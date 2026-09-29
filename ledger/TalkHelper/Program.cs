@@ -101,6 +101,11 @@ static class Program
         /// Whether each person trusts Tom, as the game last said (the acquaintance's
         /// "trusts"): only somebody the cast file names on trust reads it.
         readonly Dictionary<string, bool> _trusts = new Dictionary<string, bool>();
+        // When Ron last asked him plainly whether to tell them no, per person
+        // (town list 6bn): his plain yes as his next line in that conversation,
+        // within three game hours, is the no; walking away or a fresh
+        // conversation clears it.
+        readonly Dictionary<string, GameTime> _askedNo = new Dictionary<string, GameTime>();
 
         /// The named cast's routines (production/specs/hook-cast.json), so each
         /// person is told where they are this hour (town list 6u); null without.
@@ -189,6 +194,7 @@ static class Program
                 _unwinding.Clear();
                 // Trust is the game's to say again for the timeline it loads.
                 lock (_trusts) _trusts.Clear();
+                lock (_askedNo) _askedNo.Clear();
                 if (op == "reset") return JsonSerializer.Serialize(new { talk = "reset" }, Plain);
             }
             if (op != "save" && op != "load") return JsonSerializer.Serialize(new { talk = op, error = "unknown" }, Plain);
@@ -333,6 +339,7 @@ static class Program
             string talkOp = null, talkPath = null, talkStamp = null;
             string walkedFrom = null, walkedHeard = null;
             string deedTopic = null, sawHimAt = null, heardHimAt = null; int deedDay = -1, deedHour = -1; bool deedGrave = false;
+            bool askTonight = false;
             var heardHeSaid = new List<string>();
             bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
             bool? trustsSent = null;
@@ -415,6 +422,10 @@ static class Program
                 if (r.TryGetProperty("noReply", out v) && v.ValueKind == JsonValueKind.True) noReply = true;
                 // A NEW CONVERSATION (town list 6ae): the game says so when he walks up again.
                 if (r.TryGetProperty("fresh", out v) && v.ValueKind == JsonValueKind.True) fresh = true;
+                // THE OUTFIT'S ASK, HAD AND NOT YET ANSWERED TONIGHT (town list 6bn):
+                // the game says so for the person who brought it (Ron).
+                if (r.TryGetProperty("ask", out var ak) && ak.ValueKind == JsonValueKind.Object
+                    && ak.TryGetProperty("tonight", out var akt) && akt.ValueKind == JsonValueKind.True) askTonight = true;
                 // WHO IS REALLY WITH THEM (town list 6ad), as cast ids, when the game knows.
                 if (r.TryGetProperty("present", out v) && v.ValueKind == JsonValueKind.Array)
                 {
@@ -467,6 +478,9 @@ static class Program
             {
                 return JsonSerializer.Serialize(new { error = "bad-line" }, Plain);
             }
+            // A line to anybody but Ron clears his question, even one that goes no
+            // further than here (town list 6bn, the independent check).
+            if (!string.IsNullOrEmpty(say) && to != Arrangement.Doorman) lock (_askedNo) _askedNo.Clear();
             if (talkOp != null) return await Talk(talkOp, talkPath, talkStamp);
             if (walkedFrom != null)
             {
@@ -475,6 +489,7 @@ static class Program
                 if (already) return JsonSerializer.Serialize(new { walkedAway = walkedFrom, noted = true }, Plain);
                 var left = EngineFor(walkedFrom);
                 if (left != null) left.WalkedAway(walkedHeard, new GameTime(day, hour, minute));
+                lock (_askedNo) _askedNo.Remove(walkedFrom);
                 return JsonSerializer.Serialize(new { walkedAway = walkedFrom, noted = left != null }, Plain);
             }
             if (report.HasValue) return await ReportAsync(report.Value, reportWhy);
@@ -510,6 +525,7 @@ static class Program
             engine.SpeakerName = key != to ? "" : null;
             // WHO THEY KNOW, AND WHERE (town list 6ad), from the cast file this hour.
             if (Cast != null) engine.People = Cast.PeopleFor(key, day, hour, present);
+            if (Cast != null) engine.StreetHours = Cast.HoursFor(day, hour, minute);
             // THE SIMULATION'S STATE, loaded before the line is answered.
             foreach (var m in memories)
             {
@@ -520,7 +536,7 @@ static class Program
                 if (storyOfMemory.TryGetValue(m, out var st)) engine.TagStory(m, st);
             }
             foreach (var f in knows) engine.Knowledge.Learn(f);
-            if (fresh) { engine.StartFresh(); engine.GameMarksFresh = true; }
+            if (fresh) { engine.StartFresh(); engine.GameMarksFresh = true; lock (_askedNo) _askedNo.Remove(key); }
             // Kept until the game sends it again; until the game has ever sent it,
             // read off this conversation's own earlier talk with him.
             // Met is the game's word or their own earlier talk: the game cannot
@@ -641,6 +657,36 @@ static class Program
             // suspect him of; the Core decides whether they keep it quiet.
             string ownedUpOut = null;
             object keepsQuietOut = null;
+            // TELLING RON NO (town list 6bn), in two steps, since it ends Mickey's
+            // arrangement for good: while tonight's ask stands, a line that sounds
+            // like a no gets Ron's own plain question back in place of a reply,
+            // and his plain yes to it within the hour is the no (the independent
+            // check twice: free talk read alone took "The drivers want Sunday
+            // off. Tell them no." and "Tell them no. Only messing." for a no).
+            // Ron remembers it only once the game has answered the night
+            // (Arrangement.HeardNo); this reply has it as tonight's line.
+            bool refusedAsk = false, askPlainly = false;
+            engine.Tonight = null;
+            bool askedBefore;
+            GameTime askedAt;
+            // Any line to anybody clears the question (the independent check: a
+            // "Yes." to somebody else's remark must not answer it), and only
+            // Ron, who brought the ask, is read for it.
+            lock (_askedNo) { askedBefore = _askedNo.TryGetValue(key, out askedAt); _askedNo.Clear(); }
+            if (askTonight && key == Arrangement.Doorman && !string.IsNullOrEmpty(say))
+            {
+                bool asked = askedBefore && now.TotalMinutes - askedAt.TotalMinutes <= 180 && now.TotalMinutes >= askedAt.TotalMinutes;
+                if (asked && Arrangement.ConfirmsNo(say))
+                    refusedAsk = true;
+                // Not asked again straight after: "No thanks." to his question is
+                // a no to telling them, and must not bring the question back.
+                else if (!asked && Arrangement.SoundsLikeNo(say))
+                {
+                    askPlainly = true;
+                    lock (_askedNo) _askedNo[key] = now;
+                }
+                engine.Tonight = refusedAsk ? Arrangement.TonightToldNo : asked ? Arrangement.TonightNotYes : Arrangement.TonightAsked;
+            }
             // Only the deed this line is sent with: an older deed would come without
             // its gravity (the independent check: a killing kept quiet).
             string silenceTopic = deedTopic;
@@ -681,8 +727,14 @@ static class Program
             var heard = new List<string>();
             foreach (var m in MemoryRetrieval.Retrieve(engine.Memory, say, now)) heard.Add(m.Text);
 
+            if (askPlainly)
+            {
+                // Ron's own question, in place of a reply: no model writes it.
+                engine.RememberSaid(say, Arrangement.AskPlainly, now);
+                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false }, Plain);
+            }
             if (_llm == null)
-                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = refusedAsk ? Arrangement.TookNo : brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk }, Plain);
             string reply;
             string paused = null;
             bool timedOut = false;
@@ -737,7 +789,9 @@ static class Program
                         if (task.Status != TaskStatus.RanToCompletion && earlyFirst == null) engine.RememberSaid(say, "...", now);
                         engine.WalkedAway(heardNow, now);
                         lock (_walkedHandled) _walkedHandled.Add(key);
-                        return JsonSerializer.Serialize(new { id, to, walkedOff = true }, Plain);
+                        // What his line did stands although the reply stopped: the
+                        // game still answers a no, an owning up or an ask for silence.
+                        return JsonSerializer.Serialize(new { id, to, walkedOff = true, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk }, Plain);
                     }
                     if (done != task)
                     {
@@ -784,6 +838,9 @@ static class Program
             }
             }
             finally { _walkCts.TryRemove(key, out _); }
+            // A no confirmed while talk is paused, unreachable or too slow gets
+            // Ron's own acknowledgement, not a brush-off (the independent check).
+            if (refusedAsk && (timedOut || paused != null) && earlyFirst == null) reply = Arrangement.TookNo;
             // INVENTED: what the first draft claimed that nothing supports, kept
             // for the log (the line said is the second draft or the plain one).
             // UNCHECKED: the claim check failed or answered out of shape, so the
@@ -834,7 +891,7 @@ static class Program
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
             // ENDED: the character closed the conversation (town list 6ae).
             bool ends = !timedOut && engine.LastEnded;
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, @unchecked, fellBack, generated, model }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -1358,6 +1415,72 @@ static class Program
            && qGrave.Contains("\"agreed\":false") && qNone.Contains("\"keepsQuiet\":null") && qNone.Contains("\"ownedUp\":null")
            && qNoDeed.Contains("\"keepsQuiet\":null") && !quiet.EngineFor("lena").KeepsQuiet.ContainsKey("player.window_d1")
            && quiet.EngineFor("rocco").BuildSystemPrompt("x", new GameTime(2, 10, 5), "").Contains("He has owned up to it"), qSam + " | " + qRon + " | " + qGrave);
+
+        // TELLING RON NO (town list 6bn), in two steps: a line that sounds like a
+        // no gets Ron's own question back, no model called; only a plain yes to
+        // it within the hour is the no, and nobody remembers the no until the
+        // game answers it; without the ask nothing is read.
+        var askLlm = new FakeLlm { Next = "Right you are, boss." };
+        var asker = new Helper(askLlm, TimeSpan.FromSeconds(8));
+        LoadCards(asker, cardsDir);
+        int callsBefore = askLlm.Calls;
+        string aNo = await asker.Answer("{\"id\":130,\"to\":\"rocco\",\"say\":\"Tell them no, Ron.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        bool noModelCalled = askLlm.Calls == callsBefore;
+        string aYes = await asker.Answer("{\"id\":131,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":0,\"hour\":21,\"minute\":2,\"ask\":{\"tonight\":true}}");
+        string toldNoLine = asker.EngineFor("rocco").Tonight;
+        string aYesAgain = await asker.Answer("{\"id\":132,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":0,\"hour\":21,\"minute\":3,\"ask\":{\"tonight\":true}}");
+        string aNoAsk = await asker.Answer("{\"id\":133,\"to\":\"rocco\",\"say\":\"Tell them no, Ron.\",\"day\":0,\"hour\":21}");
+        string noAskLine = asker.EngineFor("rocco").Tonight;
+        string aMaybe = await asker.Answer("{\"id\":134,\"to\":\"rocco\",\"say\":\"What if I said no?\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        string askedLine = asker.EngineFor("rocco").Tonight;
+        // Asked, then something else: the question lapses.
+        await asker.Answer("{\"id\":135,\"to\":\"rocco\",\"say\":\"The drivers want Sunday off. Tell them no.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        string aOther = await asker.Answer("{\"id\":136,\"to\":\"rocco\",\"say\":\"No, the drivers, not the envelope.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        string aLateYes = await asker.Answer("{\"id\":137,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        Ok("a line to Ron that sounds like a no gets his own plain question, no model called; his plain yes to it is the no, reported and tonight's line for the reply, remembered by nobody until the game answers it; a yes with no question before it, any other answer, or no ask tonight is nothing",
+           aNo.Contains("\"reply\":\"" + Arrangement.AskPlainly.Substring(0, 20)) && aNo.Contains("\"refusedAsk\":false") && aNo.Contains("\"generated\":false") && noModelCalled
+           && aYes.Contains("\"refusedAsk\":true") && toldNoLine == Arrangement.TonightToldNo && aYesAgain.Contains("\"refusedAsk\":false")
+           && aNoAsk.Contains("\"refusedAsk\":false") && !aNoAsk.Contains("\"reply\":\"" + Arrangement.AskPlainly.Substring(0, 20)) && noAskLine == null
+           && aMaybe.Contains("\"refusedAsk\":false") && askedLine == Arrangement.TonightAsked
+           && aOther.Contains("\"refusedAsk\":false") && aLateYes.Contains("\"refusedAsk\":false")
+           && !asker.EngineFor("rocco").Memory.Events.Exists(e => e.Text == Arrangement.HeardNo || e.Text.StartsWith("He told me no")), aNo + " | " + aYes + " | " + aOther);
+        // Walking away clears the question: back again, a yes is nothing.
+        var walkAsker = new Helper(new FakeLlm { Next = "Right." }, TimeSpan.FromSeconds(8));
+        LoadCards(walkAsker, cardsDir);
+        await walkAsker.Answer("{\"id\":140,\"to\":\"rocco\",\"say\":\"Count me out.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        await walkAsker.Answer("{\"walkedAway\":{\"to\":\"rocco\",\"heard\":\"\"},\"day\":0,\"hour\":21}");
+        string aBack = await walkAsker.Answer("{\"id\":141,\"to\":\"rocco\",\"say\":\"Yes mate.\",\"day\":0,\"hour\":21,\"minute\":20,\"ask\":{\"tonight\":true}}");
+        await walkAsker.Answer("{\"id\":142,\"to\":\"rocco\",\"say\":\"No thanks.\",\"day\":0,\"hour\":21,\"minute\":30,\"ask\":{\"tonight\":true}}");
+        string aPlease = await walkAsker.Answer("{\"id\":143,\"to\":\"rocco\",\"say\":\"Yes please\",\"day\":0,\"hour\":22,\"minute\":50,\"ask\":{\"tonight\":true}}");
+        Ok("walking away clears Ron's question, so a yes on his return is nothing; \"No thanks.\" gets the question, and \"Yes please\" nearly three game hours later is the no",
+           aBack.Contains("\"refusedAsk\":false") && aPlease.Contains("\"refusedAsk\":true"), aBack + " | " + aPlease);
+        // Backing out of Ron's question, or a line to somebody else, is no yes;
+        // and nobody but Ron is read for it.
+        var backAsker = new Helper(new FakeLlm { Next = "Right." }, TimeSpan.FromSeconds(8));
+        LoadCards(backAsker, cardsDir);
+        await backAsker.Answer("{\"id\":150,\"to\":\"rocco\",\"say\":\"Tell them no, Ron.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        string aBackOut = await backAsker.Answer("{\"id\":151,\"to\":\"rocco\",\"say\":\"No thanks.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        await backAsker.Answer("{\"id\":152,\"to\":\"rocco\",\"say\":\"Count me out.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        await backAsker.Answer("{\"id\":153,\"to\":\"sam\",\"say\":\"Alright, Darren.\",\"day\":0,\"hour\":21}");
+        string aAfterOther = await backAsker.Answer("{\"id\":154,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        string aToDarren = await backAsker.Answer("{\"id\":155,\"to\":\"sam\",\"say\":\"Tell them no.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        await backAsker.Answer("{\"id\":160,\"to\":\"rocco\",\"say\":\"Forget it.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        string aTellYes = await backAsker.Answer("{\"id\":156,\"to\":\"rocco\",\"say\":\"Tell them okay.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        await backAsker.Answer("{\"id\":157,\"to\":\"rocco\",\"say\":\"Forget it.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        await backAsker.Answer("{\"id\":158,\"to\":\"nobodyhere\",\"say\":\"Evening.\",\"day\":0,\"hour\":21}");
+        string aAfterNobody = await backAsker.Answer("{\"id\":159,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
+        Ok("\"No thanks.\" said back to Ron's question ends nothing and does not bring it back; a line to anybody else, carded or not, clears the question; a line to anybody but Ron is never read for it",
+           aBackOut.Contains("\"refusedAsk\":false") && !aBackOut.Contains("\"reply\":\"" + Arrangement.AskPlainly.Substring(0, 20))
+           && aAfterOther.Contains("\"refusedAsk\":false") && aToDarren.Contains("\"refusedAsk\":false")
+           && aTellYes.Contains("\"refusedAsk\":false") && aAfterNobody.Contains("\"refusedAsk\":false")
+           && !aToDarren.Contains("\"reply\":\"" + Arrangement.AskPlainly.Substring(0, 20)), aBackOut + " | " + aAfterOther + " | " + aToDarren + " | " + aAfterNobody);
+        // Asked more than three game hours ago, a yes is not his no.
+        var staleAsker = new Helper(new FakeLlm { Next = "Right." }, TimeSpan.FromSeconds(8));
+        LoadCards(staleAsker, cardsDir);
+        await staleAsker.Answer("{\"id\":138,\"to\":\"rocco\",\"say\":\"I'm not doing it.\",\"day\":0,\"hour\":19,\"ask\":{\"tonight\":true}}");
+        string aStale = await staleAsker.Answer("{\"id\":139,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":0,\"hour\":22,\"minute\":1,\"ask\":{\"tonight\":true}}");
+        string staleLine = staleAsker.EngineFor("rocco").Tonight;
+        Ok("a yes to Ron's question of more than three game hours ago is not read as his no", aStale.Contains("\"refusedAsk\":false") && staleLine == Arrangement.TonightAsked, aStale);
 
         // WALKING OFF STOPS THE REPLY AT ONCE (town list 6ay).
         var slowTalk = new FakeLlm { Next = "Well, the thing about the rank is this.", Delay = TimeSpan.FromSeconds(4) };

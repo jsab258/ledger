@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Ledger.Core
 {
@@ -10,8 +11,11 @@ namespace Ledger.Core
         Did,
         /// He told Ron no: the arrangement ends at once.
         Refused,
-        /// He said nothing and did not go.
+        /// He had the ask, said nothing and did not go.
         NoShow,
+        /// Ron never reached him that night: the ask passed without his knowing,
+        /// and nothing follows (town list 6bn).
+        Undelivered,
     }
 
     /// MICKEY'S ARRANGEMENT WITH THE OUTFIT, IN THE NEW GAME (town list 6z; the
@@ -33,10 +37,25 @@ namespace Ledger.Core
     /// Ron, who keeps things quiet for the owner, tells nobody. Only the
     /// envelope handed over is a night-life secret (sensitive); a refusal or a
     /// night he stayed away is not. Nights are answered in order, one at a
-    /// time; a night that passed unanswered counts as one he stayed away
-    /// (PassedTo), so the asks never stop unnoticed; and a save is replayed
+    /// time; a night that passed unanswered after Ron brought him the ask
+    /// counts as one he stayed away (PassedTo), so the asks never stop
+    /// unnoticed; and a save is replayed
     /// through the same rules, so it can hold nothing play could not reach
     /// (the independent check).
+    ///
+    /// THE ASK IN TALK (town list 6bn): the Core knows whether Ron reached him
+    /// with it (Delivered): a night Ron never did passes silently, never "they
+    /// waited on you at the landing" about an ask he never had; Ron remembers
+    /// its terms (Terms), so he can say where and when and that a no ends it,
+    /// and the claim check lets him; and a no is two steps, since it ends the
+    /// arrangement for good: a line to Ron on an ask night that sounds like
+    /// one (SoundsLikeNo, the whole clause, as Silence reads an admission) gets
+    /// his own plain question back (AskPlainly), and only a plain yes to that
+    /// question (ConfirmsNo) is the no; a line read from free talk alone
+    /// failed the independent check twice ("The drivers want Sunday off. Tell
+    /// them no.", "Tell them no. Only messing."). Ron learns it is finished
+    /// only when it is (HeardNo, HeardStopped), so nothing he remembers says a
+    /// no the game never had, or "tonight" once it has ended.
     public sealed class Arrangement
     {
         /// The game day whose night brings the first ask: day 0, the first day,
@@ -50,6 +69,11 @@ namespace Ledger.Core
         public const double PatienceGainPerNight = 0.10;
         /// Who tells every answer first (a cast id): the outfit's man.
         public const string OutfitMan = "outfit_man";
+        /// Who brings the ask and carries a no down (a cast id): Ron, Mickey's doorman.
+        public const string Doorman = "rocco";
+        /// The hour of the morning after an ask night when the man at the
+        /// landing gives up waiting.
+        public const int GaveUpHour = 1;
         /// Every night's story is told under this topic and the night's day.
         public const string TopicPrefix = "player.outfit_d";
 
@@ -58,6 +82,30 @@ namespace Ledger.Core
         public string EndedWhy { get; private set; }
         public double Patience { get; private set; } = 1.0;
         readonly SortedDictionary<int, NightAnswer> _nights = new SortedDictionary<int, NightAnswer>();
+        readonly HashSet<int> _delivered = new HashSet<int>();
+
+        /// What Ron tells him, handing over the coat and the envelope, as Ron
+        /// remembers it: where, when, to whom, and that a no ends it.
+        public const string Terms = "I gave Mickey's nephew the envelope for the ferry landing: after ten tonight, to the man who asks for Mickey's. I told him that if he says no, Mickey's arrangement is finished.";
+        /// TONIGHT'S LINE FOR RON'S TALK (ConversationEngine.Tonight), while the
+        /// ask stands: what is his to answer, and that only the plain yes to
+        /// Ron's own question counts.
+        public const string TonightAsked = "Tonight you brought him Mickey's envelope for the ferry landing, and he has not given you his answer yet: he can take it down after ten, or tell you no, which finishes Mickey's arrangement for good. He has not refused until he says yes to the plain question that is asked for him, so never ask him yourself whether to tell them no, and never say you will tell them no or take a no down. If he seems to be turning it down, tell him plainly that a no finishes Mickey's arrangement for good, and that if he means it he need only say \"tell them no\".";
+        /// Tonight's line when Ron asked him plainly and his next line was no
+        /// plain yes (the independent check: the talk model took "Yes please",
+        /// which the reader then missed, for the no).
+        public const string TonightNotYes = "You asked him plainly whether to tell them no to the envelope, and he did not say yes: he has not refused, and the envelope is still his to take down after ten. Never say you will tell them no or take a no down; if he still means no, tell him he need only say \"tell them no\".";
+        /// RON'S OWN QUESTION, said in place of a reply when a line of his
+        /// sounds like a no (the talk helper): plain about what, and what a yes does.
+        public const string AskPlainly = "You want me to tell them no to the envelope, boss? That's Mickey's arrangement finished, for good. Say yes and I'll take your no down the landing.";
+        /// Ron's answer to his yes when live talk is off, in place of a brush-off.
+        public const string TookNo = "Right you are, boss. I'll take your no down the landing.";
+        /// Tonight's line once his line to Ron is read as a no.
+        public const string TonightToldNo = "He has just told you no to tonight's envelope. You will take his answer down to the ferry landing tonight, and that is Mickey's arrangement finished: say so plainly.";
+        /// What Ron remembers when the game has his no (Answer, Refused).
+        public const string HeardNo = "He told me no to the envelope, so I'm taking his answer down to the landing tonight: that's Mickey's arrangement finished.";
+        /// What Ron remembers when the outfit stops the asks (the last night away).
+        public const string HeardStopped = "Word came up from the landing: Mickey's nephew stayed away once too often, and Mickey's arrangement is finished. Nobody down there expects anything from him now.";
 
         public Arrangement(int firstDay = 0) { FirstDay = Math.Max(0, firstDay); }
 
@@ -69,6 +117,23 @@ namespace Ledger.Core
 
         /// Whether the outfit asks on this day's night.
         public bool AsksOn(int day) => !Ended && day == NextNight;
+
+        /// When the man at the landing gives up waiting on this night's answer.
+        public static GameTime GaveUpAt(int day) => new GameTime(day + 1, GaveUpHour, 0);
+
+        /// WHETHER TONIGHT'S ASK STANDS at `now`: Ron has brought it, it is not
+        /// answered, and the man at the landing has not given up waiting. The
+        /// game sends the talk helper "ask": {"tonight": true} with lines to Ron
+        /// only while this holds.
+        public bool AskStands(GameTime now)
+        {
+            int night = NightOf(now);
+            return AsksOn(night) && _delivered.Contains(night);
+        }
+
+        /// The day whose night it is at `now`: until one in the morning, the
+        /// day before's.
+        public static int NightOf(GameTime now) => now.Hour < GaveUpHour ? now.Day - 1 : now.Day;
 
         /// The topic the night's story is told under, as the session record keys deeds.
         public static string TopicFor(int day) => TopicPrefix + day;
@@ -83,17 +148,48 @@ namespace Ledger.Core
             : "Mickey's nephew never turned up at the landing";
 
         /// The word each answer's story carries.
-        public static string Value(NightAnswer a) => a == NightAnswer.Did ? "did" : a == NightAnswer.Refused ? "refused" : "noshow";
+        public static string Value(NightAnswer a) =>
+            a == NightAnswer.Did ? "did" : a == NightAnswer.Refused ? "refused" : a == NightAnswer.NoShow ? "noshow" : "undelivered";
+
+        /// RON REACHED HIM WITH TONIGHT'S ASK: the coat and the envelope handed
+        /// over, the terms said. With `ron` (his gossiper) and `now`, Ron
+        /// remembers the terms, which the game sends his talk like any memory.
+        /// False, changing nothing, unless the outfit asks tonight, he has not
+        /// had it yet and, with `now`, it is that night (from its morning until
+        /// one the next morning, NightOf).
+        public bool Delivered(int day, Gossiper ron = null, GameTime? now = null)
+        {
+            if (!AsksOn(day) || (now.HasValue && NightOf(now.Value) != day) || !_delivered.Add(day)) return false;
+            if (ron != null && now.HasValue) ron.Memory.Append(new MemoryEvent(now.Value, "observation", 0.8, Terms));
+            return true;
+        }
+
+        /// Whether Ron reached him with this night's ask.
+        public bool WasDelivered(int day) => _delivered.Contains(day);
 
         /// He answered this night's ask. Returns false, changing nothing, unless
-        /// it is the night the outfit asks (NextNight). With `mill`, the night's
-        /// story goes into the gossip, told first by whoever knows it at `now`,
-        /// which must then be given.
+        /// it is the night the outfit asks (NextNight); a night away (NoShow)
+        /// only once Ron has reached him with it, and Undelivered never (only
+        /// PassedTo marks a night the ask never reached him). Taking the
+        /// envelope or telling Ron no means he had it; with `now`, only before
+        /// the man at the landing gives up waiting (GaveUpAt), so the game
+        /// answers a no as of when he said it. With `mill`, the night's story
+        /// goes into the gossip, told first by whoever knows it at `now`, which
+        /// must then be given, and Ron, if the mill has him, learns when it ends.
         public bool Answer(int day, NightAnswer what, GossipMill mill = null, GameTime? now = null)
         {
             if (mill != null && !now.HasValue) throw new ArgumentException("the story needs the time it is told", nameof(now));
-            if (!AsksOn(day)) return false;
+            if (what == NightAnswer.Undelivered || !AsksOn(day)) return false;
+            if (what == NightAnswer.NoShow && !_delivered.Contains(day)) return false;
+            if (what != NightAnswer.NoShow && now.HasValue && now.Value.TotalMinutes >= GaveUpAt(day).TotalMinutes) return false;
+            _delivered.Add(day);
+            return Record(day, what, mill, now);
+        }
+
+        bool Record(int day, NightAnswer what, GossipMill mill, GameTime? now)
+        {
             _nights[day] = what;
+            if (what == NightAnswer.Undelivered) return true;
             if (what == NightAnswer.Refused) { Ended = true; EndedWhy = "refused"; }
             else if (what == NightAnswer.Did) Patience = Math.Min(1.0, Patience + PatienceGainPerNight);
             else
@@ -102,38 +198,185 @@ namespace Ledger.Core
                 if (Patience <= 1e-9) { Ended = true; EndedWhy = "stopped"; }
             }
             if (mill != null)
+            {
                 mill.Witness(OutfitMan, new Fact("player", "outfit_d" + day, Value(what)), Said(what), what == NightAnswer.Did, now.Value, 1.0);
+                if (Ended && mill.Get(Doorman) is Gossiper ron)
+                    ron.Memory.Append(new MemoryEvent(now.Value, "observation", 0.8, what == NightAnswer.Refused ? HeardNo : HeardStopped));
+            }
             return true;
         }
 
         /// The day is now `day`: every ask night before it that nobody answered
         /// (a dawn the game missed, a load that skipped a night) counts as one
-        /// he stayed away, told by the outfit's man when a mill is given: as of
-        /// one in the morning after that night, when he gave up waiting, or
-        /// `now` if that is earlier. The game calls it at each dawn and after
+        /// he stayed away if Ron had reached him with it, told by the outfit's
+        /// man when a mill is given: as of one in the morning after that night,
+        /// when he gave up waiting; with `now`, a night whose man is still
+        /// waiting does not pass yet. A night Ron never reached him passes
+        /// silently (Undelivered). The game calls it at each dawn and after
         /// every load.
         public void PassedTo(int day, GossipMill mill = null, GameTime? now = null)
         {
             if (mill != null && !now.HasValue) throw new ArgumentException("the story needs the time it is told", nameof(now));
-            while (!Ended && NextNight < day)
+            // With `now`, a night passes only once the man has given up waiting
+            // (the independent check: a load between midnight and one passed a
+            // night whose ask still stood).
+            while (!Ended && NextNight < day && (!now.HasValue || GaveUpAt(NextNight).TotalMinutes <= now.Value.TotalMinutes))
             {
                 GameTime? told = null;
-                if (now.HasValue)
-                {
-                    var gaveUp = new GameTime(NextNight + 1, 1, 0);
-                    told = gaveUp.TotalMinutes < now.Value.TotalMinutes ? gaveUp : now.Value;
-                }
-                Answer(NextNight, NightAnswer.NoShow, mill, told);
+                if (now.HasValue) told = GaveUpAt(NextNight);
+                if (_delivered.Contains(NextNight)) Record(NextNight, NightAnswer.NoShow, mill, told);
+                else Record(NextNight, NightAnswer.Undelivered, null, null);
             }
         }
 
+        // HOW A NO IS READ (the independent check of town list 6bn): as Silence
+        // reads an admission, the whole clause must be the no, and every other
+        // clause of the sentence only the words people put round one. That
+        // only decides whether Ron asks him plainly; the no is the plain yes.
+        static string Words(string s) =>
+            " " + Regex.Replace(Apostrophes(s).ToLowerInvariant().Replace("'", ""), @"[^a-z]+", " ").Trim() + " ";
+
+        static string Apostrophes(string s) => (s ?? "").Replace('\u2019', '\'').Replace('\u2018', '\'').Replace('`', '\'').Replace('\u00b4', '\'');
+
+        static List<string> Sentences(string said)
+        {
+            var list = new List<string>();
+            foreach (var raw in Regex.Split(Apostrophes(said), @"(?<=[.!?])\s+"))
+            {
+                var t = raw.Trim();
+                if (t.Length > 0) list.Add(t);
+            }
+            return list;
+        }
+
+        const string Lead = @"(no |nah |nope |look |listen |sorry |right |ron |well |so |honestly |just |ok |okay |alright |all right |you |go and |go )*";
+        const string What = @"(it|that|this|the envelope|their envelope|mickeys envelope|any of it|their errands|mickeys errands|their dirty work|mickeys dirty work)";
+        const string After = @"( for them| anymore| any more| again| down there| down| there| to the landing| down the landing| down to the landing)*";
+        const string Tail = @"( (then|ron|mate|boss|pal|love|sorry|honestly|mind|from me|for me|for good|and thats final|and thats that|thanks|thank you))* $";
+        // The whole clause that says no to the ask.
+        static readonly Regex RefuseClause = new Regex(@"^ " + Lead + "(" +
+            @"tell (them|em|him|the outfit|them lot|that lot|the man|mickeys people) (no|its a no|the answers no|my answers no|the answer is no|i said no|im not doing it|i wont do it|im not interested|to find (somebody|someone) else|to get (somebody|someone) else|where to stick it|to sling their hook|to get lost)" +
+            @"|(im|i am) not (doing|taking|carrying|running|touching|delivering) " + What + After +
+            @"|(im|i am) not going to (do|take|carry|run|touch|deliver) " + What + After +
+            @"|i (wont|will not|shant|refuse to|aint going to|aint gonna) (do|take|carry|run|touch|deliver) " + What + After +
+            @"|i (wont|will not|shant) be (doing|taking|carrying|running) " + What + After +
+            @"|count me out|no deal|(the|my) answers no|(the|my) answer is no|(its|thats) a no|no thanks|no thank you|(im|i am) not interested|find (somebody|someone) else|forget it" +
+            @"|ill have nothing to do with (it|this|that|any of it)|i will have nothing to do with (it|this|that|any of it)" +
+            @"|i said no|(im|i am) out|(im|i am) not going( down)? (to the landing|down the landing|to the ferry|down there|there)" +
+            @"|i (cant|cannot) do (it|that|this)|i dont want to do (it|that|this)|i dont want (any part|no part) of (it|this|that)|(im|i am) not coming|tell (them|em) (im|i am) not coming" +
+            @"|(im|i am) having no part (of|in) (it|this|that|any of it)|i want no part (of|in) (it|this|that|any of it)" +
+            @"|i want nothing to do with (it|this|that|any of it)|mickeys arrangement is (finished|over|done)" +
+            ")" + Tail);
+        // A clause of the words round a no, which says nothing of its own.
+        static readonly Regex AroundClause = new Regex(
+            @"^ ((no|nah|nope|look|listen|sorry|right|ron|mate|boss|pal|love|well|so|honestly|then|ok|okay|alright|all right|thanks|ta|cheers|mind|never|not a chance|no chance|no way|not on your life|absolutely not|definitely not|certainly not|im sorry|thats final|and thats final|thats that|and thats that|end of|end of story|my minds made up)( |$))+$");
+        // Anywhere in the line, it is no plain no: taken back, put off,
+        // supposed, or somebody else's words ("Darren said tell them no"; "tell
+        // them I said no" is his own).
+        static readonly Regex TakenBack = new Regex(
+            @" (only joking|just joking|joking|kidding|only messing|messing|having you on|winding you up|pulling your leg|yeah right|as if|not really|on second thoughts?|second thoughts|changed my mind|actually|wait|hang on|hold on|think about it|ill (do|take|carry|go|think)|ill have (it|that|the envelope)|im (doing|taking|going)|i will (do|take|go)|course (im|i am|i will|ill)|give it here|hand it over|go on then|maybe|perhaps|probably|not likely|or not|or should i|should i|shall i|unless|if|what if|suppose|supposing|not yet|yet|tonight|tomorrow|later|for now|this time|next time) " +
+            @"| (?!i )[a-z]+ (said|says|reckons|told me|tells me) ");
+        // His plain yes to Ron's own question, read over the whole sentence,
+        // commas or none (the independent check: "Yes please" was missed): only
+        // these words and phrases, and one of them a yes.
+        static readonly Regex YesSentence = new Regex(
+            @"^ ((yes|yeah|yep|yup|aye|sure|definitely|certainly|absolutely|of course|course|correct|exactly|right|thats right|that is right|thats it|thats what i said|thats my answer|you heard me|you heard|i do|i am|im sure|i am sure|im certain|i mean it|do it|go ahead|please do|tell them no|tell em no|its a no|thats a no|im not doing it|i am not doing it|im not taking it|i wont do it|find someone else|find somebody else|i said no|count me out|yea|sir|please|ron|mate|boss|pal|love|then|thanks|ta|cheers|honestly|ok|okay|sorry|for good|thats final|and thats final)( |$))+$");
+        static readonly Regex YesWord = new Regex(
+            @" (yes|yeah|yea|yep|yup|aye|sure|definitely|certainly|absolutely|of course|correct|exactly|thats right|that is right|thats it|thats what i said|thats my answer|you heard me|i do|im sure|i am sure|im certain|i mean it|tell them no|tell em no|its a no|thats a no) ");
+        // What only sounds like a yes: brushing him off ("Yeah yeah."), or
+        // telling them something else ("Tell them thanks.").
+        static readonly Regex NotAYes = new Regex(@" (yeah yeah|sure sure|aye aye|yep yep) | tell (them|em) (?!no )");
+        // The words round that yes: nothing that could be a no to the question.
+        static readonly Regex PoliteClause = new Regex(
+            @"^ ((ron|mate|boss|pal|love|then|please|thanks|ta|cheers|honestly|ok|okay|sorry|im sorry|thats final|and thats final|for good|look|listen)( |$))+$");
+
+        // Every clause of the sentence the shape or the words round it, and one the shape.
+        static bool AllClauses(string sentence, Regex shape, Regex around)
+        {
+            bool found = false;
+            foreach (var clause in sentence.TrimEnd('.', '!', '?').Split(new[] { ',', ';', ':', '\u2014', '\u2013' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var w = Words(clause);
+                if (w.Trim().Length == 0) continue;
+                if (shape.IsMatch(w)) found = true;
+                else if (!around.IsMatch(w)) return false;
+            }
+            return found;
+        }
+
+        // A sentence that answers Ron's question yes: a plain yes and the words
+        // round it, never a line that is only a refusal, which said back to his
+        // question can mean "no, don't" (the independent check: "No thanks.",
+        // "Forget it." ended it).
+        static bool AnswersYes(string sentence)
+        {
+            var w = Words(sentence);
+            return YesSentence.IsMatch(w) && YesWord.IsMatch(w) && !NotAYes.IsMatch(w);
+        }
+
+        static bool AnyTakenBack(List<string> sentences)
+        {
+            foreach (var s in sentences) if (TakenBack.IsMatch(Words(s))) return true;
+            return false;
+        }
+
+        /// WHETHER A LINE OF HIS TO RON SOUNDS LIKE A NO to the ask: a clause
+        /// that is a plain no to it ("Tell them no, Ron.", "I'm not doing it.",
+        /// "Count me out.", "No thanks."), in no question, and nothing in the
+        /// line supposed, put off till later, taken back or somebody else's
+        /// words; never a bare "no". It is never the no itself, only whether
+        /// Ron asks him plainly (AskPlainly, which names the envelope), so it
+        /// reads wider than the no: only his plain yes (ConfirmsNo) ends it.
+        /// The game asks only while tonight's ask stands (AskStands).
+        public static bool SoundsLikeNo(string said)
+        {
+            var sentences = Sentences(said);
+            if (AnyTakenBack(sentences)) return false;
+            foreach (var s in sentences)
+            {
+                if (s.EndsWith("?")) continue;
+                foreach (var clause in s.TrimEnd('.', '!').Split(new[] { ',', ';', ':', '\u2014', '\u2013' }, StringSplitOptions.RemoveEmptyEntries))
+                    if (RefuseClause.IsMatch(Words(clause))) return true;
+            }
+            return false;
+        }
+
+        /// HIS ANSWER TO RON'S OWN QUESTION (AskPlainly), his next line to
+        /// anybody: the whole line a plain yes and the words round it ("Yes.",
+        /// "Yes please", "Yes, I'm sure", "Sure.", "That's right, Ron.", "Tell
+        /// them no.", "Yes, I'm not doing it."), every sentence of it; never a
+        /// question, never a refusal alone ("No thanks.", "Forget it."), never
+        /// a brush-off ("Yeah yeah."), nothing else beside it, nothing taken back.
+        public static bool ConfirmsNo(string said)
+        {
+            var sentences = Sentences(said);
+            // "Forget it" said back to his question can mean "never mind"
+            // (the independent check: "Yeah, forget it.").
+            if (sentences.Count == 0 || AnyTakenBack(sentences) || Words(said).Contains(" forget it ")) return false;
+            bool yes = false;
+            foreach (var s in sentences)
+            {
+                if (s.EndsWith("?")) return false;
+                if (AnswersYes(s)) yes = true;
+                // Beside a yes, a sentence that is only a no to the ask ("Yes,
+                // I'm sure. I'm not doing it."); alone it is no yes.
+                else if (!AllClauses(s, PoliteClause, PoliteClause) && !AllClauses(s, RefuseClause, AroundClause)) return false;
+            }
+            return yes;
+        }
+
         /// For any save's JSON: "first", the first night's day; "nights", [day,
-        /// answer] pairs in order. Patience and the end follow from them.
+        /// answer] pairs in order; "delivered", the ask nights Ron reached him.
+        /// Patience and the end follow from them.
         public Dictionary<string, object> ToJson()
         {
             var nights = new List<object>();
             foreach (var kv in _nights) nights.Add(new List<object> { (double)kv.Key, Value(kv.Value) });
-            return new Dictionary<string, object> { { "first", (double)FirstDay }, { "nights", nights } };
+            var delivered = new List<object>();
+            var days = new List<int>(_delivered);
+            days.Sort();
+            foreach (var d in days) delivered.Add((double)d);
+            return new Dictionary<string, object> { { "first", (double)FirstDay }, { "nights", nights }, { "delivered", delivered } };
         }
 
         /// From ToJson's values, replayed in order through Answer: the first
@@ -144,13 +387,33 @@ namespace Ledger.Core
             int first = 0;
             if (saved != null && saved.TryGetValue("first", out var f) && f is double fd && fd >= 0 && fd < 100000 && fd == Math.Floor(fd)) first = (int)fd;
             var a = new Arrangement(first);
-            if (saved == null || !saved.TryGetValue("nights", out var n) || !(n is List<object> nights)) return a;
-            foreach (var x in nights)
-            {
-                if (!(x is List<object> pair) || pair.Count != 2 || !(pair[0] is double d) || !(pair[1] is string v)) break;
-                NightAnswer? ans = v == "did" ? NightAnswer.Did : v == "refused" ? NightAnswer.Refused : v == "noshow" ? NightAnswer.NoShow : (NightAnswer?)null;
-                if (!ans.HasValue || d != Math.Floor(d) || !a.Answer((int)d, ans.Value)) break;
-            }
+            if (saved == null) return a;
+            var delivered = new HashSet<int>();
+            // A save from before the ask in talk (no "delivered") knew no night
+            // he never had: its nights away stand (the independent check).
+            bool before6bn = !saved.ContainsKey("delivered");
+            if (saved.TryGetValue("delivered", out var dl) && dl is List<object> dlist)
+                foreach (var x in dlist) if (x is double dd && dd >= 0 && dd < 100000 && dd == Math.Floor(dd)) delivered.Add((int)dd);
+            if (saved.TryGetValue("nights", out var n) && n is List<object> nights)
+                foreach (var x in nights)
+                {
+                    if (!(x is List<object> pair) || pair.Count != 2 || !(pair[0] is double d) || !(pair[1] is string v) || d != Math.Floor(d)) break;
+                    NightAnswer? ans = v == "did" ? NightAnswer.Did : v == "refused" ? NightAnswer.Refused : v == "noshow" ? NightAnswer.NoShow
+                                     : v == "undelivered" ? NightAnswer.Undelivered : (NightAnswer?)null;
+                    if (!ans.HasValue || !a.AsksOn((int)d)) break;
+                    int day = (int)d;
+                    // A night away needs the ask delivered, a night it never reached him needs it not.
+                    if (ans.Value == NightAnswer.Undelivered)
+                    {
+                        if (delivered.Contains(day)) break;
+                        a.Record(day, NightAnswer.Undelivered, null, null);
+                        continue;
+                    }
+                    if (ans.Value == NightAnswer.NoShow && !delivered.Contains(day) && !before6bn) break;
+                    if (!a.Answer(day, ans.Value) && !(ans.Value == NightAnswer.NoShow && a.Delivered(day) && a.Answer(day, ans.Value))) break;
+                }
+            // Tonight's ask, had and not yet answered.
+            if (!a.Ended && delivered.Contains(a.NextNight)) a.Delivered(a.NextNight);
             return a;
         }
     }

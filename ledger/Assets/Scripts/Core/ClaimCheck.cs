@@ -106,12 +106,13 @@ namespace Ledger.Core
         /// how they talk), H for their hard facts, B for beliefs, M for every
         /// memory with its time, W for why they are wary, S for the scene, T for
         /// the time now, K for how they know him (town list 6s), P for the
-        /// people and places of the street they know (town list 6ad). The same
+        /// people and places of the street they know (town list 6ad), O for the
+        /// street's opening hours (town list 6bo). The same
         /// material as KnownFor, in the same order. `ownName`: the speaker's own
         /// name, null for the card's heading, empty for none (town list 6be).
         public static List<(string id, string text)> KnownItems(CharacterCard card, IEnumerable<MemoryEvent> retrieved,
             IEnumerable<string> beliefs, string why, string scene, string now = null, string knowsHim = null,
-            IEnumerable<string> people = null, string ownName = null)
+            IEnumerable<string> people = null, string ownName = null, string hours = null)
         {
             var items = new List<(string, string)>();
             int n = 0;
@@ -154,6 +155,7 @@ namespace Ledger.Core
             if (!string.IsNullOrEmpty(scene)) items.Add(("S1", "The scene: " + scene));
             if (!string.IsNullOrEmpty(now)) items.Add(("T1", "It is now " + now + "."));
             if (!string.IsNullOrEmpty(knowsHim)) items.Add(("K1", "How they know him, as they were told it: " + knowsHim));
+            if (!string.IsNullOrWhiteSpace(hours)) items.Add(("O1", hours.Trim()));
             n = 0;
             foreach (var p in people ?? Array.Empty<string>())
                 if (!string.IsNullOrWhiteSpace(p)) items.Add(("P" + (++n), "Somebody or somewhere on the street they know: " + p));
@@ -195,17 +197,19 @@ namespace Ledger.Core
                 "face\"); what somebody did not do or say; a guess, opinion, prediction or feeling, or anything marked as a guess " +
                 "(\"could've been anyone\", \"I think\", \"maybe\"); vague words (somebody, talk, things, people); anything about the " +
                 "conversation itself or the person they are talking to (\"you're asking a lot\", \"new management\"); habits of the street " +
-                "or of people that a C, H or P item describes; the time now when T1 gives it; small talk about the weather or the scene now; " +
+                "or of people that a C, H or P item describes, but never a shop's opening hours, which are always listed; the time now when T1 gives it; small talk about the weather or the scene now; " +
                 "the speaker's own everyday life, tastes and belongings, and the street's ordinary fixtures, when they name no particular " +
                 "person, vehicle, time or happening (\"I don't drive\", \"plain ones in the tin\", \"the phone box on the corner\").\n" +
-                "Check the items before you write \"none\": a detail a C, H, M, S, T, K or P item gives, in other words, has that item's id.\n" +
+                "Check the items before you write \"none\": a detail a C, H, M, S, T, K, O or P item gives, in other words, has that item's id.\n" +
                 "Give each specific a kind: vehicle, person, time, place, appearance, object, amount, action, police, business for " +
                 "things that happened; or weather, now, denial, guess, habit, talk, street, self for things that are not claims about an " +
                 "event: street is the general run of the street or the rank and its ordinary fixtures (\"quiet today\", \"people in and out\", " +
                 "\"the market crowd's moving through\", \"the phone box on the corner\", \"the evening paper\"), self is what the speaker is doing " +
                 "or has been doing, and their own everyday life, tastes, belongings and habits as they tell them (\"stood here all afternoon\", " +
                 "\"waiting on a call\", \"I never learned to drive\", \"my usual\", \"digestives in the tin\"), " +
-                "talk is about this conversation or the person they are talking to (\"you're asking a lot\"). What they heard other people " +
+                "talk is about this conversation or the person they are talking to (\"you're asking a lot\"); a shop's opening hours and days, " +
+                "and whether it is open now, are habit, never time, and are always listed (\"the cafe shuts at ten\", \"Rita's is shut " +
+                "Wednesday afternoons\", \"it's shut now\"). What they heard other people " +
                 "say is not talk: give it the kind of what it is about, and the item they heard it in.\n" +
                 "Examples, with M1 \"[D3 21:40] I saw a man put the pawn shop window in and run towards the quay\":\n" +
                 "\"He ran off towards the quay, didn't see his face.\" -> {\"specifics\": [{\"detail\": \"he ran towards the quay\", " +
@@ -255,8 +259,13 @@ namespace Ledger.Core
             // ONE SECOND LOOK A DETAIL, side by side (measured on the bench:
             // given five details at once, it cited one true hard fact for all
             // five, two of which it did not state). More than MaxLooks flagged
-            // is a line made up wholesale: the list's verdict stands.
-            if (flagged.Count > MaxLooks) return (flagged, calls);
+            // is a line made up wholesale: the list's verdict stands; but a
+            // shop's hours, while the street's hours are an item, are always
+            // looked at, so "what's open round here?" answered in full is not
+            // refused for its length (town list 6bo, the independent check).
+            int otherFlagged = 0;
+            foreach (var d in flagged) if (!(ids.Contains("O1") && TellsOfHours(d))) otherFlagged++;
+            if (otherFlagged > MaxLooks || flagged.Count > MaxLooks * 4) return (flagged, calls);
             var looks = new List<System.Threading.Tasks.Task<LlmResponse>>();
             // NOT SHOWN THE LINE (measured on the bench's held-out half, 28
             // September: shown it, the second look read the rest of the line as
@@ -610,6 +619,20 @@ namespace Ledger.Core
                     return null;
                 }
                 var ids = SourceIds((MiniJson.GetString(o, "source") ?? "").Trim(), validIds);
+                // A shop's hours are never cleared on the list's word while the
+                // street's hours are among the items (town list 6bo, the
+                // independent check four times): given as a habit, the street,
+                // now, a denial or an event, the second look decides, shown every
+                // item but the people lines, as for any event. The speaker's own
+                // doings, the weather and the talk itself are left as they were
+                // ("I opened the post this morning", "it's closing in"): cleared
+                // from the hours alone, a witness's "he shut the boot at ten to
+                // ten" was refused.
+                if (validIds.Contains("O1") && TellsOfHours(detail) && kind != "self" && kind != "weather" && kind != "talk" && kind != "guess")
+                {
+                    outList.Add(detail.Trim()); claimed.Add(detail.Trim());
+                    continue;
+                }
                 if (kind == "habit")
                 {
                     bool card = false;
@@ -634,6 +657,10 @@ namespace Ledger.Core
                 // look decides. What a character says about the person they are
                 // talking to is not listed at all, K or no K (FINDINGS).
                 bool eventSupport = false;
+                // The street's opening hours (O) never clear a detail on the list's
+                // word alone: the second look, which is shown them, checks each
+                // time against them (town list 6bo: cleared by the list, four
+                // of 24 answers about hours passed wrong, "half eight" for eight).
                 if (ids != null) foreach (var id in ids) if (id[0] == 'B' || id[0] == 'M' || id[0] == 'W') eventSupport = true;
                 if (!eventSupport) { outList.Add(detail.Trim()); claimed.Add(detail.Trim()); }
             }
@@ -643,6 +670,48 @@ namespace Ledger.Core
             // habit's leave.
             if (habits != null) foreach (var d in claimed) habits.Remove(d);
             return outList;
+        }
+
+        static readonly string[] OpenShut = { "open", "opens", "opened", "opening", "shut", "shuts", "shutting", "closed", "closes", "closing" };
+        // Hours said without a word of opening or shutting: "nine till six".
+        static readonly System.Text.RegularExpressions.Regex Span = new System.Text.RegularExpressions.Regex(
+            @"\b(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|[0-9]+|midnight|noon)( oclock| thirty)? (till|until|to) (half )?(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|[0-9]+|midnight|noon)\b");
+        // "Close" only as a shop closes ("they close at eleven"), never "close to ten".
+        static readonly System.Text.RegularExpressions.Regex CloseAt = new System.Text.RegularExpressions.Regex(
+            @"\bclose (at|till|until|early|late|up|for|by|around|about|before|after|on)\b");
+        static readonly string[] WhenWords = { "now", "today", "tonight", "tomorrow", "morning", "mornings", "afternoon", "afternoons", "evening", "evenings",
+            "night", "nights", "late", "early", "day", "days", "week", "weekend", "weekday", "weekdays", "noon", "midday", "midnight", "half", "quarter", "clock", "oclock",
+            "teatime", "lunchtime", "dinnertime", "lunch", "hour", "hours", "ago", "minutes", "since",
+            "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve",
+            "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+            "mondays", "tuesdays", "wednesdays", "thursdays", "fridays", "saturdays", "sundays",
+            // Said of a place as it is: "Rita's is shut", "it's open".
+            "is", "s", "are", "isnt", "arent", "aint", "its", "theyre" };
+        // What opens and shuts that is no shop (the independent check: "the
+        // door's open now", "the road's closed today", "one eye open all night").
+        static readonly string[] NotAShop = { "door", "doors", "window", "windows", "road", "roads", "gate", "gates", "eye", "eyes", "mouth", "mouths", "box", "boxes",
+            "book", "books", "tin", "tins", "curtains", "file", "hand", "hands", "mind", "ears", "lid", "drawer", "drawers", "safe", "letter", "envelope",
+            "bag", "coat", "jacket", "flask", "bottle", "packet", "wound" };
+
+        /// Whether a detail speaks of when a place opens or shuts: a word of
+        /// opening or shutting and a word of when or of how it is now ("the cafe
+        /// shuts at ten", "Rita's is shut", "they close at eleven", "we open at
+        /// eight"), never of a door, a road, an eye or a mouth (the independent
+        /// check). Only ever makes the check stricter, and only while the
+        /// street's hours are an item.
+        internal static bool TellsOfHours(string detail)
+        {
+            if (string.IsNullOrWhiteSpace(detail)) return false;
+            var low = detail.ToLowerInvariant().Replace("\u2019", "").Replace("'", "");
+            if (Span.IsMatch(System.Text.RegularExpressions.Regex.Replace(low, @"[^a-z0-9]+", " "))) return true;
+            bool openShut = CloseAt.IsMatch(low), when = false;
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(low, @"[a-z]+|[0-9]+"))
+            {
+                if (Array.IndexOf(NotAShop, m.Value) >= 0) return false;
+                if (Array.IndexOf(OpenShut, m.Value) >= 0) openShut = true;
+                if (Array.IndexOf(WhenWords, m.Value) >= 0 || char.IsDigit(m.Value[0])) when = true;
+            }
+            return openShut && when;
         }
 
         static readonly string[] Somebody = { "he", "she", "they", "him", "her", "them", "his", "their", "we", "us", "somebody", "someone",

@@ -165,11 +165,19 @@ namespace Ledger.Core
         /// How this person knows Tom and what they call him (PlayerIdentity.
         /// HowTheyKnowHim), as the game sends it each turn; null when it does not.
         public string HowYouKnowHim { get; set; }
+        /// WHAT STANDS BETWEEN THEM TONIGHT (town list 6bn), set by the caller
+        /// each turn and shown to the talk model only: Ron with the outfit's
+        /// ask not yet answered, or just told no. Never saved; null for none.
+        public string Tonight { get; set; }
 
         /// WHO THEY KNOW ON THE STREET, AND WHERE (town list 6ad): lines from
         /// CastDay.PeopleFor, set by the caller each turn; shown to the talk model
         /// and given to the claim check as P items. Null or empty for none.
         public IReadOnlyList<string> People { get; set; }
+        /// THE STREET'S OPENING HOURS (town list 6bo): CastDay.HoursFor, set by
+        /// the caller each turn; shown to the talk model and given to the claim
+        /// check as its O item. Null for none.
+        public string StreetHours { get; set; }
         /// Their own name, for the claim check (town list 6be): null for the
         /// card's heading; empty when the speaker is not the card's person (a
         /// card lent to somebody else), whose name is then nobody's to state.
@@ -215,6 +223,11 @@ namespace Ledger.Core
             {
                 sb.AppendLine();
                 sb.AppendLine(HowYouKnowHim);
+            }
+            if (!string.IsNullOrEmpty(Tonight))
+            {
+                sb.AppendLine();
+                sb.AppendLine(Tonight);
             }
 
             if (Memory.Beliefs.Count > 0)
@@ -283,6 +296,11 @@ namespace Ledger.Core
                 sb.AppendLine();
                 sb.AppendLine("People and places on the street you know of, and all you know of them. Where somebody usually is, is only usual: you do not know where anyone is right now unless they are here with you. Anybody not named here you speak of by what they do.");
                 foreach (var p in People) sb.AppendLine("- " + p);
+            }
+            if (!string.IsNullOrEmpty(StreetHours))
+            {
+                sb.AppendLine();
+                sb.AppendLine(StreetHours);
             }
 
             sb.AppendLine();
@@ -831,6 +849,7 @@ namespace Ledger.Core
             Heard = Knowing.Nothing;
             HeardStory = null;
             HowYouKnowHim = null;
+            Tonight = null;
             KnowsHimFromGame = false;
             _lastTurn = null;
             LastEnded = false;
@@ -1255,7 +1274,7 @@ namespace Ledger.Core
             if (streaming != null)
             {
                 knownEarly = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People, SpeakerName);
+                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours);
             }
             var d1 = new Drafted();
             try
@@ -1290,7 +1309,7 @@ namespace Ledger.Core
             if (Checker != null)
             {
                 var known = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People, SpeakerName);
+                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours);
                 try
                 {
                     // A FIRST SENTENCE THAT FAILED ITS OWN CHECK (town list 6a,

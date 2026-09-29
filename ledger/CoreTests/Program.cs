@@ -5523,23 +5523,25 @@ namespace Ledger.CoreTests
             // three nights not turning up end it, and nothing ends the game; the
             // night is a story told first-hand either way, and comes back to his face.
             {
+                // A night away: Ron reached him with the ask, and he did not go.
+                bool Away(Arrangement a, int day) => a.Delivered(day) && a.Answer(day, NightAnswer.NoShow);
                 var arr = new Arrangement();
                 bool first = arr.AsksOn(0) && !arr.AsksOn(1) && arr.NextNight == 0;
                 bool did = arr.Answer(0, NightAnswer.Did);
                 bool twice = arr.Answer(0, NightAnswer.Refused);
-                bool skipAhead = arr.Answer(4, NightAnswer.NoShow);
+                bool skipAhead = Away(arr, 4);
                 bool second = arr.AsksOn(2) && !arr.AsksOn(3);
-                arr.Answer(2, NightAnswer.NoShow);
-                arr.Answer(4, NightAnswer.NoShow);
+                Away(arr, 2);
+                Away(arr, 4);
                 bool standing = !arr.Ended && arr.AsksOn(6);
-                arr.Answer(6, NightAnswer.NoShow);
+                Away(arr, 6);
                 Check(first && did && !twice && !skipAhead && second && arr.Nights[0] == NightAnswer.Did && standing
                       && arr.Ended && arr.EndedWhy == "stopped" && arr.NextNight == -1 && !arr.AsksOn(8) && !arr.Answer(8, NightAnswer.Did),
                       "the outfit asks on the first night and every other night after, in order; a night done wins patience back, and three nights not turning up end it");
                 var no = new Arrangement();
                 no.Answer(0, NightAnswer.Refused);
                 var three = new Arrangement();
-                three.Answer(0, NightAnswer.NoShow); three.Answer(2, NightAnswer.NoShow); three.Answer(4, NightAnswer.NoShow);
+                Away(three, 0); Away(three, 2); Away(three, 4);
                 Check(no.Ended && no.EndedWhy == "refused" && !no.AsksOn(2) && three.Ended && three.Nights.Count == 3,
                       "telling them no ends Mickey's arrangement at once; three nights away end it exactly");
                 Check(!typeof(Arrangement).GetProperties().Any(p => p.PropertyType == typeof(Verdict)),
@@ -5560,7 +5562,7 @@ namespace Ledger.CoreTests
                 var night = new GameTime(0, 22, 30);
                 var mDid = Mill(); new Arrangement().Answer(0, NightAnswer.Did, mDid, night);
                 var mNo = Mill(); new Arrangement().Answer(0, NightAnswer.Refused, mNo, night);
-                var mAway = Mill(); new Arrangement().Answer(0, NightAnswer.NoShow, mAway, night);
+                var mAway = Mill(); var awayArr = new Arrangement(); awayArr.Delivered(0); awayArr.Answer(0, NightAnswer.NoShow, mAway, night);
                 var rDid = mDid.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
                 var rNo = mNo.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
                 var rAway = mAway.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
@@ -5585,21 +5587,138 @@ namespace Ledger.CoreTests
                       && manSays != null && !manSays.Bank.StartsWith("recognition/outfit"),
                       "what he did with the ask shows, though only the envelope is a secret, and comes back in its own words from those who heard it (\"Heard you told them no.\"), never from the man who was there", faceNo?.Text ?? "");
 
-                // A night nobody answered is a night he stayed away: the asks never
-                // stop unnoticed.
+                // A night he had the ask and nobody answered is a night he stayed
+                // away; a night Ron never reached him passes silently (town list
+                // 6bn): never "they waited on you" about an ask he never had.
                 var gap = new Arrangement();
                 gap.Answer(0, NightAnswer.Did);
                 var mGap = Mill();
-                gap.PassedTo(5, mGap, new GameTime(5, 9, 0));
-                bool afterGap = gap.Nights.Count == 3 && gap.Nights[2] == NightAnswer.NoShow && gap.Nights[4] == NightAnswer.NoShow && gap.AsksOn(6) && !gap.Ended
-                                && mGap.Get(Arrangement.OutfitMan).Rumors.Count(x => x.Content.Value == "noshow") == 2;
+                gap.Delivered(2);
+                gap.PassedTo(3, mGap, new GameTime(3, 6, 0));
+                gap.PassedTo(5, mGap, new GameTime(5, 6, 0));
+                bool afterGap = gap.Nights.Count == 3 && gap.Nights[2] == NightAnswer.NoShow && gap.Nights[4] == NightAnswer.Undelivered && gap.AsksOn(6) && !gap.Ended
+                                && mGap.Get(Arrangement.OutfitMan).Rumors.Count(x => x.Content.Value == "noshow") == 1
+                                && !mGap.Get(Arrangement.OutfitMan).Rumors.Exists(x => x.TopicKey == Arrangement.TopicFor(4))
+                                && Math.Abs(gap.Patience - 0.66) < 1e-9;
                 gap.PassedTo(13);
-                Check(afterGap && gap.Ended && gap.EndedWhy == "stopped" && gap.NextNight == -1,
-                      "every ask night that passed unanswered counts as a night he stayed away, told by the outfit's man, until the arrangement ends");
+                bool neverEnds = !gap.Ended && gap.Nights.Count == 7 && gap.AsksOn(14);
+                Away(gap, 14); Away(gap, 16);
+                Check(afterGap && neverEnds && gap.Ended && gap.EndedWhy == "stopped" && !gap.Answer(18, NightAnswer.Undelivered),
+                      "an ask he had and left unanswered is a night away, told by the outfit's man; an ask Ron never reached him with passes silently, changing nothing; only nights he had count towards the end");
+
+                // THE ASK IN TALK (town list 6bn): Ron remembers the terms he gave;
+                // a plain refusal to him is read as one, a doubtful line never.
+                var ronG = new Gossiper("rocco", "rocco", new MemoryStore("rocco"), new KnowledgeBase(), new SuspicionTracker());
+                var talkArr = new Arrangement();
+                bool handed = talkArr.Delivered(0, ronG, new GameTime(0, 21, 0));
+                bool handedAgain = talkArr.Delivered(0, ronG, new GameTime(0, 21, 5));
+                bool notTonight = new Arrangement().Delivered(1);
+                string refusedButWasnt = null, missed = null;
+                foreach (var plainNo in new[] { "Tell them no, Ron.", "I'm not doing it.", "No. I'm not taking the envelope.", "Count me out.", "Tell them I'm not interested, boss.",
+                                                "I won't do it.", "I'm not running Mickey's errands.", "I'm not going to do it.", "I won't be doing it.", "The answer's no.",
+                                                "I'm not doing their dirty work.", "Tell 'em no.", "No, Ron. Tell them no.", "Just tell them no.", "Tell them no, and that's final.",
+                                                "Tell them I said no.", "Look, I'm not doing it, Ron.", "It's a no from me.", "Tell them to find someone else.", "I want no part of it.",
+                                                "Mickey's arrangement is finished.", "I'm not doing it. I'm not Mickey.", "Tell them no! What'll they do about it?", "I\u2019m not doing it anymore.",
+                                                "No thanks.", "I'm not interested.", "Find someone else.", "Forget it.", "I'm not taking it down there.", "Tell them no, I'm not my uncle.",
+                                                "I'll have nothing to do with it.", "Tell them no, or I'll tell them myself.", "I said no.", "I'm out.", "I'm not going to the landing.",
+                                                "I can't do it.", "I don't want to do it.", "Tell them I'm not coming.", "Tell them no thanks." })
+                    if (!Arrangement.SoundsLikeNo(plainNo)) missed = plainNo;
+                // Every line the independent check found read as a no, and more.
+                foreach (var notNo in new[] { "No.", "What if I said no?", "Should I tell them no?", "I won't tell them no.", "Maybe I'll tell them no.", "If I'm not doing it, what then?",
+                                              "No, I'll take it.", "Tell them no? Not likely.", "I'm not doing it yet.", "Is there any tea?", "",
+                                              "Tell them no problem, I'll be there.", "Tell him no one saw me.", "Tell them no smoking in the cabs.", "Tell him no hard feelings.",
+                                              "No deal is ever simple with Mickey.", "I can't tell them no.", "I don't want to tell them no.", "I wish I could tell them no.",
+                                              "Darren said tell them no.", "Sheila reckons I should tell them no.", "I'm not doing it. Only joking.", "Tell them no. Actually I'll do it.",
+                                              "I'm not doing it for Mickey, I'm doing it for you.", "I won't take it off.", "I'm not having that.", "Count me out for Sunday dinner.",
+                                              "I'm not doing it tonight.", "Tell them no. Not tonight.", "Tell them no, wait.", "No way.", "Not a chance.", "I'm not going.",
+                                              "They'll never hear me tell them no.", "Tell them no. Hang on, let me think.", "You're telling me no?",
+                                              "Tell them no. Only messing.", "Tell them no. I'm winding you up, Ron.", "Tell them no. Actually, hand it over.",
+                                              "Tell them no. Nah, I'll take the envelope.", "Tell them no. Or should I?", "I'm not taking it. Course I'm taking it, you daft sod.",
+                                              "I'm not doing it. Honestly? I'll think about it.", "Tell them no. Actually I\u2018ll take it.", "Tell them no. Actually I`ll take it." })
+                    if (Arrangement.SoundsLikeNo(notNo)) refusedButWasnt = notNo;
+                Check(handed && !handedAgain && !notTonight && talkArr.WasDelivered(0) && ronG.Memory.Events.Count(e => e.Text == Arrangement.Terms) == 1
+                      && Arrangement.Terms.Contains("ferry landing") && Arrangement.Terms.Contains("after ten") && Arrangement.Terms.Contains("finished")
+                      && missed == null && refusedButWasnt == null,
+                      "Ron remembers the terms he gave, once, so he can say where, when and that a no ends it; a whole clause that plainly refuses sounds like a no, never a question, a maybe, a no put off or taken back, somebody else's words, or a phrase inside something else",
+                      (missed ?? "") + " | " + (refusedButWasnt ?? ""));
+
+                // THE NO IS TWO STEPS: what sounds like one gets Ron's own plain
+                // question, and only the whole line a plain yes to it is the no.
+                string confirmMissed = null, confirmWrong = null;
+                foreach (var yes in new[] { "Yes.", "That's right, Ron.", "You heard me.", "Yeah.", "Aye, tell them no.", "Yes. Thanks.", "Tell them no.", "Yes, please.", "Yes, tell them no, Ron.",
+                                            "Yes please", "Yes I do", "Yes I'm sure", "Yes that's right", "Yup", "Sure.", "Definitely.", "Yes, do it.", "Yes mate.",
+                                            "Yes, I'm not doing it.", "Yes, find someone else.", "Tell them no, I mean it.",
+                                            "Yes, I'm sure. I'm not doing it.", "Yes. Find someone else.", "Yes, I said no.", "Yes, count me out.", "Yes, yes, I'm sure.", "Yes, sir.", "Yea." })
+                    if (!Arrangement.ConfirmsNo(yes)) confirmMissed = yes;
+                foreach (var not in new[] { "No.", "Yes, but not yet.", "Yes? Why?", "Yeah, I'll do it.", "Yeah. No.", "Yes, I'll take it.", "Maybe.", "Go on then.", "",
+                                            "Yeah, well.", "Yes. Only messing.", "Yes. Nah, hand it over.", "No, the drivers, not the envelope.", "Yeah, I suppose.", "Yes, if you think so.",
+                                            "Tell them no. Or should I?", "Yes. Wait.", "Right.", "Ok.", "Do it.", "Go ahead.", "Sure?", "Yes, go on then.", "Yeah, I'll have it.",
+                                            "No thanks.", "No, forget it.", "Nah, forget it.", "Sorry, forget it.", "Forget it, Ron.", "No thank you.", "I'm not doing it.",
+                                            "Count me out.", "No deal.", "Yeah yeah.", "Sure, sure.", "Tell them thanks.",
+                                            "Tell them yes.", "Tell them okay.", "Tell them sure.", "Tell them of course.", "Tell them yeah.", "Tell them I am.", "Tell them I do.", "Aye, tell them.",
+                                            "Yeah, forget it.", "Sure, forget it.", "Yes. Forget it." })
+                    if (Arrangement.ConfirmsNo(not)) confirmWrong = not;
+                Check(confirmMissed == null && confirmWrong == null && Arrangement.AskPlainly.Contains("tell them no to the envelope") && Arrangement.AskPlainly.Contains("finished")
+                      && Arrangement.AskPlainly.Contains("Say yes") && !Arrangement.TonightAsked.Contains("?") && Arrangement.TonightNotYes.Contains("has not refused"),
+                      "Ron's own question says plainly that a yes finishes it, and only a line that is wholly a plain yes or no to the ask answers it; anything beside it, a question, a maybe or a take-back never",
+                      (confirmMissed ?? "") + " | " + (confirmWrong ?? ""));
+
+                // WHEN, AND WHAT RON LEARNS (the independent check): the ask stands
+                // from Ron's handing it over until one in the morning; a no or the
+                // envelope after that is too late; Ron remembers a no only once the
+                // game has it, and that it is finished when the asks stop.
+                var timed = new Arrangement();
+                bool beforeHanded = timed.AskStands(new GameTime(0, 19, 0));
+                bool lateHand = new Arrangement().Delivered(0, null, new GameTime(1, 1, 0));
+                timed.Delivered(0, null, new GameTime(0, 20, 0));
+                bool stands = timed.AskStands(new GameTime(0, 21, 0)) && timed.AskStands(new GameTime(1, 0, 59)) && !timed.AskStands(new GameTime(1, 1, 0))
+                              && !timed.AskStands(new GameTime(1, 21, 0)) && !timed.AskStands(new GameTime(2, 21, 0));
+                var mLate = Mill();
+                bool tooLate = !timed.Answer(0, NightAnswer.Refused, mLate, new GameTime(1, 1, 0)) && !timed.Answer(0, NightAnswer.Did, mLate, new GameTime(1, 2, 0))
+                               && mLate.Get("rocco").Memory.Events.Count == 0 && !timed.Ended;
+                bool inTime = timed.Answer(0, NightAnswer.Refused, mLate, new GameTime(1, 0, 59)) && !timed.AskStands(new GameTime(1, 0, 59))
+                              && mLate.Get("rocco").Memory.Events.Count(e => e.Text == Arrangement.HeardNo) == 1;
+                var mStop = Mill();
+                var stop = new Arrangement();
+                for (int d = 0; d <= 4; d += 2) { stop.Delivered(d); stop.PassedTo(d + 1, mStop, new GameTime(d + 1, 6, 0)); }
+                var stopMem = mStop.Get("rocco").Memory.Events;
+                bool stoppedTold = stop.Ended && stop.EndedWhy == "stopped" && stopMem.Count == 1 && stopMem[0].Text == Arrangement.HeardStopped
+                                   && stopMem[0].Time.Equals(new GameTime(5, 1, 0));
+                bool noMillNoMemory = new Arrangement().Answer(0, NightAnswer.Refused);
+                // A load between midnight and one leaves a standing night standing;
+                // a hand-over is only tonight's; a save from before 6bn keeps its
+                // nights away (the second independent check).
+                var afterMidnight = new Arrangement();
+                afterMidnight.Delivered(0, null, new GameTime(0, 21, 0));
+                afterMidnight.PassedTo(1, null, new GameTime(1, 0, 30));
+                bool stillStands = afterMidnight.AskStands(new GameTime(1, 0, 45)) && afterMidnight.Answer(0, NightAnswer.Did, Mill(), new GameTime(1, 0, 45));
+                var gaveUpLoad = new Arrangement();
+                gaveUpLoad.Delivered(0, null, new GameTime(0, 21, 0));
+                gaveUpLoad.PassedTo(1, null, new GameTime(1, 1, 0));
+                bool passedAtOne = gaveUpLoad.Nights.Count == 1 && gaveUpLoad.Nights[0] == NightAnswer.NoShow;
+                var early = new Arrangement();
+                early.Answer(0, NightAnswer.Did);
+                bool wrongNight = !early.Delivered(2, null, new GameTime(0, 23, 0)) && early.Delivered(2, null, new GameTime(2, 20, 0));
+                var legacy = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"nights\": [[0, \"noshow\"], [2, \"did\"], [4, \"refused\"]]}")));
+                bool legacyKept = legacy.Nights.Count == 3 && legacy.Ended && legacy.EndedWhy == "refused";
+                Check(!beforeHanded && !lateHand && stands && tooLate && inTime && stoppedTold && noMillNoMemory && stillStands && passedAtOne && wrongNight && legacyKept
+                      && !Arrangement.HeardNo.Contains("after ten") && Arrangement.HeardStopped.Contains("finished"),
+                      "the ask stands from Ron's handing it over until one in the morning, and a no or the envelope after that is too late; Ron remembers the no once the game has it, and that it is finished when the outfit stops the asks",
+                      $"{beforeHanded} {lateHand} {stands} {tooLate} {inTime} {stoppedTold} {noMillNoMemory} {stillStands} {passedAtOne} {wrongNight} {legacyKept}");
 
                 // The save replays play in order: what play could not reach is dropped.
                 var saved = MiniJson.Serialize(arr.ToJson());
                 var back = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)));
+                var withUndelivered = new Arrangement();
+                withUndelivered.Answer(0, NightAnswer.Did);
+                withUndelivered.PassedTo(3);
+                withUndelivered.Delivered(4);
+                var wuBack = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(withUndelivered.ToJson()))));
+                var noShowUndelivered = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"nights\": [[0, \"noshow\"]], \"delivered\": []}")));
+                var undeliveredDelivered = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"nights\": [[0, \"undelivered\"]], \"delivered\": [0]}")));
+                Check(wuBack.Nights.Count == 2 && wuBack.Nights[2] == NightAnswer.Undelivered && wuBack.WasDelivered(4) && wuBack.AsksOn(4)
+                      && noShowUndelivered.Nights.Count == 0 && undeliveredDelivered.Nights.Count == 0,
+                      "the save keeps which asks reached him, tonight's included, and cannot hold a night away from an ask he never had");
                 var planted = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
                     "{\"first\": 3, \"nights\": [[3, \"did\"], [4, \"refused\"], [5, \"did\"]]}")));
                 var outOfOrder = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
@@ -9692,6 +9811,116 @@ namespace Ledger.CoreTests
                       "a stage direction said in the first person is taken out and never spoken early; talk that only sounds like one is kept whole", wrongG ?? "");
             }
 
+            // OPEN AND CLOSED (town list 6bo): every shop's hours from the cast file,
+            // researched for 1990 and fitted to who keeps it when; as people say
+            // them, and whether it is open now; bad hours refused.
+            {
+                var hookH = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
+                // Day 0 is a Monday, so day 2 a Wednesday and day 6 a Sunday.
+                bool ritas = hookH.OpenAt("ritas", 2, 12, 59) == true && hookH.OpenAt("ritas_counter", 2, 13) == false && hookH.OpenAt("ritas", 1, 17, 29) == true
+                             && hookH.OpenAt("ritas", 1, 17, 30) == false && hookH.OpenAt("ritas", 6, 11) == false && hookH.OpenAt("ritas", 0, 8, 59) == false;
+                bool late = hookH.OpenAt("mickeys", 1, 2, 30) == true && hookH.OpenAt("mickeys", 1, 3) == false && hookH.OpenAt("mickeys_rank", 7, 1) == true
+                            && hookH.OpenAt("mickeys", 6, 8) == false && hookH.OpenAt("mickeys", 6, 9) == true && hookH.OpenAt("mickeys", -1, 23) == true;
+                bool others = hookH.OpenAt("market", 1, 10) == true && hookH.OpenAt("market", 2, 10) == false && hookH.OpenAt("quay", 1, 10) == null
+                              && hookH.OpenAt("nowhere", 1, 10) == null && hookH.OpenAt(null, 1, 10) == null && hookH.OpenAt("cafe_front", 6, 12) == false
+                              && hookH.OpenAt("fish_market", 6, 10) == false && hookH.OpenAt("kiosk", 6, 10) == true && hookH.HoursWords("cafe") != null;
+                // Whoever keeps a shop is only at its counter in an hour it is open.
+                string keeperAtShut = null;
+                foreach (var (who, place) in new[] { ("rita", "ritas_counter"), ("marla", "fish_counter"), ("hal", "hals_shop"), ("zlata", "mickeys_office"), ("dusan", "mickeys_rank") })
+                    for (int d = 0; d < 7; d++)
+                        for (int h = 0; h < 24; h++)
+                            if (hookH.PlaceOf(who, d, h) == place && hookH.OpenAt(place, d, h) != true && hookH.OpenAt(place, d, h, 59) != true) keeperAtShut = who + " day " + d + " hour " + h;
+                var said = new Dictionary<string, string>
+                {
+                    { "ritas", "nine till half five, on Wednesdays it shuts at one, shut on Sundays" },
+                    { "mickeys", "seven till three in the morning, on Sundays it opens at nine" },
+                    { "market", "Tuesdays, Fridays and Saturdays, eight till four" },
+                    { "cafe", "half six in the morning till ten at night, on Sundays eight till twelve" },
+                    { "fish_market", "half seven till two, shut on Sundays" },
+                    { "newsagent", "six in the morning till half five, on Sundays seven till twelve, the post office counter nine till half five on weekdays" },
+                    { "laundry", "eight till half five, shut on Sundays" },
+                };
+                string wrongWords = null;
+                foreach (var kv in said) if (hookH.HoursWords(kv.Key) != kv.Value) wrongWords = kv.Key + ": " + hookH.HoursWords(kv.Key);
+                var ronHours = hookH.HoursFor(1, 10);
+                var ronLate = hookH.HoursFor(1, 17, 45);
+                Check(ritas && late && others && keeperAtShut == null && wrongWords == null && hookH.HoursWords("quay") == null
+                      && ronHours != null && ronHours.StartsWith("Opening hours, as everybody on the street knows them. Mickey's: seven till three in the morning, on Sundays it opens at nine; open now. ")
+                      && ronHours.Contains("Rita's: nine till half five, on Wednesdays it shuts at one, shut on Sundays; open now.") && !ronHours.Contains("the quay")
+                      && ronLate.Contains("Rita's: nine till half five, on Wednesdays it shuts at one, shut on Sundays; shut now.") && ronLate.Contains("The cafe: half six in the morning till ten at night, on Sundays eight till twelve; open now."),
+                      "every shop has its hours, as the street says them and whether it is open now, a late close running into the next morning; whoever keeps a shop is at its counter only while it is open",
+                      $"{ritas} {late} {others} {keeperAtShut} {wrongWords} | {ronHours}");
+
+                string Cast(string hours) =>
+                    "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"shop\":{\"places\":[\"a\"],\"names\":[\"the shop\"],\"hours\":" + hours + "}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}";
+                string acceptedBad = null;
+                foreach (var bad in new[] { "[]", "{}", "{\"mon\":[12,36]}", "{\"mon\":[20,31]}", "{\"mon\":[0,30]}", "{\"sunday\":[9,17]}", "{\"mon\":[9]}", "{\"mon\":[9,9]}", "{\"mon\":[25,26]}", "{\"mon\":[9.25,17]}", "{\"mon\":[20,45]}",
+                                            "{\"mon\":[-1,5]}", "{\"mon\":[\"9\",17]}", "{\"mon\":[7,32],\"tue\":[7,20]}", "{\"sun\":[7,32],\"mon\":[7,20]}", "{\"mon\":[9,17,1]}" })
+                {
+                    try { CastDay.Parse(Cast(bad)); acceptedBad = bad; }
+                    catch (FormatException) { }
+                }
+                var overnight = CastDay.Parse(Cast("{\"mon\":[7,30],\"tue\":[6,20]}"));
+                var allWeek = CastDay.Parse(Cast("{\"mon\":[9,17],\"tue\":[9,17],\"wed\":[9,17],\"thu\":[9,17],\"fri\":[9,17],\"sat\":[9,17],\"sun\":[9,17]}"));
+                var weekdays = CastDay.Parse(Cast("{\"mon\":[0,24],\"tue\":[9,12],\"wed\":[9,12],\"thu\":[9,12],\"fri\":[9,12]}"));
+                // In talk: the line is shown and is the check's O item; a shop's
+                // hours cited to it go to the second look, which is shown it.
+                var he = new ConversationEngine(new FakeLlm { NextReply = "x" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                he.StreetHours = hookH.HoursFor(2, 14, 30);
+                string hp = he.BuildSystemPrompt("Is Rita's open?", new GameTime(2, 14, 30), "");
+                var hItems = ClaimCheck.KnownItems(MakeLenaCard(), new List<MemoryEvent>(), null, null, null, null, null, null, null, he.StreetHours);
+                var hIds = hItems.ConvertAll(i => i.id);
+                var asHabit = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Rita's shuts at one on Wednesdays\", \"kind\": \"habit\", \"source\": \"O1\"}]}", hIds, new List<string>());
+                var asTime = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"the cafe shuts at ten\", \"kind\": \"time\", \"source\": \"O1\"}]}", hIds, new List<string>());
+                var unsourced = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Rita's opens at eight\", \"kind\": \"time\", \"source\": \"none\"}]}", hIds, new List<string>());
+                // Never on the card's word, never passed as small talk, while the hours are an item.
+                var hCardIds = new List<string>(hIds); hCardIds.Add("H1");
+                var onCard = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Mickey's is open all night\", \"kind\": \"habit\", \"source\": \"H1\"}]}", hCardIds, new List<string>());
+                var asNow = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Rita's is open now\", \"kind\": \"now\", \"source\": \"none\"}]}", hIds, new List<string>());
+                var cardWithout = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Mickey's is open all night\", \"kind\": \"habit\", \"source\": \"H1\"}]}", new List<string> { "C1", "H1" }, new List<string>());
+                var pHabit = new List<string>();
+                var viaPeople = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Rita's shuts at one on Wednesdays\", \"kind\": \"habit\", \"source\": \"P1\"}]}", new List<string>(hIds) { "P1" }, pHabit);
+                bool words = ClaimCheck.TellsOfHours("Rita's shuts at one on Wednesdays") && ClaimCheck.TellsOfHours("it's shut now") && ClaimCheck.TellsOfHours("open all night")
+                             && ClaimCheck.TellsOfHours("the cafe shuts at 10") && ClaimCheck.TellsOfHours("they close at eleven") && ClaimCheck.TellsOfHours("the cafe doesn't close till eleven")
+                             && ClaimCheck.TellsOfHours("we open at eight") && ClaimCheck.TellsOfHours("Rita's is shut") && ClaimCheck.TellsOfHours("shuts at teatime")
+                             && !ClaimCheck.TellsOfHours("the door's open") && !ClaimCheck.TellsOfHours("the door's open now") && !ClaimCheck.TellsOfHours("the road's closed today")
+                             && !ClaimCheck.TellsOfHours("kept one eye open all night") && !ClaimCheck.TellsOfHours("keeps his mouth shut") && !ClaimCheck.TellsOfHours("it's close to ten")
+                             && !ClaimCheck.TellsOfHours("quiet till dinner") && !ClaimCheck.TellsOfHours("takings in the till are down")
+                             && ClaimCheck.TellsOfHours("I'm shutting at five today") && ClaimCheck.TellsOfHours("Rita's is nine till six") && ClaimCheck.TellsOfHours("Rita's shut about an hour ago")
+                             && ClaimCheck.TellsOfHours("Rita's shuts at six, just in case");
+                // Every kind but the speaker's own, the weather and the talk goes to
+                // the second look, which may clear it from anything but the people.
+                var hMemItems = ClaimCheck.KnownItems(MakeLenaCard(), new List<MemoryEvent> { new MemoryEvent(new GameTime(2, 9, 0), "observation", 0.5, "The cafe was busy.") },
+                                                      null, null, null, null, null, null, null, he.StreetHours);
+                var hMemIds = hMemItems.ConvertAll(i => i.id);
+                int kindsFlagged = 0;
+                foreach (var (d, k, src) in new[] { ("Rita's is nine till six", "habit", "C1"), ("the cafe doesn't open till nine on Sundays", "denial", "none"), ("we open at eight", "time", "M1"),
+                                                     ("they close at eleven", "habit", "C1"), ("it's shut now", "now", "none") })
+                    kindsFlagged += ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"" + d + "\", \"kind\": \"" + k + "\", \"source\": \"" + src + "\"}]}", hMemIds, new List<string>()).Count;
+                string cafeList = "{\"specifics\": [{\"detail\": \"the cafe shuts at ten\", \"kind\": \"time\", \"source\": \"M1\"}]}";
+                var byMemory = ClaimCheck.CheckAsync(new ScriptedLlm(cafeList, "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"M1\"}]}"), "m", hMemItems, "x", CancellationToken.None).GetAwaiter().GetResult();
+                var byHours = ClaimCheck.CheckAsync(new ScriptedLlm(cafeList, "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"O1\"}]}"), "m", hMemItems, "x", CancellationToken.None).GetAwaiter().GetResult();
+                var hPeopleItems = new List<(string id, string text)>(hMemItems) { ("P1", "Somebody or somewhere on the street they know: Rita, who keeps Rita's pawn; usually at Rita's.") };
+                string ritaList = "{\"specifics\": [{\"detail\": \"Rita's shuts at six on Wednesdays\", \"kind\": \"habit\", \"source\": \"P1\"}]}";
+                var byPeople = ClaimCheck.CheckAsync(new ScriptedLlm(ritaList, "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"P1\"}]}"), "m", hPeopleItems, "x", CancellationToken.None).GetAwaiter().GetResult();
+                bool selfLeft = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"it's closing in\", \"kind\": \"weather\", \"source\": \"none\"}]}", hMemIds, new List<string>()).Count == 0;
+                bool hoursAlone = kindsFlagged == 5 && byMemory.invented.Count == 0 && byMemory.calls.Count == 2 && byHours.invented.Count == 0 && byPeople.invented.Count == 1 && selfLeft;
+                var selfShut = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"I'll shut the door\", \"kind\": \"self\", \"source\": \"none\"}]}", hIds, new List<string>());
+                Check(hp.Contains("Rita's: nine till half five, on Wednesdays it shuts at one, shut on Sundays; shut now.") && hItems.Exists(i => i.id == "O1" && i.text.StartsWith("Opening hours"))
+                      && asHabit.Count == 1 && asTime.Count == 1 && unsourced.Count == 1 && onCard.Count == 1 && asNow.Count == 1 && cardWithout.Count == 0 && selfShut.Count == 0 && viaPeople.Count == 1 && pHabit.Count == 0 && words && hoursAlone
+                      && ClaimCheck.KnownItems(MakeLenaCard(), new List<MemoryEvent>(), null, null, null, null).TrueForAll(i => i.id != "O1"),
+                      "the street's hours are in the talk and are the check's O item: a shop's hours given as a habit, the street, now, a denial or an event go to the second look, which may clear them from anything but the street's people, while the hours are an item; a door, a road, a mouth, the weather and the speaker's own doings untouched",
+                      string.Join(" | ", asHabit) + " / " + string.Join(" | ", asTime) + $" / {unsourced.Count} {onCard.Count} {asNow.Count} {cardWithout.Count} {selfShut.Count} {viaPeople.Count} {pHabit.Count} {words} {kindsFlagged} {byMemory.invented?.Count} {byHours.invented?.Count}");
+                Check(acceptedBad == null && overnight.OpenAt("shop", 1, 5, 59) == true && overnight.OpenAt("a", 1, 7) == true && overnight.OpenAt("a", 2, 6) == false
+                      && allWeek.HoursWords("shop") == "nine till five every day" && weekdays.HoursWords("shop") == "nine till twelve, on Mondays day and night, shut on Saturdays and Sundays"
+                      && weekdays.OpenAt("a", 0, 0) == true && weekdays.OpenAt("a", 0, 23, 59) == true && weekdays.OpenAt("a", 1, 0) == false
+                      && weekdays.OpenAt("a", 1, -20) == true && weekdays.OpenAt("a", -1, 25) == true && weekdays.OpenAt("a", 0, 9, -1) == true
+                      && CastDay.Parse(Cast("{\"fri\":[19,27]}")).HoursWords("shop") == "Fridays, seven in the evening till three in the morning"
+                      && CastDay.Parse(Cast("{\"fri\":[0,6]}")).HoursWords("shop") == "Fridays, midnight till six in the morning",
+                      "an area's hours are refused unless every weekday named opens as [open, close] in whole or half hours, a late close never running past the next day's opening",
+                      (acceptedBad ?? "") + " | " + allWeek.HoursWords("shop") + " | " + weekdays.HoursWords("shop"));
+            }
+
             // WHO THEY KNOW, AND WHERE (town list 6ad): with no map, asking a local is
             // the way round. The named people by name, everybody else by what they
             // do; friends by where they usually are; whoever is here now; and the
@@ -9754,7 +9983,7 @@ namespace Ledger.CoreTests
                 Check(pp.Contains("- Ron Kirby, who keeps Mickey's door and the rank; you know each other well") && pp.Contains("you do not know where anyone is right now unless they are here with you")
                       && pIds.Contains("P1") && ClaimCheck.NumberedKnown(pItems).Contains("P1: Somebody or somewhere on the street they know: ")
                       && habitP.Count == 1 && habitNone.Count == 1 && eventP.Count == 1
-                      && ClaimCheck.RequestItems("m", "x", "y").System.Contains("a C, H or P item describes")
+                      && ClaimCheck.RequestItems("m", "x", "y").System.Contains("a C, H or P item describes, but never a shop's opening hours")
                       && ClaimCheck.RequestItems("m", "x", "y").System.Contains("the speaker's own everyday life, tastes and belongings")
                       && ClaimCheck.RequestItems("m", "x", "y").System.Contains("\"I never learned to drive\""),
                       "they are told who they know, and the claim check reads it: a habit or event from a P item alone goes to the second look");

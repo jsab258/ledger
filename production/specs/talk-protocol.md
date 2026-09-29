@@ -44,6 +44,7 @@ It first writes one line:
 | `knowing` | | `level` (`nothing`, `little`, `enough`) and `story`: how much of a story about Tom has reached them (town list 1) |
 | `acquaintance` | | `met`, `heardOf`, `calls`: whether they have met him, heard of him, and what they call him (town list 6s); `trusts`, whether they trust him, which matters only to somebody the cast file marks `"namesHim": "on-trust"` (Sheila, Jafar's ruling of 29 September): until the game sends `true` they call him the new owner whatever `calls` says; what it last sent holds until it sends `true` or `false` again, and a load or a reset forgets it |
 | `present` | | the cast ids of whoever is really within talking range of them (town list 6ad) |
+| `ask` | | `tonight`: true while the outfit's ask this person brought tonight stands (Ron, while Arrangement.AskStands: from Delivered until one in the morning, unanswered; town list 6bn); the reply then knows it is his to answer, or that he has just said no |
 | `deed` | | the deed they suspect him of: `topic`, `day`, `hour`; `sawHimAt` (a place or area id where they saw him within about an hour of it); `heardHimAt` (where they have heard he was then); `heardHeSaid` (the area ids of what he has been telling people, when that has reached them); `grave` (true for a killing) (town list 6ac, 6al, 6am) |
 | `noReply` | | true to have the Core decide the level from `evidence` without a reply |
 
@@ -68,6 +69,7 @@ The reply:
 | `putToHim` | the deed they raised with him to his face this turn, in their own words: asked him straight out, put a caught or doubted answer to him, or took up his owning up; for the session record's `known` event, how "question" (town list 6bc) |
 | `claim` | his answer about where he was: `topic`, `areas`, `result` (`consistent`, `contradiction`, `unknown`), `definite`, and `later` when judged on a later turn (town list 6ac, 6am) |
 | `ownedUp` | the deed's topic when he owned up to it (town list 6al) |
+| `refusedAsk` | true when, with `ask.tonight` sent, his line was a plain yes (Arrangement.ConfirmsNo: "Yes.", "Yes please", "Yes, I'm sure", "Tell them no.") to Ron's own question, "You want me to tell them no to the envelope?", as his very next line, to Ron, in that conversation within three game hours (a line to anybody else, "walkedAway" and "fresh" clear the question; only Ron, the doorman, is read for it); the game then answers the night Refused, which ends Mickey's arrangement and gives Ron his memory of it. A line that only sounds like a no (Arrangement.SoundsLikeNo) gets that question as its `reply`, written by no model (`generated` false), and `refusedAsk` false; with live talk off, paused, unreachable or too slow, a yes gets Ron's fixed "I'll take your no down the landing" in place of a brush-off (town list 6bn) |
 | `keepsQuiet` | `topic`, `agreed`, `fragile`: when he asked them to keep it quiet, and the Core's answer (town list 6al) |
 | `unchecked` | the check could not run; the reply stands unchecked |
 | `fellBack` | the reply is the character's own "that's all I know" line |
@@ -82,7 +84,7 @@ With `noReply`: `{"id", "to", "who", "suspicion", "level", "why"}`.
 
 | sent | answer | meaning |
 |---|---|---|
-| `{"walkedAway": {"to", "heard"}, "day", "hour"}` | `{"walkedAway", "noted"}` | he left mid-reply; they keep only what he heard (town list 6v); sent while that reply is still being written, it stops it at once, and that line's answer is `{"id", "to", "walkedOff"}` (town list 6ay) |
+| `{"walkedAway": {"to", "heard"}, "day", "hour"}` | `{"walkedAway", "noted"}` | he left mid-reply; they keep only what he heard (town list 6v); sent while that reply is still being written, it stops it at once, and that line's answer is `{"id", "to", "walkedOff", "ownedUp", "keepsQuiet", "refusedAsk"}`, the last three as for any reply, since what his line did stands (town list 6ay, 6bn) |
 | `{"report": <id>, "why": <note>}` | `{"reported", "found", "saved", "thanks"}` | the report button on a reply (town list 6c) |
 | `{"talk": "save", "path", "stamp"}` | `{"talk": "saved", "people"}` | keep every conversation beside the game's save (town list 6r) |
 | `{"talk": "load", "path", "stamp"}` | `{"talk": "loaded", "people", "skipped"}`, or `missing`, `stale`, `error` | put them back |

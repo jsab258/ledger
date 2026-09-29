@@ -269,6 +269,8 @@ static class Program
                         if (why != null && ellis == "does not come") ellis = $"day {day + 1} (minute {MinuteOf(playHour):0}), for {why}";
                     }
                     if (day == tea.Day && hod == 10) tea.SheSeesHim(now);
+                    // Ron brings the ask after dark, at the office, before the tea.
+                    if (hod == 20 && arrangement.AsksOn(day)) arrangement.Delivered(day, mill.Get("rocco"), now);
                     if (sits && day == tea.Day && hod == 21)
                         for (int m = 0; m < 60; m++) tea.WithHer(new GameTime(day, 21, m));
                     if (sits && day == tea.Day && hod == 22)
