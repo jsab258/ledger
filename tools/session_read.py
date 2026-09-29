@@ -40,7 +40,7 @@ ENDS = {"quit", "crash"}
 PLAYERS = {"friend", "jafar"}
 HOWS = {"look", "remark", "recognition", "question", "talk"}
 # How a reply went (town list 6bd): all but "own" and "ended" are talk that broke.
-WENT = {"own", "fallback", "refused", "brush", "paused", "ended", "walkedOff"}
+WENT = {"own", "fallback", "refused", "brush", "cut", "paused", "ended", "walkedOff"}
 BROKE = {"fallback", "refused", "brush", "paused"}
 # The hints (FirstMoments) and the answers to the outfit's ask (Arrangement), town list 6bh.
 MOMENTS = ["StandingStill", "CanTalk", "FirstAsk", "SeenAtDeed", "OverheardAboutHim", "LedgerOpened"]

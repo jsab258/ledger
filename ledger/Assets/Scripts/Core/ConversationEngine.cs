@@ -466,6 +466,12 @@ namespace Ledger.Core
         /// one of ClaimCheck.KnownOnlyLines.
         public IReadOnlyList<string> LastInvented { get; private set; } = new List<string>();
 
+        /// THE LAST TURN'S STEPS, each with the milliseconds from the turn's
+        /// start to its end (town list 6bx: replies cut at eight seconds, and
+        /// nothing said which step took the time): "draft", "check", "redraft",
+        /// "recheck", in the order they ran.
+        public List<(string step, long ms)> LastSteps { get; } = new List<(string, long)>();
+
         /// What the last reply's first draft promised that the world will not
         /// keep (Promises); empty when nothing, or when no check ran.
         public IReadOnlyList<string> LastPromised { get; private set; } = new List<string>();
@@ -1242,6 +1248,8 @@ namespace Ledger.Core
         {
             LastEnded = false;
             _turnInput = playerInput;
+            LastSteps.Clear();
+            var stepClock = System.Diagnostics.Stopwatch.StartNew();
             if (!GameMarksFresh && _lastTurn.HasValue && now.TotalMinutes - _lastTurn.Value.TotalMinutes >= FreshAfterMinutes)
                 StartFresh();
             _lastTurn = now;
@@ -1280,6 +1288,7 @@ namespace Ledger.Core
             try
             {
                 await DraftAsync(d1, request, streaming, knownEarly, onFirstChecked, null, ct);
+                LastSteps.Add(("draft", stepClock.ElapsedMilliseconds));
             }
             catch (Exception) // ANY failure (LlmApiException, cancellation, network) must
             {                 // roll back the user turn we just appended, or it leaks.
@@ -1320,6 +1329,7 @@ namespace Ledger.Core
                     // check, a second draft and its check: the slowest tenth of
                     // turns heard their first word after about 8 s.
                     var invented = firstFlagged ?? await InventedAsync(known, reply, ct);
+                    if (firstFlagged == null) LastSteps.Add(("check", stepClock.ElapsedMilliseconds));
                     LastInvented = invented;
                     // A PROMISE THE WORLD WILL NOT KEEP (town list 6af) is asked
                     // again without, the same way as a claim nobody supports.
@@ -1349,6 +1359,7 @@ namespace Ledger.Core
                         // nothing the first draft was caught claiming.
                         d2 = new Drafted();
                         await DraftAsync(d2, second, streaming, knownEarly, onFirstChecked, flagged, ct);
+                        LastSteps.Add(("redraft", stepClock.ElapsedMilliseconds));
                         if (d2.FirstFlagged != null)
                         {
                             reply = ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
@@ -1358,6 +1369,7 @@ namespace Ledger.Core
                         {
                             var redrafted = ValidateReply(d2.Response.Text);
                             var again = await InventedAsync(known, redrafted, ct);
+                            LastSteps.Add(("recheck", stepClock.ElapsedMilliseconds));
                             bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0 && RealWorld.Find(redrafted).Count == 0;
                             reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
                             if (!holds) _lastCleanCited = new List<string>();

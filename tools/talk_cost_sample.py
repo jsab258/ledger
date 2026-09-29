@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 """What an hour of conversation costs, from real calls: a scripted sample of turns through the game's own talk program.
 
-    python tools/talk_cost_sample.py [--turns-per-hour 120] [--out production/playtest/talk-cost-<date>.md]
+    python tools/talk_cost_sample.py [--turns-per-hour 120] [--early] [--out production/playtest/talk-cost-<date>.md]
+
+With --early (town list 6bx) the talk program is started as the game starts it,
+with --early: each reply's first sentence is sent as soon as it passes its
+check, and the sample records when it was heard, how each turn went (own,
+fallback, cut, brush...) and where the time went (the reply's steps).
 
 WHY, 29 September (Jafar's list, item 9: "what one hour of conversation costs,
 from real calls"). The talk program (ledger/TalkHelper) is started as the game
@@ -53,6 +58,31 @@ CONVERSATIONS = [
 ]
 
 
+def median(xs):
+    xs = sorted(xs)
+    return xs[len(xs) // 2] if xs else None
+
+
+def timing_lines(replies):
+    """With --early: when the first sentence was heard, how each turn went, and
+    the median time at which each step of a turn ended (town list 6bx)."""
+    firsts = [r["first_s"] for r in replies if r.get("first_s") is not None]
+    went = {}
+    for r in replies:
+        went[r.get("went") or "?"] = went.get(r.get("went") or "?", 0) + 1
+    steps = {}
+    for r in replies:
+        for name, ms in r["steps"]:
+            steps.setdefault(name, []).append(ms / 1000.0)
+    out = ["- with --early, as the game runs it: a first sentence heard in %d of %d turns, median %s s, slowest %s s"
+           % (len(firsts), len(replies), "%.1f" % median(firsts) if firsts else "-", "%.1f" % max(firsts) if firsts else "-"),
+           "- how the turns went: " + ", ".join("%s %d" % kv for kv in sorted(went.items()))]
+    if steps:
+        out.append("- each step's end, median from the turn's start: " + ", ".join(
+            "%s %.1f s (%d turns)" % (name, median(v), len(v)) for name, v in steps.items()))
+    return out
+
+
 def main(argv):
     per_hour = int(argv[argv.index("--turns-per-hour") + 1]) if "--turns-per-hour" in argv else 120
     out = argv[argv.index("--out") + 1] if "--out" in argv else os.path.join(
@@ -60,7 +90,8 @@ def main(argv):
     env = dict(os.environ)
     env["ANTHROPIC_API_KEY"] = json.load(open(SECRETS, encoding="utf-8"))["anthropic_api_key"]
     env.pop("LEDGER_TALK_FAKE", None)
-    p = subprocess.Popen(["dotnet", DLL], cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    early = "--early" in argv
+    p = subprocess.Popen(["dotnet", DLL] + (["--early"] if early else []), cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          stderr=subprocess.DEVNULL, text=True, encoding="utf-8", bufsize=1)
     ready = json.loads(p.stdout.readline())
     if not ready.get("online"):
@@ -76,14 +107,18 @@ def main(argv):
                                       "scene": "overcast, a dry October morning"}) + "\n")
             p.stdin.flush()
             t0 = time.time()
+            first_s = None
             while True:
                 line = p.stdout.readline()
                 if not line:
                     break
                 msg = json.loads(line)
+                if msg.get("id") == n and "first" in msg and first_s is None:
+                    first_s = round(time.time() - t0, 2)
                 if msg.get("id") == n and "reply" in msg:
                     replies.append({"to": who, "say": say, "reply": msg.get("reply"), "ms": msg.get("ms"),
-                                    "offline": msg.get("offline"), "wall_s": round(time.time() - t0, 2)})
+                                    "offline": msg.get("offline"), "wall_s": round(time.time() - t0, 2),
+                                    "first_s": first_s, "went": msg.get("went"), "steps": msg.get("steps") or []})
                     break
             turns += 1
         hour += 1
@@ -114,6 +149,7 @@ def main(argv):
         "- an hour of steady talk at %d turns (one every %d seconds): **US$%.2f**; at 60 turns: US$%.2f; at 180: US$%.2f"
         % (per_hour, 3600 // per_hour, per_turn * per_hour, per_turn * 60, per_turn * 180),
         "- median time to the reply: %.1f s" % sorted(r["wall_s"] for r in replies)[len(replies) // 2],
+    ] + (timing_lines(replies) if early else []) + [
         "",
         "Tokens by model:",
         "",
@@ -123,7 +159,9 @@ def main(argv):
         "",
         "The turns, what was said and what came back:",
         "",
-    ] + ["- %s: \"%s\" -> \"%s\" (%.1f s)" % (r["to"], r["say"], (r["reply"] or "").replace("\n", " "), r["wall_s"]) for r in replies]
+    ] + ["- %s: \"%s\" -> \"%s\" (%.1f s%s%s)" % (r["to"], r["say"], (r["reply"] or "").replace("\n", " "), r["wall_s"],
+                                                   ", first sentence %.1f s" % r["first_s"] if r.get("first_s") is not None else "",
+                                                   ", " + r["went"] if r.get("went") else "") for r in replies]
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w", encoding="utf-8", newline="\n").write("\n".join(lines) + "\n")
     print("talkCost turns=%d calls=%d usd=%.4f perTurn=%.5f perHour@%d=%.2f -> %s" % (
