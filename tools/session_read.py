@@ -41,6 +41,8 @@ FIELDS = {
     "found": {"who": (STR, True), "damage": (STR, True), "story": (STR, True)},
     "trust": {"who": (STR, True)},
     "week": {"answer": (STR, True), "story": (STR, True)},
+    # What somebody calls him, the first time they use his name (town list 6ch).
+    "calls": {"who": (STR, True), "name": (STR, True)},
 }
 ENDS = {"quit", "crash"}
 PLAYERS = {"friend", "jafar"}
@@ -242,6 +244,7 @@ def one(events):
         "found": [(e["t"], e["who"], e["damage"]) for e in events if e["e"] == "found"],
         "trust": [(e["t"], e["who"]) for e in events if e["e"] == "trust"],
         "week": [(e["t"], e["answer"]) for e in weeks],
+        "calls": [(e["t"], e["who"], e["name"]) for e in events if e["e"] == "calls"],
         "asks": [(e["t"], int(e["night"]), e["answer"], e["story"]) for e in asks],
         "replies": len(replies),
         "broke": broke,
@@ -303,6 +306,8 @@ def show(path, facts, unread, warn):
         out.append("  the damage found: " + "; ".join(f"{damage} by {who} (minute {minute(t)})" for t, who, damage in facts["found"]))
     if facts["trust"]:
         out.append("  came to trust him: " + ", ".join(f"{who} (minute {minute(t)})" for t, who in facts["trust"]))
+    if facts["calls"]:
+        out.append("  first called him by name: " + "; ".join(f"{who} {name} (minute {minute(t)})" for t, who, name in facts["calls"]))
     if facts["week"]:
         out.append("  his answer at the week's end: " + "; ".join(f"{answer} (minute {minute(t)})" for t, answer in facts["week"]))
     out.append("  the town showing it knew something they had done: "
@@ -562,6 +567,7 @@ def selftest():
                                                   {"t": 900, "e": "tea", "day": 2, "state": "Stayed"},
                                                   {"t": 1200, "e": "trust", "who": "lena"},
                                                   {"t": 1500, "e": "week", "answer": "TakeOver", "story": "player.week_d6"},
+                                                  {"t": 1550, "e": "calls", "who": "ada", "name": "Nowak"},
                                                   {"t": 1700, "e": "known", "who": "ada", "how": "recognition", "story": "player.week_d6"},
                                                   {"t": 1800, "e": "tea", "day": 4, "state": "Spilt"},
                                                   {"t": 1900, "e": "week", "answer": "Maybe", "story": "player.week_d8"},
@@ -570,7 +576,7 @@ def selftest():
         fw = one(ew)
         tw = show(week_, fw, uw, ww)
         assert [k["who"] for k in fw["reacting"]] == ["joey", "ada"] and fw["first_known"]["how"] == "found" and fw["known_by_30"], fw["reacting"]
-        assert "Ada's tea: day 3, Stayed" in tw and "rita_window by joey" in tw and "came to trust him: lena" in tw and "TakeOver (minute 25.0)" in tw, tw
+        assert "first called him by name: ada Nowak" in tw and "Ada's tea: day 3, Stayed" in tw and "rita_window by joey" in tw and "came to trust him: lena" in tw and "TakeOver (minute 25.0)" in tw, tw
         assert "Maybe" not in tw.split("warning")[0] and any("Spilt" in w for w in ww) and any("Maybe" in w for w in ww) and not uw, (tw, ww, uw)
         # What the police heard, and DS Ellis on the street (town list 6bm).
         policed = write("2026-10-12-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},

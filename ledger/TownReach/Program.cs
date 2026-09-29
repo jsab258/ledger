@@ -67,6 +67,7 @@ static class Program
         if (Array.IndexOf(args, "--arrest") >= 0) return TakenIn(cast);
         if (Array.IndexOf(args, "--week-end") >= 0) return WeekEnd(cast);
         if (Array.IndexOf(args, "--threat") >= 0) return Threat(cast);
+        if (Array.IndexOf(args, "--week-waits") >= 0) return WeekWaits(cast);
         if (Array.IndexOf(args, "--week") >= 0) return WeekOnPaper(cast);
         if (Array.IndexOf(args, "--arrival") >= 0) return ArrivalOnPaper(cast);
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
@@ -269,10 +270,56 @@ static class Program
     /// such a story shows in her manner. The table is for Jafar's page.
     static int WeekOnPaper(CastDay cast)
     {
-        var people = cast.People;
         Console.WriteLine("the whole week on paper: from 09:00 on day 1 (a Monday) to noon on day 8; he talks with Sheila each morning at ten");
-        Console.WriteLine("| the envelope | Ada's tea | the window seen by | DS Ellis | taken in | Sheila trusts him | day 7, over | the arrangement | his answer held by Monday noon |");
-        Console.WriteLine("|---|---|---|---|---|---|---|---|---|");
+        Console.WriteLine(WeekHeader);
+        foreach (var row in WeekRows(cast, null, null, out _)) Console.WriteLine(row);
+        return 0;
+    }
+
+    const string WeekHeader = "| the envelope | Ada's tea | the window seen by | DS Ellis | taken in | Sheila trusts him | day 7, over | the arrangement | his answer held by Monday noon |\n|---|---|---|---|---|---|---|---|---|";
+
+    /// A WAIT EVERY EVENING (town list 6ci): the same week, with him waiting
+    /// every evening from six till ten the next morning. A plain skip (the
+    /// hours run with him away, as TownHours.RunTo has them) against the wait
+    /// that stops (Waiting.Next before each hour): each thing the week has him
+    /// do in those hours must come after a stop that says so, and the week
+    /// must come out as it does with no waiting at all.
+    static int WeekWaits(CastDay cast)
+    {
+        var none = WeekRows(cast, null, null, out _);
+        var plain = WeekRows(cast, "plain", null, out _);
+        Console.WriteLine("the week on paper with a wait every evening from six till ten the next morning (the Saturday night's till Sunday noon)");
+        Console.WriteLine("(in a wait he does a thing only once its line has stopped the wait; each wait is read an hour at a time, as the game will)");
+        Console.WriteLine();
+        Console.WriteLine("a plain skip (the hours run with him away):");
+        Console.WriteLine(WeekHeader);
+        foreach (var row in plain) Console.WriteLine(row);
+        Console.WriteLine($"rows as with no waiting: {none.Where((r, i) => r == plain[i]).Count()} of {none.Count}");
+        Console.WriteLine();
+        Console.WriteLine("the wait that stops (Waiting.Next), for three sets of walks (to Ada's, the landing, the office, in game minutes):");
+        List<string> shownRows = null, firstStops = null;
+        foreach (var (tea, landing, office) in new[] { (0, 0, 0), (30, 120, 30), (60, 180, 60) })
+        {
+            var stops = new List<string>();
+            var rows = WeekRows(cast, "stopping", stops, out int missed, tea, landing, office);
+            if (shownRows == null || tea == 30) { shownRows = rows; firstStops = stops; }
+            Console.WriteLine($"  walks {tea}, {landing}, {office}: things he would have missed for want of a stop {missed}; rows as with no waiting {none.Where((r, i) => r == rows[i]).Count()} of {none.Count}");
+        }
+        Console.WriteLine();
+        Console.WriteLine("with walks 30, 120, 30:");
+        Console.WriteLine(WeekHeader);
+        foreach (var row in shownRows) Console.WriteLine(row);
+        Console.WriteLine("the stops, first row (takes the envelope, sits with Ada, Sheila sees the window):");
+        foreach (var st in firstStops) Console.WriteLine("  " + st);
+        return 0;
+    }
+
+    static List<string> WeekRows(CastDay cast, string waits, List<string> stopsOut, out int missed, int teaLead = 0, int landingLead = 0, int officeLead = 0)
+    {
+        var rows = new List<string>();
+        missed = 0;
+        int miss = 0;
+        var people = cast.People;
         const string window = "player.window_d1";
         foreach (bool takes in new[] { true, false })
             foreach (bool sits in new[] { true, false })
@@ -292,11 +339,46 @@ static class Program
                     var talkDays = new HashSet<int>();
                     bool sheSaw = seenBy == "lena", reported = false;
                     int handOverAt = -1;
+                    // The wait every evening (WeekWaits): from six till ten the next morning.
+                    bool first = takes && sits && seenBy == "lena";
+                    var stopWhy = new HashSet<string>();
+                    var shownLines = new HashSet<string>();
                     mill.Age(new GameTime(0, 9, 0));
                     for (int abs = 9; abs < 24 * 7 + 12; abs++)
                     {
                         int day = abs / 24, hod = abs % 24;
                         var now = new GameTime(day, hod, 0);
+                        // Every evening from six till ten the next morning; the
+                        // Saturday night's till Sunday noon, over Sheila's ten o'clock.
+                        bool InWait(int h) => waits != null && h >= 18 && (h % 24 >= 18 || h % 24 < (h / 24 == week.Day ? 12 : 10));
+                        // Waiting through this hour since the last (the wait began in an earlier hour).
+                        bool waitingOn = InWait(abs) && InWait(abs - 1);
+                        if (InWait(abs) && !InWait(abs - 1)) stopWhy.Clear();
+                        if (waits == "stopping" && waitingOn)
+                        {
+                            int wakeDay = hod >= 18 ? day + 1 : day;
+                            var wake = new GameTime(wakeDay, wakeDay == week.Day ? 12 : 10, 0);
+                            var beats = new WaitBeats { Asks = arrangement, Tea = tea, Police = police, Mill = mill, Week = week, Custody = custody, Shown = shownLines,
+                                                        TeaLead = teaLead, LandingLead = landingLead, OfficeLead = officeLead,
+                                                        AtAdas = sits && day == tea.Day && (hod - 1 == 21 || hod - 1 == 22) };
+                            // Every stop that falls in the hour just waited through.
+                            WaitStop st;
+                            while ((st = Waiting.Next(now.AddMinutes(-60), wake, beats)) != null && st.At.CompareTo(now) <= 0)
+                            {
+                                Waiting.Showed(beats, st);
+                                stopWhy.Add(st.Why);
+                                if (first && stopsOut != null) stopsOut.Add($"day {st.At.Day + 1} {st.At.Hour:D2}:{st.At.Minute:D2} {st.Why}: \"{st.Line}\"");
+                            }
+                        }
+                        // In a wait's hours he does a thing only once its line has
+                        // stopped the wait (a plain skip, never); `count` counts
+                        // what was skipped for want of a stop.
+                        bool Skip(string why, bool count = true)
+                        {
+                            if (!waitingOn || waits == null) return false;
+                            if (waits == "plain" || !stopWhy.Contains(why)) { if (count && waits == "stopping") miss++; return true; }
+                            return false;
+                        }
                         if (hod == 6) arrangement.PassedTo(day, mill, now);
                         // The slice's window, at noon on the Tuesday.
                         if (seenBy != "none" && day == 1 && hod == 12)
@@ -339,13 +421,13 @@ static class Program
                             talkDays.Add(day);
                         if (trust == "never" && hod == 11 && TrustsNow(mill, talkDays, sheSaw, day)) trust = $"day {day + 1}";
                         if (day == tea.Day && hod == 10) tea.SheSeesHim(now);
-                        if (hod == 20 && arrangement.AsksOn(day)) arrangement.Delivered(day, mill.Get("rocco"), now);
-                        if (sits && day == tea.Day && hod == 21)
+                        if (hod == 20 && arrangement.AsksOn(day) && !Skip("ron")) arrangement.Delivered(day, mill.Get("rocco"), now);
+                        if (sits && day == tea.Day && hod == 21 && !Skip("tea"))
                             for (int m = 0; m < 60; m++) tea.WithHer(new GameTime(day, 21, m));
-                        if (sits && day == tea.Day && hod == 22)
+                        if (sits && day == tea.Day && hod == 22 && !Skip("tea", false))
                             for (int m = 0; m <= 30; m++) tea.WithHer(new GameTime(day, 22, m));
                         if (day == tea.Day && hod == 23) tea.Close(mill.Get(AdasTea.Ada), now);
-                        if (hod == 22 && arrangement.AsksOn(day) && !held)
+                        if (hod == 22 && arrangement.AsksOn(day) && !held && arrangement.WasDelivered(day) && !Skip(takes ? "landing" : "ron"))
                         {
                             var answer = takes ? NightAnswer.Did : NightAnswer.Refused;
                             if (answer == NightAnswer.Did && day == tea.Day)
@@ -355,10 +437,10 @@ static class Program
                             }
                             else arrangement.Answer(day, answer, mill, new GameTime(day, 22, 30));
                         }
-                        if (abs == handOverAt && arrangement.AsksOn(tea.Day))
+                        if (abs == handOverAt && arrangement.AsksOn(tea.Day) && !Skip("landing", false))
                             arrangement.Answer(tea.Day, NightAnswer.Did, mill, new GameTime(day, hod, 45));
                         // The week's end: her question at half past ten on the Sunday.
-                        if (day == week.Day && hod == 10 && week.Waits(new GameTime(day, 10, 30)))
+                        if (day == week.Day && hod == 10 && week.Waits(new GameTime(day, 10, 30)) && !Skip("sheila"))
                         {
                             week.Ask(new GameTime(day, 10, 30), trust != "never");
                             week.Give(WeekAnswer.TakeOver, new GameTime(day, 10, 40), mill, cast, arrangement);
@@ -369,9 +451,10 @@ static class Program
                     int holdAnswer = mill.Agents.Count(a => a.Rumors.Any(WeeksEnd.IsWeekAnswer));
                     string arr = arrangement.Ended ? $"ended ({arrangement.EndedWhy})" : $"stands ({arrangement.Nights.Count} nights)";
                     string book = week.AskedAt == null ? "not asked" : week.RealBook ? "the real book" : "the day-book";
-                    Console.WriteLine($"| {(takes ? "takes it every night" : "tells Ron no")} | {(sits ? "sits with her" : "stands her up")} | {(seenBy == "none" ? "no window" : seenBy == "nobody" ? "nobody" : seenBy)} | {ellis} | {taken} | {trust} | {book} | {arr} | {holdAnswer} of {people.Count} |");
+                    rows.Add($"| {(takes ? "takes it every night" : "tells Ron no")} | {(sits ? "sits with her" : "stands her up")} | {(seenBy == "none" ? "no window" : seenBy == "nobody" ? "nobody" : seenBy)} | {ellis} | {taken} | {trust} | {book} | {arr} | {holdAnswer} of {people.Count} |");
                 }
-        return 0;
+        missed = miss;
+        return rows;
     }
 
     // Her trust as the talk reads it (Trust.Earned), with the week run's two

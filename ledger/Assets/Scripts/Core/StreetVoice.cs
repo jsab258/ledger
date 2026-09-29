@@ -524,8 +524,9 @@ namespace Ledger.Core
                 // Nor his answer to Sheila: what he means to do, not anything
                 // done; what it does to them is Act II's (town list 6ca).
                 if (WeeksEnd.IsWeekAnswer(r)) continue;
-                // Nor his arrival (town list 6cg): news of him, not of anything done.
-                if (DayOne.IsArrival(r)) continue;
+                // Nor his arrival (town list 6cg), nor his name (6ch): news of him,
+                // not of anything done.
+                if (DayOne.IsArrival(r) || PlayerIdentity.IsNameStory(r)) continue;
                 if (!(r.Confidence >= 0.0)) continue;   // a NaN must not hide a real story
                 if (strongest == null || r.Confidence > strongest.Confidence) strongest = r;
             }
@@ -644,7 +645,7 @@ namespace Ledger.Core
             if (r == null || from == null || to == null) return lines;
             // His arrival passes on unvoiced: it is no story to lower your
             // voice over (town list 6cg, the independent check).
-            if (DayOne.IsArrival(r)) return lines;
+            if (DayOne.IsArrival(r) || PlayerIdentity.IsNameStory(r)) return lines;
             string what = Trim(r.Summary);
             if (string.IsNullOrEmpty(what)) return lines;
             // With `heard`, a line he has not heard lately from each bank
@@ -889,7 +890,7 @@ namespace Ledger.Core
             // Any other story of him they hold at all, secret or not, and any
             // wariness of him, come first (the third review: the game files the
             // window as no secret, and the line was said over it).
-            if (g.Rumors.Exists(x => x != null && x.Content != null && x.Content.Subject == "player" && !DayOne.IsArrival(x) && x.Confidence > 0)) return null;
+            if (g.Rumors.Exists(x => x != null && x.Content != null && x.Content.Subject == "player" && !DayOne.IsArrival(x) && !PlayerIdentity.IsNameStory(x) && x.Confidence > 0)) return null;
             if (g.Suspicion != null && g.Suspicion.Level != SuspicionLevel.Trusting) return null;
             var r = g.Rumors.Find(x => DayOne.IsArrival(x) && x.Confidence >= shareFloor);
             if (r == null || (heard != null && heard.HasRemarked(g.Id, r))) return null;

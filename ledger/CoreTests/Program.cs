@@ -6232,6 +6232,262 @@ namespace Ledger.CoreTests
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
 
+            // THE MAN AT THE LANDING (town list 6cj): a few fixed lines by the
+            // arrangement's state; each within the content rules; none names
+            // what is in the envelope.
+            {
+                GameTime T(int d, int h, int m = 0) => new GameTime(d, h, m);
+                var said = new List<(string what, string line, string want)>();
+                void Says(string what, Arrangement arr, GameTime at, LandingMoment m, string want, int seed = 0) =>
+                    said.Add((what, TheLanding.Line(arr, at, m, seed) ?? "none", want));
+                // Night one: not there before ten; he asks for Mickey's, whether or
+                // not Ron has been; nothing handed, nothing for him here.
+                var a = new Arrangement(0);
+                Says("before ten", a, T(0, 21, 30), LandingMoment.Comes, "none");
+                Says("comes, Ron not been", a, T(0, 22, 10), LandingMoment.Comes, TheLanding.Asks);
+                a.Delivered(0, null, T(0, 20));
+                Says("comes", a, T(0, 22, 10), LandingMoment.Comes, TheLanding.Asks);
+                Says("nothing handed", a, T(0, 22, 20), LandingMoment.NothingToHand, TheLanding.NothingForMe);
+                Says("handed before it is answered", a, T(0, 22, 20), LandingMoment.HandsOver, "none");
+                // Handed over: done, and when the next is; talk after is "go home",
+                // past midnight too.
+                a.Answer(0, NightAnswer.Did, null, T(0, 22, 30));
+                Says("handed", a, T(0, 22, 31), LandingMoment.HandsOver, "Right. Wednesday, same again.");
+                Says("comes again", a, T(0, 23), LandingMoment.Comes, "none");
+                Says("talks after", a, T(1, 0, 30), LandingMoment.TalksToHim, TheLanding.DoneYourBit);
+                Says("after one", a, T(1, 1, 5), LandingMoment.TalksToHim, "none");
+                // A night with no ask: when the next is.
+                Says("no ask tonight", a, T(1, 22, 10), LandingMoment.Comes, "Nothing tonight. Tomorrow, after ten.");
+                Says("talks, no ask", a, T(1, 22, 10), LandingMoment.TalksToHim, TheLanding.BrushOff[1], 1);
+                // He stayed away on Wednesday; Friday's handover says so.
+                a.Delivered(2, null, T(2, 20));
+                a.PassedTo(3, null, T(3, 6));
+                a.Delivered(4, null, T(4, 20));
+                a.Answer(4, NightAnswer.Did, null, T(4, 22, 30));
+                Says("handed after a night away", a, T(4, 22, 31), LandingMoment.HandsOver, "You kept us waiting last time. Don't make a habit of it. Sunday, same again.");
+                // Finished with, three ways.
+                var no = new Arrangement(0);
+                no.Delivered(0, null, T(0, 20));
+                no.Answer(0, NightAnswer.Refused, null, T(0, 21));
+                Says("told Ron no", no, T(0, 22, 10), LandingMoment.Comes, TheLanding.DoneRefused);
+                Says("told Ron no, talks", no, T(0, 22, 10), LandingMoment.TalksToHim, TheLanding.DoneGoOn);
+                Says("told Ron no, nothing handed", no, T(0, 22, 10), LandingMoment.NothingToHand, "none");
+                var away = new Arrangement(0);
+                for (int n = 0; n <= 4; n += 2) { away.Delivered(n, null, T(n, 20)); away.PassedTo(n + 1, null, T(n + 1, 6)); }
+                Says("stayed away three times", away, T(5, 22, 10), LandingMoment.Comes, TheLanding.DoneStopped);
+                var wound = new Arrangement(0);
+                wound.WoundDown(T(0, 12));
+                Says("wound down, before Ron has been", wound, T(0, 22, 10), LandingMoment.Comes, TheLanding.Asks);
+                // Wound down on a Monday (the second review): it answers Tuesday's
+                // ask, but Ron goes down on the Monday at eleven.
+                var monday = new Arrangement(0);
+                for (int n = 0; n <= 6; n += 2) { monday.Delivered(n, null, T(n, 20)); monday.Answer(n, NightAnswer.Did, null, T(n, 22, 30)); }
+                monday.WoundDown(T(7, 11));
+                Says("wound down Monday, before Ron", monday, T(7, 22, 10), LandingMoment.Comes, "Nothing tonight. Tomorrow, after ten.");
+                Says("wound down Monday, talk before Ron", monday, T(7, 22, 10), LandingMoment.TalksToHim, TheLanding.BrushOff[0]);
+                Says("wound down Monday, after Ron", monday, T(7, 23, 30), LandingMoment.Comes, TheLanding.DoneWound);
+                Says("wound down Monday, the Tuesday", monday, T(8, 22, 10), LandingMoment.Comes, TheLanding.DoneWound);
+                Says("wound down", wound, T(0, 23, 30), LandingMoment.Comes, TheLanding.DoneWound);
+                Says("brush-off, round again", a, T(1, 22, 10), LandingMoment.TalksToHim, TheLanding.BrushOff[2], -1);
+                var wrongLines = said.Where(x => x.line != x.want).Select(x => $"{x.what}: \"{x.line}\", not \"{x.want}\"").ToList();
+                var all = new List<string> { TheLanding.Asks, TheLanding.NothingForMe, TheLanding.DoneRefused, TheLanding.DoneStopped, TheLanding.DoneWound,
+                                             TheLanding.DoneYourBit, TheLanding.DoneGoOn, string.Format(TheLanding.SameAgain, "Thursday"),
+                                             string.Format(TheLanding.KeptWaiting, "Thursday"), string.Format(TheLanding.NotTonight, "Tomorrow") };
+                all.AddRange(TheLanding.BrushOff);
+                var breaks = all.Where(l => ContentRule.SpeechBreaks(l) != null || SafetyRule.SpeechBreaks(l) != null
+                                            || System.Text.RegularExpressions.Regex.IsMatch(l, @"money|cash|notes|£|pound|envelope", System.Text.RegularExpressions.RegexOptions.IgnoreCase)).ToList();
+                Check(wrongLines.Count == 0 && breaks.Count == 0,
+                      "the man at the landing asks for Mickey's, says the job is done and when the next is, says so when there is nothing tonight or they are finished with him, and brushes off talk; only from ten till one; every line within the content rules, none naming what is in the envelope",
+                      string.Join(" | ", wrongLines) + " | " + string.Join(" | ", breaks));
+            }
+
+            // A WAIT THAT STOPS FOR WHAT THE TOWN HAS FOR HIM (town list 6ci): each
+            // beat stops a wait that crosses it, in plain words; Ron comes at once
+            // on an ask night he has not yet reached him; a wait begun inside a
+            // beat's lead runs on; in the cells, to his release; nothing recorded.
+            {
+                GameTime T(int d, int h, int m = 0) => new GameTime(d, h, m);
+                string W(WaitStop st) => st == null ? "none" : st.Why + "@" + st.At;
+                var got = new List<(string what, string stop, string want)>();
+                void Is(string what, WaitStop st, string want) => got.Add((what, W(st), want));
+                // The walk-round first.
+                Is("walk-round: no stop", Waiting.Next(T(0, 9), T(0, 18), new WaitBeats { WalkRoundDone = false }), "none");
+                got.Add(("walk-round: refused", Waiting.Refused(new WaitBeats { WalkRoundDone = false }) ?? "none", Waiting.WalkRoundLine));
+                got.Add(("after it: allowed", Waiting.Refused(new WaitBeats()) ?? "none", "none"));
+                // Ron after dark on the first night; at once if it is later, until his line is shown.
+                var asks = new Arrangement(0);
+                var ab = new WaitBeats { Asks = asks };
+                Is("ron", Waiting.Next(T(0, 12), T(0, 23), ab), "ron@D0 20:00");
+                Is("ron not yet", Waiting.Next(T(0, 12), T(0, 19), ab), "none");
+                var late = Waiting.Next(T(0, 21, 15), T(1, 8), ab);
+                Is("ron at once", late, "ron@D0 21:15");
+                Waiting.Showed(ab, late);
+                Is("ron, once shown", Waiting.Next(T(0, 21, 20), T(1, 8), ab), "none");
+                // After midnight the stop is still night one's.
+                var night = Waiting.Next(T(1, 0, 30), T(1, 8), new WaitBeats { Asks = new Arrangement(0) });
+                Is("ron after midnight", night, "ron@D1 00:30");
+                Is("for night one", null, night != null && night.ForDay == 0 ? "none" : "another night");
+                // Brought: the landing, less his walk; inside the walk's time, at once; once.
+                asks.Delivered(0, null, T(0, 20));
+                var lb = new WaitBeats { Asks = asks, LandingLead = 30 };
+                Is("landing", Waiting.Next(T(0, 20, 5), T(1, 0), lb), "landing@D0 21:30");
+                var inside = Waiting.Next(T(0, 21, 40), T(1, 0), lb);
+                Is("landing, inside the walk", inside, "landing@D0 21:40");
+                Waiting.Showed(lb, inside);
+                Is("landing, once shown", Waiting.Next(T(0, 21, 45), T(1, 0), lb), "none");
+                // Answered: nothing till the next ask night's dark.
+                asks.Answer(0, NightAnswer.Did, null, T(0, 22, 30));
+                Is("the next night", Waiting.Next(T(0, 23), T(2, 21), new WaitBeats { Asks = asks }), "ron@D2 20:00");
+                // Past one, before dawn counts the night: the next ask is known all the same.
+                var passed = new Arrangement(0);
+                passed.Delivered(0, null, T(0, 20));
+                Is("before dawn", Waiting.Next(T(1, 2), T(2, 21), new WaitBeats { Asks = passed }), "ron@D2 20:00");
+                // Told no: Ron never again.
+                var no = new Arrangement(0);
+                no.Delivered(0, null, T(0, 20));
+                no.Answer(0, NightAnswer.Refused, null, T(0, 20, 30));
+                Is("ended", Waiting.Next(T(0, 21), T(4, 23), new WaitBeats { Asks = no }), "none");
+                // Ada's tea, once she has asked: the pot at nine, less his walk; at once after
+                // Ron's stop took its time (the independent check); none in her house or unasked.
+                var tea = AdasTea.For(0, true);
+                tea.SheSeesHim(T(2, 10));
+                Is("tea", Waiting.Next(T(2, 12), T(2, 23), new WaitBeats { Tea = tea, TeaLead = 30 }), "tea@D2 20:30");
+                var both = new WaitBeats { Asks = new Arrangement(2), Tea = tea, TeaLead = 60 };
+                var first = Waiting.Next(T(2, 12), T(3, 12), both);
+                Is("the earliest of two", first, "ron@D2 20:00");
+                Waiting.Showed(both, first);
+                Is("the tea after Ron", Waiting.Next(T(2, 20, 5), T(3, 12), both), "tea@D2 20:05");
+                Is("tea, in her house", Waiting.Next(T(2, 12), T(2, 23), new WaitBeats { Tea = tea, AtAdas = true }), "none");
+                Is("tea, never asked", Waiting.Next(T(2, 12), T(2, 23), new WaitBeats { Tea = AdasTea.For(0, true) }), "none");
+                // What a "wait until" choice is offered: every known stop, in order.
+                got.Add(("ahead", string.Join(", ", Waiting.Ahead(T(2, 12), T(3, 12), new WaitBeats { Asks = new Arrangement(2), Tea = tea, TeaLead = 30 }).ConvertAll(x => W(x))), "ron@D2 20:00, tea@D2 20:30"));
+                got.Add(("ahead, both at once", string.Join(", ", Waiting.Ahead(T(2, 21), T(3, 12), new WaitBeats { Asks = new Arrangement(2), Tea = tea, TeaLead = 30 }).ConvertAll(x => W(x))), "ron@D2 21:00, tea@D2 21:00"));
+                // A statement about a window: the constable the next morning at ten, and on
+                // the hour itself; about a wounding, DS Ellis at nine. Nothing recorded.
+                var file = new PoliceFile();
+                file.Report("ada", "player.window_d1", Offence.Damage, 4, 1);
+                Is("constable", Waiting.Next(T(1, 18), T(2, 12), new WaitBeats { Police = file }), "constable@D2 10:00");
+                Is("constable, on the hour", Waiting.Next(T(2, 10), T(2, 12), new WaitBeats { Police = file }), "constable@D2 10:00");
+                var cut = new PoliceFile();
+                cut.Report("ada", "player.cut_d1", Offence.Wounding, 4, 1);
+                Is("DS Ellis", Waiting.Next(T(1, 18), T(2, 12), new WaitBeats { Police = cut }), "ellis@D2 09:00");
+                var forBody = Waiting.Next(T(1, 18), T(2, 12), new WaitBeats { Police = new PoliceFile(), Inquiry = Inquiry.Procedure });
+                Is("DS Ellis for a body", forBody, "ellis@D2 09:00");
+                got.Add(("a body is not about him", forBody?.Line ?? "none", Waiting.EllisBodyLine));
+                Is("nothing recorded", null, file.ConstableCalls.Count == 0 && cut.EllisCameOn == -1 ? "none" : "recorded");
+                Is("a far wait", Waiting.Next(T(1, 18), T(1000000, 0), new WaitBeats { Police = new PoliceFile() }), "none");
+                // In the cells: to his release, and nothing else.
+                var held = file.TakeIn(file.ConstableComes(2), T(2, 10), false, false);
+                Is("released", Waiting.Next(T(2, 11), T(3, 9), new WaitBeats { Custody = held, Asks = new Arrangement(2), Police = file }), "released@D2 16:00");
+                Is("still held", Waiting.Next(T(2, 11), T(2, 15), new WaitBeats { Custody = held, Asks = new Arrangement(2) }), "none");
+                Is("released, at its minute", Waiting.Next(T(2, 16), T(3, 9), new WaitBeats { Custody = held, Asks = new Arrangement(2) }), "released@D2 16:00");
+                // Sheila's Sunday: from ten, less his walk to the office; once she has asked,
+                // before six, at once if that time has come; on another day, before the day is out.
+                var week = new WeeksEnd(0);
+                Is("Sheila", Waiting.Next(T(5, 20), T(6, 12), new WaitBeats { Week = week }), "sheila@D6 10:00");
+                Is("Sheila, his walk", Waiting.Next(T(5, 20), T(6, 12), new WaitBeats { Week = week, OfficeLead = 20 }), "sheila@D6 09:40");
+                week.Ask(T(6, 10, 30), false);
+                var wb = new WaitBeats { Week = week, OfficeLead = 60 };
+                Is("Sheila's answer", Waiting.Next(T(6, 10, 40), T(6, 20), wb), "sheila_answer@D6 16:30");
+                Is("her answer, at its own minute", Waiting.Next(T(6, 17, 30), T(6, 20), new WaitBeats { Week = week }), "sheila_answer@D6 17:30");
+                Is("her answer, once she has gone", Waiting.Next(T(6, 18), T(6, 22), new WaitBeats { Week = week }), "none");
+                var lateAsk = new WeeksEnd(0);
+                lateAsk.Ask(T(6, 15, 30), false);
+                Is("asked late, a long walk", Waiting.Next(T(6, 15, 40), T(6, 20), new WaitBeats { Week = lateAsk, OfficeLead = 180 }), "sheila_answer@D6 15:40");
+                var monday = new WeeksEnd(0);
+                monday.Ask(T(7, 11), false);
+                Is("asked on the Monday", Waiting.Next(T(7, 12), T(8, 8), new WaitBeats { Week = monday, OfficeLead = 30 }), "sheila_answer@D7 17:00");
+                week.Give(WeekAnswer.TakeOver, T(6, 10, 45), null, null);
+                Is("answered", Waiting.Next(T(6, 11), T(6, 20), wb), "none");
+                Is("a wait that ends before it starts", Waiting.Next(T(0, 12), T(0, 11), new WaitBeats { Asks = new Arrangement(0) }), "none");
+                // A body and his wounding the same morning: about him (the third review).
+                var bodyAndCut = new PoliceFile();
+                bodyAndCut.Report("joey", "player.cut_d1", Offence.Wounding, 4, 1);
+                got.Add(("a body and his wounding", Waiting.Next(T(1, 22), T(2, 12), new WaitBeats { Police = bodyAndCut, Inquiry = Inquiry.Procedure })?.Line ?? "none", Waiting.EllisLine));
+                // The tea already had: no line after it.
+                var had = AdasTea.For(0, true);
+                had.SheSeesHim(T(2, 10));
+                for (int m = 0; m < 100; m++) had.WithHer(T(2, 21).AddMinutes(m));
+                Is("tea, already had", Waiting.Next(T(2, 22, 45), T(3, 8), new WaitBeats { Tea = had }), "none");
+                // Two spells in the cells ending the same day: each its own release.
+                var spell1 = Custody.Take("player.killing_d2", Offence.Killing, T(3, 9), false, false);
+                var spell2 = Custody.Take("player.window_d1", Offence.Damage, T(4, 10), false, false);
+                var twice = new WaitBeats { Custody = spell2 };
+                Waiting.Showed(twice, new WaitStop(spell1.OutAt, "released", Waiting.ReleasedLine, spell1.OutAt.Day, "released@" + spell1.OutAt.TotalMinutes));
+                Is("the second release the same day", Waiting.Next(T(4, 10, 5), T(5, 0), twice), "released@D4 16:00");
+                // Shown made when the game gave none.
+                var bare = new WaitBeats { Shown = null };
+                Waiting.Showed(bare, new WaitStop(T(0, 1), "ron", Waiting.RonLine, 0));
+                Is("showed with no list", null, bare.Shown != null && bare.Shown.Contains("ron@0") ? "none" : "lost");
+                var wrong = got.Where(g => g.stop != g.want).Select(g => $"{g.what}: {g.stop}, not {g.want}").ToList();
+                Check(wrong.Count == 0,
+                      "a wait stops for what the town has for him, each line once, in plain words: Ron after dark, or at once while he looks for him; the landing, Ada's pot and Sheila less his walk there, or at once if that time has come; the constable at ten and DS Ellis at nine; in the cells only his release; once shown a wait runs on; looking ahead records nothing and reads two weeks at most",
+                      string.Join(" | ", wrong));
+            }
+
+            // WHAT THE TOWN CALLS HIM, BY KNOWING (town list 6ch, carried until Jafar
+            // rules): Nowak once they know his name, Tom after two days' talk or when
+            // he asks, never Tommy in week one, never back down; his name given read
+            // only from plain sentences; the street's fact of it filed once.
+            {
+                var R = PlayerIdentity.Rung.NewOwner;
+                bool ladder = PlayerIdentity.RungByKnowing(false, 5, false) == R
+                              && PlayerIdentity.RungByKnowing(true, 1, false) == PlayerIdentity.Rung.Surname
+                              && PlayerIdentity.RungByKnowing(true, 2, false) == PlayerIdentity.Rung.First
+                              && PlayerIdentity.RungByKnowing(false, 1, true) == PlayerIdentity.Rung.First
+                              && PlayerIdentity.RungByKnowing(true, 1, false, PlayerIdentity.Rung.First) == PlayerIdentity.Rung.First
+                              && PlayerIdentity.RungByKnowing(true, 30, true) != PlayerIdentity.Rung.Diminutive
+                              && new PlayerIdentity().CallsFor(PlayerIdentity.Rung.Surname) == "Nowak" && new PlayerIdentity().CallsFor(R) == "the new owner";
+                var nameLines = new (string line, bool gave, bool first)[]
+                {
+                    ("I'm Tom.", true, false), ("Morning. I'm Tom Nowak, Mickey's nephew.", true, false), ("The name's Nowak.", true, false), ("Tom Nowak.", true, false),
+                    ("Call me Tom.", true, true), ("Tom's fine.", true, true), ("Please, call me Tom.", true, true),
+                    ("Is Tom here?", false, false), ("Darren said you'd call me Tom.", false, false), ("I'm Tom's cousin.", false, false), ("I'm not Tom.", false, false),
+                    ("\"I'm Tom,\" he said.", false, false), ("Morning, Sheila.", false, false), ("", false, false), (null, false, false),
+                    // The independent check's introductions, and what is no introduction.
+                    ("Name's Tom.", true, false), ("Name's Nowak.", true, false), ("I'm Tom, and you are?", true, false), ("Hi, I'm Tom, who are you?", true, false),
+                    ("I'm Tom Nowak. Mickey said you'd help.", true, false), ("I'm Tom and I've taken over from Mickey.", true, false), ("I'm Tom from the cab office.", true, false),
+                    ("Tom's the name.", true, false), ("Good morning I'm Tom", true, false), ("Call me Mr Nowak.", true, false), ("Tom.", true, false),
+                    ("Thanks, Tom.", false, false), ("Tom, Dick and Harry.", false, false), ("Just Nowak, not Mr Nowak.", false, false),
+                    // The second review: a name beside who he is; a greeting to someone is none.
+                    ("Tom Nowak, Mickey's nephew.", true, false), ("Tom Nowak, pleased to meet you.", true, false), ("Tom Nowak, how do you do?", true, false),
+                    ("I'm Mickey's nephew, Tom.", true, false), ("I'm the new owner, Tom Nowak.", true, false), ("Nowak, Tom Nowak.", true, false),
+                    ("Morning Tom.", false, false), ("Hello Tom.", false, false),
+                    ("'Morning. I'm Tom Nowak, Mickey's nephew.", true, false), ("'Scuse me, I'm Tom Nowak.", true, false),
+                    // The third review: more introductions; a greeting to a Tom; quotations in single marks.
+                    ("Tom Nowak, from Mickey's.", true, false), ("Tom Nowak, by the way.", true, false), ("Tom Nowak here.", true, false),
+                    ("I'm Mickey's nephew Tom.", true, false), ("Tom Nowak, Mickey's lad.", true, false), ("Tom Nowak, Mickey's nephew, and you must be Ada.", true, false),
+                    ("It's just Tom.", true, true), ("Call me Nowak.", true, false), ("Tom, please.", true, true), ("Call me Tommy.", true, true),
+                    ("Nice to meet you, Tom.", false, false), ("Pleased to meet you, Tom.", false, false), ("How do you do, Tom.", false, false),
+                    ("Mum used to say, 'Tom will do.'", false, false), ("On the envelope: 'Call me Tom.'", false, false),
+                    ("I'm Tom Nowak. My uncle called it \"the office\".", true, false), ("\"I'm Tom", false, false),
+                };
+                var nameWrong = new List<string>();
+                foreach (var (line, gave, first) in nameLines)
+                    if (PlayerIdentity.GivesName(line) != (gave, first)) nameWrong.Add(line ?? "null");
+                var nm = new GossipMill(null);
+                nm.Add(new Gossiper("ada", "ada", new MemoryStore("ada"), new KnowledgeBase(), new SuspicionTracker()));
+                var me2 = new PlayerIdentity();
+                bool told = me2.NameTold(nm, "ada", new GameTime(0, 10, 0)) && !me2.NameTold(nm, "ada", new GameTime(0, 11, 0)) && !me2.NameTold(nm, "nobody", new GameTime(0, 10, 0))
+                            && PlayerIdentity.HoldsHisName(nm.Get("ada")) && StreetVoice.StoryThatShows(nm.Get("ada"), nm.MinConfidenceToShare) == null;
+                // Never in their manner, an exchange, or in the way of the arrival's line (the independent check).
+                var knowsName = StreetVoice.RegardFor(nm.Get("ada"), nm.MinConfidenceToShare, false, new RemarkLedger(), Acquaintance.Known, false);
+                var nameArr = new Gossiper("na", "na", new MemoryStore("na"), new KnowledgeBase(), new SuspicionTracker());
+                nameArr.Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.9, Hops = 0 });
+                nameArr.Rumors.Add(new Rumor { Content = new Fact("player", "name", "Nowak"), Summary = "x", Confidence = 0.9, Hops = 0 });
+                told = told && knowsName.Knowing == Knowing.Nothing && !knowsName.Speaks
+                       && StreetVoice.Exchange(nm.Get("ada").Rumors.Find(r => r.TopicKey == PlayerIdentity.NameTopic), nm.Get("ada"), nm.Get("ada"), 0).Count == 0
+                       && StreetVoice.ArrivalLine(nameArr, nm.MinConfidenceToShare, new RemarkLedger(), 0, 0.0, false, false) != null;
+                var eng = new ConversationEngine(null, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker())
+                          { KnowsHisName = true, AskedFirstName = true, CallsRung = PlayerIdentity.Rung.First };
+                var engBack = new ConversationEngine(null, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                engBack.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(eng.CaptureTalk()))));
+                bool kept = engBack.KnowsHisName && engBack.AskedFirstName && engBack.CallsRung == PlayerIdentity.Rung.First;
+                Check(ladder && nameWrong.Count == 0 && told && kept,
+                      "what the town calls him goes by knowing: Nowak once they know his name, Tom after two days' talk or when he asks, never Tommy in week one, never back down; his name given is read only from plain sentences of his own; the street's fact of it is filed once, shows in nobody's manner, and it all travels with the talk",
+                      $"{ladder} [{string.Join(" | ", nameWrong)}] {told} {kept}");
+            }
+
             // DAY ONE (town list 6cg): Sheila's walk-round, the same end played or
             // skipped; his arrival the street's first story, first-hand for whoever
             // is about Mickey's and Ada on her step, once; shown only when nothing
