@@ -49,6 +49,9 @@ FRAMES = int(argv[3]) if len(argv) > 3 and not argv[3].startswith("--") else 120
 # --body: the body alone, the back and fronts sewn and draped without sleeves
 # (the first stage: the sleeves go on the settled armholes after)
 BODY_ONLY = "--body" in argv
+# --from SETTLED.npy: the body stage's settled points; the body starts there and
+# each sleeve starts with its top on the settled armhole (the second stage)
+FROM = argv[argv.index("--from") + 1] if "--from" in argv else None
 os.makedirs(OUT, exist_ok=True)
 T0 = time.time()
 EDGE = 10.0                       # cloth triangle edge, mm (the research: drape at about 10 mm)
@@ -409,6 +412,47 @@ for name, pc in pieces.items():
             g = [at[(name, side, k)] for k in f]
             faces.append(g if side == 1 else list(reversed(g)))
 
+# THE SECOND STAGE'S START: the body where the first stage left it, and each
+# sleeve hung from the settled armhole. The sleeve's top points sit on the
+# armhole points they are sewn to, and the rest runs down the arm from there
+# as a tube that narrows as the sleeve does, so the armhole seams start shut.
+if FROM and not BODY_ONLY:
+    settled = np.load(FROM)
+    for i in range(len(settled)):
+        verts[i] = tuple(settled[i])
+    armhole_of = {}
+    for side in (1, -1):
+        for bseg, sseg, rev in (("armhole", "capBack", False), ("armhole", "capFront", True)):
+            body_piece = "back" if sseg == "capBack" else "front"
+            ia = pieces[body_piece]["idx"][bseg]
+            ib = pieces["sleeve"]["idx"][sseg]
+            if rev:
+                ib = list(reversed(ib))
+            for x, y in zip(ia, ib):
+                armhole_of[(side, y)] = Vector(verts[at[(body_piece, side, x)]])
+    flat_s = pieces["sleeve"]["flat"]
+    cap_ids = sorted({k for (_, k) in armhole_of})
+    width_top, width_cuff = 2 * sp["bicepsRight"][0], 2 * sp["wristRight"][0]
+    for side in (1, -1):
+        sh, wr = (up_l, hand_l) if side > 0 else (up_r, hand_r)
+        axis = (wr - sh).normalized()
+        ring = [(flat_s[k][0], flat_s[k][1], armhole_of[(side, k)]) for k in cap_ids]
+        ring.sort(key=lambda r: r[0])
+        centre = sum((r[2] for r in ring), Vector()) / len(ring)
+        rx = [r[0] for r in ring]
+        for k, (x, y) in enumerate(flat_s):
+            if (side, k) in armhole_of:
+                verts[at[("sleeve", side, k)]] = tuple(armhole_of[(side, k)])
+                continue
+            j = min(range(len(rx)), key=lambda q: abs(rx[q] - x))
+            ycap, rpos = ring[j][1], ring[j][2]
+            down = max(0.0, y - ycap) / 1000.0
+            t = max(0.0, min(1.0, y / sp["centerWrist"][1]))
+            scale = (width_top + (width_cuff - width_top) * t) / width_top
+            pos = centre + axis * down + (rpos - centre) * scale
+            verts[at[("sleeve", side, k)]] = tuple(pos)
+    print("SECOND STAGE: the body from %s, the sleeves from the settled armholes" % FROM, flush=True)
+
 SEAMS = {}
 
 
@@ -493,6 +537,8 @@ for fr in range(1, FRAMES + 1):
         print("SEW frame %d: widest gap %.1f mm, mean %.2f; by seam %s" % (fr, max(g), sum(g) / len(g), worst), flush=True)
 
 ev = jacket.evaluated_get(bpy.context.evaluated_depsgraph_get())
+if BODY_ONLY:
+    np.save(os.path.join(OUT, "settled_body.npy"), np.array([tuple(v.co) for v in ev.data.vertices]))
 done = bpy.data.meshes.new_from_object(ev)
 jacket.modifiers.clear()
 old = jacket.data
