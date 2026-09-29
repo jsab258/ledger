@@ -36,7 +36,7 @@ It first writes one line:
 | `say` | required | what the player typed |
 | `day`, `hour`, `minute` | | the game's time now |
 | `scene` | | the weather and the light only; where they are comes from the cast file (town list 6u) |
-| `fresh` | | true when he walks up to somebody again: a new conversation (town list 6ae) |
+| `fresh` | | true when he walks up to somebody again: a new conversation (town list 6ae); once sent for a person, only the game starts their talk afresh, and until then the program does after six game hours apart (town list 6az) |
 | `memories` | | what the character remembers from the simulation: `day`, `hour`, `minute`, `kind`, `importance`, `text`, and `story`, the deed's topic when it is about something Tom did (town list 6ah) |
 | `knows` | | facts they hold: `subject`, `predicate`, `value` |
 | `suspicion`, `suspicionWhy` | | the level the game holds and why; or instead |

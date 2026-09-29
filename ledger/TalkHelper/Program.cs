@@ -508,7 +508,7 @@ static class Program
                 if (storyOfMemory.TryGetValue(m, out var st)) engine.TagStory(m, st);
             }
             foreach (var f in knows) engine.Knowledge.Learn(f);
-            if (fresh) engine.StartFresh();
+            if (fresh) { engine.StartFresh(); engine.GameMarksFresh = true; }
             // Kept until the game sends it again; until the game has ever sent it,
             // read off this conversation's own earlier talk with him.
             // Met is the game's word or their own earlier talk: the game cannot
