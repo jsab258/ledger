@@ -128,7 +128,7 @@ DAYS["2026-09-30"] = carried(
      ("q-sheila-trust", "When Sheila trusts him: she calls him new management and keeps Mickey's real book back until she fully trusts the new owner, "
                         "and nothing yet decides when that is, so she never names him",
       [("time", "Time and a clean week: once he has talked with her on three different days (day 3 at the soonest), as long as she has never seen or "
-                "heard of him about the place when something was done, never caught him lying, and she is not wary; then she names him and the book can come out. In the slice's crime she sees the window go in herself, so a friend who plays it never earns her trust in week one (recommended; built this way meanwhile)"),
+                "heard of him about the place when something was done, never caught him lying, and she is not wary; then she names him and the book can come out. In the slice's crime she sees the window go in herself, so a friend who plays it never earns her trust in week one; and trust once earned holds, even through an arrest (recommended; built this way meanwhile)"),
        ("book", "Only the book's scene: she trusts him on day 7 whatever he has done, the same for every player"),
        ("ellis", "As the first, and DS Ellis's asking also forces the book out of her, without her naming him (about two hours more)")]),
      ("q-wind-down", "Day 7 is also a night the outfit asks. Told \"wind it down\", Sheila closes the book on Mickey's arrangements, yet Ron would still bring the envelope that evening",
