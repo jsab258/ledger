@@ -39,18 +39,37 @@ LINES = json.load(open(OUT + "/lines.json", encoding="utf-8"))[who]
 t0 = time.time()
 tts = SoproTTS.from_pretrained("samuel-vitorino/sopro-v2-turbo", device="cpu")
 load_s = time.time() - t0
+# ATTEMPT 2 (the first drifted off accent on most lines, likeness strong): a
+# steadier sampler and, optionally, the approved in-game line added to the
+# reference (SOPRO_TEMP, SOPRO_TOPK, SOPRO_EXTRA_REF, a repo path).
+TEMP = float(os.environ.get("SOPRO_TEMP", "0") or 0) or None
+TOPK = int(os.environ.get("SOPRO_TOPK", "0") or 0) or None
+ref_path = os.path.join(ROOT, ref)
+extra = os.environ.get("SOPRO_EXTRA_REF", "")
+if extra:
+    import soundfile as sf
+    import numpy as np
+    a, sra = sf.read(ref_path, dtype="float32", always_2d=True)
+    b, srb = sf.read(os.path.join(ROOT, extra), dtype="float32", always_2d=True)
+    if srb != sra:
+        import torchaudio
+        b = torchaudio.functional.resample(torch.from_numpy(b.T.copy()), srb, sra).numpy().T
+    joined = np.concatenate([a.mean(axis=1), np.zeros(int(0.4 * sra), "float32"), b.mean(axis=1)])
+    ref_path = os.path.join(OUT, "%s-ref-joined.wav" % who)
+    sf.write(ref_path, joined, sra)
 t0 = time.time()
-reference = tts.prepare_reference(os.path.join(ROOT, ref))       # once per voice, as the game would at start
+reference = tts.prepare_reference(ref_path)                      # once per voice, as the game would at start
 prep_s = time.time() - t0
 print("LOADED %.1f s, reference %.1f s, threads %d" % (load_s, prep_s, torch.get_num_threads()), flush=True)
 sr = getattr(tts, "sample_rate", None) or getattr(getattr(tts, "config", None), "sample_rate", None) or 24000
 
-report = {"who": who, "engine": "sopro-v2-turbo (sopro 2.2.0, CPU)", "reference": ref, "load_s": round(load_s, 1),
+report = {"who": who, "engine": "sopro-v2-turbo (sopro 2.2.0, CPU)", "reference": ref, "extra_reference": extra,
+          "temperature": TEMP, "top_k": TOPK, "load_s": round(load_s, 1),
           "reference_s": round(prep_s, 2), "threads": torch.get_num_threads(), "takes": []}
 for feeling, line in LINES.items():
     chunks, first = [], None
     t0 = time.time()
-    for chunk in tts.stream(line, ref=reference, lang="en"):
+    for chunk in tts.stream(line, ref=reference, lang="en", temperature=TEMP, top_k=TOPK):
         if first is None:
             first = time.time() - t0
         chunks.append(chunk.detach().cpu().reshape(-1))
