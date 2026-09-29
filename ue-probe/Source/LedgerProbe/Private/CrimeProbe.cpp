@@ -2480,6 +2480,7 @@ namespace
 		std::map<std::string, StreetVoice::Regard> Regards;
 		StreetVoice::RemarkLedger Remarks;
 		std::map<std::string, double> LineAt;
+		std::map<std::string, int32> SecondLooksSeen;   // the knowing looks already written to the session record
 		double RegardAt = 0.0;
 		int LinesSaid = 0, FaintSaid = 0, NextLineId = 900000;
 	};
@@ -2861,20 +2862,58 @@ namespace
 		GVoiceAskedAt = FPlatformTime::Seconds();
 	}
 
+	// THE DEED A STORY IS ABOUT, by the key the session record and the talk
+	// program use (29 September, town list 6ah): the window, whether seen
+	// broken or seen as the man running from it, is "player.window_d1"; any
+	// other story about him is its own topic; a story about somebody else is
+	// none (empty).
+	std::string DeedKeyOf(const RumorPtr& R)
+	{
+		if (!R || R->Content.Subject != "player") { return std::string(); }
+		if (R->Content.Predicate == "broke_a_window" || R->Content.Predicate == LedgerCrime::NearPredicate()) { return "player.window_d1"; }
+		return R->TopicKey();
+	}
+
 	std::string MemoriesJson(const GossiperPtr& G)
 	{
 		std::string Mem;
 		if (G && G->Memory)
 		{
+			// WHICH STORY A MEMORY BELONGS TO (town list 6ah): the memories the
+			// mill writes (a sighting, "I heard from ... that ...") carry the
+			// story's own summary, so a memory holding the summary of a story
+			// about him is tagged with that story's deed.
+			std::vector<std::pair<std::string, std::string>> Stories;
+			for (const RumorPtr& R : G->Rumors)
+			{
+				const std::string Key = DeedKeyOf(R);
+				if (!Key.empty() && !R->Summary.empty()) { Stories.push_back({ R->Summary, Key }); }
+			}
 			for (const MemoryEvent& E : G->Memory->Events)
 			{
+				std::string Story;
+				for (const auto& S : Stories) { if (E.Text.find(S.first) != std::string::npos) { Story = S.second; break; } }
 				if (!Mem.empty()) { Mem += ","; }
 				Mem += "{\"day\":" + std::to_string(E.Time.Day) + ",\"hour\":" + std::to_string(E.Time.Hour)
 					+ ",\"minute\":" + std::to_string(E.Time.Minute) + ",\"kind\":\"" + JsonEsc(E.Kind)
-					+ "\",\"importance\":" + std::to_string(E.Importance) + ",\"text\":\"" + JsonEsc(E.Text) + "\"}";
+					+ "\",\"importance\":" + std::to_string(E.Importance) + ",\"text\":\"" + JsonEsc(E.Text) + "\""
+					+ (Story.empty() ? std::string() : ",\"story\":\"" + JsonEsc(Story) + "\"") + "}";
 			}
 		}
 		return Mem;
+	}
+
+	// HOW THEY KNOW HIM (town list 6s): met, once he has talked with them in
+	// this game (a conversation is a scene with him; the first hour's
+	// walk-round, which would make Sheila's the first, is not built yet);
+	// heard of him, once any story about him has reached them. No "calls":
+	// the talk program then has them call him the new owner.
+	std::string AcquaintanceJson(const GossiperPtr& G, const std::string& Card)
+	{
+		bool bHeardOf = false;
+		if (G) { for (const RumorPtr& R : G->Rumors) { if (R && R->Content.Subject == "player") { bHeardOf = true; break; } } }
+		return std::string(",\"acquaintance\":{\"met\":") + (GLive.Talked.count(Card) ? "true" : "false")
+			+ ",\"heardOf\":" + (bHeardOf ? "true" : "false") + "}";
 	}
 
 	std::string EvidenceFor(const GossiperPtr& G, double Familiarity, int OwnRungOnA);
@@ -2916,6 +2955,7 @@ namespace
 		// named people really within talking range of them (the cast file's
 		// 6 m), not guessed from their routines.
 		const bool bFresh = !GLive.Talked.count(Card) || GLive.Left.count(Card);
+		const std::string Acquaintance = AcquaintanceJson(G, Card);
 		GLive.Talked.insert(Card);
 		GLive.Left.erase(Card);
 		std::string Present;
@@ -2936,8 +2976,9 @@ namespace
 			+ ",\"hour\":" + std::to_string(GNow.Hour) + ",\"minute\":" + std::to_string(GNow.Minute)
 			+ (bFresh ? ",\"fresh\":true" : "") + ",\"present\":[" + Present + "]"
 			+ ",\"scene\":\"" + Light + "\",\"memories\":[" + MemoriesJson(G) + "]"
-			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + KnowingJson(Card) + "}\n";
+			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + KnowingJson(Card) + Acquaintance + "}\n";
 		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
+		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: to %s%s%s"), *Un(Card), *Un(Acquaintance), *Un(KnowingJson(Card)));
 		GLive.PendingId = Id;
 		GLive.PendingName = Name;
 		GLive.PendingCard = Card;
@@ -3443,6 +3484,7 @@ namespace
 					R.SecondLookMetres, R.LookAwayMetres, (int)R.bLooksBack, (int)R.bSpeaks, (int)R.bFaint);
 			}
 			GLive.Regards[P.Card] = R;
+			int32 SecondLooks = 0;
 			if (TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Looks = GLooks.Find(P.Body))
 			{
 				for (const TWeakObjectPtr<ULedgerPersonAnim>& L : *Looks)
@@ -3451,9 +3493,20 @@ namespace
 					{
 						L->SetRegard(R.FirstLookMetres, R.FirstLookSeconds, R.SecondLookMetres, R.SecondLookSeconds,
 						             R.LookAwayMetres, R.bLooksBack);
+						SecondLooks = FMath::Max(SecondLooks, L->SecondLooks);   // body and face look together: counted once
 					}
 				}
 			}
+			// THE SECOND, LONGER LOOK IN THE SESSION RECORD (known, "look"), once
+			// per look given, for a story about him that can be named.
+			const std::string Deed = DeedKeyOf(R.Story);
+			int32& Seen = GLive.SecondLooksSeen[P.Card];
+			if (SecondLooks > Seen && R.bKnowsItIsHim && !Deed.empty())
+			{
+				LedgerSession::Write(TEXT("known"), TEXT("\"who\":") + LedgerSession::Str(Un(std::string(P.Card)))
+					+ TEXT(",\"how\":\"look\",\"story\":") + LedgerSession::Str(Un(Deed)));
+			}
+			Seen = SecondLooks;
 			// THE LINE, when it is due and he can hear it.
 			const double M = FVector::Dist2D(HimAt, At) / 100.0;
 			const bool bTalking = GLive.Talked.count(P.Card) && !GLive.Left.count(P.Card);
@@ -3487,6 +3540,13 @@ namespace
 			Say(FString(P.Name) + (R.bFaint ? TEXT(" (to the one beside them): ") : TEXT(": ")) + Un(Line->Text), 8.0f, FColor::White);
 			LiveVoiceSay(GLive.NextLineId++, P.Card, Line->Text, Visual);
 			UE_LOG(LogTemp, Display, TEXT("LedgerRegard: %s says (%s, %.1f m): %s"), P.Name, UTF8_TO_TCHAR(Line->Bank.c_str()), M, *Un(Line->Text));
+			// AND IN THE SESSION RECORD (known): a remark to a companion, or a
+			// line to his face from a story about him.
+			if (!Deed.empty() && Line->Source)
+			{
+				LedgerSession::Write(TEXT("known"), TEXT("\"who\":") + LedgerSession::Str(Un(std::string(P.Card)))
+					+ (R.bFaint ? TEXT(",\"how\":\"remark\",\"story\":") : TEXT(",\"how\":\"recognition\",\"story\":")) + LedgerSession::Str(Un(Deed)));
+			}
 			// KEPT AT ONCE, as a reply is: a remark made and then lost to a quit
 			// would be made again after the reload.
 			if (GPhase == ECrimePhase::LiveRoam) { SaveEncounterToDisk(); }
