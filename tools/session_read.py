@@ -27,12 +27,16 @@ FIELDS = {
     "known": {"who": (STR, True), "how": (STR, False), "story": (STR, True)},
     "talk": {"who": (STR, True)},
     "named": {"who": (STR, False), "names": (STRS, True)},
-    "load": {"from": (STR, False)},
-    "end": {"why": (STR, True)},
+    "load": {"from": (STR, False), "deeds": (STRS, False)},
+    "end": {"why": (STR, True), "usd": (NUM, False)},
+    "reply": {"who": (STR, True), "how": (STR, True), "s": (NUM, False)},
 }
 ENDS = {"quit", "crash"}
 PLAYERS = {"friend", "jafar"}
 HOWS = {"look", "remark", "recognition", "question", "talk"}
+# How a reply went (town list 6bd): all but "own" and "ended" are talk that broke.
+WENT = {"own", "fallback", "refused", "brush", "paused", "ended", "walkedOff"}
+BROKE = {"fallback", "refused", "brush", "paused"}
 THIRTY = 30 * 60
 
 
@@ -95,6 +99,8 @@ def read(path):
             warn.append(f"a player the spec does not know: {e['player']!r} (friend or jafar)")
         if e["e"] == "known" and "how" in e and e["how"] not in HOWS:
             warn.append(f"a way of knowing the spec does not know: {e['how']!r}")
+        if e["e"] == "reply" and e["how"] not in WENT:
+            warn.append(f"a way a reply went the spec does not know: {e['how']!r}")
         if e["e"] == "still" and e["s"] > e["t"]:
             warn.append(f"a still spell of {e['s']:.0f} s ending at {e['t']:.0f} s would have begun before the session")
     return events, unread, warn
@@ -118,6 +124,11 @@ def one(events):
     length = (end or (events[-1] if events else {"t": 0}))["t"]
     deeds = [e for e in events if e["e"] == "deed"]
     done_at = {}
+    # A deed held by a loaded save was done before this record began (town list 6bd).
+    for e in events:
+        if e["e"] == "load":
+            for what in e.get("deeds", []):
+                done_at.setdefault(what, -1.0)
     for d in deeds:
         done_at.setdefault(d["what"], d["t"])
     knowns = [e for e in events if e["e"] == "known"]
@@ -132,7 +143,18 @@ def one(events):
             for who in e["names"]:
                 named.setdefault(who, e["t"])
     first = reacting[0] if reacting else None
+    replies = [e for e in events if e["e"] == "reply"]
+    broke = {}
+    for e in replies:
+        if e["how"] in BROKE:
+            broke.setdefault(e["who"], {}).setdefault(e["how"], 0)
+            broke[e["who"]][e["how"]] += 1
+    waits = sorted(e["s"] for e in replies if "s" in e and e["how"] in ("own", "ended"))
     return {
+        "replies": len(replies),
+        "broke": broke,
+        "wait_median": statistics.median(waits) if waits else None,
+        "usd": end.get("usd") if end else None,
         "player": start.get("player"),
         "build": start.get("build", "?"),
         "fresh": start.get("fresh"),
@@ -167,6 +189,12 @@ def show(path, facts, unread, warn):
     out.append("  went: " + (", ".join(f"{at} ({minute(t)})" for t, at in facts["places"]) or "nowhere recorded"))
     out.append("  still: " + ("; ".join(f"from minute {minute(t)} for {s:.0f} s at {at}" for t, s, at in facts["still"]) or "never for 20 s"))
     out.append("  talked to: " + (", ".join(f"{w} ({minute(t)})" for t, w in facts["talks"]) or "nobody"))
+    if facts["replies"]:
+        broke = "; ".join(f"{who} " + ", ".join(f"{how} {n}" for how, n in sorted(hows.items())) for who, hows in sorted(facts["broke"].items()))
+        wait = f", first word a median {facts['wait_median']:.1f} s after his line" if facts["wait_median"] is not None else ""
+        out.append(f"  replies: {facts['replies']}{wait}; talk that broke: " + (broke or "none"))
+    if facts["usd"] is not None:
+        out.append(f"  the talk cost: ${facts['usd']:.2f}")
     out.append("  named: " + (", ".join(f"{w} ({minute(t)})" for w, t in sorted(facts["named"].items(), key=lambda kv: kv[1])) or "nobody"))
     out.append("  did: " + ("; ".join(f"{what} ({minute(t)}, seen by {len(seen)})" for t, what, seen in facts["deeds"]) or "nothing the town could hold"))
     out.append("  the town showing it knew something they had done: "
@@ -213,6 +241,14 @@ def folder(sessions):
     if by30:
         line += f"; of those {len(by30)}, the median first reaction at minute {minute(statistics.median(f['first_known']['t'] for f in by30))}"
     out.append(line)
+    broke = {}
+    for f in friends:
+        for who, hows in f["broke"].items():
+            for how, n in hows.items():
+                broke[how] = broke.get(how, 0) + n
+    replies = sum(f["replies"] for f in friends)
+    if replies:
+        out.append(f"  friends' talk: {replies} replies; broke " + (", ".join(f"{how} {n}" for how, n in sorted(broke.items())) or "never"))
     if mine:
         out.append("  your own sessions: " + ", ".join(f"{when_from_name(p) or os.path.basename(p)} for {minute(f['length'])} min" for p, f in mine))
     return "\n".join(out)
@@ -227,12 +263,32 @@ def run(target):
         print(f"no session records (.jsonl) in {target}")
         return 1
     sessions = []
+    records = []
     for p in paths:
         try:
             events, unread, warn = read(p)
         except OSError as err:
             print(f"SESSION {os.path.basename(p)}: could not be opened ({err})")
             continue
+        records.append((p, events, unread, warn))
+    # ONE SITTING ACROSS A LOAD (town list 6bd): a record that carries a game on
+    # by loading a save is joined to the record before it for the same player,
+    # its minutes counted on from where that one ended, so a friend who quits
+    # and comes back is one half hour, and the town reacting after the load is
+    # read against what was done before it.
+    joined = []
+    for p, events, unread, warn in records:
+        start = next((e for e in events if e["e"] == "start"), {})
+        carries = start.get("fresh") is False and any(e["e"] == "load" for e in events)
+        if carries and joined and joined[-1][3] == start.get("player"):
+            prev_p, prev_events, prev_notes, player = joined[-1]
+            offset = max((e["t"] for e in prev_events), default=0.0)
+            more = [dict(e, t=e["t"] + offset) for e in events if e["e"] != "start"]
+            ends = [e for e in prev_events if e["e"] != "end"]
+            joined[-1] = (prev_p + " + " + os.path.basename(p), ends + more, (prev_notes[0] + unread, prev_notes[1] + warn), player)
+        else:
+            joined.append((p, list(events), (unread, warn), start.get("player")))
+    for p, events, (unread, warn), _ in joined:
         facts = one(events)
         sessions.append((p, facts))
         print(show(p, facts, unread, warn))
@@ -307,6 +363,41 @@ def selftest():
         assert any("Jafar" in w for w in wo) and any("stare" in w for w in wo) and any("before the session" in w for w in wo), wo
         assert "no deed in this record for it" in show(odd, one(eo), uo, wo)
         assert "your own sessions: 2026-10-03 20:15 for 40.0 min" in together
+        # Where talk broke, and the cost (town list 6bd).
+        talky = write("2026-10-09-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},
+                                                 {"t": 10, "e": "reply", "who": "ron", "how": "own", "s": 1.5},
+                                                 {"t": 20, "e": "reply", "who": "ron", "how": "fallback", "s": 2.0},
+                                                 {"t": 30, "e": "reply", "who": "sheila", "how": "brush"},
+                                                 {"t": 40, "e": "reply", "who": "ron", "how": "own", "s": 2.5},
+                                                 {"t": 50, "e": "reply", "who": "ron", "how": "shrugged"},
+                                                 {"t": 60, "e": "end", "why": "quit", "usd": 0.42}])
+        et, ut, wt = read(talky)
+        ft = one(et)
+        tt = show(talky, ft, ut, wt)
+        assert ft["broke"] == {"ron": {"fallback": 1}, "sheila": {"brush": 1}} and ft["replies"] == 5 and abs(ft["wait_median"] - 2.0) < 1e-9, ft
+        assert "talk that broke: ron fallback 1; sheila brush 1" in tt and "the talk cost: $0.42" in tt and any("shrugged" in w for w in wt), tt
+        # One sitting across a load: the reaction after the load counts against the deed before it.
+        sit = os.path.join(d, "sitting")
+        os.makedirs(sit)
+        def write_in(name, lines):
+            p = os.path.join(sit, name)
+            with open(p, "w", encoding="utf-8") as fh:
+                fh.write("\n".join(json.dumps(x) for x in lines))
+            return p
+        write_in("2026-10-10-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},
+                                             {"t": 300, "e": "deed", "what": "player.window_d1"}, {"t": 600, "e": "end", "why": "quit"}])
+        write_in("2026-10-10-101500.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": False},
+                                             {"t": 5, "e": "load", "from": "slot1", "deeds": ["player.window_d1"]},
+                                             {"t": 400, "e": "known", "who": "ron", "how": "question", "story": "player.window_d1"},
+                                             {"t": 900, "e": "end", "why": "quit"}])
+        import io, contextlib
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            run(sit)
+        joined_text = buf.getvalue()
+        assert "SESSIONS 1: 1 friends'" in joined_text and "minute 16.7, ron, question, about player.window_d1" in joined_text and ", by thirty" in joined_text, joined_text
+        alone = one(read(os.path.join(sit, "2026-10-10-101500.jsonl"))[0])
+        assert alone["first_known"] is not None and alone["first_known"]["who"] == "ron", alone
         with open(os.path.join(d, "u16.jsonl"), "w", encoding="utf-16") as fh:
             fh.write(json.dumps({"t": 0, "e": "start", "player": "friend"}))
         assert "not UTF-8" in read(os.path.join(d, "u16.jsonl"))[1][0]

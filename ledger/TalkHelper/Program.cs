@@ -777,6 +777,14 @@ static class Program
             var putToHim = timedOut || reply == brush ? new List<string>() : new List<string>(engine.LastPutToHim);
             // WHOM HIS LINE NAMED (town list 6bd), as cast ids, never the words.
             var named = Cast?.WhoNamed(say) ?? new List<string>();
+            // HOW THE REPLY WENT (town list 6bd), for the session record's `reply` line:
+            // where a friend's talk broke, beside the "still" it may explain.
+            string went = paused != null ? "paused"
+                : timedOut ? "brush"
+                : ClaimCheck.IsKnownOnly(reply, card) ? "fallback"
+                : ResponseValidator.IsDeflection(reply, card.Name) ? "refused"
+                : (!timedOut && engine.LastEnded) ? "ended"
+                : "own";
             bool @unchecked = !timedOut && engine.Checker != null && engine.LastUnchecked;
             // THE REST, when the first sentence has already been sent to be spoken:
             // what follows it, or nothing if the reply is no longer its sequel
@@ -806,7 +814,7 @@ static class Program
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
             // ENDED: the character closed the conversation (town list 6ae).
             bool ends = !timedOut && engine.LastEnded;
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, @unchecked, fellBack, generated, model }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
