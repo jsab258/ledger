@@ -91,7 +91,44 @@ up_l, up_r, low_l = joint("upperarm_l"), joint("upperarm_r"), joint("lowerarm_l"
 SHOULDER_X = abs(up_l.x)
 torso = [p for p, b in pts if not b.startswith(ARM_BONES) and (p.z > up_l.z - 0.05 or abs(p.x) < SHOULDER_X)]
 thigh_l = joint("thigh_l")
-ARMPIT = up_l.z - 0.09
+# THE ARMPIT, FOUND ON THE BODY (the clothing session, 29 September): the
+# highest level at which a ray from the torso's middle out towards the arm
+# leaves the torso and meets air before it meets the arm, as a ruler held up
+# under the arm finds it. The rule it replaces, 9 cm below the arm's joint,
+# put Ron's armpit 15 cm under his shoulder (a man's is about 23 to 30): the
+# jacket drafted from it had a shirt's 17 cm armhole and a 4 cm sleeve cap,
+# and its sleeves fought his arms.
+import bmesh
+from mathutils.bvhtree import BVHTree
+_bm = bmesh.new()
+_bm.from_mesh(body.data)
+_bm.transform(W)
+_bvh = BVHTree.FromBMesh(_bm)
+
+
+def _air_between(z, y):
+    """Along +x at height z and depth y from the middle: is there air between the torso and the arm?"""
+    o = Vector((0.0, y, z))
+    d = Vector((1.0, 0.0, 0.0))
+    hits, t = [], 0.0
+    while t < 0.6:
+        h = _bvh.ray_cast(o + d * (t + 1e-4), d, 0.6 - t)
+        if h[0] is None:
+            break
+        t = (h[0] - o).x
+        hits.append(t)
+    # out of the torso, then into the arm more than 5 mm further on
+    return len(hits) >= 3 and hits[1] - hits[0] > 0.005
+
+
+ARMPIT = None
+for k in range(0, 300):
+    z = up_l.z - 0.02 - k * 0.002
+    if all(_air_between(z, up_l.y + dy) for dy in (-0.01, 0.0, 0.01)):
+        ARMPIT = z
+        break
+if ARMPIT is None:
+    ARMPIT = up_l.z - 0.09
 
 chest_z, chest = max(((z, girth_at(z, torso)[0]) for z in [ARMPIT - k * 0.01 for k in range(0, 13)]), key=lambda t: t[1])
 waist_z = spine2.z
@@ -148,6 +185,26 @@ at_wrist = hand_l - fa * 0.02
 fore_pts = [p for p, b in pts if b.startswith(("lowerarm", "wrist", "hand")) and b.endswith("_l")]
 wrist = perimeter(hull([((p - at_wrist).dot(wu), (p - at_wrist).dot(wv)) for p in fore_pts if abs((p - at_wrist).dot(fa)) < 0.006]))
 
+# SHOULDER TO SHOULDER AS FREESEWING TAKES IT, round the back (the clothing
+# session, 29 September): a tape from one shoulder point over the upper back
+# to the other, not the straight line between them (Ron's straight line, 446
+# mm, drafted shoulders narrower than a standard man of his chest by 8 cm).
+def _over_back(a, b, n=40):
+    path = [a]
+    for k in range(1, n):
+        p = a.lerp(b, k / n)
+        h = _bvh.ray_cast(Vector((p.x, p.y + 0.5, p.z)), Vector((0.0, -1.0, 0.0)), 1.0)
+        if h[0] is not None:
+            path.append(h[0])
+    path.append(b)
+    pl = [(q.x, q.y) for q in path]
+    # a tape bridges the hollows: the outline's back half, round its hull
+    hl = hull(pl)
+    back = [q for q in hl if q[1] >= min(a.y, b.y) - 0.005]
+    back.sort(key=lambda q: q[0])
+    return sum(math.dist(back[i], back[i + 1]) for i in range(len(back) - 1)) if len(back) > 1 else (a - b).length
+
+
 m = lambda metres: round(metres * 1000.0, 1)
 out = {
     "body": BODY,
@@ -159,7 +216,7 @@ out = {
         "neck": m(neck_g),
         "hpsToBust": m((hps - bust).length) if hps and bust else None,
         "hpsToWaistBack": m(hps.z - waist_z) if hps else None,
-        "shoulderToShoulder": m((sp_l - sp_r).length) if sp_l and sp_r else None,
+        "shoulderToShoulder": m(_over_back(sp_r, sp_l)) if sp_l and sp_r else None,
         "shoulderSlope": round(math.degrees(math.atan2(hps.z - sp_l.z, abs(sp_l.x - hps.x))), 1) if hps and sp_l else None,
         "waistToArmpit": m(ARMPIT - waist_z),
         "waistToHips": m(waist_z - hips_z),

@@ -1,0 +1,27 @@
+{
+ "body": "F:/LedgerTools/bodies/MH_RoccoP2/MH_RoccoP2_Body.fbx",
+ "measurements": {
+  "biceps": 441.9,
+  "chest": 1175.1,
+  "waist": 1078.5,
+  "hips": 1155.8,
+  "neck": 441.5,
+  "hpsToBust": 375.5,
+  "hpsToWaistBack": 471.2,
+  "shoulderToShoulder": 520.5,
+  "shoulderSlope": 1.2,
+  "waistToArmpit": 250.6,
+  "waistToHips": 120.0,
+  "shoulderToWrist": 636.1,
+  "wrist": 217.3
+ },
+ "heights_m": {
+  "chest": 1.39,
+  "waist": 1.139,
+  "hips": 1.019,
+  "neck": 1.612,
+  "armpit": 1.39,
+  "hps": 1.611,
+  "top": 1.624
+ }
+}

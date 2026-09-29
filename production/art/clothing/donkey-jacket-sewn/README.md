@@ -1,0 +1,15 @@
+# Ron's donkey jacket, sewn from a pattern round his body (the clothing session, from 29 September)
+
+CLOTHES.md item 2. The builder's pattern route (../donkey-jacket-pattern) made a clean body but lost the sleeves three ways; this carries on its one-day attempt (Jafar, 29 September: drape with the arms held out, then pose; research first).
+
+## What was wrong, and what changed
+
+- **The pattern was cut for the wrong body.** The armpit was taken 9 cm under the arm's joint in MetaHuman's reference pose, whose arms are raised: 15 cm under Ron's shoulder, where it is 22 (a ray from the torso out towards the arm, the highest level where it meets air before the arm). Brian then drew a 17 cm armhole whose foot sat inside the root of his arm, and to match it a sleeve 54 cm wide with a 4 cm cap. Shoulder to shoulder is now taken round the back as FreeSewing takes it (520 mm, not 446 straight across). tools/meshgen/blender/body_measurements.py; ron-measurements.json.
+- **The draft** (brian-ron.json, pattern.png): Brian at Ron's measurements, chestEase 20%, lengthBonus 45%, bicepsEase 12%, cuffEase 60%, armholeDepth 6%, shoulder slope 5 degrees (his shoulders in the pose the garment is exported in; 13, a man standing, put the shoulder seam 3 to 4 cm under his raised shoulders): the armhole 25 cm under the shoulder's high point, 3 cm under his armpit; the sleeve 52 cm round with a 12.4 cm cap, a work jacket's.
+- **The sewing** (tools/meshgen/blender/sew_donkey.py, tailor.py, brian.py), after the research (production/research/clothing-pipeline/SLEEVES-RECIPE-2026-09-29.md) and twelve runs:
+  - the body pieces laid round the posed body, arms held 40 degrees below the horizontal (his rest pose is 52.6): each column of a piece at its pattern height, as far out as the torso reaches there or anywhere above (a curtain from the shoulders), the arms left through the armholes; the full body with the head, so nothing reads as inside it at the open neck;
+  - the sleeves as unstretched tubes hanging on the top of each arm;
+  - every piece remembers the shape it was laid in (its lengths within 7% of the pattern's);
+  - sewn weightless with the sewing force as good as unlimited (the builder's cap of 10 stopped pulling once a gap passed a few millimetres), slippery on the body: the shoulders close from 25 cm and the armholes from 10 to 14 cm within 20 frames;
+  - the seams welded, then settled under gravity and the arms brought back to the rest pose.
+- **What did not work**, in order: the pieces remembering a straight wrap (the fold over the shoulders fought it and the jacket slid down to his chest, weightless, run 3); the sleeves remembering their tube while blended into the armholes (pulled 6 cm back off them, run 4); the sleeves relaxed with their tops held (still stretched by half, run 6); true lengths with low bending (the right sleeve fell in at the armpit, run 9); a tube moved whole onto its armhole (pushed into the arm, run 10). The armhole wraps the arm's root at an angle, its top over the shoulder 7 cm inward of where a tube round the arm begins: no unstretched tube meets it; sewing from a gap does.
