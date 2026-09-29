@@ -23,7 +23,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - **The replies that time out** (town): 1 in 24, not 1 in 5; the bigger fault, "that's all I know" to half a newcomer's questions, set aside after three tries, reopening it on the town's next page. Since yesterday: measured again; set aside.
 - **The first week wired into the game** (town writes, builder wires): whole on paper, settled by the town under your narrowed rule; in the game, the first night's window and the evening; about thirty handovers to wire, which first need a running clock, waits and days the game lacks (days of work). Since yesterday: the town settled the week's design pages.
 - **The AI tester walking it** (builder): walks the packaged game, played by me; next after tonight's build. Since yesterday: the three faults it found are fixed.
-- **Checklist gaps for the friends' build** (builder most; town and clothing some): 359 small rows needed in the builder's lane (328 the builder's, 28 shared with the town, 3 the clothing session's), in seventeen packages, from launch and menus to traffic; the town's own sweeps leave 7 open. Since yesterday: the builder's lane swept for the first time since the list was archived.
+- **Checklist gaps for the friends' build** (builder 17, builder with the town 3): the twenty a friend would notice first, from a copy that starts on a friend's PC to an autosave to come back to; the rest later, as you ruled; the town's own sweeps leave 7 open. Since yesterday: the builder's lane swept for the first time since the list was archived, then cut to twenty.
 
 ## Town, 30 September
 
