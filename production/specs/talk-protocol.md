@@ -56,7 +56,7 @@ The reply:
 | `rest` | with `--early`: what follows the first sentence already sent |
 | `ms` | how long it took |
 | `offline`, `timedOut` | no model, or too slow: `reply` is the character's own brush-off (town list 6ap) |
-| `paused` | a plain note for the player, not in a character's voice, when live talk has stopped and when it comes back (town list 6t) |
+| `paused` | a plain note for the player, not in a character's voice: live talk has stopped and when it comes back (town list 6t), or cannot be reached just now, or is off in this copy (town list 6ax) |
 | `ends` | the character has closed the conversation (town list 6ae) |
 | `heard` | the memories the reply could draw on |
 | `suspicion`, `level`, `why`, `manner` | where their suspicion stands, why, and how a story about him made them behave |
