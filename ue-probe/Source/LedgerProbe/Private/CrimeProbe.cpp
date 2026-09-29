@@ -4563,7 +4563,7 @@ namespace
 		}
 		FString Text;
 		if (Near != nullptr) { Text = FString::Printf(TEXT("T  talk to %s"), Near); }
-		if (bBeforeDeed && GGlass[0] != nullptr
+		if (bBeforeDeed && !GActAttempted[0] && GGlass[0] != nullptr
 		    && FVector::Dist2D(At, GGlass[0]->GetComponentsBoundingBox(true).GetCenter()) / 100.0 <= LedgerCrime::kLiveReachM)
 		{
 			Text += (Text.IsEmpty() ? FString() : FString(TEXT("        "))) + TEXT("E  the window");
@@ -5132,6 +5132,24 @@ namespace
 			// pane of clear glass that vanishes is invisible, and the shout is
 			// only a sound, so the tester pressed E, broke the window and
 			// reported that nothing happened.
+			// PEOPLE TURN TO THE SMASH, 29 September (the twenty a friend would
+			// notice, 16): every head within 25 m, after a start that grows with
+			// the distance, for three and a half seconds.
+			if (GGlass[0] != nullptr)
+			{
+				const FVector Where = GGlass[0]->GetComponentsBoundingBox(true).GetCenter();
+				int32 Turned = 0;
+				for (TObjectIterator<ULedgerPersonAnim> It; It; ++It)
+				{
+					const USkeletalMeshComponent* M = It->GetSkelMeshComponent();
+					if (M == nullptr || M->GetWorld() != World || !It->bLook) { continue; }
+					const float D = (float)FVector::Dist(M->GetComponentLocation(), Where);
+					if (D > 2500.0f) { continue; }
+					It->LookToward(Where, 0.2f + D / 3000.0f, 3.5f);
+					++Turned;
+				}
+				UE_LOG(LogTemp, Display, TEXT("LedgerCrime: %d head(s) turn to the smash"), Turned);
+			}
 			Say(TEXT("The window goes in with a crash."), 16.0f, FColor::Orange);
 			if (!GFiledSummaryA.empty()) { Say(TEXT("Sheila: \"Stop. I mean it. Stop.\""), 16.0f); }
 			WriteBreadcrumb(TEXT("live-deed"));
