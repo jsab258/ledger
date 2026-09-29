@@ -157,6 +157,42 @@ def cache_path(who, clip, cache=CACHE):
 
 CAST = ("lena", "rocco", "sam")   # the talkers whose voices --prewarm prepares
 
+# WHICH ENGINE SPEAKS FOR WHOM, 29 September (Jafar's list, item 6): Nano for
+# everyone unless production/specs/voice-engines.json gives a character to
+# Sopro (tools/voice-live/sopro-worker.py, about 1 s to the first sound on
+# the processor against Nano's 4), with the approved in-game line it adds to
+# that character's reference. LEDGER_VOICE_ENGINES ("rocco=sopro,...")
+# overrides the file for a trial. Nobody is moved without his yes.
+ENGINES_FILE = ROOT / "production" / "specs" / "voice-engines.json"
+
+
+def engines(env=None, path=ENGINES_FILE):
+    """{who: "sopro"} for the characters Sopro speaks for, and {who: extra clip}."""
+    env = os.environ.get("LEDGER_VOICE_ENGINES", "") if env is None else env
+    try:
+        spec = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    except Exception:
+        spec = {}
+    who = {k: v for k, v in (spec.get("engines") or {}).items() if v in ("sopro", "nano")}
+    for pair in [p for p in env.split(",") if "=" in p]:
+        k, v = pair.split("=", 1)
+        if v.strip() in ("sopro", "nano"):
+            who[k.strip()] = v.strip()
+    extra = {k: str(ROOT / v) for k, v in (spec.get("reference_extra") or {}).items()}
+    return {k: v for k, v in who.items() if v == "sopro"}, extra
+
+
+def start_sopro(out):
+    """The Sopro worker, started once, answering in the voice server's own lines."""
+    import subprocess
+    py = os.environ.get("LEDGER_SOPRO_PY", r"F:\LedgerTools\sopro\.venv\Scripts\python.exe")
+    p = subprocess.Popen([py, str(pathlib.Path(__file__).with_name("sopro-worker.py")), "--out", str(out / "sopro")],
+                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, bufsize=1)
+    for line in p.stdout:
+        if '"ready"' in line:
+            return p
+    return None
+
 
 def learn(torch, speaker, who, clip):
     """The character's voice, from the cache or learned once on the processor.
@@ -215,7 +251,22 @@ def serve(args):
                 warmed.append(who)
             except Exception:
                 pass   # a voice that will not warm is learned on first use, as before
-    print(dumps({"ready": True, "device": str(dev), "loadS": round(time.time() - t0, 1), "out": str(out), "warmed": warmed}), flush=True)
+    by_sopro, extra = engines()
+    sopro = start_sopro(out) if by_sopro else None
+    if sopro is not None and args.get("prewarm"):
+        # Sopro's voices learned and run once before the first line, as Nano's are.
+        for k, who in enumerate(sorted(by_sopro)):
+            clip = clip_for(who)
+            if clip is None:
+                continue
+            sopro.stdin.write(dumps({"id": -1 - k, "who": who, "text": "Right.", "clip": clip, "extra": extra.get(who, "")}) + "\n")
+            sopro.stdin.flush()
+            for answer in sopro.stdout:
+                if '"last":true' in answer or '"error"' in answer:
+                    warmed.append(who + ":sopro")
+                    break
+    print(dumps({"ready": True, "device": str(dev), "loadS": round(time.time() - t0, 1), "out": str(out), "warmed": warmed,
+                 "sopro": sorted(by_sopro) if sopro else []}), flush=True)
     for line in sys.stdin:
         if not line.strip():
             continue
@@ -227,6 +278,14 @@ def serve(args):
         clip = clip_for(who)
         if clip is None:
             print(dumps({"id": i, "who": who, "error": "no-clip"}), flush=True)
+            continue
+        if sopro is not None and who in by_sopro:
+            sopro.stdin.write(dumps({"id": i, "who": who, "text": text, "clip": clip, "extra": extra.get(who, "")}) + "\n")
+            sopro.stdin.flush()
+            for answer in sopro.stdout:
+                print(answer.strip(), flush=True)
+                if '"last":true' in answer or '"error"' in answer:
+                    break
             continue
         t = time.time()
         try:
@@ -280,6 +339,15 @@ def selftest():
     check("a long sentence is cut at a comma, never mid-word",
           all(len(x) <= 221 for x in sentences("word, " * 80)) and all(not x.startswith("ord") for x in sentences("word, " * 80)))
     check("a good line parses", parse('{"id":3,"who":"lena","text":" New management. "}') == (3, "lena", "New management."))
+    with _tf.TemporaryDirectory() as d:
+        f = pathlib.Path(d) / "voice-engines.json"
+        check("with no file everyone stays on Nano", engines("", f) == ({}, {}))
+        f.write_text('{"engines": {"rocco": "sopro", "sam": "nano", "x": "paid"}, "reference_extra": {"rocco": "a.wav"}}', encoding="utf-8")
+        by, extra = engines("", f)
+        check("the file gives Ron to Sopro and nothing else", by == {"rocco": "sopro"} and extra["rocco"].endswith("a.wav"))
+        check("a trial override moves Darren too", engines("sam=sopro", f)[0] == {"rocco": "sopro", "sam": "sopro"})
+        check("an unknown engine is never taken", "x" not in by and engines("lena=paid", f)[0] == {"rocco": "sopro"})
+    check("the game's file moves nobody without his yes", engines("")[0] == {})
     for badline in ('[1]', '{"id":"3","who":"lena","text":"x"}', '{"id":3,"who":"lena","text":"  "}', '{"id":3,"text":"x"}'):
         try:
             parse(badline)

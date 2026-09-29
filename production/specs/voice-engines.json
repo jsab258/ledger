@@ -1,0 +1,8 @@
+{
+ "about": "Which voice engine speaks for whom (tools/voice-live/voice-server.py). Everyone is on Nano, the game's own engine, unless a character is given to Sopro here; nobody is moved without Jafar's yes on a blind page (CLAUDE.md: no voice is cast without his yes). reference_extra adds a character's approved in-game line to its reference for Sopro (29 September: with it and a steadier sampler Ron held his accent on 15 of 16 test lines).",
+ "engines": {},
+ "reference_extra": {
+  "rocco": "production/casting/in-game-2026-09-25/voice/ron-kirby.wav",
+  "sam": "production/casting/in-game-2026-09-25/voice/darren-milner.wav"
+ }
+}
