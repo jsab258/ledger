@@ -1,5 +1,6 @@
 #include "SliceCharacter.h"
 #include "HAL/PlatformMisc.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "LocomotionAnim.h"
 
@@ -127,7 +128,8 @@ void ALedgerSliceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Released, this, &ALedgerSliceCharacter::RunReleased);
 	PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALedgerSliceCharacter::RequestAct);
 	PlayerInputComponent->BindKey(EKeys::T, IE_Pressed, this, &ALedgerSliceCharacter::RequestTalk);
-	PlayerInputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ALedgerSliceCharacter::RequestQuit);
+	PlayerInputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ALedgerSliceCharacter::RequestPause).bExecuteWhenPaused = true;
+	PlayerInputComponent->BindKey(EKeys::Q, IE_Pressed, this, &ALedgerSliceCharacter::RequestQuit).bExecuteWhenPaused = true;
 	PlayerInputComponent->BindKey(EKeys::R, IE_Pressed, this, &ALedgerSliceCharacter::RequestReport);
 	PlayerInputComponent->BindKey(EKeys::F1, IE_Pressed, this, &ALedgerSliceCharacter::RequestNotice);
 }
@@ -154,7 +156,11 @@ void ALedgerSliceCharacter::RunPressed() { GetCharacterMovement()->MaxWalkSpeed 
 void ALedgerSliceCharacter::RunReleased() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm; }
 void ALedgerSliceCharacter::RequestAct() { ++ActRequests; }
 void ALedgerSliceCharacter::RequestTalk() { ++TalkRequests; }
-void ALedgerSliceCharacter::RequestQuit() { FPlatformMisc::RequestExit(false); }
+void ALedgerSliceCharacter::RequestPause() { UGameplayStatics::SetGamePaused(this, !UGameplayStatics::IsGamePaused(this)); }
+void ALedgerSliceCharacter::RequestQuit()
+{
+	if (UGameplayStatics::IsGamePaused(this)) { FPlatformMisc::RequestExit(false); }
+}
 void ALedgerSliceCharacter::RequestReport() { ++ReportRequests; }
 void ALedgerSliceCharacter::RequestNotice() { ++NoticeRequests; }
 int32 ALedgerSliceCharacter::ConsumeReportRequests()

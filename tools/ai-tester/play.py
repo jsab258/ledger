@@ -5,7 +5,7 @@
     python tools/ai-tester/play.py shot
     python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run]
     python tools/ai-tester/play.py turn DEGREES          (negative left, positive right)
-    python tools/ai-tester/play.py press E|T
+    python tools/ai-tester/play.py press E|T|Esc|Q
     python tools/ai-tester/play.py say "WORDS"
     python tools/ai-tester/play.py wait SECONDS
     python tools/ai-tester/play.py note SEVERITY "WHAT"   (5 unplayable .. 1 cosmetic)
@@ -62,7 +62,7 @@ STATE_DIR = r"F:\LedgerTools\tmp\ai-tester"
 STATE = os.path.join(STATE_DIR, "state.json")
 RES = (1280, 720)
 
-SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14, "shift": 0x2A}
+SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14, "shift": 0x2A, "esc": 0x01, "q": 0x10}
 WALK_KEY = {"forward": "w", "back": "s", "left": "a", "right": "d"}
 PIXELS_PER_DEGREE = 5.7                  # a first guess; the player sees the result and corrects
 
@@ -454,7 +454,8 @@ def act(verb, rest):
         label = "turned %+.0f degrees" % degrees
     elif verb == "press":
         k = (rest[0] if rest else "E").upper()
-        tap("e" if k == "E" else "t")
+        # ESC AND Q, 29 September: the pause (Esc) and quitting from it (Q).
+        tap({"E": "e", "T": "t", "ESC": "esc", "Q": "q"}.get(k, "t"))
         label = "pressed %s" % k
     elif verb == "say":
         words = " ".join(rest)[:200]
