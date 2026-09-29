@@ -136,6 +136,7 @@ namespace Ledger.PerceptionGolden
                 EmitHints(sb);
                 EmitAsks(sb);
                 EmitTea(sb);
+                EmitTownSave(sb);
             }
 
             var text = sb.ToString();
@@ -825,6 +826,45 @@ namespace Ledger.PerceptionGolden
                 var back = AdasTea.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)));
                 Row(sb, "TeaSave", how, Esc(saved), back == null ? "null" : back.State + "|" + back.Day.ToString(Inv) + "|" + back.Minutes.Count.ToString(Inv));
             }
+        }
+
+        /// THE TOWN'S ONE SAVE (town list 6bl), awaiting the port (town list T2):
+        /// a first week's pieces all filled, saved, loaded and saved again; the
+        /// bundle as it is written, what comes back, and a save from a later
+        /// version refused.
+        static void EmitTownSave(StringBuilder sb)
+        {
+            GameTime T(int d, int h, int mi = 0) => new GameTime(d, h, mi);
+            var t = new TownSave();
+            t.Hints.Begin(0, true);
+            t.Hints.Happened(Moment.CanTalk, 20);
+            t.Asks.Delivered(0, null, T(0, 20));
+            t.Asks.Answer(0, NightAnswer.Did, null, T(0, 22, 30));
+            t.Tea = AdasTea.For(0, true);
+            t.Tea.SheSeesHim(T(2, 10));
+            for (int m = 21 * 60; m <= 22 * 60 + 40; m++) t.Tea.WithHer(T(2, m / 60, m % 60));
+            t.Tea.Close(null, T(2, 23));
+            t.Police.Report("ada", "player.window_d1", Offence.Damage, 4, 1);
+            t.Police.ConstableComes(2);
+            t.Arrests.Add(t.Police.TakeIn("player.window_d1", T(2, 10), false, false));
+            t.Damage.Add(new Aftermath("ritas", "rita_window", "somebody put Rita's window in", T(1, 23, 30), T(2, 16)));
+            t.NewsFiled.Add("hal_rita_words");
+            t.Week.Ask(T(6, 10, 30), true);
+            t.Week.Give(WeekAnswer.TakeOver, T(6, 10, 40), null, null);
+            var written = MiniJson.Serialize(t.ToJson());
+            Row(sb, "TownSaveWritten", Esc(written));
+            var back = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(written)));
+            Row(sb, "TownSaveBack", back.Asks.NextNight.ToString(Inv), back.Tea == null ? "null" : back.Tea.State.ToString(), back.Arrests.Count.ToString(Inv),
+                back.Damage.Count.ToString(Inv), string.Join(",", back.NewsFiled), back.Week.Answer.ToString(), Bit(back.Police.WasTaken("player.window_d1")));
+            Row(sb, "TownSaveSame", Bit(MiniJson.Serialize(back.ToJson()) == written));
+            var later = t.ToJson();
+            later["version"] = (double)(TownSave.Version + 1);
+            string refused;
+            try { TownSave.FromJson(later); refused = "0"; }
+            catch (SaveIncompatibleException) { refused = "1"; }
+            Row(sb, "TownSaveLaterRefused", refused);
+            var junk = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"asks\": 7, \"tea\": \"x\", \"arrests\": [1, 2]}")));
+            Row(sb, "TownSaveJunk", junk.Asks.NextNight.ToString(Inv), junk.Tea == null ? "null" : "tea", junk.Arrests.Count.ToString(Inv));
         }
 
         /// THE MAN AT THE LANDING (town list 6cj), awaiting the port: his line for
