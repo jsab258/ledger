@@ -56,50 +56,7 @@ def say(*a):
     print("POSE", *a, flush=True)
 
 
-def turn(arm, bone, axis, deg, child=None, want=None):
-    """Turn a pose bone about a world axis through its own joint. If `want` is given (a world direction), the
-    sign is chosen so that `child`'s joint moves that way."""
-    pb = arm.pose.bones[bone]
-    bpy.context.view_layer.update()
-    M = arm.matrix_world
-    head = pb.head.copy()
-    before = pb.matrix.copy()
-
-    def apply(sign):
-        R = Matrix.Rotation(math.radians(deg * sign), 4, axis)
-        Ra = (M.inverted() @ R @ M).to_3x3().to_4x4()
-        pb.matrix = Matrix.Translation(head) @ Ra @ Matrix.Translation(-head) @ before
-        bpy.context.view_layer.update()
-
-    if want is None or child is None:
-        apply(1)
-        return
-    c0 = M @ arm.pose.bones[child].head
-    apply(1)
-    moved = (M @ arm.pose.bones[child].head) - c0
-    if moved.dot(want) < 0:
-        apply(-1)
-
-
-def make_pose(arm, name):
-    X, Z = Vector((1, 0, 0)), Vector((0, 0, 1))
-    fwd, up = Vector((0, -1, 0)), Vector((0, 0, 1))
-    if name in ("down", "walk", "sit"):
-        tailor.pose_arms(arm, 80.0)
-    if name == "up":
-        tailor.pose_arms(arm, -35.0)
-    if name == "walk":
-        turn(arm, "thigh_l", X, 25, "calf_l", fwd)
-        turn(arm, "thigh_r", X, 15, "calf_r", -fwd)
-        turn(arm, "calf_r", X, 30, "foot_r", -fwd + up * 0.3)
-        turn(arm, "upperarm_l", X, 20, "lowerarm_l", -fwd)       # arms swing against the legs
-        turn(arm, "upperarm_r", X, 20, "lowerarm_r", fwd)
-    if name == "sit":
-        turn(arm, "spine_01", X, 10, "spine_03", fwd)
-        for s in ("l", "r"):
-            turn(arm, "thigh_" + s, X, 85, "calf_" + s, fwd + up)
-            turn(arm, "calf_" + s, X, 85, "foot_" + s, -fwd - up)
-            turn(arm, "lowerarm_" + s, X, 50, "hand_" + s, fwd)
+turn, make_pose = tailor.turn, tailor.make_pose
 
 
 bpy.ops.wm.open_mainfile(filepath=BLEND)
