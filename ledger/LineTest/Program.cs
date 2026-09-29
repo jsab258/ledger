@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Ledger.Core;
+using Ledger.DevTools;
 
 /// THE LOCAL LINE-WRITING BLIND TEST (checklist L01), 25 September.
 ///
@@ -164,9 +165,9 @@ static class Program
             if (args[i] == "--local") { var p = args[i + 1].Split('=', 2); writers.Add((p[0], new LocalChat(p[1]), null)); }
         if (args.Contains("--paid"))
         {
-            var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
-            if (string.IsNullOrEmpty(key)) { Console.Error.WriteLine("linetest: --paid needs ANTHROPIC_API_KEY"); return 2; }
-            writers.Add(("paid", new AnthropicClient(key), null));
+            // The game's own model, through Claude Code on Jafar's subscription,
+            // never a key (Jafar, 29 September: no API calls in development).
+            writers.Add(("paid", new ClaudeCodeClient(), null));
         }
         var outDir = Arg(args, "--out", Path.Combine("production", "research", "local-writers"));
         Directory.CreateDirectory(outDir);

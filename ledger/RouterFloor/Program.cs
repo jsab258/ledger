@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Ledger.Core;
+using Ledger.DevTools;
 
 /// THE SMALL-MODEL TEST: can a model this PC can run do the intent router's job?
 ///
@@ -19,9 +20,9 @@ using Ledger.Core;
 ///
 /// THE PAID ROUTER, 23 September (Jafar's decision 4, (a)): the router stays on
 /// the paid model, and the same lines run on it, through the game's own
-/// AnthropicClient and the model IntentRouter asks for. ANTHROPIC_API_KEY in
-/// the environment; nothing is sent without it, and the tokens and the cost
-/// are printed. There is no JSON constraint on that API, so it runs the
+/// model IntentRouter asks for, through Claude Code on Jafar's subscription
+/// (no API calls in development, 29 September), and the tokens and the cost
+/// at API rates are printed. There is no JSON constraint on that API, so it runs the
 /// shipped prompt only.
 ///
 /// WHY THE ROUTER. It is the one place the game asks a model to pick from a
@@ -515,26 +516,9 @@ static class Program
         string url = Arg(args, "--url", "http://127.0.0.1:8089");
         string outPath = Arg(args, "--out", null);
         bool paid = args.Contains("--anthropic");
-        string key = paid ? Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY") : null;
-        // THE GAME'S OWN KEY, 23 September (Jafar: run the paid lines here with
-        // the key the game uses). Read from the same file and field the game's
-        // Secrets.LoadAnthropicKey reads, so it never passes through a command
-        // line or a log. Never printed.
-        if (paid && string.IsNullOrEmpty(key) && args.Contains("--key-from-game"))
-        {
-            var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                                    "AppData", "LocalLow", "DefaultCompany", "ledger", "secrets.json");
-            if (File.Exists(file))
-            {
-                using var sdoc = JsonDocument.Parse(File.ReadAllText(file));
-                if (sdoc.RootElement.TryGetProperty("anthropic_api_key", out var k)) key = k.GetString();
-            }
-        }
-        if (paid && string.IsNullOrEmpty(key))
-        {
-            Console.WriteLine("routerFloor: --anthropic needs ANTHROPIC_API_KEY in the environment; nothing sent.");
-            return 2;
-        }
+        // NO API CALLS IN DEVELOPMENT (Jafar, 29 September): the paid router's
+        // model through Claude Code on his subscription, never a key (the
+        // game's key and --key-from-game are gone).
         string label = Arg(args, "--label", paid ? Models.Ambient + ", the paid router as shipped" : "local model");
 
         // WHICH LINES (23 September): the 42 as before, the forged lines, or a
@@ -586,7 +570,7 @@ static class Program
         var passes = new List<(string mode, List<Row> rows)>();
         foreach (var mode in modes.Split(','))
         {
-            ILlmClient client = paid ? (ILlmClient)new AnthropicClient(key)
+            ILlmClient client = paid ? (ILlmClient)new ClaudeCodeClient()
                                      : new LocalChatClient(url, mode == "json");
             var rows = await Pass(client, set);
             passes.Add((mode, rows));

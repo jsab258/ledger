@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ledger.Core;
+using Ledger.DevTools;
 
 namespace Ledger.Tier2Gen
 {
     /// The Tier-2 batch generator (game-design/tier2-pipeline-spec.md): the
-    /// machine that makes density purchasable. Runs headless in CI with the
-    /// ANTHROPIC_API_KEY secret (player authorization 2026-07-26), generates
+    /// machine that makes density purchasable. Ran headless in CI on a key
+    /// (player authorization 2026-07-26); since 29 September (no API calls in
+    /// development) it runs only by hand, through Claude Code on Jafar's
+    /// subscription, and generates
     /// character cards for the Hook district against the HookMap place registry,
     /// script-validates every card (no LLM in the validator), and feeds failures
     /// back into the next request — the self-healing batch loop.
@@ -95,15 +98,10 @@ namespace Ledger.Tier2Gen
             string outDir = ArgStr(args, "--out", "tier2-out");
             string model = ArgStr(args, "--model", "claude-sonnet-5");
 
-            var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
-            if (string.IsNullOrEmpty(key))
-            {
-                Console.WriteLine("Tier2Gen: ANTHROPIC_API_KEY is not set; nothing generated.");
-                return 1;
-            }
-
+            // NO API CALLS IN DEVELOPMENT (Jafar, 29 September): through Claude
+            // Code on his subscription, never a key.
             Directory.CreateDirectory(outDir);
-            var client = new AnthropicClient(key);
+            var client = new ClaudeCodeClient();
             var accepted = new List<Dictionary<string, object>>();
             var takenIds = new HashSet<string>(ExistingCast);
             var takenNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
@@ -203,14 +201,7 @@ namespace Ledger.Tier2Gen
                 return 1;
             }
 
-            var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
-            if (string.IsNullOrEmpty(key))
-            {
-                Console.WriteLine("Tier2Gen --enrich: ANTHROPIC_API_KEY is not set; nothing changed.");
-                return 1;
-            }
-
-            var client = new AnthropicClient(key);
+            var client = new ClaudeCodeClient();
             long tin = 0, tout = 0;
             int done = 0, failed = 0;
 
