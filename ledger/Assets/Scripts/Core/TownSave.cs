@@ -17,6 +17,7 @@ namespace Ledger.Core
     ///   news    TownNews       the town's own stories already filed (ids)
     ///   damage  Aftermath      each deed's damage, who has found it, until mended
     ///   arrests Custody        each time he was taken in, and what came of it
+    ///   hours   TownHours      the hours the town has talked through
     public sealed class TownSave
     {
         /// The bundle's version. A file from a later version than this build
@@ -31,6 +32,7 @@ namespace Ledger.Core
         public readonly List<string> NewsFiled = new List<string>();
         public readonly List<Aftermath> Damage = new List<Aftermath>();
         public readonly List<Custody> Arrests = new List<Custody>();
+        public TownHours Hours = new TownHours();
 
         public Dictionary<string, object> ToJson()
         {
@@ -52,6 +54,7 @@ namespace Ledger.Core
             var arrests = new List<object>();
             foreach (var c in Arrests) arrests.Add(c.ToJson());
             d["arrests"] = arrests;
+            d["hours"] = Hours.ToJson();
             return d;
         }
 
@@ -85,6 +88,7 @@ namespace Ledger.Core
                     if (Custody.FromJson(x as Dictionary<string, object>) is Custody c && t.Police.WasTaken(c.Topic)) arrests.Add(c);
             arrests.Sort((a, b) => a.TakenAt.TotalMinutes != b.TakenAt.TotalMinutes ? a.TakenAt.TotalMinutes.CompareTo(b.TakenAt.TotalMinutes) : string.CompareOrdinal(a.Topic, b.Topic));
             foreach (var c in arrests) if (!t.Arrests.Exists(o => o.Topic == c.Topic)) t.Arrests.Add(c);
+            t.Hours = TownHours.FromJson(Obj("hours"));
             return t;
         }
     }

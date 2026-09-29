@@ -33,7 +33,8 @@ FIELDS = {
     "hint": {"moment": (STR, True)},
     "ask": {"night": (NUM, True), "answer": (STR, True), "story": (STR, True)},
     "police": {"who": (STR, True), "story": (STR, True), "how": (STR, True)},
-    "ellis": {"why": (STR, True)},
+    "ellis": {"why": (STR, True), "day": (NUM, False)},
+    "taken": {"story": (STR, True), "day": (NUM, True), "end": (STR, False)},
 }
 ENDS = {"quit", "crash"}
 PLAYERS = {"friend", "jafar"}
@@ -46,6 +47,8 @@ MOMENTS = ["StandingStill", "CanTalk", "FirstAsk", "SeenAtDeed", "OverheardAbout
 ANSWERS = {"did", "refused", "noshow"}
 # What the police hold (PoliceFile.Known), town list 6bm.
 POLICE_HOW = {"statement", "description", "talk"}
+# How a spell in custody ended (Custody.End), town list 6bt.
+CUSTODY_ENDS = {"Cautioned", "Charged", "BailedToReturn"}
 THIRTY = 30 * 60
 
 
@@ -114,6 +117,8 @@ def read(path):
             warn.append(f"a hint the spec does not know: {e['moment']!r}")
         if e["e"] == "ask" and e["answer"] not in ANSWERS:
             warn.append(f"an answer to the ask the spec does not know: {e['answer']!r}")
+        if e["e"] == "taken" and "end" in e and e["end"] not in CUSTODY_ENDS:
+            warn.append(f"a way custody ends the spec does not know: {e['end']!r}")
         if e["e"] == "police" and e["how"] not in POLICE_HOW:
             warn.append(f"a way the police hold something the spec does not know: {e['how']!r}")
         if e["e"] == "still" and e["s"] > e["t"]:
@@ -153,11 +158,41 @@ def one(events):
     for a in asks:
         done_at.setdefault(a["story"], a["t"])
     knowns = [e for e in events if e["e"] == "known"]
-    # THE TOWN REACTING TO SOMETHING HE HAD DONE: a `known` about a story that
-    # is a deed of this session, done at or before it (the independent check).
-    reacting = [e for e in knowns if e["story"] in done_at and done_at[e["story"]] <= e["t"]]
-    before = [e for e in knowns if e["story"] not in done_at]
-    early = [e for e in knowns if e["story"] in done_at and done_at[e["story"]] > e["t"]]
+    # WHAT FOLLOWS A DEED (town list 6bt): his being taken in follows the deed
+    # he was taken for; DS Ellis asking after him follows the crime she came
+    # for, or, come for the street's talk, whatever he had done by then; what
+    # he claimed about a deed follows it. Each counts as the town reacting to
+    # that deed (Meridian condition 2), not as something done before.
+    follows = {}
+    for e in events:
+        if e["e"] == "taken":
+            follows["player.taken_d%d" % int(e["day"])] = e["story"]
+        if e["e"] == "ellis" and "day" in e:
+            why = e["why"]
+            follows["player.police_d%d" % int(e["day"])] = why.split(" ", 1)[1] if " " in why else "*the street's talk*"
+
+    def followed(k):
+        s = k["story"]
+        if s in done_at:
+            return s
+        f = follows.get(s)
+        if f is None and s.startswith("player.claim_"):
+            f = "player." + s[len("player.claim_"):]
+        if f == "*the street's talk*":
+            done = [d for d, at in done_at.items() if at <= k["t"]]
+            return min(done, key=lambda d: done_at[d]) if done else None
+        return f
+    reacting, before, early = [], [], []
+    for k in knowns:
+        d = followed(k)
+        if d is None or d not in done_at:
+            before.append(k)
+        elif done_at[d] > k["t"]:
+            early.append(k)
+        else:
+            if d != k["story"]:
+                k = dict(k, follows=d)
+            reacting.append(k)
     named = {}
     for e in events:
         if e["e"] == "named":
@@ -179,6 +214,7 @@ def one(events):
         "hints": hints,
         "police": [(e["t"], e["who"], e["story"], e["how"]) for e in events if e["e"] == "police"],
         "ellis": [(e["t"], e["why"]) for e in events if e["e"] == "ellis"],
+        "taken": [(e["t"], e["story"], e.get("end", "?")) for e in events if e["e"] == "taken"],
         "asks": [(e["t"], int(e["night"]), e["answer"], e["story"]) for e in asks],
         "replies": len(replies),
         "broke": broke,
@@ -205,7 +241,7 @@ def one(events):
 
 
 def describe(k):
-    return f"minute {minute(k['t'])}, {k['who']}, {k.get('how', '?')}, about {k['story']}"
+    return f"minute {minute(k['t'])}, {k['who']}, {k.get('how', '?')}, about {k['story']}" + (f", following {k['follows']}" if "follows" in k else "")
 
 
 def show(path, facts, unread, warn):
@@ -232,6 +268,8 @@ def show(path, facts, unread, warn):
     if facts["police"]:
         out.append("  the police heard: " + "; ".join(f"{how} from {who} about {story} (minute {minute(t)})" for t, who, story, how in facts["police"]))
     out.append("  DS Ellis on Quay Street: " + (", ".join(f"minute {minute(t)}, for {why}" for t, why in facts["ellis"]) or "never"))
+    if facts["taken"]:
+        out.append("  taken in: " + "; ".join(f"for {story}, minute {minute(t)}, {end}" for t, story, end in facts["taken"]))
     out.append("  the town showing it knew something they had done: "
                + ("; ".join(describe(k) for k in facts["reacting"]) or "nothing recorded"))
     if facts["before"]:
@@ -464,6 +502,23 @@ def selftest():
         assert fh_["first_known"] is not None and fh_["first_known"]["story"] == "player.outfit_d0" and fh_["known_by_30"], fh_["first_known"]
         assert "night 0 refused" in th and "hints shown: StandingStill" in th and any("Nonsense" in w for w in wh) and any("maybe" in w for w in wh), (th, wh)
         assert "night 2" not in th and [a[1] for a in fh_["asks"]] == [0], (th, fh_["asks"])
+        # What follows a deed counts as the town reacting to it (town list 6bt).
+        followed_ = write("2026-10-13-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},
+                                                      {"t": 100, "e": "deed", "what": "player.window_d1", "seen": ["ada"]},
+                                                      {"t": 300, "e": "taken", "story": "player.window_d1", "day": 3, "end": "Charged"},
+                                                      {"t": 400, "e": "known", "who": "joey", "how": "recognition", "story": "player.taken_d3"},
+                                                      {"t": 500, "e": "ellis", "why": "talk", "day": 4},
+                                                      {"t": 600, "e": "known", "who": "lena", "how": "recognition", "story": "player.police_d4"},
+                                                      {"t": 700, "e": "known", "who": "sam", "how": "talk", "story": "player.claim_window_d1"},
+                                                      {"t": 800, "e": "known", "who": "rita", "how": "remark", "story": "player.police_d9"},
+                                                      {"t": 850, "e": "taken", "story": "player.x", "day": 5, "end": "Hanged"},
+                                                      {"t": 900, "e": "end", "why": "quit"}])
+        ef, uf, wf = read(followed_)
+        ff = one(ef)
+        tf = show(followed_, ff, uf, wf)
+        assert [k["who"] for k in ff["reacting"]] == ["joey", "lena", "sam"] and all(k["follows"] == "player.window_d1" for k in ff["reacting"]), ff["reacting"]
+        assert [k["who"] for k in ff["before"]] == ["rita"] and "following player.window_d1" in tf and "taken in: for player.window_d1" in tf, tf
+        assert any("Hanged" in w for w in wf) and not uf, (wf, uf)
         # What the police heard, and DS Ellis on the street (town list 6bm).
         policed = write("2026-10-12-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},
                                                     {"t": 1500, "e": "police", "who": "ron", "story": "player.outfit_d2", "how": "talk"},

@@ -121,6 +121,7 @@ namespace Ledger.PerceptionGolden
                 EmitTownNews(sb);
                 EmitPoliceAsked(sb);
                 EmitTaken(sb);
+                EmitTownRounds(sb);
             }
 
             var text = sb.ToString();
@@ -573,6 +574,60 @@ namespace Ledger.PerceptionGolden
                         var lines = StreetVoice.Ambient(a, b, now, 0.5, 1.0, false, false, seed, null, kind == "none" ? null : kind, since);
                         Row(sb, "JustNow", kind, D(since), seed.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), lines[1].Bank, Esc(lines[1].Text));
                     }
+        }
+
+        /// THE TOWN TALKS BY ITS ROUTINES (town list 6bs), awaiting the port: a
+        /// story's holders and their confidence after each hour of TownRounds.Hour
+        /// on a small cast, with nobody, one or both of a pair on the street; and
+        /// how many hours CatchUp runs.
+        static void EmitTownRounds(StringBuilder sb)
+        {
+            var rc = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"cafe\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}}," +
+                    "\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[11,\"quay\"]]},{\"id\":\"q\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[10,\"quay\"]]}," +
+                    "{\"id\":\"r\",\"routine\":[[0,\"off\"],[11,\"quay\"]]}],\"ties\":[[\"p\",\"q\",0.8],[\"q\",\"r\",0.8]]}");
+            foreach (var (name, onStreet) in new (string, Func<string, bool>)[] { ("none", null), ("p", (Func<string, bool>)(id => id == "p")), ("pq", (Func<string, bool>)(id => id == "p" || id == "q")) })
+            {
+                var graph = new SocialGraph();
+                foreach (var (a, b, w) in rc.Ties) graph.Link(a, b, w);
+                var m = new GossipMill(graph);
+                foreach (var id in rc.People) m.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                m.Witness("p", new Fact(TownNews.Subject, "a_row", "seen"), "somebody had words in the cafe", false, new GameTime(0, 9, 0), 0.9);
+                for (int h = 9; h < 13; h++)
+                {
+                    int passed = TownRounds.Hour(m, rc, new GameTime(0, h, 0), onStreet);
+                    foreach (var id in rc.People)
+                    {
+                        var r = m.Get(id).Rumors.Find(x => x.Content.Predicate == "a_row");
+                        Row(sb, "TownRoundsHour", name, h.ToString(Inv), id, passed.ToString(Inv), r == null ? "null" : D(r.Confidence) + "|" + r.Hops.ToString(Inv));
+                    }
+                }
+            }
+            // A pair who meet every hour, ageing between: one copy, however long.
+            {
+                var pairGraph = new SocialGraph();
+                pairGraph.Link("a", "b", 0.8);
+                var m = new GossipMill(pairGraph);
+                foreach (var id in new[] { "a", "b" }) m.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                m.Witness("a", new Fact("player", "night_walk", "seen"), "the new owner out late", true, new GameTime(0, 9, 0), 0.9);
+                for (int k = 0; k < 72; k++)
+                {
+                    m.Tick(GameTime.FromTotalMinutes(540 + k * 60));
+                    m.Age(GameTime.FromTotalMinutes(600 + k * 60));
+                    if (k % 12 == 11)
+                    {
+                        var b = m.Get("b");
+                        Row(sb, "TownRoundsAged", k.ToString(Inv), b.Rumors.Count.ToString(Inv), D(b.Suspicion.Value),
+                            b.Rumors.Count > 0 ? D(b.Rumors[0].Confidence) : "none");
+                    }
+                }
+            }
+            foreach (var (from, to) in new[] { (570L, 730L), (0L, 144000L), (720L, 540L), (600L, 600L) })
+            {
+                var graph = new SocialGraph();
+                var m = new GossipMill(graph);
+                Row(sb, "TownRoundsCatchUp", from.ToString(Inv), to.ToString(Inv),
+                    TownRounds.CatchUp(m, rc, GameTime.FromTotalMinutes(from), GameTime.FromTotalMinutes(to)).ToString(Inv));
+            }
         }
 
         /// WHAT AN ARREST DOES (town list 6bp), awaiting the port: the hours held

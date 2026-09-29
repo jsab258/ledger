@@ -101,6 +101,36 @@ DAYS = {
 }
 
 
+
+def carried(day, answered, title, lede, new_questions, new_docs):
+    """A day's page carrying yesterday's open items: every question and
+    document not answered, then the new ones."""
+    base = DAYS[day]
+    return {
+        "title": title,
+        "lede": lede,
+        "questions": [q for q in base["questions"] if q[0] not in answered] + new_questions,
+        "docs": [d for d in base["docs"] if d[0] not in answered] + new_docs,
+    }
+
+
+DAYS["2026-09-30"] = carried(
+    "2026-09-29", {"q-sheila-name", "q-chatter", "first-hour"},
+    "The police in the street, and the calls still open",
+    "New: whether an arrest can happen, what one does, and word of the police asking about Tom. Everything else is carried from yesterday, still open. "
+    "Done as you picked: the first hour, the neighbours' talk and Sheila's name. One tap each, and a note if you want.",
+    [("q-arrest", "Which deed may lead to an arrest. Today nothing can: the friends' build has one crime, Rita's window; Rita never goes to the police "
+                  "(her trade), and a witness went only for a crime a detective takes. In 1990 an arrest cost hours, not the game (the research)",
+      [("witness", "A witness to the window can go to the police: only somebody who saw him plainly, is not afraid and has cooled on him (Ada, after he stood "
+                   "her up for her tea); at the town's middle tempers nobody does, so an arrest is rare and earned (recommended; built this way meanwhile)"),
+       ("rita", "Rita reports her own window, for the insurance, as most shopkeepers did, and a witness who cooled on him names him"),
+       ("none", "No arrest in the first build: only for violence, which it does not have yet")])],
+    [("police-asking", "Word that the police are asking", os.path.join(REPO, "game-design", "police-asking-2026-09-29.md"),
+      "Approve how it goes and its lines", "Change it (say what in the note)"),
+     ("arrest", "What an arrest does", os.path.join(REPO, "game-design", "arrest-2026-09-29.md"),
+      "Approve how it goes and its lines", "Change it (say what in the note)")])
+
+
 def build(date):
     day = DAYS[date]
     esc = html.escape
@@ -135,6 +165,11 @@ def selftest():
     assert page.startswith("<title>") and 'data-key="first-hour"' in page and 'data-key="q-chatter"' in page and 'q-relay' not in page
     assert "<script" not in town_page.outline_html(DAYS["2026-09-29"]["docs"][0][2])
     for key, _, options in DAYS["2026-09-29"]["questions"]:
+        assert "recommended" in options[0][1], key
+    later = build("2026-09-30")
+    assert 'data-key="q-arrest"' in later and 'data-key="arrest"' in later and 'data-key="police-asking"' in later
+    assert 'data-key="q-chatter"' not in later and 'data-key="first-hour"' not in later and 'data-key="q-clock"' in later and 'data-key="first-ask"' in later
+    for key, _, options in DAYS["2026-09-30"]["questions"]:
         assert "recommended" in options[0][1], key
     print("town_day_page selftest: ok")
     return 0

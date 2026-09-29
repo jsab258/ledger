@@ -36,12 +36,14 @@ decimal), and `e`, the event. In the order they happen:
 | `hint` | `moment`, FirstMoments's moment (`"StandingStill"`, `"CanTalk"`, `"FirstAsk"`, `"SeenAtDeed"`, `"OverheardAboutHim"`, `"LedgerOpened"`) | a hint shows, what FirstMoments.Happened or Due returned (town list 6bh) |
 | `ask` | `night`, the ask's day; `answer`: `"did"`, `"refused"` or `"noshow"`; `story`, its topic (`"player.outfit_d0"`) | the outfit's ask is answered (Arrangement.Answer, or PassedTo for a night Ron brought him the ask and nobody answered; a night the ask never reached him is not written, town list 6bn); its story counts as a deed of this session for the town's reaction (town list 6bh) |
 | `police` | `who`, who told them; `story`, the deed's topic; `how`: `"statement"`, `"description"` or `"talk"` (PoliceFile.Known) | somebody tells the police, or the street's talk reaches DS Ellis (town list 6bm) |
-| `ellis` | `why`: `"talk"`, `"body"`, or the reported crime (`"Wounding player.cut_d2"`) | DS Ellis comes to Quay Street (PoliceFile.EllisComes; town list 6bm) |
+| `ellis` | `why`: `"talk"`, `"body"`, or the reported crime (`"Wounding player.cut_d2"`); `day`, the game day | DS Ellis comes to Quay Street (PoliceFile.EllisComes; town list 6bm); with `day`, her asking after him (`player.police_d<day>`) counts as the town reacting to the crime she came for, or to what he had done by then (town list 6bt) |
+| `taken` | `story`, the deed he was taken in for; `day`, the game day; `end`: `"Cautioned"`, `"Charged"` or `"BailedToReturn"` (Custody.End) | he is taken in (PoliceFile.TakeIn); the street's word of it (`player.taken_d<day>`) counts as the town reacting to that deed, as what he claimed about a deed (`player.claim_<deed>`) does to the deed (town list 6bt) |
 | `end` | `why`: `"quit"` or `"crash"`; `usd`, what the talk cost this session (the talk helper's closing line) | the session ends |
 
 Required: `player` (start), `at` (place), `s` (still), `what` (deed), `who` and
 `story` (known), `who` (talk), `names` (named), `moment` (hint), `night`, `answer`
-and `story` (ask), `who`, `story` and `how` (police), `why` (ellis, end); `load`
+and `story` (ask), `who`, `story` and `how` (police), `why` (ellis, end), `story` and
+`day` (taken); `load`
 needs none.
 The others may be left out. `player` is `"friend"` or `"jafar"` and `how` one
 of the five above; any other value is warned about. Nothing else is written. A line the reader cannot use

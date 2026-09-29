@@ -611,13 +611,21 @@ namespace Ledger.Core
             return slots;
         }
 
+        /// How much stronger a telling must be than what the listener holds to
+        /// be news to them. Not zero: ageing multiplies both copies by the same
+        /// factor, and the same story told again the same way then comes out
+        /// one rounding step stronger about half the time, and was taken for
+        /// news, a copy and a raise each time (town list 6bs, the independent
+        /// check: 128 of 293 tellings over 72 hours of the forty).
+        public const double SameStrength = 1e-9;
+
         static Telling Weigh(Gossiper listener, Rumor r, double passed)
         {
             var existing = listener.BestOfValue(r.TopicKey, r.Content.Value);
-            if (existing == null || existing.Confidence < passed) return Telling.New;
+            if (existing == null || existing.Confidence < passed - SameStrength) return Telling.New;
             if (r.OriginRung < 4) return Telling.Held;
             foreach (var x in listener.Rumors)
-                if (x.TopicKey == r.TopicKey && x.Content.Value == r.Content.Value && x.OriginRung >= 4 && x.Confidence >= passed)
+                if (x.TopicKey == r.TopicKey && x.Content.Value == r.Content.Value && x.OriginRung >= 4 && x.Confidence >= passed - SameStrength)
                     return Telling.Held;
             return Telling.Quiet;
         }
