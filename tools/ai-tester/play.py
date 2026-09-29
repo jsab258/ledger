@@ -400,6 +400,7 @@ def start(args):
         if os.path.isdir(stage):
             shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(stage, "vignette-pieces.json"))
             shutil.copyfile(os.path.join(REPO, "content", "dialogue", "crime-witness-v1.json"), os.path.join(stage, "crime-witness-v1.json"))
+    game_args += [x for x in args.get("extra", []) if x.startswith("-") and " " not in x]
     build = "editor" if args.get("editor") else "packaged"
     print("aiTester build=%s selfContained=%s config=%s" % (build, "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
     cmd = ([EDITOR, PROJECT, "-game"] if args.get("editor") else [PACKAGED]) + game_args
@@ -575,6 +576,9 @@ if __name__ == "__main__":
         a = {"editor": "--editor" in rest, "force": "--force" in rest}
         if "--wait" in rest:
             a["wait"] = rest[rest.index("--wait") + 1]
+        # --game-arg X, repeatable: one more argument for the game, such as a
+        # trial exposure (-PlayNightPin=2.0) while the evening is tuned in play.
+        a["extra"] = [rest[k + 1] for k, x in enumerate(rest) if x == "--game-arg" and k + 1 < len(rest)]
         sys.exit(start(a))
     if verb == "shot":
         s = running_state()
