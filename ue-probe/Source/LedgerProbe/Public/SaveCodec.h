@@ -27,10 +27,13 @@
 // That is the whole of the difference and it is why this is its own file.
 //
 // WHAT IT DOES NOT DO, said plainly rather than discovered later:
-//   - SUSPICION IS NOT RESTORED. SuspicionTracker is out of scope in this
-//     port (Gossip.h says so at its head and prints
-//     gossipSuspicionPorted=no), so the "suspicion" key is read past and
-//     dropped. The golden table does not pin it for the same reason.
+//   - SUSPICION IS NOT SAVED OR RESTORED. The tracker's number is in this
+//     port and the mill raises it (Suspicion.h, Gossip.h, town list 6n), but
+//     this codec was not asked to carry it: the key is written as 0 and read
+//     past. The golden table does not pin it.
+//   - THE FIRST TELLER'S RUNG IS (town list 6n): written only when known,
+//     read back clamped to the ladder, as SaveCodec.cs RumorJson (~62) and
+//     RestoreAgents (~344) do.
 //   - No escapes beyond the two CrimeProbe.h handles, and \u is passed
 //     through as characters rather than decoded. Nothing this codec writes
 //     produces one.
@@ -41,6 +44,7 @@
 #include <clocale>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <string>
 #include <vector>
 
@@ -410,6 +414,26 @@ namespace Save
 		return static_cast<int>(V);
 	}
 
+	/// `MiniJson.TryGetInt`: the same reading as FieldInt, but able to say
+	/// "that key was not a number". Only an unquoted number answers (`v is
+	/// double`), and not a NaN or an infinity; then GetInt's saturating
+	/// reading. By the bits, for the fast-math reason Perception.h gives.
+	inline bool FieldTryInt(const std::string& S, Span Obj, const std::string& Key, int& Out)
+	{
+		Out = 0;
+		const Raw R = FieldRaw(S, Obj, Key);
+		if (!R.Found || R.Quoted) { return false; }
+		if (R.Text == "null" || R.Text == "true" || R.Text == "false") { return false; }
+		bool Ok = false;
+		const double V = StrToDoubleC(R.Text, Ok);
+		if (!Ok) { return false; }
+		unsigned long long Bits = 0ULL;
+		std::memcpy(&Bits, &V, sizeof(Bits));
+		if (((Bits >> 52) & 0x7FFULL) == 0x7FFULL) { return false; }   // NaN or an infinity
+		Out = FieldInt(S, Obj, Key);
+		return true;
+	}
+
 	/// `v is bool b && b`. ONLY an unquoted JSON true. Not 1, not "true",
 	/// not "True" - MiniJson produces lower-case literals and the C# asks
 	/// whether the boxed value IS a bool before it asks what it is.
@@ -683,11 +707,12 @@ namespace Save
 			Out += ",\"leashed\":";
 			Out += G->Leashed ? "true" : "false";
 			// SUSPICION IS WRITTEN AS ZERO AND THAT IS NOT A MEASUREMENT.
-			// SuspicionTracker is out of scope in this port, so there is no
-			// value here to write; the key is present because the C#'s
-			// reader expects the shape, and zero is what an unported field
-			// honestly holds. A save this writes must never be mistaken for
-			// one that carries a suspicion this build never tracked.
+			// The tracker's number is in this port since 29 September and the
+			// mill raises it since town list 6n, but carrying it through a
+			// save was not part of either port, so nothing reads it back
+			// here; the key is present because the C#'s reader expects the
+			// shape. A save this writes must never be mistaken for one that
+			// carries a suspicion.
 			Out += ",\"suspicion\":0";
 			Out += ",\"suppressed\":[";
 			for (std::vector<std::string>::size_type T = 0; T < G->Suppressed.size(); ++T)
@@ -722,6 +747,15 @@ namespace Save
 				Out += Rm->Sensitive ? "true" : "false";
 				Out += ",\"indelible\":";
 				Out += Rm->Indelible ? "true" : "false";
+				// The first teller's rung is written only when it is known,
+				// so a save with none reads exactly as before (town list 6n).
+				if (Rm->OriginRung >= 0)
+				{
+					char Buf[32];
+					std::sprintf(Buf, "%d", Rm->OriginRung);
+					Out += ",\"rung\":";
+					Out += Buf;
+				}
 				Out += '}';
 			}
 			Out += "],\"facts\":[";
@@ -813,6 +847,12 @@ namespace Save
 					Made->Hops = FieldInt(Json, Each[R], "hops");
 					Made->Sensitive = FieldFlag(Json, Each[R], "sensitive");
 					Made->Indelible = FieldFlag(Json, Each[R], "indelible");
+					// The first teller's rung (town list 6n): absent in older
+					// saves, and then unknown; clamped to the ladder, as a
+					// hand-edited file may say anything.
+					int RungSaved = 0;
+					Made->OriginRung = FieldTryInt(Json, Each[R], "rung", RungSaved)
+						? (RungSaved < -1 ? -1 : (RungSaved > 4 ? 4 : RungSaved)) : -1;
 					G->Rumors.push_back(Made);
 				}
 			}

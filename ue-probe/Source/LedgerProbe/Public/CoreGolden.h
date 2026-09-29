@@ -47,6 +47,7 @@
 #include "CastDay.h"
 #include "Schedule.h"
 #include "StreetVoice.h"
+#include "Suspecting.h"
 #include "Suspicion.h"
 
 #include <cstdio>
@@ -1243,6 +1244,277 @@ namespace Golden
 		return It->second.first ? &It->second.second : 0;
 	}
 
+	// ---- the first teller's rung (town list 6n, 29 September) ---------
+	//
+	// Each row's world is built again from nothing, exactly as
+	// PerceptionGolden's EmitOriginRung builds it, and read the way that row
+	// reads it; a row that follows others in one world (HeardThenSeen) replays
+	// the steps before it. Every answer on a row is checked (MultiAnswer).
+
+	// new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker())
+	inline GossiperPtr RungAgent(const std::string& Id)
+	{
+		return std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+	}
+
+	// Memory.Events.Count(e => e.Kind == "heard")
+	inline long long HeardLines(const Gossiper& G)
+	{
+		long long N = 0;
+		for (std::vector<MemoryEvent>::size_type Q = 0; Q < G.Memory->Events.size(); ++Q)
+		{
+			if (G.Memory->Events[Q].Kind == "heard") ++N;
+		}
+		return N;
+	}
+
+	// The familiarity a row names: stranger, heardOf, close.
+	inline bool FamiliarityNamed(const std::string& Name, double& Out)
+	{
+		if (Name == "stranger") { Out = Acquaintance::Stranger;   return true; }
+		if (Name == "heardOf")  { Out = Acquaintance::HeardOfYou; return true; }
+		if (Name == "close")    { Out = Acquaintance::Close;      return true; }
+		return false;
+	}
+
+	// ClaimResult.ToString()
+	inline std::string ClaimName(ClaimResult C)
+	{
+		return C == ClaimResult::Contradiction ? "Contradiction" : C == ClaimResult::Consistent ? "Consistent" : "Unknown";
+	}
+
+	inline std::string RungsOf(const Gossiper& G)
+	{
+		std::string Out;
+		for (std::vector<RumorPtr>::size_type Q = 0; Q < G.Rumors.size(); ++Q)
+		{
+			Out += (Q ? "," : "") + FromInt(G.Rumors[Q]->OriginRung);
+		}
+		return Out;
+	}
+
+	// (x, y) => x == who || y == who
+	inline GossipMill::TogetherFn Involving(const std::string& Who)
+	{
+		return [Who](const std::string& X, const std::string& Y) { return X == Who || Y == Who; };
+	}
+
+	inline Answer OriginRungRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::string& Fn = F[0];
+		const Fact Window("player", "window_d1", "seen");
+		const std::string Topic = "player.window_d1";
+		std::vector<std::string> Outs;
+		std::vector<std::string>::size_type First = 1;
+		// Rung, holder, familiarity: two rounds of talk down a line of three.
+		if (Fn == "OriginRung" && F.size() >= 11)
+		{
+			First = 4;
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("w", "a", 0.9); Gr->Link("a", "b", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("w")); Mill.Add(RungAgent("a")); Mill.Add(RungAgent("b"));
+			Mill.Witness("w", Window, "the window went", true, GameTime(1, 23, 0), 0.94, false, I(F[1]));
+			Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+			Mill.Tick(GameTime(1, 23, 12), AlwaysTogether);
+			const GossiperPtr G = Mill.Get(F[2]);
+			double Fam = 0.0;
+			if (!G || !FamiliarityNamed(F[3], Fam)) { Outs.push_back("unknown-holder-or-familiarity/" + F[2] + "/" + F[3]); }
+			else
+			{
+				const RumorPtr R = G->Best(Topic);
+				const DeedAccount Acc = Suspecting::AccountOf(G.get(), Topic);
+				const Suspecting::Derived Dv = Suspecting::Derive(Acc, Nearness(), Fam);
+				Outs.push_back(R ? FromInt(R->Hops) : std::string("none"));
+				Outs.push_back(R ? FromInt(R->OriginRung) : std::string("none"));
+				Outs.push_back(FromBool(Acc.SawItMyself));
+				Outs.push_back(FromInt(Acc.Rung));
+				Outs.push_back(FromBool(Acc.NamesHim));
+				Outs.push_back(SuspicionLevelName(Dv.Level));
+				Outs.push_back(FromDouble(Dv.Value));
+			}
+		}
+		// Heard from somebody who recognised him, then seen as a shape, then
+		// seen plainly, then a rung off the ladder: the row's step and those
+		// before it.
+		else if (Fn == "HeardThenSeen" && F.size() >= 8)
+		{
+			First = 2;
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("n", "a", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("n")); Mill.Add(RungAgent("a"));
+			Mill.Witness("n", Window, "Novak put it in", true, GameTime(1, 23, 0), 0.94, false, 4);   // names-gate: allow (the C# golden fixture, EmitOriginRung; never shown)
+			Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+			static const char* const Steps[3] = { "shape", "plain", "offLadder" };
+			static const double Conf[3] = { 0.9, 0.6, 0.5 };
+			static const int Look[3] = { 1, 3, 9 };
+			for (int S = 0; S < 3 && Outs.empty(); ++S)
+			{
+				Mill.Witness("a", Window, Steps[S], true, GameTime(1, 23, 30), Conf[S], false, Look[S]);
+				if (F[1] != Steps[S]) continue;
+				const GossiperPtr G = Mill.Get("a");
+				const DeedAccount Acc = Suspecting::AccountOf(G.get(), Topic);
+				const Suspecting::Derived Dv = Suspecting::Derive(Acc, Nearness(), Acquaintance::HeardOfYou);
+				Outs.push_back(FromInt((long long)G->Rumors.size()));
+				Outs.push_back(FromBool(Acc.SawItMyself));
+				Outs.push_back(FromInt(Acc.Rung));
+				Outs.push_back(FromBool(Acc.NamesHim));
+				Outs.push_back(SuspicionLevelName(Dv.Level));
+				Outs.push_back(FromDouble(Dv.Value));
+			}
+			if (Outs.empty()) Outs.push_back("unknown-step/" + F[1]);
+		}
+		// Two witnesses: the vaguer surer telling first, then the one who named him.
+		else if (Fn == "NamingThrough" && F.size() >= 5)
+		{
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("s", "a", 0.9); Gr->Link("n", "a", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("s")); Mill.Add(RungAgent("n")); Mill.Add(RungAgent("a"));
+			Mill.Witness("s", Window, "a shape", true, GameTime(1, 23, 0), 0.94, false, 1);
+			Mill.Tick(GameTime(1, 23, 6), Involving("s"));
+			Mill.Witness("n", Window, "Novak put it in", true, GameTime(1, 23, 0), 0.8, false, 4);   // names-gate: allow (the C# golden fixture)
+			const std::vector<GossipEvent> Ev = Mill.Tick(GameTime(1, 23, 12), Involving("n"));
+			const GossiperPtr G = Mill.Get("a");
+			const DeedAccount Acc = Suspecting::AccountOf(G.get(), Topic);
+			Outs.push_back(FromInt((long long)Ev.size()));
+			Outs.push_back(FromInt((long long)G->Rumors.size()));
+			Outs.push_back(FromBool(Acc.NamesHim));
+			Outs.push_back(FromInt(HeardLines(*G)));
+		}
+		// A speaker with a look of their own and a naming beside it: one telling.
+		else if (Fn == "OneTelling" && F.size() >= 6)
+		{
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("n", "s", 0.9); Gr->Link("s", "l", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("n")); Mill.Add(RungAgent("s")); Mill.Add(RungAgent("l"));
+			Mill.Witness("n", Window, "Novak put it in", true, GameTime(1, 23, 0), 0.94, false, 4);   // names-gate: allow (the C# golden fixture)
+			Mill.Tick(GameTime(1, 23, 6), Involving("n"));
+			Mill.Witness("s", Window, "a shape by the glass", true, GameTime(1, 23, 8), 0.9, false, 1);
+			const std::vector<GossipEvent> Ev = Mill.Tick(GameTime(1, 23, 12), Involving("l"));
+			const GossiperPtr G = Mill.Get("l");
+			const DeedAccount Acc = Suspecting::AccountOf(G.get(), Topic);
+			Outs.push_back(FromInt((long long)Ev.size()));
+			Outs.push_back(FromInt((long long)G->Rumors.size()));
+			Outs.push_back(FromBool(Acc.NamesHim));
+			Outs.push_back(FromInt(HeardLines(*G)));
+			Outs.push_back(FromDouble(G->Suspicion.Value()));
+		}
+		// A faint naming heard first, then a sure look with no rung given, told
+		// in talk or asked for.
+		else if (Fn == "SurestTold" && F.size() >= 8)
+		{
+			First = 2;
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("s", "l", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("s")); Mill.Add(RungAgent("l"));
+			RumorPtr Naming = std::make_shared<Rumor>(Window);
+			Naming->OriginId = "n"; Naming->Summary = "Novak did it"; Naming->Confidence = 0.30;   // names-gate: allow (the C# golden fixture)
+			Naming->Hops = 1; Naming->Sensitive = true; Naming->OriginRung = 4;
+			Mill.Get("s")->Rumors.push_back(Naming);
+			Mill.Witness("s", Window, "him coming away", true, GameTime(1, 23, 0), 0.90);
+			Mill.Get("l")->Knowledge->Learn(Fact("player", "window_d1", "home all night"));
+			const std::vector<GossipEvent> Ev = F[1] == "asked"
+				? Mill.CompareNotes("l", "s", GameTime(1, 23, 6))
+				: Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+			const GossiperPtr G = Mill.Get("l");
+			const DeedAccount Acc = Suspecting::AccountOf(G.get(), Topic);
+			Outs.push_back(FromInt((long long)Ev.size()));
+			Outs.push_back(FromDouble(G->Suspicion.Value()));
+			Outs.push_back(FromInt(HeardLines(*G)));
+			Outs.push_back(FromBool(Acc.NamesHim));
+			Outs.push_back(Escape(Acc.Summary));
+			Outs.push_back(FromDouble(Acc.Confidence));
+		}
+		// A faint look of their own beside a surer naming: the naming places the number.
+		else if (Fn == "NamingPlaces" && F.size() >= 5)
+		{
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("n", "a", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("n")); Mill.Add(RungAgent("a"));
+			Mill.Witness("n", Window, "Novak put it in", true, GameTime(1, 23, 0), 0.94, false, 4);   // names-gate: allow (the C# golden fixture)
+			Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+			Mill.Witness("a", Window, "a shape", true, GameTime(1, 23, 30), 0.25, false, 1);
+			const DeedAccount Acc = Suspecting::AccountOf(Mill.Get("a").get(), Topic);
+			const Suspecting::Derived Dv = Suspecting::Derive(Acc, Nearness(), Acquaintance::HeardOfYou);
+			Outs.push_back(FromDouble(Acc.Confidence));
+			Outs.push_back(FromDouble(Acc.NamingConfidence));
+			Outs.push_back(SuspicionLevelName(Dv.Level));
+			Outs.push_back(FromDouble(Dv.Value));
+		}
+		// A body, asked about over a weak tie: whole, indelible and learned.
+		else if (Fn == "AskedAboutBody" && F.size() >= 5)
+		{
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("w", "c", 0.1);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("w")); Mill.Add(RungAgent("c"));
+			Mill.Witness("w", Fact("player", "killed_d1", "the docker"), "he put the docker down", false,
+			             GameTime(1, 23, 0), 1.0, true, 4);
+			Mill.CompareNotes("c", "w", GameTime(1, 23, 40));
+			const GossiperPtr C = Mill.Get("c");
+			const RumorPtr R = C->Best("player.killed_d1");
+			Outs.push_back(R ? FromDouble(R->Confidence) : std::string("none"));
+			Outs.push_back(R && R->Indelible ? "1" : "0");
+			Outs.push_back(R ? FromInt(R->OriginRung) : std::string("none"));
+			Outs.push_back(ClaimName(C->Knowledge->CheckClaim(Fact("player", "killed_d1", "nobody"))));
+		}
+		// THE RUNG IN A SAVE: the C#'s fixture, carried in the row, read back;
+		// and rungs written by this engine's writer and read back after a
+		// restart, with how many "rung" keys the writer wrote.
+		else if (Fn == "OriginRungSave" && F.size() >= 4 && F[1] == "read")
+		{
+			First = 3;
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			Mill.Add(RungAgent("w"));
+			Save::RestoreMillAgents(Unescape(F[2]), Mill);
+			Outs.push_back(RungsOf(*Mill.Get("w")));
+		}
+		else if (Fn == "OriginRungSave" && F.size() >= 5 && F[1] == "roundTrip")
+		{
+			First = 3;
+			GossipMill Src(std::make_shared<SocialGraph>());
+			Src.Add(RungAgent("w"));
+			std::string::size_type Start = 0;
+			for (int Ix = 0; Start <= F[2].size(); ++Ix)
+			{
+				std::string::size_type End = F[2].find(',', Start);
+				if (End == std::string::npos) End = F[2].size();
+				RumorPtr R = std::make_shared<Rumor>(Fact("player", "p" + FromInt(Ix), "v"));
+				R->OriginId = "w"; R->Summary = "s"; R->Confidence = 0.5; R->Hops = 1;
+				R->OriginRung = I(F[2].substr(Start, End - Start));
+				Src.Get("w")->Rumors.push_back(R);
+				Start = End + 1;
+			}
+			const std::string Json = Save::CaptureMillAgents(Src);
+			long long Keys = 0;
+			for (std::string::size_type At = Json.find("\"rung\""); At != std::string::npos; At = Json.find("\"rung\"", At + 1)) ++Keys;
+			GossipMill Back(std::make_shared<SocialGraph>());
+			Back.Add(RungAgent("w"));
+			Save::RestoreMillAgents(Json, Back);
+			Outs.push_back(FromInt(Keys));
+			Outs.push_back(RungsOf(*Back.Get("w")));
+		}
+		else
+		{
+			return A;
+		}
+		A.Known = true;
+		A.Got = MultiAnswer(F, First, Outs);
+		return A;
+	}
+
+	inline bool IsOriginRungRow(const std::string& Fn)
+	{
+		return Fn == "OriginRung" || Fn == "HeardThenSeen" || Fn == "NamingThrough" || Fn == "OneTelling"
+		    || Fn == "SurestTold" || Fn == "NamingPlaces" || Fn == "AskedAboutBody" || Fn == "OriginRungSave";
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -1994,6 +2266,12 @@ namespace Golden
 			const std::string C = Unescape(F[1]);
 			A.Known = true;
 			A.Got = FromBool(!C.empty() && GossipMill::IsWordChar(C[0]));
+		}
+		// THE FIRST TELLER'S RUNG (town list 6n), answered from Gossip.h,
+		// Suspecting.h and SaveCodec.h (PerceptionGolden EmitOriginRung).
+		else if (IsOriginRungRow(Fn))
+		{
+			A = OriginRungRow(F);
 		}
 		// The stateful ones.
 		else if (Fn == "Scenario" && F.size() >= 4)
