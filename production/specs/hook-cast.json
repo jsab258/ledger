@@ -3,7 +3,7 @@
  "talk_range_m": 6.0,
  "talk_range_from": "GossipDirector.cs TalkRange",
  "week": "day modulo 7: 0 mon to 6 sun, Population.IsRestDay's convention; 'days' replaces the daily routine on that weekday",
- "hours_what": "OPEN AND CLOSED (town list 6bo, 29 September): an area's 'hours' gives, for each weekday it opens, [open, close] in hours from that day's midnight, whole or half hours, a close past 24 running into the next morning until six at the latest; a weekday left out is shut. 'hours_note' is said after them. From production/research/shop-hours-1990/NOTE-2026-09-29.md, sourced: the Shops Act 1950 as it stood in 1990 (every shop not exempt shut by one on one weekday of its choosing; all shut by eight; on Sundays only papers, tobacco, sweets and meals; fish exempt from the half day but not sold on Sundays), fish sold after the dock's morning auction. Inferred: the half day on Wednesday, as independents still kept it in the 1980s by one 2020 account (the note's two local sources, Hull's and Grimsby's from the early 1900s, say Thursday); the market on Tuesday, Friday and Saturday, Grimsby's market days today (1990's not found); a pawnbroker's nine till half five (today's in Hull); the steam laundry, a works rather than a shop, with no half day; and the rest fitted to who is where in the routines below: the cafe open late because some of its regulars eat there on weekday evenings, the cab office till the night driver goes home at three.",
+ "hours_what": "OPEN AND CLOSED (town list 6bo, 29 September): an area's 'hours' gives, for each weekday it opens, [open, close] in hours from that day's midnight, whole or half hours, a close past 24 running into the next morning until six at the latest; a weekday left out is shut. 'hours_note' is said after them. From production/research/shop-hours-1990/NOTE-2026-09-29.md, sourced: the Shops Act 1950 as it stood in 1990 (every shop not exempt shut by one on one weekday of its choosing; all shut by eight; on Sundays only papers, tobacco, sweets and meals; fish exempt from the half day but not sold on Sundays), fish sold after the dock's morning auction. Inferred: the half day on Wednesday, as independents still kept it in the 1980s by one 2020 account (the note's two local sources, Hull's and Grimsby's from the early 1900s, say Thursday); the market on Tuesday, Friday and Saturday, Grimsby's market days today (1990's not found); a pawnbroker's nine till half five (today's in Hull); the steam laundry, a works rather than a shop, with no half day; the fish shop, exempt from the half day, shut Wednesday afternoons all the same, when its keeper goes home at one; 'hours_breaks' gives, on a weekday, [from, to] inside the day's hours when it is shut because whoever keeps it is elsewhere (Hal at Rita's on Monday mornings, nobody at Mickey's from six to seven and the last hour of a Sunday); and the rest fitted to who is where in the routines below: the cafe open late because some of its regulars eat there on weekday evenings, the cab office till the night driver goes home at three.",
  "places": {
   "mickeys_office": {
    "x_m": 6.0,
@@ -184,12 +184,13 @@
   "mickeys": {
    "places": ["mickeys_office", "mickeys_rank"],
    "names": ["Mickey's", "the office", "the cab office", "the rank"],
-   "hours": {"mon": [7, 27], "tue": [7, 27], "wed": [7, 27], "thu": [7, 27], "fri": [7, 27], "sat": [7, 27], "sun": [9, 27]}
+   "hours": {"mon": [7, 27], "tue": [7, 27], "wed": [7, 27], "thu": [7, 27], "fri": [7, 27], "sat": [7, 27], "sun": [9, 27]},
+   "hours_breaks": {"sun": [[18, 19], [23, 24]]}
   },
   "fish_market": {
    "places": ["fish_counter", "fish_front"],
    "names": ["the fish market", "the fishmonger's", "the market"],
-   "hours": {"mon": [7.5, 14], "tue": [7.5, 14], "wed": [7.5, 14], "thu": [7.5, 14], "fri": [7.5, 14], "sat": [7.5, 14]}
+   "hours": {"mon": [7.5, 14], "tue": [7.5, 14], "wed": [7.5, 13], "thu": [7.5, 14], "fri": [7.5, 14], "sat": [7.5, 14]}
   },
   "ritas": {
    "places": ["ritas_counter", "ritas_step"],
@@ -228,7 +229,8 @@
   "hals": {
    "places": ["hals_shop"],
    "names": ["Hal's"],
-   "hours": {"mon": [10, 18], "tue": [10, 18], "wed": [10, 13], "thu": [10, 18], "fri": [10, 18], "sat": [10, 18]}
+   "hours": {"mon": [10, 18], "tue": [10, 18], "wed": [10, 13], "thu": [10, 18], "fri": [10, 18], "sat": [10, 18]},
+   "hours_breaks": {"mon": [11, 12]}
   },
   "bus_stop": {
    "places": ["bus_stop"],
