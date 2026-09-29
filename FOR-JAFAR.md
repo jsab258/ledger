@@ -12,6 +12,24 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **[Wednesday's cleanup page](https://claude.ai/artifact/BKVe5Ypxbv9fh4YD9f2ezi):** your two yeses of Tuesday are done (Unreal's store capped at 10 GB, trimming itself when Unreal next starts, about 7 GB; its old cache deleted again). C: is at 43 GB while the build machine builds; the list alone cannot reach 60. Recommended: two small groups (1.7 GB); the big win is yours alone: the Windows hibernation file, 13.7 GB.
 
+## Town, 30 September
+
+**[Your page: the police, Sheila's trust, the week's end, the calls carried](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y)**, picks marked.
+
+**Decide there:** can an arrest happen, what one does and says; word of the police asking; when Sheila trusts Tom; day 7 and her words. Carried: yesterday's nine, the check's retune now on your subscription, not money.
+
+**Decide here:** friends' live talk goes through our relay, which needs a key: (A) your new capped key, one monthly limit (recommended); (B) none for friends yet.
+
+**Done:** Tom's no to the outfit asked back first; 1990 shop hours everybody knows; arrests cost hours, not the game; damage found next morning; the town talks by its routines; Sheila's trust; the week's end; no tool of mine calls the API now.
+
+**Research:** 1990 shop hours; custody and bail; the caution's words; four checklist sweeps; Claude Code's print mode.
+
+**Got wrong:** my pushes set off a paid playtest 46 times unnoticed; I pushed once on a red check; Sheila's trust and day 7 took nine reviews; a 2.5 GB review copy sits on C:, on the cleanup list.
+
+**C: free:** 46.8 GB at the last summary, 46 now. Backup runs with this commit.
+
+**Next:** your page.
+
 ## Builder, Tuesday 29 September
 
 **[Tuesday's page](https://claude.ai/artifact/TmJnie1Qzo6jE6NdkyqRPo):** Ron threatening, made two ways, blind; Monday's items still wait (Sheila's game voice taken off: it leans American in moments).
@@ -35,30 +53,6 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 **Decide.**
 - Jacket: (A) cut from a real pattern, sewn round Ron in Blender like the cap: free, days (recommended); (B) Marvelous Designer, $39, approved, but you install and drive it; (C) park clothes.
 - Carried: the delay (Inworld); hair.
-
-## Town, 29 September
-
-**[Your page: the first hour, the town's first story, the calls left](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked.
-
-**Decide there:** the clock; Tom's reading; Mickey's people knowing his name; a privacy notice; who keeps quiet; $20–40 to retune the invention check; the talk allowance; new, how Mickey died and the street's plain facts (asked first questions, the three said "that's all I know" about 38 times in 60).
-
-**Your answers, done:** story and eleven sheets approved; Father Brendan Walsh, Keith Garbutt, June Suddaby; the first hour; neighbours' talk capped; Sheila names Tom only on trust.
-
-**Got wrong:** I missed your answers on both pages for a night.
-
-**Done:**
-- No repeats in two hours; 27 street lines fixed.
-- Characters keep talk across reloads, know Tom and the place, end talks.
-- A lie can surface later; Tom can own up or ask for silence.
-- The street reacts to a deed; no real brands; fewer tics.
-
-**Failed:** Tom's reading, again.
-
-**Research:** 1990 speech; what players are told; three checklist sweeps.
-
-**C: free:** 41.5 GB yesterday, 46.8 now; the builder's cleanup page waits. Backup runs with this commit.
-
-**Next:** your page.
 
 ## 26 September, day
 
