@@ -157,7 +157,10 @@ namespace Ledger.Core
             if (line.Composed && line.Source?.Content != null && line.Source.Content.Subject == TownNews.Subject)
             {
                 var key = line.Source.TopicKey;
-                _storyTold[key] = TimesToldHim(key) + 1;
+                // AT THE MOST AN INT HOLDS IT STAYS (FINDINGS, 29 September): it
+                // wrapped to int.MinValue before.
+                int told = TimesToldHim(key);
+                _storyTold[key] = told == int.MaxValue ? told : told + 1;
             }
         }
 
@@ -210,7 +213,9 @@ namespace Ledger.Core
                         ledger.HeardLine(bank, line);
             if (saved.TryGetValue("told", out var told) && told is Dictionary<string, object> toldMap)
                 foreach (var kv in toldMap)
-                    if (kv.Value is double dv && dv >= 0) ledger._storyTold[kv.Key] = (int)dv;
+                    // clamped as MiniJson.GetInt clamps: a count past int.MaxValue read
+                    // as int.MinValue before (FINDINGS, 29 September)
+                    if (kv.Value is double dv && dv >= 0) ledger._storyTold[kv.Key] = dv >= int.MaxValue ? int.MaxValue : (int)dv;
                     else if (kv.Value is int iv && iv >= 0) ledger._storyTold[kv.Key] = iv;
             return ledger;
         }
