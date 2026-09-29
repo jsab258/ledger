@@ -42,6 +42,14 @@
    "mb": 8201
   },
   {
+   "path": "F:/LedgerTools/hf/hub/models--samuel-vitorino--sopro-v2-turbo",
+   "madeBy": "the builder, 29 September: snapshot_download of samuel-vitorino/sopro-v2-turbo (Apache-2.0)",
+   "why": "Sopro V2 Turbo's weights for the voice-delay trial",
+   "status": "kept",
+   "recorded": "2026-09-29",
+   "mb": 634
+  },
+  {
    "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaC1.uasset",
    "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
    "why": "the approved face (its source)",
@@ -904,6 +912,14 @@
    "mb": 1121
   },
   {
+   "path": "F:/LedgerTools/sopro",
+   "madeBy": "the builder, 29 September: pip install sopro 2.2.0 and CPU torch in its own venv",
+   "why": "Sopro V2 Turbo, the next free voice engine for the delay (Jafar: free routes only); tools/voice-live/sopro_takes.py",
+   "status": "kept",
+   "recorded": "2026-09-29",
+   "mb": 735
+  },
+  {
    "path": "F:/LedgerTools/tmp/cand",
    "madeBy": "the portrait tool, 25 Sep",
    "why": "the first candidate pictures, glazed eyes",
@@ -973,6 +989,14 @@
    "recorded": "2026-09-25",
    "mb": 131,
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
+  },
+  {
+   "path": "F:/LedgerTools/tmp/hair3",
+   "madeBy": "the builder, 29 September: tools/meshgen/blender/hair/grow_perm.py, attempt 3",
+   "why": "Sheila's third hair attempt, set aside (the two-tries rule)",
+   "status": "rejected",
+   "recorded": "2026-09-29",
+   "mb": 61
   },
   {
    "path": "F:/LedgerTools/tmp/ingame",

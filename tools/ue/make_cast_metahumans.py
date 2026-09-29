@@ -539,6 +539,20 @@ for _t in DIMENSIONS_4:
     DIMENSIONS_4[_t]["rocco"] = SECOND["P2"]["rocco"]
 CANDIDATES.update(DIMENSIONS_4)
 
+# DARREN'S HAIR, 29 September: Jafar picked Sheila's S4 and turned Darren's
+# down for its "woman's haircut" (the long cut); curls grown in Blender were
+# set aside after three attempts, so his S4 face gets Epic's two plain short
+# men's cuts, his bleached ends kept: S5 the messy crop, S6 the casual cut
+# with a fringe. Build them with LEDGER_MH_ONLY=sam.
+DARREN_HAIR = {
+    "S5": {"sam": _finish(DIMENSIONS_4["S4"]["sam"], hair="WI_Hair_S_Messy")},
+    "S6": {"sam": _finish(DIMENSIONS_4["S4"]["sam"], hair="WI_Hair_S_Casual")},
+}
+for _t in DARREN_HAIR:
+    DARREN_HAIR[_t]["lena"] = DIMENSIONS_4["S4"]["lena"]
+    DARREN_HAIR[_t]["rocco"] = SECOND["P2"]["rocco"]
+CANDIDATES.update(DARREN_HAIR)
+
 
 def brief(who):
     """The brief the current take builds `who` to: a candidate's, the cast's, or none (a stand-in)."""
