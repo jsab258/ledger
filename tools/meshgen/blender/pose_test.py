@@ -47,7 +47,8 @@ def opt(name, default, kind=float):
 
 POSES = opt("--poses", "down,up,walk,sit", str).split(",")
 FRAMES = opt("--frames", 45, int)
-GARMENT = opt("--garment", "Jacket", str)
+HOLD_SLEEVE, HOLD_HEM = opt("--hold-sleeve", 0.95), opt("--hold-hem", 0.5)
+GARMENT = opt("--garment", "JacketSim", str)      # the coarse simulation mesh, as Unreal simulates it
 os.makedirs(OUT, exist_ok=True)
 
 
@@ -104,11 +105,20 @@ def make_pose(arm, name):
 bpy.ops.wm.open_mainfile(filepath=BLEND)
 garment = bpy.data.objects[GARMENT]
 arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
-body = next(o for o in bpy.data.objects if o.type == "MESH" and o is not garment and not o.hide_render
+body = next(o for o in bpy.data.objects if o.type == "MESH" and o is not garment
             and any(m.type == "ARMATURE" for m in o.modifiers))
+# THE FINISHED GARMENT RIDES THE CLOTH (finish_donkey.py's NAME.blend): its
+# render mesh (collar, yoke, buttons, pockets and all) follows the simulated
+# drape by a surface deform, as Unreal's proxy deformer carries a render mesh
+# on its simulation mesh; the drape itself is simulated and not drawn
+RENDER = opt("--render", "JacketRender", str)
+follower = bpy.data.objects.get(RENDER)
+keep = (garment, body, follower)
 for o in list(bpy.data.objects):
-    if o.type == "MESH" and o not in (garment, body):
+    if o.type == "MESH" and o not in keep:
         bpy.data.objects.remove(o, do_unlink=True)
+garment.hide_set(False)
+body.hide_render = False
 if arm.animation_data:
     arm.animation_data_clear()
 for pb in arm.pose.bones:
@@ -134,6 +144,12 @@ dt.layers_vgroup_select_dst = "NAME"
 bpy.context.view_layer.objects.active = garment
 bpy.ops.object.datalayout_transfer(modifier="Weights")
 bpy.ops.object.modifier_apply(modifier="Weights")
+# THE WEIGHTS PUT RIGHT FOR A JACKET (tailor.torso_weights): the body pieces
+# without the arms' weights except near the sleeves, all smoothed round the
+# armpits as Unreal's transfer smooths them (copied point by point, the arm's
+# and the torso's weights met in one row, and the cloth there was squeezed out
+# in flaps, run 16; the side panels rose into a sail, the second review)
+tailor.torso_weights(garment, smooth=opt("--smooth-weights", 8, int))
 mw = garment.matrix_world.copy()
 garment.parent = arm
 garment.matrix_world = mw
@@ -153,17 +169,43 @@ if uv:
     for lp in garment.data.loops:
         vu[lp.vertex_index] = tuple(uv.data[lp.index].uv)
 hold = garment.vertex_groups.new(name="hold")
+# LOOSER ROUND THE ARMPITS (the first blind review: the body came through at
+# the inside of the upper arm in the walk; with the arms raised the chest
+# beside them came through the front): within 12 cm of an armpit the cloth is
+# held at 0.4 rising to full, so the body's collision can push it clear, as
+# Unreal's backstop will
+arm_pits = [tailor.joint(arm, "upperarm_" + s_) + Vector((0.0, 0.0, -0.10)) for s_ in ("l", "r")]
 for i, p in enumerate(co):
     u, v = vu.get(i, (0.0, 0.0))
     if abs(u) > 1.5:                                # a sleeve (its flat pattern at u beyond 1.5; v down it)
-        w = 0.7 - 0.3 * max(0.0, min(1.0, -v / 0.53))
+        w = HOLD_SLEEVE - 0.15 * max(0.0, min(1.0, -v / 0.53))
     else:
         t = max(0.0, min(1.0, (chest - p[2]) / max(0.05, chest - bottom)))
-        w = 1.0 - 0.75 * t
+        w = 1.0 - (1.0 - HOLD_HEM) * t
+    near_pit = min((Vector(p) - q).length for q in arm_pits)
+    if near_pit < 0.12:
+        w = min(w, 0.4 + 0.6 * near_pit / 0.12)
     hold.add([i], w, "REPLACE")
-cl = tailor.cloth(garment, frames=FRAMES, self_collision=True)
+# HELD AS UNREAL HOLDS IT (run 16's poses: on the coarse mesh, held weakly,
+# the sleeves stayed where they were and the arms came out of them): Unreal's
+# maximum distance keeps each point within a few centimetres of where the
+# skin carries it, so here the goal is strong: the sleeves and the upper body
+# nearly all the way, the hem half
+cl = tailor.cloth(garment, frames=FRAMES, self_collision=True, mass=None, bending=opt("--bending", 10.0))
 cl.settings.vertex_group_mass = "hold"
-cl.settings.pin_stiffness = 1.0
+cl.settings.pin_stiffness = opt("--pin", 5.0)
+if follower is not None:
+    follower.hide_set(False)
+    follower.hide_render = False
+    follower.modifiers.clear()
+    sd = follower.modifiers.new("OnTheCloth", "SURFACE_DEFORM")
+    sd.target = garment
+    sd.falloff = 4.0
+    bpy.context.view_layer.objects.active = follower
+    bpy.ops.object.select_all(action="DESELECT")
+    follower.select_set(True)
+    bpy.ops.object.surfacedeform_bind(modifier="OnTheCloth")
+    garment.hide_render = True
 tailor.collider(body, friction=20.0)
 grey = tailor.material("M_Body", (0.5, 0.5, 0.5))
 body.data.materials.clear()
@@ -199,8 +241,11 @@ for name in POSES:
     inside = tailor.inside_count(bvh, c, range(len(c)), tol=0.003)
     L1 = np.linalg.norm(c[edges[:, 0]] - c[edges[:, 1]], axis=1)
     r = L1 / np.maximum(L0, 1e-6)
+    worst = np.argsort(r)[-4:][::-1]
     report[name] = {"insideOver3mm": inside, "stretch95": round(float(np.percentile(r, 95)), 3),
-                    "stretchMax": round(float(r.max()), 2)}
+                    "stretchMax": round(float(r.max()), 2),
+                    "worst": [(round(float(r[k]), 1), [round(float(x), 3) for x in co[edges[k, 0]]],
+                               [round(float(x), 2) for x in vu.get(int(edges[k, 0]), (0, 0))]) for k in worst]}
     say(name, report[name])
     cen = Vector((0.0, float(c[:, 1].mean()), float((c[:, 2].min() + c[:, 2].max()) / 2)))
     tailor.pictures(os.path.join(OUT, "pose-" + name), cen, views=(("front", (0, -3.6, 0.2)), ("side", (3.6, 0, 0.2)),

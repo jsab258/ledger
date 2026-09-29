@@ -14,20 +14,27 @@ ways. Two things change here:
    armpit, inside the root of the arm, and a 4 cm sleeve cap on a sleeve
    54 cm wide. body_measurements.py now finds the armpit on the body (22 cm
    under the shoulder) and takes shoulder to shoulder round the back, as
-   FreeSewing does; the draft (armholeDepth 12%, bicepsEase 12%) has a 26 cm
-   armhole and an 11.5 cm cap, a work jacket's.
-2. THE ORDER. Everything is placed at once round the posed body, arms
-   present: the body pieces rolled round the torso at the height they hang
-   (no lift, which put the armhole above the arm), the sleeves as tubes round
-   the arms blended into the armholes they are sewn to, nothing starting
-   inside the body. The flat pattern is the cloth's rest shape (tailor.py),
-   so the bending of the placement costs no lengths. Then sewn weightless,
-   draped, the seams welded, and the arms brought back to the body's rest
-   pose with the jacket on them.
+   FreeSewing does; the draft (armholeDepth 6%, bicepsEase 12%, a 5 degree
+   shoulder, the raised shoulders of the pose it is exported in) has a 25
+   cm armhole and a 12.4 cm cap, a work jacket's.
+2. THE ORDER (after the research, SLEEVES-RECIPE-2026-09-29.md, and
+   sixteen runs; production/art/clothing/donkey-jacket-sewn/README.md).
+   Everything is placed at once round the posed body, arms present: the
+   body pieces hung on a curtain from the shoulders at the heights they have
+   on the pattern, the sleeves as unstretched tubes hanging on the arms,
+   nothing starting inside the body; each piece remembers the shape it was
+   laid in. Sewn weightless with the sewing force drawn in over 15 frames to
+   as good as unlimited, slippery on the body: gaps of 10 to 25 cm close.
+   The seams are welded, the cloth settles under gravity remembering the
+   pattern's own lengths, and the body's own skeleton carries it back to the
+   rest pose (its points first taken back through the skin, tailor.unpose),
+   the cloth on top settling it. press_garment.py then irons out the
+   crinkles the sewing leaves.
 
-OUT_DIR gets place-*.png (the placement), sewn-*.png, jacket-*.png (in the
-rest pose), jacket.blend, NAME_render_static.fbx and NAME_sim_static.fbx (the
-body's rest pose, for the builder's make_cloth_jacket.py) and jacket.json.
+OUT_DIR gets place-*.png (the placement), stitched-*.png, settled-*.png and
+settled.blend (the sewing pose), jacket-*.png and jacket.blend (the body's
+rest pose, for press_garment.py and finish_donkey.py, which writes the files
+for Unreal) and jacket.json.
 """
 import json
 import math
@@ -56,8 +63,8 @@ POSE = opt("--pose", 40.0)                  # the arms held out: degrees below t
 EDGE = opt("--edge", 12.0)                  # cloth triangle edge while draping, mm
 CLEAR = opt("--clear", 0.035)               # the body pieces start this far out from the torso, m
 LIFT = opt("--lift", 0.0)
-SEW_FRAMES = opt("--sew", 40, int)          # weightless sewing
-DROP_FRAMES = opt("--drop", 50, int)        # gravity ramped in and settled
+SEW_FRAMES = opt("--sew", 60, int)          # weightless sewing
+DROP_FRAMES = opt("--drop", 60, int)        # gravity ramped in and settled
 RETURN_FRAMES = opt("--return", 60, int)    # the arms back to the rest pose
 PLACE_ONLY = "--place-only" in argv
 NAME = opt("--name", "ron_donkey", str)
@@ -314,7 +321,7 @@ for side in (1, -1):
             ib = list(reversed(ib))
         for x_, y_ in zip(ia, ib):
             armhole_pos[(side, y_)] = Vector(G.verts[AT[(piece, side)][x_]])
-BLEND = opt("--blend", 0.14)
+BLEND = opt("--blend", 0.0)                 # 0: the sleeves start unstretched and the sewing brings them to the armholes
 cap_ids = sorted({k for (_, k) in armhole_pos})
 # THE TUBE MOVED WHOLE TO ITS ARMHOLE (29 September, run 10): unstretched
 # and unblended, the tubes' cap edges lay 9 to 12 cm from their armholes,
@@ -454,7 +461,7 @@ for i, co in enumerate(G.verts):
 # fold over the shoulder is the one they keep. The sleeves keep their
 # unstretched tube: their blend into the armhole stretches the cap by up to
 # three quarters, which a rest shape would keep.
-if opt("--body-rest", "wrap", str) == "placed":
+if opt("--body-rest", "placed", str) == "placed":
     for i in range(len(G.verts)):
         if not G.piece_of[i].startswith("sleeve"):
             G.rest[i] = G.verts[i]
@@ -492,7 +499,13 @@ if PLACE_ONLY:
 
 scn = bpy.context.scene
 CL = dict(mass=opt("--mass", 0.006), tension=opt("--tension", 40.0), compression=opt("--compression", 60.0),
-          shear=opt("--shear", 15.0), bending=opt("--bending", 25.0))
+          shear=opt("--shear", 15.0), bending=opt("--bending", 60.0))
+# SETTLED AND CARRIED AT MELTON'S TRUE WEIGHT (FIT-AND-STIFFNESS-2026-09-29.md:
+# at 0.006 kg a point the jacket weighed 84 kg, and sagged, clung, hung out
+# behind and stretched into a sail), with the bending that keeps a melton-
+# stiff line at that weight (a bending length near 8 cm by the helper's
+# estimate); the sewing itself, weightless, keeps what worked
+HANG = dict(CL, mass=None, bending=opt("--hang-bending", 10.0))
 log["cloth"] = CL
 # THE STITCH, 29 September run 9 (runs 3 to 8: a rest shape that bends one
 # way fought the fold over the shoulder, and friction 60 held the sleeves
@@ -500,7 +513,7 @@ log["cloth"] = CL
 # wraps (the pattern's lengths), bend almost freely, and slide on the body,
 # so each settles where its seams hold it; normal stiffness after the weld
 tailor.collider(body, friction=opt("--stitch-friction", 5.0))
-stitch = dict(CL, bending=opt("--stitch-bending", 0.5))
+stitch = dict(CL, bending=opt("--stitch-bending", 25.0))
 cl = tailor.cloth(jacket, sewing=True, rest_key="rest", frames=SEW_FRAMES, **stitch)
 cl.settings.effector_weights.gravity = 0.0
 # THE SEAMS DRAWN IN OVER 15 FRAMES, not at once (run 12: pulled shut in a
@@ -545,7 +558,7 @@ scn.frame_set(1)
 REST_STRAIN = tailor.pattern_rest(jacket)
 log["weld"]["restVsPattern"] = REST_STRAIN
 say("rest shape from the pattern's lengths, edges against the pattern (5/50/95%)", REST_STRAIN)
-cl = tailor.cloth(jacket, frames=DROP_FRAMES, self_collision=True, rest_key="rest", **CL)
+cl = tailor.cloth(jacket, frames=DROP_FRAMES, self_collision=True, rest_key="rest", **HANG)
 gw = cl.settings.effector_weights
 gw.gravity = 0.15
 gw.keyframe_insert("gravity", frame=1)
@@ -583,8 +596,52 @@ for side in ("l", "r"):
     pb.keyframe_insert("rotation_quaternion", frame=RETURN_FRAMES)
 LOWER = RETURN_FRAMES + 30
 scn.frame_set(1)
-log["lower"] = {"restVsPattern": tailor.pattern_rest(jacket)}
-cl = tailor.cloth(jacket, frames=LOWER, self_collision=True, rest_key="rest", **CL)
+LOWER_BY = opt("--lower-by", "skin", str)
+if LOWER_BY == "skin":
+    # THE JACKET RIDES THE SKELETON DOWN (29 September, run 14): pushed down
+    # by the arms alone, the sleeves levered the whole jacket up (the hem back
+    # at the crotch) and the body came through at an armpit. As the research
+    # has it, the jacket takes the posed body's skin weights and is carried
+    # back to the body's rest pose on the skeleton; the cloth on top, held to
+    # that most at the shoulders and least at the hem, settles it and keeps it
+    # off the body and itself.
+    dt = jacket.modifiers.new("Weights", "DATA_TRANSFER")
+    dt.object = body_src
+    dt.use_vert_data = True
+    dt.data_types_verts = {"VGROUP_WEIGHTS"}
+    dt.vert_mapping = "POLYINTERP_NEAREST"
+    dt.layers_vgroup_select_src = "ALL"
+    dt.layers_vgroup_select_dst = "NAME"
+    bpy.context.view_layer.objects.active = jacket
+    bpy.ops.object.datalayout_transfer(modifier="Weights")
+    bpy.ops.object.modifier_apply(modifier="Weights")
+    # THE BODY'S OWN SKELETON CARRIES IT (a second skeleton whose rest was the
+    # sewing pose did nothing in a background run: the arms came down out of
+    # the sleeves): the jacket's points are taken back through the pose to the
+    # rest pose by its own skin weights, so the Armature modifier puts them
+    # where they are now, and brings them down with the arms
+    say("arm weights taken off the body pieces:", tailor.torso_weights(jacket))
+    say("points taken back to the rest pose through the skin:", tailor.unpose(jacket, arm))
+    am = jacket.modifiers.new("Armature", "ARMATURE")
+    am.object = arm
+    scn.frame_set(1)
+    uvj = jacket.data.uv_layers["pattern"]
+    vuv = {lp.vertex_index: tuple(uvj.data[lp.index].uv) for lp in jacket.data.loops}
+    cj = tailor.coords(jacket, evaluated=False)
+    top_, bot_ = float(cj[:, 2].max()), float(cj[:, 2].min())
+    hold = jacket.vertex_groups.new(name="hold")
+    for i, pco in enumerate(cj):
+        u, v = vuv.get(i, (0.0, 0.0))
+        if abs(u) > 1.5:
+            w = 0.8 - 0.3 * max(0.0, min(1.0, -v / 0.53))
+        else:
+            w = 1.0 - 0.8 * max(0.0, min(1.0, (top_ - 0.3 - pco[2]) / max(0.05, top_ - 0.3 - bot_)))
+        hold.add([i], w, "REPLACE")
+log["lower"] = {"by": LOWER_BY, "restVsPattern": tailor.pattern_rest(jacket)}
+cl = tailor.cloth(jacket, frames=LOWER, self_collision=True, rest_key="rest", **HANG)
+if LOWER_BY == "skin":
+    cl.settings.vertex_group_mass = "hold"
+    cl.settings.pin_stiffness = 1.0
 scn.frame_end = LOWER
 for f in range(1, LOWER + 1):
     scn.frame_set(f)
@@ -595,6 +652,11 @@ BVH_REST = tailor.bvh_of(body_rest)
 bpy.data.objects.remove(body_rest, do_unlink=True)
 co = tailor.coords(jacket)
 tailor.apply_frame(jacket)
+if LOWER_BY == "skin":
+    # the jacket stays where it is, in the body's rest pose, its borrowed weights gone
+    for g in list(jacket.vertex_groups):
+        jacket.vertex_groups.remove(g)
+    co = tailor.coords(jacket, evaluated=False)
 
 # ---- the checks, the pictures, the files -----------------------------------------------------
 

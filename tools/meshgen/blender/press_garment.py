@@ -33,6 +33,24 @@ bev = tailor.evaluated_copy(body, "BodyNow")
 bvh = tailor.bvh_of(bev)
 bpy.data.objects.remove(bev, do_unlink=True)
 report = tailor.press(garment, bvh, rounds=opt("--rounds", 40, int), smooth=opt("--smooth", 0.25), lengths=opt("--lengths", 10, int))
+# BY PIECE, from the flat pattern's layout (brian.LAYOUT): the back at u 0,
+# the fronts at u +-1, the sleeves at u +-2
+uvl = garment.data.uv_layers["pattern"]
+u_of = {lp.vertex_index: uvl.data[lp.index].uv[0] for lp in garment.data.loops}
+sleeves = [i for i, u in u_of.items() if abs(u) >= 1.5]
+fronts = [i for i, u in u_of.items() if 0.5 <= abs(u) < 1.5]
+backs = [i for i, u in u_of.items() if abs(u) < 0.5]
+# THE SLEEVES PRESSED AGAIN (the first blind review: 'both forearms have
+# dense, small, papery crinkles'): a second pass on them alone
+report["sleeves"] = tailor.press(garment, bvh, rounds=opt("--sleeve-rounds", 60, int), smooth=0.35, lengths=opt("--lengths", 10, int),
+                                 only=sleeves)
+# THE HOLLOWS SPANNED (the same review: 'the chest moulds to the body')
+if "--no-span" not in argv:
+    # below the armpits (the body's own measure, else 25 cm under the top of the cloth)
+    top = max((garment.matrix_world @ v.co).z for v in garment.data.vertices)
+    report["spanned"] = tailor.span_hollows(garment, fronts + backs, fronts, backs, z_max=opt("--span-below", top - 0.17), deepest=opt("--span-deepest", 0.04))
+    # and clear of the body again, where spanning a slope brought a point near it
+    report["afterSpan"] = tailor.press(garment, bvh, rounds=2, smooth=0.0, lengths=0)
 print("PRESS", json.dumps(report), flush=True)
 co = tailor.coords(garment, evaluated=False)
 mid = Vector((0.0, float(co[:, 1].mean()), float(co[:, 2].min() + co[:, 2].max()) / 2))

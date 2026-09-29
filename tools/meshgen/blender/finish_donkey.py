@@ -185,63 +185,78 @@ def grid(piece, side, x0, x1, y0, y1, nx, ny, lift):
 
 extras = []
 
-# ---- the yoke: a raised black layer over the shoulders ----------------------------------------
+# ---- the yoke: one black piece over the shoulders, cut from the cloth's own surface ----------------
+#
+# THE SECOND BLIND REVIEW (29 September): built as four panels laid through
+# the pattern, the yoke 'looks torn at both shoulders ... does not read as
+# going over the shoulders ... ragged side edges ... a vertical seam down the
+# middle'. Now it is the jacket's own surface where the pattern says yoke,
+# front and back joined across the shoulder seam as one piece (the welded
+# cloth already joins them), the surface subdivided twice so the straight
+# lower edges are straight to 3 mm, and set off the wool by a constant lift
+# along the surface's own normals, so the wool cannot show through it.
 
-FRONT_YOKE = opt("--front-yoke", 130.0)        # mm under the shoulder seam's lowest point
+FRONT_YOKE = opt("--front-yoke", 170.0)        # mm under the shoulder seam's lowest point
 BACK_YOKE = opt("--back-yoke", 290.0)          # mm under the back neck (centre back)
-YOKE_LIFT = opt("--yoke-lift", 0.0025)         # off the wool, clear of its small folds
+YOKE_LIFT = opt("--yoke-lift", 0.0025)
 fp, bp = pts["front"], pts["back"]
 front_yoke_y = max(fp["shoulder"][1], fp["neck"][1]) + FRONT_YOKE
 back_yoke_y = bp["cbNeck"][1] + BACK_YOKE
-
-
-def top_edge(segs):
-    """The piece's top edge (neckline, shoulder, armhole) as y for a given x, mm."""
-    pts_ = [q for sg in segs for q in sg]
-    xs = np.array([q[0] for q in pts_])
-    ys = np.array([q[1] for q in pts_])
-    order = np.argsort(xs)
-    xs, ys = xs[order], ys[order]
-
-    def f(x):
-        m = np.abs(xs - x) < 4.0
-        return float(ys[m].min()) if m.any() else float(np.interp(x, xs, ys))
-    return f, float(xs.max())
-
-
-def yoke_panel(piece, side, segs, y_low, name):
-    """A panel over the pattern from the top edge down to a straight line y_low, column by column, on the drape,
-    lifted off it: its lower edge straight across, its top edge along the seams."""
-    f, xmax = top_edge(segs)
-    nx, ny = 36, 14
-    rows = [[] for _ in range(ny + 1)]
-    for i in range(nx + 1):
-        x = xmax * i / nx
-        yt = min(f(x), y_low)
-        for j in range(ny + 1):
-            y = yt + (y_low - yt) * j / ny
-            q = at(piece, side, x, y)
-            if q is None:
-                q = at(piece, side, max(0.0, x - 2.0), y + 1.0)
-            rows[j].append(q + outward(q) * YOKE_LIFT if q is not None else None)
-    rows = [[q for q in r] for r in rows]
-    if any(q is None for r in rows for q in r):
-        say("yoke %s: points off the drape, filled from their neighbours" % name)
-        for r in rows:
-            for k in range(len(r)):
-                if r[k] is None:
-                    r[k] = next((r[j] for j in range(k, len(r)) if r[j] is not None), None) or next(
-                        (r[j] for j in range(k, -1, -1) if r[j] is not None))
-    return sheet(name, rows, yoke_m, thickness=0.0015, offset=1.0)
-
-
-B_, F_ = P["B"], P["F"]
-for side in (1, -1):
-    extras.append(yoke_panel("back", side, [B_["neckline"], B_["shoulder"], B_["armhole"]], back_yoke_y,
-                             "YokeBack_%s" % ("l" if side > 0 else "r")))
-    extras.append(yoke_panel("front", side, [F_["neckline"], F_["shoulder"], F_["armhole"]], front_yoke_y,
-                             "YokeFront_%s" % ("l" if side > 0 else "r")))
-log["yoke"] = {"frontMmUnderShoulder": FRONT_YOKE, "backMmUnderNeck": BACK_YOKE}
+ydata = jacket.data.copy()
+yoke = bpy.data.objects.new("Yoke", ydata)
+bpy.context.collection.objects.link(yoke)
+sub_ = yoke.modifiers.new("Subdivision", "SUBSURF")
+sub_.levels = sub_.render_levels = 2
+bpy.context.view_layer.objects.active = yoke
+bpy.ops.object.select_all(action="DESELECT")
+yoke.select_set(True)
+bpy.ops.object.modifier_apply(modifier=sub_.name)
+yb = bmesh.new()
+yb.from_mesh(yoke.data)
+uvy = yb.loops.layers.uv["pattern"]
+yb.faces.ensure_lookup_table()
+drop = []
+for f in yb.faces:
+    u = sum(l[uvy].uv[0] for l in f.loops) / len(f.loops)
+    v = sum(l[uvy].uv[1] for l in f.loops) / len(f.loops)
+    y = -v * 1000.0
+    # the front yoke stops short of the centre front, under the collar, where
+    # it met the overlapping front in a jagged clash (the final attempt)
+    inside = (abs(u) < 0.5 and y <= back_yoke_y) or (0.5 <= abs(u) < 1.5 and y <= front_yoke_y
+                                                      and (abs(u) - 1.0) * 1000.0 >= opt("--yoke-from-cf", 60.0))
+    if not inside:
+        drop.append(f)
+bmesh.ops.delete(yb, geom=drop, context="FACES")
+bmesh.ops.delete(yb, geom=[v for v in yb.verts if not v.link_faces], context="VERTS")
+# ITS OUTLINE STRAIGHTENED: cut face by face its edges stepped like a saw;
+# each outline point moves towards the middle of its two outline neighbours
+for _ in range(8):
+    moves = {}
+    for vtx in yb.verts:
+        nb = [e.other_vert(vtx) for e in vtx.link_edges if e.is_boundary]
+        if len(nb) == 2:
+            moves[vtx] = (nb[0].co + nb[1].co) / 2
+    for vtx, target in moves.items():
+        vtx.co = vtx.co.lerp(target, 0.5)
+bmesh.ops.recalc_face_normals(yb, faces=yb.faces[:])
+yb.normal_update()
+vote = sum(f.normal.dot(f.calc_center_median() - BODY_BVH.find_nearest(f.calc_center_median())[0])
+           for f in list(yb.faces)[::5] if BODY_BVH.find_nearest(f.calc_center_median())[0] is not None)
+if vote < 0:
+    bmesh.ops.reverse_faces(yb, faces=yb.faces[:])
+    yb.normal_update()
+for vtx in yb.verts:
+    vtx.co = vtx.co + vtx.normal * YOKE_LIFT
+yb.to_mesh(yoke.data)
+yb.free()
+yoke.data.materials.clear()
+yoke.data.materials.append(yoke_m)
+for pl in yoke.data.polygons:
+    pl.use_smooth = True
+s_ = yoke.modifiers.new("Solidify", "SOLIDIFY")
+s_.thickness, s_.offset = 0.0015, 1.0
+extras.append(yoke)
+log["yoke"] = {"frontMmUnderShoulder": FRONT_YOKE, "backMmUnderNeck": BACK_YOKE, "faces": len(yoke.data.polygons)}
 
 # ---- the front: the left front laps 4 cm over the right; four buttons on the centre line ---------
 
@@ -253,7 +268,10 @@ for j in range(41):
     row = []
     for x in (0.0, LAP * 0.5, LAP):
         p = at("front", -1, x, y)                   # over the wearer's right front
-        row.append(p + outward(p) * (WOOL_T + 0.0005) if p is not None else None)
+        # FLUSH AT THE CENTRE LINE, standing its thickness at its edge (the
+        # second review: a strip with two edges 'reads like a shirt placket')
+        lift = (WOOL_T + 0.0005) * (x / LAP)
+        row.append(p + outward(p) * lift if p is not None else None)
     rows.append(row)
 rows = [r for r in rows if None not in r]
 flap = sheet("FrontLap", rows, wool)
@@ -264,13 +282,13 @@ for k, y in enumerate(BUTTONS):
     if p is None:
         continue
     n = outward(p)
-    bpy.ops.mesh.primitive_cylinder_add(vertices=24, radius=0.011, depth=0.004, location=p + n * (2 * WOOL_T + 0.002))
+    bpy.ops.mesh.primitive_cylinder_add(vertices=24, radius=0.0125, depth=0.005, location=p + n * (2 * WOOL_T + 0.0025))
     b = bpy.context.active_object
     b.name = "Button%d" % k
     b.rotation_euler = n.to_track_quat("Z", "Y").to_euler()
     b.data.materials.append(button_m)
     bev = b.modifiers.new("Bevel", "BEVEL")
-    bev.width, bev.segments = 0.0015, 2
+    bev.width, bev.segments = 0.0022, 3
     extras.append(b)
 log["front"] = {"lapMm": LAP, "buttonsMmFromTop": [round(y) for y in BUTTONS]}
 
@@ -293,7 +311,8 @@ log["pockets"] = {"widthMm": PW, "heightMm": PH, "footAboveHemMm": PFOOT}
 # pattern, so it spreads broad over the yoke as a donkey jacket's does (the
 # V&A's T.561-1993); at the fronts it runs further and out to the points.
 
-STAND, FALL, POINT = opt("--stand", 0.03), opt("--fall", 55.0), opt("--point", 30.0)
+STAND, FALL, POINT = opt("--stand", 0.022), opt("--fall", 72.0), opt("--point", 60.0)
+B_, F_ = P["B"], P["F"]
 
 
 def along(poly, n):
@@ -330,10 +349,10 @@ for piece, side, x, y, end in ring:
     if p is None:
         continue
     toward = min(end, 1.0) * 2 if end <= 0.5 else 1.0     # 0 at the front ends, 1 from the neck point back
-    width = FALL + POINT * max(0.0, 1.0 - toward / 0.35)
+    width = FALL + POINT * 0.35 * max(0.0, 1.0 - toward / 0.35)   # the points run a little further down...
     fx, fy = x + nx * width, y + ny * width
     if piece == "front" and toward < 0.35:         # the point: out from centre front as well as down
-        fx += POINT * 0.6 * (1.0 - toward / 0.35)
+        fx += POINT * 1.4 * (1.0 - toward / 0.35)       # ...and well out, spread over the yoke (a dagger collar, the second try)
     q_out = at(piece, side, max(0.0, fx), fy)
     if q_out is None:
         continue
@@ -392,40 +411,71 @@ bpy.ops.object.join()
 render = bpy.context.active_object
 log["render"] = {"verts": len(render.data.vertices), "tris": sum(len(p.vertices) - 2 for p in render.data.polygons)}
 
-# ---- the simulation mesh: the pattern cut again at 25 mm, on the drape ------------------------
-
+# ---- the simulation mesh: the pattern cut again at 25 mm, on the drape, welded seam by seam ----------
+#
+# The research wants a simplified, single-sided mesh of even triangles 2 to 3
+# cm across. Cut again from the pattern (brian.pieces at 25 mm), each point is
+# put on the drape through the shared flat pattern, and the seams are welded
+# exactly as the drape's were, pair by pair along each named seam (tailor.
+# weld). Merged by distance instead (the first version), points of different
+# seams near each armpit merged too, leaving edges between three faces;
+# decimating the drape instead (the second) left long thin triangles that the
+# cloth tore at, 120 times stretched in the pose tests (29 September).
 C = brian.pieces(SRC, opt("--sim-edge", 25.0))
-sv, sf, suv = [], [], []
-for piece in ("back", "front", "sleeve"):
-    flat, faces = C["pieces"][piece]
-    for side in (1, -1):
-        base = len(sv)
-        for x, y in flat:
-            u, v = piece_uv(piece, side, x, y)
-            p = on_drape(u, v)
-            sv.append(tuple(p) if p is not None else (0.0, 0.0, 0.0))
-            suv.append((u, v))
-        for f in faces:
-            g = [base + k for k in f]
-            sf.append(list(reversed(g)) if side < 0 else g)
-smesh = bpy.data.meshes.new("JacketSim")
-smesh.from_pydata(sv, [], sf)
-uvs = smesh.uv_layers.new(name="pattern")
-for poly in smesh.polygons:
-    for li in poly.loop_indices:
-        uvs.data[li].uv = suv[smesh.loops[li].vertex_index]
+SG = tailor.Garment()
+SAT = {}
+
+
+def drape_pts(piece, side, flat):
+    out = []
+    for x, y in flat:
+        q = on_drape(*piece_uv(piece, side, x, y))
+        out.append(tuple(q) if q is not None else (0.0, 0.0, 0.0))
+    return out
+
+
+bflat_c, bfaces_c = C["pieces"]["back"]
+fflat_c, ffaces_c = C["pieces"]["front"]
+sflat_c, sfaces_c = C["pieces"]["sleeve"]
+SAT[("back", 1)] = SG.add("back", bflat_c, bfaces_c, drape_pts("back", 1, bflat_c))
+_fold = {k: SAT[("back", 1)][k] for k in C["idx"]["back"]["fold"]}
+SAT[("back", -1)] = SG.add("back", bflat_c, bfaces_c, drape_pts("back", -1, bflat_c), mirror=True, share=_fold)
+SAT[("front", 1)] = SG.add("front_l", fflat_c, ffaces_c, drape_pts("front", 1, fflat_c), layout=(1.0, 0.0))
+SAT[("front", -1)] = SG.add("front_r", fflat_c, ffaces_c, drape_pts("front", -1, fflat_c), layout=(-1.0, 0.0), mirror=True)
+SAT[("sleeve", 1)] = SG.add("sleeve_l", sflat_c, sfaces_c, drape_pts("sleeve", 1, sflat_c), layout=(2.0, 0.0))
+SAT[("sleeve", -1)] = SG.add("sleeve_r", sflat_c, sfaces_c, drape_pts("sleeve", -1, sflat_c), layout=(-2.0, 0.0), mirror=True)
+
+
+def spairs(p1, s1, seg1, p2, s2, seg2, rev=False):
+    ia = [SAT[(p1, s1)][k] for k in C["idx"][p1][seg1]]
+    ib = [SAT[(p2, s2)][k] for k in C["idx"][p2][seg2]]
+    return ia, list(reversed(ib)) if rev else ib
+
+
+for s_ in (1, -1):
+    SG.seam("shoulder", *spairs("back", s_, "shoulder", "front", s_, "shoulder"))
+    SG.seam("side", *spairs("back", s_, "side", "front", s_, "side"))
+    SG.seam("armhole back", *spairs("back", s_, "armhole", "sleeve", s_, "capBack"))
+    SG.seam("armhole front", *spairs("front", s_, "armhole", "sleeve", s_, "capFront", rev=True))
+    SG.seam("underarm", *spairs("sleeve", s_, "right", "sleeve", s_, "left", rev=True))
+SG.seam("centre front", *spairs("front", 1, "cf", "front", -1, "cf"))
+sim = SG.build("JacketSim")
+sco = tailor.coords(sim, evaluated=False)
+missing = int(sum(1 for q in SG.verts if q == (0.0, 0.0, 0.0)))
+gaps = tailor.seam_gaps(sco, SG.seams)
+merged = tailor.weld(sim, SG.sewing, sco, max_gap=0.02)
 sbm = bmesh.new()
-sbm.from_mesh(smesh)
-before = len(sbm.verts)
-bmesh.ops.remove_doubles(sbm, verts=sbm.verts[:], dist=0.002)
+sbm.from_mesh(sim.data)
+over = sum(1 for e in sbm.edges if len(e.link_faces) > 2)
+lens = sorted(e.calc_length() for e in sbm.edges)
 bmesh.ops.recalc_face_normals(sbm, faces=sbm.faces[:])
-sbm.to_mesh(smesh)
+sbm.to_mesh(sim.data)
 sbm.free()
-sim = bpy.data.objects.new("JacketSim", smesh)
-bpy.context.collection.objects.link(sim)
-smesh.materials.append(wool)
-missing = sum(1 for p in sv if p == (0.0, 0.0, 0.0))
-log["sim"] = {"verts": len(smesh.vertices), "merged": before - len(smesh.vertices), "tris": len(smesh.polygons), "offPattern": missing}
+sim.data.materials.clear()
+sim.data.materials.append(wool)
+log["sim"] = {"verts": len(sim.data.vertices), "tris": len(sim.data.polygons), "offPattern": missing,
+              "seamGapsBeforeWeldMm": gaps, "pairsWelded": merged, "of": len(SG.sewing), "edgesOnThreeFaces": over,
+              "edgeMm": [round(lens[len(lens) // 20] * 1000, 1), round(lens[len(lens) // 2] * 1000, 1), round(lens[-1] * 1000, 1)]}
 say("sim", log["sim"])
 
 # ---- files and pictures ---------------------------------------------------------------------

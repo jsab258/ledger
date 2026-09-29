@@ -133,7 +133,10 @@ if ARMPIT is None:
 chest_z, chest = max(((z, girth_at(z, torso)[0]) for z in [ARMPIT - k * 0.01 for k in range(0, 13)]), key=lambda t: t[1])
 waist_z = spine2.z
 waist = girth_at(waist_z, torso)[0]
-hips_z, hips = max(((z, girth_at(z, torso)[0]) for z in [waist_z - k * 0.01 for k in range(0, int((waist_z - thigh_l.z) * 100) + 1)]), key=lambda t: t[1])
+# THE SEAT, the fullest girth round the buttocks: searched on down to 10 cm
+# under the hip joints (the clothing session, 29 September: stopped at the
+# joints it read the girth just under the waist, 12 cm down on Ron)
+hips_z, hips = max(((z, girth_at(z, torso)[0]) for z in [waist_z - k * 0.01 for k in range(0, int((waist_z - thigh_l.z + 0.10) * 100) + 1)]), key=lambda t: t[1])
 # the body mesh ends at the base of the neck, where the head's mesh joins:
 # the neck is measured just under that edge
 TOP = max(p.z for p, _ in pts)
@@ -205,6 +208,73 @@ def _over_back(a, b, n=40):
     return sum(math.dist(back[i], back[i + 1]) for i in range(len(back) - 1)) if len(back) > 1 else (a - b).length
 
 
+# TROUSERS' MEASUREMENTS (the clothing session, 29 September; CLOTHES.md item
+# 4: FreeSewing's Titan and Charlie ask for these), as a tape takes them, off
+# the legs, which hang straight in the rest pose:
+#   seat           the fullest girth from the waist to the crotch (so, as
+#                  "hips" above, which Brian treats as the seat line)
+#   seatBack, waistBack   the back half of each girth, side to side
+#   crotch         the highest level where nothing lies between the legs
+#   crossSeam      from the centre front waist between the legs to the
+#                  centre back waist, round the hull of the body's middle
+#                  slice (a tape bridges the cleft); crossSeamFront its front
+#                  part, to the crotch's lowest point
+#   knee           the leg's girth at the knee joint
+#   waistToSeat, waistToUpperLeg (the crotch), waistToKnee, waistToFloor, inseam
+floor_z = min(p.z for p in all_pts)
+legs = [p for p, b in pts if not b.startswith(ARM_BONES)]
+crotch_z = None
+for k in range(0, 400):
+    # a ray from front to back along the middle line: while it meets the
+    # body, the torso still joins the legs (the mesh's points are too sparse
+    # to test a thin band of them)
+    z = waist_z - 0.05 - k * 0.002
+    if _bvh.ray_cast(Vector((0.0, -1.0, z)), Vector((0.0, 1.0, 0.0)), 2.0)[0] is None:
+        crotch_z = z + 0.002
+        break
+knee_z = joint("calf_l").z
+
+
+def back_half(z, band=0.006):
+    sl = [(p.x, p.y) for p in legs if abs(p.z - z) < band and abs(p.x) < 0.3]
+    h = hull(sl)
+    if len(h) < 3:
+        return 0.0
+    left = max(h, key=lambda q: q[0])
+    right = min(h, key=lambda q: q[0])
+    side_y = (left[1] + right[1]) / 2
+    back = sorted([q for q in h if q[1] >= side_y] + [left, right], key=lambda q: q[0])
+    return sum(math.dist(back[i], back[i + 1]) for i in range(len(back) - 1))
+
+
+mid_slab = [(p.y, p.z) for p in legs if abs(p.x) < 0.006 and crotch_z - 0.03 < p.z < waist_z + 0.005]
+cross, cross_front = 0.0, 0.0
+if len(mid_slab) > 3:
+    h = hull(mid_slab)
+    top_front = min((q for q in h if q[1] > waist_z - 0.02), key=lambda q: q[0], default=None)
+    top_back = max((q for q in h if q[1] > waist_z - 0.02), key=lambda q: q[0], default=None)
+    low = min(h, key=lambda q: q[1])
+    if top_front and top_back:
+        i0, i1, il = h.index(top_front), h.index(top_back), h.index(low)
+        n_h = len(h)
+
+        def run(a, b):
+            path = [h[a]]
+            i = a
+            while i != b:
+                i = (i + 1) % n_h
+                path.append(h[i])
+            return path
+        # the hull runs round one way; take the way from front to back that passes the lowest point
+        p1 = run(i0, i1)
+        if low not in p1:
+            p1 = list(reversed(run(i1, i0)))
+        cross = sum(math.dist(p1[k], p1[k + 1]) for k in range(len(p1) - 1))
+        j = p1.index(low)
+        cross_front = sum(math.dist(p1[k], p1[k + 1]) for k in range(j))
+knee_sl = [((p.x), (p.y)) for p in legs if abs(p.z - knee_z) < 0.006 and p.x > 0.0]
+knee_g = perimeter(hull(knee_sl))
+
 m = lambda metres: round(metres * 1000.0, 1)
 out = {
     "body": BODY,
@@ -222,9 +292,21 @@ out = {
         "waistToHips": m(waist_z - hips_z),
         "shoulderToWrist": m(shoulder_to_wrist),
         "wrist": m(wrist),
+        "seat": m(hips),
+        "seatBack": m(back_half(hips_z)),
+        "waistBack": m(back_half(waist_z)),
+        "waistToSeat": m(waist_z - hips_z),
+        "waistToUpperLeg": m(waist_z - crotch_z) if crotch_z else None,
+        "waistToKnee": m(waist_z - knee_z),
+        "waistToFloor": m(waist_z - floor_z),
+        "inseam": m(crotch_z - floor_z) if crotch_z else None,
+        "crossSeam": m(cross),
+        "crossSeamFront": m(cross_front),
+        "knee": m(knee_g),
     },
     "heights_m": {"chest": round(chest_z, 3), "waist": round(waist_z, 3), "hips": round(hips_z, 3), "neck": round(neck_z, 3),
-                  "armpit": round(ARMPIT, 3), "hps": round(hps.z, 3) if hps else None, "top": round(max(p.z for p in all_pts), 3)},
+                  "armpit": round(ARMPIT, 3), "hps": round(hps.z, 3) if hps else None, "top": round(max(p.z for p in all_pts), 3),
+                  "crotch": round(crotch_z, 3) if crotch_z else None, "knee": round(knee_z, 3), "floor": round(floor_z, 3)},
 }
 json.dump(out, open(OUT, "w"), indent=1)
 print("MEASURED", json.dumps(out["measurements"]))

@@ -954,6 +954,14 @@
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
   },
   {
+   "path": "F:/LedgerTools/tmp/clothes",
+   "madeBy": "the clothing session (tools/meshgen/blender/sew_donkey.py, press_garment.py, finish_donkey.py, pose_test.py)",
+   "why": "scratch for the donkey jacket's sewing runs, drafts and check pictures; the chosen run's files go to F:/LedgerTools/garments, the failed runs are superseded",
+   "status": "kept",
+   "recorded": "2026-09-29",
+   "mb": 884
+  },
+  {
    "path": "F:/LedgerTools/tmp/dcc",
    "madeBy": "tools/ue/export_dcc.py, 28 September",
    "why": "Ron's whole body as FBX, the body the jacket is hung on",
