@@ -73,6 +73,12 @@ tokens and cost.
     AskStory, AskRonRemembers, AskSave, AskLoad) and Ada's tea (Tea...). The
     threat waits on Jafar.
 - [ ] T3. Then the non-visual items of ROADMAP.md, still no new systems.
+  - Steam's AI disclosure (ROADMAP's thirty-minute build; checklist AI07),
+    researched and DRAFTED 29 September: production/store/steam-ai-disclosure.md
+    (the public text, 62 words; what is made live; the eight guardrails, each
+    named from the code; the mature-content text). The builder's part is under
+    Handovers. The wording is Jafar's before the first public build, not asked
+    now (three a day).
 
 ## The list, in order (Jafar, 28 September)
 
