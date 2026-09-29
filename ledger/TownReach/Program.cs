@@ -12,6 +12,9 @@ using Ledger.Core;
 ///     dotnet run --project ledger/TownReach -c Release -- [--cast production/specs/quay-cast.json] [--days 14] [--every 1] [--ties]
 ///     ... -- --cast production/specs/hook-cast.json --meridian sheila,ron,darren,ada,june
 ///     ... -- --cast production/specs/hook-cast.json --two-hours [--clear-every 45] [--deed-at 30] [--town-news]
+///     ... -- --cast production/specs/hook-cast.json --meridian ... --teller outfit_man --told-at 22 --answer did
+///     ... -- --cast production/specs/hook-cast.json --loud [--second-night]
+///     ... -- --cast production/specs/hook-cast.json --first-hour
 ///
 /// A MEASUREMENT AND NOTHING ELSE. It changes no constant and decides nothing:
 /// the mill is the shipped GossipMill with its own numbers, the routines are
@@ -59,6 +62,7 @@ static class Program
         if (metArg != null) return Meridian(cast, metArg.Split(','), double.Parse(Arg(args, "--rate", "2"), Inv),
                                             Arg(args, "--teller", null), int.Parse(Arg(args, "--told-at", "22"), Inv), Arg(args, "--answer", "did"));
         if (Array.IndexOf(args, "--loud") >= 0) return Loud(cast, Array.IndexOf(args, "--second-night") >= 0);
+        if (Array.IndexOf(args, "--first-hour") >= 0) return FirstHourOnPaper(cast, double.Parse(Arg(args, "--rate", "2"), Inv));
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
                                                                    double.Parse(Arg(args, "--deed-at", "-1"), Inv),
                                                                    Array.IndexOf(args, "--town-news") >= 0 ? TownNews.Parse(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(castPath)), "town-news.json"))) : null);
@@ -204,6 +208,118 @@ static class Program
             Console.WriteLine($"  hearers who say something about the story at least once: {perHearer(storyRemarkers) * 100:0}%  " +
                               $"(half-remembered, to a companion: {(storyRemarkers > 0 ? faintRemarkers / storyRemarkers * 100 : 0):0}% of those who say something)");
         }
+        return 0;
+    }
+
+    /// THE FIRST HOUR ON PAPER (town list 6bk): the week the first hour spans,
+    /// played through the Core's own pieces together, for each of Tom's choices:
+    /// the outfit's asks every other night from night one while the arrangement
+    /// stands (Arrangement: the envelope handed over, or Ron told no, at half
+    /// past ten on an ordinary night; a night he stays away counted by
+    /// PassedTo at dawn, six, as the handover has the game do it); Ada's tea on
+    /// day 3 (AdasTea: she asks him at ten that morning; sitting with her he is
+    /// there from nine to half past ten, then, taking the envelope, is seen
+    /// leaving and reaches the landing near one after the two hours' walk);
+    /// the gossip ticking hour by hour on the cast's routines; each morning at
+    /// nine whether DS Ellis comes (PoliceFile, on the street's talk); and what
+    /// the five he met on day 1 show or say to his face as he passes each of
+    /// them once an hour (StreetVoice.RegardFor, as --meridian: a best case).
+    /// No other sighting is filed (the envelope's walk and the tea's are seen
+    /// only as the pieces have it), so this is the pieces' own reach, not the
+    /// perception's. Alison's question is not in it: the fire is not written.
+    static int FirstHourOnPaper(CastDay cast, double rate)
+    {
+        var people = cast.People;
+        var met = new[] { "lena", "rocco", "sam", "ada", "june" };
+        int lastHour = (int)Math.Round(60 * rate);   // minute sixty, in game hours from 09:00 on day 0
+        int halfHour = (int)Math.Round(30 * rate);
+        double MinuteOf(int gameHour) => gameHour / rate;
+        Console.WriteLine($"first hour on paper: met {string.Join(",", met)}; play from 09:00 on day 0 to minute 60 (hour {lastHour}) at {rate.ToString(Inv)} game minutes a real second");
+        Console.WriteLine("| the envelope | Ada's tea | first shown to him | first said to his face | by minute 30 | the arrangement by minute 60 | Ada | Ellis |");
+        Console.WriteLine("|---|---|---|---|---|---|---|---|");
+        var policies = new (string name, NightAnswer first, NightAnswer later)[]
+        {
+            ("takes it every night", NightAnswer.Did, NightAnswer.Did),
+            ("takes it once, then stays away", NightAnswer.Did, NightAnswer.NoShow),
+            ("tells Ron no", NightAnswer.Refused, NightAnswer.Refused),
+            ("stays away", NightAnswer.NoShow, NightAnswer.NoShow),
+        };
+        foreach (var (name, first, later) in policies)
+            foreach (bool sits in new[] { true, false })
+            {
+                var graph = new SocialGraph();
+                foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
+                var mill = new GossipMill(graph);
+                foreach (var p in people) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
+                var arrangement = new Arrangement(0);
+                var tea = AdasTea.For(0, true);
+                var police = new PoliceFile();
+                var remarks = new RemarkLedger();
+                string firstShown = null, firstFaced = null, ellis = "does not come", byThirty = null;
+                int handOverAt = -1;   // play hour at which a delayed envelope is handed over
+                mill.Age(new GameTime(0, 9, 0));
+                for (int playHour = 0; playHour < lastHour; playHour++)
+                {
+                    int abs = 9 + playHour, day = abs / 24, hod = abs % 24;
+                    var now = new GameTime(day, hod, 0);
+                    if (hod == 6) arrangement.PassedTo(day, mill, now);
+                    if (hod == 9 && day >= 1)
+                    {
+                        string why = police.EllisComes(mill, day);
+                        if (why != null && ellis == "does not come") ellis = $"day {day + 1} (minute {MinuteOf(playHour):0}), for {why}";
+                    }
+                    if (day == tea.Day && hod == 10) tea.SheSeesHim(now);
+                    if (sits && day == tea.Day && hod == 21)
+                        for (int m = 0; m < 60; m++) tea.WithHer(new GameTime(day, 21, m));
+                    if (sits && day == tea.Day && hod == 22)
+                        for (int m = 0; m <= 30; m++) tea.WithHer(new GameTime(day, 22, m));
+                    if (day == tea.Day && hod == 23) tea.Close(mill.Get(AdasTea.Ada), now);
+                    for (int minute = 0; minute < 60; minute += 6)
+                        mill.Tick(new GameTime(day, hod, minute), (a, b) => cast.Together(a, b, day, hod));
+                    // The ask, after the hour's talk: on an ordinary night at half
+                    // past ten; on the tea's night, taking it after his tea, he is seen
+                    // leaving at 22:31 and hands it over at 00:45, after the walk.
+                    if (hod == 22 && arrangement.AsksOn(day))
+                    {
+                        var answer = arrangement.Nights.Count == 0 ? first : later;
+                        if (answer == NightAnswer.Did && day == tea.Day)
+                        {
+                            tea.WentToTheLanding(mill, new GameTime(day, sits ? 22 : 21, sits ? 31 : 45), forTheAsk: true);
+                            handOverAt = playHour + (sits ? 2 : 1);
+                        }
+                        else if (answer != NightAnswer.NoShow) arrangement.Answer(day, answer, mill, new GameTime(day, 22, 30));
+                    }
+                    if (playHour == handOverAt && arrangement.AsksOn(tea.Day))
+                        arrangement.Answer(tea.Day, NightAnswer.Did, mill, new GameTime(day, hod, 45));
+                    mill.Age(new GameTime((abs + 1) / 24, (abs + 1) % 24, 0));
+                    foreach (var p in met)
+                    {
+                        var g = mill.Get(p);
+                        if (g == null || cast.Where(p, day, hod) == null) continue;
+                        bool companion = people.Any(o => o != p && cast.Together(p, o, day, hod));
+                        var rg = StreetVoice.RegardFor(g, mill.MinConfidenceToShare, false, remarks, Acquaintance.Known, companion);
+                        if (rg.Knowing == Knowing.Nothing || !rg.KnowsItIsHim) continue;
+                        firstShown ??= $"minute {MinuteOf(playHour + 1):0}, {p}";
+                        if (rg.Speaks && !rg.Faint && firstFaced == null && rg.Story != null)
+                        {
+                            var line = StreetVoice.Recognition(g, rg.Story, rg.Stance, playHour, remarks);
+                            firstFaced = $"minute {MinuteOf(playHour + 1):0}, {p}: \"{line?.Text}\"";
+                        }
+                        if (rg.Speaks && rg.Story != null)
+                        {
+                            if (rg.Faint) remarks.RecordFaint(p, rg.Story, heard: true);
+                            else remarks.Record(p, rg.Story, rg.Stance, heard: true);
+                        }
+                    }
+                    if (playHour + 1 == halfHour)
+                        byThirty = (firstFaced != null ? "said to his face" : firstShown != null ? "shown, not said" : "nothing shown")
+                                   + $"; loudness {PoliceFile.Loudness(mill)}";
+                }
+                var adaG = mill.Get(AdasTea.Ada);
+                string adaAfter = $"{tea.State}, regard {adaG.Loyalty:0.00}" + (tea.SeenGoing ? ", saw him go" : "");
+                string arr = arrangement.Ended ? $"ended ({arrangement.EndedWhy}, {arrangement.Nights.Count} nights)" : $"stands ({arrangement.Nights.Count} nights)";
+                Console.WriteLine($"| {name} | {(sits ? "sits with her" : "stands her up")} | {firstShown ?? "never"} | {firstFaced ?? "never"} | {byThirty} | {arr} | {adaAfter} | {ellis} |");
+            }
         return 0;
     }
 

@@ -5479,6 +5479,32 @@ namespace Ledger.CoreTests
                       "the tea keeps across a save, and a save cannot claim a stay the minutes do not show");
             }
 
+            // ONE SAVE FOR THE TOWN'S PIECES (town list 6bl): every piece travels
+            // together, each restored from what it can read, a later version refused.
+            {
+                var town = new TownSave();
+                town.Hints.Begin(0, true); town.Hints.Moved(1); town.Hints.Happened(Moment.CanTalk, 2); town.Hints.Due(2);
+                town.Asks.Answer(0, NightAnswer.Did);
+                town.Tea = AdasTea.For(0, true);
+                town.Tea.SheSeesHim(new GameTime(2, 10, 0));
+                town.Police.Report("rita", "player.window_d0", Offence.Damage, 4, 1);
+                town.Heard.HeardLine("recognition/ordinary", "Evening.");
+                town.NewsFiled.Add("laundry_row");
+                var back = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(town.ToJson()))));
+                var noTea = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(new TownSave().ToJson()))));
+                var damaged = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
+                    "{\"version\": 1, \"hints\": 7, \"asks\": {\"first\": 0, \"nights\": [[0, \"did\"]]}, \"tea\": \"x\", \"police\": [], \"news\": [\"a\", 3, \"a\", \"\"]}")));
+                string future = null;
+                try { TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"version\": 2}"))); }
+                catch (SaveIncompatibleException futureErr) { future = futureErr.Fault.ToString(); }
+                Check(back.Hints.Done.Contains(Moment.CanTalk) && back.Asks.Nights.Count == 1 && back.Tea != null && back.Tea.State == TeaState.Asked
+                      && back.Police.Strongest("player.window_d0") == Known.Statement && back.Heard.Fresh("recognition/ordinary", new[] { "Evening.", "All right." }, 0) == "All right."
+                      && back.NewsFiled.Count == 1 && back.NewsFiled[0] == "laundry_row"
+                      && noTea.Tea == null && damaged.Asks.Nights.Count == 1 && damaged.Hints.Done.Count == 0 && damaged.Tea == null
+                      && damaged.NewsFiled.Count == 1 && future == "FromTheFuture" && TownSave.FromJson(null).Asks.NextNight == 0,
+                      "the town's pieces travel in one save and come back together; a damaged piece loses only itself; a save from a later version is refused");
+            }
+
             // MICKEY'S ARRANGEMENT IN THE NEW GAME (town list 6z): the outfit asks
             // every other night from the first, in order; refusing ends it at once,
             // three nights not turning up end it, and nothing ends the game; the

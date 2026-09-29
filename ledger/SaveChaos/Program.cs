@@ -221,6 +221,20 @@ namespace Ledger.SaveChaos
                     if (t.State == TeaState.NotAsked && (t.Minutes.Count > 0 || t.SeenGoing)) return (false, "a tea never asked, with minutes or a sighting");
                     return (true, "ok");
                 }),
+                ("TownSave", MiniJson.Serialize(new Func<TownSave>(() =>
+                {
+                    var whole = new TownSave { Hints = fm, Asks = arr, Tea = tea, Police = police, Heard = heard };
+                    whole.NewsFiled.Add("laundry_row");
+                    return whole;
+                })().ToJson()), d =>
+                {
+                    TownSave t;
+                    try { t = TownSave.FromJson(d); }
+                    catch (SaveIncompatibleException) { return (true, "ok"); }   // a later version, refused as it should be
+                    if (t.Hints == null || t.Asks == null || t.Police == null || t.Heard == null) return (false, "a piece missing");
+                    foreach (var id in t.NewsFiled) if (string.IsNullOrEmpty(id)) return (false, "an empty news id");
+                    return (true, "ok");
+                }),
                 ("RemarkLedger", MiniJson.Serialize(heard.ToJson()), d =>
                 {
                     var l = RemarkLedger.FromJson(d);
