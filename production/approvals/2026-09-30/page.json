@@ -5,7 +5,7 @@
  "how": [
   "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
   "Updated Tuesday evening. Your picks of Tuesday morning are acted on and off the page: Sheila's face is S4, with its hair, and goes into the game tonight; Ron's threat keeps the game's own voice (your blind B); Ron's and Darren's voices, their thinking sounds, the conversation light and how Sheila looks at you are approved; Darren's face waits on a man's haircut.",
-  "Left for you: the street by day and at night, as whole frames, and three calls, each with my recommendation."
+  "Left for you: the street by day and at night, as whole frames, and two calls, each with my recommendation. Under your narrowed rule the pillar box's and kiosk's marks are mine within canon (every brand is fictional): made-up marks."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
  "sections": [
@@ -84,36 +84,6 @@
     [
      "B",
      "B: keep at Blender curls"
-    ]
-   ]
-  },
-  {
-   "kind": "look",
-   "key": "call-marks",
-   "name": "The pillar box and the kiosk: whose marks",
-   "note": "Both stand in the street plain, with no postal cipher and no telephone company's mark. Canon says every brand is fictional. (A) Marks made up for LEDGER's Britain, in the 1990 manner (recommended). (B) The real 1990 marks: against canon. (C) Plain, as now.",
-   "pictures": [
-    {
-     "src": "production/art/clutter-2026-09-29/pillar-box.jpg",
-     "alt": "The pillar box, plain"
-    },
-    {
-     "src": "production/art/clutter-2026-09-29/kx100-kiosk.jpg",
-     "alt": "The kiosk, plain"
-    }
-   ],
-   "options": [
-    [
-     "A",
-     "A: made-up marks (recommended)"
-    ],
-    [
-     "B",
-     "B: the real ones"
-    ],
-    [
-     "C",
-     "C: plain"
     ]
    ]
   },

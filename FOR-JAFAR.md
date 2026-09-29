@@ -5,23 +5,23 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Tuesday 29 September, 18:30)
+## Overview (Tuesday 29 September, 19:00)
 
 ### Needs you
 
 1. **[Cleanup page](https://claude.ai/artifact/BKVe5Ypxbv9fh4YD9f2ezi)** (builder): C: is at 49.6 GB, under your 60. Two groups: Unreal's cache moved to drive F (12.1 GB) and a spare project copy a helper left (2.4 GB). Recommended: yes to both.
-2. **[Wednesday's page](https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ)** (builder): the street by day and at night, as whole frames; three calls: hair, the pillar box's and kiosk's marks, the name plates' font. Recommended: yes to both frames, A on each call.
-3. **[Town's page: the police, Sheila's trust, the week's end, threats](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y)** (town), with the calls carried from before. Recommended: the picks marked on it.
-4. **LEDGER's own capped key** (builder and town; no page): the characters' live talk and the town's relay both wait on it; the paid writer won your blind 8 of 12. Recommended: make it with a hard monthly cap and save it alone at %LOCALAPPDATA%\LEDGER\live-talk-key.txt.
+2. **[Wednesday's page](https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ)** (builder): the street by day and at night, as whole frames; two calls: hair, and the name plates' font licence. Recommended: yes to both frames, A on both calls.
+3. **[Town's page: three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y)** (town): how Mickey died, winding it down, threats. Recommended: the picks marked on it.
+4. **LEDGER's own capped key** (builder; no page): the characters' live talk while you play waits on it (the paid writer won your blind 8 of 12); friends' relay stays keyless, as you ruled. Recommended: make it with a hard monthly cap and save it alone at %LOCALAPPDATA%\LEDGER\live-talk-key.txt.
 
 ### Road to worth playing
 
-- **Faces approved** (builder): Ron's and Sheila's yes; Darren's waits on a man's haircut. Since yesterday: your S4 for Sheila, going into the game tonight; hair made in Blender set aside after three tries.
-- **People dressed** (clothing session; the builder fits them in Unreal): nobody dressed yet. Since yesterday: clothing moved to its own session, with Ron's, Darren's and Sheila's bodies; the three spare builds set aside after three tries.
+- **Faces approved** (builder): Ron's and Sheila's yes; Darren's waits on a man's haircut. Since yesterday: your S4 for Sheila, into the game tonight; hair made in Blender set aside after three tries.
+- **People dressed** (clothing session; the builder fits them in Unreal): nobody dressed yet. Since yesterday: clothing moved to its own session, with Ron's, Darren's and Sheila's bodies; three spare builds set aside after three tries.
 - **Voices** (builder): Ron's and Darren's yes; Sheila's leans American on every free engine. Since yesterday: your yeses; your blind pick keeps the game's own engine.
-- **The delay before a character speaks** (builder): 5.4 s to the first sound; thinking sounds cover it for Ron and Darren; the next free engine is untried. Since yesterday: your yes to the thinking sounds; paid voices ruled out.
-- **The replies that time out** (builder): one in five (28 September); no live talk until your key. Since yesterday: nothing.
-- **The first week wired into the game** (town writes, builder wires): the week is whole on paper; the game has the first night's window and the evening; about ten handovers wait on your town page. Since yesterday: the week finished on paper; the evening now plays at night.
+- **The delay before a character speaks** (words: town; voice: builder): 5.4 s to the first sound; the thinking sounds cover it for Ron and Darren; timings wait for your key. Since yesterday: your yes to the thinking sounds; paid voices ruled out.
+- **The replies that time out** (town): 1 in 24 since a fix, not 1 in 5; the real fault is "that's all I know" to half a newcomer's questions. Since yesterday: measured again; the street's plain facts written for everyone to say.
+- **The first week wired into the game** (town writes, builder wires): whole on paper, settled by the town under your narrowed rule; in the game, the first night's window and the evening; about thirty handovers to wire. Since yesterday: the town settled the week's design pages.
 - **The AI tester walking it** (builder): walks the packaged game, played by me; next after tonight's build. Since yesterday: the three faults it found are fixed.
 
 ## Town, 30 September
