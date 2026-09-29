@@ -162,6 +162,8 @@ real_table() {
     talk-helper-selftest  "$REPO"                 "dotnet run --project ledger/TalkHelper -c Release -- --selftest" \
     relay-selftest        "$REPO"                 "dotnet run --project ledger/Relay -c Release -- --selftest" \
     session-read-selftest "$REPO"                 "$PY tools/session_read.py --selftest" \
+    talk-protocol         "$REPO"                 "$PY tools/talk-protocol-check.py" \
+    talk-protocol-selftest "$REPO"                "$PY tools/talk-protocol-check.py --selftest" \
     crime-verdict-selftest "$REPO"                "$PY tools/crime-verdict-check.py --selftest" \
     encounter-check-selftest "$REPO"                "$PY tools/encounter-verdict-check.py --selftest" \
     sky-material-selftest "$REPO"                 "$PY tools/ue/make_sky_material.py --selftest" \
