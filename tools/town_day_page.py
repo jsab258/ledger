@@ -128,6 +128,23 @@ DAYS["2026-09-30"] = {
     "docs": [],
 }
 
+# 1 October: yesterday's three, carried while unanswered, and one new call of
+# backstory (Jafar, 29 September: only identity or what is hard to undo, at most
+# three new a day).
+DAYS["2026-10-01"] = {
+    "title": "The warehouse fire, and yesterday's calls",
+    "lede": "One new call, backstory: the warehouse fire, Act I's founding rumour, drafted from the outline and checked by two fresh reviewers against canon and the cast. Yesterday's three stay until you answer them. One tap each, and a note if you want.",
+    "questions": list(DAYS["2026-09-30"]["questions"]) + [
+        ("q-fire-draft", "The warehouse fire: nothing says when it burned, whose it was or whether anybody was hurt, so Alison's question on day 3 finds a town with nothing to say (Father Walsh's old July card would put it around 1970; everything else says last year)",
+         [("recommended", "Last November, eleven months before Tom comes: an importer's warehouse on the old row, nobody hurt (the night watchman had slipped off home and lied about his rounds); the outfit had it burned as a lesson for the rent it was owed, Mickey found them the men, and his page in the real book says so; the street believes the owner did it for the insurance (recommended)"),
+          ("long-ago", "Long ago, about 1970, as Father Walsh's old card has it: Ellis's and Alison's thread becomes an old story"),
+          ("hurt", "Last November, but the watchman got out with his hands burned (his secret, that he was not there, goes)"),
+          ("death", "Last November, and the watchman died: a murder inquiry and an inquest, the whole town still talking of it")]),
+    ],
+    "docs": [],
+}
+
+
 def build(date):
     day = DAYS[date]
     esc = html.escape
