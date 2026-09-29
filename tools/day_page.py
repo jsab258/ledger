@@ -22,7 +22,11 @@ page.json:
      {"kind": "look", "key": "look-talk-light", "name": "...", "note": "...", "pictures": [{"src": "repo path", "alt": "..."}],
       "options": [["yes", "Keep it"], ["no", "Not like this"]]},
      {"kind": "voice", "key": "game-sheila-dunn", "name": "...", "note": "...", "line": "...", "audio": "repo path",
-      "options": [["yes", "This is her"], ["no", "Not her"]]}]}
+      "options": [["yes", "This is her"], ["no", "Not her"]]},
+     {"kind": "pair", "key": "act-ron-kirby-threat", "name": "...", "note": "...", "line": "...",
+      "takes": [{"label": "A", "audio": "repo path"}, {"label": "B", "audio": "repo path"}],
+      "options": [["A", "A"], ["B", "B"], ["neither", "Neither"]]}]}
+A pair is heard blind: which take is which engine is kept in a key file, never on the page.
 Picks are stored as verdicts/<key>.
 """
 import json
@@ -68,6 +72,8 @@ def publishable(spec):
                 c["speak"]["file"] = pub(c["speak"]["file"], tag)
         for p in s.get("pictures", []):
             p["src"] = pub(p["src"], tag)
+        for t in s.get("takes", []):
+            t["audio"] = pub(t["audio"], tag)
         secs.append(s)
     out["sections"] = secs
     return out, files
@@ -176,6 +182,14 @@ function render(){
       const g = el("div", {class:"capgrid"});
       for (const p of s.pictures) g.append(el("figure", {}, el("img", {src:p.src, alt:p.alt, loading:"lazy"}), el("figcaption", {class:"was", text:p.alt})));
       sec.append(g, picks(s.key, s.options, st.pick));
+    } else if (s.kind === "pair") {
+      const row = el("div", {class:"row"});
+      for (const t of s.takes) {
+        const b = el("button", {type:"button", text:"Play " + t.label});
+        b.addEventListener("click", () => play(t.audio, b));
+        row.append(b);
+      }
+      sec.append(row, el("div", {class:"row"}, el("q", {text:s.line})), picks(s.key, s.options, st.pick));
     } else if (s.kind === "voice") {
       const b = el("button", {type:"button", text:"Play"});
       b.addEventListener("click", () => play(s.audio, b));

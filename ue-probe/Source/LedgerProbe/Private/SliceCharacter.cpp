@@ -103,6 +103,8 @@ void ALedgerSliceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALedgerSliceCharacter::RequestAct);
 	PlayerInputComponent->BindKey(EKeys::T, IE_Pressed, this, &ALedgerSliceCharacter::RequestTalk);
 	PlayerInputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ALedgerSliceCharacter::RequestQuit);
+	PlayerInputComponent->BindKey(EKeys::R, IE_Pressed, this, &ALedgerSliceCharacter::RequestReport);
+	PlayerInputComponent->BindKey(EKeys::F1, IE_Pressed, this, &ALedgerSliceCharacter::RequestNotice);
 }
 
 void ALedgerSliceCharacter::MoveForward(float Value)
@@ -128,6 +130,20 @@ void ALedgerSliceCharacter::RunReleased() { GetCharacterMovement()->MaxWalkSpeed
 void ALedgerSliceCharacter::RequestAct() { ++ActRequests; }
 void ALedgerSliceCharacter::RequestTalk() { ++TalkRequests; }
 void ALedgerSliceCharacter::RequestQuit() { FPlatformMisc::RequestExit(false); }
+void ALedgerSliceCharacter::RequestReport() { ++ReportRequests; }
+void ALedgerSliceCharacter::RequestNotice() { ++NoticeRequests; }
+int32 ALedgerSliceCharacter::ConsumeReportRequests()
+{
+	const int32 N = ReportRequests;
+	ReportRequests = 0;
+	return N;
+}
+int32 ALedgerSliceCharacter::ConsumeNoticeRequests()
+{
+	const int32 N = NoticeRequests;
+	NoticeRequests = 0;
+	return N;
+}
 int32 ALedgerSliceCharacter::ConsumeTalkRequests()
 {
 	const int32 N = TalkRequests;
