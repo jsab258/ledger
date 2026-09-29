@@ -94,6 +94,8 @@ DAYS = {
              "Approve how she comes and what she has", "Change it (say what in the note)"),
             ("day-three", "Day 3: Ada's tea", os.path.join(REPO, "game-design", "day-three-2026-09-29.md"),
              "Approve Ada's tea", "Change it (say what in the note)"),
+            ("first-hour-on-paper", "The first hour, on paper: what the town does for each choice", os.path.join(REPO, "game-design", "first-hour-on-paper-2026-09-29.md"),
+             "Seen: it reads as the first hour should", "Something here is wrong for the hour (say what in the note)"),
         ],
     },
 }
