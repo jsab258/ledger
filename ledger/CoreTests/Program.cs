@@ -5368,6 +5368,117 @@ namespace Ledger.CoreTests
                       "the police file keeps across a save, talk and a statement from one person both; a damaged file keeps only what it can read");
             }
 
+            // ADA'S TEA ON THE NIGHT OF THE SECOND ASK (town list 6bg): she asks
+            // when she sees him that day; he must sit with her till half past ten
+            // to have come; leaving her for the landing, he is seen from her
+            // window; what it leaves is her regard, which decides whether she
+            // would go to the police about him. The independent check's cases.
+            {
+                Gossiper Ada()
+                {
+                    var g = new Gossiper(AdasTea.Ada, AdasTea.Ada, new MemoryStore(AdasTea.Ada), new KnowledgeBase(), new SuspicionTracker());
+                    g.Nerve = 0.6; g.Loyalty = 0.35;   // as the cast file's traits will give her (town list 6bj)
+                    return g;
+                }
+                void Sit(AdasTea t, int fromMinute, int toMinute)
+                {
+                    for (int m = fromMinute; m <= toMinute; m++) t.WithHer(new GameTime(t.Day, m / 60, m % 60));
+                }
+                var tea = AdasTea.For(0, true);
+                string early = tea.SheSeesHim(new GameTime(1, 10, 0));
+                string asks = tea.SheSeesHim(new GameTime(2, 10, 0));
+                string twice = tea.SheSeesHim(new GameTime(2, 11, 0));
+                Sit(tea, 21 * 60, 22 * 60 + 40);
+                var ada = Ada();
+                bool wouldBefore = PoliceFile.WouldReport(ada, Offence.Wounding, false, null);
+                var notYet = tea.Close(ada, new GameTime(2, 22, 50));
+                var stayed = tea.Close(ada, new GameTime(2, 23, 0));
+                var arr = new Arrangement(0);
+                arr.Answer(0, NightAnswer.Did);
+                Check(tea.Day == 2 && early == null && asks == AdasTea.Invite && twice == null && notYet == TeaState.Asked && stayed == TeaState.Stayed
+                      && wouldBefore && !PoliceFile.WouldReport(ada, Offence.Wounding, false, null) && arr.AsksOn(tea.Day)
+                      && ada.Memory.Events.Exists(e => e.Text.StartsWith("Mickey's nephew came for his tea and sat with me"))
+                      && AdasTea.For(0, false) == null && AdasTea.For(3, true).Day == 5 && ContentRule.SpeechBreaks(AdasTea.Invite) == null,
+                      "Ada asks him in on the night of the outfit's second ask, when she sees him that day; sitting with her till half past ten warms her past going to the police about him");
+
+                var dropIn = AdasTea.For(0, true);
+                dropIn.SheSeesHim(new GameTime(2, 9, 30));
+                dropIn.WithHer(new GameTime(2, 21, 10));
+                var ada2 = Ada();
+                var mill = new GossipMill(null);
+                mill.Add(ada2);
+                dropIn.WentToTheLanding(mill, new GameTime(2, 22, 15), forTheAsk: true);
+                dropIn.WentToTheLanding(mill, new GameTime(2, 22, 20), forTheAsk: true);
+                var left = dropIn.Close(ada2, new GameTime(3, 1, 0));
+                // One minute at 22:31 is not staying; landing first and tea after is seen.
+                var oneMinute = AdasTea.For(0, true);
+                oneMinute.SheSeesHim(new GameTime(2, 8, 0));
+                oneMinute.WithHer(new GameTime(2, 22, 31));
+                var landingFirst = AdasTea.For(0, true);
+                landingFirst.SheSeesHim(new GameTime(2, 8, 0));
+                var ada5 = Ada();
+                var mill5 = new GossipMill(null);
+                mill5.Add(ada5);
+                landingFirst.WentToTheLanding(mill5, new GameTime(2, 21, 5), forTheAsk: true);
+                // Stayed, then walked the two hours: reaching the landing after midnight is still seen.
+                var stayer = AdasTea.For(0, true);
+                stayer.SheSeesHim(new GameTime(2, 8, 0));
+                Sit(stayer, 21 * 60, 22 * 60 + 40);
+                var ada7 = Ada();
+                var mill7 = new GossipMill(null);
+                mill7.Add(ada7);
+                var stayerState = stayer.Close(ada7, new GameTime(2, 23, 0));
+                stayer.WentToTheLanding(mill7, new GameTime(3, 0, 40), forTheAsk: true);
+                var tooLate = AdasTea.For(0, true);
+                tooLate.SheSeesHim(new GameTime(2, 8, 0));
+                var mill8 = new GossipMill(null);
+                mill8.Add(Ada());
+                tooLate.WentToTheLanding(mill8, new GameTime(3, 1, 30), forTheAsk: true);
+                // An hour away in the middle is not staying.
+                var gap = AdasTea.For(0, true);
+                gap.SheSeesHim(new GameTime(2, 8, 0));
+                Sit(gap, 21 * 60, 21 * 60 + 30);
+                Sit(gap, 22 * 60 + 30, 22 * 60 + 59);
+                var afterRefusal = AdasTea.For(0, true);
+                afterRefusal.SheSeesHim(new GameTime(2, 8, 0));
+                var ada6 = Ada();
+                var mill6 = new GossipMill(null);
+                mill6.Add(ada6);
+                afterRefusal.WentToTheLanding(mill6, new GameTime(2, 22, 5), forTheAsk: false);
+                afterRefusal.WentToTheLanding(mill6, new GameTime(4, 22, 5), forTheAsk: true);
+                var seen = ada2.Rumors.Find(r => r.TopicKey == "player.left_tea_for_landing_d2");
+                var stood = AdasTea.For(0, true);
+                stood.SheSeesHim(new GameTime(2, 12, 0));
+                var ada3 = Ada();
+                var stoodUp = stood.Close(ada3, new GameTime(2, 23, 0));
+                var neverAsked = AdasTea.For(0, true);
+                neverAsked.WithHer(new GameTime(2, 21, 30));
+                var ada4 = Ada();
+                double before4 = ada4.Loyalty;
+                Check(oneMinute.Close(Ada(), new GameTime(2, 23, 0)) == TeaState.LeftEarly
+                      && landingFirst.Close(ada5, new GameTime(2, 23, 0)) == TeaState.StoodUp && ada5.Rumors.Exists(r => r.TopicKey == "player.left_tea_for_landing_d2"
+                          && r.Summary == "Mickey's nephew went off down towards the ferry, late, the night I'd asked him in for his tea")
+                      && stayerState == TeaState.Stayed && stayer.SeenGoing && ada7.Rumors.Exists(r => r.TopicKey == "player.left_tea_for_landing_d2")
+                      && !tooLate.SeenGoing && gap.Close(Ada(), new GameTime(2, 23, 0)) == TeaState.LeftEarly
+                      && ada6.Rumors.Count == 0 && !afterRefusal.SeenGoing,
+                      "one minute at half past ten, or an hour away between, is not staying; going to the landing instead is seen; staying and then walking the two hours to the landing is seen too, till it closes at one; without the ask, or on another night, a walk is only a walk");
+                Check(left == TeaState.LeftEarly && Math.Abs(ada2.Loyalty - 0.40) < 1e-9 && PoliceFile.WouldReport(ada2, Offence.Wounding, false, null)
+                      && seen != null && seen.Sensitive && seen.OriginRung == 4 && ada2.Rumors.Count(r => r.TopicKey == "player.left_tea_for_landing_d2") == 1
+                      && stoodUp == TeaState.StoodUp && ada3.Loyalty < 0.35 && ada3.Memory.Events.Exists(e => e.Text == "I asked Mickey's nephew in for his tea. He never came. I'll not ask again.")
+                      && neverAsked.Close(ada4, new GameTime(2, 23, 0)) == TeaState.NotAsked && ada4.Loyalty == before4
+                      && !ada2.Memory.Events.Exists(e => e.Text.Contains("new owner") || e.Text.Contains(" they ")),
+                      "dropping in and leaving is not coming; going from her house to the landing he is seen from her window, once; standing her up cools her; a tea she never asked leaves her as she was; her memories are hers, of Mickey's nephew");
+
+                var back = AdasTea.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(tea.ToJson()))));
+                var lied = AdasTea.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"day\": 2, \"state\": \"Stayed\", \"minutes\": [1351], \"seenGoing\": true}")));
+                var notAsked = AdasTea.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"day\": 2, \"state\": \"NotAsked\", \"minutes\": [1300, 1360], \"seenGoing\": true}")));
+                var junk = AdasTea.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"day\": -1}")));
+                Check(back.Day == 2 && back.State == TeaState.Stayed && back.LatestMinute == tea.LatestMinute
+                      && lied.State == TeaState.LeftEarly && lied.SeenGoing && junk == null
+                      && notAsked.State == TeaState.NotAsked && notAsked.Minutes.Count == 0 && !notAsked.SeenGoing,
+                      "the tea keeps across a save, and a save cannot claim a stay the minutes do not show");
+            }
+
             // MICKEY'S ARRANGEMENT IN THE NEW GAME (town list 6z): the outfit asks
             // every other night from the first, in order; refusing ends it at once,
             // three nights not turning up end it, and nothing ends the game; the

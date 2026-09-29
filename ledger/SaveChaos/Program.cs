@@ -158,6 +158,10 @@ namespace Ledger.SaveChaos
             police.Heard("ron", "player.night_walk_d0", Offence.Suspicious, 3);
             police.Report("bold", "player.cut_d2", Offence.Wounding, 2, 2);
             police.EllisComes(null, 2);
+            var tea = AdasTea.For(0, true);
+            tea.SheSeesHim(new GameTime(2, 10, 0));
+            for (int m = 21 * 60; m <= 22 * 60 + 40; m++) tea.WithHer(new GameTime(2, m / 60, m % 60));
+            tea.Close(null, new GameTime(2, 23, 0));
             var heard = new RemarkLedger();
             heard.HeardLine("recognition/ordinary", "Evening.");
             heard.HeardLine("recognition/outfit-refused", "Heard you told them no.");
@@ -205,6 +209,16 @@ namespace Ledger.SaveChaos
                     }
                     f.CanArrest("player.cut_d2");
                     f.Strongest("player.window_d0");
+                    return (true, "ok");
+                }),
+                ("AdasTea", MiniJson.Serialize(tea.ToJson()), d =>
+                {
+                    var t = AdasTea.FromJson(d);
+                    if (t == null) return (true, "ok");   // a tea it cannot place is none
+                    if (t.Day < 0 || t.Day >= 100000) return (false, $"day={t.Day}");
+                    foreach (var m in t.Minutes) if (m < AdasTea.From * 60 || m >= AdasTea.Until * 60) return (false, $"minute {m}");
+                    if (t.State == TeaState.Stayed && t.LatestMinute < AdasTea.StayUntilMinute) return (false, "a stay the minutes do not show");
+                    if (t.State == TeaState.NotAsked && (t.Minutes.Count > 0 || t.SeenGoing)) return (false, "a tea never asked, with minutes or a sighting");
                     return (true, "ok");
                 }),
                 ("RemarkLedger", MiniJson.Serialize(heard.ToJson()), d =>
