@@ -8334,22 +8334,36 @@ namespace LedgerVignetteShot
 		// (a night row with no pin of its own takes the look file's night
 		// pin); the volume the player looks through takes the same number,
 		// or goes back to metering itself when there is none.
+		// AND THE NIGHT'S BIAS, 29 September (the AI tester, in the packaged
+		// game: the evening glowed saturated yellow). The frames on his page
+		// take the look file's night bias on top of the pin (PlaceCamera's
+		// write, a stop darker at -1); the player's volume took only the pin.
+		// -PlayNightPin= and -PlayNightBias= try other values in play.
+		double Pin = GExposurePinNow;
+		double Bias = C->SunOn ? 0.0 : GLook.NightExposureBias;
+		if (!C->SunOn)
+		{
+			FParse::Value(FCommandLine::Get(), TEXT("PlayNightPin="), Pin);
+			FParse::Value(FCommandLine::Get(), TEXT("PlayNightBias="), Bias);
+		}
 		APostProcessVolume* PPV = GPlayPPV.Get();
 		if (PPV != nullptr)
 		{
 			FPostProcessSettings& S = PPV->Settings;
-			const bool bPin = GExposurePinNow > 0.0;
+			const bool bPin = Pin > 0.0;
 			S.bOverride_AutoExposureMinBrightness = bPin;
 			S.bOverride_AutoExposureMaxBrightness = bPin;
 			if (bPin)
 			{
-				S.AutoExposureMinBrightness = (float)GExposurePinNow;
-				S.AutoExposureMaxBrightness = (float)GExposurePinNow;
+				S.AutoExposureMinBrightness = (float)Pin;
+				S.AutoExposureMaxBrightness = (float)Pin;
 			}
+			S.bOverride_AutoExposureBias = !C->SunOn;
+			S.AutoExposureBias = (float)Bias;
 		}
-		return FString::Printf(TEXT("%s/sun-%s/lanterns-%s/pin-%.3f/volume-%s"), UTF8_TO_TCHAR(Id),
+		return FString::Printf(TEXT("%s/sun-%s/lanterns-%s/pin-%.3f/bias-%.2f/volume-%s"), UTF8_TO_TCHAR(Id),
 			C->SunOn ? TEXT("on") : TEXT("off"), C->LanternsOn ? TEXT("on") : TEXT("off"),
-			GExposurePinNow, PPV != nullptr ? TEXT("moved") : TEXT("none"));
+			Pin, Bias, PPV != nullptr ? TEXT("moved") : TEXT("none"));
 	}
 
 	int32 ControlQuadsSpawnedCount()
