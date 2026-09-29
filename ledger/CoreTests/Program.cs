@@ -10097,10 +10097,21 @@ namespace Ledger.CoreTests
                 bool ritas = hookH.OpenAt("ritas", 2, 12, 59) == true && hookH.OpenAt("ritas_counter", 2, 13) == false && hookH.OpenAt("ritas", 1, 17, 29) == true
                              && hookH.OpenAt("ritas", 1, 17, 30) == false && hookH.OpenAt("ritas", 6, 11) == false && hookH.OpenAt("ritas", 0, 8, 59) == false;
                 bool late = hookH.OpenAt("mickeys", 1, 2, 30) == true && hookH.OpenAt("mickeys", 1, 3) == false && hookH.OpenAt("mickeys_rank", 7, 1) == true
-                            && hookH.OpenAt("mickeys", 6, 8) == false && hookH.OpenAt("mickeys", 6, 9) == true && hookH.OpenAt("mickeys", -1, 23) == true;
+                            && hookH.OpenAt("mickeys", 6, 8) == false && hookH.OpenAt("mickeys", 6, 9) == true && hookH.OpenAt("mickeys", -1, 22) == true
+                            && hookH.OpenAt("mickeys", 6, 23, 30) == false && hookH.OpenAt("mickeys", 7, 0, 30) == true
+                            && hookH.OpenAt("hals", 0, 11, 30) == false && hookH.OpenAt("hals", 0, 10, 59) == true && hookH.OpenAt("hals", 0, 12) == true && hookH.OpenAt("hals", 1, 11, 30) == true;
                 bool others = hookH.OpenAt("market", 1, 10) == true && hookH.OpenAt("market", 2, 10) == false && hookH.OpenAt("quay", 1, 10) == null
                               && hookH.OpenAt("nowhere", 1, 10) == null && hookH.OpenAt(null, 1, 10) == null && hookH.OpenAt("cafe_front", 6, 12) == false
                               && hookH.OpenAt("fish_market", 6, 10) == false && hookH.OpenAt("kiosk", 6, 10) == true && hookH.HoursWords("cafe") != null;
+                // Open with somebody in (town list 6by): at every open half hour of
+                // Hal's, the fish shop and Mickey's, somebody of the cast is there.
+                string openEmpty = null;
+                foreach (var area in new[] { "hals", "fish_market", "mickeys" })
+                    for (int d = 0; d < 7; d++)
+                        for (int h = 0; h < 24; h++)
+                            foreach (var m in new[] { 0, 30 })
+                                if (hookH.OpenAt(area, d, h, m) == true && !hookH.People.Any(pp => hookH.AreaOf(hookH.PlaceOf(pp, d, h)) == area))
+                                    openEmpty = area + " day " + d + " " + h + ":" + m;
                 // Whoever keeps a shop is only at its counter in an hour it is open.
                 string keeperAtShut = null;
                 foreach (var (who, place) in new[] { ("rita", "ritas_counter"), ("marla", "fish_counter"), ("hal", "hals_shop"), ("zlata", "mickeys_office"), ("dusan", "mickeys_rank") })
@@ -10110,10 +10121,11 @@ namespace Ledger.CoreTests
                 var said = new Dictionary<string, string>
                 {
                     { "ritas", "nine till half five, on Wednesdays it shuts at one, shut on Sundays" },
-                    { "mickeys", "seven till three in the morning, on Sundays it opens at nine" },
+                    { "mickeys", "seven till three in the morning, on Sundays it opens at nine, on Sundays shut from six till seven in the evening and from eleven at night till midnight" },
+                    { "hals", "ten till six, on Wednesdays it shuts at one, on Mondays shut from eleven till twelve, shut on Sundays" },
                     { "market", "Tuesdays, Fridays and Saturdays, eight till four" },
                     { "cafe", "half six in the morning till ten at night, on Sundays eight till twelve" },
-                    { "fish_market", "half seven till two, shut on Sundays" },
+                    { "fish_market", "half seven till two, on Wednesdays it shuts at one, shut on Sundays" },
                     { "newsagent", "six in the morning till half five, on Sundays seven till twelve, the pensions counter nine till half five on weekdays" },
                     { "laundry", "eight till half five, shut on Sundays" },
                 };
@@ -10121,16 +10133,23 @@ namespace Ledger.CoreTests
                 foreach (var kv in said) if (hookH.HoursWords(kv.Key) != kv.Value) wrongWords = kv.Key + ": " + hookH.HoursWords(kv.Key);
                 var ronHours = hookH.HoursFor(1, 10);
                 var ronLate = hookH.HoursFor(1, 17, 45);
-                Check(ritas && late && others && keeperAtShut == null && wrongWords == null && hookH.HoursWords("quay") == null
-                      && ronHours != null && ronHours.StartsWith("Opening hours, as everybody on the street knows them. Mickey's: seven till three in the morning, on Sundays it opens at nine; open now. ")
+                Check(ritas && late && others && keeperAtShut == null && openEmpty == null && wrongWords == null && hookH.HoursWords("quay") == null
+                      && ronHours != null && ronHours.StartsWith("Opening hours, as everybody on the street knows them. Mickey's: seven till three in the morning, on Sundays it opens at nine, on Sundays shut from six till seven in the evening and from eleven at night till midnight; open now. ")
                       && ronHours.Contains("Rita's: nine till half five, on Wednesdays it shuts at one, shut on Sundays; open now.") && !ronHours.Contains("the quay")
                       && ronLate.Contains("Rita's: nine till half five, on Wednesdays it shuts at one, shut on Sundays; shut now.") && ronLate.Contains("The cafe: half six in the morning till ten at night, on Sundays eight till twelve; open now."),
                       "every shop has its hours, as the street says them and whether it is open now, a late close running into the next morning; whoever keeps a shop is at its counter only while it is open",
-                      $"{ritas} {late} {others} {keeperAtShut} {wrongWords} | {ronHours}");
+                      $"{ritas} {late} {others} {keeperAtShut} {openEmpty} {wrongWords} | {ronHours}");
 
                 string Cast(string hours) =>
                     "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"shop\":{\"places\":[\"a\"],\"names\":[\"the shop\"],\"hours\":" + hours + "}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}";
                 string acceptedBad = null;
+                foreach (var badBreak in new[] { "{\"mon\":[[11,13],[12,14]]}", "{\"mon\":[9,10]}", "{\"mon\":[16,17]}", "{\"tue\":[11,12]}", "{\"mon\":[12,11]}", "{\"mon\":[11.25,12]}", "[]", "{\"monday\":[11,12]}" })
+                {
+                    try { CastDay.Parse(Cast("{\"mon\":[9,17]},\"hours_breaks\":" + badBreak)); acceptedBad = "break " + badBreak; }
+                    catch (FormatException) { }
+                }
+                try { CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"shop\":{\"places\":[\"a\"],\"hours_breaks\":{\"mon\":[11,12]}}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}"); acceptedBad = "breaks without hours"; }
+                catch (FormatException) { }
                 foreach (var bad in new[] { "[]", "{}", "{\"mon\":[12,36]}", "{\"mon\":[20,31]}", "{\"mon\":[0,30]}", "{\"sunday\":[9,17]}", "{\"mon\":[9]}", "{\"mon\":[9,9]}", "{\"mon\":[25,26]}", "{\"mon\":[9.25,17]}", "{\"mon\":[20,45]}",
                                             "{\"mon\":[-1,5]}", "{\"mon\":[\"9\",17]}", "{\"mon\":[7,32],\"tue\":[7,20]}", "{\"sun\":[7,32],\"mon\":[7,20]}", "{\"mon\":[9,17,1]}" })
                 {

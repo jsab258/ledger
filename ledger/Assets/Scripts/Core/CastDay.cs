@@ -52,6 +52,7 @@ namespace Ledger.Core
         readonly Dictionary<string, string> _within = new Dictionary<string, string>();
         readonly Dictionary<string, (double open, double close)?[]> _hours = new Dictionary<string, (double, double)?[]>();
         readonly Dictionary<string, string> _hoursNote = new Dictionary<string, string>();
+        readonly Dictionary<string, List<(double from, double to)>[]> _breaks = new Dictionary<string, List<(double, double)>[]>();
         readonly Dictionary<string, List<(int hour, string place)>> _daily = new Dictionary<string, List<(int, string)>>();
         readonly Dictionary<string, List<(int hour, string place)>[]> _byWeekday = new Dictionary<string, List<(int, string)>[]>();
         readonly List<string> _people = new List<string>();
@@ -99,6 +100,11 @@ namespace Ledger.Core
                 c._areaNames[kv.Key] = names;
                 if (a != null && a.ContainsKey("hours")) c._hours[kv.Key] = ReadHours(kv.Key, a["hours"]);
                 if (MiniJson.GetString(a, "hours_note") is string hn && hn.Trim().Length > 0) c._hoursNote[kv.Key] = hn.Trim();
+                if (a != null && a.ContainsKey("hours_breaks"))
+                {
+                    if (!c._hours.TryGetValue(kv.Key, out var wk)) throw new FormatException($"cast file: area {kv.Key} has breaks but no hours");
+                    c._breaks[kv.Key] = ReadBreaks(kv.Key, a["hours_breaks"], wk);
+                }
                 foreach (var pl in MiniJson.GetList(a, "places") ?? new List<object>())
                     if (pl is string pls)
                     {
@@ -240,6 +246,36 @@ namespace Ledger.Core
             return week;
         }
 
+        // An area's breaks (town list 6by): on a weekday, [from, to], or a list
+        // of them, in whole or half hours strictly inside that day's hours, when
+        // it is shut because whoever keeps it is elsewhere (Hal on Mondays at
+        // Rita's); never overlapping.
+        static List<(double from, double to)>[] ReadBreaks(string area, object value, (double open, double close)?[] week)
+        {
+            var o = MiniJson.AsObject(value) ?? throw new FormatException($"cast file: area {area}'s hours_breaks must be an object of weekdays");
+            var breaks = new List<(double from, double to)>[7];
+            foreach (var kv in o)
+            {
+                int wd = Array.IndexOf(WeekdayKeys, kv.Key);
+                if (wd < 0) throw new FormatException($"cast file: area {area}'s hours_breaks name no weekday: {kv.Key}");
+                var list = kv.Value as List<object>;
+                var pairs = list != null && list.Count > 0 && list[0] is List<object> ? list : new List<object> { kv.Value };
+                var day = new List<(double from, double to)>();
+                foreach (var x in pairs)
+                {
+                    if (!(x is List<object> pair) || pair.Count != 2 || !(pair[0] is double from) || !(pair[1] is double to)
+                        || to <= from || from * 2 != Math.Floor(from * 2) || to * 2 != Math.Floor(to * 2)
+                        || !week[wd].HasValue || from <= week[wd].Value.open || to >= week[wd].Value.close
+                        || day.Exists(b => from < b.to && b.from < to))
+                        throw new FormatException($"cast file: area {area}'s breaks on {kv.Key} must be [from, to], whole or half hours, strictly inside that day's hours, never overlapping");
+                    day.Add((from, to));
+                }
+                day.Sort((a, b) => a.from.CompareTo(b.from));
+                breaks[wd] = day;
+            }
+            return breaks;
+        }
+
         /// OPEN AND CLOSED (town list 6bo): whether a place or area is open at
         /// this hour and minute of this day, its hours from the cast file (a
         /// close past midnight counts on the next morning); null when it has no
@@ -253,10 +289,12 @@ namespace Ledger.Core
             long d0 = all >= 0 ? all / 1440 : -((-all + 1439) / 1440);
             day = (int)d0;
             double t = (all - d0 * 1440) / 60.0;
+            _breaks.TryGetValue(area, out var breaks);
+            bool InBreak(int wd, double at) => breaks != null && breaks[wd] != null && breaks[wd].Exists(b => b.from <= at && at < b.to);
             var today = week[Weekday(day)];
-            if (today.HasValue && today.Value.open <= t && t < today.Value.close) return true;
+            if (today.HasValue && today.Value.open <= t && t < today.Value.close) return !InBreak(Weekday(day), t);
             var before = week[Weekday(day - 1)];
-            if (before.HasValue && t + 24 < before.Value.close) return true;
+            if (before.HasValue && t + 24 < before.Value.close) return !InBreak(Weekday(day - 1), t + 24);
             return false;
         }
 
@@ -324,6 +362,19 @@ namespace Ledger.Core
                     bits.Add("on " + DaysWords(days) + (h.close == usual.close ? " it opens at " + TimeWords(h.open, false)
                                                      : h.open == usual.open ? " it shuts at " + TimeWords(h.close, true)
                                                      : " " + Span(h)));
+                }
+                if (_breaks.TryGetValue(area, out var breaks))
+                {
+                    var byBreak = new List<(string said, List<int> days)>();
+                    for (int d = 0; d < 7; d++)
+                    {
+                        if (breaks[d] == null || breaks[d].Count == 0) continue;
+                        string said = string.Join(" and ", breaks[d].ConvertAll(b => "from " + TimeWords(b.from, true) + " till " + TimeWords(b.to, false)));
+                        int g = byBreak.FindIndex(x => x.said == said);
+                        if (g < 0) byBreak.Add((said, new List<int> { d })); else byBreak[g].days.Add(d);
+                    }
+                    foreach (var (said, days) in byBreak)
+                        bits.Add("on " + DaysWords(days) + " shut " + said);
                 }
                 if (shut.Count > 0) bits.Add("shut on " + DaysWords(shut));
             }
