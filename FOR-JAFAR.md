@@ -50,21 +50,21 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Clothes, Wednesday 30 September
 
-**No page from me today:** nothing has passed the gate yet.
+**No page today:** nothing has passed the gate yet.
 
-**Set aside, per your rule: the donkey jacket** (and its other builds). Three blind reviewers failed it, the last after research: the armpit tears with the arms up, the sides gather, the back bags under the yoke. What it left works for the rest: Ron measured properly, clothes cut from real patterns and sewn round his own body.
+**Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its other builds; Ron's work trousers (right standing, broken sitting and on a stair); the flat cap (the side profile right at last, but the band stands off his head). Sheila's skirt walks cleanly but fails sitting.
 
-**Decide:** Marvelous Designer can be scripted except one click each time it opens, online and signed in; $39 a month, 14 days free. (A, recommended) you start the free trial on your account; I script it, try the jacket once, and use your approved month only if it passes. (B) The jacket stays set aside.
+**Decide:**
+- Marvelous Designer is scriptable except one click at each start, online; $39 a month, 14 days free. (A, recommended) you start the trial; I script the jacket once. (B) Leave it.
+- The standing shapes now come close; every failure is how clothes bend sitting or walking, tested in Blender, and Unreal redoes those weights anyway. (A, recommended) I finish shapes to the gate standing; the builder tests the poses in Unreal. (B) Keep testing poses here.
 
-**Work trousers:** cut from FreeSewing for Ron, sewn round him a new way (every seam closed, nothing through him); belt, fly, pockets. Two reviewers failed them sitting and on a stair; researching, then the last try.
+**In hand:** Sheila's cardigan and blouse, two reviews failed; researching, then its last try.
 
-**Flat cap:** being built on his head.
+**Research:** sleeves; jacket weight; Marvelous Designer; trousers, caps; skinning; the cap; Sheila's clothes; seated skirts; the cardigan (running).
 
-**Research:** sleeves; the jacket's weight (84 kg simulated); Marvelous Designer's scripting; 1990 trousers and caps; skinning trousers (running).
+**Pushes:** free GitHub tests only.
 
-**Pushes set off:** free GitHub tests only.
-
-**C: free:** 34 GB when I began, 47.3 now. Backup runs with this commit.
+**C: free:** 34 GB when I began, 46.7 now. Backup runs with this commit.
 
 ## Builder, Wednesday 30 September
 
