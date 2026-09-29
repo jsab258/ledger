@@ -18,11 +18,19 @@ namespace Ledger.Core
     {
         public const int MaxTranscriptTurns = 12;
 
-        /// A CONVERSATION STARTS FRESH after this long apart, or on another day
-        /// (town list 6ae, the second checklist sweep): "Morning, Ron" on day two
-        /// was the next line of last night's talk. What was said is kept in
-        /// memory; only the talk the model still sees is cleared.
-        public const int FreshAfterMinutes = 120;
+        /// A CONVERSATION STARTS FRESH after this long apart (town list 6ae, the
+        /// second checklist sweep): "Morning, Ron" on day two was the next line of
+        /// last night's talk. What was said is kept in memory; only the talk the
+        /// model still sees is cleared. Six game hours, and no rule for a new day
+        /// (town list 6az, the fourth sweep): at the clock rates on his page two
+        /// game hours pass in under a real minute, so a player stopping to think
+        /// found the conversation begun again; and once the game has said when a
+        /// conversation is fresh (GameMarksFresh), only the game says so.
+        public const int FreshAfterMinutes = 360;
+
+        /// The game has marked a fresh conversation for this person at least once,
+        /// so it decides when talk starts over, not the clock (town list 6az).
+        public bool GameMarksFresh { get; set; }
 
         /// THE MARK A CHARACTER ENDS A CONVERSATION WITH (town list 6ae): done,
         /// busy or insulted, they say so and end the reply with it; it is taken
@@ -779,7 +787,7 @@ namespace Ledger.Core
             {
                 { "card", Card.Id }, { "memory", memory }, { "beliefs", beliefs }, { "shown", shown }, { "transcript", transcript },
                 { "facts", facts }, { "suspicion", Suspicion.Value }, { "suspicionWhy", Suspicion.LatestReason() }, { "heard", Heard.ToString() },
-                { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid }, { "howYouKnowHim", HowYouKnowHim }, { "knowsHimFromGame", KnowsHimFromGame },
+                { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid }, { "howYouKnowHim", HowYouKnowHim }, { "knowsHimFromGame", KnowsHimFromGame }, { "gameMarksFresh", GameMarksFresh },
                 { "lastTurn", _lastTurn.HasValue ? (object)new List<object> { _lastTurn.Value.Day, _lastTurn.Value.Hour, _lastTurn.Value.Minute } : null },
                 { "answers", AnswersJson() }, { "currentDeed", CurrentDeed }, { "asksThisTalk", _asksThisTalk },
                 { "ownedUp", new List<object>(OwnedUp) }, { "keepsQuiet", QuietJson() }, { "toldOthers", ToldOthersJson() },
@@ -857,6 +865,7 @@ namespace Ledger.Core
             if (saved.TryGetValue("heardStory", out var hst) && hst is string story) HeardStory = story;
             if (saved.TryGetValue("howYouKnowHim", out var hk) && hk is string knows) HowYouKnowHim = knows;
             if (saved.TryGetValue("knowsHimFromGame", out var kg) && kg is bool fromGame) KnowsHimFromGame = fromGame;
+            if (saved.TryGetValue("gameMarksFresh", out var gmf) && gmf is bool marks) GameMarksFresh = marks;
             if (saved.TryGetValue("currentDeed", out var cd) && cd is string cds) CurrentDeed = cds;
             if (saved.TryGetValue("answers", out var ans) && ans is List<object> ansList)
                 foreach (var ao in ansList)
@@ -1195,7 +1204,7 @@ namespace Ledger.Core
         {
             LastEnded = false;
             _turnInput = playerInput;
-            if (_lastTurn.HasValue && (now.Day != _lastTurn.Value.Day || now.TotalMinutes - _lastTurn.Value.TotalMinutes >= FreshAfterMinutes))
+            if (!GameMarksFresh && _lastTurn.HasValue && now.TotalMinutes - _lastTurn.Value.TotalMinutes >= FreshAfterMinutes)
                 StartFresh();
             _lastTurn = now;
             var system = BuildSystemPrompt(playerInput, now, sceneContext);

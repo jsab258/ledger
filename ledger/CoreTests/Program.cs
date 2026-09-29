@@ -5663,6 +5663,30 @@ namespace Ledger.CoreTests
                       "a reply naming a real brand is asked again without it, and the character is told not to in the first place", brandKept);
             }
 
+            // TALK DOES NOT START OVER WHILE HE THINKS (town list 6az): a quiet spell of
+            // two or three game hours, or midnight, keeps the conversation; six apart
+            // start it again; once the game marks fresh talk, only the game does.
+            {
+                var pause = new FakeLlm { NextReply = "Right." };
+                var pe2 = new ConversationEngine(pause, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                await pe2.SayToAsync("Evening.", new GameTime(3, 23, 0), "");
+                await pe2.SayToAsync("Still here.", new GameTime(4, 1, 30), "");
+                int afterMidnight = pause.LastRequest.Messages.Count;
+                await pe2.SayToAsync("Morning.", new GameTime(4, 9, 0), "");
+                int nextMorning = pause.LastRequest.Messages.Count;
+                pe2.GameMarksFresh = true;
+                await pe2.SayToAsync("Hello again.", new GameTime(4, 9, 5), "");
+                await pe2.SayToAsync("Much later.", new GameTime(4, 20, 0), "");
+                int gameKeeps = pause.LastRequest.Messages.Count;
+                var pBack = new ConversationEngine(null, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                pBack.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(pe2.CaptureTalk()))));
+                var sheilaCard = CharacterCard.Parse(File.ReadAllText(Root("production/cast/cards/lena.md")));
+                Check(afterMidnight == 3 && nextMorning == 1 && gameKeeps == 5 && pBack.GameMarksFresh
+                      && !sheilaCard.ToPromptBlock().Contains("You are in Mickey's"),
+                      "a quiet spell or midnight keeps the conversation; the next morning starts it again; once the game marks fresh talk only the game does; Sheila's card no longer places her",
+                      afterMidnight + " " + nextMorning + " " + gameKeeps);
+            }
+
             // A CONVERSATION STARTS FRESH, AND A CHARACTER CAN END IT (town list 6ae).
             {
                 var freshLlm = new FakeLlm { NextReply = "Evening." };
