@@ -143,7 +143,12 @@ DAYS["2026-09-30"] = carried(
                           "cannot cover every way of threatening, or of caving in, and a threat it misses the town never hears of",
       [("model", "The checking model judges each line about a deed (\"is this a threat to keep quiet?\"), the Core deciding what follows: about a twentieth of a penny a line, on the capped key (recommended)"),
        ("words", "Word shapes only, as built: free, with gaps"),
-       ("none", "Threats unread for now")])],
+       ("none", "Threats unread for now")]),
+     ("q-calls-him", "What the town calls him. Canon's ladder is the new owner, Nowak, Tom, Tommy, by knowing, not liking; today the game sends no name, so Darren says "
+                     "\"the new owner\" all week, and the rule written for the game runs on liking, so Ada would say \"Tommy\" after one tea",
+      [("knowing", "By knowing him: Nowak once they know his name, Tom after two days' talk or when he asks them to, Tommy for nobody in week one; never back down (recommended; canon's rule; built this way meanwhile)"),
+       ("liking", "By liking, as the code has it: Tom at once, Nowak for those who cool on him, Tommy after Ada's tea"),
+       ("own", "Only Mickey's own people use his name in week one")])],
     [("police-asking", "Word that the police are asking", os.path.join(REPO, "game-design", "police-asking-2026-09-29.md"),
       "Approve how it goes and its lines", "Change it (say what in the note)"),
      ("arrest", "What an arrest does", os.path.join(REPO, "game-design", "arrest-2026-09-29.md"),
@@ -151,7 +156,9 @@ DAYS["2026-09-30"] = carried(
      ("arrest-words", "What he is told at the arrest and on release", os.path.join(REPO, "game-design", "arrest-words-2026-09-29.md"),
       "Approve the words", "Change them (say what in the note)"),
      ("week-end", "The week's end: Sheila's question and his answer", os.path.join(REPO, "game-design", "week-end-2026-09-29.md"),
-      "Approve how it goes and her words", "Change it (say what in the note)")])
+      "Approve how it goes and her words", "Change it (say what in the note)"),
+     ("day-one", "Day one: Sheila's walk-round, and the street's first talk of him", os.path.join(REPO, "game-design", "day-one-2026-09-29.md"),
+      "Approve her words and the street's", "Change them (say what in the note)")])
 
 
 def build(date):
@@ -190,7 +197,7 @@ def selftest():
     for key, _, options in DAYS["2026-09-29"]["questions"]:
         assert "recommended" in options[0][1], key
     later = build("2026-09-30")
-    assert 'data-key="q-threat-reading"' in later and 'data-key="q-threat"' in later and 'data-key="q-wind-down"' in later and 'data-key="week-end"' in later and 'data-key="q-sheila-trust"' in later and 'data-key="q-arrest"' in later and 'data-key="arrest"' in later and 'data-key="police-asking"' in later
+    assert 'data-key="q-calls-him"' in later and 'data-key="day-one"' in later and 'data-key="q-threat-reading"' in later and 'data-key="q-threat"' in later and 'data-key="q-wind-down"' in later and 'data-key="week-end"' in later and 'data-key="q-sheila-trust"' in later and 'data-key="q-arrest"' in later and 'data-key="arrest"' in later and 'data-key="police-asking"' in later
     assert 'data-key="q-chatter"' not in later and 'data-key="first-hour"' not in later and 'data-key="q-clock"' in later and 'data-key="first-ask"' in later
     for key, _, options in DAYS["2026-09-30"]["questions"]:
         assert "recommended" in options[0][1], key
