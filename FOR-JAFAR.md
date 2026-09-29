@@ -26,21 +26,21 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page: three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y):** how Mickey died, winding it down, threats.
+**[Your page: three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y):** how Mickey died, winding it down, threats. **[Tomorrow's, ready](https://claude.ai/artifact/TXEoUnQoDTaLPfFZdHSYAL):** the fire, the talk's check, Steam's wording.
 
-**Decided by me** (a line each in DECISIONS; overturn any): yesterday's other questions and design pages. Relay: no key.
+**Decided by me** (DECISIONS; overturn any): yesterday's other questions and pages. Relay: no key.
 
-**Talk:** the brush-off figure was stale (1 in 24). A plain first sentence ("Couldn't tell you.") no longer waits for its check. **Set aside, per your rule:** the fallback. "That's all I know" answers half a newcomer's questions; three attempts failed (repairing replies cut it to 4 in 60 but let a kept "Yes." confirm what was cut). Only the check's retune is left: your call. Timings wait for your key.
+**Talk:** the brush-off figure was stale (1 in 24). Plain first sentences no longer wait for their check. **Set aside, per your rule:** "that's all I know" answers half a newcomer's questions; three attempts failed (the best, 4 in 60, let a kept "Yes." confirm what was cut). Reopening the check's retune is tomorrow's call. Timings wait for your key.
 
-**Handed over:** ten short cards in first-hour order, each with what the tester should see; names; the wait; the landing man; the street's facts. Steam's AI disclosure drafted.
+**Handed over:** ten short cards in first-hour order; names; the wait; the landing man; the street's facts.
 
-**Set aside:** the court day, a new system.
+**Paused by your ruling:** the ending reading, everyone's nerve, the court day, the Ledger's feed.
 
 **Research:** grounded replies; Steam's disclosure; waiting; a 1990 court day.
 
 **Got wrong:** the wait took four reviews.
 
-**Pushes set off:** GitHub's free tests; Core pushes also the Unreal build here.
+**Pushes set off:** free GitHub tests; Core pushes also the Unreal build here.
 
 **C: free:** 46.8 GB, 47.9 now. Backup runs with this commit.
 
