@@ -114,11 +114,24 @@ def hold(name, seconds, run=False):
 
 
 def type_text(text):
+    """TYPED AS A KEYBOARD TYPES, 29 September: each character as the real key
+    press that makes it (its scan code, Shift held where the layout needs it),
+    not as a Unicode packet: the packets never reached the game's line box
+    (no reply to the tester's talk since 24 September), and only real key
+    presses show whether typing a line also walks Tom (the twenty a friend
+    would notice, 9)."""
     for ch in text:
-        for up in (False, True):
-            i = INPUT(type=1, u=_U(ki=KEYBDINPUT(0, ord(ch), 0x0004 | (0x0002 if up else 0), 0, None)))
-            user32.SendInput(1, ctypes.byref(i), ctypes.sizeof(INPUT))
-        time.sleep(0.02)
+        vk = user32.VkKeyScanW(ord(ch))
+        if vk == -1 or vk == 0xFFFF:
+            continue
+        shift = bool((vk >> 8) & 1)
+        sc = user32.MapVirtualKeyW(vk & 0xFF, 0)
+        if shift:
+            send_key(SCAN["shift"])
+        send_key(sc); time.sleep(0.02); send_key(sc, up=True)
+        if shift:
+            send_key(SCAN["shift"], up=True)
+        time.sleep(0.03)
 
 
 def enter():
@@ -401,11 +414,14 @@ def start(args):
             shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(stage, "vignette-pieces.json"))
             shutil.copyfile(os.path.join(REPO, "content", "dialogue", "crime-witness-v1.json"), os.path.join(stage, "crime-witness-v1.json"))
     game_args += [x for x in args.get("extra", []) if x.startswith("-") and " " not in x]
+    if args.get("noraw"):
+        game_args = [x for x in game_args if "ForceRawInputSimulation" not in x]
     # --plain, 29 September: the packaged game as a friend starts it, with no
     # mode and no talk path, only a window the tester can drive.
     if args.get("plain"):
-        game_args = ["-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash",
-                     "-dpcvars=Slate.ForceRawInputSimulation=1"]
+        # Without the raw-input setting the scripted runs use for mouse turns:
+        # a friend's copy has none, and it changes how typed keys reach a box.
+        game_args = ["-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash"]
     build = "editor" if args.get("editor") else "packaged"
     print("aiTester build=%s selfContained=%s config=%s" % (build, "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
     cmd = ([EDITOR, PROJECT, "-game"] if args.get("editor") else [PACKAGED]) + game_args
@@ -579,7 +595,7 @@ if __name__ == "__main__":
     verb = argv[0] if argv else ""
     rest = argv[1:]
     if verb == "start":
-        a = {"editor": "--editor" in rest, "force": "--force" in rest, "plain": "--plain" in rest}
+        a = {"editor": "--editor" in rest, "force": "--force" in rest, "plain": "--plain" in rest, "noraw": "--no-raw" in rest}
         if "--wait" in rest:
             a["wait"] = rest[rest.index("--wait") + 1]
         # --game-arg X, repeatable: one more argument for the game, such as a

@@ -73,6 +73,13 @@ ALedgerSliceCharacter::ALedgerSliceCharacter()
 void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+	if (const APlayerController* KeysPC = Cast<APlayerController>(GetController()))
+	{
+		const float Fwd = (KeysPC->IsInputKeyDown(EKeys::W) ? 1.0f : 0.0f) - (KeysPC->IsInputKeyDown(EKeys::S) ? 1.0f : 0.0f);
+		const float Side = (KeysPC->IsInputKeyDown(EKeys::D) ? 1.0f : 0.0f) - (KeysPC->IsInputKeyDown(EKeys::A) ? 1.0f : 0.0f);
+		MoveForward(Fwd);
+		MoveRight(Side);
+	}
 	if (GetMesh() == nullptr) { return; }
 	// FROM WHERE THE PLAYER ACTUALLY SEES, to the nearest point of his body's
 	// upright line (feet to head): the first version measured to his head
@@ -118,10 +125,9 @@ void ALedgerSliceCharacter::BeginPlay()
 void ALedgerSliceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAxisKey(EKeys::W, this, &ALedgerSliceCharacter::MoveForward);
-	PlayerInputComponent->BindAxisKey(EKeys::S, this, &ALedgerSliceCharacter::MoveBackward);
-	PlayerInputComponent->BindAxisKey(EKeys::D, this, &ALedgerSliceCharacter::MoveRight);
-	PlayerInputComponent->BindAxisKey(EKeys::A, this, &ALedgerSliceCharacter::MoveLeft);
+	// W A S D ARE READ AS HELD KEYS IN TICK, 29 September: bound as axis keys
+	// they are not axes, and the engine's check for that fired on every
+	// launch (an "ensure": a crash report and a stall as the game started).
 	PlayerInputComponent->BindAxisKey(EKeys::MouseX, this, &ALedgerSliceCharacter::LookYaw);
 	PlayerInputComponent->BindAxisKey(EKeys::MouseY, this, &ALedgerSliceCharacter::LookPitch);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Pressed, this, &ALedgerSliceCharacter::RunPressed);

@@ -3527,8 +3527,20 @@ namespace
 					.HintText(FText::FromString(FString(TEXT("Say something to ")) + GTalkTarget.Name + TEXT(", then Enter. Esc to leave it.")))
 					.OnTextCommitted_Lambda([](const FText& T, ETextCommit::Type How)
 					{
+						if (How == ETextCommit::OnEnter || How == ETextCommit::OnCleared)
+						{
+							UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: %s with %d characters"),
+							       How == ETextCommit::OnEnter ? TEXT("sent") : TEXT("left with Esc"), T.ToString().Len());
+						}
+						// A BOX THAT NEVER HELD THE KEYBOARD, 29 September (the tester, with
+						// real key presses, in a friend's plain copy): Slate cannot focus a
+						// widget in the frame it is added, so the box lost a focus it never
+						// had, closed itself, and the letters he typed went to the game (the
+						// window smashed on "e", report on "r", Tom walked). Now only Enter or
+						// Esc ends the line; a lost focus is won back (HumanTalkTick), and the
+						// game ignores its keys while the box is open.
 						if (How == ETextCommit::OnEnter) { GSaid = T.ToString(); bSayCommitted = true; }
-						else { bSayCancelled = true; }
+						else if (How == ETextCommit::OnCleared) { bSayCancelled = true; }
 					})
 				]
 			];
@@ -3538,9 +3550,14 @@ namespace
 			FInputModeUIOnly M;
 			M.SetWidgetToFocus(GSayText);
 			PC->SetInputMode(M);
+			// A key held as the box opens would stay down: Tom walked on while
+			// the line was typed.
+			PC->FlushPressedKeys();
 		}
 		FSlateApplication::Get().SetKeyboardFocus(GSayText);
 		bSayOpen = true;
+		UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: open for %s, keyboard focus %s"), *GTalkTarget.Name,
+		       FSlateApplication::Get().GetKeyboardFocusedWidget() == GSayText ? TEXT("in the box") : TEXT("NOT in the box"));
 		GSayOpenedAt = NowS();
 	}
 
@@ -4017,6 +4034,14 @@ namespace
 		AckTick();
 		if (bSayOpen)
 		{
+			// THE KEYBOARD BACK INTO THE BOX whenever it leaves while the box is
+			// open (above); the game ignores its keys meanwhile.
+			if (GSayText.IsValid() && !bSayCommitted && !bSayCancelled
+			    && FSlateApplication::Get().GetKeyboardFocusedWidget() != GSayText)
+			{
+				FSlateApplication::Get().SetUserFocus(0, GSayText, EFocusCause::SetDirectly);
+				FSlateApplication::Get().SetKeyboardFocus(GSayText, EFocusCause::SetDirectly);
+			}
 			// THE T THAT OPENED THE LINE is not the first letter of it.
 			if (GSayText.IsValid() && Now - GSayOpenedAt < 0.5)
 			{
@@ -4489,6 +4514,63 @@ namespace
 	}
 
 	// ---- the ticker ------------------------------------------------------
+	// A PROMPT ON WHAT HE CAN USE, 29 September (the twenty a friend would
+	// notice, 8): near a person, "T  talk to Sheila"; before the deed, beside
+	// Mickey's window, "E  the window". Its own line under the spoken ones,
+	// hidden while he types; the same people and reach the keys act on.
+	TSharedPtr<STextBlock> GPromptText;
+	TSharedPtr<SWidget> GPromptRoot;
+	TWeakObjectPtr<UWorld> GPromptWorld;
+	FString GPromptNow;
+
+	void PromptSet(const FString& Text)
+	{
+		if (GEngine == nullptr || GEngine->GameViewport == nullptr) { return; }
+		UWorld* W = GEngine->GameViewport->GetWorld();
+		if (!GPromptRoot.IsValid() || GPromptWorld.Get() != W)
+		{
+			SAssignNew(GPromptRoot, SBox)
+				.HAlign(HAlign_Center).VAlign(VAlign_Bottom).Padding(FMargin(40.0f, 0.0f, 40.0f, 110.0f))
+				[
+					SAssignNew(GPromptText, STextBlock)
+					.Font(FCoreStyle::GetDefaultFontStyle("Bold", 16))
+					.ColorAndOpacity(FSlateColor(FLinearColor(0.95f, 0.92f, 0.8f, 1.0f)))
+					.ShadowOffset(FVector2D(1.5f, 1.5f))
+					.ShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.9f))
+				];
+			GEngine->GameViewport->AddViewportWidgetContent(GPromptRoot.ToSharedRef(), 49);
+			GPromptWorld = W;
+			GPromptNow = TEXT("(unset)");
+		}
+		if (Text == GPromptNow || !GPromptText.IsValid()) { return; }
+		GPromptNow = Text;
+		GPromptText->SetText(FText::FromString(Text));
+	}
+
+	void LivePromptTick(bool bBeforeDeed)
+	{
+		if (GPawn == nullptr || bSayOpen) { PromptSet(FString()); return; }
+		const FVector At = GPawn->GetActorLocation();
+		struct Who { AActor* Body; const GossiperPtr* G; const TCHAR* Name; };
+		const Who People[3] = { { GN2Body, &GN2, TEXT("Darren") }, { GW1Body, &GW1, TEXT("Sheila") }, { GR3Body, &GR3, TEXT("Ron") } };
+		const TCHAR* Near = nullptr;
+		double Best = LedgerCrime::kLiveTalkM;
+		for (const Who& P : People)
+		{
+			if (P.Body == nullptr || !*P.G) { continue; }
+			const double M = FVector::Dist2D(At, P.Body->GetActorLocation()) / 100.0;
+			if (M <= Best) { Best = M; Near = P.Name; }
+		}
+		FString Text;
+		if (Near != nullptr) { Text = FString::Printf(TEXT("T  talk to %s"), Near); }
+		if (bBeforeDeed && GGlass[0] != nullptr
+		    && FVector::Dist2D(At, GGlass[0]->GetComponentsBoundingBox(true).GetCenter()) / 100.0 <= LedgerCrime::kLiveReachM)
+		{
+			Text += (Text.IsEmpty() ? FString() : FString(TEXT("        "))) + TEXT("E  the window");
+		}
+		PromptSet(Text);
+	}
+
 	bool Tick(float)
 	{
 		// PAUSED: the clock held, the line shown, nothing else runs.
@@ -4994,6 +5076,7 @@ namespace
 		}
 		case ECrimePhase::LiveWaitDeed:
 		{
+			if (!bLiveScript) { LivePromptTick(true); }
 			if (bLiveScript || bAskAfterDeed)
 			{
 				if (bLiveScript) { LiveVoiceStart(); }
@@ -5119,6 +5202,7 @@ namespace
 		}
 		case ECrimePhase::LiveRoam:
 		{
+			if (!bLiveScript) { LivePromptTick(false); }
 			LiveVoiceStart();
 			LiveVoicePump();
 			if (!bLiveScript)
