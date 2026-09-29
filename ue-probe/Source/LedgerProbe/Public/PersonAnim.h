@@ -110,6 +110,16 @@ public:
 	// starts over: he can come past again.
 	static constexpr float LookResetCm = 500.0f;
 
+	// A NOISE THEY TURN TO, 29 September (the twenty a friend would notice,
+	// 16: people turn toward the smash): after a short start the head turns
+	// to where it came from for this long, whoever they were looking at, then
+	// goes back to its own business.
+	void LookToward(const FVector& Where, float DelaySeconds, float Seconds);
+	FVector NoisePoint = FVector::ZeroVector;
+	float NoiseDelay = 0.0f;
+	float NoiseLeft = 0.0f;
+	int32 NoiseLooks = 0;
+
 protected:
 	virtual FAnimInstanceProxy* CreateAnimInstanceProxy() override;
 };

@@ -268,8 +268,39 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 	// driver that itself eases toward the look wanted. A full turn takes about
 	// three quarters of a second and eases back in about a second and a half;
 	// half a second of glance reaches four fifths of its turn.
+	// THE NOISE, over whatever they were looking at (LookToward).
+	if (NoiseLeft > 0.0f && C != nullptr)
+	{
+		if (NoiseDelay > 0.0f) { NoiseDelay -= DeltaSeconds; }
+		else
+		{
+			if (NoiseLeft >= 0.0f && LookAlpha < 0.05f && Want == 0.0f) { ++NoiseLooks; }
+			NoiseLeft -= DeltaSeconds;
+			const FVector At = C->GetComponentLocation() + FVector(0.0, 0.0, 160.0);
+			const FVector Facing = C->GetComponentTransform().TransformVectorNoScale(FVector(0.0, 1.0, 0.0)).GetSafeNormal2D();
+			const FVector To = NoisePoint - At;
+			const FVector Flat = FVector(To.X, To.Y, 0.0);
+			const float Cos = (float)FVector::DotProduct(Facing, Flat.GetSafeNormal());
+			const float Deg = FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(Cos, -1.0f, 1.0f)));
+			LookTarget = NoisePoint;
+			if (Deg > 95.0f && Flat.Size() > 1.0)
+			{
+				const FVector Up(0.0, 0.0, 1.0);
+				const float SideSign = FVector::DotProduct(FVector::CrossProduct(Facing, Flat), Up) >= 0.0 ? 1.0f : -1.0f;
+				LookTarget = At + Facing.RotateAngleAxis(95.0f * SideSign, Up) * Flat.Size() + FVector(0.0, 0.0, To.Z);
+			}
+			Want = 1.0f;
+		}
+	}
 	const float Rate = Want > LookAlpha ? 6.0f : 3.0f;
 	LookDrive = FMath::FInterpTo(LookDrive, Want, DeltaSeconds, Rate);
 	LookAlpha = FMath::FInterpTo(LookAlpha, LookDrive, DeltaSeconds, Rate);
 	PeakAlpha = FMath::Max(PeakAlpha, LookAlpha);
+}
+
+void ULedgerPersonAnim::LookToward(const FVector& Where, float DelaySeconds, float Seconds)
+{
+	NoisePoint = Where;
+	NoiseDelay = FMath::Max(0.0f, DelaySeconds);
+	NoiseLeft = FMath::Max(0.0f, Seconds);
 }
