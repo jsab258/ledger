@@ -609,6 +609,8 @@ namespace Ledger.PerceptionGolden
                 var m = new GossipMill(pairGraph);
                 foreach (var id in new[] { "a", "b" }) m.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
                 m.Witness("a", new Fact("player", "night_walk", "seen"), "the new owner out late", true, new GameTime(0, 9, 0), 0.9);
+                // A body never goes cold: an indelible story beside it, never faded.
+                m.Get("a").Rumors.Add(new Rumor { Content = new Fact("town", "body_quay", "found"), Summary = "a body on the quay", Confidence = 1.0, Indelible = true });
                 for (int k = 0; k < 72; k++)
                 {
                     m.Tick(GameTime.FromTotalMinutes(540 + k * 60));
@@ -616,8 +618,9 @@ namespace Ledger.PerceptionGolden
                     if (k % 12 == 11)
                     {
                         var b = m.Get("b");
+                        var body = m.Get("a").Rumors.Find(x => x.Indelible);
                         Row(sb, "TownRoundsAged", k.ToString(Inv), b.Rumors.Count.ToString(Inv), D(b.Suspicion.Value),
-                            b.Rumors.Count > 0 ? D(b.Rumors[0].Confidence) : "none");
+                            b.Rumors.Count > 0 ? D(b.Rumors[0].Confidence) : "none", body == null ? "gone" : D(body.Confidence));
                     }
                 }
             }
