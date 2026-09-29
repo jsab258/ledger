@@ -5,7 +5,7 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Tuesday 29 September, 22:30)
+## Overview (Tuesday 29 September, 23:55)
 
 ### Needs you
 
@@ -24,7 +24,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - **The replies that time out** (town): 1 in 24, not 1 in 5; the bigger fault, "that's all I know" to half a newcomer's questions, set aside after three tries, reopening it on the town's next page. Since yesterday: measured again; set aside.
 - **The first week wired into the game** (town writes, builder wires): whole on paper, settled by the town under your narrowed rule; in the game, the first night's window and the evening; about thirty handovers to wire, which first need a running clock, waits and days the game lacks (days of work). Since yesterday: the town settled the week's design pages.
 - **The AI tester walking it** (builder): walked the packaged game four times tonight. Since yesterday: the smash works; the evening, too bright in play, now matches your night frames; the approved faces are in; still open: the shop behind the broken glass is a flat board and the street's three stylised placeholder figures jump out at night.
-- **Checklist gaps for the friends' build** (builder 17, builder with the town 3): the twenty a friend would notice first, from a copy that starts on a friend's PC to an autosave to come back to; the rest later, as you ruled; the town's own sweeps leave 7 open. Since yesterday: the builder's lane swept for the first time since the list was archived, then cut to twenty.
+- **Checklist gaps for the friends' build** (builder 17, builder with the town 3): the twenty a friend would notice first; four done in play tonight: a plain start plays the game, a prompt on who and what is in reach, typing no longer leaks into the game (it smashed the window on "e"), Esc pauses; the rest later, as you ruled. Since yesterday: my lane swept, cut to twenty, four done.
 
 ## Town, 30 September
 
