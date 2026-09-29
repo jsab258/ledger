@@ -64,7 +64,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Pushes:** free GitHub tests only.
 
-**C: free:** 34 GB when I began, 26.3 now. Backup runs with this commit.
+**C: free:** 34 GB when I began, 26 now while the build machine builds (the builder's cleanup page waits on you). Backup runs with this commit.
 
 ## Builder, Wednesday 30 September
 
