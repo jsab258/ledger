@@ -5099,6 +5099,26 @@ namespace Ledger.CoreTests
                             new ScriptedLlm(Flag("a van"), Unsupported, Flag("a white van"), Unsupported));
             Check(ClaimCheck.IsKnownOnly(await e2.SayToAsync("What happened?", now, "In the yard.")), "a claim twice drafted is never said");
 
+            // A SENTENCE WITH NOTHING IN IT TO CHECK (town list T1): plain words only;
+            // nothing of a third person, a place, a time, a thing, a count or a deed;
+            // how they address him only as address.
+            {
+                var plainLines = new (string line, bool plain)[]
+                {
+                    ("Mm.", true), ("Fair.", true), ("Couldn't tell you, friend.", true), ("Yes.", true), ("Right you are, boss.", true), ("Which one, boss?", false),
+                    ("Boss, I couldn't say.", true), ("Who, boss?", true),
+                    ("He was there.", false), ("He's out.", false), ("Thirty years.", false), ("Ron was in the yard.", false), ("Here and there.", false),
+                    ("Fish van was late again this morning.", false), ("I saw him.", false), ("It's the morning, friend.", false), ("", false), (null, false), ("3.", false),
+                    ("My son would know.", false), ("The lad would know.", false), ("That lot would know.", false), ("Your mate would know.", false),
+                    ("Just the one.", false), ("More than one.", false), ("I own the lot.", false), ("Boss.", false),
+                };
+                var plainWrong = new List<string>();
+                foreach (var (line, plain) in plainLines) if (PlainWords.IsPlain(line) != plain) plainWrong.Add(line ?? "null");
+                Check(plainWrong.Count == 0,
+                      "a plain sentence is one with nothing in it to check: plain words only, nothing said of a third person, a place, a time, a thing, a count or a deed, and how they address him only as address",
+                      string.Join(" | ", plainWrong));
+            }
+
             // THE FALLBACK IS NOT ONE LINE FOR EVERYONE (FINDINGS, 25 September).
             var eFb = Engine(new ScriptedLlm("A van.", "A van again.", "A van.", "A van again."),
                             new ScriptedLlm(Flag("a van"), Unsupported, Flag("a van"), Unsupported, Flag("a van"), Unsupported, Flag("a van"), Unsupported));
@@ -5159,6 +5179,16 @@ namespace Ledger.CoreTests
             var eEarlyPint = Streamed(sEarlyPint, new ScriptedLlm(Clean, Clean));
             await eEarlyPint.SayToAsync("Busy?", now, "In the yard.", default, s => { lock (handedPint) handedPint.Add(s); return Task.FromResult(true); });
             Check(handedPint.Count == 0, "the engine itself never hands over a first sentence the content rule refuses, whatever its caller checks");
+            // A PLAIN FIRST SENTENCE (town list T1) is handed over without a check of
+            // its own; the whole reply is still checked.
+            var sPlain = new ScriptedStream("Mm. I've seen nothing.");
+            var plainCheck = new ScriptedLlm(Clean);
+            var handedPlain = new List<string>();
+            var ePlain = Streamed(sPlain, plainCheck);
+            var rPlain = await ePlain.SayToAsync("Busy?", now, "In the yard.", default, s => { lock (handedPlain) handedPlain.Add(s); return Task.FromResult(true); });
+            Check(handedPlain.Count == 1 && handedPlain[0] == "Mm." && plainCheck.Requests.Count == 1 && rPlain.StartsWith("Mm."),
+                "a plain first sentence is handed over without waiting for a check of its own, and the whole reply is still checked",
+                string.Join("|", handedPlain) + " / checks " + plainCheck.Requests.Count + " / " + rPlain);
             var dCurly = new Director().Validate("{\"kind\":\"demand\",\"who\":\"Mitch\",\"day\":14,\"hour\":9,\"amount\":180," +
                 "\"line\":\"Mitch told the rank you’d be better off dead.\",\"because\":\"Mitch has not been paid since day 4\"}", SampleWorld());
             Check(!dCurly.IsSomething, "a director's line is read with its curly apostrophes straightened");

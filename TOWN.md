@@ -37,7 +37,41 @@ tokens and cost.
   - But a newcomer's twenty first questions to Sheila, Ron and Darren end in
     "that's all I know" 31 to 38 times in 60: the claim check stops honest
     replies. That is q, folded in here.
+  - Done 29 September evening:
+    - A plain first sentence (PlainWords: nothing in it to check) is spoken
+      without waiting for its own check. It is 9% of the bench's first
+      sentences; none of the 227 labelled inventions sits in one. A wider
+      "known words" skip would have let 3 through and was dropped.
+    - The plain first sentence passed its second independent check with narrow
+      notes only (the first failed it: the list let in people and counts, since
+      tightened).
+    - The talk program logs what each request sends (--sizes: about 13,000
+      characters of instructions a reply, 12,000 a check, ~9,400 tokens a turn,
+      estimated).
+    - A guarded live mode for the LEDGER key (a dollar a day, logged).
+  - THE FALLBACK RATE, SET ASIDE after three attempts (Jafar's rule):
+    - the street's facts: 31 and 34 in 60, against 35 to 41;
+    - the character's plain opening: 1 caught in 60;
+    - after research (production/research/grounded-replies/NOTE-2026-09-29.md),
+      repairing the reply instead of redrafting it: 4 in 60, but some answers
+      were nonsense; kept only up to the first flagged sentence, 20 in 60. An
+      independent check failed it, since a kept "Yes." can affirm what was
+      dropped.
+
+    The route left is q, the check's own standard and examples.
 - [ ] T2. Finish and harden what exists: every handover still waiting, made small, tested and clear, so the builder can wire it quickly.
+  - 29 September evening: ten cards in production/handovers/ (README.md in the
+    first hour's order), each with:
+    - what the player gets;
+    - the calls in play's order;
+    - the port and its rows;
+    - the save;
+    - what the AI tester should see.
+
+    NOW.md's 24 long lines are now one line per card. New port rows where
+    there were none: the hints (HintDue and the rest), the outfit's asks (Ask,
+    AskStory, AskRonRemembers, AskSave, AskLoad) and Ada's tea (Tea...). The
+    threat waits on Jafar.
 - [ ] T3. Then the non-visual items of ROADMAP.md, still no new systems.
 
 ## The list, in order (Jafar, 28 September)

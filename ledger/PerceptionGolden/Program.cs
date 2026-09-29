@@ -133,6 +133,9 @@ namespace Ledger.PerceptionGolden
                 EmitNames(sb);
                 EmitWaits(sb);
                 EmitLanding(sb);
+                EmitHints(sb);
+                EmitAsks(sb);
+                EmitTea(sb);
             }
 
             var text = sb.ToString();
@@ -731,6 +734,96 @@ namespace Ledger.PerceptionGolden
                 holder.Rumors.Add(new Rumor { Content = new Fact("player", "taken_d4", "police"), Summary = Custody.TakenSaid, Confidence = c, Sensitive = false });
                 var shows = StreetVoice.StoryThatShows(holder, 0.35);
                 Row(sb, "TakenShows", D(c), shows == null ? "null" : shows.TopicKey);
+            }
+        }
+
+        /// THE HINTS, EACH THE FIRST TIME IT MATTERS (town list 6y), awaiting the
+        /// port (town list T2: a handover made testable): a first session as the
+        /// game drives it, then a load, each call's answer a row.
+        static void EmitHints(StringBuilder sb)
+        {
+            string H(Hint h) => h == null ? "none" : h.Moment + "|" + Bit(h.AtOnce) + "|" + Esc(h.Speaker ?? "") + "|" + Esc(h.Key ?? "") + "|" + Esc(h.Line);
+            var m = new FirstMoments();
+            m.Begin(0, true);
+            foreach (var t in new[] { 1.0, 3.9, 4.0, 4.1, 10.0 }) Row(sb, "HintDue", D(t), H(m.Due(t)));
+            m.Moved(11);
+            Row(sb, "HintDue", "after moving", H(m.Due(12)));
+            Row(sb, "HintHappened", "CanTalk", H(m.Happened(Moment.CanTalk, 20)));
+            Row(sb, "HintHappened", "CanTalk again", H(m.Happened(Moment.CanTalk, 21)));
+            foreach (var t in new[] { 21.0, 32.0, 33.0 }) Row(sb, "HintDue", D(t), H(m.Due(t)));
+            Row(sb, "HintHappened", "FirstAsk", H(m.Happened(Moment.FirstAsk, 600)));
+            Row(sb, "HintHappened", "SeenAtDeed", H(m.Happened(Moment.SeenAtDeed, 601)));
+            Row(sb, "HintDue", "613", H(m.Due(613)));
+            var saved = MiniJson.Serialize(m.ToJson());
+            Row(sb, "HintSave", Esc(saved));
+            var back = FirstMoments.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)));
+            back.Begin(0, false, MiniJson.AsObject(MiniJson.Deserialize(saved)));
+            Row(sb, "HintAfterLoad", "CanTalk", H(back.Happened(Moment.CanTalk, 5)));
+            Row(sb, "HintAfterLoad", "OverheardAboutHim", H(back.Happened(Moment.OverheardAboutHim, 6)));
+            Row(sb, "HintFill", Esc(FirstMoments.Fill("Press {Talk} to talk, {Move} to walk, {Coat} for the coat.", k => k == "Talk" ? "E" : k == "Move" ? " " : null)));
+        }
+
+        /// THE OUTFIT'S ASKS (town list 6z, 6bn), awaiting the port (town list T2):
+        /// a week of nights as the game drives them, each call's answer and the
+        /// arrangement's state a row, and its save.
+        static void EmitAsks(StringBuilder sb)
+        {
+            GameTime T(int d, int h, int mi = 0) => new GameTime(d, h, mi);
+            string State(Arrangement a) => a.NextNight + "|" + Bit(a.Ended) + "|" + (a.EndedWhy ?? "none") + "|" + D(a.Patience) + "|" + a.Nights.Count;
+            var mill = new GossipMill(null);
+            foreach (var id in new[] { Arrangement.OutfitMan, Arrangement.Doorman }) mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+            var a = new Arrangement(0);
+            Row(sb, "Ask", "start", State(a), Bit(a.AsksOn(0)), Bit(a.AskStands(T(0, 21))));
+            Row(sb, "Ask", "delivered", Bit(a.Delivered(0, mill.Get(Arrangement.Doorman), T(0, 20))), Bit(a.Delivered(0, null, T(0, 20, 5))), Bit(a.AskStands(T(0, 21))), Bit(a.AskStands(T(1, 0, 59))), Bit(a.AskStands(T(1, 1))));
+            Row(sb, "Ask", "did", Bit(a.Answer(0, NightAnswer.Did, mill, T(0, 22, 30))), Bit(a.Answer(0, NightAnswer.Did, mill, T(0, 22, 40))), State(a));
+            a.PassedTo(1, mill, T(1, 6));
+            Row(sb, "Ask", "dawn 1", State(a));
+            a.Delivered(2, mill.Get(Arrangement.Doorman), T(2, 20));
+            a.PassedTo(3, mill, T(3, 6));
+            Row(sb, "Ask", "stayed away", State(a), Bit(a.Nights.TryGetValue(2, out var n2) && n2 == NightAnswer.NoShow));
+            a.PassedTo(5, mill, T(5, 6));
+            Row(sb, "Ask", "never brought", State(a), Bit(a.Nights.TryGetValue(4, out var n4) && n4 == NightAnswer.Undelivered));
+            Row(sb, "Ask", "too late", Bit(a.Answer(6, NightAnswer.Did, mill, T(7, 1, 5))));
+            a.Delivered(6, mill.Get(Arrangement.Doorman), T(6, 20));
+            Row(sb, "Ask", "no", Bit(a.Answer(6, NightAnswer.Refused, mill, T(6, 22))), State(a));
+            foreach (var r in mill.Get(Arrangement.OutfitMan).Rumors) Row(sb, "AskStory", r.TopicKey, Esc(r.Content.Value), Bit(r.Sensitive), Esc(r.Summary));
+            foreach (var ev in mill.Get(Arrangement.Doorman).Memory.Events) Row(sb, "AskRonRemembers", Esc(ev.Text));
+            var saved = MiniJson.Serialize(a.ToJson());
+            Row(sb, "AskSave", Esc(saved));
+            Row(sb, "AskLoad", State(Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)))));
+        }
+
+        /// ADA'S TEA (town list 6bg), awaiting the port (town list T2): three
+        /// evenings (sat through, left early, stood up), seen going to the
+        /// landing, and the save, each answer and what it leaves with her a row.
+        static void EmitTea(StringBuilder sb)
+        {
+            GameTime T(int d, int h, int mi = 0) => new GameTime(d, h, mi);
+            Row(sb, "Tea", "not met her", Bit(AdasTea.For(0, false) == null), AdasTea.For(0, true).Day.ToString(Inv));
+            foreach (var (how, from, to) in new[] { ("sat", 21 * 60 + 5, 22 * 60 + 40), ("late", 21 * 60 + 45, 22 * 60 + 40), ("early", 21 * 60, 21 * 60 + 50), ("away", -1, -1) })
+            {
+                var mill = new GossipMill(null);
+                foreach (var id in new[] { AdasTea.Ada, "zlata" }) mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var ada = mill.Get(AdasTea.Ada);
+                ada.Loyalty = 0.35;
+                var tea = AdasTea.For(0, true);
+                var line = tea.SheSeesHim(T(2, 10));
+                Row(sb, "TeaAsked", how, Esc(line ?? "none"), Esc(tea.SheSeesHim(T(2, 11)) ?? "none"), tea.State.ToString());
+                if (from >= 0) for (int m = from; m <= to; m++) tea.WithHer(T(2, m / 60, m % 60));
+                Row(sb, "TeaBefore11", how, tea.Close(ada, T(2, 22, 59)).ToString());
+                var end = tea.Close(ada, T(2, 23));
+                Row(sb, "TeaClosed", how, end.ToString(), D(ada.Loyalty), D(ada.Suspicion.Value), ada.Memory.Events.Count > 0 ? Esc(ada.Memory.Events[ada.Memory.Events.Count - 1].Text) : "none");
+                if (how == "sat")
+                {
+                    tea.WentToTheLanding(mill, T(2, 22, 45), true);
+                    foreach (var r in ada.Rumors) Row(sb, "TeaSeenGoing", r.TopicKey, Esc(r.Content.Value), Bit(r.Sensitive), Esc(r.Summary));
+                    Row(sb, "TeaSeenGoingOnce", Bit(tea.SeenGoing), ada.Rumors.Count.ToString(Inv));
+                    tea.WentToTheLanding(mill, T(2, 23, 30), true);
+                    Row(sb, "TeaSeenGoingOnce", Bit(tea.SeenGoing), ada.Rumors.Count.ToString(Inv));
+                }
+                var saved = MiniJson.Serialize(tea.ToJson());
+                var back = AdasTea.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)));
+                Row(sb, "TeaSave", how, Esc(saved), back == null ? "null" : back.State + "|" + back.Day.ToString(Inv) + "|" + back.Minutes.Count.ToString(Inv));
             }
         }
 

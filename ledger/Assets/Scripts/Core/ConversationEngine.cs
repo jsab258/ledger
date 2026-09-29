@@ -1189,7 +1189,12 @@ namespace Ledger.Core
                         var said = d.First;
                         d.FirstTask = Task.Run(async () =>
                         {
-                            var (bad, cost) = await FirstInventedAsync(knownEarly, said, ct).ConfigureAwait(false);
+                            // A PLAIN FIRST SENTENCE (town list T1: "Mm.", "Fair.",
+                            // "Couldn't tell you, friend.") states nothing to check,
+                            // so it is not kept waiting for the check (PlainWords).
+                            var (bad, cost) = PlainWords.IsPlain(said)
+                                ? ((IReadOnlyList<string>)new List<string>(), (LlmResponse)null)
+                                : await FirstInventedAsync(knownEarly, said, ct).ConfigureAwait(false);
                             if (bad.Count == 0 && flagged != null && ClaimCheck.Repeats(said, flagged)) bad = flagged;
                             if (bad.Count > 0)
                             {
