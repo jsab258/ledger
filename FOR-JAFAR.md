@@ -5,7 +5,7 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Tuesday 29 September, 20:00)
+## Overview (Tuesday 29 September, 22:30)
 
 ### Needs you
 
@@ -13,11 +13,12 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 2. **[Wednesday's page](https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ)** (builder): the street by day and at night, as whole frames; Darren with a man's haircut, the reviewer's notes beside it; Ron, faster, heard blind against his voice now; a new voice for Sheila, the first free one that stays English; two calls: hair, and the name plates' font licence. Recommended: yes to both frames, Darren and Sheila's voice, your ear on Ron, A on both calls.
 3. **Town's pages** (town): [three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y) (how Mickey died, winding it down, threats) and [the next](https://claude.ai/artifact/TXEoUnQoDTaLPfFZdHSYAL) (the warehouse fire, reopening the talk's check, Steam's wording). Recommended: the picks marked on them.
 4. **LEDGER's own capped key** (builder; no page): the characters' live talk while you play waits on it (the paid writer won your blind 8 of 12); friends' relay stays keyless, as you ruled. Recommended: make it with a hard monthly cap and save it alone at %LOCALAPPDATA%\LEDGER\live-talk-key.txt.
+5. **Marvelous Designer for the jacket** (clothing; no page, its summary below): it can be scripted apart from one click each time it opens, online and signed in to your account; $39 a month with 14 days free. Recommended by the clothing session: (A) you start the free trial on your account; it scripts it, tries the jacket once, and uses your approved month only if the jacket passes. (B) The jacket stays set aside.
 
 ### Road to worth playing
 
 - **Faces approved** (builder): Ron's and Sheila's yes, and both now in the packaged game with Darren's C5; Darren with a man's haircut is on your page. Since yesterday: your S4 for Sheila, in the game; hair made in Blender set aside after three tries.
-- **People dressed** (clothing session; the builder fits them in Unreal): nobody dressed yet. Since yesterday: clothing moved to its own session, with Ron's, Darren's and Sheila's bodies; three spare builds set aside after three tries.
+- **People dressed** (clothing session; the builder fits them in Unreal): nobody dressed yet; the jacket set aside after three blind reviews; work trousers for Ron cut from a real pattern, failed sitting and on a stair, one try left; a flat cap under way. Since yesterday: clothing in its own session; three spare builds set aside; the trousers and cap begun.
 - **Voices** (builder): Ron's and Darren's yes; Sheila has a candidate at last on your page, a Yorkshire woman's recordings (free licence) through Sopro, English on 19 of 19 lines. Since yesterday: your yeses; your blind pick keeps the game's own engine; Sopro holds Ron's and this voice's accent, loses Darren's Scottish.
 - **The delay before a character speaks** (words: town; voice: builder): in play Ron's voice starts in 2.0 s through Sopro against 3.5 for the others through the game's engine (6.8 while the game settles); the thinking sounds cover the rest; timings of the words wait for your key. Since yesterday: Sopro measured in play and on your page blind for Ron; set aside for Darren (it loses his Scottish); paid voices ruled out.
 - **The replies that time out** (town): 1 in 24, not 1 in 5; the bigger fault, "that's all I know" to half a newcomer's questions, set aside after three tries, reopening it on the town's next page. Since yesterday: measured again; set aside.
@@ -64,6 +65,28 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 **Pushes set off:** free GitHub tests only.
 
 **C: free:** 34 GB when I began, 47.3 now. Backup runs with this commit.
+
+## Builder, Wednesday 30 September
+
+**[Wednesday's page](https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ):** the street by day and night; Darren with a man's haircut; Ron, faster; a voice for Sheila; two calls.
+
+**Your picks** of Tuesday sat unread seven hours; now acted on: your approved faces are all in the packaged game.
+
+**Voices, free:** Ron through Sopro speaks in 2.0 s in play (others 3.5); Sheila's candidate stays English on 19 of 19 lines; Darren keeps his engine.
+
+**Tester:** the smash works; the evening now matches your night frames (it was 1.7 stops too bright); Esc pauses. Open: a flat board behind the broken glass; three stylised placeholder people.
+
+**Checklist:** your twenty follow the slice.
+
+**Set aside, three tries each:** hair grown in Blender; spare builds; Sopro for Darren. Past the rule: Tuesday's jacket sleeves, about eleven rounds, before the rule.
+
+**Bigger than it looked:** the first week needs a running clock, waits and days.
+
+**Research:** street clutter; evening light; smashed windows; sleeves; hair by script; MetaHuman builds; the 1990 set; accents in free cloning.
+
+**C:** 38 (building) to 48; 31 while building. Backup: with this commit.
+
+**Try it:** the played copy: E at Mickey's window, wait for evening; Esc pauses.
 
 ## Builder, Tuesday 29 September
 
