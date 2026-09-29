@@ -32,6 +32,8 @@ FIELDS = {
     "reply": {"who": (STR, True), "how": (STR, True), "s": (NUM, False)},
     "hint": {"moment": (STR, True)},
     "ask": {"night": (NUM, True), "answer": (STR, True), "story": (STR, True)},
+    "police": {"who": (STR, True), "story": (STR, True), "how": (STR, True)},
+    "ellis": {"why": (STR, True)},
 }
 ENDS = {"quit", "crash"}
 PLAYERS = {"friend", "jafar"}
@@ -42,6 +44,8 @@ BROKE = {"fallback", "refused", "brush", "paused"}
 # The hints (FirstMoments) and the answers to the outfit's ask (Arrangement), town list 6bh.
 MOMENTS = ["StandingStill", "CanTalk", "FirstAsk", "SeenAtDeed", "OverheardAboutHim", "LedgerOpened"]
 ANSWERS = {"did", "refused", "noshow"}
+# What the police hold (PoliceFile.Known), town list 6bm.
+POLICE_HOW = {"statement", "description", "talk"}
 THIRTY = 30 * 60
 
 
@@ -110,6 +114,8 @@ def read(path):
             warn.append(f"a hint the spec does not know: {e['moment']!r}")
         if e["e"] == "ask" and e["answer"] not in ANSWERS:
             warn.append(f"an answer to the ask the spec does not know: {e['answer']!r}")
+        if e["e"] == "police" and e["how"] not in POLICE_HOW:
+            warn.append(f"a way the police hold something the spec does not know: {e['how']!r}")
         if e["e"] == "still" and e["s"] > e["t"]:
             warn.append(f"a still spell of {e['s']:.0f} s ending at {e['t']:.0f} s would have begun before the session")
     return events, unread, warn
@@ -169,6 +175,8 @@ def one(events):
             hints.append((e["t"], e["moment"]))
     return {
         "hints": hints,
+        "police": [(e["t"], e["who"], e["story"], e["how"]) for e in events if e["e"] == "police"],
+        "ellis": [(e["t"], e["why"]) for e in events if e["e"] == "ellis"],
         "asks": [(e["t"], int(e["night"]), e["answer"], e["story"]) for e in asks],
         "replies": len(replies),
         "broke": broke,
@@ -219,6 +227,9 @@ def show(path, facts, unread, warn):
     if facts["asks"]:
         out.append("  the outfit's asks: " + "; ".join(f"night {night} {answer} (minute {minute(t)})" for t, night, answer, _ in facts["asks"]))
     out.append("  hints shown: " + (", ".join(f"{m} ({minute(t)})" for t, m in facts["hints"]) or "none"))
+    if facts["police"]:
+        out.append("  the police heard: " + "; ".join(f"{how} from {who} about {story} (minute {minute(t)})" for t, who, story, how in facts["police"]))
+    out.append("  DS Ellis on Quay Street: " + (", ".join(f"minute {minute(t)}, for {why}" for t, why in facts["ellis"]) or "never"))
     out.append("  the town showing it knew something they had done: "
                + ("; ".join(describe(k) for k in facts["reacting"]) or "nothing recorded"))
     if facts["before"]:
@@ -281,6 +292,9 @@ def folder(sessions):
                     answers[answer] = answers.get(answer, 0) + 1
         if answers:
             out.append("  the outfit's first ask, what friends did: " + ", ".join(f"{a} {n}" for a, n in sorted(answers.items())))
+        came = [f["ellis"][0][0] for f in friends if f["ellis"]]
+        out.append(f"  DS Ellis came in {len(came)} of {len(friends)} friends' sessions"
+                   + (f", first at a median minute {minute(statistics.median(came))}" if came else ""))
     if mine:
         out.append("  your own sessions: " + ", ".join(f"{when_from_name(p) or os.path.basename(p)} for {minute(f['length'])} min" for p, f in mine))
     return "\n".join(out)
@@ -447,6 +461,16 @@ def selftest():
         assert [m for _, m in fh_["hints"]] == ["StandingStill", "CanTalk", "FirstAsk", "Nonsense"], fh_["hints"]
         assert fh_["first_known"] is not None and fh_["first_known"]["story"] == "player.outfit_d0" and fh_["known_by_30"], fh_["first_known"]
         assert "night 0 refused" in th and "hints shown: StandingStill" in th and any("Nonsense" in w for w in wh) and any("maybe" in w for w in wh), (th, wh)
+        # What the police heard, and DS Ellis on the street (town list 6bm).
+        policed = write("2026-10-12-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},
+                                                    {"t": 1500, "e": "police", "who": "ron", "story": "player.outfit_d2", "how": "talk"},
+                                                    {"t": 1500, "e": "ellis", "why": "talk"},
+                                                    {"t": 1600, "e": "police", "who": "ada", "story": "x", "how": "gossip"},
+                                                    {"t": 3600, "e": "end", "why": "quit"}])
+        ep, up, wp = read(policed)
+        fp = one(ep)
+        tp = show(policed, fp, up, wp)
+        assert fp["ellis"] == [(1500, "talk")] and "talk from ron about player.outfit_d2" in tp and "minute 25.0, for talk" in tp and any("gossip" in w for w in wp), (tp, wp)
         with open(os.path.join(d, "u16.jsonl"), "w", encoding="utf-16") as fh:
             fh.write(json.dumps({"t": 0, "e": "start", "player": "friend"}))
         assert "not UTF-8" in read(os.path.join(d, "u16.jsonl"))[1][0]

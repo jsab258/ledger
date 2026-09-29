@@ -35,11 +35,14 @@ decimal), and `e`, the event. In the order they happen:
 | `reply` | `who`; `how`: the talk helper's `went` (`"own"`, `"fallback"`, `"refused"`, `"brush"`, `"paused"`, `"ended"`), or `"walkedOff"`; `s`, seconds from his line to the first word he heard | a person answers him (town list 6bd: where a friend's talk broke) |
 | `hint` | `moment`, FirstMoments's moment (`"StandingStill"`, `"CanTalk"`, `"FirstAsk"`, `"SeenAtDeed"`, `"OverheardAboutHim"`, `"LedgerOpened"`) | a hint shows, what FirstMoments.Happened or Due returned (town list 6bh) |
 | `ask` | `night`, the ask's day; `answer`: `"did"`, `"refused"` or `"noshow"`; `story`, its topic (`"player.outfit_d0"`) | the outfit's ask is answered (Arrangement.Answer, or PassedTo for a night nobody answered); its story counts as a deed of this session for the town's reaction (town list 6bh) |
+| `police` | `who`, who told them; `story`, the deed's topic; `how`: `"statement"`, `"description"` or `"talk"` (PoliceFile.Known) | somebody tells the police, or the street's talk reaches DS Ellis (town list 6bm) |
+| `ellis` | `why`: `"talk"`, `"body"`, or the reported crime (`"Wounding player.cut_d2"`) | DS Ellis comes to Quay Street (PoliceFile.EllisComes; town list 6bm) |
 | `end` | `why`: `"quit"` or `"crash"`; `usd`, what the talk cost this session (the talk helper's closing line) | the session ends |
 
 Required: `player` (start), `at` (place), `s` (still), `what` (deed), `who` and
 `story` (known), `who` (talk), `names` (named), `moment` (hint), `night`, `answer`
-and `story` (ask), `why` (end); `load` needs none.
+and `story` (ask), `who`, `story` and `how` (police), `why` (ellis, end); `load`
+needs none.
 The others may be left out. `player` is `"friend"` or `"jafar"` and `how` one
 of the five above; any other value is warned about. Nothing else is written. A line the reader cannot use
 (unknown `e`, a field missing or of the wrong kind) is shown as unread, and a
