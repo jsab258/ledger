@@ -213,9 +213,16 @@ def pose_arms(arm, deg):
         d = (el - sh).normalized()
         now = math.degrees(math.asin(max(-1.0, min(1.0, -d.z))))
         ax = d.cross(Vector((0, 0, 1))).normalized()
-        R = Matrix.Rotation(math.radians(now - deg), 4, ax)
-        if (R.to_3x3() @ d).z < d.z:
-            R = Matrix.Rotation(math.radians(deg - now), 4, ax)
+        # whichever way round lands nearer the angle asked for (the first
+        # version assumed the arms always go up, and 'arms down' raised them)
+        best = None
+        for sgn in (1.0, -1.0):
+            Rc = Matrix.Rotation(math.radians((now - deg) * sgn), 4, ax)
+            dc = Rc.to_3x3() @ d
+            err = abs(math.degrees(math.asin(max(-1.0, min(1.0, -dc.z)))) - deg)
+            if best is None or err < best[0]:
+                best = (err, Rc)
+        R = best[1]
         M = arm.matrix_world
         Ra = (M.inverted() @ R @ M).to_3x3().to_4x4()
         h = pb.head.copy()
@@ -386,9 +393,26 @@ def push_out(obj, bvh, clear=0.003):
     return n
 
 
+MELTON = 0.7        # kg per square metre, melton wool (Epic's own figure; FIT-AND-STIFFNESS-2026-09-29.md)
+
+
+def mass_per_point(obj, density=MELTON):
+    """Blender's cloth mass is per point, not per garment: the fabric's weight per area times each point's
+    share of the area. (0.006 kg a point made Ron's jacket weigh 84 kg, and it sagged, clung and stretched.)"""
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    area = sum(f.calc_area() for f in bm.faces)
+    n = len(bm.verts)
+    bm.free()
+    return density * area / max(1, n)
+
+
 def cloth(obj, quality=12, mass=0.01, tension=40.0, compression=40.0, shear=15.0, bending=20.0, air=2.0,
           distance=0.004, self_collision=False, self_distance=0.002, sewing=False, rest_key=None, frames=100):
-    """A cloth modifier with the research's settings (OpenSew-2's, SLEEVES-RECIPE-2026-09-29.md)."""
+    """A cloth modifier with the research's settings (OpenSew-2's, SLEEVES-RECIPE-2026-09-29.md). mass=None
+    takes the true weight of melton for this mesh (mass_per_point)."""
+    if mass is None:
+        mass = mass_per_point(obj)
     if rest_key:
         passthrough(obj)
     cl = obj.modifiers.new("Cloth", "CLOTH")
@@ -601,7 +625,7 @@ def pattern_rest(obj, smooth=8, iterations=300, uv_name="pattern"):
     return [round(float(np.percentile(r, q)), 3) for q in (5, 50, 95)]
 
 
-def press(obj, body_bvh, rounds=40, smooth=0.3, lengths=4, clear=0.004, uv_name="pattern"):
+def press(obj, body_bvh, rounds=40, smooth=0.3, lengths=4, clear=0.004, uv_name="pattern", only=None):
     """The garment pressed, as a tailor presses a finished jacket: its small crinkles smoothed out, its size
     kept, nothing inside the body. Returns the edges against the pattern (5/50/95%) and the points moved (mm).
 
@@ -640,6 +664,10 @@ def press(obj, body_bvh, rounds=40, smooth=0.3, lengths=4, clear=0.004, uv_name=
     bm.free()
     free = np.ones(n, dtype=bool)
     free[list(boundary)] = False                   # the hem, cuffs and neckline keep their line
+    if only is not None:                           # a second pass on some pieces alone (the sleeves)
+        keep = np.zeros(n, dtype=bool)
+        keep[list(only)] = True
+        free &= keep
     M = np.array(obj.matrix_world)
     Mi = np.linalg.inv(M)
     for _ in range(rounds):
@@ -672,3 +700,201 @@ def press(obj, body_bvh, rounds=40, smooth=0.3, lengths=4, clear=0.004, uv_name=
     moved = np.linalg.norm(x - x0, axis=1) * 1000
     return {"edgesVsPattern": [round(float(np.percentile(r, q)), 3) for q in (5, 50, 95)],
             "movedMm": [round(float(np.percentile(moved, q)), 1) for q in (50, 95, 100)]}
+
+
+def unpose(obj, arm):
+    """The garment's points taken back through the skeleton's current pose to its rest pose, by the garment's
+    own skin weights (vertex groups named for the bones), so that an Armature modifier on the body's own
+    skeleton puts them back exactly where they are now, and carries them as the skeleton moves.
+
+    WHY, 29 September (the clothing session): the jacket is sewn with the
+    arms held out and must end in the body's rest pose. A second skeleton
+    whose rest was the sewing pose (Blender's 'apply pose as rest') did
+    nothing in a background run, and the arms came down out of the sleeves.
+    Inverting the blended skinning transform point by point needs no
+    operator: each point's pose-to-rest is the inverse of the weighted sum of
+    its bones' skinning matrices."""
+    A = arm.matrix_world
+    Ai = A.inverted()
+    S = {}
+    for pb in arm.pose.bones:
+        S[pb.name] = np.array(A @ pb.matrix @ pb.bone.matrix_local.inverted() @ Ai)
+    names = {g.index: g.name for g in obj.vertex_groups}
+    Mw = np.array(obj.matrix_world)
+    Mwi = np.linalg.inv(Mw)
+    moved = 0
+    for v in obj.data.vertices:
+        tot = 0.0
+        M = np.zeros((4, 4))
+        for g in v.groups:
+            nm = names.get(g.group)
+            if nm in S and g.weight > 0:
+                M += S[nm] * g.weight
+                tot += g.weight
+        if tot <= 0:
+            continue
+        M /= tot
+        p = Mw @ np.array([v.co.x, v.co.y, v.co.z, 1.0])
+        r = np.linalg.solve(M, p)
+        lr = Mwi @ r
+        if np.linalg.norm(lr[:3] - np.array(v.co[:])) > 1e-6:
+            moved += 1
+        v.co = lr[:3]
+    obj.data.update()
+    return moved
+
+
+def _hull2(pts):
+    pts = sorted(set((round(float(a), 5), round(float(b), 5)) for a, b in pts))
+    if len(pts) < 3:
+        return pts
+
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    lo, up = [], []
+    for q in pts:
+        while len(lo) >= 2 and cross(lo[-2], lo[-1], q) <= 0:
+            lo.pop()
+        lo.append(q)
+    for q in reversed(pts):
+        while len(up) >= 2 and cross(up[-2], up[-1], q) <= 0:
+            up.pop()
+        up.append(q)
+    return lo[:-1] + up[:-1]
+
+
+def _to_hull(p, hull):
+    """The nearest point on a closed 2D polygon's boundary to p."""
+    best, bd = None, 1e9
+    n = len(hull)
+    for k in range(n):
+        a, b = np.array(hull[k]), np.array(hull[(k + 1) % n])
+        ab = b - a
+        t = max(0.0, min(1.0, float(np.dot(p - a, ab) / max(1e-12, np.dot(ab, ab)))))
+        q = a + ab * t
+        d = float(np.linalg.norm(p - q))
+        if d < bd:
+            best, bd = q, d
+    return best, bd
+
+
+def span_hollows(obj, ids_body, ids_front, ids_back, z_max, band=0.012, tol=0.003, deepest=0.03, smooth_rounds=6):
+    """Stiff melton spans the body's small hollows instead of sinking into them: each body-piece point below
+    z_max lying in a hollow of the cloth's own outline, across (a slice at its height) or down (a strip at its
+    place across the front or back), no deeper than `deepest`, goes out to the outline's convex hull there;
+    the moves are then smoothed over the cloth, so no slice or strip leaves a step. Returns how many points
+    moved and the most, mm.
+
+    WHY, 29 September (the clothing session, the first blind review: FAIL, 'the
+    chest moulds to the body ... both pectorals and a crease under them, like
+    a stretch shirt'): the drape settles into every hollow of a heavy man's
+    front, under the chest and in the small of the back, where a donkey
+    jacket's thick wool bridges them (the builder's jacket was filled the same
+    way, slice by slice). Only small hollows, and none above the armpits: at
+    the first try, unbounded, it squared the shoulders into a cardboard box
+    (the slope from the neck to the shoulder is shape, not a hollow)."""
+    me = obj.data
+    x = np.array([v.co[:] for v in me.vertices])
+    disp = np.zeros_like(x)
+    body = np.array(sorted(i for i in ids_body if x[i, 2] < z_max))
+
+    def keep(i, dv):
+        if np.linalg.norm(dv) > np.linalg.norm(disp[i]):
+            disp[i] = dv
+    zs = x[body, 2]
+    for z0 in np.arange(zs.min(), zs.max() + band, band):
+        sel = body[(zs >= z0) & (zs < z0 + band)]
+        if len(sel) < 8:
+            continue
+        hull = _hull2(x[sel][:, :2])
+        if len(hull) < 3:
+            continue
+        for i in sel:
+            q, d = _to_hull(x[i, :2], hull)
+            if tol < d <= deepest:
+                keep(i, np.array([q[0] - x[i, 0], q[1] - x[i, 1], 0.0]))
+    for ids, sign in ((ids_front, -1.0), (ids_back, 1.0)):
+        ids = np.array(sorted(i for i in ids if x[i, 2] < z_max))
+        if len(ids) < 8:
+            continue
+        xs = x[ids, 0]
+        for x0 in np.arange(xs.min(), xs.max() + band, band):
+            sel = ids[(xs >= x0) & (xs < x0 + band)]
+            if len(sel) < 8:
+                continue
+            H = np.array(_hull2([(float(x[i, 2]), float(x[i, 1]) * sign) for i in sel]))
+            if len(H) < 3:
+                continue
+            n = len(H)
+            for i in sel:
+                z, o = float(x[i, 2]), float(x[i, 1]) * sign
+                ext = None
+                for k in range(n):
+                    a, b = H[k], H[(k + 1) % n]
+                    if (a[0] - z) * (b[0] - z) <= 0 and abs(b[0] - a[0]) > 1e-9:
+                        e = a[1] + (b[1] - a[1]) * (z - a[0]) / (b[0] - a[0])
+                        ext = e if ext is None else max(ext, e)
+                if ext is not None and tol < ext - o <= deepest:
+                    keep(i, np.array([0.0, (ext - o) * sign, 0.0]))
+    # the moves smoothed over the cloth's own edges (no steps between slices)
+    edges = np.array([e.vertices[:] for e in me.edges])
+    deg = np.bincount(edges.ravel(), minlength=len(x)).astype(float)
+    for _ in range(smooth_rounds):
+        acc = np.zeros_like(disp)
+        np.add.at(acc, edges[:, 0], disp[edges[:, 1]])
+        np.add.at(acc, edges[:, 1], disp[edges[:, 0]])
+        avg = acc / np.maximum(deg, 1)[:, None]
+        disp = (disp + avg) * 0.5
+    # nothing moves above z_max, the moves fading in over 6 cm beneath it
+    fade = np.clip((z_max - x[:, 2]) / 0.06, 0.0, 1.0)[:, None]
+    x = x + disp * fade
+    for i, v in enumerate(me.vertices):
+        v.co = x[i]
+    me.update()
+    mag = np.linalg.norm(disp * fade, axis=1)
+    return int((mag > 0.001).sum()), round(float(mag.max()) * 1000, 1)
+
+
+
+def torso_weights(obj, arm_bones=ARMISH, keep_near=0.06, uv_name="pattern", smooth=8):
+    """The garment's copied skin weights put right for a jacket: the body pieces (their flat pattern at u
+    within 1.5) lose the arms' weights except within keep_near of a sleeve, then every weight is smoothed and
+    normalised, so the change from arm to torso spreads over the armhole instead of one row.
+
+    WHY (FIT-AND-STIFFNESS-2026-09-29.md): copied from the nearest place on the
+    body, the side panels took upper-arm weights, and raising the arm dragged
+    the side of the jacket up into a sail."""
+    me = obj.data
+    uv = me.uv_layers[uv_name]
+    u_of = {lp.vertex_index: uv.data[lp.index].uv[0] for lp in me.loops}
+    co = np.array([v.co[:] for v in me.vertices])
+    sleeve = np.array([i for i, u in u_of.items() if abs(u) >= 1.5])
+    tree = None
+    if len(sleeve):
+        from mathutils.kdtree import KDTree
+        tree = KDTree(len(sleeve))
+        for k, i in enumerate(sleeve):
+            tree.insert(Vector(co[i]), k)
+        tree.balance()
+    arm_groups = [g.index for g in obj.vertex_groups if g.name.startswith(arm_bones)]
+    cut = 0
+    for v in me.vertices:
+        if abs(u_of.get(v.index, 0.0)) >= 1.5:
+            continue
+        if tree is not None and tree.find(v.co)[2] < keep_near:
+            continue
+        for gi in arm_groups:
+            try:
+                obj.vertex_groups[gi].remove([v.index])
+                cut += 1
+            except RuntimeError:
+                pass
+    bpy.ops.object.select_all(action="DESELECT")
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.object.mode_set(mode="WEIGHT_PAINT")
+    if smooth:
+        bpy.ops.object.vertex_group_smooth(group_select_mode="ALL", factor=0.5, repeat=smooth)
+    bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
+    bpy.ops.object.mode_set(mode="OBJECT")
+    return cut

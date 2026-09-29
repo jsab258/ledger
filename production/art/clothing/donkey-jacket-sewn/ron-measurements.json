@@ -4,24 +4,38 @@
   "biceps": 441.9,
   "chest": 1175.1,
   "waist": 1078.5,
-  "hips": 1155.8,
+  "hips": 1184.6,
   "neck": 441.5,
   "hpsToBust": 375.5,
   "hpsToWaistBack": 471.2,
   "shoulderToShoulder": 520.5,
   "shoulderSlope": 1.2,
   "waistToArmpit": 250.6,
-  "waistToHips": 120.0,
+  "waistToHips": 170.0,
   "shoulderToWrist": 636.1,
-  "wrist": 217.3
+  "wrist": 217.3,
+  "seat": 1184.6,
+  "seatBack": 610.7,
+  "waistBack": 487.7,
+  "waistToSeat": 170.0,
+  "waistToUpperLeg": 254.0,
+  "waistToKnee": 598.7,
+  "waistToFloor": 1142.1,
+  "inseam": 888.1,
+  "crossSeam": 748.0,
+  "crossSeamFront": 390.9,
+  "knee": 433.5
  },
  "heights_m": {
   "chest": 1.39,
   "waist": 1.139,
-  "hips": 1.019,
+  "hips": 0.969,
   "neck": 1.612,
   "armpit": 1.39,
   "hps": 1.611,
-  "top": 1.624
+  "top": 1.624,
+  "crotch": 0.885,
+  "knee": 0.541,
+  "floor": -0.003
  }
 }
