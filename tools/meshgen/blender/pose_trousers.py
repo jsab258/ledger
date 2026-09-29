@@ -66,55 +66,28 @@ bpy.context.view_layer.update()
 
 # ---- the body's weights, the arms' off, smoothed ------------------------------------------------
 
+# ZONE WEIGHTS ON THE MAIN BONES (production/research/clothing-pipeline/
+# SKINNING-TROUSERS-2026-09-29.md, after two blind reviews failed the posed
+# trousers: copied from the nearest skin, the waist fell away sitting, the
+# hems cinched round the ankles, the belt folded like a concertina). Each
+# point's weights come from where it is, not from the skin under it:
+#   the belt, band, loops and the cloth's top 3 cm: one ring on the pelvis,
+#     the spine (spine_01) taking up to 40% at the centre back, no leg;
+#   below it the pelvis gives way to the thigh of its own side: at the front
+#     from 3 cm under the top to 12 cm (the lap folds under the belt, not
+#     through it); at the back by the seat's height (0.7 at its top, 0.5 at
+#     the buttock's widest, 0.2 at its fold, none below);
+#   by the middle seam each side's thigh fades to the pelvis over 7 cm;
+#   the knee blends thigh to calf over 15 cm; below it the calf alone, the
+#   same all round every ring, so the hem hangs open (no foot, no ankle).
 for g in list(garment.vertex_groups):
     garment.vertex_groups.remove(g)
-dt = garment.modifiers.new("Weights", "DATA_TRANSFER")
-dt.object = body
-dt.use_vert_data = True
-dt.data_types_verts = {"VGROUP_WEIGHTS"}
-dt.vert_mapping = "POLYINTERP_NEAREST"
-dt.layers_vgroup_select_src = "ALL"
-dt.layers_vgroup_select_dst = "NAME"
-bpy.ops.object.select_all(action="DESELECT")
-garment.select_set(True)
-bpy.context.view_layer.objects.active = garment
-bpy.ops.object.datalayout_transfer(modifier="Weights")
-bpy.ops.object.modifier_apply(modifier="Weights")
-for g in list(garment.vertex_groups):
-    if g.name.startswith(tailor.ARMISH):
-        garment.vertex_groups.remove(g)
-# EACH SIDE ON ITS OWN LEG (the second attempt's stair pose: the cloth bridging
-# the seat's cleft took its weights from whichever buttock was nearer, often
-# the other one, and the lifted leg's buttock came through): cloth left of the
-# middle drops the right leg's bones, and the other way round
-LEGGY = ("thigh", "calf", "foot", "ball")
-side_cut = 0
-for v in garment.data.vertices:
-    xw = (garment.matrix_world @ v.co).x
-    if abs(xw) < 0.012:
-        continue
-    drop = "_r" if xw > 0 else "_l"
-    for g in list(v.groups):
-        nm = garment.vertex_groups[g.group].name
-        if nm.startswith(LEGGY) and drop in nm:
-            garment.vertex_groups[g.group].remove([v.index])
-            side_cut += 1
-bpy.ops.object.mode_set(mode="WEIGHT_PAINT")
-bpy.ops.object.vertex_group_smooth(group_select_mode="ALL", factor=0.5, repeat=opt("--smooth", 12, int))
-bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
-bpy.ops.object.mode_set(mode="OBJECT")
-# THE BELT, BAND AND LOOPS MOVE WITH THE TROUSERS (the first blind review:
-# sitting, 'the belt comes away from it'): each small piece (everything but
-# the trousers' own cloth, the largest piece) takes the weights of the
-# trousers' nearest point, so nothing parts from the cloth it is sewn to. (Two
-# tries on 30 September: the band and belt riding the pelvis whole let the
-# lifted thighs through them at the front.)
 from mathutils.kdtree import KDTree
 bm_ = bmesh.new()
 bm_.from_mesh(garment.data)
-bm_.verts.ensure_lookup_table()
 comp = [-1] * len(bm_.verts)
 sizes = []
+bm_.verts.ensure_lookup_table()
 for v0 in bm_.verts:
     if comp[v0.index] >= 0:
         continue
@@ -132,25 +105,96 @@ for v0 in bm_.verts:
 bm_.free()
 main = int(np.argmax(sizes))
 gco = np.array([garment.matrix_world @ v.co for v in garment.data.vertices])
-cloth_ids = [i for i, c in enumerate(comp) if c == main]
+AXC = np.array([0.0, float(gco[:, 1].mean())])
+ang = np.arctan2(gco[:, 0] - AXC[0], gco[:, 1] - AXC[1])        # 0 at the centre back (+y), pi at the front
+back_f = np.clip(np.cos(ang), 0.0, 1.0)                          # 1 at the centre back, 0 at the sides and front
+front_f = np.clip(-np.cos(ang), 0.0, 1.0)
+sector = ((np.degrees(ang) + 180.0) // 10).astype(int)
+top_by = {}
+for sct, z, c in zip(sector, gco[:, 2], comp):
+    if c == main:
+        top_by[sct] = max(top_by.get(sct, -9.0), z)
+KNEE = float(tailor.joint(arm, "calf_l").z)
+CROTCH = opt("--crotch", 0.885)
+SEAT_Z = [(1.10, 0.7), (1.00, 0.7), (0.97, 0.5), (0.87, 0.2), (0.82, 0.0), (-1.0, 0.0)]
+bones = {}
+
+
+def grp(name):
+    if name not in bones:
+        bones[name] = garment.vertex_groups.get(name) or garment.vertex_groups.new(name=name)
+    return bones[name]
+
+
+def seat_share(z):
+    zs = [a for a, _ in SEAT_Z][::-1]
+    ws = [b for _, b in SEAT_Z][::-1]
+    return float(np.interp(z, zs, ws))
+
+
+# which small pieces are the belt, band and loops (at the top: the ring) and which are sewn onto the cloth
+# lower down (the pockets' lips and welts, the fly: they follow the cloth under them; as part of the ring the
+# back welts stood off the seat like rods when he sat)
+comp_top = {}
+for i, c in enumerate(comp):
+    if c != main:
+        comp_top[c] = min(comp_top.get(c, 9.0), top_by.get(sector[i], gco[i, 2]) - gco[i, 2])
+RING = {c for c, d in comp_top.items() if d < 0.02}
+cloth_w = {}
+for i, (p, c) in enumerate(zip(gco, comp)):
+    side = "_l" if p[0] > 0 else "_r"
+    spine = 0.4 * back_f[i]
+    if c in RING:                                                # the belt, band and loops: the ring
+        w = {"pelvis": 1.0 - spine, "spine_01": spine}
+    elif c != main:
+        continue                                                 # sewn-on pieces: after the cloth, from it
+    else:
+        depth = top_by.get(sector[i], p[2]) - p[2]
+        if depth < 0.03:
+            pel, sp = 1.0 - spine, spine
+        else:
+            fade = min(1.0, (depth - 0.03) / 0.03)
+            sp = spine * (1.0 - fade)
+            front_pel = float(np.interp(depth, [0.03, 0.12, 0.25], [1.0, 0.3, 0.0]))
+            back_pel = seat_share(p[2])
+            pel = (front_f[i] * front_pel + (1.0 - front_f[i]) * max(back_pel, front_pel * (1.0 - back_f[i]))) * (1.0 - sp)
+        if p[2] > CROTCH - 0.03 and abs(p[0]) < 0.07:               # by the middle seam, towards the pelvis
+            pel = pel + (1.0 - pel - sp) * (1.0 - abs(p[0]) / 0.07)
+        leg = max(0.0, 1.0 - pel - sp)
+        k = float(np.clip((KNEE + 0.075 - p[2]) / 0.15, 0.0, 1.0))  # 0 above the knee's blend, 1 below it
+        w = {"pelvis": pel, "spine_01": sp, "thigh" + side: leg * (1.0 - k), "calf" + side: leg * k}
+    tot = sum(w.values())
+    w = {nm: wt / tot for nm, wt in w.items() if wt > 1e-4}
+    if c == main:
+        cloth_w[i] = w
+    for nm, wt in w.items():
+        grp(nm).add([i], wt, "REPLACE")
+cloth_ids = list(cloth_w)
 kd = KDTree(len(cloth_ids))
 for k, i in enumerate(cloth_ids):
     kd.insert(Vector(gco[i]), k)
 kd.balance()
-names = {g.index: g for g in garment.vertex_groups}
-wmap = {i: [(g.group, g.weight) for g in garment.data.vertices[i].groups] for i in cloth_ids}
-glued = 0
 for i, c in enumerate(comp):
-    if c == main:
+    if c == main or c in RING:
         continue
     _p, k, _d = kd.find(Vector(gco[i]))
-    src = wmap[cloth_ids[k]]
-    for g in list(garment.data.vertices[i].groups):
-        names[g.group].remove([i])
-    for gi, w in src:
-        names[gi].add([i], w, "REPLACE")
-    glued += 1
-log_rigid = glued
+    for nm, wt in cloth_w[cloth_ids[k]].items():
+        grp(nm).add([i], wt, "REPLACE")
+side_cut = 0
+log_rigid = sum(1 for c in comp if c != main)
+# THE BODY THE TROUSERS ALWAYS COVER IS HIDDEN, as the game's Body Hidden Face
+# Map hides it (the research): the legs from 8 cm above the hem to 6 cm under
+# the band's lowest point, where the cloth never leaves them
+lo_z = float(gco[comp == np.int64(main) if False else [c == main for c in comp], 2].min()) if False else float(min(gco[i, 2] for i, c in enumerate(comp) if c == main))
+band_lo = min(top_by.values()) - 0.06
+cover = body.vertex_groups.get("covered") or body.vertex_groups.new(name="covered")
+bco = np.array([body.matrix_world @ v.co for v in body.data.vertices])
+ids_cov = [i for i, q in enumerate(bco) if lo_z + 0.08 < q[2] < band_lo and abs(q[0]) < 0.3]
+cover.add(ids_cov, 1.0, "REPLACE")
+mask = body.modifiers.new("Covered", "MASK")
+mask.vertex_group = "covered"
+mask.invert_vertex_group = True
+mask.show_viewport = False              # measured against the whole body; the pictures (render) hide the covered part
 am = garment.modifiers.new("Armature", "ARMATURE")
 am.object = arm
 

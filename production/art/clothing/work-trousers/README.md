@@ -1,4 +1,4 @@
-# Ron's work trousers (the clothing session, 29 and 30 September)
+# Ron's work trousers (the clothing session, 29 September): SET ASIDE
 
 CLOTHES.md item 4, the first half. Ron's casting sheet: "dark grey work trousers; scuffed black leather boots". The references: production/reference/work-trousers-and-flat-cap-1990.md (Peter Fryer's Smith's Dock, 1990 to 1991); the research: production/research/clothing-pipeline/TROUSERS-AND-CAP-2026-09-29.md.
 
@@ -17,3 +17,5 @@ FreeSewing's Titan (MIT), at the settings of Charlie, the trouser built on it (C
 ## Reviews
 
 - review-1.md: FAIL (the waist opening sitting, the body through the seat on the stair, ragged hems, thin and clean).
+- review-2.md: FAIL (sitting, the stair, the hems cinching, the belt folding: all in the skinned poses).
+- review-3.md: FAIL after the research (the skinned poses again). SET ASIDE under the two-tries rule, 29 September.

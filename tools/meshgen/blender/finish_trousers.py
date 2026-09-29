@@ -318,8 +318,22 @@ for side in (1, -1):
 # man in 149-009 has bagged knees and soft horizontal folds behind the knees'.
 # Skinned trousers make no creases of their own, so the worn ones are laid
 # into the cloth: soft, uneven, a few millimetres.
+# THE SEAT HANGS, NOT FOLLOWING THE CLEFT (the second blind review: 'at rest
+# the seat hugs the buttocks and runs into the cleft'): bridged again, deeper
+log["seatBridged"] = tailor.bridge_slices(trousers, opt("--crotch", 0.885) - 0.12, 1.08, opt("--crotch", 0.885),
+                                          deepest=opt("--seat-bridge", 0.06), smooth_rounds=16)
 log["pushedOut"] = tailor.push_out(trousers, BODY_BVH, 0.003)     # anything the bridging's smoothing left inside
 KNEE_Z = opt("--knee-z", 0.54)
+KNEE_BAG = opt("--knee-bag", 0.013)
+_tco0 = np.array([v.co[:] for v in me.vertices])
+_ang0 = np.degrees(np.arctan2(_tco0[:, 0], _tco0[:, 1] + 0.03)) // 10
+_top = {}
+for a_, z_ in zip(_ang0, _tco0[:, 2]):
+    _top[a_] = max(_top.get(a_, -9.0), z_)
+
+
+def TOP_AT(p):
+    return _top.get(math.degrees(math.atan2(p.x, p.y + 0.03)) // 10, p.z)
 rng = np.random.default_rng(7)
 tco = np.array([v.co[:] for v in me.vertices])
 moved_c = 0
@@ -334,10 +348,14 @@ for vi, v in enumerate(me.vertices):
     if n.y > 0.25 and -0.07 < zk < 0.10:                      # behind the knee: three soft folds, tilted a little
         w = math.sin(math.pi * (zk + 0.07) / 0.17) ** 2
         d += 0.0026 * w * math.cos(2 * math.pi * (zk - 0.012 * side * (abs(p.x) - 0.13) / 0.05) / 0.043) * min(1.0, (n.y - 0.25) / 0.4)
-    if n.y < -0.25 and -0.05 < zk < 0.13:                     # the knee bagged forward
-        d += 0.004 * math.exp(-((zk - 0.035) / 0.045) ** 2) * min(1.0, (-n.y - 0.25) / 0.4)
-    if n.y < -0.3 and p.z < 0.11:                             # a soft fold above the hem where it rests on the foot
-        d += 0.003 * math.sin(math.pi * max(0.0, min(1.0, (p.z - 0.03) / 0.08)))
+    if n.y < -0.25 and -0.06 < zk < 0.15:                     # the knee bagged forward, 1 to 2 cm (the research)
+        d += KNEE_BAG * math.exp(-((zk - 0.04) / 0.055) ** 2) * min(1.0, (-n.y - 0.25) / 0.4)
+    if n.y < -0.3 and p.z < 0.11:                             # a soft break above the hem where it rests on the foot
+        d += 0.006 * math.sin(math.pi * max(0.0, min(1.0, (p.z - 0.03) / 0.08)))
+    below_band = TOP_AT(p) - p.z
+    if 0.0 < below_band < 0.07 and n.y < 0.2:                 # gathers under the cinched belt, front and sides
+        a_ = math.atan2(p.x, -(p.y + 0.03))
+        d += 0.0045 * max(0.0, math.cos(7.0 * a_ + 0.6)) ** 2 * (1.0 - below_band / 0.07)
     if d:
         me.vertices[vi].co = tco[vi] + np.array(n) * d
         moved_c += 1
