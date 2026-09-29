@@ -36,18 +36,19 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 29 September
 
-**[Your page: the first hour, the town's first story, eight calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Still open: [28 September's](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s).
+**[Your page: the first hour, the town's first story, the calls left](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked.
 
-**Decide there:** Sheila and Tom's name; neighbours' talk; the clock; Tom's reading; Mickey's people knowing his name; a privacy notice; who keeps quiet for Tom; $20–40 to retune the invention check: 13 of 36 small-talk answers still end "that's as far as I can take you" (was 28).
+**Decide there:** the clock; Tom's reading; Mickey's people knowing his name; a privacy notice; who keeps quiet; $20–40 to retune the invention check; the talk allowance; new, how Mickey died and the street's plain facts (asked first questions, the three said "that's all I know" about 38 times in 60).
 
-**Your answers, done:** talk server waits (Hetzner first); Tom's reading from his own sight; scratch folder recycled.
+**Your answers, done:** story and eleven sheets approved; Father Brendan Walsh, Keith Garbutt, June Suddaby; the first hour; neighbours' talk capped; Sheila names Tom only on trust.
+
+**Got wrong:** I missed your answers on both pages for a night.
 
 **Done:**
-- Talk naming Tom raises suspicion; no repeats in two hours; 27 street lines fixed.
-- Characters keep talk across reloads, know Tom, the place and the weekday, promise nothing, end talks.
-- Tom's "where were you?" counts, and a lie can surface later; he can own up or ask for silence.
-- Locals say who someone is and where they usually are.
-- The street reacts to a deed; no real brands or mobiles; no spoken stage directions; fewer tics.
+- No repeats in two hours; 27 street lines fixed.
+- Characters keep talk across reloads, know Tom and the place, end talks.
+- A lie can surface later; Tom can own up or ask for silence.
+- The street reacts to a deed; no real brands; fewer tics.
 
 **Failed:** Tom's reading, again.
 

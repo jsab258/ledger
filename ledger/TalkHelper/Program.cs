@@ -98,6 +98,10 @@ static class Program
     sealed class Helper
     {
         public readonly Dictionary<string, CharacterCard> Cards = new Dictionary<string, CharacterCard>();
+        /// Whether each person trusts Tom, as the game last said (the acquaintance's
+        /// "trusts"): only somebody the cast file names on trust reads it.
+        readonly Dictionary<string, bool> _trusts = new Dictionary<string, bool>();
+
         /// The named cast's routines (production/specs/hook-cast.json), so each
         /// person is told where they are this hour (town list 6u); null without.
         public CastDay Cast;
@@ -183,6 +187,8 @@ static class Program
             {
                 _engines.Clear();
                 _unwinding.Clear();
+                // Trust is the game's to say again for the timeline it loads.
+                lock (_trusts) _trusts.Clear();
                 if (op == "reset") return JsonSerializer.Serialize(new { talk = "reset" }, Plain);
             }
             if (op != "save" && op != "load") return JsonSerializer.Serialize(new { talk = op, error = "unknown" }, Plain);
@@ -329,6 +335,7 @@ static class Program
             string deedTopic = null, sawHimAt = null, heardHimAt = null; int deedDay = -1, deedHour = -1; bool deedGrave = false;
             var heardHeSaid = new List<string>();
             bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
+            bool? trustsSent = null;
             string callsHim = null;
             List<string> present = null;
             try
@@ -445,6 +452,8 @@ static class Program
                     metHim = Bool(aq, "met");
                     heardOfHim = Bool(aq, "heardOf");
                     callsHim = aq.TryGetProperty("calls", out var ac) && ac.ValueKind == JsonValueKind.String ? ac.GetString() : null;
+                    if (aq.TryGetProperty("trusts", out var tr) && (tr.ValueKind == JsonValueKind.True || tr.ValueKind == JsonValueKind.False))
+                        trustsSent = tr.ValueKind == JsonValueKind.True;
                 }
                 if (r.TryGetProperty("knowing", out v) && v.ValueKind == JsonValueKind.Object)
                 {
@@ -496,6 +505,9 @@ static class Program
                 engine = NewEngine(card);
                 _engines[key] = engine;
             }
+            // A card lent to somebody else: their name is not the card's
+            // (town list 6be, the independent check).
+            engine.SpeakerName = key != to ? "" : null;
             // WHO THEY KNOW, AND WHERE (town list 6ad), from the cast file this hour.
             if (Cast != null) engine.People = Cast.PeopleFor(key, day, hour, present);
             // THE SIMULATION'S STATE, loaded before the line is answered.
@@ -513,6 +525,14 @@ static class Program
             // read off this conversation's own earlier talk with him.
             // Met is the game's word or their own earlier talk: the game cannot
             // make them forget a conversation they have had.
+            // NAMED ONLY ON TRUST (Jafar, 29 September page): Sheila keeps him
+            // at "the new owner", her "new management", until the game says she
+            // trusts him, whatever name its ladder sends; what it said holds
+            // until it says otherwise (the independent check).
+            if (trustsSent.HasValue) lock (_trusts) _trusts[key] = trustsSent.Value;
+            bool trustsHim;
+            lock (_trusts) trustsHim = _trusts.TryGetValue(key, out var tv) && tv;
+            if (acquaintanceSent && !trustsHim && Cast != null && Cast.NamesHimOnlyOnTrust(key)) callsHim = null;
             if (acquaintanceSent)
             {
                 engine.HowYouKnowHim = Tom.HowTheyKnowHim(metHim || engine.HasSpokenWithHim, heardOfHim, callsHim, onlyTheirOwnTalk: !metHim);
@@ -1474,6 +1494,25 @@ static class Program
         await knower.Answer("{\"id\":62,\"to\":\"sam\",\"say\":\"Still here.\"}");
         Ok("what the game says a person calls Tom reaches their talk, and holds until it says otherwise",
            knowPrompt.Contains("you call him Tom") && knower.EngineFor("sam").HowYouKnowHim.Contains("you call him Tom") && !knowPrompt.Contains("I have never met"), knowPrompt.Length.ToString());
+        // Sheila names him only once she trusts him (Jafar, 29 September page).
+        var trusting = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+        LoadCards(trusting, cardsDir);
+        LoadCast(trusting, cardsDir);
+        await trusting.Answer("{\"id\":65,\"to\":\"lena\",\"say\":\"Morning.\",\"acquaintance\":{\"met\":true,\"calls\":\"Nowak\"}}");
+        string untrusted = trusting.EngineFor("lena").HowYouKnowHim;
+        await trusting.Answer("{\"id\":66,\"to\":\"sam\",\"say\":\"Morning.\",\"acquaintance\":{\"met\":true,\"calls\":\"Nowak\"}}");
+        await trusting.Answer("{\"id\":67,\"to\":\"lena\",\"say\":\"Morning.\",\"acquaintance\":{\"met\":true,\"calls\":\"Nowak\",\"trusts\":true}}");
+        string trusted = trusting.EngineFor("lena").HowYouKnowHim;
+        await trusting.Answer("{\"id\":68,\"to\":\"lena\",\"say\":\"Still me.\",\"acquaintance\":{\"met\":true,\"calls\":\"Nowak\"}}");
+        string stillTrusted = trusting.EngineFor("lena").HowYouKnowHim;
+        await trusting.Answer("{\"id\":69,\"to\":\"lena\",\"say\":\"And again.\",\"acquaintance\":{\"met\":true,\"calls\":\"Nowak\",\"trusts\":false}}");
+        Ok("Sheila calls him the new owner whatever name the game sends, until it says she trusts him, and that holds until it says otherwise; Darren takes the name at once",
+           untrusted.Contains("you call him the new owner") && trusting.EngineFor("sam").HowYouKnowHim.Contains("you call him Nowak")
+           && trusted.Contains("you call him Nowak") && stillTrusted.Contains("you call him Nowak")
+           && trusting.EngineFor("lena").HowYouKnowHim.Contains("you call him the new owner"), untrusted);
+        await trusting.Answer("{\"id\":70,\"to\":\"lena\",\"who\":\"zlata\",\"say\":\"Morning.\"}");
+        Ok("a card lent to somebody else does not lend them its name; its own person keeps theirs",
+           trusting.EngineFor("zlata") != null && trusting.EngineFor("zlata").SpeakerName == "" && trusting.EngineFor("lena").SpeakerName == null);
 
         // TALK KEPT WITH THE GAME'S SAVE (town list 6r).
         string talkDir = Path.Combine(Path.GetTempPath(), "talkhelper-selftest-" + Guid.NewGuid().ToString("N"));

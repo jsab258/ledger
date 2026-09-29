@@ -67,11 +67,11 @@ people. Ages are in 1990.
 | **Maureen Jensen, "the Widow"** | 57 | trawler-owner's widow from a Hessle Road family, head of the dockside syndicate | blonde set, heavy gold, fur-collared coat, hard face | [sheet](maureen-jensen/SHEET.md) |
 | **Danny Cammack** | 27 | head of the new crew, Grimsby-side, loud money | mullet, gold chain, leather blouson | [sheet](danny-cammack/SHEET.md) |
 | **Ada** | 78 | the old woman of the street; a widow who keeps a window on Quay Street | headscarf, hunched, dentures | [sheet](ada/SHEET.md) |
-| **June** | 38 | Mickey's estranged daughter, back for the funeral | highlights, shoulder pads | [sheet](june/SHEET.md) |
-| **Father Emil** | about 61 | the priest (name not yet ruled: the research offers Father Brendan Walsh, or Emil as the Polish mission's priest who knew Tom's father) | black suit and collar, thinning grey hair | [sheet](father-emil/SHEET.md) |
+| **June Suddaby** | 38 | Mickey's estranged daughter, back for the funeral | highlights, shoulder pads | [sheet](june/SHEET.md) |
+| **Father Brendan Walsh** | about 61 | the Irish-born parish priest, Father Walsh to the street (Jafar, 28 September: once Father Emil) | black suit and collar, thinning grey hair | [sheet](father-emil/SHEET.md) |
 | **Alison Sedman** | 30 | a reporter on the local paper; grammar school, first of her family at college | big permed hair, big glasses, a notebook | [sheet](alison-sedman/SHEET.md) |
 | **Philip Danby** | 33 | a teacher at the comprehensive, which stands closed for the game's window | side parting, knitted tie, corduroy jacket | [sheet](philip-danby/SHEET.md) |
-| **the Fixer** | 48 | brokers between all three rivals (name not yet ruled: the research offers Keith Garbutt) | neat moustache, car coat | [sheet](the-fixer/SHEET.md) |
+| **Keith Garbutt, the Fixer** | 48 | brokers between all three rivals | neat moustache, car coat | [sheet](the-fixer/SHEET.md) |
 
 **Mickey** (Michael Suddaby, 1924-1990), a trawlerman until the fleet went,
 then the cab office, appears only in a framed photograph: flat cap, moustache.

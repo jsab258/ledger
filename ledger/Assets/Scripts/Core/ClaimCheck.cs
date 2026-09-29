@@ -107,10 +107,11 @@ namespace Ledger.Core
         /// memory with its time, W for why they are wary, S for the scene, T for
         /// the time now, K for how they know him (town list 6s), P for the
         /// people and places of the street they know (town list 6ad). The same
-        /// material as KnownFor, in the same order.
+        /// material as KnownFor, in the same order. `ownName`: the speaker's own
+        /// name, null for the card's heading, empty for none (town list 6be).
         public static List<(string id, string text)> KnownItems(CharacterCard card, IEnumerable<MemoryEvent> retrieved,
             IEnumerable<string> beliefs, string why, string scene, string now = null, string knowsHim = null,
-            IEnumerable<string> people = null)
+            IEnumerable<string> people = null, string ownName = null)
         {
             var items = new List<(string, string)>();
             int n = 0;
@@ -127,6 +128,21 @@ namespace Ledger.Core
                              System.Text.RegularExpressions.Regex.Replace(kv.Value.Trim(), @"\s+", " "), @"(?<=[.!?])\s+(?=[A-Z""'])"))
                     if (sentence.Trim().Length > 0) items.Add(("C" + (++n), sentence.Trim()));
             }
+            // THEIR OWN NAME (town list 6be): the card's heading, in no section,
+            // so "Who are you?" answered "Sheila Dunn" was an invention. Not
+            // when the card is lent to somebody else (the independent check).
+            //
+            // WHO THE STREET'S PEOPLE ARE stays in the P items, which clear a
+            // habit and nothing else (town list 6ad), although that refuses
+            // "June, Mickey's daughter" to a newcomer. Split out so it could
+            // clear more, it failed the independent check twice: a description
+            // says what somebody habitually does ("who keeps Mickey's door",
+            // "always on his rounds"), and "Ron minding the door, Darren doing
+            // his rounds", said of the night the window went, passed as who they
+            // are; no reading of the words could tell a person's work from what
+            // they were doing that night.
+            string own = ownName ?? card.Name;
+            if (!string.IsNullOrWhiteSpace(own)) items.Add(("C" + (++n), "Their own name is " + own.Trim() + "."));
             n = 0;
             foreach (var f in card.HardFacts) items.Add(("H" + (++n), f));
             n = 0;

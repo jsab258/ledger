@@ -42,7 +42,7 @@ It first writes one line:
 | `suspicion`, `suspicionWhy` | | the level the game holds and why; or instead |
 | `evidence` | | `account` (`held`, `seen`, `names`, `rung`, `confidence`, `namingConfidence`, `summary`), `near` (`sawHim`, `heard`, `others`, `summary`) and `familiarity`, from which the Core derives the level (town list 6n) |
 | `knowing` | | `level` (`nothing`, `little`, `enough`) and `story`: how much of a story about Tom has reached them (town list 1) |
-| `acquaintance` | | `met`, `heardOf`, `calls`: whether they have met him, heard of him, and what they call him (town list 6s) |
+| `acquaintance` | | `met`, `heardOf`, `calls`: whether they have met him, heard of him, and what they call him (town list 6s); `trusts`, whether they trust him, which matters only to somebody the cast file marks `"namesHim": "on-trust"` (Sheila, Jafar's ruling of 29 September): until the game sends `true` they call him the new owner whatever `calls` says; what it last sent holds until it sends `true` or `false` again, and a load or a reset forgets it |
 | `present` | | the cast ids of whoever is really within talking range of them (town list 6ad) |
 | `deed` | | the deed they suspect him of: `topic`, `day`, `hour`; `sawHimAt` (a place or area id where they saw him within about an hour of it); `heardHimAt` (where they have heard he was then); `heardHeSaid` (the area ids of what he has been telling people, when that has reached them); `grave` (true for a killing) (town list 6ac, 6al, 6am) |
 | `noReply` | | true to have the Core decide the level from `evidence` without a reply |

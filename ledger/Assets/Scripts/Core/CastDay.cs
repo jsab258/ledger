@@ -29,7 +29,10 @@ namespace Ledger.Core
     /// the street gives them one, "called", how another local speaks of them
     /// ("the dispatcher at the cab office"), "role", a note of what they do,
     /// and "keepsQuiet", for whom they keep a thing quiet when asked ("owner",
-    /// "anyone", "nobody", else a friend: Silence); and "ties", each [a, b, strength] with anything after the
+    /// "anyone", "nobody", else a friend: Silence); "namesHim": "on-trust"
+    /// for somebody who keeps Tom at "the new owner" until they trust him,
+    /// whatever name the game's ladder gives (Jafar, 28 September, on the 29
+    /// September page: Sheila, by her own choice); and "ties", each [a, b, strength] with anything after the
     /// strength (a note of where they meet) ignored. A place a routine names
     /// that "places" does not define is refused, so a typo cannot quietly
     /// send somebody off the street.
@@ -54,6 +57,7 @@ namespace Ledger.Core
         readonly Dictionary<string, string> _role = new Dictionary<string, string>();
         readonly Dictionary<string, string> _called = new Dictionary<string, string>();
         readonly Dictionary<string, KeepsQuietFor> _quiet = new Dictionary<string, KeepsQuietFor>();
+        readonly HashSet<string> _nameOnTrust = new HashSet<string>();
         readonly List<(string a, string b, double w)> _ties = new List<(string, string, double)>();
 
         public IReadOnlyList<string> People => _people;
@@ -107,6 +111,12 @@ namespace Ledger.Core
                 if (MiniJson.GetString(p, "role") is string rl && rl.Trim().Length > 0) c._role[id] = rl.Trim();
                 if (MiniJson.GetString(p, "called") is string cl && cl.Trim().Length > 0) c._called[id] = cl.Trim();
                 if (MiniJson.GetString(p, "keepsQuiet") is string kq) c._quiet[id] = Silence.Parse(kq.Trim());
+                if (p.ContainsKey("namesHim"))
+                {
+                    if (!(p["namesHim"] is string nh) || nh.Trim() != "on-trust")
+                        throw new FormatException($"cast file: {id}'s namesHim must be \"on-trust\" or absent");
+                    c._nameOnTrust.Add(id);
+                }
                 c._daily[id] = c.ReadRoutine(id, MiniJson.GetList(p, "routine"));
                 if (p.ContainsKey("days") && !(p["days"] is Dictionary<string, object>))
                     throw new FormatException($"cast file: {id}'s days must be an object keyed mon to sun");
@@ -276,6 +286,12 @@ namespace Ledger.Core
         /// file's "keepsQuiet", else a friend.
         public KeepsQuietFor QuietStance(string id) => id != null && _quiet.TryGetValue(id, out var q) ? q : KeepsQuietFor.Friend;
 
+        /// Whether somebody calls Tom by name only once they trust him (the
+        /// file's "namesHim"): until then "the new owner", whatever the game's
+        /// ladder sends (Jafar, on the 29 September page: Sheila is the exception by
+        /// her own choice, as she promised Mickey to size him up).
+        public bool NamesHimOnlyOnTrust(string id) => id != null && _nameOnTrust.Contains(id);
+
         // The street's words for the named people, beside their names (town list 6bd).
         static readonly Dictionary<string, string[]> RoleWords = new Dictionary<string, string[]>
         {
@@ -291,7 +307,7 @@ namespace Ledger.Core
 
         /// WHOM A TYPED LINE NAMES (town list 6bd, the fourth sweep): the cast ids
         /// of the people it names by name, first name or surname ("Sheila", "Dunn",
-        /// "Father Emil"), or by the street's word for a named person ("the
+        /// "Father Walsh"), or by the street's word for a named person ("the
         /// bookkeeper"), for the session record's `named` line, never the words.
         /// A name that is a place's ("at Rita's", "Hal's") is the place, not them.
         public List<string> WhoNamed(string line)

@@ -21,8 +21,8 @@ REPO = town_page.REPO
 
 DAYS = {
     "2026-09-29": {
-        "title": "The first hour, and nine decisions",
-        "lede": "The plan for a player's first hour, the first story of the town's own, and nine things only you can decide. One tap each, and a note if you want. The talk server and Tom's reading you answered on 28 September; Tom's reading is back, because it failed its review again.",
+        "title": "The first hour, and eleven decisions",
+        "lede": "The plan for a player's first hour, the first story of the town's own, and eleven things only you can decide. One tap each, and a note if you want. Done as you picked: the first hour, the neighbours' talk and Sheila's name, and everything on the 28 September page (Father Emil is now Father Brendan Walsh). New today, the last two: what the town cannot say because nobody has written it.",
         "questions": [
             ("q-sheila-name", "Sheila's card keeps Tom at \"new management\" until he earns a name; canon says names follow knowing, not liking",
              [("exception", "Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town's)"),
@@ -56,6 +56,14 @@ DAYS = {
              [("raise", "$1.50 a day and $10 a month a copy, about 125 lines a day; three friends playing every day would be at most $4.50 a day, and the relay's own stop at $320 of its $400 month still holds (recommended: the thirty minutes should never run dry)"),
               ("keep", "Keep $0.50 a day and $5 a month; a friend who talks a lot sees the plain note and the short answers"),
               ("more", "$3 a day and $20 a month a copy, for long sessions")]),
+            ("q-mickey-death", "How Mickey died. Neither canon nor the outline says, so asked \"How did Mickey die?\", Sheila and Ron made up a heart attack and the check stopped them; now they say they don't know. Sheila's card has her see Ron argue with a stranger in the yard two nights before he died",
+             [("heart", "His heart, at the office early one morning; Ron found him when he came on at the rank; the doctor said his heart, and nobody on the street thinks otherwise (recommended: the story is what Tom inherited, and a mystery in the death would be a thread the outline has no room for; the argument in the yard stays something Sheila saw)"),
+              ("doubt", "His heart, as the doctor said, but some on the street wonder, and the argument in the yard keeps the doubt alive; never solved, never a quest"),
+              ("yours", "Something else, in your note")]),
+            ("q-street-facts", "What the street knows that nobody has written. Asked a newcomer's twenty first questions, Sheila, Ron and Darren answered about 38 of 60 with \"that's all I know\" (46 before tonight's fix to the check), nearly all for want of plain facts: the door Sheila does not open, the funeral, what Mickey left, where Tom sleeps, the drivers, the money, where to eat, what Mickey was like",
+             [("draft", "I write them from canon and the outline as one short page for your yes: the door is Mickey's own office, locked since he died, and Sheila keeps the key; the funeral was at Father Walsh's chapel, June came back for it; Mickey left Tom the office by his will, as the letter says; Tom sleeps in the flat over the office, Mickey's; one driver by day, one by night, and the dispatcher; the takings thin since the docks went; the cafe across the street. Then everybody can say them (recommended)"),
+              ("cards", "Only what each person would know, written into their own cards, for your yes card by card: slower, and every card changes"),
+              ("leave", "Leave them unwritten for now: the town says it does not know until the story reaches them")]),
         ],
         "docs": [
             ("first-hour", "The first hour, on paper", os.path.join(REPO, "game-design", "first-hour-2026-09-29.md"),
