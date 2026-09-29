@@ -75,20 +75,23 @@ bpy.context.view_layer.update()
 
 # ---- the body's own weights, the small pieces glued to the garment -------------------------------------
 
-for g in list(garment.vertex_groups):
-    garment.vertex_groups.remove(g)
-dt = garment.modifiers.new("Weights", "DATA_TRANSFER")
-dt.object = body
-dt.use_vert_data = True
-dt.data_types_verts = {"VGROUP_WEIGHTS"}
-dt.vert_mapping = "POLYINTERP_NEAREST"
-dt.layers_vgroup_select_src = "ALL"
-dt.layers_vgroup_select_dst = "NAME"
-bpy.ops.object.select_all(action="DESELECT")
-garment.select_set(True)
-bpy.context.view_layer.objects.active = garment
-bpy.ops.object.datalayout_transfer(modifier="Weights")
-bpy.ops.object.modifier_apply(modifier="Weights")
+OWN = "--own-weights" in argv                      # footwear: the modeller wrote its weights
+if not OWN:
+    for g in list(garment.vertex_groups):
+        garment.vertex_groups.remove(g)
+if not OWN:
+    dt = garment.modifiers.new("Weights", "DATA_TRANSFER")
+    dt.object = body
+    dt.use_vert_data = True
+    dt.data_types_verts = {"VGROUP_WEIGHTS"}
+    dt.vert_mapping = "POLYINTERP_NEAREST"
+    dt.layers_vgroup_select_src = "ALL"
+    dt.layers_vgroup_select_dst = "NAME"
+    bpy.ops.object.select_all(action="DESELECT")
+    garment.select_set(True)
+    bpy.context.view_layer.objects.active = garment
+    bpy.ops.object.datalayout_transfer(modifier="Weights")
+    bpy.ops.object.modifier_apply(modifier="Weights")
 # ZONE WEIGHTS (--zones; JUMPER-2026-09-30.md, after two reviews failed Ron's
 # jumper: fins at the armpits, the known fault of copying the nearest skin's
 # weights onto a sweater): below the armpit the side panel carries no arm, its
@@ -184,7 +187,7 @@ for i, c in enumerate(comp):
 HEM = opt("--hem", 0.0)
 cxy = np.array([float(np.mean(gco[:, 0])), float(np.mean(gco[:, 1]))])
 for i, c in enumerate(comp):
-    if c == main:
+    if c == main or OWN:                        # own weights (footwear): every piece keeps what it was given
         continue
     zc = float(np.mean(comp_z[c]))
     target = Vector(gco[i])
@@ -354,5 +357,11 @@ for name in POSES:
     mid = Vector((float(co[:, 0].mean()), float(co[:, 1].mean()), 0.5 * (lo_z + hi_z)))
     tailor.pictures(os.path.join(OUT, "pose-%s" % name), mid,
                     views=(("front", (0, -3.2, 0.2)), ("side", (3.2, 0, 0.2)), ("three-quarter", (2.2, -2.3, 0.4))))
+    if "--close" in argv:
+        # close views of the garment itself (footwear: the feet), a lighter body behind so dark shoes read
+        cd = opt("--close", 1.0)
+        tailor.pictures(os.path.join(OUT, "close-%s" % name), mid,
+                        views=(("front", (0, -cd, 0.25 * cd)), ("side", (cd, 0, 0.1 * cd)), ("three-quarter", (0.7 * cd, -0.7 * cd, 0.35 * cd))),
+                        res=(700, 500))
 json.dump(log, open(os.path.join(OUT, "pose-test.json"), "w"), indent=1)
 say("done")
