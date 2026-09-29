@@ -56,6 +56,7 @@ The reply:
 | `rest` | with `--early`: what follows the first sentence already sent |
 | `ms` | how long it took |
 | `offline`, `timedOut` | no model, or too slow: `reply` is the character's own brush-off (town list 6ap) |
+| `walkedOff` | he walked off while it was being written: there is no reply, and they keep only what he heard (town list 6ay) |
 | `paused` | a plain note for the player, not in a character's voice: live talk has stopped and when it comes back (town list 6t), or cannot be reached just now, or is off in this copy (town list 6ax) |
 | `ends` | the character has closed the conversation (town list 6ae) |
 | `heard` | the memories the reply could draw on |
@@ -78,7 +79,7 @@ With `noReply`: `{"id", "to", "who", "suspicion", "level", "why"}`.
 
 | sent | answer | meaning |
 |---|---|---|
-| `{"walkedAway": {"to", "heard"}, "day", "hour"}` | `{"walkedAway", "noted"}` | he left mid-reply; they keep only what he heard (town list 6v) |
+| `{"walkedAway": {"to", "heard"}, "day", "hour"}` | `{"walkedAway", "noted"}` | he left mid-reply; they keep only what he heard (town list 6v); sent while that reply is still being written, it stops it at once, and that line's answer is `{"id", "to", "walkedOff"}` (town list 6ay) |
 | `{"report": <id>, "why": <note>}` | `{"reported", "found", "saved", "thanks"}` | the report button on a reply (town list 6c) |
 | `{"talk": "save", "path", "stamp"}` | `{"talk": "saved", "people"}` | keep every conversation beside the game's save (town list 6r) |
 | `{"talk": "load", "path", "stamp"}` | `{"talk": "loaded", "people", "skipped"}`, or `missing`, `stale`, `error` | put them back |

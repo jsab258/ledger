@@ -106,6 +106,35 @@ static class Program
         readonly Dictionary<string, ConversationEngine> _engines = new Dictionary<string, ConversationEngine>();
         readonly ILlmClient _llm;
         readonly CostTracker _cost = new CostTracker();
+
+        // WALKING OFF STOPS THE REPLY AT ONCE (town list 6ay, the fourth sweep):
+        // lines were read one at a time, so "walkedAway" was read only after the
+        // reply it was about had finished, paid for, and the next person waited
+        // behind it. The reader now hands such a line here the moment it arrives
+        // (WalkOffIfFor); the reply being written for that person stops.
+        readonly System.Collections.Concurrent.ConcurrentDictionary<string, CancellationTokenSource> _walkCts =
+            new System.Collections.Concurrent.ConcurrentDictionary<string, CancellationTokenSource>();
+        readonly System.Collections.Concurrent.ConcurrentDictionary<string, string> _walkHeard =
+            new System.Collections.Concurrent.ConcurrentDictionary<string, string>();
+        readonly HashSet<string> _walkedHandled = new HashSet<string>();
+
+        /// A line that arrived while a reply was being written: when it says he
+        /// walked away from the person being answered, that reply stops now.
+        public bool WalkOffIfFor(string line)
+        {
+            try
+            {
+                using var doc = JsonDocument.Parse(line);
+                if (!doc.RootElement.TryGetProperty("walkedAway", out var wa) || wa.ValueKind != JsonValueKind.Object) return false;
+                string from = wa.TryGetProperty("to", out var t) && t.ValueKind == JsonValueKind.String ? t.GetString() : null;
+                string heard = wa.TryGetProperty("heard", out var h) && h.ValueKind == JsonValueKind.String ? h.GetString() : "";
+                if (from == null || !_walkCts.TryGetValue(from, out var stop)) return false;
+                _walkHeard[from] = heard ?? "";
+                try { stop.Cancel(); } catch (ObjectDisposedException) { return false; }
+                return true;
+            }
+            catch (JsonException) { return false; }
+        }
         public CostTracker Cost => _cost;
         readonly TimeSpan _patience;
 
@@ -432,6 +461,9 @@ static class Program
             if (talkOp != null) return await Talk(talkOp, talkPath, talkStamp);
             if (walkedFrom != null)
             {
+                bool already;
+                lock (_walkedHandled) already = _walkedHandled.Remove(walkedFrom);
+                if (already) return JsonSerializer.Serialize(new { walkedAway = walkedFrom, noted = true }, Plain);
                 var left = EngineFor(walkedFrom);
                 if (left != null) left.WalkedAway(walkedHeard, new GameTime(day, hour, minute));
                 return JsonSerializer.Serialize(new { walkedAway = walkedFrom, noted = left != null }, Plain);
@@ -642,6 +674,10 @@ static class Program
                 await Task.WhenAny(before, Task.Delay(10000));
                 _unwinding.Remove(engine);
             }
+            using var walkCts = new CancellationTokenSource();
+            _walkCts[key] = walkCts;
+            try
+            {
             using (var cts = new CancellationTokenSource(_patience))
             {
                 try
@@ -667,7 +703,22 @@ static class Program
                         };
                     }
                     var task = engine.SayToAsync(say, now, scene, cts.Token, onFirst);
-                    var done = await Task.WhenAny(task, Task.Delay(_patience));
+                    var walkedOff = Task.Delay(Timeout.Infinite, walkCts.Token).ContinueWith(_ => { }, TaskScheduler.Default);
+                    var done = await Task.WhenAny(task, Task.Delay(_patience), walkedOff);
+                    if (done == walkedOff)
+                    {
+                        // HE WALKED OFF (town list 6ay): the reply stops, and they keep
+                        // only what he heard, as town list 6v has it.
+                        lock (gate) closed = true;
+                        cts.Cancel();
+                        await Task.WhenAny(task, Task.Delay(3000));
+                        if (!task.IsCompleted) _unwinding[engine] = task;
+                        string heardNow = _walkHeard.TryRemove(key, out var hn) ? hn : "";
+                        if (task.Status != TaskStatus.RanToCompletion && earlyFirst == null) engine.RememberSaid(say, "...", now);
+                        engine.WalkedAway(heardNow, now);
+                        lock (_walkedHandled) _walkedHandled.Add(key);
+                        return JsonSerializer.Serialize(new { id, to, walkedOff = true }, Plain);
+                    }
                     if (done != task)
                     {
                         timedOut = true;
@@ -711,6 +762,8 @@ static class Program
                     paused = AiNotice.TalkUnreachable;
                 }
             }
+            }
+            finally { _walkCts.TryRemove(key, out _); }
             // INVENTED: what the first draft claimed that nothing supports, kept
             // for the log (the line said is the second draft or the plain one).
             // UNCHECKED: the claim check failed or answered out of shape, so the
@@ -871,11 +924,30 @@ static class Program
         LoadCast(helper, CardsDir(args));
         Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake, notice = new { title = AiNotice.Title, text = AiNotice.TextFor(relay != null), report = AiNotice.ReportLabel } }, Plain));
         Console.Out.Flush();
-        string line;
-        while ((line = Console.In.ReadLine()) != null)
+        // Lines are still answered one at a time, in the order sent; but the
+        // reader goes on reading while a reply is written, so a "walkedAway"
+        // for the person being answered stops that reply at once (town list 6ay).
+        var incoming = new System.Collections.Concurrent.BlockingCollection<string>();
+        _ = Task.Run(() =>
         {
+            string l;
+            while ((l = Console.In.ReadLine()) != null) incoming.Add(l);
+            incoming.CompleteAdding();
+        });
+        var waiting = new Queue<string>();
+        while (true)
+        {
+            string line;
+            if (waiting.Count > 0) line = waiting.Dequeue();
+            else if (!incoming.TryTake(out line, Timeout.Infinite)) break;
             if (line.Trim().Length == 0) continue;
-            Console.Out.WriteLine(await helper.Answer(line));
+            var answer = helper.Answer(line);
+            while (!answer.IsCompleted)
+            {
+                if (incoming.TryTake(out var next, 50)) { helper.WalkOffIfFor(next); waiting.Enqueue(next); }
+                else if (incoming.IsCompleted) break;
+            }
+            Console.Out.WriteLine(await answer);
             Console.Out.Flush();
         }
         // WHAT THE SESSION COST, when the game closes the helper's input: the
@@ -1254,6 +1326,25 @@ static class Program
            && qGrave.Contains("\"agreed\":false") && qNone.Contains("\"keepsQuiet\":null") && qNone.Contains("\"ownedUp\":null")
            && qNoDeed.Contains("\"keepsQuiet\":null") && !quiet.EngineFor("lena").KeepsQuiet.ContainsKey("player.window_d1")
            && quiet.EngineFor("rocco").BuildSystemPrompt("x", new GameTime(2, 10, 5), "").Contains("He has owned up to it"), qSam + " | " + qRon + " | " + qGrave);
+
+        // WALKING OFF STOPS THE REPLY AT ONCE (town list 6ay).
+        var slowTalk = new FakeLlm { Next = "Well, the thing about the rank is this.", Delay = TimeSpan.FromSeconds(4) };
+        var offWalker = new Helper(slowTalk, TimeSpan.FromSeconds(8));
+        LoadCards(offWalker, cardsDir);
+        var walkWatch = Stopwatch.StartNew();
+        var pendingReply = offWalker.Answer("{\"id\":160,\"to\":\"rocco\",\"say\":\"What's the rank like?\",\"day\":2,\"hour\":18}");
+        await Task.Delay(300);
+        string walkLine = "{\"walkedAway\":{\"to\":\"rocco\",\"heard\":\"\"},\"day\":2,\"hour\":18}";
+        bool stopped = offWalker.WalkOffIfFor(walkLine);
+        string stoppedReply = await pendingReply;
+        long stoppedMs = walkWatch.ElapsedMilliseconds;
+        string noted = await offWalker.Answer(walkLine);
+        var offEngine = offWalker.EngineFor("rocco");
+        int leftNotes = offEngine.Memory.Events.FindAll(ev => ev.Text == "He walked off while I was still talking to him.").Count;
+        Ok("walking off stops the reply being written at once; they remember his line, that they said nothing he heard, and that he left, once",
+           stopped && stoppedReply.Contains("\"walkedOff\":true") && stoppedMs < 2500 && noted.Contains("\"noted\":true") && leftNotes == 1
+           && offEngine.Memory.Events.Exists(ev => ev.Text.Contains("What's the rank like?")) && offEngine.Memory.Events.Exists(ev => ev.Text.Contains("he walked off before I could answer"))
+           && !offWalker.WalkOffIfFor(walkLine), stoppedReply + " | " + noted + " | " + stoppedMs);
 
         // TALK THAT CANNOT BE REACHED (town list 6ax): the brush-off, and the player told.
         var broken = new Helper(new BrokenFake(), TimeSpan.FromSeconds(8));
