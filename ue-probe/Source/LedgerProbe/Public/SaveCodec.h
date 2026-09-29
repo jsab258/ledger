@@ -26,11 +26,13 @@
 // string-aware - a brace inside a rumour's summary must not close its object.
 // That is the whole of the difference and it is why this is its own file.
 //
-// WHAT IT DOES NOT DO, said plainly rather than discovered later:
-//   - SUSPICION IS NOT SAVED OR RESTORED. The tracker's number is in this
-//     port and the mill raises it (Suspicion.h, Gossip.h, town list 6n), but
-//     this codec was not asked to carry it: the key is written as 0 and read
-//     past. The golden table does not pin it.
+// WHAT IT DOES AND DOES NOT DO, said plainly rather than discovered later:
+//   - SUSPICION IS SAVED AND RESTORED (the independent reviewer, 29
+//     September): each agent's number is written, and read back through
+//     SuspicionTracker::Restore, as SaveCodec.cs Capture (~152) and
+//     RestoreAgents (~318) do. It used to be written as 0 and read past, so
+//     a restart forgot how much everybody suspected him. The golden table's
+//     SuspicionSave rows pin both halves.
 //   - THE FIRST TELLER'S RUNG IS (town list 6n): written only when known,
 //     read back clamped to the ladder, as SaveCodec.cs RumorJson (~62) and
 //     RestoreAgents (~344) do.
@@ -691,6 +693,25 @@ namespace Save
 		Out += '"';
 	}
 
+	/// A double as MiniJson writes one, d.ToString("R"): the shortest text
+	/// that reads back as it, and the WORDS .NET uses where there is no
+	/// number, NaN and Infinity. A NaN suspicion is reachable (a NaN rumour
+	/// told to somebody raises theirs by NaN), and then the C# writes "NaN",
+	/// which its own reader refuses, as WellFormed here does; printf's "nan"
+	/// is refused too, but it is not what the C# wrote. By the bits, for the
+	/// fast-math reason Perception.h gives.
+	inline std::string SaveNumber(double V)
+	{
+		if (IsNaNBits(V)) { return "NaN"; }
+		unsigned long long Bits = 0ULL;
+		std::memcpy(&Bits, &V, sizeof(Bits));
+		if ((Bits & 0x7FFFFFFFFFFFFFFFULL) == 0x7FF0000000000000ULL)
+		{
+			return (Bits >> 63) != 0ULL ? "-Infinity" : "Infinity";
+		}
+		return ShortestRoundTrip(V);
+	}
+
 	/// The mill's agents as the JSON the C#'s own codec writes for them.
 	inline std::string CaptureMillAgents(const GossipMill& Mill)
 	{
@@ -703,17 +724,13 @@ namespace Save
 			if (I) { Out += ','; }
 			Out += "{\"id\":";
 			QuotedInto(Out, G->Id);
-			Out += ",\"loyalty\":" + ShortestRoundTrip(G->Loyalty);
+			Out += ",\"loyalty\":" + SaveNumber(G->Loyalty);
 			Out += ",\"leashed\":";
 			Out += G->Leashed ? "true" : "false";
-			// SUSPICION IS WRITTEN AS ZERO AND THAT IS NOT A MEASUREMENT.
-			// The tracker's number is in this port since 29 September and the
-			// mill raises it since town list 6n, but carrying it through a
-			// save was not part of either port, so nothing reads it back
-			// here; the key is present because the C#'s reader expects the
-			// shape. A save this writes must never be mistaken for one that
-			// carries a suspicion.
-			Out += ",\"suspicion\":0";
+			// THE SUSPICION, AS THE C# WRITES IT: { "suspicion",
+			// a.Suspicion.Value } (the independent reviewer, 29 September).
+			// This wrote 0, so a restart forgot it.
+			Out += ",\"suspicion\":" + SaveNumber(G->Suspicion.Value());
 			Out += ",\"suppressed\":[";
 			for (std::vector<std::string>::size_type T = 0; T < G->Suppressed.size(); ++T)
 			{
@@ -736,7 +753,7 @@ namespace Save
 				QuotedInto(Out, Rm->OriginId);
 				Out += ",\"summary\":";
 				QuotedInto(Out, Rm->Summary);
-				Out += ",\"conf\":" + ShortestRoundTrip(Rm->Confidence);
+				Out += ",\"conf\":" + SaveNumber(Rm->Confidence);
 				Out += ",\"hops\":";
 				{
 					char Buf[32];
@@ -802,6 +819,10 @@ namespace Save
 
 			G->Loyalty = FieldNumber(Json, Records[I], "loyalty", 0.0);
 			G->Leashed = FieldFlag(Json, Records[I], "leashed");
+			// C#: g.Suspicion.Restore(Num(a, "suspicion")), clamped there as
+			// here; an absent or null key restores 0 (the independent
+			// reviewer, 29 September: this was read past).
+			G->Suspicion.Restore(FieldNumber(Json, Records[I], "suspicion", 0.0));
 
 			G->Suppressed.clear();
 			Span Suppressed;

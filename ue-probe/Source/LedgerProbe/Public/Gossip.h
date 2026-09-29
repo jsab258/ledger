@@ -297,14 +297,20 @@ namespace LedgerCore
 
 		// OrderByDescending(Confidence).FirstOrDefault(). C#'s OrderBy is a
 		// STABLE sort, so among equal confidences the earliest-added rumour
-		// wins; the strict > below reproduces that without sorting at all.
+		// wins; a strictly-greater test reproduces that without sorting at all.
+		//
+		// BY double.CompareTo, NOT BY `>` (the independent reviewer, 29
+		// September). OrderByDescending ranks a NaN below every number, so a
+		// NaN copy held first never wins; `>` against a NaN is false both
+		// ways, so the NaN held first stayed "best" and hid every real
+		// number after it. A save or a planted rumour can carry a NaN.
 		RumorPtr Best(const std::string& TopicKey) const
 		{
 			RumorPtr BestR;
 			for (std::vector<RumorPtr>::size_type I = 0; I < Rumors.size(); ++I)
 			{
 				if (Rumors[I]->TopicKey() != TopicKey) continue;
-				if (!BestR || Rumors[I]->Confidence > BestR->Confidence) BestR = Rumors[I];
+				if (!BestR || DotNetCompare(Rumors[I]->Confidence, BestR->Confidence) > 0) BestR = Rumors[I];
 			}
 			return BestR;
 		}
@@ -313,6 +319,10 @@ namespace LedgerCore
 		/// re-tell guards compare against this rather than Best(): two agents
 		/// holding conflicting values must settle, not re-copy each other's
 		/// version every round (audit 2026-07-27).
+		///
+		/// Ranked by double.CompareTo, as Best is and for the same reason: a
+		/// NaN copy held first must not hide a real one (the independent
+		/// reviewer, 29 September; Weigh and Witness read this).
 		RumorPtr BestOfValue(const std::string& TopicKey, const std::string& Value) const
 		{
 			RumorPtr BestR;
@@ -320,7 +330,7 @@ namespace LedgerCore
 			{
 				if (Rumors[I]->TopicKey() != TopicKey) continue;
 				if (Rumors[I]->Content.Value != Value) continue;
-				if (!BestR || Rumors[I]->Confidence > BestR->Confidence) BestR = Rumors[I];
+				if (!BestR || DotNetCompare(Rumors[I]->Confidence, BestR->Confidence) > 0) BestR = Rumors[I];
 			}
 			return BestR;
 		}
@@ -688,7 +698,11 @@ namespace LedgerCore
 
 						RumorPtr Heard = std::make_shared<Rumor>(R->Content);
 						Heard->OriginId = R->OriginId; Heard->Summary = R->Summary;
-						Heard->Confidence = Passed; Heard->Hops = R->Hops + 1;
+						// C#'s int + 1 wraps (unchecked); a signed overflow is
+						// undefined in C++, and a save can set hops to INT_MAX
+						// (the independent reviewer, 29 September). So the
+						// addition is done unsigned and wraps as the C#'s does.
+						Heard->Confidence = Passed; Heard->Hops = (int)((unsigned)R->Hops + 1u);
 						Heard->Sensitive = R->Sensitive; Heard->Indelible = R->Indelible;
 						Heard->OriginRung = R->OriginRung;
 						Listener->Rumors.push_back(Heard);
@@ -822,7 +836,8 @@ namespace LedgerCore
 
 				RumorPtr Heard = std::make_shared<Rumor>(R->Content);
 				Heard->OriginId = R->OriginId; Heard->Summary = R->Summary;
-				Heard->Confidence = Passed; Heard->Hops = R->Hops + 1;
+				// Wraps as the C#'s int + 1 does, as in Tick.
+				Heard->Confidence = Passed; Heard->Hops = (int)((unsigned)R->Hops + 1u);
 				Heard->Sensitive = R->Sensitive; Heard->Indelible = R->Indelible;
 				Heard->OriginRung = R->OriginRung;
 				Checker->Rumors.push_back(Heard);
