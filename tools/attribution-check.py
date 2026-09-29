@@ -534,7 +534,17 @@ SKIP_FRAGMENTS = ("/.git/", "/node_modules/", "/.venv", "/obj/", "/bin/",
                   # check the machine that builds cannot be asked to run.
                   "/ue-probe/Intermediate/", "/ue-probe/Binaries/",
                   "/ue-probe/Saved/", "/ue-probe/Packaged/",
-                  "/ue-probe/Build/", "/ue-probe/DerivedDataCache/")
+                  "/ue-probe/Build/", "/ue-probe/DerivedDataCache/",
+                  # CLAUDE CODE'S OWN HELPER WORKTREES (29 September): a helper
+                  # run in isolation leaves a whole second checkout under
+                  # .claude/worktrees/, gitignored and never in CI; walking it
+                  # counted every asset twice, the copy as unattributed.
+                  "/.claude/worktrees/",
+                  # THE PROBE'S LOCAL RUN OUTPUT: every run of the game writes
+                  # its frames, sounds and logs as ue-probe/ue-*; the build
+                  # machine copies what it keeps into production/d1-probe, and
+                  # none of it is ever committed from here (gitignored).
+                  "/ue-probe/ue-")
 
 _fails = []
 

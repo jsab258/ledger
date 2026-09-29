@@ -145,6 +145,12 @@ production/playtest/ai-tester/
 # THE BUILDER'S OWN CHECKOUT: the stop hook acts only where this untracked file is.
 .claude/builder-checkout
 
+# Claude Code's helper worktrees: whole second checkouts, local only.
+.claude/worktrees/
+
+# The probe's local run output (frames, sounds, logs); the build machine keeps its own in production/d1-probe.
+ue-probe/ue-*
+
 # THE METAHUMAN STAYS OUT OF GIT (24 September): assembled on this PC outside
 # the repository and copied in by the probe workflow; the character asset is
 # 138 MB, over the file limit.
