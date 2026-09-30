@@ -631,10 +631,14 @@ namespace LedgerCore
 			while ((At = S.find(From, At)) != std::string::npos) { S.replace(At, From.size(), To); At += To.size(); }
 			return S;
 		}
+		/// ONE PLACEHOLDER, whatever the story's first letter (the port's
+		/// independent check, 30 September: "Here, {What}." and "Here, {what}."
+		/// were two wordings, so the same words came straight back).
+		inline std::string OnePlaceholder(const std::string& Wording) { return ReplaceAll(Wording, "{What}", "{what}"); }
 		inline std::string Unfill(const std::string& Text, const std::string& What)
 		{
 			if (Text.empty() || What.empty()) return Text;
-			return ReplaceAll(ReplaceAll(Text, Cap(What), "{What}"), What, "{what}");
+			return OnePlaceholder(ReplaceAll(ReplaceAll(Text, Cap(What), "{What}"), What, "{what}"));
 		}
 		/// What the ledger keeps of a line he heard: the words, or for a
 		/// composed telling its wording without the story (town list 6o).
@@ -708,7 +712,8 @@ namespace LedgerCore
 			void HeardLine(const std::string& Bank, const std::string& Line)
 			{
 				if (Line.empty()) return;
-				LinesHeard[Bank][Line] = ++Hearings;
+				// A wording from a save made before one placeholder is read as one.
+				LinesHeard[Bank][OnePlaceholder(Line)] = ++Hearings;
 			}
 
 			/// He heard this line: remembered under its own bank; a telling

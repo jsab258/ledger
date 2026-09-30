@@ -119,17 +119,19 @@ namespace LedgerCore
 		}
 
 		/// 09:00: DS Ellis, while there is a reason (ROUTE.md step 5). The
-		/// reason, or empty. `OffenceOf`, when the game gives it: come for the
-		/// street's talk, she hears it (PoliceFile.HearTheStreet, "the game
-		/// knows its deeds"); the Core's week gives none.
-		std::string NineEllis(GossipMill* Mill, const GameTime& Now, const std::function<Offence(const std::string&)>& OffenceOf = nullptr)
+		/// reason, or empty. Come for the street's talk, she hears it
+		/// (PoliceFile.HearTheStreet, the game grading its deeds: a window is
+		/// damage, the rest suspicious, as the Core's week grades them); she
+		/// hears and asks only the people on the street at nine (the cast).
+		static Offence GradeOf(const std::string& Topic) { return Topic.compare(0, 13, "player.window") == 0 ? Offence::Damage : Offence::Suspicious; }
+		std::string NineEllis(GossipMill* Mill, const GameTime& Now, const CastDay* Cast)
 		{
 			if (Now.Hour != 9 || Now.Day < 1 || Mill == nullptr) return std::string();
 			std::string Why;
 			if (!Police.EllisComes(Mill, Now.Day, Inquiry::None, Why)) return std::string();
-			if (Why == "talk" && OffenceOf) Police.HearTheStreet(Mill, Now.Day, OffenceOf);
+			if (Why == "talk") Police.HearTheStreet(Mill, Now.Day, &GradeOf, Cast, &Now);
 			if (EllisFirst == "never") EllisFirst = "day " + std::to_string(Now.Day + 1) + ", for " + Why;
-			const std::vector<std::string> Who = PoliceFile::WhoSheAsks(Mill);
+			const std::vector<std::string> Who = PoliceFile::WhoSheAsks(Mill, Cast, &Now);
 			PoliceFile::Asked(Mill, &Who, Why, Now);
 			return Why;
 		}

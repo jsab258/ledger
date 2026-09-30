@@ -95,7 +95,9 @@ namespace LedgerCore
 		TeaState Close(Gossiper* AdaG, const GameTime& Now)
 		{
 			if (StateValue != TeaState::Asked) return StateValue;
-			if (Now.Day == DayValue && Now.Hour < Until) return StateValue;
+			// Not before the evening is over (the time-and-state sweep: closed on
+			// an earlier day, the tea was a stand-up before it was poured).
+			if (Now.Day < DayValue || (Now.Day == DayValue && Now.Hour < Until)) return StateValue;
 			StateValue = Judge();
 			if (AdaG != nullptr)
 			{

@@ -1192,7 +1192,9 @@ namespace LedgerCore
 					}
 				}
 			}
-			LastAge = Now;
+			// Never back (the time-and-state sweep, 30 September: a late call for
+			// eleven after one for noon set the clock back, and the hour faded twice).
+			if (!bAged || Now.TotalMinutes() > LastAge.TotalMinutes()) LastAge = Now;
 			bAged = true;
 		}
 

@@ -125,13 +125,23 @@ namespace LedgerCore
 			{
 				if (!TryParseInt(Parts[I], V[I])) { return false; }
 			}
+			// Only a time ToString could write (the time-and-state sweep, 30
+			// September: "D1 25:99" was read as D2 02:39 yet counted on day 1).
+			if (V[0] < 0 || V[0] >= 100000 || V[1] < 0 || V[1] > 23 || V[2] < 0 || V[2] > 59) { return false; }
 			Out = GameTime(V[0], V[1], V[2]);
 			return true;
 		}
 
 		// C# int.TryParse over the invariant culture's Integer style.
-		static bool TryParseInt(const std::string& S, int& Out)
+		static bool TryParseInt(const std::string& Raw, int& Out)
 		{
+			// TRAILING NULS ARE ALLOWED, as .NET's int.TryParse allows them after
+			// the number and its trailing blanks (the sweep port's independent
+			// check, 30 September: "D1 02:03" with a NUL after it loaded in the
+			// C# and was dropped here).
+			std::string::size_type L = Raw.size();
+			while (L > 0 && Raw[L - 1] == '\0') { --L; }
+			const std::string S = Raw.substr(0, L);
 			std::string::size_type B = S.find_first_not_of(" \t\r\n\f\v");
 			std::string::size_type E = S.find_last_not_of(" \t\r\n\f\v");
 			if (B == std::string::npos) { return false; }

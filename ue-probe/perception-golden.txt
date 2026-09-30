@@ -12518,6 +12518,19 @@ Scenario|save_reload|day0|2
 Scenario|save_reload|hour0|19
 Scenario|save_reload|minute0|40
 Scenario|save_reload|text2|two~lines~become~one
+Scenario|save_reload|junkEvents|4
+Scenario|save_reload|junkBeliefs|2
+Scenario|save_reload|junkKept0|kept~one
+Scenario|save_reload|junkKept1|smiley
+Scenario|save_reload|junkKept2|not~a~number~but~the~C#~takes~it
+Scenario|save_reload|junkKept3|kept~two
+Scenario|save_reload|junkLine0|-~[D2~19:40]~(0.62!observation)~kept~one
+Scenario|save_reload|junkLine1|-~[D2~19:48]~(0.62!observation)~smiley
+Scenario|save_reload|junkLine2|-~[D2~19:51]~(NaN!heard)~not~a~number~but~the~C#~takes~it
+Scenario|save_reload|junkLine3|-~[D2~19:47]~(0.62!observation)~kept~two
+Scenario|save_reload|junkBelief0|kept
+Scenario|save_reload|junkBelief1|indented~belief
+Scenario|save_reload|junkFixture|#~Memory:~w1^^##~Beliefs ^-~kept^~~~-~indented~belief^not~a~belief~line^^##~Events~^-~[D2~19:40]~(0.62!observation)~kept~one^this~is~not~an~event~line^-~[D2~19:41~(0.62!observation)~no~closing~bracket^-~[D2~19:42]~0.62!observation)~no~opening~paren^-~[D2~19:43]~(0.62!observation~no~closing~paren^-~[DX~19:44]~(0.62!observation)~bad~time^-~[D2~19:45]~(notanumber!observation)~bad~importance^-~[D2~19:46]~(0.62!observation!extra)~too~many~fields^-~[D2~19:48]~:)~(0.62!observation)~smiley^x~[D2~19:49]~(0.62!observation)~no~dash-bracket~prefix^-~[~D2~19:50]~(0.62!observation)~space~before~the~D^-~[D2~19:51]~(NaN!heard)~not~a~number~but~the~C#~takes~it^-~[D-2147483648~0:0]~(0.5!heard)~the~smallest~int~there~is^-~[D2~19:47]~(0.62!observation)~kept~two^
 Scenario|save_reload|loadTwiceEvents|3
 Scenario|save_reload|loadTwiceBeliefs|2
 Scenario|gossip_restore|rumorsBeforeRestore|0
@@ -51796,7 +51809,15 @@ RemarkFreshRun|3,3,7,0,-5,13,2,2,9,100,-1,6,4,11,5,8,1,12,10,3,3,7,0,14,27,-15,2
 RemarkFreshRun|3,3,7,0,-5,13,2,2,9,100,-1,6,4,11,5,8,1,12,10,3,3,7,0,14,27,-15,2,9,6,1|17|I've~heard~his~name~somewhere.~Can't~place~it./There~was~talk~about~that~one.~Or~was~it~somebody~else./You've~the~look~of~him,~you~know.~Around~the~eyes./That's~Mickey's~nephew,~that~is./He's~the~one~people~were~on~about.~Only~talk,~mind./Evening./Somebody~was~saying~something~about~him.~I~forget~what./Him.~Something~went~round~about~him.~It'll~come~to~me./Mind~how~you~go./I've~heard~a~thing~or~two~about~him.~Nothing~I'd~swear~to./Keeps~busy,~that~one,~so~I~hear.~Or~so~somebody~said./Still~open,~is~it?/I've~heard~a~thing~or~two~about~him.~Nothing~I'd~swear~to./People~have~been~saying~things~about~him.~Half~of~it~rubbish,~I~expect./Tell~Sheila~I~said~hello./Didn't~somebody~say~something~about~him?~Never~mind./Is~that~him?~The~nephew?/You'll~be~at~the~market~Thursday,~I~expect./Something~was~said~about~him.~It's~gone~now./His~name~came~up.~I~wasn't~really~listening./Cold~enough~for~you?/His~name~came~up.~I~wasn't~really~listening./He's~the~one~people~were~on~about.~Only~talk,~mind./Mickey's~nephew.~Still~standing,~then./I~heard~something~about~him.~Can't~remember~who~from./I~heard~something~about~him.~Can't~remember~who~from./How's~Mickey's~treating~you?/I've~heard~his~name~somewhere.~Can't~place~it./There~was~talk~about~that~one.~Or~was~it~somebody~else./All~right.|4|1|0
 RemarkFreshRun|0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0|-1|That's~Mickey's~nephew,~that~is./Is~that~him?~The~nephew?/Mickey's~nephew.~Still~standing,~then./Somebody~was~saying~something~about~him.~I~forget~what./I've~heard~his~name~somewhere.~Can't~place~it./All~right./I've~heard~his~name~somewhere.~Can't~place~it./There~was~talk~about~that~one.~Or~was~it~somebody~else./How's~Mickey's~treating~you?/Him.~Something~went~round~about~him.~It'll~come~to~me./Him.~Something~went~round~about~him.~It'll~come~to~me./Cold~enough~for~you?/I've~heard~a~thing~or~two~about~him.~Nothing~I'd~swear~to./His~name~came~up.~I~wasn't~really~listening./Your~uncle'd~have~hated~this~weather./Didn't~somebody~say~something~about~him?~Never~mind./He's~the~one~people~were~on~about.~Only~talk,~mind./Your~uncle'd~have~hated~this~weather./Something~was~said~about~him.~It's~gone~now./People~have~been~saying~things~about~him.~Half~of~it~rubbish,~I~expect./Tell~Sheila~I~said~hello./People~have~been~saying~things~about~him.~Half~of~it~rubbish,~I~expect./I~heard~something~about~him.~Can't~remember~who~from./Still~open,~is~it?/Keeps~busy,~that~one,~so~I~hear.~Or~so~somebody~said./Keeps~busy,~that~one,~so~I~hear.~Or~so~somebody~said./You've~the~look~of~him,~you~know.~Around~the~eyes./That's~Mickey's~nephew,~that~is./Is~that~him?~The~nephew?/Long~day?|4|1|0
 RemarkFreshRun|0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0|17|That's~Mickey's~nephew,~that~is./Is~that~him?~The~nephew?/Mickey's~nephew.~Still~standing,~then./Somebody~was~saying~something~about~him.~I~forget~what./I've~heard~his~name~somewhere.~Can't~place~it./All~right./I've~heard~his~name~somewhere.~Can't~place~it./There~was~talk~about~that~one.~Or~was~it~somebody~else./How's~Mickey's~treating~you?/Him.~Something~went~round~about~him.~It'll~come~to~me./Him.~Something~went~round~about~him.~It'll~come~to~me./Cold~enough~for~you?/I've~heard~a~thing~or~two~about~him.~Nothing~I'd~swear~to./His~name~came~up.~I~wasn't~really~listening./Your~uncle'd~have~hated~this~weather./Didn't~somebody~say~something~about~him?~Never~mind./He's~the~one~people~were~on~about.~Only~talk,~mind./Your~uncle'd~have~hated~this~weather./Something~was~said~about~him.~It's~gone~now./People~have~been~saying~things~about~him.~Half~of~it~rubbish,~I~expect./Tell~Sheila~I~said~hello./People~have~been~saying~things~about~him.~Half~of~it~rubbish,~I~expect./I~heard~something~about~him.~Can't~remember~who~from./Still~open,~is~it?/Keeps~busy,~that~one,~so~I~hear.~Or~so~somebody~said./Keeps~busy,~that~one,~so~I~hear.~Or~so~somebody~said./You've~the~look~of~him,~you~know.~Around~the~eyes./That's~Mickey's~nephew,~that~is./Is~that~him?~The~nephew?/Long~day?|4|1|0
+WordingOf|I'm~telling~you,~the~new~owner~was~at~the~warehouse.|the~new~owner~was~at~the~warehouse.|1|I'm~telling~you,~{what}.
+WordingOf|The~new~owner~was~at~the~warehouse.~I~know~what~I~saw.|the~new~owner~was~at~the~warehouse|1|{what}.~I~know~what~I~saw.
+WordingOf|The~new~owner~was~at~the~warehouse.~I~know~what~I~saw.|the~new~owner~was~at~the~warehouse|0|The~new~owner~was~at~the~warehouse.~I~know~what~I~saw.
+WordingOf|Twice:~the~lad~ran,~and~the~lad~ran.|the~lad~ran|1|Twice:~{what},~and~{what}.
+WordingOf|Nothing~to~take~out~here.||1|Nothing~to~take~out~here.
+WordingOf|Anana|ana|1|{what}na
+WordingOf|Hat~hat|hat|1|{W{what}}~{what}
 RemarkCase|told-only-town-composed|[0,1]
+RemarkCase|wording-kept|[Here,~{What}.]
 RemarkCase|wording-empty|[x]
 RemarkCase|empty-line|[]
 RemarkCase|banks-apart|[Evening.]
@@ -55566,6 +55587,7 @@ AskBadSave|1|0|0|none|1|0|{"first":0,"nights":[],"delivered":[]}
 AskBadSave|2|2|0|none|0.6599999999999999|1|{"first":0,"nights":[[0,"noshow"]],"delivered":[0]}
 AskBadSave|3|0|0|none|1|0|{"first":0,"nights":[],"delivered":[]}
 AskBadSave|4|0|0|none|1|0|{"first":0,"nights":[],"delivered":[0]}
+AskBadSave|5|-1|1|wound down|1|4|{"first":0,"nights":[[0,"did"],[2,"did"],[4,"did"],[6,"refused"]],"delivered":[0,2,4,6],"woundDown":[6],"woundTell":[6,10020]}
 AskBadSave|6|-1|1|refused|1|1|{"first":0,"nights":[[0,"refused"]],"delivered":[0]}
 AskBadSave|7|2|0|none|1|1|{"first":0,"nights":[[0,"did"]],"delivered":[0]}
 AskBadSave|8|5|0|none|1|1|{"first":3,"nights":[[3,"did"]],"delivered":[3,5]}
@@ -56906,6 +56928,21 @@ NewsHeard|2|exchange/tell/news|Hal~and~Rita~had~words~in~the~pawn,~and~nobody~kn
 NewsHeard|3|exchange/tell/news|You'll~never~guess.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|I'd~not~have~thought~it.|4
 NewsHeard|4|none|4
 NewsHeard|5|none|4
+ExchangeHeard|0.9~0.5~0.5~0.5~0|0|exchange/tell/certain|I'm~telling~you,~somebody~put~Rita's~window~in.|I'm~telling~you,~{what}.|exchange/answer/neutral|You're~serious.
+ExchangeHeard|0.9~0.5~0.5~0.5~0|1|exchange/tell/certain|Somebody~put~Rita's~window~in.~I~know~what~I~saw.|{what}.~I~know~what~I~saw.|exchange/answer/neutral|That~would~explain~a~few~things.
+ExchangeHeard|0.9~0.5~0.5~0.5~0|2|exchange/tell/certain|You~want~to~know~why~I've~been~quiet?~Somebody~put~Rita's~window~in.|You~want~to~know~why~I've~been~quiet?~{what}.|exchange/answer/neutral|What,~and~nobody's~said~anything?
+ExchangeHeard|0.6~0.9~0.5~0.5~1|0|exchange/tell/secondhand|They're~saying~somebody~put~Rita's~window~in.|They're~saying~{what}.|exchange/answer/nervous|Say~it~quieter~or~don't~say~it.
+ExchangeHeard|0.6~0.9~0.5~0.5~1|1|exchange/tell/secondhand|Word~is~somebody~put~Rita's~window~in.|Word~is~{what}.|exchange/answer/nervous|That's~the~kind~of~talk~that~ends~with~somebody~moving~away.
+ExchangeHeard|0.6~0.9~0.5~0.5~1|2|exchange/tell/secondhand|Somebody~told~me~somebody~put~Rita's~window~in.~Make~of~it~what~you~like.|Somebody~told~me~{what}.~Make~of~it~what~you~like.|exchange/answer/nervous|Some~things~you~carry.~You~don't~hand~them~round.
+ExchangeHeard|0.6~0.9~0.5~0.5~0|0|exchange/tell/secondhand|They're~saying~somebody~put~Rita's~window~in.|They're~saying~{what}.|exchange/answer/neutral|You're~serious.
+ExchangeHeard|0.6~0.9~0.5~0.5~0|1|exchange/tell/secondhand|Word~is~somebody~put~Rita's~window~in.|Word~is~{what}.|exchange/answer/neutral|That~would~explain~a~few~things.
+ExchangeHeard|0.6~0.9~0.5~0.5~0|2|exchange/tell/secondhand|Somebody~told~me~somebody~put~Rita's~window~in.~Make~of~it~what~you~like.|Somebody~told~me~{what}.~Make~of~it~what~you~like.|exchange/answer/neutral|What,~and~nobody's~said~anything?
+ExchangeHeard|0.3~0.5~0.9~0.5~0|0|exchange/tell/doubtful|There's~a~story~going~round~that~somebody~put~Rita's~window~in.~Probably~nothing.|There's~a~story~going~round~that~{what}.~Probably~nothing.|exchange/answer/loyal|That's~a~hard~thing~to~say~about~a~man~who's~done~me~no~harm.
+ExchangeHeard|0.3~0.5~0.9~0.5~0|1|exchange/tell/doubtful|You~hear~all~sorts.~Somebody~put~Rita's~window~in,~apparently.|You~hear~all~sorts.~{what},~apparently.|exchange/answer/loyal|Give~it~a~month.~It'll~be~somebody~else's~turn.
+ExchangeHeard|0.3~0.5~0.9~0.5~0|2|exchange/tell/doubtful|Somebody's~saying~somebody~put~Rita's~window~in.~Somebody's~always~saying~something.|Somebody's~saying~{what}.~Somebody's~always~saying~something.|exchange/answer/loyal|I'll~not~be~the~one~carrying~that~any~further.
+ExchangeHeard|0.3~0.5~0.5~0.9~1|0|exchange/tell/doubtful|There's~a~story~going~round~that~somebody~put~Rita's~window~in.~Probably~nothing.|There's~a~story~going~round~that~{what}.~Probably~nothing.|exchange/answer/greedy|Now~that~IS~worth~hearing.
+ExchangeHeard|0.3~0.5~0.5~0.9~1|1|exchange/tell/doubtful|You~hear~all~sorts.~Somebody~put~Rita's~window~in,~apparently.|You~hear~all~sorts.~{what},~apparently.|exchange/answer/greedy|Say~that~again,~slowly.
+ExchangeHeard|0.3~0.5~0.5~0.9~1|2|exchange/tell/doubtful|Somebody's~saying~somebody~put~Rita's~window~in.~Somebody's~always~saying~something.|Somebody's~saying~{what}.~Somebody's~always~saying~something.|exchange/answer/greedy|I'd~not~give~that~away~for~nothing.
 NewsSeed|before|
 NewsSeed|at ten|row|
 NewsSeedHolder|rita|town.row_d0|1|1|0
@@ -56925,6 +56962,7 @@ Aftermath|tick to nine|rita@540
 Aftermath|tick to noon||1|I~came~by~and~saw~it~for~myself:~somebody~put~Rita's~window~in.~I~never~saw~who~did~it.|1
 Aftermath|save|{"area":"ritas","key":"rita_window_d0","said":"somebody~put~Rita's~window~in","done":150,"mended":960,"leaveOut":["joey"],"found":["rita","hal"],"next":13}|{"area":"ritas","key":"rita_window_d0","said":"somebody~put~Rita's~window~in","done":150,"mended":960,"leaveOut":["joey"],"found":["rita","hal"],"next":13}
 Aftermath|bad saves|1|1|{"area":"a","key":"k","said":"s","done":100,"mended":1000,"leaveOut":["y"],"found":["x"],"next":17}|{"area":"a","key":"k","said":"s","done":100,"mended":1000,"leaveOut":[],"found":[],"next":2}
+TownSaveWritten|text|{"version":1,"hints":{"done":[]},"asks":{"first":0,"nights":[[0,"did"]],"delivered":[0]},"police":{"entries":[{"who":"ada","topic":"player.window_d1","offence":"Damage","how":"Statement","day":1}],"visits":[],"calls":[[2,"player.window_d1"]],"taken":[["player.window_d1",3840]]},"heard":{"said":[],"heard":[],"told":{}},"news":["hal_rita_words"],"tea":{"day":2,"state":"Stayed","minutes":[1260,1261,1262,1263,1264,1265,1266,1267,1268,1269,1270,1271,1272,1273,1274,1275,1276,1277,1278,1279,1280,1281,1282,1283,1284,1285,1286,1287,1288,1289,1290,1291,1292,1293,1294,1295,1296,1297,1298,1299,1300,1301,1302,1303,1304,1305,1306,1307,1308,1309,1310,1311,1312,1313,1314,1315,1316,1317,1318,1319,1320,1321,1322,1323,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1340,1341,1342,1343,1344,1345,1346,1347,1348,1349,1350,1351,1352,1353,1354,1355,1356,1357,1358,1359,1360],"seenGoing":false},"damage":[{"area":"ritas","key":"rita_window","said":"somebody~put~Rita's~window~in","done":2850,"mended":3840,"leaveOut":[],"found":[],"next":48}],"arrests":[{"topic":"player.window_d1","offence":"Damage","taken":3480,"ownsUp":false,"coat":false}],"hours":{"next":-1},"week":{"first":0,"asked":9270,"realBook":true,"answer":"TakeOver","answered":9280},"shown":[]}
 TownSaveBack|back|2|Stayed|1|1|hal_rita_words|TakeOver|1
 TownSaveSame|same|1
 TownSaveLaterRefused|later|1
@@ -57614,3 +57652,38 @@ FixLandingNo|after|NothingToHand|none
 FixMidnight|1|0
 FixPoliceOrder|5:mark1,5:mark3,5:mark5,5:mark7,5:mark9,5:mark11,5:mark13,5:mark15,5:mark17,5:mark19,6:mark0,6:mark2,6:mark4,6:mark6,6:mark8,6:mark10,6:mark12,6:mark14,6:mark16,6:mark18
 FixCellsCall|1|null|0|player.window_d2
+FixPoliceSave|bad save 2|{"entries":[{"who":"a","topic":"w","offence":"Damage","how":"Statement","day":2}],"visits":[],"calls":[[4,"w"]],"taken":[]}
+FixPoliceSave|talk early, visit unreported, two calls a day, spell weeks on|{"entries":[{"who":"rita","topic":"w1","offence":"Damage","how":"Statement","day":1},{"who":"hal","topic":"w2","offence":"Damage","how":"Statement","day":1}],"visits":[[3,"talk"]],"calls":[[2,"w1"]],"taken":[]}
+FixPoliceSave|a spell after its call|{"entries":[{"who":"rita","topic":"w1","offence":"Damage","how":"Statement","day":1}],"visits":[],"calls":[[2,"w1"]],"taken":[["w1",3840]]}
+SweepAge|10-12|0.9856631986401876
+SweepAge|10-12-11-12|0.9856631986401876
+SweepAge|10-9-12|0.9856631986401876
+SweepConstable|null|w1|1
+SweepAsked|2|ada,bruno,danica,dario,drago,emil,fabjan,ferko,franjo,goran,hana,ines,iva,jelena,joey,katarina,lena,luka,magda,marla,marta,noor,outfit_man,petra,rita,rocco,sam,sanja,selma,stipe,tanja,tibor,tomas,vesna,zlata,zora
+SweepHeard|2|rocco:player.window_d1:Talk,lena:player.window_d1:Talk,zlata:player.window_d1:Talk,ferko:player.window_d1:Talk,sam:player.window_d1:Talk,ada:player.window_d1:Talk,noor:player.window_d1:Talk,marla:player.window_d1:Talk,joey:player.window_d1:Talk,rita:player.window_d1:Talk,tibor:player.window_d1:Talk,emil:player.window_d1:Talk,vesna:player.window_d1:Talk,magda:player.window_d1:Talk,zora:player.window_d1:Talk,iva:player.window_d1:Talk,selma:player.window_d1:Talk,tanja:player.window_d1:Talk,katarina:player.window_d1:Talk,ines:player.window_d1:Talk,marta:player.window_d1:Talk,jelena:player.window_d1:Talk,stipe:player.window_d1:Talk,fabjan:player.window_d1:Talk,goran:player.window_d1:Talk,tomas:player.window_d1:Talk,luka:player.window_d1:Talk,bruno:player.window_d1:Talk,petra:player.window_d1:Talk,dario:player.window_d1:Talk,sanja:player.window_d1:Talk,hana:player.window_d1:Talk,franjo:player.window_d1:Talk,danica:player.window_d1:Talk,drago:player.window_d1:Talk,outfit_man:player.window_d1:Talk
+SweepAsked|4|ada,bruno,danica,dario,drago,emil,fabjan,ferko,franjo,goran,hana,ines,iva,jelena,joey,katarina,lena,luka,magda,marla,marta,noor,outfit_man,petra,rita,rocco,sam,sanja,selma,stipe,tanja,tibor,tomas,vesna,zlata,zora
+SweepHeard|4|rocco:player.window_d1:Talk,lena:player.window_d1:Talk,zlata:player.window_d1:Talk,ferko:player.window_d1:Talk,sam:player.window_d1:Talk,ada:player.window_d1:Talk,noor:player.window_d1:Talk,marla:player.window_d1:Talk,joey:player.window_d1:Talk,rita:player.window_d1:Talk,tibor:player.window_d1:Talk,emil:player.window_d1:Talk,vesna:player.window_d1:Talk,magda:player.window_d1:Talk,zora:player.window_d1:Talk,iva:player.window_d1:Talk,selma:player.window_d1:Talk,tanja:player.window_d1:Talk,katarina:player.window_d1:Talk,ines:player.window_d1:Talk,marta:player.window_d1:Talk,jelena:player.window_d1:Talk,stipe:player.window_d1:Talk,fabjan:player.window_d1:Talk,goran:player.window_d1:Talk,tomas:player.window_d1:Talk,luka:player.window_d1:Talk,bruno:player.window_d1:Talk,petra:player.window_d1:Talk,dario:player.window_d1:Talk,sanja:player.window_d1:Talk,hana:player.window_d1:Talk,franjo:player.window_d1:Talk,danica:player.window_d1:Talk,drago:player.window_d1:Talk,outfit_man:player.window_d1:Talk
+SweepAsked|6|emil,outfit_man,sanja,vesna,zlata
+SweepHeard|6|zlata:player.window_d1:Talk,emil:player.window_d1:Talk,vesna:player.window_d1:Talk,sanja:player.window_d1:Talk,outfit_man:player.window_d1:Talk
+SweepWound|load|1|{"first":0,"nights":[[0,"undelivered"],[2,"undelivered"],[4,"undelivered"],[6,"refused"]],"delivered":[6],"woundDown":[6],"woundTell":[6,10020]}
+SweepWound|half a night|-1
+SweepWound|at one|-1
+SweepWound|at 00:59|6
+SweepTea|Asked|Asked|StoodUp
+SweepArrest|as saved|1
+SweepArrest|another offence|0
+SweepArrest|another day|0
+SweepArrest|raised later|1|Wounding
+SweepDamage|-50000|0
+SweepDamage|-1|0
+SweepDamage|0|1
+SweepTime|D3~14:05|1|5165|1
+SweepTime|D1~25:99|0|-|0
+SweepTime|D1~23:60|0|-|0
+SweepTime|D-3~-4:-5|0|-|0
+SweepTime|D2147483647~00:00|0|-|0
+SweepTime|D100000~00:00|0|-|0
+SweepTime|D99999~23:59|1|143999999|1
+SweepTime|D0~00:00|1|0|1
+SweepShown|written|["released@4380","ron@1","sheila_answer@6","tea@2"]
+SweepShown|damaged|landing@3,ron@1,sheila_answer@6

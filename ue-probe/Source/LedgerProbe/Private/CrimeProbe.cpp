@@ -4512,8 +4512,6 @@ namespace
 		GHeldUntil = C->OutAt();
 	}
 
-	// The grading the police give a story they hear of in the street's talk.
-	Offence GradeOf(const std::string& Topic) { return Topic == GWindowTopic ? Offence::Damage : Offence::Suspicious; }
 
 	// Who holds the deed first-hand, with the rung they saw him at.
 	std::vector<std::pair<GossiperPtr, int> > DeedWitnesses()
@@ -4564,7 +4562,7 @@ namespace
 			LedgerSession::Write(TEXT("police"), TEXT("\"who\":") + LedgerSession::Str(Un(Who)) + TEXT(",\"story\":") + LedgerSession::Str(Un(GWeek.DeedTopic)));
 			UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %s goes to the police about %s on day %d"), *Un(Who), *Un(GWeek.DeedTopic), H.Day);
 		}
-		const std::string Why = GWeek.NineEllis(GMill.get(), H, [](const std::string& T) { return GradeOf(T); });
+		const std::string Why = GWeek.NineEllis(GMill.get(), H, &GCast);
 		if (!Why.empty())
 		{
 			Say(TEXT("DS Ellis is on Quay Street this morning, asking after you."), 8.0f, FColor::Yellow);
@@ -5067,7 +5065,6 @@ namespace
 				return std::string(B);
 			}()
 			+ "\nclock=" + GClock.ToText()
-			+ [] { std::string S; for (const std::string& K : GWaitShown) { S += "\nwaitShown=" + K; } return S; }()
 			+ "\ncommit=" + Utf8(CrimeSha()) + "\n";
 		// THE TALK SAVED BESIDE IT, under the same stamp (handover 6r).
 		if (GLive.bStarted && GLive.bReady)
@@ -5098,6 +5095,7 @@ namespace
 			T.Arrests = GWeek.Arrests;
 			T.Hours = GWeek.Hours;
 			T.Week = GWeek.Week;
+			T.WaitShown = GWaitShown;
 			Ok = FFileHelper::SaveStringToFile(Un(T.ToJson()), *(Dir / TEXT("town.json")),
 				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		}
@@ -5118,6 +5116,7 @@ namespace
 		GSaveDirUsed = Dir;
 		bLoadPlace = false;
 		bSheilaTrusts = false;
+		GWaitShown.clear();   // from the town's save (and an older save's clock file)
 		FString J;
 		bool Ok = FFileHelper::LoadFileToString(J, *(Dir / TEXT("agents.json")));
 		if (Ok && GMill) { Save::RestoreMillAgents(Utf8(J), *GMill); GLoadedBytes = J.Len(); }
@@ -5160,6 +5159,7 @@ namespace
 				GWeek.Arrests = T.Arrests;
 				GWeek.Hours = T.Hours;
 				GWeek.Week = T.Week;
+				GWaitShown.insert(T.WaitShown.begin(), T.WaitShown.end());
 			}
 		}
 		FString ClockText;
@@ -5192,7 +5192,7 @@ namespace
 				else if (Kv.StartsWith(TEXT("saw_"))) { GSawHimAt[Utf8(Kv.Mid(4))] = Utf8(V); }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
 				else if (Kv == TEXT("clock")) { bClockRead = GClock.FromText(Utf8(V)); }
-				else if (Kv == TEXT("waitShown")) { GWaitShown.insert(Utf8(V)); }
+				else if (Kv == TEXT("waitShown") && TownSave::IsStopKey(Utf8(V))) { GWaitShown.insert(Utf8(V)); }   // an older save's, checked as the town's save checks them
 			}
 		}
 		else { Ok = false; }
@@ -5631,6 +5631,7 @@ namespace
 				GWeek = TownWeek();
 				bSheilaTrusts = false;
 				GTeaMinuteDone = -1;
+				GWaitShown.clear();
 				GLightNight = -1;
 			}
 			GWatchSlot = 0;

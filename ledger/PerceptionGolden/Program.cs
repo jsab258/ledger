@@ -149,6 +149,9 @@ namespace Ledger.PerceptionGolden
             EmitThreats(sb);
             // Ported to Arrangement.h, FirstWeek.h, Gossip.h, PlayerIdentity.h, PoliceFile.h, StreetVoice.h and WeeksEnd.h on 30 September (the town's ten fixes).
             EmitPortReviewFixes(sb);
+            // Ported to Arrangement.h, FirstWeek.h, GameTime.h, Gossip.h, PoliceFile.h, StreetVoice.h, TownNews.h,
+            // TownSave.h and Waiting.h on 30 September (the last four of the fourteen and the time-and-state sweep's ten).
+            EmitSweepFixes(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -158,7 +161,6 @@ namespace Ledger.PerceptionGolden
             // the table; the handover in NOW.md says so.
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
-                EmitSweepFixes(sb);
             }
 
             var text = sb.ToString();
@@ -171,8 +173,7 @@ namespace Ledger.PerceptionGolden
                 // And the time-and-state sweep's (30 September): a night Ron brought
                 // before it was wound down stays brought on a load; a memory's time
                 // only as the game writes one; the town's save keeps the wait's lines.
-                var held = new[] { "WordingOf|", "ExchangeHeard|", "RemarkCase|wording-kept|",
-                                   "AskBadSave|5|", "Scenario|save_reload|junk", "TownSaveWritten|" };
+                var held = new string[0];   // emptied 30 September: the port follows the sweep
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {

@@ -301,6 +301,10 @@ namespace LedgerCore
 					if (Ans == NightAnswer::NoShow && !Delivered.count(Day) && !bBefore6bn) break;
 					if (Ans == NightAnswer::Refused && Wound.count(Day) && Day >= First + WeeksEndAfter)
 					{
+						// Delivered only if Ron had brought it before she closed the
+						// book (the time-and-state sweep: brought at eight, wound down
+						// at half past, a load forgot it had been).
+						if (Delivered.count(Day)) A.Delivered_.insert(Day);
 						A.WoundDown_.insert(Day);
 						A.Record(Day, NightAnswer::Refused, nullptr, nullptr);
 						continue;
@@ -314,10 +318,15 @@ namespace LedgerCore
 			if (Wt != nullptr && Wt->Type == LedgerVignette::T_ARR && Wt->Arr.size() == 2 && Wt->Arr[0].Type == LedgerVignette::T_NUM
 			    && Wt->Arr[1].Type == LedgerVignette::T_NUM && std::fabs(Wt->Arr[0].Num) < 2147483647.0)
 			{
-				const int Tn = (int)Wt->Arr[0].Num;
+				const double TnD = Wt->Arr[0].Num;
+				const int Tn = (int)TnD;
 				const double Tm = Wt->Arr[1].Num;
-				if (A.WoundDown_.count(Tn) && Tm == std::floor(Tm)
-				    && Tm >= (Tn - Every) * 24.0 * 60 && Tm <= (Tn + 1) * 24.0 * 60 + GaveUpHour * 60)
+				// A whole night, and no later than play can make it: before one
+				// (the time-and-state sweep: 6.5 was read as night 6, and one
+				// o'clock itself was kept).
+				if (TnD == std::floor(TnD) && TnD >= 0 && TnD < 100000
+				    && A.WoundDown_.count(Tn) && Tm == std::floor(Tm)
+				    && Tm >= (Tn - Every) * 24.0 * 60 && Tm < (Tn + 1) * 24.0 * 60 + GaveUpHour * 60)
 				{
 					A.WoundTellNight = Tn;
 					A.WoundTellAt = GameTime::FromTotalMinutes((long long)Tm);
