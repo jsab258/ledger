@@ -83,6 +83,49 @@ JB = {k: to_bl(v) for k, v in joint.items()}
 
 arm, body = tailor.load_body(BODY, lod=1)
 BVH = tailor.bvh_of(body)
+# THE STAND-IN BODY (30 September, the suit jacket's first blind review: "the body's shape shows through the jacket,
+# which behaves like a skin rather than a canvassed jacket": Darren's spine groove, ribs and back muscles, Ron's back
+# rolls, the cleft of the seat; production/research/clothing-pipeline/CARRY-AND-SEAMS-2026-09-30.md: fit to "a proxy
+# that fills the body's hollows, not the skin"). A copy of his body whose hollows are filled: round after round each
+# point moves towards the mean of its neighbours, but only when that moves it outward (--proxy-rounds), so grooves,
+# folds and the dips between muscles fill and the body's outline stays; the head, hands and feet are left as they
+# are. The garment is drawn onto this and kept off it; it is never nearer his real body than the stand-in is.
+if opt("--proxy-rounds", 80, int) > 0:
+    import bmesh as _bm
+    pb_ = _bm.new()
+    pb_.from_mesh(body.data)
+    pb_.transform(body.matrix_world)
+    pb_.verts.ensure_lookup_table()
+    Vp = np.array([tuple(v.co) for v in pb_.verts])
+    ed_ = np.array([(e.verts[0].index, e.verts[1].index) for e in pb_.edges])
+    dg_ = np.bincount(ed_.ravel(), minlength=len(Vp)).astype(float)
+    Jw = lambda n: np.array(tuple(arm.matrix_world @ arm.pose.bones[n].head))  # noqa: E731
+    keep_ = np.zeros(len(Vp), bool)
+    for jn, rr in (("head", 0.14), ("neck_02", 0.06), ("hand_l", 0.11), ("hand_r", 0.11), ("foot_l", 0.14), ("foot_r", 0.14)):
+        keep_ |= np.linalg.norm(Vp - Jw(jn), axis=1) < rr
+    free_ = ~keep_
+    for rnd_ in range(opt("--proxy-rounds", 80, int)):
+        if rnd_ % 10 == 0:
+            for i_, v in enumerate(pb_.verts):
+                v.co = Vector(tuple(Vp[i_]))
+            pb_.normal_update()
+            Nn = np.array([tuple(v.normal) for v in pb_.verts])
+        acc_ = np.zeros_like(Vp)
+        np.add.at(acc_, ed_[:, 0], Vp[ed_[:, 1]])
+        np.add.at(acc_, ed_[:, 1], Vp[ed_[:, 0]])
+        d_ = acc_ / np.maximum(dg_, 1)[:, None] - Vp
+        out_ = (d_ * Nn).sum(axis=1)
+        mv = free_ & (out_ > 0)
+        Vp[mv] += 0.5 * d_[mv]
+    for i_, v in enumerate(pb_.verts):
+        v.co = Vector(tuple(Vp[i_]))
+    pb_.normal_update()
+    moved_p = np.linalg.norm(Vp - np.array([tuple(body.matrix_world @ v.co) for v in body.data.vertices]), axis=1)
+    from mathutils.bvhtree import BVHTree as _BVH
+    BVH = _BVH.FromBMesh(pb_)
+    log["proxy"] = {"rounds": opt("--proxy-rounds", 80, int), "meanFillMm": round(float(moved_p.mean()) * 1000, 1),
+                    "mostFillMm": round(float(moved_p.max()) * 1000, 1)}
+    say("stand-in body", json.dumps(log["proxy"]))
 J = lambda n: np.array(tuple(arm.matrix_world @ arm.pose.bones[n].head))
 # which of the base body's sides is the MetaHuman's left (+x)
 flip = JB["l-shoulder"][0] < 0
@@ -236,6 +279,33 @@ for k, (a_, b_, f_) in scales.items():
     S[k] = abs(V_fit[a_][ax[k]] - V_fit[b_][ax[k]]) / f_ if f_ else 1.0
 G = np.array([sum(w * V_fit[i] for i, w in zip(ix, ws)) + np.array([d[0] * S.get("x", 1), d[1] * S.get("y", 1), d[2] * S.get("z", 1)])
               for ix, ws, d in refs])
+# CARRIED BY THE BASE BODY'S OWN CHANGE (30 September, the suit jacket's first review: lapels crumpled with ragged
+# edges, the shirt showing through beside them, the sleeves' layers crossing): a .mhclo's offsets lie along fixed
+# directions, so wherever the fitted body faces another way than hm08 (the chest's slope under the lapels, the arms
+# turned), the garment's stacked layers cross. Instead each garment point, as it sits on the untouched base body,
+# moves by the base body's change round it: the moves of the body points near it, weighted by a Gaussian of their
+# distance (--field-sigma, decimetres), so neighbouring layers move together (the donkey jacket's carry to Darren,
+# carry_garment.py). --mhclo-offsets returns to the .mhclo's own way.
+if "--mhclo-offsets" not in argv:
+    from mathutils.kdtree import KDTree as _KDf
+    G0 = np.array([sum(w * V_mh[i] for i, w in zip(ix, ws)) + np.array(d) for ix, ws, d in refs])
+    ids_f = np.array(body_ids)
+    kdf = _KDf(len(ids_f))
+    for j_, i_ in enumerate(ids_f):
+        kdf.insert(Vector(tuple(V_mh[i_])), j_)
+    kdf.balance()
+    dV = V_fit[ids_f] - V_mh[ids_f]
+    SIGF = opt("--field-sigma", 0.25)
+    G = np.empty_like(G0)
+    for k_, g0 in enumerate(G0):
+        near = kdf.find_range(Vector(tuple(g0)), 3.0 * SIGF)
+        if len(near) < 6:
+            near = kdf.find_n(Vector(tuple(g0)), 24)
+        jj = np.array([n_[1] for n_ in near])
+        dd = np.array([n_[2] for n_ in near])
+        ww = np.exp(-(dd / SIGF) ** 2 / 2.0) + 1e-12
+        G[k_] = g0 + (ww[:, None] * dV[jj]).sum(0) / ww.sum()
+    log["carry"] = {"field": True, "sigmaDm": SIGF}
 before = set(bpy.data.objects)
 bpy.ops.wm.obj_import(filepath=obj_file, forward_axis="NEGATIVE_Z", up_axis="Y")
 g = next(o for o in bpy.data.objects if o not in before and o.type == "MESH")

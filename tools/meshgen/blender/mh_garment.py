@@ -114,6 +114,8 @@ for k, fs in pieces.items():
         kind[k] = "button"
     elif abs(c.x) < 0.03 and hi - lo > 0.12 and c.y < 0 and xwidth(fs) < 0.06:
         kind[k] = "tie"
+    elif abs(c.x) > min(abs(J("upperarm_l").x), abs(J("upperarm_r").x)) and "--keep-cuffs" not in argv:
+        dropped.append(k)                     # a shirt's cuff: the sleeve hides it, and it came through as shards
     else:
         kind[k] = "shirt"
 log["pieces"] = {kd: sum(len(pieces[k]) for k in kind if kind[k] == kd) for kd in set(kind.values())}
@@ -133,12 +135,190 @@ KINDS = ["cloth", "shirt", "tie", "button"]
 for i, kd in enumerate(kinds_left):
     pk.data[i].value = KINDS.index(kd)
 
+# ---- the breast pocket's handkerchief pressed flat: the cloth's faces the maker's texture paints white (a pocket
+# square), on the chest, are laid onto the jacket's surface round them, so a plain welt pocket is left
+if "--remove-pocket-square" in argv:
+    _img = None
+    _mhm = next((os.path.join(GDIR, f) for f in os.listdir(GDIR) if f.endswith(".mhmat")), None)
+    for line in open(_mhm, encoding="utf-8", errors="ignore"):
+        w_ = line.split()
+        if len(w_) >= 2 and w_[0] == "diffuseTexture":
+            _img = bpy.data.images.load(os.path.join(GDIR, w_[1]))
+    Wd, Hd = _img.size
+    Dd = np.array(_img.pixels[:]).reshape(Hd, Wd, 4)[:, :, :3]
+    uvd0 = me.uv_layers["UVMap"].data
+    chest_lo = hip_z + 0.2
+    sq = []
+    for p_ in me.polygons:
+        if pk.data[p_.index].value != 0:
+            continue
+        u_ = np.mean([uvd0[li].uv[0] for li in p_.loop_indices])
+        v_ = np.mean([uvd0[li].uv[1] for li in p_.loop_indices])
+        if Dd[min(Hd - 1, int(v_ * Hd)), min(Wd - 1, int(u_ * Wd))].mean() > 0.35 and (mw @ p_.center).z > chest_lo:
+            sq.append(p_.index)
+    # the welt it sat in goes too (the fit crumpled the welt's end on the curved chest, and the review saw it torn):
+    # any small piece of the maker's texture layout (under --welt-faces faces) touching the square
+    if "--keep-welt" not in argv and sq:
+        bw = bmesh.new()
+        bw.from_mesh(me)
+        uvw = bw.loops.layers.uv["UVMap"]
+        bw.faces.ensure_lookup_table()
+        islw = {}
+        kw = 0
+        for f in bw.faces:
+            if f.index in islw:
+                continue
+            islw[f.index] = kw
+            st_ = [f]
+            while st_:
+                x_ = st_.pop()
+                for lp in x_.loops:
+                    va, ua, ub = lp.vert, lp[uvw].uv, lp.link_loop_next[uvw].uv
+                    for l2 in lp.edge.link_loops:
+                        y_ = l2.face
+                        if y_ is x_ or y_.index in islw:
+                            continue
+                        wa_, wb_ = (l2[uvw].uv, l2.link_loop_next[uvw].uv) if l2.vert is va else (l2.link_loop_next[uvw].uv, l2[uvw].uv)
+                        if (ua - wa_).length < 1e-5 and (ub - wb_).length < 1e-5:
+                            islw[y_.index] = kw
+                            st_.append(y_)
+            kw += 1
+        sqset0 = set(sq)
+        sqv0 = {v.index for i in sq for v in bw.faces[i].verts}
+        size_ = {}
+        for f in bw.faces:
+            size_[islw[f.index]] = size_.get(islw[f.index], 0) + 1
+        sq_c = sum((mw @ bw.faces[i].calc_center_median() for i in sq), Vector()) / len(sq)
+        isl_c = {}
+        for f in bw.faces:
+            isl_c.setdefault(islw[f.index], []).append(mw @ f.calc_center_median())
+        touch = {k_ for k_, cs in isl_c.items() if (sum(cs, Vector()) / len(cs) - sq_c).length < opt("--welt-reach", 0.04)
+                 and not (set(i for i in range(len(bw.faces)) if islw[i] == k_) & sqset0)}
+        welt = [f.index for f in bw.faces if islw[f.index] in touch and size_[islw[f.index]] < opt("--welt-faces", 150, int)]
+        bw.free()
+        log["weltFaces"] = len(welt)
+        sq += welt
+    sqv = sorted({vi for i in sq for vi in me.polygons[i].vertices})
+    if sq:
+        # taken out, and the slit it leaves closed (laid flat onto the chest it crumpled)
+        bq = bmesh.new()
+        bq.from_mesh(me)
+        bq.faces.ensure_lookup_table()
+        sqs = set(sq)
+        bmesh.ops.delete(bq, geom=[bq.faces[i] for i in sq], context="FACES")
+        bmesh.ops.delete(bq, geom=[v for v in bq.verts if not v.link_faces], context="VERTS")
+        loops_ = []
+        adj_ = {}
+        for e in bq.edges:
+            if e.is_boundary:
+                a_, b_ = e.verts
+                adj_.setdefault(a_, []).append(e)
+                adj_.setdefault(b_, []).append(e)
+        seen_ = set()
+        small = []
+        for e0 in [e for e in bq.edges if e.is_boundary]:
+            if e0 in seen_:
+                continue
+            st_, comp_e = [e0], []
+            while st_:
+                e = st_.pop()
+                if e in seen_:
+                    continue
+                seen_.add(e)
+                comp_e.append(e)
+                for v in e.verts:
+                    st_ += [x for x in adj_[v] if x not in seen_]
+            if len(comp_e) <= opt("--pocket-hole", 80, int):
+                c_ = sum(((mw @ v.co) for e in comp_e for v in e.verts), Vector()) / (2 * len(comp_e))
+                if c_.z > chest_lo:
+                    small += comp_e
+        if small:
+            bmesh.ops.holes_fill(bq, edges=small, sides=0)
+        bq.to_mesh(me)
+        bq.free()
+        me.update()
+        # the "piece" attribute follows the faces kept (the new faces are cloth)
+        pk = me.attributes["piece"]
+    log["pocketSquare"] = {"faces": len(sq)}
+    say("pocket square taken out", len(sq), "faces")
+# ---- the breast pocket pressed flatter (the first review: "a thick, puffy, lifted flap ... a pouch stuck onto the
+# chest"; taking its handkerchief out left the lapel's layers in shards, so nothing is taken out): the points of the
+# jacket within --pocket-r of the pocket's middle, standing more than 3 mm proud of the chest round it, are brought
+# down to 3 mm plus a third of their height (the pocket stays, low)
+if "--press-pocket" in argv:
+    from mathutils.bvhtree import BVHTree as _BVp
+    _mhm2 = next((os.path.join(GDIR, f) for f in os.listdir(GDIR) if f.endswith(".mhmat")), None)
+    for line in open(_mhm2, encoding="utf-8", errors="ignore"):
+        w_ = line.split()
+        if len(w_) >= 2 and w_[0] == "diffuseTexture":
+            _img2 = bpy.data.images.load(os.path.join(GDIR, w_[1]))
+    Wd2, Hd2 = _img2.size
+    Dd2 = np.array(_img2.pixels[:]).reshape(Hd2, Wd2, 4)[:, :, :3]
+    uvp = me.uv_layers["UVMap"].data
+    white = []
+    for p_ in me.polygons:
+        if pk.data[p_.index].value != 0:
+            continue
+        u_ = np.mean([uvp[li].uv[0] for li in p_.loop_indices])
+        v_ = np.mean([uvp[li].uv[1] for li in p_.loop_indices])
+        cz = (mw @ p_.center).z
+        if Dd2[min(Hd2 - 1, int(v_ * Hd2)), min(Wd2 - 1, int(u_ * Wd2))].mean() > 0.35 and cz > hip_z + 0.2:
+            white.append(mw @ p_.center)
+    if white:
+        pc_ = sum(white, Vector()) / len(white)
+        PR = opt("--pocket-r", 0.075)
+        GPp = [mw @ v.co for v in me.vertices]
+        ring_ = [i for i, q in enumerate(GPp) if PR < (q - pc_).length < PR + 0.04 and pk.data is not None]
+        near_ = [i for i, q in enumerate(GPp) if (q - pc_).length < PR]
+        # the chest round it: a plane through the ring's points (least squares), its normal outward
+        R_ = np.array([tuple(GPp[i]) for i in ring_])
+        cen = R_.mean(axis=0)
+        _u, _s, vt = np.linalg.svd(R_ - cen)
+        nrm = vt[2] if vt[2][1] < 0 else -vt[2]         # outward is towards -y (the front)
+        inv_p = mw.inverted()
+        pressed = 0
+        for i in near_:
+            q = np.array(tuple(GPp[i]))
+            h_ = (q - cen) @ nrm
+            if h_ > 0.003:
+                w_ = 1.0 - max(0.0, ((GPp[i] - pc_).length - PR * 0.6) / (PR * 0.4))
+                new_h = 0.003 + (h_ - 0.003) / 3.0
+                q2 = q - nrm * (h_ - new_h) * max(0.0, min(1.0, w_))
+                me.vertices[i].co = inv_p @ Vector(tuple(q2))
+                pressed += 1
+        me.update()
+        log["pocketPressed"] = pressed
+        say("breast pocket pressed", pressed, "points")
+# ---- the shirt front and tie lowered under the jacket (the first review: white flecks of shirt beside the lapel's
+# edge): every point of them moves --inner-sink towards his body, never nearer it than 2 mm
+if opt("--inner-sink", 0.0) > 0:
+    from mathutils.bvhtree import BVHTree as _BV3
+    body3 = next(o for o in bpy.data.objects if o.type == "MESH" and "Body" in o.name)
+    b3 = bmesh.new()
+    b3.from_mesh(body3.data)
+    b3.transform(body3.matrix_world)
+    b3.normal_update()
+    T3 = _BV3.FromBMesh(b3)
+    b3.free()
+    inner = {vi for p_ in me.polygons if pk.data[p_.index].value in (1, 2) for vi in p_.vertices}
+    inv3 = mw.inverted()
+    for vi in inner:
+        w3 = mw @ me.vertices[vi].co
+        h3, n3, _i, _d = T3.find_nearest(w3)
+        if h3 is None:
+            continue
+        off3 = (w3 - h3).dot(n3)
+        new_off = max(0.002, off3 - opt("--inner-sink", 0.003))
+        me.vertices[vi].co = inv3 @ (w3 - n3 * (off3 - new_off))
+    me.update()
+    log["innerSunk"] = len(inner)
 # ---- the cloth bridges the body's hollows (30 September: on Ron, arms raised, his belly's folds showed through the
 # suit jacket; three reviewers had failed the donkey jacket for the body showing through stiff wool). Round an
 # upright axis, the trunk's outer radius on a grid of heights and angles is filled from above: each cell takes the
 # larger of itself and the smoothed grid, round after round, so dents (the folds under a belly, the groove of the
 # spine, the hollows beside the chest) fill and bulges stay; each point then moves out by its cell's fill. Points
-# near the arm (the sleeves, the armholes) are left, easing in over 6 cm beyond --arm-r.
+# near the arm (the sleeves, the armholes) are left, easing in over --arm-blend beyond --arm-r (at 11 cm and 6 cm
+# the trunk moved while the sleeve beside it did not, and the seam at the back of the armpit opened).
 if "--no-stiff" not in argv:
     body_s = next(o for o in bpy.data.objects if o.type == "MESH" and "Body" in o.name)
     GP0 = np.array([tuple(mw @ v.co) for v in me.vertices])
@@ -153,9 +333,18 @@ if "--no-stiff" not in argv:
                 best = np.minimum(best, np.linalg.norm(P_ - (a_ + t_[:, None] * ab), axis=1))
         return best
 
-    ARM_R = opt("--arm-r", 0.11)
-    wa = np.clip((arm_dist(GP0) - ARM_R) / 0.06, 0, 1)
+    ARM_R = opt("--arm-r", 0.15)
+    wa = np.clip((arm_dist(GP0) - ARM_R) / opt("--arm-blend", 0.08), 0, 1)
     wa = wa * wa * (3 - 2 * wa)
+    # nor the front's opening above the top button (the lapels, the shirt and tie: layers a few millimetres apart,
+    # which the stiffening parted, and the shirt showed through in flecks), easing in over 5 cm round it
+    btn_z = max(((mw @ p_.center).z for p_ in me.polygons if pk.data[p_.index].value == 3 and abs((mw @ p_.center).x) < 0.06),
+                default=hip_z + 0.3)
+    vx = np.clip((np.abs(GP0[:, 0]) - opt("--v-half", 0.11)) / 0.05, 0, 1)
+    vz = np.clip((btn_z - GP0[:, 2]) / 0.05, 0, 1)
+    front_ = GP0[:, 1] < 0
+    wv = np.where(front_, np.maximum(vx, vz), 1.0)
+    wa = wa * (wv * wv * (3 - 2 * wv))
     is_cloth_s = np.zeros(len(GP0), bool)
     for p_ in me.polygons:
         if pk.data[p_.index].value == 0:
@@ -223,21 +412,13 @@ if "--no-stiff" not in argv:
         b0c, b1c = b0 % NBs, (b0 + 1) % NBs
         return ((1 - tk) * ((1 - tb) * fill[k0c, b0c] + tb * fill[k0c, b1c]) + tk * ((1 - tb) * fill[k1c, b0c] + tb * fill[k1c, b1c]))
 
-    for i in np.where(is_cloth_s & (fk_ > -0.5) & (fk_ < Ks - 0.5))[0]:
+    # every layer at a place (the jacket, the half beneath it, the shirt and tie) moves out by the same amount there,
+    # so their order is kept (moved with the nearest jacket point, the shirt crossed the jacket's inner front)
+    for i in np.where((fk_ > -0.5) & (fk_ < Ks - 0.5))[0]:
         d_ = fill_at(i) * wa[i]
         new_s[i, 0] += d_ * math.cos(angs[i])
         new_s[i, 1] += d_ * math.sin(angs[i])
         most_s = max(most_s, d_)
-    # the pieces on it (a shirt front, a tie, buttons, flaps) move with the cloth nearest them
-    from mathutils.kdtree import KDTree as _KD2
-    cl_ = np.where(is_cloth_s)[0]
-    kd2_ = _KD2(len(cl_))
-    for j_, i in enumerate(cl_):
-        kd2_.insert(Vector(tuple(GP0[i])), j_)
-    kd2_.balance()
-    for i in np.where(~is_cloth_s)[0]:
-        j_ = cl_[kd2_.find(Vector(tuple(GP0[i])))[1]]
-        new_s[i] = GP0[i] + (new_s[j_] - GP0[j_])
     inv_ = mw.inverted()
     for i, v in enumerate(me.vertices):
         v.co = inv_ @ Vector(tuple(new_s[i]))
@@ -346,18 +527,87 @@ if "--no-straight" not in argv:
         if np.isnan(lowest[b_]) or z_ < lowest[b_]:
             lowest[b_] = z_
     hem_level = float(np.nanmedian(lowest))
-    raised = 0
     floor_ = hem_level - opt("--hem-drop", 0.006)
+    need_ = np.maximum(0.0, floor_ - GP2[:, 2]) * 0.85
+    need_[~is_cloth_v] = 0.0
+    lift_ = need_.copy()
+    ed2 = np.array([e.vertices[:] for e in me.edges])
+    dg2 = np.bincount(ed2.ravel(), minlength=len(GP2)).astype(float)
+    for _ in range(opt("--hem-smooth", 25, int)):
+        acc2 = np.zeros(len(GP2))
+        np.add.at(acc2, ed2[:, 0], lift_[ed2[:, 1]])
+        np.add.at(acc2, ed2[:, 1], lift_[ed2[:, 0]])
+        lift_ = np.maximum(need_, 0.5 * lift_ + 0.5 * acc2 / np.maximum(dg2, 1))
+    raised = int((lift_ > 1e-4).sum())
+    inv2 = mw.inverted()
     for i, v in enumerate(me.vertices):
-        if GP2[i, 2] < floor_:
+        if lift_[i] > 1e-5:
             q_ = GP2[i].copy()
-            q_[2] = floor_ - (floor_ - GP2[i, 2]) * 0.15
-            v.co = mw.inverted() @ Vector(tuple(q_))
-            raised += 1
+            q_[2] += lift_[i]
+            v.co = inv2 @ Vector(tuple(q_))
     me.update()
     log["hemLevel"] = {"z": round(hem_level, 3), "raised": raised}
     log["straightSkirt"] = {"top": round(float(top), 3), "moved": int(moved_), "mostMm": round(most_ * 1000, 1)}
     say("skirt straightened", moved_, "points, most", round(most_ * 1000, 1), "mm")
+# ---- the layers that never show taken out (30 September: on Darren the jacket's inner front, the half that buttons
+# underneath, came through the shirt in the opening as dark shards, and the shirt showed in white flecks beside the
+# lapels; games remove what an outer layer always hides, as fit_under.py does under the donkey jacket). Along the
+# line out from his body at each face's middle: a jacket face lying under the shirt there goes, and a shirt or tie
+# face lying outside the jacket there goes. Above the hips only; the neck and cuffs are left.
+if "--no-cull" not in argv:
+    from mathutils.bvhtree import BVHTree as _BV4
+    body4 = next(o for o in bpy.data.objects if o.type == "MESH" and "Body" in o.name)
+    b4 = bmesh.new()
+    b4.from_mesh(body4.data)
+    b4.transform(body4.matrix_world)
+    b4.normal_update()
+    TB = _BV4.FromBMesh(b4)
+    b4.free()
+    Vw4 = [mw @ v.co for v in me.vertices]
+    kind_of_face = [pk.data[p_.index].value for p_ in me.polygons]
+    cloth_faces = [p_ for p_ in me.polygons if kind_of_face[p_.index] == 0]
+    inner_faces = [p_ for p_ in me.polygons if kind_of_face[p_.index] in (1, 2)]
+    TC = _BV4.FromPolygons(Vw4, [list(p_.vertices) for p_ in cloth_faces])
+    TI = _BV4.FromPolygons(Vw4, [list(p_.vertices) for p_ in inner_faces]) if inner_faces else None
+    neck4 = J("neck_01").z - 0.01
+    GAPC = opt("--cull-gap", 0.001)
+    gone4 = []
+    for p_ in me.polygons:
+        k4 = kind_of_face[p_.index]
+        if k4 == 3:
+            continue
+        c4 = mw @ p_.center
+        if c4.z < hip_z + 0.1 or c4.z > neck4:
+            continue
+        h4, n4, _i, _d = TB.find_nearest(c4)
+        if h4 is None:
+            continue
+        d_self = (c4 - h4).dot(n4)
+        if d_self <= 0:
+            continue
+        other = TI if k4 == 0 else TC
+        if other is None:
+            continue
+        hit = other.ray_cast(h4 + n4 * 0.0005, n4, 0.12)
+        if hit[0] is None:
+            continue
+        d_other = (hit[0] - h4).dot(n4)
+        if k4 == 0 and d_other > d_self + GAPC:
+            gone4.append(p_.index)          # the jacket under the shirt: never seen
+        elif k4 in (1, 2) and d_other < d_self - GAPC:
+            gone4.append(p_.index)          # the shirt outside the jacket: it would show through
+    if gone4:
+        b5 = bmesh.new()
+        b5.from_mesh(me)
+        b5.faces.ensure_lookup_table()
+        bmesh.ops.delete(b5, geom=[b5.faces[i] for i in gone4], context="FACES")
+        bmesh.ops.delete(b5, geom=[v for v in b5.verts if not v.link_faces], context="VERTS")
+        b5.to_mesh(me)
+        b5.free()
+        me.update()
+        pk = me.attributes["piece"]
+    log["culled"] = len(gone4)
+    say("hidden layers taken out", len(gone4), "faces")
 # ---- the colours ---------------------------------------------------------------------------------------------------
 mhmat = next((os.path.join(GDIR, f) for f in os.listdir(GDIR) if f.endswith(".mhmat")), None)
 tex = {}
@@ -420,7 +670,7 @@ for i, kd in enumerate(KINDS):
         continue
     L = lum.copy()
     if kd == "cloth":
-        Lb = blur(np.where(m_, L, np.nan_to_num(L[m_].mean())), opt("--plain", 3.0))
+        Lb = blur(np.where(m_, L, np.nan_to_num(L[m_].mean())), opt("--plain", 8.0))
         L = Lb
     shade = L / max(1e-6, float(L[m_].mean()))
     shade = np.clip(1 + (shade - 1) * opt("--shade", 0.6), 0.5, 1.5)
@@ -436,7 +686,21 @@ img_c.file_format = "PNG"
 img_c.save()
 nrm_src = tex.get("normalmapTexture")
 if nrm_src:
-    shutil.copy(nrm_src, os.path.join(OUT, NAME + "_normal.png"))
+    _ni = bpy.data.images.load(nrm_src)
+    _ni.colorspace_settings.name = "Non-Color"
+    Wn, Hn = _ni.size
+    Nm = np.array(_ni.pixels[:]).reshape(Hn, Wn, 4)
+    for c_ in (0, 1):
+        Nm[:, :, c_] = 0.5 + (blur(Nm[:, :, c_], opt("--normal-soft", 2.5)) - 0.5) * opt("--normal-strength", 0.8)
+    v3n = Nm[:, :, :3] * 2 - 1
+    v3n[:, :, 2] = np.sqrt(np.clip(1 - v3n[:, :, 0] ** 2 - v3n[:, :, 1] ** 2, 0, 1))
+    Nm[:, :, :3] = (v3n + 1) / 2
+    img_nn = bpy.data.images.new(NAME + "_normal", Wn, Hn, alpha=False)
+    img_nn.colorspace_settings.name = "Non-Color"
+    img_nn.pixels[:] = Nm.ravel()
+    img_nn.filepath_raw = os.path.join(OUT, NAME + "_normal.png")
+    img_nn.file_format = "PNG"
+    img_nn.save()
 log["textures"] = {"basecolor": NAME + "_basecolor.png", "normal": NAME + "_normal.png" if nrm_src else None,
                    "normalFrom": os.path.basename(nrm_src) if nrm_src else None}
 mat = bpy.data.materials.new("M_" + NAME)

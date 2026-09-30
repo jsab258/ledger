@@ -30,6 +30,29 @@ for o in bpy.data.objects:
     if o.type == "MESH":
         o.hide_render = not (o is g or "Body" in o.name) or o.name in hide
 body = next((o for o in bpy.data.objects if o.type == "MESH" and "Body" in o.name and not o.hide_render), None)
+# --hide-covered M: the body's faces the garment always covers (within M metres of it) hidden, as the game hides them
+# (MetaHuman's hidden-face map); what shows then is what a player sees
+if body is not None and "--hide-covered" in argv:
+    import bmesh
+    from mathutils.bvhtree import BVHTree
+    GT = BVHTree.FromObject(g, bpy.context.evaluated_depsgraph_get())
+    arm_ = next(o for o in bpy.data.objects if o.type == "ARMATURE")
+    Jh = lambda n: arm_.matrix_world @ arm_.pose.bones[n].head  # noqa: E731
+    neck_z = Jh("neck_01").z - 0.02
+    hem_z = min((g.matrix_world @ v.co).z for v in g.data.vertices) + 0.04     # below the hem nothing is covered
+    hands_ = [Jh("hand_l"), Jh("hand_r")]
+    near_ = []
+    for v in body.data.vertices:
+        w_ = body.matrix_world @ v.co
+        if w_.z > neck_z or w_.z < hem_z or min((w_ - h_).length for h_ in hands_) < 0.12:
+            continue                          # the neck and hands always show
+        d_ = GT.find_nearest(w_)[3]
+        if d_ is not None and d_ < opt("--hide-covered", 0.025):
+            near_.append(v.index)
+    vg_ = body.vertex_groups.new(name="_shown")
+    vg_.add([i for i in range(len(body.data.vertices)) if i not in set(near_)], 1.0, "REPLACE")
+    mk = body.modifiers.new("Covered", "MASK")
+    mk.vertex_group = "_shown"
 if body is not None:
     body.data.materials.clear()
     body.data.materials.append(tailor.material("M_Skin", tuple(float(c) for c in opt("--body-rgb", "0.55,0.42,0.36", str).split(",")), 0.6))
