@@ -402,10 +402,10 @@ static class Program
                             if (why != null)
                             {
                                 if (ellis == "never") ellis = $"day {day + 1}, for {why}";
-                                PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill), why, now);
+                                PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill, cast, now), why, now);
                             }
                         }
-                        if (hod == 10 && custody == null && police.ConstableComes(day) is string t)
+                        if (hod == 10 && custody == null && police.ConstableComes(day, now) is string t)
                         {
                             custody = police.TakeIn(t, now, false, false);
                             if (custody != null)
@@ -578,7 +578,7 @@ static class Program
         {
             int day = abs / 24, hod = abs % 24;
             var now = new GameTime(day, hod, 0);
-            if (hod == 10 && custody == null && police.ConstableComes(day) is string t)
+            if (hod == 10 && custody == null && police.ConstableComes(day, now) is string t)
             {
                 custody = police.TakeIn(t, now, false, false);
                 saw = Custody.SeenTaken(mill, cast, "mickeys", now);
@@ -695,7 +695,7 @@ static class Program
                     {
                         string why = police.EllisComes(mill, day);
                         if (why != null && ellis == "does not come") ellis = $"day {day + 1} (minute {MinuteOf(playHour):0}), for {why}";
-                        if (why != null) askedBy += PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill), why, now);
+                        if (why != null) askedBy += PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill, cast, now), why, now);
                     }
                     if (day == tea.Day && hod == 10) tea.SheSeesHim(now);
                     // Ron brings the ask after dark, at the office, before the tea.

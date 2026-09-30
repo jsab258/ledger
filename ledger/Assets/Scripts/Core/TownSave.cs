@@ -19,6 +19,10 @@ namespace Ledger.Core
     ///   arrests Custody        each time he was taken in, and what came of it
     ///   hours   TownHours      the hours the town has talked through
     ///   week    WeeksEnd       Sheila's question at the week's end, and his answer
+    ///   shown   Waiting        the wait's lines he has been shown (the game's
+    ///                          WaitBeats.Shown is this set; the time-and-state
+    ///                          sweep, 30 September: kept nowhere, a reload
+    ///                          stopped him again at lines already shown)
     public sealed class TownSave
     {
         /// The bundle's version. A file from a later version than this build
@@ -35,6 +39,7 @@ namespace Ledger.Core
         public readonly List<Custody> Arrests = new List<Custody>();
         public TownHours Hours = new TownHours();
         public WeeksEnd Week = new WeeksEnd();
+        public readonly HashSet<string> WaitShown = new HashSet<string>();
 
         public Dictionary<string, object> ToJson()
         {
@@ -58,7 +63,22 @@ namespace Ledger.Core
             d["arrests"] = arrests;
             d["hours"] = Hours.ToJson();
             d["week"] = Week.ToJson();
+            var shown = new List<string>(WaitShown);
+            shown.Sort(StringComparer.Ordinal);
+            var shownList = new List<object>();
+            foreach (var k in shown) shownList.Add(k);
+            d["shown"] = shownList;
             return d;
+        }
+
+        // A wait's stop key as WaitStop makes it: a word, "@", and a day or a minute.
+        static bool IsStopKey(string k)
+        {
+            int at = k.IndexOf('@');
+            if (at <= 0 || at == k.Length - 1 || k.Length - at - 1 > 9) return false;
+            for (int i = 0; i < k.Length; i++)
+                if (i < at ? !(k[i] >= 'a' && k[i] <= 'z') : i > at && !(k[i] >= '0' && k[i] <= '9')) return false;
+            return true;
         }
 
         /// From ToJson's values: each piece from what it can read, fresh where
@@ -88,11 +108,13 @@ namespace Ledger.Core
             var arrests = new List<Custody>();
             if (saved.TryGetValue("arrests", out var ar) && ar is List<object> arList)
                 foreach (var x in arList)
-                    if (Custody.FromJson(x as Dictionary<string, object>) is Custody c && t.Police.WasTaken(c.Topic)) arrests.Add(c);
+                    if (Custody.FromJson(x as Dictionary<string, object>) is Custody c && t.Police.Took(c)) arrests.Add(c);
             arrests.Sort((a, b) => a.TakenAt.TotalMinutes != b.TakenAt.TotalMinutes ? a.TakenAt.TotalMinutes.CompareTo(b.TakenAt.TotalMinutes) : string.CompareOrdinal(a.Topic, b.Topic));
             foreach (var c in arrests) if (!t.Arrests.Exists(o => o.Topic == c.Topic)) t.Arrests.Add(c);
             t.Hours = TownHours.FromJson(Obj("hours"));
             t.Week = WeeksEnd.FromJson(Obj("week"));
+            if (saved.TryGetValue("shown", out var sh) && sh is List<object> shList)
+                foreach (var x in shList) if (x is string k && IsStopKey(k)) t.WaitShown.Add(k);
             return t;
         }
     }

@@ -112,6 +112,7 @@ namespace Ledger.CoreTests
                 await TestClaimCheckedReplies();
                 TestCaughtClaimIsNotLearned();
                 TestPortReviewFaults();
+                TestSweepFaults();
                 TestBudgetedClient();
                 await TestTranscriptRollback();
                 await TestReflection();
@@ -8108,6 +8109,131 @@ namespace Ledger.CoreTests
         /// the builder's independent checks of the C++ ports found them in the C#
         /// the ports copy; one regression each, and rows for the port to follow
         /// (PerceptionGolden --awaiting-port, EmitPortReviewFixes).
+        static void TestSweepFaults()
+        {
+            Console.WriteLine("-- the time-and-state sweep of the Core (30 September)");
+            // 1. The talk's ageing never runs back: a late call for an earlier hour ages nothing.
+            {
+                double After(params int[] hours)
+                {
+                    var mill = new GossipMill(new SocialGraph());
+                    mill.Add(new Gossiper("a", "a", new MemoryStore("a"), new KnowledgeBase(), new SuspicionTracker()));
+                    mill.Get("a").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 1.0, Hops = 1 });
+                    foreach (var h in hours) mill.Age(new GameTime(1, h, 0));
+                    return mill.Get("a").Rumors[0].Confidence;
+                }
+                double straight = After(10, 12), late = After(10, 12, 11, 12);
+                Check(Math.Abs(straight - late) < 1e-12, "a late call to age the talk for an earlier hour ages nothing, and the next hour is not aged twice", $"{straight} {late}");
+            }
+            // 2. A constable's call only for today's date.
+            {
+                var police = new PoliceFile();
+                police.Report("rita", "w1", Offence.Damage, 4, 1);
+                var early = police.ConstableComes(3, new GameTime(2, 10, 0));
+                var today = police.ConstableComes(3, new GameTime(3, 10, 0));
+                Check(early == null && today == "w1" && police.ConstableCalls.Count == 1 && police.ConstableCalls[0].day == 3,
+                      "a constable's call for a later day made today is refused and recorded nowhere; made that day, it comes", $"{early} {today} {police.ConstableCalls.Count}");
+            }
+            // 3. DS Ellis asks only the people on the street when she is there.
+            {
+                var cast = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
+                var mill = new GossipMill(new SocialGraph());
+                foreach (var id in cast.People)
+                {
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    mill.Get(id).Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 0.9, Sensitive = true, Hops = 1 });
+                }
+                var sunday = new GameTime(6, 9, 0);
+                var all = PoliceFile.WhoSheAsks(mill);
+                var there = PoliceFile.WhoSheAsks(mill, cast, sunday);
+                bool right = all.All(id => there.Contains(id) == (cast.PlaceOf(id, 6, 9) != CastDay.Off));
+                Check(right && there.Count > 0 && there.Count < all.Count && !there.Contains("lena"),
+                      "on her Sunday visit DS Ellis asks only the people on the street at nine, not Sheila at home", $"{there.Count} of {all.Count}");
+            }
+            // 4. A night Ron brought, then wound down that evening, is delivered after a load.
+            {
+                var a = new Arrangement(0);
+                for (int n = 0; n < 6; n += Arrangement.Every) a.PassedTo(n + 1);
+                bool brought = a.Delivered(6, null, new GameTime(6, 20, 0));
+                bool wound = a.WoundDown(new GameTime(6, 20, 30));
+                var back = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(a.ToJson()))));
+                Check(brought && wound && back.WasDelivered(6) && back.WoundNight == 6,
+                      "a night Ron brought at eight and wound down at half past is still one he brought after a load", $"{brought} {wound} {back.WasDelivered(6)} {back.WoundNight}");
+                // 5. The wound-down word waiting for the landing: a whole night, and before one.
+                var json = a.ToJson();
+                double atOneMinute = 7 * 1440.0 + 60;
+                json["woundTell"] = new List<object> { 6.5, 6 * 1440.0 + 23 * 60 };
+                var half = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(json))));
+                json["woundTell"] = new List<object> { 6.0, atOneMinute };
+                var atOne = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(json))));
+                json["woundTell"] = new List<object> { 6.0, atOneMinute - 1 };
+                var before = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(json))));
+                Check(half.WoundNight == -1 && atOne.WoundNight == -1 && before.WoundNight == 6,
+                      "a saved wound-down word for night 6.5, or at one o'clock itself, is not restored; at 00:59 it is", $"{half.WoundNight} {atOne.WoundNight} {before.WoundNight}");
+            }
+            // 6. Ada's tea is not judged before its evening.
+            {
+                var tea = AdasTea.For(0, true);
+                tea.SheSeesHim(new GameTime(tea.Day, 8, 0));
+                var ada = new Gossiper("ada", "ada", new MemoryStore("ada"), new KnowledgeBase(), new SuspicionTracker());
+                double loyal = ada.Loyalty;
+                var early = tea.Close(ada, new GameTime(tea.Day - 1, 12, 0));
+                Check(early == TeaState.Asked && tea.State == TeaState.Asked && ada.Loyalty == loyal && ada.Memory.Events.Count == 0,
+                      "Ada's tea closed on a day before its own is still to come, not a stand-up", $"{early} {ada.Loyalty}");
+            }
+            // 7. A saved arrest is kept only as the police file took him.
+            {
+                var police = new PoliceFile();
+                police.Report("rita", "w1", Offence.Damage, 4, 1);
+                police.ConstableComes(2, new GameTime(2, 10, 0));
+                var c = police.TakeIn("w1", new GameTime(2, 10, 0), false, false);
+                var town = new TownSave { Police = police };
+                town.Arrests.Add(c);
+                var json = MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(town.ToJson())));
+                var kept = TownSave.FromJson(json);
+                var arrest = (Dictionary<string, object>)((List<object>)json["arrests"])[0];
+                arrest["offence"] = "Killing";
+                arrest["taken"] = 40.0 * 1440 + 600;
+                var edited = TownSave.FromJson(json);
+                arrest["offence"] = "Damage";
+                var moved = TownSave.FromJson(json);
+                Check(c != null && kept.Arrests.Count == 1 && edited.Arrests.Count == 0 && moved.Arrests.Count == 0,
+                      "a saved arrest edited to another offence, or another day, than the police file took him for is not kept", $"{kept.Arrests.Count} {edited.Arrests.Count} {moved.Arrests.Count}");
+            }
+            // 8. A deed's damage from before the first day is not read.
+            {
+                var dmg = new Aftermath("ritas", "player.window_d1", "Rita's window is boarded up.", new GameTime(1, 21, 0));
+                var json = MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(dmg.ToJson())));
+                bool fine = Aftermath.FromJson(json) != null;
+                json["done"] = -50000.0;
+                Check(fine && Aftermath.FromJson(json) == null, "a deed's damage saved at minus fifty thousand minutes is refused");
+            }
+            // 9. A memory's time only as the game writes one.
+            {
+                Check(GameTime.TryParse("D3 14:05", out var ok) && ok.Day == 3 && ok.Hour == 14 && ok.Minute == 5
+                      && !GameTime.TryParse("D1 25:99", out _) && !GameTime.TryParse("D-3 -4:-5", out _) && !GameTime.TryParse("D2147483647 00:00", out _)
+                      && !GameTime.TryParse("D100000 00:00", out _) && GameTime.TryParse("D99999 23:59", out _)
+                      && MemoryEvent.FromLine("- [D1 25:99] (0.50|observation) he was about") == null
+                      && MemoryEvent.FromLine("- [D1 23:59] (0.50|observation) he was about") != null,
+                      "a memory's time is read only as the game writes one: hours to 23, minutes to 59, days from 0 below 100000");
+            }
+            // 10. The wait's lines already shown travel in the town's save.
+            {
+                var town = new TownSave();
+                town.WaitShown.Add("ron@1");
+                town.WaitShown.Add("released@4380");
+                var json = MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(town.ToJson())));
+                var back = TownSave.FromJson(json);
+                var shown = (List<object>)json["shown"];
+                json["shown"] = new List<object> { "ron@1", "Ron@1", "x@", "@3", "tea@1234567890", "tea@-1", "tea 1", 3.0, "landing@3" };
+                var damaged = TownSave.FromJson(json);
+                Check(back.WaitShown.SetEquals(new[] { "ron@1", "released@4380" }) && (string)shown[0] == "released@4380"
+                      && damaged.WaitShown.SetEquals(new[] { "ron@1", "landing@3" }),
+                      "the wait's lines already shown are saved in order and restored, and a key WaitStop could not make is dropped",
+                      string.Join(",", damaged.WaitShown));
+            }
+        }
+
         static void TestPortReviewFaults()
         {
             Console.WriteLine("-- the Core's faults the ports' reviews found (30 September)");

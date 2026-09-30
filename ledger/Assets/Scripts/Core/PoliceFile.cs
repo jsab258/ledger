@@ -104,7 +104,9 @@ namespace Ledger.Core
             // September: the call was recorded, TakeIn refused him, and the deed
             // was used up for good, never answered for): with `now`, no call is
             // made or recorded while he is held; the deed waits for its call.
-            if (now.HasValue && InTheCells(now.Value)) return null;
+            // And only for today (the time-and-state sweep: a call for day 3
+            // made on day 2 took him on day 2).
+            if (now.HasValue && (now.Value.Day != day || InTheCells(now.Value))) return null;
             var topic = ConstableWouldCome(day);
             if (topic != null) _calls.Add((day, topic));
             return topic;
@@ -145,11 +147,28 @@ namespace Ledger.Core
         {
             if (topic == null || !CanArrest(topic)) return null;
             foreach (var t in _taken) if (t.outMinute > now.TotalMinutes) return null;
-            Offence o = Offence.Suspicious;
-            foreach (var e in _entries) if (e.Topic == topic && e.How == Known.Statement && Arrestable(e.Offence)) { o = e.Offence; break; }
-            var c = Custody.Take(topic, o, now, ownsUp, inTheCoat);
+            var c = Custody.Take(topic, ArrestOffence(topic), now, ownsUp, inTheCoat);
             if (c != null) _taken.Add((topic, c.OutAt.TotalMinutes));
             return c;
+        }
+
+        // What he is taken in for: the first statement's arrestable offence.
+        Offence ArrestOffence(string topic)
+        {
+            foreach (var e in _entries) if (e.Topic == topic && e.How == Known.Statement && Arrestable(e.Offence)) return e.Offence;
+            return Offence.Suspicious;
+        }
+
+        /// Whether a save's arrest is the one this file took him in for: the
+        /// same deed, the offence its statement gives, out at the same minute
+        /// (the time-and-state sweep, 30 September: an arrest edited to a
+        /// killing forty days on was kept, and held him while the file said not).
+        public bool Took(Custody c)
+        {
+            if (c == null) return false;
+            foreach (var t in _taken)
+                if (t.topic == c.Topic) return t.outMinute == c.OutAt.TotalMinutes && c.Offence == ArrestOffence(c.Topic);
+            return false;
         }
         public string EllisCameFor => _visits.Count > 0 ? _visits[0].why : null;
 
@@ -315,13 +334,17 @@ namespace Ledger.Core
         /// WHO SHE ASKS on a visit about him (town list 6bq): everybody of his
         /// day world who holds a story of his nights, heard or seen, the ones
         /// her enquiries lead her to; in order, for the save and the port.
-        public static List<string> WhoSheAsks(GossipMill mill)
+        /// With the cast and the visit's time, only those on the street then
+        /// (the time-and-state sweep, 30 September: on a Sunday she "stopped"
+        /// thirty-six people who were at home, Sheila among them).
+        public static List<string> WhoSheAsks(GossipMill mill, CastDay cast = null, GameTime? at = null)
         {
             var who = new List<string>();
             if (mill == null) return who;
             foreach (var a in mill.Agents)
             {
                 if (a.Circle != "day") continue;
+                if (cast != null && at is GameTime t && (cast.PlaceOf(a.Id, t.Day, t.Hour) ?? CastDay.Off) == CastDay.Off) continue;
                 foreach (var r in a.Rumors)
                     if (r.Content != null && r.Content.Subject == "player" && r.Sensitive && r.Confidence > 0) { who.Add(a.Id); break; }
             }

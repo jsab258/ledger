@@ -521,8 +521,12 @@ namespace Ledger.Core
                     // a save could wind down night 0); otherwise a plain no.
                     if (ans.Value == NightAnswer.Refused && wound.Contains(day) && day >= first + WeeksEnd.After)
                     {
-                        // Replayed as it was made: never a night Ron brought (the
-                        // independent check: a load marked it delivered).
+                        // Replayed as it was made: delivered only if Ron had
+                        // brought it before she closed the book (the independent
+                        // check: a load marked it delivered; the time-and-state
+                        // sweep: brought at eight, wound down at half past, a
+                        // load forgot it had been).
+                        if (delivered.Contains(day)) a._delivered.Add(day);
                         a._woundDown.Add(day);
                         a.Record(day, NightAnswer.Refused, null, null);
                         continue;
@@ -533,8 +537,12 @@ namespace Ledger.Core
             if (!a.Ended && delivered.Contains(a.NextNight)) a.Delivered(a.NextNight);
             // A wound-down story the outfit's man has not had yet.
             if (saved.TryGetValue("woundTell", out var wt) && wt is List<object> wtl && wtl.Count == 2 && wtl[0] is double tn && wtl[1] is double tm
+                // A whole night, and no later than play can make it: before one
+                // (the time-and-state sweep: 6.5 was read as night 6, and one
+                // o'clock itself was kept, as noTell's bound does not).
+                && tn == Math.Floor(tn) && tn >= 0 && tn < 100000
                 && a._woundDown.Contains((int)tn) && tm == Math.Floor(tm)
-                && tm >= ((int)tn - Every) * 24.0 * 60 && tm <= ((int)tn + 1) * 24.0 * 60 + GaveUpHour * 60)
+                && tm >= ((int)tn - Every) * 24.0 * 60 && tm < ((int)tn + 1) * 24.0 * 60 + GaveUpHour * 60)
             {
                 a._woundTellNight = (int)tn;
                 a._woundTellAt = GameTime.FromTotalMinutes((long)tm);

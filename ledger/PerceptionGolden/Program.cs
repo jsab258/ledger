@@ -158,6 +158,7 @@ namespace Ledger.PerceptionGolden
             // the table; the handover in NOW.md says so.
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
+                EmitSweepFixes(sb);
             }
 
             var text = sb.ToString();
@@ -167,7 +168,11 @@ namespace Ledger.PerceptionGolden
             // the builder's port commit empties this list and accepts the table.
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") < 0)
             {
-                var held = new[] { "WordingOf|", "ExchangeHeard|", "RemarkCase|wording-kept|" };
+                // And the time-and-state sweep's (30 September): a night Ron brought
+                // before it was wound down stays brought on a load; a memory's time
+                // only as the game writes one; the town's save keeps the wait's lines.
+                var held = new[] { "WordingOf|", "ExchangeHeard|", "RemarkCase|wording-kept|",
+                                   "AskBadSave|5|", "Scenario|save_reload|junk", "TownSaveWritten|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1413,6 +1418,101 @@ namespace Ledger.PerceptionGolden
         /// September): the rows a fix changed, and rows pinning each fix, awaiting
         /// the port's own fix; the builder's port commit moves this emitter above
         /// the line and accepts the table.
+        // THE TIME-AND-STATE SWEEP OF THE CORE (30 September), for the port to
+        // follow: each fault's case, a row each.
+        static void EmitSweepFixes(StringBuilder sb)
+        {
+            GameTime T(int day, int hour, int minute = 0) => new GameTime(day, hour, minute);
+            Dictionary<string, object> Round(Dictionary<string, object> d) => MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(d)));
+            // The talk's ageing never runs back.
+            foreach (var hours in new[] { new[] { 10, 12 }, new[] { 10, 12, 11, 12 }, new[] { 10, 9, 12 } })
+            {
+                var mill = new GossipMill(new SocialGraph());
+                mill.Add(new Gossiper("a", "a", new MemoryStore("a"), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Get("a").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 1.0, Hops = 1 });
+                foreach (var h in hours) mill.Age(T(1, h));
+                Row(sb, "SweepAge", string.Join("-", hours), mill.Get("a").Rumors[0].Confidence.ToString("R", Inv));
+            }
+            // A constable's call only for today's date.
+            {
+                var police = new PoliceFile();
+                police.Report("rita", "w1", Offence.Damage, 4, 1);
+                Row(sb, "SweepConstable", police.ConstableComes(3, T(2, 10)) ?? "null", police.ConstableComes(3, T(3, 10)) ?? "null", police.ConstableCalls.Count.ToString(Inv));
+            }
+            // DS Ellis asks only the people on the street at her visit's hour.
+            {
+                var cast = CastDay.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(FindRepoRoot(), "production", "specs", "hook-cast.json")));
+                var mill = new GossipMill(new SocialGraph());
+                foreach (var id in cast.People)
+                {
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    mill.Get(id).Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 0.9, Sensitive = true, Hops = 1 });
+                }
+                foreach (var day in new[] { 2, 4, 6 })
+                    Row(sb, "SweepAsked", day.ToString(Inv), string.Join(",", PoliceFile.WhoSheAsks(mill, cast, T(day, 9))));
+            }
+            // A night brought, then wound down that evening; the wound-down word's bounds.
+            {
+                var a = new Arrangement(0);
+                for (int n = 0; n < 6; n += Arrangement.Every) a.PassedTo(n + 1);
+                a.Delivered(6, null, T(6, 20));
+                a.WoundDown(T(6, 20, 30));
+                var json = a.ToJson();
+                Row(sb, "SweepWound", "load", Bit(Arrangement.FromJson(Round(json)).WasDelivered(6)), Esc(MiniJson.Serialize(json)));
+                foreach (var (label, night, minute) in new[] { ("half a night", 6.5, 6 * 1440.0 + 23 * 60), ("at one", 6.0, 7 * 1440.0 + 60), ("at 00:59", 6.0, 7 * 1440.0 + 59) })
+                {
+                    json["woundTell"] = new List<object> { night, minute };
+                    Row(sb, "SweepWound", label, Arrangement.FromJson(Round(json)).WoundNight.ToString(Inv));
+                }
+            }
+            // Ada's tea is not judged before its evening.
+            {
+                var tea = AdasTea.For(0, true);
+                tea.SheSeesHim(T(tea.Day, 8));
+                Row(sb, "SweepTea", tea.Close(null, T(tea.Day - 1, 12)).ToString(), tea.Close(null, T(tea.Day, 12)).ToString(), tea.Close(null, T(tea.Day + 1, 9)).ToString());
+            }
+            // A saved arrest is kept only as the police file took him.
+            {
+                var police = new PoliceFile();
+                police.Report("rita", "w1", Offence.Damage, 4, 1);
+                police.ConstableComes(2, T(2, 10));
+                var town = new TownSave { Police = police };
+                town.Arrests.Add(police.TakeIn("w1", T(2, 10), false, false));
+                var json = Round(town.ToJson());
+                var arrest = (Dictionary<string, object>)((List<object>)json["arrests"])[0];
+                Row(sb, "SweepArrest", "as saved", TownSave.FromJson(json).Arrests.Count.ToString(Inv));
+                arrest["offence"] = "Killing";
+                Row(sb, "SweepArrest", "another offence", TownSave.FromJson(json).Arrests.Count.ToString(Inv));
+                arrest["offence"] = "Damage";
+                arrest["taken"] = 40.0 * 1440 + 600;
+                Row(sb, "SweepArrest", "another day", TownSave.FromJson(json).Arrests.Count.ToString(Inv));
+            }
+            // A deed's damage from before the first day.
+            foreach (var done in new[] { -50000.0, -1.0, 0.0 })
+            {
+                var json = Round(new Aftermath("ritas", "player.window_d1", "Rita's window is boarded up.", T(1, 21)).ToJson());
+                json["done"] = done;
+                Row(sb, "SweepDamage", done.ToString("R", Inv), Bit(Aftermath.FromJson(json) != null));
+            }
+            // A memory's time only as the game writes one.
+            foreach (var s in new[] { "D3 14:05", "D1 25:99", "D1 23:60", "D-3 -4:-5", "D2147483647 00:00", "D100000 00:00", "D99999 23:59", "D0 00:00" })
+            {
+                bool ok = GameTime.TryParse(s, out var t);
+                Row(sb, "SweepTime", Esc(s), Bit(ok), ok ? t.TotalMinutes.ToString(Inv) : "-", Bit(MemoryEvent.FromLine("- [" + s + "] (0.50|observation) he was about") != null));
+            }
+            // The wait's lines already shown, in the town's save.
+            {
+                var town = new TownSave();
+                foreach (var k in new[] { "ron@1", "released@4380", "tea@2" }) town.WaitShown.Add(k);
+                var json = Round(town.ToJson());
+                Row(sb, "SweepShown", "written", Esc(MiniJson.Serialize(json["shown"])));
+                json["shown"] = new List<object> { "ron@1", "Ron@1", "x@", "@3", "tea@1234567890", "tea@-1", "tea 1", 3.0, "landing@3", "ron@1" };
+                var back = new List<string>(TownSave.FromJson(json).WaitShown);
+                back.Sort(StringComparer.Ordinal);
+                Row(sb, "SweepShown", "damaged", Esc(string.Join(",", back)));
+            }
+        }
+
         static void EmitPortReviewFixes(StringBuilder sb)
         {
             GameTime T(int day, int hour, int minute = 0) => new GameTime(day, hour, minute);

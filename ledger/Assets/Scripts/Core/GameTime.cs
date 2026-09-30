@@ -69,6 +69,10 @@ namespace Ledger.Core
             if (parts.Length != 3) return false;
             if (!int.TryParse(parts[0], out var d) || !int.TryParse(parts[1], out var h) || !int.TryParse(parts[2], out var m))
                 return false;
+            // Only a time ToString could write (the time-and-state sweep, 30
+            // September: "D1 25:99" was read as D2 02:39 yet counted on day 1,
+            // and minus days and the largest int were kept).
+            if (d < 0 || d >= 100000 || h < 0 || h > 23 || m < 0 || m > 59) return false;
             time = new GameTime(d, h, m);
             return true;
         }
