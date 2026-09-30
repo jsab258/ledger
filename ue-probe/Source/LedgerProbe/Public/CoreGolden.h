@@ -57,6 +57,7 @@
 #include "PlayerIdentity.h"
 #include "FirstWeek.h"
 #include "WeeksEnd.h"
+#include "PoliceFile.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -2008,6 +2009,296 @@ namespace Golden
 		return A;
 	}
 
+	// ---- after a deed: the police asking, taking him in (town list 6bq, 6bp)
+	//
+	// PerceptionGolden's EmitTaken and EmitPoliceAsked, played again here.
+
+	inline const std::map<std::string, std::vector<std::string> >& PoliceAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		using StreetVoice::StanceKind;
+		for (int Oi = 0; Oi <= (int)Offence::Killing; ++Oi)
+			for (bool bOwns : { false, true })
+				for (int Day : { 0, 4, 5, 6 })
+				{
+					const std::shared_ptr<Custody> C = Custody::Take("player.x_d1", (Offence)Oi, GameTime(Day, 10, 0), bOwns, bOwns);
+					std::vector<std::string> O;
+					if (!C) O.push_back("null");
+					else { O = { CustodyEndName(C->End()), FromInt(C->OutAt().TotalMinutes()), FromInt(C->AnswerDay()), FromBool(C->CoatKept()) }; }
+					Ans["CustodyTake|" + std::string(OffenceName((Offence)Oi)) + "|" + FromBool(bOwns) + "|" + FromInt(Day)] = O;
+				}
+		for (int D = -1; D < 8; ++D) Ans["CustodyNextSitting|" + FromInt(D)] = { FromInt(Custody::NextSitting(D)) };
+		for (const char* Pred : { "taken_d4", "taken_d", "taken", "police_d4" })
+			Ans["CustodyIsTaken|" + std::string(Pred)] = { FromBool(Custody::IsTaken(std::make_shared<Rumor>(Fact("player", Pred, "police")))) };
+		const Gossiper Tk("tk", "tk", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+		for (int K = 0; K <= (int)StanceKind::Confronts; ++K)
+			for (int Hops : { 0, 1 })
+				for (int Seed = 0; Seed < 6; ++Seed)
+				{
+					RumorPtr About = std::make_shared<Rumor>(Fact("player", "taken_d4", "police"));
+					About->Summary = Custody::TakenSaid; About->Confidence = 0.5; About->Sensitive = false; About->Hops = Hops;
+					const std::shared_ptr<SpokenLine> L = StreetVoice::Recognition(&Tk, About, (StanceKind)K, Seed);
+					std::vector<std::string> O;
+					if (!L) O.push_back("null");
+					else { O = { L->Bank, Escape(L->Text), FromBool(L->AboutPlayer) }; }
+					Ans["RecognitionTaken|" + std::string(StreetVoice::StanceName((StanceKind)K)) + "|" + FromInt(Hops) + "|" + FromInt(Seed)] = O;
+				}
+		for (double Conf : { 0.2, 0.5, 0.9 })
+		{
+			Gossiper Holder("th", "th", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", "taken_d4", "police"));
+			R->Summary = Custody::TakenSaid; R->Confidence = Conf; R->Sensitive = false;
+			Holder.Rumors.push_back(R);
+			const RumorPtr Shows = StreetVoice::StoryThatShows(Holder, 0.35);
+			Ans["TakenShows|" + FromDouble(Conf)] = { Shows ? Shows->TopicKey() : std::string("null") };
+		}
+		for (const char* Pred : { "police_d4", "police_d", "police", "outfit_d4" })
+			Ans["PoliceIsAsking|" + std::string(Pred)] = { FromBool(PoliceFile::IsAsking(std::make_shared<Rumor>(Fact("player", Pred, "asking")))) };
+		const Gossiper Pa("pa", "pa", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+		for (int K = 0; K <= (int)StanceKind::Confronts; ++K)
+			for (int Hops : { 0, 1 })
+				for (bool bSens : { false, true })
+					for (int Seed = 0; Seed < 6; ++Seed)
+					{
+						RumorPtr About = std::make_shared<Rumor>(Fact("player", "police_d4", "asking"));
+						About->Summary = PoliceFile::AskedSaid; About->Confidence = 0.5; About->Sensitive = bSens; About->Hops = Hops;
+						const std::shared_ptr<SpokenLine> L = StreetVoice::Recognition(&Pa, About, (StanceKind)K, Seed);
+						std::vector<std::string> O;
+						if (!L) O.push_back("null");
+						else { O = { L->Bank, Escape(L->Text), FromBool(L->AboutPlayer) }; }
+						Ans["RecognitionPolice|" + std::string(StreetVoice::StanceName((StanceKind)K)) + "|" + FromInt(Hops) + "|" + FromBool(bSens) + "|" + FromInt(Seed)] = O;
+					}
+		for (double Conf : { 0.2, 0.5, 0.9 })
+		{
+			Gossiper Holder("ph", "ph", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", "police_d4", "asking"));
+			R->Summary = PoliceFile::AskedSaid; R->Confidence = Conf; R->Sensitive = false;
+			Holder.Rumors.push_back(R);
+			const RumorPtr Shows = StreetVoice::StoryThatShows(Holder, 0.35);
+			const RumorPtr Half = StreetVoice::StoryHalfRemembered(Holder, 0.35);
+			Ans["PoliceShows|" + FromDouble(Conf)] = { Shows ? Shows->TopicKey() : std::string("null"), Half ? Half->TopicKey() : std::string("null") };
+		}
+		for (double Susp : { 0.0, 0.25, 0.5 })
+			for (bool bAsked : { false, true })
+			{
+				Gossiper P("pr", "pr", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+				P.Suspicion.Restore(Susp);
+				RumorPtr Night = std::make_shared<Rumor>(Fact("player", "night_walk", "seen"));
+				Night->Summary = "s"; Night->Confidence = 0.4; Night->Sensitive = true; Night->Hops = 1;
+				P.Rumors.push_back(Night);
+				if (bAsked)
+				{
+					RumorPtr A = std::make_shared<Rumor>(Fact("player", "police_d4", "asking"));
+					A->Summary = PoliceFile::AskedSaid; A->Confidence = 1.0; A->Sensitive = false;
+					P.Rumors.push_back(A);
+				}
+				const StreetVoice::Regard Rg = StreetVoice::RegardFor(&P, 0.35, false, nullptr, 0.50, false);   // Acquaintance.Known
+				Ans["PoliceRegard|" + FromDouble(Susp) + "|" + FromBool(bAsked)] = { StreetVoice::StanceName(Rg.Stance), Rg.Story ? Rg.Story->TopicKey() : std::string("null") };
+			}
+		return Ans;
+	}
+
+	// THE FILE ITSELF (EmitPoliceAsked's regression rows): the same calls in
+	// the same order.
+	inline const std::map<std::string, std::vector<std::string> >& PoliceFileAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		auto T = [](int D, int H, int M = 0) { return GameTime(D, H, M); };
+		auto Or = [](bool B, const std::string& S) { return B ? S : std::string("null"); };
+		const std::string W1 = "player.window_d1";
+		PoliceFile Pf;
+		{
+			const bool B1 = Pf.Report("ada", W1, Offence::Damage, 3, 1);
+			const bool B2 = Pf.Report("ada", W1, Offence::Damage, 3, 1);
+			const bool B3 = Pf.CanArrest(&W1);
+			const bool B4 = Pf.Report("", "x", Offence::Damage, 4, 1);
+			Ans["PoliceFile|report"] = { FromBool(B1), FromBool(B2), FromBool(B3), FromBool(B4) };
+		}
+		{
+			const bool B1 = Pf.Report("ada", W1, Offence::Damage, 4, 2);
+			const bool B2 = Pf.CanArrest(&W1);
+			const bool B3 = Pf.Report("ada", W1, Offence::Damage, 4, 2);
+			Ans["PoliceFile|named"] = { FromBool(B1), FromBool(B2), FromBool(B3) };
+		}
+		Pf.Heard("joey", W1, Offence::Damage, 2);
+		Pf.Heard("joey", W1, Offence::Damage, 3);
+		{
+			Known K1 = Known::Talk, K2 = Known::Talk;
+			const bool B1 = Pf.Strongest(W1, K1), B2 = Pf.Strongest("nothing", K2);
+			Ans["PoliceFile|strongest"] = { Or(B1, KnownName(K1)), Or(B2, KnownName(K2)), FromInt((long long)Pf.Entries().size()) };
+		}
+		{
+			std::string C1, C2, C3, C4;
+			const bool B1 = Pf.ConstableComes(2, C1);
+			const bool B2 = Pf.ConstableComes(3, C2);
+			const bool B3 = Pf.ConstableComes(3, C3);
+			const bool B4 = Pf.ConstableComes(4, C4);
+			Ans["PoliceFile|constable"] = { Or(B1, C1), Or(B2, C2), Or(B3, C3), Or(B4, C4) };
+		}
+		{
+			const std::shared_ptr<Custody> Took = Pf.TakeIn(&W1, T(3, 10), false, true);
+			const std::string TookS = Took ? std::string(CustodyEndName(Took->End())) + "|" + FromInt(Took->OutAt().TotalMinutes()) + "|" + FromInt(Took->AnswerDay()) + "|" + FromBool(Took->CoatKept()) : "null";
+			const bool bWas = Pf.WasTaken(W1), bCan = Pf.CanArrest(&W1);
+			const bool bAgain = (bool)Pf.TakeIn(&W1, T(3, 11), false, false);
+			const bool bNone = (bool)Pf.TakeIn(nullptr, T(3, 11), false, false);
+			std::vector<std::string> O;
+			// A custody's four fields are one cell of the C#'s row, split by the table's own bars.
+			if (Took) { O = { CustodyEndName(Took->End()), FromInt(Took->OutAt().TotalMinutes()), FromInt(Took->AnswerDay()), FromBool(Took->CoatKept()) }; }
+			else O = { "null" };
+			O.push_back(FromBool(bWas)); O.push_back(FromBool(bCan)); O.push_back(bAgain ? "again" : "null"); O.push_back(bNone ? "none" : "null");
+			Ans["PoliceFile|taken"] = O;
+			(void)TookS;
+		}
+		Pf.Report("zlata", "player.cut_d3", Offence::Wounding, 4, 3);
+		Pf.Report("zlata", "player.push_d3", Offence::Assault, 4, 3);
+		{
+			const std::string Cut = "player.cut_d3", Push = "player.push_d3";
+			const bool B1 = (bool)Pf.TakeIn(&Cut, T(3, 12), false, false);
+			const bool B2 = (bool)Pf.TakeIn(&Push, T(4, 12), false, false);
+			Ans["PoliceFile|in the cells"] = { B1 ? "taken" : "null", B2 ? "taken" : "null" };
+		}
+		GossipMill Loud(std::make_shared<SocialGraph>());
+		struct Q { const char* Id; const char* Circle; int Hops; double Conf; bool bLeash; };
+		const Q Qs[] = { { "a1", "day", 1, 0.9, false }, { "a2", "day", 1, 0.9, false }, { "a3", "day", 1, 0.3, false }, { "a4", "day", 0, 0.9, false },
+		                 { "a5", "night", 1, 0.9, false }, { "a6", "day", 1, 0.9, true }, { "a7", "day", 1, 0.9, false } };
+		for (const Q& X : Qs)
+		{
+			GossiperPtr Who = std::make_shared<Gossiper>(X.Id, X.Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), X.Circle);
+			Who->Leashed = X.bLeash;
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", "night_walk", "seen"));
+			R->Summary = "seen at night"; R->Confidence = X.Conf; R->Sensitive = true; R->Hops = X.Hops;
+			Who->Rumors.push_back(R);
+			Loud.Add(Who);
+		}
+		Loud.Get("a2")->Suppressed.push_back("player.night_walk");
+		Ans["PoliceFile|loudness"] = { FromInt(PoliceFile::Loudness(&Loud)), FromInt(PoliceFile::Loudness(nullptr)) };
+		Loud.Get("a3")->Rumors[0]->Confidence = 0.9;
+		Ans["PoliceFile|louder"] = { FromInt(PoliceFile::Loudness(&Loud)) };
+		auto Join = [](const std::vector<std::string>& V) { std::string S; for (size_t I = 0; I < V.size(); ++I) S += (I ? "," : "") + V[I]; return S; };
+		Ans["PoliceFile|ellis would"] = { Escape(Join(Pf.EllisWouldComeAll(&Loud, 2, Inquiry::Procedure))), Escape(Join(Pf.EllisWouldComeAll(&Loud, 3))) };
+		{
+			std::string E1, E2, E3, E4, For;
+			const bool B1 = Pf.EllisComes(&Loud, 3, Inquiry::Procedure, E1);
+			const bool B2 = Pf.EllisComes(&Loud, 3, Inquiry::Procedure, E2);
+			const bool B3 = Pf.EllisComes(&Loud, 3, Inquiry::None, E3);
+			const bool B4 = Pf.EllisComes(&Loud, 3, Inquiry::None, E4);
+			const bool BF = Pf.EllisCameFor(For);
+			Ans["PoliceFile|ellis comes"] = { Escape(Or(B1, E1)), Escape(Or(B2, E2)), Escape(Or(B3, E3)), Escape(Or(B4, E4)), FromInt(Pf.EllisCameOn()), Escape(Or(BF, For)) };
+		}
+		Pf.HearTheStreet(&Loud, 3, [](const std::string& Topic) { return Topic.find("night") != std::string::npos ? Offence::Suspicious : Offence::Damage; });
+		{
+			const PoliceFile::Entry& Last = Pf.Entries().back();
+			Ans["PoliceFile|heard the street"] = { FromInt((long long)Pf.Entries().size()), Escape(Last.Who + " " + KnownName(Last.How)) };
+		}
+		const std::vector<std::string> AskedWho = PoliceFile::WhoSheAsks(&Loud);
+		Ans["PoliceFile|who she asks"] = { Join(AskedWho) };
+		{
+			const int N1 = PoliceFile::Asked(&Loud, &AskedWho, "talk", T(3, 11));
+			const std::vector<std::string> Odd = { "a1", "a1", "nobody", "" };
+			const int N2 = PoliceFile::Asked(&Loud, &Odd, "talk", T(3, 12));
+			const int N3 = PoliceFile::Asked(&Loud, &AskedWho, "body", T(3, 12));
+			const int N4 = PoliceFile::Asked(&Loud, &AskedWho, "talk", T(4, 9));
+			const GossiperPtr A1 = Loud.Get("a1");
+			Ans["PoliceFile|asked"] = { FromInt(N1), FromInt(N2), FromInt(N3), FromInt(N4), FromInt((long long)A1->Rumors.size()),
+				FromInt((long long)A1->Memory->Events.size()), Escape(A1->Memory->Events.back().Text) };
+		}
+		const std::string FileSaved = Pf.ToJson();
+		Ans["PoliceFile|save"] = { Escape(FileSaved) };
+		Ans["PoliceFile|load"] = { Escape(PoliceFile::FromJson(FileSaved).ToJson()) };
+		const char* BadFiles[] = {
+			R"({"entries":[{"who":"a","topic":"t","offence":"Damage","how":"Statement","day":1},{"who":"a","topic":"t","offence":"Damage","how":"Description","day":2},{"who":"a","topic":"t","offence":"damage","how":"Talk","day":1},{"who":"","topic":"t","offence":"Damage","how":"Talk","day":1},{"who":"b","topic":"t","offence":"Damage","how":"Talk","day":1.5}]})",
+			R"({"entries":[{"who":"a","topic":"player.cut","offence":"Wounding","how":"Statement","day":1}],"visits":[[5,"talk"],[2,"body"],[3,"Wounding player.cut"],[4,"Damage player.x"],[4,"Wounding  x"],[6,"talk"],[1,"Robbery a b"]]})",
+			R"({"entries":[{"who":"a","topic":"w","offence":"Damage","how":"Statement","day":2}],"calls":[[2,"w"],[4,"w"],[3,"w"],[5,"x"]],"taken":[["w",1000],["x",2000],["w",1e9]]})",
+			R"({"entries":{"who":"a"},"visits":"talk"})",
+			R"([1,2])",
+			R"({"entries":[)",
+		};
+		for (int I = 0; I < (int)(sizeof(BadFiles) / sizeof(BadFiles[0])); ++I)
+			Ans["PoliceBadSave|" + FromInt(I)] = { Escape(PoliceFile::FromJson(BadFiles[I]).ToJson()) };
+		for (int Oi = 0; Oi <= (int)Offence::Killing; ++Oi)
+			for (bool bVictim : { false, true })
+				for (const auto& Nl : { std::make_pair(0.3, 0.3), std::make_pair(0.5, 0.3), std::make_pair(0.5, 0.45), std::make_pair(0.3, 0.55), std::make_pair(0.5, 0.65) })
+				{
+					const Gossiper G2("wr", "wr", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", 0.5, Nl.first, Nl.second);
+					const std::string Topic = "t";
+					Ans["PoliceWouldReport|" + std::string(OffenceName((Offence)Oi)) + "|" + FromBool(bVictim) + "|" + FromDouble(Nl.first) + "|" + FromDouble(Nl.second)]
+						= { FromBool(PoliceFile::WouldReport(&G2, (Offence)Oi, bVictim, &Topic)) };
+				}
+		{
+			Gossiper Quiet("wq", "wq", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", 0.5, 0.9, 0.1);
+			Quiet.Suppressed.push_back("t");
+			const std::string Tt = "t", Tu = "u";
+			Ans["PoliceWouldReport|quiet"] = { FromBool(PoliceFile::WouldReport(&Quiet, Offence::Damage, true, &Tt)), FromBool(PoliceFile::WouldReport(&Quiet, Offence::Killing, false, &Tt)),
+				FromBool(PoliceFile::WouldReport(&Quiet, Offence::Damage, true, &Tu, true)), FromBool(PoliceFile::WouldReport(nullptr, Offence::Damage, true, &Tu)) };
+			Quiet.Leashed = true;
+			Ans["PoliceWouldReport|hooked"] = { FromBool(PoliceFile::WouldReport(&Quiet, Offence::Damage, true, nullptr)) };
+		}
+		{
+			const std::shared_ptr<Custody> Back = Custody::FromJson(Custody::Take("player.cut_d1", Offence::Wounding, T(2, 23, 30), false, true)->ToJson());
+			Ans["CustodyWords|charged"] = { Escape(Back->ArrestWords()), Escape(Back->ReleaseWords()), FromBool(Back->Holds(T(3, 7, 29))), FromBool(Back->Holds(T(3, 7, 30))) };
+			Ans["CustodyWords|cautioned"] = { Escape(Custody::Take("w", Offence::Damage, T(4, 10), true, true)->ReleaseWords()) };
+			Ans["CustodyWords|killing"] = { Escape(Custody::Take("k", Offence::Killing, T(4, 10), false, true)->ReleaseWords()) };
+			Ans["CustodyWords|bad saves"] = { FromBool(!Custody::FromJson("")), FromBool(!Custody::FromJson(R"({"topic":"t","offence":"Assault","taken":10})")),
+				FromBool(!Custody::FromJson(R"({"topic":"t","offence":"Damage","taken":10.5})")),
+				Escape(Custody::FromJson(R"({"topic":"t","offence":"Damage","taken":10,"ownsUp":true,"coat":true,"topic":"u"})")->ToJson()) };
+		}
+		{
+			CastDay TakenCast;
+			std::string Err;
+			CastDay::Parse(R"({"talk_range_m":6,"places":{"mickeys_office":{"x_m":0,"z_m":0},"quay":{"x_m":50,"z_m":0}},"areas":{"mickeys":{"places":["mickeys_office"]},"quay":{"places":["quay"]}},)"
+				R"("people":[{"id":"lena","routine":[[0,"off"],[9,"mickeys_office"],[18,"off"]]},{"id":"zlata","routine":[[0,"off"],[7,"mickeys_office"],[20,"off"]]},{"id":"joey","routine":[[0,"off"],[6,"quay"],[18,"off"]]}],"ties":[]})",
+				TakenCast, Err);
+			GossipMill Street(std::make_shared<SocialGraph>());
+			for (const std::string& Id : TakenCast.People())
+				Street.Add(std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+			const std::string S1 = Join(Custody::SeenTaken(&Street, &TakenCast, "mickeys", T(2, 10)));
+			const std::string S2 = Join(Custody::SeenTaken(&Street, &TakenCast, "mickeys", T(2, 11)));
+			const std::string S3 = Join(Custody::SeenTaken(&Street, &TakenCast, "quay", T(2, 19)));
+			const std::string S4 = Join(Custody::SeenTaken(&Street, &TakenCast, "", T(2, 10)));
+			Ans["CustodySeenTaken|office"] = { S1, S2, S3, S4 };
+		}
+		return Ans;
+	}
+
+	inline Answer PoliceFileRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const bool bGrid = F[0] == "PoliceWouldReport" && F.size() >= 2 && F[1] != "quiet" && F[1] != "hooked";
+		const int Labels = bGrid ? 4 : 1;
+		if ((int)F.size() < 1 + Labels + 1) return A;
+		std::string Key = F[0] + "|" + F[1];
+		if (bGrid) Key += "|" + F[2] + "|" + (IsNumber(F[3]) ? FromDouble(D(F[3])) : F[3]) + "|" + (IsNumber(F[4]) ? FromDouble(D(F[4])) : F[4]);
+		const auto& Ans = PoliceFileAnswers();
+		const auto It = Ans.find(Key);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 1 + Labels, It->second);
+		return A;
+	}
+
+	inline Answer PoliceRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::string& Fn = F[0];
+		const int Labels = Fn == "RecognitionPolice" ? 4 : (Fn == "CustodyTake" || Fn == "RecognitionTaken") ? 3 : Fn == "PoliceRegard" ? 2 : 1;
+		if ((int)F.size() < 1 + Labels + 1) return A;
+		std::string Key = Fn;
+		for (int I = 1; I <= Labels; ++I)
+		{
+			// Numbers by value: 0.2 as the table writes it may differ in text.
+			const bool bNumeric = (Fn == "TakenShows" || Fn == "PoliceShows" || (Fn == "PoliceRegard" && I == 1)) && IsNumber(F[I]);
+			Key += "|" + (bNumeric ? FromDouble(D(F[I])) : F[I]);
+		}
+		const auto& Ans = PoliceAnswers();
+		const auto It = Ans.find(Key);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 1 + Labels, It->second);
+		return A;
+	}
+
 	// ---- the week's end (town list 6ca) ----------------------------------
 	//
 	// PerceptionGolden's EmitWeeksEnd, played again here; each row is found
@@ -2272,6 +2563,21 @@ namespace Golden
 			const size_t Told = OddMill.Get(AdasTea::Ada)->Rumors.size();
 			Ans["TeaEdge|seen before one"].push_back({ FromBool(bSeen), FromInt((long long)Told), TeaStateName(Odd->Close(nullptr, T(2, 23))) });
 			Ans["TeaEdge|first ask negative"].push_back({ FromBool(AdasTea::For(-1, true) == nullptr) });
+		}
+		{
+			const Way NanWays[] = { { "sat", 21 * 60 + 5, 22 * 60 + 40 }, { "early", 21 * 60, 21 * 60 + 50 }, { "away", -1, -1 } };
+			for (const Way& W : NanWays)
+			{
+				Gossiper NanAda(AdasTea::Ada, AdasTea::Ada, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+				NanAda.Loyalty = std::numeric_limits<double>::quiet_NaN();
+				std::unique_ptr<AdasTea> Tn = AdasTea::For(0, true);
+				std::string Ignored;
+				Tn->SheSeesHim(T(2, 10), Ignored);
+				if (W.From >= 0) for (int M = W.From; M <= W.To; ++M) Tn->WithHer(T(2, M / 60, M % 60));
+				const TeaState S = Tn->Close(&NanAda, T(2, 23));
+				// C#'s double.NaN.ToString("R") is "NaN".
+				Ans["TeaNaN|" + std::string(W.How)].push_back({ TeaStateName(S), std::isnan(NanAda.Loyalty) ? std::string("NaN") : FromDouble(NanAda.Loyalty) });
+			}
 		}
 		return Ans;
 	}
@@ -3600,6 +3906,17 @@ namespace Golden
 		{
 			A = GossipFuzzRow(F);
 		}
+		// THE POLICE FILE ITSELF (town list 6ar): PoliceFile.h, its regression rows.
+		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "CustodyWords" || Fn == "CustodySeenTaken")
+		{
+			A = PoliceFileRow(F);
+		}
+		// AFTER A DEED (town list 6bq, 6bp): PoliceFile.h and StreetVoice's banks.
+		else if (Fn == "CustodyTake" || Fn == "CustodyNextSitting" || Fn == "CustodyIsTaken" || Fn == "RecognitionTaken" || Fn == "TakenShows"
+		         || Fn == "PoliceIsAsking" || Fn == "RecognitionPolice" || Fn == "PoliceShows" || Fn == "PoliceRegard")
+		{
+			A = PoliceRow(F);
+		}
 		// THE WEEK'S END (town list 6ca): WeeksEnd.h and StreetVoice's banks.
 		else if (Fn == "WeekAsk" || Fn == "WeekFiled" || Fn == "RecognitionWeek" || Fn == "RecognitionOutfitWound" || Fn == "WeekShows"
 		         || Fn == "WeekBadSave" || Fn == "WeekWaits" || Fn == "WeekRegard")
@@ -3608,7 +3925,7 @@ namespace Golden
 		}
 		// ADA'S TEA (town list 6bg): FirstWeek.h.
 		else if (Fn == "Tea" || Fn == "TeaAsked" || Fn == "TeaBefore11" || Fn == "TeaClosed" || Fn == "TeaSeenGoing" || Fn == "TeaSeenGoingOnce" || Fn == "TeaSave"
-		         || Fn == "TeaBadSave" || Fn == "TeaGap" || Fn == "TeaEdge")
+		         || Fn == "TeaBadSave" || Fn == "TeaGap" || Fn == "TeaEdge" || Fn == "TeaNaN")
 		{
 			A = TeaRow(F);
 		}

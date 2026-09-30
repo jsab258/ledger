@@ -305,10 +305,10 @@ namespace LedgerCore
 			NightsMap[Day] = What;
 			if (What == NightAnswer::Undelivered) return true;
 			if (What == NightAnswer::Refused) { bEnded = true; EndedWhyValue = WoundDown_.count(Day) ? "wound down" : "refused"; }
-			else if (What == NightAnswer::Did) PatienceValue = std::fmin(1.0, PatienceValue + PatienceGainPerNight);
+			else if (What == NightAnswer::Did) PatienceValue = DotNetMin(1.0, PatienceValue + PatienceGainPerNight);
 			else
 			{
-				PatienceValue = std::fmax(0.0, PatienceValue - PatienceLossPerNoShow);
+				PatienceValue = DotNetMax(0.0, PatienceValue - PatienceLossPerNoShow);
 				if (PatienceValue <= 1e-9) { bEnded = true; EndedWhyValue = "stopped"; }
 			}
 			if (Mill != nullptr && Now != nullptr)
