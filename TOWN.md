@@ -25,8 +25,23 @@ first whether the method is wrong. Pages:
 - [ ] U1. T1's timeouts and the delay to the first words, measured with LEDGER's key (at most about a dollar a day, every run logged with its tokens and cost). With it, his answers of 30 September:
   - reopen the check's retune (the fallback);
   - threats read by the checking model on the capped key while he plays.
-- [ ] U2. Authored breadth for the first week: the street's lines written ahead (remarks, greetings, recognitions, reactions to what Tom does) for every named character, in their own voice as their casting sheet describes it, within the approved story and canon; enough that two hours of play never repeats, by my own measure; through the quality gate, the content rules on every line. Research first how game writers write ambient lines for a living town, the whole pipeline.
-- [ ] U3. Casting sheets for the street regulars, about thirty, from CASTING.md's second tier, as a contact sheet of text on one approval page.
+
+  IN HAND 30 September. The research into the whole method first
+  (production/research/talk-helper/METHOD-2026-09-30.md: studios ground before
+  writing and check alongside, never a second model in series on every line).
+  Measured with the key: first words at a median 2.0 s, 2 brush-offs and 1
+  fallback in 24 turns, US$0.40 (production/playtest/talk-cost-2026-09-30-early.md);
+  each turn now records where its time went.
+  - The retune: what bears on his line goes before the writer (newcomer's
+    "that's all I know" 36, then 28 and 27, of 60); a detail stated word for
+    word in its cited item cleared by code; a people line clears who somebody
+    is: 23 of 60 with all three; inventions still caught, 99 of 108. Two
+    looks measured no better: set aside.
+  - The delay: --pending hands the first sentence to the voice ahead of its
+    check (a handover once measured).
+  - Threats by the model: not started.
+- [ ] U2. (IN HAND 30 September: the research into how writers write street lines, production/research/ambient-lines/METHOD-2026-09-30.md; each named character's own lines for the street's banks, taken first, OwnLines; how many each needs from two hours' busiest walk, TownReach --two-hours by named speaker; Ron's 159 as the sample, through two reviewers, on the 30 September second page; the rest after his yes.) Authored breadth for the first week: the street's lines written ahead (remarks, greetings, recognitions, reactions to what Tom does) for every named character, in their own voice as their casting sheet describes it, within the approved story and canon; enough that two hours of play never repeats, by my own measure; through the quality gate, the content rules on every line. Research first how game writers write ambient lines for a living town, the whole pipeline.
+- [ ] U3. (IN HAND 30 September: production/casting/regulars/REGULARS.md, through two reviewers, on the 30 September second page.) Casting sheets for the street regulars, about thirty, from CASTING.md's second tier, as a contact sheet of text on one approval page.
 - [ ] U4. Item i: every cost that decides the ending readable before it decides (reopened by his list).
 - [ ] U5. Then ROADMAP's non-visual items, still no new systems.
 

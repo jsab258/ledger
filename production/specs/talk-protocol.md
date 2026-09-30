@@ -10,9 +10,15 @@ field this page does not name.
 
 ## Starting it
 
-`LedgerTalk.exe [--early] [--fake] [--relay <address> --copy <code>]`, from the
+`LedgerTalk.exe [--early [--pending]] [--fake] [--relay <address> --copy <code>]`, from the
 folder with its cards and `hook-cast.json` beside it (town list 6aa).
 `--early` sends each reply's first checked sentence as soon as it is ready;
+`--pending`, with it, also sends that sentence the moment it is written, before
+its check, as `{"id","to","pending","ms"}`, so the voice can make it ready while
+it is checked (U1, 30 September; production/research/talk-helper/METHOD-2026-09-30.md):
+PLAY it only when the same turn's `first` arrives with the same words, and drop
+it unplayed if the turn's reply comes first. A sentence the content rule
+refuses is never sent pending;
 `--fake` answers without a model; `--relay` and `--copy` talk through our
 server (town list 6b), otherwise `ANTHROPIC_API_KEY` is read.
 
@@ -104,7 +110,7 @@ dollars at the game's own price table, and how many there were.
 
 Errors: `{"error": "bad-line"}`; `{"id", "to", "error": "no-card"}` or
 `"no-evidence"`; `{"talk", "error": "unknown"}`, `"unwritable"`,
-`"unreadable"` or `"path-must-end-.talk.json"`.
+`"unreadable"` or `"path-must-end-.talk.json"`.
 
 Not the protocol, but written by the program: with `--fake` and the
 environment's `LEDGER_TALK_SIZES` naming a file, each model request is logged

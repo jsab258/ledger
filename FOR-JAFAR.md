@@ -45,6 +45,8 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **C: free:** 46.8 GB, 47.9 now. Backup runs with this commit.
 
+**New today, [your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** Ron's own street lines (the sample before the rest of the cast's) and the thirty regulars as one contact sheet; each through two blind reviewers, their remaining notes beside it.
+
 **Next:** the talk timings with your key (first run: first words at 2.0 s, $0.40).
 
 ## Clothes, Wednesday 30 September

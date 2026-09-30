@@ -18,6 +18,10 @@ namespace Ledger.CoreTests
 
         /// `detail` is printed only on failure — the value that made the check
         /// fail, so a red run says what the number actually was.
+        // The shared bank a line's bank came from: "ambient/open/night@rocco" is
+        // "ambient/open/night" (OwnLines, U2).
+        static string SharedBank(string bank) => bank == null ? null : bank.IndexOf('@') < 0 ? bank : bank.Substring(0, bank.IndexOf('@'));
+
         static void Check(bool condition, string name, string detail = null)
         {
             if (!condition) throw new Exception($"FAILED: {name}" + (detail == null ? "" : $" — {detail}"));
@@ -4893,10 +4897,10 @@ namespace Ledger.CoreTests
             var listFlag = "{\"specifics\": [{\"detail\": \"a van\", \"kind\": \"vehicle\", \"source\": \"none\"}]}";
             var fakeA = new ScriptedLlm(listFlag, "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}");
             var a = ClaimCheck.CheckAsync(fakeA, "m", items, "A van.", CancellationToken.None).GetAwaiter().GetResult();
-            Check(a.invented.Count == 1 && a.calls.Count == 2, "a flagged specific the second look does not support is invented");
+            Check(a.invented.Count == 1 && a.calls.Count == 1 + ClaimCheck.Looks, "a flagged specific no second look supports is invented");
             var fakeB = new ScriptedLlm(listFlag, "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"M1\"}]}");
             var b = ClaimCheck.CheckAsync(fakeB, "m", items, "A van.", CancellationToken.None).GetAwaiter().GetResult();
-            Check(b.invented.Count == 0 && b.calls.Count == 2, "one the second look supports is not");
+            Check(b.invented.Count == 0 && b.calls.Count == 1 + ClaimCheck.Looks, "one the second look supports is not");
             var fakeC = new ScriptedLlm("{\"specifics\": []}");
             var c = ClaimCheck.CheckAsync(fakeC, "m", items, "Morning.", CancellationToken.None).GetAwaiter().GetResult();
             Check(c.invented.Count == 0 && c.calls.Count == 1, "nothing flagged costs one call and no second look");
@@ -4911,7 +4915,7 @@ namespace Ledger.CoreTests
             // 1 and 2: a second look that fails keeps the list's verdict and its cost.
             var fakeF = new ScriptedLlm(listFlag, "unused") { ThrowAt = 2 };
             var f = ClaimCheck.CheckAsync(fakeF, "m", items, "A white van, parked by Rita's at nine.", CancellationToken.None).GetAwaiter().GetResult();
-            Check(f.invented != null && f.invented.Count == 1 && f.invented[0] == "a van" && f.calls.Count == 1,
+            Check(f.invented != null && f.invented.Count == 1 && f.invented[0] == "a van" && f.calls.Count == ClaimCheck.Looks,
                 "a second look that fails (not cancelled) keeps what the list flagged, and the list's call is still counted");
             var ctsG = new CancellationTokenSource();
             var fakeG = new ScriptedLlm(listFlag, "unused") { CancelOnCall = ctsG, CancelAt = 2 };
@@ -4956,7 +4960,7 @@ namespace Ledger.CoreTests
             // shown the line, 68% of invented replies caught; not shown it, 87%).
             var fakeH = new ScriptedLlm(listFlag, "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}");
             ClaimCheck.CheckAsync(fakeH, "m", items, "A van by Rita's.", CancellationToken.None).GetAwaiter().GetResult();
-            Check(fakeH.Requests.Count == 2 && !fakeH.Requests[1].Messages[0].Content.Contains("Rita's") && fakeH.Requests[1].Messages[0].Content.Contains("1. a van"),
+            Check(fakeH.Requests.Count == 1 + ClaimCheck.Looks && !fakeH.Requests[1].Messages[0].Content.Contains("Rita's") && fakeH.Requests[1].Messages[0].Content.Contains("1. a van"),
                 "the live check's second look judges the detail against the items, without the line");
             // 8: an answer cut off at the cap.
             var cutFlag = new ScriptedLlm("{\"specifics\": [{\"detail\": \"a van\", \"kind\": \"vehicle\", \"source\": \"none\"}, {\"detail\": \"at ni",
@@ -5036,13 +5040,75 @@ namespace Ledger.CoreTests
             // cited one true item for all of them).
             var twoFlags = "{\"specifics\": [{\"detail\": \"gone dark\", \"kind\": \"time\", \"source\": \"none\"}, " +
                            "{\"detail\": \"ran through the yard\", \"kind\": \"action\", \"source\": \"none\"}]}";
-            var fakeP = new ScriptedLlm(twoFlags, "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}",
-                                        "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"M1\"}]}");
+            // Every look at the first refuses it, every look at the second clears it.
+            var pAnswers = new List<string> { twoFlags };
+            for (int k = 0; k < ClaimCheck.Looks; k++) pAnswers.Add("{\"verdicts\": [{\"n\": 1, \"supported\": false}]}");
+            pAnswers.Add("{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"M1\"}]}");
+            var fakeP = new ScriptedLlm(pAnswers.ToArray());
             var p2 = ClaimCheck.CheckAsync(fakeP, "m", items, "Gone dark, he ran through the yard.", CancellationToken.None).GetAwaiter().GetResult();
-            Check(p2.invented.Count == 1 && p2.invented[0] == "gone dark" && p2.calls.Count == 3
+            Check(p2.invented.Count == 1 && p2.invented[0] == "gone dark" && p2.calls.Count == 1 + 2 * ClaimCheck.Looks
                   && fakeP.Requests[1].Messages[0].Content.Contains("1. gone dark") && !fakeP.Requests[1].Messages[0].Content.Contains("ran through the yard\n")
-                  && fakeP.Requests[2].Messages[0].Content.Contains("1. ran through the yard"),
-                "each flagged detail gets its own second look, and each verdict is its own");
+                  && fakeP.Requests[1 + ClaimCheck.Looks].Messages[0].Content.Contains("1. ran through the yard"),
+                "each flagged detail gets its own second looks, and each detail's verdict is its own");
+
+            // TWO LOOKS, EITHER CLEARS (U1, 30 September; kept to measure with):
+            // a detail stays refused only when every look refuses it.
+            var oneFlag = "{\"specifics\": [{\"detail\": \"ran through the yard\", \"kind\": \"action\", \"source\": \"none\"}]}";
+            var fakeQ = new ScriptedLlm(oneFlag, "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}",
+                                        "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"M1\"}]}");
+            ClaimCheck.Looks = 2;
+            (IReadOnlyList<string> invented, List<LlmResponse> calls) q2;
+            try { q2 = ClaimCheck.CheckAsync(fakeQ, "m", items, "He ran through the yard.", CancellationToken.None).GetAwaiter().GetResult(); }
+            finally { ClaimCheck.Looks = 1; }
+            Check(q2.invented.Count == 0 && q2.calls.Count == 3,
+                "a detail one look refuses and the other clears is cleared: it stays refused only when every look refuses it");
+
+            // STATED IN SO MANY WORDS (U1, 30 September): a detail whose every
+            // telling word stands in order in the item the list cited for it is
+            // cleared by the Core, no look asked; a paraphrase, a denial, a time
+            // or number the item does not give, a people line for anything but
+            // a habit, or no item cited, goes to the looks as before.
+            Check(ClaimCheck.StatedIn("Ron came on at the rank", "Mickey died of his heart; Ron found him when he came on at the rank.")
+                  && ClaimCheck.StatedIn("Mickey died", "Mickey, the previous owner, died three weeks ago.")
+                  && ClaimCheck.StatedIn("a stranger in the yard two nights before Mickey died", "I saw Ron argue with a stranger in the yard behind the office two nights before Mickey died.")
+                  && !ClaimCheck.StatedIn("Ron shouted at a man in the yard", "I saw Ron argue with a stranger in the yard.")
+                  && !ClaimCheck.StatedIn("Ron didn't find him", "Ron found him when he came on at the rank.")
+                  && !ClaimCheck.StatedIn("Ron never found him", "Ron found him when he came on at the rank.")
+                  && !ClaimCheck.StatedIn("early one evening", "at the office early one morning")
+                  && !ClaimCheck.StatedIn("three drivers", "two drivers on the rank")
+                  && !ClaimCheck.StatedIn("a white van", "a fish van this morning")
+                  && !ClaimCheck.StatedIn("him found Ron", "Ron found him")
+                  && !ClaimCheck.StatedIn("", "Ron found him") && !ClaimCheck.StatedIn("the", "the rank"),
+                  "a detail is stated in an item when every telling word of it stands there in order, a word's ending aside; never a paraphrase, a denial, another time or number, or words out of order");
+            var knownR = new List<(string id, string text)> { ("H1", "Mickey died of his heart; Ron found him when he came on at the rank."), ("P1", "Somebody they know: Ron, who keeps the rank; usually at Mickey's.") };
+            string ListOf(params (string d, string kind, string src)[] xs) =>
+                "{\"specifics\": [" + string.Join(", ", xs.Select(x => "{\"detail\": \"" + x.d + "\", \"kind\": \"" + x.kind + "\", \"source\": \"" + x.src + "\"}")) + "]}";
+            var fakeR = new ScriptedLlm(ListOf(("Ron found him", "action", "H1"), ("Ron came on at the rank", "action", "H1")));
+            var r2 = ClaimCheck.CheckAsync(fakeR, "m", knownR, "Ron found him when he came on at the rank.", CancellationToken.None).GetAwaiter().GetResult();
+            var fakeS = new ScriptedLlm(ListOf(("Ron found him", "action", "none")), "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}");
+            var s2 = ClaimCheck.CheckAsync(fakeS, "m", knownR, "Ron found him.", CancellationToken.None).GetAwaiter().GetResult();
+            var fakeT = new ScriptedLlm(ListOf(("Ron kept the rank last night", "action", "P1")), "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}");
+            var t2 = ClaimCheck.CheckAsync(fakeT, "m", knownR, "Ron kept the rank last night.", CancellationToken.None).GetAwaiter().GetResult();
+            var fakeU = new ScriptedLlm(ListOf(("Ron shouted at the rank", "action", "H1")), "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}");
+            var u2 = ClaimCheck.CheckAsync(fakeU, "m", knownR, "Ron shouted at the rank.", CancellationToken.None).GetAwaiter().GetResult();
+            // Who somebody is, in the present, stated in their people line, is
+            // cleared from it; anything with a time or a past in it is not.
+            var knownP = new List<(string id, string text)> { ("P1", "Somebody or somewhere on the street they know: Rita, who keeps the pawn shop; you know each other a little."),
+                                                              ("P2", "Somebody or somewhere on the street they know: Ron Kirby, who keeps Mickey's door and the rank.") };
+            var fakeV = new ScriptedLlm(ListOf(("Rita keeps the pawn shop", "person", "P1")));
+            var v2 = ClaimCheck.CheckAsync(fakeV, "m", knownP, "Rita keeps the pawn shop.", CancellationToken.None).GetAwaiter().GetResult();
+            var fakeW = new ScriptedLlm(ListOf(("Ron kept the door that night", "action", "P2")), "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}");
+            var w2 = ClaimCheck.CheckAsync(fakeW, "m", knownP, "Ron kept the door that night.", CancellationToken.None).GetAwaiter().GetResult();
+            Check(v2.invented.Count == 0 && v2.calls.Count == 1 && w2.invented.Count == 1
+                  && ClaimCheck.Timeless("Rita keeps the pawn shop") && !ClaimCheck.Timeless("Ron was minding the door")
+                  && !ClaimCheck.Timeless("Ron keeps the door at night") && !ClaimCheck.Timeless("Ron minded the door") && !ClaimCheck.Timeless("Rita keeps it when he's out"),
+                  "who somebody is, said in the present and stated in their people line, is cleared from it; what anybody did, or anything with a time, is not",
+                  $"{v2.invented.Count}/{v2.calls.Count} {w2.invented.Count}");
+            Check(r2.invented.Count == 0 && r2.calls.Count == 1
+                  && s2.invented.Count == 1 && s2.calls.Count == 1 + ClaimCheck.Looks
+                  && t2.invented.Count == 1 && u2.invented.Count == 1 && u2.calls.Count == 1 + ClaimCheck.Looks,
+                  "what is stated in so many words in the item the list cited is cleared with no look; with no item cited, a people line for an event, or words the item does not have, the looks decide",
+                  $"{r2.invented.Count}/{r2.calls.Count} {s2.invented.Count}/{s2.calls.Count} {t2.invented.Count} {u2.invented.Count}/{u2.calls.Count}");
             var many = new System.Text.StringBuilder("{\"specifics\": [");
             for (int k = 0; k <= ClaimCheck.MaxLooks; k++) many.Append(k > 0 ? ", " : "").Append("{\"detail\": \"thing " + k + "\", \"kind\": \"object\", \"source\": \"none\"}");
             var fakeM = new ScriptedLlm(many.Append("]}").ToString(), "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"M1\"}]}");
@@ -5117,6 +5183,124 @@ namespace Ledger.CoreTests
                 Check(plainWrong.Count == 0,
                       "a plain sentence is one with nothing in it to check: plain words only, nothing said of a third person, a place, a time, a thing, a count or a deed, and how they address him only as address",
                       string.Join(" | ", plainWrong));
+            }
+
+            // WHAT BEARS ON HIS LINE, CHOSEN BEFORE THE REPLY IS WRITTEN (U1, 30
+            // September): the items sharing his line's telling words, a rarer word
+            // counting for more, three at most, in the list's order; nothing when
+            // no word is shared; the time and the scene never; and in the reply's
+            // instructions only while the switch is on.
+            {
+                var items = new List<(string id, string text)>
+                {
+                    ("C1", "Bookkeeper of Mickey's minicab office on Quay Street for thirty-one years."),
+                    ("H1", "Mickey died of his heart, at the office early one morning; Ron found him."),
+                    ("H2", "The door at the back of the office is Mickey's own room; it has been locked since he died, and I keep the key."),
+                    ("H3", "Mickey's has two cab drivers on the rank, one by day and one by night."),
+                    ("S1", "The scene: the door of the office, a dry morning."),
+                    ("T1", "It is now ten in the morning."),
+                };
+                var door = ClaimCheck.Bearing(items, "What's behind that door?");
+                var drivers = ClaimCheck.Bearing(items, "How many drivers are there?");
+                var died = ClaimCheck.Bearing(items, "How did Mickey die?");
+                var who = ClaimCheck.Bearing(items, "Who are you?");
+                var morning = ClaimCheck.Bearing(items, "Morning.");
+                Check(door.Count == 1 && door[0].StartsWith("The door at the back")
+                      && drivers.Count == 1 && drivers[0].StartsWith("Mickey's has two cab drivers")
+                      && died.Contains(items[1].text) && died.Count <= 3
+                      && who.Count == 0 && morning.Count == 0 && ClaimCheck.Bearing(items, "").Count == 0 && ClaimCheck.Bearing(null, "door").Count == 0,
+                      "what bears on his line is the items sharing its telling words (\"die\" meets \"died\", \"drivers\" meets \"driver\"), never the time or the scene, and nothing when no word is shared",
+                      string.Join(" | ", door) + " || " + string.Join(" | ", drivers) + " || " + string.Join(" | ", died) + " || " + string.Join(" | ", who));
+
+                var eChoose = Engine(new ScriptedLlm("Mm."), new ScriptedLlm(Clean));
+                eChoose.Card.HardFacts.Add("The door at the back of the office is Mickey's own room; it has been locked since he died, and I keep the key.");
+                string onPrompt = eChoose.BuildSystemPrompt("What's behind that door?", now, "In the office.");
+                string onNothing = eChoose.BuildSystemPrompt("Who are you?", now, "In the office.");
+                ConversationEngine.ChooseFirst = false;
+                string offPrompt;
+                try { offPrompt = eChoose.BuildSystemPrompt("What's behind that door?", now, "In the office."); }
+                finally { ConversationEngine.ChooseFirst = true; }
+                int chosenAt = onPrompt.IndexOf("Of what you know, this bears most on what he just said:", StringComparison.Ordinal);
+                int doorAt = chosenAt < 0 ? -1 : onPrompt.IndexOf("- The door at the back of the office is Mickey's own room", chosenAt, StringComparison.Ordinal);
+                Check(chosenAt >= 0 && doorAt > chosenAt && doorAt < onPrompt.IndexOf("Rules that override", StringComparison.Ordinal),
+                      "the reply's instructions carry what bears on his line, before the rules", onPrompt);
+                Check(!onNothing.Contains("bears most") && onNothing.Contains("What none of it gives, you do not know")
+                      && !offPrompt.Contains("bears most") && !offPrompt.Contains("What none of it gives"),
+                      "with nothing chosen the instructions say only to answer from what they know, never that nothing bears on it; with the switch off, neither");
+            }
+
+            // THE STREET'S NAMED PEOPLE IN THEIR OWN WORDS (OwnLines, U2, 30
+            // September): a named person's own lines for a bank come first, kept
+            // by the ledger as "bank@id", so the no-repeat rule runs over theirs;
+            // anybody else, and any bank they have none for, keeps the shared
+            // bank; every own line keeps the content rule, is unique in its bank,
+            // sits in a bank StreetVoice has, and never speaks of its speaker as
+            // somebody else; and there are enough for two hours' busiest walk.
+            {
+                Gossiper G(string id) => new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker());
+                var ronPair = StreetVoice.Ambient(G("rocco"), G("xb"), now, 0.5, 1.0, false, false, 3);
+                var otherPair = StreetVoice.Ambient(G("xa"), G("rocco"), new GameTime(2, 11, 0), 0.5, 1.0, false, false, 3);
+                var nightPair = StreetVoice.Ambient(G("rocco"), G("xb"), new GameTime(2, 23, 0), 0.5, 1.0, false, false, 3);
+                var plainPair = StreetVoice.Ambient(G("xa"), G("xb"), now, 0.5, 1.0, false, false, 3);
+                var ron = OwnLines.ByCast["rocco"];
+                Check(ronPair[0].Bank == "ambient/open/ordinary@rocco" && Array.IndexOf(ron["ambient/open/ordinary"], ronPair[0].Text) >= 0
+                      && ronPair[1].Bank == "ambient/reply/ordinary"
+                      && otherPair[0].Bank == "ambient/open/ordinary" && otherPair[1].Bank == "ambient/reply/ordinary@rocco" && Array.IndexOf(ron["ambient/reply/ordinary"], otherPair[1].Text) >= 0
+                      && nightPair[0].Bank == "ambient/open/night@rocco"
+                      && plainPair[0].Bank == "ambient/open/ordinary" && plainPair[1].Bank == "ambient/reply/ordinary",
+                      "a named person's own lines come first, opening or answering, kept as bank@id; anybody else keeps the shared bank",
+                      string.Join(" | ", ronPair.Select(l => l.Bank + ": " + l.Text)) + " || " + string.Join(" | ", otherPair.Select(l => l.Bank)));
+
+                var about = new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.5, Sensitive = false, Hops = 0 };
+                var ronSaw = StreetVoice.Recognition(G("rocco"), about, StanceKind.Comments, 1);
+                var ledgerOwn = new RemarkLedger();
+                var said = new HashSet<string>();
+                bool freshEach = true;
+                for (int k = 0; k < ron["ambient/open/ordinary"].Length; k++)
+                {
+                    var l = StreetVoice.Ambient(G("rocco"), G("xb"), now, 0.5, 1.0, false, false, 5, ledgerOwn)[0];
+                    if (!said.Add(l.Text)) freshEach = false;
+                    ledgerOwn.Heard(l);
+                }
+                var faintRon = StreetVoice.FaintRemark(G("rocco"), about, 2);
+                Check(ronSaw != null && ronSaw.Bank == "recognition/arrival-saw@rocco" && Array.IndexOf(ron["recognition/arrival-saw"], ronSaw.Text) >= 0
+                      && freshEach && faintRon.Bank == "faint@rocco" && SharedBank("faint@rocco") == "faint" && SharedBank("faint") == "faint"
+                      && OwnLines.For("rocco", "no/such/bank") == null && OwnLines.For("xa", "faint") == null && OwnLines.For(null, "faint") == null,
+                      "his own lines serve his recognitions and his half-words too, and with the ledger none comes back until all of his have been heard",
+                      (ronSaw == null ? "null" : ronSaw.Bank) + " | " + faintRon.Bank);
+
+                var banks = new HashSet<string>
+                {
+                    "faint", "recognition/arrival-heard", "recognition/arrival-saw", "recognition/avoids", "recognition/confronts", "recognition/ordinary",
+                    "recognition/outfit-did", "recognition/outfit-noshow", "recognition/outfit-refused", "recognition/outfit-wounddown", "recognition/police-asked",
+                    "recognition/police-heard", "recognition/refuses", "recognition/sensitive", "recognition/taken-heard", "recognition/taken-saw",
+                    "recognition/threat-heard", "recognition/threat-told", "recognition/week-takeover", "recognition/week-winddown", "recognition/week-wontsay",
+                    "ambient/open/feud", "ambient/open/injured", "ambient/open/justnow/crash", "ambient/open/justnow/glass", "ambient/open/justnow/noise",
+                    "ambient/open/justnow/shout", "ambient/open/night", "ambient/open/ordinary", "ambient/open/prices", "ambient/open/settling", "ambient/open/slump",
+                    "ambient/reply/feud", "ambient/reply/injured", "ambient/reply/justnow", "ambient/reply/night", "ambient/reply/ordinary", "ambient/reply/prices",
+                    "ambient/reply/settling", "ambient/reply/slump",
+                };
+                var ownFaults = new List<string>();
+                foreach (var who in OwnLines.ByCast)
+                {
+                    string ownName = who.Key == "rocco" ? "Ron" : null;
+                    foreach (var bank in who.Value)
+                    {
+                        if (!banks.Contains(bank.Key)) ownFaults.Add(who.Key + ": no such bank " + bank.Key);
+                        if (bank.Value.Length < 2) ownFaults.Add(who.Key + ": fewer than two in " + bank.Key);
+                        if (bank.Value.Distinct().Count() != bank.Value.Length) ownFaults.Add(who.Key + ": a line twice in " + bank.Key);
+                        foreach (var line in bank.Value)
+                        {
+                            if (ContentRule.SpeechBreaks(line) != null) ownFaults.Add(who.Key + ": content rule: " + line);
+                            if (RealWorld.Find(line).Count > 0) ownFaults.Add(who.Key + ": a real name or later thing: " + line);
+                            // Their own name only as they give it ("Ron. I keep the rank."), never as somebody else.
+                            if (ownName != null && line.Contains(ownName) && !line.Contains(ownName + ". ")) ownFaults.Add(who.Key + ": speaks of himself as another: " + line);
+                        }
+                    }
+                }
+                Check(ownFaults.Count == 0 && ron["ambient/open/ordinary"].Length >= 30 && ron["ambient/open/night"].Length >= 12,
+                      "every own line keeps the content rule, names nothing real or later, is once in its bank and in a bank the street has, never speaks of its speaker as somebody else; Ron has more everyday and night openers than two hours' busiest walk hears (28 and 10)",
+                      string.Join(" | ", ownFaults));
             }
 
             // THE FALLBACK IS NOT ONE LINE FOR EVERYONE (FINDINGS, 25 September).
@@ -6573,11 +6757,11 @@ namespace Ledger.CoreTests
                             && hintsPlayed.Done.Contains(Moment.CanTalk) && hintsSkipped.Done.Contains(Moment.CanTalk);
                 bool arrival = sawCome.Count == 3 && sawCome.Contains("lena") && sawCome.Contains("rocco") && sawCome.Contains("ada") && !sawCome.Contains("joey") && sawAgain.Count == 0
                                && arrivalStory != null && !arrivalStory.Sensitive && StreetVoice.StoryThatShows(dm.Get("lena"), dm.MinConfidenceToShare) == null
-                               && inCoat == null && afterTalk == null && sawLine != null && sawLine.Bank == "recognition/arrival-saw" && sawTwice == null && sheilaSays == null
-                               && strangerHeard == null && knownHeard != null && knownHeard.Bank == "recognition/arrival-heard" && underFaint == null
+                               && inCoat == null && afterTalk == null && sawLine != null && SharedBank(sawLine.Bank) == "recognition/arrival-saw" && sawTwice == null && sheilaSays == null
+                               && strangerHeard == null && knownHeard != null && SharedBank(knownHeard.Bank) == "recognition/arrival-heard" && underFaint == null
                                && DayOne.Arrived(dm, dcast, new GameTime(1, 9, 0)).Count == 0
                                && ronRegard.Knowing == Knowing.Nothing && arrivalExchange.Count == 0 && secondArrival.Count == 0
-                               && heardArrival != null && heardArrival.Bank == "recognition/arrival-heard"
+                               && heardArrival != null && SharedBank(heardArrival.Bank) == "recognition/arrival-heard"
                                && StreetVoice.ArrivalLine(withDeed, dm.MinConfidenceToShare, new RemarkLedger(), 0, 1.0, false, false) == null
                                && !DayOne.IsArrival(StreetVoice.StoryThatShows(withDeed, dm.MinConfidenceToShare));
                 Check(walk && arrival,

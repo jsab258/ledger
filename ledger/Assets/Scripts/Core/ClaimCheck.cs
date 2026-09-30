@@ -231,6 +231,14 @@ namespace Ledger.Core
         /// The most flagged details given a second look each.
         public const int MaxLooks = 8;
 
+        /// How many second looks each flagged detail gets; it stays refused only
+        /// if every one refuses it. One: a second look side by side measured no
+        /// better on the bench's held-out half (U1, 30 September: invented
+        /// replies caught 100 of 108 against 97, honest ones refused 42 of 132
+        /// against 40, both within a run's noise), and costs a call a detail;
+        /// kept to measure with (ClaimBench firsts --two-looks).
+        public static int Looks = 1;
+
         // A call whose failure, however it comes, arrives in its task.
         static async System.Threading.Tasks.Task<LlmResponse> LookAsync(ILlmClient client, LlmRequest request, System.Threading.CancellationToken ct) =>
             await client.CompleteAsync(request, ct).ConfigureAwait(false);
@@ -253,9 +261,39 @@ namespace Ledger.Core
             // is flagged the line is unchecked, never clean.
             bool cut = r.StopReason == "max_tokens";
             var habits = new HashSet<string>();
-            var flagged = ParseItems(cut ? Salvaged(r.Text) : r.Text, ids, habits);
+            var cites = new Dictionary<string, List<string>>();
+            var flagged = ParseItems(cut ? Salvaged(r.Text) : r.Text, ids, habits, cites);
             if (cut && (flagged == null || flagged.Count == 0)) return (null, calls);
             if (flagged == null || flagged.Count == 0) return (flagged, calls);
+            // STATED IN SO MANY WORDS, BY CODE (U1, 30 September: the check's
+            // standard is "stated or directly implied"; the research's own
+            // split, production/research/grounded-replies/NOTE-2026-09-29.md).
+            // A detail whose every telling word stands, in order, in the item
+            // the list itself cited for it is stated there, and no model is
+            // asked: a look refused Darren's "at the office", his own fact word
+            // for word, one time in twelve, and an honest reply full of what they
+            // know was refused wholesale past MaxLooks. What is only implied
+            // still goes to the looks; a shop's hours always do (town list 6bo),
+            // and a people line clears a habit, or who somebody is said in the
+            // present with nothing of another time ("Rita keeps the pawn shop"),
+            // never an event (6ad: "Ron minding the door" said of the night
+            // the window went has a word the line does not, and a time).
+            var itemText = new Dictionary<string, string>();
+            foreach (var (id, text) in items) itemText[id] = text;
+            var stated = new HashSet<string>();
+            foreach (var d in flagged)
+            {
+                if ((ids.Contains("O1") && TellsOfHours(d)) || !cites.TryGetValue(d, out var cited)) continue;
+                foreach (var id in cited)
+                    if ((id[0] != 'P' || habits.Contains(d) || Timeless(d)) && itemText.TryGetValue(id, out var t) && StatedIn(d, t)) { stated.Add(d); break; }
+            }
+            if (stated.Count > 0)
+            {
+                var rest = new List<string>();
+                foreach (var d in flagged) if (!stated.Contains(d)) rest.Add(d);
+                flagged = rest;
+                if (flagged.Count == 0) return (cut ? null : flagged, calls);
+            }
             // ONE SECOND LOOK A DETAIL, side by side (measured on the bench:
             // given five details at once, it cited one true hard fact for all
             // five, two of which it did not state). More than MaxLooks flagged
@@ -277,7 +315,10 @@ namespace Ledger.Core
             // only to the card or the time now (routed here by ParseItems) is
             // cleared or not by this look's instructions alone: the Core holds
             // it to naming a real item, not to naming a memory.
-            foreach (var d in flagged) looks.Add(LookAsync(client, RequestVerify(model, known, new[] { d }), ct));
+            // LOOKS A DETAIL (Looks; U1, 30 September): with more than one, a
+            // detail stays refused only when every look refuses it, side by side.
+            foreach (var d in flagged)
+                for (int k = 0; k < Looks; k++) looks.Add(LookAsync(client, RequestVerify(model, known, new[] { d }), ct));
             // Every look is waited for, so none is left running unwatched when
             // the turn is cancelled (the independent check's third pass).
             try { await System.Threading.Tasks.Task.WhenAll(looks).ConfigureAwait(false); }
@@ -286,15 +327,21 @@ namespace Ledger.Core
             var left = new List<string>();
             for (int i = 0; i < flagged.Count; i++)
             {
-                // THE SECOND LOOK FAILING KEEPS THE LIST'S VERDICT (the
-                // independent check: a throw here let a flagged line be said
-                // word for word, and lost the first call's cost).
-                var v = looks[i].Status == System.Threading.Tasks.TaskStatus.RanToCompletion ? looks[i].Result : null;
-                if (v != null) calls.Add(v);
-                // What they know of the street's people clears a habit, never an
-                // event (town list 6ad).
-                var ok = v == null ? null : ParseVerify(v.Text, 1, habits.Contains(flagged[i]) ? ids : ids.FindAll(x => x[0] != 'P'));
-                if (ok == null || !ok[0]) left.Add(flagged[i]);
+                bool cleared = false;
+                for (int k = 0; k < Looks; k++)
+                {
+                    var look = looks[i * Looks + k];
+                    // THE SECOND LOOK FAILING KEEPS THE LIST'S VERDICT (the
+                    // independent check: a throw here let a flagged line be said
+                    // word for word, and lost the first call's cost).
+                    var v = look.Status == System.Threading.Tasks.TaskStatus.RanToCompletion ? look.Result : null;
+                    if (v != null) calls.Add(v);
+                    // What they know of the street's people clears a habit, never an
+                    // event (town list 6ad).
+                    var ok = v == null ? null : ParseVerify(v.Text, 1, habits.Contains(flagged[i]) ? ids : ids.FindAll(x => x[0] != 'P'));
+                    if (ok != null && ok[0]) cleared = true;
+                }
+                if (!cleared) left.Add(flagged[i]);
             }
             // A cut-off answer the second look cleared is still only half read
             // (the independent check's second pass): unchecked, never clean.
@@ -579,7 +626,14 @@ namespace Ledger.Core
         /// street's people (P items); anything else it may not (town list 6ad,
         /// the independent check: "Darren was at the quay" cleared by "usually
         /// at the quay").
-        public static IReadOnlyList<string> ParseItems(string answer, ICollection<string> validIds, ICollection<string> habits)
+        public static IReadOnlyList<string> ParseItems(string answer, ICollection<string> validIds, ICollection<string> habits) =>
+            ParseItems(answer, validIds, habits, null);
+
+        /// As above, with `cites` given the items the list cited for each detail
+        /// it named a real item for (U1, 30 September: what the Core then reads
+        /// for a detail stated in so many words, StatedIn).
+        public static IReadOnlyList<string> ParseItems(string answer, ICollection<string> validIds, ICollection<string> habits,
+                                                       IDictionary<string, List<string>> cites)
         {
             // Every list in the answer is read (the independent check: an empty
             // list followed by a corrected one came back clean), and one that
@@ -619,6 +673,7 @@ namespace Ledger.Core
                     return null;
                 }
                 var ids = SourceIds((MiniJson.GetString(o, "source") ?? "").Trim(), validIds);
+                if (cites != null && ids != null) cites[detail.Trim()] = ids;
                 // A shop's hours are never cleared on the list's word while the
                 // street's hours are among the items (town list 6bo, the
                 // independent check four times): given as a habit, the street,
@@ -729,6 +784,24 @@ namespace Ledger.Core
         /// window went", "he walked in at nine"); not a clock time alone, which
         /// as often says when a place shuts ("they close before six"). Only ever
         /// makes the check stricter; a word list always leaks (FINDINGS).
+        /// Nothing of another time: no past word, no day, no hour, no "when" (U1,
+        /// 30 September: who somebody is, as a people line states it, may be
+        /// cleared from it; what anybody did at some time may not).
+        internal static bool Timeless(string detail)
+        {
+            if (string.IsNullOrWhiteSpace(detail)) return false;
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(detail.ToLowerInvariant().Replace('’', '\''), @"[a-z]+"))
+            {
+                var w = m.Value;
+                if (Array.IndexOf(Then, w) >= 0 || Array.IndexOf(Times, w) >= 0 || Array.IndexOf(Whens, w) >= 0) return false;
+                if (w.Length >= 5 && w.EndsWith("ed") && Array.IndexOf(NotDeeds, w) < 0) return false;
+            }
+            return true;
+        }
+
+        static readonly string[] Whens = { "night", "nights", "morning", "mornings", "evening", "afternoon", "today", "tonight", "last", "when", "while",
+                                           "after", "before", "since", "ago", "then", "earlier", "once", "used", "kept", "went", "got", "had", "was", "were" };
+
         internal static bool TellsOfThen(string detail)
         {
             if (string.IsNullOrWhiteSpace(detail)) return false;
@@ -903,5 +976,130 @@ namespace Ledger.Core
             "- Your first answer said " + string.Join("; ", invented) +
             ", which nothing you saw, heard or were told supports. Answer again, saying only what you actually know. " +
             "If you don't know something, say so in your own way.";
+
+        /// STATED IN SO MANY WORDS (U1, 30 September): every telling word of the
+        /// detail stands in the item in the same order ("Ron came on at the
+        /// rank" in "Ron found him when he came on at the rank"), a word's
+        /// ending aside ("died", "die"); never a detail with a denial in it
+        /// ("Ron didn't find him"), and never an empty one. Times, days and
+        /// numbers are telling words here: "early one evening" is not stated by
+        /// "early one morning".
+        public static bool StatedIn(string detail, string item)
+        {
+            if (string.IsNullOrWhiteSpace(detail) || string.IsNullOrWhiteSpace(item)) return false;
+            var d = Worded(detail, out bool denies);
+            if (denies || d.Count == 0) return false;
+            var t = Worded(item, out _);
+            int j = 0;
+            foreach (var w in t) if (j < d.Count && w == d[j]) j++;
+            return j == d.Count;
+        }
+
+        static readonly HashSet<string> Glue = new HashSet<string>
+        {
+            "a", "an", "the", "of", "to", "in", "on", "at", "for", "with", "by", "from", "and", "or", "but", "as", "into", "up", "off",
+            "is", "are", "was", "were", "be", "been", "am", "has", "have", "had", "do", "does", "did", "it", "its", "he", "him", "his",
+            "she", "her", "they", "them", "their", "i", "me", "my", "you", "your", "we", "us", "our", "that", "this", "there", "here",
+            "who", "which", "what", "when", "where", "so", "just", "then",
+        };
+        static readonly HashSet<string> Denials = new HashSet<string> { "not", "no", "never", "nobody", "nothing", "none", "neither", "nor", "without", "nowt", "noone" };
+
+        // The detail's words in order, stemmed, without the glue; whether it denies.
+        static List<string> Worded(string text, out bool denies)
+        {
+            denies = false;
+            var words = new List<string>();
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(text.ToLowerInvariant().Replace('’', '\''), "[a-z0-9']+"))
+            {
+                var w = m.Value.Trim('\'');
+                if (w.EndsWith("n't") || Denials.Contains(w)) denies = true;
+                if (w.EndsWith("'s")) w = w.Substring(0, w.Length - 2);
+                if (w.Length == 0 || Glue.Contains(w)) continue;
+                words.Add(Stem(w));
+            }
+            return words;
+        }
+
+        /// WHAT BEARS ON HIS LINE, CHOSEN BEFORE THE REPLY IS WRITTEN (U1, 30
+        /// September; production/research/talk-helper/METHOD-2026-09-30.md: in
+        /// practice the grounding happens before writing, and a detective game
+        /// that chose the fact first cut invented turns from 17.8% to 6.3%).
+        /// The known items that share the most telling words with his line, a
+        /// rarer word counting for more, at most `max`, in the list's order;
+        /// none when nothing shares a word. Chosen by code, so it costs no
+        /// call and no time; the check still reads everything they know.
+        public static List<string> Bearing(IEnumerable<(string id, string text)> items, string line, int max = 3)
+        {
+            var chosen = new List<string>();
+            if (items == null || string.IsNullOrWhiteSpace(line)) return chosen;
+            var list = new List<(string id, string text, HashSet<string> words)>();
+            foreach (var (id, text) in items)
+                if (!string.IsNullOrWhiteSpace(text) && id != "T1" && id != "S1") list.Add((id, text, Telling(text)));
+            if (list.Count == 0) return chosen;
+            var asked = Telling(line);
+            var scored = new List<(int at, double score)>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                double score = 0;
+                foreach (var w in asked)
+                {
+                    if (!list[i].words.Contains(w)) continue;
+                    int df = 0;
+                    foreach (var x in list) if (x.words.Contains(w)) df++;
+                    score += Math.Log(1.0 + (double)list.Count / df);
+                }
+                if (score > 0) scored.Add((i, score));
+            }
+            scored.Sort((a, b) => b.score != a.score ? b.score.CompareTo(a.score) : a.at.CompareTo(b.at));
+            var top = scored.GetRange(0, Math.Min(max, scored.Count));
+            top.Sort((a, b) => a.at.CompareTo(b.at));
+            foreach (var (at, _) in top) chosen.Add(list[at].text);
+            return chosen;
+        }
+
+        // Words that tell what a line is about: lower case, a plural's s and a
+        // possessive dropped, and none of the words every line has.
+        static readonly HashSet<string> Untelling = new HashSet<string>
+        {
+            "a", "an", "the", "and", "or", "but", "of", "to", "in", "on", "at", "for", "with", "by", "from", "about", "as", "into",
+            "i", "me", "my", "you", "your", "he", "him", "his", "she", "her", "it", "its", "we", "us", "our", "they", "them", "their",
+            "is", "are", "was", "were", "be", "been", "being", "am", "do", "does", "did", "done", "have", "has", "had", "will", "would",
+            "can", "could", "should", "shall", "may", "might", "must", "not", "no", "yes", "so", "if", "then", "than", "that", "this",
+            "these", "those", "there", "here", "what", "who", "whom", "which", "when", "where", "why", "how", "any", "some", "all",
+            "just", "only", "very", "much", "more", "most", "get", "got", "know", "think", "tell", "say", "said", "like", "one", "anything",
+            "something", "nothing", "everything", "anyone", "someone", "round", "around", "now", "ever", "still", "own",
+            "don't", "didn't", "isn't", "wasn't", "i'm", "you're", "what's", "who's", "it's", "that's", "there's", "meant", "mean", "going",
+            // A greeting or the time of day says nothing of what he wants to know:
+            // "Morning." must not bring up the morning Mickey died.
+            "morning", "afternoon", "evening", "night", "today", "tonight", "hello", "hiya", "alright", "cheers", "thanks", "love", "mate",
+            "boss", "friend", "sorry", "well", "right", "okay",
+        };
+
+        // A word's plain stem, roughly, so "die" meets "died" and "drivers" meets
+        // "driver": -ies and -ied to y, then -ing, -ed or -s off a long word, and
+        // a final e off, so "locked", "lock" and "locking" meet.
+        static string Stem(string w)
+        {
+            if (w.Length == 4 && w.EndsWith("ied")) return w.Substring(0, 3);     // died, lied, tied
+            if (w.Length > 4 && (w.EndsWith("ies") || w.EndsWith("ied"))) return w.Substring(0, w.Length - 3) + "y";
+            if (w.Length > 5 && w.EndsWith("ing")) w = w.Substring(0, w.Length - 3);
+            else if (w.Length > 3 && w.EndsWith("ed")) w = w.Substring(0, w.Length - 2);
+            else if (w.Length > 3 && w.EndsWith("s") && !w.EndsWith("ss")) w = w.Substring(0, w.Length - 1);
+            if (w.Length > 3 && w.EndsWith("e")) w = w.Substring(0, w.Length - 1);
+            return w;
+        }
+
+        static HashSet<string> Telling(string text)
+        {
+            var words = new HashSet<string>();
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(text.ToLowerInvariant().Replace('’', '\''), "[a-z0-9']+"))
+            {
+                var w = m.Value.Trim('\'');
+                if (w.EndsWith("'s")) w = w.Substring(0, w.Length - 2);
+                if (w.Length < 3 || Untelling.Contains(w)) continue;
+                words.Add(Stem(w));
+            }
+            return words;
+        }
     }
 }

@@ -130,13 +130,27 @@ def timing_lines(replies):
     for r in replies:
         for name, ms in r["steps"]:
             steps.setdefault(name, []).append(ms / 1000.0)
+    # Ready for the voice ahead of its check (--pending, U1 30 September): the
+    # voice can start on it then, and play it once "first" clears it.
+    ahead = [r["pending_s"] for r in replies if r.get("pending_s") is not None and r.get("first_s") is not None]
     out = ["- with --early, as the game runs it: a first sentence heard in %d of %d turns, median %s s, slowest %s s"
            % (len(firsts), len(replies), "%.1f" % median(firsts) if firsts else "-", "%.1f" % max(firsts) if firsts else "-"),
+           "- with --pending: of those, %d written ahead of their check, median %s s, so the voice can start that much sooner (median %s s)"
+           % (len(ahead), "%.1f" % median(ahead) if ahead else "-",
+              "%.1f" % median([r["first_s"] - r["pending_s"] for r in replies if r.get("pending_s") is not None and r.get("first_s") is not None]) if ahead else "-"),
            "- how the turns went: " + ", ".join("%s %d" % kv for kv in sorted(went.items()))]
     if steps:
         out.append("- each step's end, median from the turn's start: " + ", ".join(
             "%s %.1f s (%d turns)" % (name, median(v), len(v)) for name, v in steps.items()))
     return out
+
+
+def turn_steps(r):
+    """Where this turn's time went, step by step (T1, 30 September: a turn cut
+    at eight seconds left no record of why)."""
+    if not r.get("steps"):
+        return ""
+    return "; steps: " + ", ".join("%s %.1f" % (name, ms / 1000.0) for name, ms in r["steps"])
 
 
 def size_summary(path, turns):
@@ -179,7 +193,7 @@ def main(argv):
         if os.path.exists(sizes):
             os.remove(sizes)
         env["LEDGER_TALK_SIZES"] = os.path.abspath(sizes)
-    p = subprocess.Popen(["dotnet", DLL] + ([] if live else ["--fake"]) + (["--early"] if early else []), cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    p = subprocess.Popen(["dotnet", DLL] + ([] if live else ["--fake"]) + (["--early", "--pending"] if early else []), cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          stderr=subprocess.DEVNULL, text=True, encoding="utf-8", bufsize=1)
     ready = json.loads(p.stdout.readline())
     if not ready.get("online"):
@@ -196,17 +210,20 @@ def main(argv):
             p.stdin.flush()
             t0 = time.time()
             first_s = None
+            pending_s = None
             while True:
                 line = p.stdout.readline()
                 if not line:
                     break
                 msg = json.loads(line)
+                if msg.get("id") == n and "pending" in msg and pending_s is None:
+                    pending_s = round(time.time() - t0, 2)
                 if msg.get("id") == n and "first" in msg and first_s is None:
                     first_s = round(time.time() - t0, 2)
                 if msg.get("id") == n and "reply" in msg:
                     replies.append({"to": who, "say": say, "reply": msg.get("reply"), "ms": msg.get("ms"),
                                     "offline": msg.get("offline"), "wall_s": round(time.time() - t0, 2),
-                                    "first_s": first_s, "went": msg.get("went"), "steps": msg.get("steps") or []})
+                                    "first_s": first_s, "pending_s": pending_s, "went": msg.get("went"), "steps": msg.get("steps") or []})
                     break
             turns += 1
         hour += 1
@@ -252,7 +269,7 @@ def main(argv):
         "",
     ] + ["- %s: \"%s\" -> \"%s\" (%.1f s%s%s)" % (r["to"], r["say"], (r["reply"] or "").replace("\n", " "), r["wall_s"],
                                                    ", first sentence %.1f s" % r["first_s"] if r.get("first_s") is not None else "",
-                                                   ", " + r["went"] if r.get("went") else "") for r in replies]
+                                                   ", " + r["went"] if r.get("went") else "") + turn_steps(r) for r in replies]
     if live:
         tokens = {}
         for l in cost["cost"].splitlines():

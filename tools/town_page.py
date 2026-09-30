@@ -75,9 +75,23 @@ def inline(md):
 def outline_html(path=None):
     with open(path or OUTLINE, encoding="utf-8") as fh:
         text = fh.read()
-    out, para, items = [], [], []
+    out, para, items, table = [], [], [], []
 
     def flush():
+        # A TABLE READS AS CARDS (the regulars' contact sheet, 30 September):
+        # nine columns do not fit a phone, so each row is a card, its name and
+        # age the heading and every other column a line; "#" and "id" are left out.
+        if table:
+            head = [c.strip().lower() for c in table[0]]
+            cards = []
+            for row in table[1:]:
+                cells = dict(zip(head, [c.strip() for c in row]))
+                title = ", ".join(x for x in (cells.get("name", ""), cells.get("age", "")) if x) or next(iter(cells.values()), "")
+                body = "".join("<p><b>" + html.escape(k) + "</b> " + inline(v) + "</p>"
+                               for k, v in cells.items() if k not in ("#", "id", "name", "age") and v)
+                cards.append('<div class="person"><h4>' + inline(title) + "</h4>" + body + "</div>")
+            out.append('<div class="people">' + "".join(cards) + "</div>")
+            table.clear()
         if para:
             out.append("<p>" + inline(" ".join(para)) + "</p>")
             para.clear()
@@ -86,6 +100,15 @@ def outline_html(path=None):
             items.clear()
     for raw in text.split("\n"):
         line = raw.rstrip()
+        if line.startswith("|"):
+            if para or items:
+                flush()
+            cells = line.strip().strip("|").split("|")
+            if not all(re.match(r"^\s*:?-{3,}:?\s*$", c) for c in cells):
+                table.append(cells)
+            continue
+        if table:
+            flush()
         if line.startswith("# "):
             flush()
             continue  # the page carries its own heading
@@ -139,6 +162,14 @@ textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding
 .outline p,.outline li{max-width:65ch}
 .outline ul{padding-left:1.2rem;margin:4px 0}
 :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:8px 0}
+.person{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg)}
+.person h4{margin:0 0 6px;font-size:1rem}
+.person p{margin:2px 0;font-size:.92rem;line-height:1.35}
+.person b{color:var(--soft);font-weight:600}
+.notes{margin:0 0 12px;padding:8px 12px;border-left:3px solid var(--amber);background:var(--amber-bg);border-radius:4px}
+.notes summary{cursor:pointer;font-weight:600}
+.notes li{margin:4px 0}
 img{max-width:100%;height:auto;cursor:zoom-in}
 .full{position:fixed;inset:0;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;z-index:10;cursor:zoom-out}
 .full img{max-width:100vw;max-height:100vh;width:auto;height:auto;object-fit:contain;cursor:zoom-out}

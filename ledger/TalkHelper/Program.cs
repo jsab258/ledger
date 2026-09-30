@@ -153,6 +153,14 @@ static class Program
 
         public Helper(ILlmClient llm, TimeSpan patience) { _llm = llm; _patience = patience; }
         public bool Early;
+        /// THE FIRST SENTENCE AHEAD OF ITS CHECK (--pending; U1, 30 September):
+        /// with Early, each first sentence is also written the moment it is
+        /// drafted as {"id","to","pending":...,"ms"}, before its check, so the
+        /// game's voice can make it ready while it is checked. It is to be
+        /// PLAYED only when the same turn's "first" arrives with the same words;
+        /// a pending sentence with no matching "first" before the turn's reply
+        /// is never played. Off unless asked for, until the game reads it.
+        public bool Pending;
         /// THE REST'S OWN LIMIT (town list 6bx): once the first sentence has
         /// been heard, the rest of the reply has this long beyond the turn's
         /// patience before it is cut, so a turn whose first words came quickly
@@ -911,6 +919,16 @@ static class Program
                 try
                 {
                     Func<string, Task<bool>> onFirst = null;
+                    engine.OnFirstWritten = Early && Pending
+                        ? (Action<string>)(ahead =>
+                        {
+                            lock (gate)
+                            {
+                                if (closed) return;
+                                Emit(JsonSerializer.Serialize(new { id, to, pending = ahead, ms = sw.ElapsedMilliseconds }, Plain));
+                            }
+                        })
+                        : null;
                     if (Early)
                     {
                         onFirst = first =>
@@ -1062,7 +1080,9 @@ static class Program
             // ENDED: the character closed the conversation (town list 6ae).
             bool ends = !timedOut && engine.LastEnded;
             // THE TURN'S STEPS (town list 6bx), each with its milliseconds from the start.
-            var steps = engine.LastSteps.ConvertAll(x => new object[] { x.step, x.ms });
+            // Under the engine's own lock: a turn given up may still be marking steps as it unwinds.
+            List<object[]> steps;
+            lock (engine.LastSteps) steps = engine.LastSteps.ConvertAll(x => new object[] { x.step, x.ms });
             // TRUST EARNED (town list 6bz): for somebody who names him only on
             // trust, whether they trust him after this turn, and whether this
             // turn earned it; the game keeps it and sends it back.
@@ -1248,6 +1268,7 @@ static class Program
             };
         }
         helper.Early = Array.IndexOf(args, "--early") >= 0;
+        helper.Pending = Array.IndexOf(args, "--pending") >= 0;
         LoadCards(helper, CardsDir(args));
         LoadCast(helper, CardsDir(args));
         Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake, notice = new { title = AiNotice.Title, text = AiNotice.TextFor(relay != null), report = AiNotice.ReportLabel } }, Plain));
@@ -1492,7 +1513,7 @@ static class Program
             cutHelper.Emit = _ => { };
             var cutOff = await cutHelper.Answer("{\"id\":22,\"to\":\"sam\",\"say\":\"See anything?\"}");
             Ok("a rest slower than the turn's patience still comes when the first sentence was heard, within its own limit; past it the turn is cut after the first sentence, recorded as cut",
-               Reply(within) == "Aye. I saw him go by the chip shop at nine." && within.Contains("\"went\":\"own\"") && within.Contains("\"steps\":[[\"draft\"")
+               Reply(within) == "Aye. I saw him go by the chip shop at nine." && within.Contains("\"went\":\"own\"") && within.Contains("[\"draft\",") && (within.Contains("[\"first-plain\",") || within.Contains("[\"first-passed\","))
                && Reply(cutOff) == "Aye." && cutOff.Contains("\"went\":\"cut\""), within + " | " + cutOff);
         }
 
@@ -1502,6 +1523,33 @@ static class Program
            clean.firsts.Count + " " + clean.lastAt);
         Ok("and the rest follows, to be spoken after it", Str(clean.last, "rest") == "I saw him go by the chip shop at nine." &&
            Reply(clean.last) == "Aye. I saw him go by the chip shop at nine.", clean.last);
+
+        // THE FIRST SENTENCE AHEAD OF ITS CHECK (--pending; U1, 30 September):
+        // written as "pending" the moment it is drafted, then as "first" once
+        // it passes, the same words; one the check fails goes pending but never
+        // first, so the game never plays it; one the content rule refuses is not
+        // even pending; and without the flag nothing is written ahead.
+        async Task<List<string>> Ahead(StreamFake llm, string say, bool pending = true)
+        {
+            var ah = new Helper(llm, TimeSpan.FromSeconds(8)) { Early = true, Pending = pending, CheckAlways = true, RestPatience = TimeSpan.Zero };
+            LoadCards(ah, cardsDir);
+            var lines = new List<string>();
+            ah.Emit = line => { lock (lines) lines.Add(line); };
+            lines.Add(await ah.Answer("{\"id\":23,\"to\":\"sam\",\"say\":\"" + say + "\"}"));
+            return lines;
+        }
+        int At(List<string> lines, string key, string words) => lines.FindIndex(l => l.Contains("\"" + key + "\":\"" + words + "\""));
+        var aheadClean = await Ahead(new StreamFake("Aye. I saw him go by the chip shop at nine."), "See anything?");
+        Ok("with --pending the first sentence is written ahead of its check, then as first once it passes, the same words",
+           At(aheadClean, "pending", "Aye.") >= 0 && At(aheadClean, "first", "Aye.") > At(aheadClean, "pending", "Aye."), string.Join(" | ", aheadClean));
+        var aheadBad = await Ahead(new StreamFake("Dennis from the yard did it. Everyone knows."), "Who was it?");
+        Ok("one its check fails is never written as first, so it is never played",
+           aheadBad.TrueForAll(l => !l.Contains("\"first\":\"Dennis")), string.Join(" | ", aheadBad));
+        var aheadPint = await Ahead(new StreamFake("Fancy a pint after? Aye."), "Busy?");
+        var aheadOff = await Ahead(new StreamFake("Aye. I saw him go by the chip shop at nine."), "See anything?", pending: false);
+        Ok("one the content rule refuses is not even written ahead, and without --pending nothing is",
+           aheadPint.TrueForAll(l => !l.Contains("pint")) && aheadOff.TrueForAll(l => !l.Contains("\"pending\"")) && At(aheadOff, "first", "Aye.") >= 0,
+           string.Join(" | ", aheadPint) + " || " + string.Join(" | ", aheadOff));
 
         var restBad = await Early(new StreamFake("Aye. It was Dennis from the yard, I know it."), "Who was it?", TimeSpan.FromSeconds(8));
         Ok("if the rest invents, only the checked first sentence is said",

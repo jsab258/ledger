@@ -581,9 +581,17 @@ namespace Ledger.Core
         public static SpokenLine FaintRemark(Gossiper g, Rumor about, int seed, RemarkLedger heard = null)
         {
             if (g == null || about == null) return null;
-            string text = heard != null ? heard.Fresh("faint", FaintLines, seed) : Pick(seed, FaintLines);
-            return new SpokenLine { SpeakerId = g.Id, Text = text, AboutPlayer = true, Source = about, Bank = "faint" };
+            // A named person's own words first (OwnLines, U2).
+            var (bank, lines) = Own(g.Id, "faint", FaintLines);
+            string text = heard != null ? heard.Fresh(bank, lines, seed) : Pick(seed, lines);
+            return new SpokenLine { SpeakerId = g.Id, Text = text, AboutPlayer = true, Source = about, Bank = bank };
         }
+
+        /// A NAMED PERSON'S OWN LINES FIRST (OwnLines, U2, 30 September): theirs
+        /// for the bank when they have some, kept by the ledger as "bank@id";
+        /// the shared bank otherwise.
+        static (string bank, string[] lines) Own(string speakerId, string bank, string[] lines) =>
+            OwnLines.For(speakerId, bank) ?? (bank, lines);
 
         /// Fourteen, as every band is (BarkGen's repeat floor).
         internal static readonly string[] FaintLines =
@@ -907,7 +915,7 @@ namespace Ledger.Core
             // With `heard`, a line he has not heard lately from the same bank
             // (RemarkLedger.Fresh, town list 6k); without it, the seed alone.
             string usedBank = null;
-            string From(string bank, string[] lines) { usedBank = bank; return heard != null ? heard.Fresh(bank, lines, seed) : Pick(seed, lines); }
+            string From(string bank, string[] lines) { (bank, lines) = Own(g.Id, bank, lines); usedBank = bank; return heard != null ? heard.Fresh(bank, lines, seed) : Pick(seed, lines); }
             // Every one of these has to INVITE being stopped, because it can
             // be: the speaker's memory holds the same rumour the line came
             // from, so the player can turn round and ask what they meant. A
@@ -1192,9 +1200,10 @@ namespace Ledger.Core
             string reply;
             // With `heard`, lines he has not heard lately (town list 6o).
             string openBank = null, replyBank = null;
-            string OpenLine(string bank, string[] bankLines) { openBank = bank; return heard != null ? heard.Fresh(bank, bankLines, seed) : Pick(seed, bankLines); }
+            string OpenLine(string bank, string[] bankLines) { (bank, bankLines) = Own(a.Id, bank, bankLines); openBank = bank; return heard != null ? heard.Fresh(bank, bankLines, seed) : Pick(seed, bankLines); }
             string ReplyLine(string bank, string[] bankLines)
             {
+                (bank, bankLines) = Own(b.Id, bank, bankLines);
                 replyBank = bank;
                 int s = Answer(seed, b.Id);
                 return heard != null ? heard.Fresh(bank, bankLines, s) : Pick(s, bankLines);
