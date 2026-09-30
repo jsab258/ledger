@@ -1636,6 +1636,37 @@ namespace LedgerCrime
 		return std::min(0.7, 0.4 + 0.1 * (DaysMet - 1));
 	}
 
+	/// THE WAIT, HOUR BY HOUR (the review's B2): each hour's stops are read with
+	/// the town as that hour finds it, after the hours before it have run, as
+	/// the reference week reads them. StopAt(From, To, At) finds the first stop
+	/// in (From, To]; Advance(To, bStop) moves the clock there, runs the hours
+	/// crossed and returns where the clock is (later than To when the hours
+	/// took him away, as the cells do; the wait ends there). Times in minutes.
+	/// Returns where the wait ends.
+	template <class FStopAt, class FAdvance>
+	long long WaitHourByHour(long long FromM, long long UntilM, FStopAt StopAt, FAdvance Advance, bool& bStopped)
+	{
+		bStopped = false;
+		long long NowM = FromM;
+		while (NowM < UntilM)
+		{
+			const long long HourEnd = (NowM >= 0 ? NowM / 60 + 1 : -((-NowM) / 60)) * 60;
+			const long long SegEnd = HourEnd < UntilM ? HourEnd : UntilM;
+			long long At = 0;
+			// A stop at the segment's own start is a beat already under way (the
+			// second independent check): it stops the wait there, with no time gone.
+			if (StopAt(NowM, SegEnd, At) && At >= NowM && At <= SegEnd)
+			{
+				bStopped = true;
+				return Advance(At, true);
+			}
+			const long long Landed = Advance(SegEnd, false);
+			if (Landed > SegEnd) return Landed;
+			NowM = SegEnd;
+		}
+		return NowM;
+	}
+
 	/// THE LAD'S SIGHTING OF THE MAN FLEEING THROUGH THE YARD belongs to the
 	/// scripted story, where the man does run through it (the review's A7): in
 	/// free play whoever saw the deed was measured at the deed.
@@ -2622,6 +2653,47 @@ namespace LedgerCrime
 		// WALKING UP TO DARREN AFTER THE DEED IS NOT RUNNING FROM IT (the review's
 		// A7): the yard's flight sighting is the scripted story's alone.
 		Expect(R, FleeSightingInPlay(true) && !FleeSightingInPlay(false), "a7-no-yard-flight-sighting-in-free-play");
+
+		// THE WAIT READS EACH HOUR'S STOPS AS THAT HOUR FINDS THE TOWN (the review's
+		// B2). The design: a stop that exists only because of what an earlier
+		// hour of the wait did (the night's talk raising the street's loudness, so
+		// DS Ellis comes at nine) is found and stops the wait there; the clock
+		// goes hour by hour, each hour's events run before the next hour's stops
+		// are read; nothing jumps past it.
+		{
+			bool bLoud = false;                    // the town: loud once 06:00 has run
+			std::vector<long long> Ran;            // the hours run, in order
+			auto StopAt = [&bLoud](long long From, long long To, long long& At)
+			{
+				const long long Nine = 9 * 60;
+				if (bLoud && From < Nine && Nine <= To) { At = Nine; return true; }
+				return false;
+			};
+			auto Advance = [&bLoud, &Ran](long long To, bool) -> long long
+			{
+				for (long long H = (Ran.empty() ? 3 : Ran.back() / 60 + 1) * 60; H <= To; H += 60) { Ran.push_back(H); if (H == 6 * 60) bLoud = true; }
+				return To;
+			};
+			bool bStopped = false;
+			const long long Ended = WaitHourByHour(2 * 60, 10 * 60, StopAt, Advance, bStopped);
+			Expect(R, bStopped && Ended == 9 * 60, "b2-a-stop-made-by-an-earlier-hour-of-the-wait-stops-it");
+			Expect(R, !Ran.empty() && Ran.back() == 9 * 60, "b2-and-the-clock-went-no-further-than-the-stop");
+			bool bQuiet = false;
+			auto NoStop = [](long long, long long, long long&) { return false; };
+			auto Plain = [](long long To, bool) -> long long { return To; };
+			Expect(R, WaitHourByHour(2 * 60 + 20, 10 * 60 + 20, NoStop, Plain, bQuiet) == 10 * 60 + 20 && !bQuiet,
+			       "b2-with-no-stop-the-wait-runs-its-whole-length");
+			// A beat already under way when he presses Z (Ron at the door, the tea,
+			// the landing) stops the wait at its start, as Waiting::Next gives it
+			// (the second independent check: a Z at 21:15 ran through to 05:15).
+			bool bNow = false;
+			auto UnderWay = [](long long From, long long, long long& At) { At = From; return From == 21 * 60 + 15; };
+			Expect(R, WaitHourByHour(21 * 60 + 15, 29 * 60 + 15, UnderWay, Plain, bNow) == 21 * 60 + 15 && bNow,
+			       "b2-a-beat-under-way-when-the-wait-starts-stops-it-at-once");
+			auto Cells = [](long long To, bool) -> long long { return To == 10 * 60 ? 16 * 60 : To; };
+			Expect(R, WaitHourByHour(9 * 60, 17 * 60, NoStop, Cells, bQuiet) == 16 * 60 && !bQuiet,
+			       "b2-a-jump-past-the-hour-(the-cells)-ends-the-wait-where-it-lands");
+		}
 
 		// THE LIGHT ON HIM (the independent review of 30 September, A2): the
 		// game's own day and night (ClockLight: night from 19:00 to 07:00) and

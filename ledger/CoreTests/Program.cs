@@ -7587,6 +7587,30 @@ namespace Ledger.CoreTests
                       string.Join(" | ", wrongSure));
             }
 
+            // NO TALK THROUGH A WALL (the independent review of 30 September, D:
+            // Mickey's office and the fish counter, 6.0 m apart through a wall,
+            // gossiped as if together). Within talking range and in the same area,
+            // or both out on the pavement; never inside one place and inside another.
+            {
+                var hookW = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
+                var wallCast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":6,\"z_m\":7.5,\"inside\":true},\"mickeys_rank\":{\"x_m\":7.5,\"z_m\":3.8}," +
+                    "\"fish_counter\":{\"x_m\":12,\"z_m\":7.5,\"inside\":true},\"fish_front\":{\"x_m\":12,\"z_m\":4.2}}," +
+                    "\"areas\":{\"mickeys\":{\"places\":[\"mickeys_office\",\"mickeys_rank\"]},\"fish_market\":{\"places\":[\"fish_counter\",\"fish_front\"]}}," +
+                    "\"people\":[{\"id\":\"office\",\"routine\":[[0,\"mickeys_office\"]]},{\"id\":\"rank\",\"routine\":[[0,\"mickeys_rank\"]]},{\"id\":\"counter\",\"routine\":[[0,\"fish_counter\"]]},{\"id\":\"front\",\"routine\":[[0,\"fish_front\"]]}],\"ties\":[]}");
+                var wallCases = new (string a, string b, bool want)[]
+                {
+                    ("office", "counter", false), ("office", "front", false), ("rank", "counter", false),
+                    ("rank", "front", true), ("office", "rank", true), ("counter", "front", true),
+                };
+                var wrongWall = new List<string>();
+                foreach (var (a, b, want) in wallCases)
+                    if (wallCast.Together(a, b, 0, 10) != want) wrongWall.Add($"{a}-{b}: {!want}");
+                bool realMarks = hookW.IsInside("mickeys_office") && hookW.IsInside("fish_counter") && !hookW.IsInside("mickeys_rank") && !hookW.IsInside("fish_front");
+                Check(wrongWall.Count == 0 && realMarks,
+                      "two people talk when within range and in the same area, or both out on the pavement; never through a wall, inside one place and in or outside another",
+                      string.Join(" | ", wrongWall) + $" real marks {realMarks}");
+            }
+
             // NO NO BEFORE THE ASK (the independent review of 30 September, "not a
             // game fault", a gap in the Core's own rule): a no given on an ask day
             // before Ron has brought the ask is nothing, and Ron never remembers

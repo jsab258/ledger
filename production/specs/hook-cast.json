@@ -5,7 +5,7 @@
  "week": "day modulo 7: 0 mon to 6 sun, Population.IsRestDay's convention; 'days' replaces the daily routine on that weekday",
  "hours_what": "OPEN AND CLOSED (town list 6bo, 29 September): an area's 'hours' gives, for each weekday it opens, [open, close] in hours from that day's midnight, whole or half hours, a close past 24 running into the next morning until six at the latest; a weekday left out is shut. 'hours_note' is said after them. From production/research/shop-hours-1990/NOTE-2026-09-29.md, sourced: the Shops Act 1950 as it stood in 1990 (every shop not exempt shut by one on one weekday of its choosing; all shut by eight; on Sundays only papers, tobacco, sweets and meals; fish exempt from the half day but not sold on Sundays), fish sold after the dock's morning auction. Inferred: the half day on Wednesday, as independents still kept it in the 1980s by one 2020 account (the note's two local sources, Hull's and Grimsby's from the early 1900s, say Thursday); the market on Tuesday, Friday and Saturday, Grimsby's market days today (1990's not found); a pawnbroker's nine till half five (today's in Hull); the steam laundry, a works rather than a shop, with no half day; the fish shop, exempt from the half day, shut Wednesday afternoons all the same, when its keeper goes home at one; 'hours_breaks' gives, on a weekday, [from, to] inside the day's hours when it is shut because whoever keeps it is elsewhere (Hal at Rita's on Monday mornings, nobody at Mickey's from six to seven and the last hour of a Sunday); and the rest fitted to who is where in the routines below: the cafe open late because some of its regulars eat there on weekday evenings, the cab office till the night driver goes home at three.",
  "places": {
-  "mickeys_office": {
+  "mickeys_office": {"inside": true, 
    "x_m": 6.0,
    "z_m": 7.5,
    "from": "decal_00_fascia_mickeys x, inside the front room",
@@ -17,7 +17,7 @@
    "from": "the footway at Mickey's door, where the cabs wait",
    "said": "the pavement at Mickey's door, where the cabs wait"
   },
-  "fish_counter": {
+  "fish_counter": {"inside": true, 
    "x_m": 12.0,
    "z_m": 7.5,
    "from": "decal_01_fascia_fish_market x, inside",
@@ -29,7 +29,7 @@
    "from": "the fish market's pavement",
    "said": "the pavement outside the fish market"
   },
-  "ritas_counter": {
+  "ritas_counter": {"inside": true, 
    "x_m": 18.0,
    "z_m": 7.5,
    "from": "decal_02_fascia_ritas_pawn x, inside",
@@ -59,7 +59,7 @@
    "from": "the quay apron at the street's south end",
    "said": "the quay at the bottom of Quay Street"
   },
-  "laundry_counter": {
+  "laundry_counter": {"inside": true, 
    "x_m": 30.0,
    "z_m": 7.5,
    "from": "the steam laundry's counter, inside (decal_03_fascia_steam_laundry x)",
@@ -71,7 +71,7 @@
    "from": "Ada's front step and window, in the terraces across from Mickey's (canon: the west block across from Mickey's is plain terraces)",
    "said": "Ada's front step, in the terraces across from Mickey's"
   },
-  "cafe": {
+  "cafe": {"inside": true, 
    "x_m": 24.0,
    "z_m": -7.5,
    "from": "the cafe, inside, in the west block's shops across from the parade's north half (canon)",
@@ -83,13 +83,13 @@
    "from": "the cafe's pavement",
    "said": "the pavement outside the cafe"
   },
-  "pension_counter": {
+  "pension_counter": {"inside": true, 
    "x_m": 32.0,
    "z_m": -7.5,
    "from": "the newsagent's counter where pensions and benefits are paid, in the same shop block",
    "said": "the newsagent's counter, where the pensions are paid"
   },
-  "hals_shop": {
+  "hals_shop": {"inside": true, 
    "x_m": 39.0,
    "z_m": -7.5,
    "from": "Hal's shop, the same block's far end",
@@ -2024,7 +2024,7 @@
     [
      9,
      "ritas_counter"
-    ],
+    ], [11, "ritas_step"], [12, "ritas_counter"],
     [
      17,
      "off"
@@ -2039,7 +2039,7 @@
      [
       9,
       "ritas_counter"
-     ],
+     ], [11, "ritas_step"], [12, "ritas_counter"],
      [
       13,
       "off"
@@ -3470,7 +3470,7 @@
    "marta",
    "noor",
    0.3,
-   "ritas_counter/kiosk 11:00 Mon,Tue,Wed,Thu,Fri,Sat"
+   "ritas_step/kiosk 11:00 Mon,Tue,Wed,Thu,Fri,Sat"
   ],
   [
    "jelena",

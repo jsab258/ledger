@@ -138,6 +138,19 @@
 #include "Styling/CoreStyle.h"
 #include "Engine/GameViewportClient.h"
 #include "Components/CapsuleComponent.h"
+
+#if PLATFORM_WINDOWS
+// Windows' own replace-in-one-step, declared alone: <windows.h> here would
+// clash with names this file uses (GetObject). Kernel32; the signature is
+// MoveFileExW's (BOOL, LPCWSTR, LPCWSTR, DWORD).
+extern "C" __declspec(dllimport) int __stdcall MoveFileExW(const wchar_t* ExistingFileName, const wchar_t* NewFileName, unsigned long Flags);
+#ifndef MOVEFILE_REPLACE_EXISTING
+#define MOVEFILE_REPLACE_EXISTING 0x00000001
+#endif
+#ifndef MOVEFILE_WRITE_THROUGH
+#define MOVEFILE_WRITE_THROUGH 0x00000008
+#endif
+#endif
 #include "Sound/SoundWaveProcedural.h"
 #include "Animation/SkeletalMeshActor.h"
 #include "EngineUtils.h"
@@ -2779,6 +2792,10 @@ namespace
 		std::string Buf;
 		bool bStarted = false, bReady = false;
 		int NextId = 1, PendingId = 0;
+		// A REPLY GIVEN UP ON AT THE PATIENCE LIMIT (the review's B4c): its facts
+		// (his no to Ron, owning up, keeping quiet) still count when it comes.
+		int LateId = 0;
+		std::string LateCard;
 		FString PendingName;
 		std::string PendingCard;
 		AActor* PendingBody = nullptr;
@@ -4060,6 +4077,19 @@ namespace
 				Say(Thanks == "none" ? FString(TEXT("Reported. Thank you.")) : Un(Thanks), 6.0f, FColor(210, 210, 210));
 				continue;
 			}
+			// A LATE REPLY (B4c): nothing said or shown, since the moment has
+			// gone, but what it settles (his no, owning up, keeping quiet) counts.
+			if (GLive.LateId != 0 && L.find("\"id\":" + std::to_string(GLive.LateId) + ",") != std::string::npos)
+			{
+				if (L.find("\"went\"") != std::string::npos || L.find("\"walkedOff\":true") != std::string::npos)
+				{
+					TakeClaimsFromReply(L, GLive.LateCard);
+					LedgerSession::Write(TEXT("reply"), TEXT("\"who\":") + LedgerSession::Str(Un(GLive.LateCard)) + TEXT(",\"how\":\"late\""));
+					UE_LOG(LogTemp, Display, TEXT("LedgerTalk: a late reply from %s, its facts kept"), *Un(GLive.LateCard));
+				}
+				if (L.find("\"went\"") != std::string::npos || L.find("\"walkedOff\":true") != std::string::npos) { GLive.LateId = 0; }
+				continue;
+			}
 			if (GLive.PendingId != 0 && L.find("\"id\":" + std::to_string(GLive.PendingId) + ",") != std::string::npos)
 			{
 				// THE FIRST SENTENCE, BEFORE ITS CHECK (--pending): made by the voice
@@ -4125,6 +4155,9 @@ namespace
 				LiveVoiceDrop(GLive.PendingId * 10 + 7);
 				if (L.find("\"walkedOff\":true") != std::string::npos)
 				{
+					// WHAT HE SETTLED STILL COUNTS though he walked off (the review's
+					// B4b): his no to Ron, owning up, keeping quiet.
+					TakeClaimsFromReply(L, GLive.PendingCard);
 					LedgerSession::Write(TEXT("reply"), TEXT("\"who\":") + LedgerSession::Str(Un(GLive.PendingCard)) + TEXT(",\"how\":\"walkedOff\""));
 					GLive.PendingId = 0;
 					GLive.bFirstSaid = false;
@@ -4220,6 +4253,8 @@ namespace
 		if (GLive.PendingId != 0 && NowS() - GLive.AskedAt > 30.0)
 		{
 			if (!GLive.bFirstSaid) { Say(GLive.PendingName + TEXT(" says nothing."), 6.0f, FColor::White); }
+			GLive.LateId = GLive.PendingId;
+			GLive.LateCard = GLive.PendingCard;
 			GLive.PendingId = 0;
 			GLive.bFirstSaid = false;
 		}
@@ -4961,6 +4996,7 @@ namespace
 	// crosses is kept (an autosave, so a reload finds the street where he left
 	// it), and the street's light follows the hour: night from seven in the
 	// evening to seven in the morning, late September in the north.
+	bool bHoldSaves = false;   // a wait saves once, at its end
 	void ClockHours(const std::vector<GameTime>& Hours)
 	{
 		for (const GameTime& H : Hours)
@@ -4972,7 +5008,7 @@ namespace
 			if (!bLiveScript && GMill && bGCast) { GWeek.RoundsTo(GMill.get(), &GCast, H.AddMinutes(-1)); }
 			ConsequenceHour(H);
 		}
-		if (!Hours.empty()) { SaveEncounterToDisk(); }
+		if (!Hours.empty() && !bHoldSaves) { SaveEncounterToDisk(); }
 		// HIS HOURS IN THE CELLS, after the hour that took him: the clock goes to
 		// his release, the town's hours running on, and the release words show.
 		if (bHeldPending)
@@ -5332,34 +5368,74 @@ namespace
 		B.Shown = GWaitShown;
 		std::string Refused;
 		if (Waiting::Refused(&B, Refused)) { Say(Un(Refused), 5.0f, FColor::Yellow); return; }
-		const GameTime Until = GNow.AddMinutes(kWaitMinutes);
-		WaitStop S;
-		const bool bStop = Waiting::Next(GNow, Until, &B, S);
-		const GameTime To = bStop ? S.At : Until;
-		UE_LOG(LogTemp, Display, TEXT("LedgerWait: from %s to %s%s"), *Un(GNow.ToString()), *Un(To.ToString()),
-			bStop ? *(FString(TEXT(", stopped: ")) + Un(S.Key)) : TEXT(""));
-		LedgerSession::Write(TEXT("wait"), TEXT("\"from\":") + LedgerSession::Str(Un(GNow.ToString())) + TEXT(",\"to\":") + LedgerSession::Str(Un(To.ToString())));
+		// HOUR BY HOUR (the review's B2): each hour's stops read with the town as
+		// that hour finds it, after the hours before it have run (the night's
+		// talk can bring DS Ellis at nine); a stop's line shown before that
+		// hour's events, as the reference week shows them; the wait ends where
+		// the hours take him (the cells).
 		const GameTime From = GNow;
-		const std::vector<GameTime> Hours = GClock.JumpTo(To);
-		GNow = GClock.Now();
-		// Waiting at Ada's step on the tea's evening is time with her, counted
-		// before the hours (her tea closes at eleven).
-		if (B.AtAdas && GWeek.Tea)
+		const GameTime Until = GNow.AddMinutes(kWaitMinutes);
+		const bool bAtAdas = B.AtAdas;
+		WaitStop S;
+		std::shared_ptr<Custody> HeldNow = Held;
+		auto ReadStop = [&](long long FromM, long long ToM) -> bool
 		{
-			for (GameTime M = From.AddMinutes(1); M.TotalMinutes() <= GNow.TotalMinutes(); M = M.AddMinutes(1))
+			HeldNow = GWeek.Holding(GNow);
+			B.CustodyOf = HeldNow.get();
+			B.Shown = GWaitShown;
+			return Waiting::Next(GameTime::FromTotalMinutes(FromM), GameTime::FromTotalMinutes(ToM), &B, S);
+		};
+		auto StopAt = [&](long long FromM, long long ToM, long long& AtM) -> bool
+		{
+			// A stop inside the hour is the day's own timetable (the tea, the
+			// landing, her answer); a stop on the hour, or none, is read again
+			// with the hour's talk run up to it (the second independent check:
+			// the rounds that bring DS Ellis at nine run in the hour before).
+			bool bFound = ReadStop(FromM, ToM);
+			if (!bFound || S.At.TotalMinutes() >= ToM)
 			{
-				if (M.Day == GWeek.Tea->Day() && M.Hour >= AdasTea::From && M.Hour < AdasTea::Until) { GWeek.Tea->WithHer(M); }
+				if (!bLiveScript && GMill && bGCast) { GWeek.RoundsTo(GMill.get(), &GCast, GameTime::FromTotalMinutes(ToM - 1)); }
+				bFound = ReadStop(FromM, ToM);
 			}
-		}
-		ClockHours(Hours);
-		ClockLight();
-		Say(FString(TEXT("You wait. ")) + Un(GNow.ToString()) + TEXT("."), 5.0f, FColor::Yellow);
-		if (bStop)
+			if (!bFound) { return false; }
+			AtM = S.At.TotalMinutes();
+			return true;
+		};
+		auto Advance = [&](long long ToM, bool bStop) -> long long
 		{
-			Say(Un(S.Line), 8.0f, FColor::Yellow);
-			Waiting::Showed(&B, &S);
-			GWaitShown = B.Shown;
-		}
+			const GameTime SegFrom = GNow;
+			const std::vector<GameTime> Hours = GClock.JumpTo(GameTime::FromTotalMinutes(ToM));
+			GNow = GClock.Now();
+			// Waiting at Ada's step on the tea's evening is time with her, counted
+			// before the hours (her tea closes at eleven).
+			if (bAtAdas && GWeek.Tea)
+			{
+				for (GameTime M = SegFrom.AddMinutes(1); M.TotalMinutes() <= GNow.TotalMinutes(); M = M.AddMinutes(1))
+				{
+					if (M.Day == GWeek.Tea->Day() && M.Hour >= AdasTea::From && M.Hour < AdasTea::Until) { GWeek.Tea->WithHer(M); }
+				}
+			}
+			if (bStop)
+			{
+				Say(FString(TEXT("You wait. ")) + Un(GNow.ToString()) + TEXT("."), 5.0f, FColor::Yellow);
+				Say(Un(S.Line), 8.0f, FColor::Yellow);
+				Waiting::Showed(&B, &S);
+				GWaitShown = B.Shown;
+			}
+			ClockHours(Hours);
+			return GNow.TotalMinutes();
+		};
+		bool bStopped = false;
+		// ONE SAVE FOR THE WHOLE WAIT, at its end, not one an hour.
+		bHoldSaves = true;
+		LedgerCrime::WaitHourByHour(From.TotalMinutes(), Until.TotalMinutes(), StopAt, Advance, bStopped);
+		bHoldSaves = false;
+		SaveEncounterToDisk();
+		UE_LOG(LogTemp, Display, TEXT("LedgerWait: from %s to %s%s"), *Un(From.ToString()), *Un(GNow.ToString()),
+			bStopped ? *(FString(TEXT(", stopped: ")) + Un(S.Key)) : TEXT(""));
+		LedgerSession::Write(TEXT("wait"), TEXT("\"from\":") + LedgerSession::Str(Un(From.ToString())) + TEXT(",\"to\":") + LedgerSession::Str(Un(GNow.ToString())));
+		ClockLight();
+		if (!bStopped) { Say(FString(TEXT("You wait. ")) + Un(GNow.ToString()) + TEXT("."), 5.0f, FColor::Yellow); }
 	}
 
 	bool HumanTalkTick(UWorld* World, double Now)
@@ -5638,19 +5714,36 @@ namespace
 
 	// THE SAVE, TO DISK: the mill as the JSON the C# codec reads, each
 	// resident's memory as its markdown, and the clock and the filed clause.
+	// A SAVE FILE WRITTEN WHOLE OR NOT AT ALL (the review's C3): to a .tmp beside
+	// it, then moved over it, so a save cut off leaves the last whole file, never
+	// an empty or half-written one.
+	bool SaveWhole(const FString& Text, const TCHAR* Path, FFileHelper::EEncodingOptions Enc)
+	{
+		const FString Tmp = FString(Path) + TEXT(".tmp");
+		if (!FFileHelper::SaveStringToFile(Text, *Tmp, Enc)) { return false; }
+#if PLATFORM_WINDOWS
+		// In one step (the second independent check: Unreal's Move deletes the old
+		// file first, so a cut in between left none): Windows' own replace.
+		const FString FullTmp = FPaths::ConvertRelativePathToFull(Tmp), FullPath = FPaths::ConvertRelativePathToFull(FString(Path));
+		return ::MoveFileExW(*FullTmp, *FullPath, MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH) != 0;
+#else
+		return IFileManager::Get().Move(Path, *Tmp, true, true);
+#endif
+	}
+
 	void SaveEncounterToDisk()
 	{
 		const FString Dir = EncSaveDir();
 		GSaveDirUsed = Dir;
 		IFileManager::Get().MakeDirectory(*Dir, true);
 		const std::string Json = GMill ? Save::CaptureMillAgents(*GMill) : std::string();
-		bool Ok = !Json.empty() && FFileHelper::SaveStringToFile(Un(Json), *(Dir / TEXT("agents.json")),
+		bool Ok = !Json.empty() && SaveWhole(Un(Json), *(Dir / TEXT("agents.json")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
 		const GossiperPtr Gs[3] = { GW1, GN2, GR3 };
 		for (const GossiperPtr& G : Gs)
 		{
 			if (!G || !G->Memory) { Ok = false; continue; }
-			Ok = FFileHelper::SaveStringToFile(Un(G->Memory->ToMarkdown()),
+			Ok = SaveWhole(Un(G->Memory->ToMarkdown()),
 				*(Dir / FString::Printf(TEXT("memory-%s.md"), *Un(G->Id))),
 				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		}
@@ -5661,7 +5754,7 @@ namespace
 			for (const GossiperPtr& G : GMill->Agents())
 			{
 				if (!G || !G->Memory || G == GW1 || G == GN2 || G == GR3) { continue; }
-				Ok = FFileHelper::SaveStringToFile(Un(G->Memory->ToMarkdown()),
+				Ok = SaveWhole(Un(G->Memory->ToMarkdown()),
 					*(Dir / FString::Printf(TEXT("memory-%s.md"), *Un(G->Id))),
 					FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 			}
@@ -5696,16 +5789,16 @@ namespace
 			const std::string Path = Utf8(FPaths::ConvertRelativePathToFull(Dir / Un(LedgerCrime::TalkSaveFile())));
 			FPlatformProcess::WritePipe(GLive.InWrite, Un("{\"talk\":\"save\",\"path\":\"" + JsonEsc(Path) + "\",\"stamp\":\"" + GLive.TalkStamp + "\"}\n"));
 		}
-		Ok = FFileHelper::SaveStringToFile(Un(Clock), *(Dir / TEXT("clock.txt")),
+		Ok = SaveWhole(Un(Clock), *(Dir / TEXT("clock.txt")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		// WHO HAS HAD THEIR SAY AND WHAT HE HAS HEARD (town list 6o), so a
 		// reload neither lets anybody remark twice on a story nor starts a
 		// bank over.
-		Ok = FFileHelper::SaveStringToFile(Un(GLive.Remarks.ToJson()), *(Dir / TEXT("remarks.json")),
+		Ok = SaveWhole(Un(GLive.Remarks.ToJson()), *(Dir / TEXT("remarks.json")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		// THE HOURS THE TOWN HAS TALKED (town list 6bs), so a reload runs no
 		// hour twice and loses none.
-		Ok = FFileHelper::SaveStringToFile(Un(GTownHours.ToJson()), *(Dir / TEXT("town-hours.json")),
+		Ok = SaveWhole(Un(GTownHours.ToJson()), *(Dir / TEXT("town-hours.json")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		// THE CONSEQUENCE (free play): the police file, the damage and any
 		// arrest, in the town's own save (TownSave), so a reload keeps them.
@@ -5720,13 +5813,13 @@ namespace
 			T.Hours = GWeek.Hours;
 			T.Week = GWeek.Week;
 			T.WaitShown = GWaitShown;
-			Ok = FFileHelper::SaveStringToFile(Un(T.ToJson()), *(Dir / TEXT("town.json")),
+			Ok = SaveWhole(Un(T.ToJson()), *(Dir / TEXT("town.json")),
 				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		}
 		// THE HINTS ALREADY SHOWN (town list 6y), so a load shows none twice.
 		if (bHintsOn)
 		{
-			Ok = FFileHelper::SaveStringToFile(Un(GHints.ToJson()), *(Dir / TEXT("hints.json")),
+			Ok = SaveWhole(Un(GHints.ToJson()), *(Dir / TEXT("hints.json")),
 				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		}
 		bSavedToDisk = Ok;
@@ -5738,6 +5831,36 @@ namespace
 	{
 		const FString Dir = EncSaveDir();
 		GSaveDirUsed = Dir;
+		// CHECK FIRST, THEN LOAD (the review's C2): a save this build cannot take
+		// (no clock file, no agents, another build's) is refused before anything
+		// of it goes into the town, so the new game after it starts clean.
+		{
+			FString PreClock, PreAgents;
+			const bool bHasClock = FFileHelper::LoadFileToString(PreClock, *(Dir / TEXT("clock.txt")));
+			const bool bHasAgents = FFileHelper::LoadFileToString(PreAgents, *(Dir / TEXT("agents.json")));
+			FString SavedBy;
+			if (bHasClock)
+			{
+				TArray<FString> PreLines;
+				PreClock.ParseIntoArrayLines(PreLines);
+				for (const FString& L : PreLines) { if (L.StartsWith(TEXT("commit="))) { SavedBy = L.Mid(7); } }
+			}
+			bool bHasMemories = true;
+			for (const GossiperPtr& G : { GW1, GN2, GR3 })
+			{
+				if (G && !IFileManager::Get().FileExists(*(Dir / FString::Printf(TEXT("memory-%s.md"), *Un(G->Id))))) { bHasMemories = false; }
+			}
+			const TCHAR* Why = !bHasClock ? TEXT("no clock file") : !bHasAgents ? TEXT("no agents file")
+				: !bHasMemories ? TEXT("a memory file missing")
+				: (Utf8(SavedBy) != Utf8(CrimeSha()) ? TEXT("another build's save") : nullptr);
+			if (Why != nullptr)
+			{
+				bLoadedFromDisk = false;
+				UE_LOG(LogTemp, Display, TEXT("LedgerLoad: refused before loading anything: %s"), Why);
+				LedgerSession::Write(TEXT("loadRefused"), TEXT("\"why\":") + LedgerSession::Str(FString(Why)));
+				return;
+			}
+		}
 		bLoadPlace = false;
 		bSheilaTrusts = false;
 		GMet = LedgerCrime::MeetingBook();
