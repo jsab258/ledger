@@ -5269,7 +5269,11 @@ namespace Ledger.CoreTests
                       && TalkRules.ConceptOf("Where's Mickey's daughter?") != "office_where" && TalkRules.ConceptOf("Have you got family?") == null
                       && TalkRules.ConceptOf("How should I know?") == null && TalkRules.ConceptOf("Who do you work for?") == null
                       && TalkRules.ConceptOf("Who runs the Hook?") == null && TalkRules.ConceptOf("Where am I sleeping?") == "sleep"
-                      && TalkRules.Choose("What was Mickey like?", "lena").Kind == TalkRules.Kind.Scene && TalkRules.Choose("Nice weather.", "lena") == null,
+                      && TalkRules.Choose("What was Mickey like?", "lena").Kind == TalkRules.Kind.Partial
+                      && TalkRules.Choose("What was Mickey like?", "lena").Facts.Count == 2 && TalkRules.Choose("Nice weather.", "lena") == null
+                      // Jafar's two Mickey lines, never for June or Alison.
+                      && StreetFacts.For("rocco").Contains("Mickey kept me on when the docks let me go in 1989.")
+                      && !StreetFacts.For("june").Exists(f => f.StartsWith("Mickey kept")) && !StreetFacts.For("noor").Exists(f => f.StartsWith("Mickey kept")),
                       "the most specific rule wins, its facts in the speaker's own words, and whom to ask only where the speaker does not know");
                 ConversationEngine.UseRules = true;
                 ConversationEngine.PlainFallback = true;

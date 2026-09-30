@@ -350,6 +350,8 @@ def one_screen(day, date, done):
         if detail:
             parts.append("<p>" + esc(detail) + "</p>")
         parts.append('<textarea id="%s-note" placeholder="A note, if you want one"></textarea></details></section>' % key)
+    if not decisions:
+        parts.append("<p>Nothing is waiting on you from the town: every question on this page is answered.</p>")
     parts.append("</main>")
     parts.append(ONE_SCREEN_SCRIPT)
     return "\n".join(parts)
