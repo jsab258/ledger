@@ -402,6 +402,7 @@ static class Program
                             if (why != null)
                             {
                                 if (ellis == "never") ellis = $"day {day + 1}, for {why}";
+                                if (why == "talk") police.HearTheStreet(mill, day, t => t.StartsWith("player.window", StringComparison.Ordinal) ? Offence.Damage : Offence.Suspicious, cast, now);
                                 PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill, cast, now), why, now);
                             }
                         }

@@ -71,13 +71,14 @@ namespace Ledger.Core
             return d;
         }
 
-        // A wait's stop key as WaitStop makes it: a word, "@", and a day or a minute.
+        // A wait's stop key as WaitStop makes it: a word ("sheila_answer" has an
+        // underscore: the independent check), "@", and a day or a minute.
         static bool IsStopKey(string k)
         {
             int at = k.IndexOf('@');
             if (at <= 0 || at == k.Length - 1 || k.Length - at - 1 > 9) return false;
             for (int i = 0; i < k.Length; i++)
-                if (i < at ? !(k[i] >= 'a' && k[i] <= 'z') : i > at && !(k[i] >= '0' && k[i] <= '9')) return false;
+                if (i < at ? !((k[i] >= 'a' && k[i] <= 'z') || (k[i] == '_' && i > 0)) : i > at && !(k[i] >= '0' && k[i] <= '9')) return false;
             return true;
         }
 

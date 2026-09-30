@@ -8149,6 +8149,11 @@ namespace Ledger.CoreTests
                 bool right = all.All(id => there.Contains(id) == (cast.PlaceOf(id, 6, 9) != CastDay.Off));
                 Check(right && there.Count > 0 && there.Count < all.Count && !there.Contains("lena"),
                       "on her Sunday visit DS Ellis asks only the people on the street at nine, not Sheila at home", $"{there.Count} of {all.Count}");
+                // And hears the street's talk only from them (the independent check).
+                var file = new PoliceFile();
+                file.HearTheStreet(mill, 6, t => Offence.Damage, cast, sunday);
+                var heard = file.Entries.Select(e => e.Who).Distinct().OrderBy(x => x, StringComparer.Ordinal).ToList();
+                Check(heard.SequenceEqual(there), "and files the street's talk only from the people she asked", string.Join(",", heard));
             }
             // 4. A night Ron brought, then wound down that evening, is delivered after a load.
             {
@@ -8199,6 +8204,19 @@ namespace Ledger.CoreTests
                 var moved = TownSave.FromJson(json);
                 Check(c != null && kept.Arrests.Count == 1 && edited.Arrests.Count == 0 && moved.Arrests.Count == 0,
                       "a saved arrest edited to another offence, or another day, than the police file took him for is not kept", $"{kept.Arrests.Count} {edited.Arrests.Count} {moved.Arrests.Count}");
+                // The independent check: a description raised to a statement of another
+                // offence after he was taken comes first in the file; the arrest stands.
+                var file = new PoliceFile();
+                file.Report("p1", "player.cut_d1", Offence.Robbery, 3, 1);
+                file.Report("p2", "player.cut_d1", Offence.Wounding, 4, 1);
+                file.EllisComes(new GossipMill(new SocialGraph()), 2);
+                var cut = file.TakeIn("player.cut_d1", new GameTime(2, 9, 0), false, false);
+                file.Report("p1", "player.cut_d1", Offence.Robbery, 4, 3);
+                var townCut = new TownSave { Police = file };
+                townCut.Arrests.Add(cut);
+                var cutBack = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(townCut.ToJson()))));
+                Check(cut != null && cut.Offence == Offence.Wounding && cutBack.Arrests.Count == 1,
+                      "an arrest for a wounding stands after a load when a robbery statement about the same deed came later and sits first in the file", $"{cut?.Offence} {cutBack.Arrests.Count}");
             }
             // 8. A deed's damage from before the first day is not read.
             {
@@ -8222,12 +8240,13 @@ namespace Ledger.CoreTests
                 var town = new TownSave();
                 town.WaitShown.Add("ron@1");
                 town.WaitShown.Add("released@4380");
+                town.WaitShown.Add("sheila_answer@6");
                 var json = MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(town.ToJson())));
                 var back = TownSave.FromJson(json);
                 var shown = (List<object>)json["shown"];
-                json["shown"] = new List<object> { "ron@1", "Ron@1", "x@", "@3", "tea@1234567890", "tea@-1", "tea 1", 3.0, "landing@3" };
+                json["shown"] = new List<object> { "ron@1", "Ron@1", "x@", "@3", "_x@3", "tea@1234567890", "tea@-1", "tea 1", 3.0, "landing@3" };
                 var damaged = TownSave.FromJson(json);
-                Check(back.WaitShown.SetEquals(new[] { "ron@1", "released@4380" }) && (string)shown[0] == "released@4380"
+                Check(back.WaitShown.SetEquals(new[] { "ron@1", "released@4380", "sheila_answer@6" }) && (string)shown[0] == "released@4380"
                       && damaged.WaitShown.SetEquals(new[] { "ron@1", "landing@3" }),
                       "the wait's lines already shown are saved in order and restored, and a key WaitStop could not make is dropped",
                       string.Join(",", damaged.WaitShown));

@@ -44,7 +44,8 @@ inputs are shown:
 4. **09:00, from the next day:** if
    `PoliceFile.WouldReport(mill.Get(seer), offence, false, topic, cast.NeverToPolice(seer))`,
    then `police.Report(seer, topic, offence, rung, d)`, once.
-5. **09:00:** `why = police.EllisComes(mill, d)`; if not null,
+5. **09:00:** `why = police.EllisComes(mill, d)`; on "talk",
+   `police.HearTheStreet(mill, d, grading, cast, now)`; if not null,
    `PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill, cast, now), why, now)`:
    with the cast and the time, she asks only the people on the street then.
 6. **10:00, if not in the cells:** `t = police.ConstableComes(d, now)`. **Pass

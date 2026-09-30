@@ -160,14 +160,19 @@ namespace Ledger.Core
         }
 
         /// Whether a save's arrest is the one this file took him in for: the
-        /// same deed, the offence its statement gives, out at the same minute
-        /// (the time-and-state sweep, 30 September: an arrest edited to a
-        /// killing forty days on was kept, and held him while the file said not).
+        /// same deed, an arrestable offence a statement about it gives, out at
+        /// the same minute (the time-and-state sweep, 30 September: an arrest
+        /// edited to a killing forty days on was kept, and held him while the
+        /// file said not). Any statement's offence, not only the first's: a
+        /// description raised to a statement after he was taken can come first
+        /// (the sweep's independent check).
         public bool Took(Custody c)
         {
             if (c == null) return false;
             foreach (var t in _taken)
-                if (t.topic == c.Topic) return t.outMinute == c.OutAt.TotalMinutes && c.Offence == ArrestOffence(c.Topic);
+                if (t.topic == c.Topic)
+                    return t.outMinute == c.OutAt.TotalMinutes
+                        && _entries.Exists(e => e.Topic == c.Topic && e.How == Known.Statement && e.Offence == c.Offence && Arrestable(e.Offence));
             return false;
         }
         public string EllisCameFor => _visits.Count > 0 ? _visits[0].why : null;
@@ -281,13 +286,19 @@ namespace Ledger.Core
         /// WHAT THE STREET TELLS HER when she comes for its talk: each person
         /// passing talk of his nights round, as talk, a deed each (`offenceOf`
         /// grades a topic; the game knows its deeds). Their own sightings are
-        /// not talk: a witness is WouldReport's.
-        public void HearTheStreet(GossipMill mill, int day, Func<string, Offence> offenceOf)
+        /// not talk: a witness is WouldReport's. With the cast and the visit's
+        /// time, only the people on the street then, the ones she asks
+        /// (WhoSheAsks; the independent check of the sweep: she filed talk from
+        /// thirty-six people at home on a Sunday whom she never asked).
+        public void HearTheStreet(GossipMill mill, int day, Func<string, Offence> offenceOf, CastDay cast = null, GameTime? at = null)
         {
             if (mill == null) return;
             foreach (var a in mill.Agents)
+            {
+                if (!OnTheStreet(cast, at, a.Id)) continue;
                 foreach (var r in TalkOf(mill, a))
                     Heard(a.Id, r.TopicKey, offenceOf != null ? offenceOf(r.TopicKey) : Offence.Suspicious, day);
+            }
         }
 
         /// WHETHER SHE COMES TO QUAY STREET TODAY, and for what, each reason
@@ -344,13 +355,18 @@ namespace Ledger.Core
             foreach (var a in mill.Agents)
             {
                 if (a.Circle != "day") continue;
-                if (cast != null && at is GameTime t && (cast.PlaceOf(a.Id, t.Day, t.Hour) ?? CastDay.Off) == CastDay.Off) continue;
+                if (!OnTheStreet(cast, at, a.Id)) continue;
                 foreach (var r in a.Rumors)
                     if (r.Content != null && r.Content.Subject == "player" && r.Sensitive && r.Confidence > 0) { who.Add(a.Id); break; }
             }
             who.Sort(StringComparer.Ordinal);
             return who;
         }
+
+        // Whether somebody is on the street at her visit's hour; anybody, without
+        // the cast and the time.
+        static bool OnTheStreet(CastDay cast, GameTime? at, string id) =>
+            cast == null || !(at is GameTime t) || (cast.PlaceOf(id, t.Day, t.Hour) ?? CastDay.Off) != CastDay.Off;
 
         /// SHE ASKED THEM (town list 6bq; the checklist's A15.06, a warning
         /// before any arrest, and the audible half of A15.09): on a visit that

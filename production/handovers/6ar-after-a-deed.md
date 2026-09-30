@@ -31,7 +31,8 @@ arrest-words-2026-09-29.md. Code: ledger/Assets/Scripts/Core/TownNews.cs
    Whoever comes into the area finds it, once.
 3. **Each morning at nine:** `police.EllisComes(mill, day, inquiry)` until it
    returns null.
-   - On "talk": `police.HearTheStreet(mill, day, grading)`.
+   - On "talk": `police.HearTheStreet(mill, day, grading, cast, now)` (only the
+     people on the street then, the ones she asks).
    - For any reason but "body":
      `PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill, cast, now), reason, now)`
      (only the people on the street then).
