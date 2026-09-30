@@ -749,11 +749,19 @@ namespace LedgerCore
 			/// a damaged save loses remarks, never the game.
 			static RemarkLedger FromJson(const std::string& Json)
 			{
+				LedgerVignette::Value Parsed;
+				std::string Err;
+				if (!MiniJson::Deserialize(Json, Parsed, Err) || Parsed.Type != LedgerVignette::T_OBJ) return RemarkLedger();
+				return FromValue(&Parsed);
+			}
+
+			/// The same from a value already read (a piece of TownSave's JSON).
+			static RemarkLedger FromValue(const LedgerVignette::Value* RootP)
+			{
 				using namespace LedgerVignette;
 				RemarkLedger L;
-				Value Root;
-				std::string Err;
-				if (!MiniJson::Deserialize(Json, Root, Err) || Root.Type != T_OBJ) return L;
+				if (RootP == 0 || RootP->Type != T_OBJ) return L;
+				const Value& Root = *RootP;
 				const Value* S = 0; const Value* H = 0; const Value* T = 0;
 				for (size_t I = 0; I < Root.Obj.size(); ++I)
 				{

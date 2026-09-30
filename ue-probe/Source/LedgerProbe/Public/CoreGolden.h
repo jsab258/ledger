@@ -60,6 +60,7 @@
 #include "PoliceFile.h"
 #include "Waiting.h"
 #include "TownNews.h"
+#include "TownSave.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -2008,6 +2009,75 @@ namespace Golden
 		if (It == Ans.end()) return A;
 		A.Known = true;
 		A.Got = MultiAnswer(F, 1 + Labels, It->second);
+		return A;
+	}
+
+	// ---- the town's one save (town list 6bl) ------------------------------
+	//
+	// PerceptionGolden's EmitTownSave, played again here.
+
+	inline const std::map<std::string, std::vector<std::string> >& TownSaveAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		auto T = [](int D, int H, int M = 0) { return GameTime(D, H, M); };
+		TownSave S;
+		S.Hints.Begin(0, true);
+		{ Hint H; S.Hints.Happened(Moment::CanTalk, 20, H); }
+		{ const GameTime A = T(0, 20); S.Asks.Delivered(0, nullptr, &A); }
+		{ const GameTime A = T(0, 22, 30); S.Asks.Answer(0, NightAnswer::Did, nullptr, &A); }
+		S.Tea = AdasTea::For(0, true);
+		{ std::string Ignored; S.Tea->SheSeesHim(T(2, 10), Ignored); }
+		for (int M = 21 * 60; M <= 22 * 60 + 40; ++M) S.Tea->WithHer(T(2, M / 60, M % 60));
+		S.Tea->Close(nullptr, T(2, 23));
+		S.Police.Report("ada", "player.window_d1", Offence::Damage, 4, 1);
+		std::string Called;
+		const bool bCalled = S.Police.ConstableComes(2, Called);
+		S.Arrests.push_back(S.Police.TakeIn(bCalled ? &Called : nullptr, T(2, 10), false, false));
+		{
+			Aftermath A;
+			const GameTime Mended = T(2, 16);
+			Aftermath::Make("ritas", "rita_window", "somebody put Rita's window in", T(1, 23, 30), &Mended, nullptr, A);
+			S.Damage.push_back(A);
+		}
+		S.NewsFiled.push_back("hal_rita_words");
+		S.Week.Ask(T(6, 10, 30), true);
+		S.Week.Give(WeekAnswer::TakeOver, T(6, 10, 40), nullptr, nullptr);
+		const std::string Written = S.ToJson();
+		Ans["TownSaveWritten|text"] = { Escape(Written) };
+		TownSave Back;
+		std::string Err;
+		TownSave::FromJson(Written, Back, Err);
+		std::string News;
+		for (size_t I = 0; I < Back.NewsFiled.size(); ++I) News += (I ? "," : "") + Back.NewsFiled[I];
+		Ans["TownSaveBack|back"] = { FromInt(Back.Asks.NextNight()), Back.Tea ? std::string(TeaStateName(Back.Tea->State())) : std::string("null"),
+			FromInt((long long)Back.Arrests.size()), FromInt((long long)Back.Damage.size()), News, WeekAnswerName(Back.Week.Answer()), FromBool(Back.Police.WasTaken("player.window_d1")) };
+		Ans["TownSaveSame|same"] = { FromBool(Back.ToJson() == Written) };
+		{
+			std::string Later = Written;
+			const std::string V1 = "{\"version\":1,";
+			if (Later.compare(0, V1.size(), V1) == 0) Later.replace(0, V1.size(), "{\"version\":2,");
+			TownSave Refused;
+			std::string E;
+			Ans["TownSaveLaterRefused|later"] = { TownSave::FromJson(Later, Refused, E) ? "0" : "1" };
+		}
+		{
+			TownSave Junk;
+			std::string E;
+			TownSave::FromJson("{\"asks\": 7, \"tea\": \"x\", \"arrests\": [1, 2]}", Junk, E);
+			Ans["TownSaveJunk|junk"] = { FromInt(Junk.Asks.NextNight()), Junk.Tea ? "tea" : "null", FromInt((long long)Junk.Arrests.size()) };
+		}
+		return Ans;
+	}
+
+	inline Answer TownSaveRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const auto& Ans = TownSaveAnswers();
+		const auto It = Ans.find(F[0] + "|" + F[1]);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 2, It->second);
 		return A;
 	}
 
@@ -4340,6 +4410,11 @@ namespace Golden
 		else if (Fn == "GossipFuzz")
 		{
 			A = GossipFuzzRow(F);
+		}
+		// THE TOWN'S ONE SAVE (town list 6bl): TownSave.h.
+		else if (Fn == "TownSaveWritten" || Fn == "TownSaveBack" || Fn == "TownSaveSame" || Fn == "TownSaveLaterRefused" || Fn == "TownSaveJunk")
+		{
+			A = TownSaveRow(F);
 		}
 		// THE TOWN'S OWN NEWS (town list 6aq): TownNews.h and Exchange's news branch.
 		else if (Fn == "TownNews" || Fn == "TownNewsWitnesses" || Fn == "NewsHeard" || Fn == "ExchangeHeard" || Fn == "NewsSeed" || Fn == "NewsSeedHolder"

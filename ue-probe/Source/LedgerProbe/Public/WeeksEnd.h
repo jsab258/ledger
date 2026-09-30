@@ -201,9 +201,17 @@ namespace LedgerCore
 		/// anything it cannot read. Text that is no JSON object is no save.
 		static WeeksEnd FromJson(const std::string& SavedJson)
 		{
-			LedgerVignette::Value Root;
+			LedgerVignette::Value Parsed;
 			std::string Err;
-			if (!MiniJson::Deserialize(SavedJson, Root, Err) || Root.Type != LedgerVignette::T_OBJ) return WeeksEnd();
+			if (!MiniJson::Deserialize(SavedJson, Parsed, Err) || Parsed.Type != LedgerVignette::T_OBJ) return WeeksEnd();
+			return FromValue(&Parsed);
+		}
+
+		/// The same from a value already read; none, or no object, is a fresh one.
+		static WeeksEnd FromValue(const LedgerVignette::Value* RootP)
+		{
+			if (RootP == nullptr || RootP->Type != LedgerVignette::T_OBJ) return WeeksEnd();
+			const LedgerVignette::Value& Root = *RootP;
 			const LedgerVignette::Value* F = Last(Root, "first");
 			const int First = F != nullptr && F->Type == LedgerVignette::T_NUM && F->Num >= 0 && F->Num <= 100000 && F->Num == std::floor(F->Num) ? (int)F->Num : 0;
 			WeeksEnd W(First);

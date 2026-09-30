@@ -138,6 +138,9 @@ namespace Ledger.PerceptionGolden
             EmitJustNow(sb);
             // Ported to TownNews.h and Exchange's news branch on 30 September (town list 6aq: the town's own news).
             EmitTownNews(sb);
+            // Ported to TownSave.h on 30 September (town list 6bl: the town's one save); every row
+            // carries a label now, since the port's reader skips a row of two fields.
+            EmitTownSave(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -148,7 +151,6 @@ namespace Ledger.PerceptionGolden
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
                 EmitThreats(sb);
-                EmitTownSave(sb);
             }
 
             var text = sb.ToString();
@@ -1054,19 +1056,19 @@ namespace Ledger.PerceptionGolden
             t.Week.Ask(T(6, 10, 30), true);
             t.Week.Give(WeekAnswer.TakeOver, T(6, 10, 40), null, null);
             var written = MiniJson.Serialize(t.ToJson());
-            Row(sb, "TownSaveWritten", Esc(written));
+            Row(sb, "TownSaveWritten", "text", Esc(written));
             var back = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(written)));
-            Row(sb, "TownSaveBack", back.Asks.NextNight.ToString(Inv), back.Tea == null ? "null" : back.Tea.State.ToString(), back.Arrests.Count.ToString(Inv),
+            Row(sb, "TownSaveBack", "back", back.Asks.NextNight.ToString(Inv), back.Tea == null ? "null" : back.Tea.State.ToString(), back.Arrests.Count.ToString(Inv),
                 back.Damage.Count.ToString(Inv), string.Join(",", back.NewsFiled), back.Week.Answer.ToString(), Bit(back.Police.WasTaken("player.window_d1")));
-            Row(sb, "TownSaveSame", Bit(MiniJson.Serialize(back.ToJson()) == written));
+            Row(sb, "TownSaveSame", "same", Bit(MiniJson.Serialize(back.ToJson()) == written));
             var later = t.ToJson();
             later["version"] = (double)(TownSave.Version + 1);
             string refused;
             try { TownSave.FromJson(later); refused = "0"; }
             catch (SaveIncompatibleException) { refused = "1"; }
-            Row(sb, "TownSaveLaterRefused", refused);
+            Row(sb, "TownSaveLaterRefused", "later", refused);
             var junk = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"asks\": 7, \"tea\": \"x\", \"arrests\": [1, 2]}")));
-            Row(sb, "TownSaveJunk", junk.Asks.NextNight.ToString(Inv), junk.Tea == null ? "null" : "tea", junk.Arrests.Count.ToString(Inv));
+            Row(sb, "TownSaveJunk", "junk", junk.Asks.NextNight.ToString(Inv), junk.Tea == null ? "null" : "tea", junk.Arrests.Count.ToString(Inv));
         }
 
         /// THE MAN AT THE LANDING (town list 6cj), ported on 30 September: his line for

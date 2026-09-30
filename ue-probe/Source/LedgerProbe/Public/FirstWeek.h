@@ -147,9 +147,17 @@ namespace LedgerCore
 		/// cannot read it skips. Text that is no JSON object is no save.
 		static std::unique_ptr<AdasTea> FromJson(const std::string& SavedJson)
 		{
-			LedgerVignette::Value Root;
+			LedgerVignette::Value Parsed;
 			std::string Err;
-			if (!MiniJson::Deserialize(SavedJson, Root, Err) || Root.Type != LedgerVignette::T_OBJ) return nullptr;
+			if (!MiniJson::Deserialize(SavedJson, Parsed, Err) || Parsed.Type != LedgerVignette::T_OBJ) return nullptr;
+			return FromValue(&Parsed);
+		}
+
+		/// The same from a value already read; none, or no object, is none.
+		static std::unique_ptr<AdasTea> FromValue(const LedgerVignette::Value* RootP)
+		{
+			if (RootP == nullptr || RootP->Type != LedgerVignette::T_OBJ) return nullptr;
+			const LedgerVignette::Value& Root = *RootP;
 			const LedgerVignette::Value* D = Last(Root, "day");
 			if (D == nullptr || D->Type != LedgerVignette::T_NUM || !(D->Num >= 0 && D->Num < 100000 && D->Num == std::floor(D->Num))) return nullptr;
 			std::unique_ptr<AdasTea> T(new AdasTea());

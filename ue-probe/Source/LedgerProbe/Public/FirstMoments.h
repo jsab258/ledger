@@ -270,6 +270,15 @@ namespace LedgerCore
 			return F;
 		}
 
+		/// The same from a value already read (a piece of TownSave's JSON); none,
+		/// or no object, is the C#'s null save.
+		static FirstMoments FromValue(const LedgerVignette::Value* Root)
+		{
+			FirstMoments F;
+			if (Root != nullptr && Root->Type == LedgerVignette::T_OBJ) ReadValue(*Root, F.DoneSet);
+			return F;
+		}
+
 	private:
 		std::set<Moment> DoneSet;
 		std::vector<std::pair<Moment, double> > Waiting;
@@ -314,6 +323,11 @@ namespace LedgerCore
 			LedgerVignette::Value Root;
 			std::string Err;
 			if (!MiniJson::Deserialize(SavedJson, Root, Err) || Root.Type != LedgerVignette::T_OBJ) return;
+			ReadValue(Root, Into);
+		}
+
+		static void ReadValue(const LedgerVignette::Value& Root, std::set<Moment>& Into)
+		{
 			// A key given twice keeps its last value, as the C#'s dictionary does.
 			const LedgerVignette::Value* Done = nullptr;
 			for (std::vector<std::pair<std::string, LedgerVignette::Value> >::size_type I = 0; I < Root.Obj.size(); ++I)
