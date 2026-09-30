@@ -56,6 +56,46 @@ def say(*a):
 
 bpy.ops.wm.open_mainfile(filepath=BLEND)
 garment = bpy.data.objects[RENDER]
+# THE GAME MESH (production/research/clothing-pipeline/PIPELINE-2026-09-30.md: a hero's jacket 15 to 30 thousand
+# triangles at LOD0): --decimate keeps that share of the faces, the shape held; --uv-smart gives it one clean UV set
+# (an automatic projection, a first pass: the modeller's were the body's own)
+if opt("--decimate", 0.0):
+    bpy.ops.object.select_all(action="DESELECT")
+    garment.select_set(True)
+    bpy.context.view_layer.objects.active = garment
+    keep_g = garment.vertex_groups.new(name="decimate_free")
+    _bd = bmesh.new()
+    _bd.from_mesh(garment.data)
+    _hold = set()
+    for e in _bd.edges:
+        if len(e.link_faces) == 2 and e.link_faces[0].material_index != e.link_faces[1].material_index:
+            for v in e.verts:
+                _hold.add(v.index)
+                for e2 in v.link_edges:
+                    _hold.add(e2.other_vert(v).index)
+        if e.is_boundary:
+            for v in e.verts:
+                _hold.add(v.index)
+    _bd.free()
+    keep_g.add([i for i in range(len(garment.data.vertices)) if i not in _hold], 1.0, "REPLACE")
+    dm = garment.modifiers.new("Decimate", "DECIMATE")
+    dm.ratio = opt("--decimate", 0.0)
+    dm.use_collapse_triangulate = True
+    dm.vertex_group = "decimate_free"
+    dm.vertex_group_factor = 1.0
+    bpy.ops.object.modifier_apply(modifier="Decimate")
+    garment.vertex_groups.remove(garment.vertex_groups["decimate_free"])
+if "--uv-smart" in argv:
+    bpy.ops.object.select_all(action="DESELECT")
+    garment.select_set(True)
+    bpy.context.view_layer.objects.active = garment
+    for uvl in list(garment.data.uv_layers):
+        garment.data.uv_layers.remove(uvl)
+    garment.data.uv_layers.new(name="UVMap")
+    bpy.ops.object.mode_set(mode="EDIT")
+    bpy.ops.mesh.select_all(action="SELECT")
+    bpy.ops.uv.smart_project(angle_limit=1.15, island_margin=0.004)
+    bpy.ops.object.mode_set(mode="OBJECT")
 arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
 body = next(o for o in bpy.data.objects if o.type == "MESH" and o is not garment
             and any(m.type == "ARMATURE" for m in o.modifiers))
@@ -107,7 +147,10 @@ if ZONES:
     def grp_(nm):
         return garment.vertex_groups.get(nm) or garment.vertex_groups.new(name=nm)
     zoned = 0
-    for v in garment.data.vertices:
+    # (--keep-armpit: the side under the arm keeps the body's own weights, its corrective joints included; stripped
+    # of the arm, the remade jacket's side stood still while the skin, moved by upperarm_in and the latissimus,
+    # came through it into a crumple)
+    for v in ([] if "--keep-armpit" in argv else garment.data.vertices):
         p_ = garment.matrix_world @ v.co
         ax_ = abs(p_.x)
         sd = "l" if p_.x > 0 else "r"
@@ -128,6 +171,38 @@ if ZONES:
                     cur = next((g.weight for g in v.groups if g.group == gg.index), 0.0)
                     gg.add([v.index], cur + freed * share, "REPLACE")
                 zoned += 1
+    ARM_R = opt("--arm-radius", 0.0)
+    if ARM_R > 0:
+        def seg_d(p_, a_, b_):
+            ab = b_ - a_
+            t_ = max(0.0, min(1.0, (p_ - a_).dot(ab) / max(1e-9, ab.length_squared)))
+            return (p_ - (a_ + ab * t_)).length
+        chains = {}
+        for sd in ("l", "r"):
+            J_ = lambda n: arm.matrix_world @ arm.pose.bones[n + sd].head
+            chains[sd] = [J_("upperarm_"), J_("lowerarm_"), J_("hand_"), J_("middle_03_") if ("middle_03_" + sd) in arm.pose.bones else J_("hand_")]
+        cleared = 0
+        for v in garment.data.vertices:
+            p_ = garment.matrix_world @ v.co
+            if p_.z > ARMPIT_Z - 0.06:
+                continue
+            ch = chains["l" if p_.x > 0 else "r"]
+            d_arm = min(seg_d(p_, ch[i], ch[i + 1]) for i in range(len(ch) - 1))
+            if d_arm < ARM_R:
+                continue
+            freed = 0.0
+            for g in list(v.groups):
+                if gnames[g.group].startswith(ARMISH_) or gnames[g.group].startswith("clavicle"):
+                    freed += g.weight
+                    garment.vertex_groups[g.group].remove([v.index])
+            if freed > 0:
+                low = p_.z < 1.0
+                for nm, share in ((("pelvis", 0.7), ("spine_01", 0.3)) if low else (("spine_02", 0.5), ("spine_03", 0.5))):
+                    gg = grp_(nm)
+                    cur = next((g.weight for g in v.groups if g.group == gg.index), 0.0)
+                    gg.add([v.index], cur + freed * share, "REPLACE")
+                cleared += 1
+        print("POSE armCleared", cleared, flush=True)
     CUFF_T = opt("--cuff-zone-t", 0.0)
     if CUFF_T > 0:
         for v in garment.data.vertices:
@@ -138,7 +213,8 @@ if ZONES:
             a_ = arm.matrix_world @ arm.pose.bones["lowerarm_" + sd].head
             h_ = arm.matrix_world @ arm.pose.bones["hand_" + sd].head
             t = (p_ - a_).dot(h_ - a_) / (h_ - a_).length_squared
-            if t > CUFF_T:
+            radial_c = ((p_ - a_) - (h_ - a_) * t).length
+            if t > CUFF_T and radial_c < opt("--arm-radius", 0.10):     # the sleeve's end only (a coat's side beside the hand took it)
                 for gidx in [g.group for g in v.groups]:
                     garment.vertex_groups[gidx].remove([v.index])
                 grp_("lowerarm_twist_01_" + sd).add([v.index], 0.6, "REPLACE")
@@ -147,6 +223,37 @@ bpy.ops.object.mode_set(mode="WEIGHT_PAINT")
 bpy.ops.object.vertex_group_smooth(group_select_mode="ALL", factor=0.5, repeat=opt("--smooth", 6, int))
 bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
 bpy.ops.object.mode_set(mode="OBJECT")
+AP_N = opt("--armpit-smooth", 0, int)
+if AP_N and ZONES:
+    _gco = np.array([garment.matrix_world @ v.co for v in garment.data.vertices])
+    _ng = len(garment.vertex_groups)
+    Wm = np.zeros((len(_gco), _ng))
+    for v in garment.data.vertices:
+        for g in v.groups:
+            Wm[v.index, g.group] = g.weight
+    _ed = np.array([e.vertices[:] for e in garment.data.edges])
+    _deg = np.bincount(_ed.ravel(), minlength=len(_gco)).astype(float)
+    APR = opt("--armpit-r", 0.12)
+    zone = np.zeros(len(_gco))
+    for sg in (1.0, -1.0):
+        c_ = np.array([sg * SIDE_X, np.median(_gco[:, 1]), ARMPIT_Z])
+        d_ = np.linalg.norm(_gco - c_, axis=1)
+        zone = np.maximum(zone, np.clip(1.0 - d_ / APR, 0.0, 1.0))
+    zone = zone ** 0.7
+    for _ in range(AP_N):
+        acc = np.zeros_like(Wm)
+        np.add.at(acc, _ed[:, 0], Wm[_ed[:, 1]])
+        np.add.at(acc, _ed[:, 1], Wm[_ed[:, 0]])
+        avg = acc / np.maximum(_deg, 1)[:, None]
+        Wm = Wm + (avg - Wm) * (0.5 * zone)[:, None]
+    Wm = Wm / np.maximum(Wm.sum(axis=1, keepdims=True), 1e-9)
+    for i in np.where(zone > 0)[0]:
+        for gi in range(_ng):
+            if Wm[i, gi] > 1e-4:
+                garment.vertex_groups[gi].add([int(i)], float(Wm[i, gi]), "REPLACE")
+            else:
+                garment.vertex_groups[gi].remove([int(i)])
+    print("POSE armpitSmoothed", int((zone > 0).sum()), flush=True)
 from mathutils.kdtree import KDTree
 bm_ = bmesh.new()
 bm_.from_mesh(garment.data)
@@ -319,8 +426,75 @@ if Z_WAIST > 0:
             cur_s = next((g.weight for g in v.groups if g.group == sp_g.index), 0.0)
             pel_g.add([v.index], cur_p + freed * 0.7, "REPLACE")
             sp_g.add([v.index], cur_s + freed * 0.3, "REPLACE")
+# A COAT'S SKIRT, THE LOOSE PART (--coat-below Z; production/research/clothing-pipeline/PIPELINE-2026-09-30.md:
+# tight garments are skinned, only loose parts such as coat tails are simulated): below Z the thighs' pull is cut
+# to --coat-thigh of what the skin gave (the rest to the pelvis), eased over 8 cm, so the skirt hangs from the hips
+# and follows the legs only partly; and a vertex colour "SimMaxDistance" (red channel, 0 skinned, 1 free to
+# --sim-max metres) rising from Z to the hem, for Unreal's cloth to take as the part it simulates
+COAT_Z = opt("--coat-below", 0.0)
+if COAT_Z > 0:
+    names = {g.index: g for g in garment.vertex_groups}
+    pel_c = garment.vertex_groups.get("pelvis") or garment.vertex_groups.new(name="pelvis")
+    KEEP = opt("--coat-thigh", 0.35)
+    KEEP_F, KEEP_B = opt("--coat-thigh-front", KEEP), opt("--coat-thigh-back", KEEP)
+    hem_z = float(gco[:, 2].min())
+    cy_c = float(np.mean(gco[:, 1]))
+    for v in garment.data.vertices:
+        z_ = gco[v.index][2]
+        if z_ > COAT_Z + 0.08:
+            freed = 0.0
+            for g in list(v.groups):
+                if names[g.group].name.startswith("thigh"):
+                    freed += g.weight
+                    names[g.group].remove([v.index])
+            if freed > 0:
+                cur = next((g.weight for g in v.groups if g.group == pel_c.index), 0.0)
+                pel_c.add([v.index], cur + freed, "REPLACE")
+            continue
+        f = min(1.0, (COAT_Z + 0.08 - z_) / 0.08)
+        # (the front lies on the thighs when he sits, the back hangs behind him)
+        kf = KEEP_F if gco[v.index][1] < cy_c else KEEP_B
+        keep = 1.0 - (1.0 - kf) * f
+        freed = 0.0
+        for g in list(v.groups):
+            if names[g.group].name.startswith("thigh"):
+                freed += g.weight * (1.0 - keep)
+                names[g.group].add([v.index], g.weight * keep, "REPLACE")
+        if freed > 0:
+            cur = next((g.weight for g in v.groups if g.group == pel_c.index), 0.0)
+            pel_c.add([v.index], cur + freed, "REPLACE")
+    ca = garment.data.color_attributes.get("SimMaxDistance") or garment.data.color_attributes.new("SimMaxDistance", "FLOAT_COLOR", "POINT")
+    for v in garment.data.vertices:
+        z_ = gco[v.index][2]
+        t_ = max(0.0, min(1.0, (COAT_Z - z_) / max(1e-6, COAT_Z - hem_z)))
+        ca.data[v.index].color = (t_, t_, t_, 1.0)
+    log_coat = {"below": COAT_Z, "thighKeptFront": KEEP_F, "thighKeptBack": KEEP_B, "simMaxM": opt("--sim-max", 0.06)}
+else:
+    log_coat = None
+bpy.ops.object.select_all(action="DESELECT")
+garment.select_set(True)
+bpy.context.view_layer.objects.active = garment
+bpy.ops.object.vertex_group_limit_total(group_select_mode="ALL", limit=4)
+bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
 am = garment.modifiers.new("Armature", "ARMATURE")
 am.object = arm
+EXPORT = opt("--export", "", str)
+if EXPORT:
+    # THE HANDOVER: the garment skinned on the body's own skeleton in its reference pose (a skeletal mesh on the
+    # MetaHuman body skeleton; at most four influences a point, normalised), and the same shape static
+    os.makedirs(EXPORT, exist_ok=True)
+    NAME_X = opt("--name", "garment", str)
+    mw = garment.matrix_world.copy()
+    garment.parent = arm
+    garment.matrix_world = mw
+    bpy.ops.object.select_all(action="DESELECT")
+    arm.select_set(True)
+    garment.select_set(True)
+    bpy.context.view_layer.objects.active = arm
+    bpy.ops.export_scene.fbx(filepath=os.path.join(EXPORT, NAME_X + "_skinned.fbx"), use_selection=True,
+                             object_types={"ARMATURE", "MESH"}, add_leaf_bones=False, mesh_smooth_type="FACE",
+                             bake_anim=False, colors_type="LINEAR")
+    say("exported", os.path.join(EXPORT, NAME_X + "_skinned.fbx"))
 
 bm = bmesh.new()
 bm.from_mesh(garment.data)
@@ -328,7 +502,8 @@ EDGES = np.array([[e.verts[0].index, e.verts[1].index] for e in bm.edges])
 bm.free()
 REST = tailor.coords(garment)
 L0 = np.linalg.norm(REST[EDGES[:, 1]] - REST[EDGES[:, 0]], axis=1)
-log = {"blend": BLEND, "poses": {}, "gluedToCloth": log_rigid, "bodyHidden": len(ids_cov)}
+log = {"blend": BLEND, "poses": {}, "gluedToCloth": log_rigid, "bodyHidden": len(ids_cov), "coat": log_coat,
+       "tris": sum(len(p_.vertices) - 2 for p_ in garment.data.polygons)}
 grey = tailor.material("M_Body", (0.5, 0.5, 0.5))
 body.data.materials.clear()
 body.data.materials.append(grey)
@@ -349,6 +524,11 @@ for name in POSES:
     ok = L0 > 1e-6
     lo_z, hi_z = float(co[:, 2].min()), float(co[:, 2].max())
     worst = [[round(float(c), 3) for c in co[i]] for i in np.argsort(-deep)[:4] if deep[i] > 0.003]
+    _gn = {g.index: g.name for g in garment.vertex_groups}
+    worst_rest = [{"rest": [round(float(c), 3) for c in REST[i]],
+                   "groups": sorted([(_gn[g.group], round(g.weight, 2)) for g in garment.data.vertices[i].groups], key=lambda t: -t[1])[:3]}
+                  for i in np.argsort(-deep)[:3] if deep[i] > 0.003]
+    say(name, "worstRest", json.dumps(worst_rest))
     log["poses"][name] = {"insideOver3mm": int((deep > 0.003).sum()), "deepestMm": round(float(deep.max()) * 1000, 1),
                           "whereDeepest": worst,
                           "stretch95": round(float(np.percentile(r[ok], 95)), 3), "stretchMax": round(float(r[ok].max()), 2),
@@ -356,12 +536,13 @@ for name in POSES:
     say(name, json.dumps(log["poses"][name]))
     mid = Vector((float(co[:, 0].mean()), float(co[:, 1].mean()), 0.5 * (lo_z + hi_z)))
     tailor.pictures(os.path.join(OUT, "pose-%s" % name), mid,
-                    views=(("front", (0, -3.2, 0.2)), ("side", (3.2, 0, 0.2)), ("three-quarter", (2.2, -2.3, 0.4))))
+                    views=(("front", (0, -3.2, 0.2)), ("side", (3.2, 0, 0.2)), ("three-quarter", (2.2, -2.3, 0.4)), ("back", (0, 3.2, 0.25))))
     if "--close" in argv:
         # close views of the garment itself (footwear: the feet), a lighter body behind so dark shoes read
         cd = opt("--close", 1.0)
         tailor.pictures(os.path.join(OUT, "close-%s" % name), mid,
-                        views=(("front", (0, -cd, 0.25 * cd)), ("side", (cd, 0, 0.1 * cd)), ("three-quarter", (0.7 * cd, -0.7 * cd, 0.35 * cd))),
+                        views=(("front", (0, -cd, 0.25 * cd)), ("side", (cd, 0, 0.1 * cd)), ("three-quarter", (0.7 * cd, -0.7 * cd, 0.35 * cd)),
+                               ("back", (0, cd, 0.25 * cd))),
                         res=(700, 500))
 json.dump(log, open(os.path.join(OUT, "pose-test.json"), "w"), indent=1)
 say("done")
