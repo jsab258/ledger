@@ -170,6 +170,24 @@ def load_models(cpu_only):
     speaker.ve.to("cpu")
     inf = speaker.s3gen.inference
     speaker.s3gen.inference = lambda speech_tokens, ref_dict, **k: inf(speech_tokens=speech_tokens.to("cpu"), ref_dict=ref_dict, **k)
+    # THE DECODER'S FLOW ON THE CARD (1 October; item 2, the delay): the flow
+    # (sound tokens to a spectrogram) took 1.20 s of a median line's 2.20 s on
+    # the processor and 0.39 s on the card (tools/voice-live/voice_profile.py),
+    # and gives the same spectrogram to within rounding (flow_card_same.py:
+    # every difference under 0.0005% of its range), so the voice is unchanged.
+    # Its inputs go to the card and its spectrogram comes back; the vocoder and
+    # the voice's reference stay on the processor. LEDGER_VOICE_FLOW_CPU=1
+    # keeps it on the processor.
+    if os.environ.get("LEDGER_VOICE_FLOW_CPU") != "1":
+        flow = speaker.s3gen.flow
+        flow.to(dev)
+        inner = flow.inference
+
+        def flow_on_card(**k):
+            moved = {n: (v.to(dev) if torch.is_tensor(v) else v) for n, v in k.items()}
+            mels, cache = inner(**moved)
+            return mels.to("cpu"), cache
+        flow.inference = flow_on_card
     return torch, speaker, dev
 
 
