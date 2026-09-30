@@ -158,6 +158,8 @@ real_table() {
     approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \
     own-lines-page        "$REPO"                 "$PY tools/own_lines_md.py rocco --check" \
     own-lines-port        "$REPO"                 "$PY tools/port_own_lines.py --check" \
+    route-week            "$REPO"                 "$PY tools/route_week_check.py" \
+    route-week-selftest   "$REPO"                 "$PY tools/route_week_check.py --selftest" \
     own-lines-port-selftest "$REPO"               "$PY tools/port_own_lines.py --selftest" \
     names-gate            "$REPO"                 "$PY tools/names-gate.py" \
     names-gate-selftest   "$REPO"                 "$PY tools/names-gate.py --selftest" \

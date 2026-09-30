@@ -63,7 +63,9 @@ STATE_DIR = r"F:\LedgerTools\tmp\ai-tester"
 STATE = os.path.join(STATE_DIR, "state.json")
 RES = (1280, 720)
 
-SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14, "z": 0x2C,   # z: see LAYOUT below "shift": 0x2A, "esc": 0x01, "q": 0x10,
+SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14,
+        "z": 0x2C,   # z: its place differs by layout, see THE KEYBOARD'S OWN LAYOUT below
+        "shift": 0x2A, "esc": 0x01, "q": 0x10,
         # THE TITLE'S KEYS, 30 September: Enter takes a choice, the arrows move
         # between them (0xE000 marks a key Windows sends as "extended").
         "enter": 0x1C, "up": 0xE048, "down": 0xE050}
@@ -652,6 +654,8 @@ def selftest():
     block = for_jafar_block(worst, 10, 4.0, "x", "r.md")
     check("the block for Jafar is worst first and short", block[4].startswith("- (5)") and len(block) <= 12)
     check("the keys the commands send exist", all(v in SCAN for v in WALK_KEY.values()) and "e" in SCAN and "t" in SCAN)
+    # every key `press` offers and `walk --run` holds (30 September: a comment swallowed Shift, Esc and Q)
+    check("every key press offers is there, and Shift", all(k in SCAN for k in ("e", "t", "z", "esc", "q", "enter", "up", "down", "shift")))
     src = open(os.path.abspath(__file__), encoding="utf-8").read()
     check("nothing here calls the API or reads a key",
           ("api." + "anthropic.com") not in src and ("anthropic" + "_api_key") not in src and ("x-" + "api-key") not in src)

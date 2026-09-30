@@ -10,7 +10,6 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 ### Needs you
 
 1. **C: at 45 GB, under your 60** (builder; no page yet): this morning's move of Unreal's cache to drive F did not hold: Unreal kept writing it to C:, 8.5 GB again by 10:00 (my mistake: I checked the setting, not where the files went). I am finding out why before a second try, then a cleanup page for the copy on C:. The one big win that is yours alone is Windows' hibernation file, 13.7 GB. Recommended: if you never hibernate the PC, run `powercfg /h off` in a terminal opened as administrator.
-2. **Suits and coats** (clothing; no page): Epic makes none. (A, the clothing session's recommendation) free CC0 suits from MakeHuman, refitted and bound as skinned meshes, your method of this morning; (B) Fab's ready-made ones, $5 to 20 each. Marvelous Designer is out, as you ruled.
 
 ### Road to worth playing
 

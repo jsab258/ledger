@@ -353,6 +353,17 @@ namespace LedgerCore
 			return I == AreaNames.end() ? std::vector<std::string>() : I->second;
 		}
 		/// The place nearest a point within MaxM metres, or empty.
+		/// Where a place stands in the street's metres (x along, z across); false
+		/// for a place the file gives no position.
+		bool PlaceXZ(const std::string& Place, double& OutX, double& OutZ) const
+		{
+			const auto It = PlaceAt.find(Place);
+			if (It == PlaceAt.end()) return false;
+			OutX = It->second.first;
+			OutZ = It->second.second;
+			return true;
+		}
+
 		std::string NearestPlace(double X, double Z, double MaxM) const
 		{
 			std::string Best;
