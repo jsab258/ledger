@@ -8331,6 +8331,35 @@ namespace LedgerVignetteShot
 		return Hidden;
 	}
 
+	int32 ShowStreetGlassNear(const FBox& Box)
+	{
+		if (!Box.IsValid) { return 0; }
+		const FBox Grown = Box.ExpandBy(20.0);
+		int32 Shown = 0;
+		for (int32 I = 0; I < GStreetActors.Num() && I < (int32)GStreet.Rows.size(); ++I)
+		{
+			AStaticMeshActor* A = GStreetActors[I];
+			if (A == nullptr || GStreet.Rows[(size_t)I].Base != "glass") { continue; }
+			if (!A->GetComponentsBoundingBox(true).Intersect(Grown)) { continue; }
+			A->SetActorHiddenInGame(false);
+			++Shown;
+		}
+		return Shown;
+	}
+
+	int32 HideStreetMeshes(const char* Tag)
+	{
+		int32 Hidden = 0;
+		for (int32 I = 0; I < GStreetActors.Num() && I < (int32)GStreet.Rows.size(); ++I)
+		{
+			AStaticMeshActor* A = GStreetActors[I];
+			if (A == nullptr || GStreet.Rows[(size_t)I].RevealOn != Tag) { continue; }
+			A->SetActorHiddenInGame(true);
+			++Hidden;
+		}
+		return Hidden;
+	}
+
 	int32 RevealStreetMeshes(const char* Tag)
 	{
 		int32 Shown = 0;

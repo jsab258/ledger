@@ -146,6 +146,13 @@ namespace LedgerVignetteShot
 	// many it showed; 0 when the Blender street is not in play.
 	int32 RevealStreetMeshes(const char* Tag);
 
+	// THE WINDOW MENDED, 30 September (the AI tester: on day 3 the window
+	// broken on day 0 was still broken, though the glazier had been by
+	// four the next working day). The two above undone: the street glass
+	// near Box shown again, and the meshes tagged reveal_on Tag hidden.
+	int32 ShowStreetGlassNear(const FBox& Box);
+	int32 HideStreetMeshes(const char* Tag);
+
 	// THE CRIME PROBE'S TWO, ruling of 2026-09-08 sections 2 and 4. See
 	// VignetteShot.cpp for what each does and why the probe's pieces are
 	// kept in a map of their own.

@@ -380,6 +380,7 @@ namespace
 	void ConsequenceHour(const GameTime& H);
 	void ConstableHour(const GameTime& H);
 	bool NearPlace(const char* Place, double Metres);
+	void WindowLook();
 	std::shared_ptr<SocialGraph> GGraph;
 	std::shared_ptr<GossipMill>  GMill;
 	GossiperPtr GW1, GN2;
@@ -1447,6 +1448,10 @@ namespace
 	}
 
 	// ---- the deed --------------------------------------------------------
+	// What the smash of the first window laid down (shards, the brick), so
+	// the glazier's mend can clear it (WindowLook).
+	TArray<TWeakObjectPtr<AActor> > GWindowDebris;
+
 	void CommitDeed(UWorld* World, int Index)
 	{
 		LedgerCrime::CrimeReading& C = GCrime[Index];
@@ -1503,11 +1508,12 @@ namespace
 			if (!GroundYAt(World, SX, SZ, GroundY, On)) { continue; }
 			const FString Name = FString::Printf(TEXT("probe_shard_%s%d"),
 				Index == 0 ? TEXT("a") : TEXT("b"), I);
-			if (SpawnBox(World, Name,
+			if (AActor* Shard = SpawnBox(World, Name,
 			             LedgerCrime::P3(SX, GroundY + LedgerCrime::kShardSY * 0.5, SZ),
 			             LedgerCrime::kShardSX, LedgerCrime::kShardSY, LedgerCrime::kShardSZ,
-			             TEXT("glass")) != nullptr)
+			             TEXT("glass")))
 			{
+				if (Index == 0) { GWindowDebris.Add(Shard); }
 				++C.Shards;
 				++GShardsSpawned;
 			}
@@ -1521,11 +1527,12 @@ namespace
 			{
 				const FString Name = FString::Printf(TEXT("probe_brick_%s"),
 					Index == 0 ? TEXT("a") : TEXT("b"));
-				if (SpawnBox(World, Name,
+				if (AActor* Brick = SpawnBox(World, Name,
 				             LedgerCrime::P3(BX, GroundY + LedgerCrime::kBrickSY * 0.5, BZ),
 				             LedgerCrime::kBrickSX, LedgerCrime::kBrickSY, LedgerCrime::kBrickSZ,
-				             TEXT("brick_grey")) != nullptr)
+				             TEXT("brick_grey")))
 				{
+					if (Index == 0) { GWindowDebris.Add(Brick); }
 					++C.Bricks;
 					++GBricksSpawned;
 				}
@@ -2174,6 +2181,27 @@ namespace
 		bRitasWindow = GEnc == EEncounter::Live && !bLiveScript;
 		GGlass[0] = LedgerVignetteShot::FindStreetPiece(bRitasWindow ? kGlassR : kGlassA);
 		GGlass[1] = LedgerVignetteShot::FindStreetPiece(kGlassB);
+
+		// NO SLOT BETWEEN THE PARKED CARS AND THE KERB RAILING (the AI tester,
+		// 30 September: by the fish market he pushed into it and stuck). The
+		// railing runs x 10 to 16 m at z 3.375 (vignette-pieces.json, E8) and
+		// the cars' near sides stand at z 2.78 (street-vehicles.json, 1.64 m
+		// wide at z 1.96): 0.6 m, narrower than he is. An unseen wall there
+		// stops him at its mouth; it blocks only people, so no sight line or
+		// camera trace meets it. Free play only: the regression's street is its own.
+		if (bRitasWindow)
+		{
+			if (AActor* Slot = SpawnBox(World, TEXT("free_car_rail_slot"), LedgerCrime::P3(13.0, 0.5, 3.08), 6.4, 1.2, 0.56, TEXT("concrete")))
+			{
+				Slot->SetActorHiddenInGame(true);
+				if (AStaticMeshActor* M = Cast<AStaticMeshActor>(Slot))
+				{
+					UStaticMeshComponent* C = M->GetStaticMeshComponent();
+					C->SetCollisionResponseToAllChannels(ECR_Ignore);
+					C->SetCollisionResponseToChannel(ECC_Pawn, ECR_Block);
+				}
+			}
+		}
 	}
 
 	// THE CAST FILE, once read (the ties, and the places where he is seen).
@@ -2780,6 +2808,9 @@ namespace
 		return true;
 	}
 
+	// Which path the talk takes this run: "live-key", "offline" or "stand-in".
+	const TCHAR* GTalkPath = TEXT("none");
+
 	void LiveHelperStart()
 	{
 		if (GLive.bStarted) { return; }
@@ -2815,6 +2846,7 @@ namespace
 		// real on LEDGER's own key, every other run's is the stand-in.
 		const bool bPlayed = LiveTalkPlayed();
 		const bool bKey = TalkKeyForThisRun();
+		GTalkPath = !bPlayed ? TEXT("stand-in") : bKey ? TEXT("live-key") : TEXT("offline");
 		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: %s"), !bPlayed ? TEXT("the stand-in (a scripted or unattended run)")
 			: bKey ? TEXT("live, on LEDGER's own key") : TEXT("offline: no live-talk key file"));
 		GLive.Proc = FPlatformProcess::CreateProc(*Exe, bPlayed ? TEXT("--early") : TEXT("--fake --early"),
@@ -2864,6 +2896,17 @@ namespace
 	bool bVoiceAsked = false, bVoicePlayed = false, bVoiceRecording = false, bVoiceAllIn = false;
 	double GVoiceSeconds = 0.0, GVoiceAskedAt = 0.0, GVoicePlayedAt = 0.0;
 	double GVoiceStartedAt = 0.0;   // when the latest sentence's sound began to play
+	// ONE LINE, END TO END (Jafar's list after the audit, item 2): from his
+	// Enter to the reply's first words, to its first sentence handed to the
+	// voice, to the first sound of it heard, one record a reply ("heard" in
+	// the session record, and a LedgerTiming log line), marked with the path
+	// the talk took: live on LEDGER's key, offline, or the stand-in.
+	double GEnterAt = 0.0, GTimedWordsAt = 0.0, GTimedVoiceAskedAt = 0.0;
+	bool bAwaitFirstSound = false;
+	std::string GTimedCard;
+	const TCHAR* TalkPathName();
+
+	const TCHAR* TalkPathName() { return GTalkPath; }
 
 	void LiveVoiceStart()
 	{
@@ -2970,6 +3013,15 @@ namespace
 		GVoice.WindowDb.Reset();
 		MouthLevelFrom(0);
 		GVoiceStartedAt = NowS();
+		if (bAwaitFirstSound && GEnterAt > 0.0)
+		{
+			bAwaitFirstSound = false;
+			const double Words = GTimedWordsAt - GEnterAt, Asked = GTimedVoiceAskedAt - GEnterAt, Sound = GVoiceStartedAt - GEnterAt;
+			LedgerSession::Write(TEXT("heard"), TEXT("\"who\":") + LedgerSession::Str(Un(GTimedCard)) + TEXT(",\"path\":") + LedgerSession::Str(TalkPathName())
+				+ FString::Printf(TEXT(",\"enterToWords\":%.2f,\"enterToVoiceAsked\":%.2f,\"enterToSound\":%.2f"), Words, Asked, Sound));
+			UE_LOG(LogTemp, Display, TEXT("LedgerTiming: %s (%s) Enter to words %.2f s, to the voice asked %.2f s, to first sound %.2f s"),
+				*Un(GTimedCard), TalkPathName(), Words, Asked, Sound);
+		}
 		if (!bVoicePlayed)
 		{
 			GVoicePlayedAt = NowS();
@@ -3391,6 +3443,7 @@ namespace
 		GVoice.Pending.Add(Id, Who);
 		bVoiceAsked = true;
 		GVoiceAskedAt = NowS();
+		if (bAwaitFirstSound && GTimedVoiceAskedAt < GTimedWordsAt) { GTimedVoiceAskedAt = GVoiceAskedAt; }
 	}
 
 	// THE DEED A STORY IS ABOUT, by the key the session record and the talk
@@ -3826,7 +3879,15 @@ namespace
 			{
 				// THE FIRST SENTENCE, EARLY: said and spoken at once; the answer's
 				// line that follows carries only what is left to say ("rest").
-				if (GLive.FirstAt < GLive.AskedAt) { GLive.FirstAt = NowS(); }
+				if (GLive.FirstAt < GLive.AskedAt)
+				{
+					GLive.FirstAt = NowS();
+					// The line's clock: its words are here; its first sound is next.
+					GTimedWordsAt = GLive.FirstAt;
+					GTimedVoiceAskedAt = 0.0;
+					GTimedCard = GLive.PendingCard;
+					bAwaitFirstSound = GVoice.bReady && GEnterAt > 0.0 && GEnterAt <= GLive.AskedAt;
+				}
 				const std::string First = JsonField(L, "first");
 				if (First != "none")
 				{
@@ -3993,7 +4054,7 @@ namespace
 						// window smashed on "e", report on "r", Tom walked). Now only Enter or
 						// Esc ends the line; a lost focus is won back (HumanTalkTick), and the
 						// game ignores its keys while the box is open.
-						if (How == ETextCommit::OnEnter) { GSaid = T.ToString(); bSayCommitted = true; }
+						if (How == ETextCommit::OnEnter) { GSaid = T.ToString(); bSayCommitted = true; GEnterAt = NowS(); }
 						else if (How == ETextCommit::OnCleared) { bSayCancelled = true; }
 					})
 				]
@@ -4584,6 +4645,43 @@ namespace
 		}
 		GWeek.TwentyThreeTea(GMill.get(), H);
 		GWeek.HourEnd(GMill.get(), &GCast, H);
+		WindowLook();
+	}
+
+	// RITA'S WINDOW LOOKS AS THE TOWN'S DAMAGE RECORD SAYS (30 September, the
+	// AI tester: broken on day 3 though the glazier had mended it on day 1,
+	// and whole after a reload whatever the hour): broken from the deed
+	// until its mend (Aftermath: boarded that morning, the glazier by four
+	// the working day after), whole after; on a load, whichever is true.
+	int GWindowLooksBroken = -1;
+	void WindowLook()
+	{
+		if (bLiveScript || !bRitasWindow || GGlass[0] == nullptr) { return; }
+		bool bBroken = false;
+		for (const Aftermath& A : GWeek.Damage)
+		{
+			if (A.Key() == "rita_window" && GNow.TotalMinutes() >= A.DoneAt().TotalMinutes() && GNow.TotalMinutes() < A.MendedAt().TotalMinutes()) { bBroken = true; }
+		}
+		if ((int)bBroken == GWindowLooksBroken) { return; }
+		GWindowLooksBroken = bBroken ? 1 : 0;
+		AActor* Glass = GGlass[0];
+		Glass->SetActorHiddenInGame(bBroken);
+		Glass->SetActorEnableCollision(!bBroken);
+		const FBox Box = Glass->GetComponentsBoundingBox(true);
+		int32 Panes = 0, Pieces = 0;
+		if (bBroken)
+		{
+			Panes = LedgerVignetteShot::HideStreetGlassNear(Box);
+			Pieces = LedgerVignetteShot::RevealStreetMeshes("crime_r");
+		}
+		else
+		{
+			Panes = LedgerVignetteShot::ShowStreetGlassNear(Box);
+			Pieces = LedgerVignetteShot::HideStreetMeshes("crime_r");
+			for (const TWeakObjectPtr<AActor>& D : GWindowDebris) { if (D.IsValid()) { D->SetActorHiddenInGame(true); D->SetActorEnableCollision(false); } }
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerAfter: Rita's window %s at %s (%d panes, %d pieces)"),
+			bBroken ? TEXT("broken") : TEXT("whole"), *Un(GNow.ToString()), Panes, Pieces);
 	}
 
 	// WHERE HE STANDS, for the week: at Ada's step (her tea's minutes), at the
@@ -5596,6 +5694,9 @@ namespace
 				bClockRuns = true;
 				GLightNight = -1;
 				GPhase = bDeedDone ? ECrimePhase::LiveRoam : ECrimePhase::LiveWaitDeed;
+				RespawnMate(World);   // Ron in the street, as in a new game
+				GWindowLooksBroken = -1;
+				WindowLook();         // Rita's window as the record has it at this hour
 				if (bLoadPlace)
 				{
 					TeleportPawn(World, GLoadX, GLoadZ, GLoadYaw);
@@ -5632,6 +5733,10 @@ namespace
 				bSheilaTrusts = false;
 				GTeaMinuteDone = -1;
 				GWaitShown.clear();
+				// RON IS IN THE STREET FROM THE START in free play, at his place in
+				// the yard across from Rita's (the tester, 30 September: only the
+				// scripted story brought him on, so nobody could tell him no).
+				RespawnMate(World);
 				GLightNight = -1;
 			}
 			GWatchSlot = 0;
