@@ -186,7 +186,9 @@ namespace Ledger.PerceptionGolden
                     // 192 of the seeded gossip worlds' traces (their save rows do not move).
                     "NamesHim|", "GossipFuzz|scenario|",
                     // A9, the keeper finds her own damage, from the deed's own hour.
-                    "Aftermath|tick to noon|", "Aftermath|bad saves|", "TownSaveWritten|text|" };
+                    "Aftermath|tick to noon|", "Aftermath|bad saves|", "TownSaveWritten|text|",
+                    // B6, Ada's tea as she would tell it.
+                    "TeaClosed|late|", "TeaSave|late|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {

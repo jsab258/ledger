@@ -46,6 +46,9 @@ namespace Ledger.Core
         /// past ten, and never away more than ten minutes between (the
         /// independent check: an hour's gap counted as staying).
         public const int ArriveByMinute = 21 * 60 + 30, StayUntilMinute = 22 * 60 + 30, LongestAway = 10;
+        /// Up to half an hour late and then staying is staying all the same,
+        /// remembered as late (the independent review of 30 September, B6).
+        public const int LateArriveByMinute = 22 * 60;
         public const double StayedGain = 0.25, LeftEarlyGain = 0.05, StoodUpCost = 0.15;
 
         /// What she says when she asks him.
@@ -87,21 +90,30 @@ namespace Ledger.Core
             _minutes.Add(now.Hour * 60 + now.Minute);
         }
 
-        // How the evening went, from the minutes alone.
-        TeaState Judge()
+        // How the evening went, from the minutes alone, and how she would tell
+        // it: on time or late, left before half ten, slipped out, or came near
+        // eleven (the independent review of 30 September, B6: all of these were
+        // "off again before the pot was cold").
+        enum How { StoodUp, OnTime, Late, CameNearEleven, SlippedOut, LeftEarly }
+
+        static TeaState StateOf(How how) =>
+            how == How.StoodUp ? TeaState.StoodUp : how == How.OnTime || how == How.Late ? TeaState.Stayed : TeaState.LeftEarly;
+
+        How Judge()
         {
-            if (_minutes.Count == 0) return TeaState.StoodUp;
-            if (_minutes.Min > ArriveByMinute || _minutes.Max < StayUntilMinute) return TeaState.LeftEarly;
+            if (_minutes.Count == 0) return How.StoodUp;
+            if (_minutes.Min > LateArriveByMinute) return How.CameNearEleven;
+            if (_minutes.Max < StayUntilMinute) return How.LeftEarly;
             int last = -1;
             foreach (var m in _minutes)
             {
                 // The minutes away are those between two he was there: stamps
                 // eleven apart are ten away, which is allowed (the port's
                 // independent check, 30 September).
-                if (last >= 0 && m - last - 1 > LongestAway) return TeaState.LeftEarly;
+                if (last >= 0 && m - last - 1 > LongestAway) return How.SlippedOut;
                 last = m;
             }
-            return TeaState.Stayed;
+            return _minutes.Min > ArriveByMinute ? How.Late : How.OnTime;
         }
 
         /// The evening closes (eleven, or any later call): how it went, and what
@@ -112,21 +124,26 @@ namespace Ledger.Core
             // Not before the evening is over (the time-and-state sweep: closed
             // on an earlier day, the tea was a stand-up before it was poured).
             if (now.Day < Day || (now.Day == Day && now.Hour < Until)) return State;
-            State = Judge();
+            var how = Judge();
+            State = StateOf(how);
             if (ada != null)
             {
                 if (State == TeaState.Stayed)
                 {
                     ada.Loyalty = Math.Min(1.0, ada.Loyalty + StayedGain);
                     ada.Suspicion.Lower(0.1, "Mickey's nephew sat with me over a pot of tea");
-                    ada.Memory.Append(new MemoryEvent(now, "conversation", 0.7,
-                        "Mickey's nephew came for his tea and sat with me till gone half ten. There's more to him than they're saying."));
+                    ada.Memory.Append(new MemoryEvent(now, "conversation", 0.7, how == How.Late
+                        ? "Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying."
+                        : "Mickey's nephew came for his tea and sat with me till gone half ten. There's more to him than they're saying."));
                 }
                 else if (State == TeaState.LeftEarly)
                 {
                     ada.Loyalty = Math.Min(1.0, ada.Loyalty + LeftEarlyGain);
-                    ada.Memory.Append(new MemoryEvent(now, "conversation", 0.6,
-                        "Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he."));
+                    ada.Memory.Append(new MemoryEvent(now, "conversation", 0.6, how == How.SlippedOut
+                        ? "Mickey's nephew came for his tea and slipped off out in the middle of it. Somewhere to be, had he."
+                        : how == How.CameNearEleven
+                        ? "Mickey's nephew came for his tea with the pot near cold and gone ten. Better late, I suppose."
+                        : "Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he."));
                 }
                 else
                 {
@@ -180,7 +197,7 @@ namespace Ledger.Core
                 foreach (var x in list)
                     if (x is double m && m >= From * 60 && m < Until * 60 && m == Math.Floor(m)) t._minutes.Add((int)m);
             // A closed evening is what its minutes say, whatever the file says.
-            if (t.State == TeaState.Stayed || t.State == TeaState.LeftEarly || t.State == TeaState.StoodUp) t.State = t.Judge();
+            if (t.State == TeaState.Stayed || t.State == TeaState.LeftEarly || t.State == TeaState.StoodUp) t.State = StateOf(t.Judge());
             if (saved.TryGetValue("seenGoing", out var s) && s is bool sb) t.SeenGoing = sb && t.State != TeaState.NotAsked;
             return t;
         }

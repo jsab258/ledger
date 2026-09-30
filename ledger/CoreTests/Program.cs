@@ -7461,6 +7461,41 @@ namespace Ledger.CoreTests
                       string.Join(" | ", wrongSure));
             }
 
+            // ADA'S TEA, AS SHE WOULD TELL IT (the independent review of 30 September,
+            // B6: with her from 21:45 to 22:40 she remembered "off again before the
+            // pot was cold" and he counted as leaving early). Up to half an hour late
+            // and staying past half ten with no long gap is staying, remembered as
+            // late; slipping out for more than ten minutes is remembered as that;
+            // coming after ten, as the pot near cold; leaving before half ten keeps
+            // "off again before the pot was cold".
+            {
+                var teaCases = new (string what, (int from, int to)[] spans, TeaState want, string says, string never)[]
+                {
+                    ("on time, stayed", new[] { (21 * 60, 22 * 60 + 40) }, TeaState.Stayed, "sat with me till gone half ten", "came late"),
+                    ("a quarter of an hour late, stayed", new[] { (21 * 60 + 45, 22 * 60 + 40) }, TeaState.Stayed, "came late for his tea", "before the pot was cold"),
+                    ("on time, left at ten past ten", new[] { (21 * 60, 22 * 60 + 10) }, TeaState.LeftEarly, "off again before the pot was cold", "came late"),
+                    ("slipped out a quarter of an hour", new[] { (21 * 60, 21 * 60 + 50), (22 * 60 + 5, 22 * 60 + 40) }, TeaState.LeftEarly, "slipped off", "before the pot was cold"),
+                    ("came at a quarter past ten", new[] { (22 * 60 + 15, 22 * 60 + 50) }, TeaState.LeftEarly, "near cold", "before the pot was cold"),
+                };
+                var wrongTea = new List<string>();
+                foreach (var (what, spans, want, says, never) in teaCases)
+                {
+                    var t = AdasTea.For(0, true);
+                    t.SheSeesHim(new GameTime(2, 10, 0));
+                    foreach (var (from, to) in spans) for (int m = from; m <= to; m++) t.WithHer(new GameTime(2, m / 60, m % 60));
+                    var a = new Gossiper(AdasTea.Ada, AdasTea.Ada, new MemoryStore(AdasTea.Ada), new KnowledgeBase(), new SuspicionTracker()) { Loyalty = 0.35 };
+                    var got = t.Close(a, new GameTime(2, 23, 0));
+                    string mem = a.Memory.Events.Count > 0 ? a.Memory.Events[a.Memory.Events.Count - 1].Text : "";
+                    double gain = a.Loyalty - 0.35;
+                    double wantGain = want == TeaState.Stayed ? AdasTea.StayedGain : AdasTea.LeftEarlyGain;
+                    if (got != want || !mem.Contains(says) || mem.Contains(never) || Math.Abs(gain - wantGain) > 1e-9)
+                        wrongTea.Add($"{what}: {got}, +{gain:0.00}, \"{mem}\"");
+                }
+                Check(wrongTea.Count == 0,
+                      "Ada remembers his tea as it went: late but staying is staying, and remembered as late; slipping out, coming near eleven and leaving early are each remembered as what they were",
+                      string.Join(" | ", wrongTea));
+            }
+
             // HE MISSES HER SUNDAY (the independent review of 30 September, B1): if
             // he does not come to the office between ten and twelve on her Sunday,
             // she asks the next time he talks with her there, any later day; the
