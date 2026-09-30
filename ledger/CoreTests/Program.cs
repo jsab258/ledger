@@ -7412,9 +7412,24 @@ namespace Ledger.CoreTests
                         new SecretsBook(), new BeatBook(), new GossipMill(null), new DebtBook(), out _);
                 }
                 catch (Exception e) { refused0 = e.Message; }
-                Check(refused0 == null && back0.Equals(new GameTime(0, 9, 30)),
-                      "a save made on the game's first day, day 0, reads back to that morning",
-                      refused0 ?? back0.ToString());
+                // A day that is not a whole number is no day (the second independent check:
+                // -0.5 and 0.5 loaded as day 0 once day 0 was allowed).
+                var fractionalLoads = new List<string>();
+                var json0b = SaveCodec.Capture(new GameTime(0, 9, 30), new Wallet(10), new Campaign(), new PlayerKnowledge(),
+                    new SecretsBook(), new BeatBook(), new GossipMill(null), new DebtBook(), null);
+                foreach (var bad in new[] { "-0.5", "0.5", "-0.9", "2.5" })
+                {
+                    var odd = System.Text.RegularExpressions.Regex.Replace(json0b, "\"day\":\\s*0", "\"day\":" + bad);
+                    try
+                    {
+                        SaveCodec.Restore(odd, new Wallet(0), new Campaign(), new PlayerKnowledge(), new SecretsBook(), new BeatBook(), new GossipMill(null), new DebtBook(), out _);
+                        fractionalLoads.Add(bad);
+                    }
+                    catch (SaveIncompatibleException) { }
+                }
+                Check(refused0 == null && back0.Equals(new GameTime(0, 9, 30)) && fractionalLoads.Count == 0,
+                      "a save made on the game's first day, day 0, reads back to that morning; a day that is not a whole number is refused",
+                      (refused0 ?? back0.ToString()) + " / loaded " + string.Join(",", fractionalLoads));
             }
 
             // A WITNESS'S STORY IS ONLY AS SURE AS THE WITNESS WAS (Jafar's ruling of
@@ -7624,9 +7639,19 @@ namespace Ledger.CoreTests
                 bool stillNot = !noMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0");
                 no.TellDue(noMill, new GameTime(0, 23, 0));
                 var heard = noMill.Get(Arrangement.OutfitMan).Rumors.Find(r => r.TopicKey == "player.outfit_d0");
-                Check(notYet && stillNot && heard != null && heard.Hops == 0,
-                      "his no at half nine reaches the man at the landing when Ron goes down at eleven, as the hour turns, not at dawn",
-                      $"{notYet} {stillNot} {heard != null}");
+                // And a night he stays away, at one, when the man gives up waiting (the
+                // review's B3, its third part; the second independent check).
+                var away = new Arrangement(0);
+                var awayMill = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) awayMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                away.Delivered(0, awayMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                away.TellDue(awayMill, new GameTime(1, 0, 0));
+                bool awayNotYet = !awayMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0");
+                away.TellDue(awayMill, new GameTime(1, 1, 0));
+                var awayHeard = awayMill.Get(Arrangement.OutfitMan).Rumors.Find(r => r.TopicKey == "player.outfit_d0");
+                Check(notYet && stillNot && heard != null && heard.Hops == 0 && awayNotYet && awayHeard != null && awayHeard.Content.Value == "noshow",
+                      "his no at half nine reaches the man at the landing when Ron goes down at eleven, as the hour turns, not at dawn; a night away at one, when he gives up waiting",
+                      $"{notYet} {stillNot} {heard != null} {awayNotYet} {awayHeard?.Content.Value}");
             }
 
             // THE WITNESS BANK KEEPS THE CONTENT RULE (the independent review of 30
@@ -7643,10 +7668,16 @@ namespace Ledger.CoreTests
                     foreach (var key in new[] { "text", "clause" })
                         if (MiniJson.GetString(l, key) is string s) { lines++; if (ContentRule.SpeechBreaks(s) is string why) breaks.Add(MiniJson.GetString(l, "id") + " " + why); }
                 }
-                bool idiom = ContentRule.SpeechBreaks("Half the dock front walks like that after opening time.") != null
-                             && ContentRule.SpeechBreaks("Out at chucking-out time, the lot of them.") != null
-                             && ContentRule.SpeechBreaks("The cafe's opening time is half six.") == null
-                             && ContentRule.SpeechBreaks("I'll see you by the pub on the corner.") == null;
+                // The pub's own idioms are refused; a shop's opening time never is (the second
+                // independent check: "before opening time" was refused from a shopkeeper, and
+                // "chuckin'-out time", "kicking-out time", "Time, gentlemen" passed). "After
+                // opening time" of men walking home is drink only by its sense, which no word
+                // rule can read: that bank line was reworded by hand.
+                var refusedIdioms = new[] { "Out at chucking-out time, the lot of them.", "Chuckin'-out time, and not before.", "Kicking-out time at the Anchor.",
+                                            "Time, gentlemen, please.", "The pubs let out at eleven." };
+                var allowedShops = new[] { "I was in before opening time and the glass was all over the step.", "Come back after opening time, love, I'm not open till nine.",
+                                           "The shop's shut till opening time.", "The cafe's opening time is half six.", "I'll see you by the pub on the corner." };
+                bool idiom = refusedIdioms.All(s => ContentRule.SpeechBreaks(s) != null) && allowedShops.All(s => ContentRule.SpeechBreaks(s) == null);
                 Check(idiom && lines > 30 && breaks.Count == 0,
                       "the witness bank's every line and clause keeps the content rule; the pub's hours as a drinking idiom are refused, a shop's opening time and a pub as a place are not",
                       $"idiom {idiom}, {lines} lines, " + string.Join(" | ", breaks));
@@ -7678,6 +7709,28 @@ namespace Ledger.CoreTests
                 Check(sheRight && zlataRight && adaRight && storiesKept,
                       "what was said to someone's face is remembered as that: Sheila being told his answer, whoever was in the office being there, the threatened being threatened; never \"I saw it myself\" of themselves; the stories are theirs first-hand as before",
                       string.Join(" / ", sheMem) + " | " + string.Join(" / ", zlataMem) + " | " + string.Join(" / ", adaMem));
+            }
+
+            // AND IN A STORE KEPT IN A FILE (the second independent check: the removed
+            // "I saw it myself" came back when the file was read again).
+            {
+                var memDir = Path.Combine(Path.GetTempPath(), "ledger-b7-" + Guid.NewGuid().ToString("N"));
+                Directory.CreateDirectory(memDir);
+                try
+                {
+                    string memPath = Path.Combine(memDir, "lena.md");
+                    var fm7 = new GossipMill(null);
+                    fm7.Add(new Gossiper("lena", "lena", new MemoryStore("lena", memPath), new KnowledgeBase(), new SuspicionTracker()));
+                    fm7.Get("lena").Memory.Append(new MemoryEvent(new GameTime(6, 9, 0), "observation", 0.5, "Opened the office."));
+                    var wf = new WeeksEnd();
+                    wf.Ask(new GameTime(6, 10, 30), false);
+                    wf.Give(WeekAnswer.WindDown, new GameTime(6, 10, 40), fm7, null);
+                    var reread = new MemoryStore("lena", memPath).Events.Select(e => e.Text).ToList();
+                    Check(reread.Count == 2 && !reread.Exists(x => x.StartsWith("I saw it myself", StringComparison.Ordinal)),
+                          "what was said to her face is remembered as that in a store kept in a file too, read back",
+                          string.Join(" / ", reread));
+                }
+                finally { try { Directory.Delete(memDir, true); } catch (IOException) { } }
             }
 
             // ADA'S TEA, AS SHE WOULD TELL IT (the independent review of 30 September,
@@ -7910,14 +7963,58 @@ namespace Ledger.CoreTests
                 var reloadedHours = TownHours.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(loadedHours.ToJson()))));
                 for (int hh = 15; hh <= 20; hh++) reloadedHours.RunTo(reloaded, rc, new GameTime(0, hh, 0));
                 bool noHourLost = Math.Abs(straight.Get("p").Rumors[0].Confidence - reloaded.Get("p").Rumors[0].Confidence) < 1e-12;
+                // Nor a save at the end of an hour (the second independent check: after the
+                // 09:59 call one hour's fading was lost), asked each minute.
+                GossipMill Reload(GossipMill from)
+                {
+                    var g1 = new SocialGraph();
+                    foreach (var (a, b, w) in rc.Ties) g1.Link(a, b, w);
+                    var m1 = new GossipMill(g1);
+                    foreach (var g0 in from.Agents)
+                    {
+                        var copy = new Gossiper(g0.Id, g0.Id, new MemoryStore(g0.Id), new KnowledgeBase(), new SuspicionTracker());
+                        foreach (var r0 in g0.Rumors) copy.Rumors.Add(new Rumor { Content = r0.Content, Summary = r0.Summary, Confidence = r0.Confidence, Hops = r0.Hops, Sensitive = r0.Sensitive });
+                        m1.Add(copy);
+                    }
+                    return m1;
+                }
+                // Before day 0 (the second independent check): rounds stamped at their own
+                // hour of the day before, and the next round kept across a save.
+                var negMill = Fading(); var negHours = new TownHours();
+                negHours.RunTo(negMill, rc, new GameTime(-1, 23, 30));
+                var negBack = TownHours.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(negHours.ToJson()))));
+                bool beforeDayZero = negHours.NextRound == -24 && negBack.NextRound == -24
+                                     && negMill.Agents.All(g0 => g0.Memory.Events.All(e => e.Time.Hour >= 0 && e.Time.Minute >= 0 && (e.Time.Day != -1 || e.Time.Hour == 23)));
+                var minuteStraight = Fading(); var minuteStraightHours = new TownHours();
+                for (int mm = 9 * 60; mm <= 20 * 60; mm++) minuteStraightHours.RunTo(minuteStraight, rc, GameTime.FromTotalMinutes(mm));
+                bool noHourLostAtEnd = true;
+                foreach (int saveAt in new[] { 9 * 60 + 54, 9 * 60 + 59, 13 * 60 + 57 })
+                {
+                    var before = Fading(); var beforeHours = new TownHours();
+                    for (int mm = 9 * 60; mm <= saveAt; mm++) beforeHours.RunTo(before, rc, GameTime.FromTotalMinutes(mm));
+                    var after = Reload(before);
+                    var afterHours = TownHours.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(beforeHours.ToJson()))));
+                    for (int mm = saveAt + 1; mm <= 20 * 60; mm++) afterHours.RunTo(after, rc, GameTime.FromTotalMinutes(mm));
+                    if (Math.Abs(minuteStraight.Get("p").Rumors[0].Confidence - after.Get("p").Rumors[0].Confidence) > 1e-12) noHourLostAtEnd = false;
+                }
                 // Asked each minute or each hour, the town ends the same.
                 var minutely = Fading(); var minutelyHours = new TownHours();
                 for (int mm = 9 * 60; mm <= 20 * 60; mm++) minutelyHours.RunTo(minutely, rc, GameTime.FromTotalMinutes(mm));
                 bool sameEitherWay = minutely.Agents.All(g0 => Math.Abs((g0.Rumors.Count > 0 ? g0.Rumors[0].Confidence : -1) - (straight.Get(g0.Id).Rumors.Count > 0 ? straight.Get(g0.Id).Rumors[0].Confidence : -1)) < 1e-12);
+                // With people on the street (the second independent check): asked each
+                // round or oftener, the same town; a longer gap is time the game's street
+                // did not run (asleep, in the cells, a load's jump), with nobody on it.
+                Func<string, bool> pq = id => id == "p" || id == "q";
+                var everyMinute = Fading(); var everyMinuteHours = new TownHours();
+                for (int mm = 9 * 60; mm <= 12 * 60; mm++) everyMinuteHours.RunTo(everyMinute, rc, GameTime.FromTotalMinutes(mm), pq);
+                var everyRound = Fading(); var everyRoundHours = new TownHours();
+                for (int mm = 9 * 60; mm <= 12 * 60; mm += TownRounds.MinutesBetweenRounds) everyRoundHours.RunTo(everyRound, rc, GameTime.FromTotalMinutes(mm), pq);
+                bool sameWithStreet = everyMinute.Agents.All(g0 => g0.Rumors.Count == everyRound.Get(g0.Id).Rumors.Count
+                    && (g0.Rumors.Count == 0 || Math.Abs(g0.Rumors[0].Confidence - everyRound.Get(g0.Id).Rumors[0].Confidence) < 1e-12));
                 // A save from before (the next hour only) reads as that hour's start.
                 bool oldSave = TownHours.FromJson(new Dictionary<string, object> { { "next", 12.0 } }).NextRound == 12 * 60;
                 bool hoursOnce = firstRun == 2 && noneAhead && sameHour == 7 && gameOwnPair && skippedTwo == 12 && hours.NextHour == 11 && hours.NextRound == 11 * 60 + 6
-                                 && afterLoad == 5 && noHourLost && sameEitherWay && oldSave
+                                 && afterLoad == 5 && noHourLost && noHourLostAtEnd && sameEitherWay && sameWithStreet && oldSave && beforeDayZero
                                  && townBack.Hours.NextRound == 11 * 60 + 6 && TownRounds.HourStart(-1).Equals(new GameTime(-1, 23, 0));
                 Check(passed9 >= 1 && qHeard && rNotYet && rHeard && same && !Holds(onStreetBoth, "q") && Holds(onStreetOne, "q") && noRetell && hoursOnce
                       && ran == 3 && Holds(skipped, "r") && longest == TownRounds.LongestCatchUpHours

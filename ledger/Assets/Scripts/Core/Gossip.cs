@@ -303,7 +303,7 @@ namespace Ledger.Core
             int before = g?.Memory?.Events.Count ?? 0;
             Witness(witnessId, content, summary, sensitive, now, confidence);
             if (g?.Memory == null) return;
-            if (g.Memory.Events.Count > before) g.Memory.Events.RemoveRange(before, g.Memory.Events.Count - before);
+            g.Memory.KeepFirst(before);
             if (!string.IsNullOrEmpty(remembered)) g.Memory.Append(new MemoryEvent(now, "conversation", sensitive ? 0.9 : 0.6, remembered));
         }
 

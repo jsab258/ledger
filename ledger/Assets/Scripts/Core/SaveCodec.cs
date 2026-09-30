@@ -202,7 +202,10 @@ namespace Ledger.Core
             // for it.
             // Day 0 is the game's first day, a Monday (GameTime, the cast): the
             // independent review of 30 September, C5, found it refused.
-            if (!MiniJson.TryGetInt(root, "day", out int day) || day < 0 || day > MaxPlayableDay)
+            // And a whole number (the second independent check: 0.5 and -0.5 read as
+            // day 0, and 2.5 as day 2).
+            if (!MiniJson.TryGetInt(root, "day", out int day) || day < 0 || day > MaxPlayableDay
+                || !(root["day"] is double dayRaw && dayRaw == Math.Floor(dayRaw)))
                 throw new SaveIncompatibleException(SaveFault.Unreadable,
                     "the save has no readable day — it is truncated or corrupt");
 

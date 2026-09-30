@@ -102,7 +102,7 @@ namespace Ledger.Core
                         {
                             // Theirs to know, not to tell, and not to remember as seen.
                             g.Suppressed.Add(st.Fact.Subject + "." + st.Fact.Predicate);
-                            if (g.Memory.Events.Count > memories) g.Memory.Events.RemoveRange(memories, g.Memory.Events.Count - memories);
+                            g.Memory.KeepFirst(memories);
                         }
                     }
                 filed.Add(st.Id);
@@ -274,7 +274,7 @@ namespace Ledger.Core
                     }
                     int memories = g.Memory.Events.Count;
                     mill.Witness(p, fact, Said, false, at, 0.9);
-                    if (g.Memory.Events.Count > memories) g.Memory.Events.RemoveRange(memories, g.Memory.Events.Count - memories);
+                    g.Memory.KeepFirst(memories);
                     g.Memory.Append(new MemoryEvent(at, "observation", 0.6, p == cast.KeeperOf(Area) ? KeeperMemoryOf(cast, there) : there ? PresentMemoryOf() : MemoryOf()));
                     found.Add((p, at));
                 }

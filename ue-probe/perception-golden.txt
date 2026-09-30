@@ -51962,13 +51962,6 @@ TownRoundsCatchUp|570|730|3
 TownRoundsCatchUp|0|144000|336
 TownRoundsCatchUp|720|540|0
 TownRoundsCatchUp|600|600|0
-TownHoursRun|0|2|9|p:0.9:0;q:0.5760000000000001:1;r:none
-TownHoursRun|1|7|9|p:0.9:0;q:0.5760000000000001:1;r:none
-TownHoursRun|2|22|12|p:0.8807148558789302:0;q:0.5636575077625153:1;r:0.36074080496800986:2
-TownHoursRun|3|0|12|p:0.8807148558789302:0;q:0.5636575077625153:1;r:0.36074080496800986:2
-TownHoursRun|4|15|13|p:0.8743787470382454:0;q:0.559602398104477:1;r:0.35814553478686534:2
-TownHoursRun|5|195|33|p:0.756806773728343:0;q:0.4843563351861397:1;r:0.30998805451912936:2
-TownHoursRun|6|9|34|p:0.756806773728343:0;q:0.4843563351861397:1;r:0.30998805451912936:2
 TownHoursJson|{"next":5}|5
 TownHoursJson|{"next":-1}|-1
 TownHoursJson|{"next":-2}|-1
@@ -51983,12 +51976,6 @@ TownHoursJson|{"next":1e3}|1000
 TownHoursJson|{"next":-0.0}|0
 TownHoursJson|[5]|-1
 TownHoursJson|not~json|-1
-TownHoursRound|{"round":726}|726
-TownHoursRound|{"round":727,"next":12}|720
-TownHoursRound|{"next":12}|720
-TownHoursRound|{"round":-1}|-1
-TownHoursRound|{"round":-6}|-1
-TownHoursRound|{"round":726.5}|-1
 GossipFuzz|scenario|1|1|ecce3a06352b8e4e|769
 GossipFuzz|scenario|2|1|a3830e82254d70e6|1012
 GossipFuzz|scenario|3|1|abcdaeddd1066c32|651
