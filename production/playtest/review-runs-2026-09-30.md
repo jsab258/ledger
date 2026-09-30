@@ -24,3 +24,13 @@ The independent review (production/audits/review-2026-09-30/FAULTS.md, "What sti
 
 - The visual slice's stand-in silhouette (Mixamo's "Michelle", a stylised modern figure with headphones, 16 September) stands by the fish market every night in free play: the night light spawns it. Barred from play in the same change as the fixes; the frames for Jafar's page keep it.
 - The pavement at Rita's traps the player between the telephone box, the crates and the parked cars; the tester got out only backwards. The two parked cars at Rita's leave no way through to her window from the road.
+
+## The same three runs after the fixes (30 September, 23:08, to 1 October, 00:25)
+
+Played by the AI tester in the build machine's packages of ccf9b7740 (the review's High faults and the town's half), 90ca1e36a (the wait, saves, walls, witness lines) and e7a80159d (the town's second check), stand-in talk. Pictures: production/playtest/ai-tester/2026-09-30-2308, 2026-09-30-2354 and 2026-10-01-0018.
+
+1. **The smash.** At D0 11:39 the onlookers were the people really there: Darren on Rita's step (his day), Rita and her staff behind her counter, the fish counter, the pension counter, Sheila and Ron at Mickey's. Darren, who had met him, recognised him at 1.5 m (rung 4) and alone filed "the new owner was at Rita's on Monday"; everyone else filed what they had: the damage heard, or a shape. No memory anywhere holds "bank-unreadable"; the talk saved beside the save ("people":1); the save holds the meetings (met_lena, met_sam).
+2. **Continue.** He came back where he stood, and the talk program loaded the saved conversation ("loaded, people 1"). The Z wait now goes hour by hour: it stopped at 20:00 for Ron's envelope and at 22:00 for the landing, then ran on to morning.
+3. **Sunday past noon.** The waits stopped at D6 10:00 for Sheila's appointment; he waited on past noon without seeing her, and on Monday at 10:45 at the office she put her question (the log: "Sheila puts her question at D7 10:45").
+
+Known, not faults of the route: the build machine's packages all stamp their commit as SHA-UNKNOWN, so a save from an older package is not refused as "another build's" (harmless for play); the review's C5 small save items remain (see its list).
