@@ -393,7 +393,8 @@ namespace Ledger.SaveChaos
             // otherwise this check and the codec could drift apart and the
             // fuzzer would be measuring its own opinion. The derivation (an
             // `int` day used as a loop induction variable) is on the constant.
-            if (now.Day < 1) return (false, $"day={now.Day}");
+            // Day 0 is the game's first day (the independent review of 30 September, C5).
+            if (now.Day < 0) return (false, $"day={now.Day}");
             if (now.Day > SaveCodec.MaxPlayableDay) return (false, $"day={now.Day} (absurd)");
             if (now.Hour < 0 || now.Hour > 23) return (false, $"hour={now.Hour}");
             if (now.Minute < 0 || now.Minute > 59) return (false, $"minute={now.Minute}");
