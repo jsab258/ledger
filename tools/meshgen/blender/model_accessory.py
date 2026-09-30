@@ -461,7 +461,9 @@ elif KIND == "spectacles":
     bpy.ops.object.join()
     piece = bpy.context.active_object
     # ---- the chain: from each arm's tip down round the back of her neck, 2 mm off it, lowest at her nape -------
-    z_low = meas["hps"] + 0.012
+    # its lowest at the base of her neck, from her own skeleton (the measurements' height, copied from another body
+    # for her S4 head, hung it across her back)
+    z_low = float((arm.matrix_world @ arm.pose.bones["neck_01"].head).z) - opt("--chain-drop", 0.035)
     cpts = []
     for k in range(41):
         t = k / 40.0                                     # 0 at her left tip, 1 at her right
@@ -473,7 +475,7 @@ elif KIND == "spectacles":
         h_ = BVH.ray_cast(Vector((xx, 0.4, zz)), Vector((0, -1, 0)), 0.8)[0]
         yy = (h_.y + 0.002) if h_ is not None else float(sl[:, 1].max()) + 0.002
         cpts.append(Vector((xx, yy, zz)))
-    for _ in range(4):                                   # eased along its length (from point to point it zigzagged)
+    for _ in range(12):                                  # eased along its length (from point to point it zigzagged)
         cpts = [cpts[0]] + [(cpts[i_ - 1] + cpts[i_] * 2 + cpts[i_ + 1]) / 4 for i_ in range(1, len(cpts) - 1)] + [cpts[-1]]
     for i_ in range(1, len(cpts) - 1):
         hit, nn, _f, _d = BVH.find_nearest(cpts[i_])
