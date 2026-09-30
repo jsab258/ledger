@@ -22,14 +22,17 @@
 // WitnessesDropped 202 to 203, SummariesSaying, SaysWord and IsWordChar 233
 // to 264, Witness 270 to 378 with its rung, Tick 433 to 541 with together as
 // a function argument, Telling, SurestFirst, TellingSlot, TellingSlots and
-// Weigh 559 to 623 with SameStrength, CompareNotes 631 to 724, and (town
+// Weigh 559 to 623 with SameStrength, CompareNotes 631 to 724, (town
 // list 6bs, 29 September, for the town's hourly rounds in TownRounds.h) Age
-// 1104 to 1131 with RumorHalfLifeHours.
+// 1104 to 1131 with RumorHalfLifeHours, and (30 September, the town's fix
+// of his arrival) PlainFactOfHim, Leads with Lead, and ExposureOf with
+// Exposure's numbers (not its Sentence).
 //
 // OUT OF SCOPE AND NOT HERE, so a reader can tell a missing member from a
-// forgotten one: Forget, PlayerClaims, KnowsSecret, DayCircleHeat, Leads,
-// ExposureOf, Bribe, Intimidate, Discredit, UseHook, HoldsIndelible,
-// Contain, Backfire, RestoreDiscredited and StrongestSurvivingPlayerLead.
+// forgotten one: Forget, PlayerClaims, KnowsSecret, DayCircleHeat, Bribe,
+// Intimidate, Discredit, UseHook (whose own use of PlainFactOfHim waits
+// with it), HoldsIndelible, Contain, Backfire, RestoreDiscredited and
+// StrongestSurvivingPlayerLead.
 //
 // SUSPICION IS RAISED AS THE C# RAISES IT since town list 6n: Tick's two
 // Suspicion.Raise calls (Gossip.cs 513 and 523) and CompareNotes' two (707
@@ -364,6 +367,15 @@ namespace LedgerCore
 		bool Exposure;        // a night-life rumour reached a day-circle NPC
 
 		GossipEvent() : Contradiction(false), Exposure(false) {}
+	};
+
+	// Gossip.cs 1219 to 1224 (its last class, here before the mill that
+	// returns it): one person carrying talk the player can work from.
+	struct Lead
+	{
+		std::string HolderId, HolderName, SourceId, TopicKey, Summary;
+		double Confidence = 0;
+		bool Sensitive = false;
 	};
 
 	// Gossip.cs 142 onward. The rumour network. Seeds first-hand sightings
@@ -1063,6 +1075,93 @@ namespace LedgerCore
 		}
 
 	public:
+		/// HIS NAME AND HIS ARRIVAL, the street's plain facts about him: never a
+		/// lead, never his exposure, never what a hook is spent silencing (the
+		/// port's independent check, 30 September: a hook could be spent on
+		/// "Mickey's nephew has come" while a deed still showed). Gossip.cs 800:
+		/// PlayerIdentity.IsNameStory(r) || DayOne.IsArrival(r). Both headers
+		/// include this one, so their two tests are spelled here as
+		/// PlayerIdentity::IsNameStory and DayOne::IsArrival spell them (topics
+		/// "player.name" and "player.arrived"); the golden's FixArrival row
+		/// pins them.
+		static bool PlainFactOfHim(const RumorPtr& R)
+		{
+			return R && R->Content.Subject == "player" && (R->TopicKey() == "player.name" || R->TopicKey() == "player.arrived");
+		}
+
+		/// Gossip.cs 802 to 834, ported 30 September for the town's fix of his
+		/// arrival. Everyone currently carrying (and willing to spread) talk
+		/// about the subject, strongest first: the leads the player works from
+		/// to decide who to lean on. A leash holds everything except a body;
+		/// his name and his arrival are never a lead. OrderByDescending is a
+		/// stable sort on double.CompareTo, and so is this.
+		std::vector<Lead> Leads(const std::string& Subject = "player") const
+		{
+			const std::string Subj = ToLowerInvariantAscii(Subject);
+			std::vector<Lead> List;
+			for (std::vector<GossiperPtr>::size_type I = 0; I < AgentList.size(); ++I)
+			{
+				const GossiperPtr& A = AgentList[I];
+				const bool bLeashed = A->Leashed && Subj == "player";
+				for (std::vector<RumorPtr>::size_type J = 0; J < A->Rumors.size(); ++J)
+				{
+					const RumorPtr& R = A->Rumors[J];
+					// His name and his arrival are the street's plain facts, never a lead
+					// (the fourth review of 6ch; the port's review, 30 September, of the arrival).
+					if (R->Content.Subject == Subj && R->Confidence >= MinConfidenceToShare && !PlainFactOfHim(R)
+					    && (!bLeashed || R->Indelible)
+					    && (!A->SuppressedHas(R->TopicKey()) || R->Indelible))
+					{
+						Lead L;
+						L.HolderId = A->Id; L.HolderName = A->DisplayName; L.SourceId = R->OriginId;
+						L.TopicKey = R->TopicKey(); L.Summary = R->Summary; L.Confidence = R->Confidence; L.Sensitive = R->Sensitive;
+						List.push_back(L);
+					}
+				}
+			}
+			std::stable_sort(List.begin(), List.end(), [](const Lead& X, const Lead& Y) { return DotNetCompare(X.Confidence, Y.Confidence) > 0; });
+			return List;
+		}
+
+		/// Gossip.cs 887 to 905: the split of what the street holds about him,
+		/// his own face against his people's. Its Sentence (the words the
+		/// ledger screen reads) is not ported.
+		struct Exposure
+		{
+			int Yours = 0, Delegated = 0;
+			double YoursWeight = 0, DelegatedWeight = 0;
+			int Stories() const { return Yours + Delegated; }
+			double Weight() const { return YoursWeight + DelegatedWeight; }
+			/// The share of the case against him his own face put there; -1 when
+			/// there is no case at all.
+			double YoursShare() const { return Weight() <= 0 ? -1 : YoursWeight / Weight(); }
+		};
+
+		/// Gossip.cs 868 to 884, ported 30 September for the town's fix of his
+		/// arrival: how much of what the street holds about him came from him
+		/// being seen, and how much from his people. ViaOthers decides which
+		/// predicates are somebody else's round; empty is the C#'s null (none
+		/// of it delegated). An empty Subject is the C#'s null, "player".
+		Exposure ExposureOf(const std::string& Subject, const std::function<bool(const std::string&)>& ViaOthers) const
+		{
+			Exposure E;
+			const std::string Subj = ToLowerInvariantAscii(Subject.empty() ? std::string("player") : Subject);
+			for (std::vector<GossiperPtr>::size_type I = 0; I < AgentList.size(); ++I)
+			{
+				const GossiperPtr& A = AgentList[I];
+				if (!A) continue;
+				for (std::vector<RumorPtr>::size_type J = 0; J < A->Rumors.size(); ++J)
+				{
+					const RumorPtr& R = A->Rumors[J];
+					if (!R || R->Content.Subject != Subj || PlainFactOfHim(R)) continue;
+					const bool bTheirs = ViaOthers && ViaOthers(R->Content.Predicate);
+					if (bTheirs) { E.Delegated++; E.DelegatedWeight += R->Confidence; }
+					else { E.Yours++; E.YoursWeight += R->Confidence; }
+				}
+			}
+			return E;
+		}
+
 		/// Gossip.cs 1104 to 1128. Rumours fade if nobody keeps them alive,
 		/// the "lie low and let it cool" option. Call once per in-game hour;
 		/// confidence decays on a multi-day half-life and spent rumours drop

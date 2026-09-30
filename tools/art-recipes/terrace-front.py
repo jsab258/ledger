@@ -507,6 +507,9 @@ MATERIALS = (
     ("shard_a_glass", (0.018, 0.026, 0.024), 0.04),
     ("shard_a_edge",  (0.320, 0.460, 0.400), 0.20),
     ("shard_a_ground", (0.090, 0.120, 0.110), 0.03),
+    ("shard_r_glass", (0.018, 0.026, 0.024), 0.04),
+    ("shard_r_edge",  (0.320, 0.460, 0.400), 0.20),
+    ("shard_r_ground", (0.090, 0.120, 0.110), 0.03),
     ("grime",       (0.078, 0.061, 0.048), 0.90),
     ("lens_amber",  (0.780, 0.360, 0.040), 0.20),
     # WHAT A WINDOW SHOWS IS THE INSIDE, and the first render of this bay is
@@ -2905,7 +2908,11 @@ def _name_plate(out):
 #: the broken edges pale, the glass's thickness catching the light. Unreal
 #: keeps them hidden until the deed (the sidecar's reveal_on, which the
 #: export writes for every shard_<deed>_ material). (deed, the glazing part.)
-BROKEN_WINDOWS = (("a", "east_parade_display_glazing_bay0"),)
+BROKEN_WINDOWS = (("a", "east_parade_display_glazing_bay0"),
+                  # RITA'S WINDOW, 30 September: free play's crime, where the
+                  # town's consequences put it (production/handovers/6ar-after-a-deed.md);
+                  # the scripted regression keeps Mickey's ("a").
+                  ("r", "east_parade_display_glazing_bay2"))
 #: One seed, so the same glass falls the same way on every export.
 BROKEN_SEED = 19900929
 #: How many pieces lie on the pavement, and how far out the fan reaches.

@@ -28,7 +28,9 @@
 //   /tmp/core-port-test ue-probe/perception-golden.txt
 #include "CoreGolden.h"
 #include "FixedClock.h"
+#include "LiveClock.h"
 
+#include <cmath>
 #include <cstdio>
 #include <fstream>
 #include <map>
@@ -299,6 +301,42 @@ int main(int argc, char** argv)
 		LedgerSim::FixedClock Z(0.1);
 		Loud(Z.Advance(0.0) == 0 && Z.Advance(-1.0) == 0 && Z.Accumulated == 0.0,
 		     "a zero or negative frame steps nothing and loses nothing");
+	}
+
+	// THE CLOCK THAT RUNS WITH PLAY (LiveClock.h, Jafar's list of 30 September,
+	// item 1): two game minutes a real second, every hour crossed handed back
+	// once, a wait that jumps in hours, held when told, saved exactly.
+	{
+		using LedgerCore::LiveClock;
+		using LedgerCore::GameTime;
+		LiveClock C(GameTime(1, 9, 0));
+		// Twelve real minutes at sixty frames: exactly one game day, 24 hours handed back.
+		int Hours = 0;
+		for (int F = 0; F < 12 * 60 * 60; ++F) Hours += (int)C.Advance(1.0 / 60.0, false).size();
+		Loud(C.Now().Day == 2 && C.Now().Hour == 9 && C.Now().Minute == 0 && Hours == 24,
+		     "twelve real minutes at 60 frames a second is one game day, each of its 24 hours once");
+		LiveClock H(GameTime(1, 9, 59));
+		Loud(H.Advance(30.0, true).empty() && H.Now().Minute == 59, "a held clock does not move");
+		Loud(H.Advance(-1.0, false).empty() && H.Advance(std::nan(""), false).empty() && H.Now().Minute == 59,
+		     "a negative or NaN frame moves nothing");
+		const std::vector<GameTime> One = H.Advance(0.5, false);
+		Loud(One.size() == 1 && One[0].Hour == 10 && One[0].Minute == 0, "crossing ten o'clock hands back 10:00 once");
+		LiveClock S(GameTime(1, 9, 0));
+		S.Advance(5.0, false);
+		Loud(S.Now().Minute == 2 && S.TotalMinutes() == GameTime(1, 9, 2).TotalMinutes(),
+		     "a five-second stall counts as one second (the longest step), two game minutes");
+		LiveClock W(GameTime(1, 18, 30));
+		const std::vector<GameTime> Wait = W.JumpTo(GameTime(2, 8, 0));
+		Loud(Wait.size() == 14 && Wait.front().Hour == 19 && Wait.back().Day == 2 && Wait.back().Hour == 8 && W.Now().Hour == 8,
+		     "a wait from 18:30 to 08:00 hands back the fourteen hours from 19:00 to 08:00, in order");
+		Loud(W.JumpTo(GameTime(1, 12, 0)).empty() && W.Now().Day == 2, "a wait to an earlier time moves nothing");
+		LiveClock A(GameTime(3, 21, 7));
+		A.Advance(0.25, false);
+		LiveClock B;
+		Loud(B.FromText(A.ToText()) && B.TotalMinutes() == A.TotalMinutes() && std::fabs(B.Fraction() - A.Fraction()) < 1e-6,
+		     "saved and read back, the clock is where it was, to the fraction of a minute");
+		Loud(!B.FromText("") && !B.FromText("12") && !B.FromText("x|0.5") && !B.FromText("-5|0.5") && !B.FromText("5|1.5")
+		     && B.TotalMinutes() == A.TotalMinutes(), "a save it cannot read is refused and leaves the clock alone");
 	}
 
 	std::printf("core-port-test: %d check(s), %d failure(s) over %ld golden row(s), "

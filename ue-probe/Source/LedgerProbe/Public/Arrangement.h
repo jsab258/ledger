@@ -17,7 +17,9 @@
 // TRANSLITERATION, NOT REWRITE, as Gossip.h states the method: the C#'s
 // nullable GameTime is a pointer here (nullptr its null). Checked against
 // PerceptionGolden's EmitAsks and EmitLanding rows (Ask, AskStory,
-// AskRonRemembers, AskSave, AskLoad, Landing) in ue-probe/perception-golden.txt.
+// AskRonRemembers, AskLoad, Landing) and, since the town's ten fixes of 30
+// September, EmitPortReviewFixes' (FixAsk, AskSave, FixAskStory, FixLandingNo)
+// in ue-probe/perception-golden.txt.
 //
 // NO UNREAL TYPE IS IN THIS FILE, as every file of the port.
 #pragma once
@@ -35,6 +37,10 @@
 
 namespace LedgerCore
 {
+	// The man at the landing is there from ten till one (TheLanding::There,
+	// below): Answer asks it of the envelope.
+	namespace TheLanding { inline bool There(const GameTime& Now); }
+
 	/// What he did with one night's ask.
 	enum class NightAnswer
 	{
@@ -56,6 +62,8 @@ namespace LedgerCore
 		/// The hour of the morning after an ask night when the man at the landing gives up.
 		static constexpr int GaveUpHour = 1;
 		static constexpr const char* TopicPrefix = "player.outfit_d";
+		/// The furthest day the arrangement walks to, as its save keeps it.
+		static constexpr int LastDay = 100000;
 		/// When Ron takes word down: eleven at night, or at once if later.
 		static constexpr int RonGoesDownHour = 23;
 		/// WeeksEnd.After (WeeksEnd.cs 44): the day from the first on which the
@@ -151,9 +159,41 @@ namespace LedgerCore
 			if (What == NightAnswer::Undelivered || !AsksOn(Day)) return false;
 			if (What == NightAnswer::NoShow && !Delivered_.count(Day)) return false;
 			if (What != NightAnswer::NoShow && Now != nullptr && Now->TotalMinutes() >= GaveUpAt(Day).TotalMinutes()) return false;
+			// ONLY ON ITS OWN NIGHT (the port's independent check, 30 September:
+			// an envelope two nights ahead could be done on the Monday, and a
+			// night away filed before the landing opened): the envelope or the no
+			// on that night, the night away once the man has given up waiting.
+			if (Now != nullptr && What != NightAnswer::NoShow && NightOf(*Now) != Day) return false;
+			// The envelope is handed over at the landing, while its man is there
+			// (the independent check: done at nine that morning, he was filed as
+			// seeing it at nine).
+			if (Now != nullptr && What == NightAnswer::Did && !TheLanding::There(*Now)) return false;
+			if (Now != nullptr && What == NightAnswer::NoShow && Now->TotalMinutes() < GaveUpAt(Day).TotalMinutes()) return false;
 			Delivered_.insert(Day);
+			// A PLAIN NO GOES DOWN WITH RON, as the wound-down word does (the
+			// port's independent check): the man at the landing knows it only
+			// when Ron has been down, at eleven or at once if later; Ron knows now.
+			if (What == NightAnswer::Refused && Now != nullptr)
+			{
+				Record(Day, What, nullptr, Now);
+				if (Mill != nullptr)
+				{
+					const GossiperPtr Ron = Mill->Get(Doorman);
+					if (Ron && Ron->Memory) Ron->Memory->Append(MemoryEvent(*Now, "observation", 0.8, HeardNo));
+				}
+				const GameTime GoesDown(Now->Day, RonGoesDownHour, 0);
+				NoTellNight = Day;
+				NoTellAt = Now->Hour < GaveUpHour || Now->TotalMinutes() >= GoesDown.TotalMinutes() ? *Now : GoesDown;
+				TellWoundDown(Mill, Now);
+				return true;
+			}
 			return Record(Day, What, Mill, Now);
 		}
+
+		/// His no, not yet at the landing: when Ron takes it down (false: the
+		/// C#'s null), and the night it answers (-1 when none waits).
+		bool NoWordAt(GameTime& Out) const { if (NoTellNight < 0) return false; Out = NoTellAt; return true; }
+		int NoNight() const { return NoTellNight; }
 
 		/// The day is now Day: every ask night before it that nobody answered
 		/// counts as one he stayed away if Ron had reached him with it (told as
@@ -163,6 +203,10 @@ namespace LedgerCore
 		{
 			if (Mill != nullptr && Now == nullptr) return;   // the C# throws
 			TellWoundDown(Mill, Now);
+			// NO FURTHER THAN A SAVE CAN HOLD (the port's independent check, 30
+			// September: a far-future day was walked night by night, ten million
+			// nights and a 244 MB save): the save keeps days under LastDay.
+			if (Day > LastDay) Day = LastDay;
 			while (!bEnded && NextNight() < Day && (Now == nullptr || GaveUpAt(NextNight()).TotalMinutes() <= Now->TotalMinutes()))
 			{
 				const int N = NextNight();
@@ -173,7 +217,7 @@ namespace LedgerCore
 		}
 
 		/// {"first", "nights": [[day, answer]...], "delivered": [days], and
-		/// "woundDown", "woundTell" when there are any}, as MiniJson.Serialize
+		/// "woundDown", "woundTell", "noTell" when there are any}, as MiniJson.Serialize
 		/// writes the C#'s dictionary, in its order.
 		std::string ToJson() const
 		{
@@ -196,6 +240,7 @@ namespace LedgerCore
 				J += "]";
 			}
 			if (WoundTellNight >= 0) J += ",\"woundTell\":[" + std::to_string(WoundTellNight) + "," + std::to_string(WoundTellAt.TotalMinutes()) + "]";
+			if (NoTellNight >= 0) J += ",\"noTell\":[" + std::to_string(NoTellNight) + "," + std::to_string(NoTellAt.TotalMinutes()) + "]";
 			return J + "}";
 		}
 
@@ -278,6 +323,29 @@ namespace LedgerCore
 					A.WoundTellAt = GameTime::FromTotalMinutes((long long)Tm);
 				}
 			}
+			// A plain no the outfit's man has not had yet: only for a night
+			// answered no, not wound down, and taken down that night.
+			const LedgerVignette::Value* Nt = Last(Root, "noTell");
+			if (Nt != nullptr && Nt->Type == LedgerVignette::T_ARR && Nt->Arr.size() == 2 && Nt->Arr[0].Type == LedgerVignette::T_NUM
+			    && Nt->Arr[1].Type == LedgerVignette::T_NUM)
+			{
+				const double Nn = Nt->Arr[0].Num;
+				const double Nm = Nt->Arr[1].Num;
+				if (Nn == std::floor(Nn) && Nn >= 0 && Nn < 100000)
+				{
+					// The C#'s `said`, renamed: Said is the class's own function.
+					const std::map<int, NightAnswer>::const_iterator SaidThen = A.NightsMap.find((int)Nn);
+					if (SaidThen != A.NightsMap.end() && SaidThen->second == NightAnswer::Refused
+					    && !A.WoundDown_.count((int)Nn) && Nm == std::floor(Nm)
+					    // Only when play could make it (the independent check): from Ron's
+					    // hour that night until the man gives up waiting.
+					    && Nm >= (int)Nn * 24.0 * 60 + RonGoesDownHour * 60 && Nm < ((int)Nn + 1) * 24.0 * 60 + GaveUpHour * 60)
+					{
+						A.NoTellNight = (int)Nn;
+						A.NoTellAt = GameTime::FromTotalMinutes((long long)Nm);
+					}
+				}
+			}
 			return A;
 		}
 
@@ -291,6 +359,9 @@ namespace LedgerCore
 		std::set<int> WoundDown_;
 		int WoundTellNight = -1;
 		GameTime WoundTellAt;
+		// A plain no waiting for Ron to take it down: the night and when he goes.
+		int NoTellNight = -1;
+		GameTime NoTellAt;
 
 		static bool WholeIn(double D) { return D >= 0 && D < 100000 && D == std::floor(D); }
 
@@ -302,9 +373,17 @@ namespace LedgerCore
 			return Out;
 		}
 
+		// The outfit's man has the wound-down story, or a plain no, once Ron has
+		// been down (at dawn, when the game calls PassedTo, or later).
 		void TellWoundDown(GossipMill* Mill, const GameTime* Now)
 		{
-			if (WoundTellNight < 0 || Mill == nullptr || Now == nullptr || Now->TotalMinutes() < WoundTellAt.TotalMinutes()) return;
+			if (Mill == nullptr || Now == nullptr) return;
+			if (NoTellNight >= 0 && Now->TotalMinutes() >= NoTellAt.TotalMinutes())
+			{
+				Mill->Witness(OutfitMan, Fact("player", "outfit_d" + std::to_string(NoTellNight), Value(NightAnswer::Refused)), Said(NightAnswer::Refused), false, NoTellAt, 1.0);
+				NoTellNight = -1;
+			}
+			if (WoundTellNight < 0 || Now->TotalMinutes() < WoundTellAt.TotalMinutes()) return;
 			Mill->Witness(OutfitMan, Fact("player", "outfit_d" + std::to_string(WoundTellNight), "wounddown"), SaidWoundDown, false, WoundTellAt, 1.0);
 			WoundTellNight = -1;
 		}
@@ -391,8 +470,16 @@ namespace LedgerCore
 			const int Night = Arrangement::NightOf(Now);
 			const std::map<int, NightAnswer>::const_iterator Tn = A->Nights().find(Night);
 			const bool bDidTonight = Tn != A->Nights().end() && Tn->second == NightAnswer::Did;
-			GameTime Word;
-			const bool bNotHeardYet = A->Ended() && A->EndedWhy() == "wound down" && A->WoundWordAt(Word) && Now.TotalMinutes() < Word.TotalMinutes();
+			// Wound down, and Ron not yet down with the word: till then he waits
+			// on Mickey's as ever.
+			GameTime Word, NoWord;
+			const bool bWoundNotHeard = A->Ended() && A->EndedWhy() == "wound down" && A->WoundWordAt(Word) && Now.TotalMinutes() < Word.TotalMinutes();
+			// His plain no, the same: the man knows it once Ron has been down with
+			// it (the independent check, 30 September: he said "Ron's been down"
+			// while the no still waited for eleven).
+			const bool bNoNotHeard = A->Ended() && A->EndedWhy() == "refused" && A->NoWordAt(NoWord) && Now.TotalMinutes() < NoWord.TotalMinutes();
+			const bool bNotHeardYet = bWoundNotHeard || bNoNotHeard;
+			const int WaitingNight = bWoundNotHeard ? A->WoundNight() : A->NoNight();
 			if (M == LandingMoment::TalksToHim)
 			{
 				if (A->Ended() && !bNotHeardYet) { Out = DoneGoOn; return true; }
@@ -402,13 +489,13 @@ namespace LedgerCore
 			}
 			if (bNotHeardYet)
 			{
-				if (Night == A->WoundNight())
+				if (Night == WaitingNight)
 				{
 					if (M == LandingMoment::Comes) { Out = Asks; return true; }
 					if (M == LandingMoment::NothingToHand) { Out = NothingForMe; return true; }
 					return false;
 				}
-				if (M == LandingMoment::Comes) { Out = Format(NotTonight, When(A->WoundNight(), Night)); return true; }
+				if (M == LandingMoment::Comes) { Out = Format(NotTonight, When(WaitingNight, Night)); return true; }
 				return false;
 			}
 			if (A->Ended())

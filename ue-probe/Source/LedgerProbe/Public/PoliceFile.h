@@ -13,11 +13,9 @@
 //
 // TRANSLITERATION, NOT REWRITE, as Gossip.h states the method: the C#'s
 // nullable returns are false or nullptr here.
-// TWO KNOWN DEVIATIONS (the independent check, 30 September). FromJson sorts
-// the visits and calls by day with a stable sort, where the C#'s List.Sort is
-// not stable (two or three with the same day can come back swapped, and a
-// reload swaps them again); only their order and the save's bytes differ, no
-// decision, and the C# is asked to sort stably (FINDINGS, for the town).
+// ONE KNOWN DEVIATION (the independent check, 30 September; its other, the
+// unstable sort of the visits and calls, the C# put right the same day and
+// both now keep one day's order: ByDayKeepingOrder).
 // WhoSheAsks orders ids by UTF-8 bytes where the C# orders UTF-16 units; the
 // same for every id outside the astral planes and the high BMP, and the cast's
 // ids are plain ASCII. Checked against PerceptionGolden's EmitTaken and EmitPoliceAsked
@@ -309,12 +307,24 @@ namespace LedgerCore
 		const std::vector<std::pair<int, std::string> >& ConstableCalls() const { return CallsList; }
 
 		/// WHETHER A CONSTABLE CALLS TODAY TO TAKE HIM IN: the deed's topic into
-		/// Out, recorded, or false.
-		bool ConstableComes(int Day, std::string& Out)
+		/// Out, recorded, or false. Now is the C#'s optional `now` (nullptr its null).
+		bool ConstableComes(int Day, std::string& Out, const GameTime* Now = nullptr)
 		{
+			// NOT WHILE HE IS IN THE CELLS (the port's independent check, 30
+			// September: the call was recorded, TakeIn refused him, and the deed
+			// was used up for good, never answered for): with Now, no call is
+			// made or recorded while he is held; the deed waits for its call.
+			if (Now != nullptr && InTheCells(*Now)) return false;
 			if (!ConstableWouldCome(Day, Out)) return false;
 			CallsList.push_back(std::make_pair(Day, Out));
 			return true;
+		}
+
+		// Whether he is in the cells at Now, taken for any deed.
+		bool InTheCells(const GameTime& Now) const
+		{
+			for (const auto& T : TakenList) { if (T.second > Now.TotalMinutes()) return true; }
+			return false;
 		}
 
 		/// The deed a constable would call for on Day, nothing recorded.
@@ -536,6 +546,20 @@ namespace LedgerCore
 			return J + "]}";
 		}
 
+		// By day, two on the same day kept in the order saved (the port's
+		// independent check, 30 September: List.Sort is not stable, so they came
+		// back swapped; the port sorted stably, and now the C# does too).
+		static void ByDayKeepingOrder(std::vector<std::pair<int, std::string> >& List)
+		{
+			for (size_t I = 1; I < List.size(); ++I)
+			{
+				const std::pair<int, std::string> Cur = List[I];
+				size_t J = I;
+				while (J > 0 && List[J - 1].first > Cur.first) { List[J] = List[J - 1]; --J; }
+				List[J] = Cur;
+			}
+		}
+
 		/// From ToJson's text; what it cannot read it skips. Text that is no JSON
 		/// object is the C#'s null save: an empty file.
 		static PoliceFile FromJson(const std::string& SavedJson)
@@ -585,7 +609,7 @@ namespace LedgerCore
 					for (const auto& V : F.VisitsList) { if (V.second == X.Arr[1].Str) bDup = true; }
 					if (!bDup) F.VisitsList.push_back(std::make_pair(Day, X.Arr[1].Str));
 				}
-			std::stable_sort(F.VisitsList.begin(), F.VisitsList.end(), [](const std::pair<int, std::string>& A, const std::pair<int, std::string>& B) { return A.first < B.first; });
+			ByDayKeepingOrder(F.VisitsList);
 			const Value* Cs = PoliceJson::Last(Root, "calls");
 			if (Cs != nullptr && Cs->Type == LedgerVignette::T_ARR)
 				for (const Value& X : Cs->Arr)
@@ -598,7 +622,7 @@ namespace LedgerCore
 					for (const auto& C : F.CallsList) { if (C.second == Topic) bCalled = true; }
 					if (bStatement && !bCalled) F.CallsList.push_back(std::make_pair(Day, Topic));
 				}
-			std::stable_sort(F.CallsList.begin(), F.CallsList.end(), [](const std::pair<int, std::string>& A, const std::pair<int, std::string>& B) { return A.first < B.first; });
+			ByDayKeepingOrder(F.CallsList);
 			const Value* Tk = PoliceJson::Last(Root, "taken");
 			if (Tk != nullptr && Tk->Type == LedgerVignette::T_ARR)
 				for (const Value& X : Tk->Arr)

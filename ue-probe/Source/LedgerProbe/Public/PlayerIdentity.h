@@ -40,7 +40,33 @@ namespace LedgerCore
 			const GossiperPtr G = Mill->Get(Who);
 			if (!G) return false;
 			for (const RumorPtr& R : G->Rumors) { if (IsNameStory(R) && R->Hops == 0) return false; }
-			Mill->Witness(Who, Fact("player", "name", Surname), std::string("Mickey's nephew is called ") + Surname, false, At, 1.0);
+			// TOLD, NOT SEEN, AND THEIRS FIRST-HAND (the port's independent check,
+			// 30 September): through the mill's sighting, somebody who had heard
+			// his name at full certainty was never made first-hand, kept the
+			// teller as its source, was "told" again every time, and remembered
+			// "I saw it myself". The story is made theirs here, in place when they
+			// already hold it second-hand.
+			const Fact What("player", "name", Surname);
+			const std::string Said = std::string("Mickey's nephew is called ") + Surname;
+			RumorPtr Held;
+			for (const RumorPtr& R : G->Rumors) { if (IsNameStory(R) && (!Held || R->Confidence > Held->Confidence)) Held = R; }
+			if (!Held)
+			{
+				RumorPtr R = std::make_shared<Rumor>(What);
+				R->OriginId = Who; R->Summary = Said; R->Confidence = 1.0; R->Hops = 0; R->Sensitive = false;
+				G->Rumors.push_back(R);
+			}
+			else
+			{
+				Held->Content = What;
+				Held->OriginId = Who;
+				Held->Summary = Said;
+				Held->Confidence = 1.0;
+				Held->Hops = 0;
+				Held->Sensitive = false;
+			}
+			if (G->Knowledge) G->Knowledge->Learn(What);
+			if (G->Memory) G->Memory->Append(MemoryEvent(At, "observation", 0.6, "He told me himself: " + Said));
 			return true;
 		}
 

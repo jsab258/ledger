@@ -288,6 +288,32 @@ jobs:
         shell: bash
         run: bash tools/port-golden-check.sh --accept
 
+      # UNREAL'S CACHE SETTINGS WHERE EVERY PROGRAM SEES THEM, 30 September.
+      # tools/ue/UserEngine.ini (the cache server on drive F, capped at 10 GiB,
+      # the old file cache draining; Jafar's yes on 28 and 29 September and on
+      # the 30 September cleanup page) was installed by the builder from inside
+      # Claude's desktop app, which is a packaged app: Windows kept that copy
+      # in the app's private AppData, so only Unreal started from Claude read
+      # it. This runner, started outside it, read Epic's default (C:), and each
+      # side's change of default made Unreal delete the other's store: drive F
+      # was emptied at 09:43 and C: refilled to 8.5 GB
+      # (production/research/unreal-cache-cap/ZEN-PATH-2026-09-30.md). The
+      # runner is outside the app, so it installs the file where Unreal looks
+      # (%LOCALAPPDATA%\Unreal Engine\Engine\Config), before any Unreal step,
+      # and only when it differs.
+      - name: Install this project's Unreal cache settings
+        if: always()
+        timeout-minutes: 2
+        shell: pwsh
+        run: |
+          $src = Join-Path $PWD "tools\ue\UserEngine.ini"
+          $dir = Join-Path $env:LOCALAPPDATA "Unreal Engine\Engine\Config"
+          $dst = Join-Path $dir "UserEngine.ini"
+          New-Item -ItemType Directory -Force $dir | Out-Null
+          $same = (Test-Path $dst) -and ((Get-FileHash $src).Hash -eq (Get-FileHash $dst).Hash)
+          if (-not $same) { Copy-Item $src $dst -Force }
+          Write-Host "unrealUserSettings=$(if ($same) { 'already-installed' } else { 'installed' }) zenDataPath=$((Select-String -Path $dst -Pattern '^DataPath=').Line)"
+
       #
       # NO continue-on-error, FROM 2026-09-22, AND THIS IS THE POINT OF THE
       # WHOLE SAFEGUARD. It carried `continue-on-error: true` from the days

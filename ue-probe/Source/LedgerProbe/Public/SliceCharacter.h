@@ -82,16 +82,21 @@ private:
 	// first conversation, and players a way to report what a character said).
 	void RequestReport();
 	void RequestNotice();
+	// Z WAITS, 30 September (Jafar's list, item 1; the town's card 6ci): counted
+	// like T, consumed by the encounter, which passes the time.
+	void RequestWait();
 public:
 	int32 ConsumeActRequests();
 	int32 ConsumeTalkRequests();
 	int32 ConsumeReportRequests();
 	int32 ConsumeNoticeRequests();
+	int32 ConsumeWaitRequests();
 
 private:
 	int32 ActRequests = 0;
 	int32 TalkRequests = 0;
 	int32 ReportRequests = 0;
+	int32 WaitRequests = 0;
 	int32 NoticeRequests = 0;
 	void MarkStreetWalkable();
 	void CloseStreetEnds();

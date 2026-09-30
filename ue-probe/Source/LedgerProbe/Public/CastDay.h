@@ -174,6 +174,17 @@ namespace LedgerCore
 				if (GetString(P, "name", S) && Trim(S).size() > 0) C.Name[Id] = Trim(S);
 				if (GetString(P, "role", S) && Trim(S).size() > 0) C.Role[Id] = Trim(S);
 				if (GetString(P, "called", S) && Trim(S).size() > 0) C.Called[Id] = Trim(S);
+				// NEVER TO THE POLICE (CastDay.cs 126 to 131; the town's handover 6ar):
+				// "police" is "never" or absent; the police file never takes a report
+				// from them (PoliceFile::WouldReport's bNeverToPolice).
+				if (const Value* Pol = Get(P, "police"))
+				{
+					if (Pol->Type != T_STR || Pol->Str != "never")
+					{
+						Err = "cast file: " + Id + "'s police must be \"never\" or absent"; return false;
+					}
+					C.NeverPolice.insert(Id);
+				}
 				if (const Value* Cr = Get(P, "circle"))
 				{
 					if (Cr->Type != T_STR || (Cr->Str != "day" && Cr->Str != "night" && Cr->Str != "both"))
@@ -318,6 +329,8 @@ namespace LedgerCore
 		}
 		std::string CircleOf(const std::string& Id) const { const std::string C = Lookup(Circle, Id); return C.empty() ? "day" : C; }
 		bool NamesHimOnlyOnTrust(const std::string& Id) const { return NameOnTrust.count(Id) > 0; }
+		/// CastDay.cs 482: whoever the cast file marks "police": "never".
+		bool NeverToPolice(const std::string& Id) const { return NeverPolice.count(Id) > 0; }
 
 		// THE PLACES AND WHAT PEOPLE CALL AN AREA (the C#'s Places and
 		// AreaNames), for the game's own reads: where he was seen near a deed.
@@ -361,6 +374,7 @@ namespace LedgerCore
 		std::map<std::string, std::pair<std::vector<Routine>, std::vector<bool> > > ByWeekday;
 		std::vector<std::string> PeopleList;
 		std::set<std::string> NameOnTrust;
+		std::set<std::string> NeverPolice;
 		std::vector<Tie> TieList;
 
 		static std::string Lookup(const std::map<std::string, std::string>& M, const std::string& K)
