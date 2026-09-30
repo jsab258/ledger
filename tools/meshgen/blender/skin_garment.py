@@ -164,6 +164,18 @@ leg = [n for n in names if n.startswith(("thigh", "calf", "foot", "ball"))]
 pelvis = ensure("pelvis")
 th_l, th_r = ensure("thigh_l"), ensure("thigh_r")
 PEL = opt("--skirt-pelvis", 0.7)
+# the front is open below its last button (retopo_garment.py): each half leans to its own thigh (--own-thigh), so
+# walking the halves part over the forward leg; a point's side is that of the faces round it (the two copies of a
+# point on the opening lie on different sides)
+OWN = opt("--own-thigh", 0.65)
+CUT_X = opt("--cut-x", -0.019)
+fx = np.zeros(len(P))
+fn = np.zeros(len(P))
+for p_ in me.polygons:
+    for vi in p_.vertices:
+        fx[vi] += (g.matrix_world @ p_.center).x
+        fn[vi] += 1
+side_x = fx / np.maximum(fn, 1)
 moved = 0
 for i in range(len(P)):
     if comp[i] != main or P[i, 2] >= hip_z:
@@ -175,9 +187,12 @@ for i in range(len(P)):
         continue
     front = min(1.0, max(0.0, (hip_y - P[i, 1]) / 0.08 + 0.5))
     front = front * front * (3 - 2 * front)
+    left = side_x[i] > CUT_X
+    own = 0.5 + (OWN - 0.5) * min(1.0, abs(side_x[i] - CUT_X) / 0.02 + 0.5)
+    fl = own if left else 1 - own
     want = np.zeros(W.shape[1])
-    want[th_l] += T * (front * 0.5 + (1 - front) * (1 - PEL) * 0.5)
-    want[th_r] += T * (front * 0.5 + (1 - front) * (1 - PEL) * 0.5)
+    want[th_l] += T * (front * fl + (1 - front) * (1 - PEL) * 0.5)
+    want[th_r] += T * (front * (1 - fl) + (1 - front) * (1 - PEL) * 0.5)
     want[pelvis] += T * (1 - front) * PEL
     for b_ in leg:
         W[i, col[b_]] *= 1 - t

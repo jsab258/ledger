@@ -477,8 +477,10 @@ puv = lb.loops.layers.uv.new("pattern")
 pan_layer = lb.faces.layers.int.new("panel")
 extra_layer = lb.faces.layers.int.new("extra")          # 1: made here, nothing of the drape under it
 PANELS = ["back", "front_l", "front_r", "sleeve_l", "sleeve_r"]
+over_layer = lb.faces.layers.int.new("overlap")        # 1: the front's overlapping edge strip (painted above the opening)
 missed = 0
 shared = {}
+VG = {}
 for pname, G in grids.items():
     nc, nr = len(G) - 1, len(G[0]) - 1
     V = [[None] * (nr + 1) for _ in range(nc + 1)]
@@ -493,10 +495,13 @@ for pname, G in grids.items():
             V[i][j] = lb.verts.new(p3)
             if key is not None:
                 shared[key] = V[i][j]
+    VG[pname] = V
     for i in range(nc):
         for j in range(nr):
             f = lb.faces.new((V[i][j], V[i + 1][j], V[i + 1][j + 1], V[i][j + 1]))
             f[pan_layer] = PANELS.index(pname)
+            if pname == "front_r" and i == 0:
+                f[over_layer] = 1
             for lp, (a, b) in zip(f.loops, ((i, j), (i + 1, j), (i + 1, j + 1), (i, j + 1))):
                 lp[puv].uv = G[a][b]
 nan = sum(1 for v in lb.verts if any(math.isnan(t) for t in v.co))
@@ -583,6 +588,7 @@ def copy_uv(new_faces, src_of, offset_of):
 
 
 # the hem lengthened: rows continuing the skirt's fall, the pattern continued below the hem
+hem_src = {}
 if HEM_DROP > 0:
     hem = min(boundary_loops(lb), key=lambda L_: sum(v.co.z for v in L_) / len(L_))
     hem_set = set(hem)
@@ -605,9 +611,45 @@ if HEM_DROP > 0:
                 src_of[v] = s
                 off[v] = Vector((0, -HEM_DROP / rows))
         copy_uv([g for g in res["geom"] if isinstance(g, bmesh.types.BMFace)], src_of, off)
+        hem_src.update(src_of)
         edges = [g for g in res["geom"] if isinstance(g, bmesh.types.BMEdge) and all(x in src_of for x in g.verts)]
     say("hem lengthened", HEM_DROP, "m in", rows, "rows")
     face_outward(lb)
+# THE FRONT OPENS BELOW ITS LAST BUTTON (the first review: "No picture shows a front edge or opening below the last
+# button. If the skirt is a closed tube, the cloth has to stretch round both thighs instead of parting"): a man's
+# jacket laps left over right, its left front's edge about 2 cm to his right of the buttons; the mesh is cut along
+# that line (the right front's first line of points from the centre) from --open-below (default: 2.5 cm under the
+# lowest button) down through the hem, so the two fronts part over the thighs. Above it, the same line is painted
+# as the overlapping front's edge (the "overlap" faces).
+if "--no-open" not in argv and "front_r" in VG:
+    btn_z = [centre(pieces[k]).z for k in buttons]
+    open_z = opt("--open-below", (min(btn_z) - 0.025) if btn_z else 1.0)
+    col = [VG["front_r"][1][j] for j in range(len(VG["front_r"][1]))]
+    chain = [v for v in col if v.is_valid]
+    chain.sort(key=lambda v: v.co.z)
+    below = [v for v in chain if v.co.z < open_z]
+    # down through the hem's new rows
+    nxt = {s_: n_ for n_, s_ in hem_src.items()}
+    cur = below[0] if below else None
+    ext = []
+    while cur is not None and cur in nxt:
+        cur = nxt[cur]
+        ext.append(cur)
+    line = ext[::-1] + below
+    if below:
+        line.append(next(v for v in chain if v.co.z >= open_z))
+    cut = []
+    for a, b in zip(line, line[1:]):
+        e = next((e for e in a.link_edges if e.other_vert(a) is b), None)
+        if e is not None:
+            cut.append(e)
+    if cut:
+        bmesh.ops.split_edges(lb, edges=cut)
+    for f in lb.faces:
+        if f[over_layer] and f.calc_center_median().z < open_z:
+            f[over_layer] = 0
+    log["frontOpening"] = {"belowZ": round(open_z, 3), "edgesCut": len(cut)}
+    say("the front opened below", round(open_z, 3), "m:", len(cut), "edges")
 # every opening turned in: by --thick towards the body, then --lip up inside
 if LIP > 0:
     bnd = [e for e in lb.edges if e.is_boundary]
@@ -881,9 +923,26 @@ yoke_key = max((k for k in pieces if "Yoke" in piece_mat(pieces[k])), key=lambda
 src_bm = bmesh.new()
 src_bm.from_mesh(hi.data)
 src_bm.faces.ensure_lookup_table()
-bmesh.ops.delete(src_bm, geom=[f for f in src_bm.faces if comp[f.index] == yoke_key], context="FACES")
+def piece_height(k):
+    zz = [v.co.z for f in pieces[k] for v in f.verts]
+    return max(zz) - min(zz)
+
+
+strips = [k for k in small_wool if k != collar and piece_height(k) > 0.4]
+pockets = [k for k in small_wool if k != collar and k not in strips]
+drop = {yoke_key} | set(strips)
+bmesh.ops.delete(src_bm, geom=[f for f in src_bm.faces if comp[f.index] in drop], context="FACES")
 src_bm.faces.ensure_lookup_table()
-src_comp = [comp[i] for i in range(len(comp)) if comp[i] != yoke_key]
+src_comp = [comp[i] for i in range(len(comp)) if comp[i] not in drop]
+POCKET_LIFT = opt("--pocket-lift", 0.003)
+if POCKET_LIFT > 0:
+    lift_vs = {v for f, c_ in zip(src_bm.faces, src_comp) if c_ in pockets for v in f.verts}
+    for v in lift_vs:
+        w_ = hi.matrix_world @ v.co
+        h_, n_, _i, _d = BODY_BVH.find_nearest(w_)
+        if h_ is not None:
+            v.co += hi.matrix_world.inverted().to_3x3() @ ((w_ - h_).normalized() * POCKET_LIFT)
+log["bakeLeftOut"] = {"frontStrips": len(strips), "pocketsLifted": len(pockets)}
 bmesh.ops.recalc_face_normals(src_bm, faces=[f for f, c_ in zip(src_bm.faces, src_comp) if c_ == main])
 src_bm.normal_update()
 src_bm.transform(hi.matrix_world)
@@ -977,11 +1036,12 @@ log["yokeShare"] = round(float((yoke > 0.5).mean()), 4)
 # (c) the faces made here (the hem's new rows, the turned-in edges) take the plain wool, whatever the rays found
 ex = lm.attributes.get("extra")
 uvd = lm.uv_layers["UVMap"].data
-plain = np.zeros((TEX, TEX), bool)
-if ex is not None:
-    for p_ in lm.polygons:
-        if not ex.data[p_.index].value:
-            continue
+
+
+def raster(polys):
+    """The texels the given faces cover in UVMap (with a small pad), as a mask."""
+    out = np.zeros((TEX, TEX), bool)
+    for p_ in polys:
         uvs = [np.array(uvd[li].uv) * TEX for li in p_.loop_indices]
         for k_ in range(1, len(uvs) - 1):
             a_, b_, c_ = uvs[0], uvs[k_], uvs[k_ + 1]
@@ -1000,7 +1060,11 @@ if ex is not None:
             l2 = inv[1, 0] * d0 + inv[1, 1] * d1
             pad = 2.5 / max(1.0, np.linalg.norm(b_ - a_), np.linalg.norm(c_ - a_))
             inside = (l1 >= -pad) & (l2 >= -pad) & (l1 + l2 <= 1 + pad)
-            plain[y0:y1 + 1, x0:x1 + 1] |= inside
+            out[y0:y1 + 1, x0:x1 + 1] |= inside
+    return out
+
+
+plain = raster([p_ for p_ in lm.polygons if ex is not None and ex.data[p_.index].value])
 hit &= ~plain
 log["plainTexels"] = int(plain.sum())
 
@@ -1023,6 +1087,7 @@ col = np.ones((TEX, TEX, 4))
 col[:, :, :3] = wool_c[None, None, :] * (1 - ymask[:, :, None]) + yoke_c[None, None, :] * ymask[:, :, None]
 img_c = new_image("_basecolor")
 img_c.pixels[:] = col.ravel()
+POCKET_LINE = opt("--pocket-line", 0.35)
 # the normal map: steep texels (the drape's crumpled armpits) laid flat, the texels with nothing under them flat,
 # the yoke's edge raised (--ledge, the step's height in texture steps)
 nrm = np.array(img_n.pixels[:]).reshape(TEX, TEX, 4)
@@ -1034,9 +1099,113 @@ gy, gx = np.gradient(h)
 LEDGE = opt("--ledge", 1.2)
 v3[:, :, 0] -= LEDGE * gx
 v3[:, :, 1] -= LEDGE * gy
+# THE POCKETS' OUTLINES (the first review: "faint painted outlines only ... at street distance they disappear, and
+# on the V&A jacket they are a strong feature"): each texel's place on the game mesh (a position bake) tested against
+# the drape's pocket pieces; where a pocket lies over it, a mask; its edge raised in the normal map (--pocket-ledge)
+# and a thin shadow line drawn round it in the colour (--pocket-line, how much darker)
+pocket_mask = np.zeros((TEX, TEX))
+cover = hit | plain
+if pockets:
+    pbm_ = bmesh.new()
+    for k in pockets:
+        vmap = {}
+        for f in pieces[k]:
+            vs = []
+            for v in f.verts:
+                if v.index not in vmap:
+                    vmap[v.index] = pbm_.verts.new(v.co)
+                vs.append(vmap[v.index])
+            try:
+                pbm_.faces.new(vs)
+            except ValueError:
+                pass
+    POCKET_BVH = BVHTree.FromBMesh(pbm_)
+    zlo = min(v.co.z for v in pbm_.verts) - 0.02
+    zhi = max(v.co.z for v in pbm_.verts) + 0.02
+    pbm_.free()
+    # each texel's place on the game mesh, from the faces of the two fronts (a bake of "POSITION" gave other values)
+    pos = np.zeros((TEX, TEX, 3))
+    front_ids = {PANELS.index("front_l"), PANELS.index("front_r")}
+    panel_a = lm.attributes["panel"].data
+    for p_ in lm.polygons:
+        if panel_a[p_.index].value not in front_ids:
+            continue
+        uvs = [np.array(uvd[li].uv) * TEX for li in p_.loop_indices]
+        cos = [np.array(lo.matrix_world @ lm.vertices[vi].co) for vi in p_.vertices]
+        for k_ in range(1, len(uvs) - 1):
+            a_, b_, c_ = uvs[0], uvs[k_], uvs[k_ + 1]
+            A_, B_, C_ = cos[0], cos[k_], cos[k_ + 1]
+            x0, y0 = np.floor(np.minimum(np.minimum(a_, b_), c_)).astype(int)
+            x1, y1 = np.ceil(np.maximum(np.maximum(a_, b_), c_)).astype(int)
+            x0, y0, x1, y1 = max(0, x0), max(0, y0), min(TEX - 1, x1), min(TEX - 1, y1)
+            if x1 < x0 or y1 < y0:
+                continue
+            m_ = np.array([[b_[0] - a_[0], c_[0] - a_[0]], [b_[1] - a_[1], c_[1] - a_[1]]])
+            if abs(np.linalg.det(m_)) < 1e-9:
+                continue
+            inv = np.linalg.inv(m_)
+            xs, ys = np.meshgrid(np.arange(x0, x1 + 1) + 0.5, np.arange(y0, y1 + 1) + 0.5)
+            d0, d1 = xs - a_[0], ys - a_[1]
+            l1 = inv[0, 0] * d0 + inv[0, 1] * d1
+            l2 = inv[1, 0] * d0 + inv[1, 1] * d1
+            inside = (l1 >= -0.02) & (l2 >= -0.02) & (l1 + l2 <= 1.02)
+            P3 = A_[None, None, :] + l1[:, :, None] * (B_ - A_)[None, None, :] + l2[:, :, None] * (C_ - A_)[None, None, :]
+            blk = pos[y0:y1 + 1, x0:x1 + 1]
+            blk[inside] = P3[inside]
+    cand = (pos[:, :, 2] > zlo) & (pos[:, :, 2] < zhi) & (pos[:, :, 1] < 0)
+    ys_, xs_ = np.nonzero(cand)
+    PT = opt("--pocket-reach", 0.009)
+    for y_, x_ in zip(ys_, xs_):
+        q_ = POCKET_BVH.find_nearest(Vector(pos[y_, x_]))
+        if q_[0] is not None and q_[3] < PT:
+            pocket_mask[y_, x_] = 1.0
+    log["pocketTexels"] = int(pocket_mask.sum())
+    pm = blur(pocket_mask, 1.0)
+    py_, px_ = np.gradient(pm)
+    PL = opt("--pocket-ledge", 1.4)
+    v3[:, :, 0] -= PL * px_
+    v3[:, :, 1] -= PL * py_
+# the overlapping front's edge above the opening: the strip of the right front between the centre and the line is
+# the left front lying over it; its outer side is raised (--edge-ledge); its mask spreads past its island's edges
+# (as a bake's margin) so only the line itself makes a step
+over = lm.attributes.get("overlap")
+cover = hit | plain
+if over is not None and any(d.value for d in over.data):
+    strip = raster([p_ for p_ in lm.polygons if over.data[p_.index].value])
+    sm = strip.astype(float)
+    for _ in range(8):
+        grown = np.maximum.reduce([sm, np.roll(sm, 1, 0), np.roll(sm, -1, 0), np.roll(sm, 1, 1), np.roll(sm, -1, 1)])
+        sm = np.where(cover, sm, grown)
+    he = blur(sm, 1.2)
+    ey, ex_ = np.gradient(he)
+    EL = opt("--edge-ledge", 1.6)
+    v3[:, :, 0] -= EL * ex_ * cover
+    v3[:, :, 1] -= EL * ey * cover
+    log["frontEdgeTexels"] = int(strip.sum())
+# melton's felted face: a fine, even grain on the wool (not the yoke), --felt its strength
+FELT = opt("--felt", 0.05)
+if FELT > 0:
+    rng = np.random.default_rng(7)
+    nz_ = rng.normal(size=(TEX, TEX, 2))
+    nz_ = np.stack([blur(nz_[:, :, 0], 1.0), blur(nz_[:, :, 1], 1.0)], axis=2)
+    nz_ /= nz_.std() + 1e-9
+    wool_t = (cover & (yoke < 0.5)).astype(float)[:, :, None]
+    v3[:, :, :2] += FELT * nz_ * wool_t
 v3 /= np.linalg.norm(v3, axis=2, keepdims=True)
 nrm[:, :, :3] = (v3 + 1) / 2
 img_n.pixels[:] = nrm.ravel()
+if pocket_mask.any() and POCKET_LINE > 0:
+    edge = np.clip(blur(pocket_mask, 1.2) - blur(pocket_mask, 3.0), 0, None)
+    edge = edge / (edge.max() + 1e-9)
+    colp = np.array(img_c.pixels[:]).reshape(TEX, TEX, 4)
+    colp[:, :, :3] *= (1 - POCKET_LINE * edge)[:, :, None]
+    img_c.pixels[:] = colp.ravel()
+# the yoke's shine: PVC or leather, not wool (--yoke-rough), in a roughness map
+rough = np.ones((TEX, TEX, 4))
+rv = opt("--wool-rough", 0.9) * (1 - ymask) + opt("--yoke-rough", 0.42) * ymask
+rough[:, :, 0] = rough[:, :, 1] = rough[:, :, 2] = rv
+img_r = new_image("_roughness", colour=False)
+img_r.pixels[:] = rough.ravel()
 log["bakeHitShare"] = round(float(hit.mean()), 3)
 log["steepFlattened"] = int(steep.sum())
 
@@ -1048,6 +1217,7 @@ def save(im, fname):
 
 
 save(img_c, NAME + "_basecolor.png")
+save(img_r, NAME + "_roughness.png")
 save(img_n, NAME + "_normal_gl.png")
 dx = nrm.copy()
 dx[:, :, 1] = 1.0 - dx[:, :, 1]
@@ -1063,7 +1233,9 @@ nmap = nt.nodes.new("ShaderNodeNormalMap")
 nmap.uv_map = "UVMap"
 nt.links.new(node_n.outputs["Color"], nmap.inputs["Color"])
 nt.links.new(nmap.outputs["Normal"], bsdf.inputs["Normal"])
-bsdf.inputs["Roughness"].default_value = 0.92
+node_r = nt.nodes.new("ShaderNodeTexImage")
+node_r.image = img_r
+nt.links.new(node_r.outputs["Color"], bsdf.inputs["Roughness"])
 bt.node_tree.nodes.remove(bn)
 bpy.data.objects.remove(hib, do_unlink=True)
 hi.hide_render = True
@@ -1088,6 +1260,7 @@ bpy.ops.export_scene.fbx(filepath=os.path.join(OUT, NAME + "_static.fbx"), use_s
                          mesh_smooth_type="OFF", use_tspace=True, add_leaf_bones=False, colors_type="LINEAR")
 img_c.pack()
 img_n.pack()
+img_r.pack()
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, NAME + ".blend"))
 json.dump(log, open(os.path.join(OUT, "retopo.json"), "w"), indent=1)
 say("done", json.dumps({k: log[k] for k in ("faces", "tris", "points")}))
