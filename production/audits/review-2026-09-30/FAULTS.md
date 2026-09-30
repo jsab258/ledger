@@ -1,20 +1,24 @@
 # Independent review, 30 September 2026: time, saves, the route's logic, and the port
 
-Reviewed `main` at 565e94ea (30 September, after the builder's continuous route and the town's time-and-state sweep). The code was read by this session and by four separate reviewers, one per area, each told to read only and to trace a small case for every fault. This session then re-read the deciding lines of every fault marked **checked** below. Nothing was fixed and no code was changed.
+Reviewed `main` at 565e94ea (30 September, after the builder's continuous route and the town's time-and-state sweep). The code was read by this session and by four separate reviewers, one per area, each told to read only and to trace a small case for every fault. This session then re-read the deciding lines of every fault marked **checked** below, and ran proofs for the High faults (RESULTS.md, `probes/`). Nothing was fixed and no game code was changed.
 
 ## How much of this was run
 
-**Nothing was run on this machine.** The Core's tests need .NET 8, which was not installed:
-- Microsoft's download host is refused by the network policy.
-- Ubuntu's own .NET 8 package was reachable, but the session's disk allowance had 94 MB left: this session's own earlier fetch of repository history had filled it (28 GB).
-- Removing that history was refused by the session's safety check, and further attempts to make room or to use the C++ compiler were refused too. This session stopped there rather than work round it.
+**First pass: nothing was run.** The first version of this review was written by reading only, because this session's disk allowance was full and .NET could not be installed.
 
-So **every fault below is suspected from reading, not proved by running.** The evidence has three strengths:
+**Second pass: the High faults were run.** With Jafar's approval, the local history was replaced with a shallow copy, and .NET 8 was installed from Ubuntu's archive. Then:
+- **The Core's own test table** (`tools/ci-checks.sh`) passed 37 of 37 here, as on GitHub (run 317). That includes CoreTests (5,034 checks), SaveChaos (149), Soak (9), and the port comparison (57,679 golden rows, 0 mismatches). A pass contradicts nothing here: four faults are written into those golden rows, and no test covers the game-side code where most of the others live.
+- **Small proofs for the High faults** are in `probes/`. Their output is in RESULTS.md. Each High fault below now says what its proof ran and what still rests on reading.
+  - The C++ proofs use the game's own headers, compiled with g++ 13 and the repository's Unreal shim.
+  - The talk proof drives the game's own talk program, with stand-in replies (no model, no key).
+  - The Ellis proof uses the C# Core and the real cast file.
+
+The evidence has these strengths:
+- **proved**: a proof ran the game's own code on the small case and got the faulty result;
+- **proved in part**: the proof ran the Core or port half, and the rest (usually a line in the Unreal-only game file, `CrimeProbe.cpp`, which cannot run here) is from reading;
 - **checked**: this session read the deciding lines itself and they say what the case needs;
 - **reported**: a reviewer traced it; this session did not re-read every line;
 - a **golden row** means the committed port table already encodes the behaviour, so the tests pass *because* of it.
-
-GitHub's own machine runs the Core's test table (CoreTests, Soak, SaveChaos, the port comparison, StrangerTest and the rest) on this branch's push; its result is given in the pull request. On the latest main, run 316 of that workflow passed. A pass does not contradict anything here: several faults below are pinned by the very rows the tests compare.
 
 Severity, for a player: **High** means met in ordinary play of the first week, and it changes what the town knows or does. **Medium** means visible, or it needs a common but specific action. **Low** means rare, cosmetic, only in the tests, or outside the first week.
 
@@ -22,7 +26,11 @@ Severity, for a player: **High** means met in ordinary play of the first week, a
 
 ## A. The route's logic: the crime, its witnesses, gossip and the consequence
 
-### A1. Every free-play smash gets an ear-only "witness" in Sheila, and what she files is a debug string. High; checked (the geometry is reported)
+### A1. Every free-play smash gets an ear-only "witness" in Sheila, and what she files is a debug string. High; proved in part
+- **Proof** (RESULTS.md, `high-faults.cpp` [A1]): the game's own `Resolve`, `BankPick` and `Witness`, fed her fixed position and heading and Rita's window from the street file.
+  - With the line to the glass open: she is 9.87 m away and 161° off her axis. She hears it at rung 0, certainty 0.40, and the bank has "no-line-at-witness_summary-rung-0". The filed summary is `bank-unreadable/none`, and her memory reads "I think I saw it, couldn't swear to it: bank-unreadable/none".
+  - With the line blocked: nothing is filed.
+  - So whether it happens in the game depends on Unreal's line trace against the real street, which cannot run here. The filing chain itself is proved.
 - **Where:**
   - `CrimeProbe.cpp` 2326: the summary starts as `UnreadableSummaryPrefix() + GOverheard.WhyNot`.
   - 2327-2358: it is replaced only if `BankPick` finds a line for the rung reached.
@@ -39,7 +47,8 @@ Severity, for a player: **High** means met in ordinary play of the first week, a
   5. She shouts "Stop. I mean it. Stop.", and the story spreads.
 - **Player impact:** every playthrough with the smash. A shout from a woman facing the other way, and a diagnostic string in the town's gossip and in what the talk program is sent. Whether she hears it against the real street meshes needs a run.
 
-### A2. Who can witness ignores the hour, the routines and the light. High; checked
+### A2. Who can witness ignores the hour, the routines and the light. High; proved in part
+- **Proof** (`high-faults.cpp` [A2]): the game's `VantageOf` gives light 1.00 to every reading. The same witness at 12 m on axis sees him at light 1.0 and 0.3, but not at 0.1. That the two bodies never move with their routines is from reading `CrimeProbe.cpp`.
 - **Where:**
   - `CrimeProbe.cpp` 2152-2175: two stand-in bodies, spawned once at fixed places and headings.
   - `CrimeProbe.h` 173: `kLightLevel = 1.0` ("overcast_day, lanterns off") for every reading, day or night.
@@ -49,7 +58,11 @@ Severity, for a player: **High** means met in ordinary play of the first week, a
   - 12:00: Rita's routine puts her at her counter behind the glass. She is never a witness; she only "finds" the damage at 13:00 (A9).
 - **Player impact:** the town's witnesses never match the people the player sees on the street.
 
-### A3. The story key the talk, keep-quiet and owning-up use is not the key free play files. High; checked
+### A3. The story key the talk, keep-quiet and owning-up use is not the key free play files. High; proved
+- **Proof** (`high-faults.cpp` [A3]): Darren holds `player.window_d0` at rung 1.
+  - `DeedJson(…, "player.window_d1", …)` returns an empty field.
+  - `KeepQuiet` suppresses `player.broke_a_window`, `player.was_near_the_deed` and `player.at_window_d1`, but not `player.window_d0`.
+  - `OwnedUpStory` files "the new owner told me himself that he broke Mickey's window", not sensitive.
 - **Where:**
   - `CrimeProbe.cpp` 2364-2366: free play files `Fact("player", "window_d" + day, "ritas")`.
   - `CrimeProbe.h` 1615: `WindowDeedKey()` is fixed at `"player.window_d1"`.
@@ -65,7 +78,11 @@ Severity, for a player: **High** means met in ordinary play of the first week, a
   5. Owning up files the wrong window, and not as sensitive.
 - **Player impact:** the keep-quiet, owning-up and threat mechanics do not act on the real deed in free play.
 
-### A4. No witness in free play can ever report him, and no constable can ever come. High; checked
+### A4. No witness in free play can ever report him, and no constable can ever come. High; proved in part
+- **Proof** (`high-faults.cpp` [A4]):
+  - The best rung at any distance, in full light, facing him, is 3 at the game's familiarity 0.0, and 4 at 0.35.
+  - `WouldReport(damage)` is no at the default loyalty 0.5 and yes at 0.4.
+  - That play never raises familiarity or lowers Sheila's and Darren's loyalty is from reading.
 - **Where:**
   - `CrimeProbe.h` 175: `kFamiliarity = 0.0` for every deed reading, on every day.
   - `Perception.cpp` 55: rung 4 (recognised) needs familiarity at least 0.35.
@@ -75,14 +92,16 @@ Severity, for a player: **High** means met in ordinary play of the first week, a
 - **Case:** any week, any choices. Sheila and Darren never report (loyalty 0.5 is not below 0.5), and no rung-4 reading exists, so the route's acceptance row "seen by Ada, stands her up, day 5, Charged" (ROUTE.md) cannot happen in the game. DS Ellis comes only for the street's talk.
 - **Canon note:** a stranger on day 0 is canon (he has never been to the Hook). Familiarity that never rises after a week of talking to them is not.
 
-### A5. Any witness's copy counts as "he did it", whatever the rung. High; reported (the mechanism is shared with the C# design, so this may want a ruling rather than a port fix)
+### A5. Any witness's copy counts as "he did it", whatever the rung. High; proved in part for the police, reported for the talk (the mechanism is shared with the C# design, so this may want a ruling rather than a port fix)
 - **Where:**
   - Only `Suspecting.h` 83-85 and 207-249 read the story's rung.
-  - Regard remarks (`StreetVoice.h` 565-623), police loudness and `WhoSheAsks` (`PoliceFile.h` 438-444, 499-513, 728-739), and the leak's suspicion (`Gossip.h` 713-776) read only the subject "player".
+  - Regard remarks (`StreetVoice.h` 565-623), `WhoSheAsks` (`PoliceFile.h` 499-513, 728-739) and the leak's suspicion (`Gossip.h` 713-776) read only the subject "player".
+- **Proof** (`high-faults.cpp` [A5]): a rung-0, heard-only story puts its holder on `WhoSheAsks`' list.
+  - **Correction to the first pass:** `Loudness` returns 0 for it. The police's loudness counts only talk of his nights, so window stories alone cannot bring DS Ellis for talk. She asks their holders only once she comes for something else.
 - **Case:**
   1. A1's rung-0 story, or a shape at rung 1, reaches Ron at about 0.22.
-  2. The regard code gives Ron familiarity 0.5 with Tom, so he "knows it is him". He says to Tom's face "Heard your name this week. More than once."
-  3. With enough such stories, Ellis comes for talk and asks everyone who holds "nobody saw more than a shape".
+  2. The regard code gives Ron familiarity 0.5 with Tom, so he "knows it is him". He says to Tom's face "Heard your name this week. More than once." (reported, not run)
+  3. When Ellis comes for his nights, she also asks everyone holding "nobody saw more than a shape".
 - **Player impact:** the town behaves as if it knows who did it when nobody could say.
 
 ### A6. After a Continue before the deed, nobody can see it. Medium; checked
@@ -120,7 +139,11 @@ Severity, for a player: **High** means met in ordinary play of the first week, a
   - The same in `Observation.h` 361-377 and `Gossip.h` 646-648.
 - **Case:** rung 4, act, victim and actor seen, in light. Certainty sums to 1.04 and is clamped to 0.94. The witness gives a Statement ("names him, and will sign it") yet remembers "I think I saw it, couldn't swear to it".
 
-### A11. DS Ellis "on Quay Street" asks and hears most of the town. High; checked; **golden row**
+### A11. DS Ellis "on Quay Street" asks and hears most of the town. High; proved; **golden row**
+- **Proof** (RESULTS.md, `EllisProbe`): the C# Core's `WhoSheAsks` and `HearTheStreet`, with the real cast file, set up as the `SweepAsked` row.
+  - At 09:00 on Wednesday, Thursday and Friday, she asks 36 people. 15, 15 and 17 of them are not on Quay Street: the docks, the customs shed, the chapel, the flats and the ferry landing, 79 to 159 m from Rita's window.
+  - Four of those asked never go to the police, and her file takes their talk too.
+  - Each person asked remembers "DS Ellis, the detective, stopped me on Quay Street…".
 - **Where:**
   - `PoliceFile.cs` 368-369: `OnTheStreet` means only that the routine's place is not "off".
   - It is used by `WhoSheAsks` (351-364) and `HearTheStreet` (293-302). The same in `PoliceFile.h` 682-687.
@@ -146,7 +169,11 @@ Severity, for a player: **High** means met in ordinary play of the first week, a
 
 ## B. Time and state
 
-### B1. Sheila's week's-end question can only be put on Sunday between 10:00 and 11:59. High; checked
+### B1. Sheila's week's-end question can only be put on Sunday between 10:00 and 11:59. High; proved in part
+- **Proof** (`high-faults.cpp` [B1]): the game's own `TownWeek`, week's day 6.
+  - `Waits` is yes at D6 10:30 and 11:59, and no at D6 12:05 and D7 10:00.
+  - `Ask(D7 10:00)` itself accepts.
+  - That the game calls `Ask` only when `Waits` is true is `CrimeProbe.cpp` 3554, from reading.
 - **Where:**
   - `CrimeProbe.cpp` 3554: she asks only when `GWeek.Week.Waits(GNow)`.
   - `WeeksEnd.h` 131-137: `Waits` is false on any other day, and false from 12:00 unless she has already asked.
@@ -227,7 +254,12 @@ From the time reviewer, with this session re-reading the Arrangement lines:
 
 ## C. Save and reload
 
-### C1. After Continue, everything said in conversation can be lost for good. High; checked (how often is reported)
+### C1. After Continue, everything said in conversation can be lost for good. High; proved in part (how often is reported)
+- **Proof** (RESULTS.md, `talk-stamp.sh`): the game's talk program, with stand-in replies.
+  - Darren is told "I was at the pictures all night", and the talk is saved under G1.
+  - A new program loads under G2 and answers `{"talk":"loaded","people":0,"stale":true}`.
+  - The next save writes talk.json under G3, and Darren no longer holds "the pictures".
+  - That the game's save changes the stamp before the talk program is ready is `CrimeProbe.cpp` 5193 and 5213, from reading.
 - **Where:**
   - `CrimeProbe.cpp` 5193: every save makes a new talk stamp and writes it to clock.txt.
   - 5213-5217: the talk program is told to save only if it is started and ready.
@@ -312,11 +344,15 @@ Compared and found sensible (reported by the port reviewer):
 
 ---
 
-## What would turn these into proofs
+## What still needs the game itself
 
-Each case above is written so that a test could be made from it. The cheapest proofs, in order:
+The proofs in `probes/` ran the Core and the port. What they cannot run is the Unreal-only game file, `CrimeProbe.cpp`, and the real street. Three runs of the packaged game would settle the rest:
 
-1. **C1:** a Continue with the talk program started a few seconds late. One scripted run, and the talk program's reply shows "stale".
-2. **A1, A3 and A4:** one free-play smash in the packaged game, with the session record and the witnesses' memories read afterwards.
-3. **B1:** a Core test of `TownWeek.Week.Waits(GameTime(6,12,0))` against `WeeksEnd.Ask(GameTime(7,10,0))`.
-4. **A11, B6, A9 and B7:** already visible in the committed golden rows cited.
+1. **One free-play smash, with the witnesses' memories read afterwards** (the session record and the saved memory files). It shows:
+   - whether Sheila's line to Rita's window is open in the real street (A1);
+   - that only the two stand-ins are read (A2);
+   - that no witness is told the deed or reports it (A3, A4).
+2. **One Continue, with the talk program starting a few seconds late:** the talk program answers "stale" (C1). Also one Continue before the smash, then the smash: nothing seen (A6).
+3. **One Sunday played past noon before talking to Sheila at the office:** no `week` field is ever sent (B1).
+
+The Medium and Low faults remain from reading, as marked.
