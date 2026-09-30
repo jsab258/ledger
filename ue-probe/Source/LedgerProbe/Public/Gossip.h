@@ -231,6 +231,23 @@ namespace LedgerCore
 		{
 		}
 
+		/// WHETHER THE STORY NAMES HIM (Gossip.cs NamesHim; Jafar's A5 ruling,
+		/// 30 September: a witness's story is only as sure as the witness was):
+		/// its first teller recognised him (rung 4), or it is no sighting at all
+		/// (no rung: a thing told as known). A noise, a shape, a mark or a face
+		/// is Suspecting's alone.
+		bool NamesHim() const { return OriginRung == -1 || OriginRung >= 4; }
+
+		/// Gossip.cs MergeRung: a vaguer look of one's own never erases a naming.
+		static int MergeRung(int A, int B)
+		{
+			const bool NA = A == -1 || A >= 4, NB = B == -1 || B >= 4;
+			if (NA && NB) return A > B ? A : B;
+			if (NA) return A;
+			if (NB) return B;
+			return A > B ? A : B;
+		}
+
 		std::string TopicKey() const { return Content.Subject + "." + Content.Predicate; }
 	};
 
@@ -521,6 +538,20 @@ namespace LedgerCore
 		/// cannot swear to who, and everything downstream (spread, heat,
 		/// bribe prices) inherits that doubt. `Rung` is how well they saw the
 		/// man (Rumor::OriginRung), -1 when the caller does not give it.
+		/// Gossip.cs WitnessRemembering (the review's B7): filed first-hand, but
+		/// remembered as what happened, never "I saw it myself" of something
+		/// said to their face; no memory at all when Remembered is empty.
+		void WitnessRemembering(const std::string& WitnessId, const Fact& Content, const std::string& Summary,
+		                        bool bSensitive, const GameTime& Now, const std::string& Remembered, double Confidence = 1.0)
+		{
+			const GossiperPtr G = Get(WitnessId);
+			const size_t Before = G && G->Memory ? G->Memory->Events.size() : 0;
+			Witness(WitnessId, Content, Summary, bSensitive, Now, Confidence);
+			if (!G || !G->Memory) return;
+			if (G->Memory->Events.size() > Before) G->Memory->Events.erase(G->Memory->Events.begin() + Before, G->Memory->Events.end());
+			if (!Remembered.empty()) G->Memory->Append(MemoryEvent(Now, "conversation", bSensitive ? 0.9 : 0.6, Remembered));
+		}
+
 		void Witness(const std::string& WitnessId, const Fact& Content,
 		             const std::string& Summary, bool bSensitive, const GameTime& Now,
 		             double Confidence = 1.0, bool bIndelible = false, int Rung = -1)
@@ -583,7 +614,7 @@ namespace LedgerCore
 				else
 				{
 					// A second look of their own: the better of the two, as below.
-					Own->OriginRung = Own->OriginRung > Rung ? Own->OriginRung : Rung;   // C#: Math.Max
+					Own->OriginRung = Rumor::MergeRung(Own->OriginRung, Rung);
 					if (bIndelible && !Own->Indelible)
 					{
 						Own->Indelible = true;
@@ -692,7 +723,7 @@ namespace LedgerCore
 					// version is the telling; the rest go in quietly (the third pass).
 					// C#: a HashSet made on first use; its absence and its
 					// emptiness answer every Add alike.
-					std::vector<std::string> ToldThisRound;
+					std::vector<std::string> ToldThisRound, NamedThisTelling;
 					const double Hop = HopDecay;
 					const std::vector<Told> Order = SurestFirst(Slots,
 						[TieW, Hop](const Rumor& X) { return X.Indelible ? X.Confidence : X.Confidence * TieW * Hop; });
@@ -736,6 +767,12 @@ namespace LedgerCore
 						Heard->Sensitive = R->Sensitive; Heard->Indelible = R->Indelible;
 						Heard->OriginRung = R->OriginRung;
 						Listener->Rumors.push_back(Heard);
+						// THE LEAK AND THE CONTRADICTION FIRE ONCE A TELLING, on the
+						// first copy that names him and reaches the listener (the
+						// town's A5 fix and its independent check, 30 September).
+						const bool bFirstNaming = Heard->NamesHim() && AddOnce(NamedThisTelling, R->TopicKey());
+						const std::string WhyContra = "a rumor about " + R->TopicKey() + " contradicts what the new owner told me";
+						const char* const WhyLeak = "heard something that doesn't fit the person I thought I knew";
 						if (Weighed == Telling::Quiet)
 						{
 							// A naming is new to them though the story is not: it
@@ -744,6 +781,10 @@ namespace LedgerCore
 							if (Heard->OriginRung >= 4)
 								Listener->Memory->Append(MemoryEvent(Now, "heard", Clamp(Passed * 0.8, 0.2, 0.85),
 									"I heard from " + Speaker->DisplayName + " that " + R->Summary));
+							if (bFirstNaming && NamingReaches(*Listener, *R, Passed, WhyContra, WhyLeak).first)
+								Listener->Memory->Append(MemoryEvent(Now, "observation", 0.85,
+									"What I heard about " + ReplaceAll(R->TopicKey(), "player.", "")
+									+ " doesn't match what they told me to my face."));
 							if (Heard->Indelible && Heard->Confidence >= 0.95) Listener->Knowledge->Learn(Heard->Content);
 							continue;
 						}
@@ -756,23 +797,19 @@ namespace LedgerCore
 
 						// Consequence 1: the rumour collides with a claim the
 						// player made to this listener, and the lie is
-						// exposed.
-						if (Listener->Knowledge->CheckClaim(R->Content) == ClaimResult::Contradiction)
+						// exposed. Consequence 2: a night-life secret reaches
+						// someone from the player's daytime world, and the
+						// double life springs a leak. Both only on a telling
+						// that names him (NamingReaches).
+						if (bFirstNaming)
 						{
-							Listener->Suspicion.Raise(ContradictionSuspicion * Passed,
-								"a rumor about " + R->TopicKey() + " contradicts what the new owner told me");
-							Listener->Memory->Append(MemoryEvent(Now, "observation", 0.85,
-								"What I heard about " + ReplaceAll(R->TopicKey(), "player.", "")
-								+ " doesn't match what they told me to my face."));
-							Ev.Contradiction = true;
-						}
-						// Consequence 2: a night-life secret reaches someone
-						// from the player's daytime world, and the double
-						// life springs a leak.
-						else if (R->Sensitive && Listener->Circle == "day")
-						{
-							Listener->Suspicion.Raise(LeakSuspicion * Passed, "heard something that doesn't fit the person I thought I knew");
-							Ev.Exposure = true;
+							const std::pair<bool, bool> Reached = NamingReaches(*Listener, *R, Passed, WhyContra, WhyLeak);
+							if (Reached.first)
+								Listener->Memory->Append(MemoryEvent(Now, "observation", 0.85,
+									"What I heard about " + ReplaceAll(R->TopicKey(), "player.", "")
+									+ " doesn't match what they told me to my face."));
+							Ev.Contradiction = Reached.first;
+							Ev.Exposure = Reached.second;
 						}
 
 						// AFTER the contradiction check, never before: an
@@ -839,7 +876,7 @@ namespace LedgerCore
 			// they saw while the same witness would still have volunteered it
 			// in ordinary talk. AND THE PARTNER'S LEASH IS NO LONGER TESTED
 			// INSIDE THE LOOP: it does not depend on the rumour.
-			std::vector<std::string> AskedToldThisRound;
+			std::vector<std::string> AskedToldThisRound, AskedNamed;
 			const double Hop = HopDecay;
 			const std::vector<RumorPtr> Asked = Partner->Rumors;   // C#: partner.Rumors.ToList()
 			const std::vector<Told> Order = SurestFirst(TellingSlots(Asked),
@@ -872,11 +909,15 @@ namespace LedgerCore
 				Heard->Sensitive = R->Sensitive; Heard->Indelible = R->Indelible;
 				Heard->OriginRung = R->OriginRung;
 				Checker->Rumors.push_back(Heard);
+				const bool bFirstNaming = Heard->NamesHim() && AddOnce(AskedNamed, R->TopicKey());
+				const std::string WhyContra = "what " + Partner->DisplayName + " told me contradicts what the new owner said to my face";
+				const char* const WhyLeak = "I went asking, and I did not like the answer";
 				if (Weighed == Telling::Quiet)
 				{
 					if (Heard->OriginRung >= 4)
 						Checker->Memory->Append(MemoryEvent(Now, "heard", Clamp(Passed * 0.8, 0.2, 0.85),
 							Partner->DisplayName + " told me, when I asked: " + R->Summary));
+					if (bFirstNaming) NamingReaches(*Checker, *R, Passed, WhyContra, WhyLeak);
 					if (Heard->Indelible && Heard->Confidence >= 0.95) Checker->Knowledge->Learn(Heard->Content);
 					continue;
 				}
@@ -886,16 +927,11 @@ namespace LedgerCore
 
 				GossipEvent Ev;
 				Ev.FromId = PartnerId; Ev.ToId = CheckerId; Ev.RumorRef = Heard;
-				if (Checker->Knowledge->CheckClaim(R->Content) == ClaimResult::Contradiction)
+				if (bFirstNaming)
 				{
-					Checker->Suspicion.Raise(ContradictionSuspicion * Passed,
-						"what " + Partner->DisplayName + " told me contradicts what the new owner said to my face");
-					Ev.Contradiction = true;
-				}
-				else if (R->Sensitive && Checker->Circle == "day")
-				{
-					Checker->Suspicion.Raise(LeakSuspicion * Passed, "I went asking, and I did not like the answer");
-					Ev.Exposure = true;
+					const std::pair<bool, bool> Reached = NamingReaches(*Checker, *R, Passed, WhyContra, WhyLeak);
+					Ev.Contradiction = Reached.first;
+					Ev.Exposure = Reached.second;
 				}
 				// A body heard of at certainty is hard knowledge, as in Tick,
 				// and after the contradiction check for the same reason (the
@@ -1042,16 +1078,34 @@ namespace LedgerCore
 		/// list 6bs).
 		static constexpr double SameStrength = 1e-9;
 
+		/// Gossip.cs NamingReaches: the contradiction, or else the leak, of a
+		/// telling that names him; (contradiction, exposure).
+		std::pair<bool, bool> NamingReaches(Gossiper& Listener, const Rumor& R, double Passed,
+		                                    const std::string& Why, const std::string& WhyLeak)
+		{
+			if (Listener.Knowledge->CheckClaim(R.Content) == ClaimResult::Contradiction)
+			{
+				Listener.Suspicion.Raise(ContradictionSuspicion * Passed, Why);
+				return std::make_pair(true, false);
+			}
+			if (R.Sensitive && Listener.Circle == "day")
+			{
+				Listener.Suspicion.Raise(LeakSuspicion * Passed, WhyLeak);
+				return std::make_pair(false, true);
+			}
+			return std::make_pair(false, false);
+		}
+
 		static Telling Weigh(const Gossiper& Listener, const Rumor& R, double Passed)
 		{
 			const RumorPtr Existing = Listener.BestOfValue(R.TopicKey(), R.Content.Value);
 			if (!Existing || NotFiniteBits(Existing->Confidence) || Existing->Confidence < Passed - SameStrength) return Telling::New;
-			if (R.OriginRung < 4) return Telling::Held;
+			if (!R.NamesHim()) return Telling::Held;
 			for (std::vector<RumorPtr>::size_type I = 0; I < Listener.Rumors.size(); ++I)
 			{
 				const RumorPtr& X = Listener.Rumors[I];
 				if (X->TopicKey() == R.TopicKey() && X->Content.Value == R.Content.Value
-				    && X->OriginRung >= 4 && !NotFiniteBits(X->Confidence) && X->Confidence >= Passed - SameStrength)
+				    && X->NamesHim() && !NotFiniteBits(X->Confidence) && X->Confidence >= Passed - SameStrength)
 					return Telling::Held;
 			}
 			return Telling::Quiet;

@@ -373,7 +373,13 @@ namespace LedgerCore
 			// so the clamp is the thing actually holding a witness below the
 			// mill's 0.95 promotion threshold rather than a comment claiming
 			// to.
-			return Clamp(C, 0.05, 0.94);
+			// A FULL SIGHTING is the one thing it does not hold (the review's
+			// A10, 30 September): the act watched, not only heard, who went
+			// down, and who did it recognised; that witness knows, and says "I
+			// saw it myself".
+			const bool bFull = (int)(Slots & Slot::Act) != 0 && bLooked && (int)(Slots & Slot::Victim) != 0
+			                && (int)(Slots & Slot::Actor) != 0 && Rung >= 4;
+			return Clamp(C, 0.05, bFull ? 1.0 : 0.94);
 		}
 	};
 }

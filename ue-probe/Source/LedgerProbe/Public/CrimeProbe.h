@@ -1731,7 +1731,9 @@ namespace LedgerCrime
 			double X = 0.0, Z = 0.0;
 			std::string Place;
 			if (!Cast.Where(Id, Day, Hour, X, Z) || !Cast.PlaceOf(Id, Day, Hour, Place)) continue;
-			if (!OnQuayStreet(X, Z)) continue;
+			// On Quay Street by the town's own rule (CastDay::OnQuayStreet, the
+			// street's own areas, as DS Ellis asks there; the review's A11).
+			if (!Cast.OnQuayStreet(Id, Day, Hour)) continue;
 			OnlookerAt O;
 			O.Id = Id;
 			O.Place = Place;

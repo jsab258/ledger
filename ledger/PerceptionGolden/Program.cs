@@ -178,31 +178,7 @@ namespace Ledger.PerceptionGolden
                 // after a missed Sunday.
                 // A11, DS Ellis only on Quay Street.
                 // A10, a full sighting certain (only these rows move).
-                var held = new[] { "WeekAsksNow|", "SweepAsked|", "SweepHeard|",
-                    "CertaintyFor|28|4|1|", "CertaintyFor|60|4|1|", "CertaintyFor|127|4|1|",
-                    "Resolve|70|0|0|0|0|0|0|30|0|1|0|30|0|1|0|0|0|1|45|0|3|4|0|certainty|",
-                    "Scenario|observation_four|closeCertainty|", "Scenario|observation_four|litShooterCertainty|",
-                    // A5, a story only as sure as its first teller; its leak gate moves
-                    // 192 of the seeded gossip worlds' traces (their save rows do not move).
-                    "NamesHim|", "GossipFuzz|scenario|",
-                    // A9, the keeper finds her own damage, from the deed's own hour.
-                    "Aftermath|tick to noon|", "Aftermath|bad saves|", "TownSaveWritten|text|",
-                    // B6, Ada's tea as she would tell it.
-                    "TeaClosed|late|", "TeaSave|late|",
-                    // B7, told to their face is not a sighting.
-                    "ThreatMemory|", "WeekFiledMemory|",
-                    // A12, the town's rounds in time order.
-                    "TownHoursRun|", "TownHoursRound|",
-                    // B3, his no told when Ron goes down.
-                    "TellDue|",
-                    // B5, a deed after midnight.
-                    "FirstReport|",
-                    // A no only after the ask.
-                    "NoBeforeAsk|",
-                    // The independent check of the A5 fix: a telling as sure as its naming.
-                    "OneTelling|1|2|", "SurestTold|",
-                    // The keeper told first still finds her own window.
-                    "KeeperHeardFirst|" };
+                var held = new string[0];   // emptied 30 September, late: the builder's port follows the review's Core fixes
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
