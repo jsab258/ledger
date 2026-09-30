@@ -5308,6 +5308,10 @@ namespace Ledger.CoreTests
                     ("Fish van was late again this morning.", false), ("I saw him.", false), ("It's the morning, friend.", false), ("", false), (null, false), ("3.", false),
                     ("My son would know.", false), ("The lad would know.", false), ("That lot would know.", false), ("Your mate would know.", false),
                     ("Just the one.", false), ("More than one.", false), ("I own the lot.", false), ("Boss.", false),
+                    // A reaction before the answer (the delay note's step 5).
+                    ("Depends who's asking.", true), ("Hang on, boss.", true), ("Who wants to know?", true), ("Ooh, now.", true), ("Go on, then.", true),
+                    ("Of course.", true), ("It's on.", false), ("Hang on, Rita's shut.", false), ("Depends on the weather.", false), ("Of course he was.", false),
+                    ("A course.", false), ("I've seen it.", false),
                 };
                 var plainWrong = new List<string>();
                 foreach (var (line, plain) in plainLines) if (PlainWords.IsPlain(line) != plain) plainWrong.Add(line ?? "null");
@@ -5444,7 +5448,14 @@ namespace Ledger.CoreTests
                 var ownFaults = new List<string>();
                 foreach (var who in OwnLines.ByCast)
                 {
-                    string ownName = who.Key == "rocco" ? "Ron" : null;
+                    // How each gives their own name, the only way they may say it.
+                    var intro = new Dictionary<string, (string name, string given)>
+                    {
+                        ["rocco"] = ("Ron", "Ron."), ["sam"] = ("Darren", "Darren."), ["lena"] = ("Sheila", "Sheila Dunn."),
+                        ["noor"] = ("Alison", "Alison Sedman."), ["ada"] = ("Ada", "Ada."), ["emil"] = ("Walsh", "Father Walsh."), ["june"] = ("June", "June."),
+                    };
+                    string ownName = intro.TryGetValue(who.Key, out var me) ? me.name : null;
+                    if (ownName == null) ownFaults.Add(who.Key + ": no name to check");
                     foreach (var bank in who.Value)
                     {
                         if (!banks.Contains(bank.Key)) ownFaults.Add(who.Key + ": no such bank " + bank.Key);
@@ -5455,7 +5466,7 @@ namespace Ledger.CoreTests
                             if (ContentRule.SpeechBreaks(line) != null) ownFaults.Add(who.Key + ": content rule: " + line);
                             if (RealWorld.Find(line).Count > 0) ownFaults.Add(who.Key + ": a real name or later thing: " + line);
                             // Their own name only as they give it ("Ron. I keep the rank."), never as somebody else.
-                            if (ownName != null && line.Contains(ownName) && !line.Contains(ownName + ". ")) ownFaults.Add(who.Key + ": speaks of himself as another: " + line);
+                            if (ownName != null && line.Contains(ownName) && !line.Contains(me.given)) ownFaults.Add(who.Key + ": speaks of themselves as another: " + line);
                         }
                     }
                 }
@@ -5771,7 +5782,7 @@ namespace Ledger.CoreTests
                 var takenHeardLine = StreetVoice.Recognition(tm.Get("joey"), heardTaken, StanceKind.Comments, 0);
                 bool street = sawIt.Count == 1 && sawIt[0] == "zlata" && sawAgain.Count == 0 && takenStory != null && !takenStory.Sensitive
                               && StreetVoice.StoryThatShows(tm.Get("zlata"), tm.MinConfidenceToShare) == takenStory
-                              && sawLine != null && sawLine.Bank == "recognition/taken-saw" && takenHeardLine != null && takenHeardLine.Bank == "recognition/taken-heard"
+                              && sawLine != null && SharedBank(sawLine.Bank) == "recognition/taken-saw" && takenHeardLine != null && SharedBank(takenHeardLine.Bank) == "recognition/taken-heard"
                               && !Custody.IsTaken(new Rumor { Content = new Fact("player", "taken", "police") });
                 // The town's save keeps each arrest the police file made, once, the
                 // earliest of any given twice, in order; none it did not make.
@@ -5860,7 +5871,7 @@ namespace Ledger.CoreTests
                       && !askMill.Get("ada").Memory.Events.Exists(e => e.Text.Contains(PoliceFile.AskedSaid)) && PoliceFile.Loudness(askMill) == loudBefore && forBodyNone
                       && withAsk.Stance == withoutAsk.Stance && StreetVoice.StoryHalfRemembered(fadedAsk, askMill.MinConfidenceToShare) == null
                       && StreetVoice.StoryThatShows(askMill.Get("ada"), askMill.MinConfidenceToShare) != null
-                      && askedLine != null && askedLine.Bank == "recognition/police-asked" && heardLine != null && heardLine.Bank == "recognition/police-heard"
+                      && askedLine != null && SharedBank(askedLine.Bank) == "recognition/police-asked" && heardLine != null && SharedBank(heardLine.Bank) == "recognition/police-heard"
                       && !PoliceFile.IsAsking(new Rumor { Content = new Fact("player", "police", "asking") }),
                       "she asks the day people holding a story of his nights; each remembers it and passes it on as the street's news, never his nights' talk, and says so to his face, as the one she asked or as talk; a visit for a body asks nobody about him",
                       $"{string.Join(",", sheAsks)} {askedN} {adaAsk?.Sensitive} {askedLine?.Bank} {heardLine?.Bank}");
@@ -6141,8 +6152,8 @@ namespace Ledger.CoreTests
                 var faceDid = StreetVoice.Recognition(holder, Heard(rDid), StanceKind.Comments, 0);
                 var faceAway = StreetVoice.Recognition(holder, Heard(rAway), StanceKind.Comments, 0);
                 var manSays = StreetVoice.Recognition(mNo.Get(Arrangement.OutfitMan), rNo, StanceKind.Comments, 0);
-                Check(shows == hNo && faceNo != null && faceNo.Bank == "recognition/outfit-refused" && faceDid.Bank == "recognition/outfit-did"
-                      && faceAway.Bank == "recognition/outfit-noshow" && ContentRule.SpeechBreaks(faceNo.Text) == null && !faceNo.Text.Contains("last night")
+                Check(shows == hNo && faceNo != null && SharedBank(faceNo.Bank) == "recognition/outfit-refused" && SharedBank(faceDid.Bank) == "recognition/outfit-did"
+                      && SharedBank(faceAway.Bank) == "recognition/outfit-noshow" && ContentRule.SpeechBreaks(faceNo.Text) == null && !faceNo.Text.Contains("last night")
                       && manSays != null && !manSays.Bank.StartsWith("recognition/outfit"),
                       "what he did with the ask shows, though only the envelope is a secret, and comes back in its own words from those who heard it (\"Heard you told them no.\"), never from the man who was there", faceNo?.Text ?? "");
 
@@ -7034,7 +7045,8 @@ namespace Ledger.CoreTests
                 var heardLine = StreetVoice.Recognition(tm.Get("joey"), new Rumor { Content = new Fact("player", "threat_window_d1", "threatened"), Summary = Silence.ThreatSaid, Confidence = 0.6, Hops = 1 }, StanceKind.Comments, 0);
                 filed = filed && threatStory != null && threatStory.TopicKey == "player.threat_window_d1" && !threatStory.Sensitive
                         && StreetVoice.StoryThatShows(tm.Get("ada"), tm.MinConfidenceToShare) == threatStory
-                        && toldLine != null && toldLine.Bank == "recognition/threat-told" && heardLine != null && heardLine.Bank == "recognition/threat-heard";
+                        && toldLine != null && toldLine.Bank.StartsWith("recognition/threat-told", StringComparison.Ordinal)
+                        && heardLine != null && heardLine.Bank.StartsWith("recognition/threat-heard", StringComparison.Ordinal);
                 Check(heard && filed,
                       "a threat is remembered once a deed and makes them warier, kept with the talk, and keeps Sheila's trust back; the one threatened holds the story first-hand, once, and the street says it to his face",
                       $"{heard} {filed}");
@@ -7066,7 +7078,7 @@ namespace Ledger.CoreTests
                              && Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"first\":0,\"nights\":[[0,\"refused\"]],\"delivered\":[0],\"woundDown\":[0]}"))).EndedWhy == "refused";
                 var woundLine = StreetVoice.Recognition(new Gossiper("wl", "wl", new MemoryStore("wl"), new KnowledgeBase(), new SuspicionTracker()),
                     new Rumor { Content = new Fact("player", "outfit_d6", "wounddown"), Summary = Arrangement.SaidWoundDown, Confidence = 0.5, Hops = 1 }, StanceKind.Comments, 0);
-                ended = ended && woundLine != null && woundLine.Bank == "recognition/outfit-wounddown";
+                ended = ended && woundLine != null && SharedBank(woundLine.Bank) == "recognition/outfit-wounddown";
                 var asksBack = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(asks.ToJson()))));
                 // A load never makes it a night Ron brought, and loads again the same (the second review).
                 string once = MiniJson.Serialize(asksBack.ToJson());
@@ -7374,8 +7386,8 @@ namespace Ledger.CoreTests
                 var wontSayLine = StreetVoice.Recognition(wm.Get("joey"), heardWontSay, StanceKind.Comments, 0);
                 var windDownLine = StreetVoice.Recognition(wm.Get("joey"), new Rumor { Content = new Fact("player", "week_d6", "winddown"), Summary = WeeksEnd.Said(WeekAnswer.WindDown), Confidence = 0.6, Hops = 1 }, StanceKind.Comments, 0);
                 bool voiced = StreetVoice.StoryThatShows(wm.Get("zlata"), wm.MinConfidenceToShare) == weekStory && StreetVoice.StoryThatShows(wm.Get("lena"), wm.MinConfidenceToShare) == null
-                              && weekLine != null && weekLine.Bank == "recognition/week-takeover" && wontSayLine != null && wontSayLine.Bank == "recognition/week-wontsay"
-                              && windDownLine != null && windDownLine.Bank == "recognition/week-winddown";
+                              && weekLine != null && SharedBank(weekLine.Bank) == "recognition/week-takeover" && wontSayLine != null && SharedBank(wontSayLine.Bank) == "recognition/week-wontsay"
+                              && windDownLine != null && SharedBank(windDownLine.Bank) == "recognition/week-winddown";
                 Check(timing && filed && closes && talk && saves && voiced && stays,
                       "Sheila asks from day 7, once, waiting at the office that Sunday morning; his plain answer stands only while the question does, a day ended unanswered is his refusal, the story is hers first-hand and whoever was in the office, and a save is replayed through the same rules",
                       $"{timing} {filed} {closes} {talk} {saves} {voiced} {stays}");
