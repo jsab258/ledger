@@ -129,29 +129,53 @@ rig.select_set(True)
 bpy.context.view_layer.objects.active = rig
 bpy.ops.object.parent_set(type="ARMATURE_AUTO")
 say("bound", len(base.vertex_groups), "groups")
-# the whole: moved so the pelvises meet, scaled to his height from pelvis to neck first
+# EACH BONE PLACED DIRECTLY (30 September, the suit on Darren: its sleeves ended 70 to 75 per cent of the way from
+# elbow to wrist; stretching bones in the pose made each child inherit its parent's stretch at an angle, skewing the
+# forearm): for every bone a map of its own, from the base body's joint pair to his (moved to his head joint, turned
+# to his direction, stretched along it to his length), and each point of the base body moved by the maps of its
+# bones, weighted as the automatic weights say
+bpy.context.view_layer.update()
+maps = {}
 for bn, h, t, par, mh, mt in CHAIN:
-    pb = rig.pose.bones[bn]
-    bpy.context.view_layer.update()
-    head_w = rig.matrix_world @ pb.head
-    tail_w = rig.matrix_world @ pb.tail
-    d_now = (tail_w - head_w)
-    d_to = Vector(tuple(J(mt) - J(mh)))
-    q = d_now.normalized().rotation_difference(d_to.normalized())
-    # in the bone's own space: turn it so its direction is his, and stretch it to his length
-    M = pb.matrix.copy()
-    R = q.to_matrix().to_4x4()
-    pb.matrix = Matrix.Translation(head_w) @ R @ Matrix.Translation(-head_w) @ M
-    bpy.context.view_layer.update()
-    pb.scale = (1.0, d_to.length / max(1e-6, d_now.length), 1.0)
-    bpy.context.view_layer.update()
-bpy.context.view_layer.update()
-rig.location = Vector(tuple(J("pelvis"))) - (rig.matrix_world @ rig.pose.bones["spine"].head) + rig.location
-bpy.context.view_layer.update()
-dg = bpy.context.evaluated_depsgraph_get()
-ev = base.evaluated_get(dg).to_mesh()
-P = np.array([tuple(base.matrix_world @ v.co) for v in ev.vertices])
-base.evaluated_get(dg).to_mesh_clear()
+    h0, t0 = Vector(tuple(JB[h])), Vector(tuple(JB[t]))
+    h1, t1 = Vector(tuple(J(mh))), Vector(tuple(J(mt)))
+    d0, d1 = (t0 - h0), (t1 - h1)
+    R = d0.normalized().rotation_difference(d1.normalized()).to_matrix().to_4x4()
+    u = d0.normalized()
+    k = d1.length / max(1e-9, d0.length)
+    S = Matrix.Identity(4)
+    for i_ in range(3):
+        for j_ in range(3):
+            S[i_][j_] = (1.0 if i_ == j_ else 0.0) + (k - 1.0) * u[i_] * u[j_]
+    maps[bn] = Matrix.Translation(h1) @ R @ S @ Matrix.Translation(-h0)
+gi = {vg.index: vg.name for vg in base.vertex_groups}
+# the helper shells round the body (the tights, the skirt; clothes are often fitted to them: the suit's cuffs are) get
+# no weights of their own from the automatic binding, being separate pieces, so each takes the weights of the body
+# point nearest it (30 September: unweighted, they moved with the spine and the suit's cuffs landed 13 cm up the arm)
+from mathutils.kdtree import KDTree as _KD  # noqa: E402
+NB_REST = len(body_ids)
+_kd = _KD(NB_REST)
+for i_ in range(NB_REST):
+    _kd.insert(me.vertices[i_].co, i_)
+_kd.balance()
+
+
+def weights_of(v):
+    src = v if v.index < NB_REST else me.vertices[_kd.find(v.co)[1]]
+    return [(gi.get(ge.group), ge.weight) for ge in src.groups]
+
+
+P = np.zeros((len(me.vertices), 3))
+for v in me.vertices:
+    co = v.co
+    acc, wsum = Vector(), 0.0
+    for bn, w_ in weights_of(v):
+        if bn in maps and w_ > 0:
+            acc += (maps[bn] @ co) * w_
+            wsum += w_
+    P[v.index] = tuple(acc / wsum) if wsum > 0 else tuple(maps["spine"] @ co)
+for m_ in list(base.modifiers):
+    base.modifiers.remove(m_)
 say("posed onto his joints")
 
 # ---- 3. drawn onto his surface ------------------------------------------------------------------------------------

@@ -148,10 +148,13 @@ for v0 in bm.verts:
                 st.append(w)
 main = np.bincount(comp[comp >= 0]).argmax()
 is_button = np.zeros(len(bm.verts), bool)
+piece_attr = me.attributes.get("piece")                 # mh_garment.py's: 0 cloth, 1 shirt, 2 tie, 3 button
 for f in bm.faces:
-    if "Button" in mat_names[f.material_index]:
+    if "Button" in mat_names[f.material_index] or (piece_attr is not None and piece_attr.data[f.index].value == 3):
         for v in f.verts:
             is_button[v.index] = True
+# the pieces on the trunk (a collar, a shirt front, a tie, the front's buttons): inside the shoulders; the ones on
+# the arms (a shirt's cuffs, a sleeve's buttons) keep the arm
 is_collar = (comp != main) & ~is_button
 # the skirt, below the hip joints: its front takes the mean of the two thighs (walking, the legs swing opposite
 # ways and the front stays with the hips, never parting into shorts; sitting, both come forward and it lies over
@@ -214,7 +217,14 @@ for s_ in "lr":
     if cr is not None:
         arm_bones |= set(under(cr))
 arm_cols = [col[n] for n in names if n in arm_bones]
-pieces_ids = np.where(comp != main)[0]
+shoulder_x = min(abs(J("upperarm_l").x), abs(J("upperarm_r").x))
+pcentre = {}
+for c_ in np.unique(comp[comp != main]):
+    pcentre[c_] = P[comp == c_].mean(axis=0)
+pieces_ids = np.array([i for i in np.where(comp != main)[0] if abs(pcentre[comp[i]][0]) < shoulder_x], dtype=int)
+is_collar = np.zeros(len(P), bool)
+is_collar[pieces_ids] = True
+is_collar &= ~is_button
 spine5 = ensure("spine_05")
 for i in pieces_ids:
     lost = W[i, arm_cols].sum()
