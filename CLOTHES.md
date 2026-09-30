@@ -12,7 +12,7 @@ The third session (Jafar, 29 September): clothes for the people of a British por
 
 ONE GARMENT PROVEN ON TWO BODIES BEFORE ANY WARDROBE. STOPPED: new garment families, and accepting anything judged standing only.
 
-- [ ] 1. One properly skinned jacket. The donkey jacket made the game way SET ASIDE 30 September after three blind reviews (production/art/clothing/donkey-jacket-game); its pipeline stays (tools/meshgen/blender/retopo_garment.py, skin_garment.py, carry_garment.py). NOW (Jafar's ruling, 30 September: suits and coats from MakeHuman's CC0 garments, bound panel by panel): Men's Suit 3's jacket (Margaret Toigo, CC0), a hand-made game mesh, fitted to Ron and Darren (fit_mhclo.py, mh_garment.py), skinned with its joints corrected (skin_garment.py), judged walking, sitting and with arms raised as well as standing (production/art/clothing/suit-jacket: review 1 failed both; review 2 under way).
+- [ ] 1. One properly skinned jacket. SET ASIDE 30 September under the two-tries rule, twice: the donkey jacket made the game way (three blind reviews, production/art/clothing/donkey-jacket-game) and MakeHuman's CC0 suit jacket (three blind reviews, the last after research: Ron failed only on two small local breaks, Darren on shape; production/art/clothing/suit-jacket). The pipeline and its tools stay (retopo_garment.py, skin_garment.py, carry_garment.py, fit_mhclo.py with its jacket form, mh_garment.py, look_garment.py). WAITING ON JAFAR (scope, FOR-JAFAR.md Clothes): (A, recommended, carried on meanwhile) the builder tests the suit jacket in Unreal on Ron and Darren with its skirt as cloth, when his list allows (F:/LedgerTools/garments/suit_jacket_test); (B) park clothing until his route runs; (C) a paid Fab jacket.
 - [ ] 2. Proven on two approved bodies, Ron's (MH_RoccoP2) and Darren's (MH_SamC5), walking, sitting and with arms raised in Unreal, which the builder tests; I watch "Handovers to clothing". Every handover names the exact version of the body it fits (its file and checksum).
 - [ ] 3. Only then the principals' outfits, by that proven pipeline.
 
@@ -26,7 +26,7 @@ Kept from the earlier list, not worked until 3: the MakeHuman CC0 suits (tools/m
 ## Status
 
 - 30 September, morning: the first list finished (handed over or set aside); the pipeline researched.
-- 30 September, afternoon: the game-way jacket set aside after its third blind review; Jafar asked how to go on.
+- 30 September, afternoon: the game-way donkey jacket, then the MakeHuman suit jacket, each set aside after three blind reviews; Jafar asked how to go on (scope).
 - 30 September, 10:00: an outside audit narrowed the list to one jacket proven on Ron and Darren; the eased sewn jacket failed its second blind review (the yoke's edges); retopology, bake and skinning researched before the remake.
 - Bodies: Ron (MH_RoccoP2), Darren (MH_SamC5), Sheila (MH_LenaC1, and MH_LenaS4 with her approved head for anything on her face) in F:\LedgerTools\bodies; the slim, average and heavy builds are set aside by the builder. The next principals wait on his exports.
 - Tools: Blender 4.5.13 headless (tools/meshgen/blender); scratch on F:. Blender scripts and these records set off nothing on push; records under production/ run the free Core tests; production/specs and production/assets would start the Unreal build, so garments never go there.
