@@ -75,6 +75,7 @@
 #include "SaveCodec.h"
 #include "Misc/App.h"
 #include "TitleScreen.h"
+#include "LedgerGarments.h"
 #include "Misc/Parse.h"
 #include "Misc/DateTime.h"
 #include "HAL/FileManager.h"
@@ -903,6 +904,7 @@ namespace
 		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s has %d part(s) that can speak"), Who, PartsAnimated);
 		LedgerJacket::Wear(A, Who);
+		LedgerGarments::Wear(A, Who);
 		Body->SetActorHiddenInGame(true);
 		GVisuals.Add(Body, A);
 		++GVisualsPlaced;
@@ -2781,7 +2783,8 @@ namespace
 		int64 QueuedBytes = 0;
 		TWeakObjectPtr<AActor> Speaker, LastSpeaker;
 		double SpeakerQuietSince = -1.0;
-		float PeakDb = -30.0f;   // the loudest 40 ms queued so far in this answer
+		float PeakDb = -30.0f;   // the sentence's speaking level (MouthLevelFrom)
+		TArray<float> WindowDb;  // every 40 ms of it, for that level
 	};
 	FLiveVoice GVoice;
 	bool bVoiceAsked = false, bVoicePlayed = false, bVoiceRecording = false, bVoiceAllIn = false;
@@ -2820,19 +2823,26 @@ namespace
 		return DataAt >= 0 && DataLen > 0;
 	}
 
-	// THE LOUDEST 40 MS in the samples from From on, so each answer's mouth is
-	// scaled to its own voice: Darren's is about 8 dB quieter than Ron's, and
-	// on one fixed scale his lips barely parted (the film, 30 September).
-	void MouthPeakFrom(int32 From)
+	// THE SENTENCE'S SPEAKING LEVEL, from every 40 ms of it queued so far: the
+	// loudness four in five of its sounding windows stay under. Scaled to its
+	// loudest single moment instead, Ron's quiet "Quiet one today." kept his
+	// mouth shut under one loud spot (the reviewer, 30 September); on one
+	// fixed scale Darren's quieter voice barely parted his lips.
+	void MouthLevelFrom(int32 From)
 	{
 		const int32 Ch = FMath::Max(1, GVoice.PcmChannels);
 		const int32 Span = FMath::Max(1, (int32)(0.04 * GVoice.PcmRate)) * Ch;
-		for (int32 A = From; A + Span <= GVoice.Pcm.Num(); A += Span / 2)
+		for (int32 A = From; A + Span <= GVoice.Pcm.Num(); A += Span)
 		{
 			double Sum = 0.0;
 			for (int32 S = A; S < A + Span; S += Ch) { const double V = GVoice.Pcm[S] / 32768.0; Sum += V * V; }
-			GVoice.PeakDb = FMath::Max(GVoice.PeakDb, 10.0f * FMath::LogX(10.0f, (float)(Sum / (Span / Ch)) + 1e-12f));
+			GVoice.WindowDb.Add(10.0f * FMath::LogX(10.0f, (float)(Sum / (Span / Ch)) + 1e-12f));
 		}
+		TArray<float> Sounding;
+		for (float D : GVoice.WindowDb) { if (D > -60.0f) { Sounding.Add(D); } }
+		if (Sounding.Num() == 0) { return; }
+		Sounding.Sort();
+		GVoice.PeakDb = Sounding[FMath::Min(Sounding.Num() - 1, (int32)(Sounding.Num() * 0.8f))];
 	}
 
 	// A PIECE THAT CONTINUES the sound still playing: its sound is added to the
@@ -2846,7 +2856,7 @@ namespace
 		const int32 Was = GVoice.Pcm.Num();
 		GVoice.Pcm.Append(reinterpret_cast<const int16*>(&Bytes[DataAt]), DataLen / 2);
 		GVoice.QueuedBytes += DataLen;
-		MouthPeakFrom(Was);
+		MouthLevelFrom(Was);
 		const double Len = (double)DataLen / (double)(2 * Channels * Rate);
 		GVoiceSeconds += Len;
 		return Len;
@@ -2883,7 +2893,8 @@ namespace
 		GVoice.QueuedBytes = DataLen;
 		GVoice.Speaker = Who;
 		GVoice.PeakDb = -30.0f;
-		MouthPeakFrom(0);
+		GVoice.WindowDb.Reset();
+		MouthLevelFrom(0);
 		GVoiceStartedAt = NowS();
 		if (!bVoicePlayed)
 		{
@@ -2907,7 +2918,7 @@ namespace
 	// notice, 12: lips roughly in time; the faces stood still while they
 	// spoke). The part of the answer being heard is what the mixer has taken
 	// from the wave, less about 30 ms still in its buffers; its loudness over
-	// 40 ms, against the answer's own loudest (MouthPeakFrom), opens the speaker's jaw and
+	// 40 ms, against the sentence's own speaking level (MouthLevelFrom), opens the speaker's jaw and
 	// shapes their lips (ULedgerPersonAnim::SpeakTick), on every part of them
 	// that plays our animation, so the face and body agree. When they stop,
 	// the mouth eases back to the idle over a second.
@@ -2918,7 +2929,28 @@ namespace
 		Who->GetComponents(Parts);
 		for (USkeletalMeshComponent* C : Parts)
 		{
-			if (ULedgerPersonAnim* A = C != nullptr ? Cast<ULedgerPersonAnim>(C->GetAnimInstance()) : nullptr) { A->SpeakTick(Level, bSpeaking, Dt); }
+			if (ULedgerPersonAnim* A = C != nullptr ? Cast<ULedgerPersonAnim>(C->GetAnimInstance()) : nullptr)
+			{
+				A->SpeakTick(Level, bSpeaking, Dt);
+				// WHAT THE FACE IS DOING while it speaks, once a second for the
+				// first twenty: Darren's stayed frozen at every level (the
+				// reviewer, 30 September) though his face is set up as the others'.
+				static TMap<FString, double> NextFaceLog;
+				static int32 FaceLogs = 0;
+				if (bSpeaking && C->GetName() == TEXT("Face") && FaceLogs < 20)
+				{
+					double& Next = NextFaceLog.FindOrAdd(Who->GetName());
+					if (NowS() >= Next)
+					{
+						Next = NowS() + 1.0;
+						++FaceLogs;
+						UE_LOG(LogTemp, Log, TEXT("LedgerMouth: %s face at LOD %d, weight %.2f, jaw %.2f, anim ticks %s, visible %s"),
+							*Who->GetName(), C->GetPredictedLODLevel(), A->SpeakWeight, A->MouthValues[0],
+							C->bEnableUpdateRateOptimizations ? TEXT("with rate optimisation") : TEXT("every frame"),
+							C->IsVisible() ? TEXT("yes") : TEXT("no"));
+					}
+				}
+			}
 		}
 	}
 
@@ -2946,8 +2978,36 @@ namespace
 		for (USkeletalMeshComponent* C : Parts) { if (C != nullptr && C->DoesSocketExist(TEXT("head"))) { Head = C->GetSocketLocation(TEXT("head")); break; } }
 		// In front of the face: a MetaHuman faces its actor's +Y (SyncVisual).
 		const FVector Toward = Who->GetActorRightVector().GetSafeNormal2D();
-		const FVector Eye = Head + Toward * 60.0f + FVector(0.0f, 0.0f, 2.0f);
-		const FVector Look = Head + FVector(0.0f, 0.0f, 2.0f);
+		// -MouthFilmWide: the whole person from 2.6 m instead, for what they wear.
+		static const bool bWide = FParse::Param(FCommandLine::Get(), TEXT("MouthFilmWide"));
+		const FVector Feet = Who->GetActorLocation();
+		const FVector Look = bWide ? Feet + FVector(0.0f, 0.0f, 90.0f) : Head + FVector(0.0f, 0.0f, 2.0f);
+		// The first way round him with nothing in between (Ron stands facing
+		// the yard wall): in front, then to either side, then behind.
+		FVector Dir = Toward;
+		float Dist = 260.0f;
+		if (bWide)
+		{
+			// Twelve ways round, nearest the front first, at 2.6 m, 2 m then
+			// 1.6 m: Ron's yard is cramped.
+			bool bFound = false;
+			for (float Try : { 260.0f, 200.0f, 160.0f })
+			{
+				for (int32 K = 0; K < 12 && !bFound; ++K)
+				{
+					const float Deg = (K % 2 == 0 ? 1.0f : -1.0f) * 30.0f * ((K + 1) / 2);
+					const FVector D = Toward.RotateAngleAxis(Deg, FVector::UpVector);
+					FHitResult Hit;
+					FCollisionQueryParams Q(TEXT("LedgerMouthFilm"), true, Who);
+					if (!World->SweepSingleByChannel(Hit, Look, Feet + D * Try + FVector(0.0f, 0.0f, 100.0f), FQuat::Identity, ECC_Camera, FCollisionShape::MakeSphere(15.0f), Q))
+					{
+						Dir = D; Dist = Try; bFound = true;
+					}
+				}
+				if (bFound) { break; }
+			}
+		}
+		const FVector Eye = bWide ? Feet + Dir * Dist + FVector(0.0f, 0.0f, 100.0f) : Head + Toward * 60.0f + FVector(0.0f, 0.0f, 2.0f);
 		if (!GMouthFilm.Cam.IsValid())
 		{
 			FActorSpawnParameters P;
@@ -2966,9 +3026,67 @@ namespace
 		}
 	}
 
+	// THE THINKING SOUND'S MOUTH, 30 September: its own face animation used
+	// to replace the face's (a single-node animation, for good), so after the
+	// first "Let me think." Darren's and Ron's faces neither spoke nor turned
+	// (the reviewer: Darren's mouth frozen; Ron's shut for half his answer).
+	// Now a face that plays our animation keeps it, and its mouth follows the
+	// thinking sound's audio as it follows an answer's.
+	struct FAckMouth { TArray<int16> Pcm; int32 Rate = 24000, Ch = 1; int64 Queued = 0; float RefDb = -30.0f;
+	                   TWeakObjectPtr<USoundWaveProcedural> Wave; TWeakObjectPtr<AActor> Who; };
+	FAckMouth GAckMouth;
+
+	// The speaking level of a whole clip: the loudness four in five of its
+	// sounding 40 ms windows stay under (as MouthLevelFrom).
+	float ClipSpeakingDb(const TArray<int16>& Pcm, int32 Rate, int32 Ch)
+	{
+		const int32 Span = FMath::Max(1, (int32)(0.04 * Rate)) * Ch;
+		TArray<float> Sounding;
+		for (int32 A = 0; A + Span <= Pcm.Num(); A += Span)
+		{
+			double Sum = 0.0;
+			for (int32 S = A; S < A + Span; S += Ch) { const double V = Pcm[S] / 32768.0; Sum += V * V; }
+			const float D = 10.0f * FMath::LogX(10.0f, (float)(Sum / (Span / Ch)) + 1e-12f);
+			if (D > -60.0f) { Sounding.Add(D); }
+		}
+		if (Sounding.Num() == 0) { return -30.0f; }
+		Sounding.Sort();
+		return Sounding[FMath::Min(Sounding.Num() - 1, (int32)(Sounding.Num() * 0.8f))];
+	}
+
+	// The loudness of the part being heard, 0 to 1 against the clip's speaking level.
+	float HeardLevel(const TArray<int16>& Pcm, int32 Rate, int32 Ch, int64 Queued, USoundWaveProcedural* Wave, float RefDb, float& OutDb, int64& OutHeard)
+	{
+		const int64 Taken = Queued - Wave->GetAvailableAudioByteCount();
+		OutHeard = Taken / (2 * Ch) - (int64)(0.03 * Rate);
+		const int64 Span = (int64)(0.04 * Rate);
+		double Sum = 0.0;
+		int64 N = 0;
+		for (int64 S = FMath::Max<int64>(0, OutHeard - Span); S < OutHeard && S * Ch < Pcm.Num(); ++S)
+		{
+			const double V = Pcm[S * Ch] / 32768.0;
+			Sum += V * V;
+			++N;
+		}
+		OutDb = N > 0 ? 10.0f * FMath::LogX(10.0f, (float)(Sum / N) + 1e-12f) : -120.0f;
+		return FMath::Clamp((OutDb - (RefDb - 24.0f)) / 24.0f, 0.0f, 1.0f);
+	}
+
 	void MouthTick()
 	{
 		const float Dt = (float)FApp::GetDeltaTime();
+		// THE THINKING SOUND, while no answer is playing.
+		const bool bAnswer = GVoice.Playing.IsValid() && GVoice.PlayingWave.IsValid();
+		if (!bAnswer && GAckMouth.Wave.IsValid() && GAckMouth.Who.IsValid() && GAckMouth.Pcm.Num() > 0)
+		{
+			float Db = -120.0f;
+			int64 Heard = 0;
+			const float Level = HeardLevel(GAckMouth.Pcm, GAckMouth.Rate, GAckMouth.Ch, GAckMouth.Queued, GAckMouth.Wave.Get(), GAckMouth.RefDb, Db, Heard);
+			MouthApply(GAckMouth.Who.Get(), Level, true, Dt);
+			GVoice.LastSpeaker = GAckMouth.Who;
+			GVoice.SpeakerQuietSince = -1.0;
+			return;
+		}
 		const bool bPlaying = GVoice.Playing.IsValid() && GVoice.PlayingWave.IsValid() && GVoice.Speaker.IsValid() && GVoice.Pcm.Num() > 0;
 		MouthFilmTick(GameWorld(), GVoice.Speaker.Get(), bPlaying);
 		if (!bPlaying)
@@ -2984,21 +3102,10 @@ namespace
 		if (GVoice.LastSpeaker.IsValid() && GVoice.LastSpeaker != GVoice.Speaker) { MouthApply(GVoice.LastSpeaker.Get(), 0.0f, false, Dt); }
 		GVoice.LastSpeaker = GVoice.Speaker;
 		GVoice.SpeakerQuietSince = -1.0;
-		const int64 Taken = GVoice.QueuedBytes - GVoice.PlayingWave->GetAvailableAudioByteCount();
-		const int32 Ch = GVoice.PcmChannels;
-		const int64 Heard = Taken / (2 * Ch) - (int64)(0.03 * GVoice.PcmRate);
-		const int64 Span = (int64)(0.04 * GVoice.PcmRate);
-		double Sum = 0.0;
-		int64 N = 0;
-		for (int64 S = FMath::Max<int64>(0, Heard - Span); S < Heard && S * Ch < GVoice.Pcm.Num(); ++S)
-		{
-			const double V = GVoice.Pcm[S * Ch] / 32768.0;
-			Sum += V * V;
-			++N;
-		}
-		const float Db = N > 0 ? 10.0f * FMath::LogX(10.0f, (float)(Sum / N) + 1e-12f) : -120.0f;
-		// Open fully within 6 dB of the answer's loudest, shut 30 dB below it.
-		const float Level = FMath::Clamp((Db - (GVoice.PeakDb - 30.0f)) / 24.0f, 0.0f, 1.0f);
+		float Db = -120.0f;
+		int64 Heard = 0;
+		// Open fully at the sentence's speaking level, shut 24 dB below it.
+		const float Level = HeardLevel(GVoice.Pcm, GVoice.PcmRate, GVoice.PcmChannels, GVoice.QueuedBytes, GVoice.PlayingWave.Get(), GVoice.PeakDb, Db, Heard);
 		MouthApply(GVoice.Speaker.Get(), Level, true, Dt);
 		// A LINE A FIFTH OF A SECOND for the first sixty, so a run shows the
 		// mouth following the words.
@@ -3109,6 +3216,7 @@ namespace
 
 	void AckEnd(bool bCut)
 	{
+		GAckMouth = FAckMouth();
 		if (GAck.Sound.IsValid()) { GAck.Sound->Stop(); }
 		if (GAck.Face.IsValid() && GAck.FaceIdle.IsValid())
 		{
@@ -3151,7 +3259,26 @@ namespace
 		// Named as tools/ue/speech_faces.py names it: AS_ plus the sound's name, dashes as underscores.
 		const FString Name = FString::Printf(TEXT("AS_ack_%s_%s"), *Un(Card), *FPaths::GetBaseFilename(Wav).Replace(TEXT("-"), TEXT("_")));
 		UAnimSequenceBase* Anim = LoadObject<UAnimSequenceBase>(nullptr, *FString::Printf(TEXT("/Game/Ledger/MetaHumans/Speech/%s.%s"), *Name, *Name));
-		if (Anim != nullptr)
+		// A FACE PLAYING OUR ANIMATION KEEPS IT (above): its mouth follows this
+		// sound instead of the sound's own face animation.
+		bool bOurFace = false;
+		{
+			TArray<USkeletalMeshComponent*> Parts;
+			Who->GetComponents(Parts);
+			for (USkeletalMeshComponent* C : Parts) { if (C != nullptr && C->GetName() == TEXT("Face") && Cast<ULedgerPersonAnim>(C->GetAnimInstance()) != nullptr) { bOurFace = true; } }
+		}
+		if (bOurFace)
+		{
+			GAckMouth.Pcm.Reset();
+			GAckMouth.Pcm.Append(reinterpret_cast<const int16*>(&Bytes[DataAt]), DataLen / 2);
+			GAckMouth.Rate = Rate;
+			GAckMouth.Ch = FMath::Max(1, Channels);
+			GAckMouth.Queued = DataLen;
+			GAckMouth.RefDb = ClipSpeakingDb(GAckMouth.Pcm, GAckMouth.Rate, GAckMouth.Ch);
+			GAckMouth.Wave = W;
+			GAckMouth.Who = Who;
+		}
+		if (Anim != nullptr && !bOurFace)
 		{
 			TArray<USkeletalMeshComponent*> Parts;
 			Who->GetComponents(Parts);
@@ -3170,7 +3297,7 @@ namespace
 			}
 		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerAck: %s says %s, %.2f s, face %s"), *Un(Card), *FPaths::GetBaseFilename(Wav), Seconds,
-			GAck.Face.IsValid() ? TEXT("yes") : TEXT("no"));
+			bOurFace ? TEXT("its mouth follows the sound") : GAck.Face.IsValid() ? TEXT("yes") : TEXT("no"));
 	}
 
 	// Each frame: the acknowledgement ends with its sound, or at once when the answer starts.

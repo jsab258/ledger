@@ -83,6 +83,14 @@ def main():
         _write(glass_line("CREATE-FAILED", 0, 3, [], False))
         return 2
     flags = ["%s=%s" % (p, _set_enum(unreal, mat, p, e, v)) for p, e, v in FLAGS]
+    # ON SKINNED MESHES TOO, 30 September: Sheila's spectacle lenses wear it
+    # (LedgerGarments.h), and a material not marked for skeletal meshes draws
+    # as the engine's grey stand-in in a game: the lenses came out opaque grey.
+    try:
+        mat.set_editor_property("used_with_skeletal_mesh", True)
+        flags.append("used_with_skeletal_mesh=%s" % ("taken" if mat.get_editor_property("used_with_skeletal_mesh") else "REFUSED"))
+    except Exception as e:
+        flags.append("used_with_skeletal_mesh=RAISED-%s" % type(e).__name__)
 
     tint = mel.create_material_expression(mat, unreal.MaterialExpressionVectorParameter, -500, 0)
     tint.set_editor_property("parameter_name", TINT_PARAM)

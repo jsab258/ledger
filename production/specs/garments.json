@@ -1,0 +1,35 @@
+{
+  "what": "The garments the clothing session hands the builder (NOW.md, Handovers), fitted on the cast in Unreal: each skinned FBX is imported onto the wearer's body skeleton in the MetaHuman project (tools/ue/import_garments.py, under /Game/Ledger/MetaHumans/Garments, never in the public repository, which the build machine mirrors with the cast) and worn in the game by following the body's pose (LedgerGarments.h). 'hides' names the parts of Epic's outfit a garment replaces ('shoes': the part whose top is within 25 cm of the soles, since Epic's outfit pieces are named only Outfits, _2 and _3); 'raise_mm' lifts the wearer so soles stand on the ground (MetaHumans stand barefoot on the floor since 5.6); 'hold' keeps a garment off until the reason given is dealt with.",
+  "garments": [
+    {
+      "who": "Rocco",
+      "name": "RonBoots",
+      "fbx": "F:/LedgerTools/garments/ron_boots/ron_boots_skinned.fbx",
+      "hides": [
+        "shoes"
+      ],
+      "raise_mm": 20,
+      "handed": "2026-09-30"
+    },
+    {
+      "who": "Lena",
+      "name": "SheilaSpectacles",
+      "fbx": "F:/LedgerTools/garments/sheila_spectacles/sheila_spectacles_skinned.fbx",
+      "handed": "2026-09-30",
+      "hold": "30 September: made on her C1 face; on her approved S4 face in the game they sit 2 to 3 cm high (F:/LedgerTools/bodies/MH_LenaS4/spectacles-on-S4-in-game.jpg). Back to the clothing session to refit on F:/LedgerTools/bodies/MH_LenaS4/MH_LenaS4_FullBody.fbx; not worn until then."
+    },
+    {
+      "who": "Lena",
+      "name": "SheilaGlassesChain",
+      "fbx": "F:/LedgerTools/garments/sheila_spectacles/sheila_glasses_chain_skinned.fbx",
+      "handed": "2026-09-30",
+      "hold": "30 September: made on her C1 face; on her approved S4 face in the game they sit 2 to 3 cm high (F:/LedgerTools/bodies/MH_LenaS4/spectacles-on-S4-in-game.jpg). Back to the clothing session to refit on F:/LedgerTools/bodies/MH_LenaS4/MH_LenaS4_FullBody.fbx; not worn until then."
+    },
+    {
+      "who": "Lena",
+      "name": "SheilaHandbag",
+      "fbx": "F:/LedgerTools/garments/sheila_handbag/sheila_handbag_skinned.fbx",
+      "handed": "2026-09-30"
+    }
+  ]
+}
