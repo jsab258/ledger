@@ -7461,6 +7461,34 @@ namespace Ledger.CoreTests
                       string.Join(" | ", wrongSure));
             }
 
+            // TOLD TO HER FACE IS NOT A SIGHTING (the independent review of 30
+            // September, B7): Sheila, told his answer, also remembered "I saw it
+            // myself: The new owner told Sheila he's ..." of herself; the man he
+            // threatened remembered "I saw it myself" of his own threat. Each
+            // remembers what happened to them: Sheila being told, whoever was in the
+            // office being there when he told her, the threatened being threatened.
+            {
+                var toldCast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"mickeys\":{\"places\":[\"mickeys_office\"],\"names\":[\"Mickey's\"]}}," +
+                    "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"off\"],[9,\"mickeys_office\"],[18,\"off\"]]},{\"id\":\"zlata\",\"routine\":[[0,\"off\"],[7,\"mickeys_office\"],[20,\"off\"]]},{\"id\":\"ada\",\"routine\":[[0,\"off\"]]}],\"ties\":[]}");
+                var tm2 = new GossipMill(null);
+                foreach (var id in toldCast.People) tm2.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var wk = new WeeksEnd();
+                wk.Ask(new GameTime(6, 10, 30), false);
+                wk.Give(WeekAnswer.WindDown, new GameTime(6, 11, 0), tm2, toldCast);
+                Silence.FileThreat(tm2, "ada", "player.window_d1", new GameTime(2, 10, 0));
+                var sheMem = tm2.Get("lena").Memory.Events.Select(e => e.Text).ToList();
+                var zlataMem = tm2.Get("zlata").Memory.Events.Select(e => e.Text).ToList();
+                var adaMem = tm2.Get("ada").Memory.Events.Select(e => e.Text).ToList();
+                bool sheRight = sheMem.Count == 1 && sheMem[0] == WeeksEnd.Remembered(WeekAnswer.WindDown);
+                bool zlataRight = zlataMem.Count == 1 && zlataMem[0].StartsWith("I was there when the new owner told Sheila", StringComparison.Ordinal)
+                                  && WeeksEnd.OverheardMemory(WeekAnswer.WontSay) == "I was there when Sheila asked the new owner what he means to do with Mickey's business, and he wouldn't say.";
+                bool adaRight = adaMem.Count == 1 && adaMem[0].Contains("threatened me") && !adaMem[0].Contains("I saw it myself");
+                bool storiesKept = tm2.Get("lena").Rumors.Exists(WeeksEnd.IsWeekAnswer) && tm2.Get("zlata").Rumors.Exists(WeeksEnd.IsWeekAnswer) && tm2.Get("ada").Rumors.Exists(Silence.IsThreat);
+                Check(sheRight && zlataRight && adaRight && storiesKept,
+                      "what was said to someone's face is remembered as that: Sheila being told his answer, whoever was in the office being there, the threatened being threatened; never \"I saw it myself\" of themselves; the stories are theirs first-hand as before",
+                      string.Join(" / ", sheMem) + " | " + string.Join(" / ", zlataMem) + " | " + string.Join(" / ", adaMem));
+            }
+
             // ADA'S TEA, AS SHE WOULD TELL IT (the independent review of 30 September,
             // B6: with her from 21:45 to 22:40 she remembered "off again before the
             // pot was cold" and he counted as leaving early). Up to half an hour late

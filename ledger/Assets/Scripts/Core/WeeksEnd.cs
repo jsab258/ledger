@@ -122,6 +122,10 @@ namespace Ledger.Core
             }
         }
 
+        /// What somebody in the office when he told her remembers.
+        public static string OverheardMemory(WeekAnswer a) =>
+            Said(a) is string s && s.Length > 0 ? "I was there when " + (s.StartsWith("The ", StringComparison.Ordinal) ? "the " + s.Substring(4) : s) : null;
+
         /// The story's topic prefix: "player.week_d" + the day she asked.
         public const string TopicPrefix = "player.week_d";
         public static bool IsWeekAnswer(Rumor r) =>
@@ -217,7 +221,8 @@ namespace Ledger.Core
             var fact = new Fact("player", "week_d" + AskedAt.Value.Day, Value(Answer));
             if (mill.Get(Sheila) is Gossiper she)
                 she.Memory?.Append(new MemoryEvent(at, "conversation", 0.9, Remembered(Answer)));
-            mill.Witness(Sheila, fact, Said(Answer), false, at, 1.0);
+            // Told to her face: her own memory above, never "I saw it myself" (B7).
+            mill.WitnessRemembering(Sheila, fact, Said(Answer), false, at, null);
             // The day closing unanswered at midnight: she is not there to be
             // overheard. Said by the caller, never read from the clock (the port's
             // independent check, 30 September: a plain answer at 00:00 was heard
@@ -231,7 +236,7 @@ namespace Ledger.Core
             if (area == null) return;
             foreach (var p in cast.People)
                 if (p != Sheila && cast.AreaOf(cast.PlaceOf(p, at.Day, at.Hour)) == area)
-                    mill.Witness(p, fact, Said(Answer), false, at, 1.0);
+                    mill.WitnessRemembering(p, fact, Said(Answer), false, at, OverheardMemory(Answer));
         }
 
         /// Her line for the talk while the question stands (a per-turn line,

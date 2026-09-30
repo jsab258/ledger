@@ -276,6 +276,22 @@ namespace Ledger.Core
         /// a disguise (or distance, or darkness) passes less than 1.0 — the witness
         /// saw SOMETHING but can't swear to who, and everything downstream (spread,
         /// heat, bribe prices) inherits that doubt.
+        /// FIRST-HAND, BUT NOT A SIGHTING (the independent review of 30 September,
+        /// B7): the story is theirs first-hand, as Witness files it, and what they
+        /// remember is `remembered` (null: nothing more, their own memory of it
+        /// being written by the caller), never "I saw it myself" of something
+        /// said to their face.
+        public void WitnessRemembering(string witnessId, Fact content, string summary, bool sensitive, GameTime now,
+            string remembered, double confidence = 1.0)
+        {
+            var g = Get(witnessId);
+            int before = g?.Memory?.Events.Count ?? 0;
+            Witness(witnessId, content, summary, sensitive, now, confidence);
+            if (g?.Memory == null) return;
+            if (g.Memory.Events.Count > before) g.Memory.Events.RemoveRange(before, g.Memory.Events.Count - before);
+            if (!string.IsNullOrEmpty(remembered)) g.Memory.Append(new MemoryEvent(now, "conversation", sensitive ? 0.9 : 0.6, remembered));
+        }
+
         public void Witness(string witnessId, Fact content, string summary, bool sensitive, GameTime now,
             double confidence = 1.0, bool indelible = false, int rung = -1)
         {
