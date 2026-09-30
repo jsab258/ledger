@@ -549,12 +549,52 @@ if "--no-straight" not in argv:
     log["hemLevel"] = {"z": round(hem_level, 3), "raised": raised}
     log["straightSkirt"] = {"top": round(float(top), 3), "moved": int(moved_), "mostMm": round(most_ * 1000, 1)}
     say("skirt straightened", moved_, "points, most", round(most_ * 1000, 1), "mm")
+# ---- the shirt and tie set under the jacket, the collars as a pair (the second review: "the back edge of the shirt
+# collar ragged: a jagged white rim with dark slivers across the nape"; the research: fit the two collars together
+# with a fixed gap). Along the line out from his body at each shirt or tie point: where the jacket lies over it, the
+# point is set --under metres inside the jacket (never nearer him than 1 mm); where nothing of the jacket is over it
+# (the collar band above the jacket's collar, the V), it stays.
+if "--no-under" not in argv:
+    from mathutils.bvhtree import BVHTree as _BV5
+    body5 = next(o for o in bpy.data.objects if o.type == "MESH" and "Body" in o.name)
+    b5_ = bmesh.new()
+    b5_.from_mesh(body5.data)
+    b5_.transform(body5.matrix_world)
+    b5_.normal_update()
+    TB5 = _BV5.FromBMesh(b5_)
+    b5_.free()
+    Vw5 = [mw @ v.co for v in me.vertices]
+    TC5 = _BV5.FromPolygons(Vw5, [list(p_.vertices) for p_ in me.polygons if pk.data[p_.index].value == 0])
+    # the collars only (set everywhere, the shirt went under the jacket's hidden under-front in the V, which then showed)
+    collar_z = J("neck_01").z - opt("--under-below-neck", 0.04)
+    inner5 = sorted({vi for p_ in me.polygons if pk.data[p_.index].value in (1, 2) for vi in p_.vertices
+                     if (mw @ me.vertices[vi].co).z > collar_z})
+    UNDER = opt("--under", 0.003)
+    inv5 = mw.inverted()
+    set_under = 0
+    for vi in inner5:
+        w5 = Vw5[vi]
+        h5, n5, _i, _d = TB5.find_nearest(w5)
+        if h5 is None:
+            continue
+        off5 = (w5 - h5).dot(n5)
+        hit5 = TC5.ray_cast(h5 + n5 * 0.0005, n5, 0.10)
+        if hit5[0] is None:
+            continue
+        dj = (hit5[0] - h5).dot(n5)
+        target = max(0.001, dj - UNDER)
+        if off5 > target:
+            me.vertices[vi].co = inv5 @ (h5 + n5 * target + (w5 - h5 - n5 * off5))
+            set_under += 1
+    me.update()
+    log["setUnder"] = set_under
+    say("shirt and tie set under the jacket", set_under, "points")
 # ---- the layers that never show taken out (30 September: on Darren the jacket's inner front, the half that buttons
 # underneath, came through the shirt in the opening as dark shards, and the shirt showed in white flecks beside the
 # lapels; games remove what an outer layer always hides, as fit_under.py does under the donkey jacket). Along the
 # line out from his body at each face's middle: a jacket face lying under the shirt there goes, and a shirt or tie
 # face lying outside the jacket there goes. Above the hips only; the neck and cuffs are left.
-if "--no-cull" not in argv:
+if "--cull" in argv:
     from mathutils.bvhtree import BVHTree as _BV4
     body4 = next(o for o in bpy.data.objects if o.type == "MESH" and "Body" in o.name)
     b4 = bmesh.new()
