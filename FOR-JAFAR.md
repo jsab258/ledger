@@ -9,7 +9,10 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ### Needs you
 
-Nothing waiting on you (every page's stored answers checked at 22:05: yours, the town's; the clothing session has no page).
+(Every page's stored answers checked at 00:35: yours, the town's two; the clothing session has no page.)
+
+1. **[The town's page](https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz), two taps.** Does seeing Tom break a window send a neighbour to the police? Recommended yes (today nobody ever reports). Sheila on the faster model? Recommended try it, blind-checked (her first sentence 0.81 s against 1.43 s, measured outside the game).
+2. **The route is ready for your cloud review** once tonight's last push is green on the build machine (about 01:15): main as it stands then; what changed and the finished-game runs in production/playtest/review-runs-2026-09-30.md. Recommended: run it.
 
 ### Road to worth playing
 
