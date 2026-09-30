@@ -83,49 +83,135 @@ JB = {k: to_bl(v) for k, v in joint.items()}
 
 arm, body = tailor.load_body(BODY, lod=1)
 BVH = tailor.bvh_of(body)
-# THE STAND-IN BODY (30 September, the suit jacket's first blind review: "the body's shape shows through the jacket,
-# which behaves like a skin rather than a canvassed jacket": Darren's spine groove, ribs and back muscles, Ron's back
-# rolls, the cleft of the seat; production/research/clothing-pipeline/CARRY-AND-SEAMS-2026-09-30.md: fit to "a proxy
-# that fills the body's hollows, not the skin"). A copy of his body whose hollows are filled: round after round each
-# point moves towards the mean of its neighbours, but only when that moves it outward (--proxy-rounds), so grooves,
-# folds and the dips between muscles fill and the body's outline stays; the head, hands and feet are left as they
-# are. The garment is drawn onto this and kept off it; it is never nearer his real body than the stand-in is.
-if opt("--proxy-rounds", 80, int) > 0:
+REAL_BVH = BVH
+# THE JACKET FORM (30 September, the suit jacket's second blind review: "the body shows through the jacket ... like a
+# wetsuit ... every reference jacket hangs straight down from a padded chest"; production/research/clothing-pipeline/
+# TAILORED-FIT-2026-09-30.md: fit to a smooth form, as Roblox's cages, Marvelous's fitting suits and Daz's projection
+# templates do, never to the skin, whose change then *is* the muscle). A copy of his body made into a tailor's form:
+#   the torso, from --form-below-hips under the hip joints up to --form-top-below-shoulder under the shoulder joints:
+#     each 1 cm slice (his arms left out) replaced by its convex outline round an upright axis, never coming back in
+#     going down (a jacket falls plumb from the fullest point of the chest and the shoulder blades), the outline
+#     smoothed over height and angle (filled, never drawn in);
+#   a shoulder pad (--pad metres at the shoulder point, thinning to nothing at the neck and the upper arm);
+#   everything else (the arms, the neck's base) smoothed outward only, --form-rounds rounds, so muscles and folds
+#     fill; the head, hands and feet as they are.
+# The garment is drawn onto this form; only at the end is it pushed out of his real body, where needed.
+if "--no-form" not in argv:
     import bmesh as _bm
-    pb_ = _bm.new()
-    pb_.from_mesh(body.data)
-    pb_.transform(body.matrix_world)
-    pb_.verts.ensure_lookup_table()
-    Vp = np.array([tuple(v.co) for v in pb_.verts])
-    ed_ = np.array([(e.verts[0].index, e.verts[1].index) for e in pb_.edges])
-    dg_ = np.bincount(ed_.ravel(), minlength=len(Vp)).astype(float)
+    fbm = _bm.new()
+    fbm.from_mesh(body.data)
+    fbm.transform(body.matrix_world)
+    fbm.verts.ensure_lookup_table()
+    Vf = np.array([tuple(v.co) for v in fbm.verts])
+    V0f = Vf.copy()
+    gib = {vg.index: vg.name for vg in body.vertex_groups}
+    ARMS_ = ("upperarm", "lowerarm", "hand", "thumb", "index", "middle", "ring", "pinky")
+    armw = np.array([sum(ge.weight for ge in v.groups if gib.get(ge.group, "").startswith(ARMS_)) for v in body.data.vertices])
     Jw = lambda n: np.array(tuple(arm.matrix_world @ arm.pose.bones[n].head))  # noqa: E731
-    keep_ = np.zeros(len(Vp), bool)
-    for jn, rr in (("head", 0.14), ("neck_02", 0.06), ("hand_l", 0.11), ("hand_r", 0.11), ("foot_l", 0.14), ("foot_r", 0.14)):
-        keep_ |= np.linalg.norm(Vp - Jw(jn), axis=1) < rr
-    free_ = ~keep_
-    for rnd_ in range(opt("--proxy-rounds", 80, int)):
+    hipz = (Jw("thigh_l")[2] + Jw("thigh_r")[2]) / 2
+    shz = min(Jw("upperarm_l")[2], Jw("upperarm_r")[2])
+    z_top = shz - opt("--form-top-below-shoulder", 0.07)
+    z_bot = hipz - opt("--form-below-hips", 0.06)
+    trunk_pts = Vf[(armw < 0.3) & (Vf[:, 2] > hipz) & (Vf[:, 2] < z_top)]
+    AXf = trunk_pts[:, :2].mean(axis=0)
+    NBf, DZf = 144, 0.01
+    Kf = int(math.ceil((z_top - z_bot) / DZf)) + 1
+    dirs_f = np.stack([np.cos(np.arange(NBf) * 2 * math.pi / NBf), np.sin(np.arange(NBf) * 2 * math.pi / NBf)], axis=1)
+    HULL = np.zeros((Kf, NBf))
+    for k_ in range(Kf):
+        z_ = z_top - k_ * DZf
+        sl = Vf[(armw < 0.3) & (np.abs(Vf[:, 2] - z_) < 0.012)][:, :2] - AXf
+        HULL[k_] = (sl @ dirs_f.T).max(axis=0) if len(sl) >= 6 else (HULL[k_ - 1] if k_ else 0)
+    Rf = np.maximum.accumulate(HULL, axis=0)
+
+    def gsm(a_, sz, sa):
+        r1 = int(math.ceil(3 * sa))
+        k1 = np.exp(-(np.arange(-r1, r1 + 1) / sa) ** 2 / 2)
+        k1 /= k1.sum()
+        a_ = np.apply_along_axis(lambda x: np.convolve(np.pad(x, r1, mode="wrap"), k1, mode="valid"), 1, a_)
+        r0 = int(math.ceil(3 * sz))
+        k0 = np.exp(-(np.arange(-r0, r0 + 1) / sz) ** 2 / 2)
+        k0 /= k0.sum()
+        return np.apply_along_axis(lambda x: np.convolve(np.pad(x, r0, mode="edge"), k0, mode="valid"), 0, a_)
+
+    for _ in range(20):
+        Rf = np.maximum(Rf, gsm(Rf, 2.0, 2.0))
+    # each torso point moved out to the form's outline at its height and angle (never in); eased in over 6 cm above
+    # the top and near the arms
+    angf = np.mod(np.arctan2(Vf[:, 1] - AXf[1], Vf[:, 0] - AXf[0]), 2 * math.pi)
+    radf = np.linalg.norm(Vf[:, :2] - AXf, axis=1)
+    fk = (z_top - Vf[:, 2]) / DZf
+    fbn = angf / (2 * math.pi) * NBf
+
+    def r_at(i):
+        k0 = int(math.floor(fk[i]))
+        b0 = int(math.floor(fbn[i]))
+        tk, tb = fk[i] - k0, fbn[i] - b0
+        k0c, k1c = min(max(k0, 0), Kf - 1), min(max(k0 + 1, 0), Kf - 1)
+        b0c, b1c = b0 % NBf, (b0 + 1) % NBf
+        return ((1 - tk) * ((1 - tb) * Rf[k0c, b0c] + tb * Rf[k0c, b1c]) + tk * ((1 - tb) * Rf[k1c, b0c] + tb * Rf[k1c, b1c]))
+
+    moved_f = 0
+    for i in range(len(Vf)):
+        z_ = Vf[i, 2]
+        if z_ < z_bot or z_ > z_top + 0.06 or armw[i] > 0.6:
+            continue
+        w_top = 1.0 if z_ <= z_top else 1.0 - (z_ - z_top) / 0.06
+        w_arm = 1.0 - min(1.0, armw[i] / 0.6)
+        w_bot = min(1.0, (z_ - z_bot) / 0.04)
+        w_ = max(0.0, w_top * w_arm * w_bot)
+        w_ = w_ * w_ * (3 - 2 * w_)
+        rt = r_at(i)
+        if rt > radf[i] and w_ > 0:
+            d_ = (rt - radf[i]) * w_
+            Vf[i, 0] += d_ * math.cos(angf[i])
+            Vf[i, 1] += d_ * math.sin(angf[i])
+            moved_f += 1
+    # the shoulder pad
+    for i in range(len(Vf)):
+        for s_ in ("l", "r"):
+            spt = Jw("upperarm_" + s_) + np.array([0.0, 0.0, 0.03])
+            d_ = np.linalg.norm(Vf[i] - spt)
+            if d_ < 0.11 and Vf[i, 2] > shz - 0.04:
+                t_ = 1.0 - d_ / 0.11
+                out_ = np.array([Vf[i, 0] - AXf[0], Vf[i, 1] - AXf[1], 0.0])
+                out_ = out_ / max(1e-9, np.linalg.norm(out_))
+                dirp = out_ * 0.5 + np.array([0.0, 0.0, 0.85])
+                dirp /= np.linalg.norm(dirp)
+                Vf[i] += dirp * opt("--pad", 0.015) * (t_ * t_ * (3 - 2 * t_))
+    # everything smoothed outward only (muscles and folds fill); the head, hands and feet kept
+    edf = np.array([(e.verts[0].index, e.verts[1].index) for e in fbm.edges])
+    dgf = np.bincount(edf.ravel(), minlength=len(Vf)).astype(float)
+    keepf = np.zeros(len(Vf), bool)
+    for jn, rr in (("head", 0.14), ("neck_02", 0.05), ("hand_l", 0.11), ("hand_r", 0.11), ("foot_l", 0.14), ("foot_r", 0.14)):
+        keepf |= np.linalg.norm(V0f - Jw(jn), axis=1) < rr
+    for rnd_ in range(opt("--form-rounds", 60, int)):
         if rnd_ % 10 == 0:
-            for i_, v in enumerate(pb_.verts):
-                v.co = Vector(tuple(Vp[i_]))
-            pb_.normal_update()
-            Nn = np.array([tuple(v.normal) for v in pb_.verts])
-        acc_ = np.zeros_like(Vp)
-        np.add.at(acc_, ed_[:, 0], Vp[ed_[:, 1]])
-        np.add.at(acc_, ed_[:, 1], Vp[ed_[:, 0]])
-        d_ = acc_ / np.maximum(dg_, 1)[:, None] - Vp
-        out_ = (d_ * Nn).sum(axis=1)
-        mv = free_ & (out_ > 0)
-        Vp[mv] += 0.5 * d_[mv]
-    for i_, v in enumerate(pb_.verts):
-        v.co = Vector(tuple(Vp[i_]))
-    pb_.normal_update()
-    moved_p = np.linalg.norm(Vp - np.array([tuple(body.matrix_world @ v.co) for v in body.data.vertices]), axis=1)
+            for i_, v in enumerate(fbm.verts):
+                v.co = Vector(tuple(Vf[i_]))
+            fbm.normal_update()
+            Nf = np.array([tuple(v.normal) for v in fbm.verts])
+        acc_ = np.zeros_like(Vf)
+        np.add.at(acc_, edf[:, 0], Vf[edf[:, 1]])
+        np.add.at(acc_, edf[:, 1], Vf[edf[:, 0]])
+        d_ = acc_ / np.maximum(dgf, 1)[:, None] - Vf
+        mv = ~keepf & ((d_ * Nf).sum(axis=1) > 0)
+        Vf[mv] += 0.5 * d_[mv]
+    for i_, v in enumerate(fbm.verts):
+        v.co = Vector(tuple(Vf[i_]))
+    fbm.normal_update()
     from mathutils.bvhtree import BVHTree as _BVH
-    BVH = _BVH.FromBMesh(pb_)
-    log["proxy"] = {"rounds": opt("--proxy-rounds", 80, int), "meanFillMm": round(float(moved_p.mean()) * 1000, 1),
-                    "mostFillMm": round(float(moved_p.max()) * 1000, 1)}
-    say("stand-in body", json.dumps(log["proxy"]))
+    BVH = _BVH.FromBMesh(fbm)
+    fill_f = np.linalg.norm(Vf - V0f, axis=1)
+    log["form"] = {"top": round(float(z_top), 3), "bottom": round(float(z_bot), 3), "torsoPointsOut": moved_f,
+                   "meanMm": round(float(fill_f.mean()) * 1000, 1), "mostMm": round(float(fill_f.max()) * 1000, 1),
+                   "padM": opt("--pad", 0.015)}
+    say("jacket form", json.dumps(log["form"]))
+    if "--save-form" in argv:
+        fme = bpy.data.meshes.new("JacketForm")
+        fbm.to_mesh(fme)
+        fob = bpy.data.objects.new("JacketForm", fme)
+        bpy.context.collection.objects.link(fob)
 J = lambda n: np.array(tuple(arm.matrix_world @ arm.pose.bones[n].head))
 # which of the base body's sides is the MetaHuman's left (+x)
 flip = JB["l-shoulder"][0] < 0
@@ -320,30 +406,43 @@ g.data.update()
 # kept out of him by smoothed pushes (moved point by point, the faces between still cut through at the calves)
 ge = np.array([e.vertices[:] for e in g.data.edges])
 gdeg = np.bincount(ge.ravel(), minlength=len(g.data.vertices)).astype(float)
-MINE = opt("--min-ease", 0.006)
+MINE = opt("--min-ease", 0.004)
 pushed = 0
-for rnd in range(opt("--push-rounds", 4, int)):
+from mathutils.kdtree import KDTree as _KDp
+PUSH_R = opt("--push-r", 0.02)
+for rnd in range(opt("--push-rounds", 3, int)):
     Q = np.array([tuple(v.co) for v in g.data.vertices])
-    disp = np.zeros_like(Q)
+    need = np.zeros_like(Q)
     for i, q in enumerate(Q):
-        hit, nn, _f, _d = BVH.find_nearest(Vector(tuple(q)))
+        hit, nn, _f, _d = REAL_BVH.find_nearest(Vector(tuple(q)))
         if hit is not None:
             off = (Vector(tuple(q)) - hit).dot(nn)
             if off < MINE:
-                disp[i] = np.array(tuple(nn)) * (MINE - off)
-    for _ in range(6):
-        acc = np.zeros_like(disp)
-        np.add.at(acc, ge[:, 0], disp[ge[:, 1]])
-        np.add.at(acc, ge[:, 1], disp[ge[:, 0]])
-        disp = np.maximum(disp, 0) * 0 + np.where(np.linalg.norm(disp, axis=1)[:, None] > 0, disp, 0.5 * acc / np.maximum(gdeg, 1)[:, None])
+                need[i] = np.array(tuple(nn)) * (MINE - off)
+    # each point moves by the largest push of the points round it (within --push-r), weighted by nearness, so the
+    # layers stacked there (a lapel, its facing, a pocket) move as one (the research: "push only the innermost layer
+    # out of the body and give every layer above it the same shift")
+    idx_need = np.where(np.linalg.norm(need, axis=1) > 0)[0]
+    pushed = len(idx_need)
+    if not pushed:
+        break
+    kdp = _KDp(len(idx_need))
+    for j_, i in enumerate(idx_need):
+        kdp.insert(Vector(tuple(Q[i])), j_)
+    kdp.balance()
+    disp = np.zeros_like(Q)
+    for i, q in enumerate(Q):
+        best = None
+        for _c, j_, d_ in kdp.find_range(Vector(tuple(q)), PUSH_R):
+            w_ = 1.0 - d_ / PUSH_R
+            cand = need[idx_need[j_]] * w_
+            if best is None or np.linalg.norm(cand) > np.linalg.norm(best):
+                best = cand
+        if best is not None:
+            disp[i] = best
     Q = Q + disp
-    pushed = int((np.linalg.norm(disp, axis=1) > 1e-5).sum())
     for i, v in enumerate(g.data.vertices):
         v.co = Vector(tuple(Q[i]))
-for v in g.data.vertices:
-    hit, nn, _f, _d = BVH.find_nearest(v.co)
-    if hit is not None and (v.co - hit).dot(nn) < 0.003:
-        v.co = hit + nn * 0.003
 log["garmentPoints"] = len(G)
 log["pushedOut"] = pushed
 
