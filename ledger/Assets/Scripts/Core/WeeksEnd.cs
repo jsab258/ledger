@@ -151,6 +151,20 @@ namespace Ledger.Core
             return AskedAt is GameTime && Stands(now) && now.Hour < StayUntil;
         }
 
+        /// WHETHER, TALKING WITH HER NOW, SHE PUTS THE QUESTION: the gate for
+        /// Ask, for the game and the reference week alike (the independent
+        /// review of 30 September, B1: the game asked only while she waited on
+        /// her Sunday, so coming an hour late lost the week's end for good). At
+        /// the office, unasked and unanswered, from the seventh day: on her
+        /// Sunday only while she waits for him there, ten till twelve; any later
+        /// day, the next time he talks with her there.
+        public bool AsksNow(GameTime now, bool atOffice)
+        {
+            if (!atOffice || AskedAt != null || Answered || now.Day < Day) return false;
+            if (now.Day == Day && CastDay.Weekday(Day) == 6) return Waits(now);
+            return true;
+        }
+
         /// Whether she puts the question now, the first time he talks with her
         /// at the office from day 7 on: true once, the turn she asks. Only at
         /// the office, where the book is and whom the story names as there

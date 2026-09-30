@@ -173,7 +173,10 @@ namespace Ledger.PerceptionGolden
                 // And the time-and-state sweep's (30 September): a night Ron brought
                 // before it was wound down stays brought on a load; a memory's time
                 // only as the game writes one; the town's save keeps the wait's lines.
-                var held = new string[0];   // emptied 30 September: the port follows the sweep
+                // And the independent review's Core fixes (30 September evening), each
+                // held until the builder's port follows: B1, the week's question
+                // after a missed Sunday.
+                var held = new[] { "WeekAsksNow|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1787,6 +1790,12 @@ namespace Ledger.PerceptionGolden
             Row(sb, "WeekWaits", "answered", Bit(sunday.Waits(new GameTime(6, 11, 30))), Bit(sunday.Give(WeekAnswer.WindDown, new GameTime(6, 11, 5), null, null)));
             var monday = new WeeksEnd(1);
             Row(sb, "WeekWaits", "not a sunday", Bit(monday.Waits(new GameTime(7, 10, 0))), Bit(monday.Ask(new GameTime(7, 10, 0), false, false)), Bit(monday.Ask(new GameTime(7, 10, 0), false)));
+            // He misses her Sunday (the independent review, B1): she asks the next time he talks with her at the office.
+            var missed = new WeeksEnd(0);
+            foreach (var (d, h, m, office) in new[] { (5, 11, 0, true), (6, 9, 30, true), (6, 10, 15, true), (6, 12, 5, true), (7, 10, 0, true), (7, 10, 0, false), (13, 15, 0, true) })
+                Row(sb, "WeekAsksNow", d + " " + h + ":" + m.ToString("D2", Inv) + (office ? " office" : " elsewhere"), Bit(missed.AsksNow(new GameTime(d, h, m), office)));
+            missed.Ask(new GameTime(7, 10, 0), false);
+            Row(sb, "WeekAsksNow", "asked", Bit(missed.AsksNow(new GameTime(7, 11, 0), true)));
             foreach (var value in new[] { "winddown", "takeover", "wontsay" })
             {
                 var who = new Gossiper("wr", "wr", new MemoryStore("wr"), new KnowledgeBase(), new SuspicionTracker());
