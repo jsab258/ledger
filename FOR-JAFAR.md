@@ -50,15 +50,11 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Clothes, Wednesday 30 September
 
-**Through the gate, handed to the builder** (for your page, on the people): Ron's black work boots; Sheila's handbag and her spectacles on their chain; Darren's belt, pager and T-shirt; Sheila's skirt and blouse (those three judged standing, as recommended below). Sheila's tights: a skin material.
+**Through the gate, handed to the builder** (for your page, on the people): Ron's black work boots; Sheila's handbag and her spectacles on their chain; Darren's belt, pager and T-shirt; Sheila's skirt and blouse (those three judged standing). Sheila's tights: a skin material.
 
 **Set aside, per your rule** (three failed reviews each, one after research): the donkey jacket and its builds; Ron's trousers; the flat cap; Sheila's cardigan; Ron's jumper and Darren's jacket (right standing, broken sitting); Darren's trainers, Sheila's shoes, Darren's jeans (the seat).
 
-**Decide:**
-- Suits and coats (Epic makes none): (A, recommended) free CC0 suits from MakeHuman, refitted by me; say yes and I download them. (B) Fab's ready-made ones, $5–20 each. (C) Marvelous Designer, $39 a month.
-- Poses: (A, recommended) I finish shapes to the gate standing; the builder tests poses in Unreal. (B) Keep testing here.
-
-**Next:** Tom and the others once their bodies exist. Much bigger than it looked.
+**Your answers, acted on:** no Marvelous Designer, all free; poses tested in Unreal. Next, in order: research how studios make game clothes end to end; remake the set-aside garments as skinned meshes, the jacket first; free CC0 suits from MakeHuman; then Tom and the others as their bodies come.
 
 **Research:** seventeen notes; today shoes, lacing, small pieces, belts, jeans, suits.
 
