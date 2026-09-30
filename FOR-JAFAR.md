@@ -52,19 +52,19 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **First through the gate:** Ron's black work boots passed a blind reviewer; handed to the builder, who puts them on your page on Ron.
 
-**Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its builds; Ron's trousers; the flat cap; Sheila's cardigan; Ron's jumper and Darren's jacket (right standing and walking, broken sitting). Sheila's skirt fails sitting.
+**Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its builds; Ron's trousers; the flat cap; Sheila's cardigan; Ron's jumper and Darren's jacket (right standing, broken sitting); Darren's trainers and Sheila's shoes (toe and heel shapes). Sheila's skirt fails sitting.
 
 **Decide:**
-- Marvelous Designer is scriptable except one click at each start, online; $39 a month, 14 days free. (A, recommended) you start the trial; I script the jacket once. (B) Leave it.
-- The standing shapes now come close; every failure is how clothes bend sitting or walking, tested in Blender, and Unreal redoes those weights anyway. (A, recommended) I finish shapes to the gate standing; the builder tests the poses in Unreal. (B) Keep testing poses here.
+- Marvelous Designer: scriptable but for one click at each start; $39 a month, 14 days free. (A, recommended) you start the trial; I script the jacket once. (B) Leave it.
+- Poses: (A, recommended) I finish shapes to the gate standing; the builder tests poses in Unreal. (B) Keep testing here.
 
-**Next:** Darren's trainers and Sheila's shoes (second tries), then Tom and the others. Much bigger than it looked: every garment so far fails sitting.
+**Next:** Darren's belt and pager (at review), Sheila's handbag and spectacles, then Tom. Much bigger than it looked.
 
-**Research:** twelve notes, sleeves to shoes.
+**Research:** fourteen notes, sleeves to shoes and small pieces.
 
 **Pushes:** free tests only.
 
-**C: free:** 34 GB when I began, 45 now (the builder's cleanup page waits on you). Backup runs with this commit.
+**C: free:** 34 GB when I began, 41 now (the builder's cleanup page waits on you). Backup runs with this commit.
 
 ## Builder, Wednesday 30 September
 

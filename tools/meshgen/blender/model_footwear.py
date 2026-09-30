@@ -53,10 +53,12 @@ NAME = opt("--name", "footwear_" + KIND, str)
 P = {  # the kinds' numbers (the research)
     "boot": dict(top_back=0.155, top_front=0.148, rise=0.0, sole=0.028, fore=0.015, cup=0.0, welt=0.005, allow=0.016, spring=0.010, toe_h=0.036, toe_m=2.0,
                  upper=(0.012, 0.012, 0.013), sole_rgb=(0.02, 0.02, 0.02), lace_rgb=(0.01, 0.01, 0.01), eyelets=6),
-    "trainer": dict(top_back=0.072, top_front=0.100, rise=0.30, sole=0.025, fore=0.018, cup=0.012, welt=0.002, allow=0.012, spring=0.012, toe_h=0.032, toe_m=1.9,
-                    upper=(0.80, 0.79, 0.76), sole_rgb=(0.86, 0.85, 0.82), lace_rgb=(0.88, 0.88, 0.86), eyelets=6),
-    "shoe": dict(top_back=0.062, top_front=0.092, rise=0.30, sole=0.020, fore=0.008, cup=0.0, welt=0.003, allow=0.014, spring=0.006, toe_h=0.030, toe_m=1.8,
-                 upper=(0.075, 0.035, 0.016), sole_rgb=(0.03, 0.017, 0.01), lace_rgb=(0.045, 0.022, 0.01), eyelets=4),
+    "trainer": dict(top_back=0.072, top_front=0.100, rise=0.30, sole=0.025, fore=0.018, cup=0.012, welt=0.002, allow=0.012, spring=0.010, toe_h=0.032, toe_m=1.9,
+                    upper=(0.80, 0.79, 0.76), sole_rgb=(0.86, 0.85, 0.82), lace_rgb=(0.88, 0.88, 0.86), eyelets=7,
+                    throat=0.67, slot=(0.010, 0.007), eyelet_off=0.008, tongue_up=0.020, nose=0.015),
+    "shoe": dict(top_back=0.062, top_front=0.092, rise=0.30, sole=0.020, fore=0.008, cup=0.004, welt=0.003, allow=0.014, spring=0.008, toe_h=0.030, toe_m=1.8,
+                 upper=(0.075, 0.035, 0.016), sole_rgb=(0.03, 0.017, 0.01), lace_rgb=(0.045, 0.022, 0.01), eyelets=4,
+                 throat=0.59, slot=(0.003, 0.002), eyelet_off=0.0095, tongue_up=0.006, nose=0.013),
 }[KIND]
 EASE = opt("--ease", 0.0045) + 0.0025
 log = {"body": BODY, "kind": KIND}
@@ -97,9 +99,13 @@ def e_of(p):
     return (p - HEEL).dot(E)
 
 
+SLOPE = (P["top_front"] - P["top_back"]) / 0.12
+
+
 def top_at(s):
-    """The topline's height above the floor at distance s along the foot."""
-    return P["top_back"] + (P["top_front"] - P["top_back"]) * max(0.0, min(1.0, s / 0.12)) + (P["rise"] * max(0.0, s - 0.12) if P["rise"] else 0.0)
+    """The topline's height above the floor at distance s along the foot: one plane, rising forward for a low shoe
+    (the opening cut by it is a clean, flat curve)."""
+    return P["top_back"] + SLOPE * s
 
 
 # ---- the upper: LOFTED RINGS along the foot (the skin copied and set out showed every toe and tore at the heel,
@@ -114,6 +120,10 @@ S_TOE0 = float(fp_s[foot_pts_all[:, 2] < FLOOR + 0.03].max())
 ec_foot = float(np.median([e_of(Vector(p)) for p in sole_pts]))
 
 
+CO_S = (co[:, :2] - np.array([HEEL.x, HEEL.y])) @ np.array([D.x, D.y])
+CO_E = (co[:, :2] - np.array([HEEL.x, HEEL.y])) @ np.array([E.x, E.y])
+
+
 def section_hull(s):
     loops = tailor.section_loops(body, HEEL + D * s, D)
     pts = np.concatenate(loops) if loops else np.zeros((0, 3))
@@ -121,7 +131,13 @@ def section_hull(s):
         return None
     e2 = np.array([e_of(Vector(p)) for p in pts])
     z2 = pts[:, 2]
-    sel = (np.abs(e2 - ec_foot) < 0.085) & (z2 < FLOOR + top_at(s) + 0.06)
+    if s < 0.06:
+        # at the heel the section at s is only the heel's back, below the collar (a dip in it there): the leg's
+        # points up to 3 cm ahead added, so the counter rises to the collar round the tendon
+        ahead = (CO_S > s) & (CO_S < s + 0.03) & (co[:, 2] > FLOOR + 0.04)
+        e2 = np.concatenate([e2, CO_E[ahead]])
+        z2 = np.concatenate([z2, co[ahead, 2]])
+    sel = (np.abs(e2 - ec_foot) < 0.085) & (z2 < FLOOR + top_at(s) + 0.012)
     if sel.sum() < 4:
         return None
     return np.array(tailor._hull2(np.column_stack([e2[sel], z2[sel]])))
@@ -149,9 +165,7 @@ def ring_from_hull(hull, s, ec, zc):
         r = (best if best is not None else 0.02) + EASE
         e, z = ec + dvec[0] * r, zc + dvec[1] * r
         z = max(z, FLOOR)
-        topz = FLOOR + top_at(s)
-        clipped.append(z > topz)
-        z = min(z, topz)
+        clipped.append(False)                         # the opening is cut by the topline's plane afterwards
         out.append((e, z))
     return out, clipped
 
@@ -170,35 +184,112 @@ for s in s_samples:
     rings.append(r)
     clips.append(c)
     s_list.append(s)
+for _ in range(2):                                   # eased along the foot, the ball's ring held
+    ra_ = np.array(rings)
+    sm_ = ra_.copy()
+    sm_[1:-1] = 0.25 * ra_[:-2] + 0.5 * ra_[1:-1] + 0.25 * ra_[2:]
+    rings = [list(map(tuple, r_)) for r_ in sm_[:-1]] + [rings[-1]]
 # the toe box: superellipse sections from the ball's ring out to the tip
 ball_ring = np.array(rings[-1])
 ec_b = float((ball_ring[:, 0].max() + ball_ring[:, 0].min()) / 2)
 wb = float((ball_ring[:, 0].max() - ball_ring[:, 0].min()) / 2)
 hb = float(ball_ring[:, 1].max() - FLOOR)
 S_TIP = S_TOE0 + P["allow"] + EASE
-NS_ = 3.0
-for u in np.linspace(0.0, 0.985, 12)[1:]:
-    s = S_BALL + (S_TIP - S_BALL) * u
-    w = wb * max(0.0, 1.0 - u ** P["toe_m"]) ** (1 / P["toe_m"]) * (1.0 - 0.10 * u)
-    h = hb + (P["toe_h"] - hb) * u ** 1.3
-    r = []
-    for k in range(M_R):
-        a = -math.pi / 2 + 2 * math.pi * k / M_R
-        ca, sa = math.cos(a), math.sin(a)
-        # the superellipse section: flat bottom at the floor, rounded top h, half-width w
-        qn = abs(ca) ** (2 / NS_) * (1 if ca >= 0 else -1)
-        e = ec_b + w * qn
-        z = FLOOR + (h * sa ** (2 / NS_) if sa > 0 else 0.0)
-        # blended from the ball's own ring over the first third (the change of shape had left a step)
-        bl = min(1.0, u / 0.35)
-        bl = bl * bl * (3 - 2 * bl)
-        e = ball_ring[k, 0] * (1 - bl) + e * bl
-        z = ball_ring[k, 1] * (1 - bl) + z * bl
-        r.append((e, z))
-    rings.append(r)
-    clips.append([False] * M_R)
-    s_list.append(s)
-# the mesh: rings joined, the back capped, the tip capped, the clipped lid removed (the ankle opening)
+NS_ = {"boot": 3.0, "trainer": 2.6, "shoe": 2.3}[KIND]
+TIP_H = opt("--tip-h", 0.55)
+if KIND == "boot":
+    for u in np.linspace(0.0, 0.985, 12)[1:]:
+        s = S_BALL + (S_TIP - S_BALL) * u
+        w = wb * max(0.0, 1.0 - u ** P["toe_m"]) ** (1 / P["toe_m"]) * (1.0 - 0.10 * u)
+        h = hb + (P["toe_h"] - hb) * u ** 1.3
+        if KIND != "boot" and u > 0.5:
+            h *= math.sqrt(max(0.0, 1.0 - ((u - 0.5) / 0.5) ** 2)) * 0.75 + 0.25
+        r = []
+        for k in range(M_R):
+            a = -math.pi / 2 + 2 * math.pi * k / M_R
+            ca, sa = math.cos(a), math.sin(a)
+            # the superellipse section: flat bottom at the floor, rounded top h, half-width w
+            qn = abs(ca) ** (2 / NS_) * (1 if ca >= 0 else -1)
+            e = ec_b + w * qn
+            z = FLOOR + (h * sa ** (2 / NS_) if sa > 0 else 0.0)
+            # blended from the ball's own ring over the first third (the change of shape had left a step)
+            bl = min(1.0, u / 0.35)
+            bl = bl * bl * (3 - 2 * bl)
+            e = ball_ring[k, 0] * (1 - bl) + e * bl
+            z = ball_ring[k, 1] * (1 - bl) + z * bl
+            r.append((e, z))
+        rings.append(r)
+        clips.append([False] * M_R)
+        s_list.append(s)
+else:
+    # THE TOE BOX DRAWN AS A LAST IS, to the research's numbers (production/research/clothing-pipeline/SHOE-TOE-AND-
+    # LACING-2026-09-30.md; the third try, after two reviews called a dome over the toes "a clown shoe" and the toes'
+    # own shapes stood up as pads and a nub). The feet are hidden inside the shoes, so the toe need not clear them.
+    # Its top falls steadily from the ball: three quarters of the ball's height half way, 0.6 at four fifths, a nose
+    # NOSE tall at the tip. Seen from above the inner edge runs straight to nine tenths of the length and then rounds;
+    # the outer edge curves in from the ball; the tip lines up with the second toe. Each section a flat-bottomed
+    # round; the last a seam, welded
+    NT_ = opt("--toe-flat", 2.6)
+    NOSE = P["nose"]
+    hb_z = float(ball_ring[:, 1].max())
+    Hb = hb_z - FLOOR
+    e_med0, e_lat0 = float(ball_ring[:, 0].min()), float(ball_ring[:, 0].max())
+    e_tip = e_med0 + 0.35 * (e_lat0 - e_med0)
+    u_med = max(0.3, min(0.9, (0.9 * S_TIP - S_BALL) / (S_TIP - S_BALL)))
+    us_ = [1.0 - (1.0 - t) ** 1.5 for t in np.linspace(0.0, 1.0, 17)[1:]]
+    for i_, u in enumerate(us_):
+        s = S_BALL + u * (S_TIP - S_BALL)
+        if u <= u_med:
+            e_m = e_med0
+        else:
+            v_ = (u - u_med) / (1.0 - u_med)
+            e_m = e_tip - (e_tip - e_med0) * math.sqrt(max(0.0, 1.0 - v_ * v_))
+        e_l = e_tip + (e_lat0 - e_tip) * max(0.0, 1.0 - u ** 1.45) ** (1 / 1.45)
+        if u <= 0.8:
+            f_ = 1.0 - 0.5 * u
+        else:
+            v_ = (u - 0.8) / 0.2
+            f_ = NOSE / Hb + (0.6 - NOSE / Hb) * math.sqrt(max(0.0, 1.0 - v_ * v_))
+        hz = FLOOR + Hb * f_
+        c, w = 0.5 * (e_m + e_l), 0.5 * (e_l - e_m)
+        b = min(1.0, (i_ + 1) / 2.0)                     # the first section a blend from the ball's own
+        r_ = []
+        for k in range(M_R):
+            a = -math.pi / 2 + 2 * math.pi * k / M_R
+            ca, sa = math.cos(a), math.sin(a)
+            e_r = c + w * abs(ca) ** (2 / NT_) * (1 if ca >= 0 else -1)
+            z_r = FLOOR + ((hz - FLOOR) * sa ** (2 / NT_) if sa > 0 else 0.0)
+            r_.append((ball_ring[k, 0] * (1 - b) + e_r * b, ball_ring[k, 1] * (1 - b) + z_r * b))
+        if u >= 1.0 - 1e-9:
+            r_ = [(c, 0.5 * (r_[k][1] + r_[(M_R - k) % M_R][1])) for k in range(M_R)]
+        rings.append(r_)
+        clips.append([False] * M_R)
+        s_list.append(float(s))
+    # the rings eased along the foot across the ball, where the foot's own sections meet the drawn toe (a hump)
+    ra_ = np.array(rings)
+    for _ in range(2):
+        sm_ = ra_.copy()
+        sm_[1:-2] = 0.25 * ra_[:-3] + 0.5 * ra_[1:-2] + 0.25 * ra_[2:-1]
+        ra_ = sm_
+    rings = [list(map(tuple, r_)) for r_ in ra_]
+# the heel: rings narrowing behind the first, upright, round in plan, EASE and 4 mm behind it (a fan from the first
+# ring left a notch at the collar and spikes at the floor)
+r0a = np.array(rings[0])
+ec0 = float((r0a[:, 0].max() + r0a[:, 0].min()) / 2)
+RB = EASE + 0.004
+back_r, back_s = [], []
+for t in (1.0, 0.9, 0.75, 0.55, 0.3):
+    f = math.cos(t * math.pi / 2) if t < 1.0 else 0.0
+    back_s.append(s_list[0] - RB * math.sin(t * math.pi / 2))
+    if t < 1.0:
+        back_r.append([(ec0 + (e - ec0) * f, z) for e, z in rings[0]])
+    else:
+        zz = [z for _e, z in rings[0]]
+        back_r.append([(ec0, 0.5 * (zz[k] + zz[(M_R - k) % M_R])) for k in range(M_R)])
+rings = back_r + rings
+s_list = back_s + s_list
+clips = [[False] * M_R for _ in back_r] + clips
+# the mesh: rings joined, the back and the tip capped, the opening cut by the topline's plane
 bm = bmesh.new()
 V = []
 for s, r in zip(s_list, rings):
@@ -213,43 +304,59 @@ for i in range(len(V) - 1):
         if clips[i][k] and clips[i][k2] and clips[i + 1][k] and clips[i + 1][k2]:
             continue                                   # the opening
         bm.faces.new((V[i][k], V[i][k2], V[i + 1][k2], V[i + 1][k]))
-# the back: a rounded heel cap, pushed back by the ease
-r0 = V[0]
-cback = sum((v.co for v in r0), Vector()) / M_R - D * (EASE + 0.004)
-cv = bm.verts.new(cback)
-for k in range(M_R):
-    k2 = (k + 1) % M_R
-    bm.faces.new((r0[k2], r0[k], cv))                # closed: the heel counter's back, up to the topline
+bmesh.ops.remove_doubles(bm, verts=V[0], dist=1e-5)     # the back seam: the two sides of the last ring welded
 rl = V[-1]
-ctip = sum((v.co for v in rl), Vector()) / M_R + D * 0.004
-tv = bm.verts.new(ctip)
-for k in range(M_R):
-    k2 = (k + 1) % M_R
-    bm.faces.new((rl[k], rl[k2], tv))
+if KIND == "boot":
+    ctip = sum((v.co for v in rl), Vector()) / M_R + D * 0.002
+    tv = bm.verts.new(ctip)
+    for k in range(M_R):
+        k2 = (k + 1) % M_R
+        bm.faces.new((rl[k], rl[k2], tv))
+else:
+    bmesh.ops.remove_doubles(bm, verts=rl, dist=1e-5)
+bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context="VERTS")
+bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], plane_co=HEEL + Vector((0, 0, P["top_back"])),
+                       plane_no=(Vector((0, 0, 1)) - D * SLOPE).normalized(), clear_outer=True)
 bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context="VERTS")
 bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
 # smoothed a little (the edges held), kept off the foot, the bottom on the floor
-for _ in range(opt("--smooth", 6, int)):
+# (Taubin's two passes, one shrinking and one swelling, so the surface is evened without being drawn onto the foot:
+# the plain passes drew it in, and kept off the foot it took the toes' bumps)
+for round_, lam in [(r_ // 2, (0.5, -0.53)[r_ % 2]) for r_ in range(2 * opt("--smooth", 6, int))]:
     new = {}
     for v in bm.verts:
-        if v.is_boundary or v.co.z <= FLOOR + 1e-4:
+        if v.co.z <= FLOOR + 1e-4:
+            fl = [e.other_vert(v).co for e in v.link_edges if e.other_vert(v).co.z <= FLOOR + 1e-4]
+            if len(fl) >= 2:
+                c_ = v.co + (sum(fl, Vector()) / len(fl) - v.co) * lam
+                new[v] = Vector((c_.x, c_.y, FLOOR))
             continue
-        nb = [e.other_vert(v).co for e in v.link_edges]
-        new[v] = v.co * 0.5 + sum(nb, Vector()) / len(nb) * 0.5
+        if v.is_boundary:
+            if lam < 0:
+                continue                             # the swelling pass drove the opening's front into a spike
+            nb = [e.other_vert(v).co for e in v.link_edges if e.is_boundary]
+        else:
+            nb = [e.other_vert(v).co for e in v.link_edges]
+        if nb:
+            new[v] = v.co + (sum(nb, Vector()) / len(nb) - v.co) * lam
     for v, c in new.items():
         v.co = c
-for v in bm.verts:
-    hit, nn, _f, _d = BVH.find_nearest(v.co)
-    if hit is not None and (v.co - hit).dot(nn) < EASE * 0.6:
-        v.co = hit + nn * EASE * 0.6
-    if v.co.z < FLOOR:
-        v.co.z = FLOOR
+    if lam > 0:
+        continue
+    for v in bm.verts:
+        hit, nn, _f, _d = BVH.find_nearest(v.co)
+        if hit is not None and (v.co - hit).dot(nn) < EASE * 0.6 and (
+                KIND == "boot" or v.co.z > FLOOR + top_at(s_of(v.co)) - 0.035 or s_of(v.co) < S_BALL - 0.02):
+            v.co = v.co.lerp(hit + nn * EASE * 0.6, 0.6 if round_ < 5 else 1.0)
+        if v.co.z < FLOOR:
+            v.co.z = FLOOR
 log["loft"] = {"rings": len(V), "tipMm": round((S_TIP) * 1000)}
 # the collar: its edge put on the topline (the clipped rings left it zigzagging up and down), smoothed, then rolled
+bmesh.ops.remove_doubles(bm, verts=[v for v in bm.verts if v.is_boundary], dist=0.0008)
 loop = [v for v in bm.verts if v.is_boundary]
 for v in loop:
     v.co.z = FLOOR + top_at(s_of(v.co))
-for _ in range(24):
+for _ in range(6):
     new = {}
     for v in loop:
         nb = [e.other_vert(v) for e in v.link_edges if e.is_boundary]
@@ -258,13 +365,20 @@ for _ in range(24):
     for v, c in new.items():
         v.co = c
 bm.normal_update()
-cedges = [e for e in bm.edges if e.is_boundary]
-res = bmesh.ops.extrude_edge_only(bm, edges=cedges)
+cedges = [e for e in bm.edges if e.is_boundary] if opt("--collar-roll", 0, int) else []
+# (by default no turned-in strip: the plane's clean cut and the leather's own thickness make the edge; turned in,
+# it met the leg, and kept off the leg, it stood out as a frill)
+res = bmesh.ops.extrude_edge_only(bm, edges=cedges) if cedges else {"geom": []}
+OPEN_C = sum((v.co for v in loop), Vector()) / max(1, len(loop))
 for v in [g for g in res["geom"] if isinstance(g, bmesh.types.BMVert)]:
     # TURNED IN, a padded collar (rolled out, it read as a torn lip lifting off)
+    inward = OPEN_C - v.co
+    inward.z = 0.0
+    inward = inward.normalized() if inward.length > 1e-6 else Vector((0, 0, 0))
+    v.co = v.co + inward * 0.0015 - Vector((0, 0, 0.007))
     hit, nn, _f, _d = BVH.find_nearest(v.co)
-    inward = (hit - v.co).normalized() if hit is not None and (v.co - hit).length > 1e-6 else Vector((0, 0, -1))
-    v.co = v.co + inward * 0.003 - Vector((0, 0, 0.007))
+    if hit is not None and (v.co - hit).dot(nn) < 0.004:
+        v.co = hit + nn * 0.004
 # toe spring: the front lifted, the most at the tip
 s_tip = max(s_of(v.co) for v in bm.verts)
 for v in bm.verts:
@@ -274,12 +388,31 @@ for v in bm.verts:
         v.co.z += P["spring"] * u * u
 
 S_HEEL_FRONT = 0.27 * L_FOOT
-DROP = P["sole"] - P["fore"] - P["cup"]
+DROP = max(0.0, P["sole"] - P["fore"])
+S_TIP_U = max(s_of(v.co) for v in bm.verts)
+
+
+def lift_at(s):
+    return P["spring"] * max(0.0, (s - S_BALL) / max(1e-6, S_TIP_U - S_BALL)) ** 2 if s > S_BALL else 0.0
+
+
+def drop_at(s):
+    run = (S_BALL - 0.02 - S_HEEL_FRONT) if KIND == "trainer" else 0.012
+    u = max(0.0, min(1.0, (s - S_HEEL_FRONT) / run))
+    return DROP * u * u * (3 - 2 * u)
+
+
+def floor_at(s):
+    """The upper's own floor at s: the bare floor, lowered in front of the heel by the drop, lifted by the spring."""
+    return FLOOR - drop_at(s) + lift_at(s)
+
+
 for v in bm.verts:
     s = s_of(v.co)
-    if v.co.z < FLOOR + 0.002 + (P["spring"] if s > S_BALL else 0.0) and s > S_HEEL_FRONT:
-        f = min(1.0, (s - S_HEEL_FRONT) / 0.012)
-        v.co.z -= DROP * f
+    zr = v.co.z - (FLOOR + lift_at(s))
+    if zr < 0.035:
+        u_ = 1.0 - max(0.0, zr) / 0.035
+        v.co.z -= drop_at(s) * u_ * u_ * (3 - 2 * u_)
 upper_me = bpy.data.meshes.new("Upper")
 bm.to_mesh(upper_me)
 bm.free()
@@ -291,15 +424,19 @@ UPPER_BVH = tailor.bvh_of(upper)
 # beyond it; a heel block the full stack under the heel, the forepart's visible edge thinner (the upper comes down
 # over the difference); for a trainer a cupsole whose wall wraps up round the upper; the waist lifted off the ground
 outl_r, outl_l = [], []
-for sv, r in zip(s_list, rings):
-    ra = np.array(r)
-    low = ra[ra[:, 1] < FLOOR + 0.004]
-    if len(low) < 2:
+uv_ = np.array([tuple(v.co) for v in upper_me.vertices])
+us_ = np.array([s_of(Vector(q)) for q in uv_])
+ue_ = np.array([e_of(Vector(q)) for q in uv_])
+uzr = uv_[:, 2] - np.array([floor_at(q) for q in us_])
+band = uzr < max(P["cup"], 0.004) + 0.010
+for sv in np.arange(s_list[0], S_TIP_U - 0.006, 0.008):
+    sel = band & (np.abs(us_ - sv) < 0.005)
+    if sel.sum() < 2:
         continue
-    outl_r.append((sv, float(low[:, 0].max())))
-    outl_l.append((sv, float(low[:, 0].min())))
-back_s = s_list[0] - EASE - 0.004
-tip_s = S_TIP + 0.004
+    outl_r.append((float(sv), float(ue_[sel].max())))
+    outl_l.append((float(sv), float(ue_[sel].min())))
+back_s = float(us_.min()) - 0.001
+tip_s = S_TIP_U + 0.001
 mid_e0 = (outl_r[0][1] + outl_l[0][1]) / 2
 outline = [(back_s, mid_e0)] + outl_r + [(tip_s, ec_b)] + outl_l[::-1]
 outline = np.array(outline, dtype=float)
@@ -321,6 +458,35 @@ nrm2 = np.column_stack([nrm2[:, 1], -nrm2[:, 0]])
 nrm2 /= np.maximum(np.linalg.norm(nrm2, axis=1), 1e-9)[:, None]
 if np.mean(np.sum((ring - cen) * nrm2, axis=1)) < 0:
     nrm2 = -nrm2
+bpts = np.column_stack([us_[band], ue_[band]])
+tng = np.column_stack([-nrm2[:, 1], nrm2[:, 0]])
+need = np.zeros(len(ring))
+for i_ in range(len(ring)):
+    rel = bpts - ring[i_]
+    near = np.abs(rel @ tng[i_]) < 0.006
+    if near.any():
+        need[i_] = max(0.0, float((rel[near] @ nrm2[i_]).max()))
+need = np.max([np.roll(need, k) for k in range(-3, 4)], axis=0)
+for _ in range(3):
+    need = 0.25 * np.roll(need, 1) + 0.5 * need + 0.25 * np.roll(need, -1)
+ring = ring + nrm2 * need[:, None]
+RING_IN = ring.copy()
+_seg_a, _seg_b = RING_IN, np.roll(RING_IN, -1, axis=0)
+for v in upper_me.vertices:
+    sv, ev = s_of(v.co), e_of(v.co)
+    zr = v.co.z - floor_at(sv)
+    if zr <= 0.0005 or zr > 0.012:
+        continue                                     # the floor itself stays inside; above 12 mm is untouched
+    q = np.array([sv, ev])
+    ab = _seg_b - _seg_a
+    t_ = np.clip(np.sum((q - _seg_a) * ab, axis=1) / np.maximum(np.sum(ab * ab, axis=1), 1e-12), 0.0, 1.0)
+    cl = _seg_a + ab * t_[:, None]
+    k_ = int(np.argmin(np.sum((cl - q) ** 2, axis=1)))
+    w_ = (1.0 - zr / 0.012) ** 2 * 0.9
+    tgt = cl[k_] - nrm2[k_] * 0.0008                 # a hair inside the line, under the sole's rim
+    ns, ne = sv + (tgt[0] - sv) * w_, ev + (tgt[1] - ev) * w_
+    p3 = HEEL + D * float(ns) + E * float(ne)
+    v.co = Vector((p3.x, p3.y, v.co.z))
 ring = ring + nrm2 * (P["welt"] + 0.001)
 T = P["sole"]
 s_tip = max(s_of(Vector(v.co)) for v in upper_me.vertices)
@@ -328,20 +494,52 @@ sm = bmesh.new()
 top_r, bot_r = [], []
 for s, e in ring:
     base = HEEL + D * float(s) + E * float(e)
-    lift = P["spring"] * max(0.0, (s - S_BALL) / max(1e-6, s_tip - S_BALL)) ** 2 if s > S_BALL else 0.0
+    lift = lift_at(s)
     waist = 0.0
     if KIND != "trainer" and S_HEEL_FRONT + 0.004 < s < S_BALL - 0.015:
         waist = 0.004 * math.sin(math.pi * (s - S_HEEL_FRONT - 0.004) / (S_BALL - 0.019 - S_HEEL_FRONT)) ** 0.4
-    ztop = FLOOR + P["cup"] + (0.0 if s < S_HEEL_FRONT else -DROP * min(1.0, (s - S_HEEL_FRONT) / 0.012))
+    ztop = FLOOR + P["cup"] - drop_at(s)
     top_r.append(sm.verts.new((base.x, base.y, ztop + lift)))
-    bot_r.append(sm.verts.new((base.x, base.y, FLOOR - T + P["cup"] + lift + waist)))
+    bot_r.append(sm.verts.new((base.x, base.y, FLOOR - T + P["cup"] + lift * 0.6 + waist)))
 n = len(ring)
 for i_ in range(n):
     j_ = (i_ + 1) % n
     sm.faces.new((top_r[i_], top_r[j_], bot_r[j_], bot_r[i_]))
-sm.faces.new(top_r[::-1])
-sm.faces.new(bot_r)
-bmesh.ops.triangulate(sm, faces=sm.faces[:])
+cen_se = ring.mean(axis=0)
+
+
+def waist_at(s_):
+    if KIND != "trainer" and S_HEEL_FRONT + 0.004 < s_ < S_BALL - 0.015:
+        return 0.004 * math.sin(math.pi * (s_ - S_HEEL_FRONT - 0.004) / (S_BALL - 0.019 - S_HEEL_FRONT)) ** 0.4
+    return 0.0
+
+
+def cap(outer, top):
+    """Inset rings towards the middle, each on the sole's own face (lifted at the toe as the edge is), then a fan."""
+    rows = [outer]
+    for f in (0.8, 0.55, 0.3):
+        row = []
+        for (s_, e_) in cen_se + (ring - cen_se) * f:
+            b_ = HEEL + D * float(s_) + E * float(e_)
+            z_ = (FLOOR + P["cup"] - drop_at(s_) + lift_at(s_)) if top else (FLOOR - T + P["cup"] + lift_at(s_) * 0.6 + waist_at(s_))
+            row.append(sm.verts.new((b_.x, b_.y, z_)))
+        rows.append(row)
+    for a_, b_ in zip(rows[:-1], rows[1:]):
+        for i_ in range(n):
+            j_ = (i_ + 1) % n
+            q = (a_[i_], a_[j_], b_[j_], b_[i_])
+            sm.faces.new(q if not top else q[::-1])
+    b0 = HEEL + D * float(cen_se[0]) + E * float(cen_se[1])
+    z0 = (FLOOR + P["cup"] - drop_at(cen_se[0]) + lift_at(cen_se[0])) if top else (FLOOR - T + P["cup"] + lift_at(cen_se[0]) * 0.6)
+    cv_ = sm.verts.new((b0.x, b0.y, z0))
+    for i_ in range(n):
+        j_ = (i_ + 1) % n
+        t_ = (rows[-1][i_], rows[-1][j_], cv_)
+        sm.faces.new(t_ if not top else t_[::-1])
+
+
+cap(top_r, True)
+cap(bot_r, False)
 bmesh.ops.recalc_face_normals(sm, faces=sm.faces[:])
 sole_me = bpy.data.meshes.new("Sole")
 sm.to_mesh(sole_me)
@@ -391,48 +589,147 @@ def on_top(s, e, from_front_z=None):
 
 if KIND == "boot":
     lace_rows = [(0.07 + 0.05 * t, P["top_back"] - 0.014 - 0.09 * t) for t in np.linspace(0.0, 1.0, n_e)]
+    HALF = 0.012 if KIND != "boot" else 0.015
+    lace_pts = []
+    for s, z in lace_rows:
+        ec_l = top_e(s)
+        row = [on_top(s, ec_l + side * HALF, z) for side in (-1.0, 1.0)]
+        lace_pts.append(row)
+    # the tongue: a strip 44 mm wide under the laces, from the vamp up through the opening to 12 mm above it
+    tongue_rows = []
+    s_a = lace_rows[-1][0] + 0.012
+    s_b = lace_rows[0][0] - 0.022
+    for t in np.linspace(0.0, 1.0, 10):
+        s = s_a + (s_b - s_a) * t
+        zf = None if KIND != "boot" else (lace_rows[-1][1] + (lace_rows[0][1] + 0.012 - lace_rows[-1][1]) * t)
+        ec_l = top_e(s) if KIND != "boot" else top_e(lace_rows[-1][0])
+        row = []
+        for e in np.linspace(-0.022, 0.022, 7):
+            if zf is None:
+                # a low shoe's tongue lies on the foot, under the vamp and seen only in the opening (laid on the upper,
+                # its edges stood up as fins where they crossed the collar)
+                hit_, nn_ = BVH.ray_cast(HEEL + D * s + E * (ec_l + e) + Vector((0, 0, 0.4)), Vector((0, 0, -1)), 0.6)[:2]
+                row.append(None if hit_ is None else hit_ + nn_ * (EASE * 0.6 - 0.001))
+                continue
+            q = on_top(s, ec_l + e, zf)
+            row.append(None if q is None else q[0] + q[1] * 0.0012)
+        if all(r_ is not None for r_ in row):
+            if max(r_.z for r_ in row) > FLOOR + top_at(s) + 0.015:
+                break
+            tongue_rows.append(row)
+    if len(tongue_rows) > 2:
+        # its top edge lifted 12 mm above the collar, as a tongue stands
+        top_row = [p_ + Vector((0, 0, 0.006)) - D * 0.003 for p_ in tongue_rows[-1]]
+        tongue_rows.append(top_row)
+        tv_, tf_ = [], []
+        w_ = len(tongue_rows[0])
+        for r_ in tongue_rows:
+            tv_.extend(tuple(p_) for p_ in r_)
+        for i_ in range(len(tongue_rows) - 1):
+            for j_ in range(w_ - 1):
+                tf_.append((i_ * w_ + j_, i_ * w_ + j_ + 1, (i_ + 1) * w_ + j_ + 1, (i_ + 1) * w_ + j_))
+        tm = bpy.data.meshes.new("Tongue")
+        tm.from_pydata(tv_, [], tf_)
+        to = bpy.data.objects.new("Tongue", tm)
+        bpy.context.collection.objects.link(to)
+        tm.materials.append(tailor.material("M_Upper", P["upper"], 0.5))
+        sl = to.modifiers.new("Solidify", "SOLIDIFY")
+        sl.thickness, sl.offset = 0.002, -1.0
+        extras.append(to)
+
+
 else:
-    s0 = 0.108 if KIND == "trainer" else 0.112
-    lace_rows = [(s0 + (0.058 if KIND == "trainer" else 0.036) * t, None) for t in np.linspace(0.0, 1.0, n_e)]
-HALF = 0.012 if KIND != "boot" else 0.015
-lace_pts = []
-for s, z in lace_rows:
-    ec_l = top_e(s)
-    row = [on_top(s, ec_l + side * HALF, z) for side in (-1.0, 1.0)]
-    lace_pts.append(row)
-# the tongue: a strip 44 mm wide under the laces, from the vamp up through the opening to 12 mm above it
-tongue_rows = []
-s_a = lace_rows[-1][0] + 0.012
-s_b = lace_rows[0][0] - 0.022
-for t in np.linspace(0.0, 1.0, 10):
-    s = s_a + (s_b - s_a) * t
-    zf = None if KIND != "boot" else (lace_rows[-1][1] + (lace_rows[0][1] + 0.012 - lace_rows[-1][1]) * t)
-    ec_l = top_e(s) if KIND != "boot" else top_e(lace_rows[-1][0])
-    row = []
-    for e in np.linspace(-0.022, 0.022, 7):
-        q = on_top(s, ec_l + e, zf)
-        row.append(None if q is None else q[0] + q[1] * 0.0012)
-    if all(r_ is not None for r_ in row):
+    # AN OPEN THROAT (the third try: two reviews saw "a short flat cluster of crosses bunched under the ankle, the
+    # rest of the instep bare", "no tongue or open throat", "eyelets as if printed on"). The lace opening is cut
+    # through the leather from the collar's front down the instep to the throat, THROAT of the way from the heel to
+    # the tip, wider at the top; the eyelets run down both edges; the tongue lies on the foot under it and stands
+    # above the collar; the laces cross over the gap; on a trainer the edges are raised as an eyestay
+    s_top = 0.08
+    while s_top < S_BALL - 0.06:
+        q = UPPER_BVH.ray_cast(HEEL + D * s_top + E * top_e(s_top) + Vector((0, 0, 0.4)), Vector((0, 0, -1)), 0.6)[0]
+        if q is not None and q.z < FLOOR + top_at(s_top) - 0.004:
+            break
+        s_top += 0.003
+    S_THROAT = P["throat"] * S_TIP
+    HW_TOP, HW_THR = P["slot"]
+    e_top, e_thr = top_e(s_top + 0.004), top_e(S_THROAT)
+
+    def lace_e(s_):
+        return e_top + (e_thr - e_top) * (s_ - s_top) / max(1e-6, S_THROAT - s_top)
+
+    def slot_hw(s_):
+        return HW_TOP + (HW_THR - HW_TOP) * max(0.0, min(1.0, (s_ - s_top) / max(1e-6, S_THROAT - s_top)))
+
+    lace_rows = [(float(s_), None) for s_ in np.linspace(s_top + 0.005, S_THROAT - 0.007, n_e)]
+    lace_pts = []
+    for s_, _z in lace_rows:
+        lace_pts.append([on_top(s_, lace_e(s_) + side * (slot_hw(s_) + P["eyelet_off"])) for side in (-1.0, 1.0)])
+    # the tongue: on the foot 1.5 mm off the skin, from under the vamp in front of the throat up through the opening
+    # to above the collar's front; as wide as the opening and 14 mm under each edge
+    tongue_rows = []
+    s_list_t = list(np.arange(S_THROAT + 0.010, s_top - 0.035, -0.006))
+    for s_ in s_list_t:
+        hwt = slot_hw(min(max(s_, s_top), S_THROAT)) + 0.014
+        row = []
+        for e in np.linspace(-hwt, hwt, 7):
+            hit_, nn_ = BVH.ray_cast(HEEL + D * s_ + E * (lace_e(min(max(s_, s_top), S_THROAT)) + e) + Vector((0, 0, 0.4)),
+                                     Vector((0, 0, -1)), 0.6)[:2]
+            row.append(None if hit_ is None else hit_ + nn_ * 0.0010)
+        if any(r_ is None for r_ in row):
+            break
+        if max(r_.z for r_ in row) > FLOOR + top_at(s_) + P["tongue_up"]:
+            break
         tongue_rows.append(row)
-if len(tongue_rows) > 2:
-    # its top edge lifted 12 mm above the collar, as a tongue stands
-    top_row = [p_ + Vector((0, 0, 0.012)) - D * 0.004 for p_ in tongue_rows[-1]]
-    tongue_rows.append(top_row)
-    tv_, tf_ = [], []
-    w_ = len(tongue_rows[0])
-    for r_ in tongue_rows:
-        tv_.extend(tuple(p_) for p_ in r_)
-    for i_ in range(len(tongue_rows) - 1):
-        for j_ in range(w_ - 1):
-            tf_.append((i_ * w_ + j_, i_ * w_ + j_ + 1, (i_ + 1) * w_ + j_ + 1, (i_ + 1) * w_ + j_))
-    tm = bpy.data.meshes.new("Tongue")
-    tm.from_pydata(tv_, [], tf_)
-    to = bpy.data.objects.new("Tongue", tm)
-    bpy.context.collection.objects.link(to)
-    tm.materials.append(tailor.material("M_Upper", P["upper"], 0.5))
-    sl = to.modifiers.new("Solidify", "SOLIDIFY")
-    sl.thickness, sl.offset = 0.002, -1.0
-    extras.append(to)
+    if len(tongue_rows) > 2:
+        top_row = [p_ + Vector((0, 0, 0.004)) - D * 0.002 for p_ in tongue_rows[-1]]
+        tongue_rows.append(top_row)
+        tv_, tf_ = [], []
+        w_ = len(tongue_rows[0])
+        for r_ in tongue_rows:
+            tv_.extend(tuple(p_) for p_ in r_)
+        for i_ in range(len(tongue_rows) - 1):
+            for j_ in range(w_ - 1):
+                tf_.append((i_ * w_ + j_, (i_ + 1) * w_ + j_, (i_ + 1) * w_ + j_ + 1, i_ * w_ + j_ + 1))
+        tm = bpy.data.meshes.new("Tongue")
+        tm.from_pydata(tv_, [], tf_)
+        to = bpy.data.objects.new("Tongue", tm)
+        bpy.context.collection.objects.link(to)
+        tm.materials.append(tailor.material("M_Upper", P["upper"], 0.5))
+        sl = to.modifiers.new("Solidify", "SOLIDIFY")
+        # 1.5 mm, under the leather's inner face (4 mm thick, its edges came through the upper beside the laces)
+        sl.thickness, sl.offset = 0.0015, 1.0
+        extras.append(to)
+    # the opening cut through the upper between two upright planes along the lace line, back from the throat
+    cb = bmesh.new()
+    cb.from_mesh(upper_me)
+    planes_ = []
+    for side in (-1.0, 1.0):
+        a_ = HEEL + D * (s_top - 0.03) + E * (lace_e(s_top) + side * HW_TOP)
+        b_ = HEEL + D * S_THROAT + E * (lace_e(S_THROAT) + side * HW_THR)
+        n_ = Vector((0, 0, 1)).cross(b_ - a_).normalized()
+        planes_.append((a_, n_ if n_.dot(E) * side > 0 else -n_))    # each pointing away from the lace line
+    for pc, pn in planes_ + [(HEEL + D * S_THROAT, D)]:
+        bmesh.ops.bisect_plane(cb, geom=cb.verts[:] + cb.edges[:] + cb.faces[:], plane_co=pc, plane_no=pn)
+    cut = []
+    for f in cb.faces:
+        c = f.calc_center_median()
+        inside = all((c - pc).dot(pn) < 0 for pc, pn in planes_)
+        if inside and s_top - 0.03 < s_of(c) < S_THROAT and c.z > FLOOR + 0.03:     # (unbounded, it opened the heel)
+            cut.append(f)
+    bmesh.ops.delete(cb, geom=cut, context="FACES")
+    bmesh.ops.delete(cb, geom=[v for v in cb.verts if not v.link_faces], context="VERTS")
+    if KIND == "trainer":
+        # the eyestay: the leather within 14 mm of the opening raised 1.2 mm
+        cb.normal_update()
+        for v in cb.verts:
+            s_ = s_of(v.co)
+            if s_top - 0.01 < s_ < S_THROAT + 0.004 and v.co.z > FLOOR + 0.03:
+                d_ = abs(e_of(v.co) - lace_e(min(max(s_, s_top), S_THROAT))) - slot_hw(s_)
+                if -0.001 < d_ < 0.016:
+                    v.co = v.co + v.normal * 0.0012 * math.sin(math.pi * min(1.0, (d_ + 0.001) / 0.017))
+    cb.to_mesh(upper_me)
+    cb.free()
+    log["throat"] = {"fromHeelMm": round(S_THROAT * 1000), "topMm": round(s_top * 1000), "pairs": n_e}
 
 
 def bar(a, b, w=0.004, t=0.0022):
@@ -450,7 +747,8 @@ def bar(a, b, w=0.004, t=0.0022):
 pts_ok = [r_ for r_ in lace_pts if r_[0] is not None and r_[1] is not None]
 for row in pts_ok:
     for hit, nn in row:
-        bpy.ops.mesh.primitive_torus_add(major_radius=0.0028, minor_radius=0.0009, location=hit + nn * 0.0012)
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.0028, minor_radius=0.0009, major_segments=10, minor_segments=4,
+                                         location=hit + nn * 0.0012)
         o = bpy.context.active_object
         o.rotation_mode = "QUATERNION"
         o.rotation_quaternion = Vector((0, 0, 1)).rotation_difference(nn)
@@ -466,7 +764,8 @@ if pts_ok and KIND != "boot":
     (hl, nl), (hr, nr) = pts_ok[0]
     c_ = (hl + hr) / 2 + nl * 0.005
     for sg in (-1.0, 1.0):
-        bpy.ops.mesh.primitive_torus_add(major_radius=0.008, minor_radius=0.0016, location=c_ + E * (sg * 0.009))
+        bpy.ops.mesh.primitive_torus_add(major_radius=0.008, minor_radius=0.0016, major_segments=14, minor_segments=5,
+                                         location=c_ + E * (sg * 0.009))
         o = bpy.context.active_object
         o.rotation_mode = "QUATERNION"
         o.rotation_quaternion = Vector((0, 0, 1)).rotation_difference((nl + D * 0.3).normalized())
@@ -478,33 +777,6 @@ elif pts_ok:
     (hl, nl), (hr, nr) = pts_ok[0]
     bar(hl + nl * 0.004, hr + nr * 0.004)
 log["eyelets"] = sum(2 for r_ in pts_ok)
-
-# ---- a toe cap and a heel counter: overlays cut from the upper by planes (clean edges), 1.2 mm proud -----------
-for part, keep_fn, planes in (
-        ("ToeCap", lambda c: s_of(c) > S_BALL + 0.35 * (S_TIP - S_BALL), [(HEEL + D * (S_BALL + 0.35 * (S_TIP - S_BALL)), -D)]),
-        ("HeelCounter", lambda c: s_of(c) < 0.075 and c.z < FLOOR + top_at(s_of(c)) - 0.014,
-         [(HEEL + D * 0.075, D), (HEEL + Vector((0, 0, P["top_back"] - 0.014)), Vector((0, 0, 1)))])):
-    ob = bmesh.new()
-    ob.from_mesh(upper_me)
-    for pc, pn in planes:
-        bmesh.ops.bisect_plane(ob, geom=ob.verts[:] + ob.edges[:] + ob.faces[:], plane_co=pc, plane_no=pn, clear_outer=True)
-    bmesh.ops.delete(ob, geom=[f for f in ob.faces if not keep_fn(f.calc_center_median())], context="FACES")
-    bmesh.ops.delete(ob, geom=[v for v in ob.verts if not v.link_faces], context="VERTS")
-    ob.normal_update()
-    for v in ob.verts:
-        hit, nn, _f, _d = BVH.find_nearest(v.co)
-        out = (v.co - hit).normalized() if hit is not None and (v.co - hit).length > 1e-6 else Vector((0, 0, 1))
-        v.co = v.co + out * 0.0012
-    om = bpy.data.meshes.new(part)
-    ob.to_mesh(om)
-    ob.free()
-    if len(om.polygons) > 4:
-        oo = bpy.data.objects.new(part, om)
-        bpy.context.collection.objects.link(oo)
-        om.materials.append(tailor.material("M_Upper", P["upper"], 0.5))
-        sl = oo.modifiers.new("Solidify", "SOLIDIFY")
-        sl.thickness, sl.offset = 0.0012, 1.0
-        extras.append(oo)
 
 # ---- materials, thickness, the pair, weights ----------------------------------------------------------------
 upm = tailor.material("M_Upper", P["upper"], 0.45 if KIND != "trainer" else 0.55)
@@ -525,11 +797,40 @@ if vote < 0:
     bmesh.ops.reverse_faces(rb, faces=rb.faces[:])
 rb.to_mesh(upper_me)
 rb.free()
+# ---- a toe cap and a heel counter: panels of the upper itself, split along plane lines and a shade apart (as
+# separate pieces 1 mm proud, their edges read as slits, slivers and cuts to the second reviewers) --------------
+S_CAP = S_BALL + 0.35 * (S_TIP - S_BALL)
+CN = (D + Vector((0, 0, 1.1))).normalized()
+C0 = HEEL + D * 0.085 + Vector((0, 0, FLOOR - HEEL.z))
+ZC = HEEL + Vector((0, 0, FLOOR - HEEL.z + P["top_back"] - 0.012))
+pan_rgb = tuple(c * (0.95 if KIND == "trainer" else 0.90) for c in P["upper"])
+upper_me.materials.append(tailor.material("M_Panel", pan_rgb, 0.45 if KIND != "trainer" else 0.55))
+pb = bmesh.new()
+pb.from_mesh(upper_me)
+for pc, pn in ((HEEL + D * S_CAP, D), (C0, CN), (ZC, Vector((0, 0, 1)))):
+    bmesh.ops.bisect_plane(pb, geom=pb.verts[:] + pb.edges[:] + pb.faces[:], plane_co=pc, plane_no=pn)
+for f in pb.faces:
+    c = f.calc_center_median()
+    cap_ = s_of(c) > S_CAP
+    counter = (c - C0).dot(CN) < 0 and c.z < ZC.z
+    f.material_index = 1 if (cap_ or counter) else 0
+pb.to_mesh(upper_me)
+pb.free()
+SMOOTH_ALL = set(extras)
+if KIND == "trainer":
+    pb = bmesh.new()
+    pb.from_mesh(upper_me)
+    pb.normal_update()
+    for v in pb.verts:
+        d_ = FLOOR + top_at(s_of(v.co)) - v.co.z
+        if -0.001 < d_ < 0.016:
+            v.co = v.co + v.normal * 0.0042 * math.sin(math.pi * min(1.0, (d_ + 0.003) / 0.019))
+    pb.to_mesh(upper_me)
+    pb.free()
+
 sol = upper.modifiers.new("Solidify", "SOLIDIFY")
 sol.thickness, sol.offset, sol.use_rim = 0.0025, -1.0, True
 for o in [upper, sole] + extras:
-    for p_ in o.data.polygons:
-        p_.use_smooth = o is upper
     bpy.ops.object.select_all(action="DESELECT")
     o.select_set(True)
     bpy.context.view_layer.objects.active = o
@@ -537,6 +838,11 @@ for o in [upper, sole] + extras:
         bpy.ops.object.modifier_apply(modifier=mdf.name)
     for m in list(o.modifiers):
         o.modifiers.remove(m)
+    if o is upper:
+        for p_ in o.data.polygons:
+            p_.use_smooth = True
+    else:
+        bpy.ops.object.shade_smooth_by_angle(angle=math.radians(50))
 bpy.ops.object.select_all(action="DESELECT")
 for o in [upper, sole] + extras:
     o.select_set(True)
@@ -608,7 +914,7 @@ hide_ids = []
 for v in body.data.vertices:
     p = body.matrix_world @ v.co
     pl = Vector((abs(p.x), p.y, p.z))
-    if p.z < FLOOR + top_at(max(0.0, s_of(pl))) - 0.02 and abs(e_of(pl) - ec_foot) < 0.08 and -0.01 < s_of(pl) < S_TIP:
+    if p.z < FLOOR + top_at(max(0.0, s_of(pl))) - 0.03 and abs(e_of(pl) - ec_foot) < 0.08 and -0.01 < s_of(pl) < S_TIP:
         hide_ids.append(v.index)
 hid.add(hide_ids, 1.0, "REPLACE")
 mk = body.modifiers.new("InShoe", "MASK")
