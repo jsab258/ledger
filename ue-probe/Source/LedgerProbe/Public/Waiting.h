@@ -173,17 +173,21 @@ namespace LedgerCore
 				Beat("tea", Tea->Day(), At(Tea->Day(), AdasTea::From), At(Tea->Day(), AdasTea::Until).AddMinutes(-1), Lead(B->TeaLead), TeaLine);
 
 			const PoliceFile* Police = B->Police;
-			const int LastDay = std::min(Until.Day, Now.Day + DaysAhead);
+			// Counted wide (the port's independent check, 30 September: within
+			// fourteen days of the largest day, Now.Day + DaysAhead wrapped).
+			const long long LastDay = std::min((long long)Until.Day, (long long)Now.Day + DaysAhead);
 			if (Police != nullptr)
 			{
-				for (int D = std::max(0, Now.Day); D <= LastDay; ++D)
+				for (long long DD = std::max(0, Now.Day); DD <= LastDay; ++DD)
 				{
+					const int D = (int)DD;
 					const GameTime T = At(D, ConstableHour);
 					std::string Topic;
 					if (Cmp(T.AddMinutes(60), Now) > 0 && Police->ConstableWouldCome(D, Topic)) { Beat("constable", D, T, T.AddMinutes(59), 0, ConstableLine); break; }
 				}
-				for (int D = std::max(0, Now.Day); D <= LastDay; ++D)
+				for (long long DD = std::max(0, Now.Day); DD <= LastDay; ++DD)
 				{
+					const int D = (int)DD;
 					const GameTime T = At(D, EllisHour);
 					if (Cmp(T.AddMinutes(60), Now) <= 0) continue;
 					const std::vector<std::string> Whys = Police->EllisWouldComeAll(B->Mill, D, B->InquiryOf);

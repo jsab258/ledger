@@ -29,6 +29,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -50,6 +51,10 @@ namespace LedgerCore
 		std::vector<std::shared_ptr<Custody> > Arrests;
 		TownHours Hours;
 		WeeksEnd Week;
+		/// The wait's lines he has been shown (the game's WaitBeats.Shown is this
+		/// set; the time-and-state sweep, 30 September: kept nowhere, a reload
+		/// stopped him again at lines already shown).
+		std::set<std::string> WaitShown;
 
 		std::string ToJson() const
 		{
@@ -62,7 +67,25 @@ namespace LedgerCore
 			for (size_t I = 0; I < Damage.size(); ++I) J += (I ? "," : "") + Damage[I].ToJson();
 			J += "],\"arrests\":[";
 			for (size_t I = 0; I < Arrests.size(); ++I) J += (I ? "," : "") + Arrests[I]->ToJson();
-			return J + "],\"hours\":" + Hours.ToJson() + ",\"week\":" + Week.ToJson() + "}";
+			J += "],\"hours\":" + Hours.ToJson() + ",\"week\":" + Week.ToJson() + ",\"shown\":[";
+			size_t I = 0;
+			for (const std::string& K : WaitShown) J += (I++ ? "," : "") + PoliceJson::Str(K);   // std::set: ordinal order
+			return J + "]}";
+		}
+
+		// A wait's stop key as WaitStop makes it: a lower-case word (underscores
+		// after its first letter, as in sheila_answer), "@", and up to nine digits.
+		static bool IsStopKey(const std::string& K)
+		{
+			const std::string::size_type At = K.find('@');
+			if (At == std::string::npos || At == 0 || At == K.size() - 1 || K.size() - At - 1 > 9) return false;
+			for (size_t I = 0; I < K.size(); ++I)
+			{
+				const char C = K[I];
+				if (I < At) { if (!((C >= 'a' && C <= 'z') || (C == '_' && I > 0))) return false; }
+				else if (I > At) { if (!(C >= '0' && C <= '9')) return false; }
+			}
+			return true;
 		}
 
 		/// From ToJson's text: each piece from what it can read, fresh where it
@@ -123,7 +146,7 @@ namespace LedgerCore
 				{
 					if (X.Type != LedgerVignette::T_OBJ) continue;
 					const std::shared_ptr<Custody> C = Custody::FromValue(X);
-					if (C && T.Police.WasTaken(C->Topic())) Taken.push_back(C);
+					if (C && T.Police.Took(C.get())) Taken.push_back(C);
 				}
 			std::stable_sort(Taken.begin(), Taken.end(), [](const std::shared_ptr<Custody>& A, const std::shared_ptr<Custody>& B) {
 				if (A->TakenAt().TotalMinutes() != B->TakenAt().TotalMinutes()) return A->TakenAt().TotalMinutes() < B->TakenAt().TotalMinutes();
@@ -137,6 +160,9 @@ namespace LedgerCore
 			}
 			T.Hours = TownHours::FromValue(Obj("hours"));
 			T.Week = WeeksEnd::FromValue(Obj("week"));
+			const Value* Sh = PoliceJson::Last(Root, "shown");
+			if (Sh != nullptr && Sh->Type == LedgerVignette::T_ARR)
+				for (const Value& X : Sh->Arr) { if (X.Type == LedgerVignette::T_STR && IsStopKey(X.Str)) T.WaitShown.insert(X.Str); }
 			return true;
 		}
 	};

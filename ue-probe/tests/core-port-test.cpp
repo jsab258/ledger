@@ -338,6 +338,16 @@ int main(int argc, char** argv)
 		Loud(!B.FromText("") && !B.FromText("12") && !B.FromText("x|0.5") && !B.FromText("-5|0.5") && !B.FromText("5|1.5")
 		     && B.TotalMinutes() == A.TotalMinutes(), "a save it cannot read is refused and leaves the clock alone");
 	}
+	// .NET'S int.TryParse TAKES TRAILING NULS (the sweep port's independent
+	// check, 30 September, proved against the real C#): after the number and
+	// its trailing blanks, never before them or inside it.
+	{
+		GameTime Tm;
+		Loud(GameTime::TryParse(std::string("D1 02:03\0", 9), Tm) && Tm.TotalMinutes() == GameTime(1, 2, 3).TotalMinutes()
+		     && GameTime::TryParse(std::string("D1 02:03\t\0\0", 11), Tm) && !GameTime::TryParse(std::string("D1 02:03 \0\0", 11), Tm)
+		     && !GameTime::TryParse(std::string("D1 02:0\0 3", 10), Tm) && !GameTime::TryParse(std::string("D1 02:\0", 7), Tm),
+		     "a time with NULs after it reads as .NET reads it, and NULs anywhere else are refused");
+	}
 
 	std::printf("core-port-test: %d check(s), %d failure(s) over %ld golden row(s), "
 	            "%ld mismatch(es), %ld unanswered, %ld skipped\n",

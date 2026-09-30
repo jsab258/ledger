@@ -8,6 +8,7 @@ SHIP-SAFE
 5. Music: self-hosted MusicGen (MIT) or Stable Audio Open; ElevenLabs Music if adopted. Final pick re-verified when radio production starts (open-questions 4).
 6. Geodata: OSM/Overture as skeleton only, geometry self-generated, OSM attribution shipped, layouts fictionalized.
 7. Fonts: the SIL Open Font Licence (OFL 1.1), which lets a game ship the font; its licence text shipped beside it and the font never sold on its own. Ruled by Jafar 2026-09-30 (Wednesday's page, "call-font", A), first for Marcellus SC on the street's name plates.
+8. Animation (Epic, Unreal-only): Epic's free animation content licensed for use in Unreal Engine products only, such as the Game Animation Sample and Lyra, used inside the game only: never exported, sold or used outside an Unreal build. Each pack's own licence is read at download and named in THIRD-PARTY.md. Our MetaHumans already come under the same kind of Epic licence. Ruled by Jafar 2026-09-30 (production/research/townspeople-animation, A).
 
 NEVER SHIP
 1. XTTS-v2 or F5-TTS official weights output (non-commercial).

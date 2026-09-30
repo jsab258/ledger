@@ -3973,6 +3973,222 @@ namespace Golden
 		return A;
 	}
 
+	// ---- the time-and-state sweep of the Core (30 September) ----------
+	//
+	// PerceptionGolden's EmitSweepFixes, played again here, in the C#'s order:
+	// the last four of the port reviews' fourteen (a police save keeps only
+	// what play could make) and the sweep's ten. Each key keeps its answers
+	// in the table's order and hands them out in turn. SweepConstable and
+	// SweepTea carry no label. Where the C# edits a saved value (a night's
+	// "woundTell", an arrest's offence, the damage's "done", the wait's
+	// "shown"), the same value is put into the saved text here.
+
+	// The text with the value after "Key": (up to the next , } or ]) replaced,
+	// the first at or after From; the whole text when the key is absent.
+	inline std::string WithValue(const std::string& Text, const std::string& Key, const std::string& Value, std::string::size_type From = 0)
+	{
+		const std::string K = "\"" + Key + "\":";
+		const std::string::size_type At = Text.find(K, From);
+		if (At == std::string::npos) return Text;
+		const std::string::size_type B = At + K.size();
+		std::string::size_type E = B;
+		if (E < Text.size() && (Text[E] == '[' || Text[E] == '"'))
+		{
+			const char Close = Text[E] == '[' ? ']' : '"';
+			E = Text.find(Close, E + 1);
+			if (E == std::string::npos) return Text;
+			++E;
+		}
+		else
+		{
+			while (E < Text.size() && Text[E] != ',' && Text[E] != '}' && Text[E] != ']') ++E;
+		}
+		return Text.substr(0, B) + Value + Text.substr(E);
+	}
+
+	inline const std::map<std::string, std::vector<std::vector<std::string> > >& SweepAnswers()
+	{
+		static std::map<std::string, std::vector<std::vector<std::string> > > Ans;
+		if (!Ans.empty()) return Ans;
+		auto T = [](int D, int H, int M = 0) { return GameTime(D, H, M); };
+		auto Person = [](const std::string& Id) { return std::make_shared<Gossiper>(Id, Id, std::make_shared<MemoryStore>(Id), std::make_shared<KnowledgeBase>()); };
+		// A police save keeps only what play could make.
+		const std::pair<const char*, const char*> Saves[] = {
+			{ "bad save 2", R"({"entries":[{"who":"a","topic":"w","offence":"Damage","how":"Statement","day":2}],"calls":[[2,"w"],[4,"w"],[3,"w"],[5,"x"]],"taken":[["w",1000],["x",2000],["w",1e9]]})" },
+			{ "talk early, visit unreported, two calls a day, spell weeks on", R"({"entries":[{"who":"rita","topic":"w1","offence":"Damage","how":"Statement","day":1},{"who":"hal","topic":"w2","offence":"Damage","how":"Statement","day":1}],"visits":[[2,"talk"],[4,"Wounding cut"],[3,"talk"]],"calls":[[2,"w1"],[2,"w2"]],"taken":[["w1",28800]]})" },
+			{ "a spell after its call", R"({"entries":[{"who":"rita","topic":"w1","offence":"Damage","how":"Statement","day":1}],"calls":[[2,"w1"]],"taken":[["w1",3840]]})" } };
+		for (const auto& S : Saves) Ans["FixPoliceSave|" + std::string(S.first)].push_back({ Escape(PoliceFile::FromJson(S.second).ToJson()) });
+		// The talk's ageing never runs back.
+		const std::vector<std::vector<int> > Ages = { { 10, 12 }, { 10, 12, 11, 12 }, { 10, 9, 12 } };
+		for (const std::vector<int>& Hours : Ages)
+		{
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			Mill.Add(Person("a"));
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", "window_d1", "ritas"));
+			R->Summary = "x"; R->Confidence = 1.0; R->Hops = 1;
+			Mill.Get("a")->Rumors.push_back(R);
+			std::string Label;
+			for (size_t I = 0; I < Hours.size(); ++I) { Mill.Age(T(1, Hours[I])); Label += (I ? "-" : "") + FromInt(Hours[I]); }
+			Ans["SweepAge|" + Label].push_back({ FromDouble(Mill.Get("a")->Rumors[0]->Confidence) });
+		}
+		// A constable's call only for today's date.
+		{
+			PoliceFile Police;
+			Police.Report("rita", "w1", Offence::Damage, 4, 1);
+			std::string A2, A3;
+			const GameTime Two = T(2, 10), Three = T(3, 10);
+			const bool B2 = Police.ConstableComes(3, A2, &Two);
+			const bool B3 = Police.ConstableComes(3, A3, &Three);
+			Ans["SweepConstable"].push_back({ B2 ? A2 : "null", B3 ? A3 : "null", FromInt((long long)Police.ConstableCalls().size()) });
+		}
+		// DS Ellis asks only the people on the street at her visit's hour.
+		if (const CastDay* Cast = CastNamed("hook-cast.json"))
+		{
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			for (const std::string& Id : Cast->People())
+			{
+				Mill.Add(Person(Id));
+				RumorPtr R = std::make_shared<Rumor>(Fact("player", "window_d1", "ritas"));
+				R->Summary = "x"; R->Confidence = 0.9; R->Sensitive = true; R->Hops = 1;
+				Mill.Get(Id)->Rumors.push_back(R);
+			}
+			for (int Day : { 2, 4, 6 })
+			{
+				const GameTime Nine = T(Day, 9);
+				std::string Asked;
+				const std::vector<std::string> Who = PoliceFile::WhoSheAsks(&Mill, Cast, &Nine);
+				for (size_t I = 0; I < Who.size(); ++I) Asked += (I ? "," : "") + Who[I];
+				Ans["SweepAsked|" + FromInt(Day)].push_back({ Asked });
+				PoliceFile File;
+				File.HearTheStreet(&Mill, Day, [](const std::string&) { return Offence::Damage; }, Cast, &Nine);
+				std::string Heard;
+				for (size_t I = 0; I < File.Entries().size(); ++I)
+				{
+					const PoliceFile::Entry& E = File.Entries()[I];
+					Heard += (I ? "," : "") + E.Who + ":" + E.Topic + ":" + KnownName(E.How);
+				}
+				Ans["SweepHeard|" + FromInt(Day)].push_back({ Escape(Heard) });
+			}
+		}
+		// A night brought, then wound down that evening; the wound-down word's bounds.
+		{
+			Arrangement A(0);
+			for (int N = 0; N < 6; N += Arrangement::Every) A.PassedTo(N + 1);
+			const GameTime Eight = T(6, 20);
+			A.Delivered(6, nullptr, &Eight);
+			A.WoundDown(T(6, 20, 30));
+			const std::string Json = A.ToJson();
+			Ans["SweepWound|load"].push_back({ FromBool(Arrangement::FromJson(Json).WasDelivered(6)), Escape(Json) });
+			const std::pair<const char*, const char*> Tells[] = { { "half a night", "[6.5,9960]" }, { "at one", "[6,10140]" }, { "at 00:59", "[6,10139]" } };
+			for (const auto& W : Tells)
+				Ans["SweepWound|" + std::string(W.first)].push_back({ FromInt(Arrangement::FromJson(WithValue(Json, "woundTell", W.second)).WoundNight()) });
+		}
+		// Ada's tea is not judged before its evening.
+		{
+			std::unique_ptr<AdasTea> Tea = AdasTea::For(0, true);
+			std::string Ignored;
+			Tea->SheSeesHim(T(Tea->Day(), 8), Ignored);
+			const std::string S1 = TeaStateName(Tea->Close(nullptr, T(Tea->Day() - 1, 12)));
+			const std::string S2 = TeaStateName(Tea->Close(nullptr, T(Tea->Day(), 12)));
+			const std::string S3 = TeaStateName(Tea->Close(nullptr, T(Tea->Day() + 1, 9)));
+			Ans["SweepTea"].push_back({ S1, S2, S3 });
+		}
+		// A saved arrest is kept only as the police file took him.
+		{
+			TownSave Town;
+			Town.Police.Report("rita", "w1", Offence::Damage, 4, 1);
+			std::string Called;
+			const GameTime Ten = T(2, 10);
+			Town.Police.ConstableComes(2, Called, &Ten);
+			const std::string W1 = "w1";
+			Town.Arrests.push_back(Town.Police.TakeIn(&W1, Ten, false, false));
+			const std::string Json = Town.ToJson();
+			const std::string::size_type Ar = Json.find("\"arrests\":[");
+			auto Count = [](const std::string& J) { TownSave Back; std::string Err; TownSave::FromJson(J, Back, Err); return FromInt((long long)Back.Arrests.size()); };
+			Ans["SweepArrest|as saved"].push_back({ Count(Json) });
+			const std::string Killing = WithValue(Json, "offence", "\"Killing\"", Ar);
+			Ans["SweepArrest|another offence"].push_back({ Count(Killing) });
+			const std::string Later = WithValue(Json, "taken", FromInt(40LL * 1440 + 600), Ar);
+			Ans["SweepArrest|another day"].push_back({ Count(Later) });
+		}
+		// A statement raised after he was taken, of another offence, comes first.
+		{
+			TownSave Town;
+			Town.Police.Report("p1", "player.cut_d1", Offence::Robbery, 3, 1);
+			Town.Police.Report("p2", "player.cut_d1", Offence::Wounding, 4, 1);
+			GossipMill Empty(std::make_shared<SocialGraph>());
+			std::string Why;
+			Town.Police.EllisComes(&Empty, 2, Inquiry::None, Why);
+			const std::string Cut = "player.cut_d1";
+			Town.Arrests.push_back(Town.Police.TakeIn(&Cut, T(2, 9), false, false));
+			Town.Police.Report("p1", "player.cut_d1", Offence::Robbery, 4, 3);
+			TownSave Back;
+			std::string Err;
+			TownSave::FromJson(Town.ToJson(), Back, Err);
+			Ans["SweepArrest|raised later"].push_back({ FromInt((long long)Back.Arrests.size()), Back.Arrests.empty() ? std::string("-") : std::string(OffenceName(Back.Arrests[0]->OffenceOf())) });
+		}
+		// A deed's damage from before the first day.
+		{
+			Aftermath A;
+			Aftermath::Make("ritas", "player.window_d1", "Rita's window is boarded up.", T(1, 21), nullptr, nullptr, A);
+			const std::string Json = A.ToJson();
+			for (const char* Done : { "-50000", "-1", "0" })
+			{
+				LedgerVignette::Value Root;
+				std::string Err;
+				Aftermath Back;
+				const bool bOk = MiniJson::Deserialize(WithValue(Json, "done", Done), Root, Err) && Root.Type == LedgerVignette::T_OBJ && Aftermath::FromValue(Root, Back);
+				Ans["SweepDamage|" + std::string(Done)].push_back({ FromBool(bOk) });
+			}
+		}
+		// A memory's time only as the game writes one.
+		for (const char* S : { "D3 14:05", "D1 25:99", "D1 23:60", "D-3 -4:-5", "D2147483647 00:00", "D100000 00:00", "D99999 23:59", "D0 00:00" })
+		{
+			GameTime Tm;
+			const bool bOk = GameTime::TryParse(S, Tm);
+			MemoryEvent E(GameTime(), "observation", 0.0, "");
+			const bool bLine = MemoryEvent::TryFromLine("- [" + std::string(S) + "] (0.50|observation) he was about", E);
+			Ans["SweepTime|" + Escape(S)].push_back({ FromBool(bOk), bOk ? FromInt(Tm.TotalMinutes()) : std::string("-"), FromBool(bLine) });
+		}
+		// The wait's lines already shown, in the town's save.
+		{
+			TownSave Town;
+			for (const char* K : { "ron@1", "released@4380", "tea@2", "sheila_answer@6" }) Town.WaitShown.insert(K);
+			const std::string Json = Town.ToJson();
+			const std::string::size_type At = Json.find("\"shown\":");
+			Ans["SweepShown|written"].push_back({ Escape(Json.substr(At + 8, Json.find(']', At) - At - 7)) });
+			const std::string Damaged = WithValue(Json, "shown",
+				R"(["ron@1","Ron@1","x@","@3","_x@3","tea@1234567890","tea@-1","tea 1",3,"landing@3","ron@1","sheila_answer@6"])");
+			TownSave Back;
+			std::string Err;
+			TownSave::FromJson(Damaged, Back, Err);
+			std::string Kept;
+			size_t I = 0;
+			for (const std::string& K : Back.WaitShown) Kept += (I++ ? "," : "") + K;
+			Ans["SweepShown|damaged"].push_back({ Escape(Kept) });
+		}
+		return Ans;
+	}
+
+	inline Answer SweepRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::string& Fn = F[0];
+		const int Labels = Fn == "SweepConstable" || Fn == "SweepTea" ? 0 : 1;
+		if ((int)F.size() < 1 + Labels + 1) return A;
+		std::string Key = Fn;
+		for (int I = 1; I <= Labels; ++I) Key += "|" + F[I];
+		const auto& Ans = SweepAnswers();
+		const auto It = Ans.find(Key);
+		if (It == Ans.end()) return A;
+		static std::map<std::string, std::size_t> Turn;
+		const std::size_t N = Turn[Key]++;
+		if (N >= It->second.size()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 1 + Labels, It->second[N]);
+		return A;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -4821,6 +5037,14 @@ namespace Golden
 		         || Fn == "FixLanding" || Fn == "FixLandingNo" || Fn == "FixMidnight" || Fn == "FixPoliceOrder" || Fn == "FixCellsCall")
 		{
 			A = FixRow(F);
+		}
+		// THE TIME-AND-STATE SWEEP OF 30 SEPTEMBER (EmitSweepFixes): Arrangement.h,
+		// FirstWeek.h, GameTime.h, Gossip.h, PoliceFile.h, StreetVoice.h, TownNews.h,
+		// TownSave.h, Waiting.h.
+		else if (Fn == "FixPoliceSave" || Fn == "SweepAge" || Fn == "SweepConstable" || Fn == "SweepAsked" || Fn == "SweepHeard"
+		         || Fn == "SweepWound" || Fn == "SweepTea" || Fn == "SweepArrest" || Fn == "SweepDamage" || Fn == "SweepTime" || Fn == "SweepShown")
+		{
+			A = SweepRow(F);
 		}
 		// DAY ONE (town list 6cg): DayOne.h and StreetVoice::ArrivalLine.
 		else if (Fn == "WalkRound" || Fn == "ArrivalSeen" || Fn == "RecognitionArrival" || Fn == "ArrivalLine" || Fn == "ArrivalRegard")

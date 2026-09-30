@@ -314,7 +314,9 @@ namespace LedgerCore
 			// September: the call was recorded, TakeIn refused him, and the deed
 			// was used up for good, never answered for): with Now, no call is
 			// made or recorded while he is held; the deed waits for its call.
-			if (Now != nullptr && InTheCells(*Now)) return false;
+			// And only for today (the time-and-state sweep: a call for day 3
+			// made on day 2 took him on day 2).
+			if (Now != nullptr && (Now->Day != Day || InTheCells(*Now))) return false;
 			if (!ConstableWouldCome(Day, Out)) return false;
 			CallsList.push_back(std::make_pair(Day, Out));
 			return true;
@@ -355,14 +357,39 @@ namespace LedgerCore
 		{
 			if (Topic == nullptr || !CanArrest(Topic)) return nullptr;
 			for (const auto& T : TakenList) { if (T.second > Now.TotalMinutes()) return nullptr; }
-			Offence O = Offence::Suspicious;
-			for (const Entry& E : EntriesList) { if (E.Topic == *Topic && E.How == Known::Statement && Custody::Arrestable(E.Offence_)) { O = E.Offence_; break; } }
-			std::shared_ptr<Custody> C = Custody::Take(*Topic, O, Now, bOwnsUp, bInTheCoat);
+			std::shared_ptr<Custody> C = Custody::Take(*Topic, ArrestOffence(*Topic), Now, bOwnsUp, bInTheCoat);
 			if (C) TakenList.push_back(std::make_pair(*Topic, C->OutAt().TotalMinutes()));
 			return C;
 		}
 
+		/// Whether a save's arrest is the one this file took him in for: the
+		/// same deed, an arrestable offence a statement about it gives, out at
+		/// the same minute (the time-and-state sweep, 30 September). Any
+		/// statement's offence, not only the first's.
+		bool Took(const Custody* C) const
+		{
+			if (C == nullptr) return false;
+			for (const auto& T : TakenList)
+			{
+				if (T.first != C->Topic()) continue;
+				if (T.second != C->OutAt().TotalMinutes()) return false;
+				for (const Entry& E : EntriesList)
+				{
+					if (E.Topic == C->Topic() && E.How == Known::Statement && E.Offence_ == C->OffenceOf() && Arrestable(E.Offence_)) return true;
+				}
+				return false;
+			}
+			return false;
+		}
+
 		static bool Arrestable(Offence O) { return Custody::Arrestable(O); }
+
+		// What he is taken in for: the first statement's arrestable offence.
+		Offence ArrestOffence(const std::string& Topic) const
+		{
+			for (const Entry& E : EntriesList) { if (E.Topic == Topic && E.How == Known::Statement && Arrestable(E.Offence_)) return E.Offence_; }
+			return Offence::Suspicious;
+		}
 
 		/// WOULD THIS PERSON GO TO THE POLICE with what they saw or suffered?
 		static bool WouldReport(const Gossiper* G, Offence O, bool bVictim, const std::string* Topic, bool bNeverToPolice = false)
@@ -417,12 +444,15 @@ namespace LedgerCore
 		}
 
 		/// WHAT THE STREET TELLS HER when she comes for its talk.
-		void HearTheStreet(const GossipMill* Mill, int Day, const std::function<Offence(const std::string&)>& OffenceOf)
+		/// With the cast and the visit's time, only the people on the street
+		/// then, the ones she asks (the sweep's independent check).
+		void HearTheStreet(const GossipMill* Mill, int Day, const std::function<Offence(const std::string&)>& OffenceOf,
+		                   const CastDay* Cast = nullptr, const GameTime* At = nullptr)
 		{
 			if (Mill == nullptr) return;
 			for (const GossiperPtr& A : Mill->Agents())
 			{
-				if (!A) continue;
+				if (!A || !OnTheStreet(Cast, At, A->Id)) continue;
 				for (const RumorPtr& R : TalkOf(*Mill, *A)) Heard(A->Id, R->TopicKey(), OffenceOf ? OffenceOf(R->TopicKey()) : Offence::Suspicious, Day);
 			}
 		}
@@ -464,13 +494,15 @@ namespace LedgerCore
 
 		/// WHO SHE ASKS on a visit about him: everybody of his day world who
 		/// holds a story of his nights, in order.
-		static std::vector<std::string> WhoSheAsks(const GossipMill* Mill)
+		/// With the cast and the visit's time, only those on the street then
+		/// (the time-and-state sweep, 30 September).
+		static std::vector<std::string> WhoSheAsks(const GossipMill* Mill, const CastDay* Cast = nullptr, const GameTime* At = nullptr)
 		{
 			std::vector<std::string> Who;
 			if (Mill == nullptr) return Who;
 			for (const GossiperPtr& A : Mill->Agents())
 			{
-				if (!A || A->Circle != "day") continue;
+				if (!A || A->Circle != "day" || !OnTheStreet(Cast, At, A->Id)) continue;
 				for (const RumorPtr& R : A->Rumors)
 				{
 					if (R && R->Content.Subject == "player" && R->Sensitive && R->Confidence > 0) { Who.push_back(A->Id); break; }
@@ -604,7 +636,8 @@ namespace LedgerCore
 				for (const Value& X : Vs->Arr)
 				{
 					int Day;
-					if (X.Type != LedgerVignette::T_ARR || X.Arr.size() != 2 || !DayOf(X.Arr[0], Day) || X.Arr[1].Type != LedgerVignette::T_STR || !KnownWhy(X.Arr[1].Str)) continue;
+					if (X.Type != LedgerVignette::T_ARR || X.Arr.size() != 2 || !DayOf(X.Arr[0], Day) || X.Arr[1].Type != LedgerVignette::T_STR || !KnownWhy(X.Arr[1].Str)
+					    || !VisitCouldBe(F, Day, X.Arr[1].Str)) continue;
 					bool bDup = false;
 					for (const auto& V : F.VisitsList) { if (V.second == X.Arr[1].Str) bDup = true; }
 					if (!bDup) F.VisitsList.push_back(std::make_pair(Day, X.Arr[1].Str));
@@ -617,10 +650,11 @@ namespace LedgerCore
 					int Day;
 					if (X.Type != LedgerVignette::T_ARR || X.Arr.size() != 2 || !DayOf(X.Arr[0], Day) || X.Arr[1].Type != LedgerVignette::T_STR) continue;
 					const std::string& Topic = X.Arr[1].Str;
-					bool bStatement = false, bCalled = false;
+					bool bStatement = false, bCalled = false, bThatDay = false;
 					for (const Entry& E : F.EntriesList) { if (E.Topic == Topic && E.Offence_ == Offence::Damage && E.How == Known::Statement && E.Day < Day) bStatement = true; }
-					for (const auto& C : F.CallsList) { if (C.second == Topic) bCalled = true; }
-					if (bStatement && !bCalled) F.CallsList.push_back(std::make_pair(Day, Topic));
+					for (const auto& C : F.CallsList) { if (C.second == Topic) bCalled = true; if (C.first == Day) bThatDay = true; }
+					// One call a day, as play makes them (the port's independent check, 30 September).
+					if (bStatement && !bCalled && !bThatDay) F.CallsList.push_back(std::make_pair(Day, Topic));
 				}
 			ByDayKeepingOrder(F.CallsList);
 			const Value* Tk = PoliceJson::Last(Root, "taken");
@@ -629,7 +663,7 @@ namespace LedgerCore
 				{
 					if (X.Type != LedgerVignette::T_ARR || X.Arr.size() != 2 || X.Arr[0].Type != LedgerVignette::T_STR || X.Arr[1].Type != LedgerVignette::T_NUM) continue;
 					const double Om = X.Arr[1].Num;
-					if (Om < 0 || Om >= 1e8 || Om != std::floor(Om) || !F.CanArrest(&X.Arr[0].Str)) continue;
+					if (Om < 0 || Om >= 1e8 || Om != std::floor(Om) || !F.CanArrest(&X.Arr[0].Str) || !SpellCouldBe(F, X.Arr[0].Str, (long long)Om)) continue;
 					F.TakenList.push_back(std::make_pair(X.Arr[0].Str, (long long)Om));
 				}
 			return F;
@@ -642,6 +676,52 @@ namespace LedgerCore
 		std::vector<std::pair<std::string, long long> > TakenList;
 
 		static bool Detective(Offence O) { return (int)O >= (int)Offence::Wounding; }
+
+		// Whether somebody is on the street at her visit's hour; anybody,
+		// without the cast and the time.
+		static bool OnTheStreet(const CastDay* Cast, const GameTime* At, const std::string& Id)
+		{
+			if (Cast == nullptr || At == nullptr) return true;
+			std::string Place;
+			return Cast->PlaceOf(Id, At->Day, At->Hour, Place) && Place != CastDay::Off();
+		}
+
+		// WHAT PLAY COULD MAKE, for a load (the port's independent check, 30
+		// September): her visit for the talk only from TalkNoSoonerThan; for a
+		// crime only once it is in the file, by statement or description, on
+		// or before that day.
+		static bool VisitCouldBe(const PoliceFile& F, int Day, const std::string& Why)
+		{
+			if (Why == "body") return true;
+			if (Why == "talk") return Day >= TalkNoSoonerThan;
+			const std::string::size_type Sp = Why.find(' ');
+			const std::string Off = Why.substr(0, Sp), Topic = Why.substr(Sp + 1);
+			for (const Entry& E : F.EntriesList)
+			{
+				if (E.Topic == Topic && Off == OffenceName(E.Offence_) && E.How != Known::Talk && E.Day <= Day) return true;
+			}
+			return false;
+		}
+
+		// A spell in the cells ends no later than the longest spell (Custody's
+		// 22 hours) after the day of the call or the visit that took him, and
+		// not before that day began. Taken with neither on file, it ends no
+		// earlier than the day of the statement it was for.
+		static constexpr int LongestSpellHours = 22;
+		static bool SpellCouldBe(const PoliceFile& F, const std::string& Topic, long long OutMinute)
+		{
+			int Latest = -1;
+			for (const auto& C : F.CallsList) { if (C.second == Topic) Latest = std::max(Latest, C.first); }
+			const std::string Tail = " " + Topic;
+			for (const auto& V : F.VisitsList)
+			{
+				if (V.second.size() >= Tail.size() && V.second.compare(V.second.size() - Tail.size(), Tail.size(), Tail) == 0) Latest = std::max(Latest, V.first);
+			}
+			if (Latest >= 0) return OutMinute >= Latest * 1440LL && OutMinute <= (Latest + 1) * 1440LL + LongestSpellHours * 60;
+			long long Stated = -1;
+			for (const Entry& E : F.EntriesList) { if (E.Topic == Topic && E.How == Known::Statement && (Stated < 0 || E.Day < Stated)) Stated = E.Day; }
+			return Stated >= 0 && OutMinute >= Stated * 1440LL;
+		}
 
 		// Talk a person of his day world would pass on: his hidden life, heard
 		// from somebody, at the share floor, not bought or hooked quiet.

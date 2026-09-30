@@ -106,7 +106,7 @@ namespace
 				}
 				W.DamageTick(&Mill, &Cast, Now);
 				W.NineReports(&Mill, &Cast, Now, 4);
-				W.NineEllis(&Mill, Now);
+				W.NineEllis(&Mill, Now, &Cast);
 				if (Hod == 10 && W.Arrests.empty()) W.TenConstable(&Mill, &Cast, Now, "mickeys");
 				const std::shared_ptr<Custody> C = W.Latest();
 				const bool bHeld = C && C->Holds(Now);

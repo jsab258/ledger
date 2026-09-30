@@ -97,6 +97,13 @@ namespace LedgerCore
 					Err = "town news: " + St.Id + " needs a day and an hour";
 					return false;
 				}
+				// A whole day within what a save keeps, a whole hour (the port's
+				// independent check, 30 September: 1e10, or a fraction, was taken).
+				if (D->Num != std::floor(D->Num) || D->Num < 0 || D->Num >= 100000 || H->Num != std::floor(H->Num))
+				{
+					Err = "town news: " + St.Id + " needs a whole day from 0 to 99999 and a whole hour";
+					return false;
+				}
 				St.Day = (int)D->Num;
 				St.Hour = (int)H->Num;
 				const Value* F = PoliceJson::Last(So, "fact");
@@ -285,7 +292,9 @@ namespace LedgerCore
 				return true;
 			};
 			long long Done = 0, Mended = 0, Next = 0;
-			if (!ReadMinutes("done", Done) || !ReadMinutes("mended", Mended) || Mended < Done) return false;
+			// Never before the first day (the time-and-state sweep: a deed at minus
+			// fifty thousand minutes loaded, and was found).
+			if (!ReadMinutes("done", Done) || Done < 0 || !ReadMinutes("mended", Mended) || Mended < Done) return false;
 			std::vector<std::string> Leave;
 			const Value* Ls = PoliceJson::Last(Root, "leaveOut");
 			if (Ls != nullptr && Ls->Type == LedgerVignette::T_ARR)
