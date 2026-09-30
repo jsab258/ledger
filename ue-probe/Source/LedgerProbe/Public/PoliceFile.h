@@ -12,9 +12,15 @@
 // charged and bailed. Her asking after him is the street's news, not his secret.
 //
 // TRANSLITERATION, NOT REWRITE, as Gossip.h states the method: the C#'s
-// nullable returns are false or nullptr here, and List.Sort on the file's few
-// visits and calls is a stable sort, as the C#'s insertion sort is for lists
-// that short. Checked against PerceptionGolden's EmitTaken and EmitPoliceAsked
+// nullable returns are false or nullptr here.
+// TWO KNOWN DEVIATIONS (the independent check, 30 September). FromJson sorts
+// the visits and calls by day with a stable sort, where the C#'s List.Sort is
+// not stable (two or three with the same day can come back swapped, and a
+// reload swaps them again); only their order and the save's bytes differ, no
+// decision, and the C# is asked to sort stably (FINDINGS, for the town).
+// WhoSheAsks orders ids by UTF-8 bytes where the C# orders UTF-16 units; the
+// same for every id outside the astral planes and the high BMP, and the cast's
+// ids are plain ASCII. Checked against PerceptionGolden's EmitTaken and EmitPoliceAsked
 // rows in ue-probe/perception-golden.txt, and through the wait's rows.
 //
 // NO UNREAL TYPE IS IN THIS FILE, as every file of the port.
