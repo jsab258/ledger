@@ -105,7 +105,7 @@ With `noReply`: `{"id", "to", "who", "suspicion", "level", "why"}`.
 A report is kept as a line with `reportedAt`, `why` and `turn`.
 
 When the game closes the program's input, it writes one last line and stops:
-`{"cost", "usd", "calls"}`, what the session's model calls cost, by model, in
+`{"cost", "usd", "calls", "budgetSpent", "budgetRefused"}` (the last two only under `--budget-usd`: what the budget counted, reserves of refused calls included, and how many calls it refused, Jafar's rule of 30 September that the key's cap is enforced in code), what the session's model calls cost, by model, in
 dollars at the game's own price table, and how many there were.
 
 Errors: `{"error": "bad-line"}`; `{"id", "to", "error": "no-card"}` or

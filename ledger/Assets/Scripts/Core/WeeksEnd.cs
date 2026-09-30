@@ -190,21 +190,25 @@ namespace Ledger.Core
             if (!(AskedAt is GameTime at) || Answered || now.Day <= at.Day) return false;
             Answer = WeekAnswer.WontSay;
             AnsweredAt = new GameTime(at.Day + 1, 0, 0);
-            File(mill, cast, AnsweredAt.Value, false);
+            File(mill, cast, AnsweredAt.Value, false, overheard: false);
             return true;
         }
 
         // Filed once: her memory and the story, first-hand for her and for
         // anybody the cast has in the office's area then (never at midnight,
         // when she is not there to be overheard: only she knows).
-        void File(GossipMill mill, CastDay cast, GameTime at, bool atOffice)
+        void File(GossipMill mill, CastDay cast, GameTime at, bool atOffice, bool overheard = true)
         {
             if (mill == null) return;
             var fact = new Fact("player", "week_d" + AskedAt.Value.Day, Value(Answer));
             if (mill.Get(Sheila) is Gossiper she)
                 she.Memory?.Append(new MemoryEvent(at, "conversation", 0.9, Remembered(Answer)));
             mill.Witness(Sheila, fact, Said(Answer), false, at, 1.0);
-            if (cast == null || at.Hour == 0 && at.Minute == 0) return;
+            // The day closing unanswered at midnight: she is not there to be
+            // overheard. Said by the caller, never read from the clock (the port's
+            // independent check, 30 September: a plain answer at 00:00 was heard
+            // by Sheila alone).
+            if (cast == null || !overheard) return;
             // Where she is when he answers: her routine's place, or the office
             // on her Sunday off (the independent check: an answer on Rita's step
             // was heard by the people at Mickey's).

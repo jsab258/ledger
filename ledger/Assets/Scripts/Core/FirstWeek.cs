@@ -95,7 +95,10 @@ namespace Ledger.Core
             int last = -1;
             foreach (var m in _minutes)
             {
-                if (last >= 0 && m - last > LongestAway) return TeaState.LeftEarly;
+                // The minutes away are those between two he was there: stamps
+                // eleven apart are ten away, which is allowed (the port's
+                // independent check, 30 September).
+                if (last >= 0 && m - last - 1 > LongestAway) return TeaState.LeftEarly;
                 last = m;
             }
             return TeaState.Stayed;
@@ -145,7 +148,10 @@ namespace Ledger.Core
         {
             if (SeenGoing || mill == null || !forTheAsk || State == TeaState.NotAsked) return;
             bool thatNight = (now.Day == Day && now.Hour >= From) || (now.Day == Day + 1 && now.Hour < 1);
-            if (!thatNight) return;
+            // Nobody sees him go when Ada is not in the mill (the port's
+            // independent check, 30 September: he was marked seen, and nobody
+            // held it).
+            if (!thatNight || mill.Get(Ada) == null) return;
             SeenGoing = true;
             mill.Witness(Ada, new Fact("player", "left_tea_for_landing_d" + Day, "seen"),
                          "Mickey's nephew went off down towards the ferry, late, the night I'd asked him in for his tea", true, now, 1.0, rung: 4);

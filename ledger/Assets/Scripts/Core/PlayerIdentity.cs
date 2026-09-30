@@ -265,7 +265,29 @@ namespace Ledger.Core
         public bool NameTold(GossipMill mill, string who, GameTime at)
         {
             if (mill == null || string.IsNullOrEmpty(who) || !(mill.Get(who) is Gossiper g) || g.Rumors.Exists(r => IsNameStory(r) && r.Hops == 0)) return false;
-            mill.Witness(who, new Fact("player", "name", Surname), $"Mickey's nephew is called {Surname}", false, at, 1.0);
+            // TOLD, NOT SEEN, AND THEIRS FIRST-HAND (the port's independent check,
+            // 30 September): through the mill's sighting, somebody who had heard
+            // his name at full certainty was never made first-hand, kept the
+            // teller as its source, was "told" again every time, and remembered
+            // "I saw it myself". The story is made theirs here, in place when they
+            // already hold it second-hand.
+            var fact = new Fact("player", "name", Surname);
+            string said = $"Mickey's nephew is called {Surname}";
+            Rumor held = null;
+            foreach (var r in g.Rumors) if (IsNameStory(r) && (held == null || r.Confidence > held.Confidence)) held = r;
+            if (held == null)
+                g.Rumors.Add(new Rumor { Content = fact, OriginId = who, Summary = said, Confidence = 1.0, Hops = 0, Sensitive = false });
+            else
+            {
+                held.Content = fact;
+                held.OriginId = who;
+                held.Summary = said;
+                held.Confidence = 1.0;
+                held.Hops = 0;
+                held.Sensitive = false;
+            }
+            g.Knowledge.Learn(fact);
+            g.Memory.Append(new MemoryEvent(at, "observation", 0.6, $"He told me himself: {said}"));
             return true;
         }
         public static bool HoldsHisName(Gossiper g) => g != null && g.Rumors.Exists(IsNameStory);
