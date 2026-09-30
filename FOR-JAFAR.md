@@ -27,7 +27,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page: three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y):** how Mickey died, winding it down, threats. **[Tomorrow's, ready](https://claude.ai/artifact/TXEoUnQoDTaLPfFZdHSYAL):** the fire, the talk's check, Steam's wording.
+**Both your pages are answered and acted on** (30 September, morning): Mickey's heart, the wind-down ends it, threats read by the checking model, the fire as drafted, the check reopened, Steam's wording approved. Nothing waits on you from the town.
 
 **Decided by me** (DECISIONS; overturn any): yesterday's other questions and pages. Relay: no key.
 
@@ -45,7 +45,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **C: free:** 46.8 GB, 47.9 now. Backup runs with this commit.
 
-**Next:** your three calls.
+**Next:** the talk timings with your key (first run: first words at 2.0 s, $0.40).
 
 ## Clothes, Wednesday 30 September
 

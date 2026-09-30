@@ -139,6 +139,9 @@ textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding
 .outline p,.outline li{max-width:65ch}
 .outline ul{padding-left:1.2rem;margin:4px 0}
 :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+img{max-width:100%;height:auto;cursor:zoom-in}
+.full{position:fixed;inset:0;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;z-index:10;cursor:zoom-out}
+.full img{max-width:100vw;max-height:100vh;width:auto;height:auto;object-fit:contain;cursor:zoom-out}
 """
 
 
@@ -190,6 +193,17 @@ def build(date):
 
 
 SCRIPT = """<script>
+// EVERY PICTURE OPENS AT FULL SIZE WHEN TAPPED (Jafar, 30 September); tap again to close.
+document.addEventListener("click", e => {
+  const open = document.querySelector(".full");
+  if (open) { open.remove(); return; }
+  const img = e.target.closest && e.target.closest("img");
+  if (!img) return;
+  const d = document.createElement("div"); d.className = "full";
+  const big = document.createElement("img"); big.src = img.currentSrc || img.src; big.alt = img.alt || "";
+  d.appendChild(big); document.body.appendChild(d);
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") { const o = document.querySelector(".full"); if (o) o.remove(); } });
 let db = null, canWrite = true;
 const state = {};
 function status(key, text, ok){const s=document.getElementById(key+"-status"); if(s){s.textContent=text; s.className="status"+(ok?" saved":"");}}
