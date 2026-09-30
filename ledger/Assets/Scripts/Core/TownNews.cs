@@ -258,11 +258,20 @@ namespace Ledger.Core
                     var g = mill.Get(p);
                     if (g == null) continue;
                     _found.Add(p);
-                    // Heard it before coming by: they see it, and keep the one copy.
-                    if (g.Rumors.Exists(r => r.Content != null && r.Content.Subject == TownNews.Subject && r.Content.Predicate == Key)) continue;
                     // There when it happened: at the deed's time; else as the hour starts.
                     bool there = h * 60 <= DoneAt.TotalMinutes;
                     var at = there ? DoneAt : new GameTime(day, hour, 0);
+                    // Heard it before coming by: they see it, and keep the one copy;
+                    // the keeper, told of her own place, still finds it in her own words.
+                    if (g.Rumors.Exists(r => r.Content != null && r.Content.Subject == TownNews.Subject && r.Content.Predicate == Key))
+                    {
+                        if (p == cast.KeeperOf(Area))
+                        {
+                            g.Memory.Append(new MemoryEvent(at, "observation", 0.6, KeeperMemoryOf(cast, there)));
+                            found.Add((p, at));
+                        }
+                        continue;
+                    }
                     int memories = g.Memory.Events.Count;
                     mill.Witness(p, fact, Said, false, at, 0.9);
                     if (g.Memory.Events.Count > memories) g.Memory.Events.RemoveRange(memories, g.Memory.Events.Count - memories);

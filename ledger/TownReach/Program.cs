@@ -344,10 +344,21 @@ static class Program
                     var stopWhy = new HashSet<string>();
                     var shownLines = new HashSet<string>();
                     mill.Age(new GameTime(0, 9, 0));
+                    // THE TOWN'S TALK IN TIME WITH WHAT HAPPENS (the independent review
+                    // of 30 September, A12: the answer at 10:40 was filed before the
+                    // hour's rounds ran from 10:00, so hearers held a 10:00 memory of
+                    // it): what happens on the hour happens first, the rounds run up to
+                    // each later event's minute before it, and the rest at the hour's
+                    // end (TownHours.RunTo); his no or the winding down reaches the
+                    // landing as each hour turns (Arrangement.TellDue).
+                    var talk = new TownHours();
                     for (int abs = 9; abs < 24 * 7 + 12; abs++)
                     {
                         int day = abs / 24, hod = abs % 24;
                         var now = new GameTime(day, hod, 0);
+                        // The rounds before minute m of this hour.
+                        void Before(int m) => talk.RunTo(mill, cast, now.AddMinutes(m - 1));
+                        arrangement.TellDue(mill, now);
                         // Every evening from six till ten the next morning; the
                         // Saturday night's till Sunday noon, over Sheila's ten o'clock.
                         bool InWait(int h) => waits != null && h >= 18 && (h % 24 >= 18 || h % 24 < (h / 24 == week.Day ? 12 : 10));
@@ -433,21 +444,27 @@ static class Program
                             var answer = takes ? NightAnswer.Did : NightAnswer.Refused;
                             if (answer == NightAnswer.Did && day == tea.Day)
                             {
+                                if (sits) Before(31);
                                 tea.WentToTheLanding(mill, new GameTime(day, sits ? 22 : 21, sits ? 31 : 45), forTheAsk: true);
                                 handOverAt = abs + (sits ? 2 : 1);
                             }
-                            else arrangement.Answer(day, answer, mill, new GameTime(day, 22, 30));
+                            else { Before(30); arrangement.Answer(day, answer, mill, new GameTime(day, 22, 30)); }
                         }
                         if (abs == handOverAt && arrangement.AsksOn(tea.Day) && !Skip("landing", false))
+                        {
+                            Before(45);
                             arrangement.Answer(tea.Day, NightAnswer.Did, mill, new GameTime(day, hod, 45));
+                        }
                         // The week's end: her question at half past ten on the Sunday.
                         if (day == week.Day && hod == 10 && week.AsksNow(new GameTime(day, 10, 30), atOffice: true) && !Skip("sheila"))
                         {
                             week.Ask(new GameTime(day, 10, 30), trust != "never");
+                            Before(40);
                             week.Give(WeekAnswer.TakeOver, new GameTime(day, 10, 40), mill, cast, arrangement);
                         }
                         week.Close(now, mill, cast);
-                        TownRounds.Hour(mill, cast, now);
+                        // The rest of the hour's rounds.
+                        talk.RunTo(mill, cast, now.AddMinutes(59));
                     }
                     int holdAnswer = mill.Agents.Count(a => a.Rumors.Any(WeeksEnd.IsWeekAnswer));
                     string arr = arrangement.Ended ? $"ended ({arrangement.EndedWhy})" : $"stands ({arrangement.Nights.Count} nights)";
