@@ -194,7 +194,9 @@ namespace Ledger.PerceptionGolden
                     // A12, the town's rounds in time order.
                     "TownHoursRun|", "TownHoursRound|",
                     // B3, his no told when Ron goes down.
-                    "TellDue|" };
+                    "TellDue|",
+                    // B5, a deed after midnight.
+                    "FirstReport|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1849,6 +1851,9 @@ namespace Ledger.PerceptionGolden
                     Row(sb, "NamesHim", "leak " + rung.ToString(Inv), Bit(leak.Get("n").Rumors.Exists(x => x.TopicKey == "player.window_d1")), D(leak.Get("n").Suspicion.Value));
                 }
             }
+            // A deed before six is the night before's: reported that morning (the review, B5).
+            foreach (var (d, h, m) in new[] { (2, 0, 30), (2, 5, 59), (2, 6, 0), (2, 12, 0), (2, 23, 30), (0, 1, 0) })
+                Row(sb, "FirstReport", d + " " + h + ":" + m.ToString("D2", Inv), Aftermath.NightOf(new GameTime(d, h, m)).ToString(Inv), Aftermath.FirstReportMorning(new GameTime(d, h, m)).TotalMinutes.ToString(Inv));
             // His no reaches the landing when Ron goes down, as the hour turns (the review, B3).
             {
                 var noMill = new GossipMill(null);

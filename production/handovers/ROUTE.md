@@ -41,7 +41,9 @@ inputs are shown:
    - `mill.Witness(seer, new Fact("player", "window_d" + d, place), said, true, now, certainty, rung)`
      for each witness, with the rung Perception gave.
 3. **Every hour after it:** `damage.Tick(mill, cast, now)`.
-4. **09:00, from the next day:** if
+4. **09:00, from `Aftermath.FirstReportMorning(deedTime)`** (the morning after
+   the deed's night: a deed before six belongs to the night before, so one at
+   half twelve is reported that same morning; the independent review, B5): if
    `PoliceFile.WouldReport(mill.Get(seer), offence, false, topic, cast.NeverToPolice(seer))`,
    then `police.Report(seer, topic, offence, rung, d)`, once.
 5. **09:00:** `why = police.EllisComes(mill, d)`; on "talk",
