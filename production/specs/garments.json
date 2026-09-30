@@ -30,6 +30,20 @@
       "name": "SheilaHandbag",
       "fbx": "F:/LedgerTools/garments/sheila_handbag/sheila_handbag_skinned.fbx",
       "handed": "2026-09-30"
+    },
+    {
+      "who": "Sam",
+      "name": "DarrenBelt",
+      "fbx": "F:/LedgerTools/garments/darren_belt_pager/darren_belt_skinned.fbx",
+      "handed": "2026-09-30",
+      "hold": "30 September: fitted and imported, but on Darren as the game dresses him now, Epic's untucked sweater covers his waist, so they would not show; worn once his own T-shirt (handed over, cloth) is fitted."
+    },
+    {
+      "who": "Sam",
+      "name": "DarrenPager",
+      "fbx": "F:/LedgerTools/garments/darren_belt_pager/darren_pager_skinned.fbx",
+      "handed": "2026-09-30",
+      "hold": "30 September: fitted and imported, but on Darren as the game dresses him now, Epic's untucked sweater covers his waist, so they would not show; worn once his own T-shirt (handed over, cloth) is fitted."
     }
   ]
 }

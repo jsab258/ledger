@@ -52,7 +52,17 @@ namespace
 	// times two seconds of frames and steps the picture down until a frame
 	// takes at most 15 ms (60 a second with room for the voice on the same
 	// card), or Low is reached.
-	constexpr double kTuneTargetMs = 15.0;
+	// THE LADDER, 30 September (the packaged walk): stepping the picture
+	// level alone took this card from Highest (26.4 ms at 3440 by 1440)
+	// past High (15.1) to Medium (7.9), though the build machine measures
+	// Highest drawn at half size and upscaled at 14.3 ms with the voice
+	// running. So at each level the street is drawn smaller first (100, 70,
+	// then 55 per cent of the screen, upscaled), and the level drops only
+	// after; the first rung at or under 16 ms, the 60-a-second line with a
+	// small margin, is kept.
+	constexpr double kTuneTargetMs = 16.0;
+	const float kTuneScales[3] = { 100.0f, 70.0f, 55.0f };
+	int32 GTuneLevel = 3, GTuneScale = 0;
 	// Measured only once the street is built and the card has nothing left
 	// to prepare, and by the median frame of at least ninety: the first try
 	// averaged in the benchmark's own stall and the editor's shader work
@@ -92,7 +102,10 @@ namespace
 		UGameUserSettings* S = GEngine != nullptr ? GEngine->GetGameUserSettings() : nullptr;
 		if (S == nullptr) { return -1; }
 		const int32 L = S->GetOverallScalabilityLevel();
-		return L < 0 ? -1 : FMath::Min(L, 3);
+		// Drawn smaller than the screen (the first launch's ladder), the
+		// levels no longer agree and the overall reads "custom": the light's
+		// own level stands for the picture then.
+		return L >= 0 ? FMath::Min(L, 3) : FMath::Clamp(S->GetGlobalIlluminationQuality(), 0, 3);
 	}
 
 	// A BUTTON WHOSE WORDS TURN GOLD WHEN IT IS THE ONE CHOSEN, by the keys
@@ -160,14 +173,22 @@ namespace
 
 FString PictureName()
 {
+	FString Name;
 	switch (PictureLevel())
 	{
-	case 0: return TEXT("Low");
-	case 1: return TEXT("Medium");
-	case 2: return TEXT("High");
-	case 3: return TEXT("Highest");
-	default: return TEXT("set for this PC");
+	case 0: Name = TEXT("Low"); break;
+	case 1: Name = TEXT("Medium"); break;
+	case 2: Name = TEXT("High"); break;
+	default: Name = TEXT("Highest"); break;
 	}
+	UGameUserSettings* S = GEngine != nullptr ? GEngine->GetGameUserSettings() : nullptr;
+	if (S != nullptr)
+	{
+		float Norm = 1.0f, Value = 100.0f, Min = 0.0f, Max = 100.0f;
+		S->GetResolutionScaleInformationEx(Norm, Value, Min, Max);
+		if (Value < 99.0f) { Name += FString::Printf(TEXT(", drawn at %.0f%%"), Value); }
+	}
+	return Name;
 }
 
 void FirstLaunchSettings()
@@ -312,6 +333,14 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 			bTuning = true;
 			GTuneFrom = -1.0;
 			GTuneFrames.Reset();
+			GTuneLevel = PictureLevel() < 0 ? 3 : PictureLevel();
+			GTuneScale = 0;
+			if (UGameUserSettings* S0 = GEngine != nullptr ? GEngine->GetGameUserSettings() : nullptr)
+			{
+				S0->SetOverallScalabilityLevel(GTuneLevel);
+				S0->SetResolutionScaleValueEx(kTuneScales[0]);
+				S0->ApplySettings(true);
+			}
 		}
 	}
 	if (bTuning)
@@ -326,11 +355,14 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 			GTuneFrames.Sort();
 			const double Ms = 1000.0 * GTuneFrames[GTuneFrames.Num() / 2];
 			UGameUserSettings* S = GEngine != nullptr ? GEngine->GetGameUserSettings() : nullptr;
-			const int32 L = PictureLevel() < 0 ? 3 : PictureLevel();
-			if (S != nullptr && Ms > kTuneTargetMs && L > 0)
+			const bool bLast = GTuneLevel == 0 && GTuneScale == 2;
+			if (S != nullptr && Ms > kTuneTargetMs && !bLast)
 			{
-				UE_LOG(LogTemp, Log, TEXT("LedgerTitle: first launch: picture %s takes %.1f ms a frame (the median of %d), over %.0f; one level down"), *PictureName(), Ms, GTuneFrames.Num(), kTuneTargetMs);
-				S->SetOverallScalabilityLevel(L - 1);
+				UE_LOG(LogTemp, Log, TEXT("LedgerTitle: first launch: picture %s takes %.1f ms a frame (the median of %d), over %.0f"),
+					*PictureName(), Ms, GTuneFrames.Num(), kTuneTargetMs);
+				if (GTuneScale < 2) { ++GTuneScale; } else { --GTuneLevel; GTuneScale = 0; }
+				S->SetOverallScalabilityLevel(GTuneLevel);
+				S->SetResolutionScaleValueEx(kTuneScales[GTuneScale]);
 				S->ApplySettings(true);
 				GTuneFrom = T + 1.0;
 				GTuneFrames.Reset();
@@ -338,7 +370,7 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 			else
 			{
 				bTuning = false;
-				UE_LOG(LogTemp, Log, TEXT("LedgerTitle: first launch settles on picture %s at %.1f ms a frame"), *PictureName(), Ms);
+				UE_LOG(LogTemp, Log, TEXT("LedgerTitle: first launch settles on picture %s, at %.1f ms a frame"), *PictureName(), Ms);
 			}
 		}
 		if (GStatus.IsValid()) { GStatus->SetText(FText::FromString(TEXT("Finding the picture this PC can keep smooth..."))); }

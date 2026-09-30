@@ -978,6 +978,22 @@
    "mb": 122
   },
   {
+   "path": "F:/LedgerTools/tmp/dressed",
+   "madeBy": "the in-game portrait tool (-PortraitInGame), 30 September night",
+   "why": "pictures of the dressed cast; the ones used are copied to production/approvals/2026-09-30",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 178
+  },
+  {
+   "path": "F:/LedgerTools/tmp/dressed2",
+   "madeBy": "the in-game portrait tool, second run, 30 September night",
+   "why": "a failed try at full-length pictures",
+   "status": "rejected",
+   "recorded": "2026-09-30",
+   "mb": 178
+  },
+  {
    "path": "F:/LedgerTools/tmp/etest",
    "madeBy": "the portrait tool, 25 Sep",
    "why": "face test frames, summed up in production/casting/in-game-2026-09-25/face-tests.jpg",
@@ -1099,6 +1115,102 @@
    "status": "superseded",
    "recorded": "2026-09-29",
    "mb": 553
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-1",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 70
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-10",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 49
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-11",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 80
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-12",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 80
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-2",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 72
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-3",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 22
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-4",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 75
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-5",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 80
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-6",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 79
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-7",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 47
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-8",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 48
+  },
+  {
+   "path": "F:/LedgerTools/tmp/mouthfilm-9",
+   "madeBy": "the game's -MouthFilm, 30 September night",
+   "why": "frames of the cast speaking, superseded by the reviewed film (production/approvals/2026-09-30/mouth-*.webp)",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 46
   },
   {
    "path": "F:/LedgerTools/tmp/pip-cache",
