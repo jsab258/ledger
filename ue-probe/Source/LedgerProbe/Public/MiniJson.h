@@ -75,6 +75,14 @@ namespace MiniJson
 			for (int I = 1; I < N; ++I) { if (((unsigned char)S[At + I] & 0xC0) != 0x80) { Len = 1; return 0xFFFD; } }
 			unsigned Cp = C & (N == 2 ? 0x1F : N == 3 ? 0x0F : 0x07);
 			for (int I = 1; I < N; ++I) Cp = (Cp << 6) | ((unsigned char)S[At + I] & 0x3F);
+			// An overlong form, a surrogate or past U+10FFFF is a bad byte too, as
+			// .NET decodes it (the police port's independent check, 30 September:
+			// C0 A0 read as a space loaded a save the C# refuses).
+			if ((N == 2 && Cp < 0x80) || (N == 3 && Cp < 0x800) || (N == 4 && (Cp < 0x10000 || Cp > 0x10FFFF)) || (Cp >= 0xD800 && Cp <= 0xDFFF) || C >= 0xF8)
+			{
+				Len = 1;
+				return 0xFFFD;
+			}
 			Len = (size_t)N;
 			return Cp;
 		}
