@@ -406,7 +406,14 @@ namespace LedgerStreet
 	{
 		std::string Glb;
 		double X, Z, Y, FaceDeg, Phase;
-		Person() : X(0.0), Z(0.0), Y(0.0), FaceDeg(0.0), Phase(0.0) {}
+		// A WALK, 30 September (the twenty a friend would notice, 13: nobody
+		// moved): "walk": {"to_x_m", "speed_ms", "pause_s": [min, max]} paces
+		// the person between X and ToX along the pavement at Z, pausing at
+		// each end; HasWalk false when the file gives none.
+		bool HasWalk;
+		double WalkToX, WalkSpeedMs, PauseMinS, PauseMaxS;
+		Person() : X(0.0), Z(0.0), Y(0.0), FaceDeg(0.0), Phase(0.0),
+		           HasWalk(false), WalkToX(0.0), WalkSpeedMs(1.2), PauseMinS(3.0), PauseMaxS(8.0) {}
 	};
 
 	// ONE READER FOR ANYTHING PLACED BY A GLB NAME AND STREET METRES: the
@@ -440,6 +447,25 @@ namespace LedgerStreet
 			if (F != 0 && F->Type == T_NUM) { Q.FaceDeg = F->Num; }
 			const Value* Ph = P.Find("phase");
 			if (Ph != 0 && Ph->Type == T_NUM && Ph->Num >= 0.0 && Ph->Num <= 1.0) { Q.Phase = Ph->Num; }
+			const Value* W = P.Find("walk");
+			if (W != 0 && W->Type == T_OBJ)
+			{
+				const Value* To = W->Find("to_x_m");
+				if (To != 0 && To->Type == T_NUM && std::fabs(To->Num - Q.X) > 1.0)
+				{
+					Q.HasWalk = true;
+					Q.WalkToX = To->Num;
+					const Value* S = W->Find("speed_ms");
+					if (S != 0 && S->Type == T_NUM && S->Num > 0.2 && S->Num < 3.0) { Q.WalkSpeedMs = S->Num; }
+					const Value* Pa = W->Find("pause_s");
+					if (Pa != 0 && Pa->Type == T_ARR && Pa->Arr.size() >= 2 && Pa->Arr[0].Type == T_NUM && Pa->Arr[1].Type == T_NUM
+					    && Pa->Arr[0].Num >= 0.0 && Pa->Arr[1].Num >= Pa->Arr[0].Num)
+					{
+						Q.PauseMinS = Pa->Arr[0].Num;
+						Q.PauseMaxS = Pa->Arr[1].Num;
+					}
+				}
+			}
 			Out.push_back(Q);
 		}
 		return true;

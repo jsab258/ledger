@@ -6,6 +6,7 @@
 #include "Animation/AnimSequenceBase.h"
 #include "AnimationRuntime.h"
 #include "AnimNodes/AnimNode_ModifyCurve.h"
+#include "AnimNodes/AnimNode_TwoWayBlend.h"
 #include "BoneControllers/AnimNode_LookAt.h"
 #include "BoneControllers/AnimNode_ModifyBone.h"
 #include "Camera/PlayerCameraManager.h"
@@ -25,6 +26,10 @@ namespace
 	struct FLedgerPersonProxy : public FAnimInstanceProxy
 	{
 		FAnimNode_SequencePlayer_Standalone Player;
+		// THE WALK, blended over the idle by how much the person is moving.
+		FAnimNode_SequencePlayer_Standalone WalkPlayer;
+		FAnimNode_TwoWayBlend Moving;
+		bool bHasWalk = false;
 		FAnimNode_ConvertLocalToComponentSpace ToComponent;
 		FAnimNode_ModifyBone Calm[ULedgerPersonAnim::CalmBones];
 		FAnimNode_LookAt Look;
@@ -61,7 +66,20 @@ namespace
 				Look.Alpha = 0.0f;
 				Look.LookAtLocation = A->LookTarget;
 			}
-			ToComponent.LocalPose.SetLinkNode(&Player);
+			bHasWalk = A != nullptr && A->WalkSequence != nullptr;
+			if (bHasWalk)
+			{
+				WalkPlayer.SetSequence(A->WalkSequence);
+				WalkPlayer.SetLoopAnimation(true);
+				Moving.A.SetLinkNode(&Player);
+				Moving.B.SetLinkNode(&WalkPlayer);
+				Moving.Alpha = 0.0f;
+				ToComponent.LocalPose.SetLinkNode(&Moving);
+			}
+			else
+			{
+				ToComponent.LocalPose.SetLinkNode(&Player);
+			}
 			// THE NECK AND HEAD HELD TOWARD REST against the idle's own turns,
 			// then the look (PersonAnim.h).
 			FAnimNode_Base* Into = &ToComponent;
@@ -93,6 +111,8 @@ namespace
 		virtual void GetCustomNodes(TArray<FAnimNode_Base*>& OutNodes) override
 		{
 			OutNodes.Add(&Player);
+			OutNodes.Add(&WalkPlayer);
+			OutNodes.Add(&Moving);
 			OutNodes.Add(&ToComponent);
 			for (int32 I = 0; I < ULedgerPersonAnim::CalmBones; ++I) { OutNodes.Add(&Calm[I]); }
 			OutNodes.Add(&Look);
@@ -109,6 +129,7 @@ namespace
 				Look.Alpha = A->LookAlpha;
 				Look.LookAtLocation = A->LookTarget;
 				Mouth.Alpha = A->SpeakWeight;
+				if (bHasWalk) { Moving.Alpha = A->WalkWeight; }
 				for (int32 I = 0; I < ULedgerPersonAnim::MouthCurveCount; ++I)
 				{
 					if (float* V = Mouth.CurveMap.Find(FName(ULedgerPersonAnim::MouthCurves[I]))) { *V = A->MouthValues[I]; }
@@ -192,6 +213,54 @@ void ULedgerPersonAnim::SetRegard(double InFirstLookMetres, double InFirstLookSe
 void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
+	// THE WALK (SetupWalk): the owner paces A to B and back; the idle and the
+	// walk blend by how much it is moving, and it sets off and stops over
+	// about half a second rather than sliding at full speed.
+	if (WalkSequence != nullptr && DeltaSeconds > 0.0f)
+	{
+		AActor* Owner = GetOwningActor();
+		bool bGoing = false;
+		if (Owner != nullptr)
+		{
+			if (PauseLeft > 0.0f) { PauseLeft -= DeltaSeconds; }
+			else
+			{
+				FVector At = Owner->GetActorLocation();
+				FVector To = (bToB ? WalkB : WalkA) - At;
+				To.Z = 0.0f;
+				const float Left = To.Size();
+				if (Left < 5.0f)
+				{
+					bToB = !bToB;
+					++WalkLegs;
+					PauseLeft = FMath::FRandRange(PauseMin, PauseMax);
+				}
+				else
+				{
+					const FVector Dir = To / Left;
+					// HE WAITS FOR THE PLAYER rather than walking through him.
+					bool bBlocked = false;
+					const UWorld* W = GetWorld();
+					const APlayerController* WPC = W != nullptr ? W->GetFirstPlayerController() : nullptr;
+					if (WPC != nullptr && WPC->GetPawn() != nullptr)
+					{
+						const FVector Rel = WPC->GetPawn()->GetActorLocation() - At;
+						bBlocked = Rel.Size2D() < 130.0f && FVector::DotProduct(Rel.GetSafeNormal2D(), Dir) > 0.5f;
+					}
+					if (!bBlocked)
+					{
+						At += Dir * FMath::Min(Left, WalkSpeedCms * WalkWeight * DeltaSeconds);
+						Owner->SetActorLocation(At);
+						bGoing = true;
+					}
+					FRotator R = Owner->GetActorRotation();
+					R.Yaw = FMath::FixedTurn(R.Yaw, FMath::RadiansToDegrees(FMath::Atan2(Dir.Y, Dir.X)) + WalkYawOffset, 180.0f * DeltaSeconds);
+					Owner->SetActorRotation(R);
+				}
+			}
+		}
+		WalkWeight = FMath::FInterpConstantTo(WalkWeight, bGoing ? 1.0f : 0.0f, DeltaSeconds, 2.0f);
+	}
 	if (!bLook || HeadBone.IsNone()) { LookAlpha = 0.0f; return; }
 	const USkeletalMeshComponent* C = GetSkelMeshComponent();
 	const UWorld* World = GetWorld();
@@ -341,4 +410,18 @@ void ULedgerPersonAnim::SpeakTick(float Level, bool bSpeaking, float DeltaSecond
 	for (int32 I = 1; I <= 4; ++I) { MouthValues[I] = Closed; }  // lips together, four quarters
 	for (int32 I = 5; I <= 8; ++I) { MouthValues[I] = 0.25f * L * Drift; }           // funnel, four quarters
 	MouthValues[9] = MouthValues[10] = 0.18f * L * (1.0f - Drift);                    // stretch, left and right
+}
+
+void ULedgerPersonAnim::SetupWalk(UAnimSequenceBase* InWalk, const FVector& InA, const FVector& InB, float InSpeedCms,
+                                  float InPauseMin, float InPauseMax, float InYawOffset)
+{
+	WalkSequence = InWalk;
+	WalkA = InA;
+	WalkB = InB;
+	WalkSpeedCms = InSpeedCms;
+	PauseMin = InPauseMin;
+	PauseMax = FMath::Max(InPauseMin, InPauseMax);
+	WalkYawOffset = InYawOffset;
+	bToB = true;
+	PauseLeft = FMath::FRandRange(0.0f, PauseMax);   // not all setting off at once
 }
