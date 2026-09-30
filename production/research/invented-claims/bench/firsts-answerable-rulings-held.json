@@ -1,0 +1,22 @@
+{
+  "lena|Can I have a look at the books?": "partly",
+  "lena|Does it ever stop raining here?": "partly",
+  "lena|Does the business owe anyone money?": "partly",
+  "lena|How long have you known Sheila?": "yes",
+  "lena|Is it always this quiet?": "partly",
+  "lena|Mind if I smoke?": "yes",
+  "lena|Which cars are still on the road?": "partly",
+  "rocco|Are we still taking bookings?": "yes",
+  "rocco|Can I have a look at the books?": "partly",
+  "rocco|Is it always this quiet?": "partly",
+  "rocco|Which cars are still on the road?": "partly",
+  "sam|Are we still taking bookings?": "partly",
+  "sam|Can I have a look at the books?": "partly",
+  "sam|Did Mickey live round here?": "partly",
+  "sam|Does it ever stop raining here?": "partly",
+  "sam|Is it always this quiet?": "partly",
+  "sam|What time do we open in the morning?": "yes",
+  "sam|Which cars are still on the road?": "partly",
+  "sam|Who's got the keys to this place?": "partly",
+  "sam|Who's the lad hanging about by the rank?": "no"
+}

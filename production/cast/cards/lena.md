@@ -46,5 +46,5 @@ For the game, never shown to the model: what this person says when there is noth
 - brush-off: Later. I'm in the middle of something.
 - brush-off: Give me ten minutes.
 - opener: I'll tell you what I know.
-- opener: Plainly, then.
-- opener: This much I know.
+- opener: I'll put it plainly.
+- opener: I know this much.

@@ -213,6 +213,14 @@ DAYS["2026-09-30-3"] = {
          "They are on in the game. In conversation his card has him talk on at more length. "
          "\"Thirty years on the quay\" matches his card and the threat line you approved on 29 September. "
          "If his tone is off, I rewrite all 159 to match and write nobody else's lines until then."),
+        ("ron-plain", "Refused twice, Ron says it plainly. Right?", [("yes", "Yes"), ("stiff", "Too stiff")], "yes",
+         "When the check refuses a reply twice, Ron now says the facts that bear on the question plainly, after a short opener of his own, "
+         "instead of \"that's all I know\". Every detail in it is a written fact, so nothing is invented; his secrets are never said this "
+         "way. Two blind reviews; what the second left: \"Now then\" can read as hello in the middle of a talk; the cards say Mickey died "
+         "\"three weeks ago\" where this says \"three weeks before you came\", which drift apart over the week (I will align the cards).",
+         [("Sorry I missed the funeral.", "All I know is this, boss. Mickey's funeral was at Father Walsh's chapel, before you came."),
+          ("Where do I sleep?", "Here's what I can tell you, boss. You're in Mickey's flat, over the office."),
+          ("Is there any money in it?", "Now then. Mickey's hasn't made much since the docks went. Trade's been thin.")]),
         ("talk-next", "Next for talk: write down what the street would know?", [("write", "Yes, write it"), ("leave", "Leave talk")], "write",
          "\"That's all I know\" is down from 36 to about 22 of a newcomer's 60 questions. Two ways of prompting the writer failed today "
          "(planning first: no better; a narrower second try: worse, 27). What still falls back is a question nobody wrote the answer to: "
@@ -302,7 +310,10 @@ def one_screen(day, date, done):
         raise ValueError("more than %d decisions" % MAX_DECISIONS)
     if len(shown) > MAX_SHOWN or any(len(w) + len(t) > MAX_SHOWN_CHARS for w, t in shown):
         raise ValueError("too much shown above the decisions")
-    for key, question, options, rec, _ in decisions:
+    shown_total = len(shown) + sum(len(d[5]) for d in decisions if len(d) > 5)
+    if shown_total > 8 or any(len(w) + len(t) > MAX_SHOWN_CHARS for d in decisions if len(d) > 5 for w, t in d[5]):
+        raise ValueError("too much shown on one screen")
+    for key, question, options, rec, *_ in decisions:
         if len(question) > MAX_QUESTION:
             raise ValueError(key + ": the question is longer than one line")
         if any(len(label) > MAX_OPTION for _, label in options):
@@ -316,7 +327,9 @@ def one_screen(day, date, done):
              '<header><p class="eyebrow">LEDGER · the town · ' + esc(date) + "</p><h1>" + esc(day.get("heading", day["title"])) + "</h1></header>"]
     if shown:
         parts.append("<ol>" + "".join("<li><small>%s</small><q>%s</q></li>" % (esc(w), esc(t)) for w, t in shown) + "</ol>")
-    for key, question, options, rec, detail in decisions:
+    for key, question, options, rec, detail, *lines in decisions:
+        if lines and lines[0]:
+            parts.append("<ol>" + "".join("<li><small>%s</small><q>%s</q></li>" % (esc(w), esc(t)) for w, t in lines[0]) + "</ol>")
         rec_label = dict(options)[rec].lower()
         parts.append('<section class="ask" data-key="%s"><p>%s (recommended: %s)</p><div class="row" role="group" aria-label="%s">'
                      % (key, esc(question), esc(rec_label), esc(question)))
