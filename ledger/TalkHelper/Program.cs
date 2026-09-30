@@ -2170,7 +2170,7 @@ static class Program
             LoadCards(sh, cardsDir);
             bool has(string who, string part) => sh.Cards.TryGetValue(who, out var c) && c.HardFacts.Exists(f => f.Contains(part));
             var all = new List<string>();
-            foreach (var (_, fact, own, _, _) in StreetFacts.All) { all.Add(fact); if (own != null) all.Add(own); }
+            foreach (var (_, _, fact, own, _, _) in StreetFacts.All) { all.Add(fact); if (own != null) all.Add(own); }
             var bad = all.FindAll(f => f.Contains("Tom") || f.Contains("Nowak") || ContentRule.SpeechBreaks(f) != null || SafetyRule.SpeechBreaks(f) != null);
             Ok("every talking character knows the street's plain facts (the door, the funeral, the will, the flat, the drivers, the hours, the trade, the cafe), the person a fact is about in their own words; none names him, and each passes the content rules",
                has("rocco", "The cafe is across the street")

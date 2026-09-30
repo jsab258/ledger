@@ -27,43 +27,71 @@ namespace Ledger.Core
     {
         /// (whom it is about, or "", the street's words, their own words, said
         /// plainly to him, and said plainly by the person it is about).
-        public static readonly (string about, string fact, string own, string said, string ownSaid)[] All =
+        public static readonly (string id, string about, string fact, string own, string said, string ownSaid)[] All =
         {
-            ("", "Mickey died three weeks before the new owner, his nephew, came to Quay Street.", null,
+            ("died_when", "", "Mickey died three weeks before the new owner, his nephew, came to Quay Street.", null,
                  "Mickey died three weeks before you came.", null),
             // How Mickey died (Jafar, 30 September): his heart; nobody thinks otherwise.
-            ("rocco", "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+            ("died_heart", "rocco", "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
                       "I found Mickey at the office early one morning, when I came on at the rank; the doctor said it was his heart.",
                       "Mickey died of his heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
                       "Mickey died of his heart, the doctor said. I came on at the rank early one morning and found him at the office."),
             // The warehouse fire as the street has it (Jafar, 30 September); the truth is never the street's.
-            ("", "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.", null,
+            ("fire", "", "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.", null,
                  // Said plainly without the street's rumour (the blind review: "the
                  // owner" is heard as the new owner, and Sheila does not pass on gossip).
                  "The importer's warehouse at the far end of the old warehouse row burned down last November, on a Saturday night. The evening paper called it arson, since it started in two places. Nobody was charged.", null),
-            ("", "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.", null,
+            ("will", "", "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.", null,
                  "Mickey left you the office in his will. The letter you brought says so.", null),
-            ("", "Mickey's funeral was at Father Walsh's chapel, before the new owner came; he missed it.", null,
+            ("funeral", "", "Mickey's funeral was at Father Walsh's chapel, before the new owner came; he missed it.", null,
                  "Mickey's funeral was at Father Walsh's chapel, before you came.", null),
-            ("june", "June, Mickey's daughter, came back to the Hook for the funeral and is still in town; she wants nothing from the office.",
+            ("june", "june", "June, Mickey's daughter, came back to the Hook for the funeral and is still in town; she wants nothing from the office.",
                      "I came back to the Hook for my father's funeral and I am still in town; I want nothing from the office.",
                      "June, Mickey's daughter, came back for the funeral. She's still in town, and she wants nothing from the office.",
                      "I came back for my father's funeral. I'm still here, and I want nothing from the office."),
-            ("", "The new owner is living in Mickey's flat over the office.", null,
+            ("flat", "", "The new owner is living in Mickey's flat over the office.", null,
                  "You're in Mickey's flat, over the office.", null),
-            ("lena", "The door at the back of Mickey's that Sheila does not open is Mickey's own room; it has been locked since he died, and Sheila keeps the key.",
+            ("door", "lena", "The door at the back of Mickey's that Sheila does not open is Mickey's own room; it has been locked since he died, and Sheila keeps the key.",
                      "The door at the back of the office that I do not open is Mickey's own room; it has been locked since he died, and I keep the key.",
                      "The door at the back of the office that Sheila keeps shut is Mickey's own room. It's been locked since he died, and Sheila keeps the key.",
                      "The door at the back is Mickey's own room. It's been locked since he died, and I keep the key."),
-            ("", "Mickey's has two cab drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.", null,
+            ("drivers", "", "Mickey's has two cab drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.", null,
                  "Mickey's has two drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.", null),
-            ("", "The cab office opens at seven in the morning, nine on Sundays, and runs until the night driver goes home at three.", null,
+            ("hours", "", "The cab office opens at seven in the morning, nine on Sundays, and runs until the night driver goes home at three.", null,
                  "The office opens at seven, nine on a Sunday, and runs till the night driver goes home at three.", null),
-            ("", "Mickey's has not made much money since the docks went; trade has been thin.", null,
+            ("trade", "", "Mickey's has not made much money since the docks went; trade has been thin.", null,
                  "Mickey's hasn't made much since the docks went. Trade's been thin.", null),
-            ("", "The cafe is across the street, in the shops opposite the north end of the parade; it opens at half past six and shuts at ten at night, and on Sundays it is open only from eight till twelve.", null,
+            ("cafe", "", "The cafe is across the street, in the shops opposite the north end of the parade; it opens at half past six and shuts at ten at night, and on Sundays it is open only from eight till twelve.", null,
                  "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.", null),
+            // WHO KEEPS WHAT AT MICKEY'S, as the whole street knows it (Jafar, 30
+            // September: write down what the street would know; from the approved
+            // cards, nothing new): for the rule table's plain answers (TalkRules).
+            ("office", "", "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.", null,
+                 "Mickey's is on Quay Street, with the rank outside.", null),
+            // Their own words start with their name, so "Who are you?" is answered
+            // (the blind review); "at Mickey's", not "here", since they say it anywhere.
+            ("sheila_books", "lena", "Sheila Dunn has kept the books at Mickey's for thirty-one years.",
+                             "I am Sheila Dunn, and I have kept the books at Mickey's for thirty-one years.",
+                             "Sheila Dunn keeps the books at Mickey's. She's been at it thirty-one years.",
+                             "Sheila Dunn. I keep the books at Mickey's, and have for thirty-one years."),
+            ("ron_rank", "rocco", "Ron Kirby keeps the rank outside Mickey's and watches the yard gate; Mickey kept him on when the docks let him go in 1989.",
+                         "I am Ron Kirby; I keep the rank outside Mickey's and watch the yard gate, and Mickey kept me on when the docks let me go in 1989.",
+                         "Ron Kirby looks after the rank outside Mickey's and watches the yard gate. Mickey kept him on when the docks let him go.",
+                         "Ron Kirby. I look after the rank outside Mickey's and watch the yard gate. Mickey kept me on when the docks let me go."),
+            ("darren_rounds", "sam", "Darren Milner walks Quay Street at all hours and talks to everyone; if something is being said in the Hook, he has heard it.",
+                              "I am Darren Milner; I walk Quay Street at all hours and talk to everyone, and if something is being said in the Hook, I have heard it.",
+                              "Darren Milner's up and down Quay Street at all hours, talking to everyone. If it's being said round here, he's heard it.",
+                              "Darren. I'm up and down Quay Street at all hours, talking to everyone. If it's being said round here, I've heard it."),
         };
+
+        /// The words a character holds a fact in, by its id (the street's, or
+        /// their own when it is about them); null for an unknown id.
+        public static string Held(string id, string who)
+        {
+            foreach (var f in All)
+                if (f.id == id) return f.about.Length > 0 && f.about == who && f.own != null ? f.own : f.fact;
+            return null;
+        }
 
         /// How a fact is said plainly, given the words a character holds it in
         /// (the street's, or the person's own); null for anything else, so a
@@ -71,7 +99,7 @@ namespace Ledger.Core
         public static string SaidFor(string known)
         {
             if (string.IsNullOrEmpty(known)) return null;
-            foreach (var (_, fact, own, said, ownSaid) in All)
+            foreach (var (_, _, fact, own, said, ownSaid) in All)
             {
                 if (known == fact) return said;
                 if (own != null && known == own) return ownSaid;
@@ -93,7 +121,7 @@ namespace Ledger.Core
         public static List<string> For(string who)
         {
             var list = new List<string>();
-            foreach (var (about, fact, own, _, _) in All)
+            foreach (var (_, about, fact, own, _, _) in All)
             {
                 if (about.Length > 0 && about == who) { if (own != null) list.Add(own); }
                 else list.Add(fact);
