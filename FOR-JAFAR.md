@@ -5,7 +5,7 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Wednesday 30 September, 07:25)
+## Overview (Wednesday 30 September, 07:45)
 
 ### Needs you
 
@@ -13,6 +13,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 2. **[Wednesday's page](https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ)** (builder): the street by day and at night; Darren with a man's haircut; Ron, faster, heard blind; Sheila's voice; their mouths moving as they speak; Ron's boots with Sheila's handbag; two calls: hair and the name plates' font. Recommended: yes to the frames, Darren, Sheila's voice, the mouths, the boots and bag; your ear on Ron; A on both calls.
 3. **Town's pages** (town): [three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y) (how Mickey died, winding it down, threats) and [the next](https://claude.ai/artifact/TXEoUnQoDTaLPfFZdHSYAL) (the warehouse fire, reopening the talk's check, Steam's wording). Recommended: the picks marked on them.
 4. **Money and scope** (builder and clothing; no page): LEDGER's own capped key for the characters' live talk while you play (recommended: make it with a hard monthly cap and save it alone at %LOCALAPPDATA%\LEDGER\live-talk-key.txt); suits and coats, which Epic makes none of (clothing's recommendation: A, free CC0 suits from MakeHuman refitted by the clothing session; B Fab's at $5 to 20 each; C Marvelous Designer at $39 a month); and whether clothing finishes garments standing and leaves sitting and walking to Unreal's tests (recommended: A, yes).
+5. **Mickey's office, how much first** (builder; scope; no page yet): making it walkable is several days, not one: the shell opened, a working door, the room, day and night light, and the camera in a small room; and no readable photograph of a 1985 to 1995 minicab office inside exists online (two research rounds; the best is a Brixton one from 1980, a man writing jobs at the front window under the number painted on the glass). (A, recommended) the front office first, one room: counter, radio desk, phones, the fare book, chairs, walkable from the street, Mickey's own door closed, day and night frames on your page in about two days; (B) the whole ground floor with Mickey's office and the stair at once, about five days; (C) keep the window's picture and put the days into wiring the first week on the street. I start on A meanwhile.
 
 ### Road to worth playing
 
