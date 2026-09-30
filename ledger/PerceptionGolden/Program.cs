@@ -1430,6 +1430,17 @@ namespace Ledger.PerceptionGolden
                 Row(sb, "WeekBadSave", i.ToString(Inv), Bit(w.AskedAt.HasValue), w.Answer.ToString(), w.AnsweredAt.HasValue ? w.AnsweredAt.Value.TotalMinutes.ToString(Inv) : "-",
                     Bit(w.RealBook), Esc(MiniJson.Serialize(w.ToJson())));
             }
+            // Sheila not in the cast, and a place named "": nobody overhears her
+            // answer (the port's independent check, 30 September).
+            var noSheila = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":0,\"z_m\":0},\"\":{\"x_m\":1,\"z_m\":0}},\"areas\":{\"mickeys\":{\"places\":[\"mickeys_office\",\"\"]}}," +
+                "\"people\":[{\"id\":\"pat\",\"routine\":[[0,\"\"]]}],\"ties\":[]}");
+            {
+                var nm = new GossipMill(null);
+                foreach (var id in new[] { "pat", "ada" }) nm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var nw = new WeeksEnd(1);
+                nw.Ask(new GameTime(7, 10, 0), true, true);
+                Row(sb, "WeekNoSheila", "pat", Bit(nw.Give(WeekAnswer.WindDown, new GameTime(7, 11, 0), nm, noSheila)), Bit(nm.Get("pat").Rumors.Exists(WeeksEnd.IsWeekAnswer)));
+            }
             var sunday = new WeeksEnd(0);
             foreach (var (h, m) in new[] { (9, 59), (10, 0), (11, 59), (12, 0) })
                 Row(sb, "WeekWaits", "unasked " + h + ":" + m.ToString("D2", Inv), Bit(sunday.Waits(new GameTime(6, h, m))));

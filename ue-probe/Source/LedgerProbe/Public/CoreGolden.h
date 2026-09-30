@@ -2631,6 +2631,21 @@ namespace Golden
 			Ans["WeekBadSave|" + FromInt(I)] = { FromBool(W.AskedAt(Ta)), WeekAnswerName(W.Answer()), W.AnsweredAt(Tb) ? FromInt(Tb.TotalMinutes()) : std::string("-"),
 				FromBool(W.RealBook()), Escape(W.ToJson()) };
 		}
+		{
+			CastDay NoSheila;
+			std::string Err2;
+			CastDay::Parse(R"({"talk_range_m":6,"places":{"mickeys_office":{"x_m":0,"z_m":0},"":{"x_m":1,"z_m":0}},"areas":{"mickeys":{"places":["mickeys_office",""]}},)"
+				R"("people":[{"id":"pat","routine":[[0,""]]}],"ties":[]})", NoSheila, Err2);
+			GossipMill Nm(std::make_shared<SocialGraph>());
+			for (const char* Id : { "pat", "ada" })
+				Nm.Add(std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+			WeeksEnd Nw(1);
+			Nw.Ask(GameTime(7, 10, 0), true, true);
+			const bool bGave = Nw.Give(WeekAnswer::WindDown, GameTime(7, 11, 0), &Nm, &NoSheila);
+			bool bPat = false;
+			for (const RumorPtr& R : Nm.Get("pat")->Rumors) { if (WeeksEnd::IsWeekAnswer(R)) bPat = true; }
+			Ans["WeekNoSheila|pat"] = { FromBool(bGave), FromBool(bPat) };
+		}
 		auto Hm = [](int H, int M) { char B[16]; std::snprintf(B, sizeof(B), "%d:%02d", H, M); return std::string(B); };
 		WeeksEnd Sunday(0);
 		for (const auto& X : { std::make_pair(9, 59), std::make_pair(10, 0), std::make_pair(11, 59), std::make_pair(12, 0) })
@@ -4141,7 +4156,7 @@ namespace Golden
 		}
 		// THE WEEK'S END (town list 6ca): WeeksEnd.h and StreetVoice's banks.
 		else if (Fn == "WeekAsk" || Fn == "WeekFiled" || Fn == "RecognitionWeek" || Fn == "RecognitionOutfitWound" || Fn == "WeekShows"
-		         || Fn == "WeekBadSave" || Fn == "WeekWaits" || Fn == "WeekRegard")
+		         || Fn == "WeekBadSave" || Fn == "WeekWaits" || Fn == "WeekRegard" || Fn == "WeekNoSheila")
 		{
 			A = WeekRow(F);
 		}
