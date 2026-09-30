@@ -162,10 +162,11 @@ namespace Ledger.Core
         /// called PassedTo at dawn, stamped eleven after the night's rounds had
         /// run without it): the game calls this as each hour turns, before the
         /// town's rounds, and the outfit's man has it from the moment it is due.
-        /// And a night he stayed away, at one, when the man at the landing gives
-        /// up waiting (the review's B3, its third part; the second independent
-        /// check), as PassedTo files it.
-        public void TellDue(GossipMill mill, GameTime now) => PassedTo(now.Day, mill, now);
+        /// Not a night he stayed away: that stays PassedTo's, at dawn, as of one
+        /// (the builder's check of the port: passed at one as the hours turned, a
+        /// night lost his no confirmed at two past to Ron's question at two to
+        /// one; the review's B3 counts the dawn filing low).
+        public void TellDue(GossipMill mill, GameTime now) => TellWoundDown(mill, now);
 
         // The outfit's man has the no and the wound-down story once Ron has been
         // down (TellDue each hour; PassedTo at dawn; or later).

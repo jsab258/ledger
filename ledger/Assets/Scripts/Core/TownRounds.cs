@@ -106,7 +106,7 @@ namespace Ledger.Core
             long nowM = now.TotalMinutes;
             long hourNowStart = TownRounds.FloorDiv(nowM, 60) * 60;
             long lastRound = TownRounds.FloorDiv(nowM, step) * step;
-            bool firstCall = NextRound < 0;
+            bool firstCall = NextRound == -1;   // a round before day 0 is a round (the builder's check)
             if (firstCall) NextRound = hourNowStart;
             if (lastRound < NextRound) return 0;
             // The mill's ageing clock is not in the save: started again at the
