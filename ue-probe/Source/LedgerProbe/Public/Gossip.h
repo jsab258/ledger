@@ -85,6 +85,17 @@ namespace LedgerCore
 		return std::signbit(B) ? A : B;
 	}
 
+	// C#'s Math.Min(double, double), the same way: a NaN on either side is the
+	// answer, and -0 beats +0 (the independent check of Ada's tea, 30
+	// September: std::fmin gave a NaN regard full marks).
+	inline double DotNetMin(double A, double B)
+	{
+		if (IsNaNBits(A)) { return A; }
+		if (IsNaNBits(B)) { return B; }
+		if (A != B) { return A < B ? A : B; }
+		return std::signbit(A) ? A : B;
+	}
+
 	// C#'s double.CompareTo, which is what OrderByDescending sorts by: a NaN
 	// is smaller than every number and equal to another NaN, so the order is
 	// a total one even where `>` is not.

@@ -90,6 +90,7 @@
 #include "Gossip.h"      // Rumor, Gossiper, RumorPtr, GossiperPtr
 #include "DayOne.h"      // his arrival and his name, which nobody lowers their voice over
 #include "WeeksEnd.h"    // his answer to Sheila at the week's end (town list 6ca)
+#include "PoliceFile.h"  // the police asking after him and taking him in (town list 6bq, 6bp)
 #include "MiniJson.h"    // the remark ledger's save, read as the C# reads it
 
 #include <algorithm>
@@ -676,7 +677,10 @@ namespace LedgerCore
 				// His night, or what he did with the outfit's ask (town list 6z).
 				// His answer to Sheila at the week's end shows too (town list 6ca),
 				// though she, who was told it, never remarks on it.
-				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R) || WeeksEnd::IsWeekAnswer(R))) continue;
+				// The police asking after him (town list 6bq) and taking him in
+				// (6bp) show too.
+				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R) || PoliceFile::IsAsking(R)
+				    || Custody::IsTaken(R) || WeeksEnd::IsWeekAnswer(R))) continue;
 				if (WeeksEnd::IsWeekAnswer(R) && G.Id == WeeksEnd::Sheila) continue;
 				if (!R->Indelible && G.SuppressedHas(R->TopicKey())) continue;
 				if (!(R->Confidence >= ShareFloor)) continue;
@@ -1029,6 +1033,10 @@ namespace LedgerCore
 			{
 				const RumorPtr& R = G->Rumors[I];
 				if (!R || R->Content.Subject != "player") continue;
+				// The police asking after him is news of the police, not of
+				// anything he did: it shows in their manner, but weighs nothing on
+				// how they stand to him (town list 6bq).
+				if (PoliceFile::IsAsking(R)) continue;
 				// Nor his answer to Sheila (town list 6ca): what he means to do, not
 				// anything done. Nor his arrival (6cg), nor his name (6ch): news
 				// of him, not of anything done.
@@ -1238,6 +1246,66 @@ namespace LedgerCore
 			return Lines;
 		}
 
+		// THE POLICE TOOK HIM IN (town list 6bp): whoever saw them put him in
+		// the car, or whoever heard it.
+		inline const char* const* RecognitionTakenSaw(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Saw the police put you in the car.",
+				"They had you in the back of a police car, didn't they.",
+				"Saw you go off with the police. You're out, then.",
+				"I watched them take you. Didn't look like a social call.",
+				"You're back. I saw them take you off.",
+				"Didn't expect to see you out so soon.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionTakenHeard(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard the police had you in.",
+				"They say you were taken in.",
+				"Heard you'd been down the station.",
+				"Word is the police lifted you.",
+				"Out already? Heard they'd taken you in.",
+				"They say the police came for you.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		// THE POLICE ASKING AFTER HIM (town list 6bq): whoever she asked says so
+		// as the one she asked; whoever heard it, as talk.
+		inline const char* const* RecognitionPoliceAsked(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"That detective stopped me about you.",
+				"Had a detective on at me about you. Ellis, she said.",
+				"Ellis was asking me about you. Thought you'd want to know.",
+				"There's a woman detective asking about you.",
+				"The police asked me about you.",
+				"I've had the police at me over you.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionPoliceHeard(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"That detective was asking after you, I hear.",
+				"Police were round asking about you, they say.",
+				"You've got the police asking questions, you know.",
+				"Word is Ellis was down the street after you.",
+				"Heard a detective's been asking about you.",
+				"They say the police have been asking round about you.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
 		inline const char* const* RecognitionOutfitWoundDown(int& OutCount)
 		{
 			static const char* const Lines[6] = {
@@ -1380,6 +1448,10 @@ namespace LedgerCore
 			if ((int)K >= (int)StanceKind::Confronts)          { Bank = "recognition/confronts";      Lines = RecognitionConfronts(Count); }
 			else if (K == StanceKind::Refuses)                 { Bank = "recognition/refuses";        Lines = RecognitionRefuses(Count); }
 			else if (K == StanceKind::Avoids)                  { Bank = "recognition/avoids";         Lines = RecognitionAvoids(Count); }
+			else if (Custody::IsTaken(About) && About->Hops == 0)     { Bank = "recognition/taken-saw";     Lines = RecognitionTakenSaw(Count); }
+			else if (Custody::IsTaken(About))                         { Bank = "recognition/taken-heard";   Lines = RecognitionTakenHeard(Count); }
+			else if (PoliceFile::IsAsking(About) && About->Hops == 0) { Bank = "recognition/police-asked";  Lines = RecognitionPoliceAsked(Count); }
+			else if (PoliceFile::IsAsking(About))                     { Bank = "recognition/police-heard";  Lines = RecognitionPoliceHeard(Count); }
 			else if (bNight && About->Content.Value == "did")     { Bank = "recognition/outfit-did";     Lines = RecognitionOutfitDid(Count); }
 			else if (bNight && About->Content.Value == "refused") { Bank = "recognition/outfit-refused"; Lines = RecognitionOutfitRefused(Count); }
 			else if (bNight && About->Content.Value == "wounddown") { Bank = "recognition/outfit-wounddown"; Lines = RecognitionOutfitWoundDown(Count); }

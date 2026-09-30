@@ -101,20 +101,20 @@ namespace LedgerCore
 			{
 				if (StateValue == TeaState::Stayed)
 				{
-					AdaG->Loyalty = std::fmin(1.0, AdaG->Loyalty + StayedGain);
+					AdaG->Loyalty = DotNetMin(1.0, AdaG->Loyalty + StayedGain);
 					AdaG->Suspicion.Lower(0.1, "Mickey's nephew sat with me over a pot of tea");
 					if (AdaG->Memory) AdaG->Memory->Append(MemoryEvent(Now, "conversation", 0.7,
 						"Mickey's nephew came for his tea and sat with me till gone half ten. There's more to him than they're saying."));
 				}
 				else if (StateValue == TeaState::LeftEarly)
 				{
-					AdaG->Loyalty = std::fmin(1.0, AdaG->Loyalty + LeftEarlyGain);
+					AdaG->Loyalty = DotNetMin(1.0, AdaG->Loyalty + LeftEarlyGain);
 					if (AdaG->Memory) AdaG->Memory->Append(MemoryEvent(Now, "conversation", 0.6,
 						"Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he."));
 				}
 				else
 				{
-					AdaG->Loyalty = std::fmax(0.0, AdaG->Loyalty - StoodUpCost);
+					AdaG->Loyalty = DotNetMax(0.0, AdaG->Loyalty - StoodUpCost);
 					if (AdaG->Memory) AdaG->Memory->Append(MemoryEvent(Now, "observation", 0.65,
 						"I asked Mickey's nephew in for his tea. He never came. I'll not ask again."));
 				}

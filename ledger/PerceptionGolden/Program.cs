@@ -129,6 +129,9 @@ namespace Ledger.PerceptionGolden
             EmitTea(sb);
             // Ported to WeeksEnd.h and StreetVoice's banks on 30 September (town list 6ca: the week's end).
             EmitWeeksEnd(sb);
+            // Ported to PoliceFile.h and StreetVoice's banks on 30 September (town list 6bp, 6bq: taken in, and the police asking).
+            EmitTaken(sb);
+            EmitPoliceAsked(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -140,8 +143,6 @@ namespace Ledger.PerceptionGolden
             {
                 EmitJustNow(sb);
                 EmitTownNews(sb);
-                EmitPoliceAsked(sb);
-                EmitTaken(sb);
                 EmitThreats(sb);
                 EmitWaits(sb);
                 EmitTownSave(sb);
@@ -991,6 +992,17 @@ namespace Ledger.PerceptionGolden
             odd.WentToTheLanding(oddMill, T(3, 0, 59), true);
             Row(sb, "TeaEdge", "seen before one", Bit(odd.SeenGoing), oddMill.Get(AdasTea.Ada).Rumors.Count.ToString(Inv), Esc(odd.Close(null, T(2, 23)).ToString()));
             Row(sb, "TeaEdge", "first ask negative", Bit(AdasTea.For(-1, true) == null));
+            // Her regard, when a damaged save made it NaN, stays NaN, as Math.Min
+            // and Math.Max keep it (the port's independent check, 30 September).
+            foreach (var (how, from, to) in new[] { ("sat", 21 * 60 + 5, 22 * 60 + 40), ("early", 21 * 60, 21 * 60 + 50), ("away", -1, -1) })
+            {
+                var nanAda = new Gossiper(AdasTea.Ada, AdasTea.Ada, new MemoryStore(AdasTea.Ada), new KnowledgeBase(), new SuspicionTracker());
+                nanAda.Loyalty = double.NaN;
+                var t = AdasTea.For(0, true);
+                t.SheSeesHim(T(2, 10));
+                if (from >= 0) for (int m = from; m <= to; m++) t.WithHer(T(2, m / 60, m % 60));
+                Row(sb, "TeaNaN", how, t.Close(nanAda, T(2, 23)).ToString(), D(nanAda.Loyalty));
+            }
         }
 
         /// THE TOWN'S ONE SAVE (town list 6bl), awaiting the port (town list T2):
@@ -1476,6 +1488,93 @@ namespace Ledger.PerceptionGolden
                     var rg = StreetVoice.RegardFor(p, 0.35, false, null, Acquaintance.Known, false);
                     Row(sb, "PoliceRegard", D(susp), Bit(asked), rg.Stance.ToString(), rg.Story == null ? "null" : rg.Story.TopicKey);
                 }
+
+            // THE FILE ITSELF, for the port's regression (30 September): reports and
+            // talk, the constable's call, taking him in, Ellis's visits and the
+            // street's loudness, whom she asks, and the save, as the game drives it.
+            GameTime T(int d, int h, int m = 0) => new GameTime(d, h, m);
+            var pf = new PoliceFile();
+            Row(sb, "PoliceFile", "report", Bit(pf.Report("ada", "player.window_d1", Offence.Damage, 3, 1) != null), Bit(pf.Report("ada", "player.window_d1", Offence.Damage, 3, 1) != null),
+                Bit(pf.CanArrest("player.window_d1")), Bit(pf.Report("", "x", Offence.Damage, 4, 1) != null));
+            Row(sb, "PoliceFile", "named", Bit(pf.Report("ada", "player.window_d1", Offence.Damage, 4, 2) != null), Bit(pf.CanArrest("player.window_d1")), Bit(pf.Report("ada", "player.window_d1", Offence.Damage, 4, 2) != null));
+            pf.Heard("joey", "player.window_d1", Offence.Damage, 2);
+            pf.Heard("joey", "player.window_d1", Offence.Damage, 3);
+            Row(sb, "PoliceFile", "strongest", pf.Strongest("player.window_d1")?.ToString() ?? "null", pf.Strongest("nothing")?.ToString() ?? "null", pf.Entries.Count.ToString(Inv));
+            Row(sb, "PoliceFile", "constable", pf.ConstableComes(2) ?? "null", pf.ConstableComes(3) ?? "null", pf.ConstableComes(3) ?? "null", pf.ConstableComes(4) ?? "null");
+            var took = pf.TakeIn("player.window_d1", T(3, 10), false, true);
+            Row(sb, "PoliceFile", "taken", took == null ? "null" : took.End + "|" + took.OutAt.TotalMinutes.ToString(Inv) + "|" + took.AnswerDay.ToString(Inv) + "|" + Bit(took.CoatKept),
+                Bit(pf.WasTaken("player.window_d1")), Bit(pf.CanArrest("player.window_d1")), pf.TakeIn("player.window_d1", T(3, 11), false, false) == null ? "null" : "again",
+                pf.TakeIn(null, T(3, 11), false, false) == null ? "null" : "none");
+            pf.Report("zlata", "player.cut_d3", Offence.Wounding, 4, 3);
+            pf.Report("zlata", "player.push_d3", Offence.Assault, 4, 3);
+            Row(sb, "PoliceFile", "in the cells", pf.TakeIn("player.cut_d3", T(3, 12), false, false) == null ? "null" : "taken", pf.TakeIn("player.push_d3", T(4, 12), false, false) == null ? "null" : "taken");
+            var loud = new GossipMill(null);
+            foreach (var (id, circle, hops, conf, leash) in new[] { ("a1", "day", 1, 0.9, false), ("a2", "day", 1, 0.9, false), ("a3", "day", 1, 0.3, false), ("a4", "day", 0, 0.9, false),
+                                                                     ("a5", "night", 1, 0.9, false), ("a6", "day", 1, 0.9, true), ("a7", "day", 1, 0.9, false) })
+            {
+                var who = new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker(), circle);
+                who.Leashed = leash;
+                who.Rumors.Add(new Rumor { Content = new Fact("player", "night_walk", "seen"), Summary = "seen at night", Confidence = conf, Sensitive = true, Hops = hops });
+                loud.Add(who);
+            }
+            loud.Get("a2").Suppressed.Add("player.night_walk");
+            Row(sb, "PoliceFile", "loudness", PoliceFile.Loudness(loud).ToString(Inv), PoliceFile.Loudness(null).ToString(Inv));
+            loud.Get("a3").Rumors[0].Confidence = 0.9;
+            Row(sb, "PoliceFile", "louder", PoliceFile.Loudness(loud).ToString(Inv));
+            Row(sb, "PoliceFile", "ellis would", Esc(string.Join(",", pf.EllisWouldComeAll(loud, 2, Inquiry.Procedure))), Esc(string.Join(",", pf.EllisWouldComeAll(loud, 3))));
+            Row(sb, "PoliceFile", "ellis comes", Esc(pf.EllisComes(loud, 3, Inquiry.Procedure) ?? "null"), Esc(pf.EllisComes(loud, 3, Inquiry.Procedure) ?? "null"),
+                Esc(pf.EllisComes(loud, 3) ?? "null"), Esc(pf.EllisComes(loud, 3) ?? "null"), pf.EllisCameOn.ToString(Inv), Esc(pf.EllisCameFor ?? "null"));
+            pf.HearTheStreet(loud, 3, t => t.Contains("night") ? Offence.Suspicious : Offence.Damage);
+            Row(sb, "PoliceFile", "heard the street", pf.Entries.Count.ToString(Inv), Esc(pf.Entries[pf.Entries.Count - 1].Who + " " + pf.Entries[pf.Entries.Count - 1].How));
+            var askedWho = PoliceFile.WhoSheAsks(loud);
+            Row(sb, "PoliceFile", "who she asks", string.Join(",", askedWho));
+            Row(sb, "PoliceFile", "asked", PoliceFile.Asked(loud, askedWho, "talk", T(3, 11)).ToString(Inv), PoliceFile.Asked(loud, new[] { "a1", "a1", "nobody", null }, "talk", T(3, 12)).ToString(Inv),
+                PoliceFile.Asked(loud, askedWho, "body", T(3, 12)).ToString(Inv), PoliceFile.Asked(loud, askedWho, "talk", T(4, 9)).ToString(Inv),
+                loud.Get("a1").Rumors.Count.ToString(Inv), loud.Get("a1").Memory.Events.Count.ToString(Inv), Esc(loud.Get("a1").Memory.Events[loud.Get("a1").Memory.Events.Count - 1].Text));
+            var fileSaved = MiniJson.Serialize(pf.ToJson());
+            Row(sb, "PoliceFile", "save", Esc(fileSaved));
+            Row(sb, "PoliceFile", "load", Esc(MiniJson.Serialize(PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize(fileSaved))).ToJson())));
+            var badFiles = new[] {
+                @"{""entries"":[{""who"":""a"",""topic"":""t"",""offence"":""Damage"",""how"":""Statement"",""day"":1},{""who"":""a"",""topic"":""t"",""offence"":""Damage"",""how"":""Description"",""day"":2},{""who"":""a"",""topic"":""t"",""offence"":""damage"",""how"":""Talk"",""day"":1},{""who"":"""",""topic"":""t"",""offence"":""Damage"",""how"":""Talk"",""day"":1},{""who"":""b"",""topic"":""t"",""offence"":""Damage"",""how"":""Talk"",""day"":1.5}]}",
+                @"{""entries"":[{""who"":""a"",""topic"":""player.cut"",""offence"":""Wounding"",""how"":""Statement"",""day"":1}],""visits"":[[5,""talk""],[2,""body""],[3,""Wounding player.cut""],[4,""Damage player.x""],[4,""Wounding  x""],[6,""talk""],[1,""Robbery a b""]]}",
+                @"{""entries"":[{""who"":""a"",""topic"":""w"",""offence"":""Damage"",""how"":""Statement"",""day"":2}],""calls"":[[2,""w""],[4,""w""],[3,""w""],[5,""x""]],""taken"":[[""w"",1000],[""x"",2000],[""w"",1e9]]}",
+                @"{""entries"":{""who"":""a""},""visits"":""talk""}",
+                @"[1,2]",
+                @"{""entries"":[",
+            };
+            for (int i = 0; i < badFiles.Length; i++)
+            {
+                Dictionary<string, object> parsed;
+                try { parsed = MiniJson.AsObject(MiniJson.Deserialize(badFiles[i])); }
+                catch (FormatException) { parsed = null; }
+                Row(sb, "PoliceBadSave", i.ToString(Inv), Esc(MiniJson.Serialize(PoliceFile.FromJson(parsed).ToJson())));
+            }
+            foreach (Offence o in Enum.GetValues(typeof(Offence)))
+                foreach (var victim in new[] { false, true })
+                    foreach (var (nerve, loyalty) in new[] { (0.3, 0.3), (0.5, 0.3), (0.5, 0.45), (0.3, 0.55), (0.5, 0.65) })
+                    {
+                        var g2 = new Gossiper("wr", "wr", new MemoryStore("wr"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, nerve, loyalty);
+                        Row(sb, "PoliceWouldReport", o.ToString(), Bit(victim), D(nerve), D(loyalty), Bit(PoliceFile.WouldReport(g2, o, victim, "t")));
+                    }
+            var quiet = new Gossiper("wq", "wq", new MemoryStore("wq"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, 0.9, 0.1);
+            quiet.Suppressed.Add("t");
+            Row(sb, "PoliceWouldReport", "quiet", Bit(PoliceFile.WouldReport(quiet, Offence.Damage, true, "t")), Bit(PoliceFile.WouldReport(quiet, Offence.Killing, false, "t")),
+                Bit(PoliceFile.WouldReport(quiet, Offence.Damage, true, "u", true)), Bit(PoliceFile.WouldReport(null, Offence.Damage, true, "u")));
+            quiet.Leashed = true;
+            Row(sb, "PoliceWouldReport", "hooked", Bit(PoliceFile.WouldReport(quiet, Offence.Damage, true, null)));
+            var custodyBack = Custody.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(Custody.Take("player.cut_d1", Offence.Wounding, T(2, 23, 30), false, true).ToJson()))));
+            Row(sb, "CustodyWords", "charged", Esc(custodyBack.ArrestWords()), Esc(custodyBack.ReleaseWords()), Bit(custodyBack.Holds(T(3, 7, 29))), Bit(custodyBack.Holds(T(3, 7, 30))));
+            Row(sb, "CustodyWords", "cautioned", Esc(Custody.Take("w", Offence.Damage, T(4, 10), true, true).ReleaseWords()));
+            Row(sb, "CustodyWords", "killing", Esc(Custody.Take("k", Offence.Killing, T(4, 10), false, true).ReleaseWords()));
+            Row(sb, "CustodyWords", "bad saves", Bit(Custody.FromJson(null) == null), Bit(Custody.FromJson(MiniJson.AsObject(MiniJson.Deserialize(@"{""topic"":""t"",""offence"":""Assault"",""taken"":10}"))) == null),
+                Bit(Custody.FromJson(MiniJson.AsObject(MiniJson.Deserialize(@"{""topic"":""t"",""offence"":""Damage"",""taken"":10.5}"))) == null),
+                Esc(MiniJson.Serialize(Custody.FromJson(MiniJson.AsObject(MiniJson.Deserialize(@"{""topic"":""t"",""offence"":""Damage"",""taken"":10,""ownsUp"":true,""coat"":true,""topic"":""u""}"))).ToJson())));
+            var street = new GossipMill(null);
+            var takenCast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}},\"areas\":{\"mickeys\":{\"places\":[\"mickeys_office\"]},\"quay\":{\"places\":[\"quay\"]}}," +
+                "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"off\"],[9,\"mickeys_office\"],[18,\"off\"]]},{\"id\":\"zlata\",\"routine\":[[0,\"off\"],[7,\"mickeys_office\"],[20,\"off\"]]},{\"id\":\"joey\",\"routine\":[[0,\"off\"],[6,\"quay\"],[18,\"off\"]]}],\"ties\":[]}");
+            foreach (var id in takenCast.People) street.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+            Row(sb, "CustodySeenTaken", "office", string.Join(",", Custody.SeenTaken(street, takenCast, "mickeys", T(2, 10))), string.Join(",", Custody.SeenTaken(street, takenCast, "mickeys", T(2, 11))),
+                string.Join(",", Custody.SeenTaken(street, takenCast, "quay", T(2, 19))), string.Join(",", Custody.SeenTaken(street, takenCast, "", T(2, 10))));
         }
 
         /// THE TOWN'S OWN NEWS (town list 6aq), for the port of StreetVoice.Exchange's
