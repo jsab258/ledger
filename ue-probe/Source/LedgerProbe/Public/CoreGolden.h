@@ -1914,6 +1914,23 @@ namespace Golden
 			O.push_back(FromInt((long long)Again.size()));
 			Ans["ArrivalSeen|" + FromInt(H)] = O;
 		}
+		{
+			CastDay Blank;
+			CastDay::Parse(R"({"talk_range_m":6,"places":{"mickeys_office":{"x_m":0,"z_m":0},"mickeys_rank":{"x_m":5,"z_m":0},"adas_step":{"x_m":20,"z_m":0}},)"
+				R"("areas":{"":{"places":["mickeys_office","mickeys_rank"]},"adas":{"places":["adas_step"]}},)"
+				R"("people":[{"id":"lena","routine":[[0,"off"],[9,"mickeys_office"],[18,"off"]]},{"id":"ada","routine":[[0,"off"],[9,"adas_step"],[18,"off"]]}],"ties":[]})",
+				Blank, Err);
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			for (const std::string& Id : Blank.People())
+				Mill.Add(std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+			const std::vector<std::string> Saw = DayOne::Arrived(&Mill, &Blank, GameTime(0, 9, 0));
+			std::string Joined;
+			for (std::vector<std::string>::size_type I = 0; I < Saw.size(); ++I) { Joined += (I ? "," : "") + Saw[I]; }
+			std::vector<std::string> O;
+			O.push_back(Joined);
+			O.push_back("0");
+			Ans["ArrivalSeen|area named blank"] = O;
+		}
 		auto ArrivalRumor = [](double Confidence, int Hops) {
 			RumorPtr R = std::make_shared<Rumor>(Fact("player", "arrived", "mickeys"));
 			R->Summary = DayOne::ArrivalSaid; R->Confidence = Confidence; R->Sensitive = false; R->Hops = Hops;

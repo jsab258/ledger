@@ -1157,6 +1157,15 @@ namespace Ledger.PerceptionGolden
                 var again = DayOne.Arrived(mill, cast, new GameTime(0, hour, 30));
                 Row(sb, "ArrivalSeen", hour.ToString(Inv), string.Join(",", saw), again.Count.ToString(Inv));
             }
+            // An area named "" is still an area (the port's independent check, 30 September).
+            var blankArea = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":0,\"z_m\":0},\"mickeys_rank\":{\"x_m\":5,\"z_m\":0},\"adas_step\":{\"x_m\":20,\"z_m\":0}}," +
+                "\"areas\":{\"\":{\"places\":[\"mickeys_office\",\"mickeys_rank\"]},\"adas\":{\"places\":[\"adas_step\"]}}," +
+                "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"off\"],[9,\"mickeys_office\"],[18,\"off\"]]},{\"id\":\"ada\",\"routine\":[[0,\"off\"],[9,\"adas_step\"],[18,\"off\"]]}],\"ties\":[]}");
+            {
+                var mill = new GossipMill(null);
+                foreach (var id in blankArea.People) mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                Row(sb, "ArrivalSeen", "area named blank", string.Join(",", DayOne.Arrived(mill, blankArea, new GameTime(0, 9, 0))), "0");
+            }
             var g = new Gossiper("ag", "ag", new MemoryStore("ag"), new KnowledgeBase(), new SuspicionTracker());
             foreach (var hops in new[] { 0, 1 })
                 for (int seed = 0; seed < 6; seed++)
