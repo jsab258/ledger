@@ -30,14 +30,20 @@ on 30 September; two ways of prompting the writer failed and are off.
 2. **When the check refuses twice,** the character states the chosen facts
    plainly, in their own manner, built by code. "That's all I know" stays only
    for when no fact was chosen. One sample on his page, one screen.
-   - State, 30 September: built (ConversationEngine.PlainFallback, off until
-     measured): an opener of their own and up to two chosen street facts in
-     plain words written for each; a card's own facts, secrets among them,
-     never. Through two blind reviews; Ron's sample on his page. Measuring on
-     the three sets. The facts chosen miss the answer in about half the empty
-     answers (item 1), which item 4's rule table addresses.
+   - State, 30 September: built, reviewed twice, measured, and off
+     (grounded-replies/PLAIN-AND-CHECK-2026-09-30.md). Empty answers fell from
+     about 26 to 16 where they could answer, no plain line invented anything,
+     but 84 of 123 plain lines were beside the point and every honest "don't
+     know" went. It waits for item 4's choice of facts. Ron's sample is on his
+     page.
 3. **Tune the checker** on about 250 labelled details, confirmed on questions it
    was never tuned on.
+   - State, 30 September: done, today's check kept. 255 details labelled
+     blind: of what it refused, 62 of 130 were true; of what it passed, 7 of
+     90 invented. Three versions (code first, examples from the tuning half,
+     two looks) each trade fewer true refusals for more inventions on the
+     held-out half; none passes the rule, so tuning is set aside after three
+     tries.
 4. **A small rule table for the first week:** the kind of question, who is asked
    and what they hold decide between an answer, a partial answer, "don't know,
    ask someone who does", or a written line.
@@ -63,6 +69,8 @@ reach yet.
 
 ## Waiting on Jafar
 
-- Ron's tone, five of his street lines, and how he says the facts plainly:
-  two taps (the town's page of 30 September). Nobody else's street lines are
-  written until then.
+- How Ron says the facts plainly (the town's page of 30 September; off for
+  now, it waits for item 4).
+
+After the list: the named cast's own street lines, in Ron's pattern (his tone
+approved, 30 September).

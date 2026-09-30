@@ -108,6 +108,7 @@ static partial class Program
             case "bearing": return Bearing();
             case "detailbench": return await DetailBench(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
             case "causes": return await Causes(dir, parallel, Arg(args, "--third", "claude-fable-5-1"));
+            case "plainrel": return await PlainRelevance(Arg(args, "--from", ""), parallel);
             case "answerable": return args.Contains("--third") ? await AnswerableThird(dir, Arg(args, "--third", "claude-fable-5-1"), parallel) : await Answerable(dir, parallel);
             case "firsts-label": return await FirstsLabel(dir, Path.Combine(RepoRoot(), "production", "research", "invented-claims", "bench"), parallel);
             case "threats": return await Threats(dir, parallel);
