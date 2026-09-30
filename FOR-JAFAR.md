@@ -5,7 +5,7 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Wednesday 30 September, 22:10)
+## Overview (Thursday 1 October, 00:10)
 
 ### Needs you
 
@@ -15,7 +15,7 @@ Nothing waiting on you (every page's stored answers checked at 22:05: yours, the
 
 (Your list of 30 September, after the audit: the playable route first; other visual work stopped while it is broken.)
 
-- **One continuous route through ordinary play** (builder the game side, town the Core side): NOT DONE, fixes in. Your reviewer's three runs of the finished game showed every game-side fault it had read, and one it missed: no conversation was ever saved, so every Continue forgot them. All the High faults are now fixed, a failing test first for each, with the town's half ported and checked: the witnesses are whoever is really on the street at that hour, in that hour's light; Sheila, Darren and Ron keep their day and go home at night; meeting him lets people recognise him; only someone who recognised him says it was him; talk survives a Continue. Walked in the editor build by day and at midnight; the build machine is packaging the game's half now, the town's half follows tonight. Next: the packaged walk, the review's smaller items, then I tell you it is ready for your cloud review. Since this afternoon: fixed, not yet walked packaged.
+- **One continuous route through ordinary play** (builder the game side, town the Core side): NOT DONE, nearly ready for your cloud review. Your reviewer's three runs of the finished game showed every fault it had read, and one it missed (no conversation was ever saved). All the High faults and most of the smaller ones are fixed, a failing test first for each, with the town's half ported, and checked in the finished game: the witnesses are whoever is really there, in that hour's light; only someone who recognised him names him; Continue brings back the conversation; the Z wait stops for Ron and the landing, hour by hour. Left: the town's last Core fix (a late no across one o'clock) and Sunday's question checked in the finished game; then I tell you it is ready. Since yesterday: fixed and walked.
 - **The delay before a character speaks** (builder, item 2): MEASURED ON THE REAL PATH, 30 lines in the finished game on your key ($0.23): the words come 1.9 s after Enter (median; 1.1 to 3.8), the first sound 5.4 s (2.2 to 10.2); none within your 2 s. The voice itself is the larger part (3.7 s). Since this morning: measured for real; the fix is the list's next item.
 - **Replies that say "that's all I know"** (town): about half of a newcomer's questions by the audit's count (31 to 38 of 60); the town's latest run, 23 of 60. Since yesterday: fewer, not solved.
 - **Replies that time out** (town, measured in play by the builder): none of 30 on the real path in the finished game this evening (29 in the character's own words, 1 ended the talk). Since this morning: measured in play.
