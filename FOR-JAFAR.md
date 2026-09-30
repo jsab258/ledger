@@ -5,7 +5,7 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Wednesday 30 September, 19:00)
+## Overview (Wednesday 30 September, 20:00)
 
 ### Needs you
 
@@ -15,7 +15,7 @@ Nothing waiting on you (every page's stored answers checked at 19:00: yours, the
 
 (Your list of 30 September, after the audit: the playable route first; other visual work stopped while it is broken.)
 
-- **One continuous route through ordinary play** (builder, item 1; the town supplies the week): DONE, walked by the AI tester in the packaged game. The clock runs; the town's week runs hour by hour exactly as the Core's does: Rita's window, the witnesses, the damage found and mended, the police each morning, DS Ellis, Ron's envelope taken down to the quay or refused to his face at Mickey's door, Ada's tea, your Sunday answer to Sheila; Z stops for each; every hour saves, and Continue puts you back where you stood. Since this morning: done.
+- **One continuous route through ordinary play** (builder the game side, town the Core side): NOT DONE. I marked it done this afternoon; your independent review found eight High faults the walks did not show, four of them written into the test tables: the wrong witnesses (Sheila by ear, filing a debug line; nobody by the hour or the light), keep-quiet and owning-up missing the real deed, nobody ever able to report him, DS Ellis questioning half the town, a noise treated as proof, Sheila's Sunday question missable, and talk forgotten after Continue. Being fixed now, a failing test first for each. Since this morning: reopened.
 - **The delay before a character speaks** (builder, item 2): MEASURED ON THE REAL PATH, 30 lines in the finished game on your key ($0.23): the words come 1.9 s after Enter (median; 1.1 to 3.8), the first sound 5.4 s (2.2 to 10.2); none within your 2 s. The voice itself is the larger part (3.7 s). Since this morning: measured for real; the fix is the list's next item.
 - **Replies that say "that's all I know"** (town): about half of a newcomer's questions by the audit's count (31 to 38 of 60); the town's latest run, 23 of 60. Since yesterday: fewer, not solved.
 - **Replies that time out** (town, measured in play by the builder): none of 30 on the real path in the finished game this evening (29 in the character's own words, 1 ended the talk). Since this morning: measured in play.

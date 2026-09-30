@@ -5,6 +5,7 @@ GOAL: one goal, set by Jafar with /goal, runs from Monday 28 September until Sun
 ORDER (Jafar, 30 September, evening; it replaces the list after the audit, whose first item, the playable route, is done and walked in the packaged game). Other visual work stays stopped unless it serves these.
 
 - [x] 1. The measuring run: the AI tester plays 30 lines through the real talk in the finished game, capped at $0.50 in code, the key read only by the game's own talk; its real numbers in the overview (Enter to words, to the voice asked, to first sound; the game's timing line). DONE 30 September, 18:38 to 18:51 (production/playtest/real-talk-2026-09-30.md): words 1.9 s median, first sound 5.4 s median (2.2 to 10.2), none within 2 s; $0.23.
+- [ ] 1b. THE ROUTE IS NOT DONE (Jafar, 30 September, evening; the independent review, branch claude/review-2026-09-30, production/audits/review-2026-09-30/FAULTS.md, not merged until its running proofs): fix the High faults on the game side before the delay, each with a failing test from the design first: A1 the ear-only witness and her debug string; A2 witnesses that ignore the hour, the routines and the light; A3 the story key keep-quiet, owning-up and threats cannot find; A4 witnesses who can never report (familiarity; the loyalty threshold is the town's); A11 DS Ellis hearing most of the town (the town's Core fix, ported); C1 conversation lost after Continue; A5 by his ruling (a noise or a shape is suspicion, never "he did it"; the town's Core rule, ported to the game's remarks). Then the builder's Medium and Low items of the split (A6, A7, A8, B2, B4(b)(c), C2 to C5, A12's live order).
 - [ ] 2. The delay: the first real words heard within 2 s of pressing Enter, measured on the real path. The voice alone takes 4.5 to 8.4 s even with instant stand-in words, now the biggest risk in the game. Method: production/research/voice-direction and voice-in-the-game; research the method first where they do not cover it.
 - [ ] 3. The friends' build, with the voice stopgap (tools/voice-live/make_portable.py; the game finds a Voice folder beside it): a Shipping build, walked for thirty minutes in a fresh Windows account.
 - [ ] 4. Mouths from Epic's audio-driven animation for every line made in advance (production/research/metahuman-audio-driven-animation).
@@ -12,7 +13,7 @@ ORDER (Jafar, 30 September, evening; it replaces the list after the audit, whose
 - [ ] 6. Mickey's office as a playable blockout (production/research/interior-blockout).
 - [ ] 7. Film MakeHuman's suit jacket in the game (F:/LedgerTools/garments/suit_jacket_test, on MH_RoccoP2 and MH_SamC5), cloth on, walking, sitting and arms raised, and tell the clothing session under Handovers to clothing.
 
-STATE (Wednesday 30 September, 19:00): item 1 measured on the real path (first sound 5.4 s median, the voice the larger part); item 2, the delay, next.
+STATE (Wednesday 30 September, 20:00): item 1 measured; the route reopened by the review (1b) and worked before the delay; the delay's first measurements taken (Nano whole-sentence 2.2 s alone, Sopro streaming 0.8 s alone, both far slower beside the game under load).
 
 ## Handovers to clothing
 
