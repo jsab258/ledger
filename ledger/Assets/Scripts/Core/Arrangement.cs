@@ -157,8 +157,15 @@ namespace Ledger.Core
             return true;
         }
 
-        // The outfit's man has the wound-down story once Ron has been down
-        // (at dawn, when the game calls PassedTo, or later).
+        /// HIS NO, OR THE WINDING DOWN, REACHES THE LANDING WHEN RON GOES DOWN
+        /// (the independent review of 30 September, B3: told only when the game
+        /// called PassedTo at dawn, stamped eleven after the night's rounds had
+        /// run without it): the game calls this as each hour turns, before the
+        /// town's rounds, and the outfit's man has it from the moment it is due.
+        public void TellDue(GossipMill mill, GameTime now) => TellWoundDown(mill, now);
+
+        // The outfit's man has the no and the wound-down story once Ron has been
+        // down (TellDue each hour; PassedTo at dawn; or later).
         void TellWoundDown(GossipMill mill, GameTime? now)
         {
             if (mill == null || !now.HasValue) return;
