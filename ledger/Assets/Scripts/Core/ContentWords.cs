@@ -56,6 +56,7 @@ namespace Ledger.Core
             new Rule("alcohol", "brewery", false, @"\bbrewer(?:y|ies|s)?\b"),
             new Rule("alcohol", "offlicence", false, @"\boff-?licen[cs]es?\b|\boffies?\b"),
             new Rule("alcohol", "lastorders", false, @"\blast orders\b"),
+            new Rule("alcohol", "pubhours", false, @"\b(?:after|before|till|until) opening time\b|\bchucking[- ]out time\b"),
             new Rule("alcohol", "lockin", false, @"\block-?ins?\b"),
             new Rule("alcohol", "happyhour", false, @"\bhappy hour\b"),
             new Rule("alcohol", "freehouse", false, @"\bfree\s?house\b|\btied\s?house\b"),

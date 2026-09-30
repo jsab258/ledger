@@ -7461,6 +7461,29 @@ namespace Ledger.CoreTests
                       string.Join(" | ", wrongSure));
             }
 
+            // THE WITNESS BANK KEEPS THE CONTENT RULE (the independent review of 30
+            // September, A13: "Half the dock front walks like that after opening
+            // time", men from the pub, spoke of drink). The pub's hours as a drinking
+            // idiom are refused; a shop's opening hours, and a pub as a place, are not.
+            {
+                var bank = MiniJson.AsObject(MiniJson.Deserialize(File.ReadAllText(Root("content/dialogue/crime-witness-v1.json"))));
+                var breaks = new List<string>();
+                int lines = 0;
+                foreach (var o in MiniJson.GetList(bank, "lines") ?? new List<object>())
+                {
+                    var l = MiniJson.AsObject(o);
+                    foreach (var key in new[] { "text", "clause" })
+                        if (MiniJson.GetString(l, key) is string s) { lines++; if (ContentRule.SpeechBreaks(s) is string why) breaks.Add(MiniJson.GetString(l, "id") + " " + why); }
+                }
+                bool idiom = ContentRule.SpeechBreaks("Half the dock front walks like that after opening time.") != null
+                             && ContentRule.SpeechBreaks("Out at chucking-out time, the lot of them.") != null
+                             && ContentRule.SpeechBreaks("The cafe's opening time is half six.") == null
+                             && ContentRule.SpeechBreaks("I'll see you by the pub on the corner.") == null;
+                Check(idiom && lines > 30 && breaks.Count == 0,
+                      "the witness bank's every line and clause keeps the content rule; the pub's hours as a drinking idiom are refused, a shop's opening time and a pub as a place are not",
+                      $"idiom {idiom}, {lines} lines, " + string.Join(" | ", breaks));
+            }
+
             // TOLD TO HER FACE IS NOT A SIGHTING (the independent review of 30
             // September, B7): Sheila, told his answer, also remembered "I saw it
             // myself: The new owner told Sheila he's ..." of herself; the man he
