@@ -128,7 +128,7 @@ namespace LedgerCore
 			const long long NowM = Now.TotalMinutes();
 			const long long HourNowStart = TownRounds::FloorDiv(NowM, 60) * 60;
 			const long long LastRound = TownRounds::FloorDiv(NowM, Step) * Step;
-			const bool bFirstCall = NextRoundValue < 0;
+			const bool bFirstCall = NextRoundValue == -1;   // a round before day 0 is a round (the builder's check)
 			if (bFirstCall) NextRoundValue = HourNowStart;
 			if (LastRound < NextRoundValue) return 0;
 			// The mill's ageing clock is not in the save: started again at the

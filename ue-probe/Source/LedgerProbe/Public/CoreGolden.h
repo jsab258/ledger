@@ -3196,15 +3196,33 @@ namespace Golden
 			const GameTime Eight(0, 20, 0);
 			Away.Delivered(0, AwayMill.Get(Arrangement::Doorman).get(), &Eight);
 			std::string AwayAt;
-			const int Times[][2] = { { 1, 0 }, { 1, 1 } };
+			const int Times[][2] = { { 1, 0 }, { 1, 1 }, { 1, 6 } };
 			for (const auto& X : Times)
 			{
-				Away.TellDue(&AwayMill, GameTime(X[0], X[1], 0));
+				const GameTime When(X[0], X[1], 0);
+				if (X[1] == 6) Away.PassedTo(1, &AwayMill, &When); else Away.TellDue(&AwayMill, When);
 				RumorPtr Found;
 				for (const RumorPtr& R : AwayMill.Get(Arrangement::OutfitMan)->Rumors) { if (R->TopicKey() == "player.outfit_d0") { Found = R; break; } }
 				AwayAt += (AwayAt.empty() ? "" : ",") + FromInt(X[0]) + " " + FromInt(X[1]) + ":" + (Found ? Found->Content.Value : std::string("none"));
 			}
 			Ans["TellDue|away"] = { AwayAt, FromInt((long long)Away.Nights().size()) };
+		}
+		// HIS NO AS OF TWO TO ONE, CONFIRMED AT TWO PAST, STILL COUNTS (the builder's check).
+		{
+			GossipMill LateMill((std::shared_ptr<SocialGraph>()));
+			for (const char* Id : { Arrangement::Doorman, Arrangement::OutfitMan })
+				LateMill.Add(std::make_shared<Gossiper>(Id, Id, std::make_shared<MemoryStore>(Id), std::make_shared<KnowledgeBase>()));
+			Arrangement Late(0);
+			const GameTime Eight(0, 20, 0), TwoToOne(1, 0, 58);
+			Late.Delivered(0, LateMill.Get(Arrangement::Doorman).get(), &Eight);
+			for (int H : { 21, 22, 23 }) Late.TellDue(&LateMill, GameTime(0, H, 0));
+			Late.TellDue(&LateMill, GameTime(1, 0, 0));
+			Late.TellDue(&LateMill, GameTime(1, 1, 0));
+			const bool bLateNo = Late.Answer(0, NightAnswer::Refused, &LateMill, &TwoToOne);
+			Late.TellDue(&LateMill, GameTime(1, 2, 0));
+			RumorPtr LateR;
+			for (const RumorPtr& R : LateMill.Get(Arrangement::OutfitMan)->Rumors) { if (R->TopicKey() == "player.outfit_d0") { LateR = R; break; } }
+			Ans["TellDue|late no"] = { FromBool(bLateNo), LateR ? LateR->Content.Value : std::string("none") };
 		}
 		// SHEILA'S QUESTION AFTER A MISSED SUNDAY (the review's B1).
 		{

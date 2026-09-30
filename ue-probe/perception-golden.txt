@@ -55919,6 +55919,8 @@ FirstReport|2 12:00|2|4860
 FirstReport|2 23:30|2|4860
 FirstReport|0 1:00|-1|540
 TellDue|no at 21:30|22:0,23:1
+TellDue|away|1 0:none,1 1:none,1 6:noshow|1
+TellDue|late no|1|refused
 WeekAsksNow|5 11:00 office|0
 WeekAsksNow|6 9:30 office|0
 WeekAsksNow|6 10:15 office|1

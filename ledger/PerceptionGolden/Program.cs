@@ -183,7 +183,7 @@ namespace Ledger.PerceptionGolden
                 // and a night away told at one; held until the port follows again.
                 // The builder's check of the second port: a no across one o'clock, the night
                 // away at dawn; held until the port follows.
-                var held = new[] { "TellDue|away|", "TellDue|late no|" };
+                var held = new string[0];   // emptied 1 October: the builder's port follows
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
