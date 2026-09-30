@@ -10,6 +10,7 @@
     python tools/ai-tester/play.py wait SECONDS
     python tools/ai-tester/play.py note SEVERITY "WHAT"   (5 unplayable .. 1 cosmetic)
     python tools/ai-tester/play.py finish "SUMMARY"
+    python tools/ai-tester/play.py close          (closes only the game this tester started, if it stayed open)
     python tools/ai-tester/play.py --selftest
 
 WHY THIS SHAPE, 29 September. Jafar: "nothing in development calls the
@@ -571,6 +572,51 @@ def finish(rest):
     return 0
 
 
+def process_image(pid):
+    """The full path of a process's image, or "" when it cannot be read."""
+    h = ctypes.windll.kernel32.OpenProcess(0x1000, False, int(pid))   # PROCESS_QUERY_LIMITED_INFORMATION
+    if not h:
+        return ""
+    buf = ctypes.create_unicode_buffer(1024)
+    size = wt.DWORD(1024)
+    ok = ctypes.windll.kernel32.QueryFullProcessImageNameW(h, 0, buf, ctypes.byref(size))
+    ctypes.windll.kernel32.CloseHandle(h)
+    return buf.value if ok else ""
+
+
+# THE TESTER'S OWN GAME ONLY (Jafar, 30 September: "closing your own test game"
+# is allowed, nothing broader). The process must be the one this tester started
+# (its recorded id) and its image the editor or the packaged game; anything
+# else is refused, whatever the id now names.
+OWN_GAME_IMAGES = ("unrealeditor.exe", "ledgerprobe.exe")
+
+
+def close(rest):
+    st = load_state()
+    if not st or not st.get("pid"):
+        print("aiTester close=NO-RUN (the tester has started no game)")
+        return 1
+    pid = int(st["pid"])
+    if not pid_alive(pid):
+        print("aiTester close=already (its game has gone)")
+        return 0
+    image = process_image(pid)
+    if os.path.basename(image).lower() not in OWN_GAME_IMAGES:
+        print("aiTester close=REFUSED (process %d is %s, not the tester's game)" % (pid, image or "unreadable"))
+        return 1
+    if user32.IsWindow(st.get("hwnd", 0)):
+        user32.PostMessageW(st["hwnd"], 0x0010, 0, 0)   # WM_CLOSE: its own window, as a person closes it
+    t0 = time.time()
+    while pid_alive(pid) and time.time() - t0 < 90:
+        time.sleep(1)
+    if pid_alive(pid):
+        subprocess.run(["taskkill", "/PID", str(pid), "/F"], capture_output=True)
+        time.sleep(2)
+    gone = not pid_alive(pid)
+    print("aiTester close=%s pid=%d image=%s" % ("closed" if gone else "STILL-OPEN", pid, os.path.basename(image)))
+    return 0 if gone else 1
+
+
 def selftest():
     ok = bad = 0
 
@@ -620,5 +666,7 @@ if __name__ == "__main__":
         sys.exit(note(rest))
     if verb == "finish":
         sys.exit(finish(rest))
+    if verb == "close":
+        sys.exit(close(rest))
     print(__doc__)
     sys.exit(2)

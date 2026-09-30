@@ -8,7 +8,9 @@
       "Bash(dotnet run *)",
       "Bash(dotnet build *)",
       "Bash(dotnet test *)",
-      "Bash(dotnet --version)"
+      "Bash(dotnet --version)",
+      "Bash(powershell.exe -NoProfile -File tools/ue/build-local.ps1)",
+      "Bash(python tools/ai-tester/play.py close)"
     ]
   }
 }
