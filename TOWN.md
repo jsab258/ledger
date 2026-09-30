@@ -39,7 +39,16 @@ first whether the method is wrong. Pages:
     looks measured no better: set aside.
   - The delay: --pending hands the first sentence to the voice ahead of its
     check (a handover once measured).
-  - Threats by the model: not started.
+  - After, with the key (production/playtest/talk-cost-2026-09-30-after.md, 24
+    turns, US$0.43; the day's two runs US$0.83): no brush-off (was 2), own
+    words 22 (was 20), fallback 2 (was 1), whole reply 4.3 s (was 5.8), first
+    words heard 2.1 s (was 2.0), the first sentence ready for the voice at
+    0.9 s, a second sooner once --pending is wired. Why the brush-offs came: a
+    first sentence failing its check sends a second draft and check in series,
+    past eight seconds on a slow turn; that path now ends at 5 to 6 s.
+  - Threats by the model: built beside the reply (ThreatRead), measured on
+    forty labelled lines (words 3 of 20, the model 20 of 20, one false alarm),
+    handed over with the talk program's next build.
 - [ ] U2. (IN HAND 30 September: the research into how writers write street lines, production/research/ambient-lines/METHOD-2026-09-30.md; each named character's own lines for the street's banks, taken first, OwnLines; how many each needs from two hours' busiest walk, TownReach --two-hours by named speaker; Ron's 159 as the sample, through two reviewers, on the 30 September second page; the rest after his yes.) Authored breadth for the first week: the street's lines written ahead (remarks, greetings, recognitions, reactions to what Tom does) for every named character, in their own voice as their casting sheet describes it, within the approved story and canon; enough that two hours of play never repeats, by my own measure; through the quality gate, the content rules on every line. Research first how game writers write ambient lines for a living town, the whole pipeline.
 - [ ] U3. (IN HAND 30 September: production/casting/regulars/REGULARS.md, through two reviewers, on the 30 September second page.) Casting sheets for the street regulars, about thirty, from CASTING.md's second tier, as a contact sheet of text on one approval page.
 - [ ] U4. Item i: every cost that decides the ending readable before it decides (reopened by his list).

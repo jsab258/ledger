@@ -105,6 +105,7 @@ static class Program
             case "disguise": return await Disguise(dir);
             case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
             case "bearing": return Bearing();
+            case "threats": return await Threats(dir, parallel);
             case "why": return await Why(args.Length > 1 ? args[1] : "lena", args.Length > 2 ? args[2] : "");
             case "hours": return await Hours(dir, parallel);
             case "hourslook": return await HoursLook();
@@ -551,6 +552,51 @@ static class Program
         var (found, calls) = await ClaimCheck.CheckAsync(client, "claude-haiku-4-5", items, line, default);
         foreach (var c in calls) { Console.WriteLine("--- call"); Console.WriteLine(c.Text); }
         Console.WriteLine("flagged: " + (found == null ? "(unchecked)" : string.Join(" | ", found)));
+        return 0;
+    }
+
+    /// THREATS READ TWO WAYS (Jafar, 30 September: "the checking model reads
+    /// each line about a deed for a threat"): a labelled set of lines a man
+    /// might say to somebody who knows what he did, twenty threats plain and
+    /// veiled and twenty that are not (a plea, an offer, a joke, a quotation,
+    /// a warning for their own good, friendly talk), each read by the word
+    /// shapes (Silence.Threatens) and by the checking model (ThreatRead),
+    /// through Claude Code on the subscription. Counts each reading's hits and
+    /// false alarms, and what either finds.
+    static async Task<int> Threats(string dir, int parallel)
+    {
+        var set = JsonDocument.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "research", "threats-1990", "threat-lines.json"))).RootElement;
+        var jobs = new List<(string line, bool threat)>();
+        foreach (var x in set.GetProperty("threats").EnumerateArray()) jobs.Add((x.GetString(), true));
+        foreach (var x in set.GetProperty("not_threats").EnumerateArray()) jobs.Add((x.GetString(), false));
+        using var client = new ClaudeCodeClient();
+        var rows = new List<object>();
+        var gate = new SemaphoreSlim(parallel);
+        int wordsHit = 0, wordsFalse = 0, modelHit = 0, modelFalse = 0, eitherHit = 0, eitherFalse = 0, outOfShape = 0;
+        await Task.WhenAll(jobs.Select(async job =>
+        {
+            await gate.WaitAsync();
+            try
+            {
+                bool words = Silence.Threatens(job.line);
+                bool? model = null;
+                try { model = ThreatRead.Parse((await client.CompleteAsync(ThreatRead.Ask("claude-haiku-4-5", job.line))).Text); }
+                catch (Exception) { }
+                lock (rows)
+                {
+                    if (model == null) outOfShape++;
+                    bool m = model == true, either = words || m;
+                    if (job.threat) { if (words) wordsHit++; if (m) modelHit++; if (either) eitherHit++; }
+                    else { if (words) wordsFalse++; if (m) modelFalse++; if (either) eitherFalse++; }
+                    rows.Add(new { job.line, job.threat, words, model });
+                }
+            }
+            finally { gate.Release(); }
+        }));
+        WriteJsonl(Path.Combine(dir, "threats.jsonl"), rows);
+        int t = jobs.Count(j => j.threat), n = jobs.Count - t;
+        Console.WriteLine($"threats: {t} threats, {n} not; word shapes caught {wordsHit}/{t}, false {wordsFalse}/{n}; " +
+                          $"the model caught {modelHit}/{t}, false {modelFalse}/{n}; either caught {eitherHit}/{t}, false {eitherFalse}/{n}; model out of shape {outOfShape} -> threats.jsonl");
         return 0;
     }
 
