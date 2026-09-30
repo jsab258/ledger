@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -114,6 +115,11 @@ namespace Ledger.PerceptionGolden
             EmitTownHours(sb);
             // The same reviewer's seeded gossip generator, as a family of rows (GossipFuzz.cs; its C++ twin is GossipFuzz.h).
             GossipFuzz.Emit(sb);
+            // Ported to FirstMoments.h on 30 September (town list 6y, the hints): the save and
+            // fill rows carry a label, so every row has the three fields the port's reader asks.
+            EmitHints(sb);
+            // Ported to DayOne.h and StreetVoice::ArrivalLine on 30 September (town list 6cg, day one).
+            EmitArrival(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -129,11 +135,9 @@ namespace Ledger.PerceptionGolden
                 EmitTaken(sb);
                 EmitWeeksEnd(sb);
                 EmitThreats(sb);
-                EmitArrival(sb);
                 EmitNames(sb);
                 EmitWaits(sb);
                 EmitLanding(sb);
-                EmitHints(sb);
                 EmitAsks(sb);
                 EmitTea(sb);
                 EmitTownSave(sb);
@@ -738,9 +742,9 @@ namespace Ledger.PerceptionGolden
             }
         }
 
-        /// THE HINTS, EACH THE FIRST TIME IT MATTERS (town list 6y), awaiting the
-        /// port (town list T2: a handover made testable): a first session as the
-        /// game drives it, then a load, each call's answer a row.
+        /// THE HINTS, EACH THE FIRST TIME IT MATTERS (town list 6y), ported to
+        /// FirstMoments.h on 30 September: a first session as the game drives it,
+        /// then a load, each call's answer a row, and the edges.
         static void EmitHints(StringBuilder sb)
         {
             string H(Hint h) => h == null ? "none" : h.Moment + "|" + Bit(h.AtOnce) + "|" + Esc(h.Speaker ?? "") + "|" + Esc(h.Key ?? "") + "|" + Esc(h.Line);
@@ -756,12 +760,71 @@ namespace Ledger.PerceptionGolden
             Row(sb, "HintHappened", "SeenAtDeed", H(m.Happened(Moment.SeenAtDeed, 601)));
             Row(sb, "HintDue", "613", H(m.Due(613)));
             var saved = MiniJson.Serialize(m.ToJson());
-            Row(sb, "HintSave", Esc(saved));
+            Row(sb, "HintSave", "done", Esc(saved));
             var back = FirstMoments.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)));
             back.Begin(0, false, MiniJson.AsObject(MiniJson.Deserialize(saved)));
             Row(sb, "HintAfterLoad", "CanTalk", H(back.Happened(Moment.CanTalk, 5)));
             Row(sb, "HintAfterLoad", "OverheardAboutHim", H(back.Happened(Moment.OverheardAboutHim, 6)));
-            Row(sb, "HintFill", Esc(FirstMoments.Fill("Press {Talk} to talk, {Move} to walk, {Coat} for the coat.", k => k == "Talk" ? "E" : k == "Move" ? " " : null)));
+            Row(sb, "HintFill", "keys", Esc(FirstMoments.Fill("Press {Talk} to talk, {Move} to walk, {Coat} for the coat.", k => k == "Talk" ? "E" : k == "Move" ? " " : null)));
+
+            // THE EDGES, for the port's regression (30 September): no time, a clock
+            // that runs backwards and one the game restarted, damaged saves, and
+            // braces that are not a key. Keys are ASCII words: the words are ours.
+            var n = new FirstMoments();
+            n.Begin(0, true);
+            n.Moved(1);
+            Row(sb, "HintEdge", "happened at NaN", H(n.Happened(Moment.CanTalk, double.NaN)));
+            Row(sb, "HintEdge", "due at infinity", H(n.Due(double.PositiveInfinity)));
+            var b = new FirstMoments();
+            b.Begin(100, true);
+            b.Moved(100);
+            Row(sb, "HintEdge", "waits at 100", H(b.Happened(Moment.CanTalk, 100)));
+            Row(sb, "HintEdge", "due at 50 is due at 100", H(b.Due(50)));
+            Row(sb, "HintEdge", "gap holds backwards", H(b.Due(55)));
+            b.Begin(0, false);
+            Row(sb, "HintEdge", "restarted clock, overheard at 5", H(b.Happened(Moment.OverheardAboutHim, 5)));
+            Row(sb, "HintEdge", "restarted clock, gap at 5", H(b.Due(5)));
+            Row(sb, "HintEdge", "restarted clock, due at 12", H(b.Due(12)));
+            Row(sb, "HintEdge", "stale after its moment", H(b.Happened(Moment.SeenAtDeed, 13)), H(b.Due(40)));
+            Row(sb, "HintEdge", "at once in the gap", H(b.Happened(Moment.LedgerOpened, 41)));
+            var badSaves = new[] {
+                "{\"done\":[\"CanTalk\",\"canTalk\",3,null,\"FirstAsk\"]}",
+                "{\"done\":[\"FirstAsk\"],\"done\":[\"SeenAtDeed\"]}",
+                "{\"done\":\"CanTalk\"}",
+                "[\"CanTalk\"]",
+                "{\"done\":[\"CanTalk\"",
+                "" };
+            // Labelled by their place in the list: an empty save would be an empty field.
+            // Text MiniJson cannot parse throws before FirstMoments sees it; the port reads
+            // the text itself and takes it as no save, so a throw here is no save.
+            for (int i = 0; i < badSaves.Length; i++)
+            {
+                Dictionary<string, object> parsed;
+                try { parsed = MiniJson.AsObject(MiniJson.Deserialize(badSaves[i])); }
+                catch (FormatException) { parsed = null; }
+                var f = FirstMoments.FromJson(parsed);
+                Row(sb, "HintBadSave", i.ToString(CultureInfo.InvariantCulture), Esc(MiniJson.Serialize(f.ToJson())));
+            }
+            // A load whose text is no JSON object keeps what was done; an object
+            // clears it and reads what it can (the independent check, 30 September).
+            for (int i = 0; i < badSaves.Length; i++)
+            {
+                Dictionary<string, object> parsed;
+                try { parsed = MiniJson.AsObject(MiniJson.Deserialize(badSaves[i])); }
+                catch (FormatException) { parsed = null; }
+                var kept = new FirstMoments();
+                kept.Begin(0, true);
+                kept.Happened(Moment.LedgerOpened, 1);
+                kept.Begin(2, false, parsed);
+                Row(sb, "HintLoadBad", i.ToString(CultureInfo.InvariantCulture), Esc(MiniJson.Serialize(kept.ToJson())));
+            }
+            // A key bound as nothing but whitespace, any of .NET's, stays in its braces.
+            var blanks = new[] { "\u00A0", "\u2003", "\u3000", " \t", "\u0085\u2028", "x\u00A0" };
+            for (int i = 0; i < blanks.Length; i++)
+                Row(sb, "HintFillBlank", i.ToString(CultureInfo.InvariantCulture), Esc("[" + FirstMoments.Fill("{Talk}", k => blanks[i]) + "]"));
+            var fills = new[] { "{Talk}{Talk}", "{Co-at} and {} and {Talk", "{{Talk}}", "{Talk_2} {9}", "" };
+            for (int i = 0; i < fills.Length; i++)
+                Row(sb, "HintFillEdge", i.ToString(CultureInfo.InvariantCulture), Esc("[" + FirstMoments.Fill(fills[i], k => k == "Talk" ? "E" : k == "Talk_2" ? "F" : k == "9" ? "\t" : null) + "]"));
         }
 
         /// THE OUTFIT'S ASKS (town list 6z, 6bn), awaiting the port (town list T2):
@@ -1077,7 +1140,7 @@ namespace Ledger.PerceptionGolden
             Row(sb, "NameArrival", "name~only", Esc(lineName?.Text ?? "none"));
         }
 
-        /// DAY ONE (town list 6cg), awaiting the port: Sheila's walk-round lines,
+        /// DAY ONE (town list 6cg), ported on 30 September: Sheila's walk-round lines,
         /// who holds his arrival first-hand at each hour of day 0 on a small
         /// cast, that it gives way to any other story of him, and its lines.
         static void EmitArrival(StringBuilder sb)
@@ -1114,6 +1177,18 @@ namespace Ledger.PerceptionGolden
                 var withDeed = StreetVoice.ArrivalLine(holder, 0.35, new RemarkLedger(), 0, 0.0, false, false);
                 Row(sb, "ArrivalLine", id, "in the coat", StreetVoice.ArrivalLine(holder, 0.35, new RemarkLedger(), 0, 1.0, true, false) == null ? "null" : "said");
                 Row(sb, "ArrivalLine", id, "with a deed", withDeed == null ? "null" : withDeed.Bank);
+            }
+            // Neither his arrival nor his name enters anybody's manner or is voiced
+            // in an exchange (the port's regression, 30 September).
+            foreach (var (label, pred) in new[] { ("arrival", "arrived"), ("name", "name") })
+            {
+                var who = new Gossiper("ar", "ar", new MemoryStore("ar"), new KnowledgeBase(), new SuspicionTracker());
+                var other = new Gossiper("ot", "ot", new MemoryStore("ot"), new KnowledgeBase(), new SuspicionTracker());
+                var r = new Rumor { Content = new Fact("player", pred, "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.9, Hops = 0 };
+                who.Rumors.Add(r);
+                var rg = StreetVoice.RegardFor(who, 0.2, false, new RemarkLedger(), 1.0, false);
+                Row(sb, "ArrivalRegard", label, rg.Knowing.ToString(), rg.Stance.ToString(), Bit(rg.Speaks),
+                    StreetVoice.Exchange(r, who, other, 0).Count.ToString(Inv));
             }
         }
 

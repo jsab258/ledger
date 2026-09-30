@@ -75,6 +75,8 @@
 #include "SaveCodec.h"
 #include "Misc/App.h"
 #include "TitleScreen.h"
+#include "FirstMoments.h"
+#include "DayOne.h"
 #include "LedgerGarments.h"
 #include "Misc/Parse.h"
 #include "Misc/DateTime.h"
@@ -122,6 +124,7 @@
 #include "Camera/PlayerCameraManager.h"
 #include "Camera/CameraActor.h"
 #include "Camera/CameraComponent.h"
+#include "Widgets/Layout/SBorder.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Text/STextBlock.h"
@@ -184,6 +187,7 @@ namespace
 		Talk, SaveDisk, LoadDisk,
 		LiveWaitDeed, LiveAfterDeed, LiveRoam,
 		LiveTitle,
+		LiveWalkRound,
 		Done
 	};
 
@@ -2418,6 +2422,9 @@ namespace
 	// through the same input path, so the playable version is also checked
 	// by the build. One step counter; nothing else differs.
 	bool bLiveScript = false;
+	bool bSheilaMet = false;   // her walk-round is over (day one, beside StartLive)
+	LedgerCore::FirstMoments GHints;   // the hints (town list 6y, beside StartLive), saved with the story
+	bool bHintsOn = false;
 	// -AskAfterDeed (29 September): the scripted talk breaks the window first, as
 	// -LiveScript does, and asks once the street holds the deed.
 	bool bAskAfterDeed = false;
@@ -2447,6 +2454,8 @@ namespace
 	// distance, the light and his acquaintance allow, and the certainty the
 	// resolver's own rule gives an actor seen fleeing. Filed only if it could
 	// tie the man to anyone (a mark, a face or a name).
+	void HintHappened(LedgerCore::Moment M);   // the hints, below StartLive
+
 	void FileFleeSighting(UWorld* World)
 	{
 		if (GN2Body == nullptr || GPawn == nullptr || !GMill) { GFleeSummary = "no-lad-or-no-mill"; return; }
@@ -2456,6 +2465,7 @@ namespace
 		bFleeSeen = GFleeSeconds >= Perception::NoticeSeconds
 			&& Perception::InSight(W.ActorMetres, W.ActorOffAxisDeg, LedgerCrime::kLightLevel, W.bActorOccluded, 1.4);
 		GFleeRung = bFleeSeen ? Perception::IdRung(W.ActorMetres, LedgerCrime::kLightLevel, W.Familiarity, false, W.FaceToward()) : 0;
+		if (bFleeSeen) { HintHappened(LedgerCore::Moment::SeenAtDeed); }   // seen running from it (town list 6y)
 		const LedgerCore::Slot Got = (LedgerCore::Slot)((int)LedgerCore::Slot::Actor | (int)LedgerCore::Slot::Flight);
 		GFleeCertainty = bFleeSeen ? LedgerCore::Observe::CertaintyFor(Got, GFleeRung, true, false) : 0.0;
 		// WHO ELSE WAS ABOUT, MEASURED RATHER THAN ASSERTED (the independent
@@ -3369,7 +3379,9 @@ namespace
 	{
 		bool bHeardOf = false;
 		if (G) { for (const RumorPtr& R : G->Rumors) { if (R && R->Content.Subject == "player") { bHeardOf = true; break; } } }
-		return std::string(",\"acquaintance\":{\"met\":") + (GLive.Talked.count(Card) ? "true" : "false")
+		// Sheila has met him once her walk-round is over (town list 6s, 6cg).
+		const bool bMet = GLive.Talked.count(Card) > 0 || (Card == "lena" && bSheilaMet);
+		return std::string(",\"acquaintance\":{\"met\":") + (bMet ? "true" : "false")
 			+ ",\"heardOf\":" + (bHeardOf ? "true" : "false") + "}";
 	}
 
@@ -4618,6 +4630,12 @@ namespace
 		// hour twice and loses none.
 		Ok = FFileHelper::SaveStringToFile(Un(GTownHours.ToJson()), *(Dir / TEXT("town-hours.json")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
+		// THE HINTS ALREADY SHOWN (town list 6y), so a load shows none twice.
+		if (bHintsOn)
+		{
+			Ok = FFileHelper::SaveStringToFile(Un(GHints.ToJson()), *(Dir / TEXT("hints.json")),
+				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
+		}
 		bSavedToDisk = Ok;
 		GSavedBytes = (int)Json.size();
 	}
@@ -4866,6 +4884,181 @@ namespace
 
 	// THE LIVE STORY STARTS, from the save when bTryLoad and one is there, or
 	// new: straight from the street being placed, or from the title's choice.
+	// THE HINTS, EACH THE FIRST TIME IT MATTERS, 30 September (town list 6y;
+	// the twenty a friend would notice, 7; FirstMoments.h, the port checked
+	// row for row against the C#). A line of plain text at the top of the
+	// view, for nine seconds, never two within twelve. The moments this
+	// street has: he stands still in a new game, he is free to talk (from
+	// the start here, until day one's walk-round ends it), and somebody saw
+	// the deed. The coat, the overheard remark and the Ledger wait for their
+	// keys: a hint whose key the game does not have yet is never shown with
+	// its braces, only logged. Sheila's and Ron's spoken lines wait for
+	// takes that pass the accent gate; the plain line shows alone.
+	bool bHintsMoved = false, bHintsFromSet = false;
+	FVector GHintsFrom = FVector::ZeroVector;
+	TSharedPtr<STextBlock> GHintText;
+	TSharedPtr<SWidget> GHintBack;
+	TSharedPtr<SWidget> GHintRoot;
+	TWeakObjectPtr<UWorld> GHintWorld;
+	double GHintUntil = -1.0;
+	constexpr double kHintSeconds = 9.0;
+
+	/// The keys as this game binds them (SliceCharacter.cpp).
+	bool HintKey(const std::string& K, std::string& Out)
+	{
+		if (K == "Move") { Out = "W A S D"; return true; }
+		if (K == "Run") { Out = "Shift"; return true; }
+		if (K == "Talk") { Out = "T"; return true; }
+		return false;
+	}
+
+	void HintSetText(const FString& Text)
+	{
+		if (GEngine == nullptr || GEngine->GameViewport == nullptr) { return; }
+		UWorld* W = GEngine->GameViewport->GetWorld();
+		if (!GHintRoot.IsValid() || GHintWorld.Get() != W)
+		{
+			SAssignNew(GHintRoot, SBox)
+				.HAlign(HAlign_Center).VAlign(VAlign_Top).Padding(FMargin(40.0f, 64.0f, 40.0f, 0.0f))
+				[
+					SNew(SBox).MaxDesiredWidth(900.0f)
+					[
+						// A DARK BACKING, so the line reads over a white sky (the
+						// tester, 30 September); hidden while there is no hint.
+						SAssignNew(GHintBack, SBorder)
+						.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
+						.BorderBackgroundColor(FLinearColor(0.0f, 0.0f, 0.0f, 0.5f))
+						.Padding(FMargin(16.0f, 8.0f))
+						.Visibility(EVisibility::Collapsed)
+						[
+							SAssignNew(GHintText, STextBlock)
+							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 17))
+							.Justification(ETextJustify::Center)
+							.AutoWrapText(true)
+							.ColorAndOpacity(FSlateColor(FLinearColor(0.95f, 0.92f, 0.8f, 1.0f)))
+							.ShadowOffset(FVector2D(1.0f, 1.0f))
+							.ShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.8f))
+						]
+					]
+				];
+			GEngine->GameViewport->AddViewportWidgetContent(GHintRoot.ToSharedRef(), 48);
+			GHintWorld = W;
+		}
+		if (GHintText.IsValid()) { GHintText->SetText(FText::FromString(Text)); }
+		if (GHintBack.IsValid()) { GHintBack->SetVisibility(Text.IsEmpty() ? EVisibility::Collapsed : EVisibility::HitTestInvisible); }
+	}
+
+	void HintShow(const LedgerCore::Hint& H)
+	{
+		const std::string Text = LedgerCore::FirstMoments::Fill(H.Key, &HintKey);
+		if (Text.find('{') != std::string::npos)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerHints: %s not shown, its key is not in the game yet: %s"),
+			       *Un(LedgerCore::MomentName(H.M)), *Un(Text));
+			return;
+		}
+		HintSetText(Un(Text));
+		GHintUntil = NowS() + kHintSeconds;
+		UE_LOG(LogTemp, Display, TEXT("LedgerHints: shown %s: %s"), *Un(LedgerCore::MomentName(H.M)), *Un(Text));
+		LedgerSession::Write(TEXT("hint"), TEXT("\"moment\":") + LedgerSession::Str(Un(LedgerCore::MomentName(H.M))));
+	}
+
+	void HintHappened(LedgerCore::Moment M)
+	{
+		if (!bHintsOn) { return; }
+		// A moment whose key the game does not have yet is not reported, so
+		// its hint is not spent unseen and shows once the key exists (the
+		// independent check, 30 September).
+		if (LedgerCore::FirstMoments::Fill(LedgerCore::FirstMoments::Words(M).Key, &HintKey).find('{') != std::string::npos)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerHints: %s kept for later, its key is not in the game yet"), *Un(LedgerCore::MomentName(M)));
+			return;
+		}
+		LedgerCore::Hint H;
+		if (GHints.Happened(M, NowS(), H)) { HintShow(H); }
+	}
+
+	void HintsTick()
+	{
+		if (!bHintsOn) { return; }
+		const double T = NowS();
+		if (GPawn != nullptr && !bHintsMoved)
+		{
+			const FVector At = GPawn->GetActorLocation();
+			if (!bHintsFromSet) { GHintsFrom = At; bHintsFromSet = true; }
+			else if (FVector::Dist2D(At, GHintsFrom) > 50.0f) { GHints.Moved(T); bHintsMoved = true; }
+		}
+		LedgerCore::Hint H;
+		if (GHints.Due(T, H)) { HintShow(H); }
+		if (GHintUntil >= 0.0 && T >= GHintUntil) { HintSetText(FString()); GHintUntil = -1.0; }
+	}
+
+	const TCHAR* const kErrandLine = TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like.");
+
+	// SHEILA'S WALK-ROUND, 30 September (town list 6cg, day one; the twenty a
+	// friend would notice, 6: a clear first purpose). A new game opens on her
+	// five stops in her own words (DayOne.h), as plain text until her voice
+	// passes the accent gate, one at a time for its reading time or until he
+	// presses Enter; he stands until she has done. Played or skipped, it ends
+	// the same way: she has met him, the hints begin, the moment to talk has
+	// come (its hint when the hints are next asked), and the errand is given.
+	int32 GWalkStop = -1;
+	double GWalkAt = 0.0, GWalkUntil = 0.0;
+	bool bWalkLocked = false, bWalkEnterWasDown = true;   // true: a held Enter from the title is not a press
+	FString GWalkLine;
+
+	void WalkRoundEnd(UWorld* World)
+	{
+		if (!GWalkLine.IsEmpty()) { const FString Was = GWalkLine; GSubs.RemoveAll([&Was](const FSubLine& L) { return L.Text == Was; }); SubsRebuild(); }
+		GWalkLine.Empty();
+		PromptSet(FString());
+		if (bWalkLocked)
+		{
+			if (APlayerController* PC = World != nullptr ? World->GetFirstPlayerController() : nullptr) { PC->ResetIgnoreMoveInput(); }
+			bWalkLocked = false;
+		}
+		bSheilaMet = true;
+		bHintsOn = true;
+		bHintsMoved = false;
+		bHintsFromSet = false;   // where he stands now is where he starts
+		GHints.Begin(NowS(), true);
+		LedgerCore::Hint H;
+		if (LedgerCore::DayOne::WalkRoundEnds(&GHints, NowS(), H)) { HintShow(H); }
+		UE_LOG(LogTemp, Display, TEXT("LedgerDayOne: the walk-round ends at stop %d of %d; the hints begin"), GWalkStop, LedgerCore::DayOne::WalkRoundCount);
+		Say(kErrandLine, 40.0f, FColor::Yellow);
+		GPhase = ECrimePhase::LiveWaitDeed;
+	}
+
+	void WalkRoundTick(UWorld* World)
+	{
+		// Nothing to use until she has shown him round.
+		TakeActRequests(0);
+		TakeTalkRequests();
+		APlayerController* PC = World != nullptr ? World->GetFirstPlayerController() : nullptr;
+		if (PC != nullptr && !bWalkLocked) { PC->SetIgnoreMoveInput(true); bWalkLocked = true; }
+		const double T = NowS();
+		// ENTER, SEEN AS A KEY GOING DOWN: this ticker runs outside the
+		// frame's input, after "just pressed" is cleared (the tester pressed
+		// Enter and nothing moved on, 30 September).
+		const bool bEnterDown = PC != nullptr && PC->IsInputKeyDown(EKeys::Enter);
+		const bool bNext = bEnterDown && !bWalkEnterWasDown && GWalkStop >= 0 && T - GWalkAt > 0.6;
+		bWalkEnterWasDown = bEnterDown;
+		if (GWalkStop < 0 || bNext || T >= GWalkUntil)
+		{
+			if (!GWalkLine.IsEmpty()) { const FString Was = GWalkLine; GSubs.RemoveAll([&Was](const FSubLine& L) { return L.Text == Was; }); SubsRebuild(); }
+			++GWalkStop;
+			if (GWalkStop >= LedgerCore::DayOne::WalkRoundCount) { WalkRoundEnd(World); return; }
+			const LedgerCore::DayOne::Stop& S = LedgerCore::DayOne::WalkRound[GWalkStop];
+			GWalkLine = FString(TEXT("Sheila: \"")) + Un(S.Line) + TEXT("\"");
+			const double Seconds = 2.5 + 0.065 * (double)FCString::Strlen(*Un(S.Line));
+			Say(GWalkLine, (float)Seconds + 1.0f);
+			GWalkAt = T;
+			GWalkUntil = T + Seconds;
+			UE_LOG(LogTemp, Display, TEXT("LedgerDayOne: stop %d, %s"), GWalkStop, *Un(S.Name));
+		}
+		PromptSet(TEXT("Enter  go on"));
+	}
+
 	void StartLive(UWorld* World, bool bTryLoad)
 	{
 		// COME BACK AND THE TOWN STILL KNOWS: a save from before is
@@ -4893,11 +5086,35 @@ namespace
 			GLive.Remarks = StreetVoice::RemarkLedger();   // and nobody has said anything to him yet
 			GTownHours = TownHours();                      // nor has the town talked an hour (town list 6bs)
 			GWatchSlot = 0;
-			Say(TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like."), 40.0f, FColor::Yellow);
+			// DAY ONE FIRST (town list 6cg; the twenty a friend would notice,
+			// 6): in free play Sheila shows him round before he can walk, and
+			// the errand follows it (WalkRoundEnd).
+			if (bLiveScript) { Say(kErrandLine, 40.0f, FColor::Yellow); }
+			else
+			{
+				GPhase = ECrimePhase::LiveWalkRound;
+				GWalkStop = -1;
+			}
 		}
 		// THE SESSION RECORD STARTS (handover 6p): a new game or a
 		// loaded save, and the deed the save holds.
 		LedgerSession::Start(CrimeSha(), !bLoadedFromDisk, SessionCastFile());
+		// THE HINTS BEGIN (town list 6y), in free play only, when he has
+		// control: after a load at once, keeping those already shown; in a
+		// new game when Sheila's walk-round ends (WalkRoundEnd). Sheila has
+		// met him either way.
+		if (!bLiveScript && bLoadedFromDisk)
+		{
+			FString Saved;
+			const bool bSaved = FFileHelper::LoadFileToString(Saved, *(EncSaveDir() / TEXT("hints.json")));
+			const std::string SavedJson = Utf8(Saved);
+			bHintsOn = true;
+			bHintsMoved = false;
+			bHintsFromSet = false;
+			GHints.Begin(NowS(), false, bSaved ? &SavedJson : nullptr);
+			bSheilaMet = true;
+			UE_LOG(LogTemp, Display, TEXT("LedgerHints: begun, a load, %d done"), (int32)GHints.Done().size());
+		}
 		if (bLoadedFromDisk)
 		{
 			TArray<FString> Deeds;
@@ -4936,6 +5153,7 @@ namespace
 		UWorld* World = GameWorld();
 		StopShoutRecording(false);
 		SubsTick();
+		HintsTick();
 		// THE TITLE, as soon as there is a player to show it to; the street
 		// goes on building behind it.
 		if (!bTitleAsked && World != nullptr && World->GetFirstPlayerController() != nullptr)
@@ -5398,6 +5616,11 @@ namespace
 			GPhaseStart = Now;
 			return true;
 		}
+		case ECrimePhase::LiveWalkRound:
+		{
+			WalkRoundTick(World);
+			return true;
+		}
 		case ECrimePhase::LiveWaitDeed:
 		{
 			if (!bLiveScript) { LivePromptTick(true); }
@@ -5480,6 +5703,8 @@ namespace
 			SubsRebuild();
 			Say(TEXT("The window goes in with a crash."), 16.0f, FColor::Orange);
 			if (!GFiledSummaryA.empty()) { Say(TEXT("Sheila: \"Stop. I mean it. Stop.\""), 16.0f); }
+			// SOMEBODY SAW THAT (town list 6y): she filed what she saw.
+			if (!GFiledSummaryA.empty()) { HintHappened(LedgerCore::Moment::SeenAtDeed); }
 			WriteBreadcrumb(TEXT("live-deed"));
 			if (bLiveScript)
 			{

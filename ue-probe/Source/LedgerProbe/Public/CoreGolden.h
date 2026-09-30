@@ -51,6 +51,8 @@
 #include "Suspecting.h"
 #include "Suspicion.h"
 #include "TownRounds.h"
+#include "FirstMoments.h"
+#include "DayOne.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -1875,6 +1877,245 @@ namespace Golden
 		return A;
 	}
 
+	// ---- day one: Sheila's walk-round and his arrival (town list 6cg) --
+	//
+	// PerceptionGolden's EmitArrival, played again here the same way in one
+	// run; each row is found by its function and its labels.
+
+	inline const std::map<std::string, std::vector<std::string> >& ArrivalAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		for (int I = 0; I < DayOne::WalkRoundCount; ++I)
+		{
+			std::vector<std::string> O;
+			O.push_back(DayOne::WalkRound[I].Name);
+			O.push_back(Escape(DayOne::WalkRound[I].Line));
+			Ans["WalkRound|" + FromInt(I)] = O;
+		}
+		CastDay Cast;
+		std::string Err;
+		CastDay::Parse(R"({"talk_range_m":6,"places":{"mickeys_office":{"x_m":0,"z_m":0},"mickeys_rank":{"x_m":5,"z_m":0},"adas_step":{"x_m":20,"z_m":0},"quay":{"x_m":50,"z_m":0}},)"
+			R"("areas":{"mickeys":{"places":["mickeys_office","mickeys_rank"],"names":["Mickey's"]},"adas":{"places":["adas_step"],"names":["Ada's"]},"quay":{"places":["quay"],"names":["the quay"]}},)"
+			R"("people":[{"id":"lena","routine":[[0,"off"],[9,"mickeys_office"],[18,"off"]]},{"id":"rocco","routine":[[0,"off"],[8,"mickeys_rank"],[20,"off"]]},{"id":"ada","routine":[[0,"off"],[9,"adas_step"],[18,"off"]]},{"id":"joey","routine":[[0,"off"],[6,"quay"],[18,"off"]]}],"ties":[]})",
+			Cast, Err);
+		const int Hours[] = { 7, 8, 9, 12 };
+		for (int H : Hours)
+		{
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			for (const std::string& Id : Cast.People())
+				Mill.Add(std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+			const std::vector<std::string> Saw = DayOne::Arrived(&Mill, &Cast, GameTime(0, H, 0));
+			const std::vector<std::string> Again = DayOne::Arrived(&Mill, &Cast, GameTime(0, H, 30));
+			std::string Joined;
+			for (std::vector<std::string>::size_type I = 0; I < Saw.size(); ++I) { Joined += (I ? "," : "") + Saw[I]; }
+			std::vector<std::string> O;
+			O.push_back(Joined);
+			O.push_back(FromInt((long long)Again.size()));
+			Ans["ArrivalSeen|" + FromInt(H)] = O;
+		}
+		auto ArrivalRumor = [](double Confidence, int Hops) {
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", "arrived", "mickeys"));
+			R->Summary = DayOne::ArrivalSaid; R->Confidence = Confidence; R->Sensitive = false; R->Hops = Hops;
+			return R;
+		};
+		const Gossiper Ag("ag", "ag", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+		for (int Hops = 0; Hops <= 1; ++Hops)
+			for (int Seed = 0; Seed < 6; ++Seed)
+			{
+				const std::shared_ptr<SpokenLine> L = StreetVoice::Recognition(&Ag, ArrivalRumor(0.5, Hops), StreetVoice::StanceKind::Comments, Seed);
+				std::vector<std::string> O;
+				if (!L) O.push_back("null");
+				else { O.push_back(L->Bank); O.push_back(Escape(L->Text)); }
+				Ans["RecognitionArrival|" + FromInt(Hops) + "|" + FromInt(Seed)] = O;
+			}
+		const char* Ids[] = { "ah", "lena", "june" };
+		for (const char* Id : Ids)
+		{
+			Gossiper Holder(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+			Holder.Rumors.push_back(ArrivalRumor(1.0, 0));
+			StreetVoice::RemarkLedger Ledger;
+			const std::shared_ptr<SpokenLine> First = StreetVoice::ArrivalLine(&Holder, 0.35, &Ledger, 0, 0.0, false, false);
+			const std::shared_ptr<SpokenLine> Second = StreetVoice::ArrivalLine(&Holder, 0.35, &Ledger, 1, 0.0, false, false);
+			std::vector<std::string> O;
+			if (!First) O.push_back("null");
+			else { O.push_back(First->Bank); O.push_back(Escape(First->Text)); }
+			O.push_back(Second ? "again" : "null");
+			Ans["ArrivalLine|" + std::string(Id) + "|alone"] = O;
+			RumorPtr Deed = std::make_shared<Rumor>(Fact("player", "window_d1", "ritas"));
+			Deed->Summary = "x"; Deed->Confidence = 0.5; Deed->Sensitive = true;
+			Holder.Rumors.push_back(Deed);
+			StreetVoice::RemarkLedger L1, L2;
+			const std::shared_ptr<SpokenLine> WithDeed = StreetVoice::ArrivalLine(&Holder, 0.35, &L1, 0, 0.0, false, false);
+			Ans["ArrivalLine|" + std::string(Id) + "|in the coat"] = std::vector<std::string>(1,
+				StreetVoice::ArrivalLine(&Holder, 0.35, &L2, 0, 1.0, true, false) ? "said" : "null");
+			Ans["ArrivalLine|" + std::string(Id) + "|with a deed"] = std::vector<std::string>(1, WithDeed ? WithDeed->Bank : std::string("null"));
+		}
+		const char* const Kinds[2][2] = { { "arrival", "arrived" }, { "name", "name" } };
+		for (const auto& K : Kinds)
+		{
+			GossiperPtr Who = std::make_shared<Gossiper>("ar", "ar", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+			GossiperPtr Other = std::make_shared<Gossiper>("ot", "ot", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", K[1], "mickeys"));
+			R->Summary = DayOne::ArrivalSaid; R->Confidence = 0.9; R->Hops = 0;
+			Who->Rumors.push_back(R);
+			StreetVoice::RemarkLedger L;
+			const StreetVoice::Regard Rg = StreetVoice::RegardFor(Who.get(), 0.2, false, &L, 1.0, false);
+			std::vector<std::string> O;
+			O.push_back(StreetVoice::KnowingName(Rg.HowMuch));
+			O.push_back(StreetVoice::StanceName(Rg.Stance));
+			O.push_back(FromBool(Rg.bSpeaks));
+			O.push_back(FromInt((long long)StreetVoice::Exchange(R, Who, Other, 0).size()));
+			Ans["ArrivalRegard|" + std::string(K[0])] = O;
+		}
+		return Ans;
+	}
+
+	inline Answer ArrivalRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::map<std::string, std::vector<std::string> >& Ans = ArrivalAnswers();
+		// RecognitionArrival carries two labels; the rest one.
+		const int Labels = F[0] == "RecognitionArrival" || F[0] == "ArrivalLine" ? 2 : 1;
+		if ((int)F.size() < 1 + Labels + 1) return A;
+		std::string Key = F[0];
+		for (int I = 1; I <= Labels; ++I) Key += "|" + F[I];
+		const std::map<std::string, std::vector<std::string> >::const_iterator It = Ans.find(Key);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 1 + Labels, It->second);
+		return A;
+	}
+
+	// ---- the hints, each the first time it matters (town list 6y) ----
+	//
+	// PerceptionGolden's EmitHints, played again here the same way in one
+	// run: a first session as the game drives it, then a load; each row is
+	// that call's answer, found by its function and label.
+
+	/// The C#'s H(Hint): none, or Moment|AtOnce|Speaker|Key|Line.
+	inline std::vector<std::string> HintOuts(bool bGot, const Hint& H)
+	{
+		std::vector<std::string> O;
+		if (!bGot) { O.push_back("none"); return O; }
+		O.push_back(MomentName(H.M));
+		O.push_back(FromBool(H.AtOnce));
+		O.push_back(Escape(H.Speaker));
+		O.push_back(Escape(H.Key));
+		O.push_back(H.bLine ? Escape(H.Line) : std::string("null"));
+		return O;
+	}
+
+	inline const std::map<std::string, std::vector<std::string> >& HintAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		Hint H;
+		FirstMoments M;
+		M.Begin(0, true);
+		const double Ts[] = { 1.0, 3.9, 4.0, 4.1, 10.0 };
+		for (double T : Ts) { const bool B = M.Due(T, H); Ans["HintDue|" + FromDouble(T)] = HintOuts(B, H); }
+		M.Moved(11);
+		{ const bool B = M.Due(12, H); Ans["HintDue|after moving"] = HintOuts(B, H); }
+		{ const bool B = M.Happened(Moment::CanTalk, 20, H); Ans["HintHappened|CanTalk"] = HintOuts(B, H); }
+		{ const bool B = M.Happened(Moment::CanTalk, 21, H); Ans["HintHappened|CanTalk again"] = HintOuts(B, H); }
+		const double Ts2[] = { 21.0, 32.0, 33.0 };
+		for (double T : Ts2) { const bool B = M.Due(T, H); Ans["HintDue|" + FromDouble(T)] = HintOuts(B, H); }
+		{ const bool B = M.Happened(Moment::FirstAsk, 600, H); Ans["HintHappened|FirstAsk"] = HintOuts(B, H); }
+		{ const bool B = M.Happened(Moment::SeenAtDeed, 601, H); Ans["HintHappened|SeenAtDeed"] = HintOuts(B, H); }
+		{ const bool B = M.Due(613, H); Ans["HintDue|" + FromDouble(613)] = HintOuts(B, H); }
+		const std::string Saved = M.ToJson();
+		Ans["HintSave|done"] = std::vector<std::string>(1, Escape(Saved));
+		FirstMoments Back = FirstMoments::FromJson(Saved);
+		Back.Begin(0, false, &Saved);
+		{ const bool B = Back.Happened(Moment::CanTalk, 5, H); Ans["HintAfterLoad|CanTalk"] = HintOuts(B, H); }
+		{ const bool B = Back.Happened(Moment::OverheardAboutHim, 6, H); Ans["HintAfterLoad|OverheardAboutHim"] = HintOuts(B, H); }
+		Ans["HintFill|keys"] = std::vector<std::string>(1, Escape(FirstMoments::Fill("Press {Talk} to talk, {Move} to walk, {Coat} for the coat.",
+			[](const std::string& K, std::string& Out) {
+				if (K == "Talk") { Out = "E"; return true; }
+				if (K == "Move") { Out = " "; return true; }
+				return false; })));
+
+		// THE EDGES, as the C# plays them after the session above.
+		FirstMoments N;
+		N.Begin(0, true);
+		N.Moved(1);
+		{ const bool B = N.Happened(Moment::CanTalk, std::numeric_limits<double>::quiet_NaN(), H); Ans["HintEdge|happened at NaN"] = HintOuts(B, H); }
+		{ const bool B = N.Due(std::numeric_limits<double>::infinity(), H); Ans["HintEdge|due at infinity"] = HintOuts(B, H); }
+		FirstMoments Bk;
+		Bk.Begin(100, true);
+		Bk.Moved(100);
+		{ const bool B = Bk.Happened(Moment::CanTalk, 100, H); Ans["HintEdge|waits at 100"] = HintOuts(B, H); }
+		{ const bool B = Bk.Due(50, H); Ans["HintEdge|due at 50 is due at 100"] = HintOuts(B, H); }
+		{ const bool B = Bk.Due(55, H); Ans["HintEdge|gap holds backwards"] = HintOuts(B, H); }
+		Bk.Begin(0, false);
+		{ const bool B = Bk.Happened(Moment::OverheardAboutHim, 5, H); Ans["HintEdge|restarted clock, overheard at 5"] = HintOuts(B, H); }
+		{ const bool B = Bk.Due(5, H); Ans["HintEdge|restarted clock, gap at 5"] = HintOuts(B, H); }
+		{ const bool B = Bk.Due(12, H); Ans["HintEdge|restarted clock, due at 12"] = HintOuts(B, H); }
+		{
+			const bool B1 = Bk.Happened(Moment::SeenAtDeed, 13, H);
+			std::vector<std::string> O = HintOuts(B1, H);
+			const bool B2 = Bk.Due(40, H);
+			const std::vector<std::string> O2 = HintOuts(B2, H);
+			O.insert(O.end(), O2.begin(), O2.end());
+			Ans["HintEdge|stale after its moment"] = O;
+		}
+		{ const bool B = Bk.Happened(Moment::LedgerOpened, 41, H); Ans["HintEdge|at once in the gap"] = HintOuts(B, H); }
+		const char* BadSaves[] = {
+			"{\"done\":[\"CanTalk\",\"canTalk\",3,null,\"FirstAsk\"]}",
+			"{\"done\":[\"FirstAsk\"],\"done\":[\"SeenAtDeed\"]}",
+			"{\"done\":\"CanTalk\"}",
+			"[\"CanTalk\"]",
+			"{\"done\":[\"CanTalk\"",
+			"" };
+		for (int I = 0; I < 6; ++I)
+		{
+			Ans["HintBadSave|" + FromDouble(I)] = std::vector<std::string>(1, Escape(FirstMoments::FromJson(BadSaves[I]).ToJson()));
+		}
+		for (int I = 0; I < 6; ++I)
+		{
+			FirstMoments Kept;
+			Kept.Begin(0, true);
+			Kept.Happened(Moment::LedgerOpened, 1, H);
+			const std::string Text = BadSaves[I];
+			Kept.Begin(2, false, &Text);
+			Ans["HintLoadBad|" + FromDouble(I)] = std::vector<std::string>(1, Escape(Kept.ToJson()));
+		}
+		// U+00A0, U+2003, U+3000, space and tab, U+0085 and U+2028, and x with U+00A0, in UTF-8.
+		const char* Blanks[] = { "\xC2\xA0", "\xE2\x80\x83", "\xE3\x80\x80", " \t", "\xC2\x85\xE2\x80\xA8", "x\xC2\xA0" };
+		for (int I = 0; I < 6; ++I)
+		{
+			const std::string B = Blanks[I];
+			Ans["HintFillBlank|" + FromDouble(I)] = std::vector<std::string>(1, Escape("[" + FirstMoments::Fill("{Talk}",
+				[&B](const std::string&, std::string& Out) { Out = B; return true; }) + "]"));
+		}
+		const char* Fills[] = { "{Talk}{Talk}", "{Co-at} and {} and {Talk", "{{Talk}}", "{Talk_2} {9}", "" };
+		for (int I = 0; I < 5; ++I)
+		{
+			Ans["HintFillEdge|" + FromDouble(I)] = std::vector<std::string>(1, Escape("[" + FirstMoments::Fill(Fills[I],
+				[](const std::string& K, std::string& Out) {
+					if (K == "Talk") { Out = "E"; return true; }
+					if (K == "Talk_2") { Out = "F"; return true; }
+					if (K == "9") { Out = "\t"; return true; }
+					return false; }) + "]"));
+		}
+		return Ans;
+	}
+
+	inline Answer HintRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::map<std::string, std::vector<std::string> >& Ans = HintAnswers();
+		// A number's label is found by its value: the C# writes 10 as "10",
+		// the shortest round trip here as "1e+01".
+		const std::string Label = IsNumber(F[1]) ? FromDouble(D(F[1])) : F[1];
+		const std::map<std::string, std::vector<std::string> >::const_iterator It = Ans.find(F[0] + "|" + Label);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 2, It->second);
+		return A;
+	}
+
 	// ---- the town's hourly rounds (town list 6bs, 29 September) ------
 	//
 	// PerceptionGolden's EmitTownRounds and EmitTownHours, built again here
@@ -2802,6 +3043,17 @@ namespace Golden
 		else if (Fn == "GossipFuzz")
 		{
 			A = GossipFuzzRow(F);
+		}
+		// DAY ONE (town list 6cg): DayOne.h and StreetVoice::ArrivalLine.
+		else if (Fn == "WalkRound" || Fn == "ArrivalSeen" || Fn == "RecognitionArrival" || Fn == "ArrivalLine" || Fn == "ArrivalRegard")
+		{
+			A = ArrivalRow(F);
+		}
+		// THE HINTS (town list 6y): FirstMoments.h.
+		else if (Fn == "HintDue" || Fn == "HintHappened" || Fn == "HintSave" || Fn == "HintAfterLoad" || Fn == "HintFill"
+		         || Fn == "HintEdge" || Fn == "HintBadSave" || Fn == "HintFillEdge" || Fn == "HintLoadBad" || Fn == "HintFillBlank")
+		{
+			A = HintRow(F);
 		}
 		// The stateful ones.
 		else if (Fn == "Scenario" && F.size() >= 4)

@@ -216,8 +216,7 @@ namespace LedgerCore
 	// rows raise it). Value, Raise, Lower and Restore, clamped as the C#'s
 	// Math.Clamp clamps (a NaN passes through). NOT HERE: the reasons trail
 	// (Reasons, RecentReasons, MaxReasons), which nothing ported reads, so a
-	// Raise's reason is taken and dropped; and Level, which nothing ported
-	// asks. The mill's four Raise calls (Tick and CompareNotes) are in
+	// Raise's reason is taken and dropped. Level came with day one. The mill's four Raise calls (Tick and CompareNotes) are in
 	// Gossip.h since town list 6n.
 	class SuspicionTracker
 	{
@@ -230,6 +229,13 @@ namespace LedgerCore
 	public:
 		SuspicionTracker() : V(0.0) {}
 		double Value() const { return V; }
+		/// Suspicion.cs 193, 30 September (day one's ArrivalLine asks it): the
+		/// four bands; a NaN falls through them all to Confronting, as the C#'s.
+		SuspicionLevel Level() const
+		{
+			return V < 0.25 ? SuspicionLevel::Trusting : V < 0.50 ? SuspicionLevel::Uneasy
+			     : V < 0.80 ? SuspicionLevel::Suspicious : SuspicionLevel::Confronting;
+		}
 		// A NaN reads as none, and an amount that is not finite moves nothing
 		// (town list 6bw): a rumour told at NaN left the hearer's suspicion
 		// NaN for good, and the save could not be read back.

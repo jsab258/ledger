@@ -69,6 +69,10 @@ namespace MiniJson
 			if (C < 0x80) { Len = 1; return C; }
 			const int N = C >= 0xF0 ? 4 : C >= 0xE0 ? 3 : C >= 0xC0 ? 2 : 1;
 			if (N == 1 || At + N > S.size()) { Len = 1; return 0xFFFD; }
+			// A follower that is not 10xxxxxx makes the lead one bad byte, as .NET's
+			// decoder does before the C# ever sees the text (the hints port's
+			// independent check, 30 September: E2 80 41 read as U+2001 and ate the A).
+			for (int I = 1; I < N; ++I) { if (((unsigned char)S[At + I] & 0xC0) != 0x80) { Len = 1; return 0xFFFD; } }
 			unsigned Cp = C & (N == 2 ? 0x1F : N == 3 ? 0x0F : 0x07);
 			for (int I = 1; I < N; ++I) Cp = (Cp << 6) | ((unsigned char)S[At + I] & 0x3F);
 			Len = (size_t)N;

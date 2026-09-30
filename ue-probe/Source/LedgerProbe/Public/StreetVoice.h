@@ -88,6 +88,7 @@
 #pragma once
 
 #include "Gossip.h"      // Rumor, Gossiper, RumorPtr, GossiperPtr
+#include "DayOne.h"      // his arrival and his name, which nobody lowers their voice over
 #include "MiniJson.h"    // the remark ledger's save, read as the C# reads it
 
 #include <algorithm>
@@ -516,6 +517,13 @@ namespace LedgerCore
 			if (!R || !From || !To)
 			{
 				if (OutTrace != 0) { OutTrace->Refused = "no-rumour-or-no-speaker"; }
+				return Lines;
+			}
+			// His arrival passes on unvoiced: it is no story to lower your
+			// voice over (town list 6cg, the independent check).
+			if (DayOne::IsArrival(R) || PlayerIdentity::IsNameStory(R))
+			{
+				if (OutTrace != 0) { OutTrace->Refused = "arrival-or-name"; }
 				return Lines;
 			}
 			// DEVIATION 14: the C#'s IsNullOrEmpty guard is an empty-string
@@ -1017,6 +1025,9 @@ namespace LedgerCore
 			{
 				const RumorPtr& R = G->Rumors[I];
 				if (!R || R->Content.Subject != "player") continue;
+				// Nor his arrival (town list 6cg), nor his name (6ch): news of him,
+				// not of anything done.
+				if (DayOne::IsArrival(R) || PlayerIdentity::IsNameStory(R)) continue;
 				if (!(R->Confidence >= 0.0)) continue;   // a NaN must not hide a real story
 				if (!Strongest || R->Confidence > Strongest->Confidence) Strongest = R;
 			}
@@ -1221,6 +1232,36 @@ namespace LedgerCore
 			return Lines;
 		}
 
+		// HIS ARRIVAL (town list 6cg): the street's first talk of him, said to
+		// his face once by somebody who can tell it is him.
+		inline const char* const* RecognitionArrivalSaw(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"You'll be Mickey's nephew, then.",
+				"So you're the new owner.",
+				"Saw you come in. Mickey's nephew, is it?",
+				"You've the look of Mickey about you.",
+				"Settling in, are you?",
+				"New in the office, then.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionArrivalHeard(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard Mickey's nephew had come. That'll be you.",
+				"You'll be the new owner they're all on about.",
+				"Word is Mickey's nephew's taken the office. That you?",
+				"So you're the one taking on Mickey's.",
+				"They say you've come to run the cabs.",
+				"Heard there's a new face at Mickey's.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
 		inline const char* const* RecognitionSensitive(int& OutCount)
 		{
 			static const char* const Lines[14] = {
@@ -1279,6 +1320,8 @@ namespace LedgerCore
 			else if (bNight && About->Content.Value == "did")     { Bank = "recognition/outfit-did";     Lines = RecognitionOutfitDid(Count); }
 			else if (bNight && About->Content.Value == "refused") { Bank = "recognition/outfit-refused"; Lines = RecognitionOutfitRefused(Count); }
 			else if (bNight && About->Content.Value == "noshow")  { Bank = "recognition/outfit-noshow";  Lines = RecognitionOutfitNoShow(Count); }
+			else if (DayOne::IsArrival(About) && About->Hops == 0) { Bank = "recognition/arrival-saw";   Lines = RecognitionArrivalSaw(Count); }
+			else if (DayOne::IsArrival(About))                 { Bank = "recognition/arrival-heard";  Lines = RecognitionArrivalHeard(Count); }
 			else if (About && About->Sensitive)                { Bank = "recognition/sensitive";      Lines = RecognitionSensitive(Count); }
 			else                                               { Bank = "recognition/ordinary";       Lines = RecognitionOrdinary(Count); }
 			std::shared_ptr<SpokenLine> Line = std::make_shared<SpokenLine>();
@@ -1287,6 +1330,35 @@ namespace LedgerCore
 			Line->AboutPlayer = (bool)About;
 			Line->Source = About;
 			Line->Bank = Bank;
+			return Line;
+		}
+
+		/// HIS ARRIVAL, SAID TO HIS FACE ONCE (town list 6cg; StreetVoice.cs
+		/// ArrivalLine): by somebody who holds it at the share floor, can tell it
+		/// is him (they saw him come, or know him well enough to name him), and
+		/// has nothing else of him about them, shown or half-remembered; never
+		/// with the coat on, never once he has talked with them, never Sheila,
+		/// who showed him round, nor his family; once a person (the ledger
+		/// records it). It never enters their manner or how they stand to him.
+		inline std::shared_ptr<SpokenLine> ArrivalLine(const Gossiper* G, double ShareFloor, RemarkLedger* Heard, int Seed,
+		                                               double Familiarity, bool bWearingCoat, bool bMetHim)
+		{
+			if (!G || bWearingCoat || bMetHim || G->Id == DayOne::Sheila || DayOne::Family().count(G->Id)) return std::shared_ptr<SpokenLine>();
+			// Any other story of him they hold at all, secret or not, and any
+			// wariness of him, come first.
+			for (const RumorPtr& X : G->Rumors)
+			{
+				if (X && X->Content.Subject == "player" && !DayOne::IsArrival(X) && !PlayerIdentity::IsNameStory(X) && X->Confidence > 0) return std::shared_ptr<SpokenLine>();
+			}
+			if (G->Suspicion.Level() != SuspicionLevel::Trusting) return std::shared_ptr<SpokenLine>();
+			RumorPtr R;
+			for (const RumorPtr& X : G->Rumors) { if (DayOne::IsArrival(X) && X->Confidence >= ShareFloor) { R = X; break; } }
+			if (!R || (Heard != 0 && Heard->HasRemarked(G->Id, R))) return std::shared_ptr<SpokenLine>();
+			// Who can tell it is him: saw him come, or knows him well enough
+			// (Acquaintance.CanNameYou).
+			if (R->Hops != 0 && !(Familiarity >= Perception::RecognitionFamiliarity)) return std::shared_ptr<SpokenLine>();
+			std::shared_ptr<SpokenLine> Line = Recognition(G, R, StanceKind::Comments, Seed, Heard);
+			if (Line && Heard != 0) Heard->Record(G->Id, R, StanceKind::Comments, true);
 			return Line;
 		}
 	}
