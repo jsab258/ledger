@@ -136,6 +136,8 @@ namespace Ledger.PerceptionGolden
             EmitWaits(sb);
             // Ported to StreetVoice::Ambient on 30 September (town list 6o, 6an: the street's own talk, and just after a deed).
             EmitJustNow(sb);
+            // Ported to TownNews.h and Exchange's news branch on 30 September (town list 6aq: the town's own news).
+            EmitTownNews(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -145,7 +147,6 @@ namespace Ledger.PerceptionGolden
             // the table; the handover in NOW.md says so.
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
-                EmitTownNews(sb);
                 EmitThreats(sb);
                 EmitTownSave(sb);
             }
@@ -1630,6 +1631,74 @@ namespace Ledger.PerceptionGolden
             var news = TownNews.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(root, "production", "specs", "town-news.json")));
             foreach (var st in news.Stories)
                 Row(sb, "TownNewsWitnesses", st.Id, string.Join(",", news.WitnessesOf(st, cast)));
+
+            // THE EDGES, for the port's regression (30 September): exchanges told
+            // through the ledger he hears them with (news four times at most, the
+            // banks and wordings of a story of his), filing with its parties, the
+            // news file's refusals, and the damage found afterwards.
+            var led = new RemarkLedger();
+            for (int i = 0; i < 6; i++)
+            {
+                var lines = StreetVoice.Exchange(r, a, b, i, led);
+                foreach (var l in lines) led.Heard(l);
+                Row(sb, "NewsHeard", i.ToString(Inv), lines.Count == 0 ? "none" : lines[0].Bank + "|" + Esc(lines[0].Text) + "|" + lines[1].Bank + "|" + Esc(lines[1].Text), led.TimesToldHim(r.TopicKey).ToString(Inv));
+            }
+            foreach (var (conf, nerve, loyal, greed, sens) in new[] { (0.9, 0.5, 0.5, 0.5, false), (0.6, 0.9, 0.5, 0.5, true), (0.6, 0.9, 0.5, 0.5, false), (0.3, 0.5, 0.9, 0.5, false), (0.3, 0.5, 0.5, 0.9, true) })
+            {
+                var hearer = new Gossiper("nh", "nh", new MemoryStore("nh"), new KnowledgeBase(), new SuspicionTracker(), "day", greed, nerve, loyal);
+                var his = new Rumor { Content = new Fact("player", "window_d1", "seen"), Summary = "somebody put Rita's window in", Confidence = conf, Sensitive = sens };
+                var hled = new RemarkLedger();
+                for (int i = 0; i < 3; i++)
+                {
+                    var lines = StreetVoice.Exchange(his, a, hearer, i, hled);
+                    foreach (var l in lines) hled.Heard(l);
+                    Row(sb, "ExchangeHeard", D(conf) + "~" + D(nerve) + "~" + D(loyal) + "~" + D(greed) + "~" + Bit(sens), i.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), Esc(StreetVoice.WordingOf(lines[0])), lines[1].Bank, Esc(lines[1].Text));
+                }
+            }
+            var smallCast = CastDay.Parse(@"{""talk_range_m"":6,""places"":{""pawn"":{""x_m"":0,""z_m"":0},""quay"":{""x_m"":50,""z_m"":0}},""areas"":{""ritas"":{""places"":[""pawn""]},""quay"":{""places"":[""quay""]}},""people"":[{""id"":""rita"",""routine"":[[0,""off""],[9,""pawn""],[18,""off""]]},{""id"":""hal"",""routine"":[[0,""off""],[10,""pawn""],[12,""quay""]]},{""id"":""joey"",""routine"":[[0,""off""],[6,""quay""],[18,""off""]]}],""ties"":[]}");
+            var smallNews = TownNews.Parse(@"{""stories"":[{""id"":""row"",""summary"":""Hal and Rita had words"",""area"":""ritas"",""day"":0,""hour"":10,""fact"":[""town"",""row_d0"",""seen""],""parties"":[""hal"",""rita""],""confidence"":1.5},{""id"":""boat"",""summary"":""a boat came in late"",""area"":""quay"",""day"":1,""hour"":7,""fact"":[""town"",""boat_d1"",""seen""]}]}");
+            var nm = new GossipMill(null);
+            foreach (var id in smallCast.People) nm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+            Row(sb, "NewsSeed", "before", string.Join(",", smallNews.Seed(nm, smallCast, new GameTime(0, 9, 59))));
+            Row(sb, "NewsSeed", "at ten", string.Join(",", smallNews.Seed(nm, smallCast, new GameTime(0, 10, 0))), string.Join(",", smallNews.Seed(nm, smallCast, new GameTime(0, 11, 0))));
+            foreach (var id in smallCast.People)
+            {
+                var g = nm.Get(id);
+                var held = g.Rumors.Find(x => x.Content.Subject == "town");
+                Row(sb, "NewsSeedHolder", id, held == null ? "none" : held.TopicKey + "|" + D(held.Confidence), Bit(g.Suppressed.Contains("town.row_d0")), g.Memory.Events.Count.ToString(Inv));
+            }
+            Row(sb, "NewsSeed", "next day", string.Join(",", smallNews.Seed(nm, smallCast, new GameTime(1, 8, 0))), string.Join(",", smallNews.Filed));
+            var badNews = new[] {
+                @"[1]",
+                @"{""stories"":{}}",
+                @"{""stories"":[1]}",
+                @"{""stories"":[{""id"":""a"",""summary"":""s""}]}",
+                @"{""stories"":[{""id"":""a"",""summary"":""s"",""area"":""x"",""day"":0,""hour"":24,""fact"":[""town"",""p"",""v""]}]}",
+                @"{""stories"":[{""id"":""a"",""summary"":""s"",""area"":""x"",""day"":0,""hour"":1,""fact"":[""player"",""p"",""v""]}]}",
+                @"{""stories"":[{""id"":""a"",""summary"":""s"",""area"":""x"",""day"":0,""hour"":1,""fact"":[""town"",""p""]}]}",
+                @"{""stories"":[{""id"":""a"",""summary"":""s"",""area"":""x"",""day"":0,""hour"":1,""fact"":[""town"",""p"",""v""]},{""id"":""b"",""summary"":""s"",""area"":""x"",""day"":0,""hour"":1,""fact"":[""town"",""p"",""w""]}]}",
+            };
+            for (int i = 0; i < badNews.Length; i++)
+            {
+                string got;
+                try { got = "ok:" + TownNews.Parse(badNews[i]).Stories.Count.ToString(Inv); }
+                catch (FormatException e) { got = e.Message; }
+                Row(sb, "NewsParse", i.ToString(Inv), Esc(got));
+            }
+            var damage = new Aftermath("ritas", "rita_window_d0", "somebody put Rita's window in", new GameTime(0, 2, 30), null, new[] { "joey" });
+            Row(sb, "Aftermath", "made", damage.MendedAt.TotalMinutes.ToString(Inv), Aftermath.DefaultMend(new GameTime(5, 23, 0)).TotalMinutes.ToString(Inv), Aftermath.DefaultMend(new GameTime(6, 3, 0)).TotalMinutes.ToString(Inv));
+            var am = new GossipMill(null);
+            foreach (var id in smallCast.People) am.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+            am.Witness("hal", new Fact("town", "rita_window_d0", "found"), "somebody put Rita's window in", false, new GameTime(0, 8, 0), 0.9);
+            Row(sb, "Aftermath", "tick to nine", string.Join(",", damage.Tick(am, smallCast, new GameTime(0, 9, 30)).ConvertAll(x => x.who + "@" + x.when.TotalMinutes.ToString(Inv))));
+            Row(sb, "Aftermath", "tick to noon", string.Join(",", damage.Tick(am, smallCast, new GameTime(0, 12, 0)).ConvertAll(x => x.who + "@" + x.when.TotalMinutes.ToString(Inv))),
+                am.Get("rita").Memory.Events.Count.ToString(Inv), Esc(am.Get("rita").Memory.Events[am.Get("rita").Memory.Events.Count - 1].Text), am.Get("hal").Rumors.Count.ToString(Inv));
+            var damageSaved = MiniJson.Serialize(damage.ToJson());
+            Row(sb, "Aftermath", "save", Esc(damageSaved), Esc(MiniJson.Serialize(Aftermath.FromJson(MiniJson.AsObject(MiniJson.Deserialize(damageSaved))).ToJson())));
+            Row(sb, "Aftermath", "bad saves", Bit(Aftermath.FromJson(null) == null),
+                Bit(Aftermath.FromJson(MiniJson.AsObject(MiniJson.Deserialize(@"{""area"":""a"",""key"":""k"",""said"":""s"",""done"":100,""mended"":50}"))) == null),
+                Esc(MiniJson.Serialize(Aftermath.FromJson(MiniJson.AsObject(MiniJson.Deserialize(@"{""area"":""a"",""key"":""k"",""said"":""s"",""done"":100,""mended"":1000,""next"":99999,""found"":[""x"",""""],""leaveOut"":[""y"",3]}"))).ToJson())),
+                Esc(MiniJson.Serialize(Aftermath.FromJson(MiniJson.AsObject(MiniJson.Deserialize(@"{""area"":""a"",""key"":""k"",""said"":""s"",""done"":100,""mended"":1000,""next"":0}"))).ToJson())));
         }
 
         static string FindRepoRoot()
