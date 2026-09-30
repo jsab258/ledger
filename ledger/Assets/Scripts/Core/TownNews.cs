@@ -244,7 +244,9 @@ namespace Ledger.Core
                 if (!saved.TryGetValue(k, out var o) || !(o is double d) || Math.Abs(d) > 1e8 || d != Math.Floor(d)) return false;
                 v = (long)d; return true;
             }
-            if (!ReadMinutes("done", out var done) || !ReadMinutes("mended", out var mended) || mended < done) return null;
+            // Never before the first day (the time-and-state sweep: a deed at
+            // minus fifty thousand minutes loaded, and was found).
+            if (!ReadMinutes("done", out var done) || done < 0 || !ReadMinutes("mended", out var mended) || mended < done) return null;
             var leave = new List<string>();
             foreach (var x in MiniJson.GetList(saved, "leaveOut") ?? new List<object>()) if (x is string ls && ls.Length > 0) leave.Add(ls);
             var a = new Aftermath(area, key, said, GameTime.FromTotalMinutes(done), GameTime.FromTotalMinutes(mended), leave);

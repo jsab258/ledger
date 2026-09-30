@@ -1149,7 +1149,10 @@ namespace Ledger.Core
                     }
                 }
             }
-            _lastAge = now;
+            // Never back (the time-and-state sweep, 30 September: a late call
+            // for eleven after one for noon set the clock back, and the hour
+            // from eleven to noon faded twice).
+            if (!_aged || now.TotalMinutes > _lastAge.TotalMinutes) _lastAge = now;
             _aged = true;
         }
         public double RumorHalfLifeHours = 96;

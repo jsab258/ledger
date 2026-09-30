@@ -39,10 +39,14 @@ the list only; its history is in git.
      said Monday. Fixed in the C#: the envelope and the no only on their own
      night. The C++ is the builder's, handed over with rows.
    - Then the same class of fault everywhere time and state meet.
-   - State: all fourteen faults the builder's port reviews found are fixed in
-     the C#, each with a regression and rows awaiting the port. One
-     independent check; its faults are fixed. A sweep of the same class across
-     the whole Core is under way.
+   - State, 30 September: done. All fourteen faults the builder's port reviews
+     found are fixed in the C#, each with a regression and rows awaiting the
+     port. The sweep of the same class across the whole Core found twelve,
+     each proved by a probe:
+     - nine fixed, each with a regression and rows awaiting the port, and the
+       route's sixteen rows unchanged;
+     - three set aside, since they need a crime a detective takes, which the
+       game does not have yet (FINDINGS).
 3. **Support the builder's continuous route:** for each piece of the town's
    that it needs, precise inputs, outputs and acceptance cases.
    - State: handed over, production/handovers/ROUTE.md. It gives the Core's own

@@ -33,10 +33,11 @@ arrest-words-2026-09-29.md. Code: ledger/Assets/Scripts/Core/TownNews.cs
    returns null.
    - On "talk": `police.HearTheStreet(mill, day, grading)`.
    - For any reason but "body":
-     `PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill), reason, now)`.
+     `PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill, cast, now), reason, now)`
+     (only the people on the street then).
    - Put Ellis on Quay Street for the visit. What she puts to him is
      `police.Strongest(topic)`. Her words wait on her talk card.
-4. **Each morning at ten:** if `police.ConstableComes(today)` gives a deed (or
+4. **Each morning at ten:** if `police.ConstableComes(today, now)` gives a deed (or
    Ellis's visit is for a crime where `CanArrest` holds), take him where he is:
    - `custody = police.TakeIn(deed, now, ownedUpInTalk, woreTheCoat)`; null
      means no arrest;

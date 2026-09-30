@@ -109,7 +109,9 @@ namespace Ledger.Core
         public TeaState Close(Gossiper ada, GameTime now)
         {
             if (State != TeaState.Asked) return State;
-            if (now.Day == Day && now.Hour < Until) return State;
+            // Not before the evening is over (the time-and-state sweep: closed
+            // on an earlier day, the tea was a stand-up before it was poured).
+            if (now.Day < Day || (now.Day == Day && now.Hour < Until)) return State;
             State = Judge();
             if (ada != null)
             {
