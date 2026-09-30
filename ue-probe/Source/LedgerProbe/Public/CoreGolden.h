@@ -58,6 +58,7 @@
 #include "FirstWeek.h"
 #include "WeeksEnd.h"
 #include "PoliceFile.h"
+#include "Waiting.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -2009,6 +2010,222 @@ namespace Golden
 		return A;
 	}
 
+	// ---- a wait that stops for what the town has for him (town list 6ci)
+	//
+	// PerceptionGolden's EmitWaits, played again here: each row is a case
+	// and where the wait stopped ("why@D2 20:00", "none"), or a line.
+
+	inline const std::map<std::string, std::vector<std::string> >& WaitAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		auto T = [](int D, int H, int M = 0) { return GameTime(D, H, M); };
+		auto W = [](bool bGot, const WaitStop& S) { return bGot ? S.Why + "@" + S.At.ToString() : std::string("none"); };
+		auto Is = [&W](const char* What, bool bGot, const WaitStop& S) { Ans["Wait|" + Escape(What)] = { Escape(W(bGot, S)) }; };
+		auto Got = [](const char* What, const std::string& Value) { Ans["Wait|" + Escape(What)] = { Escape(Value) }; };
+		WaitStop S;
+		std::string Line;
+		// The walk-round first.
+		{ WaitBeats B; B.WalkRoundDone = false; const bool G = Waiting::Next(T(0, 9), T(0, 18), &B, S); Is("walk-round: no stop", G, S); }
+		{ WaitBeats B; B.WalkRoundDone = false; Got("walk-round: refused", Waiting::Refused(&B, Line) ? Line : "none"); }
+		{ WaitBeats B; Got("after it: allowed", Waiting::Refused(&B, Line) ? Line : "none"); }
+		// Ron after dark on the first night; at once if it is later, until his line is shown.
+		Arrangement Asks(0);
+		WaitBeats Ab; Ab.Asks = &Asks;
+		{ const bool G = Waiting::Next(T(0, 12), T(0, 23), &Ab, S); Is("ron", G, S); }
+		{ const bool G = Waiting::Next(T(0, 12), T(0, 19), &Ab, S); Is("ron not yet", G, S); }
+		{
+			WaitStop Late;
+			const bool GL = Waiting::Next(T(0, 21, 15), T(1, 8), &Ab, Late);
+			Is("ron at once", GL, Late);
+			Waiting::Showed(&Ab, GL ? &Late : nullptr);
+			const bool G = Waiting::Next(T(0, 21, 20), T(1, 8), &Ab, S);
+			Is("ron, once shown", G, S);
+		}
+		// After midnight the stop is still night one's.
+		{
+			Arrangement A0(0);
+			WaitBeats B; B.Asks = &A0;
+			WaitStop Night;
+			const bool GN = Waiting::Next(T(1, 0, 30), T(1, 8), &B, Night);
+			Is("ron after midnight", GN, Night);
+			// The C#'s Is(..., null, want) writes "none" whatever it wanted.
+			Got("for night one", "none");
+		}
+		// Brought: the landing, less his walk; inside the walk's time, at once; once.
+		{ const GameTime At = T(0, 20); Asks.Delivered(0, nullptr, &At); }
+		WaitBeats Lb; Lb.Asks = &Asks; Lb.LandingLead = 30;
+		{ const bool G = Waiting::Next(T(0, 20, 5), T(1, 0), &Lb, S); Is("landing", G, S); }
+		{
+			WaitStop Inside;
+			const bool GI = Waiting::Next(T(0, 21, 40), T(1, 0), &Lb, Inside);
+			Is("landing, inside the walk", GI, Inside);
+			Waiting::Showed(&Lb, GI ? &Inside : nullptr);
+			const bool G = Waiting::Next(T(0, 21, 45), T(1, 0), &Lb, S);
+			Is("landing, once shown", G, S);
+		}
+		// Answered: nothing till the next ask night's dark.
+		{ const GameTime At = T(0, 22, 30); Asks.Answer(0, NightAnswer::Did, nullptr, &At); }
+		{ WaitBeats B; B.Asks = &Asks; const bool G = Waiting::Next(T(0, 23), T(2, 21), &B, S); Is("the next night", G, S); }
+		// Past one, before dawn counts the night: the next ask is known all the same.
+		{
+			Arrangement Passed(0);
+			const GameTime At = T(0, 20);
+			Passed.Delivered(0, nullptr, &At);
+			WaitBeats B; B.Asks = &Passed;
+			const bool G = Waiting::Next(T(1, 2), T(2, 21), &B, S);
+			Is("before dawn", G, S);
+		}
+		// Told no: Ron never again.
+		{
+			Arrangement No(0);
+			const GameTime A1 = T(0, 20), A2 = T(0, 20, 30);
+			No.Delivered(0, nullptr, &A1);
+			No.Answer(0, NightAnswer::Refused, nullptr, &A2);
+			WaitBeats B; B.Asks = &No;
+			const bool G = Waiting::Next(T(0, 21), T(4, 23), &B, S);
+			Is("ended", G, S);
+		}
+		// Ada's tea, once she has asked.
+		std::unique_ptr<AdasTea> Tea = AdasTea::For(0, true);
+		{ std::string Ignored; Tea->SheSeesHim(T(2, 10), Ignored); }
+		{ WaitBeats B; B.Tea = Tea.get(); B.TeaLead = 30; const bool G = Waiting::Next(T(2, 12), T(2, 23), &B, S); Is("tea", G, S); }
+		{
+			Arrangement A2(2);
+			WaitBeats Both; Both.Asks = &A2; Both.Tea = Tea.get(); Both.TeaLead = 60;
+			WaitStop First;
+			const bool GF = Waiting::Next(T(2, 12), T(3, 12), &Both, First);
+			Is("the earliest of two", GF, First);
+			Waiting::Showed(&Both, GF ? &First : nullptr);
+			const bool G = Waiting::Next(T(2, 20, 5), T(3, 12), &Both, S);
+			Is("the tea after Ron", G, S);
+		}
+		{ WaitBeats B; B.Tea = Tea.get(); B.AtAdas = true; const bool G = Waiting::Next(T(2, 12), T(2, 23), &B, S); Is("tea, in her house", G, S); }
+		{
+			std::unique_ptr<AdasTea> Unasked = AdasTea::For(0, true);
+			WaitBeats B; B.Tea = Unasked.get();
+			const bool G = Waiting::Next(T(2, 12), T(2, 23), &B, S);
+			Is("tea, never asked", G, S);
+		}
+		// What a "wait until" choice is offered: every known stop, in order.
+		auto JoinStops = [&W](const std::vector<WaitStop>& V) { std::string J; for (size_t I = 0; I < V.size(); ++I) J += (I ? ", " : "") + W(true, V[I]); return J; };
+		{
+			Arrangement A2(2);
+			WaitBeats B; B.Asks = &A2; B.Tea = Tea.get(); B.TeaLead = 30;
+			Got("ahead", JoinStops(Waiting::Ahead(T(2, 12), T(3, 12), &B)));
+		}
+		{
+			Arrangement A2(2);
+			WaitBeats B; B.Asks = &A2; B.Tea = Tea.get(); B.TeaLead = 30;
+			Got("ahead, both at once", JoinStops(Waiting::Ahead(T(2, 21), T(3, 12), &B)));
+		}
+		// A statement about a window: the constable the next morning at ten, and
+		// on the hour itself; about a wounding, DS Ellis at nine. Nothing recorded.
+		PoliceFile File;
+		File.Report("ada", "player.window_d1", Offence::Damage, 4, 1);
+		{ WaitBeats B; B.Police = &File; const bool G = Waiting::Next(T(1, 18), T(2, 12), &B, S); Is("constable", G, S); }
+		{ WaitBeats B; B.Police = &File; const bool G = Waiting::Next(T(2, 10), T(2, 12), &B, S); Is("constable, on the hour", G, S); }
+		PoliceFile Cut;
+		Cut.Report("ada", "player.cut_d1", Offence::Wounding, 4, 1);
+		{ WaitBeats B; B.Police = &Cut; const bool G = Waiting::Next(T(1, 18), T(2, 12), &B, S); Is("DS Ellis", G, S); }
+		{
+			PoliceFile Empty;
+			WaitBeats B; B.Police = &Empty; B.InquiryOf = Inquiry::Procedure;
+			WaitStop ForBody;
+			const bool GB = Waiting::Next(T(1, 18), T(2, 12), &B, ForBody);
+			Is("DS Ellis for a body", GB, ForBody);
+			Got("a body is not about him", GB ? ForBody.Line : "none");
+		}
+		Got("nothing recorded", "none");   // as "for night one"
+		{ PoliceFile Empty; WaitBeats B; B.Police = &Empty; const bool G = Waiting::Next(T(1, 18), T(1000000, 0), &B, S); Is("a far wait", G, S); }
+		// In the cells: to his release, and nothing else.
+		std::string CallTopic;
+		const bool bCalled = File.ConstableComes(2, CallTopic);
+		const std::shared_ptr<Custody> Held = File.TakeIn(bCalled ? &CallTopic : nullptr, T(2, 10), false, false);
+		{
+			Arrangement A2(2);
+			WaitBeats B; B.CustodyOf = Held.get(); B.Asks = &A2; B.Police = &File;
+			const bool G = Waiting::Next(T(2, 11), T(3, 9), &B, S);
+			Is("released", G, S);
+		}
+		{ Arrangement A2(2); WaitBeats B; B.CustodyOf = Held.get(); B.Asks = &A2; const bool G = Waiting::Next(T(2, 11), T(2, 15), &B, S); Is("still held", G, S); }
+		{ Arrangement A2(2); WaitBeats B; B.CustodyOf = Held.get(); B.Asks = &A2; const bool G = Waiting::Next(T(2, 16), T(3, 9), &B, S); Is("released, at its minute", G, S); }
+		// Sheila's Sunday.
+		WeeksEnd Week(0);
+		{ WaitBeats B; B.Week = &Week; const bool G = Waiting::Next(T(5, 20), T(6, 12), &B, S); Is("Sheila", G, S); }
+		{ WaitBeats B; B.Week = &Week; B.OfficeLead = 20; const bool G = Waiting::Next(T(5, 20), T(6, 12), &B, S); Is("Sheila, his walk", G, S); }
+		Week.Ask(T(6, 10, 30), false);
+		WaitBeats Wb; Wb.Week = &Week; Wb.OfficeLead = 60;
+		{ const bool G = Waiting::Next(T(6, 10, 40), T(6, 20), &Wb, S); Is("Sheila's answer", G, S); }
+		{ WaitBeats B; B.Week = &Week; const bool G = Waiting::Next(T(6, 17, 30), T(6, 20), &B, S); Is("her answer, at its own minute", G, S); }
+		{ WaitBeats B; B.Week = &Week; const bool G = Waiting::Next(T(6, 18), T(6, 22), &B, S); Is("her answer, once she has gone", G, S); }
+		{
+			WeeksEnd LateAsk(0);
+			LateAsk.Ask(T(6, 15, 30), false);
+			WaitBeats B; B.Week = &LateAsk; B.OfficeLead = 180;
+			const bool G = Waiting::Next(T(6, 15, 40), T(6, 20), &B, S);
+			Is("asked late, a long walk", G, S);
+		}
+		{
+			WeeksEnd Monday(0);
+			Monday.Ask(T(7, 11), false);
+			WaitBeats B; B.Week = &Monday; B.OfficeLead = 30;
+			const bool G = Waiting::Next(T(7, 12), T(8, 8), &B, S);
+			Is("asked on the Monday", G, S);
+		}
+		Week.Give(WeekAnswer::TakeOver, T(6, 10, 45), nullptr, nullptr);
+		{ const bool G = Waiting::Next(T(6, 11), T(6, 20), &Wb, S); Is("answered", G, S); }
+		{ Arrangement A0(0); WaitBeats B; B.Asks = &A0; const bool G = Waiting::Next(T(0, 12), T(0, 11), &B, S); Is("a wait that ends before it starts", G, S); }
+		// A body and his wounding the same morning: about him.
+		{
+			PoliceFile BodyAndCut;
+			BodyAndCut.Report("joey", "player.cut_d1", Offence::Wounding, 4, 1);
+			WaitBeats B; B.Police = &BodyAndCut; B.InquiryOf = Inquiry::Procedure;
+			const bool G = Waiting::Next(T(1, 22), T(2, 12), &B, S);
+			Got("a body and his wounding", G ? S.Line : "none");
+		}
+		// The tea already had: no line after it.
+		{
+			std::unique_ptr<AdasTea> Had = AdasTea::For(0, true);
+			std::string Ignored;
+			Had->SheSeesHim(T(2, 10), Ignored);
+			for (int M = 0; M < 100; ++M) Had->WithHer(T(2, 21).AddMinutes(M));
+			WaitBeats B; B.Tea = Had.get();
+			const bool G = Waiting::Next(T(2, 22, 45), T(3, 8), &B, S);
+			Is("tea, already had", G, S);
+		}
+		// Two spells in the cells ending the same day: each its own release.
+		{
+			const std::shared_ptr<Custody> Spell1 = Custody::Take("player.killing_d2", Offence::Killing, T(3, 9), false, false);
+			const std::shared_ptr<Custody> Spell2 = Custody::Take("player.window_d1", Offence::Damage, T(4, 10), false, false);
+			WaitBeats Twice; Twice.CustodyOf = Spell2.get();
+			const std::string Key = "released@" + std::to_string(Spell1->OutAt().TotalMinutes());
+			const WaitStop Shown1(Spell1->OutAt(), "released", Waiting::ReleasedLine, Spell1->OutAt().Day, &Key);
+			Waiting::Showed(&Twice, &Shown1);
+			const bool G = Waiting::Next(T(4, 10, 5), T(5, 0), &Twice, S);
+			Is("the second release the same day", G, S);
+		}
+		// Shown made when the game gave none (a C++ set is never null: kept for the row).
+		{
+			WaitBeats Bare;
+			const WaitStop Ron(T(0, 1), "ron", Waiting::RonLine, 0);
+			Waiting::Showed(&Bare, &Ron);
+			Got("showed with no list", "none");   // as "for night one"
+		}
+		return Ans;
+	}
+
+	inline Answer WaitRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const auto& Ans = WaitAnswers();
+		const auto It = Ans.find(F[0] + "|" + F[1]);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 2, It->second);
+		return A;
+	}
+
 	// ---- after a deed: the police asking, taking him in (town list 6bq, 6bp)
 	//
 	// PerceptionGolden's EmitTaken and EmitPoliceAsked, played again here.
@@ -3905,6 +4122,11 @@ namespace Golden
 		else if (Fn == "GossipFuzz")
 		{
 			A = GossipFuzzRow(F);
+		}
+		// A WAIT THAT STOPS (town list 6ci): Waiting.h.
+		else if (Fn == "Wait")
+		{
+			A = WaitRow(F);
 		}
 		// THE POLICE FILE ITSELF (town list 6ar): PoliceFile.h, its regression rows.
 		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "CustodyWords" || Fn == "CustodySeenTaken")

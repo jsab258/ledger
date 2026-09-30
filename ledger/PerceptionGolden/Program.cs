@@ -132,6 +132,8 @@ namespace Ledger.PerceptionGolden
             // Ported to PoliceFile.h and StreetVoice's banks on 30 September (town list 6bp, 6bq: taken in, and the police asking).
             EmitTaken(sb);
             EmitPoliceAsked(sb);
+            // Ported to Waiting.h on 30 September (town list 6ci: a wait that stops).
+            EmitWaits(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -144,7 +146,6 @@ namespace Ledger.PerceptionGolden
                 EmitJustNow(sb);
                 EmitTownNews(sb);
                 EmitThreats(sb);
-                EmitWaits(sb);
                 EmitTownSave(sb);
             }
 
@@ -1104,7 +1105,7 @@ namespace Ledger.PerceptionGolden
             foreach (var x in said) Row(sb, "Landing", Esc(x.what), Esc(x.line));
         }
 
-        /// A WAIT THAT STOPS (town list 6ci), awaiting the port: where each of the
+        /// A WAIT THAT STOPS (town list 6ci), ported on 30 September: where each of the
         /// Core's cases stops a wait, and why (Waiting.Next, with PoliceFile's
         /// ConstableWouldCome and EllisWouldCome).
         static void EmitWaits(StringBuilder sb)
