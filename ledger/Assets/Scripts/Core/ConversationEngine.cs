@@ -428,6 +428,7 @@ namespace Ledger.Core
             {
                 var bearing = ClaimCheck.Bearing(ClaimCheck.KnownItems(Card, retrieved, Memory.Beliefs, WhyForCheck(), sceneContext,
                                                                        now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours), playerInput);
+                LastBearing = bearing;
                 sb.AppendLine();
                 if (bearing.Count > 0)
                 {
@@ -606,6 +607,14 @@ namespace Ledger.Core
         /// nothing, or when no check ran. What was said is the second draft or
         /// one of ClaimCheck.KnownOnlyLines.
         public IReadOnlyList<string> LastInvented { get; private set; } = new List<string>();
+        /// What the SECOND draft was refused for, when the first was and the
+        /// second failed too; empty otherwise. With LastInvented, every refusal
+        /// behind a "that's all I know" (the empty answers' causes, 30 September).
+        public IReadOnlyList<string> LastRefusedAgain { get; private set; } = new List<string>();
+        /// What the character knew for the last turn's check, and the facts
+        /// chosen as bearing on his line (ChooseFirst), as the reply was built.
+        public IReadOnlyList<(string id, string text)> LastKnown { get; private set; } = new List<(string, string)>();
+        public IReadOnlyList<string> LastBearing { get; private set; } = new List<string>();
 
         /// THE LAST TURN'S STEPS, each with the milliseconds from the turn's
         /// start to its end (town list 6bx: replies cut at eight seconds, and
@@ -1600,6 +1609,7 @@ namespace Ledger.Core
             // nobody supports never becomes a memory the next answer builds on.
             // One second draft, told what it claimed; then the plain true line.
             LastInvented = new List<string>();
+            LastRefusedAgain = new List<string>();
             LastPromised = new List<string>();
             LastRealNames = new List<string>();
             LastSpokeOf = new List<string>();
@@ -1610,6 +1620,7 @@ namespace Ledger.Core
             {
                 var known = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours);
+                LastKnown = known;
                 try
                 {
                     // A FIRST SENTENCE THAT FAILED ITS OWN CHECK (town list 6a,
@@ -1653,6 +1664,7 @@ namespace Ledger.Core
                         Step("redraft");
                         if (d2.FirstFlagged != null)
                         {
+                            LastRefusedAgain = new List<string>(d2.FirstFlagged);
                             reply = ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
                             _lastCleanCited = new List<string>();
                         }
@@ -1662,6 +1674,8 @@ namespace Ledger.Core
                             var again = await InventedAsync(known, redrafted, ct);
                             Step("recheck");
                             bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0 && RealWorld.Find(redrafted).Count == 0;
+                            if (!holds) LastRefusedAgain = again.Count > 0 ? new List<string>(again)
+                                : new List<string> { "(no invented detail: it repeated a refused claim, promised, or named a real person or thing)" };
                             reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
                             if (!holds) _lastCleanCited = new List<string>();
                         }

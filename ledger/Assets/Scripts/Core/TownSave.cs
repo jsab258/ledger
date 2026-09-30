@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Ledger.Core
 {
@@ -110,8 +111,11 @@ namespace Ledger.Core
             if (saved.TryGetValue("arrests", out var ar) && ar is List<object> arList)
                 foreach (var x in arList)
                     if (Custody.FromJson(x as Dictionary<string, object>) is Custody c && t.Police.Took(c)) arrests.Add(c);
-            arrests.Sort((a, b) => a.TakenAt.TotalMinutes != b.TakenAt.TotalMinutes ? a.TakenAt.TotalMinutes.CompareTo(b.TakenAt.TotalMinutes) : string.CompareOrdinal(a.Topic, b.Topic));
-            foreach (var c in arrests) if (!t.Arrests.Exists(o => o.Topic == c.Topic)) t.Arrests.Add(c);
+            // Stable (the builder's independent check of the port, 30 September:
+            // List.Sort is not, and two arrests of one deed at the same minute
+            // came back in another order, so a different one was kept).
+            var ordered = arrests.OrderBy(a => a.TakenAt.TotalMinutes).ThenBy(a => a.Topic, StringComparer.Ordinal).ToList();
+            foreach (var c in ordered) if (!t.Arrests.Exists(o => o.Topic == c.Topic)) t.Arrests.Add(c);
             t.Hours = TownHours.FromJson(Obj("hours"));
             t.Week = WeeksEnd.FromJson(Obj("week"));
             if (saved.TryGetValue("shown", out var sh) && sh is List<object> shList)

@@ -28,7 +28,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** two taps: Ron's tone, and the next step for talk. Acted on: the ending's signs wait; Ron's lines and the regulars decided (DECISIONS).
+**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** one tap, Ron's tone. Acted on: the ending's signs wait; Ron's lines and the regulars decided (DECISIONS).
 
 **The audit's list, done:**
 - **Grounded replies:** on sixty fixed newcomer questions, labelled independently, "that's all I know" fell from 36 to about 22; inventions stayed at one or two. Planning facts first: 18, by chance (16 better, 15 worse); off. None timed out in 24.
@@ -45,7 +45,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **C: free:** 47.9 GB, 31.3 now, mid-build. Backup runs with this commit.
 
-**Next, your call, on the page:** write down what the street would know (recommended), or leave talk here.
+**Next:** your new list, in the research note's order; the empty answers' causes are running.
 
 ## Clothes, Wednesday 30 September
 

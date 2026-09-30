@@ -105,6 +105,7 @@ static class Program
             case "disguise": return await Disguise(dir);
             case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
             case "bearing": return Bearing();
+            case "causes": return await Causes(dir, parallel, Arg(args, "--third", "claude-fable-5-1"));
             case "answerable": return args.Contains("--third") ? await AnswerableThird(dir, Arg(args, "--third", "claude-fable-5-1"), parallel) : await Answerable(dir, parallel);
             case "firsts-label": return await FirstsLabel(dir, Path.Combine(RepoRoot(), "production", "research", "invented-claims", "bench"), parallel);
             case "threats": return await Threats(dir, parallel);
@@ -810,6 +811,129 @@ static class Program
         return 0;
     }
 
+    /// WHY EACH EMPTY ANSWER WAS EMPTY (Jafar's list of 30 September, item 1):
+    /// for every "that's all I know" in a `firsts` run, the two labellers apart
+    /// say which of what the character knew answers the question and, for each
+    /// detail the check refused (in either draft), which item states or plainly
+    /// implies it, or none; a third settles where they differ. Code then names
+    /// the cause: a true paraphrase refused (every refused detail supported),
+    /// the wrong facts chosen (something answers him, none of it chosen), or a
+    /// real invention (the rest). Prints the counts; causes.jsonl has each.
+    const string CauseRule =
+        "You label why a game character's reply was refused. You get what the character knows, as numbered items; what the other person said " +
+        "(not evidence); and the details a checker refused in the character's drafts, numbered. Answer with JSON only: " +
+        "{\"answering\": [\"ids of the items that answer or partly answer what he said\"], \"details\": [{\"n\": 1, \"supported_by\": \"an item id, or none\"}]}. " +
+        "An item answers him if a person who held it could truthfully give him some of what he asked. A detail is supported only if an item " +
+        "states it or plainly implies it, in any wording; a detail that adds anything no item gives (a name, time, place, number, habit, " +
+        "manner or happening) is not supported. Every refused detail gets one entry, in order.";
+
+    sealed class CauseLabel { public HashSet<string> Answering = new HashSet<string>(); public List<string> Support = new List<string>(); }
+
+    static CauseLabel ParseCause(string text, int details)
+    {
+        int a = text.IndexOf('{'), b = text.LastIndexOf('}');
+        if (a < 0 || b <= a) return null;
+        using var d = JsonDocument.Parse(text.Substring(a, b - a + 1));
+        var r = d.RootElement;
+        var l = new CauseLabel();
+        if (r.TryGetProperty("answering", out var ans) && ans.ValueKind == JsonValueKind.Array)
+            foreach (var x in ans.EnumerateArray()) if (x.ValueKind == JsonValueKind.String) l.Answering.Add(x.GetString().Trim());
+        var sup = new string[details];
+        for (int i = 0; i < details; i++) sup[i] = "none";
+        if (r.TryGetProperty("details", out var ds) && ds.ValueKind == JsonValueKind.Array)
+            foreach (var x in ds.EnumerateArray())
+                if (x.TryGetProperty("n", out var n) && n.TryGetInt32(out int k) && k >= 1 && k <= details && x.TryGetProperty("supported_by", out var s))
+                    sup[k - 1] = s.ValueKind == JsonValueKind.String && s.GetString().Trim().Length > 0 ? s.GetString().Trim() : "none";
+        l.Support.AddRange(sup);
+        return l;
+    }
+
+    static async Task<int> Causes(string dir, int parallel, string third)
+    {
+        var rows = new List<(string card, string probe, List<string> known, List<string> bearing, List<string> refused)>();
+        foreach (var line in File.ReadAllLines(Path.Combine(dir, "firsts.jsonl")))
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            using var d = JsonDocument.Parse(line);
+            var r = d.RootElement;
+            if (!r.GetProperty("fell").GetBoolean()) continue;
+            List<string> List(string name) => r.TryGetProperty(name, out var v) && v.ValueKind == JsonValueKind.Array
+                ? v.EnumerateArray().Select(x => x.GetString()).ToList() : new List<string>();
+            var refused = List("invented");
+            foreach (var x in List("refusedAgain")) if (!refused.Contains(x)) refused.Add(x);
+            rows.Add((r.GetProperty("card").GetString(), r.GetProperty("probe").GetString(), List("known"), List("bearing"), refused));
+        }
+        using var client = new ClaudeCodeClient();
+        var gate = new SemaphoreSlim(parallel);
+        string Ask(int i)
+        {
+            var x = rows[i];
+            return "WHAT THE CHARACTER KNOWS:\n" + string.Join("\n", x.known) + "\n\nWHAT HE SAID (not evidence):\n- " + x.probe +
+                   "\n\nTHE DETAILS THE CHECKER REFUSED:\n" + string.Join("\n", x.refused.Select((t, k) => (k + 1) + ". " + t));
+        }
+        async Task<CauseLabel> Label(string model, int i)
+        {
+            await gate.WaitAsync();
+            try
+            {
+                var req = new LlmRequest { Model = model, MaxTokens = 800, System = CauseRule };
+                req.Messages.Add(new LlmMessage("user", Ask(i)));
+                for (int attempt = 0; attempt < 3; attempt++)
+                {
+                    try { var l = ParseCause((await client.CompleteAsync(req)).Text, rows[i].refused.Count); if (l != null) return l; }
+                    catch (Exception) { await Task.Delay(2000 * (attempt + 1)); }
+                }
+                return null;
+            }
+            finally { gate.Release(); }
+        }
+        var first = await Task.WhenAll(Enumerable.Range(0, rows.Count).Select(i => Label(Labellers[0], i)));
+        var second = await Task.WhenAll(Enumerable.Range(0, rows.Count).Select(i => Label(Labellers[1], i)));
+        // The item's text for an id, so "chosen" is read against what the engine chose.
+        string TextOf(int i, string id)
+        {
+            foreach (var k in rows[i].known) if (k.StartsWith(id + ": ", StringComparison.Ordinal)) return k.Substring(id.Length + 2);
+            return null;
+        }
+        bool ChoseAnswer(int i, CauseLabel l) => l.Answering.Any(id => TextOf(i, id) is string t && rows[i].bearing.Contains(t));
+        bool Supported(string s) => s != null && !s.Equals("none", StringComparison.OrdinalIgnoreCase);
+        // Where the two differ on a point the cause turns on, the third's reading stands.
+        var needThird = new List<int>();
+        for (int i = 0; i < rows.Count; i++)
+        {
+            var a = first[i]; var b = second[i];
+            if (a == null || b == null) { needThird.Add(i); continue; }
+            bool differ = (a.Answering.Count > 0) != (b.Answering.Count > 0) || ChoseAnswer(i, a) != ChoseAnswer(i, b);
+            for (int k = 0; k < rows[i].refused.Count && !differ; k++) differ = Supported(a.Support[k]) != Supported(b.Support[k]);
+            if (differ) needThird.Add(i);
+        }
+        var thirds = new Dictionary<int, CauseLabel>();
+        foreach (var (i, l) in await Task.WhenAll(needThird.Select(async i => (i, await Label(third, i))))) thirds[i] = l;
+        var counts = new Dictionary<string, int>();
+        var outRows = new List<object>();
+        for (int i = 0; i < rows.Count; i++)
+        {
+            var l = thirds.TryGetValue(i, out var t) && t != null ? t : first[i] ?? second[i];
+            string cause;
+            if (l == null) cause = "unread";
+            else if (rows[i].refused.Count > 0 && l.Support.All(Supported)) cause = "true paraphrase refused";
+            else if (l.Answering.Count > 0 && !ChoseAnswer(i, l)) cause = "wrong facts chosen";
+            else cause = "real invention";
+            counts[cause] = (counts.TryGetValue(cause, out var c) ? c : 0) + 1;
+            outRows.Add(new
+            {
+                rows[i].card, rows[i].probe, cause, settledByThird = thirds.ContainsKey(i),
+                refused = rows[i].refused.Select((d, k) => new { detail = d, supportedBy = l?.Support[k] }).ToList(),
+                answering = l?.Answering.Select(id => id + ": " + TextOf(i, id)).ToList(),
+                chosen = rows[i].bearing,
+            });
+        }
+        WriteJsonl(Path.Combine(dir, "causes.jsonl"), outRows);
+        Console.WriteLine($"causes: {rows.Count} empty answers; " + string.Join("; ", counts.OrderByDescending(kv => kv.Value).Select(kv => kv.Key + " " + kv.Value)) +
+                          $"; settled by the third {thirds.Count} -> causes.jsonl");
+        return 0;
+    }
+
     static async Task<int> Firsts(string dir, int parallel)
     {
         var probes = FirstProbes;
@@ -845,6 +969,8 @@ static class Program
                     if (fell) { fallback++; byCard[job.card] = (byCard.TryGetValue(job.card, out var k) ? k : 0) + 1; }
                     if (refusedLine) refused++;
                     rows.Add(new { card = job.card, probe = job.probe, reply, fell, refused = refusedLine, invented = engine.LastInvented,
+                                   refusedAgain = engine.LastRefusedAgain, bearing = engine.LastBearing,
+                                   known = engine.LastKnown.Select(k => k.id + ": " + k.text).ToList(),
                                    plan = engine.LastPlan.HasValue ? engine.LastPlan.Value.intent + " " + string.Join(",", engine.LastPlan.Value.facts) : null });
                 }
             }
