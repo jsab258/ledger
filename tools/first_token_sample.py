@@ -18,6 +18,9 @@ to its first sentence's end, in three arms taken in turn, round by round:
 - S1: Sonnet 5, the same text laid out for caching (her card and what she
   holds, then the rules, marked; then what changes with the line), a new time
   each call so only the marked part can be read from the cache;
+- S0n: as S0 with thinking disabled: Sonnet 5 thinks by default when a
+  request sends no thinking setting (production/research/talk-helper/
+  FIRST-WORDS-2026-09-30.md), which would hold back her first words;
 - H0: Haiku 4.5, the S0 prompt (Haiku caches nothing under 4,096 tokens).
 
 The prompt is the talk program's own, taken from its stand-in with
@@ -89,10 +92,13 @@ def worst_usd(model, chars, cached_write=False):
     return tin * (pw if cached_write else pin) / 1e6 + MAX_TOKENS * pout / 1e6
 
 
-def call(conn, key, model, system, line):
-    """One streamed request: (ms to first words, ms to first sentence's end, usage, text)."""
-    body = json.dumps({"model": model, "max_tokens": MAX_TOKENS, "stream": True, "system": system,
-                       "messages": [{"role": "user", "content": line}]})
+def call(conn, key, model, system, line, thinking_off=False):
+    """One streamed request: (ms to first words, ms to first sentence's end, usage, text, thought)."""
+    req = {"model": model, "max_tokens": MAX_TOKENS, "stream": True, "system": system,
+           "messages": [{"role": "user", "content": line}]}
+    if thinking_off:
+        req["thinking"] = {"type": "disabled"}
+    body = json.dumps(req)
     t0 = time.perf_counter()
     conn.request("POST", "/v1/messages", body=body, headers={
         "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
@@ -100,6 +106,7 @@ def call(conn, key, model, system, line):
     if resp.status != 200:
         raise RuntimeError("the API answered %d: %s" % (resp.status, resp.read()[:300]))
     first = sentence = None
+    thought = False
     text, usage, event = "", {}, None
     for raw in resp:
         l = raw.decode("utf-8").rstrip("\n").rstrip("\r")
@@ -111,6 +118,8 @@ def call(conn, key, model, system, line):
         data = json.loads(l[5:])
         if event == "message_start":
             usage.update(data["message"].get("usage", {}))
+        elif event == "content_block_start" and data.get("content_block", {}).get("type") in ("thinking", "redacted_thinking"):
+            thought = True
         elif event == "content_block_delta" and data.get("delta", {}).get("type") == "text_delta":
             now = (time.perf_counter() - t0) * 1000
             if first is None:
@@ -125,7 +134,7 @@ def call(conn, key, model, system, line):
             break
     if sentence is None:
         sentence = (time.perf_counter() - t0) * 1000
-    return first, sentence, usage, text
+    return first, sentence, usage, text, thought
 
 
 def usd(model, u):
@@ -136,12 +145,12 @@ def usd(model, u):
 
 def main(argv):
     live = "--live" in argv
-    rounds = int(argv[argv.index("--rounds") + 1]) if "--rounds" in argv else 8
+    rounds = int(argv[argv.index("--rounds") + 1]) if "--rounds" in argv else 6
     system = captured_prompt()
     fixed, changing = cache_layout(system)
-    worst = rounds * (worst_usd(SONNET, len(system)) + worst_usd(SONNET, len(fixed) + len(changing), True)
+    worst = rounds * (2 * worst_usd(SONNET, len(system)) + worst_usd(SONNET, len(fixed) + len(changing), True)
                       + worst_usd(HAIKU, len(system)))
-    print("first_token_sample: Sheila's prompt %d characters; cached part %d, changing part %d; %d rounds of 3 calls; worst case US$%.3f"
+    print("first_token_sample: Sheila's prompt %d characters; cached part %d, changing part %d; %d rounds of 4 calls; worst case US$%.3f"
           % (len(system), len(fixed), len(changing), rounds, worst))
     if not live:
         print("first_token_sample: dry run, no key read and no call made")
@@ -169,13 +178,13 @@ def main(argv):
         return 2
     conn = http.client.HTTPSConnection("api.anthropic.com", timeout=30)
     rows, cost, tokens = [], 0.0, {}
-    order = ["S0", "S1", "H0"]
+    order = ["S0", "S0n", "S1", "H0"]
     try:
         for n in range(rounds):
             line = LINES[n % len(LINES)]
             now = "The time now is %d:%02d in the morning." % (9 + n // 6, (n * 7) % 60)
-            for arm in order[n % 3:] + order[:n % 3]:
-                if arm == "S0":
+            for arm in order[n % 4:] + order[:n % 4]:
+                if arm in ("S0", "S0n"):
                     model, sys_ = SONNET, system
                 elif arm == "S1":
                     model = SONNET
@@ -183,7 +192,7 @@ def main(argv):
                             {"type": "text", "text": changing + "\n\n" + now}]
                 else:
                     model, sys_ = HAIKU, system
-                first, sentence, u, text = call(conn, key, model, sys_, line)
+                first, sentence, u, text, thought = call(conn, key, model, sys_, line, thinking_off=arm == "S0n")
                 c = usd(model, u)
                 cost += c
                 t = tokens.setdefault(model, {"calls": 0, "in": 0, "write": 0, "read": 0, "out": 0})
@@ -194,7 +203,7 @@ def main(argv):
                 t["out"] += u.get("output_tokens", 0)
                 rows.append({"round": n + 1, "arm": arm, "first_ms": round(first or 0), "sentence_ms": round(sentence),
                              "read": u.get("cache_read_input_tokens", 0), "write": u.get("cache_creation_input_tokens", 0),
-                             "in": u.get("input_tokens", 0), "text": text.strip()[:80]})
+                             "in": u.get("input_tokens", 0), "thought": thought, "out": u.get("output_tokens", 0), "text": text.strip()[:80]})
                 print("  %s %s first %4d ms, sentence %4d ms, in %d, write %d, read %d"
                       % (rows[-1]["round"], arm, rows[-1]["first_ms"], rows[-1]["sentence_ms"], rows[-1]["in"], rows[-1]["write"], rows[-1]["read"]))
             time.sleep(4)
@@ -205,12 +214,12 @@ def main(argv):
     out = os.path.join(ROOT, "production", "playtest", "first-token-%s.md" % today)
     lines = ["# How soon Sheila's first sentence is written, cached and not (%s)" % today, "",
              "Made by tools/first_token_sample.py on LEDGER's key: %d rounds, the three arms in turn; her prompt as the talk program's stand-in writes it (%d characters; cached part %d)." % (rounds, len(system), len(fixed)), ""]
-    for arm, what in (("S0", "Sonnet 5, as today"), ("S1", "Sonnet 5, card and rules cached (hits only)"), ("H0", "Haiku 4.5, as today")):
+    for arm, what in (("S0", "Sonnet 5, as today"), ("S0n", "Sonnet 5, thinking disabled"), ("S1", "Sonnet 5, card and rules cached (hits only)"), ("H0", "Haiku 4.5, as today")):
         rs = [r for r in rows if r["arm"] == arm and (arm != "S1" or r["read"] > 0)]
         if rs:
-            lines.append("- %s: first words median %d ms, first sentence median %d ms (%d calls; first sentence %d to %d ms)"
+            lines.append("- %s: first words median %d ms, first sentence median %d ms (%d calls; first sentence %d to %d ms; thought in %d)"
                          % (what, statistics.median(r["first_ms"] for r in rs), statistics.median(r["sentence_ms"] for r in rs),
-                            len(rs), min(r["sentence_ms"] for r in rs), max(r["sentence_ms"] for r in rs)))
+                            len(rs), min(r["sentence_ms"] for r in rs), max(r["sentence_ms"] for r in rs), sum(1 for r in rs if r["thought"])))
     lines += ["- spent: US$%.4f" % cost, "", "| round | arm | first words (ms) | first sentence (ms) | uncached in | cache write | cache read | first words |", "|---|---|---|---|---|---|---|---|"]
     for r in rows:
         lines.append("| %d | %s | %d | %d | %d | %d | %d | %s |" % (r["round"], r["arm"], r["first_ms"], r["sentence_ms"], r["in"], r["write"], r["read"], r["text"].replace("|", "/")))
