@@ -4,7 +4,7 @@ Made by tools/meshgen/blender/model_accessory.py on each principal's exported bo
 
 - Sheila's handbag: PASSED its review (sheila-handbag-review-1.md); three narrow notes fixed; handed to the builder 30 September in F:/LedgerTools/garments/sheila_handbag.
 - Sheila's tights: a material, not a mesh (the research); handed to the builder as a line in NOW.md.
-- Darren's belt and pager: failed two reviews (belt-and-pager-reviews.md); after research (BELT-2026-09-30.md), the last try at review.
+- Darren's belt and pager: PASSED at the third review, the last after research (belt-and-pager-reviews.md, BELT-2026-09-30.md); two narrow notes fixed; handed to the builder 30 September in F:/LedgerTools/garments/darren_belt_pager.
 - Sheila's spectacles and their chain: PASSED their second review (sheila-spectacles-reviews.md); three narrow notes fixed; handed to the builder 30 September in F:/LedgerTools/garments/sheila_spectacles.
 
 Where a concept portrait and its sheet differ on a small piece (Sheila's glasses and chain; Darren's pager on a belt, at the front in the portrait), the sheet is built; the pager sits at the side of his hip because at the front his thigh met it seated.

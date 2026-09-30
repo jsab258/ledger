@@ -50,21 +50,21 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Clothes, Wednesday 30 September
 
-**First through the gate:** Ron's black work boots passed a blind reviewer; handed to the builder, who puts them on your page on Ron.
+**Through the gate, handed to the builder** (he puts them on your page, on the people): Ron's black work boots; Sheila's handbag and her spectacles on their chain; Darren's belt and pager. Sheila's tights go to him as a skin material.
 
-**Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its builds; Ron's trousers; the flat cap; Sheila's cardigan; Ron's jumper and Darren's jacket (right standing, broken sitting); Darren's trainers and Sheila's shoes (toe and heel shapes). Sheila's skirt fails sitting.
+**Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its builds; Ron's trousers; the flat cap; Sheila's cardigan; Ron's jumper and Darren's jacket (right standing, broken sitting); Darren's trainers and Sheila's shoes. Sheila's skirt fails sitting.
 
 **Decide:**
 - Marvelous Designer: scriptable but for one click at each start; $39 a month, 14 days free. (A, recommended) you start the trial; I script the jacket once. (B) Leave it.
 - Poses: (A, recommended) I finish shapes to the gate standing; the builder tests poses in Unreal. (B) Keep testing here.
 
-**Next:** Darren's belt and pager (at review), Sheila's handbag and spectacles, then Tom. Much bigger than it looked.
+**Next:** Tom and the others, once the builder exports their bodies. Much bigger than it looked.
 
-**Research:** fourteen notes, sleeves to shoes and small pieces.
+**Research:** fifteen notes; four today: shoes, toes and lacing, small pieces, belts.
 
 **Pushes:** free tests only.
 
-**C: free:** 34 GB when I began, 41 now (the builder's cleanup page waits on you). Backup runs with this commit.
+**C: free:** 34 GB when I began, 42 now (the builder's cleanup page waits on you). Backup runs with this commit.
 
 ## Builder, Wednesday 30 September
 

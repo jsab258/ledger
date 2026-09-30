@@ -136,12 +136,14 @@ if KIND == "pager":
     # (a bare frame read as a strap slider; then a flat box for the end lifted off the belt like a board): a heavier
     # frame 50 by 48 mm with 6 mm bars, the prong through a hole, and the belt's end as a strip along the belt's own
     # curve 95 mm to the wearer's left, its tip pointed, under a keeper loop
-    for sz, off, mt in (((0.049, 0.005, 0.005), (0, -0.0035, 0.0215), 1), ((0.049, 0.005, 0.005), (0, -0.0035, -0.0215), 1),
-                        ((0.005, 0.005, 0.048), (-0.022, -0.0035, 0), 1), ((0.005, 0.005, 0.048), (0.022, -0.0035, 0), 1),
-                        ((0.021, 0.003, 0.004), (0.0095, -0.0072, 0), 1)):
+    # (the third reviewer: the prong lies across the frame from the keeper's side to rest on the far bar, the end's
+    # leather showing through the frame under it; heavier bars)
+    for sz, off, mt in (((0.050, 0.005, 0.006), (0, -0.0035, 0.021), 1), ((0.050, 0.005, 0.006), (0, -0.0035, -0.021), 1),
+                        ((0.006, 0.005, 0.048), (-0.022, -0.0035, 0), 1), ((0.006, 0.005, 0.048), (0.022, -0.0035, 0), 1),
+                        ((0.042, 0.003, 0.004), (0.0, -0.0072, 0), 1)):
         box(bb, sz, tuple(front + Vector(off)), bevel=0.0012, segs=1, mat=mt)
     r_f = belt_r(a_f)
-    a_end0, a_end1 = a_f + 0.012 / r_f, a_f + 0.175 / r_f
+    a_end0, a_end1 = a_f - 0.016 / r_f, a_f + 0.175 / r_f
     ring_strip(bb, a_end0, a_end1, JEANS + BELT_T + 0.0003, JEANS + BELT_T + 0.0033,
                lambda t: 0.0175 if t < 0.92 else 0.0175 - (0.0175 - 0.006) * (t - 0.92) / 0.08, 0)
     a_k = a_f + 0.043 / r_f
