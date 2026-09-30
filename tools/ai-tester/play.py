@@ -25,6 +25,15 @@ prints its path, which the session looks at before choosing the next command.
 Nothing here calls a model, and no key is read or passed on: the game's own
 talk runs as its stand-in (-TalkFake).
 
+THE ONE MEASURING RUN OF REAL TALK (Jafar, 30 September: "the AI tester plays
+30 lines through the real talk in the finished game, capped at $0.50 in code,
+the key read only by the game's own talk"): `start --real-talk` leaves out
+-TalkFake, in the packaged game only, and always sets LEDGER_TALK_BUDGET_USD to
+REAL_TALK_BUDGET_USD for the game, which its talk program enforces call by call
+(BudgetedClient: every call reserves its worst case first, and none is sent
+that could pass the budget). This script still reads no key and passes none:
+the game reads its own key file and hands it to its own talk program.
+
 WHAT HE ASKED FOR, 24 September: "it plays the packaged slice through the
 screen and keyboard as a person would, runs the encounter and wanders freely,
 and writes what broke into FOR-JAFAR.md, worst first. It is not a gate." The
@@ -70,6 +79,7 @@ SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14,
         # between them (0xE000 marks a key Windows sends as "extended").
         "enter": 0x1C, "up": 0xE048, "down": 0xE050}
 WALK_KEY = {"forward": "w", "back": "s", "left": "a", "right": "d"}
+REAL_TALK_BUDGET_USD = "0.50"            # Jafar's cap for the measuring run, 30 September
 PIXELS_PER_DEGREE = 5.7                  # a first guess; the player sees the result and corrects
 
 PLAYBOOK = """THE PLAYBOOK (what the tester does, as before):
@@ -402,6 +412,9 @@ def start(args):
         if "Runner.Worker.exe" in jobs:
             print("aiTester status=BUILD-MACHINE-BUSY (an editor now would block its build; run without --editor, or later)")
             return 2
+    if args.get("realtalk") and args.get("editor"):
+        print("aiTester status=REFUSED (--real-talk is for the finished game only, never the editor)")
+        return 2
     idle = seconds_since_input()
     if idle < 120 and not args.get("force"):
         print("aiTester status=PC-IN-USE secondsSinceInput=%.0f (it takes the keyboard and mouse; run it when nobody is at the PC, or --force)" % idle)
@@ -410,6 +423,9 @@ def start(args):
     # the game's environment carries no key it could pass on.
     env = dict(os.environ)
     env.pop("ANTHROPIC_API_KEY", None)
+    env.pop("LEDGER_TALK_BUDGET_USD", None)
+    if args.get("realtalk"):
+        env["LEDGER_TALK_BUDGET_USD"] = REAL_TALK_BUDGET_USD
     stamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     folder = os.path.join("production", "playtest", "ai-tester", datetime.datetime.now().strftime("%Y-%m-%d-%H%M"))
     os.makedirs(os.path.join(REPO, folder), exist_ok=True)
@@ -439,6 +455,9 @@ def start(args):
             shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(stage, "vignette-pieces.json"))
             shutil.copyfile(os.path.join(REPO, "content", "dialogue", "crime-witness-v1.json"), os.path.join(stage, "crime-witness-v1.json"))
     game_args += [x for x in args.get("extra", []) if x.startswith("-") and " " not in x]
+    if args.get("realtalk"):
+        game_args = [x for x in game_args if x != "-TalkFake"]
+        print("aiTester talk=real budgetUSD=%s (the talk program's cap; the key is the game's own)" % REAL_TALK_BUDGET_USD)
     if args.get("noraw"):
         game_args = [x for x in game_args if "ForceRawInputSimulation" not in x]
     # --plain, 29 September: the packaged game as a friend starts it, with no
@@ -476,7 +495,7 @@ def start(args):
             break
         time.sleep(1.0)
     st = {"pid": game.pid, "hwnd": int(hwnd), "folder": folder.replace("\\", "/"), "stamp": stamp, "started": time.time(),
-          "build": build, "selfContained": self_contained, "step": 0, "log": [], "notes": [], "picture": None, "finished": False}
+          "build": build, "selfContained": self_contained, "realTalk": bool(args.get("realtalk")), "step": 0, "log": [], "notes": [], "picture": None, "finished": False}
     save_state(st)
     print(PLAYBOOK)
     picture(st, "started")
@@ -660,6 +679,9 @@ def selftest():
     check("nothing here calls the API or reads a key",
           ("api." + "anthropic.com") not in src and ("anthropic" + "_api_key") not in src and ("x-" + "api-key") not in src)
     check("the game's talk is the stand-in", '"-TalkFake"' in src)
+    check("real talk only under Jafar's cap of $0.50, and never in the editor",
+          0 < float(REAL_TALK_BUDGET_USD) <= 0.50 and 'env["LEDGER_TALK_BUDGET_USD"] = REAL_TALK_BUDGET_USD' in src
+          and '--real-talk is for the finished game only' in src)
     check("its save is never the player's", '"-EncounterSave=" + save' in src)
     print("ai-tester selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
@@ -672,7 +694,8 @@ if __name__ == "__main__":
     verb = argv[0] if argv else ""
     rest = argv[1:]
     if verb == "start":
-        a = {"editor": "--editor" in rest, "force": "--force" in rest, "plain": "--plain" in rest, "bare": "--bare" in rest, "noraw": "--no-raw" in rest}
+        a = {"editor": "--editor" in rest, "force": "--force" in rest, "plain": "--plain" in rest, "bare": "--bare" in rest, "noraw": "--no-raw" in rest,
+             "realtalk": "--real-talk" in rest}
         if "--wait" in rest:
             a["wait"] = rest[rest.index("--wait") + 1]
         # --game-arg X, repeatable: one more argument for the game, such as a

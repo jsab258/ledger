@@ -5,26 +5,24 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Wednesday 30 September, 18:00)
+## Overview (Wednesday 30 September, 19:00)
 
 ### Needs you
 
-1. **Two taps on the town's page** (town; [its page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ)): Ron's facts said plainly, and what the street says of Mickey; its recommendations are on the page. (Your earlier two, Ron's tone and the next step for talk, are acted on.)
-2. **Measuring real talk (item 2) needs your key or your ten minutes** (builder; no page): the real path is your LEDGER key, which no tool of mine may use. (A, recommended) allow one measuring run: the AI tester plays 30 lines through the real talk in the finished game, capped at $0.50 in code, the key read only by the game's own talk as when you play; the numbers the same day. (B) You play ten minutes; the game records every line's delay and I report yours. (C) Through Claude Code on your subscription, labelled "not the real path". Meanwhile I measure everything around the model.
-3. **Clothing's next step** (clothing; no page): both jackets were set aside at the gate, so its list is stuck. (A, the clothing session's recommendation, carrying on with it) I film MakeHuman's suit jacket in the game, cloth on, walking, sitting and arms raised, once the route is walked; nothing reaches your page until it passes there and at the gate. (B) Park clothing until the route runs. (C) A paid Fab jacket, $5 to 20.
+Nothing waiting on you (every page's stored answers checked at 19:00: yours, the town's; the clothing session has no page).
 
 ### Road to worth playing
 
 (Your list of 30 September, after the audit: the playable route first; other visual work stopped while it is broken.)
 
 - **One continuous route through ordinary play** (builder, item 1; the town supplies the week): DONE, walked by the AI tester in the packaged game. The clock runs; the town's week runs hour by hour exactly as the Core's does: Rita's window, the witnesses, the damage found and mended, the police each morning, DS Ellis, Ron's envelope taken down to the quay or refused to his face at Mickey's door, Ada's tea, your Sunday answer to Sheila; Z stops for each; every hour saves, and Continue puts you back where you stood. Since this morning: done.
-- **Real conversation, end to end** (builder measures, town writes the replies; item 2): the game now times every reply from your Enter to the first sound. NOT THE REAL PATH YET (that needs your choice above): with the stand-in's instant words, the voice alone took 4.5 to 8.4 s in the editor game this afternoon, three lines to Ron, worse than this morning's 3 s on an idle PC and over the 2 s target before any model time. Since this morning: the timing line built and measured.
+- **The delay before a character speaks** (builder, item 2): MEASURED ON THE REAL PATH, 30 lines in the finished game on your key ($0.23): the words come 1.9 s after Enter (median; 1.1 to 3.8), the first sound 5.4 s (2.2 to 10.2); none within your 2 s. The voice itself is the larger part (3.7 s). Since this morning: measured for real; the fix is the list's next item.
 - **Replies that say "that's all I know"** (town): about half of a newcomer's questions by the audit's count (31 to 38 of 60); the town's latest run, 23 of 60. Since yesterday: fewer, not solved.
-- **Replies that time out** (town): none in 24 on the town's measure of 30 September (with your key); not yet measured in play on the real path (item 2, waiting on your choice). Since yesterday: measured.
+- **Replies that time out** (town, measured in play by the builder): none of 30 on the real path in the finished game this evening (29 in the character's own words, 1 ended the talk). Since this morning: measured in play.
 - **A release on a clean machine** (builder, item 3): the voice's stopgap tried and working: today's voice program packed into one folder (4.3 GB: its Python, torch and Nano's weights) runs with nothing installed behind it, passes its self-checks and speaks a line (on the processor here, slowly; on the card as fast as today). About a day more to a friends' build (the game finding it by itself, a fresh-account test); no money, all free licences. The proper conversion stays about two weeks by the note and the route for release. Since this morning: your ruling, and the stopgap proven.
 - **Faces** (builder, item 4): frozen. Ron's and Sheila's are final; Darren's S6 is your pick, and you see it once at full size before it is final. Since yesterday: frozen.
 - **Voices** (builder): Ron's and Darren's yes; Sheila's p267 your yes, with your note that it sounds flat, as Ron's first take did. The cloud research's voice-direction note says why: the clips they learn from were read, not acted; its method (a clip library per mood, direction for every line, many takes, chosen by ear in the game) is how they get worked next. Since yesterday: the method.
-- **People dressed** (the clothing session makes, the builder fits): Ron's boots and Sheila's handbag in the game; suits and coats by your ruling (MakeHuman's, skinned); both jackets set aside at the gate, its next step is your call above; fitting waits while the route is walked. Since yesterday: your ruling.
+- **People dressed** (the clothing session makes, the builder fits): Ron's boots and Sheila's handbag in the game; suits and coats by your ruling (MakeHuman's, skinned); the suit jacket to be filmed in the game (the list's last item). Since this morning: your rulings.
 - **The AI tester walking it** (builder; functional tests of the package are item 8, by the packaged-testing note): walked the route today in the editor and the packaged game, five runs, and found the faults fixed this afternoon. Since yesterday: the whole route walked, reload included.
 
 ## Town, 30 September
