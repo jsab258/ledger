@@ -142,10 +142,18 @@ namespace LedgerCore
 		/// or else -1.
 		static TownHours FromJson(const std::string& Saved)
 		{
-			TownHours T;
-			LedgerVignette::Value Root;
+			LedgerVignette::Value Parsed;
 			std::string Err;
-			if (!MiniJson::Deserialize(Saved, Root, Err) || Root.Type != LedgerVignette::T_OBJ) return T;
+			if (!MiniJson::Deserialize(Saved, Parsed, Err) || Parsed.Type != LedgerVignette::T_OBJ) return TownHours();
+			return FromValue(&Parsed);
+		}
+
+		/// The same from a value already read; none, or no object, is a fresh one.
+		static TownHours FromValue(const LedgerVignette::Value* RootP)
+		{
+			TownHours T;
+			if (RootP == nullptr || RootP->Type != LedgerVignette::T_OBJ) return T;
+			const LedgerVignette::Value& Root = *RootP;
 			// The reader keeps a key given twice once, with its last value, as
 			// the C#'s dictionary does.
 			for (std::vector<std::pair<std::string, LedgerVignette::Value> >::size_type I = 0; I < Root.Obj.size(); ++I)

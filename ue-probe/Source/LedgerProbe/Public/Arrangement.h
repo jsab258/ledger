@@ -204,9 +204,18 @@ namespace LedgerCore
 		/// is no JSON object is the C#'s null save.
 		static Arrangement FromJson(const std::string& SavedJson)
 		{
-			LedgerVignette::Value Root;
+			LedgerVignette::Value Parsed;
 			std::string Err;
-			const bool bRead = MiniJson::Deserialize(SavedJson, Root, Err) && Root.Type == LedgerVignette::T_OBJ;
+			const bool bParsed = MiniJson::Deserialize(SavedJson, Parsed, Err) && Parsed.Type == LedgerVignette::T_OBJ;
+			return FromValue(bParsed ? &Parsed : nullptr);
+		}
+
+		/// The same from a value already read; none, or no object, is the C#'s null save.
+		static Arrangement FromValue(const LedgerVignette::Value* RootP)
+		{
+			const bool bRead = RootP != nullptr && RootP->Type == LedgerVignette::T_OBJ;
+			static const LedgerVignette::Value Empty;
+			const LedgerVignette::Value& Root = bRead ? *RootP : Empty;
 			int First = 0;
 			const LedgerVignette::Value* F = bRead ? Last(Root, "first") : nullptr;
 			if (F != nullptr && F->Type == LedgerVignette::T_NUM && WholeIn(F->Num)) First = (int)F->Num;
