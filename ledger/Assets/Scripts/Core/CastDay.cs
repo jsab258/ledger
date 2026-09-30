@@ -51,6 +51,7 @@ namespace Ledger.Core
         readonly Dictionary<string, List<string>> _areaNames = new Dictionary<string, List<string>>();
         readonly Dictionary<string, string> _within = new Dictionary<string, string>();
         readonly HashSet<string> _street = new HashSet<string>();
+        readonly Dictionary<string, string> _keeper = new Dictionary<string, string>();
         readonly Dictionary<string, (double open, double close)?[]> _hours = new Dictionary<string, (double, double)?[]>();
         readonly Dictionary<string, string> _hoursNote = new Dictionary<string, string>();
         readonly Dictionary<string, List<(double from, double to)>[]> _breaks = new Dictionary<string, List<(double, double)>[]>();
@@ -96,6 +97,11 @@ namespace Ledger.Core
             {
                 var a = MiniJson.AsObject(kv.Value);
                 if (MiniJson.GetString(a, "within") is string within && within.Length > 0) c._within[kv.Key] = within;
+                if (a != null && a.ContainsKey("keeper"))
+                {
+                    if (!(a["keeper"] is string kp) || kp.Trim().Length == 0) throw new FormatException($"cast file: area {kv.Key}'s keeper must be a person's id");
+                    c._keeper[kv.Key] = kp.Trim();
+                }
                 if (a != null && a.ContainsKey("street"))
                 {
                     if (!(a["street"] is bool st)) throw new FormatException($"cast file: area {kv.Key}'s street must be true or false");
@@ -179,6 +185,8 @@ namespace Ledger.Core
                 if (!seen.Add(key)) throw new FormatException($"cast file: tie {a}-{b} twice");
                 c._ties.Add((a, b, w));
             }
+            foreach (var kv in c._keeper)
+                if (!c._daily.ContainsKey(kv.Value)) throw new FormatException($"cast file: area {kv.Key}'s keeper {kv.Value} is not in the cast");
             return c;
         }
 
@@ -227,6 +235,9 @@ namespace Ledger.Core
         /// true answer about where somebody was is never read as a lie. Null
         /// when the file gives the place no area.
         public string AreaOf(string place) => place != null && _areaOf.TryGetValue(place, out var a) ? a : null;
+
+        /// Who keeps a place (the file's "keeper": Rita keeps Rita's), or null.
+        public string KeeperOf(string area) => area != null && _keeper.TryGetValue(area, out var k) ? k : null;
 
         /// WHETHER SOMEBODY IS ON QUAY STREET at an hour: their place then is in
         /// one of the areas the file marks "street" (Mickey's, the fish market,

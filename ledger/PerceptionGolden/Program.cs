@@ -184,7 +184,9 @@ namespace Ledger.PerceptionGolden
                     "Scenario|observation_four|closeCertainty|", "Scenario|observation_four|litShooterCertainty|",
                     // A5, a story only as sure as its first teller; its leak gate moves
                     // 192 of the seeded gossip worlds' traces (their save rows do not move).
-                    "NamesHim|", "GossipFuzz|scenario|" };
+                    "NamesHim|", "GossipFuzz|scenario|",
+                    // A9, the keeper finds her own damage, from the deed's own hour.
+                    "Aftermath|tick to noon|", "Aftermath|bad saves|", "TownSaveWritten|text|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -2018,7 +2020,7 @@ namespace Ledger.PerceptionGolden
                     Row(sb, "ExchangeHeard", D(conf) + "~" + D(nerve) + "~" + D(loyal) + "~" + D(greed) + "~" + Bit(sens), i.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), Esc(StreetVoice.WordingOf(lines[0])), lines[1].Bank, Esc(lines[1].Text));
                 }
             }
-            var smallCast = CastDay.Parse(@"{""talk_range_m"":6,""places"":{""pawn"":{""x_m"":0,""z_m"":0},""quay"":{""x_m"":50,""z_m"":0}},""areas"":{""ritas"":{""places"":[""pawn""]},""quay"":{""places"":[""quay""]}},""people"":[{""id"":""rita"",""routine"":[[0,""off""],[9,""pawn""],[18,""off""]]},{""id"":""hal"",""routine"":[[0,""off""],[10,""pawn""],[12,""quay""]]},{""id"":""joey"",""routine"":[[0,""off""],[6,""quay""],[18,""off""]]}],""ties"":[]}");
+            var smallCast = CastDay.Parse(@"{""talk_range_m"":6,""places"":{""pawn"":{""x_m"":0,""z_m"":0},""quay"":{""x_m"":50,""z_m"":0}},""areas"":{""ritas"":{""places"":[""pawn""],""names"":[""Rita's""],""keeper"":""rita""},""quay"":{""places"":[""quay""]}},""people"":[{""id"":""rita"",""routine"":[[0,""off""],[9,""pawn""],[18,""off""]]},{""id"":""hal"",""routine"":[[0,""off""],[10,""pawn""],[12,""quay""]]},{""id"":""joey"",""routine"":[[0,""off""],[6,""quay""],[18,""off""]]}],""ties"":[]}");
             var smallNews = TownNews.Parse(@"{""stories"":[{""id"":""row"",""summary"":""Hal and Rita had words"",""area"":""ritas"",""day"":0,""hour"":10,""fact"":[""town"",""row_d0"",""seen""],""parties"":[""hal"",""rita""],""confidence"":1.5},{""id"":""boat"",""summary"":""a boat came in late"",""area"":""quay"",""day"":1,""hour"":7,""fact"":[""town"",""boat_d1"",""seen""]}]}");
             var nm = new GossipMill(null);
             foreach (var id in smallCast.People) nm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
