@@ -196,7 +196,9 @@ namespace Ledger.PerceptionGolden
                     // B3, his no told when Ron goes down.
                     "TellDue|",
                     // B5, a deed after midnight.
-                    "FirstReport|" };
+                    "FirstReport|",
+                    // A no only after the ask.
+                    "NoBeforeAsk|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1850,6 +1852,14 @@ namespace Ledger.PerceptionGolden
                     leak.Tick(new GameTime(1, 12, 30), (a, b) => true);
                     Row(sb, "NamesHim", "leak " + rung.ToString(Inv), Bit(leak.Get("n").Rumors.Exists(x => x.TopicKey == "player.window_d1")), D(leak.Get("n").Suspicion.Value));
                 }
+            }
+            // No no before Ron brings the ask; once brought, a no as of two to one is that night's (the review).
+            {
+                var early = new Arrangement(0);
+                bool before = early.Answer(0, NightAnswer.Refused, null, new GameTime(0, 19, 0));
+                early.Delivered(0);
+                bool twoToOne = early.Answer(0, NightAnswer.Refused, null, new GameTime(1, 0, 58));
+                Row(sb, "NoBeforeAsk", Bit(before), Bit(twoToOne), Bit(early.Ended));
             }
             // A deed before six is the night before's: reported that morning (the review, B5).
             foreach (var (d, h, m) in new[] { (2, 0, 30), (2, 5, 59), (2, 6, 0), (2, 12, 0), (2, 23, 30), (0, 1, 0) })

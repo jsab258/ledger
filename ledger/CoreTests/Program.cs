@@ -6124,7 +6124,8 @@ namespace Ledger.CoreTests
                 var mDid = Mill(); new Arrangement().Answer(0, NightAnswer.Did, mDid, night);
                 // A plain no reaches the landing when Ron takes it down, at eleven
                 // (the port's independent check, 30 September), not when he says it.
-                var mNo = Mill(); var noArr = new Arrangement(); noArr.Answer(0, NightAnswer.Refused, mNo, night);
+                // (Ron has brought the ask first, as in play: a no before it is nothing.)
+                var mNo = Mill(); var noArr = new Arrangement(); noArr.Delivered(0); noArr.Answer(0, NightAnswer.Refused, mNo, night);
                 bool noNotYet = mNo.Get(Arrangement.OutfitMan).Rumors.Count == 0 && noArr.NoWordAt.HasValue && noArr.NoWordAt.Value.Hour == Arrangement.RonGoesDownHour;
                 var noSaved = Arrangement.FromJson(noArr.ToJson());
                 bool noKept = noSaved.NoWordAt.HasValue && noSaved.NoWordAt.Value.TotalMinutes == noArr.NoWordAt.Value.TotalMinutes;
@@ -7461,6 +7462,24 @@ namespace Ledger.CoreTests
                       string.Join(" | ", wrongSure));
             }
 
+            // NO NO BEFORE THE ASK (the independent review of 30 September, "not a
+            // game fault", a gap in the Core's own rule): a no given on an ask day
+            // before Ron has brought the ask is nothing, and Ron never remembers
+            // "He told me no"; once brought, a no put to him at two to one is that
+            // night's (B4a: the game answers as of the question).
+            {
+                var early = new Arrangement(0);
+                var em = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) em.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                bool beforeAsk = early.Answer(0, NightAnswer.Refused, em, new GameTime(0, 19, 0));
+                bool ronNoMemory = !em.Get(Arrangement.Doorman).Memory.Events.Exists(e => e.Text == Arrangement.HeardNo);
+                early.Delivered(0, em.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                bool atTwoToOne = early.Answer(0, NightAnswer.Refused, em, new GameTime(1, 0, 58));
+                Check(!beforeAsk && ronNoMemory && atTwoToOne && early.Ended,
+                      "a no before Ron has brought the ask is nothing; once he has, a no as of two to one is that night's",
+                      $"{beforeAsk} {ronNoMemory} {atTwoToOne} {early.Ended}");
+            }
+
             // A DEED AFTER MIDNIGHT IS THE NIGHT BEFORE'S (the independent review of
             // 30 September, B5): the witnesses go to the police at nine the morning
             // after the deed's night, as the pane is mended the working day after
@@ -8750,6 +8769,7 @@ namespace Ledger.CoreTests
                 var late = new Arrangement(0);
                 var lateMill = new GossipMill(null);
                 lateMill.Add(new Gossiper(Arrangement.OutfitMan, Arrangement.OutfitMan, new MemoryStore("m"), new KnowledgeBase(), new SuspicionTracker()));
+                late.Delivered(0);
                 late.Answer(0, NightAnswer.Refused, lateMill, new GameTime(0, 23, 30));
                 bool toldAtOnce = lateMill.Get(Arrangement.OutfitMan).Rumors.Count == 1 && !late.NoWordAt.HasValue;
                 Arrangement Loaded(double minute) => Arrangement.FromJson(new Dictionary<string, object>
