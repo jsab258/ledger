@@ -307,6 +307,15 @@ namespace LedgerCore
 		std::string NameOf(const std::string& Id) const { return Lookup(Name, Id); }
 		std::string SaidOf(const std::string& Place) const { return Lookup(Said, Place); }
 		std::string AreaOf(const std::string& Place) const { return Lookup(AreaOfPlace, Place); }
+		/// The C#'s AreaOf with its null kept apart from an area named "":
+		/// false for a place in no area (day one's independent check, 30 September).
+		bool AreaOf(const std::string& Place, std::string& Out) const
+		{
+			std::map<std::string, std::string>::const_iterator I = AreaOfPlace.find(Place);
+			if (I == AreaOfPlace.end()) return false;
+			Out = I->second;
+			return true;
+		}
 		std::string CircleOf(const std::string& Id) const { const std::string C = Lookup(Circle, Id); return C.empty() ? "day" : C; }
 		bool NamesHimOnlyOnTrust(const std::string& Id) const { return NameOnTrust.count(Id) > 0; }
 

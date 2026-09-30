@@ -79,13 +79,16 @@ namespace LedgerCore
 				if (!A) continue;
 				for (const RumorPtr& R : A->Rumors) { if (IsArrival(R)) return Saw; }
 			}
-			const std::string Mickeys = Cast->AreaOf("mickeys_office");
+			// An area may be named "" and still be one (the C#'s null is no area).
+			std::string Mickeys, AdasArea;
+			const bool bMickeys = Cast->AreaOf("mickeys_office", Mickeys);
+			const bool bAdas = Cast->AreaOf("adas_step", AdasArea);
 			const Fact What("player", "arrived", "mickeys");
 			for (const std::string& P : Cast->People())
 			{
-				// The C#'s null is empty here: a place not on the street has no area.
-				const std::string Area = Cast->AreaOf(Cast->PlaceOf(P, At.Day, At.Hour));
-				if (Area.empty() || !(Area == Mickeys || (P == Ada && Area == Cast->AreaOf("adas_step")))) continue;
+				std::string Area;
+				if (!Cast->AreaOf(Cast->PlaceOf(P, At.Day, At.Hour), Area)) continue;
+				if (!((bMickeys && Area == Mickeys) || (P == Ada && bAdas && Area == AdasArea))) continue;
 				const GossiperPtr G = Mill->Get(P);
 				if (!G) continue;
 				bool bHeld = false;

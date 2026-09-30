@@ -55545,6 +55545,7 @@ ArrivalSeen|7||0
 ArrivalSeen|8|rocco|0
 ArrivalSeen|9|lena,rocco,ada|0
 ArrivalSeen|12|lena,rocco,ada|0
+ArrivalSeen|area named blank|lena,ada|0
 RecognitionArrival|0|0|recognition/arrival-saw|You'll~be~Mickey's~nephew,~then.
 RecognitionArrival|0|1|recognition/arrival-saw|So~you're~the~new~owner.
 RecognitionArrival|0|2|recognition/arrival-saw|Saw~you~come~in.~Mickey's~nephew,~is~it?
