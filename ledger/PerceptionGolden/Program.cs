@@ -188,7 +188,9 @@ namespace Ledger.PerceptionGolden
                     // A9, the keeper finds her own damage, from the deed's own hour.
                     "Aftermath|tick to noon|", "Aftermath|bad saves|", "TownSaveWritten|text|",
                     // B6, Ada's tea as she would tell it.
-                    "TeaClosed|late|", "TeaSave|late|" };
+                    "TeaClosed|late|", "TeaSave|late|",
+                    // B7, told to their face is not a sighting.
+                    "ThreatMemory|", "WeekFiledMemory|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1674,6 +1676,9 @@ namespace Ledger.PerceptionGolden
                 Row(sb, "ThreatFiled", who, topic, Bit(Silence.FileThreat(mill, who, topic, new GameTime(2, 10, 0))));
             foreach (var id in new[] { "ada", "joey" })
                 foreach (var r in mill.Get(id).Rumors) Row(sb, "ThreatHeld", id, r.TopicKey, Esc(r.Summary), Bit(r.Sensitive), r.Hops.ToString(Inv));
+            // What the threatened remember: being threatened, never a sighting (the review, B7).
+            foreach (var id in new[] { "ada", "joey" })
+                Row(sb, "ThreatMemory", id, Esc(string.Join(" / ", mill.Get(id).Memory.Events.ConvertAll(e => e.Text))));
             // A threat shows in their manner (StoryThatShows), for whoever holds it at or
             // above the floor (the builder's port, 30 September: the C++ had lost the clause
             // and no row pinned it).
@@ -1731,6 +1736,10 @@ namespace Ledger.PerceptionGolden
                         story == null ? "null" : story.TopicKey + "|" + story.Content.Value + "|" + Esc(story.Summary),
                         Bit(mill.Get("lena").Memory.Events.Exists(e => e.Text == WeeksEnd.Remembered(w.Answer))),
                         back.Answer + "|" + (back.AnsweredAt.HasValue ? back.AnsweredAt.Value.TotalMinutes.ToString(Inv) : "-"));
+                    // What each remembers: Sheila being told, the office being there (the review, B7).
+                    foreach (var id in new[] { "lena", "zlata" })
+                        if (mill.Get(id) is Gossiper holder)
+                            Row(sb, "WeekFiledMemory", a.ToString(), Bit(closeInstead), id, Esc(string.Join(" / ", holder.Memory.Events.ConvertAll(e => e.Text))));
                 }
             var g = new Gossiper("wk", "wk", new MemoryStore("wk"), new KnowledgeBase(), new SuspicionTracker());
             foreach (var value in new[] { "winddown", "takeover", "wontsay" })

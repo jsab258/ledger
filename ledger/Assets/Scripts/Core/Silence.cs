@@ -251,6 +251,8 @@ namespace Ledger.Core
         /// The street's story of it, and how it is told.
         public const string ThreatPrefix = "player.threat_";
         public const string ThreatSaid = "The new owner has been threatening people to keep them quiet";
+        /// What the one he threatened remembers of it.
+        public const string ThreatMemory = "The new owner threatened me to my face, to keep me quiet.";
         public static bool IsThreat(Rumor r) =>
             r != null && r.Content != null && r.Content.Subject == "player" && r.TopicKey != null && r.TopicKey.StartsWith(ThreatPrefix, System.StringComparison.Ordinal);
 
@@ -265,7 +267,8 @@ namespace Ledger.Core
             string stem = deedTopic.StartsWith("player.", System.StringComparison.Ordinal) ? deedTopic.Substring("player.".Length) : deedTopic;
             var fact = new Fact("player", "threat_" + stem, "threatened");
             if (g.Rumors.Exists(r => r.TopicKey == ThreatPrefix + stem && r.Hops == 0)) return false;
-            mill.Witness(who, fact, ThreatSaid, false, at, 1.0);
+            // Threatened to their face: remembered as that, never "I saw it myself" (B7).
+            mill.WitnessRemembering(who, fact, ThreatSaid, false, at, ThreatMemory);
             return true;
         }
 
