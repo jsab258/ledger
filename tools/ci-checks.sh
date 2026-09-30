@@ -160,6 +160,7 @@ real_table() {
     own-lines-port        "$REPO"                 "$PY tools/port_own_lines.py --check" \
     route-week            "$REPO"                 "$PY tools/route_week_check.py" \
     route-week-selftest   "$REPO"                 "$PY tools/route_week_check.py --selftest" \
+    crime-probe           "$REPO"                 "$PY tools/crime_probe_check.py" \
     own-lines-port-selftest "$REPO"               "$PY tools/port_own_lines.py --selftest" \
     names-gate            "$REPO"                 "$PY tools/names-gate.py" \
     names-gate-selftest   "$REPO"                 "$PY tools/names-gate.py --selftest" \

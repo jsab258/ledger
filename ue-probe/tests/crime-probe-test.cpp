@@ -47,6 +47,7 @@
 #include <cstdio>
 #include <fstream>
 #include <sstream>
+#include <set>
 #include <string>
 
 using namespace LedgerCore;
@@ -525,6 +526,62 @@ int main(int argc, char** argv)
 	Loud(NothingSniffed.find("CANNOT-tell-whether-a-third-person-clause") != std::string::npos,
 	     "and both forms carry the limit IN THE VALUE, which is where the reader "
 	     "meets the number");
+
+	// WHO CAN WITNESS A DEED ON QUAY STREET (the independent review of 30
+	// September, A2), on the committed cast file, the fixture the game reads.
+	// The design, from the routines: somebody is an onlooker only while their
+	// day puts them on Quay Street, seen from where it puts them; the three
+	// the player can see stand where their day puts them (a place indoors
+	// from its own pavement until the interiors exist); anybody else counts
+	// only from behind their own window, never from a pavement where the
+	// player sees nobody.
+	{
+		std::ifstream Cf("production/specs/hook-cast.json", std::ios::binary);
+		std::stringstream Cs;
+		Cs << Cf.rdbuf();
+		LedgerCore::CastDay Cast;
+		std::string Err;
+		Check(LedgerCore::CastDay::Parse(Cs.str(), Cast, Err), "a2: the cast file reads (" + Err + ")");
+		const std::set<std::string> Bodies = { "lena", "sam", "rocco" };
+		auto Find = [](const std::vector<LedgerCrime::OnlookerAt>& L, const std::string& Id) -> const LedgerCrime::OnlookerAt* {
+			for (const auto& O : L) if (O.Id == Id) return &O;
+			return nullptr;
+		};
+		// Day 0 is a Monday. At two in the morning every routine the player can
+		// see is off, and nobody behind a window is at work.
+		const std::vector<LedgerCrime::OnlookerAt> Two = LedgerCrime::OnlookersAt(Cast, 0, 2, Bodies);
+		Check(Two.empty(), "a2-at-two-in-the-morning-nobody-is-there-to-see (" + std::to_string(Two.size()) + ")");
+		Check(!Find(Two, "sam"), "a2-darren-is-no-witness-at-night-when-his-day-has-him-off");
+		// At noon Rita is behind her own counter, looking out through her window.
+		const std::vector<LedgerCrime::OnlookerAt> Noon = LedgerCrime::OnlookersAt(Cast, 0, 12, Bodies);
+		const LedgerCrime::OnlookerAt* Rita = Find(Noon, "rita");
+		Check(Rita && Rita->Place == "ritas_counter" && !Rita->bBody && Rita->At.Z > 7.0,
+		      "a2-at-noon-rita-watches-from-behind-her-counter");
+		Check(Rita && std::fabs(LedgerCrime::OffAxisDeg(Rita->At, Rita->YawDeg, LedgerCrime::P3(18.0, 0.0, 5.0))) < 30.0,
+		      "a2-and-she-looks-out-at-the-street-through-her-window");
+		// At ten Darren's day puts him on Rita's step, and his body stands there.
+		const std::vector<LedgerCrime::OnlookerAt> Ten = LedgerCrime::OnlookersAt(Cast, 0, 10, Bodies);
+		const LedgerCrime::OnlookerAt* Darren = Find(Ten, "sam");
+		Check(Darren && Darren->bBody && Darren->Place == "ritas_step" && std::fabs(Darren->At.X - 18.0) < 0.01,
+		      "a2-at-ten-darren-stands-on-ritas-step-where-his-day-puts-him");
+		// Sheila is in the office: she is seen at Mickey's door until the office is built.
+		const LedgerCrime::OnlookerAt* Sheila = Find(Ten, "lena");
+		Check(Sheila && Sheila->bBody && Sheila->Place == "mickeys_office" && Sheila->At.Z < 7.0,
+		      "a2-sheila-at-the-office-stands-at-its-own-pavement");
+		// Nobody without a body counts from a pavement: the player would see nobody there.
+		bool bInvisible = false;
+		for (int H = 0; H < 24; ++H)
+			for (const auto& Seen : LedgerCrime::OnlookersAt(Cast, 0, H, Bodies))
+				if (!Seen.bBody && !LedgerCrime::IndoorPlace(Seen.At.Z)) bInvisible = true;
+		Check(!bInvisible, "a2-nobody-unseen-witnesses-from-an-empty-pavement");
+		// And nobody from off the street (the docks, the chapel, the flats).
+		bool bAway = false;
+		for (int D = 0; D < 7; ++D)
+			for (int H = 0; H < 24; ++H)
+				for (const auto& Seen : LedgerCrime::OnlookersAt(Cast, D, H, Bodies))
+					if (!LedgerCrime::OnQuayStreet(Seen.At.X, Seen.At.Z)) bAway = true;
+		Check(!bAway, "a2-nobody-off-quay-street-witnesses-it");
+	}
 
 	std::printf("crime-probe-test: %d check(s), %d failure(s) over 1 live bank, "
 	            "%d selftest row(s)\n", gChecks, gFailed, S.Checks);

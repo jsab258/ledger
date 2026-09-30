@@ -41,6 +41,7 @@
 // verdict's keys are how they are read.
 #pragma once
 
+#include "CastDay.h"
 #include "GameTime.h"
 #include "Gossip.h"
 #include "MemoryStore.h"
@@ -53,6 +54,9 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstdlib>
+#include <map>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -210,6 +214,11 @@ namespace LedgerCrime
 	// seen to the man in front of you only at a mark, a face or a name. A
 	// silhouette is half the street.
 	inline bool CanTieSighting(int Rung) { return Rung >= 2; }
+	/// WHO CAN SAY IT WAS THE NEW OWNER (Jafar's A5 ruling, 30 September: "a
+	/// witness's story is only as sure as the witness was"): only somebody who
+	/// recognised him. A stranger's face can be tied to him later, when they
+	/// meet him (CanTieSighting); it is not his name now.
+	inline bool CanNameHim(int Rung) { return Rung >= 4; }
 
 	// THE LIVE ENCOUNTER, 24 September: how close the player must stand to
 	// the window to break it and to the lad to talk, and how long "later" is.
@@ -443,6 +452,9 @@ namespace LedgerCrime
 		// DEFAULTING TO THAT SAME CONSTANT - the shopkeeper and the lad read
 		// exactly what they read before.
 		double Familiarity;
+		// THE LIGHT ON HIM at the hour of the reading (the review's A2): the
+		// regression's overcast day, kLightLevel, unless play measures it.
+		double Light;
 		// THE VANTAGE IS CAPTURED BEFORE THE DEED, WITH THE GLASS STANDING,
 		// and the run says so on the line. Once east_parade_glass0 is hidden
 		// with its collision off, a trace from the witness's eye to the
@@ -462,7 +474,7 @@ namespace LedgerCrime
 			  ActorBlocker("none"),
 			  VictimMetres(0.0), VictimOffAxisDeg(0.0), VictimTraceLenCm(0.0), bVictimOccluded(false),
 			  VictimBlocker("none"),
-			  SecondsWatching(0.0), Familiarity(kFamiliarity),
+			  SecondsWatching(0.0), Familiarity(kFamiliarity), Light(kLightLevel),
 			  VantageAt("before-the-deed/glass-standing"),
 			  bFiled(false), FiledReason("nothing-measured")
 		{
@@ -479,9 +491,9 @@ namespace LedgerCrime
 	{
 		LedgerCore::Vantage V;
 		V.WitnessId = R.WitnessId;
-		V.ToActor   = LedgerCore::Sight::At(R.ActorMetres, kLightLevel,
+		V.ToActor   = LedgerCore::Sight::At(R.ActorMetres, R.Light,
 		                                    R.ActorOffAxisDeg, R.bActorOccluded);
-		V.ToVictim  = LedgerCore::Sight::At(R.VictimMetres, kLightLevel,
+		V.ToVictim  = LedgerCore::Sight::At(R.VictimMetres, R.Light,
 		                                    R.VictimOffAxisDeg, R.bVictimOccluded);
 		V.Familiarity     = R.Familiarity;
 		V.ActorHasMark    = false;
@@ -530,9 +542,9 @@ namespace LedgerCrime
 		const LedgerCore::Vantage V = VantageOf(R);
 		const bool bLongEnough = R.SecondsWatching >= LedgerCore::Perception::NoticeSeconds;
 		const bool bInSightActor = bLongEnough && LedgerCore::Perception::InSight(
-			R.ActorMetres, R.ActorOffAxisDeg, kLightLevel, R.bActorOccluded, 1.4);
+			R.ActorMetres, R.ActorOffAxisDeg, R.Light, R.bActorOccluded, 1.4);
 		const bool bInSightVictim = bLongEnough && LedgerCore::Perception::InSight(
-			R.VictimMetres, R.VictimOffAxisDeg, kLightLevel, R.bVictimOccluded, 1.4);
+			R.VictimMetres, R.VictimOffAxisDeg, R.Light, R.bVictimOccluded, 1.4);
 		return "witness=" + NoSpaces(R.WitnessId)
 		     + " event=" + NoSpaces(R.EventId)
 		     + " witnessAtXYZcm=" + F1(R.WitnessAt.X * 100.0) + "/" + F1(R.WitnessAt.Z * 100.0)
@@ -1614,6 +1626,155 @@ namespace LedgerCrime
 
 	inline const char* WindowDeedKey() { return "player.window_d1"; }
 
+	/// HOW WELL A WITNESS KNOWS HIS FACE (the review's A4): a stranger until
+	/// they have met him face to face; then enough to recognise him in a good
+	/// sighting (Perception's 0.35), a little more each further day they meet,
+	/// to 0.7.
+	inline double FamiliarityFromMeetings(int DaysMet)
+	{
+		if (DaysMet <= 0) return kFamiliarity;
+		return std::min(0.7, 0.4 + 0.1 * (DaysMet - 1));
+	}
+
+	/// THE LAD'S SIGHTING OF THE MAN FLEEING THROUGH THE YARD belongs to the
+	/// scripted story, where the man does run through it (the review's A7): in
+	/// free play whoever saw the deed was measured at the deed.
+	inline bool FleeSightingInPlay(bool bScriptedStory) { return bScriptedStory; }
+
+	/// WHOM HE HAS MET, AND ON WHICH DAYS (the review's A4): face to face, a
+	/// conversation, the walk round, the tea, the envelope. Kept in the save's
+	/// clock file as "met_<id>=0,2" so a Continue remembers who knows his face.
+	struct MeetingBook
+	{
+		std::map<std::string, std::set<int> > Days;
+		void Met(const std::string& Id, int Day) { if (!Id.empty() && Day >= 0) Days[Id].insert(Day); }
+		int DaysMet(const std::string& Id) const
+		{
+			const std::map<std::string, std::set<int> >::const_iterator I = Days.find(Id);
+			return I == Days.end() ? 0 : (int)I->second.size();
+		}
+		std::string SaveLines() const
+		{
+			std::string S;
+			for (const auto& P : Days)
+			{
+				std::string L;
+				for (int D : P.second) L += (L.empty() ? "" : ",") + std::to_string(D);
+				S += "\nmet_" + P.first + "=" + L;
+			}
+			return S;
+		}
+		/// One "met_<id>" line of a save; false (and nothing kept) for any other
+		/// key or a damaged value.
+		bool TakeLine(const std::string& Key, const std::string& Value)
+		{
+			if (Key.compare(0, 4, "met_") != 0 || Key.size() <= 4) return false;
+			std::set<int> Got;
+			size_t At = 0;
+			while (At <= Value.size())
+			{
+				size_t End = Value.find(',', At);
+				if (End == std::string::npos) End = Value.size();
+				const std::string Part = Value.substr(At, End - At);
+				if (Part.empty() || Part.find_first_not_of("0123456789") != std::string::npos) return false;
+				Got.insert(std::atoi(Part.c_str()));
+				At = End + 1;
+			}
+			Days[Key.substr(4)].insert(Got.begin(), Got.end());
+			return true;
+		}
+	};
+
+	/// WHO CAN WITNESS, FROM WHERE, IN WHAT LIGHT (the review's A2, 30
+	/// September). The town lives by its routines: the people who can see a
+	/// deed are those whose day puts them on Quay Street at that hour, seen
+	/// from where it puts them, in that hour's light. The three the player can
+	/// see stand where their day puts them (a place indoors from its own
+	/// pavement until the interiors are built); anybody else counts only from
+	/// behind their own window, since until the townspeople walk the player
+	/// sees nobody on the pavements (the builder's call within canon, 30
+	/// September, DECISIONS.md). Night is the game's own, from 19:00 to 07:00
+	/// (ClockLight), and the light on him is Perceivers.LevelAt's: daylight and
+	/// the lamps that reach him, saturating.
+	const double kDeedSeconds = 1.0;   // the swing and the glass going: anybody with a clear line on him watched that long
+	inline bool NightAt(int Hour) { const int H = ((Hour % 24) + 24) % 24; return H >= 19 || H < 7; }
+	inline double LightOnHim(bool bNight, double LampReach)
+	{
+		const double Day = bNight ? 0.0 : 1.0;
+		const double L = std::max(0.0, std::min(1.0, LampReach));
+		return std::max(0.0, std::min(1.0, Day + L - Day * L));
+	}
+	inline bool OnQuayStreet(double X, double Z) { return X >= -10.0 && X <= 50.0 && std::fabs(Z) <= 10.0; }
+	/// The counters, the office and the cafe stand 7.5 m either side of the
+	/// street's middle, behind their windows (hook-cast.json's places).
+	inline bool IndoorPlace(double Z) { return std::fabs(Z) >= 7.0; }
+	inline P3 BodySpotFor(double X, double Z) { return IndoorPlace(Z) ? P3(X, 0.0, Z > 0.0 ? 4.6 : -4.6) : P3(X, 0.0, Z); }
+	/// Which way somebody at a place looks: out at the street (up it from the quay).
+	inline double StreetFacingYaw(double X, double Z)
+	{
+		return std::fabs(Z) < 0.5 ? YawToFace(P3(X, 0.0, Z), P3(X + 10.0, 0.0, Z)) : YawToFace(P3(X, 0.0, Z), P3(X, 0.0, 0.0));
+	}
+	struct OnlookerAt
+	{
+		std::string Id, Place;
+		P3 At;             // their feet, in the street's metres (Y 0: the game finds the ground)
+		double YawDeg;
+		bool bBody;        // one of the people the player can see
+		OnlookerAt() : YawDeg(0.0), bBody(false) {}
+	};
+	inline std::vector<OnlookerAt> OnlookersAt(const LedgerCore::CastDay& Cast, int Day, int Hour,
+	                                            const std::set<std::string>& WithBodies)
+	{
+		std::vector<OnlookerAt> Out;
+		for (const std::string& Id : Cast.People())
+		{
+			double X = 0.0, Z = 0.0;
+			std::string Place;
+			if (!Cast.Where(Id, Day, Hour, X, Z) || !Cast.PlaceOf(Id, Day, Hour, Place)) continue;
+			if (!OnQuayStreet(X, Z)) continue;
+			OnlookerAt O;
+			O.Id = Id;
+			O.Place = Place;
+			O.bBody = WithBodies.count(Id) > 0;
+			if (!O.bBody && !IndoorPlace(Z)) continue;
+			O.At = O.bBody ? BodySpotFor(X, Z) : P3(X, 0.0, Z);
+			O.YawDeg = StreetFacingYaw(O.At.X, O.At.Z);
+			Out.push_back(O);
+		}
+		return Out;
+	}
+
+	/// WHAT A WITNESS FILES (the review's A1; Jafar's A5 ruling, 30 September:
+	/// a noise or a shape is suspicion, never "he did it"). A story about him
+	/// only from a sighting the witness bank has words for; a noise alone is
+	/// the damage heard; otherwise nothing, never a diagnostic's words.
+	enum class WitnessFiles { Nothing, NoiseOnly, StoryAboutHim };
+	inline WitnessFiles WhatWitnessFiles(int Rung, bool bBankHasWords)
+	{
+		if (Rung <= 0) return WitnessFiles::NoiseOnly;
+		return bBankHasWords ? WitnessFiles::StoryAboutHim : WitnessFiles::Nothing;
+	}
+	/// Only somebody who saw it shouts at him.
+	inline bool WitnessShouts(int Rung) { return Rung >= 1; }
+
+	/// THE TALK'S FILE BESIDE THE SAVE: TalkHelper writes and reads only a path
+	/// ending ".talk.json" (its guard against writing over anything else).
+	inline const char* TalkSaveFile() { return "game.talk.json"; }
+
+	/// THE TALK SAVED WITH A SAVE (the review's C1): only when the talk
+	/// program is started and ready, and the save's own talk is not still
+	/// waiting to be loaded into it (saving then would write a fresh town).
+	inline bool TalkSavedWithThisSave(bool bStarted, bool bReady, bool bLoadStillPending)
+	{
+		return bStarted && bReady && !bLoadStillPending;
+	}
+	/// The stamp the clock file carries: a new one only with the talk saved
+	/// beside it; otherwise the one the last saved talk carries.
+	inline std::string TalkStampForSave(const std::string& Previous, bool bTalkSaved, const std::string& Fresh)
+	{
+		return bTalkSaved ? Fresh : Previous;
+	}
+
 	inline std::string DeedStem(const std::string& DeedKey)
 	{
 		return DeedKey.compare(0, 7, "player.") == 0 ? DeedKey.substr(7) : DeedKey;
@@ -1622,8 +1783,11 @@ namespace LedgerCrime
 	inline bool IsDeedStory(const LedgerCore::RumorPtr& R, const std::string& DeedKey)
 	{
 		if (!R || R->Content.Subject != "player") return false;
+		// The deed's own story always counts (the review's A3: free play files
+		// "player.window_dN", and on day 1 that is the scripted key too).
+		if (R->TopicKey() == DeedKey) return true;
 		if (DeedKey == WindowDeedKey()) return R->Content.Predicate == "broke_a_window" || R->Content.Predicate == NearPredicate();
-		return R->TopicKey() == DeedKey;
+		return false;
 	}
 
 	/// "player.at_window_d1": he was seen at a place near the deed's time.
@@ -1644,10 +1808,11 @@ namespace LedgerCrime
 	/// the mill learns only certain indelible stories), so it is never matched
 	/// against his claims inside the gossip: the talk program judges it.
 	inline LedgerCore::RumorPtr SightingStory(const std::string& DeedKey, const std::string& Area, const std::string& AreaWords,
-	                                          int Day, int Hour, const std::string& WitnessId, double Confidence)
+	                                          int Day, int Hour, const std::string& WitnessId, double Confidence, int Rung)
 	{
 		LedgerCore::RumorPtr R = std::make_shared<LedgerCore::Rumor>(LedgerCore::Fact("player", SightingPredicate(DeedKey), Area));
 		R->OriginId = WitnessId;
+		R->OriginRung = Rung;
 		R->Hops = 0;
 		R->Confidence = Confidence;
 		R->Sensitive = false;
@@ -1674,8 +1839,21 @@ namespace LedgerCrime
 	}
 
 	/// HE OWNED UP (town list 6al): the deed's story as told by him, certain.
-	inline LedgerCore::RumorPtr OwnedUpStory(const std::string& DeedKey, const std::string& ToldTo)
+	/// With Place (free play, the review's A3): the deed's own story,
+	/// Fact("player", <deed>, Place), sensitive, in the words Said.
+	inline LedgerCore::RumorPtr OwnedUpStory(const std::string& DeedKey, const std::string& ToldTo,
+	                                         const std::string& Place = std::string(), const std::string& Said = std::string())
 	{
+		if (!Place.empty())
+		{
+			LedgerCore::RumorPtr Own = std::make_shared<LedgerCore::Rumor>(LedgerCore::Fact("player", DeedStem(DeedKey), Place));
+			Own->OriginId = ToldTo;
+			Own->Hops = 0;
+			Own->Confidence = 1.0;
+			Own->Sensitive = true;
+			Own->Summary = Said.empty() ? std::string("the new owner owned up to it himself") : Said;
+			return Own;
+		}
 		const bool bWindow = DeedKey == WindowDeedKey();
 		LedgerCore::RumorPtr R = std::make_shared<LedgerCore::Rumor>(bWindow
 			? LedgerCore::Fact("player", "broke_a_window", "mickeys_window")
@@ -1694,8 +1872,8 @@ namespace LedgerCrime
 	inline void KeepQuiet(LedgerCore::Gossiper& G, const std::string& DeedKey)
 	{
 		std::vector<std::string> Topics;
+		Topics.push_back(DeedKey);   // the deed's own story, always (the review's A3)
 		if (DeedKey == WindowDeedKey()) { Topics.push_back("player.broke_a_window"); Topics.push_back(std::string("player.") + NearPredicate()); }
-		else { Topics.push_back(DeedKey); }
 		Topics.push_back("player." + SightingPredicate(DeedKey));
 		for (size_t I = 0; I < Topics.size(); ++I)
 			if (!G.SuppressedHas(Topics[I])) G.Suppressed.push_back(Topics[I]);
@@ -2401,6 +2579,138 @@ namespace LedgerCrime
 		Expect(R, BeatTextSource(Nothing, true) == "none/nothing-measured",
 		       "beat-source-with-nothing-staged-says-nothing-measured");
 
+		// HOW WELL A WITNESS KNOWS HIS FACE (the independent review of 30
+		// September, A4, the game's half). The design, from canon: on day 0 he
+		// is a stranger to everybody (he has never been to the Hook), so nobody
+		// can recognise him; once somebody has met him face to face (talked with
+		// him, shown him round, had him to tea, brought him the envelope) a good
+		// sighting can; each further day they meet makes him a little better
+		// known, to a ceiling short of an old friend.
+		{
+			const double Recognise = LedgerCore::Perception::RecognitionFamiliarity;
+			Expect(R, FamiliarityFromMeetings(0) < Recognise, "a4-a-stranger-cannot-be-recognised");
+			Expect(R, FamiliarityFromMeetings(1) >= Recognise, "a4-met-once-face-to-face-can-be-recognised");
+			Expect(R, FamiliarityFromMeetings(3) > FamiliarityFromMeetings(1) && FamiliarityFromMeetings(20) <= 0.7
+			          && FamiliarityFromMeetings(20) == FamiliarityFromMeetings(10),
+			       "a4-more-days-better-known-to-a-ceiling");
+			// The game's record of it: the days he met each of them, kept in
+			// the save so a Continue remembers who knows his face.
+			MeetingBook Book;
+			Book.Met("lena", 0); Book.Met("lena", 0); Book.Met("lena", 2); Book.Met("rocco", 1);
+			Expect(R, Book.DaysMet("lena") == 2 && Book.DaysMet("rocco") == 1 && Book.DaysMet("rita") == 0,
+			       "a4-meetings-count-days-not-conversations");
+			MeetingBook Back;
+			std::string Kept = Book.SaveLines();
+			size_t From = 0;
+			while (From < Kept.size())
+			{
+				size_t End = Kept.find('\n', From);
+				if (End == std::string::npos) End = Kept.size();
+				const std::string KeptLine = Kept.substr(From, End - From);
+				const size_t Eq = KeptLine.find('=');
+				if (Eq != std::string::npos) Back.TakeLine(KeptLine.substr(0, Eq), KeptLine.substr(Eq + 1));
+				From = End + 1;
+			}
+			Expect(R, Back.DaysMet("lena") == 2 && Back.DaysMet("rocco") == 1 && Back.DaysMet("sam") == 0,
+			       "a4-the-meetings-survive-a-save-and-a-continue");
+			Expect(R, !Back.TakeLine("met_ada", "x,-1") && Back.DaysMet("ada") == 0 && !Back.TakeLine("clock", "1"),
+			       "a4-a-damaged-meeting-line-counts-nothing");
+		}
+
+		// WALKING UP TO DARREN AFTER THE DEED IS NOT RUNNING FROM IT (the review's
+		// A7): the yard's flight sighting is the scripted story's alone.
+		Expect(R, FleeSightingInPlay(true) && !FleeSightingInPlay(false), "a7-no-yard-flight-sighting-in-free-play");
+
+		// THE LIGHT ON HIM (the independent review of 30 September, A2): the
+		// game's own day and night (ClockLight: night from 19:00 to 07:00) and
+		// the lamps that reach him, as the town's Perceivers.LevelAt adds them,
+		// never 1.0 at every hour. A witness 12 m away who faces him sees him
+		// by day and does not in the dark with no lamp near him.
+		{
+			Expect(R, NightAt(19) && NightAt(2) && NightAt(6) && !NightAt(7) && !NightAt(12) && !NightAt(18),
+			       "a2-night-is-the-games-own-from-seven-to-seven");
+			Expect(R, LightOnHim(false, 0.0) == 1.0 && LightOnHim(true, 0.0) == 0.0,
+			       "a2-daylight-by-day-and-none-at-night-without-a-lamp");
+			Expect(R, std::fabs(LightOnHim(true, 0.5) - 0.5) < 1e-9 && LightOnHim(true, 1.7) == 1.0 && LightOnHim(false, 0.5) == 1.0,
+			       "a2-a-lamp-lights-him-at-night-and-saturates");
+			Expect(R, LedgerCore::Perception::InSight(12.0, 0.0, LightOnHim(false, 0.0), false, 1.4)
+			          && !LedgerCore::Perception::InSight(12.0, 0.0, LightOnHim(true, 0.0), false, 1.4),
+			       "a2-seen-at-twelve-metres-by-day-not-in-the-dark");
+			Reading Dark;
+			Dark.Light = LightOnHim(true, 0.0);
+			Expect(R, VantageOf(Dark).ToActor.LightLevel == 0.0, "a2-the-reading-carries-the-hours-light");
+		}
+
+		// WHAT A WITNESS FILES (the independent review of 30 September, A1, and
+		// Jafar's ruling on A5: "a witness's story is only as sure as the
+		// witness was; a noise or a shape is suspicion, never he did it"). The
+		// design: a story about him only from a sighting (rung 1 or more) the
+		// witness bank has words for; a noise alone (rung 0) is the damage
+		// heard, never a story about him, whatever the bank holds; nothing is
+		// ever filed in a diagnostic's words; only somebody who saw it shouts.
+		{
+			Expect(R, WhatWitnessFiles(0, false) == WitnessFiles::NoiseOnly && WhatWitnessFiles(0, true) == WitnessFiles::NoiseOnly,
+			       "a1-a-noise-alone-files-the-damage-heard-never-a-story-about-him");
+			Expect(R, WhatWitnessFiles(1, true) == WitnessFiles::StoryAboutHim && WhatWitnessFiles(4, true) == WitnessFiles::StoryAboutHim,
+			       "a1-a-sighting-with-the-banks-words-files-a-story-about-him");
+			Expect(R, WhatWitnessFiles(2, false) == WitnessFiles::Nothing, "a1-no-words-no-story-never-a-diagnostic");
+			Expect(R, !WitnessShouts(0) && WitnessShouts(1) && WitnessShouts(3), "a1-only-somebody-who-saw-it-shouts");
+		}
+
+		// THE TALK'S OWN FILE IS ONE THE TALK PROGRAM WILL WRITE (found by the
+		// Continue run the review asked for, 30 September): TalkHelper saves and
+		// loads only a path ending ".talk.json", and the game asked for
+		// "talk.json", so no conversation was ever kept.
+		{
+			const std::string Name = TalkSaveFile();
+			const std::string Rule = ".talk.json";
+			Expect(R, Name.size() > Rule.size() && Name.compare(Name.size() - Rule.size(), Rule.size(), Rule) == 0,
+			       "c1-the-talks-file-ends-dot-talk-json-as-the-talk-program-requires");
+		}
+
+		// THE TALK KEPT ACROSS A CONTINUE (the independent review of 30 September,
+		// C1). The design: the clock file's talk stamp always names the talk
+		// saved beside it. A save made before the talk program is ready, or
+		// before it has loaded the save's own talk, saves no talk and so keeps
+		// the stamp it had; only a save that really saves the talk takes a new one.
+		{
+			Expect(R, !TalkSavedWithThisSave(true, false, false) && !TalkSavedWithThisSave(false, true, false),
+			       "c1-no-talk-saved-before-the-talk-program-is-ready");
+			Expect(R, !TalkSavedWithThisSave(true, true, true), "c1-no-talk-saved-while-the-saves-own-talk-is-still-to-load");
+			Expect(R, TalkSavedWithThisSave(true, true, false), "c1-talk-saved-once-ready-and-loaded");
+			// The review's case: talk at 14:57 saved as G1; Continue; the 15:00
+			// autosave comes before the talk program is ready; then it loads.
+			std::string Stamp = TalkStampForSave("", TalkSavedWithThisSave(true, true, false), "G1");
+			Stamp = TalkStampForSave(Stamp, TalkSavedWithThisSave(true, false, true), "G2");
+			Expect(R, Stamp == "G1", "c1-the-15-00-autosave-before-ready-keeps-the-talks-own-stamp");
+			Stamp = TalkStampForSave(Stamp, TalkSavedWithThisSave(true, true, false), "G3");
+			Expect(R, Stamp == "G3", "c1-the-next-real-talk-save-takes-a-new-stamp");
+		}
+
+		// THE FREE-PLAY DEED'S OWN STORY (the independent review of 30 September,
+		// A3). The design: in free play the deed is "player.window_dN", N its
+		// day, filed as Fact("player", "window_dN", "ritas"); the talk is told it
+		// by whoever holds that story, keeping quiet holds that story back, and
+		// owning up files that same story, in his own words, certain and
+		// sensitive, about Rita's window.
+		{
+			using namespace LedgerCore;
+			for (int Day : { 0, 1, 3 })
+			{
+				const std::string Key = "player.window_d" + Int(Day);
+				Gossiper Saw("lena", "lena", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+				RumorPtr Story = std::make_shared<Rumor>(Fact("player", "window_d" + Int(Day), "ritas"));
+				Story->Sensitive = true;
+				Saw.Rumors.push_back(Story);
+				Expect(R, !DeedJson(Saw, Key, Day, 14, "").empty(), "a3-the-deed-told-to-whoever-holds-its-story-day-" + Int(Day));
+				KeepQuiet(Saw, Key);
+				Expect(R, Saw.SuppressedHas(Key), "a3-keeping-quiet-holds-back-the-deed-story-day-" + Int(Day));
+				const RumorPtr Own = OwnedUpStory(Key, "lena", "ritas", "the new owner told me himself that he put Rita's window in");
+				Expect(R, Own->TopicKey() == Key && Own->Content.Value == "ritas" && Own->Sensitive && Own->Confidence == 1.0,
+				       "a3-owning-up-files-the-deed-story-itself-day-" + Int(Day));
+			}
+		}
+
 		// THE DEED AS THE TALK PROGRAM IS TOLD IT, AND ITS STORIES (29
 		// September, town list 6ac, 6am, 6au, 6al).
 		{
@@ -2413,7 +2723,13 @@ namespace LedgerCrime
 			       "deed-told-to-a-witness-with-where-she-saw-him");
 			Gossiper Nobody("n9", "n9", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
 			Expect(R, DeedJson(Nobody, WindowDeedKey(), 1, 23, "").empty(), "deed-not-told-to-somebody-it-has-not-reached");
-			RumorPtr At = SightingStory(WindowDeedKey(), "fish_market", "the fish market", 1, 23, "w1", 0.8);
+			RumorPtr At = SightingStory(WindowDeedKey(), "fish_market", "the fish market", 1, 23, "w1", 0.8, 4);
+			// WHO CAN SAY IT WAS THE NEW OWNER (Jafar's A5 ruling; the town's
+			// handover of 30 September: every sighting filed carries its rung,
+			// and none reads as "he did it" unless the witness knew him).
+			Expect(R, At->OriginRung == 4, "a5-a-sighting-story-carries-its-rung");
+			Expect(R, CanNameHim(4) && !CanNameHim(3) && !CanNameHim(1) && !CanNameHim(0),
+			       "a5-only-somebody-who-recognised-him-says-the-new-owner-was-there");
 			Expect(R, At->TopicKey() == "player.at_window_d1" && At->Content.Value == "fish_market" && !At->Sensitive,
 			       "sighting-story-keyed-by-the-deed-valued-by-the-area");
 			Expect(R, At->Summary == "the new owner was at the fish market on Tuesday night", "sighting-story-says-where-and-which-night");
@@ -2432,11 +2748,11 @@ namespace LedgerCrime
 			Expect(R, DeedJson(OwnSight, WindowDeedKey(), 1, 23, "").empty(),
 			       "an-own-sighting-is-sent-as-sawHimAt-not-heardHimAt");
 			KeepQuiet(Saw, WindowDeedKey());
-			Expect(R, Saw.SuppressedHas("player.broke_a_window") && Saw.SuppressedHas("player.was_near_the_deed")
-			          && Saw.SuppressedHas("player.at_window_d1") && Saw.Suppressed.size() == 3,
+			Expect(R, Saw.SuppressedHas("player.window_d1") && Saw.SuppressedHas("player.broke_a_window") && Saw.SuppressedHas("player.was_near_the_deed")
+			          && Saw.SuppressedHas("player.at_window_d1") && Saw.Suppressed.size() == 4,
 			       "keeping-quiet-holds-back-the-deed-and-the-sighting");
 			KeepQuiet(Saw, WindowDeedKey());
-			Expect(R, Saw.Suppressed.size() == 3, "keeping-quiet-twice-adds-nothing");
+			Expect(R, Saw.Suppressed.size() == 4, "keeping-quiet-twice-adds-nothing");
 			Expect(R, OwnedUpStory(WindowDeedKey(), "w1")->Confidence == 1.0 && IsDeedStory(OwnedUpStory(WindowDeedKey(), "w1"), WindowDeedKey()),
 			       "owning-up-gives-the-deed-s-own-story-certain");
 		}
