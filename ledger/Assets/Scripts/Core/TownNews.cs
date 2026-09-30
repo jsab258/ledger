@@ -156,10 +156,20 @@ namespace Ledger.Core
         /// independent check) (inferred).
         public static GameTime DefaultMend(GameTime done)
         {
-            int d = done.Hour < 6 ? done.Day : done.Day + 1;
+            int d = NightOf(done) + 1;
             while (CastDay.Weekday(d) == 6) d++;
             return new GameTime(d, 16, 0);
         }
+
+        /// THE NIGHT A DEED BELONGS TO: before six in the morning, the night
+        /// before's (the independent review of 30 September, B5; DefaultMend's
+        /// own rule).
+        public static int NightOf(GameTime done) => done.Hour < 6 ? done.Day - 1 : done.Day;
+
+        /// The morning its witnesses first go to the police: nine, the morning
+        /// after its night (ROUTE.md, step 4). A deed at half twelve is reported
+        /// that same morning, not a day late.
+        public static GameTime FirstReportMorning(GameTime done) => new GameTime(NightOf(done) + 1, 9, 0);
 
         /// The longest a damage stays unmended, however it is given: ninety days.
         public const int LongestUnmendedDays = 90;

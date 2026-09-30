@@ -7461,6 +7461,24 @@ namespace Ledger.CoreTests
                       string.Join(" | ", wrongSure));
             }
 
+            // A DEED AFTER MIDNIGHT IS THE NIGHT BEFORE'S (the independent review of
+            // 30 September, B5): the witnesses go to the police at nine the morning
+            // after the deed's night, as the pane is mended the working day after
+            // it; a deed at half twelve was reported a day late.
+            {
+                var nights = new (GameTime done, GameTime want)[]
+                {
+                    (new GameTime(2, 0, 30), new GameTime(2, 9, 0)), (new GameTime(2, 5, 59), new GameTime(2, 9, 0)),
+                    (new GameTime(2, 6, 0), new GameTime(3, 9, 0)), (new GameTime(2, 12, 0), new GameTime(3, 9, 0)), (new GameTime(2, 23, 30), new GameTime(3, 9, 0)),
+                };
+                var wrongNight = new List<string>();
+                foreach (var (done, want) in nights)
+                    if (!Aftermath.FirstReportMorning(done).Equals(want)) wrongNight.Add($"{done}: {Aftermath.FirstReportMorning(done)}, should {want}");
+                Check(wrongNight.Count == 0,
+                      "a deed before six in the morning is the night before's: its witnesses go to the police at nine that same morning, not a day later",
+                      string.Join(" | ", wrongNight));
+            }
+
             // HIS NO REACHES THE LANDING WHEN RON GOES DOWN, NOT AT DAWN (the
             // independent review of 30 September, B3): told no at half nine, Ron
             // goes down at eleven; the outfit's man has it from then, for the
