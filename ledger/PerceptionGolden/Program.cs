@@ -120,6 +120,13 @@ namespace Ledger.PerceptionGolden
             EmitHints(sb);
             // Ported to DayOne.h and StreetVoice::ArrivalLine on 30 September (town list 6cg, day one).
             EmitArrival(sb);
+            // Ported to Arrangement.h on 30 September (town list 6z, 6bn, 6cj: the outfit's ask and the landing).
+            EmitAsks(sb);
+            EmitLanding(sb);
+            // Ported to PlayerIdentity.h on 30 September (town list 6ch: his name as the street's fact).
+            EmitNames(sb);
+            // Ported to FirstWeek.h on 30 September (town list 6bg: Ada's tea).
+            EmitTea(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -135,11 +142,7 @@ namespace Ledger.PerceptionGolden
                 EmitTaken(sb);
                 EmitWeeksEnd(sb);
                 EmitThreats(sb);
-                EmitNames(sb);
                 EmitWaits(sb);
-                EmitLanding(sb);
-                EmitAsks(sb);
-                EmitTea(sb);
                 EmitTownSave(sb);
             }
 
@@ -827,7 +830,7 @@ namespace Ledger.PerceptionGolden
                 Row(sb, "HintFillEdge", i.ToString(CultureInfo.InvariantCulture), Esc("[" + FirstMoments.Fill(fills[i], k => k == "Talk" ? "E" : k == "Talk_2" ? "F" : k == "9" ? "\t" : null) + "]"));
         }
 
-        /// THE OUTFIT'S ASKS (town list 6z, 6bn), awaiting the port (town list T2):
+        /// THE OUTFIT'S ASKS (town list 6z, 6bn), ported to Arrangement.h on 30 September:
         /// a week of nights as the game drives them, each call's answer and the
         /// arrangement's state a row, and its save.
         static void EmitAsks(StringBuilder sb)
@@ -851,13 +854,66 @@ namespace Ledger.PerceptionGolden
             a.Delivered(6, mill.Get(Arrangement.Doorman), T(6, 20));
             Row(sb, "Ask", "no", Bit(a.Answer(6, NightAnswer.Refused, mill, T(6, 22))), State(a));
             foreach (var r in mill.Get(Arrangement.OutfitMan).Rumors) Row(sb, "AskStory", r.TopicKey, Esc(r.Content.Value), Bit(r.Sensitive), Esc(r.Summary));
-            foreach (var ev in mill.Get(Arrangement.Doorman).Memory.Events) Row(sb, "AskRonRemembers", Esc(ev.Text));
+            // Labelled (30 September, the port): the port's reader skips a row of two fields.
+            int remembered = 0;
+            foreach (var ev in mill.Get(Arrangement.Doorman).Memory.Events) Row(sb, "AskRonRemembers", (remembered++).ToString(Inv), Esc(ev.Text));
             var saved = MiniJson.Serialize(a.ToJson());
-            Row(sb, "AskSave", Esc(saved));
-            Row(sb, "AskLoad", State(Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)))));
+            Row(sb, "AskSave", "save", Esc(saved));
+            Row(sb, "AskLoad", "load", State(Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)))));
+
+            // THE EDGES, for the port's regression (30 September): saves play could
+            // not have made, and winding down, each state and save a row. Text
+            // MiniJson cannot parse is no save, as the port reads it.
+            var badAsks = new[] {
+                @"{""first"":0,""nights"":[[0,""did""],[2,""noshow""]],""delivered"":[0,2]}",
+                @"{""first"":0,""nights"":[[2,""did""]]}",
+                @"{""first"":0,""nights"":[[0,""noshow""]]}",
+                @"{""first"":0,""nights"":[[0,""noshow""]],""delivered"":[]}",
+                @"{""first"":0,""nights"":[[0,""undelivered""]],""delivered"":[0]}",
+                @"{""first"":0,""nights"":[[0,""did""],[2,""did""],[4,""did""],[6,""refused""]],""woundDown"":[6],""delivered"":[0,2,4,6],""woundTell"":[6,10020]}",
+                @"{""first"":0,""nights"":[[0,""refused""]],""woundDown"":[0]}",
+                @"{""first"":2.5,""nights"":[[0,""did""]]}",
+                @"{""first"":3,""nights"":[[3,""did""]],""delivered"":[5]}",
+                @"[1,2]",
+                @"{""first"":0,""nights"":[[0,""did""]],""first"":4}",
+                @"{""first"":0,""nights"":[[0,""did"",1],[0.5,""did""]]}",
+                @"{""first"":0,""nights"":[[0,""did""]],""woundTell"":[0,10020]}",
+                @"{""first"":0,""nights"":[[0,""did""]",
+            };
+            for (int i = 0; i < badAsks.Length; i++)
+            {
+                Dictionary<string, object> parsed;
+                try { parsed = MiniJson.AsObject(MiniJson.Deserialize(badAsks[i])); }
+                catch (FormatException) { parsed = null; }
+                var got = Arrangement.FromJson(parsed);
+                Row(sb, "AskBadSave", i.ToString(Inv), State(got), Esc(MiniJson.Serialize(got.ToJson())));
+            }
+            string Word(Arrangement x) => x.WoundWordAt.HasValue ? x.WoundWordAt.Value.TotalMinutes.ToString(Inv) : "null";
+            foreach (var (label, at) in new[] { ("noon", T(0, 12)), ("half eleven", T(0, 23, 30)), ("half twelve", T(1, 0, 30)), ("day six", T(6, 9)) })
+            {
+                var wm = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.OutfitMan, Arrangement.Doorman }) wm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var w = new Arrangement(0);
+                w.Delivered(0, wm.Get(Arrangement.Doorman), T(0, 20));
+                bool first = w.WoundDown(at, wm);
+                bool again = w.WoundDown(at, wm);
+                int toldBefore = wm.Get(Arrangement.OutfitMan).Rumors.Count;
+                w.PassedTo(at.Day + 2, wm, T(at.Day + 2, 6));
+                Row(sb, "AskWound", label, Bit(first), Bit(again), State(w), Word(w), w.WoundNight.ToString(Inv), toldBefore.ToString(Inv),
+                    wm.Get(Arrangement.OutfitMan).Rumors.Count.ToString(Inv), wm.Get(Arrangement.Doorman).Memory.Events.Count.ToString(Inv), Esc(MiniJson.Serialize(w.ToJson())));
+            }
+            // A dawn the game called before the man gave up: nothing passes yet.
+            var early = new Arrangement(0);
+            early.Delivered(0, null, T(0, 20));
+            early.PassedTo(1, null, T(1, 0, 30));
+            Row(sb, "AskEdge", "dawn before one", State(early), Bit(early.AskStands(T(1, 0, 45))));
+            early.PassedTo(1, null, T(1, 1));
+            Row(sb, "AskEdge", "dawn at one", State(early), Bit(early.AskStands(T(1, 0, 45))));
+            Row(sb, "AskEdge", "answer undelivered", Bit(new Arrangement(0).Answer(0, NightAnswer.Undelivered)), Bit(new Arrangement(0).Answer(0, NightAnswer.NoShow)), Bit(new Arrangement(0).Answer(2, NightAnswer.Did)));
+            Row(sb, "AskEdge", "first day negative", State(new Arrangement(-3)), Bit(new Arrangement(-3).AsksOn(0)));
         }
 
-        /// ADA'S TEA (town list 6bg), awaiting the port (town list T2): three
+        /// ADA'S TEA (town list 6bg), ported to FirstWeek.h on 30 September: three
         /// evenings (sat through, left early, stood up), seen going to the
         /// landing, and the save, each answer and what it leaves with her a row.
         static void EmitTea(StringBuilder sb)
@@ -889,6 +945,51 @@ namespace Ledger.PerceptionGolden
                 var back = AdasTea.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)));
                 Row(sb, "TeaSave", how, Esc(saved), back == null ? "null" : back.State + "|" + back.Day.ToString(Inv) + "|" + back.Minutes.Count.ToString(Inv));
             }
+            // THE EDGES, for the port's regression (30 September): damaged saves,
+            // the longest gap, and asking or sitting outside the evening.
+            var badTeas = new[] {
+                @"{""day"":2,""state"":""Stayed"",""minutes"":[1265,1266]}",
+                @"{""day"":2,""state"":""Asked"",""minutes"":[1200,1300,1380,1260.5,1379]}",
+                @"{""day"":2,""state"":""NotAsked"",""minutes"":[1300],""seenGoing"":true}",
+                @"{""day"":-1}",
+                @"{""day"":2.5}",
+                @"{""state"":""Asked""}",
+                @"{""day"":2,""state"":""stayed""}",
+                @"{""day"":2,""day"":3,""state"":""Asked""}",
+                @"[2]",
+                @"{""day"":2,""state"":""StoodUp"",""seenGoing"":""yes""}",
+                @"{""day"":2,""state"":""Asked""",
+            };
+            for (int i = 0; i < badTeas.Length; i++)
+            {
+                Dictionary<string, object> parsed;
+                try { parsed = MiniJson.AsObject(MiniJson.Deserialize(badTeas[i])); }
+                catch (FormatException) { parsed = null; }
+                var t = AdasTea.FromJson(parsed);
+                Row(sb, "TeaBadSave", i.ToString(Inv), t == null ? "null" : t.State + "|" + t.Day.ToString(Inv) + "|" + t.Minutes.Count.ToString(Inv) + "|" + Bit(t.SeenGoing) + "|" + Esc(MiniJson.Serialize(t.ToJson())));
+            }
+            foreach (var gap in new[] { 10, 11 })
+            {
+                var t = AdasTea.For(0, true);
+                t.SheSeesHim(T(2, 10));
+                for (int m = 21 * 60 + 30; m <= 22 * 60; m++) t.WithHer(T(2, m / 60, m % 60));
+                for (int m = 22 * 60 + gap; m <= 22 * 60 + 40; m++) t.WithHer(T(2, m / 60, m % 60));
+                Row(sb, "TeaGap", gap.ToString(Inv), t.Close(null, T(3, 9)).ToString(), t.LatestMinute.ToString(Inv));
+            }
+            var late = AdasTea.For(1, true);
+            Row(sb, "TeaEdge", "asked at nine", Esc(late.SheSeesHim(T(3, 21)) ?? "none"), Esc(late.SheSeesHim(T(4, 10)) ?? "none"), late.State.ToString());
+            var odd = AdasTea.For(0, true);
+            odd.SheSeesHim(T(2, 8, 59));
+            odd.WithHer(T(2, 20, 59)); odd.WithHer(T(2, 23)); odd.WithHer(T(3, 21, 40)); odd.WithHer(T(2, 21, 0));
+            odd.WentToTheLanding(null, T(2, 22), true);
+            var oddMill = new GossipMill(null);
+            oddMill.Add(new Gossiper(AdasTea.Ada, AdasTea.Ada, new MemoryStore(AdasTea.Ada), new KnowledgeBase(), new SuspicionTracker()));
+            odd.WentToTheLanding(oddMill, T(2, 22), false);
+            odd.WentToTheLanding(oddMill, T(3, 1), true);
+            Row(sb, "TeaEdge", "outside the evening", odd.Minutes.Count.ToString(Inv), odd.LatestMinute.ToString(Inv), Bit(odd.SeenGoing), oddMill.Get(AdasTea.Ada).Rumors.Count.ToString(Inv));
+            odd.WentToTheLanding(oddMill, T(3, 0, 59), true);
+            Row(sb, "TeaEdge", "seen before one", Bit(odd.SeenGoing), oddMill.Get(AdasTea.Ada).Rumors.Count.ToString(Inv), Esc(odd.Close(null, T(2, 23)).ToString()));
+            Row(sb, "TeaEdge", "first ask negative", Bit(AdasTea.For(-1, true) == null));
         }
 
         /// THE TOWN'S ONE SAVE (town list 6bl), awaiting the port (town list T2):
@@ -930,7 +1031,7 @@ namespace Ledger.PerceptionGolden
             Row(sb, "TownSaveJunk", junk.Asks.NextNight.ToString(Inv), junk.Tea == null ? "null" : "tea", junk.Arrests.Count.ToString(Inv));
         }
 
-        /// THE MAN AT THE LANDING (town list 6cj), awaiting the port: his line for
+        /// THE MAN AT THE LANDING (town list 6cj), ported on 30 September: his line for
         /// each moment and state of the arrangement (TheLanding.Line).
         static void EmitLanding(StringBuilder sb)
         {
@@ -1111,7 +1212,7 @@ namespace Ledger.PerceptionGolden
             foreach (var g in got) Row(sb, "Wait", Esc(g.what), Esc(g.stop));
         }
 
-        /// HIS NAME AS THE STREET'S FACT (town list 6ch), awaiting the port: which
+        /// HIS NAME AS THE STREET'S FACT (town list 6ch), ported on 30 September: which
         /// stories are it, filing it once, and that it never enters anybody's
         /// manner (RegardFor) or an overheard exchange.
         static void EmitNames(StringBuilder sb)

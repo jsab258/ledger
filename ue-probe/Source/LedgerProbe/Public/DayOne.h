@@ -1,7 +1,6 @@
 // TRANSLITERATION of ledger/Assets/Scripts/Core/DayOne.cs, 30 September
-// (the town's handover 6cg, "day one"; production/handovers/6cg-day-one.md),
-// with the one piece of PlayerIdentity.cs it reads (IsNameStory, town list
-// 6ch; the rest of the name comes with its own rows).
+// (the town's handover 6cg, "day one"; production/handovers/6cg-day-one.md);
+// the story of his name it reads is PlayerIdentity.h's.
 //
 // DAY ONE'S WORDS: Sheila's walk-round, stop by stop, in her own voice; its
 // end, played or skipped, is the talk hint's moment (FirstMoments.h). And his
@@ -20,6 +19,7 @@
 #include "CastDay.h"
 #include "FirstMoments.h"
 #include "Gossip.h"
+#include "PlayerIdentity.h"   // the story of his name
 
 #include <set>
 #include <string>
@@ -27,12 +27,6 @@
 
 namespace LedgerCore
 {
-	namespace PlayerIdentity
-	{
-		static const char* const NameTopic = "player.name";
-		inline bool IsNameStory(const RumorPtr& R) { return R && R->Content.Subject == "player" && R->TopicKey() == NameTopic; }
-	}
-
 	namespace DayOne
 	{
 		static const char* const Sheila = "lena";

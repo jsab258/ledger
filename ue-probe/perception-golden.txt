@@ -55569,3 +55569,115 @@ ArrivalLine|june|in the coat|null
 ArrivalLine|june|with a deed|null
 ArrivalRegard|arrival|Nothing|Indifferent|0|0
 ArrivalRegard|name|Nothing|Indifferent|0|0
+Ask|start|0|0|none|1|0|1|0
+Ask|delivered|1|0|1|1|0
+Ask|did|1|0|2|0|none|1|1
+Ask|dawn 1|2|0|none|1|1
+Ask|stayed away|4|0|none|0.6599999999999999|2|1
+Ask|never brought|6|0|none|0.6599999999999999|3|1
+Ask|too late|0
+Ask|no|1|-1|1|refused|0.6599999999999999|4
+AskStory|player.outfit_d0|did|1|Mickey's~nephew~brought~the~envelope~down~the~landing
+AskStory|player.outfit_d2|noshow|0|Mickey's~nephew~never~turned~up~at~the~landing
+AskStory|player.outfit_d6|refused|0|Ron~came~down~the~landing~to~say~Mickey's~nephew~told~them~no
+AskRonRemembers|0|I~gave~Mickey's~nephew~the~envelope~for~the~ferry~landing:~after~ten~tonight,~to~the~man~who~asks~for~Mickey's.~I~told~him~that~if~he~says~no,~Mickey's~arrangement~is~finished.
+AskRonRemembers|1|I~gave~Mickey's~nephew~the~envelope~for~the~ferry~landing:~after~ten~tonight,~to~the~man~who~asks~for~Mickey's.~I~told~him~that~if~he~says~no,~Mickey's~arrangement~is~finished.
+AskRonRemembers|2|I~gave~Mickey's~nephew~the~envelope~for~the~ferry~landing:~after~ten~tonight,~to~the~man~who~asks~for~Mickey's.~I~told~him~that~if~he~says~no,~Mickey's~arrangement~is~finished.
+AskRonRemembers|3|He~told~me~no~to~the~envelope,~so~I'm~taking~his~answer~down~to~the~landing~tonight:~that's~Mickey's~arrangement~finished.
+AskSave|save|{"first":0,"nights":[[0,"did"],[2,"noshow"],[4,"undelivered"],[6,"refused"]],"delivered":[0,2,6]}
+AskLoad|load|-1|1|refused|0.6599999999999999|4
+AskBadSave|0|4|0|none|0.6599999999999999|2|{"first":0,"nights":[[0,"did"],[2,"noshow"]],"delivered":[0,2]}
+AskBadSave|1|0|0|none|1|0|{"first":0,"nights":[],"delivered":[]}
+AskBadSave|2|2|0|none|0.6599999999999999|1|{"first":0,"nights":[[0,"noshow"]],"delivered":[0]}
+AskBadSave|3|0|0|none|1|0|{"first":0,"nights":[],"delivered":[]}
+AskBadSave|4|0|0|none|1|0|{"first":0,"nights":[],"delivered":[0]}
+AskBadSave|5|-1|1|wound down|1|4|{"first":0,"nights":[[0,"did"],[2,"did"],[4,"did"],[6,"refused"]],"delivered":[0,2,4],"woundDown":[6],"woundTell":[6,10020]}
+AskBadSave|6|-1|1|refused|1|1|{"first":0,"nights":[[0,"refused"]],"delivered":[0]}
+AskBadSave|7|2|0|none|1|1|{"first":0,"nights":[[0,"did"]],"delivered":[0]}
+AskBadSave|8|5|0|none|1|1|{"first":3,"nights":[[3,"did"]],"delivered":[3,5]}
+AskBadSave|9|0|0|none|1|0|{"first":0,"nights":[],"delivered":[]}
+AskBadSave|10|4|0|none|1|0|{"first":4,"nights":[],"delivered":[]}
+AskBadSave|11|0|0|none|1|0|{"first":0,"nights":[],"delivered":[]}
+AskBadSave|12|2|0|none|1|1|{"first":0,"nights":[[0,"did"]],"delivered":[0]}
+AskBadSave|13|0|0|none|1|0|{"first":0,"nights":[],"delivered":[]}
+AskWound|noon|1|0|-1|1|wound down|1|1|null|-1|0|1|2|{"first":0,"nights":[[0,"refused"]],"delivered":[0],"woundDown":[0]}
+AskWound|half eleven|1|0|-1|1|wound down|1|1|null|-1|1|1|2|{"first":0,"nights":[[0,"refused"]],"delivered":[0],"woundDown":[0]}
+AskWound|half twelve|1|0|-1|1|wound down|1|1|null|-1|1|1|2|{"first":0,"nights":[[0,"refused"]],"delivered":[0],"woundDown":[0]}
+AskWound|day six|1|0|-1|1|wound down|0.6599999999999999|4|null|-1|1|2|2|{"first":0,"nights":[[0,"noshow"],[2,"undelivered"],[4,"undelivered"],[6,"refused"]],"delivered":[0],"woundDown":[6]}
+AskEdge|dawn before one|0|0|none|1|0|1
+AskEdge|dawn at one|2|0|none|0.6599999999999999|1|0
+AskEdge|answer undelivered|0|0|0
+AskEdge|first day negative|0|0|none|1|0|1
+Landing|before~ten|none
+Landing|comes,~Ron~not~been|Mickey's?
+Landing|comes|Mickey's?
+Landing|nothing~handed|Nothing~for~me?~Then~you've~no~business~down~here.
+Landing|handed~before~it~is~answered|none
+Landing|handed|Right.~Wednesday,~same~again.
+Landing|comes~again|none
+Landing|talks~after|You've~done~your~bit.~Go~home.
+Landing|after~one|none
+Landing|no~ask~tonight|Nothing~tonight.~Tomorrow,~after~ten.
+Landing|talks,~no~ask|Not~here.~Go~on.
+Landing|handed~after~a~night~away|You~kept~us~waiting~last~time.~Don't~make~a~habit~of~it.~Sunday,~same~again.
+Landing|told~Ron~no|Ron's~been~down.~We're~done,~you~and~us.
+Landing|told~Ron~no,~talks|We're~done.~Go~on.
+Landing|told~Ron~no,~nothing~handed|none
+Landing|stayed~away~three~times|You~had~your~chances.~We're~done,~you~and~us.
+Landing|wound~down,~before~Ron~has~been|Mickey's?
+Landing|wound~down~Monday,~before~Ron|Nothing~tonight.~Tomorrow,~after~ten.
+Landing|wound~down~Monday,~talk~before~Ron|I've~nothing~to~say~to~you.
+Landing|wound~down~Monday,~after~Ron|Winding~it~all~up,~Ron~says.~We're~done,~you~and~us.
+Landing|wound~down~Monday,~the~Tuesday|Winding~it~all~up,~Ron~says.~We're~done,~you~and~us.
+Landing|wound~down|Winding~it~all~up,~Ron~says.~We're~done,~you~and~us.
+Landing|brush-off,~round~again|I~don't~do~talking.
+NameStoryIs|name|1
+NameStoryIs|names|0
+NameStoryIs|arrived|0
+NameStoryIs|window_d1|0
+NameTold|ada|1
+NameTold|ada|0
+NameTold|nobody|0
+NameTold|joey|1
+NameRegard|0|Nothing|Indifferent|0|0
+NameRegard|0.5|Nothing|Indifferent|0|0
+NameRegard|0.9|Nothing|Indifferent|0|0
+NameArrival|arrived+name|You'll~be~Mickey's~nephew,~then.
+NameArrival|name~only|none
+Tea|not met her|1|2
+TeaAsked|sat|There'll~be~a~pot~on~at~nine~tonight,~if~you~want~it.~I~don't~ask~twice,~mind.|none|Asked
+TeaBefore11|sat|Asked
+TeaClosed|sat|Stayed|0.6|0|Mickey's~nephew~came~for~his~tea~and~sat~with~me~till~gone~half~ten.~There's~more~to~him~than~they're~saying.
+TeaSeenGoing|player.left_tea_for_landing_d2|seen|1|Mickey's~nephew~went~off~down~towards~the~ferry,~late,~the~night~I'd~asked~him~in~for~his~tea
+TeaSeenGoingOnce|1|1
+TeaSeenGoingOnce|1|1
+TeaSave|sat|{"day":2,"state":"Stayed","minutes":[1265,1266,1267,1268,1269,1270,1271,1272,1273,1274,1275,1276,1277,1278,1279,1280,1281,1282,1283,1284,1285,1286,1287,1288,1289,1290,1291,1292,1293,1294,1295,1296,1297,1298,1299,1300,1301,1302,1303,1304,1305,1306,1307,1308,1309,1310,1311,1312,1313,1314,1315,1316,1317,1318,1319,1320,1321,1322,1323,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1340,1341,1342,1343,1344,1345,1346,1347,1348,1349,1350,1351,1352,1353,1354,1355,1356,1357,1358,1359,1360],"seenGoing":true}|Stayed|2|96
+TeaAsked|late|There'll~be~a~pot~on~at~nine~tonight,~if~you~want~it.~I~don't~ask~twice,~mind.|none|Asked
+TeaBefore11|late|Asked
+TeaClosed|late|LeftEarly|0.39999999999999997|0|Mickey's~nephew~came~for~his~tea~and~was~off~again~before~the~pot~was~cold.~Somewhere~to~be,~had~he.
+TeaSave|late|{"day":2,"state":"LeftEarly","minutes":[1305,1306,1307,1308,1309,1310,1311,1312,1313,1314,1315,1316,1317,1318,1319,1320,1321,1322,1323,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1340,1341,1342,1343,1344,1345,1346,1347,1348,1349,1350,1351,1352,1353,1354,1355,1356,1357,1358,1359,1360],"seenGoing":false}|LeftEarly|2|56
+TeaAsked|early|There'll~be~a~pot~on~at~nine~tonight,~if~you~want~it.~I~don't~ask~twice,~mind.|none|Asked
+TeaBefore11|early|Asked
+TeaClosed|early|LeftEarly|0.39999999999999997|0|Mickey's~nephew~came~for~his~tea~and~was~off~again~before~the~pot~was~cold.~Somewhere~to~be,~had~he.
+TeaSave|early|{"day":2,"state":"LeftEarly","minutes":[1260,1261,1262,1263,1264,1265,1266,1267,1268,1269,1270,1271,1272,1273,1274,1275,1276,1277,1278,1279,1280,1281,1282,1283,1284,1285,1286,1287,1288,1289,1290,1291,1292,1293,1294,1295,1296,1297,1298,1299,1300,1301,1302,1303,1304,1305,1306,1307,1308,1309,1310],"seenGoing":false}|LeftEarly|2|51
+TeaAsked|away|There'll~be~a~pot~on~at~nine~tonight,~if~you~want~it.~I~don't~ask~twice,~mind.|none|Asked
+TeaBefore11|away|Asked
+TeaClosed|away|StoodUp|0.19999999999999998|0|I~asked~Mickey's~nephew~in~for~his~tea.~He~never~came.~I'll~not~ask~again.
+TeaSave|away|{"day":2,"state":"StoodUp","minutes":[],"seenGoing":false}|StoodUp|2|0
+TeaBadSave|0|LeftEarly|2|2|0|{"day":2,"state":"LeftEarly","minutes":[1265,1266],"seenGoing":false}
+TeaBadSave|1|Asked|2|2|0|{"day":2,"state":"Asked","minutes":[1300,1379],"seenGoing":false}
+TeaBadSave|2|NotAsked|2|0|0|{"day":2,"state":"NotAsked","minutes":[],"seenGoing":false}
+TeaBadSave|3|null
+TeaBadSave|4|null
+TeaBadSave|5|null
+TeaBadSave|6|NotAsked|2|0|0|{"day":2,"state":"NotAsked","minutes":[],"seenGoing":false}
+TeaBadSave|7|Asked|3|0|0|{"day":3,"state":"Asked","minutes":[],"seenGoing":false}
+TeaBadSave|8|null
+TeaBadSave|9|StoodUp|2|0|0|{"day":2,"state":"StoodUp","minutes":[],"seenGoing":false}
+TeaBadSave|10|null
+TeaGap|10|Stayed|1360
+TeaGap|11|LeftEarly|1360
+TeaEdge|asked at nine|none|none|NotAsked
+TeaEdge|outside the evening|1|1260|0|0
+TeaEdge|seen before one|1|1|LeftEarly
+TeaEdge|first ask negative|1

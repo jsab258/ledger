@@ -43,9 +43,9 @@ STATE: setup done on Monday; the list starts at item 1. Blender live: registered
 - 29 Sep, THE TOWN'S HANDOVERS AS CARDS (town list T2, Jafar, 29 September evening): each waiting line is now a short card in production/handovers/ (README.md gives the order the first hour needs): what the player gets, the calls in play's order, the port and its rows behind --awaiting-port, the save, and what the AI tester should see. In that order:
   1. day one: production/handovers/6cg-day-one.md (PORTED 30 September: DayOne.h and StreetVoice's ArrivalLine, 32 rows and an independent check; the walk-round WIRED into a new game; Arrived and ArrivalLine wait for day 0 of the running first week)
   2. the hints: production/handovers/6y-hints.md (PORTED 30 September: FirstMoments.h, 51 rows and an independent check that found five differences, all fixed and pinned; WIRED: walking, talking and being seen, saved with the story)
-  3. the outfit's ask, Ron and the man at the landing: production/handovers/6z-the-ask.md
-  4. what the town calls him: production/handovers/6ch-names.md
-  5. Ada's tea: production/handovers/6bg-adas-tea.md
+  3. the outfit's ask, Ron and the man at the landing: production/handovers/6z-the-ask.md (PORTED 30 September: Arrangement.h with TheLanding, 63 rows with hand-edited saves and winding down; the reading of a no stays in the talk program; wiring waits for the running week's nights, the landing's body and his lines' plain text)
+  4. what the town calls him: production/handovers/6ch-names.md (PORTED 30 September: PlayerIdentity.h, NameTold, HoldsHisName and IsNameStory, 13 rows; the name never shows in anybody's manner or an overheard exchange; wiring "knowsName" and "gaveName" waits on a local build)
+  5. Ada's tea: production/handovers/6bg-adas-tea.md (PORTED 30 September: FirstWeek.h, 37 rows with damaged saves and the ten-minute gap; wiring waits for the running week: her step, the evening and the minutes he sits with her)
   6. a way to wait, and the clock: production/handovers/6ci-the-wait.md
   7. Sheila's trust and the week's end: production/handovers/6ca-sheila-and-the-week.md
   8. after a deed: the damage, the police, DS Ellis, an arrest: production/handovers/6ar-after-a-deed.md

@@ -3381,8 +3381,10 @@ namespace
 		if (G) { for (const RumorPtr& R : G->Rumors) { if (R && R->Content.Subject == "player") { bHeardOf = true; break; } } }
 		// Sheila has met him once her walk-round is over (town list 6s, 6cg).
 		const bool bMet = GLive.Talked.count(Card) > 0 || (Card == "lena" && bSheilaMet);
+		// "knowsName" once they hold the street's story of his name (town list 6ch).
 		return std::string(",\"acquaintance\":{\"met\":") + (bMet ? "true" : "false")
-			+ ",\"heardOf\":" + (bHeardOf ? "true" : "false") + "}";
+			+ ",\"heardOf\":" + (bHeardOf ? "true" : "false")
+			+ (LedgerCore::PlayerIdentity::HoldsHisName(G.get()) ? ",\"knowsName\":true" : "") + "}";
 	}
 
 	std::string EvidenceFor(const GossiperPtr& G, double Familiarity, int OwnRungOnA);
@@ -3572,6 +3574,13 @@ namespace
 		{
 			G->Rumors.push_back(LedgerCrime::OwnedUpStory(Topic, G->Id));
 			UE_LOG(LogTemp, Display, TEXT("LedgerDeed: he owned up to %s to %s"), *Un(Topic), *Un(Card));
+		}
+		// HE GAVE HIS NAME (town list 6ch): they hold it as the street's plain
+		// fact, once, and the town's rounds pass it on (PlayerIdentity.h).
+		const Value* Gave = CastDay::Get(&Root, "gaveName");
+		if (Gave != nullptr && Gave->Type == T_BOOL && Gave->Bool && GMill && LedgerCore::PlayerIdentity::NameTold(GMill.get(), G->Id, GNow))
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerNames: %s has his name now"), *Un(Card));
 		}
 	}
 
