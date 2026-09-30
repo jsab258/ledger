@@ -181,58 +181,58 @@
   }
  },
  "areas": {
-  "mickeys": {
+  "mickeys": {"street": true, 
    "places": ["mickeys_office", "mickeys_rank"],
    "names": ["Mickey's", "the office", "the cab office", "the rank"],
    "hours": {"mon": [7, 27], "tue": [7, 27], "wed": [7, 27], "thu": [7, 27], "fri": [7, 27], "sat": [7, 27], "sun": [9, 27]},
    "hours_breaks": {"sun": [[18, 19], [23, 24]]}
   },
-  "fish_market": {
+  "fish_market": {"street": true, 
    "places": ["fish_counter", "fish_front"],
    "names": ["the fish market", "the fishmonger's", "the market"],
    "hours": {"mon": [7.5, 14], "tue": [7.5, 14], "wed": [7.5, 13], "thu": [7.5, 14], "fri": [7.5, 14], "sat": [7.5, 14]}
   },
-  "ritas": {
+  "ritas": {"street": true, 
    "places": ["ritas_counter", "ritas_step"],
    "names": ["Rita's", "the pawn shop", "the pawnbroker's", "the pawn"],
    "hours": {"mon": [9, 17.5], "tue": [9, 17.5], "wed": [9, 13], "thu": [9, 17.5], "fri": [9, 17.5], "sat": [9, 17.5]}
   },
-  "kiosk": {
+  "kiosk": {"street": true, 
    "places": ["kiosk"],
    "names": ["the kiosk"],
    "hours": {"mon": [6, 18], "tue": [6, 18], "wed": [6, 18], "thu": [6, 18], "fri": [6, 18], "sat": [6, 18], "sun": [7, 14]}
   },
-  "laundry": {
+  "laundry": {"street": true, 
    "places": ["laundry_front", "laundry_counter"],
    "names": ["the steam laundry", "the laundry", "the laundrette"],
    "hours": {"mon": [8, 17.5], "tue": [8, 17.5], "wed": [8, 17.5], "thu": [8, 17.5], "fri": [8, 17.5], "sat": [8, 17.5]}
   },
-  "quay": {
+  "quay": {"street": true, 
    "places": ["quay"],
    "names": ["the quay"]
   },
-  "adas": {
+  "adas": {"street": true, 
    "places": ["adas_step"],
    "names": ["Ada's"]
   },
-  "cafe": {
+  "cafe": {"street": true, 
    "places": ["cafe", "cafe_front"],
    "names": ["the cafe", "the caff"],
    "hours": {"mon": [6.5, 22], "tue": [6.5, 22], "wed": [6.5, 22], "thu": [6.5, 22], "fri": [6.5, 22], "sat": [6.5, 22], "sun": [8, 12]}
   },
-  "newsagent": {
+  "newsagent": {"street": true, 
    "places": ["pension_counter"],
    "names": ["the newsagent's", "the paper shop"],
    "hours": {"mon": [6, 17.5], "tue": [6, 17.5], "wed": [6, 17.5], "thu": [6, 17.5], "fri": [6, 17.5], "sat": [6, 17.5], "sun": [7, 12]},
    "hours_note": "the pensions counter nine till half five on weekdays"
   },
-  "hals": {
+  "hals": {"street": true, 
    "places": ["hals_shop"],
    "names": ["Hal's"],
    "hours": {"mon": [10, 18], "tue": [10, 18], "wed": [10, 13], "thu": [10, 18], "fri": [10, 18], "sat": [10, 18]},
    "hours_breaks": {"mon": [11, 12]}
   },
-  "bus_stop": {
+  "bus_stop": {"street": true, 
    "places": ["bus_stop"],
    "names": ["the bus stop"]
   },
