@@ -35,7 +35,11 @@ the list only; its history is in git.
      ledger's capital letters; TownNews.Parse's out-of-range days. Then the
      sweep.
 3. **Support the builder's continuous route:** for each piece of the town's
-   that it needs, precise inputs, outputs and acceptance cases. Not started.
+   that it needs, precise inputs, outputs and acceptance cases.
+   - State: handed over, production/handovers/ROUTE.md. It gives the Core's own
+     week, hour by hour, as the reference; the ids fix; the talk fields; one
+     TownSave; and sixteen acceptance rows with the wait's stops.
+   - Next: keep the rows current when the Core moves.
 
 **Stop:** new systems, checklist sweeps, and review rounds on depth nobody can
 reach yet.
