@@ -200,7 +200,9 @@ namespace Ledger.PerceptionGolden
                     // A no only after the ask.
                     "NoBeforeAsk|",
                     // The independent check of the A5 fix: a telling as sure as its naming.
-                    "OneTelling|1|2|", "SurestTold|" };
+                    "OneTelling|1|2|", "SurestTold|",
+                    // The keeper told first still finds her own window.
+                    "KeeperHeardFirst|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -2108,6 +2110,15 @@ namespace Ledger.PerceptionGolden
             Row(sb, "Aftermath", "tick to nine", string.Join(",", damage.Tick(am, smallCast, new GameTime(0, 9, 30)).ConvertAll(x => x.who + "@" + x.when.TotalMinutes.ToString(Inv))));
             Row(sb, "Aftermath", "tick to noon", string.Join(",", damage.Tick(am, smallCast, new GameTime(0, 12, 0)).ConvertAll(x => x.who + "@" + x.when.TotalMinutes.ToString(Inv))),
                 am.Get("rita").Memory.Events.Count.ToString(Inv), Esc(am.Get("rita").Memory.Events[am.Get("rita").Memory.Events.Count - 1].Text), am.Get("hal").Rumors.Count.ToString(Inv));
+            // The keeper told of it before she came in still finds it in her own words (the builder's report, A9).
+            {
+                var km = new GossipMill(null);
+                foreach (var id in smallCast.People) km.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                km.Witness("rita", new Fact("town", "rita_window_k", "found"), "somebody put Rita's window in", false, new GameTime(0, 8, 0), 0.6);
+                var kd = new Aftermath("ritas", "rita_window_k", "somebody put Rita's window in", new GameTime(0, 2, 30));
+                Row(sb, "KeeperHeardFirst", string.Join(",", kd.Tick(km, smallCast, new GameTime(0, 12, 0)).ConvertAll(x => x.who + "@" + x.when.TotalMinutes.ToString(Inv))),
+                    Esc(string.Join(" / ", km.Get("rita").Memory.Events.ConvertAll(e => e.Text))));
+            }
             var damageSaved = MiniJson.Serialize(damage.ToJson());
             Row(sb, "Aftermath", "save", Esc(damageSaved), Esc(MiniJson.Serialize(Aftermath.FromJson(MiniJson.AsObject(MiniJson.Deserialize(damageSaved))).ToJson())));
             Row(sb, "Aftermath", "bad saves", Bit(Aftermath.FromJson(null) == null),

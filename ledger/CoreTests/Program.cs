@@ -8018,6 +8018,15 @@ namespace Ledger.CoreTests
                 var words = new Aftermath("shop", "k2", "the pawn shop's window was put in", new GameTime(0, 2, 0)).KeeperMemoryOf(edge, false);
                 var lower = new Aftermath("shop", "k3", "somebody put rita's window in.", new GameTime(0, 2, 0)).KeeperMemoryOf(edge, false);
                 if (!words.StartsWith("My window was put in while", StringComparison.Ordinal)) wrongKept.Add("another wording: \"" + words + "\"");
+                // Told before she came in (the builder, in the game: "heard from Hal that
+                // somebody put Rita's window in"), she still finds her own window, in her
+                // own words, when she comes in; nobody else gets a second copy.
+                var hm = new GossipMill(null);
+                foreach (var id in kept.People) hm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                hm.Witness("rita", new Fact(TownNews.Subject, "rita_window2", "found"), "somebody put Rita's window in", false, new GameTime(0, 8, 0), 0.6);
+                new Aftermath("shop", "rita_window2", "somebody put Rita's window in", new GameTime(0, 2, 0)).Tick(hm, kept, new GameTime(0, 20, 0));
+                if (!hm.Get("rita").Memory.Events.Exists(e => e.Text.Contains("my window") && e.Time.Equals(new GameTime(0, 9, 0))))
+                    wrongKept.Add("told first, Rita never found her own window in her own words");
                 if (!lower.StartsWith("Somebody put my window in while", StringComparison.Ordinal) || lower.Contains("..") || lower.Contains(". while")) wrongKept.Add("lower case and a full stop: \"" + lower + "\"");
                 Check(wrongKept.Count == 0,
                       "the keeper finds her own damage in her own words (\"my window\", never \"I came by\" or her own name): when she comes in, or at once if she is there when it happens; a passer-by still comes by and sees it",
