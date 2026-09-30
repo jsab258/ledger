@@ -168,9 +168,13 @@ DAYS["2026-10-01"] = {
 # sample before more are made (CLAUDE.md: nothing is multiplied before he
 # approves one), with the blind reviewer's remaining notes beside it.
 DAYS["2026-09-30-2"] = {
-    "title": "Ron's street lines, and the thirty regulars",
-    "lede": "Two things to read, each a sample before more are made. Ron's own street lines: 159, in his voice, so the street stops talking with one voice; the rest of the named cast follow his pattern once you say yes. And the street's thirty regulars as one contact sheet of text; their faces, clothes and voices come after, from the builder, only with your yes. One tap each, and a note if you want.",
-    "questions": [],
+    "title": "Ron's street lines, the thirty regulars, and the ending's signs",
+    "lede": "One call, and two things to read, each a sample before more are made. Ron's own street lines: 159, in his voice, so the street stops talking with one voice; the rest of the named cast follow his pattern once you say yes. And the street's thirty regulars as one contact sheet of text; their faces, clothes and voices come after, from the builder, only with your yes. One tap each, and a note if you want.",
+    "questions": [
+        ("q-ending-signs", "Item i, every cost that decides how the week ends readable before it decides, turned out much bigger than it looked: the game in Unreal has no endings yet, and each of the seven things that decide them needs a sign that moves exactly at its line, most of them the builder's to put in the street. The design is written (one state for each thing, read by both the ending and its sign, as the research found studios do; and a killing with a sure witness passes through a day of police investigating before a manhunt, so no ending shuts unseen)",
+         [("wait", "Keep the design on file; the code waits until the week's end is in the game, and the day of investigating goes in with it (recommended: no new systems until the slice is worth playing)"),
+          ("core", "Build the Core half now: the states, the signs' words, Tom's reading and its tests, several evenings, for the builder to wire when the endings come")]),
+    ],
     "docs": [
         ("ron-street-lines", "Ron's own street lines", os.path.join(REPO, "production", "casting", "ron-kirby", "STREET-LINES.md"),
          "Yes: this is Ron; write the rest of the named cast this way", "Change them (say what in the note)",
