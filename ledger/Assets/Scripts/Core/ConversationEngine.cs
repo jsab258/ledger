@@ -79,6 +79,12 @@ namespace Ledger.Core
         /// when no such fact was chosen; a card's own facts, secrets among them,
         /// are never said this way.
         public static bool PlainFallback = false;
+        /// THE RULE TABLE (TalkRules; Jafar's list of 30 September afternoon,
+        /// item 4): a line of a known kind has its facts chosen by the table and
+        /// its reply shaped as an answer, a partial answer or "don't know, ask
+        /// someone who does"; with it on, the plain line (PlainFallback) is said
+        /// only where a rule chose the facts.
+        public static bool UseRules = false;
 
         /// THE FACTS AND THE INTENT BEFORE THE WORDS (Jafar's list of 30
         /// September, after the adversarial audit; production/research/
@@ -325,6 +331,9 @@ namespace Ledger.Core
         public string BuildSystemPrompt(string playerInput, GameTime now, string sceneContext)
         {
             LastBearing = new List<string>();
+            // The table and the plan first are two ways of choosing; with both
+            // on, the plan decides (the blind review: the rule was half-used).
+            LastRule = UseRules && !PlanFirst ? TalkRules.Choose(playerInput, Card.Id) : null;
             var sb = new StringBuilder();
             sb.AppendLine(Card.ToPromptBlock());
             if (!string.IsNullOrEmpty(HowYouKnowHim))
@@ -431,6 +440,29 @@ namespace Ledger.Core
                 sb.AppendLine("Then, straight after the tag, say your reply in your own voice. Every specific in it (who, what, when, where, what anyone " +
                               "did or looks like) comes from the facts you named; say it in your own words. If they do not answer him, say you do not know " +
                               "in your own way and give him something you do know. The tag is never spoken; nothing else goes in angle brackets.");
+            }
+            // THE RULE TABLE'S CHOICE (UseRules): the facts that answer this kind
+            // of question for this speaker, and what kind of reply it is.
+            else if (LastRule != null && LastRule.Kind != TalkRules.Kind.Scene)
+            {
+                LastBearing = LastRule.Facts;
+                sb.AppendLine();
+                if (LastRule.Facts.Count > 0)
+                {
+                    sb.AppendLine("Of what you know, this is what answers what he just said:");
+                    foreach (var f in LastRule.Facts) sb.AppendLine("- " + f);
+                }
+                if (LastRule.Kind == TalkRules.Kind.Answer)
+                    sb.AppendLine("Answer him from it, in your own words. Add nothing it does not give: no name, time, place, number, habit of " +
+                                  "somebody else, or thing that happened.");
+                else if (LastRule.Kind == TalkRules.Kind.Partial)
+                    // Not "you do not know the rest" (the blind review: Sheila
+                    // withholds, she does not plead ignorance).
+                    sb.AppendLine("It answers part of what he asked. Give him that part, in your own words, and say that is all you can tell him for " +
+                                  "now; add nothing it does not give." + (LastRule.Ask != null ? " Tell him " + LastRule.Ask + " would know more." : ""));
+                else
+                    sb.AppendLine("You do not know the answer to this. Say so plainly, in your own way, and do not guess." +
+                                  (LastRule.Ask != null ? " Tell him " + LastRule.Ask + " would know." : ""));
             }
             // WHAT BEARS ON HIS LINE, chosen before the reply is written, from
             // the same items the check reads (U1, 30 September): the reply is
@@ -617,7 +649,13 @@ namespace Ledger.Core
         // What is said when both drafts were refused (PlainFallback).
         string RefusedTwice()
         {
-            if (PlainFallback)
+            // With the rule table on, said plainly only where a rule chose the
+            // facts (measured: the facts shared words pick missed the question in
+            // 84 of 123 plain lines); "don't know" keeps its line and whom to ask.
+            bool ruled = LastRule != null && (LastRule.Kind == TalkRules.Kind.Answer || LastRule.Kind == TalkRules.Kind.Partial);
+            if (UseRules && LastRule != null && LastRule.Kind == TalkRules.Kind.DontKnow)
+                return ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++) + (LastRule.Ask != null ? " You'd want " + LastRule.Ask + " for that." : "");
+            if (PlainFallback && (!UseRules || ruled))
             {
                 var said = new List<string>();
                 foreach (var b in LastBearing)
@@ -634,7 +672,13 @@ namespace Ledger.Core
                     uint h = 2166136261;
                     foreach (char c in Card.Id ?? "") { h ^= c; h *= 16777619; }
                     string opener = openers.Count > 0 ? openers[(int)((h + (uint)n) % (uint)openers.Count)] + " " : "";
-                    return opener + string.Join(" ", said);
+                    // About themselves, no opener; a partial answer says so, and
+                    // whom to ask for the rest (the blind review: said plainly,
+                    // a partial answer sounded complete).
+                    if (UseRules && LastRule != null && TalkRules.AboutThemselves(LastRule.Concept)) opener = "";
+                    string rest = UseRules && LastRule != null && LastRule.Kind == TalkRules.Kind.Partial
+                        ? (LastRule.Ask != null ? " You'd want " + LastRule.Ask + " for the rest." : " That's as much as I can tell you.") : "";
+                    return opener + string.Join(" ", said) + rest;
                 }
             }
             return ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
@@ -654,6 +698,8 @@ namespace Ledger.Core
         public IReadOnlyList<string> LastBearing { get; private set; } = new List<string>();
         /// The last reply was the chosen facts said plainly (PlainFallback).
         public bool LastSaidPlainly { get; private set; }
+        /// The rule the table chose for the last line (UseRules), or null.
+        public TalkRules.Choice LastRule { get; private set; }
 
         /// THE LAST TURN'S STEPS, each with the milliseconds from the turn's
         /// start to its end (town list 6bx: replies cut at eight seconds, and

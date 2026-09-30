@@ -104,11 +104,11 @@ static partial class Program
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
-            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
+            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
             case "bearing": return Bearing();
             case "detailbench": return await DetailBench(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
             case "causes": return await Causes(dir, parallel, Arg(args, "--third", "claude-fable-5-1"));
-            case "plainrel": return await PlainRelevance(Arg(args, "--from", ""), parallel);
+            case "plainrel": return await PlainRelevance(Arg(args, "--from", ""), parallel, args.Contains("--all"));
             case "answerable": return args.Contains("--third") ? await AnswerableThird(dir, Arg(args, "--third", "claude-fable-5-1"), parallel) : await Answerable(dir, parallel);
             case "firsts-label": return await FirstsLabel(dir, Path.Combine(RepoRoot(), "production", "research", "invented-claims", "bench"), parallel);
             case "threats": return await Threats(dir, parallel);
@@ -986,6 +986,7 @@ static partial class Program
                     if (refusedLine) refused++;
                     rows.Add(new { card = job.card, probe = job.probe, reply, fell, refused = refusedLine, invented = engine.LastInvented,
                                    refusedAgain = engine.LastRefusedAgain, bearing = engine.LastBearing, saidPlainly = engine.LastSaidPlainly,
+                                   rule = engine.LastRule == null ? null : engine.LastRule.Concept + " " + engine.LastRule.Kind,
                                    known = engine.LastKnown.Select(k => k.id + ": " + k.text).ToList(),
                                    plan = engine.LastPlan.HasValue ? engine.LastPlan.Value.intent + " " + string.Join(",", engine.LastPlan.Value.facts) : null });
                 }

@@ -5238,6 +5238,60 @@ namespace Ledger.CoreTests
             }
             finally { ConversationEngine.PlainFallback = false; }
 
+            // THE RULE TABLE (TalkRules; Jafar's list of 30 September afternoon,
+            // item 4): each of the sixty's twenty questions has its kind; a rule
+            // for the speaker beats the general one; the facts come in the
+            // speaker's own words; with the table on, the plain line is said only
+            // where a rule chose the facts.
+            {
+                var kinds = new (string line, string concept)[]
+                {
+                    ("Who are you?", "who_are_you"), ("What is this place?", "what_place"), ("What am I meant to do here?", "my_job"),
+                    ("How did Mickey die?", "mickey_death"), ("Sorry I missed the funeral.", "funeral"), ("What's behind that door?", "door"),
+                    ("Where do I sleep?", "sleep"), ("Who runs things round here?", "who_runs"), ("Is there any money in the business?", "money"),
+                    ("Did Mickey leave me anything?", "inheritance"), ("What was Mickey like?", "mickey_like"), ("Who can I trust?", "trust"),
+                    ("How many drivers are there?", "drivers"), ("Where's the office?", "office_where"), ("What do you do here?", "what_you_do"),
+                    ("Do you work for me now?", "work_for_me"), ("Anything I should know?", "anything_know"), ("Where can I get something to eat?", "food"),
+                    ("Who was Mickey's family?", "family"), ("What happens now?", "what_now"),
+                };
+                var wrong = kinds.Where(k => TalkRules.ConceptOf(k.line) != k.concept).Select(k => k.line + " -> " + TalkRules.ConceptOf(k.line)).ToList();
+                Check(wrong.Count == 0 && TalkRules.ConceptOf("Nice weather.") == null && TalkRules.ConceptOf("") == null,
+                      "each of the twenty first questions is sorted into its kind, and small talk into none", string.Join("; ", wrong));
+                var runsRon = TalkRules.Choose("Who runs things round here?", "rocco");
+                var moneyRon = TalkRules.Choose("Is there any money in the business?", "rocco");
+                var moneySheila = TalkRules.Choose("Is there any money in the business?", "lena");
+                Check(runsRon.Kind == TalkRules.Kind.Partial && runsRon.Facts.Count == 3 && runsRon.Facts.Contains(StreetFacts.Held("ron_rank", "rocco"))
+                      && runsRon.Facts[2].StartsWith("I am Ron Kirby") && moneyRon.Kind == TalkRules.Kind.Partial && moneyRon.Ask == "Sheila"
+                      && moneySheila.Kind == TalkRules.Kind.Answer && moneySheila.Ask == null && moneySheila.Facts.Contains(StreetFacts.Held("sheila_books", "lena"))
+                      // The narrowed patterns (the blind review): none of these is its lookalike.
+                      && TalkRules.ConceptOf("Leave me alone.") == null && TalkRules.ConceptOf("Did Mickey die in his sleep?") != "sleep"
+                      && TalkRules.ConceptOf("Is the cafe any good?") != "money" && TalkRules.ConceptOf("Who's at the door?") == null
+                      && TalkRules.ConceptOf("Where's Mickey's daughter?") != "office_where" && TalkRules.ConceptOf("Have you got family?") == null
+                      && TalkRules.ConceptOf("How should I know?") == null && TalkRules.ConceptOf("Who do you work for?") == null
+                      && TalkRules.ConceptOf("Who runs the Hook?") == null && TalkRules.ConceptOf("Where am I sleeping?") == "sleep"
+                      && TalkRules.Choose("What was Mickey like?", "lena").Kind == TalkRules.Kind.Scene && TalkRules.Choose("Nice weather.", "lena") == null,
+                      "the most specific rule wins, its facts in the speaker's own words, and whom to ask only where the speaker does not know");
+                ConversationEngine.UseRules = true;
+                ConversationEngine.PlainFallback = true;
+                try
+                {
+                    var er = Engine(new ScriptedLlm("Upstairs, next to the boiler room.", "Top floor, room nine."),
+                                    new ScriptedLlm(Flag("the boiler room"), Unsupported, Flag("room nine"), Unsupported));
+                    string prompt = er.BuildSystemPrompt("Where do I sleep?", now, "In the office.");
+                    string said = await er.SayToAsync("Where do I sleep?", now, "In the office.");
+                    Check(prompt.Contains("this is what answers what he just said") && prompt.Contains(StreetFacts.Held("flat", er.Card.Id))
+                          && !prompt.Contains("bears most on what he just said") && er.LastSaidPlainly
+                          && said.EndsWith("You're in Mickey's flat, over the office."),
+                          "with the table on, the reply rests on the rule's facts, and refused twice it says them plainly", said);
+                    var eo = Engine(new ScriptedLlm("A man with a van.", "A white van, definitely."),
+                                    new ScriptedLlm(Flag("a van"), Unsupported, Flag("a white van"), Unsupported));
+                    string other = await eo.SayToAsync("What happened in the yard?", now, "In the yard.");
+                    Check(ClaimCheck.IsKnownOnly(other, eo.Card) && !eo.LastSaidPlainly && eo.LastRule == null,
+                          "a line of no kind, refused twice, keeps \"that's all I know\" with the table on", other);
+                }
+                finally { ConversationEngine.UseRules = false; ConversationEngine.PlainFallback = false; }
+            }
+
             // A SENTENCE WITH NOTHING IN IT TO CHECK (town list T1): plain words only;
             // nothing of a third person, a place, a time, a thing, a count or a deed;
             // how they address him only as address.

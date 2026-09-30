@@ -19,9 +19,10 @@ static partial class Program
     const string RelevanceRule =
         "You judge whether a character's reply answers what the other person said to them. Answer with one word only: " +
         "\"answers\" (it gives what he asked or responds to what he said), \"partly\" (it gives some of it, or something plainly " +
-        "related), or \"beside\" (it is about something else and leaves what he asked unanswered).";
+        "related), \"declines\" (it says they do not know, or will not say, and gives nothing else), or \"beside\" (it is about " +
+        "something else and leaves what he asked unanswered).";
 
-    static async Task<int> PlainRelevance(string dirs, int parallel)
+    static async Task<int> PlainRelevance(string dirs, int parallel, bool all = false)
     {
         var rows = new List<(string run, string card, string probe, string reply, string answerable)>();
         foreach (var run in dirs.Split(',', StringSplitOptions.RemoveEmptyEntries))
@@ -33,7 +34,7 @@ static partial class Program
                 if (string.IsNullOrWhiteSpace(line)) continue;
                 using var d = JsonDocument.Parse(line);
                 var r = d.RootElement;
-                if (!(r.TryGetProperty("saidPlainly", out var sp) && sp.ValueKind == JsonValueKind.True)) continue;
+                if (!all && !(r.TryGetProperty("saidPlainly", out var sp) && sp.ValueKind == JsonValueKind.True)) continue;
                 string ans = r.TryGetProperty("answerable", out var a) && a.ValueKind == JsonValueKind.String ? a.GetString() : null;
                 rows.Add((Path.GetFileName(run.Trim().TrimEnd('/', '\\')), r.GetProperty("card").GetString(), r.GetProperty("probe").GetString(), r.GetProperty("reply").GetString(), ans));
             }
@@ -52,7 +53,7 @@ static partial class Program
                     try
                     {
                         var t = (await client.CompleteAsync(req)).Text.Trim().ToLowerInvariant();
-                        foreach (var w in new[] { "answers", "partly", "beside" }) if (t.Contains(w)) return w;
+                        foreach (var w in new[] { "answers", "partly", "declines", "beside" }) if (t.Contains(w)) return w;
                     }
                     catch (Exception) { await Task.Delay(2000 * (attempt + 1)); }
                 }
@@ -62,18 +63,21 @@ static partial class Program
         }
         var a1 = await Task.WhenAll(Enumerable.Range(0, rows.Count).Select(i => One(Labellers[0], i)));
         var a2 = await Task.WhenAll(Enumerable.Range(0, rows.Count).Select(i => One(Labellers[1], i)));
-        int Rank(string w) => w == "answers" ? 2 : w == "partly" ? 1 : w == "beside" ? 0 : -1;
+        // Where they differ the lower reading stands: answers, partly, declines, beside.
+        int Rank(string w) => w == "answers" ? 3 : w == "partly" ? 2 : w == "declines" ? 1 : w == "beside" ? 0 : -1;
         var final = Enumerable.Range(0, rows.Count).Select(i =>
         {
             int x = Rank(a1[i]), y = Rank(a2[i]);
             int m = x < 0 ? y : y < 0 ? x : Math.Min(x, y);
-            return m == 2 ? "answers" : m == 1 ? "partly" : m == 0 ? "beside" : "unread";
+            return m == 3 ? "answers" : m == 2 ? "partly" : m == 1 ? "declines" : m == 0 ? "beside" : "unread";
         }).ToList();
         var outRows = rows.Select((r, i) => new { r.run, r.card, r.probe, r.answerable, r.reply, relevance = final[i], labels = new[] { a1[i], a2[i] } }).ToList();
-        WriteJsonl(Path.Combine(Path.GetDirectoryName(dirs.Split(',')[0].Trim().TrimEnd('/', '\\')) ?? ".", "plain-relevance.jsonl"), outRows);
+        WriteJsonl(Path.Combine(Path.GetDirectoryName(dirs.Split(',')[0].Trim().TrimEnd('/', '\\')) ?? ".", all ? "reply-relevance.jsonl" : "plain-relevance.jsonl"), outRows);
         foreach (var g in outRows.GroupBy(o => o.run))
-            Console.WriteLine($"plain relevance {g.Key}: {g.Count()} plain lines; answers {g.Count(o => o.relevance == "answers")}, partly {g.Count(o => o.relevance == "partly")}, " +
-                              $"beside the point {g.Count(o => o.relevance == "beside")}; where nobody can answer: {g.Count(o => o.answerable == "no")}");
+            Console.WriteLine($"relevance {g.Key}: {g.Count()} lines; where they could answer: answers {g.Count(o => o.answerable != "no" && o.relevance == "answers")}, " +
+                              $"partly {g.Count(o => o.answerable != "no" && o.relevance == "partly")}, declines {g.Count(o => o.answerable != "no" && o.relevance == "declines")}, " +
+                              $"beside {g.Count(o => o.answerable != "no" && o.relevance == "beside")}; where nobody could: declines {g.Count(o => o.answerable == "no" && o.relevance == "declines")}, " +
+                              $"other {g.Count(o => o.answerable == "no" && o.relevance != "declines")}");
         Console.WriteLine($"plain relevance, all: {outRows.Count}; answers {outRows.Count(o => o.relevance == "answers")}, partly {outRows.Count(o => o.relevance == "partly")}, " +
                           $"beside the point {outRows.Count(o => o.relevance == "beside")}, unread {outRows.Count(o => o.relevance == "unread")}");
         return 0;
