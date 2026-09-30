@@ -1449,7 +1449,14 @@ namespace Ledger.PerceptionGolden
                     mill.Get(id).Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 0.9, Sensitive = true, Hops = 1 });
                 }
                 foreach (var day in new[] { 2, 4, 6 })
+                {
                     Row(sb, "SweepAsked", day.ToString(Inv), string.Join(",", PoliceFile.WhoSheAsks(mill, cast, T(day, 9))));
+                    var file = new PoliceFile();
+                    file.HearTheStreet(mill, day, t => Offence.Damage, cast, T(day, 9));
+                    var heard = new List<string>();
+                    foreach (var e in file.Entries) heard.Add(e.Who + ":" + e.Topic + ":" + e.How);
+                    Row(sb, "SweepHeard", day.ToString(Inv), Esc(string.Join(",", heard)));
+                }
             }
             // A night brought, then wound down that evening; the wound-down word's bounds.
             {
@@ -1487,6 +1494,18 @@ namespace Ledger.PerceptionGolden
                 arrest["taken"] = 40.0 * 1440 + 600;
                 Row(sb, "SweepArrest", "another day", TownSave.FromJson(json).Arrests.Count.ToString(Inv));
             }
+            // A statement raised after he was taken, of another offence, comes first.
+            {
+                var file = new PoliceFile();
+                file.Report("p1", "player.cut_d1", Offence.Robbery, 3, 1);
+                file.Report("p2", "player.cut_d1", Offence.Wounding, 4, 1);
+                file.EllisComes(new GossipMill(new SocialGraph()), 2);
+                var town = new TownSave { Police = file };
+                town.Arrests.Add(file.TakeIn("player.cut_d1", T(2, 9), false, false));
+                file.Report("p1", "player.cut_d1", Offence.Robbery, 4, 3);
+                var back = TownSave.FromJson(Round(town.ToJson()));
+                Row(sb, "SweepArrest", "raised later", back.Arrests.Count.ToString(Inv), back.Arrests.Count > 0 ? back.Arrests[0].Offence.ToString() : "-");
+            }
             // A deed's damage from before the first day.
             foreach (var done in new[] { -50000.0, -1.0, 0.0 })
             {
@@ -1503,10 +1522,10 @@ namespace Ledger.PerceptionGolden
             // The wait's lines already shown, in the town's save.
             {
                 var town = new TownSave();
-                foreach (var k in new[] { "ron@1", "released@4380", "tea@2" }) town.WaitShown.Add(k);
+                foreach (var k in new[] { "ron@1", "released@4380", "tea@2", "sheila_answer@6" }) town.WaitShown.Add(k);
                 var json = Round(town.ToJson());
                 Row(sb, "SweepShown", "written", Esc(MiniJson.Serialize(json["shown"])));
-                json["shown"] = new List<object> { "ron@1", "Ron@1", "x@", "@3", "tea@1234567890", "tea@-1", "tea 1", 3.0, "landing@3", "ron@1" };
+                json["shown"] = new List<object> { "ron@1", "Ron@1", "x@", "@3", "_x@3", "tea@1234567890", "tea@-1", "tea 1", 3.0, "landing@3", "ron@1", "sheila_answer@6" };
                 var back = new List<string>(TownSave.FromJson(json).WaitShown);
                 back.Sort(StringComparer.Ordinal);
                 Row(sb, "SweepShown", "damaged", Esc(string.Join(",", back)));
