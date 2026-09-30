@@ -45,7 +45,7 @@ using Ledger.DevTools;
 /// what the tokens would cost at API rates, for comparing runs; nothing is
 /// billed. The subscription has limits too: run the smallest set that answers
 /// the question.
-static class Program
+static partial class Program
 {
     static readonly JsonSerializerOptions Plain = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
     static readonly string[] Labellers = { "claude-opus-5-5", "claude-sonnet-5" };
@@ -106,6 +106,7 @@ static class Program
             case "disguise": return await Disguise(dir);
             case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
             case "bearing": return Bearing();
+            case "detailbench": return await DetailBench(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
             case "causes": return await Causes(dir, parallel, Arg(args, "--third", "claude-fable-5-1"));
             case "answerable": return args.Contains("--third") ? await AnswerableThird(dir, Arg(args, "--third", "claude-fable-5-1"), parallel) : await Answerable(dir, parallel);
             case "firsts-label": return await FirstsLabel(dir, Path.Combine(RepoRoot(), "production", "research", "invented-claims", "bench"), parallel);

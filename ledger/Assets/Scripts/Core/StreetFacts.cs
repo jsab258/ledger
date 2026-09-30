@@ -34,15 +34,17 @@ namespace Ledger.Core
             // How Mickey died (Jafar, 30 September): his heart; nobody thinks otherwise.
             ("rocco", "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
                       "I found Mickey at the office early one morning, when I came on at the rank; the doctor said it was his heart.",
-                      "It was his heart. Ron found him at the office early one morning, coming on at the rank.",
-                      "It was his heart. I found him at the office early one morning, when I came on at the rank."),
+                      "Mickey died of his heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+                      "Mickey died of his heart, the doctor said. I came on at the rank early one morning and found him at the office."),
             // The warehouse fire as the street has it (Jafar, 30 September); the truth is never the street's.
             ("", "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.", null,
-                 "The importer's warehouse on the old row burned down last November, on a Saturday night. The paper called it arson. Nobody was charged, and the street says the owner had it done for the insurance.", null),
+                 // Said plainly without the street's rumour (the blind review: "the
+                 // owner" is heard as the new owner, and Sheila does not pass on gossip).
+                 "The importer's warehouse at the far end of the old warehouse row burned down last November, on a Saturday night. The evening paper called it arson, since it started in two places. Nobody was charged.", null),
             ("", "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.", null,
-                 "Mickey left you the office in his will. You came with one suitcase and the letter saying so.", null),
+                 "Mickey left you the office in his will. The letter you brought says so.", null),
             ("", "Mickey's funeral was at Father Walsh's chapel, before the new owner came; he missed it.", null,
-                 "The funeral was at Father Walsh's chapel, before you came.", null),
+                 "Mickey's funeral was at Father Walsh's chapel, before you came.", null),
             ("june", "June, Mickey's daughter, came back to the Hook for the funeral and is still in town; she wants nothing from the office.",
                      "I came back to the Hook for my father's funeral and I am still in town; I want nothing from the office.",
                      "June, Mickey's daughter, came back for the funeral. She's still in town, and she wants nothing from the office.",
@@ -51,16 +53,16 @@ namespace Ledger.Core
                  "You're in Mickey's flat, over the office.", null),
             ("lena", "The door at the back of Mickey's that Sheila does not open is Mickey's own room; it has been locked since he died, and Sheila keeps the key.",
                      "The door at the back of the office that I do not open is Mickey's own room; it has been locked since he died, and I keep the key.",
-                     "That back door at Mickey's is Mickey's own room. It's been locked since he died, and Sheila keeps the key.",
-                     "That's Mickey's own room. It's been locked since he died, and I keep the key."),
+                     "The door at the back of the office that Sheila keeps shut is Mickey's own room. It's been locked since he died, and Sheila keeps the key.",
+                     "The door at the back is Mickey's own room. It's been locked since he died, and I keep the key."),
             ("", "Mickey's has two cab drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.", null,
-                 "Two drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.", null),
+                 "Mickey's has two drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.", null),
             ("", "The cab office opens at seven in the morning, nine on Sundays, and runs until the night driver goes home at three.", null,
                  "The office opens at seven, nine on a Sunday, and runs till the night driver goes home at three.", null),
             ("", "Mickey's has not made much money since the docks went; trade has been thin.", null,
                  "Mickey's hasn't made much since the docks went. Trade's been thin.", null),
             ("", "The cafe is across the street, in the shops opposite the north end of the parade; it opens at half past six and shuts at ten at night, and on Sundays it is open only from eight till twelve.", null,
-                 "The cafe's across the street, opposite the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.", null),
+                 "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.", null),
         };
 
         /// How a fact is said plainly, given the words a character holds it in

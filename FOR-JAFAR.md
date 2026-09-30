@@ -28,24 +28,24 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** one tap, Ron's tone. Acted on: the ending's signs wait; Ron's lines and the regulars decided (DECISIONS).
+**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** two taps: Ron's tone, and his facts said plainly. Acted on: the ending's signs wait; Ron's lines and the regulars decided (DECISIONS).
 
 **The audit's list, done:**
 - **Grounded replies:** on sixty fixed newcomer questions, labelled independently, "that's all I know" fell from 36 to about 22; inventions stayed at one or two. Planning facts first: 18, by chance (16 better, 15 worse); off. None timed out in 24.
-- **Time and state:** the Monday envelope and the builder's fourteen faults fixed; a sweep found thirteen more: ten fixed, three wait for a detective's crime the game lacks; a reviewer's three catches in them, fixed.
+- **Time and state:** the Monday envelope and the builder's fourteen faults fixed; a sweep found thirteen more: ten fixed, three wait for a detective's crime.
 - **The builder's route:** sixteen test cases, unchanged.
 
 **Your key:** capped in code; $0.83 spent.
 
-**Research:** contextual dialogue (Valve's talk); the talk program; street lines; the ending's signs.
+**Research:** contextual dialogue (Valve's talk); the talk program; street lines; the ending's signs; choosing what a character says.
 
 **Set aside after two tries:** a second look by the check; prompting the writer (a narrower second try: worse).
 
-**Pushes:** Core ones run the Unreal build here.
+**Pushes:** Core ones build Unreal here.
 
-**C: free:** 47.9 GB, 31.3 now, mid-build. Backup runs with this commit.
+**C: free:** 47.9 GB, 43.4 now. Backup runs with this commit.
 
-**Your new list, item 1 done:** of 21 empty answers, the facts chosen missed the answer in 12, and 29% of what the check refused was true. Next, item 2.
+**Your new list:** item 1 done: of 21 empty answers, the facts chosen missed the answer in 12, and 29% of what the check refused was true. Item 2 built and reviewed; measuring.
 
 ## Clothes, Wednesday 30 September
 

@@ -5224,7 +5224,7 @@ namespace Ledger.CoreTests
                 ep.Card.OwnWords["opener"] = new List<string> { "This much I know." };
                 string plain = await ep.SayToAsync("How many drivers are there?", now, "In the office.");
                 bool chose = ep.LastBearing.Contains(drivers);
-                Check(chose && plain == "This much I know. Two drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone."
+                Check(chose && plain == "This much I know. Mickey's has two drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone."
                       && ep.LastSaidPlainly && !plain.Contains("book") && ep.LastRefusedAgain.Count == 1,
                       "refused twice, she says the chosen street fact plainly, after her own opener, and never her secret", plain);
                 var none = Engine(new ScriptedLlm("A man with a van.", "A white van, definitely."),

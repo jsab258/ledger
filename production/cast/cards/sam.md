@@ -45,6 +45,6 @@ For the game, never shown to the model: what this person says when there is noth
 - brush-off: Can't stop, mate. Places to be.
 - brush-off: Later, yeah? There's a fella waiting on me.
 - brush-off: Catch you on the way back.
+- opener: Here's what I've heard, mate.
 - opener: Right, here's what I know.
-- opener: Straight up, then.
-- opener: This much I've got, mate.
+- opener: I can tell you this much, mate.

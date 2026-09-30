@@ -30,6 +30,12 @@ on 30 September; two ways of prompting the writer failed and are off.
 2. **When the check refuses twice,** the character states the chosen facts
    plainly, in their own manner, built by code. "That's all I know" stays only
    for when no fact was chosen. One sample on his page, one screen.
+   - State, 30 September: built (ConversationEngine.PlainFallback, off until
+     measured): an opener of their own and up to two chosen street facts in
+     plain words written for each; a card's own facts, secrets among them,
+     never. Through two blind reviews; Ron's sample on his page. Measuring on
+     the three sets. The facts chosen miss the answer in about half the empty
+     answers (item 1), which item 4's rule table addresses.
 3. **Tune the checker** on about 250 labelled details, confirmed on questions it
    was never tuned on.
 4. **A small rule table for the first week:** the kind of question, who is asked
@@ -37,6 +43,10 @@ on 30 September; two ways of prompting the writer failed and are off.
    ask someone who does", or a written line.
 5. **Measure every change** on the sixty, on a new sixty nobody tuned on, and on
    thirty questions nobody in the town can answer.
+   - The sets: a helper who saw neither the facts nor the failures wrote twenty
+     new first lines and ten nobody can answer (half of them leading), each
+     asked of Sheila, Ron and Darren and labelled answerable or not by two
+     labellers and a third (bench/firsts-held.txt, firsts-none.txt).
 6. **The builder's continuous route**, done before this list: the time-and-state
    faults fixed (all fourteen, the sweep's ten, the independent checks'
    catches), and ROUTE.md handed over; keep its rows current when the Core moves.
@@ -53,5 +63,6 @@ reach yet.
 
 ## Waiting on Jafar
 
-- Ron's tone, five of his street lines, one tap (the town's page of 30
-  September). Nobody else's street lines are written until then.
+- Ron's tone, five of his street lines, and how he says the facts plainly:
+  two taps (the town's page of 30 September). Nobody else's street lines are
+  written until then.

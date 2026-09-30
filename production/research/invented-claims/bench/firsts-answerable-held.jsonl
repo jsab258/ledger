@@ -1,0 +1,60 @@
+{"card":"lena","probe":"Morning. I'm Tom, Mickey's nephew.","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Alright? Is this Mickey's cab office?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"How long have you been here?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Who's got the keys to this place?","a":"partly","b":"partly","gold":"partly"}
+{"card":"lena","probe":"Are we still taking bookings?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Which cars are still on the road?","a":"partly","b":"no","gold":null}
+{"card":"lena","probe":"When did you last see Mickey?","a":"partly","b":"partly","gold":"partly"}
+{"card":"lena","probe":"Did Mickey ever mention me?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Did Mickey live round here?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Who was Mickey's solicitor?","a":"no","b":"no","gold":"no"}
+{"card":"lena","probe":"Can I have a look at the books?","a":"yes","b":"partly","gold":null}
+{"card":"lena","probe":"Does the business owe anyone money?","a":"no","b":"partly","gold":null}
+{"card":"lena","probe":"Who's the lad hanging about by the rank?","a":"partly","b":"partly","gold":"partly"}
+{"card":"lena","probe":"How long have you known Sheila?","a":"yes","b":"no","gold":null}
+{"card":"lena","probe":"Is it always this quiet?","a":"yes","b":"partly","gold":null}
+{"card":"lena","probe":"What's the street like after dark?","a":"partly","b":"partly","gold":"partly"}
+{"card":"lena","probe":"Mind if I smoke?","a":"no","b":"yes","gold":null}
+{"card":"lena","probe":"Does it ever stop raining here?","a":"partly","b":"no","gold":null}
+{"card":"lena","probe":"Where's the nearest phone box?","a":"no","b":"no","gold":"no"}
+{"card":"lena","probe":"What time do we open in the morning?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Morning. I'm Tom, Mickey's nephew.","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Alright? Is this Mickey's cab office?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"How long have you been here?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Who's got the keys to this place?","a":"partly","b":"partly","gold":"partly"}
+{"card":"rocco","probe":"Are we still taking bookings?","a":"yes","b":"no","gold":null}
+{"card":"rocco","probe":"Which cars are still on the road?","a":"partly","b":"no","gold":null}
+{"card":"rocco","probe":"When did you last see Mickey?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Did Mickey ever mention me?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Did Mickey live round here?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Who was Mickey's solicitor?","a":"no","b":"no","gold":"no"}
+{"card":"rocco","probe":"Can I have a look at the books?","a":"partly","b":"no","gold":null}
+{"card":"rocco","probe":"Does the business owe anyone money?","a":"no","b":"no","gold":"no"}
+{"card":"rocco","probe":"Who's the lad hanging about by the rank?","a":"no","b":"no","gold":"no"}
+{"card":"rocco","probe":"How long have you known Sheila?","a":"partly","b":"partly","gold":"partly"}
+{"card":"rocco","probe":"Is it always this quiet?","a":"yes","b":"partly","gold":null}
+{"card":"rocco","probe":"What's the street like after dark?","a":"partly","b":"partly","gold":"partly"}
+{"card":"rocco","probe":"Mind if I smoke?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Does it ever stop raining here?","a":"partly","b":"partly","gold":"partly"}
+{"card":"rocco","probe":"Where's the nearest phone box?","a":"no","b":"no","gold":"no"}
+{"card":"rocco","probe":"What time do we open in the morning?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Morning. I'm Tom, Mickey's nephew.","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Alright? Is this Mickey's cab office?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"How long have you been here?","a":"no","b":"no","gold":"no"}
+{"card":"sam","probe":"Who's got the keys to this place?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"Are we still taking bookings?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"Which cars are still on the road?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"When did you last see Mickey?","a":"no","b":"no","gold":"no"}
+{"card":"sam","probe":"Did Mickey ever mention me?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Did Mickey live round here?","a":"yes","b":"partly","gold":null}
+{"card":"sam","probe":"Who was Mickey's solicitor?","a":"no","b":"no","gold":"no"}
+{"card":"sam","probe":"Can I have a look at the books?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"Does the business owe anyone money?","a":"no","b":"no","gold":"no"}
+{"card":"sam","probe":"Who's the lad hanging about by the rank?","a":"no","b":"partly","gold":null}
+{"card":"sam","probe":"How long have you known Sheila?","a":"partly","b":"partly","gold":"partly"}
+{"card":"sam","probe":"Is it always this quiet?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"What's the street like after dark?","a":"partly","b":"partly","gold":"partly"}
+{"card":"sam","probe":"Mind if I smoke?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Does it ever stop raining here?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"Where's the nearest phone box?","a":"no","b":"no","gold":"no"}
+{"card":"sam","probe":"What time do we open in the morning?","a":"yes","b":"no","gold":null}

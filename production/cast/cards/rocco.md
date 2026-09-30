@@ -46,6 +46,6 @@ For the game, never shown to the model: what this person says when there is noth
 - brush-off: Not now, boss. Rank's busy.
 - brush-off: Catch me after, friend.
 - brush-off: Give us a minute, boss.
-- opener: Aye, boss.
-- opener: Here's how it is, boss.
-- opener: I'll tell you what I know, friend.
+- opener: Now then.
+- opener: All I know is this, boss.
+- opener: Here's what I can tell you, boss.
