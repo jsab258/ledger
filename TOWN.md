@@ -22,8 +22,11 @@ on 30 September; two ways of prompting the writer failed and are off.
 
 1. **The empty answers by cause:** for each, the wrong facts chosen, a real
    invention, or a true paraphrase refused.
-   - State: running on a fresh run of today's version (two labellers apart, a
-     third where they differ, the cause named by code).
+   - State, 30 September: done (grounded-replies/CAUSES-2026-09-30.md). Of 21
+     empty answers, all answerable from what they knew: the facts chosen missed
+     the answer in 12 (nothing chosen in 7); the check refused a true detail in
+     16, and 29% of all it refused was true; the other 89 refused details were
+     invented. So item 2 needs the choice fixed first, or it says the wrong fact.
 2. **When the check refuses twice,** the character states the chosen facts
    plainly, in their own manner, built by code. "That's all I know" stays only
    for when no fact was chosen. One sample on his page, one screen.

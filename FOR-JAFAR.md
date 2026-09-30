@@ -39,13 +39,13 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Research:** contextual dialogue (Valve's talk); the talk program; street lines; the ending's signs.
 
-**Set aside after two tries:** a second look by the check; prompting the writer (a narrower second try measured worse, 27 in 60).
+**Set aside after two tries:** a second look by the check; prompting the writer (a narrower second try: worse).
 
 **Pushes:** Core ones run the Unreal build here.
 
 **C: free:** 47.9 GB, 31.3 now, mid-build. Backup runs with this commit.
 
-**Next:** your new list, in the research note's order; the empty answers' causes are running.
+**Your new list, item 1 done:** of 21 empty answers, the facts chosen missed the answer in 12, and 29% of what the check refused was true. Next, item 2.
 
 ## Clothes, Wednesday 30 September
 
