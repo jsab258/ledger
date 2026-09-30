@@ -105,3 +105,19 @@ starting to write while the player types (wasted calls cost money).
 - .NET PooledConnectionIdleTimeout (updated 13 Aug 2026): https://learn.microsoft.com/en-us/dotnet/api/system.net.http.socketshttphandler.pooledconnectionidletimeout
 - .NET HttpClient guidelines (updated 6 Aug 2026): https://learn.microsoft.com/en-us/dotnet/fundamentals/networking/http/httpclient-guidelines
 - Cloudflare connection limits (updated 23 Jul 2026): https://developers.cloudflare.com/fundamentals/reference/connection-limits/
+
+## Measured here, 30 September night (free: no key, or Claude Code on the subscription)
+
+- **Warm connection** (the talk program's own client, requests with no key,
+  which the API refuses): after 90 s idle, 194, 197 and 204 ms before the
+  change and 185, 180 and 172 ms after it (the pool kept six minutes, HTTP/2);
+  about 20 ms a turn; the first request of a session stays about 300 ms.
+- **The first sentence's check answers briefly already** (40 real first
+  sentences from the bench, the checker's own first look): its JSON is 135
+  characters at the median, 322 at the 90th percentile; one specific at the
+  median, three at the 90th. At about 83 tokens a second a leaner answer would
+  save about 0.2 s at the median and 0.5 s at the slow end: not worth changing
+  the checker's method while the voice, not the check, is the limit.
+- **A reaction opener** (step 5a): plain first sentences rose from 8% to 21% of
+  150 bench replies with no more inventions, but "That's a ... question" came
+  up six times in 150; left off (DECISIONS, 30 September).
