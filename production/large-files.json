@@ -963,11 +963,11 @@
   },
   {
    "path": "F:/LedgerTools/tmp/clothes",
-   "madeBy": "the clothing session (tools/meshgen/blender/sew_donkey.py, sew_trousers.py, sew_flatcap.py and the finishing and pose-test scripts)",
-   "why": "scratch for the clothing session's sewing runs, drafts and check pictures (the jacket, the trousers, the cap); a finished garment's files go to F:/LedgerTools/garments, failed runs are superseded",
+   "madeBy": "the clothing session (tools/meshgen/blender: the sewing, modelling, footwear and small-pieces scripts, and pose_skinned.py)",
+   "why": "scratch for the clothing session's runs and check pictures: the jacket, trousers, cap, knitwear, shoes and small pieces; it keeps the best candidate of each set-aside garment (for a later decision) beside superseded runs; finished garments go to F:/LedgerTools/garments",
    "status": "kept",
-   "recorded": "2026-09-29",
-   "mb": 1466
+   "recorded": "2026-09-30",
+   "mb": 3456
   },
   {
    "path": "F:/LedgerTools/tmp/dcc",
