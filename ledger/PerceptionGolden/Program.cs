@@ -141,6 +141,14 @@ namespace Ledger.PerceptionGolden
             // Ported to TownSave.h on 30 September (town list 6bl: the town's one save); every row
             // carries a label now, since the port's reader skips a row of two fields.
             EmitTownSave(sb);
+            // Ported to OwnLines.h (made from OwnLines.cs by tools/port_own_lines.py) and StreetVoice's
+            // pickers on 30 September (the town's U2: a named person's own lines first).
+            EmitOwnLines(sb);
+            // Ported to Silence.h and StreetVoice's two threat banks on 30 September (town list 6cd,
+            // after Jafar's ruling that morning: the talk program reads a line for a threat).
+            EmitThreats(sb);
+            // Ported to Arrangement.h, FirstWeek.h, Gossip.h, PlayerIdentity.h, PoliceFile.h, StreetVoice.h and WeeksEnd.h on 30 September (the town's ten fixes).
+            EmitPortReviewFixes(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -150,9 +158,6 @@ namespace Ledger.PerceptionGolden
             // the table; the handover in NOW.md says so.
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
-                EmitThreats(sb);
-                EmitOwnLines(sb);
-                EmitPortReviewFixes(sb);
             }
 
             var text = sb.ToString();
@@ -1355,14 +1360,23 @@ namespace Ledger.PerceptionGolden
                 {
                     var lines = OwnLines.ByCast[who][bank];
                     for (int i = 0; i < lines.Length; i++) Row(sb, "OwnLine", who, bank, i.ToString(Inv), Esc(lines[i]));
+                    // Its size, so a line the port has that the Core has not shows (the builder's
+                    // independent check, 30 September).
+                    Row(sb, "OwnBankSize", who, bank, lines.Length.ToString(Inv));
                 }
+            foreach (var who in OwnLines.ByCast.Keys.OrderBy(k => k, StringComparer.Ordinal))
+                Row(sb, "OwnBanks", who, string.Join(",", OwnLines.ByCast[who].Keys.OrderBy(k => k, StringComparer.Ordinal)));
+            // Nobody else has any: a person or bank the port has and the Core has not is a failure.
+            foreach (var (who, bank) in new[] { ("xa", "faint"), ("rocco", "ambient/open/none"), ("", "faint"), ("rOcco", "faint") })
+                Row(sb, "OwnFor", who == "" ? "(empty)" : who, bank, OwnLines.For(who, bank) is var f && f.HasValue ? f.Value.bank + "/" + f.Value.lines.Length.ToString(Inv) : "none");
             Gossiper G(string id) => new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker());
             foreach (var (a, b, hour) in new[] { ("rocco", "xb", 11), ("xa", "rocco", 11), ("rocco", "xb", 23), ("xa", "xb", 11) })
-                for (int seed = 0; seed < 4; seed++)
+                // Seeds past the longest bank (32 lines), so a bank of another size shows.
+                for (int seed = 0; seed < 40; seed++)
                     foreach (var l in StreetVoice.Ambient(G(a), G(b), new GameTime(2, hour, 0), 0.5, 1.0, false, false, seed))
                         Row(sb, "OwnAmbient", a, b, hour.ToString(Inv), seed.ToString(Inv), l.SpeakerId, l.Bank, Esc(l.Text));
             var arrived = new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.5, Sensitive = false, Hops = 0 };
-            for (int seed = 0; seed < 3; seed++)
+            for (int seed = 0; seed < 16; seed++)
             {
                 var r = StreetVoice.Recognition(G("rocco"), arrived, StanceKind.Comments, seed);
                 Row(sb, "OwnRecognition", seed.ToString(Inv), r == null ? "null" : r.Bank + "|" + Esc(r.Text));
@@ -1495,6 +1509,15 @@ namespace Ledger.PerceptionGolden
                 Row(sb, "ThreatFiled", who, topic, Bit(Silence.FileThreat(mill, who, topic, new GameTime(2, 10, 0))));
             foreach (var id in new[] { "ada", "joey" })
                 foreach (var r in mill.Get(id).Rumors) Row(sb, "ThreatHeld", id, r.TopicKey, Esc(r.Summary), Bit(r.Sensitive), r.Hops.ToString(Inv));
+            // A threat shows in their manner (StoryThatShows), for whoever holds it at or
+            // above the floor (the builder's port, 30 September: the C++ had lost the clause
+            // and no row pinned it).
+            foreach (var id in new[] { "ada", "joey" })
+                foreach (var floor in new[] { 0.2, 0.95 })
+                {
+                    var s = StreetVoice.StoryThatShows(mill.Get(id), floor);
+                    Row(sb, "ThreatShows", id, floor.ToString("R", Inv), s == null ? "none" : s.TopicKey);
+                }
             var g = new Gossiper("tg", "tg", new MemoryStore("tg"), new KnowledgeBase(), new SuspicionTracker());
             foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
                 foreach (var hops in new[] { 0, 1 })

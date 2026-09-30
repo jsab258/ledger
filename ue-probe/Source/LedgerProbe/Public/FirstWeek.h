@@ -128,7 +128,10 @@ namespace LedgerCore
 		{
 			if (bSeenGoing || Mill == nullptr || !bForTheAsk || StateValue == TeaState::NotAsked) return;
 			const bool bThatNight = (Now.Day == DayValue && Now.Hour >= From) || (Now.Day == DayValue + 1 && Now.Hour < 1);
-			if (!bThatNight) return;
+			// Nobody sees him go when Ada is not in the mill (the port's
+			// independent check, 30 September: he was marked seen, and nobody
+			// held it).
+			if (!bThatNight || !Mill->Get(Ada)) return;
 			bSeenGoing = true;
 			Mill->Witness(Ada, Fact("player", "left_tea_for_landing_d" + std::to_string(DayValue), "seen"),
 			              "Mickey's nephew went off down towards the ferry, late, the night I'd asked him in for his tea", true, Now, 1.0, false, 4);
@@ -199,7 +202,10 @@ namespace LedgerCore
 			int LastM = -1;
 			for (int M : MinutesSet)
 			{
-				if (LastM >= 0 && M - LastM > LongestAway) return TeaState::LeftEarly;
+				// The minutes away are those between two he was there: stamps
+				// eleven apart are ten away, which is allowed (the port's
+				// independent check, 30 September).
+				if (LastM >= 0 && M - LastM - 1 > LongestAway) return TeaState::LeftEarly;
 				LastM = M;
 			}
 			return TeaState::Stayed;

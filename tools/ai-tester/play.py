@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """THE AI TESTER, played by Claude Code itself (Jafar, 29 September).
 
-    python tools/ai-tester/play.py start [--editor | --plain | --bare] [--force] [--wait 60] [--game-arg X]
+    python tools/ai-tester/play.py start [--editor | --plain | --bare] [--force] [--wait 60] [--game-arg X] [--save DIR]
     python tools/ai-tester/play.py shot
     python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run]
     python tools/ai-tester/play.py turn DEGREES          (negative left, positive right)
-    python tools/ai-tester/play.py press E|T|Esc|Q|Enter|Up|Down
+    python tools/ai-tester/play.py press E|T|Z|Esc|Q|Enter|Up|Down
     python tools/ai-tester/play.py say "WORDS"
     python tools/ai-tester/play.py wait SECONDS
     python tools/ai-tester/play.py note SEVERITY "WHAT"   (5 unplayable .. 1 cosmetic)
@@ -63,7 +63,7 @@ STATE_DIR = r"F:\LedgerTools\tmp\ai-tester"
 STATE = os.path.join(STATE_DIR, "state.json")
 RES = (1280, 720)
 
-SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14, "shift": 0x2A, "esc": 0x01, "q": 0x10,
+SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14, "z": 0x2C,   # z: see LAYOUT below "shift": 0x2A, "esc": 0x01, "q": 0x10,
         # THE TITLE'S KEYS, 30 September: Enter takes a choice, the arrows move
         # between them (0xE000 marks a key Windows sends as "extended").
         "enter": 0x1C, "up": 0xE048, "down": 0xE050}
@@ -72,7 +72,7 @@ PIXELS_PER_DEGREE = 5.7                  # a first guess; the player sees the re
 
 PLAYBOOK = """THE PLAYBOOK (what the tester does, as before):
 The game: a street in a British port town, about 1990. You are the man in the grey tracksuit, seen from behind. Walk with W A S D (walk), turn with the mouse (turn), E does the act in front of you. To talk, stand near someone and use say: it presses T, types the words and presses Enter; the talk runs as its stand-in, so judge that the talk works, not what is said. Yellow and white lines are the game telling you things and people speaking.
-1. Play the encounter: walk to the shop window by Mickey's (the minicab office with the dark blue front) and press E beside it to break it. Someone will shout. Then go round through the yard behind the parade if you can find it. After a while the game says it is later that week and tells you where Darren is; find him and talk to him; answer him once or twice. Talk to Sheila and Ron too if you find them.
+1. Play the encounter: walk to Rita's pawn shop window, two doors up from Mickey's (the minicab office with the dark blue front), and press E beside it to break it. Someone will shout. Then go round through the yard behind the parade if you can find it. After a while the game says it is later that week and tells you where Darren is; find him and talk to him; answer him once or twice. Talk to Sheila and Ron too if you find them.
 2. Then wander freely: walk the street, look at the buildings and the people, try the edges, try walking into things.
 Note anything broken or wrong as soon as you see it (stuck or through the world, a person floating, half in the ground or in an odd pose, flicker, something missing, garbled text, a key ignored, talk that makes no sense), and anything showing or mentioning alcohol, betting or children. Severity: 5 unplayable or crashed, 4 a feature does not work, 3 clearly wrong and noticeable, 2 minor, 1 cosmetic. Not the same thing twice. Walk a second or two at a time, then look. Finish with a two-sentence summary."""
 
@@ -96,6 +96,19 @@ class _U(ctypes.Union):
 
 class INPUT(ctypes.Structure):
     _fields_ = [("type", wt.DWORD), ("u", _U)]
+
+
+# THE KEYBOARD'S OWN LAYOUT, 30 September: this PC types Swiss German
+# (QWERTZ), where the scan code an American keyboard gives Z is Y, so the
+# game's Z never came. A letter whose place differs between layouts takes its
+# scan code from Windows for the layout in use (MapVirtualKeyW, VK to scan
+# code); W A S D E T Q sit in the same places on both.
+try:
+    _vsc = ctypes.windll.user32.MapVirtualKeyW(0x5A, 0)   # VK_Z
+    if _vsc:
+        SCAN["z"] = _vsc
+except Exception:
+    pass
 
 
 def send_key(scan, up=False):
@@ -398,7 +411,12 @@ def start(args):
     stamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     folder = os.path.join("production", "playtest", "ai-tester", datetime.datetime.now().strftime("%Y-%m-%d-%H%M"))
     os.makedirs(os.path.join(REPO, folder), exist_ok=True)
-    save = tempfile.mkdtemp(prefix="ledger-ai-tester-save-")
+    # --save DIR (30 September, Jafar's list item 1: a real reload): the game
+    # saves there and, since it is not a fresh story, the title offers
+    # Continue; start again with the same DIR after closing to reload it.
+    save = args.get("save") or tempfile.mkdtemp(prefix="ledger-ai-tester-save-")
+    if args.get("save"):
+        os.makedirs(save, exist_ok=True)
     # THE PACKAGED GAME AS A PLAYER GETS IT (24 September, Jafar's rule: the
     # tester walks the packaged release build with the real cast, dialogue,
     # light and sound). A package that carries its own run-time files is run
@@ -408,7 +426,7 @@ def start(args):
     self_contained = (not args.get("editor")) and os.path.isfile(os.path.join(
         pack_root, "Content", "LedgerData", "production", "assets", "street", "quay-street.json"))
     shipping = os.path.isfile(os.path.join(pack_root, "Binaries", "Win64", "LedgerProbe-Win64-Shipping.exe"))
-    game_args = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkHelper=" + HELPER, "-TalkFake",
+    game_args = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live"] + ([] if args.get("save") else ["-LiveFresh"]) + ["-TalkHelper=" + HELPER, "-TalkFake",
                  "-EncounterSave=" + save, "-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash",
                  "-dpcvars=Slate.ForceRawInputSimulation=1", "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0"]
     if not self_contained:
@@ -486,7 +504,7 @@ def act(verb, rest):
         k = (rest[0] if rest else "E").upper()
         # ESC AND Q, 29 September: the pause (Esc) and quitting from it (Q);
         # ENTER, UP AND DOWN, 30 September: the title.
-        tap({"E": "e", "T": "t", "ESC": "esc", "Q": "q", "ENTER": "enter", "UP": "up", "DOWN": "down"}.get(k, "t"))
+        tap({"E": "e", "T": "t", "Z": "z", "ESC": "esc", "Q": "q", "ENTER": "enter", "UP": "up", "DOWN": "down"}.get(k, "t"))
         label = "pressed %s" % k
     elif verb == "say":
         words = " ".join(rest)[:200]
@@ -656,6 +674,8 @@ if __name__ == "__main__":
         # --game-arg X, repeatable: one more argument for the game, such as a
         # trial exposure (-PlayNightPin=2.0) while the evening is tuned in play.
         a["extra"] = [rest[k + 1] for k, x in enumerate(rest) if x == "--game-arg" and k + 1 < len(rest)]
+        if "--save" in rest and rest.index("--save") + 1 < len(rest):
+            a["save"] = rest[rest.index("--save") + 1]
         sys.exit(start(a))
     if verb == "shot":
         s = running_state()

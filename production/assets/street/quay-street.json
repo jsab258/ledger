@@ -2259,6 +2259,75 @@
    "faces": 90
   },
   {
+   "mesh": "street_shard_r_edge",
+   "material": "shard_r_edge",
+   "base_material": "shard_r_edge",
+   "linear_rgb": [
+    0.32,
+    0.46,
+    0.4
+   ],
+   "roughness": 0.2,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": "crime_r",
+   "faces": 135
+  },
+  {
+   "mesh": "street_shard_r_glass",
+   "material": "shard_r_glass",
+   "base_material": "shard_r_glass",
+   "linear_rgb": [
+    0.018,
+    0.026,
+    0.024
+   ],
+   "roughness": 0.04,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": "crime_r",
+   "faces": 2271
+  },
+  {
+   "mesh": "street_shard_r_ground",
+   "material": "shard_r_ground",
+   "base_material": "shard_r_ground",
+   "linear_rgb": [
+    0.09,
+    0.12,
+    0.11
+   ],
+   "roughness": 0.03,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": "crime_r",
+   "faces": 90
+  },
+  {
    "mesh": "street_sign_fascia_fish_market",
    "material": "sign_generated/fascia_fish_market",
    "base_material": "paint_fascia",

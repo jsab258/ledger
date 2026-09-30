@@ -174,7 +174,7 @@ namespace LedgerCore
 			AnswerValue = WeekAnswer::WontSay;
 			bAnsweredAt = true;
 			AnsweredAtValue = GameTime(AskedAtValue.Day + 1, 0, 0);
-			File(Mill, Cast, AnsweredAtValue, false);
+			File(Mill, Cast, AnsweredAtValue, false, false);
 			return true;
 		}
 
@@ -251,15 +251,20 @@ namespace LedgerCore
 		}
 
 		// Filed once: her memory and the story, first-hand for her and for
-		// anybody the cast has where she is then (never at midnight).
-		void File(GossipMill* Mill, const CastDay* Cast, const GameTime& At, bool bAtOffice)
+		// anybody the cast has where she is then (never when the day closes
+		// unanswered at midnight, when she is not there to be overheard).
+		void File(GossipMill* Mill, const CastDay* Cast, const GameTime& At, bool bAtOffice, bool bOverheard = true)
 		{
 			if (Mill == nullptr) return;
 			const Fact What("player", "week_d" + std::to_string(AskedAtValue.Day), Value(AnswerValue));
 			const GossiperPtr She = Mill->Get(Sheila);
 			if (She && She->Memory) She->Memory->Append(MemoryEvent(At, "conversation", 0.9, Remembered(AnswerValue)));
 			Mill->Witness(Sheila, What, Said(AnswerValue), false, At, 1.0);
-			if (Cast == nullptr || (At.Hour == 0 && At.Minute == 0)) return;
+			// The day closing unanswered at midnight: she is not there to be
+			// overheard. Said by the caller, never read from the clock (the port's
+			// independent check, 30 September: a plain answer at 00:00 was heard
+			// by Sheila alone).
+			if (Cast == nullptr || !bOverheard) return;
 			// Where she is when he answers: the office on her Sunday off, or her
 			// routine's place; anywhere else, nobody overhears it. The C#'s null
 			// area is kept apart from one named "".

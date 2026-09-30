@@ -95,6 +95,8 @@
 // business and the crime verdict's keys are how they are read.
 #pragma once
 
+#include "OwnLines.h"      // a named person's own lines first (the town's U2)
+#include "Silence.h"       // a threat to keep quiet, as the street's story (town list 6cd)
 #include "Gossip.h"      // Rumor, Gossiper, RumorPtr, GossiperPtr
 #include "DayOne.h"      // his arrival and his name, which nobody lowers their voice over
 #include "WeeksEnd.h"    // his answer to Sheila at the week's end (town list 6ca)
@@ -605,9 +607,14 @@ namespace LedgerCore
 				// though she, who was told it, never remarks on it.
 				// The police asking after him (town list 6bq) and taking him in
 				// (6bp) show too.
+				// And a threat to keep quiet (town list 6cd; StreetVoice.cs 365).
 				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R) || PoliceFile::IsAsking(R)
-				    || Custody::IsTaken(R) || WeeksEnd::IsWeekAnswer(R))) continue;
+				    || Custody::IsTaken(R) || WeeksEnd::IsWeekAnswer(R) || Silence::IsThreat(R))) continue;
 				if (WeeksEnd::IsWeekAnswer(R) && G.Id == WeeksEnd::Sheila) continue;
+				// His arrival and his name are plain facts, never what shows, even
+				// marked sensitive, which only a damaged save makes them (the
+				// port's independent check, 30 September).
+				if (DayOne::IsArrival(R) || PlayerIdentity::IsNameStory(R)) continue;
 				if (!R->Indelible && G.SuppressedHas(R->TopicKey())) continue;
 				if (!(R->Confidence >= ShareFloor)) continue;
 				if (!Best || R->Confidence > Best->Confidence) Best = R;
@@ -1040,6 +1047,7 @@ namespace LedgerCore
 			{
 				const RumorPtr& R = G.Rumors[I];
 				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R))) continue;
+				if (DayOne::IsArrival(R) || PlayerIdentity::IsNameStory(R)) continue;
 				if (!R->Indelible && G.SuppressedHas(R->TopicKey())) continue;
 				if (!(R->Confidence > 0.0) || R->Confidence >= ShareFloor) continue;
 				if (!Best || R->Confidence > Best->Confidence) Best = R;
@@ -1236,6 +1244,17 @@ namespace LedgerCore
 			return Lines;
 		}
 
+		/// A NAMED PERSON'S OWN LINES FIRST (OwnLines.cs, U2, 30 September):
+		/// theirs for the bank when they have some, kept by the ledger as
+		/// "bank@id"; the shared bank otherwise (StreetVoice.cs's Own).
+		inline void Own(const std::string& SpeakerId, std::string& Bank, const char* const*& Lines, int& Count)
+		{
+			std::string B;
+			const char* const* L = 0;
+			int N = 0;
+			if (OwnLines::For(SpeakerId, Bank, B, L, N)) { Bank = B; Lines = L; Count = N; }
+		}
+
 		/// What somebody who knows a little says, once, to a companion, about
 		/// him, as he goes past; null (an empty pointer) with no one or no
 		/// story. With `Heard`, a line he has not heard lately (the remark
@@ -1246,12 +1265,15 @@ namespace LedgerCore
 			if (!G || !About) return std::shared_ptr<SpokenLine>();
 			int Count = 0;
 			const char* const* Lines = FaintLines(Count);
+			// A named person's own words first (OwnLines, U2).
+			std::string Bank = "faint";
+			Own(G->Id, Bank, Lines, Count);
 			std::shared_ptr<SpokenLine> Line = std::make_shared<SpokenLine>();
 			Line->SpeakerId = G->Id;
-			Line->Text = Heard != 0 ? Heard->Fresh("faint", Lines, Count, Seed) : Pick(Seed, Lines, Count);
+			Line->Text = Heard != 0 ? Heard->Fresh(Bank, Lines, Count, Seed) : Pick(Seed, Lines, Count);
 			Line->AboutPlayer = true;
 			Line->Source = About;
-			Line->Bank = "faint";
+			Line->Bank = Bank;
 			return Line;
 		}
 
@@ -1749,18 +1771,23 @@ namespace LedgerCore
 			if (!A || !B) return Lines;
 			std::string OpenBank, ReplyBank, Opener, Reply;
 			// With `Heard`, lines he has not heard lately (town list 6o).
+			// A named person's own lines first, the opener's and the answer's (OwnLines, U2).
 			auto OpenLine = [&](const char* Bank) {
 				int N = 0;
 				const char* const* L = AmbientBank(Bank, N);
-				OpenBank = Bank;
-				return Heard != 0 ? Heard->Fresh(Bank, L, N, Seed) : Pick(Seed, L, N);
+				std::string Used = Bank;
+				Own(A->Id, Used, L, N);
+				OpenBank = Used;
+				return Heard != 0 ? Heard->Fresh(Used, L, N, Seed) : Pick(Seed, L, N);
 			};
 			auto ReplyLine = [&](const char* Bank) {
 				int N = 0;
 				const char* const* L = AmbientBank(Bank, N);
-				ReplyBank = Bank;
+				std::string Used = Bank;
+				Own(B->Id, Used, L, N);
+				ReplyBank = Used;
 				const int S = AnswerSeed(Seed, B->Id);
-				return Heard != 0 ? Heard->Fresh(Bank, L, N, S) : Pick(S, L, N);
+				return Heard != 0 ? Heard->Fresh(Used, L, N, S) : Pick(S, L, N);
 			};
 			const bool bFresh = JustNow != 0 && SecondsSince >= 0 && SecondsSince < JustNowSeconds;
 			const bool bSettling = JustNow != 0 && SecondsSince >= JustNowSeconds && SecondsSince < SettlingSeconds;
@@ -2008,6 +2035,36 @@ namespace LedgerCore
 			return Lines;
 		}
 
+		// A THREAT TO KEEP QUIET (town list 6cd): the one he threatened says so
+		// to his face, unafraid; whoever heard it, as talk. Six each, as the C#.
+		inline const char* const* RecognitionThreatTold(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"I've not forgotten what you said to me.",
+				"Say what you like. I'm not frightened of you.",
+				"I heard you the first time. I'm not deaf.",
+				"Still here, aren't I? So much for your threats.",
+				"You can stop looking at me like that.",
+				"I'll say what I like, thank you.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionThreatHeard(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard you've been leaning on people.",
+				"They say you've been making threats.",
+				"Word is you put the frighteners on somebody.",
+				"Heard you've been telling people to keep their mouths shut.",
+				"Threatening folk now, are we? That's what I heard.",
+				"They say you're not above a threat or two.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
 		inline std::shared_ptr<SpokenLine> Recognition(const Gossiper* G, const RumorPtr& About, StanceKind K, int Seed,
 		                                               const RemarkLedger* Heard = 0)
 		{
@@ -2029,18 +2086,22 @@ namespace LedgerCore
 			else if (bNight && About->Content.Value == "noshow")  { Bank = "recognition/outfit-noshow";  Lines = RecognitionOutfitNoShow(Count); }
 			else if (DayOne::IsArrival(About) && About->Hops == 0) { Bank = "recognition/arrival-saw";   Lines = RecognitionArrivalSaw(Count); }
 			else if (DayOne::IsArrival(About))                 { Bank = "recognition/arrival-heard";  Lines = RecognitionArrivalHeard(Count); }
-			// (The threat's two banks come here with Silence, town list 6cd.)
+			else if (Silence::IsThreat(About) && About->Hops == 0) { Bank = "recognition/threat-told";  Lines = RecognitionThreatTold(Count); }
+			else if (Silence::IsThreat(About))                 { Bank = "recognition/threat-heard"; Lines = RecognitionThreatHeard(Count); }
 			else if (WeeksEnd::IsWeekAnswer(About) && About->Content.Value == "winddown") { Bank = "recognition/week-winddown"; Lines = RecognitionWeekWindDown(Count); }
 			else if (WeeksEnd::IsWeekAnswer(About) && About->Content.Value == "takeover") { Bank = "recognition/week-takeover"; Lines = RecognitionWeekTakeOver(Count); }
 			else if (WeeksEnd::IsWeekAnswer(About) && About->Content.Value == "wontsay")  { Bank = "recognition/week-wontsay";  Lines = RecognitionWeekWontSay(Count); }
 			else if (About && About->Sensitive)                { Bank = "recognition/sensitive";      Lines = RecognitionSensitive(Count); }
 			else                                               { Bank = "recognition/ordinary";       Lines = RecognitionOrdinary(Count); }
+			// A named person's own words first (OwnLines, U2).
+			std::string UsedBank = Bank;
+			Own(G->Id, UsedBank, Lines, Count);
 			std::shared_ptr<SpokenLine> Line = std::make_shared<SpokenLine>();
 			Line->SpeakerId = G->Id;
-			Line->Text = Heard != 0 ? Heard->Fresh(Bank, Lines, Count, Seed) : Pick(Seed, Lines, Count);
+			Line->Text = Heard != 0 ? Heard->Fresh(UsedBank, Lines, Count, Seed) : Pick(Seed, Lines, Count);
 			Line->AboutPlayer = (bool)About;
 			Line->Source = About;
-			Line->Bank = Bank;
+			Line->Bank = UsedBank;
 			return Line;
 		}
 

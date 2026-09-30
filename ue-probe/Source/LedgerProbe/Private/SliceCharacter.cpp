@@ -275,6 +275,7 @@ void ALedgerSliceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ALedgerSliceCharacter::RequestPause).bExecuteWhenPaused = true;
 	PlayerInputComponent->BindKey(EKeys::Q, IE_Pressed, this, &ALedgerSliceCharacter::RequestQuit).bExecuteWhenPaused = true;
 	PlayerInputComponent->BindKey(EKeys::R, IE_Pressed, this, &ALedgerSliceCharacter::RequestReport);
+	PlayerInputComponent->BindKey(EKeys::Z, IE_Pressed, this, &ALedgerSliceCharacter::RequestWait);
 	PlayerInputComponent->BindKey(EKeys::F1, IE_Pressed, this, &ALedgerSliceCharacter::RequestNotice);
 }
 
@@ -307,6 +308,13 @@ void ALedgerSliceCharacter::RequestQuit()
 }
 void ALedgerSliceCharacter::RequestReport() { ++ReportRequests; }
 void ALedgerSliceCharacter::RequestNotice() { ++NoticeRequests; }
+void ALedgerSliceCharacter::RequestWait() { ++WaitRequests; }
+int32 ALedgerSliceCharacter::ConsumeWaitRequests()
+{
+	const int32 N = WaitRequests;
+	WaitRequests = 0;
+	return N;
+}
 int32 ALedgerSliceCharacter::ConsumeReportRequests()
 {
 	const int32 N = ReportRequests;
