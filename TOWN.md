@@ -65,9 +65,9 @@ reach yet.
   bench labelled about a dollar once cost about $14.50.)
 - **This file stays short.**
 
-## Waiting on Jafar (the town's second page of 30 September)
+## Waiting on Jafar
 
-- Ron's own street lines: the sample for the named cast.
-- The thirty regulars.
-- Whether the ending's signs wait until the week's end is in the game
-  (recommended).
+- Ron's tone, five of his street lines, one tap (the town's page of 30
+  September). Nobody else's street lines are written until then.
+- Next for talk: when a reply is refused twice, say the chosen fact plainly
+  (recommended, and under way meanwhile), or leave talk here.

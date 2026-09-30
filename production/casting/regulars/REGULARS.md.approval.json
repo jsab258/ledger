@@ -1,0 +1,12 @@
+{
+ "approves": "production/casting/regulars/REGULARS.md",
+ "by": "Claude (town), under Jafar's delegation",
+ "on": "2026-09-30",
+ "note": "Jafar, 30 September: the thirty regulars are the town's to decide within canon, the casting sheets and his rulings. Decided yes as they stand. The blind reviewer's remaining notes are settled in DECISIONS, 30 September. Faces, clothes and voices stay the builder's, and no voice is cast without Jafar's yes.",
+ "against": {
+  "production/casting/regulars/REGULARS.md": "3fb70877d3a48c7162a8d68e92b5982ffa04196f",
+  "production/casting/CASTING.md": "b4bb7e767564b2a64e48f2814269397dc7431bc2",
+  "canon.md#The content rule (D18, permanent)": "abdac64668bff0fc1bf58edfa9f8717c216ceda2",
+  "canon.md#Premise and cast (the baseline: Jafar, 2026-09-28, OPEN 2)": "66d4c5feb14b3459858c52b6182b27d584a3d0fa"
+ }
+}
