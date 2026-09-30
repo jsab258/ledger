@@ -1278,6 +1278,14 @@
    "mb": 238
   },
   {
+   "path": "F:/LedgerTools/town-scratch/ci-tree",
+   "madeBy": "the town session (git worktree add, detached)",
+   "why": "a clean copy of the town branch on F: for running the full Core checks before each push, so uncommitted work never hides a failure; reused every push",
+   "status": "kept",
+   "recorded": "2026-09-30",
+   "mb": 2633
+  },
+  {
    "path": "F:/LedgerTools/uv",
    "madeBy": "uv 0.12.19 from GitHub, and its cache (28 September)",
    "why": "runs the Blender MCP server",

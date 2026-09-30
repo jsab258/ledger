@@ -27,27 +27,24 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**Both your pages are answered and acted on** (30 September, morning): Mickey's heart, the wind-down ends it, threats read by the checking model, the fire as drafted, the check reopened, Steam's wording approved. Nothing waits on you from the town.
+**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ), no picks yet:** the ending's signs (wait, recommended), Ron's own street lines, the thirty regulars.
 
-**Decided by me** (DECISIONS; overturn any): yesterday's other questions and pages. Relay: no key.
+**The audit's list, done:**
+- **Grounded replies:** on sixty fixed newcomer questions, labelled independently, "that's all I know" fell from 36 to about 22; inventions stayed at one or two. Planning the facts first gave 18, but by chance (question by question, 16 better, 15 worse), so it stays off as the dearer. Replies timing out: none in 24.
+- **Time and state:** the Monday envelope and the builder's fourteen faults fixed; a sweep found thirteen more: ten fixed, three wait for a detective's crime the game lacks; a reviewer's three catches in them, fixed.
+- **The builder's route:** sixteen acceptance cases, unchanged by the fixes.
 
-**Talk:** the brush-off figure was stale (1 in 24). Plain first sentences no longer wait for their check. **Set aside, per your rule:** "that's all I know" answers half a newcomer's questions; three attempts failed (the best, 4 in 60, let a kept "Yes." confirm what was cut). Reopening the check's retune is tomorrow's call. Timings wait for your key.
+**Your key:** capped in code; $0.83 today.
 
-**Handed over:** ten short cards in first-hour order; names; the wait; the landing man; the street's facts.
+**Research:** contextual dialogue (Valve's talk); the talk program; the street's lines; the ending's signs.
 
-**Paused by your ruling:** the ending reading, everyone's nerve, the court day, the Ledger's feed.
+**Set aside after two tries:** a second look by the check.
 
-**Research:** grounded replies; Steam's disclosure; waiting; a 1990 court day.
+**Pushes:** each runs the Unreal build here.
 
-**Got wrong:** the wait took four reviews.
+**C: free:** 47.9 GB, 48.3 now. Backup runs with this commit.
 
-**Pushes set off:** free GitHub tests; Core pushes also the Unreal build here.
-
-**C: free:** 46.8 GB, 47.9 now. Backup runs with this commit.
-
-**New today, [your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** one call (the ending's signs turned out much bigger than they looked: wait, recommended, or build the Core half now); Ron's own street lines, the sample before the rest of the cast's; the thirty regulars as one contact sheet; each through two blind reviewers, their remaining notes beside it.
-
-**Next:** the talk timings with your key (first run: first words at 2.0 s, $0.40).
+**Next, your call:** (A, recommended) when a reply is refused twice, say the chosen fact plainly instead, measured the same way; (B) leave talk here.
 
 ## Clothes, Wednesday 30 September
 
