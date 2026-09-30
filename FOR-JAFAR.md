@@ -9,7 +9,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ### Needs you
 
-1. **Two taps on the town's page** (town; [its page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ)): Ron's tone (five of his own street lines; his 159 are on in the game from today, nobody else's written until you have heard him), and the next step for talk: (recommended) write down what the street would know, or leave talk here.
+1. **Two taps on the town's page** (town; [its page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ)): Ron's facts said plainly, and what the street says of Mickey; its recommendations are on the page. (Your earlier two, Ron's tone and the next step for talk, are acted on.)
 2. **Measuring real talk (item 2) needs your key or your ten minutes** (builder; no page): the real path is your LEDGER key, which no tool of mine may use. (A, recommended) allow one measuring run: the AI tester plays 30 lines through the real talk in the finished game, capped at $0.50 in code, the key read only by the game's own talk as when you play; the numbers the same day. (B) You play ten minutes; the game records every line's delay and I report yours. (C) Through Claude Code on your subscription, labelled "not the real path". Meanwhile I measure everything around the model.
 3. **Clothing's next step** (clothing; no page): both jackets were set aside at the gate, so its list is stuck. (A, the clothing session's recommendation, carrying on with it) I film MakeHuman's suit jacket in the game, cloth on, walking, sitting and arms raised, once the route is walked; nothing reaches your page until it passes there and at the gate. (B) Park clothing until the route runs. (C) A paid Fab jacket, $5 to 20.
 
