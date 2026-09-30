@@ -115,10 +115,11 @@ namespace LedgerCore
 		/// AS GAME TIME PASSES (TownRounds.cs RunTo, the review's A12 and B3):
 		/// every round not yet run up to Now, once, each at its own minute and
 		/// none before it; the hours before Now's with nobody on the street, the
-		/// hour now with OnStreet; the mill aged as each hour starts. Call it as
-		/// often as you like (each game minute, and before a talk turn): asked
-		/// each minute or each hour, the town ends the same. Returns how many
-		/// rounds ran.
+		/// hour now with OnStreet; the mill aged as each hour starts. While the
+		/// game runs its own street it calls this at least once a round (every
+		/// six game minutes) or oftener, and asked each round or each minute the
+		/// town ends the same; whole hours gone by count as time the street did
+		/// not run (the second independent check). Returns how many rounds ran.
 		template <class TCast>
 		int RunTo(GossipMill* Mill, const TCast* Cast, const GameTime& Now, const TownRounds::OnStreetFn& OnStreet = TownRounds::OnStreetFn())
 		{
@@ -127,17 +128,20 @@ namespace LedgerCore
 			const long long NowM = Now.TotalMinutes();
 			const long long HourNowStart = TownRounds::FloorDiv(NowM, 60) * 60;
 			const long long LastRound = TownRounds::FloorDiv(NowM, Step) * Step;
-			if (NextRoundValue < 0) NextRoundValue = HourNowStart;
+			const bool bFirstCall = NextRoundValue < 0;
+			if (bFirstCall) NextRoundValue = HourNowStart;
 			if (LastRound < NextRoundValue) return 0;
 			// The mill's ageing clock is not in the save: started again at the
-			// hour of the first round not yet run, a load loses no hour of fading.
-			Mill->Age(GameTime::FromTotalMinutes(TownRounds::FloorDiv(NextRoundValue, 60) * 60));
+			// hour the last round ran in (the second independent check: from the
+			// next round's, a save after a call at xx:54 to xx:59 lost an hour's
+			// fading); on the first call, not at all.
+			if (!bFirstCall) Mill->Age(AtMinute(TownRounds::FloorDiv(NextRoundValue - Step, 60) * 60));
 			const long long Earliest = HourNowStart - TownRounds::LongestCatchUpHours * 60LL;
 			if (NextRoundValue < Earliest) NextRoundValue = Earliest;
 			int Ran = 0;
 			for (long long R = NextRoundValue; R <= LastRound; R += Step, ++Ran)
 			{
-				const GameTime At = GameTime::FromTotalMinutes(R);
+				const GameTime At = AtMinute(R);
 				if (R % 60 == 0) Mill->Age(At);
 				const bool bStreet = R >= HourNowStart && (bool)OnStreet;
 				const int Day = At.Day, Hour = At.Hour;
@@ -146,6 +150,14 @@ namespace LedgerCore
 			}
 			NextRoundValue = LastRound + Step;
 			return Ran;
+		}
+
+		/// A minute counted from day 0's midnight, days floored (TownRounds.cs At):
+		/// before day 0 is the day before's, never a negative hour.
+		static GameTime AtMinute(long long M)
+		{
+			const long long Day = TownRounds::FloorDiv(M, 24 * 60), Rem = M - Day * 24 * 60;
+			return GameTime((int)Day, (int)(Rem / 60), (int)(Rem % 60));
 		}
 
 		/// {"next": the hour, as the C#'s MiniJson writes a double that is whole}.
@@ -177,8 +189,8 @@ namespace LedgerCore
 				if (Root.Obj[I].first == "round") Round = &Root.Obj[I].second;
 				else if (Root.Obj[I].first == "next") NextV = &Root.Obj[I].second;
 			}
-			if (Round != nullptr && Round->Type == LedgerVignette::T_NUM && Round->Num >= -1 && Round->Num < 6e8 && Round->Num == std::floor(Round->Num)
-			    && (Round->Num < 0 ? Round->Num == -1 : std::fmod(Round->Num, (double)TownRounds::MinutesBetweenRounds) == 0))
+			if (Round != nullptr && Round->Type == LedgerVignette::T_NUM && Round->Num > -6e8 && Round->Num < 6e8 && Round->Num == std::floor(Round->Num)
+			    && (Round->Num == -1 || std::fmod(Round->Num, (double)TownRounds::MinutesBetweenRounds) == 0))
 				T.NextRoundValue = (long long)Round->Num;
 			else if (NextV != nullptr && NextV->Type == LedgerVignette::T_NUM && NextV->Num >= -1 && NextV->Num < 1e7 && NextV->Num == std::floor(NextV->Num))
 				T.NextRoundValue = NextV->Num < 0 ? -1 : (long long)NextV->Num * 60;

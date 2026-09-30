@@ -534,7 +534,7 @@ namespace LedgerCore
 				// Their memory of it is being asked, not a sighting of their own.
 				if (G->Memory)
 				{
-					if (G->Memory->Events.size() > Memories) G->Memory->Events.erase(G->Memory->Events.begin() + Memories, G->Memory->Events.end());
+					G->Memory->KeepFirst((int)Memories);
 					G->Memory->Append(MemoryEvent(Now, "observation", 0.7, AskedMemory));
 				}
 				++N;

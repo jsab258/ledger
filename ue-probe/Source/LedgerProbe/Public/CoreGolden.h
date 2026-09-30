@@ -3187,6 +3187,25 @@ namespace Golden
 			}
 			Ans["TellDue|no at 21:30"] = { At };
 		}
+		// A NIGHT HE STAYED AWAY, TOLD AT ONE (the second independent check).
+		{
+			GossipMill AwayMill((std::shared_ptr<SocialGraph>()));
+			for (const char* Id : { Arrangement::Doorman, Arrangement::OutfitMan })
+				AwayMill.Add(std::make_shared<Gossiper>(Id, Id, std::make_shared<MemoryStore>(Id), std::make_shared<KnowledgeBase>()));
+			Arrangement Away(0);
+			const GameTime Eight(0, 20, 0);
+			Away.Delivered(0, AwayMill.Get(Arrangement::Doorman).get(), &Eight);
+			std::string AwayAt;
+			const int Times[][2] = { { 1, 0 }, { 1, 1 } };
+			for (const auto& X : Times)
+			{
+				Away.TellDue(&AwayMill, GameTime(X[0], X[1], 0));
+				RumorPtr Found;
+				for (const RumorPtr& R : AwayMill.Get(Arrangement::OutfitMan)->Rumors) { if (R->TopicKey() == "player.outfit_d0") { Found = R; break; } }
+				AwayAt += (AwayAt.empty() ? "" : ",") + FromInt(X[0]) + " " + FromInt(X[1]) + ":" + (Found ? Found->Content.Value : std::string("none"));
+			}
+			Ans["TellDue|away"] = { AwayAt, FromInt((long long)Away.Nights().size()) };
+		}
 		// SHEILA'S QUESTION AFTER A MISSED SUNDAY (the review's B1).
 		{
 			WeeksEnd Missed(0);
@@ -3871,6 +3890,38 @@ namespace Golden
 			}
 			Outs.push_back(FromInt(Ran));
 			Outs.push_back(FromInt(T.NextHour()));
+			Outs.push_back(Copies);
+		}
+		// TownHoursEndSave|the save's minute|each person's copy at 13:00: run each
+		// minute to the save, saved, a fresh town given the stories, run on.
+		else if (Fn == "TownHoursEndSave" && F.size() >= 3)
+		{
+			const long long SaveAt = std::atoll(F[1].c_str());
+			CastDay Cast;
+			std::shared_ptr<GossipMill> M1;
+			if (!TownRoundsWorld(Cast, M1)) return A;
+			TownHours H1;
+			for (long long Mm = 9 * 60; Mm <= SaveAt; ++Mm) H1.RunTo(M1.get(), &Cast, GameTime::FromTotalMinutes(Mm));
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			for (const CastDay::Tie& Tt : Cast.Ties()) Gr->Link(Tt.A, Tt.B, Tt.W);
+			GossipMill M2(Gr);
+			for (const std::string& Id : Cast.People()) M2.Add(RungAgent(Id));
+			for (const GossiperPtr& G0 : M1->Agents())
+				for (const RumorPtr& R0 : G0->Rumors)
+				{
+					RumorPtr Copy = std::make_shared<Rumor>(R0->Content);
+					Copy->Summary = R0->Summary; Copy->Confidence = R0->Confidence; Copy->Hops = R0->Hops;
+					M2.Get(G0->Id)->Rumors.push_back(Copy);
+				}
+			TownHours H2 = TownHours::FromJson(H1.ToJson());
+			for (long long Mm = SaveAt + 1; Mm <= 13 * 60; ++Mm) H2.RunTo(&M2, &Cast, GameTime::FromTotalMinutes(Mm));
+			std::string Copies;
+			for (std::vector<std::string>::size_type I = 0; I < Cast.People().size(); ++I)
+			{
+				const std::string& Id = Cast.People()[I];
+				const RumorPtr R = FirstWithPredicate(M2.Get(Id), "a_row");
+				Copies += (I ? ";" : "") + Id + ":" + (R ? FromDouble(R->Confidence) : std::string("none"));
+			}
 			Outs.push_back(Copies);
 		}
 		// TownHoursJson|a save|the hour it gives.
@@ -5071,7 +5122,7 @@ namespace Golden
 		}
 		// THE TOWN'S HOURLY ROUNDS (town list 6bs): TownRounds.h.
 		else if (Fn == "TownRoundsHour" || Fn == "TownRoundsAged" || Fn == "TownRoundsCatchUp"
-		         || Fn == "TownHoursRun" || Fn == "TownHoursJson" || Fn == "TownHoursRound")
+		         || Fn == "TownHoursRun" || Fn == "TownHoursJson" || Fn == "TownHoursRound" || Fn == "TownHoursEndSave")
 		{
 			A = TownRoundsRow(F);
 		}

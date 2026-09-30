@@ -181,7 +181,7 @@ namespace Ledger.PerceptionGolden
                 // The second independent check (30 September, night), after the builder's
                 // port of the review's fixes: a save at the hour's end, days before day 0,
                 // and a night away told at one; held until the port follows again.
-                var held = new[] { "TownHoursRun|", "TownHoursRound|", "TellDue|away|", "TownHoursEndSave|" };
+                var held = new string[0];   // emptied 30 September, night: the builder's port follows the second check
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
