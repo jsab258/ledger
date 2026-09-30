@@ -89,6 +89,7 @@
 
 #include "Gossip.h"      // Rumor, Gossiper, RumorPtr, GossiperPtr
 #include "DayOne.h"      // his arrival and his name, which nobody lowers their voice over
+#include "WeeksEnd.h"    // his answer to Sheila at the week's end (town list 6ca)
 #include "MiniJson.h"    // the remark ledger's save, read as the C# reads it
 
 #include <algorithm>
@@ -673,7 +674,10 @@ namespace LedgerCore
 			{
 				const RumorPtr& R = G.Rumors[I];
 				// His night, or what he did with the outfit's ask (town list 6z).
-				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R))) continue;
+				// His answer to Sheila at the week's end shows too (town list 6ca),
+				// though she, who was told it, never remarks on it.
+				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R) || WeeksEnd::IsWeekAnswer(R))) continue;
+				if (WeeksEnd::IsWeekAnswer(R) && G.Id == WeeksEnd::Sheila) continue;
 				if (!R->Indelible && G.SuppressedHas(R->TopicKey())) continue;
 				if (!(R->Confidence >= ShareFloor)) continue;
 				if (!Best || R->Confidence > Best->Confidence) Best = R;
@@ -1025,8 +1029,10 @@ namespace LedgerCore
 			{
 				const RumorPtr& R = G->Rumors[I];
 				if (!R || R->Content.Subject != "player") continue;
-				// Nor his arrival (town list 6cg), nor his name (6ch): news of him,
-				// not of anything done.
+				// Nor his answer to Sheila (town list 6ca): what he means to do, not
+				// anything done. Nor his arrival (6cg), nor his name (6ch): news
+				// of him, not of anything done.
+				if (WeeksEnd::IsWeekAnswer(R)) continue;
 				if (DayOne::IsArrival(R) || PlayerIdentity::IsNameStory(R)) continue;
 				if (!(R->Confidence >= 0.0)) continue;   // a NaN must not hide a real story
 				if (!Strongest || R->Confidence > Strongest->Confidence) Strongest = R;
@@ -1232,6 +1238,63 @@ namespace LedgerCore
 			return Lines;
 		}
 
+		inline const char* const* RecognitionOutfitWoundDown(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard Ron went down the landing for you. No more of Mickey's errands, they say.",
+				"Word is Mickey's friends down the landing won't be calling on you now.",
+				"Heard you've finished with Mickey's arrangements.",
+				"They say Ron took word down the landing. You're out of it.",
+				"So that's Mickey's arrangement done with, they say.",
+				"Heard you're having nothing more to do with Mickey's lot.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		// HIS ANSWER TO SHEILA AT THE WEEK'S END (town list 6ca), as talk.
+		inline const char* const* RecognitionWeekWindDown(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard you're winding Mickey's down.",
+				"They say you're getting out of Mickey's business.",
+				"Just the cabs from now on, is it? That's what I heard.",
+				"Heard you told Sheila you're winding it down.",
+				"Word is you're shutting up Mickey's side of things.",
+				"So it's a cab firm and nothing else now, they say.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionWeekTakeOver(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard you're taking on Mickey's business.",
+				"They say you're stepping into Mickey's shoes.",
+				"Word is you're carrying on where Mickey left off.",
+				"Heard you told Sheila it's all yours now.",
+				"So you're the new Mickey, they say.",
+				"Heard you're keeping Mickey's business going. All of it.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionWeekWontSay(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard you wouldn't tell Sheila what you're doing.",
+				"They say even Sheila can't get a straight answer out of you.",
+				"Word is you're keeping your plans to yourself.",
+				"Heard Sheila asked you straight and got nothing.",
+				"Keeping us all guessing, they say.",
+				"Heard you won't say what you're doing with Mickey's.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
 		// HIS ARRIVAL (town list 6cg): the street's first talk of him, said to
 		// his face once by somebody who can tell it is him.
 		inline const char* const* RecognitionArrivalSaw(int& OutCount)
@@ -1319,9 +1382,14 @@ namespace LedgerCore
 			else if (K == StanceKind::Avoids)                  { Bank = "recognition/avoids";         Lines = RecognitionAvoids(Count); }
 			else if (bNight && About->Content.Value == "did")     { Bank = "recognition/outfit-did";     Lines = RecognitionOutfitDid(Count); }
 			else if (bNight && About->Content.Value == "refused") { Bank = "recognition/outfit-refused"; Lines = RecognitionOutfitRefused(Count); }
+			else if (bNight && About->Content.Value == "wounddown") { Bank = "recognition/outfit-wounddown"; Lines = RecognitionOutfitWoundDown(Count); }
 			else if (bNight && About->Content.Value == "noshow")  { Bank = "recognition/outfit-noshow";  Lines = RecognitionOutfitNoShow(Count); }
 			else if (DayOne::IsArrival(About) && About->Hops == 0) { Bank = "recognition/arrival-saw";   Lines = RecognitionArrivalSaw(Count); }
 			else if (DayOne::IsArrival(About))                 { Bank = "recognition/arrival-heard";  Lines = RecognitionArrivalHeard(Count); }
+			// (The threat's two banks come here with Silence, town list 6cd.)
+			else if (WeeksEnd::IsWeekAnswer(About) && About->Content.Value == "winddown") { Bank = "recognition/week-winddown"; Lines = RecognitionWeekWindDown(Count); }
+			else if (WeeksEnd::IsWeekAnswer(About) && About->Content.Value == "takeover") { Bank = "recognition/week-takeover"; Lines = RecognitionWeekTakeOver(Count); }
+			else if (WeeksEnd::IsWeekAnswer(About) && About->Content.Value == "wontsay")  { Bank = "recognition/week-wontsay";  Lines = RecognitionWeekWontSay(Count); }
 			else if (About && About->Sensitive)                { Bank = "recognition/sensitive";      Lines = RecognitionSensitive(Count); }
 			else                                               { Bank = "recognition/ordinary";       Lines = RecognitionOrdinary(Count); }
 			std::shared_ptr<SpokenLine> Line = std::make_shared<SpokenLine>();

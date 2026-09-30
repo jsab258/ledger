@@ -127,6 +127,8 @@ namespace Ledger.PerceptionGolden
             EmitNames(sb);
             // Ported to FirstWeek.h on 30 September (town list 6bg: Ada's tea).
             EmitTea(sb);
+            // Ported to WeeksEnd.h and StreetVoice's banks on 30 September (town list 6ca: the week's end).
+            EmitWeeksEnd(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -140,7 +142,6 @@ namespace Ledger.PerceptionGolden
                 EmitTownNews(sb);
                 EmitPoliceAsked(sb);
                 EmitTaken(sb);
-                EmitWeeksEnd(sb);
                 EmitThreats(sb);
                 EmitWaits(sb);
                 EmitTownSave(sb);
@@ -1327,7 +1328,7 @@ namespace Ledger.PerceptionGolden
                     }
         }
 
-        /// THE WEEK'S END (town list 6ca), awaiting the port: when Sheila asks
+        /// THE WEEK'S END (town list 6ca), ported on 30 September: when Sheila asks
         /// and waits, how long the question stands, what a plain answer and a
         /// day ended unanswered file (who holds it, her memory), the save
         /// replayed, and the street's three banks by stance and seed. The
@@ -1387,6 +1388,51 @@ namespace Ledger.PerceptionGolden
                 holder.Rumors.Add(new Rumor { Content = new Fact("player", "week_d6", "takeover"), Summary = "x", Confidence = 0.9, Sensitive = false });
                 var shows = StreetVoice.StoryThatShows(holder, 0.35);
                 Row(sb, "WeekShows", holderId, shows == null ? "null" : shows.TopicKey);
+            }
+            // THE EDGES, for the port's regression (30 September): saves play could
+            // not have made, her Sunday's hours, and that his answer weighs nothing
+            // on how anybody stands to him.
+            var badWeeks = new[] {
+                @"{""first"":0,""asked"":9270,""realBook"":true,""answer"":""TakeOver"",""answered"":9300}",
+                @"{""first"":0,""asked"":9270,""answer"":""WontSay"",""answered"":10080}",
+                @"{""first"":0,""asked"":5000}",
+                @"{""first"":0,""asked"":9270,""answer"":""None"",""answered"":9300}",
+                @"{""first"":0,""asked"":9270,""answer"":""takeover"",""answered"":9300}",
+                @"{""first"":0,""asked"":9270,""answer"":""TakeOver"",""answered"":11000}",
+                @"{""first"":2,""asked"":9270}",
+                @"{""first"":0,""asked"":9270.5}",
+                @"{""first"":-1,""asked"":9270}",
+                @"[1]",
+                @"{""first"":0,""asked"":9270,""realBook"":""yes""}",
+                @"{""first"":0,""asked"":9270,""answer"":""WontSay"",""answered"":9300}",
+                @"{""first"":0,""asked"":9270,""answer"":""WindDown"",""answered"":9260}",
+                @"{""first"":0,""asked"":9270",
+            };
+            for (int i = 0; i < badWeeks.Length; i++)
+            {
+                Dictionary<string, object> parsed;
+                try { parsed = MiniJson.AsObject(MiniJson.Deserialize(badWeeks[i])); }
+                catch (FormatException) { parsed = null; }
+                var w = WeeksEnd.FromJson(parsed);
+                Row(sb, "WeekBadSave", i.ToString(Inv), Bit(w.AskedAt.HasValue), w.Answer.ToString(), w.AnsweredAt.HasValue ? w.AnsweredAt.Value.TotalMinutes.ToString(Inv) : "-",
+                    Bit(w.RealBook), Esc(MiniJson.Serialize(w.ToJson())));
+            }
+            var sunday = new WeeksEnd(0);
+            foreach (var (h, m) in new[] { (9, 59), (10, 0), (11, 59), (12, 0) })
+                Row(sb, "WeekWaits", "unasked " + h + ":" + m.ToString("D2", Inv), Bit(sunday.Waits(new GameTime(6, h, m))));
+            sunday.Ask(new GameTime(6, 10, 30), true);
+            foreach (var (d, h, m) in new[] { (6, 12, 0), (6, 17, 59), (6, 18, 0), (7, 10, 0) })
+                Row(sb, "WeekWaits", "asked " + d + " " + h + ":" + m.ToString("D2", Inv), Bit(sunday.Waits(new GameTime(d, h, m))), Bit(sunday.Stands(new GameTime(d, h, m))));
+            sunday.Give(WeekAnswer.TakeOver, new GameTime(6, 11, 0), null, null);
+            Row(sb, "WeekWaits", "answered", Bit(sunday.Waits(new GameTime(6, 11, 30))), Bit(sunday.Give(WeekAnswer.WindDown, new GameTime(6, 11, 5), null, null)));
+            var monday = new WeeksEnd(1);
+            Row(sb, "WeekWaits", "not a sunday", Bit(monday.Waits(new GameTime(7, 10, 0))), Bit(monday.Ask(new GameTime(7, 10, 0), false, false)), Bit(monday.Ask(new GameTime(7, 10, 0), false)));
+            foreach (var value in new[] { "winddown", "takeover", "wontsay" })
+            {
+                var who = new Gossiper("wr", "wr", new MemoryStore("wr"), new KnowledgeBase(), new SuspicionTracker());
+                who.Rumors.Add(new Rumor { Content = new Fact("player", "week_d6", value), Summary = "x", Confidence = 0.9, Sensitive = false });
+                var rg = StreetVoice.RegardFor(who, 0.35, false, new RemarkLedger(), 1.0, false);
+                Row(sb, "WeekRegard", value, rg.Knowing.ToString(), rg.Stance.ToString(), Bit(rg.Speaks));
             }
         }
 
