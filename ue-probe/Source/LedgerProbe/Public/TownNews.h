@@ -13,6 +13,11 @@
 // TRANSLITERATION, NOT REWRITE, as Gossip.h states the method: the C#'s
 // FormatException is a false return with its words; its HashSets are kept in
 // the order things were added, as a HashSet without removals enumerates.
+// ONE KNOWN DEVIATION (the independent check, 30 September): a file that is
+// not JSON at all is refused here as "town news: not an object", where the C#
+// passes on MiniJson's own words ("Unexpected end of JSON", "Expected string
+// at 1"): the C++ reader's messages were never made word for word, and only a
+// log reads them; both refuse the same files.
 // Checked against PerceptionGolden's EmitTownNews rows (TownNews,
 // TownNewsWitnesses) in ue-probe/perception-golden.txt, and its own rows.
 //
