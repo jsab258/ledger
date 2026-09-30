@@ -124,6 +124,22 @@ public:
 	// Epic's streaming speech solver, in the engine, is the next
 	// (production/research/lip-sync/NOTE-2026-09-30.md).
 	void SpeakTick(float Level, bool bSpeaking, float DeltaSeconds);
+
+	// A WALK BETWEEN TWO POINTS, 30 September (the twenty a friend would
+	// notice, 13: everyone stood still). Set before InitAnim: the walk clip is
+	// blended in while the owner moves from A to B and back at SpeedCms, with
+	// a pause of PauseMin to PauseMax seconds at each end, turned to where it
+	// goes (YawOffset: the mesh's own turn against the street's yaw); it waits
+	// while the player stands in its way.
+	void SetupWalk(UAnimSequenceBase* InWalk, const FVector& InA, const FVector& InB, float InSpeedCms,
+	               float InPauseMin, float InPauseMax, float InYawOffset);
+	UPROPERTY(Transient)
+	TObjectPtr<UAnimSequenceBase> WalkSequence;
+	FVector WalkA = FVector::ZeroVector, WalkB = FVector::ZeroVector;
+	float WalkSpeedCms = 120.0f, PauseMin = 3.0f, PauseMax = 8.0f, WalkYawOffset = 0.0f;
+	float WalkWeight = 0.0f, PauseLeft = 0.0f;
+	bool bToB = true;
+	int32 WalkLegs = 0;
 	static constexpr int32 MouthCurveCount = 11;
 	static constexpr const TCHAR* MouthCurves[MouthCurveCount] = {
 		TEXT("CTRL_expressions_jawOpen"),

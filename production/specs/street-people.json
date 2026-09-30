@@ -1,5 +1,5 @@
 {
-  "what": "The handful of people in the street, for Jafar's presentable checklist (ROADMAP.md, 23 September): 'a handful of people stand or walk in the street, even if they only idle'. Each is a glb in production/assets/people made by tools/art-recipes/person-export.py from a Mixamo body and clip already held (D46), imported by tools/ue/import_people.py and placed by the Unreal probe. Street metres as the scene file gives them: x along the street, z across (east is +), y the ground height, the footway's own at that z. face_deg is the direction the person faces, as a yaw in Unreal (0 up the street, 90 toward the east side). phase is where in its loop each starts, so the idles do not move in step. They are seen and not simulated: no collision, no perception, nothing a system reads.",
+  "what": "The handful of people in the street, for Jafar's presentable checklist (ROADMAP.md, 23 September): 'a handful of people stand or walk in the street, even if they only idle'. Each is a glb in production/assets/people made by tools/art-recipes/person-export.py from a Mixamo body and clip already held (D46), imported by tools/ue/import_people.py and placed by the Unreal probe. Street metres as the scene file gives them: x along the street, z across (east is +), y the ground height, the footway's own at that z. face_deg is the direction the person faces, as a yaw in Unreal (0 up the street, 90 toward the east side). phase is where in its loop each starts, so the idles do not move in step. They are seen and not simulated: no collision, no perception, nothing a system reads. A person with \"walk\" paces from x_m to to_x_m and back along its pavement at speed_ms, pausing pause_s at each end, in free play only (30 September).",
   "people": [
     {
       "glb": "joe-pockets",
@@ -35,7 +35,16 @@
       "face_deg": 90,
       "phase": 0.7,
       "why": "across the road on the plain terrace's pavement, facing the parade",
-      "y_m": 0.0794
+      "y_m": 0.0794,
+      "walk": {
+        "to_x_m": 6.0,
+        "speed_ms": 1.5,
+        "pause_s": [
+          5,
+          12
+        ],
+        "why": "30 September: along the plain terrace's pavement and back, clear of Kate's stretch; a little under the walk clip's own 1.65 m/s"
+      }
     },
     {
       "glb": "kate-idle",
@@ -44,7 +53,16 @@
       "face_deg": 180,
       "phase": 0.1,
       "why": "further up the west pavement, facing down the street toward the camera",
-      "y_m": 0.0869
+      "y_m": 0.0869,
+      "walk": {
+        "to_x_m": 19.5,
+        "speed_ms": 0.8,
+        "pause_s": [
+          4,
+          9
+        ],
+        "why": "30 September (the twenty a friend would notice, 13): up and down her stretch of the west pavement with her shopping, pausing at each end; the walk clip's own pace, 0.8 m/s"
+      }
     },
     {
       "glb": "elizabeth-idle",

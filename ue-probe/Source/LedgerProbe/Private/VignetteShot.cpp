@@ -1594,7 +1594,7 @@ namespace
 	// WHAT THE STREET'S OWN COLLISION DID, printed with the street segment.
 	int32 GStreetColliding = 0, GStreetSightThrough = 0, GStreetOldWallsOff = 0;
 	// THE PEOPLE, 23 September: asked (the file's rows) and spawned.
-	int32 GPeopleAsked = 0, GPeopleSpawned = 0;
+	int32 GPeopleAsked = 0, GPeopleSpawned = 0, GPeopleWalking = 0;
 	std::string GPeopleNote = "not-built";
 	// A glb from Blender faces +Y in this engine at yaw 0 (Blender's -Y, the
 	// street export's own axis rule), so a person facing yaw F is turned F-90.
@@ -2275,6 +2275,23 @@ namespace
 			if (Look != nullptr)
 			{
 				Look->Setup(Anim, At0, bInteractive ? 1.0f : 0.0f, bInteractive);
+				// A WALKER, 30 September (the twenty a friend would notice, 13):
+				// only where a friend or the tester plays, never in the
+				// automation's shots or its scripted runs, whose sight lines
+				// and frames are measured with everyone where the file puts them.
+				const bool bFreePlay = bInteractive && !FParse::Param(FCommandLine::Get(), TEXT("LiveScript"))
+					&& !FParse::Param(FCommandLine::Get(), TEXT("LookScript"))
+					&& (bLiveEncounter || !FParse::Param(FCommandLine::Get(), TEXT("LedgerCrime")));
+				if (P.HasWalk && bFreePlay)
+				{
+					const FString WalkPath = FString::Printf(TEXT("/Game/Ledger/People/%s/A_%s__walk.A_%s__walk"), *Stem, *Stem, *Stem);
+					if (UAnimSequence* Walk = LoadObject<UAnimSequence>(nullptr, *WalkPath))
+					{
+						const FVector To((float)(P.WalkToX * 100.0), At.Y, At.Z);
+						Look->SetupWalk(Walk, At, To, (float)(P.WalkSpeedMs * 100.0), (float)P.PauseMinS, (float)P.PauseMaxS, (float)kPersonYawOffsetDeg);
+						++GPeopleWalking;
+					}
+				}
 				C->InitAnim(true);
 				GPersonAnims.Add(Look);
 				if (GHeadBone.empty() && !Look->HeadBone.IsNone())
@@ -2307,7 +2324,9 @@ namespace
 			++GPeopleSpawned;
 		}
 		GPeopleNote = (Missing.empty() ? std::string("placed") : "placed/missing" + Missing)
-			+ "/castMetaHumans=" + std::to_string(GCastMetaHumans) + "/castIdling=" + std::to_string(GCastIdling);
+			+ "/castMetaHumans=" + std::to_string(GCastMetaHumans) + "/castIdling=" + std::to_string(GCastIdling)
+			+ "/walking=" + std::to_string(GPeopleWalking);
+		UE_LOG(LogTemp, Display, TEXT("LedgerPeople: %d placed, %d walking"), (int32)GPeopleSpawned, (int32)GPeopleWalking);
 	}
 
 	// THE STREET'S SOUND, 23 September, for the presentable checklist: "sound is
