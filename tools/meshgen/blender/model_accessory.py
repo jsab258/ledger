@@ -65,27 +65,36 @@ if KIND == "pager":
     # ---- the belt he needs for it (the note: "Darren needs a belt"): a plain dark leather strap 35 mm deep and
     # 4 mm thick round the torso's own hull at the belt line, 3 mm out for the jeans, a square buckle in front ------
     z_belt = meas["hips"] + 0.6 * (meas["waist"] - meas["hips"])
-    loops = tailor.section_loops(body, Vector((0, 0, z_belt)), Vector((0, 0, 1)))
-    torso = max(loops, key=lambda l_: len(l_) - 1000 * abs(float(np.mean(l_[:, 0]))))
-    hull = np.array(tailor._hull2(torso[:, :2]))
-    cen = hull.mean(axis=0)
-    ang = np.arctan2(hull[:, 1] - cen[1], hull[:, 0] - cen[0])
-    ring = []
-    for a_ in np.linspace(-math.pi, math.pi, 72, endpoint=False):
-        d_ = np.array([math.cos(a_), math.sin(a_)])
-        best = 0.0
-        for i_ in range(len(hull)):
-            q0, q1 = hull[i_], hull[(i_ + 1) % len(hull)]
-            ed = q1 - q0
-            den = d_[0] * (-ed[1]) + d_[1] * ed[0]
-            if abs(den) < 1e-12:
-                continue
-            w_ = q0 - cen
-            t_ = (w_[0] * (-ed[1]) + w_[1] * ed[0]) / den
-            u_ = (d_[0] * w_[1] - d_[1] * w_[0]) / den
-            if t_ > 0 and -1e-9 <= u_ <= 1 + 1e-9:
-                best = max(best, t_)
-        ring.append((a_, best))
+    def hull_ring(zz, cen=None):
+        """The torso's outline at height zz as a tape takes it (its hull), as radii by angle about `cen`."""
+        loops = tailor.section_loops(body, Vector((0, 0, zz)), Vector((0, 0, 1)))
+        torso = max(loops, key=lambda l_: len(l_) - 1000 * abs(float(np.mean(l_[:, 0]))))
+        hull = np.array(tailor._hull2(torso[:, :2]))
+        cen = hull.mean(axis=0) if cen is None else cen
+        out = []
+        for a_ in np.linspace(-math.pi, math.pi, 72, endpoint=False):
+            d_ = np.array([math.cos(a_), math.sin(a_)])
+            best = 0.0
+            for i_ in range(len(hull)):
+                q0, q1 = hull[i_], hull[(i_ + 1) % len(hull)]
+                ed = q1 - q0
+                den = d_[0] * (-ed[1]) + d_[1] * ed[0]
+                if abs(den) < 1e-12:
+                    continue
+                w_ = q0 - cen
+                t_ = (w_[0] * (-ed[1]) + w_[1] * ed[0]) / den
+                u_ = (d_[0] * w_[1] - d_[1] * w_[0]) / den
+                if t_ > 0 and -1e-9 <= u_ <= 1 + 1e-9:
+                    best = max(best, t_)
+            out.append((a_, best))
+        return out, cen
+
+    ring, cen = hull_ring(z_belt)
+    # its lower and upper edges laid on the outline at their own heights too (on the one at its middle, the top of
+    # his seat, and the jeans' band over it, came through its lower edge at the back)
+    ring_lo, _c = hull_ring(z_belt - 0.019, cen)
+    ring_hi, _c = hull_ring(z_belt + 0.019, cen)
+    ring = [(a_, max(r_, ring_lo[i_][1], ring_hi[i_][1])) for i_, (a_, r_) in enumerate(ring)]
     # a jeans belt 38 by 3.5 mm (at 35 it read as a dress belt), set on the jeans' waistband: 3 mm of denim and
     # 1.5 mm clear of it (BELT-2026-09-30.md)
     BELT_H, BELT_T, JEANS = 0.038, 0.0035, 0.0045

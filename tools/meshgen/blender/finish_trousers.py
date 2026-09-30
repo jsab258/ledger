@@ -48,6 +48,10 @@ def opt(name, default, kind=float):
 
 NAME = opt("--name", "ron_trousers", str)
 BAND = opt("--band", 34.0)                  # mm
+# JEANS (30 September, Darren's "stonewashed jeans"): five-pocket western jeans: no belt of their own (his belt is
+# a piece of its own, F:/LedgerTools/garments/darren_belt_pager), five loops standing clear of it, scooped front
+# pockets and a coin pocket, a yoke and two patch pockets at the back
+JEANS = "--jeans" in argv
 TWILL_T = 0.0015
 log = {"blend": BLEND, "pattern": TITAN}
 
@@ -62,6 +66,17 @@ body = next(o for o in bpy.data.objects if o.type == "MESH" and o is not trouser
 for o in list(bpy.data.objects):
     if o.type == "MESH" and o not in (trousers, body):
         bpy.data.objects.remove(o, do_unlink=True)
+
+# THE SEAT HANGS, NOT FOLLOWING THE CLEFT (the work trousers' second blind review: 'at rest the seat hugs the
+# buttocks and runs into the cleft'): bridged, deeper, BEFORE anything is laid on the cloth (bridged after, the
+# cloth moved out and left the jeans' pockets, yoke and centre seam in the hollow, torn-looking: Darren's jeans,
+# second review, 30 September)
+_bev0 = tailor.evaluated_copy(body, "BodyFirst")
+_BBVH0 = tailor.bvh_of(_bev0)
+bpy.data.objects.remove(_bev0, do_unlink=True)
+log["seatBridged"] = tailor.bridge_slices(trousers, opt("--crotch", 0.885) - 0.12, 1.08, opt("--crotch", 0.885),
+                                          deepest=opt("--seat-bridge", 0.06), smooth_rounds=16)
+log["pushedOut"] = tailor.push_out(trousers, _BBVH0, 0.003)       # anything the bridging's smoothing left inside
 
 # ---- the pattern, as sew_trousers.py laid it out -------------------------------------------
 
@@ -204,6 +219,8 @@ for f in (0.0, 0.5, 1.0):
         hit, nrm, _i, _d = BODY_BVH.find_nearest(r)
         if hit is not None and (r - hit).dot(nrm) < 0.004:
             r = hit + nrm * 0.004
+        if JEANS and hit is not None and (r - hit).dot(nrm) > 0.0038:
+            r = hit + nrm * 0.0038               # held under his belt (4.5 mm off him); further out it came through
         row.append(lift(r, 0.001) if f == 0.0 else r)
     band_rows.append(row)
 sheet("Waistband", band_rows, twill, thickness=0.003, offset=-1.0, closed_rows=False)
@@ -227,25 +244,56 @@ def band_point(frac, h, off):
 belt_rows = []
 for h in (0.08, 0.5, 0.92):
     belt_rows.append([band_point(j / 240.0, h, 0.0045) for j in range(241)])
-sheet("Belt", belt_rows, leather, thickness=0.004, offset=-1.0)
+if not JEANS:
+    sheet("Belt", belt_rows, leather, thickness=0.004, offset=-1.0)
 # the buckle a little left of the centre front, a frame 46 by 42 mm
 bk = band_point(0.012, 0.5, 0.009)
 n_b = outward(bk)
 upb = Vector((0, 0, 1))
 side_b = upb.cross(n_b).normalized()
-for (cx, cz, w_, h_) in ((0.0, 0.021, 0.046, 0.005), (0.0, -0.021, 0.046, 0.005), (-0.021, 0.0, 0.005, 0.042), (0.021, 0.0, 0.005, 0.042)):
+for (cx, cz, w_, h_) in (() if JEANS else ((0.0, 0.021, 0.046, 0.005), (0.0, -0.021, 0.046, 0.005), (-0.021, 0.0, 0.005, 0.042), (0.021, 0.0, 0.005, 0.042))):
     c = bk + side_b * cx + upb * cz
     rows = [[c + side_b * (sx * w_ / 2) + upb * (sz * h_ / 2) for sx in (-1, 1)] for sz in (-1, 1)]
     sheet("Buckle", rows, metal, thickness=0.004, offset=-1.0)
 # seven belt loops: the centre back, each back's middle, each side just behind its seam, each front near its pocket
-LOOPS = (0.10, 0.25, 0.375, 0.5, 0.625, 0.75, 0.90)
+LOOPS = (0.12, 0.30, 0.5, 0.70, 0.88) if JEANS else (0.10, 0.25, 0.375, 0.5, 0.625, 0.75, 0.90)
+BELT_BVH = None
+if "--belt" in argv:
+    # the wearer's own belt (a separate piece), so the loops lie on its face: at a fixed distance from the skin they
+    # sank into it where it spans the hollow of the back, and stood off as hooks at the hips
+    _before = set(bpy.data.objects)
+    bpy.ops.import_scene.fbx(filepath=opt("--belt", "", str))
+    _new = [o for o in bpy.data.objects if o not in _before]
+    _bm = next(o for o in _new if o.type == "MESH")
+    BELT_BVH = tailor.bvh_of(_bm)
+    for o in _new:
+        bpy.data.objects.remove(o, do_unlink=True)
+LOOP_OFF = 0.0095 if JEANS else 0.0065        # (over his own belt, 3.5 mm thick and 1.5 mm off the band)
 for fr in LOOPS:
     # FLAT STRIPS SEWN TO THE BAND (the first blind review: 'rods standing off
     # the belt'): down on the cloth at both ends, over the belt between
     rows = []
-    for h, dz, off in ((0.0, -0.008, 0.0015), (0.06, 0.0, 0.0062), (0.5, 0.0, 0.0065), (0.94, 0.0, 0.0062), (1.0, 0.004, 0.0015)):
-        rows.append([band_point(fr + d / 1600.0, h, off) + Vector((0, 0, dz)) for d in (-5, 0, 5)])
-    sheet("BeltLoop", rows, twill, thickness=0.0015, offset=-1.0)
+    for h, dz, off in ((0.0, -0.008, 0.0015), (0.06, 0.0, LOOP_OFF - 0.0003), (0.5, 0.0, LOOP_OFF), (0.94, 0.0, LOOP_OFF - 0.0003), (1.0, 0.004, 0.0015)):
+        row = []
+        for d in (-5, 0, 5):
+            fr_ = fr + d * (1.3 if JEANS else 1.0) / (1000.0 if JEANS else 1600.0)
+            off_ = off
+            if JEANS and off > 0.003:
+                q_ = band_point(fr_, h, 0.0)
+                if BELT_BVH is not None:
+                    # on the belt's face, 1.3 mm out (the loop's own thickness goes inward from there)
+                    n_ = outward(q_)
+                    hit_ = BELT_BVH.ray_cast(q_ + n_ * 0.06, -n_, 0.1)[0]
+                    off_ = max(0.0015, ((hit_ - q_).dot(n_) + 0.0013) if hit_ is not None else off)
+                else:
+                    # over his belt's face, 9.5 mm from his skin (a fixed 9.5 from the band left hoops clear of it)
+                    hb_, nb_, _i, _d = BODY_BVH.find_nearest(q_)
+                    off_ = max(0.0015, 0.0095 - ((q_ - hb_).dot(nb_) if hb_ is not None else 0.0038))
+            row.append(band_point(fr_, h, off_) + Vector((0, 0, dz)))
+        rows.append(row)
+    sheet("BeltLoop", rows, twill, thickness=0.0025 if JEANS else 0.0015, offset=-1.0)
+    if JEANS:
+        log.setdefault("loopOffMm", []).append(round(max(max((r_ - band_point(fr, 0.5, 0.0)).length for r_ in rows[2]), 0) * 1000, 1))
 log["waist"] = {"bandMm": BAND, "ringPoints": len(ring), "loops": len(LOOPS)}
 
 # ---- the fly: the left front's shield over the centre line, curved at its foot ---------------------------
@@ -276,7 +324,38 @@ log["fly"] = {"lengthMm": FLY, "rows": len(fly_rows)}
 # ---- Charlie's slanted front pockets: a lip from the waist down to the side seam ---------------------------
 
 st, sb = CH_F.get("slantTop", [73, 134]), CH_F.get("slantBottom", [22, 257])
-for side in (1, -1):
+P_Fw = O["front"]["P"]
+y_wf = lambda x: P_Fw["styleWaistOut"][1] + (P_Fw["styleWaistIn"][1] - P_Fw["styleWaistOut"][1]) * x / max(1.0, P_Fw["styleWaistIn"][0])
+if JEANS:
+    # the scooped front pockets: a lip from the waist 95 mm in from the side, curving down to the side seam 75 mm lower
+    for side in (1, -1):
+        rows = []
+        for off in (-3.0, 3.0):
+            row = []
+            for j in range(14):
+                t = j / 13
+                x = 15.0 + 80.0 * math.cos(t * math.pi / 2)         # (ending 15 mm from the side: nearer, it crossed the seam's gap and stood off the hip)
+                y = y_wf(95.0) + 2.0 + 75.0 * math.sin(t * math.pi / 2)
+                nx, ny = 75.0 * math.cos(t * math.pi / 2), 95.0 * math.sin(t * math.pi / 2)   # square to the curve
+                L_ = math.hypot(nx, ny)
+                p = at("front", side, x + off * nx / L_, y + off * ny / L_)
+                row.append(lift(p, 0.0012 * min(1.0, 0.35 + (1.0 - t) / 0.2)) if p is not None else None)   # eased out at the side
+            rows.append(row)
+        if all(r is not None for rr in rows for r in rr):
+            sheet("PocketLip", rows, twill, thickness=0.001, offset=-1.0)
+    # the coin pocket on his right front, inside the scoop
+    rows = []
+    for j in range(6):
+        y = y_wf(64.0) + 8.0 + 50.0 * j / 5
+        row = []
+        for i in range(5):
+            x = 40.0 + 46.0 * i / 4
+            p = at("front", -1, x, y)
+            row.append(lift(p, 0.0011) if p is not None else None)
+        rows.append(row)
+    if all(r is not None for rr in rows for r in rr):
+        sheet("CoinPocket", rows, twill, thickness=0.0012, offset=-1.0)
+for side in (() if JEANS else (1, -1)):
     rows = []
     for off in (-2.5, 2.5):
         row = []
@@ -297,7 +376,69 @@ log["frontPockets"] = {"slantTop": st, "slantBottom": sb}
 # ---- a welt on each back, 14 cm wide, 7 cm below the band -------------------------------------------------
 
 P_B = O["back"]["P"]
-for side in (1, -1):
+if JEANS:
+    wo, wi = P_B["styleWaistOut"], P_B["styleWaistIn"]
+    y_wb = lambda x: wo[1] + (wi[1] - wo[1]) * (x - wo[0]) / (wi[0] - wo[0])
+    cbp = np.array(O["back"]["crotch"])
+    x_cb = lambda y: float(np.interp(y, cbp[np.argsort(cbp[:, 1]), 1], cbp[np.argsort(cbp[:, 1]), 0]))
+    for side in (1, -1):
+        # the yoke's seam: 40 mm below the waist at the side, 85 at the centre back, a raised line 6 mm wide
+        rows = []
+        for off in (-3.0, 3.0):
+            row = []
+            y_end = wi[1] + 85.0
+            x_end = x_cb(y_end) + 2.0                            # to the centre seam at its own height (it slants out)
+            x_st = wo[0] - 60.0                                  # 60 mm inside the back (the drape carries its side seam forward: nearer, a bar showed from the front)
+            for j in range(12):
+                t = j / 11
+                x = x_st + (x_end - x_st) * t
+                y = wo[1] + 40.0 + (y_end - wo[1] - 40.0) * t + off
+                p = at("back", side, x, y)
+                # (at 0.8 mm it sank into the cloth in dashes; its start eased into the cloth, not a blunt end)
+                row.append(lift(p, 0.0016 * min(1.0, 0.35 + t / 0.25)) if p is not None else None)
+            rows.append(row)
+        if all(r is not None for rr in rows for r in rr):
+            sheet("Yoke", rows, twill, thickness=0.001, offset=-1.0)
+        # a patch pocket: 135 wide, 150 deep to a shallow point, its top 12 mm under the yoke at its middle
+        # centred on the seat: its inner edge 30 mm from the centre back (placed at the piece's middle, the pockets
+        # sat out on his flanks)
+        # placed from the centre seam at the pocket's top, 37 mm from it, 125 wide (from the waist's end the pockets
+        # wrapped round onto his hips; from the seam at each row's height they slid into the crotch below the seat)
+        y0 = wi[1] + 85.0 + 13.0                              # 13 mm under the yoke's V (just under it, they met it)
+        mid_x = x_cb(y0) + 37.0 + 62.5
+        rows = []
+        for j in range(9):
+            f = j / 8
+            y = y0 + 150.0 * f
+            half = 62.5 * (1.0 if f < 0.8 else 1.0 - (f - 0.8) / 0.2 * 0.85)
+            row = []
+            for i in range(13):                                   # (7 columns cut chords across the seat's curve)
+                x = mid_x - half + 2 * half * i / 12
+                p = at("back", side, x, y)
+                rim = min(1.0, min(i, 12 - i) / 1.5, min(j, 8 - j) / 1.2 if j < 8 else 0.0)
+                row.append(lift(p, 0.0003 + 0.0007 * rim) if p is not None else None)
+            rows.append(row)
+        if all(r is not None for rr in rows for r in rr):
+            sheet("BackPocket", rows, twill, thickness=0.0006, offset=-1.0)     # (1.5 mm thick, 1.3 up: slabs from the side)
+    # the centre-back seam: a raised line down the back's crotch curve from the waist, 17 cm
+    cb = O["back"]["crotch"]
+    cb_len = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(np.array(cb), axis=0), axis=1))])
+    for side in (1, -1):
+        rows = []
+        for off in (-2.5, 2.5):
+            row = []
+            for j in range(12):
+                d_ = 170.0 * j / 11
+                k_ = int(np.clip(np.searchsorted(cb_len, d_) - 1, 0, len(cb) - 2))
+                f_ = (d_ - cb_len[k_]) / max(1e-6, cb_len[k_ + 1] - cb_len[k_])
+                x = cb[k_][0] + (cb[k_ + 1][0] - cb[k_][0]) * f_ + 3.0 + off
+                y = cb[k_][1] + (cb[k_ + 1][1] - cb[k_][1]) * f_
+                p = at("back", side, x, y)
+                row.append(lift(p, 0.0012) if p is not None else None)
+            rows.append(row)
+        if all(r is not None for rr in rows for r in rr):
+            sheet("CentreBackSeam", rows, twill, thickness=0.001, offset=-1.0)
+for side in (() if JEANS else (1, -1)):
     wo, wi = P_B["styleWaistOut"], P_B["styleWaistIn"]
     mid_x = 0.5 * (wo[0] + wi[0])
     top_at = 0.5 * (wo[1] + wi[1])
@@ -318,11 +459,6 @@ for side in (1, -1):
 # man in 149-009 has bagged knees and soft horizontal folds behind the knees'.
 # Skinned trousers make no creases of their own, so the worn ones are laid
 # into the cloth: soft, uneven, a few millimetres.
-# THE SEAT HANGS, NOT FOLLOWING THE CLEFT (the second blind review: 'at rest
-# the seat hugs the buttocks and runs into the cleft'): bridged again, deeper
-log["seatBridged"] = tailor.bridge_slices(trousers, opt("--crotch", 0.885) - 0.12, 1.08, opt("--crotch", 0.885),
-                                          deepest=opt("--seat-bridge", 0.06), smooth_rounds=16)
-log["pushedOut"] = tailor.push_out(trousers, BODY_BVH, 0.003)     # anything the bridging's smoothing left inside
 KNEE_Z = opt("--knee-z", 0.54)
 KNEE_BAG = opt("--knee-bag", 0.013)
 _tco0 = np.array([v.co[:] for v in me.vertices])
@@ -355,12 +491,45 @@ for vi, v in enumerate(me.vertices):
     below_band = TOP_AT(p) - p.z
     if 0.0 < below_band < 0.07 and n.y < 0.2:                 # gathers under the cinched belt, front and sides
         a_ = math.atan2(p.x, -(p.y + 0.03))
-        d += 0.0045 * max(0.0, math.cos(7.0 * a_ + 0.6)) ** 2 * (1.0 - below_band / 0.07)
+        d += (0.0012 if JEANS else 0.0045) * max(0.0, math.cos(7.0 * a_ + 0.6)) ** 2 * (1.0 - below_band / 0.07)   # (jeans: light; full, a ridge stood out at the hip)
     if d:
         me.vertices[vi].co = tco[vi] + np.array(n) * d
         moved_c += 1
 me.update()
 log["creases"] = {"points": moved_c, "kneeZ": KNEE_Z}
+
+if JEANS:
+    # THE HEM A STIFF BAND (Darren's jeans, second review: 'frilly ripples at the instep'; JEANS-2026-09-30.md): the
+    # lowest 25 mm of each leg evened across, the hem's own edge eased along itself, level
+    hb = bmesh.new()
+    hb.from_mesh(me)
+    zmin = min(v.co.z for v in hb.verts)
+    band = [v for v in hb.verts if v.co.z < zmin + 0.045]
+    edge = [v for v in band if v.is_boundary]
+    for _ in range(14):
+        new = {}
+        for v in band:
+            if v.is_boundary:
+                nb = [e.other_vert(v) for e in v.link_edges if e.is_boundary]
+            else:
+                nb = [e.other_vert(v) for e in v.link_edges]
+            if len(nb) >= 2:
+                c_ = sum((u.co for u in nb), Vector()) / len(nb)
+                w_ = 0.5 if v.co.z < zmin + 0.025 else 0.25
+                new[v] = v.co.lerp(c_, w_)
+        for v, c_ in new.items():
+            v.co = c_
+    if edge:
+        for side in (1, -1):
+            ev = [v for v in edge if (v.co.x > 0) == (side > 0)]
+            if ev:
+                ze = sum(v.co.z for v in ev) / len(ev)
+                for v in ev:
+                    v.co.z = ze + (v.co.z - ze) * 0.3
+    hb.to_mesh(me)
+    hb.free()
+    me.update()
+    log["hemBand"] = {"points": len(band)}
 
 # ---- the render mesh ------------------------------------------------------------------------------------
 
