@@ -963,11 +963,11 @@
   },
   {
    "path": "F:/LedgerTools/tmp/clothes",
-   "madeBy": "the clothing session (tools/meshgen/blender: the sewing, modelling, footwear and small-pieces scripts, and pose_skinned.py)",
-   "why": "scratch for the clothing session's runs and check pictures: the jacket, trousers, jeans, cap, knitwear, blouse, T-shirt, shoes and small pieces; it keeps the best candidate of each set-aside garment (for a later decision) beside superseded runs; finished garments go to F:/LedgerTools/garments",
+   "madeBy": "the clothing session (tools/meshgen/blender: the sewing, modelling, footwear and small-pieces scripts, pose_skinned.py, and on 30 September the game-mesh, skinning, carrying and MakeHuman-fitting scripts)",
+   "why": "scratch for the clothing session's runs and check pictures: the jacket (sewn, eased, the game-way remakes), the MakeHuman suit fits, trousers, jeans, cap, knitwear, blouse, T-shirt, shoes and small pieces; it keeps the best candidate of each set-aside garment (for a later decision) beside superseded runs; finished garments go to F:/LedgerTools/garments",
    "status": "kept",
    "recorded": "2026-09-30",
-   "mb": 4321
+   "mb": 8555
   },
   {
    "path": "F:/LedgerTools/tmp/dcc",

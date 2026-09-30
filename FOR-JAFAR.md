@@ -47,19 +47,19 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Your new list:** item 1 done: of 21 empty answers, the facts chosen missed the answer in 12, and 29% of what the check refused was true. Item 2 built and reviewed; measuring.
 
-## Clothes, Wednesday 30 September
+## Clothes, Thursday 1 October
 
-**Through the gate, handed to the builder** (for your page, on the people): Ron's black work boots; Sheila's handbag and her spectacles on their chain; Darren's belt, pager and T-shirt; Sheila's skirt and blouse (those three judged standing). Sheila's tights: a skin material.
+(Written 30 September, 16:00; nothing has changed since.)
 
-**Set aside, per your rule** (three failed reviews each, one after research): the donkey jacket and its builds; Ron's trousers; the flat cap; Sheila's cardigan; Ron's jumper and Darren's jacket (right standing, broken sitting); Darren's trainers, Sheila's shoes, Darren's jeans (the seat).
+**Needs you (scope), no page:** your rule set aside both jackets, so the list cannot move. (A, recommended; carrying on with it) the builder tests the suit jacket in Unreal, cloth on, when his route allows; nothing reaches your page until it passes there and at the gate. (B) park clothing until his route runs. (C) a paid Fab jacket, $5 to 20, against your ruling of this morning.
 
-**Your answers, acted on:** no Marvelous Designer, all free; poses tested in Unreal. Next, in order: research how studios make game clothes end to end; remake the set-aside garments as skinned meshes, the jacket first; free CC0 suits from MakeHuman; then Tom and the others as their bodies come.
+**Made:** the jacket the game way: a clean mesh laid on its pattern, textures baked, skinned, joints fixed, carried to Darren; then MakeHuman's free suit jacket fitted on a tailor's form of each man.
 
-**Research:** seventeen notes; today shoes, lacing, small pieces, belts, jeans, suits.
+**Set aside:** the donkey jacket (three reviews: a padded look); the suit jacket (three: Ron only two small breaks, at the lapel's end and under the collar; Darren barrel-shaped).
 
-**Pushes:** free tests only.
+**Research:** retopology and skinning; carrying garments and seam faults; fitting to a form, not the skin.
 
-**C: free:** 34 GB at the start, 40 now, after a dip to 20 (his cleanup page awaits you). Backup runs with this commit.
+**Pushes:** free tests only. **C: free:** 51 GB at the start, 56 now. Backup runs with this commit.
 
 ## Builder, Wednesday 30 September
 
