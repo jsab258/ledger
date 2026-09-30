@@ -539,6 +539,12 @@ SKIP_FRAGMENTS = ("/.git/", "/node_modules/", "/.venv", "/obj/", "/bin/",
                   "/ue-probe/Intermediate/", "/ue-probe/Binaries/",
                   "/ue-probe/Saved/", "/ue-probe/Packaged/",
                   "/ue-probe/Build/", "/ue-probe/DerivedDataCache/",
+                  # THE GAME'S STAGED DATA (30 September): tools/ue/
+                  # stage_game_data.py copies the game's run-time files, each
+                  # attributed at its source path, into this gitignored folder
+                  # before a package; staged on this PC, the walk counted every
+                  # voice clip twice, the copy as unattributed.
+                  "/ue-probe/Content/LedgerData/",
                   # CLAUDE CODE'S OWN HELPER WORKTREES (29 September): a helper
                   # run in isolation leaves a whole second checkout under
                   # .claude/worktrees/, gitignored and never in CI; walking it
