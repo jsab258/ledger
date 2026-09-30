@@ -56,6 +56,7 @@
 #include "Arrangement.h"
 #include "PlayerIdentity.h"
 #include "FirstWeek.h"
+#include "WeeksEnd.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -2007,6 +2008,168 @@ namespace Golden
 		return A;
 	}
 
+	// ---- the week's end (town list 6ca) ----------------------------------
+	//
+	// PerceptionGolden's EmitWeeksEnd, played again here; each row is found
+	// by its function and its labels.
+
+	inline const std::map<std::string, std::vector<std::string> >& WeekAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		for (int First : { 0, 1 })
+			for (int Day : { 5, 6, 7, 8 })
+				for (int Hour : { 9, 10, 11, 12 })
+				{
+					WeeksEnd W(First);
+					const GameTime At(Day + First, Hour, 0);
+					const bool bWaits = W.Waits(At);
+					const bool bAsked = W.Ask(At, false);
+					std::vector<std::string> O = { FromBool(bWaits), FromBool(bAsked) };
+					if (bAsked) { O.push_back(FromBool(W.Stands(GameTime(At.Day, 23, 59)))); O.push_back(FromBool(W.Stands(GameTime(At.Day + 1, 0, 0)))); }
+					else O.push_back("-");
+					Ans["WeekAsk|" + FromInt(First) + "|" + FromInt(At.TotalMinutes())] = O;
+				}
+		CastDay Cast;
+		std::string Err;
+		CastDay::Parse(R"({"talk_range_m":6,"places":{"mickeys_office":{"x_m":0,"z_m":0},"quay":{"x_m":50,"z_m":0}},"areas":{"mickeys":{"places":["mickeys_office"],"names":["Mickey's"]}},)"
+			R"("people":[{"id":"lena","routine":[[0,"off"],[9,"mickeys_office"],[18,"off"]]},{"id":"zlata","routine":[[0,"off"],[7,"mickeys_office"],[20,"off"]]},{"id":"joey","routine":[[0,"off"],[6,"quay"],[18,"off"]]}],"ties":[]})",
+			Cast, Err);
+		for (int Ai = 0; Ai <= (int)WeekAnswer::WontSay; ++Ai)
+			for (bool bClose : { false, true })
+			{
+				const WeekAnswer A = (WeekAnswer)Ai;
+				GossipMill Mill(std::make_shared<SocialGraph>());
+				for (const std::string& Id : Cast.People())
+					Mill.Add(std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+				WeeksEnd W;
+				W.Ask(GameTime(6, 10, 30), true);
+				const bool bDone = bClose ? W.Close(GameTime(7, 9, 0), &Mill, &Cast) : W.Give(A, GameTime(6, 11, 0), &Mill, &Cast);
+				std::string Holders;
+				for (const std::string& Id : Cast.People())
+				{
+					bool bHolds = false;
+					for (const RumorPtr& R : Mill.Get(Id)->Rumors) { if (WeeksEnd::IsWeekAnswer(R)) { bHolds = true; break; } }
+					if (bHolds) Holders += (Holders.empty() ? "" : ",") + Id;
+				}
+				RumorPtr Story;
+				for (const RumorPtr& R : Mill.Get("lena")->Rumors) { if (WeeksEnd::IsWeekAnswer(R)) { Story = R; break; } }
+				bool bRemembers = false;
+				for (const MemoryEvent& E : Mill.Get("lena")->Memory->Events) { if (E.Text == WeeksEnd::Remembered(W.Answer())) { bRemembers = true; break; } }
+				const WeeksEnd Back = WeeksEnd::FromJson(W.ToJson());
+				GameTime T1, T2;
+				std::vector<std::string> O = { FromBool(bDone), WeekAnswerName(W.Answer()), W.AnsweredAt(T1) ? FromInt(T1.TotalMinutes()) : std::string("-"), Holders };
+				if (!Story) O.push_back("null");
+				else { O.push_back(Story->TopicKey()); O.push_back(Story->Content.Value); O.push_back(Escape(Story->Summary)); }
+				O.push_back(FromBool(bRemembers));
+				O.push_back(WeekAnswerName(Back.Answer()));
+				O.push_back(Back.AnsweredAt(T2) ? FromInt(T2.TotalMinutes()) : std::string("-"));
+				Ans["WeekFiled|" + std::string(WeekAnswerName(A)) + "|" + FromBool(bClose)] = O;
+			}
+		const Gossiper G("wk", "wk", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+		for (const char* Value : { "winddown", "takeover", "wontsay" })
+			for (int K = 0; K <= (int)StreetVoice::StanceKind::Confronts; ++K)
+				for (int Seed = 0; Seed < 6; ++Seed)
+				{
+					RumorPtr About = std::make_shared<Rumor>(Fact("player", "week_d6", Value));
+					About->Summary = "x"; About->Confidence = 0.5; About->Sensitive = false; About->Hops = 1;
+					const std::shared_ptr<SpokenLine> L = StreetVoice::Recognition(&G, About, (StreetVoice::StanceKind)K, Seed);
+					std::vector<std::string> O;
+					if (!L) O.push_back("null");
+					else { O.push_back(L->Bank); O.push_back(Escape(L->Text)); O.push_back(FromBool(L->AboutPlayer)); }
+					Ans["RecognitionWeek|" + std::string(Value) + "|" + StreetVoice::StanceName((StreetVoice::StanceKind)K) + "|" + FromInt(Seed)] = O;
+				}
+		for (int Seed = 0; Seed < 6; ++Seed)
+		{
+			RumorPtr About = std::make_shared<Rumor>(Fact("player", "outfit_d6", "wounddown"));
+			About->Summary = Arrangement::SaidWoundDown; About->Confidence = 0.5; About->Sensitive = false; About->Hops = 1;
+			const std::shared_ptr<SpokenLine> L = StreetVoice::Recognition(&G, About, StreetVoice::StanceKind::Comments, Seed);
+			std::vector<std::string> O;
+			if (!L) O.push_back("null");
+			else { O.push_back(L->Bank); O.push_back(Escape(L->Text)); }
+			Ans["RecognitionOutfitWound|" + FromInt(Seed)] = O;
+		}
+		for (const char* HolderId : { "wk", "lena" })
+		{
+			Gossiper Holder(HolderId, HolderId, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", "week_d6", "takeover"));
+			R->Summary = "x"; R->Confidence = 0.9; R->Sensitive = false;
+			Holder.Rumors.push_back(R);
+			const RumorPtr Shows = StreetVoice::StoryThatShows(Holder, 0.35);
+			Ans["WeekShows|" + std::string(HolderId)] = { Shows ? Shows->TopicKey() : std::string("null") };
+		}
+
+		// THE EDGES (EmitWeeksEnd's regression rows).
+		const char* BadWeeks[] = {
+			R"({"first":0,"asked":9270,"realBook":true,"answer":"TakeOver","answered":9300})",
+			R"({"first":0,"asked":9270,"answer":"WontSay","answered":10080})",
+			R"({"first":0,"asked":5000})",
+			R"({"first":0,"asked":9270,"answer":"None","answered":9300})",
+			R"({"first":0,"asked":9270,"answer":"takeover","answered":9300})",
+			R"({"first":0,"asked":9270,"answer":"TakeOver","answered":11000})",
+			R"({"first":2,"asked":9270})",
+			R"({"first":0,"asked":9270.5})",
+			R"({"first":-1,"asked":9270})",
+			R"([1])",
+			R"({"first":0,"asked":9270,"realBook":"yes"})",
+			R"({"first":0,"asked":9270,"answer":"WontSay","answered":9300})",
+			R"({"first":0,"asked":9270,"answer":"WindDown","answered":9260})",
+			R"({"first":0,"asked":9270)",
+		};
+		for (int I = 0; I < (int)(sizeof(BadWeeks) / sizeof(BadWeeks[0])); ++I)
+		{
+			const WeeksEnd W = WeeksEnd::FromJson(BadWeeks[I]);
+			GameTime Ta, Tb;
+			Ans["WeekBadSave|" + FromInt(I)] = { FromBool(W.AskedAt(Ta)), WeekAnswerName(W.Answer()), W.AnsweredAt(Tb) ? FromInt(Tb.TotalMinutes()) : std::string("-"),
+				FromBool(W.RealBook()), Escape(W.ToJson()) };
+		}
+		auto Hm = [](int H, int M) { char B[16]; std::snprintf(B, sizeof(B), "%d:%02d", H, M); return std::string(B); };
+		WeeksEnd Sunday(0);
+		for (const auto& X : { std::make_pair(9, 59), std::make_pair(10, 0), std::make_pair(11, 59), std::make_pair(12, 0) })
+			Ans["WeekWaits|unasked " + Hm(X.first, X.second)] = { FromBool(Sunday.Waits(GameTime(6, X.first, X.second))) };
+		Sunday.Ask(GameTime(6, 10, 30), true);
+		const int Asked[4][3] = { { 6, 12, 0 }, { 6, 17, 59 }, { 6, 18, 0 }, { 7, 10, 0 } };
+		for (const auto& X : Asked)
+			Ans["WeekWaits|asked " + FromInt(X[0]) + " " + Hm(X[1], X[2])] = { FromBool(Sunday.Waits(GameTime(X[0], X[1], X[2]))), FromBool(Sunday.Stands(GameTime(X[0], X[1], X[2]))) };
+		Sunday.Give(WeekAnswer::TakeOver, GameTime(6, 11, 0), nullptr, nullptr);
+		{
+			const bool B1 = Sunday.Waits(GameTime(6, 11, 30));
+			const bool B2 = Sunday.Give(WeekAnswer::WindDown, GameTime(6, 11, 5), nullptr, nullptr);
+			Ans["WeekWaits|answered"] = { FromBool(B1), FromBool(B2) };
+			WeeksEnd Monday(1);
+			const bool M1 = Monday.Waits(GameTime(7, 10, 0));
+			const bool M2 = Monday.Ask(GameTime(7, 10, 0), false, false);
+			const bool M3 = Monday.Ask(GameTime(7, 10, 0), false);
+			Ans["WeekWaits|not a sunday"] = { FromBool(M1), FromBool(M2), FromBool(M3) };
+		}
+		for (const char* Value : { "winddown", "takeover", "wontsay" })
+		{
+			Gossiper Who("wr", "wr", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", "week_d6", Value));
+			R->Summary = "x"; R->Confidence = 0.9; R->Sensitive = false;
+			Who.Rumors.push_back(R);
+			StreetVoice::RemarkLedger L;
+			const StreetVoice::Regard Rg = StreetVoice::RegardFor(&Who, 0.35, false, &L, 1.0, false);
+			Ans["WeekRegard|" + std::string(Value)] = { StreetVoice::KnowingName(Rg.HowMuch), StreetVoice::StanceName(Rg.Stance), FromBool(Rg.bSpeaks) };
+		}
+		return Ans;
+	}
+
+	inline Answer WeekRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const int Labels = F[0] == "RecognitionWeek" ? 3 : (F[0] == "WeekAsk" || F[0] == "WeekFiled") ? 2 : 1;
+		if ((int)F.size() < 1 + Labels + 1) return A;
+		std::string Key = F[0];
+		for (int I = 1; I <= Labels; ++I) Key += "|" + F[I];
+		const auto& Ans = WeekAnswers();
+		const auto It = Ans.find(Key);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 1 + Labels, It->second);
+		return A;
+	}
+
 	// ---- Ada's tea (town list 6bg) ---------------------------------------
 	//
 	// PerceptionGolden's EmitTea, played again here. TeaSeenGoingOnce has no
@@ -3436,6 +3599,12 @@ namespace Golden
 		else if (Fn == "GossipFuzz")
 		{
 			A = GossipFuzzRow(F);
+		}
+		// THE WEEK'S END (town list 6ca): WeeksEnd.h and StreetVoice's banks.
+		else if (Fn == "WeekAsk" || Fn == "WeekFiled" || Fn == "RecognitionWeek" || Fn == "RecognitionOutfitWound" || Fn == "WeekShows"
+		         || Fn == "WeekBadSave" || Fn == "WeekWaits" || Fn == "WeekRegard")
+		{
+			A = WeekRow(F);
 		}
 		// ADA'S TEA (town list 6bg): FirstWeek.h.
 		else if (Fn == "Tea" || Fn == "TeaAsked" || Fn == "TeaBefore11" || Fn == "TeaClosed" || Fn == "TeaSeenGoing" || Fn == "TeaSeenGoingOnce" || Fn == "TeaSave"
