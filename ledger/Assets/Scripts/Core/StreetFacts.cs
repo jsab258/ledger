@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Ledger.Core
@@ -68,6 +69,15 @@ namespace Ledger.Core
             // cards, nothing new): for the rule table's plain answers (TalkRules).
             ("office", "", "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.", null,
                  "Mickey's is on Quay Street, with the rank outside.", null),
+            // WHAT THE STREET SAYS OF MICKEY (Jafar's yes, 30 September): only these
+            // two for now, the two that survived three blind reviews; for the
+            // regulars who knew him (the talking cards are Sheila's, Ron's and
+            // Darren's), never June, estranged, or anybody new to the street.
+            ("mickey_counsel", "", "Mickey kept his business to himself; you would not hear it from him on the street.", null,
+                 "Mickey kept his business to himself. You'd not hear it from him on the street.", null),
+            ("mickey_kept_ron", "rocco", "Mickey kept Ron on when the docks let him go in 1989.",
+                 "Mickey kept me on when the docks let me go in 1989.",
+                 "Mickey kept Ron on when the docks let him go.", "Mickey kept me on when the docks let me go."),
             // Their own words start with their name, so "Who are you?" is answered
             // (the blind review); "at Mickey's", not "here", since they say it anywhere.
             ("sheila_books", "lena", "Sheila Dunn has kept the books at Mickey's for thirty-one years.",
@@ -116,13 +126,22 @@ namespace Ledger.Core
             return card;
         }
 
+        // Facts some people on the street never hold (the Mickey lines: June is
+        // estranged, Alison came a month before he died).
+        static readonly Dictionary<string, string[]> NotFor = new Dictionary<string, string[]>
+        {
+            { "mickey_counsel", new[] { "june", "noor" } },
+            { "mickey_kept_ron", new[] { "june", "noor" } },
+        };
+
         /// What this person knows of them (a cast id; the facts about
         /// somebody else in the street's words, their own in theirs).
         public static List<string> For(string who)
         {
             var list = new List<string>();
-            foreach (var (_, about, fact, own, _, _) in All)
+            foreach (var (id, about, fact, own, _, _) in All)
             {
+                if (NotFor.TryGetValue(id, out var not) && Array.IndexOf(not, who) >= 0) continue;
                 if (about.Length > 0 && about == who) { if (own != null) list.Add(own); }
                 else list.Add(fact);
             }

@@ -82,8 +82,9 @@ namespace Ledger.Core
             // Partial: "Were you at the funeral?" is not answered by where it was.
             new Rule { Concept = "funeral", Kind = Kind.Partial, Facts = new[] { "funeral", "june" } },
             new Rule { Concept = "mickey_death", Kind = Kind.Answer, Facts = new[] { "died_heart", "died_when" } },
-            // What Mickey was like is backstory nobody has written: Jafar's first.
-            new Rule { Concept = "mickey_like", Kind = Kind.Scene },
+            // What Mickey was like: only what Jafar approved (30 September), and
+            // that is all they can tell him.
+            new Rule { Concept = "mickey_like", Kind = Kind.Partial, Facts = new[] { "mickey_counsel", "mickey_kept_ron" } },
             new Rule { Concept = "family", Kind = Kind.Answer, Facts = new[] { "june" } },
             new Rule { Concept = "inheritance", Kind = Kind.Answer, Facts = new[] { "will", "flat" } },
             new Rule { Concept = "door", Kind = Kind.Answer, Facts = new[] { "door" } },
