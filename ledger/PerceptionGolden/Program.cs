@@ -161,6 +161,23 @@ namespace Ledger.PerceptionGolden
             }
 
             var text = sb.ToString();
+            // ROWS A CORE FIX CHANGED, HELD BACK FROM THE COMMITTED TABLE UNTIL THE
+            // PORT FOLLOWS (30 September: a telling's wording has one placeholder,
+            // whatever the story's first letter): emitted only with --awaiting-port;
+            // the builder's port commit empties this list and accepts the table.
+            if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") < 0)
+            {
+                var held = new[] { "WordingOf|", "ExchangeHeard|", "RemarkCase|wording-kept|" };
+                var kept = new StringBuilder();
+                foreach (var row in text.Split('\n'))
+                {
+                    if (row.Length == 0) continue;
+                    bool hold = false;
+                    foreach (var h in held) if (row.StartsWith(h, StringComparison.Ordinal)) hold = true;
+                    if (!hold) kept.Append(row).Append('\n');
+                }
+                text = kept.ToString();
+            }
             System.IO.File.WriteAllText(path, text);
             // The COUNT with its denominator, on stderr so it cannot pollute
             // the table: a golden file that silently emitted nothing would
@@ -1489,13 +1506,23 @@ namespace Ledger.PerceptionGolden
             {
                 var visits = new List<object>();
                 for (int k = 0; k < 20; k++) visits.Add(new List<object> { (double)(k % 2 == 0 ? 6 : 5), "Wounding mark" + k });
-                var loaded = PoliceFile.FromJson(new Dictionary<string, object> { { "visits", visits } });
+                var reports = new List<object>();
+                for (int k = 0; k < 20; k++) reports.Add(new Dictionary<string, object> { { "who", "w" + k }, { "topic", "mark" + k }, { "offence", "Wounding" }, { "how", "Statement" }, { "day", 1.0 } });
+                var loaded = PoliceFile.FromJson(new Dictionary<string, object> { { "entries", reports }, { "visits", visits } });
                 Row(sb, "FixPoliceOrder", string.Join(",", loaded.Visits.Select(v => v.day + ":" + v.why.Substring(v.why.IndexOf(' ') + 1))));
                 var file = new PoliceFile();
                 file.Report("rita", "player.window_d1", Offence.Damage, 4, 1);
                 file.Report("hal", "player.window_d2", Offence.Damage, 4, 2);
                 var held = file.TakeIn("player.window_d1", T(3, 8), false, false);
                 Row(sb, "FixCellsCall", Bit(held != null), file.ConstableComes(3, T(3, 10)) ?? "null", file.ConstableCalls.Count.ToString(Inv), file.ConstableComes(4, T(4, 10)) ?? "null");
+                // A police save keeps only what play could make.
+                foreach (var (label, json) in new[]
+                {
+                    ("bad save 2", @"{""entries"":[{""who"":""a"",""topic"":""w"",""offence"":""Damage"",""how"":""Statement"",""day"":2}],""calls"":[[2,""w""],[4,""w""],[3,""w""],[5,""x""]],""taken"":[[""w"",1000],[""x"",2000],[""w"",1e9]]}"),
+                    ("talk early, visit unreported, two calls a day, spell weeks on", @"{""entries"":[{""who"":""rita"",""topic"":""w1"",""offence"":""Damage"",""how"":""Statement"",""day"":1},{""who"":""hal"",""topic"":""w2"",""offence"":""Damage"",""how"":""Statement"",""day"":1}],""visits"":[[2,""talk""],[4,""Wounding cut""],[3,""talk""]],""calls"":[[2,""w1""],[2,""w2""]],""taken"":[[""w1"",28800]]}"),
+                    ("a spell after its call", @"{""entries"":[{""who"":""rita"",""topic"":""w1"",""offence"":""Damage"",""how"":""Statement"",""day"":1}],""calls"":[[2,""w1""]],""taken"":[[""w1"",3840]]}"),
+                })
+                    Row(sb, "FixPoliceSave", label, Esc(MiniJson.Serialize(PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize(json))).ToJson())));
             }
         }
 
@@ -1747,6 +1774,9 @@ namespace Ledger.PerceptionGolden
                 Dictionary<string, object> parsed;
                 try { parsed = MiniJson.AsObject(MiniJson.Deserialize(badFiles[i])); }
                 catch (FormatException) { parsed = null; }
+                // Save 2 moved to EmitPortReviewFixes on 30 September: a spell that
+                // ends before its own call is refused now, and the port follows.
+                if (i == 2) continue;
                 Row(sb, "PoliceBadSave", i.ToString(Inv), Esc(MiniJson.Serialize(PoliceFile.FromJson(parsed).ToJson())));
             }
             foreach (Offence o in Enum.GetValues(typeof(Offence)))

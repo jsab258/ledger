@@ -247,8 +247,19 @@ namespace Ledger.Core
         /// second look at whatever it flagged. Returns the invented details
         /// (empty when the line may be said) or null when the checker failed or
         /// answered out of shape, and every call it made, for the cost.
+        public static System.Threading.Tasks.Task<(IReadOnlyList<string> invented, List<LlmResponse> calls)> CheckAsync(
+            ILlmClient client, string model, List<(string id, string text)> items, string line, System.Threading.CancellationToken ct) =>
+            CheckAsync(client, model, items, line, ct, null);
+
+        /// As above, with `focus`: the ids of the facts the reply was planned
+        /// from (ConversationEngine.PlanFirst). Each flagged detail then also gets
+        /// a look shown only those facts, beside the usual look at everything
+        /// they know, and stands cleared if either look clears it (Jafar's list of
+        /// 30 September: the reply judged against the facts it chose, with
+        /// labelled examples; production/research/grounded-replies/PLAN-FIRST-2026-09-30.md).
         public static async System.Threading.Tasks.Task<(IReadOnlyList<string> invented, List<LlmResponse> calls)> CheckAsync(
-            ILlmClient client, string model, List<(string id, string text)> items, string line, System.Threading.CancellationToken ct)
+            ILlmClient client, string model, List<(string id, string text)> items, string line, System.Threading.CancellationToken ct,
+            IReadOnlyCollection<string> focus)
         {
             var calls = new List<LlmResponse>();
             var known = NumberedKnown(items);
@@ -317,8 +328,23 @@ namespace Ledger.Core
             // it to naming a real item, not to naming a memory.
             // LOOKS A DETAIL (Looks; U1, 30 September): with more than one, a
             // detail stays refused only when every look refuses it, side by side.
+            // THE PLANNED FACTS, looked at alone (focus): the facts the reply was
+            // written from, with who they are, how they know him, the scene and
+            // the time now.
+            var focusItems = new List<(string id, string text)>();
+            if (focus != null && focus.Count > 0)
+            {
+                var focusSet = new HashSet<string>(focus);
+                foreach (var (id, text) in items)
+                    if (focusSet.Contains(id) || id == "K1" || id == "S1" || id == "T1") focusItems.Add((id, text));
+            }
+            int perDetail = Looks + (focusItems.Count > 0 ? 1 : 0);
+            string focusKnown = focusItems.Count > 0 ? NumberedKnown(focusItems) : null;
             foreach (var d in flagged)
+            {
                 for (int k = 0; k < Looks; k++) looks.Add(LookAsync(client, RequestVerify(model, known, new[] { d }), ct));
+                if (focusKnown != null) looks.Add(LookAsync(client, RequestVerify(model, focusKnown, new[] { d }), ct));
+            }
             // Every look is waited for, so none is left running unwatched when
             // the turn is cancelled (the independent check's third pass).
             try { await System.Threading.Tasks.Task.WhenAll(looks).ConfigureAwait(false); }
@@ -328,9 +354,9 @@ namespace Ledger.Core
             for (int i = 0; i < flagged.Count; i++)
             {
                 bool cleared = false;
-                for (int k = 0; k < Looks; k++)
+                for (int k = 0; k < perDetail; k++)
                 {
-                    var look = looks[i * Looks + k];
+                    var look = looks[i * perDetail + k];
                     // THE SECOND LOOK FAILING KEEPS THE LIST'S VERDICT (the
                     // independent check: a throw here let a flagged line be said
                     // word for word, and lost the first call's cost).
@@ -338,6 +364,9 @@ namespace Ledger.Core
                     if (v != null) calls.Add(v);
                     // What they know of the street's people clears a habit, never an
                     // event (town list 6ad).
+                    // (Who somebody is is cleared from a people line by the Core
+                    // alone, word for word, StatedIn: a look would let "Ron minding
+                    // Mickey's door", said of that night, through.)
                     var ok = v == null ? null : ParseVerify(v.Text, 1, habits.Contains(flagged[i]) ? ids : ids.FindAll(x => x[0] != 'P'));
                     if (ok != null && ok[0]) cleared = true;
                 }
@@ -379,6 +408,15 @@ namespace Ledger.Core
                 "and a detail that adds to what an item says is not supported. " +
                 "A time must agree with the items' times. A supported detail gives the id of the " + label + " item that supports it; " +
                 "with no such id it is not supported. " +
+                // WORKED EXAMPLES, from the town's own flagged replies (Jafar's list of
+                // 30 September, after the audit: "judge paraphrases against labelled
+                // examples"): the same thing in other words and a plain consequence
+                // are supported; a size, a manner, a person or a happening added is not.
+                "Examples, each a DETAIL against one item: \"Mickey's old flat, over the office\" against \"The new owner is living in Mickey's " +
+                "flat over the office.\" is supported (the same thing in other words). \"nobody goes in it\" against \"it has been locked since he " +
+                "died, and Sheila keeps the key\" is supported (a plain consequence). \"a small funeral\" against \"Mickey's funeral was at Father Walsh's chapel\" is not (a size " +
+                "added). \"Father Walsh took the service\" against the same item is not (a deed added). \"the phone rings most mornings\" against " +
+                "\"The cab office opens at seven\" is not (a habit added). " +
                 "Answer with JSON only: {\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"M1\"}, {\"n\": 2, \"supported\": false}]}.";
             var sb = new StringBuilder();
             sb.AppendLine(label + ":");

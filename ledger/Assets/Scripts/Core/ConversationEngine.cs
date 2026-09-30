@@ -67,6 +67,56 @@ namespace Ledger.Core
         /// (ClaimBench firsts).
         public static bool ChooseFirst = true;
 
+        /// THE FACTS AND THE INTENT BEFORE THE WORDS (Jafar's list of 30
+        /// September, after the adversarial audit; production/research/
+        /// grounded-replies/PLAN-FIRST-2026-09-30.md): the writer is shown what
+        /// the character knows as numbered facts and plans first, in one tag,
+        /// what it means to do (answer, partly, dontknow, deflect, askback,
+        /// refuse) and which one to three facts it will use, then words the reply
+        /// from them. The tag is never voiced: the first sentence is read after
+        /// it. Off until measured against the fixed newcomer set (ClaimBench
+        /// firsts --plan).
+        public static bool PlanFirst = false;
+
+        /// The last reply's plan: its intent and the fact ids it named that the
+        /// character holds; null when there was none.
+        public (string intent, List<string> facts)? LastPlan { get; private set; }
+
+        static readonly System.Text.RegularExpressions.Regex PlanTag = new System.Text.RegularExpressions.Regex(
+            @"^\s*<plan\s+intent\s*=\s*""(?<i>[a-z]+)""\s+facts\s*=\s*""(?<f>[^""]*)""\s*/?>\s*",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+        /// The reply after its plan: null while a plan tag is still being written,
+        /// the text itself when there is no plan.
+        internal static string AfterPlan(string text)
+        {
+            if (text == null) return null;
+            var t = text.TrimStart();
+            if (!t.StartsWith("<plan", StringComparison.OrdinalIgnoreCase)) return t.StartsWith("<") && t.Length < 5 ? null : text;
+            var m = PlanTag.Match(t);
+            return m.Success ? t.Substring(m.Length) : null;
+        }
+
+        /// The reply with its plan tag taken out, wherever the model put one.
+        internal static string StripPlan(string text)
+        {
+            if (text == null) return null;
+            var m = PlanTag.Match(text.TrimStart());
+            var rest = m.Success ? text.TrimStart().Substring(m.Length) : text;
+            return System.Text.RegularExpressions.Regex.Replace(rest, @"<plan\b[^>]*>", "").Trim();
+        }
+
+        (string intent, List<string> facts)? ReadPlan(string text, ICollection<string> ids)
+        {
+            if (text == null) return null;
+            var m = PlanTag.Match(text.TrimStart());
+            if (!m.Success) return null;
+            var facts = new List<string>();
+            foreach (var f in m.Groups["f"].Value.Split(new[] { ',', ' ', ';' }, StringSplitOptions.RemoveEmptyEntries))
+                if (ids.Contains(f.Trim()) && !facts.Contains(f.Trim())) facts.Add(f.Trim());
+            return (m.Groups["i"].Value.ToLowerInvariant(), facts);
+        }
+
         /// THE FIRST SENTENCE AHEAD OF ITS CHECK (U1, 30 September;
         /// production/research/talk-helper/METHOD-2026-09-30.md: in practice the
         /// check runs alongside, not in series): called with the first sentence
@@ -350,10 +400,28 @@ namespace Ledger.Core
                 sb.AppendLine(StreetHours);
             }
 
+            // THE PLAN FIRST (PlanFirst): what they know, numbered, the facts that
+            // bear most on his line marked, and a plan in one tag before the words.
+            if (PlanFirst)
+            {
+                var known = ClaimCheck.KnownItems(Card, retrieved, Memory.Beliefs, WhyForCheck(), sceneContext,
+                                                  now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours);
+                var bears = new HashSet<string>(ClaimCheck.Bearing(known, playerInput));
+                sb.AppendLine();
+                sb.AppendLine("Everything you know, numbered (the ones marked * bear most on what he just said):");
+                foreach (var (id, text) in known) sb.AppendLine(id + (bears.Contains(text) ? "*" : "") + ": " + text);
+                sb.AppendLine("Before you speak, plan in one tag, exactly like this: <plan intent=\"answer\" facts=\"H3,C2\"/>");
+                sb.AppendLine("intent is answer (what you know answers him), partly (it answers some of it), dontknow (nothing numbered above answers it), " +
+                              "deflect (you would rather not say), askback (you need to know what he means) or refuse. facts are the numbers of the one to " +
+                              "three facts your reply will use, or none.");
+                sb.AppendLine("Then, straight after the tag, say your reply in your own voice. Every specific in it (who, what, when, where, what anyone " +
+                              "did or looks like) comes from the facts you named; say it in your own words. If they do not answer him, say you do not know " +
+                              "in your own way and give him something you do know. The tag is never spoken; nothing else goes in angle brackets.");
+            }
             // WHAT BEARS ON HIS LINE, chosen before the reply is written, from
             // the same items the check reads (U1, 30 September): the reply is
             // grounded before it is written, not only vetoed after.
-            if (ChooseFirst)
+            else if (ChooseFirst)
             {
                 var bearing = ClaimCheck.Bearing(ClaimCheck.KnownItems(Card, retrieved, Memory.Beliefs, WhyForCheck(), sceneContext,
                                                                        now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours), playerInput);
@@ -526,6 +594,9 @@ namespace Ledger.Core
         /// null when the checker failed or answered out of shape, and its calls.
         public Func<ILlmClient, string, List<(string id, string text)>, string, CancellationToken,
             Task<(IReadOnlyList<string> invented, List<LlmResponse> calls)>> CheckLine { get; set; } = ClaimCheck.CheckAsync;
+        /// The check with the plan's facts (PlanFirst), replaceable as CheckLine is.
+        public Func<ILlmClient, string, List<(string id, string text)>, string, CancellationToken, IReadOnlyCollection<string>,
+            Task<(IReadOnlyList<string> invented, List<LlmResponse> calls)>> CheckFocused { get; set; } = ClaimCheck.CheckAsync;
         public string CheckerModel { get; set; } = Models.Ambient;
 
         /// What the last reply's FIRST draft claimed without support; empty when
@@ -1231,7 +1302,10 @@ namespace Ledger.Core
                         if (d.FirstTask != null) return;
                         // A stage direction said in the first person is never the
                         // sentence spoken early (town list 6aj): the next one is.
-                        var f = FirstSentence(ResponseValidator.WithoutGestures(text));
+                        // With the plan first, the first sentence is read after the tag.
+                        var spoken = PlanFirst ? AfterPlan(text) : text;
+                        if (spoken == null) return;
+                        var f = FirstSentence(ResponseValidator.WithoutGestures(spoken));
                         if (f == null) return;
                         d.First = ValidateReply(f);
                         var said = d.First;
@@ -1339,7 +1413,9 @@ namespace Ledger.Core
         {
             try
             {
-                var (found, calls) = await CheckLine(Checker, CheckerModel, known, line, ct);
+                // With the plan first, the check also looks at the facts the plan named.
+                var focus = PlanFirst && LastPlan.HasValue && LastPlan.Value.facts.Count > 0 ? LastPlan.Value.facts : null;
+                var (found, calls) = focus != null ? await CheckFocused(Checker, CheckerModel, known, line, ct, focus) : await CheckLine(Checker, CheckerModel, known, line, ct);
                 foreach (var c in calls) _cost?.Record(CheckerModel, c.InputTokens, c.OutputTokens);
                 // What a clean line drew on, from the list's own answer (its first call).
                 _lastCleanCited = found != null && found.Count == 0 && calls != null && calls.Count > 0
@@ -1502,7 +1578,15 @@ namespace Ledger.Core
                 throw;
             }
 
-            var reply = d1.Response != null ? ValidateReply(d1.Response.Text) : null;
+            LastPlan = null;
+            if (PlanFirst && d1.Response != null)
+            {
+                var ids = new HashSet<string>();
+                foreach (var (id, _) in ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown), Memory.Beliefs, WhyForCheck(), sceneContext,
+                                                              now.ToldAs, HowYouKnowHim, People, SpeakerName, StreetHours)) ids.Add(id);
+                LastPlan = ReadPlan(d1.Response.Text, ids);
+            }
+            var reply = d1.Response != null ? ValidateReply(PlanFirst ? StripPlan(d1.Response.Text) : d1.Response.Text) : null;
             bool firstHeard = d1.Heard;
             string firstSentence = d1.First;
             IReadOnlyList<string> firstFlagged = d1.FirstFlagged;
@@ -1571,7 +1655,7 @@ namespace Ledger.Core
                         }
                         else
                         {
-                            var redrafted = ValidateReply(d2.Response.Text);
+                            var redrafted = ValidateReply(PlanFirst ? StripPlan(d2.Response.Text) : d2.Response.Text);
                             var again = await InventedAsync(known, redrafted, ct);
                             Step("recheck");
                             bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0 && RealWorld.Find(redrafted).Count == 0;

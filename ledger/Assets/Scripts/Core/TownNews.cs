@@ -58,6 +58,10 @@ namespace Ledger.Core
                     throw new FormatException("town news: a story needs an id, a summary and an area");
                 if (!(o.TryGetValue("day", out var d) && d is double dd) || !(o.TryGetValue("hour", out var h) && h is double hh) || hh < 0 || hh > 23)
                     throw new FormatException($"town news: {st.Id} needs a day and an hour");
+                // A whole day within what a save keeps, a whole hour (the port's
+                // independent check, 30 September: 1e10, or a fraction, was taken).
+                if (dd != Math.Floor(dd) || dd < 0 || dd >= Arrangement.LastDay || hh != Math.Floor(hh))
+                    throw new FormatException($"town news: {st.Id} needs a whole day from 0 to {Arrangement.LastDay - 1} and a whole hour");
                 st.Day = (int)dd; st.Hour = (int)hh;
                 var f = MiniJson.GetList(o, "fact");
                 if (f == null || f.Count != 3 || !(f[0] is string fs) || !(f[1] is string fp) || !(f[2] is string fv))
