@@ -50,7 +50,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Clothes, Wednesday 30 September
 
-**Through the gate, handed to the builder** (he puts them on your page, on the people): Ron's black work boots; Sheila's handbag and her spectacles on their chain; Darren's belt, pager and white T-shirt; Sheila's skirt (shirt and skirt judged standing, as recommended below). Sheila's tights go to him as a skin material.
+**Through the gate, handed to the builder** (he puts them on your page, on the people): Ron's black work boots; Sheila's handbag and her spectacles on their chain; Darren's belt, pager and T-shirt; Sheila's skirt and blouse (those three judged standing, as recommended below). Sheila's tights go to him as a skin material.
 
 **Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its builds; Ron's trousers; the flat cap; Sheila's cardigan; Ron's jumper and Darren's jacket (right standing, broken sitting); Darren's trainers, Sheila's shoes, Darren's jeans (the seat).
 
@@ -64,7 +64,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Pushes:** free tests only.
 
-**C: free:** 34 GB at the start, 42 now (the builder's cleanup page waits on you). Backup runs with this commit.
+**C: free:** 34 GB at the start, 20 now and falling with the builder's work (his cleanup page waits on you). Backup runs with this commit.
 
 ## Builder, Wednesday 30 September
 

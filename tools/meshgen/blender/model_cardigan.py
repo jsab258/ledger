@@ -621,8 +621,9 @@ if opt("--tuck", 0.0):
     # lowest 5 cm drawn in towards her, up to --tuck, never nearer her than 2 mm
     for v in knit_me.vertices:
         p = Vector(v.co)
-        if p.z < HEM_Z + 0.05:
-            f = 1.0 - (p.z - HEM_Z) / 0.05
+        TH = opt("--tuck-h", 0.05)                          # (a blouse: only the part inside the band, so it puffs above)
+        if p.z < HEM_Z + TH:
+            f = 1.0 - (p.z - HEM_Z) / TH
             f = f * f * (3 - 2 * f)
             hit, n_, _f, _d = BVH.find_nearest(p)
             if hit is not None:
@@ -801,12 +802,12 @@ def placket(extras_):
         return
     rows_p = [[r_[k] for k in keep] for r_ in rows_p]
     extras_.append(strip("Placket", rows_p, knitm, 0.0012))
-    zb = [z_ for z_ in np.linspace(HEM_Z + 0.06, rows_p[1][-1].z - 0.035, 5)]
+    zb = [z_ for z_ in np.linspace(HEM_Z + 0.06, rows_p[1][-1].z - 0.05, 5)]      # (the top one half sank under the collar)
     for z_ in zb:
         q = on_knit_from_front(0.0, float(z_))
         if q is None:
             continue
-        bpy.ops.mesh.primitive_cylinder_add(vertices=12, radius=0.0055, depth=0.0025, location=q + Vector((0, -0.0028, 0)),
+        bpy.ops.mesh.primitive_cylinder_add(vertices=12, radius=0.0055, depth=0.0022, location=q + Vector((0, -0.0038, 0)),   # on the placket's face
                                             rotation=(math.pi / 2, 0, 0))
         b_ = bpy.context.active_object
         b_.data.materials.append(tailor.material("M_BlouseButton", (0.82, 0.78, 0.68), 0.3))
@@ -1168,7 +1169,7 @@ WD = opt("--welt-drop", 0.006)          # the welt's lowest row below the knit (
 welt = ring_band("Welt", lambda r: Vector((0.0, mid_y, HEM_Z + 0.002 + (WELT - 0.002) * r / 5 - (WD if r == 0 else 0.0))), lambda r: Vector((0, 0, 1)),
                  6, 256, 0.0025, 0.007, 0.20,
                  skip=lambda q: q is None or (not CREW and q.y < FRONT_Y and abs(q.x) < 0.012))   # (a pullover's welt goes all round)
-if welt and (not EXTRUDE or CREW):
+if welt and (not EXTRUDE or CREW) and not opt("--tuck", 0.0):      # (tucked in, a hem band showed as a ledge)
     extras.append(welt)
 # SNUG CUFFS (the second review: 'the sleeve ends flare open with a thin,
 # ragged rim'): each a ribbed tube 5 cm long round the wrist, 8 mm clear of it,
