@@ -255,8 +255,12 @@ namespace LedgerCore
 			// Where she is when he answers: the office on her Sunday off, or her
 			// routine's place; anywhere else, nobody overhears it. The C#'s null
 			// area is kept apart from one named "".
-			std::string Area;
-			if (!Cast->AreaOf(bAtOffice ? std::string(Office) : Cast->PlaceOf(Sheila, At.Day, At.Hour), Area)) return;
+			// Sheila not in the cast has no place (the C#'s null), so nobody
+			// overhears; one-argument PlaceOf would give "", a place a cast may
+			// name (the week's independent check, 30 September).
+			std::string Place = Office, Area;
+			if (!bAtOffice && !Cast->PlaceOf(Sheila, At.Day, At.Hour, Place)) return;
+			if (!Cast->AreaOf(Place, Area)) return;
 			for (const std::string& P : Cast->People())
 			{
 				std::string Theirs;

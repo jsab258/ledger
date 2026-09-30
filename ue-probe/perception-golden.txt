@@ -55872,6 +55872,7 @@ WeekBadSave|10|1|None|-|0|{"first":0,"asked":9270,"realBook":false}
 WeekBadSave|11|1|WontSay|9300|0|{"first":0,"asked":9270,"realBook":false,"answer":"WontSay","answered":9300}
 WeekBadSave|12|1|None|-|0|{"first":0,"asked":9270,"realBook":false}
 WeekBadSave|13|0|None|-|0|{"first":0}
+WeekNoSheila|pat|1|0
 WeekWaits|unasked 9:59|0
 WeekWaits|unasked 10:00|1
 WeekWaits|unasked 11:59|1
