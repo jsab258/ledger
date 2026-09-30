@@ -13,9 +13,10 @@ namespace Ledger.Core
         /// (0 someone, 1 silhouette, 2 a mark, 3 a face, 4 recognition), or -1
         /// when the account does not carry it. For a first-hand account it is
         /// the rung the witness reached; recognition (4) is what names him.
-        /// NOT READ OFF THE CERTAINTY: a sighting is capped at 0.94 by
-        /// Observe.CertaintyFor, so the 0.95 line can never name anybody
-        /// (independent check, 24 September).
+        /// NOT READ OFF THE CERTAINTY: a sighting short of a full one is capped
+        /// at 0.94 by Observe.CertaintyFor, and a full one reaches it only with
+        /// recognition, so the rung, not the 0.95 line, is what names him
+        /// (independent check, 24 September; the review's A10, 30 September).
         public int Rung;
         /// A heard account whose first teller named him (they recognised
         /// him). Rumor.OriginRung carries the teller's rung through every
