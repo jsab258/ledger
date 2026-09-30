@@ -30,7 +30,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 1 October
 
-**[Your page](https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz):** two taps. Does seeing Tom break a window send a neighbour to the police? (I say yes.) Sheila on the faster model? (I say try it, blind-checked.)
+**[Your page](https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz):** three taps. Does seeing Tom break a window send a neighbour to the police? (I say yes.) Sheila on the faster model? (I say try it, blind-checked.) The other characters' street lines: one more try, a new way? (I say yes, once.)
 
 **Your review's Core side:** all fixed and ported, each test first:
 - Sheila asks on Monday if he misses Sunday (seen in the game);
@@ -42,7 +42,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - the town's talk in time;
 - a no across one o'clock.
 
-Three checks (two fresh reviewers, then the builder) found faults in my fixes; all mended.
+Three checks found faults in my fixes; all mended.
 
 **Set aside after three reviews (past the two-tries rule):** the other named characters' street lines; the shared lines stay.
 
@@ -54,7 +54,7 @@ Three checks (two fresh reviewers, then the builder) found faults in my fixes; a
 
 **C: free:** 56.3 GB, 63.4 now. Backup runs with this commit.
 
-**Next:** your two taps.
+**Next:** your three taps.
 
 ## Clothes, Thursday 1 October
 
