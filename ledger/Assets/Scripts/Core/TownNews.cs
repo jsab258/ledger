@@ -167,6 +167,28 @@ namespace Ledger.Core
         /// What a finder remembers: the damage they saw, not the deed.
         public string MemoryOf() => "I came by and saw it for myself: " + Said + ". I never saw who did it.";
 
+        /// WHAT THE KEEPER REMEMBERS of her own place (the independent review of
+        /// 30 September, A9: Rita "came by" her own window): in her own words,
+        /// the place's name in the story made "my" ("somebody put Rita's window
+        /// in": "Somebody put my window in"), found when she came in, or while
+        /// she was there when it happened.
+        public string KeeperMemoryOf(CastDay cast, bool wasThere)
+        {
+            string own = Said;
+            var names = new List<string>(cast != null ? cast.AreaNames(Area) : (IReadOnlyList<string>)new List<string>());
+            names.Sort((x, y) => y.Length.CompareTo(x.Length));
+            foreach (var n in names)
+            {
+                int at = own.IndexOf(n, StringComparison.Ordinal);
+                if (at < 0) continue;
+                own = own.Substring(0, at) + "my" + (n.EndsWith("'s", StringComparison.Ordinal) ? "" : " place") + own.Substring(at + n.Length);
+                break;
+            }
+            if (own == Said) own = Said + ", at my place";
+            own = own.Length > 0 ? char.ToUpperInvariant(own[0]) + own.Substring(1) : own;
+            return own + (wasThere ? ", and me inside. " : " while I wasn't there; I found it when I came in. ") + "I never saw who did it.";
+        }
+
         static long FloorDiv(long a, long b) => a >= 0 ? a / b : -((-a + b - 1) / b);
 
         /// A deed's damage in `area` (a CastDay area id), under `key` (unique
@@ -181,7 +203,9 @@ namespace Ledger.Core
             long longest = doneAt.TotalMinutes + LongestUnmendedDays * 24L * 60;
             MendedAt = mend.TotalMinutes > longest ? GameTime.FromTotalMinutes(longest) : mend;
             foreach (var p in leaveOut ?? Array.Empty<string>()) if (p != null) _leaveOut.Add(p);
-            _nextHour = FloorDiv(doneAt.TotalMinutes, 60) + 1;
+            // From the deed's own hour: whoever is in the area then is there when it
+            // happens and knows it at once (the independent review, A9).
+            _nextHour = FloorDiv(doneAt.TotalMinutes, 60);
         }
 
         /// THE HOURS SINCE THE LAST CALL, up to `now` or its mending: whoever came
@@ -208,11 +232,13 @@ namespace Ledger.Core
                     _found.Add(p);
                     // Heard it before coming by: they see it, and keep the one copy.
                     if (g.Rumors.Exists(r => r.Content != null && r.Content.Subject == TownNews.Subject && r.Content.Predicate == Key)) continue;
-                    var at = new GameTime(day, hour, 0);
+                    // There when it happened: at the deed's time; else as the hour starts.
+                    bool there = h * 60 <= DoneAt.TotalMinutes;
+                    var at = there ? DoneAt : new GameTime(day, hour, 0);
                     int memories = g.Memory.Events.Count;
                     mill.Witness(p, fact, Said, false, at, 0.9);
                     if (g.Memory.Events.Count > memories) g.Memory.Events.RemoveRange(memories, g.Memory.Events.Count - memories);
-                    g.Memory.Append(new MemoryEvent(at, "observation", 0.6, MemoryOf()));
+                    g.Memory.Append(new MemoryEvent(at, "observation", 0.6, p == cast.KeeperOf(Area) ? KeeperMemoryOf(cast, there) : MemoryOf()));
                     found.Add((p, at));
                 }
             }

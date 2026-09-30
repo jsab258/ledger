@@ -7709,6 +7709,37 @@ namespace Ledger.CoreTests
                       string.Join(",", early.Select(e => e.who + "@" + e.when)) + " | " + string.Join(",", later.Select(e => e.who + "@" + e.when)));
             }
 
+            // THE KEEPER FINDS HER OWN DAMAGE, IN HER OWN WORDS, AND AT ONCE IF SHE IS
+            // THERE (the independent review of 30 September, A9: Rita, behind her
+            // counter at a noon smash, "came by" at one o'clock and remembered
+            // "somebody put Rita's window in" of her own window). The cast file
+            // names who keeps a place ("keeper").
+            {
+                var kept = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"counter\":{\"x_m\":0,\"z_m\":0},\"step\":{\"x_m\":0,\"z_m\":3}}," +
+                    "\"areas\":{\"shop\":{\"places\":[\"counter\",\"step\"],\"names\":[\"Rita's\",\"the pawn shop\"],\"keeper\":\"rita\"}}," +
+                    "\"people\":[{\"id\":\"rita\",\"routine\":[[0,\"off\"],[9,\"counter\"],[17,\"off\"]]},{\"id\":\"passer\",\"routine\":[[0,\"off\"],[14,\"step\"],[15,\"off\"]]}],\"ties\":[]}");
+                var wrongKept = new List<string>();
+                foreach (var (doneAt, ritaAt, there) in new[] { (new GameTime(0, 2, 0), new GameTime(0, 9, 0), false), (new GameTime(0, 12, 5), new GameTime(0, 12, 5), true) })
+                {
+                    var km = new GossipMill(null);
+                    foreach (var id in kept.People) km.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    var dmg = new Aftermath("shop", "rita_window", "somebody put Rita's window in", doneAt);
+                    var found = dmg.Tick(km, kept, new GameTime(0, 20, 0));
+                    var rita = found.Find(f => f.who == "rita");
+                    var passer = found.Find(f => f.who == "passer");
+                    string ritaMem = km.Get("rita").Memory.Events.Count == 1 ? km.Get("rita").Memory.Events[0].Text : "(" + km.Get("rita").Memory.Events.Count + " memories)";
+                    string passerMem = km.Get("passer").Memory.Events.Count == 1 ? km.Get("passer").Memory.Events[0].Text : "";
+                    if (rita.who == null || !rita.when.Equals(ritaAt)) wrongKept.Add($"{doneAt}: Rita found it at {rita.when}, should {ritaAt}");
+                    if (!ritaMem.Contains("my window") || ritaMem.Contains("I came by") || ritaMem.Contains("Rita's") || !ritaMem.Contains("never saw who did it")
+                        || ritaMem.Contains("I found it when I came in") == there)
+                        wrongKept.Add($"{doneAt}: Rita remembers \"{ritaMem}\"");
+                    if (passer.who == null || !passer.when.Equals(new GameTime(0, 14, 0)) || passerMem != dmg.MemoryOf()) wrongKept.Add($"{doneAt}: the passer-by {passer.when} \"{passerMem}\"");
+                }
+                Check(wrongKept.Count == 0,
+                      "the keeper finds her own damage in her own words (\"my window\", never \"I came by\" or her own name): when she comes in, or at once if she is there when it happens; a passer-by still comes by and sees it",
+                      string.Join(" | ", wrongKept));
+            }
+
             // THE TOWN'S OWN NEWS (town list 6aq): a happening among the named cast,
             // seen by everybody in its area at its hour, filed once, spread by the
             // same rounds, told as news and never as about him, raising nobody's

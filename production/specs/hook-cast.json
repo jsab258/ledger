@@ -192,7 +192,7 @@
    "names": ["the fish market", "the fishmonger's", "the market"],
    "hours": {"mon": [7.5, 14], "tue": [7.5, 14], "wed": [7.5, 13], "thu": [7.5, 14], "fri": [7.5, 14], "sat": [7.5, 14]}
   },
-  "ritas": {"street": true, 
+  "ritas": {"keeper": "rita", "street": true, 
    "places": ["ritas_counter", "ritas_step"],
    "names": ["Rita's", "the pawn shop", "the pawnbroker's", "the pawn"],
    "hours": {"mon": [9, 17.5], "tue": [9, 17.5], "wed": [9, 13], "thu": [9, 17.5], "fri": [9, 17.5], "sat": [9, 17.5]}
@@ -226,7 +226,7 @@
    "hours": {"mon": [6, 17.5], "tue": [6, 17.5], "wed": [6, 17.5], "thu": [6, 17.5], "fri": [6, 17.5], "sat": [6, 17.5], "sun": [7, 12]},
    "hours_note": "the pensions counter nine till half five on weekdays"
   },
-  "hals": {"street": true, 
+  "hals": {"keeper": "hal", "street": true, 
    "places": ["hals_shop"],
    "names": ["Hal's"],
    "hours": {"mon": [10, 18], "tue": [10, 18], "wed": [10, 13], "thu": [10, 18], "fri": [10, 18], "sat": [10, 18]},
