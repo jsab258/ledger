@@ -134,6 +134,12 @@ namespace LedgerCore
 				}
 				if (Key == Off()) { Err = "cast file: 'off' is not a place"; return false; }
 				C.PlaceAt[Key] = std::make_pair(X->Num, Z->Num);
+				// INSIDE A BUILDING (CastDay.cs, the review's D): no talk through its walls.
+				if (const Value* In = Get(P, "inside"))
+				{
+					if (In->Type != T_BOOL) { Err = "cast file: place " + Key + "'s inside must be true or false"; return false; }
+					if (In->Bool) C.InsidePlaces.insert(Key);
+				}
 				std::string Said;
 				if (GetString(P, "said", Said) && Trim(Said).size() > 0) C.Said[Key] = Trim(Said);
 			}
@@ -305,8 +311,18 @@ namespace LedgerCore
 			double Ax = 0, Az = 0, Bx = 0, Bz = 0;
 			if (!Where(A, Day, Hour, Ax, Az) || !Where(B, Day, Hour, Bx, Bz)) return false;
 			const double Dx = Ax - Bx, Dz = Az - Bz;
-			return std::sqrt(Dx * Dx + Dz * Dz) <= TalkRangeM;
+			if (std::sqrt(Dx * Dx + Dz * Dz) > TalkRangeM) return false;
+			// NO TALK THROUGH A WALL (CastDay.cs, the review's D): in the same area,
+			// or both out on the pavement.
+			std::string Pa, Pb, Aa, Ab;
+			PlaceOf(A, Day, Hour, Pa);
+			PlaceOf(B, Day, Hour, Pb);
+			const bool bSameArea = AreaOf(Pa, Aa) && AreaOf(Pb, Ab) && Aa == Ab;
+			return bSameArea || (!IsInside(Pa) && !IsInside(Pb));
 		}
+
+		/// A place inside a building (CastDay.cs IsInside).
+		bool IsInside(const std::string& Place) const { return InsidePlaces.count(Place) > 0; }
 
 		int HoursTogetherPerWeek(const std::string& A, const std::string& B) const
 		{
@@ -416,6 +432,7 @@ namespace LedgerCore
 		std::set<std::string> NameOnTrust;
 		std::set<std::string> NeverPolice;
 		std::set<std::string> StreetAreas;
+		std::set<std::string> InsidePlaces;
 		std::map<std::string, std::string> KeeperOfArea;
 		std::vector<Tie> TieList;
 

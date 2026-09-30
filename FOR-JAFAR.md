@@ -63,27 +63,25 @@ Nothing waiting on you (every page's stored answers checked at 22:05: yours, the
 
 ## Builder, Thursday 1 October
 
-(Written 30 September, 18:00.)
+(Written 30 September, 22:50; refreshed by 07:00.)
 
-**No page from me today;** the town's has your two taps.
+**No page from me;** the town's page is all answered.
 
-**The route, item 1, done, walked in the packaged game:** the town's week hour by hour as the Core's: Rita's window, witnesses, damage mended, police, DS Ellis, Ron's envelope taken down or refused, Ada's tea, Sunday's answer; Z stops for each; Continue puts you back where you stood.
+**The route: not done.** Your reviewer's three runs in the finished game showed every fault it had read, and one more: no conversation was ever saved. All the High faults are fixed, a failing test first for each, the town's half ported: the witnesses are whoever is really there, in that hour's light; people keep their day; meeting him lets them recognise him; only someone who knew him names him; talk survives Continue. Also fixed: the Z wait (hour by hour), safer saves, no talk through walls, witness lines that said "half nine" at noon.
 
-**Also:** the town's newest fourteen fixes ported; both research pull requests merged; your rulings recorded.
+**Evidence:** 38 of 38 checks; the port agrees with all 57,770 rows; the build machine passed the first push.
 
-**Measured, not the real path:** the voice alone, 0.7 to 9.9 s from Enter to first sound.
-
-**Failed or unproven:** the build machine's last run failed once (its reload died at 8 s; that package passes here); the quay is black at night; I briefly put a stray panel over Rita's front (fixed).
+**Failed or unproven:** I broke the Core tests once (fixed in minutes); not yet walked in the packaged game.
 
 **Past two tries:** nothing.
 
-**C:** 45 GB this morning, 65 now (hibernation off). F: 9 GB.
+**C:** 45 GB this morning, 64.9 now. F: 8 GB.
 
-**Research:** seven cloud notes merged (voices, faces, testing, Mickey's, talk, townspeople, in-game voice).
+**Research:** none new tonight.
 
 **Backup:** with this commit.
 
-**Try it:** double-click the played copy, New game; after eight, T to Ron at Mickey's door. **Your call:** measuring real talk, (A) recommended.
+**Next:** the packaged walk, then I tell you the route is ready for your cloud review.
 
 ## 26 September, day
 

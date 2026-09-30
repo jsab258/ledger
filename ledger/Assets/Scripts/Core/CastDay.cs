@@ -51,6 +51,7 @@ namespace Ledger.Core
         readonly Dictionary<string, List<string>> _areaNames = new Dictionary<string, List<string>>();
         readonly Dictionary<string, string> _within = new Dictionary<string, string>();
         readonly HashSet<string> _street = new HashSet<string>();
+        readonly HashSet<string> _inside = new HashSet<string>();
         readonly Dictionary<string, string> _keeper = new Dictionary<string, string>();
         readonly Dictionary<string, (double open, double close)?[]> _hours = new Dictionary<string, (double, double)?[]>();
         readonly Dictionary<string, string> _hoursNote = new Dictionary<string, string>();
@@ -91,6 +92,11 @@ namespace Ledger.Core
                 if (kv.Key == Off) throw new FormatException("cast file: 'off' is not a place");
                 c._places[kv.Key] = (x, z);
                 if (p.TryGetValue("said", out var so) && so is string saidWords && saidWords.Trim().Length > 0) c._said[kv.Key] = saidWords.Trim();
+                if (p.TryGetValue("inside", out var io))
+                {
+                    if (!(io is bool inside)) throw new FormatException($"cast file: place {kv.Key}'s inside must be true or false");
+                    if (inside) c._inside.Add(kv.Key);
+                }
             }
             // The areas, optional: each a list of its places and the names people use.
             foreach (var kv in MiniJson.GetObject(root, "areas") ?? new Dictionary<string, object>())
@@ -472,14 +478,23 @@ namespace Ledger.Core
             return _places[place];
         }
 
-        /// Both on the street and within talking range: the game's own rule.
+        /// Whether a place is inside a building (the file's "inside": the office,
+        /// the counters, the cafe), where a wall stands between it and the next.
+        public bool IsInside(string place) => place != null && _inside.Contains(place);
+
+        /// Both on the street and within talking range, and in the same area or
+        /// both out on the pavement: never through a wall (the independent review
+        /// of 30 September, D: Mickey's office and the fish counter, 6.0 m apart,
+        /// gossiped as if together).
         public bool Together(string a, string b, int day, int hour)
         {
             var wa = Where(a, day, hour);
             var wb = Where(b, day, hour);
             if (wa == null || wb == null) return false;
             double dx = wa.Value.x - wb.Value.x, dz = wa.Value.z - wb.Value.z;
-            return Math.Sqrt(dx * dx + dz * dz) <= TalkRangeM;
+            if (Math.Sqrt(dx * dx + dz * dz) > TalkRangeM) return false;
+            string pa = PlaceOf(a, day, hour), pb = PlaceOf(b, day, hour);
+            return AreaOf(pa) == AreaOf(pb) && AreaOf(pa) != null || (!IsInside(pa) && !IsInside(pb));
         }
 
         /// WHAT THE STREET CALLS SOMEBODY (town list 6ad): the name canon or the
