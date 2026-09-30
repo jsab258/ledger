@@ -441,7 +441,7 @@ static class Program
                         if (abs == handOverAt && arrangement.AsksOn(tea.Day) && !Skip("landing", false))
                             arrangement.Answer(tea.Day, NightAnswer.Did, mill, new GameTime(day, hod, 45));
                         // The week's end: her question at half past ten on the Sunday.
-                        if (day == week.Day && hod == 10 && week.Waits(new GameTime(day, 10, 30)) && !Skip("sheila"))
+                        if (day == week.Day && hod == 10 && week.AsksNow(new GameTime(day, 10, 30), atOffice: true) && !Skip("sheila"))
                         {
                             week.Ask(new GameTime(day, 10, 30), trust != "never");
                             week.Give(WeekAnswer.TakeOver, new GameTime(day, 10, 40), mill, cast, arrangement);
@@ -525,7 +525,7 @@ static class Program
             {
                 int day = abs / 24, hod = abs % 24;
                 var now = new GameTime(day, hod, 0);
-                if (day == week.Day && hod == 10 && week.Waits(new GameTime(day, 10, 30)))
+                if (day == week.Day && hod == 10 && week.AsksNow(new GameTime(day, 10, 30), atOffice: true))
                 {
                     week.Ask(new GameTime(day, 10, 30), false);
                     if (answer != WeekAnswer.WontSay) week.Give(answer, new GameTime(day, 10, 40), mill, cast, asks);

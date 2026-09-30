@@ -7393,6 +7393,37 @@ namespace Ledger.CoreTests
                       $"{timing} {filed} {closes} {talk} {saves} {voiced} {stays}");
             }
 
+            // HE MISSES HER SUNDAY (the independent review of 30 September, B1): if
+            // he does not come to the office between ten and twelve on her Sunday,
+            // she asks the next time he talks with her there, any later day; the
+            // game asked only while she waited that Sunday, so an hour late lost the
+            // week's end for good. What the game asks the Core, turn by turn:
+            {
+                var missed = new WeeksEnd();
+                var askedAlready = new WeeksEnd();
+                askedAlready.Ask(new GameTime(7, 10, 0), false);
+                var answeredOne = new WeeksEnd();
+                answeredOne.Ask(new GameTime(6, 10, 30), false);
+                answeredOne.Give(WeekAnswer.WindDown, new GameTime(6, 10, 40), null, null);
+                var cases = new (string what, bool got, bool want)[]
+                {
+                    ("day 5, at the office", missed.AsksNow(new GameTime(5, 11, 0), true), false),
+                    ("her Sunday, 09:30, before she comes in", missed.AsksNow(new GameTime(6, 9, 30), true), false),
+                    ("her Sunday, 10:15, at the office", missed.AsksNow(new GameTime(6, 10, 15), true), true),
+                    ("her Sunday, 12:05: she has gone home", missed.AsksNow(new GameTime(6, 12, 5), true), false),
+                    ("Monday 10:00, at the office", missed.AsksNow(new GameTime(7, 10, 0), true), true),
+                    ("Monday 10:00, elsewhere", missed.AsksNow(new GameTime(7, 10, 0), false), false),
+                    ("a week later, at the office", missed.AsksNow(new GameTime(13, 15, 0), true), true),
+                    ("asked already", askedAlready.AsksNow(new GameTime(7, 11, 0), true), false),
+                    ("answered", answeredOne.AsksNow(new GameTime(7, 11, 0), true), false),
+                };
+                var wrongAsk = new List<string>();
+                foreach (var (what, got, want) in cases) if (got != want) wrongAsk.Add(what + ": " + got);
+                Check(wrongAsk.Count == 0,
+                      "if he misses her Sunday morning at the office, Sheila puts the week's question the next time he talks with her there, on any later day; never before ten on her Sunday, after she has gone home, away from the office, or once asked",
+                      string.Join(" | ", wrongAsk));
+            }
+
             // WHAT A REPLY SPOKE OF (town list 6ah): the stories of the memories a
             // clean check found it drawing on, for the game's record of the town
             // reacting in talk; none when it drew on none, or fell back.
