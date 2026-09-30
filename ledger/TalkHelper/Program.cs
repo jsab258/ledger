@@ -780,19 +780,28 @@ static class Program
             // "Yes." to somebody else's remark must not answer it), and only
             // Ron, who brought the ask, is read for it.
             lock (_askedNo) { askedBefore = _askedNo.TryGetValue(key, out askedAt); _askedNo.Clear(); }
-            if (askTonight && key == Arrangement.Doorman && !string.IsNullOrEmpty(say))
+            // His yes answers the question Ron put while the ask stood, even once
+            // it has lapsed (the independent review of 30 September, B4a: a yes at
+            // two past one to a question at two to one was lost); the game is told
+            // when the question was put (refusedAt) and answers that night as of then.
+            object refusedAtOut = null;
+            if ((askTonight || askedBefore) && key == Arrangement.Doorman && !string.IsNullOrEmpty(say))
             {
                 bool asked = askedBefore && now.TotalMinutes - askedAt.TotalMinutes <= 180 && now.TotalMinutes >= askedAt.TotalMinutes;
                 if (asked && Arrangement.ConfirmsNo(say))
+                {
                     refusedAsk = true;
+                    refusedAtOut = new { day = askedAt.Day, hour = askedAt.Hour, minute = askedAt.Minute };
+                }
                 // Not asked again straight after: "No thanks." to his question is
                 // a no to telling them, and must not bring the question back.
-                else if (!asked && Arrangement.SoundsLikeNo(say))
+                else if (askTonight && !asked && Arrangement.SoundsLikeNo(say))
                 {
                     askPlainly = true;
                     lock (_askedNo) _askedNo[key] = now;
                 }
-                engine.Tonight = refusedAsk ? Arrangement.TonightToldNo : asked ? Arrangement.TonightNotYes : Arrangement.TonightAsked;
+                if (askTonight || refusedAsk)
+                    engine.Tonight = refusedAsk ? Arrangement.TonightToldNo : asked ? Arrangement.TonightNotYes : Arrangement.TonightAsked;
             }
             // THE WEEK'S END (town list 6ca): her question put in her own fixed
             // words; while it stands, a line that sounds like one answer gets her
@@ -912,14 +921,14 @@ static class Program
                 // Sheila's own fixed words, in place of a reply: no model writes them.
                 engine.RememberSaid(say, weekReply, now);
                 var (wTrusts, wEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
-                return JsonSerializer.Serialize(new { id, to, day, reply = weekReply, ms = sw.ElapsedMilliseconds, offline = _llm == null, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut, trusts = wTrusts, trustEarned = wEarned, weekAnswer = weekAnswer == WeekAnswer.None ? null : weekAnswer.ToString() }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = weekReply, ms = sw.ElapsedMilliseconds, offline = _llm == null, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut, trusts = wTrusts, trustEarned = wEarned, weekAnswer = weekAnswer == WeekAnswer.None ? null : weekAnswer.ToString() }, Plain);
             }
             if (askPlainly)
             {
                 // Ron's own question, in place of a reply: no model writes it.
                 engine.RememberSaid(say, Arrangement.AskPlainly, now);
                 await ThreatReadDone();
-                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
             }
             if (refusedAsk && _llm != null)
             {
@@ -928,12 +937,12 @@ static class Program
                 // September: the stand-in answered with a memory line).
                 engine.RememberSaid(say, Arrangement.TookNo, now);
                 await ThreatReadDone();
-                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.TookNo, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.TookNo, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
             }
             if (_llm == null)
             {
                 var (offTrusts, offEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
-                return JsonSerializer.Serialize(new { id, to, day, reply = refusedAsk ? Arrangement.TookNo : brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, trusts = offTrusts, trustEarned = offEarned, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = refusedAsk ? Arrangement.TookNo : brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, trusts = offTrusts, trustEarned = offEarned, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
             }
             string reply;
             string paused = null;
@@ -1017,7 +1026,7 @@ static class Program
                         // What his line did stands although the reply stopped: the
                         // game still answers a no, an owning up or an ask for silence.
                         await ThreatReadDone();
-                        return JsonSerializer.Serialize(new { id, to, walkedOff = true, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, gaveName = gaveNameOut }, Plain);
+                        return JsonSerializer.Serialize(new { id, to, walkedOff = true, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, gaveName = gaveNameOut }, Plain);
                     }
                     if (done != task)
                     {
@@ -1128,7 +1137,7 @@ static class Program
             // turn earned it; the game keeps it and sends it back.
             var (trusts, trustEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen && (went == "own" || went == "ended" || went == "fallback"));
             await ThreatReadDone();
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model, steps, trusts, trustEarned, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, @unchecked, fellBack, generated, model, steps, trusts, trustEarned, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -1837,6 +1846,16 @@ static class Program
            && aMaybe.Contains("\"refusedAsk\":false") && askedLine == Arrangement.TonightAsked
            && aOther.Contains("\"refusedAsk\":false") && aLateYes.Contains("\"refusedAsk\":false")
            && !asker.EngineFor("rocco").Memory.Events.Exists(e => e.Text == Arrangement.HeardNo || e.Text.StartsWith("He told me no")), aNo + " | " + aYes + " | " + aOther);
+        // ACROSS ONE IN THE MORNING (the independent review of 30 September, B4a):
+        // Ron's question put at two to one, while the ask stood, and his "Yes." at
+        // two past, after it lapsed, is still the no, reported with the question's
+        // time, so the game answers that night as of then.
+        var lateAsker = new Helper(new FakeLlm { Next = "Right you are, boss." }, TimeSpan.FromSeconds(8));
+        LoadCards(lateAsker, cardsDir);
+        await lateAsker.Answer("{\"id\":138,\"to\":\"rocco\",\"say\":\"Tell them no, Ron.\",\"day\":1,\"hour\":0,\"minute\":58,\"ask\":{\"tonight\":true}}");
+        string aPastOne = await lateAsker.Answer("{\"id\":139,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":1,\"hour\":1,\"minute\":2}");
+        Ok("his yes at two past one to Ron's question at two to one is the no, reported as of the question, so the game answers the night Ron asked",
+           aPastOne.Contains("\"refusedAsk\":true") && aPastOne.Contains("\"refusedAt\":{\"day\":1,\"hour\":0,\"minute\":58}"), aPastOne);
         // Walking away clears the question: back again, a yes is nothing.
         var walkAsker = new Helper(new FakeLlm { Next = "Right." }, TimeSpan.FromSeconds(8));
         LoadCards(walkAsker, cardsDir);

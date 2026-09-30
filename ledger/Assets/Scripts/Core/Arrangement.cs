@@ -251,6 +251,9 @@ namespace Ledger.Core
             if (mill != null && !now.HasValue) throw new ArgumentException("the story needs the time it is told", nameof(now));
             if (what == NightAnswer.Undelivered || !AsksOn(day)) return false;
             if (what == NightAnswer.NoShow && !_delivered.Contains(day)) return false;
+            // NO NO BEFORE THE ASK (the independent review of 30 September): a no
+            // told as of a time needs Ron to have brought that night's ask first.
+            if (what == NightAnswer.Refused && now.HasValue && !_delivered.Contains(day)) return false;
             if (what != NightAnswer.NoShow && now.HasValue && now.Value.TotalMinutes >= GaveUpAt(day).TotalMinutes) return false;
             // ONLY ON ITS OWN NIGHT (the port's independent check, 30 September:
             // an envelope two nights ahead could be done on the Monday, and a
