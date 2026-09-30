@@ -8231,6 +8231,21 @@ namespace Ledger.CoreTests
                 var townCut = new TownSave { Police = file };
                 townCut.Arrests.Add(cut);
                 var cutBack = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(townCut.ToJson()))));
+                // Two arrests of one deed at the same minute, saved in an order: the
+                // first saved is kept, whatever the sort (the builder's independent
+                // check of the port: List.Sort is not stable).
+                bool firstKept = true;
+                for (int round = 0; round < 20; round++)
+                {
+                    var twice = MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(town.ToJson())));
+                    var one = (Dictionary<string, object>)((List<object>)twice["arrests"])[0];
+                    var coat = new Dictionary<string, object>(one) { ["coat"] = true };
+                    // Three of one deed at one minute, differing only in the coat he wore.
+                    twice["arrests"] = round % 2 == 0 ? new List<object> { one, coat, coat } : new List<object> { coat, one, one };
+                    var kept2 = TownSave.FromJson(twice);
+                    if (kept2.Arrests.Count != 1 || kept2.Arrests[0].CoatKept != (round % 2 == 1)) firstKept = false;
+                }
+                Check(firstKept, "of two arrests of one deed at the same minute, the first saved is the one kept, every time");
                 Check(cut != null && cut.Offence == Offence.Wounding && cutBack.Arrests.Count == 1,
                       "an arrest for a wounding stands after a load when a robbery statement about the same deed came later and sits first in the file", $"{cut?.Offence} {cutBack.Arrests.Count}");
             }
