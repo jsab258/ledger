@@ -55485,3 +55485,86 @@ GossipFuzz|save|1000497|0ae2a249714b463b|5
 GossipFuzz|save|1000498|dd409a6bab92c663|3
 GossipFuzz|save|1000499|0260cc690a0714d0|6
 GossipFuzz|save|1000500|b8b6fb185a562c60|3
+HintDue|1|none
+HintDue|3.9|none
+HintDue|4|StandingStill|0||{Move}~walks,~{Run}~runs.~People~on~this~street~notice~who's~about.|null
+HintDue|4.1|none
+HintDue|10|none
+HintDue|after moving|none
+HintHappened|CanTalk|none
+HintHappened|CanTalk again|none
+HintDue|21|CanTalk|0|lena|Walk~up~to~anyone~and~press~{Talk}.~What~you~tell~them,~they~remember.|That's~Ron~on~the~rank.~Go~and~say~hello.~Everyone~out~there~wants~a~look~at~you.
+HintDue|32|none
+HintDue|33|none
+HintHappened|FirstAsk|FirstAsk|1|rocco|{Coat}~puts~the~coat~on~or~takes~it~off:~in~the~dark~it~makes~you~harder~to~recognise.|If~you~go~tonight,~boss,~wear~that.~In~the~dark~nobody~looks~twice~at~a~coat.
+HintHappened|SeenAtDeed|none
+HintDue|613|SeenAtDeed|0||Somebody~saw~that.~What~they~make~of~it~can~go~round.|null
+HintSave|done|{"done":["CanTalk","FirstAsk","SeenAtDeed","StandingStill"]}
+HintAfterLoad|CanTalk|none
+HintAfterLoad|OverheardAboutHim|none
+HintFill|keys|Press~E~to~talk,~{Move}~to~walk,~{Coat}~for~the~coat.
+HintEdge|happened at NaN|none
+HintEdge|due at infinity|none
+HintEdge|waits at 100|none
+HintEdge|due at 50 is due at 100|CanTalk|0|lena|Walk~up~to~anyone~and~press~{Talk}.~What~you~tell~them,~they~remember.|That's~Ron~on~the~rank.~Go~and~say~hello.~Everyone~out~there~wants~a~look~at~you.
+HintEdge|gap holds backwards|none
+HintEdge|restarted clock, overheard at 5|none
+HintEdge|restarted clock, gap at 5|none
+HintEdge|restarted clock, due at 12|OverheardAboutHim|0||That~was~about~you.~{Ledger}~shows~what~you~believe~the~street~knows.|null
+HintEdge|stale after its moment|none|none
+HintEdge|at once in the gap|LedgerOpened|1||What~you~believe~the~street~now~knows~about~you.|null
+HintBadSave|0|{"done":["CanTalk","FirstAsk"]}
+HintBadSave|1|{"done":["SeenAtDeed"]}
+HintBadSave|2|{"done":[]}
+HintBadSave|3|{"done":[]}
+HintBadSave|4|{"done":[]}
+HintBadSave|5|{"done":[]}
+HintLoadBad|0|{"done":["CanTalk","FirstAsk","StandingStill"]}
+HintLoadBad|1|{"done":["SeenAtDeed","StandingStill"]}
+HintLoadBad|2|{"done":["StandingStill"]}
+HintLoadBad|3|{"done":["LedgerOpened","StandingStill"]}
+HintLoadBad|4|{"done":["LedgerOpened","StandingStill"]}
+HintLoadBad|5|{"done":["LedgerOpened","StandingStill"]}
+HintFillBlank|0|[{Talk}]
+HintFillBlank|1|[{Talk}]
+HintFillBlank|2|[{Talk}]
+HintFillBlank|3|[{Talk}]
+HintFillBlank|4|[{Talk}]
+HintFillBlank|5|[x ]
+HintFillEdge|0|[EE]
+HintFillEdge|1|[{Co-at}~and~{}~and~{Talk]
+HintFillEdge|2|[{E}]
+HintFillEdge|3|[F~{9}]
+HintFillEdge|4|[]
+WalkRound|0|door|New~management.~Sheila~Dunn,~I~keep~the~books.~Come~on,~I'll~show~you~round~before~you~start~looking~lost.
+WalkRound|1|office|Phone,~radio,~and~the~fare~book.~Every~fare~goes~in~the~book.~That~was~Mickey's~rule,~and~it's~mine~now.
+WalkRound|2|drivers|One~driver~by~day,~one~by~night,~and~the~radio~in~between.~The~takings~have~been~thin~since~the~docks~laid~men~off.
+WalkRound|3|mickeys-door|That's~Mickey's~office.~It's~been~locked~since~he~died,~and~I've~the~key.~Not~today.
+WalkRound|4|flat|Your~flat's~upstairs,~over~the~office.~His~things~are~still~in~it.~I~didn't~have~the~heart.
+ArrivalSeen|7||0
+ArrivalSeen|8|rocco|0
+ArrivalSeen|9|lena,rocco,ada|0
+ArrivalSeen|12|lena,rocco,ada|0
+RecognitionArrival|0|0|recognition/arrival-saw|You'll~be~Mickey's~nephew,~then.
+RecognitionArrival|0|1|recognition/arrival-saw|So~you're~the~new~owner.
+RecognitionArrival|0|2|recognition/arrival-saw|Saw~you~come~in.~Mickey's~nephew,~is~it?
+RecognitionArrival|0|3|recognition/arrival-saw|You've~the~look~of~Mickey~about~you.
+RecognitionArrival|0|4|recognition/arrival-saw|Settling~in,~are~you?
+RecognitionArrival|0|5|recognition/arrival-saw|New~in~the~office,~then.
+RecognitionArrival|1|0|recognition/arrival-heard|Heard~Mickey's~nephew~had~come.~That'll~be~you.
+RecognitionArrival|1|1|recognition/arrival-heard|You'll~be~the~new~owner~they're~all~on~about.
+RecognitionArrival|1|2|recognition/arrival-heard|Word~is~Mickey's~nephew's~taken~the~office.~That~you?
+RecognitionArrival|1|3|recognition/arrival-heard|So~you're~the~one~taking~on~Mickey's.
+RecognitionArrival|1|4|recognition/arrival-heard|They~say~you've~come~to~run~the~cabs.
+RecognitionArrival|1|5|recognition/arrival-heard|Heard~there's~a~new~face~at~Mickey's.
+ArrivalLine|ah|alone|recognition/arrival-saw|You'll~be~Mickey's~nephew,~then.|null
+ArrivalLine|ah|in the coat|null
+ArrivalLine|ah|with a deed|null
+ArrivalLine|lena|alone|null|null
+ArrivalLine|lena|in the coat|null
+ArrivalLine|lena|with a deed|null
+ArrivalLine|june|alone|null|null
+ArrivalLine|june|in the coat|null
+ArrivalLine|june|with a deed|null
+ArrivalRegard|arrival|Nothing|Indifferent|0|0
+ArrivalRegard|name|Nothing|Indifferent|0|0
