@@ -2723,6 +2723,7 @@ namespace
 		AActor* PendingBody = nullptr;
 		double AskedAt = 0.0;
 		bool bFirstSaid = false;   // the answer's first sentence came early and is being spoken
+		std::string PendingSaid;   // the sentence sent to the voice before its check (--pending), this turn
 		double FirstAt = 0.0;      // when the answer's first words arrived (-AskScript's measure)
 		// THE AI NOTICE, A REPORT, A PAUSE, 29 September (the town session's
 		// handovers 6c and 6t): the helper's ready line carries the notice and
@@ -2864,7 +2865,10 @@ namespace
 		GTalkPath = !bPlayed ? TEXT("stand-in") : bKey ? TEXT("live-key") : TEXT("offline");
 		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: %s"), !bPlayed ? TEXT("the stand-in (a scripted or unattended run)")
 			: bKey ? TEXT("live, on LEDGER's own key") : TEXT("offline: no live-talk key file"));
-		GLive.Proc = FPlatformProcess::CreateProc(*Exe, bPlayed ? TEXT("--early") : TEXT("--fake --early"),
+		// --pending (item 2, the delay; talk-protocol.md): the first sentence also
+		// comes the moment it is written, before its check, so the voice can make
+		// it while it is checked; it is played only if the checked words match.
+		GLive.Proc = FPlatformProcess::CreateProc(*Exe, bPlayed ? TEXT("--early --pending") : TEXT("--fake --early --pending"),
 			false, true, true, nullptr, 0, nullptr, GLive.OutWrite, GLive.InRead);
 		GLive.bStarted = GLive.Proc.IsValid();
 	}
@@ -2889,7 +2893,13 @@ namespace
 		// pieces as its sound is made; each is added to the sound already
 		// playing, with no gap, and the usual pause is left only between
 		// sentences.
-		struct FPiece { FString Wav; TWeakObjectPtr<AActor> Who; bool bJoined = false; };
+		struct FPiece { FString Wav; TWeakObjectPtr<AActor> Who; bool bJoined = false; int32 Id = 0; };
+		// THE SENTENCE MADE BEFORE ITS CHECK (--pending, item 2, the delay): its
+		// pieces wait here until the checked first sentence arrives with the same
+		// words (released to the queue) or the turn goes another way (dropped,
+		// and any of its pieces still to come are thrown away on arrival).
+		TSet<int32> HeldIds, DroppedIds;
+		TArray<FPiece> Held;
 		TArray<FPiece> Queue;
 		double BusyUntil = 0.0;
 		bool bLastIn = false;
@@ -2917,6 +2927,11 @@ namespace
 	// the session record, and a LedgerTiming log line), marked with the path
 	// the talk took: live on LEDGER's key, offline, or the stand-in.
 	double GEnterAt = 0.0, GTimedWordsAt = 0.0, GTimedVoiceAskedAt = 0.0;
+	// THE VOICE'S OWN SHARE, SPLIT (item 2, the delay): when the first
+	// sentence's sound file came back from the voice server, how long the
+	// server says it worked on it ("ms"), and how long the sound is.
+	int32 GTimedVoiceId = -1;
+	double GTimedPieceAt = 0.0, GTimedPieceWorkS = -1.0, GTimedPieceLenS = -1.0;
 	bool bAwaitFirstSound = false;
 	std::string GTimedCard;
 	const TCHAR* TalkPathName();
@@ -3052,10 +3067,12 @@ namespace
 		{
 			bAwaitFirstSound = false;
 			const double Words = GTimedWordsAt - GEnterAt, Asked = GTimedVoiceAskedAt - GEnterAt, Sound = GVoiceStartedAt - GEnterAt;
+			const double Arrived = GTimedPieceAt > 0.0 ? GTimedPieceAt - GEnterAt : -1.0;
 			LedgerSession::Write(TEXT("heard"), TEXT("\"who\":") + LedgerSession::Str(Un(GTimedCard)) + TEXT(",\"path\":") + LedgerSession::Str(TalkPathName())
-				+ FString::Printf(TEXT(",\"enterToWords\":%.2f,\"enterToVoiceAsked\":%.2f,\"enterToSound\":%.2f"), Words, Asked, Sound));
-			UE_LOG(LogTemp, Display, TEXT("LedgerTiming: %s (%s) Enter to words %.2f s, to the voice asked %.2f s, to first sound %.2f s"),
-				*Un(GTimedCard), TalkPathName(), Words, Asked, Sound);
+				+ FString::Printf(TEXT(",\"enterToWords\":%.2f,\"enterToVoiceAsked\":%.2f,\"enterToSound\":%.2f,\"enterToPiece\":%.2f,\"voiceWork\":%.2f,\"pieceSeconds\":%.2f"),
+					Words, Asked, Sound, Arrived, GTimedPieceWorkS, GTimedPieceLenS));
+			UE_LOG(LogTemp, Display, TEXT("LedgerTiming: %s (%s) Enter to words %.2f s, to the voice asked %.2f s, to its sound file %.2f s (made in %.2f s, %.2f s long), to first sound %.2f s"),
+				*Un(GTimedCard), TalkPathName(), Words, Asked, Arrived, GTimedPieceWorkS, GTimedPieceLenS, Sound);
 		}
 		if (!bVoicePlayed)
 		{
@@ -3297,13 +3314,28 @@ namespace
 			TWeakObjectPtr<AActor>* Who = GVoice.Pending.Find(Id);
 			const std::string Wav = JsonField(L, "wav");
 			const bool bLast = L.find("\"last\":true") != std::string::npos || L.find("\"error\"") != std::string::npos;
-			if (Who != nullptr && Wav != "none")
+			if (Id == GTimedVoiceId && GTimedPieceAt <= 0.0 && Wav != "none")
+			{
+				GTimedPieceAt = NowS();
+				// Numbers, not strings: read after their key.
+				auto Num = [&L](const char* Key) -> double {
+					const std::string K = std::string("\"") + Key + "\":";
+					const std::string::size_type P = L.find(K);
+					return P == std::string::npos ? -1.0 : atof(L.c_str() + P + K.size());
+				};
+				const double Ms = Num("ms");
+				GTimedPieceWorkS = Ms >= 0.0 ? Ms / 1000.0 : -1.0;
+				GTimedPieceLenS = Num("seconds");
+			}
+			if (Who != nullptr && Wav != "none" && !GVoice.DroppedIds.Contains(Id))
 			{
 				FLiveVoice::FPiece Piece;
 				Piece.Wav = Un(Wav);
 				Piece.Who = *Who;
 				Piece.bJoined = L.find("\"joined\":true") != std::string::npos;
-				GVoice.Queue.Add(Piece);
+				Piece.Id = Id;
+				if (GVoice.HeldIds.Contains(Id)) { GVoice.Held.Add(Piece); }
+				else { GVoice.Queue.Add(Piece); }
 			}
 			if (bLast) { GVoice.Pending.Remove(Id); bVoiceAllIn = true; }
 		}
@@ -3469,16 +3501,38 @@ namespace
 		if (NowS() > GAck.Until + 0.1) { AckEnd(false); }
 	}
 
-	void LiveVoiceSay(int32 Id, const std::string& Card, const std::string& Text, AActor* Who)
+	// The pending sentence's pieces to the queue (its words passed their check).
+	void LiveVoiceRelease(int32 Id)
+	{
+		GVoice.HeldIds.Remove(Id);
+		for (int32 I = 0; I < GVoice.Held.Num();)
+		{
+			if (GVoice.Held[I].Id == Id) { GVoice.Queue.Add(GVoice.Held[I]); GVoice.Held.RemoveAt(I); }
+			else { ++I; }
+		}
+	}
+
+	// The pending sentence thrown away (the turn went another way).
+	void LiveVoiceDrop(int32 Id)
+	{
+		if (!GVoice.HeldIds.Contains(Id)) { return; }
+		GVoice.HeldIds.Remove(Id);
+		GVoice.DroppedIds.Add(Id);
+		GVoice.Held.RemoveAll([Id](const FLiveVoice::FPiece& P) { return P.Id == Id; });
+	}
+
+	void LiveVoiceSay(int32 Id, const std::string& Card, const std::string& Text, AActor* Who, int32 Turn = 0)
 	{
 		if (!GVoice.bReady || GVoice.InWrite == nullptr || Text.empty() || Text == "none") { return; }
+		// "turn": a conversation's turn, so the voice serves the newest first and
+		// drops an older turn's unmade sentences (voice-server.py, pick).
 		const std::string Req = "{\"id\":" + std::to_string(Id) + ",\"who\":\"" + JsonEsc(Card)
-			+ "\",\"text\":\"" + JsonEsc(Text) + "\"}\n";
+			+ "\",\"text\":\"" + JsonEsc(Text) + "\"" + (Turn > 0 ? ",\"turn\":" + std::to_string(Turn) : std::string()) + "}\n";
 		FPlatformProcess::WritePipe(GVoice.InWrite, Un(Req));
 		GVoice.Pending.Add(Id, Who);
 		bVoiceAsked = true;
 		GVoiceAskedAt = NowS();
-		if (bAwaitFirstSound && GTimedVoiceAskedAt < GTimedWordsAt) { GTimedVoiceAskedAt = GVoiceAskedAt; }
+		if (bAwaitFirstSound && GTimedVoiceAskedAt < GTimedWordsAt) { GTimedVoiceAskedAt = GVoiceAskedAt; GTimedVoiceId = Id; GTimedPieceAt = 0.0; }
 	}
 
 	// THE DEED A STORY IS ABOUT, by the key the session record and the talk
@@ -3632,6 +3686,7 @@ namespace
 		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: to %s%s%s%s evidence=%s"), *Un(Card), *Un(Acquaintance), *Un(KnowingJson(Card)), *Un(DeedField),
 			*Un(EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung)));
 		GLive.PendingId = Id;
+		GLive.PendingSaid.clear();
 		GLive.PendingName = Name;
 		GLive.PendingCard = Card;
 		GLive.AnswerCard = Card;
@@ -3912,14 +3967,32 @@ namespace
 			}
 			if (GLive.PendingId != 0 && L.find("\"id\":" + std::to_string(GLive.PendingId) + ",") != std::string::npos)
 			{
+				// THE FIRST SENTENCE, BEFORE ITS CHECK (--pending): made by the voice
+				// at once and held; nothing is shown or said yet.
+				const std::string PendingWords = JsonField(L, "pending");
+				if (PendingWords != "none" && JsonField(L, "first") == "none")
+				{
+					if (GVoice.bReady && GLive.PendingSaid.empty())
+					{
+						const int32 HeldId = GLive.PendingId * 10 + 7;
+						GLive.PendingSaid = PendingWords;
+						GVoice.HeldIds.Add(HeldId);
+						LiveVoiceSay(HeldId, GLive.PendingCard, PendingWords, GVisualFor(GLive.PendingBody), GLive.PendingId);
+						GTimedVoiceAskedAt = NowS();
+						GTimedVoiceId = HeldId;
+						GTimedPieceAt = 0.0;
+					}
+					continue;
+				}
 				// THE FIRST SENTENCE, EARLY: said and spoken at once; the answer's
 				// line that follows carries only what is left to say ("rest").
 				if (GLive.FirstAt < GLive.AskedAt)
 				{
 					GLive.FirstAt = NowS();
-					// The line's clock: its words are here; its first sound is next.
+					// The line's clock: its words are here; its first sound is next
+					// (already on its way when the pending sentence was sent).
 					GTimedWordsAt = GLive.FirstAt;
-					GTimedVoiceAskedAt = 0.0;
+					if (GLive.PendingSaid.empty()) { GTimedVoiceAskedAt = 0.0; }
 					GTimedCard = GLive.PendingCard;
 					bAwaitFirstSound = GVoice.bReady && GEnterAt > 0.0 && GEnterAt <= GLive.AskedAt;
 				}
@@ -3927,7 +4000,13 @@ namespace
 				if (First != "none")
 				{
 					Say(GLive.PendingName + TEXT(": ") + Un(First), 20.0f, FColor::White);
-					LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, First, GVisualFor(GLive.PendingBody));
+					const int32 HeldId = GLive.PendingId * 10 + 7;
+					if (!GLive.PendingSaid.empty() && GLive.PendingSaid == First) { LiveVoiceRelease(HeldId); }
+					else
+					{
+						LiveVoiceDrop(HeldId);
+						LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, First, GVisualFor(GLive.PendingBody), GLive.PendingId);
+					}
 					GLive.bFirstSaid = true;
 					GLive.HeardSoFar = First;
 					GLive.AnswerBody = GLive.PendingBody;
@@ -3948,6 +4027,7 @@ namespace
 				// WALKED OFF (handover 6ay): he left while it was coming, and
 				// the answer is only {"id","to","walkedOff":true}: nothing to
 				// say or show, only the record's line.
+				LiveVoiceDrop(GLive.PendingId * 10 + 7);
 				if (L.find("\"walkedOff\":true") != std::string::npos)
 				{
 					LedgerSession::Write(TEXT("reply"), TEXT("\"who\":") + LedgerSession::Str(Un(GLive.PendingCard)) + TEXT(",\"how\":\"walkedOff\""));
@@ -3988,14 +4068,14 @@ namespace
 					if (Rest != "none" && !Rest.empty())
 					{
 						Say(GLive.PendingName + TEXT(": ") + Un(Rest), 20.0f, FColor::White);
-						LiveVoiceSay(GLive.PendingId * 10 + 1, GLive.PendingCard, Rest, GVisualFor(GLive.PendingBody));
+						LiveVoiceSay(GLive.PendingId * 10 + 1, GLive.PendingCard, Rest, GVisualFor(GLive.PendingBody), GLive.PendingId);
 						GLive.HeardSoFar += " " + Rest;
 					}
 				}
 				else
 				{
 					Say(GLive.PendingName + TEXT(": ") + Un(Reply == "none" ? std::string("...") : Reply), 20.0f, FColor::White);
-					LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, Reply, GVisualFor(GLive.PendingBody));
+					LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, Reply, GVisualFor(GLive.PendingBody), GLive.PendingId);
 					GLive.HeardSoFar = Reply == "none" ? std::string() : Reply;
 					GLive.AnswerBody = GLive.PendingBody;
 				}

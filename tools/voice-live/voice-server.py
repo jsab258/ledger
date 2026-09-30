@@ -92,6 +92,36 @@ def parse(line):
     return i, who, text.strip()[:600]
 
 
+def turn_of(line):
+    """The conversation turn a request belongs to (the game's "turn"), 0 for
+    anything else (a street remark, a scripted line)."""
+    try:
+        d = json.loads(line)
+        n = d.get("turn", 0) if isinstance(d, dict) else 0
+        return n if isinstance(n, int) and n > 0 else 0
+    except Exception:
+        return 0
+
+
+def pick(waiting, newest):
+    """THE NEWEST LINE FIRST (item 2, the delay; production/research/voice-latency):
+    of the requests waiting, in arrival order as (turn, request), the newest
+    turn's come first in their order, then the street's (turn 0) in theirs;
+    any of an older turn than the newest is dropped unmade. Returns (the
+    request to make or None, the dropped ones, the rest still waiting, the
+    newest turn)."""
+    for turn, _ in waiting:
+        newest = max(newest, turn)
+    dropped = [r for turn, r in waiting if 0 < turn < newest]
+    kept = [(turn, r) for turn, r in waiting if not (0 < turn < newest)]
+    for k, (turn, r) in enumerate(kept):
+        if turn == newest and turn > 0:
+            return r, dropped, kept[:k] + kept[k + 1:], newest
+    if kept:
+        return kept[0][1], dropped, kept[1:], newest
+    return None, dropped, [], newest
+
+
 def load_models(cpu_only):
     os.environ["HF_HUB_OFFLINE"] = "1"
     os.environ["TRANSFORMERS_OFFLINE"] = "1"
@@ -267,9 +297,43 @@ def serve(args):
                     break
     print(dumps({"ready": True, "device": str(dev), "loadS": round(time.time() - t0, 1), "out": str(out), "warmed": warmed,
                  "sopro": sorted(by_sopro) if sopro else []}), flush=True)
-    for line in sys.stdin:
-        if not line.strip():
+    # THE GAME'S LINES ARE READ AS THEY COME, on their own thread, so a new
+    # turn's first sentence is seen while an older reply is still being made.
+    import threading
+    inbox, gate, ended = [], threading.Condition(), [False]
+
+    def reader():
+        for raw in sys.stdin:
+            if raw.strip():
+                with gate:
+                    inbox.append((turn_of(raw), raw))
+                    gate.notify()
+        with gate:
+            ended[0] = True
+            gate.notify()
+    threading.Thread(target=reader, daemon=True).start()
+    newest = 0
+
+    def newer_waiting(turn):
+        with gate:
+            return turn > 0 and any(t2 > turn for t2, _ in inbox)
+    while True:
+        with gate:
+            while not inbox and not ended[0]:
+                gate.wait()
+            if not inbox and ended[0]:
+                break
+            line, dropped, rest, newest = pick(inbox, newest)
+            inbox[:] = rest
+        for old in dropped:
+            try:
+                oi, owho, _ = parse(old)
+                print(dumps({"id": oi, "who": owho, "last": True, "skipped": "older-turn"}), flush=True)
+            except Exception:
+                pass
+        if line is None:
             continue
+        this_turn = turn_of(line)
         try:
             i, who, text = parse(line)
         except Exception as e:
@@ -292,6 +356,10 @@ def serve(args):
             ready_voice(who, clip)
             pieces = sentences(text)
             for k, piece in enumerate(pieces):
+                # An older reply stops between sentences once a newer turn waits.
+                if k > 0 and newer_waiting(this_turn):
+                    print(dumps({"id": i, "who": who, "last": True, "cut": "newer-turn"}), flush=True)
+                    break
                 torch.manual_seed(20260924 + i * 100 + k)
                 wav = speaker.generate(piece)
                 path = out / ("%d-%d.wav" % (i, k))
@@ -354,6 +422,16 @@ def selftest():
             check("refuses " + badline, False)
         except ValueError:
             check("refuses " + badline, True)
+    # The newest line first.
+    r, dropped, rest, newest = pick([(3, "a"), (0, "street"), (4, "b"), (4, "c")], 0)
+    check("a newer turn's first request comes before an older one's and the street's", r == "b" and newest == 4)
+    check("an older turn's waiting request is dropped unmade", dropped == ["a"])
+    check("the rest keep their order", rest == [(0, "street"), (4, "c")])
+    r2, d2, rest2, n2 = pick(rest, newest)
+    check("the same turn's next request follows", r2 == "c" and d2 == [] and rest2 == [(0, "street")])
+    check("the street's lines come when no turn waits", pick(rest2, n2)[0] == "street")
+    check("a turn is read from the game's line", turn_of('{"id":71,"who":"sam","text":"x","turn":7}') == 7
+          and turn_of('{"id":71,"who":"sam","text":"x"}') == 0)
     print("voice-server selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
