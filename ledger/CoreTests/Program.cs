@@ -7393,6 +7393,74 @@ namespace Ledger.CoreTests
                       $"{timing} {filed} {closes} {talk} {saves} {voiced} {stays}");
             }
 
+            // A WITNESS'S STORY IS ONLY AS SURE AS THE WITNESS WAS (Jafar's ruling of
+            // 30 September on the independent review's A5): a noise or a shape is
+            // suspicion, never "he did it". Five people hold the same secret story
+            // of Rita's window, retold, whose first teller heard a noise (rung 0),
+            // saw a shape (1), saw a face (3), knew him (4), or told it as a thing
+            // known, no sighting at all (no rung). Only the last two say he did it:
+            // only they show it to his face, bring DS Ellis to them, count towards
+            // her coming for the street's talk, or give her anything to file.
+            {
+                var sure = new GossipMill(new SocialGraph());
+                foreach (var (id, rung) in new[] { ("noise", 0), ("shape", 1), ("face", 3), ("knew", 4), ("told", -1) })
+                {
+                    sure.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    sure.Get(id).Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "somebody put Rita's window in",
+                                                        Confidence = 0.9, Sensitive = true, Hops = 1, OriginRung = rung });
+                }
+                var wrongSure = new List<string>();
+                foreach (var id in new[] { "noise", "shape", "face", "knew", "told" })
+                {
+                    bool says = id == "knew" || id == "told";
+                    var g = sure.Get(id);
+                    if ((StreetVoice.StoryThatShows(g, sure.MinConfidenceToShare) != null) != says) wrongSure.Add(id + " shows it");
+                    var regard = StreetVoice.RegardFor(g, sure.MinConfidenceToShare, false, null, 0.9, false);
+                    if ((regard.Story != null) != says) wrongSure.Add(id + " regards him by it");
+                }
+                var askedSure = PoliceFile.WhoSheAsks(sure);
+                if (!askedSure.SequenceEqual(new[] { "knew", "told" })) wrongSure.Add("she asks " + string.Join(",", askedSure));
+                if (PoliceFile.Loudness(sure) != 2) wrongSure.Add("loudness " + PoliceFile.Loudness(sure));
+                var sureFile = new PoliceFile();
+                sureFile.HearTheStreet(sure, 2, t => Offence.Damage);
+                var sureHeard = sureFile.Entries.Select(e => e.Who).Distinct().OrderBy(x => x, StringComparer.Ordinal).ToList();
+                if (!sureHeard.SequenceEqual(new[] { "knew", "told" })) wrongSure.Add("she files " + string.Join(",", sureHeard));
+                // And told on to a neighbour of his day world, only a story that names
+                // him makes them warier of him (the leak); a noise is not about him.
+                foreach (var (rung, warier) in new[] { (0, false), (1, false), (4, true) })
+                {
+                    var leakGraph = new SocialGraph();
+                    leakGraph.Link("w", "n", 0.9);
+                    var leak = new GossipMill(leakGraph);
+                    leak.Add(new Gossiper("w", "w", new MemoryStore("w"), new KnowledgeBase(), new SuspicionTracker(), "night"));
+                    leak.Add(new Gossiper("n", "n", new MemoryStore("n"), new KnowledgeBase(), new SuspicionTracker(), "day"));
+                    leak.Witness("w", new Fact("player", "window_d1", "ritas"), "somebody put Rita's window in", true, new GameTime(1, 12, 0), 0.9, rung: rung);
+                    double was = leak.Get("n").Suspicion.Value;
+                    leak.Tick(new GameTime(1, 12, 30), (a, b) => true);
+                    bool heardIt = leak.Get("n").Rumors.Exists(x => x.TopicKey == "player.window_d1");
+                    if (!heardIt) wrongSure.Add("rung " + rung + " never reached the neighbour");
+                    else if ((leak.Get("n").Suspicion.Value > was) != warier) wrongSure.Add("rung " + rung + (warier ? " left the neighbour no warier" : " made the neighbour warier of him"));
+                }
+                // One telling of a shape of the teller's own and a naming heard beside
+                // it names him: the neighbour is warier (the golden row OneTelling).
+                {
+                    var og = new SocialGraph(); og.Link("n", "s", 0.9); og.Link("s", "l", 0.9);
+                    var one = new GossipMill(og);
+                    one.Add(new Gossiper("n", "n", new MemoryStore("n"), new KnowledgeBase(), new SuspicionTracker(), "night"));
+                    one.Add(new Gossiper("s", "s", new MemoryStore("s"), new KnowledgeBase(), new SuspicionTracker(), "night"));
+                    one.Add(new Gossiper("l", "l", new MemoryStore("l"), new KnowledgeBase(), new SuspicionTracker(), "day"));
+                    one.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, new GameTime(1, 23, 0), 0.94, rung: 4);
+                    one.Tick(new GameTime(1, 23, 6), (x, y) => x == "n" || y == "n");
+                    one.Witness("s", new Fact("player", "window_d1", "seen"), "a shape by the glass", true, new GameTime(1, 23, 8), 0.9, rung: 1);
+                    one.Tick(new GameTime(1, 23, 12), (x, y) => x == "l" || y == "l");
+                    if (!(Suspecting.AccountOf(one.Get("l"), "player.window_d1").NamesHim && one.Get("l").Suspicion.Value > 0))
+                        wrongSure.Add("one telling of a shape and a naming left the neighbour no warier");
+                }
+                Check(wrongSure.Count == 0,
+                      "a story is only as sure as its first teller: one who heard a noise, saw a shape or a face never says he did it; only one who knew him, or who told it as a thing known, shows it to his face, is asked by DS Ellis, makes the street loud or gives her anything to file",
+                      string.Join(" | ", wrongSure));
+            }
+
             // HE MISSES HER SUNDAY (the independent review of 30 September, B1): if
             // he does not come to the office between ten and twelve on her Sunday,
             // she asks the next time he talks with her there, any later day; the
