@@ -37,6 +37,7 @@ FIXED = [
     "production/specs/hook-cast.json",   # the places the session record names (29 September)
     "production/specs/quay-cast.json",   # the built street's ten, for the CastDay rows of the golden run (29 September)
     "production/specs/garments.json",    # the clothing session's garments and who wears them (30 September, LedgerGarments.h)
+    "production/specs/town-news.json",   # the town's own news, for the TownNewsWitnesses rows of the golden run (30 September)
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"
