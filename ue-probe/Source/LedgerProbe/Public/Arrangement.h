@@ -156,7 +156,9 @@ namespace LedgerCore
 		/// AS EACH HOUR TURNS, before the rounds (Arrangement.cs TellDue, the
 		/// review's B3): his no, or the winding down, reaches the landing when
 		/// Ron goes down, not at dawn.
-		void TellDue(GossipMill* Mill, const GameTime& Now) { TellWoundDown(Mill, &Now); }
+		/// And a night he stayed away, at one, when the man at the landing gives up
+		/// waiting (the second independent check), as PassedTo files it.
+		void TellDue(GossipMill* Mill, const GameTime& Now) { PassedTo(Now.Day, Mill, &Now); }
 
 		bool Answer(int Day, NightAnswer What, GossipMill* Mill = nullptr, const GameTime* Now = nullptr)
 		{

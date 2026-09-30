@@ -501,6 +501,14 @@ namespace LedgerCore
 			// not ported.
 		}
 
+		/// MemoryStore.cs KeepFirst: every event from Count on taken back (the C#
+		/// also rewrites its file; this store keeps none).
+		void KeepFirst(int Count)
+		{
+			if (Count < 0 || (size_t)Count >= Events.size()) return;
+			Events.erase(Events.begin() + Count, Events.end());
+		}
+
 		// MemoryStore.cs 87 to 91.
 		void Append(const MemoryEvent& E)
 		{

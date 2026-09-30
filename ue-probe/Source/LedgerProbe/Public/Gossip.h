@@ -548,7 +548,7 @@ namespace LedgerCore
 			const size_t Before = G && G->Memory ? G->Memory->Events.size() : 0;
 			Witness(WitnessId, Content, Summary, bSensitive, Now, Confidence);
 			if (!G || !G->Memory) return;
-			if (G->Memory->Events.size() > Before) G->Memory->Events.erase(G->Memory->Events.begin() + Before, G->Memory->Events.end());
+			G->Memory->KeepFirst((int)Before);
 			if (!Remembered.empty()) G->Memory->Append(MemoryEvent(Now, "conversation", bSensitive ? 0.9 : 0.6, Remembered));
 		}
 

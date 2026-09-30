@@ -159,7 +159,7 @@ namespace LedgerCore
 						// Theirs to know, not to tell, and not to remember as seen.
 						const std::string Topic = St.What.Subject + "." + St.What.Predicate;
 						if (!G->SuppressedHas(Topic)) G->Suppressed.push_back(Topic);
-						if (G->Memory && G->Memory->Events.size() > Memories) G->Memory->Events.erase(G->Memory->Events.begin() + Memories, G->Memory->Events.end());
+						if (G->Memory) G->Memory->KeepFirst((int)Memories);
 					}
 				}
 				Out.push_back(St.Id);
@@ -357,7 +357,7 @@ namespace LedgerCore
 					Mill->Witness(P, What, SaidValue, false, At, 0.9);
 					if (G->Memory)
 					{
-						if (G->Memory->Events.size() > Memories) G->Memory->Events.erase(G->Memory->Events.begin() + Memories, G->Memory->Events.end());
+						G->Memory->KeepFirst((int)Memories);
 						G->Memory->Append(MemoryEvent(At, "observation", 0.6, bKeeper ? KeeperMemoryOf(Cast, bThere) : bThere ? PresentMemoryOf() : MemoryOf()));
 					}
 					Out.push_back(std::make_pair(P, At));

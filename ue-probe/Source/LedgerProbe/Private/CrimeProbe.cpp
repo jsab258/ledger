@@ -2413,7 +2413,7 @@ namespace
 					               "somebody put Rita's window in", false, GNow, 0.9);
 					if (G && G->Memory)
 					{
-						if (G->Memory->Events.size() > Memories) G->Memory->Events.erase(G->Memory->Events.begin() + Memories, G->Memory->Events.end());
+						G->Memory->KeepFirst((int)Memories);
 						G->Memory->Append(MemoryEvent(GNow, "observation", 0.6, "I heard glass go over at Rita's. I never saw who did it."));
 					}
 					GHeardOnly.insert(R.WitnessId);
@@ -5774,6 +5774,9 @@ namespace
 			+ [] { std::string S; for (const auto& W : GWeek.Witnesses) { S += "\nwitness_" + W.first + "=" + std::to_string(W.second); } return S; }()
 			+ (bSheilaTrusts ? "\nsheilaTrusts=1" : "")
 			+ GMet.SaveLines()
+			// When DS Ellis first came and when he was first taken (the review's C4),
+			// so the week read after a load is the week played.
+			+ "\nellisFirst=" + GWeek.EllisFirst + "\ntakenFirst=" + GWeek.TakenFirst
 			+ [] {
 				if (GPawn == nullptr || bLiveScript) { return std::string(); }
 				const LedgerCrime::P3 At = ToStreet(GPawn->GetActorLocation());
@@ -5943,6 +5946,8 @@ namespace
 				else if (Kv == TEXT("deedHour")) { GDeedHour = FCString::Atoi(*V); GWeek.DeedAt = GameTime(GDeedDay, GDeedHour, 0); }
 				else if (Kv.StartsWith(TEXT("saw_"))) { GSawHimAt[Utf8(Kv.Mid(4))] = Utf8(V); }
 				else if (GMet.TakeLine(Utf8(Kv), Utf8(V))) { }
+				else if (Kv == TEXT("ellisFirst") && !V.IsEmpty()) { GWeek.EllisFirst = Utf8(V); }
+				else if (Kv == TEXT("takenFirst") && !V.IsEmpty()) { GWeek.TakenFirst = Utf8(V); }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
 				else if (Kv == TEXT("clock")) { bClockRead = GClock.FromText(Utf8(V)); }
 				else if (Kv == TEXT("waitShown") && TownSave::IsStopKey(Utf8(V))) { GWaitShown.insert(Utf8(V)); }   // an older save's, checked as the town's save checks them
