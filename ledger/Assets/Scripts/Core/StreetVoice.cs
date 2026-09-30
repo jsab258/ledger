@@ -365,6 +365,8 @@ namespace Ledger.Core
                 // in (town list 6bp), or his answer to Sheila at the week's end
                 // (town list 6ca), which she, who was told it, never remarks on.
                 if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r) || PoliceFile.IsAsking(r) || Custody.IsTaken(r) || WeeksEnd.IsWeekAnswer(r) || Silence.IsThreat(r))) continue;
+                // Only a story that says he did it (Rumor.NamesHim: a noise or a shape never does).
+                if (!r.NamesHim) continue;
                 if (WeeksEnd.IsWeekAnswer(r) && g.Id == WeeksEnd.Sheila) continue;
                 // His arrival and his name are plain facts, never what shows, even
                 // marked sensitive, which only a damaged save makes them (the
@@ -393,6 +395,7 @@ namespace Ledger.Core
                 // not the police asking after him, which shows while it is news
                 // and is then forgotten, with no faint remark (town list 6bq).
                 if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r))) continue;
+                if (!r.NamesHim) continue;
                 if (DayOne.IsArrival(r) || PlayerIdentity.IsNameStory(r)) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence > 0.0) || r.Confidence >= shareFloor) continue;
@@ -523,6 +526,8 @@ namespace Ledger.Core
             foreach (var r in g.Rumors)
             {
                 if (r == null || r.Content == null || r.Content.Subject != "player") continue;
+                // A noise or a shape is not him (Rumor.NamesHim, Jafar's ruling on A5).
+                if (!r.NamesHim) continue;
                 // The police asking after him is news of the police, not of
                 // anything he did: it shows in their manner, but weighs nothing
                 // on how they stand to him (town list 6bq, the independent check:
@@ -905,7 +910,7 @@ namespace Ledger.Core
             // Any other story of him they hold at all, secret or not, and any
             // wariness of him, come first (the third review: the game files the
             // window as no secret, and the line was said over it).
-            if (g.Rumors.Exists(x => x != null && x.Content != null && x.Content.Subject == "player" && !DayOne.IsArrival(x) && !PlayerIdentity.IsNameStory(x) && x.Confidence > 0)) return null;
+            if (g.Rumors.Exists(x => x != null && x.Content != null && x.Content.Subject == "player" && x.NamesHim && !DayOne.IsArrival(x) && !PlayerIdentity.IsNameStory(x) && x.Confidence > 0)) return null;
             if (g.Suspicion != null && g.Suspicion.Level != SuspicionLevel.Trusting) return null;
             var r = g.Rumors.Find(x => DayOne.IsArrival(x) && x.Confidence >= shareFloor);
             if (r == null || (heard != null && heard.HasRemarked(g.Id, r))) return null;

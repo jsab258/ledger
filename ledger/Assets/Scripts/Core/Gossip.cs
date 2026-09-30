@@ -51,6 +51,15 @@ namespace Ledger.Core
         /// (Suspecting.AccountOf reads it).
         public int OriginRung = -1;
 
+        /// WHETHER THE STORY SAYS HE DID IT (Jafar's ruling of 30 September on
+        /// the independent review's A5: "a witness's story is only as sure as
+        /// the witness was. A noise or a shape is suspicion, never 'he did
+        /// it'"): its first teller recognised him (rung 4, what names him, as
+        /// Suspecting has it), or it is no sighting at all but told by somebody
+        /// who knew (no rung). A noise, a shape, a mark or a face alone names
+        /// nobody: what it gives is Suspecting's, never the street's "he did it".
+        public bool NamesHim => OriginRung < 0 || OriginRung >= 4;
+
         /// A FACT, not a story. Set only by a killing (combat-spec §7b).
         ///
         /// Every other rumour in this game can be muddied, bought quiet,
@@ -432,6 +441,13 @@ namespace Ledger.Core
         /// One gossip round. `together` decides which tied pairs are actually in a
         /// position to talk this round (co-located in game, or always-true in tests).
         /// Returns everything that propagated, for logging.
+        // Whether a telling names him (Rumor.NamesHim): the copy told, or another
+        // version of the same story the teller passes on with it (the golden
+        // row OneTelling: a shape of their own and a naming heard beside it).
+        bool TellingNamesHim(Gossiper teller, Rumor r) =>
+            r.NamesHim || teller.Rumors.Exists(x => x != null && x.Content != null && x.TopicKey == r.TopicKey && x.NamesHim
+                                                    && (x.Indelible || x.Confidence >= MinConfidenceToShare));
+
         public List<GossipEvent> Tick(GameTime now, Func<string, string, bool> together = null)
         {
             var events = new List<GossipEvent>();
@@ -523,7 +539,9 @@ namespace Ledger.Core
                         }
                         // Consequence 2: a night-life secret reaches someone from the
                         // player's daytime world — the double life springs a leak.
-                        else if (r.Sensitive && listener.Circle == "day")
+                        // Only a story that names him (Rumor.NamesHim; Jafar's ruling on A5):
+                        // somebody's noise in the night is not the man they thought they knew.
+                        else if (r.Sensitive && TellingNamesHim(speaker, r) && listener.Circle == "day")
                         {
                             listener.Suspicion.Raise(LeakSuspicion * passed, "heard something that doesn't fit the person I thought I knew");
                             ev.Exposure = true;
@@ -731,7 +749,7 @@ namespace Ledger.Core
                         $"what {partner.DisplayName} told me contradicts what the new owner said to my face");
                     ev.Contradiction = true;
                 }
-                else if (r.Sensitive && checker.Circle == "day")
+                else if (r.Sensitive && TellingNamesHim(partner, r) && checker.Circle == "day")
                 {
                     checker.Suspicion.Raise(LeakSuspicion * passed, "I went asking, and I did not like the answer");
                     ev.Exposure = true;

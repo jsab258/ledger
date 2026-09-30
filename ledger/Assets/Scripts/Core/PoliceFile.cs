@@ -263,7 +263,7 @@ namespace Ledger.Core
         {
             if (a.Circle != "day") yield break;
             foreach (var r in a.Rumors)
-                if (r.Content != null && r.Content.Subject == "player" && r.Sensitive && r.Hops >= 1
+                if (r.Content != null && r.Content.Subject == "player" && r.Sensitive && r.Hops >= 1 && r.NamesHim
                     && (r.Indelible || (r.Confidence >= mill.MinConfidenceToShare && !a.Leashed && !a.Suppressed.Contains(r.TopicKey))))
                     yield return r;
         }
@@ -359,7 +359,7 @@ namespace Ledger.Core
                 if (a.Circle != "day") continue;
                 if (!OnTheStreet(cast, at, a.Id)) continue;
                 foreach (var r in a.Rumors)
-                    if (r.Content != null && r.Content.Subject == "player" && r.Sensitive && r.Confidence > 0) { who.Add(a.Id); break; }
+                    if (r.Content != null && r.Content.Subject == "player" && r.Sensitive && r.NamesHim && r.Confidence > 0) { who.Add(a.Id); break; }
             }
             who.Sort(StringComparer.Ordinal);
             return who;

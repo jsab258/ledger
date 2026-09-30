@@ -181,7 +181,10 @@ namespace Ledger.PerceptionGolden
                 var held = new[] { "WeekAsksNow|", "SweepAsked|", "SweepHeard|",
                     "CertaintyFor|28|4|1|", "CertaintyFor|60|4|1|", "CertaintyFor|127|4|1|",
                     "Resolve|70|0|0|0|0|0|0|30|0|1|0|30|0|1|0|0|0|1|45|0|3|4|0|certainty|",
-                    "Scenario|observation_four|closeCertainty|", "Scenario|observation_four|litShooterCertainty|" };
+                    "Scenario|observation_four|closeCertainty|", "Scenario|observation_four|litShooterCertainty|",
+                    // A5, a story only as sure as its first teller; its leak gate moves
+                    // 192 of the seeded gossip worlds' traces (their save rows do not move).
+                    "NamesHim|", "GossipFuzz|scenario|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1797,6 +1800,35 @@ namespace Ledger.PerceptionGolden
             Row(sb, "WeekWaits", "answered", Bit(sunday.Waits(new GameTime(6, 11, 30))), Bit(sunday.Give(WeekAnswer.WindDown, new GameTime(6, 11, 5), null, null)));
             var monday = new WeeksEnd(1);
             Row(sb, "WeekWaits", "not a sunday", Bit(monday.Waits(new GameTime(7, 10, 0))), Bit(monday.Ask(new GameTime(7, 10, 0), false, false)), Bit(monday.Ask(new GameTime(7, 10, 0), false)));
+            // A story is only as sure as its first teller (Jafar's ruling on the review's A5):
+            // a noise, a shape or a face never says he did it.
+            {
+                var sure = new GossipMill(new SocialGraph());
+                foreach (var (id, rung) in new[] { ("noise", 0), ("shape", 1), ("mark", 2), ("face", 3), ("knew", 4), ("told", -1) })
+                {
+                    sure.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    sure.Get(id).Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 0.9, Sensitive = true, Hops = 1, OriginRung = rung });
+                    var holder = sure.Get(id);
+                    Row(sb, "NamesHim", id, Bit(holder.Rumors[0].NamesHim), Bit(StreetVoice.StoryThatShows(holder, sure.MinConfidenceToShare) != null),
+                        Bit(StreetVoice.RegardFor(holder, sure.MinConfidenceToShare, false, null, 0.9, false).Story != null));
+                }
+                var sureFile = new PoliceFile();
+                sureFile.HearTheStreet(sure, 2, t => Offence.Damage);
+                var sureHeard = new List<string>();
+                foreach (var e in sureFile.Entries) sureHeard.Add(e.Who);
+                Row(sb, "NamesHim", "police", string.Join(",", PoliceFile.WhoSheAsks(sure)), PoliceFile.Loudness(sure).ToString(Inv), string.Join(",", sureHeard));
+                foreach (var rung in new[] { 0, 1, 2, 3, 4, -1 })
+                {
+                    var leakGraph = new SocialGraph();
+                    leakGraph.Link("w", "n", 0.9);
+                    var leak = new GossipMill(leakGraph);
+                    leak.Add(new Gossiper("w", "w", new MemoryStore("w"), new KnowledgeBase(), new SuspicionTracker(), "night"));
+                    leak.Add(new Gossiper("n", "n", new MemoryStore("n"), new KnowledgeBase(), new SuspicionTracker(), "day"));
+                    leak.Witness("w", new Fact("player", "window_d1", "ritas"), "x", true, new GameTime(1, 12, 0), 0.9, rung: rung);
+                    leak.Tick(new GameTime(1, 12, 30), (a, b) => true);
+                    Row(sb, "NamesHim", "leak " + rung.ToString(Inv), Bit(leak.Get("n").Rumors.Exists(x => x.TopicKey == "player.window_d1")), D(leak.Get("n").Suspicion.Value));
+                }
+            }
             // He misses her Sunday (the independent review, B1): she asks the next time he talks with her at the office.
             var missed = new WeeksEnd(0);
             foreach (var (d, h, m, office) in new[] { (5, 11, 0, true), (6, 9, 30, true), (6, 10, 15, true), (6, 12, 5, true), (7, 10, 0, true), (7, 10, 0, false), (13, 15, 0, true) })
