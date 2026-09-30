@@ -313,6 +313,20 @@ jobs:
           $same = (Test-Path $dst) -and ((Get-FileHash $src).Hash -eq (Get-FileHash $dst).Hash)
           if (-not $same) { Copy-Item $src $dst -Force }
           Write-Host "unrealUserSettings=$(if ($same) { 'already-installed' } else { 'installed' }) zenDataPath=$((Select-String -Path $dst -Pattern '^DataPath=').Line)"
+          # THE OLD STORE ON C: GOES (Jafar's yes of 30 September on the cleanup
+          # page, group unreal-cache-to-f: "delete the copy on C:"). Only this
+          # machine can: files under AppData that Claude deletes stay for every
+          # other program. The cache itself lives on F: (DataPath above); Zen's
+          # own install folder beside it stays.
+          $old = Join-Path $env:LOCALAPPDATA "UnrealEngine\Common\DerivedDataCache"
+          foreach ($part in @("Content", "Buckets")) {
+            $p = Join-Path $old $part
+            if (Test-Path $p) {
+              $mb = [math]::Round(((Get-ChildItem $p -Recurse -File -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum) / 1MB)
+              Remove-Item $p -Recurse -Force -ErrorAction SilentlyContinue
+              Write-Host "oldCacheOnC=removed part=$part mb=$mb stillThere=$(Test-Path $p)"
+            }
+          }
 
       #
       # NO continue-on-error, FROM 2026-09-22, AND THIS IS THE POINT OF THE
