@@ -975,6 +975,11 @@ static class Program
     /// than every N seconds instead of the Core's floor, to compare (the street's murmur is not counted).
     static int TwoHours(CastDay cast, string castJson, double clearEvery, double deedAtMinute = -1, TownNews newsFile = null)
     {
+        // The named characters: those the cast file gives a name.
+        var named = new HashSet<string>();
+        using (var doc = System.Text.Json.JsonDocument.Parse(castJson))
+            foreach (var person in doc.RootElement.GetProperty("people").EnumerateArray())
+                if (person.TryGetProperty("name", out _) && person.TryGetProperty("id", out var pid)) named.Add(pid.GetString());
         var people = cast.People;
         var placesObj = MiniJson.AsObject(MiniJson.AsObject(MiniJson.Deserialize(castJson))["places"]);
         var spots = new List<(string name, double x, double z)>();
@@ -992,6 +997,11 @@ static class Program
             // bank -> per run: (seconds, text) heard, two ways
             var seedHeard = new Dictionary<string, List<List<(double t, string text)>>>();
             var freshHeard = new Dictionary<string, List<List<(double t, string text)>>>();
+            // BY NAMED SPEAKER (U2, 30 September): how many lines each named
+            // character says in his hearing, bank by bank, with the ledger; what
+            // sizes each one's own lines.
+            var spokenBy = new Dictionary<(string who, string bank), int>();
+            var mostBy = new Dictionary<string, int>();
             int runs = 0;
             foreach (int sightAbs in new[] { 22, 23, 24, 25, 26, 27, 28 })
             foreach (var witness in people)
@@ -1009,6 +1019,14 @@ static class Program
                 var remarks = new RemarkLedger();
                 var runSeed = new Dictionary<string, List<(double, string)>>();
                 var runFresh = new Dictionary<string, List<(double, string)>>();
+                var runBy = new Dictionary<string, int>();
+                void Said(SpokenLine l)
+                {
+                    if (l == null || l.SpeakerId == null || !named.Contains(l.SpeakerId)) return;
+                    var k = (l.SpeakerId, l.Bank ?? "?");
+                    spokenBy[k] = (spokenBy.TryGetValue(k, out var c) ? c : 0) + 1;
+                    runBy[l.SpeakerId] = (runBy.TryGetValue(l.SpeakerId, out var r) ? r : 0) + 1;
+                }
                 void Note(Dictionary<string, List<(double, string)>> into, string bank, double t, string text)
                 {
                     if (bank == null || string.IsNullOrEmpty(text)) return;
@@ -1050,7 +1068,7 @@ static class Program
                             double t = hourStart + minute / 60.0 * SecondsPerHour;
                             var from = mill.Get(ev.FromId); var to = mill.Get(ev.ToId);
                             foreach (var l in StreetVoice.Exchange(ev.Rumor, from, to, day * 31 + hourOfDay)) Note(runSeed, l.Bank, t, l.Text);
-                            foreach (var l in StreetVoice.Exchange(ev.Rumor, from, to, day * 31 + hourOfDay, ledger)) { Note(runFresh, l.Bank, t, l.Text); ledger.Heard(l); }
+                            foreach (var l in StreetVoice.Exchange(ev.Rumor, from, to, day * 31 + hourOfDay, ledger)) { Note(runFresh, l.Bank, t, l.Text); ledger.Heard(l); Said(l); }
                         }
                     }
                     mill.Age(new GameTime((abs + 1) / 24, (abs + 1) % 24, 0));
@@ -1070,6 +1088,7 @@ static class Program
                         Note(runSeed, bySeed.Bank, hourStart, bySeed.Text);
                         Note(runFresh, byFresh.Bank, hourStart, byFresh.Text);
                         ledger.Heard(byFresh);
+                        Said(byFresh);
                         if (rg.Faint) remarks.RecordFaint(p, rg.Story, heard: true);
                         else remarks.Record(p, rg.Story, rg.Stance, heard: true);
                     }
@@ -1100,11 +1119,12 @@ static class Program
                         string justNow = deedT >= 0 && t >= deedT ? "glass" : null;
                         double since = deedT >= 0 && t >= deedT ? t - deedT : -1;
                         foreach (var l in StreetVoice.Ambient(mill.Get(a), mill.Get(b), now, 0.5, 1.0, false, false, seed, null, justNow, since)) Note(runSeed, l.Bank, t, l.Text);
-                        foreach (var l in StreetVoice.Ambient(mill.Get(a), mill.Get(b), now, 0.5, 1.0, false, false, seed, ledger, justNow, since)) { Note(runFresh, l.Bank, t, l.Text); ledger.Heard(l); }
+                        foreach (var l in StreetVoice.Ambient(mill.Get(a), mill.Get(b), now, 0.5, 1.0, false, false, seed, ledger, justNow, since)) { Note(runFresh, l.Bank, t, l.Text); ledger.Heard(l); Said(l); }
                     }
                 }
                 foreach (var kv in runSeed) { if (!seedHeard.TryGetValue(kv.Key, out var l)) seedHeard[kv.Key] = l = new List<List<(double, string)>>(); l.Add(kv.Value); }
                 foreach (var kv in runFresh) { if (!freshHeard.TryGetValue(kv.Key, out var l)) freshHeard[kv.Key] = l = new List<List<(double, string)>>(); l.Add(kv.Value); }
+                foreach (var kv in runBy) mostBy[kv.Key] = Math.Max(mostBy.TryGetValue(kv.Key, out var m) ? m : 0, kv.Value);
             }
 
             Console.WriteLine($"MODE {mode}: runs={runs} (each of the cast out at each hour of night one as the witness)");
@@ -1196,6 +1216,15 @@ static class Program
                     }
                 }
                 Console.WriteLine($"  {bank}: seen {bankSize} | {meanUses:0.0} ({mostUses}) | {mostInTen} | {Rep(sd):0.0} / {Rep(fr):0.0} | {Gap(sd)} / {Gap(fr)}");
+            }
+            Console.WriteLine("  by named speaker: lines said in his hearing in two hours, mean over the runs (the most in one run), then bank by bank, mean");
+            foreach (var who in named.OrderBy(x => x, StringComparer.Ordinal))
+            {
+                var mine = spokenBy.Where(kv => kv.Key.who == who).OrderBy(kv => kv.Key.bank, StringComparer.Ordinal).ToList();
+                if (mine.Count == 0) { Console.WriteLine($"    {who}: none"); continue; }
+                double total = mine.Sum(kv => kv.Value) / (double)runs;
+                Console.WriteLine($"    {who}: {total:0.0} ({(mostBy.TryGetValue(who, out var most) ? most : 0)}) | " +
+                                  string.Join(", ", mine.Select(kv => $"{kv.Key.bank} {kv.Value / (double)runs:0.0}")));
             }
         }
         return 0;

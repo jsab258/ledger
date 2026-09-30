@@ -103,7 +103,9 @@ static class Program
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
-            case "firsts": return await Firsts(dir, parallel);
+            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
+            case "bearing": return Bearing();
+            case "why": return await Why(args.Length > 1 ? args[1] : "lena", args.Length > 2 ? args[2] : "");
             case "hours": return await Hours(dir, parallel);
             case "hourslook": return await HoursLook();
             case "check": _withPeople = args.Contains("--people"); return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
@@ -498,15 +500,63 @@ static class Program
     /// such questions to each character who talks, through the real engine and
     /// its check, each a first line to them; counts the answers that end in
     /// their "that's all I know" or a refusal, for reading by eye after.
+    static readonly string[] FirstProbes =
+    {
+        "Who are you?", "What is this place?", "What am I meant to do here?", "How did Mickey die?", "Sorry I missed the funeral.",
+        "What's behind that door?", "Where do I sleep?", "Who runs things round here?", "Is there any money in the business?", "Did Mickey leave me anything?",
+        "What was Mickey like?", "Who can I trust?", "How many drivers are there?", "Where's the office?", "What do you do here?",
+        "Do you work for me now?", "Anything I should know?", "Where can I get something to eat?", "Who was Mickey's family?", "What happens now?",
+    };
+
+    /// WHAT THE CHOOSING STEP PICKS (U1, 30 September): for each of a
+    /// newcomer's first questions, what ClaimCheck.Bearing puts before the
+    /// writer, from the items the check reads. No model is called.
+    static int Bearing()
+    {
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
+        int none = 0, n = 0;
+        foreach (var c in new[] { "lena", "rocco", "sam" })
+        {
+            var card = StreetFacts.AddTo(CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, c + ".md"))), c);
+            string where = cast.WhereWords(c, 0, 10);
+            var items = ClaimCheck.KnownItems(card, null, null, null, "Dry, grey." + (where != null ? " Where you are: " + where + "." : ""),
+                                              new GameTime(0, 10, 0).ToldAs, new PlayerIdentity().HowTheyKnowHim(true, true, null), cast.PeopleFor(c, 0, 10));
+            foreach (var probe in FirstProbes)
+            {
+                var chosen = ClaimCheck.Bearing(items, probe);
+                n++;
+                if (chosen.Count == 0) none++;
+                Console.WriteLine(c + " | " + probe);
+                foreach (var x in chosen) Console.WriteLine("    - " + x);
+            }
+        }
+        Console.WriteLine($"bearing: {n - none} of {n} questions given something that bears on them; {none} given nothing");
+        return 0;
+    }
+
+    /// WHY A LINE WAS REFUSED (U1, 30 September): the whole check on one line
+    /// a card's speaker might say, as the first questions ask it, with every
+    /// call's raw answer printed. Through Claude Code, as the bench is.
+    static async Task<int> Why(string who, string line)
+    {
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
+        var card = StreetFacts.AddTo(CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, who + ".md"))), who);
+        string where = cast.WhereWords(who, 0, 10);
+        var items = ClaimCheck.KnownItems(card, null, null, null, "Dry, grey." + (where != null ? " Where you are: " + where + "." : ""),
+                                          new GameTime(0, 10, 0).ToldAs, new PlayerIdentity().HowTheyKnowHim(true, true, null), cast.PeopleFor(who, 0, 10));
+        foreach (var (id, text) in items) if (id[0] == 'H' || id[0] == 'K') Console.WriteLine(id + ": " + text);
+        using var client = new ClaudeCodeClient();
+        var (found, calls) = await ClaimCheck.CheckAsync(client, "claude-haiku-4-5", items, line, default);
+        foreach (var c in calls) { Console.WriteLine("--- call"); Console.WriteLine(c.Text); }
+        Console.WriteLine("flagged: " + (found == null ? "(unchecked)" : string.Join(" | ", found)));
+        return 0;
+    }
+
     static async Task<int> Firsts(string dir, int parallel)
     {
-        var probes = new[]
-        {
-            "Who are you?", "What is this place?", "What am I meant to do here?", "How did Mickey die?", "Sorry I missed the funeral.",
-            "What's behind that door?", "Where do I sleep?", "Who runs things round here?", "Is there any money in the business?", "Did Mickey leave me anything?",
-            "What was Mickey like?", "Who can I trust?", "How many drivers are there?", "Where's the office?", "What do you do here?",
-            "Do you work for me now?", "Anything I should know?", "Where can I get something to eat?", "Who was Mickey's family?", "What happens now?",
-        };
+        var probes = FirstProbes;
         var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
         var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
         var cost = new CostTracker();

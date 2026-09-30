@@ -151,6 +151,7 @@ namespace Ledger.PerceptionGolden
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
                 EmitThreats(sb);
+                EmitOwnLines(sb);
             }
 
             var text = sb.ToString();
@@ -1346,6 +1347,42 @@ namespace Ledger.PerceptionGolden
         /// stories are threats, filing one (once a person and deed), and the
         /// lines at his face, told first-hand or heard. The reading of his words
         /// stays in the talk program.
+        /// A NAMED PERSON'S OWN LINES (OwnLines, U2, 30 September): every line of
+        /// every bank as the Core holds it, and what the street's pickers say
+        /// with them: Ron opening and answering by day and by night, his
+        /// recognition of the arrival, his half-word, a pair with nobody named
+        /// (the shared banks, unchanged), and the ledger moving through his
+        /// everyday openers without a repeat.
+        static void EmitOwnLines(StringBuilder sb)
+        {
+            foreach (var who in OwnLines.ByCast.Keys.OrderBy(k => k, StringComparer.Ordinal))
+                foreach (var bank in OwnLines.ByCast[who].Keys.OrderBy(k => k, StringComparer.Ordinal))
+                {
+                    var lines = OwnLines.ByCast[who][bank];
+                    for (int i = 0; i < lines.Length; i++) Row(sb, "OwnLine", who, bank, i.ToString(Inv), Esc(lines[i]));
+                }
+            Gossiper G(string id) => new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker());
+            foreach (var (a, b, hour) in new[] { ("rocco", "xb", 11), ("xa", "rocco", 11), ("rocco", "xb", 23), ("xa", "xb", 11) })
+                for (int seed = 0; seed < 4; seed++)
+                    foreach (var l in StreetVoice.Ambient(G(a), G(b), new GameTime(2, hour, 0), 0.5, 1.0, false, false, seed))
+                        Row(sb, "OwnAmbient", a, b, hour.ToString(Inv), seed.ToString(Inv), l.SpeakerId, l.Bank, Esc(l.Text));
+            var arrived = new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.5, Sensitive = false, Hops = 0 };
+            for (int seed = 0; seed < 3; seed++)
+            {
+                var r = StreetVoice.Recognition(G("rocco"), arrived, StanceKind.Comments, seed);
+                Row(sb, "OwnRecognition", seed.ToString(Inv), r == null ? "null" : r.Bank + "|" + Esc(r.Text));
+                var f = StreetVoice.FaintRemark(G("rocco"), arrived, seed);
+                Row(sb, "OwnFaint", seed.ToString(Inv), f.Bank, Esc(f.Text));
+            }
+            var ledger = new RemarkLedger();
+            for (int i = 0; i < 6; i++)
+            {
+                var l = StreetVoice.Ambient(G("rocco"), G("xb"), new GameTime(2, 11, 0), 0.5, 1.0, false, false, 1, ledger)[0];
+                Row(sb, "OwnFresh", i.ToString(Inv), l.Bank, Esc(l.Text));
+                ledger.Heard(l);
+            }
+        }
+
         static void EmitThreats(StringBuilder sb)
         {
             foreach (var pred in new[] { "threat_window_d1", "threat_", "threat", "taken_d4" })

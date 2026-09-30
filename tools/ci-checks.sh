@@ -156,6 +156,7 @@ real_table() {
     content-gate-selftest "$REPO"                 "$PY tools/content-gate.py --selftest" \
     approvals             "$REPO"                 "$PY tools/approvals.py" \
     approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \
+    own-lines-page        "$REPO"                 "$PY tools/own_lines_md.py rocco --check" \
     names-gate            "$REPO"                 "$PY tools/names-gate.py" \
     names-gate-selftest   "$REPO"                 "$PY tools/names-gate.py --selftest" \
     spec-test             "$REPO"                 "bash tools/spec-test-check.sh" \

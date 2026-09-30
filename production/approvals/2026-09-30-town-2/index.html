@@ -1,0 +1,195 @@
+<title>Ron&#x27;s street lines, and the thirty regulars</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;600&display=swap">
+<style>
+:root{--bg:#eef0ee;--card:#fbfcfb;--ink:#1d2326;--soft:#56646a;--line:#cdd4d2;--amber:#a7650f;--amber-bg:#f6e8d3;--flag:#8d2f22;
+ --ok:#2f6b45;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--flag:#e58a78;--ok:#7cc497;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--flag:#e58a78;--ok:#7cc497;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "Public Sans",system-ui,sans-serif;margin:0}
+.wrap{max-width:46rem;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:grid;gap:28px}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:2rem;line-height:1.15}h2{font-size:1.45rem}h3{font-size:1.1rem;margin-top:14px}
+.lede{color:var(--soft);margin:6px 0 0}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:0 0 4px}
+section{display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:10px}
+.intro{color:var(--soft);font-size:.92rem;margin:0}
+dl{display:grid;grid-template-columns:8.5rem 1fr;gap:6px 14px;margin:0;font-size:.95rem}
+dt{color:var(--soft);font-weight:600}dd{margin:0}
+@media (max-width:520px){dl{grid-template-columns:1fr}dt{margin-top:6px}}
+.voice{background:var(--amber-bg);border-radius:4px;padding:8px 10px;font-size:.95rem}
+.voice strong{color:var(--flag)}
+blockquote{margin:0;padding-left:12px;border-left:3px solid var(--line);font-family:"Newsreader",Georgia,serif;font-size:1.05rem}
+.lines{display:grid;gap:6px}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.pick{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:4px;padding:8px 10px;cursor:pointer;flex:1 1 14rem}
+.pick input{margin-top:4px}
+.pick:has(input:checked){border-color:var(--amber);background:var(--amber-bg)}
+textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.status{font-size:.85rem;color:var(--soft)}
+.saved{color:var(--ok)}
+.outline p,.outline li{max-width:65ch}
+.outline ul{padding-left:1.2rem;margin:4px 0}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin:8px 0}
+.person{border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--bg)}
+.person h4{margin:0 0 6px;font-size:1rem}
+.person p{margin:2px 0;font-size:.92rem;line-height:1.35}
+.person b{color:var(--soft);font-weight:600}
+.notes{margin:0 0 12px;padding:8px 12px;border-left:3px solid var(--amber);background:var(--amber-bg);border-radius:4px}
+.notes summary{cursor:pointer;font-weight:600}
+.notes li{margin:4px 0}
+img{max-width:100%;height:auto;cursor:zoom-in}
+.full{position:fixed;inset:0;background:rgba(0,0,0,.92);display:flex;align-items:center;justify-content:center;z-index:10;cursor:zoom-out}
+.full img{max-width:100vw;max-height:100vh;width:auto;height:auto;object-fit:contain;cursor:zoom-out}
+</style>
+<main class="wrap">
+<header><p class="eyebrow">LEDGER · the town session · 2026-09-30</p>
+<h1>Ron&#x27;s street lines, and the thirty regulars</h1>
+<p class="lede">Two things to read, each a sample before more are made. Ron&#x27;s own street lines: 159, in his voice, so the street stops talking with one voice; the rest of the named cast follow his pattern once you say yes. And the street&#x27;s thirty regulars as one contact sheet of text; their faces, clothes and voices come after, from the builder, only with your yes. One tap each, and a note if you want.</p></header>
+<section><h2>Ron&#x27;s own street lines</h2><article class="card outline" data-key="ron-street-lines">
+<details class="notes"><summary>The blind reviewer's remaining notes</summary><ul><li>He is more clipped than rambling: most lines are two to five words, where his card has him run on.</li><li>His money-minded side shows in only a line or two.</li><li>Thirty years on the docks, as his card and the talk have it; his sheet&#x27;s line says forty, which I read as his own rounding.</li><li>A few everyday lines still assume the street, such as the smell of the fish market, and he also stands at the caff, the quay and the allotments.</li></ul></details>
+<p>What Ron says on the street, written ahead in his own voice: 159 lines. The game takes these before the street&#x27;s shared lines, and never says one twice until he has said them all. Made from ledger/Assets/Scripts/Core/OwnLines.cs by tools/own_lines_md.py; the sample before anybody else&#x27;s are written.</p>
+<h3>To Tom as he passes</h3>
+<ul><li>Boss.</li><li>All right. Rank&#x27;s quiet.</li><li>Boss. Kettle&#x27;s on in the office.</li><li>Cold one, boss. Mind how you go.</li><li>Anything you want watching, boss?</li><li>Quiet day. Mostly.</li></ul>
+<h3>To Tom, the first time, having seen him arrive</h3>
+<ul><li>You&#x27;ll be Mickey&#x27;s nephew. Ron. I keep the rank.</li><li>Saw you come in with your case. Mickey&#x27;s nephew, is it?</li></ul>
+<h3>To Tom, the first time, having heard he&#x27;d come</h3>
+<ul><li>You&#x27;ll be the new owner, then. Ron. The rank&#x27;s mine, the door too.</li><li>Heard Mickey&#x27;s nephew had come. That&#x27;ll be you, boss.</li></ul>
+<h3>To Tom, while talk about him is going round</h3>
+<ul><li>Your name&#x27;s going round, boss. Just so you know.</li><li>People are talking. I don&#x27;t join in.</li><li>Keep your head down a day or two, boss.</li><li>Heard a thing or two. It&#x27;ll keep.</li></ul>
+<h3>To Tom, when Ron wants it out with him</h3>
+<ul><li>A word, boss. Not out here.</li><li>We need to talk, you and me.</li></ul>
+<h3>To Tom, when Ron won&#x27;t help him</h3>
+<ul><li>Not today, boss. Ask somebody else.</li><li>I&#x27;ve nothing for you.</li></ul>
+<h3>To Tom, when Ron would rather not stop</h3>
+<ul><li>Boss.</li><li>Busy, boss. After.</li><li>Another time, boss.</li></ul>
+<h3>To Tom, having seen the police take him</h3>
+<ul><li>Saw them put you in the car, boss. I kept the rank going.</li><li>You&#x27;re out, then. Saw them take you off.</li></ul>
+<h3>To Tom, having heard the police took him</h3>
+<ul><li>Heard the police had you in, boss.</li><li>They say you were down the station.</li></ul>
+<h3>To Tom, after the detective asked Ron about him</h3>
+<ul><li>Ellis was at me about you, boss. Wanted you to hear it from me.</li><li>Detective stopped me about you, boss. You&#x27;ll want to hear what she asked.</li></ul>
+<h3>To Tom, having heard the police are asking</h3>
+<ul><li>Heard a detective&#x27;s been asking round about you, boss.</li><li>Police are asking about you, so they say.</li></ul>
+<h3>To Tom, after Tom threatened him</h3>
+<ul><li>I heard you, boss. I&#x27;m still stood here.</li><li>Thirty years on the quay, boss. I&#x27;ve been told worse by better.</li></ul>
+<h3>To Tom, having heard he threatened someone</h3>
+<ul><li>Word is you&#x27;ve been leaning on folk, boss. The street keeps count.</li><li>Heard you&#x27;ve been threatening people. It gets round.</li></ul>
+<h3>To Tom, having heard he did Mickey&#x27;s run</h3>
+<ul><li>Heard you did Mickey&#x27;s run. Watch yourself down there.</li><li>Went all right, I hear, boss. Say nowt.</li></ul>
+<h3>To Tom, having heard he told the outfit no</h3>
+<ul><li>I took your no down myself, boss. Mickey never sent one.</li><li>They had it from me. They&#x27;ll not forget it.</li></ul>
+<h3>To Tom, once Mickey&#x27;s arrangement is wound down</h3>
+<ul><li>That&#x27;s Mickey&#x27;s arrangement done with, boss. I took word down myself.</li><li>They&#x27;ll not be calling. That&#x27;s finished.</li></ul>
+<h3>To Tom, having heard he left the outfit waiting</h3>
+<ul><li>Heard they waited on you at the landing, boss.</li><li>You never went down. They&#x27;ll have noticed.</li></ul>
+<h3>To Tom, having heard he&#x27;s winding Mickey&#x27;s down</h3>
+<ul><li>Heard you&#x27;re winding Mickey&#x27;s down, boss. Just the cabs, then.</li><li>Can&#x27;t say I&#x27;m sorry, boss. Mickey&#x27;s other business never did him any good.</li></ul>
+<h3>To Tom, having heard he&#x27;s taking it all on</h3>
+<ul><li>Heard you&#x27;re taking it all on. All of Mickey&#x27;s.</li><li>So you&#x27;re the new Mickey, boss. We&#x27;ll see.</li></ul>
+<h3>To Tom, having heard he won&#x27;t tell Sheila</h3>
+<ul><li>Sheila says you&#x27;ll not tell her, boss. You&#x27;ll not tell me either, I expect.</li><li>Keeping it to yourself. Fair enough.</li></ul>
+<h3>Half a word to whoever is beside him, once Tom is past</h3>
+<ul><li>That&#x27;s the boss. Mickey&#x27;s nephew.</li><li>There&#x27;s been talk about him. I&#x27;ll not repeat it.</li><li>He&#x27;s all right. So far.</li></ul>
+<h3>Starting a word with a neighbour, in the day</h3>
+<ul><li>How&#x27;s the world treating you, friend?</li><li>Keeping all right, friend?</li><li>Weather can&#x27;t make its mind up.</li><li>Wind&#x27;s round to the east. Feel that.</li><li>Fish van was late again.</li><li>Still going, then?</li><li>How&#x27;s the back?</li><li>Not seen you on the street for a bit.</li><li>Kept you busy, have they?</li><li>Quiet on the rank today.</li><li>Taking it steady, friend?</li><li>Did you get that sorted, in the end?</li><li>Anything going cheap your end?</li><li>Grey old day, this.</li><li>Smell of fish never leaves this street, does it?</li><li>Not much in the paper. Never is.</li><li>Bearing up, friend?</li><li>Cold enough for you, friend?</li><li>Your feet holding up?</li><li>These boots have done some miles on that rank.</li><li>Looking better than last week, friend.</li><li>Anything doing your end?</li><li>They&#x27;ve still not fixed that lamp by the gate.</li><li>Getting by, are you?</li><li>Days are drawing in now, friend.</li><li>Water&#x27;s brown as tea today.</li><li>You get your letter about the poll tax?</li><li>Gulls are loud today. Weather coming.</li><li>Keeping out of trouble?</li><li>You all right? You look done in.</li><li>Stop a minute, friend. How&#x27;s things?</li><li>You&#x27;ll want your big coat soon.</li></ul>
+<h3>Answering a neighbour, in the day</h3>
+<ul><li>Same as ever, friend.</li><li>Can&#x27;t grumble. Wouldn&#x27;t do any good.</li><li>Getting by, friend. Getting by.</li><li>Not so bad. Feet are killing me.</li><li>Could be worse. Thirty years on the quay taught me that.</li><li>Aye, well. You know how it is.</li><li>I&#x27;ll live, friend.</li><li>Don&#x27;t start me off, friend.</li><li>Ask me when I&#x27;ve sat down.</li><li>One day at a time, friend.</li></ul>
+<h3>Starting a word at night</h3>
+<ul><li>You&#x27;re out late, friend.</li><li>Rank&#x27;s dead. Not had a fare in an hour.</li><li>Cold&#x27;s come down now, hasn&#x27;t it.</li><li>Quiet as the grave tonight.</li><li>Last hour, then I&#x27;m off.</li><li>Only us daft enough to be out, friend.</li><li>Mind the kerb. It&#x27;s black as pitch down there.</li><li>You want to get yourself home. It&#x27;s bitter.</li><li>Street&#x27;s a different place once it&#x27;s dark.</li><li>I&#x27;ll give it another hour, then I&#x27;m off.</li><li>Hear that? Just the water.</li><li>Not a soul about. I like it like this.</li><li>You&#x27;ll catch your death out here.</li><li>Long shift, friend?</li></ul>
+<h3>Answering at night</h3>
+<ul><li>Someone&#x27;s got to watch the gate.</li><li>Nearly done, friend. Nearly.</li><li>Nights are the easy bit. Nobody wants owt.</li><li>I don&#x27;t sleep much these days anyway.</li><li>Go on, get yourself in.</li><li>Aye. Mind how you go.</li></ul>
+<h3>Starting a word when trade is dead</h3>
+<ul><li>Three fares. That&#x27;s the lot. Three.</li><li>Street&#x27;s dead since the docks went.</li><li>Nobody&#x27;s got the money for a cab these days.</li><li>Cab&#x27;s sat on that rank like it&#x27;s parked for good.</li><li>I&#x27;ve seen quiet, friend, but not like this.</li><li>Bus shelter&#x27;s busier than the rank.</li></ul>
+<h3>Answering when trade is dead</h3>
+<ul><li>Docks went and took the street with them.</li><li>Somebody&#x27;s making money. It&#x27;s not round here.</li><li>Same on the rank. Nobody&#x27;s paying.</li><li>I&#x27;ve seen it come and go. It comes back.</li></ul>
+<h3>Starting a word when prices are up</h3>
+<ul><li>Tea&#x27;s gone up again at the caff.</li><li>You seen what they want for a loaf now?</li><li>Rent&#x27;s up again. Letter came, bold as you like.</li><li>Everything&#x27;s dearer and nobody&#x27;s wages are.</li><li>Gas bill came. I had to sit down.</li></ul>
+<h3>Answering when prices are up</h3>
+<ul><li>Don&#x27;t. I&#x27;ve stopped looking.</li><li>Same everywhere, friend.</li><li>I go without, mostly. Easier.</li></ul>
+<h3>Starting a word when he&#x27;s hurt</h3>
+<ul><li>Don&#x27;t ask. I walked into something.</li><li>Took a knock. It&#x27;s nothing.</li><li>I&#x27;m all right. Don&#x27;t fuss.</li></ul>
+<h3>Answering somebody who&#x27;s hurt</h3>
+<ul><li>Seen that go bad on the quay. Mind it.</li><li>Casualty&#x27;ll see you. It&#x27;s only a wait.</li><li>Sit down a minute. The rank&#x27;ll keep.</li></ul>
+<h3>To somebody he&#x27;s fallen out with</h3>
+<ul><li>I&#x27;ve nothing to say to you. Go on.</li><li>You know where I stand. Keep walking.</li><li>Say your piece or shift.</li></ul>
+<h3>Answering somebody he&#x27;s fallen out with</h3>
+<ul><li>Suit yourself, friend.</li><li>I&#x27;ll remember that.</li><li>I&#x27;m not the one stood there scowling.</li></ul>
+<h3>Just after glass breaks</h3>
+<ul><li>That&#x27;s glass. That&#x27;s a window, that.</li><li>Hear that? Somebody&#x27;s window.</li></ul>
+<h3>Just after a shout</h3>
+<ul><li>Who&#x27;s that bawling?</li><li>Somebody&#x27;s shouting down there.</li></ul>
+<h3>Just after a crash</h3>
+<ul><li>What&#x27;s come down?</li><li>That was a crash, that.</li></ul>
+<h3>Just after a noise</h3>
+<ul><li>What was that?</li><li>Hang on. Something&#x27;s up.</li></ul>
+<h3>Answering, just after</h3>
+<ul><li>I&#x27;ll not go looking. Not for nowt.</li><li>Leave it be. It&#x27;s not ours.</li><li>Leave it. Somebody&#x27;ll ring.</li></ul>
+<h3>Once it&#x27;s gone quiet again</h3>
+<ul><li>Gone quiet again.</li><li>Whatever it was, it&#x27;s done.</li><li>Whole street&#x27;ll know by tomorrow.</li></ul>
+<h3>Answering, once it&#x27;s gone quiet</h3>
+<ul><li>Let it settle, friend.</li><li>Somebody saw. Somebody always does.</li><li>Best not to wonder, friend.</li></ul>
+<div class="row"><label class="pick"><input type="radio" name="ron-street-lines" id="ron-street-lines-approve" value="approve"><span>Yes: this is Ron; write the rest of the named cast this way</span></label><label class="pick"><input type="radio" name="ron-street-lines" id="ron-street-lines-redo" value="redo"><span>Change them (say what in the note)</span></label></div><textarea id="ron-street-lines-note" placeholder="What to change"></textarea><p class="status" id="ron-street-lines-status"></p></article></section>
+<section><h2>The thirty regulars: a contact sheet</h2><article class="card outline" data-key="regulars">
+<details class="notes"><summary>The blind reviewer's remaining notes</summary><ul><li>Hal and Doreen work every day though the sheet counts Hal as retired and Doreen as one who won&#x27;t retire.</li><li>The two older voice slots carry five people each, ages fifty to sixty-six on one voice.</li><li>An Irish priest&#x27;s Irish housekeeper may still bring Father Ted&#x27;s Mrs Doyle to mind for some, whatever her name.</li><li>The parade&#x27;s empty unit, the takeaway&#x27;s bay, is labelled a repair shop in the street&#x27;s spec and has no sign yet.</li><li>New routines must keep Tanja&#x27;s friendship with Ada and Albert&#x27;s with Ron meeting as they do now.</li></ul></details>
+<p>The second tier of production/casting/CASTING.md: about thirty people the player passes day after day. Text only: faces, clothes and voices are the builder&#x27;s, and no voice is cast without Jafar&#x27;s yes. Judged as one contact sheet on the town&#x27;s approval page; the approval, when given, is REGULARS.md.approval.json beside this file (tools/approvals.py), and it lapses if this file changes. On his yes these sheets replace the older cards for the same ids in tier2-batch-1.json (game-design/ and the game&#x27;s StreamingAssets), which give some of them other ages and trades.</p>
+<h3>How they were chosen (decided within canon, DECISIONS 30 September)</h3>
+<ul><li><strong>Who.</strong> Everybody who already walks the street&#x27;s routines (production/specs/hook-cast.json), so every sheet is somebody the player actually meets, except six whose roles repeat another&#x27;s: - the laundry&#x27;s presser and a laundress (Iva, Selma); - the pawn&#x27;s clerk and appraiser (Marta, Ines); - the pawn counter&#x27;s morning locksmith (Jelena); - the customs assistant (Goran).</li></ul>
+<p>They stay in the routines as crowd faces, the third tier. Tanja, a laundress in the routines, is laid off now (row 8), so the laundry&#x27;s day loses her. The ids are the routines&#x27; own, kept from the old studio. Added, as CASTING.md asks: Grace Rinaldi&#x27;s caff, her Italian father&#x27;s before her, and the Tangs&#x27; takeaway on the parade. Their routines, and a bay for the takeaway (the parade&#x27;s empty unit is free), are handovers.</p>
+<ul><li><strong>Ages and sexes: CASTING.md&#x27;s census shares, exactly.</strong> - 8 in their twenties; - 8 aged thirty to forty-four; - 6 aged forty-five to fifty-nine; - 5 aged sixty to seventy-four (3 women); - 3 over seventy-five (2 women); - 14 men and 16 women in all.</li><li><strong>Trades: the census where canon allows it.</strong> - As the census asks, nearly: four retired (and Doreen, who won&#x27;t) and two out of work, on a street whose work went with the docks. - Canon changes the rest. Canon and the street&#x27;s facts have two drivers and a dispatcher, not four drivers. The routines put the quay, the docks, the pawn and the laundry on the street, so dock and shipping has six where the census has two. The fish market&#x27;s own workers are in the crowd. - Two keep house, a housekeeper and a landlady, both for others; the census has three. - The outfit&#x27;s man at the ferry landing stays unnamed and out of these sheets, as canon has him.</li><li><strong>Names.</strong> - First names are drawn from the ONS top 100 for each person&#x27;s birth decade. - Surnames come from Hull&#x27;s 1990 directory and Guppy&#x27;s East Riding and Lincolnshire lists (production/research/casting/notes/names.md). - None is a principal&#x27;s surname. - Every name was checked against well-known people. Dropped: Kevin Ward (a rugby league player), Wayne Dobson (a television magician), Bilocca (Lillian Bilocca of Hull, 1968), Doyle for a priest&#x27;s housekeeper (Father Ted&#x27;s Mrs Doyle), Peter Chan (a film director) and Tweedy (Chicken Run). - No first name one letter from a principal&#x27;s (Roy and Ron, Carl and Carol), and no surname a pun in a fishing port (Codling). - A Hong Kong wife keeps her own surname.</li><li><strong>Look: CASTING.md&#x27;s period traits, counted.</strong> - a moustache on 2 of the 6 men aged 35 to 60; - a perm or set on 4 of the 8 women over 45; - glasses on 10 of 30; - dentures on 6 of the 12 over 55; - 4 stout; - smokers: 5 working men and 6 women; - faded tattoos only on the old trawlerman; - nothing groomed. - Nobody is dressed like a principal: no mullet and gold (Danny Cammack), no moustache and car coat (Keith Garbutt), no cardigan or glasses on a chain (Sheila), no set and heavy gold (Maureen Jensen), no feathered bob or blazer (Carol Ellis), no donkey jacket (Ron&#x27;s own), no short dark hair and clean shave (Tom).</li><li><strong>Voice.</strong> A slot, not a voice, by age: younger (20s), middle (30 to 44), older (45 to 74), oldest (75 and over). The accent is the Humber&#x27;s own unless the sheet says otherwise. The pool needs eleven: eight local, one Irish (Cork) and two Hong Kong English, one past CASTING.md&#x27;s eight to ten.</li><li><strong>The content rule.</strong> - No drink, no betting and no children, in any line or trait, and nobody&#x27;s trade touches either. - Nobody is a teacher, since teaching cannot be spoken of without children (Jafar, 28 September, of Ada). - Nothing explains why the docks went: the outline keeps that &quot;underneath, never explained&quot;.</li></ul>
+<h3>The contact sheet</h3>
+<div class="people"><div class="person"><h4>Pauline Kitching, 44</h4><p><b>who, and where</b> Mickey&#x27;s dispatcher, the radio and the phone</p><p><b>look</b> short brown hair going grey, a V-neck jumper, the desk microphone at her elbow, smokes</p><p><b>voice slot</b> woman, middle, brisk local</p><p><b>manner</b> quick and dry on the radio, kind off it</p><p><b>a line</b> &quot;Car to the station, two minutes. No, love, two real minutes.&quot;</p></div><div class="person"><h4>Kevin Needham, 36</h4><p><b>who, and where</b> the day driver on Mickey&#x27;s rank</p><p><b>look</b> thinning ginger hair, a zip-up anorak, smokes</p><p><b>voice slot</b> man, middle, flat local</p><p><b>manner</b> talkative, knows every short cut, moans about his car</p><p><b>a line</b> &quot;Traffic on the bridge again. I went round by the market.&quot;</p></div><div class="person"><h4>Terry Hodgson, 52</h4><p><b>who, and where</b> the night driver</p><p><b>look</b> grey crew cut, a moustache, lined face, anorak over a jumper, smokes</p><p><b>voice slot</b> man, older, low local</p><p><b>manner</b> few words, all nights, keeps himself to himself</p><p><b>a line</b> &quot;Now then. Where to?&quot;</p></div><div class="person"><h4>Brenda Laverack, 50</h4><p><b>who, and where</b> the fish shop&#x27;s woman, buys on the fish dock at dawn</p><p><b>look</b> permed blonde-grey hair under a scarf, stout, a white coat and a blue-striped fishmonger&#x27;s apron, red hands, smokes</p><p><b>voice slot</b> woman, older, broad local</p><p><b>manner</b> loud, generous, knows the price of everything</p><p><b>a line</b> &quot;Haddock&#x27;s dear this week and it&#x27;s not even good haddock.&quot;</p></div><div class="person"><h4>Lee Drewery, 24</h4><p><b>who, and where</b> never had steady work; takes casual days on the quay when there are any</p><p><b>look</b> cropped hair, an army-surplus jacket, jeans, rigger boots</p><p><b>voice slot</b> man, younger, broad local</p><p><b>manner</b> cheerful for a man with nothing on, cheeky with the older men, careful with Ron</p><p><b>a line</b> &quot;Casual again. If they want me. They mostly don&#x27;t.&quot;</p></div><div class="person"><h4>Rita Welburn, 56</h4><p><b>who, and where</b> keeps Rita&#x27;s, the pawn</p><p><b>look</b> plain hair going grey, a wedding ring and a watch, a good wool coat</p><p><b>voice slot</b> woman, older, measured local</p><p><b>manner</b> shrewd, polite, never says what a thing is worth until she has to</p><p><b>a line</b> &quot;I&#x27;ll look at it. Looking costs you nothing.&quot;</p></div><div class="person"><h4>Wayne Harrison, 27</h4><p><b>who, and where</b> the pawn&#x27;s back-room hand</p><p><b>look</b> short back and sides, NHS glasses, a navy boiler suit over a checked shirt</p><p><b>voice slot</b> man, younger, quick local</p><p><b>manner</b> shifty charm, always carrying something</p><p><b>a line</b> &quot;Don&#x27;t ask me, I just shift the boxes.&quot;</p></div><div class="person"><h4>Julie Kettlewell, 29</h4><p><b>who, and where</b> laid off from the steam laundry&#x27;s presses in the summer, looking for anything</p><p><b>look</b> long hair pulled back, a quilted jacket, smokes</p><p><b>voice slot</b> woman, younger, flat local</p><p><b>manner</b> proud, fed up, sharp about the laundry</p><p><b>a line</b> &quot;Twelve years on them presses and twelve weeks&#x27; notice. Generous, they called it. I&#x27;m nithered stood here.&quot;</p></div><div class="person"><h4>Henry &quot;Hal&quot; Metcalfe, 66</h4><p><b>who, and where</b> retired from a fish merchant&#x27;s office; keeps the coin shop that sells no coins; calls on Rita&#x27;s on Mondays</p><p><b>look</b> bald, neat grey moustache, glasses, dentures, tweed jacket, tie</p><p><b>voice slot</b> man, older, soft local</p><p><b>manner</b> courteous, evasive, remembers everyone&#x27;s business</p><p><b>a line</b> &quot;Coins? Now and then. It&#x27;s the company I keep the shop for.&quot;</p></div><div class="person"><h4>Susan Coverdale, 38</h4><p><b>who, and where</b> a customs officer, lives past Rita&#x27;s</p><p><b>look</b> short practical hair, glasses, navy uniform raincoat</p><p><b>voice slot</b> woman, middle, careful standard</p><p><b>manner</b> watchful, off duty never quite off duty</p><p><b>a line</b> &quot;I&#x27;ve never known the quay this quiet. Not in all my time.&quot;</p></div><div class="person"><h4>Nora Cronin, 67</h4><p><b>who, and where</b> keeps Father Walsh&#x27;s house and buys for his table</p><p><b>look</b> set grey hair under a felt hat, glasses, a sensible coat, a shopping bag</p><p><b>voice slot</b> woman, older, Irish (Cork)</p><p><b>manner</b> devout, dry, a quick laugh, protective of the priest</p><p><b>a line</b> &quot;I came over in fifty-one for a year. That was a long year.&quot;</p></div><div class="person"><h4>Winifred Duggleby, 76</h4><p><b>who, and where</b> retired; cleans the chapel and does its flowers</p><p><b>look</b> a knitted hat over grey hair, dentures, flowered overall under her coat</p><p><b>voice slot</b> woman, oldest, broad local</p><p><b>manner</b> slow, cheerful, talks to the flowers</p><p><b>a line</b> &quot;Chrysanthemums again. Nobody gives lilies any more.&quot;</p></div><div class="person"><h4>Doreen Harland, 61</h4><p><b>who, and where</b> a washerwoman at the steam laundry who won&#x27;t retire, still on the early shift</p><p><b>look</b> cropped grey hair, stout, a tabard, forearms like a docker&#x27;s, smokes</p><p><b>voice slot</b> woman, older, broad local</p><p><b>manner</b> tireless, blunt, laughs loud</p><p><b>a line</b> &quot;Early shift since I was fifteen. They&#x27;ll carry me out of that laundry.&quot;</p></div><div class="person"><h4>Tracey Scarth, 28</h4><p><b>who, and where</b> a seamstress: alterations at the laundry and a stall on the market</p><p><b>look</b> bleached crimped hair, big earrings, denim jacket, pins in her lapel, smokes</p><p><b>voice slot</b> woman, younger, broad local</p><p><b>manner</b> chatty, ambitious, sews while she talks</p><p><b>a line</b> &quot;Take it in two inches and nobody&#x27;ll know it wasn&#x27;t made for you.&quot;</p></div><div class="person"><h4>Colin Mastin, 41</h4><p><b>who, and where</b> a crane driver on the docks, home by the quay</p><p><b>look</b> moustache, flat cap, work jacket, smokes</p><p><b>voice slot</b> man, middle, flat local</p><p><b>manner</b> steady, dry, worried about the work going</p><p><b>a line</b> &quot;Half the berths empty. You stop asking after a while.&quot;</p></div><div class="person"><h4>Albert Suggitt, 78</h4><p><b>who, and where</b> a retired trawlerman who mends nets on the docks some mornings</p><p><b>look</b> weathered, white stubble, dentures, faded tattoos on his hands, a knitted gansey</p><p><b>voice slot</b> man, oldest, broad old local</p><p><b>manner</b> slow, patient, full of the old fleet</p><p><b>a line</b> &quot;Forty year at sea and they give me a needle and a stool.&quot;</p></div><div class="person"><h4>Gary Mawer, 29</h4><p><b>who, and where</b> a boat repairer at the yard; breakfast at the caff, the docks twice a week</p><p><b>look</b> curly hair, oily overalls, a body-warmer over them</p><p><b>voice slot</b> man, younger, broad local</p><p><b>manner</b> practical, easy-going, always hungry</p><p><b>a line</b> &quot;Bacon sandwich and a tea, then I&#x27;m anybody&#x27;s.&quot;</p></div><div class="person"><h4>Ian Megginson, 34</h4><p><b>who, and where</b> a locksmith and repairman at the yard</p><p><b>look</b> neat short hair, glasses, a canvas tool bag</p><p><b>voice slot</b> man, middle, quiet local</p><p><b>manner</b> patient, precise, knows every lock on the street</p><p><b>a line</b> &quot;Old lock, that. Anybody with a hairpin and an hour.&quot;</p></div><div class="person"><h4>Christine Pickering, 39</h4><p><b>who, and where</b> a clerk at the harbour office</p><p><b>look</b> straight hair to her collar, a belted mac, carries a folder</p><p><b>voice slot</b> woman, middle, clipped local</p><p><b>manner</b> efficient, a little superior, fond of forms</p><p><b>a line</b> &quot;It&#x27;s all on the forms, if anybody ever read the forms.&quot;</p></div><div class="person"><h4>Karen Grummitt, 25</h4><p><b>who, and where</b> the ferry&#x27;s ticket clerk; lodges at the boarding house</p><p><b>look</b> long hair in a scrunchie, big glasses, ferry company jacket, smokes</p><p><b>voice slot</b> woman, younger, bright local</p><p><b>manner</b> friendly, bored, wants out of the Hook</p><p><b>a line</b> &quot;I&#x27;ll be on that boat myself one day. One way.&quot;</p></div><div class="person"><h4>Gordon Leckenby, 55</h4><p><b>who, and where</b> a ferryman</p><p><b>look</b> grey beard, woollen hat, oilskin, smokes a pipe</p><p><b>voice slot</b> man, older, slow local</p><p><b>manner</b> unhurried, weather-wise</p><p><b>a line</b> &quot;Wind&#x27;s getting up. She&#x27;ll be lively on the crossing.&quot;</p></div><div class="person"><h4>Sylvia Rennison, 64</h4><p><b>who, and where</b> a widow who keeps the boarding house; buys fish for her lodgers</p><p><b>look</b> set grey hair, glasses, dentures, housecoat, slippers on the step</p><p><b>voice slot</b> woman, older, genteel local</p><p><b>manner</b> house-proud, nosy, strict about the rent</p><p><b>a line</b> &quot;Rent&#x27;s Friday, and Friday means Friday.&quot;</p></div><div class="person"><h4>Edith Stockill, 79</h4><p><b>who, and where</b> a retired shipping clerk who writes letters and fills in forms at the newsagent&#x27;s pension counter</p><p><b>look</b> small, white set hair, glasses, dentures, cameo brooch, good coat, a fountain pen</p><p><b>voice slot</b> woman, oldest, careful old local</p><p><b>manner</b> exact, dignified, keeps confidences</p><p><b>a line</b> &quot;Sign there, dear. And there. It&#x27;ll catch the last post.&quot;</p></div><div class="person"><h4>Shaun Hewson, 26</h4><p><b>who, and where</b> the sign painter doing the street&#x27;s boards this month</p><p><b>look</b> paint-flecked overalls, a pencil behind his ear, curly hair</p><p><b>voice slot</b> man, younger, easy local</p><p><b>manner</b> whistles, jokes, proud of his lettering</p><p><b>a line</b> &quot;Nobody looks at a sign till the spelling&#x27;s wrong.&quot;</p></div><div class="person"><h4>Dawn Pybus, 27</h4><p><b>who, and where</b> runs for the rent collector</p><p><b>look</b> a navy mac, a wedding ring, her hair in a clip, a clipboard</p><p><b>voice slot</b> woman, younger, careful local</p><p><b>manner</b> apologetic, dogged, hates the job</p><p><b>a line</b> &quot;I only collect it. Shout at the landlord, not me.&quot;</p></div><div class="person"><h4>Dennis Iveson, 62</h4><p><b>who, and where</b> a scrap dealer on the old warehouse row</p><p><b>look</b> stubble, flat cap, stout, dentures, glasses mended with tape, a filthy old overcoat, smokes</p><p><b>voice slot</b> man, older, rough local</p><p><b>manner</b> cunning, jovial, buys anything</p><p><b>a line</b> &quot;Copper, lead, brass. I&#x27;ll weigh it and I&#x27;ll pay you. Fair&#x27;s fair.&quot;</p></div><div class="person"><h4>Norman Dent, 57</h4><p><b>who, and where</b> the night watchman on the warehouse row</p><p><b>look</b> grey hair, clean-shaven, a greatcoat, a torch</p><p><b>voice slot</b> man, older, slow local</p><p><b>manner</b> lonely, glad of company, swears he misses nothing</p><p><b>a line</b> &quot;Nothing moves on that row at night but me and the rats.&quot;</p></div><div class="person"><h4>Grace Rinaldi, 58</h4><p><b>who, and where</b> keeps the caff, her Italian father&#x27;s before her</p><p><b>look</b> dark hair pulled back under a hairnet, stout, a coloured nylon overall, a gold cross</p><p><b>voice slot</b> woman, older, local with warmth</p><p><b>manner</b> warm, bossy, fierce about her tea, forgets nobody</p><p><b>a line</b> &quot;Sit down before you fall down. Tea&#x27;s on.&quot;</p></div><div class="person"><h4>Peter Tang (Tang Wing-kei), 44</h4><p><b>who, and where</b> keeps the takeaway on the parade with his wife; came from the New Territories in 1968</p><p><b>look</b> short neat hair, reading glasses, white shirt, a pullover</p><p><b>voice slot</b> man, middle, Hong Kong English with twenty years of Hull in it</p><p><b>manner</b> polite, tired, careful with strangers, proud of his cooking</p><p><b>a line</b> &quot;Ten minutes, love. Good food takes ten minutes.&quot;</p></div><div class="person"><h4>Lily Tang (Wong Mei-ling), 41</h4><p><b>who, and where</b> the takeaway&#x27;s front and its books</p><p><b>look</b> a bob, a patterned blouse, a gold watch</p><p><b>voice slot</b> woman, middle, Hong Kong English</p><p><b>manner</b> quick, warm with regulars, sharp with anyone who&#x27;s rude</p><p><b>a line</b> &quot;Same as last week? I remember. Everybody thinks I don&#x27;t.&quot;</p></div></div>
+<h3>Notes for the builder, when he says yes</h3>
+<ul><li><strong>Faces.</strong> - One of CASTING.md&#x27;s sixteen crowd faces each, individualised by hair, glasses and wear as the &quot;look&quot; column says. - The Tangs need two East Asian faces of their own. The crowd set has one East Asian face, and a white face re-skinned is wrong. They are placed as a couple, never as a lone token.</li><li><strong>Voices.</strong> Slots, not voices, cast only with Jafar&#x27;s yes. Nora Cronin&#x27;s Cork and the Tangs&#x27; Hong Kong English each need a real speaker&#x27;s reference of that accent, checked before he hears it (the gate).</li><li><strong>Routines</strong> (the town writes them; the builder places them). Albert mends nets mornings only. The six folded into the crowd keep theirs. Grace and the Tangs need theirs, and the takeaway a bay: the parade&#x27;s empty unit.</li></ul>
+<div class="row"><label class="pick"><input type="radio" name="regulars" id="regulars-approve" value="approve"><span>Yes: these are the street&#x27;s regulars</span></label><label class="pick"><input type="radio" name="regulars" id="regulars-redo" value="redo"><span>Change them (say what in the note)</span></label></div><textarea id="regulars-note" placeholder="What to change"></textarea><p class="status" id="regulars-status"></p></article></section>
+<p class="status" id="store-status"></p></main>
+<script>
+// EVERY PICTURE OPENS AT FULL SIZE WHEN TAPPED (Jafar, 30 September); tap again to close.
+document.addEventListener("click", e => {
+  const open = document.querySelector(".full");
+  if (open) { open.remove(); return; }
+  const img = e.target.closest && e.target.closest("img");
+  if (!img) return;
+  const d = document.createElement("div"); d.className = "full";
+  const big = document.createElement("img"); big.src = img.currentSrc || img.src; big.alt = img.alt || "";
+  d.appendChild(big); document.body.appendChild(d);
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") { const o = document.querySelector(".full"); if (o) o.remove(); } });
+let db = null, canWrite = true;
+const state = {};
+function status(key, text, ok){const s=document.getElementById(key+"-status"); if(s){s.textContent=text; s.className="status"+(ok?" saved":"");}}
+function save(key){
+  const card=document.querySelector('[data-key="'+key+'"]');
+  const picked=card.querySelector('input[type=radio]:checked');
+  const note=document.getElementById(key+"-note").value;
+  state[key]={pick:picked?picked.value:null,note:note,at:new Date().toISOString()};
+  if(!db){status(key,"Not saved: this view cannot store your answer.");return;}
+  if(!canWrite){status(key,"Not saved: you can read this page but not answer on it.");return;}
+  status(key,"Saving...");
+  db.doc("verdicts/"+key).set(state[key]).then(()=>status(key,"Saved",true)).catch(e=>{
+    if(e&&(e.code==="not_granted"||e.code==="permission_denied"||e.code==="invalid_argument")) canWrite=false;
+    status(key,"Not saved: "+(e&&e.message?e.message:"the store refused it")+".");});
+}
+for(const card of document.querySelectorAll("[data-key]")){
+  const key=card.dataset.key;
+  card.querySelectorAll("input[type=radio]").forEach(r=>r.addEventListener("change",()=>save(key)));
+  const t=document.getElementById(key+"-note"); if(t) t.addEventListener("change",()=>save(key));
+}
+(async()=>{
+  try{ db = await window.claude?.use?.("db"); }catch(e){ db=null; }
+  const g=document.getElementById("store-status");
+  if(!db){ g.textContent="Answers cannot be stored in this view."; return; }
+  for(const card of document.querySelectorAll("[data-key]")){
+    const key=card.dataset.key;
+    try{
+      const snap=await db.doc("verdicts/"+key).get();
+      const v=snap&&(snap.data?snap.data():snap);
+      if(v&&v.pick){const r=document.getElementById(key+"-"+v.pick); if(r) r.checked=true;}
+      if(v&&v.note){document.getElementById(key+"-note").value=v.note;}
+      if(v&&(v.pick||v.note)) status(key,"Saved",true);
+    }catch(e){}
+  }
+})();
+</script>

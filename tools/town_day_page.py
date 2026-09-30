@@ -164,9 +164,35 @@ DAYS["2026-10-01"] = {
 }
 
 
-def build(date):
+# 30 September, the second page: the street's lines and its regulars, each the
+# sample before more are made (CLAUDE.md: nothing is multiplied before he
+# approves one), with the blind reviewer's remaining notes beside it.
+DAYS["2026-09-30-2"] = {
+    "title": "Ron's street lines, and the thirty regulars",
+    "lede": "Two things to read, each a sample before more are made. Ron's own street lines: 159, in his voice, so the street stops talking with one voice; the rest of the named cast follow his pattern once you say yes. And the street's thirty regulars as one contact sheet of text; their faces, clothes and voices come after, from the builder, only with your yes. One tap each, and a note if you want.",
+    "questions": [],
+    "docs": [
+        ("ron-street-lines", "Ron's own street lines", os.path.join(REPO, "production", "casting", "ron-kirby", "STREET-LINES.md"),
+         "Yes: this is Ron; write the rest of the named cast this way", "Change them (say what in the note)",
+         ["He is more clipped than rambling: most lines are two to five words, where his card has him run on.",
+          "His money-minded side shows in only a line or two.",
+          "Thirty years on the docks, as his card and the talk have it; his sheet's line says forty, which I read as his own rounding.",
+          "A few everyday lines still assume the street, such as the smell of the fish market, and he also stands at the caff, the quay and the allotments."]),
+        ("regulars", "The thirty regulars: a contact sheet", os.path.join(REPO, "production", "casting", "regulars", "REGULARS.md"),
+         "Yes: these are the street's regulars", "Change them (say what in the note)",
+         ["Hal and Doreen work every day though the sheet counts Hal as retired and Doreen as one who won't retire.",
+          "The two older voice slots carry five people each, ages fifty to sixty-six on one voice.",
+          "An Irish priest's Irish housekeeper may still bring Father Ted's Mrs Doyle to mind for some, whatever her name.",
+          "The parade's empty unit, the takeaway's bay, is labelled a repair shop in the street's spec and has no sign yet.",
+          "New routines must keep Tanja's friendship with Ada and Albert's with Ron meeting as they do now."]),
+    ],
+}
+
+
+def build(key):
     done = answered()
-    day = dict(DAYS[date])
+    day = dict(DAYS[key])
+    date = key[:10]
     day["questions"] = [q for q in day["questions"] if q[0] not in done]
     day["docs"] = [d for d in day["docs"] if d[0] not in done]
     esc = html.escape
@@ -185,8 +211,15 @@ def build(date):
                 parts.append(f'<label class="pick"><input type="radio" name="{key}" id="{key}-{v}" value="{v}"><span>{esc(label)}</span></label>')
             parts.append(f'</div><textarea id="{key}-note" placeholder="A note, if you want one"></textarea><p class="status" id="{key}-status"></p></div>')
         parts.append("</section>")
-    for key, title, path, yes, no in day["docs"]:
+    for doc in day["docs"]:
+        key, title, path, yes, no = doc[:5]
+        notes = doc[5] if len(doc) > 5 else None
         parts.append(f'<section><h2>{esc(title)}</h2><article class="card outline" data-key="{key}">')
+        # THE REVIEWER'S REMAINING NOTES, beside what they are about (CLAUDE.md,
+        # the gate: narrow points go to his page with the candidate, his eye decides).
+        if notes:
+            parts.append("<details class=\"notes\"><summary>The blind reviewer's remaining notes</summary><ul>"
+                         + "".join("<li>" + esc(n) + "</li>" for n in notes) + "</ul></details>")
         parts.append(town_page.outline_html(path))
         parts.append(f'<div class="row"><label class="pick"><input type="radio" name="{key}" id="{key}-approve" value="approve"><span>{esc(yes)}</span></label>'
                      f'<label class="pick"><input type="radio" name="{key}" id="{key}-redo" value="redo"><span>{esc(no)}</span></label></div>'
@@ -224,11 +257,17 @@ def main(argv):
     if date != datetime.date.today().isoformat():
         print("refused: a page is dated the day it is made; today is " + datetime.date.today().isoformat())
         return 1
-    out_dir = os.path.join(REPO, "production", "approvals", date + "-town")
+    # A second page on one day (--part 2) is its own page, never the answered one rewritten.
+    part = argv[argv.index("--part") + 1] if "--part" in argv else None
+    key = date + ("-" + part if part else "")
+    if key not in DAYS:
+        print("no page written for " + key)
+        return 1
+    out_dir = os.path.join(REPO, "production", "approvals", date + "-town" + ("-" + part if part else ""))
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "index.html")
     with open(path, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(build(date))
+        fh.write(build(key))
     print("wrote", os.path.relpath(path, REPO))
     return 0
 
