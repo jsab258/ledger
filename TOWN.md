@@ -80,4 +80,5 @@ reach yet.
 
 - Two taps on the page of 1 October (https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz):
   whether seeing Tom break a window is enough to report him (A4's Core half);
-  Sheila on the faster model, blind-checked.
+  Sheila on the faster model, blind-checked; one more try at the other
+  characters' street lines, a new way, capped at one review (item 2).

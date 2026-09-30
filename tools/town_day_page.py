@@ -259,6 +259,15 @@ DAYS["2026-10-01-2"] = {
          "she can then be heard within 2 s; on today's model not. Try: I write twenty of her replies on both, a reviewer "
          "who does not know which is which compares them against her casting sheet, and I switch only if she still sounds like herself; "
          "about half the cost a line. Keep: she stays about 0.6 s slower than the others."),
+        ("street-lines", "The other characters' street lines: one more try, a new way?",
+         [("try", "Try once more"), ("leave", "Leave them")], "try",
+         "Your list's item 2: Darren, Sheila, Alison, Ada, Father Walsh and June in their own voices on the street. Three versions "
+         "failed three fresh reviews (lines refusing what Tom never asked, openers nobody could answer, the same idea in four mouths), "
+         "so by your two-tries rule they are set aside and the street's shared lines stay for them. The reviews showed the method "
+         "was wrong, not the wording: they were written for every situation the street has, not for where each person really is. "
+         "Try once more: only the lines each is heard saying where their day puts them, written as exchanges between the people who "
+         "meet (Ada and Walsh at her step, the four at the fish market), checked by machine for repeats first; one review, and if it "
+         "fails they stay on the shared lines for good. Leave them: the shared lines, as now."),
     ],
 }
 
