@@ -2010,6 +2010,62 @@ namespace Golden
 		return A;
 	}
 
+	// ---- the street's own talk, and just after a deed (town list 6o, 6an)
+	//
+	// PerceptionGolden's EmitJustNow, played again here.
+
+	inline const std::map<std::string, std::vector<std::string> >& AmbientAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		const Gossiper A("ja", "ja", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+		const Gossiper B("jb", "jb", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+		const GameTime Now(1, 10, 0);
+		auto Pair = [](const std::vector<SpokenLine>& L) { return std::vector<std::string>{ L[0].Bank, Escape(L[0].Text), L[1].Bank, Escape(L[1].Text) }; };
+		for (const char* Kind : { "glass", "shout", "crash", "bang", "none" })
+			for (double Since : { -1.0, 0.0, 3.0, 89.9, 90.0, 179.9, 180.0 })
+				for (int Seed = 0; Seed < 12; ++Seed)
+				{
+					const std::string K = Kind;
+					const std::vector<SpokenLine> L = StreetVoice::Ambient(&A, &B, Now, 0.5, 1.0, false, false, Seed, 0, K == "none" ? 0 : &K, Since);
+					Ans["JustNow|" + K + "|" + FromDouble(Since) + "|" + FromInt(Seed)] = Pair(L);
+				}
+		struct Case { const char* Label; double Pros, Price; bool bInjured, bFeud; int Hour; };
+		const Case Cases[] = { { "feud", 0.5, 1.0, false, true, 10 }, { "injured", 0.5, 1.0, true, false, 10 }, { "prices", 0.5, 1.13, false, false, 10 },
+		                       { "prices edge", 0.5, 1.12, false, false, 10 }, { "slump", 0.3, 1.0, false, false, 10 }, { "slump edge", 0.35, 1.0, false, false, 10 },
+		                       { "night", 0.5, 1.0, false, false, 21 }, { "small hours", 0.5, 1.0, false, false, 4 }, { "dawn", 0.5, 1.0, false, false, 5 } };
+		for (const Case& C : Cases)
+			for (int Seed = 0; Seed < 14; ++Seed)
+				Ans["AmbientBranch|" + std::string(C.Label) + "|" + FromInt(Seed)] = Pair(StreetVoice::Ambient(&A, &B, GameTime(1, C.Hour, 0), C.Pros, C.Price, C.bInjured, C.bFeud, Seed));
+		StreetVoice::RemarkLedger Led;
+		const std::string Glass = "glass";
+		for (int I = 0; I < 16; ++I)
+		{
+			const std::vector<SpokenLine> L = StreetVoice::Ambient(&A, &B, Now, 0.5, 1.0, false, false, I % 3, &Led, I < 8 ? &Glass : 0, I < 8 ? 10.0 : -1);
+			for (const SpokenLine& S : L) Led.HeardLine(S.Bank, S.Text);
+			Ans["AmbientHeard|" + FromInt(I)] = Pair(L);
+		}
+		Ans["AmbientHeard|nobody"] = { FromInt((long long)StreetVoice::Ambient(0, &B, Now, 0.5, 1.0, false, false, 0).size()),
+			FromInt((long long)StreetVoice::Ambient(&A, 0, Now, 0.5, 1.0, false, false, 0).size()),
+			StreetVoice::Ambient(&A, &B, Now, 0.5, 1.0, false, false, 0, 0, &Glass, std::numeric_limits<double>::quiet_NaN())[0].Bank };
+		return Ans;
+	}
+
+	inline Answer AmbientRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const int Labels = F[0] == "JustNow" ? 3 : F[0] == "AmbientBranch" ? 2 : 1;
+		if ((int)F.size() < 1 + Labels + 1) return A;
+		std::string Key = F[0];
+		for (int I = 1; I <= Labels; ++I) Key += "|" + ((F[0] == "JustNow" && I == 2 && IsNumber(F[I])) ? FromDouble(D(F[I])) : F[I]);
+		const auto& Ans = AmbientAnswers();
+		const auto It = Ans.find(Key);
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, 1 + Labels, It->second);
+		return A;
+	}
+
 	// ---- a wait that stops for what the town has for him (town list 6ci)
 	//
 	// PerceptionGolden's EmitWaits, played again here: each row is a case
@@ -4137,6 +4193,11 @@ namespace Golden
 		else if (Fn == "GossipFuzz")
 		{
 			A = GossipFuzzRow(F);
+		}
+		// THE STREET'S OWN TALK (town list 6o, 6an): StreetVoice::Ambient.
+		else if (Fn == "JustNow" || Fn == "AmbientBranch" || Fn == "AmbientHeard")
+		{
+			A = AmbientRow(F);
 		}
 		// A WAIT THAT STOPS (town list 6ci): Waiting.h.
 		else if (Fn == "Wait")

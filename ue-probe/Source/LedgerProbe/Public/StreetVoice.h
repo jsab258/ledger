@@ -1246,6 +1246,448 @@ namespace LedgerCore
 			return Lines;
 		}
 
+		// THE STREET'S OWN TALK'S LINES (StreetVoice.cs Ambient), copied from the
+		// C# by a script on 30 September, bank by bank, in its order.
+		inline const char* const* AmbientBank(const std::string& Name, int& OutCount)
+		{
+			if (Name == "ambient/open/justnow/glass")
+			{
+				static const char* const Lines[6] = {
+					"What was that? Glass?",
+					"That was glass, that.",
+					"Somebody's window's gone in.",
+					"Did you hear that? Sounded like a window.",
+					"That's a window going, that is.",
+					"Glass. Down the road somewhere.",
+				};
+				OutCount = 6;
+				return Lines;
+			}
+			if (Name == "ambient/open/justnow/shout")
+			{
+				static const char* const Lines[5] = {
+					"Who's that shouting?",
+					"Somebody's shouting their head off.",
+					"Did you hear that shouting?",
+					"That's trouble, that is.",
+					"Hark at that.",
+				};
+				OutCount = 5;
+				return Lines;
+			}
+			if (Name == "ambient/open/justnow/crash")
+			{
+				static const char* const Lines[6] = {
+					"What was that bang?",
+					"Something's gone over, listen.",
+					"That was a crash, that.",
+					"What's gone on down there?",
+					"Something's come down, that.",
+					"Hell of a bang, that.",
+				};
+				OutCount = 6;
+				return Lines;
+			}
+			if (Name == "ambient/open/justnow/noise")
+			{
+				static const char* const Lines[6] = {
+					"What was that?",
+					"Did you hear that?",
+					"What's going on down there?",
+					"Something's up.",
+					"What's all that about?",
+					"What the hell was that?",
+				};
+				OutCount = 6;
+				return Lines;
+			}
+			if (Name == "ambient/reply/justnow")
+			{
+				static const char* const Lines[10] = {
+					"Came from down that way.",
+					"I'm not going to look.",
+					"Best stay out of it.",
+					"Someone'll ring the police.",
+					"It's always something round here.",
+					"Keep your head down, that's what I say.",
+					"Not our business.",
+					"Don't go over. Leave it.",
+					"I heard it. I didn't see it.",
+					"Let's hope that's the end of it.",
+				};
+				OutCount = 10;
+				return Lines;
+			}
+			if (Name == "ambient/open/settling")
+			{
+				static const char* const Lines[6] = {
+					"Gone quiet now, anyway.",
+					"Whatever that was, it's done with.",
+					"Did anybody see what happened?",
+					"Curtains are twitching all down the street.",
+					"My heart's going ten to the dozen.",
+					"Whole street's on edge now.",
+				};
+				OutCount = 6;
+				return Lines;
+			}
+			if (Name == "ambient/reply/settling")
+			{
+				static const char* const Lines[6] = {
+					"Somebody'll know what it was. Somebody always does.",
+					"I didn't see and I'm not asking.",
+					"Best not to wonder.",
+					"It'll be all round the street by tomorrow.",
+					"Least said, soonest mended.",
+					"Let it lie.",
+				};
+				OutCount = 6;
+				return Lines;
+			}
+			if (Name == "ambient/open/feud")
+			{
+				static const char* const Lines[14] = {
+					"I've nothing to say to you.",
+					"Don't. Just don't.",
+					"You've a nerve, standing there.",
+					"Walk on.",
+					"I saw you coming and I stayed anyway. Don't make me regret it.",
+					"I'm not having this.",
+					"Say what you came to say or move.",
+					"I've said all I'm saying.",
+					"You know what you did.",
+					"Not in front of people.",
+					"Whatever it is, it's too late for it.",
+					"I'd cross the road but I got here first.",
+					"Don't smile at me.",
+					"There's nothing left to talk about.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/reply/feud")
+			{
+				static const char* const Lines[14] = {
+					"Suits me.",
+					"That's how it is, then.",
+					"Right.",
+					"Have it your way. You always do.",
+					"I wasn't going to.",
+					"Fine.",
+					"One of us has to be sensible, and it won't be you.",
+					"As you like.",
+					"I'll be here when you've calmed down.",
+					"Understood.",
+					"You'll come round. You did last time.",
+					"Then I'll not keep you.",
+					"Suit yourself.",
+					"That's a shame. That's genuinely a shame.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/open/injured")
+			{
+				static const char* const Lines[14] = {
+					"It's not healing. I've stopped pretending it is.",
+					"Can't lift with it. Can't do the work either.",
+					"It wakes me. That's the worst of it.",
+					"Doctor'd sign me off, and who pays the rent then?",
+					"I've been strapping it up and hoping.",
+					"You can smell it going bad. I'm not imagining that.",
+					"Every step. Every single step.",
+					"I've been doing it one-handed a fortnight now.",
+					"They'll not keep me on if I can't carry.",
+					"It was nothing. A week ago it was nothing.",
+					"I daren't stop. If I stop I don't start again.",
+					"It's worse in the cold. It's always worse in the cold.",
+					"I'd have it looked at if I could spare the day.",
+					"Don't. Don't touch it.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/reply/injured")
+			{
+				static const char* const Lines[14] = {
+					"Get it seen to before it goes bad.",
+					"You said that last week.",
+					"Go down casualty. You'll wait, but you'll be seen.",
+					"You'll lose the arm being proud.",
+					"Have you told them at work?",
+					"Sit down, at least. Sit down.",
+					"My father did the same and he never worked again.",
+					"That's not a wound any more, that's a decision.",
+					"Let me see it. No, properly.",
+					"You keep saying it's fine. It's not fine.",
+					"Take the day. The work'll still be there.",
+					"I'd not let a dog go on like that.",
+					"There's no shame in a week on the sick.",
+					"Promise me you'll go this week.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/open/prices")
+			{
+				static const char* const Lines[14] = {
+					"Bread's gone up again. Again.",
+					"Everything's dearer and nobody will say why.",
+					"I paid what I paid last month and got less of it.",
+					"Have you seen what they want for mince?",
+					"Same basket, half the basket.",
+					"I stopped buying it. That's my answer to it.",
+					"It all adds up. Penny here, penny there.",
+					"It's not the price. It's that they say it like it's normal.",
+					"My rent's the same, my wages are the same, and yet.",
+					"There's no shortage. I've seen the store rooms.",
+					"Somebody's making that money. It's not us.",
+					"Twice this month. Twice.",
+					"I asked why and got a shrug for my trouble.",
+					"I've started keeping a list. It's not cheering reading.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/reply/prices")
+			{
+				static const char* const Lines[14] = {
+					"It's the deliveries. Ask anyone who takes one.",
+					"My money's the same money it was.",
+					"You'll get used to it. We always do.",
+					"There's men getting fat on it, you can be sure.",
+					"Wait till the winter.",
+					"It's the same everywhere. That's what they tell me, anyway.",
+					"I've gone back to the market. Costs me an hour, saves me a pound.",
+					"Nobody's putting wages up to match, funny that.",
+					"My mother said the same in her day. Doesn't help.",
+					"You should see what they charge across the water.",
+					"Complain to who? That's the trouble.",
+					"I buy less and eat less and there we are.",
+					"It'll settle. It usually settles.",
+					"Don't get me started.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/open/slump")
+			{
+				static const char* const Lines[14] = {
+					"Nobody's spending. You can feel it on the street.",
+					"Third quiet week. I've started counting them.",
+					"I've had four people in since I opened.",
+					"You can hear the clock in my shop. That's how quiet.",
+					"Even the market's thin.",
+					"I've laid my assistant off. I hated doing it.",
+					"Half these shutters weren't down last year.",
+					"There's no work at the docks. None.",
+					"People are walking past looking, not coming in.",
+					"I'll give it till the spring and then I don't know.",
+					"It's not a bad patch now. It's just how it is.",
+					"Nobody's got it to spend, that's the truth of it.",
+					"I've started taking payment in bits.",
+					"It's the waiting I can't stand.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/reply/slump")
+			{
+				static const char* const Lines[14] = {
+					"It'll turn. It always turns.",
+					"And the bank wants its money all the same.",
+					"Same for everybody. If that helps, which it doesn't.",
+					"Give it till the season changes.",
+					"I've been saying that for six months.",
+					"You've weathered worse than this.",
+					"There's still money on this street. It's just not moving.",
+					"My takings are down a third and I'm one of the lucky ones.",
+					"It's not you. Don't go blaming yourself.",
+					"Hold on. That's all any of us can do.",
+					"There'll be work when the boats come back.",
+					"I'd not shut. Once you shut you don't open.",
+					"Everybody's saying it. That's how I know it's real.",
+					"Come round Sunday. We'll not talk about money.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/open/night")
+			{
+				static const char* const Lines[14] = {
+					"You're out late.",
+					"Long shift?",
+					"You'll catch your death standing about.",
+					"Nothing good happens at this hour.",
+					"Couldn't sleep either?",
+					"It's a different street after eleven.",
+					"You're the third person I've passed. On a Tuesday.",
+					"Quiet, isn't it. Properly quiet.",
+					"I like it now. Nobody wants anything.",
+					"Watch the corner. It's dark since the lamp went.",
+					"Off home?",
+					"You're keeping strange hours lately.",
+					"That's the second time round the block for me.",
+					"Cold gets in at this hour.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/reply/night")
+			{
+				static const char* const Lines[14] = {
+					"It's the only quiet part of the day.",
+					"Someone has to be.",
+					"Nearly. Nearly.",
+					"I'll sleep when the bill's paid.",
+					"Couldn't settle. You know how it is.",
+					"Walking helps. Don't ask me why.",
+					"Work. What else.",
+					"I've stopped trying to sleep before two.",
+					"Nowhere to be, that's the trouble.",
+					"Same as you, by the look of it.",
+					"It's the only time I get to think.",
+					"Half an hour and I'm in.",
+					"You take care going back.",
+					"Aye. Goodnight to you.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/open/ordinary")
+			{
+				static const char* const Lines[14] = {
+					"Cold one.",
+					"How's your mother keeping?",
+					"Did you settle that business with the landlord?",
+					"You'll be at the market Thursday?",
+					"That's the rain coming, that is.",
+					"You've had your hair cut.",
+					"Have you a minute? No, it'll keep.",
+					"I've been meaning to catch you.",
+					"Did the roof hold?",
+					"You look better than you did.",
+					"Any word from your brother?",
+					"They've dug the road up again.",
+					"I've got that thing you asked about, when you want it.",
+					"You're the fourth person to say that to me today.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			if (Name == "ambient/reply/ordinary")
+			{
+				static const char* const Lines[14] = {
+					"Same as ever.",
+					"Better this week, any road.",
+					"Don't ask. Not today.",
+					"All being well.",
+					"Can't complain. Well. I could.",
+					"Somebody was asking after you, as it happens.",
+					"Not so bad. You?",
+					"Ask me tomorrow and you'll get a different answer.",
+					"Just about holding. That's the size of it.",
+					"I'll catch you Friday, if that suits.",
+					"Getting on with it, you know.",
+					"Mustn't grumble.",
+					"There's always something, isn't there.",
+					"Aye, well. It passes.",
+				};
+				OutCount = 14;
+				return Lines;
+			}
+			OutCount = 0;
+			return 0;
+		}
+
+		// THE STREET'S OWN TALK (StreetVoice.cs Ambient; town list 6an and 6o,
+		// ported 30 September): two people talking about their own lives, not
+		// his; and for the first JustNowSeconds after a deed within their
+		// earshot, what anybody would say ("What was that? Glass?"), then, to
+		// SettlingSeconds, the street settling, then everyday talk again.
+		// `JustNow` is what they heard ("glass", "shout", "crash", anything
+		// else a noise; none for nothing), `SecondsSince` the player's real
+		// seconds since, below zero for none.
+		static constexpr double JustNowSeconds = 90.0, SettlingSeconds = 180.0;
+		/// The first exchange after a deed comes as soon as the hush lifts.
+		static constexpr double JustNowSpeakAfterSeconds = 3.0;
+
+		inline std::vector<SpokenLine> Ambient(const Gossiper* A, const Gossiper* B, const GameTime& Now,
+		                                       double Prosperity, double PriceLevel, bool bAInjured, bool bFeuding, int Seed,
+		                                       const RemarkLedger* Heard = 0, const std::string* JustNow = 0, double SecondsSince = -1)
+		{
+			std::vector<SpokenLine> Lines;
+			if (!A || !B) return Lines;
+			std::string OpenBank, ReplyBank, Opener, Reply;
+			// With `Heard`, lines he has not heard lately (town list 6o).
+			auto OpenLine = [&](const char* Bank) {
+				int N = 0;
+				const char* const* L = AmbientBank(Bank, N);
+				OpenBank = Bank;
+				return Heard != 0 ? Heard->Fresh(Bank, L, N, Seed) : Pick(Seed, L, N);
+			};
+			auto ReplyLine = [&](const char* Bank) {
+				int N = 0;
+				const char* const* L = AmbientBank(Bank, N);
+				ReplyBank = Bank;
+				const int S = AnswerSeed(Seed, B->Id);
+				return Heard != 0 ? Heard->Fresh(Bank, L, N, S) : Pick(S, L, N);
+			};
+			const bool bFresh = JustNow != 0 && SecondsSince >= 0 && SecondsSince < JustNowSeconds;
+			const bool bSettling = JustNow != 0 && SecondsSince >= JustNowSeconds && SecondsSince < SettlingSeconds;
+			if (bFresh)
+			{
+				const std::string& K = *JustNow;
+				Opener = K == "glass" ? OpenLine("ambient/open/justnow/glass")
+				       : K == "shout" ? OpenLine("ambient/open/justnow/shout")
+				       : K == "crash" ? OpenLine("ambient/open/justnow/crash")
+				       : OpenLine("ambient/open/justnow/noise");
+				Reply = ReplyLine("ambient/reply/justnow");
+			}
+			else if (bSettling)
+			{
+				Opener = OpenLine("ambient/open/settling");
+				Reply = ReplyLine("ambient/reply/settling");
+			}
+			else if (bFeuding)
+			{
+				Opener = OpenLine("ambient/open/feud");
+				Reply = ReplyLine("ambient/reply/feud");
+			}
+			else if (bAInjured)
+			{
+				Opener = OpenLine("ambient/open/injured");
+				Reply = ReplyLine("ambient/reply/injured");
+			}
+			else if (PriceLevel > 1.12)
+			{
+				Opener = OpenLine("ambient/open/prices");
+				Reply = ReplyLine("ambient/reply/prices");
+			}
+			else if (Prosperity < 0.35)
+			{
+				Opener = OpenLine("ambient/open/slump");
+				Reply = ReplyLine("ambient/reply/slump");
+			}
+			else if (Now.Hour >= 21 || Now.Hour < 5)
+			{
+				Opener = OpenLine("ambient/open/night");
+				Reply = ReplyLine("ambient/reply/night");
+			}
+			else
+			{
+				Opener = OpenLine("ambient/open/ordinary");
+				Reply = ReplyLine("ambient/reply/ordinary");
+			}
+			SpokenLine L1;
+			L1.SpeakerId = A->Id; L1.Text = Opener; L1.Bank = OpenBank;
+			SpokenLine L2;
+			L2.SpeakerId = B->Id; L2.Text = Reply; L2.Bank = ReplyBank;
+			Lines.push_back(L1);
+			Lines.push_back(L2);
+			return Lines;
+		}
+
 		// THE POLICE TOOK HIM IN (town list 6bp): whoever saw them put him in
 		// the car, or whoever heard it.
 		inline const char* const* RecognitionTakenSaw(int& OutCount)
