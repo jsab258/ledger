@@ -616,6 +616,19 @@ for v in knit_me.vertices:
         d = max(d, -(dist - 0.004))                                   # never onto her skin
         v.co = p + out * d
 knit_me.update()
+if opt("--tuck", 0.0):
+    # TUCKED IN (a blouse under her skirt: the band and the blouse's foot met and patched through each other): the
+    # lowest 5 cm drawn in towards her, up to --tuck, never nearer her than 2 mm
+    for v in knit_me.vertices:
+        p = Vector(v.co)
+        if p.z < HEM_Z + 0.05:
+            f = 1.0 - (p.z - HEM_Z) / 0.05
+            f = f * f * (3 - 2 * f)
+            hit, n_, _f, _d = BVH.find_nearest(p)
+            if hit is not None:
+                dist = (p - hit).dot(n_)
+                v.co = p - n_ * max(0.0, min(opt("--tuck", 0.0) * f, dist - opt("--tuck-clear", 0.002)))
+    knit_me.update()
 if opt("--hem-smooth", 0, int):
     # the hem's edge eased along itself, level (a T-shirt's plain hem showed its every wobble as a wavy edge)
     hb = bmesh.new()
@@ -698,6 +711,107 @@ def band_along(pts, side_dirs, name="Band"):
         inn.append(p + sd * opt("--band-in", 0.020) + lift)
         outn.append(p - sd * opt("--band-out", 0.009) + lift)
     return strip(name, [outn, [a.lerp(b, 0.5) for a, b in zip(outn, inn)], inn], knitm, 0.003), inn, outn
+
+
+def flat_collar(extras_, W, gap_m):
+    """A flat round collar: from the top of the neckline's band, rolled over 6 mm, then lying on the blouse 2.5 mm
+    off it, walked outward over its surface in 5 mm steps (so it follows shoulder and chest alike), W wide; open at
+    the throat by gap_m either side of the middle, each end rounded as a circle of radius W."""
+    _bk = bmesh.new()
+    _bk.from_mesh(knit_me)
+    _ep = [v.co.copy() for v in _bk.verts if v.is_boundary and v.co.z > NECK_Z - 0.08
+           and math.hypot(v.co.x - NECK_AX.x, v.co.y - NECK_AX.y) < opt("--edge-r", NECK_R + 0.03)]
+    _bk.free()
+    _ang = np.array([math.atan2(q.x - NECK_AX.x, -(q.y - NECK_AX.y)) for q in _ep])
+    _rad = np.array([math.hypot(q.x - NECK_AX.x, q.y - NECK_AX.y) for q in _ep])
+    _zz = np.array([q.z for q in _ep])
+    o_ = np.argsort(_ang)
+    _ang, _rad, _zz = _ang[o_], _rad[o_], _zz[o_]
+    ext_a = np.concatenate([_ang - 2 * math.pi, _ang, _ang + 2 * math.pi])
+    r0 = float(np.median(_rad))
+    gap = gap_m / max(0.03, r0)
+    grid_a = np.linspace(gap, 2 * math.pi - gap, 90)
+    r_edge = np.interp(np.where(grid_a > math.pi, grid_a - 2 * math.pi, grid_a), ext_a, np.tile(_rad, 3))
+    z_edge = np.interp(np.where(grid_a > math.pi, grid_a - 2 * math.pi, grid_a), ext_a, np.tile(_zz, 3))
+    for _ in range(24):
+        r_edge = 0.5 * r_edge + 0.25 * (np.roll(r_edge, 1) + np.roll(r_edge, -1))
+        z_edge = 0.5 * z_edge + 0.25 * (np.roll(z_edge, 1) + np.roll(z_edge, -1))
+    NB = opt("--neckband", 0.012)
+    arc = (grid_a - gap) * r0                                 # metres along the neckline from the left end
+    arc_len = float(arc[-1])
+    rows = [[] for _ in range(10)]
+    for k, a_ in enumerate(grid_a):
+        d_ = Vector((math.sin(a_), -math.cos(a_), 0.0))
+        u = min(arc[k], arc_len - arc[k])                     # distance from the nearer end
+        w_here = W * math.sqrt(max(0.0, 1.0 - (1.0 - min(1.0, u / W)) ** 2)) if u < W else W
+        w_here = max(w_here, 0.004)
+        top = Vector((NECK_AX.x, NECK_AX.y, z_edge[k] + NB * 0.7)) + d_ * (r_edge[k] + 0.004)
+        # the roll over the band, then the blouse's own surface outward from the neckline, found by rays straight
+        # down (walked over the surface from the edge, the collar kept snapping back to it and crumpled into a frill)
+        pts = [top, top + d_ * 0.005 + Vector((0, 0, 0.001))]
+        L_ = 0.0
+        for s_ in np.arange(0.006, 0.20, 0.002):
+            org = Vector((NECK_AX.x, NECK_AX.y, z_edge[k] + 0.12)) + d_ * (r_edge[k] + s_)
+            hit, nn, _i, _d = KNIT_BVH.ray_cast(org, Vector((0, 0, -1)), 0.5)
+            if hit is None or hit.z > z_edge[k] + 0.004:
+                continue
+            q = hit + nn * 0.0025
+            L_ += (q - pts[-1]).length
+            pts.append(q)
+            if L_ >= w_here:
+                break
+        # resampled to 10 points along its length
+        L_ = [0.0]
+        for i_ in range(1, len(pts)):
+            L_.append(L_[-1] + (pts[i_] - pts[i_ - 1]).length)
+        for r_i in range(10):
+            t = L_[-1] * r_i / 9
+            j = max(0, min(len(pts) - 2, int(np.searchsorted(L_, t)) - 1))
+            f = (t - L_[j]) / max(1e-9, L_[j + 1] - L_[j])
+            rows[r_i].append(pts[j].lerp(pts[j + 1], min(1.0, max(0.0, f))))
+    # each row eased along the collar, its ends held (point by point the outer edge came out wavy), and laid back
+    # on the blouse 2.5 mm off it
+    for r_i in range(2, 10):
+        row = rows[r_i]
+        for _ in range(8):
+            row = [row[0]] + [row[i_ - 1] * 0.25 + row[i_] * 0.5 + row[i_ + 1] * 0.25 for i_ in range(1, len(row) - 1)] + [row[-1]]
+        for i_, q in enumerate(row):
+            hit, nn, _f, _d = KNIT_BVH.find_nearest(q)
+            if hit is not None:
+                row[i_] = hit + nn * (0.0025 + 0.0004 * r_i / 9)
+        rows[r_i] = row
+    colm = strip("FlatCollar", rows, knitm, 0.0018)
+    extras_.append(colm)
+    log["flatCollar"] = {"widthMm": W * 1000, "gapMm": gap_m * 1000 * 2}
+
+
+def placket(extras_):
+    """A buttoned front: a 25 mm band down the middle from the neckline to the hem, 1.2 mm proud, five buttons."""
+    top_z = NECK_Z + 0.06                                   # up to the neckline (the ray stops where the blouse ends)
+    zs = np.linspace(HEM_Z + 0.01, top_z, 90)                # (24 steps stopped it up to 2 cm short of the collar)
+    rows_p = []
+    for off in (-0.0125, 0.0, 0.0125):
+        row = []
+        for z_ in zs:
+            q = on_knit_from_front(off, float(z_))
+            row.append(q + Vector((0, -0.0012, 0)) if q is not None else None)
+        rows_p.append(row)
+    keep = [k for k in range(len(zs)) if all(r_[k] is not None for r_ in rows_p)]
+    if len(keep) < 4:
+        return
+    rows_p = [[r_[k] for k in keep] for r_ in rows_p]
+    extras_.append(strip("Placket", rows_p, knitm, 0.0012))
+    zb = [z_ for z_ in np.linspace(HEM_Z + 0.06, rows_p[1][-1].z - 0.035, 5)]
+    for z_ in zb:
+        q = on_knit_from_front(0.0, float(z_))
+        if q is None:
+            continue
+        bpy.ops.mesh.primitive_cylinder_add(vertices=12, radius=0.0055, depth=0.0025, location=q + Vector((0, -0.0028, 0)),
+                                            rotation=(math.pi / 2, 0, 0))
+        b_ = bpy.context.active_object
+        b_.data.materials.append(tailor.material("M_BlouseButton", (0.82, 0.78, 0.68), 0.3))
+        extras_.append(b_)
+    log["placket"] = {"buttons": len(zb)}
 
 
 def neck_ring(extras_, NB, gap=0.0, edge_z_min=None, ribbed=True, name="Neckband"):
@@ -990,7 +1104,15 @@ if not CREW:
     log["blouse"] = {"panelRows": len(blouse_rows), "collarMm": 0 if ZIP else COLLAR * 1000}
 else:
     extras = []
-    neck_ring(extras, opt("--neckband", 0.028))
+    if "--flat-collar" in argv:
+        # A BLOUSE (Sheila's "cream blouse with a small round collar", 30 September): a narrow band at the neckline,
+        # a flat round collar folded over it and lying on her shoulders and chest, its ends rounded at the throat,
+        # and a buttoned placket down the front
+        neck_ring(extras, opt("--neckband", 0.012), ribbed=False, name="CollarStand")
+        flat_collar(extras, opt("--collar-w", 0.062), opt("--collar-gap-m", 0.012))
+        placket(extras)
+    else:
+        neck_ring(extras, opt("--neckband", 0.028))
 if ZIP and not EXTRUDE:
     # THE SHELL SUIT'S STAND COLLAR: the same band, taller and plain, round the back and sides, open over the zip
     _gap = math.asin(min(0.95, (NECK_SIDE + opt("--collar-gap", 0.006)) / max(1e-6, NECK_R + 0.03)))
