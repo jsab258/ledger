@@ -91,6 +91,14 @@ namespace Ledger.Core
             if (!string.IsNullOrEmpty(CopyCode)) msg.Headers.Add("x-ledger-copy", CopyCode);
             else msg.Headers.Add("x-api-key", _apiKey);
             msg.Headers.Add("anthropic-version", "2023-06-01");
+#if NET5_0_OR_GREATER
+            // HTTP/2 where the far end offers it (the API does): the first
+            // sentence's check goes out while the reply still streams, on the
+            // same connection instead of opening a second (the delay research,
+            // 30 September, production/research/talk-helper/FIRST-WORDS-2026-09-30.md).
+            msg.Version = System.Net.HttpVersion.Version20;
+            msg.VersionPolicy = HttpVersionPolicy.RequestVersionOrLower;
+#endif
         }
 
         string ModelFor(string model) => string.IsNullOrEmpty(CopyCode) ? model : Models.RoleOf(model);
@@ -102,7 +110,17 @@ namespace Ledger.Core
             _apiKey = apiKey;
             // handler is a test seam: pass a fake to exercise the retry/error paths
             // deterministically. In production it is null and HttpClient uses its default.
+#if NET5_0_OR_GREATER
+            // A TURN A MINUTE OR MORE AFTER THE LAST finds its connection still
+            // open (the delay research, 30 September: .NET closed an idle
+            // connection after 60 s though the API's edge keeps one about 400 s,
+            // and a fresh one cost 25 ms more here, measured, 291 ms the first
+            // of a session): six minutes, under the edge's own limit.
+            _http = handler != null ? new HttpClient(handler)
+                : new HttpClient(new SocketsHttpHandler { PooledConnectionIdleTimeout = TimeSpan.FromMinutes(6) });
+#else
             _http = handler != null ? new HttpClient(handler) : new HttpClient();
+#endif
             _http.Timeout = timeout ?? TimeSpan.FromSeconds(60);
         }
 
