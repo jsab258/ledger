@@ -28,9 +28,19 @@ the list only; its history is in git.
 2. **The street's lines for the other named characters,** in their own voices
    as their casting sheets describe, within the approved story, through the
    gate (Ron's tone approved).
+   - State: SET ASIDE after three fresh blind reviews found obvious faults
+     (lines to Tom's face that refuse what he never asked, openers no reply
+     follows, the same idea in four to six mouths); the shared street lines
+     stay for these six. Why the method failed and what a next try would do:
+     ambient-lines/set-aside-2026-09-30.
 3. **The text half of the delay,** when the builder's real-talk measurement
    lands: what the talk program sends and how long the first words take, cut
    on the real path.
+   - State: landed (words 1.9 s after Enter in the game; the first sentence
+     written at 0.9 s and passed at 2.0 s). The builder asks for its note's
+     steps 5 and 6 (voice-latency/NOTE-2026-09-30.md): the first sentence off
+     the check's path (a reaction opener the plain rule passes; on the bench
+     now), and Sheila's slower first sentence (prompt caching, measured first).
 
 Done before this list (history in git): the empty answers by cause; the plain
 line (built, reviewed, his yes to Ron's wording); the check's tuning (kept as

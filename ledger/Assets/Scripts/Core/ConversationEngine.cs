@@ -85,6 +85,12 @@ namespace Ledger.Core
         /// someone who does"; with it on, the plain line (PlainFallback) is said
         /// only where a rule chose the facts.
         public static bool UseRules = false;
+        /// A REACTION BEFORE THE ANSWER (the builder's delay note, step 5, 30
+        /// September; production/research/voice-latency/NOTE-2026-09-30.md): the
+        /// reply opens with a moment's reaction of the character's own that names
+        /// nothing, a sentence by itself, which PlainWords lets the voice speak
+        /// without waiting for its check.
+        public static bool ReactFirst = false;
 
         /// THE FACTS AND THE INTENT BEFORE THE WORDS (Jafar's list of 30
         /// September, after the adversarial audit; production/research/
@@ -542,6 +548,8 @@ namespace Ledger.Core
             sb.AppendLine($"- Reply as {Card.Name} would speak, in plain dialogue only: no stage directions, no quotation marks around your whole reply, no XML or bracketed tags.");
             if (TicRule)
                 sb.AppendLine("- Never open two replies in a row the same way.");
+            if (ReactFirst)
+                sb.AppendLine($"- Begin with a moment's reaction of your own, a few words that are a sentence by themselves and name nobody and nothing (no person, place, time, number or thing): how {Card.Name} takes what was just said, a question back, a moment's thought, surprise or wariness, in your own manner. Then the rest, which the rules here still govern. Never the same reaction twice running, and none at all when a word or two is the whole answer.");
             sb.AppendLine("- Talk like a person, not a writer: contractions, plain words, sentences that can trail off. Say 'is' and 'has', never 'serves as' or 'boasts'. No dashes, no neat lists of three, no 'it's not just X, it's Y', and never words like delve, tapestry, testament, vibrant, crucial, pivotal, showcase.");
             // SPEECH ONLY, AND THIS IS FROM A REAL TRANSCRIPT. Asked something
             // he could not answer, Sam replied "Sam squints at that like you've

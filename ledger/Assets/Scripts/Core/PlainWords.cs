@@ -26,7 +26,15 @@ namespace Ledger.Core
             "and but or if because than " +
             "good bad fine fair true wrong funny odd daft " +
             "dont doesnt cant couldnt wont wouldnt isnt arent shouldnt mustnt " +
-            "im id ill youre youve youd youll thats whats whos weve").Split(' '));
+            "im id ill youre youve youd youll thats whats whos weve " +
+            // A REACTION BEFORE THE ANSWER (the builder's delay note, step 5, 30
+            // September): the words a moment's reaction is made of, none of which
+            // can carry a person, place, time, thing or deed on its own.
+            "depends asking wants knows question honest honestly blimey cor ooh dunno heck gosh crikey wait er erm um let thinking").Split(' '));
+
+        // The same, as phrases only: "on" and "course" alone can carry a claim
+        // ("It's on.", "a course"), "Hang on." and "Of course." cannot.
+        static readonly Regex PlainPhrases = new Regex(@"\b(hang|hold|go|come) on\b|\bof course\b", RegexOptions.IgnoreCase);
 
         // HOW THEY ADDRESS HIM, only as address: after a comma at the end ("Right
         // you are, boss.") or before one at the start ("Boss, I couldn't say.").
@@ -46,8 +54,10 @@ namespace Ledger.Core
         public static bool IsPlain(string sentence)
         {
             if (string.IsNullOrWhiteSpace(sentence) || Regex.IsMatch(sentence, "[0-9]")) return false;
-            var w = Words(AddressAtStart.Replace(AddressAtEnd.Replace(sentence, "$2"), ""));
-            if (w.Count == 0) return false;
+            var bare = AddressAtStart.Replace(AddressAtEnd.Replace(sentence, "$2"), "");
+            var w = Words(PlainPhrases.Replace(bare, " "));
+            // Nothing left but a plain phrase ("Of course.") is plain; nothing at all ("Boss.") is not.
+            if (w.Count == 0) return PlainPhrases.IsMatch(bare);
             foreach (var x in w) if (!Plain.Contains(x)) return false;
             return true;
         }
