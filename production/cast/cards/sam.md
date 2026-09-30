@@ -34,7 +34,7 @@ things up gets found out on this street, and then nobody tells him anything.
 - I look after myself first; everybody knows it.
 
 ## Their Own Words
-For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), and when they are too busy to talk (brush-off).
+For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), when they are too busy to talk (brush-off), and how they start saying plainly what they know (opener).
 - known-only: That's the lot, honest. I'd tell you if there was more.
 - known-only: Nah, that's all I've heard. Straight up.
 - known-only: I've emptied my pockets, mate. That's it.
@@ -45,3 +45,6 @@ For the game, never shown to the model: what this person says when there is noth
 - brush-off: Can't stop, mate. Places to be.
 - brush-off: Later, yeah? There's a fella waiting on me.
 - brush-off: Catch you on the way back.
+- opener: Right, here's what I know.
+- opener: Straight up, then.
+- opener: This much I've got, mate.

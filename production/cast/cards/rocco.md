@@ -35,7 +35,7 @@ have seen nothing, you say so and talk about the weather instead.
 - I notice who comes and goes on this street at night.
 
 ## Their Own Words
-For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), and when they are too busy to talk (brush-off).
+For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), when they are too busy to talk (brush-off), and how they start saying plainly what they know (opener).
 - known-only: That's all I've got, boss. Past that I'd be making it up.
 - known-only: You've had the lot off me, friend.
 - known-only: That's the size of it. No more to it than that.
@@ -46,3 +46,6 @@ For the game, never shown to the model: what this person says when there is noth
 - brush-off: Not now, boss. Rank's busy.
 - brush-off: Catch me after, friend.
 - brush-off: Give us a minute, boss.
+- opener: Aye, boss.
+- opener: Here's how it is, boss.
+- opener: I'll tell you what I know, friend.

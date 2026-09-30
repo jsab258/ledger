@@ -5208,6 +5208,36 @@ namespace Ledger.CoreTests
                             new ScriptedLlm(Flag("a van"), Unsupported, Flag("a white van"), Unsupported));
             Check(ClaimCheck.IsKnownOnly(await e2.SayToAsync("What happened?", now, "In the yard.")), "a claim twice drafted is never said");
 
+            // SAID PLAINLY WHEN REFUSED TWICE (PlainFallback; Jafar's list of 30
+            // September afternoon, item 2): an opener of their own and the chosen
+            // street facts in their plain words; the stock line when no such fact
+            // was chosen; a card's own facts, secrets among them, never said so.
+            ConversationEngine.PlainFallback = true;
+            try
+            {
+                const string drivers = "Mickey's has two cab drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.";
+                const string secret = "The office's second book, the real one, exists, and I know where the drivers' takings are written down.";
+                var ep = Engine(new ScriptedLlm("Three drivers, all on nights.", "Four of them, and a van."),
+                                new ScriptedLlm(Flag("three drivers"), Unsupported, Flag("four of them"), Unsupported));
+                ep.Card.HardFacts.Add(drivers);
+                ep.Card.HardFacts.Add(secret);
+                ep.Card.OwnWords["opener"] = new List<string> { "This much I know." };
+                string plain = await ep.SayToAsync("How many drivers are there?", now, "In the office.");
+                bool chose = ep.LastBearing.Contains(drivers);
+                Check(chose && plain == "This much I know. Two drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone."
+                      && ep.LastSaidPlainly && !plain.Contains("book") && ep.LastRefusedAgain.Count == 1,
+                      "refused twice, she says the chosen street fact plainly, after her own opener, and never her secret", plain);
+                var none = Engine(new ScriptedLlm("A man with a van.", "A white van, definitely."),
+                                  new ScriptedLlm(Flag("a van"), Unsupported, Flag("a white van"), Unsupported));
+                string stock = await none.SayToAsync("What happened?", now, "In the yard.");
+                Check(ClaimCheck.IsKnownOnly(stock, none.Card) && !none.LastSaidPlainly,
+                      "with no street fact chosen, refused twice is still \"that's all I know\"", stock);
+                Check(StreetFacts.SaidFor(drivers) != null && StreetFacts.SaidFor(secret) == null && StreetFacts.SaidFor("") == null
+                      && StreetFacts.All.All(f => f.said != null && (f.own == null) == (f.ownSaid == null)),
+                      "every street fact has its plain words, and the person it is about their own; nothing else is said plainly");
+            }
+            finally { ConversationEngine.PlainFallback = false; }
+
             // A SENTENCE WITH NOTHING IN IT TO CHECK (town list T1): plain words only;
             // nothing of a third person, a place, a time, a thing, a count or a deed;
             // how they address him only as address.
