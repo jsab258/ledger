@@ -12,6 +12,24 @@ Anything urgent goes at the top of FOR-JAFAR.md straight away, and work
 carries on (Jafar, 28 September). Before every push: fetch, rebase onto main,
 run the Core suites, then push to main.
 
+## The list from 30 September, in order (Jafar)
+
+Still no new systems. Research the method before the problem: before a new
+kind of work, research how professionals do it from start to finish, with
+dated sources, and only then specific problems; when something fails, ask
+first whether the method is wrong. Pages:
+- an answered item never appears again;
+- a page is dated the day it is made;
+- every picture opens at full size when tapped.
+
+- [ ] U1. T1's timeouts and the delay to the first words, measured with LEDGER's key (at most about a dollar a day, every run logged with its tokens and cost). With it, his answers of 30 September:
+  - reopen the check's retune (the fallback);
+  - threats read by the checking model on the capped key while he plays.
+- [ ] U2. Authored breadth for the first week: the street's lines written ahead (remarks, greetings, recognitions, reactions to what Tom does) for every named character, in their own voice as their casting sheet describes it, within the approved story and canon; enough that two hours of play never repeats, by my own measure; through the quality gate, the content rules on every line. Research first how game writers write ambient lines for a living town, the whole pipeline.
+- [ ] U3. Casting sheets for the street regulars, about thirty, from CASTING.md's second tier, as a contact sheet of text on one approval page.
+- [ ] U4. Item i: every cost that decides the ending readable before it decides (reopened by his list).
+- [ ] U5. Then ROADMAP's non-visual items, still no new systems.
+
 ## The list from 29 September evening, in order (Jafar)
 
 No new systems until the playable slice is worth playing: depth nobody can

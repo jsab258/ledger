@@ -12,16 +12,22 @@ namespace Ledger.Core
     /// dispatcher and the two drivers of the cast; the parade and the shops
     /// across from its north half; the office's hours), and given to every
     /// talking character as things they know. Never his name: the street
-    /// learns that by the ladder (PlayerIdentity). Never how Mickey died,
-    /// which is Jafar's to rule, and never why the docks went (the outline
-    /// keeps that "underneath, never explained"). The person a fact is about
-    /// knows it in their own words.
+    /// learns that by the ladder (PlayerIdentity). How Mickey died and the
+    /// warehouse fire as the street has it, as Jafar ruled on 30 September; never
+    /// the fire's truth, and never why the docks went (the outline keeps that
+    /// "underneath, never explained"). The person a fact is about knows it in
+    /// their own words.
     public static class StreetFacts
     {
         /// (whom it is about, or "", the street's words, their own words).
         public static readonly (string about, string fact, string own)[] All =
         {
             ("", "Mickey died three weeks before the new owner, his nephew, came to Quay Street.", null),
+            // How Mickey died (Jafar, 30 September): his heart; nobody thinks otherwise.
+            ("rocco", "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+                      "I found Mickey at the office early one morning, when I came on at the rank; the doctor said it was his heart."),
+            // The warehouse fire as the street has it (Jafar, 30 September); the truth is never the street's.
+            ("", "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.", null),
             ("", "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.", null),
             ("", "Mickey's funeral was at Father Walsh's chapel, before the new owner came; he missed it.", null),
             ("june", "June, Mickey's daughter, came back to the Hook for the funeral and is still in town; she wants nothing from the office.",

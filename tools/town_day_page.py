@@ -11,6 +11,7 @@ Each day's content is a DAYS entry: a title, a line of lede, the questions
 page shows what was committed.
 """
 import html
+import json
 import os
 import sys
 
@@ -18,6 +19,18 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import town_page  # noqa: E402  (the same style, script and markdown renderer)
 
 REPO = town_page.REPO
+# WHAT JAFAR HAS ANSWERED (Jafar, 30 September: "An item I have answered never
+# appears on a page again"): each page's stored verdicts, read before the next
+# page is built and kept here, key by key; build() leaves every one out.
+ANSWERED_PATH = os.path.join(REPO, "production", "approvals", "town-answered.json")
+
+
+def answered():
+    try:
+        with open(ANSWERED_PATH, encoding="utf-8") as fh:
+            return set(json.load(fh))
+    except (OSError, ValueError):
+        return set()
 
 DAYS = {
     "2026-09-29": {
@@ -152,7 +165,10 @@ DAYS["2026-10-01"] = {
 
 
 def build(date):
-    day = DAYS[date]
+    done = answered()
+    day = dict(DAYS[date])
+    day["questions"] = [q for q in day["questions"] if q[0] not in done]
+    day["docs"] = [d for d in day["docs"] if d[0] not in done]
     esc = html.escape
     parts = ["<title>" + esc(day["title"]) + "</title>",
              '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
@@ -181,17 +197,20 @@ def build(date):
 
 
 def selftest():
-    page = build("2026-09-29")
-    assert page.startswith("<title>") and 'data-key="first-hour"' in page and 'data-key="q-chatter"' in page and 'q-relay' not in page
-    assert "<script" not in town_page.outline_html(DAYS["2026-09-29"]["docs"][0][2])
-    for key, _, options in DAYS["2026-09-29"]["questions"]:
-        assert "recommended" in options[0][1], key
-    later = build("2026-09-30")
-    # Three calls at most (Jafar, 29 September), nothing else.
-    assert later.count('class="card" data-key=') == 3 and 'data-key="q-mickey-death"' in later and 'data-key="q-wind-down"' in later and 'data-key="q-threat"' in later
-    assert 'data-key="q-threat-reading"' not in later and 'data-key="q-clock"' not in later and 'data-key="day-one"' not in later and 'class="card outline"' not in later
-    for key, _, options in DAYS["2026-09-30"]["questions"]:
-        assert "recommended" in options[0][1], key
+    # Jafar's rules for pages (30 September): an answered item never appears
+    # again; a page is dated the day it is made; pictures open at full size.
+    done = answered()
+    assert {"q-mickey-death", "q-wind-down", "q-threat", "q-fire-draft", "q-fallback", "steam-ai"} <= done
+    for date in DAYS:
+        page = build(date)
+        assert page.startswith("<title>")
+        for key in done:
+            assert 'data-key="%s"' % key not in page, (date, key)
+    assert main(["town_day_page.py", "2099-01-01"]) == 1
+    assert "zoom-in" in town_page.STYLE and 'className = "full"' in town_page.SCRIPT
+    for day in DAYS.values():
+        for key, _, options in day["questions"]:
+            assert "recommended" in options[0][1], key
     print("town_day_page selftest: ok")
     return 0
 
@@ -199,7 +218,12 @@ def selftest():
 def main(argv):
     if "--selftest" in argv:
         return selftest()
+    import datetime
     date = argv[1]
+    # A page is dated the day it is made (Jafar, 30 September).
+    if date != datetime.date.today().isoformat():
+        print("refused: a page is dated the day it is made; today is " + datetime.date.today().isoformat())
+        return 1
     out_dir = os.path.join(REPO, "production", "approvals", date + "-town")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "index.html")
