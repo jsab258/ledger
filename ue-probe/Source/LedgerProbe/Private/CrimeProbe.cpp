@@ -112,6 +112,8 @@
 #include "Engine/StaticMeshActor.h"
 #include "Engine/StaticMesh.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/LocalLightComponent.h"
+#include "UObject/UObjectIterator.h"
 #include "AudioDevice.h"
 #include "AudioMixerBlueprintLibrary.h"
 #include "Components/AudioComponent.h"
@@ -370,6 +372,12 @@ namespace
 	// Sheila's trust, as her talk reports it (the reply's trusts / trustEarned),
 	// kept in the save: her week's question is over the real book once she has it.
 	bool bSheilaTrusts = false;
+	// THE DEED'S STORY KEY AS FILED (the review's A3): in free play
+	// "player.window_dN", N its day; the scripted encounter keeps its own.
+	std::string DeedKeyNow() { return bRitasWindow ? GWindowTopic : std::string(LedgerCrime::WindowDeedKey()); }
+	// Those who only heard the smash (the review's A1): they hold the damage
+	// heard, not a story about him; they never "find" it later either.
+	std::set<std::string> GHeardOnly;
 	// WHERE HE STOOD at the save (street metres, and his heading), so a
 	// reload puts him back there rather than at the street's start.
 	bool bLoadPlace = false;
@@ -2266,6 +2274,16 @@ namespace
 	bool bDeedDone = false;
 	int GDeedDay = -1, GDeedHour = -1;
 	std::map<std::string, std::string> GSawHimAt;
+	// WHOM HE HAS MET, AND ON WHICH DAYS (the review's A4): a conversation, the
+	// walk round, Ada's tea, Ron's envelope. Who can recognise him grows from it.
+	LedgerCrime::MeetingBook GMet;
+	// How well somebody he talks to knows him now: the street has heard of the
+	// new owner (kLadFamiliarity); in free play, his meetings with them raise it.
+	double TalkFamiliarity(const std::string& Card)
+	{
+		if (bLiveScript) { return LedgerCrime::kLadFamiliarity; }
+		return std::max(LedgerCrime::kLadFamiliarity, LedgerCrime::FamiliarityFromMeetings(GMet.DaysMet(Card)));
+	}
 
 	void MarkDeedTime()
 	{
@@ -2278,7 +2296,7 @@ namespace
 	// SEEN NEAR THE DEED (town list 6au): the place nearest where he stood,
 	// kept as where this person saw him, and the story that he was there,
 	// given to them for the gossip to carry.
-	void SawHimNear(const GossiperPtr& G, double X, double Z, double Confidence)
+	void SawHimNear(const GossiperPtr& G, double X, double Z, double Confidence, int Rung)
 	{
 		if (!G || !bGCast) { return; }
 		MarkDeedTime();
@@ -2289,9 +2307,9 @@ namespace
 		const std::string Area = AreaId.empty() ? Place : AreaId;
 		const std::vector<std::string> Names = GCast.AreaNamesOf(Area);
 		const std::string Words = !Names.empty() ? Names[0] : !GCast.SaidOf(Place).empty() ? GCast.SaidOf(Place) : Area;
-		const std::string Topic = std::string("player.") + LedgerCrime::SightingPredicate(LedgerCrime::WindowDeedKey());
+		const std::string Topic = std::string("player.") + LedgerCrime::SightingPredicate(DeedKeyNow());
 		for (const RumorPtr& R : G->Rumors) { if (R && R->TopicKey() == Topic) { return; } }
-		RumorPtr At = LedgerCrime::SightingStory(LedgerCrime::WindowDeedKey(), Area, Words, GDeedDay, GDeedHour, G->Id, Confidence);
+		RumorPtr At = LedgerCrime::SightingStory(DeedKeyNow(), Area, Words, GDeedDay, GDeedHour, G->Id, Confidence, Rung);
 		G->Rumors.push_back(At);
 		UE_LOG(LogTemp, Display, TEXT("LedgerDeed: %s saw him at %s: %s"), *Un(G->Id), *Un(Place), *Un(At->Summary));
 	}
@@ -2308,6 +2326,12 @@ namespace
 			LedgerCrime::Reading& R = GReadings[I];
 			if (R.EventId != EventId) { continue; }
 			LedgerCrime::Resolve(R, D);
+			if (GEnc == EEncounter::Live && !bLiveScript && Index == 0)
+			{
+				LedgerSession::Write(TEXT("witness"), TEXT("\"who\":") + LedgerSession::Str(Un(R.WitnessId))
+					+ FString::Printf(TEXT(",\"rung\":%d,\"saw\":%s,\"metres\":%.1f,\"light\":%.2f,\"familiarity\":%.2f"),
+						R.O.Rung, R.bFiled ? TEXT("true") : TEXT("false"), R.ActorMetres, R.Light, R.Familiarity));
+			}
 			if (!R.bFiled) { continue; }
 
 			// THE RUNG SHE ACTUALLY REACHED DECIDES THE WORDS, both of them.
@@ -2324,9 +2348,11 @@ namespace
 			// producer drift away from the check and the beat would speak a
 			// diagnostic.
 			std::string Summary = LedgerCrime::UnreadableSummaryPrefix() + GOverheard.WhyNot;
+			bool bBankWords = false;
 			if (LedgerCrime::BankPick(GBankText, "witness_summary", R.O.Rung, Seed,
 			                          Id, Text, Clause, Speaker, Variants, Why))
 			{
+				bBankWords = true;
 				// TWO STRINGS, TWO JOBS, queue 157. The SENTENCE is what she
 				// says out loud and is the fallback the composer speaks when it
 				// refuses. The CLAUSE is what the mill files as the Summary,
@@ -2356,6 +2382,34 @@ namespace
 				GOverheard.SeedValue = Seed;
 				GOverheard.IdRung = R.O.Rung;
 			}
+			// WHAT SHE FILES (the review's A1; Jafar's A5 ruling): a noise alone is
+			// the damage heard, never a story about him and never a diagnostic;
+			// a story about him only from a sighting the bank has words for.
+			const LedgerCrime::WitnessFiles Files = LedgerCrime::WhatWitnessFiles(R.O.Rung, bBankWords
+				&& Summary.compare(0, std::string(LedgerCrime::UnreadableSummaryPrefix()).size(), LedgerCrime::UnreadableSummaryPrefix()) != 0);
+			if (GMill && Files == LedgerCrime::WitnessFiles::NoiseOnly)
+			{
+				if (bRitasWindow && Index == 0)
+				{
+					const GossiperPtr G = GMill->Get(R.WitnessId);
+					const size_t Memories = G && G->Memory ? G->Memory->Events.size() : 0;
+					GMill->Witness(R.WitnessId, Fact(std::string(TownNews::Subject), std::string("rita_window"), std::string("heard")),
+					               "somebody put Rita's window in", false, GNow, 0.9);
+					if (G && G->Memory)
+					{
+						if (G->Memory->Events.size() > Memories) G->Memory->Events.erase(G->Memory->Events.begin() + Memories, G->Memory->Events.end());
+						G->Memory->Append(MemoryEvent(GNow, "observation", 0.6, "I heard glass go over at Rita's. I never saw who did it."));
+					}
+					GHeardOnly.insert(R.WitnessId);
+				}
+				UE_LOG(LogTemp, Display, TEXT("LedgerCrime: %s heard it only (rung 0): the damage heard, no story about him"), *Un(R.WitnessId));
+				continue;
+			}
+			if (Files == LedgerCrime::WitnessFiles::Nothing)
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerCrime: %s at rung %d: no words in the bank, nothing filed"), *Un(R.WitnessId), R.O.Rung);
+				continue;
+			}
 			if (GMill)
 			{
 				// A first-hand sighting enters the network at the certainty
@@ -2364,14 +2418,17 @@ namespace
 				const Fact Content = bRitasWindow
 					? Fact(std::string("player"), "window_d" + std::to_string(GNow.Day), std::string("ritas"))
 					: Fact(std::string("player"), std::string("broke_a_window"), VictimId);
-				// THE RUNG SHE REACHED travels with the story in play (town list
-				// 6n), so a retelling whose first teller knew him can name him;
-				// the regression keeps its measured run without it.
+				// THE RUNG SHE REACHED travels with the story (town list 6n), so a
+				// retelling whose first teller knew him can name him; since the
+				// town's A5 fix of 30 September a story with no rung reads as known,
+				// so the regression's carry its rung too.
+				// EVERY SIGHTING CARRIES ITS RUNG (the town's handover of 30 September:
+				// in the Core no rung now reads as a thing known, naming him).
 				GMill->Witness(R.WitnessId, Content, Summary, /*bSensitive=*/bRitasWindow, GNow,
-				               R.O.Certainty, /*bIndelible=*/false, GEnc == EEncounter::Live ? R.O.Rung : -1);
+				               R.O.Certainty, /*bIndelible=*/false, R.O.Rung);
 				// WHERE SHE SAW HIM (town list 6ac, 6au), in play, when what she
 				// saw can be tied to him.
-				if (GEnc == EEncounter::Live && Index == 0 && LedgerCrime::CanTieSighting(R.O.Rung))
+				if (GEnc == EEncounter::Live && Index == 0 && LedgerCrime::CanNameHim(R.O.Rung))
 				{
 					double Sx = LedgerCrime::kCrimeAX, Sz = LedgerCrime::kCrimeAZ;
 					if (bRitasWindow && GGlass[0] != nullptr)
@@ -2379,13 +2436,13 @@ namespace
 						const LedgerCrime::P3 G = ToStreet(GGlass[0]->GetComponentsBoundingBox(true).GetCenter());
 						Sx = G.X; Sz = G.Z;
 					}
-					SawHimNear(GMill->Get(R.WitnessId), Sx, Sz, R.O.Certainty);
+					SawHimNear(GMill->Get(R.WitnessId), Sx, Sz, R.O.Certainty, R.O.Rung);
 				}
 				if (GEnc != EEncounter::None && Index == 0 && R.WitnessId == GIdW1)
 				{
 					GW1RungA = R.O.Rung;
 					GFiledSummaryA = Summary;
-					PlayShout();
+					if (LedgerCrime::WitnessShouts(R.O.Rung)) { PlayShout(); }
 				}
 			}
 		}
@@ -2607,6 +2664,7 @@ namespace
 		RumorPtr Near = std::make_shared<Rumor>(Fact(std::string("player"), std::string(LedgerCrime::NearPredicate()),
 		                                             std::string(LedgerCrime::NearValue())));
 		Near->OriginId = GIdN2;
+		Near->OriginRung = GFleeRung;
 		Near->Summary = GFleeSummary;
 		Near->Confidence = GFleeCertainty;
 		Near->Hops = 0;
@@ -2616,7 +2674,7 @@ namespace
 			GN2->Memory->Append(MemoryEvent(GNow, "observation", 0.6, "What I saw myself: " + GFleeSummary));
 		}
 		bFleeFiled = GN2 != nullptr;
-		if (GEnc == EEncounter::Live) { SawHimNear(GN2, LedgerCrime::kFleeX, LedgerCrime::kFleeZ, GFleeCertainty); }
+		if (GEnc == EEncounter::Live && LedgerCrime::CanNameHim(GFleeRung)) { SawHimNear(GN2, LedgerCrime::kFleeX, LedgerCrime::kFleeZ, GFleeCertainty, GFleeRung); }
 	}
 
 	// WHAT ONE RESIDENT HOLDS, AS THE EVIDENCE THE CORE DERIVES SUSPICION
@@ -3659,10 +3717,11 @@ namespace
 		const std::string Acquaintance = AcquaintanceJson(G, Card);
 		// THE DEED THEY HOLD (town list 6ac, 6am, 6au).
 		const std::string DeedField = (bDeedDone && G)
-			? LedgerCrime::DeedJson(*G, LedgerCrime::WindowDeedKey(), GDeedDay, GDeedHour, GSawHimAt.count(G->Id) ? GSawHimAt[G->Id] : std::string())
+			? LedgerCrime::DeedJson(*G, DeedKeyNow(), GDeedDay, GDeedHour, GSawHimAt.count(G->Id) ? GSawHimAt[G->Id] : std::string())
 			: std::string();
 		GLive.Talked.insert(Card);
 		GLive.Left.erase(Card);
+		GMet.Met(Card, GNow.Day);
 		std::string Present;
 		if (AActor* Me = CardBody(Card))
 		{
@@ -3681,10 +3740,10 @@ namespace
 			+ ",\"hour\":" + std::to_string(GNow.Hour) + ",\"minute\":" + std::to_string(GNow.Minute)
 			+ (bFresh ? ",\"fresh\":true" : "") + ",\"present\":[" + Present + "]"
 			+ ",\"scene\":\"" + Light + "\",\"memories\":[" + MemoriesJson(G) + "]"
-			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + KnowingJson(Card) + Acquaintance + DeedField + WeekTalkJson(Card) + "}\n";
+			+ ",\"evidence\":" + EvidenceFor(G, TalkFamiliarity(Card), OwnRung) + KnowingJson(Card) + Acquaintance + DeedField + WeekTalkJson(Card) + "}\n";
 		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
 		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: to %s%s%s%s evidence=%s"), *Un(Card), *Un(Acquaintance), *Un(KnowingJson(Card)), *Un(DeedField),
-			*Un(EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung)));
+			*Un(EvidenceFor(G, TalkFamiliarity(Card), OwnRung)));
 		GLive.PendingId = Id;
 		GLive.PendingSaid.clear();
 		GLive.PendingName = Name;
@@ -3828,7 +3887,10 @@ namespace
 		}
 		if (CastDay::GetString(&Root, "ownedUp", Topic) && !Topic.empty())
 		{
-			G->Rumors.push_back(LedgerCrime::OwnedUpStory(Topic, G->Id));
+			// In free play the deed's own story, about Rita's window (the review's A3).
+			G->Rumors.push_back(bRitasWindow && Topic == GWindowTopic
+				? LedgerCrime::OwnedUpStory(Topic, G->Id, "ritas", "the new owner told me himself that he put Rita's window in")
+				: LedgerCrime::OwnedUpStory(Topic, G->Id));
 			UE_LOG(LogTemp, Display, TEXT("LedgerDeed: he owned up to %s to %s"), *Un(Topic), *Un(Card));
 		}
 		// HE GAVE HIS NAME (town list 6ch): they hold it as the street's plain
@@ -3950,6 +4012,18 @@ namespace
 		{
 			const std::string L = GLive.Buf.substr(0, Nl);
 			GLive.Buf.erase(0, Nl + 1);
+			// THE TALK'S SAVE AND LOAD ANSWERED, never silently (the Continue run of
+			// 30 September found every save refused for its file name, unseen).
+			if (L.compare(0, 8, "{\"talk\":") == 0)
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerTalk: the talk program says %s"), *Un(L));
+				if (L.find("\"error\"") != std::string::npos || L.find("\"stale\":true") != std::string::npos
+				    || L.find("\"missing\":true") != std::string::npos)
+				{
+					LedgerSession::Write(TEXT("talkSaveFailed"), TEXT("\"said\":") + LedgerSession::Str(Un(L)));
+				}
+				continue;
+			}
 			if (L.find("\"ready\"") != std::string::npos)
 			{
 				GLive.bReady = true;
@@ -4114,7 +4188,7 @@ namespace
 			std::string Req;
 			if (GLive.bTalkLoad)
 			{
-				const std::string Path = Utf8(FPaths::ConvertRelativePathToFull(EncSaveDir() / TEXT("talk.json")));
+				const std::string Path = Utf8(FPaths::ConvertRelativePathToFull(EncSaveDir() / Un(LedgerCrime::TalkSaveFile())));
 				Req = "{\"talk\":\"load\",\"path\":\"" + JsonEsc(Path) + "\",\"stamp\":\"" + GLive.TalkStamp + "\"}\n";
 			}
 			else { Req = "{\"talk\":\"reset\"}\n"; }
@@ -4714,8 +4788,9 @@ namespace
 		// ROUTE.md step 2: the damage (which those who saw it done never
 		// "find") and who saw it, at the rung they saw him at; their stories
 		// were filed as they saw it (ResolveAndFile), so the mill is not passed.
+		const std::vector<std::string> Heard(GHeardOnly.begin(), GHeardOnly.end());
 		GWeek.Deed(nullptr, GNow, "ritas", "rita_window", "somebody put Rita's window in", Saw,
-			"window_d" + std::to_string(GNow.Day), std::string(), 1.0, true);
+			"window_d" + std::to_string(GNow.Day), std::string(), 1.0, true, &Heard);
 		UE_LOG(LogTemp, Display, TEXT("LedgerAfter: the deed at %s (%s): %d saw it, the damage kept"),
 			*Un(GNow.ToString()), *Un(GWindowTopic), (int32)Saw.size());
 	}
@@ -4754,6 +4829,7 @@ namespace
 		}
 		if (GWeek.TwentyRon(GMill.get(), H))
 		{
+			GMet.Met("rocco", H.Day);
 			Say(TEXT("Ron's at the door with an envelope for you: for the ferry landing, after ten tonight, to the man who asks for Mickey's. The way down is past the quay at the bottom of the street."), 14.0f, FColor::Yellow);
 			LedgerSession::Write(TEXT("ask"), TEXT("\"night\":") + FString::FromInt(H.Day));
 			UE_LOG(LogTemp, Display, TEXT("LedgerWeek: Ron brings the envelope on night %d"), H.Day);
@@ -4837,6 +4913,7 @@ namespace
 				if (GTeaMinuteDone < 0) { UE_LOG(LogTemp, Display, TEXT("LedgerWeek: with Ada from %s"), *Un(GNow.ToString())); }
 				GTeaMinuteDone = M;
 				GWeek.Tea->WithHer(GNow);
+				GMet.Met("ada", GNow.Day);
 			}
 		}
 		const int Night = Arrangement::NightOf(GNow);
@@ -4877,6 +4954,290 @@ namespace
 		}
 	}
 
+	// THE THREE THE PLAYER CAN SEE KEEP THEIR DAY (the independent review of
+	// 30 September, A2): each hour Sheila, Darren and Ron stand where their
+	// routine puts them on Quay Street (a place indoors from its own pavement
+	// until the interiors are built), and leave the street when their day
+	// does. Never while he talks with them or waits on their reply, and never
+	// in front of his eyes: a move waits until neither where they stand nor
+	// where they go is in his view (except on a new game or a Continue).
+	std::map<std::string, int> GPlacedFor;
+	std::set<std::string> GAway;
+	std::map<std::string, double> GHeldBackSince;   // when a move first waited for his eyes
+	bool bPlaceNow = false;
+	// A MOVE WAITS FOR HIS EYES ONLY SO LONG (the independent check of 30
+	// September: walking towards somebody, he would never see them go or come).
+	constexpr double kPlaceWaitSeconds = 12.0;
+
+	// THE FLOOR UNDER SOMEBODY'S FEET: searched from a metre up, never from
+	// four (the first walk of 30 September stood Ron and Sheila on the shop
+	// fronts' overhang by Mickey's), ignoring him and the three people.
+	double FeetYAt(UWorld* World, double X, double Z)
+	{
+		if (World == nullptr) { return 0.1; }
+		FCollisionQueryParams Params;
+		Params.bTraceComplex = false;
+		if (GPawn != nullptr) { Params.AddIgnoredActor(GPawn); }
+		for (const char* C : { "lena", "sam", "rocco" }) { if (AActor* B = CardBody(C)) { Params.AddIgnoredActor(B); Params.AddIgnoredActor(GVisualFor(B)); } }
+		FHitResult Hit;
+		if (!World->LineTraceSingleByChannel(Hit, ToUE(LedgerCrime::P3(X, 1.0, Z)), ToUE(LedgerCrime::P3(X, -1.0, Z)), ECC_Visibility, Params)) { return 0.1; }
+		return (double)Hit.ImpactPoint.Z / 100.0;
+	}
+
+	void PlaceBodyAt(AActor* Body, double X, double Z, double GroundY)
+	{
+		if (Body == nullptr) { return; }
+		Body->SetActorLocation(ToUE(LedgerCrime::P3(X, GroundY + LedgerCrime::kBodyHeightM * 0.5, Z)));
+		SyncVisual(Body);
+	}
+
+	void ShowPerson(AActor* Body, bool bShow)
+	{
+		TWeakObjectPtr<AActor>* V = GVisuals.Find(Body);
+		if (V == nullptr || !V->IsValid()) { return; }
+		(*V)->SetActorHiddenInGame(!bShow);
+		TArray<AActor*> Worn;
+		(*V)->GetAttachedActors(Worn, true, true);
+		for (AActor* W : Worn) { if (W != nullptr) { W->SetActorHiddenInGame(!bShow); } }
+	}
+
+	bool InHisView(UWorld* World, const FVector& At)
+	{
+		APlayerController* PC = World != nullptr ? World->GetFirstPlayerController() : nullptr;
+		if (PC == nullptr) { return false; }
+		FVector Eye;
+		FRotator Look;
+		PC->GetPlayerViewPoint(Eye, Look);
+		const FVector To = At - Eye;
+		if (To.Size() > 6000.0f) { return false; }
+		return FVector::DotProduct(To.GetSafeNormal(), Look.Vector()) > 0.64f;   // within about 50 degrees of where he looks
+	}
+
+	void PlaceBodiesByRoutine(UWorld* World)
+	{
+		if (!bRitasWindow || bLiveScript || !bGCast || GEnc != EEncounter::Live || World == nullptr) { return; }
+		if (GPhase == ECrimePhase::LiveWalkRound) { return; }
+		const int Key = GNow.Day * 24 + GNow.Hour;
+		const char* Cards[3] = { "lena", "sam", "rocco" };
+		bool bAny = false;
+		for (const char* C : Cards) { if (GPlacedFor.count(C) == 0 || GPlacedFor[C] != Key) { bAny = true; } }
+		if (!bAny) { return; }
+		std::map<std::string, LedgerCrime::OnlookerAt> Here;
+		for (const LedgerCrime::OnlookerAt& O : LedgerCrime::OnlookersAt(GCast, GNow.Day, GNow.Hour, { "lena", "sam", "rocco" }))
+		{
+			if (O.bBody) { Here[O.Id] = O; }
+		}
+		// HER APPOINTMENT OUTRANKS HER DAY OFF: the week's end keeps Sheila at the
+		// office for him on the Sunday morning, and while her question stands.
+		double OfficeX = 0.0, OfficeZ = 0.0;
+		if (GWeek.Week.Waits(GNow) && GCast.PlaceXZ("mickeys_office", OfficeX, OfficeZ))
+		{
+			LedgerCrime::OnlookerAt O;
+			O.Id = "lena";
+			O.Place = "mickeys_office";
+			O.bBody = true;
+			O.At = LedgerCrime::BodySpotFor(OfficeX, OfficeZ);
+			O.YawDeg = LedgerCrime::StreetFacingYaw(O.At.X, O.At.Z);
+			Here["lena"] = O;
+		}
+		for (const char* C : Cards)
+		{
+			if (GPlacedFor.count(C) && GPlacedFor[C] == Key) { continue; }
+			AActor* Body = CardBody(C);
+			if (Body == nullptr) { GPlacedFor[C] = Key; continue; }
+			if ((bSayOpen && GTalkTarget.Card == C) || (GLive.PendingId != 0 && GLive.PendingBody == Body)
+			    || (GLive.Talked.count(C) && !GLive.Left.count(C))) { continue; }
+			const auto It = Here.find(C);
+			const bool bWaitedEnough = GHeldBackSince.count(C) && NowS() - GHeldBackSince[C] >= kPlaceWaitSeconds;
+			if (It == Here.end())
+			{
+				if (!bPlaceNow && !bWaitedEnough && !GAway.count(C) && InHisView(World, Body->GetActorLocation()))
+				{
+					if (!GHeldBackSince.count(C)) { GHeldBackSince[C] = NowS(); }
+					continue;
+				}
+				GHeldBackSince.erase(C);
+				PlaceBodyAt(Body, -400.0, -400.0, 0.0);
+				ShowPerson(Body, false);
+				GAway.insert(C);
+				GPlacedFor[C] = Key;
+				UE_LOG(LogTemp, Display, TEXT("LedgerDay: %s off the street at %s"), *Un(C), *Un(GNow.ToString()));
+				continue;
+			}
+			double X = It->second.At.X, Z = It->second.At.Z;
+			// NEVER ONTO ANOTHER OF THE THREE, wherever they stand now (placed this
+			// hour or held back by a conversation).
+			for (int Pass = 0; Pass < 2; ++Pass)
+			{
+				for (const char* Other : Cards)
+				{
+					AActor* OtherBody = CardBody(Other);
+					if (std::string(Other) == C || OtherBody == nullptr || GAway.count(Other)) { continue; }
+					const LedgerCrime::P3 There = ToStreet(OtherBody->GetActorLocation());
+					if (std::fabs(There.X - X) < 0.9 && std::fabs(There.Z - Z) < 0.9) { X += 1.1; }
+				}
+			}
+			if (GPawn != nullptr)
+			{
+				const LedgerCrime::P3 Him = ToStreet(GPawn->GetActorLocation());
+				if (std::fabs(Him.X - X) < 1.0 && std::fabs(Him.Z - Z) < 1.0) { X += 1.2; }
+			}
+			const FVector Goes = ToUE(LedgerCrime::P3(X, 1.0, Z));
+			const bool bAppointment = It->second.Place == "mickeys_office" && std::string(C) == "lena" && GWeek.Week.Waits(GNow);
+			if (!bPlaceNow && !bWaitedEnough && !bAppointment
+			    && ((!GAway.count(C) && InHisView(World, Body->GetActorLocation())) || InHisView(World, Goes)))
+			{
+				if (!GHeldBackSince.count(C)) { GHeldBackSince[C] = NowS(); }
+				continue;
+			}
+			GHeldBackSince.erase(C);
+			PlaceBodyAt(Body, X, Z, FeetYAt(World, X, Z));
+			Body->SetActorRotation(FRotator(0.0f, (float)It->second.YawDeg, 0.0f));
+			SyncVisual(Body);
+			ShowPerson(Body, true);
+			GAway.erase(C);
+			GPlacedFor[C] = Key;
+			UE_LOG(LogTemp, Display, TEXT("LedgerDay: %s at %s (%.1f, %.1f) at %s"), *Un(C), *Un(It->second.Place), X, Z, *Un(GNow.ToString()));
+		}
+		bPlaceNow = false;
+	}
+
+	// GLASS IS SEEN THROUGH: a sightline that meets a pane goes on past it; so
+	// does the painted interior card behind a shop window, which stands for the
+	// room the people at the counter are in (the first walk of 30 September:
+	// Rita and her staff were blind behind street_card_int23_pawn).
+	bool TraceBlockedPastGlass(UWorld* World, const FVector& From, const FVector& To,
+	                           const AActor* IgnoreA, const AActor* IgnoreB,
+	                           std::string& OutBlocker, double& OutLenCm)
+	{
+		OutBlocker = "none";
+		OutLenCm = (double)FVector::Dist(From, To);
+		if (World == nullptr) { return false; }
+		FCollisionQueryParams Params;
+		Params.bTraceComplex = false;
+		if (IgnoreA != nullptr) { Params.AddIgnoredActor(IgnoreA); }
+		if (IgnoreB != nullptr) { Params.AddIgnoredActor(IgnoreB); }
+		for (int Pass = 0; Pass < 6; ++Pass)
+		{
+			FHitResult Hit;
+			if (!World->LineTraceSingleByChannel(Hit, From, To, ECC_Visibility, Params)) { return false; }
+			const std::string Name = BlockerName(Hit.GetActor());
+			if ((Un(Name).Contains(TEXT("glass")) || Un(Name).Contains(TEXT("_card_int"))) && Hit.GetActor() != nullptr) { Params.AddIgnoredActor(Hit.GetActor()); continue; }
+			OutBlocker = Name;
+			OutLenCm = (double)FVector::Dist(From, Hit.ImpactPoint);
+			return true;
+		}
+		OutBlocker = "past-six-panes";   // never read as a clear line without looking further
+		return true;
+	}
+
+	// THE LIGHT ON HIM NOW: the game's night (19:00 to 07:00) and the reach of
+	// the lamps the street has lit around his head, as Perceivers.LevelAt adds them.
+	double LampReachAt(UWorld* World, const FVector& At, std::string& OutLamp)
+	{
+		double Best = 0.0;
+		OutLamp = "none";
+		for (TObjectIterator<ULocalLightComponent> It; It; ++It)
+		{
+			const ULocalLightComponent* L = *It;
+			if (L == nullptr || L->GetWorld() != World || !L->IsVisible() || L->Intensity <= 0.0f) { continue; }
+			if (L->GetName().StartsWith(TEXT("Talk"))) { continue; }   // the conversation light (LedgerTalkLight.h) lights a face, not the street
+			if (L->GetOwner() != nullptr && L->GetOwner()->IsHidden()) { continue; }
+			const double Radius = (double)L->AttenuationRadius;
+			if (Radius <= 1.0) { continue; }
+			const double D = (double)FVector::Dist(L->GetComponentLocation(), At);
+			if (D >= Radius) { continue; }
+			const double Reach = 1.0 - D / Radius;
+			if (Reach > Best) { Best = Reach; OutLamp = BlockerName(L->GetOwner()); }
+		}
+		return Best;
+	}
+
+	// ONE ONLOOKER'S VANTAGE, as MeasureVantage takes the regression's, from
+	// where they stand (their body, or their place behind their window).
+	LedgerCrime::Reading MeasureOnlooker(UWorld* World, const LedgerCrime::OnlookerAt& O, AActor* Body, AActor* Glass)
+	{
+		LedgerCrime::Reading R;
+		R.WitnessId = O.Id;
+		R.EventId = "A";
+		R.SecondsWatching = LedgerCrime::kDeedSeconds;
+		R.VantageAt = Body != nullptr ? "before-the-deed/glass-standing/where-he-sees-them" : "before-the-deed/glass-standing/behind-their-window";
+		if (GPawn == nullptr) { R.FiledReason = "nothing-measured"; return R; }
+		LedgerCrime::P3 Feet;
+		if (Body != nullptr)
+		{
+			const FBox BodyBox = Body->GetComponentsBoundingBox();
+			Feet = ToStreet(FVector(BodyBox.GetCenter().X, BodyBox.GetCenter().Y, BodyBox.Min.Z));
+			R.WitnessYawDeg = (double)Body->GetActorRotation().Yaw;
+		}
+		else
+		{
+			Feet = LedgerCrime::P3(O.At.X, FeetYAt(World, O.At.X, O.At.Z), O.At.Z);
+			R.WitnessYawDeg = O.YawDeg;
+		}
+		R.WitnessAt = Feet;
+		R.EyeAt = LedgerCrime::P3(Feet.X, Feet.Y + LedgerCrime::kEyeHeightM, Feet.Z);
+		const FBox PawnBox = GPawn->GetComponentsBoundingBox();
+		const FVector HeadUE(PawnBox.GetCenter().X, PawnBox.GetCenter().Y, PawnBox.Max.Z - 10.0f);
+		R.ActorHeadAt = ToStreet(HeadUE);
+		R.ActorYawDeg = (double)GPawn->GetActorRotation().Yaw;
+		const FVector EyeUE = ToUE(R.EyeAt);
+		R.ActorMetres = LedgerCrime::Metres(R.EyeAt, R.ActorHeadAt);
+		R.ActorOffAxisDeg = LedgerCrime::OffAxisDeg(R.EyeAt, R.WitnessYawDeg, R.ActorHeadAt);
+		R.bActorOccluded = TraceBlockedPastGlass(World, EyeUE, HeadUE, Body, GPawn, R.ActorBlocker, R.ActorTraceLenCm);
+		if (Glass == nullptr) { R.VictimBlocker = "no-window-asked-for"; return R; }
+		const FVector VictimUE = Glass->GetComponentsBoundingBox(true).GetCenter();
+		R.VictimAt = ToStreet(VictimUE);
+		R.VictimMetres = LedgerCrime::Metres(R.EyeAt, R.VictimAt);
+		R.VictimOffAxisDeg = LedgerCrime::OffAxisDeg(R.EyeAt, R.WitnessYawDeg, R.VictimAt);
+		R.bVictimOccluded = TraceBlockedPastGlass(World, EyeUE, VictimUE, Body, Glass, R.VictimBlocker, R.VictimTraceLenCm);
+		return R;
+	}
+
+	// THE ONLOOKERS AT A DEED IN PLAY (A2 and A4): whoever is really there at
+	// this hour, from where they stand, in this hour's light, knowing his face
+	// as well as their meetings with him allow.
+	void DeedOnlookers(UWorld* World)
+	{
+		std::string Lamp;
+		const FVector Head = GPawn != nullptr ? GPawn->GetComponentsBoundingBox().GetCenter() : FVector::ZeroVector;
+		const bool bNight = LedgerCrime::NightAt(GNow.Hour);
+		const double Reach = bNight ? LampReachAt(World, Head, Lamp) : 0.0;
+		const double Light = LedgerCrime::LightOnHim(bNight, Reach);
+		int Measured = 0;
+		for (const LedgerCrime::OnlookerAt& O : LedgerCrime::OnlookersAt(GCast, GNow.Day, GNow.Hour, { "lena", "sam", "rocco" }))
+		{
+			AActor* Body = O.bBody ? CardBody(O.Id) : nullptr;
+			if (O.bBody && (Body == nullptr || GAway.count(O.Id))) { continue; }
+			LedgerCrime::Reading R = MeasureOnlooker(World, O, Body, GGlass[0]);
+			R.Light = Light;
+			R.Familiarity = LedgerCrime::FamiliarityFromMeetings(GMet.DaysMet(O.Id));
+			UE_LOG(LogTemp, Display, TEXT("LedgerWitness: %s %s %s, %.1f m off-axis %.0f, sightline %s, light %.2f (lamp %s), met on %d day(s), familiarity %.2f"),
+				*Un(O.Id), Body != nullptr ? TEXT("where he sees them, their day says") : TEXT("behind the window at"), *Un(O.Place), R.ActorMetres, R.ActorOffAxisDeg,
+				*Un(R.bActorOccluded ? R.ActorBlocker : std::string("clear")), R.Light, *Un(Lamp), GMet.DaysMet(O.Id), R.Familiarity);
+			GReadings.push_back(R);
+			++Measured;
+		}
+		// The three still standing where they stood when their day moved on
+		// (a conversation, his eyes on them) are there, and are measured there.
+		for (const char* C : { "lena", "sam", "rocco" })
+		{
+			bool bIn = false;
+			for (const LedgerCrime::Reading& R : GReadings) { if (R.EventId == "A" && R.WitnessId == C) { bIn = true; } }
+			AActor* Body = CardBody(C);
+			if (bIn || Body == nullptr || GAway.count(C)) { continue; }
+			LedgerCrime::OnlookerAt O;
+			O.Id = C; O.Place = "where-he-sees-them"; O.bBody = true;
+			LedgerCrime::Reading R = MeasureOnlooker(World, O, Body, GGlass[0]);
+			R.Light = Light;
+			R.Familiarity = LedgerCrime::FamiliarityFromMeetings(GMet.DaysMet(C));
+			GReadings.push_back(R);
+			++Measured;
+		}
+		LedgerSession::Write(TEXT("onlookers"), FString::Printf(TEXT("\"hour\":%d,\"night\":%s,\"light\":%.2f,\"measured\":%d"),
+			GNow.Hour, bNight ? TEXT("true") : TEXT("false"), Light, Measured));
+	}
+
 	void ClockLight()
 	{
 		const int Night = (GNow.Hour >= 19 || GNow.Hour < 7) ? 1 : 0;
@@ -4893,6 +5254,7 @@ namespace
 		const std::vector<GameTime> Hours = GClock.Advance(Delta, bHeld);
 		GNow = GClock.Now();
 		ClockHours(Hours);
+		if (GPawn != nullptr) { PlaceBodiesByRoutine(GPawn->GetWorld()); }
 		ClockLight();
 		WeekTick();
 	}
@@ -5270,7 +5632,11 @@ namespace
 					FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 			}
 		}
-		GLive.TalkStamp = Utf8(FGuid::NewGuid().ToString(EGuidFormats::Digits));
+		// A NEW STAMP ONLY WITH THE TALK SAVED BESIDE IT (the review's C1): a save
+		// before the talk program is ready, or before it has loaded the save's
+		// own talk, keeps the stamp the saved talk carries, so Continue finds it.
+		const bool bTalkSavedNow = LedgerCrime::TalkSavedWithThisSave(GLive.bStarted && FPlatformProcess::IsProcRunning(GLive.Proc), GLive.bReady, GLive.bTalkLoad);
+		GLive.TalkStamp = LedgerCrime::TalkStampForSave(GLive.TalkStamp, bTalkSavedNow, Utf8(FGuid::NewGuid().ToString(EGuidFormats::Digits)));
 		const std::string Clock = "day=" + std::to_string(GNow.Day) + "\nhour=" + std::to_string(GNow.Hour)
 			+ "\nminute=" + std::to_string(GNow.Minute) + "\nsummaryA=" + GFiledSummaryA
 			+ "\nrungA=" + std::to_string(GW1RungA)
@@ -5280,6 +5646,7 @@ namespace
 			+ [] { std::string S; for (const auto& Kv : GSawHimAt) { S += "\nsaw_" + Kv.first + "=" + Kv.second; } return S; }()
 			+ [] { std::string S; for (const auto& W : GWeek.Witnesses) { S += "\nwitness_" + W.first + "=" + std::to_string(W.second); } return S; }()
 			+ (bSheilaTrusts ? "\nsheilaTrusts=1" : "")
+			+ GMet.SaveLines()
 			+ [] {
 				if (GPawn == nullptr || bLiveScript) { return std::string(); }
 				const LedgerCrime::P3 At = ToStreet(GPawn->GetActorLocation());
@@ -5290,9 +5657,9 @@ namespace
 			+ "\nclock=" + GClock.ToText()
 			+ "\ncommit=" + Utf8(CrimeSha()) + "\n";
 		// THE TALK SAVED BESIDE IT, under the same stamp (handover 6r).
-		if (GLive.bStarted && GLive.bReady)
+		if (bTalkSavedNow)
 		{
-			const std::string Path = Utf8(FPaths::ConvertRelativePathToFull(Dir / TEXT("talk.json")));
+			const std::string Path = Utf8(FPaths::ConvertRelativePathToFull(Dir / Un(LedgerCrime::TalkSaveFile())));
 			FPlatformProcess::WritePipe(GLive.InWrite, Un("{\"talk\":\"save\",\"path\":\"" + JsonEsc(Path) + "\",\"stamp\":\"" + GLive.TalkStamp + "\"}\n"));
 		}
 		Ok = FFileHelper::SaveStringToFile(Un(Clock), *(Dir / TEXT("clock.txt")),
@@ -5339,6 +5706,11 @@ namespace
 		GSaveDirUsed = Dir;
 		bLoadPlace = false;
 		bSheilaTrusts = false;
+		GMet = LedgerCrime::MeetingBook();
+		GPlacedFor.clear();
+		GHeldBackSince.clear();
+		GHeardOnly.clear();
+		bPlaceNow = true;
 		GWaitShown.clear();   // from the town's save (and an older save's clock file)
 		FString J;
 		bool Ok = FFileHelper::LoadFileToString(J, *(Dir / TEXT("agents.json")));
@@ -5413,6 +5785,7 @@ namespace
 				}
 				else if (Kv == TEXT("deedHour")) { GDeedHour = FCString::Atoi(*V); }
 				else if (Kv.StartsWith(TEXT("saw_"))) { GSawHimAt[Utf8(Kv.Mid(4))] = Utf8(V); }
+				else if (GMet.TakeLine(Utf8(Kv), Utf8(V))) { }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
 				else if (Kv == TEXT("clock")) { bClockRead = GClock.FromText(Utf8(V)); }
 				else if (Kv == TEXT("waitShown") && TownSave::IsStopKey(Utf8(V))) { GWaitShown.insert(Utf8(V)); }   // an older save's, checked as the town's save checks them
@@ -5761,6 +6134,7 @@ namespace
 			bWalkLocked = false;
 		}
 		bSheilaMet = true;
+		GMet.Met("lena", GNow.Day);
 		bHintsOn = true;
 		bHintsMoved = false;
 		bHintsFromSet = false;   // where he stands now is where he starts
@@ -5858,6 +6232,11 @@ namespace
 				bSheilaTrusts = false;
 				GTeaMinuteDone = -1;
 				GWaitShown.clear();
+				GMet = LedgerCrime::MeetingBook();
+				GPlacedFor.clear();
+				GHeldBackSince.clear();
+				GHeardOnly.clear();
+				bPlaceNow = false;   // a new game: they take their places out of his sight
 				// RON IS IN THE STREET FROM THE START in free play, at his place in
 				// the yard across from Rita's (the tester, 30 September: only the
 				// scripted story brought him on, so nobody could tell him no).
@@ -5897,7 +6276,7 @@ namespace
 		if (bLoadedFromDisk)
 		{
 			TArray<FString> Deeds;
-			if (!GFiledSummaryA.empty()) { Deeds.Add(TEXT("player.window_d1")); }
+			if (bDeedDone || !GFiledSummaryA.empty()) { Deeds.Add(Un(DeedKeyNow())); }
 			LedgerSession::Write(TEXT("load"), TEXT("\"from\":") + LedgerSession::Str(FPaths::ConvertRelativePathToFull(EncSaveDir()))
 				+ TEXT(",\"deeds\":") + LedgerSession::List(Deeds));
 		}
@@ -6431,10 +6810,16 @@ namespace
 			}
 			// THE SAME DEED AS THE REGRESSION: the vantage measured with the
 			// glass standing, then the deed, then what she saw filed.
-			GReadings.push_back(MeasureVantage(World, GIdW1, "A", GW1Body, GGlass[0], GSeconds[0][0]));
-			GReadings.push_back(MeasureVantage(World, GIdN2, "A", GN2Body, GGlass[0], GSeconds[0][1]));
+			if (bRitasWindow && !bLiveScript && bGCast) { DeedOnlookers(World); }
+			else
+			{
+				GReadings.push_back(MeasureVantage(World, GIdW1, "A", GW1Body, GGlass[0], GSeconds[0][0]));
+				GReadings.push_back(MeasureVantage(World, GIdN2, "A", GN2Body, GGlass[0], GSeconds[0][1]));
+			}
 			GActRequestsSeen[0] += Presses;
 			GActAttempted[0] = true;
+			// The deed's story key before anybody files it (the review's A3).
+			if (bRitasWindow) { GWindowTopic = "player.window_d" + std::to_string(GNow.Day); }
 			CommitDeed(World, 0);
 			GActTook[0] = GCrime[0].bPieceFound && GCrime[0].bHiddenAfter;
 			ResolveAndFile(0);
@@ -6442,7 +6827,6 @@ namespace
 			GFleeSeconds = 0.0;
 			GLiveDeedAt = Now;
 			GLiveDeedGameAt = GNow;
-			if (bRitasWindow) { GWindowTopic = "player.window_d" + std::to_string(GNow.Day); }
 			LedgerSession::Write(TEXT("deed"), TEXT("\"what\":") + LedgerSession::Str(Un(bRitasWindow ? GWindowTopic : std::string("player.window_d1"))));
 			MarkDeedTime();
 			DeedFollows();
@@ -6522,8 +6906,11 @@ namespace
 			if (bLiveScript) { TakeTalkRequests(); }
 			else { HumanTalkTick(World, Now); }
 			// WHOEVER SEES HIM GO: the lad, by the same sight test, if the
-			// man comes through the yard while it is still fresh.
-			if (!bFleeFiled && GN2Body != nullptr && GPawn != nullptr)
+			// man comes through the yard while it is still fresh. The scripted
+			// story only (the review's A7): in free play the onlookers at the
+			// deed are measured where they stand, and walking up to Darren
+			// afterwards is not running from it.
+			if (LedgerCrime::FleeSightingInPlay(bLiveScript) && !bFleeFiled && GN2Body != nullptr && GPawn != nullptr)
 			{
 				const LedgerCrime::Reading W = MeasureVantage(World, GIdN2, "flee", GN2Body, nullptr, 0.0);
 				if (Perception::InSight(W.ActorMetres, W.ActorOffAxisDeg, LedgerCrime::kLightLevel, W.bActorOccluded, 1.4))

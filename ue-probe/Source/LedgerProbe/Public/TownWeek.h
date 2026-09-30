@@ -76,10 +76,13 @@ namespace LedgerCore
 		/// town's card for the game); the Core's week leaves nobody out.
 		void Deed(GossipMill* Mill, const GameTime& Now, const std::string& Area, const std::string& Thing, const std::string& Said,
 		          const std::vector<std::pair<std::string, int> >& Saw, const std::string& StoryFact, const std::string& StorySaid, double Certainty,
-		          bool bWitnessesLeftOut = true)
+		          bool bWitnessesLeftOut = true, const std::vector<std::string>* AlsoLeftOut = nullptr)
 		{
 			std::vector<std::string> LeaveOut;
 			if (bWitnessesLeftOut) for (const auto& S : Saw) LeaveOut.push_back(S.first);
+			// Those who only heard it go (the review's A1): they know the window
+			// went, and never "find" it; they are not witnesses of him.
+			if (AlsoLeftOut != nullptr) for (const std::string& H : *AlsoLeftOut) LeaveOut.push_back(H);
 			Aftermath A;
 			const GameTime Mend = Aftermath::DefaultMend(Now);
 			if (Aftermath::Make(Area, Thing, Said, Now, &Mend, bWitnessesLeftOut ? &LeaveOut : nullptr, A)) Damage.push_back(A);

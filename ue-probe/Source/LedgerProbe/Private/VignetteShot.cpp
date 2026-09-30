@@ -781,6 +781,11 @@ namespace
 	std::string GFigureWhy   = "nothing-measured";
 	bool   GFigureAsked      = false;   // spawn attempted, write-on-change
 	bool   GFigureVisibleNow = false;   // live, for the shot line's denominator
+	// NEVER IN PLAY (the review runs of 30 September: the visual slice's
+	// stand-in silhouette, a stylised modern figure, stood by the fish market
+	// every night in free play). The play conditions bar it; the frames for
+	// Jafar's page keep it as they were.
+	bool   GFigureBarredInPlay = false;
 	int32  GFigureShown      = 0;       // shots the figure was visible in
 	int32  GFigureHidden     = 0;       // shots it was hidden for
 	// THE POSE READBACK. MaxBoneDeltaCm is the largest distance between a
@@ -6603,7 +6608,7 @@ namespace
 	// street without deciding whether the figure is in it.
 	void DriveFigure(const Condition& C)
 	{
-		if (!C.LanternsOn)
+		if (!C.LanternsOn || GFigureBarredInPlay)
 		{
 			if (GFigure != nullptr) { GFigure->SetActorHiddenInGame(true); }
 			GFigureVisibleNow = false;
@@ -8377,6 +8382,7 @@ namespace LedgerVignetteShot
 	{
 		const Condition* C = FindCondition(Id);
 		if (C == nullptr) { return FString::Printf(TEXT("no-such-condition/%s"), UTF8_TO_TCHAR(Id)); }
+		GFigureBarredInPlay = true;
 		ApplyCondition(*C);
 		// THE PIN FOLLOWS THE LIGHT. ApplyCondition has set GExposurePinNow
 		// (a night row with no pin of its own takes the look file's night
