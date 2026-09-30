@@ -21,19 +21,28 @@ the list only; its history is in git.
      and what they want to say first, then word it.
    - Measure against a fixed set of newcomer questions, labelled independently:
      the fallback rate before and after.
-   - State: not started on the new method. Today's changes (what bears on his
-     line chosen by code; stated details cleared by code) took a newcomer's
-     "that's all I know" from 36 to 23 of 60, without independent labels.
+   - State, 30 September: done as asked.
+     - The research: production/research/grounded-replies/PLAN-FIRST-2026-09-30.md.
+     - The fixed set: sixty newcomer questions, all at least partly
+       answerable, by two labellers and a third on their differences.
+     - The measurement, three runs of each version labelled independently
+       (MEASURED-2026-09-30.md): "that's all I know" from 36 of 60 this
+       morning to a mean of 21.7 with today's version, and 18.3 with the facts
+       and intent planned first. Question by question the two do not differ
+       (16 better, 15 worse, p = 1.0). Inventions stay at about one or two in
+       60.
+     - Planning stays off behind its switch: no better, and dearer.
+   - What still falls back is a reply the check refuses twice: an
+     embellishment it rightly stops, or a paraphrase it still misses.
 2. **Time and state defects.**
    - Arrangement.Answer accepted Wednesday's completed delivery while the clock
      said Monday. Fixed in the C#: the envelope and the no only on their own
      night. The C++ is the builder's, handed over with rows.
    - Then the same class of fault everywhere time and state meet.
-   - State: ten of the fourteen faults the builder's port reviews found are
-     fixed, with rows for the port. Left: the police file's save keeping what
-     play could not make; Waiting.Next's wrap near its largest day; the heard
-     ledger's capital letters; TownNews.Parse's out-of-range days. Then the
-     sweep.
+   - State: all fourteen faults the builder's port reviews found are fixed in
+     the C#, each with a regression and rows awaiting the port. One
+     independent check; its faults are fixed. A sweep of the same class across
+     the whole Core is under way.
 3. **Support the builder's continuous route:** for each piece of the town's
    that it needs, precise inputs, outputs and acceptance cases.
    - State: handed over, production/handovers/ROUTE.md. It gives the Core's own

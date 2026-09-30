@@ -422,6 +422,36 @@ namespace Ledger.Core
             }
         }
 
+        // WHAT PLAY COULD MAKE, for a load (the port's independent check, 30
+        // September: a save kept two calls a day, "talk" before day 3, a visit
+        // with no report behind it, a spell ending weeks later). Her visit for
+        // the talk only from TalkNoSoonerThan; for a crime only once it is in
+        // the file, by statement or description, on or before that day.
+        static bool VisitCouldBe(PoliceFile f, int day, string why)
+        {
+            if (why == "body") return true;
+            if (why == "talk") return day >= TalkNoSoonerThan;
+            int sp = why.IndexOf(' ');
+            string off = why.Substring(0, sp), topic = why.Substring(sp + 1);
+            return f._entries.Exists(e => e.Topic == topic && e.Offence.ToString() == off && e.How != Known.Talk && e.Day <= day);
+        }
+
+        // A spell in the cells ends no later than the longest spell (Custody.Take:
+        // 22 hours) after the day of the call or the visit that took him, and not
+        // before that day began. Taken with neither on file (at the scene, say),
+        // it ends no earlier than the day of the statement it was for.
+        const int LongestSpellHours = 22;
+        static bool SpellCouldBe(PoliceFile f, string topic, long outMinute)
+        {
+            int latest = -1;
+            foreach (var c in f._calls) if (c.topic == topic) latest = Math.Max(latest, c.day);
+            foreach (var v in f._visits) if (v.why.EndsWith(" " + topic, StringComparison.Ordinal)) latest = Math.Max(latest, v.day);
+            if (latest >= 0) return outMinute >= latest * 1440L && outMinute <= (latest + 1) * 1440L + LongestSpellHours * 60;
+            int stated = int.MaxValue;
+            foreach (var e in f._entries) if (e.Topic == topic && e.How == Known.Statement) stated = Math.Min(stated, e.Day);
+            return stated != int.MaxValue && outMinute >= stated * 1440L;
+        }
+
         public static PoliceFile FromJson(Dictionary<string, object> saved)
         {
             var f = new PoliceFile();
@@ -451,7 +481,8 @@ namespace Ledger.Core
                 }
             if (saved.TryGetValue("visits", out var vs) && vs is List<object> visits)
                 foreach (var x in visits)
-                    if (x is List<object> pair && pair.Count == 2 && Day(pair[0], out int day) && pair[1] is string why && KnownWhy(why))
+                    if (x is List<object> pair && pair.Count == 2 && Day(pair[0], out int day) && pair[1] is string why && KnownWhy(why)
+                        && VisitCouldBe(f, day, why))
                     {
                         bool dup = false;
                         foreach (var v in f._visits) if (v.why == why) dup = true;
@@ -463,14 +494,16 @@ namespace Ledger.Core
                 foreach (var x in calls)
                     if (x is List<object> pair && pair.Count == 2 && Day(pair[0], out int day) && pair[1] is string topic
                         && f._entries.Exists(e => e.Topic == topic && e.Offence == Offence.Damage && e.How == Known.Statement && e.Day < day)
-                        && !f._calls.Exists(c => c.topic == topic))
+                        && !f._calls.Exists(c => c.topic == topic)
+                        // One call a day, as play makes them (the port's independent check, 30 September).
+                        && !f._calls.Exists(c => c.day == day))
                         f._calls.Add((day, topic));
             ByDayKeepingOrder(f._calls);
             // Taken in only for a deed with a statement he could be arrested for.
             if (saved.TryGetValue("taken", out var tk) && tk is List<object> takenList)
                 foreach (var x in takenList)
                     if (x is List<object> pair && pair.Count == 2 && pair[0] is string topic && pair[1] is double om && om >= 0 && om < 1e8 && om == Math.Floor(om)
-                        && f.CanArrest(topic))
+                        && f.CanArrest(topic) && SpellCouldBe(f, topic, (long)om))
                         f._taken.Add((topic, (long)om));
             return f;
         }

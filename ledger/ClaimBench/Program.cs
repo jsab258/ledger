@@ -103,7 +103,7 @@ static class Program
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
-            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
+            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
             case "bearing": return Bearing();
             case "answerable": return args.Contains("--third") ? await AnswerableThird(dir, Arg(args, "--third", "claude-fable-5-1"), parallel) : await Answerable(dir, parallel);
             case "firsts-label": return await FirstsLabel(dir, Path.Combine(RepoRoot(), "production", "research", "invented-claims", "bench"), parallel);
@@ -844,7 +844,8 @@ static class Program
                     n++;
                     if (fell) { fallback++; byCard[job.card] = (byCard.TryGetValue(job.card, out var k) ? k : 0) + 1; }
                     if (refusedLine) refused++;
-                    rows.Add(new { card = job.card, probe = job.probe, reply, fell, refused = refusedLine, invented = engine.LastInvented });
+                    rows.Add(new { card = job.card, probe = job.probe, reply, fell, refused = refusedLine, invented = engine.LastInvented,
+                                   plan = engine.LastPlan.HasValue ? engine.LastPlan.Value.intent + " " + string.Join(",", engine.LastPlan.Value.facts) : null });
                 }
             }
             finally { gate.Release(); }

@@ -171,16 +171,21 @@ namespace Ledger.Core
                 Beat("tea", tea.Day, At(tea.Day, AdasTea.From), At(tea.Day, AdasTea.Until).AddMinutes(-1), Lead(b.TeaLead), TeaLine);
 
             var police = b.Police;
-            int lastDay = Math.Min(until.Day, now.Day + DaysAhead);
+            // Counted wide (the port's independent check, 30 September: within
+            // fourteen days of the largest day, now.Day + DaysAhead wrapped and
+            // the wait never stopped; at the very top the loop never ended).
+            long lastDay = Math.Min((long)until.Day, (long)now.Day + DaysAhead);
             if (police != null)
             {
-                for (int d = Math.Max(0, now.Day); d <= lastDay; d++)
+                for (long dd = Math.Max(0, now.Day); dd <= lastDay; dd++)
                 {
+                    int d = (int)dd;
                     var t = At(d, ConstableHour);
                     if (t.AddMinutes(60).CompareTo(now) > 0 && police.ConstableWouldCome(d) != null) { Beat("constable", d, t, t.AddMinutes(59), 0, ConstableLine); break; }
                 }
-                for (int d = Math.Max(0, now.Day); d <= lastDay; d++)
+                for (long dd = Math.Max(0, now.Day); dd <= lastDay; dd++)
                 {
+                    int d = (int)dd;
                     var t = At(d, EllisHour);
                     if (t.AddMinutes(60).CompareTo(now) <= 0) continue;
                     var whys = police.EllisWouldComeAll(b.Mill, d, b.Inquiry);

@@ -5074,6 +5074,21 @@ namespace Ledger.CoreTests
             Check(q2.invented.Count == 0 && q2.calls.Count == 3,
                 "a detail one look refuses and the other clears is cleared: it stays refused only when every look refuses it");
 
+            // THE PLANNED FACTS LOOKED AT ALONE (CheckAsync with focus): beside the
+            // usual look, one shown only the facts the reply was planned from; either
+            // clearing a detail clears it.
+            {
+                var knownF = new List<(string id, string text)> { ("H1", "The new owner is living in Mickey's flat over the office."), ("H2", "Mickey's has two cab drivers.") };
+                var oneFlagF = "{\"specifics\": [{\"detail\": \"Mickey's old flat\", \"kind\": \"place\", \"source\": \"none\"}]}";
+                var fakeF2 = new ScriptedLlm(oneFlagF, "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}", "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"H1\"}]}");
+                var withFocus = ClaimCheck.CheckAsync(fakeF2, "m", knownF, "Mickey's old flat.", CancellationToken.None, new[] { "H1" }).GetAwaiter().GetResult();
+                var fakeF3 = new ScriptedLlm(oneFlagF, "{\"verdicts\": [{\"n\": 1, \"supported\": false}]}");
+                var without = ClaimCheck.CheckAsync(fakeF3, "m", knownF, "Mickey's old flat.", CancellationToken.None, null).GetAwaiter().GetResult();
+                Check(withFocus.invented.Count == 0 && withFocus.calls.Count == 3 && fakeF2.Requests[2].Messages[0].Content.Contains("H1:")
+                      && !fakeF2.Requests[2].Messages[0].Content.Contains("H2:") && without.invented.Count == 1 && without.calls.Count == 2,
+                      "with the plan's facts, a flagged detail also gets a look at those facts alone, and either look clearing it clears it");
+            }
+
             // STATED IN SO MANY WORDS (U1, 30 September): a detail whose every
             // telling word stands in order in the item the list cited for it is
             // cleared by the Core, no look asked; a paraphrase, a denial, a time
@@ -5238,6 +5253,36 @@ namespace Ledger.CoreTests
                 Check(!onNothing.Contains("bears most") && onNothing.Contains("What none of it gives, you do not know")
                       && !offPrompt.Contains("bears most") && !offPrompt.Contains("What none of it gives"),
                       "with nothing chosen the instructions say only to answer from what they know, never that nothing bears on it; with the switch off, neither");
+            }
+
+            // THE FACTS AND THE INTENT BEFORE THE WORDS (PlanFirst, Jafar's list of
+            // 30 September): the tag is read, never said; the first sentence is read
+            // after it; a reply with no tag is the reply; the plan's facts are only
+            // those the character holds.
+            {
+                const string planned = "<plan intent=\"answer\" facts=\"H1,C1,Z9\"/> Mickey's own room. It's been locked since he died.";
+                Check(ConversationEngine.AfterPlan(planned) == "Mickey's own room. It's been locked since he died."
+                      && ConversationEngine.AfterPlan("<plan intent=\"answ") == null && ConversationEngine.AfterPlan("<") == null
+                      && ConversationEngine.AfterPlan("Aye. I saw him.") == "Aye. I saw him."
+                      && ConversationEngine.StripPlan(planned) == "Mickey's own room. It's been locked since he died."
+                      && ConversationEngine.StripPlan("Right. <plan intent=\"x\" facts=\"\"/>") == "Right.",
+                      "the plan's tag is read and taken out before anything is said, and a reply without one is left as it is");
+                ConversationEngine.PlanFirst = true;
+                try
+                {
+                    var ep = Engine(new ScriptedLlm(planned), new ScriptedLlm(Clean));
+                    ep.Card.HardFacts.Add("The door at the back of the office is Mickey's own room; it has been locked since he died.");
+                    string prompt = ep.BuildSystemPrompt("What's behind that door?", now, "In the office.");
+                    string said = ep.SayToAsync("What's behind that door?", now, "In the office.").GetAwaiter().GetResult();
+                    var plan = ep.LastPlan;
+                    Check(said == "Mickey's own room. It's been locked since he died." && plan.HasValue && plan.Value.intent == "answer"
+                          && plan.Value.facts.Contains("C1") && !plan.Value.facts.Contains("Z9")
+                          && prompt.Contains("Before you speak, plan in one tag") && prompt.Contains("bear most")
+                          && !ep.Memory.Events.Exists(e => e.Text.Contains("<plan")),
+                          "with the plan first the reply is said without its tag, the plan keeps only facts the character holds, and nothing remembers the tag",
+                          said + " | " + (plan.HasValue ? plan.Value.intent + " " + string.Join(",", plan.Value.facts) : "no plan"));
+                }
+                finally { ConversationEngine.PlanFirst = false; }
             }
 
             // THE STREET'S NAMED PEOPLE IN THEIR OWN WORDS (OwnLines, U2, 30
@@ -5772,8 +5817,10 @@ namespace Ledger.CoreTests
                 var damaged = PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
                     "{\"entries\": [{\"who\": \"a\", \"topic\": \"t\", \"offence\": \"Arson\", \"how\": \"Talk\", \"day\": 1}, {\"who\": \"b\", \"topic\": \"t\", \"offence\": \"Damage\", \"how\": \"Statement\", \"day\": 2.5}, 7, {\"who\": \"c\", \"topic\": \"t\", \"offence\": \"Damage\", \"how\": \"Statement\", \"day\": 3}], \"visits\": [[-4, \"talk\"], [2, \"Arson\"], [3, \"Arson x\"], [3, \"Suspicious x\"], [3, \"Killing \"], [4, \"body\"], [5, \"body\"], [1, \"Wounding player.cut_d1\"]]}")));
                 Check(back.Entries.Count == 2 && back.EllisCameOn == 4 && back.EllisCameFor == "talk" && back.Strongest("player.window_d0") == Known.Statement
-                      && damaged.Entries.Count == 1 && damaged.Entries[0].Who == "c" && damaged.Visits.Count == 2 && damaged.EllisCameFor == "Wounding player.cut_d1" && damaged.EllisCameOn == 1,
-                      "the police file keeps across a save, talk and a statement from one person both; a damaged file keeps only what it can read");
+                      // A visit for a wounding nobody reported is what play could not
+                      // make (the port's independent check, 30 September): refused.
+                      && damaged.Entries.Count == 1 && damaged.Entries[0].Who == "c" && damaged.Visits.Count == 1 && damaged.EllisCameFor == "body" && damaged.EllisCameOn == 4,
+                      "the police file keeps across a save, talk and a statement from one person both; a damaged file keeps only what it can read and play could make");
             }
 
             // ADA'S TEA ON THE NIGHT OF THE SECOND ASK (town list 6bg): she asks
@@ -8189,7 +8236,9 @@ namespace Ledger.CoreTests
             {
                 var visits = new List<object>();
                 for (int k = 0; k < 20; k++) visits.Add(new List<object> { (double)(k % 2 == 0 ? 6 : 5), "Wounding mark" + k });
-                var loaded = PoliceFile.FromJson(new Dictionary<string, object> { { "visits", visits } });
+                var reports = new List<object>();
+                for (int k = 0; k < 20; k++) reports.Add(new Dictionary<string, object> { { "who", "w" + k }, { "topic", "mark" + k }, { "offence", "Wounding" }, { "how", "Statement" }, { "day", 1.0 } });
+                var loaded = PoliceFile.FromJson(new Dictionary<string, object> { { "entries", reports }, { "visits", visits } });
                 var sixes = loaded.Visits.Where(v => v.day == 6).Select(v => v.why).ToList();
                 var wantSixes = Enumerable.Range(0, 20).Where(k => k % 2 == 0).Select(k => "Wounding mark" + k).ToList();
                 Check(loaded.Visits.Count == 20 && loaded.Visits[0].day == 5 && sixes.SequenceEqual(wantSixes),
@@ -8207,6 +8256,60 @@ namespace Ledger.CoreTests
                 Check(held != null && whileHeld == "none" && callsWhileHeld == 0 && after == "player.window_d2",
                       "no constable calls while he is in the cells, so the other window waits for its call instead of being used up",
                       $"{whileHeld} {callsWhileHeld} {after}");
+            }
+            // 12. The wait near the largest day: a constable due still stops it, and it ends.
+            {
+                var file = new PoliceFile();
+                file.Report("rita", "player.window_d1", Offence.Damage, 4, 1);
+                int top = int.MaxValue - 5;
+                var stop = Waiting.Next(new GameTime(top, 8, 0), new GameTime(int.MaxValue, 23, 0), new WaitBeats { Police = file });
+                var last = Waiting.Next(new GameTime(int.MaxValue, 11, 0), new GameTime(int.MaxValue, 23, 0), new WaitBeats { Police = file });
+                Check(stop != null && stop.Why == "constable" && stop.At.Day == top && last == null,
+                      "near the largest day the wait still stops for a constable due, and a wait on the last day ends", stop?.Why ?? "none");
+            }
+            // 13. A telling's wording is one, whatever the story's first letter.
+            {
+                string capital = StreetVoice.Unfill("Here, Hal and Rita had words.", "Hal and Rita had words");
+                string lower = StreetVoice.Unfill("Here, the new owner was out late.", "the new owner was out late");
+                var led = new RemarkLedger();
+                led.HeardLine("exchange/tell/news", "Here, {What}.");
+                string next = led.Fresh("exchange/tell/news", new[] { "Here, {what}.", "Did you hear? {what}." }, 0);
+                Check(capital == "Here, {what}." && capital == lower && next == "Did you hear? {what}.",
+                      "a telling's wording is one whatever the story's first letter, and a wording saved the old way counts as heard", capital + " | " + lower + " | " + next);
+            }
+            // 14. The town's news refuses a day no save could hold, or a fraction.
+            {
+                string News(string day, string hour) =>
+                    "{\"stories\":[{\"id\":\"x\",\"summary\":\"Hal and Rita had words\",\"area\":\"ritas\",\"day\":" + day + ",\"hour\":" + hour +
+                    ",\"fact\":[\"town\",\"x_d0\",\"seen\"],\"confidence\":0.9,\"parties\":[\"hal\",\"rita\"]}]}";
+                bool Refused(string day, string hour) { try { TownNews.Parse(News(day, hour)); return false; } catch (FormatException) { return true; } }
+                Check(!Refused("2", "10") && Refused("1e10", "10") && Refused("2.5", "10") && Refused("-1", "10") && Refused("2", "10.5"),
+                      "the town's news refuses a day no save could hold, a fraction of a day or an hour, or a day before the first");
+            }
+            // 11. A police save keeps only what play could make.
+            {
+                var e = new List<object>
+                {
+                    new Dictionary<string, object> { { "who", "rita" }, { "topic", "player.window_d1" }, { "offence", "Damage" }, { "how", "Statement" }, { "day", 1.0 } },
+                    new Dictionary<string, object> { { "who", "hal" }, { "topic", "player.window_d2" }, { "offence", "Damage" }, { "how", "Statement" }, { "day", 1.0 } },
+                };
+                var saved = new Dictionary<string, object>
+                {
+                    { "entries", e },
+                    { "visits", new List<object> { new List<object> { 2.0, "talk" }, new List<object> { 4.0, "Wounding player.cut_d1" }, new List<object> { 3.0, "talk" } } },
+                    { "calls", new List<object> { new List<object> { 2.0, "player.window_d1" }, new List<object> { 2.0, "player.window_d2" } } },
+                    { "taken", new List<object> { new List<object> { "player.window_d1", (double)(20 * 1440) } } },
+                };
+                var f = PoliceFile.FromJson(saved);
+                var fair = PoliceFile.FromJson(new Dictionary<string, object>
+                {
+                    { "entries", e }, { "calls", new List<object> { new List<object> { 2.0, "player.window_d1" } } },
+                    { "taken", new List<object> { new List<object> { "player.window_d1", (double)(2 * 1440 + 16 * 60) } } },
+                });
+                Check(f.Visits.Count == 1 && f.Visits[0].why == "talk" && f.Visits[0].day == 3 && f.ConstableCalls.Count == 1 && !f.WasTaken("player.window_d1")
+                      && fair.WasTaken("player.window_d1"),
+                      "a police save keeps only what play could make: her visit for the talk from day 3, for a crime only once reported, one call a day, a spell no longer than the longest after its call",
+                      string.Join(",", f.Visits.Select(v => v.day + ":" + v.why)) + " calls=" + f.ConstableCalls.Count + " taken=" + f.WasTaken("player.window_d1") + "/" + fair.WasTaken("player.window_d1"));
             }
         }
 

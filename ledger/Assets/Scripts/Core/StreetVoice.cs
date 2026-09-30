@@ -173,6 +173,8 @@ namespace Ledger.Core
         public void HeardLine(string bank, string line)
         {
             if (string.IsNullOrEmpty(line)) return;
+            // A wording from a save made before one placeholder is read as one.
+            line = StreetVoice.OnePlaceholder(line);
             if (!_linesHeard.TryGetValue(bank ?? "", out var heard)) _linesHeard[bank ?? ""] = heard = new Dictionary<string, int>();
             heard[line] = ++_hearings;
         }
@@ -1675,8 +1677,14 @@ namespace Ledger.Core
         internal static string Unfill(string text, string what)
         {
             if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(what)) return text;
-            return text.Replace(Cap(what), "{What}").Replace(what, "{what}");
+            // ONE PLACEHOLDER, whatever the story's first letter (the port's
+            // independent check, 30 September: "Here, {What}." for a story that
+            // starts with a name and "Here, {what}." for one that does not were two
+            // wordings, so the same words came straight back).
+            return OnePlaceholder(text.Replace(Cap(what), "{What}").Replace(what, "{what}"));
         }
+
+        internal static string OnePlaceholder(string wording) => wording?.Replace("{What}", "{what}");
 
         /// What the ledger keeps of a line he heard: the words, or for a
         /// composed telling its wording without the story (town list 6o).
