@@ -69,6 +69,16 @@ namespace Ledger.Core
         /// The second try, after a refused first, told to answer in one or two
         /// short sentences from what bears on his line alone (ClaimCheck.SecondDraftNote).
         public static bool NarrowRedraft = false;
+        /// WHEN THE CHECK REFUSES TWICE (Jafar's list of 30 September afternoon,
+        /// item 2; the research note grounded-dialogue-selection, step 1): the
+        /// character says the chosen facts plainly instead of "that's all I
+        /// know": a short opener of their own (their card's "opener" lines) and
+        /// up to two of the chosen facts in the plain words the street's facts
+        /// carry (StreetFacts.SaidFor), built by code, so every specific in it
+        /// is a fact's and nothing is checked. "That's all I know" stays for
+        /// when no such fact was chosen; a card's own facts, secrets among them,
+        /// are never said this way.
+        public static bool PlainFallback = false;
 
         /// THE FACTS AND THE INTENT BEFORE THE WORDS (Jafar's list of 30
         /// September, after the adversarial audit; production/research/
@@ -314,6 +324,7 @@ namespace Ledger.Core
 
         public string BuildSystemPrompt(string playerInput, GameTime now, string sceneContext)
         {
+            LastBearing = new List<string>();
             var sb = new StringBuilder();
             sb.AppendLine(Card.ToPromptBlock());
             if (!string.IsNullOrEmpty(HowYouKnowHim))
@@ -603,6 +614,32 @@ namespace Ledger.Core
             Task<(IReadOnlyList<string> invented, List<LlmResponse> calls)>> CheckFocused { get; set; } = ClaimCheck.CheckAsync;
         public string CheckerModel { get; set; } = Models.Ambient;
 
+        // What is said when both drafts were refused (PlainFallback).
+        string RefusedTwice()
+        {
+            if (PlainFallback)
+            {
+                var said = new List<string>();
+                foreach (var b in LastBearing)
+                {
+                    var s = StreetFacts.SaidFor(b);
+                    if (s != null && !said.Contains(s)) said.Add(s);
+                    if (said.Count == 2) break;
+                }
+                if (said.Count > 0)
+                {
+                    LastSaidPlainly = true;
+                    var openers = Card.Own("opener");
+                    int n = _knownOnlySaid++;
+                    uint h = 2166136261;
+                    foreach (char c in Card.Id ?? "") { h ^= c; h *= 16777619; }
+                    string opener = openers.Count > 0 ? openers[(int)((h + (uint)n) % (uint)openers.Count)] + " " : "";
+                    return opener + string.Join(" ", said);
+                }
+            }
+            return ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
+        }
+
         /// What the last reply's FIRST draft claimed without support; empty when
         /// nothing, or when no check ran. What was said is the second draft or
         /// one of ClaimCheck.KnownOnlyLines.
@@ -615,6 +652,8 @@ namespace Ledger.Core
         /// chosen as bearing on his line (ChooseFirst), as the reply was built.
         public IReadOnlyList<(string id, string text)> LastKnown { get; private set; } = new List<(string, string)>();
         public IReadOnlyList<string> LastBearing { get; private set; } = new List<string>();
+        /// The last reply was the chosen facts said plainly (PlainFallback).
+        public bool LastSaidPlainly { get; private set; }
 
         /// THE LAST TURN'S STEPS, each with the milliseconds from the turn's
         /// start to its end (town list 6bx: replies cut at eight seconds, and
@@ -1610,6 +1649,7 @@ namespace Ledger.Core
             // One second draft, told what it claimed; then the plain true line.
             LastInvented = new List<string>();
             LastRefusedAgain = new List<string>();
+            LastSaidPlainly = false;
             LastPromised = new List<string>();
             LastRealNames = new List<string>();
             LastSpokeOf = new List<string>();
@@ -1665,7 +1705,7 @@ namespace Ledger.Core
                         if (d2.FirstFlagged != null)
                         {
                             LastRefusedAgain = new List<string>(d2.FirstFlagged);
-                            reply = ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
+                            reply = RefusedTwice();
                             _lastCleanCited = new List<string>();
                         }
                         else
@@ -1676,7 +1716,7 @@ namespace Ledger.Core
                             bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0 && RealWorld.Find(redrafted).Count == 0;
                             if (!holds) LastRefusedAgain = again.Count > 0 ? new List<string>(again)
                                 : new List<string> { "(no invented detail: it repeated a refused claim, promised, or named a real person or thing)" };
-                            reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
+                            reply = holds ? redrafted : d2.Heard ? d2.First : RefusedTwice();
                             if (!holds) _lastCleanCited = new List<string>();
                         }
                     }

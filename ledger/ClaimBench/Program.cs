@@ -95,6 +95,7 @@ static class Program
         string mode = args.Length > 0 ? args[0] : "";
         string dir = Arg(args, "--dir", Path.Combine(RepoRoot(), "production", "research", "invented-claims", "bench"));
         int parallel = int.Parse(Arg(args, "--parallel", "6"));
+        Set = Arg(args, "--set", "");
         switch (mode)
         {
             case "generate": return await Generate(dir, parallel);
@@ -103,7 +104,7 @@ static class Program
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
-            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
+            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
             case "bearing": return Bearing();
             case "causes": return await Causes(dir, parallel, Arg(args, "--third", "claude-fable-5-1"));
             case "answerable": return args.Contains("--third") ? await AnswerableThird(dir, Arg(args, "--third", "claude-fable-5-1"), parallel) : await Answerable(dir, parallel);
@@ -504,6 +505,17 @@ static class Program
     /// such questions to each character who talks, through the real engine and
     /// its check, each a first line to them; counts the answers that end in
     /// their "that's all I know" or a refusal, for reading by eye after.
+    /// THE QUESTION SETS (Jafar's list of 30 September afternoon, item 5):
+    /// "" the sixty the day was tuned on; "held" a new sixty nobody tuned on;
+    /// "none", thirty that nobody in the town can answer. Each set but the
+    /// first is a file beside the bench, firsts-<set>.txt, a question a line,
+    /// with its labels in firsts-answerable-<set>.jsonl and its rulings.
+    static string Set = "";
+    static string SetSuffix => Set.Length == 0 ? "" : "-" + Set;
+    static string[] Probes() => Set.Length == 0 ? FirstProbes
+        : File.ReadAllLines(Path.Combine(RepoRoot(), "production", "research", "invented-claims", "bench", "firsts-" + Set + ".txt"))
+              .Select(l => l.Trim()).Where(l => l.Length > 0).ToArray();
+
     static readonly string[] FirstProbes =
     {
         "Who are you?", "What is this place?", "What am I meant to do here?", "How did Mickey die?", "Sorry I missed the funeral.",
@@ -636,7 +648,7 @@ static class Program
     static async Task<int> Answerable(string dir, int parallel)
     {
         var jobs = new List<(string card, string probe)>();
-        foreach (var c in new[] { "lena", "rocco", "sam" }) foreach (var p in FirstProbes) jobs.Add((c, p));
+        foreach (var c in new[] { "lena", "rocco", "sam" }) foreach (var p in Probes()) jobs.Add((c, p));
         var known = new Dictionary<string, string>();
         foreach (var c in new[] { "lena", "rocco", "sam" }) known[c] = FirstsKnown(c);
         using var client = new ClaudeCodeClient();
@@ -673,7 +685,7 @@ static class Program
             if (a == b) agree++;
             rows.Add(new { card, probe, a, b, gold = a == b ? a : null });
         }
-        WriteJsonl(Path.Combine(dir, "firsts-answerable.jsonl"), rows);
+        WriteJsonl(Path.Combine(dir, "firsts-answerable" + SetSuffix + ".jsonl"), rows);
         Console.WriteLine($"answerable: {jobs.Count} pairs, the two labellers agree on {agree}; the rest wait for a ruling -> firsts-answerable.jsonl");
         return 0;
     }
@@ -687,7 +699,7 @@ static class Program
     static async Task<int> AnswerableThird(string dir, string model, int parallel)
     {
         var rows = new List<(string card, string probe, string a, string b)>();
-        foreach (var line in File.ReadAllLines(Path.Combine(dir, "firsts-answerable.jsonl")))
+        foreach (var line in File.ReadAllLines(Path.Combine(dir, "firsts-answerable" + SetSuffix + ".jsonl")))
         {
             if (string.IsNullOrWhiteSpace(line)) continue;
             using var d = JsonDocument.Parse(line);
@@ -727,7 +739,7 @@ static class Program
             }
             finally { gate.Release(); }
         }));
-        File.WriteAllText(Path.Combine(dir, "firsts-answerable-rulings.json"), JsonSerializer.Serialize(rulings, new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping }));
+        File.WriteAllText(Path.Combine(dir, "firsts-answerable-rulings" + SetSuffix + ".json"), JsonSerializer.Serialize(rulings, new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping }));
         Console.WriteLine($"answerable --third {model}: {rulings.Count} of {rows.Count} disagreements ruled -> firsts-answerable-rulings.json");
         return 0;
     }
@@ -740,7 +752,7 @@ static class Program
     /// and the invention rate, with the disputed turns listed for a person.
     static async Task<int> FirstsLabel(string dir, string benchDir, int parallel)
     {
-        var fixedPath = Path.Combine(benchDir, "firsts-answerable.jsonl");
+        var fixedPath = Path.Combine(benchDir, "firsts-answerable" + SetSuffix + ".jsonl");
         if (!File.Exists(fixedPath)) { Console.WriteLine("no fixed labels yet: run `answerable` first"); return 1; }
         var answerable = new Dictionary<string, string>();
         foreach (var line in File.ReadAllLines(fixedPath))
@@ -751,17 +763,18 @@ static class Program
             string key = r.GetProperty("card").GetString() + "|" + r.GetProperty("probe").GetString();
             answerable[key] = r.TryGetProperty("gold", out var g) && g.ValueKind == JsonValueKind.String ? g.GetString() : null;
         }
-        var rulingsPath = Path.Combine(benchDir, "firsts-answerable-rulings.json");
+        var rulingsPath = Path.Combine(benchDir, "firsts-answerable-rulings" + SetSuffix + ".json");
         if (File.Exists(rulingsPath))
             using (var rd = JsonDocument.Parse(File.ReadAllText(rulingsPath)))
                 foreach (var p in rd.RootElement.EnumerateObject()) answerable[p.Name] = p.Value.GetString();
-        var replies = new List<(string card, string probe, string reply, bool fell)>();
+        var replies = new List<(string card, string probe, string reply, bool fell, bool plain)>();
         foreach (var line in File.ReadAllLines(Path.Combine(dir, "firsts.jsonl")))
         {
             if (string.IsNullOrWhiteSpace(line)) continue;
             using var d = JsonDocument.Parse(line);
             var r = d.RootElement;
-            replies.Add((r.GetProperty("card").GetString(), r.GetProperty("probe").GetString(), r.GetProperty("reply").GetString(), r.GetProperty("fell").GetBoolean()));
+            replies.Add((r.GetProperty("card").GetString(), r.GetProperty("probe").GetString(), r.GetProperty("reply").GetString(), r.GetProperty("fell").GetBoolean(),
+                         r.TryGetProperty("saidPlainly", out var sp) && sp.ValueKind == JsonValueKind.True));
         }
         var known = new Dictionary<string, string>();
         foreach (var c in replies.Select(x => x.card).Distinct()) known[c] = FirstsKnown(c);
@@ -803,11 +816,12 @@ static class Program
                 else if (a > 0 || b > 0) { disputed++; label = "disputed"; }
                 else label = "grounded";
             }
-            rows.Add(new { x.card, x.probe, answerable = ans, label, x.reply });
+            rows.Add(new { x.card, x.probe, answerable = ans, label, x.reply, saidPlainly = x.plain });
         }
         WriteJsonl(Path.Combine(dir, "firsts-labelled.jsonl"), rows);
         Console.WriteLine($"firsts labelled: {n} replies; fallback {fell}/{n}; fallback where they could answer {fellAnswerable}/{answerableCount}; " +
-                          $"fallback where they could not {unanswerableFell}/{unanswerableCount}; invented (both labellers) {invented}/{n}; disputed {disputed}; unread {unread} -> firsts-labelled.jsonl");
+                          $"fallback where they could not {unanswerableFell}/{unanswerableCount}; invented (both labellers) {invented}/{n}; disputed {disputed}; unread {unread}; " +
+                          $"said plainly {replies.Count(x => x.plain)} -> firsts-labelled.jsonl");
         return 0;
     }
 
@@ -936,7 +950,7 @@ static class Program
 
     static async Task<int> Firsts(string dir, int parallel)
     {
-        var probes = FirstProbes;
+        var probes = Probes();
         var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
         var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
         var cost = new CostTracker();
@@ -969,7 +983,7 @@ static class Program
                     if (fell) { fallback++; byCard[job.card] = (byCard.TryGetValue(job.card, out var k) ? k : 0) + 1; }
                     if (refusedLine) refused++;
                     rows.Add(new { card = job.card, probe = job.probe, reply, fell, refused = refusedLine, invented = engine.LastInvented,
-                                   refusedAgain = engine.LastRefusedAgain, bearing = engine.LastBearing,
+                                   refusedAgain = engine.LastRefusedAgain, bearing = engine.LastBearing, saidPlainly = engine.LastSaidPlainly,
                                    known = engine.LastKnown.Select(k => k.id + ": " + k.text).ToList(),
                                    plan = engine.LastPlan.HasValue ? engine.LastPlan.Value.intent + " " + string.Join(",", engine.LastPlan.Value.facts) : null });
                 }
