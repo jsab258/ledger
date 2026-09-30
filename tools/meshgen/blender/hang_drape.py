@@ -344,6 +344,11 @@ if TUBE > 0:
         DRS = (target - RS) * wt[:, None]
         for n_, i in enumerate(ids):
             d = DRS[min(kt[n_], KT - 1), bf[n_]]
+            # eased to nothing at the armhole seam as the trunk is (the second review: moved by different amounts
+            # either side of it, the back of the armhole looked torn)
+            if len(ah):
+                wa = min(1.0, akd.find(Vector(P[i]))[2] / AE)
+                d *= wa * wa * (3 - 2 * wa)
             bm.verts[i].co += Vector(RDIR[n_]) * d
         log["sleeve_" + s] = {"points": int(len(ids)), "mostMm": round(float(np.abs(DRS).max()) * 1000, 1)}
         say("sleeve", s, json.dumps(log["sleeve_" + s]))
