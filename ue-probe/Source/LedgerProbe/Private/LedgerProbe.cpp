@@ -833,11 +833,10 @@ public:
 				UE_LOG(LogTemp, Display, TEXT("LedgerProbe: a plain launch plays the game (-LedgerSlice -LedgerCrime -Encounter=live)"));
 			}
 		}
-		// RON'S OWN STREET LINES WAIT ON JAFAR'S YES (the town's handover of 30
-		// September): the port holds them (OwnLines.h), and the game leaves them
-		// off unless started with -OwnLines, or for the golden test, whose rows
-		// need them. His yes flips this default.
-		LedgerCore::OwnLines::InUse() = FParse::Param(FCommandLine::Get(), TEXT("OwnLines"))
+		// RON'S OWN STREET LINES ARE ON (decided 30 September, Jafar leaving it
+		// to the town; DECISIONS): the port holds them (OwnLines.h). -NoOwnLines
+		// turns them off for a comparison; the golden test always has them.
+		LedgerCore::OwnLines::InUse() = !FParse::Param(FCommandLine::Get(), TEXT("NoOwnLines"))
 			|| FParse::Param(FCommandLine::Get(), TEXT("LedgerGoldenTest"));
 		// THE TEST RUNS ONLY WHEN ASKED, AND THAT IS NOT FUSSINESS.
 		//
