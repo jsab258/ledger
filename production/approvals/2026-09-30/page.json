@@ -4,8 +4,8 @@
  "title": "Wednesday's page",
  "how": [
   "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
-  "Updated Tuesday evening. Your picks of Tuesday morning are acted on and off the page: Sheila's face is S4, with its hair, and goes into the game tonight; Ron's threat keeps the game's own voice (your blind B); Ron's and Darren's voices, their thinking sounds, the conversation light and how Sheila looks at you are approved; Darren's face waits on a man's haircut.",
-  "Left for you: the street by day and at night, as whole frames; Darren with a man's haircut; Ron, faster, heard blind; a new voice for Sheila; and two calls, each with my recommendation. Under your narrowed rule the pillar box's and kiosk's marks are mine within canon (every brand is fictional): made-up marks."
+  "Updated Wednesday, small hours. Your picks of Tuesday morning are acted on and off the page: Sheila's face is S4, in the game; Ron's threat keeps the game's own voice; Ron's and Darren's voices, their thinking sounds, the conversation light and how Sheila looks at you are approved; Darren's face waits on a man's haircut.",
+  "Left for you: the street by day and at night, as whole frames; Darren with a man's haircut; Ron, faster, heard blind; a new voice for Sheila; their mouths moving as they speak; Ron's boots and Sheila's handbag; and two calls, each with my recommendation."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
  "sections": [
@@ -180,6 +180,66 @@
     [
      "B",
      "B: no"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "look-mouths-speaking",
+   "name": "Their mouths, moving as they speak",
+   "note": "Until tonight the three spoke with their mouths shut. Now, while one of them speaks, the loudness of the voice you hear opens the jaw and shapes the lips through the face's own controls, and the face rests again after. Each strip reads left to right, a tenth of a second a frame, filmed from 60 cm while they answered (the harsh light is the conversation light, aimed for the normal camera further back): Darren, Sheila, Ron. It passed my check and a fresh reviewer's (the first reviewer failed Darren's and Ron's, frozen by their thinking sounds; fixed). The reviewer's remaining notes: every open mouth is the same oval, the drift of the lips barely shows; the teeth have ragged, yellowish edges; Ron's upper lip lifts on one side and shows a greenish corner; Darren has a white strand under his lower lip. This is the quick way; Epic's own speech-to-face solver, found inside the engine, is the better one to try next.",
+   "pictures": [
+    {
+     "src": "production/approvals/2026-09-30/mouth-darren.webp",
+     "alt": "Darren answering"
+    },
+    {
+     "src": "production/approvals/2026-09-30/mouth-sheila.webp",
+     "alt": "Sheila answering"
+    },
+    {
+     "src": "production/approvals/2026-09-30/mouth-ron.webp",
+     "alt": "Ron answering"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Roughly in time; keep it"
+    ],
+    [
+     "no",
+     "Worse than still"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "look-dressed-boots-handbag",
+   "name": "Dressed: Ron's work boots and Sheila's handbag",
+   "note": "The clothing session's first pieces through its gate, fitted in the game: Ron's black work boots (in place of Epic's, which are hidden, and lifting him 2 cm onto their soles) and Sheila's chestnut handbag in her right hand. Clothes on people are yours to approve. Its reviewers' notes: the boots' collar a little ragged, the sole even with no heel step, the laces flat, the toe low and a touch long; the bag a little boxy, no metal loops at the handles, its clasp flat. Her spectacles are held back: made on her earlier face, on S4 they sit 2 to 3 cm high, so they have gone back to be refitted.",
+   "pictures": [
+    {
+     "src": "production/approvals/2026-09-30/dressed-ron-boots.webp",
+     "alt": "Ron in the alley, in his boots"
+    },
+    {
+     "src": "production/approvals/2026-09-30/dressed-ron-boots-close.webp",
+     "alt": "The boots, close"
+    },
+    {
+     "src": "production/approvals/2026-09-30/dressed-sheila-handbag.webp",
+     "alt": "Sheila with her handbag"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Yes, they stay"
+    ],
+    [
+     "no",
+     "No"
     ]
    ]
   }
