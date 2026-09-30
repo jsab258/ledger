@@ -5,17 +5,18 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Wednesday 30 September, 11:45)
+## Overview (Wednesday 30 September, 13:30)
 
 ### Needs you
 
-1. **C: at 45 GB, under your 60** (builder; no page yet): this morning's move of Unreal's cache to drive F did not hold: Unreal kept writing it to C:, 8.5 GB again by 10:00 (my mistake: I checked the setting, not where the files went). I am finding out why before a second try, then a cleanup page for the copy on C:. The one big win that is yours alone is Windows' hibernation file, 13.7 GB. Recommended: if you never hibernate the PC, run `powercfg /h off` in a terminal opened as administrator.
+1. **C: at 50 GB, under your 60** (builder; no page yet): this morning's move of Unreal's cache to drive F did not hold: Unreal kept writing it to C:, 8.5 GB again by 10:00 (my mistake: I checked the setting, not where the files went). I am finding out why before a second try, then a cleanup page for the copy on C:. The one big win that is yours alone is Windows' hibernation file, 13.7 GB. Recommended: if you never hibernate the PC, run `powercfg /h off` in a terminal opened as administrator.
+2. **Ron's tone** (town; [its page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ)): five of his own street lines, one tap. His 159 lines are on in the game from today; nobody else's are written until you have heard his tone.
 
 ### Road to worth playing
 
 (Your list of 30 September, after the audit: the playable route first; other visual work stopped while it is broken.)
 
-- **One continuous route through ordinary play** (builder, item 1; the town supplies the week): running in the editor copy, not yet the packaged one. The clock now runs (two game minutes a real second, held while he talks); the window he can break is Rita's, where the town's consequences are written; the whole cast gossips by its routines; passers-by find the damage; each morning the police rules run; Z waits, stopping for what concerns him; the game saves every game hour and Continue resumes at the saved minute. Not yet: his place on a reload, Ron's asks, Ada's tea and Sunday on the clock. Since yesterday: the forty-second wait and the jump to day four are gone.
+- **One continuous route through ordinary play** (builder, item 1; the town supplies the week): walked end to end in the editor copy, not yet the packaged one. The clock runs; the town's week runs hour by hour exactly as the Core's does (checked against its sixteen cases): Rita's window, the witness, passers-by finding the damage, the police each morning, DS Ellis on day 4, Ron's envelope on his nights and the handover at the quay, Ada's tea; Z stops for each; every hour saves, and Continue puts you back where you stood at that minute. Not yet walked: your no to Ron, Sunday's answer to Sheila. Since this morning: the whole week on the clock, and your place kept.
 - **Real conversation, end to end** (builder measures, town writes the replies; item 2): NOT MEASURED ON THE REAL PATH YET. The "about 3 seconds" I gave you was the voice alone, with stand-in text in place of the model's reply, and I let it read as the whole wait: my mistake. Item 2 measures from Enter, through the real model and its check, to the voice you hear, while playing. The town's own figure for the words alone (with your key, 30 September) is in its summary below. Since yesterday: corrected.
 - **Replies that say "that's all I know"** (town): about half of a newcomer's questions by the audit's count (31 to 38 of 60); the town's latest run, 23 of 60. Since yesterday: fewer, not solved.
 - **A release on a clean machine** (builder, item 3): not started: the package is still a Development build and its voice needs outside scripts. Since yesterday: on the list.
