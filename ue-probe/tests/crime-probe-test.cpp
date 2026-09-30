@@ -544,7 +544,7 @@ int main(int argc, char** argv)
 		Check(LedgerCore::CastDay::Parse(Cs.str(), Cast, Err), "a2: the cast file reads (" + Err + ")");
 		const std::set<std::string> Bodies = { "lena", "sam", "rocco" };
 		auto Find = [](const std::vector<LedgerCrime::OnlookerAt>& L, const std::string& Id) -> const LedgerCrime::OnlookerAt* {
-			for (const auto& O : L) if (O.Id == Id) return &O;
+			for (const auto& Each : L) if (Each.Id == Id) return &Each;
 			return nullptr;
 		};
 		// Day 0 is a Monday. At two in the morning every routine the player can
