@@ -178,7 +178,10 @@ namespace Ledger.PerceptionGolden
                 // after a missed Sunday.
                 // A11, DS Ellis only on Quay Street.
                 // A10, a full sighting certain (only these rows move).
-                var held = new string[0];   // emptied 30 September, late: the builder's port follows the review's Core fixes
+                // The second independent check (30 September, night), after the builder's
+                // port of the review's fixes: a save at the hour's end, days before day 0,
+                // and a night away told at one; held until the port follows again.
+                var held = new[] { "TownHoursRun|", "TownHoursRound|", "TellDue|away|", "TownHoursEndSave|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -720,6 +723,32 @@ namespace Ledger.PerceptionGolden
                 Row(sb, "TownHoursJson", Esc(saved), TownHours.FromJson(d as Dictionary<string, object>).NextHour.ToString(Inv));
             }
             // The next round kept (the review, A12), and a save from before read as its hour's start.
+            // Saved after a call at an hour's end, the town goes on as if never saved (the second independent check).
+            foreach (int saveAt in new[] { 9 * 60 + 54, 9 * 60 + 59 })
+            {
+                var rc = CastDay.Parse(TownRoundsCastJson);
+                GossipMill Town()
+                {
+                    var graph = new SocialGraph();
+                    foreach (var (a, b, w) in rc.Ties) graph.Link(a, b, w);
+                    var m = new GossipMill(graph);
+                    foreach (var id in rc.People) m.Add(Ag(id));
+                    return m;
+                }
+                var m1 = Town();
+                m1.Witness("p", new Fact(TownNews.Subject, "a_row", "seen"), "somebody had words in the cafe", false, new GameTime(0, 9, 0), 0.9);
+                var h1 = new TownHours();
+                for (int mm = 9 * 60; mm <= saveAt; mm++) h1.RunTo(m1, rc, GameTime.FromTotalMinutes(mm));
+                var m2 = Town();
+                foreach (var g0 in m1.Agents) foreach (var r0 in g0.Rumors) m2.Get(g0.Id).Rumors.Add(new Rumor { Content = r0.Content, Summary = r0.Summary, Confidence = r0.Confidence, Hops = r0.Hops });
+                var h2 = TownHours.FromJson(MiniJson.Deserialize(MiniJson.Serialize(h1.ToJson())) as Dictionary<string, object>);
+                for (int mm = saveAt + 1; mm <= 13 * 60; mm++) h2.RunTo(m2, rc, GameTime.FromTotalMinutes(mm));
+                Row(sb, "TownHoursEndSave", saveAt.ToString(Inv), string.Join(";", rc.People.Select(id =>
+                {
+                    var r = m2.Get(id).Rumors.Find(x => x.Content.Predicate == "a_row");
+                    return id + ":" + (r == null ? "none" : D(r.Confidence));
+                })));
+            }
             foreach (var saved in new[] { "{\"round\":726}", "{\"round\":727,\"next\":12}", "{\"next\":12}", "{\"round\":-1}", "{\"round\":-6}", "{\"round\":726.5}" })
                 Row(sb, "TownHoursRound", Esc(saved), TownHours.FromJson(MiniJson.Deserialize(saved) as Dictionary<string, object>).NextRound.ToString(Inv));
         }
@@ -1858,6 +1887,19 @@ namespace Ledger.PerceptionGolden
                     at.Add(h.ToString(Inv) + ":" + Bit(noMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0")));
                 }
                 Row(sb, "TellDue", "no at 21:30", string.Join(",", at));
+                // And a night he stayed away, at one (the second independent check).
+                var awayMill = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) awayMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var away = new Arrangement(0);
+                away.Delivered(0, awayMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                var awayAt = new List<string>();
+                foreach (var (d, h) in new[] { (1, 0), (1, 1) })
+                {
+                    away.TellDue(awayMill, new GameTime(d, h, 0));
+                    var r = awayMill.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == "player.outfit_d0");
+                    awayAt.Add(d + " " + h + ":" + (r == null ? "none" : r.Content.Value));
+                }
+                Row(sb, "TellDue", "away", string.Join(",", awayAt), away.Nights.Count.ToString(Inv));
             }
             // He misses her Sunday (the independent review, B1): she asks the next time he talks with her at the office.
             var missed = new WeeksEnd(0);

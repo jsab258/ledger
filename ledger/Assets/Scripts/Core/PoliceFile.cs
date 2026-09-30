@@ -393,7 +393,7 @@ namespace Ledger.Core
                 int memories = g.Memory.Events.Count;
                 mill.Witness(id, fact, AskedSaid, false, now, 1.0);
                 // Their memory of it is being asked, not a sighting of their own.
-                if (g.Memory.Events.Count > memories) g.Memory.Events.RemoveRange(memories, g.Memory.Events.Count - memories);
+                g.Memory.KeepFirst(memories);
                 g.Memory.Append(new MemoryEvent(now, "observation", 0.7, AskedMemory));
                 n++;
             }

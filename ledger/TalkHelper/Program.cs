@@ -787,7 +787,8 @@ static class Program
             object refusedAtOut = null;
             if ((askTonight || askedBefore) && key == Arrangement.Doorman && !string.IsNullOrEmpty(say))
             {
-                bool asked = askedBefore && now.TotalMinutes - askedAt.TotalMinutes <= 180 && now.TotalMinutes >= askedAt.TotalMinutes;
+                // Within three game hours, not at them (the second independent check).
+                bool asked = askedBefore && now.TotalMinutes - askedAt.TotalMinutes < 180 && now.TotalMinutes >= askedAt.TotalMinutes;
                 if (asked && Arrangement.ConfirmsNo(say))
                 {
                     refusedAsk = true;
@@ -1856,6 +1857,13 @@ static class Program
         string aPastOne = await lateAsker.Answer("{\"id\":139,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":1,\"hour\":1,\"minute\":2}");
         Ok("his yes at two past one to Ron's question at two to one is the no, reported as of the question, so the game answers the night Ron asked",
            aPastOne.Contains("\"refusedAsk\":true") && aPastOne.Contains("\"refusedAt\":{\"day\":1,\"hour\":0,\"minute\":58}"), aPastOne);
+        // Three game hours on is too late (the second independent check: at exactly three
+        // hours a yes still ended that night's arrangement, backdated).
+        var slowAsker = new Helper(new FakeLlm { Next = "Right you are, boss." }, TimeSpan.FromSeconds(8));
+        LoadCards(slowAsker, cardsDir);
+        await slowAsker.Answer("{\"id\":140,\"to\":\"rocco\",\"say\":\"Tell them no, Ron.\",\"day\":1,\"hour\":0,\"minute\":58,\"ask\":{\"tonight\":true}}");
+        string aThreeHours = await slowAsker.Answer("{\"id\":141,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":1,\"hour\":3,\"minute\":58}");
+        Ok("a yes three game hours after Ron's question is nothing", aThreeHours.Contains("\"refusedAsk\":false"), aThreeHours);
         // Walking away clears the question: back again, a yes is nothing.
         var walkAsker = new Helper(new FakeLlm { Next = "Right." }, TimeSpan.FromSeconds(8));
         LoadCards(walkAsker, cardsDir);

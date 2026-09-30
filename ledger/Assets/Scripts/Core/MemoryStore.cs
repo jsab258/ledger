@@ -228,6 +228,16 @@ namespace Ledger.Core
             Save();
         }
 
+        /// Every event from `count` on taken back, and the file rewritten (the
+        /// second independent check of 30 September: a line taken back from the
+        /// list stayed in the file and came back when it was read).
+        public void KeepFirst(int count)
+        {
+            if (count < 0 || count >= Events.Count) return;
+            Events.RemoveRange(count, Events.Count - count);
+            Save();
+        }
+
         public List<MemoryEvent> EventsOnDay(int day) =>
             Events.FindAll(e => e.Time.Day == day);
 

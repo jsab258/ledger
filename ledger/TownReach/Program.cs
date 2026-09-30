@@ -439,14 +439,23 @@ static class Program
                         if (sits && day == tea.Day && hod == 22 && !Skip("tea", false))
                             for (int m = 0; m <= 30; m++) tea.WithHer(new GameTime(day, 22, m));
                         if (day == tea.Day && hod == 23) tea.Close(mill.Get(AdasTea.Ada), now);
-                        if (hod == 22 && arrangement.AsksOn(day) && !held && arrangement.WasDelivered(day) && !Skip(takes ? "landing" : "ron"))
+                        // Not sitting with her, he sets off at 21:45 and is seen going, in
+                        // its own hour, after the rounds before it (the second independent
+                        // check: it was filed in hour 22's pass, after rounds that ran without it).
+                        if (hod == 21 && !sits && takes && day == tea.Day && arrangement.AsksOn(day) && !held && arrangement.WasDelivered(day) && !Skip("landing"))
+                        {
+                            Before(45);
+                            tea.WentToTheLanding(mill, new GameTime(day, 21, 45), forTheAsk: true);
+                            handOverAt = abs + 2;
+                        }
+                        if (hod == 22 && arrangement.AsksOn(day) && !held && arrangement.WasDelivered(day) && !(!sits && takes && day == tea.Day) && !Skip(takes ? "landing" : "ron"))
                         {
                             var answer = takes ? NightAnswer.Did : NightAnswer.Refused;
                             if (answer == NightAnswer.Did && day == tea.Day)
                             {
-                                if (sits) Before(31);
-                                tea.WentToTheLanding(mill, new GameTime(day, sits ? 22 : 21, sits ? 31 : 45), forTheAsk: true);
-                                handOverAt = abs + (sits ? 2 : 1);
+                                Before(31);
+                                tea.WentToTheLanding(mill, new GameTime(day, 22, 31), forTheAsk: true);
+                                handOverAt = abs + 2;
                             }
                             else { Before(30); arrangement.Answer(day, answer, mill, new GameTime(day, 22, 30)); }
                         }
