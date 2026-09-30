@@ -2052,8 +2052,6 @@ CertaintyFor|28|3|1|0|0.94
 CertaintyFor|28|3|1|1|0.94
 CertaintyFor|28|4|0|0|0.94
 CertaintyFor|28|4|0|1|0.8400000000000001
-CertaintyFor|28|4|1|0|0.94
-CertaintyFor|28|4|1|1|0.94
 CertaintyFor|60|0|0|0|0.8
 CertaintyFor|60|0|0|1|0.6000000000000001
 CertaintyFor|60|0|1|0|0.8
@@ -2068,8 +2066,6 @@ CertaintyFor|60|3|1|0|0.94
 CertaintyFor|60|3|1|1|0.94
 CertaintyFor|60|4|0|0|0.94
 CertaintyFor|60|4|0|1|0.8400000000000001
-CertaintyFor|60|4|1|0|0.94
-CertaintyFor|60|4|1|1|0.94
 CertaintyFor|20|0|0|0|0.6000000000000001
 CertaintyFor|20|0|0|1|0.4
 CertaintyFor|20|0|1|0|0.6000000000000001
@@ -2148,8 +2144,6 @@ CertaintyFor|127|3|1|0|0.94
 CertaintyFor|127|3|1|1|0.94
 CertaintyFor|127|4|0|0|0.94
 CertaintyFor|127|4|0|1|0.94
-CertaintyFor|127|4|1|0|0.94
-CertaintyFor|127|4|1|1|0.94
 Resolve|70|0|0|1|0|0|0|2.3|0|1|0|2.3|0|1|0|0|0|1|45|0|3|0|0|slots|60
 Resolve|70|0|0|1|0|0|0|2.3|0|1|0|2.3|0|1|0|0|0|1|45|0|3|0|0|rung|3
 Resolve|70|0|0|1|0|0|0|2.3|0|1|0|2.3|0|1|0|0|0|1|45|0|3|0|0|certainty|0.94
@@ -2212,7 +2206,6 @@ Resolve|70|0|0|1|0|0|0|2.3|0|1|0|2.3|0|1|0|0|0|1|45|0|0.34|0|0|awareness|0
 Resolve|70|0|0|1|0|0|0|2.3|0|1|0|2.3|0|1|0|0|0|1|45|0|0.34|0|0|retellings|0
 Resolve|70|0|0|0|0|0|0|30|0|1|0|30|0|1|0|0|0|1|45|0|3|4|0|slots|28
 Resolve|70|0|0|0|0|0|0|30|0|1|0|30|0|1|0|0|0|1|45|0|3|4|0|rung|4
-Resolve|70|0|0|0|0|0|0|30|0|1|0|30|0|1|0|0|0|1|45|0|3|4|0|certainty|0.94
 Resolve|70|0|0|0|0|0|0|30|0|1|0|30|0|1|0|0|0|1|45|0|3|4|0|willingness|1
 Resolve|70|0|0|0|0|0|0|30|0|1|0|30|0|1|0|0|0|1|45|0|3|4|0|label|full
 Resolve|70|0|0|0|0|0|0|30|0|1|0|30|0|1|0|0|0|1|45|0|3|4|0|accused|a1
@@ -12622,7 +12615,6 @@ Scenario|gossip_restore|brokenKeptPred|already_knew
 Scenario|gossip_restore|restoreTwiceRumors|2
 Scenario|observation_four|closeSlots|63
 Scenario|observation_four|closeRung|4
-Scenario|observation_four|closeCertainty|0.94
 Scenario|observation_four|closeLabel|full
 Scenario|observation_four|closeAccused|player
 Scenario|observation_four|closeNamesSomebody|1
@@ -12646,7 +12638,6 @@ Scenario|observation_four|acrossAccused|none
 Scenario|observation_four|acrossNamesSomebody|0
 Scenario|observation_four|litShooterSlots|63
 Scenario|observation_four|litShooterRung|4
-Scenario|observation_four|litShooterCertainty|0.94
 Scenario|observation_four|litShooterLabel|full
 Scenario|observation_four|litShooterAccused|player
 Scenario|observation_four|litShooterNamesSomebody|1

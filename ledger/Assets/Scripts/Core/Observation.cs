@@ -345,7 +345,12 @@ namespace Ledger.Core
             // at best. They now sum past it for a full close sighting, so the
             // clamp is the thing actually holding a witness below the mill's
             // 0.95 promotion threshold rather than a comment claiming to.
-            return Feel.Clamp(c, 0.05, 0.94);
+            // A FULL SIGHTING is the one thing it does not hold (the independent
+            // review of 30 September, A10): the act watched, not only heard, who
+            // went down, and who did it recognised; that witness knows, and says
+            // "I saw it myself".
+            bool full = (slots & Slot.Act) != 0 && looked && (slots & Slot.Victim) != 0 && (slots & Slot.Actor) != 0 && rung >= 4;
+            return Feel.Clamp(c, 0.05, full ? 1.0 : 0.94);
         }
 
         /// WILL THEY SAY IT. Separate from believing it, and driven by things

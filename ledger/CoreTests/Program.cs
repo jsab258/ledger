@@ -22092,17 +22092,39 @@ namespace Ledger.CoreTests
 
             // Certainty never reaches the mill's hard-knowledge threshold from
             // a partial. Overhearing is never knowledge and neither is this.
-            Check(wallLoud.Certainty < 0.95 && close.Certainty < 0.95,
-                  "observation: no observation promotes itself into certainty",
-                  $"{close.Certainty:0.00}");
+            // A FULL SIGHTING IS CERTAIN, AND ONLY A FULL SIGHTING (the independent
+            // review of 30 September, A10: the cap held every witness below 0.95,
+            // so one who saw it all, close, in the light, and knew him gave a
+            // statement "and will sign it" yet remembered "I think I saw it,
+            // couldn't swear to it"; the cap's own comment says it is for
+            // anything short of a full sighting).
+            Check(close.Has(Slot.Act) && close.Has(Slot.Victim) && close.Has(Slot.Actor) && close.Rung >= 4 && close.Certainty >= 0.95,
+                  "observation: the act, the victim and a man they know, seen close in the light, is a full sighting and certain",
+                  $"{close.Label()} rung {close.Rung} {close.Certainty:0.00}");
+            Slot all3 = Slot.Act | Slot.Victim | Slot.Actor;
+            Check(wallLoud.Certainty < 0.95 && far.Certainty < 0.95
+                  && Observe.CertaintyFor(all3, 3, looked: true, heard: false) < 0.95
+                  && Observe.CertaintyFor(all3, 4, looked: false, heard: true) < 0.95
+                  && Observe.CertaintyFor(Slot.Act | Slot.Actor, 4, looked: true, heard: false) < 0.95
+                  && Observe.CertaintyFor(all3 | Slot.Aftermath, 3, looked: true, heard: false) < 0.95,
+                  "observation: nothing short of a full sighting promotes itself into certainty: not a man half known, not a sound, not the act without who went down",
+                  $"{far.Certainty:0.00}");
             Check(close.Certainty > far.Certainty && far.Certainty > wallLoud.Certainty,
                   "observation: certainty tracks how much they got");
             // The cap has to BITE, not merely exist. A break run that raised it
             // to 1.0 survived every check, which meant nothing had ever reached
-            // it. The best possible witness now lands exactly on the ceiling.
-            Check(Math.Abs(close.Certainty - 0.94) < 1e-9,
-                  "observation: the best possible witness is held AT the ceiling",
-                  $"{close.Certainty:0.000}");
+            // it. The best partial witness lands exactly on the ceiling.
+            Check(Math.Abs(Observe.CertaintyFor(all3 | Slot.Aftermath, 3, looked: true, heard: false) - 0.94) < 1e-9,
+                  "observation: the best witness short of a full sighting is held AT the ceiling",
+                  $"{Observe.CertaintyFor(all3 | Slot.Aftermath, 3, true, false):0.000}");
+            // And what each remembers says so.
+            var remembers = new GossipMill(null);
+            foreach (var id in new[] { "full", "half" }) remembers.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+            remembers.Witness("full", new Fact("player", "window_d1", "ritas"), "he put Rita's window in", true, new GameTime(1, 12, 0), close.Certainty);
+            remembers.Witness("half", new Fact("player", "window_d1", "ritas"), "he put Rita's window in", true, new GameTime(1, 12, 0), far.Certainty);
+            Check(remembers.Get("full").Memory.Events.Exists(e => e.Text.StartsWith("I saw it myself", StringComparison.Ordinal))
+                  && remembers.Get("half").Memory.Events.Exists(e => e.Text.StartsWith("I think I saw it, couldn't swear to it", StringComparison.Ordinal)),
+                  "observation: a full sighting is remembered as seen, anything less as not sworn to");
             // Hearing it is worth less than watching it, with the same slots.
             Slot sameSlots = Slot.Act | Slot.Victim;
             Check(Observe.CertaintyFor(sameSlots, 0, looked: false, heard: true)

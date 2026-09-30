@@ -177,7 +177,11 @@ namespace Ledger.PerceptionGolden
                 // held until the builder's port follows: B1, the week's question
                 // after a missed Sunday.
                 // A11, DS Ellis only on Quay Street.
-                var held = new[] { "WeekAsksNow|", "SweepAsked|", "SweepHeard|" };
+                // A10, a full sighting certain (only these rows move).
+                var held = new[] { "WeekAsksNow|", "SweepAsked|", "SweepHeard|",
+                    "CertaintyFor|28|4|1|", "CertaintyFor|60|4|1|", "CertaintyFor|127|4|1|",
+                    "Resolve|70|0|0|0|0|0|0|30|0|1|0|30|0|1|0|0|0|1|45|0|3|4|0|certainty|",
+                    "Scenario|observation_four|closeCertainty|", "Scenario|observation_four|litShooterCertainty|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
