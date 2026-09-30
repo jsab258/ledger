@@ -291,6 +291,11 @@ render();
 })();
 </script>
 """
+# PICTURES AT FULL SIZE on this page and on every page built from it
+# (day_page.py, weekend_page.py): tools/page_pictures.py, Jafar 30 September.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import page_pictures  # noqa: E402
+PAGE = page_pictures.apply(PAGE)
 
 
 def build():
