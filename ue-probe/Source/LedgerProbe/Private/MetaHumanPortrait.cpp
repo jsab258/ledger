@@ -45,6 +45,7 @@
 // animation, at rest.
 #include "MetaHumanPortrait.h"
 #include "LedgerJacket.h"
+#include "LedgerGarments.h"
 
 #include "Animation/AnimSequenceBase.h"
 #include "Camera/CameraActor.h"
@@ -116,6 +117,26 @@ namespace LedgerMhPortrait
 	bool GMotion = false;
 	constexpr int32 MotionFrames = 24;
 	constexpr double MotionStep = 0.25;
+	// THE BOUND JACKET, 30 September (Jafar: game clothes are skinned meshes;
+	// "test it walking, sitting and with arms raised"). -PortraitGarments
+	// dresses the person from the garments list as the game does
+	// (LedgerGarments.h; -WearHeld=<name> for one not yet approved).
+	// -PortraitMotionViews=0,180,90 films the motion once from each of those
+	// turns round the person (0 the usual front three-quarter, 180 the back),
+	// each into ue-motion-<who>-<take>-v<turn>/; -PortraitMotionFrames=N and
+	// -PortraitMotionStep=seconds set how many pictures and how far apart
+	// (a range-of-motion loop runs over a minute).
+	bool GGarments = false;
+	TArray<float> GViews;
+	int32 GMotionFrames = MotionFrames;
+	double GMotionStep = MotionStep;
+	int32 ViewIndex(int32 Shot);
+	// -PortraitStand=x,across,yaw[,groundcm]: where the person stands, in
+	// street metres, and which way (the actor's yaw: -90 faces up the
+	// street). The motion's back and side views need open road all round:
+	// at the usual stand by Mickey's the back camera stood in the shop.
+	bool GStandSet = false;
+	FVector GStandAt = FVector::ZeroVector;
 	bool GInGame = false;             // -PortraitInGame: the game's own cast, where it stands
 	bool GNoHair = false, GStudio = false, GFaceRest = false;   // the look tests
 	float GStudioCd = 8.0f;           // -PortraitStudioCd: the key light's candela (60 blew the picture out)
@@ -228,7 +249,7 @@ namespace LedgerMhPortrait
 		if (GSunlit && !GSunFound) { FindSun(World); }
 		// Facing the road (-Y in this engine is toward the west side): a
 		// MetaHuman faces its actor's +Y, so yaw 180 turns it to face -Y.
-		const FVector At = GSunFound ? GStand : StreetToUE(kStandX, 0.0, kStandZ) + FVector(0, 0, kGroundCm);
+		const FVector At = GStandSet ? GStandAt : GSunFound ? GStand : StreetToUE(kStandX, 0.0, kStandZ) + FVector(0, 0, kGroundCm);
 		AActor* A = World->SpawnActor<AActor>(Cls, At, FRotator(0.0f, GYaw, 0.0f), P);
 		if (A == nullptr) { return; }
 		UAnimSequenceBase* Idles[] = { LoadObject<UAnimSequenceBase>(nullptr, kIdle), LoadObject<UAnimSequenceBase>(nullptr, kFaceIdle) };
@@ -247,6 +268,7 @@ namespace LedgerMhPortrait
 		}
 		LedgerJacket::Wear(A, kWho[J.Who]);
 		if (!GClothPath.IsEmpty()) { LedgerJacket::WearCloth(A, GClothPath); }
+		if (GGarments) { LedgerGarments::Wear(A, kWho[J.Who]); }
 		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s body idle %s, face idle %s"), *Name,
 			Idles[0] != nullptr ? TEXT("loaded") : TEXT("MISSING"), Idles[1] != nullptr ? TEXT("loaded") : TEXT("MISSING"));
 		GPerson = A;
@@ -429,7 +451,10 @@ namespace LedgerMhPortrait
 		{
 		case EShot::Close: Eye = Face + FVector(25.0f, -Back, -4.0f); break;
 		case EShot::Mid: Eye = Face + FVector(40.0f, -Back, -15.0f); break;
-		case EShot::Motion: Eye = Face + FVector(60.0f, -Back, -60.0f); break;
+		case EShot::Motion:
+			Eye = Face + FVector(60.0f, -Back, -60.0f);
+			if (GViews.IsValidIndex(ViewIndex(GShot))) { Eye = Face + FRotator(0.0f, GViews[ViewIndex(GShot)], 0.0f).RotateVector(Eye - Face); }
+			break;
 		case EShot::Front: case EShot::Talk: case EShot::Studio: Eye = Face + FVector(0.0f, -Back, -4.0f); break;
 		case EShot::Speak: Eye = Face + FVector(0.0f, -Back - 20.0f, -6.0f); Look = Face + FVector(0.0f, 0.0f, -12.0f); break;
 		// THE PROFILE turns the person, not the camera: from either side along
@@ -541,6 +566,21 @@ namespace LedgerMhPortrait
 		}
 	}
 
+	// Which of -PortraitMotionViews a motion shot is: the motion shots before
+	// it in the list, counted.
+	int32 ViewIndex(int32 Shot)
+	{
+		int32 N = 0;
+		for (int32 I = 0; I < Shot && I < GShots.Num(); ++I) { if (GShots[I] == EShot::Motion) { ++N; } }
+		return N;
+	}
+
+	FString ViewSuffix()
+	{
+		const int32 V = ViewIndex(GShot);
+		return GViews.IsValidIndex(V) ? FString::Printf(TEXT("-v%.0f"), GViews[V]) : FString();
+	}
+
 	FString ShotName(EShot S)
 	{
 		switch (S)
@@ -583,11 +623,12 @@ namespace LedgerMhPortrait
 			}
 			C->SetPlayRate(1.0f);
 		}
-		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s moves: %s on %d part(s)"), *Stem(), *GMotionAnim, Bodies);
+		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s moves: %s on %d part(s), %.1f s long, view %s"), *Stem(), *GMotionAnim, Bodies,
+			Anim != nullptr ? Anim->GetPlayLength() : 0.0f, *ViewSuffix());
 		if (Anim == nullptr || Bodies == 0) { return false; }
 		GMotion = true;
 		GFrame = 0;
-		GFrames = MotionFrames;
+		GFrames = GMotionFrames;
 		return true;
 	}
 
@@ -773,7 +814,8 @@ namespace LedgerMhPortrait
 			// One frame of the line: pose, then the picture of it.
 			if (GScan) { HoldIdles(GFrame * 0.5f); }
 			else if (!GMotion) { for (USkeletalMeshComponent* C : FaceParts()) { C->SetPosition((float)GFrame / SpeakFps, false); } }
-			const FString Out = FPaths::ConvertRelativePathToFull(GOut / FString::Printf(TEXT("ue-%s-%s/f%04d.png"), GScan ? TEXT("scan") : GMotion ? TEXT("motion") : TEXT("speak"), *Stem(), GFrame));
+			const FString Out = FPaths::ConvertRelativePathToFull(GOut / FString::Printf(TEXT("ue-%s-%s%s/f%04d.png"), GScan ? TEXT("scan") : GMotion ? TEXT("motion") : TEXT("speak"), *Stem(),
+				GMotion ? *ViewSuffix() : TEXT(""), GFrame));
 			FScreenshotRequest::RequestScreenshot(Out, false, false);
 			GPhaseAt = Now;
 			GPhase = 6;
@@ -781,7 +823,7 @@ namespace LedgerMhPortrait
 		}
 		case 6:
 			// Two engine frames per picture, so each request is taken before the next.
-			if (Now - GPhaseAt < (GMotion ? MotionStep : 0.12)) { return true; }
+			if (Now - GPhaseAt < (GMotion ? GMotionStep : 0.12)) { return true; }
 			if (++GFrame < GFrames) { GPhase = 5; return true; }
 			GScan = false;
 			GMotion = false;
@@ -845,7 +887,34 @@ namespace LedgerMhPortrait
 		}
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitSpeech="), GSpeech);
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitCloth="), GClothPath);
-		if (FParse::Value(FCommandLine::Get(), TEXT("PortraitMotion="), GMotionAnim)) { GShots = { EShot::Mid, EShot::Motion }; }
+		if (FParse::Value(FCommandLine::Get(), TEXT("PortraitMotion="), GMotionAnim))
+		{
+			GShots = { EShot::Mid, EShot::Motion };
+			FString Views;
+			if (FParse::Value(FCommandLine::Get(), TEXT("PortraitMotionViews="), Views, false))
+			{
+				TArray<FString> List;
+				Views.ParseIntoArray(List, TEXT(","), true);
+				GShots = { EShot::Mid };
+				for (const FString& V : List) { GViews.Add(FCString::Atof(*V)); GShots.Add(EShot::Motion); }
+			}
+			FParse::Value(FCommandLine::Get(), TEXT("PortraitMotionFrames="), GMotionFrames);
+			FParse::Value(FCommandLine::Get(), TEXT("PortraitMotionStep="), GMotionStep);
+		}
+		GGarments = FParse::Param(FCommandLine::Get(), TEXT("PortraitGarments"));
+		FString Stand;
+		if (FParse::Value(FCommandLine::Get(), TEXT("PortraitStand="), Stand, false))
+		{
+			TArray<FString> V;
+			Stand.ParseIntoArray(V, TEXT(","), true);
+			if (V.Num() >= 3)
+			{
+				GStandSet = true;
+				GStandAt = StreetToUE(FCString::Atod(*V[0]), 0.0, FCString::Atod(*V[1]))
+					+ FVector(0, 0, V.Num() >= 4 ? FCString::Atof(*V[3]) : 1.0f);
+				GYaw = FCString::Atof(*V[2]);
+			}
+		}
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceScan"))) { GShots = { EShot::Scan }; }
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitInGame")))
 		{
