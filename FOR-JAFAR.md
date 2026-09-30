@@ -59,7 +59,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Research:** retopology and skinning; carrying garments and seam faults; fitting to a form, not the skin.
 
-**Pushes:** free tests only. **C: free:** 51 GB at the start, 56 now. Backup runs with this commit.
+**Pushes:** free tests only. **C: free:** 51 GB at the start, 46 now (my scratch is all on F:). Backup ran: OK.
 
 ## Builder, Wednesday 30 September
 
