@@ -264,7 +264,7 @@ namespace Ledger.Core
             if (a.Circle != "day") yield break;
             foreach (var r in a.Rumors)
                 if (r.Content != null && r.Content.Subject == "player" && r.Sensitive && r.Hops >= 1 && r.NamesHim
-                    && (r.Indelible || (r.Confidence >= mill.MinConfidenceToShare && !a.Leashed && !a.Suppressed.Contains(r.TopicKey))))
+                    && ((r.Indelible && r.Confidence > 0) || (r.Confidence >= mill.MinConfidenceToShare && !a.Leashed && !a.Suppressed.Contains(r.TopicKey))))
                     yield return r;
         }
 

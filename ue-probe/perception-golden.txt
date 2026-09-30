@@ -51873,9 +51873,6 @@ HeardThenSeen|shape|2|1|1|1|Suspicious|0.60152
 HeardThenSeen|plain|2|1|3|1|Suspicious|0.635
 HeardThenSeen|offLadder|2|1|4|1|Confronting|0.89
 NamingThrough|0|2|1|2
-OneTelling|1|2|1|2|0.07776000000000001
-SurestTold|talk|1|0.22680000000000003|2|1|Novak~did~it|0.21600000000000003
-SurestTold|asked|1|0.22680000000000003|2|1|Novak~did~it|0.21600000000000003
 NamingPlaces|0.25|0.6768000000000001|Suspicious|0.60152
 AskedAboutBody|1|1|4|Contradiction
 OriginRungSave|read|{"agents":[{"id":"w","rumors":[{"subj":"player","pred":"absent","val":"v","conf":0.5,"hops":1},{"subj":"player","pred":"two","val":"v","conf":0.5,"hops":1,"rung":2},{"subj":"player","pred":"nine","val":"v","conf":0.5,"hops":1,"rung":9},{"subj":"player","pred":"minusfive","val":"v","conf":0.5,"hops":1,"rung":-5},{"subj":"player","pred":"quoted","val":"v","conf":0.5,"hops":1,"rung":"3"},{"subj":"player","pred":"null","val":"v","conf":0.5,"hops":1,"rung":null},{"subj":"player","pred":"bool","val":"v","conf":0.5,"hops":1,"rung":true},{"subj":"player","pred":"fraction","val":"v","conf":0.5,"hops":1,"rung":2.7},{"subj":"player","pred":"negfraction","val":"v","conf":0.5,"hops":1,"rung":-0.5},{"subj":"player","pred":"huge","val":"v","conf":0.5,"hops":1,"rung":1e300}]}]}|-1,2,4,-1,-1,-1,-1,2,0,4

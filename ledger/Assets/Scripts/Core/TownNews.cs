@@ -125,7 +125,8 @@ namespace Ledger.Core
     /// what is broken stays broken, and A25.07, what a deed leaves handled
     /// consistently). A window put in where nobody saw it was talked of by
     /// nobody next day, though the pane was gone. Now whoever comes into the
-    /// deed's area, hour by hour from the hour after it until it is mended,
+    /// deed's area, hour by hour from the deed's own hour (whoever is there
+    /// then knows at once, at its time) until it is mended,
     /// finds it: the town's own news, naming nobody ("somebody put Rita's window
     /// in"), filed as a sighting is and told by the news bank, so it raises
     /// nobody's suspicion. The routines put each keeper at their counter when
@@ -175,7 +176,14 @@ namespace Ledger.Core
         public const int LongestUnmendedDays = 90;
 
         /// What a finder remembers: the damage they saw, not the deed.
-        public string MemoryOf() => "I came by and saw it for myself: " + Said + ". I never saw who did it.";
+        public string MemoryOf() => "I came by and saw it for myself: " + Clause(Said) + ". I never saw who did it.";
+
+        /// What somebody who was there when it happened remembers (the
+        /// independent check of A9: Hal, inside Rita's, "came by").
+        public string PresentMemoryOf() => "I was there when " + Clause(Said) + ". I never saw who did it.";
+
+        // The story's words as a clause: no full stop of its own.
+        static string Clause(string s) => (s ?? "").Trim().TrimEnd('.', ' ');
 
         /// WHAT THE KEEPER REMEMBERS of her own place (the independent review of
         /// 30 September, A9: Rita "came by" her own window): in her own words,
@@ -184,19 +192,25 @@ namespace Ledger.Core
         /// she was there when it happened.
         public string KeeperMemoryOf(CastDay cast, bool wasThere)
         {
-            string own = Said;
+            string said = Clause(Said), own = said;
             var names = new List<string>(cast != null ? cast.AreaNames(Area) : (IReadOnlyList<string>)new List<string>());
             names.Sort((x, y) => y.Length.CompareTo(x.Length));
             foreach (var n in names)
             {
-                int at = own.IndexOf(n, StringComparison.Ordinal);
+                // "Rita's window", "the pawn shop's window": the place's own name
+                // and its "'s" become "my"; a bare place name, "my place".
+                string name = n.EndsWith("'s", StringComparison.Ordinal) ? n : n + "'s";
+                int at = own.IndexOf(name, StringComparison.OrdinalIgnoreCase);
+                int len = name.Length;
+                string by = "my";
+                if (at < 0) { at = own.IndexOf(n, StringComparison.OrdinalIgnoreCase); len = n.Length; by = "my place"; }
                 if (at < 0) continue;
-                own = own.Substring(0, at) + "my" + (n.EndsWith("'s", StringComparison.Ordinal) ? "" : " place") + own.Substring(at + n.Length);
+                own = own.Substring(0, at) + by + own.Substring(at + len);
                 break;
             }
-            if (own == Said) own = Said + ", at my place";
+            if (own == said) own = said + ", at my place";
             own = own.Length > 0 ? char.ToUpperInvariant(own[0]) + own.Substring(1) : own;
-            return own + (wasThere ? ", and me inside. " : " while I wasn't there; I found it when I came in. ") + "I never saw who did it.";
+            return own + (wasThere ? " while I was there. " : " while I wasn't there; I found it when I came in. ") + "I never saw who did it.";
         }
 
         static long FloorDiv(long a, long b) => a >= 0 ? a / b : -((-a + b - 1) / b);
@@ -230,7 +244,11 @@ namespace Ledger.Core
             long nowM = now.TotalMinutes, mendM = MendedAt.TotalMinutes;
             var fact = new Fact(TownNews.Subject, Key, "found");
             long h = _nextHour;
-            for (; h * 60 <= nowM && (h + 1) * 60 <= mendM; h++)
+            // An hour counts while the damage stands through it; the deed's own
+            // hour, for whoever is there, if it stands after the deed (the
+            // independent check: a pane mended at 12:50 for a 12:05 deed was
+            // found by nobody, not even those there).
+            for (; h * 60 <= nowM && ((h + 1) * 60 <= mendM || (h * 60 <= DoneAt.TotalMinutes && DoneAt.TotalMinutes < mendM)); h++)
             {
                 int day = (int)FloorDiv(h, 24), hour = (int)(h - (long)day * 24);
                 foreach (var p in cast.People)
@@ -248,7 +266,7 @@ namespace Ledger.Core
                     int memories = g.Memory.Events.Count;
                     mill.Witness(p, fact, Said, false, at, 0.9);
                     if (g.Memory.Events.Count > memories) g.Memory.Events.RemoveRange(memories, g.Memory.Events.Count - memories);
-                    g.Memory.Append(new MemoryEvent(at, "observation", 0.6, p == cast.KeeperOf(Area) ? KeeperMemoryOf(cast, there) : MemoryOf()));
+                    g.Memory.Append(new MemoryEvent(at, "observation", 0.6, p == cast.KeeperOf(Area) ? KeeperMemoryOf(cast, there) : there ? PresentMemoryOf() : MemoryOf()));
                     found.Add((p, at));
                 }
             }
@@ -287,7 +305,7 @@ namespace Ledger.Core
             foreach (var x in MiniJson.GetList(saved, "leaveOut") ?? new List<object>()) if (x is string ls && ls.Length > 0) leave.Add(ls);
             var a = new Aftermath(area, key, said, GameTime.FromTotalMinutes(done), GameTime.FromTotalMinutes(mended), leave);
             foreach (var x in MiniJson.GetList(saved, "found") ?? new List<object>()) if (x is string fs && fs.Length > 0) a._found.Add(fs);
-            // Never before the hour after the deed, never past its mending.
+            // Never before the deed's own hour, never past its mending.
             if (ReadMinutes("next", out var next))
                 a._nextHour = Math.Max(a._nextHour, Math.Min(next, FloorDiv(mended, 60) + 1));
             return a;

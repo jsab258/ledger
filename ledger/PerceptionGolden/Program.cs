@@ -198,7 +198,9 @@ namespace Ledger.PerceptionGolden
                     // B5, a deed after midnight.
                     "FirstReport|",
                     // A no only after the ask.
-                    "NoBeforeAsk|" };
+                    "NoBeforeAsk|",
+                    // The independent check of the A5 fix: a telling as sure as its naming.
+                    "OneTelling|1|2|", "SurestTold|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -2361,7 +2363,8 @@ namespace Ledger.PerceptionGolden
                 foreach (var id in new[] { "s", "l" })
                     mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
                 mill.Get("s").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "seen"), OriginId = "n", Summary = "Novak did it", Confidence = 0.30, Hops = 1, Sensitive = true, OriginRung = 4 });
-                mill.Witness("s", new Fact("player", "window_d1", "seen"), "him coming away", true, new GameTime(1, 23, 0), 0.90);
+                // Their own look carries its rung, as every sighting must (a face).
+                mill.Witness("s", new Fact("player", "window_d1", "seen"), "him coming away", true, new GameTime(1, 23, 0), 0.90, rung: 3);
                 mill.Get("l").Knowledge.Learn(new Fact("player", "window_d1", "home all night"));
                 var ev = asked ? mill.CompareNotes("l", "s", new GameTime(1, 23, 6)) : mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
                 var acc = Suspecting.AccountOf(mill.Get("l"), "player.window_d1");

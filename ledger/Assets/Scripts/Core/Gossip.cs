@@ -54,11 +54,26 @@ namespace Ledger.Core
         /// WHETHER THE STORY SAYS HE DID IT (Jafar's ruling of 30 September on
         /// the independent review's A5: "a witness's story is only as sure as
         /// the witness was. A noise or a shape is suspicion, never 'he did
-        /// it'"): its first teller recognised him (rung 4, what names him, as
-        /// Suspecting has it), or it is no sighting at all but told by somebody
-        /// who knew (no rung). A noise, a shape, a mark or a face alone names
-        /// nobody: what it gives is Suspecting's, never the street's "he did it".
-        public bool NamesHim => OriginRung < 0 || OriginRung >= 4;
+        /// it'"): its first teller recognised him (rung 4, what names him in
+        /// Suspecting), or it is no sighting on the ladder at all but a thing
+        /// told as known (no rung: his night to the man at the landing, his
+        /// answer to Sheila, a threat), as the Core has always filed a story
+        /// about him. So every sighting must carry its rung. A noise, a shape,
+        /// a mark or a face names nobody: what it gives is Suspecting's, never
+        /// the street's "he did it"; a rung off the ladder names nobody either.
+        public bool NamesHim => OriginRung == -1 || OriginRung >= 4;
+
+        /// Two looks at the same thing, merged: a naming is never lost to a
+        /// vaguer look (the independent check of the fix: a thing told as
+        /// known, then a shape of their own, became the shape); else the better.
+        internal static int MergeRung(int a, int b)
+        {
+            bool na = a == -1 || a >= 4, nb = b == -1 || b >= 4;
+            if (na && nb) return Math.Max(a, b);
+            if (na) return a;
+            if (nb) return b;
+            return Math.Max(a, b);
+        }
 
         /// A FACT, not a story. Set only by a killing (combat-spec §7b).
         ///
@@ -350,7 +365,7 @@ namespace Ledger.Core
                 else
                 {
                     // A second look of their own: the better of the two, as below.
-                    own.OriginRung = Math.Max(own.OriginRung, rung);
+                    own.OriginRung = Rumor.MergeRung(own.OriginRung, rung);
                     if (indelible && !own.Indelible)
                     {
                         own.Indelible = true;
@@ -457,12 +472,29 @@ namespace Ledger.Core
         /// One gossip round. `together` decides which tied pairs are actually in a
         /// position to talk this round (co-located in game, or always-true in tests).
         /// Returns everything that propagated, for logging.
-        // Whether a telling names him (Rumor.NamesHim): the copy told, or another
-        // version of the same story the teller passes on with it (the golden
-        // row OneTelling: a shape of their own and a naming heard beside it).
-        bool TellingNamesHim(Gossiper teller, Rumor r) =>
-            r.NamesHim || teller.Rumors.Exists(x => x != null && x.Content != null && x.TopicKey == r.TopicKey && x.NamesHim
-                                                    && (x.Indelible || x.Confidence >= MinConfidenceToShare));
+        // WHAT A TELLING THAT NAMES HIM DOES TO THE LISTENER (Jafar's ruling of
+        // 30 September on the independent review's A5): once a telling, at the
+        // first copy that names him and actually reaches them, the one told or a
+        // version passed quietly beside it (the golden row OneTelling: a shape of
+        // the teller's own and a naming heard beside it); never for a naming the
+        // teller only holds (the independent check of the fix: too faint to pass,
+        // bought quiet, or picked up this very round). A noise or a shape
+        // contradicts nothing he said and shows no double life. Returns whether
+        // it contradicted his word (else whether it exposed his nights).
+        (bool contradiction, bool exposure) NamingReaches(Gossiper listener, Rumor r, double passed, string why, string whyLeak)
+        {
+            if (listener.Knowledge.CheckClaim(r.Content) == ClaimResult.Contradiction)
+            {
+                listener.Suspicion.Raise(ContradictionSuspicion * passed, why);
+                return (true, false);
+            }
+            if (r.Sensitive && listener.Circle == "day")
+            {
+                listener.Suspicion.Raise(LeakSuspicion * passed, whyLeak);
+                return (false, true);
+            }
+            return (false, false);
+        }
 
         public List<GossipEvent> Tick(GameTime now, Func<string, string, bool> together = null)
         {
@@ -491,7 +523,7 @@ namespace Ledger.Core
                     // side, and each copy raised the listener's suspicion again
                     // (the independent check's second pass). The surest copy of a
                     // version is the telling; the rest go in quietly (the third pass).
-                    HashSet<string> toldThisRound = null;
+                    HashSet<string> toldThisRound = null, namedThisTelling = null;
                     foreach (var (r, version) in SurestFirst(slots, x => x.Indelible ? x.Confidence : x.Confidence * tie * HopDecay))
                     {
                         // NEVER TOLD AT NaN OR AN INFINITY (town list 6bw): no
@@ -527,6 +559,9 @@ namespace Ledger.Core
                             Indelible = r.Indelible, OriginRung = r.OriginRung,
                         };
                         listener.Rumors.Add(heard);
+                        bool firstNaming = heard.NamesHim && (namedThisTelling ??= new HashSet<string>()).Add(r.TopicKey);
+                        string whyContra = $"a rumor about {r.TopicKey} contradicts what the new owner told me";
+                        const string whyLeak = "heard something that doesn't fit the person I thought I knew";
                         if (weigh == Telling.Quiet)
                         {
                             // A naming is new to them though the story is not: it is
@@ -534,6 +569,11 @@ namespace Ledger.Core
                             if (heard.OriginRung >= 4)
                                 listener.Memory.Append(new MemoryEvent(now, "heard", Math.Clamp(passed * 0.8, 0.2, 0.85),
                                     $"I heard from {speaker.DisplayName} that {r.Summary}"));
+                            // The naming passed quietly beside a vaguer telling does what
+                            // a naming does, once (no event: the story is not new).
+                            if (firstNaming && NamingReaches(listener, r, passed, whyContra, whyLeak).contradiction)
+                                listener.Memory.Append(new MemoryEvent(now, "observation", 0.85,
+                                    $"What I heard about {r.TopicKey.Replace("player.", "")} doesn't match what they told me to my face."));
                             if (heard.Indelible && heard.Confidence >= 0.95) listener.Knowledge.Learn(heard.Content);
                             continue;
                         }
@@ -544,23 +584,18 @@ namespace Ledger.Core
                         var ev = new GossipEvent { FromId = speaker.Id, ToId = listenerId, Rumor = heard };
 
                         // Consequence 1: the rumor collides with a claim the player made
-                        // to this listener — the lie is exposed.
-                        if (listener.Knowledge.CheckClaim(r.Content) == ClaimResult.Contradiction)
+                        // to this listener — the lie is exposed. Consequence 2: a
+                        // night-life secret reaches someone from the player's daytime
+                        // world — the double life springs a leak. Both only for a copy
+                        // that names him (NamingReaches).
+                        if (firstNaming)
                         {
-                            listener.Suspicion.Raise(ContradictionSuspicion * passed,
-                                $"a rumor about {r.TopicKey} contradicts what the new owner told me");
-                            listener.Memory.Append(new MemoryEvent(now, "observation", 0.85,
-                                $"What I heard about {r.TopicKey.Replace("player.", "")} doesn't match what they told me to my face."));
-                            ev.Contradiction = true;
-                        }
-                        // Consequence 2: a night-life secret reaches someone from the
-                        // player's daytime world — the double life springs a leak.
-                        // Only a story that names him (Rumor.NamesHim; Jafar's ruling on A5):
-                        // somebody's noise in the night is not the man they thought they knew.
-                        else if (r.Sensitive && TellingNamesHim(speaker, r) && listener.Circle == "day")
-                        {
-                            listener.Suspicion.Raise(LeakSuspicion * passed, "heard something that doesn't fit the person I thought I knew");
-                            ev.Exposure = true;
+                            var (contra, exposed) = NamingReaches(listener, r, passed, whyContra, whyLeak);
+                            if (contra)
+                                listener.Memory.Append(new MemoryEvent(now, "observation", 0.85,
+                                    $"What I heard about {r.TopicKey.Replace("player.", "")} doesn't match what they told me to my face."));
+                            ev.Contradiction = contra;
+                            ev.Exposure = exposed;
                         }
 
                         // AFTER the contradiction check, never before: an
@@ -671,9 +706,11 @@ namespace Ledger.Core
         {
             var existing = listener.BestOfValue(r.TopicKey, r.Content.Value);
             if (existing == null || NotFinite(existing.Confidence) || existing.Confidence < passed - SameStrength) return Telling.New;
-            if (r.OriginRung < 4) return Telling.Held;
+            // A telling that names him (a recognition, or a thing told as known)
+            // gets through a vaguer version held as surely (Rumor.NamesHim).
+            if (!r.NamesHim) return Telling.Held;
             foreach (var x in listener.Rumors)
-                if (x.TopicKey == r.TopicKey && x.Content.Value == r.Content.Value && x.OriginRung >= 4 && !NotFinite(x.Confidence) && x.Confidence >= passed - SameStrength)
+                if (x.TopicKey == r.TopicKey && x.Content.Value == r.Content.Value && x.NamesHim && !NotFinite(x.Confidence) && x.Confidence >= passed - SameStrength)
                     return Telling.Held;
             return Telling.Quiet;
         }
@@ -717,7 +754,7 @@ namespace Ledger.Core
             // does not depend on the rumour, so it belongs where it is decided
             // once — and sitting after two per-rumour filters it read as though
             // it might.
-            HashSet<string> askedToldThisRound = null;
+            HashSet<string> askedToldThisRound = null, askedNamed = null;
             foreach (var (r, askedVersion) in SurestFirst(TellingSlots(partner.Rumors.ToList()), x => x.Indelible ? x.Confidence : x.Confidence * tie * HopDecay))
             {
                 if (NotFinite(r.Confidence)) continue;   // never told at NaN or an infinity, as Tick (town list 6bw)
@@ -746,11 +783,15 @@ namespace Ledger.Core
                     Indelible = r.Indelible, OriginRung = r.OriginRung,
                 };
                 checker.Rumors.Add(heard);
+                bool firstNaming = heard.NamesHim && (askedNamed ??= new HashSet<string>()).Add(r.TopicKey);
+                string whyContra = $"what {partner.DisplayName} told me contradicts what the new owner said to my face";
+                const string whyLeak = "I went asking, and I did not like the answer";
                 if (weigh == Telling.Quiet)
                 {
                     if (heard.OriginRung >= 4)
                         checker.Memory.Append(new MemoryEvent(now, "heard", System.Math.Clamp(passed * 0.8, 0.2, 0.85),
                             $"{partner.DisplayName} told me, when I asked: {r.Summary}"));
+                    if (firstNaming) NamingReaches(checker, r, passed, whyContra, whyLeak);
                     if (heard.Indelible && heard.Confidence >= 0.95) checker.Knowledge.Learn(heard.Content);
                     continue;
                 }
@@ -759,16 +800,11 @@ namespace Ledger.Core
                     $"{partner.DisplayName} told me, when I asked: {r.Summary}"));
 
                 var ev = new GossipEvent { FromId = partnerId, ToId = checkerId, Rumor = heard };
-                if (checker.Knowledge.CheckClaim(r.Content) == ClaimResult.Contradiction)
+                if (firstNaming)
                 {
-                    checker.Suspicion.Raise(ContradictionSuspicion * passed,
-                        $"what {partner.DisplayName} told me contradicts what the new owner said to my face");
-                    ev.Contradiction = true;
-                }
-                else if (r.Sensitive && TellingNamesHim(partner, r) && checker.Circle == "day")
-                {
-                    checker.Suspicion.Raise(LeakSuspicion * passed, "I went asking, and I did not like the answer");
-                    ev.Exposure = true;
+                    var (contra, exposed) = NamingReaches(checker, r, passed, whyContra, whyLeak);
+                    ev.Contradiction = contra;
+                    ev.Exposure = exposed;
                 }
                 // A body heard of at certainty is hard knowledge, as in Tick, and
                 // after the contradiction check for the same reason (the

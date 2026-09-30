@@ -1473,13 +1473,16 @@ namespace Ledger.CoreTests
                 var g11 = new SocialGraph(); g11.Link("s", "l", 0.9);
                 var m11 = Mill3(g11, "s", "l");
                 m11.Get("s").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "seen"), OriginId = "n", Summary = "Novak did it, somebody said", Confidence = 0.30, Hops = 1, Sensitive = true, OriginRung = 4 });
-                m11.Witness("s", new Fact("player", "window_d1", "seen"), "him coming away from the glass", true, t0, 0.90);
+                // (Their own look carries its rung, as every sighting must: a face.)
+                m11.Witness("s", new Fact("player", "window_d1", "seen"), "him coming away from the glass", true, t0, 0.90, rung: 3);
                 m11.Get("l").Knowledge.Learn(new Fact("player", "window_d1", "home all night"));
                 var ev11 = m11.Tick(new GameTime(1, 23, 6), (x, y) => true);
                 double rise11 = m11.Get("l").Suspicion.Value;
-                double full11 = m11.ContradictionSuspicion * 0.90 * 0.9 * m11.HopDecay;
-                Check(ev11.Count == 1 && ev11[0].Contradiction && Math.Abs(rise11 - full11) < 1e-9,
-                      "a faint naming heard first and a sure look of their own: told once, at the surer amount",
+                // A face names nobody (Jafar's ruling on the review's A5): the lie is
+                // exposed by the naming, as surely as the naming reached them.
+                double full11 = m11.ContradictionSuspicion * 0.30 * 0.9 * m11.HopDecay;
+                Check(ev11.Count == 1 && Math.Abs(rise11 - full11) < 1e-9,
+                      "a faint naming heard first and a sure look of their own at a face: told once; the lie it exposes costs as much as the naming carries",
                       $"{ev11.Count} events, rise {rise11:0.000} of {full11:0.000}");
                 var heard11 = m11.Get("l").Memory.Events.Where(e => e.Kind == "heard").Select(e => e.Text).ToList();
                 var l11 = Suspecting.AccountOf(m11.Get("l"), "player.window_d1");
@@ -1492,13 +1495,14 @@ namespace Ledger.CoreTests
                 var g12 = new SocialGraph(); g12.Link("s", "c", 0.9);
                 var m12 = Mill3(g12, "s", "c");
                 m12.Get("s").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "seen"), OriginId = "n", Summary = "Novak did it, somebody said", Confidence = 0.30, Hops = 1, Sensitive = true, OriginRung = 4 });
-                m12.Witness("s", new Fact("player", "window_d1", "seen"), "him coming away from the glass", true, t0, 0.90);
+                m12.Witness("s", new Fact("player", "window_d1", "seen"), "him coming away from the glass", true, t0, 0.90, rung: 3);
                 m12.Get("c").Knowledge.Learn(new Fact("player", "window_d1", "home all night"));
                 var ev12 = m12.CompareNotes("c", "s", new GameTime(1, 23, 6));
-                double full12 = m12.ContradictionSuspicion * 0.90 * 0.9 * m12.HopDecay;
+                // As in the telling: the lie is exposed as surely as the naming reached them.
+                double full12 = m12.ContradictionSuspicion * 0.30 * 0.9 * m12.HopDecay;
                 Check(ev12.Count == 1 && Math.Abs(m12.Get("c").Suspicion.Value - full12) < 1e-9
                       && m12.Get("c").Memory.Events.Count(e => e.Kind == "heard") == 2 && Suspecting.AccountOf(m12.Get("c"), "player.window_d1").NamesHim,
-                      "asked, the surest copy is the answer, and the naming beside it is remembered",
+                      "asked, the surest copy is the answer, and the naming beside it is remembered, the lie exposed as surely as the naming carries",
                       $"{ev12.Count} events, rise {m12.Get("c").Suspicion.Value:0.000} of {full12:0.000}");
                 // THE FOURTH PASS. A faint look of their own and a surer naming: the
                 // naming decides the case, so it places the number; the words stay theirs.
@@ -7419,6 +7423,14 @@ namespace Ledger.CoreTests
                     var regard = StreetVoice.RegardFor(g, sure.MinConfidenceToShare, false, null, 0.9, false);
                     if ((regard.Story != null) != says) wrongSure.Add(id + " regards him by it");
                 }
+                // Overheard, a noise or a shape passes as the street's news, never as
+                // talk of him ("Are you sure it was him?"); a naming as talk of him.
+                foreach (var id in new[] { "noise", "shape", "face", "knew", "told" })
+                {
+                    bool says = id == "knew" || id == "told";
+                    var said = StreetVoice.Exchange(sure.Get(id).Rumors[0], sure.Get(id), sure.Get("knew"), 3);
+                    if (said.Count == 0 || said.Exists(x => x.AboutPlayer != says)) wrongSure.Add(id + " overheard as " + (says ? "news" : "talk of him"));
+                }
                 var askedSure = PoliceFile.WhoSheAsks(sure);
                 if (!askedSure.SequenceEqual(new[] { "knew", "told" })) wrongSure.Add("she asks " + string.Join(",", askedSure));
                 if (PoliceFile.Loudness(sure) != 2) wrongSure.Add("loudness " + PoliceFile.Loudness(sure));
@@ -7456,6 +7468,85 @@ namespace Ledger.CoreTests
                     one.Tick(new GameTime(1, 23, 12), (x, y) => x == "l" || y == "l");
                     if (!(Suspecting.AccountOf(one.Get("l"), "player.window_d1").NamesHim && one.Get("l").Suspicion.Value > 0))
                         wrongSure.Add("one telling of a shape and a naming left the neighbour no warier");
+                }
+                // WARIER EXACTLY WHEN A NAMING REACHES THEM IN THE TELLING, never for
+                // one the teller only holds (the independent check of these fixes):
+                // the same round's naming, whatever order the town was built in; a
+                // naming too faint to pass; asked about, a naming too faint to tell;
+                // a body's shape told beside a naming the teller was bought quiet on;
+                // a noise against his own word to them.
+                {
+                    var window = new Fact("player", "window_d1", "ritas");
+                    GossipMill Town(string[] order, double tieSL = 0.9)
+                    {
+                        var g = new SocialGraph(); g.Link("a", "s", 0.9); g.Link("s", "l", tieSL);
+                        var m = new GossipMill(g);
+                        foreach (var id in order) m.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker(), id == "l" ? "day" : "night"));
+                        return m;
+                    }
+                    bool Named(GossipMill m) => m.Get("l").Rumors.Exists(x => x.TopicKey == "player.window_d1" && x.NamesHim);
+                    void Rule(string what, GossipMill m) { if ((m.Get("l").Suspicion.Value > 0) != Named(m)) wrongSure.Add(what + $": warier {m.Get("l").Suspicion.Value > 0}, holds a naming {Named(m)}"); }
+                    foreach (var order in new[] { new[] { "a", "s", "l" }, new[] { "l", "s", "a" } })
+                    {
+                        var m = Town(order);
+                        m.Witness("a", window, "Nowak put Rita's window in", true, new GameTime(1, 23, 0), 0.94, rung: 4);
+                        m.Witness("s", window, "a shape by the glass", true, new GameTime(1, 23, 0), 0.9, rung: 1);
+                        m.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                        Rule("the same round, built " + string.Join("", order), m);
+                    }
+                    var faint = Town(new[] { "a", "s", "l" });
+                    faint.Witness("s", window, "a shape by the glass", true, new GameTime(1, 23, 0), 0.9, rung: 1);
+                    faint.Get("s").Rumors.Add(new Rumor { Content = window, Summary = "Nowak put it in", Confidence = 0.22, Hops = 1, Sensitive = true, OriginRung = 4 });
+                    faint.Tick(new GameTime(1, 23, 6), (x, y) => (x == "s" && y == "l") || (x == "l" && y == "s"));
+                    Rule("a naming too faint to pass", faint);
+                    var asked = Town(new[] { "a", "s", "l" }, 0.5);
+                    asked.Witness("s", window, "a shape by the glass", true, new GameTime(1, 23, 0), 0.9, rung: 1);
+                    asked.Get("s").Rumors.Add(new Rumor { Content = window, Summary = "Nowak put it in", Confidence = 0.4, Hops = 1, Sensitive = true, OriginRung = 4 });
+                    asked.CompareNotes("l", "s", new GameTime(1, 23, 10));
+                    Rule("asked about, a naming too faint to tell", asked);
+                    var body = Town(new[] { "a", "s", "l" });
+                    var killing = new Fact("player", "killing_d1", "quay");
+                    body.Witness("s", killing, "a shape on the quay, and a man down", true, new GameTime(1, 23, 0), 0.9, indelible: true, rung: 1);
+                    body.Get("s").Rumors.Add(new Rumor { Content = killing, Summary = "Nowak did it", Confidence = 0.9, Hops = 1, Sensitive = true, OriginRung = 4 });
+                    body.Get("s").Suppressed.Add("player.killing_d1");
+                    body.Tick(new GameTime(1, 23, 6), (x, y) => (x == "s" && y == "l") || (x == "l" && y == "s"));
+                    if (body.Get("l").Suspicion.Value > 0 && !body.Get("l").Rumors.Exists(x => x.TopicKey == "player.killing_d1" && x.NamesHim))
+                        wrongSure.Add("a body's shape told beside a bought-quiet naming made the neighbour warier");
+                    // NO RUNG IS A THING TOLD AS KNOWN, AND NAMES HIM EVERYWHERE (the
+                    // independent check: the telling dropped it as the weakest look,
+                    // and a vaguer look of one's own erased it); a rung off the ladder
+                    // names nobody.
+                    var told = Town(new[] { "a", "s", "l" });
+                    told.Witness("s", window, "the new owner put Rita's window in", true, new GameTime(1, 23, 0), 0.9);
+                    told.Witness("l", window, "a shape by the glass", true, new GameTime(1, 23, 0), 0.9, rung: 1);
+                    told.Tick(new GameTime(1, 23, 6), (x, y) => (x == "s" && y == "l") || (x == "l" && y == "s"));
+                    if (!Named(told)) wrongSure.Add("a thing told as known was dropped for the listener's own shape");
+                    var twice = Town(new[] { "a", "s", "l" });
+                    twice.Witness("s", window, "the new owner put Rita's window in", true, new GameTime(1, 23, 0), 1.0);
+                    twice.Witness("s", window, "a shape by the glass", true, new GameTime(1, 23, 5), 0.9, rung: 1);
+                    if (!twice.Get("s").Rumors.Exists(x => x.TopicKey == "player.window_d1" && x.Hops == 0 && x.NamesHim))
+                        wrongSure.Add("a vaguer look of their own erased what they knew");
+                    if (new Rumor { Content = window, OriginRung = -5 }.NamesHim || new Rumor { Content = window, OriginRung = 2 }.NamesHim)
+                        wrongSure.Add("a rung off the ladder, or a mark, names him");
+                    // What the Core files as told by somebody who knew him names him.
+                    var toldMill = new GossipMill(null);
+                    foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan, WeeksEnd.Sheila, "ada", "zlata" })
+                        toldMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    var nights = new Arrangement(0);
+                    nights.Delivered(0);
+                    nights.Answer(0, NightAnswer.Did, toldMill, new GameTime(0, 22, 30));
+                    var wkTold = new WeeksEnd();
+                    wkTold.Ask(new GameTime(6, 10, 30), false);
+                    wkTold.Give(WeekAnswer.WindDown, new GameTime(6, 11, 0), toldMill, null);
+                    Silence.FileThreat(toldMill, "ada", "player.window_d1", new GameTime(2, 10, 0));
+                    PoliceFile.Asked(toldMill, new[] { "zlata" }, "talk", new GameTime(3, 9, 0));
+                    foreach (var (who, what) in new[] { (Arrangement.OutfitMan, "his night"), (WeeksEnd.Sheila, "his answer"), ("ada", "his threat"), ("zlata", "the detective asking after him") })
+                        if (!toldMill.Get(who).Rumors.Exists(x => x.Content.Subject == "player" && x.NamesHim)) wrongSure.Add(what + ", told as known, names nobody");
+                    var lie = Town(new[] { "a", "s", "l" });
+                    lie.PlayerClaims("l", new Fact("player", "window_d1", "nothing_to_do_with_me"), new GameTime(1, 20, 0));
+                    lie.Witness("s", window, "a noise from Rita's", true, new GameTime(1, 23, 0), 0.9, rung: 0);
+                    lie.Tick(new GameTime(1, 23, 6), (x, y) => (x == "s" && y == "l") || (x == "l" && y == "s"));
+                    Rule("a noise against his own word", lie);
                 }
                 Check(wrongSure.Count == 0,
                       "a story is only as sure as its first teller: one who heard a noise, saw a shape or a face never says he did it; only one who knew him, or who told it as a thing known, shows it to his face, is asked by DS Ellis, makes the street loud or gives her anything to file",
@@ -7891,6 +7982,24 @@ namespace Ledger.CoreTests
                         wrongKept.Add($"{doneAt}: Rita remembers \"{ritaMem}\"");
                     if (passer.who == null || !passer.when.Equals(new GameTime(0, 14, 0)) || passerMem != dmg.MemoryOf()) wrongKept.Add($"{doneAt}: the passer-by {passer.when} \"{passerMem}\"");
                 }
+                // And the edges the independent check found: somebody else there when it
+                // happened remembers being there, not coming by; the keeper on her step
+                // is not "inside"; other wordings of the damage in her own mouth; a pane
+                // mended within the deed's hour is still known to those who were there.
+                var edge = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"counter\":{\"x_m\":0,\"z_m\":0},\"step\":{\"x_m\":0,\"z_m\":3}}," +
+                    "\"areas\":{\"shop\":{\"places\":[\"counter\",\"step\"],\"names\":[\"Rita's\",\"the pawn shop\"],\"keeper\":\"rita\"}}," +
+                    "\"people\":[{\"id\":\"rita\",\"routine\":[[0,\"off\"],[9,\"step\"],[17,\"off\"]]},{\"id\":\"hal\",\"routine\":[[0,\"off\"],[11,\"counter\"],[12,\"off\"]]}],\"ties\":[]}");
+                var em = new GossipMill(null);
+                foreach (var id in edge.People) em.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                new Aftermath("shop", "k1", "somebody put Rita's window in", new GameTime(0, 11, 30), new GameTime(0, 11, 50)).Tick(em, edge, new GameTime(0, 20, 0));
+                string halMem = em.Get("hal").Memory.Events.Count == 1 ? em.Get("hal").Memory.Events[0].Text : "(none)";
+                string ritaStep = em.Get("rita").Memory.Events.Count == 1 ? em.Get("rita").Memory.Events[0].Text : "(none)";
+                if (!halMem.StartsWith("I was there when somebody put Rita's window in", StringComparison.Ordinal)) wrongKept.Add("Hal there: \"" + halMem + "\"");
+                if (ritaStep.Contains("inside") || !ritaStep.Contains("my window") || ritaStep.Contains("I found it when I came in")) wrongKept.Add("Rita on her step: \"" + ritaStep + "\"");
+                var words = new Aftermath("shop", "k2", "the pawn shop's window was put in", new GameTime(0, 2, 0)).KeeperMemoryOf(edge, false);
+                var lower = new Aftermath("shop", "k3", "somebody put rita's window in.", new GameTime(0, 2, 0)).KeeperMemoryOf(edge, false);
+                if (!words.StartsWith("My window was put in while", StringComparison.Ordinal)) wrongKept.Add("another wording: \"" + words + "\"");
+                if (!lower.StartsWith("Somebody put my window in while", StringComparison.Ordinal) || lower.Contains("..") || lower.Contains(". while")) wrongKept.Add("lower case and a full stop: \"" + lower + "\"");
                 Check(wrongKept.Count == 0,
                       "the keeper finds her own damage in her own words (\"my window\", never \"I came by\" or her own name): when she comes in, or at once if she is there when it happens; a passer-by still comes by and sees it",
                       string.Join(" | ", wrongKept));

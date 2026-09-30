@@ -692,8 +692,10 @@ namespace Ledger.Core
 
             // THE TOWN'S OWN NEWS (town list 6aq): told as news, not as something
             // seen of a man ("I'd say it in front of him" is about him), and never
-            // about the player.
-            if (r.Content != null && r.Content.Subject == TownNews.Subject)
+            // about the player. So too a story of his that does not name him (a
+            // noise, a shape, a face: Rumor.NamesHim; Jafar's ruling on the
+            // review's A5): "somebody put Rita's window in" is news, not him.
+            if (r.Content != null && (r.Content.Subject == TownNews.Subject || (r.Content.Subject == "player" && !r.NamesHim)))
             {
                 // Four tellings of one story he can make out; after that it is the
                 // street's murmur, as real talk is (TownReach: thirteen an hour
