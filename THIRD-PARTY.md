@@ -349,6 +349,17 @@ holds and has to be corrected or widened.
 | **Where** | `production/assets/steps/step-walk-0.wav` to `-7.wav` and `step-run-0.wav` to `-7.wav`, cut by `tools/ue/make_steps.py`: the rumble below 60 Hz (walk) or 100 Hz (run) taken off, each footfall cut so its loudest hit lands 12 ms in and ended 35 dB down, kept only with a heel and a toe, died away by its end, and between 500 and 1600 Hz, levelled |
 | **What** | Tom's footsteps, walking and running, played by the player character as each foot lands (`ue-probe` SliceCharacter.cpp) |
 
+## Clothes and the body they are fitted through — MakeHuman community, CC0
+
+| | |
+|---|---|
+| **Source** | **MakeHuman** (http://www.makehumancommunity.org). The base body `base.obj` (hm08, "explicitly released as CC0 in september 2020", https://github.com/makehumancommunity/makehuman, LICENSE.md). Garments from the CC0 asset packs (https://files.makehumancommunity.org/asset_packs/), each checked against its own `.mhclo` header and the pack's record: **Men's Suit 3** (`toigo_male_suit_3`) by Margaret Toigo (MargaretToigo), 12 November 2018, http://www.makehumancommunity.org/node/1733, licence CC0 |
+| **Licence** | CC0 1.0 Universal — no attribution required, recorded anyway. A 2017 mirror copy of male_worksuit01 says AGPLv3: only the CC0 pack copies are used |
+| **Where** | Not in the repository: the fitted, re-coloured and skinned garments live in `F:/LedgerTools/garments/` (each README names its source asset); the tools that fit them are `tools/meshgen/blender/fit_mhclo.py` and `mh_garment.py` |
+| **What** | The suit jacket (with its shirt front, tie and buttons), fitted to the MetaHuman bodies Ron (MH_RoccoP2) and Darren (MH_SamC5), re-coloured from the maker's texture; its normal map kept |
+
+Attribution not required; recorded anyway under this file's standing rule.
+
 ## What this project made itself
 
 | | |
