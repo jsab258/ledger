@@ -530,7 +530,8 @@ tailor.collider(body, friction=opt("--friction", 10.0))
 trousers.shape_key_clear()
 pin_ids = [i for i in range(len(trousers.data.vertices))
            if any(g.group == held.index and g.weight >= 0.99 for g in trousers.data.vertices[i].groups)]
-gap, edges_ = tailor.relax(trousers, G.sewing, pin_ids, BVH, iterations=opt("--relax", 300, int), clear=0.004, report=say)
+gap, edges_ = tailor.relax(trousers, G.sewing, pin_ids, BVH, iterations=opt("--relax", 300, int), clear=0.004, report=say,
+                           bend=opt("--bend", 0.0))
 co = tailor.coords(trousers, evaluated=False)
 log["stitch"] = {"by": "projection", "widestGapMm": gap, "seamGapsMm": tailor.seam_gaps(co, G.seams), "edgesVsPattern": edges_,
                  "strainVsPattern": tailor.strain(trousers, co, G.groups, G.flat),
@@ -553,7 +554,8 @@ say("welded", log["weld"])
 pin_ids = [i for i in range(len(trousers.data.vertices))
            if any(g.group == held.index and g.weight >= 0.99 for g in trousers.data.vertices[i].groups)]
 gap, edges_ = tailor.relax(trousers, [], pin_ids, BVH, iterations=opt("--settle", 200, int), clear=0.004, report=say,
-                           gravity=opt("--gravity", 0.0004), length_rounds=opt("--length-rounds", 4, int))
+                           gravity=opt("--gravity", 0.0004), length_rounds=opt("--length-rounds", 4, int),
+                           bend=opt("--bend", 0.0))
 log["settle"] = {"by": "projection", "edgesVsPattern": edges_}
 say("settled by projection", edges_)
 press_ = tailor.press(trousers, BVH, rounds=opt("--press", 30, int), smooth=opt("--smooth", 0.25), lengths=10)
