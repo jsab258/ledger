@@ -1,2 +1,4 @@
 {"date": "2026-09-30", "what": "talk_cost_sample --live --early", "turns": 24, "calls": 97, "tokens": {"claude-sonnet-5": {"calls": 8, "in": 34499, "out": 347}, "claude-haiku-4-5": {"calls": 89, "in": 291652, "out": 6632}}, "usd": 0.3973}
 {"date": "2026-09-30", "what": "talk_cost_sample --live --early", "turns": 24, "calls": 103, "tokens": {"claude-sonnet-5": {"calls": 9, "in": 41670, "out": 369}, "claude-haiku-4-5": {"calls": 94, "in": 307972, "out": 6761}}, "usd": 0.4288}
+{"date": "2026-10-01", "what": "first_token_sample --live", "turns": 1, "calls": 1, "tokens": {"claude-sonnet-5": {"calls": 1, "in": 4561, "write": 0, "read": 0, "out": 49}}, "usd": 0.0096}
+{"date": "2026-10-01", "what": "first_token_sample --live", "turns": 24, "calls": 24, "tokens": {"claude-sonnet-5": {"calls": 18, "in": 63324, "write": 3124, "read": 15620, "out": 920}, "claude-haiku-4-5": {"calls": 6, "in": 21140, "write": 0, "read": 0, "out": 192}}, "usd": 0.1689}

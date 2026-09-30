@@ -240,6 +240,28 @@ DAYS["2026-09-30-3"] = {
     ],
 }
 
+DAYS["2026-10-01-2"] = {
+    "title": "The police, and Sheila's speed",
+    "one_screen": True,
+    "heading": "Two decisions",
+    "show": [],
+    "decisions": [
+        ("police-witness", "Seeing Tom break a window: enough to report him?",
+         [("yes", "Yes"), ("no", "No")], "yes",
+         "The review found nobody ever reports him: the rule says a witness goes to the police only when not on his side, "
+         "and everybody starts in the middle, where nobody is. Only standing Ada up moves anyone. "
+         "Yes: seeing him do it is enough, unless he has won them over (tea, a friend) or talks them round "
+         "(keep it quiet, a threat), which gives those their point. No: only those he has already let down report, as now."),
+        ("sheila-model", "Sheila on the faster, cheaper model?",
+         [("try", "Try it"), ("keep", "Keep")], "try",
+         "Measured on your key tonight ($0.18): her first sentence comes 1.43 s after she is asked on today's model, "
+         "0.81 s on the faster one Ron and Darren use; caching her card gave nothing. With a fast voice (about 0.8 s) "
+         "she can then be heard within 2 s; on today's model not. Try: I write twenty of her replies on both, a reviewer "
+         "who does not know which is which compares them against her casting sheet, and I switch only if she still sounds like herself; "
+         "about half the cost a line. Keep: she stays about 0.6 s slower than the others."),
+    ],
+}
+
 # EVERY PAGE FITS ONE PHONE SCREEN (Jafar, 30 September: "Your page is a wall
 # of text"): at most three decisions, each one line with its options and the
 # recommendation, answered with a tap; any detail folded underneath, closed.

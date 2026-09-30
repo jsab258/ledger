@@ -12,6 +12,20 @@ Town in FOR-JAFAR.md by 07:00. Before every push: fetch, rebase onto main, run
 the Core suites, and know what the push sets off. This file is current state and
 the list only; its history is in git.
 
+## First (Jafar, 30 September, late evening): the independent review's Core side
+
+The time faults, Sheila's week's-end question, Ada's tea, Rita's own window,
+"couldn't swear to it", every golden row that encodes a fault, and his ruling
+on A5 ("a witness's story is only as sure as the witness was: a noise or a
+shape is suspicion, never he did it"); each a failing test first, then the
+code and its golden row; the split agreed with the builder (NOW.md).
+- State: done and on main (B1, A11, A10, A5, A9, B6, B7, A13, A12, B3, B4a,
+  B5, the no before the ask, C5's day 0), with one independent check, whose
+  findings on A5 and A9 are fixed too; the port's rows held for the builder.
+  D (talk through a wall) waits on branch town-wall for his port. A4's Core
+  half is a story ruling: on Jafar's page. Left, outside the first week: B8's
+  Core items and C5's nerve.
+
 ## The list (Jafar, 30 September evening), in order; still no new systems
 
 1. **Measure the first-week rule table** on the sixty, on a new sixty nobody
@@ -36,11 +50,16 @@ the list only; its history is in git.
 3. **The text half of the delay,** when the builder's real-talk measurement
    lands: what the talk program sends and how long the first words take, cut
    on the real path.
-   - State: landed (words 1.9 s after Enter in the game; the first sentence
-     written at 0.9 s and passed at 2.0 s). The builder asks for its note's
-     steps 5 and 6 (voice-latency/NOTE-2026-09-30.md): the first sentence off
-     the check's path (a reaction opener the plain rule passes; on the bench
-     now), and Sheila's slower first sentence (prompt caching, measured first).
+   - State: words 1.9 s after Enter in the game; the first sentence written
+     at 0.9 s and passed at 2.0 s (the check about 1.1 s). Done: the
+     connection kept warm on HTTP/2 (about 20 ms a turn after a pause); the
+     plain rule passes a reaction ("Hang on, boss."). Tried and left off: a
+     reaction opener (plain first sentences 8% to 21%, but a tic). Measured
+     on the key, 1 October ($0.18): Sheila's first sentence 1.43 s on her
+     model, 1.32 cached (nothing), no thinking by default; 0.81 s on the
+     faster one, which is his money call (page of 1 October). A leaner check
+     would save about 0.2 s (its answer is already short): left until the
+     voice, not the check, is the limit.
 
 Done before this list (history in git): the empty answers by cause; the plain
 line (built, reviewed, his yes to Ron's wording); the check's tuning (kept as
@@ -59,5 +78,6 @@ reach yet.
 
 ## Waiting on Jafar
 
-- Nothing: both taps of 30 September are answered (Ron's plain wording; what
-  the street says of Mickey).
+- Two taps on the page of 1 October (https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz):
+  whether seeing Tom break a window is enough to report him (A4's Core half);
+  Sheila on the faster model, blind-checked.

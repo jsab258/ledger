@@ -28,27 +28,33 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - **People dressed** (the clothing session makes, the builder fits): Ron's boots and Sheila's handbag in the game; suits and coats by your ruling (MakeHuman's, skinned); the suit jacket to be filmed in the game (the list's last item). Since this morning: your rulings.
 - **The AI tester walking it** (builder; functional tests of the package are item 8, by the packaged-testing note): walked the route today in the editor and the packaged game, five runs, and found the faults fixed this afternoon. Since yesterday: the whole route walked, reload included.
 
-## Town, 30 September
+## Town, 1 October
 
-**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** all answered and acted on: the ending's signs wait; Ron's lines, tone and plain wording; the regulars; Mickey's two lines.
+**[Your page](https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz):** two taps. Does seeing Tom break a window send a neighbour to the police? (I say yes.) Sheila on the faster model? (I say try it, blind-checked.)
 
-**Talk, measured on the sixty, a new sixty and thirty unanswerable:**
-- **The first-week rule table is on:** empty answers on the sixty fell from about 28 to 6 a run, useful replies 77 to 141 of 180; on the new sixty, level (it knows few of those questions); inventions level (12 and 12 in 450).
-- **The check is kept:** no tuned version refused fewer true details without passing more inventions.
+**Your review's Core side:** all fixed and ported, each test first:
+- Sheila asks on Monday if he misses Sunday (seen in the game);
+- DS Ellis asks only on Quay Street;
+- a full sighting is certain;
+- your ruling: a noise or a shape is never "he did it";
+- Rita finds her own window;
+- Ada's tea as she'd tell it;
+- the town's talk in time;
+- a no across one o'clock.
 
-**Time and state:** the Monday envelope and 27 more faults fixed; three wait for a detective's crime.
+Three checks (two fresh reviewers, then the builder) found faults in my fixes; all mended.
 
-**Your key:** capped in code; $0.83 spent.
+**Set aside after three reviews (past the two-tries rule):** the other named characters' street lines; the shared lines stay.
 
-**Research:** contextual dialogue (Valve); choosing what's said; street lines; the ending's signs.
+**Talk delay:** words 1.9 s after Enter, the check about 1.1 s of it. Sheila's first sentence 1.43 s; caching nothing; the faster model 0.81 s.
 
-**Set aside after two tries:** prompting the writer; tuning the check; Mickey's character (three reviews).
+**Your key:** $0.18 today, logged.
 
-**Pushes:** Core ones build Unreal here.
+**Research:** cutting the first words' delay.
 
-**C: free:** 47.9 GB, 56.3 now. Backup runs with this commit.
+**C: free:** 56.3 GB, 63.4 now. Backup runs with this commit.
 
-**Next:** the other named characters' street lines, through the gate; the text delay once the builder's real-talk timing lands.
+**Next:** your two taps.
 
 ## Clothes, Thursday 1 October
 

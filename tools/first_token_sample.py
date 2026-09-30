@@ -132,6 +132,7 @@ def call(conn, key, model, system, line, thinking_off=False):
             usage["output_tokens"] = data.get("usage", {}).get("output_tokens", usage.get("output_tokens", 0))
         elif event == "message_stop":
             break
+    resp.read()   # the rest of the stream, so the connection is ready for the next call
     if sentence is None:
         sentence = (time.perf_counter() - t0) * 1000
     return first, sentence, usage, text, thought
