@@ -44,7 +44,8 @@ the list only; its history is in git.
      port. The sweep of the same class across the whole Core proved twelve
      with probes, and one of its four suspicions was real:
      - ten fixed, each with a regression and rows awaiting the port, and the
-       route's sixteen rows unchanged;
+       route's sixteen rows unchanged; an independent check of the fixes
+       proved three slips in them, fixed the same way;
      - three set aside, since they need a crime a detective takes, which the
        game does not have yet (FINDINGS).
 3. **Support the builder's continuous route:** for each piece of the town's
