@@ -41,9 +41,9 @@ the list only; its history is in git.
    - Then the same class of fault everywhere time and state meet.
    - State, 30 September: done. All fourteen faults the builder's port reviews
      found are fixed in the C#, each with a regression and rows awaiting the
-     port. The sweep of the same class across the whole Core found twelve,
-     each proved by a probe:
-     - nine fixed, each with a regression and rows awaiting the port, and the
+     port. The sweep of the same class across the whole Core proved twelve
+     with probes, and one of its four suspicions was real:
+     - ten fixed, each with a regression and rows awaiting the port, and the
        route's sixteen rows unchanged;
      - three set aside, since they need a crime a detective takes, which the
        game does not have yet (FINDINGS).
