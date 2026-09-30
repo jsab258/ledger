@@ -2389,6 +2389,29 @@
    "faces": 6
   },
   {
+   "mesh": "street_sign_plate_quay_street",
+   "material": "sign_production/assets/vignette/decals2d/plate_quay_street",
+   "base_material": "paint_fascia",
+   "linear_rgb": [
+    0.03,
+    0.022,
+    0.03
+   ],
+   "roughness": 0.45,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": "production/assets/vignette/decals2d/plate_quay_street",
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 6
+  },
+  {
    "mesh": "street_slate",
    "material": "slate",
    "base_material": "slate",

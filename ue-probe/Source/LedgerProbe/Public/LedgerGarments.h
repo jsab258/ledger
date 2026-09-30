@@ -84,7 +84,21 @@ namespace LedgerGarments
 			if (!G.IsValid() || G->GetStringField(TEXT("who")) != Who) { continue; }
 			const FString Name = G->GetStringField(TEXT("name"));
 			// HELD: handed over but not to be worn yet (its reason in the list).
-			if (G->HasField(TEXT("hold"))) { UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s held back: %s"), Who, *Name, *G->GetStringField(TEXT("hold")).Left(80)); continue; }
+			// -WearHeld=RonJacket,... wears a held one for a test run (30
+			// September: the bound jacket filmed moving before Jafar sees it).
+			if (G->HasField(TEXT("hold")))
+			{
+				FString Held;
+				FParse::Value(FCommandLine::Get(), TEXT("WearHeld="), Held, false);
+				TArray<FString> Tests;
+				Held.ParseIntoArray(Tests, TEXT(","), true);
+				if (!Tests.Contains(Name))
+				{
+					UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s held back: %s"), Who, *Name, *G->GetStringField(TEXT("hold")).Left(80));
+					continue;
+				}
+				UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s is held, worn for this test run (-WearHeld)"), Who, *Name);
+			}
 			const FString Asset = FString::Printf(TEXT("/Game/Ledger/MetaHumans/Garments/%s/SKM_%s.SKM_%s"), *Name, *Name, *Name);
 			USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr, *Asset);
 			if (Mesh == nullptr)
@@ -130,9 +144,15 @@ namespace LedgerGarments
 				auto MeshTop = [](const USkeletalMeshComponent* C) {
 					const USkeletalMesh* M = C->GetSkeletalMeshAsset();
 					return M != nullptr ? (float)(M->GetBounds().Origin.Z + M->GetBounds().BoxExtent.Z) : 1000.0f; };
+				// "top": the part that covers the shoulders and ends above the
+				// knees (a jacket goes on in its place: made on the bare body,
+				// Epic's jumper would come through it).
+				auto MeshBottom = [](const USkeletalMeshComponent* C) {
+					const USkeletalMesh* M = C->GetSkeletalMeshAsset();
+					return M != nullptr ? (float)(M->GetBounds().Origin.Z - M->GetBounds().BoxExtent.Z) : 0.0f; };
 				for (USkeletalMeshComponent* C : Parts)
 				{
-					if (C != nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s reaches %.0f cm"), Who, *C->GetName(), MeshTop(C)); }
+					if (C != nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerGarments: %s's %s reaches %.0f cm, from %.0f cm"), Who, *C->GetName(), MeshTop(C), MeshBottom(C)); }
 				}
 				for (USkeletalMeshComponent* C : Parts)
 				{
@@ -142,7 +162,9 @@ namespace LedgerGarments
 					for (const TSharedPtr<FJsonValue>& H : *Hides)
 					{
 						const FString Word = H->AsString().ToLower();
-						if ((Word == TEXT("shoes") && Top < 25.0f) || (Word != TEXT("shoes") && Named.Contains(Word)))
+						const bool bShoes = Word == TEXT("shoes") && Top < 25.0f;
+						const bool bTop = Word == TEXT("top") && Top > 130.0f && MeshBottom(C) > 60.0f;
+						if (bShoes || bTop || (Word != TEXT("shoes") && Word != TEXT("top") && Named.Contains(Word)))
 						{
 							C->SetVisibility(false, true);
 							Hidden += TEXT(" ") + C->GetName();

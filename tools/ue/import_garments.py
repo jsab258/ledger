@@ -17,6 +17,11 @@ game wears each by following the body's pose (LedgerGarments.h).
 
 Writes import-garments.txt beside the project: each asset, its skeleton,
 its size and its material slots.
+
+LEDGER_GARMENTS=RonJacket,... imports only those. A garment's "materials"
+maps its FBX slot names to material instances already in the project (the
+bound jacket takes the donkey jacket's wool, yoke and buttons), set on the
+mesh after the import.
 """
 import json
 import os
@@ -102,11 +107,25 @@ def main_after_idle(seconds=20.0):
         lines.append("  size cm %s, centre %s" % ([round(2 * x, 1) for x in (b.box_extent.x, b.box_extent.y, b.box_extent.z)],
                                                  [round(x, 1) for x in (b.origin.x, b.origin.y, b.origin.z)]))
         lines.append("  material slots: %s" % [str(m.get_editor_property("material_slot_name")) for m in mesh.get_editor_property("materials")])
+        mats = g.get("materials", {})
+        if mats:
+            slots = list(mesh.get_editor_property("materials"))
+            for i, s in enumerate(slots):
+                want = mats.get(str(s.get_editor_property("material_slot_name")))
+                mi = unreal.load_asset(want) if want else None
+                if mi is not None:
+                    s.set_editor_property("material_interface", mi)
+                    slots[i] = s
+            mesh.set_editor_property("materials", slots)
+            lines.append("  materials set: %s" % [str(s.get_editor_property("material_interface").get_name()) if s.get_editor_property("material_interface") else "none" for s in slots])
         unreal.EditorAssetLibrary.save_directory(folder)
 
     def run():
         lines = []
+        only = [x for x in os.environ.get("LEDGER_GARMENTS", "").split(",") if x]
         for g in garments():
+            if only and g["name"] not in only:
+                continue
             try:
                 one(g, lines)
             except Exception as e:

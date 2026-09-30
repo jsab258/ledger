@@ -205,6 +205,16 @@ happened paints the build red for known reasons, and a check that is red for a
 known reason is a check people learn to skip. What it must never do is go
 quiet, which is exactly how the project ended up not knowing it had no font.
 
+## Fonts — MARCELLUS SC, THE STREET NAME PLATES' LETTERING, SIL OPEN FONT LICENCE 1.1
+
+| | |
+|---|---|
+| **File** | `production/fonts/marcellus-sc/MarcellusSC-Regular.ttf`, from Google Fonts' own repository (github.com/google/fonts, ofl/marcellussc), 30 September 2026 |
+| **Author** | Astigmatic (AOETI), Brian J. Bonislawsky — Copyright (c) 2012, reserved font name "Marcellus" |
+| **Licence** | SIL Open Font License, Version 1.1; allowed for fonts by Jafar on 30 September 2026 (ledger-v2/research/license-allowlist.md, SHIP-SAFE 7) |
+| **Licence file** | `production/fonts/marcellus-sc/OFL.txt`, beside the font |
+| **Used for** | Rendering the street name plates' letters into images (`tools/props/make_vignette_2d.py`, `production/assets/vignette/decals2d/plate_*.png`), the nearest free face to the Kindersley capitals of 1990 British plates. The font file itself does not ship in the game; the images do. |
+
 ## Textures, props, vehicles — NOTHING YET
 
 *(This heading is a LOG of the pre-M17.6 state and its first sentence stopped

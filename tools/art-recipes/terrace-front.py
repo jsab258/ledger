@@ -2035,6 +2035,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     _north_approach(out)
     _pavement_dressing(out)
     _street_furniture(out, root)
+    _name_plate(out)
     _broken_windows(out)
     # EVERY THIRD UPSTAIRS WINDOW HAS A LIT ROOM BEHIND ITS NET AT NIGHT.
     nets = [q for q in out if q.get("decal_emit") == "net" and "net_curtain" in str(q.get("decal", ""))]
@@ -2864,6 +2865,33 @@ def _street_furniture(out, root=None):
         except (OSError, ValueError, KeyError, IndexError) as exc:
             notes.append("%s%d=refused/%s" % (piece, n, type(exc).__name__))
     return "built/" + ",".join(built) + ("" if not notes else " notes/" + ",".join(notes))
+
+
+#: THE STREET'S NAME PLATE, 30 September. Black capitals on a white plate
+#: with a black border, the Ministry of Transport's Kindersley lettering of
+#: 1952 (production/research/street-clutter-1990, section 6: 20 to 25 cm
+#: tall, 60 to 120 cm long, on the end walls of terraces), lettered in
+#: Marcellus SC once Jafar allowed its licence (Wednesday's page, call-font)
+#: by tools/props/make_vignette_2d.py. Canon: the built street is Quay
+#: Street, in the Hook. It hangs where the first west terrace meets the side
+#: opening, on the solid corner pier (x 19.92 to 21.0, brick to 3.12 m), its
+#: foot 2.4 m above the footway: the corner the player sees from the start.
+NAME_PLATE = LETTERED + "/plate_quay_street"
+NAME_PLATE_AT = (20.02, 20.92, 2.50, 2.76)   # x0, x1, z0, z1 (0.90 by 0.26 m)
+NAME_PLATE_FACE_Y = -5.12                    # the west terrace's frontage
+
+
+def _name_plate(out):
+    x0, x1, z0, z1 = NAME_PLATE_AT
+    y = NAME_PLATE_FACE_Y
+    # 12 mm proud of the brick, a plate screwed to the wall; the street side
+    # of the west terrace is +y. No crop: the export lays a lettered face's
+    # picture from the reader's left to right whichever way it faces, so the
+    # plate reads in the game (Blender's own preview, which maps along +x,
+    # shows it mirrored on this side of the street).
+    pl = _box(out, "name_plate_quay_street", "paint_fascia", x0, x1, y - 0.002, y + 0.012, z0, z1,
+              "QUAY-STREET/the-Hook/Kindersley-capitals")
+    pl["decal"] = NAME_PLATE
 
 
 #: THE SMASHED WINDOW, 29 September. The AI tester, looking after the deed:

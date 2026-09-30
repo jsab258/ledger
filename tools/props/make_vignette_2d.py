@@ -67,6 +67,12 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEST = ROOT / "production" / "assets" / "vignette" / "decals2d"
 CANON = ROOT / "canon.md"
 FONT = ROOT / "ledger" / "Assets" / "Resources" / "LedgerSans.ttf"
+# THE PLATES' LETTERING, 30 September: Marcellus SC (Astigmatic, SIL Open Font
+# Licence 1.1), the nearest free face to the Kindersley capitals the Ministry
+# of Transport recommended for street name plates from 1952
+# (production/research/street-clutter-1990). Jafar added the OFL to the
+# allowlist for fonts that day (Wednesday's page, "call-font", A).
+PLATE_FONT = ROOT / "production" / "fonts" / "marcellus-sc" / "MarcellusSC-Regular.ttf"
 
 MM = 1          # pixels per millimetre. See the docstring: not a guess.
 SEED = 20260902  # every image below is a pure function of this number.
@@ -391,8 +397,14 @@ def street_plate(name, district, rng, streets=None):
     d.rectangle([0, 0, w - 1, h - 1], outline=(28, 28, 32), width=6 * MM)
     d.rectangle([14 * MM, 14 * MM, w - 15 * MM, h - 15 * MM],
                 outline=(28, 28, 32), width=3 * MM)
-    big = ImageFont.truetype(str(FONT), 92 * MM)
-    small = ImageFont.truetype(str(FONT), 34 * MM)
+    # The name as large as the plate takes: capitals about 90 mm tall, made
+    # smaller only when a long name would run into the border.
+    size = 118 * MM
+    big = ImageFont.truetype(str(PLATE_FONT), size)
+    while big.getlength(name.upper()) > w - 90 * MM and size > 40 * MM:
+        size -= 2 * MM
+        big = ImageFont.truetype(str(PLATE_FONT), size)
+    small = ImageFont.truetype(str(PLATE_FONT), 34 * MM)
     d.text((w // 2, h // 2 + 16 * MM), name.upper(), font=big,
            fill=(24, 24, 28), anchor="mm")
     # The legend is a canon DISTRICT. Canon mints no council, so none is drawn.
@@ -488,7 +500,12 @@ def build(dest=DEST, streets=None, districts=None):
                     "letters into an image, which the OFL permits without "
                     "restriction on the result; the font itself is not "
                     "redistributed by these files. Already attributed in "
-                    "THIRD-PARTY.md under 'SIL Open Font License'."},
+                    "THIRD-PARTY.md under 'SIL Open Font License'.",
+            "plate_font": "production/fonts/marcellus-sc/MarcellusSC-Regular.ttf "
+                          "(Marcellus SC, Astigmatic, SIL Open Font License 1.1, "
+                          "its licence beside it as OFL.txt). Used to RENDER the "
+                          "street name plates' letters into images; allowed by "
+                          "Jafar 2026-09-30 (license-allowlist SHIP-SAFE 7)."},
         "canon": {"streets_used": streets, "district_legend": home,
                   "rule": "street names come from canon.md at run time and any "
                           "name not minted there is refused, so no name is "

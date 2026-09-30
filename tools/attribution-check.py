@@ -198,6 +198,11 @@ WATCHED = {
     # also swallow half the project. The token is the licence, because that is
     # the obligation: the OFL is what THIRD-PARTY.md has to say out loud.
     "ledger/Assets/Resources/LedgerSans.ttf": "SIL Open Font License",
+    # THE STREET NAME PLATES' LETTERING, 30 September: Marcellus SC, fetched
+    # from Google Fonts' repository once Jafar allowed the OFL for fonts. The
+    # token is the family's own section, not the licence, which the PT Sans
+    # row already names and would pass without anybody writing anything.
+    "production/fonts/marcellus-sc": "MARCELLUS SC",
     # THE PS5 CORNER'S BAR, 23 September: two Kingdom Come: Deliverance II
     # screenshots supplied by Jafar ("that game is my stated bar"), kept where
     # every reference lives. Files, not the folder, because the folder's other

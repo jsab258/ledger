@@ -5,19 +5,18 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Wednesday 30 September, 08:15)
+## Overview (Wednesday 30 September, 09:40)
 
 ### Needs you
 
 1. **C: at 55 GB, under your 60** (builder; no page): your two cleanup yeses of this morning are carried out (C: 40 to 55 GB; Unreal's cache now lives on drive F), and nothing left on my list frees more: C:\LedgerTools's two big folders turned out to be links to drive F, and the rest is in use. The one big win is Windows' hibernation file, 13.7 GB, and it is yours alone. Recommended: if you never hibernate the PC, run `powercfg /h off` in a terminal opened as administrator.
-2. **Town's pages** (town): [three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y) (how Mickey died, winding it down, threats) and [the next](https://claude.ai/artifact/TXEoUnQoDTaLPfFZdHSYAL) (the warehouse fire, reopening the talk's check, Steam's wording). Recommended: the picks marked on them.
-3. **Suits and coats** (clothing; no page): Epic makes none. (A, the clothing session's recommendation) free CC0 suits from MakeHuman, refitted and bound as skinned meshes, your method of this morning; (B) Fab's ready-made ones, $5 to 20 each. Marvelous Designer is out, as you ruled.
-4. **Mickey's office, how much first** (builder; scope): several days, not one, and no readable photograph of a 1985 to 1995 minicab office inside exists online (two research rounds; the best is a Brixton one from 1980). (A, recommended) the front office first, one room, walkable, day and night frames on your page, about two days; (B) the whole ground floor with Mickey's office and the stair, about five days; (C) keep the window's picture and put the days into the first week on the street. I start on A meanwhile.
+2. **Suits and coats** (clothing; no page): Epic makes none. (A, the clothing session's recommendation) free CC0 suits from MakeHuman, refitted and bound as skinned meshes, your method of this morning; (B) Fab's ready-made ones, $5 to 20 each. Marvelous Designer is out, as you ruled.
+3. **Mickey's office, how much first** (builder; scope): several days, not one, and no readable photograph of a 1985 to 1995 minicab office inside exists online (two research rounds; the best is a Brixton one from 1980). (A, recommended) the front office first, one room, walkable, day and night frames on your page, about two days; (B) the whole ground floor with Mickey's office and the stair, about five days; (C) keep the window's picture and put the days into the first week on the street. I start on A meanwhile.
 
 ### Road to worth playing
 
 - **Faces approved** (builder): Ron's and Sheila's yes, both in the game; Darren's S6, your yes this morning, going in, and shown again at full size on the next page. Since yesterday: their mouths move as they speak; Darren's face settled.
-- **People dressed** (the clothing session makes, the builder fits): Ron's boots and Sheila's handbag in the game, shown again at full size on the next page; her spectacles refitted, a blouse, a skirt and Darren's T-shirt ready; the set-aside jacket to be bound your way (a skinned mesh on the MetaHuman skeleton, cloth only for the hem) and tested walking, sitting and with arms raised, after the pipeline's research. Since yesterday: the first garments in the game; the method corrected.
+- **People dressed** (the clothing session makes, the builder fits): Ron's boots and Sheila's handbag in the game, shown again at full size on the next page; her spectacles refitted, a blouse, a skirt and Darren's T-shirt ready to fit. The set-aside jacket, bound your way and filmed on Ron in the street: it walks and raises its arms cleanly, no wings at the armpits; sitting, its lower part follows each thigh, so that part must be cloth, as you said; the clothing session's own remake takes these findings. Since yesterday: your method tested and it works.
 - **Voices** (builder): Ron's and Darren's yes; Sheila's p267, your yes, tried through the game's own engine too since the fast one sounded flat to you (and to you for Ron, who stays on the game's engine). Since yesterday: Sheila cast.
 - **The delay before a character speaks** (words: town; voice: builder): about 3 s to the first sound in the game (2.5 to 3.1 over nine lines); Ron through the faster engine 2.0 s, on your page. Since yesterday: measured again.
 - **The replies that time out** (town): 1 in 24; "that's all I know" to half a newcomer's questions set aside after three tries, reopening its check on the town's page. Since yesterday: no change.
