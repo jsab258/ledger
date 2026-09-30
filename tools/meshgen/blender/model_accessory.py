@@ -86,7 +86,9 @@ if KIND == "pager":
             if t_ > 0 and -1e-9 <= u_ <= 1 + 1e-9:
                 best = max(best, t_)
         ring.append((a_, best))
-    BELT_H, BELT_T, JEANS = 0.038, 0.004, 0.003          # a jeans belt 38 mm (at 35 it read as a dress belt)
+    # a jeans belt 38 by 3.5 mm (at 35 it read as a dress belt), set on the jeans' waistband: 3 mm of denim and
+    # 1.5 mm clear of it (BELT-2026-09-30.md)
+    BELT_H, BELT_T, JEANS = 0.038, 0.0035, 0.0045
     RA = np.array([a_ for a_, _r in ring])
     RR = np.array([r_ for _a, r_ in ring])
 
@@ -118,8 +120,8 @@ if KIND == "pager":
 
     bb = bmesh.new()
     rows = []
-    for r_extra, z_ in ((JEANS, z_belt - BELT_H / 2), (JEANS + BELT_T, z_belt - BELT_H / 2),
-                        (JEANS + BELT_T, z_belt + BELT_H / 2), (JEANS, z_belt + BELT_H / 2)):
+    for r_extra, z_ in ((JEANS + 0.002, z_belt - BELT_H / 2), (JEANS + BELT_T + 0.002, z_belt - BELT_H / 2),
+                        (JEANS + BELT_T, z_belt + BELT_H / 2), (JEANS, z_belt + BELT_H / 2)):   # a cone, the foot out
         rows.append([bb.verts.new(belt_pt(a_, r_extra, z_)) for a_, _r in ring])
     n_ = len(ring)
     for j_ in range(4):
@@ -134,16 +136,16 @@ if KIND == "pager":
     # (a bare frame read as a strap slider; then a flat box for the end lifted off the belt like a board): a heavier
     # frame 50 by 48 mm with 6 mm bars, the prong through a hole, and the belt's end as a strip along the belt's own
     # curve 95 mm to the wearer's left, its tip pointed, under a keeper loop
-    for sz, off, mt in (((0.050, 0.005, 0.006), (0, -0.0035, 0.021), 1), ((0.050, 0.005, 0.006), (0, -0.0035, -0.021), 1),
-                        ((0.006, 0.005, 0.048), (-0.022, -0.0035, 0), 1), ((0.006, 0.005, 0.048), (0.022, -0.0035, 0), 1),
+    for sz, off, mt in (((0.049, 0.005, 0.005), (0, -0.0035, 0.0215), 1), ((0.049, 0.005, 0.005), (0, -0.0035, -0.0215), 1),
+                        ((0.005, 0.005, 0.048), (-0.022, -0.0035, 0), 1), ((0.005, 0.005, 0.048), (0.022, -0.0035, 0), 1),
                         ((0.021, 0.003, 0.004), (0.0095, -0.0072, 0), 1)):
         box(bb, sz, tuple(front + Vector(off)), bevel=0.0012, segs=1, mat=mt)
     r_f = belt_r(a_f)
-    a_end0, a_end1 = a_f + 0.012 / r_f, a_f + 0.107 / r_f
+    a_end0, a_end1 = a_f + 0.012 / r_f, a_f + 0.175 / r_f
     ring_strip(bb, a_end0, a_end1, JEANS + BELT_T + 0.0003, JEANS + BELT_T + 0.0033,
-               lambda t: 0.0165 if t < 0.86 else 0.0165 - (0.0165 - 0.005) * (t - 0.86) / 0.14, 0)
+               lambda t: 0.0175 if t < 0.92 else 0.0175 - (0.0175 - 0.006) * (t - 0.92) / 0.08, 0)
     a_k = a_f + 0.043 / r_f
-    ring_strip(bb, a_k - 0.005 / r_f, a_k + 0.005 / r_f, JEANS - 0.0006, JEANS + BELT_T + 0.0048, lambda t: 0.0205, 0, n=2)
+    ring_strip(bb, a_k - 0.008 / r_f, a_k + 0.008 / r_f, JEANS - 0.0006, JEANS + BELT_T + 0.0045, lambda t: 0.0205, 0, n=2)
     bme = bpy.data.meshes.new("darren_belt")
     bb.to_mesh(bme)
     bb.free()
@@ -297,16 +299,19 @@ elif KIND == "spectacles":
     prof = np.array(prof)
     rng = (prof[:, 0] > nose_tip[2] + 0.015) & (prof[:, 0] < nose_tip[2] + 0.06)
     nasion = prof[rng][np.argmax(prof[rng][:, 1])]
-    eye_z = nasion[0] - 0.004
+    # the eyes' height: 20 mm below the deepest point of the nose's bridge (at 8 mm the first fit sat 10 to 15 mm
+    # too high, to its reviewer; the eye sockets' deepest point, tried next, was the hollow under the eye)
+    eye_z = float(nasion[0]) - opt("--eye-drop", 0.024)          # 4 mm lower still, to the second reviewer
+    log["nasionZ"] = round(float(nasion[0]), 4)
     ys = []
     for sx in (-1.0, 1.0):
         h_ = BVH.ray_cast(Vector((sx * 0.032, nose_tip[1] - 0.2, eye_z)), Vector((0, 1, 0)), 0.4)[0]
         ys.append(h_.y if h_ is not None else nasion[1])
     y_eye = min(ys)
     y_nose_b = float(np.interp(eye_z - 0.006, prof[:, 0], prof[:, 1]))
-    FW, FH, FWB, BR, RIM, RD = 0.056, 0.050, 0.052, 0.018, 0.005, 0.004
+    FW, FH, FWB, BR, RIM, RD = 0.0535, 0.050, 0.0495, 0.018, 0.005, 0.004     # 5 mm narrower overall (review 2)
     y_f = min(y_eye - 0.012, y_nose_b - 0.002 - RD / 2)
-    zc = eye_z - 0.004
+    zc = eye_z + 0.002                                  # the pupils a little above the lens's middle
     log.update({"eyeZ": round(eye_z, 4), "frameY": round(y_f, 4), "noseBridgeY": round(y_nose_b, 4)})
 
     def outline(n=48):
@@ -346,10 +351,11 @@ elif KIND == "spectacles":
         f_ = bm.faces.new(lv)
         lens_faces.append(f_)
         # the end piece: a small block at the outer top corner, back towards the hinge
-        box(bm, (0.006, 0.010, 0.008), (sx * (BR / 2 + FW + RIM - 0.001), RD / 2 + 0.004, zc + FH / 2 - 0.006), bevel=0.001,
+        box(bm, (0.006, 0.010, 0.008), (sx * (BR / 2 + FW + RIM - 0.001), RD / 2 + 0.004, zc + FH / 6), bevel=0.001,
             segs=1, mat=0)
-    # the bridge: a bar across at the lenses' upper third, arched a little
-    box(bm, (BR + 0.004, RD, 0.0045), (0, 0, zc + FH / 2 - 0.010), bevel=0.0012, segs=1, mat=0)
+    # the bridge: moulded, across at the lenses' upper third, resting on her nose (a thin rod along the very top
+    # read as modern)
+    box(bm, (BR + 0.008, RD + 0.0015, 0.011), (0, 0.0004, zc + FH / 2 - 0.017), bevel=0.003, segs=3, mat=0)
     # the lenses split at their upper third, the top a darker tint
     res = bmesh.ops.triangulate(bm, faces=lens_faces)
     lens_tris = res["faces"]
@@ -387,18 +393,23 @@ elif KIND == "spectacles":
     frame = bpy.data.objects.new(NAME, me)
     bpy.context.collection.objects.link(frame)
     # the arms: from each end piece back along her head, 3 mm off it, to the top of her ear, then down behind it
-    hinge_z = zc + FH / 2 - 0.006
+    hinge_z = zc + FH / 6                               # the hinges a third of the way down, as the period's frames
     parts = [frame]
     tips = []
     for sx in (-1.0, 1.0):
         x0 = sx * (BR / 2 + FW + RIM) * math.cos(math.radians(5.0))
         y0 = y_f + RD / 2 + 0.009 + (FW + RIM) * math.sin(math.radians(5.0))
         pts = [(x0, y0, hinge_z)]
-        ear_z = eye_z - 0.004
+        ear_z = eye_z + opt("--ear-up", 0.006)           # where the ear's rim joins the head (6 mm lower, it cut the rim)
         y_ear = y0 + opt("--ear-back", 0.092)
 
         def side_at(yy, zz):
-            h_ = BVH.ray_cast(Vector((0.0, yy, zz)), Vector((sx, 0.0, 0.0)), 0.2)[0]
+            """The head's side: from outside in front of the ear (from inside, in front of the face, the ray met
+            nothing and the arm went through her cheekbone), from inside at the ear (its rim is not the head)."""
+            if yy < y_ear - 0.012:
+                h_ = BVH.ray_cast(Vector((sx * 0.25, yy, zz)), Vector((-sx, 0.0, 0.0)), 0.3)[0]
+            else:
+                h_ = BVH.ray_cast(Vector((0.0, yy, zz)), Vector((sx, 0.0, 0.0)), 0.2)[0]
             return abs(h_.x) if h_ is not None else abs(x0)
 
         n_s = 14
@@ -406,14 +417,14 @@ elif KIND == "spectacles":
             t = k / n_s
             yy = y0 + (y_ear - y0) * t
             zz = hinge_z + (ear_z - hinge_z) * (t ** 1.3)
-            xx = max(abs(x0) + (side_at(yy, zz) + 0.003 - abs(x0)) * min(1.0, t * 3.0), side_at(yy, zz) + 0.003)
+            xx = max(abs(x0), side_at(yy, zz) + 0.003) if t < 0.5 else side_at(yy, zz) + 0.003
             pts.append((sx * xx, float(yy), float(zz)))
         # over the ear's root and down behind it, following the head
         last = pts[-1]
         for k in range(1, 7):
             t = k / 6.0
             yy = last[1] + 0.018 * math.sin(t * math.pi / 2)
-            zz = last[2] - 0.022 * (1 - math.cos(t * math.pi / 2)) - 0.002 * t
+            zz = last[2] - 0.018 * (1 - math.cos(t * math.pi / 2)) - 0.002 * t
             pts.append((sx * (side_at(yy, zz) + 0.0025), float(yy), float(zz)))
         tips.append(Vector(pts[-1]))
         cu = bpy.data.curves.new("temple", "CURVE")
@@ -457,10 +468,10 @@ elif KIND == "spectacles":
         hit, nn, _f, _d = BVH.find_nearest(cpts[i_])
         if hit is not None and (cpts[i_] - hit).dot(nn) < 0.002:
             cpts[i_] = hit + nn * 0.002
-    cpts[0], cpts[-1] = tips[0] + Vector((0, 0.002, -0.002)), tips[1] + Vector((0, 0.002, -0.002))
+    cpts[0], cpts[-1] = tips[0] + Vector((0, 0.001, 0.0)), tips[1] + Vector((0, 0.001, 0.0))   # at the tips (2 mm forward, it came through the ear)
     cu = bpy.data.curves.new("chain", "CURVE")
     cu.dimensions = "3D"
-    cu.bevel_depth, cu.bevel_resolution = 0.0007, 1
+    cu.bevel_depth, cu.bevel_resolution = 0.0010, 1     # 2 mm (at 1.4 it would flicker away at game distance)
     sp = cu.splines.new("POLY")
     sp.points.add(len(cpts) - 1)
     for i_, q in enumerate(cpts):
@@ -529,9 +540,16 @@ def skin_weights(obj):
                     acc[n] = acc.get(n, 0.0) + x * 0.5 / max(1, len(nbr[vi]))
             new[vi] = acc
         per = new
-    for vi, w in per.items():                         # the thighs' pull halved (in full it hauled the back up seated),
-        back = (obj.matrix_world @ me_.vertices[vi].co).y > 0.02       # and at the back cut to a sixth (it bunched)
-        per[vi] = {n: (x * (0.15 if back else 0.5) if n.startswith("thigh") else x) for n, x in w.items()}
+    for vi, w in per.items():                         # two bones: the spine's share to spine_01, the rest the pelvis
+        sp_ = sum(x for n, x in w.items() if n.startswith("spine"))
+        tot = sum(w.values()) or 1.0
+        per[vi] = {"pelvis": (tot - sp_) / tot, "spine_01": sp_ / tot}
+    xy = np.array([tuple((obj.matrix_world @ v.co).xy) for v in me_.vertices])
+    col = {}
+    for vi in per:                                    # the same across the width: each column's mean
+        near = np.where(np.sum((xy - xy[vi]) ** 2, axis=1) < 0.008 ** 2)[0]
+        col[vi] = {n: float(np.mean([per[int(j)].get(n, 0.0) for j in near])) for n in ("pelvis", "spine_01")}
+    per = col
     # the main strap: the largest connected piece; the others (the belt's end, the keeper, the buckle) take the
     # strap's own weights at its nearest point (weighted from the skin, the end lifted off it like a board)
     seen, islands = set(), []
