@@ -7461,6 +7461,27 @@ namespace Ledger.CoreTests
                       string.Join(" | ", wrongSure));
             }
 
+            // HIS NO REACHES THE LANDING WHEN RON GOES DOWN, NOT AT DAWN (the
+            // independent review of 30 September, B3): told no at half nine, Ron
+            // goes down at eleven; the outfit's man has it from then, for the
+            // night's talk, not at six the next morning stamped eleven after the
+            // night's rounds had run without it. The game asks each hour (TellDue).
+            {
+                var noMill = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) noMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var no = new Arrangement(0);
+                no.Delivered(0, noMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                no.Answer(0, NightAnswer.Refused, noMill, new GameTime(0, 21, 30));
+                bool notYet = !noMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0");
+                no.TellDue(noMill, new GameTime(0, 22, 0));
+                bool stillNot = !noMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0");
+                no.TellDue(noMill, new GameTime(0, 23, 0));
+                var heard = noMill.Get(Arrangement.OutfitMan).Rumors.Find(r => r.TopicKey == "player.outfit_d0");
+                Check(notYet && stillNot && heard != null && heard.Hops == 0,
+                      "his no at half nine reaches the man at the landing when Ron goes down at eleven, as the hour turns, not at dawn",
+                      $"{notYet} {stillNot} {heard != null}");
+            }
+
             // THE WITNESS BANK KEEPS THE CONTENT RULE (the independent review of 30
             // September, A13: "Half the dock front walks like that after opening
             // time", men from the pub, spoke of drink). The pub's hours as a drinking
@@ -7708,11 +7729,16 @@ namespace Ledger.CoreTests
                 }
                 int qCopies = agedPair.Get("b").Rumors.Count(x => x.Content.Predicate == "night_walk");
                 bool noRetell = qCopies == 1;
-                // Every hour once, however often it is asked; skipped hours with nobody on the street.
+                // EVERY ROUND ONCE, AND NONE BEFORE ITS TIME (the independent review of
+                // 30 September, A12: the hour's ten rounds ran as it started, so a talk
+                // at 13:01 could hold a memory stamped 13:54): a call runs the rounds
+                // up to its own time, each round with the street as that call gives
+                // it; rounds of hours gone by with nobody on the street.
                 var hoursMill = RoundsMill();
                 var hours = new TownHours();
                 int firstRun = hours.RunTo(hoursMill, rc, new GameTime(0, 9, 10), id => id == "p" || id == "q");
-                int sameHour = hours.RunTo(hoursMill, rc, new GameTime(0, 9, 50));
+                bool noneAhead = hoursMill.Agents.All(g0 => g0.Memory.Events.All(e => e.Time.TotalMinutes <= 9 * 60 + 10));
+                int sameHour = hours.RunTo(hoursMill, rc, new GameTime(0, 9, 50), id => id == "p" || id == "q");
                 bool gameOwnPair = !Holds(hoursMill, "q");
                 int skippedTwo = hours.RunTo(hoursMill, rc, new GameTime(0, 11, 5));
                 var hoursBack = TownHours.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(hours.ToJson()))));
@@ -7737,12 +7763,19 @@ namespace Ledger.CoreTests
                 var reloadedHours = TownHours.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(loadedHours.ToJson()))));
                 for (int hh = 15; hh <= 20; hh++) reloadedHours.RunTo(reloaded, rc, new GameTime(0, hh, 0));
                 bool noHourLost = Math.Abs(straight.Get("p").Rumors[0].Confidence - reloaded.Get("p").Rumors[0].Confidence) < 1e-12;
-                bool hoursOnce = firstRun == 1 && sameHour == 0 && gameOwnPair && skippedTwo == 2 && hours.NextHour == 12 && afterLoad == 0 && noHourLost
-                                 && townBack.Hours.NextHour == 12 && TownRounds.HourStart(-1).Equals(new GameTime(-1, 23, 0));
+                // Asked each minute or each hour, the town ends the same.
+                var minutely = Fading(); var minutelyHours = new TownHours();
+                for (int mm = 9 * 60; mm <= 20 * 60; mm++) minutelyHours.RunTo(minutely, rc, GameTime.FromTotalMinutes(mm));
+                bool sameEitherWay = minutely.Agents.All(g0 => Math.Abs((g0.Rumors.Count > 0 ? g0.Rumors[0].Confidence : -1) - (straight.Get(g0.Id).Rumors.Count > 0 ? straight.Get(g0.Id).Rumors[0].Confidence : -1)) < 1e-12);
+                // A save from before (the next hour only) reads as that hour's start.
+                bool oldSave = TownHours.FromJson(new Dictionary<string, object> { { "next", 12.0 } }).NextRound == 12 * 60;
+                bool hoursOnce = firstRun == 2 && noneAhead && sameHour == 7 && gameOwnPair && skippedTwo == 12 && hours.NextHour == 11 && hours.NextRound == 11 * 60 + 6
+                                 && afterLoad == 5 && noHourLost && sameEitherWay && oldSave
+                                 && townBack.Hours.NextRound == 11 * 60 + 6 && TownRounds.HourStart(-1).Equals(new GameTime(-1, 23, 0));
                 Check(passed9 >= 1 && qHeard && rNotYet && rHeard && same && !Holds(onStreetBoth, "q") && Holds(onStreetOne, "q") && noRetell && hoursOnce
                       && ran == 3 && Holds(skipped, "r") && longest == TownRounds.LongestCatchUpHours
                       && TownRounds.Hour(null, rc, new GameTime(0, 9, 0)) == 0 && TownRounds.CatchUp(skipped, rc, new GameTime(0, 12, 0), new GameTime(0, 9, 0)) == 0,
-                      "an hour of the town's talk runs the rounds by the routines, as TownReach always has, for every pair the street does not hold, and ages the hour; skipped hours are caught up, two weeks at most",
+                      "an hour of the town's talk runs the rounds by the routines, as TownReach always has, for every pair the street does not hold, and ages the hour; skipped hours are caught up, two weeks at most; the game's hours run each round once and none before its time, asked each minute or each hour alike, across a save",
                       $"{passed9} {qHeard} {rNotYet} {rHeard} {same} {ran} {longest} {noRetell}/{qCopies} {hoursOnce}");
             }
 

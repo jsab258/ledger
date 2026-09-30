@@ -12,14 +12,15 @@ namespace Ledger.Core
     /// hour. The game ran rounds only between people standing near each other on
     /// the street in front of him, so nobody off Quay Street talked, and nobody
     /// at all while he slept or sat in the cells. So: the game keeps one
-    /// TownHours and calls its RunTo as each game hour starts (and after a
-    /// load), which runs every hour not yet run, once, the hour now with the
-    /// street as it stands (`onStreet`, the people the game has walking there,
-    /// whose rounds are its own by distance) and any hours skipped with nobody
-    /// on it. A round passes stories only between the pairs it is given, so the
-    /// game's rounds and these never tell the same pair twice; the ageing is
-    /// here, once an hour, and nowhere else. Who is on the street is read as the
-    /// hour starts, for the whole hour.
+    /// TownHours and calls its RunTo as game time passes (as often as it likes,
+    /// and after a load), which runs every round not yet run up to now, once,
+    /// each at its own minute and none before it (the independent review of
+    /// 30 September, A12), this hour's with the street as it stands
+    /// (`onStreet`, the people the game has walking there, whose rounds are
+    /// its own by distance) and any before it with nobody on it. A round passes
+    /// stories only between the pairs it is given, so the game's rounds and
+    /// these never tell the same pair twice; the ageing is here, once an hour,
+    /// and nowhere else.
     public static class TownRounds
     {
         /// Game minutes between two rounds, as TownReach has always run them.
@@ -75,38 +76,65 @@ namespace Ledger.Core
     /// twice and aged twice). One per game, saved with the town (TownSave).
     public sealed class TownHours
     {
-        /// The first hour not yet run, counted from day 0's midnight; -1 before any.
-        public long NextHour { get; private set; } = -1;
+        /// The first round not yet run, in minutes from day 0's midnight (a
+        /// multiple of TownRounds.MinutesBetweenRounds); -1 before any.
+        public long NextRound { get; private set; } = -1;
+        /// The first hour not yet wholly run; -1 before any.
+        public long NextHour => NextRound < 0 ? -1 : TownRounds.FloorDiv(NextRound, 60);
 
-        /// AS EACH GAME HOUR STARTS, and after a load: every hour not yet run up
-        /// to and including the hour `now` is in, once each; the hours before
-        /// it with nobody on the street (skipped: asleep, in the cells, a load's
-        /// jump), the hour now with `onStreet`. The first call runs only the
-        /// hour now. Returns how many hours ran.
+        /// EVERY ROUND ONCE, AND NONE BEFORE ITS TIME (the independent review
+        /// of 30 September, A12: the hour's ten rounds ran as the hour started,
+        /// so a talk at 13:01 could hold a memory stamped 13:54, and a deed at
+        /// 12:05 was first passed on at 13:00): every round from the first not
+        /// yet run up to `now`, each at its own minute; the rounds of the hour
+        /// `now` is in with `onStreet` (the people the game has walking there,
+        /// whose rounds are its own by distance), any before it with nobody on
+        /// the street (skipped: asleep, in the cells, a load's jump), two weeks
+        /// at most; the mill aged as each hour turns. The game may call it as
+        /// often as it likes: asked each minute or each hour, the town ends the
+        /// same. The first call starts at the hour now's start. Returns how many
+        /// rounds ran.
         public int RunTo(GossipMill mill, CastDay cast, GameTime now, Func<string, bool> onStreet = null)
         {
             if (mill == null || cast == null) return 0;
-            long hourNow = TownRounds.FloorDiv(now.TotalMinutes, 60);
-            if (hourNow < NextHour) return 0;
+            const int step = TownRounds.MinutesBetweenRounds;
+            long nowM = now.TotalMinutes;
+            long hourNowStart = TownRounds.FloorDiv(nowM, 60) * 60;
+            long lastRound = TownRounds.FloorDiv(nowM, step) * step;
+            if (NextRound < 0) NextRound = hourNowStart;
+            if (lastRound < NextRound) return 0;
             // The mill's ageing clock is not in the save: started again at the
-            // first hour not yet run, a load loses no hour of fading (the
+            // hour the next round is in, a load loses no hour of fading (the
             // independent check: one hour's fade missing after each load). A
             // mill that has aged to that hour already is not aged again.
-            if (NextHour >= 0) mill.Age(TownRounds.HourStart(NextHour));
+            mill.Age(GameTime.FromTotalMinutes(TownRounds.FloorDiv(NextRound, 60) * 60));
+            long earliest = hourNowStart - TownRounds.LongestCatchUpHours * 60L;
+            if (NextRound < earliest) NextRound = earliest;
             int ran = 0;
-            if (NextHour >= 0 && hourNow > NextHour)
-                ran += TownRounds.CatchUp(mill, cast, TownRounds.HourStart(NextHour), TownRounds.HourStart(hourNow));
-            TownRounds.Hour(mill, cast, TownRounds.HourStart(hourNow), onStreet);
-            NextHour = hourNow + 1;
-            return ran + 1;
+            for (long r = NextRound; r <= lastRound; r += step, ran++)
+            {
+                var at = GameTime.FromTotalMinutes(r);
+                if (r % 60 == 0) mill.Age(at);
+                var street = r >= hourNowStart ? onStreet : null;
+                int day = at.Day, hour = at.Hour;
+                mill.Tick(at, (x, y) => !(street != null && street(x) && street(y)) && cast.Together(x, y, day, hour));
+            }
+            NextRound = lastRound + step;
+            return ran;
         }
 
-        public Dictionary<string, object> ToJson() => new Dictionary<string, object> { { "next", (double)NextHour } };
+        public Dictionary<string, object> ToJson() => new Dictionary<string, object> { { "next", (double)NextHour }, { "round", (double)NextRound } };
 
+        /// From ToJson's values: the next round; a save from before rounds were
+        /// kept (the next hour only) reads as that hour's start.
         public static TownHours FromJson(Dictionary<string, object> saved)
         {
             var t = new TownHours();
-            if (saved != null && saved.TryGetValue("next", out var n) && n is double d && d >= -1 && d < 1e7 && d == Math.Floor(d)) t.NextHour = (long)d;
+            if (saved != null && saved.TryGetValue("round", out var r) && r is double rd && rd >= -1 && rd < 6e8 && rd == Math.Floor(rd)
+                && (rd < 0 ? rd == -1 : rd % TownRounds.MinutesBetweenRounds == 0))
+                t.NextRound = (long)rd;
+            else if (saved != null && saved.TryGetValue("next", out var n) && n is double d && d >= -1 && d < 1e7 && d == Math.Floor(d))
+                t.NextRound = d < 0 ? -1 : (long)d * 60;
             return t;
         }
     }

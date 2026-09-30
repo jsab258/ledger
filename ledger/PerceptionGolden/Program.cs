@@ -190,7 +190,11 @@ namespace Ledger.PerceptionGolden
                     // B6, Ada's tea as she would tell it.
                     "TeaClosed|late|", "TeaSave|late|",
                     // B7, told to their face is not a sighting.
-                    "ThreatMemory|", "WeekFiledMemory|" };
+                    "ThreatMemory|", "WeekFiledMemory|",
+                    // A12, the town's rounds in time order.
+                    "TownHoursRun|", "TownHoursRound|",
+                    // B3, his no told when Ron goes down.
+                    "TellDue|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -731,6 +735,9 @@ namespace Ledger.PerceptionGolden
                 try { d = MiniJson.Deserialize(saved); } catch (Exception) { d = null; }
                 Row(sb, "TownHoursJson", Esc(saved), TownHours.FromJson(d as Dictionary<string, object>).NextHour.ToString(Inv));
             }
+            // The next round kept (the review, A12), and a save from before read as its hour's start.
+            foreach (var saved in new[] { "{\"round\":726}", "{\"round\":727,\"next\":12}", "{\"next\":12}", "{\"round\":-1}", "{\"round\":-6}", "{\"round\":726.5}" })
+                Row(sb, "TownHoursRound", Esc(saved), TownHours.FromJson(MiniJson.Deserialize(saved) as Dictionary<string, object>).NextRound.ToString(Inv));
         }
 
         static void EmitTownRounds(StringBuilder sb)
@@ -1841,6 +1848,21 @@ namespace Ledger.PerceptionGolden
                     leak.Tick(new GameTime(1, 12, 30), (a, b) => true);
                     Row(sb, "NamesHim", "leak " + rung.ToString(Inv), Bit(leak.Get("n").Rumors.Exists(x => x.TopicKey == "player.window_d1")), D(leak.Get("n").Suspicion.Value));
                 }
+            }
+            // His no reaches the landing when Ron goes down, as the hour turns (the review, B3).
+            {
+                var noMill = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) noMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var no = new Arrangement(0);
+                no.Delivered(0, noMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                no.Answer(0, NightAnswer.Refused, noMill, new GameTime(0, 21, 30));
+                var at = new List<string>();
+                foreach (var h in new[] { 22, 23 })
+                {
+                    no.TellDue(noMill, new GameTime(0, h, 0));
+                    at.Add(h.ToString(Inv) + ":" + Bit(noMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0")));
+                }
+                Row(sb, "TellDue", "no at 21:30", string.Join(",", at));
             }
             // He misses her Sunday (the independent review, B1): she asks the next time he talks with her at the office.
             var missed = new WeeksEnd(0);
