@@ -6,10 +6,11 @@
 WHY, 30 September (Jafar, after an outside audit: one garment "proven on two approved bodies, Ron's and Darren's",
 before any wardrobe). The MetaHuman bodies share one mesh, point for point (Ron's MH_RoccoP2 and Darren's MH_SamC5,
 32,334 points each), so the change from one body to the other is known at every point of the skin. Each point of
-the garment's main surface moves by the body's own change round it: the changes of the skin points near it,
-weighted by a Gaussian whose width grows with the point's distance from the skin (--sigma-near to --sigma metres),
-so a point close to the skin follows the skin under it and a loose one the body round it, and neighbouring points
-move together (carried by the nearest skin triangle alone, the jacket's loose sides came out in wings and ragged
+the garment's main surface moves by the body's own broad change round it: the changes of the skin points near it,
+weighted by a Gaussian of one even width (--sigma metres), so neighbouring points move together and the new body's
+small forms (a lean man's pectorals and abdominals) do not print into stiff wool (the game-way jacket's second
+review; production/research/clothing-pipeline/CARRY-AND-SEAMS-2026-09-30.md; --sigma-near narrower lets points near
+the skin follow it more closely) (carried by the nearest skin triangle alone, the jacket's loose sides came out in wings and ragged
 seams on Darren; production/research/clothing-pipeline/RETOPOLOGY-AND-SKINNING-2026-09-30.md, section 5). The
 pieces on the main surface (a collar, buttons, a yoke, pockets) move with the main surface itself, so they stay
 where they sat on it. A point is then pushed out of the new body, only as far as it stood off the first body (the
@@ -47,7 +48,7 @@ GARMENTS = opt("--garment", "garment", str).split(",")
 KEEP = [k for k in opt("--keep", "", str).split(",") if k]
 NAME = opt("--name", "carried", str)
 SIG = opt("--sigma", 0.06)
-MIN_SIG = opt("--sigma-near", 0.012)
+MIN_SIG = opt("--sigma-near", SIG)          # one even width (the research: a narrower one near the skin printed his muscles)
 CLEAR = opt("--clear", 0.005)
 PS = opt("--piece-sigma", 0.03)
 log = {"in": IN, "from": FROM, "to": TO, "garments": GARMENTS, "sigma": SIG, "clear": CLEAR}

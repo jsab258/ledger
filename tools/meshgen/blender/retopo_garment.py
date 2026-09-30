@@ -370,6 +370,24 @@ def warp(f):
     return float(np.interp(f, cum, xs))
 
 
+def run_fracs(pname, r, runs):
+    """The run's sample count n, where its n+1 samples fall (fractions of its length on the garment), and where each of
+    its own points falls (the same measure)."""
+    n = count_of(pname, r)
+    pts = r["pts"]
+    seglen = [(p[0].co - q[0].co).length for p, q in zip(pts, pts[1:])]
+    cum = np.concatenate([[0], np.cumsum(seglen)])
+    total = cum[-1]
+    if r["role"] == "under":
+        i = runs.index(r)
+        from_start = runs[i - 1]["role"].startswith("cap")
+        fr = [warp(k / n) for k in range(n + 1)]
+        fr = fr if from_start else [1 - warp(1 - k / n) for k in range(n + 1)]
+    else:
+        fr = [k / n for k in range(n + 1)]
+    return n, np.array(fr), cum / max(total, 1e-12)
+
+
 def sample(pname, r, runs):
     """The run's points: n+1 places along it by length on the garment, each as this piece's pattern point."""
     n = count_of(pname, r)
@@ -428,39 +446,120 @@ for pname, runs in panels.items():
         raise SystemExit("RETOPO the piece %s's opposite sides differ: %d/%d, %d/%d" % (pname, len(B), len(T), len(R), len(Lf)))
     nc, nr = len(B) - 1, len(R) - 1
 
-    def arcpar(ps):
-        d = [0.0] + [(b - a).length for a, b in zip(ps, ps[1:])]
-        c = np.cumsum(d)
-        return c / c[-1]
+    # THE GRID FROM A MAP OF THE PIECE ONTO A RECTANGLE (30 September, the second review: the back armhole "looks
+    # torn": the pattern piece's edge curves in there, and a grid spread straight across the piece put points outside
+    # it, which the lift then took from the nearest place, in shards). The piece's own triangles are mapped onto a
+    # rectangle, its four sides onto the rectangle's (each point where it falls among the side's samples), its
+    # inside by the average of its neighbours (Tutte's embedding: onto a convex shape it never folds); the grid is laid
+    # on the rectangle and taken back through that map, so every point lies inside the piece.
+    ukey = lambda v, u: (v.index, round(u.x, 6), round(u.y, 6))  # noqa: E731
+    idx, uvs, ptris = {}, [], []
+    for f in sb.faces:
+        if panel_of_face.get(f.index) != pname:
+            continue
+        ids = []
+        for lp in f.loops:
+            kk = ukey(lp.vert, lp[suv].uv)
+            if kk not in idx:
+                idx[kk] = len(uvs)
+                uvs.append((lp[suv].uv.x, lp[suv].uv.y))
+            ids.append(idx[kk])
+        for jj in range(1, len(ids) - 1):
+            ptris.append((ids[0], ids[jj], ids[jj + 1]))
+    uvs = np.array(uvs)
+    npnt = len(uvs)
+    rect = np.full((npnt, 2), np.nan)
 
-    sB, sT, tL, tR = arcpar(B), arcpar(T), arcpar(Lf), arcpar(R)
-    c0, c1, c2, c3 = B[0], B[-1], T[-1], T[0]
+    def place(rs, fn):
+        off = 0
+        for r in rs:
+            n_r, fr_r, phi = run_fracs(pname, r, runs)
+            fi = np.interp(phi, fr_r, np.arange(n_r + 1))
+            for (v, u), f_ in zip(r["pts"], fi):
+                kk = ukey(v, u)
+                if kk in idx:
+                    rect[idx[kk]] = fn(off + f_)
+            off += n_r
+
+    place([bottom], lambda f_: (f_, 0.0))
+    place(s1, lambda f_: (nc, f_))
+    place(top, lambda f_: (nc - f_, nr))
+    place(s3, lambda f_: (0.0, nr - f_))
+    fixed_b = ~np.isnan(rect[:, 0])
+    ed = set()
+    for t3 in ptris:
+        for x_, y_ in ((t3[0], t3[1]), (t3[1], t3[2]), (t3[2], t3[0])):
+            ed.add((min(x_, y_), max(x_, y_)))
+    ed = np.array(sorted(ed))
+    deg = np.bincount(ed.ravel(), minlength=npnt).astype(float)
+    free = np.where(~fixed_b)[0]
+    X = np.where(fixed_b[:, None], rect, 0.0)
+    X[free] = np.nanmean(rect[fixed_b], axis=0)
+
+    def lap(Y):
+        """(D - A) Y over all points."""
+        out = deg[:, None] * Y
+        np.subtract.at(out, ed[:, 0], Y[ed[:, 1]])
+        np.subtract.at(out, ed[:, 1], Y[ed[:, 0]])
+        return out
+
+    # conjugate gradients on the free points, the boundary held
+    Xb = np.where(fixed_b[:, None], X, 0.0)
+    rhs = -lap(Xb)[free]
+    Y = X[free].copy()
+
+    def A(Yf):
+        Z = np.zeros_like(X)
+        Z[free] = Yf
+        return lap(Z)[free]
+
+    rr = rhs - A(Y)
+    pp = rr.copy()
+    rs_old = (rr * rr).sum(axis=0)
+    for _it in range(4000):
+        Ap = A(pp)
+        alpha = rs_old / np.maximum((pp * Ap).sum(axis=0), 1e-30)
+        Y += pp * alpha
+        rr -= Ap * alpha
+        rs_new = (rr * rr).sum(axis=0)
+        if rs_new.max() < 1e-18:
+            break
+        pp = rr + pp * (rs_new / np.maximum(rs_old, 1e-30))
+        rs_old = rs_new
+    X[free] = Y
+    # the grid taken back through the map
+    rkd = KDTree(len(ptris))
+    for ti, (a_, b_, c_) in enumerate(ptris):
+        cc = (X[a_] + X[b_] + X[c_]) / 3
+        rkd.insert((cc[0], cc[1], 0.0), ti)
+    rkd.balance()
     G = [[None] * (nr + 1) for _ in range(nc + 1)]
     for i in range(nc + 1):
-        for j in range(nr + 1):
-            t = float(tL[j] + tR[j]) / 2
-            s = float(sB[i] + sT[i]) / 2
-            G[i][j] = ((1 - t) * B[i] + t * T[i] + (1 - s) * Lf[j] + s * R[j]
-                       - ((1 - s) * (1 - t) * c0 + s * (1 - t) * c1 + (1 - s) * t * c3 + s * t * c2))
-    # folded faces (a concave edge can fold a Coons patch): the inside eased by Laplacian until none
-    def folded():
-        sgn = []
-        for i in range(nc):
-            for j in range(nr):
-                a, b, c, d = G[i][j], G[i + 1][j], G[i + 1][j + 1], G[i][j + 1]
-                sgn.append((b - a).cross(d - a) + (d - c).cross(b - c))
-        pos = sum(1 for x in sgn if x > 0)
-        return min(pos, len(sgn) - pos)
-
-    nf = folded()
-    rounds = 0
-    while nf and rounds < 200:
-        for _ in range(5):
-            for i in range(1, nc):
-                for j in range(1, nr):
-                    G[i][j] = (G[i - 1][j] + G[i + 1][j] + G[i][j - 1] + G[i][j + 1]) / 4
-        rounds += 5
-        nf = folded()
+        G[i][0], G[i][nr] = B[i], T[i]
+    for j in range(nr + 1):
+        G[0][j], G[nc][j] = Lf[j], R[j]
+    outside = 0
+    for i in range(1, nc):
+        for j in range(1, nr):
+            q = Vector((i, j, 0.0))
+            got = None
+            best = None
+            for _c, ti, _d in rkd.find_n(q, 24):
+                a_, b_, c_ = ptris[ti]
+                A2, B2, C2 = (Vector((X[k_][0], X[k_][1], 0.0)) for k_ in (a_, b_, c_))
+                if intersect_point_tri_2d(q, A2, B2, C2):
+                    got = ti
+                    break
+                if best is None:
+                    best = ti
+            ti = got if got is not None else best
+            outside += got is None
+            a_, b_, c_ = ptris[ti]
+            A2, B2, C2 = (Vector((X[k_][0], X[k_][1], 0.0)) for k_ in (a_, b_, c_))
+            Ua, Ub, Uc = (Vector((uvs[k_][0], uvs[k_][1], 0.0)) for k_ in (a_, b_, c_))
+            w3 = barycentric_transform(q, A2, B2, C2, Ua, Ub, Uc)
+            G[i][j] = Vector((w3[0], w3[1]))
+    rounds, nf = 0, outside
     K = {}
     for i in range(nc + 1):
         K[(i, 0)], K[(i, nr)] = Bk[i][1], Tk[i][1]
@@ -468,7 +567,7 @@ for pname, runs in panels.items():
         K[(0, j)], K[(nc, j)] = Lk[j][1], Rk[j][1]
     grids[pname] = G
     keys[pname] = K
-    say("grid", pname, "%dx%d" % (nc, nr), "folded", nf, "eased rounds", rounds)
+    say("grid", pname, "%dx%d" % (nc, nr), "points off the map", nf)
 log["grids"] = {p: [len(G) - 1, len(G[0]) - 1] for p, G in grids.items()}
 
 # ---- 3. the lift, and the pieces joined ------------------------------------------------------------------------
@@ -481,6 +580,7 @@ over_layer = lb.faces.layers.int.new("overlap")        # 1: the front's overlapp
 missed = 0
 shared = {}
 VG = {}
+holes = set()
 for pname, G in grids.items():
     nc, nr = len(G) - 1, len(G[0]) - 1
     V = [[None] * (nr + 1) for _ in range(nc + 1)]
@@ -493,6 +593,8 @@ for pname, G in grids.items():
             p3, ok = lift(pname, G[i][j])
             missed += not ok
             V[i][j] = lb.verts.new(p3)
+            if not ok:
+                holes.add(V[i][j])
             if key is not None:
                 shared[key] = V[i][j]
     VG[pname] = V
@@ -504,6 +606,14 @@ for pname, G in grids.items():
                 f[over_layer] = 1
             for lp, (a, b) in zip(f.loops, ((i, j), (i + 1, j), (i + 1, j + 1), (i, j + 1))):
                 lp[puv].uv = G[a][b]
+# points that fell in a hole of the drape's outer skin (its deepest folds) take the mean of their neighbours on the
+# grid, not the nearest place (which could be another fold, and threw shards)
+for _ in range(opt("--hole-rounds", 60, int)):
+    for v in holes:
+        nb_ = [e.other_vert(v).co for e in v.link_edges]
+        if nb_:
+            v.co = sum(nb_, Vector()) / len(nb_)
+log["holesFilled"] = len(holes)
 nan = sum(1 for v in lb.verts if any(math.isnan(t) for t in v.co))
 if nan:
     raise SystemExit("RETOPO %d lifted points have no position" % nan)
@@ -512,6 +622,21 @@ log["liftMissed"] = missed
 n_before = len(lb.verts)
 bmesh.ops.remove_doubles(lb, verts=lb.verts[:], dist=opt("--weld", 0.0005))
 say("joined at the seams", n_before, "->", len(lb.verts), "points")
+# STIFF MELTON'S SURFACE (the second review: the glossy yoke "puffed and quilted, wavy highlight bands", a jagged edge
+# at the back armhole): the lifted grid copies the drape's small waves, which stiff wool does not make; the game mesh
+# is evened by Taubin's two-pass smoothing (--taubin rounds; it does not shrink), the openings held; the drape's
+# broad folds stay, and what the smoothing takes goes into the normal map's bake, softened there
+for _ in range(opt("--taubin", 12, int)):
+    for lam in (0.5, -0.53):
+        new_co = {}
+        for v in lb.verts:
+            if v.is_boundary or not v.link_edges:
+                continue
+            avg = sum((e.other_vert(v).co for e in v.link_edges), Vector()) / len(v.link_edges)
+            new_co[v] = v.co + (avg - v.co) * lam
+        for v, c in new_co.items():
+            v.co = c
+log["taubin"] = opt("--taubin", 12, int)
 
 
 def boundary_loops(bm):
@@ -601,7 +726,8 @@ if HEM_DROP > 0:
             up = [e2.other_vert(v) for e2 in v.link_edges if not e2.is_boundary]
             d = (v.co - up[0].co) if up else Vector((0, 0, -1))
             d.z = min(d.z, -1e-4)
-            fall[v] = (d.normalized() * 0.6 + Vector((0, 0, -0.4))).normalized()
+            # mostly straight down (continuing the skirt's own fall flared the corners out: the second review)
+            fall[v] = (d.normalized() * 0.25 + Vector((0, 0, -0.75))).normalized()
         res = bmesh.ops.extrude_edge_only(lb, edges=edges)
         src_of, off = {}, {}
         for v in (g for g in res["geom"] if isinstance(g, bmesh.types.BMVert)):
@@ -1081,6 +1207,9 @@ def base_colour(name, fallback):
 
 
 wool_c = base_colour("Wool", (0.03, 0.04, 0.09))
+if opt("--wool-srgb", "", str):
+    # the drape's wool read charcoal-slate more than navy (the second review): the colour given in sRGB
+    wool_c = np.array([float(c) for c in opt("--wool-srgb", "", str).split(",")])
 yoke_c = base_colour("Yoke", (0.012, 0.012, 0.014))
 ymask = np.clip(blur(yoke, opt("--yoke-aa", 0.7)), 0, 1)
 col = np.ones((TEX, TEX, 4))
@@ -1094,6 +1223,45 @@ nrm = np.array(img_n.pixels[:]).reshape(TEX, TEX, 4)
 v3 = nrm[:, :, :3] * 2 - 1
 steep = v3[:, :, 2] < opt("--steep", 0.55)
 v3[steep | ~hit] = (0.0, 0.0, 1.0)
+# STIFF MELTON, A SMOOTH YOKE, CLEAN SEAMS (the second review: the back armhole "looks torn", the yoke "puffed and
+# quilted, wavy highlight bands"; the geometry there is clean: the drape's crumples at the armpit and across the
+# yoke were baked into the normal map): the wool's normals softened (--nrm-soft pixels) and held within --max-tilt
+# degrees, so only broad folds remain; the yoke flat (PVC is stiff; its edge is raised below); along every seam and
+# edge of the pieces a band (--seam-band pixels) laid flat, then a small stitched groove (--seam-groove) drawn in it
+cov = hit | plain
+for k_ in (0, 1):
+    v3[:, :, k_] = blur(v3[:, :, k_], opt("--nrm-soft", 2.0))
+mt = math.cos(math.radians(opt("--max-tilt", 28.0)))
+xy = np.linalg.norm(v3[:, :, :2], axis=2)
+zz = np.sqrt(np.clip(1 - np.minimum(xy, math.sqrt(1 - mt * mt)) ** 2, 0, 1))
+scale = np.where(xy > 1e-9, np.minimum(xy, math.sqrt(1 - mt * mt)) / np.maximum(xy, 1e-9), 0)
+v3[:, :, 0] *= scale
+v3[:, :, 1] *= scale
+v3[:, :, 2] = zz
+yflat = np.clip(blur((yoke > 0.5).astype(float), 2.0) * 1.5, 0, 1)
+v3[:, :, 0] *= 1 - yflat
+v3[:, :, 1] *= 1 - yflat
+# distance (pixels) from the edge of the pieces' islands
+dist = np.zeros((TEX, TEX))
+m_ = cov.copy()
+BAND = opt("--seam-band", 14, int)
+for k_ in range(1, BAND + 1):
+    er = m_ & np.roll(m_, 1, 0) & np.roll(m_, -1, 0) & np.roll(m_, 1, 1) & np.roll(m_, -1, 1)
+    dist[m_ & ~er] = k_
+    m_ = er
+dist[m_] = BAND + 1
+ramp = np.clip((dist - 3) / max(1, BAND - 3), 0, 1)
+ramp = ramp * ramp * (3 - 2 * ramp)
+v3[:, :, 0] *= ramp
+v3[:, :, 1] *= ramp
+GROOVE = opt("--seam-groove", 0.6)
+if GROOVE > 0:
+    hg = -np.clip(1 - np.abs(dist - 4) / 2.5, 0, 1) * cov
+    hg = blur(hg, 0.8)
+    gy_, gx_ = np.gradient(hg)
+    v3[:, :, 0] -= GROOVE * gx_
+    v3[:, :, 1] -= GROOVE * gy_
+v3 /= np.linalg.norm(v3, axis=2, keepdims=True)
 h = blur(yoke, opt("--ledge-soft", 1.6))
 gy, gx = np.gradient(h)
 LEDGE = opt("--ledge", 1.2)
@@ -1202,7 +1370,7 @@ if pocket_mask.any() and POCKET_LINE > 0:
     img_c.pixels[:] = colp.ravel()
 # the yoke's shine: PVC or leather, not wool (--yoke-rough), in a roughness map
 rough = np.ones((TEX, TEX, 4))
-rv = opt("--wool-rough", 0.9) * (1 - ymask) + opt("--yoke-rough", 0.42) * ymask
+rv = opt("--wool-rough", 0.9) * (1 - ymask) + opt("--yoke-rough", 0.5) * ymask
 rough[:, :, 0] = rough[:, :, 1] = rough[:, :, 2] = rv
 img_r = new_image("_roughness", colour=False)
 img_r.pixels[:] = rough.ravel()
