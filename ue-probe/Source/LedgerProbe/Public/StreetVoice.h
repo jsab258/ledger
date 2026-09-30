@@ -66,6 +66,14 @@
 //       REPLIER IDS, not summaries, so the bank measurement above is not its
 //       denominator: canon.md carries 0 non-ASCII bytes (1 file examined,
 //       2026-09-08), which is the set the cast ids derive from.
+//       AND TWO MORE PRODUCERS OF SUMMARIES since 30 September: the town's
+//       news (production/specs/town-news.json, 0 non-ASCII bytes, with
+//       hook-cast.json and quay-cast.json, measured that day) and the damage's
+//       wording (Aftermath, the game's own). The independent check of that day
+//       proved the parting on non-ASCII text (a replier "Zoë", a summary
+//       starting "é", one padded with U+00A0), and one the C# has alone: its
+//       Trim's EndsWith(".") is culture-aware, so a full stop followed by a
+//       soft hyphen or zero-width space counts as one there and not here.
 //   13. Answer's ARITHMETIC IS DONE IN uint32 AND CAST BACK. C# int
 //       arithmetic is unchecked and wraps; C++ signed overflow is undefined,
 //       so `seed * 97 + 31 + hash % 9973` would be UB for a large seed. The
@@ -463,14 +471,16 @@ namespace LedgerCore
 		// lines splits on whitespace and truncates in silence.
 		inline const char* TellBandName(int BandIndex)
 		{
-			return BandIndex == 0 ? "confidence-at-or-above-0.80"
+			return BandIndex == -1 ? "news"
+			     : BandIndex == 0 ? "confidence-at-or-above-0.80"
 			     : BandIndex == 1 ? "confidence-0.50-to-0.80"
 			                      : "confidence-below-0.50";
 		}
 
 		inline const char* AnswerBandName(int BandIndex)
 		{
-			return BandIndex == 0 ? "nerve-above-0.65-and-sensitive"
+			return BandIndex == -1 ? "news"
+			     : BandIndex == 0 ? "nerve-above-0.65-and-sensitive"
 			     : BandIndex == 1 ? "loyalty-above-0.65"
 			     : BandIndex == 2 ? "greed-above-0.65"
 			                      : "no-disposition-above-0.65";
@@ -945,6 +955,16 @@ namespace LedgerCore
 				N2.Bank = "exchange/reply/news";
 				Lines.push_back(N1);
 				Lines.push_back(N2);
+				// A news exchange is composed too: the trace says so, its bands the
+				// news bank's (-1, named "news"), so the game's reading of it never
+				// takes it for a refusal (the independent check, 30 September).
+				if (OutTrace != 0)
+				{
+					OutTrace->TellBand = -1; OutTrace->TellIndex = NewsI; OutTrace->TellCount = NewsCount;
+					OutTrace->AnswerBand = -1; OutTrace->AnswerIndex = ReplyI; OutTrace->AnswerCount = ReplyCount;
+					OutTrace->AnswerSeedValue = AnswerSeed(Seed, To->Id);
+					OutTrace->bComposed = true;
+				}
 				return Lines;
 			}
 
