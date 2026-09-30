@@ -64,7 +64,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Pushes:** free tests only.
 
-**C: free:** 34 GB at the start, 20 now, falling with the builder's work (his cleanup page awaits you). Backup runs with this commit.
+**C: free:** 34 GB at the start, 40 now; it dipped to 20 while the builder worked (his cleanup page awaits you). Backup runs with this commit.
 
 ## Builder, Wednesday 30 September
 
