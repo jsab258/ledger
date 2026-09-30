@@ -1010,10 +1010,17 @@ namespace Ledger.Core
         }
 
         /// The note that asks for a second draft.
-        public static string SecondDraftNote(IReadOnlyList<string> invented) =>
+        public static string SecondDraftNote(IReadOnlyList<string> invented, bool narrow = false) =>
             "- Your first answer said " + string.Join("; ", invented) +
-            ", which nothing you saw, heard or were told supports. Answer again, saying only what you actually know. " +
-            "If you don't know something, say so in your own way.";
+            ", which nothing you saw, heard or were told supports. " +
+            (narrow
+                // THE SECOND TRY NARROWED (30 September, after the newcomer
+                // bench: what still fell back was a second draft adding texture
+                // the character was never given): one or two short sentences,
+                // from what bears on his line alone.
+                ? "Answer again in one or two short sentences, in your own words, from what bears most on what he just said and nothing else: " +
+                  "no name, time, place, number, habit or happening that it does not give. If it does not answer him, say so in your own way."
+                : "Answer again, saying only what you actually know. If you don't know something, say so in your own way.");
 
         /// STATED IN SO MANY WORDS (U1, 30 September): every telling word of the
         /// detail stands in the item in the same order ("Ron came on at the
