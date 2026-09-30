@@ -224,6 +224,13 @@ DAYS["2026-09-30-3"] = {
          [("Sorry I missed the funeral.", "All I know is this, boss. Mickey's funeral was at Father Walsh's chapel, before you came."),
           ("Where do I sleep?", "Here's what I can tell you, boss. You're in Mickey's flat, over the office."),
           ("Is there any money in it?", "Now then. Mickey's hasn't made much since the docks went. Trade's been thin.")]),
+        ("mickey-like", "What was Mickey like? Say only these two for now?", [("yes", "Yes"), ("write", "I'll write it"), ("leave", "Leave it")], "yes",
+         "\"What was Mickey like?\" is among a newcomer's first questions, and nobody has written it. I drafted three versions of what the "
+         "street says of him; three blind reviews each found lines that give away the story (the fire, the envelope on night one, which "
+         "way the drivers' money runs). These two survived. Yes: every regular who knew him can say them; the rest stays unsaid. I'll "
+         "write it: you give me what the street says of him. Leave it: the question keeps today's path, where he is often left blank.",
+         [("anyone on the street", "Mickey kept his business to himself. You'd not hear it from him on the street."),
+          ("anyone on the street", "Mickey kept Ron on when the docks let him go.")]),
         ("talk-next", "Next for talk: write down what the street would know?", [("write", "Yes, write it"), ("leave", "Leave talk")], "write",
          "\"That's all I know\" is down from 36 to about 22 of a newcomer's 60 questions. Two ways of prompting the writer failed today "
          "(planning first: no better; a narrower second try: worse, 27). What still falls back is a question nobody wrote the answer to: "

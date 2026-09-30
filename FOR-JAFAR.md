@@ -28,7 +28,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** one tap, Ron's facts said plainly. Acted on: the ending's signs wait; Ron's lines, his tone (yes) and the regulars; writing the missing knowledge goes into item 4.
+**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** two taps: Ron's facts said plainly; what the street says of Mickey. Acted on: the ending's signs wait; Ron's lines, tone and the regulars; the missing knowledge goes into item 4.
 
 **The audit's list, done:**
 - **Grounded replies:** on sixty fixed newcomer questions, labelled independently, "that's all I know" fell from 36 to about 22, inventions unchanged; planning facts first: no better.
@@ -37,15 +37,15 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Your key:** capped in code; $0.83 spent.
 
-**Research:** contextual dialogue (Valve's talk); the talk program; street lines; the ending's signs; choosing what a character says.
+**Research:** contextual dialogue (Valve); the talk program; street lines; the ending's signs; choosing what's said.
 
-**Set aside after two tries:** a second look; prompting the writer; tuning the check.
+**Set aside after two tries:** a second look; prompting the writer; tuning the check; writing Mickey's character (three reviews).
 
 **Pushes:** Core ones build Unreal here.
 
-**C: free:** 47.9 GB, 43.4 now. Backup runs with this commit.
+**C: free:** 47.9 GB, 49.5 now. Backup runs with this commit.
 
-**Your new list:** 1: the facts chosen missed the answer in 12 of 21 empty answers. 2: the plain line cuts empty answers (26 to 16) but 84 of 123 miss the question: off until 4 picks the facts. 3: no tuned check beat today's; kept. Now 4.
+**Your new list:** 1: the chosen facts missed in 12 of 21 empty answers. 2: the plain line cuts empty answers (26 to 16) but most miss the question: off until 4. 3: no tuned check beat today's; kept. 4: built, measuring.
 
 ## Clothes, Thursday 1 October
 

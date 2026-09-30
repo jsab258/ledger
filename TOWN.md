@@ -47,6 +47,11 @@ on 30 September; two ways of prompting the writer failed and are off.
 4. **A small rule table for the first week:** the kind of question, who is asked
    and what they hold decide between an answer, a partial answer, "don't know,
    ask someone who does", or a written line.
+   - State, 30 September: built (TalkRules, ConversationEngine.UseRules, off
+     until measured), through a blind review (lookalike lines, Sheila pleading
+     ignorance, a partial answer sounding complete, all fixed). Measuring on the
+     three sets against today's version, runs alternating. "What was Mickey
+     like?" waits on him.
 5. **Measure every change** on the sixty, on a new sixty nobody tuned on, and on
    thirty questions nobody in the town can answer.
    - The sets: a helper who saw neither the facts nor the failures wrote twenty
@@ -71,6 +76,8 @@ reach yet.
 
 - How Ron says the facts plainly (the town's page of 30 September; off for
   now, it waits for item 4).
+- What the street says Mickey was like: two lines that survived three blind
+  reviews, or his own words (the same page). Set aside after three tries.
 
 After the list: the named cast's own street lines, in Ron's pattern (his tone
 approved, 30 September).
