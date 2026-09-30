@@ -28,10 +28,10 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** two taps: Ron's tone, and his facts said plainly. Acted on: the ending's signs wait; Ron's lines and the regulars decided (DECISIONS).
+**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** one tap, Ron's facts said plainly. Acted on: the ending's signs wait; Ron's lines, his tone (yes) and the regulars; writing the missing knowledge goes into item 4.
 
 **The audit's list, done:**
-- **Grounded replies:** on sixty fixed newcomer questions, labelled independently, "that's all I know" fell from 36 to about 22; inventions stayed at one or two. Planning facts first: 18, by chance (16 better, 15 worse); off. None timed out in 24.
+- **Grounded replies:** on sixty fixed newcomer questions, labelled independently, "that's all I know" fell from 36 to about 22, inventions unchanged; planning facts first: no better.
 - **Time and state:** the Monday envelope and the builder's fourteen faults fixed; a sweep found thirteen more: ten fixed, three wait for a detective's crime.
 - **The builder's route:** sixteen test cases, unchanged.
 
@@ -39,13 +39,13 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Research:** contextual dialogue (Valve's talk); the talk program; street lines; the ending's signs; choosing what a character says.
 
-**Set aside after two tries:** a second look by the check; prompting the writer (a narrower second try: worse).
+**Set aside after two tries:** a second look; prompting the writer; tuning the check.
 
 **Pushes:** Core ones build Unreal here.
 
 **C: free:** 47.9 GB, 43.4 now. Backup runs with this commit.
 
-**Your new list:** item 1 done: of 21 empty answers, the facts chosen missed the answer in 12, and 29% of what the check refused was true. Item 2 built and reviewed; measuring.
+**Your new list:** 1: the facts chosen missed the answer in 12 of 21 empty answers. 2: the plain line cuts empty answers (26 to 16) but 84 of 123 miss the question: off until 4 picks the facts. 3: no tuned check beat today's; kept. Now 4.
 
 ## Clothes, Thursday 1 October
 

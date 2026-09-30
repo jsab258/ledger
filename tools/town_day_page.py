@@ -200,24 +200,27 @@ DAYS["2026-09-30-3"] = {
     "title": "Ron's tone",
     "one_screen": True,
     "heading": "Five of Ron's street lines",
-    "show": [
-        ("passing Tom on the rank", "Boss. Kettle's on in the office."),
-        ("meeting him the first time", "You'll be the new owner, then. Ron. The rank's mine, the door too."),
-        ("while talk about Tom goes round", "Your name's going round, boss. Just so you know."),
-        ("after Tom threatens him", "Thirty years on the quay, boss. I've been told worse by better."),
-        ("once Tom winds Mickey's business down", "Can't say I'm sorry, boss. Mickey's other business never did him any good."),
-    ],
+    "show": [],
     "decisions": [
         ("ron-tone", "Is this Ron's tone?", [("yes", "Yes"), ("hard", "Too hard"), ("soft", "Too soft")], "yes",
          "Ron has 159 street lines, all short: remarks in passing, a word with a neighbour, a line after a noise. "
          "They are on in the game. In conversation his card has him talk on at more length. "
          "\"Thirty years on the quay\" matches his card and the threat line you approved on 29 September. "
-         "If his tone is off, I rewrite all 159 to match and write nobody else's lines until then."),
+         "If his tone is off, I rewrite all 159 to match and write nobody else's lines until then.",
+         [
+        ("passing Tom on the rank", "Boss. Kettle's on in the office."),
+        ("meeting him the first time", "You'll be the new owner, then. Ron. The rank's mine, the door too."),
+        ("while talk about Tom goes round", "Your name's going round, boss. Just so you know."),
+        ("after Tom threatens him", "Thirty years on the quay, boss. I've been told worse by better."),
+        ("once Tom winds Mickey's business down", "Can't say I'm sorry, boss. Mickey's other business never did him any good."),
+    ]),
         ("ron-plain", "Refused twice, Ron says it plainly. Right?", [("yes", "Yes"), ("stiff", "Too stiff")], "yes",
-         "When the check refuses a reply twice, Ron now says the facts that bear on the question plainly, after a short opener of his own, "
+         "When the check refuses a reply twice, Ron can say the facts that bear on the question plainly, after a short opener of his own, "
          "instead of \"that's all I know\". Every detail in it is a written fact, so nothing is invented; his secrets are never said this "
-         "way. Two blind reviews; what the second left: \"Now then\" can read as hello in the middle of a talk; the cards say Mickey died "
-         "\"three weeks ago\" where this says \"three weeks before you came\", which drift apart over the week (I will align the cards).",
+         "way. Measured, it is off for now: the facts it picks by shared words miss the question two times in three, so it waits until "
+         "the rule table picks them by the kind of question. This is how it sounds when the fact is right. Two blind reviews; what the "
+         "second left: \"Now then\" can read as hello mid-talk; the cards say Mickey died \"three weeks ago\" where this says \"three "
+         "weeks before you came\" (I will align the cards).",
          [("Sorry I missed the funeral.", "All I know is this, boss. Mickey's funeral was at Father Walsh's chapel, before you came."),
           ("Where do I sleep?", "Here's what I can tell you, boss. You're in Mickey's flat, over the office."),
           ("Is there any money in it?", "Now then. Mickey's hasn't made much since the docks went. Trade's been thin.")]),
