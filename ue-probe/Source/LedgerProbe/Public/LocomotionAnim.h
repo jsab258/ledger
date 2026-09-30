@@ -26,6 +26,11 @@ public:
 
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
+	// Where the walk and run clips are in their loops, in the clip's own
+	// seconds, for his footsteps (SliceCharacter.cpp StepTick). False until
+	// both clips are set.
+	bool ClipTimes(float& OutWalk, float& OutRun) const;
+
 	UPROPERTY(Transient)
 	TObjectPtr<UAnimSequenceBase> Idle;
 	UPROPERTY(Transient)

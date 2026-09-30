@@ -5,6 +5,7 @@
 #include "Animation/AnimNodeSpaceConversions.h"
 #include "Animation/AnimSequenceBase.h"
 #include "AnimationRuntime.h"
+#include "AnimNodes/AnimNode_ModifyCurve.h"
 #include "BoneControllers/AnimNode_LookAt.h"
 #include "BoneControllers/AnimNode_ModifyBone.h"
 #include "Camera/PlayerCameraManager.h"
@@ -28,6 +29,10 @@ namespace
 		FAnimNode_ModifyBone Calm[ULedgerPersonAnim::CalmBones];
 		FAnimNode_LookAt Look;
 		FAnimNode_ConvertComponentToLocalSpace ToLocal;
+		// THE MOUTH WHILE THEY SPEAK (SpeakTick, PersonAnim.h): the face rig's
+		// own mouth controls, blended over the idle by how much of the voice
+		// is being heard. On a body the curves meet nothing and do nothing.
+		FAnimNode_ModifyCurve Mouth;
 
 		explicit FLedgerPersonProxy(UAnimInstance* Instance) : FAnimInstanceProxy(Instance) {}
 
@@ -76,10 +81,14 @@ namespace
 			Look.ComponentPose.SetLinkNode(Into);
 			ToLocal.ComponentPose.SetLinkNode(bLooks ? static_cast<FAnimNode_Base*>(&Look)
 			                                         : static_cast<FAnimNode_Base*>(&ToComponent));
+			Mouth.SourcePose.SetLinkNode(&ToLocal);
+			Mouth.ApplyMode = EModifyCurveApplyMode::Blend;
+			Mouth.Alpha = 0.0f;
+			for (const TCHAR* Name : ULedgerPersonAnim::MouthCurves) { Mouth.CurveMap.Add(FName(Name), 0.0f); }
 			FAnimInstanceProxy::Initialize(InAnimInstance);
 		}
 
-		virtual FAnimNode_Base* GetCustomRootNode() override { return &ToLocal; }
+		virtual FAnimNode_Base* GetCustomRootNode() override { return &Mouth; }
 
 		virtual void GetCustomNodes(TArray<FAnimNode_Base*>& OutNodes) override
 		{
@@ -88,6 +97,7 @@ namespace
 			for (int32 I = 0; I < ULedgerPersonAnim::CalmBones; ++I) { OutNodes.Add(&Calm[I]); }
 			OutNodes.Add(&Look);
 			OutNodes.Add(&ToLocal);
+			OutNodes.Add(&Mouth);
 		}
 
 		// THE GAME THREAD'S DECISION, copied in before the worker updates.
@@ -98,6 +108,11 @@ namespace
 			{
 				Look.Alpha = A->LookAlpha;
 				Look.LookAtLocation = A->LookTarget;
+				Mouth.Alpha = A->SpeakWeight;
+				for (int32 I = 0; I < ULedgerPersonAnim::MouthCurveCount; ++I)
+				{
+					if (float* V = Mouth.CurveMap.Find(FName(ULedgerPersonAnim::MouthCurves[I]))) { *V = A->MouthValues[I]; }
+				}
 			}
 		}
 	};
@@ -303,4 +318,27 @@ void ULedgerPersonAnim::LookToward(const FVector& Where, float DelaySeconds, flo
 	NoisePoint = Where;
 	NoiseDelay = FMath::Max(0.0f, DelaySeconds);
 	NoiseLeft = FMath::Max(0.0f, Seconds);
+}
+
+void ULedgerPersonAnim::SpeakTick(float Level, bool bSpeaking, float DeltaSeconds)
+{
+	// OPEN QUICKLY, CLOSE A LITTLE SLOWER, as a jaw does: the loudness is
+	// followed in about 30 ms rising and 80 ms falling, and the blend over
+	// the idle eases in and out over a fifth of a second.
+	const float Target = bSpeaking ? FMath::Clamp(Level, 0.0f, 1.0f) : 0.0f;
+	const float Rate = Target > SpeakLevel ? 1.0f / 0.03f : 1.0f / 0.08f;
+	SpeakLevel += (Target - SpeakLevel) * FMath::Min(1.0f, DeltaSeconds * Rate);
+	SpeakWeight = FMath::FInterpConstantTo(SpeakWeight, bSpeaking ? 1.0f : 0.0f, DeltaSeconds, 5.0f);
+	SpeakClock += DeltaSeconds;
+	const float L = SpeakLevel;
+	// THE SHAPES: the jaw with the loudness; the lips pressed together in the
+	// quiet between sounds; a little funnel and stretch that drift against
+	// each other so vowels do not all look alike (a jaw alone reads as a
+	// puppet's). The research: production/research/lip-sync/NOTE-2026-09-30.md.
+	const float Drift = 0.5f + 0.5f * FMath::Sin(SpeakClock * 7.3f) * FMath::Sin(SpeakClock * 3.1f + 1.0f);
+	MouthValues[0] = 0.04f + 0.36f * L;                          // jawOpen
+	const float Closed = FMath::Clamp(1.0f - L * 4.0f, 0.0f, 1.0f) * 0.6f;
+	for (int32 I = 1; I <= 4; ++I) { MouthValues[I] = Closed; }  // lips together, four quarters
+	for (int32 I = 5; I <= 8; ++I) { MouthValues[I] = 0.25f * L * Drift; }           // funnel, four quarters
+	MouthValues[9] = MouthValues[10] = 0.18f * L * (1.0f - Drift);                    // stretch, left and right
 }

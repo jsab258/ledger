@@ -182,6 +182,10 @@ WATCHED = {
     # THE PS5 CORNER'S SCANNED MATERIALS, 23 September, downloaded on Jafar's
     # yes: Poly Haven textures, CC0, 2k maps, one folder per material.
     "production/assets/scanned": "Scanned materials — Poly Haven",
+    # TOM'S FOOTSTEPS, 30 September: cut from two CC0 recordings of real
+    # trainers (tools/ue/make_steps.py), kept apart from the generated beds in
+    # `production/assets/sounds` (ours) so neither row covers the other.
+    "production/assets/steps": "Footsteps — sturmankin and Joseph Sardin",
     # NOT AN ASSET DROP: the visual bar's reference frames. Five GTA V
     # screenshots supplied by Jafar, committed byte-exact after the project
     # spent three days with its visual target existing only as a prose

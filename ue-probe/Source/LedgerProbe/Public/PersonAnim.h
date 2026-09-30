@@ -115,6 +115,27 @@ public:
 	// to where it came from for this long, whoever they were looking at, then
 	// goes back to its own business.
 	void LookToward(const FVector& Where, float DelaySeconds, float Seconds);
+
+	// THE MOUTH WHILE THEY SPEAK, 30 September (the twenty a friend would
+	// notice, 12: lips roughly in time). Each frame the game says how loud
+	// the voice being heard is (0 to 1) and whether they are speaking; the
+	// face's own mouth controls follow it, blended over the idle, so a face
+	// opens and closes with its words and rests again after. A first step:
+	// Epic's streaming speech solver, in the engine, is the next
+	// (production/research/lip-sync/NOTE-2026-09-30.md).
+	void SpeakTick(float Level, bool bSpeaking, float DeltaSeconds);
+	static constexpr int32 MouthCurveCount = 11;
+	static constexpr const TCHAR* MouthCurves[MouthCurveCount] = {
+		TEXT("CTRL_expressions_jawOpen"),
+		TEXT("CTRL_expressions_mouthLipsTogetherUL"), TEXT("CTRL_expressions_mouthLipsTogetherUR"),
+		TEXT("CTRL_expressions_mouthLipsTogetherDL"), TEXT("CTRL_expressions_mouthLipsTogetherDR"),
+		TEXT("CTRL_expressions_mouthFunnelUL"), TEXT("CTRL_expressions_mouthFunnelUR"),
+		TEXT("CTRL_expressions_mouthFunnelDL"), TEXT("CTRL_expressions_mouthFunnelDR"),
+		TEXT("CTRL_expressions_mouthStretchL"), TEXT("CTRL_expressions_mouthStretchR") };
+	float MouthValues[MouthCurveCount] = {};
+	float SpeakLevel = 0.0f;
+	float SpeakWeight = 0.0f;
+	float SpeakClock = 0.0f;
 	FVector NoisePoint = FVector::ZeroVector;
 	float NoiseDelay = 0.0f;
 	float NoiseLeft = 0.0f;

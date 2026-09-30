@@ -330,6 +330,15 @@ holds and has to be corrected or widened.
 | **Where** | `production/assets/scanned/polyhaven/<asset>/`: `brick_4` (a warm red stretcher-bond brick, the Hook sheet's nearest), `brick_wall_001` (a darker variegated brick, the alternate), `concrete_pavement_02` (square concrete flags, the British footway's), `asphalt_01` (a coarse grey road) and `painted_concrete_02` (a smooth, lightly worn paint, the base the shopfront's navy is tinted over; the library's painted timber is all planking, which a shopfront is not); diffuse, DirectX normal, roughness and ambient occlusion each |
 | **What** | the corner's scanned brick, for the "best free scanned materials" half of the PS5 experiment |
 
+## Footsteps — sturmankin and Joseph Sardin, CC0
+
+| | |
+|---|---|
+| **Source** | Walking: **sturmankin**, "paving_11a_sneakers_walk" (https://freesound.org/s/273077/, uploaded 1 May 2015), trainers on three paving slabs, its public high-quality preview. Running: **Joseph Sardin**, BigSoundBank s0514 "Footsteps, Shoe on Concrete" (https://bigsoundbank.com/, its page read 30 September 2026), a man running in trainers on concrete outdoors. Both fetched 30 September 2026 without signing in; the sources are kept in F:/LedgerTools/steps-sources |
+| **Licence** | Both CC0 1.0 Universal: the Freesound page reads "Creative Commons 0"; the BigSoundBank page reads "CC0 (public domain)". Credit not required, given here |
+| **Where** | `production/assets/steps/step-walk-0.wav` to `-7.wav` and `step-run-0.wav` to `-7.wav`, cut by `tools/ue/make_steps.py`: the rumble below 60 Hz (walk) or 100 Hz (run) taken off, each footfall cut so its loudest hit lands 12 ms in and ended 35 dB down, kept only with a heel and a toe, died away by its end, and between 500 and 1600 Hz, levelled |
+| **What** | Tom's footsteps, walking and running, played by the player character as each foot lands (`ue-probe` SliceCharacter.cpp) |
+
 ## What this project made itself
 
 | | |
