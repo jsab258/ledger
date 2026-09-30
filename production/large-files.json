@@ -1310,6 +1310,15 @@
    "mb": 13163
   },
   {
+   "path": "F:/LedgerTools/voice-portable",
+   "madeBy": "the builder, from miniconda's Python 3.12, the chatterbox-nano env-dml packages and weights, and tools/voice-live (scratchpad make_voice_portable.py)",
+   "why": "item 3's voice stopgap trial: today's voice program runnable from one folder with nothing installed, for a friends' build",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 4315,
+   "statusWhy": "F: down to 4.5 GB free; remade in three minutes by tools/voice-live/make_portable.py when the friends' build needs it (tested 30 September: bare environment, self-test 21/21, a line spoken)"
+  },
+  {
    "path": "F:/LedgerTools/voxcpm2",
    "madeBy": "uv venv + pip install voxcpm (CPU torch), 29 September",
    "why": "VoxCPM2 (Apache-2.0) for acted lines made in advance (Jafar's list, item 6); the model itself is in F:/LedgerTools/hf",

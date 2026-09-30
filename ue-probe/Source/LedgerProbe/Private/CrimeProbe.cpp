@@ -175,6 +175,8 @@ namespace
 	// scripted encounter keeps Mickey's, which the regression measures.
 	const TCHAR* kGlassR = TEXT("east_parade_glass2");
 	bool bRitasWindow = false;
+	// Rita's pane in the scene file as the street set it up (WindowLook puts it back so).
+	bool bWindowGlassStartRead = false, bWindowGlassStartHidden = true, bWindowGlassStartCollides = false;
 
 	// The bank, found the same way the piece list is (VignetteShot.cpp's
 	// FindSpec): a packaged build's ProjectDir is the STAGED project, not the
@@ -2181,6 +2183,12 @@ namespace
 		bRitasWindow = GEnc == EEncounter::Live && !bLiveScript;
 		GGlass[0] = LedgerVignetteShot::FindStreetPiece(bRitasWindow ? kGlassR : kGlassA);
 		GGlass[1] = LedgerVignetteShot::FindStreetPiece(kGlassB);
+		if (GGlass[0] != nullptr)
+		{
+			bWindowGlassStartRead = true;
+			bWindowGlassStartHidden = GGlass[0]->IsHidden();
+			bWindowGlassStartCollides = GGlass[0]->GetActorEnableCollision();
+		}
 
 		// NO SLOT BETWEEN THE PARKED CARS AND THE KERB RAILING (the AI tester,
 		// 30 September: by the fish market he pushed into it and stuck). The
@@ -2534,10 +2542,17 @@ namespace
 	void RespawnMate(UWorld* World)
 	{
 		if (GR3Body != nullptr || World == nullptr) { return; }
+		// IN FREE PLAY HE KEEPS MICKEY'S DOOR (the cast: "Ron Kirby, who keeps
+		// Mickey's door and the rank"; the AI tester, 30 September: in the yard
+		// the gap between the houses is shut by crates, so nobody could reach
+		// him to answer his envelope): just along from the door, three metres
+		// from Sheila, facing the street. The scripted story keeps its yard.
+		const double RX = bRitasWindow ? 6.0 : LedgerCrime::kR3X, RZ = bRitasWindow ? 4.0 : LedgerCrime::kR3Z;
 		double GY = 0.0;
 		std::string On;
-		if (!GroundYAt(World, LedgerCrime::kR3X, LedgerCrime::kR3Z, GY, On)) { GY = 0.1; }
-		GR3Body = SpawnBody(World, TEXT("probe_body_r3"), LedgerCrime::kR3X, LedgerCrime::kR3Z, GY);
+		if (!GroundYAt(World, RX, RZ, GY, On)) { GY = 0.1; }
+		GR3Body = SpawnBody(World, TEXT("probe_body_r3"), RX, RZ, GY);
+		if (bRitasWindow && GR3Body != nullptr) { FaceBody(GR3Body, LedgerCrime::P3(RX, GY, 0.0)); }
 		DressBody(World, GR3Body, TEXT("Rocco"));   // names-gate: allow (the asset MH_RoccoT2)
 	}
 
@@ -2912,7 +2927,27 @@ namespace
 	{
 		if (GVoice.bStarted) { return; }
 		FString Py, Script;
-		if (!FParse::Value(FCommandLine::Get(), TEXT("VoicePython="), Py) || !FParse::Value(FCommandLine::Get(), TEXT("VoiceScript="), Script)) { return; }
+		if (!FParse::Value(FCommandLine::Get(), TEXT("VoicePython="), Py) || !FParse::Value(FCommandLine::Get(), TEXT("VoiceScript="), Script))
+		{
+			// THE VOICE BESIDE THE GAME, 30 September (item 3's stopgap for a
+			// friends' build, Jafar's ruling): a folder "Voice" next to the game
+			// holding today's voice program with its own Python, torch and
+			// weights (tools/voice-live, made portable), started with its own
+			// paths, so a PC with nothing installed hears the cast. -NoVoice
+			// leaves it off.
+			const FString Voice = FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::RootDir(), TEXT("Voice")));
+			Py = Voice / TEXT("python/python.exe");
+			Script = Voice / TEXT("tools/voice-live/voice-server.py");
+			if (FParse::Param(FCommandLine::Get(), TEXT("NoVoice")) || !FPaths::FileExists(Py) || !FPaths::FileExists(Script)) { return; }
+			FPlatformMisc::SetEnvironmentVar(TEXT("NANO_PKG"), *(Voice / TEXT("nano/src-master/src")));
+			FPlatformMisc::SetEnvironmentVar(TEXT("NANO_WEIGHTS"), *(Voice / TEXT("nano/weights")));
+			FPlatformMisc::SetEnvironmentVar(TEXT("NANO_VOICE_CACHE"), *(Voice / TEXT("nano/voice-cache")));
+			FPlatformMisc::SetEnvironmentVar(TEXT("PYTHONNOUSERSITE"), TEXT("1"));
+			const FString Path = FPlatformMisc::GetEnvironmentVariable(TEXT("PATH"));
+			FPlatformMisc::SetEnvironmentVar(TEXT("PATH"), *(FPaths::ConvertRelativePathToFull(Voice / TEXT("python")) + TEXT(";")
+				+ FPaths::ConvertRelativePathToFull(Voice / TEXT("python/Library/bin")) + TEXT(";") + Path));
+			UE_LOG(LogTemp, Display, TEXT("LedgerVoice: the voice beside the game, %s"), *Voice);
+		}
 		GVoice.bStarted = true;   // one try, whatever happens
 		if (!FPlatformProcess::CreatePipe(GVoice.OutRead, GVoice.OutWrite) || !FPlatformProcess::CreatePipe(GVoice.InRead, GVoice.InWrite, true)) { return; }
 		// --prewarm: the cast voices are learned and run once before the server
@@ -4663,10 +4698,20 @@ namespace
 			if (A.Key() == "rita_window" && GNow.TotalMinutes() >= A.DoneAt().TotalMinutes() && GNow.TotalMinutes() < A.MendedAt().TotalMinutes()) { bBroken = true; }
 		}
 		if ((int)bBroken == GWindowLooksBroken) { return; }
-		GWindowLooksBroken = bBroken ? 1 : 0;
 		AActor* Glass = GGlass[0];
-		Glass->SetActorHiddenInGame(bBroken);
-		Glass->SetActorEnableCollision(!bBroken);
+		// THE SCENE FILE'S PANE AS IT STARTED (the AI tester, 30 September, in
+		// the packaged game: shown whole, it stood as a dark tiled panel over
+		// Rita's front, since the street's own glass is what is seen and that
+		// pane starts hidden). Whole puts it back as it was; broken hides it.
+		if (GWindowLooksBroken < 0 && !bWindowGlassStartRead)
+		{
+			bWindowGlassStartRead = true;
+			bWindowGlassStartHidden = Glass->IsHidden();
+			bWindowGlassStartCollides = Glass->GetActorEnableCollision();
+		}
+		GWindowLooksBroken = bBroken ? 1 : 0;
+		Glass->SetActorHiddenInGame(bBroken || bWindowGlassStartHidden);
+		Glass->SetActorEnableCollision(!bBroken && bWindowGlassStartCollides);
 		const FBox Box = Glass->GetComponentsBoundingBox(true);
 		int32 Panes = 0, Pieces = 0;
 		if (bBroken)
