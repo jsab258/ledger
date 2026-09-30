@@ -27,16 +27,16 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ), no picks yet:** the ending's signs (wait, recommended), Ron's own street lines, the thirty regulars.
+**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** five of Ron's lines, one tap for his tone. Acted on: the ending's signs wait; Ron's lines and the regulars decided (DECISIONS).
 
 **The audit's list, done:**
-- **Grounded replies:** on sixty fixed newcomer questions, labelled independently, "that's all I know" fell from 36 to about 22; inventions stayed at one or two. Planning the facts first gave 18, but by chance (question by question, 16 better, 15 worse), so it stays off as the dearer. Replies timing out: none in 24.
+- **Grounded replies:** on sixty fixed newcomer questions, labelled independently, "that's all I know" fell from 36 to about 22; inventions stayed at one or two. Planning the facts first gave 18, but by chance (16 questions better, 15 worse), so it stays off as the dearer. Replies timing out: none in 24.
 - **Time and state:** the Monday envelope and the builder's fourteen faults fixed; a sweep found thirteen more: ten fixed, three wait for a detective's crime the game lacks; a reviewer's three catches in them, fixed.
-- **The builder's route:** sixteen acceptance cases, unchanged by the fixes.
+- **The builder's route:** sixteen test cases, unchanged.
 
 **Your key:** capped in code; $0.83 today.
 
-**Research:** contextual dialogue (Valve's talk); the talk program; the street's lines; the ending's signs.
+**Research:** contextual dialogue (Valve's talk); the talk program; street lines; the ending's signs.
 
 **Set aside after two tries:** a second look by the check.
 
@@ -44,7 +44,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **C: free:** 47.9 GB, 48.3 now. Backup runs with this commit.
 
-**Next, your call:** (A, recommended) when a reply is refused twice, say the chosen fact plainly instead, measured the same way; (B) leave talk here.
+**Next, your call:** (A, recommended, under way) when a reply is refused twice, say the chosen fact plainly instead; (B) leave talk here.
 
 ## Clothes, Wednesday 30 September
 

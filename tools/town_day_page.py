@@ -193,10 +193,145 @@ DAYS["2026-09-30-2"] = {
 }
 
 
+# 30 September, the third page: after Jafar's answers to the second (the
+# ending's signs wait; Ron's lines and the regulars decided by the town), five
+# of Ron's street lines, once, for his tone.
+DAYS["2026-09-30-3"] = {
+    "title": "Ron's tone",
+    "one_screen": True,
+    "heading": "Five of Ron's street lines",
+    "show": [
+        ("passing Tom on the rank", "Boss. Kettle's on in the office."),
+        ("meeting him the first time", "You'll be the new owner, then. Ron. The rank's mine, the door too."),
+        ("while talk about Tom goes round", "Your name's going round, boss. Just so you know."),
+        ("after Tom threatens him", "Thirty years on the quay, boss. I've been told worse by better."),
+        ("once Tom winds Mickey's business down", "Can't say I'm sorry, boss. Mickey's other business never did him any good."),
+    ],
+    "decisions": [
+        ("ron-tone", "Is this Ron's tone?", [("yes", "Yes"), ("hard", "Too hard"), ("soft", "Too soft")], "yes",
+         "Ron has 159 street lines, all short: remarks in passing, a word with a neighbour, a line after a noise. "
+         "They are on in the game. In conversation his card has him talk on at more length. "
+         "\"Thirty years on the quay\" matches his card and the threat line you approved on 29 September. "
+         "If his tone is off, I rewrite all 159 to match and write nobody else's lines until then."),
+    ],
+}
+
+# EVERY PAGE FITS ONE PHONE SCREEN (Jafar, 30 September: "Your page is a wall
+# of text"): at most three decisions, each one line with its options and the
+# recommendation, answered with a tap; any detail folded underneath, closed.
+MAX_DECISIONS = 3
+MAX_QUESTION = 90      # characters: one line on a phone, the recommendation added
+MAX_OPTION = 16        # a tap button's label
+MAX_SHOWN = 5          # lines shown above the decisions, each short
+MAX_SHOWN_CHARS = 120   # the moment and the line together, about two phone lines
+
+ONE_SCREEN_STYLE = """
+:root{--bg:#eef0ee;--card:#fbfcfb;--ink:#1d2326;--soft:#56646a;--line:#cdd4d2;--amber:#a7650f;--amber-bg:#f6e8d3;--ok:#2f6b45}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--ok:#7cc497;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--ok:#7cc497;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 "Public Sans",system-ui,sans-serif;margin:0}
+.wrap{max-width:30rem;margin:0 auto;padding-inline:16px;padding-block:18px 28px;display:grid;gap:14px}
+.eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:0}
+h1{font:600 1.35rem/1.2 "Newsreader",Georgia,serif;margin:2px 0 0;text-wrap:balance}
+ol{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+li{display:grid;gap:1px}
+li small{color:var(--soft);font-size:.74rem;letter-spacing:.02em}
+li q{font:italic 500 1.08rem/1.3 "Newsreader",Georgia,serif}
+.ask{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px;display:grid;gap:10px}
+.ask p{margin:0;font-weight:600}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row button{flex:1 1 6rem;font:inherit;padding:10px 8px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink);cursor:pointer}
+.row button.rec{border-color:var(--amber)}
+.row button[aria-pressed="true"]{background:var(--amber-bg);border-color:var(--amber);font-weight:600}
+.row button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.status{font-size:.8rem;color:var(--soft);margin:0;min-height:1.1em}
+.status.saved{color:var(--ok)}
+details{font-size:.86rem;color:var(--soft)}
+summary{cursor:pointer}
+details p{margin:6px 0 0}
+textarea{width:100%;box-sizing:border-box;min-height:2.6rem;margin-top:6px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+"""
+
+ONE_SCREEN_SCRIPT = """<script>
+let db = null, canWrite = true;
+const picks = {};
+function status(key, t, ok) { const s = document.getElementById(key + "-status"); s.textContent = t; s.className = "status" + (ok ? " saved" : ""); }
+function show(key, p) { document.querySelectorAll('[data-key="' + key + '"] [data-pick]').forEach(b => b.setAttribute("aria-pressed", String(b.dataset.pick === p))); }
+function save(key) {
+  const note = document.getElementById(key + "-note").value;
+  if (!db) { status(key, "Not saved: this view cannot store your answer."); return; }
+  if (!canWrite) { status(key, "Not saved: you can read this page but not answer on it."); return; }
+  status(key, "Saving...");
+  db.doc("verdicts/" + key).set({ pick: picks[key] || null, note, at: new Date().toISOString() })
+    .then(() => status(key, "Saved", true))
+    .catch(e => { if (e && (e.code === "not_granted" || e.code === "permission_denied")) canWrite = false; status(key, "Not saved: " + (e && e.message ? e.message : "the store refused it") + "."); });
+}
+document.querySelectorAll("[data-key]").forEach(card => {
+  const key = card.dataset.key;
+  card.querySelectorAll("[data-pick]").forEach(b => b.addEventListener("click", () => { picks[key] = b.dataset.pick; show(key, picks[key]); save(key); }));
+  document.getElementById(key + "-note").addEventListener("change", () => save(key));
+});
+(async () => {
+  try { db = await window.claude?.use?.("db"); } catch (e) { db = null; }
+  if (!db) return;
+  for (const card of document.querySelectorAll("[data-key]")) {
+    const key = card.dataset.key;
+    try {
+      const snap = await db.doc("verdicts/" + key).get();
+      const v = snap && (snap.data ? snap.data() : snap);
+      if (v && v.pick) { picks[key] = v.pick; show(key, v.pick); status(key, "Saved", true); }
+      if (v && v.note) document.getElementById(key + "-note").value = v.note;
+    } catch (e) {}
+  }
+})();
+</script>"""
+
+
+def one_screen(day, date, done):
+    """A page that fits one phone screen, or ValueError saying what does not."""
+    esc = html.escape
+    decisions = [d for d in day["decisions"] if d[0] not in done]
+    shown = day.get("show", [])
+    if len(decisions) > MAX_DECISIONS:
+        raise ValueError("more than %d decisions" % MAX_DECISIONS)
+    if len(shown) > MAX_SHOWN or any(len(w) + len(t) > MAX_SHOWN_CHARS for w, t in shown):
+        raise ValueError("too much shown above the decisions")
+    for key, question, options, rec, _ in decisions:
+        if len(question) > MAX_QUESTION:
+            raise ValueError(key + ": the question is longer than one line")
+        if any(len(label) > MAX_OPTION for _, label in options):
+            raise ValueError(key + ": an option is longer than a tap button")
+        if rec not in [v for v, _ in options]:
+            raise ValueError(key + ": the recommendation is not one of its options")
+    parts = ["<title>" + esc(day["title"]) + "</title>",
+             '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
+             '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&family=Public+Sans:wght@400;600&display=swap">',
+             "<style>" + ONE_SCREEN_STYLE + "</style>", '<main class="wrap">',
+             '<header><p class="eyebrow">LEDGER · the town · ' + esc(date) + "</p><h1>" + esc(day.get("heading", day["title"])) + "</h1></header>"]
+    if shown:
+        parts.append("<ol>" + "".join("<li><small>%s</small><q>%s</q></li>" % (esc(w), esc(t)) for w, t in shown) + "</ol>")
+    for key, question, options, rec, detail in decisions:
+        rec_label = dict(options)[rec].lower()
+        parts.append('<section class="ask" data-key="%s"><p>%s (recommended: %s)</p><div class="row" role="group" aria-label="%s">'
+                     % (key, esc(question), esc(rec_label), esc(question)))
+        for v, label in options:
+            parts.append('<button type="button"%s id="%s-%s" data-pick="%s" aria-pressed="false">%s</button>'
+                         % (' class="rec"' if v == rec else "", key, v, v, esc(label)))
+        parts.append('</div><p class="status" id="%s-status"></p><details><summary>More</summary>' % key)
+        if detail:
+            parts.append("<p>" + esc(detail) + "</p>")
+        parts.append('<textarea id="%s-note" placeholder="A note, if you want one"></textarea></details></section>' % key)
+    parts.append("</main>")
+    parts.append(ONE_SCREEN_SCRIPT)
+    return "\n".join(parts)
+
+
 def build(key):
     done = answered()
     day = dict(DAYS[key])
     date = key[:10]
+    if day.get("one_screen"):
+        return one_screen(day, date, done)
     day["questions"] = [q for q in day["questions"] if q[0] not in done]
     day["docs"] = [d for d in day["docs"] if d[0] not in done]
     esc = html.escape
@@ -245,8 +380,23 @@ def selftest():
             assert 'data-key="%s"' % key not in page, (date, key)
     assert main(["town_day_page.py", "2099-01-01"]) == 1
     assert "zoom-in" in town_page.STYLE and 'className = "full"' in town_page.SCRIPT
+    # One phone screen (Jafar, 30 September): too many decisions, a long line,
+    # an unmarked recommendation or detail left open are refused.
+    ok = {"title": "t", "one_screen": True, "decisions": [("k1", "Is it right?", [("yes", "Yes"), ("no", "No")], "yes", "why")]}
+    assert "<details>" in one_screen(ok, "2026-09-30", set()) and "<details open" not in one_screen(ok, "2026-09-30", set())
+    assert "(recommended: yes)" in one_screen(ok, "2026-09-30", set())
+    for bad in (dict(ok, decisions=ok["decisions"] * 4),
+                dict(ok, decisions=[("k1", "x" * 200, [("yes", "Yes")], "yes", "")]),
+                dict(ok, decisions=[("k1", "Is it right?", [("yes", "Yes, and a great deal more besides")], "yes", "")]),
+                dict(ok, decisions=[("k1", "Is it right?", [("yes", "Yes")], "maybe", "")]),
+                dict(ok, show=[("when", "a line " * 40)])):
+        try:
+            one_screen(bad, "2026-09-30", set())
+        except ValueError:
+            continue
+        raise AssertionError("a page that does not fit one screen was built")
     for day in DAYS.values():
-        for key, _, options in day["questions"]:
+        for key, _, options in day.get("questions", []):
             assert "recommended" in options[0][1], key
     print("town_day_page selftest: ok")
     return 0
@@ -266,6 +416,11 @@ def main(argv):
     key = date + ("-" + part if part else "")
     if key not in DAYS:
         print("no page written for " + key)
+        return 1
+    # EVERY PAGE FITS ONE PHONE SCREEN (Jafar, 30 September): only one-screen
+    # pages are written from now on.
+    if not DAYS[key].get("one_screen"):
+        print("refused: a page must fit one phone screen (Jafar, 30 September); give it one_screen")
         return 1
     out_dir = os.path.join(REPO, "production", "approvals", date + "-town" + ("-" + part if part else ""))
     os.makedirs(out_dir, exist_ok=True)
