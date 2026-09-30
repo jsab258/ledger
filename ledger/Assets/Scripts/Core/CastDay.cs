@@ -50,6 +50,7 @@ namespace Ledger.Core
         readonly Dictionary<string, string> _areaOf = new Dictionary<string, string>();
         readonly Dictionary<string, List<string>> _areaNames = new Dictionary<string, List<string>>();
         readonly Dictionary<string, string> _within = new Dictionary<string, string>();
+        readonly HashSet<string> _street = new HashSet<string>();
         readonly Dictionary<string, (double open, double close)?[]> _hours = new Dictionary<string, (double, double)?[]>();
         readonly Dictionary<string, string> _hoursNote = new Dictionary<string, string>();
         readonly Dictionary<string, List<(double from, double to)>[]> _breaks = new Dictionary<string, List<(double, double)>[]>();
@@ -95,6 +96,11 @@ namespace Ledger.Core
             {
                 var a = MiniJson.AsObject(kv.Value);
                 if (MiniJson.GetString(a, "within") is string within && within.Length > 0) c._within[kv.Key] = within;
+                if (a != null && a.ContainsKey("street"))
+                {
+                    if (!(a["street"] is bool st)) throw new FormatException($"cast file: area {kv.Key}'s street must be true or false");
+                    if (st) c._street.Add(kv.Key);
+                }
                 var names = new List<string>();
                 foreach (var n in MiniJson.GetList(a, "names") ?? new List<object>()) if (n is string ns && ns.Trim().Length > 0) names.Add(ns.Trim());
                 c._areaNames[kv.Key] = names;
@@ -221,6 +227,21 @@ namespace Ledger.Core
         /// true answer about where somebody was is never read as a lie. Null
         /// when the file gives the place no area.
         public string AreaOf(string place) => place != null && _areaOf.TryGetValue(place, out var a) ? a : null;
+
+        /// WHETHER SOMEBODY IS ON QUAY STREET at an hour: their place then is in
+        /// one of the areas the file marks "street" (Mickey's, the fish market,
+        /// Rita's, the kiosk, the laundry, the quay at its foot, Ada's step, the
+        /// cafe, the newsagent's, Hal's, the bus stop), not the docks, the chapel,
+        /// the landing or anywhere else in the Hook, and not at home (the
+        /// independent review of 30 September, A11: DS Ellis "on Quay Street"
+        /// stopped people at the chapel and the landing). A file that marks no
+        /// area (a test's small street) counts anybody not at home.
+        public bool OnQuayStreet(string id, int day, int hour)
+        {
+            var place = PlaceOf(id, day, hour) ?? Off;
+            if (place == Off) return false;
+            return _street.Count == 0 || (AreaOf(place) is string a && _street.Contains(a));
+        }
 
         // An area's hours: each weekday it opens, [open, close] in whole or half
         // hours from that day's midnight, a close past 24 into the next morning
@@ -478,7 +499,7 @@ namespace Ledger.Core
 
         /// Whether somebody never goes to the police, whatever they saw or
         /// suffered: their trade keeps them from it (the file's "police": "never",
-        /// town list 6bj). Read only by PoliceFile.WouldReport.
+        /// town list 6bj). Read by PoliceFile.WouldReport and HearTheStreet.
         public bool NeverToPolice(string id) => id != null && _neverToPolice.Contains(id);
 
         /// Which of his worlds somebody belongs to, for the gossip (Gossiper.Circle):

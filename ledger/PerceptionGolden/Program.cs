@@ -176,7 +176,8 @@ namespace Ledger.PerceptionGolden
                 // And the independent review's Core fixes (30 September evening), each
                 // held until the builder's port follows: B1, the week's question
                 // after a missed Sunday.
-                var held = new[] { "WeekAsksNow|" };
+                // A11, DS Ellis only on Quay Street.
+                var held = new[] { "WeekAsksNow|", "SweepAsked|", "SweepHeard|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1452,13 +1453,15 @@ namespace Ledger.PerceptionGolden
                 police.Report("rita", "w1", Offence.Damage, 4, 1);
                 Row(sb, "SweepConstable", police.ConstableComes(3, T(2, 10)) ?? "null", police.ConstableComes(3, T(3, 10)) ?? "null", police.ConstableCalls.Count.ToString(Inv));
             }
-            // DS Ellis asks only the people on the street at her visit's hour.
+            // DS Ellis asks only the people on Quay Street at her visit's hour (the
+            // independent review, A11), the town as the game builds it: each in
+            // their own world (the outfit's man is his night world's).
             {
                 var cast = CastDay.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(FindRepoRoot(), "production", "specs", "hook-cast.json")));
                 var mill = new GossipMill(new SocialGraph());
                 foreach (var id in cast.People)
                 {
-                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(id)));
                     mill.Get(id).Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 0.9, Sensitive = true, Hops = 1 });
                 }
                 foreach (var day in new[] { 2, 4, 6 })

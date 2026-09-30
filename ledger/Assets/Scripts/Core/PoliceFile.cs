@@ -296,6 +296,8 @@ namespace Ledger.Core
             foreach (var a in mill.Agents)
             {
                 if (!OnTheStreet(cast, at, a.Id)) continue;
+                // Those who never go to the police tell her nothing (the file's "police": "never").
+                if (cast != null && cast.NeverToPolice(a.Id)) continue;
                 foreach (var r in TalkOf(mill, a))
                     Heard(a.Id, r.TopicKey, offenceOf != null ? offenceOf(r.TopicKey) : Offence.Suspicious, day);
             }
@@ -363,10 +365,10 @@ namespace Ledger.Core
             return who;
         }
 
-        // Whether somebody is on the street at her visit's hour; anybody, without
-        // the cast and the time.
+        // Whether somebody is on Quay Street at her visit's hour (CastDay.OnQuayStreet;
+        // the independent review, A11); anybody, without the cast and the time.
         static bool OnTheStreet(CastDay cast, GameTime? at, string id) =>
-            cast == null || !(at is GameTime t) || (cast.PlaceOf(id, t.Day, t.Hour) ?? CastDay.Off) != CastDay.Off;
+            cast == null || !(at is GameTime t) || cast.OnQuayStreet(id, t.Day, t.Hour);
 
         /// SHE ASKED THEM (town list 6bq; the checklist's A15.06, a warning
         /// before any arrest, and the audible half of A15.09): on a visit that

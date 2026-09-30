@@ -8281,26 +8281,40 @@ namespace Ledger.CoreTests
                 Check(early == null && today == "w1" && police.ConstableCalls.Count == 1 && police.ConstableCalls[0].day == 3,
                       "a constable's call for a later day made today is refused and recorded nowhere; made that day, it comes", $"{early} {today} {police.ConstableCalls.Count}");
             }
-            // 3. DS Ellis asks only the people on the street when she is there.
+            // 3. DS Ellis asks only the people on the street when she is there, the
+            // town as the game builds it, each in their own world.
             {
                 var cast = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
                 var mill = new GossipMill(new SocialGraph());
                 foreach (var id in cast.People)
                 {
-                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(id)));
                     mill.Get(id).Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 0.9, Sensitive = true, Hops = 1 });
                 }
-                var sunday = new GameTime(6, 9, 0);
-                var all = PoliceFile.WhoSheAsks(mill);
-                var there = PoliceFile.WhoSheAsks(mill, cast, sunday);
-                bool right = all.All(id => there.Contains(id) == (cast.PlaceOf(id, 6, 9) != CastDay.Off));
-                Check(right && there.Count > 0 && there.Count < all.Count && !there.Contains("lena"),
-                      "on her Sunday visit DS Ellis asks only the people on the street at nine, not Sheila at home", $"{there.Count} of {all.Count}");
-                // And hears the street's talk only from them (the independent check).
-                var file = new PoliceFile();
-                file.HearTheStreet(mill, 6, t => Offence.Damage, cast, sunday);
-                var heard = file.Entries.Select(e => e.Who).Distinct().OrderBy(x => x, StringComparer.Ordinal).ToList();
-                Check(heard.SequenceEqual(there), "and files the street's talk only from the people she asked", string.Join(",", heard));
+                // Quay Street itself (canon; the cast file's places within the street):
+                // not the docks, the customs shed, the ferry, the warehouses, the
+                // chapel, the market, the boarding house, the flats or the allotments
+                // (the independent review of 30 September, A11: she "stopped" people at
+                // the chapel and the landing, and each remembered it as Quay Street).
+                var quayStreet = new HashSet<string> { "mickeys", "fish_market", "ritas", "kiosk", "laundry", "quay", "adas", "cafe", "newsagent", "hals", "bus_stop" };
+                foreach (var visit in new[] { new GameTime(6, 9, 0), new GameTime(2, 9, 0), new GameTime(3, 14, 0) })
+                {
+                    var all = PoliceFile.WhoSheAsks(mill);
+                    var there = PoliceFile.WhoSheAsks(mill, cast, visit);
+                    var onStreet = all.Where(id => quayStreet.Contains(cast.AreaOf(cast.PlaceOf(id, visit.Day, visit.Hour)) ?? "")).ToList();
+                    if (visit.Hour == 9 && visit.Day == 2 && there.Contains("outfit_man"))
+                        Check(false, "the outfit's man, at his breakfast in the cafe, is his night world's: she never asks him", "");
+                    Check(there.SequenceEqual(onStreet) && there.Count > 0 && (visit.Day != 6 || !there.Contains("lena")),
+                          $"DS Ellis on Quay Street at {visit} asks only the people on Quay Street then: not those at home, nor at the docks, the chapel, the landing or anywhere else in the Hook",
+                          string.Join(",", there.Except(onStreet)) + " / missing " + string.Join(",", onStreet.Except(there)));
+                    // And hears the street's talk only from those she asked who ever talk to the police.
+                    var file = new PoliceFile();
+                    file.HearTheStreet(mill, visit.Day, t => Offence.Damage, cast, visit);
+                    var heard = file.Entries.Select(e => e.Who).Distinct().OrderBy(x => x, StringComparer.Ordinal).ToList();
+                    var talks = onStreet.Where(id => !cast.NeverToPolice(id)).OrderBy(x => x, StringComparer.Ordinal).ToList();
+                    Check(heard.SequenceEqual(talks), $"and at {visit} files the street's talk only from those she asked who ever talk to the police",
+                          "heard " + string.Join(",", heard) + " / should " + string.Join(",", talks));
+                }
             }
             // 4. A night Ron brought, then wound down that evening, is delivered after a load.
             {
