@@ -453,6 +453,7 @@ namespace LedgerCore
 			for (const GossiperPtr& A : Mill->Agents())
 			{
 				if (!A || !OnTheStreet(Cast, At, A->Id)) continue;
+				if (Cast != nullptr && Cast->NeverToPolice(A->Id)) continue;   // never talks to the police (A11)
 				for (const RumorPtr& R : TalkOf(*Mill, *A)) Heard(A->Id, R->TopicKey(), OffenceOf ? OffenceOf(R->TopicKey()) : Offence::Suspicious, Day);
 			}
 		}
@@ -505,7 +506,7 @@ namespace LedgerCore
 				if (!A || A->Circle != "day" || !OnTheStreet(Cast, At, A->Id)) continue;
 				for (const RumorPtr& R : A->Rumors)
 				{
-					if (R && R->Content.Subject == "player" && R->Sensitive && R->Confidence > 0) { Who.push_back(A->Id); break; }
+					if (R && R->Content.Subject == "player" && R->Sensitive && R->NamesHim() && R->Confidence > 0) { Who.push_back(A->Id); break; }
 				}
 			}
 			std::sort(Who.begin(), Who.end());
@@ -682,8 +683,7 @@ namespace LedgerCore
 		static bool OnTheStreet(const CastDay* Cast, const GameTime* At, const std::string& Id)
 		{
 			if (Cast == nullptr || At == nullptr) return true;
-			std::string Place;
-			return Cast->PlaceOf(Id, At->Day, At->Hour, Place) && Place != CastDay::Off();
+			return Cast->OnQuayStreet(Id, At->Day, At->Hour);
 		}
 
 		// WHAT PLAY COULD MAKE, for a load (the port's independent check, 30
@@ -731,8 +731,8 @@ namespace LedgerCore
 			if (A.Circle != "day") return Out;
 			for (const RumorPtr& R : A.Rumors)
 			{
-				if (R && R->Content.Subject == "player" && R->Sensitive && R->Hops >= 1
-				    && (R->Indelible || (R->Confidence >= Mill.MinConfidenceToShare && !A.Leashed && !A.SuppressedHas(R->TopicKey()))))
+				if (R && R->Content.Subject == "player" && R->Sensitive && R->Hops >= 1 && R->NamesHim()
+				    && ((R->Indelible && R->Confidence > 0) || (R->Confidence >= Mill.MinConfidenceToShare && !A.Leashed && !A.SuppressedHas(R->TopicKey()))))
 					Out.push_back(R);
 			}
 			return Out;

@@ -105,38 +105,51 @@ namespace LedgerCore
 	/// saved with the town.
 	class TownHours
 	{
-		long long Next = -1;
+		long long NextRoundValue = -1;
 	public:
-		/// The first hour not yet run, counted from day 0's midnight; -1 before any.
-		long long NextHour() const { return Next; }
+		/// The first round not yet run, in minutes from day 0's midnight; -1 before any.
+		long long NextRound() const { return NextRoundValue; }
+		/// The hour it falls in; -1 before any.
+		long long NextHour() const { return NextRoundValue < 0 ? -1 : TownRounds::FloorDiv(NextRoundValue, 60); }
 
-		/// AS EACH GAME HOUR STARTS, and after a load: every hour not yet run
-		/// up to and including the hour Now is in, once each; the hours before
-		/// it with nobody on the street (skipped: asleep, in the cells, a
-		/// load's jump), the hour now with OnStreet. The first call runs only
-		/// the hour now. Returns how many hours ran.
+		/// AS GAME TIME PASSES (TownRounds.cs RunTo, the review's A12 and B3):
+		/// every round not yet run up to Now, once, each at its own minute and
+		/// none before it; the hours before Now's with nobody on the street, the
+		/// hour now with OnStreet; the mill aged as each hour starts. Call it as
+		/// often as you like (each game minute, and before a talk turn): asked
+		/// each minute or each hour, the town ends the same. Returns how many
+		/// rounds ran.
 		template <class TCast>
 		int RunTo(GossipMill* Mill, const TCast* Cast, const GameTime& Now, const TownRounds::OnStreetFn& OnStreet = TownRounds::OnStreetFn())
 		{
 			if (Mill == nullptr || Cast == nullptr) return 0;
-			const long long HourNow = TownRounds::FloorDiv(Now.TotalMinutes(), 60);
-			if (HourNow < Next) return 0;
+			const int Step = TownRounds::MinutesBetweenRounds;
+			const long long NowM = Now.TotalMinutes();
+			const long long HourNowStart = TownRounds::FloorDiv(NowM, 60) * 60;
+			const long long LastRound = TownRounds::FloorDiv(NowM, Step) * Step;
+			if (NextRoundValue < 0) NextRoundValue = HourNowStart;
+			if (LastRound < NextRoundValue) return 0;
 			// The mill's ageing clock is not in the save: started again at the
-			// first hour not yet run, a load loses no hour of fading. A mill
-			// that has aged to that hour already is not aged again.
-			if (Next >= 0) Mill->Age(TownRounds::HourStart(Next));
+			// hour of the first round not yet run, a load loses no hour of fading.
+			Mill->Age(GameTime::FromTotalMinutes(TownRounds::FloorDiv(NextRoundValue, 60) * 60));
+			const long long Earliest = HourNowStart - TownRounds::LongestCatchUpHours * 60LL;
+			if (NextRoundValue < Earliest) NextRoundValue = Earliest;
 			int Ran = 0;
-			if (Next >= 0 && HourNow > Next)
+			for (long long R = NextRoundValue; R <= LastRound; R += Step, ++Ran)
 			{
-				Ran += TownRounds::CatchUp(Mill, Cast, TownRounds::HourStart(Next), TownRounds::HourStart(HourNow));
+				const GameTime At = GameTime::FromTotalMinutes(R);
+				if (R % 60 == 0) Mill->Age(At);
+				const bool bStreet = R >= HourNowStart && (bool)OnStreet;
+				const int Day = At.Day, Hour = At.Hour;
+				Mill->Tick(At, [&OnStreet, bStreet, Cast, Day, Hour](const std::string& A, const std::string& B)
+					{ return !(bStreet && OnStreet(A) && OnStreet(B)) && Cast->Together(A, B, Day, Hour); });
 			}
-			TownRounds::Hour(Mill, Cast, TownRounds::HourStart(HourNow), OnStreet);
-			Next = HourNow + 1;
-			return Ran + 1;
+			NextRoundValue = LastRound + Step;
+			return Ran;
 		}
 
 		/// {"next": the hour, as the C#'s MiniJson writes a double that is whole}.
-		std::string ToJson() const { return "{\"next\":" + std::to_string(Next) + "}"; }
+		std::string ToJson() const { return "{\"next\":" + std::to_string(NextHour()) + ",\"round\":" + std::to_string(NextRoundValue) + "}"; }
 
 		/// The C#'s FromJson: "next" a number from -1 to under 1e7 and whole,
 		/// or else -1.
@@ -156,12 +169,19 @@ namespace LedgerCore
 			const LedgerVignette::Value& Root = *RootP;
 			// The reader keeps a key given twice once, with its last value, as
 			// the C#'s dictionary does.
+			// "round" (minutes, a whole round or -1) first; else an old save's "next" (the hour's start).
+			const LedgerVignette::Value* Round = nullptr;
+			const LedgerVignette::Value* NextV = nullptr;
 			for (std::vector<std::pair<std::string, LedgerVignette::Value> >::size_type I = 0; I < Root.Obj.size(); ++I)
 			{
-				if (Root.Obj[I].first != "next") continue;
-				const LedgerVignette::Value& N = Root.Obj[I].second;
-				if (N.Type == LedgerVignette::T_NUM && N.Num >= -1 && N.Num < 1e7 && N.Num == std::floor(N.Num)) T.Next = (long long)N.Num;
+				if (Root.Obj[I].first == "round") Round = &Root.Obj[I].second;
+				else if (Root.Obj[I].first == "next") NextV = &Root.Obj[I].second;
 			}
+			if (Round != nullptr && Round->Type == LedgerVignette::T_NUM && Round->Num >= -1 && Round->Num < 6e8 && Round->Num == std::floor(Round->Num)
+			    && (Round->Num < 0 ? Round->Num == -1 : std::fmod(Round->Num, (double)TownRounds::MinutesBetweenRounds) == 0))
+				T.NextRoundValue = (long long)Round->Num;
+			else if (NextV != nullptr && NextV->Type == LedgerVignette::T_NUM && NextV->Num >= -1 && NextV->Num < 1e7 && NextV->Num == std::floor(NextV->Num))
+				T.NextRoundValue = NextV->Num < 0 ? -1 : (long long)NextV->Num * 60;
 			return T;
 		}
 	};

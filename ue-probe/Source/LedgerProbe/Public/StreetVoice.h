@@ -610,6 +610,7 @@ namespace LedgerCore
 				// And a threat to keep quiet (town list 6cd; StreetVoice.cs 365).
 				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R) || PoliceFile::IsAsking(R)
 				    || Custody::IsTaken(R) || WeeksEnd::IsWeekAnswer(R) || Silence::IsThreat(R))) continue;
+				if (!R->NamesHim()) continue;   // a noise, a shape or a face is Suspecting's alone (A5)
 				if (WeeksEnd::IsWeekAnswer(R) && G.Id == WeeksEnd::Sheila) continue;
 				// His arrival and his name are plain facts, never what shows, even
 				// marked sensitive, which only a damaged save makes them (the
@@ -947,7 +948,9 @@ namespace LedgerCore
 
 			// THE TOWN'S OWN NEWS (town list 6aq): told as news, not as something
 			// seen of a man, and never about the player.
-			if (R->Content.Subject == "town")
+			// And a story of him that names nobody (a noise, a shape, a face) is
+			// the street's news too, never talk of him (A5).
+			if (R->Content.Subject == "town" || (R->Content.Subject == "player" && !R->NamesHim()))
 			{
 				if (Heard != 0 && Heard->TimesToldHim(R->TopicKey()) >= MostNewsTellings)
 				{
@@ -1052,6 +1055,7 @@ namespace LedgerCore
 			{
 				const RumorPtr& R = G.Rumors[I];
 				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R))) continue;
+				if (!R->NamesHim()) continue;
 				if (DayOne::IsArrival(R) || PlayerIdentity::IsNameStory(R)) continue;
 				if (!R->Indelible && G.SuppressedHas(R->TopicKey())) continue;
 				if (!(R->Confidence > 0.0) || R->Confidence >= ShareFloor) continue;
@@ -1175,6 +1179,7 @@ namespace LedgerCore
 			{
 				const RumorPtr& R = G->Rumors[I];
 				if (!R || R->Content.Subject != "player") continue;
+				if (!R->NamesHim()) continue;
 				// The police asking after him is news of the police, not of
 				// anything he did: it shows in their manner, but weighs nothing on
 				// how they stand to him (town list 6bq).
@@ -2125,7 +2130,7 @@ namespace LedgerCore
 			// wariness of him, come first.
 			for (const RumorPtr& X : G->Rumors)
 			{
-				if (X && X->Content.Subject == "player" && !DayOne::IsArrival(X) && !PlayerIdentity::IsNameStory(X) && X->Confidence > 0) return std::shared_ptr<SpokenLine>();
+				if (X && X->Content.Subject == "player" && X->NamesHim() && !DayOne::IsArrival(X) && !PlayerIdentity::IsNameStory(X) && X->Confidence > 0) return std::shared_ptr<SpokenLine>();
 			}
 			if (G->Suspicion.Level() != SuspicionLevel::Trusting) return std::shared_ptr<SpokenLine>();
 			RumorPtr R;

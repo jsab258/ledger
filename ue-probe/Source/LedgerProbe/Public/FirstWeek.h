@@ -52,6 +52,8 @@ namespace LedgerCore
 		/// The evening: the pot on at nine; the evening closes at eleven.
 		static constexpr int From = 21, Until = 23;
 		static constexpr int ArriveByMinute = 21 * 60 + 30, StayUntilMinute = 22 * 60 + 30, LongestAway = 10;
+		/// Up to half an hour late is late, not gone (the review's B6).
+		static constexpr int LateArriveByMinute = 22 * 60;
 		static constexpr double StayedGain = 0.25, LeftEarlyGain = 0.05, StoodUpCost = 0.15;
 		static constexpr const char* Invite = "There'll be a pot on at nine tonight, if you want it. I don't ask twice, mind.";
 
@@ -98,21 +100,26 @@ namespace LedgerCore
 			// Not before the evening is over (the time-and-state sweep: closed on
 			// an earlier day, the tea was a stand-up before it was poured).
 			if (Now.Day < DayValue || (Now.Day == DayValue && Now.Hour < Until)) return StateValue;
-			StateValue = Judge();
+			const How HowItWent = Judge();
+			StateValue = StateOf(HowItWent);
 			if (AdaG != nullptr)
 			{
 				if (StateValue == TeaState::Stayed)
 				{
 					AdaG->Loyalty = DotNetMin(1.0, AdaG->Loyalty + StayedGain);
 					AdaG->Suspicion.Lower(0.1, "Mickey's nephew sat with me over a pot of tea");
-					if (AdaG->Memory) AdaG->Memory->Append(MemoryEvent(Now, "conversation", 0.7,
-						"Mickey's nephew came for his tea and sat with me till gone half ten. There's more to him than they're saying."));
+					if (AdaG->Memory) AdaG->Memory->Append(MemoryEvent(Now, "conversation", 0.7, HowItWent == How::Late
+						? "Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying."
+						: "Mickey's nephew came for his tea and sat with me till gone half ten. There's more to him than they're saying."));
 				}
 				else if (StateValue == TeaState::LeftEarly)
 				{
 					AdaG->Loyalty = DotNetMin(1.0, AdaG->Loyalty + LeftEarlyGain);
-					if (AdaG->Memory) AdaG->Memory->Append(MemoryEvent(Now, "conversation", 0.6,
-						"Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he."));
+					if (AdaG->Memory) AdaG->Memory->Append(MemoryEvent(Now, "conversation", 0.6, HowItWent == How::SlippedOut
+						? "Mickey's nephew came for his tea and slipped off out in the middle of it. Somewhere to be, had he."
+						: HowItWent == How::CameNearEleven
+						? "Mickey's nephew came for his tea with the pot near cold and gone ten. Better late, I suppose."
+						: "Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he."));
 				}
 				else
 				{
@@ -182,7 +189,7 @@ namespace LedgerCore
 				}
 			}
 			// A closed evening is what its minutes say, whatever the file says.
-			if (T->StateValue == TeaState::Stayed || T->StateValue == TeaState::LeftEarly || T->StateValue == TeaState::StoodUp) T->StateValue = T->Judge();
+			if (T->StateValue == TeaState::Stayed || T->StateValue == TeaState::LeftEarly || T->StateValue == TeaState::StoodUp) T->StateValue = StateOf(T->Judge());
 			const LedgerVignette::Value* Sg = Last(Root, "seenGoing");
 			if (Sg != nullptr && Sg->Type == LedgerVignette::T_BOOL) T->bSeenGoing = Sg->Bool && T->StateValue != TeaState::NotAsked;
 			return T;
@@ -197,20 +204,29 @@ namespace LedgerCore
 		AdasTea() {}
 
 		// How the evening went, from the minutes alone.
-		TeaState Judge() const
+		/// HOW IT WENT, as she would tell it (AdasTea.Judge's How, the review's B6).
+		enum class How { StoodUp, OnTime, Late, CameNearEleven, SlippedOut, LeftEarly };
+
+		static TeaState StateOf(How H)
 		{
-			if (MinutesSet.empty()) return TeaState::StoodUp;
-			if (*MinutesSet.begin() > ArriveByMinute || *MinutesSet.rbegin() < StayUntilMinute) return TeaState::LeftEarly;
+			return H == How::StoodUp ? TeaState::StoodUp : (H == How::OnTime || H == How::Late) ? TeaState::Stayed : TeaState::LeftEarly;
+		}
+
+		How Judge() const
+		{
+			if (MinutesSet.empty()) return How::StoodUp;
+			if (*MinutesSet.begin() > LateArriveByMinute) return How::CameNearEleven;
+			if (*MinutesSet.rbegin() < StayUntilMinute) return How::LeftEarly;
 			int LastM = -1;
 			for (int M : MinutesSet)
 			{
 				// The minutes away are those between two he was there: stamps
 				// eleven apart are ten away, which is allowed (the port's
 				// independent check, 30 September).
-				if (LastM >= 0 && M - LastM - 1 > LongestAway) return TeaState::LeftEarly;
+				if (LastM >= 0 && M - LastM - 1 > LongestAway) return How::SlippedOut;
 				LastM = M;
 			}
-			return TeaState::Stayed;
+			return *MinutesSet.begin() > ArriveByMinute ? How::Late : How::OnTime;
 		}
 
 		/// A key given twice keeps its last value, as the C#'s dictionary does.

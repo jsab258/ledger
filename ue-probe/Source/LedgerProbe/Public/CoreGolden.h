@@ -1428,7 +1428,7 @@ namespace Golden
 			Naming->OriginId = "n"; Naming->Summary = "Novak did it"; Naming->Confidence = 0.30;   // names-gate: allow (the C# golden fixture)
 			Naming->Hops = 1; Naming->Sensitive = true; Naming->OriginRung = 4;
 			Mill.Get("s")->Rumors.push_back(Naming);
-			Mill.Witness("s", Window, "him coming away", true, GameTime(1, 23, 0), 0.90);
+			Mill.Witness("s", Window, "him coming away", true, GameTime(1, 23, 0), 0.90, false, 3);
 			Mill.Get("l")->Knowledge->Learn(Fact("player", "window_d1", "home all night"));
 			const std::vector<GossipEvent> Ev = F[1] == "asked"
 				? Mill.CompareNotes("l", "s", GameTime(1, 23, 6))
@@ -2143,7 +2143,7 @@ namespace Golden
 			}
 		}
 		CastDay SmallCast;
-		CastDay::Parse(R"({"talk_range_m":6,"places":{"pawn":{"x_m":0,"z_m":0},"quay":{"x_m":50,"z_m":0}},"areas":{"ritas":{"places":["pawn"]},"quay":{"places":["quay"]}},"people":[{"id":"rita","routine":[[0,"off"],[9,"pawn"],[18,"off"]]},{"id":"hal","routine":[[0,"off"],[10,"pawn"],[12,"quay"]]},{"id":"joey","routine":[[0,"off"],[6,"quay"],[18,"off"]]}],"ties":[]})", SmallCast, Err);
+		CastDay::Parse(R"({"talk_range_m":6,"places":{"pawn":{"x_m":0,"z_m":0},"quay":{"x_m":50,"z_m":0}},"areas":{"ritas":{"places":["pawn"],"names":["Rita's"],"keeper":"rita"},"quay":{"places":["quay"]}},"people":[{"id":"rita","routine":[[0,"off"],[9,"pawn"],[18,"off"]]},{"id":"hal","routine":[[0,"off"],[10,"pawn"],[12,"quay"]]},{"id":"joey","routine":[[0,"off"],[6,"quay"],[18,"off"]]}],"ties":[]})", SmallCast, Err);
 		TownNews SmallNews;
 		TownNews::Parse(R"({"stories":[{"id":"row","summary":"Hal and Rita had words","area":"ritas","day":0,"hour":10,"fact":["town","row_d0","seen"],"parties":["hal","rita"],"confidence":1.5},{"id":"boat","summary":"a boat came in late","area":"quay","day":1,"hour":7,"fact":["town","boat_d1","seen"]}]})", SmallNews, Err);
 		{
@@ -2200,6 +2200,18 @@ namespace Golden
 			const std::string Noon = Found(Damage.Tick(&Am, &SmallCast, GameTime(0, 12, 0)));
 			const GossiperPtr Rita = Am.Get("rita");
 			Ans["Aftermath|tick to noon"] = { Noon, FromInt((long long)Rita->Memory->Events.size()), Escape(Rita->Memory->Events.back().Text), FromInt((long long)Am.Get("hal")->Rumors.size()) };
+			// The keeper told of her damage before she came in still finds it in her own words (A9).
+			{
+				GossipMill Km(std::make_shared<SocialGraph>());
+				for (const std::string& Id : SmallCast.People())
+					Km.Add(std::make_shared<Gossiper>(Id, Id, std::make_shared<MemoryStore>(Id), std::make_shared<KnowledgeBase>()));
+				Km.Witness("rita", Fact("town", "rita_window_k", "found"), "somebody put Rita's window in", false, GameTime(0, 8, 0), 0.6);
+				Aftermath Kd;
+				Aftermath::Make("ritas", "rita_window_k", "somebody put Rita's window in", GameTime(0, 2, 30), nullptr, nullptr, Kd);
+				const std::string KFound = Found(Kd.Tick(&Km, &SmallCast, GameTime(0, 12, 0)));
+				auto Memories = [](const GossiperPtr& Who) { std::string M; if (Who && Who->Memory) for (size_t I = 0; I < Who->Memory->Events.size(); ++I) M += (I ? " / " : "") + Who->Memory->Events[I].Text; return M; };
+				Ans["KeeperHeardFirst"] = { KFound, Escape(Memories(Km.Get("rita"))) };
+			}
 			const std::string Saved = Damage.ToJson();
 			Aftermath Back;
 			Aftermath::FromJson(Saved, Back);
@@ -2219,11 +2231,12 @@ namespace Golden
 		Answer A;
 		const auto& Ans = NewsAnswers();
 		const bool bTwo = F[0] == "ExchangeHeard";
-		if ((int)F.size() < (bTwo ? 4 : 3)) return A;
-		const auto It = Ans.find(F[0] + "|" + F[1] + (bTwo ? "|" + F[2] : std::string()));
+		const bool bNone = F[0] == "KeeperHeardFirst";
+		if ((int)F.size() < (bNone ? 2 : bTwo ? 4 : 3)) return A;
+		const auto It = Ans.find(bNone ? F[0] : F[0] + "|" + F[1] + (bTwo ? "|" + F[2] : std::string()));
 		if (It == Ans.end()) return A;
 		A.Known = true;
-		A.Got = MultiAnswer(F, bTwo ? 3 : 2, It->second);
+		A.Got = MultiAnswer(F, bNone ? 1 : bTwo ? 3 : 2, It->second);
 		return A;
 	}
 
@@ -2394,6 +2407,12 @@ namespace Golden
 		for (const char* Id : { "ada", "joey" })
 			for (const RumorPtr& R : Mill.Get(Id)->Rumors)
 				Ans["ThreatHeld|" + std::string(Id) + "|" + R->TopicKey()].push_back({ Escape(R->Summary), FromBool(R->Sensitive), FromInt(R->Hops) });
+		// What the one threatened remembers (the review's B7).
+		{
+			auto Memories = [](const GossiperPtr& Who) { std::string M; if (Who && Who->Memory) for (size_t I = 0; I < Who->Memory->Events.size(); ++I) M += (I ? " / " : "") + Who->Memory->Events[I].Text; return M; };
+			for (const char* Id : { "ada", "joey" })
+				Ans["ThreatMemory|" + std::string(Id)].push_back({ Escape(Memories(Mill.Get(Id))) });
+		}
 		for (const char* Id : { "ada", "joey" })
 			for (double Floor : { 0.2, 0.95 })
 			{
@@ -2417,7 +2436,7 @@ namespace Golden
 	inline Answer ThreatRow(const std::vector<std::string>& F)
 	{
 		Answer A;
-		const int Labels = F[0] == "ThreatIs" ? 1 : F[0] == "RecognitionThreat" ? 3 : 2;
+		const int Labels = (F[0] == "ThreatIs" || F[0] == "ThreatMemory") ? 1 : F[0] == "RecognitionThreat" ? 3 : 2;
 		std::vector<std::string> G = F;
 		if (F[0] == "ThreatShows" && F.size() >= 3 && IsNumber(F[2])) { G[2] = FromDouble(D(F[2])); }
 		if ((int)F.size() < 1 + Labels + 1) return A;
@@ -2997,6 +3016,11 @@ namespace Golden
 				O.push_back(WeekAnswerName(Back.Answer()));
 				O.push_back(Back.AnsweredAt(T2) ? FromInt(T2.TotalMinutes()) : std::string("-"));
 				Ans["WeekFiled|" + std::string(WeekAnswerName(A)) + "|" + FromBool(bClose)] = O;
+				// What Sheila and whoever was in the office remember (the review's B7).
+				auto Memories = [](const GossiperPtr& Who) { std::string M; if (Who && Who->Memory) for (size_t I = 0; I < Who->Memory->Events.size(); ++I) M += (I ? " / " : "") + Who->Memory->Events[I].Text; return M; };
+				for (const char* Id : { "lena", "zlata" })
+					if (const GossiperPtr Holder = Mill.Get(Id))
+						Ans["WeekFiledMemory|" + std::string(WeekAnswerName(A)) + "|" + FromBool(bClose) + "|" + Id] = { Escape(Memories(Holder)) };
 			}
 		const Gossiper G("wk", "wk", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
 		for (const char* Value : { "winddown", "takeover", "wontsay" })
@@ -3089,6 +3113,91 @@ namespace Golden
 			const bool M3 = Monday.Ask(GameTime(7, 10, 0), false);
 			Ans["WeekWaits|not a sunday"] = { FromBool(M1), FromBool(M2), FromBool(M3) };
 		}
+		// A STORY ONLY AS SURE AS ITS FIRST TELLER (the review's A5, Jafar's ruling).
+		{
+			GossipMill Sure(std::make_shared<SocialGraph>());
+			const std::pair<const char*, int> Looks[] = { { "noise", 0 }, { "shape", 1 }, { "mark", 2 }, { "face", 3 }, { "knew", 4 }, { "told", -1 } };
+			for (const auto& L : Looks)
+			{
+				Sure.Add(std::make_shared<Gossiper>(L.first, L.first, std::make_shared<MemoryStore>(L.first), std::make_shared<KnowledgeBase>()));
+				RumorPtr R = std::make_shared<Rumor>(Fact("player", "window_d1", "ritas"));
+				R->Summary = "x"; R->Confidence = 0.9; R->Sensitive = true; R->Hops = 1; R->OriginRung = L.second;
+				const GossiperPtr Holder = Sure.Get(L.first);
+				Holder->Rumors.push_back(R);
+				const StreetVoice::Regard Rg = StreetVoice::RegardFor(Holder.get(), Sure.MinConfidenceToShare, false, nullptr, 0.9, false);
+				Ans["NamesHim|" + std::string(L.first)] = { FromBool(Holder->Rumors[0]->NamesHim()),
+					FromBool((bool)StreetVoice::StoryThatShows(*Holder, Sure.MinConfidenceToShare)), FromBool((bool)Rg.Story) };
+			}
+			PoliceFile SureFile;
+			SureFile.HearTheStreet(&Sure, 2, [](const std::string&) { return Offence::Damage; });
+			std::string SureAsked, SureHeard;
+			const std::vector<std::string> SureWho = PoliceFile::WhoSheAsks(&Sure);
+			for (size_t I = 0; I < SureWho.size(); ++I) SureAsked += (I ? "," : "") + SureWho[I];
+			for (size_t I = 0; I < SureFile.Entries().size(); ++I) SureHeard += (I ? "," : "") + SureFile.Entries()[I].Who;
+			Ans["NamesHim|police"] = { SureAsked, FromInt(PoliceFile::Loudness(&Sure)), SureHeard };
+			for (int Rung : { 0, 1, 2, 3, 4, -1 })
+			{
+				std::shared_ptr<SocialGraph> LeakGraph = std::make_shared<SocialGraph>();
+				LeakGraph->Link("w", "n", 0.9);
+				GossipMill Leak(LeakGraph);
+				Leak.Add(std::make_shared<Gossiper>("w", "w", std::make_shared<MemoryStore>("w"), std::make_shared<KnowledgeBase>(), "night"));
+				Leak.Add(std::make_shared<Gossiper>("n", "n", std::make_shared<MemoryStore>("n"), std::make_shared<KnowledgeBase>(), "day"));
+				Leak.Witness("w", Fact("player", "window_d1", "ritas"), "x", true, GameTime(1, 12, 0), 0.9, false, Rung);
+				Leak.Tick(GameTime(1, 12, 30), [](const std::string&, const std::string&) { return true; });
+				bool bHas = false;
+				for (const RumorPtr& X : Leak.Get("n")->Rumors) { if (X->TopicKey() == "player.window_d1") { bHas = true; } }
+				Ans["NamesHim|leak " + FromInt(Rung)] = { FromBool(bHas), FromDouble(Leak.Get("n")->Suspicion.Value()) };
+			}
+		}
+		// A NO ONLY AFTER RON HAS BROUGHT THE ASK (the review's B4a).
+		{
+			Arrangement Early(0);
+			const GameTime Seven(0, 19, 0), TwoToOne(1, 0, 58);
+			const bool bBefore = Early.Answer(0, NightAnswer::Refused, nullptr, &Seven);
+			Early.Delivered(0);
+			const bool bTwoToOne = Early.Answer(0, NightAnswer::Refused, nullptr, &TwoToOne);
+			Ans["NoBeforeAsk"] = { FromBool(bBefore), FromBool(bTwoToOne), FromBool(Early.Ended()) };
+		}
+		// A DEED AFTER MIDNIGHT IS THE NIGHT BEFORE'S (the review's B5).
+		{
+			const int Times[][3] = { { 2, 0, 30 }, { 2, 5, 59 }, { 2, 6, 0 }, { 2, 12, 0 }, { 2, 23, 30 }, { 0, 1, 0 } };
+			for (const auto& X : Times)
+			{
+				const GameTime At(X[0], X[1], X[2]);
+				Ans["FirstReport|" + FromInt(X[0]) + " " + FromInt(X[1]) + ":" + (X[2] < 10 ? "0" : "") + FromInt(X[2])] =
+					{ FromInt(Aftermath::NightOf(At)), FromInt(Aftermath::FirstReportMorning(At).TotalMinutes()) };
+			}
+		}
+		// HIS NO TOLD WHEN RON GOES DOWN (the review's B3).
+		{
+			GossipMill NoMill((std::shared_ptr<SocialGraph>()));
+			for (const char* Id : { Arrangement::Doorman, Arrangement::OutfitMan })
+				NoMill.Add(std::make_shared<Gossiper>(Id, Id, std::make_shared<MemoryStore>(Id), std::make_shared<KnowledgeBase>()));
+			Arrangement No(0);
+			const GameTime Eight(0, 20, 0), HalfNine(0, 21, 30);
+			No.Delivered(0, NoMill.Get(Arrangement::Doorman).get(), &Eight);
+			No.Answer(0, NightAnswer::Refused, &NoMill, &HalfNine);
+			std::string At;
+			for (int H : { 22, 23 })
+			{
+				No.TellDue(&NoMill, GameTime(0, H, 0));
+				bool bHas = false;
+				for (const RumorPtr& R : NoMill.Get(Arrangement::OutfitMan)->Rumors) { if (R->TopicKey() == "player.outfit_d0") { bHas = true; } }
+				At += (At.empty() ? "" : ",") + FromInt(H) + ":" + FromBool(bHas);
+			}
+			Ans["TellDue|no at 21:30"] = { At };
+		}
+		// SHEILA'S QUESTION AFTER A MISSED SUNDAY (the review's B1).
+		{
+			WeeksEnd Missed(0);
+			struct When { int D, H, M; bool bOffice; };
+			const When Ws[] = { { 5, 11, 0, true }, { 6, 9, 30, true }, { 6, 10, 15, true }, { 6, 12, 5, true }, { 7, 10, 0, true }, { 7, 10, 0, false }, { 13, 15, 0, true } };
+			for (const When& X : Ws)
+				Ans["WeekAsksNow|" + FromInt(X.D) + " " + FromInt(X.H) + ":" + (X.M < 10 ? "0" : "") + FromInt(X.M) + (X.bOffice ? " office" : " elsewhere")] =
+					{ FromBool(Missed.AsksNow(GameTime(X.D, X.H, X.M), X.bOffice)) };
+			Missed.Ask(GameTime(7, 10, 0), false);
+			Ans["WeekAsksNow|asked"] = { FromBool(Missed.AsksNow(GameTime(7, 11, 0), true)) };
+		}
 		for (const char* Value : { "winddown", "takeover", "wontsay" })
 		{
 			Gossiper Who("wr", "wr", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
@@ -3105,7 +3214,7 @@ namespace Golden
 	inline Answer WeekRow(const std::vector<std::string>& F)
 	{
 		Answer A;
-		const int Labels = F[0] == "RecognitionWeek" ? 3 : (F[0] == "WeekAsk" || F[0] == "WeekFiled") ? 2 : 1;
+		const int Labels = F[0] == "NoBeforeAsk" ? 0 : (F[0] == "RecognitionWeek" || F[0] == "WeekFiledMemory") ? 3 : (F[0] == "WeekAsk" || F[0] == "WeekFiled") ? 2 : 1;
 		if ((int)F.size() < 1 + Labels + 1) return A;
 		std::string Key = F[0];
 		for (int I = 1; I <= Labels; ++I) Key += "|" + F[I];
@@ -3769,6 +3878,11 @@ namespace Golden
 		{
 			Outs.push_back(FromInt(TownHours::FromJson(Unescape(F[1])).NextHour()));
 		}
+		// TownHoursRound|a save|the round it gives (the review's A12).
+		else if (Fn == "TownHoursRound" && F.size() >= 3)
+		{
+			Outs.push_back(FromInt(TownHours::FromJson(Unescape(F[1])).NextRound()));
+		}
 		else
 		{
 			return A;
@@ -4047,7 +4161,7 @@ namespace Golden
 			GossipMill Mill(std::make_shared<SocialGraph>());
 			for (const std::string& Id : Cast->People())
 			{
-				Mill.Add(Person(Id));
+				Mill.Add(std::make_shared<Gossiper>(Id, Id, std::make_shared<MemoryStore>(Id), std::make_shared<KnowledgeBase>(), Cast->CircleOf(Id)));
 				RumorPtr R = std::make_shared<Rumor>(Fact("player", "window_d1", "ritas"));
 				R->Summary = "x"; R->Confidence = 0.9; R->Sensitive = true; R->Hops = 1;
 				Mill.Get(Id)->Rumors.push_back(R);
@@ -4957,7 +5071,7 @@ namespace Golden
 		}
 		// THE TOWN'S HOURLY ROUNDS (town list 6bs): TownRounds.h.
 		else if (Fn == "TownRoundsHour" || Fn == "TownRoundsAged" || Fn == "TownRoundsCatchUp"
-		         || Fn == "TownHoursRun" || Fn == "TownHoursJson")
+		         || Fn == "TownHoursRun" || Fn == "TownHoursJson" || Fn == "TownHoursRound")
 		{
 			A = TownRoundsRow(F);
 		}
@@ -4972,7 +5086,7 @@ namespace Golden
 		}
 		// THE TOWN'S OWN NEWS (town list 6aq): TownNews.h and Exchange's news branch.
 		else if (Fn == "TownNews" || Fn == "TownNewsWitnesses" || Fn == "NewsHeard" || Fn == "ExchangeHeard" || Fn == "NewsSeed" || Fn == "NewsSeedHolder"
-		         || Fn == "NewsParse" || Fn == "Aftermath")
+		         || Fn == "NewsParse" || Fn == "Aftermath" || Fn == "KeeperHeardFirst")
 		{
 			A = NewsRow(F);
 		}
@@ -4982,7 +5096,7 @@ namespace Golden
 			A = AmbientRow(F);
 		}
 		// A THREAT TO KEEP QUIET (town list 6cd): Silence.h and StreetVoice's two banks.
-		else if (Fn == "ThreatIs" || Fn == "ThreatFiled" || Fn == "ThreatHeld" || Fn == "RecognitionThreat" || Fn == "ThreatShows")
+		else if (Fn == "ThreatIs" || Fn == "ThreatFiled" || Fn == "ThreatHeld" || Fn == "ThreatMemory" || Fn == "RecognitionThreat" || Fn == "ThreatShows")
 		{
 			A = ThreatRow(F);
 		}
@@ -5010,7 +5124,8 @@ namespace Golden
 		}
 		// THE WEEK'S END (town list 6ca): WeeksEnd.h and StreetVoice's banks.
 		else if (Fn == "WeekAsk" || Fn == "WeekFiled" || Fn == "RecognitionWeek" || Fn == "RecognitionOutfitWound" || Fn == "WeekShows"
-		         || Fn == "WeekBadSave" || Fn == "WeekWaits" || Fn == "WeekRegard" || Fn == "WeekNoSheila")
+		         || Fn == "WeekBadSave" || Fn == "WeekWaits" || Fn == "WeekRegard" || Fn == "WeekNoSheila"
+		         || Fn == "WeekFiledMemory" || Fn == "NamesHim" || Fn == "NoBeforeAsk" || Fn == "FirstReport" || Fn == "TellDue" || Fn == "WeekAsksNow")
 		{
 			A = WeekRow(F);
 		}

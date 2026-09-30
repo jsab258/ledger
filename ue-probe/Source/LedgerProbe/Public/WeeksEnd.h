@@ -136,6 +136,26 @@ namespace LedgerCore
 			return bAsked && Stands(Now) && Now.Hour < StayUntil;
 		}
 
+		/// WHETHER, TALKING WITH HER NOW, SHE PUTS THE QUESTION (WeeksEnd.cs
+		/// AsksNow; the review's B1): at the office, unasked and unanswered, from
+		/// the seventh day; on her Sunday only while she waits there, ten till
+		/// twelve; any later day, the next time he talks with her there.
+		bool AsksNow(const GameTime& Now, bool bAtOffice) const
+		{
+			if (!bAtOffice || bAsked || Answered() || Now.Day < Day()) return false;
+			if (Now.Day == Day() && CastDay::Weekday(Day()) == 6) return Waits(Now);
+			return true;
+		}
+
+		/// What somebody in the office when he told her remembers (WeeksEnd.cs
+		/// OverheardMemory); empty for no answer.
+		static std::string OverheardMemory(WeekAnswer A)
+		{
+			const std::string S = Said(A);
+			if (S.empty()) return std::string();
+			return "I was there when " + (S.compare(0, 4, "The ") == 0 ? "the " + S.substr(4) : S);
+		}
+
 		/// Whether she puts the question now: true once, the turn she asks.
 		bool Ask(const GameTime& Now, bool bInRealBook, bool bAtOffice = true)
 		{
@@ -259,7 +279,8 @@ namespace LedgerCore
 			const Fact What("player", "week_d" + std::to_string(AskedAtValue.Day), Value(AnswerValue));
 			const GossiperPtr She = Mill->Get(Sheila);
 			if (She && She->Memory) She->Memory->Append(MemoryEvent(At, "conversation", 0.9, Remembered(AnswerValue)));
-			Mill->Witness(Sheila, What, Said(AnswerValue), false, At, 1.0);
+			// Told to her face: her own memory above, never "I saw it myself" (B7).
+			Mill->WitnessRemembering(Sheila, What, Said(AnswerValue), false, At, std::string());
 			// The day closing unanswered at midnight: she is not there to be
 			// overheard. Said by the caller, never read from the clock (the port's
 			// independent check, 30 September: a plain answer at 00:00 was heard
@@ -278,7 +299,7 @@ namespace LedgerCore
 			{
 				std::string Theirs;
 				if (P != Sheila && Cast->AreaOf(Cast->PlaceOf(P, At.Day, At.Hour), Theirs) && Theirs == Area)
-					Mill->Witness(P, What, Said(AnswerValue), false, At, 1.0);
+					Mill->WitnessRemembering(P, What, Said(AnswerValue), false, At, OverheardMemory(AnswerValue));
 			}
 		}
 	};

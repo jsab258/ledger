@@ -14,6 +14,12 @@ on:
       - "production/**"
       - "THIRD-PARTY.md"
       - "voice-candidates/**"     # a new asset drop must re-run the attribution gate
+      # THE PORT'S OWN CHECKS run here too (port-golden, route-week, crime-probe
+      # compile these), so a change to them alone starts the job (30 September:
+      # a test that only g++ rejects reached main unseen).
+      - "ue-probe/Source/LedgerProbe/Public/**"
+      - "ue-probe/tests/**"
+      - "ue-probe/perception-golden.txt"
       - ".github/workflows/ledger-core-tests.yml"
   workflow_dispatch:
 

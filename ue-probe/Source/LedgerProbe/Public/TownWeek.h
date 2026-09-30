@@ -49,6 +49,7 @@ namespace LedgerCore
 		/// empty until he does one.
 		std::string DeedTopic;
 		int DeedDay = -1;
+		GameTime DeedAt;   // when it was done: its night, and so its first report (the review's B5)
 		std::vector<std::pair<std::string, int> > Witnesses;
 		/// What the week has come to, as the Core's rows put it.
 		std::string EllisFirst = "never", TakenFirst = "no";
@@ -64,10 +65,19 @@ namespace LedgerCore
 		// ---- the scheduled steps, in the Core's order within an hour ----
 
 		/// 06:00: the asks' nights passed (a night away filed).
+		/// Also, as each hour turns and before anything else in it, his no or the
+		/// winding down reaches the landing when Ron goes down (Arrangement's
+		/// TellDue; the review's B3).
 		void Six(GossipMill* Mill, const GameTime& Now)
 		{
+			Asks.TellDue(Mill, Now);
 			if (Now.Hour == 6) Asks.PassedTo(Now.Day, Mill, &Now);
 		}
+
+		/// THE TOWN'S TALK UP TO A MOMENT (the review's A12): every round not yet
+		/// run up to At, once; the game calls it as its minutes pass and before
+		/// a talk turn, the reference week before each event's minute.
+		void RoundsTo(GossipMill* Mill, const CastDay* Cast, const GameTime& At) { Hours.RunTo(Mill, Cast, At); }
 
 		/// THE DEED (ROUTE.md step 2), when he does it: the damage kept, and
 		/// each witness holding it first-hand as a sensitive story at the rung
@@ -88,6 +98,7 @@ namespace LedgerCore
 			if (Aftermath::Make(Area, Thing, Said, Now, &Mend, bWitnessesLeftOut ? &LeaveOut : nullptr, A)) Damage.push_back(A);
 			DeedTopic = "player." + StoryFact;
 			DeedDay = Now.Day;
+			DeedAt = Now;
 			Witnesses = Saw;
 			if (Mill == nullptr) return;
 			for (const auto& S : Saw)
@@ -107,7 +118,9 @@ namespace LedgerCore
 		std::vector<std::string> NineReports(GossipMill* Mill, const CastDay* Cast, const GameTime& Now, int RungOverride = -1)
 		{
 			std::vector<std::string> Went;
-			if (Now.Hour != 9 || DeedDay < 0 || Now.Day < DeedDay + 1 || DeedTopic.empty() || Mill == nullptr) return Went;
+			// From nine the morning after its night: a deed before six is the night before's (B5).
+			if (Now.Hour != 9 || DeedDay < 0 || Now.TotalMinutes() < Aftermath::FirstReportMorning(DeedAt).TotalMinutes()
+			    || DeedTopic.empty() || Mill == nullptr) return Went;
 			for (const auto& W : Witnesses)
 			{
 				bool bGave = false;
@@ -178,10 +191,12 @@ namespace LedgerCore
 		}
 
 		/// Every hour, last: the week's end closed, then the town's talk.
-		void HourEnd(GossipMill* Mill, const CastDay* Cast, const GameTime& Now)
+		/// The rounds run up to RoundsUpTo when given (the reference week: the
+		/// hour's end), or to Now (the game, whose rounds follow its minutes).
+		void HourEnd(GossipMill* Mill, const CastDay* Cast, const GameTime& Now, const GameTime* RoundsUpTo = nullptr)
 		{
 			Week.Close(Now, Mill, Cast);
-			Hours.RunTo(Mill, Cast, Now);
+			Hours.RunTo(Mill, Cast, RoundsUpTo != nullptr ? *RoundsUpTo : Now);
 		}
 
 		// ---- what he does, between them ----

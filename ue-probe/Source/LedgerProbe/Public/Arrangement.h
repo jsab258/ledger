@@ -153,11 +153,18 @@ namespace LedgerCore
 		/// He answered this night's ask; see the C#. With a mill the night's
 		/// story goes into the gossip, told at Now, which must then be given
 		/// (the C# throws without it; here the answer is refused).
+		/// AS EACH HOUR TURNS, before the rounds (Arrangement.cs TellDue, the
+		/// review's B3): his no, or the winding down, reaches the landing when
+		/// Ron goes down, not at dawn.
+		void TellDue(GossipMill* Mill, const GameTime& Now) { TellWoundDown(Mill, &Now); }
+
 		bool Answer(int Day, NightAnswer What, GossipMill* Mill = nullptr, const GameTime* Now = nullptr)
 		{
 			if (Mill != nullptr && Now == nullptr) return false;
 			if (What == NightAnswer::Undelivered || !AsksOn(Day)) return false;
 			if (What == NightAnswer::NoShow && !Delivered_.count(Day)) return false;
+			// A NO ONLY AFTER RON HAS BROUGHT THAT NIGHT'S ASK (the review's B4a).
+			if (What == NightAnswer::Refused && Now != nullptr && !Delivered_.count(Day)) return false;
 			if (What != NightAnswer::NoShow && Now != nullptr && Now->TotalMinutes() >= GaveUpAt(Day).TotalMinutes()) return false;
 			// ONLY ON ITS OWN NIGHT (the port's independent check, 30 September:
 			// an envelope two nights ahead could be done on the Monday, and a

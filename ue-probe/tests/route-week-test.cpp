@@ -96,6 +96,8 @@ namespace
 					if (!StopWhy.count(Why)) { if (bCount) ++Miss; return true; }
 					return false;
 				};
+				// The rounds before minute M of this hour (TownReach's Before; the review's A12).
+				auto Before = [&](int M) { W.RoundsTo(&Mill, &Cast, Now.AddMinutes(M - 1)); };
 				W.Six(&Mill, Now);
 				// The slice's window, at noon on the Tuesday.
 				if (SeenBy != "none" && Day == 1 && Hod == 12)
@@ -125,20 +127,27 @@ namespace
 					const NightAnswer Answer = bTakes ? NightAnswer::Did : NightAnswer::Refused;
 					if (Answer == NightAnswer::Did && Day == W.Tea->Day())
 					{
+						if (bSits) Before(31);
 						W.Tea->WentToTheLanding(&Mill, GameTime(Day, bSits ? 22 : 21, bSits ? 31 : 45), true);
 						HandOverAt = Abs + (bSits ? 2 : 1);
 					}
-					else W.AnswerAsk(Day, Answer, &Mill, GameTime(Day, 22, 30));
+					else { Before(30); W.AnswerAsk(Day, Answer, &Mill, GameTime(Day, 22, 30)); }
 				}
 				if (Abs == HandOverAt && W.Asks.AsksOn(W.Tea->Day()) && !Skip("landing", false))
+				{
+					Before(45);
 					W.AnswerAsk(W.Tea->Day(), NightAnswer::Did, &Mill, GameTime(Day, Hod, 45));
+				}
 				// The week's end: her question at half past ten on the Sunday.
-				if (Day == W.Week.Day() && Hod == 10 && W.Week.Waits(GameTime(Day, 10, 30)) && !Skip("sheila", true))
+				if (Day == W.Week.Day() && Hod == 10 && W.Week.AsksNow(GameTime(Day, 10, 30), true) && !Skip("sheila", true))
 				{
 					W.Week.Ask(GameTime(Day, 10, 30), Trust != "never");
+					Before(40);
 					W.Week.Give(WeekAnswer::TakeOver, GameTime(Day, 10, 40), &Mill, &Cast, &W.Asks);
 				}
-				W.HourEnd(&Mill, &Cast, Now);
+				// The rest of the hour's rounds.
+				const GameTime HourEndsAt = Now.AddMinutes(59);
+				W.HourEnd(&Mill, &Cast, Now, &HourEndsAt);
 			}
 			int HoldAnswer = 0;
 			for (const GossiperPtr& A : Mill.Agents())

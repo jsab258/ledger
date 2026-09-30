@@ -183,6 +183,66 @@ namespace LedgerCore
 	/// THE DAMAGE FOUND AFTERWARDS (TownNews.cs Aftermath).
 	class Aftermath
 	{
+		// TownNews.cs Clause: (s ?? "").Trim().TrimEnd('.', ' '), with C#'s own Trim.
+		static std::string Clause(const std::string& S)
+		{
+			const std::string T = MiniJson::Trim(S);
+			std::string::size_type E = T.size();
+			while (E > 0 && (T[E - 1] == '.' || T[E - 1] == ' ')) --E;
+			return T.substr(0, E);
+		}
+		// List<T>.Sort as .NET runs it on a short list (IntrospectiveSort: two
+		// or three elements by fixed swaps, up to sixteen by insertion), so equal
+		// keys come out in .NET's order, which is not always a stable one.
+		template <class TLess>
+		static void DotNetSmallSort(std::vector<std::string>& V, TLess Greater)
+		{
+			auto SwapIfGreater = [&](size_t I, size_t J) { if (I != J && Greater(V[I], V[J])) std::swap(V[I], V[J]); };
+			if (V.size() < 2) return;
+			if (V.size() == 2) { SwapIfGreater(0, 1); return; }
+			if (V.size() == 3) { SwapIfGreater(0, 1); SwapIfGreater(0, 2); SwapIfGreater(1, 2); return; }
+			if (V.size() > 16) { std::stable_sort(V.begin(), V.end(), [&](const std::string& A, const std::string& B) { return Greater(B, A); }); return; }
+			for (size_t I = 0; I + 1 < V.size(); ++I)
+			{
+				std::string T = V[I + 1];
+				size_t J = I + 1;
+				while (J > 0 && Greater(V[J - 1], T)) { V[J] = V[J - 1]; --J; }
+				V[J] = T;
+			}
+		}
+		static bool EndsWith(const std::string& S, const std::string& Tail)
+		{
+			return S.size() >= Tail.size() && S.compare(S.size() - Tail.size(), Tail.size(), Tail) == 0;
+		}
+		// string.IndexOf(x, OrdinalIgnoreCase), for the ASCII the cast's names use.
+		static std::string::size_type FindAsciiNoCase(const std::string& Hay, const std::string& Needle)
+		{
+			if (Needle.empty()) return 0;
+			for (std::string::size_type I = 0; I + Needle.size() <= Hay.size(); ++I)
+			{
+				bool bSame = true;
+				for (std::string::size_type J = 0; J < Needle.size() && bSame; ++J)
+				{
+					char A = Hay[I + J], B = Needle[J];
+					if (A >= 'A' && A <= 'Z') A = (char)(A - 'A' + 'a');
+					if (B >= 'A' && B <= 'Z') B = (char)(B - 'A' + 'a');
+					bSame = A == B;
+				}
+				if (bSame) return I;
+			}
+			return std::string::npos;
+		}
+		// string.Length: UTF-16 units of a UTF-8 string.
+		static size_t Utf16Length(const std::string& S)
+		{
+			size_t N = 0;
+			for (unsigned char C : S)
+			{
+				if ((C & 0xC0) == 0x80) continue;
+				N += (C >= 0xF0) ? 2 : 1;
+			}
+			return N;
+		}
 	public:
 		static constexpr int LongestUnmendedDays = 90;
 
@@ -196,12 +256,48 @@ namespace LedgerCore
 		/// Boarded that morning, the glazier by four the working day after, never a Sunday.
 		static GameTime DefaultMend(const GameTime& Done)
 		{
-			int D = Done.Hour < 6 ? Done.Day : Done.Day + 1;
+			int D = NightOf(Done) + 1;
 			while (CastDay::Weekday(D) == 6) ++D;
 			return GameTime(D, 16, 0);
 		}
 
-		std::string MemoryOf() const { return "I came by and saw it for myself: " + SaidValue + ". I never saw who did it."; }
+		/// THE NIGHT A DEED BELONGS TO (TownNews.cs NightOf, the review's B5):
+		/// before six in the morning, the night before's.
+		static int NightOf(const GameTime& Done) { return Done.Hour < 6 ? Done.Day - 1 : Done.Day; }
+
+		/// Nine the morning after its night: its witnesses' first report.
+		static GameTime FirstReportMorning(const GameTime& Done) { return GameTime(NightOf(Done) + 1, 9, 0); }
+
+		std::string MemoryOf() const { return "I came by and saw it for myself: " + Clause(SaidValue) + ". I never saw who did it."; }
+
+		/// Somebody there when it happened (TownNews.cs PresentMemoryOf).
+		std::string PresentMemoryOf() const { return "I was there when " + Clause(SaidValue) + ". I never saw who did it."; }
+
+		/// WHO KEEPS THE PLACE, IN HER OWN WORDS (TownNews.cs KeeperMemoryOf, the
+		/// review's A9): the place's name made "my", found when she came in or
+		/// while she was there.
+		std::string KeeperMemoryOf(const CastDay* Cast, bool bWasThere) const
+		{
+			const std::string Said = Clause(SaidValue);
+			std::string Own = Said;
+			std::vector<std::string> Names = Cast != nullptr ? Cast->AreaNamesOf(AreaValue) : std::vector<std::string>();
+			// names.Sort((x, y) => y.Length.CompareTo(x.Length)): "greater" is the shorter.
+			DotNetSmallSort(Names, [](const std::string& X, const std::string& Y) { return Utf16Length(Y) > Utf16Length(X); });
+			for (const std::string& N : Names)
+			{
+				const std::string Name = EndsWith(N, "'s") ? N : N + "'s";
+				std::string::size_type At = FindAsciiNoCase(Own, Name);
+				std::string::size_type Len = Name.size();
+				std::string By = "my";
+				if (At == std::string::npos) { At = FindAsciiNoCase(Own, N); Len = N.size(); By = "my place"; }
+				if (At == std::string::npos) continue;
+				Own = Own.substr(0, At) + By + Own.substr(At + Len);
+				break;
+			}
+			if (Own == Said) Own = Said + ", at my place";
+			if (!Own.empty() && Own[0] >= 'a' && Own[0] <= 'z') Own[0] = (char)(Own[0] - 'a' + 'A');
+			return Own + (bWasThere ? " while I was there. " : " while I wasn't there; I found it when I came in. ") + "I never saw who did it.";
+		}
 
 		/// A deed's damage; false (the C#'s ArgumentException) without an area, a key and words.
 		static bool Make(const std::string& InArea, const std::string& InKey, const std::string& InSaid, const GameTime& Done,
@@ -214,7 +310,7 @@ namespace LedgerCore
 			const long long Longest = Done.TotalMinutes() + LongestUnmendedDays * 24LL * 60;
 			A.MendedAtValue = Mend.TotalMinutes() > Longest ? GameTime::FromTotalMinutes(Longest) : Mend;
 			if (LeaveOut != nullptr) for (const std::string& P : *LeaveOut) A.LeaveOutIds.Add(P);
-			A.NextHour = FloorDiv(Done.TotalMinutes(), 60) + 1;
+			A.NextHour = FloorDiv(Done.TotalMinutes(), 60);   // from the deed's own hour (A9)
 			Out = A;
 			return true;
 		}
@@ -228,7 +324,9 @@ namespace LedgerCore
 			const long long NowM = Now.TotalMinutes(), MendM = MendedAtValue.TotalMinutes();
 			const Fact What(TownNews::Subject, KeyValue, "found");
 			long long H = NextHour;
-			for (; H * 60 <= NowM && (H + 1) * 60 <= MendM; ++H)
+			const long long DoneM = DoneAtValue.TotalMinutes();
+			// A pane mended within the deed's own hour is still known to those there.
+			for (; H * 60 <= NowM && ((H + 1) * 60 <= MendM || (H * 60 <= DoneM && DoneM < MendM)); ++H)
 			{
 				const int Day = (int)FloorDiv(H, 24), Hour = (int)(H - (long long)Day * 24);
 				for (const std::string& P : Cast->People())
@@ -238,17 +336,29 @@ namespace LedgerCore
 					const GossiperPtr G = Mill->Get(P);
 					if (!G) continue;
 					Found.Add(P);
-					// Heard it before coming by: they see it, and keep the one copy.
+					// There at the deed's own hour: they know at once, at its time.
+					const bool bThere = H * 60 <= DoneM;
+					const GameTime At = bThere ? DoneAtValue : GameTime(Day, Hour, 0);
+					const bool bKeeper = P == Cast->KeeperOf(AreaValue);
+					// Heard it before coming by: they see it, and keep the one copy;
+					// the keeper still finds her own damage in her own words.
 					bool bHeld = false;
 					for (const RumorPtr& R : G->Rumors) { if (R && R->Content.Subject == TownNews::Subject && R->Content.Predicate == KeyValue) { bHeld = true; break; } }
-					if (bHeld) continue;
-					const GameTime At(Day, Hour, 0);
+					if (bHeld)
+					{
+						if (bKeeper)
+						{
+							if (G->Memory) G->Memory->Append(MemoryEvent(At, "observation", 0.6, KeeperMemoryOf(Cast, bThere)));
+							Out.push_back(std::make_pair(P, At));
+						}
+						continue;
+					}
 					const size_t Memories = G->Memory ? G->Memory->Events.size() : 0;
 					Mill->Witness(P, What, SaidValue, false, At, 0.9);
 					if (G->Memory)
 					{
 						if (G->Memory->Events.size() > Memories) G->Memory->Events.erase(G->Memory->Events.begin() + Memories, G->Memory->Events.end());
-						G->Memory->Append(MemoryEvent(At, "observation", 0.6, MemoryOf()));
+						G->Memory->Append(MemoryEvent(At, "observation", 0.6, bKeeper ? KeeperMemoryOf(Cast, bThere) : bThere ? PresentMemoryOf() : MemoryOf()));
 					}
 					Out.push_back(std::make_pair(P, At));
 				}

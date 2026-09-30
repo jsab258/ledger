@@ -28,6 +28,8 @@ namespace LedgerCore
 		/// The street's story of it, and how it is told.
 		static const char* const ThreatPrefix = "player.threat_";
 		static const char* const ThreatSaid = "The new owner has been threatening people to keep them quiet";
+		/// What the one he threatened remembers of it (Silence.cs ThreatMemory).
+		static const char* const ThreatMemory = "The new owner threatened me to my face, to keep me quiet.";
 
 		inline bool IsThreat(const RumorPtr& R)
 		{
@@ -50,7 +52,8 @@ namespace LedgerCore
 			{
 				if (R && R->TopicKey() == std::string(ThreatPrefix) + Stem && R->Hops == 0) return false;
 			}
-			Mill->Witness(Who, What, ThreatSaid, false, At, 1.0);
+			// Threatened to their face: remembered as that, never "I saw it myself" (B7).
+			Mill->WitnessRemembering(Who, What, ThreatSaid, false, At, ThreatMemory);
 			return true;
 		}
 	}

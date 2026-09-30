@@ -146,6 +146,18 @@ namespace LedgerCore
 					const Value* A = &Areas->Obj[I].second;
 					std::string Within;
 					if (GetString(A, "within", Within) && Within.size() > 0) C.WithinOf[Key] = Within;
+					// WHO KEEPS IT and WHETHER IT IS QUAY STREET'S OWN (CastDay.cs, the
+					// review's A9 and A11); refused as the C# refuses a bad value.
+					if (const Value* Kp = Get(A, "keeper"))
+					{
+						if (Kp->Type != T_STR || Trim(Kp->Str).empty()) { Err = "cast file: area " + Key + "'s keeper must be a person's id"; return false; }
+						C.KeeperOfArea[Key] = Trim(Kp->Str);
+					}
+					if (const Value* St = Get(A, "street"))
+					{
+						if (St->Type != T_BOOL) { Err = "cast file: area " + Key + "'s street must be true or false"; return false; }
+						if (St->Bool) C.StreetAreas.insert(Key);
+					}
 					std::vector<std::string> Names;
 					if (const Value* NL = GetList(A, "names"))
 						for (size_t J = 0; J < NL->Arr.size(); ++J)
@@ -243,6 +255,8 @@ namespace LedgerCore
 				Tie Tt; Tt.A = A; Tt.B = B; Tt.W = W;
 				C.TieList.push_back(Tt);
 			}
+			for (std::map<std::string, std::string>::const_iterator K = C.KeeperOfArea.begin(); K != C.KeeperOfArea.end(); ++K)
+				if (!C.Daily.count(K->second)) { Err = "cast file: area " + K->first + "'s keeper " + K->second + " is not in the cast"; return false; }
 			return true;
 		}
 
@@ -332,6 +346,21 @@ namespace LedgerCore
 		/// CastDay.cs 482: whoever the cast file marks "police": "never".
 		bool NeverToPolice(const std::string& Id) const { return NeverPolice.count(Id) > 0; }
 
+		/// Who keeps an area (CastDay.cs KeeperOf); empty for nobody.
+		std::string KeeperOf(const std::string& Area) const { return Lookup(KeeperOfArea, Area); }
+
+		/// ON QUAY STREET AT THAT HOUR (CastDay.cs OnQuayStreet, the review's
+		/// A11): somewhere, not off, and in one of the street's own areas; a
+		/// file that marks none counts anybody not off.
+		bool OnQuayStreet(const std::string& Id, int Day, int Hour) const
+		{
+			std::string Place;
+			if (!PlaceOf(Id, Day, Hour, Place) || Place == Off()) return false;
+			if (StreetAreas.empty()) return true;
+			std::string Area;
+			return AreaOf(Place, Area) && StreetAreas.count(Area) > 0;
+		}
+
 		// THE PLACES AND WHAT PEOPLE CALL AN AREA (the C#'s Places and
 		// AreaNames), for the game's own reads: where he was seen near a deed.
 		std::vector<std::string> Places() const
@@ -386,6 +415,8 @@ namespace LedgerCore
 		std::vector<std::string> PeopleList;
 		std::set<std::string> NameOnTrust;
 		std::set<std::string> NeverPolice;
+		std::set<std::string> StreetAreas;
+		std::map<std::string, std::string> KeeperOfArea;
 		std::vector<Tie> TieList;
 
 		static std::string Lookup(const std::map<std::string, std::string>& M, const std::string& K)

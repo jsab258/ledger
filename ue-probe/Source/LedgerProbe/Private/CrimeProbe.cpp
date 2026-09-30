@@ -2259,12 +2259,15 @@ namespace
 		// hourly talk leaves those pairs alone. In free play nothing is staged
 		// (Jafar's list, item 1): they talk by their routines, as the rest of
 		// the town does, or the story never leaves the one who saw.
-		const int Ran = GTownHours.RunTo(GMill.get(), &Street, GNow,
+		// The scripted story's clock stands still at its scenes, so its hour's
+		// rounds run whole, to the hour's end, as they always did (the port's
+		// independent check: minute by minute, nine of ten ran later, unheld).
+		const int Ran = GTownHours.RunTo(GMill.get(), &Street, GNow.AddMinutes(59 - GNow.Minute),
 			[](const std::string& Id) { return bLiveScript && (Id == "w1" || Id == "n2" || Id == LedgerCrime::kR3Id); });
 		if (Ran > 0)
 		{
-			UE_LOG(LogTemp, Display, TEXT("LedgerTownHours: %d hour(s) of the town's talk, to %s; next hour %lld"),
-				Ran, *Un(GNow.ToString()), GTownHours.NextHour());
+			UE_LOG(LogTemp, Display, TEXT("LedgerTownHours: %d round(s) of the town's talk, to the end of %s's hour; next round at minute %lld"),
+				Ran, *Un(GNow.ToString()), GTownHours.NextRound());
 		}
 	}
 
@@ -3663,7 +3666,9 @@ namespace
 		if (Card == "lena")
 		{
 			if (GWeek.Week.Stands(GNow)) { J += ",\"week\":{\"stands\":true}"; }
-			else if (GWeek.Week.Waits(GNow) && GWeek.Week.Ask(GNow, bSheilaTrusts, NearPlace("mickeys_office", 6.0)))
+			// Asked on her Sunday while she waits, or any later day the next time
+			// he talks with her at the office (the review's B1, WeeksEnd.AsksNow).
+			else if (GWeek.Week.AsksNow(GNow, NearPlace("mickeys_office", 6.0)) && GWeek.Week.Ask(GNow, bSheilaTrusts, true))
 			{
 				J += std::string(",\"week\":{\"ask\":true,\"realBook\":") + (bSheilaTrusts ? "true" : "false")
 					+ ",\"dayOff\":" + (CastDay::Weekday(GNow.Day) == 6 ? "true" : "false")
@@ -3913,11 +3918,27 @@ namespace
 		const Value* Refused = CastDay::Get(&Root, "refusedAsk");
 		if (Card == "rocco" && Refused != nullptr && Refused->Type == T_BOOL && Refused->Bool)
 		{
-			const int Night = Arrangement::NightOf(GNow);
-			if (GWeek.AnswerAsk(Night, NightAnswer::Refused, GMill.get(), GNow))
+			// AS OF WHEN RON'S QUESTION WAS PUT (the talk program's "refusedAt";
+			// the review's B4a): a yes at two past one to a question at two to
+			// one is that night's no. Without it, or out of range, as of now.
+			GameTime At = GNow;
+			if (const Value* RefusedAt = CastDay::GetObject(&Root, "refusedAt"))
+			{
+				const Value* D = CastDay::Get(RefusedAt, "day");
+				const Value* Hh = CastDay::Get(RefusedAt, "hour");
+				const Value* Mm = CastDay::Get(RefusedAt, "minute");
+				if (D && Hh && Mm && D->Type == T_NUM && Hh->Type == T_NUM && Mm->Type == T_NUM
+				    && Hh->Num >= 0 && Hh->Num < 24 && Mm->Num >= 0 && Mm->Num < 60 && D->Num >= 0 && D->Num < 1e5)
+				{
+					const GameTime Put((int)D->Num, (int)Hh->Num, (int)Mm->Num);
+					if (Put.TotalMinutes() <= GNow.TotalMinutes() && GNow.TotalMinutes() - Put.TotalMinutes() <= 24 * 60) { At = Put; }
+				}
+			}
+			const int Night = Arrangement::NightOf(At);
+			if (GWeek.AnswerAsk(Night, NightAnswer::Refused, GMill.get(), At))
 			{
 				LedgerSession::Write(TEXT("refused"), TEXT("\"night\":") + FString::FromInt(Night));
-				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: he tells Ron no, night %d, %s"), Night, *Un(GNow.ToString()));
+				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: he tells Ron no, night %d, as of %s"), Night, *Un(At.ToString()));
 			}
 		}
 		std::string Answer;
@@ -4793,6 +4814,12 @@ namespace
 			"window_d" + std::to_string(GNow.Day), std::string(), 1.0, true, &Heard);
 		UE_LOG(LogTemp, Display, TEXT("LedgerAfter: the deed at %s (%s): %d saw it, the damage kept"),
 			*Un(GNow.ToString()), *Un(GWindowTopic), (int32)Saw.size());
+		// WHOEVER IS IN THE AREA NOW KNOWS AT ONCE (the review's A9; the reference
+		// week ticks the damage in the deed's own hour).
+		for (const auto& Found : GWeek.DamageTick(GMill.get(), &GCast, GNow))
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %s knows at once, %s"), *Un(Found.first), *Un(Found.second.ToString()));
+		}
 	}
 
 	// ONE GAME HOUR OF THE TOWN'S WEEK (ROUTE.md section 1), in the Core's
@@ -4939,6 +4966,10 @@ namespace
 		for (const GameTime& H : Hours)
 		{
 			UE_LOG(LogTemp, Display, TEXT("LedgerClock: %s (phase %d)"), *Un(H.ToString()), (int32)GPhase);
+			// THE HOUR BEFORE'S TALK FIRST (the port's independent check): an hour
+			// crossed in one jump (a wait, the cells) has its rounds run before
+			// the new hour's events, as they would have been played through.
+			if (!bLiveScript && GMill && bGCast) { GWeek.RoundsTo(GMill.get(), &GCast, H.AddMinutes(-1)); }
 			ConsequenceHour(H);
 		}
 		if (!Hours.empty()) { SaveEncounterToDisk(); }
@@ -5254,6 +5285,9 @@ namespace
 		const std::vector<GameTime> Hours = GClock.Advance(Delta, bHeld);
 		GNow = GClock.Now();
 		ClockHours(Hours);
+		// THE TOWN'S TALK AS ITS MINUTES PASS (the review's A12): every round
+		// due up to now, once; nothing when none is due.
+		if (!bLiveScript && GMill && bGCast) { GWeek.RoundsTo(GMill.get(), &GCast, GNow); }
 		if (GPawn != nullptr) { PlaceBodiesByRoutine(GPawn->GetWorld()); }
 		ClockLight();
 		WeekTick();
@@ -5774,7 +5808,7 @@ namespace
 				else if (Kv == TEXT("rungA")) { GW1RungA = FCString::Atoi(*V); }
 				else if (Kv == TEXT("othersNear")) { GFleeOthersSeen = FCString::Atoi(*V); }
 				else if (Kv == TEXT("talkStamp")) { GLive.TalkStamp = Utf8(V); }
-				else if (Kv == TEXT("deedDay")) { GDeedDay = FCString::Atoi(*V); bDeedDone = true; GWindowTopic = "player.window_d" + std::to_string(GDeedDay); GWeek.DeedTopic = GWindowTopic; GWeek.DeedDay = GDeedDay; }
+				else if (Kv == TEXT("deedDay")) { GDeedDay = FCString::Atoi(*V); bDeedDone = true; GWindowTopic = "player.window_d" + std::to_string(GDeedDay); GWeek.DeedTopic = GWindowTopic; GWeek.DeedDay = GDeedDay; GWeek.DeedAt = GameTime(GDeedDay, 12, 0); }
 				else if (Kv.StartsWith(TEXT("witness_"))) { GWeek.Witnesses.push_back({ Utf8(Kv.Mid(8)), FCString::Atoi(*V) }); }
 				else if (Kv == TEXT("sheilaTrusts")) { bSheilaTrusts = V == TEXT("1"); }
 				else if (Kv == TEXT("place"))
@@ -5783,7 +5817,7 @@ namespace
 					V.ParseIntoArray(P, TEXT(","));
 					if (P.Num() == 3) { bLoadPlace = true; GLoadX = FCString::Atod(*P[0]); GLoadZ = FCString::Atod(*P[1]); GLoadYaw = FCString::Atod(*P[2]); }
 				}
-				else if (Kv == TEXT("deedHour")) { GDeedHour = FCString::Atoi(*V); }
+				else if (Kv == TEXT("deedHour")) { GDeedHour = FCString::Atoi(*V); GWeek.DeedAt = GameTime(GDeedDay, GDeedHour, 0); }
 				else if (Kv.StartsWith(TEXT("saw_"))) { GSawHimAt[Utf8(Kv.Mid(4))] = Utf8(V); }
 				else if (GMet.TakeLine(Utf8(Kv), Utf8(V))) { }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
