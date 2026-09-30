@@ -496,90 +496,6 @@ namespace LedgerCore
 			}
 		};
 
-		/// StreetVoice.cs 131. What the two of them SAY when a rumour passes
-		/// between them.
-		///
-		/// The teller names the story; the hearer answers in the way their own
-		/// disposition dictates. Both lines carry the rumour, so a player in
-		/// earshot learns it by listening: the ledger row becomes a side
-		/// effect of having heard rather than the event itself.
-		///
-		/// THE TELLING IS THE COMPOSED HALF AND THE ANSWER IS NOT, and the C#
-		/// says so at 289 to 295 rather than marking both: the tell carries
-		/// the summary inside it and is a new sentence every time, while the
-		/// answer is a literal from a band and is in a bank as written.
-		/// Marking both would be tidier and would put a renderable hole in the
-		/// structural bucket the first time a reply went missing.
-		inline std::vector<SpokenLine> Exchange(const RumorPtr& R, const GossiperPtr& From,
-		                                        const GossiperPtr& To, int Seed,
-		                                        ExchangeTrace* OutTrace)
-		{
-			std::vector<SpokenLine> Lines;
-			if (OutTrace != 0) { OutTrace->Refused = "none"; }
-			if (!R || !From || !To)
-			{
-				if (OutTrace != 0) { OutTrace->Refused = "no-rumour-or-no-speaker"; }
-				return Lines;
-			}
-			// His arrival passes on unvoiced: it is no story to lower your
-			// voice over (town list 6cg, the independent check).
-			if (DayOne::IsArrival(R) || PlayerIdentity::IsNameStory(R))
-			{
-				if (OutTrace != 0) { OutTrace->Refused = "arrival-or-name"; }
-				return Lines;
-			}
-			// DEVIATION 14: the C#'s IsNullOrEmpty guard is an empty-string
-			// guard here. Same outcome, no speech.
-			const std::string What = Trim(R->Summary);
-			if (What.empty())
-			{
-				if (OutTrace != 0) { OutTrace->Refused = "summary-carried-no-text"; }
-				return Lines;
-			}
-
-			int TellCount = 0;
-			const int TellBandI = TellBandIndex(R->Confidence);
-			const char* const* Tells = TellBand(TellBandI, TellCount);
-			const int TellI = PickIndex(Seed, TellCount);
-			const std::string Tell = Render(std::string(Tells[TellI]), What);
-
-			int AnswerCount = 0;
-			const int AnswerBandI = AnswerBandIndex(*To, R->Sensitive);
-			const char* const* Answers = AnswerBand(AnswerBandI, AnswerCount);
-			const int ASeed = AnswerSeed(Seed, To->Id);
-			const int AnswerI = PickIndex(ASeed, AnswerCount);
-			const std::string Answer(Answers[AnswerI]);
-
-			SpokenLine L1;
-			L1.SpeakerId = From->Id; L1.Text = Tell;
-			L1.AboutPlayer = true;   L1.Source = R; L1.Composed = true;
-			SpokenLine L2;
-			L2.SpeakerId = To->Id;   L2.Text = Answer;
-			L2.AboutPlayer = true;   L2.Source = R; L2.Composed = false;
-			Lines.push_back(L1);
-			Lines.push_back(L2);
-
-			if (OutTrace != 0)
-			{
-				OutTrace->TellBand = TellBandI;
-				OutTrace->TellIndex = TellI;
-				OutTrace->TellCount = TellCount;
-				OutTrace->AnswerBand = AnswerBandI;
-				OutTrace->AnswerIndex = AnswerI;
-				OutTrace->AnswerCount = AnswerCount;
-				OutTrace->AnswerSeedValue = ASeed;
-				OutTrace->bComposed = true;
-			}
-			return Lines;
-		}
-
-		/// The C# signature, for a caller that wants the two lines and nothing
-		/// about how they were chosen.
-		inline std::vector<SpokenLine> Exchange(const RumorPtr& R, const GossiperPtr& From,
-		                                        const GossiperPtr& To, int Seed)
-		{
-			return Exchange(R, From, To, Seed, 0);
-		}
 
 		// ---- THE REACTION LADDER AND DECISION 7 (a), ported 23 September ----
 		//
@@ -889,6 +805,191 @@ namespace LedgerCore
 				return Out + "\"";
 			}
 		};
+
+		/// StreetVoice.cs 131. What the two of them SAY when a rumour passes
+		/// between them.
+		///
+		/// The teller names the story; the hearer answers in the way their own
+		/// disposition dictates. Both lines carry the rumour, so a player in
+		/// earshot learns it by listening: the ledger row becomes a side
+		/// effect of having heard rather than the event itself.
+		///
+		/// THE TELLING IS THE COMPOSED HALF AND THE ANSWER IS NOT, and the C#
+		/// says so at 289 to 295 rather than marking both: the tell carries
+		/// the summary inside it and is a new sentence every time, while the
+		/// answer is a literal from a band and is in a bank as written.
+		/// Marking both would be tidier and would put a renderable hole in the
+		/// structural bucket the first time a reply went missing.
+		// THE TOWN'S OWN NEWS (town list 6aq), told as news, never about him:
+		// copied from the C#'s exchange/tell/news and exchange/reply/news by a
+		// script on 30 September ({What} is the C#'s {Cap(what)}).
+		inline const char* const* TellNews(int& OutCount)
+		{
+			static const char* const Lines[10] = {
+				"Did you hear? {What}.",
+				"Here, {what}.",
+				"{What}, apparently.",
+				"You'll never guess. {What}.",
+				"They're saying {what}.",
+				"Seems {what}.",
+				"Have you heard? {What}.",
+				"I'll tell you something. {What}.",
+				"Talk of the street, this. {What}.",
+				"You'll want to hear this. {What}.",
+			};
+			OutCount = 10;
+			return Lines;
+		}
+		inline const char* const* ReplyNews(int& OutCount)
+		{
+			static const char* const Lines[10] = {
+				"Never.",
+				"Well, I never.",
+				"Go on.",
+				"You're joking.",
+				"Doesn't surprise me.",
+				"First I've heard of it.",
+				"There's always something.",
+				"Who told you that?",
+				"Well, it's none of my business.",
+				"I'd not have thought it.",
+			};
+			OutCount = 10;
+			return Lines;
+		}
+		/// Four tellings of one story he can make out; after that it is the street's murmur.
+		static constexpr int MostNewsTellings = 4;
+
+		static const char* const TellBankNames[3] = { "exchange/tell/certain", "exchange/tell/secondhand", "exchange/tell/doubtful" };
+		static const char* const AnswerBankNames[4] = { "exchange/answer/nervous", "exchange/answer/loyal", "exchange/answer/greedy", "exchange/answer/neutral" };
+
+		inline std::vector<SpokenLine> Exchange(const RumorPtr& R, const GossiperPtr& From,
+		                                        const GossiperPtr& To, int Seed,
+		                                        ExchangeTrace* OutTrace, const RemarkLedger* Heard = 0)
+		{
+			std::vector<SpokenLine> Lines;
+			if (OutTrace != 0) { OutTrace->Refused = "none"; }
+			if (!R || !From || !To)
+			{
+				if (OutTrace != 0) { OutTrace->Refused = "no-rumour-or-no-speaker"; }
+				return Lines;
+			}
+			// His arrival passes on unvoiced: it is no story to lower your
+			// voice over (town list 6cg, the independent check).
+			if (DayOne::IsArrival(R) || PlayerIdentity::IsNameStory(R))
+			{
+				if (OutTrace != 0) { OutTrace->Refused = "arrival-or-name"; }
+				return Lines;
+			}
+			// DEVIATION 14: the C#'s IsNullOrEmpty guard is an empty-string
+			// guard here. Same outcome, no speech.
+			const std::string What = Trim(R->Summary);
+			if (What.empty())
+			{
+				if (OutTrace != 0) { OutTrace->Refused = "summary-carried-no-text"; }
+				return Lines;
+			}
+
+			// With `Heard`, a line he has not heard lately from each bank
+			// (RemarkLedger.Fresh, town list 6o); without it, the seed alone. A
+			// telling carries the story, so the ledger weighs its WORDING, the
+			// story taken out.
+			auto TellFrom = [&](const char* Bank, const char* const* Templates, int Count, int& OutIndex) {
+				std::vector<std::string> Rendered, Wordings;
+				for (int I = 0; I < Count; ++I) { Rendered.push_back(Render(std::string(Templates[I]), What)); Wordings.push_back(Unfill(Rendered.back(), What)); }
+				if (Heard == 0) { OutIndex = PickIndex(Seed, Count); return Rendered[OutIndex]; }
+				std::vector<const char*> Ptrs;
+				for (const std::string& W : Wordings) Ptrs.push_back(W.c_str());
+				const std::string Pick1 = Heard->Fresh(Bank, Ptrs.data(), Count, Seed);
+				int At = -1;
+				for (int I = 0; I < Count; ++I) { if (Wordings[I] == Pick1) { At = I; break; } }
+				OutIndex = At < 0 ? 0 : At;
+				return Rendered[OutIndex];
+			};
+			auto ReplyFrom = [&](const char* Bank, const char* const* Bank1, int Count, int& OutIndex) {
+				const int S = AnswerSeed(Seed, To->Id);
+				if (Heard == 0) { OutIndex = PickIndex(S, Count); return std::string(Bank1[OutIndex]); }
+				const std::string Pick1 = Heard->Fresh(Bank, Bank1, Count, S);
+				OutIndex = 0;
+				for (int I = 0; I < Count; ++I) { if (Pick1 == Bank1[I]) { OutIndex = I; break; } }
+				return Pick1;
+			};
+
+			// THE TOWN'S OWN NEWS (town list 6aq): told as news, not as something
+			// seen of a man, and never about the player.
+			if (R->Content.Subject == "town")
+			{
+				if (Heard != 0 && Heard->TimesToldHim(R->TopicKey()) >= MostNewsTellings)
+				{
+					if (OutTrace != 0) { OutTrace->Refused = "news-told-enough"; }
+					return Lines;
+				}
+				int NewsCount = 0, ReplyCount = 0, NewsI = 0, ReplyI = 0;
+				const char* const* NewsLines = TellNews(NewsCount);
+				const char* const* NewsReplies = ReplyNews(ReplyCount);
+				const std::string News = TellFrom("exchange/tell/news", NewsLines, NewsCount, NewsI);
+				const std::string HeardIt = ReplyFrom("exchange/reply/news", NewsReplies, ReplyCount, ReplyI);
+				SpokenLine N1;
+				N1.SpeakerId = From->Id; N1.Text = News; N1.AboutPlayer = false; N1.Source = R; N1.Composed = true;
+				N1.Bank = "exchange/tell/news"; N1.Wording = Unfill(News, What); N1.bHasWording = true;
+				SpokenLine N2;
+				N2.SpeakerId = To->Id; N2.Text = HeardIt; N2.AboutPlayer = false; N2.Source = R; N2.Composed = false;
+				N2.Bank = "exchange/reply/news";
+				Lines.push_back(N1);
+				Lines.push_back(N2);
+				return Lines;
+			}
+
+			int TellCount = 0;
+			const int TellBandI = TellBandIndex(R->Confidence);
+			const char* const* Tells = TellBand(TellBandI, TellCount);
+			int TellI = 0;
+			const std::string Tell = TellFrom(TellBankNames[TellBandI], Tells, TellCount, TellI);
+
+			int AnswerCount = 0;
+			const int AnswerBandI = AnswerBandIndex(*To, R->Sensitive);
+			const char* const* Answers = AnswerBand(AnswerBandI, AnswerCount);
+			const int ASeed = AnswerSeed(Seed, To->Id);
+			int AnswerI = 0;
+			const std::string Answer = ReplyFrom(AnswerBankNames[AnswerBandI], Answers, AnswerCount, AnswerI);
+
+			SpokenLine L1;
+			L1.SpeakerId = From->Id; L1.Text = Tell;
+			L1.AboutPlayer = true;   L1.Source = R; L1.Composed = true;
+			L1.Bank = TellBankNames[TellBandI]; L1.Wording = Unfill(Tell, What); L1.bHasWording = true;
+			SpokenLine L2;
+			L2.SpeakerId = To->Id;   L2.Text = Answer;
+			L2.AboutPlayer = true;   L2.Source = R; L2.Composed = false;
+			L2.Bank = AnswerBankNames[AnswerBandI];
+			Lines.push_back(L1);
+			Lines.push_back(L2);
+
+			if (OutTrace != 0)
+			{
+				OutTrace->TellBand = TellBandI;
+				OutTrace->TellIndex = TellI;
+				OutTrace->TellCount = TellCount;
+				OutTrace->AnswerBand = AnswerBandI;
+				OutTrace->AnswerIndex = AnswerI;
+				OutTrace->AnswerCount = AnswerCount;
+				OutTrace->AnswerSeedValue = ASeed;
+				OutTrace->bComposed = true;
+			}
+			return Lines;
+		}
+
+		/// The C# signature, for a caller that wants the two lines and nothing
+		/// about how they were chosen; `Heard` as the C#'s last argument.
+		inline std::vector<SpokenLine> Exchange(const RumorPtr& R, const GossiperPtr& From,
+		                                        const GossiperPtr& To, int Seed)
+		{
+			return Exchange(R, From, To, Seed, (ExchangeTrace*)0, 0);
+		}
+		inline std::vector<SpokenLine> Exchange(const RumorPtr& R, const GossiperPtr& From,
+		                                        const GossiperPtr& To, int Seed, const RemarkLedger* Heard)
+		{
+			return Exchange(R, From, To, Seed, (ExchangeTrace*)0, Heard);
+		}
 
 		// ---- knowing a little, and the look (29 September) ----------------
 		//

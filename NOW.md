@@ -50,7 +50,7 @@ STATE: setup done on Monday; the list starts at item 1. Blender live: registered
   7. Sheila's trust and the week's end: production/handovers/6ca-sheila-and-the-week.md (week's end PORTED 30 September: WeeksEnd.h and StreetVoice's four banks, 201 rows with hand-edited saves and her Sunday's hours; the reading of his answer stays in the talk program; wiring waits for the running week)
   8. after a deed: the damage, the police, DS Ellis, an arrest: production/handovers/6ar-after-a-deed.md (PORTED 30 September: PoliceFile.h with Custody, and StreetVoice's four police banks, 417 rows with the file's own rules and saves; Aftermath and the cast's never-to-police come with the town's news, 10; wiring waits for the running week)
   9. the street's own talk: production/handovers/6o-the-streets-talk.md (Ambient PORTED 30 September: every branch and the just-after-a-deed talk, 563 rows; the overheard exchanges' "heard" ledger comes with the town's news, 10; wiring into the street's pairs waits on a local build)
-  10. the town's news sample: production/handovers/6aq-town-news.md
+  10. the town's news sample: production/handovers/6aq-town-news.md (PORTED 30 September: TownNews.h with Aftermath, and the overheard exchanges' news branch, bank names and "heard" ledger, 61 rows; wiring waits on a local build)
 
 - 29 Sep, the talk program's whole protocol on one page (town list 6av): production/specs/talk-protocol.md, every field the game sends and gets back, kept true by a check; the lines below say when to send each.
 

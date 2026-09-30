@@ -56911,3 +56911,64 @@ AmbientHeard|13|ambient/open/ordinary|You've~had~your~hair~cut.|ambient/reply/or
 AmbientHeard|14|ambient/open/ordinary|Have~you~a~minute?~No,~it'll~keep.|ambient/reply/ordinary|Same~as~ever.
 AmbientHeard|15|ambient/open/ordinary|I've~been~meaning~to~catch~you.|ambient/reply/ordinary|Better~this~week,~any~road.
 AmbientHeard|nobody|0|0|ambient/open/ordinary
+TownNews|0|exchange/tell/news|Did~you~hear?~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Well,~it's~none~of~my~business.|0
+TownNews|1|exchange/tell/news|Here,~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|First~I've~heard~of~it.|0
+TownNews|2|exchange/tell/news|Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about,~apparently.|exchange/reply/news|Go~on.|0
+TownNews|3|exchange/tell/news|You'll~never~guess.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|I'd~not~have~thought~it.|0
+TownNews|4|exchange/tell/news|They're~saying~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|There's~always~something.|0
+TownNews|5|exchange/tell/news|Seems~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|You're~joking.|0
+TownNews|6|exchange/tell/news|Have~you~heard?~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Never.|0
+TownNews|7|exchange/tell/news|I'll~tell~you~something.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Who~told~you~that?|0
+TownNews|8|exchange/tell/news|Talk~of~the~street,~this.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Doesn't~surprise~me.|0
+TownNews|9|exchange/tell/news|You'll~want~to~hear~this.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Well,~I~never.|0
+TownNews|10|exchange/tell/news|Did~you~hear?~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Well,~it's~none~of~my~business.|0
+TownNews|11|exchange/tell/news|Here,~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|First~I've~heard~of~it.|0
+TownNews|12|exchange/tell/news|Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about,~apparently.|exchange/reply/news|Go~on.|0
+TownNews|13|exchange/tell/news|You'll~never~guess.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|I'd~not~have~thought~it.|0
+TownNews|14|exchange/tell/news|They're~saying~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|There's~always~something.|0
+TownNews|15|exchange/tell/news|Seems~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|You're~joking.|0
+TownNews|16|exchange/tell/news|Have~you~heard?~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Never.|0
+TownNews|17|exchange/tell/news|I'll~tell~you~something.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Who~told~you~that?|0
+TownNews|18|exchange/tell/news|Talk~of~the~street,~this.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Doesn't~surprise~me.|0
+TownNews|19|exchange/tell/news|You'll~want~to~hear~this.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Well,~I~never.|0
+TownNewsWitnesses|hal_rita_row|sam,rita,victor,hal,ines,marta,jelena
+NewsHeard|0|exchange/tell/news|Did~you~hear?~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Well,~it's~none~of~my~business.|1
+NewsHeard|1|exchange/tell/news|Here,~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|First~I've~heard~of~it.|2
+NewsHeard|2|exchange/tell/news|Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about,~apparently.|exchange/reply/news|Go~on.|3
+NewsHeard|3|exchange/tell/news|You'll~never~guess.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|I'd~not~have~thought~it.|4
+NewsHeard|4|none|4
+NewsHeard|5|none|4
+ExchangeHeard|0.9~0.5~0.5~0.5~0|0|exchange/tell/certain|I'm~telling~you,~somebody~put~Rita's~window~in.|I'm~telling~you,~{what}.|exchange/answer/neutral|You're~serious.
+ExchangeHeard|0.9~0.5~0.5~0.5~0|1|exchange/tell/certain|Somebody~put~Rita's~window~in.~I~know~what~I~saw.|{What}.~I~know~what~I~saw.|exchange/answer/neutral|That~would~explain~a~few~things.
+ExchangeHeard|0.9~0.5~0.5~0.5~0|2|exchange/tell/certain|You~want~to~know~why~I've~been~quiet?~Somebody~put~Rita's~window~in.|You~want~to~know~why~I've~been~quiet?~{What}.|exchange/answer/neutral|What,~and~nobody's~said~anything?
+ExchangeHeard|0.6~0.9~0.5~0.5~1|0|exchange/tell/secondhand|They're~saying~somebody~put~Rita's~window~in.|They're~saying~{what}.|exchange/answer/nervous|Say~it~quieter~or~don't~say~it.
+ExchangeHeard|0.6~0.9~0.5~0.5~1|1|exchange/tell/secondhand|Word~is~somebody~put~Rita's~window~in.|Word~is~{what}.|exchange/answer/nervous|That's~the~kind~of~talk~that~ends~with~somebody~moving~away.
+ExchangeHeard|0.6~0.9~0.5~0.5~1|2|exchange/tell/secondhand|Somebody~told~me~somebody~put~Rita's~window~in.~Make~of~it~what~you~like.|Somebody~told~me~{what}.~Make~of~it~what~you~like.|exchange/answer/nervous|Some~things~you~carry.~You~don't~hand~them~round.
+ExchangeHeard|0.6~0.9~0.5~0.5~0|0|exchange/tell/secondhand|They're~saying~somebody~put~Rita's~window~in.|They're~saying~{what}.|exchange/answer/neutral|You're~serious.
+ExchangeHeard|0.6~0.9~0.5~0.5~0|1|exchange/tell/secondhand|Word~is~somebody~put~Rita's~window~in.|Word~is~{what}.|exchange/answer/neutral|That~would~explain~a~few~things.
+ExchangeHeard|0.6~0.9~0.5~0.5~0|2|exchange/tell/secondhand|Somebody~told~me~somebody~put~Rita's~window~in.~Make~of~it~what~you~like.|Somebody~told~me~{what}.~Make~of~it~what~you~like.|exchange/answer/neutral|What,~and~nobody's~said~anything?
+ExchangeHeard|0.3~0.5~0.9~0.5~0|0|exchange/tell/doubtful|There's~a~story~going~round~that~somebody~put~Rita's~window~in.~Probably~nothing.|There's~a~story~going~round~that~{what}.~Probably~nothing.|exchange/answer/loyal|That's~a~hard~thing~to~say~about~a~man~who's~done~me~no~harm.
+ExchangeHeard|0.3~0.5~0.9~0.5~0|1|exchange/tell/doubtful|You~hear~all~sorts.~Somebody~put~Rita's~window~in,~apparently.|You~hear~all~sorts.~{What},~apparently.|exchange/answer/loyal|Give~it~a~month.~It'll~be~somebody~else's~turn.
+ExchangeHeard|0.3~0.5~0.9~0.5~0|2|exchange/tell/doubtful|Somebody's~saying~somebody~put~Rita's~window~in.~Somebody's~always~saying~something.|Somebody's~saying~{what}.~Somebody's~always~saying~something.|exchange/answer/loyal|I'll~not~be~the~one~carrying~that~any~further.
+ExchangeHeard|0.3~0.5~0.5~0.9~1|0|exchange/tell/doubtful|There's~a~story~going~round~that~somebody~put~Rita's~window~in.~Probably~nothing.|There's~a~story~going~round~that~{what}.~Probably~nothing.|exchange/answer/greedy|Now~that~IS~worth~hearing.
+ExchangeHeard|0.3~0.5~0.5~0.9~1|1|exchange/tell/doubtful|You~hear~all~sorts.~Somebody~put~Rita's~window~in,~apparently.|You~hear~all~sorts.~{What},~apparently.|exchange/answer/greedy|Say~that~again,~slowly.
+ExchangeHeard|0.3~0.5~0.5~0.9~1|2|exchange/tell/doubtful|Somebody's~saying~somebody~put~Rita's~window~in.~Somebody's~always~saying~something.|Somebody's~saying~{what}.~Somebody's~always~saying~something.|exchange/answer/greedy|I'd~not~give~that~away~for~nothing.
+NewsSeed|before|
+NewsSeed|at ten|row|
+NewsSeedHolder|rita|town.row_d0|1|1|0
+NewsSeedHolder|hal|town.row_d0|1|1|0
+NewsSeedHolder|joey|none|0|0
+NewsSeed|next day|boat|row,boat
+NewsParse|0|town~news:~not~an~object
+NewsParse|1|town~news:~no~stories
+NewsParse|2|town~news:~a~story~that~is~not~an~object
+NewsParse|3|town~news:~a~story~needs~an~id,~a~summary~and~an~area
+NewsParse|4|town~news:~a~needs~a~day~and~an~hour
+NewsParse|5|town~news:~a's~fact~must~have~the~subject~"town"
+NewsParse|6|town~news:~a~needs~a~fact~[subject,~predicate,~value]
+NewsParse|7|town~news:~b~repeats~an~id~or~a~fact
+Aftermath|made|960|11040|11040
+Aftermath|tick to nine|rita@540
+Aftermath|tick to noon||1|I~came~by~and~saw~it~for~myself:~somebody~put~Rita's~window~in.~I~never~saw~who~did~it.|1
+Aftermath|save|{"area":"ritas","key":"rita_window_d0","said":"somebody~put~Rita's~window~in","done":150,"mended":960,"leaveOut":["joey"],"found":["rita","hal"],"next":13}|{"area":"ritas","key":"rita_window_d0","said":"somebody~put~Rita's~window~in","done":150,"mended":960,"leaveOut":["joey"],"found":["rita","hal"],"next":13}
+Aftermath|bad saves|1|1|{"area":"a","key":"k","said":"s","done":100,"mended":1000,"leaveOut":["y"],"found":["x"],"next":17}|{"area":"a","key":"k","said":"s","done":100,"mended":1000,"leaveOut":[],"found":[],"next":2}

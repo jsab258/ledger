@@ -59,6 +59,7 @@
 #include "WeeksEnd.h"
 #include "PoliceFile.h"
 #include "Waiting.h"
+#include "TownNews.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -2007,6 +2008,152 @@ namespace Golden
 		if (It == Ans.end()) return A;
 		A.Known = true;
 		A.Got = MultiAnswer(F, 1 + Labels, It->second);
+		return A;
+	}
+
+	// ---- the town's own news (town list 6aq) -----------------------------
+	//
+	// PerceptionGolden's EmitTownNews, played again here, with the repo's
+	// own hook-cast.json and town-news.json.
+
+	inline const std::map<std::string, std::vector<std::string> >& NewsAnswers()
+	{
+		static std::map<std::string, std::vector<std::string> > Ans;
+		if (!Ans.empty()) return Ans;
+		const GossiperPtr A = std::make_shared<Gossiper>("na", "na", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+		const GossiperPtr B = std::make_shared<Gossiper>("nb", "nb", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day");
+		RumorPtr R = std::make_shared<Rumor>(Fact("town", "hal_rita_row_d0", "seen"));
+		R->Summary = "Hal and Rita had words in the pawn, and nobody knows what about"; R->Confidence = 0.9;
+		for (int Seed = 0; Seed < 20; ++Seed)
+		{
+			const std::vector<SpokenLine> L = StreetVoice::Exchange(R, A, B, Seed);
+			Ans["TownNews|" + FromInt(Seed)] = { L[0].Bank, Escape(L[0].Text), L[1].Bank, Escape(L[1].Text), FromBool(L[0].AboutPlayer) };
+		}
+		std::string CastText, NewsText, Err;
+		CastDay Cast;
+		TownNews News;
+		if (ReadCastFile("hook-cast.json", CastText) && CastDay::Parse(CastText, Cast, Err) && ReadCastFile("town-news.json", NewsText) && TownNews::Parse(NewsText, News, Err))
+		{
+			for (const TownNews::Story& St : News.Stories)
+			{
+				const std::vector<std::string> W = News.WitnessesOf(&St, &Cast);
+				std::string J;
+				for (size_t I = 0; I < W.size(); ++I) J += (I ? "," : "") + W[I];
+				Ans["TownNewsWitnesses|" + St.Id] = { J };
+			}
+		}
+
+		// THE EDGES (EmitTownNews' regression rows).
+		auto Join = [](const std::vector<std::string>& V) { std::string J; for (size_t I = 0; I < V.size(); ++I) J += (I ? "," : "") + V[I]; return J; };
+		StreetVoice::RemarkLedger Led;
+		for (int I = 0; I < 6; ++I)
+		{
+			const std::vector<SpokenLine> L = StreetVoice::Exchange(R, A, B, I, &Led);
+			for (const SpokenLine& S : L) Led.Heard(S);
+			std::vector<std::string> O;
+			if (L.empty()) O.push_back("none");
+			else O = { L[0].Bank, Escape(L[0].Text), L[1].Bank, Escape(L[1].Text) };
+			O.push_back(FromInt(Led.TimesToldHim(R->TopicKey())));
+			Ans["NewsHeard|" + FromInt(I)] = O;
+		}
+		struct Hc { double Conf, Nerve, Loyal, Greed; bool bSens; };
+		const Hc Hcs[] = { { 0.9, 0.5, 0.5, 0.5, false }, { 0.6, 0.9, 0.5, 0.5, true }, { 0.6, 0.9, 0.5, 0.5, false }, { 0.3, 0.5, 0.9, 0.5, false }, { 0.3, 0.5, 0.5, 0.9, true } };
+		for (const Hc& H : Hcs)
+		{
+			const GossiperPtr Hearer = std::make_shared<Gossiper>("nh", "nh", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", H.Greed, H.Nerve, H.Loyal);
+			RumorPtr His = std::make_shared<Rumor>(Fact("player", "window_d1", "seen"));
+			His->Summary = "somebody put Rita's window in"; His->Confidence = H.Conf; His->Sensitive = H.bSens;
+			StreetVoice::RemarkLedger HLed;
+			const std::string Label = FromDouble(H.Conf) + "~" + FromDouble(H.Nerve) + "~" + FromDouble(H.Loyal) + "~" + FromDouble(H.Greed) + "~" + FromBool(H.bSens);
+			for (int I = 0; I < 3; ++I)
+			{
+				const std::vector<SpokenLine> L = StreetVoice::Exchange(His, A, Hearer, I, &HLed);
+				for (const SpokenLine& S : L) HLed.Heard(S);
+				Ans["ExchangeHeard|" + Label + "|" + FromInt(I)] = { L[0].Bank, Escape(L[0].Text), Escape(StreetVoice::WordingOf(L[0])), L[1].Bank, Escape(L[1].Text) };
+			}
+		}
+		CastDay SmallCast;
+		CastDay::Parse(R"({"talk_range_m":6,"places":{"pawn":{"x_m":0,"z_m":0},"quay":{"x_m":50,"z_m":0}},"areas":{"ritas":{"places":["pawn"]},"quay":{"places":["quay"]}},"people":[{"id":"rita","routine":[[0,"off"],[9,"pawn"],[18,"off"]]},{"id":"hal","routine":[[0,"off"],[10,"pawn"],[12,"quay"]]},{"id":"joey","routine":[[0,"off"],[6,"quay"],[18,"off"]]}],"ties":[]})", SmallCast, Err);
+		TownNews SmallNews;
+		TownNews::Parse(R"({"stories":[{"id":"row","summary":"Hal and Rita had words","area":"ritas","day":0,"hour":10,"fact":["town","row_d0","seen"],"parties":["hal","rita"],"confidence":1.5},{"id":"boat","summary":"a boat came in late","area":"quay","day":1,"hour":7,"fact":["town","boat_d1","seen"]}]})", SmallNews, Err);
+		{
+			GossipMill Nm(std::make_shared<SocialGraph>());
+			for (const std::string& Id : SmallCast.People())
+				Nm.Add(std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+			Ans["NewsSeed|before"] = { Join(SmallNews.Seed(&Nm, &SmallCast, GameTime(0, 9, 59))) };
+			const std::string S1 = Join(SmallNews.Seed(&Nm, &SmallCast, GameTime(0, 10, 0)));
+			const std::string S2 = Join(SmallNews.Seed(&Nm, &SmallCast, GameTime(0, 11, 0)));
+			Ans["NewsSeed|at ten"] = { S1, S2 };
+			for (const std::string& Id : SmallCast.People())
+			{
+				const GossiperPtr G = Nm.Get(Id);
+				RumorPtr Held;
+				for (const RumorPtr& X : G->Rumors) { if (X->Content.Subject == "town") { Held = X; break; } }
+				// The topic and its confidence are two cells of the table, as the C#'s "|" makes them.
+				std::vector<std::string> O;
+				if (Held) { O.push_back(Held->TopicKey()); O.push_back(FromDouble(Held->Confidence)); }
+				else O.push_back("none");
+				O.push_back(FromBool(G->SuppressedHas("town.row_d0")));
+				O.push_back(FromInt((long long)G->Memory->Events.size()));
+				Ans["NewsSeedHolder|" + Id] = O;
+			}
+			const std::string S3 = Join(SmallNews.Seed(&Nm, &SmallCast, GameTime(1, 8, 0)));
+			Ans["NewsSeed|next day"] = { S3, Join(SmallNews.Filed()) };
+		}
+		const char* BadNews[] = {
+			R"([1])",
+			R"({"stories":{}})",
+			R"({"stories":[1]})",
+			R"({"stories":[{"id":"a","summary":"s"}]})",
+			R"({"stories":[{"id":"a","summary":"s","area":"x","day":0,"hour":24,"fact":["town","p","v"]}]})",
+			R"({"stories":[{"id":"a","summary":"s","area":"x","day":0,"hour":1,"fact":["player","p","v"]}]})",
+			R"({"stories":[{"id":"a","summary":"s","area":"x","day":0,"hour":1,"fact":["town","p"]}]})",
+			R"({"stories":[{"id":"a","summary":"s","area":"x","day":0,"hour":1,"fact":["town","p","v"]},{"id":"b","summary":"s","area":"x","day":0,"hour":1,"fact":["town","p","w"]}]})",
+		};
+		for (int I = 0; I < (int)(sizeof(BadNews) / sizeof(BadNews[0])); ++I)
+		{
+			TownNews Got;
+			std::string E;
+			Ans["NewsParse|" + FromInt(I)] = { Escape(TownNews::Parse(BadNews[I], Got, E) ? "ok:" + FromInt((long long)Got.Stories.size()) : E) };
+		}
+		{
+			Aftermath Damage;
+			const std::vector<std::string> Leave = { "joey" };
+			Aftermath::Make("ritas", "rita_window_d0", "somebody put Rita's window in", GameTime(0, 2, 30), nullptr, &Leave, Damage);
+			Ans["Aftermath|made"] = { FromInt(Damage.MendedAt().TotalMinutes()), FromInt(Aftermath::DefaultMend(GameTime(5, 23, 0)).TotalMinutes()), FromInt(Aftermath::DefaultMend(GameTime(6, 3, 0)).TotalMinutes()) };
+			GossipMill Am(std::make_shared<SocialGraph>());
+			for (const std::string& Id : SmallCast.People())
+				Am.Add(std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+			Am.Witness("hal", Fact("town", "rita_window_d0", "found"), "somebody put Rita's window in", false, GameTime(0, 8, 0), 0.9);
+			auto Found = [](const std::vector<std::pair<std::string, GameTime> >& V) { std::string J; for (size_t I = 0; I < V.size(); ++I) J += (I ? "," : "") + V[I].first + "@" + FromInt(V[I].second.TotalMinutes()); return J; };
+			Ans["Aftermath|tick to nine"] = { Found(Damage.Tick(&Am, &SmallCast, GameTime(0, 9, 30))) };
+			const std::string Noon = Found(Damage.Tick(&Am, &SmallCast, GameTime(0, 12, 0)));
+			const GossiperPtr Rita = Am.Get("rita");
+			Ans["Aftermath|tick to noon"] = { Noon, FromInt((long long)Rita->Memory->Events.size()), Escape(Rita->Memory->Events.back().Text), FromInt((long long)Am.Get("hal")->Rumors.size()) };
+			const std::string Saved = Damage.ToJson();
+			Aftermath Back;
+			Aftermath::FromJson(Saved, Back);
+			Ans["Aftermath|save"] = { Escape(Saved), Escape(Back.ToJson()) };
+			Aftermath B1, B2, B3;
+			const bool bNull = !Aftermath::FromJson("", B1);
+			const bool bBackwards = !Aftermath::FromJson(R"({"area":"a","key":"k","said":"s","done":100,"mended":50})", B1);
+			Aftermath::FromJson(R"({"area":"a","key":"k","said":"s","done":100,"mended":1000,"next":99999,"found":["x",""],"leaveOut":["y",3]})", B2);
+			Aftermath::FromJson(R"({"area":"a","key":"k","said":"s","done":100,"mended":1000,"next":0})", B3);
+			Ans["Aftermath|bad saves"] = { FromBool(bNull), FromBool(bBackwards), Escape(B2.ToJson()), Escape(B3.ToJson()) };
+		}
+		return Ans;
+	}
+
+	inline Answer NewsRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const auto& Ans = NewsAnswers();
+		const bool bTwo = F[0] == "ExchangeHeard";
+		if ((int)F.size() < (bTwo ? 4 : 3)) return A;
+		const auto It = Ans.find(F[0] + "|" + F[1] + (bTwo ? "|" + F[2] : std::string()));
+		if (It == Ans.end()) return A;
+		A.Known = true;
+		A.Got = MultiAnswer(F, bTwo ? 3 : 2, It->second);
 		return A;
 	}
 
@@ -4193,6 +4340,12 @@ namespace Golden
 		else if (Fn == "GossipFuzz")
 		{
 			A = GossipFuzzRow(F);
+		}
+		// THE TOWN'S OWN NEWS (town list 6aq): TownNews.h and Exchange's news branch.
+		else if (Fn == "TownNews" || Fn == "TownNewsWitnesses" || Fn == "NewsHeard" || Fn == "ExchangeHeard" || Fn == "NewsSeed" || Fn == "NewsSeedHolder"
+		         || Fn == "NewsParse" || Fn == "Aftermath")
+		{
+			A = NewsRow(F);
 		}
 		// THE STREET'S OWN TALK (town list 6o, 6an): StreetVoice::Ambient.
 		else if (Fn == "JustNow" || Fn == "AmbientBranch" || Fn == "AmbientHeard")
