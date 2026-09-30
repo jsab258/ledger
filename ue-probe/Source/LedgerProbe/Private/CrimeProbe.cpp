@@ -69,6 +69,7 @@
 #include "TownNews.h"
 #include "TownSave.h"
 #include "Waiting.h"
+#include "TownWeek.h"
 #include "Suspecting.h"
 #include "FrameStats.h"
 
@@ -349,6 +350,28 @@ namespace
 	LiveClock GClock;
 	bool bClockRuns = false;
 	bool bLiveScript = false;    // -LiveScript, the scripted encounter (see THE LIVE ENCOUNTER, SCRIPTED)
+	// THE THREE IN THE STREET BY THE CAST'S OWN IDS in free play (the town's
+	// route, production/handovers/ROUTE.md, step 0: "key the mill by the
+	// cast's ids (lena, sam, rocco), not w1, n2, r3, or Arrangement and
+	// WeeksEnd find nobody"); the scripted encounter and the regression keep
+	// the probe's own, which their measured rows name.
+	std::string GIdW1 = "w1", GIdN2 = "n2", GIdR3 = "r3";
+	// THE TOWN'S WEEK (TownWeek.h; production/handovers/ROUTE.md), in free
+	// play: its asks, Ada's tea, the police file, the damage, the arrests,
+	// the week's end and the hours the town has talked, run hour by hour in
+	// the order the Core's own week runs them (tools/route_week_check.py
+	// holds the two together). One TownSave of it, town.json.
+	TownWeek GWeek;
+	// The deed's story, as the mill holds it in free play: "player.window_d<day>"
+	// (ROUTE.md step 2), set when he does it.
+	std::string GWindowTopic = "player.window_d1";
+	// Sheila's trust, as her talk reports it (the reply's trusts / trustEarned),
+	// kept in the save: her week's question is over the real book once she has it.
+	bool bSheilaTrusts = false;
+	// WHERE HE STOOD at the save (street metres, and his heading), so a
+	// reload puts him back there rather than at the street's start.
+	bool bLoadPlace = false;
+	double GLoadX = 0.0, GLoadZ = 0.0, GLoadYaw = 0.0;
 	int  GLightNight = -1;       // the street's light last applied: 1 night, 0 day
 	/// What one exchange of talk costs, in game minutes: the clock is held while
 	/// he talks, so a slow reply never costs him time (production/research/game-clock).
@@ -356,6 +379,7 @@ namespace
 	void ClockCharge(int Minutes);
 	void ConsequenceHour(const GameTime& H);
 	void ConstableHour(const GameTime& H);
+	bool NearPlace(const char* Place, double Metres);
 	std::shared_ptr<SocialGraph> GGraph;
 	std::shared_ptr<GossipMill>  GMill;
 	GossiperPtr GW1, GN2;
@@ -1546,10 +1570,10 @@ namespace
 	{
 		double PairMetres(const std::string& A, const std::string& B) const
 		{
-			AActor* PA = (A == "w1") ? GW1Body : ((A == "n2") ? GN2Body
-			           : ((A == LedgerCrime::kR3Id) ? GR3Body : nullptr));
-			AActor* PB = (B == "w1") ? GW1Body : ((B == "n2") ? GN2Body
-			           : ((B == LedgerCrime::kR3Id) ? GR3Body : nullptr));
+			AActor* PA = (A == "w1" || A == GIdW1) ? GW1Body : ((A == "n2" || A == GIdN2) ? GN2Body
+			           : ((A == LedgerCrime::kR3Id || A == GIdR3) ? GR3Body : nullptr));
+			AActor* PB = (B == "w1" || B == GIdW1) ? GW1Body : ((B == "n2" || B == GIdN2) ? GN2Body
+			           : ((B == LedgerCrime::kR3Id || B == GIdR3) ? GR3Body : nullptr));
 			if (PA == nullptr || PB == nullptr) { return -1.0; }
 			return (double)FVector::Dist(PA->GetActorLocation(), PB->GetActorLocation()) / 100.0;
 		}
@@ -2183,7 +2207,7 @@ namespace
 
 	void TownHoursTick()
 	{
-		if (GEnc != EEncounter::Live || !GMill || !bGCast) { return; }
+		if (GEnc != EEncounter::Live || !GMill || !bGCast || !bLiveScript) { return; }
 		FStreetCast Street;
 		Street.Cast = &GCast;
 		// WHO THE STREET HOLDS: in the scripted encounter the game passes the
@@ -2301,19 +2325,27 @@ namespace
 				// A first-hand sighting enters the network at the certainty
 				// the resolver measured, which is what everything downstream
 				// inherits.
-				const Fact Content(std::string("player"), std::string("broke_a_window"), VictimId);
+				const Fact Content = bRitasWindow
+					? Fact(std::string("player"), "window_d" + std::to_string(GNow.Day), std::string("ritas"))
+					: Fact(std::string("player"), std::string("broke_a_window"), VictimId);
 				// THE RUNG SHE REACHED travels with the story in play (town list
 				// 6n), so a retelling whose first teller knew him can name him;
 				// the regression keeps its measured run without it.
-				GMill->Witness(R.WitnessId, Content, Summary, /*bSensitive=*/false, GNow,
+				GMill->Witness(R.WitnessId, Content, Summary, /*bSensitive=*/bRitasWindow, GNow,
 				               R.O.Certainty, /*bIndelible=*/false, GEnc == EEncounter::Live ? R.O.Rung : -1);
 				// WHERE SHE SAW HIM (town list 6ac, 6au), in play, when what she
 				// saw can be tied to him.
 				if (GEnc == EEncounter::Live && Index == 0 && LedgerCrime::CanTieSighting(R.O.Rung))
 				{
-					SawHimNear(GMill->Get(R.WitnessId), LedgerCrime::kCrimeAX, LedgerCrime::kCrimeAZ, R.O.Certainty);
+					double Sx = LedgerCrime::kCrimeAX, Sz = LedgerCrime::kCrimeAZ;
+					if (bRitasWindow && GGlass[0] != nullptr)
+					{
+						const LedgerCrime::P3 G = ToStreet(GGlass[0]->GetComponentsBoundingBox(true).GetCenter());
+						Sx = G.X; Sz = G.Z;
+					}
+					SawHimNear(GMill->Get(R.WitnessId), Sx, Sz, R.O.Certainty);
 				}
-				if (GEnc != EEncounter::None && Index == 0 && R.WitnessId == "w1")
+				if (GEnc != EEncounter::None && Index == 0 && R.WitnessId == GIdW1)
 				{
 					GW1RungA = R.O.Rung;
 					GFiledSummaryA = Summary;
@@ -2448,6 +2480,7 @@ namespace
 	}
 
 	double GLiveDeedAt = 0.0;
+	GameTime GLiveDeedGameAt;
 	// THE LIVE ENCOUNTER, SCRIPTED (-LiveScript): the same live phases, with
 	// the probe walking where a player would and pressing the same keys
 	// through the same input path, so the playable version is also checked
@@ -2490,7 +2523,7 @@ namespace
 	void FileFleeSighting(UWorld* World)
 	{
 		if (GN2Body == nullptr || GPawn == nullptr || !GMill) { GFleeSummary = "no-lad-or-no-mill"; return; }
-		LedgerCrime::Reading W = MeasureVantage(World, "n2", "flee", GN2Body, nullptr, GFleeSeconds);
+		LedgerCrime::Reading W = MeasureVantage(World, GIdN2, "flee", GN2Body, nullptr, GFleeSeconds);
 		W.Familiarity = LedgerCrime::kLadFamiliarity;
 		GFleeMetres = W.ActorMetres;
 		bFleeSeen = GFleeSeconds >= Perception::NoticeSeconds
@@ -2530,7 +2563,7 @@ namespace
 		// it and the save keeps it exactly as it keeps any other.
 		RumorPtr Near = std::make_shared<Rumor>(Fact(std::string("player"), std::string(LedgerCrime::NearPredicate()),
 		                                             std::string(LedgerCrime::NearValue())));
-		Near->OriginId = "n2";
+		Near->OriginId = GIdN2;
 		Near->Summary = GFleeSummary;
 		Near->Confidence = GFleeCertainty;
 		Near->Hops = 0;
@@ -3418,6 +3451,30 @@ namespace
 			+ (LedgerCore::PlayerIdentity::HoldsHisName(G.get()) ? ",\"knowsName\":true" : "") + "}";
 	}
 
+	// THE WEEK IN THE TALK (ROUTE.md section 2; production/specs/talk-protocol.md),
+	// in free play: Ron knows the envelope is his to hear a no to while the
+	// night's ask stands; Sheila puts her week's-end question the first time
+	// he talks to her at Mickey's on the Sunday, and it stands after.
+	std::string WeekTalkJson(const std::string& Card)
+	{
+		if (bLiveScript || !GMill) { return std::string(); }
+		std::string J;
+		if (Card == "rocco" && GWeek.Asks.AskStands(GNow)) { J += ",\"ask\":{\"tonight\":true}"; }
+		if (Card == "lena")
+		{
+			if (GWeek.Week.Stands(GNow)) { J += ",\"week\":{\"stands\":true}"; }
+			else if (GWeek.Week.Waits(GNow) && GWeek.Week.Ask(GNow, bSheilaTrusts, NearPlace("mickeys_office", 6.0)))
+			{
+				J += std::string(",\"week\":{\"ask\":true,\"realBook\":") + (bSheilaTrusts ? "true" : "false")
+					+ ",\"dayOff\":" + (CastDay::Weekday(GNow.Day) == 6 ? "true" : "false")
+					+ ",\"ended\":" + (GWeek.Asks.Ended() ? "true" : "false") + "}";
+				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: Sheila puts her question at %s (%s)"), *Un(GNow.ToString()),
+					bSheilaTrusts ? TEXT("the real book") : TEXT("the day-book"));
+			}
+		}
+		return J;
+	}
+
 	std::string EvidenceFor(const GossiperPtr& G, double Familiarity, int OwnRungOnA);
 	std::string JsonField(const std::string& Line, const std::string& Name);
 	void SaveEncounterToDisk();
@@ -3482,7 +3539,7 @@ namespace
 			+ ",\"hour\":" + std::to_string(GNow.Hour) + ",\"minute\":" + std::to_string(GNow.Minute)
 			+ (bFresh ? ",\"fresh\":true" : "") + ",\"present\":[" + Present + "]"
 			+ ",\"scene\":\"" + Light + "\",\"memories\":[" + MemoriesJson(G) + "]"
-			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + KnowingJson(Card) + Acquaintance + DeedField + "}\n";
+			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + KnowingJson(Card) + Acquaintance + DeedField + WeekTalkJson(Card) + "}\n";
 		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
 		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: to %s%s%s%s evidence=%s"), *Un(Card), *Un(Acquaintance), *Un(KnowingJson(Card)), *Un(DeedField),
 			*Un(EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung)));
@@ -3538,7 +3595,7 @@ namespace
 				Path.IsEmpty() ? TEXT("no hook-cast.json found") : *Un(Err.empty() ? std::string("unreadable") : Err));
 			return;
 		}
-		const std::map<std::string, std::string> Street = { { "lena", "w1" }, { "sam", "n2" }, { "rocco", LedgerCrime::kR3Id } };
+		const std::map<std::string, std::string> Street = { { "lena", GIdW1 }, { "sam", GIdN2 }, { "rocco", GIdR3 } };
 		// THE WHOLE TOWN IN FREE PLAY (Jafar's list of 30 September, item 1:
 		// gossip and the consequence in ordinary play). The three in the
 		// street keep the ids the game has always given them (w1, n2 and the
@@ -3637,6 +3694,44 @@ namespace
 		if (Gave != nullptr && Gave->Type == T_BOOL && Gave->Bool && GMill && LedgerCore::PlayerIdentity::NameTold(GMill.get(), G->Id, GNow))
 		{
 			UE_LOG(LogTemp, Display, TEXT("LedgerNames: %s has his name now"), *Un(Card));
+		}
+		// A THREAT (the reply's "threatened"): the one threatened holds it
+		// first-hand, warier, and it buys no silence (Silence.h).
+		std::string Threat;
+		if (GMill && CastDay::GetString(&Root, "threatened", Threat) && !Threat.empty() && Silence::FileThreat(GMill.get(), G->Id, Threat, GNow))
+		{
+			LedgerSession::Write(TEXT("deed"), TEXT("\"topic\":") + LedgerSession::Str(Un(Threat)) + TEXT(",\"seen\":[") + LedgerSession::Str(Un(G->Id)) + TEXT("]"));
+			UE_LOG(LogTemp, Display, TEXT("LedgerDeed: he threatened %s over %s"), *Un(Card), *Un(Threat));
+		}
+		// THE WEEK, FROM THE TALK (ROUTE.md steps 12 and 14), in free play.
+		if (bLiveScript || !GMill) { return; }
+		const Value* Refused = CastDay::Get(&Root, "refusedAsk");
+		if (Card == "rocco" && Refused != nullptr && Refused->Type == T_BOOL && Refused->Bool)
+		{
+			const int Night = Arrangement::NightOf(GNow);
+			if (GWeek.AnswerAsk(Night, NightAnswer::Refused, GMill.get(), GNow))
+			{
+				LedgerSession::Write(TEXT("refused"), TEXT("\"night\":") + FString::FromInt(Night));
+				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: he tells Ron no, night %d, %s"), Night, *Un(GNow.ToString()));
+			}
+		}
+		std::string Answer;
+		if (Card == "lena" && CastDay::GetString(&Root, "weekAnswer", Answer) && !Answer.empty())
+		{
+			const WeekAnswer A = Answer == "WindDown" ? WeekAnswer::WindDown : Answer == "TakeOver" ? WeekAnswer::TakeOver
+				: Answer == "WontSay" ? WeekAnswer::WontSay : WeekAnswer::None;
+			if (GWeek.Week.Give(A, GNow, GMill.get(), &GCast, &GWeek.Asks))
+			{
+				LedgerSession::Write(TEXT("week"), TEXT("\"answer\":") + LedgerSession::Str(Un(Answer)));
+				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: his answer to Sheila, %s, at %s"), *Un(Answer), *Un(GNow.ToString()));
+			}
+		}
+		const Value* Earned = CastDay::Get(&Root, "trustEarned");
+		const Value* Trusts = CastDay::Get(&Root, "trusts");
+		if (Card == "lena" && !bSheilaTrusts && ((Earned != nullptr && Earned->Type == T_BOOL && Earned->Bool) || (Trusts != nullptr && Trusts->Type == T_BOOL && Trusts->Bool)))
+		{
+			bSheilaTrusts = true;
+			UE_LOG(LogTemp, Display, TEXT("LedgerWeek: Sheila trusts him from %s"), *Un(GNow.ToString()));
 		}
 	}
 
@@ -3965,9 +4060,9 @@ namespace
 			"Did you hear the glass go last night?" };
 		struct Who { AActor* Body; GossiperPtr G; const char* Card; const char* Id; const TCHAR* Name; int Rung; };
 		const Who People[3] = {
-			{ GN2Body, GN2, "sam", "n2", TEXT("Darren"), -1 },
-			{ GW1Body, GW1, "lena", "w1", TEXT("Sheila"), GW1RungA },
-			{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Ron"), -1 } };
+			{ GN2Body, GN2, "sam", GIdN2.c_str(), TEXT("Darren"), -1 },
+			{ GW1Body, GW1, "lena", GIdW1.c_str(), TEXT("Sheila"), GW1RungA },
+			{ GR3Body, GR3, "rocco", GIdR3.c_str(), TEXT("Ron"), -1 } };
 		const bool bVoiceIdle = GVoice.Queue.Num() == 0 && GVoice.Pending.Num() == 0 && Now > GVoice.BusyUntil + 1.0;
 		if (GAsk.bWaiting)
 		{
@@ -4386,10 +4481,6 @@ namespace
 	// hour: the damage found. Each morning at nine: whether DS Ellis comes
 	// asking; at ten, whether a constable takes him. All of it saved with the
 	// story (town.json, the town's own TownSave).
-	PoliceFile GPolice;
-	std::vector<Aftermath> GDamage;
-	std::vector<std::shared_ptr<Custody> > GArrests;
-	const char* const kWindowTopic = "player.broke_a_window";   // the story's topic, as the mill holds it
 
 	// HELD UNTIL: set when a constable takes him, so the hours in the cells
 	// pass once the hour that took him is done (never inside another hour).
@@ -4397,16 +4488,12 @@ namespace
 	GameTime GHeldUntil;
 
 	// TEN O'CLOCK: a constable, for a deed a witness gave a statement about (the
-	// card, step 4). He is taken where he stands; the street that sees it has
-	// it to talk of; the arrest words, then his rights; the hours in the cells
-	// pass (the town's hours running meanwhile); and he is let go with plain words.
+	// card, step 4; ROUTE.md step 6, TownWeek::TenConstable). He is taken
+	// where he stands; the street that sees it has it to talk of; the arrest
+	// words, then his rights; the hours in the cells pass (the town's hours
+	// running meanwhile); and he is let go with plain words.
 	void ConstableHour(const GameTime& H)
 	{
-		std::string Topic;
-		if (!GPolice.ConstableComes(H.Day, Topic, &H)) { return; }
-		std::shared_ptr<Custody> C = GPolice.TakeIn(&Topic, H, false, false);
-		if (!C) { UE_LOG(LogTemp, Display, TEXT("LedgerAfter: a constable calls on day %d for %s, no arrest"), H.Day, *Un(Topic)); return; }
-		GArrests.push_back(C);
 		std::string Area = "mickeys";
 		if (GPawn != nullptr && bGCast)
 		{
@@ -4414,80 +4501,134 @@ namespace
 			const std::string Place = GCast.NearestPlace(At.X, At.Z, 30.0);
 			if (!Place.empty()) { GCast.AreaOf(Place, Area); }
 		}
-		const std::vector<std::string> Saw = Custody::SeenTaken(GMill.get(), &GCast, Area, H);
+		const std::shared_ptr<Custody> C = GWeek.TenConstable(GMill.get(), &GCast, H, Area);
+		if (!C) { return; }
 		Say(FString(TEXT("A constable: \"")) + Un(C->ArrestWords()) + TEXT("\""), 14.0f, FColor::White);
 		Say(FString(TEXT("At the station: ")) + Un(std::string(Custody::Rights)), 14.0f, FColor::Yellow);
-		LedgerSession::Write(TEXT("taken"), TEXT("\"story\":") + LedgerSession::Str(Un(Topic)) + TEXT(",\"day\":") + FString::FromInt(H.Day)
+		LedgerSession::Write(TEXT("taken"), TEXT("\"story\":") + LedgerSession::Str(Un(GWeek.DeedTopic)) + TEXT(",\"day\":") + FString::FromInt(H.Day)
 			+ TEXT(",\"end\":") + LedgerSession::Str(Un(C->OutAt().ToString())));
-		UE_LOG(LogTemp, Display, TEXT("LedgerAfter: taken at %s in %s for %s, out at %s; %d saw it"),
-			*Un(H.ToString()), *Un(Area), *Un(Topic), *Un(C->OutAt().ToString()), (int32)Saw.size());
+		UE_LOG(LogTemp, Display, TEXT("LedgerAfter: taken at %s in %s, out at %s"), *Un(H.ToString()), *Un(Area), *Un(C->OutAt().ToString()));
 		bHeldPending = true;
 		GHeldUntil = C->OutAt();
 	}
 
 	// The grading the police give a story they hear of in the street's talk.
-	Offence GradeOf(const std::string& Topic) { return Topic == kWindowTopic ? Offence::Damage : Offence::Suspicious; }
+	Offence GradeOf(const std::string& Topic) { return Topic == GWindowTopic ? Offence::Damage : Offence::Suspicious; }
 
-	void DeedFollows()
+	// Who holds the deed first-hand, with the rung they saw him at.
+	std::vector<std::pair<GossiperPtr, int> > DeedWitnesses()
 	{
-		if (bLiveScript || !GMill || !bGCast) { return; }
-		const std::string Topic = kWindowTopic;
-		std::vector<std::string> Saw;
-		std::vector<std::pair<GossiperPtr, int> > Witnesses;
+		std::vector<std::pair<GossiperPtr, int> > Out;
+		if (!GMill) { return Out; }
 		for (const GossiperPtr& G : GMill->Agents())
 		{
 			if (!G) { continue; }
 			for (const RumorPtr& R : G->Rumors)
 			{
-				if (R && R->TopicKey() == Topic && R->Hops == 0) { Saw.push_back(FStreetCast::CastId(G->Id)); Witnesses.push_back({ G, R->OriginRung }); break; }
+				if (R && R->TopicKey() == GWindowTopic && R->Hops == 0) { Out.push_back({ G, R->OriginRung }); break; }
 			}
 		}
-		Aftermath A;
-		const std::string Key = "ritas_window_d" + std::to_string(GNow.Day);
-		if (Aftermath::Make("ritas", Key, "somebody put Rita's window in", GNow, nullptr, &Saw, A)) { GDamage.push_back(A); }
-		int Reports = 0;
-		for (const auto& W : Witnesses)
-		{
-			if (!PoliceFile::WouldReport(W.first.get(), Offence::Damage, false, &Topic, GCast.NeverToPolice(FStreetCast::CastId(W.first->Id)))) { continue; }
-			if (!GPolice.Report(W.first->Id, Topic, Offence::Damage, W.second, GNow.Day)) { continue; }
-			++Reports;
-			LedgerSession::Write(TEXT("police"), TEXT("\"who\":") + LedgerSession::Str(Un(W.first->Id)) + TEXT(",\"story\":")
-				+ LedgerSession::Str(Un(Topic)) + TEXT(",\"how\":") + LedgerSession::Str(W.second >= 4 ? TEXT("statement") : TEXT("description")));
-		}
-		UE_LOG(LogTemp, Display, TEXT("LedgerAfter: the deed at %s: %d saw it, %d went to the police, the damage kept (%s)"),
-			*Un(GNow.ToString()), (int32)Saw.size(), Reports, *Un(Key));
+		return Out;
 	}
 
+	void DeedFollows()
+	{
+		if (bLiveScript || !GMill || !bGCast) { return; }
+		GWindowTopic = "player.window_d" + std::to_string(GNow.Day);
+		std::vector<std::pair<std::string, int> > Saw;
+		for (const auto& W : DeedWitnesses()) { Saw.push_back({ W.first->Id, W.second }); }
+		// ROUTE.md step 2: the damage (which those who saw it done never
+		// "find") and who saw it, at the rung they saw him at; their stories
+		// were filed as they saw it (ResolveAndFile), so the mill is not passed.
+		GWeek.Deed(nullptr, GNow, "ritas", "rita_window", "somebody put Rita's window in", Saw,
+			"window_d" + std::to_string(GNow.Day), std::string(), 1.0, true);
+		UE_LOG(LogTemp, Display, TEXT("LedgerAfter: the deed at %s (%s): %d saw it, the damage kept"),
+			*Un(GNow.ToString()), *Un(GWindowTopic), (int32)Saw.size());
+	}
+
+	// ONE GAME HOUR OF THE TOWN'S WEEK (ROUTE.md section 1), in the Core's
+	// order: six o'clock the asks' nights passed, the damage found, nine the
+	// witnesses to the police (once each, from the day after it) and DS Ellis,
+	// ten the constable and Ada's invitation, eight in the evening Ron at the
+	// door, eleven the tea's close, then the week's end and the town's talk.
 	void ConsequenceHour(const GameTime& H)
 	{
 		if (bLiveScript || !GMill || !bGCast) { return; }
-		for (Aftermath& A : GDamage)
+		GWeek.Six(GMill.get(), H);
+		for (const auto& Found : GWeek.DamageTick(GMill.get(), &GCast, H))
 		{
-			for (const auto& Found : A.Tick(GMill.get(), &GCast, H))
+			UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %s finds the damage at %s"), *Un(Found.first), *Un(Found.second.ToString()));
+		}
+		for (const std::string& Who : GWeek.NineReports(GMill.get(), &GCast, H))
+		{
+			LedgerSession::Write(TEXT("police"), TEXT("\"who\":") + LedgerSession::Str(Un(Who)) + TEXT(",\"story\":") + LedgerSession::Str(Un(GWeek.DeedTopic)));
+			UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %s goes to the police about %s on day %d"), *Un(Who), *Un(GWeek.DeedTopic), H.Day);
+		}
+		const std::string Why = GWeek.NineEllis(GMill.get(), H, [](const std::string& T) { return GradeOf(T); });
+		if (!Why.empty())
+		{
+			Say(TEXT("DS Ellis is on Quay Street this morning, asking after you."), 8.0f, FColor::Yellow);
+			LedgerSession::Write(TEXT("ellis"), TEXT("\"why\":") + LedgerSession::Str(Un(Why)) + TEXT(",\"day\":") + FString::FromInt(H.Day));
+			UE_LOG(LogTemp, Display, TEXT("LedgerAfter: DS Ellis comes on day %d for %s"), H.Day, *Un(Why));
+		}
+		ConstableHour(H);
+		std::string Invite;
+		if (GWeek.TenTea(H, Invite))
+		{
+			Say(FString(TEXT("Ada, from her step: \"")) + Un(Invite) + TEXT("\""), 12.0f, FColor::White);
+			UE_LOG(LogTemp, Display, TEXT("LedgerWeek: Ada asks him in for tea on day %d"), H.Day);
+		}
+		if (GWeek.TwentyRon(GMill.get(), H))
+		{
+			Say(TEXT("Ron's at the door with an envelope for you: for the ferry landing, after ten tonight, to the man who asks for Mickey's. The way down is past the quay at the bottom of the street."), 14.0f, FColor::Yellow);
+			LedgerSession::Write(TEXT("ask"), TEXT("\"night\":") + FString::FromInt(H.Day));
+			UE_LOG(LogTemp, Display, TEXT("LedgerWeek: Ron brings the envelope on night %d"), H.Day);
+		}
+		GWeek.TwentyThreeTea(GMill.get(), H);
+		GWeek.HourEnd(GMill.get(), &GCast, H);
+	}
+
+	// WHERE HE STANDS, for the week: at Ada's step (her tea's minutes), at the
+	// quay (the way down to the landing), at Mickey's (Sheila's question).
+	bool NearPlace(const char* Place, double Metres)
+	{
+		double X = 0.0, Z = 0.0;
+		if (GPawn == nullptr || !bGCast || !GCast.PlaceXZ(Place, X, Z)) { return false; }
+		const LedgerCrime::P3 At = ToStreet(GPawn->GetActorLocation());
+		return (At.X - X) * (At.X - X) + (At.Z - Z) * (At.Z - Z) <= Metres * Metres;
+	}
+	bool AtAdasNow() { return NearPlace("adas_step", 4.0); }
+
+	// WHAT HE DOES IN THE WEEK, A FRAME AT A TIME (ROUTE.md steps 9 to 11):
+	// each minute at Ada's step between nine and eleven on the tea's day is a
+	// minute with her; on an ask night from ten, with the envelope and the
+	// night unanswered, going down past the quay is the envelope handed over
+	// (and on the tea's night, leaving her for it).
+	int GTeaMinuteDone = -1;
+	void WeekTick()
+	{
+		if (bLiveScript || !bClockRuns || !GMill || !bGCast || GWeek.Holding(GNow)) { return; }
+		if (GWeek.Tea && GNow.Day == GWeek.Tea->Day() && GNow.Hour >= AdasTea::From && GNow.Hour < AdasTea::Until && AtAdasNow())
+		{
+			const int M = GNow.Hour * 60 + GNow.Minute;
+			if (M != GTeaMinuteDone)
 			{
-				UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %s finds %s at %s"), *Un(Found.first), *Un(A.Said()), *Un(Found.second.ToString()));
+				if (GTeaMinuteDone < 0) { UE_LOG(LogTemp, Display, TEXT("LedgerWeek: with Ada from %s"), *Un(GNow.ToString())); }
+				GTeaMinuteDone = M;
+				GWeek.Tea->WithHer(GNow);
 			}
 		}
-		// NINE O'CLOCK: DS Ellis, while there is a reason.
-		if (H.Hour == 9)
+		const int Night = Arrangement::NightOf(GNow);
+		if (GWeek.Asks.AskStands(GNow) && (GNow.Hour >= Waiting::LandingFrom || GNow.Hour < Arrangement::GaveUpHour) && NearPlace("quay", 8.0))
 		{
-			std::string Why;
-			if (GPolice.EllisComes(GMill.get(), H.Day, Inquiry::None, Why))
+			if (GWeek.Tea && Night == GWeek.Tea->Day()) { GWeek.Tea->WentToTheLanding(GMill.get(), GNow, true); }
+			if (GWeek.AnswerAsk(Night, NightAnswer::Did, GMill.get(), GNow))
 			{
-				if (Why == "talk") { GPolice.HearTheStreet(GMill.get(), H.Day, [](const std::string& T) { return GradeOf(T); }); }
-				int Asked = 0;
-				if (Why != "body")
-				{
-					const std::vector<std::string> Who = PoliceFile::WhoSheAsks(GMill.get());
-					Asked = PoliceFile::Asked(GMill.get(), &Who, Why, H);
-				}
-				Say(TEXT("A detective is on Quay Street this morning, asking about you."), 8.0f, FColor::Yellow);
-				LedgerSession::Write(TEXT("ellis"), TEXT("\"why\":") + LedgerSession::Str(Un(Why)) + TEXT(",\"day\":") + FString::FromInt(H.Day));
-				UE_LOG(LogTemp, Display, TEXT("LedgerAfter: DS Ellis comes on day %d for %s; %d asked"), H.Day, *Un(Why), Asked);
+				Say(TEXT("Down at the ferry landing a man asks for Mickey's. You hand him the envelope."), 10.0f, FColor::Yellow);
+				LedgerSession::Write(TEXT("landing"), TEXT("\"night\":") + FString::FromInt(Night));
+				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: the envelope handed over at the landing, night %d, %s"), Night, *Un(GNow.ToString()));
 			}
 		}
-		// TEN O'CLOCK: a constable, for a deed a witness made a statement about.
-		if (H.Hour == 10) { ConstableHour(H); }
 	}
 
 	// THE CLOCK, A FRAME AT A TIME (LiveClock.h): held while he talks (the box
@@ -4511,7 +4652,7 @@ namespace
 			const std::vector<GameTime> Held = GClock.JumpTo(GHeldUntil);
 			GNow = GClock.Now();
 			ClockHours(Held);
-			if (!GArrests.empty()) { Say(Un(GArrests.back()->ReleaseWords()), 14.0f, FColor::Yellow); }
+			if (GWeek.Latest()) { Say(Un(GWeek.Latest()->ReleaseWords()), 14.0f, FColor::Yellow); }
 		}
 	}
 
@@ -4532,6 +4673,7 @@ namespace
 		GNow = GClock.Now();
 		ClockHours(Hours);
 		ClockLight();
+		WeekTick();
 	}
 
 	void ClockCharge(int Minutes)
@@ -4561,8 +4703,14 @@ namespace
 		const bool bPressed = Slice != nullptr && Slice->ConsumeWaitRequests() > 0;
 		if (!bPressed || bSayOpen || GLive.PendingId != 0) { return; }
 		WaitBeats B;
-		B.Police = &GPolice;
+		B.Asks = &GWeek.Asks;
+		B.Tea = GWeek.Tea.get();
+		B.Police = &GWeek.Police;
 		B.Mill = GMill.get();
+		B.Week = &GWeek.Week;
+		const std::shared_ptr<Custody> Held = GWeek.Holding(GNow);
+		B.CustodyOf = Held.get();
+		B.AtAdas = AtAdasNow();
 		B.WalkRoundDone = bSheilaMet;
 		B.Shown = GWaitShown;
 		std::string Refused;
@@ -4574,8 +4722,18 @@ namespace
 		UE_LOG(LogTemp, Display, TEXT("LedgerWait: from %s to %s%s"), *Un(GNow.ToString()), *Un(To.ToString()),
 			bStop ? *(FString(TEXT(", stopped: ")) + Un(S.Key)) : TEXT(""));
 		LedgerSession::Write(TEXT("wait"), TEXT("\"from\":") + LedgerSession::Str(Un(GNow.ToString())) + TEXT(",\"to\":") + LedgerSession::Str(Un(To.ToString())));
+		const GameTime From = GNow;
 		const std::vector<GameTime> Hours = GClock.JumpTo(To);
 		GNow = GClock.Now();
+		// Waiting at Ada's step on the tea's evening is time with her, counted
+		// before the hours (her tea closes at eleven).
+		if (B.AtAdas && GWeek.Tea)
+		{
+			for (GameTime M = From.AddMinutes(1); M.TotalMinutes() <= GNow.TotalMinutes(); M = M.AddMinutes(1))
+			{
+				if (M.Day == GWeek.Tea->Day() && M.Hour >= AdasTea::From && M.Hour < AdasTea::Until) { GWeek.Tea->WithHer(M); }
+			}
+		}
 		ClockHours(Hours);
 		ClockLight();
 		Say(FString(TEXT("You wait. ")) + Un(GNow.ToString()) + TEXT("."), 5.0f, FColor::Yellow);
@@ -4634,9 +4792,9 @@ namespace
 		if (TakeTalkRequests() <= 0 || GPawn == nullptr) { return false; }
 		struct Who { AActor* Body; GossiperPtr G; const char* Card; const char* Id; const TCHAR* Name; int Rung; };
 		const Who People[3] = {
-			{ GN2Body, GN2, "sam", "n2", TEXT("Darren"), -1 },
-			{ GW1Body, GW1, "lena", "w1", TEXT("Sheila"), GW1RungA },
-			{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Ron"), -1 } };
+			{ GN2Body, GN2, "sam", GIdN2.c_str(), TEXT("Darren"), -1 },
+			{ GW1Body, GW1, "lena", GIdW1.c_str(), TEXT("Sheila"), GW1RungA },
+			{ GR3Body, GR3, "rocco", GIdR3.c_str(), TEXT("Ron"), -1 } };
 		const Who* Near = nullptr;
 		const Who* Closest = nullptr;
 		double Best = LedgerCrime::kLiveTalkM, ClosestM = 1e9;
@@ -4899,6 +5057,15 @@ namespace
 			+ "\ntalkStamp=" + GLive.TalkStamp
 			+ (bDeedDone ? "\ndeedDay=" + std::to_string(GDeedDay) + "\ndeedHour=" + std::to_string(GDeedHour) : std::string())
 			+ [] { std::string S; for (const auto& Kv : GSawHimAt) { S += "\nsaw_" + Kv.first + "=" + Kv.second; } return S; }()
+			+ [] { std::string S; for (const auto& W : GWeek.Witnesses) { S += "\nwitness_" + W.first + "=" + std::to_string(W.second); } return S; }()
+			+ (bSheilaTrusts ? "\nsheilaTrusts=1" : "")
+			+ [] {
+				if (GPawn == nullptr || bLiveScript) { return std::string(); }
+				const LedgerCrime::P3 At = ToStreet(GPawn->GetActorLocation());
+				char B[96];
+				FCStringAnsi::Snprintf(B, sizeof(B), "\nplace=%.2f,%.2f,%.1f", At.X, At.Z, (double)GPawn->GetActorRotation().Yaw);
+				return std::string(B);
+			}()
 			+ "\nclock=" + GClock.ToText()
 			+ [] { std::string S; for (const std::string& K : GWaitShown) { S += "\nwaitShown=" + K; } return S; }()
 			+ "\ncommit=" + Utf8(CrimeSha()) + "\n";
@@ -4924,9 +5091,13 @@ namespace
 		if (!bLiveScript)
 		{
 			TownSave T;
-			T.Police = GPolice;
-			T.Damage = GDamage;
-			T.Arrests = GArrests;
+			T.Asks = GWeek.Asks;
+			if (GWeek.Tea) { T.Tea.reset(new AdasTea(*GWeek.Tea)); }
+			T.Police = GWeek.Police;
+			T.Damage = GWeek.Damage;
+			T.Arrests = GWeek.Arrests;
+			T.Hours = GWeek.Hours;
+			T.Week = GWeek.Week;
 			Ok = FFileHelper::SaveStringToFile(Un(T.ToJson()), *(Dir / TEXT("town.json")),
 				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		}
@@ -4945,6 +5116,8 @@ namespace
 	{
 		const FString Dir = EncSaveDir();
 		GSaveDirUsed = Dir;
+		bLoadPlace = false;
+		bSheilaTrusts = false;
 		FString J;
 		bool Ok = FFileHelper::LoadFileToString(J, *(Dir / TEXT("agents.json")));
 		if (Ok && GMill) { Save::RestoreMillAgents(Utf8(J), *GMill); GLoadedBytes = J.Len(); }
@@ -4976,12 +5149,17 @@ namespace
 		{
 			FString TownText;
 			TownSave T;
+			GWeek = TownWeek();
 			std::string Err;
 			if (FFileHelper::LoadFileToString(TownText, *(Dir / TEXT("town.json"))) && TownSave::FromJson(Utf8(TownText), T, Err))
 			{
-				GPolice = T.Police;
-				GDamage = T.Damage;
-				GArrests = T.Arrests;
+				GWeek.Asks = T.Asks;
+				GWeek.Tea.reset(T.Tea ? new AdasTea(*T.Tea) : nullptr);
+				GWeek.Police = T.Police;
+				GWeek.Damage = T.Damage;
+				GWeek.Arrests = T.Arrests;
+				GWeek.Hours = T.Hours;
+				GWeek.Week = T.Week;
 			}
 		}
 		FString ClockText;
@@ -5001,7 +5179,15 @@ namespace
 				else if (Kv == TEXT("rungA")) { GW1RungA = FCString::Atoi(*V); }
 				else if (Kv == TEXT("othersNear")) { GFleeOthersSeen = FCString::Atoi(*V); }
 				else if (Kv == TEXT("talkStamp")) { GLive.TalkStamp = Utf8(V); }
-				else if (Kv == TEXT("deedDay")) { GDeedDay = FCString::Atoi(*V); bDeedDone = true; }
+				else if (Kv == TEXT("deedDay")) { GDeedDay = FCString::Atoi(*V); bDeedDone = true; GWindowTopic = "player.window_d" + std::to_string(GDeedDay); GWeek.DeedTopic = GWindowTopic; GWeek.DeedDay = GDeedDay; }
+				else if (Kv.StartsWith(TEXT("witness_"))) { GWeek.Witnesses.push_back({ Utf8(Kv.Mid(8)), FCString::Atoi(*V) }); }
+				else if (Kv == TEXT("sheilaTrusts")) { bSheilaTrusts = V == TEXT("1"); }
+				else if (Kv == TEXT("place"))
+				{
+					TArray<FString> P;
+					V.ParseIntoArray(P, TEXT(","));
+					if (P.Num() == 3) { bLoadPlace = true; GLoadX = FCString::Atod(*P[0]); GLoadZ = FCString::Atod(*P[1]); GLoadYaw = FCString::Atod(*P[2]); }
+				}
 				else if (Kv == TEXT("deedHour")) { GDeedHour = FCString::Atoi(*V); }
 				else if (Kv.StartsWith(TEXT("saw_"))) { GSawHimAt[Utf8(Kv.Mid(4))] = Utf8(V); }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
@@ -5325,7 +5511,9 @@ namespace
 		if (GHintUntil >= 0.0 && T >= GHintUntil) { HintSetText(FString()); GHintUntil = -1.0; }
 	}
 
-	const TCHAR* const kErrandLine = TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like.");
+	const TCHAR* const kErrandMickeys = TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like.");
+	const TCHAR* const kErrandRitas = TEXT("Walk to Rita's pawn shop, two doors up from Mickey's (the minicab office with the dark blue front), and press E at her window. Press T near someone to talk to them first, if you like.");
+	const TCHAR* ErrandLine() { return bRitasWindow ? kErrandRitas : kErrandMickeys; }
 
 	// SHEILA'S WALK-ROUND, 30 September (town list 6cg, day one; the twenty a
 	// friend would notice, 6: a clear first purpose). A new game opens on her
@@ -5357,7 +5545,7 @@ namespace
 		LedgerCore::Hint H;
 		if (LedgerCore::DayOne::WalkRoundEnds(&GHints, NowS(), H)) { HintShow(H); }
 		UE_LOG(LogTemp, Display, TEXT("LedgerDayOne: the walk-round ends at stop %d of %d; the hints begin"), GWalkStop, LedgerCore::DayOne::WalkRoundCount);
-		Say(kErrandLine, 40.0f, FColor::Yellow);
+		Say(ErrandLine(), 40.0f, FColor::Yellow);
 		GPhase = ECrimePhase::LiveWaitDeed;
 	}
 
@@ -5408,6 +5596,14 @@ namespace
 				bClockRuns = true;
 				GLightNight = -1;
 				GPhase = bDeedDone ? ECrimePhase::LiveRoam : ECrimePhase::LiveWaitDeed;
+				if (bLoadPlace)
+				{
+					TeleportPawn(World, GLoadX, GLoadZ, GLoadYaw);
+					// The camera behind him again, not only his heading (the tester:
+					// after Continue he faced the camera).
+					if (AController* C = GPawn != nullptr ? GPawn->GetController() : nullptr) { C->SetControlRotation(FRotator(0.0f, (float)GLoadYaw, 0.0f)); }
+					UE_LOG(LogTemp, Display, TEXT("LedgerLoad: back where he stood, %.2f, %.2f"), GLoadX, GLoadZ);
+				}
 				Say(FString(TEXT("The street remembers. ")) + Un(GNow.ToString()) + TEXT("."), 8.0f, FColor::Yellow);
 			}
 			else if (bLoadedFromDisk)
@@ -5429,16 +5625,19 @@ namespace
 			GTownHours = TownHours();                      // nor has the town talked an hour (town list 6bs)
 			if (!bLiveScript)
 			{
-				GClock = LiveClock(GameTime(1, 9, 0));
+				GClock = LiveClock(GameTime(0, 9, 0));
 				GNow = GClock.Now();
 				bClockRuns = true;
+				GWeek = TownWeek();
+				bSheilaTrusts = false;
+				GTeaMinuteDone = -1;
 				GLightNight = -1;
 			}
 			GWatchSlot = 0;
 			// DAY ONE FIRST (town list 6cg; the twenty a friend would notice,
 			// 6): in free play Sheila shows him round before he can walk, and
 			// the errand follows it (WalkRoundEnd).
-			if (bLiveScript) { Say(kErrandLine, 40.0f, FColor::Yellow); }
+			if (bLiveScript) { Say(ErrandLine(), 40.0f, FColor::Yellow); }
 			else
 			{
 				GPhase = ECrimePhase::LiveWalkRound;
@@ -5697,7 +5896,7 @@ namespace
 			// are held to: seconds accrue only while the sightline holds.
 			if (GN2Body != nullptr && GPawn != nullptr && (Now - GPhaseStart) >= kSettleAfterTeleport)
 			{
-				const LedgerCrime::Reading W = MeasureVantage(World, "n2", "flee", GN2Body, nullptr, 0.0);
+				const LedgerCrime::Reading W = MeasureVantage(World, GIdN2, "flee", GN2Body, nullptr, 0.0);
 				if (Perception::InSight(W.ActorMetres, W.ActorOffAxisDeg, LedgerCrime::kLightLevel, W.bActorOccluded, 1.4))
 				{
 					GFleeSeconds += Delta;
@@ -6001,8 +6200,8 @@ namespace
 			}
 			// THE SAME DEED AS THE REGRESSION: the vantage measured with the
 			// glass standing, then the deed, then what she saw filed.
-			GReadings.push_back(MeasureVantage(World, "w1", "A", GW1Body, GGlass[0], GSeconds[0][0]));
-			GReadings.push_back(MeasureVantage(World, "n2", "A", GN2Body, GGlass[0], GSeconds[0][1]));
+			GReadings.push_back(MeasureVantage(World, GIdW1, "A", GW1Body, GGlass[0], GSeconds[0][0]));
+			GReadings.push_back(MeasureVantage(World, GIdN2, "A", GN2Body, GGlass[0], GSeconds[0][1]));
 			GActRequestsSeen[0] += Presses;
 			GActAttempted[0] = true;
 			CommitDeed(World, 0);
@@ -6011,7 +6210,9 @@ namespace
 			GWatchSlot = -1;
 			GFleeSeconds = 0.0;
 			GLiveDeedAt = Now;
-			LedgerSession::Write(TEXT("deed"), TEXT("\"what\":\"player.window_d1\""));
+			GLiveDeedGameAt = GNow;
+			if (bRitasWindow) { GWindowTopic = "player.window_d" + std::to_string(GNow.Day); }
+			LedgerSession::Write(TEXT("deed"), TEXT("\"what\":") + LedgerSession::Str(Un(bRitasWindow ? GWindowTopic : std::string("player.window_d1"))));
 			MarkDeedTime();
 			DeedFollows();
 			// AND SEEN: broken glass on the pavement under the window, in play
@@ -6054,7 +6255,7 @@ namespace
 			}
 			// THE ERRAND IS DONE, so its instruction goes (the tester, 30
 			// September: "Walk to Mickey's front window" stayed up after it).
-			GSubs.RemoveAll([](const FSubLine& L) { return L.Text.StartsWith(TEXT("Walk to Mickey's front window")); });
+			GSubs.RemoveAll([](const FSubLine& L) { return L.Text == kErrandMickeys || L.Text == kErrandRitas; });
 			SubsRebuild();
 			Say(TEXT("The window goes in with a crash."), 16.0f, FColor::Orange);
 			if (!GFiledSummaryA.empty()) { Say(TEXT("Sheila: \"Stop. I mean it. Stop.\""), 16.0f); }
@@ -6076,6 +6277,7 @@ namespace
 		case ECrimePhase::LiveAfterDeed:
 		{
 			ClockTick(Delta);
+			if (!bLiveScript) { WaitKeyTick(World); }
 			if (bLiveScript && !bLiveFled && Now - GLiveDeedAt >= 1.0)
 			{
 				TeleportPawn(World, LedgerCrime::kFleeX, LedgerCrime::kFleeZ, LedgerCrime::kFleeYawDeg);
@@ -6092,14 +6294,17 @@ namespace
 			// man comes through the yard while it is still fresh.
 			if (!bFleeFiled && GN2Body != nullptr && GPawn != nullptr)
 			{
-				const LedgerCrime::Reading W = MeasureVantage(World, "n2", "flee", GN2Body, nullptr, 0.0);
+				const LedgerCrime::Reading W = MeasureVantage(World, GIdN2, "flee", GN2Body, nullptr, 0.0);
 				if (Perception::InSight(W.ActorMetres, W.ActorOffAxisDeg, LedgerCrime::kLightLevel, W.bActorOccluded, 1.4))
 				{
 					GFleeSeconds += Delta;
 					if (GFleeSeconds >= Perception::NoticeSeconds) { FileFleeSighting(World); }
 				}
 			}
-			if (Now - GLiveDeedAt < (bLiveScript ? 7.0 : LedgerCrime::kLiveLaterSeconds)) { return true; }
+			const bool bMomentOver = bLiveScript ? Now - GLiveDeedAt >= 7.0
+				: (Now - GLiveDeedAt >= LedgerCrime::kLiveLaterSeconds
+				   || GNow.TotalMinutes() - GLiveDeedGameAt.TotalMinutes() >= (long long)(LedgerCrime::kLiveLaterSeconds * LiveClock::MinutesPerRealSecond));
+			if (!bMomentOver) { return true; }
 			// FREE PLAY GOES ON (Jafar's list of 30 September, item 1): once the
 			// lad's moment to see him go has passed, nothing is staged. The town
 			// talks hour by hour as the clock runs (TownHoursTick), whoever is
@@ -6187,9 +6392,9 @@ namespace
 			if (TakeTalkRequests() <= 0 || GPawn == nullptr) { return true; }
 			struct Who { AActor* Body; GossiperPtr G; const char* Card; const char* Id; const TCHAR* Name; int Rung; };
 			const Who People[3] = {
-				{ GN2Body, GN2, "sam", "n2", TEXT("Darren"), -1 },
-				{ GW1Body, GW1, "lena", "w1", TEXT("Sheila"), GW1RungA },
-				{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Ron"), -1 } };
+				{ GN2Body, GN2, "sam", GIdN2.c_str(), TEXT("Darren"), -1 },
+				{ GW1Body, GW1, "lena", GIdW1.c_str(), TEXT("Sheila"), GW1RungA },
+				{ GR3Body, GR3, "rocco", GIdR3.c_str(), TEXT("Ron"), -1 } };
 			const Who* Near = nullptr;
 			double Best = LedgerCrime::kLiveTalkM;
 			for (const Who& P : People)
@@ -6258,24 +6463,26 @@ namespace LedgerCrimeProbe
 			bAskAfterDeed = FParse::Param(FCommandLine::Get(), TEXT("AskAfterDeed"));
 		}
 
+		if (GEnc == EEncounter::Live && !bLiveScript) { GIdW1 = "lena"; GIdN2 = "sam"; GIdR3 = "rocco"; }
+		else { GIdW1 = "w1"; GIdN2 = "n2"; GIdR3 = LedgerCrime::kR3Id; }
 		GGraph = std::make_shared<SocialGraph>();
-		GGraph->Link("w1", "n2", LedgerCrime::kTie);
+		GGraph->Link(GIdW1, GIdN2, LedgerCrime::kTie);
 		GMill = std::make_shared<GossipMill>(GGraph);
 		// DISPLAY NAMES ARE ARCHETYPES, NOT CAST. Canon's cast baseline is
 		// pending and a probe does not mint one; the heard memory line reads
 		// "I heard from the shopkeeper that ...".
-		GW1 = std::make_shared<Gossiper>("w1", GEnc == EEncounter::Live ? "Sheila" : "the shopkeeper",
+		GW1 = std::make_shared<Gossiper>(GIdW1, GEnc == EEncounter::Live ? "Sheila" : "the shopkeeper",
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
-		GN2 = std::make_shared<Gossiper>("n2", GEnc == EEncounter::Live ? "Darren" : "the lad in the yard",
+		GN2 = std::make_shared<Gossiper>(GIdN2, GEnc == EEncounter::Live ? "Darren" : "the lad in the yard",
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
 		GMill->Add(GW1);
 		GMill->Add(GN2);
 		// THE LAD'S MATE: tied to him and to nobody else, at the street's own
 		// tie, so the only way the crime can reach him is a second retelling.
-		GGraph->Link("n2", LedgerCrime::kR3Id, LedgerCrime::kR3Tie);
-		GR3 = std::make_shared<Gossiper>(LedgerCrime::kR3Id, GEnc == EEncounter::Live ? std::string("Ron") : std::string(LedgerCrime::kR3Name),
+		GGraph->Link(GIdN2, GIdR3, LedgerCrime::kR3Tie);
+		GR3 = std::make_shared<Gossiper>(GIdR3, GEnc == EEncounter::Live ? std::string("Ron") : std::string(LedgerCrime::kR3Name),
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
 		GMill->Add(GR3);
