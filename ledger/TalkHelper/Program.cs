@@ -921,6 +921,15 @@ static class Program
                 await ThreatReadDone();
                 return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
             }
+            if (refusedAsk && _llm != null)
+            {
+                // His no confirmed: Ron's own acknowledgement, a moment that matters,
+                // so no model writes it, live or stand-in (the builder's report of 30
+                // September: the stand-in answered with a memory line).
+                engine.RememberSaid(say, Arrangement.TookNo, now);
+                await ThreatReadDone();
+                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.TookNo, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
+            }
             if (_llm == null)
             {
                 var (offTrusts, offEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
@@ -1815,7 +1824,8 @@ static class Program
         string aLateYes = await asker.Answer("{\"id\":137,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
         Ok("a line to Ron that sounds like a no gets his own plain question, no model called; his plain yes to it is the no, reported and tonight's line for the reply, remembered by nobody until the game answers it; a yes with no question before it, any other answer, or no ask tonight is nothing",
            aNo.Contains("\"reply\":\"" + Arrangement.AskPlainly.Substring(0, 20)) && aNo.Contains("\"refusedAsk\":false") && aNo.Contains("\"generated\":false") && noModelCalled
-           && aYes.Contains("\"refusedAsk\":true") && toldNoLine == Arrangement.TonightToldNo && aYesAgain.Contains("\"refusedAsk\":false")
+           && aYes.Contains("\"refusedAsk\":true") && aYes.Contains("\"reply\":\"" + Arrangement.TookNo.Substring(0, 20)) && aYes.Contains("\"generated\":false")
+           && toldNoLine == Arrangement.TonightToldNo && aYesAgain.Contains("\"refusedAsk\":false")
            && aNoAsk.Contains("\"refusedAsk\":false") && !aNoAsk.Contains("\"reply\":\"" + Arrangement.AskPlainly.Substring(0, 20)) && noAskLine == null
            && aMaybe.Contains("\"refusedAsk\":false") && askedLine == Arrangement.TonightAsked
            && aOther.Contains("\"refusedAsk\":false") && aLateYes.Contains("\"refusedAsk\":false")
