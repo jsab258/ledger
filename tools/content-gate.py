@@ -267,6 +267,10 @@ rule("offlicence", "alcohol", "a shop whose whole function is alcohol, unlike "
      "a pub, which can be a room people sit in",
      r"\boff-?licen[cs]es?\b|\boffies?\b", token="off-licence")
 rule("lastorders", "alcohol", "the serving ritual", r"\blast orders\b")
+rule("pubhours", "alcohol", "the pub's hours as a drinking idiom (the independent review of 30 "
+     "September, A13: 'half the dock front walks like that after opening time'). NOT "
+     "'opening time' alone, which a shop has too",
+     r"\b(?:after|before|till|until) opening time\b|\bchucking[- ]out time\b")
 rule("lockin", "alcohol", "after-hours drinking", r"\block-?ins?\b")
 rule("happyhour", "alcohol", "the serving ritual", r"\bhappy hour\b")
 rule("freehouse", "alcohol", "means not tied to a brewery. D17 voids the "
