@@ -134,6 +134,8 @@ namespace Ledger.PerceptionGolden
             EmitPoliceAsked(sb);
             // Ported to Waiting.h on 30 September (town list 6ci: a wait that stops).
             EmitWaits(sb);
+            // Ported to StreetVoice::Ambient on 30 September (town list 6o, 6an: the street's own talk, and just after a deed).
+            EmitJustNow(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -143,7 +145,6 @@ namespace Ledger.PerceptionGolden
             // the table; the handover in NOW.md says so.
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
-                EmitJustNow(sb);
                 EmitTownNews(sb);
                 EmitThreats(sb);
                 EmitTownSave(sb);
@@ -599,6 +600,28 @@ namespace Ledger.PerceptionGolden
                         var lines = StreetVoice.Ambient(a, b, now, 0.5, 1.0, false, false, seed, null, kind == "none" ? null : kind, since);
                         Row(sb, "JustNow", kind, D(since), seed.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), lines[1].Bank, Esc(lines[1].Text));
                     }
+            // EVERY BRANCH OF THE STREET'S OWN TALK, for the port's regression (30
+            // September): a feud, an injury, prices, a slump, the night and their
+            // edges, each over a bank's length of seeds; and a run through one
+            // ledger that hears each pair, as the game does.
+            foreach (var (label, pros, price, injured, feud, hour) in new[] {
+                ("feud", 0.5, 1.0, false, true, 10), ("injured", 0.5, 1.0, true, false, 10), ("prices", 0.5, 1.13, false, false, 10),
+                ("prices edge", 0.5, 1.12, false, false, 10), ("slump", 0.3, 1.0, false, false, 10), ("slump edge", 0.35, 1.0, false, false, 10),
+                ("night", 0.5, 1.0, false, false, 21), ("small hours", 0.5, 1.0, false, false, 4), ("dawn", 0.5, 1.0, false, false, 5) })
+                for (int seed = 0; seed < 14; seed++)
+                {
+                    var lines = StreetVoice.Ambient(a, b, new GameTime(1, hour, 0), pros, price, injured, feud, seed);
+                    Row(sb, "AmbientBranch", label, seed.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), lines[1].Bank, Esc(lines[1].Text));
+                }
+            var led = new RemarkLedger();
+            for (int i = 0; i < 16; i++)
+            {
+                var lines = StreetVoice.Ambient(a, b, now, 0.5, 1.0, false, false, i % 3, led, i < 8 ? "glass" : null, i < 8 ? 10.0 : -1);
+                foreach (var l in lines) led.HeardLine(l.Bank, l.Text);
+                Row(sb, "AmbientHeard", i.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), lines[1].Bank, Esc(lines[1].Text));
+            }
+            Row(sb, "AmbientHeard", "nobody", StreetVoice.Ambient(null, b, now, 0.5, 1.0, false, false, 0).Count.ToString(Inv), StreetVoice.Ambient(a, null, now, 0.5, 1.0, false, false, 0).Count.ToString(Inv),
+                StreetVoice.Ambient(a, b, now, 0.5, 1.0, false, false, 0, null, "glass", double.NaN)[0].Bank);
         }
 
         /// THE TOWN TALKS BY ITS ROUTINES (town list 6bs), ported 29 September: a
