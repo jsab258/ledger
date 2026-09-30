@@ -161,6 +161,11 @@ static class Program
         /// a pending sentence with no matching "first" before the turn's reply
         /// is never played. Off unless asked for, until the game reads it.
         public bool Pending;
+        /// Threats the words miss read by the checking model beside the reply
+        /// (ThreatRead; Jafar, 30 September), and how long past the reply the
+        /// turn waits for it.
+        public bool ThreatByModel = true;
+        public TimeSpan ThreatWait = TimeSpan.FromSeconds(2);
         /// THE REST'S OWN LIMIT (town list 6bx): once the first sentence has
         /// been heard, the rest of the reply has this long beyond the turn's
         /// patience before it is cut, so a turn whose first words came quickly
@@ -855,6 +860,28 @@ static class Program
                     keepsQuietOut = new { topic = silenceTopic, agreed, fragile = agreed && Silence.Fragile(stance) };
                 }
             }
+            // A THREAT THE WORDS MISSED, READ BY THE CHECKING MODEL (Jafar, 30
+            // September, on his page: "the checking model reads each line about a
+            // deed for a threat", on the capped key while he plays). Beside the
+            // reply, never before it, so the reply waits no longer; waited on
+            // before the turn's answer is written, ThreatWait at most. Found, it
+            // is a threat as one the words found is, for the game and every later
+            // turn; this turn's reply was already on its way without it.
+            Task<LlmResponse> threatRead = null;
+            if (ThreatByModel && _llm != null && silenceTopic != null && threatenedOut == null && !string.IsNullOrWhiteSpace(say))
+            {
+                try { threatRead = _llm.CompleteAsync(ThreatRead.Ask(engine.CheckerModel, say), CancellationToken.None); }
+                catch (Exception) { threatRead = null; }
+            }
+            async Task ThreatReadDone()
+            {
+                var t = threatRead;
+                threatRead = null;
+                if (t == null) return;
+                if (await Task.WhenAny(t, Task.Delay(ThreatWait)) != t || t.Status != TaskStatus.RanToCompletion || t.Result == null) return;
+                _cost?.Record(engine.CheckerModel, t.Result.InputTokens, t.Result.OutputTokens);
+                if (ThreatRead.Parse(t.Result.Text) == true && engine.HeardThreat(silenceTopic, now)) threatenedOut = silenceTopic;
+            }
             if (suspicion.HasValue)
             {
                 // THE REASON CARRIES THE MOVE, so it reads as the reason the
@@ -881,6 +908,7 @@ static class Program
 
             if (weekReply != null)
             {
+                await ThreatReadDone();
                 // Sheila's own fixed words, in place of a reply: no model writes them.
                 engine.RememberSaid(say, weekReply, now);
                 var (wTrusts, wEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
@@ -890,6 +918,7 @@ static class Program
             {
                 // Ron's own question, in place of a reply: no model writes it.
                 engine.RememberSaid(say, Arrangement.AskPlainly, now);
+                await ThreatReadDone();
                 return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
             }
             if (_llm == null)
@@ -978,6 +1007,7 @@ static class Program
                         lock (_walkedHandled) _walkedHandled.Add(key);
                         // What his line did stands although the reply stopped: the
                         // game still answers a no, an owning up or an ask for silence.
+                        await ThreatReadDone();
                         return JsonSerializer.Serialize(new { id, to, walkedOff = true, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, gaveName = gaveNameOut }, Plain);
                     }
                     if (done != task)
@@ -1087,6 +1117,7 @@ static class Program
             // trust, whether they trust him after this turn, and whether this
             // turn earned it; the game keeps it and sends it back.
             var (trusts, trustEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen && (went == "own" || went == "ended" || went == "fallback"));
+            await ThreatReadDone();
             return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model, steps, trusts, trustEarned, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
         }
 
@@ -1149,6 +1180,24 @@ static class Program
             var text = resp.Text ?? "";
             for (int i = 8; i < text.Length + 8; i += 8) onText(text.Substring(0, Math.Min(text.Length, i)));
             return resp;
+        }
+    }
+
+    /// The stand-in for the threat reading (ThreatRead): it answers the reading
+    /// as told and counts it; anything else goes to the plain stand-in.
+    sealed class ThreatFake : ILlmClient
+    {
+        readonly ILlmClient _rest = new FakeLlm();
+        public bool Says;
+        public int Reads;
+        public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
+        {
+            if ((request.System ?? "").Contains("threatens them to keep quiet"))
+            {
+                Interlocked.Increment(ref Reads);
+                return Task.FromResult(new LlmResponse { Text = Says ? "{\"threat\": true}" : "{\"threat\": false}", Model = request.Model, InputTokens = 10, OutputTokens = 5 });
+            }
+            return _rest.CompleteAsync(request, ct);
         }
     }
 
@@ -1334,6 +1383,9 @@ static class Program
         public ScriptFake(params string[] lines) => _lines = new Queue<string>(lines);
         public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
         {
+            // The threat reading (ThreatRead) is answered "no" and uses up no line of the script.
+            if ((request.System ?? "").Contains("threatens them to keep quiet"))
+                return Task.FromResult(new LlmResponse { Text = "{\"threat\": false}", StopReason = "end_turn", InputTokens = 100, OutputTokens = 5, Model = request.Model });
             if (_lines.Count > 0) _last = _lines.Dequeue();
             return Task.FromResult(new LlmResponse { Text = _last, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model });
         }
@@ -2172,6 +2224,35 @@ static class Program
                threatOnce.Contains("\"threatened\":\"player.window_d1\"") && threatOnce.Contains("\"keepsQuiet\":null")
                && threatAgain.Contains("\"threatened\":null") && noDeed.Contains("\"threatened\":null") && askAfter.Contains("\"agreed\":false")
                && th.EngineFor("sam").Threatened.Contains("player.window_d1"), threatOnce + " | " + threatAgain);
+        }
+        // A THREAT THE WORDS MISS, READ BY THE CHECKING MODEL (Jafar, 30
+        // September): read beside the reply for a line about a deed the words
+        // did not find a threat in; found, it is reported as one the words
+        // found is; no reading without a deed, for a line the words already
+        // caught, or with the reading off.
+        {
+            string deed = ",\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23}";
+            const string veiled = "Lovely shop you've got. Be a shame if the windows kept going in.";
+            var yes = new ThreatFake { Says = true };
+            var ty = new Helper(yes, TimeSpan.FromSeconds(8));
+            LoadCards(ty, cardsDir); LoadCast(ty, cardsDir);
+            string found = ty.Answer("{\"id\":141,\"to\":\"sam\",\"day\":2,\"hour\":10,\"say\":\"" + veiled + "\"" + deed + "}").Result;
+            int afterFound = yes.Reads;
+            string noDeedRead = ty.Answer("{\"id\":142,\"to\":\"lena\",\"day\":2,\"hour\":10,\"say\":\"" + veiled + "\"}").Result;
+            string words = ty.Answer("{\"id\":143,\"to\":\"lena\",\"day\":2,\"hour\":10,\"say\":\"Say a word and you'll regret it.\"" + deed + "}").Result;
+            var no = new ThreatFake { Says = false };
+            var tn = new Helper(no, TimeSpan.FromSeconds(8));
+            LoadCards(tn, cardsDir); LoadCast(tn, cardsDir);
+            string cleared = tn.Answer("{\"id\":144,\"to\":\"sam\",\"day\":2,\"hour\":10,\"say\":\"" + veiled + "\"" + deed + "}").Result;
+            var readOff = new ThreatFake { Says = true };
+            var to = new Helper(readOff, TimeSpan.FromSeconds(8)) { ThreatByModel = false };
+            LoadCards(to, cardsDir); LoadCast(to, cardsDir);
+            string unread = to.Answer("{\"id\":145,\"to\":\"sam\",\"day\":2,\"hour\":10,\"say\":\"" + veiled + "\"" + deed + "}").Result;
+            Ok("a veiled threat the words miss is read by the checking model beside the reply and reported as a threat; none read without a deed, for a line the words caught, or with the reading off",
+               found.Contains("\"threatened\":\"player.window_d1\"") && afterFound == 1 && ty.EngineFor("sam").Threatened.Contains("player.window_d1")
+               && noDeedRead.Contains("\"threatened\":null") && words.Contains("\"threatened\":\"player.window_d1\"") && yes.Reads == 1
+               && cleared.Contains("\"threatened\":null") && no.Reads == 1 && unread.Contains("\"threatened\":null") && readOff.Reads == 0,
+               found + " | " + cleared + " | reads " + yes.Reads + "/" + no.Reads + "/" + readOff.Reads);
         }
         Ok("a card lent to somebody else does not lend them its name; its own person keeps theirs",
            trusting.EngineFor("zlata") != null && trusting.EngineFor("zlata").SpeakerName == "" && trusting.EngineFor("lena").SpeakerName == null);
