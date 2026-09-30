@@ -302,6 +302,15 @@ if TUBE_Z > HEM_Z:
     dirs_t = {v: (np.array([v.co.x, v.co.y]) - cen_t) for v in loop_v}
     rad_t = {v: float(np.linalg.norm(d_)) for v, d_ in dirs_t.items()}
     dirs_t = {v: d_ / max(1e-9, np.linalg.norm(d_)) for v, d_ in dirs_t.items()}
+    # the join's loop evened round (cut through the shell's uneven faces it zigzagged, and every row below and
+    # the seam across the jacket kept the zigzag): radii smoothed in order of angle, the loop's points moved to them
+    _ord = sorted(loop_v, key=lambda v: math.atan2(dirs_t[v][1], dirs_t[v][0]))
+    _rr = np.array([rad_t[v] for v in _ord])
+    for _ in range(opt("--tube-loop-smooth", 12, int)):
+        _rr = 0.5 * _rr + 0.25 * (np.roll(_rr, 1) + np.roll(_rr, -1))
+    for v, r_ in zip(_ord, _rr):
+        rad_t[v] = float(r_)
+        v.co = Vector((cen_t[0] + dirs_t[v][0] * r_, cen_t[1] + dirs_t[v][1] * r_, v.co.z))
     n_rows = max(2, int(round((TUBE_Z - HEM_Z) / 0.02)))
     cur_e = edge_e
     cur_map = {v: v for v in loop_v}
@@ -343,13 +352,13 @@ if TUBE_Z > HEM_Z:
     # the join above the tube eased up the jacket over 12 cm (the tube's straight fall met the moulded shell at a
     # step, and whatever was laid across it, the pockets, broke there)
     cen3 = Vector((cen_t[0], cen_t[1], 0.0))
-    for _ in range(10):
+    for _ in range(opt("--tube-ease", 10, int)):
         new_ = {}
         for v in bm.verts:
-            if TUBE_Z - 0.03 < v.co.z < TUBE_Z + 0.12 and not v.is_boundary:
+            if TUBE_Z - 0.06 < v.co.z < TUBE_Z + 0.12 and not v.is_boundary:
                 nb_ = [e.other_vert(v).co for e in v.link_edges]
                 c_ = sum(nb_, Vector()) / len(nb_)
-                w_ = 0.5 * (1.0 - max(0.0, (v.co.z - TUBE_Z)) / 0.12)
+                w_ = 0.5 * (1.0 - abs(v.co.z - TUBE_Z) / (0.12 if v.co.z > TUBE_Z else 0.06))
                 new_[v] = v.co.lerp(c_, w_)
         for v, c_ in new_.items():
             v.co = c_
@@ -785,6 +794,8 @@ if opt("--hem-smooth", 0, int):
     hb.from_mesh(knit_me)
     edge_v = [v for v in hb.verts if v.is_boundary and v.co.z < HEM_Z + 0.006]
     z_edge = float(np.median([v.co.z for v in edge_v])) if edge_v else HEM_Z     # its own level (a grown band's is lower)
+    _hc = sum((v.co for v in edge_v), Vector()) / max(1, len(edge_v))
+    _r0 = {v: math.hypot(v.co.x - _hc.x, v.co.y - _hc.y) for v in edge_v}
     for _ in range(opt("--hem-smooth", 0, int)):
         new = {}
         for v in edge_v:
@@ -794,6 +805,16 @@ if opt("--hem-smooth", 0, int):
                 new[v] = Vector((c_.x, c_.y, z_edge))
         for v, c_ in new.items():
             v.co = c_
+    if "--hem-keep-r" in argv:
+        # each point back out to its own distance from the hem's middle (smoothing drew the loop in: a coat's
+        # hem rolled under like an anorak's)
+        _rs = sorted(_r0.values())
+        for v in edge_v:
+            dxy = Vector((v.co.x - _hc.x, v.co.y - _hc.y, 0.0))
+            if dxy.length > 1e-6:
+                r_t = _r0[v]
+                p_ = Vector((_hc.x, _hc.y, 0.0)) + dxy.normalized() * r_t
+                v.co = Vector((p_.x, p_.y, v.co.z))
     hb.to_mesh(knit_me)
     hb.free()
     knit_me.update()
@@ -937,6 +958,92 @@ def flat_collar(extras_, W, gap_m):
     colm = strip("FlatCollar", rows, knitm, 0.0018)
     extras_.append(colm)
     log["flatCollar"] = {"widthMm": W * 1000, "gapMm": gap_m * 1000 * 2}
+
+
+def turn_collar(extras_, STAND, FALL, POINT, gap_m):
+    """A work jacket's turn-down collar (FREE-BASES-AND-COLLARS-2026-09-30.md: a separate piece drafted as a stand
+    and a fall, laid over the neckline, not grown from the body; grown, it read as a crew neck with a cape): the stand
+    rises STAND from the neckline, leaning in to 5 mm off the neck; at its top (the roll line) the fall folds back
+    down over it and out over the shoulders, FALL wide; within 5 cm of each front end the fall lengthens to POINT, so
+    each end comes to a point lying down the chest at the front of the neck; open at the throat by gap_m."""
+    _bk = bmesh.new()
+    _bk.from_mesh(knit_me)
+    _ep = [v.co.copy() for v in _bk.verts if v.is_boundary and v.co.z > NECK_Z - 0.08
+           and math.hypot(v.co.x - NECK_AX.x, v.co.y - NECK_AX.y) < opt("--edge-r", NECK_R + 0.03)]
+    _bk.free()
+    _ang = np.array([math.atan2(q.x - NECK_AX.x, -(q.y - NECK_AX.y)) for q in _ep])
+    _rad = np.array([math.hypot(q.x - NECK_AX.x, q.y - NECK_AX.y) for q in _ep])
+    _zz = np.array([q.z for q in _ep])
+    o_ = np.argsort(_ang)
+    _ang, _rad, _zz = _ang[o_], _rad[o_], _zz[o_]
+    ext_a = np.concatenate([_ang - 2 * math.pi, _ang, _ang + 2 * math.pi])
+    r0 = float(np.median(_rad))
+    gap = gap_m / max(0.03, r0)
+    grid_a = np.linspace(gap, 2 * math.pi - gap, 96)
+    ga = np.where(grid_a > math.pi, grid_a - 2 * math.pi, grid_a)
+    r_edge = np.interp(ga, ext_a, np.tile(_rad, 3))
+    z_edge = np.interp(ga, ext_a, np.tile(_zz, 3))
+    for _ in range(24):
+        r_edge[1:-1] = 0.5 * r_edge[1:-1] + 0.25 * (r_edge[:-2] + r_edge[2:])
+        z_edge[1:-1] = 0.5 * z_edge[1:-1] + 0.25 * (z_edge[:-2] + z_edge[2:])
+    arc = (grid_a - gap) * r0
+    arc_len = float(arc[-1])
+    N_ST, N_FA = 4, 9
+    rows = [[] for _ in range(N_ST + N_FA)]
+    for k, a_ in enumerate(grid_a):
+        d_ = Vector((math.sin(a_), -math.cos(a_), 0.0))
+        u = min(arc[k], arc_len - arc[k])
+        f_pt = max(0.0, 1.0 - u / 0.05)
+        fall_here = FALL + (POINT - FALL) * f_pt ** 1.5
+        foot = Vector((NECK_AX.x, NECK_AX.y, z_edge[k] - 0.004)) + d_ * (r_edge[k] + 0.003)
+        top_z = z_edge[k] + STAND
+        hn = BVH.ray_cast(Vector((NECK_AX.x, NECK_AX.y, top_z)), d_, 0.25)[0]
+        r_top = ((hn - Vector((NECK_AX.x, NECK_AX.y, top_z))).length + 0.005) if hn is not None else r_edge[k] - 0.01
+        r_top = min(r_top, r_edge[k] + 0.002)
+        top = Vector((NECK_AX.x, NECK_AX.y, top_z)) + d_ * r_top
+        for i_ in range(N_ST):
+            t = i_ / (N_ST - 1)
+            rows[i_].append(foot.lerp(top, t))
+        # the fall: over the roll line, down outside the stand, then out over the jacket (rays from above), or at
+        # the points down the chest (rays from in front)
+        fold = top + d_ * 0.006 + Vector((0, 0, 0.003))
+        over = Vector((NECK_AX.x, NECK_AX.y, z_edge[k] - 0.002)) + d_ * (r_edge[k] + 0.016)
+        pts = [fold, over]
+        L_ = (over - fold).length
+        front_ = f_pt > 0.0 and math.cos(a_) > 0.5
+        steps = np.arange(0.004, 0.25, 0.003)
+        for s_ in steps:
+            if front_:
+                # down the chest, spreading a little outward (the points' lower edges part in a V)
+                x_ = (over.x + math.copysign(s_ * 0.35, math.sin(a_) if abs(math.sin(a_)) > 1e-6 else 1.0))
+                q = on_knit_from_front(x_, over.z - s_)
+                q = None if q is None else q + Vector((0, -0.0035, 0))
+            else:
+                org = Vector((NECK_AX.x, NECK_AX.y, z_edge[k] + 0.15)) + d_ * (r_edge[k] + 0.016 + s_)
+                hit, nn, _i, _d = KNIT_BVH.ray_cast(org, Vector((0, 0, -1)), 0.5)
+                q = None if (hit is None or hit.z > z_edge[k]) else hit + nn * 0.0035
+            if q is None:
+                continue
+            L_ += (q - pts[-1]).length
+            pts.append(q)
+            if L_ >= fall_here:
+                break
+        Lc = [0.0]
+        for i_ in range(1, len(pts)):
+            Lc.append(Lc[-1] + (pts[i_] - pts[i_ - 1]).length)
+        for r_i in range(N_FA):
+            t = Lc[-1] * r_i / (N_FA - 1)
+            j = max(0, min(len(pts) - 2, int(np.searchsorted(Lc, t)) - 1))
+            f = (t - Lc[j]) / max(1e-9, Lc[j + 1] - Lc[j])
+            rows[N_ST + r_i].append(pts[j].lerp(pts[j + 1], min(1.0, max(0.0, f))))
+    for r_i in range(N_ST + 2, N_ST + N_FA):                  # the fall's rows eased along the collar, ends held
+        row = rows[r_i]
+        for _ in range(6):
+            row = [row[0]] + [row[i_ - 1] * 0.25 + row[i_] * 0.5 + row[i_ + 1] * 0.25 for i_ in range(1, len(row) - 1)] + [row[-1]]
+        rows[r_i] = row
+    colm = strip("TurnCollar", rows, knitm, 0.0025)
+    extras_.append(colm)
+    log["turnCollar"] = {"standMm": STAND * 1000, "fallMm": FALL * 1000, "pointMm": POINT * 1000}
 
 
 def placket(extras_):
@@ -1265,8 +1372,12 @@ else:
         # A BLOUSE (Sheila's "cream blouse with a small round collar", 30 September): a narrow band at the neckline,
         # a flat round collar folded over it and lying on her shoulders and chest, its ends rounded at the throat,
         # and a buttoned placket down the front
-        neck_ring(extras, opt("--neckband", 0.012), ribbed=False, name="CollarStand")
-        flat_collar(extras, opt("--collar-w", 0.062), opt("--collar-gap-m", 0.012))
+        if opt("--turn-collar", 0.0):
+            turn_collar(extras, opt("--stand", 0.025), opt("--turn-collar", 0.0), opt("--collar-point-len", 0.10),
+                        opt("--collar-gap-m", 0.012))
+        else:
+            neck_ring(extras, opt("--neckband", 0.012), ribbed=False, name="CollarStand")
+            flat_collar(extras, opt("--collar-w", 0.062), opt("--collar-gap-m", 0.012))
         placket(extras)
     else:
         neck_ring(extras, opt("--neckband", 0.028))
@@ -1453,6 +1564,51 @@ if YOKE:
     bmy.free()
     knit_me.update()
     log["yoke"] = {"faces": n_y, "frontZ": round(z_front, 3), "backZ": round(z_back, 3)}
+
+if "--pockets-inset" in argv:
+    PW_, PH_ = opt("--pocket-w", 0.19), opt("--pocket-h", 0.20)
+    z0_, z1_ = HEM_Z + opt("--pocket-low", 0.08), HEM_Z + opt("--pocket-low", 0.08) + PH_
+    bpk = bmesh.new()
+    bpk.from_mesh(knit_me)
+    yc0 = float(np.median([v.co.y for v in bpk.verts]))
+    for sg in (1.0, -1.0):
+        cx = sg * opt("--pocket-x", 0.115)
+        for pc_, pn_ in (((cx - PW_ / 2, 0, 0), (1, 0, 0)), ((cx + PW_ / 2, 0, 0), (1, 0, 0)),
+                         ((0, 0, z0_), (0, 0, 1)), ((0, 0, z1_), (0, 0, 1))):
+            # cut only round the pocket (cut right round the jacket, each plane left a ragged line across it)
+            fz = [f for f in bpk.faces if f.calc_center_median().y < yc0 and abs(f.calc_center_median().x - cx) < PW_ / 2 + 0.02
+                  and z0_ - 0.02 < f.calc_center_median().z < z1_ + 0.02]
+            gv = list({v for f in fz for v in f.verts})
+            ge = list({e for f in fz for e in f.edges})
+            bmesh.ops.bisect_plane(bpk, geom=gv + ge + fz, plane_co=pc_, plane_no=pn_)
+    bpk.normal_update()
+    yc_ = float(np.median([v.co.y for v in bpk.verts]))
+    inside = set()
+    for f in bpk.faces:
+        c = f.calc_center_median()
+        if c.y < yc_ and z0_ < c.z < z1_ and any(abs(c.x - sg * opt("--pocket-x", 0.115)) < PW_ / 2 for sg in (1.0, -1.0)):
+            inside |= set(f.verts)
+    rim = {v for v in inside if any(e.other_vert(v) not in inside for e in v.link_edges)}
+    for v in inside:
+        v.co = v.co + v.normal * (0.0004 if v in rim else opt("--pocket-raise", 0.003))
+    # the pocket's outline a hard edge (a smooth step of a millimetre or two did not show at all)
+    in_f = set()
+    for f in bpk.faces:
+        c = f.calc_center_median()
+        if all(v in inside for v in f.verts):
+            in_f.add(f)
+    n_sharp = 0
+    for e in bpk.edges:
+        lf = e.link_faces
+        if len(lf) == 2 and ((lf[0] in in_f) != (lf[1] in in_f)):
+            e.smooth = False
+            n_sharp += 1
+        if len(lf) == 2 and lf[0] in in_f and lf[1] in in_f and all(v in rim for v in e.verts):
+            e.smooth = False
+    bpk.to_mesh(knit_me)
+    bpk.free()
+    knit_me.update()
+    log["pocketsInset"] = {"points": len(inside), "sharpEdges": n_sharp}
 
 if EXTRUDE and ZIP:
     # the zip's tapes (the rows grown out from each side of the V) in the zip's colour
