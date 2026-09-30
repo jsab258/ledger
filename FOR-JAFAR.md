@@ -29,24 +29,25 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** two taps: Ron's facts said plainly; what the street says of Mickey. Acted on: the ending's signs wait; Ron's lines, tone and the regulars; the missing knowledge goes into item 4.
+**[Your page](https://claude.ai/artifact/GQwb2iMthCPhE56xArHCeJ):** all answered and acted on: the ending's signs wait; Ron's lines, tone and plain wording; the regulars; Mickey's two lines.
 
-**The audit's list, done:**
-- **Grounded replies:** on sixty fixed newcomer questions, labelled independently, "that's all I know" fell from 36 to about 22, inventions unchanged; planning facts first: no better.
-- **Time and state:** the Monday envelope and the builder's fourteen faults fixed; a sweep found thirteen more: ten fixed, three wait for a detective's crime.
-- **The builder's route:** sixteen test cases, unchanged.
+**Talk, measured on the sixty, a new sixty and thirty unanswerable:**
+- **The first-week rule table is on:** empty answers on the sixty fell from about 28 to 6 a run, useful replies 77 to 141 of 180; on the new sixty, level (it knows few of those questions); inventions level (12 and 12 in 450).
+- **The check is kept:** no tuned version refused fewer true details without passing more inventions.
+
+**Time and state:** the Monday envelope and 27 more faults fixed; three wait for a detective's crime.
 
 **Your key:** capped in code; $0.83 spent.
 
-**Research:** contextual dialogue (Valve); the talk program; street lines; the ending's signs; choosing what's said.
+**Research:** contextual dialogue (Valve); choosing what's said; street lines; the ending's signs.
 
-**Set aside after two tries:** a second look; prompting the writer; tuning the check; writing Mickey's character (three reviews).
+**Set aside after two tries:** prompting the writer; tuning the check; Mickey's character (three reviews).
 
 **Pushes:** Core ones build Unreal here.
 
-**C: free:** 47.9 GB, 49.5 now. Backup runs with this commit.
+**C: free:** 47.9 GB, 56.3 now. Backup runs with this commit.
 
-**Your new list:** 1: the chosen facts missed in 12 of 21 empty answers. 2: the plain line cuts empty answers (26 to 16) but most miss the question: off until 4. 3: no tuned check beat today's; kept. 4: built, measuring.
+**Next:** the other named characters' street lines, through the gate; the text delay once the builder's real-talk timing lands.
 
 ## Clothes, Thursday 1 October
 

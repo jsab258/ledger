@@ -1112,7 +1112,8 @@ static class Program
             // WRITTEN BY THE MODEL, marked so (the EU's AI Act, Article 50(2):
             // generated text marked in a form a machine can read); a brush-off
             // and the fallback line are the game's own words.
-            bool generated = reply != brush && !fellBack && !ResponseValidator.IsDeflection(reply, card.Name);
+            // The chosen facts said plainly are built by code from written words.
+            bool generated = reply != brush && !fellBack && !engine.LastSaidPlainly && !ResponseValidator.IsDeflection(reply, card.Name);
             string model = generated ? engine.Model : null;
             Keep(new Turn { Id = id, To = to, Day = day, Hour = hour, Minute = minute, Say = say, Reply = reply, Generated = generated,
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
@@ -1294,6 +1295,12 @@ static class Program
 
     static async Task<int> Main(string[] args)
     {
+        // THE FIRST-WEEK RULE TABLE AND THE PLAIN LINE, ON (Jafar's list of 30
+        // September evening: on only if it cuts the empty answers without adding
+        // inventions; measured on the sixty, a new sixty and thirty unanswerable,
+        // production/research/grounded-replies/RULES-2026-09-30.md).
+        ConversationEngine.UseRules = true;
+        ConversationEngine.PlainFallback = true;
         if (Array.IndexOf(args, "--selftest") >= 0) return await SelfTest(CardsDir(args));
         var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
         bool fake = Array.IndexOf(args, "--fake") >= 0 || Environment.GetEnvironmentVariable("LEDGER_TALK_FAKE") == "1";

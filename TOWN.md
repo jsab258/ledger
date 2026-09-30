@@ -21,7 +21,10 @@ the list only; its history is in git.
      they could answer, "that's all I know": the sixty 29, 32, 22 today against
      5, 7, 6; the new sixty 23, 24, 28 against 25, 23, 24; honest "don't know"
      where nobody could: 10, 11, 11 against 15, 12, 15. Inventions level (12
-     against 12 in 450). Whether the replies answer: labelling.
+     against 12 in 450). Useful replies: the sixty 77 against 141 of 180, the
+     new sixty 58 against 61 of 144. Done: switched on in the talk program
+     (grounded-replies/RULES-2026-09-30.md); it reaches only the kinds of
+     question it knows.
 2. **The street's lines for the other named characters,** in their own voices
    as their casting sheets describe, within the approved story, through the
    gate (Ron's tone approved).
