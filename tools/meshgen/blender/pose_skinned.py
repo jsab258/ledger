@@ -504,7 +504,7 @@ REST = tailor.coords(garment)
 L0 = np.linalg.norm(REST[EDGES[:, 1]] - REST[EDGES[:, 0]], axis=1)
 log = {"blend": BLEND, "poses": {}, "gluedToCloth": log_rigid, "bodyHidden": len(ids_cov), "coat": log_coat,
        "tris": sum(len(p_.vertices) - 2 for p_ in garment.data.polygons)}
-grey = tailor.material("M_Body", (0.5, 0.5, 0.5))
+grey = tailor.material("M_Body", tuple(float(c) for c in opt("--body-rgb", "0.5,0.5,0.5", str).split(",")))
 body.data.materials.clear()
 body.data.materials.append(grey)
 
