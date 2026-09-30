@@ -213,6 +213,12 @@ DAYS["2026-09-30-3"] = {
          "They are on in the game. In conversation his card has him talk on at more length. "
          "\"Thirty years on the quay\" matches his card and the threat line you approved on 29 September. "
          "If his tone is off, I rewrite all 159 to match and write nobody else's lines until then."),
+        ("talk-next", "Next for talk: write down what the street would know?", [("write", "Yes, write it"), ("leave", "Leave talk")], "write",
+         "\"That's all I know\" is down from 36 to about 22 of a newcomer's 60 questions. Two ways of prompting the writer failed today "
+         "(planning first: no better; a narrower second try: worse, 27). What still falls back is a question nobody wrote the answer to: "
+         "who took Mickey's funeral, how he ran things, last week's takings. The writer fills the gap and the check stops it. "
+         "Studios write that knowledge ahead (Valve's talk). I would write it from the questions that fall back, within canon, "
+         "backstory to you first, and measure it the same way."),
     ],
 }
 

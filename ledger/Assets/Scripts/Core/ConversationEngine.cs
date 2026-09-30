@@ -66,6 +66,9 @@ namespace Ledger.Core
         /// September; ClaimCheck.Bearing); off only to measure what it does
         /// (ClaimBench firsts).
         public static bool ChooseFirst = true;
+        /// The second try, after a refused first, told to answer in one or two
+        /// short sentences from what bears on his line alone (ClaimCheck.SecondDraftNote).
+        public static bool NarrowRedraft = false;
 
         /// THE FACTS AND THE INTENT BEFORE THE WORDS (Jafar's list of 30
         /// September, after the adversarial audit; production/research/
@@ -1637,7 +1640,7 @@ namespace Ledger.Core
                     }
                     else if (flagged.Count > 0)
                     {
-                        string note = (invented.Count > 0 ? ClaimCheck.SecondDraftNote(invented) + "\n" : "")
+                        string note = (invented.Count > 0 ? ClaimCheck.SecondDraftNote(invented, NarrowRedraft && ChooseFirst) + "\n" : "")
                                     + (promised.Count > 0 ? Promises.SecondDraftNote(promised) + "\n" : "")
                                     + (realNames.Count > 0 ? RealWorld.SecondDraftNote(realNames) + "\n" : "");
                         var second = new LlmRequest { Model = Model, System = system + note, MaxTokens = 300 };

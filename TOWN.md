@@ -69,5 +69,7 @@ reach yet.
 
 - Ron's tone, five of his street lines, one tap (the town's page of 30
   September). Nobody else's street lines are written until then.
-- Next for talk: when a reply is refused twice, say the chosen fact plainly
-  (recommended, and under way meanwhile), or leave talk here.
+- Talk: write the plain facts the street would know, to cut "that's all I
+  know" further (recommended; backstory to him first), or leave talk here. Two
+  ways of prompting the writer failed on 30 September (planning first: no
+  better; a narrower second try: worse), so prompting is set aside.

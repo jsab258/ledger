@@ -5172,6 +5172,22 @@ namespace Ledger.CoreTests
             Check(e.LastInvented.Count == 1 && e.LastInvented[0] == "a man with a van", "the first draft's invention is recorded");
             Check(talk.Requests.Count == 2 && talk.Requests[1].System.Contains("a man with a van"), "the second draft is told what it claimed");
             Check(check.Requests.Count == 3, "both drafts were checked, the first with its second look");
+            // THE SECOND TRY NARROWED (NarrowRedraft, 30 September): told to answer
+            // in one or two short sentences from what bears on his line alone;
+            // with the switch off, the note is as it was.
+            ConversationEngine.NarrowRedraft = true;
+            try
+            {
+                var talkN = new ScriptedLlm("A man with a van, parked by the yard.", "He ran off through the yard, is what I heard.");
+                var eN = Engine(talkN, new ScriptedLlm(Flag("a man with a van"), Unsupported, Clean));
+                var replyN = await eN.SayToAsync("What happened to the window?", now, "In the yard.");
+                Check(replyN.StartsWith("He ran off through the yard") && talkN.Requests.Count == 2
+                      && talkN.Requests[1].System.Contains("a man with a van") && talkN.Requests[1].System.Contains("one or two short sentences")
+                      && talkN.Requests[1].System.Contains("from what bears most on what he just said and nothing else")
+                      && !talk.Requests[1].System.Contains("one or two short sentences"),
+                      "with the second try narrowed, it is told what it claimed and to answer in one or two short sentences from what bears on his line alone; without, as before");
+            }
+            finally { ConversationEngine.NarrowRedraft = false; }
             var supported = Engine(new ScriptedLlm("He ran off through the yard, I heard."),
                                    new ScriptedLlm(Flag("ran off through the yard"), "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"M1\"}]}"));
             Check((await supported.SayToAsync("What happened?", now, "")).StartsWith("He ran off") && supported.LastInvented.Count == 0,
