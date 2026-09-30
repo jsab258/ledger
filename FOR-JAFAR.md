@@ -50,17 +50,17 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Clothes, Wednesday 30 September
 
-**Through the gate, handed to the builder** (he puts them on your page, on the people): Ron's black work boots; Sheila's handbag and her spectacles on their chain; Darren's belt and pager. Sheila's tights go to him as a skin material.
+**Through the gate, handed to the builder** (he puts them on your page, on the people): Ron's black work boots; Sheila's handbag and her spectacles on their chain; Darren's belt, pager and white T-shirt (the shirt judged standing, as recommended below). Sheila's tights go to him as a skin material.
 
 **Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its builds; Ron's trousers; the flat cap; Sheila's cardigan; Ron's jumper and Darren's jacket (right standing, broken sitting); Darren's trainers and Sheila's shoes. Sheila's skirt fails sitting.
 
 **Decide:**
-- Marvelous Designer: scriptable but for one click at each start; $39 a month, 14 days free. (A, recommended) you start the trial; I script the jacket once. (B) Leave it.
+- Marvelous Designer: scriptable bar one click per start; $39 a month, 14 days free. (A, recommended) you start the trial; I script the jacket once. (B) Leave it.
 - Poses: (A, recommended) I finish shapes to the gate standing; the builder tests poses in Unreal. (B) Keep testing here.
 
-**Next:** Tom and the others, once the builder exports their bodies. Much bigger than it looked.
+**Next:** Darren's jeans (sewn; details next), then Tom and the others once their bodies exist. Much bigger than it looked.
 
-**Research:** fifteen notes; four today: shoes, toes and lacing, small pieces, belts.
+**Research:** fifteen notes; today shoes, lacing, small pieces, belts.
 
 **Pushes:** free tests only.
 
