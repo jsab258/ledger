@@ -1424,6 +1424,15 @@ namespace Ledger.PerceptionGolden
         {
             GameTime T(int day, int hour, int minute = 0) => new GameTime(day, hour, minute);
             Dictionary<string, object> Round(Dictionary<string, object> d) => MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(d)));
+            // A police save keeps only what play could make (the last four of the
+            // port reviews' fourteen, fixed after the builder ported the ten).
+            foreach (var (label, json) in new[]
+            {
+                ("bad save 2", @"{""entries"":[{""who"":""a"",""topic"":""w"",""offence"":""Damage"",""how"":""Statement"",""day"":2}],""calls"":[[2,""w""],[4,""w""],[3,""w""],[5,""x""]],""taken"":[[""w"",1000],[""x"",2000],[""w"",1e9]]}"),
+                ("talk early, visit unreported, two calls a day, spell weeks on", @"{""entries"":[{""who"":""rita"",""topic"":""w1"",""offence"":""Damage"",""how"":""Statement"",""day"":1},{""who"":""hal"",""topic"":""w2"",""offence"":""Damage"",""how"":""Statement"",""day"":1}],""visits"":[[2,""talk""],[4,""Wounding cut""],[3,""talk""]],""calls"":[[2,""w1""],[2,""w2""]],""taken"":[[""w1"",28800]]}"),
+                ("a spell after its call", @"{""entries"":[{""who"":""rita"",""topic"":""w1"",""offence"":""Damage"",""how"":""Statement"",""day"":1}],""calls"":[[2,""w1""]],""taken"":[[""w1"",3840]]}"),
+            })
+                Row(sb, "FixPoliceSave", label, Esc(MiniJson.Serialize(PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize(json))).ToJson())));
             // The talk's ageing never runs back.
             foreach (var hours in new[] { new[] { 10, 12 }, new[] { 10, 12, 11, 12 }, new[] { 10, 9, 12 } })
             {
@@ -1634,14 +1643,6 @@ namespace Ledger.PerceptionGolden
                 file.Report("hal", "player.window_d2", Offence.Damage, 4, 2);
                 var held = file.TakeIn("player.window_d1", T(3, 8), false, false);
                 Row(sb, "FixCellsCall", Bit(held != null), file.ConstableComes(3, T(3, 10)) ?? "null", file.ConstableCalls.Count.ToString(Inv), file.ConstableComes(4, T(4, 10)) ?? "null");
-                // A police save keeps only what play could make.
-                foreach (var (label, json) in new[]
-                {
-                    ("bad save 2", @"{""entries"":[{""who"":""a"",""topic"":""w"",""offence"":""Damage"",""how"":""Statement"",""day"":2}],""calls"":[[2,""w""],[4,""w""],[3,""w""],[5,""x""]],""taken"":[[""w"",1000],[""x"",2000],[""w"",1e9]]}"),
-                    ("talk early, visit unreported, two calls a day, spell weeks on", @"{""entries"":[{""who"":""rita"",""topic"":""w1"",""offence"":""Damage"",""how"":""Statement"",""day"":1},{""who"":""hal"",""topic"":""w2"",""offence"":""Damage"",""how"":""Statement"",""day"":1}],""visits"":[[2,""talk""],[4,""Wounding cut""],[3,""talk""]],""calls"":[[2,""w1""],[2,""w2""]],""taken"":[[""w1"",28800]]}"),
-                    ("a spell after its call", @"{""entries"":[{""who"":""rita"",""topic"":""w1"",""offence"":""Damage"",""how"":""Statement"",""day"":1}],""calls"":[[2,""w1""]],""taken"":[[""w1"",3840]]}"),
-                })
-                    Row(sb, "FixPoliceSave", label, Esc(MiniJson.Serialize(PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize(json))).ToJson())));
             }
         }
 
