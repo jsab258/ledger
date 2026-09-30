@@ -364,6 +364,10 @@ namespace Ledger.Core
                 // (town list 6ca), which she, who was told it, never remarks on.
                 if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r) || PoliceFile.IsAsking(r) || Custody.IsTaken(r) || WeeksEnd.IsWeekAnswer(r) || Silence.IsThreat(r))) continue;
                 if (WeeksEnd.IsWeekAnswer(r) && g.Id == WeeksEnd.Sheila) continue;
+                // His arrival and his name are plain facts, never what shows, even
+                // marked sensitive, which only a damaged save makes them (the
+                // port's independent check, 30 September).
+                if (DayOne.IsArrival(r) || PlayerIdentity.IsNameStory(r)) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence >= shareFloor)) continue;
                 if (best == null || r.Confidence > best.Confidence) best = r;
@@ -387,6 +391,7 @@ namespace Ledger.Core
                 // not the police asking after him, which shows while it is news
                 // and is then forgotten, with no faint remark (town list 6bq).
                 if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r))) continue;
+                if (DayOne.IsArrival(r) || PlayerIdentity.IsNameStory(r)) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence > 0.0) || r.Confidence >= shareFloor) continue;
                 if (best == null || r.Confidence > best.Confidence) best = r;

@@ -59,7 +59,13 @@ namespace Ledger.Core
             // Wound down, and Ron not yet down with the word (the second review:
             // a Monday's winding down answers the Tuesday's ask, yet Ron goes
             // down on the Monday at eleven): till then he waits on Mickey's as ever.
-            bool notHeardYet = a.Ended && a.EndedWhy == "wound down" && a.WoundWordAt is GameTime word && now.CompareTo(word) < 0;
+            bool woundNotHeard = a.Ended && a.EndedWhy == "wound down" && a.WoundWordAt is GameTime word && now.CompareTo(word) < 0;
+            // His plain no, the same: the man knows it once Ron has been down with
+            // it (the independent check, 30 September: he said "Ron's been down"
+            // while the no still waited for eleven).
+            bool noNotHeard = a.Ended && a.EndedWhy == "refused" && a.NoWordAt is GameTime noWord && now.CompareTo(noWord) < 0;
+            bool notHeardYet = woundNotHeard || noNotHeard;
+            int waitingNight = woundNotHeard ? a.WoundNight : a.NoNight;
             if (m == LandingMoment.TalksToHim)
             {
                 if (a.Ended && !notHeardYet) return DoneGoOn;
@@ -68,8 +74,8 @@ namespace Ledger.Core
             }
             if (notHeardYet)
             {
-                if (night == a.WoundNight) return m == LandingMoment.Comes ? Asks : m == LandingMoment.NothingToHand ? NothingForMe : null;
-                return m == LandingMoment.Comes ? string.Format(NotTonight, When(a.WoundNight, night)) : null;
+                if (night == waitingNight) return m == LandingMoment.Comes ? Asks : m == LandingMoment.NothingToHand ? NothingForMe : null;
+                return m == LandingMoment.Comes ? string.Format(NotTonight, When(waitingNight, night)) : null;
             }
             if (a.Ended)
                 return m == LandingMoment.Comes ? (a.EndedWhy == "refused" ? DoneRefused : a.EndedWhy == "wound down" ? DoneWound : DoneStopped) : null;

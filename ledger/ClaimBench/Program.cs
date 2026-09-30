@@ -105,6 +105,8 @@ static class Program
             case "disguise": return await Disguise(dir);
             case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
             case "bearing": return Bearing();
+            case "answerable": return args.Contains("--third") ? await AnswerableThird(dir, Arg(args, "--third", "claude-fable-5-1"), parallel) : await Answerable(dir, parallel);
+            case "firsts-label": return await FirstsLabel(dir, Path.Combine(RepoRoot(), "production", "research", "invented-claims", "bench"), parallel);
             case "threats": return await Threats(dir, parallel);
             case "why": return await Why(args.Length > 1 ? args[1] : "lena", args.Length > 2 ? args[2] : "");
             case "hours": return await Hours(dir, parallel);
@@ -154,7 +156,7 @@ static class Program
                     }
                     Console.WriteLine($"{d.id}: flagged {a}/{times} as now, {b}/{times} as before");
                 }
-                Console.WriteLine($"usd={_usd:0.00}");
+                Console.WriteLine($"api-rate usd, not billed={_usd:0.00}");
                 return 0;
             }
             case "rawline":
@@ -262,7 +264,7 @@ static class Program
         await Task.WhenAll(tasks);
         drafts.Sort((a, b) => string.CompareOrdinal(a.id, b.id));
         WriteJsonl(Path.Combine(dir, "drafts.jsonl"), drafts);
-        Console.WriteLine($"generate: jobs={jobs.Count} drafts={drafts.Count} failedJobs={failures} usd={cost.EstimateUsd() + _usd:0.00} (the engine's own rate card) -> drafts.jsonl");
+        Console.WriteLine($"generate: jobs={jobs.Count} drafts={drafts.Count} failedJobs={failures} api-rate usd, not billed={cost.EstimateUsd() + _usd:0.00} (the engine's own rate card) -> drafts.jsonl");
         return failures == 0 ? 0 : 1;
     }
 
@@ -316,7 +318,7 @@ static class Program
             WriteJsonl(Path.Combine(dir, $"labels.{model}.jsonl"), rows);
             Console.WriteLine($"label {model}: {rows.Count} rows, unparsed={rows.Count(x => !x.parsed)}, invented turns={rows.Count(x => x.invented.Count > 0)}");
         }
-        Console.WriteLine($"label: usd={_usd:0.00}");
+        Console.WriteLine($"label: api-rate usd, not billed={_usd:0.00}");
         return 0;
     }
 
@@ -438,7 +440,7 @@ static class Program
         double recall = tp + fn > 0 ? tp * 1.0 / (tp + fn) : 0, falseAlarm = fp + tn > 0 ? fp * 1.0 / (fp + tn) : 0;
         Console.WriteLine($"check {variant} ({half}): invented turns caught {tp}/{tp + fn} ({recall * 100:0}%, 95% {Wilson(tp, tp + fn)}), " +
                           $"clean turns flagged {fp}/{fp + tn} ({falseAlarm * 100:0}%), unchecked={unchecked1}, " +
-                          $"ms median={ms[ms.Count / 2]} p90={ms[(int)(ms.Count * 0.9)]}, usd={_usd:0.00}");
+                          $"ms median={ms[ms.Count / 2]} p90={ms[(int)(ms.Count * 0.9)]}, api-rate usd, not billed={_usd:0.00}");
         return 0;
     }
 
@@ -491,7 +493,7 @@ static class Program
         }
         ConversationEngine.RealWorldRule = true;
         WriteJsonl(Path.Combine(dir, "smalltalk.jsonl"), rows);
-        Console.WriteLine($"smalltalk: usd={cost.EstimateUsd():0.00} (the engine's own rate card) -> smalltalk.jsonl");
+        Console.WriteLine($"smalltalk: api-rate usd, not billed={cost.EstimateUsd():0.00} (the engine's own rate card) -> smalltalk.jsonl");
         return 0;
     }
 
@@ -600,6 +602,214 @@ static class Program
         return 0;
     }
 
+    // ------------------------------------------------------------------ the newcomer set, labelled independently
+
+    /// WHAT A NEWCOMER'S QUESTION IS SHOWN AGAINST: the numbered items the check
+    /// reads, for that character, as Firsts builds them (the card with the
+    /// street's facts, the people and places they know, how they know him, the
+    /// scene where they stand at ten on day 0).
+    static string FirstsKnown(string who)
+    {
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
+        var card = StreetFacts.AddTo(CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, who + ".md"))), who);
+        string where = cast.WhereWords(who, 0, 10);
+        return ClaimCheck.NumberedKnown(ClaimCheck.KnownItems(card, null, null, null, "Dry, grey." + (where != null ? " Where you are: " + where + "." : ""),
+            new GameTime(0, 10, 0).ToldAs, new PlayerIdentity().HowTheyKnowHim(true, true, null), cast.PeopleFor(who, 0, 10)));
+    }
+
+    const string AnswerableRule =
+        "You decide whether a character in a small British port town in 1990 can answer a newcomer's question from what they know. " +
+        "KNOWN is everything the character knows. Answer \"yes\" when KNOWN states or directly implies an answer to the question, " +
+        "\"partly\" when it gives part of an answer, and \"no\" when it gives none (then the honest reply is that they do not know). " +
+        "A greeting or an apology that asks nothing is \"yes\": a plain reply answers it. The character's own life and work as KNOWN " +
+        "tells them count. Nothing outside KNOWN counts, however likely. Answer with JSON and nothing else: " +
+        "{\"answerable\": \"yes\", \"from\": [\"H3\"]}.";
+
+    /// THE FIXED LABELS (Jafar, 30 September: "measured against a fixed set of
+    /// newcomer questions, labelled independently"): for each of the sixty
+    /// question and character pairs, whether the character can answer it from
+    /// what they know, by two labellers apart. Written once to
+    /// firsts-answerable.jsonl beside the bench; where they differ, a person's
+    /// ruling goes in firsts-answerable-rulings.json as {"card|probe": "yes"}.
+    static async Task<int> Answerable(string dir, int parallel)
+    {
+        var jobs = new List<(string card, string probe)>();
+        foreach (var c in new[] { "lena", "rocco", "sam" }) foreach (var p in FirstProbes) jobs.Add((c, p));
+        var known = new Dictionary<string, string>();
+        foreach (var c in new[] { "lena", "rocco", "sam" }) known[c] = FirstsKnown(c);
+        using var client = new ClaudeCodeClient();
+        var verdicts = new Dictionary<(string, string, string), string>();
+        var gate = new SemaphoreSlim(parallel);
+        foreach (var model in Labellers)
+            await Task.WhenAll(jobs.Select(async job =>
+            {
+                await gate.WaitAsync();
+                try
+                {
+                    var req = new LlmRequest { Model = model, MaxTokens = 200, System = AnswerableRule };
+                    req.Messages.Add(new LlmMessage("user", "KNOWN:\n" + known[job.card] + "\nTHE QUESTION:\n<<<\n" + job.probe + "\n>>>"));
+                    string v = null;
+                    for (int attempt = 0; attempt < 3 && v == null; attempt++)
+                    {
+                        try
+                        {
+                            var r = await client.CompleteAsync(req);
+                            var m = System.Text.RegularExpressions.Regex.Match(r.Text ?? "", "\"answerable\"\\s*:\\s*\"(yes|partly|no)\"");
+                            if (m.Success) v = m.Groups[1].Value;
+                        }
+                        catch (Exception) { await Task.Delay(2000 * (attempt + 1)); }
+                    }
+                    lock (verdicts) verdicts[(model, job.card, job.probe)] = v ?? "unread";
+                }
+                finally { gate.Release(); }
+            }));
+        var rows = new List<object>();
+        int agree = 0;
+        foreach (var (card, probe) in jobs)
+        {
+            string a = verdicts[(Labellers[0], card, probe)], b = verdicts[(Labellers[1], card, probe)];
+            if (a == b) agree++;
+            rows.Add(new { card, probe, a, b, gold = a == b ? a : null });
+        }
+        WriteJsonl(Path.Combine(dir, "firsts-answerable.jsonl"), rows);
+        Console.WriteLine($"answerable: {jobs.Count} pairs, the two labellers agree on {agree}; the rest wait for a ruling -> firsts-answerable.jsonl");
+        return 0;
+    }
+
+    /// A THIRD LABELLER FOR WHERE THE TWO DIFFER (30 September): a different
+    /// model, under the same rule, reads only the pairs the two labellers
+    /// disagree on between answerable ("yes" or "partly") and not ("no"), and
+    /// the majority of three is written as the ruling, so the fixed labels
+    /// never rest on the judgement of whoever is testing a method against them.
+    /// A yes against a partly needs no ruling: both count as answerable.
+    static async Task<int> AnswerableThird(string dir, string model, int parallel)
+    {
+        var rows = new List<(string card, string probe, string a, string b)>();
+        foreach (var line in File.ReadAllLines(Path.Combine(dir, "firsts-answerable.jsonl")))
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            using var d = JsonDocument.Parse(line);
+            var r = d.RootElement;
+            if (r.TryGetProperty("gold", out var g) && g.ValueKind == JsonValueKind.String) continue;
+            rows.Add((r.GetProperty("card").GetString(), r.GetProperty("probe").GetString(), r.GetProperty("a").GetString(), r.GetProperty("b").GetString()));
+        }
+        bool Can(string v) => v == "yes" || v == "partly";
+        var known = new Dictionary<string, string>();
+        foreach (var c in rows.Select(x => x.card).Distinct()) known[c] = FirstsKnown(c);
+        using var client = new ClaudeCodeClient();
+        var rulings = new SortedDictionary<string, string>(StringComparer.Ordinal);
+        var gate = new SemaphoreSlim(parallel);
+        await Task.WhenAll(rows.Select(async x =>
+        {
+            string key = x.card + "|" + x.probe;
+            if (Can(x.a) == Can(x.b)) { lock (rulings) rulings[key] = "partly"; return; }
+            await gate.WaitAsync();
+            try
+            {
+                var req = new LlmRequest { Model = model, MaxTokens = 200, System = AnswerableRule };
+                req.Messages.Add(new LlmMessage("user", "KNOWN:\n" + known[x.card] + "\nTHE QUESTION:\n<<<\n" + x.probe + "\n>>>"));
+                string v = null;
+                for (int attempt = 0; attempt < 3 && v == null; attempt++)
+                {
+                    try
+                    {
+                        var m = System.Text.RegularExpressions.Regex.Match((await client.CompleteAsync(req)).Text ?? "", "\"answerable\"\\s*:\\s*\"(yes|partly|no)\"");
+                        if (m.Success) v = m.Groups[1].Value;
+                    }
+                    catch (Exception) { await Task.Delay(2000 * (attempt + 1)); }
+                }
+                if (v == null) return;
+                // The majority of three: the third sides with one of the two.
+                string ruled = Can(v) == Can(x.a) ? (Can(x.a) ? x.a : "no") : (Can(x.b) ? x.b : "no");
+                lock (rulings) rulings[key] = ruled;
+            }
+            finally { gate.Release(); }
+        }));
+        File.WriteAllText(Path.Combine(dir, "firsts-answerable-rulings.json"), JsonSerializer.Serialize(rulings, new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping }));
+        Console.WriteLine($"answerable --third {model}: {rulings.Count} of {rows.Count} disagreements ruled -> firsts-answerable-rulings.json");
+        return 0;
+    }
+
+    /// THE REPLIES, LABELLED INDEPENDENTLY: a firsts.jsonl (from `firsts`, in
+    /// `dir`) read against the fixed labels. Each reply that is not the fallback
+    /// is labelled by the two labellers apart, under LabelRule, for invented
+    /// details; invented when both find one, disputed when one does. Prints the
+    /// fallback rate, the fallback rate on questions the character can answer,
+    /// and the invention rate, with the disputed turns listed for a person.
+    static async Task<int> FirstsLabel(string dir, string benchDir, int parallel)
+    {
+        var fixedPath = Path.Combine(benchDir, "firsts-answerable.jsonl");
+        if (!File.Exists(fixedPath)) { Console.WriteLine("no fixed labels yet: run `answerable` first"); return 1; }
+        var answerable = new Dictionary<string, string>();
+        foreach (var line in File.ReadAllLines(fixedPath))
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            using var d = JsonDocument.Parse(line);
+            var r = d.RootElement;
+            string key = r.GetProperty("card").GetString() + "|" + r.GetProperty("probe").GetString();
+            answerable[key] = r.TryGetProperty("gold", out var g) && g.ValueKind == JsonValueKind.String ? g.GetString() : null;
+        }
+        var rulingsPath = Path.Combine(benchDir, "firsts-answerable-rulings.json");
+        if (File.Exists(rulingsPath))
+            using (var rd = JsonDocument.Parse(File.ReadAllText(rulingsPath)))
+                foreach (var p in rd.RootElement.EnumerateObject()) answerable[p.Name] = p.Value.GetString();
+        var replies = new List<(string card, string probe, string reply, bool fell)>();
+        foreach (var line in File.ReadAllLines(Path.Combine(dir, "firsts.jsonl")))
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            using var d = JsonDocument.Parse(line);
+            var r = d.RootElement;
+            replies.Add((r.GetProperty("card").GetString(), r.GetProperty("probe").GetString(), r.GetProperty("reply").GetString(), r.GetProperty("fell").GetBoolean()));
+        }
+        var known = new Dictionary<string, string>();
+        foreach (var c in replies.Select(x => x.card).Distinct()) known[c] = FirstsKnown(c);
+        using var client = new ClaudeCodeClient();
+        var found = new Dictionary<(string model, string card, string probe), int>();
+        var gate = new SemaphoreSlim(parallel);
+        foreach (var model in Labellers)
+            await Task.WhenAll(replies.Where(x => !x.fell).Select(async x =>
+            {
+                await gate.WaitAsync();
+                try
+                {
+                    var req = new LlmRequest { Model = model, MaxTokens = 600, System = LabelRule };
+                    req.Messages.Add(new LlmMessage("user", "KNOWN:\n" + known[x.card] + "\nTHE OTHER PERSON SAID (not evidence):\n- " + x.probe +
+                        "\n\nTHE LINE THE CHARACTER SAID:\n<<<\n" + x.reply + "\n>>>"));
+                    List<Detail> parsed = null;
+                    for (int attempt = 0; attempt < 3 && parsed == null; attempt++)
+                    {
+                        try { parsed = ParseDetails((await client.CompleteAsync(req)).Text); } catch (Exception) { await Task.Delay(2000 * (attempt + 1)); }
+                    }
+                    lock (found) found[(model, x.card, x.probe)] = parsed == null ? -1 : parsed.Count;
+                }
+                finally { gate.Release(); }
+            }));
+        int n = replies.Count, fell = 0, fellAnswerable = 0, answerableCount = 0, unanswerableFell = 0, unanswerableCount = 0, invented = 0, disputed = 0, unread = 0;
+        var rows = new List<object>();
+        foreach (var x in replies)
+        {
+            answerable.TryGetValue(x.card + "|" + x.probe, out var ans);
+            bool canAnswer = ans == "yes" || ans == "partly";
+            if (canAnswer) answerableCount++; else if (ans == "no") unanswerableCount++;
+            string label;
+            if (x.fell) { fell++; if (canAnswer) fellAnswerable++; else if (ans == "no") unanswerableFell++; label = "empty"; }
+            else
+            {
+                int a = found[(Labellers[0], x.card, x.probe)], b = found[(Labellers[1], x.card, x.probe)];
+                if (a < 0 || b < 0) { unread++; label = "unread"; }
+                else if (a > 0 && b > 0) { invented++; label = "invented"; }
+                else if (a > 0 || b > 0) { disputed++; label = "disputed"; }
+                else label = "grounded";
+            }
+            rows.Add(new { x.card, x.probe, answerable = ans, label, x.reply });
+        }
+        WriteJsonl(Path.Combine(dir, "firsts-labelled.jsonl"), rows);
+        Console.WriteLine($"firsts labelled: {n} replies; fallback {fell}/{n}; fallback where they could answer {fellAnswerable}/{answerableCount}; " +
+                          $"fallback where they could not {unanswerableFell}/{unanswerableCount}; invented (both labellers) {invented}/{n}; disputed {disputed}; unread {unread} -> firsts-labelled.jsonl");
+        return 0;
+    }
+
     static async Task<int> Firsts(string dir, int parallel)
     {
         var probes = FirstProbes;
@@ -641,7 +851,7 @@ static class Program
         }));
         WriteJsonl(Path.Combine(dir, "firsts.jsonl"), rows);
         Console.WriteLine($"firsts: a newcomer's first questions, {n} answered ({failed} failed): \"that's all I know\" {fallback} (" +
-                          string.Join(", ", byCard.Select(kv => kv.Key + " " + kv.Value)) + $"), refused {refused}; usd={cost.EstimateUsd():0.00} -> firsts.jsonl");
+                          string.Join(", ", byCard.Select(kv => kv.Key + " " + kv.Value)) + $"), refused {refused}; api-rate usd, not billed={cost.EstimateUsd():0.00} -> firsts.jsonl");
         return 0;
     }
 
@@ -711,7 +921,7 @@ static class Program
         foreach (var key in new[] { "without", "with" })
             if (tally.TryGetValue(key, out var t))
                 Console.WriteLine($"hours {key} the street's hours: right {t[0]}, wrong {t[1]}, no answer {t[2]} (by the words; read hours.jsonl by eye)");
-        Console.WriteLine($"hours: {failed} failed; usd={cost.EstimateUsd():0.00} -> hours.jsonl");
+        Console.WriteLine($"hours: {failed} failed; api-rate usd, not billed={cost.EstimateUsd():0.00} -> hours.jsonl");
         return 0;
     }
 
@@ -737,7 +947,7 @@ static class Program
             var ok = ClaimCheck.ParseVerify(r.Text, 1, items.ConvertAll(i => i.id));
             Console.WriteLine($"  {(truth ? "true " : "false")} {(ok != null && ok[0] ? "cleared" : "REFUSED")}: {detail} -> {r.Text.Replace('\n', ' ')}");
         }
-        Console.WriteLine($"hourslook: usd={_usd:0.00}");
+        Console.WriteLine($"hourslook: api-rate usd, not billed={_usd:0.00}");
         return 0;
     }
 
@@ -788,7 +998,7 @@ static class Program
             Console.WriteLine($"  {(caught ? "caught" : "PASSED")}: {line}");
         }
         WriteJsonl(Path.Combine(dir, "disguise.jsonl"), rows);
-        Console.WriteLine($"disguise: inventions hidden in small talk caught {flagged}/{lines.Length}; usd={_usd:0.00}");
+        Console.WriteLine($"disguise: inventions hidden in small talk caught {flagged}/{lines.Length}; api-rate usd, not billed={_usd:0.00}");
         return 0;
     }
 
@@ -853,7 +1063,7 @@ static class Program
         }
         ConversationEngine.TicRule = true;
         WriteJsonl(Path.Combine(dir, "tics.jsonl"), rows);
-        Console.WriteLine($"tics: usd={cost.EstimateUsd():0.00} -> tics.jsonl");
+        Console.WriteLine($"tics: api-rate usd, not billed={cost.EstimateUsd():0.00} -> tics.jsonl");
         return 0;
     }
 
@@ -1085,7 +1295,7 @@ static class Program
         var ms = meta.Values.Select(m => m.ms).OrderBy(x => x).ToList();
         Console.WriteLine($"pipeline {tag} (check {checker}): turns={n} failedJobs={failures} said an invented detail={failed}/{n} ({failed * 100.0 / Math.Max(1, n):0}%, 95% {Wilson(failed, n)}), " +
                           $"redrafted={redrafted} fixed line={fixedLines} unlabelled={unparsed} turn ms median={ms[ms.Count / 2]} p90={ms[(int)(ms.Count * 0.9)]} " +
-                          $"usd={cost.EstimateUsd() + _usd:0.00}");
+                          $"api-rate usd, not billed={cost.EstimateUsd() + _usd:0.00}");
         if (early && firstHeardMs.Count > 0)
         {
             firstHeardMs.Sort();

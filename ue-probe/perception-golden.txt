@@ -55579,12 +55579,10 @@ Ask|too late|0
 Ask|no|1|-1|1|refused|0.6599999999999999|4
 AskStory|player.outfit_d0|did|1|Mickey's~nephew~brought~the~envelope~down~the~landing
 AskStory|player.outfit_d2|noshow|0|Mickey's~nephew~never~turned~up~at~the~landing
-AskStory|player.outfit_d6|refused|0|Ron~came~down~the~landing~to~say~Mickey's~nephew~told~them~no
 AskRonRemembers|0|I~gave~Mickey's~nephew~the~envelope~for~the~ferry~landing:~after~ten~tonight,~to~the~man~who~asks~for~Mickey's.~I~told~him~that~if~he~says~no,~Mickey's~arrangement~is~finished.
 AskRonRemembers|1|I~gave~Mickey's~nephew~the~envelope~for~the~ferry~landing:~after~ten~tonight,~to~the~man~who~asks~for~Mickey's.~I~told~him~that~if~he~says~no,~Mickey's~arrangement~is~finished.
 AskRonRemembers|2|I~gave~Mickey's~nephew~the~envelope~for~the~ferry~landing:~after~ten~tonight,~to~the~man~who~asks~for~Mickey's.~I~told~him~that~if~he~says~no,~Mickey's~arrangement~is~finished.
 AskRonRemembers|3|He~told~me~no~to~the~envelope,~so~I'm~taking~his~answer~down~to~the~landing~tonight:~that's~Mickey's~arrangement~finished.
-AskSave|save|{"first":0,"nights":[[0,"did"],[2,"noshow"],[4,"undelivered"],[6,"refused"]],"delivered":[0,2,6]}
 AskLoad|load|-1|1|refused|0.6599999999999999|4
 AskBadSave|0|4|0|none|0.6599999999999999|2|{"first":0,"nights":[[0,"did"],[2,"noshow"]],"delivered":[0,2]}
 AskBadSave|1|0|0|none|1|0|{"first":0,"nights":[],"delivered":[]}
@@ -55620,9 +55618,6 @@ Landing|after~one|none
 Landing|no~ask~tonight|Nothing~tonight.~Tomorrow,~after~ten.
 Landing|talks,~no~ask|Not~here.~Go~on.
 Landing|handed~after~a~night~away|You~kept~us~waiting~last~time.~Don't~make~a~habit~of~it.~Sunday,~same~again.
-Landing|told~Ron~no|Ron's~been~down.~We're~done,~you~and~us.
-Landing|told~Ron~no,~talks|We're~done.~Go~on.
-Landing|told~Ron~no,~nothing~handed|none
 Landing|stayed~away~three~times|You~had~your~chances.~We're~done,~you~and~us.
 Landing|wound~down,~before~Ron~has~been|Mickey's?
 Landing|wound~down~Monday,~before~Ron|Nothing~tonight.~Tomorrow,~after~ten.
@@ -55675,8 +55670,6 @@ TeaBadSave|7|Asked|3|0|0|{"day":3,"state":"Asked","minutes":[],"seenGoing":false
 TeaBadSave|8|null
 TeaBadSave|9|StoodUp|2|0|0|{"day":2,"state":"StoodUp","minutes":[],"seenGoing":false}
 TeaBadSave|10|null
-TeaGap|10|Stayed|1360
-TeaGap|11|LeftEarly|1360
 TeaEdge|asked at nine|none|none|NotAsked
 TeaEdge|outside the evening|1|1260|0|0
 TeaEdge|seen before one|1|1|LeftEarly

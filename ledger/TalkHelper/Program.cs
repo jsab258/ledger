@@ -1302,6 +1302,20 @@ static class Program
         string sizesPath = Environment.GetEnvironmentVariable("LEDGER_TALK_SIZES");
         bool sizes = fake && !string.IsNullOrEmpty(sizesPath);
         if (sizes) llm = new SizeRecorder(llm, sizesPath);
+        // THE KEY'S CAP, ENFORCED IN CODE (Jafar, 30 September): with --budget-usd
+        // (or LEDGER_TALK_BUDGET_USD) every call reserves its worst case first,
+        // and none is sent that could take the run past the budget (BudgetedClient).
+        int bi = Array.IndexOf(args, "--budget-usd");
+        string budgetText = bi >= 0 && bi + 1 < args.Length ? args[bi + 1] : Environment.GetEnvironmentVariable("LEDGER_TALK_BUDGET_USD");
+        if (llm != null && !fake && !string.IsNullOrEmpty(budgetText))
+        {
+            if (!double.TryParse(budgetText, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out double budget) || !(budget >= 0))
+            {
+                Console.Error.WriteLine("talk: --budget-usd must be a number of dollars; refusing to start");
+                return 2;
+            }
+            llm = new BudgetedClient(llm, budget);
+        }
         var helper = new Helper(llm, TimeSpan.FromSeconds(8)) { CheckAlways = sizes };
         if (relay != null && !string.IsNullOrEmpty(copy))
         {
@@ -1356,6 +1370,9 @@ static class Program
             cost = helper.Cost.Report(),
             usd = helper.Cost.EstimateUsd(),
             calls = helper.Cost.TotalCalls,
+            // Under a budget (--budget-usd): its spend with refused calls' reserves, and the calls it refused.
+            budgetSpent = llm is BudgetedClient held ? held.SpentUsd : (double?)null,
+            budgetRefused = llm is BudgetedClient refusing ? refusing.Refused : (int?)null,
         }, Plain));
         return 0;
     }

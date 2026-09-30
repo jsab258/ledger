@@ -111,6 +111,8 @@ namespace Ledger.CoreTests
                 TestClaimCheck();
                 await TestClaimCheckedReplies();
                 TestCaughtClaimIsNotLearned();
+                TestPortReviewFaults();
+                TestBudgetedClient();
                 await TestTranscriptRollback();
                 await TestReflection();
                 TestPhysique();
@@ -5957,8 +5959,17 @@ namespace Ledger.CoreTests
                 }
                 var night = new GameTime(0, 22, 30);
                 var mDid = Mill(); new Arrangement().Answer(0, NightAnswer.Did, mDid, night);
-                var mNo = Mill(); new Arrangement().Answer(0, NightAnswer.Refused, mNo, night);
-                var mAway = Mill(); var awayArr = new Arrangement(); awayArr.Delivered(0); awayArr.Answer(0, NightAnswer.NoShow, mAway, night);
+                // A plain no reaches the landing when Ron takes it down, at eleven
+                // (the port's independent check, 30 September), not when he says it.
+                var mNo = Mill(); var noArr = new Arrangement(); noArr.Answer(0, NightAnswer.Refused, mNo, night);
+                bool noNotYet = mNo.Get(Arrangement.OutfitMan).Rumors.Count == 0 && noArr.NoWordAt.HasValue && noArr.NoWordAt.Value.Hour == Arrangement.RonGoesDownHour;
+                var noSaved = Arrangement.FromJson(noArr.ToJson());
+                bool noKept = noSaved.NoWordAt.HasValue && noSaved.NoWordAt.Value.TotalMinutes == noArr.NoWordAt.Value.TotalMinutes;
+                noArr.PassedTo(1, mNo, new GameTime(1, 6, 0));
+                // A night away is filed once the man has given up waiting, at one (the port's independent check).
+                var mAway = Mill(); var awayArr = new Arrangement(); awayArr.Delivered(0);
+                bool awayEarly = awayArr.Answer(0, NightAnswer.NoShow, mAway, night);
+                awayArr.Answer(0, NightAnswer.NoShow, mAway, Arrangement.GaveUpAt(0));
                 var rDid = mDid.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
                 var rNo = mNo.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
                 var rAway = mAway.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
@@ -5966,7 +5977,7 @@ namespace Ledger.CoreTests
                 try { new Arrangement().Answer(0, NightAnswer.Did, Mill()); } catch (ArgumentException noTimeErr) { noTime = noTimeErr.Message; }
                 bool manSaw = mNo.Get(Arrangement.OutfitMan).Memory.Events.Exists(e => e.Text == "I saw it myself: Ron came down the landing to say Mickey's nephew told them no");
                 Check(rDid != null && rDid.Sensitive && rDid.Content.Value == "did" && rDid.Hops == 0
-                      && rNo != null && !rNo.Sensitive && rNo.Content.Value == "refused" && mNo.Get("rocco").Rumors.Count == 0 && manSaw
+                      && rNo != null && !rNo.Sensitive && rNo.Content.Value == "refused" && mNo.Get("rocco").Rumors.Count == 0 && manSaw && noNotYet && noKept && !noArr.NoWordAt.HasValue && !awayEarly
                       && rAway != null && !rAway.Sensitive && rAway.Content.Value == "noshow"
                       && noTime != null,
                       "every night is the outfit's talk, told first-hand by its man, what he himself saw; only the envelope is a secret; Ron tells nobody; never without a time");
@@ -6492,9 +6503,13 @@ namespace Ledger.CoreTests
                 var no = new Arrangement(0);
                 no.Delivered(0, null, T(0, 20));
                 no.Answer(0, NightAnswer.Refused, null, T(0, 21));
-                Says("told Ron no", no, T(0, 22, 10), LandingMoment.Comes, TheLanding.DoneRefused);
-                Says("told Ron no, talks", no, T(0, 22, 10), LandingMoment.TalksToHim, TheLanding.DoneGoOn);
-                Says("told Ron no, nothing handed", no, T(0, 22, 10), LandingMoment.NothingToHand, "none");
+                // Before Ron goes down with it at eleven the man has not heard (the
+                // independent check, 30 September); after, he is done with him.
+                Says("told Ron no, before Ron goes down", no, T(0, 22, 10), LandingMoment.Comes, TheLanding.Asks);
+                Says("told Ron no, before, nothing handed", no, T(0, 22, 10), LandingMoment.NothingToHand, TheLanding.NothingForMe);
+                Says("told Ron no", no, T(0, 23, 10), LandingMoment.Comes, TheLanding.DoneRefused);
+                Says("told Ron no, talks", no, T(0, 23, 10), LandingMoment.TalksToHim, TheLanding.DoneGoOn);
+                Says("told Ron no, nothing handed", no, T(0, 23, 10), LandingMoment.NothingToHand, "none");
                 var away = new Arrangement(0);
                 for (int n = 0; n <= 4; n += 2) { away.Delivered(n, null, T(n, 20)); away.PassedTo(n + 1, null, T(n + 1, 6)); }
                 Says("stayed away three times", away, T(5, 22, 10), LandingMoment.Comes, TheLanding.DoneStopped);
@@ -8042,6 +8057,203 @@ namespace Ledger.CoreTests
         /// cannot tell a caught lie from an honest correction would quietly
         /// stop the town ever updating, which is a worse bug than the one it
         /// was written to fix.
+        /// THE CORE'S FAULTS THE PORTS' REVIEWS FOUND (FINDINGS, 30 September):
+        /// the builder's independent checks of the C++ ports found them in the C#
+        /// the ports copy; one regression each, and rows for the port to follow
+        /// (PerceptionGolden --awaiting-port, EmitPortReviewFixes).
+        static void TestPortReviewFaults()
+        {
+            Console.WriteLine("-- the Core's faults the ports' reviews found (30 September)");
+            // 1. His arrival, like his name, is the street's plain fact: never a lead,
+            // never his exposure.
+            {
+                var mill = new GossipMill(new SocialGraph());
+                foreach (var id in new[] { "a", "b" }) mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Get("a").Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.9, Hops = 0 });
+                mill.Get("b").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "He put Rita's window in.", Confidence = 0.9, Hops = 0 });
+                var leads = mill.Leads();
+                var exposure = mill.ExposureOf("player", _ => false);
+                Check(leads.Count == 1 && leads[0].TopicKey == "player.window_d1" && exposure.Yours == 1,
+                      "his arrival is the street's plain fact, never a lead nor his exposure, as his name is",
+                      string.Join(",", leads.Select(l => l.TopicKey)) + " yours=" + exposure.Yours);
+            }
+            // 2. Nor what shows in anybody's manner, even marked sensitive (a damaged save).
+            {
+                var g = new Gossiper("s", "s", new MemoryStore("s"), new KnowledgeBase(), new SuspicionTracker());
+                g.Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.9, Sensitive = true, Hops = 0 });
+                var shows = StreetVoice.StoryThatShows(g, 0.35);
+                g.Rumors[0].Confidence = 0.1;
+                var half = StreetVoice.StoryHalfRemembered(g, 0.35);
+                Check(shows == null && half == null, "his arrival marked sensitive never shows in anybody's manner, nor as a half-remembered story");
+            }
+            // 3. His name told to somebody who had it second-hand at full certainty
+            // becomes theirs first-hand, from him, once, remembered as told.
+            {
+                var mill = new GossipMill(new SocialGraph());
+                mill.Add(new Gossiper("h", "h", new MemoryStore("h"), new KnowledgeBase(), new SuspicionTracker()));
+                var id = new PlayerIdentity();
+                mill.Get("h").Rumors.Add(new Rumor { Content = new Fact("player", "name", id.Surname), OriginId = "ada", Summary = "Mickey's nephew is called " + id.Surname, Confidence = 1.0, Hops = 2 });
+                bool first = id.NameTold(mill, "h", new GameTime(1, 10, 0));
+                bool again = id.NameTold(mill, "h", new GameTime(1, 11, 0));
+                var names = mill.Get("h").Rumors.FindAll(r => r.TopicKey == PlayerIdentity.NameTopic);
+                var told = mill.Get("h").Memory.Events.FindAll(e => e.Text.Contains("called " + id.Surname));
+                Check(first && !again && names.Count == 1 && names[0].Hops == 0 && names[0].OriginId == "h"
+                      && told.Count == 1 && told[0].Text.StartsWith("He told me himself") && !told.Exists(e => e.Text.StartsWith("I saw it myself")),
+                      "his name told to somebody who had heard it at full certainty is made theirs first-hand, once, and remembered as told, never as seen",
+                      $"{first} {again} {names.Count} hops={names[0].Hops} from={names[0].OriginId} " + string.Join(" / ", told.Select(e => e.Text)));
+            }
+            // 4. Ada's tea: ten minutes away is allowed, eleven is not.
+            {
+                TeaState Evening(int gapAway)
+                {
+                    var tea = AdasTea.For(1, true);
+                    tea.SheSeesHim(new GameTime(tea.Day, 10, 0));
+                    int day = tea.Day;
+                    for (int m = 21 * 60 + 25; m <= 22 * 60 + 40; m++)
+                    {
+                        if (m > 21 * 60 + 40 && m <= 21 * 60 + 40 + gapAway) continue;
+                        tea.WithHer(new GameTime(day, m / 60, m % 60));
+                    }
+                    var ada = new Gossiper("ada", "Ada", new MemoryStore("ada"), new KnowledgeBase(), new SuspicionTracker());
+                    return tea.Close(ada, new GameTime(day, 23, 0));
+                }
+                var ten = Evening(10);
+                var eleven = Evening(11);
+                Check(ten == TeaState.Stayed && eleven == TeaState.LeftEarly,
+                      "at Ada's tea ten minutes away is allowed and eleven is leaving early, as \"never away more than ten\" says", ten + " / " + eleven);
+            }
+            // 5. With no Ada in the mill nobody sees him go to the landing, and he is not marked seen.
+            {
+                var tea = AdasTea.For(1, true);
+                tea.SheSeesHim(new GameTime(tea.Day, 10, 0));
+                var empty = new GossipMill(new SocialGraph());
+                tea.WentToTheLanding(empty, new GameTime(tea.Day, 22, 0), true);
+                bool unseen = !tea.SeenGoing;
+                var withAda = new GossipMill(new SocialGraph());
+                withAda.Add(new Gossiper("ada", "Ada", new MemoryStore("ada"), new KnowledgeBase(), new SuspicionTracker()));
+                tea.WentToTheLanding(withAda, new GameTime(tea.Day, 22, 5), true);
+                Check(unseen && tea.SeenGoing && withAda.Get("ada").Rumors.Count == 1,
+                      "with no Ada in the mill he is not marked seen going to the landing; with her, she sees him and holds it");
+            }
+            // 6. The envelope or the no only on its own night (the no then goes down
+            // with Ron, tested with the outfit's talk).
+            {
+                var arr = new Arrangement(2);
+                bool early = arr.Answer(2, NightAnswer.Did, null, new GameTime(0, 20, 0));
+                bool onTheNight = arr.Answer(2, NightAnswer.Did, null, new GameTime(2, 22, 0));
+                var morning = new Arrangement(0);
+                bool atNine = morning.Answer(0, NightAnswer.Did, null, new GameTime(0, 9, 0));
+                var late = new Arrangement(0);
+                var lateMill = new GossipMill(null);
+                lateMill.Add(new Gossiper(Arrangement.OutfitMan, Arrangement.OutfitMan, new MemoryStore("m"), new KnowledgeBase(), new SuspicionTracker()));
+                late.Answer(0, NightAnswer.Refused, lateMill, new GameTime(0, 23, 30));
+                bool toldAtOnce = lateMill.Get(Arrangement.OutfitMan).Rumors.Count == 1 && !late.NoWordAt.HasValue;
+                Arrangement Loaded(double minute) => Arrangement.FromJson(new Dictionary<string, object>
+                {
+                    { "first", 0.0 }, { "nights", new List<object> { new List<object> { 0.0, "refused" } } }, { "delivered", new List<object> { 0.0 } },
+                    { "noTell", new List<object> { 0.0, minute } },
+                });
+                bool morningNoTell = Loaded(600).NoWordAt.HasValue, oneOClock = Loaded(1500).NoWordAt.HasValue, elevenOk = Loaded(1380).NoWordAt.HasValue;
+                Check(!early && onTheNight && !atNine && toldAtOnce && !morningNoTell && !oneOClock && elevenOk,
+                      "the envelope only on its own night and while the landing is open; a no after eleven reaches the landing at once; a save's waiting no only between eleven and one",
+                      $"{early} {onTheNight} {atNine} {toldAtOnce} {morningNoTell} {oneOClock} {elevenOk}");
+            }
+            // 7. A far-future day is walked no further than a save can hold.
+            {
+                var far = new Arrangement(0);
+                var clock = System.Diagnostics.Stopwatch.StartNew();
+                far.PassedTo(10000000);
+                Check(far.Nights.Count <= Arrangement.LastDay / Arrangement.Every + 1 && clock.ElapsedMilliseconds < 2000,
+                      "a far-future day is walked no further than the save's last day", far.Nights.Count + " nights, " + clock.ElapsedMilliseconds + " ms");
+            }
+            // 8. His plain answer at 00:00 is overheard like any other; only the day
+            // closing unanswered at midnight is Sheila's alone.
+            {
+                var cast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"" + WeeksEnd.Office + "\":{\"x_m\":0,\"z_m\":0}},"
+                    + "\"areas\":{\"mickeys\":{\"places\":[\"" + WeeksEnd.Office + "\"]}},"
+                    + "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"" + WeeksEnd.Office + "\"]]},{\"id\":\"rocco\",\"routine\":[[0,\"" + WeeksEnd.Office + "\"]]}],\"ties\":[]}");
+                GossipMill Mill() { var m = new GossipMill(null); foreach (var id in new[] { "lena", "rocco" }) m.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker())); return m; }
+                var said = Mill();
+                var wk = new WeeksEnd();
+                wk.Ask(new GameTime(7, 0, 0), true);
+                bool given = wk.Give(WeekAnswer.TakeOver, new GameTime(7, 0, 0), said, cast);
+                var closed = Mill();
+                var unanswered = new WeeksEnd();
+                unanswered.Ask(new GameTime(7, 0, 0), true);
+                unanswered.Close(new GameTime(8, 0, 0), closed, cast);
+                Check(given && said.Get("rocco").Rumors.Count == 1 && closed.Get("rocco").Rumors.Count == 0 && closed.Get("lena").Rumors.Count == 1,
+                      "a plain answer given at midnight is overheard like any other; only the day closing unanswered is Sheila's alone",
+                      said.Get("rocco").Rumors.Count + " / " + closed.Get("rocco").Rumors.Count);
+            }
+            // 9. The police file's visits load by day, those of one day in the order saved.
+            {
+                var visits = new List<object>();
+                for (int k = 0; k < 20; k++) visits.Add(new List<object> { (double)(k % 2 == 0 ? 6 : 5), "Wounding mark" + k });
+                var loaded = PoliceFile.FromJson(new Dictionary<string, object> { { "visits", visits } });
+                var sixes = loaded.Visits.Where(v => v.day == 6).Select(v => v.why).ToList();
+                var wantSixes = Enumerable.Range(0, 20).Where(k => k % 2 == 0).Select(k => "Wounding mark" + k).ToList();
+                Check(loaded.Visits.Count == 20 && loaded.Visits[0].day == 5 && sixes.SequenceEqual(wantSixes),
+                      "the police file's visits load by day, and those of one day in the order they were saved", string.Join(",", sixes));
+            }
+            // 10. No constable calls while he is in the cells: the other window waits for its call.
+            {
+                var file = new PoliceFile();
+                file.Report("rita", "player.window_d1", Offence.Damage, 4, 1);
+                file.Report("hal", "player.window_d2", Offence.Damage, 4, 2);
+                var held = file.TakeIn("player.window_d1", new GameTime(3, 8, 0), false, false);
+                string whileHeld = held == null ? "not held" : file.ConstableComes(3, new GameTime(3, 10, 0)) ?? "none";
+                int callsWhileHeld = file.ConstableCalls.Count;
+                string after = file.ConstableComes(4, new GameTime(4, 10, 0));
+                Check(held != null && whileHeld == "none" && callsWhileHeld == 0 && after == "player.window_d2",
+                      "no constable calls while he is in the cells, so the other window waits for its call instead of being used up",
+                      $"{whileHeld} {callsWhileHeld} {after}");
+            }
+        }
+
+        /// THE KEY'S CAP, ENFORCED IN CODE (Jafar, 30 September): a call that could
+        /// take the run past its budget is refused before it is sent; spending
+        /// settles to the tokens used; a stream goes through, a plain client too.
+        static void TestBudgetedClient()
+        {
+            Console.WriteLine("-- the key's cap, in code");
+            var req = new LlmRequest { Model = Models.Ambient, MaxTokens = 300, System = new string('x', 4000) };
+            req.Messages.Add(new LlmMessage("user", "hello"));
+            double worst = BudgetedClient.WorstCaseUsd(req);
+            double settled = 10 / 1_000_000.0 * Models.Cost[Models.Ambient].inPerM + 10 / 1_000_000.0 * Models.Cost[Models.Ambient].outPerM;
+            var inner = new CountingClient();
+            // A limit under one call's worst case: refused before sending.
+            var tight = new BudgetedClient(inner, worst * 0.9);
+            bool tightRefused;
+            try { tight.CompleteAsync(req).GetAwaiter().GetResult(); tightRefused = false; } catch (BudgetSpentException) { tightRefused = true; }
+            int sentUnderTight = inner.Calls;
+            // A limit of a call's worst case and a half: calls go while what they
+            // really cost leaves room for the next one's worst case, then stop.
+            var b = new BudgetedClient(inner, worst * 1.5);
+            int sent = 0;
+            bool stopped = false;
+            for (int k = 0; k < 1000 && !stopped; k++)
+            {
+                try { b.CompleteAsync(req).GetAwaiter().GetResult(); sent++; } catch (BudgetSpentException) { stopped = true; }
+            }
+            int expected = (int)Math.Floor((worst * 0.5) / settled) + 1;
+            var unknown = new LlmRequest { Model = "some-dearer-model", MaxTokens = 100, System = "x" };
+            Check(worst > 0.0012 && worst < 0.003 && tightRefused && sentUnderTight == 0 && tight.Refused == 1
+                  && stopped && Math.Abs(sent - expected) <= 1 && b.SpentUsd <= b.LimitUsd
+                  && BudgetedClient.WorstCaseUsd(unknown) >= BudgetedClient.WorstCaseUsd(new LlmRequest { Model = Models.Core, MaxTokens = 100, System = "x" }),
+                  "a paid run's client refuses, before sending, any call whose worst case would pass its budget; what it spends settles to the tokens used, so it stops where they reach it; an unknown model is costed at the dearest rate",
+                  $"worst={worst:0.0000} sent={sent} expected={expected} spent={b.SpentUsd:0.0000}");
+        }
+
+        sealed class CountingClient : ILlmClient
+        {
+            public int Calls;
+            public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
+            {
+                Calls++;
+                return Task.FromResult(new LlmResponse { Text = "ok", Model = request.Model, InputTokens = 10, OutputTokens = 10 });
+            }
+        }
+
         static void TestCaughtClaimIsNotLearned()
         {
             Console.WriteLine("A caught claim is not what they know:");

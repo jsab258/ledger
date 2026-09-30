@@ -1,0 +1,60 @@
+{"card":"lena","probe":"Who are you?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"What is this place?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"What am I meant to do here?","a":"partly","b":"partly","gold":"partly"}
+{"card":"lena","probe":"How did Mickey die?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Sorry I missed the funeral.","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"What's behind that door?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Where do I sleep?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Who runs things round here?","a":"partly","b":"partly","gold":"partly"}
+{"card":"lena","probe":"Is there any money in the business?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Did Mickey leave me anything?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"What was Mickey like?","a":"partly","b":"partly","gold":"partly"}
+{"card":"lena","probe":"Who can I trust?","a":"partly","b":"partly","gold":"partly"}
+{"card":"lena","probe":"How many drivers are there?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Where's the office?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"What do you do here?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Do you work for me now?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Anything I should know?","a":"yes","b":"partly","gold":null}
+{"card":"lena","probe":"Where can I get something to eat?","a":"yes","b":"yes","gold":"yes"}
+{"card":"lena","probe":"Who was Mickey's family?","a":"partly","b":"partly","gold":"partly"}
+{"card":"lena","probe":"What happens now?","a":"partly","b":"no","gold":null}
+{"card":"rocco","probe":"Who are you?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"What is this place?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"What am I meant to do here?","a":"partly","b":"no","gold":null}
+{"card":"rocco","probe":"How did Mickey die?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Sorry I missed the funeral.","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"What's behind that door?","a":"yes","b":"partly","gold":null}
+{"card":"rocco","probe":"Where do I sleep?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Who runs things round here?","a":"partly","b":"partly","gold":"partly"}
+{"card":"rocco","probe":"Is there any money in the business?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Did Mickey leave me anything?","a":"yes","b":"no","gold":null}
+{"card":"rocco","probe":"What was Mickey like?","a":"partly","b":"partly","gold":"partly"}
+{"card":"rocco","probe":"Who can I trust?","a":"partly","b":"no","gold":null}
+{"card":"rocco","probe":"How many drivers are there?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Where's the office?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"What do you do here?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Do you work for me now?","a":"yes","b":"partly","gold":null}
+{"card":"rocco","probe":"Anything I should know?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Where can I get something to eat?","a":"yes","b":"yes","gold":"yes"}
+{"card":"rocco","probe":"Who was Mickey's family?","a":"partly","b":"partly","gold":"partly"}
+{"card":"rocco","probe":"What happens now?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"Who are you?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"What is this place?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"What am I meant to do here?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"How did Mickey die?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Sorry I missed the funeral.","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"What's behind that door?","a":"partly","b":"partly","gold":"partly"}
+{"card":"sam","probe":"Where do I sleep?","a":"yes","b":"no","gold":null}
+{"card":"sam","probe":"Who runs things round here?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"Is there any money in the business?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Did Mickey leave me anything?","a":"yes","b":"no","gold":null}
+{"card":"sam","probe":"What was Mickey like?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"Who can I trust?","a":"partly","b":"no","gold":null}
+{"card":"sam","probe":"How many drivers are there?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Where's the office?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"What do you do here?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Do you work for me now?","a":"yes","b":"no","gold":null}
+{"card":"sam","probe":"Anything I should know?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Where can I get something to eat?","a":"yes","b":"yes","gold":"yes"}
+{"card":"sam","probe":"Who was Mickey's family?","a":"partly","b":"partly","gold":"partly"}
+{"card":"sam","probe":"What happens now?","a":"partly","b":"no","gold":null}

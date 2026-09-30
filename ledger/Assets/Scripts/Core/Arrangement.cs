@@ -126,6 +126,8 @@ namespace Ledger.Core
         /// knows only then). Null and -1 otherwise.
         public GameTime? WoundWordAt => _woundTellNight >= 0 ? _woundTellAt : (GameTime?)null;
         public int WoundNight => _woundTellNight;
+        /// The furthest day the arrangement walks to, as its save keeps it.
+        public const int LastDay = 100000;
         /// When Ron takes word down: eleven at night, or at once if later.
         public const int RonGoesDownHour = 23;
 
@@ -159,7 +161,13 @@ namespace Ledger.Core
         // (at dawn, when the game calls PassedTo, or later).
         void TellWoundDown(GossipMill mill, GameTime? now)
         {
-            if (_woundTellNight < 0 || mill == null || !now.HasValue || now.Value.TotalMinutes < _woundTellAt.TotalMinutes) return;
+            if (mill == null || !now.HasValue) return;
+            if (_noTellNight >= 0 && now.Value.TotalMinutes >= _noTellAt.TotalMinutes)
+            {
+                mill.Witness(OutfitMan, new Fact("player", "outfit_d" + _noTellNight, Value(NightAnswer.Refused)), Said(NightAnswer.Refused), false, _noTellAt, 1.0);
+                _noTellNight = -1;
+            }
+            if (_woundTellNight < 0 || now.Value.TotalMinutes < _woundTellAt.TotalMinutes) return;
             mill.Witness(OutfitMan, new Fact("player", "outfit_d" + _woundTellNight, "wounddown"), SaidWoundDown, false, _woundTellAt, 1.0);
             _woundTellNight = -1;
         }
@@ -237,9 +245,40 @@ namespace Ledger.Core
             if (what == NightAnswer.Undelivered || !AsksOn(day)) return false;
             if (what == NightAnswer.NoShow && !_delivered.Contains(day)) return false;
             if (what != NightAnswer.NoShow && now.HasValue && now.Value.TotalMinutes >= GaveUpAt(day).TotalMinutes) return false;
+            // ONLY ON ITS OWN NIGHT (the port's independent check, 30 September:
+            // an envelope two nights ahead could be done on the Monday, and a
+            // night away filed before the landing opened): the envelope or the no
+            // on that night, the night away once the man has given up waiting.
+            if (now.HasValue && what != NightAnswer.NoShow && NightOf(now.Value) != day) return false;
+            // The envelope is handed over at the landing, while its man is there
+            // (the independent check: done at nine that morning, he was filed as
+            // seeing it at nine).
+            if (now.HasValue && what == NightAnswer.Did && !TheLanding.There(now.Value)) return false;
+            if (now.HasValue && what == NightAnswer.NoShow && now.Value.TotalMinutes < GaveUpAt(day).TotalMinutes) return false;
             _delivered.Add(day);
+            // A PLAIN NO GOES DOWN WITH RON, as the wound-down word does (the
+            // port's independent check): the man at the landing knows it only
+            // when Ron has been down, at eleven or at once if later; Ron knows now.
+            if (what == NightAnswer.Refused && now.HasValue)
+            {
+                Record(day, what, null, now);
+                if (mill?.Get(Doorman) is Gossiper ron) ron.Memory.Append(new MemoryEvent(now.Value, "observation", 0.8, HeardNo));
+                var goesDown = new GameTime(now.Value.Day, RonGoesDownHour, 0);
+                _noTellNight = day;
+                _noTellAt = now.Value.Hour < GaveUpHour || now.Value.TotalMinutes >= goesDown.TotalMinutes ? now.Value : goesDown;
+                TellWoundDown(mill, now);
+                return true;
+            }
             return Record(day, what, mill, now);
         }
+
+        // A plain no waiting for Ron to take it down: the night and when he goes.
+        int _noTellNight = -1;
+        GameTime _noTellAt;
+        /// His no, not yet at the landing: when Ron takes it down; null otherwise.
+        public GameTime? NoWordAt => _noTellNight >= 0 ? _noTellAt : (GameTime?)null;
+        /// The night the no waiting for Ron answers; -1 when none waits.
+        public int NoNight => _noTellNight;
 
         bool Record(int day, NightAnswer what, GossipMill mill, GameTime? now)
         {
@@ -277,6 +316,10 @@ namespace Ledger.Core
             // (the independent check: a load between midnight and one passed a
             // night whose ask still stood).
             TellWoundDown(mill, now);
+            // NO FURTHER THAN A SAVE CAN HOLD (the port's independent check, 30
+            // September: a far-future day was walked night by night, ten million
+            // nights and a 244 MB save): the save keeps days under LastDay.
+            day = Math.Min(day, LastDay);
             while (!Ended && NextNight < day && (!now.HasValue || GaveUpAt(NextNight).TotalMinutes <= now.Value.TotalMinutes))
             {
                 GameTime? told = null;
@@ -436,6 +479,7 @@ namespace Ledger.Core
             var d0 = new Dictionary<string, object> { { "first", (double)FirstDay }, { "nights", nights }, { "delivered", delivered } };
             if (_woundDown.Count > 0) { var w = new List<object>(); foreach (var x in _woundDown) w.Add((double)x); d0["woundDown"] = w; }
             if (_woundTellNight >= 0) d0["woundTell"] = new List<object> { (double)_woundTellNight, (double)_woundTellAt.TotalMinutes };
+            if (_noTellNight >= 0) d0["noTell"] = new List<object> { (double)_noTellNight, (double)_noTellAt.TotalMinutes };
             return d0;
         }
 
@@ -494,6 +538,18 @@ namespace Ledger.Core
             {
                 a._woundTellNight = (int)tn;
                 a._woundTellAt = GameTime.FromTotalMinutes((long)tm);
+            }
+            // A plain no the outfit's man has not had yet: only for a night
+            // answered no, not wound down, and taken down that night.
+            if (saved.TryGetValue("noTell", out var nt) && nt is List<object> ntl && ntl.Count == 2 && ntl[0] is double nn && ntl[1] is double nm
+                && nn == Math.Floor(nn) && nn >= 0 && nn < 100000 && a._nights.TryGetValue((int)nn, out var said) && said == NightAnswer.Refused
+                && !a._woundDown.Contains((int)nn) && nm == Math.Floor(nm)
+                // Only when play could make it (the independent check): from Ron's
+                // hour that night until the man gives up waiting.
+                && nm >= (int)nn * 24.0 * 60 + RonGoesDownHour * 60 && nm < ((int)nn + 1) * 24.0 * 60 + GaveUpHour * 60)
+            {
+                a._noTellNight = (int)nn;
+                a._noTellAt = GameTime.FromTotalMinutes((long)nm);
             }
             return a;
         }

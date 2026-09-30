@@ -152,6 +152,7 @@ namespace Ledger.PerceptionGolden
             {
                 EmitThreats(sb);
                 EmitOwnLines(sb);
+                EmitPortReviewFixes(sb);
             }
 
             var text = sb.ToString();
@@ -888,7 +889,8 @@ namespace Ledger.PerceptionGolden
             int remembered = 0;
             foreach (var ev in mill.Get(Arrangement.Doorman).Memory.Events) Row(sb, "AskRonRemembers", (remembered++).ToString(Inv), Esc(ev.Text));
             var saved = MiniJson.Serialize(a.ToJson());
-            Row(sb, "AskSave", "save", Esc(saved));
+            // AskSave moved to EmitPortReviewFixes on 30 September: the save now
+            // keeps a plain no Ron has not yet taken down, and the port follows.
             Row(sb, "AskLoad", "load", State(Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)))));
 
             // THE EDGES, for the port's regression (30 September): saves play could
@@ -998,14 +1000,8 @@ namespace Ledger.PerceptionGolden
                 var t = AdasTea.FromJson(parsed);
                 Row(sb, "TeaBadSave", i.ToString(Inv), t == null ? "null" : t.State + "|" + t.Day.ToString(Inv) + "|" + t.Minutes.Count.ToString(Inv) + "|" + Bit(t.SeenGoing) + "|" + Esc(MiniJson.Serialize(t.ToJson())));
             }
-            foreach (var gap in new[] { 10, 11 })
-            {
-                var t = AdasTea.For(0, true);
-                t.SheSeesHim(T(2, 10));
-                for (int m = 21 * 60 + 30; m <= 22 * 60; m++) t.WithHer(T(2, m / 60, m % 60));
-                for (int m = 22 * 60 + gap; m <= 22 * 60 + 40; m++) t.WithHer(T(2, m / 60, m % 60));
-                Row(sb, "TeaGap", gap.ToString(Inv), t.Close(null, T(3, 9)).ToString(), t.LatestMinute.ToString(Inv));
-            }
+            // The TeaGap rows moved to EmitPortReviewFixes on 30 September: the
+            // Core's count of minutes away was put right, and the port follows.
             var late = AdasTea.For(1, true);
             Row(sb, "TeaEdge", "asked at nine", Esc(late.SheSeesHim(T(3, 21)) ?? "none"), Esc(late.SheSeesHim(T(4, 10)) ?? "none"), late.State.ToString());
             var odd = AdasTea.For(0, true);
@@ -1109,9 +1105,8 @@ namespace Ledger.PerceptionGolden
             var no = new Arrangement(0);
             no.Delivered(0, null, T(0, 20));
             no.Answer(0, NightAnswer.Refused, null, T(0, 21));
-            Says("told Ron no", no, T(0, 22, 10), LandingMoment.Comes, TheLanding.DoneRefused);
-            Says("told Ron no, talks", no, T(0, 22, 10), LandingMoment.TalksToHim, TheLanding.DoneGoOn);
-            Says("told Ron no, nothing handed", no, T(0, 22, 10), LandingMoment.NothingToHand, "none");
+            // The "told Ron no" rows moved to EmitPortReviewFixes on 30 September:
+            // the man hears a plain no only when Ron takes it down, and the port follows.
             var away = new Arrangement(0);
             for (int n = 0; n <= 4; n += 2) { away.Delivered(n, null, T(n, 20)); away.PassedTo(n + 1, null, T(n + 1, 6)); }
             Says("stayed away three times", away, T(5, 22, 10), LandingMoment.Comes, TheLanding.DoneStopped);
@@ -1380,6 +1375,113 @@ namespace Ledger.PerceptionGolden
                 var l = StreetVoice.Ambient(G("rocco"), G("xb"), new GameTime(2, 11, 0), 0.5, 1.0, false, false, 1, ledger)[0];
                 Row(sb, "OwnFresh", i.ToString(Inv), l.Bank, Esc(l.Text));
                 ledger.Heard(l);
+            }
+        }
+
+        /// THE CORE'S FAULTS THE PORTS' REVIEWS FOUND, PUT RIGHT (FINDINGS, 30
+        /// September): the rows a fix changed, and rows pinning each fix, awaiting
+        /// the port's own fix; the builder's port commit moves this emitter above
+        /// the line and accepts the table.
+        static void EmitPortReviewFixes(StringBuilder sb)
+        {
+            GameTime T(int day, int hour, int minute = 0) => new GameTime(day, hour, minute);
+            // Ada's tea: stamps gap apart are gap-1 minutes away; ten away is allowed.
+            foreach (var gap in new[] { 10, 11, 12 })
+            {
+                var t = AdasTea.For(0, true);
+                t.SheSeesHim(T(2, 10));
+                for (int m = 21 * 60 + 30; m <= 22 * 60; m++) t.WithHer(T(2, m / 60, m % 60));
+                for (int m = 22 * 60 + gap; m <= 22 * 60 + 40; m++) t.WithHer(T(2, m / 60, m % 60));
+                Row(sb, "TeaGap", gap.ToString(Inv), t.Close(null, T(3, 9)).ToString(), t.LatestMinute.ToString(Inv));
+            }
+            // The outfit's ask: the envelope or the no only on its own night; a
+            // night away only once the man has given up; a plain no at the landing
+            // only when Ron takes it down (eleven, or at once if later), and kept
+            // in the save until then. The week EmitAsks plays, then Ron going down.
+            {
+                var mill = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.OutfitMan, Arrangement.Doorman }) mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var a = new Arrangement(0);
+                a.Delivered(0, mill.Get(Arrangement.Doorman), T(0, 20));
+                Row(sb, "FixAsk", "did two nights early", Bit(new Arrangement(2).Answer(2, NightAnswer.Did, null, T(0, 20))));
+                a.Answer(0, NightAnswer.Did, mill, T(0, 22, 30));
+                a.PassedTo(1, mill, T(1, 6));
+                a.Delivered(2, mill.Get(Arrangement.Doorman), T(2, 20));
+                var away = new Arrangement(0);
+                away.Delivered(0);
+                Row(sb, "FixAsk", "away before one", Bit(away.Answer(0, NightAnswer.NoShow, null, T(0, 23))), Bit(away.Answer(0, NightAnswer.NoShow, null, T(1, 1))));
+                a.PassedTo(3, mill, T(3, 6));
+                a.PassedTo(5, mill, T(5, 6));
+                a.Delivered(6, mill.Get(Arrangement.Doorman), T(6, 20));
+                Row(sb, "FixAsk", "no", Bit(a.Answer(6, NightAnswer.Refused, mill, T(6, 22))),
+                    a.NoWordAt.HasValue ? a.NoWordAt.Value.TotalMinutes.ToString(Inv) : "none",
+                    Bit(mill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == Arrangement.TopicFor(6))));
+                Row(sb, "AskSave", "save", Esc(MiniJson.Serialize(a.ToJson())));
+                a.PassedTo(7, mill, T(7, 6));
+                foreach (var r in mill.Get(Arrangement.OutfitMan).Rumors) Row(sb, "FixAskStory", r.TopicKey, Esc(r.Content.Value), Bit(r.Sensitive), Esc(r.Summary));
+                Row(sb, "FixAsk", "taken down", a.NoWordAt.HasValue ? "waiting" : "told");
+                var far = new Arrangement(0);
+                far.PassedTo(10000000);
+                Row(sb, "FixAsk", "far future", far.Nights.Count.ToString(Inv));
+            }
+            Gossiper G(string id) => new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker());
+            // His arrival: never a lead, never his exposure, never what shows.
+            {
+                var mill = new GossipMill(new SocialGraph());
+                foreach (var id in new[] { "a", "b" }) mill.Add(G(id));
+                mill.Get("a").Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.9, Sensitive = true, Hops = 0 });
+                mill.Get("b").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "He put Rita's window in.", Confidence = 0.9, Hops = 0 });
+                Row(sb, "FixArrival", "leads", string.Join(",", mill.Leads().Select(l => l.TopicKey)), mill.ExposureOf("player", _ => false).Yours.ToString(Inv),
+                    StreetVoice.StoryThatShows(mill.Get("a"), 0.35) == null ? "null" : "shows");
+            }
+            // His name told to somebody who had it second-hand at full certainty.
+            {
+                var mill = new GossipMill(new SocialGraph());
+                mill.Add(G("h"));
+                var id = new PlayerIdentity();
+                mill.Get("h").Rumors.Add(new Rumor { Content = new Fact("player", "name", id.Surname), OriginId = "ada", Summary = "Mickey's nephew is called " + id.Surname, Confidence = 1.0, Hops = 2 });
+                bool first = id.NameTold(mill, "h", T(1, 10)), again = id.NameTold(mill, "h", T(1, 11));
+                var r = mill.Get("h").Rumors.Find(x => x.TopicKey == PlayerIdentity.NameTopic);
+                Row(sb, "FixNameTold", Bit(first), Bit(again), r.Hops.ToString(Inv), Esc(r.OriginId), Esc(mill.Get("h").Memory.Events.Last().Text));
+            }
+            // Going to the landing with no Ada in the mill.
+            {
+                var tea = AdasTea.For(1, true);
+                tea.SheSeesHim(T(tea.Day, 10));
+                tea.WentToTheLanding(new GossipMill(new SocialGraph()), T(tea.Day, 22), true);
+                Row(sb, "FixLanding", "no ada", Bit(tea.SeenGoing));
+            }
+            // The man at the landing after a plain no at nine: waiting until Ron has
+            // been down at eleven, then done with him.
+            {
+                var no = new Arrangement(0);
+                no.Delivered(0, null, T(0, 20));
+                no.Answer(0, NightAnswer.Refused, null, T(0, 21));
+                foreach (var (label, at) in new[] { ("before Ron goes down", T(0, 22, 10)), ("after", T(0, 23, 10)) })
+                    foreach (var m in new[] { LandingMoment.Comes, LandingMoment.TalksToHim, LandingMoment.NothingToHand })
+                        Row(sb, "FixLandingNo", label, m.ToString(), Esc(TheLanding.Line(no, at, m) ?? "none"));
+            }
+            // A plain answer at midnight is overheard; the day closing unanswered is not.
+            {
+                var cast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"" + WeeksEnd.Office + "\":{\"x_m\":0,\"z_m\":0}},"
+                    + "\"areas\":{\"mickeys\":{\"places\":[\"" + WeeksEnd.Office + "\"]}},"
+                    + "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"" + WeeksEnd.Office + "\"]]},{\"id\":\"rocco\",\"routine\":[[0,\"" + WeeksEnd.Office + "\"]]}],\"ties\":[]}");
+                GossipMill Mill() { var m = new GossipMill(null); foreach (var id in new[] { "lena", "rocco" }) m.Add(G(id)); return m; }
+                var said = Mill(); var wk = new WeeksEnd(); wk.Ask(T(7, 0), true); wk.Give(WeekAnswer.TakeOver, T(7, 0), said, cast);
+                var closed = Mill(); var un = new WeeksEnd(); un.Ask(T(7, 0), true); un.Close(T(8, 0), closed, cast);
+                Row(sb, "FixMidnight", said.Get("rocco").Rumors.Count.ToString(Inv), closed.Get("rocco").Rumors.Count.ToString(Inv));
+            }
+            // The police file: one day's visits in the order saved; no call while he is in the cells.
+            {
+                var visits = new List<object>();
+                for (int k = 0; k < 20; k++) visits.Add(new List<object> { (double)(k % 2 == 0 ? 6 : 5), "Wounding mark" + k });
+                var loaded = PoliceFile.FromJson(new Dictionary<string, object> { { "visits", visits } });
+                Row(sb, "FixPoliceOrder", string.Join(",", loaded.Visits.Select(v => v.day + ":" + v.why.Substring(v.why.IndexOf(' ') + 1))));
+                var file = new PoliceFile();
+                file.Report("rita", "player.window_d1", Offence.Damage, 4, 1);
+                file.Report("hal", "player.window_d2", Offence.Damage, 4, 2);
+                var held = file.TakeIn("player.window_d1", T(3, 8), false, false);
+                Row(sb, "FixCellsCall", Bit(held != null), file.ConstableComes(3, T(3, 10)) ?? "null", file.ConstableCalls.Count.ToString(Inv), file.ConstableComes(4, T(4, 10)) ?? "null");
             }
         }
 

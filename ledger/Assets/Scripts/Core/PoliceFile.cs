@@ -98,11 +98,23 @@ namespace Ledger.Core
         /// call (the game calls it until it returns null). The deed's topic, or
         /// null. The game takes him where he is found (Custody.Take); for a
         /// detective's crime she takes him on her visit (CanArrest).
-        public string ConstableComes(int day)
+        public string ConstableComes(int day, GameTime? now = null)
         {
+            // NOT WHILE HE IS IN THE CELLS (the port's independent check, 30
+            // September: the call was recorded, TakeIn refused him, and the deed
+            // was used up for good, never answered for): with `now`, no call is
+            // made or recorded while he is held; the deed waits for its call.
+            if (now.HasValue && InTheCells(now.Value)) return null;
             var topic = ConstableWouldCome(day);
             if (topic != null) _calls.Add((day, topic));
             return topic;
+        }
+
+        // Whether he is in the cells at `now`, taken for any deed.
+        bool InTheCells(GameTime now)
+        {
+            foreach (var t in _taken) if (t.outMinute > now.TotalMinutes) return true;
+            return false;
         }
 
         /// The deed a constable would call for on `day`, nothing recorded (a
@@ -396,6 +408,20 @@ namespace Ledger.Core
         }
 
         /// From ToJson's values; what it cannot read it skips.
+        // By day, two on the same day kept in the order saved (the port's
+        // independent check, 30 September: List.Sort is not stable, so they came
+        // back swapped; the port sorts stably).
+        static void ByDayKeepingOrder(List<(int, string)> list)
+        {
+            for (int i = 1; i < list.Count; i++)
+            {
+                var cur = list[i];
+                int j = i - 1;
+                while (j >= 0 && list[j].Item1 > cur.Item1) { list[j + 1] = list[j]; j--; }
+                list[j + 1] = cur;
+            }
+        }
+
         public static PoliceFile FromJson(Dictionary<string, object> saved)
         {
             var f = new PoliceFile();
@@ -431,7 +457,7 @@ namespace Ledger.Core
                         foreach (var v in f._visits) if (v.why == why) dup = true;
                         if (!dup) f._visits.Add((day, why));
                     }
-            f._visits.Sort((a, b) => a.day.CompareTo(b.day));
+            ByDayKeepingOrder(f._visits);
             // A constable's call only for a statement about a window, given before it.
             if (saved.TryGetValue("calls", out var cs) && cs is List<object> calls)
                 foreach (var x in calls)
@@ -439,7 +465,7 @@ namespace Ledger.Core
                         && f._entries.Exists(e => e.Topic == topic && e.Offence == Offence.Damage && e.How == Known.Statement && e.Day < day)
                         && !f._calls.Exists(c => c.topic == topic))
                         f._calls.Add((day, topic));
-            f._calls.Sort((a, b) => a.day.CompareTo(b.day));
+            ByDayKeepingOrder(f._calls);
             // Taken in only for a deed with a statement he could be arrested for.
             if (saved.TryGetValue("taken", out var tk) && tk is List<object> takenList)
                 foreach (var x in takenList)

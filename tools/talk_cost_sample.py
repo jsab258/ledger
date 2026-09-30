@@ -67,10 +67,20 @@ def live_key():
     return key or None
 
 
+# THE KEY'S CAP, ENFORCED IN CODE (Jafar, 30 September: "a run labelled about a
+# dollar cost $14.50; every run checks its estimated cost first and stops at the
+# day's dollar"): the run's estimate is the last run's cost and half again, and it
+# is refused if that would pass the day's dollar; the talk program is then given
+# what is left of the dollar as a hard budget (LEDGER_TALK_BUDGET_USD,
+# BudgetedClient), which refuses any call whose worst case would pass it.
+ESTIMATE_MARGIN = 1.5
+
+
 def live_allowed():
-    """(allowed, why): never under CI; within the day's allowance."""
+    """(allowed, why, budget): never under CI; the run's estimate within what
+    is left of the day's dollar; the budget the talk program is held to."""
     if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
-        return False, "refused: an automated run may never use LEDGER's key"
+        return False, "refused: an automated run may never use LEDGER's key", 0.0
     today = datetime.date.today().isoformat()
     spent, last = 0.0, LIVE_RUN_ESTIMATE_USD
     if os.path.exists(RUNS):
@@ -82,9 +92,11 @@ def live_allowed():
             last = r.get("usd", last)
             if r.get("date") == today:
                 spent += r.get("usd", 0.0)
-    if spent + last > LIVE_DAILY_USD:
-        return False, "refused: today's runs cost US$%.2f, and another (about US$%.2f) would pass US$%.2f" % (spent, last, LIVE_DAILY_USD)
-    return True, "today's runs so far US$%.2f" % spent
+    estimate = last * ESTIMATE_MARGIN
+    left = LIVE_DAILY_USD - spent
+    if estimate > left:
+        return False, "refused: today's runs cost US$%.2f, and this one is estimated at US$%.2f (the last run's and half again), past the day's US$%.2f" % (spent, estimate, LIVE_DAILY_USD), 0.0
+    return True, "today's runs so far US$%.2f; this run estimated at US$%.2f; held to US$%.2f" % (spent, estimate, left), left
 
 CONVERSATIONS = [
     ("lena", ["Morning. You keep the books for Mickey's?",
@@ -177,11 +189,17 @@ def main(argv):
     env = dict(os.environ)
     env.pop("ANTHROPIC_API_KEY", None)   # never a key but LEDGER's own, below
     live = "--live" in argv
+    # The day's estimate and budget, nothing run (the cap, checked for free).
+    if "--cap" in argv:
+        ok, why, budget = live_allowed()
+        print(why)
+        return 0 if ok else 1
     if live:
-        ok, why = live_allowed()
+        ok, why, budget = live_allowed()
         print(why)
         if not ok:
             return 1
+        env["LEDGER_TALK_BUDGET_USD"] = "%.4f" % budget
         key = live_key()
         if key is None:
             print("no LEDGER key yet: nothing run")
@@ -201,6 +219,7 @@ def main(argv):
         p.kill()
         return 1
     turns, replies, n = 0, [], 0
+    stopped = None
     hour = 11
     for who, lines in CONVERSATIONS:
         for say in lines:
@@ -224,8 +243,15 @@ def main(argv):
                     replies.append({"to": who, "say": say, "reply": msg.get("reply"), "ms": msg.get("ms"),
                                     "offline": msg.get("offline"), "wall_s": round(time.time() - t0, 2),
                                     "first_s": first_s, "pending_s": pending_s, "went": msg.get("went"), "steps": msg.get("steps") or []})
+                    # Talk cut off (on a live run, the day's dollar spent): no more turns.
+                    if live and msg.get("paused"):
+                        stopped = "stopped: talk was cut off (" + str(msg.get("paused")) + "), the day's budget spent or the service unreachable"
                     break
             turns += 1
+            if stopped:
+                break
+        if stopped:
+            break
         hour += 1
     p.stdin.close()
     tail = p.stdout.read()
@@ -252,7 +278,7 @@ def main(argv):
         "Made by tools/talk_cost_sample.py: the game's own talk program, started as the game starts it, with the real key; "
         "three conversations of eight turns (Sheila, Ron, Darren). Its own cost report at the game's rate card (US dollars):",
         "",
-        "- turns: %d (answered offline: %d); calls: %d" % (turns, offline, cost["calls"]),
+        "- turns: %d (answered offline: %d); calls: %d" % (turns, offline, cost["calls"]) + ("; " + stopped if stopped else ""),
         "- the session: US$%.4f; per turn: US$%.5f" % (cost["usd"], per_turn),
         "- an hour of steady talk at %d turns (one every %d seconds): **US$%.2f**; at 60 turns: US$%.2f; at 180: US$%.2f"
         % (per_hour, 3600 // per_hour, per_turn * per_hour, per_turn * 60, per_turn * 180),
