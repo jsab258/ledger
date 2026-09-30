@@ -73,6 +73,7 @@
 #include "Misc/FileHelper.h"
 #include "Misc/CommandLine.h"
 #include "SaveCodec.h"
+#include "Misc/App.h"
 #include "TitleScreen.h"
 #include "Misc/Parse.h"
 #include "Misc/DateTime.h"
@@ -865,6 +866,7 @@ namespace
 			Cap->SetHiddenInGame(true);
 			Cap->RegisterComponent();
 		}
+		int32 PartsAnimated = 0;
 		for (const TCHAR* IdlePath : kLiveIdles)
 		{
 			UAnimSequenceBase* Idle = LoadObject<UAnimSequenceBase>(nullptr, IdlePath);
@@ -890,6 +892,8 @@ namespace
 					Look->Setup(Idle, Start, 1.0f, bLooks);
 					C->InitAnim(true);
 					GLooks.FindOrAdd(Body).Add(Look);
+					++PartsAnimated;
+					UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s plays the idle and can speak"), Who, *C->GetName());
 					continue;
 				}
 				C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
@@ -897,6 +901,7 @@ namespace
 				C->SetPosition(Start, false);
 			}
 		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s has %d part(s) that can speak"), Who, PartsAnimated);
 		LedgerJacket::Wear(A, Who);
 		Body->SetActorHiddenInGame(true);
 		GVisuals.Add(Body, A);
@@ -2768,6 +2773,15 @@ namespace
 		TWeakObjectPtr<UAudioComponent> Playing;
 		TWeakObjectPtr<USoundWaveProcedural> PlayingWave;
 		double PlayingEnd = 0.0;
+		// THE MOUTH'S COPY OF WHAT IS PLAYING (MouthTick): the samples queued
+		// on the wave, and how many bytes, so the part being heard is known
+		// from what the mixer has taken; and whose face it is.
+		TArray<int16> Pcm;
+		int32 PcmRate = 24000, PcmChannels = 1;
+		int64 QueuedBytes = 0;
+		TWeakObjectPtr<AActor> Speaker, LastSpeaker;
+		double SpeakerQuietSince = -1.0;
+		float PeakDb = -30.0f;   // the loudest 40 ms queued so far in this answer
 	};
 	FLiveVoice GVoice;
 	bool bVoiceAsked = false, bVoicePlayed = false, bVoiceRecording = false, bVoiceAllIn = false;
@@ -2806,6 +2820,21 @@ namespace
 		return DataAt >= 0 && DataLen > 0;
 	}
 
+	// THE LOUDEST 40 MS in the samples from From on, so each answer's mouth is
+	// scaled to its own voice: Darren's is about 8 dB quieter than Ron's, and
+	// on one fixed scale his lips barely parted (the film, 30 September).
+	void MouthPeakFrom(int32 From)
+	{
+		const int32 Ch = FMath::Max(1, GVoice.PcmChannels);
+		const int32 Span = FMath::Max(1, (int32)(0.04 * GVoice.PcmRate)) * Ch;
+		for (int32 A = From; A + Span <= GVoice.Pcm.Num(); A += Span / 2)
+		{
+			double Sum = 0.0;
+			for (int32 S = A; S < A + Span; S += Ch) { const double V = GVoice.Pcm[S] / 32768.0; Sum += V * V; }
+			GVoice.PeakDb = FMath::Max(GVoice.PeakDb, 10.0f * FMath::LogX(10.0f, (float)(Sum / (Span / Ch)) + 1e-12f));
+		}
+	}
+
 	// A PIECE THAT CONTINUES the sound still playing: its sound is added to the
 	// same wave, so there is no gap. Its length, or 0 if nothing is playing.
 	double ContinueVoiceFile(const FString& Path)
@@ -2814,6 +2843,10 @@ namespace
 		int32 Rate, Channels, DataAt, DataLen;
 		if (!GVoice.PlayingWave.IsValid() || !GVoice.Playing.IsValid() || !ReadVoiceWav(Path, Bytes, Rate, Channels, DataAt, DataLen)) { return 0.0; }
 		GVoice.PlayingWave->QueueAudio(&Bytes[DataAt], DataLen);
+		const int32 Was = GVoice.Pcm.Num();
+		GVoice.Pcm.Append(reinterpret_cast<const int16*>(&Bytes[DataAt]), DataLen / 2);
+		GVoice.QueuedBytes += DataLen;
+		MouthPeakFrom(Was);
 		const double Len = (double)DataLen / (double)(2 * Channels * Rate);
 		GVoiceSeconds += Len;
 		return Len;
@@ -2843,6 +2876,14 @@ namespace
 		GVoice.Playing = UGameplayStatics::SpawnSoundAtLocation(World, W, Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f),
 			FRotator::ZeroRotator, 1.0f, 1.0f, 0.0f, Att);
 		GVoice.PlayingWave = W;
+		GVoice.Pcm.Reset();
+		GVoice.Pcm.Append(reinterpret_cast<const int16*>(&Bytes[DataAt]), DataLen / 2);
+		GVoice.PcmRate = Rate;
+		GVoice.PcmChannels = FMath::Max(1, Channels);
+		GVoice.QueuedBytes = DataLen;
+		GVoice.Speaker = Who;
+		GVoice.PeakDb = -30.0f;
+		MouthPeakFrom(0);
 		GVoiceStartedAt = NowS();
 		if (!bVoicePlayed)
 		{
@@ -2861,6 +2902,116 @@ namespace
 	}
 
 	std::string JsonField(const std::string& Line, const std::string& Name);
+
+	// THE MOUTH FOLLOWS THE VOICE, 30 September (the twenty a friend would
+	// notice, 12: lips roughly in time; the faces stood still while they
+	// spoke). The part of the answer being heard is what the mixer has taken
+	// from the wave, less about 30 ms still in its buffers; its loudness over
+	// 40 ms, against the answer's own loudest (MouthPeakFrom), opens the speaker's jaw and
+	// shapes their lips (ULedgerPersonAnim::SpeakTick), on every part of them
+	// that plays our animation, so the face and body agree. When they stop,
+	// the mouth eases back to the idle over a second.
+	void MouthApply(AActor* Who, float Level, bool bSpeaking, float Dt)
+	{
+		if (Who == nullptr) { return; }
+		TArray<USkeletalMeshComponent*> Parts;
+		Who->GetComponents(Parts);
+		for (USkeletalMeshComponent* C : Parts)
+		{
+			if (ULedgerPersonAnim* A = C != nullptr ? Cast<ULedgerPersonAnim>(C->GetAnimInstance()) : nullptr) { A->SpeakTick(Level, bSpeaking, Dt); }
+		}
+	}
+
+	// -MouthFilm, 30 September: while someone speaks, their face filmed from
+	// 60 cm, a frame every tenth of a second (Saved/MouthFilm/<who>), so the
+	// mouth can be judged against the words, not guessed from a distance;
+	// the player's own view comes back when they stop.
+	struct FMouthFilm { TWeakObjectPtr<ACameraActor> Cam; double LastFrame = 0.0; int32 Frame = 0; bool bOn = false; };
+	FMouthFilm GMouthFilm;
+
+	void MouthFilmTick(UWorld* World, AActor* Who, bool bSpeaking)
+	{
+		static const bool bWanted = FParse::Param(FCommandLine::Get(), TEXT("MouthFilm"));
+		if (!bWanted || World == nullptr) { return; }
+		APlayerController* PC = World->GetFirstPlayerController();
+		if (!bSpeaking || Who == nullptr)
+		{
+			if (GMouthFilm.bOn && PC != nullptr && PC->GetPawn() != nullptr) { PC->SetViewTargetWithBlend(PC->GetPawn(), 0.0f); }
+			GMouthFilm.bOn = false;
+			return;
+		}
+		FVector Head = Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f);
+		TArray<USkeletalMeshComponent*> Parts;
+		Who->GetComponents(Parts);
+		for (USkeletalMeshComponent* C : Parts) { if (C != nullptr && C->DoesSocketExist(TEXT("head"))) { Head = C->GetSocketLocation(TEXT("head")); break; } }
+		// In front of the face: a MetaHuman faces its actor's +Y (SyncVisual).
+		const FVector Toward = Who->GetActorRightVector().GetSafeNormal2D();
+		const FVector Eye = Head + Toward * 60.0f + FVector(0.0f, 0.0f, 2.0f);
+		const FVector Look = Head + FVector(0.0f, 0.0f, 2.0f);
+		if (!GMouthFilm.Cam.IsValid())
+		{
+			FActorSpawnParameters P;
+			P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			GMouthFilm.Cam = World->SpawnActor<ACameraActor>(Eye, (Look - Eye).Rotation(), P);
+		}
+		if (!GMouthFilm.Cam.IsValid()) { return; }
+		GMouthFilm.Cam->SetActorLocationAndRotation(Eye, (Look - Eye).Rotation());
+		if (!GMouthFilm.bOn && PC != nullptr) { PC->SetViewTargetWithBlend(GMouthFilm.Cam.Get(), 0.0f); GMouthFilm.bOn = true; }
+		const double T = FPlatformTime::Seconds();
+		if (T - GMouthFilm.LastFrame >= 0.099 && GMouthFilm.Frame < 400)
+		{
+			GMouthFilm.LastFrame = T;
+			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
+				/ TEXT("MouthFilm") / Who->GetName() / FString::Printf(TEXT("f_%03d.png"), GMouthFilm.Frame++)), false, false);
+		}
+	}
+
+	void MouthTick()
+	{
+		const float Dt = (float)FApp::GetDeltaTime();
+		const bool bPlaying = GVoice.Playing.IsValid() && GVoice.PlayingWave.IsValid() && GVoice.Speaker.IsValid() && GVoice.Pcm.Num() > 0;
+		MouthFilmTick(GameWorld(), GVoice.Speaker.Get(), bPlaying);
+		if (!bPlaying)
+		{
+			if (GVoice.LastSpeaker.IsValid())
+			{
+				MouthApply(GVoice.LastSpeaker.Get(), 0.0f, false, Dt);
+				if (GVoice.SpeakerQuietSince < 0.0) { GVoice.SpeakerQuietSince = NowS(); }
+				if (NowS() - GVoice.SpeakerQuietSince > 1.0) { GVoice.LastSpeaker = nullptr; }
+			}
+			return;
+		}
+		if (GVoice.LastSpeaker.IsValid() && GVoice.LastSpeaker != GVoice.Speaker) { MouthApply(GVoice.LastSpeaker.Get(), 0.0f, false, Dt); }
+		GVoice.LastSpeaker = GVoice.Speaker;
+		GVoice.SpeakerQuietSince = -1.0;
+		const int64 Taken = GVoice.QueuedBytes - GVoice.PlayingWave->GetAvailableAudioByteCount();
+		const int32 Ch = GVoice.PcmChannels;
+		const int64 Heard = Taken / (2 * Ch) - (int64)(0.03 * GVoice.PcmRate);
+		const int64 Span = (int64)(0.04 * GVoice.PcmRate);
+		double Sum = 0.0;
+		int64 N = 0;
+		for (int64 S = FMath::Max<int64>(0, Heard - Span); S < Heard && S * Ch < GVoice.Pcm.Num(); ++S)
+		{
+			const double V = GVoice.Pcm[S * Ch] / 32768.0;
+			Sum += V * V;
+			++N;
+		}
+		const float Db = N > 0 ? 10.0f * FMath::LogX(10.0f, (float)(Sum / N) + 1e-12f) : -120.0f;
+		// Open fully within 6 dB of the answer's loudest, shut 30 dB below it.
+		const float Level = FMath::Clamp((Db - (GVoice.PeakDb - 30.0f)) / 24.0f, 0.0f, 1.0f);
+		MouthApply(GVoice.Speaker.Get(), Level, true, Dt);
+		// A LINE A FIFTH OF A SECOND for the first sixty, so a run shows the
+		// mouth following the words.
+		static double NextLog = 0.0;
+		static int32 Logged = 0;
+		if (Logged < 60 && NowS() >= NextLog)
+		{
+			NextLog = NowS() + 0.2;
+			++Logged;
+			UE_LOG(LogTemp, Log, TEXT("LedgerMouth: %s at %.2f s of the answer, %.0f dB, level %.2f"), *GVoice.Speaker->GetName(),
+				(double)FMath::Max<int64>(0, Heard) / GVoice.PcmRate, Db, Level);
+		}
+	}
 
 	void LiveVoicePump()
 	{
@@ -2916,6 +3067,7 @@ namespace
 				GVoice.BusyUntil = Now + Len + 0.15;
 			}
 		}
+		MouthTick();
 	}
 
 	// THE PAUSE, COVERED (28 September; production/research/live-speech-
@@ -5195,6 +5347,10 @@ namespace
 				}
 				UE_LOG(LogTemp, Display, TEXT("LedgerCrime: %d head(s) turn to the smash"), Turned);
 			}
+			// THE ERRAND IS DONE, so its instruction goes (the tester, 30
+			// September: "Walk to Mickey's front window" stayed up after it).
+			GSubs.RemoveAll([](const FSubLine& L) { return L.Text.StartsWith(TEXT("Walk to Mickey's front window")); });
+			SubsRebuild();
 			Say(TEXT("The window goes in with a crash."), 16.0f, FColor::Orange);
 			if (!GFiledSummaryA.empty()) { Say(TEXT("Sheila: \"Stop. I mean it. Stop.\""), 16.0f); }
 			WriteBreadcrumb(TEXT("live-deed"));
@@ -5218,6 +5374,10 @@ namespace
 				bLiveFled = true;
 			}
 			TakeActRequests(0);
+			// THE PROMPT AFTER THE DEED offers talk only; nothing refreshed it
+			// here, so "E  the window" stayed on screen over the broken glass
+			// (the tester in the packaged game, 30 September).
+			if (!bLiveScript) { LivePromptTick(false); }
 			if (bLiveScript) { TakeTalkRequests(); }
 			else { HumanTalkTick(World, Now); }
 			// WHOEVER SEES HIM GO: the lad, by the same sight test, if the

@@ -45,6 +45,21 @@ namespace
 	// a change, in the log, so the levels' difference is measured.
 	double GFrameFrom = -1.0, GFrameSum = 0.0;
 	int32 GFrameCount = 0;
+	// THE FIRST LAUNCH HOLDS SIXTY, 30 September. The engine's benchmark chose
+	// Highest on this PC's card, which draws the street at 3440 by 1440 in
+	// 26.3 ms, about 38 frames a second, under Jafar's 60 at his monitor's
+	// size (the packaged game, measured on the title). So after it, the title
+	// times two seconds of frames and steps the picture down until a frame
+	// takes at most 15 ms (60 a second with room for the voice on the same
+	// card), or Low is reached.
+	constexpr double kTuneTargetMs = 15.0;
+	// Measured only once the street is built and the card has nothing left
+	// to prepare, and by the median frame of at least ninety: the first try
+	// averaged in the benchmark's own stall and the editor's shader work
+	// (3025 ms) and stepped down for nothing.
+	bool bTuning = false;
+	double GTuneFrom = -1.0;
+	TArray<float> GTuneFrames;
 
 	// WAITING FOR THE CARD: the pipelines this PC is still preparing, both the
 	// engine's own precaching of what is in view and any bundled cache. At
@@ -290,7 +305,45 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 			return EChoice::None;
 		}
 		else if (GMeasureFrames < 4) { return EChoice::None; }
-		else { bMeasured = true; FirstLaunchSettings(); }
+		else
+		{
+			bMeasured = true;
+			FirstLaunchSettings();
+			bTuning = true;
+			GTuneFrom = -1.0;
+			GTuneFrames.Reset();
+		}
+	}
+	if (bTuning)
+	{
+		const double T = FPlatformTime::Seconds();
+		const bool bSettled = bStreetReady && PipelineStateCache::GetNumActivePipelinePrecompileTasks() == 0;
+		if (!bSettled) { GTuneFrom = -1.0; GTuneFrames.Reset(); }
+		else if (GTuneFrom < 0.0) { GTuneFrom = T + 1.0; }
+		else if (T >= GTuneFrom) { GTuneFrames.Add((float)FApp::GetDeltaTime()); }
+		if (GTuneFrom > 0.0 && T >= GTuneFrom + 2.0 && GTuneFrames.Num() >= 90)
+		{
+			GTuneFrames.Sort();
+			const double Ms = 1000.0 * GTuneFrames[GTuneFrames.Num() / 2];
+			UGameUserSettings* S = GEngine != nullptr ? GEngine->GetGameUserSettings() : nullptr;
+			const int32 L = PictureLevel() < 0 ? 3 : PictureLevel();
+			if (S != nullptr && Ms > kTuneTargetMs && L > 0)
+			{
+				UE_LOG(LogTemp, Log, TEXT("LedgerTitle: first launch: picture %s takes %.1f ms a frame (the median of %d), over %.0f; one level down"), *PictureName(), Ms, GTuneFrames.Num(), kTuneTargetMs);
+				S->SetOverallScalabilityLevel(L - 1);
+				S->ApplySettings(true);
+				GTuneFrom = T + 1.0;
+				GTuneFrames.Reset();
+			}
+			else
+			{
+				bTuning = false;
+				UE_LOG(LogTemp, Log, TEXT("LedgerTitle: first launch settles on picture %s at %.1f ms a frame"), *PictureName(), Ms);
+			}
+		}
+		if (GStatus.IsValid()) { GStatus->SetText(FText::FromString(TEXT("Finding the picture this PC can keep smooth..."))); }
+		GQuietSince = -1.0;
+		if (bTuning) { return EChoice::None; }
 	}
 	const double Now = FPlatformTime::Seconds();
 	if (GFrameFrom > 0.0 && Now >= GFrameFrom)

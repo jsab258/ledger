@@ -90,3 +90,12 @@ void ULedgerLocomotionAnim::NativeUpdateAnimation(float DeltaSeconds)
 	ToWalk = FMath::Clamp(GroundSpeedCm / WalkSpeedCm, 0.0f, 1.0f);
 	ToRun = FMath::Clamp((GroundSpeedCm - WalkSpeedCm) / (RunSpeedCm - WalkSpeedCm), 0.0f, 1.0f);
 }
+
+bool ULedgerLocomotionAnim::ClipTimes(float& OutWalk, float& OutRun) const
+{
+	if (Walk == nullptr || Run == nullptr) { return false; }
+	const FLedgerLocomotionProxy& P = GetProxyOnGameThread<FLedgerLocomotionProxy>();
+	OutWalk = P.Walk.GetAccumulatedTime();
+	OutRun = P.Run.GetAccumulatedTime();
+	return true;
+}

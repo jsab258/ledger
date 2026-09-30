@@ -109,7 +109,24 @@
   ],
   "accentCheck": "25 September: every clip here passes tools/voice-live/accent_check.py or is a Scottish voice read as Scottish; Leonard's three lines read American in crowd_m3 and are now crowd_m1's takes of the same words, and Martha's and Kate's one American line each is taken out.",
   "steps": {
-    "what": "Tom's footsteps, 30 September (the twenty a friend would notice, 18). The player character (SliceCharacter.cpp StepTick) sounds a step when a foot lands, from clips named here and imported to /Game/Ledger/Sounds/Steps by tools/ue/import_sounds.py (kept in memory). NONE YET: two CC0 packs failed independent review (Kenney's concrete steps a dull 250 Hz thump; Fantozzi's 'stone' steps cork-and-grit foley), so a recorded set is being researched, and until one passes the steps are silent.",
-    "clips": []
+    "what": "Tom's footsteps, 30 September (the twenty a friend would notice, 18). Eight walking steps cut from sturmankin's trainers on paving slabs (Freesound 273077, CC0) and eight running steps from Joseph Sardin's man running in trainers on concrete (BigSoundBank s0514, CC0), by tools/ue/make_steps.py (THIRD-PARTY.md; production/research/footsteps/NOTE-2026-09-30.md), in production/assets/steps; imported to /Game/Ledger/Sounds/Steps by tools/ue/import_sounds.py (kept in memory) and played by the player character (SliceCharacter.cpp StepTick) as each clip passes its own landings, never the same one twice running. Two packs failed review first: Kenney's concrete steps (a dull 250 Hz thump) and Fantozzi's 'stone' steps (cork-and-grit foley).",
+    "clips": [
+      "step-walk-0",
+      "step-walk-1",
+      "step-walk-2",
+      "step-walk-3",
+      "step-walk-4",
+      "step-walk-5",
+      "step-walk-6",
+      "step-walk-7",
+      "step-run-0",
+      "step-run-1",
+      "step-run-2",
+      "step-run-3",
+      "step-run-4",
+      "step-run-5",
+      "step-run-6",
+      "step-run-7"
+    ]
   }
 }

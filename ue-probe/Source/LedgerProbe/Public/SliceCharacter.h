@@ -107,26 +107,20 @@ private:
 	bool bBodyHiddenForCamera = false;
 
 	// FOOTSTEPS WHEN HIS FEET LAND, 30 September (the twenty a friend would
-	// notice, 18: he walked the street in silence). Each foot's lowest point
-	// (ankle or ball) above the capsule's floor is watched; a step sounds
-	// when a foot that was lifted comes down and stops, so the sound follows
-	// whatever clip plays, at any speed. Six recorded steps on stone (Fantozzi, CC0; THIRD-PARTY.md),
-	// never the same one twice running, a little louder running than walking.
+	// notice, 18: he walked the street in silence). A step sounds as the clip
+	// carrying his feet (the walk, or the run once it is half blended in)
+	// passes one of its own landings, measured once from tom-player.glb by
+	// tools/ue/footfalls.py (whose self-test holds these numbers to the file).
+	// The first version watched his feet's heights, and three reviewers heard
+	// the run limp: it caught one foot earlier than the other, and kerbs moved
+	// it further. Walking and running steps are recorded apart; never the same
+	// one twice running.
 	void StepTick(float DeltaSeconds);
+	static constexpr float WalkFootfallS[2] = { 0.193f, 0.676f };   // left, right; the walk clip is 0.967 s
+	static constexpr float RunFootfallS[2] = { 0.254f, 0.805f };    // left, right; the run clip is 1.1 s
 	FName FootBone[2];
-	FName ToeBone[2];
-	float FootLow[2] = { 0.0f, 0.0f };
-	float FootHigh[2] = { 0.0f, 0.0f };
-	float FootPrev[2] = { 0.0f, 0.0f };
-	// Each foot's heights over the last StepWindowS, as (time, height): its
-	// range is theirs, so a jolt (pressed into someone, a kerb) is forgotten
-	// once it leaves the window instead of skewing the range for seconds.
-	TArray<FVector2f> FootSeen[2];
-	static constexpr float StepWindowS = 1.2f;
-	float TraceUntil = -1.0f;
-	bool bTracedRun = false;
-	bool bFootArmed[2] = { false, false };
-	bool bFeetSeeded = false;
+	float PrevClipT = -1.0f;
+	bool bStepOnRun = false;
 	int32 LastStepClip = -1;
 	int32 LastStepFoot = -1;
 	float StepClock = 0.0f;
@@ -134,10 +128,13 @@ private:
 	float StepWindowStart = 0.0f;
 	float StepsRecordingUntil = -1.0f;
 	static constexpr float StepWalkVolume = 0.3f;
-	static constexpr float StepRunVolume = 0.5f;
+	static constexpr float StepRunVolume = 0.4f;   // the running steps are recorded 3 dB up already
 
+	// Walking steps and running steps, recorded apart (tools/ue/make_steps.py).
 	UPROPERTY()
 	TArray<TObjectPtr<USoundBase>> StepClips;
+	UPROPERTY()
+	TArray<TObjectPtr<USoundBase>> RunStepClips;
 
 	UPROPERTY()
 	TObjectPtr<USoundAttenuation> StepAttenuation;
@@ -145,7 +142,7 @@ private:
 public:
 	int32 Steps = 0;
 	static constexpr int32 MaxStepClips = 8;
-	static FString StepClipPath(int32 Index);
+	static FString StepClipPath(bool bRun, int32 Index);
 
 private:
 
