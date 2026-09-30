@@ -7663,19 +7663,33 @@ namespace Ledger.CoreTests
                 bool stillNot = !noMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0");
                 no.TellDue(noMill, new GameTime(0, 23, 0));
                 var heard = noMill.Get(Arrangement.OutfitMan).Rumors.Find(r => r.TopicKey == "player.outfit_d0");
-                // And a night he stays away, at one, when the man gives up waiting (the
-                // review's B3, its third part; the second independent check).
+                // HIS NO ACROSS ONE O'CLOCK STILL COUNTS WITH THE HOURS TURNING (the builder's
+                // check of the port: TellDue passed the night at one as one he stayed away,
+                // and his yes at two past to Ron's question at two to one, dated back to the
+                // question, was then refused). A night away is filed at dawn, as of one, as
+                // before; the hours turning between question and yes change nothing.
+                var late = new Arrangement(0);
+                var lateMill = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) lateMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                late.Delivered(0, lateMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                foreach (var h in new[] { 21, 22, 23 }) late.TellDue(lateMill, new GameTime(0, h, 0));
+                late.TellDue(lateMill, new GameTime(1, 0, 0));
+                late.TellDue(lateMill, new GameTime(1, 1, 0));
+                bool lateNo = late.Answer(0, NightAnswer.Refused, lateMill, new GameTime(1, 0, 58));
+                late.TellDue(lateMill, new GameTime(1, 2, 0));
+                var lateHeard = lateMill.Get(Arrangement.OutfitMan).Rumors.Find(r => r.TopicKey == "player.outfit_d0");
                 var away = new Arrangement(0);
                 var awayMill = new GossipMill(null);
                 foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) awayMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
                 away.Delivered(0, awayMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
-                away.TellDue(awayMill, new GameTime(1, 0, 0));
-                bool awayNotYet = !awayMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0");
                 away.TellDue(awayMill, new GameTime(1, 1, 0));
+                bool awayNotYet = !awayMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0");
+                away.PassedTo(1, awayMill, new GameTime(1, 6, 0));
                 var awayHeard = awayMill.Get(Arrangement.OutfitMan).Rumors.Find(r => r.TopicKey == "player.outfit_d0");
-                Check(notYet && stillNot && heard != null && heard.Hops == 0 && awayNotYet && awayHeard != null && awayHeard.Content.Value == "noshow",
-                      "his no at half nine reaches the man at the landing when Ron goes down at eleven, as the hour turns, not at dawn; a night away at one, when he gives up waiting",
-                      $"{notYet} {stillNot} {heard != null} {awayNotYet} {awayHeard?.Content.Value}");
+                Check(notYet && stillNot && heard != null && heard.Hops == 0 && lateNo && lateHeard != null && lateHeard.Content.Value == "refused"
+                      && awayNotYet && awayHeard != null && awayHeard.Content.Value == "noshow",
+                      "his no at half nine reaches the man at the landing when Ron goes down at eleven, as the hour turns, not at dawn; a no as of two to one still counts with the hours turning; a night away is filed at dawn",
+                      $"{notYet} {stillNot} {heard != null} {lateNo} {lateHeard?.Content.Value} {awayNotYet} {awayHeard?.Content.Value}");
             }
 
             // THE WITNESS BANK KEEPS THE CONTENT RULE (the independent review of 30
@@ -8007,7 +8021,8 @@ namespace Ledger.CoreTests
                 var negMill = Fading(); var negHours = new TownHours();
                 negHours.RunTo(negMill, rc, new GameTime(-1, 23, 30));
                 var negBack = TownHours.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(negHours.ToJson()))));
-                bool beforeDayZero = negHours.NextRound == -24 && negBack.NextRound == -24
+                int negAgain = negHours.RunTo(negMill, rc, new GameTime(-1, 23, 36));
+                bool beforeDayZero = negAgain == 1 && negBack.NextRound == -24
                                      && negMill.Agents.All(g0 => g0.Memory.Events.All(e => e.Time.Hour >= 0 && e.Time.Minute >= 0 && (e.Time.Day != -1 || e.Time.Hour == 23)));
                 var minuteStraight = Fading(); var minuteStraightHours = new TownHours();
                 for (int mm = 9 * 60; mm <= 20 * 60; mm++) minuteStraightHours.RunTo(minuteStraight, rc, GameTime.FromTotalMinutes(mm));

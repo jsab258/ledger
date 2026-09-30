@@ -181,7 +181,9 @@ namespace Ledger.PerceptionGolden
                 // The second independent check (30 September, night), after the builder's
                 // port of the review's fixes: a save at the hour's end, days before day 0,
                 // and a night away told at one; held until the port follows again.
-                var held = new string[0];   // emptied 30 September, night: the builder's port follows the second check
+                // The builder's check of the second port: a no across one o'clock, the night
+                // away at dawn; held until the port follows.
+                var held = new[] { "TellDue|away|", "TellDue|late no|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1887,19 +1889,31 @@ namespace Ledger.PerceptionGolden
                     at.Add(h.ToString(Inv) + ":" + Bit(noMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0")));
                 }
                 Row(sb, "TellDue", "no at 21:30", string.Join(",", at));
-                // And a night he stayed away, at one (the second independent check).
+                // A night he stayed away: not at one as the hours turn, at dawn as of one (the builder's check).
                 var awayMill = new GossipMill(null);
                 foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) awayMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
                 var away = new Arrangement(0);
                 away.Delivered(0, awayMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
                 var awayAt = new List<string>();
-                foreach (var (d, h) in new[] { (1, 0), (1, 1) })
+                foreach (var (d, h) in new[] { (1, 0), (1, 1), (1, 6) })
                 {
-                    away.TellDue(awayMill, new GameTime(d, h, 0));
+                    if (h == 6) away.PassedTo(1, awayMill, new GameTime(d, h, 0)); else away.TellDue(awayMill, new GameTime(d, h, 0));
                     var r = awayMill.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == "player.outfit_d0");
                     awayAt.Add(d + " " + h + ":" + (r == null ? "none" : r.Content.Value));
                 }
                 Row(sb, "TellDue", "away", string.Join(",", awayAt), away.Nights.Count.ToString(Inv));
+                // His no as of two to one, confirmed at two past with the hours turning, still counts.
+                var lateMill = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) lateMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var late = new Arrangement(0);
+                late.Delivered(0, lateMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                foreach (var h in new[] { 21, 22, 23 }) late.TellDue(lateMill, new GameTime(0, h, 0));
+                late.TellDue(lateMill, new GameTime(1, 0, 0));
+                late.TellDue(lateMill, new GameTime(1, 1, 0));
+                bool lateNo = late.Answer(0, NightAnswer.Refused, lateMill, new GameTime(1, 0, 58));
+                late.TellDue(lateMill, new GameTime(1, 2, 0));
+                var lateR = lateMill.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == "player.outfit_d0");
+                Row(sb, "TellDue", "late no", Bit(lateNo), lateR == null ? "none" : lateR.Content.Value);
             }
             // He misses her Sunday (the independent review, B1): she asks the next time he talks with her at the office.
             var missed = new WeeksEnd(0);
