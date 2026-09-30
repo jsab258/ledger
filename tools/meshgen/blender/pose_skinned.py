@@ -108,6 +108,25 @@ body.hide_render = False
 body.hide_set(False)
 if arm.animation_data:
     arm.animation_data_clear()
+# --correctives-to-clavicle (30 September): Epic's shoulder correctives hang under the upper arm, and Blender turns
+# them fully with it, where Unreal's pose driver holds them between the arm and the trunk; the builder found the
+# chest came through with the arms up in Blender and not in Unreal. For a fairer test they are hung from the
+# clavicle instead (body and garment alike): they then stay with the shoulder, not the arm. Shoulders are still
+# judged in Unreal.
+if "--correctives-to-clavicle" in argv:
+    bpy.ops.object.select_all(action="DESELECT")
+    arm.select_set(True)
+    bpy.context.view_layer.objects.active = arm
+    bpy.ops.object.mode_set(mode="EDIT")
+    moved_c = 0
+    for s_ in "lr":
+        root = arm.data.edit_bones.get("upperarm_correctiveRoot_" + s_)
+        clav = arm.data.edit_bones.get("clavicle_" + s_)
+        if root is not None and clav is not None:
+            root.parent = clav
+            moved_c += 1
+    bpy.ops.object.mode_set(mode="OBJECT")
+    say("correctives hung from the clavicles", moved_c)
 for pb in arm.pose.bones:
     pb.rotation_mode = "QUATERNION"
     pb.matrix_basis = Matrix.Identity(4)
@@ -219,10 +238,16 @@ if ZONES:
                     garment.vertex_groups[gidx].remove([v.index])
                 grp_("lowerarm_twist_01_" + sd).add([v.index], 0.6, "REPLACE")
                 grp_("lowerarm_" + sd).add([v.index], 0.4, "REPLACE")
-bpy.ops.object.mode_set(mode="WEIGHT_PAINT")
-bpy.ops.object.vertex_group_smooth(group_select_mode="ALL", factor=0.5, repeat=opt("--smooth", 6, int))
-bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
-bpy.ops.object.mode_set(mode="OBJECT")
+# --no-smooth: the weights exactly as the garment brings them (a skinned game mesh, skin_garment.py's, whose
+# joints are already corrected; the test is of those weights, not of smoothed ones)
+if "--no-smooth" not in argv:
+    bpy.ops.object.select_all(action="DESELECT")
+    garment.select_set(True)
+    bpy.context.view_layer.objects.active = garment
+    bpy.ops.object.mode_set(mode="WEIGHT_PAINT")
+    bpy.ops.object.vertex_group_smooth(group_select_mode="ALL", factor=0.5, repeat=opt("--smooth", 6, int))
+    bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
+    bpy.ops.object.mode_set(mode="OBJECT")
 AP_N = opt("--armpit-smooth", 0, int)
 if AP_N and ZONES:
     _gco = np.array([garment.matrix_world @ v.co for v in garment.data.vertices])
@@ -474,8 +499,11 @@ else:
 bpy.ops.object.select_all(action="DESELECT")
 garment.select_set(True)
 bpy.context.view_layer.objects.active = garment
-bpy.ops.object.vertex_group_limit_total(group_select_mode="ALL", limit=4)
-bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
+if "--no-smooth" not in argv:
+    bpy.ops.object.vertex_group_limit_total(group_select_mode="ALL", limit=4)
+    bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
+for m_ in [m_ for m_ in garment.modifiers if m_.type == "ARMATURE"]:
+    garment.modifiers.remove(m_)                    # a skinned garment brings its own: one, not two
 am = garment.modifiers.new("Armature", "ARMATURE")
 am.object = arm
 EXPORT = opt("--export", "", str)

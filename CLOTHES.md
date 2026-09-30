@@ -8,20 +8,24 @@ The third session (Jafar, 29 September): clothes for the people of a British por
 - GAME CLOTHES ARE SKINNED MESHES, NOT SIMULATED CLOTH. A garment is a skeletal mesh skinned to the MetaHuman skeleton, its weights transferred from the body and fixed by hand at the joints; only loose parts (a hem, a skirt, coat tails) are simulated. The garments set aside on the first list were judged as simulated cloth, which is where the armpits and the bagging came from.
 - The builder tests the poses in Unreal; I watch "Handovers to clothing" in NOW.md for his results.
 
-## The list, in order (Jafar, 30 September)
+## The list, in order (Jafar, 30 September, after an outside audit; it replaces the one before)
 
-- [x] 0. Research first: how game studios make clothing for realistic characters from start to finish, and how the MetaHuman pipeline expects it. DONE 30 September (production/research/clothing-pipeline/PIPELINE-2026-09-30.md): shape, retopology, UVs, bake, texture, skin from the body and correct the joints, hide the body, simulate loose parts only, LODs, delivered as a MetaHuman Outfit Asset (Unreal re-transfers the weights) or a skeletal mesh on one body.
-- [ ] 1. Remake the set-aside garments by that method: shape from my drapes, sculpting or a free base, bound to the skeleton, joints fixed, only loose parts simulated. The jacket first (Ron's donkey jacket: remade by the method, SET ASIDE 30 September after three blind reviews, the last after research: it still read as a puffer; production/art/clothing/donkey-jacket-skinned. The method question answered: tailored outerwear from a free base, not from the wearer's skin), then Ron's jumper and work trousers, Darren's shell-suit jacket and jeans, Sheila's cardigan, the flat cap, and the shoes. The builder tests them in Unreal.
-- [ ] 2. (IN HAND alongside: MakeHuman's CC0 suits01 and its CC0 base body downloaded; tools/meshgen/blender/fit_mhclo.py carries a MakeHuman garment onto a MetaHuman through the base body, posed on its own joint markers and drawn onto his surface; the navy suit sits on Darren, gaps left at the wrists and shins.) Free ready-made tailored clothes (jackets, coats, suits) from MakeHuman's CC0 libraries and anything else free on the allowlist, altered and re-coloured to read as 1990 British working clothes, bound the same way.
-- [ ] 3. Then the next principals' simple garments (Tom Nowak first, then in CASTING.md's order) as the builder exports their bodies.
+ONE GARMENT PROVEN ON TWO BODIES BEFORE ANY WARDROBE. STOPPED: new garment families, and accepting anything judged standing only.
+
+- [ ] 1. One properly skinned jacket, Ron's donkey jacket, by the whole game pipeline: shape (from the sewn drape), retopology (one clean surface at game density, the yoke a region of it, not a shell over it), UVs and a bake of the drape's detail, skinning from the body, joint weights corrected, only the loose skirt simulated. Judged by a blind reviewer walking, sitting and with arms raised as well as standing. (The eased sewn jacket failed its second blind review on 30 September: production/art/clothing/donkey-jacket-skinned/eased-review-2.md; research first: production/research/clothing-pipeline/RETOPOLOGY-AND-SKINNING-2026-09-30.md.)
+- [ ] 2. Proven on two approved bodies, Ron's (MH_RoccoP2) and Darren's (MH_SamC5), walking, sitting and with arms raised in Unreal, which the builder tests; I watch "Handovers to clothing". Every handover names the exact version of the body it fits (its file and checksum).
+- [ ] 3. Only then the principals' outfits, by that proven pipeline.
+
+Kept from the earlier list, not worked until 3: the MakeHuman CC0 suits (tools/meshgen/blender/fit_mhclo.py; a suit sits on Darren with gaps at the wrists and shins) and the garments set aside below.
 
 ## Done on the first list (29 and 30 September)
 
 - Handed to the builder, each through a blind review (production/art/clothing/footwear, accessories, darren-tshirt, sheila): Ron's work boots; Darren's belt, pager and white T-shirt; Sheila's pleated skirt, cream blouse, handbag, and spectacles with their chain (refitted to her S4 head); her tights as a skin material.
-- Set aside under the two-tries rule, now item 1 above: the donkey jacket and its builds (production/art/clothing/donkey-jacket-sewn), Ron's work trousers and the flat cap (work-trousers, flat-cap-sewn), Sheila's cardigan (sheila), Ron's jumper (ron-jumper), Darren's shell-suit jacket (darren-shellsuit), trainers and jeans (footwear, darren-jeans), Sheila's shoes (footwear). Their best candidates are kept in F:\LedgerTools\tmp\clothes.
+- Set aside under the two-tries rule, waiting for item 3: the donkey jacket and its builds (production/art/clothing/donkey-jacket-sewn), Ron's work trousers and the flat cap (work-trousers, flat-cap-sewn), Sheila's cardigan (sheila), Ron's jumper (ron-jumper), Darren's shell-suit jacket (darren-shellsuit), trainers and jeans (footwear, darren-jeans), Sheila's shoes (footwear). Their best candidates are kept in F:\LedgerTools\tmp\clothes.
 
 ## Status
 
-- 30 September, morning: the first list finished (handed over or set aside); the new list started with the pipeline research.
+- 30 September, morning: the first list finished (handed over or set aside); the pipeline researched.
+- 30 September, 10:00: an outside audit narrowed the list to one jacket proven on Ron and Darren; the eased sewn jacket failed its second blind review (the yoke's edges); retopology, bake and skinning researched before the remake.
 - Bodies: Ron (MH_RoccoP2), Darren (MH_SamC5), Sheila (MH_LenaC1, and MH_LenaS4 with her approved head for anything on her face) in F:\LedgerTools\bodies; the slim, average and heavy builds are set aside by the builder. The next principals wait on his exports.
 - Tools: Blender 4.5.13 headless (tools/meshgen/blender); scratch on F:. Blender scripts and these records set off nothing on push; records under production/ run the free Core tests; production/specs and production/assets would start the Unreal build, so garments never go there.
