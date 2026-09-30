@@ -1278,6 +1278,14 @@
    "mb": 238
   },
   {
+   "path": "F:/LedgerTools/town-scratch/breaker",
+   "madeBy": "the town's independent-check subagent, 30 September evening (exports of two commits to test the review's Core fixes)",
+   "why": "throwaway copies for breaking the fixes; its report is in the commit that fixed its findings",
+   "status": "superseded",
+   "recorded": "2026-09-30",
+   "mb": 160
+  },
+  {
    "path": "F:/LedgerTools/town-scratch/ci-tree",
    "madeBy": "the town session (git worktree add, detached)",
    "why": "a clean copy of the town branch on F: for running the full Core checks before each push, so uncommitted work never hides a failure; reused every push",

@@ -7398,6 +7398,25 @@ namespace Ledger.CoreTests
                       $"{timing} {filed} {closes} {talk} {saves} {voiced} {stays}");
             }
 
+            // A SAVE ON THE FIRST DAY READS BACK (the independent review of 30
+            // September, C5: day 0, the new game's first day, a Monday, was refused
+            // as unreadable, as though the week had no first morning).
+            {
+                GameTime back0 = default;
+                string refused0 = null;
+                try
+                {
+                    var json0 = SaveCodec.Capture(new GameTime(0, 9, 30), new Wallet(10), new Campaign(), new PlayerKnowledge(),
+                        new SecretsBook(), new BeatBook(), new GossipMill(null), new DebtBook(), null);
+                    back0 = SaveCodec.Restore(json0, new Wallet(0), new Campaign(), new PlayerKnowledge(),
+                        new SecretsBook(), new BeatBook(), new GossipMill(null), new DebtBook(), out _);
+                }
+                catch (Exception e) { refused0 = e.Message; }
+                Check(refused0 == null && back0.Equals(new GameTime(0, 9, 30)),
+                      "a save made on the game's first day, day 0, reads back to that morning",
+                      refused0 ?? back0.ToString());
+            }
+
             // A WITNESS'S STORY IS ONLY AS SURE AS THE WITNESS WAS (Jafar's ruling of
             // 30 September on the independent review's A5): a noise or a shape is
             // suspicion, never "he did it". Five people hold the same secret story
