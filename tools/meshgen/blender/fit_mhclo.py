@@ -223,12 +223,33 @@ GB = to_bl(G)
 for i, v in enumerate(g.data.vertices):
     v.co = Vector(tuple(GB[i]))
 g.data.update()
+# kept out of him by smoothed pushes (moved point by point, the faces between still cut through at the calves)
+ge = np.array([e.vertices[:] for e in g.data.edges])
+gdeg = np.bincount(ge.ravel(), minlength=len(g.data.vertices)).astype(float)
+MINE = opt("--min-ease", 0.006)
 pushed = 0
+for rnd in range(opt("--push-rounds", 4, int)):
+    Q = np.array([tuple(v.co) for v in g.data.vertices])
+    disp = np.zeros_like(Q)
+    for i, q in enumerate(Q):
+        hit, nn, _f, _d = BVH.find_nearest(Vector(tuple(q)))
+        if hit is not None:
+            off = (Vector(tuple(q)) - hit).dot(nn)
+            if off < MINE:
+                disp[i] = np.array(tuple(nn)) * (MINE - off)
+    for _ in range(6):
+        acc = np.zeros_like(disp)
+        np.add.at(acc, ge[:, 0], disp[ge[:, 1]])
+        np.add.at(acc, ge[:, 1], disp[ge[:, 0]])
+        disp = np.maximum(disp, 0) * 0 + np.where(np.linalg.norm(disp, axis=1)[:, None] > 0, disp, 0.5 * acc / np.maximum(gdeg, 1)[:, None])
+    Q = Q + disp
+    pushed = int((np.linalg.norm(disp, axis=1) > 1e-5).sum())
+    for i, v in enumerate(g.data.vertices):
+        v.co = Vector(tuple(Q[i]))
 for v in g.data.vertices:
     hit, nn, _f, _d = BVH.find_nearest(v.co)
-    if hit is not None and (v.co - hit).dot(nn) < opt("--min-ease", 0.004):
-        v.co = hit + nn * opt("--min-ease", 0.004)
-        pushed += 1
+    if hit is not None and (v.co - hit).dot(nn) < 0.003:
+        v.co = hit + nn * 0.003
 log["garmentPoints"] = len(G)
 log["pushedOut"] = pushed
 
