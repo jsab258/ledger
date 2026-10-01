@@ -32,44 +32,44 @@ Every sightline is assumed open (Unreal's trace cannot run here); people stand w
 
 [A1, A2, A4] Who sees Rita's window go, from where, in what light (OnlookersAt, LightOnHim, FamiliarityFromMeetings)
 
-  D0 12:00, day, light on him 1.00
-    rocco      fish_front       body     6.9 m   87 deg off  rung 0  certainty 0.40  files the damage heard
-    lena       fish_front       body     6.9 m   87 deg off  rung 0  certainty 0.40  files the damage heard
-    sam        fish_front       body     6.9 m   87 deg off  rung 0  certainty 0.40  files the damage heard
-    marla      fish_counter     window   7.8 m   62 deg off  rung 0  certainty 0.40  files the damage heard
-    rita       ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  files a story about him
-    victor     ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  files a story about him
-    hal        hals_shop        window  23.1 m   60 deg off  rung 0  certainty 0.80  files the damage heard
-    zora       laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  files the damage heard
-    iva        laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  files the damage heard
-    selma      laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  files the damage heard
-    tanja      laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  files the damage heard
-    katarina   laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  files the damage heard
-    ines       ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  files a story about him
-    marta      ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  files a story about him
-    hana       pension_counter  window  17.4 m   49 deg off  rung 1  certainty 0.86  files a story about him
+  D0 12:00, day, light on him 1.00 (slots: 4 the act, 8 who it was done to, 16 who did it)
+    rocco      fish_front       body     6.9 m   87 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    lena       fish_front       body     6.9 m   87 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    sam        fish_front       body     6.9 m   87 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    marla      fish_counter     window   7.8 m   62 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    rita       ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  slots 60  files a story about him
+    victor     ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  slots 60  files a story about him
+    hal        hals_shop        window  23.1 m   60 deg off  rung 0  certainty 0.80  slots 12  files the damage heard
+    zora       laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    iva        laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    selma      laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    tanja      laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    katarina   laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    ines       ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  slots 60  files a story about him
+    marta      ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  slots 60  files a story about him
+    hana       pension_counter  window  17.4 m   49 deg off  rung 1  certainty 0.86  slots 60  files a story about him
 
-  D0 16:00, day, light on him 1.00
-    rocco      mickeys_rank     body    11.4 m   91 deg off  rung 0  certainty 0.40  files the damage heard
-    lena       mickeys_office   body    12.9 m   87 deg off  rung 0  certainty 0.40  files the damage heard
-    zlata      mickeys_office   window  13.4 m   74 deg off  rung 0  certainty 0.00  files nothing
-    sam        mickeys_rank     body    11.4 m   91 deg off  rung 0  certainty 0.40  files the damage heard
-    rita       ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  files a story about him
-    hal        hals_shop        window  23.1 m   60 deg off  rung 0  certainty 0.80  files the damage heard
-    iva        laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  files the damage heard
-    tanja      laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  files the damage heard
-    katarina   laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  files the damage heard
-    ines       ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  files a story about him
-    marta      ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  files a story about him
-    jelena     mickeys_office   window  13.4 m   74 deg off  rung 0  certainty 0.00  files nothing
+  D0 16:00, day, light on him 1.00 (slots: 4 the act, 8 who it was done to, 16 who did it)
+    rocco      mickeys_rank     body    11.4 m   91 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    lena       mickeys_office   body    12.9 m   87 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    zlata      mickeys_office   window  13.4 m   74 deg off  rung 0  certainty 0.00  slots  0  files nothing
+    sam        mickeys_rank     body    11.4 m   91 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    rita       ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  slots 60  files a story about him
+    hal        hals_shop        window  23.1 m   60 deg off  rung 0  certainty 0.80  slots 12  files the damage heard
+    iva        laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    tanja      laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    katarina   laundry_counter  window  11.7 m   72 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
+    ines       ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  slots 60  files a story about him
+    marta      ritas_counter    window   3.7 m   14 deg off  rung 3  certainty 0.94  slots 60  files a story about him
+    jelena     mickeys_office   window  13.4 m   74 deg off  rung 0  certainty 0.00  slots  0  files nothing
 
-  D0 21:00, night, light on him 0.00 (no lamp reaches him)
-    rocco      mickeys_office   body    12.9 m   87 deg off  rung 0  certainty 0.40  files the damage heard
+  D0 21:00, night, light on him 0.00 (no lamp reaches him) (slots: 4 the act, 8 who it was done to, 16 who did it)
+    rocco      mickeys_office   body    12.9 m   87 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
 
-  D0 21:00, night, light on him 0.60 (a lamp reaches him)
-    rocco      mickeys_office   body    12.9 m   87 deg off  rung 0  certainty 0.40  files the damage heard
+  D0 21:00, night, light on him 0.60 (a lamp reaches him) (slots: 4 the act, 8 who it was done to, 16 who did it)
+    rocco      mickeys_office   body    12.9 m   87 deg off  rung 0  certainty 0.40  slots  4  files the damage heard
 
-  D1 02:00, night, light on him 0.00 (no lamp reaches him)
+  D1 02:00, night, light on him 0.00 (no lamp reaches him) (slots: 4 the act, 8 who it was done to, 16 who did it)
     nobody on Quay Street can see him
 
   the rung-0 branch, as the game files it for Sheila:
@@ -81,6 +81,7 @@ Every sightline is assumed open (Unreal's trace cannot run here); people stand w
   deed field sent to the talk: ,"deed":{"topic":"player.window_d0","day":0,"hour":11}
   kept quiet suppresses player.window_d0: yes
   owning up files: player.window_d0 = "the new owner told me himself that he put Rita's window in", sensitive=yes
+  the evidence the game sends, asked as "player.broke_a_window": held=NO; asked as "player.window_d0": held=yes rung=1
 
 [A4] Can a witness in free play report him now?
   best rung at any distance, full light, facing him: never met -> 3; met on one day -> 4
@@ -126,6 +127,17 @@ Every sightline is assumed open (Unreal's trace cannot run here); people stand w
   cw-ws-r4-03: "the fella from Mickey's put the shop window in, Nowak, and he was seen clear enough that there's no question who he is" (says Nowak: YES)
   Darren holds his name: no; Ron holds his name: no; Ron's memory after an hour of talk says Nowak: YES
       "I heard from sam that it was Nowak that put the window in on Quay Street, the new owner up at Mickey's, and there's no mistaking him"
+
+[NEW] Darren saw it at rung 4; Tom threatens him over it (Silence::FileThreat, as the game files the reply's "threatened")
+  would report before the threat: yes; threat filed: yes; would report after it: YES
+
+[NEW] A smash on Monday at 17:30: who is measured as an onlooker, and who the damage's tick says was there
+  onlookers in Rita's area: lena
+  joey    at ritas_step     (outdoors, no body): "I was there when somebody put Rita's window in. I never saw who did it."
+  rita    at ritas_step     (outdoors, no body): "Somebody put my window in while I was there. I never saw who did it."
+  victor  at ritas_step     (outdoors, no body): "I was there when somebody put Rita's window in. I never saw who did it."
+  tibor   at ritas_step     (outdoors, no body): "I was there when somebody put Rita's window in. I never saw who did it."
+  ines    at ritas_step     (outdoors, no body): "I was there when somebody put Rita's window in. I never saw who did it."
 ```
 
 ## probes/EllisRecheck (the C# Core and the real cast file)
