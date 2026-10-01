@@ -1039,6 +1039,22 @@
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
   },
   {
+   "path": "F:/LedgerTools/tmp/film-loud",
+   "madeBy": "the builder's -MouthFilm runs for item 4, 1 October (tools/said_pairs.py's LOUD_FILM)",
+   "why": "raw frames of the thinking sounds with the loudness mouth; superseded by film-ab3 and settled by his picks",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 232
+  },
+  {
+   "path": "F:/LedgerTools/tmp/film-made",
+   "madeBy": "the builder's -MouthFilm runs for item 4, 1 October (tools/said_pairs.py's MADE_FILM)",
+   "why": "raw frames of the thinking sounds with Epic's made faces; the pairs on Thursday's page were cut from film-ab3, and his blind picks settled item 4",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 217
+  },
+  {
    "path": "F:/LedgerTools/tmp/hair3",
    "madeBy": "the builder, 29 September: tools/meshgen/blender/hair/grow_perm.py, attempt 3",
    "why": "Sheila's third hair attempt, set aside (the two-tries rule)",
@@ -1276,6 +1292,126 @@
    "status": "superseded",
    "recorded": "2026-09-28",
    "mb": 238
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "the suit jacket's films in the game; the final-* runs are the ones production/art/clothing/suit-jacket-ingame-2026-10-01 names",
+   "status": "kept",
+   "recorded": "2026-10-01",
+   "mb": 1592
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-rom",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 101
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-sit",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 114
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-walk",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 83
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-walk-const1",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 44
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-walk-free30",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 33
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-walk-free30b",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 44
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-walk-graph130",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 44
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-walk-graph30",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 83
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-walk-graphMD130",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 44
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Rocco-walk-uniform30",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 44
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Sam-rom",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 102
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Sam-sit",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 112
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/Sam-walk",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 84
+  },
+  {
+   "path": "F:/LedgerTools/tmp/suit-test/walk",
+   "madeBy": "the builder's portrait tool, 1 October (item 7)",
+   "why": "an earlier or diagnostic run of the suit jacket film, replaced by the final-* runs or kept only as a sheet in production/art/clothing/suit-jacket-ingame-2026-10-01",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 83
   },
   {
    "path": "F:/LedgerTools/town-scratch/breaker",
