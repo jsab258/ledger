@@ -195,7 +195,9 @@ namespace Ledger.PerceptionGolden
                 // suppresses the deed); held until the port's Silence.h follows.
                 // The review of 1 October, M3: no tea invitation while he is held; held until
                 // the port's AdasTea.SheSeesHim takes `held`.
-                var held = new[] { "SweepHeard|", "ThreatSilences|", "TeaHeld|" };
+                // The review of 1 October, B3 and L4: a night away passes at four, a story
+                // stamped when filed; held until the port's Arrangement.h follows.
+                var held = new[] { "SweepHeard|", "ThreatSilences|", "TeaHeld|", "AskEdge|dawn at one|", "LandingHours|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1020,6 +1022,28 @@ namespace Ledger.PerceptionGolden
             Row(sb, "AskEdge", "dawn before one", State(early), Bit(early.AskStands(T(1, 0, 45))));
             early.PassedTo(1, null, T(1, 1));
             Row(sb, "AskEdge", "dawn at one", State(early), Bit(early.AskStands(T(1, 0, 45))));
+            // THE HOURS HIS NO AND A NIGHT AWAY REACH THE LANDING (the independent review
+            // of 1 October, B3 and L4): a night away passes as the hours turn at four,
+            // once no late no can come; a story is stamped when it is filed.
+            {
+                var lh = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) lh.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var away = new Arrangement(0);
+                away.Delivered(0, lh.Get(Arrangement.Doorman), T(0, 20));
+                away.TellDue(lh, T(1, 3));
+                string atThree = State(away);
+                away.TellDue(lh, T(1, 4));
+                var awayMem = lh.Get(Arrangement.OutfitMan).Memory.Events.Find(e => e.Text != null && e.Text.Contains(Arrangement.Said(NightAnswer.NoShow)));
+                Row(sb, "LandingHours", "night away", atThree, State(away), awayMem == null ? "none" : awayMem.Time.TotalMinutes.ToString(Inv));
+                var lh2 = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) lh2.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var no = new Arrangement(0);
+                no.Delivered(0, lh2.Get(Arrangement.Doorman), T(0, 20));
+                no.Answer(0, NightAnswer.Refused, null, T(0, 23, 5));
+                no.TellDue(lh2, T(1, 0));
+                var noMem = lh2.Get(Arrangement.OutfitMan).Memory.Events.Find(e => e.Text != null && e.Text.Contains(Arrangement.Said(NightAnswer.Refused)));
+                Row(sb, "LandingHours", "no after eleven", noMem == null ? "none" : noMem.Time.TotalMinutes.ToString(Inv));
+            }
             Row(sb, "AskEdge", "answer undelivered", Bit(new Arrangement(0).Answer(0, NightAnswer.Undelivered)), Bit(new Arrangement(0).Answer(0, NightAnswer.NoShow)), Bit(new Arrangement(0).Answer(2, NightAnswer.Did)));
             Row(sb, "AskEdge", "first day negative", State(new Arrangement(-3)), Bit(new Arrangement(-3).AsksOn(0)));
         }
