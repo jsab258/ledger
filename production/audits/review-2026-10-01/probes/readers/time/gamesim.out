@@ -1,0 +1,98 @@
+== gamesim tea-cells
+
+[S1] Monday's window seen and recognised (rung 4) by Darren; then a wait from Wednesday 09:30
+  [D0 12:00] the deed (Darren, rung 4)
+  [D0 20:00] Ron's at the door with an envelope for you
+  [D1 09:00] sam goes to the police about player.window_d0
+  [D2 10:00] WAIT STOPS: "There's a constable asking for you." (constable@2)
+  [D2 10:00] A constable: I'm arresting you on suspicion of criminal damage. You do no...  (out at D2 16:00)
+  [D2 10:00] Ada, from her step: "There'll be a pot on at nine tonight, if you want it. I don't ask twice, mind."
+  [D2 16:00] release: You are charged with the offence(s) shown below. Y...
+  [D2 16:00] wait from D2 09:30 ended (stopped)
+  tea state now 1 (1=Asked); custody holds at 10:30? yes
+== gamesim ellis-false
+
+[S3] No envelopes (he never goes down); Thursday (day 3) 17:00 Sheila, on Rita's step by her day, sees the window at rung 4. Friday he presses Z at 09:05.
+  [D0 20:00] Ron's at the door with an envelope for you
+  [D2 10:00] Ada, from her step: "There'll be a pot on at nine tonight, if you want it. I don't ask twice, mind."
+  [D2 20:00] Ron's at the door with an envelope for you
+  [D3 17:00] the deed; Sheila's place by her routine now: ritas_step
+  [D4 08:59] loudness at 08:59: 2
+  [D4 09:00] lena goes to the police about player.window_d3
+  [D4 09:00] loudness after the 09:00 hour's events and its 09:00 round: 3; visits 0
+  [D4 09:05] WAIT STOPS: "DS Ellis is on Quay Street, asking after you." (ellis@4)
+  [D4 09:05] wait from D4 09:05 ended (stopped)
+  DS Ellis's visits so far: (none on day 4)
+  [D4 17:05] wait from D4 09:05 ended (ran out)
+  [D4 20:00] WAIT STOPS: "Ron's at the door with something for you." (ron@4)
+  [D4 20:00] Ron's at the door with an envelope for you
+  [D4 20:00] wait from D4 17:05 ended (stopped)
+  DS Ellis's visits so far: 
+== gamesim ellis-false-night
+
+[S3b] As S3, but he presses Z on Friday at 02:00 (asleep through the morning).
+  [D4 09:00] lena goes to the police about player.window_d3
+  [D4 09:00] WAIT STOPS: "DS Ellis is on Quay Street, asking after you." (ellis@4)
+  [D4 09:00] wait from D4 02:00 ended (stopped)
+  DS Ellis's visits so far: 0
+  [D4 17:00] wait from D4 09:00 ended (ran out)
+  [D4 20:00] WAIT STOPS: "Ron's at the door with something for you." (ron@4)
+  [D4 20:00] Ron's at the door with an envelope for you
+  [D4 20:00] wait from D4 17:00 ended (stopped)
+  [D4 22:00] WAIT STOPS: "They'll be expecting the envelope at the landing after ten." (landing@4)
+  [D4 22:00] wait from D4 20:00 ended (stopped)
+  DS Ellis's visits: 
+== gamesim no-late
+
+[S4] Night 0: Ron's plain question at 22:58, his yes read at 23:03 (refusedAt 22:58), as CrimeProbe.cpp 4536-4552 answers it.
+  answered: yes; NoWordAt pending: yes
+  23:30: the man at the landing holds the no: no
+  23:59: the man at the landing holds the no: no (the 23:00..23:54 rounds have run)
+  00:00: holds it: yes; his memory of it stamped: D0 23:00 
+== gamesim tea
+
+[S5] Ada's tea, judged (FirstWeek.h): first minute..last minute -> state
+  21:00..22:29 -> LeftEarly, loyalty 0.55: Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he.
+  21:00..22:30 -> Stayed, loyalty 0.75: Mickey's nephew came for his tea and sat with me till gone half ten. There's more to him than they're saying.
+  21:45..22:40 -> Stayed, loyalty 0.75: Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying.
+  22:00..22:30 -> Stayed, loyalty 0.75: Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying.
+  22:01..22:59 -> LeftEarly, loyalty 0.55: Mickey's nephew came for his tea with the pot near cold and gone ten. Better late, I suppose.
+  21:31..22:35 -> Stayed, loyalty 0.75: Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying.
+  21:05..21:05 -> LeftEarly, loyalty 0.55: Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he.
+== gamesim misc
+
+[S6] SpellCouldBe: a saved arrest out at 00:05 on the call's day (the call is at 10:00)
+  loaded: in the cells at D2 00:01? yes; at D2 09:00? no
+  a spell out at D3 20:00 for a call on D2 10:00 (34 h; Damage is at most 6 h): kept? yes
+
+[S7] Arrangement.Answer(Refused) before Ron has brought the ask
+  with a time, undelivered: refused
+  without a time (no mill), undelivered: accepted
+
+[S8] WeeksEnd.AsksNow at the office
+  D6 09:59 (weekday 6): no
+  D6 10:00 (weekday 6): asks
+  D6 11:59 (weekday 6): asks
+  D6 12:00 (weekday 6): no
+  D6 23:00 (weekday 6): no
+  D7 03:00 (weekday 0): asks
+  D7 09:00 (weekday 0): asks
+  D13 10:00 (weekday 6): asks
+  Sheila's place by her day: D7 03:00 off, D7 12:30 fish_front, D7 17:30 ritas_step
+== gamesim b5
+
+[S9] A window at D2 00:30 (Tuesday night), seen at rung 4 by Darren
+  mended at D2 16:00; first report morning D2 09:00
+  [D2 09:00] sam goes to the police about player.window_d2
+  [D2 10:00] Ada, from her step: "There'll be a pot on at nine tonight, if you want it. I don't ask twice, mind."
+  [D2 20:00] Ron's at the door with an envelope for you
+  [D3 09:00] DS Ellis is on Quay Street this morning, asking after you. (talk)
+  [D3 10:00] A constable: I'm arresting you on suspicion of criminal damage. You do no...  (out at D3 16:00)
+  [D3 16:00] release: You are charged with the offence(s) shown below. Y...
+== gamesim ellis-true
+
+[S10] Wednesday 17:00 window seen by Sheila at rung 4, no envelopes; Z on Friday at 02:00
+  [D4 02:00] loudness 7, visits 0
+  [D4 09:00] WAIT STOPS: "DS Ellis is on Quay Street, asking after you." (ellis@4)
+  [D4 09:00] DS Ellis is on Quay Street this morning, asking after you. (talk)
+  [D4 09:00] wait from D4 02:00 ended (stopped)
