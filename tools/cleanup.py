@@ -32,7 +32,7 @@ import shutil
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATE = "2026-09-30"   # the next page; the 29 September one is carried out (git has it and its verdicts)
+DATE = "2026-10-01"   # the next page; the 30 September one is carried out (git has it and its verdicts)
 HOME = os.path.expanduser("~")
 LOCAL = os.environ.get("LOCALAPPDATA", os.path.join(HOME, "AppData", "Local"))
 RUNNER = r"C:\actions-runner-ledger\_work"
@@ -301,32 +301,21 @@ def delete_renamed():
 
 W = os.path.join(RUNNER, "ledger", "ledger", "ue-probe")
 PLAN = [
-    # 29 September, midday: his two groups of the 29th carried out (the store's
-    # cap is down to 10 GB and trims itself when Unreal next starts, about 7 GB;
-    # the old cache deleted again). C: at 46 GB while the build machine builds:
-    # the list alone cannot reach 60, so the rest is his to decide (below).
-    # His two groups of 30 September's first page (the old packaged copy,
-    # the superseded film frames) are carried out, 29 September afternoon:
-    # C: 53 to 55 GB. Git has them and their verdicts.
-    # 29 September, afternoon: C: at 48 GB once the day's builds ran. Your rule
-    # says new caches go to drive F; Unreal's is the biggest thing on the list.
-    {"id": "unreal-cache-to-f", "title": "Move Unreal's cache to drive F, and delete the copy on C:",
-     "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "Zen"), os.path.join(LOCAL, "UnrealEngine", "Common", "DerivedDataCache")],
-     "why": "Unreal keeps a cache of built shaders and assets (capped at 10 GB on your yes of Tuesday), and an older cache it is draining. Your rule is that caches live on drive F, not C: (F has 31 GB free). On your yes I point Unreal's own settings at the LedgerTools folder on drive F, and once Unreal is closed I delete both old copies on C:.",
-     "after": "The next build or two are a few minutes slower while the cache refills on F. It stays at 10 GB there.",
-     "move": "F:/LedgerTools/zen/Data",
-     "recommend": True},
-    {"id": "helper-checkout", "title": "A spare copy of the project a helper left behind",
-     "paths": [os.path.join(REPO, ".claude", "worktrees")],
-     "why": "A helper I ran on Tuesday worked in its own spare copy of the project, and the copy stayed. Everything in it is on GitHub; nothing uses it. I no longer run helpers that way.",
-     "after": "Nothing you would notice.",
+    # 30 September's four groups were all carried out (git has them and their
+    # verdicts). 1 October, 13:00: C: at 55.6 GB. The project's own git store
+    # is 30 GB and grows about 1 GB a day with the build machine's pictures
+    # (not on your list: below); the list's only big item now is the build output.
+    {"id": "build-intermediate", "title": "The project's build output, remade by the next build",
+     "paths": [os.path.join(REPO, "ue-probe", "Intermediate")],
+     "why": "Unreal's compiler keeps its working files for the game here (gitignored, on your list). Nothing of yours and nothing the game runs from: the game runs from Binaries, which stays.",
+     "after": "The next build of the game is a full one, about 15 minutes instead of 2; the folder then grows back to about 5 GB over the following days.",
      "recommend": True},
 ]
 
 NOT_IN_LIST = [
     ("Dropbox", os.path.join(HOME, "Dropbox"), "yours; the backup adds to it and never deletes"),
-    ("Windows' hibernation file", r"C:\hiberfil.sys", "the biggest win and yours alone: a Windows setting I may not change. If you never hibernate the PC, run 'powercfg /h off' in a terminal opened as administrator and it goes, putting C: over 60 GB with the rest"),
-    ("Windows' swap file", r"C:\pagefile.sys", "Windows'"),
+    ("The project's git store", os.path.join(REPO, ".git"), "30 GB: the project's whole history, most of it the build machine's street pictures, about 130 MB each time it runs (several times a day). Not on your list, so untouched. I am stopping the build machine committing its pictures every run, which stops the growth; shrinking the history itself would rewrite it on GitHub for all three sessions, a bigger step I do not recommend now"),
+    ("Windows' swap file", r"C:\pagefile.sys", "about 22 GB today: it grew while the game, my voice tests and Unreal ran together (13.5 GB in use at the peak), and Windows shrinks it back only when the PC restarts. A restart is yours: I recommend one tonight, and I am running fewer heavy tests at once"),
     ("Windows' temporary files", os.path.join(LOCAL, "Temp"), "not on your list, so untouched"),
     ("Hugging Face's model cache", os.path.join(HOME, ".cache", "huggingface"), "the voice models (the game's live voice loads one from here), not datasets; not on your list, so untouched. It could move to drive F if you say so, with the voice tools pointed there"),
 ]

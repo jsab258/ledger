@@ -5,13 +5,14 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Thursday 1 October, 12:45)
+## Overview (Thursday 1 October, 13:20)
 
 ### Needs you
 
 (Every page's stored answers checked at 12:45: Thursday's and Wednesday's, mine; the town's. Your no to the four looks came by message and is acted on: your rule on the bar is in CLAUDE.md, your eight fixes are on the list.)
 
-1. **The route is ready for your cloud review:** main as of 760832bce, green on the build machine at 01:08 (its Core tests and the full Unreal run); what changed and the runs in the finished game before and after are in production/playtest/review-runs-2026-09-30.md. Recommended: run it.
+1. **[Drive C cleanup](https://claude.ai/artifact/4WE6ZWBMWHeStVxxSdaDNx), one tap, first by your rule (C: at 38.6 GB):** the project's build output, 5.2 GB, remade by the next build (recommended yes). Most of today's fall is Windows' swap file, about 22 GB after the game, my voice tests and Unreal ran together; it shrinks only when the PC restarts, which is yours: I recommend a restart tonight. The project's git store is 30 GB of history, mostly the build machine's pictures; I am stopping that growth.
+2. **The route is ready for your cloud review:** main as of 760832bce, green on the build machine at 01:08 (its Core tests and the full Unreal run); what changed and the runs in the finished game before and after are in production/playtest/review-runs-2026-09-30.md. Recommended: run it.
 
 ### Road to worth playing
 

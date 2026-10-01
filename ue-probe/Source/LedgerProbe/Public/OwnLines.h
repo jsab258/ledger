@@ -297,10 +297,152 @@ namespace LedgerCore
 			"There's been talk about him. I'll not repeat it.",
 			"He's all right. So far.",
 		};
+		// sam, recognition/sensitive
+		static const char* const k40[3] = {
+			"So listen. Your name's doing the rounds. I'm not saying where. Yet.",
+			"Everybody's got a version of you going. Mine's the one worth having.",
+			"There he is. You want to know what's being said, you know where I'll be.",
+		};
+		// sam, faint
+		static const char* const k41[2] = {
+			"Him? I had something on him. Can't have been worth much, I've forgot it.",
+			"Don't look. That's him. Whisper going round a while back. Old news.",
+		};
+		// sam, recognition/police-asked
+		static const char* const k42[2] = {
+			"Ellis had me in a doorway over you. I said I'd seen nothing. I'm good at that.",
+			"Your detective friend's been on at me. Didn't tell her much. Didn't know much, did I.",
+		};
+		// sam, recognition/taken-saw
+		static const char* const k43[2] = {
+			"Saw them stick you in the back of the panda. You're out quick. Who'd you know?",
+			"Out already? Watched them drive you off. Thought that was the last of you.",
+		};
+		// sam, recognition/taken-heard
+		static const char* const k44[2] = {
+			"Hear you had a ride with the police. Free taxi, that. Nice for a cab man.",
+			"They're saying the law lifted you. You're walking about, so it can't have been much.",
+		};
+		// sam, recognition/outfit-did
+		static const char* const k45[2] = {
+			"So you did Mickey's errand by the ferry. I'll not ask. I'd only have to forget it.",
+			"Picked up the late run, they're saying. Nobody's heard it from me.",
+		};
+		// sam, recognition/outfit-refused
+		static const char* const k46[2] = {
+			"Turned them down, did you? Takes nerve, that. Or you don't know who they are.",
+			"Word is you turned the ferry lot down. I'd walk the long way home for a bit.",
+		};
+		// sam, recognition/outfit-wounddown
+		static const char* const k47[2] = {
+			"Mickey's old arrangement's off, they say. There's people by the ferry not happy about that.",
+			"Finished with the sideline, I hear. Clean hands. Doesn't pay, but there you go.",
+		};
+		// sam, recognition/outfit-noshow
+		static const char* const k48[2] = {
+			"You left them stood by the ferry half the night. They've been asking where you were.",
+			"Never turned up, they're saying. I'd have a story ready if I were you.",
+		};
+		// sam, recognition/threat-told
+		static const char* const k49[2] = {
+			"Message received, mate. I've gone deaf and blind, me.",
+			"No need to say it twice. I've forgot everything already.",
+		};
+		// sam, recognition/threat-heard
+		static const char* const k50[2] = {
+			"Leaning on folk now, are you? Not on me, I hope. I scare easy, me.",
+			"Somebody's been told to keep shut, I hear. I keep shut for nothing, me.",
+		};
+		// sam, recognition/week-takeover
+		static const char* const k51[2] = {
+			"Mickey's whole lot, then? Big shoes, mate. Anything wants fetching, I'm your man.",
+			"Taking the lot on, they're saying. You'll be needing friends. I'm cheap.",
+		};
+		// sam, recognition/week-winddown
+		static const char* const k52[2] = {
+			"Only the cabs from now on, I hear. Shame. I had ideas.",
+			"Winding the other business up, they reckon. Safer. Duller, mind.",
+		};
+		// sam, recognition/week-wontsay
+		static const char* const k53[2] = {
+			"Not even telling Sheila, they say. You can tell me. I'll only tell people who pay.",
+			"Keeping it under your hat. That's worth something, that, to the right buyer.",
+		};
+		// sam, recognition/refuses
+		static const char* const k54[2] = {
+			"I'm not dealing with you, mate. Bad for business.",
+			"Your money's no good with me now. Nothing personal.",
+		};
+		// sam, recognition/confronts
+		static const char* const k55[2] = {
+			"Here. Word with you. What you did's got people asking me, and I don't like being asked.",
+			"No, stop a minute. I've had nothing but grief over you.",
+		};
+		// emil, recognition/sensitive
+		static const char* const k56[3] = {
+			"I hear things, God help me. I don't hold any of them against a man.",
+			"You look like a man carrying something. My door's open, any hour.",
+			"There's a lot said about you. None of it's my business unless you make it so.",
+		};
+		// emil, faint
+		static const char* const k57[2] = {
+			"God keep him. There's been talk, I know. I'd not trouble with it.",
+			"That's the young fella with the cabs. Whatever it was, I let it go by.",
+		};
+		// emil, recognition/police-asked
+		static const char* const k58[2] = {
+			"The detective was round asking about you. I said I see you about the street, which is the truth of it.",
+			"That Ellis woman came to me about you. I've no stories to give her, and I said so.",
+		};
+		// emil, recognition/police-heard
+		static const char* const k59[2] = {
+			"The guards are asking after you, I'm told. The police, I mean. Old habit.",
+			"If the police come to you, and you want somebody to stand beside you, say.",
+		};
+		// emil, recognition/taken-heard
+		static const char* const k60[2] = {
+			"I heard they took you in. I said a prayer, for what it's worth. It's not nothing.",
+			"You're out, thank God. I hope they treated you decent.",
+		};
+		// emil, recognition/threat-told
+		static const char* const k61[2] = {
+			"Threats don't work on an old priest, son. I've nothing left anyone can take.",
+			"I'll forget you said that. I'd rather you did too.",
+		};
+		// emil, recognition/threat-heard
+		static const char* const k62[2] = {
+			"Frightening people, they're saying. That's not the man I took you for.",
+			"Fear buys you nothing in the end. I've watched men try.",
+		};
+		// emil, recognition/avoids
+		static const char* const k63[2] = {
+			"The chapel's waiting on me. Another time.",
+			"Forgive me, I'm late for a call.",
+		};
+		// june, recognition/sensitive
+		static const char* const k64[2] = {
+			"Whatever you've got yourself into, I don't want to hear it. Well. Go on, then.",
+			"You've got this street talking already. Took me years to get away from it.",
+		};
+		// june, recognition/police-heard
+		static const char* const k65[2] = {
+			"Police, now. I came back for a funeral, not this.",
+			"Sort out whatever the police want before I go home, would you.",
+		};
+		// june, recognition/taken-heard
+		static const char* const k66[2] = {
+			"I'm not asking what the police wanted you for. I'm just saying I know.",
+			"You get yourself arrested, and I'm the one getting looks in the street. Thanks.",
+		};
+		// june, recognition/avoids
+		static const char* const k67[2] = {
+			"Not now. I've a train to see about.",
+			"I'm not stopping.",
+		};
 
 		inline const Bank* Banks(int& OutCount)
 		{
-			static const Bank All[40] = {
+			static const Bank All[68] = {
 				{ "rocco", "ambient/open/ordinary", k0, 32 },
 				{ "rocco", "ambient/reply/ordinary", k1, 10 },
 				{ "rocco", "ambient/open/night", k2, 14 },
@@ -341,8 +483,36 @@ namespace LedgerCore
 				{ "rocco", "recognition/week-takeover", k37, 2 },
 				{ "rocco", "recognition/week-wontsay", k38, 2 },
 				{ "rocco", "faint", k39, 3 },
+				{ "sam", "recognition/sensitive", k40, 3 },
+				{ "sam", "faint", k41, 2 },
+				{ "sam", "recognition/police-asked", k42, 2 },
+				{ "sam", "recognition/taken-saw", k43, 2 },
+				{ "sam", "recognition/taken-heard", k44, 2 },
+				{ "sam", "recognition/outfit-did", k45, 2 },
+				{ "sam", "recognition/outfit-refused", k46, 2 },
+				{ "sam", "recognition/outfit-wounddown", k47, 2 },
+				{ "sam", "recognition/outfit-noshow", k48, 2 },
+				{ "sam", "recognition/threat-told", k49, 2 },
+				{ "sam", "recognition/threat-heard", k50, 2 },
+				{ "sam", "recognition/week-takeover", k51, 2 },
+				{ "sam", "recognition/week-winddown", k52, 2 },
+				{ "sam", "recognition/week-wontsay", k53, 2 },
+				{ "sam", "recognition/refuses", k54, 2 },
+				{ "sam", "recognition/confronts", k55, 2 },
+				{ "emil", "recognition/sensitive", k56, 3 },
+				{ "emil", "faint", k57, 2 },
+				{ "emil", "recognition/police-asked", k58, 2 },
+				{ "emil", "recognition/police-heard", k59, 2 },
+				{ "emil", "recognition/taken-heard", k60, 2 },
+				{ "emil", "recognition/threat-told", k61, 2 },
+				{ "emil", "recognition/threat-heard", k62, 2 },
+				{ "emil", "recognition/avoids", k63, 2 },
+				{ "june", "recognition/sensitive", k64, 2 },
+				{ "june", "recognition/police-heard", k65, 2 },
+				{ "june", "recognition/taken-heard", k66, 2 },
+				{ "june", "recognition/avoids", k67, 2 },
 			};
-			OutCount = 40;
+			OutCount = 68;
 			return All;
 		}
 

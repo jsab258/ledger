@@ -1,0 +1,56 @@
+{
+ "freeC": 38.6,
+ "freeF": 5.0,
+ "groups": [
+  {
+   "id": "build-intermediate",
+   "title": "The project's build output, remade by the next build",
+   "paths": [
+    "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Intermediate"
+   ],
+   "why": "Unreal's compiler keeps its working files for the game here (gitignored, on your list). Nothing of yours and nothing the game runs from: the game runs from Binaries, which stays.",
+   "after": "The next build of the game is a full one, about 15 minutes instead of 2; the folder then grows back to about 5 GB over the following days.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Intermediate",
+     5.18
+    ]
+   ],
+   "gb": 5.2,
+   "movedGb": 0
+  }
+ ],
+ "others": [
+  {
+   "name": "Dropbox",
+   "path": "C:\\Users\\Jafar\\Dropbox",
+   "gb": 44.5,
+   "why": "yours; the backup adds to it and never deletes"
+  },
+  {
+   "name": "The project's git store",
+   "path": "C:\\Users\\Jafar\\ledger-local\\.git",
+   "gb": 32.2,
+   "why": "30 GB: the project's whole history, most of it the build machine's street pictures, about 130 MB each time it runs (several times a day). Not on your list, so untouched. I am stopping the build machine committing its pictures every run, which stops the growth; shrinking the history itself would rewrite it on GitHub for all three sessions, a bigger step I do not recommend now"
+  },
+  {
+   "name": "Windows' swap file",
+   "path": "C:\\pagefile.sys",
+   "gb": 21.8,
+   "why": "about 22 GB today: it grew while the game, my voice tests and Unreal ran together (13.5 GB in use at the peak), and Windows shrinks it back only when the PC restarts. A restart is yours: I recommend one tonight, and I am running fewer heavy tests at once"
+  },
+  {
+   "name": "Windows' temporary files",
+   "path": "C:\\Users\\Jafar\\AppData\\Local\\Temp",
+   "gb": 9.9,
+   "why": "not on your list, so untouched"
+  },
+  {
+   "name": "Hugging Face's model cache",
+   "path": "C:\\Users\\Jafar\\.cache\\huggingface",
+   "gb": 8.0,
+   "why": "the voice models (the game's live voice loads one from here), not datasets; not on your list, so untouched. It could move to drive F if you say so, with the voice tools pointed there"
+  }
+ ]
+}
