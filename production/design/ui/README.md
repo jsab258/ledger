@@ -22,9 +22,12 @@ Each look went through my own check against the references and then reviewers wh
 
 The pages ask Google Fonts for their fonts (FONTS.md lists each, with its licence; the licence texts are in fonts/). Open a page in a browser with `?screen=title`, `?screen=talk` or `?screen=pause`. A window 1920 by 1080 is a 16:9 screen; 2580 by 1080 is his 21:9 screen; draw at 4/3 scale for 1440 tall.
 
-## What is not in this folder, and why
+## His answers (1 October 2026, read from the page's store at 13:48)
 
-The rendered pictures are not committed yet. The repository's attribution check (tools/attribution-check.py) refuses any picture or font file in a folder it does not know, and the list of folders of the project's own pictures lives in that tool's code, which this job was told not to change. The pictures are on Jafar's choice page (https://claude.ai/artifact/KkuYDscJkQfG2DaMbq5nYD, its source in step1/page/, his picks stored under verdicts/ui-direction and verdicts/ui-pictures-in-repo), and go into this folder once the check knows it (one line in the tool's list of our own folders), which the page asks him.
+- **The look: C, the evening paper** (verdicts/ui-direction). Recommended was A; his pick governs. Its reviewers' notes carry into step 2: the masthead word is the game's title, never a newspaper's name used in play; the menus stay mixed case in a plain heavy face; speech stays light on dark.
+- **The pictures go into the pull request: yes** (verdicts/ui-pictures-in-repo). One line in tools/attribution-check.py now names this folder as the project's own work; the step-1 pictures are in step1/pictures/, full size (2560 by 1440 and 3440 by 1440), as WebP.
+- **The finish: (a)**, in chat: we do it ourselves, with real scanned materials and the game's own renders, and one finished screen is judged against Kingdom Come: Deliverance II before more. It waits for the playable route (his rule of 30 September).
+- **Branding**: researched before any start (production/research/ui-design/BRANDING.md).
 
 ## Step 2, after his pick
 
