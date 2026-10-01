@@ -30,33 +30,26 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - **People dressed** (the clothing session makes, the builder fits): your no today: the clothes read 2020s (slim jeans with contrast stitching, slip-on trainers); plain 1990 clothes before the friends' build. The suit jacket's method test filmed in the game (walking clean; sitting, the skirt still follows the thighs). Since this morning: your no.
 - **The AI tester walking it** (builder; the nightly route walk is item 5): walks the finished game each time it changes; this morning it found Sheila standing on the fish market's crate and the thinking sounds falling back to the loudness mouth in the package (both fixed, walked again). New: a fixed walk of the route with real key presses, judged by the game's own check lines, passes all 11 stages in the editor build and in the finished game (typing w, a, s, d moves Tom 0 cm; Continue puts him back exactly). Since yesterday: two faults fixed; the route walk built.
 
-## Town, 1 October
+## Town, 2 October
 
-**[Your page](https://claude.ai/artifact/RZrzqngShazxh4JtrePZfZ)** (new, 09:00): one tap. Darren's, Father Walsh's and June's own street lines passed a blind review: put them in? I say yes. Sheila's, Alison's and Ada's failed and stay shared for good, as you said (the fourth try, past the two-tries rule by your tap).
+(Written 1 October, 21:15.)
 
-**Your three taps, acted on:** the police ruling is with the builder to port; Sheila stays on her model (a blind reviewer preferred it 13 to 6 of 20).
+**[Your page](https://claude.ai/artifact/KoqZDK2cUeBvvTKVDRhfxU):** one tap. Tom's written suggested lines: put them in? I say yes (three fresh reviews; the third's one narrow point fixed).
 
-**Your review's Core side:** all fixed and ported, each test first:
-- Sheila's Monday question;
-- DS Ellis asks only on Quay Street;
-- a full sighting is certain;
-- your ruling: a noise or a shape is never "he did it";
-- Rita finds her own window;
-- Ada's tea as she'd tell it;
-- the town's talk in time;
-- a no across one o'clock.
+**Done:**
+- Darren's, Father Walsh's and June's own street lines: in the game, your yes.
+- Sheila stays on her model (blind check, 13 to 6).
+- Your review's two High faults, the town's half, on main: a witness says "the new owner", never "Nowak"; a witness is never again told she knows nothing.
+- Its Medium faults and your rulings, each test first, one fresh check: Ron and Sheila never go to the police and keep it to themselves; a threat silences a witness, never about a body; no tea invitation from the cells; the landing's hours. With the builder to port.
+- Suggestions, the talk side: built; the model's lines measured on the subscription, varied after one fix.
 
-**Found:** the game never plays the neighbours' small talk, Ron's approved lines included; asked the builder.
+**Past the two-tries rule:** the written lines (third review, the last) and the street lines (fourth try, your tap).
 
-**Talk delay:** words 1.9 s after Enter, the check about 1.1 s of it. Done.
+**Your key:** nothing since $0.18.
 
-**Your key:** $0.18, logged.
+**C: free:** 63 GB this morning, 47 GB now, below 60: the builder's cleanup page comes first.
 
-**Research:** cutting the first words' delay.
-
-**C: free:** 56.3 GB, 63 now.
-
-**Next:** your tap.
+**Next:** your tap; the builder's port.
 
 ## Clothes, Thursday 1 October
 
