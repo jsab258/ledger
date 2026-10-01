@@ -1,0 +1,61 @@
+{
+ "passed": 5,
+ "stages": 11,
+ "rows": [
+  {
+   "stage": "street",
+   "ok": true,
+   "detail": "chose=new"
+  },
+  {
+   "stage": "talk-open",
+   "ok": false,
+   "detail": "no talk-open line within 10 s"
+  },
+  {
+   "stage": "talk-typed",
+   "ok": false,
+   "detail": "no talk-typed line within 10 s"
+  },
+  {
+   "stage": "reply-words",
+   "ok": false,
+   "detail": "no reply-words line within 30 s"
+  },
+  {
+   "stage": "deed",
+   "ok": false,
+   "detail": "no deed line within 15 s"
+  },
+  {
+   "stage": "onlookers",
+   "ok": false,
+   "detail": "no onlookers line within 15 s"
+  },
+  {
+   "stage": "wait",
+   "ok": true,
+   "detail": "from=D0 18:46 to=D0 20:00 stopped=ron@0"
+  },
+  {
+   "stage": "save",
+   "ok": true,
+   "detail": "clock=D0 21:00 at=8.76,3.05"
+  },
+  {
+   "stage": "quit",
+   "ok": true,
+   "detail": "the game closed from the pause"
+  },
+  {
+   "stage": "street",
+   "ok": true,
+   "detail": "chose=continue (saved clock=D0 21:00 at=8.76,3.05)"
+  },
+  {
+   "stage": "continue",
+   "ok": false,
+   "detail": "no continue line within 30 s"
+  }
+ ]
+}

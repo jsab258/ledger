@@ -2999,6 +2999,23 @@ namespace
 	bool bVoiceAsked = false, bVoicePlayed = false, bVoiceRecording = false, bVoiceAllIn = false;
 	double GVoiceSeconds = 0.0, GVoiceAskedAt = 0.0, GVoicePlayedAt = 0.0;
 	double GVoiceStartedAt = 0.0;   // when the latest sentence's sound began to play
+
+	// THE ROUTE'S OWN CHECK LINES (item 5, 1 October; production/research/
+	// packaged-game-testing, its recommendation): one plain line for each
+	// stage of ordinary play as it happens, whoever plays (a person, the AI
+	// tester, the scripted route walk), "LEDGER-ROUTE stage=<name> ok=<1|0>
+	// <detail>", in the log and appended to route-checks.jsonl beside the
+	// game's own files (Saved: a Shipping build keeps no log). For watching
+	// only; nothing here drives the game.
+	void RouteCheck(const TCHAR* Stage, bool bOk, const FString& Detail)
+	{
+		UE_LOG(LogTemp, Display, TEXT("LEDGER-ROUTE stage=%s ok=%d %s"), Stage, bOk ? 1 : 0, *Detail);
+		const FString Line = FString::Printf(TEXT("{\"stage\":\"%s\",\"ok\":%s,\"at\":%.2f,\"detail\":\"%s\"}\n"), Stage,
+			bOk ? TEXT("true") : TEXT("false"), FPlatformTime::Seconds(), *Detail.ReplaceCharWithEscapedChar());
+		FFileHelper::SaveStringToFile(Line, *(FPaths::ProjectSavedDir() / TEXT("route-checks.jsonl")),
+			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM, &IFileManager::Get(), FILEWRITE_Append);
+	}
+	FVector GSayOpenPawnAt = FVector::ZeroVector;
 	// ONE LINE, END TO END (Jafar's list after the audit, item 2): from his
 	// Enter to the reply's first words, to its first sentence handed to the
 	// voice, to the first sound of it heard, one record a reply ("heard" in
@@ -3144,6 +3161,7 @@ namespace
 		if (bAwaitFirstSound && GEnterAt > 0.0)
 		{
 			bAwaitFirstSound = false;
+			RouteCheck(TEXT("reply-heard"), true, FString::Printf(TEXT("seconds=%.2f"), GVoiceStartedAt - GEnterAt));
 			const double Words = GTimedWordsAt - GEnterAt, Asked = GTimedVoiceAskedAt - GEnterAt, Sound = GVoiceStartedAt - GEnterAt;
 			const double Arrived = GTimedPieceAt > 0.0 ? GTimedPieceAt - GEnterAt : -1.0;
 			LedgerSession::Write(TEXT("heard"), TEXT("\"who\":") + LedgerSession::Str(Un(GTimedCard)) + TEXT(",\"path\":") + LedgerSession::Str(TalkPathName())
@@ -3659,6 +3677,41 @@ namespace
 		GAckForceLoud = false;
 		++GFaceAB.Step;
 		GFaceAB.NextAt = Now + 2.5;
+	}
+
+	// -RouteWalk, 1 October (item 5): where Tom stands and which way the camera
+	// looks, in the street's own metres (X along it, Z across, the heading in
+	// degrees from +X toward +Z), written five times a second to
+	// route-where.txt beside the game's files, so tools/route_walk.py can steer
+	// its real key presses toward a place in short legs instead of timed walks
+	// (timed walks got lost when people and cars stood in the way).
+	void RouteWhereTick(UWorld* World, double Now)
+	{
+		static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("RouteWalk"));
+		static double Next = 0.0;
+		if (!bOn || GPawn == nullptr || World == nullptr || Now < Next) { return; }
+		Next = Now + 0.2;
+		APlayerController* PC = World->GetFirstPlayerController();
+		const FVector Loc = GPawn->GetActorLocation();
+		const FVector Fwd = PC != nullptr ? PC->GetControlRotation().Vector() : GPawn->GetActorForwardVector();
+		const LedgerCrime::P3 A = ToStreet(Loc), B = ToStreet(Loc + Fwd * 100.0f);
+		const double Heading = FMath::RadiansToDegrees(std::atan2(B.Z - A.Z, B.X - A.X));
+		// Then the places it steers for: Rita's window and the three who talk.
+		FString Text = FString::Printf(TEXT("tom %.3f %.3f %.1f %s"), A.X, A.Z, Heading, *Un(GNow.ToString()));
+		if (GGlass[0] != nullptr)
+		{
+			const LedgerCrime::P3 G = ToStreet(GGlass[0]->GetComponentsBoundingBox(true).GetCenter());
+			Text += FString::Printf(TEXT("|window %.3f %.3f %.2f"), G.X, G.Z, LedgerCrime::kLiveReachM);
+		}
+		for (const char* C : { "lena", "sam", "rocco" })
+		{
+			AActor* Body = CardBody(C);
+			AActor* Shown = Body != nullptr ? GVisualFor(Body) : nullptr;   // the stand-in body is never shown; the person is
+			if (Shown == nullptr || Shown->IsHidden()) { continue; }        // away: hidden off the street
+			const LedgerCrime::P3 P = ToStreet(Body->GetActorLocation());
+			Text += FString::Printf(TEXT("|%s %.3f %.3f %.2f"), UTF8_TO_TCHAR(C), P.X, P.Z, LedgerCrime::kLiveTalkM);
+		}
+		FFileHelper::SaveStringToFile(Text, *(FPaths::ProjectSavedDir() / TEXT("route-where.txt")));
 	}
 
 	// Each frame: the acknowledgement ends with its sound, or at once when the answer starts.
@@ -4207,6 +4260,7 @@ namespace
 					// The line's clock: its words are here; its first sound is next
 					// (already on its way when the pending sentence was sent).
 					GTimedWordsAt = GLive.FirstAt;
+					if (GEnterAt > 0.0) { RouteCheck(TEXT("reply-words"), true, FString::Printf(TEXT("seconds=%.2f"), GTimedWordsAt - GEnterAt)); }
 					if (GLive.PendingSaid.empty()) { GTimedVoiceAskedAt = 0.0; }
 					GTimedCard = GLive.PendingCard;
 					bAwaitFirstSound = GVoice.bReady && GEnterAt > 0.0 && GEnterAt <= GLive.AskedAt;
@@ -4389,7 +4443,13 @@ namespace
 						// window smashed on "e", report on "r", Tom walked). Now only Enter or
 						// Esc ends the line; a lost focus is won back (HumanTalkTick), and the
 						// game ignores its keys while the box is open.
-						if (How == ETextCommit::OnEnter) { GSaid = T.ToString(); bSayCommitted = true; GEnterAt = NowS(); }
+						if (How == ETextCommit::OnEnter)
+						{
+							GSaid = T.ToString(); bSayCommitted = true; GEnterAt = NowS();
+							// TYPING NEVER MOVES TOM (the audit: w, a, s and d typed in the box walked him).
+							const double Moved = GPawn != nullptr ? FVector::Dist2D(GPawn->GetActorLocation(), GSayOpenPawnAt) : -1.0;
+							RouteCheck(TEXT("talk-typed"), Moved >= 0.0 && Moved < 1.0, FString::Printf(TEXT("chars=%d moved_cm=%.1f"), GSaid.Len(), Moved));
+						}
 						else if (How == ETextCommit::OnCleared) { bSayCancelled = true; }
 					})
 				]
@@ -4409,6 +4469,8 @@ namespace
 		UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: open for %s, keyboard focus %s"), *GTalkTarget.Name,
 		       FSlateApplication::Get().GetKeyboardFocusedWidget() == GSayText ? TEXT("in the box") : TEXT("NOT in the box"));
 		GSayOpenedAt = NowS();
+		GSayOpenPawnAt = GPawn != nullptr ? GPawn->GetActorLocation() : FVector::ZeroVector;
+		RouteCheck(TEXT("talk-open"), true, FString::Printf(TEXT("to=%s clock=%s"), *GTalkTarget.Name, *Un(GNow.ToString())));
 	}
 
 	void CloseSayBox(UWorld* World)
@@ -5530,6 +5592,8 @@ namespace
 		SaveEncounterToDisk();
 		UE_LOG(LogTemp, Display, TEXT("LedgerWait: from %s to %s%s"), *Un(From.ToString()), *Un(GNow.ToString()),
 			bStopped ? *(FString(TEXT(", stopped: ")) + Un(S.Key)) : TEXT(""));
+		RouteCheck(TEXT("wait"), GNow.TotalMinutes() > From.TotalMinutes(), FString::Printf(TEXT("from=%s to=%s%s"), *Un(From.ToString()), *Un(GNow.ToString()),
+			bStopped ? *(FString(TEXT(" stopped=")) + Un(S.Key)) : TEXT("")));
 		LedgerSession::Write(TEXT("wait"), TEXT("\"from\":") + LedgerSession::Str(Un(From.ToString())) + TEXT(",\"to\":") + LedgerSession::Str(Un(GNow.ToString())));
 		ClockLight();
 		if (!bStopped) { Say(FString(TEXT("You wait. ")) + Un(GNow.ToString()) + TEXT("."), 5.0f, FColor::Yellow); }
@@ -5547,6 +5611,7 @@ namespace
 		LookScriptTick(World, Now);
 		AskScriptTick(Now);
 		FaceABTick(Now);
+		RouteWhereTick(World, Now);
 		TalkLightTick(World, Now);
 		AckTick();
 		if (bSayOpen)
@@ -5925,6 +5990,10 @@ namespace
 		}
 		bSavedToDisk = Ok;
 		GSavedBytes = (int)Json.size();
+		{
+			const LedgerCrime::P3 At = GPawn != nullptr ? ToStreet(GPawn->GetActorLocation()) : LedgerCrime::P3(0.0, 0.0, 0.0);
+			RouteCheck(TEXT("save"), Ok, FString::Printf(TEXT("clock=%s at=%.2f,%.2f"), *Un(GNow.ToString()), At.X, At.Z));
+		}
 	}
 
 	// THE LOAD, FROM DISK, in a process that never saw the crime.
@@ -6463,6 +6532,9 @@ namespace
 					// after Continue he faced the camera).
 					if (AController* C = GPawn != nullptr ? GPawn->GetController() : nullptr) { C->SetControlRotation(FRotator(0.0f, (float)GLoadYaw, 0.0f)); }
 					UE_LOG(LogTemp, Display, TEXT("LedgerLoad: back where he stood, %.2f, %.2f"), GLoadX, GLoadZ);
+					const LedgerCrime::P3 Now3 = GPawn != nullptr ? ToStreet(GPawn->GetActorLocation()) : LedgerCrime::P3(1e9, 0.0, 1e9);
+					const double Off = std::hypot(Now3.X - GLoadX, Now3.Z - GLoadZ);
+					RouteCheck(TEXT("continue"), Off < 0.5, FString::Printf(TEXT("clock=%s at=%.2f,%.2f off_m=%.2f"), *Un(GNow.ToString()), Now3.X, Now3.Z, Off));
 				}
 				Say(FString(TEXT("The street remembers. ")) + Un(GNow.ToString()) + TEXT("."), 8.0f, FColor::Yellow);
 			}
@@ -6661,6 +6733,7 @@ namespace
 			if (Choice == LedgerTitle::EChoice::Quit) { FPlatformMisc::RequestExit(false); return true; }
 			LedgerTitle::Hide(World);
 			GPhase = ECrimePhase::LiveWaitDeed;
+			RouteCheck(TEXT("street"), true, FString::Printf(TEXT("chose=%s"), Choice == LedgerTitle::EChoice::Continue ? TEXT("continue") : TEXT("new")));
 			StartLive(World, Choice == LedgerTitle::EChoice::Continue);
 			GPhaseStart = Now;
 			return true;
@@ -7070,7 +7143,13 @@ namespace
 			}
 			// THE SAME DEED AS THE REGRESSION: the vantage measured with the
 			// glass standing, then the deed, then what she saw filed.
-			if (bRitasWindow && !bLiveScript && bGCast) { DeedOnlookers(World); }
+			if (bRitasWindow && !bLiveScript && bGCast)
+			{
+				DeedOnlookers(World);
+				FString Who;
+				for (const LedgerCrime::Reading& R : GReadings) { if (R.EventId == "A") { Who += (Who.IsEmpty() ? TEXT("") : TEXT(",")) + Un(R.WitnessId); } }
+				RouteCheck(TEXT("onlookers"), true, FString::Printf(TEXT("clock=%s measured=%s"), *Un(GNow.ToString()), Who.IsEmpty() ? TEXT("none") : *Who));
+			}
 			else
 			{
 				GReadings.push_back(MeasureVantage(World, GIdW1, "A", GW1Body, GGlass[0], GSeconds[0][0]));
@@ -7145,6 +7224,7 @@ namespace
 				FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()
 					/ TEXT("ue-encounter-live-deed.png")), true, false);
 			}
+			RouteCheck(TEXT("deed"), true, FString::Printf(TEXT("clock=%s"), *Un(GNow.ToString())));
 			GPhase = ECrimePhase::LiveAfterDeed;
 			GPhaseStart = Now;
 			return true;
