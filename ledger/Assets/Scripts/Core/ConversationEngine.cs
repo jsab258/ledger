@@ -44,7 +44,16 @@ namespace Ledger.Core
         public bool LastEnded { get; private set; }
 
         /// Starts the next line as a new conversation (the game's {"fresh":true}).
-        public void StartFresh() { _transcript.Clear(); _asksThisTalk = 0; }
+        public void StartFresh() { _transcript.Clear(); _asksThisTalk = 0; TalkNumber++; }
+
+        /// Which conversation this is with them, counted up each time one starts
+        /// afresh, so what was suggested to Tom in one is forgotten in the next.
+        public int TalkNumber { get; private set; }
+
+        /// What has been said in this conversation, his lines ("user") and theirs
+        /// ("assistant"), as he heard it: all Tom's suggested lines may read of
+        /// the talk (Suggest; never their card, memories or secrets).
+        public IReadOnlyList<LlmMessage> TalkSoFar => _transcript;
 
         /// ASKING, AND KNOWING WHEN TO STOP (town list 6ak, the third checklist
         /// sweep): how many replies of this conversation were told to ask him

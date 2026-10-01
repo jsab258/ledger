@@ -1,0 +1,111 @@
+{
+ "status": "in review: not for play until the town says it has passed its last review and Jafar's page (1 October); the game shows no suggestions while this says 'in review'",
+ "about": "Tom's own written suggested lines (Jafar, 1 October: Mixed, the game's own lines for hellos, goodbyes and decisions; production/design/ui/STYLE-GUIDE.md, Suggested lines). greet: opening a talk, first meeting or tenth. leave: ending one, before anything is said or after. personal: something personal or off the subject. Follow-ups to what was just said are the model's only: none fits after anything, so without the model that slot is left out. deals: ron-ask, said while Ron's ask stands, sounds like a no so Ron puts his plain question; ron-tell-them-no answers that question; sheila-week answers 'So which is it going to be?'; sheila-week-<answer> answers her plain question for that answer. Each yes is the yes the game takes; each no and keep decides nothing (CoreTests, Suggested lines). Never the same line twice in one conversation.",
+ "greet": [
+  "Hello. Have you got a minute?",
+  "Sorry to bother you.",
+  "All right? Can I have a word?",
+  "Hello there.",
+  "Mind if I stop a minute?",
+  "Hello. Is now a good time?"
+ ],
+ "leave": [
+  "I'll let you get on.",
+  "I won't keep you.",
+  "Right. I'd best be off.",
+  "I'll leave you to it.",
+  "Another time, then.",
+  "I won't stop, then.",
+  "I'll not hold you up."
+ ],
+ "personal": [
+  "Have you always lived round here?",
+  "What was Mickey like?",
+  "Where's good for a cup of tea round here?",
+  "What do you make of the street these days?",
+  "I'm still finding my feet here.",
+  "It's all new to me, this.",
+  "What do people do round here of a Sunday?",
+  "Who should I get to know round here?",
+  "Do you get many strangers down here?",
+  "What's the best thing about this street?"
+ ],
+ "deals": {
+  "ron-ask": {
+   "refuse": [
+    "Tell them no. I'm not doing it.",
+    "I'm not carrying it. Count me out."
+   ]
+  },
+  "ron-tell-them-no": {
+   "yes": [
+    "Yes. Tell them no.",
+    "Yes, I'm sure."
+   ],
+   "no": [
+    "No, hold off for now.",
+    "No. I'll think on it."
+   ],
+   "keep": [
+    "What happens if I don't?",
+    "Can I think it over?"
+   ]
+  },
+  "sheila-week": {
+   "winddown": [
+    "Wind it down. Just the cabs.",
+    "I'm getting out of Mickey's business."
+   ],
+   "takeover": [
+    "I'm taking it on. All of it.",
+    "I'll keep it going. All of it."
+   ],
+   "wontsay": [
+    "I'm not saying. That's my answer.",
+    "That's my business, Sheila."
+   ]
+  },
+  "sheila-week-winddown": {
+   "yes": [
+    "Yes. Wind it down.",
+    "Yes. Just the cabs."
+   ],
+   "no": [
+    "No. Give me a bit longer.",
+    "No. Let me think."
+   ],
+   "keep": [
+    "What would that mean for you?",
+    "What happens to Ron, then?"
+   ]
+  },
+  "sheila-week-takeover": {
+   "yes": [
+    "Yes. It's mine now.",
+    "Yes. I'm keeping it going."
+   ],
+   "no": [
+    "No. Not yet.",
+    "No. I need longer."
+   ],
+   "keep": [
+    "What comes with it, exactly?",
+    "Who else knows about it?"
+   ]
+  },
+  "sheila-week-wontsay": {
+   "yes": [
+    "Yes. I'm saying nothing.",
+    "Yes. That's for me to know."
+   ],
+   "no": [
+    "No. Give me a minute.",
+    "No. Ask me again later."
+   ],
+   "keep": [
+    "Why does it matter so much?",
+    "What would you do?"
+   ]
+  }
+ }
+}
