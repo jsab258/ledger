@@ -936,6 +936,14 @@
    "mb": 261
   },
   {
+   "path": "F:/LedgerTools/scratch/uishot",
+   "madeBy": "the builder's interface films (-TitleShot, -PauseShot, -TalkShot, -PadShot), 1 October",
+   "why": "the interface's screens filmed at 1920x1080 and 3440x1440 to check them against the design; scratch, superseded by each new film",
+   "status": "kept",
+   "recorded": "2026-10-01",
+   "mb": 241
+  },
+  {
    "path": "F:/LedgerTools/slr83/scottish_english_male.zip",
    "madeBy": "the builder, 29 September: downloaded from openslr.org/resources/83",
    "why": "the source of the Scottish calibration set",
