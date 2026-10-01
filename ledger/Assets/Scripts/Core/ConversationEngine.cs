@@ -265,7 +265,10 @@ namespace Ledger.Core
         public MemoryStore Memory { get; }
         public KnowledgeBase Knowledge { get; }
         public SuspicionTracker Suspicion { get; }
-        public string Model { get; }
+        /// The model for this line: by the kind of moment, never by who is talking
+        /// (TalkMoment; Jafar's ruling D48). The talk program sets it each line;
+        /// small talk's until it does.
+        public string Model { get; set; }
 
         readonly List<LlmMessage> _transcript = new List<LlmMessage>();
 
@@ -278,7 +281,7 @@ namespace Ledger.Core
             Knowledge = knowledge;
             Suspicion = suspicion;
             _cost = cost;
-            Model = model ?? (card.Tier == "core" ? Models.Core : Models.Ambient);
+            Model = model ?? TalkMoment.ModelFor(TalkKind.SmallTalk);
             // Their own words when a line is refused (town list 6ap).
             ResponseValidator.OwnDeflections(card.Name, card.Own("deflect"));
         }
