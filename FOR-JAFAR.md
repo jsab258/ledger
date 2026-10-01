@@ -5,11 +5,11 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Thursday 1 October, 05:35)
+## Overview (Thursday 1 October, 05:45)
 
 ### Needs you
 
-(Every page's stored answers checked at 03:30: Thursday's and Wednesday's, mine; the town's; the clothing session has no page.)
+(Every page's stored answers checked at 05:40: Thursday's and Wednesday's, mine; the town's; the clothing session has no page. No new picks.)
 
 1. **[The town's page](https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz), three taps.** Does seeing Tom break a window send a neighbour to the police? Recommended yes (today nobody ever reports). Sheila on the faster model? Recommended try it, blind-checked (her first sentence 0.81 s against 1.43 s, measured outside the game). The other characters' street lines: one more try, a new way? Recommended try once.
 2. **The route is ready for your cloud review:** main as of 760832bce, green on the build machine at 01:08 (its Core tests and the full Unreal run); what changed and the runs in the finished game before and after are in production/playtest/review-runs-2026-09-30.md. Recommended: run it.
@@ -28,7 +28,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - **Faces** (builder, item 4): frozen. Ron's and Sheila's are final; Darren's S6 is your pick, and you see it once at full size before it is final. Since yesterday: frozen.
 - **Voices** (builder): Ron's and Darren's yes; Sheila's p267 your yes, with your note that it sounds flat, as Ron's first take did. The cloud research's voice-direction note says why: the clips they learn from were read, not acted; its method (a clip library per mood, direction for every line, many takes, chosen by ear in the game) is how they get worked next. Since yesterday: the method.
 - **People dressed** (the clothing session makes, the builder fits): Ron's boots and Sheila's handbag in the game; suits and coats by your ruling (MakeHuman's, skinned); the suit jacket to be filmed in the game (the list's last item). Since this morning: your rulings.
-- **The AI tester walking it** (builder; functional tests of the package are item 8, by the packaged-testing note): walked the route today in the editor and the packaged game, five runs, and found the faults fixed this afternoon. Since yesterday: the whole route walked, reload included.
+- **The AI tester walking it** (builder; functional tests of the package are item 5, by the packaged-testing note): walks the finished game each time it changes; this morning it found Sheila standing on the fish market's crate (fixed, walked again) and the thinking sounds falling back to the loudness mouth in the package (fixed, walked again). Since yesterday: two faults found and fixed in the finished game.
 
 ## Town, 1 October
 
@@ -74,25 +74,27 @@ Three checks found faults in my fixes; all mended.
 
 ## Builder, Thursday 1 October
 
-(Written 1 October, 03:45.)
+(Written 03:45; refreshed 05:45.)
 
-**[Thursday's page](https://claude.ai/artifact/3zqyXtiTA35rPcuufuD48K):** one tap, the voice's delay. I recommend your other items first, then the voice moved into the game.
+**[Thursday's page](https://claude.ai/artifact/3zqyXtiTA35rPcuufuD48K):** three taps: the voice's delay (I recommend your other items first, then the voice moved into the game), and Ron's and Darren's thinking sounds with two kinds of mouth, blind.
 
-**The route: ready for your cloud review** (main as of 760832bce): every High fault fixed; the review's three runs pass in the finished game.
+**The route: ready for your cloud review.** Since: the tester found Sheila standing on the fish market's crate; fixed, test first, and seen fixed in the finished game.
 
-**The delay:** the voice's work for a short line in the game fell from 3.95 to 2.98 s (its decoder on the graphics card, same sound). With the words at 1.9 s, the first sound comes about 4.5 s after Enter.
+**The delay:** a short line's voice work in the game fell from 3.95 to 2.98 s. With the words at 1.9 s, the first sound comes about 4.5 s after Enter.
 
-**Failed, past two tries:** the voice in pieces (1.0 s to the first piece on the idle PC; slower, with gaps, in the game); a compiled main loop (slower in the game); frame caps, half resolution, priority: no change. Set aside; your call.
+**Failed, past two tries:** the voice in pieces, and a compiled loop: both slower beside the game. Set aside; your call.
 
-**Evidence:** checks 38/38; Core tests green on GitHub.
+**Mouths:** the thinking sounds play mouths Epic's tool made from the sound, in the finished game. The second blind review found narrow points only.
 
-**Got wrong:** Wednesday's four open looks were missing from Needs you; back on.
+**Evidence:** checks 38/38; Core and Unreal green.
 
-**Research:** fast first sound (a helper); the voice in pieces in the game (mine).
+**Got wrong:** Wednesday's open looks were missing from Needs you; back on.
 
-**C:** 64.9 GB last night, 60.5 now (Windows' page file grew under the game-and-voice runs). F: 8 GB. Backup with this commit.
+**Research:** fast first sound (a helper); the voice in pieces (mine).
 
-**Next:** the friends' build, short of the new account.
+**C:** 64.9 GB last night, 67.8 now. Backup with this commit.
+
+**Next:** nightly tests of the finished game.
 
 ## 26 September, day
 
