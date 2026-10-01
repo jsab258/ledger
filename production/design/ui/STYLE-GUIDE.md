@@ -4,8 +4,8 @@ The look Jafar picked on 1 October 2026: the interface is a 1990 British local e
 
 ## Principles
 
-1. **One paper, one red.** Ink, newsprint and a single spot red. Red means *the one in hand*, a band or a speaker's name, and nothing else.
-2. **Period lettering for headings, plain type for reading.** The blackletter word is the game's name and nothing more. League Gothic is for bands and ears only. Everything the player reads is in Libre Franklin.
+1. **One paper, one red.** Ink, newsprint and a single spot red. Red means *the one in hand*, a band (STOP PRESS, SETTINGS, a question) or a speaker's name, and nothing else: the ears and the hint's tag are ink, the progress rule is newsprint.
+2. **Period lettering for headings, plain type for reading.** The blackletter word is the game's name and nothing more. League Gothic is for bands, ears and small section heads only. Everything the player acts on or hears is in Libre Franklin; Old Standard TT italic carries only notes, captions and datelines, never below 24.
 3. **Nothing he could not know.** No markers, no meters, no minds shown. A name appears only once Tom has learned it; until then the street's description of the person is used (D12).
 4. **Read first, then belong.** Any style that costs legibility loses: speech is light on dark, never dark on newsprint.
 5. **Out of the way of the street.** Everything the player reads or acts on sits in the centred 16:9 region of a wide screen. Only the street, and the shading over it, uses the full width.
@@ -15,30 +15,31 @@ The look Jafar picked on 1 October 2026: the interface is a 1990 British local e
 - **Units.** Everything is laid out at 1080 tall: 1920 wide at 16:9, 2580 wide at Jafar's 21:9. Unreal scales by the shortest side (the default DPI curve, 1080 = 1.0), so on his 3440 by 1440 screen every size here is drawn a third larger. Sizes below are in these units.
 - **The safe region.** The centred 1920 by 1080; on 21:9 that leaves 330 units each side (440 pixels on his screen). A setting "Interface width: 16:9 / full width" comes later.
 - **Margins.** 120 units left and right of the safe region, 52 to 74 at the top and bottom. Nothing sits closer than 54 to an edge (5%).
-- **Spacing.** An 8-unit step. Rows of choices are 74 to 78 units, settings lines 60, and gaps between keys 10.
+- **Spacing.** An 8-unit step. Rows of choices are 76 to 86 units (the larger with a note under the choice), settings lines 56, and gaps between keys 10.
 - **Where things sit:**
   - **Title:** the front page at the left of the safe region.
   - **Pause and confirmations:** centred.
   - **Settings:** a listings page across the safe region, with key hints under it.
   - **Subtitles:** centred, their last line 104 units up (10%).
-  - **The typing box:** above the subtitles, 252 up, with its keys at its right.
-  - **First-time hints:** a slip just above the subtitle zone.
-  - **The prompt:** beside the person or thing it belongs to.
+  - **The typing box:** above the subtitles, 252 up, on the side of the picture away from the person he is talking to, so their face and listening stay in view; its keys ride on its top edge and move as it grows.
+  - **First-time hints:** a small slip low at the left, clear of the street ahead and of the subtitles.
+  - **The prompt:** beside the person or thing it belongs to, anchored to its place in the picture, so it stays beside them at any shape of screen.
 
 ## Type
 
 | Role | Face | Size (units) | Notes |
 |---|---|---|---|
-| Masthead | UnifrakturMaguntia | 112 to 128 | The game's name only: the title and loading pages. Never on the pause screen, never a newspaper in play |
+| Masthead | UnifrakturMaguntia | 112 to 128 | The game's name only: the title and loading pages. Never on the pause screen, and never the name of a newspaper in the town |
 | Band | League Gothic, capitals | 40 to 58 | STOP PRESS, SETTINGS, confirmations; white on red |
-| Ear | League Gothic, capitals | 30 | LATE FINAL, RAIN LATER |
+| Ear, section head | League Gothic, capitals | 26 to 30 | LATE FINAL, RAIN LATER, THE SCREEN; ink, never red |
 | Choice | Libre Franklin 800 | 48 to 50 | Mixed case; one per row |
 | Setting, tab | Libre Franklin 600 / 800 | 30 / 32 | Values in 500, numbers tabular |
 | Subtitle | Libre Franklin 450 | 39 | About 48 px from the top of an h to the foot of a y on a 1440 screen; at most two lines under 40 letters |
 | Speaker's name | Libre Franklin 800, capitals | 30 | White on red, before the line |
 | Typing box | Libre Franklin 450 | 36 | Grows to three lines, then scrolls |
 | Key hint | Libre Franklin 500 | 30 | The key itself 700, in a ruled box |
-| Standfirst, caption, note | Old Standard TT italic | 25 to 30 | |
+| Note, caption | Old Standard TT italic | 26 to 30 | Where and when, why a choice is unavailable, a caption |
+| Explanation in settings | Libre Franklin 400 | 27 | |
 | Dateline | Old Standard TT, capitals, tracked | 24 | |
 | Smallest label | Libre Franklin 400 | 22 | The build number only; nothing the player must read is smaller than 24 |
 
@@ -50,7 +51,7 @@ Fonts are all SIL OFL 1.1 (FONTS.md). Unreal needs static cuts of the variable f
 |---|---|---|---|
 | Newsprint | #E8E3D6 | Every sheet | |
 | Ink | #1E1E1D | Text on newsprint, rules, key boxes | 13.0 : 1 on newsprint |
-| Spot red | #B4191F | The one in hand, bands, speakers' names | 5.3 : 1 on newsprint (large bold type only); white on it 6.8 : 1 |
+| Spot red | #B4191F | The one in hand, bands, speakers' names; nothing else | 5.3 : 1 on newsprint (large bold type only); white on it 6.8 : 1 |
 | Grey | #4F4C46 | Notes, unchosen tabs, arrows | 6.7 : 1 |
 | Unavailable | #77726A | A choice that cannot be taken, always with a line saying why | 3.7 : 1 |
 | On dark | #F1EDE3 | Text over the street | |
@@ -77,8 +78,9 @@ Every part is drawn in step2/kit.html.
 - **Settings line:**
   - normal;
   - in hand: red, with a bar;
-  - unavailable: grey, with the reason in place of its value ("Set by Quality").
-  - Values change with ← and → between ‹ and ›.
+  - unavailable: grey, with the reason in place of its value ("Off on Low").
+  - Values change with ← and → between ‹ and ›, drawn in ink at 36 so they read as the way to change it.
+- **Quality:** the preset sits over the five lines it sets (shadows, reflections in the wet, how far you see, textures, effects); changing one of them makes it Custom. The screen's own lines (display, resolution, frame rate, brightness) sit apart under their own head. The Picture section is changed over the live street, dimmed but not blurred, so each change shows as it is made.
 - **Preset box:**
   - normal: ruled;
   - picked: filled with ink;
@@ -93,9 +95,9 @@ Every part is drawn in step2/kit.html.
 - **Prompt:**
   - one at a time, the nearest in view;
   - a short line points to its person or thing;
-  - the key in its box, then the verb on the backing ("Talk to Sheila", "The window").
+  - the key in its box, then the verb on the backing ("Talk to Sheila", "The window"); the name in it follows the same rule as subtitles, and it is the only label ever shown on a person.
 - **First-time hint:**
-  - a slip headed FIRST STEPS: the keys, then a line in italic;
+  - a small slip headed FIRST STEPS in ink: the keys, then the game's own line in italic;
   - one at a time;
   - gone the moment the action is done; never pauses the game.
 - **Typing box:**
@@ -105,7 +107,7 @@ Every part is drawn in step2/kit.html.
   - no suggested questions.
 - **Confirmation:** a red band asking the question, a line saying what is kept, and the safe choice in hand first ("Stay on the street").
 - **Progress:**
-  - a thin red rule that fills when the work can be counted, with the game's own words for the phase ("Getting the street ready for this PC's graphics card", "312 to go");
+  - a thin newsprint rule that fills when the work can be counted, with the game's own words for the phase ("Building the street", "Starting as soon as the street is ready", "312 to go"; the first-launch phase, "Getting the street ready for this PC's graphics card", only on the first run);
   - a short moving piece when it cannot be counted;
   - never a bar that guesses.
 
