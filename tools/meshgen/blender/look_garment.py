@@ -41,13 +41,31 @@ if body is not None and "--hide-covered" in argv:
     neck_z = Jh("neck_01").z - 0.02
     hem_z = min((g.matrix_world @ v.co).z for v in g.data.vertices) + 0.04     # below the hem nothing is covered
     hands_ = [Jh("hand_l"), Jh("hand_r")]
+    # covered means the garment lies over the point along its outward normal, within --hide-covered, and the point is
+    # not near the garment's openings (a sleeve's end, the neckline, the hem; 1 October: hidden by distance alone,
+    # skin beside a sleeve's end and at the throat vanished, and a reviewer read the holes as the garment's faults)
+    import bmesh as _bm2
+    gb_ = _bm2.new()
+    gb_.from_mesh(g.data)
+    gb_.transform(g.matrix_world)
+    rim_ = [v.co.copy() for e in gb_.edges if e.is_boundary for v in e.verts]
+    gb_.free()
+    from mathutils.kdtree import KDTree as _KDh
+    kdr = _KDh(max(1, len(rim_)))
+    for i_, c_ in enumerate(rim_):
+        kdr.insert(c_, i_)
+    kdr.balance()
     near_ = []
+    bnorm = body.matrix_world.to_3x3()
     for v in body.data.vertices:
         w_ = body.matrix_world @ v.co
         if w_.z > neck_z or w_.z < hem_z or min((w_ - h_).length for h_ in hands_) < 0.12:
             continue                          # the neck and hands always show
-        d_ = GT.find_nearest(w_)[3]
-        if d_ is not None and d_ < opt("--hide-covered", 0.025):
+        if rim_ and kdr.find(w_)[2] < opt("--rim-keep", 0.035):
+            continue
+        n_ = (bnorm @ v.normal).normalized()
+        hit_ = GT.ray_cast(w_ + n_ * 0.0005, n_, opt("--hide-covered", 0.025) + 0.03)
+        if hit_[0] is not None:
             near_.append(v.index)
     vg_ = body.vertex_groups.new(name="_shown")
     vg_.add([i for i in range(len(body.data.vertices)) if i not in set(near_)], 1.0, "REPLACE")
