@@ -62,7 +62,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Research:** the tailor's jacket in Marvelous; read the wardrobe research.
 
-**Pushes:** free tests only. **C: free:** 46 GB, then 20 (the swap file; the builder's cleanup page and a restart). Backup ran with this commit.
+**Pushes:** free tests only. **C: free:** 46 GB at the start, a dip to 20, 42 now (the swap file; the builder's cleanup page). Backup ran: OK.
 
 ## Builder, Thursday 1 October
 
