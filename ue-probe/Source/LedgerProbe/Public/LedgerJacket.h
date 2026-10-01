@@ -79,7 +79,12 @@ namespace LedgerJacket
 	// template: the jacket hung on Ron's own body in Blender, its skin weights
 	// copied from that body) on a cloth component that follows the body's pose
 	// and collides with the body's physics asset, so its loose parts swing.
-	inline bool WearCloth(AActor* A, const FString& Path)
+	// A garment whose loose part is cloth (item 7, 1 October: the clothing
+	// session's suit jacket, made by tools/ue/make_cloth_garment.py) brings a
+	// material instance per slot, MI_Slot_<slot>, beside its asset; those win.
+	// bHideTop hides Epic's top under a jacket, by the garments list's rule
+	// (LedgerGarments.h: the part that covers the shoulders and ends above the knees).
+	inline bool WearCloth(AActor* A, const FString& Path, bool bHideTop = false)
 	{
 		if (A == nullptr || Path.IsEmpty()) { return false; }
 		UChaosClothAssetBase* Asset = LoadObject<UChaosClothAssetBase>(nullptr, *Path);
@@ -113,11 +118,29 @@ namespace LedgerJacket
 		for (int32 I = 0; I < FMath::Max(Slots.Num(), J->GetNumMaterials()); ++I)
 		{
 			const FString S = Slots.IsValidIndex(I) ? Slots[I].ToString().ToLower() : FString();
-			UMaterialInterface* M = S.Contains(TEXT("yoke")) ? Yoke : S.Contains(TEXT("button")) ? Button : Wool;
+			const FString Own = Slots.IsValidIndex(I) ? FString(TEXT("MI_Slot_")) + Slots[I].ToString() : FString();
+			UMaterialInterface* Mine = Own.IsEmpty() || S == TEXT("none") ? nullptr : LoadObject<UMaterialInterface>(nullptr, *(Folder / Own + TEXT(".") + Own));
+			// an unnamed slot: by its number (the template's cloth asset can carry it so)
+			const FString ByNumber = FString::Printf(TEXT("MI_Slot_%d"), I);
+			if (Mine == nullptr) { Mine = LoadObject<UMaterialInterface>(nullptr, *(Folder / ByNumber + TEXT(".") + ByNumber)); }
+			UMaterialInterface* M = Mine != nullptr ? Mine : S.Contains(TEXT("yoke")) ? Yoke : S.Contains(TEXT("button")) ? Button : Wool;
 			if (M != nullptr) { J->SetMaterial(I, M); }
 			Seen += FString::Printf(TEXT("%s%d:%s"), Seen.IsEmpty() ? TEXT("") : TEXT(", "), I, S.IsEmpty() ? TEXT("(unnamed)") : *S);
 		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerJacket: cloth slots %s; wool %s"), *Seen, Wool != nullptr ? TEXT("found") : TEXT("MISSING"));
+		if (bHideTop)
+		{
+			FString Hidden;
+			for (USkeletalMeshComponent* C : Parts)
+			{
+				const USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
+				if (M == nullptr || C == Body || C->GetName() == TEXT("Face")) { continue; }
+				const float Top = (float)(M->GetBounds().Origin.Z + M->GetBounds().BoxExtent.Z);
+				const float Bottom = (float)(M->GetBounds().Origin.Z - M->GetBounds().BoxExtent.Z);
+				if (Top > 130.0f && Bottom > 60.0f) { C->SetVisibility(false, true); Hidden += TEXT(" ") + C->GetName(); }
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerJacket: under the cloth, hiding%s"), Hidden.IsEmpty() ? TEXT(" nothing") : *Hidden);
+		}
 		UPhysicsAsset* Phys = Body->GetPhysicsAsset();
 		if (Phys != nullptr) { J->AddCollisionSource(Body, Phys); }
 		UE_LOG(LogTemp, Display, TEXT("LedgerJacket: cloth %s worn, colliding with %s"), *Path, Phys != nullptr ? *Phys->GetName() : TEXT("nothing (no physics asset)"));

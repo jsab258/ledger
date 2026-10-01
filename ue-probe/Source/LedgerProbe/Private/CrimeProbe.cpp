@@ -3763,9 +3763,12 @@ namespace
 	// inside, the camera's arm comes in to the plan's length (-InsideArm=N
 	// tries another), as studios bring a third-person camera in indoors.
 	struct FOfficeMark { std::string Place; double X = 0, Z = 0, FaceX = 0, FaceZ = 0; };
-	struct FOffice { bool bBuilt = false, bOn = false; double X0 = 0, X1 = 0, Z0 = 0, Z1 = 0, ArmM = 2.0, LiftM = 0.25; float StreetArm = -1.0f, StreetLift = 0.0f;
+	struct FOffice { bool bBuilt = false, bOn = false; double X0 = 0, X1 = 0, Z0 = 0, Z1 = 0, ArmM = 2.0, LiftM = 0.25, PivotM = 0.0; float StreetArm = -1.0f, StreetLift = 0.0f;
 	                 std::vector<FOfficeMark> Marks; };   // a place in someone's day that is now inside, and where they stand there
 	FOffice GOffice;
+	// Each office box's name from the spec, for the camera's probe log (an
+	// actor's label exists only in the editor).
+	TMap<TWeakObjectPtr<AActor>, FString> GOfficeBoxName;
 
 	FString OfficeSpecFile()
 	{
@@ -3853,7 +3856,7 @@ namespace
 				const double Z0 = B->GetNumberField(TEXT("z0")), Z1 = B->GetNumberField(TEXT("z1"));
 				AActor* A = SpawnBox(World, TEXT("office_") + B->GetStringField(TEXT("name")),
 					LedgerCrime::P3((X0 + X1) * 0.5, (Y0 + Y1) * 0.5, (Z0 + Z1) * 0.5), X1 - X0, Y1 - Y0, Z1 - Z0, TEXT("plaster"));
-				if (A != nullptr) { PaintFlat(A, Basic, Colour(B->GetStringField(TEXT("kind")))); ++Boxes; }
+				if (A != nullptr) { PaintFlat(A, Basic, Colour(B->GetStringField(TEXT("kind")))); GOfficeBoxName.Add(A, B->GetStringField(TEXT("name"))); ++Boxes; }
 			}
 		}
 		if (Root->TryGetArrayField(TEXT("marks"), List))
@@ -3901,6 +3904,10 @@ namespace
 			GOffice.X0 = (*Inside)->GetNumberField(TEXT("x0")); GOffice.X1 = (*Inside)->GetNumberField(TEXT("x1"));
 			GOffice.Z0 = (*Inside)->GetNumberField(TEXT("z0")); GOffice.Z1 = (*Inside)->GetNumberField(TEXT("z1"));
 			GOffice.ArmM = (*Inside)->GetNumberField(TEXT("arm_m")); GOffice.LiftM = (*Inside)->GetNumberField(TEXT("lift_m"));
+			// THE ARM'S PIVOT, raised indoors (production/research/third-person-camera-interiors,
+			// step 1): swept from his hip, the arm met door heads and jambs within a metre
+			// of him; from the upper chest it clears them.
+			(*Inside)->TryGetNumberField(TEXT("pivot_m"), GOffice.PivotM);
 			float Arm = 0.0f;
 			if (FParse::Value(FCommandLine::Get(), TEXT("InsideArm="), Arm) && Arm > 0.5f) { GOffice.ArmM = Arm; }
 			GOffice.bOn = true;
@@ -4121,7 +4128,30 @@ namespace
 		const bool bIn = At.X > GOffice.X0 && At.X < GOffice.X1 && At.Z > GOffice.Z0 && At.Z < GOffice.Z1;
 		const float Want = bIn ? (float)GOffice.ArmM * 100.0f : GOffice.StreetArm;
 		Boom->TargetArmLength = FMath::FInterpTo(Boom->TargetArmLength, Want, Dt, 4.0f);
-		Boom->SocketOffset.Z = FMath::FInterpTo(Boom->SocketOffset.Z, GOffice.StreetLift + (bIn ? (float)GOffice.LiftM * 100.0f : 0.0f), Dt, 4.0f);
+		// The pivot up and the arm's end down by as much, so the camera stands as
+		// high as on the street (plus any lift) but sweeps from his chest.
+		const float Pivot = bIn ? (float)GOffice.PivotM * 100.0f : 0.0f;
+		Boom->TargetOffset.Z = FMath::FInterpTo(Boom->TargetOffset.Z, Pivot, Dt, 4.0f);
+		Boom->SocketOffset.Z = FMath::FInterpTo(Boom->SocketOffset.Z, GOffice.StreetLift - Pivot + (bIn ? (float)GOffice.LiftM * 100.0f : 0.0f), Dt, 4.0f);
+		// -OfficeCamLog (the research's step 0): twice a second inside, the arm's own
+		// sweep repeated, and what it meets, by the spec's box name.
+		static const bool bLog = FParse::Param(FCommandLine::Get(), TEXT("OfficeCamLog"));
+		static double NextLog = 0.0;
+		UWorld* World = GPawn->GetWorld();
+		if (!bLog || !bIn || World == nullptr || World->GetTimeSeconds() < NextLog) { return; }
+		NextLog = World->GetTimeSeconds() + 0.5;
+		const FRotator Rot = Boom->GetTargetRotation();
+		const FVector Origin = Boom->GetComponentLocation() + Boom->TargetOffset;
+		const FVector End = Origin - Rot.Vector() * Boom->TargetArmLength + FRotationMatrix(Rot).TransformVector(Boom->SocketOffset);
+		FCollisionQueryParams Q(TEXT("LedgerOfficeCam"), false, GPawn);
+		FHitResult Hit;
+		const bool bHit = World->SweepSingleByChannel(Hit, Origin, End, FQuat::Identity, Boom->ProbeChannel, FCollisionShape::MakeSphere(Boom->ProbeSize), Q);
+		const FString* Named = bHit && Hit.GetActor() != nullptr ? GOfficeBoxName.Find(Hit.GetActor()) : nullptr;
+		const USkeletalMeshComponent* TomMesh = GPawn->FindComponentByClass<USkeletalMeshComponent>();
+		const bool bTomHidden = TomMesh != nullptr && !TomMesh->IsVisible();
+		UE_LOG(LogTemp, Display, TEXT("LedgerOfficeCam: at %.2f,%.2f pivot %.2f m, arm %.0f cm: %s%s"), At.X, At.Z, Origin.Z / 100.0f, (End - Origin).Size(),
+			bHit ? *FString::Printf(TEXT("meets %s at %.0f cm"), Named != nullptr ? **Named : (Hit.GetActor() != nullptr ? *Hit.GetActor()->GetName() : TEXT("?")), Hit.Distance) : TEXT("clear"),
+			bTomHidden ? TEXT(", Tom hidden") : TEXT(""));
 	}
 
 	// Each frame: the acknowledgement ends with its sound, or at once when the answer starts.

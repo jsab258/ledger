@@ -10,7 +10,7 @@
  },
  "hide": ["east_parade_bay0", "east_parade_interior0", "decal_04_interior_shop_shelves", "east_parade_shopdoor0", "east_parade_shopdoor0_light",
           "street_mickeys_frame_painted", "street_mickeys_glass", "street_mickeys_interior", "street_mickeys_interior_lit"],
- "inside": {"x0": 3.0, "x1": 9.0, "z0": 5.12, "z1": 16.5, "arm_m": 2.0, "lift_m": 0.25},
+ "inside": {"x0": 3.0, "x1": 9.0, "z0": 5.12, "z1": 16.5, "arm_m": 2.0, "lift_m": 0.0, "pivot_m": 0.6},
  "boxes": [
   {"name": "floor", "kind": "floor", "x0": 3.0, "x1": 9.0, "y0": -0.10, "y1": 0.10, "z0": 5.12, "z1": 16.65},
   {"name": "upper storey", "kind": "wall", "x0": 3.0, "x1": 9.0, "y0": 3.0, "y1": 6.3, "z0": 5.12, "z1": 13.15},
@@ -29,9 +29,7 @@
   {"name": "the books", "kind": "use", "x0": 6.9, "x1": 7.4, "y0": 0.75, "y1": 0.85, "z0": 10.7, "z1": 11.0},
   {"name": "filing cabinets", "kind": "furniture", "x0": 8.5, "x1": 9.0, "y0": 0.10, "y1": 1.3, "z0": 9.8, "z1": 11.5},
   {"name": "cupboard", "kind": "furniture", "x0": 4.19, "x1": 4.7, "y0": 0.10, "y1": 1.9, "z0": 10.8, "z1": 11.6},
-  {"name": "wall, back room to lobby (left of the door)", "kind": "wall", "x0": 4.19, "x1": 5.0, "y0": 0.10, "y1": 3.0, "z0": 11.7, "z1": 11.85},
-  {"name": "wall, back room to lobby (right of the door)", "kind": "wall", "x0": 6.1, "x1": 9.0, "y0": 0.10, "y1": 3.0, "z0": 11.7, "z1": 11.85},
-  {"name": "WC", "kind": "nogo", "x0": 7.5, "x1": 9.0, "y0": 0.10, "y1": 3.0, "z0": 11.85, "z1": 13.0},
+  {"name": "WC (a closet in the back room's corner)", "kind": "nogo", "x0": 7.5, "x1": 9.0, "y0": 0.10, "y1": 3.0, "z0": 11.85, "z1": 13.0},
   {"name": "shelf", "kind": "furniture", "x0": 6.3, "x1": 7.3, "y0": 0.10, "y1": 0.9, "z0": 12.6, "z1": 12.95},
   {"name": "the kettle", "kind": "use", "x0": 6.6, "x1": 6.85, "y0": 0.9, "y1": 1.12, "z0": 12.65, "z1": 12.9},
   {"name": "back wall (left of the back door)", "kind": "wall", "x0": 4.05, "x1": 5.0, "y0": 0.10, "y1": 3.0, "z0": 13.0, "z1": 13.15},
@@ -48,7 +46,7 @@
   {"name": "beyond gate B (not built)", "kind": "nogo", "x0": 10.1, "x1": 10.3, "y0": 0.10, "y1": 2.0, "z0": 14.0, "z1": 16.1}
  ],
  "marks": [
-  {"name": "Sheila at her desk", "who": "lena", "x": 7.15, "z": 11.45},
+  {"name": "Sheila at her desk", "who": "lena", "x": 7.15, "z": 11.45, "place": "mickeys_office", "face_x": 5.55, "face_z": 9.5},
   {"name": "the radio's chair (Mickey's, empty: the brief)", "who": "", "x": 7.05, "z": 9.15},
   {"name": "Ron at the door", "who": "rocco", "x": 4.64, "z": 4.3},
   {"name": "the bench", "who": "", "x": 8.7, "z": 6.4}

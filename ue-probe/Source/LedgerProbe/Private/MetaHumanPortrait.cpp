@@ -267,7 +267,7 @@ namespace LedgerMhPortrait
 			}
 		}
 		LedgerJacket::Wear(A, kWho[J.Who]);
-		if (!GClothPath.IsEmpty()) { LedgerJacket::WearCloth(A, GClothPath); }
+		if (!GClothPath.IsEmpty()) { LedgerJacket::WearCloth(A, GClothPath, FParse::Param(FCommandLine::Get(), TEXT("PortraitClothHidesTop"))); }
 		if (GGarments) { LedgerGarments::Wear(A, kWho[J.Who]); }
 		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s body idle %s, face idle %s"), *Name,
 			Idles[0] != nullptr ? TEXT("loaded") : TEXT("MISSING"), Idles[1] != nullptr ? TEXT("loaded") : TEXT("MISSING"));
