@@ -6198,10 +6198,11 @@ namespace Ledger.CoreTests
                 var noSaved = Arrangement.FromJson(noArr.ToJson());
                 bool noKept = noSaved.NoWordAt.HasValue && noSaved.NoWordAt.Value.TotalMinutes == noArr.NoWordAt.Value.TotalMinutes;
                 noArr.PassedTo(1, mNo, new GameTime(1, 6, 0));
-                // A night away is filed once the man has given up waiting, at one (the port's independent check).
+                // A night away is filed once no late no can come, at four (the port's independent
+                // check; the independent check of 1 October: at one, a late no was then refused).
                 var mAway = Mill(); var awayArr = new Arrangement(); awayArr.Delivered(0);
-                bool awayEarly = awayArr.Answer(0, NightAnswer.NoShow, mAway, night);
-                awayArr.Answer(0, NightAnswer.NoShow, mAway, Arrangement.GaveUpAt(0));
+                bool awayEarly = awayArr.Answer(0, NightAnswer.NoShow, mAway, night) || awayArr.Answer(0, NightAnswer.NoShow, mAway, Arrangement.GaveUpAt(0));
+                awayArr.Answer(0, NightAnswer.NoShow, mAway, Arrangement.PassesAt(0));
                 var rDid = mDid.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
                 var rNo = mNo.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
                 var rAway = mAway.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
@@ -7139,6 +7140,12 @@ namespace Ledger.CoreTests
                       && PoliceFile.WouldReport(darren, Offence.Killing, false, "player.window_d1")
                       && PoliceFile.WouldReport(darren, Offence.Damage, false, "player.window_d2"),
                       "a witness he threatens over a deed goes to nobody about it; a body is still reported, and another deed as before");
+                // A save from before this rule holds the threat without the silence: threatened
+                // again, the threat is not filed twice, but the silence holds (the independent check).
+                darren.Suppressed.Remove("player.window_d1");
+                bool refiled = Silence.FileThreat(thm, "sam", "player.window_d1", new GameTime(2, 11, 0));
+                Check(!refiled && !PoliceFile.WouldReport(darren, Offence.Damage, false, "player.window_d1"),
+                      "threatened again after a save from before the rule, the threat is not filed twice and the silence holds");
             }
 
             // WINDING IT DOWN ENDS MICKEY'S ARRANGEMENT THAT NIGHT (town list 6cc):
@@ -7801,6 +7808,36 @@ namespace Ledger.CoreTests
                       && elevenWhen != null && elevenWhen.Time.Day == 1 && elevenWhen.Time.Hour == 0 && elevenWhen.Time.Minute == 0,
                       "a night away reaches the landing as the hours turn at four, once no late no can come, not at dawn; a no told when the hour turns is stamped then, never before the rounds that ran without it",
                       $"{fourNotYet} {fourHeard?.Content.Value} {fourWhen?.Time} | {elevenWhen?.Time}");
+                // A NO AS OF ITS QUESTION IS STILL TOLD WHEN HE SAYS IT (the independent check
+                // of 1 October: the game answers a no as of Ron's question, refusedAt, and that
+                // one time was also its stamp, so a yes at two past one to a question at two to
+                // one reached the landing stamped two to one, before the one o'clock round that
+                // ran without it; and a question at ten to eleven answered at half past waited
+                // for midnight though Ron goes down at once after eleven). `toldAt`, when he
+                // said it, stamps the story and Ron's memory; `now` stays the night's "as of".
+                Arrangement LateNo(out GossipMill m)
+                {
+                    var a = new Arrangement(0);
+                    m = new GossipMill(null);
+                    foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) m.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    a.Delivered(0, m.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                    return a;
+                }
+                MemoryEvent ToldAt(GossipMill m) => m.Get(Arrangement.OutfitMan).Memory.Events.Find(e => e.Text != null && e.Text.Contains(Arrangement.Said(NightAnswer.Refused)));
+                var acrossOne = LateNo(out var oneMill);
+                bool acrossCounts = acrossOne.Answer(0, NightAnswer.Refused, oneMill, new GameTime(1, 0, 58), new GameTime(1, 1, 2));
+                var halfEleven = LateNo(out var halfMill);
+                halfEleven.Answer(0, NightAnswer.Refused, halfMill, new GameTime(0, 22, 50), new GameTime(0, 23, 30));
+                var ronHeard = oneMill.Get(Arrangement.Doorman).Memory.Events.Find(e => e.Text == Arrangement.HeardNo);
+                Check(acrossCounts && ToldAt(oneMill) != null && ToldAt(oneMill).Time.Equals(new GameTime(1, 1, 2)) && ronHeard != null && ronHeard.Time.Equals(new GameTime(1, 1, 2))
+                      && ToldAt(halfMill) != null && ToldAt(halfMill).Time.Equals(new GameTime(0, 23, 30)),
+                      "a no as of Ron's question still counts that night and is told, and remembered by Ron, when he says it: a yes at two past one is stamped two past one; a yes at half eleven to a question before eleven reaches the landing at half eleven",
+                      $"{acrossCounts} {ToldAt(oneMill)?.Time} {ronHeard?.Time} | {ToldAt(halfMill)?.Time}");
+                // NO NIGHT AWAY BEFORE FOUR, ANSWERED ANY WAY (the independent check: Answer
+                // NoShow at half one was taken, and the late no as of two to one then refused).
+                var noShowEarly = LateNo(out var nsMill);
+                Check(!noShowEarly.Answer(0, NightAnswer.NoShow, nsMill, new GameTime(1, 1, 30)) && noShowEarly.Answer(0, NightAnswer.Refused, nsMill, new GameTime(1, 0, 58), new GameTime(1, 1, 40)),
+                      "a night away is not taken before four, so a late no as of before one still counts");
             }
 
             // THE WITNESS BANK KEEPS THE CONTENT RULE (the independent review of 30
@@ -8731,6 +8768,42 @@ namespace Ledger.CoreTests
                       && !PoliceFile.WouldReport(plainSaw, Offence.Killing, false, "player.window_d1", hookQ.NeverToPolice("rocco"))
                       && PoliceFile.WouldReport(plainSaw, Offence.Damage, false, "player.window_d1", hookQ.NeverToPolice("sam")),
                       "Mickey's people, Ron and Sheila, never go to the police about him, whatever they saw; Darren, no loyalist, still reports");
+                // A MISSPELT keepsQuiet IS REFUSED (the independent check of 1 October: "Owner"
+                // or a typo became a friend's silence, and Ron and Sheila reported again).
+                string badQuiet = null;
+                try { CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"x\",\"keepsQuiet\":\"ownr\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}"); }
+                catch (FormatException e) { badQuiet = e.Message; }
+                Check(badQuiet != null && badQuiet.Contains("keepsQuiet"), "a keepsQuiet word the cast file does not know is refused, never read as a friend's", badQuiet ?? "accepted");
+                // THEY HANDLE IT PRIVATELY (Jafar's ruling of 1 October: "Ron and Sheila ...
+                // handle what they saw privately: a word with him, a warning, a favour owed";
+                // the independent check: Sheila's sighting still reached DS Ellis through the
+                // neighbours she told, and her and Ron's talk counted toward bringing her).
+                // What they hold of his deeds they pass on to nobody; their talk is not the
+                // street's talk; a word with him is still theirs (StoryThatShows).
+                GossipMill StreetOf()
+                {
+                    var g = new SocialGraph();
+                    foreach (var (a, b, w) in hookQ.Ties) g.Link(a, b, w);
+                    var m = new GossipMill(g);
+                    foreach (var p in hookQ.People) m.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), hookQ.CircleOf(p)));
+                    return m;
+                }
+                (int spread, GossipMill m) Spread(string who)
+                {
+                    var m = StreetOf();
+                    m.Witness(who, new Fact("player", "window_d1", "ritas"), "the new owner put Rita's window in", true, new GameTime(1, 12, 0), 1.0);
+                    for (int h = 12; h < 60; h++) TownRounds.Hour(m, hookQ, new GameTime(1 + h / 24, h % 24, 0));
+                    return (m.Agents.Count(a => a.Id != who && a.Rumors.Exists(r => r.TopicKey == "player.window_d1")), m);
+                }
+                var (bySheila, sheilaStreet) = Spread("lena");
+                var (byDarren, darrenStreet) = Spread("sam");
+                var heldBy = darrenStreet.Agents.Where(a => a.Rumors.Exists(r => r.TopicKey == "player.window_d1" && r.Hops > 0)).Select(a => a.Id).ToList();
+                bool ownHold = heldBy.Contains("lena") || heldBy.Contains("rocco");
+                int loudWithout = heldBy.Count(id => id != "lena" && id != "rocco");
+                Check(bySheila == 0 && byDarren > 0 && StreetVoice.StoryThatShows(sheilaStreet.Get("lena"), sheilaStreet.MinConfidenceToShare) != null
+                      && (!ownHold || PoliceFile.Loudness(darrenStreet) <= loudWithout),
+                      "a deed Sheila saw goes no further than her, while one Darren saw goes round; she can still have a word with him; and Ron's and Sheila's talk is not the street's talk that brings DS Ellis",
+                      $"Sheila's went to {bySheila}, Darren's to {byDarren}; loudness {PoliceFile.Loudness(darrenStreet)} of {heldBy.Count} holding, {loudWithout} not Mickey's own");
 
                 var q = new ConversationEngine(new FakeLlm { NextReply = "Not a word, boss." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
                 q.Suspicion.Raise(0.6, "I saw him near the window");

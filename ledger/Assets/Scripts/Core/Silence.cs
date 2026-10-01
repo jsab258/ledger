@@ -177,10 +177,11 @@ namespace Ledger.Core
             return any;
         }
 
-        // A THREAT TO KEEP QUIET (town list 6cd; carried until Jafar rules on
-        // his 30 September page: this week a threat never buys silence; it is
-        // the street's story and makes them warier; the 1990 research,
-        // production/research/threats-1990). Read as an admission is: a whole
+        // A THREAT TO KEEP QUIET (town list 6cd; the 1990 research,
+        // production/research/threats-1990): the street's story, and it makes
+        // them warier; and by Jafar's ruling of 1 October it talks them round:
+        // they keep the deed to themselves, a body excepted (FileThreat). Read
+        // as an admission is: a whole
         // sentence of a threat's plain shape and nothing else but the words
         // round one, since reading a threat he never made would tell the town
         // he threatened somebody (the independent check: menace words alone
@@ -266,7 +267,9 @@ namespace Ledger.Core
             if (mill == null || string.IsNullOrEmpty(who) || string.IsNullOrEmpty(deedTopic) || !(mill.Get(who) is Gossiper g)) return false;
             string stem = deedTopic.StartsWith("player.", System.StringComparison.Ordinal) ? deedTopic.Substring("player.".Length) : deedTopic;
             var fact = new Fact("player", "threat_" + stem, "threatened");
-            if (g.Rumors.Exists(r => r.TopicKey == ThreatPrefix + stem && r.Hops == 0)) return false;
+            // Filed once a deed and person; threatened again, the silence holds even
+            // for a save from before Jafar's ruling of 1 October, which had none.
+            if (g.Rumors.Exists(r => r.TopicKey == ThreatPrefix + stem && r.Hops == 0)) { g.Suppressed.Add(deedTopic); return false; }
             // Threatened to their face: remembered as that, never "I saw it myself" (B7).
             mill.WitnessRemembering(who, fact, ThreatSaid, false, at, ThreatMemory);
             // A THREAT TALKS THEM ROUND (Jafar's ruling of 1 October; the independent

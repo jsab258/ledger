@@ -57816,7 +57816,6 @@ TeaGap|10|Stayed|1360
 TeaGap|11|Stayed|1360
 TeaGap|12|LeftEarly|1360
 FixAsk|did two nights early|0
-FixAsk|away before one|0|1
 FixAsk|no|1|10020|0
 AskSave|save|{"first":0,"nights":[[0,"did"],[2,"noshow"],[4,"undelivered"],[6,"refused"]],"delivered":[0,2,6],"noTell":[6,10020]}
 FixAskStory|player.outfit_d0|did|1|Mickey's~nephew~brought~the~envelope~down~the~landing

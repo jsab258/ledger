@@ -127,25 +127,26 @@ Each row is what the Core gives (`TownReach --week-waits`, 1 October, on the
 Core with Jafar's two police rulings of that day: a witness who saw the window
 reports it the next morning unless on his side, so Darren, who saw it, has him
 taken in on day 4; Sheila, one of Mickey's own, never goes to the police about
-him; Ada's tea on day 3 comes after any report. Darren replaced Ada as the
+him and keeps what she saw to herself, so her rows run as if nobody had seen
+it; Ada's tea on day 3 comes after any report. Darren replaced Ada as the
 second witness, the review of 1 October's M4: behind her window she could never
 see Rita's glass in play). The route played the same way must give the same.
 
 | the envelope | Ada's tea | window seen by | DS Ellis first | taken in | Sheila trusts him | day 7 | the arrangement | his answer held by Monday noon |
 |---|---|---|---|---|---|---|---|---|
-| takes it | sits | Sheila | day 4, for talk | no | never | the day-book | stands (4 nights) | 7 of 41 |
+| takes it | sits | Sheila | day 5, for talk | no | never | the day-book | stands (4 nights) | 7 of 41 |
 | takes it | sits | Darren | day 4, for talk | day 4, Charged | day 4 | the real book | stands (4 nights) | 7 of 41 |
 | takes it | sits | nobody | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
 | takes it | sits | no window | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
-| takes it | stands her up | Sheila | day 4, for talk | no | never | the day-book | stands (4 nights) | 7 of 41 |
+| takes it | stands her up | Sheila | day 5, for talk | no | never | the day-book | stands (4 nights) | 7 of 41 |
 | takes it | stands her up | Darren | day 4, for talk | day 4, Charged | day 4 | the real book | stands (4 nights) | 7 of 41 |
 | takes it | stands her up | nobody | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
 | takes it | stands her up | no window | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
-| tells Ron no | sits | Sheila | day 4, for talk | no | never | the day-book | ended (refused) | 7 of 41 |
+| tells Ron no | sits | Sheila | never | no | never | the day-book | ended (refused) | 7 of 41 |
 | tells Ron no | sits | Darren | day 4, for talk | day 4, Charged | day 4 | the real book | ended (refused) | 7 of 41 |
 | tells Ron no | sits | nobody | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
 | tells Ron no | sits | no window | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
-| tells Ron no | stands her up | Sheila | day 4, for talk | no | never | the day-book | ended (refused) | 7 of 41 |
+| tells Ron no | stands her up | Sheila | never | no | never | the day-book | ended (refused) | 7 of 41 |
 | tells Ron no | stands her up | Darren | day 4, for talk | day 4, Charged | day 4 | the real book | ended (refused) | 7 of 41 |
 | tells Ron no | stands her up | nobody | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
 | tells Ron no | stands her up | no window | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
@@ -160,7 +161,7 @@ the window):
 | day 3 | 20:00 | ron | "Ron's at the door with something for you." |
 | day 3 | 20:00 | landing | "They'll be expecting the envelope at the landing after ten." |
 | day 3 | 20:30 | tea | "Ada's pot goes on at nine." |
-| day 4 | 09:00 | ellis | "DS Ellis is on Quay Street, asking after you." |
+| day 5 | 09:00 | ellis | "DS Ellis is on Quay Street, asking after you." |
 | day 5 | 20:00 | ron | "Ron's at the door with something for you." |
 | day 5 | 20:00 | landing | "They'll be expecting the envelope at the landing after ten." |
 | day 7 | 09:30 | sheila | "Sheila's waiting for you in the office this morning, on her day off." |

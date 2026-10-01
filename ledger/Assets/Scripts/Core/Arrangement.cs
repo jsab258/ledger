@@ -257,10 +257,12 @@ namespace Ledger.Core
         /// PassedTo marks a night the ask never reached him). Taking the
         /// envelope or telling Ron no means he had it; with `now`, only before
         /// the man at the landing gives up waiting (GaveUpAt), so the game
-        /// answers a no as of when he said it. With `mill`, the night's story
-        /// goes into the gossip, told first by whoever knows it at `now`, which
-        /// must then be given, and Ron, if the mill has him, learns when it ends.
-        public bool Answer(int day, NightAnswer what, GossipMill mill = null, GameTime? now = null)
+        /// answers a no as of when he said it, or as of Ron's question for a yes
+        /// to it, with `toldAt` when he said it, which stamps what is told and
+        /// remembered. With `mill`, the night's story goes into the gossip, told
+        /// first by whoever knows it, `now` then given, and Ron, if the mill has
+        /// him, learns when it ends.
+        public bool Answer(int day, NightAnswer what, GossipMill mill = null, GameTime? now = null, GameTime? toldAt = null)
         {
             if (mill != null && !now.HasValue) throw new ArgumentException("the story needs the time it is told", nameof(now));
             if (what == NightAnswer.Undelivered || !AsksOn(day)) return false;
@@ -278,19 +280,25 @@ namespace Ledger.Core
             // (the independent check: done at nine that morning, he was filed as
             // seeing it at nine).
             if (now.HasValue && what == NightAnswer.Did && !TheLanding.There(now.Value)) return false;
-            if (now.HasValue && what == NightAnswer.NoShow && now.Value.TotalMinutes < GaveUpAt(day).TotalMinutes) return false;
+            // A night away only once no late no can come (PassesAt; the independent check of 1 October).
+            if (now.HasValue && what == NightAnswer.NoShow && now.Value.TotalMinutes < PassesAt(day).TotalMinutes) return false;
             _delivered.Add(day);
             // A PLAIN NO GOES DOWN WITH RON, as the wound-down word does (the
             // port's independent check): the man at the landing knows it only
             // when Ron has been down, at eleven or at once if later; Ron knows now.
             if (what == NightAnswer.Refused && now.HasValue)
             {
+                // `now` is the night's "as of" (Ron's question, for a yes to it);
+                // `toldAt`, when he said it, stamps what is told and remembered (the
+                // independent check of 1 October: one time for both put the story
+                // before the rounds that ran without it).
+                var told = toldAt.HasValue && toldAt.Value.TotalMinutes > now.Value.TotalMinutes ? toldAt.Value : now.Value;
                 Record(day, what, null, now);
-                if (mill?.Get(Doorman) is Gossiper ron) ron.Memory.Append(new MemoryEvent(now.Value, "observation", 0.8, HeardNo));
+                if (mill?.Get(Doorman) is Gossiper ron) ron.Memory.Append(new MemoryEvent(told, "observation", 0.8, HeardNo));
                 var goesDown = new GameTime(now.Value.Day, RonGoesDownHour, 0);
                 _noTellNight = day;
                 _noTellAt = now.Value.Hour < GaveUpHour || now.Value.TotalMinutes >= goesDown.TotalMinutes ? now.Value : goesDown;
-                TellWoundDown(mill, now);
+                TellWoundDown(mill, told);
                 return true;
             }
             return Record(day, what, mill, now);
