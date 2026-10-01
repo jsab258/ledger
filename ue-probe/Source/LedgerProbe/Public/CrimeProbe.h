@@ -49,6 +49,7 @@
 #include "Perception.h"
 #include "Reaction.h"
 #include "StreetVoice.h"
+#include "Suspecting.h"
 #include "Suspicion.h"
 
 #include <algorithm>
@@ -1626,6 +1627,46 @@ namespace LedgerCrime
 
 	inline const char* WindowDeedKey() { return "player.window_d1"; }
 
+	/// WHAT A RESIDENT HOLDS OF THE DEED, AS THE EVIDENCE SENT WITH EACH LINE
+	/// (the independent review of 1 October, N1): their account of the deed's
+	/// story as it was filed. In free play that is "player.window_dN"; the
+	/// scripted encounter files the mill's "player.broke_a_window".
+	inline LedgerCore::DeedAccount EvidenceAccount(const LedgerCore::Gossiper* G, bool bFreePlay, const std::string& FiledKey)
+	{
+		return LedgerCore::Suspecting::AccountOf(G, bFreePlay ? FiledKey : std::string("player.broke_a_window"));
+	}
+
+	inline std::string EvidenceEsc(const std::string& In)
+	{
+		std::string Out;
+		for (size_t I = 0; I < In.size(); ++I)
+		{
+			const char Ch = In[I];
+			if (Ch == '\\' || Ch == '"') { Out += '\\'; Out += Ch; }
+			else if (Ch == '\n') Out += "\\n";
+			else if (Ch == '\r') Out += "\\r";
+			else if (Ch == '\t') Out += "\\t";
+			else Out += Ch;
+		}
+		return Out;
+	}
+
+	/// THAT ACCOUNT AS THE TALK PROGRAM IS SENT IT, the inside of
+	/// "evidence":{"account":{...}}, opening on "topic", the deed's key as the
+	/// line's deed.topic gives it: the talk program uses an account only for
+	/// the deed the line is about (the town's half of N1).
+	inline std::string EvidenceAccountFields(const LedgerCore::DeedAccount& A, const std::string& DeedKey)
+	{
+		std::string J = "\"topic\":\"" + EvidenceEsc(DeedKey) + "\",";
+		if (!A.Held) return J + "\"held\":false";
+		return J + "\"held\":true,\"seen\":" + (A.SawItMyself ? "true" : "false")
+			+ ",\"rung\":" + std::to_string(A.Rung)
+			+ ",\"names\":" + (A.NamesHim ? "true" : "false")
+			+ ",\"confidence\":" + std::to_string(A.Confidence)
+			+ (A.NamesHim ? ",\"namingConfidence\":" + std::to_string(A.NamingConfidence) : std::string())
+			+ ",\"summary\":\"" + EvidenceEsc(A.Summary) + "\"";
+	}
+
 	/// HOW WELL A WITNESS KNOWS HIS FACE (the review's A4): a stranger until
 	/// they have met him face to face; then enough to recognise him in a good
 	/// sighting (Perception's 0.35), a little more each further day they meet,
@@ -1634,6 +1675,17 @@ namespace LedgerCrime
 	{
 		if (DaysMet <= 0) return kFamiliarity;
 		return std::min(0.7, 0.4 + 0.1 * (DaysMet - 1));
+	}
+
+	/// HOW WELL ONE OF THE THREE KNOWS HIS FACE FOR THEIR LOOKS AND REMARKS
+	/// (the independent review of 1 October, M1): in free play the same as
+	/// for witnessing, from his meetings with them. The scripted encounter
+	/// keeps the values it was measured with: Sheila and Ron have dealt with
+	/// him, Darren knows him by name only.
+	inline double RegardFamiliarity(bool bScripted, const std::string& Card, int DaysMet)
+	{
+		if (!bScripted) return FamiliarityFromMeetings(DaysMet);
+		return Card == "sam" ? kLadFamiliarity : 0.50;
 	}
 
 	/// THE WAIT, HOUR BY HOUR (the review's B2): each hour's stops are read with
@@ -1964,6 +2016,44 @@ namespace LedgerCrime
 	/// area a sighting of him they heard of puts him at; "heardHeSaid", the
 	/// areas of what he has told people, once that has reached them. Empty for
 	/// somebody the deed has not reached.
+	/// TOM'S SUGGESTED LINES, THE PANEL'S ROWS (Jafar, 1 October: "Mixed";
+	/// production/design/ui/STYLE-GUIDE.md, Suggested lines): three at most,
+	/// his exact words. A deal that stands comes first, one line for each of
+	/// its answers in the file's order (the yes and the no both, and the line
+	/// that keeps talking), written, never the model's; then the talk
+	/// program's lines in their jobs' order ("ask", "personal", "leave"). Over
+	/// three, the personal line goes first, then the asking one, so a way to
+	/// leave stays. Nothing already shown in this conversation is offered
+	/// again; of an answer's lines, the seed picks where to start.
+	inline std::vector<std::string> SuggestRows(const std::vector<std::pair<std::string, std::vector<std::string> > >& DealAnswers, int InSeed,
+	                                            const std::vector<std::string>& Lines, const std::vector<std::string>& Jobs,
+	                                            const std::set<std::string>& Shown)
+	{
+		std::vector<std::string> Rows;
+		for (size_t A = 0; A < DealAnswers.size() && Rows.size() < 3; ++A)
+		{
+			const std::vector<std::string>& Of = DealAnswers[A].second;
+			for (size_t K = 0; K < Of.size(); ++K)
+			{
+				const std::string& L = Of[(K + (size_t)(InSeed < 0 ? -InSeed : InSeed)) % Of.size()];
+				if (!L.empty() && !Shown.count(L) && std::find(Rows.begin(), Rows.end(), L) == Rows.end()) { Rows.push_back(L); break; }
+			}
+		}
+		const size_t Room = 3 - Rows.size();
+		std::vector<size_t> Keep;
+		for (const char* Job : { "leave", "ask", "personal" })
+		{
+			for (size_t I = 0; I < Lines.size() && I < Jobs.size(); ++I)
+			{
+				if (Keep.size() < Room && Jobs[I] == Job && !Lines[I].empty() && !Shown.count(Lines[I])
+				    && std::find(Rows.begin(), Rows.end(), Lines[I]) == Rows.end()) Keep.push_back(I);
+			}
+		}
+		std::sort(Keep.begin(), Keep.end());
+		for (size_t I : Keep) Rows.push_back(Lines[I]);
+		return Rows;
+	}
+
 	inline std::string DeedJson(const LedgerCore::Gossiper& G, const std::string& DeedKey, int Day, int Hour, const std::string& SawHimAt)
 	{
 		bool bHolds = !SawHimAt.empty();
@@ -2819,6 +2909,83 @@ namespace LedgerCrime
 				       "a3-owning-up-files-the-deed-story-itself-day-" + Int(Day));
 			}
 		}
+
+		// THE EVIDENCE SENT WITH EACH LINE (the independent review of
+		// 1 October, N1, High). The design: whoever saw him put Rita's window
+		// in knows it, at every line he says to her, from the look she had;
+		// in the scripted encounter the same holds of the mill's own story.
+		{
+			using namespace LedgerCore;
+			for (int Day : { 1, 3 })
+			{
+				const std::string Key = "player.window_d" + Int(Day);
+				Gossiper Saw("lena", "lena", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+				RumorPtr Story = std::make_shared<Rumor>(Fact("player", "window_d" + Int(Day), "ritas"));
+				Story->Hops = 0;
+				Story->OriginRung = 3;
+				Story->Confidence = 0.8;
+				Saw.Rumors.push_back(Story);
+				const DeedAccount Held = EvidenceAccount(&Saw, true, Key);
+				Expect(R, Held.Held && Held.SawItMyself && Held.Rung == 3,
+				       "n1-the-witness-who-saw-the-free-play-deed-knows-it-in-the-evidence-day-" + Int(Day));
+				// Sent under the line's own deed, so the talk program uses it.
+				Expect(R, EvidenceAccountFields(Held, Key).find("\"topic\":\"" + Key + "\",\"held\":true,\"seen\":true,\"rung\":3,") == 0,
+				       "n1-the-account-is-sent-under-the-lines-deed-day-" + Int(Day));
+				Gossiper Nobody("ada", "ada", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+				Expect(R, !EvidenceAccount(&Nobody, true, Key).Held, "n1-somebody-who-holds-nothing-of-it-holds-nothing-day-" + Int(Day));
+			}
+			Gossiper Scripted("w1", "w1", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+			RumorPtr Glass = std::make_shared<Rumor>(Fact("player", "broke_a_window", "glass_a"));
+			Glass->Hops = 0;
+			Glass->OriginRung = 4;
+			Scripted.Rumors.push_back(Glass);
+			const DeedAccount S = EvidenceAccount(&Scripted, false, WindowDeedKey());
+			Expect(R, S.Held && S.SawItMyself && S.Rung == 4, "n1-the-scripted-encounter-keeps-the-mills-own-story");
+		}
+
+		// TOM'S SUGGESTED LINES (STYLE-GUIDE.md, Suggested lines): three at most;
+		// a deal's answers first and both ways; then the talk program's in its
+		// jobs' order, a way to leave kept; never one shown already.
+		{
+			typedef std::vector<std::pair<std::string, std::vector<std::string> > > Deal;
+			const std::vector<std::string> SugThree = { "Was it this quiet last night?", "How are you keeping?", "I'll let you get on." };
+			const std::vector<std::string> Jobs = { "ask", "personal", "leave" };
+			const std::set<std::string> None;
+			Expect(R, SuggestRows(Deal(), 0, SugThree, Jobs, None) == SugThree, "suggest-the-three-in-their-jobs-order");
+			const Deal RonAsk = { { "refuse", { "Tell them no. I'm not doing it.", "I'm not carrying it. Count me out." } } };
+			const std::vector<std::string> WithAsk = SuggestRows(RonAsk, 0, SugThree, Jobs, None);
+			Expect(R, WithAsk.size() == 3 && WithAsk[0] == "Tell them no. I'm not doing it." && WithAsk[1] == SugThree[0] && WithAsk[2] == SugThree[2],
+			       "suggest-rons-ask-first-then-asking-and-leaving-the-personal-line-dropped");
+			const Deal Plain = { { "yes", { "Yes. Tell them no." } }, { "no", { "No, hold off for now." } }, { "keep", { "Can I think it over?" } } };
+			const std::vector<std::string> Answered = SuggestRows(Plain, 0, SugThree, Jobs, None);
+			Expect(R, Answered.size() == 3 && Answered[0] == "Yes. Tell them no." && Answered[1] == "No, hold off for now." && Answered[2] == "Can I think it over?",
+			       "suggest-a-plain-question-gets-the-yes-the-no-and-a-line-that-decides-nothing");
+			const std::set<std::string> Said = { "Tell them no. I'm not doing it.", "How are you keeping?" };
+			const std::vector<std::string> SugAgain = SuggestRows(RonAsk, 0, SugThree, Jobs, Said);
+			Expect(R, SugAgain.size() == 3 && SugAgain[0] == "I'm not carrying it. Count me out." && SugAgain[1] == SugThree[0] && SugAgain[2] == SugThree[2],
+			       "suggest-never-a-line-shown-already-in-this-conversation");
+			const std::vector<std::string> TwoJobs = { "Hello there.", "I'll let you get on." };
+			Expect(R, SuggestRows(Deal(), 0, TwoJobs, { "personal", "leave" }, None) == TwoJobs, "suggest-a-job-with-no-line-is-left-out");
+			Expect(R, SuggestRows(Deal(), 0, {}, {}, None).empty(), "suggest-nothing-to-offer-offers-nothing");
+		}
+
+		// HOW WELL THE THREE KNOW HIS FACE, ONE WAY (the independent review of
+		// 1 October, M1). The design: in free play he is a stranger to each of
+		// them until they meet, for their looks and remarks as for what they
+		// can witness; Ron, never met, does not know him on sight from the
+		// first minute, and Darren, met once, does.
+		for (const char* Card : { "lena", "sam", "rocco" })
+		{
+			for (int Days = 0; Days <= 4; ++Days)
+			{
+				Expect(R, RegardFamiliarity(false, Card, Days) == FamiliarityFromMeetings(Days),
+				       std::string("m1-") + Card + "-knows-his-face-for-looks-as-for-witnessing-after-" + Int(Days) + "-days-met");
+			}
+		}
+		Expect(R, RegardFamiliarity(false, "rocco", 0) < LedgerCore::Perception::RecognitionFamiliarity, "m1-ron-never-met-does-not-know-him-on-sight");
+		Expect(R, RegardFamiliarity(false, "sam", 1) >= LedgerCore::Perception::RecognitionFamiliarity, "m1-darren-met-once-knows-him-on-sight");
+		Expect(R, RegardFamiliarity(true, "lena", 0) == 0.50 && RegardFamiliarity(true, "sam", 0) == kLadFamiliarity
+		          && RegardFamiliarity(true, "rocco", 0) == 0.50, "m1-the-scripted-encounter-keeps-its-measured-values");
 
 		// THE DEED AS THE TALK PROGRAM IS TOLD IT, AND ITS STORIES (29
 		// September, town list 6ac, 6am, 6au, 6al).

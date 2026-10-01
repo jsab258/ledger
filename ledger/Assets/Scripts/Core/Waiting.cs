@@ -188,7 +188,17 @@ namespace Ledger.Core
                     int d = (int)dd;
                     var t = At(d, EllisHour);
                     if (t.AddMinutes(60).CompareTo(now) <= 0) continue;
-                    var whys = police.EllisWouldComeAll(b.Mill, d, b.Inquiry);
+                    // FROM NINE ON HER DAY, WHETHER SHE CAME, not whether she would now
+                    // (the independent review of 1 October, M2): nine's decision is taken
+                    // on the talk heard by then, and the hour's talk can grow louder after
+                    // it; before nine, what would bring her.
+                    List<string> whys;
+                    if (now.CompareTo(t) < 0) whys = police.EllisWouldComeAll(b.Mill, d, b.Inquiry);
+                    else
+                    {
+                        whys = new List<string>();
+                        foreach (var v in police.Visits) if (v.day == d) whys.Add(v.why);
+                    }
                     if (whys.Count > 0)
                     {
                         // About him if any of the day's reasons is, or the inquiry asks about him.

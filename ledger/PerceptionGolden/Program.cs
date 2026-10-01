@@ -1274,6 +1274,18 @@ namespace Ledger.PerceptionGolden
             got.Add(("a body is not about him", forBody?.Line ?? "none", Waiting.EllisBodyLine));
             Is("nothing recorded", null, file.ConstableCalls.Count == 0 && cut.EllisCameOn == -1 ? "none" : "recorded");
             Is("a far wait", Waiting.Next(T(1, 18), T(1000000, 0), new WaitBeats { Police = new PoliceFile() }), "none");
+            // From nine on her day, whether she came (the independent review of 1 October, M2).
+            var notCome = new PoliceFile();
+            notCome.Report("ada", "player.cut_d1", Offence.Wounding, 4, 2);
+            Is("DS Ellis, a morning she did not come", Waiting.Next(T(2, 9, 5), T(3, 12), new WaitBeats { Police = notCome }), "ellis@D3 09:00");
+            Is("DS Ellis, a morning she did not come, on the hour", Waiting.Next(T(2, 9), T(2, 12), new WaitBeats { Police = notCome }), "none");
+            var came = new PoliceFile();
+            came.Report("ada", "player.cut_d1", Offence.Wounding, 4, 1);
+            came.EllisComes(null, 2);
+            var cameStop = Waiting.Next(T(2, 9, 5), T(2, 12), new WaitBeats { Police = came });
+            Is("DS Ellis, on Quay Street now", cameStop, "ellis@D2 09:05");
+            got.Add(("DS Ellis, on Quay Street now, about him", cameStop?.Line ?? "none", Waiting.EllisLine));
+            Is("DS Ellis, gone at ten", Waiting.Next(T(2, 10), T(2, 12), new WaitBeats { Police = came }), "none");
             // In the cells: to his release, and nothing else.
             var held = file.TakeIn(file.ConstableComes(2), T(2, 10), false, false);
             Is("released", Waiting.Next(T(2, 11), T(3, 9), new WaitBeats { Custody = held, Asks = new Arrangement(2), Police = file }), "released@D2 16:00");
