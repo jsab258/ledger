@@ -2060,7 +2060,7 @@ namespace Ledger.PerceptionGolden
             // window and a body, the brave and the nervous.
             foreach (var o in new[] { Offence.Damage, Offence.Killing })
                 foreach (var nerve in new[] { 0.3, 0.5 })
-                    foreach (var loyalty in new[] { 0.55, 0.57, 0.58, 0.6 })
+                    foreach (var loyalty in new[] { 0.55, 0.57, 0.575, 0.58, 0.6 })   // 0.575, on the line: not on his side
                     {
                         var gs = new Gossiper("ws", "ws", new MemoryStore("ws"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, nerve, loyalty);
                         Row(sb, "PoliceOnHisSide", o.ToString(), D(nerve), D(loyalty), Bit(PoliceFile.WouldReport(gs, o, false, "t")));

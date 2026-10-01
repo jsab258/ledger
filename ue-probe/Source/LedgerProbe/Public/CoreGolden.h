@@ -2901,7 +2901,7 @@ namespace Golden
 		// wary start; a window and a body, the brave and the nervous.
 		for (Offence O : { Offence::Damage, Offence::Killing })
 			for (double Nerve : { 0.3, 0.5 })
-				for (double Loyalty : { 0.55, 0.57, 0.58, 0.6 })
+				for (double Loyalty : { 0.55, 0.57, 0.575, 0.58, 0.6 })
 				{
 					const Gossiper Gs("ws", "ws", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", 0.5, Nerve, Loyalty);
 					const std::string Topic = "t";
