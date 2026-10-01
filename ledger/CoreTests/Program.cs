@@ -6077,6 +6077,19 @@ namespace Ledger.CoreTests
                       && neverAsked.Close(ada4, new GameTime(2, 23, 0)) == TeaState.NotAsked && ada4.Loyalty == before4
                       && !ada2.Memory.Events.Exists(e => e.Text.Contains("new owner") || e.Text.Contains(" they ")),
                       "dropping in and leaving is not coming; going from her house to the landing he is seen from her window, once; standing her up cools her; a tea she never asked leaves her as she was; her memories are hers, of Mickey's nephew");
+                // NOT WHILE HE IS IN THE CELLS (the independent review of 1 October, M3: the
+                // constable took him at ten on the tea's day and the next line was Ada
+                // inviting him for nine that night): held, she cannot see him, so she does
+                // not ask, and asks once he is out and she sees him, if it is still before nine.
+                var heldTea = AdasTea.For(0, true);
+                var cells = Custody.Take("player.window_d1", Offence.Damage, new GameTime(heldTea.Day, 10, 0), false, false);
+                var inCells = new GameTime(heldTea.Day, 10, 30);
+                string askedInCells = heldTea.SheSeesHim(inCells, cells.Holds(inCells));
+                var outAgain = cells.OutAt.AddMinutes(30);
+                string askedAfter = heldTea.SheSeesHim(outAgain, cells.Holds(outAgain));
+                bool stillThatDay = outAgain.Day == heldTea.Day && outAgain.Hour < 21;
+                Check(cells.Holds(inCells) && askedInCells == null && (stillThatDay ? askedAfter == AdasTea.Invite : askedAfter == null),
+                      "Ada does not ask him to tea while he is in the cells; out again before nine that day and seen, she asks", $"{askedInCells} | out {cells.OutAt} | {askedAfter}");
                 // THROUGH THE TEA ITSELF, FROM THE MIDDLE WHERE THE GAME STARTS HER (the
                 // independent check of 1 October: the police tests set regard by hand):
                 // leaving early is a nudge, and she still goes to the police over a window

@@ -193,7 +193,9 @@ namespace Ledger.PerceptionGolden
                 // until the port's CastDay.NeverToPolice follows.
                 // The review of 1 October, N3: a threat talks them round (Silence.FileThreat
                 // suppresses the deed); held until the port's Silence.h follows.
-                var held = new[] { "SweepHeard|", "ThreatSilences|" };
+                // The review of 1 October, M3: no tea invitation while he is held; held until
+                // the port's AdasTea.SheSeesHim takes `held`.
+                var held = new[] { "SweepHeard|", "ThreatSilences|", "TeaHeld|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1081,6 +1083,9 @@ namespace Ledger.PerceptionGolden
             // Core's count of minutes away was put right, and the port follows.
             var late = AdasTea.For(1, true);
             Row(sb, "TeaEdge", "asked at nine", Esc(late.SheSeesHim(T(3, 21)) ?? "none"), Esc(late.SheSeesHim(T(4, 10)) ?? "none"), late.State.ToString());
+            // Not while he is in the cells (the independent review of 1 October, M3).
+            var heldTea = AdasTea.For(0, true);
+            Row(sb, "TeaHeld", Esc(heldTea.SheSeesHim(T(2, 10), true) ?? "none"), heldTea.State.ToString(), Esc(heldTea.SheSeesHim(T(2, 17), false) ?? "none"), heldTea.State.ToString());
             var odd = AdasTea.For(0, true);
             odd.SheSeesHim(T(2, 8, 59));
             odd.WithHer(T(2, 20, 59)); odd.WithHer(T(2, 23)); odd.WithHer(T(3, 21, 40)); odd.WithHer(T(2, 21, 0));

@@ -438,7 +438,7 @@ static class Program
                         if (hod == 10 && !held && day < week.Day && cast.AreaOf(cast.PlaceOf("lena", day, hod)) == "mickeys")
                             talkDays.Add(day);
                         if (trust == "never" && hod == 11 && TrustsNow(mill, talkDays, sheSaw, day)) trust = $"day {day + 1}";
-                        if (day == tea.Day && hod == 10) tea.SheSeesHim(now);
+                        if (day == tea.Day && hod == 10) tea.SheSeesHim(now, custody != null && custody.Holds(now));
                         if (hod == 20 && arrangement.AsksOn(day) && !Skip("ron")) arrangement.Delivered(day, mill.Get("rocco"), now);
                         if (sits && day == tea.Day && hod == 21 && !Skip("tea"))
                             for (int m = 0; m < 60; m++) tea.WithHer(new GameTime(day, 21, m));
