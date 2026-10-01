@@ -26,6 +26,10 @@ page.json:
      {"kind": "pair", "key": "act-ron-kirby-threat", "name": "...", "note": "...", "line": "...",
       "takes": [{"label": "A", "audio": "repo path"}, {"label": "B", "audio": "repo path"}],
       "options": [["A", "A"], ["B", "B"], ["neither", "Neither"]]},
+     {"kind": "said", "key": "said-x", "name": "one line", "detail": "folded shut",
+      "clips": [{"label": "A", "line": "the words", "audio": "repo path",
+                 "sprite": {"file": "repo path", "frames": 11, "cols": 4, "rows": 3, "fps": 10}}],
+      "options": [["A", "A"], ["B", "B"], ["neither", "Neither"]]},
      {"kind": "decide", "key": "scope-x", "name": "one line", "note": "the detail, folded shut",
       "options": [["a", "First choice (recommended)"], ["b", "Second"]]}]}
 A pair is heard blind: which take is which engine is kept in a key file, never on the page.
@@ -76,6 +80,9 @@ def publishable(spec):
             p["src"] = pub(p["src"], tag)
         for t in s.get("takes", []):
             t["audio"] = pub(t["audio"], tag)
+        for c in s.get("clips", []):
+            c["audio"] = pub(c["audio"], tag)
+            c["sprite"]["file"] = pub(c["sprite"]["file"], tag)
         secs.append(s)
     out["sections"] = secs
     return out, files
@@ -194,6 +201,16 @@ function render(){
         row.append(b);
       }
       sec.append(row, el("div", {class:"row"}, el("q", {text:s.line})), picks(s.key, s.options, st.pick));
+    } else if (s.kind === "said") {
+      // A FACE FILMED SAYING A LINE, played in time with its own sound.
+      for (const c of s.clips) {
+        const sp = spriteBox(c.sprite);
+        const b = el("button", {type:"button", text:"Play " + c.label});
+        b.addEventListener("click", () => play(c.audio, b, sp.at));
+        sec.append(el("div", {class:"cand"}, el("div", {class:"take", text:c.label}), sp.box, el("div", {class:"row"}, b, el("q", {text:c.line}))));
+      }
+      sec.append(picks(s.key, s.options, st.pick));
+      if (s.detail) sec.append(el("details", {}, el("summary", {text:"What this is"}), el("p", {class:"was", text:s.detail})));
     } else if (s.kind === "decide") {
       sec.append(picks(s.key, s.options, st.pick));
       if (s.note) sec.append(el("details", {}, el("summary", {text:"Why, and what was measured"}), el("p", {class:"was", text:s.note})));
@@ -263,6 +280,10 @@ def selftest():
     check("two files of the same name stay apart", files[data["sections"][0]["candidates"][1]["front"]] == "c/y/Q1-front.jpg")
     s = style()
     check("the casting page's look is borrowed", s.startswith("<link") and s.endswith("</style>"))
+    said = {"sections": [{"kind": "said", "key": "said-x", "clips": [{"label": "A", "audio": "a/x.wav", "sprite": {"file": "f/x.jpg"}},
+                                                                    {"label": "B", "audio": "a/y.wav", "sprite": {"file": "g/x.jpg"}}]}]}
+    sd, sf = publishable(said)
+    check("a said item's sound and film are published apart", len(sf) == 4 and sd["sections"][0]["clips"][1]["sprite"]["file"] != sd["sections"][0]["clips"][0]["sprite"]["file"])
     print("day_page selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

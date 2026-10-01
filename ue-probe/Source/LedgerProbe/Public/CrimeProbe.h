@@ -1740,6 +1740,41 @@ namespace LedgerCrime
 	/// street's middle, behind their windows (hook-cast.json's places).
 	inline bool IndoorPlace(double Z) { return std::fabs(Z) >= 7.0; }
 	inline P3 BodySpotFor(double X, double Z) { return IndoorPlace(Z) ? P3(X, 0.0, Z > 0.0 ? 4.6 : -4.6) : P3(X, 0.0, Z); }
+	/// A PLACE TO STAND, 1 October (the AI tester, the packaged game: Sheila on
+	/// top of the fish market's pallet crate, where her day puts her at
+	/// fish_front). A person stands on the pavement, never on a thing. The
+	/// pavement's height is the lowest floor in a ring 1.2 m round the spot (a
+	/// thing is never lower than the ground it stands on; the road below the
+	/// kerb is lower by its step, which is no obstacle). If the spot's own floor
+	/// is more than a step above it, the nearest point within 2 m whose floor,
+	/// and the floor a quarter metre round it, are within a step is taken
+	/// instead, searched in rings of a quarter metre, sixteen ways round.
+	/// FloorY(X, Z) is the floor's height there, as the game's own trace finds it.
+	struct StandPlace { double X, Z, FeetY; bool bMoved; };
+	template <typename FloorFn>
+	inline StandPlace PlaceToStand(double X, double Z, const FloorFn& FloorY)
+	{
+		const double kStep = 0.3, kRing = 1.2, kRoom = 0.25, kReach = 2.0, kPi = 3.14159265358979;
+		const double Here = FloorY(X, Z);
+		double Ground = Here;
+		for (int K = 0; K < 8; ++K) { Ground = std::min(Ground, FloorY(X + kRing * std::cos(K * kPi / 4.0), Z + kRing * std::sin(K * kPi / 4.0))); }
+		auto Clear = [&](double PX, double PZ) {
+			for (double DX : { -kRoom, 0.0, kRoom })
+				for (double DZ : { -kRoom, 0.0, kRoom })
+					if (FloorY(PX + DX, PZ + DZ) > Ground + kStep) return false;
+			return true;
+		};
+		if (Here <= Ground + kStep) { return { X, Z, Here, false }; }
+		for (int Ring = 1; Ring * 0.25 <= kReach + 1e-9; ++Ring)
+		{
+			for (int K = 0; K < 16; ++K)
+			{
+				const double PX = X + Ring * 0.25 * std::cos(K * kPi / 8.0), PZ = Z + Ring * 0.25 * std::sin(K * kPi / 8.0);
+				if (Clear(PX, PZ)) { return { PX, PZ, FloorY(PX, PZ), true }; }
+			}
+		}
+		return { X, Z, Here, false };
+	}
 	/// Which way somebody at a place looks: out at the street (up it from the quay).
 	inline double StreetFacingYaw(double X, double Z)
 	{

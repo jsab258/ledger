@@ -250,6 +250,10 @@ OURS = {
     # MetaHuman built on this PC (Epic's MetaHuman licence lets renders be
     # shown; the MetaHuman files stay out of this repository).
     "production/approvals/2026-09-30": "the game's look script filming its own street and cast (-LookCamera), 29 September",
+    # 1 October's page: the cast's faces filmed by the game itself while they
+    # say their thinking sounds (-MouthFilm with -FaceAB), frames of MetaHumans
+    # built on this PC (renders may be shown; the files stay out of here).
+    "production/approvals/2026-10-01": "the game's mouth film of its own cast (-MouthFilm, -FaceAB), 1 October",
     # The build's own screenshots of the game's own street. Rendered by the
     # Windows job and committed every run, so they arrive faster than any
     # other asset in the project and are the likeliest thing to trip a check

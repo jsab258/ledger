@@ -128,10 +128,11 @@ public:
 	// A LINE MADE IN ADVANCE SAID WITH ITS OWN FACE (item 4, 1 October; Jafar's
 	// list: "mouths from Epic's audio-driven animation for every line made in
 	// advance"). Epic's MetaHuman Animator made the face from the line's own
-	// sound in the editor (tools/ue/speech_faces.py: jaw, lips, tongue, brows,
-	// blinks); its curves are read at the line's time each frame and laid over
+	// sound in the editor (tools/ue/speech_faces.py); its mouth's curves (jaw,
+	// lips, teeth, tongue) are read at the line's time each frame and laid over
 	// the idle and the loudness mouth, faded in over a tenth of a second and out
-	// the same when it ends or the answer cuts it off. Speech made in play keeps
+	// over a quarter when it ends or the answer cuts it off; the eyes and brows
+	// stay the idle's. Speech made in play keeps
 	// the loudness mouth (SpeakTick) until Epic's streaming solver is in.
 	void SayMadeLine(UAnimSequenceBase* InFace);
 	void EndMadeLine();

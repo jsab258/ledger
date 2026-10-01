@@ -583,6 +583,32 @@ int main(int argc, char** argv)
 		Check(!bAway, "a2-nobody-off-quay-street-witnesses-it");
 	}
 
+	// A PLACE TO STAND, 1 October (the AI tester, the packaged game: Sheila on
+	// top of the fish market's pallet crate at fish_front, 12.0 by 4.2). A
+	// person stands on the pavement, never on a thing. The street here: the
+	// pavement at 0.15 m, the road below it at 0.0 for |Z| under 3, and a crate
+	// 1.1 m square and 0.9 m high centred on the spot.
+	{
+		auto Floor = [](double X, double Z) -> double {
+			if (std::fabs(X - 12.0) <= 0.55 && std::fabs(Z - 4.2) <= 0.55) return 1.05;
+			return std::fabs(Z) < 3.0 ? 0.0 : 0.15;
+		};
+		const LedgerCrime::StandPlace On = LedgerCrime::PlaceToStand(12.0, 4.2, Floor);
+		Check(On.bMoved, "stand-a-spot-on-the-crate-is-moved-off-it");
+		Check(On.FeetY < 0.3, "stand-and-the-feet-are-on-the-ground-not-the-crate (" + std::to_string(On.FeetY) + ")");
+		Check(std::hypot(On.X - 12.0, On.Z - 4.2) <= 2.0, "stand-and-near-where-the-day-puts-her");
+		bool bClear = true;
+		for (double DX : { -0.25, 0.0, 0.25 })
+			for (double DZ : { -0.25, 0.0, 0.25 })
+				if (Floor(On.X + DX, On.Z + DZ) > 0.4) bClear = false;
+		Check(bClear, "stand-with-room-for-a-body-clear-of-the-crate");
+		const LedgerCrime::StandPlace Free = LedgerCrime::PlaceToStand(18.0, 4.4, Floor);
+		Check(!Free.bMoved && Free.X == 18.0 && Free.Z == 4.4 && std::fabs(Free.FeetY - 0.15) < 1e-9,
+		      "stand-a-clear-pavement-spot-is-kept-as-it-is");
+		const LedgerCrime::StandPlace Kerb = LedgerCrime::PlaceToStand(12.0, 3.1, [](double, double Z) { return std::fabs(Z) < 3.0 ? 0.0 : 0.15; });
+		Check(!Kerb.bMoved, "stand-the-kerb's-step-down-to-the-road-is-no-obstacle");
+	}
+
 	std::printf("crime-probe-test: %d check(s), %d failure(s) over 1 live bank, "
 	            "%d selftest row(s)\n", gChecks, gFailed, S.Checks);
 	return gFailed == 0 ? 0 : 2;
