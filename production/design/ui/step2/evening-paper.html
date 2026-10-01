@@ -181,15 +181,19 @@ html[data-screen="suggest"] .s-suggest, html[data-screen="suggest-pad"] .s-sugge
 .say.on { color: var(--red); }
 .say.on::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 15px; width: 9px; background: var(--red); }
 .say .key { margin: 0; font-size: 26px; padding: 5px 10px; }
-.say.own { font-weight: 500; font-style: normal; color: var(--grey); }
+.say.own { font-weight: 600; font-style: italic; color: var(--ink); }
 .say.own.on { color: var(--red); }
-.with-coupon { bottom: 414px; }
+.with-coupon { bottom: 432px; }
+.kb-keys { left: 120px; bottom: 360px; }
 .coupon .typed .hintline { color: var(--grey); font-style: italic; font-family: var(--serif); font-size: 30px; }
 /* A controller's buttons: round, ruled in ink, letters as the pad has them. */
 .pad { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-right: 10px; border-radius: 50%; background: var(--news); color: var(--ink); font: 800 26px/1 var(--text); box-shadow: inset 0 0 0 2.5px var(--ink), 0 2px 4px rgba(0,0,0,.4); vertical-align: middle; }
-.pad.dpad { width: auto; padding: 0 9px; border-radius: 8px; font-size: 22px; letter-spacing: -.02em; }
+/* the pad: round like the buttons, with its cross */
+.pad.dpad { position: relative; }
+.pad.dpad::before, .pad.dpad::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ink); border-radius: 2px; }
+.pad.dpad::before { width: 9px; height: 28px; margin: -14px 0 0 -4.5px; }
+.pad.dpad::after { width: 28px; height: 9px; margin: -4.5px 0 0 -14px; }
 .keys.over .pad { padding: 0; background: var(--news); text-shadow: none; }
-.keys.over .pad.dpad { padding: 0 9px; }
 .keys .pad + span { margin-right: 34px; }
 .pad-keys { left: 120px; bottom: 182px; }
 /* 8. LOADING: tonight's front page while the street is made ready */
@@ -325,23 +329,24 @@ html[data-screen="suggest"] .s-suggest, html[data-screen="suggest-pad"] .s-sugge
     <div class="bg talk"></div>
     <div class="foot-shade"></div>
     <div class="safe">
-      <div class="sheet coupon"><div class="keys talk-keys over"><b>Enter</b><span>says it</span><b>Esc</b><span>stops typing, keeps the words</span></div><div class="to">To Sheila</div><div class="typed">I'm after a man in a grey coat who took a cab up to Fairview on Tuesday.<span class="caret"></span></div></div>
+      <div class="sheet coupon"><div class="keys talk-keys over"><b>Enter</b><span>say it</span><b>Tab</b><span>suggest a line</span><b>Esc</b><span>stop typing</span></div><div class="to">To Sheila</div><div class="typed">I'm after a man in a grey coat who took a cab up to Fairview on Tuesday.<span class="caret"></span></div></div>
     </div>
   </div>
 
 
-  <!-- 9a. SUGGESTED LINES on a keyboard: Tab opened them over his coupon -->
+  <!-- 9a. SUGGESTED LINES on a keyboard: Tab opened them over his coupon; while open they take the arrow keys -->
   <div class="screen s-suggest">
     <div class="bg talk"></div>
     <div class="foot-shade"></div>
     <div class="safe">
       <div class="sheet says with-coupon">
-        <span class="tag">Say <em>· or write your own below</em></span>
-        <div class="say on"><span class="key">1</span>Any bookings come in this morning?</div>
-        <div class="say"><span class="key">2</span>How are the books looking, Sheila?</div>
-        <div class="say"><span class="key">3</span>Right. I'll let you get on.</div>
+        <span class="tag">Say</span>
+        <div class="say on">Was it this quiet last night as well?</div>
+        <div class="say">How are you keeping, Sheila?</div>
+        <div class="say">Right. I'll let you get on.</div>
       </div>
-      <div class="sheet coupon"><div class="keys talk-keys over"><b>1</b><b>2</b><b>3</b><span>say it</span><b>Tab</b><span>hide these</span><b>Esc</b><span>stop talking</span></div><div class="to">To Sheila</div><div class="typed one"><span class="caret"></span> <span class="hintline">Or type your own words…</span></div></div>
+      <div class="keys kb-keys over"><b>↑</b><b>↓</b><span>choose</span><b>Enter</b><span>say it</span><b>Tab</b><span>my own words</span></div>
+      <div class="sheet coupon"><div class="to">To Sheila</div><div class="typed one"><span class="hintline">Tab to write your own words</span></div></div>
       <div class="subs"><p><span><span class="who">SHEILA</span>Morning. Quiet one today.</span><br><span>Rain's held off, at least.</span></p></div>
     </div>
   </div>
@@ -353,12 +358,12 @@ html[data-screen="suggest"] .s-suggest, html[data-screen="suggest-pad"] .s-sugge
     <div class="safe">
       <div class="sheet says" style="bottom:318px">
         <span class="tag">Say</span>
-        <div class="say on">Any bookings come in this morning?</div>
-        <div class="say">How are the books looking, Sheila?</div>
+        <div class="say on">Was it this quiet last night as well?</div>
+        <div class="say">How are you keeping, Sheila?</div>
         <div class="say">Right. I'll let you get on.</div>
         <div class="say own">My own words…</div>
       </div>
-      <div class="keys pad-keys over" style="bottom:252px"><span class="pad dpad">↑↓</span><span>choose</span><span class="pad">A</span><span>say it</span><span class="pad">Y</span><span>my own words</span><span class="pad">B</span><span>stop talking</span></div>
+      <div class="keys pad-keys over" style="bottom:252px"><span class="pad dpad" title="the pad, up and down"><i></i></span><span>choose</span><span class="pad">A</span><span>say it</span><span class="pad">Y</span><span>my own words</span><span class="pad">B</span><span>back</span></div>
       <div class="subs"><p><span><span class="who">SHEILA</span>Morning. Quiet one today.</span><br><span>Rain's held off, at least.</span></p></div>
     </div>
   </div>

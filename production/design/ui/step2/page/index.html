@@ -75,6 +75,13 @@ main img,section img,[data-film-sprite]{cursor:zoom-in}
 .pv .pv-play{position:absolute;left:50%;bottom:calc(64px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);min-height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;display:none;cursor:pointer}
 .pv.film .pv-play{display:block}
 @media (hover:none){.pv .pv-nav{display:none}}
+.decide{gap:6px;padding:10px 12px}
+.q{font-size:15px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{width:auto;flex:1 1 0;min-width:0;min-height:44px;padding:6px 10px;font-size:15px;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px}
+.opt .rec{margin-left:0;font-size:10px}
+.decide details summary{padding:0}
+.tally{font-size:12px}
 </style>
 <div class="wrap">
   <header>
@@ -95,14 +102,14 @@ main img,section img,[data-film-sprite]{cursor:zoom-in}
 const PAGE = {
   decisions: [
     {key:"ui-suggest-written", q:"How should the suggested lines be written?", note:false, plain:true,
-     options:[["mixed","Mixed, about 10 cents an hour more",true],["authors","Written ahead only, free but repeats",false],["reply","By her reply's call, risks her secrets",false]],
+     options:[["mixed","Mixed, +10¢ an hour",true],["authors","Written ahead",false],["reply","With her reply",false]],
      detail:"Mixed: the game's own written lines for hellos, goodbyes and decisions, and the small model, given only what Tom knows, for the rest. It costs about 10 US cents more per hour of talk, on the small model (an estimate from published prices, not measured), counts against each copy's talk allowance, and falls back to the written ones when that runs out. Written ahead costs nothing per line but is a large writing job and repeats sooner. The same call as her reply is the cheapest (about 3 cents an hour) but sees what she knows, so its suggestions would point at her secrets. The research is in the pull request."},
     {key:"ui-suggest-who", q:"Who sees them?", note:false, plain:true,
-     options:[["pad-tab","A controller at once; a keyboard when he presses Tab",true],["everyone","Everyone, always",false]],
+     options:[["pad-tab","Pad at once, keys on Tab",true],["everyone","Everyone, always",false]],
      detail:"The research found suggested words make people write shorter, more predictable lines, so a keyboard player sees them only when he asks."},
     {key:"ui-speech", q:"A microphone as a third way to talk?", note:false, plain:true,
-     options:[["later","Not now; look again after the playable route works",true],["now","Now",false]],
-     detail:"Voice is what other AI-talk games use for players who will not type. It would be new work: speech recognition on the PC and testing it with British accents."},
+     options:[["later","Later",true],["now","Now",false]],
+     detail:"Later means looking again once the playable route works. Voice is what other AI-talk games use for players who will not type. It would be new work: speech recognition on the PC and testing it with British accents."},
   ],
   screens: [
     {k:"title", n:"Title screen", d:"New game, Continue (with where and when you left off), Settings, Quit."},
@@ -126,8 +133,8 @@ const PAGE = {
     hints: ["On your wide screen the slip sits over the near lane of the road."],
     subtitles: ["The arrow points left, towards a man walking on the left pavement, who may be taken for the speaker."],
     typing: ["The box covers the man by the lamp post below the waist."],
-    suggest: [],
-    "suggest-pad": [],
+    suggest: ["Sheila's subtitle covers her lower legs; that is where subtitles sit, so the game's camera should frame her higher."],
+    "suggest-pad": ["\u201cBack\u201d on B does not say back to where (to walking, with the talk still open)."],
     loading: ["\u201c312 to go\u201d is the game's own wording; it does not say 312 of what."],
   },
   about: [

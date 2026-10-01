@@ -90,9 +90,12 @@ html, body { margin: 0; width: 100%; background: #26241F; }
 .say.on { color: var(--red); }
 .say.on::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 13px; width: 9px; background: var(--red); }
 .say .key { margin: 0; font-size: 26px; padding: 5px 10px; }
-.say.own { font-weight: 500; color: var(--grey); }
+.say.own { font-weight: 600; font-style: italic; }
 .pad { display: inline-grid; place-items: center; width: 44px; height: 44px; margin: 0 8px 8px 0; border-radius: 50%; background: var(--news); color: var(--ink); font: 800 26px/1 var(--text); box-shadow: inset 0 0 0 2.5px var(--ink), 0 2px 4px rgba(0,0,0,.4); vertical-align: middle; }
-.pad.dpad { width: auto; padding: 0 9px; border-radius: 8px; font-size: 22px; }
+.pad.dpad { position: relative; }
+.pad.dpad::before, .pad.dpad::after { content: ""; position: absolute; left: 50%; top: 50%; background: var(--ink); border-radius: 2px; }
+.pad.dpad::before { width: 9px; height: 28px; margin: -14px 0 0 -4.5px; }
+.pad.dpad::after { width: 28px; height: 9px; margin: -4.5px 0 0 -14px; }
 .st { margin: 10px 0 2px; font: 600 16px/1 var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--grey); }
 .dk .st { color: #B8B2A5; }
 </style>
@@ -191,14 +194,15 @@ html, body { margin: 0; width: 100%; background: #26241F; }
   <div style="grid-column: 1 / -1; display: grid; grid-template-columns: 2fr 1fr; gap: 28px; align-items: start;">
     <div class="sheet card">
       <div class="lab">Suggested lines</div>
-      <div class="say on"><span class="key">1</span>Any bookings come in this morning?</div>
-      <div class="say"><span class="key">2</span>How are the books looking, Sheila?</div>
+      <div class="say on">Was it this quiet last night as well?</div>
+      <div class="say">How are you keeping, Sheila?</div>
+      <div class="say">Right. I'll let you get on.</div>
       <div class="say own">My own words…</div>
-      <div class="note" style="margin-top:10px">His exact words, never a summary: three, each with its own job (ask, his own business, leave), then his own words. Numbered on a keyboard; on a controller, chosen with the pad.</div>
+      <div class="note" style="margin-top:10px">His exact words, never a summary: three in a fixed order of jobs (ask about what was said, something personal or off the subject, leave), then his own words. The first is in hand only because it is first.</div>
     </div>
     <div class="dk">
       <div class="lab">A controller's buttons</div>
-      <span class="pad dpad">↑↓</span><span class="pad">A</span><span class="pad">B</span><span class="pad">X</span><span class="pad">Y</span>
+      <span class="pad dpad" title="the pad"></span><span class="pad">A</span><span class="pad">B</span><span class="pad">X</span><span class="pad">Y</span>
       <div class="note">Round, so they never pass for keys; the letters as the pad in his hands has them, read from Steam Input.</div>
     </div>
   </div>
