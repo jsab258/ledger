@@ -1,0 +1,93 @@
+
+== day 0 11:00 (night=0)
+  onlooker rocco    at mickeys_rank     body=1 spot=(7.5,3.8) yaw=-90
+  onlooker lena     at mickeys_office   body=1 spot=(6.0,4.6) yaw=-90
+  onlooker zlata    at mickeys_office   body=0 spot=(6.0,7.5) yaw=-90
+  onlooker june     at mickeys_office   body=0 spot=(6.0,7.5) yaw=-90
+  onlooker sam      at ritas_step       body=1 spot=(18.0,4.4) yaw=-90
+  onlooker ada      at fish_counter     body=0 spot=(12.0,7.5) yaw=-90
+  onlooker marla    at fish_counter     body=0 spot=(12.0,7.5) yaw=-90
+  onlooker rita     at ritas_counter    body=0 spot=(18.0,7.5) yaw=-90
+  onlooker victor   at ritas_counter    body=0 spot=(18.0,7.5) yaw=-90
+  onlooker hal      at ritas_counter    body=0 spot=(18.0,7.5) yaw=-90
+  onlooker vesna    at fish_counter     body=0 spot=(12.0,7.5) yaw=-90
+  onlooker zora     at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker iva      at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker selma    at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker tanja    at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker katarina at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker ines     at ritas_counter    body=0 spot=(18.0,7.5) yaw=-90
+  onlooker jelena   at ritas_counter    body=0 spot=(18.0,7.5) yaw=-90
+  onlooker sanja    at fish_counter     body=0 spot=(12.0,7.5) yaw=-90
+  onlooker hana     at pension_counter  body=0 spot=(32.0,-7.5) yaw=90
+  in Rita's area: sam      at ritas_step     onlooker=1
+  in Rita's area: rita     at ritas_counter  onlooker=1
+  in Rita's area: victor   at ritas_counter  onlooker=1
+  in Rita's area: hal      at ritas_counter  onlooker=1
+  in Rita's area: ines     at ritas_counter  onlooker=1
+  in Rita's area: marta    at ritas_step     onlooker=0
+  in Rita's area: jelena   at ritas_counter  onlooker=1
+
+== day 0 13:00 (night=0)
+  onlooker rocco    at mickeys_rank     body=1 spot=(7.5,3.8) yaw=-90
+  onlooker lena     at mickeys_office   body=1 spot=(6.0,4.6) yaw=-90
+  onlooker zlata    at mickeys_office   body=0 spot=(6.0,7.5) yaw=-90
+  onlooker sam      at laundry_front    body=1 spot=(30.0,4.3) yaw=-90
+  onlooker marla    at fish_counter     body=0 spot=(12.0,7.5) yaw=-90
+  onlooker victor   at ritas_counter    body=0 spot=(18.0,7.5) yaw=-90
+  onlooker hal      at hals_shop        body=0 spot=(39.0,-7.5) yaw=90
+  onlooker zora     at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker iva      at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker selma    at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker tanja    at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker katarina at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  onlooker ines     at ritas_counter    body=0 spot=(18.0,7.5) yaw=-90
+  onlooker marta    at ritas_counter    body=0 spot=(18.0,7.5) yaw=-90
+  in Rita's area: rita     at ritas_step     onlooker=0
+  in Rita's area: victor   at ritas_counter  onlooker=1
+  in Rita's area: ines     at ritas_counter  onlooker=1
+  in Rita's area: marta    at ritas_counter  onlooker=1
+
+== day 0 17:00 (night=0)
+  onlooker rocco    at quay             body=1 spot=(-5.0,0.0) yaw=0
+  onlooker lena     at ritas_step       body=1 spot=(18.0,4.4) yaw=-90
+  onlooker zlata    at mickeys_office   body=0 spot=(6.0,7.5) yaw=-90
+  onlooker sam      at quay             body=1 spot=(-5.0,0.0) yaw=0
+  onlooker hal      at hals_shop        body=0 spot=(39.0,-7.5) yaw=90
+  onlooker tanja    at laundry_counter  body=0 spot=(30.0,7.5) yaw=-90
+  in Rita's area: lena     at ritas_step     onlooker=1
+  in Rita's area: joey     at ritas_step     onlooker=0
+  in Rita's area: rita     at ritas_step     onlooker=0
+  in Rita's area: victor   at ritas_step     onlooker=0
+  in Rita's area: tibor    at ritas_step     onlooker=0
+  in Rita's area: ines     at ritas_step     onlooker=0
+
+== day 0 19:00 (night=1)
+  onlooker rocco    at mickeys_office   body=1 spot=(6.0,4.6) yaw=-90
+  onlooker zlata    at mickeys_office   body=0 spot=(6.0,7.5) yaw=-90
+  onlooker sam      at mickeys_rank     body=1 spot=(7.5,3.8) yaw=-90
+
+== day 0 20:00 (night=1)
+  onlooker rocco    at mickeys_office   body=1 spot=(6.0,4.6) yaw=-90
+
+== day 0 21:00 (night=1)
+  onlooker rocco    at mickeys_office   body=1 spot=(6.0,4.6) yaw=-90
+
+== the deed at Mon 17:30, Rita's window; witnesses none, heard-only none
+  lena     at D0 17:30: "I was there when somebody put Rita's window in. I never saw who did it."
+  joey     at D0 17:30: "I was there when somebody put Rita's window in. I never saw who did it."
+  rita     at D0 17:30: "Somebody put my window in while I was there. I never saw who did it."
+  victor   at D0 17:30: "I was there when somebody put Rita's window in. I never saw who did it."
+  tibor    at D0 17:30: "I was there when somebody put Rita's window in. I never saw who did it."
+  ines     at D0 17:30: "I was there when somebody put Rita's window in. I never saw who did it."
+
+== the deed at Mon 10:30; Rita heard it only (rung 0), Ines saw a face (rung 3)
+  found: sam
+  found: victor
+  found: marta
+  found: jelena
+  found: hal at 11:00
+  found: lena at 17:00
+  found: joey at 17:00
+  found: tibor at 17:00
+  rita found her own window via Aftermath: 0 time(s); her memories: 0

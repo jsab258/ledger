@@ -1,0 +1,42 @@
+== 1. C1 under the current rules ==
+ session 1: Tom tells Darren he was at the pictures; the reply's save: fresh stamp G1
+    {"id": 1, "to": "sam", "reply": "Morning. Quiet one today.", "refusedAsk": false}
+    {"talk": "saved", "people": 1}
+   file: stamp=G1 people=1; holds 'pictures': True
+ session 2 (Continue): an hourly save before the talk program is ready keeps G1 and sends no talk save;
+  ready -> load G1; next save G2
+    {"talk": "loaded", "people": 1}
+    {"talk": "saved", "people": 1}
+   file: stamp=G2 people=1; holds 'pictures': True
+== 2. Ron's own question pending across a Continue (C5) ==
+ straight:
+    {"id": 1, "to": "rocco", "reply": "You want me to tell them no to the envelope, boss? That's Mickey's arr", "refusedAsk": false}
+    {"id": 2, "to": "rocco", "reply": "Right you are, boss. I'll take your no down the landing.", "refusedAsk": true}
+ with the 23:00 autosave between and a Continue (the game marks the first line after Continue fresh: GLive.Talked is empty):
+    {"id": 1, "to": "rocco", "reply": "You want me to tell them no to the envelope, boss? That's Mickey's arr", "refusedAsk": false}
+    {"talk": "saved", "people": 1}
+    {"talk": "loaded", "people": 1}
+    {"id": 1, "to": "rocco", "reply": "Funny business round here. The player said to me: \"Tell them no, Ron.\"", "refusedAsk": false}
+ (and even without fresh):
+    {"talk": "loaded", "people": 1}
+    {"id": 1, "to": "rocco", "reply": "Funny business round here. The player said to me: \"Tell them no, Ron.\"", "refusedAsk": false}
+== 3. Sheila's plain question pending across a Continue (C5) ==
+ straight:
+    {"id": 1, "to": "lena", "reply": "I don't come in Sundays. That's Mickey's real book. Everything he ran,", "refusedAsk": false}
+    {"id": 2, "to": "lena", "reply": "Take it over, then? Mickey's arrangements and everything that comes wi", "refusedAsk": false}
+    {"id": 3, "to": "lena", "reply": "Right. Then it's your book.", "refusedAsk": false, "weekAnswer": "TakeOver"}
+ with the 11:00 autosave between and a Continue:
+    {"id": 1, "to": "lena", "reply": "I don't come in Sundays. That's Mickey's real book. Everything he ran,", "refusedAsk": false}
+    {"id": 2, "to": "lena", "reply": "Take it over, then? Mickey's arrangements and everything that comes wi", "refusedAsk": false}
+    {"talk": "saved", "people": 1}
+    {"talk": "loaded", "people": 1}
+    {"id": 1, "to": "lena", "reply": "Funny business round here. The player said to me: \"Morning, Sheila.\"", "refusedAsk": false}
+== 4. A talk save that fails removes the good file; the game has already written the new stamp ==
+    {"id": 1, "to": "sam", "reply": "Morning. Quiet one today.", "refusedAsk": false}
+    {"talk": "saved", "people": 1}
+   file: stamp=G5 people=1; holds 'pictures': True
+    {"talk": "loaded", "people": 1}
+    {"talk": "save", "error": "unwritable"}
+   slot file exists after the failed save: NO
+ Continue with clock.txt's G6:
+    {"talk": "loaded", "people": 0, "missing": true}

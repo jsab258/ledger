@@ -1,0 +1,3 @@
+familiarity 0.20: knowsItIsHim=0 knowing=Enough stance=Indifferent -> KnowingJson sends {"level":"nothing"}
+familiarity 0.40: knowsItIsHim=1 knowing=Enough stance=Comments -> KnowingJson sends the story
+his memory: I saw it myself: it was Nowak that put the window in on Quay Street
