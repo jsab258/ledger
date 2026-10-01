@@ -1,0 +1,200 @@
+reload-at 9 (day 0 09:59): rows differing 0, end states differing 0
+reload-at 10 (day 0 10:59): rows differing 0, end states differing 0
+reload-at 11 (day 0 11:59): rows differing 0, end states differing 0
+reload-at 12 (day 0 12:59): rows differing 0, end states differing 0
+reload-at 13 (day 0 13:59): rows differing 0, end states differing 0
+reload-at 14 (day 0 14:59): rows differing 0, end states differing 0
+reload-at 15 (day 0 15:59): rows differing 0, end states differing 0
+reload-at 16 (day 0 16:59): rows differing 0, end states differing 0
+reload-at 17 (day 0 17:59): rows differing 0, end states differing 0
+reload-at 18 (day 0 18:59): rows differing 0, end states differing 0
+reload-at 19 (day 0 19:59): rows differing 0, end states differing 0
+reload-at 20 (day 0 20:59): rows differing 0, end states differing 0
+reload-at 21 (day 0 21:59): rows differing 0, end states differing 0
+reload-at 22 (day 0 22:59): rows differing 0, end states differing 0
+reload-at 23 (day 0 23:59): rows differing 0, end states differing 0
+reload-at 24 (day 1 00:59): rows differing 0, end states differing 0
+reload-at 25 (day 1 01:59): rows differing 0, end states differing 0
+reload-at 26 (day 1 02:59): rows differing 0, end states differing 0
+reload-at 27 (day 1 03:59): rows differing 0, end states differing 0
+reload-at 28 (day 1 04:59): rows differing 0, end states differing 0
+reload-at 29 (day 1 05:59): rows differing 0, end states differing 0
+reload-at 30 (day 1 06:59): rows differing 0, end states differing 0
+reload-at 31 (day 1 07:59): rows differing 0, end states differing 0
+reload-at 32 (day 1 08:59): rows differing 0, end states differing 0
+reload-at 33 (day 1 09:59): rows differing 0, end states differing 0
+reload-at 34 (day 1 10:59): rows differing 0, end states differing 0
+reload-at 35 (day 1 11:59): rows differing 0, end states differing 0
+reload-at 36 (day 1 12:59): rows differing 0, end states differing 0
+reload-at 37 (day 1 13:59): rows differing 0, end states differing 0
+reload-at 38 (day 1 14:59): rows differing 0, end states differing 0
+reload-at 39 (day 1 15:59): rows differing 0, end states differing 0
+reload-at 40 (day 1 16:59): rows differing 0, end states differing 0
+reload-at 41 (day 1 17:59): rows differing 0, end states differing 0
+reload-at 42 (day 1 18:59): rows differing 0, end states differing 0
+reload-at 43 (day 1 19:59): rows differing 0, end states differing 0
+reload-at 44 (day 1 20:59): rows differing 0, end states differing 0
+reload-at 45 (day 1 21:59): rows differing 0, end states differing 0
+reload-at 46 (day 1 22:59): rows differing 0, end states differing 0
+reload-at 47 (day 1 23:59): rows differing 0, end states differing 0
+reload-at 48 (day 2 00:59): rows differing 0, end states differing 0
+reload-at 49 (day 2 01:59): rows differing 0, end states differing 0
+reload-at 50 (day 2 02:59): rows differing 0, end states differing 0
+reload-at 51 (day 2 03:59): rows differing 0, end states differing 0
+reload-at 52 (day 2 04:59): rows differing 0, end states differing 0
+reload-at 53 (day 2 05:59): rows differing 0, end states differing 0
+reload-at 54 (day 2 06:59): rows differing 0, end states differing 0
+reload-at 55 (day 2 07:59): rows differing 0, end states differing 0
+reload-at 56 (day 2 08:59): rows differing 0, end states differing 0
+reload-at 57 (day 2 09:59): rows differing 0, end states differing 0
+reload-at 58 (day 2 10:59): rows differing 0, end states differing 0
+reload-at 59 (day 2 11:59): rows differing 0, end states differing 0
+reload-at 60 (day 2 12:59): rows differing 0, end states differing 0
+reload-at 61 (day 2 13:59): rows differing 0, end states differing 0
+reload-at 62 (day 2 14:59): rows differing 0, end states differing 0
+reload-at 63 (day 2 15:59): rows differing 0, end states differing 0
+reload-at 64 (day 2 16:59): rows differing 0, end states differing 0
+reload-at 65 (day 2 17:59): rows differing 0, end states differing 0
+reload-at 66 (day 2 18:59): rows differing 0, end states differing 0
+reload-at 67 (day 2 19:59): rows differing 0, end states differing 0
+reload-at 68 (day 2 20:59): rows differing 0, end states differing 0
+reload-at 69 (day 2 21:59): rows differing 0, end states differing 0
+reload-at 70 (day 2 22:59): rows differing 0, end states differing 0
+reload-at 71 (day 2 23:59): rows differing 0, end states differing 0
+reload-at 72 (day 3 00:59): rows differing 0, end states differing 0
+reload-at 73 (day 3 01:59): rows differing 0, end states differing 0
+reload-at 74 (day 3 02:59): rows differing 0, end states differing 0
+reload-at 75 (day 3 03:59): rows differing 0, end states differing 0
+reload-at 76 (day 3 04:59): rows differing 0, end states differing 0
+reload-at 77 (day 3 05:59): rows differing 0, end states differing 0
+reload-at 78 (day 3 06:59): rows differing 0, end states differing 0
+reload-at 79 (day 3 07:59): rows differing 0, end states differing 0
+reload-at 80 (day 3 08:59): rows differing 0, end states differing 0
+reload-at 81 (day 3 09:59): rows differing 0, end states differing 0
+reload-at 82 (day 3 10:59): rows differing 0, end states differing 0
+reload-at 83 (day 3 11:59): rows differing 0, end states differing 0
+reload-at 84 (day 3 12:59): rows differing 0, end states differing 0
+reload-at 85 (day 3 13:59): rows differing 0, end states differing 0
+reload-at 86 (day 3 14:59): rows differing 0, end states differing 0
+reload-at 87 (day 3 15:59): rows differing 0, end states differing 0
+reload-at 88 (day 3 16:59): rows differing 0, end states differing 0
+reload-at 89 (day 3 17:59): rows differing 0, end states differing 0
+reload-at 90 (day 3 18:59): rows differing 0, end states differing 0
+reload-at 91 (day 3 19:59): rows differing 0, end states differing 0
+reload-at 92 (day 3 20:59): rows differing 0, end states differing 0
+reload-at 93 (day 3 21:59): rows differing 0, end states differing 0
+reload-at 94 (day 3 22:59): rows differing 0, end states differing 0
+reload-at 95 (day 3 23:59): rows differing 0, end states differing 0
+reload-at 96 (day 4 00:59): rows differing 0, end states differing 0
+reload-at 97 (day 4 01:59): rows differing 0, end states differing 0
+reload-at 98 (day 4 02:59): rows differing 0, end states differing 0
+reload-at 99 (day 4 03:59): rows differing 0, end states differing 0
+reload-at 100 (day 4 04:59): rows differing 0, end states differing 0
+reload-at 101 (day 4 05:59): rows differing 0, end states differing 0
+reload-at 102 (day 4 06:59): rows differing 0, end states differing 0
+reload-at 103 (day 4 07:59): rows differing 0, end states differing 0
+reload-at 104 (day 4 08:59): rows differing 0, end states differing 0
+reload-at 105 (day 4 09:59): rows differing 0, end states differing 0
+reload-at 106 (day 4 10:59): rows differing 0, end states differing 0
+reload-at 107 (day 4 11:59): rows differing 0, end states differing 0
+reload-at 108 (day 4 12:59): rows differing 0, end states differing 0
+reload-at 109 (day 4 13:59): rows differing 0, end states differing 0
+reload-at 110 (day 4 14:59): rows differing 0, end states differing 0
+reload-at 111 (day 4 15:59): rows differing 0, end states differing 0
+reload-at 112 (day 4 16:59): rows differing 0, end states differing 0
+reload-at 113 (day 4 17:59): rows differing 0, end states differing 0
+reload-at 114 (day 4 18:59): rows differing 0, end states differing 0
+reload-at 115 (day 4 19:59): rows differing 0, end states differing 0
+reload-at 116 (day 4 20:59): rows differing 0, end states differing 0
+reload-at 117 (day 4 21:59): rows differing 0, end states differing 0
+reload-at 118 (day 4 22:59): rows differing 0, end states differing 0
+reload-at 119 (day 4 23:59): rows differing 0, end states differing 0
+reload-at 120 (day 5 00:59): rows differing 0, end states differing 0
+reload-at 121 (day 5 01:59): rows differing 0, end states differing 0
+reload-at 122 (day 5 02:59): rows differing 0, end states differing 0
+reload-at 123 (day 5 03:59): rows differing 0, end states differing 0
+reload-at 124 (day 5 04:59): rows differing 0, end states differing 0
+reload-at 125 (day 5 05:59): rows differing 0, end states differing 0
+reload-at 126 (day 5 06:59): rows differing 0, end states differing 0
+reload-at 127 (day 5 07:59): rows differing 0, end states differing 0
+reload-at 128 (day 5 08:59): rows differing 0, end states differing 0
+reload-at 129 (day 5 09:59): rows differing 0, end states differing 0
+reload-at 130 (day 5 10:59): rows differing 0, end states differing 0
+reload-at 131 (day 5 11:59): rows differing 0, end states differing 0
+reload-at 132 (day 5 12:59): rows differing 0, end states differing 0
+reload-at 133 (day 5 13:59): rows differing 0, end states differing 0
+reload-at 134 (day 5 14:59): rows differing 0, end states differing 0
+reload-at 135 (day 5 15:59): rows differing 0, end states differing 0
+reload-at 136 (day 5 16:59): rows differing 0, end states differing 0
+reload-at 137 (day 5 17:59): rows differing 0, end states differing 0
+reload-at 138 (day 5 18:59): rows differing 0, end states differing 0
+reload-at 139 (day 5 19:59): rows differing 0, end states differing 0
+reload-at 140 (day 5 20:59): rows differing 0, end states differing 0
+reload-at 141 (day 5 21:59): rows differing 0, end states differing 0
+reload-at 142 (day 5 22:59): rows differing 0, end states differing 0
+reload-at 143 (day 5 23:59): rows differing 0, end states differing 0
+reload-at 144 (day 6 00:59): rows differing 0, end states differing 0
+reload-at 145 (day 6 01:59): rows differing 0, end states differing 0
+reload-at 146 (day 6 02:59): rows differing 0, end states differing 0
+reload-at 147 (day 6 03:59): rows differing 0, end states differing 0
+reload-at 148 (day 6 04:59): rows differing 0, end states differing 0
+reload-at 149 (day 6 05:59): rows differing 0, end states differing 0
+reload-at 150 (day 6 06:59): rows differing 0, end states differing 0
+reload-at 151 (day 6 07:59): rows differing 0, end states differing 0
+reload-at 152 (day 6 08:59): rows differing 0, end states differing 0
+reload-at 153 (day 6 09:59): rows differing 0, end states differing 0
+reload-at 154 (day 6 10:59): rows differing 0, end states differing 0
+reload-at 155 (day 6 11:59): rows differing 0, end states differing 0
+reload-at 156 (day 6 12:59): rows differing 0, end states differing 0
+reload-at 157 (day 6 13:59): rows differing 0, end states differing 0
+reload-at 158 (day 6 14:59): rows differing 0, end states differing 0
+reload-at 159 (day 6 15:59): rows differing 0, end states differing 0
+reload-at 160 (day 6 16:59): rows differing 0, end states differing 0
+reload-at 161 (day 6 17:59): rows differing 0, end states differing 0
+reload-at 162 (day 6 18:59): rows differing 0, end states differing 0
+reload-at 163 (day 6 19:59): rows differing 0, end states differing 0
+reload-at 164 (day 6 20:59): rows differing 0, end states differing 0
+reload-at 165 (day 6 21:59): rows differing 0, end states differing 0
+reload-at 166 (day 6 22:59): rows differing 0, end states differing 0
+reload-at 167 (day 6 23:59): rows differing 0, end states differing 0
+reload-at 168 (day 7 00:59): rows differing 0, end states differing 0
+reload-at 169 (day 7 01:59): rows differing 0, end states differing 0
+reload-at 170 (day 7 02:59): rows differing 0, end states differing 0
+reload-at 171 (day 7 03:59): rows differing 0, end states differing 0
+reload-at 172 (day 7 04:59): rows differing 0, end states differing 0
+reload-at 173 (day 7 05:59): rows differing 0, end states differing 0
+reload-at 174 (day 7 06:59): rows differing 0, end states differing 0
+reload-at 175 (day 7 07:59): rows differing 0, end states differing 0
+reload-at 176 (day 7 08:59): rows differing 0, end states differing 0
+reload-at 177 (day 7 09:59): rows differing 0, end states differing 0
+reload-at 178 (day 7 10:59): rows differing 0, end states differing 0
+reload-at 179 (day 7 11:59): rows differing 0, end states differing 0
+with walks 30, 120, 30: missed 0
+| takes it every night | sits with her | lena | day 4, for talk | day 4, Charged | never | the day-book | stands (4 nights) | 7 of 41 |
+| takes it every night | sits with her | ada | day 4, for talk | day 4, Charged | day 4 | the real book | stands (4 nights) | 7 of 41 |
+| takes it every night | sits with her | nobody | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
+| takes it every night | sits with her | no window | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
+| takes it every night | stands her up | lena | day 4, for talk | day 4, Charged | never | the day-book | stands (4 nights) | 7 of 41 |
+| takes it every night | stands her up | ada | day 4, for talk | day 4, Charged | day 4 | the real book | stands (4 nights) | 7 of 41 |
+| takes it every night | stands her up | nobody | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
+| takes it every night | stands her up | no window | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
+| tells Ron no | sits with her | lena | day 4, for talk | day 4, Charged | never | the day-book | ended (refused) | 7 of 41 |
+| tells Ron no | sits with her | ada | day 4, for talk | day 4, Charged | day 4 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | sits with her | nobody | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | sits with her | no window | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | stands her up | lena | day 4, for talk | day 4, Charged | never | the day-book | ended (refused) | 7 of 41 |
+| tells Ron no | stands her up | ada | day 4, for talk | day 4, Charged | day 4 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | stands her up | nobody | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | stands her up | no window | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
+the stops, first row (takes the envelope, sits with Ada, Sheila sees the window):
+  day 1 20:00 ron: "Ron's at the door with something for you."
+  day 1 20:00 landing: "They'll be expecting the envelope at the landing after ten."
+  day 3 20:00 ron: "Ron's at the door with something for you."
+  day 3 20:00 landing: "They'll be expecting the envelope at the landing after ten."
+  day 3 20:30 tea: "Ada's pot goes on at nine."
+  day 4 09:00 ellis: "DS Ellis is on Quay Street, asking after you."
+  day 5 20:00 ron: "Ron's at the door with something for you."
+  day 5 20:00 landing: "They'll be expecting the envelope at the landing after ten."
+  day 7 09:30 sheila: "Sheila's waiting for you in the office this morning, on her day off."
+  day 7 20:00 ron: "Ron's at the door with something for you."
+  day 7 20:00 landing: "They'll be expecting the envelope at the landing after ten."

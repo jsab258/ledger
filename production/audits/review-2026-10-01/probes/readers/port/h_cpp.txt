@@ -1,0 +1,155 @@
+AFT D0 12:05  | rita@725,passer@725,hal@2100 | {"area":"shop","key":"k","said":"somebody put Rita's window in","done":725,"mended":2400,"leaveOut":[],"found":["rita","passer","hal"],"next":40}
+AFT M hal 1:11:0|observation|0.600000|I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+AFT R hal town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT M passer 0:12:5|observation|0.600000|I was there when somebody put Rita's window in. I never saw who did it.
+AFT R passer town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT M rita 0:12:5|observation|0.600000|Somebody put my window in while I was there. I never saw who did it.
+AFT R rita town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT D0 11:30 rita@690,hal@690 |  | {"area":"shop","key":"k","said":"somebody put Rita's window in","done":690,"mended":710,"leaveOut":[],"found":["rita","hal"],"next":12}
+AFT M hal 0:11:30|observation|0.600000|I was there when somebody put Rita's window in. I never saw who did it.
+AFT R hal town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT M rita 0:11:30|observation|0.600000|Somebody put my window in while I was there. I never saw who did it.
+AFT R rita town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT D0 11:30  |  | {"area":"shop","key":"k","said":"somebody put Rita's window in","done":690,"mended":690,"leaveOut":[],"found":[],"next":11}
+AFT D0 11:59 rita@719,hal@719 |  | {"area":"shop","key":"k","said":"somebody put Rita's window in","done":719,"mended":720,"leaveOut":[],"found":["rita","hal"],"next":12}
+AFT M hal 0:11:59|observation|0.600000|I was there when somebody put Rita's window in. I never saw who did it.
+AFT R hal town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT M rita 0:11:59|observation|0.600000|Somebody put my window in while I was there. I never saw who did it.
+AFT R rita town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT D0 02:00 rita@540,hal@660 |  | {"area":"shop","key":"k","said":"somebody put Rita's window in","done":120,"mended":960,"leaveOut":["passer"],"found":["rita","hal"],"next":16}
+AFT M hal 0:11:0|observation|0.600000|I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+AFT R hal town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT M rita 0:9:0|observation|0.600000|Somebody put my window in while I wasn't there; I found it when I came in. I never saw who did it.
+AFT R rita town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT D1 00:30  | rita@1980,hal@2100,passer@2160 | {"area":"shop","key":"k","said":"somebody put Rita's window in","done":1470,"mended":2400,"leaveOut":[],"found":["rita","hal","passer"],"next":40}
+AFT M hal 1:11:0|observation|0.600000|I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+AFT R hal town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT M passer 1:12:0|observation|0.600000|I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+AFT R passer town.k|found|0.900000|0|-1|somebody put Rita's window in
+AFT M rita 1:9:0|observation|0.600000|Somebody put my window in while I wasn't there; I found it when I came in. I never saw who did it.
+AFT R rita town.k|found|0.900000|0|-1|somebody put Rita's window in
+KMO shop False [somebody put Rita's window in] => Somebody put my window in while I wasn't there; I found it when I came in. I never saw who did it. || I was there when somebody put Rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+KMO shop True [somebody put Rita's window in] => Somebody put my window in while I was there. I never saw who did it. || I was there when somebody put Rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+KMO bare False [somebody put Rita's window in] => Somebody put Rita's window in, at my place while I wasn't there; I found it when I came in. I never saw who did it. || I was there when somebody put Rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+KMO bare True [somebody put Rita's window in] => Somebody put Rita's window in, at my place while I was there. I never saw who did it. || I was there when somebody put Rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+KMO shop False [the pawn shop's window was put in] => My window was put in while I wasn't there; I found it when I came in. I never saw who did it. || I was there when the pawn shop's window was put in. I never saw who did it. || I came by and saw it for myself: the pawn shop's window was put in. I never saw who did it.
+KMO shop True [the pawn shop's window was put in] => My window was put in while I was there. I never saw who did it. || I was there when the pawn shop's window was put in. I never saw who did it. || I came by and saw it for myself: the pawn shop's window was put in. I never saw who did it.
+KMO bare False [the pawn shop's window was put in] => The pawn shop's window was put in, at my place while I wasn't there; I found it when I came in. I never saw who did it. || I was there when the pawn shop's window was put in. I never saw who did it. || I came by and saw it for myself: the pawn shop's window was put in. I never saw who did it.
+KMO bare True [the pawn shop's window was put in] => The pawn shop's window was put in, at my place while I was there. I never saw who did it. || I was there when the pawn shop's window was put in. I never saw who did it. || I came by and saw it for myself: the pawn shop's window was put in. I never saw who did it.
+KMO shop False [somebody put rita's window in.] => Somebody put my window in while I wasn't there; I found it when I came in. I never saw who did it. || I was there when somebody put rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put rita's window in. I never saw who did it.
+KMO shop True [somebody put rita's window in.] => Somebody put my window in while I was there. I never saw who did it. || I was there when somebody put rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put rita's window in. I never saw who did it.
+KMO bare False [somebody put rita's window in.] => Somebody put rita's window in, at my place while I wasn't there; I found it when I came in. I never saw who did it. || I was there when somebody put rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put rita's window in. I never saw who did it.
+KMO bare True [somebody put rita's window in.] => Somebody put rita's window in, at my place while I was there. I never saw who did it. || I was there when somebody put rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put rita's window in. I never saw who did it.
+KMO shop False [glass all over Rita's place step] => Glass all over my place step while I wasn't there; I found it when I came in. I never saw who did it. || I was there when glass all over Rita's place step. I never saw who did it. || I came by and saw it for myself: glass all over Rita's place step. I never saw who did it.
+KMO shop True [glass all over Rita's place step] => Glass all over my place step while I was there. I never saw who did it. || I was there when glass all over Rita's place step. I never saw who did it. || I came by and saw it for myself: glass all over Rita's place step. I never saw who did it.
+KMO bare False [glass all over Rita's place step] => Glass all over Rita's place step, at my place while I wasn't there; I found it when I came in. I never saw who did it. || I was there when glass all over Rita's place step. I never saw who did it. || I came by and saw it for myself: glass all over Rita's place step. I never saw who did it.
+KMO bare True [glass all over Rita's place step] => Glass all over Rita's place step, at my place while I was there. I never saw who did it. || I was there when glass all over Rita's place step. I never saw who did it. || I came by and saw it for myself: glass all over Rita's place step. I never saw who did it.
+KMO shop False [the pawn's door kicked] => The my door kicked while I wasn't there; I found it when I came in. I never saw who did it. || I was there when the pawn's door kicked. I never saw who did it. || I came by and saw it for myself: the pawn's door kicked. I never saw who did it.
+KMO shop True [the pawn's door kicked] => The my door kicked while I was there. I never saw who did it. || I was there when the pawn's door kicked. I never saw who did it. || I came by and saw it for myself: the pawn's door kicked. I never saw who did it.
+KMO bare False [the pawn's door kicked] => The pawn's door kicked, at my place while I wasn't there; I found it when I came in. I never saw who did it. || I was there when the pawn's door kicked. I never saw who did it. || I came by and saw it for myself: the pawn's door kicked. I never saw who did it.
+KMO bare True [the pawn's door kicked] => The pawn's door kicked, at my place while I was there. I never saw who did it. || I was there when the pawn's door kicked. I never saw who did it. || I came by and saw it for myself: the pawn's door kicked. I never saw who did it.
+KMO shop False [  somebody put Rita's window in . . ] => Somebody put my window in while I wasn't there; I found it when I came in. I never saw who did it. || I was there when somebody put Rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+KMO shop True [  somebody put Rita's window in . . ] => Somebody put my window in while I was there. I never saw who did it. || I was there when somebody put Rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+KMO bare False [  somebody put Rita's window in . . ] => Somebody put Rita's window in, at my place while I wasn't there; I found it when I came in. I never saw who did it. || I was there when somebody put Rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+KMO bare True [  somebody put Rita's window in . . ] => Somebody put Rita's window in, at my place while I was there. I never saw who did it. || I was there when somebody put Rita's window in. I never saw who did it. || I came by and saw it for myself: somebody put Rita's window in. I never saw who did it.
+KMO shop False [ésomething at Rita's] => ésomething at my while I wasn't there; I found it when I came in. I never saw who did it. || I was there when ésomething at Rita's. I never saw who did it. || I came by and saw it for myself: ésomething at Rita's. I never saw who did it.
+KMO shop True [ésomething at Rita's] => ésomething at my while I was there. I never saw who did it. || I was there when ésomething at Rita's. I never saw who did it. || I came by and saw it for myself: ésomething at Rita's. I never saw who did it.
+KMO bare False [ésomething at Rita's] => ésomething at Rita's, at my place while I wasn't there; I found it when I came in. I never saw who did it. || I was there when ésomething at Rita's. I never saw who did it. || I came by and saw it for myself: ésomething at Rita's. I never saw who did it.
+KMO bare True [ésomething at Rita's] => ésomething at Rita's, at my place while I was there. I never saw who did it. || I was there when ésomething at Rita's. I never saw who did it. || I came by and saw it for myself: ésomething at Rita's. I never saw who did it.
+KMO shop False [somebody smashed RITA'S window] => Somebody smashed my window while I wasn't there; I found it when I came in. I never saw who did it. || I was there when somebody smashed RITA'S window. I never saw who did it. || I came by and saw it for myself: somebody smashed RITA'S window. I never saw who did it.
+KMO shop True [somebody smashed RITA'S window] => Somebody smashed my window while I was there. I never saw who did it. || I was there when somebody smashed RITA'S window. I never saw who did it. || I came by and saw it for myself: somebody smashed RITA'S window. I never saw who did it.
+KMO bare False [somebody smashed RITA'S window] => Somebody smashed RITA'S window, at my place while I wasn't there; I found it when I came in. I never saw who did it. || I was there when somebody smashed RITA'S window. I never saw who did it. || I came by and saw it for myself: somebody smashed RITA'S window. I never saw who did it.
+KMO bare True [somebody smashed RITA'S window] => Somebody smashed RITA'S window, at my place while I was there. I never saw who did it. || I was there when somebody smashed RITA'S window. I never saw who did it. || I came by and saw it for myself: somebody smashed RITA'S window. I never saw who did it.
+KMO shop False [pawn shop glass] => My place shop glass while I wasn't there; I found it when I came in. I never saw who did it. || I was there when pawn shop glass. I never saw who did it. || I came by and saw it for myself: pawn shop glass. I never saw who did it.
+KMO shop True [pawn shop glass] => My place shop glass while I was there. I never saw who did it. || I was there when pawn shop glass. I never saw who did it. || I came by and saw it for myself: pawn shop glass. I never saw who did it.
+KMO bare False [pawn shop glass] => Pawn shop glass, at my place while I wasn't there; I found it when I came in. I never saw who did it. || I was there when pawn shop glass. I never saw who did it. || I came by and saw it for myself: pawn shop glass. I never saw who did it.
+KMO bare True [pawn shop glass] => Pawn shop glass, at my place while I was there. I never saw who did it. || I was there when pawn shop glass. I never saw who did it. || I came by and saw it for myself: pawn shop glass. I never saw who did it.
+TEA slipped LeftEarly 0.550000 0.000000 Mickey's nephew came for his tea and slipped off out in the middle of it. Somewhere to be, had he. back=LeftEarly
+TEA neareleven LeftEarly 0.550000 0.000000 Mickey's nephew came for his tea with the pot near cold and gone ten. Better late, I suppose. back=LeftEarly
+TEA lateleft LeftEarly 0.550000 0.000000 Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he. back=LeftEarly
+TEA ten Stayed 0.750000 0.000000 Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying. back=Stayed
+TEA tenone LeftEarly 0.550000 0.000000 Mickey's nephew came for his tea with the pot near cold and gone ten. Better late, I suppose. back=LeftEarly
+TEA ontime-tolast Stayed 0.750000 0.000000 Mickey's nephew came for his tea and sat with me till gone half ten. There's more to him than they're saying. back=Stayed
+TEA late-gap Stayed 0.750000 0.000000 Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying. back=Stayed
+TEA one LeftEarly 0.550000 0.000000 Mickey's nephew came for his tea with the pot near cold and gone ten. Better late, I suppose. back=LeftEarly
+PARSE inside-yes refused
+PARSE inside-1 refused
+PARSE inside-null refused
+PARSE inside-false accepted keeper=null inside=False street=True
+PARSE keeper-nobody refused
+PARSE keeper-empty refused
+PARSE keeper-num refused
+PARSE keeper-null refused
+PARSE keeper-spaced accepted keeper=p inside=False street=True
+PARSE street-1 refused
+PARSE street-null refused
+PARSE street-true accepted keeper=null inside=False street=True
+PARSE hours-text accepted keeper=null inside=False street=True
+PARSE hours-bad-day accepted keeper=null inside=False street=True
+PARSE hours-25 accepted keeper=null inside=False street=True
+PARSE hours-backwards accepted keeper=null inside=False street=True
+PARSE hours-quarter accepted keeper=null inside=False street=True
+PARSE breaks-no-hours accepted keeper=null inside=False street=True
+PARSE hours-ok accepted keeper=null inside=False street=True
+PARSE keeper-twice-last-bad refused
+TOG ia 11000010
+TOG ia2 11000010
+TOG ib 00100000
+TOG oc 00011010
+TOG od 00011010
+TOG ie 00000000
+TOG oa 11011010
+TOG off 00000000
+MERGE -1 -1,-1,-1,-1,4,5
+MERGE 0 -1,0,1,3,4,5
+MERGE 1 -1,1,1,3,4,5
+MERGE 3 -1,3,3,3,4,5
+MERGE 4 4,4,4,4,4,5
+MERGE 5 5,5,5,5,5,5
+LOOK -1 1 -1/0.700000/s2 mem=I think I saw it, couldn't swear to it: s;I think I saw it, couldn't swear to it: s2
+LOOK 1 -1 -1/0.700000/s2 mem=I think I saw it, couldn't swear to it: s;I think I saw it, couldn't swear to it: s2
+LOOK 4 2 4/0.700000/s2 mem=I think I saw it, couldn't swear to it: s;I think I saw it, couldn't swear to it: s2
+LOOK 2 4 4/0.700000/s2 mem=I think I saw it, couldn't swear to it: s;I think I saw it, couldn't swear to it: s2
+LOOK -1 4 4/0.700000/s2 mem=I think I saw it, couldn't swear to it: s;I think I saw it, couldn't swear to it: s2
+LOOK 0 3 3/0.700000/s2 mem=I think I saw it, couldn't swear to it: s;I think I saw it, couldn't swear to it: s2
+HOURS 723,779,850 723:1:{"next":12,"round":726} 779:9:{"next":13,"round":780} 850:12:{"next":14,"round":852}
+HOURS  R p player.seen_d0 0.887097 0
+HOURS  R q player.seen_d0 0.638710 1
+HOURS  R r player.seen_d0 0.459871 2
+HOURS  M p D0 12:00 I think I saw it, couldn't swear to it: the new owner was here
+HOURS  M q D0 12:00 I heard from p that the new owner was here
+HOURS  M r D0 13:00 I heard from q that the new owner was here
+HOURS 720,721,722,726,900 720:1:{"next":12,"round":726} 721:0:{"next":12,"round":726} 722:0:{"next":12,"round":726} 726:1:{"next":12,"round":732} 900:29:{"next":15,"round":906}
+HOURS  R p player.seen_d0 0.880715 0
+HOURS  R q player.seen_d0 0.634115 1
+HOURS  R r player.seen_d0 0.456563 2
+HOURS  M p D0 12:00 I think I saw it, couldn't swear to it: the new owner was here
+HOURS  M q D0 12:00 I heard from p that the new owner was here
+HOURS  M r D0 13:00 I heard from q that the new owner was here
+HOURS 779,780,3000 779:10:{"next":13,"round":780} 780:1:{"next":13,"round":786} 3000:370:{"next":50,"round":3006}
+HOURS  R p player.seen_d0 0.684045 0
+HOURS  R q player.seen_d0 0.492513 1
+HOURS  R r player.seen_d0 0.354609 2
+HOURS  M p D0 12:00 I think I saw it, couldn't swear to it: the new owner was here
+HOURS  M q D0 12:00 I heard from p that the new owner was here
+HOURS  M r D0 13:00 I heard from q that the new owner was here
+HOURS -30,5,70 -30:6:{"next":-1,"round":-24} 5:5:{"next":0,"round":6} 70:11:{"next":1,"round":72}
+HOURS  R p player.seen_d0 0.887097 0
+HOURS  R q player.seen_d0 0.638710 1
+HOURS  R r player.seen_d0 0.459871 2
+HOURS  M p D0 12:00 I think I saw it, couldn't swear to it: the new owner was here
+HOURS  M q D-1 23:00 I heard from p that the new owner was here
+HOURS  M r D-1 23:06 I heard from q that the new owner was here
+HJSON {"round":726} => {"next":12,"round":726}
+HJSON {"round":727} => {"next":-1,"round":-1}
+HJSON {"next":12} => {"next":12,"round":720}
+HJSON {"round":-6,"next":3} => {"next":-1,"round":-6}
+HJSON {"round":-1} => {"next":-1,"round":-1}
+HJSON {"round":-7,"next":3} => {"next":3,"round":180}
+HJSON {"round":6e8,"next":2} => {"next":2,"round":120}
+HJSON {"round":"6","next":2} => {"next":2,"round":120}
+HJSON {"next":-1} => {"next":-1,"round":-1}
+HJSON {"round":-0.0} => {"next":0,"round":0}
+HJSON {"round":12.0} => {"next":0,"round":12}
+HJSON {"round":599999994} => {"next":9999999,"round":599999994}
+WREM told/1.000000/False/0 mem=observation/0.600000/I think I saw it, couldn't swear to it: heard;conversation/0.900000/remembered
