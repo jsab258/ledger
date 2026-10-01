@@ -22,7 +22,9 @@ No fixes, no praise. Files beside this one:
 | canon.md | 43 |
 | Lines carrying his rulings in CLAUDE.md, ROADMAP.md, NOW.md, TOWN.md and CLOTHES.md | 48 |
 
-**Against which code.** Main as of 3981e28 (1 October, 21:28). The three commits since, up to 4683022, add only the clothing session's Marvelous Designer tools and research note, and change no verdict.
+**Against which code.** Main as of 3981e28 (1 October, 21:28). Later commits, up to 90db276:
+- add the clothing session's Marvelous Designer tools and research note, which changes no verdict;
+- record one new ruling, his yes at 21:33 to Tom's written suggested lines (DECISIONS.md's last line, not counted here). The suggested-lines spec now says "passed", so DEC-200 moves from "on a list" toward built once the builder's panel shows them.
 
 **Not swept:**
 - the 111 dated rulings in legacy/studio-v2/game-design/, except those the archive names;
