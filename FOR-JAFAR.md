@@ -52,19 +52,17 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Next:** your tap; the builder's port.
 
-## Clothes, Thursday 1 October
+## Clothes, Friday 2 October
 
-(Written 30 September, 16:00; nothing has changed since.)
+**Needs you:** one start in Marvelous Designer: open it, open its Python window, run tools\md\md_bridge.py, leave it open. Its trial becomes a paid month on 15 October: cancel before then if the proof fails.
 
-**Needs you (scope), no page:** your rule set aside both jackets, so the list cannot move. (A, recommended; carrying on with it) the builder tests the suit jacket in Unreal, cloth on, when his route allows; nothing reaches your page until it passes there and at the gate. (B) park clothing until his route runs. (C) a paid Fab jacket, $5 to 20, against your ruling of this morning.
+**The jacket proof, your ruling:** the pattern is drafted (FreeSewing's Jaeger) for Ron and for Darren: two buttons, the lapel rolling to the top one, a centre vent, flap pockets. A bridge lets me drive Marvelous once started. Its installed terms: what you make is yours; the trial is for evaluation only.
 
-**Made:** the jacket the game way: a clean mesh laid on its pattern, textures baked, skinned, joints fixed, carried to Darren; then MakeHuman's free suit jacket fitted on a tailor's form of each man.
+**Against your bar:** Darren's boots and Sheila's blouse and his T-shirt failed, so the builder swaps Epic's; her skirt passed. The suit jacket walked cleanly in the game, but failed seated; its cloth layer has been rebuilt.
 
-**Set aside:** the donkey jacket (three reviews: a padded look); the suit jacket (three: Ron only two small breaks, at the lapel's end and under the collar; Darren barrel-shaped).
+**Research:** the tailor's jacket in Marvelous; read the wardrobe research.
 
-**Research:** retopology and skinning; carrying garments and seam faults; fitting to a form, not the skin.
-
-**Pushes:** free tests only. **C: free:** 51 GB at the start, 46 now (my scratch is all on F:). Backup ran: OK.
+**Pushes:** free tests only. **C: free:** 46 GB, then 20 (the swap file; the builder's cleanup page and a restart). Backup ran with this commit.
 
 ## Builder, Thursday 1 October
 
