@@ -2886,6 +2886,16 @@ namespace Golden
 					Ans["PoliceWouldReport|" + std::string(OffenceName((Offence)Oi)) + "|" + FromBool(bVictim) + "|" + FromDouble(Nl.first) + "|" + FromDouble(Nl.second)]
 						= { FromBool(PoliceFile::WouldReport(&G2, (Offence)Oi, bVictim, &Topic)) };
 				}
+		// At the middle, where everybody starts (Jafar's ruling of 1 October: seeing him
+		// do it is enough, unless on his side): as a witness, then as the victim.
+		for (int Oi = 0; Oi <= (int)Offence::Killing; ++Oi)
+			for (double Nerve : { 0.3, 0.4, 0.5 })
+			{
+				const Gossiper Gm("wm", "wm", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", 0.5, Nerve, 0.5);
+				const std::string Topic = "t";
+				Ans["PoliceWouldReportMiddle|" + std::string(OffenceName((Offence)Oi)) + "|" + FromDouble(Nerve)]
+					= { FromBool(PoliceFile::WouldReport(&Gm, (Offence)Oi, false, &Topic)), FromBool(PoliceFile::WouldReport(&Gm, (Offence)Oi, true, &Topic)) };
+			}
 		{
 			Gossiper Quiet("wq", "wq", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", 0.5, 0.9, 0.1);
 			Quiet.Suppressed.push_back("t");
@@ -2926,10 +2936,12 @@ namespace Golden
 	{
 		Answer A;
 		const bool bGrid = F[0] == "PoliceWouldReport" && F.size() >= 2 && F[1] != "quiet" && F[1] != "hooked";
-		const int Labels = bGrid ? 4 : 1;
+		const bool bMiddle = F[0] == "PoliceWouldReportMiddle";
+		const int Labels = bGrid ? 4 : bMiddle ? 2 : 1;
 		if ((int)F.size() < 1 + Labels + 1) return A;
 		std::string Key = F[0] + "|" + F[1];
 		if (bGrid) Key += "|" + F[2] + "|" + (IsNumber(F[3]) ? FromDouble(D(F[3])) : F[3]) + "|" + (IsNumber(F[4]) ? FromDouble(D(F[4])) : F[4]);
+		if (bMiddle) Key += "|" + (IsNumber(F[2]) ? FromDouble(D(F[2])) : F[2]);
 		const auto& Ans = PoliceFileAnswers();
 		const auto It = Ans.find(Key);
 		if (It == Ans.end()) return A;
@@ -5181,7 +5193,7 @@ namespace Golden
 			A = WaitRow(F);
 		}
 		// THE POLICE FILE ITSELF (town list 6ar): PoliceFile.h, its regression rows.
-		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "CustodyWords" || Fn == "CustodySeenTaken")
+		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "PoliceWouldReportMiddle" || Fn == "CustodyWords" || Fn == "CustodySeenTaken")
 		{
 			A = PoliceFileRow(F);
 		}

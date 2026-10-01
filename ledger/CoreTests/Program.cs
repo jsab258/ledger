@@ -5723,21 +5723,25 @@ namespace Ledger.CoreTests
                 var hooked = P("hooked", 0.7, 0.2); hooked.Leashed = true;
                 var bought = P("bought", 0.7, 0.2); bought.Suppressed.Add("player.cut_d2");
                 var loyalVictim = P("loyalVictim", 0.9, 0.9);
+                // Won over (Ada's tea, a friend): on his side (Jafar's ruling of 1 October).
+                var onSide = P("onSide", 0.7, 0.75);
                 Check(PoliceFile.WouldReport(rita, Offence.Damage, true, null) && PoliceFile.WouldReport(bold, Offence.Damage, false, null)
-                      && !PoliceFile.WouldReport(plain, Offence.Damage, false, null) && !PoliceFile.WouldReport(timid, Offence.Damage, false, null)
+                      && PoliceFile.WouldReport(plain, Offence.Damage, false, null) && !PoliceFile.WouldReport(onSide, Offence.Damage, false, null)
+                      && !PoliceFile.WouldReport(timid, Offence.Damage, false, null)
                       && !PoliceFile.WouldReport(bold, Offence.Suspicious, false, null) && !PoliceFile.WouldReport(bold, Offence.Assault, false, null)
                       && PoliceFile.WouldReport(bold, Offence.Wounding, false, null) && PoliceFile.WouldReport(bold, Offence.Killing, false, null)
-                      && !PoliceFile.WouldReport(plain, Offence.Wounding, false, null) && !PoliceFile.WouldReport(plain, Offence.Killing, false, null)
+                      && PoliceFile.WouldReport(plain, Offence.Wounding, false, null) && PoliceFile.WouldReport(plain, Offence.Killing, false, null)
+                      && !PoliceFile.WouldReport(onSide, Offence.Wounding, false, null) && !PoliceFile.WouldReport(onSide, Offence.Killing, false, null)
                       && PoliceFile.WouldReport(timid, Offence.Killing, false, null) && !PoliceFile.WouldReport(timid, Offence.Wounding, false, null)
                       && PoliceFile.WouldReport(P("middling", 0.37, 0.2), Offence.Killing, false, null)
-                      && !PoliceFile.WouldReport(close, Offence.Wounding, false, null)
+                      && PoliceFile.WouldReport(close, Offence.Wounding, false, null)
                       && PoliceFile.WouldReport(bold, Offence.Assault, true, null) && !PoliceFile.WouldReport(close, Offence.Assault, true, null)
                       && PoliceFile.WouldReport(close, Offence.Wounding, true, null) && !PoliceFile.WouldReport(loyalVictim, Offence.Robbery, true, null)
                       && !PoliceFile.WouldReport(bold, Offence.Killing, true, null)
                       && !PoliceFile.WouldReport(hooked, Offence.Wounding, false, null) && !PoliceFile.WouldReport(hooked, Offence.Killing, false, null)
                       && !PoliceFile.WouldReport(bought, Offence.Wounding, false, "player.cut_d2") && PoliceFile.WouldReport(bought, Offence.Killing, false, "player.cut_d2")
                       && !PoliceFile.WouldReport(null, Offence.Killing, false, null),
-                      "a shopkeeper reports her window; a victim reports unless they would settle it or are afraid, and a dead one reports nothing; a witness reports a detective's crime or a window unafraid and not on his side, and the nervous crack over a body; an ordinary witness says nothing; the hooked say nothing, the bought nothing but a body");
+                      "a shopkeeper reports her window; a victim reports unless they would settle it or are afraid, and a dead one reports nothing; a witness who saw him do it reports a detective's crime or a window, unafraid, unless on his side (Jafar's ruling of 1 October: seeing him break a window is enough), and the nervous crack over a body; one he has won over says nothing; the hooked say nothing, the bought nothing but a body");
 
                 // WHAT AN ARREST DOES (town list 6bp): a constable calls the day after a
                 // statement about a window, once; he is held the hours the Home

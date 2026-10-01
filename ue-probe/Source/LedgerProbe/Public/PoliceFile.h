@@ -392,6 +392,10 @@ namespace LedgerCore
 		}
 
 		/// WOULD THIS PERSON GO TO THE POLICE with what they saw or suffered?
+		/// Above this regard a witness is on his side and keeps what they saw
+		/// to themselves; everybody starts at it (PoliceFile.cs, OnHisSide).
+		static constexpr double OnHisSide = 0.5;
+
 		static bool WouldReport(const Gossiper* G, Offence O, bool bVictim, const std::string* Topic, bool bNeverToPolice = false)
 		{
 			if (G == nullptr || bNeverToPolice || O == Offence::Suspicious || G->Leashed) return false;
@@ -405,8 +409,14 @@ namespace LedgerCore
 				return G->Loyalty < Settle && G->Nerve >= Fear;
 			}
 			if (!Detective(O) && O != Offence::Damage) return false;
-			if (O == Offence::Killing) return G->Loyalty < 0.5;
-			return G->Nerve >= 0.4 && G->Loyalty < 0.5;
+			// SEEING HIM DO IT IS ENOUGH (Jafar's ruling of 1 October, on the
+			// independent review's A4: everybody starts at the middle, so a rule
+			// of "below it" meant nobody ever reported him): a witness reports
+			// unless on his side, won over above the middle (Ada's tea, a
+			// friend), or talked round (kept quiet or hooked, above).
+			const bool bOnHisSide = G->Loyalty > OnHisSide;
+			if (O == Offence::Killing) return !bOnHisSide;
+			return G->Nerve >= 0.4 && !bOnHisSide;
 		}
 
 		/// A report, as the police hold it; the entry, or false when this person

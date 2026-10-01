@@ -183,7 +183,9 @@ namespace Ledger.PerceptionGolden
                 // and a night away told at one; held until the port follows again.
                 // The builder's check of the second port: a no across one o'clock, the night
                 // away at dawn; held until the port follows.
-                var held = new string[0];   // emptied 1 October: the builder's port follows
+                // Jafar's ruling of 1 October (a witness at the middle reports): held, then
+                // emptied by the builder's port the same day.
+                var held = new string[0];
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -2041,6 +2043,14 @@ namespace Ledger.PerceptionGolden
                         var g2 = new Gossiper("wr", "wr", new MemoryStore("wr"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, nerve, loyalty);
                         Row(sb, "PoliceWouldReport", o.ToString(), Bit(victim), D(nerve), D(loyalty), Bit(PoliceFile.WouldReport(g2, o, victim, "t")));
                     }
+            // At the middle, where everybody starts (Jafar's ruling of 1 October: seeing him
+            // do it is enough, unless on his side).
+            foreach (Offence o in Enum.GetValues(typeof(Offence)))
+                foreach (var nerve in new[] { 0.3, 0.4, 0.5 })   // 0.4, the line (the port's check)
+                {
+                    var gm = new Gossiper("wm", "wm", new MemoryStore("wm"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, nerve, 0.5);
+                    Row(sb, "PoliceWouldReportMiddle", o.ToString(), D(nerve), Bit(PoliceFile.WouldReport(gm, o, false, "t")), Bit(PoliceFile.WouldReport(gm, o, true, "t")));
+                }
             var quiet = new Gossiper("wq", "wq", new MemoryStore("wq"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, 0.9, 0.1);
             quiet.Suppressed.Add("t");
             Row(sb, "PoliceWouldReport", "quiet", Bit(PoliceFile.WouldReport(quiet, Offence.Damage, true, "t")), Bit(PoliceFile.WouldReport(quiet, Offence.Killing, false, "t")),
