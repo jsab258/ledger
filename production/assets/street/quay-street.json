@@ -1064,7 +1064,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 972
+   "faces": 702
   },
   {
    "mesh": "street_glass_eg_bay0",
@@ -1087,7 +1087,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 18
+   "faces": 12
   },
   {
    "mesh": "street_glass_eg_bay1",
@@ -1827,7 +1827,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 150
+   "faces": 144
   },
   {
    "mesh": "street_interior_lit",
@@ -1850,7 +1850,7 @@
    "emit_day": 3.4,
    "emit_night": 0.7,
    "reveal_on": null,
-   "faces": 30
+   "faces": 24
   },
   {
    "mesh": "street_kerbstone",
@@ -1931,6 +1931,98 @@
    "emit_night": 8.0,
    "reveal_on": null,
    "faces": 132
+  },
+  {
+   "mesh": "street_mickeys_frame_painted",
+   "material": "mickeys_frame_painted",
+   "base_material": "frame_painted",
+   "linear_rgb": [
+    0.0625,
+    0.0875,
+    0.119
+   ],
+   "roughness": 0.35,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 270
+  },
+  {
+   "mesh": "street_mickeys_glass",
+   "material": "mickeys_glass",
+   "base_material": "glass",
+   "linear_rgb": [
+    0.085,
+    0.092,
+    0.1
+   ],
+   "roughness": 0.0,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_mickeys_interior",
+   "material": "mickeys_interior",
+   "base_material": "interior",
+   "linear_rgb": [
+    0.038,
+    0.035,
+    0.032
+   ],
+   "roughness": 0.95,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_mickeys_interior_lit",
+   "material": "mickeys_interior_lit",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 6
   },
   {
    "mesh": "street_paint_door",
