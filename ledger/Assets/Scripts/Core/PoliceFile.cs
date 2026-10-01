@@ -199,8 +199,8 @@ namespace Ledger.Core
         ///     list 6bp, carried until Jafar rules on his page: so that an arrest
         ///     can follow the first build's only crime): a wounding, a robbery or
         ///     criminal damage unafraid and not on his side (nerve at least 0.4,
-        ///     loyalty under 0.5), which at the middle values nobody is until a
-        ///     story cools them on him; a killing whenever not on his side, the brave because
+        ///     loyalty not above the middle, where everybody starts: Jafar's ruling
+        ///     of 1 October, seeing him do it is enough); a killing whenever not on his side, the brave because
         ///     they can and the nervous because they crack (Watched.WouldTalkToPolice
         ///     is its low-nerve half; the independent check found a band between
         ///     the two where nobody reported a body, and watching it pushed people
@@ -210,6 +210,10 @@ namespace Ledger.Core
         ///     deed (`topic` in their Suppressed) reports nothing but a body;
         ///     somebody whose trade keeps them from the police (`neverToPolice`,
         ///     CastDay.NeverToPolice) reports nothing at all.
+        /// Above this regard a witness is on his side and keeps what they saw
+        /// to themselves; everybody starts at it.
+        public const double OnHisSide = 0.5;
+
         public static bool WouldReport(Gossiper g, Offence o, bool victim, string topic, bool neverToPolice = false)
         {
             if (g == null || neverToPolice || o == Offence.Suspicious || g.Leashed) return false;
@@ -223,8 +227,14 @@ namespace Ledger.Core
                 return g.Loyalty < settle && g.Nerve >= fear;
             }
             if (!Detective(o) && o != Offence.Damage) return false;
-            if (o == Offence.Killing) return g.Loyalty < 0.5;
-            return g.Nerve >= 0.4 && g.Loyalty < 0.5;
+            // SEEING HIM DO IT IS ENOUGH (Jafar's ruling of 1 October, on the
+            // independent review's A4: everybody starts at the middle, so a rule
+            // of "below it" meant nobody ever reported him): a witness reports
+            // unless on his side, won over above the middle (Ada's tea, a
+            // friend), or talked round (kept quiet, above; hooked, above).
+            bool onHisSide = g.Loyalty > OnHisSide;
+            if (o == Offence.Killing) return !onHisSide;
+            return g.Nerve >= 0.4 && !onHisSide;
         }
 
         /// A report, as the police hold it: a statement naming him when the
