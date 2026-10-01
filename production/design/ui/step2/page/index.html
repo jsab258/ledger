@@ -1,0 +1,343 @@
+<title>LEDGER Screens, Evening Paper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* The house style of Jafar's daily pages (production/approvals/): the
+   decisions at the top, each screen's pictures folded below. */
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:18px 48px}
+.wrap{max-width:900px;margin:0 auto;display:grid;gap:12px}
+header{display:grid;gap:4px;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(25px,6vw,38px)/1.05 var(--display);margin:0;text-wrap:balance}
+.how{margin:0;color:var(--muted);font-size:14px;line-height:1.4}
+.decide{display:grid;gap:7px;background:var(--surface);border:1px solid var(--rule);padding:10px 12px}
+.q{margin:0;font:600 16px/1.25 var(--display)}
+.opts{display:grid;gap:6px}
+.opts.row{grid-template-columns:1fr 1fr}
+.opt{display:flex;align-items:center;gap:10px;min-height:42px;padding:5px 12px;border:1px solid var(--rule);background:var(--ground);cursor:pointer;font:600 17px/1.15 var(--display);letter-spacing:.01em;color:var(--ink);text-align:left;width:100%}
+.opt .l{display:inline-grid;place-items:center;width:28px;height:28px;flex:none;border:1.5px solid var(--ink);font:700 15px/1 var(--type)}
+.opt .rec{margin-left:auto;font:700 11px/1 var(--type);letter-spacing:.08em;text-transform:uppercase;color:var(--ok)}
+.opt.picked{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.opt.picked .l{background:var(--accent);border-color:var(--accent);color:var(--ground)}
+.opt:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+textarea{width:100%;min-height:38px;height:38px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:7px 8px}
+.tally{font:400 13px/1.4 var(--type);color:var(--muted)}
+details{background:var(--surface);border:1px solid var(--rule)}
+summary{cursor:pointer;padding:11px 14px;font:600 16px/1.25 var(--display)}
+summary span{display:block;font:400 14px/1.4 var(--body);color:var(--muted);margin-top:2px}
+.fold{display:grid;gap:12px;padding:0 14px 14px}
+.det{margin:0;font:400 14px/1.45 var(--body);color:var(--muted)}
+.decide details{background:transparent;border:0}
+.decide summary{padding:2px 0;font:600 13px/1.3 var(--type);color:var(--muted)}
+figure{margin:0;display:grid;gap:4px}
+figure img{width:100%;height:auto;display:block;background:var(--chip)}
+figcaption,.was{font:400 13px/1.45 var(--type);color:var(--muted);margin:0}
+.was b{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* PICTURES JUDGED ON THE PAGE (tools/page_pictures.py, Jafar 30 September and 1 October) */
+.capgrid,.cands,.pair{grid-template-columns:1fr!important}
+.capgrid img,.pair img,.cands img,figure img{width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important}
+main img,section img,[data-film-sprite]{cursor:zoom-in}
+.pv{position:fixed;inset:0;z-index:2147483000;background:#000;display:none;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
+.pv.on{display:block}
+.pv .pv-stage{position:absolute;inset:0;overflow:hidden}
+.pv .pv-hold{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.pv .pv-hold img{display:block;max-width:none!important;width:auto!important;height:auto!important;-webkit-user-drag:none;pointer-events:none}
+.pv .pv-film{background-repeat:no-repeat;pointer-events:none}
+.pv .pv-bar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top, 0px)) 12px 10px;background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,0));color:#fff;font:600 14px/1.2 system-ui,sans-serif;pointer-events:none}
+.pv .pv-bar *{pointer-events:auto}
+.pv .pv-count{opacity:.85;font-variant-numeric:tabular-nums}
+.pv .pv-close{min-width:88px;min-height:44px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;cursor:pointer}
+.pv .pv-cap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px calc(12px + env(safe-area-inset-bottom, 0px));background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.75));color:#fff;font:14px/1.35 system-ui,sans-serif;pointer-events:none}
+.pv .pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:72px;border:0;background:rgba(0,0,0,.35);color:#fff;font:700 30px/1 system-ui,sans-serif;cursor:pointer}
+.pv .pv-prev{left:0;border-radius:0 8px 8px 0}.pv .pv-next{right:0;border-radius:8px 0 0 8px}
+.pv .pv-play{position:absolute;left:50%;bottom:calc(64px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);min-height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;display:none;cursor:pointer}
+.pv.film .pv-play{display:block}
+@media (hover:none){.pv .pv-nav{display:none}}
+.decide{gap:6px;padding:10px 12px}
+.q{font-size:15px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{width:auto;flex:1 1 0;min-width:0;min-height:44px;padding:6px 10px;font-size:15px;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px}
+.opt .rec{margin-left:0;font-size:10px}
+.decide details summary{padding:0}
+.tally{font-size:12px}
+</style>
+<div class="wrap">
+  <header>
+    <div class="kicker">LEDGER · Thursday 1 October</div>
+    <h1>Every screen, in the evening paper</h1>
+    <p class="how">The look you picked on every screen, now with suggested lines, at your 3440 by 1440 and at 1920 by 1080. Open one below; tap a picture for full size.</p>
+  </header>
+  <section class="decide" id="d1"></section>
+  <section class="decide" id="d2"></section>
+  <section class="decide" id="d3"></section>
+  <div id="folds" class="wrap" style="gap:8px"></div>
+  <details>
+    <summary>About these pictures</summary>
+    <div class="fold" id="about"></div>
+  </details>
+</div>
+<script>
+const PAGE = {
+  decisions: [
+    {key:"ui-suggest-written", q:"How should the suggested lines be written?", note:false, plain:true,
+     options:[["mixed","Mixed, +10¢ an hour",true],["authors","Written ahead",false],["reply","With her reply",false]],
+     detail:"Mixed: the game's own written lines for hellos, goodbyes and decisions, and the small model, given only what Tom knows, for the rest. It costs about 10 US cents more per hour of talk, on the small model (an estimate from published prices, not measured), counts against each copy's talk allowance, and falls back to the written ones when that runs out. Written ahead costs nothing per line but is a large writing job and repeats sooner. The same call as her reply is the cheapest (about 3 cents an hour) but sees what she knows, so its suggestions would point at her secrets. The research is in the pull request."},
+    {key:"ui-suggest-who", q:"Who sees them?", note:false, plain:true,
+     options:[["pad-tab","Pad at once, keys on Tab",true],["everyone","Everyone, always",false]],
+     detail:"The research found suggested words make people write shorter, more predictable lines, so a keyboard player sees them only when he asks."},
+    {key:"ui-speech", q:"A microphone as a third way to talk?", note:false, plain:true,
+     options:[["later","Later",true],["now","Now",false]],
+     detail:"Later means looking again once the playable route works. Voice is what other AI-talk games use for players who will not type. It would be new work: speech recognition on the PC and testing it with British accents."},
+  ],
+  screens: [
+    {k:"title", n:"Title screen", d:"New game, Continue (with where and when you left off), Settings, Quit."},
+    {k:"pause", n:"Pause menu", d:"Stop press: back to the street, the Ledger, settings, quit."},
+    {k:"settings", n:"Settings, with quality presets", d:"Picture, sound, controls, subtitles and reading; what the line in hand does, at the right."},
+    {k:"prompt", n:"The prompt on a person", d:"One at a time, beside the nearest person or thing in view."},
+    {k:"hints", n:"A first-time key hint", d:"Shown once, gone the moment it is done."},
+    {k:"subtitles", n:"Subtitles with the speaker", d:"Overheard at night, from someone Tom has no name for, off to the left."},
+    {k:"typing", n:"The typing box", d:"His line to Sheila, grown to two lines."},
+    {k:"suggest", n:"Suggested lines, on a keyboard", d:"New: Tab opens three of his own possible lines above the box; 1, 2 or 3 says one."},
+    {k:"suggest-pad", n:"Suggested lines, with a controller", d:"New: there from the start; the pad chooses, A says it, Y opens a keyboard for his own words."},
+    {k:"loading", n:"Loading, with its progress", d:"Tonight's front page while the street is made ready; the rule moves only as the work does."},
+  ],
+  sizes: [["3440","On your 3440 by 1440 screen"],["1920","On a 1920 by 1080 screen"]],
+  kit: {n:"Every part, in every state", d:"Type, colour and contrast, choices, settings lines, presets, keys, speakers' names, the prompt, the hint, progress, the quit question, suggested lines and a controller's buttons."},
+  notes: {
+    title: ["The key hints sit on the bare street: fine at night, not yet tried over a bright frame."],
+    pause: ["\u201cThe Ledger\u201d is his notebook; on this screen it could be read as the game's name."],
+    settings: ["The sheet covers most of the street it says shows each change; only its edges show.", "The \u2039 \u203a arrows that change a value are still small."],
+    prompt: ["Here it sits on a dark shop window; not yet tried over a bright background."],
+    hints: ["On your wide screen the slip sits over the near lane of the road."],
+    subtitles: ["The arrow points left, towards a man walking on the left pavement, who may be taken for the speaker."],
+    typing: ["The box covers the man by the lamp post below the waist."],
+    suggest: ["Sheila's subtitle covers her lower legs; that is where subtitles sit, so the game's camera should frame her higher."],
+    "suggest-pad": ["\u201cBack\u201d on B does not say back to where (to walking, with the talk still open)."],
+    loading: ["\u201c312 to go\u201d is the game's own wording; it does not say 312 of what."],
+  },
+  about: [
+    "Your answers in chat: the set as drawn, with suggested lines added (here, screens 8 and 9); the name LEDGER stays for now.",
+    "Short of a 2026 game: design mockups, the paper drawn by code; scanned paper, real halftone and sound come with the finish.",
+    "The street behind is the game's own frames of 1 October. They show no Tom, so the in-play screens read as first person; that is for the builder's camera, not the interface.",
+    "On your 3440 by 1440 screen the street is the game's 2560 frame enlarged by a third, so it is soft; the interface is drawn at full size.",
+    "Everything to read sits in the middle 16:9 of the wide screen. Subtitles are 39 units on an 80% dark backing (adjustable), key hints 30, nothing to read under 24.",
+    "The style guide, the kit, the research and these pictures at full size are in the pull request."],
+};
+const state = {};
+let db = null, canWrite = true;
+function el(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})) { if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v); }
+  for (const k of kids) if (k) n.append(k);
+  return n;
+}
+function save(key, patch){
+  state[key] = Object.assign({}, state[key] || {}, patch, {at: new Date().toISOString()});
+  render();
+  if (!db || !canWrite) return;
+  db.doc("verdicts/" + key).set(Object.assign({}, state[key])).catch(e => { canWrite = false; render(); });
+}
+function render(){
+  PAGE.decisions.forEach((d, i) => {
+    const st = state[d.key] || {};
+    const box = document.getElementById("d" + (i + 1));
+    if (box.contains(document.activeElement) && document.activeElement.tagName === "TEXTAREA") return;   // never under his typing
+    box.replaceChildren();
+    box.append(el("p", {class:"q", text:d.q}));
+    const opts = el("div", {class:"opts", role:"radiogroup", "aria-label":d.q});
+    for (const [v, name, rec] of d.options) {
+      const b = el("button", {type:"button", class:"opt" + (st.pick === v ? " picked" : ""), role:"radio", "aria-checked": st.pick === v ? "true" : "false", id:"opt-" + d.key + "-" + v},
+        el("span", {text:name}), rec ? el("span", {class:"rec", text:"Recommended"}) : null);
+      b.addEventListener("click", () => save(d.key, {pick:v}));
+      opts.append(b);
+    }
+    box.append(opts);
+    if (d.note) {
+      const t = el("textarea", {id:"note-" + d.key, rows:"1", placeholder:"What to change (optional)"});
+      t.value = st.note || "";
+      t.addEventListener("change", () => save(d.key, {note:t.value}));
+      box.append(t);
+    }
+    if (d.detail) box.append(el("details", {}, el("summary", {text:"Why, in detail"}), el("p", {class:"det", text:d.detail})));
+    box.append(el("div", {class:"tally", text: st.pick
+      ? "Picked: " + (d.options.find(o => o[0] === st.pick) || [,st.pick])[1] + (st.at ? " · saved " + new Date(st.at).toLocaleString() : "") + (db ? "" : " · not stored on this view")
+      : (db ? "Not picked yet" : "Not picked yet · not stored on this view")}));
+  });
+}
+function folds(){
+  const root = document.getElementById("folds");
+  PAGE.screens.forEach((s, i) => {
+    const f = el("div", {class:"fold"});
+    for (const [z, cap] of PAGE.sizes)
+      f.append(el("figure", {}, el("img", {src:"pictures/" + s.k + "-" + z + ".jpg", alt:s.n + ", " + cap.toLowerCase(), loading:"lazy",
+        width: z === "3440" ? "3440" : "1920", height: z === "3440" ? "1440" : "1080"}), el("figcaption", {text:cap})));
+    for (const n of (PAGE.notes[s.k] || [])) f.append(el("p", {class:"was", text:n}));
+    root.append(el("details", {id:"screen-" + s.k}, el("summary", {}, document.createTextNode((i + 1) + " · " + s.n), el("span", {text:s.d})), f));
+  });
+  const k = el("div", {class:"fold"}, el("figure", {}, el("img", {src:"pictures/kit.jpg", alt:PAGE.kit.n, loading:"lazy", width:"2560", height:"1632"}), el("figcaption", {text:PAGE.kit.d})));
+  root.append(el("details", {id:"kit"}, el("summary", {}, document.createTextNode("The kit · " + PAGE.kit.n), el("span", {text:"The parts the screens are built from, as the style guide sets them."})), k));
+  const about = document.getElementById("about");
+  for (const a of PAGE.about) about.append(el("p", {class:"was", text:a}));
+}
+folds(); render();
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db) { render(); return; }
+  for (const d of PAGE.decisions) {
+    try { const s = await db.doc("verdicts/" + d.key).get(); if (s.exists) state[d.key] = Object.assign({}, s.data()); } catch (e) {}
+  }
+  render();
+})();
+
+// PICTURES JUDGED ON THE PAGE (tools/page_pictures.py): a tap opens a picture
+// full-screen at its own resolution; pinch or wheel to zoom, drag to look
+// about, double tap for its pixels one to one, swipe or arrows for the next,
+// Close or Esc to return. Filmed faces play with their own sound.
+(function(){
+  if (window.__pvReady) return; window.__pvReady = true;
+  const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+  const view = mk("div", "pv"); view.setAttribute("role", "dialog"); view.setAttribute("aria-label", "Picture, full screen");
+  const stage = mk("div", "pv-stage"), hold = mk("div", "pv-hold");
+  const bar = mk("div", "pv-bar"), count = mk("span", "pv-count"), close = mk("button", "pv-close", "Close");
+  const cap = mk("div", "pv-cap"), prev = mk("button", "pv-nav pv-prev", "‹"), next = mk("button", "pv-nav pv-next", "›");
+  const play = mk("button", "pv-play", "Play again");
+  close.type = prev.type = next.type = play.type = "button";
+  prev.setAttribute("aria-label", "The picture before"); next.setAttribute("aria-label", "The next picture");
+  stage.append(hold); bar.append(count, close); view.append(stage, bar, cap, prev, next, play);
+  (document.body || document.documentElement).append(view);
+
+  let items = [], idx = 0, W = 1, H = 1, fit = 1, sc = 1, tx = 0, ty = 0, audio = null, raf = 0, film = null;
+  const pts = new Map(); let pinch = null, drag = null, swipe = null, lastTap = 0;
+
+  function collect(){
+    return Array.from(document.querySelectorAll("img, [data-film-sprite]")).filter(e => !view.contains(e) && (e.tagName !== "IMG" || (e.currentSrc || e.src)));
+  }
+  function apply(){ hold.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + sc + ")"; }
+  function clampPan(){
+    const vw = stage.clientWidth, vh = stage.clientHeight, w = W * sc, h = H * sc;
+    tx = w <= vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, tx));
+    ty = h <= vh ? (vh - h) / 2 : Math.min(0, Math.max(vh - h, ty));
+  }
+  function fitNow(){ const vw = stage.clientWidth, vh = stage.clientHeight; fit = Math.min(vw / W, vh / H); sc = fit; tx = (vw - W * sc) / 2; ty = (vh - H * sc) / 2; apply(); }
+  function zoomAt(s, cx, cy){
+    const max = Math.max(fit * 8, 4), ns = Math.min(max, Math.max(fit, s));
+    tx = cx - (cx - tx) * ns / sc; ty = cy - (cy - ty) * ns / sc; sc = ns; clampPan(); apply();
+  }
+  function stopFilm(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); film = null; }
+  function frameOf(sp, i){
+    i = Math.max(0, Math.min(sp.frames - 1, i)); const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    return (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  }
+  function runFilm(){
+    if (!film) return; stopAudioOnly();
+    const sp = film.sp; audio = film.audio ? new Audio(film.audio) : null;
+    const box = film.box; box.style.backgroundPosition = frameOf(sp, 0);
+    // THE FILM'S CLOCK IS ITS SOUND; when the sound cannot play (no sound
+    // device, or the browser refuses), its own timer, so the face still moves.
+    const t0 = performance.now(), len = sp.frames / (sp.fps || 10);
+    let silent = !audio;
+    const now = () => silent ? (performance.now() - t0) / 1000 : audio.currentTime;
+    const over = () => silent ? now() >= len : audio.ended;
+    if (audio) { audio.play().catch(() => { silent = true; }); }
+    // A plain timer, as the page's own player uses: animation frames stop in a hidden view.
+    raf = setInterval(() => { if (film === null || film.box !== box) { clearInterval(raf); return; }
+      if (over()) { clearInterval(raf); box.style.backgroundPosition = frameOf(sp, 0); return; }
+      box.style.backgroundPosition = frameOf(sp, Math.floor(now() * sp.fps)); }, 33);
+  }
+  function stopAudioOnly(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); }
+  function show(i){
+    stopFilm(); idx = (i + items.length) % items.length; const el = items[idx];
+    hold.replaceChildren(); view.classList.remove("film");
+    count.textContent = (idx + 1) + " / " + items.length;
+    cap.textContent = el.getAttribute("data-caption") || el.alt || el.getAttribute("aria-label") || "";
+    if (el.tagName === "IMG") {
+      const im = new Image(); im.alt = el.alt || ""; im.decoding = "async";
+      im.onload = () => { W = im.naturalWidth || 1; H = im.naturalHeight || 1; fitNow(); };
+      im.src = el.getAttribute("data-full") || el.currentSrc || el.src;
+      hold.append(im); W = el.naturalWidth || 1; H = el.naturalHeight || 1; fitNow();
+    } else {
+      let sp = {}; try { sp = JSON.parse(el.getAttribute("data-film-sprite")); } catch (e) {}
+      const box = mk("div", "pv-film"); const probe = new Image();
+      box.style.backgroundImage = "url(" + sp.file + ")"; box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+      hold.append(box); view.classList.add("film");
+      film = { sp, box, audio: el.getAttribute("data-film-audio") };
+      probe.onload = () => { W = Math.round(probe.naturalWidth / sp.cols); H = Math.round(probe.naturalHeight / sp.rows);
+        box.style.width = W + "px"; box.style.height = H + "px"; fitNow(); runFilm(); };
+      probe.src = sp.file;
+    }
+  }
+  function open(el){ items = collect(); const i = items.indexOf(el); if (i < 0) return;
+    view.classList.add("on"); document.documentElement.style.overflow = "hidden"; show(i); close.focus({preventScroll:true}); }
+  function shut(){ stopFilm(); view.classList.remove("on"); hold.replaceChildren(); document.documentElement.style.overflow = ""; }
+
+  document.addEventListener("click", (e) => {
+    if (view.contains(e.target)) return;
+    const el = e.target.closest ? e.target.closest("img, [data-film-sprite]") : null;
+    if (!el || (el.tagName === "IMG" && !(el.currentSrc || el.src))) return;
+    if (el.closest("a")) e.preventDefault();
+    open(el);
+  }, true);
+  close.addEventListener("click", shut);
+  prev.addEventListener("click", () => show(idx - 1));
+  next.addEventListener("click", () => show(idx + 1));
+  play.addEventListener("click", runFilm);
+  document.addEventListener("keydown", (e) => {
+    if (!view.classList.contains("on")) return;
+    if (e.key === "Escape") shut(); else if (e.key === "ArrowRight") show(idx + 1); else if (e.key === "ArrowLeft") show(idx - 1);
+    else if (e.key === "+" || e.key === "=") zoomAt(sc * 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else if (e.key === "-") zoomAt(sc / 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else return; e.preventDefault();
+  });
+  stage.addEventListener("wheel", (e) => { e.preventDefault(); const r = stage.getBoundingClientRect(); zoomAt(sc * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top); }, {passive:false});
+  stage.addEventListener("pointerdown", (e) => {
+    try { stage.setPointerCapture(e.pointerId); } catch (err) {}   // some browsers refuse; the pinch must not depend on it
+    const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = {d: Math.hypot(a.x - b.x, a.y - b.y), s: sc}; drag = swipe = null; }
+    else if (pts.size === 1) { const p = pts.get(e.pointerId); drag = {x: p.x, y: p.y, tx, ty}; swipe = {x: p.x, y: p.y, t: Date.now()}; }
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!pts.has(e.pointerId)) return; const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pinch && pts.size >= 2) { const [a, b] = [...pts.values()]; zoomAt(pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / (pinch.d || 1), (a.x + b.x) / 2, (a.y + b.y) / 2); }
+    else if (drag && sc > fit * 1.02) { const p = pts.get(e.pointerId); tx = drag.tx + p.x - drag.x; ty = drag.ty + p.y - drag.y; clampPan(); apply(); }
+  });
+  function lift(e){
+    const p = pts.get(e.pointerId); pts.delete(e.pointerId);
+    if (pts.size < 2) pinch = null;
+    if (!p || pts.size) return;
+    if (swipe && sc <= fit * 1.02) {
+      const dx = p.x - swipe.x, dy = p.y - swipe.y, dt = Date.now() - swipe.t;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 800) { show(idx + (dx < 0 ? 1 : -1)); swipe = drag = null; return; }
+    }
+    if (swipe && Math.hypot(p.x - swipe.x, p.y - swipe.y) < 10) {
+      const now = Date.now();
+      if (now - lastTap < 320) { lastTap = 0; if (sc > fit * 1.02) fitNow(); else zoomAt(Math.max(1, fit * 2.5), p.x, p.y); }
+      else lastTap = now;
+    }
+    swipe = drag = null;
+  }
+  stage.addEventListener("pointerup", lift); stage.addEventListener("pointercancel", lift);
+  window.addEventListener("resize", () => { if (view.classList.contains("on")) fitNow(); });
+})();
+</script>
