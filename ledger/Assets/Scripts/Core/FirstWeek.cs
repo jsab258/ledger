@@ -73,10 +73,13 @@ namespace Ledger.Core
             !metAdaByThen || firstAskDay < 0 ? null : new AdasTea { Day = firstAskDay + Arrangement.Every };
 
         /// She sees him on the tea's day before nine and asks him, once.
-        /// Returns her line, or null when it is not the moment.
-        public string SheSeesHim(GameTime now)
+        /// Returns her line, or null when it is not the moment. Never while he is
+        /// `held` in the cells (Custody.Holds; the independent review of 1 October,
+        /// M3: she asked him in the hour he was arrested): she asks once he is out
+        /// and she sees him, if it is still before nine.
+        public string SheSeesHim(GameTime now, bool held = false)
         {
-            if (State != TeaState.NotAsked || now.Day != Day || now.Hour >= From) return null;
+            if (held || State != TeaState.NotAsked || now.Day != Day || now.Hour >= From) return null;
             State = TeaState.Asked;
             return Invite;
         }

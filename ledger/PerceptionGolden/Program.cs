@@ -188,7 +188,19 @@ namespace Ledger.PerceptionGolden
                 // The independent check of 1 October: won over is the tea or a friend,
                 // not a nudge (OnHisSide 0.5 to 0.575); held, then emptied by the builder's
                 // port the same day.
-                var held = new string[0];
+                // Jafar's ruling of 1 October (Mickey's people never go to the police about
+                // him): what DS Ellis hears no longer has Ron's and Sheila's talk; held
+                // until the port's CastDay.NeverToPolice follows.
+                // The review of 1 October, N3: a threat talks them round (Silence.FileThreat
+                // suppresses the deed); held until the port's Silence.h follows.
+                // The review of 1 October, M3: no tea invitation while he is held; held until
+                // the port's AdasTea.SheSeesHim takes `held`.
+                // The review of 1 October, B3 and L4: a night away passes at four, a story
+                // stamped when filed; held until the port's Arrangement.h follows.
+                // The independent check of the review's fixes, 1 October: Mickey's own keep
+                // his deeds to themselves (GossipMill.KeepsHisDeedsFor); a night away is
+                // taken only from four; held until the port follows.
+                var held = new[] { "SweepHeard|", "ThreatSilences|", "TeaHeld|", "AskEdge|dawn at one|", "LandingHours|", "KeepsHisDeeds|", "FixAsk|away before one|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -1013,6 +1025,28 @@ namespace Ledger.PerceptionGolden
             Row(sb, "AskEdge", "dawn before one", State(early), Bit(early.AskStands(T(1, 0, 45))));
             early.PassedTo(1, null, T(1, 1));
             Row(sb, "AskEdge", "dawn at one", State(early), Bit(early.AskStands(T(1, 0, 45))));
+            // THE HOURS HIS NO AND A NIGHT AWAY REACH THE LANDING (the independent review
+            // of 1 October, B3 and L4): a night away passes as the hours turn at four,
+            // once no late no can come; a story is stamped when it is filed.
+            {
+                var lh = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) lh.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var away = new Arrangement(0);
+                away.Delivered(0, lh.Get(Arrangement.Doorman), T(0, 20));
+                away.TellDue(lh, T(1, 3));
+                string atThree = State(away);
+                away.TellDue(lh, T(1, 4));
+                var awayMem = lh.Get(Arrangement.OutfitMan).Memory.Events.Find(e => e.Text != null && e.Text.Contains(Arrangement.Said(NightAnswer.NoShow)));
+                Row(sb, "LandingHours", "night away", atThree, State(away), awayMem == null ? "none" : awayMem.Time.TotalMinutes.ToString(Inv));
+                var lh2 = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) lh2.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var no = new Arrangement(0);
+                no.Delivered(0, lh2.Get(Arrangement.Doorman), T(0, 20));
+                no.Answer(0, NightAnswer.Refused, null, T(0, 23, 5));
+                no.TellDue(lh2, T(1, 0));
+                var noMem = lh2.Get(Arrangement.OutfitMan).Memory.Events.Find(e => e.Text != null && e.Text.Contains(Arrangement.Said(NightAnswer.Refused)));
+                Row(sb, "LandingHours", "no after eleven", noMem == null ? "none" : noMem.Time.TotalMinutes.ToString(Inv));
+            }
             Row(sb, "AskEdge", "answer undelivered", Bit(new Arrangement(0).Answer(0, NightAnswer.Undelivered)), Bit(new Arrangement(0).Answer(0, NightAnswer.NoShow)), Bit(new Arrangement(0).Answer(2, NightAnswer.Did)));
             Row(sb, "AskEdge", "first day negative", State(new Arrangement(-3)), Bit(new Arrangement(-3).AsksOn(0)));
         }
@@ -1076,6 +1110,9 @@ namespace Ledger.PerceptionGolden
             // Core's count of minutes away was put right, and the port follows.
             var late = AdasTea.For(1, true);
             Row(sb, "TeaEdge", "asked at nine", Esc(late.SheSeesHim(T(3, 21)) ?? "none"), Esc(late.SheSeesHim(T(4, 10)) ?? "none"), late.State.ToString());
+            // Not while he is in the cells (the independent review of 1 October, M3).
+            var heldTea = AdasTea.For(0, true);
+            Row(sb, "TeaHeld", Esc(heldTea.SheSeesHim(T(2, 10), true) ?? "none"), heldTea.State.ToString(), Esc(heldTea.SheSeesHim(T(2, 17), false) ?? "none"), heldTea.State.ToString());
             var odd = AdasTea.For(0, true);
             odd.SheSeesHim(T(2, 8, 59));
             odd.WithHer(T(2, 20, 59)); odd.WithHer(T(2, 23)); odd.WithHer(T(3, 21, 40)); odd.WithHer(T(2, 21, 0));
@@ -2077,6 +2114,19 @@ namespace Ledger.PerceptionGolden
                         var gs = new Gossiper("ws", "ws", new MemoryStore("ws"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, nerve, loyalty);
                         Row(sb, "PoliceOnHisSide", o.ToString(), D(nerve), D(loyalty), Bit(PoliceFile.WouldReport(gs, o, false, "t")));
                     }
+            // A THREAT TALKS THEM ROUND (Jafar's ruling of 1 October; the independent review
+            // of 1 October, N3): a witness he threatens over a deed reports nothing of it,
+            // a body still, another deed as before.
+            {
+                var tmg = new GossipMill(null);
+                tmg.Add(new Gossiper("th", "th", new MemoryStore("th"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, 0.7, 0.5));
+                tmg.Witness("th", new Fact("player", "window_d1", "ritas"), "it was the new owner that put the window in", true, new GameTime(1, 12, 0), 1.0);
+                var thg = tmg.Get("th");
+                bool beforeThreat = PoliceFile.WouldReport(thg, Offence.Damage, false, "player.window_d1");
+                bool filedThreat = Silence.FileThreat(tmg, "th", "player.window_d1", new GameTime(2, 10, 0));
+                Row(sb, "ThreatSilences", Bit(beforeThreat), Bit(filedThreat), Bit(PoliceFile.WouldReport(thg, Offence.Damage, false, "player.window_d1")),
+                    Bit(PoliceFile.WouldReport(thg, Offence.Killing, false, "player.window_d1")), Bit(PoliceFile.WouldReport(thg, Offence.Damage, false, "player.window_d2")));
+            }
             var quiet = new Gossiper("wq", "wq", new MemoryStore("wq"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, 0.9, 0.1);
             quiet.Suppressed.Add("t");
             Row(sb, "PoliceWouldReport", "quiet", Bit(PoliceFile.WouldReport(quiet, Offence.Damage, true, "t")), Bit(PoliceFile.WouldReport(quiet, Offence.Killing, false, "t")),
@@ -2116,6 +2166,22 @@ namespace Ledger.PerceptionGolden
             var news = TownNews.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(root, "production", "specs", "town-news.json")));
             foreach (var st in news.Stories)
                 Row(sb, "TownNewsWitnesses", st.Id, string.Join(",", news.WitnessesOf(st, cast)));
+
+            // MICKEY'S OWN HANDLE IT PRIVATELY (Jafar's ruling of 1 October): a deed Sheila
+            // or Ron saw goes no further than them through a day of the town's rounds; one
+            // Darren saw goes round; and their talk is not the street's (Loudness).
+            foreach (var witness in new[] { "lena", "rocco", "sam" })
+            {
+                var pg = new SocialGraph();
+                foreach (var (ta, tb, tw) in cast.Ties) pg.Link(ta, tb, tw);
+                var pm = new GossipMill(pg);
+                foreach (var pid in cast.People) pm.Add(new Gossiper(pid, pid, new MemoryStore(pid), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(pid)));
+                pm.Witness(witness, new Fact("player", "window_d1", "ritas"), "the new owner put Rita's window in", true, new GameTime(1, 12, 0), 1.0);
+                for (int h = 12; h < 36; h++) TownRounds.Hour(pm, cast, new GameTime(1 + h / 24, h % 24, 0));
+                int others = 0;
+                foreach (var ag in pm.Agents) if (ag.Id != witness && ag.Rumors.Exists(r => r.TopicKey == "player.window_d1")) others++;
+                Row(sb, "KeepsHisDeeds", witness, others.ToString(Inv), PoliceFile.Loudness(pm).ToString(Inv), Bit(cast.MickeysOwn(witness)));
+            }
 
             // THE EDGES, for the port's regression (30 September): exchanges told
             // through the ledger he hears them with (news four times at most, the

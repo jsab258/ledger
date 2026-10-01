@@ -162,11 +162,13 @@ namespace Ledger.Core
         /// called PassedTo at dawn, stamped eleven after the night's rounds had
         /// run without it): the game calls this as each hour turns, before the
         /// town's rounds, and the outfit's man has it from the moment it is due.
-        /// Not a night he stayed away: that stays PassedTo's, at dawn, as of one
-        /// (the builder's check of the port: passed at one as the hours turned, a
-        /// night lost his no confirmed at two past to Ron's question at two to
-        /// one; the review's B3 counts the dawn filing low).
-        public void TellDue(GossipMill mill, GameTime now) => TellWoundDown(mill, now);
+        /// AND A NIGHT HE STAYED AWAY, AS THE HOURS TURN (the independent review
+        /// of 1 October, B3: still filed at dawn, stamped one): once no late no
+        /// can still come (PassesAt, four: the builder's check of the port found
+        /// a night passed at one lost his no confirmed at two past to Ron's
+        /// question at two to one). Every story is stamped when it is filed,
+        /// never before rounds that ran without it (the review's L4).
+        public void TellDue(GossipMill mill, GameTime now) => PassedTo(now.Day, mill, now);
 
         // The outfit's man has the no and the wound-down story once Ron has been
         // down (TellDue each hour; PassedTo at dawn; or later).
@@ -175,11 +177,11 @@ namespace Ledger.Core
             if (mill == null || !now.HasValue) return;
             if (_noTellNight >= 0 && now.Value.TotalMinutes >= _noTellAt.TotalMinutes)
             {
-                mill.Witness(OutfitMan, new Fact("player", "outfit_d" + _noTellNight, Value(NightAnswer.Refused)), Said(NightAnswer.Refused), false, _noTellAt, 1.0);
+                mill.Witness(OutfitMan, new Fact("player", "outfit_d" + _noTellNight, Value(NightAnswer.Refused)), Said(NightAnswer.Refused), false, now.Value, 1.0);
                 _noTellNight = -1;
             }
             if (_woundTellNight < 0 || now.Value.TotalMinutes < _woundTellAt.TotalMinutes) return;
-            mill.Witness(OutfitMan, new Fact("player", "outfit_d" + _woundTellNight, "wounddown"), SaidWoundDown, false, _woundTellAt, 1.0);
+            mill.Witness(OutfitMan, new Fact("player", "outfit_d" + _woundTellNight, "wounddown"), SaidWoundDown, false, now.Value, 1.0);
             _woundTellNight = -1;
         }
 
@@ -194,6 +196,14 @@ namespace Ledger.Core
 
         /// When the man at the landing gives up waiting on this night's answer.
         public static GameTime GaveUpAt(int day) => new GameTime(day + 1, GaveUpHour, 0);
+
+        /// How long after he gives up a late no can still come: his yes to Ron's
+        /// question counts for three game hours after it (the talk program's
+        /// refusedAsk), and Ron asks only while the ask stands, before one.
+        public const int LateNoHours = 3;
+
+        /// When a night he stayed away passes, as one: once no late no can come.
+        public static GameTime PassesAt(int day) => GaveUpAt(day).AddMinutes(LateNoHours * 60);
 
         /// WHETHER TONIGHT'S ASK STANDS at `now`: Ron has brought it, it is not
         /// answered, and the man at the landing has not given up waiting. The
@@ -247,10 +257,12 @@ namespace Ledger.Core
         /// PassedTo marks a night the ask never reached him). Taking the
         /// envelope or telling Ron no means he had it; with `now`, only before
         /// the man at the landing gives up waiting (GaveUpAt), so the game
-        /// answers a no as of when he said it. With `mill`, the night's story
-        /// goes into the gossip, told first by whoever knows it at `now`, which
-        /// must then be given, and Ron, if the mill has him, learns when it ends.
-        public bool Answer(int day, NightAnswer what, GossipMill mill = null, GameTime? now = null)
+        /// answers a no as of when he said it, or as of Ron's question for a yes
+        /// to it, with `toldAt` when he said it, which stamps what is told and
+        /// remembered. With `mill`, the night's story goes into the gossip, told
+        /// first by whoever knows it, `now` then given, and Ron, if the mill has
+        /// him, learns when it ends.
+        public bool Answer(int day, NightAnswer what, GossipMill mill = null, GameTime? now = null, GameTime? toldAt = null)
         {
             if (mill != null && !now.HasValue) throw new ArgumentException("the story needs the time it is told", nameof(now));
             if (what == NightAnswer.Undelivered || !AsksOn(day)) return false;
@@ -268,19 +280,25 @@ namespace Ledger.Core
             // (the independent check: done at nine that morning, he was filed as
             // seeing it at nine).
             if (now.HasValue && what == NightAnswer.Did && !TheLanding.There(now.Value)) return false;
-            if (now.HasValue && what == NightAnswer.NoShow && now.Value.TotalMinutes < GaveUpAt(day).TotalMinutes) return false;
+            // A night away only once no late no can come (PassesAt; the independent check of 1 October).
+            if (now.HasValue && what == NightAnswer.NoShow && now.Value.TotalMinutes < PassesAt(day).TotalMinutes) return false;
             _delivered.Add(day);
             // A PLAIN NO GOES DOWN WITH RON, as the wound-down word does (the
             // port's independent check): the man at the landing knows it only
             // when Ron has been down, at eleven or at once if later; Ron knows now.
             if (what == NightAnswer.Refused && now.HasValue)
             {
+                // `now` is the night's "as of" (Ron's question, for a yes to it);
+                // `toldAt`, when he said it, stamps what is told and remembered (the
+                // independent check of 1 October: one time for both put the story
+                // before the rounds that ran without it).
+                var told = toldAt.HasValue && toldAt.Value.TotalMinutes > now.Value.TotalMinutes ? toldAt.Value : now.Value;
                 Record(day, what, null, now);
-                if (mill?.Get(Doorman) is Gossiper ron) ron.Memory.Append(new MemoryEvent(now.Value, "observation", 0.8, HeardNo));
+                if (mill?.Get(Doorman) is Gossiper ron) ron.Memory.Append(new MemoryEvent(told, "observation", 0.8, HeardNo));
                 var goesDown = new GameTime(now.Value.Day, RonGoesDownHour, 0);
                 _noTellNight = day;
                 _noTellAt = now.Value.Hour < GaveUpHour || now.Value.TotalMinutes >= goesDown.TotalMinutes ? now.Value : goesDown;
-                TellWoundDown(mill, now);
+                TellWoundDown(mill, told);
                 return true;
             }
             return Record(day, what, mill, now);
@@ -334,10 +352,11 @@ namespace Ledger.Core
             // September: a far-future day was walked night by night, ten million
             // nights and a 244 MB save): the save keeps days under LastDay.
             day = Math.Min(day, LastDay);
-            while (!Ended && NextNight < day && (!now.HasValue || GaveUpAt(NextNight).TotalMinutes <= now.Value.TotalMinutes))
+            while (!Ended && NextNight < day && (!now.HasValue || PassesAt(NextNight).TotalMinutes <= now.Value.TotalMinutes))
             {
+                // Stamped when it is filed (the review of 1 October, B3 and L4).
                 GameTime? told = null;
-                if (now.HasValue) told = GaveUpAt(NextNight);
+                if (now.HasValue) told = now;
                 if (_delivered.Contains(NextNight)) Record(NextNight, NightAnswer.NoShow, mill, told);
                 else Record(NextNight, NightAnswer.Undelivered, null, null);
             }
