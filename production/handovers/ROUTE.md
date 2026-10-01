@@ -123,27 +123,30 @@ Played hour by hour from day 0, 09:00 to day 7, noon, with walks of 30, 120 and
 - he sits with Ada, or stands her up;
 - the window is seen by Sheila, by Ada, by nobody, or there is no window.
 
-Each row is what the Core gives (`TownReach --week-waits`, 30 September, on the
-Core as pushed that morning). The route played the same way must give the same.
+Each row is what the Core gives (`TownReach --week-waits`, 1 October, on the
+Core with Jafar's police ruling: a witness who saw the window reports it the
+next morning unless on his side, so whoever saw it has him taken in on day 4;
+Ada's tea on day 3 comes after that report and cannot undo it). The route
+played the same way must give the same.
 
 | the envelope | Ada's tea | window seen by | DS Ellis first | taken in | Sheila trusts him | day 7 | the arrangement | his answer held by Monday noon |
 |---|---|---|---|---|---|---|---|---|
-| takes it | sits | Sheila | day 4, for talk | no | never | the day-book | stands (4 nights) | 9 of 41 |
-| takes it | sits | Ada | day 4, for talk | no | day 4 | the real book | stands (4 nights) | 9 of 41 |
-| takes it | sits | nobody | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 9 of 41 |
-| takes it | sits | no window | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 9 of 41 |
-| takes it | stands her up | Sheila | day 4, for talk | no | never | the day-book | stands (4 nights) | 9 of 41 |
-| takes it | stands her up | Ada | day 4, for talk | day 5, Charged | day 4 | the real book | stands (4 nights) | 9 of 41 |
-| takes it | stands her up | nobody | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 9 of 41 |
-| takes it | stands her up | no window | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 9 of 41 |
-| tells Ron no | sits | Sheila | day 4, for talk | no | never | the day-book | ended (refused) | 9 of 41 |
-| tells Ron no | sits | Ada | day 4, for talk | no | day 4 | the real book | ended (refused) | 9 of 41 |
-| tells Ron no | sits | nobody | never | no | day 3 | the real book | ended (refused) | 9 of 41 |
-| tells Ron no | sits | no window | never | no | day 3 | the real book | ended (refused) | 9 of 41 |
-| tells Ron no | stands her up | Sheila | day 4, for talk | no | never | the day-book | ended (refused) | 9 of 41 |
-| tells Ron no | stands her up | Ada | day 4, for talk | day 5, Charged | day 4 | the real book | ended (refused) | 9 of 41 |
-| tells Ron no | stands her up | nobody | never | no | day 3 | the real book | ended (refused) | 9 of 41 |
-| tells Ron no | stands her up | no window | never | no | day 3 | the real book | ended (refused) | 9 of 41 |
+| takes it | sits | Sheila | day 4, for talk | day 4, Charged | never | the day-book | stands (4 nights) | 7 of 41 |
+| takes it | sits | Ada | day 4, for talk | day 4, Charged | day 4 | the real book | stands (4 nights) | 7 of 41 |
+| takes it | sits | nobody | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
+| takes it | sits | no window | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
+| takes it | stands her up | Sheila | day 4, for talk | day 4, Charged | never | the day-book | stands (4 nights) | 7 of 41 |
+| takes it | stands her up | Ada | day 4, for talk | day 4, Charged | day 4 | the real book | stands (4 nights) | 7 of 41 |
+| takes it | stands her up | nobody | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
+| takes it | stands her up | no window | day 5, for talk | no | day 3 | the real book | stands (4 nights) | 7 of 41 |
+| tells Ron no | sits | Sheila | day 4, for talk | day 4, Charged | never | the day-book | ended (refused) | 7 of 41 |
+| tells Ron no | sits | Ada | day 4, for talk | day 4, Charged | day 4 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | sits | nobody | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | sits | no window | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | stands her up | Sheila | day 4, for talk | day 4, Charged | never | the day-book | ended (refused) | 7 of 41 |
+| tells Ron no | stands her up | Ada | day 4, for talk | day 4, Charged | day 4 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | stands her up | nobody | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
+| tells Ron no | stands her up | no window | never | no | day 3 | the real book | ended (refused) | 7 of 41 |
 
 **The wait's stops, first row** (takes the envelope, sits with Ada, Sheila sees
 the window):

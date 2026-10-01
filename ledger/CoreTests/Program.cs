@@ -5742,6 +5742,21 @@ namespace Ledger.CoreTests
                       && !PoliceFile.WouldReport(bought, Offence.Wounding, false, "player.cut_d2") && PoliceFile.WouldReport(bought, Offence.Killing, false, "player.cut_d2")
                       && !PoliceFile.WouldReport(null, Offence.Killing, false, null),
                       "a shopkeeper reports her window; a victim reports unless they would settle it or are afraid, and a dead one reports nothing; a witness who saw him do it reports a detective's crime or a window, unafraid, unless on his side (Jafar's ruling of 1 October: seeing him break a window is enough), and the nervous crack over a body; one he has won over says nothing; the hooked say nothing, the bought nothing but a body");
+                // WON OVER IS THE TEA OR A FRIEND, NOT A NUDGE (the builder's independent
+                // check of the port, 1 October): leaving Ada's tea early or a bribe's
+                // bump (+0.05) is not winning a witness over, so they still report a
+                // window and a body; a forgiven debt (+0.15) is. And the body's two halves
+                // meet: the nervous crack over it wherever WouldReport has them report it.
+                var nudged = P("nudged", 0.7, 0.55);
+                var forgiven = P("forgiven", 0.7, 0.65);
+                Check(PoliceFile.WouldReport(nudged, Offence.Damage, false, null) && PoliceFile.WouldReport(nudged, Offence.Killing, false, null)
+                      && !PoliceFile.WouldReport(forgiven, Offence.Damage, false, null) && !PoliceFile.WouldReport(forgiven, Offence.Killing, false, null)
+                      && Watched.WouldTalkToPolice(P("shaky", 0.2, 0.5)) && Watched.WouldTalkToPolice(P("shakyNudged", 0.2, 0.55))
+                      && !Watched.WouldTalkToPolice(P("shakyFriend", 0.2, 0.75))
+                      && Watched.WouldTalkToPolice(P("shaky", 0.2, 0.5)) == PoliceFile.WouldReport(P("shaky", 0.2, 0.5), Offence.Killing, false, null)
+                      // A regard a damaged save left unreadable reads the same in both.
+                      && Watched.WouldTalkToPolice(P("unread", 0.2, double.NaN)) == PoliceFile.WouldReport(P("unread", 0.2, double.NaN), Offence.Killing, false, null),
+                      "a nudge of regard is not winning a witness over: they still report a window and a body; a forgiven debt from the middle is; and the nervous crack over a body wherever a witness would report it");
 
                 // WHAT AN ARREST DOES (town list 6bp): a constable calls the day after a
                 // statement about a window, once; he is held the hours the Home
@@ -6060,6 +6075,23 @@ namespace Ledger.CoreTests
                       && neverAsked.Close(ada4, new GameTime(2, 23, 0)) == TeaState.NotAsked && ada4.Loyalty == before4
                       && !ada2.Memory.Events.Exists(e => e.Text.Contains("new owner") || e.Text.Contains(" they ")),
                       "dropping in and leaving is not coming; going from her house to the landing he is seen from her window, once; standing her up cools her; a tea she never asked leaves her as she was; her memories are hers, of Mickey's nephew");
+                // THROUGH THE TEA ITSELF, FROM THE MIDDLE WHERE THE GAME STARTS HER (the
+                // independent check of 1 October: the police tests set regard by hand):
+                // leaving early is a nudge, and she still goes to the police over a window
+                // or a body; staying wins her over, and she does not.
+                var midEarly = AdasTea.For(0, true);
+                midEarly.SheSeesHim(new GameTime(2, 10, 0));
+                Sit(midEarly, 21 * 60, 22 * 60 + 10);
+                var adaEarly = Ada(); adaEarly.Loyalty = 0.5;
+                var midStay = AdasTea.For(0, true);
+                midStay.SheSeesHim(new GameTime(2, 10, 0));
+                Sit(midStay, 21 * 60, 22 * 60 + 40);
+                var adaStay = Ada(); adaStay.Loyalty = 0.5;
+                Check(midEarly.Close(adaEarly, new GameTime(2, 23, 0)) == TeaState.LeftEarly
+                      && PoliceFile.WouldReport(adaEarly, Offence.Damage, false, null) && PoliceFile.WouldReport(adaEarly, Offence.Killing, false, null)
+                      && midStay.Close(adaStay, new GameTime(2, 23, 0)) == TeaState.Stayed
+                      && !PoliceFile.WouldReport(adaStay, Offence.Damage, false, null) && !PoliceFile.WouldReport(adaStay, Offence.Killing, false, null),
+                      "from the middle, leaving her tea early still leaves Ada going to the police over a window or a body; staying wins her over");
 
                 var back = AdasTea.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(tea.ToJson()))));
                 var lied = AdasTea.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"day\": 2, \"state\": \"Stayed\", \"minutes\": [1351], \"seenGoing\": true}")));

@@ -400,7 +400,8 @@ static class Program
                         }
                         damage?.Tick(mill, cast, now);
                         // Each morning after it, whoever saw it goes to the police once they
-                        // would (standing Ada up cools her after the first morning).
+                        // would: by Jafar's ruling of 1 October the first morning, unless on
+                        // his side (Ada's tea on day 3 comes after that, so it cannot undo it).
                         if (!reported && day >= 2 && hod == 9 && seenBy != "nobody" && seenBy != "none"
                             && PoliceFile.WouldReport(mill.Get(seenBy), Offence.Damage, false, window, cast.NeverToPolice(seenBy)))
                         {
