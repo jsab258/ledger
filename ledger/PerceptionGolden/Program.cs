@@ -191,7 +191,9 @@ namespace Ledger.PerceptionGolden
                 // Jafar's ruling of 1 October (Mickey's people never go to the police about
                 // him): what DS Ellis hears no longer has Ron's and Sheila's talk; held
                 // until the port's CastDay.NeverToPolice follows.
-                var held = new[] { "SweepHeard|" };
+                // The review of 1 October, N3: a threat talks them round (Silence.FileThreat
+                // suppresses the deed); held until the port's Silence.h follows.
+                var held = new[] { "SweepHeard|", "ThreatSilences|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -2068,6 +2070,19 @@ namespace Ledger.PerceptionGolden
                         var gs = new Gossiper("ws", "ws", new MemoryStore("ws"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, nerve, loyalty);
                         Row(sb, "PoliceOnHisSide", o.ToString(), D(nerve), D(loyalty), Bit(PoliceFile.WouldReport(gs, o, false, "t")));
                     }
+            // A THREAT TALKS THEM ROUND (Jafar's ruling of 1 October; the independent review
+            // of 1 October, N3): a witness he threatens over a deed reports nothing of it,
+            // a body still, another deed as before.
+            {
+                var tmg = new GossipMill(null);
+                tmg.Add(new Gossiper("th", "th", new MemoryStore("th"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, 0.7, 0.5));
+                tmg.Witness("th", new Fact("player", "window_d1", "ritas"), "it was the new owner that put the window in", true, new GameTime(1, 12, 0), 1.0);
+                var thg = tmg.Get("th");
+                bool beforeThreat = PoliceFile.WouldReport(thg, Offence.Damage, false, "player.window_d1");
+                bool filedThreat = Silence.FileThreat(tmg, "th", "player.window_d1", new GameTime(2, 10, 0));
+                Row(sb, "ThreatSilences", Bit(beforeThreat), Bit(filedThreat), Bit(PoliceFile.WouldReport(thg, Offence.Damage, false, "player.window_d1")),
+                    Bit(PoliceFile.WouldReport(thg, Offence.Killing, false, "player.window_d1")), Bit(PoliceFile.WouldReport(thg, Offence.Damage, false, "player.window_d2")));
+            }
             var quiet = new Gossiper("wq", "wq", new MemoryStore("wq"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, 0.9, 0.1);
             quiet.Suppressed.Add("t");
             Row(sb, "PoliceWouldReport", "quiet", Bit(PoliceFile.WouldReport(quiet, Offence.Damage, true, "t")), Bit(PoliceFile.WouldReport(quiet, Offence.Killing, false, "t")),
