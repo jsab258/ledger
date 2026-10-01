@@ -48,9 +48,9 @@ code and its golden row; the split agreed with the builder (NOW.md).
      neighbours' small talk; 156 lines for those only, machine check and
      content rule clean. The fresh reviewer passed Darren, Father Walsh and
      June and failed Sheila, Alison and Ada, who keep the shared lines for
-     good. The three's 58 reviewed lines are on branch town-own-lines and on
-     his page (ambient-lines/own-lines-2026-10-01.md). DONE as far as the town
-     goes: his tap, then the builder's port.
+     good. The three's 58 reviewed lines: his yes (1 October, 12:41), landed
+     by the builder with OwnLines.h (ambient-lines/own-lines-2026-10-01.md).
+     DONE.
 3. **The text half of the delay,** when the builder's real-talk measurement
    lands: what the talk program sends and how long the first words take, cut
    on the real path.
@@ -82,6 +82,4 @@ reach yet.
 
 ## Waiting on Jafar
 
-- One tap (https://claude.ai/artifact/RZrzqngShazxh4JtrePZfZ): Darren's, Father
-  Walsh's and June's own street lines in? Recommended yes. On yes, a handover
-  for the builder to land branch town-own-lines with OwnLines.h.
+- Nothing.

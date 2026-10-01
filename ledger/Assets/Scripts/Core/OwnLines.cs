@@ -28,7 +28,12 @@ namespace Ledger.Core
     /// betting or children (canon's content rule).
     ///
     /// One character complete first, Ron, as the sample for Jafar's page:
-    /// nothing is multiplied before he approves one (CLAUDE.md).
+    /// nothing is multiplied before he approves one (CLAUDE.md). Then (his tap
+    /// of 1 October, one more try, one review) only the moments the game plays
+    /// to Tom, each person only for the stories their day lets them hold:
+    /// Darren, Father Walsh and June passed the review and are here; Sheila,
+    /// Alison and Ada failed it and keep the shared banks for good
+    /// (production/research/ambient-lines/own-lines-2026-10-01.md).
     public static class OwnLines
     {
         public static readonly Dictionary<string, Dictionary<string, string[]>> ByCast = new Dictionary<string, Dictionary<string, string[]>>
@@ -320,6 +325,167 @@ namespace Ledger.Core
                     "That's the boss. Mickey's nephew.",
                     "There's been talk about him. I'll not repeat it.",
                     "He's all right. So far.",
+                },
+            },
+            // DARREN MILNER (production/casting/darren-milner/SHEET.md; the card, sam.md):
+            // 25, the street hustler on his rounds; quick, ingratiating, always half into
+            // a favour; what he has heard is what he trades, and he says so; easily
+            // scared and open about it. "So listen" when he has something to sell.
+            ["sam"] = new Dictionary<string, string[]>
+            {
+                ["recognition/sensitive"] = new[]
+                {
+                    "So listen. Your name's doing the rounds. I'm not saying where. Yet.",
+                    "Everybody's got a version of you going. Mine's the one worth having.",
+                    "There he is. You want to know what's being said, you know where I'll be.",
+                },
+                ["faint"] = new[]
+                {
+                    "Him? I had something on him. Can't have been worth much, I've forgot it.",
+                    "Don't look. That's him. Whisper going round a while back. Old news.",
+                },
+                ["recognition/police-asked"] = new[]
+                {
+                    "Ellis had me in a doorway over you. I said I'd seen nothing. I'm good at that.",
+                    "Your detective friend's been on at me. Didn't tell her much. Didn't know much, did I.",
+                },
+                ["recognition/taken-saw"] = new[]
+                {
+                    "Saw them stick you in the back of the panda. You're out quick. Who'd you know?",
+                    "Out already? Watched them drive you off. Thought that was the last of you.",
+                },
+                ["recognition/taken-heard"] = new[]
+                {
+                    "Hear you had a ride with the police. Free taxi, that. Nice for a cab man.",
+                    "They're saying the law lifted you. You're walking about, so it can't have been much.",
+                },
+                ["recognition/outfit-did"] = new[]
+                {
+                    "So you did Mickey's errand by the ferry. I'll not ask. I'd only have to forget it.",
+                    "Picked up the late run, they're saying. Nobody's heard it from me.",
+                },
+                ["recognition/outfit-refused"] = new[]
+                {
+                    "Turned them down, did you? Takes nerve, that. Or you don't know who they are.",
+                    "Word is you turned the ferry lot down. I'd walk the long way home for a bit.",
+                },
+                ["recognition/outfit-wounddown"] = new[]
+                {
+                    "Mickey's old arrangement's off, they say. There's people by the ferry not happy about that.",
+                    "Finished with the sideline, I hear. Clean hands. Doesn't pay, but there you go.",
+                },
+                ["recognition/outfit-noshow"] = new[]
+                {
+                    "You left them stood by the ferry half the night. They've been asking where you were.",
+                    "Never turned up, they're saying. I'd have a story ready if I were you.",
+                },
+                ["recognition/threat-told"] = new[]
+                {
+                    "Message received, mate. I've gone deaf and blind, me.",
+                    "No need to say it twice. I've forgot everything already.",
+                },
+                ["recognition/threat-heard"] = new[]
+                {
+                    "Leaning on folk now, are you? Not on me, I hope. I scare easy, me.",
+                    "Somebody's been told to keep shut, I hear. I keep shut for nothing, me.",
+                },
+                ["recognition/week-takeover"] = new[]
+                {
+                    "Mickey's whole lot, then? Big shoes, mate. Anything wants fetching, I'm your man.",
+                    "Taking the lot on, they're saying. You'll be needing friends. I'm cheap.",
+                },
+                ["recognition/week-winddown"] = new[]
+                {
+                    "Only the cabs from now on, I hear. Shame. I had ideas.",
+                    "Winding the other business up, they reckon. Safer. Duller, mind.",
+                },
+                ["recognition/week-wontsay"] = new[]
+                {
+                    "Not even telling Sheila, they say. You can tell me. I'll only tell people who pay.",
+                    "Keeping it under your hat. That's worth something, that, to the right buyer.",
+                },
+                ["recognition/refuses"] = new[]
+                {
+                    "I'm not dealing with you, mate. Bad for business.",
+                    "Your money's no good with me now. Nothing personal.",
+                },
+                ["recognition/confronts"] = new[]
+                {
+                    "Here. Word with you. What you did's got people asking me, and I don't like being asked.",
+                    "No, stop a minute. I've had nothing but grief over you.",
+                },
+            },
+            // FATHER WALSH (production/casting/father-emil/SHEET.md): about 61, the
+            // Irish-born parish priest; soft and slow; never asks where anyone has been,
+            // only whether they are all right; the police are "the guards" from habit.
+            ["emil"] = new Dictionary<string, string[]>
+            {
+                ["recognition/sensitive"] = new[]
+                {
+                    "I hear things, God help me. I don't hold any of them against a man.",
+                    "You look like a man carrying something. My door's open, any hour.",
+                    "There's a lot said about you. None of it's my business unless you make it so.",
+                },
+                ["faint"] = new[]
+                {
+                    "God keep him. There's been talk, I know. I'd not trouble with it.",
+                    "That's the young fella with the cabs. Whatever it was, I let it go by.",
+                },
+                ["recognition/police-asked"] = new[]
+                {
+                    "The detective was round asking about you. I said I see you about the street, which is the truth of it.",
+                    "That Ellis woman came to me about you. I've no stories to give her, and I said so.",
+                },
+                ["recognition/police-heard"] = new[]
+                {
+                    "The guards are asking after you, I'm told. The police, I mean. Old habit.",
+                    "If the police come to you, and you want somebody to stand beside you, say.",
+                },
+                ["recognition/taken-heard"] = new[]
+                {
+                    "I heard they took you in. I said a prayer, for what it's worth. It's not nothing.",
+                    "You're out, thank God. I hope they treated you decent.",
+                },
+                ["recognition/threat-told"] = new[]
+                {
+                    "Threats don't work on an old priest, son. I've nothing left anyone can take.",
+                    "I'll forget you said that. I'd rather you did too.",
+                },
+                ["recognition/threat-heard"] = new[]
+                {
+                    "Frightening people, they're saying. That's not the man I took you for.",
+                    "Fear buys you nothing in the end. I've watched men try.",
+                },
+                ["recognition/avoids"] = new[]
+                {
+                    "The chapel's waiting on me. Another time.",
+                    "Forgive me, I'm late for a call.",
+                },
+            },
+            // JUNE (production/casting/june/SHEET.md): 38, Mickey's estranged daughter,
+            // back for the funeral and leaving soon; Tom's cousin; quick, clipped, on
+            // guard; holds nothing the street says of Mickey or his business.
+            ["june"] = new Dictionary<string, string[]>
+            {
+                ["recognition/sensitive"] = new[]
+                {
+                    "Whatever you've got yourself into, I don't want to hear it. Well. Go on, then.",
+                    "You've got this street talking already. Took me years to get away from it.",
+                },
+                ["recognition/police-heard"] = new[]
+                {
+                    "Police, now. I came back for a funeral, not this.",
+                    "Sort out whatever the police want before I go home, would you.",
+                },
+                ["recognition/taken-heard"] = new[]
+                {
+                    "I'm not asking what the police wanted you for. I'm just saying I know.",
+                    "You get yourself arrested, and I'm the one getting looks in the street. Thanks.",
+                },
+                ["recognition/avoids"] = new[]
+                {
+                    "Not now. I've a train to see about.",
+                    "I'm not stopping.",
                 },
             },
         };
