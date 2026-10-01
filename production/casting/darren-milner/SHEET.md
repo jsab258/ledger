@@ -10,7 +10,7 @@ character was called Sam; the old name survives only as an internal id.
 | **Face** | Narrow and pale, quick amused eyes, a cocky half-smile; clearly a grown man. |
 | **Body** | Thin and restless, about 5 ft 9 in. |
 | **Hair** | A grown-out perm with bleached tips; light stubble. |
-| **Clothes, 1990** | A shiny purple and teal nylon shell-suit jacket over a white T-shirt; stonewashed jeans; scuffed white trainers; a black pager on his belt. |
+| **Clothes, 1990** | A shiny purple and teal nylon shell-suit jacket over a white T-shirt; stonewashed jeans; plain black leather lace-up boots, scuffed; a black pager on his belt. (Jafar, 1 October: plain 1990 clothes, no trainers; the full-length concept picture below still shows trainers.) |
 | **Voice** | Quick, ingratiating, never still. His approved voice is kept (he is in its age range); it is Scottish, which a local lad would not be. |
 
 ## Concept portraits
