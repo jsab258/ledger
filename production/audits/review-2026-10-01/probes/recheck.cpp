@@ -96,7 +96,7 @@ static void OnlookerTable(const CastDay& Cast, const std::string& Bank, int Day,
 	using namespace LedgerCrime;
 	const bool bNight = NightAt(Hour);
 	const double Light = LightOnHim(bNight, LampReach);
-	std::printf("\n  D%d %02d:00, %s, light on him %.2f%s\n", Day, Hour, bNight ? "night" : "day", Light,
+	std::printf("\n  D%d %02d:00, %s, light on him %.2f%s (slots: 4 the act, 8 who it was done to, 16 who did it)\n", Day, Hour, bNight ? "night" : "day", Light,
 		bNight ? (LampReach > 0 ? " (a lamp reaches him)" : " (no lamp reaches him)") : "");
 	const std::vector<OnlookerAt> All = OnlookersAt(Cast, Day, Hour, { "lena", "sam", "rocco" });
 	if (All.empty()) std::printf("    nobody on Quay Street can see him\n");
@@ -107,8 +107,8 @@ static void OnlookerTable(const CastDay& Cast, const std::string& Bank, int Day,
 		int Variants = 0;
 		const bool bWords = R.bFiled && BankPick(Bank, "witness_summary", R.O.Rung, 1, Id, Text, Clause, Speaker, Variants, Why);
 		const WitnessFiles F = R.bFiled ? WhatWitnessFiles(R.O.Rung, bWords) : WitnessFiles::Nothing;
-		std::printf("    %-10s %-16s %s %5.1f m %4.0f deg off  rung %d  certainty %.2f  files %s%s%s\n",
-			O.Id.c_str(), O.Place.c_str(), O.bBody ? "body  " : "window", R.ActorMetres, R.ActorOffAxisDeg, R.O.Rung, R.O.Certainty,
+		std::printf("    %-10s %-16s %s %5.1f m %4.0f deg off  rung %d  certainty %.2f  slots %2d  files %s%s%s\n",
+			O.Id.c_str(), O.Place.c_str(), O.bBody ? "body  " : "window", R.ActorMetres, R.ActorOffAxisDeg, R.O.Rung, R.O.Certainty, (int)R.O.Slots,
 			FilesName(F), CanNameHim(R.O.Rung) ? ", names him" : "", O.Id == "lena" && R.bFiled && WitnessShouts(R.O.Rung) ? ", Sheila shouts" : "");
 	}
 }
