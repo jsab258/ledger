@@ -42,13 +42,15 @@ code and its golden row; the split agreed with the builder (NOW.md).
 2. **The street's lines for the other named characters,** in their own voices
    as their casting sheets describe, within the approved story, through the
    gate (Ron's tone approved).
-   - State: set aside after three reviews (ambient-lines/set-aside-2026-09-30);
-     his tap of 1 October gave one more try, one review. Found first: the game
-     says only two kinds of street line to Tom (a remark as he comes near, by
-     the story they hold of him; half a word once he has passed), never the
-     neighbours' small talk. So the fourth version is only those: 156 lines
-     for the six, each only for stories their day lets them hold; machine
-     check and content rule clean; with one fresh reviewer.
+   - State: the fourth try (his tap of 1 October, one review) found first that
+     the game says only two kinds of street line to Tom (a remark as he comes
+     near, by the story they hold; half a word once he has passed), never the
+     neighbours' small talk; 156 lines for those only, machine check and
+     content rule clean. The fresh reviewer passed Darren, Father Walsh and
+     June and failed Sheila, Alison and Ada, who keep the shared lines for
+     good. The three's 58 reviewed lines are on branch town-own-lines and on
+     his page (ambient-lines/own-lines-2026-10-01.md). DONE as far as the town
+     goes: his tap, then the builder's port.
 3. **The text half of the delay,** when the builder's real-talk measurement
    lands: what the talk program sends and how long the first words take, cut
    on the real path.
@@ -80,6 +82,6 @@ reach yet.
 
 ## Waiting on Jafar
 
-- Nothing: his three taps of 1 October are answered and acted on (police:
-  branch town-police, with the builder for its port; Sheila: stays; street
-  lines: the fourth try).
+- One tap (https://claude.ai/artifact/RZrzqngShazxh4JtrePZfZ): Darren's, Father
+  Walsh's and June's own street lines in? Recommended yes. On yes, a handover
+  for the builder to land branch town-own-lines with OwnLines.h.
