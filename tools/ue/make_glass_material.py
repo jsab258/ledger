@@ -30,12 +30,14 @@ ASSET_PATH = PACKAGE + "/" + ASSET
 TINT_PARAM, TINT_DEFAULT = "GlassTint", (0.05, 0.06, 0.07)
 OPACITY_PARAM, OPACITY_DEFAULT = "GlassOpacity", 0.25
 ROUGH_PARAM, ROUGH_DEFAULT = "GlassRoughness", 0.05
+#: what the clean pane lets through (the research's recipe: a faint green of float glass)
+TRANSMIT_PARAM, TRANSMIT_DEFAULT = "GlassTransmit", (0.88, 0.92, 0.90)
 
 #: (property, enum type name, enum value name) - read back after the write.
 FLAGS = [
     ("blend_mode", "BlendMode", "BLEND_TRANSLUCENT"),
     ("translucency_lighting_mode", "TranslucencyLightingMode", "TLM_SURFACE_PER_PIXEL_LIGHTING"),
-    ("shading_model", "MaterialShadingModel", "MSM_DEFAULT_LIT"),
+    ("shading_model", "MaterialShadingModel", "MSM_THIN_TRANSLUCENT"),
 ]
 
 
@@ -80,7 +82,7 @@ def main():
         unreal.EditorAssetLibrary.delete_asset(ASSET_PATH)
     mat = tools.create_asset(ASSET, PACKAGE, unreal.Material, unreal.MaterialFactoryNew())
     if mat is None:
-        _write(glass_line("CREATE-FAILED", 0, 3, [], False))
+        _write(glass_line("CREATE-FAILED", 0, 4, [], False))
         return 2
     flags = ["%s=%s" % (p, _set_enum(unreal, mat, p, e, v)) for p, e, v in FLAGS]
     # ON SKINNED MESHES TOO, 30 September: Sheila's spectacle lenses wear it
@@ -102,9 +104,35 @@ def main():
     rough.set_editor_property("parameter_name", ROUGH_PARAM)
     rough.set_editor_property("default_value", ROUGH_DEFAULT)
 
+    # THIN TRANSLUCENT GLASS, 1 October (Jafar: "The shop windows have interiors
+    # and reflections"; a fresh reviewer that evening: "no reflection and no dirt,
+    # so it looks like an open hole"). Two tries failed because Unreal's
+    # Translucent blend multiplies everything the glass draws by its Opacity, the
+    # reflection included: 4% of the street at 0.25 opacity is 1%, and a Fresnel
+    # opacity only lifted it at grazing angles. The Thin Translucent shading model
+    # keeps the reflection whole (Lumen's front-layer reflection still reaches it,
+    # DefaultEngine.ini) and lets the room through by its Transmittance Color; so
+    # Opacity is now only the dirt on the pane, GlassTint the dirt's colour
+    # (production/research/shop-glass-reflections/NOTE.md, its recipe).
+    spec = mel.create_material_expression(mat, unreal.MaterialExpressionConstant, -500, 600)
+    spec.set_editor_property("r", 1.0)
+    trans = mel.create_material_expression(mat, unreal.MaterialExpressionVectorParameter, -500, 700)
+    trans.set_editor_property("parameter_name", TRANSMIT_PARAM)
+    trans.set_editor_property("default_value", unreal.LinearColor(*TRANSMIT_DEFAULT, 1.0))
+    thin = mel.create_material_expression(mat, unreal.MaterialExpressionThinTranslucentMaterialOutput, -150, 700)
+    thin_wired = False
+    for pin in ("Transmittance Color", "TransmittanceColor", ""):
+        try:
+            if mel.connect_material_expressions(trans, "", thin, pin):
+                thin_wired = True
+                break
+        except Exception:
+            pass
+    flags.append("thin_translucent_output=%s" % ("taken" if thin_wired else "NOT-WIRED"))
     asked = [(tint, unreal.MaterialProperty.MP_BASE_COLOR),
              (opac, unreal.MaterialProperty.MP_OPACITY),
-             (rough, unreal.MaterialProperty.MP_ROUGHNESS)]
+             (rough, unreal.MaterialProperty.MP_ROUGHNESS),
+             (spec, unreal.MaterialProperty.MP_SPECULAR)]
     wired = 0
     for src, prop in asked:
         try:
@@ -137,12 +165,14 @@ def selftest():
             failed += 1
             print("FAILED - %s : %s" % (name, detail))
 
-    line = glass_line("MADE", 3, 3, ["blend_mode=taken"], True)
-    check("the line carries its wired denominator", "glassMaterialWired=3/3" in line, line)
+    line = glass_line("MADE", 4, 4, ["blend_mode=taken"], True)
+    check("the line carries its wired denominator", "glassMaterialWired=4/4" in line, line)
     check("and names the asset the probe loads", "glassMaterialPath=/Game/Ledger/M_LedgerGlass" in line)
     check("a failed save says NO", "glassMaterialSaved=NO" in glass_line("INCOMPLETE", 3, 3, [], False))
     check("the defaults are glass: nearly smooth, mostly see-through",
           ROUGH_DEFAULT < 0.2 and 0.0 < OPACITY_DEFAULT < 0.5)
+    check("thin translucent: the reflection is not scaled by opacity", ("shading_model", "MaterialShadingModel", "MSM_THIN_TRANSLUCENT") in FLAGS)
+    check("and lets most light through", all(0.8 < c < 1.0 for c in TRANSMIT_DEFAULT))
     print("make_glass_material selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 1 if failed else 0
 

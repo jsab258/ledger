@@ -64,52 +64,79 @@ def selftest():
     return 1 if failed else 0
 
 
+def import_glb(unreal, glb, dest, mesh_asset):
+    """One glb as one static mesh at mesh_asset (its materials beside it), Nanite
+    off and read back. Returns (made, nanite_off, note); the note is None when
+    it went in. Shared with tools/ue/import_shop_displays.py."""
+    lib = unreal.EditorAssetLibrary
+    stem = os.path.splitext(os.path.basename(glb))[0]
+    if lib.does_directory_exist(dest):
+        lib.delete_directory(dest)
+    task = unreal.AssetImportTask()
+    task.set_editor_property("filename", glb)
+    task.set_editor_property("destination_path", dest)
+    task.set_editor_property("automated", True)
+    task.set_editor_property("replace_existing", True)
+    task.set_editor_property("save", True)
+    unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
+    mesh = None
+    for p in lib.list_assets(dest, recursive=True, include_folder=False):
+        if isinstance(lib.load_asset(p), unreal.StaticMesh):
+            mesh = p
+            break
+    if mesh is None:
+        return 0, 0, "%s-no-mesh" % stem
+    if mesh.split(".")[0] != mesh_asset:
+        lib.rename_asset(mesh.split(".")[0], mesh_asset)
+    m = lib.load_asset(mesh_asset)
+    if m is None:
+        return 0, 0, "%s-rename-did-not-take" % stem
+    off = 1 if nanite_off_and_rebuilt(unreal, m) else 0
+    lib.save_directory(dest)
+    return 1, off, None
+
+
+def nanite_off_and_rebuilt(unreal, m):
+    """NANITE OFF, THE MESH REBUILT AND SAVED, 1 October. In the cook step's
+    commandlet the StaticMeshEditorSubsystem is not there (get_editor_subsystem
+    returns None), so the old fallback only set the property: it read back off
+    in the same run, but nothing marked the package dirty, save_directory skipped
+    it, and the saved car still had Nanite on and drew Nanite's coarse stand-in:
+    3,638 of the hatchback's 14,994 triangles, the skip 278 of 928 (measured
+    1 October; Jafar that morning: "the cars are crude boxes", "the skip and the
+    pallets look like placeholders"). Setting the LOD's own build settings back
+    runs the mesh build, and the save is forced. True when the saved mesh is off
+    and draws its full triangles."""
+    ns = m.get_editor_property("nanite_settings")
+    ns.enabled = False
+    sub = unreal.get_editor_subsystem(unreal.StaticMeshEditorSubsystem)
+    if sub is not None:
+        sub.set_nanite_settings(m, ns, apply_changes=True)
+    else:
+        m.modify()
+        m.set_editor_property("nanite_settings", ns)
+        esml = unreal.EditorStaticMeshLibrary
+        esml.set_lod_build_settings(m, 0, esml.get_lod_build_settings(m, 0))
+    unreal.EditorAssetLibrary.save_loaded_asset(m, only_if_is_dirty=False)
+    return not m.get_editor_property("nanite_settings").enabled
+
+
 def main():
     import unreal
     t0 = time.time()
     root = repo_root()
     out = os.path.join(unreal.Paths.project_dir(), "ue-material.txt")
-    lib = unreal.EditorAssetLibrary
-    sub = unreal.get_editor_subsystem(unreal.StaticMeshEditorSubsystem)
     notes = []
     found = stems(root)
     made = nanite_off = 0
     for stem in found:
-        dest = "%s/%s" % (PACKAGE_ROOT, stem)
         try:
-            if lib.does_directory_exist(dest):
-                lib.delete_directory(dest)
-            task = unreal.AssetImportTask()
-            task.set_editor_property("filename", os.path.join(root, VEHICLES_REL, stem + ".glb"))
-            task.set_editor_property("destination_path", dest)
-            task.set_editor_property("automated", True)
-            task.set_editor_property("replace_existing", True)
-            task.set_editor_property("save", True)
-            unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
-            mesh = None
-            for p in lib.list_assets(dest, recursive=True, include_folder=False):
-                if isinstance(lib.load_asset(p), unreal.StaticMesh):
-                    mesh = p
-                    break
-            if mesh is None:
-                notes.append("%s-no-mesh" % stem)
-                continue
-            if mesh.split(".")[0] != mesh_path(stem):
-                lib.rename_asset(mesh.split(".")[0], mesh_path(stem))
-            m = lib.load_asset(mesh_path(stem))
-            if m is None:
-                notes.append("%s-rename-did-not-take" % stem)
-                continue
-            ns = m.get_editor_property("nanite_settings")
-            ns.enabled = False
-            try:
-                sub.set_nanite_settings(m, ns, apply_changes=True)
-            except Exception:
-                m.set_editor_property("nanite_settings", ns)
-            if not m.get_editor_property("nanite_settings").enabled:
-                nanite_off += 1
-            lib.save_directory(dest)
-            made += 1
+            m, off, note = import_glb(unreal, os.path.join(root, VEHICLES_REL, stem + ".glb"),
+                                      "%s/%s" % (PACKAGE_ROOT, stem), mesh_path(stem))
+            made += m
+            nanite_off += off
+            if note:
+                notes.append(note)
         except Exception as e:
             notes.append("%s-raised-%s" % (stem, str(e).splitlines()[0][:60] if str(e) else "?"))
     line = vehicles_line(len(found), made, nanite_off, time.time() - t0, notes)

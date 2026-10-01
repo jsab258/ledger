@@ -107,6 +107,19 @@ namespace
 			Mouth.ApplyMode = EModifyCurveApplyMode::Blend;
 			Mouth.Alpha = 0.0f;
 			for (const TCHAR* Name : ULedgerPersonAnim::MouthCurves) { Mouth.CurveMap.Add(FName(Name), 0.0f); }
+			// THE WHOLE MOUTH WHILE SPEAKING, 1 October (Jafar: "Sheila's face breaks when she
+			// talks, her mouth twisting sideways"; production/research/talking-face-faults/NOTE.md,
+			// fix A): our eleven controls were laid over the idle, whose own mouth controls, one-
+			// sided ones among them, passed through and twisted the mouth when the jaw opened. Every
+			// mouth, jaw, teeth and tongue control the idle drives is in the map too, at rest, so
+			// while someone speaks the speech owns the whole mouth, as Epic's mouth-only cut does;
+			// eyes, lids and brows stay the idle's.
+			if (A != nullptr && A->Sequence != nullptr)
+			{
+				TArray<FName> Idle;
+				ULedgerPersonAnim::MouthCurvesOf(A->Sequence, Idle);
+				for (const FName& Name : Idle) { if (!Mouth.CurveMap.Contains(Name)) { Mouth.CurveMap.Add(Name, 0.0f); } }
+			}
 			Said.SourcePose.SetLinkNode(&Mouth);
 			Said.ApplyMode = EModifyCurveApplyMode::Blend;
 			Said.Alpha = 0.0f;
@@ -266,6 +279,25 @@ void ULedgerPersonAnim::SaidTick(float DeltaSeconds)
 			Known = &MouthPart.Add(E.Name, N.Contains(TEXT("_jaw")) || N.Contains(TEXT("_mouth")) || N.Contains(TEXT("_teeth")) || N.Contains(TEXT("_tongue")));
 		}
 		if (*Known) { SaidCurves.Add(E.Name, E.Value); }
+	});
+	// AND WHAT THE MADE FACE DOES NOT CARRY of the idle's mouth goes to rest too (fix A).
+	if (IdleMouth.Num() == 0 && Sequence != nullptr) { MouthCurvesOf(Sequence, IdleMouth); }
+	for (const FName& Name : IdleMouth) { if (!SaidCurves.Contains(Name)) { SaidCurves.Add(Name, 0.0f); } }
+}
+
+void ULedgerPersonAnim::MouthCurvesOf(UAnimSequenceBase* Seq, TArray<FName>& Out)
+{
+	Out.Reset();
+	if (Seq == nullptr) { return; }
+	// Evaluating curves takes scratch memory from the thread's stack allocator, which an
+	// animation update marks for itself; called from setup it needs its own mark.
+	FMemMark Mark(FMemStack::Get());
+	FBlendedCurve Curve;
+	Seq->EvaluateCurveData(Curve, FAnimExtractContext(0.0));
+	Curve.ForEachElement([&Out](const UE::Anim::FCurveElement& E)
+	{
+		const FString N = E.Name.ToString();
+		if (N.Contains(TEXT("_jaw")) || N.Contains(TEXT("_mouth")) || N.Contains(TEXT("_teeth")) || N.Contains(TEXT("_tongue"))) { Out.Add(E.Name); }
 	});
 }
 

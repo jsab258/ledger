@@ -4022,6 +4022,21 @@ namespace
 			{
 				for (const TCHAR* Id : { TEXT("ron-whole"), TEXT("ron-boots"), TEXT("sheila-whole"), TEXT("sheila-handbag") }) { FPageShot S; S.Id = Id; Shots.Add(S); }
 			}
+			else if (Mode == TEXT("shop") || Mode == TEXT("shopnight"))
+			{
+				// THE PAWNBROKER'S WINDOW FROM THE PAVEMENT (item 2a): 1.2 m out from the
+				// shopfront, from the left, square on and from the right, each looking at the
+				// window's middle, so the room behind the glass is seen to shift as a room does.
+				const double Cx = 18.0, Cz = 5.9, Pz = 3.9;
+				for (const double Px : { 15.6, 18.0, 20.4 })
+				{
+					FPageShot S;
+					S.Id = FString::Printf(TEXT("pawnbroker-%s"), Px < 17.0 ? TEXT("left") : Px > 19.0 ? TEXT("right") : TEXT("square"));
+					S.X = Px; S.Z = Pz; S.Eye = 1.6; S.Pitch = 4.0; S.VFov = 55.0;
+					S.Yaw = FMath::RadiansToDegrees(std::atan2(Cz - Pz, Cx - Px));
+					Shots.Add(S);
+				}
+			}
 			else
 			{
 				FString Path = OfficeSpecFile().Replace(TEXT("mickeys-office.json"), TEXT("vignette-scene.json"));
@@ -4044,7 +4059,7 @@ namespace
 				}
 				Shots.Sort([](const FPageShot& A, const FPageShot& B) { return A.Id == TEXT("cam_hook") || (B.Id != TEXT("cam_hook") && A.Id < B.Id); });
 			}
-			if (Mode == TEXT("night"))
+			if (Mode == TEXT("night") || Mode == TEXT("shopnight"))
 			{
 				// To ten at night, as Z would take him; the clock then lights the street for it.
 				GClock.JumpTo(GameTime(GNow.Day, 22, 0));

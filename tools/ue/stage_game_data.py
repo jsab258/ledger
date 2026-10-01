@@ -39,6 +39,7 @@ FIXED = [
     "production/specs/garments.json",    # the clothing session's garments and who wears them (30 September, LedgerGarments.h)
     "production/specs/town-news.json",   # the town's own news, for the TownNewsWitnesses rows of the golden run (30 September)
     "production/specs/mickeys-office.json",   # Mickey's office as a grey blockout, built in live play (1 October, item 6)
+    "production/specs/shop-interiors.json",   # the shop rooms behind the windows (1 October, item 2a; VignetteShot.cpp ApplyShopInteriors)
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"
@@ -55,6 +56,8 @@ DIRS = [
     # THE THINKING SOUNDS, 28 September: each person's short acknowledgement,
     # played while their answer is made (CrimeProbe.cpp AckStart).
     "content/voice/acks",
+    # THE SHOP ROOMS' PICTURES, 1 October (item 2a): three per shop, read at run time.
+    "production/art/shop-rooms",
 ]
 VOICE_ROOT = "ledger/Assets/StreamingAssets/Audio/Voice"
 SOUND_ROOT = "production/assets/sounds"

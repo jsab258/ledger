@@ -104,6 +104,8 @@
 #include "Sound/SoundWave.h"
 #include "Engine/PointLight.h"
 #include "Engine/SpotLight.h"
+#include "Engine/RectLight.h"
+#include "Components/RectLightComponent.h"
 #include "Components/SpotLightComponent.h"
 #include "Components/PointLightComponent.h"
 #include "Engine/DirectionalLight.h"
@@ -6751,6 +6753,7 @@ namespace
 	// maps, the wet, the grade and the light are the next item and are
 	// developed here against the sheet. It exists so the first Unreal frame
 	// shows the geometry the right way round with its signs readable.
+	void ApplyShopInteriors();
 	void PaintStreet()
 	{
 		if (GStreetLoaded == 0 || GBaseMaterial == nullptr) { return; }
@@ -6925,6 +6928,255 @@ namespace
 			}
 			++GStreetPainted;
 		}
+		ApplyShopInteriors();
+	}
+
+	// THE SHOP ROOMS, 1 October (item 2a; Jafar: "the shop windows are black voids
+	// in every view ... fake interiors in the shop windows by interior mapping, as
+	// games do it"). A shop listed in production/specs/shop-interiors.json wears
+	// M_LedgerInterior on its card instead of the flat picture: its room, rendered
+	// from in front of the window in three lights (tools/art-recipes/shop-room.py),
+	// looked up with depth from wherever the camera stands
+	// (tools/ue/make_interior_material.py). The card's front corner comes from its
+	// own bounds in the world, logged beside the spec's numbers.
+	struct FInteriorRow { int32 Row = -1; UMaterialInstanceDynamic* Mid = nullptr; float DayGlow = 1.0f, NightGlow = 1.0f; bool bLitAtNight = false;
+		TWeakObjectPtr<ARectLight> Spill; };
+	TArray<FInteriorRow> GInteriorRows;
+	int32 GInteriorsAsked = 0;
+	// What the shops stood behind their glass, taken down when the street is painted again.
+	TArray<TWeakObjectPtr<AActor>> GInteriorActors;
+
+	// THE NEAR METRE BEHIND THE GLASS, 1 October: the shop's display on its bed
+	// as real meshes (tools/art-recipes/shop-room.py --display, imported by
+	// tools/ue/import_shop_displays.py), because the projected room fails close up
+	// and at a grazing angle (production/research/shop-window-interiors/NOTE.md,
+	// sections 1 and 7). Built in Blender with x to the viewer's right and y back
+	// from the glass; the glTF import turns Blender's y to Unreal's -Y, so an east
+	// shop's display is turned half round to face the street. Returns the actor.
+	AActor* SpawnShopDisplay(UWorld* World, const Value& Disp, double Side, FString& Note)
+	{
+		const std::string Glb = LedgerStreet::StrOr(Disp, "glb");
+		if (World == nullptr || Glb.empty()) { Note = TEXT("no-glb"); return nullptr; }
+		const FString Stem = UTF8_TO_TCHAR(Glb.c_str());
+		const FString MeshPath = FString::Printf(TEXT("/Game/Ledger/ShopDisplays/%s/SM_%s.SM_%s"), *Stem, *Stem, *Stem);
+		UStaticMesh* Mesh = LoadObject<UStaticMesh>(nullptr, *MeshPath);
+		if (Mesh == nullptr) { Note = TEXT("no-mesh(tools/ue/import_shop_displays.py)"); return nullptr; }
+		const double X = (LedgerStreet::NumOr(Disp, "x0", 0.0) + LedgerStreet::NumOr(Disp, "x1", 0.0)) * 50.0;
+		const FVector At((float)X, (float)(LedgerStreet::NumOr(Disp, "front", 0.0) * 100.0 * Side), (float)(LedgerStreet::NumOr(Disp, "bed", 0.0) * 100.0));
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		AStaticMeshActor* A = World->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass(), At, FRotator(0.0f, Side > 0 ? 180.0f : 0.0f, 0.0f), Params);
+		if (A == nullptr) { Note = TEXT("spawn-failed"); return nullptr; }
+		MakeMovable(A);
+		if (UStaticMeshComponent* C = A->GetStaticMeshComponent())
+		{
+			C->SetMobility(EComponentMobility::Movable);
+			C->SetStaticMesh(Mesh);
+			C->SetCastShadow(true);
+			C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
+		GBareHide.Add(A);
+		Note = FString::Printf(TEXT("display %s at %.0f,%.0f,%.0f cm"), *Stem, At.X, At.Y, At.Z);
+		return A;
+	}
+
+	// AND A LIT SHOP'S LIGHT ON THE PAVEMENT at night (the note, section 5: "each
+	// lit window gets one real rect light, so its light spills onto the
+	// pavement"; Jafar: night has "pools of light with darkness between them,
+	// and lit windows"). A tube-white panel inside the window head, tipped down
+	// and out through the glass; switched with the night (ReDriveShopInteriors).
+	ARectLight* SpawnShopSpill(UWorld* World, const FBox& Card, double Side, double Lumens)
+	{
+		if (World == nullptr || Lumens <= 0.0) { return nullptr; }
+		// In the window head, 12 cm in front of the room's card, at its top. It
+		// lights only what lighting channel 1 carries: the pavement, the road and
+		// the display (ApplyShopInteriors), never the window's own bars, which it
+		// lit brighter than the shop ("like neon strips"), nor the head rail the
+		// wet road then mirrored as a hard white bar (the fresh reviewer,
+		// 1 October). From a metre and a half inside, the transom shaded the
+		// pavement and the bars still glowed.
+		const FVector At((float)((Card.Min.X + Card.Max.X) * 0.5), (float)(Side > 0 ? Card.Min.Y - 12.0 : Card.Max.Y + 12.0), (float)(Card.Max.Z - 10.0));
+		double PitchDeg = -62.0;
+		FParse::Value(FCommandLine::Get(), TEXT("ShopSpillPitch="), PitchDeg);
+		const FRotator Aim((float)PitchDeg, Side > 0 ? -90.0f : 90.0f, 0.0f);
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		ARectLight* L = World->SpawnActor<ARectLight>(ARectLight::StaticClass(), At, Aim, Params);
+		if (L == nullptr) { return nullptr; }
+		MakeMovable(L);
+		if (URectLightComponent* RC = Cast<URectLightComponent>(L->GetLightComponent()))
+		{
+			RC->SetMobility(EComponentMobility::Movable);
+			RC->SetWorldRotation(Aim);
+			RC->SetIntensityUnits(ELightUnits::Lumens);
+			RC->SetIntensity((float)Lumens);
+			RC->SetSourceWidth((float)FMath::Max(100.0, (Card.Max.X - Card.Min.X) * 0.7));
+			RC->SetSourceHeight(30.0f);
+			RC->SetAttenuationRadius(900.0f);
+			RC->SetLightColor(FLinearColor(1.0f, 0.93f, 0.80f));     // a T12 "white" tube, about 3500 K
+			RC->SetCastShadows(true);
+			// Its emitter is a bar of light, and on the wet road its mirror image
+			// was a hard white bar under the window (cam_B, 1 October); the window
+			// itself already reflects there through Lumen.
+			RC->SetSpecularScale(0.0f);      // at 0.15 the second reviewer still saw the bar
+			RC->SetLightingChannels(false, true, false);
+			RC->SetVisibility(false);
+		}
+		return L;
+	}
+
+	void ApplyShopInteriors()
+	{
+		GInteriorRows.Reset();
+		GInteriorsAsked = 0;
+		for (const TWeakObjectPtr<AActor>& W : GInteriorActors)
+		{
+			if (W.IsValid()) { W->Destroy(); }
+		}
+		GInteriorActors.Reset();
+		FString Contents;
+		const FString SpecFile = FPaths::Combine(GStreetRepoRoot, TEXT("production/specs/shop-interiors.json"));
+		if (GStreetRepoRoot.IsEmpty() || !FFileHelper::LoadFileToString(Contents, *SpecFile)) { return; }
+		UMaterialInterface* Base = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/M_LedgerInterior.M_LedgerInterior"));
+		if (Base == nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: no M_LedgerInterior (tools/ue/make_interior_material.py), the flat pictures stay"));
+			return;
+		}
+		const std::string Text(TCHAR_TO_UTF8(*Contents));
+		Reader R(Text);
+		Value Root;
+		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { return; }
+		const Value* Shops = Root.Find("shops");
+		for (size_t S = 0; Shops != nullptr && Shops->Type == T_ARR && S < Shops->Arr.size(); ++S)
+		{
+			const Value& Sh = Shops->Arr[S];
+			const std::string Id = LedgerStreet::StrOr(Sh, "id");
+			const std::string Decal = LedgerStreet::StrOr(Sh, "decal");
+			const std::string Pics = LedgerStreet::StrOr(Sh, "pictures");
+			const Value* Room = Sh.Find("room");
+			if (Decal.empty() || Pics.empty() || Room == nullptr || Room->Type != T_OBJ) { continue; }
+			++GInteriorsAsked;
+			for (int32 I = 0; I < GStreetActors.Num() && I < (int32)GStreet.Rows.size(); ++I)
+			{
+				const LedgerStreet::Row& Rw = GStreet.Rows[(size_t)I];
+				if (Rw.Decal != Decal || GStreetActors[I] == nullptr) { continue; }
+				UStaticMeshComponent* Comp = GStreetActors[I]->GetStaticMeshComponent();
+				if (Comp == nullptr) { continue; }
+				UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(Base, GStreetActors[I]);
+				if (Mid == nullptr) { continue; }
+				const char* States[3] = { "day", "night_lit", "night_dark" };
+				const TCHAR* Params[3] = { TEXT("DayTex"), TEXT("LitTex"), TEXT("DarkTex") };
+				int32 Got = 0;
+				for (int32 K = 0; K < 3; ++K)
+				{
+					const FString File = FPaths::Combine(GStreetRepoRoot, FString(UTF8_TO_TCHAR((Pics + "_" + States[K] + ".png").c_str())));
+					if (IFileManager::Get().FileSize(*File) <= 0) { continue; }
+					int32 FW = 0, FH = 0;
+					FString As;
+					if (UTexture2D* T = ImportTexture(File, true, FW, FH, As)) { Mid->SetTextureParameterValue(FName(Params[K]), T); ++Got; }
+				}
+				if (Got < 3)
+				{
+					UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s has %d of its 3 pictures (%s_*.png), the flat picture stays"),
+						UTF8_TO_TCHAR(Id.c_str()), Got, UTF8_TO_TCHAR(Pics.c_str()));
+					continue;
+				}
+				// The card's front face, from its bounds: low x, the street side's y, its bottom.
+				const double Side = LedgerStreet::NumOr(Sh, "side", 1.0);
+				const FBox B = Comp->Bounds.GetBox();
+				const FVector Corner(B.Min.X, Side > 0 ? B.Min.Y : B.Max.Y, B.Min.Z);
+				Mid->SetVectorParameterValue(FName(TEXT("CardOrigin")), FLinearColor((float)Corner.X, (float)Corner.Y, (float)Corner.Z, 0.0f));
+				Mid->SetVectorParameterValue(FName(TEXT("RoomSize")), FLinearColor(
+					(float)(LedgerStreet::NumOr(*Room, "w", 5.0) * 100.0), (float)(LedgerStreet::NumOr(*Room, "h", 2.4) * 100.0),
+					(float)(LedgerStreet::NumOr(*Room, "d", 4.5) * 100.0), 0.0f));
+				Mid->SetScalarParameterValue(FName(TEXT("CamD")), (float)(LedgerStreet::NumOr(Sh, "camera_d", 5.0) * 100.0));
+				Mid->SetScalarParameterValue(FName(TEXT("Side")), (float)Side);
+				FInteriorRow Ir;
+				Ir.Row = I;
+				Ir.Mid = Mid;
+				// Bright as the street's own lit rooms by default (the recipe's day and night
+				// strength times the look's gains), scaled by the spec where it says so.
+				Ir.DayGlow = (float)(LedgerStreet::NumOr(Sh, "glow_day", 1.0) * Rw.EmitDay * GLook.GlowGain);
+				Ir.NightGlow = (float)(LedgerStreet::NumOr(Sh, "glow_night", 1.0) * Rw.EmitNight
+					* (GLook.RoomGlowGainNight > 0.0 ? GLook.RoomGlowGainNight : GLook.GlowGain));
+				// An absolute brightness where the spec gives one (the recipe's room strengths were
+				// made for a lit surface; this one makes all its own light), and -InteriorGlow=day,night
+				// over both for a trial.
+				const Value* Bd = Sh.Find("brightness_day");
+				const Value* Bn = Sh.Find("brightness_night");
+				if (Bd != nullptr && Bd->Type == T_NUM) { Ir.DayGlow = (float)Bd->Num; }
+				if (Bn != nullptr && Bn->Type == T_NUM) { Ir.NightGlow = (float)Bn->Num; }
+				FString Trial;
+				if (FParse::Value(FCommandLine::Get(), TEXT("InteriorGlow="), Trial, false))
+				{
+					FString L, Rt;
+					if (Trial.Split(TEXT(","), &L, &Rt)) { Ir.DayGlow = FCString::Atof(*L); Ir.NightGlow = FCString::Atof(*Rt); }
+				}
+				const Value* Lit = Sh.Find("lit_at_night");
+				Ir.bLitAtNight = Lit != nullptr && Lit->Type == T_BOOL && Lit->Bool;
+				Mid->SetScalarParameterValue(FName(TEXT("Night")), 0.0f);
+				Mid->SetScalarParameterValue(FName(TEXT("LitOn")), Ir.bLitAtNight ? 1.0f : 0.0f);
+				Mid->SetScalarParameterValue(FName(TEXT("Brightness")), Ir.DayGlow);
+				for (int32 Slot = 0; Slot < Comp->GetNumMaterials(); ++Slot) { Comp->SetMaterial(Slot, Mid); }
+				// The room is a picture: its card throws no shadow, so the shop's light
+				// behind it (SpawnShopSpill) reaches the display and the pavement.
+				Comp->SetCastShadow(false);
+				UWorld* World = GStreetActors[I]->GetWorld();
+				FString DisplayNote = TEXT("no display");
+				const Value* Disp = Sh.Find("display");
+				if (Disp != nullptr && Disp->Type == T_OBJ)
+				{
+					if (AActor* DA = SpawnShopDisplay(World, *Disp, Side, DisplayNote)) { GInteriorActors.Add(DA); }
+				}
+				double SpillLumens = LedgerStreet::NumOr(Sh, "spill_lumens", 300.0);
+				FParse::Value(FCommandLine::Get(), TEXT("ShopSpillLumens="), SpillLumens);
+				if (Ir.bLitAtNight)
+				{
+					Ir.Spill = SpawnShopSpill(World, B, Side, SpillLumens);
+					if (Ir.Spill.IsValid()) { GInteriorActors.Add(Ir.Spill.Get()); }
+					// What the window's light may fall on: the ground and the display.
+					static const char* Ground[] = { "asphalt", "paving", "kerbstone", "standing_water", "standing_water_flags",
+						"paint_yellow", "paint_white", "grime" };
+					for (int32 J = 0; J < GStreetActors.Num() && J < (int32)GStreet.Rows.size(); ++J)
+					{
+						if (GStreetActors[J] == nullptr) { continue; }
+						const std::string& RowBase = GStreet.Rows[(size_t)J].Base;
+						bool bGround = false;
+						for (const char* G : Ground) { bGround = bGround || RowBase == G; }
+						UStaticMeshComponent* GC = bGround ? GStreetActors[J]->GetStaticMeshComponent() : nullptr;
+						if (GC != nullptr) { GC->SetLightingChannels(true, true, false); }
+					}
+					for (const TWeakObjectPtr<AActor>& W : GInteriorActors)
+					{
+						AStaticMeshActor* SA = Cast<AStaticMeshActor>(W.Get());
+						if (SA != nullptr && SA->GetStaticMeshComponent() != nullptr) { SA->GetStaticMeshComponent()->SetLightingChannels(true, true, false); }
+					}
+				}
+				GInteriorRows.Add(Ir);
+				const Value* Card = Sh.Find("card");
+				UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s on its card, corner %.0f,%.0f,%.0f cm (spec %.0f,%.0f,%.0f), %.0f cm wide, glow day %.2f night %.2f; %s; night spill %s"),
+					UTF8_TO_TCHAR(Id.c_str()), Corner.X, Corner.Y, Corner.Z,
+					Card ? LedgerStreet::NumOr(*Card, "x0", 0.0) * 100.0 : 0.0, Card ? LedgerStreet::NumOr(*Card, "z", 0.0) * 100.0 : 0.0,
+					Card ? LedgerStreet::NumOr(*Card, "bottom", 0.0) * 100.0 : 0.0, B.Max.X - B.Min.X, Ir.DayGlow, Ir.NightGlow,
+					*DisplayNote, Ir.Spill.IsValid() ? *FString::Printf(TEXT("%.0f lm"), SpillLumens) : TEXT("none (shut at night)"));
+			}
+		}
+	}
+
+	// Each change of light: the room by day, or lit or dark at night.
+	void ReDriveShopInteriors(bool bSunOn)
+	{
+		for (const FInteriorRow& Ir : GInteriorRows)
+		{
+			if (Ir.Mid == nullptr) { continue; }
+			Ir.Mid->SetScalarParameterValue(FName(TEXT("Night")), bSunOn ? 0.0f : 1.0f);
+			Ir.Mid->SetScalarParameterValue(FName(TEXT("Brightness")), bSunOn ? Ir.DayGlow : Ir.NightGlow);
+			if (Ir.Spill.IsValid() && Ir.Spill->GetLightComponent() != nullptr)
+			{
+				Ir.Spill->GetLightComponent()->SetVisibility(!bSunOn && Ir.bLitAtNight);
+			}
+		}
 	}
 
 	// THE GLOW AND THE WET, PER CONDITION, as Blender drives them: the tubes
@@ -6936,6 +7188,7 @@ namespace
 	{
 		if (GStreetMids.Num() == 0 || GStreetLookFor == C.Id) { return; }
 		GStreetLookFor = C.Id;
+		ReDriveShopInteriors(C.SunOn);
 		GStreetGlowing = 0; GStreetWet = 0; GStreetFilm = 0;
 		for (int32 I = 0; I < GStreetMids.Num() && I < (int32)GStreet.Rows.size(); ++I)
 		{

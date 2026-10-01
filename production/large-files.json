@@ -920,6 +920,22 @@
    "mb": 1121
   },
   {
+   "path": "F:/LedgerTools/polyhaven",
+   "madeBy": "tools/art-recipes/fetch_polyhaven.py, 1 October",
+   "why": "Poly Haven CC0 models the shop rooms and displays are built from (shop-room.py reads them)",
+   "status": "kept",
+   "recorded": "2026-10-01",
+   "mb": 112
+  },
+  {
+   "path": "F:/LedgerTools/scratch/shoptrial",
+   "madeBy": "the builder's shop-window trial films (VignetteShot -PageShots=shop|shopnight|day|night), 1 October",
+   "why": "judging the pawnbroker's room, display, glass and night light in the game; the final set is review1 and final1",
+   "status": "superseded",
+   "recorded": "2026-10-01",
+   "mb": 261
+  },
+  {
    "path": "F:/LedgerTools/slr83/scottish_english_male.zip",
    "madeBy": "the builder, 29 September: downloaded from openslr.org/resources/83",
    "why": "the source of the Scottish calibration set",

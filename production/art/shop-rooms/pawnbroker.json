@@ -1,0 +1,18 @@
+{
+ "shop": "pawnbroker",
+ "w": 5.3,
+ "h": 2.4,
+ "d": 4.5,
+ "camera_d": 5.3,
+ "pixels": [
+  2048,
+  927
+ ],
+ "states": {
+  "day": "pawnbroker_day.png",
+  "night_lit": "pawnbroker_night_lit.png",
+  "night_dark": "pawnbroker_night_dark.png"
+ },
+ "made_by": "tools/art-recipes/shop-room.py",
+ "samples": 96
+}
