@@ -18,6 +18,8 @@ layers, 768 wide, 12 heads) and runs it with ONNX Runtime on the card
   --export      writes the graph (about 720 MB, to F:, recorded as a large file).
   --time        tokens a second with ONNX Runtime on the card, and the scores
                 against the library's at several positions.
+  --pipeline    steps a second with nothing read back until the end (the
+                research's test of the round trip each token; --spin, --steps N).
 
     env-dml\\Scripts\\python.exe tools/voice-live/nano_step_graph.py --check
     env-dml\\Scripts\\python.exe tools/voice-live/nano_step_graph.py --export [--out F:/LedgerTools/voice-graphs/nano]
@@ -187,6 +189,50 @@ def timed(argv):
     return 0
 
 
+def pipelined(argv):
+    """The research's step 1(b) (production/research/voice-latency/GPU-QUEUE-PRIORITY-2026-10-01.md):
+    the same step graph on the card, a fixed token, N steps with the scores left on
+    the card and nothing read back until one sync at the end. If this keeps its idle
+    speed beside the game while --time halves, the cost is the round trip to the card
+    each token (the cure: sampling on the card, reading back in batches), not the
+    card's time; --spin also asks DirectML to spin rather than sleep while it waits."""
+    import numpy as np
+    import onnxruntime as ort
+    vs, torch, speaker, dev, conds = load(True)
+    path = (pathlib.Path(argv[argv.index("--out") + 1]) if "--out" in argv else OUT) / "nano-step.onnx"
+    steps = int(argv[argv.index("--steps") + 1]) if "--steps" in argv else 256
+    so = ort.SessionOptions()
+    so.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
+    so.enable_mem_pattern = False
+    so.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
+    if "--spin" in argv:
+        so.add_session_config_entry("ep.dml.enable_cpu_sync_spinning", "1")
+    sess = ort.InferenceSession(str(path), so, providers=[("DmlExecutionProvider", {"device_id": 0}), "CPUExecutionProvider"])
+    with torch.no_grad():
+        first, cache, past, n = prefill(torch, speaker, conds.t3, "cpu")
+        tok = np.array([[int(speaker.t3.hp.start_speech_token)]], dtype=np.int64)
+        for run in range(3):
+            c = ort.OrtValue.ortvalue_from_numpy(cache.numpy(), "dml", 0)
+            calls = 0.0
+            t = time.time()
+            for j in range(steps):
+                binding = sess.io_binding()
+                binding.bind_cpu_input("token", tok)
+                binding.bind_cpu_input("position", np.array([n + j], dtype=np.int64))
+                binding.bind_ortvalue_input("cache", c)
+                binding.bind_output("scores", "dml", 0)
+                binding.bind_output("grown", "dml", 0)
+                t0 = time.time()
+                sess.run_with_iobinding(binding)
+                calls += time.time() - t0
+                scores, c = binding.get_outputs()
+            last = scores.numpy()       # the one read-back: waits for every step queued
+            el = time.time() - t
+            print("pipelined run %d: %d steps in %.2f s (%.1f a second); the calls returned in %.2f s in all; last score %.3f"
+                  % (run, steps, el, steps / el, calls, float(last.max())), flush=True)
+    return 0
+
+
 if __name__ == "__main__":
     if "--check" in sys.argv:
         sys.exit(check())
@@ -194,4 +240,6 @@ if __name__ == "__main__":
         sys.exit(export(sys.argv))
     if "--time" in sys.argv:
         sys.exit(timed(sys.argv))
+    if "--pipeline" in sys.argv:
+        sys.exit(pipelined(sys.argv))
     print(__doc__)
