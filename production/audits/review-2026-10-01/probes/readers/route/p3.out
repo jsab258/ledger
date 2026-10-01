@@ -1,0 +1,27 @@
+[F] familiarity from days met: 0:0.00 1:0.40 2:0.50 3:0.60 4:0.70 6:0.70
+    IdRung at 1.5 m, daylight, met once: 4; never met: 3
+
+[E] Darren holds player.window_d0 at rung 4, hop 0
+    AccountOf("player.broke_a_window"): held=0 -> Derive Trusting 0.00
+    AccountOf("player.window_d0"):     held=1 rung=4 -> Derive Confronting 0.89 (I saw it myself: a clause, and it was him, I would swear to it)
+    DeedJson(window_d0) = ,"deed":{"topic":"player.window_d0","day":0,"hour":10,"sawHimAt":"ritas_step"}
+
+[R1] Mon 10:30: Darren rung 4, Ines rung 3, Rita rung 3; nothing said to anybody
+    D1 09:00: sam goes to the police
+    D1 09:00: ines goes to the police
+    D2 10:00: a constable takes him (player.window_d0)
+    file: sam player.window_d0 how=2 day=1
+    file: ines player.window_d0 how=1 day=1
+
+[R2] the same; he threatens Darren over it at Mon 11:00 (Silence::FileThreat, as TakeClaimsFromReply does)
+    threat filed=1; WouldReport after it=1
+    D1 09:00: sam goes to the police
+    D2 10:00: a constable takes him (player.window_d0)
+
+[R3] the same; Darren keeps it quiet at Mon 11:00 (KeepQuiet with the deed field's topic)
+    (nothing above = no report, no constable)
+
+[B] rung-4 clauses filed as the story's summary:
+    cw-ws-r4-01: it was Nowak that put the window in on Quay Street, the new owner up at Mickey's, and there's no mistaking him
+    cw-ws-r4-02: the new owner that's got Mickey's now, Nowak, put the window in, and he'd be known anywhere
+    cw-ws-r4-03: the fella from Mickey's put the shop window in, Nowak, and he was seen clear enough that there's no question who he is
