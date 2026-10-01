@@ -1,6 +1,8 @@
 #include "PersonAnim.h"
 
+#include "Animation/AnimCurveTypes.h"
 #include "Animation/AnimInstanceProxy.h"
+#include "Animation/AnimationAsset.h"
 #include "Animation/AnimNode_SequencePlayer.h"
 #include "Animation/AnimNodeSpaceConversions.h"
 #include "Animation/AnimSequenceBase.h"
@@ -38,6 +40,8 @@ namespace
 		// own mouth controls, blended over the idle by how much of the voice
 		// is being heard. On a body the curves meet nothing and do nothing.
 		FAnimNode_ModifyCurve Mouth;
+		// A LINE MADE IN ADVANCE, its own face's curves over all of it (SayMadeLine).
+		FAnimNode_ModifyCurve Said;
 
 		explicit FLedgerPersonProxy(UAnimInstance* Instance) : FAnimInstanceProxy(Instance) {}
 
@@ -103,10 +107,13 @@ namespace
 			Mouth.ApplyMode = EModifyCurveApplyMode::Blend;
 			Mouth.Alpha = 0.0f;
 			for (const TCHAR* Name : ULedgerPersonAnim::MouthCurves) { Mouth.CurveMap.Add(FName(Name), 0.0f); }
+			Said.SourcePose.SetLinkNode(&Mouth);
+			Said.ApplyMode = EModifyCurveApplyMode::Blend;
+			Said.Alpha = 0.0f;
 			FAnimInstanceProxy::Initialize(InAnimInstance);
 		}
 
-		virtual FAnimNode_Base* GetCustomRootNode() override { return &Mouth; }
+		virtual FAnimNode_Base* GetCustomRootNode() override { return &Said; }
 
 		virtual void GetCustomNodes(TArray<FAnimNode_Base*>& OutNodes) override
 		{
@@ -118,6 +125,7 @@ namespace
 			OutNodes.Add(&Look);
 			OutNodes.Add(&ToLocal);
 			OutNodes.Add(&Mouth);
+			OutNodes.Add(&Said);
 		}
 
 		// THE GAME THREAD'S DECISION, copied in before the worker updates.
@@ -129,6 +137,8 @@ namespace
 				Look.Alpha = A->LookAlpha;
 				Look.LookAtLocation = A->LookTarget;
 				Mouth.Alpha = A->SpeakWeight;
+				Said.Alpha = A->SaidWeight;
+				Said.CurveMap = A->SaidCurves;
 				if (bHasWalk) { Moving.Alpha = A->WalkWeight; }
 				for (int32 I = 0; I < ULedgerPersonAnim::MouthCurveCount; ++I)
 				{
@@ -210,9 +220,43 @@ void ULedgerPersonAnim::SetRegard(double InFirstLookMetres, double InFirstLookSe
 	bLooksBack = bInLooksBack;
 }
 
+void ULedgerPersonAnim::SayMadeLine(UAnimSequenceBase* InFace)
+{
+	SaidFace = InFace;
+	SaidTime = 0.0f;
+	bSaidEnding = false;
+	SaidCurves.Reset();
+}
+
+void ULedgerPersonAnim::EndMadeLine()
+{
+	bSaidEnding = true;
+}
+
+void ULedgerPersonAnim::SaidTick(float DeltaSeconds)
+{
+	if (SaidFace == nullptr) { SaidWeight = 0.0f; return; }
+	SaidTime += DeltaSeconds;
+	const float Length = SaidFace->GetPlayLength();
+	const bool bOver = bSaidEnding || SaidTime >= Length;
+	SaidWeight = FMath::Clamp(SaidWeight + (bOver ? -DeltaSeconds : DeltaSeconds) / 0.1f, 0.0f, 1.0f);
+	if (bOver && SaidWeight <= 0.0f)
+	{
+		SaidFace = nullptr;
+		SaidCurves.Reset();
+		return;
+	}
+	// The line's face at its time (held at its last frame while it fades).
+	FBlendedCurve Curve;
+	SaidFace->EvaluateCurveData(Curve, FAnimExtractContext((double)FMath::Min(SaidTime, Length)));
+	SaidCurves.Reset();
+	Curve.ForEachElement([this](const UE::Anim::FCurveElement& E) { SaidCurves.Add(E.Name, E.Value); });
+}
+
 void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
+	SaidTick(DeltaSeconds);
 	// THE WALK (SetupWalk): the owner paces A to B and back; the idle and the
 	// walk blend by how much it is moving, and it sets off and stops over
 	// about half a second rather than sliding at full speed.

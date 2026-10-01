@@ -125,6 +125,24 @@ public:
 	// (production/research/lip-sync/NOTE-2026-09-30.md).
 	void SpeakTick(float Level, bool bSpeaking, float DeltaSeconds);
 
+	// A LINE MADE IN ADVANCE SAID WITH ITS OWN FACE (item 4, 1 October; Jafar's
+	// list: "mouths from Epic's audio-driven animation for every line made in
+	// advance"). Epic's MetaHuman Animator made the face from the line's own
+	// sound in the editor (tools/ue/speech_faces.py: jaw, lips, tongue, brows,
+	// blinks); its curves are read at the line's time each frame and laid over
+	// the idle and the loudness mouth, faded in over a tenth of a second and out
+	// the same when it ends or the answer cuts it off. Speech made in play keeps
+	// the loudness mouth (SpeakTick) until Epic's streaming solver is in.
+	void SayMadeLine(UAnimSequenceBase* InFace);
+	void EndMadeLine();
+	void SaidTick(float DeltaSeconds);
+	UPROPERTY(Transient)
+	TObjectPtr<UAnimSequenceBase> SaidFace;
+	float SaidTime = 0.0f;
+	float SaidWeight = 0.0f;
+	bool bSaidEnding = false;
+	TMap<FName, float> SaidCurves;
+
 	// A WALK BETWEEN TWO POINTS, 30 September (the twenty a friend would
 	// notice, 13: everyone stood still). Set before InitAnim: the walk clip is
 	// blended in while the owner moves from A to B and back at SpeedCms, with

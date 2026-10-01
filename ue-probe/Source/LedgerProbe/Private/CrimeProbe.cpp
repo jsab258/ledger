@@ -3328,11 +3328,16 @@ namespace
 		return FMath::Clamp((OutDb - (RefDb - 24.0f)) / 24.0f, 0.0f, 1.0f);
 	}
 
+	bool AckSaidFilm();
+
 	void MouthTick()
 	{
 		const float Dt = (float)FApp::GetDeltaTime();
 		// THE THINKING SOUND, while no answer is playing.
 		const bool bAnswer = GVoice.Playing.IsValid() && GVoice.PlayingWave.IsValid();
+		// A thinking sound with its own face (SayMadeLine): the node plays it;
+		// here it is only filmed with -MouthFilm, as an answer is.
+		if (!bAnswer && AckSaidFilm()) { return; }
 		if (!bAnswer && GAckMouth.Wave.IsValid() && GAckMouth.Who.IsValid() && GAckMouth.Pcm.Num() > 0)
 		{
 			float Db = -120.0f;
@@ -3465,8 +3470,18 @@ namespace
 		TWeakObjectPtr<UAnimationAsset> FaceIdle;
 		float FaceIdleAt = 0.0f;
 		double Until = 0.0;
+		// The face playing the sound's own face animation through our node (SayMadeLine), and whose.
+		TWeakObjectPtr<ULedgerPersonAnim> Said;
+		TWeakObjectPtr<AActor> Who;
 	};
 	FAck GAck;
+
+	bool AckSaidFilm()
+	{
+		if (!GAck.Said.IsValid() || !GAck.Who.IsValid() || !GAck.Sound.IsValid()) { return false; }
+		MouthFilmTick(GameWorld(), GAck.Who.Get(), true);
+		return true;
+	}
 	int32 GAckTurn = 0;
 
 	TArray<FString> AckFiles(const std::string& Card)
@@ -3489,6 +3504,7 @@ namespace
 	{
 		GAckMouth = FAckMouth();
 		if (GAck.Sound.IsValid()) { GAck.Sound->Stop(); }
+		if (GAck.Said.IsValid()) { GAck.Said->EndMadeLine(); }
 		if (GAck.Face.IsValid() && GAck.FaceIdle.IsValid())
 		{
 			GAck.Face->PlayAnimation(GAck.FaceIdle.Get(), true);
@@ -3530,15 +3546,26 @@ namespace
 		// Named as tools/ue/speech_faces.py names it: AS_ plus the sound's name, dashes as underscores.
 		const FString Name = FString::Printf(TEXT("AS_ack_%s_%s"), *Un(Card), *FPaths::GetBaseFilename(Wav).Replace(TEXT("-"), TEXT("_")));
 		UAnimSequenceBase* Anim = LoadObject<UAnimSequenceBase>(nullptr, *FString::Printf(TEXT("/Game/Ledger/MetaHumans/Speech/%s.%s"), *Name, *Name));
-		// A FACE PLAYING OUR ANIMATION KEEPS IT (above): its mouth follows this
-		// sound instead of the sound's own face animation.
-		bool bOurFace = false;
+		// A FACE PLAYING OUR ANIMATION KEEPS IT (above) and lays the sound's own
+		// face animation over it (item 4, 1 October: SayMadeLine); with none
+		// made, its mouth follows the sound's loudness.
+		ULedgerPersonAnim* OurFace = nullptr;
 		{
 			TArray<USkeletalMeshComponent*> Parts;
 			Who->GetComponents(Parts);
-			for (USkeletalMeshComponent* C : Parts) { if (C != nullptr && C->GetName() == TEXT("Face") && Cast<ULedgerPersonAnim>(C->GetAnimInstance()) != nullptr) { bOurFace = true; } }
+			for (USkeletalMeshComponent* C : Parts)
+			{
+				if (C != nullptr && C->GetName() == TEXT("Face")) { if (ULedgerPersonAnim* A = Cast<ULedgerPersonAnim>(C->GetAnimInstance())) { OurFace = A; } }
+			}
 		}
-		if (bOurFace)
+		const bool bOurFace = OurFace != nullptr;
+		if (bOurFace && Anim != nullptr)
+		{
+			OurFace->SayMadeLine(Anim);
+			GAck.Said = OurFace;
+			GAck.Who = Who;
+		}
+		else if (bOurFace)
 		{
 			GAckMouth.Pcm.Reset();
 			GAckMouth.Pcm.Append(reinterpret_cast<const int16*>(&Bytes[DataAt]), DataLen / 2);
@@ -3568,7 +3595,7 @@ namespace
 			}
 		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerAck: %s says %s, %.2f s, face %s"), *Un(Card), *FPaths::GetBaseFilename(Wav), Seconds,
-			bOurFace ? TEXT("its mouth follows the sound") : GAck.Face.IsValid() ? TEXT("yes") : TEXT("no"));
+			GAck.Said.IsValid() ? TEXT("its own, made from the sound") : bOurFace ? TEXT("its mouth follows the sound") : GAck.Face.IsValid() ? TEXT("yes") : TEXT("no"));
 	}
 
 	// Each frame: the acknowledgement ends with its sound, or at once when the answer starts.
