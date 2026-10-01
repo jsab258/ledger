@@ -58,6 +58,10 @@ DIRS = [
     "content/voice/acks",
     # THE SHOP ROOMS' PICTURES, 1 October (item 2a): three per shop, read at run time.
     "production/art/shop-rooms",
+    # THE INTERFACE'S TYPE, 1 October: the evening paper's fonts, read by path (LedgerPaper.cpp).
+    "production/fonts/evening-paper",
+    # and its paper and halftones (tools/ui/make_paper.py, make_halftone.py)
+    "production/art/ui",
 ]
 VOICE_ROOT = "ledger/Assets/StreamingAssets/Audio/Voice"
 SOUND_ROOT = "production/assets/sounds"

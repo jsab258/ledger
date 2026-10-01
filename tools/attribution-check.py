@@ -207,6 +207,9 @@ WATCHED = {
     # token is the family's own section, not the licence, which the PT Sans
     # row already names and would pass without anybody writing anything.
     "production/fonts/marcellus-sc": "MARCELLUS SC",
+    # THE INTERFACE'S TYPE, 1 October: the evening paper's fonts, which ship in
+    # the game (static cuts of two variable families, tools/ui/make_font_cuts.py).
+    "production/fonts/evening-paper": "THE EVENING PAPER",
     # THE PS5 CORNER'S BAR, 23 September: two Kingdom Come: Deliverance II
     # screenshots supplied by Jafar ("that game is my stated bar"), kept where
     # every reference lives. Files, not the folder, because the folder's other

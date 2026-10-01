@@ -80,6 +80,9 @@
 #include "SaveCodec.h"
 #include "Misc/App.h"
 #include "TitleScreen.h"
+#include "LedgerPause.h"
+#include "LedgerPaper.h"
+#include "LedgerSettings.h"
 #include "FirstMoments.h"
 #include "DayOne.h"
 #include "LedgerGarments.h"
@@ -133,6 +136,7 @@
 #include "GenericPlatform/GenericPlatformInputDeviceMapper.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Widgets/Input/SEditableTextBox.h"
+#include "Widgets/Text/SMultiLineEditableText.h"
 #include "LedgerJacket.h"
 #include "LedgerTalkLight.h"
 #include "Camera/PlayerCameraManager.h"
@@ -366,6 +370,8 @@ namespace
 
 	// ---- the mill --------------------------------------------------------
 	GameTime GNow(1, 12, 0);
+	GameTime GLastSavedAt;
+	bool bEverSavedLive = false;
 	// THE CLOCK THAT RUNS WITH PLAY (LiveClock.h; Jafar's list of 30 September,
 	// item 1: no waiting forty seconds, no jump to day four), in free play only:
 	// -LiveScript keeps the scripted encounter's fixed hours, which the build
@@ -1002,31 +1008,107 @@ namespace
 	// audit). Now a Slate panel of its own over the view, above the say box:
 	// the newest line last, at most six, each gone after its seconds. Every
 	// line also goes to the log, where the tester can read it.
-	struct FSubLine { FString Text; FLinearColor Colour; double Until = 0.0; };
+	// THE WORDS ON SCREEN AS THE EVENING PAPER DRAWS THEM, 1 October
+	// (production/design/ui, STYLE-GUIDE.md: Subtitle, Speaker's name, Note):
+	// a person speaking is a subtitle, the speaker's name white on red before
+	// the line, light words on the dark band, at most two lines of about forty
+	// letters, the last line 104 units up, at the size he sets; a longer speech
+	// turns over a page at a time. The game's own lines (where he is told
+	// something, the week's news) are an italic caption above. Every call says
+	// what it always said; the kind is read from the line's own form.
+	struct FSubLine
+	{
+		FString Text; FLinearColor Colour; double Until = 0.0;
+		enum class EKind : uint8 { Speech, Mine, Caption } Kind = EKind::Caption;
+		FString Name, Words;          // a speech's speaker and words
+		double Since = 0.0;
+	};
 	TArray<FSubLine> GSubs;
 	TSharedPtr<SVerticalBox> GSubBox;
 	TSharedPtr<SWidget> GSubRoot;
 	TWeakObjectPtr<UWorld> GSubWorld;
 
+	// The line cut into the guide's lines of at most about forty letters, at the spaces.
+	TArray<FString> SubLines(const FString& Words, int32 Most = 42)
+	{
+		TArray<FString> Out, W;
+		Words.ParseIntoArrayWS(W);
+		FString Cur;
+		for (const FString& One : W)
+		{
+			if (!Cur.IsEmpty() && Cur.Len() + 1 + One.Len() > Most) { Out.Add(Cur); Cur = One; }
+			else { Cur = Cur.IsEmpty() ? One : Cur + TEXT(" ") + One; }
+		}
+		if (!Cur.IsEmpty()) { Out.Add(Cur); }
+		return Out;
+	}
+
 	void SubsRebuild()
 	{
 		if (!GSubBox.IsValid()) { return; }
+		using namespace LedgerPaper;
 		GSubBox->ClearChildren();
+		const double Now = NowS();
+		const float Units = LedgerSettings::SubtitleUnits();
+		// the newest caption, then the newest speech (his own words above theirs)
+		const FSubLine* Caption = nullptr;
+		const FSubLine* Speech = nullptr;
+		const FSubLine* Mine = nullptr;
 		for (const FSubLine& L : GSubs)
 		{
-			GSubBox->AddSlot().AutoHeight().Padding(FMargin(0.0f, 2.0f))
-			[
-				SNew(STextBlock)
-				.Text(FText::FromString(L.Text))
-				.ColorAndOpacity(FSlateColor(L.Colour))
-				.Font(FCoreStyle::GetDefaultFontStyle("Regular", 17))
-				.ShadowOffset(FVector2D(1.5f, 1.5f))
-				.ShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.9f))
-				// A FIXED WRAP, not AutoWrapText: the lines are rebuilt whenever
-				// one is added, and auto-wrap waits a frame for its width, so
-				// the frame a line was said in showed it running off the edge.
-				.WrapTextAt(1060.0f)
-			];
+			if (L.Kind == FSubLine::EKind::Caption) { Caption = &L; }
+			else if (L.Kind == FSubLine::EKind::Mine) { Mine = &L; }
+			else { Speech = &L; }
+		}
+		if (Mine != nullptr && Speech != nullptr && Speech->Since > Mine->Since) { Mine = nullptr; }
+		auto Backed = [](TSharedRef<SWidget> W) { return OnBacking(W, FMargin(14.0f, 4.0f, 14.0f, 6.0f)); };
+		if (Caption != nullptr)
+		{
+			for (const FString& Line : SubLines(Caption->Text, 52))
+			{
+				GSubBox->AddSlot().AutoHeight().HAlign(HAlign_Center).Padding(FMargin(0.0f, 0.0f, 0.0f, 6.0f))
+				[
+					Backed(SNew(STextBlock).Text(FText::FromString(Line)).Font(Font(EFace::OldItalic, 30)).ColorAndOpacity(FSlateColor(OnDark())))
+				];
+			}
+			GSubBox->AddSlot().AutoHeight()[ SNew(SBox).HeightOverride(16.0f) ];
+		}
+		if (!LedgerSettings::SubtitlesOn()) { return; }
+		for (const FSubLine* S : { Mine, Speech })
+		{
+			if (S == nullptr) { continue; }
+			// A page of two lines at a time; a page turns after its reading time.
+			const TArray<FString> All = SubLines(S->Words);
+			const int32 Pages = FMath::Max(1, (All.Num() + 1) / 2);
+			int32 Page = 0;
+			double T = Now - S->Since;
+			for (; Page < Pages - 1; ++Page)
+			{
+				const int32 Letters = All[Page * 2].Len() + (All.IsValidIndex(Page * 2 + 1) ? All[Page * 2 + 1].Len() : 0);
+				const double Reading = FMath::Max(1.6, Letters / 15.0);
+				if (T < Reading) { break; }
+				T -= Reading;
+			}
+			for (int32 K = 0; K < 2 && All.IsValidIndex(Page * 2 + K); ++K)
+			{
+				TSharedRef<SHorizontalBox> Row = SNew(SHorizontalBox);
+				if (K == 0 && LedgerSettings::SpeakerNames() && !S->Name.IsEmpty())
+				{
+					const bool bMine = S->Kind == FSubLine::EKind::Mine;
+					Row->AddSlot().AutoWidth()
+					[
+						SNew(SBorder).BorderImage(Solid(bMine ? Grey() : Red())).Padding(FMargin(12.0f, 4.0f, 12.0f, 4.0f)).VAlign(VAlign_Center)
+						[
+							SNew(STextBlock).Text(FText::FromString(S->Name.ToUpper())).Font(Font(EFace::Franklin800, 30, 20)).ColorAndOpacity(FSlateColor(FLinearColor::White))
+						]
+					];
+				}
+				Row->AddSlot().AutoWidth()
+				[
+					Backed(SNew(STextBlock).Text(FText::FromString(All[Page * 2 + K])).Font(Font(EFace::Franklin450, Units)).ColorAndOpacity(FSlateColor(OnDark())))
+				];
+				GSubBox->AddSlot().AutoHeight().HAlign(HAlign_Center).Padding(FMargin(0.0f, 0.0f, 0.0f, 8.0f))[ Row ];
+			}
 		}
 	}
 
@@ -1037,15 +1119,14 @@ namespace
 		// again whenever the game world is not the one it was added under.
 		UWorld* W = GEngine->GameViewport->GetWorld();
 		if (GSubRoot.IsValid() && GSubWorld.Get() == W) { return; }
-		// AT MOST 1100 WIDE, NEVER WIDER THAN THE WINDOW: a fixed 1100 ran the
-		// lines off the edge of a 960-wide window instead of wrapping them.
-		SAssignNew(GSubRoot, SBox)
-			.HAlign(HAlign_Center).VAlign(VAlign_Bottom).Padding(FMargin(40.0f, 0.0f, 40.0f, 150.0f))
+		// In the middle 16:9, its last line 104 units up (the guide's 10%).
+		SAssignNew(GSubRoot, SBox).Padding(0.0f)
 			[
-				SNew(SBox).MaxDesiredWidth(1100.0f)
-				[
-					SAssignNew(GSubBox, SVerticalBox)
-				]
+				LedgerPaper::SafeRegion(
+					SNew(SBox).Padding(FMargin(120.0f, 0.0f, 120.0f, 96.0f)).HAlign(HAlign_Center).VAlign(VAlign_Bottom)
+					[
+						SAssignNew(GSubBox, SVerticalBox)
+					], HAlign_Fill, VAlign_Fill)
 			];
 		GEngine->GameViewport->AddViewportWidgetContent(GSubRoot.ToSharedRef(), 50);
 		GSubWorld = W;
@@ -1057,7 +1138,10 @@ namespace
 		const double Now = NowS();
 		const int32 Before = GSubs.Num();
 		GSubs.RemoveAll([Now](const FSubLine& L) { return L.Until < Now; });
-		if (GSubs.Num() != Before) { SubsRebuild(); }
+		// a speech's pages turn on their own time, so the panel is drawn again each half second while one runs
+		static double LastPage = 0.0;
+		const bool bSpeech = GSubs.ContainsByPredicate([](const FSubLine& L) { return L.Kind != FSubLine::EKind::Caption; });
+		if (GSubs.Num() != Before || (bSpeech && Now - LastPage > 0.5)) { LastPage = Now; SubsRebuild(); }
 	}
 
 	// OFF WHILE THE LOOK IS FILMED: the yellow instructions to the player are
@@ -1074,6 +1158,25 @@ namespace
 		L.Text = Line;
 		L.Colour = FLinearColor(Colour);
 		L.Until = NowS() + Seconds;
+		L.Since = NowS();
+		// WHICH KIND OF LINE, from its form: "You: ..." is his own; "Name: words"
+		// (a short name, no full stop) said in white is a person speaking, with
+		// any quotation marks round the words taken off; the rest is a caption.
+		FString Name, Words;
+		if (Colour == FColor::Cyan && Line.StartsWith(TEXT("You: ")))
+		{
+			L.Kind = FSubLine::EKind::Mine;
+			L.Name = TEXT("You");
+			L.Words = Line.Mid(5);
+		}
+		else if (Colour == FColor::White && Line.Split(TEXT(": "), &Name, &Words) && Name.Len() <= 40 && !Name.Contains(TEXT(".")) && !Words.IsEmpty())
+		{
+			L.Kind = FSubLine::EKind::Speech;
+			L.Name = Name;
+			Words.TrimStartAndEndInline();
+			if (Words.Len() > 1 && Words.StartsWith(TEXT("\"")) && Words.EndsWith(TEXT("\""))) { Words = Words.Mid(1, Words.Len() - 2); }
+			L.Words = Words;
+		}
 		GSubs.Add(L);
 		while (GSubs.Num() > 6) { GSubs.RemoveAt(0); }
 		SubsRebuild();
@@ -4859,55 +4962,111 @@ namespace
 		}
 	}
 
-	// WHAT THE PLAYER SAYS, TYPED, 24 September: T near somebody opens a line
-	// at the bottom of the screen; Enter says it, Esc leaves it. While it is
-	// open the keys go to the line, not to the legs.
+	// WHAT THE PLAYER SAYS, TYPED, 24 September: T near somebody opens a line;
+	// Enter says it, Esc leaves it. While it is open the keys go to the line,
+	// not to the legs.
+	// AS THE EVENING PAPER DRAWS IT, 1 October (STYLE-GUIDE.md, Typing box): a
+	// reader's coupon headed TO SHEILA, his words in Libre Franklin at 36 on
+	// newsprint inside a dashed edge, growing to three lines and then scrolling,
+	// its keys riding on its top edge; 252 units up, on the side of the picture
+	// away from the one he is talking to, so their face stays in view. Esc stops
+	// typing and keeps the words for the next time he speaks.
 	struct FTalkTarget { GossiperPtr G; std::string Card, Id; int Rung = -1; FString Name; AActor* Body = nullptr; };
 	FTalkTarget GTalkTarget;
 	TSharedPtr<SWidget> GSayBox;
-	TSharedPtr<SEditableTextBox> GSayText;
+	TSharedPtr<SMultiLineEditableText> GSayText;
 	bool bSayOpen = false, bSayCommitted = false, bSayCancelled = false;
-	FString GSaid;
+	FString GSaid, GSayDraft;
 	double GSayOpenedAt = 0.0;
 
 	void OpenSayBox(UWorld* World)
 	{
+		using namespace LedgerPaper;
 		if (bSayOpen || GEngine == nullptr || GEngine->GameViewport == nullptr || World == nullptr) { return; }
 		if (!GLive.bNoticeShown) { ShowAiNotice(); }
 		LedgerSession::Write(TEXT("talk"), TEXT("\"who\":") + LedgerSession::Str(Un(GTalkTarget.Card)));
 		bSayCommitted = bSayCancelled = false;
 		GSaid.Reset();
-		SAssignNew(GSayBox, SBox)
-			.HAlign(HAlign_Center).VAlign(VAlign_Bottom).Padding(FMargin(0.0f, 0.0f, 0.0f, 90.0f))
+		// the side away from the person: where they stand in the picture now
+		bool bLeft = true;
+		if (APlayerController* PC = World->GetFirstPlayerController())
+		{
+			FVector2D At;
+			int32 VX = 0, VY = 0;
+			PC->GetViewportSize(VX, VY);
+			if (GTalkTarget.Body != nullptr && VX > 0 && PC->ProjectWorldLocationToScreen(GTalkTarget.Body->GetActorLocation(), At)) { bLeft = At.X > VX * 0.5; }
+		}
+		static FTextBlockStyle Words = FTextBlockStyle()
+			.SetFont(Font(EFace::Franklin450, 36)).SetColorAndOpacity(FSlateColor(Ink()));
+		Words.SetFont(Font(EFace::Franklin450, 36));
+		TSharedRef<SWidget> Coupon =
+			SNew(SBorder).BorderImage(Sheet()).Padding(0.0f)
 			[
-				SNew(SBox).WidthOverride(900.0f)
+				SNew(SBorder).BorderImage(CouponEdge()).Padding(FMargin(20.0f, 16.0f, 22.0f, 16.0f))
 				[
-					SAssignNew(GSayText, SEditableTextBox)
-					.HintText(FText::FromString(FString(TEXT("Say something to ")) + GTalkTarget.Name + TEXT(", then Enter. Esc to leave it.")))
-					.OnTextCommitted_Lambda([](const FText& T, ETextCommit::Type How)
-					{
-						if (How == ETextCommit::OnEnter || How == ETextCommit::OnCleared)
-						{
-							UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: %s with %d characters"),
-							       How == ETextCommit::OnEnter ? TEXT("sent") : TEXT("left with Esc"), T.ToString().Len());
-						}
-						// A BOX THAT NEVER HELD THE KEYBOARD, 29 September (the tester, with
-						// real key presses, in a friend's plain copy): Slate cannot focus a
-						// widget in the frame it is added, so the box lost a focus it never
-						// had, closed itself, and the letters he typed went to the game (the
-						// window smashed on "e", report on "r", Tom walked). Now only Enter or
-						// Esc ends the line; a lost focus is won back (HumanTalkTick), and the
-						// game ignores its keys while the box is open.
-						if (How == ETextCommit::OnEnter)
-						{
-							GSaid = T.ToString(); bSayCommitted = true; GEnterAt = NowS();
-							// TYPING NEVER MOVES TOM (the audit: w, a, s and d typed in the box walked him).
-							const double Moved = GPawn != nullptr ? FVector::Dist2D(GPawn->GetActorLocation(), GSayOpenPawnAt) : -1.0;
-							RouteCheck(TEXT("talk-typed"), Moved >= 0.0 && Moved < 1.0, FString::Printf(TEXT("chars=%d moved_cm=%.1f"), GSaid.Len(), Moved));
-						}
-						else if (How == ETextCommit::OnCleared) { bSayCancelled = true; }
-					})
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Top).Padding(FMargin(0.0f, 2.0f, 30.0f, 0.0f))
+					[
+						SNew(SBorder).BorderImage(Solid(Ink())).Padding(FMargin(12.0f, 4.0f, 12.0f, 4.0f))
+						[
+							SNew(STextBlock).Text(FText::FromString(FString(TEXT("To ")) + GTalkTarget.Name)).TransformPolicy(ETextTransformPolicy::ToUpper)
+							.Font(Font(EFace::Franklin800, 30, 20)).ColorAndOpacity(FSlateColor(FLinearColor::White))
+						]
+					]
+					+ SHorizontalBox::Slot().FillWidth(1.0f)
+					[
+						// three lines, then it scrolls
+						SNew(SBox).MinDesiredHeight(46.0f).MaxDesiredHeight(144.0f)
+						[
+							SAssignNew(GSayText, SMultiLineEditableText)
+							.TextStyle(&Words)
+							.AutoWrapText(true)
+							.Text(FText::FromString(GSayDraft))
+							.HintText(FText::FromString(FString(TEXT("Say something to ")) + GTalkTarget.Name))
+							.OnKeyDownHandler_Lambda([](const FGeometry&, const FKeyEvent& E)
+							{
+								// Enter says it; Esc stops typing and keeps the words. A box that never
+								// held the keyboard (29 September) is won back by HumanTalkTick.
+								if (E.GetKey() == EKeys::Enter && !E.IsShiftDown())
+								{
+									const FString T = GSayText.IsValid() ? GSayText->GetText().ToString().TrimStartAndEnd() : FString();
+									if (T.IsEmpty()) { return FReply::Handled(); }
+									UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: sent with %d characters"), T.Len());
+									GSaid = T; bSayCommitted = true; GEnterAt = NowS(); GSayDraft.Reset();
+									// TYPING NEVER MOVES TOM (the audit: w, a, s and d typed in the box walked him).
+									const double Moved = GPawn != nullptr ? FVector::Dist2D(GPawn->GetActorLocation(), GSayOpenPawnAt) : -1.0;
+									RouteCheck(TEXT("talk-typed"), Moved >= 0.0 && Moved < 1.0, FString::Printf(TEXT("chars=%d moved_cm=%.1f"), GSaid.Len(), Moved));
+									return FReply::Handled();
+								}
+								if (E.GetKey() == EKeys::Escape)
+								{
+									GSayDraft = GSayText.IsValid() ? GSayText->GetText().ToString() : FString();
+									UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: left with Esc, %d characters kept"), GSayDraft.Len());
+									bSayCancelled = true;
+									return FReply::Handled();
+								}
+								return FReply::Unhandled();
+							})
+						]
+					]
 				]
+			];
+		SAssignNew(GSayBox, SBox)
+			[
+				SafeRegion(
+					SNew(SBox).Padding(FMargin(120.0f, 0.0f, 120.0f, 252.0f)).HAlign(bLeft ? HAlign_Left : HAlign_Right).VAlign(VAlign_Bottom)
+					[
+						SNew(SBox).WidthOverride(900.0f)
+						[
+							SNew(SVerticalBox)
+							+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 0.0f, 0.0f, 10.0f))
+							[
+								Hints({ MakeTuple(TArray<FString>{ TEXT("Enter") }, FString(TEXT("say it"))),
+								        MakeTuple(TArray<FString>{ TEXT("Esc") }, FString(TEXT("stop typing"))) })
+							]
+							+ SVerticalBox::Slot().AutoHeight()[ Coupon ]
+						]
+					])
 			];
 		GEngine->GameViewport->AddViewportWidgetContent(GSayBox.ToSharedRef(), 100);
 		if (APlayerController* PC = World->GetFirstPlayerController())
@@ -4921,8 +5080,8 @@ namespace
 		}
 		FSlateApplication::Get().SetKeyboardFocus(GSayText);
 		bSayOpen = true;
-		UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: open for %s, keyboard focus %s"), *GTalkTarget.Name,
-		       FSlateApplication::Get().GetKeyboardFocusedWidget() == GSayText ? TEXT("in the box") : TEXT("NOT in the box"));
+		UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: open for %s, keyboard focus %s, on the %s"), *GTalkTarget.Name,
+		       FSlateApplication::Get().GetKeyboardFocusedWidget() == GSayText ? TEXT("in the box") : TEXT("NOT in the box"), bLeft ? TEXT("left") : TEXT("right"));
 		GSayOpenedAt = NowS();
 		GSayOpenPawnAt = GPawn != nullptr ? GPawn->GetActorLocation() : FVector::ZeroVector;
 		RouteCheck(TEXT("talk-open"), true, FString::Printf(TEXT("to=%s clock=%s"), *GTalkTarget.Name, *Un(GNow.ToString())));
@@ -6068,8 +6227,76 @@ namespace
 		if (!bStopped) { Say(FString(TEXT("You wait. ")) + Un(GNow.ToString()) + TEXT("."), 5.0f, FColor::Yellow); }
 	}
 
+	// -TalkShot=<dir> (1 October, the interface as drawn): Tom stood three metres
+	// in front of Sheila, the coupon opened to her with the design's own line in
+	// it, filmed; the line said, and her answer's subtitles filmed; then the game
+	// closes. At the window's own size.
+	void TalkShotTick(UWorld* World)
+	{
+		static FString Dir;
+		static bool bRead = false;
+		static int32 Step = 0;
+		static double At = -1.0, LiveSince = -1.0;
+		if (!bRead) { bRead = true; FParse::Value(FCommandLine::Get(), TEXT("TalkShot="), Dir); }
+		if (Dir.IsEmpty() || World == nullptr || GPawn == nullptr || GW1Body == nullptr || !GW1) { return; }
+		const bool bLive = GPhase == ECrimePhase::LiveWaitDeed || GPhase == ECrimePhase::LiveAfterDeed || GPhase == ECrimePhase::LiveRoam;
+		if (!bLive) { return; }
+		const double T = FPlatformTime::Seconds();
+		if (LiveSince < 0.0) { LiveSince = T; }
+		const FIntPoint Sz = GEngine->GameViewport->Viewport->GetSizeXY();
+		const FString Line = TEXT("I'm after a man in a grey coat who took a cab up to Fairview on Tuesday.");
+		if (Step == 0 && T - LiveSince > 10.0 && GLive.bReady)
+		{
+			const FVector S = GW1Body->GetActorLocation();
+			const FVector Loc = S + FVector(90.0f, -170.0f, 0.0f);
+			GPawn->SetActorLocation(FVector(Loc.X, Loc.Y, GPawn->GetActorLocation().Z), false, nullptr, ETeleportType::TeleportPhysics);
+			const FRotator Face = (S - Loc).GetSafeNormal2D().Rotation();
+			if (AController* C = GPawn->GetController()) { C->SetControlRotation(FRotator(-8.0f, Face.Yaw + 18.0f, 0.0f)); }
+			Step = 1; At = T;
+		}
+		else if (Step == 1 && T - At > 1.5)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(Dir, FString::Printf(TEXT("prompt-%d.png"), Sz.X)), true, false);
+			Step = 11; At = T;
+		}
+		else if (Step == 11 && T - At > 1.0)
+		{
+			GTalkTarget.G = GW1; GTalkTarget.Card = "lena"; GTalkTarget.Id = GIdW1; GTalkTarget.Rung = GW1RungA;
+			GTalkTarget.Name = TEXT("Sheila"); GTalkTarget.Body = GW1Body;
+			GSayDraft = Line;
+			OpenSayBox(World);
+			Step = 2; At = T;
+		}
+		else if (Step == 2 && T - At > 1.5)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(Dir, FString::Printf(TEXT("typing-%d.png"), Sz.X)), true, false);
+			Step = 3; At = T;
+		}
+		else if (Step == 3 && T - At > 1.0)
+		{
+			GSaid = Line; bSayCommitted = true; GEnterAt = NowS(); GSayDraft.Reset();
+			Step = 4; At = T;
+		}
+		else if (Step == 4 && GSubs.ContainsByPredicate([](const FSubLine& L) { return L.Kind == FSubLine::EKind::Speech; }) && T - At > 1.0)
+		{
+			Step = 5; At = T;
+		}
+		else if (Step == 5 && T - At > 1.2)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(Dir, FString::Printf(TEXT("subtitles-%d.png"), Sz.X)), true, false);
+			Step = 6; At = T;
+		}
+		else if ((Step == 6 && T - At > 1.0) || (Step == 4 && T - At > 40.0))
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerTalkShot: done in %s%s"), *Dir, Step == 4 ? TEXT(" (no answer came)") : TEXT(""));
+			FPlatformMisc::RequestExit(false);
+			Step = 7;
+		}
+	}
+
 	bool HumanTalkTick(UWorld* World, double Now)
 	{
+		TalkShotTick(World);
 		LiveHelperStart();
 		LiveHelperPump();
 		LiveVoiceStart();
@@ -6099,7 +6326,8 @@ namespace
 			if (GSayText.IsValid() && Now - GSayOpenedAt < 0.5)
 			{
 				const FString Cur = GSayText->GetText().ToString();
-				if (Cur == TEXT("t") || Cur == TEXT("T")) { GSayText->SetText(FText::GetEmpty()); }
+				// the T that opened the box, after any words kept from last time
+				if (Cur == GSayDraft + TEXT("t") || Cur == GSayDraft + TEXT("T")) { GSayText->SetText(FText::FromString(GSayDraft)); }
 			}
 			if (bSayCommitted)
 			{
@@ -6461,6 +6689,7 @@ namespace
 		}
 		bSavedToDisk = Ok;
 		GSavedBytes = (int)Json.size();
+		if (Ok) { GLastSavedAt = GNow; bEverSavedLive = true; }   // the pause page's "last saved at"
 		{
 			const LedgerCrime::P3 At = GPawn != nullptr ? ToStreet(GPawn->GetActorLocation()) : LedgerCrime::P3(0.0, 0.0, 0.0);
 			RouteCheck(TEXT("save"), Ok, FString::Printf(TEXT("clock=%s at=%.2f,%.2f"), *Un(GNow.ToString()), At.X, At.Z));
@@ -6728,60 +6957,155 @@ namespace
 	// ---- the ticker ------------------------------------------------------
 	// A PROMPT ON WHAT HE CAN USE, 29 September (the twenty a friend would
 	// notice, 8): near a person, "T  talk to Sheila"; before the deed, beside
-	// Mickey's window, "E  the window". Its own line under the spoken ones,
-	// hidden while he types; the same people and reach the keys act on.
-	TSharedPtr<STextBlock> GPromptText;
+	// Mickey's window, "E  the window". Hidden while he types; the same people
+	// and reach the keys act on.
+	// AS THE EVENING PAPER DRAWS IT, 1 October (STYLE-GUIDE.md, Prompt): one at
+	// a time, the nearest; beside the person or the thing, anchored to its place
+	// in the picture with a short line pointing to it; the key in its box, then
+	// the verb on the dark band. Waiting, which belongs to nothing in the
+	// picture, is a key hint low at the right.
 	TSharedPtr<SWidget> GPromptRoot;
+	TSharedPtr<SBox> GPromptAt;
+	TSharedPtr<SWidget> GWaitHint;
 	TWeakObjectPtr<UWorld> GPromptWorld;
-	FString GPromptNow;
+	FString GPromptKey, GPromptVerb;
+	TWeakObjectPtr<AActor> GPromptActor;
+	FVector GPromptPoint = FVector::ZeroVector;     // the thing's own place, when it is no actor
+	bool bPromptWait = false;
+	double GPromptSince = 0.0;
 
-	void PromptSet(const FString& Text)
+	void PromptEnsure()
 	{
+		using namespace LedgerPaper;
 		if (GEngine == nullptr || GEngine->GameViewport == nullptr) { return; }
 		UWorld* W = GEngine->GameViewport->GetWorld();
-		if (!GPromptRoot.IsValid() || GPromptWorld.Get() != W)
-		{
-			SAssignNew(GPromptRoot, SBox)
-				.HAlign(HAlign_Center).VAlign(VAlign_Bottom).Padding(FMargin(40.0f, 0.0f, 40.0f, 110.0f))
+		if (GPromptRoot.IsValid() && GPromptWorld.Get() == W) { return; }
+		SAssignNew(GPromptRoot, SOverlay)
+			// the prompt, placed each frame where its person or thing is (units: the screen at 1080 tall)
+			+ SOverlay::Slot().HAlign(HAlign_Left).VAlign(VAlign_Top)
+			[
+				SAssignNew(GPromptAt, SBox).Visibility(EVisibility::Collapsed)
+				.RenderOpacity(1.0f)
 				[
-					SAssignNew(GPromptText, STextBlock)
-					.Font(FCoreStyle::GetDefaultFontStyle("Bold", 16))
-					.ColorAndOpacity(FSlateColor(FLinearColor(0.95f, 0.92f, 0.8f, 1.0f)))
-					.ShadowOffset(FVector2D(1.5f, 1.5f))
-					.ShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.9f))
-				];
-			GEngine->GameViewport->AddViewportWidgetContent(GPromptRoot.ToSharedRef(), 49);
-			GPromptWorld = W;
-			GPromptNow = TEXT("(unset)");
+					SNew(SHorizontalBox)
+					+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+					[
+						// the short line pointing back to the person
+						SNew(SBox).WidthOverride(34.0f).HeightOverride(2.0f)[ SNew(SImage).Image(Solid(OnDark())) ]
+					]
+					+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+					[
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot().AutoWidth()[ SNew(SBox).Visibility_Lambda([]() { return GPromptKey == TEXT("T") ? EVisibility::Visible : EVisibility::Collapsed; })[ Key(TEXT("T")) ] ]
+						+ SHorizontalBox::Slot().AutoWidth()[ SNew(SBox).Visibility_Lambda([]() { return GPromptKey == TEXT("E") ? EVisibility::Visible : EVisibility::Collapsed; })[ Key(TEXT("E")) ] ]
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
+						[
+							OnBacking(SNew(STextBlock).Text_Lambda([]() { return FText::FromString(GPromptVerb); }).Font(Font(EFace::Franklin500, 30)).ColorAndOpacity(FSlateColor(OnDark())),
+								FMargin(12.0f, 3.0f, 12.0f, 3.0f))
+						]
+					]
+				]
+			]
+			+ SOverlay::Slot()
+			[
+				SafeRegion(
+					SNew(SBox).Padding(FMargin(120.0f, 0.0f, 120.0f, 54.0f)).HAlign(HAlign_Right).VAlign(VAlign_Bottom)
+					[
+						SAssignNew(GWaitHint, SBox).Visibility(EVisibility::Collapsed)
+					])
+			];
+		GEngine->GameViewport->AddViewportWidgetContent(GPromptRoot.ToSharedRef(), 49);
+		GPromptWorld = W;
+	}
+
+	// Where the prompt's thing is, in the screen's units (1080 tall), or false when out of view.
+	bool PromptScreenAt(FVector2D& Out)
+	{
+		UWorld* W = GEngine != nullptr && GEngine->GameViewport != nullptr ? GEngine->GameViewport->GetWorld() : nullptr;
+		APlayerController* PC = W != nullptr ? W->GetFirstPlayerController() : nullptr;
+		if (PC == nullptr) { return false; }
+		FVector Where = GPromptPoint;
+		if (AActor* A = GPromptActor.Get())
+		{
+			// beside the head: the top of the person's own bounds
+			const FBox B = GVisualFor(A) != nullptr ? GVisualFor(A)->GetComponentsBoundingBox(true) : A->GetComponentsBoundingBox(true);
+			Where = B.IsValid ? FVector(B.GetCenter().X, B.GetCenter().Y, B.Max.Z - 25.0) : A->GetActorLocation() + FVector(0.0f, 0.0f, 150.0f);
 		}
-		if (Text == GPromptNow || !GPromptText.IsValid()) { return; }
-		GPromptNow = Text;
-		GPromptText->SetText(FText::FromString(Text));
+		FVector2D Px;
+		int32 VX = 0, VY = 0;
+		PC->GetViewportSize(VX, VY);
+		if (VY <= 0 || !PC->ProjectWorldLocationToScreen(Where, Px)) { return false; }
+		if (Px.X < 0.0 || Px.Y < 0.0 || Px.X > VX || Px.Y > VY) { return false; }
+		const double K = 1080.0 / VY;
+		Out = FVector2D(Px.X * K, Px.Y * K);
+		return true;
+	}
+
+	void PromptPlace()
+	{
+		if (!GPromptAt.IsValid()) { return; }
+		FVector2D At;
+		const bool bAnchored = GPromptActor.IsValid() || !GPromptPoint.IsZero();
+		const bool bShow = !GPromptVerb.IsEmpty() && bAnchored && PromptScreenAt(At);
+		// A PROMPT WITH NO PLACE IN THE PICTURE ("Enter, go on"), or waiting: a key hint low at the right.
+		static FString FixedNow = TEXT("(unset)");
+		const FString Fixed = !GPromptVerb.IsEmpty() && !bAnchored ? GPromptKey + TEXT("|") + GPromptVerb : (bPromptWait && !bShow ? FString(TEXT("Z|wait a while")) : FString());
+		if (Fixed != FixedNow && GWaitHint.IsValid())
+		{
+			FixedNow = Fixed;
+			FString K, V;
+			if (Fixed.Split(TEXT("|"), &K, &V)) { StaticCastSharedPtr<SBox>(GWaitHint)->SetContent(LedgerPaper::Hints({ MakeTuple(TArray<FString>{ K }, V) })); }
+		}
+		GPromptAt->SetVisibility(bShow ? EVisibility::HitTestInvisible : EVisibility::Collapsed);
+		if (bShow)
+		{
+			// to the right of the head, the line starting a hand's width from it
+			GPromptAt->SetPadding(FMargin((float)At.X + 26.0f, (float)At.Y - 22.0f, 0.0f, 0.0f));
+			const float A = LedgerPaper::ReduceMotion() ? 1.0f : FMath::Clamp((float)((NowS() - GPromptSince) / 0.15), 0.0f, 1.0f);
+			GPromptAt->SetRenderOpacity(A);
+		}
+		if (GWaitHint.IsValid()) { GWaitHint->SetVisibility(!Fixed.IsEmpty() ? EVisibility::HitTestInvisible : EVisibility::Collapsed); }
+	}
+
+	void PromptSet(const FString& Key, const FString& Verb, AActor* Actor, const FVector& Point, bool bWait)
+	{
+		PromptEnsure();
+		if (Key != GPromptKey || Verb != GPromptVerb) { GPromptSince = NowS(); }
+		GPromptKey = Key;
+		GPromptVerb = Verb;
+		GPromptActor = Actor;
+		GPromptPoint = Point;
+		bPromptWait = bWait;
+		PromptPlace();
 	}
 
 	void LivePromptTick(bool bBeforeDeed)
 	{
-		if (GPawn == nullptr || bSayOpen) { PromptSet(FString()); return; }
+		if (GPawn == nullptr || bSayOpen) { PromptSet(FString(), FString(), nullptr, FVector::ZeroVector, false); return; }
 		const FVector At = GPawn->GetActorLocation();
 		struct Who { AActor* Body; const GossiperPtr* G; const TCHAR* Name; };
 		const Who People[3] = { { GN2Body, &GN2, TEXT("Darren") }, { GW1Body, &GW1, TEXT("Sheila") }, { GR3Body, &GR3, TEXT("Ron") } };
-		const TCHAR* Near = nullptr;
+		const Who* Near = nullptr;
 		double Best = LedgerCrime::kLiveTalkM;
 		for (const Who& P : People)
 		{
 			if (P.Body == nullptr || !*P.G) { continue; }
 			const double M = FVector::Dist2D(At, P.Body->GetActorLocation()) / 100.0;
-			if (M <= Best) { Best = M; Near = P.Name; }
+			if (M <= Best) { Best = M; Near = &P; }
 		}
-		FString Text;
-		if (Near != nullptr) { Text = FString::Printf(TEXT("T  talk to %s"), Near); }
-		if (bBeforeDeed && !GActAttempted[0] && GGlass[0] != nullptr
-		    && FVector::Dist2D(At, GGlass[0]->GetComponentsBoundingBox(true).GetCenter()) / 100.0 <= LedgerCrime::kLiveReachM)
+		// one at a time, the nearest: the window when he is at it, else the person
+		if (bBeforeDeed && !GActAttempted[0] && GGlass[0] != nullptr)
 		{
-			Text += (Text.IsEmpty() ? FString() : FString(TEXT("        "))) + TEXT("E  the window");
+			const FVector Glass = GGlass[0]->GetComponentsBoundingBox(true).GetCenter();
+			const double Gm = FVector::Dist2D(At, Glass) / 100.0;
+			if (Gm <= LedgerCrime::kLiveReachM && (Near == nullptr || Gm < Best))
+			{
+				PromptSet(TEXT("E"), TEXT("The window"), nullptr, Glass, bClockRuns);
+				return;
+			}
 		}
-		if (bClockRuns) { Text += (Text.IsEmpty() ? FString() : FString(TEXT("        "))) + TEXT("Z  wait"); }
-		PromptSet(Text);
+		if (Near != nullptr) { PromptSet(TEXT("T"), FString::Printf(TEXT("Talk to %s"), Near->Name), Near->Body, FVector::ZeroVector, bClockRuns); return; }
+		PromptSet(FString(), FString(), nullptr, FVector::ZeroVector, bClockRuns);
 	}
 
 	// A FRIEND'S GAME OPENS ON THE TITLE (TitleScreen.h); the automation's
@@ -6832,28 +7156,33 @@ namespace
 		UWorld* W = GEngine->GameViewport->GetWorld();
 		if (!GHintRoot.IsValid() || GHintWorld.Get() != W)
 		{
+			// THE FIRST STEPS SLIP, 1 October (STYLE-GUIDE.md, First-time hint): a
+			// small newsprint slip low at the left, clear of the street ahead and
+			// of the subtitles, headed FIRST STEPS, the game's own line in italic;
+			// one at a time, gone the moment it is done, never pausing the game.
+			using namespace LedgerPaper;
 			SAssignNew(GHintRoot, SBox)
-				.HAlign(HAlign_Center).VAlign(VAlign_Top).Padding(FMargin(40.0f, 64.0f, 40.0f, 0.0f))
 				[
-					SNew(SBox).MaxDesiredWidth(900.0f)
-					[
-						// A DARK BACKING, so the line reads over a white sky (the
-						// tester, 30 September); hidden while there is no hint.
-						SAssignNew(GHintBack, SBorder)
-						.BorderImage(FCoreStyle::Get().GetBrush("WhiteBrush"))
-						.BorderBackgroundColor(FLinearColor(0.0f, 0.0f, 0.0f, 0.5f))
-						.Padding(FMargin(16.0f, 8.0f))
-						.Visibility(EVisibility::Collapsed)
+					SafeRegion(
+						SNew(SBox).Padding(FMargin(120.0f, 0.0f, 120.0f, 400.0f)).HAlign(HAlign_Left).VAlign(VAlign_Bottom)
 						[
-							SAssignNew(GHintText, STextBlock)
-							.Font(FCoreStyle::GetDefaultFontStyle("Regular", 17))
-							.Justification(ETextJustify::Center)
-							.AutoWrapText(true)
-							.ColorAndOpacity(FSlateColor(FLinearColor(0.95f, 0.92f, 0.8f, 1.0f)))
-							.ShadowOffset(FVector2D(1.0f, 1.0f))
-							.ShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.8f))
-						]
-					]
+							SAssignNew(GHintBack, SBox).WidthOverride(560.0f).Visibility(EVisibility::Collapsed)
+							[
+								PaperSheet(
+									SNew(SVerticalBox)
+									+ SVerticalBox::Slot().AutoHeight()
+									[
+										SNew(STextBlock).Text(FText::FromString(TEXT("FIRST STEPS"))).Font(Font(EFace::League, 28, 60)).ColorAndOpacity(FSlateColor(Ink()))
+									]
+									+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 4.0f, 0.0f, 8.0f))[ Rule(1.5f, Ink()) ]
+									+ SVerticalBox::Slot().AutoHeight()
+									[
+										SAssignNew(GHintText, STextBlock).AutoWrapText(true).LineHeightPercentage(1.1f)
+										.Font(Font(EFace::OldItalic, 28)).ColorAndOpacity(FSlateColor(Ink()))
+									],
+									FMargin(22.0f, 14.0f, 22.0f, 18.0f))
+							]
+						])
 				];
 			GEngine->GameViewport->AddViewportWidgetContent(GHintRoot.ToSharedRef(), 48);
 			GHintWorld = W;
@@ -6927,7 +7256,7 @@ namespace
 	{
 		if (!GWalkLine.IsEmpty()) { const FString Was = GWalkLine; GSubs.RemoveAll([&Was](const FSubLine& L) { return L.Text == Was; }); SubsRebuild(); }
 		GWalkLine.Empty();
-		PromptSet(FString());
+		PromptSet(FString(), FString(), nullptr, FVector::ZeroVector, false);
 		if (bWalkLocked)
 		{
 			if (APlayerController* PC = World != nullptr ? World->GetFirstPlayerController() : nullptr) { PC->ResetIgnoreMoveInput(); }
@@ -6973,7 +7302,7 @@ namespace
 			GWalkUntil = T + Seconds;
 			UE_LOG(LogTemp, Display, TEXT("LedgerDayOne: stop %d, %s"), GWalkStop, *Un(S.Name));
 		}
-		PromptSet(TEXT("Enter  go on"));
+		PromptSet(TEXT("Enter"), TEXT("go on"), nullptr, FVector::ZeroVector, false);
 	}
 
 	void StartLive(UWorld* World, bool bTryLoad)
@@ -7095,16 +7424,75 @@ namespace
 			if (bPausedNow && GPausedSince < 0.0)
 			{
 				GPausedSince = FPlatformTime::Seconds();
-				Say(kPausedLine, 86400.0f, FColor::Yellow);
+				// THE STOP PRESS PAGE (the evening paper, 1 October) in place of a
+				// line of words: the story's own day and hour, when it was last saved.
+				LedgerPause::FWhen W;
+				W.Day = GNow.Day;
+				W.Hour = GNow.Hour;
+				W.Minute = GNow.Minute;
+				if (bEverSavedLive) { W.SavedHour = GLastSavedAt.Hour; W.SavedMinute = GLastSavedAt.Minute; }
+				LedgerPause::Show(PW, W);
 			}
 			else if (!bPausedNow && GPausedSince >= 0.0)
 			{
 				GPausedTotal += FPlatformTime::Seconds() - GPausedSince;
 				GPausedSince = -1.0;
-				GSubs.RemoveAll([](const FSubLine& L) { return L.Text == kPausedLine; });
-				SubsRebuild();
+				LedgerPause::Hide();
 			}
-			if (bPausedNow) { return true; }
+			// -PauseShot=<dir> (1 October, the interface as drawn): the STOP PRESS page
+			// filmed once the story has run a while, at the window's size; then the game closes.
+			static FString PauseShotDir;
+			static bool bPauseShotRead = false;
+			static int32 PauseShotStep = 0;
+			if (!bPauseShotRead) { bPauseShotRead = true; FParse::Value(FCommandLine::Get(), TEXT("PauseShot="), PauseShotDir); }
+			if (!PauseShotDir.IsEmpty() && PW != nullptr)
+			{
+				static double LiveSince = -1.0;
+				const bool bLive = GPhase == ECrimePhase::LiveWaitDeed || GPhase == ECrimePhase::LiveAfterDeed || GPhase == ECrimePhase::LiveRoam;
+				if (bLive && LiveSince < 0.0) { LiveSince = FPlatformTime::Seconds(); }
+				if (!bPausedNow && PauseShotStep == 0 && bLive && FPlatformTime::Seconds() - LiveSince > 8.0)
+				{
+					UGameplayStatics::SetGamePaused(PW, true);
+					PauseShotStep = 1;
+				}
+				else if (bPausedNow && PauseShotStep == 1 && FPlatformTime::Seconds() - GPausedSince > 1.5)
+				{
+					const FIntPoint Sz = GEngine->GameViewport->Viewport->GetSizeXY();
+					FScreenshotRequest::RequestScreenshot(FPaths::Combine(PauseShotDir, FString::Printf(TEXT("pause-%d.png"), Sz.X)), true, false);
+					PauseShotStep = 2;
+				}
+				else if (bPausedNow && PauseShotStep == 2 && FPlatformTime::Seconds() - GPausedSince > 2.5)
+				{
+					UE_LOG(LogTemp, Display, TEXT("LedgerPause: PauseShot done in %s"), *PauseShotDir);
+					FPlatformMisc::RequestExit(false);
+					PauseShotStep = 3;
+				}
+			}
+			if (bPausedNow)
+			{
+				switch (LedgerPause::Tick())
+				{
+				case LedgerPause::EAction::Resume:
+					UGameplayStatics::SetGamePaused(PW, false);
+					break;
+				case LedgerPause::EAction::QuitGame:
+					UE_LOG(LogTemp, Log, TEXT("LedgerPause: quit the game"));
+					FPlatformMisc::RequestExit(false);
+					break;
+				case LedgerPause::EAction::QuitToTitle:
+				{
+					// BACK TO THE TITLE: the game starts afresh from its own command line,
+					// so the title opens over a street built anew, the story as saved.
+					UE_LOG(LogTemp, Log, TEXT("LedgerPause: quit to the title"));
+					FString Args = FCommandLine::GetOriginal();
+					FPlatformProcess::CreateProc(FPlatformProcess::ExecutablePath(), *Args, true, false, false, nullptr, 0, nullptr, nullptr);
+					FPlatformMisc::RequestExit(false);
+					break;
+				}
+				default: break;
+				}
+				return true;
+			}
 		}
 		++GTicks;
 		const double Now = NowS();
@@ -7120,7 +7508,27 @@ namespace
 		if (!bTitleAsked && World != nullptr && World->GetFirstPlayerController() != nullptr)
 		{
 			bTitleAsked = true;
-			if (TitleWanted()) { LedgerTitle::Show(World, IFileManager::Get().FileExists(*(EncSaveDir() / TEXT("agents.json")))); }
+			LedgerSettings::Load();   // the player's own settings: subtitle size, the band behind them, motion
+			if (TitleWanted())
+			{
+				// The saved story's day and time for the front page's Continue (its clock.txt).
+				int32 Day = -1, Hour = 0, Minute = 0;
+				FString ClockText;
+				if (FFileHelper::LoadFileToString(ClockText, *(EncSaveDir() / TEXT("clock.txt"))))
+				{
+					TArray<FString> Lines;
+					ClockText.ParseIntoArrayLines(Lines);
+					for (const FString& L : Lines)
+					{
+						FString Kv, V;
+						if (!L.Split(TEXT("="), &Kv, &V)) { continue; }
+						if (Kv == TEXT("day")) { Day = FCString::Atoi(*V); }
+						else if (Kv == TEXT("hour")) { Hour = FCString::Atoi(*V); }
+						else if (Kv == TEXT("minute")) { Minute = FCString::Atoi(*V); }
+					}
+				}
+				LedgerTitle::Show(World, IFileManager::Get().FileExists(*(EncSaveDir() / TEXT("agents.json"))), Day, Hour, Minute);
+			}
 		}
 		if (LedgerTitle::IsShown() && GPhase != ECrimePhase::LiveTitle
 		    && LedgerTitle::Tick(World, false) == LedgerTitle::EChoice::Quit) { FPlatformMisc::RequestExit(false); }

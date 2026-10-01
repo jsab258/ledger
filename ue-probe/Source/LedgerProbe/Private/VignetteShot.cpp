@@ -7119,6 +7119,12 @@ namespace
 				Mid->SetScalarParameterValue(FName(TEXT("LitOn")), Ir.bLitAtNight ? 1.0f : 0.0f);
 				Mid->SetScalarParameterValue(FName(TEXT("Brightness")), Ir.DayGlow);
 				for (int32 Slot = 0; Slot < Comp->GetNumMaterials(); ++Slot) { Comp->SetMaterial(Slot, Mid); }
+				// AND THE STREET LETS GO OF THE CARD'S OLD MATERIAL (1 October): nothing
+				// holds it once the room's is on, so it is collected, and the street's
+				// look, driving it at the next change of light, read freed memory and
+				// the game fell over the first time the clock crossed into the night.
+				// The room's own material is driven by ReDriveShopInteriors instead.
+				if (I < GStreetMids.Num()) { GStreetMids[I] = nullptr; }
 				// The room is a picture: its card throws no shadow, so the shop's light
 				// behind it (SpawnShopSpill) reaches the display and the pavement.
 				Comp->SetCastShadow(false);

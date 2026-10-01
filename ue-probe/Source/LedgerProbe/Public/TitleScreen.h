@@ -24,13 +24,20 @@ class UWorld;
 
 namespace LedgerTitle
 {
-	enum class EChoice : uint8 { None, NewGame, Continue, Quit };
+	enum class EChoice : uint8 { None, NewGame, Continue, Settings, Quit };
 
 	// Once per PC (a mark in the game's own settings file): full screen at the
 	// desktop's size, and the benchmark's picture level.
 	void FirstLaunchSettings();
 
-	void Show(UWorld* World, bool bCanContinue);
+	// THE FRONT PAGE, 1 October (production/design/ui, the evening paper):
+	// Continue (with the saved story's day, time and place under it when there
+	// is one: SavedDay from 0 for a Monday, -1 when none), New game, Settings,
+	// Quit. A story chosen before the street is ready shows the loading page.
+	void Show(UWorld* World, bool bCanContinue, int32 SavedDay = -1, int32 SavedHour = 0, int32 SavedMinute = 0);
+	// "Thursday, 9.40 pm": the paper's way of giving a day and a time.
+	FString DayName(int32 Day);
+	FString TimeOfDay(int32 Hour, int32 Minute);
 
 	// Every frame while shown. bStreetReady once the street and its people
 	// are placed. Returns a choice once, on the frame it is made.
