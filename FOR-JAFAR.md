@@ -32,10 +32,12 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 1 October
 
-**[Your page](https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz):** three taps. Does seeing Tom break a window send a neighbour to the police? (I say yes.) Sheila on the faster model? (I say try it, blind-checked.) The other characters' street lines: one more try, a new way? (I say yes, once.)
+**[Your page](https://claude.ai/artifact/RZrzqngShazxh4JtrePZfZ)** (new, 09:00): one tap. Darren's, Father Walsh's and June's own street lines passed a blind review: put them in? I say yes. Sheila's, Alison's and Ada's failed and stay shared for good, as you said (the fourth try, past the two-tries rule by your tap).
+
+**Your three taps, acted on:** the police ruling is with the builder to port; Sheila stays on her model (a blind reviewer preferred it 13 to 6 of 20).
 
 **Your review's Core side:** all fixed and ported, each test first:
-- Sheila asks on Monday if he misses Sunday (seen in the game);
+- Sheila's Monday question;
 - DS Ellis asks only on Quay Street;
 - a full sighting is certain;
 - your ruling: a noise or a shape is never "he did it";
@@ -44,19 +46,17 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - the town's talk in time;
 - a no across one o'clock.
 
-Three checks found faults in my fixes; all mended.
+**Found:** the game never plays the neighbours' small talk, Ron's approved lines included; asked the builder.
 
-**Set aside after three reviews (past the two-tries rule):** the other named characters' street lines; the shared lines stay.
+**Talk delay:** words 1.9 s after Enter, the check about 1.1 s of it. Done.
 
-**Talk delay:** words 1.9 s after Enter, the check about 1.1 s of it. Sheila's first sentence 1.43 s; caching nothing; the faster model 0.81 s.
-
-**Your key:** $0.18 today, logged.
+**Your key:** $0.18, logged.
 
 **Research:** cutting the first words' delay.
 
-**C: free:** 56.3 GB, 63.4 now. Backup runs with this commit.
+**C: free:** 56.3 GB, 63 now.
 
-**Next:** your three taps.
+**Next:** your tap.
 
 ## Clothes, Thursday 1 October
 
