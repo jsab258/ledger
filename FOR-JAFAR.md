@@ -5,14 +5,13 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Thursday 1 October, 09:05)
+## Overview (Thursday 1 October, 12:45)
 
 ### Needs you
 
-(Every page's stored answers checked at 09:00: Thursday's and Wednesday's, mine; the town's. Your three on Thursday's page (07:50) and the town's three (06:34) are in and acted on.)
+(Every page's stored answers checked at 12:45: Thursday's and Wednesday's, mine; the town's. Your no to the four looks came by message and is acted on: your rule on the bar is in CLAUDE.md, your eight fixes are on the list.)
 
 1. **The route is ready for your cloud review:** main as of 760832bce, green on the build machine at 01:08 (its Core tests and the full Unreal run); what changed and the runs in the finished game before and after are in production/playtest/review-runs-2026-09-30.md. Recommended: run it.
-2. **[Thursday's page](https://claude.ai/artifact/3zqyXtiTA35rPcuufuD48K), Wednesday's four open looks, now at full size:** the street by day and at night, their mouths as they answer, Ron's boots and Sheila's handbag. Tap any picture to open it full-screen at its full resolution, pinch to zoom, swipe to the next. Recommended: yes to each, unless something jars.
 
 ### Road to worth playing
 
@@ -25,7 +24,8 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - **A release on a clean machine** (builder, item 3): the voice's stopgap tried and working: today's voice program packed into one folder (4.3 GB: its Python, torch and Nano's weights) runs with nothing installed behind it, passes its self-checks and speaks a line (on the processor here, slowly; on the card as fast as today). About a day more to a friends' build (the game finding it by itself, a fresh-account test); no money, all free licences. The proper conversion stays about two weeks by the note and the route for release. Since this morning: your ruling, and the stopgap proven.
 - **Faces and mouths** (builder, item 4): faces frozen; Ron's and Sheila's are final; Darren's S6 is your pick and goes into the game next (he still wears his earlier head there). Mouths: your blind picks this morning chose the mouth that follows the voice's loudness over the faces Epic's tool made, in both pairs, so the game now plays the loudness mouth for every line and item 4 is settled. Since yesterday: your picks, acted on.
 - **Voices** (builder): Ron's and Darren's yes; Sheila's p267 your yes, with your note that it sounds flat, as Ron's first take did. The cloud research's voice-direction note says why: the clips they learn from were read, not acted; its method (a clip library per mood, direction for every line, many takes, chosen by ear in the game) is how they get worked next. Since yesterday: the method.
-- **People dressed** (the clothing session makes, the builder fits): Ron's boots and Sheila's handbag in the game; suits and coats by your ruling (MakeHuman's, skinned); the suit jacket to be filmed in the game (the list's last item). Since this morning: your rulings.
+- **What people see first** (builder; your no of today, before the friends' build, each researched first): shop windows with interiors (interior mapping), people standing and moving naturally (Epic's free animation sample), Sheila's mouth and cheek fault, plain 1990 clothes with the clothing session. After the build, in your order: the cars, the hillside, the night lighting, the street's dressing. Since this morning: your no, and the list.
+- **People dressed** (the clothing session makes, the builder fits): your no today: the clothes read 2020s (slim jeans with contrast stitching, slip-on trainers); plain 1990 clothes before the friends' build. The suit jacket's method test filmed in the game (walking clean; sitting, the skirt still follows the thighs). Since this morning: your no.
 - **The AI tester walking it** (builder; the nightly route walk is item 5): walks the finished game each time it changes; this morning it found Sheila standing on the fish market's crate and the thinking sounds falling back to the loudness mouth in the package (both fixed, walked again). New: a fixed walk of the route with real key presses, judged by the game's own check lines, passes all 11 stages in the editor build and in the finished game (typing w, a, s, d moves Tom 0 cm; Continue puts him back exactly). Since yesterday: two faults fixed; the route walk built.
 
 ## Town, 1 October
