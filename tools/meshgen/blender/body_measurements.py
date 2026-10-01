@@ -6,7 +6,7 @@ WHY, 29 September (Jafar's list, item 5, the pattern route:
 production/research/clothing-pipeline/pattern-jacket-2026-09-29.md). A jacket
 cut from FreeSewing's Brian block is drafted to the wearer's measurements:
 biceps, chest, hpsToBust, hpsToWaistBack, neck, shoulderToShoulder,
-shoulderSlope, shoulderToWrist, waistToArmpit, waistToHips and wrist
+shoulderSlope, shoulderToElbow, shoulderToWrist, waistToArmpit, waistToHips and wrist
 (Simon's collar adds nothing more). They are taken as a tape takes them: a girth is the length round the
 convex outline of a slice through the body (a tape bridges the hollows), a
 length a straight line between two landmarks found from the skeleton. The
@@ -181,6 +181,9 @@ biceps = perimeter(hull(slab))
 # the wrist joint; and the wrist's girth, square to the forearm just above it.
 hand_l = joint("hand_l")
 shoulder_to_wrist = ((sp_l - low_l).length + (low_l - hand_l).length) if sp_l else 0.0
+# shoulder to elbow (1 October: FreeSewing's Jaeger jacket drafts its two-piece sleeve from it): the same path, to
+# the elbow joint
+shoulder_to_elbow = (sp_l - low_l).length if sp_l else 0.0
 fa = (hand_l - low_l).normalized()
 wu = fa.orthogonal().normalized()
 wv = fa.cross(wu).normalized()
@@ -290,6 +293,7 @@ out = {
         "shoulderSlope": round(math.degrees(math.atan2(hps.z - sp_l.z, abs(sp_l.x - hps.x))), 1) if hps and sp_l else None,
         "waistToArmpit": m(ARMPIT - waist_z),
         "waistToHips": m(waist_z - hips_z),
+        "shoulderToElbow": m(shoulder_to_elbow),
         "shoulderToWrist": m(shoulder_to_wrist),
         "wrist": m(wrist),
         "seat": m(hips),
