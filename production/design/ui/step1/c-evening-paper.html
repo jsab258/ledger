@@ -6,21 +6,21 @@
 <!-- Direction C, "the evening paper": the interface is a local evening paper
      of 1990, black ink on newsprint with one spot colour, red, and no full
      colour (regional papers printed none in editorial until the mid 1990s).
-     The title is a blackletter masthead between thick-and-thin rules; menu
-     choices are headlines in a condensed grotesque; the line spoken is a
-     caption on a strip of newsprint; the line typed is a cut-out reader's
-     coupon. Fonts: UnifrakturMaguntia (masthead only), League Gothic
-     (headlines), Libre Franklin (everything read), Old Standard TT (datelines
-     and standfirsts). All SIL OFL 1.1, in ../fonts/ with their licences. -->
-<!-- The fonts, from Google Fonts (each SIL OFL 1.1; licences in ../fonts/, record in ../FONTS.md). -->
+     The title is the front page of the late final: blackletter masthead
+     between thick-and-thin rules, the ears either side, a halftone of the
+     street at night; choices are set as headlines. The pause is a STOP PRESS
+     box, the column papers kept for late news. Speech is a caption: her name
+     on a red tab, her words light on dark as the standards ask; his line goes
+     on a reader's coupon. Fonts, all SIL OFL 1.1 (licences in ../fonts/,
+     record in ../FONTS.md): UnifrakturMaguntia (the masthead word only),
+     League Gothic (ears and the STOP PRESS band), Libre Franklin (choices,
+     subtitles, the typing box), Old Standard TT (datelines and standfirsts). -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=League+Gothic&family=Libre+Franklin:wght@100..900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=block">
 <style>
-/* LEDGER interface mockups, step 1: what every direction shares.
-   Laid out in Unreal's units: 1080 tall, so a 16:9 screen is 1920 wide and
-   Jafar's 21:9 screen (3440 by 1440) is 2580 wide, drawn at 4/3 scale, as
-   Unreal's default DPI curve does by the shortest side. Everything the player
-   reads or acts on stays inside the centred 16:9 region (.safe); only the
-   backdrop and its shading use the full width. */
+/* SHARED BY ALL THREE DIRECTIONS. Laid out in Unreal's units: 1080 tall, so
+   16:9 is 1920 wide and Jafar's 21:9 screen (3440 by 1440) is 2580 wide, drawn
+   at 4/3 as Unreal's default DPI curve does by the shortest side. Everything
+   the player reads or acts on stays in the centred 16:9 region (.safe). */
 html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #0b0c0e; }
 .stage { position: fixed; inset: 0; overflow: hidden; }
 .bg { position: absolute; inset: 0; background-size: cover; background-position: center 55%; }
@@ -30,119 +30,144 @@ html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background:
 .bg.paused { filter: blur(7px) brightness(.5) saturate(.8); inset: -24px; }
 .safe { position: absolute; top: 0; bottom: 0; left: 50%; width: 1920px; margin-left: -960px; }
 .screen { display: none; }
-html[data-screen="title"] .s-title,
-html[data-screen="talk"] .s-talk,
-html[data-screen="pause"] .s-pause { display: block; }
-/* Paper grain, for anything printed or written on. */
-.grain { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .18  0 0 0 0 .15  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
-/* The bottom of the view, darkened a little so the speech area reads. */
-.foot-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 380px; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.38)); }
+html[data-screen="title"] .s-title, html[data-screen="talk"] .s-talk, html[data-screen="pause"] .s-pause { display: block; }
+.foot-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 420px; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.42)); }
 .left-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,7,9,.86) 0, rgba(6,7,9,.7) 26%, rgba(6,7,9,.25) 48%, rgba(6,7,9,0) 62%); }
-</style>
-<style>
+/* Speech: subtitles 8 to 10% up from the bottom, the typing box above them. */
+.subs { position: absolute; left: 0; right: 0; bottom: 104px; text-align: center; }
+.subs p { margin: 0 auto; }
+.subs p > span { -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+
+/* ---------- DIRECTION C ---------- */
 :root {
-  --news: #EAE5D9; --news-old: #DED5C0; --ink: #1F1F1E; --red: #B4191F; --grey: #55524B;
-  --head: "League Gothic", "Arial Narrow", sans-serif; --text: "Libre Franklin", "Franklin Gothic Medium", Arial, sans-serif;
-  --serif: "Old Standard TT", Georgia, serif;
+  --news: #E8E3D6; --ink: #1E1E1D; --red: #B4191F; --grey: #4F4C46;
+  --head: "League Gothic", "Arial Narrow", sans-serif; --text: "Libre Franklin", "Franklin Gothic Medium", Arial, sans-serif; --serif: "Old Standard TT", Georgia, serif;
 }
-.sheet { position: absolute; background: var(--news); color: var(--ink); box-shadow: 0 22px 48px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.3); }
-.sheet::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(130% 100% at 50% 40%, rgba(255,255,255,0) 55%, rgba(120,100,60,.16)); }
-.mast { font: 400 150px/1 "UnifrakturMaguntia", serif; text-align: center; letter-spacing: .01em; }
+/* Newsprint: off-white, a coarse fibre, yellowing towards the edges. */
+.sheet { position: absolute; color: var(--ink); background-color: var(--news);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.68' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .27  0 0 0 0 .2  0 0 0 .6 -.14'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    radial-gradient(120% 110% at 50% 45%, rgba(255,255,255,0) 50%, rgba(160,125,55,.34));
+  box-shadow: 0 1px 1px rgba(0,0,0,.25), 0 22px 48px rgba(0,0,0,.55); }
+.mast { font: 400 128px/1 "UnifrakturMaguntia", serif; text-align: center; }
 .rule2 { border-top: 5px solid var(--ink); border-bottom: 1.5px solid var(--ink); height: 4px; }
-.dateline { display: flex; justify-content: space-between; padding: 12px 4px 11px; border-bottom: 1.5px solid var(--ink); font: 400 19px/1 var(--serif); letter-spacing: .16em; text-transform: uppercase; }
-.hed { position: relative; display: block; padding: 18px 0 16px 34px; border-bottom: 1px solid rgba(31,31,30,.55); font: 400 74px/.92 var(--head); text-transform: uppercase; letter-spacing: .01em; }
+.dateline { display: flex; justify-content: space-between; padding: 11px 4px 10px; border-bottom: 1.5px solid var(--ink); font: 400 24px/1 var(--serif); letter-spacing: .14em; text-transform: uppercase; }
+.hed { position: relative; padding: 16px 0 15px 30px; border-bottom: 1px solid rgba(30,30,29,.5); font: 800 50px/1.05 var(--text); letter-spacing: -.012em; }
 .hed:last-child { border-bottom: 0; }
 .hed.on { color: var(--red); }
-.hed.on::before { content: ""; position: absolute; left: 0; top: 20px; bottom: 18px; width: 12px; background: var(--red); }
-.hed .stand { display: block; margin-top: 10px; font: italic 27px/1.2 var(--serif); text-transform: none; color: var(--ink); letter-spacing: 0; }
-.keyrow { position: absolute; font: 500 22px/1 var(--text); color: #EEEAE0; text-shadow: 0 1px 2px rgba(0,0,0,.8); }
-.keyrow b { display: inline-block; min-width: 18px; padding: 6px 10px; margin-right: 8px; background: var(--news); color: var(--ink); font-weight: 700; text-align: center; text-shadow: none; border-radius: 2px; }
-.keyrow b + span { margin-right: 26px; }
+.hed.on::before { content: ""; position: absolute; left: 0; top: 19px; bottom: 17px; width: 11px; background: var(--red); }
+.hed .stand { display: block; margin-top: 8px; font: italic 400 26px/1.2 var(--serif); white-space: nowrap; color: var(--ink); letter-spacing: 0; }
+/* Keys: boxes ruled in ink on newsprint, square as a printer sets them. */
+.keys { position: absolute; font: 500 30px/1 var(--text); color: #EEEAE0; text-shadow: 0 1px 2px rgba(0,0,0,.85); white-space: nowrap; }
+.keys b { display: inline-block; padding: 7px 12px; margin-right: 10px; background: var(--news); color: var(--ink); font-weight: 700; text-shadow: none; box-shadow: inset 0 0 0 2px var(--ink), 0 2px 4px rgba(0,0,0,.4); }
+.keys b + span { margin-right: 34px; }
 
-/* ---------- TITLE ---------- */
-.front { left: 120px; top: 120px; width: 700px; padding: 26px 40px 30px; box-sizing: border-box; transform: rotate(-.8deg); }
+/* TITLE: the late final's front page, a halftone of the street beside the choices */
+.front { left: 120px; top: 74px; width: 800px; padding: 22px 38px 30px; box-sizing: border-box; }
+.crease { position: absolute; left: 0; right: 0; top: 49%; height: 26px; pointer-events: none; background: linear-gradient(rgba(0,0,0,0), rgba(60,45,20,.12) 45%, rgba(255,255,255,.22) 55%, rgba(0,0,0,0)); }
 .ears { display: flex; justify-content: space-between; align-items: flex-start; }
-.ear { width: 118px; padding: 8px 0 7px; border: 2px solid var(--ink); text-align: center; font: 800 17px/1.15 var(--text); letter-spacing: .08em; text-transform: uppercase; }
+.ear { width: 124px; padding: 9px 0 6px; border: 2px solid var(--ink); text-align: center; font: 400 30px/1 var(--head); letter-spacing: .04em; text-transform: uppercase; }
+.ear small { display: block; margin-top: 4px; font: 400 15px/1.15 var(--serif); letter-spacing: .02em; text-transform: none; }
 .ear.red { background: var(--red); border-color: var(--red); color: #fff; }
-.front .mast { margin: -72px 0 8px; font-size: 132px; }
-.front .menu { margin-top: 16px; }
-.title-foot { left: 120px; bottom: 50px; }
-.version { position: absolute; right: 120px; bottom: 54px; font: 400 20px/1 var(--text); color: rgba(238,234,224,.7); }
+.front .mast { margin: -66px 0 8px; }
+.cols { display: grid; grid-template-columns: 1fr 262px; gap: 0; margin-top: 14px; }
+.cols .menu { padding-right: 26px; border-right: 1px solid rgba(30,30,29,.6); }
+.figure { padding-left: 24px; }
+/* A HALFTONE made in the page: the frame in grey, half-mixed with a dot
+   screen, then a hard contrast that turns the mix into dots that grow where
+   the picture is dark (black wherever dot value < 1 - brightness). */
+.photo { position: relative; height: 396px; overflow: hidden; background: #fff; filter: contrast(20) grayscale(1); }
+.photo .img { position: absolute; inset: -6px; background: url(../../../approvals/2026-10-01/street-hook-night.webp) 64% 52% / auto 118%; filter: grayscale(1) brightness(1.9) contrast(1.35) blur(.8px); }
+.photo .dots { position: absolute; inset: -40%; background: radial-gradient(circle at center, #000 0, #fff 72%) 0 0 / 4.2px 4.2px; transform: rotate(45deg); opacity: .5; }
+.figure .ink { position: relative; }
+.figure .ink::after { content: ""; position: absolute; inset: 0; background: var(--news); mix-blend-mode: multiply; }
+.figure .cap { margin-top: 10px; font: italic 400 25px/1.3 var(--serif); }
+.title-keys { left: 120px; bottom: 52px; }
+.version { position: absolute; right: 120px; bottom: 56px; font: 400 22px/1 var(--text); color: rgba(238,234,224,.72); }
 
-/* ---------- CONVERSATION ---------- */
-.subs { position: absolute; left: 0; right: 0; bottom: 224px; text-align: center; }
-.subs p { margin: 0 auto; font: 450 36px/1.5 var(--text); color: var(--ink); }
-.subs p > span { background: var(--news); padding: 4px 18px; -webkit-box-decoration-break: clone; box-decoration-break: clone; box-shadow: 0 3px 8px rgba(0,0,0,.35); }
-.subs .who { font-weight: 800; color: var(--red); letter-spacing: .04em; font-size: 30px; }
-.coupon { position: absolute; left: 50%; width: 1100px; margin-left: -550px; bottom: 98px; height: 86px; background: var(--news); box-shadow: 0 10px 26px rgba(0,0,0,.45); }
+/* CONVERSATION: her name on a red tab, her words light on dark; his line on a coupon */
+.subs p { font: 450 39px/1.62 var(--text); color: #F1EDE3; }
+.subs p > span { background: rgba(16,16,15,.8); padding: 4px 18px 5px; }
+.subs .who { display: inline-block; margin: 0 14px 0 -8px; padding: 3px 10px 1px; background: var(--red); color: #fff; font: 800 30px/1.3 var(--text); letter-spacing: .05em; vertical-align: 3px; }
+.coupon { position: absolute; left: 50%; width: 960px; margin-left: -580px; bottom: 252px; height: 84px; }
 .coupon::before { content: ""; position: absolute; inset: 7px; border: 2.5px dashed var(--ink); }
-.coupon .to { position: absolute; left: 20px; top: 18px; padding: 8px 14px 6px; background: var(--red); color: #fff; font: 400 36px/1 var(--head); letter-spacing: .03em; text-transform: uppercase; }
-.coupon .typed { position: absolute; left: 200px; right: 34px; top: 22px; padding-bottom: 6px; border-bottom: 2px dotted rgba(31,31,30,.6); font: 450 34px/1 var(--text); white-space: nowrap; }
-.caret { display: inline-block; width: 3px; height: 1.05em; margin-left: 3px; vertical-align: -0.16em; background: var(--ink); }
-.talk-keys { left: 0; right: 0; bottom: 46px; text-align: center; }
+.coupon .to { position: absolute; left: 20px; top: 20px; padding: 9px 12px 6px; background: var(--red); color: #fff; font: 800 28px/1 var(--text); letter-spacing: .05em; text-transform: uppercase; }
+.coupon .typed { position: absolute; left: 240px; right: 30px; top: 23px; font: 450 36px/1 var(--text); white-space: nowrap; }
+.caret { display: inline-block; width: 3px; height: 1.02em; margin-left: 3px; vertical-align: -0.16em; background: var(--ink); }
+.talk-keys { left: 1342px; bottom: 252px; line-height: 1.3; }
+.talk-keys b { margin-bottom: 6px; }
+.pause-keys { left: 550px; top: 892px; }
 
-/* ---------- PAUSE ---------- */
-.page { left: 50%; top: 104px; width: 840px; margin-left: -420px; padding: 30px 46px 34px; box-sizing: border-box; }
-.page .mast { font-size: 112px; margin-bottom: 8px; }
-.page .hed { font-size: 64px; padding-top: 15px; padding-bottom: 13px; }
-.page .note { margin-top: 16px; font: italic 23px/1.45 var(--serif); color: var(--grey); }
+/* PAUSE: the STOP PRESS box */
+.stop { left: 50%; top: 140px; width: 820px; margin-left: -410px; padding: 0 44px 30px; box-sizing: border-box; }
+.stop .band { margin: 0 -44px 0; padding: 14px 44px 9px; background: var(--red); color: #fff; font: 400 58px/1 var(--head); letter-spacing: .06em; text-transform: uppercase; }
+.stop .dateline { margin-top: 10px; border-top: 1.5px solid var(--ink); }
+.stop .hed { font-size: 48px; padding-top: 14px; padding-bottom: 13px; }
+.stop .note { margin-top: 14px; font: italic 400 28px/1.4 var(--serif); color: var(--grey); }
+.stop .crease { top: 61%; }
+.stop .dateline { font-size: 24px; }
 </style>
 <script>document.documentElement.dataset.screen = new URLSearchParams(location.search).get("screen") || "title";</script>
 </head>
 <body>
 <div class="stage">
 
-  <!-- TITLE: the late edition's front page -->
+  <!-- TITLE: the late final's front page -->
   <div class="screen s-title">
     <div class="bg night"></div>
     <div class="left-shade"></div>
     <div class="safe">
-      <div class="sheet front grain">
-        <div class="ears"><div class="ear red">Late<br>Final</div><div class="ear">Meridian<br>1990</div></div>
+      <div class="sheet front">
+        <div class="ears"><div class="ear red">Late final</div><div class="ear">Rain later<small>Clearing by dawn</small></div></div>
         <div class="mast">Ledger</div>
         <div class="rule2"></div>
         <div class="dateline"><span>No. 1</span><span>The Hook, Meridian</span><span>1990</span></div>
-        <div class="menu">
-          <div class="hed on">Continue<span class="stand">Thursday, 9.40 pm, on Quay Street</span></div>
-          <div class="hed">New game</div>
-          <div class="hed">Settings</div>
-          <div class="hed">Quit</div>
+        <div class="cols">
+          <div class="menu">
+            <div class="hed on">Continue<span class="stand">Thursday, 9.40 pm, Quay Street</span></div>
+            <div class="hed">New game</div>
+            <div class="hed">Settings</div>
+            <div class="hed">Quit</div>
+          </div>
+          <div class="figure">
+            <div class="ink"><div class="photo"><div class="img"></div><div class="dots"></div></div></div>
+            <div class="cap">Quay Street tonight.</div>
+          </div>
         </div>
+        <div class="crease"></div>
       </div>
-      <div class="keyrow title-foot"><b>↑</b><b>↓</b><span>to choose</span><b>Enter</b><span>to take it</span></div>
+      <div class="keys title-keys"><b>↑</b><b>↓</b><span>to choose</span><b>Enter</b><span>to take it</span></div>
       <div class="version">Build 0.1</div>
     </div>
   </div>
 
-  <!-- CONVERSATION: the reply as a caption, his line on a reader's coupon -->
+  <!-- CONVERSATION -->
   <div class="screen s-talk">
     <div class="bg talk"></div>
     <div class="foot-shade"></div>
     <div class="safe">
-      <div class="subs"><p><span><span class="who">SHEILA:</span> Morning. Quiet one today.</span><br><span>Ron's on the rank if you're after him.</span></p></div>
-      <div class="coupon grain"><div class="to">To Sheila</div><div class="typed">Did you hear anything last night?<span class="caret"></span></div></div>
-      <div class="keyrow talk-keys"><b>Enter</b><span>says it</span><b>Esc</b><span>leaves it</span></div>
+      <div class="keys talk-keys"><b>Enter</b><span>says it</span><br><b>Esc</b><span>stops typing</span></div>
+      <div class="sheet coupon"><div class="to">To Sheila</div><div class="typed">Has he been there long?<span class="caret"></span></div></div>
+      <div class="subs"><p><span><span class="who">SHEILA</span>Morning. Quiet one today.</span><br><span>Ron's on the rank if you're after him.</span></p></div>
     </div>
   </div>
 
-  <!-- PAUSE: tonight's page, the street held still behind -->
+  <!-- PAUSE: stop press, the street held still behind -->
   <div class="screen s-pause">
     <div class="bg day paused"></div>
     <div class="safe">
-      <div class="sheet page grain">
-        <div class="mast">Ledger</div>
-        <div class="rule2"></div>
-        <div class="dateline"><span>Thursday</span><span>9.40 pm</span><span>Quay Street</span></div>
-        <div class="menu">
-          <div class="hed on">Back to the street</div>
-          <div class="hed">The Ledger</div>
-          <div class="hed">Settings</div>
-          <div class="hed">Quit to the title</div>
-          <div class="hed">Quit the game</div>
-        </div>
-        <div class="note">Last saved at 9.38 pm, on Quay Street. Esc goes back to the street.</div>
+      <div class="sheet stop">
+        <div class="band">Stop press</div>
+        <div class="dateline"><span>Thursday</span><span>10.15 am</span><span>Quay Street</span></div>
+        <div class="hed on">Back to the street</div>
+        <div class="hed">The Ledger</div>
+        <div class="hed">Settings</div>
+        <div class="hed">Quit to the title</div>
+        <div class="hed">Quit the game</div>
+        <div class="note">Last saved at 10.12 am, on Quay Street.</div>
+        <div class="crease"></div>
       </div>
+      <div class="keys pause-keys"><b>Esc</b><span>goes back to the street</span></div>
     </div>
   </div>
 

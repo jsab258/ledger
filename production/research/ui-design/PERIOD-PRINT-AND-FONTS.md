@@ -256,6 +256,7 @@ The fonts the design uses were checked again at source by the session that wrote
 | League Gothic | OFL | yes, Copyright 2010 The League Gothic Project Authors | none | OFL 1.1 | yes | variable only |
 | Anton | OFL | yes, Copyright 2020 The Anton Project Authors | none | OFL 1.1 | yes | yes |
 | UnifrakturMaguntia | OFL | yes, Copyright (c) 2010 j. 'mach' wust, with Reserved Font Name UnifrakturMaguntia | UnifrakturMaguntia | OFL 1.1 | yes | yes |
+| PT Sans | OFL | yes, Copyright (c) 2010 ParaType Ltd., with Reserved Font Names "PT Sans" and "ParaType" | PT Sans, ParaType | copyright line (the OFL file beside it) | yes | yes; byte for byte the game's shipped LedgerSans.ttf |
 
 - **Tinos has no licence file in its google/fonts folder** (OFL.txt, LICENSE.txt and LICENSE all return 404 on 1 October 2026), though its METADATA says OFL and its description still says Apache. The design does not use it until a licence text is found at its source.
 - **Variable-only fonts** (Work Sans, Libre Franklin, League Gothic) have no Reserved Font Name, so static instances cut from them with fontTools need no renaming under OFL FAQ 5.9; whether Unreal reads the variable files directly was not checked.
