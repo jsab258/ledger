@@ -193,3 +193,161 @@ The 30 September proof with one change: the stories carry no rung (a thing told 
 [case 3] the 30 September name, talk.json
 {"talk":"save","error":"path-must-end-.talk.json"}
 ```
+
+## The readers' runs
+
+Each was run again by this session against the repository's own files, with the same output, except the save reader's 140 reloads inside an hour, quoted as it ran them.
+
+### probes/readers/time/gamesim.cpp (the game's free-play clock mirrored over its own headers)
+
+```
+== gamesim tea-cells
+
+[S1] Monday's window seen and recognised (rung 4) by Darren; then a wait from Wednesday 09:30
+  [D0 12:00] the deed (Darren, rung 4)
+  [D0 20:00] Ron's at the door with an envelope for you
+  [D1 09:00] sam goes to the police about player.window_d0
+  [D2 10:00] WAIT STOPS: "There's a constable asking for you." (constable@2)
+  [D2 10:00] A constable: I'm arresting you on suspicion of criminal damage. You do no...  (out at D2 16:00)
+  [D2 10:00] Ada, from her step: "There'll be a pot on at nine tonight, if you want it. I don't ask twice, mind."
+  [D2 16:00] release: You are charged with the offence(s) shown below. Y...
+  [D2 16:00] wait from D2 09:30 ended (stopped)
+  tea state now 1 (1=Asked); custody holds at 10:30? yes
+== gamesim ellis-false
+
+[S3] No envelopes (he never goes down); Thursday (day 3) 17:00 Sheila, on Rita's step by her day, sees the window at rung 4. Friday he presses Z at 09:05.
+  [D0 20:00] Ron's at the door with an envelope for you
+  [D2 10:00] Ada, from her step: "There'll be a pot on at nine tonight, if you want it. I don't ask twice, mind."
+  [D2 20:00] Ron's at the door with an envelope for you
+  [D3 17:00] the deed; Sheila's place by her routine now: ritas_step
+  [D4 08:59] loudness at 08:59: 2
+  [D4 09:00] lena goes to the police about player.window_d3
+  [D4 09:00] loudness after the 09:00 hour's events and its 09:00 round: 3; visits 0
+  [D4 09:05] WAIT STOPS: "DS Ellis is on Quay Street, asking after you." (ellis@4)
+  [D4 09:05] wait from D4 09:05 ended (stopped)
+  DS Ellis's visits so far: (none on day 4)
+  [D4 17:05] wait from D4 09:05 ended (ran out)
+  [D4 20:00] WAIT STOPS: "Ron's at the door with something for you." (ron@4)
+  [D4 20:00] Ron's at the door with an envelope for you
+  [D4 20:00] wait from D4 17:05 ended (stopped)
+  DS Ellis's visits so far: 
+== gamesim ellis-false-night
+
+[S3b] As S3, but he presses Z on Friday at 02:00 (asleep through the morning).
+  [D4 09:00] lena goes to the police about player.window_d3
+  [D4 09:00] WAIT STOPS: "DS Ellis is on Quay Street, asking after you." (ellis@4)
+  [D4 09:00] wait from D4 02:00 ended (stopped)
+  DS Ellis's visits so far: 0
+  [D4 17:00] wait from D4 09:00 ended (ran out)
+  [D4 20:00] WAIT STOPS: "Ron's at the door with something for you." (ron@4)
+  [D4 20:00] Ron's at the door with an envelope for you
+  [D4 20:00] wait from D4 17:00 ended (stopped)
+  [D4 22:00] WAIT STOPS: "They'll be expecting the envelope at the landing after ten." (landing@4)
+  [D4 22:00] wait from D4 20:00 ended (stopped)
+  DS Ellis's visits: 
+[S5] Ada's tea, judged (FirstWeek.h): first minute..last minute -> state
+  21:00..22:29 -> LeftEarly, loyalty 0.55: Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he.
+  21:00..22:30 -> Stayed, loyalty 0.75: Mickey's nephew came for his tea and sat with me till gone half ten. There's more to him than they're saying.
+  21:45..22:40 -> Stayed, loyalty 0.75: Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying.
+  22:00..22:30 -> Stayed, loyalty 0.75: Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying.
+  22:01..22:59 -> LeftEarly, loyalty 0.55: Mickey's nephew came for his tea with the pot near cold and gone ten. Better late, I suppose.
+  21:31..22:35 -> Stayed, loyalty 0.75: Mickey's nephew came late for his tea, but he sat with me till gone half ten. There's more to him than they're saying.
+  21:05..21:05 -> LeftEarly, loyalty 0.55: Mickey's nephew came for his tea and was off again before the pot was cold. Somewhere to be, had he.
+[S9] A window at D2 00:30 (Tuesday night), seen at rung 4 by Darren
+  mended at D2 16:00; first report morning D2 09:00
+  [D2 09:00] sam goes to the police about player.window_d2
+  [D2 10:00] Ada, from her step: "There'll be a pot on at nine tonight, if you want it. I don't ask twice, mind."
+  [D2 20:00] Ron's at the door with an envelope for you
+  [D3 09:00] DS Ellis is on Quay Street this morning, asking after you. (talk)
+  [D3 10:00] A constable: I'm arresting you on suspicion of criminal damage. You do no...  (out at D3 16:00)
+  [D3 16:00] release: You are charged with the offence(s) shown below. Y...
+```
+
+### probes/readers/save/talk-probe.sh (the talk program, stand-in replies)
+
+```
+== 1. C1 under the current rules ==
+ session 1: Tom tells Darren he was at the pictures; the reply's save: fresh stamp G1
+    {"id": 1, "to": "sam", "reply": "Morning. Quiet one today.", "refusedAsk": false}
+    {"talk": "saved", "people": 1}
+   file: stamp=G1 people=1; holds 'pictures': True
+ session 2 (Continue): an hourly save before the talk program is ready keeps G1 and sends no talk save;
+  ready -> load G1; next save G2
+    {"talk": "loaded", "people": 1}
+    {"talk": "saved", "people": 1}
+   file: stamp=G2 people=1; holds 'pictures': True
+== 2. Ron's own question pending across a Continue (C5) ==
+ straight:
+    {"id": 1, "to": "rocco", "reply": "You want me to tell them no to the envelope, boss? That's Mickey's arr", "refusedAsk": false}
+    {"id": 2, "to": "rocco", "reply": "Right you are, boss. I'll take your no down the landing.", "refusedAsk": true}
+ with the 23:00 autosave between and a Continue (the game marks the first line after Continue fresh: GLive.Talked is empty):
+    {"id": 1, "to": "rocco", "reply": "You want me to tell them no to the envelope, boss? That's Mickey's arr", "refusedAsk": false}
+    {"talk": "saved", "people": 1}
+    {"talk": "loaded", "people": 1}
+    {"id": 1, "to": "rocco", "reply": "Funny business round here. The player said to me: \"Tell them no, Ron.\"", "refusedAsk": false}
+ (and even without fresh):
+    {"talk": "loaded", "people": 1}
+    {"id": 1, "to": "rocco", "reply": "Funny business round here. The player said to me: \"Tell them no, Ron.\"", "refusedAsk": false}
+== 3. Sheila's plain question pending across a Continue (C5) ==
+ straight:
+    {"id": 1, "to": "lena", "reply": "I don't come in Sundays. That's Mickey's real book. Everything he ran,", "refusedAsk": false}
+    {"id": 2, "to": "lena", "reply": "Take it over, then? Mickey's arrangements and everything that comes wi", "refusedAsk": false}
+    {"id": 3, "to": "lena", "reply": "Right. Then it's your book.", "refusedAsk": false, "weekAnswer": "TakeOver"}
+ with the 11:00 autosave between and a Continue:
+    {"id": 1, "to": "lena", "reply": "I don't come in Sundays. That's Mickey's real book. Everything he ran,", "refusedAsk": false}
+    {"id": 2, "to": "lena", "reply": "Take it over, then? Mickey's arrangements and everything that comes wi", "refusedAsk": false}
+    {"talk": "saved", "people": 1}
+    {"talk": "loaded", "people": 1}
+    {"id": 1, "to": "lena", "reply": "Funny business round here. The player said to me: \"Morning, Sheila.\"", "refusedAsk": false}
+== 4. A talk save that fails removes the good file; the game has already written the new stamp ==
+    {"id": 1, "to": "sam", "reply": "Morning. Quiet one today.", "refusedAsk": false}
+    {"talk": "saved", "people": 1}
+   file: stamp=G5 people=1; holds 'pictures': True
+    {"talk": "loaded", "people": 1}
+    {"talk": "save", "error": "unwritable"}
+   slot file exists after the failed save: NO
+ Continue with clock.txt's G6:
+    {"talk": "loaded", "people": 0, "missing": true}
+```
+
+### probes/readers/save/reload-week (the route's week saved and reloaded part way; the hour ends re-run here in 4 minutes)
+
+```
+hour ends: 171 of 171 runs with rows differing 0, end states differing 0
+inside an hour: 311 of 311 runs with rows differing 0, end states differing 0
+```
+
+### probes/readers/route (p3: the evidence, a threat, keeping quiet)
+
+```
+[F] familiarity from days met: 0:0.00 1:0.40 2:0.50 3:0.60 4:0.70 6:0.70
+    IdRung at 1.5 m, daylight, met once: 4; never met: 3
+
+[E] Darren holds player.window_d0 at rung 4, hop 0
+    AccountOf("player.broke_a_window"): held=0 -> Derive Trusting 0.00
+    AccountOf("player.window_d0"):     held=1 rung=4 -> Derive Confronting 0.89 (I saw it myself: a clause, and it was him, I would swear to it)
+    DeedJson(window_d0) = ,"deed":{"topic":"player.window_d0","day":0,"hour":10,"sawHimAt":"ritas_step"}
+
+[R1] Mon 10:30: Darren rung 4, Ines rung 3, Rita rung 3; nothing said to anybody
+    D1 09:00: sam goes to the police
+    D1 09:00: ines goes to the police
+    D2 10:00: a constable takes him (player.window_d0)
+    file: sam player.window_d0 how=2 day=1
+    file: ines player.window_d0 how=1 day=1
+
+[R2] the same; he threatens Darren over it at Mon 11:00 (Silence::FileThreat, as TakeClaimsFromReply does)
+    threat filed=1; WouldReport after it=1
+    D1 09:00: sam goes to the police
+    D2 10:00: a constable takes him (player.window_d0)
+
+[R3] the same; Darren keeps it quiet at Mon 11:00 (KeepQuiet with the deed field's topic)
+    (nothing above = no report, no constable)
+
+[B] rung-4 clauses filed as the story's summary:
+    cw-ws-r4-01: it was Nowak that put the window in on Quay Street, the new owner up at Mickey's, and there's no mistaking him
+    cw-ws-r4-02: the new owner that's got Mickey's now, Nowak, put the window in, and he'd be known anywhere
+    cw-ws-r4-03: the fella from Mickey's put the shop window in, Nowak, and he was seen clear enough that there's no question who he is
+familiarity 0.20: knowsItIsHim=0 knowing=Enough stance=Indifferent -> KnowingJson sends {"level":"nothing"}
+familiarity 0.40: knowsItIsHim=1 knowing=Enough stance=Comments -> KnowingJson sends the story
+his memory: I saw it myself: it was Nowak that put the window in on Quay Street
+```
