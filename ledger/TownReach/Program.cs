@@ -323,7 +323,12 @@ static class Program
         const string window = "player.window_d1";
         foreach (bool takes in new[] { true, false })
             foreach (bool sits in new[] { true, false })
-                foreach (var seenBy in new[] { "lena", "ada", "nobody", "none" })
+                // Who sees the window: Sheila, one of Mickey's own, who never goes to the
+                // police about him (Jafar's ruling of 1 October); Darren, at the fish
+                // front with a body at Tuesday noon, who does (the review of 1 October,
+                // M4: behind her window Ada could never see Rita's glass in play);
+                // nobody; or no window at all.
+                foreach (var seenBy in new[] { "lena", "sam", "nobody", "none" })
                 {
                     var graph = new SocialGraph();
                     foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
@@ -400,8 +405,8 @@ static class Program
                         }
                         damage?.Tick(mill, cast, now);
                         // Each morning after it, whoever saw it goes to the police once they
-                        // would: by Jafar's ruling of 1 October the first morning, unless on
-                        // his side (Ada's tea on day 3 comes after that, so it cannot undo it).
+                        // would: by Jafar's rulings of 1 October the first morning, unless on
+                        // his side or one of Mickey's own (Ada's tea on day 3 comes after it).
                         if (!reported && day >= 2 && hod == 9 && seenBy != "nobody" && seenBy != "none"
                             && PoliceFile.WouldReport(mill.Get(seenBy), Offence.Damage, false, window, cast.NeverToPolice(seenBy)))
                         {
@@ -433,7 +438,7 @@ static class Program
                         if (hod == 10 && !held && day < week.Day && cast.AreaOf(cast.PlaceOf("lena", day, hod)) == "mickeys")
                             talkDays.Add(day);
                         if (trust == "never" && hod == 11 && TrustsNow(mill, talkDays, sheSaw, day)) trust = $"day {day + 1}";
-                        if (day == tea.Day && hod == 10) tea.SheSeesHim(now);
+                        if (day == tea.Day && hod == 10) tea.SheSeesHim(now, custody != null && custody.Holds(now));
                         if (hod == 20 && arrangement.AsksOn(day) && !Skip("ron")) arrangement.Delivered(day, mill.Get("rocco"), now);
                         if (sits && day == tea.Day && hod == 21 && !Skip("tea"))
                             for (int m = 0; m < 60; m++) tea.WithHer(new GameTime(day, 21, m));

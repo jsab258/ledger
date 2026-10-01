@@ -55609,7 +55609,6 @@ AskWound|half eleven|1|0|-1|1|wound down|1|1|null|-1|1|1|2|{"first":0,"nights":[
 AskWound|half twelve|1|0|-1|1|wound down|1|1|null|-1|1|1|2|{"first":0,"nights":[[0,"refused"]],"delivered":[0],"woundDown":[0]}
 AskWound|day six|1|0|-1|1|wound down|0.6599999999999999|4|null|-1|1|2|2|{"first":0,"nights":[[0,"noshow"],[2,"undelivered"],[4,"undelivered"],[6,"refused"]],"delivered":[0],"woundDown":[6]}
 AskEdge|dawn before one|0|0|none|1|0|1
-AskEdge|dawn at one|2|0|none|0.6599999999999999|1|0
 AskEdge|answer undelivered|0|0|0
 AskEdge|first day negative|0|0|none|1|0|1
 Landing|before~ten|none
@@ -57822,7 +57821,6 @@ TeaGap|10|Stayed|1360
 TeaGap|11|Stayed|1360
 TeaGap|12|LeftEarly|1360
 FixAsk|did two nights early|0
-FixAsk|away before one|0|1
 FixAsk|no|1|10020|0
 AskSave|save|{"first":0,"nights":[[0,"did"],[2,"noshow"],[4,"undelivered"],[6,"refused"]],"delivered":[0,2,6],"noTell":[6,10020]}
 FixAskStory|player.outfit_d0|did|1|Mickey's~nephew~brought~the~envelope~down~the~landing
@@ -57850,11 +57848,8 @@ SweepAge|10-12-11-12|0.9856631986401876
 SweepAge|10-9-12|0.9856631986401876
 SweepConstable|null|w1|1
 SweepAsked|2|ada,ferko,franjo,hana,ines,iva,jelena,joey,katarina,lena,marla,marta,noor,rita,rocco,sam,selma,tanja,zlata,zora
-SweepHeard|2|rocco:player.window_d1:Talk,lena:player.window_d1:Talk,zlata:player.window_d1:Talk,ferko:player.window_d1:Talk,sam:player.window_d1:Talk,ada:player.window_d1:Talk,noor:player.window_d1:Talk,marla:player.window_d1:Talk,joey:player.window_d1:Talk,zora:player.window_d1:Talk,iva:player.window_d1:Talk,selma:player.window_d1:Talk,tanja:player.window_d1:Talk,katarina:player.window_d1:Talk,ines:player.window_d1:Talk,marta:player.window_d1:Talk,jelena:player.window_d1:Talk,hana:player.window_d1:Talk,franjo:player.window_d1:Talk
 SweepAsked|4|ada,ferko,hana,ines,iva,jelena,joey,lena,marla,marta,noor,rita,rocco,sam,selma,tanja,zlata,zora
-SweepHeard|4|rocco:player.window_d1:Talk,lena:player.window_d1:Talk,zlata:player.window_d1:Talk,ferko:player.window_d1:Talk,sam:player.window_d1:Talk,ada:player.window_d1:Talk,noor:player.window_d1:Talk,marla:player.window_d1:Talk,joey:player.window_d1:Talk,zora:player.window_d1:Talk,iva:player.window_d1:Talk,selma:player.window_d1:Talk,tanja:player.window_d1:Talk,ines:player.window_d1:Talk,marta:player.window_d1:Talk,jelena:player.window_d1:Talk,hana:player.window_d1:Talk
 SweepAsked|6|zlata
-SweepHeard|6|zlata:player.window_d1:Talk
 SweepWound|load|1|{"first":0,"nights":[[0,"undelivered"],[2,"undelivered"],[4,"undelivered"],[6,"refused"]],"delivered":[6],"woundDown":[6],"woundTell":[6,10020]}
 SweepWound|half a night|-1
 SweepWound|at one|-1

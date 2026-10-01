@@ -36,6 +36,7 @@ namespace Ledger.Core
         public static int Hour(GossipMill mill, CastDay cast, GameTime hourStart, Func<string, bool> onStreet = null)
         {
             if (mill == null || cast == null) return 0;
+            mill.KeepsHisDeedsFor = cast.MickeysOwn;   // Mickey's own handle it privately (Jafar, 1 October)
             int day = hourStart.Day, hour = hourStart.Hour;
             int passed = 0;
             for (int m = 0; m < 60; m += MinutesBetweenRounds)
@@ -102,6 +103,7 @@ namespace Ledger.Core
         public int RunTo(GossipMill mill, CastDay cast, GameTime now, Func<string, bool> onStreet = null)
         {
             if (mill == null || cast == null) return 0;
+            mill.KeepsHisDeedsFor = cast.MickeysOwn;   // Mickey's own handle it privately (Jafar, 1 October)
             const int step = TownRounds.MinutesBetweenRounds;
             long nowM = now.TotalMinutes;
             long hourNowStart = TownRounds.FloorDiv(nowM, 60) * 60;
