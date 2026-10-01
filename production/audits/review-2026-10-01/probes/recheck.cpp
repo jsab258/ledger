@@ -16,6 +16,8 @@
 #include "CrimeProbe.h"
 #include "PlayerIdentity.h"
 #include "PoliceFile.h"
+#include "Silence.h"
+#include "Suspecting.h"
 #include "TownWeek.h"
 
 #include <cmath>
@@ -155,6 +157,13 @@ static void ProveA3()
 	std::printf("  kept quiet suppresses player.window_d0: %s\n", Sam->SuppressedHas(Key) ? "yes" : "NO");
 	RumorPtr Own = OwnedUpStory(Key, "sam", "ritas", "the new owner told me himself that he put Rita's window in");
 	std::printf("  owning up files: %s = \"%s\", sensitive=%s\n", Own->TopicKey().c_str(), Own->Summary.c_str(), Own->Sensitive ? "yes" : "no");
+	// THE EVIDENCE the talk is sent with every line (EvidenceFor, CrimeProbe.cpp
+	// 2730): the account asked under the scripted story's key, as the game asks it,
+	// beside the same account asked under the key free play files.
+	const LedgerCore::DeedAccount Asked = LedgerCore::Suspecting::AccountOf(Sam.get(), "player.broke_a_window");
+	const LedgerCore::DeedAccount Real = LedgerCore::Suspecting::AccountOf(Sam.get(), Key);
+	std::printf("  the evidence the game sends, asked as \"player.broke_a_window\": held=%s; asked as \"%s\": held=%s rung=%d\n",
+		Asked.Held ? "yes" : "NO", Key.c_str(), Real.Held ? "yes" : "no", Real.Rung);
 }
 
 // ---- A4: from a recognition to the constable --------------------------------
@@ -285,6 +294,43 @@ static void ProveNowak(const std::string& Bank)
 		bRonSays ? "YES" : "no", Memories(Ron).c_str());
 }
 
+// ---- NEW: a threat, and the report it was ruled to stop -----------------------
+static void ProveThreat()
+{
+	std::printf("\n[NEW] Darren saw it at rung 4; Tom threatens him over it (Silence::FileThreat, as the game files the reply's \"threatened\")\n");
+	auto Mill = NewMill();
+	Mill->Add(NewPerson("sam"));
+	const std::string Topic = "player.window_d0";
+	Mill->Witness("sam", Fact("player", "window_d0", "ritas"), "seen", true, GameTime(0, 10, 30), 1.0, false, 4);
+	const bool bBefore = PoliceFile::WouldReport(Mill->Get("sam").get(), Offence::Damage, false, &Topic);
+	const bool bFiled = Silence::FileThreat(Mill.get(), "sam", Topic, GameTime(0, 11, 0));
+	const bool bAfter = PoliceFile::WouldReport(Mill->Get("sam").get(), Offence::Damage, false, &Topic);
+	std::printf("  would report before the threat: %s; threat filed: %s; would report after it: %s\n", bBefore ? "yes" : "no", bFiled ? "yes" : "no", bAfter ? "YES" : "no");
+}
+
+// ---- NEW: who "was there" at the deed's hour, by the damage's own tick --------
+static void ProveThere(const CastDay& Cast)
+{
+	using namespace LedgerCrime;
+	std::printf("\n[NEW] A smash on Monday at 17:30: who is measured as an onlooker, and who the damage's tick says was there\n");
+	std::string Seen;
+	for (const OnlookerAt& O : OnlookersAt(Cast, 0, 17, { "lena", "sam", "rocco" })) if (O.Place.compare(0, 5, "ritas") == 0) Seen += " " + O.Id;
+	std::printf("  onlookers in Rita's area:%s\n", Seen.empty() ? " none but those listed by body" : Seen.c_str());
+	auto Mill = NewMill();
+	for (const std::string& P : Cast.People()) Mill->Add(NewPerson(P));
+	TownWeek W;
+	// Sheila (her body on Rita's step) saw it; as DeedFollows passes it (CrimeProbe.cpp 5448-5466).
+	W.Deed(nullptr, GameTime(0, 17, 30), "ritas", "rita_window", "somebody put Rita's window in", { { "lena", 4 } }, "window_d0", std::string(), 1.0, true);
+	for (const auto& F : W.DamageTick(Mill.get(), &Cast, GameTime(0, 17, 30)))
+	{
+		std::string Place;
+		Cast.PlaceOf(F.first, 0, 17, Place);
+		const GossiperPtr G = Mill->Get(F.first);
+		std::printf("  %-7s at %-14s (%s, %s): \"%s\"\n", F.first.c_str(), Place.c_str(), Cast.IsInside(Place) ? "indoors" : "outdoors",
+			F.first == "lena" || F.first == "sam" || F.first == "rocco" ? "a body" : "no body", G && !G->Memory->Events.empty() ? G->Memory->Events.back().Text.c_str() : "");
+	}
+}
+
 int main(int Argc, char** Argv)
 {
 	const std::string Bank = ReadAll(Argc > 1 ? Argv[1] : "content/dialogue/crime-witness-v1.json");
@@ -299,5 +345,7 @@ int main(int Argc, char** Argv)
 	ProveB1();
 	WhoEver(Cast);
 	ProveNowak(Bank);
+	ProveThreat();
+	ProveThere(Cast);
 	return 0;
 }
