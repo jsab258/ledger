@@ -85,6 +85,14 @@ html, body { margin: 0; width: 100%; background: #26241F; }
 .hint .tagr { display: inline-block; padding: 7px 12px 3px; background: var(--ink); color: var(--news); font: 400 26px/1 var(--head); letter-spacing: .06em; text-transform: uppercase; }
 .hint .do { display: flex; align-items: center; gap: 4px; padding: 14px 20px 0; font: 600 30px/1 var(--text); }
 .hint .why { padding: 10px 20px 14px; font: italic 400 26px/1.3 var(--serif); }
+.say { position: relative; display: flex; align-items: center; gap: 16px; padding: 12px 0 11px 24px; border-bottom: 1px solid var(--rule); font: 600 34px/1.2 var(--text); }
+.say:last-child { border-bottom: 0; }
+.say.on { color: var(--red); }
+.say.on::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 13px; width: 9px; background: var(--red); }
+.say .key { margin: 0; font-size: 26px; padding: 5px 10px; }
+.say.own { font-weight: 500; color: var(--grey); }
+.pad { display: inline-grid; place-items: center; width: 44px; height: 44px; margin: 0 8px 8px 0; border-radius: 50%; background: var(--news); color: var(--ink); font: 800 26px/1 var(--text); box-shadow: inset 0 0 0 2.5px var(--ink), 0 2px 4px rgba(0,0,0,.4); vertical-align: middle; }
+.pad.dpad { width: auto; padding: 0 9px; border-radius: 8px; font-size: 22px; }
 .st { margin: 10px 0 2px; font: 600 16px/1 var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--grey); }
 .dk .st { color: #B8B2A5; }
 </style>
@@ -176,6 +184,22 @@ html, body { margin: 0; width: 100%; background: #26241F; }
       <div class="phase"><span>Building the street</span><span>312 to go</span></div><div class="bar"><b></b></div>
       <div class="phase" style="margin-top:20px"><span>Getting ready</span><span></span></div><div class="bar wait"><b></b></div>
       <div class="note">A rule that fills as the work is done when it can be counted, a short moving piece when it cannot; never a bar that guesses.</div>
+    </div>
+  </div>
+
+  <!-- ROW: suggested lines and a controller's buttons, full width so each line stays one line -->
+  <div style="grid-column: 1 / -1; display: grid; grid-template-columns: 2fr 1fr; gap: 28px; align-items: start;">
+    <div class="sheet card">
+      <div class="lab">Suggested lines</div>
+      <div class="say on"><span class="key">1</span>Any bookings come in this morning?</div>
+      <div class="say"><span class="key">2</span>How are the books looking, Sheila?</div>
+      <div class="say own">My own words…</div>
+      <div class="note" style="margin-top:10px">His exact words, never a summary: three, each with its own job (ask, his own business, leave), then his own words. Numbered on a keyboard; on a controller, chosen with the pad.</div>
+    </div>
+    <div class="dk">
+      <div class="lab">A controller's buttons</div>
+      <span class="pad dpad">↑↓</span><span class="pad">A</span><span class="pad">B</span><span class="pad">X</span><span class="pad">Y</span>
+      <div class="note">Round, so they never pass for keys; the letters as the pad in his hands has them, read from Steam Input.</div>
     </div>
   </div>
 

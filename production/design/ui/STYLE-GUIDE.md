@@ -37,6 +37,7 @@ The look Jafar picked on 1 October 2026: the interface is a 1990 British local e
 | Subtitle | Libre Franklin 450 | 39 | About 48 px from the top of an h to the foot of a y on a 1440 screen; at most two lines under 40 letters |
 | Speaker's name | Libre Franklin 800, capitals | 30 | White on red, before the line |
 | Typing box | Libre Franklin 450 | 36 | Grows to three lines, then scrolls |
+| Suggested line | Libre Franklin 600 | 34 | At most about 40 letters, so it is one line |
 | Key hint | Libre Franklin 500 | 30 | The key itself 700, in a ruled box |
 | Note, caption | Old Standard TT italic | 26 to 30 | Where and when, why a choice is unavailable, a caption |
 | Explanation in settings | Libre Franklin 400 | 27 | |
@@ -104,7 +105,18 @@ Every part is drawn in step2/kit.html.
   - the coupon, headed TO SHEILA (to whoever he is talking to);
   - Enter says it; Esc stops typing and keeps the words;
   - grows with the text;
-  - no suggested questions.
+  - suggested lines sit above it on a keyboard when he asks for them (below).
+- **Suggested lines** (Jafar, 1 October: for a controller, or for anyone who would rather not type; production/research/ui-design/SUGGESTED-LINES.md):
+  - his exact words, never a summary of them (Mass Effect's wheel is the warning: a summary that says something he did not mean);
+  - three at most, each with its own job: one asks or presses, one is his own business, one leaves; then "My own words…";
+  - written only from what Tom himself knows (his Ledger and the talk so far), never from what the other person knows, and never ranked by whether they would work;
+  - where his answer decides something (a deal he can end with a plain yes), the yes and the no are both offered, written from the game's state, never by the model, with a third line that keeps talking without deciding;
+  - never the same line twice in one conversation; the same voice and period as everyone else, and the same content rule;
+  - chosen, a line goes the same way as a typed one: it is what he says;
+  - on a keyboard they open with Tab above the coupon, numbered 1 to 3; with a controller they are there from the start, moved with the pad and said with A, and "My own words…" (Y) opens Steam's floating keyboard over the game;
+  - no timers;
+  - the one in hand is red with its bar, like every other choice.
+- **A controller's buttons:** round, ruled in ink, never square like keys; the letters are the pad's own, read from Steam Input, and they follow any rebinding.
 - **Confirmation:** a red band asking the question, a line saying what is kept, and the safe choice in hand first ("Stay on the street").
 - **Progress:**
   - a thin newsprint rule that fills when the work can be counted, with the game's own words for the phase ("Building the street", "Starting as soon as the street is ready", "312 to go"; the first-launch phase, "Getting the street ready for this PC's graphics card", only on the first run);

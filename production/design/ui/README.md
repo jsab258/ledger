@@ -38,6 +38,11 @@ The pages ask Google Fonts for their fonts (FONTS.md lists each, with its licenc
 - **Not fixable here**: the game's frames show no Tom, so the in-play screens read as first person. That is the builder's camera, not the interface.
 - **His page**: https://claude.ai/artifact/KRReoxSgX8qEfPAebV4JhM (source step2/page/). It asks whether to build the set as drawn (verdicts/ui-set-evening-paper), and whether a trade mark lawyer should check the name LEDGER before anything goes public (verdicts/ui-name-check; recommended: yes, now, with two fallback names; production/research/ui-design/BRANDING.md).
 
+## His answers on step 2 (1 October 2026, in chat; nothing tapped on the page)
+
+- **The set: liked as drawn**, with one thing missing: players who use a controller, or do not want to type, choose from **suggested lines** instead of typing; typing stays. This overrides the research's "no suggested questions"; the suggestions are designed next (research first), and the style guide changes with them.
+- **The name: LEDGER stays for now.** No trade mark check yet; it is to be raised again before any Steam page, trailer or announcement (BRANDING.md).
+
 ## Next
 
 - **The finish**, under his answer (a): scanned paper, a real halftone screen, sound; one screen finished and judged against Kingdom Come: Deliverance II before the rest. It starts once the playable route works (his rule of 30 September).

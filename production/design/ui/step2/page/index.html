@@ -80,10 +80,11 @@ main img,section img,[data-film-sprite]{cursor:zoom-in}
   <header>
     <div class="kicker">LEDGER · Thursday 1 October</div>
     <h1>Every screen, in the evening paper</h1>
-    <p class="how">The look you picked, on all eight screens, at your 3440 by 1440 and at 1920 by 1080. Open one below; tap a picture for full size.</p>
+    <p class="how">The look you picked on every screen, now with suggested lines, at your 3440 by 1440 and at 1920 by 1080. Open one below; tap a picture for full size.</p>
   </header>
   <section class="decide" id="d1"></section>
   <section class="decide" id="d2"></section>
+  <section class="decide" id="d3"></section>
   <div id="folds" class="wrap" style="gap:8px"></div>
   <details>
     <summary>About these pictures</summary>
@@ -93,12 +94,15 @@ main img,section img,[data-film-sprite]{cursor:zoom-in}
 <script>
 const PAGE = {
   decisions: [
-    {key:"ui-set-evening-paper", q:"The full set: build it like this?", note:true, plain:true,
-     options:[["yes","Yes, build it",false],["change","Change something (say what below)",false]],
-     detail:"Short of a 2026 game: these are design mockups, with paper drawn by code rather than scanned; the finish comes later, done ourselves as you chose. The game's frames behind show no Tom, so the in-play screens read as first person; that is the frames, for the builder. Three fresh reviewers checked the set in turn and their obvious faults are fixed; what they still note is under each screen."},
-    {key:"ui-name-check", q:"Before any Steam page or trailer, should a trade mark lawyer check the name LEDGER?", note:false, plain:true,
-     options:[["now","Yes, now, with two fallback names",true],["keep","Keep LEDGER, accept the risk",false],["rename","Rename now",false]],
-     detail:"A cryptocurrency-wallet company, Ledger, holds LEDGER as a trade mark for software (the class games are sold under) in the UK, the EU and the US, and enforces it. That comes from summaries of official decisions: the registers themselves could not be reached from here. Only a lawyer's search clears a name. From published price ranges, a clearance in all three would be in the low thousands of pounds. The full research is in the pull request."},
+    {key:"ui-suggest-written", q:"How should the suggested lines be written?", note:false, plain:true,
+     options:[["mixed","Mixed, about 10 cents an hour more",true],["authors","Written ahead only, free but repeats",false],["reply","By her reply's call, risks her secrets",false]],
+     detail:"Mixed: the game's own written lines for hellos, goodbyes and decisions, and the small model, given only what Tom knows, for the rest. It costs about 10 US cents more per hour of talk, on the small model (an estimate from published prices, not measured), counts against each copy's talk allowance, and falls back to the written ones when that runs out. Written ahead costs nothing per line but is a large writing job and repeats sooner. The same call as her reply is the cheapest (about 3 cents an hour) but sees what she knows, so its suggestions would point at her secrets. The research is in the pull request."},
+    {key:"ui-suggest-who", q:"Who sees them?", note:false, plain:true,
+     options:[["pad-tab","A controller at once; a keyboard when he presses Tab",true],["everyone","Everyone, always",false]],
+     detail:"The research found suggested words make people write shorter, more predictable lines, so a keyboard player sees them only when he asks."},
+    {key:"ui-speech", q:"A microphone as a third way to talk?", note:false, plain:true,
+     options:[["later","Not now; look again after the playable route works",true],["now","Now",false]],
+     detail:"Voice is what other AI-talk games use for players who will not type. It would be new work: speech recognition on the PC and testing it with British accents."},
   ],
   screens: [
     {k:"title", n:"Title screen", d:"New game, Continue (with where and when you left off), Settings, Quit."},
@@ -108,10 +112,12 @@ const PAGE = {
     {k:"hints", n:"A first-time key hint", d:"Shown once, gone the moment it is done."},
     {k:"subtitles", n:"Subtitles with the speaker", d:"Overheard at night, from someone Tom has no name for, off to the left."},
     {k:"typing", n:"The typing box", d:"His line to Sheila, grown to two lines."},
-    {k:"loading", n:"Loading, with its progress", d:"Tonight's front page while the street is made ready; the red rule moves only as the work does."},
+    {k:"suggest", n:"Suggested lines, on a keyboard", d:"New: Tab opens three of his own possible lines above the box; 1, 2 or 3 says one."},
+    {k:"suggest-pad", n:"Suggested lines, with a controller", d:"New: there from the start; the pad chooses, A says it, Y opens a keyboard for his own words."},
+    {k:"loading", n:"Loading, with its progress", d:"Tonight's front page while the street is made ready; the rule moves only as the work does."},
   ],
   sizes: [["3440","On your 3440 by 1440 screen"],["1920","On a 1920 by 1080 screen"]],
-  kit: {n:"Every part, in every state", d:"Type, colour and contrast, choices, settings lines, presets, keys, speakers' names, the prompt, the hint, progress and the quit question."},
+  kit: {n:"Every part, in every state", d:"Type, colour and contrast, choices, settings lines, presets, keys, speakers' names, the prompt, the hint, progress, the quit question, suggested lines and a controller's buttons."},
   notes: {
     title: ["The key hints sit on the bare street: fine at night, not yet tried over a bright frame."],
     pause: ["\u201cThe Ledger\u201d is his notebook; on this screen it could be read as the game's name."],
@@ -120,15 +126,17 @@ const PAGE = {
     hints: ["On your wide screen the slip sits over the near lane of the road."],
     subtitles: ["The arrow points left, towards a man walking on the left pavement, who may be taken for the speaker."],
     typing: ["The box covers the man by the lamp post below the waist."],
+    suggest: [],
+    "suggest-pad": [],
     loading: ["\u201c312 to go\u201d is the game's own wording; it does not say 312 of what."],
   },
   about: [
+    "Your answers in chat: the set as drawn, with suggested lines added (here, screens 8 and 9); the name LEDGER stays for now.",
     "Short of a 2026 game: design mockups, the paper drawn by code; scanned paper, real halftone and sound come with the finish.",
     "The street behind is the game's own frames of 1 October. They show no Tom, so the in-play screens read as first person; that is for the builder's camera, not the interface.",
     "On your 3440 by 1440 screen the street is the game's 2560 frame enlarged by a third, so it is soft; the interface is drawn at full size.",
     "Everything to read sits in the middle 16:9 of the wide screen. Subtitles are 39 units on an 80% dark backing (adjustable), key hints 30, nothing to read under 24.",
-    "The style guide, the kit, the research and these pictures at full size are in the pull request.",
-    "Your pick from the first page: the evening paper. The pictures are in the pull request, as you said yes."],
+    "The style guide, the kit, the research and these pictures at full size are in the pull request."],
 };
 const state = {};
 let db = null, canWrite = true;

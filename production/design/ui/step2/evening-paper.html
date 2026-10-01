@@ -11,7 +11,7 @@
      only), League Gothic (bands and ears only), Libre Franklin (everything
      read), Old Standard TT (datelines, standfirsts, captions, notes).
      Open with ?screen=title, pause, settings, prompt, hints, subtitles,
-     typing or loading. -->
+     typing, suggest (keyboard), suggest-pad (controller) or loading. -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=League+Gothic&family=Libre+Franklin:wght@100..900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=block">
 <style>
 /* LAYOUT. Unreal's units: 1080 tall, so 16:9 is 1920 wide and Jafar's 21:9
@@ -32,7 +32,8 @@ html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background:
 .screen { display: none; }
 html[data-screen="title"] .s-title, html[data-screen="pause"] .s-pause, html[data-screen="settings"] .s-settings,
 html[data-screen="prompt"] .s-prompt, html[data-screen="hints"] .s-hints, html[data-screen="subtitles"] .s-subtitles,
-html[data-screen="typing"] .s-typing, html[data-screen="loading"] .s-loading { display: block; }
+html[data-screen="typing"] .s-typing, html[data-screen="loading"] .s-loading,
+html[data-screen="suggest"] .s-suggest, html[data-screen="suggest-pad"] .s-suggest-pad { display: block; }
 .foot-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 420px; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.42)); }
 .left-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,7,9,.86) 0, rgba(6,7,9,.7) 26%, rgba(6,7,9,.25) 48%, rgba(6,7,9,0) 62%); }
 
@@ -166,6 +167,31 @@ html[data-screen="typing"] .s-typing, html[data-screen="loading"] .s-loading { d
 
 /* 6. SUBTITLES alone: overheard, at night, from somebody he has no name for */
 /* 7. THE TYPING BOX grown to two lines */
+
+/* 9. SUGGESTED LINES (Jafar, 1 October): for a controller, or for anyone who
+   would rather not type. The exact words he will say, never a summary; three,
+   each with its own job (ask, something of his own, leave), then his own words.
+   On a keyboard they open with Tab above the coupon; on a controller they are
+   there from the start. Same place as the coupon: away from the person. */
+.says { position: absolute; left: 120px; width: 900px; bottom: 252px; padding: 0 0 6px; }
+.says .tag { display: inline-block; padding: 7px 12px 3px; background: var(--ink); color: var(--news); font: 400 28px/1 var(--head); letter-spacing: .06em; text-transform: uppercase; }
+.says .tag em { font-style: normal; color: rgba(232,227,214,.75); }
+.say { position: relative; display: flex; align-items: center; gap: 18px; margin: 0 22px; padding: 14px 0 13px 24px; border-bottom: 1px solid var(--rule); font: 600 34px/1.2 var(--text); }
+.say:last-child { border-bottom: 0; }
+.say.on { color: var(--red); }
+.say.on::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 15px; width: 9px; background: var(--red); }
+.say .key { margin: 0; font-size: 26px; padding: 5px 10px; }
+.say.own { font-weight: 500; font-style: normal; color: var(--grey); }
+.say.own.on { color: var(--red); }
+.with-coupon { bottom: 414px; }
+.coupon .typed .hintline { color: var(--grey); font-style: italic; font-family: var(--serif); font-size: 30px; }
+/* A controller's buttons: round, ruled in ink, letters as the pad has them. */
+.pad { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-right: 10px; border-radius: 50%; background: var(--news); color: var(--ink); font: 800 26px/1 var(--text); box-shadow: inset 0 0 0 2.5px var(--ink), 0 2px 4px rgba(0,0,0,.4); vertical-align: middle; }
+.pad.dpad { width: auto; padding: 0 9px; border-radius: 8px; font-size: 22px; letter-spacing: -.02em; }
+.keys.over .pad { padding: 0; background: var(--news); text-shadow: none; }
+.keys.over .pad.dpad { padding: 0 9px; }
+.keys .pad + span { margin-right: 34px; }
+.pad-keys { left: 120px; bottom: 182px; }
 /* 8. LOADING: tonight's front page while the street is made ready */
 .loadpage { left: 50%; top: 70px; width: 1160px; margin-left: -580px; padding: 22px 44px 34px; box-sizing: border-box; }
 .loadpage .mast { margin: -66px 0 8px; }
@@ -300,6 +326,40 @@ html[data-screen="typing"] .s-typing, html[data-screen="loading"] .s-loading { d
     <div class="foot-shade"></div>
     <div class="safe">
       <div class="sheet coupon"><div class="keys talk-keys over"><b>Enter</b><span>says it</span><b>Esc</b><span>stops typing, keeps the words</span></div><div class="to">To Sheila</div><div class="typed">I'm after a man in a grey coat who took a cab up to Fairview on Tuesday.<span class="caret"></span></div></div>
+    </div>
+  </div>
+
+
+  <!-- 9a. SUGGESTED LINES on a keyboard: Tab opened them over his coupon -->
+  <div class="screen s-suggest">
+    <div class="bg talk"></div>
+    <div class="foot-shade"></div>
+    <div class="safe">
+      <div class="sheet says with-coupon">
+        <span class="tag">Say <em>· or write your own below</em></span>
+        <div class="say on"><span class="key">1</span>Any bookings come in this morning?</div>
+        <div class="say"><span class="key">2</span>How are the books looking, Sheila?</div>
+        <div class="say"><span class="key">3</span>Right. I'll let you get on.</div>
+      </div>
+      <div class="sheet coupon"><div class="keys talk-keys over"><b>1</b><b>2</b><b>3</b><span>say it</span><b>Tab</b><span>hide these</span><b>Esc</b><span>stop talking</span></div><div class="to">To Sheila</div><div class="typed one"><span class="caret"></span> <span class="hintline">Or type your own words…</span></div></div>
+      <div class="subs"><p><span><span class="who">SHEILA</span>Morning. Quiet one today.</span><br><span>Rain's held off, at least.</span></p></div>
+    </div>
+  </div>
+
+  <!-- 9b. SUGGESTED LINES with a controller: there from the start; his own words open Steam's keyboard -->
+  <div class="screen s-suggest-pad">
+    <div class="bg talk"></div>
+    <div class="foot-shade"></div>
+    <div class="safe">
+      <div class="sheet says" style="bottom:318px">
+        <span class="tag">Say</span>
+        <div class="say on">Any bookings come in this morning?</div>
+        <div class="say">How are the books looking, Sheila?</div>
+        <div class="say">Right. I'll let you get on.</div>
+        <div class="say own">My own words…</div>
+      </div>
+      <div class="keys pad-keys over" style="bottom:252px"><span class="pad dpad">↑↓</span><span>choose</span><span class="pad">A</span><span>say it</span><span class="pad">Y</span><span>my own words</span><span class="pad">B</span><span>stop talking</span></div>
+      <div class="subs"><p><span><span class="who">SHEILA</span>Morning. Quiet one today.</span><br><span>Rain's held off, at least.</span></p></div>
     </div>
   </div>
 
