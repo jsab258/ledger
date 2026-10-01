@@ -85,7 +85,10 @@ private:
 	// Z WAITS, 30 September (Jafar's list, item 1; the town's card 6ci): counted
 	// like T, consumed by the encounter, which passes the time.
 	void RequestWait();
+	// A CONTROLLER'S A, 1 October: whatever the prompt in front of him offers, use or talk.
+	void RequestPadAct();
 public:
+	int32 ConsumePadActRequests();
 	int32 ConsumeActRequests();
 	int32 ConsumeTalkRequests();
 	int32 ConsumeReportRequests();
@@ -95,6 +98,7 @@ public:
 private:
 	int32 ActRequests = 0;
 	int32 TalkRequests = 0;
+	int32 PadActRequests = 0;
 	int32 ReportRequests = 0;
 	int32 WaitRequests = 0;
 	int32 NoticeRequests = 0;

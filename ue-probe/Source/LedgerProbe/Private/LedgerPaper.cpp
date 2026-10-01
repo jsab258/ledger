@@ -297,6 +297,26 @@ TSharedRef<SWidget> Key(const FString& Label)
 		];
 }
 
+// A CONTROLLER'S BUTTON (STYLE-GUIDE.md, A controller's buttons): round, ruled in ink, never square
+// like a key; the pad drawn as its cross in a round button ("+").
+TSharedRef<SWidget> PadButton(const FString& Label)
+{
+	static const FSlateRoundedBoxBrush* Round = new FSlateRoundedBoxBrush(Newsprint(), 22.0f, Ink(), 2.0f, FVector2D(44.0f, 44.0f));
+	TSharedRef<SWidget> Inside = Label == TEXT("+")
+		? StaticCastSharedRef<SWidget>(SNew(SOverlay)
+			+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center)[ SNew(SBox).WidthOverride(26.0f).HeightOverride(8.0f)[ SNew(SImage).Image(Solid(Ink())) ] ]
+			+ SOverlay::Slot().HAlign(HAlign_Center).VAlign(VAlign_Center)[ SNew(SBox).WidthOverride(8.0f).HeightOverride(26.0f)[ SNew(SImage).Image(Solid(Ink())) ] ])
+		: StaticCastSharedRef<SWidget>(SNew(STextBlock).Text(FText::FromString(Label)).Font(Font(EFace::Franklin700, 26)).ColorAndOpacity(FSlateColor(Ink())));
+	return SNew(SBox).WidthOverride(44.0f).HeightOverride(44.0f)
+		[
+			SNew(SBorder).BorderImage(Round).Padding(0.0f).HAlign(HAlign_Center).VAlign(VAlign_Center)[ Inside ]
+		];
+}
+
+namespace { bool bPadInUse = false; }
+bool PadInUse() { return bPadInUse; }
+void SetPadInUse(bool bPad) { bPadInUse = bPad; }
+
 TSharedRef<SWidget> Hints(const TArray<TPair<TArray<FString>, FString>>& Items)
 {
 	TSharedRef<SHorizontalBox> Row = SNew(SHorizontalBox);
@@ -305,7 +325,9 @@ TSharedRef<SWidget> Hints(const TArray<TPair<TArray<FString>, FString>>& Items)
 		TSharedRef<SHorizontalBox> One = SNew(SHorizontalBox);
 		for (int32 K = 0; K < Items[I].Key.Num(); ++K)
 		{
-			One->AddSlot().AutoWidth().Padding(FMargin(K > 0 ? 10.0f : 0.0f, 0.0f, 0.0f, 0.0f))[ Key(Items[I].Key[K]) ];
+			// "pad:A" is a controller's round button; anything else a key.
+			const FString& K1 = Items[I].Key[K];
+			One->AddSlot().AutoWidth().VAlign(VAlign_Center).Padding(FMargin(K > 0 ? 10.0f : 0.0f, 0.0f, 0.0f, 0.0f))[ K1.StartsWith(TEXT("pad:")) ? PadButton(K1.RightChop(4)) : Key(K1) ];
 		}
 		One->AddSlot().AutoWidth().VAlign(VAlign_Center)
 			[
