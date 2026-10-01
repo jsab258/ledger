@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>LEDGER interface, the evening paper: the kit of parts</title>
+<!-- Every part of the evening-paper interface in every state it has, at its
+     true size (1080 units; drawn at 4/3 for 1440 tall). The rules behind each
+     are in ../STYLE-GUIDE.md. Fonts as evening-paper.html. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=League+Gothic&family=Libre+Franklin:wght@100..900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=block">
+<style>
+html, body { margin: 0; width: 100%; background: #26241F; }
+:root {
+  --news: #E8E3D6; --ink: #1E1E1D; --red: #B4191F; --grey: #4F4C46; --off: #77726A; --rule: rgba(30,30,29,.5);
+  --onDark: #F1EDE3; --backing: rgba(16,16,15,.8);
+  --head: "League Gothic", "Arial Narrow", sans-serif; --text: "Libre Franklin", Arial, sans-serif; --serif: "Old Standard TT", Georgia, serif;
+}
+.sheet { color: var(--ink); background-color: var(--news);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.68' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .27  0 0 0 0 .2  0 0 0 .6 -.14'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  box-shadow: 0 10px 26px rgba(0,0,0,.45); }
+.page { padding: 30px 36px 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.col { display: grid; gap: 22px; align-content: start; }
+.card { padding: 16px 20px 18px; }
+.lab { margin: 0 0 10px; font: 700 18px/1 var(--text); letter-spacing: .12em; text-transform: uppercase; color: var(--red); }
+.dk .lab { color: #E9A6A6; }
+.dk { padding: 16px 20px 18px; background: #34322C; color: var(--onDark); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.note { font: italic 400 20px/1.3 var(--serif); color: var(--grey); }
+.dk .note { color: #C9C3B6; }
+/* type */
+.ty { display: grid; gap: 8px; }
+.ty .r { display: grid; gap: 4px; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+.ty .r span:last-child { font: 400 18px/1.2 var(--text); color: var(--grey); }
+/* colours */
+.sw { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.sw div { height: 64px; padding: 8px 10px; box-sizing: border-box; font: 600 17px/1.2 var(--text); box-shadow: inset 0 0 0 1px rgba(0,0,0,.2); }
+/* parts */
+.hed { position: relative; padding: 10px 0 9px 26px; border-bottom: 1px solid var(--rule); font: 800 40px/1.05 var(--text); letter-spacing: -.012em; }
+.hed.on { color: var(--red); }
+.hed.on::before { content: ""; position: absolute; left: 0; top: 13px; bottom: 11px; width: 10px; background: var(--red); }
+.hed.press { color: var(--red); background: rgba(180,25,31,.1); }
+.hed.press::before { content: ""; position: absolute; left: 0; top: 13px; bottom: 11px; width: 16px; background: var(--red); }
+.hed.off { color: var(--off); }
+.hed small { display: block; margin-top: 4px; font: italic 400 22px/1.2 var(--serif); color: var(--grey); }
+.tag { float: right; font: 400 18px/1 var(--text); color: var(--grey); letter-spacing: 0; padding-top: 14px; }
+.lrow { position: relative; display: flex; justify-content: space-between; align-items: center; min-height: 52px; padding-left: 20px; border-bottom: 1px solid var(--rule); font: 600 28px/1 var(--text); }
+.lrow i { font-style: normal; color: var(--grey); font-weight: 400; margin: 0 12px; }
+.lrow.on { color: var(--red); }
+.lrow.on::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 8px; background: var(--red); }
+.lrow.off { color: var(--off); }
+.boxes { display: flex; gap: 10px; flex-wrap: wrap; }
+.box { padding: 10px 16px 8px; box-shadow: inset 0 0 0 2px var(--ink); font: 600 26px/1 var(--text); }
+.box.picked { background: var(--ink); color: var(--news); }
+.box.focus { box-shadow: inset 0 0 0 4px var(--red); color: var(--red); }
+.box.picked.focus { color: var(--news); box-shadow: 0 0 0 4px var(--red), inset 0 0 0 2px var(--ink); }
+.slider { position: relative; width: 240px; height: 6px; background: rgba(30,30,29,.35); }
+.slider b { position: absolute; left: 0; top: 0; bottom: 0; width: 55%; background: var(--ink); }
+.slider i { position: absolute; left: 55%; top: -11px; width: 10px; height: 28px; margin: 0 0 0 -5px; background: var(--ink); }
+.on .slider b, .on .slider i { background: var(--red); }
+.tabs { display: flex; gap: 34px; border-bottom: 1.5px solid var(--ink); }
+.tab { position: relative; padding-bottom: 10px; font: 800 28px/1 var(--text); color: var(--grey); }
+.tab.on { color: var(--red); }
+.tab.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1.5px; height: 6px; background: var(--red); }
+.key { display: inline-block; min-width: 18px; padding: 7px 12px; margin: 0 8px 8px 0; background: var(--news); color: var(--ink); font: 700 30px/1 var(--text); text-align: center; box-shadow: inset 0 0 0 2px var(--ink), 0 2px 4px rgba(0,0,0,.4); }
+.who { display: inline-block; margin: 0 10px 10px 0; padding: 3px 10px 1px; background: var(--red); color: #fff; font: 800 30px/1.3 var(--text); letter-spacing: .05em; text-transform: uppercase; }
+.dir { display: inline-block; width: 0; height: 0; margin: 0 12px 0 2px; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 14px solid #fff; vertical-align: 1px; }
+.dir.r { border-right: 0; border-left: 14px solid #fff; margin: 0 2px 0 12px; }
+.sub { display: inline; padding: 4px 16px 5px; background: var(--backing); font: 450 39px/1.62 var(--text); color: var(--onDark); }
+.prompt { display: inline-flex; align-items: center; font: 700 30px/1 var(--text); color: var(--onDark); }
+.prompt .key { margin: 0; }
+.prompt .verb { padding: 9px 14px 8px; background: var(--backing); }
+.coupon { position: relative; padding: 18px 26px 18px 196px; font: 450 32px/1.3 var(--text); }
+.coupon::before { content: ""; position: absolute; inset: 6px; border: 2.5px dashed var(--ink); }
+.coupon .to { position: absolute; left: 18px; top: 16px; padding: 8px 10px 5px; background: var(--ink); color: var(--news); font: 800 24px/1 var(--text); letter-spacing: .05em; }
+.caret { display: inline-block; width: 3px; height: 1.02em; margin-left: 3px; vertical-align: -0.16em; background: var(--ink); }
+.band { padding: 10px 22px 6px; background: var(--red); color: #fff; font: 400 44px/1 var(--head); letter-spacing: .06em; text-transform: uppercase; }
+.bar { position: relative; height: 6px; margin-top: 12px; background: rgba(241,237,227,.22); }
+.bar b { position: absolute; left: 0; top: 0; bottom: 0; width: 62%; background: var(--red); }
+.bar.wait b { left: 34%; width: 16%; }
+.phase { display: flex; justify-content: space-between; font: 500 26px/1 var(--text); color: var(--onDark); }
+.confirm { padding: 0 0 20px; }
+.confirm .band { font-size: 40px; }
+.confirm p { margin: 16px 22px 14px; font: 600 28px/1.35 var(--text); }
+.confirm p small { display: block; margin-top: 6px; font: italic 400 22px/1.3 var(--serif); color: var(--grey); }
+.confirm .hed { margin: 0 22px; font-size: 36px; }
+.hint .tagr { display: inline-block; padding: 7px 12px 3px; background: var(--red); color: #fff; font: 400 26px/1 var(--head); letter-spacing: .06em; text-transform: uppercase; }
+.hint .do { display: flex; align-items: center; gap: 4px; padding: 14px 20px 0; font: 600 30px/1 var(--text); }
+.hint .why { padding: 10px 20px 14px; font: italic 400 26px/1.3 var(--serif); }
+.st { margin: 10px 0 2px; font: 600 16px/1 var(--text); letter-spacing: .1em; text-transform: uppercase; color: var(--grey); }
+.dk .st { color: #B8B2A5; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COLUMN 1: type and colour -->
+  <div class="col">
+    <div class="sheet card">
+      <div class="lab">Type, in units of 1080 (×4/3 on a 1440 screen)</div>
+      <div class="ty">
+        <div class="r"><span style="font: 400 96px/1 'UnifrakturMaguntia', serif">Ledger</span><span>Masthead · UnifrakturMaguntia 128 · the game's name only</span></div>
+        <div class="r"><span style="font: 400 50px/1 var(--head); letter-spacing:.06em; text-transform:uppercase">Stop press</span><span>Band · League Gothic 58 · caps</span></div>
+        <div class="r"><span style="font: 800 44px/1 var(--text); letter-spacing:-.012em">Back to the street</span><span>Choice · Libre Franklin 800 · 48–50</span></div>
+        <div class="r"><span style="font: 450 34px/1 var(--text)">Rain's held off, at least.</span><span>Subtitle · 450 · 39</span></div>
+        <div class="r"><span style="font: 600 28px/1 var(--text)">Frame rate limit</span><span>Setting · 600 · 30</span></div>
+        <div class="r"><span style="font: italic 400 26px/1 var(--serif)">Thursday, 9.40 pm, Quay Street</span><span>Standfirst · Old Standard italic · 26–28</span></div>
+        <div class="r"><span style="font: 400 22px/1 var(--serif); letter-spacing:.14em">THURSDAY · 10.15 AM</span><span>Dateline · 24 · caps tracked</span></div>
+      </div>
+    </div>
+    <div class="sheet card">
+      <div class="lab">Colour, and contrast with what is behind it</div>
+      <div class="sw">
+        <div style="background:#E8E3D6">Newsprint<br>#E8E3D6</div>
+        <div style="background:#1E1E1D;color:#E8E3D6">Ink #1E1E1D<br>13.0 : 1</div>
+        <div style="background:#B4191F;color:#fff">Spot red #B4191F<br>5.3 : 1 · 6.8 white</div>
+        <div style="background:#4F4C46;color:#E8E3D6">Grey #4F4C46<br>6.7 : 1</div>
+        <div style="background:#77726A;color:#E8E3D6">Unavailable<br>#77726A · 3.7 : 1</div>
+        <div style="background:#10100F;color:#F1EDE3">Backing 80%<br>8.9 : 1 on white sky</div>
+      </div>
+    </div>
+    <div class="dk">
+      <div class="lab">Keys, as the player has bound them</div>
+      <span class="key">T</span><span class="key">Esc</span><span class="key">Enter</span><span class="key">Shift</span><span class="key">↑</span><span class="key">↓</span><span class="key">Tab</span>
+      <div class="note">Square, ruled in ink, never rounded; the word on the key is the key's own name, and it follows any rebinding.</div>
+    </div>
+  </div>
+
+  <!-- COLUMN 2: menus and settings -->
+  <div class="col">
+    <div class="sheet card">
+      <div class="lab">A choice, in each state</div>
+      <div class="hed">New game <span class="tag">normal</span></div>
+      <div class="hed on">Continue <span class="tag">in hand</span><small>Thursday, 9.40 pm, Quay Street</small></div>
+      <div class="hed press">Settings <span class="tag">pressed, 120 ms</span></div>
+      <div class="hed off" style="border-bottom:0">Continue <span class="tag">unavailable</span><small>No story saved yet.</small></div>
+    </div>
+    <div class="sheet card">
+      <div class="lab">A settings line, in each state</div>
+      <div class="tabs"><span class="tab on">Picture</span><span class="tab">Sound</span><span class="tab">Controls</span></div>
+      <div class="lrow"><span>Vertical sync</span><span><i>‹</i>On<i>›</i></span></div>
+      <div class="lrow on"><span>Motion blur</span><span><i>‹</i>Off<i>›</i></span></div>
+      <div class="lrow on"><span>Brightness</span><span class="slider"><b></b><i></i></span></div>
+      <div class="lrow off"><span>Render scale</span><span>Set by Quality</span></div>
+      <div class="st">Presets: normal · picked · in hand · picked and in hand</div>
+      <div class="boxes"><span class="box">Low</span><span class="box picked">High</span><span class="box focus">Medium</span><span class="box picked focus">Highest</span></div>
+    </div>
+    <div class="sheet confirm">
+      <div class="band">Quit to the title?</div>
+      <p>Your story is saved as it stands.<small>Last saved at 10.12 am, on Quay Street.</small></p>
+      <div class="hed on">Stay on the street</div>
+      <div class="hed" style="border-bottom:0">Quit to the title</div>
+    </div>
+  </div>
+
+  <!-- COLUMN 3: speech, prompts, hints, loading -->
+  <div class="col">
+    <div class="dk">
+      <div class="lab">Who is speaking</div>
+      <span class="who">Sheila</span><span class="who">Man by the kiosk</span><span class="who"><span class="dir"></span>Ron</span><span class="who">Ron<span class="dir r"></span></span>
+      <div class="note">A name once he has learned it, the street's description of them until then; an arrow when they are out of sight, on the side they are.</div>
+      <div class="st">A subtitle: two lines at most, under 40 letters each</div>
+      <div><span class="sub"><span class="who" style="margin:0 12px 0 -6px">Sheila</span>Morning. Quiet one today.</span></div>
+    </div>
+    <div class="dk">
+      <div class="lab">His line, and the prompt that opens it</div>
+      <div class="sheet coupon"><span class="to">TO SHEILA</span>Was it this quiet last night?<span class="caret"></span></div>
+      <div class="st" style="margin-top:16px">The prompt: one at a time, the nearest in view</div>
+      <span class="prompt"><span class="key">T</span><span class="verb">Talk to Sheila</span></span>&nbsp;&nbsp;<span class="prompt"><span class="key">E</span><span class="verb">The window</span></span>
+    </div>
+    <div class="sheet hint">
+      <span class="tagr">First steps</span>
+      <div class="do"><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span>&nbsp;walk&nbsp;&nbsp;&nbsp;<span class="key">Shift</span>&nbsp;run</div>
+      <div class="why">People on this street notice who's about.</div>
+    </div>
+    <div class="dk">
+      <div class="lab">Loading: how far along, honestly</div>
+      <div class="phase"><span>Building the street</span><span>62%</span></div><div class="bar"><b></b></div>
+      <div class="phase" style="margin-top:20px"><span>Starting as soon as the street is ready</span><span></span></div><div class="bar wait"><b></b></div>
+      <div class="note">A filling rule when the work can be counted; a short moving piece when it cannot. Never a bar that guesses.</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -28,3 +28,12 @@
 
 - Names over subtitles: a person's name only once Tom has learned it, and until then the street's description of them ("the man at the bus stop"), since the interface shows only what he knows (D12: the Ledger is his own memory). The helper suggested asking Jafar; under D12 it needs no question, and the designs follow it.
 - No markers on the paper map, and no minimap (D20, D36).
+
+## Branding (BRANDING.md, a third helper, 1 October)
+
+- A game's brand is now a system, not a logo: type, colour, shape, texture, motion and tone of voice, with rules set at the start for what may change (PlayStation Studios' GDC 2026 talk on Horizon). The order: positioning, the name and its legal clearance, the wordmark, the brand system, key art, Steam's assets, the trailer's and title screen's titles, then the press kit.
+- Red Dead Redemption 2 carried one custom typeface from its logo into its menus; Disco Elysium's logo, key art and look came from one painter. The evening-paper interface can itself be LEDGER's brand system.
+- Steam's assets (sizes doubled in 2024; Valve's pages could not be opened, so from summaries): header 920×430, small capsule 462×174 with a logo that nearly fills it, main 1232×706, vertical 748×896, library 600×900, library hero 3840×1240 with no text, library logo as a transparent PNG; no text on capsules beyond the name.
+- The published evidence that most rewards a specialist is the store capsule and key art; a lettering specialist for a blackletter wordmark that must still read at 120×45.
+- The name: Ledger SAS, the cryptocurrency-wallet company, holds LEDGER in class 9 (software) in the EU, UK and US and enforces it. None of this was seen at a register (all blocked); only a lawyer's search clears a name, before any Steam page, trailer or announcement.
+- OFL fonts may be used in a logo for a sold game; Valve's form (January 2026) requires AI-made store art to be disclosed.

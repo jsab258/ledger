@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>LEDGER interface, the evening paper: every screen</title>
+<!-- Step 2: the whole set in the look Jafar picked on 1 October, C, "the
+     evening paper": a 1990 local evening paper, black ink on newsprint with one
+     spot red, no full colour. The rules are in ../STYLE-GUIDE.md; the parts, in
+     every state, are drawn in kit.html. Fonts, all SIL OFL 1.1 (licences in
+     ../fonts/, record in ../FONTS.md): UnifrakturMaguntia (the masthead word
+     only), League Gothic (bands and ears only), Libre Franklin (everything
+     read), Old Standard TT (datelines, standfirsts, captions, notes).
+     Open with ?screen=title, pause, settings, prompt, hints, subtitles,
+     typing or loading. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=League+Gothic&family=Libre+Franklin:wght@100..900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=block">
+<style>
+/* LAYOUT. Unreal's units: 1080 tall, so 16:9 is 1920 wide and Jafar's 21:9
+   screen (3440 by 1440) is 2580 wide, drawn at 4/3 as Unreal's default DPI
+   curve does by the shortest side. Everything the player reads or acts on
+   stays in the centred 16:9 region (.safe); only the street and its shading
+   use the full width. */
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #0b0c0e; }
+.stage { position: fixed; inset: 0; overflow: hidden; }
+.bg { position: absolute; inset: 0; background-size: cover; background-position: center 55%; }
+.bg.night { background-image: url(../../../approvals/2026-10-01/street-hook-night.webp); }
+.bg.day { background-image: url(../../../approvals/2026-10-01/street-hook-day.webp); }
+.bg.talk { background-image: url(../../../approvals/2026-10-01/street-A-day.webp); background-position: center 45%; }
+.bg.paused { filter: blur(7px) brightness(.5) saturate(.8); inset: -24px; }
+.bg.dark { filter: blur(10px) brightness(.22) saturate(.6); inset: -30px; }
+.safe { position: absolute; top: 0; bottom: 0; left: 50%; width: 1920px; margin-left: -960px; }
+.screen { display: none; }
+html[data-screen="title"] .s-title, html[data-screen="pause"] .s-pause, html[data-screen="settings"] .s-settings,
+html[data-screen="prompt"] .s-prompt, html[data-screen="hints"] .s-hints, html[data-screen="subtitles"] .s-subtitles,
+html[data-screen="typing"] .s-typing, html[data-screen="loading"] .s-loading { display: block; }
+.foot-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 420px; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.42)); }
+.left-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,7,9,.86) 0, rgba(6,7,9,.7) 26%, rgba(6,7,9,.25) 48%, rgba(6,7,9,0) 62%); }
+
+/* TOKENS: colour and type (STYLE-GUIDE.md, "Colour" and "Type"). */
+:root {
+  --news: #E8E3D6; --ink: #1E1E1D; --red: #B4191F; --grey: #4F4C46; --rule: rgba(30,30,29,.5);
+  --onDark: #F1EDE3; --backing: rgba(16,16,15,.8);
+  --head: "League Gothic", "Arial Narrow", sans-serif; --text: "Libre Franklin", "Franklin Gothic Medium", Arial, sans-serif; --serif: "Old Standard TT", Georgia, serif;
+}
+/* NEWSPRINT: off-white, a coarse fibre, yellowing towards the edges. */
+.sheet { position: absolute; color: var(--ink); background-color: var(--news);
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='360'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.68' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .27  0 0 0 0 .2  0 0 0 .6 -.14'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    radial-gradient(120% 110% at 50% 45%, rgba(255,255,255,0) 50%, rgba(160,125,55,.34));
+  box-shadow: 0 1px 1px rgba(0,0,0,.25), 0 22px 48px rgba(0,0,0,.55); }
+.crease { position: absolute; left: 0; right: 0; top: 49%; height: 26px; pointer-events: none; background: linear-gradient(rgba(0,0,0,0), rgba(60,45,20,.12) 45%, rgba(255,255,255,.22) 55%, rgba(0,0,0,0)); }
+.mast { font: 400 128px/1 "UnifrakturMaguntia", serif; text-align: center; }
+.rule2 { border-top: 5px solid var(--ink); border-bottom: 1.5px solid var(--ink); height: 4px; }
+.dateline { display: flex; justify-content: space-between; padding: 11px 4px 10px; border-bottom: 1.5px solid var(--ink); font: 400 24px/1 var(--serif); letter-spacing: .14em; text-transform: uppercase; }
+.band { padding: 14px 44px 9px; background: var(--red); color: #fff; font: 400 58px/1 var(--head); letter-spacing: .06em; text-transform: uppercase; }
+/* A CHOICE, set as a headline; the one in hand is red with a red bar. */
+.hed { position: relative; padding: 16px 0 15px 30px; border-bottom: 1px solid var(--rule); font: 800 50px/1.05 var(--text); letter-spacing: -.012em; }
+.hed:last-child { border-bottom: 0; }
+.hed.on { color: var(--red); }
+.hed.on::before { content: ""; position: absolute; left: 0; top: 19px; bottom: 17px; width: 11px; background: var(--red); }
+.hed .stand { display: block; margin-top: 8px; font: italic 400 26px/1.2 var(--serif); white-space: nowrap; color: var(--ink); letter-spacing: 0; }
+/* KEYS: boxes ruled in ink on newsprint, square as a printer sets them. */
+.keys { position: absolute; font: 500 30px/1 var(--text); color: var(--onDark); text-shadow: 0 1px 2px rgba(0,0,0,.85); white-space: nowrap; }
+.keys b, .key { display: inline-block; min-width: 18px; padding: 7px 12px; margin-right: 10px; background: var(--news); color: var(--ink); font: 700 30px/1 var(--text); text-align: center; text-shadow: none; box-shadow: inset 0 0 0 2px var(--ink), 0 2px 4px rgba(0,0,0,.4); }
+.keys b + span { margin-right: 34px; }
+/* SPEECH: subtitles 10% up from the bottom; light on dark, one backing per line. */
+.subs { position: absolute; left: 0; right: 0; bottom: 104px; text-align: center; }
+.subs p { margin: 0 auto; font: 450 39px/1.62 var(--text); color: var(--onDark); }
+.subs p > span { background: var(--backing); padding: 4px 18px 5px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.who { display: inline-block; margin: 0 14px 0 -8px; padding: 3px 10px 1px; background: var(--red); color: #fff; font: 800 30px/1.3 var(--text); letter-spacing: .05em; vertical-align: 3px; text-transform: uppercase; }
+.who .dir { display: inline-block; width: 0; height: 0; margin: 0 12px 0 2px; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 14px solid #fff; vertical-align: 1px; }
+/* HIS LINE: a reader's coupon, cut out along its dashes. */
+.coupon { position: absolute; left: 50%; width: 960px; margin-left: -580px; bottom: 252px; min-height: 84px; }
+.coupon::before { content: ""; position: absolute; inset: 7px; border: 2.5px dashed var(--ink); }
+.coupon .to { position: absolute; left: 20px; top: 20px; padding: 9px 12px 6px; background: var(--ink); color: var(--news); font: 800 28px/1 var(--text); letter-spacing: .05em; text-transform: uppercase; }
+.coupon .typed { position: relative; margin: 0 34px 0 240px; padding: 23px 0 21px; font: 450 36px/1.3 var(--text); }
+.coupon .typed.one { white-space: nowrap; }
+.caret { display: inline-block; width: 3px; height: 1.02em; margin-left: 3px; vertical-align: -0.16em; background: var(--ink); }
+.talk-keys { left: 1342px; bottom: 252px; line-height: 1.3; }
+.talk-keys b { margin-bottom: 6px; }
+.version { position: absolute; right: 120px; bottom: 56px; font: 400 22px/1 var(--text); color: rgba(238,234,224,.72); }
+/* A HALFTONE made in the page: the frame in grey, half-mixed with a dot
+   screen, then a hard contrast that turns the mix into dots that grow where
+   the picture is dark (black wherever dot value < 1 - brightness). */
+.ink { position: relative; }
+.ink::after { content: ""; position: absolute; inset: 0; background: var(--news); mix-blend-mode: multiply; }
+.photo { position: relative; overflow: hidden; background: #fff; filter: contrast(20) grayscale(1); }
+.photo .img { position: absolute; inset: -6px; background: url(../../../approvals/2026-10-01/street-hook-night.webp) 64% 52% / auto 118%; filter: grayscale(1) brightness(1.45) contrast(1.4) blur(.8px); }
+.photo .dots { position: absolute; inset: -110%; background: radial-gradient(circle at center, #000 0, #fff 72%) 0 0 / 4.2px 4.2px; transform: rotate(45deg); opacity: .5; }
+.cap { margin-top: 10px; font: italic 400 25px/1.3 var(--serif); }
+
+/* 1. TITLE: the late final's front page */
+.front { left: 120px; top: 74px; width: 800px; padding: 22px 38px 30px; box-sizing: border-box; }
+.ears { display: flex; justify-content: space-between; align-items: flex-start; }
+.ear { width: 124px; padding: 9px 0 6px; border: 2px solid var(--ink); text-align: center; font: 400 30px/1 var(--head); letter-spacing: .04em; text-transform: uppercase; }
+.ear.red { background: var(--red); border-color: var(--red); color: #fff; }
+.front .mast { margin: -66px 0 8px; }
+.cols { display: grid; grid-template-columns: 1fr 262px; margin-top: 14px; }
+.cols .menu { padding-right: 26px; border-right: 1px solid rgba(30,30,29,.6); }
+.figure { padding-left: 24px; }
+.front .photo { height: 396px; }
+.title-keys { left: 120px; bottom: 52px; }
+
+/* 2. PAUSE: the STOP PRESS box */
+.stop { left: 50%; top: 140px; width: 820px; margin-left: -410px; padding: 0 44px 30px; box-sizing: border-box; }
+.stop .band { margin: 0 -44px; }
+.stop .dateline { margin-top: 10px; border-top: 1.5px solid var(--ink); }
+.stop .hed { font-size: 48px; padding-top: 14px; padding-bottom: 13px; }
+.stop .note { margin-top: 14px; font: italic 400 28px/1.4 var(--serif); color: var(--grey); }
+.stop .crease { top: 63.5%; opacity: .6; }
+.pause-keys { left: 550px; top: 892px; }
+
+/* 3. SETTINGS: a listings page; sections across the top, one line per setting,
+   what the line in hand does in the column at the right. */
+.listings { left: 120px; top: 64px; width: 1680px; padding-bottom: 34px; box-sizing: border-box; }
+.listings .band { display: flex; align-items: baseline; justify-content: space-between; }
+.listings .band small { font: 400 italic 26px/1 var(--serif); letter-spacing: 0; text-transform: none; color: #F6D9D9; }
+.tabs { display: flex; gap: 46px; padding: 18px 44px 0; border-bottom: 1.5px solid var(--ink); }
+.tab { position: relative; padding: 0 0 14px; font: 800 32px/1 var(--text); color: var(--grey); }
+.tab.on { color: var(--red); }
+.tab.on::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1.5px; height: 6px; background: var(--red); }
+.lgrid { display: grid; grid-template-columns: 1fr 470px; }
+.lrows { padding: 10px 40px 0 44px; border-right: 1px solid rgba(30,30,29,.6); }
+.lrow { position: relative; display: flex; align-items: center; justify-content: space-between; min-height: 60px; border-bottom: 1px solid var(--rule); font: 600 30px/1 var(--text); }
+.lrow .val { display: flex; align-items: center; gap: 18px; font: 500 30px/1 var(--text); font-variant-numeric: tabular-nums; }
+.lrow .val i { font-style: normal; color: var(--grey); font-weight: 400; }
+.lrow.on { color: var(--red); }
+.lrow.on::before { content: ""; position: absolute; left: -22px; top: 12px; bottom: 12px; width: 9px; background: var(--red); }
+.lrow.preset { flex-wrap: wrap; min-height: 128px; align-content: center; row-gap: 16px; }
+.lrow.preset > span:first-child { width: 100%; }
+.boxes { display: flex; gap: 12px; }
+.box { padding: 11px 18px 9px; box-shadow: inset 0 0 0 2px var(--ink); font: 600 28px/1 var(--text); color: var(--ink); }
+.box.picked { background: var(--ink); color: var(--news); }
+.box.focus { box-shadow: inset 0 0 0 4px var(--red); color: var(--red); }
+.box.picked.focus { color: var(--news); box-shadow: 0 0 0 4px var(--red), inset 0 0 0 2px var(--ink); }
+.box.detect { margin-left: 18px; box-shadow: none; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; padding-left: 0; padding-right: 0; }
+.slider { position: relative; width: 300px; height: 6px; background: rgba(30,30,29,.35); }
+.slider b { position: absolute; left: 0; top: 0; bottom: 0; width: 55%; background: var(--ink); }
+.slider i { position: absolute; left: 55%; top: -11px; width: 10px; height: 28px; margin-left: -5px; background: var(--ink); }
+.explain { padding: 26px 40px 0 34px; }
+.explain h3 { margin: 0 0 12px; font: 800 34px/1.1 var(--text); color: var(--ink); }
+.explain p { margin: 0 0 16px; font: 400 27px/1.42 var(--serif); }
+.explain .small { font: italic 400 25px/1.4 var(--serif); color: var(--grey); }
+.settings-keys { left: 120px; bottom: 52px; }
+
+/* 4. THE PROMPT: one at a time, beside the nearest person or thing in view. */
+.prompt { position: absolute; display: flex; align-items: center; gap: 0; font: 700 30px/1 var(--text); color: var(--onDark); white-space: nowrap; }
+.prompt .key { margin: 0; }
+.prompt .verb { padding: 9px 14px 8px; background: var(--backing); }
+.prompt .tick { position: absolute; left: -46px; top: 50%; width: 34px; height: 2px; background: rgba(241,237,227,.85); }
+.prompt.her { left: calc(50% + 252px); top: 568px; }
+@media (min-aspect-ratio: 2/1) { .prompt.her { left: calc(50% + 268px); top: 600px; } }
+
+/* 5. A FIRST-TIME HINT: one slip at a time, low in the picture, gone once done. */
+.hint { left: 50%; width: 760px; margin-left: -380px; bottom: 236px; padding: 0 0 22px; box-sizing: border-box; }
+.hint .tag { display: inline-block; margin: 0 0 0 0; padding: 8px 14px 4px; background: var(--red); color: #fff; font: 400 30px/1 var(--head); letter-spacing: .06em; text-transform: uppercase; }
+.hint .do { display: flex; align-items: center; gap: 8px; padding: 20px 34px 0; font: 600 32px/1 var(--text); }
+.hint .do .key { margin-right: 4px; }
+.hint .do .gap { width: 30px; }
+.hint .why { padding: 16px 34px 0; font: italic 400 30px/1.3 var(--serif); }
+
+/* 6. SUBTITLES alone: overheard, at night, from somebody he has no name for */
+/* 7. THE TYPING BOX grown to two lines */
+/* 8. LOADING: tonight's front page while the street is made ready */
+.loadpage { left: 50%; top: 70px; width: 1160px; margin-left: -580px; padding: 22px 44px 34px; box-sizing: border-box; }
+.loadpage .mast { margin: -66px 0 8px; }
+.loadpage .photo { height: 470px; margin-top: 22px; }
+.loadpage .photo .img { background-position: 60% 58%; background-size: auto 112%; filter: grayscale(1) brightness(1.75) contrast(1.35) blur(.8px); }
+.loadpage .hedline { margin: 22px 0 0; font: 800 54px/1.05 var(--text); letter-spacing: -.012em; }
+.loadpage .cap { font-size: 26px; }
+.progress { position: absolute; left: 50%; width: 1160px; margin-left: -580px; bottom: 86px; }
+.progress .phase { display: flex; justify-content: space-between; font: 500 30px/1 var(--text); color: var(--onDark); text-shadow: 0 1px 2px rgba(0,0,0,.85); font-variant-numeric: tabular-nums; }
+.progress .phase span:last-child { color: rgba(241,237,227,.75); }
+.progress .bar { position: relative; height: 6px; margin-top: 16px; background: rgba(241,237,227,.22); }
+.progress .bar b { position: absolute; left: 0; top: 0; bottom: 0; width: 62%; background: var(--red); }
+</style>
+<script>document.documentElement.dataset.screen = new URLSearchParams(location.search).get("screen") || "title";</script>
+</head>
+<body>
+<div class="stage">
+
+  <!-- 1. TITLE -->
+  <div class="screen s-title">
+    <div class="bg night"></div>
+    <div class="left-shade"></div>
+    <div class="safe">
+      <div class="sheet front">
+        <div class="ears"><div class="ear red">Late final</div><div class="ear">Rain later</div></div>
+        <div class="mast">Ledger</div>
+        <div class="rule2"></div>
+        <div class="dateline"><span>No. 1</span><span>The Hook, Meridian</span><span>1990</span></div>
+        <div class="cols">
+          <div class="menu">
+            <div class="hed on">Continue<span class="stand">Thursday, 9.40 pm, Quay Street</span></div>
+            <div class="hed">New game</div>
+            <div class="hed">Settings</div>
+            <div class="hed">Quit</div>
+          </div>
+          <div class="figure">
+            <div class="ink"><div class="photo"><div class="img"></div><div class="dots"></div></div></div>
+            <div class="cap">Quay Street tonight.</div>
+          </div>
+        </div>
+        <div class="crease"></div>
+      </div>
+      <div class="keys title-keys"><b>↑</b><b>↓</b><span>to choose</span><b>Enter</b><span>to take it</span></div>
+      <div class="version">Build 0.1</div>
+    </div>
+  </div>
+
+  <!-- 2. PAUSE -->
+  <div class="screen s-pause">
+    <div class="bg day paused"></div>
+    <div class="safe">
+      <div class="sheet stop">
+        <div class="band">Stop press</div>
+        <div class="dateline"><span>Thursday</span><span>10.15 am</span><span>Quay Street</span></div>
+        <div class="hed on">Back to the street</div>
+        <div class="hed">The Ledger</div>
+        <div class="hed">Settings</div>
+        <div class="hed">Quit to the title</div>
+        <div class="hed">Quit the game</div>
+        <div class="note">Last saved at 10.12 am, on Quay Street.</div>
+        <div class="crease"></div>
+      </div>
+      <div class="keys pause-keys"><b>Esc</b><span>goes back to the street</span></div>
+    </div>
+  </div>
+
+  <!-- 3. SETTINGS, the Picture section, the quality line in hand -->
+  <div class="screen s-settings">
+    <div class="bg day paused"></div>
+    <div class="safe">
+      <div class="sheet listings">
+        <div class="band">Settings <small>The street stays as it is while you change these.</small></div>
+        <div class="tabs"><span class="tab on">Picture</span><span class="tab">Sound</span><span class="tab">Controls</span><span class="tab">Subtitles and reading</span></div>
+        <div class="lgrid">
+          <div class="lrows">
+            <div class="lrow preset on"><span>Quality</span>
+              <span class="boxes"><span class="box">Low</span><span class="box">Medium</span><span class="box picked focus">High</span><span class="box">Highest</span><span class="box">Custom</span><span class="box detect">Detect for this PC</span></span></div>
+            <div class="lrow"><span>Display</span><span class="val"><i>‹</i>Full screen<i>›</i></span></div>
+            <div class="lrow"><span>Resolution</span><span class="val"><i>‹</i><span class="res">3440 × 1440</span><i>›</i></span></div>
+            <div class="lrow"><span>Frame rate limit</span><span class="val"><i>‹</i>60<i>›</i></span></div>
+            <div class="lrow"><span>Vertical sync</span><span class="val"><i>‹</i>On<i>›</i></span></div>
+            <div class="lrow"><span>Render scale</span><span class="val"><i>‹</i>100%<i>›</i></span></div>
+            <div class="lrow"><span>Brightness</span><span class="val"><span class="slider"><b></b><i></i></span></span></div>
+            <div class="lrow"><span>Motion blur</span><span class="val"><i>‹</i>Off<i>›</i></span></div>
+            <div class="lrow"><span>Film grain</span><span class="val"><i>‹</i>Off<i>›</i></span></div>
+          </div>
+          <div class="explain">
+            <h3>Quality</h3>
+            <p>How much of the street this PC draws, and how finely: shadows, reflections in the wet, how far you see.</p>
+            <p>High was picked for this PC when the game first ran. Highest needs a stronger graphics card.</p>
+            <p class="small">Detect for this PC measures it again and picks for you. Changing any line below makes this Custom.</p>
+          </div>
+        </div>
+      </div>
+      <div class="keys settings-keys"><b>Tab</b><span>next section</span><b>←</b><b>→</b><span>change</span><b>R</b><span>back to recommended</span><b>Esc</b><span>back</span></div>
+    </div>
+  </div>
+
+  <!-- 4. THE PROMPT on a person -->
+  <div class="screen s-prompt">
+    <div class="bg talk"></div>
+    <div class="safe"></div>
+    <div class="prompt her"><span class="tick"></span><span class="key">T</span><span class="verb">Talk to Sheila</span></div>
+  </div>
+
+  <!-- 5. A FIRST-TIME KEY HINT -->
+  <div class="screen s-hints">
+    <div class="bg day"></div>
+    <div class="foot-shade"></div>
+    <div class="safe">
+      <div class="sheet hint">
+        <span class="tag">First steps</span>
+        <div class="do"><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span><span>walk</span><span class="gap"></span><span class="key">Shift</span><span>run</span></div>
+        <div class="why">People on this street notice who's about.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. SUBTITLES: overheard at night, from someone he has no name for, off to the left -->
+  <div class="screen s-subtitles">
+    <div class="bg night"></div>
+    <div class="foot-shade"></div>
+    <div class="safe">
+      <div class="subs"><p><span><span class="who"><span class="dir" title="off to the left"></span>Man by the kiosk</span>Rain's coming in off the quay again.</span><br><span>You'll want your coat on tonight.</span></p></div>
+    </div>
+  </div>
+
+  <!-- 7. THE TYPING BOX, grown to two lines; Sheila listening -->
+  <div class="screen s-typing">
+    <div class="bg talk"></div>
+    <div class="foot-shade"></div>
+    <div class="safe">
+      <div class="keys talk-keys"><b>Enter</b><span>says it</span><br><b>Esc</b><span>stops typing</span></div>
+      <div class="sheet coupon"><div class="to">To Sheila</div><div class="typed">I'm after a man in a grey coat. He took a cab up to Fairview on Tuesday night<span class="caret"></span></div></div>
+    </div>
+  </div>
+
+  <!-- 8. LOADING: tonight's paper while the street is made ready, and how far along it is -->
+  <div class="screen s-loading">
+    <div class="bg night dark"></div>
+    <div class="safe">
+      <div class="sheet loadpage">
+        <div class="ears"><div class="ear red">Late final</div><div class="ear">Rain later</div></div>
+        <div class="mast">Ledger</div>
+        <div class="rule2"></div>
+        <div class="dateline"><span>Thursday</span><span>9.40 pm</span><span>Quay Street</span></div>
+        <div class="ink"><div class="photo"><div class="img"></div><div class="dots"></div></div></div>
+        <div class="cap">Quay Street tonight, where you left it.</div>
+        <div class="crease"></div>
+      </div>
+      <div class="progress"><div class="phase"><span>Getting the street ready for this PC's graphics card</span><span>312 to go</span></div><div class="bar"><b></b></div></div>
+    </div>
+  </div>
+
+</div>
+<script>/* the screen it is drawn for */ for (const e of document.querySelectorAll(".res")) e.textContent = Math.round(innerWidth * devicePixelRatio) + " × " + Math.round(innerHeight * devicePixelRatio);</script>
+</body>
+</html>
