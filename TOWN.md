@@ -82,6 +82,4 @@ reach yet.
 
 ## Waiting on Jafar
 
-- One tap (https://claude.ai/artifact/KoqZDK2cUeBvvTKVDRhfxU): Tom's written
-  suggested lines in the game? Recommended yes (three fresh reviews; the
-  interface's suggestions, his Mixed answer of 1 October).
+- Nothing.
