@@ -397,6 +397,7 @@ static class Program
             string callsHim = null;
             bool knowsNameSent = false, gaveNameOut = false, callsSentByGame = false;
             List<string> present = null;
+            string evidenceTopic = null;
             try
             {
                 using var doc = JsonDocument.Parse(line);
@@ -508,6 +509,7 @@ static class Program
                         acc.Summary = a.TryGetProperty("summary", out var sm) ? sm.GetString() : null;
                         // How surely the naming reached them; a game that does not send it yet gets the account's own.
                         acc.NamingConfidence = a.TryGetProperty("namingConfidence", out var nc) && nc.ValueKind == JsonValueKind.Number ? nc.GetDouble() : acc.Confidence;
+                        evidenceTopic = a.TryGetProperty("topic", out var atp) && atp.ValueKind == JsonValueKind.String ? atp.GetString() : null;
                     }
                     if (v.TryGetProperty("near", out var n) && n.ValueKind == JsonValueKind.Object)
                     {
@@ -517,7 +519,12 @@ static class Program
                         near.Summary = n.TryGetProperty("summary", out var ns) ? ns.GetString() : null;
                     }
                     if (v.TryGetProperty("familiarity", out var fv) && fv.ValueKind == JsonValueKind.Number) fam = fv.GetDouble();
-                    derived = Suspecting.Derive(acc, near, fam);
+                    // THE EVIDENCE IS ABOUT THE LINE'S DEED (the independent review of 1
+                    // October, N1): an account of another deed is not used, so a witness
+                    // is never told she holds nothing of what she saw; said on stderr.
+                    if (evidenceTopic != null && deedTopic != null && evidenceTopic != deedTopic)
+                        Console.Error.WriteLine("talk: evidence for " + evidenceTopic + " sent with a line about " + deedTopic + "; not used");
+                    else derived = Suspecting.Derive(acc, near, fam);
                 }
                 // HOW THIS PERSON KNOWS TOM (town list 6s), as the game knows it:
                 // whether they have met him, heard of him, and what they call him.
@@ -1502,6 +1509,22 @@ static class Program
         Ok("an abandoned reply is cancelled, never remembered as said", unheard == 0, unheard.ToString());
 
         // THE SIMULATION'S STATE REACHES THE ANSWER, 24 September.
+        // THE EVIDENCE IS ABOUT THE DEED THE LINE IS ABOUT (the independent review
+        // of 1 October, N1, High): the game asked for the account under the scripted
+        // story's key while the line's deed was the free play's, so a witness who saw
+        // him was told, every line, that she held nothing. An account naming another
+        // deed than the line's is not used: she stays as she was.
+        string LevelOf(string json) { using var dj = JsonDocument.Parse(json); return dj.RootElement.TryGetProperty("level", out var lv) ? lv.GetString() : null; }
+        var evH = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+        LoadCards(evH, cardsDir);
+        string deedW = "\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23}";
+        string sawIt = "\"evidence\":{\"account\":{\"topic\":\"player.window_d1\",\"held\":true,\"seen\":true,\"names\":true,\"rung\":4,\"confidence\":0.9,\"summary\":\"it was the new owner that put the window in\"},\"familiarity\":0.5}";
+        string otherDeed = "\"evidence\":{\"account\":{\"topic\":\"player.broke_a_window\",\"held\":false,\"rung\":-1,\"confidence\":0},\"familiarity\":0.5}";
+        var ev1 = await evH.Answer("{\"id\":301,\"to\":\"sam\",\"say\":\"Morning.\",\"day\":2,\"hour\":10,\"minute\":0," + sawIt + "," + deedW + "}");
+        var ev2 = await evH.Answer("{\"id\":302,\"to\":\"sam\",\"say\":\"Busy?\",\"day\":2,\"hour\":10,\"minute\":1," + otherDeed + "," + deedW + "}");
+        Ok("a witness who saw him stays as suspicious when a line's evidence is about another deed than the line's",
+           LevelOf(ev1) != null && LevelOf(ev1) != "Trusting" && LevelOf(ev2) == LevelOf(ev1), ev1 + " || " + ev2);
+
         var k = new Helper(new KnowledgeFake(), TimeSpan.FromSeconds(8));
         LoadCards(k, cardsDir);
         var g = await k.Answer("{\"id\":6,\"to\":\"sam\",\"say\":\"Morning.\",\"day\":3,\"hour\":16}");
