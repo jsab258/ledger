@@ -1,0 +1,229 @@
+<title>Tom&#x27;s suggested lines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,500;1,6..72,500&family=Public+Sans:wght@400;600&display=swap">
+<style>
+:root{--bg:#eef0ee;--card:#fbfcfb;--ink:#1d2326;--soft:#56646a;--line:#cdd4d2;--amber:#a7650f;--amber-bg:#f6e8d3;--ok:#2f6b45}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--ok:#7cc497;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--ok:#7cc497;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 "Public Sans",system-ui,sans-serif;margin:0}
+.wrap{max-width:30rem;margin:0 auto;padding-inline:16px;padding-block:18px 28px;display:grid;gap:14px}
+.eyebrow{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:0}
+h1{font:600 1.35rem/1.2 "Newsreader",Georgia,serif;margin:2px 0 0;text-wrap:balance}
+ol{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+li{display:grid;gap:1px}
+li small{color:var(--soft);font-size:.74rem;letter-spacing:.02em}
+li q{font:italic 500 1.08rem/1.3 "Newsreader",Georgia,serif}
+.ask{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px;display:grid;gap:10px}
+.ask p{margin:0;font-weight:600}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.row button{flex:1 1 6rem;font:inherit;padding:10px 8px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink);cursor:pointer}
+.row button.rec{border-color:var(--amber)}
+.row button[aria-pressed="true"]{background:var(--amber-bg);border-color:var(--amber);font-weight:600}
+.row button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.status{font-size:.8rem;color:var(--soft);margin:0;min-height:1.1em}
+.status.saved{color:var(--ok)}
+details{font-size:.86rem;color:var(--soft)}
+summary{cursor:pointer}
+details p{margin:6px 0 0}
+textarea{width:100%;box-sizing:border-box;min-height:2.6rem;margin-top:6px;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+
+/* PICTURES JUDGED ON THE PAGE (tools/page_pictures.py, Jafar 30 September and 1 October) */
+.capgrid,.cands,.pair{grid-template-columns:1fr!important}
+.capgrid img,.pair img,.cands img,figure img{width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important}
+main img,section img,[data-film-sprite]{cursor:zoom-in}
+.pv{position:fixed;inset:0;z-index:2147483000;background:#000;display:none;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
+.pv.on{display:block}
+.pv .pv-stage{position:absolute;inset:0;overflow:hidden}
+.pv .pv-hold{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.pv .pv-hold img{display:block;max-width:none!important;width:auto!important;height:auto!important;-webkit-user-drag:none;pointer-events:none}
+.pv .pv-film{background-repeat:no-repeat;pointer-events:none}
+.pv .pv-bar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top, 0px)) 12px 10px;background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,0));color:#fff;font:600 14px/1.2 system-ui,sans-serif;pointer-events:none}
+.pv .pv-bar *{pointer-events:auto}
+.pv .pv-count{opacity:.85;font-variant-numeric:tabular-nums}
+.pv .pv-close{min-width:88px;min-height:44px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;cursor:pointer}
+.pv .pv-cap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px calc(12px + env(safe-area-inset-bottom, 0px));background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.75));color:#fff;font:14px/1.35 system-ui,sans-serif;pointer-events:none}
+.pv .pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:72px;border:0;background:rgba(0,0,0,.35);color:#fff;font:700 30px/1 system-ui,sans-serif;cursor:pointer}
+.pv .pv-prev{left:0;border-radius:0 8px 8px 0}.pv .pv-next{right:0;border-radius:8px 0 0 8px}
+.pv .pv-play{position:absolute;left:50%;bottom:calc(64px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);min-height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;display:none;cursor:pointer}
+.pv.film .pv-play{display:block}
+@media (hover:none){.pv .pv-nav{display:none}}
+</style>
+<main class="wrap">
+<header><p class="eyebrow">LEDGER · the town · 2026-10-01</p><h1>Tom&#x27;s suggested lines</h1></header>
+<ol><li><small>greeting</small><q>Hello. Is now a good time?</q></li><li><small>something personal</small><q>What do people do round here of a Sunday?</q></li><li><small>goodbye</small><q>I&#x27;ll leave you to it.</q></li><li><small>to Ron&#x27;s &quot;tell them no?&quot;</small><q>Yes. Tell them no.</q></li><li><small>to Sheila&#x27;s &quot;Take it over, then?&quot;</small><q>Yes. It&#x27;s mine now.</q></li></ol>
+<section class="ask" data-key="suggest-written"><p>Tom&#x27;s written suggested lines: put them in the game? (recommended: put them in)</p><div class="row" role="group" aria-label="Tom&#x27;s written suggested lines: put them in the game?">
+<button type="button" class="rec" id="suggest-written-yes" data-pick="yes" aria-pressed="false">Put them in</button>
+<button type="button" id="suggest-written-no" data-pick="no" aria-pressed="false">Not yet</button>
+</div><p class="status" id="suggest-written-status"></p><details><summary>More</summary>
+<p>Your Mixed answer: greetings, goodbyes and his two decisions are written; the small model writes the rest from only what Tom knows. Three fresh reviews; the last passed all but one narrow point, now fixed. Its remaining notes: &quot;Another time, then.&quot; and &quot;I won&#x27;t stop, then.&quot; lean on a then with nothing before it; &quot;I&#x27;ll not hold you up.&quot; and &quot;I&#x27;ll think on it&quot; are northern turns of phrase; a personal question can come again at a later meeting. Each yes is the yes the game takes and each no decides nothing (tested). Put them in: the builder lights the panel. Not yet: say what jars in the note.</p>
+<p><b>Greetings (6)</b></p><ul><li>opening a talk: <q>Hello. Have you got a minute?</q></li><li>opening a talk: <q>Sorry to bother you.</q></li><li>opening a talk: <q>All right? Can I have a word?</q></li><li>opening a talk: <q>Hello there.</q></li><li>opening a talk: <q>Mind if I stop a minute?</q></li><li>opening a talk: <q>Hello. Is now a good time?</q></li></ul>
+<p><b>Something personal (10)</b></p><ul><li>off the subject: <q>Have you always lived round here?</q></li><li>off the subject: <q>What was Mickey like?</q></li><li>off the subject: <q>Where&#x27;s good for a cup of tea round here?</q></li><li>off the subject: <q>What do you make of the street these days?</q></li><li>off the subject: <q>I&#x27;m still finding my feet here.</q></li><li>off the subject: <q>It&#x27;s all new to me, this.</q></li><li>off the subject: <q>What do people do round here of a Sunday?</q></li><li>off the subject: <q>Who should I get to know round here?</q></li><li>off the subject: <q>Do you get many strangers down here?</q></li><li>off the subject: <q>What&#x27;s the best thing about this street?</q></li></ul>
+<p><b>Goodbyes (7)</b></p><ul><li>ending a talk: <q>I&#x27;ll let you get on.</q></li><li>ending a talk: <q>I won&#x27;t keep you.</q></li><li>ending a talk: <q>Right. I&#x27;d best be off.</q></li><li>ending a talk: <q>I&#x27;ll leave you to it.</q></li><li>ending a talk: <q>Another time, then.</q></li><li>ending a talk: <q>I won&#x27;t stop, then.</q></li><li>ending a talk: <q>I&#x27;ll not hold you up.</q></li></ul>
+<p><b>His two decisions (32)</b></p><ul><li>while Ron&#x27;s envelope stands, refuse: <q>Tell them no. I&#x27;m not doing it.</q></li><li>while Ron&#x27;s envelope stands, refuse: <q>I&#x27;m not carrying it. Count me out.</q></li><li>to Ron&#x27;s &quot;tell them no?&quot;, yes: <q>Yes. Tell them no.</q></li><li>to Ron&#x27;s &quot;tell them no?&quot;, yes: <q>Yes, I&#x27;m sure.</q></li><li>to Ron&#x27;s &quot;tell them no?&quot;, no: <q>No, hold off for now.</q></li><li>to Ron&#x27;s &quot;tell them no?&quot;, no: <q>No. I&#x27;ll think on it.</q></li><li>to Ron&#x27;s &quot;tell them no?&quot;, keep: <q>What happens if I don&#x27;t?</q></li><li>to Ron&#x27;s &quot;tell them no?&quot;, keep: <q>What would Mickey have done?</q></li><li>to Sheila&#x27;s &quot;which is it going to be?&quot;, winddown: <q>Wind it down. Just the cabs.</q></li><li>to Sheila&#x27;s &quot;which is it going to be?&quot;, winddown: <q>I&#x27;m getting out of Mickey&#x27;s business.</q></li><li>to Sheila&#x27;s &quot;which is it going to be?&quot;, takeover: <q>I&#x27;m taking it on. All of it.</q></li><li>to Sheila&#x27;s &quot;which is it going to be?&quot;, takeover: <q>I&#x27;ll keep it going. All of it.</q></li><li>to Sheila&#x27;s &quot;which is it going to be?&quot;, wontsay: <q>I&#x27;m not saying. That&#x27;s my answer.</q></li><li>to Sheila&#x27;s &quot;which is it going to be?&quot;, wontsay: <q>That&#x27;s my business, Sheila.</q></li><li>to Sheila&#x27;s &quot;Wind it down, then?&quot;, yes: <q>Yes. Wind it down.</q></li><li>to Sheila&#x27;s &quot;Wind it down, then?&quot;, yes: <q>Yes. Just the cabs.</q></li><li>to Sheila&#x27;s &quot;Wind it down, then?&quot;, no: <q>No. Give me a bit longer.</q></li><li>to Sheila&#x27;s &quot;Wind it down, then?&quot;, no: <q>No. Let me think.</q></li><li>to Sheila&#x27;s &quot;Wind it down, then?&quot;, keep: <q>What would that mean for you?</q></li><li>to Sheila&#x27;s &quot;Wind it down, then?&quot;, keep: <q>What happens to Ron, then?</q></li><li>to Sheila&#x27;s &quot;Take it over, then?&quot;, yes: <q>Yes. It&#x27;s mine now.</q></li><li>to Sheila&#x27;s &quot;Take it over, then?&quot;, yes: <q>Yes. I&#x27;m keeping it going.</q></li><li>to Sheila&#x27;s &quot;Take it over, then?&quot;, no: <q>No. Not yet.</q></li><li>to Sheila&#x27;s &quot;Take it over, then?&quot;, no: <q>No. I need longer.</q></li><li>to Sheila&#x27;s &quot;Take it over, then?&quot;, keep: <q>What comes with it, exactly?</q></li><li>to Sheila&#x27;s &quot;Take it over, then?&quot;, keep: <q>Who else knows about it?</q></li><li>to Sheila&#x27;s &quot;You won&#x27;t say, then?&quot;, yes: <q>Yes. I&#x27;m saying nothing.</q></li><li>to Sheila&#x27;s &quot;You won&#x27;t say, then?&quot;, yes: <q>Yes. That&#x27;s for me to know.</q></li><li>to Sheila&#x27;s &quot;You won&#x27;t say, then?&quot;, no: <q>No. Give me a minute.</q></li><li>to Sheila&#x27;s &quot;You won&#x27;t say, then?&quot;, no: <q>No. Ask me again later.</q></li><li>to Sheila&#x27;s &quot;You won&#x27;t say, then?&quot;, keep: <q>Why does it matter so much?</q></li><li>to Sheila&#x27;s &quot;You won&#x27;t say, then?&quot;, keep: <q>What would you do?</q></li></ul>
+<p><b>Written by the model, live, for Sheila (examples)</b></p><ul><li>after &quot;Who are you?&quot;, asks: <q>Thirty-one years, that&#x27;s a long time at one place.</q></li><li>personal: <q>How&#x27;s the rank been this morning then?</q></li><li>goodbye: <q>I won&#x27;t keep you from your work, Mrs Dunn.</q></li><li>after &quot;Where do I sleep?&quot;, asks: <q>So that&#x27;s where Mickey lived, then, is it.</q></li><li>personal: <q>How long have you been working here at the office.</q></li><li>goodbye: <q>Well, I&#x27;ll let you get on with things, Mrs Dunn.</q></li><li>after &quot;What is this place?&quot;, asks: <q>Do you mean the office, or something else about it?</q></li><li>personal: <q>How long have you been keeping the books here?</q></li><li>goodbye: <q>I won&#x27;t take up any more of your time just now.</q></li><li>after &quot;What&#x27;s behind that door?&quot;, asks: <q>Did Mickey keep much in there, then?</q></li><li>personal: <q>How many drivers do we have on the rank today?</q></li><li>goodbye: <q>Well, I&#x27;ll leave you to it, Sheila.</q></li></ul>
+<textarea id="suggest-written-note" placeholder="A note, if you want one"></textarea></details></section>
+</main>
+<script>
+let db = null, canWrite = true;
+const picks = {};
+function status(key, t, ok) { const s = document.getElementById(key + "-status"); s.textContent = t; s.className = "status" + (ok ? " saved" : ""); }
+function show(key, p) { document.querySelectorAll('[data-key="' + key + '"] [data-pick]').forEach(b => b.setAttribute("aria-pressed", String(b.dataset.pick === p))); }
+function save(key) {
+  const note = document.getElementById(key + "-note").value;
+  if (!db) { status(key, "Not saved: this view cannot store your answer."); return; }
+  if (!canWrite) { status(key, "Not saved: you can read this page but not answer on it."); return; }
+  status(key, "Saving...");
+  db.doc("verdicts/" + key).set({ pick: picks[key] || null, note, at: new Date().toISOString() })
+    .then(() => status(key, "Saved", true))
+    .catch(e => { if (e && (e.code === "not_granted" || e.code === "permission_denied")) canWrite = false; status(key, "Not saved: " + (e && e.message ? e.message : "the store refused it") + "."); });
+}
+document.querySelectorAll("[data-key]").forEach(card => {
+  const key = card.dataset.key;
+  card.querySelectorAll("[data-pick]").forEach(b => b.addEventListener("click", () => { picks[key] = b.dataset.pick; show(key, picks[key]); save(key); }));
+  document.getElementById(key + "-note").addEventListener("change", () => save(key));
+});
+(async () => {
+  try { db = await window.claude?.use?.("db"); } catch (e) { db = null; }
+  if (!db) return;
+  for (const card of document.querySelectorAll("[data-key]")) {
+    const key = card.dataset.key;
+    try {
+      const snap = await db.doc("verdicts/" + key).get();
+      const v = snap && (snap.data ? snap.data() : snap);
+      if (v && v.pick) { picks[key] = v.pick; show(key, v.pick); status(key, "Saved", true); }
+      if (v && v.note) document.getElementById(key + "-note").value = v.note;
+    } catch (e) {}
+  }
+})();
+
+// PICTURES JUDGED ON THE PAGE (tools/page_pictures.py): a tap opens a picture
+// full-screen at its own resolution; pinch or wheel to zoom, drag to look
+// about, double tap for its pixels one to one, swipe or arrows for the next,
+// Close or Esc to return. Filmed faces play with their own sound.
+(function(){
+  if (window.__pvReady) return; window.__pvReady = true;
+  const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+  const view = mk("div", "pv"); view.setAttribute("role", "dialog"); view.setAttribute("aria-label", "Picture, full screen");
+  const stage = mk("div", "pv-stage"), hold = mk("div", "pv-hold");
+  const bar = mk("div", "pv-bar"), count = mk("span", "pv-count"), close = mk("button", "pv-close", "Close");
+  const cap = mk("div", "pv-cap"), prev = mk("button", "pv-nav pv-prev", "‹"), next = mk("button", "pv-nav pv-next", "›");
+  const play = mk("button", "pv-play", "Play again");
+  close.type = prev.type = next.type = play.type = "button";
+  prev.setAttribute("aria-label", "The picture before"); next.setAttribute("aria-label", "The next picture");
+  stage.append(hold); bar.append(count, close); view.append(stage, bar, cap, prev, next, play);
+  (document.body || document.documentElement).append(view);
+
+  let items = [], idx = 0, W = 1, H = 1, fit = 1, sc = 1, tx = 0, ty = 0, audio = null, raf = 0, film = null;
+  const pts = new Map(); let pinch = null, drag = null, swipe = null, lastTap = 0;
+
+  function collect(){
+    return Array.from(document.querySelectorAll("img, [data-film-sprite]")).filter(e => !view.contains(e) && (e.tagName !== "IMG" || (e.currentSrc || e.src)));
+  }
+  function apply(){ hold.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + sc + ")"; }
+  function clampPan(){
+    const vw = stage.clientWidth, vh = stage.clientHeight, w = W * sc, h = H * sc;
+    tx = w <= vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, tx));
+    ty = h <= vh ? (vh - h) / 2 : Math.min(0, Math.max(vh - h, ty));
+  }
+  function fitNow(){ const vw = stage.clientWidth, vh = stage.clientHeight; fit = Math.min(vw / W, vh / H); sc = fit; tx = (vw - W * sc) / 2; ty = (vh - H * sc) / 2; apply(); }
+  function zoomAt(s, cx, cy){
+    const max = Math.max(fit * 8, 4), ns = Math.min(max, Math.max(fit, s));
+    tx = cx - (cx - tx) * ns / sc; ty = cy - (cy - ty) * ns / sc; sc = ns; clampPan(); apply();
+  }
+  function stopFilm(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); film = null; }
+  function frameOf(sp, i){
+    i = Math.max(0, Math.min(sp.frames - 1, i)); const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    return (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  }
+  function runFilm(){
+    if (!film) return; stopAudioOnly();
+    const sp = film.sp; audio = film.audio ? new Audio(film.audio) : null;
+    const box = film.box; box.style.backgroundPosition = frameOf(sp, 0);
+    // THE FILM'S CLOCK IS ITS SOUND; when the sound cannot play (no sound
+    // device, or the browser refuses), its own timer, so the face still moves.
+    const t0 = performance.now(), len = sp.frames / (sp.fps || 10);
+    let silent = !audio;
+    const now = () => silent ? (performance.now() - t0) / 1000 : audio.currentTime;
+    const over = () => silent ? now() >= len : audio.ended;
+    if (audio) { audio.play().catch(() => { silent = true; }); }
+    // A plain timer, as the page's own player uses: animation frames stop in a hidden view.
+    raf = setInterval(() => { if (film === null || film.box !== box) { clearInterval(raf); return; }
+      if (over()) { clearInterval(raf); box.style.backgroundPosition = frameOf(sp, 0); return; }
+      box.style.backgroundPosition = frameOf(sp, Math.floor(now() * sp.fps)); }, 33);
+  }
+  function stopAudioOnly(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); }
+  function show(i){
+    stopFilm(); idx = (i + items.length) % items.length; const el = items[idx];
+    hold.replaceChildren(); view.classList.remove("film");
+    count.textContent = (idx + 1) + " / " + items.length;
+    cap.textContent = el.getAttribute("data-caption") || el.alt || el.getAttribute("aria-label") || "";
+    if (el.tagName === "IMG") {
+      const im = new Image(); im.alt = el.alt || ""; im.decoding = "async";
+      im.onload = () => { W = im.naturalWidth || 1; H = im.naturalHeight || 1; fitNow(); };
+      im.src = el.getAttribute("data-full") || el.currentSrc || el.src;
+      hold.append(im); W = el.naturalWidth || 1; H = el.naturalHeight || 1; fitNow();
+    } else {
+      let sp = {}; try { sp = JSON.parse(el.getAttribute("data-film-sprite")); } catch (e) {}
+      const box = mk("div", "pv-film"); const probe = new Image();
+      box.style.backgroundImage = "url(" + sp.file + ")"; box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+      hold.append(box); view.classList.add("film");
+      film = { sp, box, audio: el.getAttribute("data-film-audio") };
+      probe.onload = () => { W = Math.round(probe.naturalWidth / sp.cols); H = Math.round(probe.naturalHeight / sp.rows);
+        box.style.width = W + "px"; box.style.height = H + "px"; fitNow(); runFilm(); };
+      probe.src = sp.file;
+    }
+  }
+  function open(el){ items = collect(); const i = items.indexOf(el); if (i < 0) return;
+    view.classList.add("on"); document.documentElement.style.overflow = "hidden"; show(i); close.focus({preventScroll:true}); }
+  function shut(){ stopFilm(); view.classList.remove("on"); hold.replaceChildren(); document.documentElement.style.overflow = ""; }
+
+  document.addEventListener("click", (e) => {
+    if (view.contains(e.target)) return;
+    const el = e.target.closest ? e.target.closest("img, [data-film-sprite]") : null;
+    if (!el || (el.tagName === "IMG" && !(el.currentSrc || el.src))) return;
+    if (el.closest("a")) e.preventDefault();
+    open(el);
+  }, true);
+  close.addEventListener("click", shut);
+  prev.addEventListener("click", () => show(idx - 1));
+  next.addEventListener("click", () => show(idx + 1));
+  play.addEventListener("click", runFilm);
+  document.addEventListener("keydown", (e) => {
+    if (!view.classList.contains("on")) return;
+    if (e.key === "Escape") shut(); else if (e.key === "ArrowRight") show(idx + 1); else if (e.key === "ArrowLeft") show(idx - 1);
+    else if (e.key === "+" || e.key === "=") zoomAt(sc * 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else if (e.key === "-") zoomAt(sc / 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else return; e.preventDefault();
+  });
+  stage.addEventListener("wheel", (e) => { e.preventDefault(); const r = stage.getBoundingClientRect(); zoomAt(sc * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top); }, {passive:false});
+  stage.addEventListener("pointerdown", (e) => {
+    try { stage.setPointerCapture(e.pointerId); } catch (err) {}   // some browsers refuse; the pinch must not depend on it
+    const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = {d: Math.hypot(a.x - b.x, a.y - b.y), s: sc}; drag = swipe = null; }
+    else if (pts.size === 1) { const p = pts.get(e.pointerId); drag = {x: p.x, y: p.y, tx, ty}; swipe = {x: p.x, y: p.y, t: Date.now()}; }
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!pts.has(e.pointerId)) return; const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pinch && pts.size >= 2) { const [a, b] = [...pts.values()]; zoomAt(pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / (pinch.d || 1), (a.x + b.x) / 2, (a.y + b.y) / 2); }
+    else if (drag && sc > fit * 1.02) { const p = pts.get(e.pointerId); tx = drag.tx + p.x - drag.x; ty = drag.ty + p.y - drag.y; clampPan(); apply(); }
+  });
+  function lift(e){
+    const p = pts.get(e.pointerId); pts.delete(e.pointerId);
+    if (pts.size < 2) pinch = null;
+    if (!p || pts.size) return;
+    if (swipe && sc <= fit * 1.02) {
+      const dx = p.x - swipe.x, dy = p.y - swipe.y, dt = Date.now() - swipe.t;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 800) { show(idx + (dx < 0 ? 1 : -1)); swipe = drag = null; return; }
+    }
+    if (swipe && Math.hypot(p.x - swipe.x, p.y - swipe.y) < 10) {
+      const now = Date.now();
+      if (now - lastTap < 320) { lastTap = 0; if (sc > fit * 1.02) fitNow(); else zoomAt(Math.max(1, fit * 2.5), p.x, p.y); }
+      else lastTap = now;
+    }
+    swipe = drag = null;
+  }
+  stage.addEventListener("pointerup", lift); stage.addEventListener("pointercancel", lift);
+  window.addEventListener("resize", () => { if (view.classList.contains("on")) fitNow(); });
+})();
+</script>
