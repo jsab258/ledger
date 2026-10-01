@@ -7106,6 +7106,22 @@ namespace Ledger.CoreTests
                 Check(heard && filed,
                       "a threat is remembered once a deed and makes them warier, kept with the talk, and keeps Sheila's trust back; the one threatened holds the story first-hand, once, and the street says it to his face",
                       $"{heard} {filed}");
+                // A THREAT TALKS THEM ROUND (Jafar's ruling of 1 October: "seeing him do
+                // it is enough, unless he has won them over or talks them round (keep
+                // it quiet, a threat)"; the independent review of 1 October, N3: a
+                // threatened witness still reported, so threatening one guaranteed the
+                // report). Threatened over a deed, they go to nobody about it; never
+                // about a body, which no bribe or threat moves; another deed as before.
+                var thm = new GossipMill(null);
+                thm.Add(new Gossiper("sam", "sam", new MemoryStore("sam"), new KnowledgeBase(), new SuspicionTracker()) { Nerve = 0.7, Loyalty = 0.5 });
+                thm.Witness("sam", new Fact("player", "window_d1", "ritas"), "it was the new owner up at Mickey's that put the window in", true, new GameTime(1, 12, 0), 1.0);
+                var darren = thm.Get("sam");
+                bool before = PoliceFile.WouldReport(darren, Offence.Damage, false, "player.window_d1");
+                Silence.FileThreat(thm, "sam", "player.window_d1", new GameTime(2, 10, 0));
+                Check(before && !PoliceFile.WouldReport(darren, Offence.Damage, false, "player.window_d1")
+                      && PoliceFile.WouldReport(darren, Offence.Killing, false, "player.window_d1")
+                      && PoliceFile.WouldReport(darren, Offence.Damage, false, "player.window_d2"),
+                      "a witness he threatens over a deed goes to nobody about it; a body is still reported, and another deed as before");
             }
 
             // WINDING IT DOWN ENDS MICKEY'S ARRANGEMENT THAT NIGHT (town list 6cc):

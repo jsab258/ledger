@@ -269,6 +269,11 @@ namespace Ledger.Core
             if (g.Rumors.Exists(r => r.TopicKey == ThreatPrefix + stem && r.Hops == 0)) return false;
             // Threatened to their face: remembered as that, never "I saw it myself" (B7).
             mill.WitnessRemembering(who, fact, ThreatSaid, false, at, ThreatMemory);
+            // A THREAT TALKS THEM ROUND (Jafar's ruling of 1 October; the independent
+            // review of 1 October, N3): frightened quiet about the deed, as one bought
+            // is, so they go to nobody about it (PoliceFile.WouldReport); never about a
+            // body, which is indelible and which no bribe or threat moves.
+            g.Suppressed.Add(deedTopic);
             return true;
         }
 
