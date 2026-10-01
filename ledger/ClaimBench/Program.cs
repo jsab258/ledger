@@ -105,6 +105,7 @@ static partial class Program
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
             case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ConversationEngine.ReactFirst = args.Contains("--react"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; FirstsOnly = Arg(args, "--only", null); FirstsModel = Arg(args, "--model", null); return await Firsts(dir, parallel);
+            case "suggest": return await SuggestBench(Arg(args, "--from", "F:/LedgerTools/town-scratch/sheila-sonnet/firsts.jsonl"), Arg(args, "--out", "F:/LedgerTools/town-scratch/suggest-bench.jsonl"), parallel);
             case "bearing": return Bearing();
             case "detailbench": return await DetailBench(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
             case "causes": return await Causes(dir, parallel, Arg(args, "--third", "claude-fable-5-1"));
@@ -1470,6 +1471,43 @@ static partial class Program
     {
         for (int i = 0; i + 1 < args.Length; i++) if (args[i] == name) return args[i + 1];
         return fallback;
+    }
+
+    /// TOM'S SUGGESTED LINES ON THE REAL SMALL MODEL (Suggest; Jafar, 1 October:
+    /// "Mixed"), on the subscription through Claude Code: for each of a bench's
+    /// first exchanges (his question, their reply), the three lines and which the
+    /// model wrote, to read and judge; nothing here is the game's.
+    static async Task<int> SuggestBench(string from, string outPath, int parallel)
+    {
+        var written = Suggest.Written.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "suggested-lines.json")));
+        var knows = new List<string>
+        {
+            StreetFacts.Held("will", "player"), StreetFacts.Held("office", "player"), StreetFacts.Held("sheila_books", "player"),
+            StreetFacts.Held("ron_rank", "player"), StreetFacts.Held("flat", "player"),
+        };
+        var rows = File.ReadAllLines(from).Where(l => l.Trim().Length > 0).Select(l => JsonDocument.Parse(l).RootElement).ToList();
+        using var client = new ClaudeCodeClient();
+        var gate = new SemaphoreSlim(parallel);
+        var outRows = new string[rows.Count];
+        int modelLines = 0, writtenLines = 0;
+        await Task.WhenAll(rows.Select(async (r, i) =>
+        {
+            await gate.WaitAsync();
+            try
+            {
+                var heard = new List<LlmMessage> { new LlmMessage("user", r.GetProperty("probe").GetString()), new LlmMessage("assistant", r.GetProperty("reply").GetString()) };
+                var res = await Suggest.WriteAsync(client, written, knows, heard, "Sheila", new List<string>(), i, timeout: TimeSpan.FromSeconds(120));
+                lock (outRows)
+                {
+                    modelLines += res.Generated.Count(g => g); writtenLines += res.Generated.Count(g => !g);
+                    outRows[i] = JsonSerializer.Serialize(new { probe = heard[0].Content, reply = heard[1].Content, suggest = res.Lines, generated = res.Generated, model = res.Model });
+                }
+            }
+            finally { gate.Release(); }
+        }));
+        File.WriteAllLines(outPath, outRows);
+        Console.WriteLine($"suggest: {rows.Count} exchanges, lines by the model {modelLines}, written {writtenLines} -> {outPath}");
+        return 0;
     }
 
     static string RepoRoot()

@@ -128,6 +128,8 @@ namespace Ledger.CoreTests
                 TestModelCannotChooseAnUnrefusableCheck();
                 TestEconomy();
                 TestContentRule();
+                TestSuggestedLines();
+                await TestSuggestLines();
                 TestPopulationDistricts();
                 TestPhones();
                 TestEveryApproachIsADifferentPlan();
@@ -28553,6 +28555,138 @@ namespace Ledger.CoreTests
         /// Walk up from the test binary to a file in the repository. Same
         /// shape as the voice-conditionals check above, which is the only
         /// reason it can be trusted to find the same tree.
+        /// TOM'S WRITTEN SUGGESTED LINES (Jafar, 1 October: "Mixed", the game's own
+        /// written lines for hellos, goodbyes and decisions; production/design/ui/
+        /// STYLE-GUIDE.md, "Suggested lines"). Chosen, a line goes the same way as a
+        /// typed one, so each is read here by the game's own detectors: a deal's yes
+        /// is the yes the game takes, its no and its keep decide nothing, the lines
+        /// that answer Ron's ask or Sheila's question sound like that answer, and no
+        /// everyday line decides anything, gives his name or breaks the content rule.
+        static void TestSuggestedLines()
+        {
+            Console.WriteLine("Suggested lines:");
+            string path = Root("production/specs/suggested-lines.json");
+            Check(path != null, "Tom's written suggested lines are there to read");
+            if (path == null) return;
+            var doc = MiniJson.AsObject(MiniJson.Deserialize(File.ReadAllText(path)));
+            List<string> L(Dictionary<string, object> o, string key) =>
+                o != null && o.TryGetValue(key, out var v) && MiniJson.AsList(v) is List<object> l ? l.Select(x => x as string).ToList() : new List<string>();
+            var faults = new List<string>();
+            var everyday = new List<string>();
+            foreach (var kind in new[] { "greet", "leave", "personal" })
+            {
+                var lines = L(doc, kind);
+                if (lines.Count < 6) faults.Add(kind + ": fewer than six, so a talk could run out");
+                everyday.AddRange(lines);
+            }
+            var deals = doc != null && doc.TryGetValue("deals", out var dv) ? MiniJson.AsObject(dv) : null;
+            Dictionary<string, object> D(string key) => deals != null && deals.TryGetValue(key, out var v) ? MiniJson.AsObject(v) : null;
+            var all = new List<string>(everyday);
+            if (deals != null) foreach (var d in deals.Values) foreach (var part in MiniJson.AsObject(d).Keys) all.AddRange(L(MiniJson.AsObject(d), part));
+            foreach (var line in all)
+            {
+                if (string.IsNullOrWhiteSpace(line)) { faults.Add("an empty line"); continue; }
+                if (ContentRule.SpeechBreaks(line) != null) faults.Add("content rule: " + line);
+                if (RealWorld.Find(line).Count > 0) faults.Add("a real name or later thing: " + line);
+                if (line.Length > 45) faults.Add("longer than a suggestion's line: " + line);
+            }
+            if (all.Distinct().Count() != all.Count) faults.Add("a line twice");
+            // No everyday line decides anything, and only the one meant to gives his name.
+            foreach (var line in everyday)
+            {
+                if (Arrangement.ConfirmsNo(line) || Arrangement.SoundsLikeNo(line)) faults.Add("decides Ron's ask: " + line);
+                if (WeeksEnd.Sounds(line) != WeekAnswer.None) faults.Add("answers Sheila's question: " + line);
+                if (PlayerIdentity.GivesName(line).gave && !line.Contains("Tom")) faults.Add("gives his name unmeant: " + line);
+            }
+            // Ron's ask: these sound like a no, so he puts his plain question; to it,
+            // the yes is the game's yes and the no and the keep are not.
+            foreach (var line in L(D("ron-ask"), "refuse"))
+                if (!Arrangement.SoundsLikeNo(line)) faults.Add("ron-ask refuse is not heard as a no: " + line);
+            var tellNo = D("ron-tell-them-no");
+            foreach (var line in L(tellNo, "yes")) if (!Arrangement.ConfirmsNo(line)) faults.Add("ron-tell-them-no yes is not his yes: " + line);
+            foreach (var line in L(tellNo, "no").Concat(L(tellNo, "keep")))
+                if (Arrangement.ConfirmsNo(line) || Arrangement.SoundsLikeNo(line)) faults.Add("ron-tell-them-no decides: " + line);
+            if (L(tellNo, "yes").Count == 0 || L(tellNo, "no").Count == 0 || L(tellNo, "keep").Count == 0) faults.Add("ron-tell-them-no wants a yes, a no and a keep");
+            // Sheila's question: each answer sounds like itself; to her plain question
+            // for it, the yes confirms it and the no and the keep confirm nothing.
+            foreach (var (key, a) in new[] { ("winddown", WeekAnswer.WindDown), ("takeover", WeekAnswer.TakeOver), ("wontsay", WeekAnswer.WontSay) })
+            {
+                var first = L(D("sheila-week"), key);
+                if (first.Count == 0) faults.Add("sheila-week has no " + key);
+                foreach (var line in first) if (WeeksEnd.Sounds(line) != a) faults.Add("sheila-week " + key + " sounds like " + WeeksEnd.Sounds(line) + ": " + line);
+                var plain = D("sheila-week-" + key);
+                if (L(plain, "yes").Count == 0 || L(plain, "no").Count == 0 || L(plain, "keep").Count == 0) faults.Add("sheila-week-" + key + " wants a yes, a no and a keep");
+                foreach (var line in L(plain, "yes")) if (!WeeksEnd.Confirms(line, a)) faults.Add("sheila-week-" + key + " yes is not her yes: " + line);
+                foreach (var line in L(plain, "no").Concat(L(plain, "keep")))
+                    foreach (var any in new[] { WeekAnswer.WindDown, WeekAnswer.TakeOver, WeekAnswer.WontSay })
+                        if (WeeksEnd.Confirms(line, any)) faults.Add("sheila-week-" + key + " confirms " + any + ": " + line);
+            }
+            Check(faults.Count == 0,
+                  "every written suggested line is read as the game reads a typed one: a deal's yes is its yes, its no and keep decide nothing, an answer to Ron or Sheila sounds like that answer, no everyday line decides or gives his name unmeant, and all keep the content rule, short and never twice",
+                  string.Join(" | ", faults));
+        }
+
+        /// THE MODEL'S SUGGESTED LINES (Suggest; Jafar, 1 October: "Mixed"): three
+        /// jobs in a fixed order, from a call that is given only what Tom knows and
+        /// the talk so far; anything wrong in a line, or no model, gives his written
+        /// line for that job; nothing said or shown before comes again.
+        static async Task TestSuggestLines()
+        {
+            Console.WriteLine("Suggested lines, the model's:");
+            var written = Suggest.Written.Parse(File.ReadAllText(Root("production/specs/suggested-lines.json")));
+            var heard = new List<LlmMessage>
+            {
+                new LlmMessage("user", "How long have you kept the books here?"),
+                new LlmMessage("assistant", "Thirty-one years. Since before the fire at the warehouses."),
+            };
+            var knows = new List<string> { "Sheila Dunn keeps the books at Mickey's.", "Ron Kirby keeps the rank." };
+            // Good lines are kept, in their jobs, and the call sees what he knows and heard, and nothing else.
+            var good = new ScriptedLlm("1. What fire was that?\n2. Do you ever take a day off?\n3. I'll let you get back to it.");
+            var cost = new CostTracker();
+            var r = await Suggest.WriteAsync(good, written, knows, heard, "Sheila", new List<string>(), 1, cost);
+            var req = good.Requests.Single();
+            Check(r.Lines.SequenceEqual(new[] { "What fire was that?", "Do you ever take a day off?", "I'll let you get back to it." })
+                  && r.Generated.All(g => g) && r.Model == Models.Ambient && req.Model == Models.Ambient
+                  && req.Messages.Single().Content.Contains("Sheila Dunn keeps the books") && req.Messages.Single().Content.Contains("Since before the fire")
+                  && req.Messages.Single().Content.Contains("Tom: How long have you kept the books here?") && cost.TotalCalls == 1,
+                  "the model's three lines are kept in their jobs, from a call given what Tom knows and the talk so far, counted in the talk's cost",
+                  string.Join(" | ", r.Lines));
+            // Each kind of wrong line gives his written line for that job.
+            var bad = new ScriptedLlm("1. Did Frank tell you about the fire?\n2. Fancy a pint after work?\n3. Yes. Tell them no.");
+            var rb = await Suggest.WriteAsync(bad, written, knows, heard, "Sheila", new List<string>(), 2);
+            Check(!rb.Generated.Any(g => g) && rb.Lines[0] == null && written.Personal.Contains(rb.Lines[1]) && written.Leave.Contains(rb.Lines[2]) && rb.Model == null,
+                  "a name he has not heard, the content rule, or a line that decides Ron's ask: each gives his written line for that job, and a follow-up, having none, is left out",
+                  string.Join(" | ", rb.Lines));
+            var more = new ScriptedLlm("1. How long have you kept the books here?\n2. So which way do you think it'll go, then, with everything that's been happening on this street lately?\n3. I'm Tom, by the way.");
+            var rm = await Suggest.WriteAsync(more, written, knows, heard, "Sheila", new List<string>(), 3);
+            Check(!rm.Generated.Any(g => g),
+                  "a line he has already said, a line too long to be a suggestion, and a line giving his name are not offered", string.Join(" | ", rm.Lines));
+            Check(Suggest.Refuse("Busy on the rank this morning?", "Tom: Hello.", new HashSet<string>()) != null
+                  && Suggest.Refuse("Busy on the rank, then?", "Tom: Hello.", new HashSet<string>()) == null
+                  && Suggest.Refuse("Was it busy this morning, then?", "Them: I was run off my feet this morning.", new HashSet<string>()) == null,
+                  "a time the call was not told is not offered; one it was told may be");
+            // No model, a failing one, or the stand-in: his written lines, none twice, none already shown.
+            var shown = new List<string> { written.Personal[0], written.Personal[1], written.Leave[0] };
+            var none = await Suggest.WriteAsync(null, written, knows, heard, "Sheila", shown, 0);
+            var failing = new ScriptedLlm("1. x") { ThrowAt = 1 };
+            var rf = await Suggest.WriteAsync(failing, written, knows, heard, "Sheila", shown, 0);
+            Check(!none.Generated.Any(g => g) && none.Lines[0] == null && none.Lines[1] != null && none.Lines[2] != null && none.Lines[1] != none.Lines[2]
+                  && none.Lines.All(l => l == null || !shown.Contains(l))
+                  && !rf.Generated.Any(g => g) && rf.Lines[0] == null && rf.Lines.All(l => l == null || !shown.Contains(l)),
+                  "with no model, or one that fails, his written lines, none twice and none already shown; no written follow-up", string.Join(" | ", none.Lines));
+            // Never twice: once every written line of a job has been shown, that job is left out.
+            var allShown = new List<string>(written.Personal);
+            var spentOut = await Suggest.WriteAsync(null, written, knows, heard, "Sheila", allShown, 0);
+            Check(spentOut.Lines[1] == null && spentOut.Lines[2] != null,
+                  "once every written personal line has been shown in a conversation, none is offered again", string.Join(" | ", spentOut.Lines));
+            // Before anything is said, the first is a written greeting even when the model writes one.
+            var opening = new ScriptedLlm("1. What brings you here?\n2. Have you lived here long?\n3. I'd best be going.");
+            var ro = await Suggest.WriteAsync(opening, written, knows, new List<LlmMessage>(), "the woman on the step", new List<string>(), 4);
+            Check(written.Greet.Contains(ro.Lines[0]) && !ro.Generated[0] && ro.Generated[1] && ro.Generated[2]
+                  && opening.Requests.Single().Messages.Single().Content.Contains("the woman on the step"),
+                  "before anything is said, the first line is a written greeting; the model writes the other two", string.Join(" | ", ro.Lines));
+        }
+
         static string Root(string relative)
         {
             var dir = new DirectoryInfo(AppContext.BaseDirectory);

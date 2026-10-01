@@ -211,6 +211,43 @@ static class Program
 
         public ConversationEngine EngineFor(string to) => _engines.TryGetValue(to, out var e) ? e : null;
 
+        /// TOM'S WRITTEN SUGGESTED LINES (production/specs/suggested-lines.json),
+        /// for the suggestions the model does not write; empty without the file.
+        public Suggest.Written Written = new Suggest.Written();
+        /// True with the stand-in (--fake): suggestions are then all written ones.
+        public bool Fake;
+        // What has been suggested to Tom in each conversation, by person and the
+        // engine's TalkNumber, so nothing is offered twice in one conversation.
+        readonly Dictionary<string, (int talk, List<string> lines)> _suggested = new Dictionary<string, (int talk, List<string> lines)>();
+
+        /// THE SUGGESTED LINES (Jafar, 1 October: "Mixed"; production/design/ui/
+        /// STYLE-GUIDE.md): three lines Tom could say next to `key`, from a call
+        /// of their own given only his Ledger (`tomKnows`), how he knows them
+        /// (`with`) and the talk so far; the written lines without a model.
+        async Task<string> SuggestAsync(int id, string to, string key, List<string> tomKnows, string with, List<string> shownByGame = null)
+        {
+            var engine = EngineFor(key);
+            IReadOnlyList<LlmMessage> heard = engine != null ? engine.TalkSoFar : new List<LlmMessage>();
+            int talk = engine?.TalkNumber ?? 0;
+            List<string> shown;
+            lock (_suggested)
+            {
+                if (!_suggested.TryGetValue(key, out var s) || s.talk != talk) _suggested[key] = s = (talk, new List<string>());
+                if (shownByGame != null) foreach (var l in shownByGame) if (!string.IsNullOrWhiteSpace(l) && !s.lines.Contains(l)) s.lines.Add(l);
+                shown = new List<string>(s.lines);
+            }
+            var r = await Suggest.WriteAsync(Fake ? null : _llm, Written, tomKnows, new List<LlmMessage>(heard), with, shown, id, _cost, TimeSpan.FromSeconds(6));
+            lock (_suggested)
+                if (_suggested.TryGetValue(key, out var s) && s.talk == talk)
+                    foreach (var l in r.Lines) if (l != null) s.lines.Add(l);
+            // In the jobs' order, a job with no line left out; `jobs` names each.
+            var jobNames = new[] { "ask", "personal", "leave" };
+            var lines = new List<string>(); var jobs = new List<string>(); var made = new List<bool>();
+            for (int j = 0; j < Suggest.Jobs; j++)
+                if (r.Lines[j] != null) { lines.Add(r.Lines[j]); jobs.Add(jobNames[j]); made.Add(r.Generated[j]); }
+            return JsonSerializer.Serialize(new { id, to, suggest = lines, jobs, generated = made, model = r.Model }, Plain);
+        }
+
         ConversationEngine NewEngine(CharacterCard card)
         {
             var engine = new ConversationEngine(_llm, card, new MemoryStore(card.Id), new KnowledgeBase(),
@@ -398,6 +435,7 @@ static class Program
             bool knowsNameSent = false, gaveNameOut = false, callsSentByGame = false;
             List<string> present = null;
             string evidenceTopic = null;
+            bool suggestAsked = false; var tomKnows = new List<string>(); string suggestWith = null; var suggestShown = new List<string>();
             try
             {
                 using var doc = JsonDocument.Parse(line);
@@ -434,6 +472,19 @@ static class Program
                 {
                     walkedFrom = wa.TryGetProperty("to", out var wt) && wt.ValueKind == JsonValueKind.String ? wt.GetString() : "";
                     walkedHeard = wa.TryGetProperty("heard", out var wh) && wh.ValueKind == JsonValueKind.String ? wh.GetString() : "";
+                }
+                // TOM'S SUGGESTED LINES (Jafar, 1 October): {"kind":"suggest"}, with his
+                // Ledger ("tomKnows") and how he knows them ("with"), never theirs.
+                if (r.TryGetProperty("kind", out var kd) && kd.ValueKind == JsonValueKind.String && kd.GetString() == "suggest")
+                {
+                    suggestAsked = true;
+                    if (r.TryGetProperty("tomKnows", out var tkn) && tkn.ValueKind == JsonValueKind.Array)
+                        foreach (var k in tkn.EnumerateArray()) if (k.ValueKind == JsonValueKind.String) tomKnows.Add(k.GetString());
+                    if (r.TryGetProperty("with", out var wi) && wi.ValueKind == JsonValueKind.String) suggestWith = wi.GetString();
+                    // Lines the game showed itself (the file's, before the answer came), so
+                    // never-twice holds for them too.
+                    if (r.TryGetProperty("shown", out var sh) && sh.ValueKind == JsonValueKind.Array)
+                        foreach (var k in sh.EnumerateArray()) if (k.ValueKind == JsonValueKind.String) suggestShown.Add(k.GetString());
                 }
                 if (r.TryGetProperty("talk", out var tk) && tk.ValueKind == JsonValueKind.String)
                 {
@@ -555,6 +606,11 @@ static class Program
             // further than here (town list 6bn, the independent check).
             if (!string.IsNullOrEmpty(say) && to != Arrangement.Doorman) lock (_askedNo) _askedNo.Clear();
             if (!string.IsNullOrEmpty(say) && to != WeeksEnd.Sheila) lock (_askedNo) _askedWeek.Clear();
+            if (suggestAsked)
+            {
+                if (!Cards.ContainsKey(to)) return JsonSerializer.Serialize(new { id, to, error = "no-card" }, Plain);
+                return await SuggestAsync(id, to, string.IsNullOrEmpty(who) ? to : who, tomKnows, suggestWith, suggestShown);
+            }
             if (talkOp != null) return await Talk(talkOp, talkPath, talkStamp);
             if (walkedFrom != null)
             {
@@ -1297,6 +1353,16 @@ static class Program
         try { h.Cast = CastDay.Parse(File.ReadAllText(path)); } catch (FormatException) { h.Cast = null; }
     }
 
+    /// Tom's written suggested lines: beside the program as shipped, else the
+    /// project's (production/specs/suggested-lines.json, beside the cards).
+    static void LoadSuggested(Helper h, string cardsDir)
+    {
+        var path = Path.Combine(AppContext.BaseDirectory, "suggested-lines.json");
+        if (!File.Exists(path)) path = Path.GetFullPath(Path.Combine(cardsDir, "..", "..", "specs", "suggested-lines.json"));
+        if (!File.Exists(path)) return;
+        h.Written = Suggest.Written.Parse(File.ReadAllText(path));
+    }
+
     static void LoadCards(Helper h, string dir)
     {
         if (!Directory.Exists(dir)) return;
@@ -1367,6 +1433,8 @@ static class Program
         helper.Pending = Array.IndexOf(args, "--pending") >= 0;
         LoadCards(helper, CardsDir(args));
         LoadCast(helper, CardsDir(args));
+        LoadSuggested(helper, CardsDir(args));
+        helper.Fake = fake;
         Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake, notice = new { title = AiNotice.Title, text = AiNotice.TextFor(relay != null), report = AiNotice.ReportLabel } }, Plain));
         Console.Out.Flush();
         // Lines are still answered one at a time, in the order sent; but the
@@ -1486,6 +1554,41 @@ static class Program
 
         var c = await h.Answer("{\"id\":3,\"to\":\"nobody\",\"say\":\"Hello?\"}");
         Ok("a line to someone with no card says so", c.Contains("no-card"), c);
+
+        // TOM'S SUGGESTED LINES (Jafar, 1 October): with the stand-in, his written
+        // lines, three, none twice in the conversation; the model's own three
+        // otherwise, from a call that never sees the card it would speak as.
+        var sgh = new Helper(null, TimeSpan.FromSeconds(8)) { Fake = true };
+        LoadCards(sgh, cardsDir);
+        LoadSuggested(sgh, cardsDir);
+        List<string> Suggested(string json)
+        {
+            var o = new List<string>();
+            using var dj = JsonDocument.Parse(json);
+            if (dj.RootElement.TryGetProperty("suggest", out var v) && v.ValueKind == JsonValueKind.Array)
+                foreach (var el in v.EnumerateArray()) o.Add(el.GetString());
+            return o;
+        }
+        var s1 = Suggested(await sgh.Answer("{\"kind\":\"suggest\",\"id\":11,\"to\":\"lena\",\"with\":\"Sheila\"}"));
+        var s2 = Suggested(await sgh.Answer("{\"kind\":\"suggest\",\"id\":12,\"to\":\"lena\",\"with\":\"Sheila\"}"));
+        var gaveG = new List<string>(sgh.Written.Greet); gaveG.RemoveAt(0);
+        var shownJson = "[" + string.Join(",", gaveG.ConvertAll(x => JsonSerializer.Serialize(x))) + "]";
+        var s3 = Suggested(await sgh.Answer("{\"kind\":\"suggest\",\"id\":15,\"to\":\"sam\",\"with\":\"Darren\",\"shown\":" + shownJson + "}"));
+        Ok("lines the game showed itself are never offered again in that conversation",
+           s3.Count >= 2 && !s3.Exists(x => gaveG.Contains(x)) && s3[0] == sgh.Written.Greet[0], string.Join(" | ", s3));
+        Ok("with the stand-in, three written lines, a greeting first, and none offered twice in one conversation",
+           s1.Count == 3 && s2.Count == 3 && sgh.Written.Greet.Contains(s1[0]) && sgh.Written.Leave.Contains(s1[2]) && !s1.Exists(x => s2.Contains(x)),
+           string.Join(" | ", s1) + " || " + string.Join(" | ", s2));
+        var model = new FakeLlm { Next = "1. How do you mean, exactly?\n2. Do you like it here?\n3. I'll let you get on, then." };
+        var sm = new Helper(model, TimeSpan.FromSeconds(8));
+        LoadCards(sm, cardsDir);
+        LoadSuggested(sm, cardsDir);
+        await sm.Answer("{\"id\":13,\"to\":\"lena\",\"say\":\"Hello.\"}");
+        int before = model.Calls;
+        var sj = await sm.Answer("{\"kind\":\"suggest\",\"id\":14,\"to\":\"lena\",\"with\":\"Sheila\",\"tomKnows\":[\"Sheila Dunn keeps the books at Mickey's.\"]}");
+        var sl = Suggested(sj);
+        Ok("with a model, its three lines in their jobs, in one call of their own",
+           sl.Count == 3 && sl[0] == "How do you mean, exactly?" && sl[2] == "I'll let you get on, then." && model.Calls == before + 1 && sj.Contains("\"generated\":[true,true,true]"), sj);
 
         var d = await h.Answer("not json");
         Ok("a broken line is refused, not guessed at", d.Contains("bad-line"), d);
