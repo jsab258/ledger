@@ -8658,6 +8658,19 @@ namespace Ledger.CoreTests
                       && PoliceFile.WouldReport(bold9, Offence.Killing, false, null) && !PoliceFile.WouldReport(bold9, Offence.Killing, false, null, neverToPolice: true)
                       && !PoliceFile.WouldReport(bold9, Offence.Damage, true, null, neverToPolice: true),
                       "whoever's trade keeps them from the police never goes, victim or witness, a body included; the cast file names them, and any other word there is refused");
+                // MICKEY'S PEOPLE NEVER GO TO THE POLICE ABOUT ONE OF THEIR OWN (Jafar's
+                // ruling of 1 October, on the independent review's N4): Ron and Sheila,
+                // Mickey's inherited loyalists (the cast's keepsQuiet "owner"), handle what
+                // they saw privately; grassing is the last thing a loyal person does. So
+                // even at the middle regard, unafraid, seeing him do it, they report
+                // nothing and tell DS Ellis nothing; Darren, who keeps quiet for anyone,
+                // is no loyalist and still reports.
+                var plainSaw = new Gossiper("w", "w", new MemoryStore("w"), new KnowledgeBase(), new SuspicionTracker()) { Nerve = 0.7, Loyalty = 0.5 };
+                Check(hookQ.NeverToPolice("rocco") && hookQ.NeverToPolice("lena") && !hookQ.NeverToPolice("sam")
+                      && !PoliceFile.WouldReport(plainSaw, Offence.Damage, false, "player.window_d1", hookQ.NeverToPolice("lena"))
+                      && !PoliceFile.WouldReport(plainSaw, Offence.Killing, false, "player.window_d1", hookQ.NeverToPolice("rocco"))
+                      && PoliceFile.WouldReport(plainSaw, Offence.Damage, false, "player.window_d1", hookQ.NeverToPolice("sam")),
+                      "Mickey's people, Ron and Sheila, never go to the police about him, whatever they saw; Darren, no loyalist, still reports");
 
                 var q = new ConversationEngine(new FakeLlm { NextReply = "Not a word, boss." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
                 q.Suspicion.Raise(0.6, "I saw him near the window");

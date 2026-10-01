@@ -188,7 +188,10 @@ namespace Ledger.PerceptionGolden
                 // The independent check of 1 October: won over is the tea or a friend,
                 // not a nudge (OnHisSide 0.5 to 0.575); held, then emptied by the builder's
                 // port the same day.
-                var held = new string[0];
+                // Jafar's ruling of 1 October (Mickey's people never go to the police about
+                // him): what DS Ellis hears no longer has Ron's and Sheila's talk; held
+                // until the port's CastDay.NeverToPolice follows.
+                var held = new[] { "SweepHeard|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {

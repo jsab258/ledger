@@ -525,8 +525,12 @@ namespace Ledger.Core
 
         /// Whether somebody never goes to the police, whatever they saw or
         /// suffered: their trade keeps them from it (the file's "police": "never",
-        /// town list 6bj). Read by PoliceFile.WouldReport and HearTheStreet.
-        public bool NeverToPolice(string id) => id != null && _neverToPolice.Contains(id);
+        /// town list 6bj), or they are Mickey's own people (the file's keepsQuiet
+        /// "owner": Ron and Sheila), who never go to the police about one of their
+        /// own, ever, and handle what they saw privately (Jafar's ruling of 1
+        /// October, on the independent review's N4). Read by PoliceFile.WouldReport
+        /// and HearTheStreet.
+        public bool NeverToPolice(string id) => id != null && (_neverToPolice.Contains(id) || (_quiet.TryGetValue(id, out var q) && q == KeepsQuietFor.Owner));
 
         /// Which of his worlds somebody belongs to, for the gossip (Gossiper.Circle):
         /// the file's "circle", else "day", the town he lives among by day
