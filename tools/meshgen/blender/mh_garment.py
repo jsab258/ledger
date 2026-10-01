@@ -784,8 +784,131 @@ for i in range(len(me.vertices)):
         t = (SIM_BELOW - Z[i]) / max(1e-6, SIM_BELOW - hem_z)
         t = t * t * (3 - 2 * t)
     ca.data[i].color = (t, t, t, 1.0)
-log["simMaxDistance"] = {"below": round(float(SIM_BELOW), 3), "hemZ": round(float(hem_z), 3), "maxM": opt("--sim-max", 0.04)}
+log["simMaxDistance"] = {"below": round(float(SIM_BELOW), 3), "hemZ": round(float(hem_z), 3), "maxM": opt("--sim-max", 0.12)}
 
+# ---- THE SHELL'S CLOTH MESH (1 October, the builder's in-game test: "the whole jacket as cloth tears apart because
+# the shirt front, tie and buttons simulate with it, so a simulated part needs a shell-only sim mesh"; Epic's route: a
+# single-sided simulation mesh driving the render mesh). The garment's own cloth only; of it, the outermost layer only
+# (a face goes when more of the cloth lies outside it within 3 cm: the facings, the under-front, pocket backs); its
+# largest piece, reduced to about --sim-faces faces; the same SimMaxDistance colour from its heights. The render mesh
+# (the shirt front, tie and buttons with it) is then driven by this in Unreal, and nothing of it simulates itself.
+if "--no-sim-mesh" not in argv:
+    from mathutils.bvhtree import BVHTree as _BV6
+    body6 = next(o for o in bpy.data.objects if o.type == "MESH" and "Body" in o.name)
+    b6 = bmesh.new()
+    b6.from_mesh(body6.data)
+    b6.transform(body6.matrix_world)
+    b6.normal_update()
+    TB6 = _BV6.FromBMesh(b6)
+    b6.free()
+    sm6 = bmesh.new()
+    sm6.from_mesh(me)
+    sm6.transform(mw)
+    sm6.faces.ensure_lookup_table()
+    pk6 = [pk.data[i].value for i in range(len(me.polygons))]
+    bmesh.ops.delete(sm6, geom=[f for f in sm6.faces if pk6[f.index] != 0], context="FACES")
+    bmesh.ops.delete(sm6, geom=[v for v in sm6.verts if not v.link_faces], context="VERTS")
+    sm6.faces.ensure_lookup_table()
+    TC6 = _BV6.FromBMesh(sm6)
+    inner6 = []
+    for f in sm6.faces:
+        c6 = f.calc_center_median()
+        h6, n6, _i, _d = TB6.find_nearest(c6)
+        if h6 is None:
+            continue
+        hit6 = TC6.ray_cast(c6 + n6 * 0.002, n6, 0.03)
+        if hit6[0] is not None:
+            inner6.append(f)
+    bmesh.ops.delete(sm6, geom=inner6, context="FACES")
+    bmesh.ops.delete(sm6, geom=[v for v in sm6.verts if not v.link_faces], context="VERTS")
+    sm6.faces.ensure_lookup_table()
+    comp6 = {}
+    for f0 in sm6.faces:
+        if f0.index in comp6:
+            continue
+        comp6[f0.index] = f0.index
+        st6 = [f0]
+        while st6:
+            f = st6.pop()
+            for e in f.edges:
+                for f2 in e.link_faces:
+                    if f2.index not in comp6:
+                        comp6[f2.index] = f0.index
+                        st6.append(f2)
+    sizes6 = {}
+    for k6 in comp6.values():
+        sizes6[k6] = sizes6.get(k6, 0) + 1
+    big6 = max(sizes6, key=sizes6.get)
+    bmesh.ops.delete(sm6, geom=[f for f in sm6.faces if comp6[f.index] != big6], context="FACES")
+    bmesh.ops.delete(sm6, geom=[v for v in sm6.verts if not v.link_faces], context="VERTS")
+    # the small holes the dropped layers leave (the back vent, under the hip pockets' flaps) filled; the openings
+    # (hem and front, neck, cuffs) are large or off the trunk and stay
+    adj6 = {}
+    for e in sm6.edges:
+        if e.is_boundary:
+            for v in e.verts:
+                adj6.setdefault(v, []).append(e)
+    seen6, holes6 = set(), []
+    shx6 = min(abs(J("upperarm_l").x), abs(J("upperarm_r").x))
+    for e0 in [e for e in sm6.edges if e.is_boundary]:
+        if e0 in seen6:
+            continue
+        st6, loop6 = [e0], []
+        while st6:
+            e = st6.pop()
+            if e in seen6:
+                continue
+            seen6.add(e)
+            loop6.append(e)
+            for v in e.verts:
+                st6 += [x for x in adj6[v] if x not in seen6]
+        per = sum(e.calc_length() for e in loop6)
+        cen = sum((v.co for e in loop6 for v in e.verts), Vector()) / (2 * len(loop6))
+        if per < opt("--sim-hole", 0.45) and abs(cen.x) < shx6 and cen.z < J("neck_01").z - 0.08:
+            holes6 += loop6
+    if holes6:
+        bmesh.ops.holes_fill(sm6, edges=holes6, sides=0)
+        bmesh.ops.triangulate(sm6, faces=[f for f in sm6.faces if len(f.verts) > 4])
+    holes_filled6 = len(holes6)
+    sm6.transform(mw.inverted())
+    sim_me = bpy.data.meshes.new(NAME + "_sim")
+    sm6.to_mesh(sim_me)
+    sm6.free()
+    sim_ob = bpy.data.objects.new(NAME + "_sim", sim_me)
+    sim_ob.matrix_world = mw.copy()
+    bpy.context.scene.collection.objects.link(sim_ob)
+    for a_ in [a_ for a_ in sim_me.attributes if a_.name == "SimMaxDistance"]:
+        sim_me.attributes.remove(a_)
+    n_faces = len(sim_me.polygons)
+    target = opt("--sim-faces", 2000, int)
+    if n_faces > target:
+        bpy.ops.object.select_all(action="DESELECT")
+        sim_ob.select_set(True)
+        bpy.context.view_layer.objects.active = sim_ob
+        dm6 = sim_ob.modifiers.new("Decimate", "DECIMATE")
+        dm6.ratio = target / n_faces
+        dm6.use_collapse_triangulate = True
+        bpy.ops.object.modifier_apply(modifier="Decimate")
+    sim_me = sim_ob.data
+    Zs = np.array([(mw @ v.co).z for v in sim_me.vertices])
+    hem6 = Zs.min()
+    ca6 = sim_me.color_attributes.new(name="SimMaxDistance", type="FLOAT_COLOR", domain="POINT")
+    for i, z_ in enumerate(Zs):
+        t = 0.0
+        if z_ < SIM_BELOW:
+            t = (SIM_BELOW - z_) / max(1e-6, SIM_BELOW - hem6)
+            t = t * t * (3 - 2 * t)
+        ca6.data[i].color = (t, t, t, 1.0)
+    sim_me.materials.clear()
+    sim_me.materials.append(mat)
+    bpy.ops.object.select_all(action="DESELECT")
+    sim_ob.select_set(True)
+    bpy.context.view_layer.objects.active = sim_ob
+    bpy.ops.export_scene.fbx(filepath=os.path.join(OUT, NAME + "_sim_static.fbx"), use_selection=True, object_types={"MESH"},
+                             mesh_smooth_type="OFF", add_leaf_bones=False, colors_type="LINEAR")
+    log["simMesh"] = {"object": NAME + "_sim", "facesBefore": n_faces, "innerLayersDropped": len(inner6), "holeEdgesFilled": holes_filled6,
+                      "faces": len(sim_me.polygons), "points": len(sim_me.vertices)}
+    say("shell cloth mesh", json.dumps(log["simMesh"]))
 # ---- the maker's record ----------------------------------------------------------------------------------------------
 key = os.path.basename(os.path.normpath(GDIR))
 rec = None
