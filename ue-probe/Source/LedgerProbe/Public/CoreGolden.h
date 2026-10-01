@@ -2581,6 +2581,23 @@ namespace Golden
 		}
 		Got("nothing recorded", "none");   // as "for night one"
 		{ PoliceFile Empty; WaitBeats B; B.Police = &Empty; const bool G = Waiting::Next(T(1, 18), T(1000000, 0), &B, S); Is("a far wait", G, S); }
+		// From nine on her day, whether she came (the independent review of 1 October, M2).
+		{
+			PoliceFile NotCome;
+			NotCome.Report("ada", "player.cut_d1", Offence::Wounding, 4, 2);
+			{ WaitBeats B; B.Police = &NotCome; const bool G = Waiting::Next(T(2, 9, 5), T(3, 12), &B, S); Is("DS Ellis, a morning she did not come", G, S); }
+			{ WaitBeats B; B.Police = &NotCome; const bool G = Waiting::Next(T(2, 9), T(2, 12), &B, S); Is("DS Ellis, a morning she did not come, on the hour", G, S); }
+			PoliceFile Came;
+			Came.Report("ada", "player.cut_d1", Offence::Wounding, 4, 1);
+			std::string Why;
+			Came.EllisComes(nullptr, 2, Inquiry::None, Why);
+			WaitBeats B; B.Police = &Came;
+			WaitStop CameStop;
+			const bool GC = Waiting::Next(T(2, 9, 5), T(2, 12), &B, CameStop);
+			Is("DS Ellis, on Quay Street now", GC, CameStop);
+			Got("DS Ellis, on Quay Street now, about him", GC ? CameStop.Line : "none");
+			{ WaitBeats B2; B2.Police = &Came; const bool G = Waiting::Next(T(2, 10), T(2, 12), &B2, S); Is("DS Ellis, gone at ten", G, S); }
+		}
 		// In the cells: to his release, and nothing else.
 		std::string CallTopic;
 		const bool bCalled = File.ConstableComes(2, CallTopic);

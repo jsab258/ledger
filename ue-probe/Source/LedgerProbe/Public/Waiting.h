@@ -190,7 +190,13 @@ namespace LedgerCore
 					const int D = (int)DD;
 					const GameTime T = At(D, EllisHour);
 					if (Cmp(T.AddMinutes(60), Now) <= 0) continue;
-					const std::vector<std::string> Whys = Police->EllisWouldComeAll(B->Mill, D, B->InquiryOf);
+					// FROM NINE ON HER DAY, WHETHER SHE CAME, not whether she would now
+					// (the independent review of 1 October, M2): nine's decision is taken
+					// on the talk heard by then, and the hour's talk can grow louder after
+					// it; before nine, what would bring her.
+					std::vector<std::string> Whys;
+					if (Cmp(Now, T) < 0) Whys = Police->EllisWouldComeAll(B->Mill, D, B->InquiryOf);
+					else { for (const auto& V : Police->Visits()) { if (V.first == D) Whys.push_back(V.second); } }
 					if (!Whys.empty())
 					{
 						// About him if any of the day's reasons is, or the inquiry asks about him.

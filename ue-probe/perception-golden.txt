@@ -56415,6 +56415,11 @@ Wait|DS~Ellis~for~a~body|ellis@D2~09:00
 Wait|a~body~is~not~about~him|DS~Ellis~is~on~Quay~Street.
 Wait|nothing~recorded|none
 Wait|a~far~wait|none
+Wait|DS~Ellis,~a~morning~she~did~not~come|ellis@D3~09:00
+Wait|DS~Ellis,~a~morning~she~did~not~come,~on~the~hour|none
+Wait|DS~Ellis,~on~Quay~Street~now|ellis@D2~09:05
+Wait|DS~Ellis,~on~Quay~Street~now,~about~him|DS~Ellis~is~on~Quay~Street,~asking~after~you.
+Wait|DS~Ellis,~gone~at~ten|none
 Wait|released|released@D2~16:00
 Wait|still~held|none
 Wait|released,~at~its~minute|released@D2~16:00

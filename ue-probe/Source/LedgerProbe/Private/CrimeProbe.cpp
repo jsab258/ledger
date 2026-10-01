@@ -144,6 +144,7 @@
 #include "Camera/CameraComponent.h"
 #include "Widgets/Layout/SBorder.h"
 #include "Widgets/Layout/SBox.h"
+#include "Widgets/Layout/SWidgetSwitcher.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Text/STextBlock.h"
 #include "Styling/CoreStyle.h"
@@ -2830,17 +2831,9 @@ namespace
 		// was measured with, below.
 		if (GEnc == EEncounter::Live && G)
 		{
-			const DeedAccount A = Suspecting::AccountOf(G.get(), "player.broke_a_window");
-			if (A.Held)
-			{
-				J += std::string("\"held\":true,\"seen\":") + (A.SawItMyself ? "true" : "false")
-					+ ",\"rung\":" + std::to_string(A.Rung)
-					+ ",\"names\":" + (A.NamesHim ? "true" : "false")
-					+ ",\"confidence\":" + std::to_string(A.Confidence)
-					+ (A.NamesHim ? ",\"namingConfidence\":" + std::to_string(A.NamingConfidence) : std::string())
-					+ ",\"summary\":\"" + JsonEsc(A.Summary) + "\"";
-			}
-			else { J += "\"held\":false"; }
+			// THE DEED'S STORY AS FILED, and sent under the line's own deed (the
+			// independent review of 1 October, N1).
+			J += LedgerCrime::EvidenceAccountFields(LedgerCrime::EvidenceAccount(G.get(), bRitasWindow, DeedKeyNow()), DeedKeyNow());
 		}
 		else if (Acc)
 		{
@@ -2918,6 +2911,7 @@ namespace
 		// the report key's label; each reply may say live talk has paused.
 		std::string NoticeTitle, NoticeText, ReportLabel;
 		bool bNoticeShown = false, bPausedShown = false;
+		bool bSuggests = false;     // the talk program writes suggested lines ("suggests" in its ready line)
 		int LastReplyId = 0;       // the turn R reports
 		FString LastReplyName;
 		// WALKING OFF MID-REPLY, 29 September (handover 6v): who is answering,
@@ -4572,6 +4566,9 @@ namespace
 		return Card == "lena" ? GW1 : Card == "sam" ? GN2 : Card == "rocco" ? GR3 : GossiperPtr();
 	}
 
+	// The plain question each person has just put to him, by card ("deal" in their last reply), or none.
+	std::map<std::string, std::string> GDealAsked;
+
 	void TakeClaimsFromReply(const std::string& Line, const std::string& Card)
 	{
 		using namespace LedgerVignette;
@@ -4631,6 +4628,10 @@ namespace
 			LedgerSession::Write(TEXT("deed"), TEXT("\"topic\":") + LedgerSession::Str(Un(Threat)) + TEXT(",\"seen\":[") + LedgerSession::Str(Un(G->Id)) + TEXT("]"));
 			UE_LOG(LogTemp, Display, TEXT("LedgerDeed: he threatened %s over %s"), *Un(Card), *Un(Threat));
 		}
+		// A PLAIN QUESTION PUT TO HIM (the reply's "deal": Ron's "tell them no?", Sheila's for an answer):
+		// his very next line to them is offered its yes, its no and a line that decides nothing.
+		std::string DealAsked;
+		GDealAsked[Card] = CastDay::GetString(&Root, "deal", DealAsked) ? DealAsked : std::string();
 		// THE WEEK, FROM THE TALK (ROUTE.md steps 12 and 14), in free play.
 		if (bLiveScript || !GMill) { return; }
 		const Value* Refused = CastDay::Get(&Root, "refusedAsk");
@@ -4742,6 +4743,8 @@ namespace
 			UTF8_TO_TCHAR(GLive.HeardSoFar.c_str()));
 	}
 
+	bool TakeSuggestAnswer(const std::string& L);
+
 	void LiveHelperPump()
 	{
 		if (!GLive.bStarted) { return; }
@@ -4763,12 +4766,16 @@ namespace
 				}
 				continue;
 			}
+			// TOM'S SUGGESTED LINES, answered (below).
+			if (TakeSuggestAnswer(L)) { continue; }
 			if (L.find("\"ready\"") != std::string::npos)
 			{
 				GLive.bReady = true;
 				GLive.NoticeTitle = JsonField(L, "title");
 				GLive.NoticeText = JsonField(L, "text");
 				GLive.ReportLabel = JsonField(L, "report");
+				// It writes suggested lines only once it says so: an older one would take the request as an empty line.
+				GLive.bSuggests = L.find("\"suggests\":true") != std::string::npos;
 				continue;
 			}
 			// A REPORT ANSWERED: the helper keeps the line and thanks the player.
@@ -4979,6 +4986,216 @@ namespace
 	FString GSaid, GSayDraft;
 	double GSayOpenedAt = 0.0;
 
+	// TOM'S SUGGESTED LINES, 1 October (Jafar: "Mixed"; STYLE-GUIDE.md,
+	// Suggested lines; production/specs/talk-protocol.md, "suggest"): above the
+	// coupon, three at most, his exact words. The talk program writes them in a
+	// call of its own from what Tom knows (its written lines when there is no
+	// model, or after six seconds); the deals' yes and no come from the game's
+	// own state and production/specs/suggested-lines.json, never the model. On a
+	// keyboard they are asked for only on Tab (suggested words make people write
+	// shorter lines), always there with the setting "Always". Chosen, a line goes
+	// the same way as a typed one. The talk program answers one line at a time,
+	// so they are asked for only when he is not typing.
+	struct FSuggest
+	{
+		int PendingId = 0;              // the "suggest" request awaiting its answer
+		bool bAnswered = false;         // its answer has come for this turn
+		bool bOpen = false;             // shown above the coupon
+		bool bKeys = false;             // and holding the keys
+		std::vector<std::string> Lines, Jobs;   // the talk program's, in its jobs' order
+		std::vector<std::string> Rows;  // what the panel offers, LedgerCrime::SuggestRows
+		std::set<std::string> Shown;    // offered in this conversation, never again
+		std::string Who;                // the conversation they are for
+		std::string Deal;               // the deal standing: "ron-ask", "sheila-week", or none
+	};
+	FSuggest GSug;
+	TSharedPtr<SVerticalBox> GSugRows;
+	TSharedPtr<SWidget> GSugKeys;
+	// The deals' written answers (suggested-lines.json "deals"): deal, then each answer and its lines in the file's order.
+	std::map<std::string, std::vector<std::pair<std::string, std::vector<std::string> > > > GDeals;
+	bool bDealsRead = false;
+
+	void ReadDeals()
+	{
+		if (bDealsRead) { return; }
+		bDealsRead = true;
+		FString Text;
+		const FString Path = FPaths::Combine(LedgerPaper::Root(), TEXT("production/specs/suggested-lines.json"));
+		TSharedPtr<FJsonObject> Root;
+		if (!FFileHelper::LoadFileToString(Text, *Path)) { UE_LOG(LogTemp, Display, TEXT("LedgerSuggest: no written lines yet (%s): no deal lines"), *Path); return; }
+		const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
+		const TSharedPtr<FJsonObject>* Deals = nullptr;
+		if (!FJsonSerializer::Deserialize(R, Root) || !Root.IsValid() || !Root->TryGetObjectField(TEXT("deals"), Deals)) { return; }
+		for (const TPair<FString, TSharedPtr<FJsonValue>>& D : (*Deals)->Values)
+		{
+			const TSharedPtr<FJsonObject>* Answers = nullptr;
+			if (!D.Value.IsValid() || !D.Value->TryGetObject(Answers)) { continue; }
+			std::vector<std::pair<std::string, std::vector<std::string> > >& Into = GDeals[Utf8(D.Key)];
+			for (const TPair<FString, TSharedPtr<FJsonValue>>& A : (*Answers)->Values)
+			{
+				const TArray<TSharedPtr<FJsonValue>>* Ls = nullptr;
+				if (!A.Value.IsValid() || !A.Value->TryGetArray(Ls)) { continue; }
+				std::vector<std::string> Lines;
+				for (const TSharedPtr<FJsonValue>& V : *Ls) { Lines.push_back(Utf8(V->AsString())); }
+				Into.push_back(std::make_pair(Utf8(A.Key), Lines));
+			}
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerSuggest: %d deal(s) of written answers read from %s"), (int32)GDeals.size(), *Path);
+	}
+
+	// What Tom knows, in plain sentences, and nothing of theirs (the protocol's "tomKnows").
+	std::string TomKnowsJson()
+	{
+		std::string J = "\"I am Tom Nowak, Mickey's nephew, and Mickey's business on Quay Street is mine now.\"";
+		for (const char* C : { "lena", "sam", "rocco" })
+		{
+			const int Days = GMet.DaysMet(C);
+			if (Days <= 0) { continue; }
+			const char* N = std::string(C) == "lena" ? "Sheila" : std::string(C) == "sam" ? "Darren" : "Ron";
+			J += ",\"I have talked with " + std::string(N) + (Days == 1 ? " on one day.\"" : " on " + std::to_string(Days) + " days.\"");
+		}
+		return J;
+	}
+
+	void RebuildSuggestRows();
+
+	void AskSuggest()
+	{
+		if (GSug.PendingId != 0 || GSug.bAnswered || !GLive.bStarted || !GLive.bReady || !GLive.bSuggests || GTalkTarget.Card.empty()) { return; }
+		const int Id = GLive.NextId++;
+		std::string Shown;
+		for (const std::string& S : GSug.Shown) { Shown += std::string(Shown.empty() ? "" : ",") + "\"" + JsonEsc(S) + "\""; }
+		const std::string Req = "{\"kind\":\"suggest\",\"id\":" + std::to_string(Id) + ",\"to\":\"" + JsonEsc(GTalkTarget.Card)
+			+ "\",\"who\":\"" + JsonEsc(GTalkTarget.Card) + "\",\"with\":\"" + JsonEsc(Utf8(GTalkTarget.Name))
+			+ "\",\"tomKnows\":[" + TomKnowsJson() + "],\"shown\":[" + Shown + "]}\n";
+		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
+		GSug.PendingId = Id;
+		UE_LOG(LogTemp, Display, TEXT("LedgerSuggest: asked for %s's (id %d)"), *GTalkTarget.Name, Id);
+	}
+
+	// The talk program's answer: true when the line was it.
+	bool TakeSuggestAnswer(const std::string& L)
+	{
+		if (GSug.PendingId == 0 || L.find("\"id\":" + std::to_string(GSug.PendingId) + ",") == std::string::npos) { return false; }
+		GSug.PendingId = 0;
+		GSug.bAnswered = true;
+		GSug.Lines.clear(); GSug.Jobs.clear();
+		TSharedPtr<FJsonObject> Root;
+		const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Un(L));
+		const TArray<TSharedPtr<FJsonValue>>* Ls = nullptr;
+		const TArray<TSharedPtr<FJsonValue>>* Js = nullptr;
+		if (FJsonSerializer::Deserialize(R, Root) && Root.IsValid() && Root->TryGetArrayField(TEXT("suggest"), Ls))
+		{
+			Root->TryGetArrayField(TEXT("jobs"), Js);
+			for (int32 I = 0; I < Ls->Num(); ++I)
+			{
+				GSug.Lines.push_back(Utf8((*Ls)[I]->AsString()));
+				GSug.Jobs.push_back(Js != nullptr && I < Js->Num() ? Utf8((*Js)[I]->AsString()) : std::string());
+			}
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerSuggest: the talk program offers %d line(s): %s"), (int32)GSug.Lines.size(), *Un(L));
+		RebuildSuggestRows();
+		return true;
+	}
+
+	void RebuildSuggestRows()
+	{
+		using namespace LedgerPaper;
+		std::vector<std::pair<std::string, std::vector<std::string> > > Deal;
+		if (!GSug.Deal.empty() && GDeals.count(GSug.Deal)) { Deal = GDeals[GSug.Deal]; }
+		GSug.Rows = LedgerCrime::SuggestRows(Deal, LedgerCrime::Seed(GNow), GSug.Lines, GSug.Jobs, GSug.Shown);
+		if (!GSugRows.IsValid()) { return; }
+		GSugRows->ClearChildren();
+		TSharedPtr<SWidget> First;
+		for (size_t I = 0; I < GSug.Rows.size(); ++I)
+		{
+			const FString Line = Un(GSug.Rows[I]);
+			if (I > 0)
+			{
+				GSugRows->AddSlot().AutoHeight().Padding(FMargin(22.0f, 0.0f, 22.0f, 0.0f))[ Rule(1.0f, Grey()) ];
+			}
+			TSharedRef<SPaperChoice> Row = SNew(SPaperChoice).Text(Line).Units(34.0f).RowHeight(68.0f)
+				.OnChosen(FSimpleDelegate::CreateLambda([Line]()
+				{
+					// Chosen, it goes the same way as a typed line; his own words are kept.
+					GSayDraft = GSayText.IsValid() ? GSayText->GetText().ToString() : GSayDraft;
+					GSaid = Line; bSayCommitted = true; GEnterAt = NowS();
+					GSug.Shown.insert(Utf8(Line));
+					LedgerSession::Write(TEXT("suggestChosen"), TEXT("\"who\":") + LedgerSession::Str(Un(GTalkTarget.Card)) + TEXT(",\"said\":") + LedgerSession::Str(Line));
+					UE_LOG(LogTemp, Display, TEXT("LedgerSuggest: chosen \"%s\""), *Line);
+				}));
+			if (!First.IsValid()) { First = Row; }
+			GSugRows->AddSlot().AutoHeight()[ Row ];
+		}
+		if (GSug.Rows.empty())
+		{
+			// Waiting for them, or nothing to offer: said in the game's own words.
+			GSugRows->AddSlot().AutoHeight().Padding(FMargin(22.0f, 14.0f, 22.0f, 14.0f))
+			[
+				SNew(STextBlock).Text(FText::FromString(GSug.PendingId != 0 ? TEXT("A moment\x2026") : TEXT("Nothing comes to mind.")))
+				.Font(Font(EFace::OldItalic, 30)).ColorAndOpacity(FSlateColor(Grey()))
+			];
+		}
+		LedgerSession::Write(TEXT("suggest"), FString::Printf(TEXT("\"who\":%s,\"rows\":%d,\"deal\":%s,\"waiting\":%s"),
+			*LedgerSession::Str(Un(GTalkTarget.Card)), (int32)GSug.Rows.size(), *LedgerSession::Str(Un(GSug.Deal)),
+			GSug.PendingId != 0 ? TEXT("true") : TEXT("false")));
+		if (GSug.bKeys && First.IsValid())
+		{
+			FSlateApplication::Get().SetUserFocus(0, First, EFocusCause::Navigation);
+			FSlateApplication::Get().SetKeyboardFocus(First, EFocusCause::Navigation);
+		}
+	}
+
+	// Tab from his own words: the suggestions take the keys.
+	void SuggestTakeKeys()
+	{
+		GSug.bOpen = GSug.bKeys = true;
+		AskSuggest();
+		RebuildSuggestRows();
+		if (GSug.Rows.empty() && GSugKeys.IsValid())
+		{
+			FSlateApplication::Get().SetUserFocus(0, GSugKeys, EFocusCause::Navigation);
+			FSlateApplication::Get().SetKeyboardFocus(GSugKeys, EFocusCause::Navigation);
+		}
+		RouteCheck(TEXT("talk-suggest-open"), true, FString::Printf(TEXT("to=%s rows=%d waiting=%d"), *GTalkTarget.Name, (int32)GSug.Rows.size(), GSug.PendingId != 0 ? 1 : 0));
+	}
+
+	// Tab from the suggestions: back to his own words, the panel shut unless it is always there.
+	void SuggestGiveKeysBack()
+	{
+		GSug.bKeys = false;
+		GSug.bOpen = LedgerSettings::SuggestAlways();
+		if (GSayText.IsValid())
+		{
+			FSlateApplication::Get().SetUserFocus(0, GSayText, EFocusCause::SetDirectly);
+			FSlateApplication::Get().SetKeyboardFocus(GSayText, EFocusCause::SetDirectly);
+		}
+	}
+
+	// THE PANEL HOLDS THE KEYS while open: up and down move between the lines
+	// (Slate's own navigation), Enter says the one in hand (the choice's own),
+	// Tab goes back to his own words, Esc stops typing and keeps the words.
+	class SSuggestKeys : public SCompoundWidget
+	{
+	public:
+		SLATE_BEGIN_ARGS(SSuggestKeys) {}
+			SLATE_DEFAULT_SLOT(FArguments, Content)
+		SLATE_END_ARGS()
+		void Construct(const FArguments& InArgs) { ChildSlot[ InArgs._Content.Widget ]; }
+		virtual bool SupportsKeyboardFocus() const override { return true; }
+		virtual FReply OnKeyDown(const FGeometry& G, const FKeyEvent& E) override
+		{
+			if (E.GetKey() == EKeys::Tab) { SuggestGiveKeysBack(); return FReply::Handled(); }
+			if (E.GetKey() == EKeys::Escape)
+			{
+				GSayDraft = GSayText.IsValid() ? GSayText->GetText().ToString() : GSayDraft;
+				bSayCancelled = true;
+				return FReply::Handled();
+			}
+			return SCompoundWidget::OnKeyDown(G, E);
+		}
+	};
+
 	void OpenSayBox(UWorld* World)
 	{
 		using namespace LedgerPaper;
@@ -4987,6 +5204,19 @@ namespace
 		LedgerSession::Write(TEXT("talk"), TEXT("\"who\":") + LedgerSession::Str(Un(GTalkTarget.Card)));
 		bSayCommitted = bSayCancelled = false;
 		GSaid.Reset();
+		// THE SUGGESTIONS FOR THIS LINE: none twice in a conversation; the deal
+		// standing with this person, from the game's own state.
+		ReadDeals();
+		if (GSug.Who != GTalkTarget.Card || !GLive.Talked.count(GTalkTarget.Card) || GLive.Left.count(GTalkTarget.Card)) { GSug.Shown.clear(); }
+		GSug.Who = GTalkTarget.Card;
+		GSug.bAnswered = false;
+		GSug.Lines.clear(); GSug.Jobs.clear(); GSug.Rows.clear();
+		GSug.bKeys = false;
+		GSug.bOpen = LedgerSettings::SuggestAlways();
+		GSug.Deal = !GDealAsked[GTalkTarget.Card].empty() ? GDealAsked[GTalkTarget.Card]
+			: (!bLiveScript && GTalkTarget.Card == "rocco" && GWeek.Asks.AskStands(GNow)) ? "ron-ask"
+			: (!bLiveScript && GTalkTarget.Card == "lena" && GWeek.Week.Stands(GNow)) ? "sheila-week" : "";
+		if (GSug.bOpen) { AskSuggest(); }
 		// the side away from the person: where they stand in the picture now
 		bool bLeft = true;
 		if (APlayerController* PC = World->GetFirstPlayerController())
@@ -5022,11 +5252,14 @@ namespace
 							.TextStyle(&Words)
 							.AutoWrapText(true)
 							.Text(FText::FromString(GSayDraft))
-							.HintText(FText::FromString(FString(TEXT("Say something to ")) + GTalkTarget.Name))
+							.HintText_Lambda([]() { return FText::FromString(GSug.bKeys ? FString(TEXT("Tab to write your own words"))
+							                                                         : FString(TEXT("Say something to ")) + GTalkTarget.Name); })
 							.OnKeyDownHandler_Lambda([](const FGeometry&, const FKeyEvent& E)
 							{
-								// Enter says it; Esc stops typing and keeps the words. A box that never
-								// held the keyboard (29 September) is won back by HumanTalkTick.
+								// Enter says it; Esc stops typing and keeps the words; Tab hands the
+								// keys to the suggested lines. A box that never held the keyboard
+								// (29 September) is won back by HumanTalkTick.
+								if (E.GetKey() == EKeys::Tab) { SuggestTakeKeys(); return FReply::Handled(); }
 								if (E.GetKey() == EKeys::Enter && !E.IsShiftDown())
 								{
 									const FString T = GSayText.IsValid() ? GSayText->GetText().ToString().TrimStartAndEnd() : FString();
@@ -5059,10 +5292,45 @@ namespace
 						SNew(SBox).WidthOverride(900.0f)
 						[
 							SNew(SVerticalBox)
+							// THE SUGGESTED LINES, as drawn: newsprint headed SAY, the lines ruled
+							// between, the one in hand red with its bar.
+							+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 0.0f, 0.0f, 12.0f))
+							[
+								SNew(SBox).Visibility_Lambda([]() { return GSug.bOpen ? EVisibility::Visible : EVisibility::Collapsed; })
+								[
+									SAssignNew(GSugKeys, SSuggestKeys)
+									[
+										SNew(SOverlay)
+										+ SOverlay::Slot()
+										[
+											PaperSheet(SAssignNew(GSugRows, SVerticalBox), FMargin(0.0f, 44.0f, 0.0f, 10.0f))
+										]
+										+ SOverlay::Slot().HAlign(HAlign_Left).VAlign(VAlign_Top)
+										[
+											SNew(SBorder).BorderImage(Solid(Ink())).Padding(FMargin(10.0f, 2.0f, 10.0f, 2.0f))
+											[
+												SNew(STextBlock).Text(FText::FromString(TEXT("SAY"))).Font(Font(EFace::League, 30, 20))
+												.ColorAndOpacity(FSlateColor(FLinearColor::White))
+											]
+										]
+									]
+								]
+							]
 							+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 0.0f, 0.0f, 10.0f))
 							[
-								Hints({ MakeTuple(TArray<FString>{ TEXT("Enter") }, FString(TEXT("say it"))),
-								        MakeTuple(TArray<FString>{ TEXT("Esc") }, FString(TEXT("stop typing"))) })
+								SNew(SWidgetSwitcher).WidgetIndex_Lambda([]() { return GSug.bKeys ? 1 : 0; })
+								+ SWidgetSwitcher::Slot()
+								[
+									Hints({ MakeTuple(TArray<FString>{ TEXT("Enter") }, FString(TEXT("say it"))),
+									        MakeTuple(TArray<FString>{ TEXT("Tab") }, FString(TEXT("suggestions"))),
+									        MakeTuple(TArray<FString>{ TEXT("Esc") }, FString(TEXT("stop typing"))) })
+								]
+								+ SWidgetSwitcher::Slot()
+								[
+									Hints({ MakeTuple(TArray<FString>{ TEXT("\x2191"), TEXT("\x2193") }, FString(TEXT("choose"))),
+									        MakeTuple(TArray<FString>{ TEXT("Enter") }, FString(TEXT("say it"))),
+									        MakeTuple(TArray<FString>{ TEXT("Tab") }, FString(TEXT("my own words"))) })
+								]
 							]
 							+ SVerticalBox::Slot().AutoHeight()[ Coupon ]
 						]
@@ -5082,6 +5350,7 @@ namespace
 		bSayOpen = true;
 		UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: open for %s, keyboard focus %s, on the %s"), *GTalkTarget.Name,
 		       FSlateApplication::Get().GetKeyboardFocusedWidget() == GSayText ? TEXT("in the box") : TEXT("NOT in the box"), bLeft ? TEXT("left") : TEXT("right"));
+		RebuildSuggestRows();
 		GSayOpenedAt = NowS();
 		GSayOpenPawnAt = GPawn != nullptr ? GPawn->GetActorLocation() : FVector::ZeroVector;
 		RouteCheck(TEXT("talk-open"), true, FString::Printf(TEXT("to=%s clock=%s"), *GTalkTarget.Name, *Un(GNow.ToString())));
@@ -5096,6 +5365,10 @@ namespace
 		}
 		GSayBox.Reset();
 		GSayText.Reset();
+		// What the talk program offered and he saw is not offered again in this conversation (a deal's answers stay).
+		if (GSug.bOpen) { for (size_t I = 0; I < GSug.Rows.size(); ++I) { if (std::find(GSug.Lines.begin(), GSug.Lines.end(), GSug.Rows[I]) != GSug.Lines.end()) { GSug.Shown.insert(GSug.Rows[I]); } } }
+		GSugRows.Reset(); GSugKeys.Reset();
+		GSug.bOpen = GSug.bKeys = false;
 		if (World != nullptr)
 		{
 			if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetInputMode(FInputModeGameOnly()); }
@@ -5236,14 +5509,13 @@ namespace
 		if (World == nullptr || GPawn == nullptr || !GMill || Now - GLive.RegardAt < 1.0) { return; }
 		GLive.RegardAt = Now;
 		struct Who { AActor* Body; GossiperPtr G; const char* Card; const TCHAR* Name; double Familiarity; };
-		// HOW WELL EACH KNOWS HIM BY SIGHT (Acquaintance): Sheila and Ron are
-		// Mickey's, kept on, and have dealt with him (Known); Darren knows him
-		// by name as Mickey's nephew and by face not at all (canon, 23
-		// September: HeardOfYou), so nothing he holds shows.
+		// HOW WELL EACH KNOWS HIM BY SIGHT: in free play from his meetings with
+		// them, as for what they can witness (the independent review of
+		// 1 October, M1); the scripted encounter keeps its measured values.
 		const Who People[3] = {
-			{ GW1Body, GW1, "lena", TEXT("Sheila"), 0.50 },
-			{ GN2Body, GN2, "sam", TEXT("Darren"), LedgerCrime::kLadFamiliarity },
-			{ GR3Body, GR3, "rocco", TEXT("Ron"), 0.50 } };
+			{ GW1Body, GW1, "lena", TEXT("Sheila"), LedgerCrime::RegardFamiliarity(bLiveScript, "lena", GMet.DaysMet("lena")) },
+			{ GN2Body, GN2, "sam", TEXT("Darren"), LedgerCrime::RegardFamiliarity(bLiveScript, "sam", GMet.DaysMet("sam")) },
+			{ GR3Body, GR3, "rocco", TEXT("Ron"), LedgerCrime::RegardFamiliarity(bLiveScript, "rocco", GMet.DaysMet("rocco")) } };
 		const FVector HimAt = GPawn->GetActorLocation();
 		for (const Who& P : People)
 		{
@@ -6274,6 +6546,18 @@ namespace
 		}
 		else if (Step == 3 && T - At > 1.0)
 		{
+			// Tab: the suggested lines take the keys (their answer, or six seconds).
+			SuggestTakeKeys();
+			Step = 31; At = T;
+		}
+		else if (Step == 31 && ((GSug.PendingId == 0 && T - At > 1.5) || T - At > 7.5))
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(Dir, FString::Printf(TEXT("suggest-%d.png"), Sz.X)), true, false);
+			Step = 32; At = T;
+		}
+		else if (Step == 32 && T - At > 1.0)
+		{
+			SuggestGiveKeysBack();
 			GSaid = Line; bSayCommitted = true; GEnterAt = NowS(); GSayDraft.Reset();
 			Step = 4; At = T;
 		}
@@ -6316,7 +6600,12 @@ namespace
 		{
 			// THE KEYBOARD BACK INTO THE BOX whenever it leaves while the box is
 			// open (above); the game ignores its keys meanwhile.
-			if (GSayText.IsValid() && !bSayCommitted && !bSayCancelled
+			if (GSug.bKeys && GSugKeys.IsValid() && !bSayCommitted && !bSayCancelled && !GSugKeys->HasKeyboardFocus() && !GSugKeys->HasFocusedDescendants())
+			{
+				RebuildSuggestRows();
+				if (!GSugKeys->HasFocusedDescendants()) { FSlateApplication::Get().SetUserFocus(0, GSugKeys, EFocusCause::SetDirectly); FSlateApplication::Get().SetKeyboardFocus(GSugKeys, EFocusCause::SetDirectly); }
+			}
+			if (!GSug.bKeys && GSayText.IsValid() && !bSayCommitted && !bSayCancelled
 			    && FSlateApplication::Get().GetKeyboardFocusedWidget() != GSayText)
 			{
 				FSlateApplication::Get().SetUserFocus(0, GSayText, EFocusCause::SetDirectly);
