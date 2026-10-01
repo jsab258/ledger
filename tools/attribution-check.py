@@ -258,6 +258,11 @@ OURS = {
     # say their thinking sounds (-MouthFilm with -FaceAB), frames of MetaHumans
     # built on this PC (renders may be shown; the files stay out of here).
     "production/approvals/2026-10-01": "the game's mouth film of its own cast (-MouthFilm, -FaceAB), 1 October",
+    # The interface's design mockups (Jafar's yes, 1 October, on the interface
+    # choice page): pages this project wrote, drawn by a browser over the game's
+    # own frames of 1 October, with SIL OFL fonts drawn into the pictures (the
+    # font files themselves are not here; production/design/ui/FONTS.md).
+    "production/design/ui": "the interface's design mockups, pages this project wrote drawn by a browser over the game's own frames of 1 October, OFL fonts drawn into the pictures and no font file here",
     # The build's own screenshots of the game's own street. Rendered by the
     # Windows job and committed every run, so they arrive faster than any
     # other asset in the project and are the likeliest thing to trip a check

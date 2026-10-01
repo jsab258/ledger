@@ -1,0 +1,321 @@
+<title>LEDGER Interface Looks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* The house style of Jafar's daily pages (production/approvals/), so this one
+   reads as one of them: the decisions at the top, the pictures folded below. */
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:18px 48px}
+.wrap{max-width:900px;margin:0 auto;display:grid;gap:12px}
+header{display:grid;gap:4px;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(25px,6vw,38px)/1.05 var(--display);margin:0;text-wrap:balance}
+.how{margin:0;color:var(--muted);font-size:14px;line-height:1.4}
+.decide{display:grid;gap:7px;background:var(--surface);border:1px solid var(--rule);padding:10px 12px}
+.q{margin:0;font:600 16px/1.25 var(--display)}
+.opts{display:grid;gap:6px}
+.opts.row{grid-template-columns:1fr 1fr}
+.opt{display:flex;align-items:center;gap:10px;min-height:42px;padding:5px 12px;border:1px solid var(--rule);background:var(--ground);cursor:pointer;font:600 17px/1.15 var(--display);letter-spacing:.01em;color:var(--ink);text-align:left;width:100%}
+.opt .l{display:inline-grid;place-items:center;width:28px;height:28px;flex:none;border:1.5px solid var(--ink);font:700 15px/1 var(--type)}
+.opt .rec{margin-left:auto;font:700 11px/1 var(--type);letter-spacing:.08em;text-transform:uppercase;color:var(--ok)}
+.opt.picked{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.opt.picked .l{background:var(--accent);border-color:var(--accent);color:var(--ground)}
+.opt:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+textarea{width:100%;min-height:38px;height:38px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:7px 8px}
+.tally{font:400 13px/1.4 var(--type);color:var(--muted)}
+details{background:var(--surface);border:1px solid var(--rule)}
+summary{cursor:pointer;padding:11px 14px;font:600 16px/1.25 var(--display)}
+summary span{display:block;font:400 14px/1.4 var(--body);color:var(--muted);margin-top:2px}
+.fold{display:grid;gap:12px;padding:0 14px 14px}
+figure{margin:0;display:grid;gap:4px}
+figure img{width:100%;height:auto;display:block;background:var(--chip)}
+figcaption,.was{font:400 13px/1.45 var(--type);color:var(--muted);margin:0}
+.was b{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* PICTURES JUDGED ON THE PAGE (tools/page_pictures.py, Jafar 30 September and 1 October) */
+.capgrid,.cands,.pair{grid-template-columns:1fr!important}
+.capgrid img,.pair img,.cands img,figure img{width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important}
+main img,section img,[data-film-sprite]{cursor:zoom-in}
+.pv{position:fixed;inset:0;z-index:2147483000;background:#000;display:none;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
+.pv.on{display:block}
+.pv .pv-stage{position:absolute;inset:0;overflow:hidden}
+.pv .pv-hold{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.pv .pv-hold img{display:block;max-width:none!important;width:auto!important;height:auto!important;-webkit-user-drag:none;pointer-events:none}
+.pv .pv-film{background-repeat:no-repeat;pointer-events:none}
+.pv .pv-bar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top, 0px)) 12px 10px;background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,0));color:#fff;font:600 14px/1.2 system-ui,sans-serif;pointer-events:none}
+.pv .pv-bar *{pointer-events:auto}
+.pv .pv-count{opacity:.85;font-variant-numeric:tabular-nums}
+.pv .pv-close{min-width:88px;min-height:44px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;cursor:pointer}
+.pv .pv-cap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px calc(12px + env(safe-area-inset-bottom, 0px));background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.75));color:#fff;font:14px/1.35 system-ui,sans-serif;pointer-events:none}
+.pv .pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:72px;border:0;background:rgba(0,0,0,.35);color:#fff;font:700 30px/1 system-ui,sans-serif;cursor:pointer}
+.pv .pv-prev{left:0;border-radius:0 8px 8px 0}.pv .pv-next{right:0;border-radius:8px 0 0 8px}
+.pv .pv-play{position:absolute;left:50%;bottom:calc(64px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);min-height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;display:none;cursor:pointer}
+.pv.film .pv-play{display:block}
+@media (hover:none){.pv .pv-nav{display:none}}
+</style>
+<div class="wrap">
+  <header>
+    <div class="kicker">LEDGER · Thursday 1 October</div>
+    <h1>Which look for the game's screens?</h1>
+    <p class="how">Three looks, each on the title, a conversation and the pause menu. Open one below; tap a picture for full size.</p>
+  </header>
+  <section class="decide" id="d1"></section>
+  <section class="decide" id="d2"></section>
+  <div id="folds" class="wrap" style="gap:8px"></div>
+  <details>
+    <summary>About these pictures</summary>
+    <div class="fold" id="about"></div>
+  </details>
+</div>
+<script>
+const PAGE = {
+  decisions: [
+    {key:"ui-direction", q:"The look for every screen", note:true,
+     options:[["A","The fare book",true],["B","The street's signs",false],["C","The evening paper",false]]},
+    {key:"ui-pictures-in-repo", q:"Also put the pictures in the pull request? (one line added to the repository's picture check)", note:false, plain:true,
+     options:[["yes","Yes, add the line",true],["no","No, page only",false]]},
+  ],
+  looks: [
+    {v:"A", name:"The fare book", line:"The cab office's own paperwork: a red account book, typed entries on ruled ledger paper.",
+     pics:["A-title","A-talk","A-pause","A-wide"], notes:[
+       "Short of a 2026 game: the book and its paper are still too clean and evenly lit; a cab office's daily book would be handled and worn.",
+       "The choices are in typewriter type, which reads a little slower than plain type.",
+       "The lower third of the cover is empty on the title.",
+       "Why recommended: it is the game's own object. The title, the pause and later the Ledger and its paper map can all be the same book; all three reviewers picked it."]},
+    {v:"B", name:"The street's signs", line:"The street's own signs: a name plate for the title, green direction-sign panels.",
+     pics:["B-title","B-talk","B-pause","B-wide"], notes:[
+       "Short of a 2026 game: the plates look nearly new; the weathering is faint.",
+       "The lettering is a free stand-in. The real road-sign typeface (Transport) costs money, which would be your decision.",
+       "The yellow arrow beside the chosen line can read as 'press up'.",
+       "Nothing of the cab office or the notebook is in it; it is the town's look, not his."]},
+    {v:"C", name:"The evening paper", line:"A 1990 local evening paper: a front page for the title, headlines for choices.",
+     pics:["C-title","C-talk","C-pause","C-wide"], notes:[
+       "Short of a 2026 game: it is a flat sheet, and it gives the notebook's name to a newspaper the player never uses in play.",
+       "A blackletter masthead reads American; British evening papers were Posts, Echoes and Gazettes.",
+       "It is the most legible of the three today."]},
+  ],
+  screens: {title:"Title screen", talk:"Talking to Sheila: her reply below, his next line being typed above it", pause:"Pause menu",
+            wide:"The title on your 3440 by 1440 screen (the street behind is enlarged by a third here)"},
+  about: [
+    "The street behind is the game's own frame of 1 October, and it is itself short of the bar: crude cars with blank plates, stiff figures, no Tom in the talk view and Sheila looking away. Judge the screens, not the street.",
+    "The first three pictures of each look are 2560 by 1440: everything at its true size on your screen, over the game's frame at its own size. The fourth is your 3440 by 1440 screen, where the street is enlarged by a third and soft.",
+    "Night on the title says 9.40 pm; the talk and the pause are by day, at 10.15 am.",
+    "His typed line sits above her reply, where the standards put the box, so the exchange reads from the bottom up.",
+    "Three reviewers who had not seen the work checked each round; what they found obvious is fixed, and the notes under each look are theirs.",
+    "Every font is free for a sold game (SIL Open Font Licence)."],
+};
+const state = {};
+let db = null, canWrite = true;
+function el(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})) { if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v); }
+  for (const k of kids) if (k) n.append(k);
+  return n;
+}
+function save(key, patch){
+  state[key] = Object.assign({}, state[key] || {}, patch, {at: new Date().toISOString()});
+  render();
+  if (!db || !canWrite) return;
+  db.doc("verdicts/" + key).set(Object.assign({}, state[key])).catch(e => { canWrite = false; render(); });
+}
+function render(){
+  PAGE.decisions.forEach((d, i) => {
+    const st = state[d.key] || {};
+    const box = document.getElementById("d" + (i + 1));
+    if (box.contains(document.activeElement) && document.activeElement.tagName === "TEXTAREA") return;   // never under his typing
+    box.replaceChildren();
+    box.append(el("p", {class:"q", text:d.q}));
+    const opts = el("div", {class:"opts" + (d.row ? " row" : ""), role:"radiogroup", "aria-label":d.q});
+    for (const [v, name, rec] of d.options) {
+      const b = el("button", {type:"button", class:"opt" + (st.pick === v ? " picked" : ""), role:"radio", "aria-checked": st.pick === v ? "true" : "false", id:"opt-" + d.key + "-" + v},
+        d.plain ? null : el("span", {class:"l", text:v}), el("span", {text:name}), rec ? el("span", {class:"rec", text:"Recommended"}) : null);
+      b.addEventListener("click", () => save(d.key, {pick:v}));
+      opts.append(b);
+    }
+    box.append(opts);
+    if (d.note) {
+      const t = el("textarea", {id:"note-" + d.key, rows:"1", placeholder:"Anything to change in it (optional)"});
+      t.value = st.note || "";
+      t.addEventListener("change", () => save(d.key, {note:t.value}));
+      box.append(t);
+    }
+    box.append(el("div", {class:"tally", text: st.pick
+      ? "Picked " + (d.options.find(o => o[0] === st.pick) || [,st.pick])[1] + (st.at ? " · saved " + new Date(st.at).toLocaleString() : "") + (db ? "" : " · not stored on this view")
+      : (db ? "Not picked yet" : "Not picked yet · not stored on this view")}));
+  });
+}
+function folds(){
+  const root = document.getElementById("folds");
+  for (const o of PAGE.looks) {
+    const f = el("div", {class:"fold"});
+    for (const p of o.pics) {
+      const s = p.split("-")[1];
+      f.append(el("figure", {}, el("img", {src:"pictures/" + p + ".jpg", alt:o.v + ", " + o.name + ": " + PAGE.screens[s], loading:"lazy",
+        width: s === "wide" ? "3440" : "2560", height:"1440"}), el("figcaption", {text:PAGE.screens[s]})));
+    }
+    for (const n of o.notes) f.append(el("p", {class:"was", text:n}));
+    root.append(el("details", {id:"look-" + o.v}, el("summary", {}, document.createTextNode(o.v + " · " + o.name), el("span", {text:o.line})), f));
+  }
+  const about = document.getElementById("about");
+  for (const a of PAGE.about) about.append(el("p", {class:"was", text:a}));
+}
+folds(); render();
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db) { render(); return; }
+  for (const d of PAGE.decisions) {
+    try { const s = await db.doc("verdicts/" + d.key).get(); if (s.exists) state[d.key] = Object.assign({}, s.data()); } catch (e) {}
+  }
+  render();
+})();
+
+// PICTURES JUDGED ON THE PAGE (tools/page_pictures.py): a tap opens a picture
+// full-screen at its own resolution; pinch or wheel to zoom, drag to look
+// about, double tap for its pixels one to one, swipe or arrows for the next,
+// Close or Esc to return. Filmed faces play with their own sound.
+(function(){
+  if (window.__pvReady) return; window.__pvReady = true;
+  const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+  const view = mk("div", "pv"); view.setAttribute("role", "dialog"); view.setAttribute("aria-label", "Picture, full screen");
+  const stage = mk("div", "pv-stage"), hold = mk("div", "pv-hold");
+  const bar = mk("div", "pv-bar"), count = mk("span", "pv-count"), close = mk("button", "pv-close", "Close");
+  const cap = mk("div", "pv-cap"), prev = mk("button", "pv-nav pv-prev", "‹"), next = mk("button", "pv-nav pv-next", "›");
+  const play = mk("button", "pv-play", "Play again");
+  close.type = prev.type = next.type = play.type = "button";
+  prev.setAttribute("aria-label", "The picture before"); next.setAttribute("aria-label", "The next picture");
+  stage.append(hold); bar.append(count, close); view.append(stage, bar, cap, prev, next, play);
+  (document.body || document.documentElement).append(view);
+
+  let items = [], idx = 0, W = 1, H = 1, fit = 1, sc = 1, tx = 0, ty = 0, audio = null, raf = 0, film = null;
+  const pts = new Map(); let pinch = null, drag = null, swipe = null, lastTap = 0;
+
+  function collect(){
+    return Array.from(document.querySelectorAll("img, [data-film-sprite]")).filter(e => !view.contains(e) && (e.tagName !== "IMG" || (e.currentSrc || e.src)));
+  }
+  function apply(){ hold.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + sc + ")"; }
+  function clampPan(){
+    const vw = stage.clientWidth, vh = stage.clientHeight, w = W * sc, h = H * sc;
+    tx = w <= vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, tx));
+    ty = h <= vh ? (vh - h) / 2 : Math.min(0, Math.max(vh - h, ty));
+  }
+  function fitNow(){ const vw = stage.clientWidth, vh = stage.clientHeight; fit = Math.min(vw / W, vh / H); sc = fit; tx = (vw - W * sc) / 2; ty = (vh - H * sc) / 2; apply(); }
+  function zoomAt(s, cx, cy){
+    const max = Math.max(fit * 8, 4), ns = Math.min(max, Math.max(fit, s));
+    tx = cx - (cx - tx) * ns / sc; ty = cy - (cy - ty) * ns / sc; sc = ns; clampPan(); apply();
+  }
+  function stopFilm(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); film = null; }
+  function frameOf(sp, i){
+    i = Math.max(0, Math.min(sp.frames - 1, i)); const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    return (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  }
+  function runFilm(){
+    if (!film) return; stopAudioOnly();
+    const sp = film.sp; audio = film.audio ? new Audio(film.audio) : null;
+    const box = film.box; box.style.backgroundPosition = frameOf(sp, 0);
+    // THE FILM'S CLOCK IS ITS SOUND; when the sound cannot play (no sound
+    // device, or the browser refuses), its own timer, so the face still moves.
+    const t0 = performance.now(), len = sp.frames / (sp.fps || 10);
+    let silent = !audio;
+    const now = () => silent ? (performance.now() - t0) / 1000 : audio.currentTime;
+    const over = () => silent ? now() >= len : audio.ended;
+    if (audio) { audio.play().catch(() => { silent = true; }); }
+    // A plain timer, as the page's own player uses: animation frames stop in a hidden view.
+    raf = setInterval(() => { if (film === null || film.box !== box) { clearInterval(raf); return; }
+      if (over()) { clearInterval(raf); box.style.backgroundPosition = frameOf(sp, 0); return; }
+      box.style.backgroundPosition = frameOf(sp, Math.floor(now() * sp.fps)); }, 33);
+  }
+  function stopAudioOnly(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); }
+  function show(i){
+    stopFilm(); idx = (i + items.length) % items.length; const el = items[idx];
+    hold.replaceChildren(); view.classList.remove("film");
+    count.textContent = (idx + 1) + " / " + items.length;
+    cap.textContent = el.getAttribute("data-caption") || el.alt || el.getAttribute("aria-label") || "";
+    if (el.tagName === "IMG") {
+      const im = new Image(); im.alt = el.alt || ""; im.decoding = "async";
+      im.onload = () => { W = im.naturalWidth || 1; H = im.naturalHeight || 1; fitNow(); };
+      im.src = el.getAttribute("data-full") || el.currentSrc || el.src;
+      hold.append(im); W = el.naturalWidth || 1; H = el.naturalHeight || 1; fitNow();
+    } else {
+      let sp = {}; try { sp = JSON.parse(el.getAttribute("data-film-sprite")); } catch (e) {}
+      const box = mk("div", "pv-film"); const probe = new Image();
+      box.style.backgroundImage = "url(" + sp.file + ")"; box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+      hold.append(box); view.classList.add("film");
+      film = { sp, box, audio: el.getAttribute("data-film-audio") };
+      probe.onload = () => { W = Math.round(probe.naturalWidth / sp.cols); H = Math.round(probe.naturalHeight / sp.rows);
+        box.style.width = W + "px"; box.style.height = H + "px"; fitNow(); runFilm(); };
+      probe.src = sp.file;
+    }
+  }
+  function open(el){ items = collect(); const i = items.indexOf(el); if (i < 0) return;
+    view.classList.add("on"); document.documentElement.style.overflow = "hidden"; show(i); close.focus({preventScroll:true}); }
+  function shut(){ stopFilm(); view.classList.remove("on"); hold.replaceChildren(); document.documentElement.style.overflow = ""; }
+
+  document.addEventListener("click", (e) => {
+    if (view.contains(e.target)) return;
+    const el = e.target.closest ? e.target.closest("img, [data-film-sprite]") : null;
+    if (!el || (el.tagName === "IMG" && !(el.currentSrc || el.src))) return;
+    if (el.closest("a")) e.preventDefault();
+    open(el);
+  }, true);
+  close.addEventListener("click", shut);
+  prev.addEventListener("click", () => show(idx - 1));
+  next.addEventListener("click", () => show(idx + 1));
+  play.addEventListener("click", runFilm);
+  document.addEventListener("keydown", (e) => {
+    if (!view.classList.contains("on")) return;
+    if (e.key === "Escape") shut(); else if (e.key === "ArrowRight") show(idx + 1); else if (e.key === "ArrowLeft") show(idx - 1);
+    else if (e.key === "+" || e.key === "=") zoomAt(sc * 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else if (e.key === "-") zoomAt(sc / 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else return; e.preventDefault();
+  });
+  stage.addEventListener("wheel", (e) => { e.preventDefault(); const r = stage.getBoundingClientRect(); zoomAt(sc * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top); }, {passive:false});
+  stage.addEventListener("pointerdown", (e) => {
+    try { stage.setPointerCapture(e.pointerId); } catch (err) {}   // some browsers refuse; the pinch must not depend on it
+    const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = {d: Math.hypot(a.x - b.x, a.y - b.y), s: sc}; drag = swipe = null; }
+    else if (pts.size === 1) { const p = pts.get(e.pointerId); drag = {x: p.x, y: p.y, tx, ty}; swipe = {x: p.x, y: p.y, t: Date.now()}; }
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!pts.has(e.pointerId)) return; const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pinch && pts.size >= 2) { const [a, b] = [...pts.values()]; zoomAt(pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / (pinch.d || 1), (a.x + b.x) / 2, (a.y + b.y) / 2); }
+    else if (drag && sc > fit * 1.02) { const p = pts.get(e.pointerId); tx = drag.tx + p.x - drag.x; ty = drag.ty + p.y - drag.y; clampPan(); apply(); }
+  });
+  function lift(e){
+    const p = pts.get(e.pointerId); pts.delete(e.pointerId);
+    if (pts.size < 2) pinch = null;
+    if (!p || pts.size) return;
+    if (swipe && sc <= fit * 1.02) {
+      const dx = p.x - swipe.x, dy = p.y - swipe.y, dt = Date.now() - swipe.t;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 800) { show(idx + (dx < 0 ? 1 : -1)); swipe = drag = null; return; }
+    }
+    if (swipe && Math.hypot(p.x - swipe.x, p.y - swipe.y) < 10) {
+      const now = Date.now();
+      if (now - lastTap < 320) { lastTap = 0; if (sc > fit * 1.02) fitNow(); else zoomAt(Math.max(1, fit * 2.5), p.x, p.y); }
+      else lastTap = now;
+    }
+    swipe = drag = null;
+  }
+  stage.addEventListener("pointerup", lift); stage.addEventListener("pointercancel", lift);
+  window.addEventListener("resize", () => { if (view.classList.contains("on")) fitNow(); });
+})();
+</script>
