@@ -5,7 +5,7 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Thursday 1 October, 05:45)
+## Overview (Thursday 1 October, 07:05)
 
 ### Needs you
 
@@ -28,7 +28,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - **Faces** (builder, item 4): frozen. Ron's and Sheila's are final; Darren's S6 is your pick, and you see it once at full size before it is final. Since yesterday: frozen.
 - **Voices** (builder): Ron's and Darren's yes; Sheila's p267 your yes, with your note that it sounds flat, as Ron's first take did. The cloud research's voice-direction note says why: the clips they learn from were read, not acted; its method (a clip library per mood, direction for every line, many takes, chosen by ear in the game) is how they get worked next. Since yesterday: the method.
 - **People dressed** (the clothing session makes, the builder fits): Ron's boots and Sheila's handbag in the game; suits and coats by your ruling (MakeHuman's, skinned); the suit jacket to be filmed in the game (the list's last item). Since this morning: your rulings.
-- **The AI tester walking it** (builder; the nightly route walk is item 5): walks the finished game each time it changes; this morning it found Sheila standing on the fish market's crate and the thinking sounds falling back to the loudness mouth in the package (both fixed, walked again). New: a fixed walk of the route with real key presses, judged by the game's own check lines, passes all 11 stages in the editor build (typing w, a, s, d moves Tom 0 cm; Continue puts him back exactly). Since yesterday: two faults fixed; the route walk built.
+- **The AI tester walking it** (builder; the nightly route walk is item 5): walks the finished game each time it changes; this morning it found Sheila standing on the fish market's crate and the thinking sounds falling back to the loudness mouth in the package (both fixed, walked again). New: a fixed walk of the route with real key presses, judged by the game's own check lines, passes all 11 stages in the editor build and in the finished game (typing w, a, s, d moves Tom 0 cm; Continue puts him back exactly). Since yesterday: two faults fixed; the route walk built.
 
 ## Town, 1 October
 
