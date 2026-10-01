@@ -78,7 +78,7 @@ Every part is drawn in step2/kit.html.
 - **Settings line:**
   - normal;
   - in hand: red, with a bar;
-  - unavailable: grey, with the reason in place of its value ("Off on Low").
+  - unavailable: grey, with the reason in place of its value ("Same as your desktop", for the resolution of a borderless window).
   - Values change with ← and → between ‹ and ›, drawn in ink at 36 so they read as the way to change it.
 - **Quality:** the preset sits over the five lines it sets (shadows, reflections in the wet, how far you see, textures, effects); changing one of them makes it Custom. The screen's own lines (display, resolution, frame rate, brightness) sit apart under their own head. The Picture section is changed over the live street, dimmed but not blurred, so each change shows as it is made.
 - **Preset box:**

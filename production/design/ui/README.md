@@ -29,6 +29,16 @@ The pages ask Google Fonts for their fonts (FONTS.md lists each, with its licenc
 - **The finish: (a)**, in chat: we do it ourselves, with real scanned materials and the game's own renders, and one finished screen is judged against Kingdom Come: Deliverance II before more. It waits for the playable route (his rule of 30 September).
 - **Branding**: researched before any start (production/research/ui-design/BRANDING.md).
 
-## Step 2, after his pick
+## Step 2: every screen in the evening paper (1 October 2026)
 
-The full set in the chosen look, each at 3440 by 1440 and 1920 by 1080, with a short style guide: the title screen (New game, Continue, Quit, and Settings), the pause menu, settings with quality presets, the prompt on people and things you can use, first-time key hints, subtitles with the speaker's name, the typing box, and the loading screen with its progress.
+- **The screens** (step2/evening-paper.html, open with ?screen=...): title, pause, settings with quality presets, the prompt on a person, a first-time key hint, subtitles from someone Tom has no name for, the typing box grown to two lines, loading with its progress. The pictures are in step2/pictures/, at 3440 by 1440 and 1920 by 1080 (WebP, full size).
+- **The kit** (step2/kit.html, step2/pictures/kit.webp): every part in every state at true size.
+- **The rules**: STYLE-GUIDE.md (type, colour with measured contrast, layout, materials, parts and states, how things appear and disappear, notes for Unreal).
+- **Review**: my own check against the standards and the period research, then fresh reviewers who had not seen it made: one full review whose obvious faults were all fixed, and a recheck that found them gone, with two small mismatches fixed after. What they still note is on his page under each screen.
+- **Not fixable here**: the game's frames show no Tom, so the in-play screens read as first person. That is the builder's camera, not the interface.
+- **His page**: https://claude.ai/artifact/KRReoxSgX8qEfPAebV4JhM (source step2/page/). It asks whether to build the set as drawn (verdicts/ui-set-evening-paper), and whether a trade mark lawyer should check the name LEDGER before anything goes public (verdicts/ui-name-check; recommended: yes, now, with two fallback names; production/research/ui-design/BRANDING.md).
+
+## Next
+
+- **The finish**, under his answer (a): scanned paper, a real halftone screen, sound; one screen finished and judged against Kingdom Come: Deliverance II before the rest. It starts once the playable route works (his rule of 30 September).
+- **The branding**, after the name check: positioning, the wordmark, the brand guide, key art and Steam's set, as BRANDING.md lays out.

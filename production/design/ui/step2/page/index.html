@@ -95,7 +95,7 @@ const PAGE = {
   decisions: [
     {key:"ui-set-evening-paper", q:"The full set: build it like this?", note:true, plain:true,
      options:[["yes","Yes, build it",false],["change","Change something (say what below)",false]],
-     detail:"NOTES_SET"},
+     detail:"Short of a 2026 game: these are design mockups, with paper drawn by code rather than scanned; the finish comes later, done ourselves as you chose. The game's frames behind show no Tom, so the in-play screens read as first person; that is the frames, for the builder. Three fresh reviewers checked the set in turn and their obvious faults are fixed; what they still note is under each screen."},
     {key:"ui-name-check", q:"Before any Steam page or trailer, should a trade mark lawyer check the name LEDGER?", note:false, plain:true,
      options:[["now","Yes, now, with two fallback names",true],["keep","Keep LEDGER, accept the risk",false],["rename","Rename now",false]],
      detail:"A cryptocurrency-wallet company, Ledger, holds LEDGER as a trade mark for software (the class games are sold under) in the UK, the EU and the US, and enforces it. That comes from summaries of official decisions: the registers themselves could not be reached from here. Only a lawyer's search clears a name. From published price ranges, a clearance in all three would be in the low thousands of pounds. The full research is in the pull request."},
@@ -112,8 +112,23 @@ const PAGE = {
   ],
   sizes: [["3440","On your 3440 by 1440 screen"],["1920","On a 1920 by 1080 screen"]],
   kit: {n:"Every part, in every state", d:"Type, colour and contrast, choices, settings lines, presets, keys, speakers' names, the prompt, the hint, progress and the quit question."},
-  notes: {},
-  about: [],
+  notes: {
+    title: ["The key hints sit on the bare street: fine at night, not yet tried over a bright frame."],
+    pause: ["\u201cThe Ledger\u201d is his notebook; on this screen it could be read as the game's name."],
+    settings: ["The sheet covers most of the street it says shows each change; only its edges show.", "The \u2039 \u203a arrows that change a value are still small."],
+    prompt: ["Here it sits on a dark shop window; not yet tried over a bright background."],
+    hints: ["On your wide screen the slip sits over the near lane of the road."],
+    subtitles: ["The arrow points left, towards a man walking on the left pavement, who may be taken for the speaker."],
+    typing: ["The box covers the man by the lamp post below the waist."],
+    loading: ["\u201c312 to go\u201d is the game's own wording; it does not say 312 of what."],
+  },
+  about: [
+    "Short of a 2026 game: design mockups, the paper drawn by code; scanned paper, real halftone and sound come with the finish.",
+    "The street behind is the game's own frames of 1 October. They show no Tom, so the in-play screens read as first person; that is for the builder's camera, not the interface.",
+    "On your 3440 by 1440 screen the street is the game's 2560 frame enlarged by a third, so it is soft; the interface is drawn at full size.",
+    "Everything to read sits in the middle 16:9 of the wide screen. Subtitles are 39 units on an 80% dark backing (adjustable), key hints 30, nothing to read under 24.",
+    "The style guide, the kit, the research and these pictures at full size are in the pull request.",
+    "Your pick from the first page: the evening paper. The pictures are in the pull request, as you said yes."],
 };
 const state = {};
 let db = null, canWrite = true;
@@ -179,5 +194,135 @@ folds(); render();
     try { const s = await db.doc("verdicts/" + d.key).get(); if (s.exists) state[d.key] = Object.assign({}, s.data()); } catch (e) {}
   }
   render();
+})();
+
+// PICTURES JUDGED ON THE PAGE (tools/page_pictures.py): a tap opens a picture
+// full-screen at its own resolution; pinch or wheel to zoom, drag to look
+// about, double tap for its pixels one to one, swipe or arrows for the next,
+// Close or Esc to return. Filmed faces play with their own sound.
+(function(){
+  if (window.__pvReady) return; window.__pvReady = true;
+  const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+  const view = mk("div", "pv"); view.setAttribute("role", "dialog"); view.setAttribute("aria-label", "Picture, full screen");
+  const stage = mk("div", "pv-stage"), hold = mk("div", "pv-hold");
+  const bar = mk("div", "pv-bar"), count = mk("span", "pv-count"), close = mk("button", "pv-close", "Close");
+  const cap = mk("div", "pv-cap"), prev = mk("button", "pv-nav pv-prev", "‹"), next = mk("button", "pv-nav pv-next", "›");
+  const play = mk("button", "pv-play", "Play again");
+  close.type = prev.type = next.type = play.type = "button";
+  prev.setAttribute("aria-label", "The picture before"); next.setAttribute("aria-label", "The next picture");
+  stage.append(hold); bar.append(count, close); view.append(stage, bar, cap, prev, next, play);
+  (document.body || document.documentElement).append(view);
+
+  let items = [], idx = 0, W = 1, H = 1, fit = 1, sc = 1, tx = 0, ty = 0, audio = null, raf = 0, film = null;
+  const pts = new Map(); let pinch = null, drag = null, swipe = null, lastTap = 0;
+
+  function collect(){
+    return Array.from(document.querySelectorAll("img, [data-film-sprite]")).filter(e => !view.contains(e) && (e.tagName !== "IMG" || (e.currentSrc || e.src)));
+  }
+  function apply(){ hold.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + sc + ")"; }
+  function clampPan(){
+    const vw = stage.clientWidth, vh = stage.clientHeight, w = W * sc, h = H * sc;
+    tx = w <= vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, tx));
+    ty = h <= vh ? (vh - h) / 2 : Math.min(0, Math.max(vh - h, ty));
+  }
+  function fitNow(){ const vw = stage.clientWidth, vh = stage.clientHeight; fit = Math.min(vw / W, vh / H); sc = fit; tx = (vw - W * sc) / 2; ty = (vh - H * sc) / 2; apply(); }
+  function zoomAt(s, cx, cy){
+    const max = Math.max(fit * 8, 4), ns = Math.min(max, Math.max(fit, s));
+    tx = cx - (cx - tx) * ns / sc; ty = cy - (cy - ty) * ns / sc; sc = ns; clampPan(); apply();
+  }
+  function stopFilm(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); film = null; }
+  function frameOf(sp, i){
+    i = Math.max(0, Math.min(sp.frames - 1, i)); const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    return (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  }
+  function runFilm(){
+    if (!film) return; stopAudioOnly();
+    const sp = film.sp; audio = film.audio ? new Audio(film.audio) : null;
+    const box = film.box; box.style.backgroundPosition = frameOf(sp, 0);
+    // THE FILM'S CLOCK IS ITS SOUND; when the sound cannot play (no sound
+    // device, or the browser refuses), its own timer, so the face still moves.
+    const t0 = performance.now(), len = sp.frames / (sp.fps || 10);
+    let silent = !audio;
+    const now = () => silent ? (performance.now() - t0) / 1000 : audio.currentTime;
+    const over = () => silent ? now() >= len : audio.ended;
+    if (audio) { audio.play().catch(() => { silent = true; }); }
+    // A plain timer, as the page's own player uses: animation frames stop in a hidden view.
+    raf = setInterval(() => { if (film === null || film.box !== box) { clearInterval(raf); return; }
+      if (over()) { clearInterval(raf); box.style.backgroundPosition = frameOf(sp, 0); return; }
+      box.style.backgroundPosition = frameOf(sp, Math.floor(now() * sp.fps)); }, 33);
+  }
+  function stopAudioOnly(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); }
+  function show(i){
+    stopFilm(); idx = (i + items.length) % items.length; const el = items[idx];
+    hold.replaceChildren(); view.classList.remove("film");
+    count.textContent = (idx + 1) + " / " + items.length;
+    cap.textContent = el.getAttribute("data-caption") || el.alt || el.getAttribute("aria-label") || "";
+    if (el.tagName === "IMG") {
+      const im = new Image(); im.alt = el.alt || ""; im.decoding = "async";
+      im.onload = () => { W = im.naturalWidth || 1; H = im.naturalHeight || 1; fitNow(); };
+      im.src = el.getAttribute("data-full") || el.currentSrc || el.src;
+      hold.append(im); W = el.naturalWidth || 1; H = el.naturalHeight || 1; fitNow();
+    } else {
+      let sp = {}; try { sp = JSON.parse(el.getAttribute("data-film-sprite")); } catch (e) {}
+      const box = mk("div", "pv-film"); const probe = new Image();
+      box.style.backgroundImage = "url(" + sp.file + ")"; box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+      hold.append(box); view.classList.add("film");
+      film = { sp, box, audio: el.getAttribute("data-film-audio") };
+      probe.onload = () => { W = Math.round(probe.naturalWidth / sp.cols); H = Math.round(probe.naturalHeight / sp.rows);
+        box.style.width = W + "px"; box.style.height = H + "px"; fitNow(); runFilm(); };
+      probe.src = sp.file;
+    }
+  }
+  function open(el){ items = collect(); const i = items.indexOf(el); if (i < 0) return;
+    view.classList.add("on"); document.documentElement.style.overflow = "hidden"; show(i); close.focus({preventScroll:true}); }
+  function shut(){ stopFilm(); view.classList.remove("on"); hold.replaceChildren(); document.documentElement.style.overflow = ""; }
+
+  document.addEventListener("click", (e) => {
+    if (view.contains(e.target)) return;
+    const el = e.target.closest ? e.target.closest("img, [data-film-sprite]") : null;
+    if (!el || (el.tagName === "IMG" && !(el.currentSrc || el.src))) return;
+    if (el.closest("a")) e.preventDefault();
+    open(el);
+  }, true);
+  close.addEventListener("click", shut);
+  prev.addEventListener("click", () => show(idx - 1));
+  next.addEventListener("click", () => show(idx + 1));
+  play.addEventListener("click", runFilm);
+  document.addEventListener("keydown", (e) => {
+    if (!view.classList.contains("on")) return;
+    if (e.key === "Escape") shut(); else if (e.key === "ArrowRight") show(idx + 1); else if (e.key === "ArrowLeft") show(idx - 1);
+    else if (e.key === "+" || e.key === "=") zoomAt(sc * 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else if (e.key === "-") zoomAt(sc / 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else return; e.preventDefault();
+  });
+  stage.addEventListener("wheel", (e) => { e.preventDefault(); const r = stage.getBoundingClientRect(); zoomAt(sc * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top); }, {passive:false});
+  stage.addEventListener("pointerdown", (e) => {
+    try { stage.setPointerCapture(e.pointerId); } catch (err) {}   // some browsers refuse; the pinch must not depend on it
+    const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = {d: Math.hypot(a.x - b.x, a.y - b.y), s: sc}; drag = swipe = null; }
+    else if (pts.size === 1) { const p = pts.get(e.pointerId); drag = {x: p.x, y: p.y, tx, ty}; swipe = {x: p.x, y: p.y, t: Date.now()}; }
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!pts.has(e.pointerId)) return; const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pinch && pts.size >= 2) { const [a, b] = [...pts.values()]; zoomAt(pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / (pinch.d || 1), (a.x + b.x) / 2, (a.y + b.y) / 2); }
+    else if (drag && sc > fit * 1.02) { const p = pts.get(e.pointerId); tx = drag.tx + p.x - drag.x; ty = drag.ty + p.y - drag.y; clampPan(); apply(); }
+  });
+  function lift(e){
+    const p = pts.get(e.pointerId); pts.delete(e.pointerId);
+    if (pts.size < 2) pinch = null;
+    if (!p || pts.size) return;
+    if (swipe && sc <= fit * 1.02) {
+      const dx = p.x - swipe.x, dy = p.y - swipe.y, dt = Date.now() - swipe.t;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 800) { show(idx + (dx < 0 ? 1 : -1)); swipe = drag = null; return; }
+    }
+    if (swipe && Math.hypot(p.x - swipe.x, p.y - swipe.y) < 10) {
+      const now = Date.now();
+      if (now - lastTap < 320) { lastTap = 0; if (sc > fit * 1.02) fitNow(); else zoomAt(Math.max(1, fit * 2.5), p.x, p.y); }
+      else lastTap = now;
+    }
+    swipe = drag = null;
+  }
+  stage.addEventListener("pointerup", lift); stage.addEventListener("pointercancel", lift);
+  window.addEventListener("resize", () => { if (view.classList.contains("on")) fitNow(); });
 })();
 </script>
