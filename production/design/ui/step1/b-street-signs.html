@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>LEDGER interface, direction B: the street's signs</title>
+<!-- Direction B, "the street's signs": the interface speaks the way British
+     streets did in 1990. The title is a street name plate, black Kindersley
+     capitals on white enamel, as on Quay Street's own plates; the menus are
+     direction-sign panels, white on Brunswick green with a white border; the
+     choice in hand is marked the way a primary route's number is, yellow;
+     text to type into is a white local sign with a black border. Fonts:
+     Marcellus SC (the plates, as in the game already) and Work Sans, the
+     nearest free grotesque to Kinneir and Calvert's Transport, for all else.
+     Both SIL OFL 1.1. -->
+<!-- The fonts, from Google Fonts (each SIL OFL 1.1; licences in ../fonts/, record in ../FONTS.md). -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Work+Sans:wght@100..900&display=block">
+<style>
+/* LEDGER interface mockups, step 1: what every direction shares.
+   Laid out in Unreal's units: 1080 tall, so a 16:9 screen is 1920 wide and
+   Jafar's 21:9 screen (3440 by 1440) is 2580 wide, drawn at 4/3 scale, as
+   Unreal's default DPI curve does by the shortest side. Everything the player
+   reads or acts on stays inside the centred 16:9 region (.safe); only the
+   backdrop and its shading use the full width. */
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #0b0c0e; }
+.stage { position: fixed; inset: 0; overflow: hidden; }
+.bg { position: absolute; inset: 0; background-size: cover; background-position: center 55%; }
+.bg.night { background-image: url(../../../approvals/2026-10-01/street-hook-night.webp); }
+.bg.day { background-image: url(../../../approvals/2026-10-01/street-hook-day.webp); }
+.bg.talk { background-image: url(../../../approvals/2026-10-01/street-A-day.webp); background-position: center 45%; }
+.bg.paused { filter: blur(7px) brightness(.5) saturate(.8); inset: -24px; }
+.safe { position: absolute; top: 0; bottom: 0; left: 50%; width: 1920px; margin-left: -960px; }
+.screen { display: none; }
+html[data-screen="title"] .s-title,
+html[data-screen="talk"] .s-talk,
+html[data-screen="pause"] .s-pause { display: block; }
+/* Paper grain, for anything printed or written on. */
+.grain { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .18  0 0 0 0 .15  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+/* The bottom of the view, darkened a little so the speech area reads. */
+.foot-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 380px; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.38)); }
+.left-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,7,9,.86) 0, rgba(6,7,9,.7) 26%, rgba(6,7,9,.25) 48%, rgba(6,7,9,0) 62%); }
+</style>
+<style>
+:root {
+  --green: #1F3D2C; --green-hi: #2A4D39; --white: #FFFFFF; --enamel: #F3F1EA; --black: #141414;
+  --yellow: #F0C62A; --dim: #C7D3CB; --sans: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+}
+body { font-family: var(--sans); }
+/* A SIGN PANEL: green, a white border set in from the edge, rounded corners. */
+.sign { position: absolute; background: var(--green); border-radius: 22px; box-shadow: 0 20px 44px rgba(0,0,0,.5); color: var(--white); }
+.sign::before { content: ""; position: absolute; inset: 10px; border: 5px solid var(--white); border-radius: 14px; pointer-events: none; }
+.item { position: relative; display: flex; align-items: center; gap: 22px; height: 76px; padding: 0 30px; margin: 0 -12px; border-radius: 10px; font: 500 38px/1 var(--sans); letter-spacing: -.005em; }
+.item .arrow { width: 40px; text-align: center; font: 600 36px/1 var(--sans); }
+.item.on { background: var(--yellow); color: var(--black); }
+.item .when { margin-left: auto; font: 400 24px/1 var(--sans); color: var(--dim); }
+.item.on .when { color: #3A3317; }
+.keyrow { position: absolute; font: 500 22px/1 var(--sans); color: #ECEFEC; text-shadow: 0 1px 2px rgba(0,0,0,.8); }
+.keyrow b { display: inline-block; min-width: 18px; padding: 6px 11px; margin: 0 8px 0 0; background: var(--enamel); color: var(--black); border-radius: 6px; font-weight: 600; text-align: center; text-shadow: none; box-shadow: inset 0 0 0 2px var(--black); }
+.keyrow b + span { margin-right: 26px; }
+
+/* ---------- TITLE ---------- */
+.plate {
+  position: absolute; left: 120px; top: 150px; width: 760px; height: 236px; border-radius: 10px;
+  background: linear-gradient(170deg, #FBFAF5, #E9E6DC 70%, #DDD8CA); box-shadow: 0 20px 44px rgba(0,0,0,.55);
+}
+.plate::before { content: ""; position: absolute; inset: 12px; border: 6px solid var(--black); border-radius: 6px; }
+.plate h1 { position: absolute; left: 0; right: 0; top: 40px; margin: 0; text-align: center; font: 400 120px/1 "Marcellus SC", serif; letter-spacing: .1em; color: var(--black); }
+.plate .district { position: absolute; left: 0; right: 0; bottom: 34px; text-align: center; font: 500 24px/1 var(--sans); letter-spacing: .26em; color: var(--black); }
+.plate .screw { position: absolute; top: 50%; width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #AAA, #555); }
+.title-sign { left: 120px; top: 432px; width: 760px; padding: 44px 50px 40px; box-sizing: border-box; }
+.title-foot { left: 120px; bottom: 56px; }
+.version { position: absolute; right: 120px; bottom: 60px; font: 400 20px/1 var(--sans); color: rgba(236,239,236,.7); }
+
+/* ---------- CONVERSATION ---------- */
+.subs { position: absolute; left: 0; right: 0; bottom: 216px; text-align: center; }
+.subs p { margin: 0 auto; font: 400 36px/1.45 var(--sans); color: var(--white); }
+.subs p > span { background: rgba(10,14,12,.8); padding: 3px 16px; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 4px; }
+.subs .who { font-weight: 600; color: var(--yellow); }
+.saybox { position: absolute; left: 50%; width: 1100px; margin-left: -550px; bottom: 100px; height: 80px; background: var(--enamel); border-radius: 12px; box-shadow: 0 10px 26px rgba(0,0,0,.45); }
+.saybox::before { content: ""; position: absolute; inset: 6px; border: 4px solid var(--black); border-radius: 8px; }
+.saybox .to { position: absolute; left: 6px; top: 6px; bottom: 6px; width: 176px; border-radius: 8px 0 0 8px; background: var(--black); color: var(--white); font: 600 24px/68px var(--sans); text-align: center; letter-spacing: .02em; }
+.saybox .typed { position: absolute; left: 210px; right: 30px; top: 21px; font: 400 34px/1 var(--sans); color: var(--black); white-space: nowrap; }
+.caret { display: inline-block; width: 3px; height: 1.05em; margin-left: 3px; vertical-align: -0.16em; background: var(--black); }
+.talk-keys { left: 0; right: 0; bottom: 46px; text-align: center; }
+
+/* ---------- PAUSE ---------- */
+.pause-sign { left: 50%; top: 156px; width: 820px; margin-left: -410px; padding: 50px 56px 44px; box-sizing: border-box; }
+.pause-sign .top { display: flex; justify-content: space-between; align-items: baseline; padding: 0 18px 22px; margin-bottom: 18px; border-bottom: 3px solid rgba(255,255,255,.85); }
+.pause-sign h2 { margin: 0; font: 600 52px/1 var(--sans); }
+.pause-sign .clock { font: 400 28px/1 var(--sans); color: var(--dim); }
+.pause-sign .note { margin: 24px 18px 0; font: 400 22px/1.5 var(--sans); color: var(--dim); }
+</style>
+<script>document.documentElement.dataset.screen = new URLSearchParams(location.search).get("screen") || "title";</script>
+</head>
+<body>
+<div class="stage">
+
+  <!-- TITLE: a street name plate, and a direction sign for the way in -->
+  <div class="screen s-title">
+    <div class="bg night"></div>
+    <div class="left-shade"></div>
+    <div class="safe">
+      <div class="plate"><span class="screw" style="left:30px"></span><span class="screw" style="right:30px"></span><h1>LEDGER</h1><div class="district">MERIDIAN · 1990</div></div>
+      <div class="sign title-sign">
+        <div class="item on"><span class="arrow">↑</span>Continue<span class="when">Thursday, 9.40 pm, Quay Street</span></div>
+        <div class="item"><span class="arrow">→</span>New game</div>
+        <div class="item"><span class="arrow">→</span>Settings</div>
+        <div class="item"><span class="arrow">←</span>Quit</div>
+      </div>
+      <div class="keyrow title-foot"><b>↑</b><b>↓</b><span>to choose</span><b>Enter</b><span>to take it</span></div>
+      <div class="version">Build 0.1</div>
+    </div>
+  </div>
+
+  <!-- CONVERSATION -->
+  <div class="screen s-talk">
+    <div class="bg talk"></div>
+    <div class="foot-shade"></div>
+    <div class="safe">
+      <div class="subs"><p><span><span class="who">Sheila:</span> Morning. Quiet one today.</span><br><span>Ron's on the rank if you're after him.</span></p></div>
+      <div class="saybox"><div class="to">To Sheila</div><div class="typed">Did you hear anything last night?<span class="caret"></span></div></div>
+      <div class="keyrow talk-keys"><b>Enter</b><span>says it</span><b>Esc</b><span>leaves it</span></div>
+    </div>
+  </div>
+
+  <!-- PAUSE: one sign, the street held still behind it -->
+  <div class="screen s-pause">
+    <div class="bg day paused"></div>
+    <div class="safe">
+      <div class="sign pause-sign">
+        <div class="top"><h2>Paused</h2><span class="clock">Thursday, 9.40 pm</span></div>
+        <div class="item on"><span class="arrow">↑</span>Back to the street</div>
+        <div class="item"><span class="arrow">→</span>The Ledger</div>
+        <div class="item"><span class="arrow">→</span>Settings</div>
+        <div class="item"><span class="arrow">←</span>Quit to the title</div>
+        <div class="item"><span class="arrow">←</span>Quit the game</div>
+        <div class="note">Last saved at 9.38 pm, on Quay Street.<br>Esc goes back to the street.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

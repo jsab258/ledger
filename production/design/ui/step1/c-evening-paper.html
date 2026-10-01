@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>LEDGER interface, direction C: the evening paper</title>
+<!-- Direction C, "the evening paper": the interface is a local evening paper
+     of 1990, black ink on newsprint with one spot colour, red, and no full
+     colour (regional papers printed none in editorial until the mid 1990s).
+     The title is a blackletter masthead between thick-and-thin rules; menu
+     choices are headlines in a condensed grotesque; the line spoken is a
+     caption on a strip of newsprint; the line typed is a cut-out reader's
+     coupon. Fonts: UnifrakturMaguntia (masthead only), League Gothic
+     (headlines), Libre Franklin (everything read), Old Standard TT (datelines
+     and standfirsts). All SIL OFL 1.1, in ../fonts/ with their licences. -->
+<!-- The fonts, from Google Fonts (each SIL OFL 1.1; licences in ../fonts/, record in ../FONTS.md). -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=League+Gothic&family=Libre+Franklin:wght@100..900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=block">
+<style>
+/* LEDGER interface mockups, step 1: what every direction shares.
+   Laid out in Unreal's units: 1080 tall, so a 16:9 screen is 1920 wide and
+   Jafar's 21:9 screen (3440 by 1440) is 2580 wide, drawn at 4/3 scale, as
+   Unreal's default DPI curve does by the shortest side. Everything the player
+   reads or acts on stays inside the centred 16:9 region (.safe); only the
+   backdrop and its shading use the full width. */
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #0b0c0e; }
+.stage { position: fixed; inset: 0; overflow: hidden; }
+.bg { position: absolute; inset: 0; background-size: cover; background-position: center 55%; }
+.bg.night { background-image: url(../../../approvals/2026-10-01/street-hook-night.webp); }
+.bg.day { background-image: url(../../../approvals/2026-10-01/street-hook-day.webp); }
+.bg.talk { background-image: url(../../../approvals/2026-10-01/street-A-day.webp); background-position: center 45%; }
+.bg.paused { filter: blur(7px) brightness(.5) saturate(.8); inset: -24px; }
+.safe { position: absolute; top: 0; bottom: 0; left: 50%; width: 1920px; margin-left: -960px; }
+.screen { display: none; }
+html[data-screen="title"] .s-title,
+html[data-screen="talk"] .s-talk,
+html[data-screen="pause"] .s-pause { display: block; }
+/* Paper grain, for anything printed or written on. */
+.grain { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .18  0 0 0 0 .15  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+/* The bottom of the view, darkened a little so the speech area reads. */
+.foot-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 380px; background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.38)); }
+.left-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,7,9,.86) 0, rgba(6,7,9,.7) 26%, rgba(6,7,9,.25) 48%, rgba(6,7,9,0) 62%); }
+</style>
+<style>
+:root {
+  --news: #EAE5D9; --news-old: #DED5C0; --ink: #1F1F1E; --red: #B4191F; --grey: #55524B;
+  --head: "League Gothic", "Arial Narrow", sans-serif; --text: "Libre Franklin", "Franklin Gothic Medium", Arial, sans-serif;
+  --serif: "Old Standard TT", Georgia, serif;
+}
+.sheet { position: absolute; background: var(--news); color: var(--ink); box-shadow: 0 22px 48px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.3); }
+.sheet::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(130% 100% at 50% 40%, rgba(255,255,255,0) 55%, rgba(120,100,60,.16)); }
+.mast { font: 400 150px/1 "UnifrakturMaguntia", serif; text-align: center; letter-spacing: .01em; }
+.rule2 { border-top: 5px solid var(--ink); border-bottom: 1.5px solid var(--ink); height: 4px; }
+.dateline { display: flex; justify-content: space-between; padding: 12px 4px 11px; border-bottom: 1.5px solid var(--ink); font: 400 19px/1 var(--serif); letter-spacing: .16em; text-transform: uppercase; }
+.hed { position: relative; display: block; padding: 18px 0 16px 34px; border-bottom: 1px solid rgba(31,31,30,.55); font: 400 74px/.92 var(--head); text-transform: uppercase; letter-spacing: .01em; }
+.hed:last-child { border-bottom: 0; }
+.hed.on { color: var(--red); }
+.hed.on::before { content: ""; position: absolute; left: 0; top: 20px; bottom: 18px; width: 12px; background: var(--red); }
+.hed .stand { display: block; margin-top: 10px; font: italic 27px/1.2 var(--serif); text-transform: none; color: var(--ink); letter-spacing: 0; }
+.keyrow { position: absolute; font: 500 22px/1 var(--text); color: #EEEAE0; text-shadow: 0 1px 2px rgba(0,0,0,.8); }
+.keyrow b { display: inline-block; min-width: 18px; padding: 6px 10px; margin-right: 8px; background: var(--news); color: var(--ink); font-weight: 700; text-align: center; text-shadow: none; border-radius: 2px; }
+.keyrow b + span { margin-right: 26px; }
+
+/* ---------- TITLE ---------- */
+.front { left: 120px; top: 120px; width: 700px; padding: 26px 40px 30px; box-sizing: border-box; transform: rotate(-.8deg); }
+.ears { display: flex; justify-content: space-between; align-items: flex-start; }
+.ear { width: 118px; padding: 8px 0 7px; border: 2px solid var(--ink); text-align: center; font: 800 17px/1.15 var(--text); letter-spacing: .08em; text-transform: uppercase; }
+.ear.red { background: var(--red); border-color: var(--red); color: #fff; }
+.front .mast { margin: -72px 0 8px; font-size: 132px; }
+.front .menu { margin-top: 16px; }
+.title-foot { left: 120px; bottom: 50px; }
+.version { position: absolute; right: 120px; bottom: 54px; font: 400 20px/1 var(--text); color: rgba(238,234,224,.7); }
+
+/* ---------- CONVERSATION ---------- */
+.subs { position: absolute; left: 0; right: 0; bottom: 224px; text-align: center; }
+.subs p { margin: 0 auto; font: 450 36px/1.5 var(--text); color: var(--ink); }
+.subs p > span { background: var(--news); padding: 4px 18px; -webkit-box-decoration-break: clone; box-decoration-break: clone; box-shadow: 0 3px 8px rgba(0,0,0,.35); }
+.subs .who { font-weight: 800; color: var(--red); letter-spacing: .04em; font-size: 30px; }
+.coupon { position: absolute; left: 50%; width: 1100px; margin-left: -550px; bottom: 98px; height: 86px; background: var(--news); box-shadow: 0 10px 26px rgba(0,0,0,.45); }
+.coupon::before { content: ""; position: absolute; inset: 7px; border: 2.5px dashed var(--ink); }
+.coupon .to { position: absolute; left: 20px; top: 18px; padding: 8px 14px 6px; background: var(--red); color: #fff; font: 400 36px/1 var(--head); letter-spacing: .03em; text-transform: uppercase; }
+.coupon .typed { position: absolute; left: 200px; right: 34px; top: 22px; padding-bottom: 6px; border-bottom: 2px dotted rgba(31,31,30,.6); font: 450 34px/1 var(--text); white-space: nowrap; }
+.caret { display: inline-block; width: 3px; height: 1.05em; margin-left: 3px; vertical-align: -0.16em; background: var(--ink); }
+.talk-keys { left: 0; right: 0; bottom: 46px; text-align: center; }
+
+/* ---------- PAUSE ---------- */
+.page { left: 50%; top: 104px; width: 840px; margin-left: -420px; padding: 30px 46px 34px; box-sizing: border-box; }
+.page .mast { font-size: 112px; margin-bottom: 8px; }
+.page .hed { font-size: 64px; padding-top: 15px; padding-bottom: 13px; }
+.page .note { margin-top: 16px; font: italic 23px/1.45 var(--serif); color: var(--grey); }
+</style>
+<script>document.documentElement.dataset.screen = new URLSearchParams(location.search).get("screen") || "title";</script>
+</head>
+<body>
+<div class="stage">
+
+  <!-- TITLE: the late edition's front page -->
+  <div class="screen s-title">
+    <div class="bg night"></div>
+    <div class="left-shade"></div>
+    <div class="safe">
+      <div class="sheet front grain">
+        <div class="ears"><div class="ear red">Late<br>Final</div><div class="ear">Meridian<br>1990</div></div>
+        <div class="mast">Ledger</div>
+        <div class="rule2"></div>
+        <div class="dateline"><span>No. 1</span><span>The Hook, Meridian</span><span>1990</span></div>
+        <div class="menu">
+          <div class="hed on">Continue<span class="stand">Thursday, 9.40 pm, on Quay Street</span></div>
+          <div class="hed">New game</div>
+          <div class="hed">Settings</div>
+          <div class="hed">Quit</div>
+        </div>
+      </div>
+      <div class="keyrow title-foot"><b>↑</b><b>↓</b><span>to choose</span><b>Enter</b><span>to take it</span></div>
+      <div class="version">Build 0.1</div>
+    </div>
+  </div>
+
+  <!-- CONVERSATION: the reply as a caption, his line on a reader's coupon -->
+  <div class="screen s-talk">
+    <div class="bg talk"></div>
+    <div class="foot-shade"></div>
+    <div class="safe">
+      <div class="subs"><p><span><span class="who">SHEILA:</span> Morning. Quiet one today.</span><br><span>Ron's on the rank if you're after him.</span></p></div>
+      <div class="coupon grain"><div class="to">To Sheila</div><div class="typed">Did you hear anything last night?<span class="caret"></span></div></div>
+      <div class="keyrow talk-keys"><b>Enter</b><span>says it</span><b>Esc</b><span>leaves it</span></div>
+    </div>
+  </div>
+
+  <!-- PAUSE: tonight's page, the street held still behind -->
+  <div class="screen s-pause">
+    <div class="bg day paused"></div>
+    <div class="safe">
+      <div class="sheet page grain">
+        <div class="mast">Ledger</div>
+        <div class="rule2"></div>
+        <div class="dateline"><span>Thursday</span><span>9.40 pm</span><span>Quay Street</span></div>
+        <div class="menu">
+          <div class="hed on">Back to the street</div>
+          <div class="hed">The Ledger</div>
+          <div class="hed">Settings</div>
+          <div class="hed">Quit to the title</div>
+          <div class="hed">Quit the game</div>
+        </div>
+        <div class="note">Last saved at 9.38 pm, on Quay Street. Esc goes back to the street.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
