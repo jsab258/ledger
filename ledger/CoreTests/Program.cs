@@ -7768,6 +7768,23 @@ namespace Ledger.CoreTests
                 Check(idiom && lines > 30 && breaks.Count == 0,
                       "the witness bank's every line and clause keeps the content rule; the pub's hours as a drinking idiom are refused, a shop's opening time and a pub as a place are not",
                       $"idiom {idiom}, {lines} lines, " + string.Join(" | ", breaks));
+                // RECOGNISING HIM IS NOT KNOWING HIS NAME (the independent review of 1
+                // October, N2, High: the three recognition clauses said "Nowak", the
+                // game files a clause as the story, and the street passed his surname
+                // on before anybody had been told it). Canon: the town calls him the
+                // new owner until it learns his name, which only PlayerIdentity.NameTold
+                // gives; so no witness or overheard line of this bank says it.
+                var named = new List<string>();
+                foreach (var o in MiniJson.GetList(bank, "lines") ?? new List<object>())
+                {
+                    var l = MiniJson.AsObject(o);
+                    foreach (var key in new[] { "text", "clause" })
+                        if (MiniJson.GetString(l, key) is string s && System.Text.RegularExpressions.Regex.IsMatch(s, @"\b(Nowak|Novak|Tom)\b"))
+                            named.Add(MiniJson.GetString(l, "id") + " " + key);
+                }
+                Check(named.Count == 0,
+                      "a witness who recognises him calls him what the town calls him before it knows his name, the new owner, never his surname, in every line and clause the game files or says",
+                      string.Join(" | ", named));
             }
 
             // TOLD TO HER FACE IS NOT A SIGHTING (the independent review of 30
