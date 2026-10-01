@@ -1,7 +1,7 @@
 encounterMode=live
 encounterStatus=PASS
 encounterFailed=none
-encounterCommit=fab9aef
+encounterCommit=d260afe
 pawnClass=LedgerSliceCharacter actPressLanded=not-attempted actRequestsSeen=1 actAttempted=yes
 aboutA w1=1 n2=1 r3=1 aboutB w1=0 n2=0 r3=0 crimeMemories w1=1 n2=2 r3=2
 filedSummaryA=the man that did the window looked straight at the one who saw him, and his face is known if not his name
