@@ -1318,6 +1318,14 @@
    "mb": 13163
   },
   {
+   "path": "F:/LedgerTools/voice-graphs/nano/nano-step.onnx",
+   "madeBy": "tools/voice-live/nano_step_graph.py --export, 1 October",
+   "why": "Nano's one-token step as a compiled graph, exact to the library; set aside beside the game (slower there), kept as the first piece of the voice's conversion into the game",
+   "status": "kept",
+   "recorded": "2026-10-01",
+   "mb": 406
+  },
+  {
    "path": "F:/LedgerTools/voice-portable",
    "madeBy": "the builder, from miniconda's Python 3.12, the chatterbox-nano env-dml packages and weights, and tools/voice-live (scratchpad make_voice_portable.py)",
    "why": "item 3's voice stopgap trial: today's voice program runnable from one folder with nothing installed, for a friends' build",

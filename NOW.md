@@ -13,7 +13,7 @@ ORDER (Jafar, 30 September, evening; it replaces the list after the audit, whose
 - [ ] 6. Mickey's office as a playable blockout (production/research/interior-blockout).
 - [ ] 7. Film MakeHuman's suit jacket in the game (F:/LedgerTools/garments/suit_jacket_test, on MH_RoccoP2 and MH_SamC5), cloth on, walking, sitting and arms raised, and tell the clothing session under Handovers to clothing.
 
-STATE (Wednesday 30 September, 21:30): the review merged with its proofs; its three runs of the finished game played (production/playtest/review-runs-2026-09-30.md: A1, A2, A3, A4, C1 and B1 all shown in the real game, and a second C1 cause: no conversation was ever saved); the game side of A1, A2, A3, A4, A7 and C1 fixed, a failing test first for each, walked in the editor build; the packaged walk follows the build machine. The town's Core fixes are on their way to main for the port.
+STATE (Thursday 1 October, 03:10): 1b ready for Jafar's cloud review (overview's Needs you). 2, the delay: the voice's decoder on the card (3.95 to 2.98 s of voice work for a short line in the game); streaming inside the sentence and a compiled token step both measured and failed beside the game, where every route runs at about half its idle speed (production/research/voice-latency/STREAMING-IN-GAME-2026-10-01.md); set aside past the two-tries rule, his scope question in the overview. Next: 4, mouths (3 waits on his fresh Windows account).
 
 ## Handovers to clothing
 

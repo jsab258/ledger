@@ -269,7 +269,10 @@ def learn(torch, speaker, who, clip):
 
 
 def serve(args):
-    out = pathlib.Path(args.get("out") or tempfile.mkdtemp(prefix="ledger-voice-"))
+    # Its sound files go to drive F on this PC (scratch never on C:, Jafar,
+    # 25 September); elsewhere, as on a friend's PC, to the system's temp.
+    scratch = pathlib.Path("F:/LedgerTools/tmp")
+    out = pathlib.Path(args.get("out") or tempfile.mkdtemp(prefix="ledger-voice-", dir=str(scratch) if scratch.is_dir() else None))
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
     torch, speaker, dev = load_models(args.get("cpu"))
@@ -282,6 +285,26 @@ def serve(args):
             voices[who] = type(conds)(t3=conds.t3.to(device=dev), gen={k: (v.to("cpu") if torch.is_tensor(v) else v)
                                                                for k, v in conds.gen.items()})
         speaker.conds = voices[who]
+
+    # IN PIECES INSIDE THE SENTENCE (1 October; item 2, the delay;
+    # tools/voice-live/nano_stream.py, from production/research/voice-latency/
+    # FAST-FIRST-AUDIO-2026-10-01.md): each sentence's sound is decoded in
+    # pieces on a thread of its own while its tokens are still being made, and
+    # the first piece goes to the game as soon as the rest will follow it with
+    # no gap; the later ones are "joined" onto the sound already playing (the
+    # game's way for Sopro's pieces), and a closing line with no sound ends
+    # the reply. OFF unless LEDGER_VOICE_STREAM=1: on the idle PC the first
+    # piece came in 1.0 s with no gaps, but beside the running game each
+    # piece's pass took 1.5 s (0.5 s idle; every pass decodes the voice's
+    # reference again), so replies came slower, with gaps of up to 0.9 s
+    # (measured 1 October; production/research/voice-latency/
+    # STREAMING-IN-GAME-2026-10-01.md). Whole sentences stay the default.
+    streaming = os.environ.get("LEDGER_VOICE_STREAM") == "1"
+    rates = {"tok": 0.045, "pass": 0.6}       # learned as it speaks
+    if streaming:
+        sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+        import nano_stream
+        from chatterbox.tts_turbo import punc_norm
 
     # PREPARED BEFORE THE CONVERSATION (--prewarm, 26 September; Jafar: "prepare
     # each cast voice before the conversation instead of on first use"): each
@@ -296,6 +319,10 @@ def serve(args):
             try:
                 ready_voice(who, clip)
                 speaker.generate("Right.")
+                if streaming:      # the pieces' own passes run once too
+                    tt = speaker.tokenizer(punc_norm("Right then, what is it you're after?"), return_tensors="pt").input_ids.to(speaker.device)
+                    for _ in nano_stream.speak_in_pieces(torch, speaker, tt, 36, 1, lambda now: now, dict(rates), dev):
+                        pass
                 warmed.append(who)
             except Exception:
                 pass   # a voice that will not warm is learned on first use, as before
@@ -335,6 +362,46 @@ def serve(args):
     def newer_waiting(turn):
         with gate:
             return turn > 0 and any(t2 > turn for t2, _ in inbox)
+
+    def speak_streamed(i, who, pieces, t, this_turn):
+        n, heard_end = 0, [0.0]
+        for k, piece in enumerate(pieces):
+            if k > 0 and newer_waiting(this_turn):
+                print(dumps({"id": i, "who": who, "last": True, "cut": "newer-turn"}), flush=True)
+                return
+            seed = 20260924 + i * 100 + k
+            tt = speaker.tokenizer(punc_norm(piece), return_tensors="pt", padding=True, truncation=True).input_ids.to(speaker.device)
+            start_at = lambda now: max(now, heard_end[0] + (0.15 if k > 0 else 0.0)) + 0.03
+            for j, (wav, _) in enumerate(nano_stream.speak_in_pieces(torch, speaker, tt, len(piece), seed, start_at, rates, dev)):
+                try:
+                    wav = speaker.watermarker.apply_watermark(wav, sample_rate=speaker.sr)
+                except Exception:
+                    pass   # a piece too short to mark still plays
+                now = time.time()
+                secs = len(wav) / float(speaker.sr)
+                # gapS: how long the sound before this piece had run out when it came (0: none)
+                gap = 0.0 if j == 0 else max(0.0, now - heard_end[0])
+                heard_end[0] = (start_at(now) if j == 0 else max(now, heard_end[0])) + secs
+                path = out / ("%d-%d-%d.wav" % (i, k, j))
+                sf.write(str(path), wav, speaker.sr, subtype="PCM_16")
+                say(dumps({"id": i, "part": n, "last": False, "joined": j > 0, "who": who, "wav": str(path),
+                           "ms": int((now - t) * 1000), "seconds": round(secs, 2), "rate": speaker.sr, "gapS": round(gap, 3)}))
+                n += 1
+        say(dumps({"id": i, "part": n, "last": True, "who": who, "ms": int((time.time() - t) * 1000),
+                   "tokS": round(rates["tok"], 4), "passS": round(rates["pass"], 3)}))
+
+    # LEDGER_VOICE_LOG=<file>: every streamed line also written there, to
+    # measure the pieces in the running game (1 October).
+    log_path = os.environ.get("LEDGER_VOICE_LOG")
+
+    def say(line):
+        print(line, flush=True)
+        if log_path:
+            try:
+                with open(log_path, "a", encoding="utf-8") as f:
+                    f.write(line + "\n")
+            except OSError:
+                pass
     while True:
         with gate:
             while not inbox and not ended[0]:
@@ -370,6 +437,13 @@ def serve(args):
                     break
             continue
         t = time.time()
+        if streaming:
+            try:
+                ready_voice(who, clip)
+                speak_streamed(i, who, sentences(text), t, this_turn)
+            except Exception as e:
+                print(dumps({"id": i, "who": who, "error": "failed", "why": type(e).__name__}), flush=True)
+            continue
         try:
             ready_voice(who, clip)
             pieces = sentences(text)
@@ -457,7 +531,18 @@ def selftest():
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
-    a = {"cpu": "--cpu" in sys.argv, "prewarm": "--prewarm" in sys.argv}
+    # LEDGER_VOICE_PRIORITY=above: its own process "above normal" with Windows, for
+    # measuring whether the processor's share of the voice is what the game slows
+    # (1 October; the same process-only setting as the Sopro worker's).
+    if os.name == "nt" and os.environ.get("LEDGER_VOICE_PRIORITY") == "above":
+        try:
+            import ctypes
+            k32 = ctypes.windll.kernel32
+            k32.SetPriorityClass(k32.GetCurrentProcess(), 0x00008000)   # ABOVE_NORMAL_PRIORITY_CLASS
+        except Exception:
+            pass
+    # LEDGER_VOICE_CPU=1: the whole voice on the processor, for measuring it beside the game (1 October).
+    a = {"cpu": "--cpu" in sys.argv or os.environ.get("LEDGER_VOICE_CPU") == "1", "prewarm": "--prewarm" in sys.argv}
     if "--out" in sys.argv:
         a["out"] = sys.argv[sys.argv.index("--out") + 1]
     sys.exit(serve(a))
