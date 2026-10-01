@@ -209,7 +209,21 @@ static class Program
             return (TrustsHim(key, engine), earned);
         }
 
-        public ConversationEngine EngineFor(string to) => _engines.TryGetValue(to, out var e) ? e : null;
+        // Locked: a suggestion reads it off the one-at-a-time queue.
+        public ConversationEngine EngineFor(string to) { lock (_engines) return _engines.TryGetValue(to, out var e) ? e : null; }
+
+        /// Whether a line is a request for Tom's suggested lines ({"kind":"suggest"}).
+        public static bool IsSuggest(string line)
+        {
+            if (line == null || line.IndexOf("\"suggest\"", StringComparison.Ordinal) < 0) return false;
+            try
+            {
+                using var d = JsonDocument.Parse(line);
+                return d.RootElement.ValueKind == JsonValueKind.Object && d.RootElement.TryGetProperty("kind", out var k)
+                    && k.ValueKind == JsonValueKind.String && k.GetString() == "suggest";
+            }
+            catch (JsonException) { return false; }
+        }
 
         /// TOM'S WRITTEN SUGGESTED LINES (production/specs/suggested-lines.json),
         /// for the suggestions the model does not write; empty without the file.
@@ -276,7 +290,7 @@ static class Program
             // a load with a bad path kept the old talk).
             if (op == "reset" || op == "load")
             {
-                _engines.Clear();
+                lock (_engines) _engines.Clear();
                 _unwinding.Clear();
                 // Trust is the game's to say again for the timeline it loads.
                 lock (_trusts) _trusts.Clear();
@@ -297,7 +311,7 @@ static class Program
                 try
                 {
                     var people = new Dictionary<string, object>();
-                    foreach (var kv in _engines) people[kv.Key] = kv.Value.CaptureTalk();
+                    lock (_engines) foreach (var kv in _engines) people[kv.Key] = kv.Value.CaptureTalk();
                     var root = new Dictionary<string, object> { { "version", 1 }, { "people", people } };
                     if (!string.IsNullOrEmpty(stamp)) root["stamp"] = stamp;
                     File.WriteAllText(tmp, MiniJson.Serialize(root));
@@ -338,7 +352,7 @@ static class Program
                 if (state == null || card == null) { skipped++; continue; }
                 var engine = NewEngine(card);
                 engine.RestoreTalk(state);
-                _engines[kv.Key] = engine;
+                lock (_engines) _engines[kv.Key] = engine;
             }
             return JsonSerializer.Serialize(new { talk = "loaded", people = _engines.Count, skipped }, Plain);
         }
@@ -648,7 +662,7 @@ static class Program
             if (!_engines.TryGetValue(key, out var engine))
             {
                 engine = NewEngine(card);
-                _engines[key] = engine;
+                lock (_engines) _engines[key] = engine;
             }
             // A day he talked with them, live talk or none (town list 6bz).
             if (!string.IsNullOrWhiteSpace(say)) engine.TalkDays.Add(day);
@@ -872,7 +886,7 @@ static class Program
             // plain question back, and his plain yes to it, as his very next
             // line to her, is his answer (WeeksEnd.Sounds, Confirms), as his no
             // to Ron is read. Her lines here are fixed, so they need no model.
-            string weekReply = null;
+            string weekReply = null, weekDeal = null;
             WeekAnswer weekAnswer = WeekAnswer.None;
             // Trust is never earned while her question stands: she put it over
             // the book her trust had decided, and says so (the independent
@@ -901,6 +915,8 @@ static class Program
                     else if (WeeksEnd.Sounds(say) is var sounds && sounds != WeekAnswer.None)
                     {
                         weekReply = WeeksEnd.AskPlainly(sounds, weekEnded);
+                        // Which deal's plain question this is, so the game offers its yes and no.
+                        weekDeal = "sheila-week-" + sounds.ToString().ToLowerInvariant();
                         lock (_askedNo) _askedWeek[key] = sounds;
                     }
                     // With talk off, the question again, never a brush-off.
@@ -985,14 +1001,14 @@ static class Program
                 // Sheila's own fixed words, in place of a reply: no model writes them.
                 engine.RememberSaid(say, weekReply, now);
                 var (wTrusts, wEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
-                return JsonSerializer.Serialize(new { id, to, day, reply = weekReply, ms = sw.ElapsedMilliseconds, offline = _llm == null, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut, trusts = wTrusts, trustEarned = wEarned, weekAnswer = weekAnswer == WeekAnswer.None ? null : weekAnswer.ToString() }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = weekReply, ms = sw.ElapsedMilliseconds, offline = _llm == null, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut, trusts = wTrusts, trustEarned = wEarned, weekAnswer = weekAnswer == WeekAnswer.None ? null : weekAnswer.ToString(), deal = weekDeal }, Plain);
             }
             if (askPlainly)
             {
                 // Ron's own question, in place of a reply: no model writes it.
                 engine.RememberSaid(say, Arrangement.AskPlainly, now);
                 await ThreatReadDone();
-                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, deal = "ron-tell-them-no", ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
             }
             if (refusedAsk && _llm != null)
             {
@@ -1435,7 +1451,7 @@ static class Program
         LoadCast(helper, CardsDir(args));
         LoadSuggested(helper, CardsDir(args));
         helper.Fake = fake;
-        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake, notice = new { title = AiNotice.Title, text = AiNotice.TextFor(relay != null), report = AiNotice.ReportLabel } }, Plain));
+        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, suggests = true, cards = helper.Cards.Keys, online = helper.Online, fake, notice = new { title = AiNotice.Title, text = AiNotice.TextFor(relay != null), report = AiNotice.ReportLabel } }, Plain));
         Console.Out.Flush();
         // Lines are still answered one at a time, in the order sent; but the
         // reader goes on reading while a reply is written, so a "walkedAway"
@@ -1448,21 +1464,34 @@ static class Program
             incoming.CompleteAdding();
         });
         var waiting = new Queue<string>();
+        // TOM'S SUGGESTED LINES OFF THE QUEUE (the builder, 1 October): a suggestion
+        // reads only the talk so far, so it is answered beside the line being
+        // answered, never in front of a spoken line sent just after it; its answer
+        // is written when ready, every line out under one lock.
+        var outLock = new object();
+        var suggesting = new List<Task>();
+        void Write(string json) { lock (outLock) { Console.Out.WriteLine(json); Console.Out.Flush(); } }
+        void Suggest(string l) => suggesting.Add(Task.Run(async () => Write(await helper.Answer(l))));
         while (true)
         {
             string line;
             if (waiting.Count > 0) line = waiting.Dequeue();
             else if (!incoming.TryTake(out line, Timeout.Infinite)) break;
             if (line.Trim().Length == 0) continue;
+            if (Helper.IsSuggest(line)) { Suggest(line); continue; }
             var answer = helper.Answer(line);
             while (!answer.IsCompleted)
             {
-                if (incoming.TryTake(out var next, 50)) { helper.WalkOffIfFor(next); waiting.Enqueue(next); }
+                if (incoming.TryTake(out var next, 50))
+                {
+                    if (Helper.IsSuggest(next)) { Suggest(next); continue; }
+                    helper.WalkOffIfFor(next); waiting.Enqueue(next);
+                }
                 else if (incoming.IsCompleted) break;
             }
-            Console.Out.WriteLine(await answer);
-            Console.Out.Flush();
+            Write(await answer);
         }
+        await Task.WhenAll(suggesting);
         // WHAT THE SESSION COST, when the game closes the helper's input: the
         // calls, the tokens by model and the dollars at the game's own price
         // table - the measure Jafar asked for of an hour of play (23 September).
@@ -1574,6 +1603,9 @@ static class Program
         var gaveG = new List<string>(sgh.Written.Greet); gaveG.RemoveAt(0);
         var shownJson = "[" + string.Join(",", gaveG.ConvertAll(x => JsonSerializer.Serialize(x))) + "]";
         var s3 = Suggested(await sgh.Answer("{\"kind\":\"suggest\",\"id\":15,\"to\":\"sam\",\"with\":\"Darren\",\"shown\":" + shownJson + "}"));
+        Ok("only a suggest request is answered off the queue; a spoken line that says \"suggest\" is a spoken line",
+           Helper.IsSuggest("{\"kind\":\"suggest\",\"id\":1,\"to\":\"lena\"}") && !Helper.IsSuggest("{\"id\":2,\"to\":\"lena\",\"say\":\"What do you \\\"suggest\\\"?\"}")
+           && !Helper.IsSuggest("not json \"suggest\""));
         Ok("lines the game showed itself are never offered again in that conversation",
            s3.Count >= 2 && !s3.Exists(x => gaveG.Contains(x)) && s3[0] == sgh.Written.Greet[0], string.Join(" | ", s3));
         Ok("with the stand-in, three written lines, a greeting first, and none offered twice in one conversation",
@@ -1966,7 +1998,7 @@ static class Program
         string aOther = await asker.Answer("{\"id\":136,\"to\":\"rocco\",\"say\":\"No, the drivers, not the envelope.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
         string aLateYes = await asker.Answer("{\"id\":137,\"to\":\"rocco\",\"say\":\"Yes.\",\"day\":0,\"hour\":21,\"ask\":{\"tonight\":true}}");
         Ok("a line to Ron that sounds like a no gets his own plain question, no model called; his plain yes to it is the no, reported and tonight's line for the reply, remembered by nobody until the game answers it; a yes with no question before it, any other answer, or no ask tonight is nothing",
-           aNo.Contains("\"reply\":\"" + Arrangement.AskPlainly.Substring(0, 20)) && aNo.Contains("\"refusedAsk\":false") && aNo.Contains("\"generated\":false") && noModelCalled
+           aNo.Contains("\"reply\":\"" + Arrangement.AskPlainly.Substring(0, 20)) && aNo.Contains("\"deal\":\"ron-tell-them-no\"") && aNo.Contains("\"refusedAsk\":false") && aNo.Contains("\"generated\":false") && noModelCalled
            && aYes.Contains("\"refusedAsk\":true") && aYes.Contains("\"reply\":\"" + Arrangement.TookNo.Substring(0, 20)) && aYes.Contains("\"generated\":false")
            && toldNoLine == Arrangement.TonightToldNo && aYesAgain.Contains("\"refusedAsk\":false")
            && aNoAsk.Contains("\"refusedAsk\":false") && !aNoAsk.Contains("\"reply\":\"" + Arrangement.AskPlainly.Substring(0, 20)) && noAskLine == null
@@ -2320,7 +2352,7 @@ static class Program
             string offWhat = Line(weekOff2, 112, "lena", "What do you mean?", Stands);
             Ok("the week's end: Sheila's question and her plain question in her own fixed words, his yes to it as his next line to her is his answer; a mixed line, a line without the question, a yes after a line to somebody else, or the question sent to somebody else is nothing; with talk off it all still comes",
                Reply(opened) == WeeksEnd.Opening(true, true) && opened.Contains("\"generated\":false")
-               && Reply(sounds) == WeeksEnd.AskPlainly(WeekAnswer.TakeOver) && sounds.Contains("\"weekAnswer\":null")
+               && Reply(sounds) == WeeksEnd.AskPlainly(WeekAnswer.TakeOver) && sounds.Contains("\"weekAnswer\":null") && sounds.Contains("\"deal\":\"sheila-week-takeover\"")
                && Reply(yes) == WeeksEnd.Took(WeekAnswer.TakeOver) && yes.Contains("\"weekAnswer\":\"TakeOver\"")
                && Reply(mixed) != WeeksEnd.AskPlainly(WeekAnswer.TakeOver) && !mixed.Contains("\"weekAnswer\":\"")
                && Reply(noWeek) != WeeksEnd.AskPlainly(WeekAnswer.TakeOver)
