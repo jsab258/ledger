@@ -1,0 +1,283 @@
+// THE ROUTE'S ACCEPTANCE ROWS, IN C++, 30 September (the town's half of the
+// route, production/handovers/ROUTE.md, section 4). The Core's own week,
+// ledger/TownReach/Program.cs WeekRows with the wait that stops and walks of
+// 30, 120 and 30 game minutes, transliterated, driving the game's TownWeek
+// (ue-probe/Source/LedgerProbe/Public/TownWeek.h) with the Core's stand-ins
+// for what the player does. It prints the sixteen rows and the first row's
+// stops exactly as TownReach --week-waits prints them; tools/route_week_check.py
+// compares the two. Agreement means the game's hour, driven the same way,
+// gives the Core's week.
+//
+//   route-week-test production/specs/hook-cast.json
+#include "TownWeek.h"
+#include "StreetVoice.h"
+#include "Waiting.h"
+#include "SaveCodec.h"
+#include "TownSave.h"
+#include <memory>
+#include <map>
+#include <cmath>
+
+#include <cstdio>
+#include <cstdlib>
+#include <fstream>
+#include <set>
+#include <sstream>
+#include <string>
+#include <vector>
+
+using namespace LedgerCore;
+
+namespace
+{
+	int gPoint = 0;
+	const int kTrustDaysTalked = 3;   // Trust.cs DaysTalked
+
+	// TownReach's TrustsNow: three different days of talk, no deed of his she
+	// saw, and nothing sensitive showing in her.
+	bool TrustsNow(const GossipMill& Mill, const std::set<int>& TalkDays, bool bSheSaw, int Today)
+	{
+		int Days = 0;
+		for (int D : TalkDays) if (D <= Today) ++Days;
+		if (Days < kTrustDaysTalked || bSheSaw) return false;
+		const GossiperPtr She = Mill.Get("lena");
+		if (!She) return true;
+		const RumorPtr R = StreetVoice::StoryThatShows(*She, Mill.MinConfidenceToShare);
+		return !R || !R->Sensitive;
+	}
+
+	std::string Two(int N) { char B[8]; std::snprintf(B, sizeof(B), "%02d", N); return B; }
+
+	void WeekRows(const CastDay& Cast, std::vector<std::string>& Rows, std::vector<std::string>& Stops, int& Missed,
+	              int TeaLead, int LandingLead, int OfficeLead, int ReloadAt, std::vector<std::string>& Prints)
+	{
+		const std::vector<std::string>& People = Cast.People();
+		int Miss = 0;
+		for (bool bTakes : { true, false })
+		for (bool bSits : { true, false })
+		for (const char* SeenByC : { "lena", "ada", "nobody", "none" })
+		{
+			const std::string SeenBy = SeenByC;
+			auto Graph = std::make_shared<SocialGraph>();
+			for (const CastDay::Tie& T : Cast.Ties()) Graph->Link(T.A, T.B, T.W);
+			std::unique_ptr<GossipMill> MillP(new GossipMill(Graph));
+			for (const std::string& P : People)
+				MillP->Add(std::make_shared<Gossiper>(P, P, std::make_shared<MemoryStore>(P), std::make_shared<KnowledgeBase>(), Cast.CircleOf(P)));
+			std::unique_ptr<TownWeek> WP(new TownWeek());
+			std::string Trust = "never";
+			std::set<int> TalkDays;
+			const bool bSheSaw = SeenBy == "lena";
+			int HandOverAt = -1;
+			const bool bFirst = bTakes && bSits && SeenBy == "lena";
+			std::set<std::string> StopWhy, ShownLines;
+			MillP->Age(GameTime(0, 9, 0));
+			for (int Abs = 9; Abs < 24 * 7 + 12; ++Abs)
+			{
+				GossipMill& Mill = *MillP;
+				TownWeek& W = *WP;
+				const int Day = Abs / 24, Hod = Abs % 24;
+				const GameTime Now(Day, Hod, 0);
+				auto Reload = [&]()
+				{
+					// THE GAME'S SAVE (SaveEncounterToDisk) AND LOAD (LoadEncounterFromDisk):
+					// agents.json, memory-<id>.md, town.json, and clock.txt's deed/witness/ellis lines.
+					const std::string Agents = Save::CaptureMillAgents(Mill);
+					std::map<std::string, std::string> Mem;
+					for (const GossiperPtr& G : Mill.Agents()) Mem[G->Id] = G->Memory->ToMarkdown();
+					TownSave T;
+					T.Asks = W.Asks;
+					if (W.Tea) T.Tea.reset(new AdasTea(*W.Tea));
+					T.Police = W.Police; T.Damage = W.Damage; T.Arrests = W.Arrests; T.Hours = W.Hours; T.Week = W.Week;
+					T.WaitShown = ShownLines;
+					const std::string TownJson = T.ToJson();
+					const std::string DeedTopic = W.DeedTopic; const int DeedDay = W.DeedDay; const int DeedHour = W.DeedAt.Hour;
+					const std::vector<std::pair<std::string, int> > Wit = W.Witnesses;
+					const std::string EllisFirst = W.EllisFirst, TakenFirst = W.TakenFirst;
+					// a new process
+					auto Graph2 = std::make_shared<SocialGraph>();
+					for (const CastDay::Tie& Tie : Cast.Ties()) Graph2->Link(Tie.A, Tie.B, Tie.W);
+					std::unique_ptr<GossipMill> M2(new GossipMill(Graph2));
+					for (const std::string& P : People)
+						M2->Add(std::make_shared<Gossiper>(P, P, std::make_shared<MemoryStore>(P), std::make_shared<KnowledgeBase>(), Cast.CircleOf(P)));
+					Save::RestoreMillAgents(Agents, *M2);
+					for (const GossiperPtr& G : M2->Agents()) G->Memory->LoadFrom(Mem[G->Id]);
+					std::unique_ptr<TownWeek> W2(new TownWeek());
+					TownSave Back; std::string E;
+					if (TownSave::FromJson(TownJson, Back, E))
+					{
+						W2->Asks = Back.Asks;
+						W2->Tea.reset(Back.Tea ? new AdasTea(*Back.Tea) : nullptr);
+						W2->Police = Back.Police; W2->Damage = Back.Damage; W2->Arrests = Back.Arrests; W2->Hours = Back.Hours; W2->Week = Back.Week;
+					}
+					if (DeedDay >= 0) { W2->DeedTopic = "player.window_d" + std::to_string(DeedDay); W2->DeedDay = DeedDay; W2->DeedAt = GameTime(DeedDay, DeedHour, 0); }
+					W2->Witnesses = Wit;
+					W2->EllisFirst = EllisFirst; W2->TakenFirst = TakenFirst;
+					*MillP = std::move(*M2);
+					*WP = std::move(*W2);
+				};
+				auto Point = [&](int P) { if (Abs == ReloadAt && P == gPoint) Reload(); };
+				auto InWait = [&W](int H) { return H >= 18 && (H % 24 >= 18 || H % 24 < (H / 24 == W.Week.Day() ? 12 : 10)); };
+				const bool bWaitingOn = InWait(Abs) && InWait(Abs - 1);
+				if (InWait(Abs) && !InWait(Abs - 1)) StopWhy.clear();
+				std::shared_ptr<Custody> Held0 = W.Latest();
+				if (bWaitingOn)
+				{
+					const int WakeDay = Hod >= 18 ? Day + 1 : Day;
+					const GameTime Wake(WakeDay, WakeDay == W.Week.Day() ? 12 : 10, 0);
+					WaitBeats B;
+					B.Asks = &W.Asks; B.Tea = W.Tea.get(); B.Police = &W.Police; B.Mill = &Mill; B.Week = &W.Week; B.CustodyOf = Held0.get();
+					B.Shown = ShownLines;
+					B.TeaLead = TeaLead; B.LandingLead = LandingLead; B.OfficeLead = OfficeLead;
+					B.AtAdas = bSits && Day == W.Tea->Day() && (Hod - 1 == 21 || Hod - 1 == 22);
+					WaitStop St;
+					while (Waiting::Next(Now.AddMinutes(-60), Wake, &B, St) && St.At.TotalMinutes() <= Now.TotalMinutes())
+					{
+						Waiting::Showed(&B, &St);
+						StopWhy.insert(St.Why);
+						if (bFirst) Stops.push_back("day " + std::to_string(St.At.Day + 1) + " " + Two(St.At.Hour) + ":" + Two(St.At.Minute) + " " + St.Why + ": \"" + St.Line + "\"");
+					}
+					ShownLines = B.Shown;
+				}
+				auto Skip = [&](const std::string& Why, bool bCount) -> bool
+				{
+					if (!bWaitingOn) return false;
+					if (!StopWhy.count(Why)) { if (bCount) ++Miss; return true; }
+					return false;
+				};
+				// The rounds before minute M of this hour (TownReach's Before; the review's A12).
+				auto Before = [&](int M) { W.RoundsTo(&Mill, &Cast, Now.AddMinutes(M - 1)); };
+				W.Six(&Mill, Now);
+				Point(1);
+				// The slice's window, at noon on the Tuesday.
+				if (SeenBy != "none" && Day == 1 && Hod == 12)
+				{
+					std::vector<std::pair<std::string, int> > Saw;
+					if (SeenBy != "nobody") Saw.push_back(std::make_pair(SeenBy, -1));
+					W.Deed(&Mill, Now, "ritas", "rita_window", "somebody put Rita's window in", Saw, "window_d1", "the new owner put Rita's window in", 1.0, false);
+				}
+				Point(2);
+				W.DamageTick(&Mill, &Cast, Now);
+				Point(3);
+				W.NineReports(&Mill, &Cast, Now, 4);
+				Point(4);
+				W.NineEllis(&Mill, Now, &Cast);
+				Point(5);
+				if (Hod == 10 && W.Arrests.empty()) W.TenConstable(&Mill, &Cast, Now, "mickeys");
+				const std::shared_ptr<Custody> C = W.Latest();
+				const bool bHeld = C && C->Holds(Now);
+				if (Hod == 10 && !bHeld && Day < W.Week.Day() && Cast.AreaOf(Cast.PlaceOf("lena", Day, Hod)) == "mickeys") TalkDays.insert(Day);
+				if (Trust == "never" && Hod == 11 && TrustsNow(Mill, TalkDays, bSheSaw, Day)) Trust = "day " + std::to_string(Day + 1);
+				std::string Invite;
+				W.TenTea(Now, Invite);
+				Point(6);
+				if (Hod == 20 && W.Asks.AsksOn(Day) && !Skip("ron", true)) W.TwentyRon(&Mill, Now);
+				if (bSits && Day == W.Tea->Day() && Hod == 21 && !Skip("tea", true))
+					for (int M = 0; M < 60; ++M) W.Tea->WithHer(GameTime(Day, 21, M));
+				if (bSits && Day == W.Tea->Day() && Hod == 22 && !Skip("tea", false))
+					for (int M = 0; M <= 30; ++M) W.Tea->WithHer(GameTime(Day, 22, M));
+				W.TwentyThreeTea(&Mill, Now);
+				if (Hod == 22 && W.Asks.AsksOn(Day) && !bHeld && W.Asks.WasDelivered(Day) && !Skip(bTakes ? "landing" : "ron", true))
+				{
+					const NightAnswer Answer = bTakes ? NightAnswer::Did : NightAnswer::Refused;
+					if (Answer == NightAnswer::Did && Day == W.Tea->Day())
+					{
+						if (bSits) Before(31);
+						W.Tea->WentToTheLanding(&Mill, GameTime(Day, bSits ? 22 : 21, bSits ? 31 : 45), true);
+						HandOverAt = Abs + (bSits ? 2 : 1);
+					}
+					else { Before(30); W.AnswerAsk(Day, Answer, &Mill, GameTime(Day, 22, 30)); Point(7); }
+				}
+				if (Abs == HandOverAt && W.Asks.AsksOn(W.Tea->Day()) && !Skip("landing", false))
+				{
+					Before(45);
+					W.AnswerAsk(W.Tea->Day(), NightAnswer::Did, &Mill, GameTime(Day, Hod, 45));
+					Point(8);
+				}
+				// The week's end: her question at half past ten on the Sunday.
+				if (Day == W.Week.Day() && Hod == 10 && W.Week.AsksNow(GameTime(Day, 10, 30), true) && !Skip("sheila", true))
+				{
+					W.Week.Ask(GameTime(Day, 10, 30), Trust != "never");
+					Before(40);
+					W.Week.Give(WeekAnswer::TakeOver, GameTime(Day, 10, 40), &Mill, &Cast, &W.Asks);
+					Point(9);
+				}
+				// The rest of the hour's rounds.
+				const GameTime HourEndsAt = Now.AddMinutes(59);
+				W.HourEnd(&Mill, &Cast, Now, &HourEndsAt);
+				Point(0);
+			}
+			GossipMill& Mill = *MillP;
+			TownWeek& W = *WP;
+			int HoldAnswer = 0;
+			for (const GossiperPtr& A : Mill.Agents())
+			{
+				for (const RumorPtr& R : A->Rumors) { if (WeeksEnd::IsWeekAnswer(R)) { ++HoldAnswer; break; } }
+			}
+			const std::string Arr = W.Asks.Ended() ? "ended (" + W.Asks.EndedWhy() + ")" : "stands (" + std::to_string(W.Asks.Nights().size()) + " nights)";
+			GameTime AskedAt;
+			const std::string Book = !W.Week.AskedAt(AskedAt) ? "not asked" : W.Week.RealBook() ? "the real book" : "the day-book";
+			Rows.push_back("| " + std::string(bTakes ? "takes it every night" : "tells Ron no") + " | " + (bSits ? "sits with her" : "stands her up") + " | "
+				+ (SeenBy == "none" ? "no window" : SeenBy) + " | " + W.EllisFirst + " | " + W.TakenFirst + " | " + Trust + " | " + Book + " | " + Arr
+				+ " | " + std::to_string(HoldAnswer) + " of " + std::to_string(People.size()) + " |");
+			{
+				std::string P;
+				char B[64];
+				for (const GossiperPtr& A : Mill.Agents())
+				{
+					P += A->Id + "{";
+					std::snprintf(B, sizeof(B), "L%.9f S%.9f|", A->Loyalty, A->Suspicion.Value()); P += B;
+					for (const RumorPtr& R : A->Rumors) { std::snprintf(B, sizeof(B), "%.6f/%d/%d", R->Confidence, R->Hops, R->OriginRung); P += R->TopicKey() + "=" + R->Content.Value + ":" + B + ";"; }
+					P += "M" + std::to_string(A->Memory->Events.size()) + "|";
+					for (const MemoryEvent& Ev : A->Memory->Events) P += Ev.Text.substr(0, 40) + "@" + std::to_string(Ev.Time.TotalMinutes()) + ";";
+					P += "}\n";
+				}
+				P += "police:" + W.Police.ToJson() + "\nasks:" + W.Asks.ToJson() + "\nweek:" + W.Week.ToJson() + "\n";
+				Prints.push_back(P);
+			}
+		}
+		Missed = Miss;
+	}
+}
+
+int main(int Argc, char** Argv)
+{
+	if (Argc < 2) { std::fprintf(stderr, "usage: route-week-test CAST.json\n"); return 2; }
+	std::ifstream F(Argv[1], std::ios::binary);
+	std::stringstream S;
+	S << F.rdbuf();
+	CastDay Cast;
+	std::string Err;
+	if (!CastDay::Parse(S.str(), Cast, Err)) { std::fprintf(stderr, "cast file: %s\n", Err.c_str()); return 2; }
+	std::vector<std::string> Rows, Stops, Prints;
+	int Missed = 0;
+	WeekRows(Cast, Rows, Stops, Missed, 30, 120, 30, -1, Prints);
+	gPoint = std::getenv("POINT") ? std::atoi(std::getenv("POINT")) : 0;
+	const int From = Argc > 2 ? std::atoi(Argv[2]) : 9, To = Argc > 3 ? std::atoi(Argv[3]) : 24 * 7 + 11;
+	for (int At = From; At <= To; ++At)
+	{
+		std::vector<std::string> R2, S2, P2; int M2 = 0;
+		WeekRows(Cast, R2, S2, M2, 30, 120, 30, At, P2);
+		int RowDiff = 0, PrintDiff = 0;
+		for (size_t K = 0; K < Rows.size(); ++K)
+		{
+			if (R2[K] != Rows[K]) { ++RowDiff; std::printf("RELOAD after day %d %02d:59 ROW %zu\n  straight: %s\n  reloaded: %s\n", At / 24, At % 24, K + 1, Rows[K].c_str(), R2[K].c_str()); }
+			if (P2[K] != Prints[K])
+			{
+				++PrintDiff;
+				if (std::getenv("SHOWDIFF"))
+				{
+					// first differing line
+					std::istringstream A(Prints[K]), Bs(P2[K]); std::string La, Lb;
+					while (std::getline(A, La) && std::getline(Bs, Lb)) if (La != Lb) { std::printf("  row %zu state differs:\n   straight %s\n   reloaded %s\n", K + 1, La.substr(0, 600).c_str(), Lb.substr(0, 600).c_str()); break; }
+				}
+			}
+		}
+		if (S2 != Stops) std::printf("RELOAD after day %d %02d:59 STOPS differ\n", At / 24, At % 24);
+		std::printf("reload-at %d (day %d %02d:59): rows differing %d, end states differing %d\n", At, At / 24, At % 24, RowDiff, PrintDiff);
+	}
+	std::printf("with walks 30, 120, 30: missed %d\n", Missed);
+	for (const std::string& R : Rows) std::printf("%s\n", R.c_str());
+	std::printf("the stops, first row (takes the envelope, sits with Ada, Sheila sees the window):\n");
+	for (const std::string& St : Stops) std::printf("  %s\n", St.c_str());
+	return 0;
+}
