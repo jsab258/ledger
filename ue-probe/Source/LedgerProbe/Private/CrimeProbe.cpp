@@ -3216,13 +3216,19 @@ namespace
 	// the player's own view comes back when they stop.
 	struct FMouthFilm { TWeakObjectPtr<ACameraActor> Cam; double LastFrame = 0.0; int32 Frame = 0; bool bOn = false; };
 	FMouthFilm GMouthFilm;
+	// -FaceAB: the camera held on this face between takes, so it is settled
+	// before a line starts (cut in as the line began, the first frames showed
+	// hair and beard missing or grainy while the picture caught up).
+	TWeakObjectPtr<AActor> GMouthFilmHold;
 
 	void MouthFilmTick(UWorld* World, AActor* Who, bool bSpeaking)
 	{
 		static const bool bWanted = FParse::Param(FCommandLine::Get(), TEXT("MouthFilm"));
 		if (!bWanted || World == nullptr) { return; }
 		APlayerController* PC = World->GetFirstPlayerController();
-		if (!bSpeaking || Who == nullptr)
+		const bool bShoot = bSpeaking && Who != nullptr;
+		if (!bShoot && GMouthFilmHold.IsValid()) { Who = GMouthFilmHold.Get(); }
+		else if (!bSpeaking || Who == nullptr)
 		{
 			if (GMouthFilm.bOn && PC != nullptr && PC->GetPawn() != nullptr) { PC->SetViewTargetWithBlend(PC->GetPawn(), 0.0f); }
 			GMouthFilm.bOn = false;
@@ -3274,7 +3280,7 @@ namespace
 		GMouthFilm.Cam->SetActorLocationAndRotation(Eye, (Look - Eye).Rotation());
 		if (!GMouthFilm.bOn && PC != nullptr) { PC->SetViewTargetWithBlend(GMouthFilm.Cam.Get(), 0.0f); GMouthFilm.bOn = true; }
 		const double T = FPlatformTime::Seconds();
-		if (T - GMouthFilm.LastFrame >= 0.099 && GMouthFilm.Frame < 400)
+		if (bShoot && T - GMouthFilm.LastFrame >= 0.099 && GMouthFilm.Frame < 400)
 		{
 			GMouthFilm.LastFrame = T;
 			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
@@ -3344,6 +3350,7 @@ namespace
 			int64 Heard = 0;
 			const float Level = HeardLevel(GAckMouth.Pcm, GAckMouth.Rate, GAckMouth.Ch, GAckMouth.Queued, GAckMouth.Wave.Get(), GAckMouth.RefDb, Db, Heard);
 			MouthApply(GAckMouth.Who.Get(), Level, true, Dt);
+			MouthFilmTick(GameWorld(), GAckMouth.Who.Get(), true);
 			GVoice.LastSpeaker = GAckMouth.Who;
 			GVoice.SpeakerQuietSince = -1.0;
 			return;
@@ -3475,6 +3482,8 @@ namespace
 		TWeakObjectPtr<AActor> Who;
 	};
 	FAck GAck;
+	// -FaceAB's second take of a sound: the loudness mouth even where a face was made (FaceABTick).
+	bool GAckForceLoud = false;
 
 	bool AckSaidFilm()
 	{
@@ -3510,7 +3519,7 @@ namespace
 			GAck.Face->PlayAnimation(GAck.FaceIdle.Get(), true);
 			GAck.Face->SetPosition(GAck.FaceIdleAt, false);
 		}
-		if (GAck.Sound.IsValid() || GAck.Face.IsValid()) { UE_LOG(LogTemp, Display, TEXT("LedgerAck: %s"), bCut ? TEXT("cut off by the answer") : TEXT("done")); }
+		if (GAck.Sound.IsValid() || GAck.Face.IsValid()) { UE_LOG(LogTemp, Display, TEXT("LedgerAck: %s (film frame %d)"), bCut ? TEXT("cut off by the answer") : TEXT("done"), GMouthFilm.Frame); }
 		GAck = FAck();
 	}
 
@@ -3559,7 +3568,9 @@ namespace
 			}
 		}
 		const bool bOurFace = OurFace != nullptr;
-		if (bOurFace && Anim != nullptr)
+		// -NoMadeFace: the loudness mouth even where a face was made, to set the two side by side.
+		static const bool bNoMade = FParse::Param(FCommandLine::Get(), TEXT("NoMadeFace"));
+		if (bOurFace && Anim != nullptr && !bNoMade && !GAckForceLoud)
 		{
 			OurFace->SayMadeLine(Anim);
 			GAck.Said = OurFace;
@@ -3594,8 +3605,60 @@ namespace
 				break;
 			}
 		}
-		UE_LOG(LogTemp, Display, TEXT("LedgerAck: %s says %s, %.2f s, face %s"), *Un(Card), *FPaths::GetBaseFilename(Wav), Seconds,
+		UE_LOG(LogTemp, Display, TEXT("LedgerAck: %s says %s, %.2f s, film frame %d, face %s"), *Un(Card), *FPaths::GetBaseFilename(Wav), Seconds, GMouthFilm.Frame,
 			GAck.Said.IsValid() ? TEXT("its own, made from the sound") : bOurFace ? TEXT("its mouth follows the sound") : GAck.Face.IsValid() ? TEXT("yes") : TEXT("no"));
+	}
+
+	// -FaceAB, 1 October (item 4): Ron's and Darren's thinking sounds, each
+	// said twice in a row where they stand, first with the face made from its
+	// sound, then with the loudness mouth, filmed with -MouthFilm, so the two
+	// ways sit side by side in the same light and place for Jafar's blind pick
+	// (tools/said_pairs.py draws which is A). From 10:15 game time, when both
+	// are out on the street (Ron at the rank, Darren on Rita's step); the game
+	// closes after the eighth.
+	struct FFaceAB { int32 Step = -1; double NextAt = 0.0; bool bAimed = false; };
+	FFaceAB GFaceAB;
+
+	void FaceABTick(double Now)
+	{
+		static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("FaceAB"));
+		if (!bOn) { return; }
+		if (GFaceAB.Step < 0)
+		{
+			if (GNow.Hour * 60 + GNow.Minute < 10 * 60 + 15) { return; }
+			GFaceAB.Step = 0;
+			GFaceAB.NextAt = Now;
+		}
+		if (Now < GFaceAB.NextAt || GAck.Sound.IsValid()) { return; }
+		struct FOne { AActor* Body; const char* Card; int32 File; };
+		const FOne Seq[4] = { { GR3Body, "rocco", 0 }, { GR3Body, "rocco", 1 }, { GN2Body, "sam", 0 }, { GN2Body, "sam", 1 } };
+		if (GFaceAB.Step >= 8)
+		{
+			GMouthFilmHold = nullptr;
+			UE_LOG(LogTemp, Display, TEXT("LedgerFaceAB: done"));
+			FPlatformMisc::RequestExit(false);
+			GFaceAB.NextAt = Now + 60.0;
+			return;
+		}
+		const FOne& O = Seq[GFaceAB.Step / 2];
+		// The camera on the face a second and a half before the line.
+		if (!GFaceAB.bAimed)
+		{
+			GMouthFilmHold = GVisualFor(O.Body);
+			GFaceAB.bAimed = true;
+			GFaceAB.NextAt = Now + 1.5;
+			return;
+		}
+		GFaceAB.bAimed = false;
+		const bool bLoud = GFaceAB.Step % 2 == 1;
+		UE_LOG(LogTemp, Display, TEXT("LedgerFaceAB: %s sound %d, %s, at D%d %02d:%02d"), UTF8_TO_TCHAR(O.Card), O.File,
+			bLoud ? TEXT("loudness") : TEXT("made"), GNow.Day, GNow.Hour, GNow.Minute);
+		GAckTurn = O.File;   // AckStart says Files[GAckTurn++ % their number]
+		GAckForceLoud = bLoud;
+		AckStart(O.Card, GVisualFor(O.Body));
+		GAckForceLoud = false;
+		++GFaceAB.Step;
+		GFaceAB.NextAt = Now + 2.5;
 	}
 
 	// Each frame: the acknowledgement ends with its sound, or at once when the answer starts.
@@ -5185,7 +5248,14 @@ namespace
 				continue;
 			}
 			GHeldBackSince.erase(C);
-			PlaceBodyAt(Body, X, Z, FeetYAt(World, X, Z));
+			// On the pavement, never on a thing (PlaceToStand: Sheila stood on the fish market's crate).
+			const LedgerCrime::StandPlace Stand = LedgerCrime::PlaceToStand(X, Z, [World](double PX, double PZ) { return FeetYAt(World, PX, PZ); });
+			if (Stand.bMoved)
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerDay: %s stands off a thing at (%.1f, %.1f): at (%.2f, %.2f), feet %.2f m"),
+					UTF8_TO_TCHAR(C), X, Z, Stand.X, Stand.Z, Stand.FeetY);
+			}
+			PlaceBodyAt(Body, Stand.X, Stand.Z, Stand.FeetY);
 			Body->SetActorRotation(FRotator(0.0f, (float)It->second.YawDeg, 0.0f));
 			SyncVisual(Body);
 			ShowPerson(Body, true);
@@ -5476,6 +5546,7 @@ namespace
 		TownHoursTick();
 		LookScriptTick(World, Now);
 		AskScriptTick(Now);
+		FaceABTick(Now);
 		TalkLightTick(World, Now);
 		AckTick();
 		if (bSayOpen)

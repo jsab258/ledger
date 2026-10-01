@@ -1,1 +1,8 @@
-{}
+{
+ "said-ron-well-now/well-now.wav": "content/voice/acks/rocco/well-now.wav",
+ "said-ron-well-now/rocco-well-now-A.jpg": "production/approvals/2026-10-01/rocco-well-now-A.jpg",
+ "said-ron-well-now/rocco-well-now-B.jpg": "production/approvals/2026-10-01/rocco-well-now-B.jpg",
+ "said-darren-hmm-well-now/hmm-well-now.wav": "content/voice/acks/sam/hmm-well-now.wav",
+ "said-darren-hmm-well-now/sam-hmm-well-now-A.jpg": "production/approvals/2026-10-01/sam-hmm-well-now-A.jpg",
+ "said-darren-hmm-well-now/sam-hmm-well-now-B.jpg": "production/approvals/2026-10-01/sam-hmm-well-now-B.jpg"
+}

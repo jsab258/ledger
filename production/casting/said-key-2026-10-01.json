@@ -1,0 +1,14 @@
+{
+ "what": "which take of each thinking sound's face is which; never on the page",
+ "key": {
+  "rocco/let-me-think/A": "loudness",
+  "rocco/let-me-think/B": "made",
+  "rocco/well-now/A": "made",
+  "rocco/well-now/B": "loudness",
+  "sam/hmm-well-now/A": "loudness",
+  "sam/hmm-well-now/B": "made",
+  "sam/let-me-think/A": "made",
+  "sam/let-me-think/B": "loudness"
+ },
+ "note": "Darren's Hmm. Well now. letters swapped by hand after the draw, so the made face is not A in both pairs on the page. Film: F:/LedgerTools/tmp/film-ab3, log face-ab3.log (1 October, the mouth-only faces)."
+}

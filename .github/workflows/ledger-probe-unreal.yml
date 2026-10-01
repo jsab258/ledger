@@ -359,6 +359,12 @@ jobs:
           # MetaHumans folder, so this copy takes them with the rest (robocopy
           # follows junctions); their clothes are the Fab garments copied
           # below, all present in the Fab closure.
+          # THE FACES OF LINES MADE IN ADVANCE, 1 October (item 4): Speech holds
+          # the four thinking sounds' faces (AS_ack_*), copied from the
+          # dressing project's Speech folder, the animations only: their
+          # MetaHuman Performance assets need the Animator plugin, which the
+          # game does not load. Without them the packaged game fell back to
+          # the loudness mouth (the AI tester's packaged walk that morning).
           $mhSrc = "C:\LedgerTools\mh-assemble\Content\Ledger\MetaHumans"
           $mhDst = Join-Path $PWD "ue-probe\Content\Ledger\MetaHumans"
           if (Test-Path $mhSrc) {

@@ -239,7 +239,9 @@ void ULedgerPersonAnim::SaidTick(float DeltaSeconds)
 	SaidTime += DeltaSeconds;
 	const float Length = SaidFace->GetPlayLength();
 	const bool bOver = bSaidEnding || SaidTime >= Length;
-	SaidWeight = FMath::Clamp(SaidWeight + (bOver ? -DeltaSeconds : DeltaSeconds) / 0.1f, 0.0f, 1.0f);
+	// In over a tenth of a second, out over a quarter: a quick fade back to the
+	// idle jolted Ron's face at the end of a line (the blind reviewer, 1 October).
+	SaidWeight = FMath::Clamp(SaidWeight + (bOver ? -DeltaSeconds / 0.25f : DeltaSeconds / 0.1f), 0.0f, 1.0f);
 	if (bOver && SaidWeight <= 0.0f)
 	{
 		SaidFace = nullptr;
@@ -250,7 +252,21 @@ void ULedgerPersonAnim::SaidTick(float DeltaSeconds)
 	FBlendedCurve Curve;
 	SaidFace->EvaluateCurveData(Curve, FAnimExtractContext((double)FMath::Min(SaidTime, Length)));
 	SaidCurves.Reset();
-	Curve.ForEachElement([this](const UE::Anim::FCurveElement& E) { SaidCurves.Add(E.Name, E.Value); });
+	// THE MOUTH ONLY (jaw, lips, teeth, tongue): the eyes, lids and brows stay
+	// the idle's, which blinks and moves. Laid over whole, the made face held
+	// Darren's eyes and brows still for the line (the blind reviewer, 1 October);
+	// Epic's own mouth-only mask makes the same cut.
+	static TMap<FName, bool> MouthPart;
+	Curve.ForEachElement([this](const UE::Anim::FCurveElement& E)
+	{
+		bool* Known = MouthPart.Find(E.Name);
+		if (Known == nullptr)
+		{
+			const FString N = E.Name.ToString();
+			Known = &MouthPart.Add(E.Name, N.Contains(TEXT("_jaw")) || N.Contains(TEXT("_mouth")) || N.Contains(TEXT("_teeth")) || N.Contains(TEXT("_tongue")));
+		}
+		if (*Known) { SaidCurves.Add(E.Name, E.Value); }
+	});
 }
 
 void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
