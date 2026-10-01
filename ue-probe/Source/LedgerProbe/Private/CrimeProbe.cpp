@@ -1045,6 +1045,7 @@ namespace
 	}
 
 	bool SayBoxOpen();
+	bool bNoticeCardUp = false;
 
 	void SubsRebuild()
 	{
@@ -1067,7 +1068,7 @@ namespace
 		auto Backed = [](TSharedRef<SWidget> W) { return OnBacking(W, FMargin(14.0f, 4.0f, 14.0f, 6.0f)); };
 		// WHILE HE TYPES the game's own narration steps aside: the coupon and its suggestions
 		// stand where a long caption would grow; the person's words stay, below the coupon, as drawn.
-		if (Caption != nullptr && !SayBoxOpen())
+		if (Caption != nullptr && !SayBoxOpen() && !bNoticeCardUp)
 		{
 			for (const FString& Line : SubLines(Caption->Text, 52))
 			{
@@ -2980,6 +2981,7 @@ namespace
 		}
 		GNoticeRoot.Reset();
 		GNoticeUntil = -1.0;
+		if (bNoticeCardUp) { bNoticeCardUp = false; SubsRebuild(); }
 	}
 
 	void NoticeTick()
@@ -2987,46 +2989,138 @@ namespace
 		if (GNoticeUntil >= 0.0 && NowS() >= GNoticeUntil) { NoticeHide(); }
 	}
 
-	void ShowAiNotice()
+	// THE FIRST TIME HE TALKS TO ANYBODY, A CARD (1 October): the notice in the
+	// middle of the picture with nothing else up, before the coupon, so it is
+	// read and never fights the coupon or its suggestions for the space.
+	// Enter (or a pad's A) goes on to the coupon; starting to type goes on with
+	// that letter in it; Esc leaves it, back to the street. F1 shows it again
+	// later, at the top, for sixteen seconds.
+	void OpenSayBoxWith(UWorld* World, const FString& First);
+	bool bNoticeThenTalk = false;
+	double GNoticeCardAt = 0.0;
+	TSharedPtr<SWidget> GNoticeCard;
+
+	void NoticeGoOn(bool bTalk, const FString& First)
 	{
-		if (GLive.NoticeText.empty() || GLive.NoticeText == "none") { return; }
+		NoticeHide();
+		UWorld* W = GEngine != nullptr && GEngine->GameViewport != nullptr ? GEngine->GameViewport->GetWorld() : nullptr;
+		if (APlayerController* PC = W != nullptr ? W->GetFirstPlayerController() : nullptr) { PC->SetInputMode(FInputModeGameOnly()); }
+		FSlateApplication::Get().SetAllUserFocusToGameViewport();
+		const bool bThenTalk = bNoticeThenTalk;
+		bNoticeThenTalk = false;
+		UE_LOG(LogTemp, Display, TEXT("LedgerNotice: card closed, %s"), bTalk && bThenTalk ? TEXT("on to the talk") : TEXT("back to the street"));
+		if (bTalk && bThenTalk && W != nullptr) { OpenSayBoxWith(W, First); }
+	}
+
+	class SNoticeCard : public SCompoundWidget
+	{
+	public:
+		SLATE_BEGIN_ARGS(SNoticeCard) {}
+			SLATE_DEFAULT_SLOT(FArguments, Content)
+		SLATE_END_ARGS()
+		void Construct(const FArguments& InArgs) { ChildSlot[ InArgs._Content.Widget ]; }
+		virtual bool SupportsKeyboardFocus() const override { return true; }
+		virtual const FSlateBrush* GetFocusBrush() const override { return nullptr; }
+		virtual FReply OnKeyDown(const FGeometry& G, const FKeyEvent& E) override
+		{
+			const FKey K = E.GetKey();
+			if (K == EKeys::Enter || K == EKeys::Gamepad_FaceButton_Bottom) { NoticeGoOn(true, FString()); return FReply::Handled(); }
+			if (K == EKeys::Escape || K == EKeys::Gamepad_FaceButton_Right) { NoticeGoOn(false, FString()); return FReply::Handled(); }
+			return FReply::Unhandled();
+		}
+		virtual FReply OnKeyChar(const FGeometry& G, const FCharacterEvent& E) override
+		{
+			const TCHAR Ch = E.GetCharacter();
+			// the T that brought the card is not a letter of his line
+			if ((Ch == TEXT('t') || Ch == TEXT('T')) && FPlatformTime::Seconds() - GNoticeCardAt < 0.5) { return FReply::Handled(); }
+			if (Ch >= 32 && Ch != 127) { NoticeGoOn(true, FString(1, &Ch)); }
+			return FReply::Handled();
+		}
+	};
+
+	void ShowAiNotice(bool bCard = false, const FString& TalkTo = FString())
+	{
+		if (GLive.NoticeText.empty() || GLive.NoticeText == "none")
+		{
+			// no notice to give: straight on to the talk
+			if (bCard && bNoticeThenTalk) { NoticeGoOn(true, FString()); }
+			return;
+		}
 		using namespace LedgerPaper;
 		NoticeHide();
 		GLive.bNoticeShown = true;
 		if (GEngine == nullptr || GEngine->GameViewport == nullptr) { return; }
 		const FString Title = GLive.NoticeTitle == "none" ? FString(TEXT("Before you talk to anyone")) : Un(GLive.NoticeTitle);
+		TSharedRef<SWidget> Sheet =
+			SNew(SBox).WidthOverride(900.0f)
+			[
+				PaperSheet(
+					SNew(SVerticalBox)
+					+ SVerticalBox::Slot().AutoHeight()
+					[
+						SNew(STextBlock).Text(FText::FromString(Title)).TransformPolicy(ETextTransformPolicy::ToUpper)
+						.Font(Font(EFace::League, 28, 60)).ColorAndOpacity(FSlateColor(Ink()))
+					]
+					+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 4.0f, 0.0f, 8.0f))[ Rule(1.5f, Ink()) ]
+					+ SVerticalBox::Slot().AutoHeight()
+					[
+						SNew(STextBlock).Text(FText::FromString(Un(GLive.NoticeText))).AutoWrapText(true).LineHeightPercentage(1.1f)
+						.Font(Font(EFace::OldItalic, 28)).ColorAndOpacity(FSlateColor(Ink()))
+					]
+					+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 10.0f, 0.0f, 0.0f))
+					[
+						SNew(STextBlock).Text(FText::FromString(TEXT("F1 shows this again. R reports the last reply.")))
+						.Font(Font(EFace::Franklin500, 24)).ColorAndOpacity(FSlateColor(Grey()))
+					],
+					FMargin(22.0f, 14.0f, 22.0f, 18.0f))
+			];
+		TSharedRef<SVerticalBox> Column = SNew(SVerticalBox) + SVerticalBox::Slot().AutoHeight()[ Sheet ];
+		if (bCard)
+		{
+			const bool bPad = PadInUse();
+			Column->AddSlot().AutoHeight().HAlign(HAlign_Left).Padding(FMargin(0.0f, 12.0f, 0.0f, 0.0f))
+			[
+				bPad
+				? Hints({ MakeTuple(TArray<FString>{ TEXT("pad:A") }, FString::Printf(TEXT("talk to %s"), *TalkTo)),
+				          MakeTuple(TArray<FString>{ TEXT("pad:B") }, FString(TEXT("not now"))) })
+				: Hints({ MakeTuple(TArray<FString>{ TEXT("Enter") }, FString::Printf(TEXT("talk to %s"), *TalkTo)),
+				          MakeTuple(TArray<FString>{ TEXT("Esc") }, FString(TEXT("not now"))) })
+			];
+		}
 		SAssignNew(GNoticeRoot, SBox)
 			[
 				SafeRegion(
-					SNew(SBox).Padding(FMargin(0.0f, 54.0f, 0.0f, 0.0f)).HAlign(HAlign_Center).VAlign(VAlign_Top)
+					SNew(SBox).Padding(FMargin(0.0f, 54.0f, 0.0f, 54.0f)).HAlign(HAlign_Center).VAlign(bCard ? VAlign_Center : VAlign_Top)
 					[
-						SNew(SBox).WidthOverride(900.0f).Visibility(EVisibility::HitTestInvisible)
+						SAssignNew(GNoticeCard, SNoticeCard).Visibility(bCard ? EVisibility::Visible : EVisibility::HitTestInvisible)
 						[
-							PaperSheet(
-								SNew(SVerticalBox)
-								+ SVerticalBox::Slot().AutoHeight()
-								[
-									SNew(STextBlock).Text(FText::FromString(Title)).TransformPolicy(ETextTransformPolicy::ToUpper)
-									.Font(Font(EFace::League, 28, 60)).ColorAndOpacity(FSlateColor(Ink()))
-								]
-								+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 4.0f, 0.0f, 8.0f))[ Rule(1.5f, Ink()) ]
-								+ SVerticalBox::Slot().AutoHeight()
-								[
-									SNew(STextBlock).Text(FText::FromString(Un(GLive.NoticeText))).AutoWrapText(true).LineHeightPercentage(1.1f)
-									.Font(Font(EFace::OldItalic, 28)).ColorAndOpacity(FSlateColor(Ink()))
-								]
-								+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 10.0f, 0.0f, 0.0f))
-								[
-									SNew(STextBlock).Text(FText::FromString(TEXT("F1 shows this again. R reports the last reply.")))
-									.Font(Font(EFace::Franklin500, 24)).ColorAndOpacity(FSlateColor(Grey()))
-								],
-								FMargin(22.0f, 14.0f, 22.0f, 18.0f))
+							Column
 						]
 					])
 			];
 		GEngine->GameViewport->AddViewportWidgetContent(GNoticeRoot.ToSharedRef(), 47);
-		GNoticeUntil = NowS() + 16.0;
-		UE_LOG(LogTemp, Display, TEXT("LedgerNotice: shown, %s: %s"), *Title, *Un(GLive.NoticeText));
+		if (bCard)
+		{
+			// the card holds the keys until he goes on
+			GNoticeCardAt = FPlatformTime::Seconds();
+			bNoticeCardUp = true;
+			SubsRebuild();
+			UWorld* W = GEngine->GameViewport->GetWorld();
+			if (APlayerController* PC = W != nullptr ? W->GetFirstPlayerController() : nullptr)
+			{
+				FInputModeUIOnly M;
+				M.SetWidgetToFocus(GNoticeCard);
+				PC->SetInputMode(M);
+				PC->FlushPressedKeys();
+			}
+			FSlateApplication::Get().SetKeyboardFocus(GNoticeCard);
+			GNoticeUntil = -1.0;
+		}
+		else
+		{
+			GNoticeUntil = NowS() + 16.0;
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerNotice: shown as %s, %s: %s"), bCard ? TEXT("the card before the first talk") : TEXT("a slip"), *Title, *Un(GLive.NoticeText));
 	}
 
 	// THE LAST REPLY REPORTED, with no note (R, or -AskReport after the
@@ -5056,6 +5150,7 @@ namespace
 	bool bSayOpen = false, bSayCommitted = false, bSayCancelled = false;
 	FString GSaid, GSayDraft;
 	bool SayBoxOpen() { return bSayOpen; }
+	void HintSetText(const FString& Text);
 	double GSayOpenedAt = 0.0;
 
 	// TOM'S SUGGESTED LINES, 1 October (Jafar: "Mixed"; STYLE-GUIDE.md,
@@ -5293,7 +5388,6 @@ namespace
 	{
 		using namespace LedgerPaper;
 		if (bSayOpen || GEngine == nullptr || GEngine->GameViewport == nullptr || World == nullptr) { return; }
-		if (!GLive.bNoticeShown) { ShowAiNotice(); }
 		LedgerSession::Write(TEXT("talk"), TEXT("\"who\":") + LedgerSession::Str(Un(GTalkTarget.Card)));
 		bSayCommitted = bSayCancelled = false;
 		GSaid.Reset();
@@ -5468,6 +5562,7 @@ namespace
 		FSlateApplication::Get().SetKeyboardFocus(GSayText);
 		bSayOpen = true;
 		SubsRebuild();
+		HintSetText(FString());   // the FIRST STEPS slip is done once he talks, and stands where the coupon opens
 		UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: open for %s, keyboard focus %s, on the %s"), *GTalkTarget.Name,
 		       FSlateApplication::Get().GetKeyboardFocusedWidget() == GSayText ? TEXT("in the box") : TEXT("NOT in the box"), bLeft ? TEXT("left") : TEXT("right"));
 		RebuildSuggestRows();
@@ -5475,6 +5570,8 @@ namespace
 		GSayOpenPawnAt = GPawn != nullptr ? GPawn->GetActorLocation() : FVector::ZeroVector;
 		RouteCheck(TEXT("talk-open"), true, FString::Printf(TEXT("to=%s clock=%s"), *GTalkTarget.Name, *Un(GNow.ToString())));
 	}
+
+	void OpenSayBoxWith(UWorld* World, const FString& First) { GSayDraft += First; OpenSayBox(World); }
 
 	void CloseSayBox(UWorld* World)
 	{
@@ -6658,7 +6755,22 @@ namespace
 			GTalkTarget.G = GW1; GTalkTarget.Card = "lena"; GTalkTarget.Id = GIdW1; GTalkTarget.Rung = GW1RungA;
 			GTalkTarget.Name = TEXT("Sheila"); GTalkTarget.Body = GW1Body;
 			GSayDraft = Line;
-			OpenSayBox(World);
+			// as a person's first talk goes: the notice's card first
+			bNoticeThenTalk = true;
+			ShowAiNotice(true, GTalkTarget.Name);
+			Step = bSayOpen ? 2 : 12; At = T;
+		}
+		else if (Step == 12 && T - At > 1.5)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(Dir, FString::Printf(TEXT("notice-%d.png"), Sz.X)), true, false);
+			Step = 13; At = T;
+		}
+		else if (Step == 13 && T - At > 1.0)
+		{
+			// Enter, as the keyboard sends it to the screens: on to the coupon
+			FSlateApplication::Get().ProcessKeyDownEvent(FKeyEvent(EKeys::Enter, FModifierKeysState(), 0, false, 0, 0));
+			FSlateApplication::Get().ProcessKeyUpEvent(FKeyEvent(EKeys::Enter, FModifierKeysState(), 0, false, 0, 0));
+			RouteCheck(TEXT("notice-card"), bSayOpen, FString::Printf(TEXT("coupon_open=%d"), bSayOpen ? 1 : 0));
 			Step = 2; At = T;
 		}
 		else if (Step == 2 && T - At > 1.5)
@@ -6727,7 +6839,7 @@ namespace
 		if (Dir.IsEmpty() || World == nullptr || GPawn == nullptr || GW1Body == nullptr || !GW1) { return; }
 		const bool bLive = GPhase == ECrimePhase::LiveWaitDeed || GPhase == ECrimePhase::LiveAfterDeed || GPhase == ECrimePhase::LiveRoam;
 		if (!bLive) { return; }
-		const double T = NowS();
+		const double T = FPlatformTime::Seconds();   // real seconds: the story's clock stands still while paused
 		if (LiveSince < 0.0) { LiveSince = T; }
 		const FIntPoint Sz = GEngine->GameViewport->Viewport->GetSizeXY();
 		APlayerController* PC = World->GetFirstPlayerController();
@@ -6778,7 +6890,15 @@ namespace
 			PressKey(World, EKeys::Gamepad_FaceButton_Bottom);
 			Step = 5; At = T;
 		}
-		else if (Step == 5 && (bSayOpen || T - At > 3.0))
+		else if (Step == 5 && bNoticeCardUp && T - At > 1.0)
+		{
+			// a first talk: the notice's card; the pad's A, as it reaches the screens, goes on
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(Dir, FString::Printf(TEXT("pad-notice-%d.png"), Sz.X)), true, false);
+			FSlateApplication::Get().ProcessKeyDownEvent(FKeyEvent(EKeys::Gamepad_FaceButton_Bottom, FModifierKeysState(), 0, false, 0, 0));
+			FSlateApplication::Get().ProcessKeyUpEvent(FKeyEvent(EKeys::Gamepad_FaceButton_Bottom, FModifierKeysState(), 0, false, 0, 0));
+			At = T;
+		}
+		else if (Step == 5 && !bNoticeCardUp && (bSayOpen || T - At > 3.0))
 		{
 			RouteCheck(TEXT("pad-talk"), bSayOpen, FString::Printf(TEXT("open=%d suggestions=%d keys=%d"), bSayOpen ? 1 : 0, GSug.bOpen ? 1 : 0, GSug.bKeys ? 1 : 0));
 			Step = 6; At = T;
@@ -6798,9 +6918,29 @@ namespace
 		else if (Step == 8 && T - At > 1.0)
 		{
 			RouteCheck(TEXT("pad-back"), !bSayOpen, FString::Printf(TEXT("open=%d"), bSayOpen ? 1 : 0));
+			// Start, as the pad sends it to the game: the STOP PRESS page
+			PressKey(World, EKeys::Gamepad_Special_Right);
+			Step = 9; At = T;
+		}
+		else if (Step == 9 && T - At > 1.5)
+		{
+			RouteCheck(TEXT("pad-pause"), LedgerPause::IsShown(), FString::Printf(TEXT("paused=%d"), LedgerPause::IsShown() ? 1 : 0));
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(Dir, FString::Printf(TEXT("pad-pause-%d.png"), Sz.X)), true, false);
+			Step = 10; At = T;
+		}
+		else if (Step == 10 && T - At > 1.0)
+		{
+			// B on the pause page, as the pad sends it to the screens: back to the street
+			FSlateApplication::Get().ProcessKeyDownEvent(FKeyEvent(EKeys::Gamepad_FaceButton_Right, FModifierKeysState(), 0, false, 0, 0));
+			FSlateApplication::Get().ProcessKeyUpEvent(FKeyEvent(EKeys::Gamepad_FaceButton_Right, FModifierKeysState(), 0, false, 0, 0));
+			Step = 11; At = T;
+		}
+		else if (Step == 11 && T - At > 1.5)
+		{
+			RouteCheck(TEXT("pad-resume"), !LedgerPause::IsShown(), FString::Printf(TEXT("paused=%d"), LedgerPause::IsShown() ? 1 : 0));
 			UE_LOG(LogTemp, Display, TEXT("LedgerPadShot: done in %s"), *Dir);
 			FPlatformMisc::RequestExit(false);
-			Step = 9;
+			Step = 12;
 		}
 	}
 
@@ -6891,6 +7031,8 @@ namespace
 		GTalkTarget.G = Near->G; GTalkTarget.Card = Near->Card; GTalkTarget.Id = Near->Id;
 		GTalkTarget.Rung = Near->Rung; GTalkTarget.Name = FString(Near->Name);
 		GTalkTarget.Body = Near->Body;
+		// THE FIRST TIME, THE NOTICE'S CARD FIRST (above); going on from it opens the coupon.
+		if (!GLive.bNoticeShown) { bNoticeThenTalk = true; ShowAiNotice(true, GTalkTarget.Name); return true; }
 		OpenSayBox(World);
 		return true;
 	}
@@ -7996,6 +8138,7 @@ namespace
 					PauseShotStep = 3;
 				}
 			}
+			if (bPausedNow) { PadShotTick(PW); }   // -PadShot's own steps go on while paused
 			if (bPausedNow)
 			{
 				switch (LedgerPause::Tick())
