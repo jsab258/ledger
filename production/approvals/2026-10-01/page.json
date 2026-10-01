@@ -1,0 +1,22 @@
+{
+ "tab": "Thursday's Page",
+ "kicker": "LEDGER · Thursday 1 October",
+ "title": "Thursday's page",
+ "how": [
+  "One decision. One tap; a note is optional. Your pick saves on the page."
+ ],
+ "foot": "Anything you do not pick carries onto the next page.",
+ "sections": [
+  {
+   "kind": "decide",
+   "key": "scope-voice-delay",
+   "name": "The voice's delay: down from 4 s to 3 s for a short line in the game, but every faster way I built runs at half speed beside the game. What next?",
+   "note": "Measured in the finished game, 1 October. The voice's work for a short line (1.6 s of speech): 3.95 s before, 2.98 s now (its decoder moved to the graphics card, same sound). On the real path the words come at 1.9 s (30 lines, 30 September), so the first sound is now about 4.5 s after Enter, covered by the characters' short sounds. Tried tonight and failed in the game: making the voice in pieces inside the sentence (1.0 s to the first piece on the idle PC, but beside the game each piece took 1.5 s, so replies came slower with gaps); a compiled version of the voice's main loop (92 steps a second idle, 17 beside the game, against 25 today); a 60 and a 30 frame cap, half the picture's resolution, and a higher priority for the voice: none changed it. Beside the running game every way runs at about half its idle speed. The one lead left: the voice inside the game itself with its own high priority on the graphics card, which a separate program cannot have. Unproven; I would research it first. Moving the voice into the game is already on the road to release (about two weeks by the earlier note), since a friend's PC should not need Python. The rest of this week's list: mouths, nightly tests of the finished game, Mickey's office, filming the suit jacket (the friends' build waits on the fresh Windows account).",
+   "options": [
+    ["items-first", "This week's other items first, then research and move the voice into the game (recommended)"],
+    ["voice-now", "Research and move the voice into the game now; the other items wait"],
+    ["leave", "Leave the voice as it is for now"]
+   ]
+  }
+ ]
+}
