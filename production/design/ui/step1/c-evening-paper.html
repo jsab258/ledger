@@ -77,7 +77,7 @@ html[data-screen="title"] .s-title, html[data-screen="talk"] .s-talk, html[data-
    screen, then a hard contrast that turns the mix into dots that grow where
    the picture is dark (black wherever dot value < 1 - brightness). */
 .photo { position: relative; height: 396px; overflow: hidden; background: #fff; filter: contrast(20) grayscale(1); }
-.photo .img { position: absolute; inset: -6px; background: url(../../../approvals/2026-10-01/street-hook-night.webp) 64% 52% / auto 118%; filter: grayscale(1) brightness(1.9) contrast(1.35) blur(.8px); }
+.photo .img { position: absolute; inset: -6px; background: url(../../../approvals/2026-10-01/street-hook-night.webp) 64% 52% / auto 118%; filter: grayscale(1) brightness(1.45) contrast(1.4) blur(.8px); }
 .photo .dots { position: absolute; inset: -40%; background: radial-gradient(circle at center, #000 0, #fff 72%) 0 0 / 4.2px 4.2px; transform: rotate(45deg); opacity: .5; }
 .figure .ink { position: relative; }
 .figure .ink::after { content: ""; position: absolute; inset: 0; background: var(--news); mix-blend-mode: multiply; }
@@ -91,7 +91,7 @@ html[data-screen="title"] .s-title, html[data-screen="talk"] .s-talk, html[data-
 .subs .who { display: inline-block; margin: 0 14px 0 -8px; padding: 3px 10px 1px; background: var(--red); color: #fff; font: 800 30px/1.3 var(--text); letter-spacing: .05em; vertical-align: 3px; }
 .coupon { position: absolute; left: 50%; width: 960px; margin-left: -580px; bottom: 252px; height: 84px; }
 .coupon::before { content: ""; position: absolute; inset: 7px; border: 2.5px dashed var(--ink); }
-.coupon .to { position: absolute; left: 20px; top: 20px; padding: 9px 12px 6px; background: var(--red); color: #fff; font: 800 28px/1 var(--text); letter-spacing: .05em; text-transform: uppercase; }
+.coupon .to { position: absolute; left: 20px; top: 20px; padding: 9px 12px 6px; background: var(--ink); color: var(--news); font: 800 28px/1 var(--text); letter-spacing: .05em; text-transform: uppercase; }
 .coupon .typed { position: absolute; left: 240px; right: 30px; top: 23px; font: 450 36px/1 var(--text); white-space: nowrap; }
 .caret { display: inline-block; width: 3px; height: 1.02em; margin-left: 3px; vertical-align: -0.16em; background: var(--ink); }
 .talk-keys { left: 1342px; bottom: 252px; line-height: 1.3; }
@@ -104,7 +104,7 @@ html[data-screen="title"] .s-title, html[data-screen="talk"] .s-talk, html[data-
 .stop .dateline { margin-top: 10px; border-top: 1.5px solid var(--ink); }
 .stop .hed { font-size: 48px; padding-top: 14px; padding-bottom: 13px; }
 .stop .note { margin-top: 14px; font: italic 400 28px/1.4 var(--serif); color: var(--grey); }
-.stop .crease { top: 61%; }
+.stop .crease { top: 63.5%; opacity: .6; }
 .stop .dateline { font-size: 24px; }
 </style>
 <script>document.documentElement.dataset.screen = new URLSearchParams(location.search).get("screen") || "title";</script>
@@ -118,7 +118,7 @@ html[data-screen="title"] .s-title, html[data-screen="talk"] .s-talk, html[data-
     <div class="left-shade"></div>
     <div class="safe">
       <div class="sheet front">
-        <div class="ears"><div class="ear red">Late final</div><div class="ear">Rain later<small>Clearing by dawn</small></div></div>
+        <div class="ears"><div class="ear red">Late final</div><div class="ear">Rain later</div></div>
         <div class="mast">Ledger</div>
         <div class="rule2"></div>
         <div class="dateline"><span>No. 1</span><span>The Hook, Meridian</span><span>1990</span></div>
@@ -147,8 +147,8 @@ html[data-screen="title"] .s-title, html[data-screen="talk"] .s-talk, html[data-
     <div class="foot-shade"></div>
     <div class="safe">
       <div class="keys talk-keys"><b>Enter</b><span>says it</span><br><b>Esc</b><span>stops typing</span></div>
-      <div class="sheet coupon"><div class="to">To Sheila</div><div class="typed">Has he been there long?<span class="caret"></span></div></div>
-      <div class="subs"><p><span><span class="who">SHEILA</span>Morning. Quiet one today.</span><br><span>Ron's on the rank if you're after him.</span></p></div>
+      <div class="sheet coupon"><div class="to">To Sheila</div><div class="typed">Was it this quiet last night?<span class="caret"></span></div></div>
+      <div class="subs"><p><span><span class="who">SHEILA</span>Morning. Quiet one today.</span><br><span>Rain's held off, at least.</span></p></div>
     </div>
   </div>
 
