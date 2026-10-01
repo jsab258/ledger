@@ -24,7 +24,7 @@ The pages ask Google Fonts for their fonts (FONTS.md lists each, with its licenc
 
 ## What is not in this folder, and why
 
-The rendered pictures are not committed yet. The repository's attribution check (tools/attribution-check.py) refuses any picture or font file in a folder it does not know, and the list of folders of the project's own pictures lives in that tool's code, which this job was told not to change. The pictures are on Jafar's choice page, and go into this folder once the check knows it (one line in the tool's list of our own folders).
+The rendered pictures are not committed yet. The repository's attribution check (tools/attribution-check.py) refuses any picture or font file in a folder it does not know, and the list of folders of the project's own pictures lives in that tool's code, which this job was told not to change. The pictures are on Jafar's choice page (https://claude.ai/artifact/KkuYDscJkQfG2DaMbq5nYD, its source in step1/page/, his picks stored under verdicts/ui-direction and verdicts/ui-pictures-in-repo), and go into this folder once the check knows it (one line in the tool's list of our own folders), which the page asks him.
 
 ## Step 2, after his pick
 
