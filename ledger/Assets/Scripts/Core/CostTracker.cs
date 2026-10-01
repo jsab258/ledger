@@ -9,33 +9,46 @@ namespace Ledger.Core
         class Bucket { public long InputTokens; public long OutputTokens; public int Calls; }
         readonly Dictionary<string, Bucket> _byModel = new Dictionary<string, Bucket>();
 
+        // Locked: a suggestion's call is counted beside a reply's, on another
+        // thread (the talk program answers suggestions off its one-at-a-time queue).
         public void Record(string model, int inputTokens, int outputTokens)
         {
-            if (!_byModel.TryGetValue(model, out var b))
-                _byModel[model] = b = new Bucket();
-            b.InputTokens += inputTokens;
-            b.OutputTokens += outputTokens;
-            b.Calls++;
+            lock (_byModel)
+            {
+                if (!_byModel.TryGetValue(model, out var b))
+                    _byModel[model] = b = new Bucket();
+                b.InputTokens += inputTokens;
+                b.OutputTokens += outputTokens;
+                b.Calls++;
+            }
         }
 
         public int TotalCalls
         {
-            get { int n = 0; foreach (var b in _byModel.Values) n += b.Calls; return n; }
+            get { lock (_byModel) { int n = 0; foreach (var b in _byModel.Values) n += b.Calls; return n; } }
         }
 
         public double EstimateUsd()
         {
-            double usd = 0;
-            foreach (var kv in _byModel)
+            lock (_byModel)
             {
-                if (!Models.Cost.TryGetValue(kv.Key, out var rate)) continue;
-                usd += kv.Value.InputTokens / 1_000_000.0 * rate.inPerM;
-                usd += kv.Value.OutputTokens / 1_000_000.0 * rate.outPerM;
+                double usd = 0;
+                foreach (var kv in _byModel)
+                {
+                    if (!Models.Cost.TryGetValue(kv.Key, out var rate)) continue;
+                    usd += kv.Value.InputTokens / 1_000_000.0 * rate.inPerM;
+                    usd += kv.Value.OutputTokens / 1_000_000.0 * rate.outPerM;
+                }
+                return usd;
             }
-            return usd;
         }
 
         public string Report()
+        {
+            lock (_byModel) return ReportLocked();
+        }
+
+        string ReportLocked()
         {
             var sb = new System.Text.StringBuilder();
             foreach (var kv in _byModel)

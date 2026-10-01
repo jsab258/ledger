@@ -1,5 +1,5 @@
 {
- "status": "in review: not for play until the town says it has passed its last review and Jafar's page (1 October); the game shows no suggestions while this says 'in review'",
+ "status": "in review: passed the town's gate (three fresh reviews; the last's one narrow point fixed), on Jafar's page of 1 October; not for play until his yes",
  "about": "Tom's own written suggested lines (Jafar, 1 October: Mixed, the game's own lines for hellos, goodbyes and decisions; production/design/ui/STYLE-GUIDE.md, Suggested lines). greet: opening a talk, first meeting or tenth. leave: ending one, before anything is said or after. personal: something personal or off the subject. Follow-ups to what was just said are the model's only: none fits after anything, so without the model that slot is left out. deals: ron-ask, said while Ron's ask stands, sounds like a no so Ron puts his plain question; ron-tell-them-no answers that question; sheila-week answers 'So which is it going to be?'; sheila-week-<answer> answers her plain question for that answer. Each yes is the yes the game takes; each no and keep decides nothing (CoreTests, Suggested lines). Never the same line twice in one conversation.",
  "greet": [
   "Hello. Have you got a minute?",
@@ -48,7 +48,7 @@
    ],
    "keep": [
     "What happens if I don't?",
-    "Can I think it over?"
+    "What would Mickey have done?"
    ]
   },
   "sheila-week": {
