@@ -1,0 +1,183 @@
+<title>LEDGER Screens, Evening Paper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* The house style of Jafar's daily pages (production/approvals/): the
+   decisions at the top, each screen's pictures folded below. */
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:18px 48px}
+.wrap{max-width:900px;margin:0 auto;display:grid;gap:12px}
+header{display:grid;gap:4px;border-bottom:2px solid var(--ink);padding-bottom:10px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(25px,6vw,38px)/1.05 var(--display);margin:0;text-wrap:balance}
+.how{margin:0;color:var(--muted);font-size:14px;line-height:1.4}
+.decide{display:grid;gap:7px;background:var(--surface);border:1px solid var(--rule);padding:10px 12px}
+.q{margin:0;font:600 16px/1.25 var(--display)}
+.opts{display:grid;gap:6px}
+.opts.row{grid-template-columns:1fr 1fr}
+.opt{display:flex;align-items:center;gap:10px;min-height:42px;padding:5px 12px;border:1px solid var(--rule);background:var(--ground);cursor:pointer;font:600 17px/1.15 var(--display);letter-spacing:.01em;color:var(--ink);text-align:left;width:100%}
+.opt .l{display:inline-grid;place-items:center;width:28px;height:28px;flex:none;border:1.5px solid var(--ink);font:700 15px/1 var(--type)}
+.opt .rec{margin-left:auto;font:700 11px/1 var(--type);letter-spacing:.08em;text-transform:uppercase;color:var(--ok)}
+.opt.picked{border-color:var(--accent);box-shadow:inset 4px 0 0 var(--accent)}
+.opt.picked .l{background:var(--accent);border-color:var(--accent);color:var(--ground)}
+.opt:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+textarea{width:100%;min-height:38px;height:38px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:7px 8px}
+.tally{font:400 13px/1.4 var(--type);color:var(--muted)}
+details{background:var(--surface);border:1px solid var(--rule)}
+summary{cursor:pointer;padding:11px 14px;font:600 16px/1.25 var(--display)}
+summary span{display:block;font:400 14px/1.4 var(--body);color:var(--muted);margin-top:2px}
+.fold{display:grid;gap:12px;padding:0 14px 14px}
+.det{margin:0;font:400 14px/1.45 var(--body);color:var(--muted)}
+.decide details{background:transparent;border:0}
+.decide summary{padding:2px 0;font:600 13px/1.3 var(--type);color:var(--muted)}
+figure{margin:0;display:grid;gap:4px}
+figure img{width:100%;height:auto;display:block;background:var(--chip)}
+figcaption,.was{font:400 13px/1.45 var(--type);color:var(--muted);margin:0}
+.was b{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* PICTURES JUDGED ON THE PAGE (tools/page_pictures.py, Jafar 30 September and 1 October) */
+.capgrid,.cands,.pair{grid-template-columns:1fr!important}
+.capgrid img,.pair img,.cands img,figure img{width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important}
+main img,section img,[data-film-sprite]{cursor:zoom-in}
+.pv{position:fixed;inset:0;z-index:2147483000;background:#000;display:none;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
+.pv.on{display:block}
+.pv .pv-stage{position:absolute;inset:0;overflow:hidden}
+.pv .pv-hold{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.pv .pv-hold img{display:block;max-width:none!important;width:auto!important;height:auto!important;-webkit-user-drag:none;pointer-events:none}
+.pv .pv-film{background-repeat:no-repeat;pointer-events:none}
+.pv .pv-bar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top, 0px)) 12px 10px;background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,0));color:#fff;font:600 14px/1.2 system-ui,sans-serif;pointer-events:none}
+.pv .pv-bar *{pointer-events:auto}
+.pv .pv-count{opacity:.85;font-variant-numeric:tabular-nums}
+.pv .pv-close{min-width:88px;min-height:44px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;cursor:pointer}
+.pv .pv-cap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px calc(12px + env(safe-area-inset-bottom, 0px));background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.75));color:#fff;font:14px/1.35 system-ui,sans-serif;pointer-events:none}
+.pv .pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:72px;border:0;background:rgba(0,0,0,.35);color:#fff;font:700 30px/1 system-ui,sans-serif;cursor:pointer}
+.pv .pv-prev{left:0;border-radius:0 8px 8px 0}.pv .pv-next{right:0;border-radius:8px 0 0 8px}
+.pv .pv-play{position:absolute;left:50%;bottom:calc(64px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);min-height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;display:none;cursor:pointer}
+.pv.film .pv-play{display:block}
+@media (hover:none){.pv .pv-nav{display:none}}
+</style>
+<div class="wrap">
+  <header>
+    <div class="kicker">LEDGER · Thursday 1 October</div>
+    <h1>Every screen, in the evening paper</h1>
+    <p class="how">The look you picked, on all eight screens, at your 3440 by 1440 and at 1920 by 1080. Open one below; tap a picture for full size.</p>
+  </header>
+  <section class="decide" id="d1"></section>
+  <section class="decide" id="d2"></section>
+  <div id="folds" class="wrap" style="gap:8px"></div>
+  <details>
+    <summary>About these pictures</summary>
+    <div class="fold" id="about"></div>
+  </details>
+</div>
+<script>
+const PAGE = {
+  decisions: [
+    {key:"ui-set-evening-paper", q:"The full set: build it like this?", note:true, plain:true,
+     options:[["yes","Yes, build it",false],["change","Change something (say what below)",false]],
+     detail:"NOTES_SET"},
+    {key:"ui-name-check", q:"Before any Steam page or trailer, should a trade mark lawyer check the name LEDGER?", note:false, plain:true,
+     options:[["now","Yes, now, with two fallback names",true],["keep","Keep LEDGER, accept the risk",false],["rename","Rename now",false]],
+     detail:"A cryptocurrency-wallet company, Ledger, holds LEDGER as a trade mark for software (the class games are sold under) in the UK, the EU and the US, and enforces it. That comes from summaries of official decisions: the registers themselves could not be reached from here. Only a lawyer's search clears a name. From published price ranges, a clearance in all three would be in the low thousands of pounds. The full research is in the pull request."},
+  ],
+  screens: [
+    {k:"title", n:"Title screen", d:"New game, Continue (with where and when you left off), Settings, Quit."},
+    {k:"pause", n:"Pause menu", d:"Stop press: back to the street, the Ledger, settings, quit."},
+    {k:"settings", n:"Settings, with quality presets", d:"Picture, sound, controls, subtitles and reading; what the line in hand does, at the right."},
+    {k:"prompt", n:"The prompt on a person", d:"One at a time, beside the nearest person or thing in view."},
+    {k:"hints", n:"A first-time key hint", d:"Shown once, gone the moment it is done."},
+    {k:"subtitles", n:"Subtitles with the speaker", d:"Overheard at night, from someone Tom has no name for, off to the left."},
+    {k:"typing", n:"The typing box", d:"His line to Sheila, grown to two lines."},
+    {k:"loading", n:"Loading, with its progress", d:"Tonight's front page while the street is made ready; the red rule moves only as the work does."},
+  ],
+  sizes: [["3440","On your 3440 by 1440 screen"],["1920","On a 1920 by 1080 screen"]],
+  kit: {n:"Every part, in every state", d:"Type, colour and contrast, choices, settings lines, presets, keys, speakers' names, the prompt, the hint, progress and the quit question."},
+  notes: {},
+  about: [],
+};
+const state = {};
+let db = null, canWrite = true;
+function el(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})) { if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v); }
+  for (const k of kids) if (k) n.append(k);
+  return n;
+}
+function save(key, patch){
+  state[key] = Object.assign({}, state[key] || {}, patch, {at: new Date().toISOString()});
+  render();
+  if (!db || !canWrite) return;
+  db.doc("verdicts/" + key).set(Object.assign({}, state[key])).catch(e => { canWrite = false; render(); });
+}
+function render(){
+  PAGE.decisions.forEach((d, i) => {
+    const st = state[d.key] || {};
+    const box = document.getElementById("d" + (i + 1));
+    if (box.contains(document.activeElement) && document.activeElement.tagName === "TEXTAREA") return;   // never under his typing
+    box.replaceChildren();
+    box.append(el("p", {class:"q", text:d.q}));
+    const opts = el("div", {class:"opts", role:"radiogroup", "aria-label":d.q});
+    for (const [v, name, rec] of d.options) {
+      const b = el("button", {type:"button", class:"opt" + (st.pick === v ? " picked" : ""), role:"radio", "aria-checked": st.pick === v ? "true" : "false", id:"opt-" + d.key + "-" + v},
+        el("span", {text:name}), rec ? el("span", {class:"rec", text:"Recommended"}) : null);
+      b.addEventListener("click", () => save(d.key, {pick:v}));
+      opts.append(b);
+    }
+    box.append(opts);
+    if (d.note) {
+      const t = el("textarea", {id:"note-" + d.key, rows:"1", placeholder:"What to change (optional)"});
+      t.value = st.note || "";
+      t.addEventListener("change", () => save(d.key, {note:t.value}));
+      box.append(t);
+    }
+    if (d.detail) box.append(el("details", {}, el("summary", {text:"Why, in detail"}), el("p", {class:"det", text:d.detail})));
+    box.append(el("div", {class:"tally", text: st.pick
+      ? "Picked: " + (d.options.find(o => o[0] === st.pick) || [,st.pick])[1] + (st.at ? " · saved " + new Date(st.at).toLocaleString() : "") + (db ? "" : " · not stored on this view")
+      : (db ? "Not picked yet" : "Not picked yet · not stored on this view")}));
+  });
+}
+function folds(){
+  const root = document.getElementById("folds");
+  PAGE.screens.forEach((s, i) => {
+    const f = el("div", {class:"fold"});
+    for (const [z, cap] of PAGE.sizes)
+      f.append(el("figure", {}, el("img", {src:"pictures/" + s.k + "-" + z + ".jpg", alt:s.n + ", " + cap.toLowerCase(), loading:"lazy",
+        width: z === "3440" ? "3440" : "1920", height: z === "3440" ? "1440" : "1080"}), el("figcaption", {text:cap})));
+    for (const n of (PAGE.notes[s.k] || [])) f.append(el("p", {class:"was", text:n}));
+    root.append(el("details", {id:"screen-" + s.k}, el("summary", {}, document.createTextNode((i + 1) + " · " + s.n), el("span", {text:s.d})), f));
+  });
+  const k = el("div", {class:"fold"}, el("figure", {}, el("img", {src:"pictures/kit.jpg", alt:PAGE.kit.n, loading:"lazy", width:"2560", height:"1632"}), el("figcaption", {text:PAGE.kit.d})));
+  root.append(el("details", {id:"kit"}, el("summary", {}, document.createTextNode("The kit · " + PAGE.kit.n), el("span", {text:"The parts the screens are built from, as the style guide sets them."})), k));
+  const about = document.getElementById("about");
+  for (const a of PAGE.about) about.append(el("p", {class:"was", text:a}));
+}
+folds(); render();
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db) { render(); return; }
+  for (const d of PAGE.decisions) {
+    try { const s = await db.doc("verdicts/" + d.key).get(); if (s.exists) state[d.key] = Object.assign({}, s.data()); } catch (e) {}
+  }
+  render();
+})();
+</script>
