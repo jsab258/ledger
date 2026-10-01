@@ -2548,6 +2548,38 @@ jobs:
           # and does not move underneath anybody.
           SHORT="$(echo "${GITHUB_SHA:-}" | cut -c1-7)"
           if [ -z "$SHORT" ]; then SHORT="$(git rev-parse HEAD | cut -c1-7)"; fi
+          # PICTURES ONLY WHEN THEY CAN HAVE CHANGED, OR ONCE A DAY (1 October,
+          # the cleanup page: every run's frames, about 130 MB of PNG, GIF and WAV
+          # that never compress against the last run's, had grown the project's git
+          # store to 30 GB on Jafar's PC). The text verdicts are committed on every
+          # run as before; the pictures when this push changed something they show
+          # (the street's specs and assets, the art recipes, the Unreal content and
+          # scripts, the shot and walk code), when the last committed pictures are
+          # 20 hours old (production/d1-probe/frames-at.txt), and on any run started
+          # by hand. The step's line says frames=0 or 1 and why.
+          FRAMES=1; FRAMESWHY=a-run-started-by-hand-or-the-first
+          BEFORE="${{ github.event.before }}"
+          if [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ] && [ -n "${GITHUB_SHA:-}" ]; then
+            if git cat-file -e "${BEFORE}^{commit}" 2>/dev/null || git fetch -q --no-tags --depth=1 origin "$BEFORE" 2>/dev/null; then
+              VIS="$(git diff --name-only "$BEFORE" "$GITHUB_SHA" -- production/specs production/assets ue-probe/Content tools/art-recipes tools/ue \
+                ue-probe/Source/LedgerProbe/Private/VignetteShot.cpp ue-probe/Source/LedgerProbe/Private/WalkProbe.cpp \
+                ue-probe/Source/LedgerProbe/Public/SurfaceBind.h ue-probe/Source/LedgerProbe/Public/FrameStats.h 2>/dev/null | head -1 || true)"
+              LASTAT="$(sed -n 's/^framesAt=\([0-9]*\).*/\1/p' production/d1-probe/frames-at.txt 2>/dev/null | head -1 || true)"
+              AGE=$(( $(date -u +%s) - ${LASTAT:-0} ))
+              if [ -z "$VIS" ] && [ "$AGE" -lt 72000 ]; then
+                FRAMES=0; FRAMESWHY="nothing-shown-changed/last-pictures-${AGE}s-old"
+              else
+                FRAMESWHY="${VIS:-the-last-pictures-are-${AGE}s-old}"
+              fi
+            else
+              FRAMESWHY=the-previous-commit-could-not-be-fetched
+            fi
+          fi
+          if [ "$FRAMES" = 1 ]; then
+            printf 'framesAt=%s framesFrom=%s\n' "$(date -u +%s)" "$SHORT" > production/d1-probe/frames-at.txt
+            git add -- production/d1-probe/frames-at.txt
+          fi
+          echo "frames=$FRAMES framesWhy=$FRAMESWHY"
           if [ ! -f "$UEVERDICT" ] || ! head -1 "$UEVERDICT" | grep -q "$SHORT"; then
             printf '# UE probe verdict %s @%s\n# Line 1 names the commit this was measured on, as the Unity verdict does.\n\nNO RUN - no verdict carrying this commit was produced; do not read an older file as this run.\nverdictReached=end\n' \
               "$SHORT" "$(date -u +%s)" > "$UEVERDICT"
@@ -2581,7 +2613,7 @@ jobs:
           # The probe step deletes the tracked copy before running, so this
           # path either holds a picture this run rendered or holds nothing,
           # and a plain `git add` would quietly leave a stale one behind.
-          git add -A -- production/d1-probe/ue-shot.png 2>/dev/null || true
+          [ "$FRAMES" = 1 ] && git add -A -- production/d1-probe/ue-shot.png 2>/dev/null || true
           # PHASE B, THE SAME TWO RULES. The vignette verdict is a TRACKED
           # file, so a run that never reached the capture would commit last
           # night's four frames and last night's numbers under this run's
@@ -2628,6 +2660,7 @@ jobs:
           # stage a path this run did not name.
           vignStaged=0; vignRefused=0; vignNamed=0; vignRepeat=0; vignSeen="|"
           stage_shot_png() {
+            [ "$FRAMES" = 1 ] || return 0   # pictures only when they can have changed (above)
             # ONE LEAF, NO PATH. A value carrying a separator or a `..` is
             # refused and counted rather than joined onto the directory: the
             # verdict is a file this repository writes, and the day it writes
@@ -2663,7 +2696,7 @@ jobs:
             stage_shot_png "$leaf"
           done
           for pat in 'ue-vign_*.png' 'ue-pinset_*.png' 'ue-corner_*.png' 'ue-hook_max.png' 'ue-hook_scanned.png' 'ue-facade_*.png'; do
-            git add -A -- "production/d1-probe/$pat" 2>/dev/null || true
+            [ "$FRAMES" = 1 ] && git add -A -- "production/d1-probe/$pat" 2>/dev/null || true
           done
           # WHOLE-STEP COUNTS ON THE STEP'S OWN LINE. `vignNamed` counts
           # DISTINCT leaves and is the denominator `vignStaged` is a fraction
@@ -2689,7 +2722,7 @@ jobs:
           # so their ABSENCE is staged too: the walk step deletes the
           # tracked copies before running, so these paths either hold
           # pictures this run rendered or hold nothing.
-          git add -A -- 'production/d1-probe/ue-walk_*.png' 2>/dev/null || true
+          [ "$FRAMES" = 1 ] && git add -A -- 'production/d1-probe/ue-walk_*.png' 2>/dev/null || true
           # AND THE CLIP, WHICH THAT GLOB DOES NOT MATCH (B1, ruled
           # 2026-09-07). The file is ue-walk.gif and the pattern above
           # is ue-walk_*.png. Without this line every run staged the
@@ -2700,10 +2733,11 @@ jobs:
           # same reason as the frames: a run that made no clip stages
           # its absence rather than leaving the last one to be
           # committed as this run's.
-          git add -A -- 'production/d1-probe/ue-walk.gif' 2>/dev/null || true
-          git add -A -- 'production/d1-probe/ue-walk-audio.wav' 2>/dev/null || true
+          [ "$FRAMES" = 1 ] && git add -A -- 'production/d1-probe/ue-walk.gif' 2>/dev/null || true
+          [ "$FRAMES" = 1 ] && git add -A -- 'production/d1-probe/ue-walk-audio.wav' 2>/dev/null || true
           # THE SLICE'S WALK, 23 September.
-          git add -A -- 'production/d1-probe/ue-slicewalk_*.png' 'production/d1-probe/ue-slicewalk-verdict.txt' 2>/dev/null || true
+          [ "$FRAMES" = 1 ] && git add -A -- 'production/d1-probe/ue-slicewalk_*.png' 2>/dev/null || true
+          git add -A -- 'production/d1-probe/ue-slicewalk-verdict.txt' 2>/dev/null || true
           git add -A -- 'production/d1-probe/ue-perf-verdict.txt' 2>/dev/null || true
           # THE CRIME, THE WITNESS AND THE OVERHEARD CONSEQUENCE (ruling
           # 2026-09-08), THE SAME TWO RULES A FOURTH TIME. The crime verdict
@@ -2735,13 +2769,13 @@ jobs:
           # with -A for the same reason. The sequence frames are NOT staged:
           # they exist to be stitched, and thirty-two stills per run is a
           # git history nobody can clone.
-          git add -A -- 'production/d1-probe/ue-crime_*.png' 2>/dev/null || true
+          [ "$FRAMES" = 1 ] && git add -A -- 'production/d1-probe/ue-crime_*.png' 2>/dev/null || true
           # AND THE CLIP, WHICH THAT GLOB DOES NOT MATCH: the file is
           # ue-crime.gif and the pattern above is ue-crime_*.png. This is
           # the same B1 mistake the walk clip already paid for, where every
           # run staged the clip's DELETION, which its step does at the top
           # for provenance, and never the clip it then made.
-          git add -A -- 'production/d1-probe/ue-crime.gif' 2>/dev/null || true
+          [ "$FRAMES" = 1 ] && git add -A -- 'production/d1-probe/ue-crime.gif' 2>/dev/null || true
           # THE ENCOUNTER, 24 September: its three verdicts and the recorded shout.
           git add -A -- 'production/d1-probe/ue-encounter-play-verdict.txt' 'production/d1-probe/ue-encounter-reload-verdict.txt' 'production/d1-probe/ue-encounter-unseen-verdict.txt' 'production/d1-probe/ue-encounter-shout.wav' 2>/dev/null || true
           git add -A -- 'production/d1-probe/ue-encounter-live-1-verdict.txt' 'production/d1-probe/ue-encounter-live-2-verdict.txt' 2>/dev/null || true
