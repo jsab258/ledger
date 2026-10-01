@@ -8425,6 +8425,16 @@ namespace LedgerVignetteShot
 		return (int32)GQuads.size();
 	}
 
+	AActor* FindStreetMesh(const FString& MeshName)
+	{
+		const std::string Want(TCHAR_TO_UTF8(*MeshName));
+		for (size_t I = 0; I < GStreet.Rows.size() && (int32)I < GStreetActors.Num(); ++I)
+		{
+			if (GStreet.Rows[I].Mesh == Want) { return GStreetActors[(int32)I]; }
+		}
+		return nullptr;
+	}
+
 	AActor* FindStreetPiece(const FString& Name)
 	{
 		AStaticMeshActor* const* Found = GByName.Find(Name);

@@ -6474,6 +6474,14 @@ def _newell(pts):
 #: side, by ground floor or upper, and by the 6 m bay from x = 3, where every
 #: block's bays start or fall, so the probe can hide the bay it broke.
 GLASS_BAY_M, GLASS_BAY_FROM_M, GLASS_GROUND_BELOW_M = 6.0, 3.0, 3.0
+#: MICKEY'S OWN OBJECTS, exported as meshes of their own (1 October, item 6):
+#: the shop door (leaf, glass, stiles and rails), the solid block behind the
+#: window, and the painted inside. The door's spandrel and the flat above stay.
+MICKEYS_OWN = frozenset([
+    "east_parade_shop_door_leaf_bay0", "east_parade_shop_door_light_bay0",
+    "east_parade_shop_door_stile_left_bay0", "east_parade_shop_door_stile_right_bay0",
+    "east_parade_shop_door_mid_rail_bay0", "east_parade_shop_door_head_rail_bay0",
+    "east_parade_carcass_shop_bay0", "interior_card_east_parade_0"])
 
 
 def _glass_key(xs, ys, zs):
@@ -6684,6 +6692,13 @@ def _export_street(bpy, args, parts):
             key = "glass_" + obj.name[len("furn_cl_"):].rsplit("_glass", 1)[0]
         elif key == "glass" and world:
             key = _glass_key([p.x for p in world], [p.y for p in world], [p.z for p in world])
+        if obj.name in MICKEYS_OWN:
+            # MICKEY'S OWN MESHES (1 October, item 6): its shop door, the block
+            # behind its window and its painted inside, each kept apart under
+            # its own material, so the game can take them away and build the
+            # office in their place (production/specs/mickeys-office.json)
+            # without opening any other door on the street.
+            key = "mickeys_" + mat_key
         # THE REFLECTION, y to -y, and nothing else moves.
         world = [mathutils.Vector((p.x, -p.y, p.z)) for p in world]
         lettered = key.startswith(("sign_", "card_"))

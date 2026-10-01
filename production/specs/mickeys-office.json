@@ -1,0 +1,63 @@
+{
+ "what": "Mickey's office as a grey blockout (item 6, 1 October 2026; game-design/mickeys-office/BRIEF.md; production/research/interior-blockout). Street metres: x along Quay Street, y up, z back from the pavement (the bay's front face at 5.12, its back at 13.12). Each box is axis-aligned from x0 to x1, y0 to y1, z0 to z1. The game hides the street's solid block for the bay and builds this instead, in live play. A first layout, to be walked and changed: a change is an edit here.",
+ "key": {
+  "floor": "light grey: floors",
+  "wall": "mid grey: walls and ceilings",
+  "furniture": "dark grey: fixed furniture (counter, desks, bench, cabinets)",
+  "use": "yellow: what Tom can use (the book, the radio, the phone, the kettle, the notices, the gates)",
+  "stand": "blue discs: where people stand",
+  "nogo": "red: blocked or not built (the WC, the lane beyond the gates)"
+ },
+ "hide": ["east_parade_bay0", "east_parade_interior0", "decal_04_interior_shop_shelves", "east_parade_shopdoor0", "east_parade_shopdoor0_light",
+          "street_mickeys_frame_painted", "street_mickeys_glass", "street_mickeys_interior", "street_mickeys_interior_lit"],
+ "inside": {"x0": 3.0, "x1": 9.0, "z0": 5.12, "z1": 16.5, "arm_m": 2.0, "lift_m": 0.25},
+ "boxes": [
+  {"name": "floor", "kind": "floor", "x0": 3.0, "x1": 9.0, "y0": -0.10, "y1": 0.10, "z0": 5.12, "z1": 16.65},
+  {"name": "upper storey", "kind": "wall", "x0": 3.0, "x1": 9.0, "y0": 3.0, "y1": 6.3, "z0": 5.12, "z1": 13.15},
+  {"name": "stair strip wall", "kind": "wall", "x0": 4.05, "x1": 4.19, "y0": 0.10, "y1": 3.0, "z0": 5.12, "z1": 13.0},
+  {"name": "stair strip (locked)", "kind": "nogo", "x0": 3.0, "x1": 4.05, "y0": 0.10, "y1": 3.0, "z0": 5.25, "z1": 13.0},
+  {"name": "bench", "kind": "furniture", "x0": 8.45, "x1": 8.95, "y0": 0.10, "y1": 0.55, "z0": 5.6, "z1": 7.2},
+  {"name": "notices", "kind": "use", "x0": 8.93, "x1": 9.0, "y0": 1.2, "y1": 1.9, "z0": 5.8, "z1": 6.8},
+  {"name": "counter", "kind": "furniture", "x0": 5.2, "x1": 9.0, "y0": 0.10, "y1": 1.05, "z0": 7.5, "z1": 8.0},
+  {"name": "the book of every fare", "kind": "use", "x0": 7.0, "x1": 7.4, "y0": 1.05, "y1": 1.12, "z0": 7.55, "z1": 7.85},
+  {"name": "the phone", "kind": "use", "x0": 8.4, "x1": 8.6, "y0": 1.05, "y1": 1.2, "z0": 7.6, "z1": 7.8},
+  {"name": "radio desk", "kind": "furniture", "x0": 6.3, "x1": 7.8, "y0": 0.10, "y1": 0.75, "z0": 8.4, "z1": 8.95},
+  {"name": "the radio", "kind": "use", "x0": 6.8, "x1": 7.2, "y0": 0.75, "y1": 0.95, "z0": 8.45, "z1": 8.7},
+  {"name": "wall, staff side to back room (left of the door)", "kind": "wall", "x0": 4.19, "x1": 5.0, "y0": 0.10, "y1": 3.0, "z0": 9.4, "z1": 9.55},
+  {"name": "wall, staff side to back room (right of the door)", "kind": "wall", "x0": 6.1, "x1": 9.0, "y0": 0.10, "y1": 3.0, "z0": 9.4, "z1": 9.55},
+  {"name": "Sheila's desk", "kind": "furniture", "x0": 6.4, "x1": 7.9, "y0": 0.10, "y1": 0.75, "z0": 10.6, "z1": 11.2},
+  {"name": "the books", "kind": "use", "x0": 6.9, "x1": 7.4, "y0": 0.75, "y1": 0.85, "z0": 10.7, "z1": 11.0},
+  {"name": "filing cabinets", "kind": "furniture", "x0": 8.5, "x1": 9.0, "y0": 0.10, "y1": 1.3, "z0": 9.8, "z1": 11.5},
+  {"name": "cupboard", "kind": "furniture", "x0": 4.19, "x1": 4.7, "y0": 0.10, "y1": 1.9, "z0": 10.8, "z1": 11.6},
+  {"name": "wall, back room to lobby (left of the door)", "kind": "wall", "x0": 4.19, "x1": 5.0, "y0": 0.10, "y1": 3.0, "z0": 11.7, "z1": 11.85},
+  {"name": "wall, back room to lobby (right of the door)", "kind": "wall", "x0": 6.1, "x1": 9.0, "y0": 0.10, "y1": 3.0, "z0": 11.7, "z1": 11.85},
+  {"name": "WC", "kind": "nogo", "x0": 7.5, "x1": 9.0, "y0": 0.10, "y1": 3.0, "z0": 11.85, "z1": 13.0},
+  {"name": "shelf", "kind": "furniture", "x0": 6.3, "x1": 7.3, "y0": 0.10, "y1": 0.9, "z0": 12.6, "z1": 12.95},
+  {"name": "the kettle", "kind": "use", "x0": 6.6, "x1": 6.85, "y0": 0.9, "y1": 1.12, "z0": 12.65, "z1": 12.9},
+  {"name": "back wall (left of the back door)", "kind": "wall", "x0": 4.05, "x1": 5.0, "y0": 0.10, "y1": 3.0, "z0": 13.0, "z1": 13.15},
+  {"name": "back wall (right of the back door)", "kind": "wall", "x0": 6.1, "x1": 9.0, "y0": 0.10, "y1": 3.0, "z0": 13.0, "z1": 13.15},
+  {"name": "back wall over the stair strip", "kind": "wall", "x0": 3.0, "x1": 4.05, "y0": 0.10, "y1": 3.0, "z0": 13.0, "z1": 13.15},
+  {"name": "yard wall, left", "kind": "wall", "x0": 2.85, "x1": 3.0, "y0": 0.10, "y1": 2.0, "z0": 13.15, "z1": 16.65},
+  {"name": "yard wall, right (below gate B)", "kind": "wall", "x0": 9.0, "x1": 9.15, "y0": 0.10, "y1": 2.0, "z0": 13.15, "z1": 14.5},
+  {"name": "yard wall, right (above gate B)", "kind": "wall", "x0": 9.0, "x1": 9.15, "y0": 0.10, "y1": 2.0, "z0": 15.6, "z1": 16.65},
+  {"name": "yard wall, back (left of gate A)", "kind": "wall", "x0": 2.85, "x1": 7.4, "y0": 0.10, "y1": 2.0, "z0": 16.5, "z1": 16.65},
+  {"name": "yard wall, back (right of gate A)", "kind": "wall", "x0": 8.5, "x1": 9.15, "y0": 0.10, "y1": 2.0, "z0": 16.5, "z1": 16.65},
+  {"name": "gate A post", "kind": "use", "x0": 7.3, "x1": 7.4, "y0": 0.10, "y1": 2.1, "z0": 16.5, "z1": 16.65},
+  {"name": "gate B post", "kind": "use", "x0": 9.0, "x1": 9.15, "y0": 0.10, "y1": 2.1, "z0": 14.4, "z1": 14.5},
+  {"name": "the lane beyond gate A (not built)", "kind": "nogo", "x0": 6.9, "x1": 9.0, "y0": 0.10, "y1": 2.0, "z0": 17.6, "z1": 17.8},
+  {"name": "beyond gate B (not built)", "kind": "nogo", "x0": 10.1, "x1": 10.3, "y0": 0.10, "y1": 2.0, "z0": 14.0, "z1": 16.1}
+ ],
+ "marks": [
+  {"name": "Sheila at her desk", "who": "lena", "x": 7.15, "z": 11.45},
+  {"name": "the radio's chair (Mickey's, empty: the brief)", "who": "", "x": 7.05, "z": 9.15},
+  {"name": "Ron at the door", "who": "rocco", "x": 4.64, "z": 4.3},
+  {"name": "the bench", "who": "", "x": 8.7, "z": 6.4}
+ ],
+ "lights": [
+  {"name": "front office", "x": 6.6, "y": 2.8, "z": 6.6, "range_m": 6.0},
+  {"name": "staff side", "x": 6.6, "y": 2.8, "z": 8.7, "range_m": 5.0},
+  {"name": "back room", "x": 6.6, "y": 2.8, "z": 10.6, "range_m": 5.0},
+  {"name": "lobby", "x": 5.6, "y": 2.8, "z": 12.4, "range_m": 4.0},
+  {"name": "yard", "x": 6.0, "y": 3.5, "z": 14.8, "range_m": 8.0}
+ ]
+}

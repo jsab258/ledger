@@ -139,6 +139,12 @@ namespace LedgerVignetteShot
 	// Returns what it did, for the log.
 	FString ApplyPlayCondition(const char* Id);
 
+	// AN EXPORTED STREET MESH BY ITS NAME (production/assets/street/
+	// quay-street.json, "street_mickeys_interior"), or nullptr when the street
+	// export did not load or has no mesh of that name (1 October, item 6:
+	// Mickey's office takes its door and its back block away).
+	AActor* FindStreetMesh(const FString& MeshName);
+
 	// THE SMASHED WINDOW, 29 September (the AI tester: after the deed the
 	// panes "still look whole"). Shows every street mesh the sidecar tagged
 	// reveal_on Tag - the jagged glass left in the frame and the glass on the

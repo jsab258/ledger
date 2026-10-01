@@ -113,6 +113,13 @@
 #include "Engine/StaticMesh.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/LocalLightComponent.h"
+#include "Components/PointLightComponent.h"
+#include "Engine/PointLight.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Dom/JsonObject.h"
+#include "Serialization/JsonReader.h"
+#include "Serialization/JsonSerializer.h"
 #include "UObject/UObjectIterator.h"
 #include "AudioDevice.h"
 #include "AudioMixerBlueprintLibrary.h"
@@ -3714,6 +3721,166 @@ namespace
 		FFileHelper::SaveStringToFile(Text, *(FPaths::ProjectSavedDir() / TEXT("route-where.txt")));
 	}
 
+	// MICKEY'S OFFICE, A GREY BLOCKOUT (item 6, 1 October; game-design/
+	// mickeys-office/BRIEF.md; production/research/interior-blockout). In the
+	// street Mickey's is a solid block behind its shopfront with a painted card
+	// for an inside. With -MickeysInside, live play hides that block, the card
+	// and the shop door, and builds the room from production/specs/
+	// mickeys-office.json: plain boxes in the street's own frame, painted to
+	// the blockout's colour key (the engine's basic-shape colour; no new
+	// asset), blue discs where people stand, a plain light in each room. The
+	// street's piece list and its golden rows are untouched. While Tom is
+	// inside, the camera's arm comes in to the plan's length (-InsideArm=N
+	// tries another), as studios bring a third-person camera in indoors.
+	struct FOffice { bool bBuilt = false, bOn = false; double X0 = 0, X1 = 0, Z0 = 0, Z1 = 0, ArmM = 2.0, LiftM = 0.25; float StreetArm = -1.0f, StreetLift = 0.0f; };
+	FOffice GOffice;
+
+	FString OfficeSpecFile()
+	{
+		TArray<FString> Cands;
+		FString Repo;
+		if (FParse::Value(FCommandLine::Get(), TEXT("LedgerRepo="), Repo) && !Repo.IsEmpty()) { Cands.Add(FPaths::Combine(Repo, TEXT("production/specs/mickeys-office.json"))); }
+		Cands.Add(AbsProject(TEXT("../production/specs/mickeys-office.json")));
+		Cands.Add(AbsProject(TEXT("../../../../production/specs/mickeys-office.json")));
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData/production/specs/mickeys-office.json"))));
+		for (FString C : Cands)
+		{
+			FPaths::CollapseRelativeDirectories(C);
+			if (FPaths::FileExists(C)) { return C; }
+		}
+		return FString();
+	}
+
+	void PaintFlat(AActor* A, UMaterialInterface* Basic, const FLinearColor& Colour)
+	{
+		if (A == nullptr || Basic == nullptr) { return; }
+		TArray<UStaticMeshComponent*> Parts;
+		A->GetComponents(Parts);
+		for (UStaticMeshComponent* C : Parts)
+		{
+			UMaterialInstanceDynamic* M = UMaterialInstanceDynamic::Create(Basic, A);
+			M->SetVectorParameterValue(TEXT("Color"), Colour);
+			C->SetMaterial(0, M);
+		}
+	}
+
+	void BuildMickeysOffice(UWorld* World)
+	{
+		static const bool bWanted = FParse::Param(FCommandLine::Get(), TEXT("MickeysInside"));
+		if (!bWanted || GOffice.bBuilt || World == nullptr) { return; }
+		GOffice.bBuilt = true;
+		const FString Path = OfficeSpecFile();
+		FString Text;
+		TSharedPtr<FJsonObject> Root;
+		if (Path.IsEmpty() || !FFileHelper::LoadFileToString(Text, *Path))
+		{
+			RouteCheck(TEXT("office-built"), false, TEXT("no mickeys-office.json"));
+			return;
+		}
+		const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
+		if (!FJsonSerializer::Deserialize(R, Root) || !Root.IsValid())
+		{
+			RouteCheck(TEXT("office-built"), false, TEXT("mickeys-office.json does not read"));
+			return;
+		}
+		int32 Hidden = 0, Boxes = 0, Marks = 0, Lights = 0;
+		const TArray<TSharedPtr<FJsonValue>>* List = nullptr;
+		if (Root->TryGetArrayField(TEXT("hide"), List))
+		{
+			for (const TSharedPtr<FJsonValue>& V : *List)
+			{
+				// A piece of the scene file's street, or a mesh of the exported one.
+				AActor* A = LedgerVignetteShot::FindStreetPiece(V->AsString());
+				if (A == nullptr) { A = LedgerVignetteShot::FindStreetMesh(V->AsString()); }
+				if (A != nullptr)
+				{
+					A->SetActorHiddenInGame(true);
+					A->SetActorEnableCollision(false);
+					++Hidden;
+				}
+			}
+		}
+		UMaterialInterface* Basic = LoadObject<UMaterialInterface>(nullptr, TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
+		auto Colour = [](const FString& Kind) -> FLinearColor
+		{
+			if (Kind == TEXT("floor")) { return FLinearColor(0.55f, 0.55f, 0.55f); }
+			if (Kind == TEXT("furniture")) { return FLinearColor(0.12f, 0.12f, 0.12f); }
+			if (Kind == TEXT("use")) { return FLinearColor(0.95f, 0.75f, 0.05f); }
+			if (Kind == TEXT("stand")) { return FLinearColor(0.1f, 0.3f, 0.9f); }
+			if (Kind == TEXT("nogo")) { return FLinearColor(0.75f, 0.08f, 0.06f); }
+			return FLinearColor(0.32f, 0.32f, 0.32f);   // wall
+		};
+		if (Root->TryGetArrayField(TEXT("boxes"), List))
+		{
+			for (const TSharedPtr<FJsonValue>& V : *List)
+			{
+				const TSharedPtr<FJsonObject> B = V->AsObject();
+				if (!B.IsValid()) { continue; }
+				const double X0 = B->GetNumberField(TEXT("x0")), X1 = B->GetNumberField(TEXT("x1"));
+				const double Y0 = B->GetNumberField(TEXT("y0")), Y1 = B->GetNumberField(TEXT("y1"));
+				const double Z0 = B->GetNumberField(TEXT("z0")), Z1 = B->GetNumberField(TEXT("z1"));
+				AActor* A = SpawnBox(World, TEXT("office_") + B->GetStringField(TEXT("name")),
+					LedgerCrime::P3((X0 + X1) * 0.5, (Y0 + Y1) * 0.5, (Z0 + Z1) * 0.5), X1 - X0, Y1 - Y0, Z1 - Z0, TEXT("plaster"));
+				if (A != nullptr) { PaintFlat(A, Basic, Colour(B->GetStringField(TEXT("kind")))); ++Boxes; }
+			}
+		}
+		if (Root->TryGetArrayField(TEXT("marks"), List))
+		{
+			for (const TSharedPtr<FJsonValue>& V : *List)
+			{
+				const TSharedPtr<FJsonObject> M = V->AsObject();
+				if (!M.IsValid()) { continue; }
+				AActor* A = LedgerVignetteShot::SpawnProbePiece(World, TEXT("office_mark_") + M->GetStringField(TEXT("name")),
+					FVector((float)M->GetNumberField(TEXT("x")), 0.115f, (float)M->GetNumberField(TEXT("z"))), FVector(0.5f, 0.01f, 0.5f), TEXT("cyl"), TEXT("plaster"));
+				if (A != nullptr) { A->SetActorEnableCollision(false); PaintFlat(A, Basic, Colour(TEXT("stand"))); ++Marks; }
+			}
+		}
+		if (Root->TryGetArrayField(TEXT("lights"), List))
+		{
+			for (const TSharedPtr<FJsonValue>& V : *List)
+			{
+				const TSharedPtr<FJsonObject> L = V->AsObject();
+				if (!L.IsValid()) { continue; }
+				const FVector At((float)L->GetNumberField(TEXT("x")) * 100.0f, (float)L->GetNumberField(TEXT("z")) * 100.0f, (float)L->GetNumberField(TEXT("y")) * 100.0f);
+				FActorSpawnParameters P;
+				P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				if (APointLight* PL = World->SpawnActor<APointLight>(At, FRotator::ZeroRotator, P))
+				{
+					PL->SetMobility(EComponentMobility::Movable);
+					PL->PointLightComponent->SetAttenuationRadius((float)L->GetNumberField(TEXT("range_m")) * 100.0f);
+					PL->PointLightComponent->SetIntensity(1500.0f);
+					PL->PointLightComponent->SetLightColor(FLinearColor(1.0f, 0.95f, 0.85f));
+					++Lights;
+				}
+			}
+		}
+		const TSharedPtr<FJsonObject>* Inside = nullptr;
+		if (Root->TryGetObjectField(TEXT("inside"), Inside) && Inside != nullptr)
+		{
+			GOffice.X0 = (*Inside)->GetNumberField(TEXT("x0")); GOffice.X1 = (*Inside)->GetNumberField(TEXT("x1"));
+			GOffice.Z0 = (*Inside)->GetNumberField(TEXT("z0")); GOffice.Z1 = (*Inside)->GetNumberField(TEXT("z1"));
+			GOffice.ArmM = (*Inside)->GetNumberField(TEXT("arm_m")); GOffice.LiftM = (*Inside)->GetNumberField(TEXT("lift_m"));
+			float Arm = 0.0f;
+			if (FParse::Value(FCommandLine::Get(), TEXT("InsideArm="), Arm) && Arm > 0.5f) { GOffice.ArmM = Arm; }
+			GOffice.bOn = true;
+		}
+		RouteCheck(TEXT("office-built"), Hidden > 0 && Boxes > 0, FString::Printf(TEXT("hid=%d boxes=%d marks=%d lights=%d arm_m=%.2f"), Hidden, Boxes, Marks, Lights, GOffice.ArmM));
+	}
+
+	// The camera's arm while Tom is inside Mickey's, eased back out on the street.
+	void OfficeCameraTick(float Dt)
+	{
+		if (!GOffice.bOn || GPawn == nullptr) { return; }
+		USpringArmComponent* Boom = GPawn->FindComponentByClass<USpringArmComponent>();
+		if (Boom == nullptr) { return; }
+		if (GOffice.StreetArm < 0.0f) { GOffice.StreetArm = Boom->TargetArmLength; GOffice.StreetLift = Boom->SocketOffset.Z; }
+		const LedgerCrime::P3 At = ToStreet(GPawn->GetActorLocation());
+		const bool bIn = At.X > GOffice.X0 && At.X < GOffice.X1 && At.Z > GOffice.Z0 && At.Z < GOffice.Z1;
+		const float Want = bIn ? (float)GOffice.ArmM * 100.0f : GOffice.StreetArm;
+		Boom->TargetArmLength = FMath::FInterpTo(Boom->TargetArmLength, Want, Dt, 4.0f);
+		Boom->SocketOffset.Z = FMath::FInterpTo(Boom->SocketOffset.Z, GOffice.StreetLift + (bIn ? (float)GOffice.LiftM * 100.0f : 0.0f), Dt, 4.0f);
+	}
+
 	// Each frame: the acknowledgement ends with its sound, or at once when the answer starts.
 	void AckTick()
 	{
@@ -5612,6 +5779,7 @@ namespace
 		AskScriptTick(Now);
 		FaceABTick(Now);
 		RouteWhereTick(World, Now);
+		OfficeCameraTick((float)FApp::GetDeltaTime());
 		TalkLightTick(World, Now);
 		AckTick();
 		if (bSayOpen)
@@ -6704,6 +6872,7 @@ namespace
 		case ECrimePhase::PlaceProps:
 		{
 			PlaceProps(World);
+			BuildMickeysOffice(World);
 			LoadBank();
 			// The pawn starts at S, facing down the street: +x, which is yaw 0
 			// in this engine and in the shared file alike.
