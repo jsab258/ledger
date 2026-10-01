@@ -32,6 +32,7 @@ import sys
 import bmesh
 import bpy
 import numpy as np
+from mathutils import Vector
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 BODY, GAME, OUT, NAME = argv[:4]
@@ -107,8 +108,9 @@ def ensure(bone):
 
 
 # ---- the body's skeleton (everything else in the file cleared first, so the skeleton keeps its own name) -------
+KEEP_ALSO = opt("--also", "", str)
 for o in list(bpy.data.objects):
-    if o is not g:
+    if o is not g and o.name != KEEP_ALSO:
         bpy.data.objects.remove(o, do_unlink=True)
 for a in list(bpy.data.armatures):
     if a.users == 0:
@@ -193,9 +195,14 @@ for i in range(len(P)):
     left = side_x[i] > CUT_X
     own = 0.5 + (OWN - 0.5) * min(1.0, abs(side_x[i] - CUT_X) / 0.02 + 0.5)
     fl = own if left else 1 - own
+    # --front-thigh: the share of the front's leg weight kept on the thighs (1 October, the builder's in-game test:
+    # sitting, a front on the thighs wrapped between them like shorts; on the pelvis it hangs and the cloth lays it
+    # over the lap)
+    FT = opt("--front-thigh", 1.0)
     want = np.zeros(W.shape[1])
-    want[th_l] += T * (front * fl + (1 - front) * (1 - PEL) * 0.5)
-    want[th_r] += T * (front * (1 - fl) + (1 - front) * (1 - PEL) * 0.5)
+    want[th_l] += T * (front * fl * FT + (1 - front) * (1 - PEL) * 0.5)
+    want[th_r] += T * (front * (1 - fl) * FT + (1 - front) * (1 - PEL) * 0.5)
+    want[pelvis] += T * front * (1 - FT)
     want[pelvis] += T * (1 - front) * PEL
     for b_ in leg:
         W[i, col[b_]] *= 1 - t
@@ -284,6 +291,37 @@ bpy.context.view_layer.objects.active = arm
 out_fbx = os.path.join(OUT, NAME + "_skinned.fbx")
 bpy.ops.export_scene.fbx(filepath=out_fbx, use_selection=True, object_types={"ARMATURE", "MESH"}, add_leaf_bones=False,
                          mesh_smooth_type="OFF", use_tspace=True, colors_type="LINEAR", bake_anim=False)
+# --also OBJECT (1 October: the shell's cloth mesh): another object of the file skinned from this one, each point
+# taking the weights of the garment's nearest point (the builder copies weights the same way), exported beside it
+ALSO = opt("--also", "", str)
+if ALSO:
+    from mathutils.kdtree import KDTree as _KDa
+    o2 = bpy.data.objects[ALSO]
+    kda = _KDa(len(P))
+    for i, q in enumerate(P):
+        kda.insert(Vector(tuple(q)), i)
+    kda.balance()
+    for vg in list(o2.vertex_groups):
+        o2.vertex_groups.remove(vg)
+    groups2 = {j: o2.vertex_groups.new(name=names[j]) for j in used}
+    for v in o2.data.vertices:
+        _c, i, _d = kda.find(o2.matrix_world @ v.co)
+        for j in used:
+            if W[i, j] > 1e-4:
+                groups2[j].add([v.index], float(W[i, j]), "REPLACE")
+    mw2 = o2.matrix_world.copy()
+    o2.parent = arm
+    o2.matrix_world = mw2
+    m2 = o2.modifiers.new("Armature", "ARMATURE")
+    m2.object = arm
+    bpy.ops.object.select_all(action="DESELECT")
+    arm.select_set(True)
+    o2.select_set(True)
+    bpy.context.view_layer.objects.active = arm
+    bpy.ops.export_scene.fbx(filepath=os.path.join(OUT, ALSO + "_skinned.fbx"), use_selection=True,
+                             object_types={"ARMATURE", "MESH"}, add_leaf_bones=False, mesh_smooth_type="OFF",
+                             colors_type="LINEAR", bake_anim=False)
+    log["also"] = {"object": ALSO, "points": len(o2.data.vertices)}
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, NAME + "_skinned.blend"))
 os.remove(static)
 json.dump(log, open(os.path.join(OUT, "skin.json"), "w"), indent=1)
