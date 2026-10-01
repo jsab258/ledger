@@ -220,21 +220,13 @@ def build(date):
                  '<textarea id="story-note" placeholder="What to change"></textarea><p class="status" id="story-status"></p></article></section>')
     parts.append('<p class="status" id="store-status"></p></main>')
     parts.append(SCRIPT)
-    return "\n".join(parts)
+    import page_pictures   # every picture judged on the page itself (Jafar, 1 October)
+    return page_pictures.apply("\n".join(parts))
 
 
 SCRIPT = """<script>
-// EVERY PICTURE OPENS AT FULL SIZE WHEN TAPPED (Jafar, 30 September); tap again to close.
-document.addEventListener("click", e => {
-  const open = document.querySelector(".full");
-  if (open) { open.remove(); return; }
-  const img = e.target.closest && e.target.closest("img");
-  if (!img) return;
-  const d = document.createElement("div"); d.className = "full";
-  const big = document.createElement("img"); big.src = img.currentSrc || img.src; big.alt = img.alt || "";
-  d.appendChild(big); document.body.appendChild(d);
-});
-document.addEventListener("keydown", e => { if (e.key === "Escape") { const o = document.querySelector(".full"); if (o) o.remove(); } });
+// EVERY PICTURE JUDGED ON THE PAGE ITSELF (Jafar, 30 September and 1 October):
+// the shared viewer, tools/page_pictures.py, added to the page by build().
 let db = null, canWrite = true;
 const state = {};
 function status(key, text, ok){const s=document.getElementById(key+"-status"); if(s){s.textContent=text; s.className="status"+(ok?" saved":"");}}

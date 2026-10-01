@@ -56,14 +56,27 @@ textarea{width:100%;min-height:54px;font:15px/1.4 var(--body);color:var(--ink);b
 footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var(--rule);padding-top:14px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
-/* PICTURES AT FULL SIZE (tools/page_pictures.py, Jafar 30 September) */
+/* PICTURES JUDGED ON THE PAGE (tools/page_pictures.py, Jafar 30 September and 1 October) */
 .capgrid,.cands,.pair{grid-template-columns:1fr!important}
 .capgrid img,.pair img,.cands img,figure img{width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important}
-main img,section img{cursor:zoom-in}
-.fullsize{position:fixed;inset:0;z-index:1000;background:#000;overflow:auto;display:none;-webkit-overflow-scrolling:touch;cursor:zoom-out}
-.fullsize.on{display:block}
-.fullsize img{max-width:none!important;width:auto!important;height:auto!important;display:block;margin:0 auto}
-.fullsize .fullhint{position:fixed;top:calc(8px + env(safe-area-inset-top, 0px));right:12px;font:600 13px/1 sans-serif;color:#fff;background:rgba(0,0,0,.6);padding:8px 10px}
+main img,section img,[data-film-sprite]{cursor:zoom-in}
+.pv{position:fixed;inset:0;z-index:2147483000;background:#000;display:none;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
+.pv.on{display:block}
+.pv .pv-stage{position:absolute;inset:0;overflow:hidden}
+.pv .pv-hold{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.pv .pv-hold img{display:block;max-width:none!important;width:auto!important;height:auto!important;-webkit-user-drag:none;pointer-events:none}
+.pv .pv-film{background-repeat:no-repeat;pointer-events:none}
+.pv .pv-bar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top, 0px)) 12px 10px;background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,0));color:#fff;font:600 14px/1.2 system-ui,sans-serif;pointer-events:none}
+.pv .pv-bar *{pointer-events:auto}
+.pv .pv-count{opacity:.85;font-variant-numeric:tabular-nums}
+.pv .pv-close{min-width:88px;min-height:44px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;cursor:pointer}
+.pv .pv-cap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px calc(12px + env(safe-area-inset-bottom, 0px));background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.75));color:#fff;font:14px/1.35 system-ui,sans-serif;pointer-events:none}
+.pv .pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:72px;border:0;background:rgba(0,0,0,.35);color:#fff;font:700 30px/1 system-ui,sans-serif;cursor:pointer}
+.pv .pv-prev{left:0;border-radius:0 8px 8px 0}.pv .pv-next{right:0;border-radius:8px 0 0 8px}
+.pv .pv-play{position:absolute;left:50%;bottom:calc(64px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);min-height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;display:none;cursor:pointer}
+.pv.film .pv-play{display:block}
+@media (hover:none){.pv .pv-nav{display:none}}
 </style>
 <div class="wrap">
   <header>
@@ -76,7 +89,7 @@ main img,section img{cursor:zoom-in}
   <footer id="foot"></footer>
 </div>
 <script>
-const PAGE = {"tab": "Thursday's Page", "kicker": "LEDGER · Thursday 1 October", "title": "Thursday's page", "how": ["Three picks. One tap each; a note is optional. Your picks save on the page."], "foot": "Anything you do not pick carries onto the next page.", "sections": [{"kind": "decide", "key": "scope-voice-delay", "name": "The voice's delay: down from 4 s to 3 s for a short line in the game, but every faster way I built runs at half speed beside the game. What next?", "note": "Measured in the finished game, 1 October. The voice's work for a short line (1.6 s of speech): 3.95 s before, 2.98 s now (its decoder moved to the graphics card, same sound). On the real path the words come at 1.9 s (30 lines, 30 September), so the first sound is now about 4.5 s after Enter, covered by the characters' short sounds. Tried tonight and failed in the game: making the voice in pieces inside the sentence (1.0 s to the first piece on the idle PC, but beside the game each piece took 1.5 s, so replies came slower with gaps); a compiled version of the voice's main loop (92 steps a second idle, 17 beside the game, against 25 today); a 60 and a 30 frame cap, half the picture's resolution, and a higher priority for the voice: none changed it. Beside the running game every way runs at about half its idle speed. The one lead left: the voice inside the game itself with its own high priority on the graphics card, which a separate program cannot have. Unproven; I would research it first. Moving the voice into the game is already on the road to release (about two weeks by the earlier note), since a friend's PC should not need Python. The rest of this week's list: mouths, nightly tests of the finished game, Mickey's office, filming the suit jacket (the friends' build waits on the fresh Windows account).", "options": [["items-first", "This week's other items first, then research and move the voice into the game (recommended)"], ["voice-now", "Research and move the voice into the game now; the other items wait"], ["leave", "Leave the voice as it is for now"]]}, {"kind": "said", "key": "said-ron-well-now", "name": "Ron's \"Well now.\": which face looks like him saying it?", "detail": "Filmed in the game from 60 cm, the same sound twice in a row in the same place: one face is Epic's tool reading the sound, the other follows its loudness, as all speech in play does today. Which is which is kept off the page. The film is ten frames a second, so it moves coarsely; the game is smooth. A blind reviewer's notes: A: the mouth opens in the first half only and stays shut for \"now\"; his eyes are half-lidded, looking down to his right. B: the upper face is frozen and only the jaw drops, with no rounding for \"w\" or \"ow\".", "clips": [{"label": "A", "line": "Well now.", "audio": "said-ron-well-now/well-now.wav", "sprite": {"file": "said-ron-well-now/rocco-well-now-A.jpg", "frames": 8, "cols": 5, "rows": 2, "fps": 11}}, {"label": "B", "line": "Well now.", "audio": "said-ron-well-now/well-now.wav", "sprite": {"file": "said-ron-well-now/rocco-well-now-B.jpg", "frames": 8, "cols": 5, "rows": 2, "fps": 11}}], "options": [["A", "A"], ["B", "B"], ["neither", "Neither looks right"]]}, {"kind": "said", "key": "said-darren-hmm-well-now", "name": "Darren's \"Hmm. Well now.\": which face looks like him saying it?", "detail": "Filmed in the game from 60 cm, the same sound twice in a row in the same place: one face is Epic's tool reading the sound, the other follows its loudness, as all speech in play does today. Which is which is kept off the page. The film is ten frames a second, so it moves coarsely; the game is smooth. A blind reviewer's notes: A: the lips part during \"Hmm\", and spread rather than round on \"Well\". B: still for the first 0.6 s, and \"Well now\" comes in one small opening.", "clips": [{"label": "A", "line": "Hmm. Well now.", "audio": "said-darren-hmm-well-now/hmm-well-now.wav", "sprite": {"file": "said-darren-hmm-well-now/sam-hmm-well-now-A.jpg", "frames": 12, "cols": 5, "rows": 3, "fps": 10}}, {"label": "B", "line": "Hmm. Well now.", "audio": "said-darren-hmm-well-now/hmm-well-now.wav", "sprite": {"file": "said-darren-hmm-well-now/sam-hmm-well-now-B.jpg", "frames": 12, "cols": 5, "rows": 3, "fps": 10}}], "options": [["A", "A"], ["B", "B"], ["neither", "Neither looks right"]]}]};
+const PAGE = {"tab": "Thursday's Page", "kicker": "LEDGER · Thursday 1 October", "title": "Thursday's page", "how": ["Wednesday's four open looks, taken again in the game at full size. Tap any picture or face to open it full-screen at its full resolution: pinch to zoom, swipe to the next, Close to come back. One tap each; a note is optional. Your picks save on the page."], "foot": "Anything you do not pick carries onto the next page. Your three picks from this morning are in (the voice: this week's items first, with your condition; both thinking sounds: the loudness mouth).", "sections": [{"kind": "look", "key": "look-street-dressed", "name": "The street by day, with its 1990 clutter: does anything jar?", "detail": "Taken today in the game at 2560 by 1440, through its own light and exposure (Wednesday's were half that). In it: the telephone kiosk, pillar box, galvanised dustbins, bollards, litter bins, the telegraph pole and its wires, the grit bin; each passed my check and a blind reviewer's, which under your rule is their approval. The third view is cropped at the bottom, where that camera stands just behind a builder's skip. Today's reviewer passed it, with notes: the near car's windscreen is opaque grey and its plate blank; the other figures' hair shows a flat silver patch on the crown and the woman in the doorway stands stiffly, arms straight down (they are the three placeholders of 23 September, replaced by MetaHuman townspeople for the friends' build); Sheila's hair reads grey in the second view and near-black in the first. Wednesday's: the kiosk's glass shows no tint or reflection; two telegraph wires seem to end at the chimneys from the far end.", "pictures": [{"src": "look-street-dressed/street-hook-day.webp", "alt": "Up the street from Mickey's, by day"}, {"src": "look-street-dressed/street-A-day.webp", "alt": "Along the east pavement, by day"}, {"src": "look-street-dressed/street-B-day.webp", "alt": "Across the road at the shops, by day"}], "options": [["yes", "Nothing jars"], ["no", "Something jars"]]}, {"kind": "look", "key": "look-street-night", "name": "The street at night under its sodium lamps: does it read as night?", "detail": "The same three views at ten at night, taken today at 2560 by 1440 through the game's own light and exposure. Low-pressure sodium, one orange colour, pools of light under each lamp and the gaps between left dark, the wet road carrying their reflections (from the research on 1990 street light). Today's reviewer passed it, with notes: in the third view the lamps' light ends in hard arcs across the upper floor; the pillar box stays bright red. Wednesday's: the left terrace's brick is lit fairly evenly up to the eaves, nearer floodlighting than pools; colours survive the sodium light, where under real sodium they would go orange and black; the cream tiles under the right-hand shop are the brightest patch; the lit upstairs windows read cool rather than warm.", "pictures": [{"src": "look-street-night/street-hook-night.webp", "alt": "Up the street from Mickey's, at night"}, {"src": "look-street-night/street-A-night.webp", "alt": "Along the east pavement, at night"}, {"src": "look-street-night/street-B-night.webp", "alt": "Across the road at the shops, at night"}], "options": [["yes", "That reads as night"], ["no", "Not like this"]]}, {"kind": "said", "key": "look-mouths-speaking", "name": "Their mouths as they answer: roughly in time with the words?", "detail": "Filmed in the game today from 60 cm while each answered, the mouth following the loudness of the voice you hear (the way your picks this morning chose for the thinking sounds too). The words are the test stand-in's, not a real reply. The film catches about seven frames a second and plays at ten, each frame placed by how much of the sentence had been heard when it was taken, so it moves coarsely; the game is smooth. In play the second sentence comes about 1.5 s after the first, while the voice makes it; here the pause is under a second. Darren still wears his earlier head in the game; S6, which you approved, goes in next. The first reviewer failed an earlier cut of these films: the mouth trailed the sound by a third of a second, because the film counted from the moment the sound was set playing, not heard; fixed, and the film's motion blur turned off (at seven frames a second a turn of the head smeared). A fresh reviewer passed the fixed films: the mouth follows the sound to within about a frame. Its notes: each sentence's mouth opens a frame late; in the pause the picture holds for half a second, then jumps; inside Sheila's mouth reads grey-green in a few frames, and a pale speckled line runs along her upper eyelid crease; the tops of the heads are cut off. Earlier notes: every open mouth is roughly the same oval; the teeth have ragged, yellowish edges.", "clips": [{"label": "Darren", "line": "Morning. Quiet one today.", "audio": "look-mouths-speaking/answer-darren.wav", "sprite": {"file": "look-mouths-speaking/answer-darren.jpg", "frames": 24, "cols": 5, "rows": 5, "fps": 10}}, {"label": "Sheila", "line": "Morning. Quiet one today.", "audio": "look-mouths-speaking/answer-sheila.wav", "sprite": {"file": "look-mouths-speaking/answer-sheila.jpg", "frames": 24, "cols": 5, "rows": 5, "fps": 10}}, {"label": "Ron", "line": "Morning. Quiet one today.", "audio": "look-mouths-speaking/answer-ron.wav", "sprite": {"file": "look-mouths-speaking/answer-ron.jpg", "frames": 24, "cols": 5, "rows": 5, "fps": 10}}], "options": [["yes", "Roughly in time; keep it"], ["no", "Worse than still"]]}, {"kind": "look", "key": "look-dressed-boots-handbag", "name": "Ron's work boots and Sheila's handbag: do they stay?", "detail": "The clothing session's first pieces, fitted in the game and taken today at full size in the street's own light: Ron's black work boots (in place of Epic's, lifting him 2 cm onto their soles) and Sheila's chestnut handbag in her right hand. Clothes on people are yours to approve. The green post at the edge of the boots is a litter bin on the pavement. Today's reviewer passed it, with notes: the boots' close view is dark, in the shop front's shade, so zoom in; each toe shows a small gap between the upper and the sole; the handbag's handles pass through her fingers rather than lying in their curl; the bag is plain brown with no texture and hangs a little tilted; a piece of litter overlaps her shoes. Earlier reviewers': the boots' collar a little ragged, the sole even with no heel step, the laces flat; the bag a little boxy, no metal loops at the handles. Her spectacles are held back to be refitted to her approved head.", "pictures": [{"src": "look-dressed-boots-handbag/dressed-ron.webp", "alt": "Ron, in his boots"}, {"src": "look-dressed-boots-handbag/dressed-ron-boots.webp", "alt": "Ron's boots, close"}, {"src": "look-dressed-boots-handbag/dressed-sheila.webp", "alt": "Sheila, with her handbag"}, {"src": "look-dressed-boots-handbag/dressed-sheila-handbag.webp", "alt": "The handbag, close"}], "options": [["yes", "Yes, they stay"], ["no", "No"]]}]};
 const state = {};
 let db = null, canWrite = true, audio = null, playing = null, raf = 0;
 function el(tag, attrs, ...kids){
@@ -92,8 +105,10 @@ function play(src, btn, onFrame){
   a.addEventListener("ended", () => { if (onFrame) onFrame(0); stop(); });
   a.play().then(() => { if (onFrame) raf = setInterval(() => { if (audio === a) onFrame(a.currentTime); }, 33); }).catch(() => stop());
 }
-function spriteBox(sp){
-  const box = el("div", {class:"speak", role:"img", "aria-label":"speaking"});
+function spriteBox(sp, audio, caption){
+  // data-film-*: the page's viewer opens the film full-screen with its sound (tools/page_pictures.py).
+  const box = el("div", {class:"speak", role:"img", "aria-label":"speaking", "data-film-sprite":JSON.stringify(sp),
+                         "data-film-audio":audio || "", "data-caption":caption || ""});
   box.style.backgroundImage = "url(" + sp.file + ")";
   box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
   const show = i => {
@@ -149,7 +164,7 @@ function render(){
             c.front ? el("img", {src:c.front, alt:s.name + " " + c.take + ", front", loading:"lazy"}) : el("div", {class:"speak"}),
             c.profile ? el("img", {src:c.profile, alt:s.name + " " + c.take + ", profile", loading:"lazy"}) : el("div", {class:"speak"})));
           if (c.speak && s.audio) {
-            const sp = spriteBox(c.speak);
+            const sp = spriteBox(c.speak, s.audio, s.name + ", " + c.take);
             const b = el("button", {type:"button", text:"Play the line"});
             b.addEventListener("click", () => play(s.audio, b, sp.at));
             box.append(sp.box, el("div", {class:"row"}, b));
@@ -169,6 +184,7 @@ function render(){
       const g = el("div", {class:"capgrid"});
       for (const p of s.pictures) g.append(el("figure", {}, el("img", {src:p.src, alt:p.alt, loading:"lazy"}), el("figcaption", {class:"was", text:p.alt})));
       sec.append(g, picks(s.key, s.options, st.pick));
+      if (s.detail) sec.append(el("details", {}, el("summary", {text:"What this is"}), el("p", {class:"was", text:s.detail})));
     } else if (s.kind === "pair") {
       const row = el("div", {class:"row"});
       for (const t of s.takes) {
@@ -180,7 +196,7 @@ function render(){
     } else if (s.kind === "said") {
       // A FACE FILMED SAYING A LINE, played in time with its own sound.
       for (const c of s.clips) {
-        const sp = spriteBox(c.sprite);
+        const sp = spriteBox(c.sprite, c.audio, s.name.split(":")[0] + ", " + c.label);
         const b = el("button", {type:"button", text:"Play " + c.label});
         b.addEventListener("click", () => play(c.audio, b, sp.at));
         sec.append(el("div", {class:"cand"}, el("div", {class:"take", text:c.label}), sp.box, el("div", {class:"row"}, b, el("q", {text:c.line}))));
@@ -212,5 +228,135 @@ render();
     try { const d = await db.doc("verdicts/" + s.key).get(); if (d.exists) state[s.key] = Object.assign({}, d.data()); } catch (e) {}
   }
   render();
+})();
+
+// PICTURES JUDGED ON THE PAGE (tools/page_pictures.py): a tap opens a picture
+// full-screen at its own resolution; pinch or wheel to zoom, drag to look
+// about, double tap for its pixels one to one, swipe or arrows for the next,
+// Close or Esc to return. Filmed faces play with their own sound.
+(function(){
+  if (window.__pvReady) return; window.__pvReady = true;
+  const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+  const view = mk("div", "pv"); view.setAttribute("role", "dialog"); view.setAttribute("aria-label", "Picture, full screen");
+  const stage = mk("div", "pv-stage"), hold = mk("div", "pv-hold");
+  const bar = mk("div", "pv-bar"), count = mk("span", "pv-count"), close = mk("button", "pv-close", "Close");
+  const cap = mk("div", "pv-cap"), prev = mk("button", "pv-nav pv-prev", "‹"), next = mk("button", "pv-nav pv-next", "›");
+  const play = mk("button", "pv-play", "Play again");
+  close.type = prev.type = next.type = play.type = "button";
+  prev.setAttribute("aria-label", "The picture before"); next.setAttribute("aria-label", "The next picture");
+  stage.append(hold); bar.append(count, close); view.append(stage, bar, cap, prev, next, play);
+  (document.body || document.documentElement).append(view);
+
+  let items = [], idx = 0, W = 1, H = 1, fit = 1, sc = 1, tx = 0, ty = 0, audio = null, raf = 0, film = null;
+  const pts = new Map(); let pinch = null, drag = null, swipe = null, lastTap = 0;
+
+  function collect(){
+    return Array.from(document.querySelectorAll("img, [data-film-sprite]")).filter(e => !view.contains(e) && (e.tagName !== "IMG" || (e.currentSrc || e.src)));
+  }
+  function apply(){ hold.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + sc + ")"; }
+  function clampPan(){
+    const vw = stage.clientWidth, vh = stage.clientHeight, w = W * sc, h = H * sc;
+    tx = w <= vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, tx));
+    ty = h <= vh ? (vh - h) / 2 : Math.min(0, Math.max(vh - h, ty));
+  }
+  function fitNow(){ const vw = stage.clientWidth, vh = stage.clientHeight; fit = Math.min(vw / W, vh / H); sc = fit; tx = (vw - W * sc) / 2; ty = (vh - H * sc) / 2; apply(); }
+  function zoomAt(s, cx, cy){
+    const max = Math.max(fit * 8, 4), ns = Math.min(max, Math.max(fit, s));
+    tx = cx - (cx - tx) * ns / sc; ty = cy - (cy - ty) * ns / sc; sc = ns; clampPan(); apply();
+  }
+  function stopFilm(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); film = null; }
+  function frameOf(sp, i){
+    i = Math.max(0, Math.min(sp.frames - 1, i)); const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    return (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  }
+  function runFilm(){
+    if (!film) return; stopAudioOnly();
+    const sp = film.sp; audio = film.audio ? new Audio(film.audio) : null;
+    const box = film.box; box.style.backgroundPosition = frameOf(sp, 0);
+    // THE FILM'S CLOCK IS ITS SOUND; when the sound cannot play (no sound
+    // device, or the browser refuses), its own timer, so the face still moves.
+    const t0 = performance.now(), len = sp.frames / (sp.fps || 10);
+    let silent = !audio;
+    const now = () => silent ? (performance.now() - t0) / 1000 : audio.currentTime;
+    const over = () => silent ? now() >= len : audio.ended;
+    if (audio) { audio.play().catch(() => { silent = true; }); }
+    // A plain timer, as the page's own player uses: animation frames stop in a hidden view.
+    raf = setInterval(() => { if (film === null || film.box !== box) { clearInterval(raf); return; }
+      if (over()) { clearInterval(raf); box.style.backgroundPosition = frameOf(sp, 0); return; }
+      box.style.backgroundPosition = frameOf(sp, Math.floor(now() * sp.fps)); }, 33);
+  }
+  function stopAudioOnly(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); }
+  function show(i){
+    stopFilm(); idx = (i + items.length) % items.length; const el = items[idx];
+    hold.replaceChildren(); view.classList.remove("film");
+    count.textContent = (idx + 1) + " / " + items.length;
+    cap.textContent = el.getAttribute("data-caption") || el.alt || el.getAttribute("aria-label") || "";
+    if (el.tagName === "IMG") {
+      const im = new Image(); im.alt = el.alt || ""; im.decoding = "async";
+      im.onload = () => { W = im.naturalWidth || 1; H = im.naturalHeight || 1; fitNow(); };
+      im.src = el.getAttribute("data-full") || el.currentSrc || el.src;
+      hold.append(im); W = el.naturalWidth || 1; H = el.naturalHeight || 1; fitNow();
+    } else {
+      let sp = {}; try { sp = JSON.parse(el.getAttribute("data-film-sprite")); } catch (e) {}
+      const box = mk("div", "pv-film"); const probe = new Image();
+      box.style.backgroundImage = "url(" + sp.file + ")"; box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+      hold.append(box); view.classList.add("film");
+      film = { sp, box, audio: el.getAttribute("data-film-audio") };
+      probe.onload = () => { W = Math.round(probe.naturalWidth / sp.cols); H = Math.round(probe.naturalHeight / sp.rows);
+        box.style.width = W + "px"; box.style.height = H + "px"; fitNow(); runFilm(); };
+      probe.src = sp.file;
+    }
+  }
+  function open(el){ items = collect(); const i = items.indexOf(el); if (i < 0) return;
+    view.classList.add("on"); document.documentElement.style.overflow = "hidden"; show(i); close.focus({preventScroll:true}); }
+  function shut(){ stopFilm(); view.classList.remove("on"); hold.replaceChildren(); document.documentElement.style.overflow = ""; }
+
+  document.addEventListener("click", (e) => {
+    if (view.contains(e.target)) return;
+    const el = e.target.closest ? e.target.closest("img, [data-film-sprite]") : null;
+    if (!el || (el.tagName === "IMG" && !(el.currentSrc || el.src))) return;
+    if (el.closest("a")) e.preventDefault();
+    open(el);
+  }, true);
+  close.addEventListener("click", shut);
+  prev.addEventListener("click", () => show(idx - 1));
+  next.addEventListener("click", () => show(idx + 1));
+  play.addEventListener("click", runFilm);
+  document.addEventListener("keydown", (e) => {
+    if (!view.classList.contains("on")) return;
+    if (e.key === "Escape") shut(); else if (e.key === "ArrowRight") show(idx + 1); else if (e.key === "ArrowLeft") show(idx - 1);
+    else if (e.key === "+" || e.key === "=") zoomAt(sc * 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else if (e.key === "-") zoomAt(sc / 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else return; e.preventDefault();
+  });
+  stage.addEventListener("wheel", (e) => { e.preventDefault(); const r = stage.getBoundingClientRect(); zoomAt(sc * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top); }, {passive:false});
+  stage.addEventListener("pointerdown", (e) => {
+    try { stage.setPointerCapture(e.pointerId); } catch (err) {}   // some browsers refuse; the pinch must not depend on it
+    const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = {d: Math.hypot(a.x - b.x, a.y - b.y), s: sc}; drag = swipe = null; }
+    else if (pts.size === 1) { const p = pts.get(e.pointerId); drag = {x: p.x, y: p.y, tx, ty}; swipe = {x: p.x, y: p.y, t: Date.now()}; }
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!pts.has(e.pointerId)) return; const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pinch && pts.size >= 2) { const [a, b] = [...pts.values()]; zoomAt(pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / (pinch.d || 1), (a.x + b.x) / 2, (a.y + b.y) / 2); }
+    else if (drag && sc > fit * 1.02) { const p = pts.get(e.pointerId); tx = drag.tx + p.x - drag.x; ty = drag.ty + p.y - drag.y; clampPan(); apply(); }
+  });
+  function lift(e){
+    const p = pts.get(e.pointerId); pts.delete(e.pointerId);
+    if (pts.size < 2) pinch = null;
+    if (!p || pts.size) return;
+    if (swipe && sc <= fit * 1.02) {
+      const dx = p.x - swipe.x, dy = p.y - swipe.y, dt = Date.now() - swipe.t;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 800) { show(idx + (dx < 0 ? 1 : -1)); swipe = drag = null; return; }
+    }
+    if (swipe && Math.hypot(p.x - swipe.x, p.y - swipe.y) < 10) {
+      const now = Date.now();
+      if (now - lastTap < 320) { lastTap = 0; if (sc > fit * 1.02) fitNow(); else zoomAt(Math.max(1, fit * 2.5), p.x, p.y); }
+      else lastTap = now;
+    }
+    swipe = drag = null;
+  }
+  stage.addEventListener("pointerup", lift); stage.addEventListener("pointercancel", lift);
+  window.addEventListener("resize", () => { if (view.classList.contains("on")) fitNow(); });
 })();
 </script>

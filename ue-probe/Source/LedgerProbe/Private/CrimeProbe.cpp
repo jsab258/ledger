@@ -3245,11 +3245,27 @@ namespace
 	// before a line starts (cut in as the line began, the first frames showed
 	// hair and beard missing or grainy while the picture caught up).
 	TWeakObjectPtr<AActor> GMouthFilmHold;
+	// How much of the playing sentence has been heard, in seconds, as each frame is
+	// taken (-1 for a thinking sound); its log line places the frame on the sound.
+	double GFilmHeardS = -1.0;
 
 	void MouthFilmTick(UWorld* World, AActor* Who, bool bSpeaking)
 	{
 		static const bool bWanted = FParse::Param(FCommandLine::Get(), TEXT("MouthFilm"));
 		if (!bWanted || World == nullptr) { return; }
+		// Once, as filming starts. -FilmSize=WxH (1 October): the film at that size, not the window's, so the
+		// page shows the face at its full resolution; run off screen (-RenderOffScreen).
+		static bool bSized = false;
+		if (!bSized && GEngine != nullptr)
+		{
+			bSized = true;
+			// No motion blur in a film: it is sized by the frame's time, and the film's
+			// frames come about seven a second, so a turn of the head smears as it never
+			// does at the game's own rate.
+			GEngine->Exec(World, TEXT("r.MotionBlurQuality 0"));
+			FString Size;
+			if (FParse::Value(FCommandLine::Get(), TEXT("FilmSize="), Size)) { GEngine->Exec(World, *FString::Printf(TEXT("r.SetRes %sw"), *Size)); GEngine->Exec(World, TEXT("r.ScreenPercentage 100")); }
+		}
 		APlayerController* PC = World->GetFirstPlayerController();
 		const bool bShoot = bSpeaking && Who != nullptr;
 		if (!bShoot && GMouthFilmHold.IsValid()) { Who = GMouthFilmHold.Get(); }
@@ -3302,12 +3318,18 @@ namespace
 			GMouthFilm.Cam = World->SpawnActor<ACameraActor>(Eye, (Look - Eye).Rotation(), P);
 		}
 		if (!GMouthFilm.Cam.IsValid()) { return; }
+		// -FilmFov=D: a narrower lens than the camera's 90 degrees puts more of the
+		// frame on the face at the same distance and cost.
+		static float FilmFov = 0.0f;
+		if (FilmFov == 0.0f) { FilmFov = -1.0f; FParse::Value(FCommandLine::Get(), TEXT("FilmFov="), FilmFov); }
+		if (FilmFov > 10.0f) { GMouthFilm.Cam->GetCameraComponent()->SetFieldOfView(FilmFov); }
 		GMouthFilm.Cam->SetActorLocationAndRotation(Eye, (Look - Eye).Rotation());
 		if (!GMouthFilm.bOn && PC != nullptr) { PC->SetViewTargetWithBlend(GMouthFilm.Cam.Get(), 0.0f); GMouthFilm.bOn = true; }
 		const double T = FPlatformTime::Seconds();
 		if (bShoot && T - GMouthFilm.LastFrame >= 0.099 && GMouthFilm.Frame < 400)
 		{
 			GMouthFilm.LastFrame = T;
+			UE_LOG(LogTemp, Display, TEXT("LedgerMouthFilm: %s f_%03d heard %.3f"), *Who->GetName(), GMouthFilm.Frame, GFilmHeardS);
 			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
 				/ TEXT("MouthFilm") / Who->GetName() / FString::Printf(TEXT("f_%03d.png"), GMouthFilm.Frame++)), false, false);
 		}
@@ -3381,9 +3403,9 @@ namespace
 			return;
 		}
 		const bool bPlaying = GVoice.Playing.IsValid() && GVoice.PlayingWave.IsValid() && GVoice.Speaker.IsValid() && GVoice.Pcm.Num() > 0;
-		MouthFilmTick(GameWorld(), GVoice.Speaker.Get(), bPlaying);
 		if (!bPlaying)
 		{
+			MouthFilmTick(GameWorld(), GVoice.Speaker.Get(), false);
 			if (GVoice.LastSpeaker.IsValid())
 			{
 				MouthApply(GVoice.LastSpeaker.Get(), 0.0f, false, Dt);
@@ -3400,6 +3422,11 @@ namespace
 		// Open fully at the sentence's speaking level, shut 24 dB below it.
 		const float Level = HeardLevel(GVoice.Pcm, GVoice.PcmRate, GVoice.PcmChannels, GVoice.QueuedBytes, GVoice.PlayingWave.Get(), GVoice.PeakDb, Db, Heard);
 		MouthApply(GVoice.Speaker.Get(), Level, true, Dt);
+		// Filmed, each frame names how much of the sentence has been heard: the
+		// sound starts about a third of a second after it is set playing.
+		GFilmHeardS = (double)FMath::Max<int64>(0, Heard) / FMath::Max(1, GVoice.PcmRate);
+		MouthFilmTick(GameWorld(), GVoice.Speaker.Get(), true);
+		GFilmHeardS = -1.0;
 		// A LINE A FIFTH OF A SECOND for the first sixty, so a run shows the
 		// mouth following the words.
 		static double NextLog = 0.0;
@@ -3593,9 +3620,12 @@ namespace
 			}
 		}
 		const bool bOurFace = OurFace != nullptr;
-		// -NoMadeFace: the loudness mouth even where a face was made, to set the two side by side.
-		static const bool bNoMade = FParse::Param(FCommandLine::Get(), TEXT("NoMadeFace"));
-		if (bOurFace && Anim != nullptr && !bNoMade && !GAckForceLoud)
+		// HIS BLIND PICKS, 1 October (item 4): the loudness mouth over the face made
+		// from the sound, in both pairs (Ron's "Well now.", Darren's "Hmm. Well now.";
+		// production/casting/said-key-2026-10-01.json). The made faces stay on file and
+		// play only with -MadeFace, or -FaceAB, which sets the two side by side.
+		static const bool bMade = FParse::Param(FCommandLine::Get(), TEXT("MadeFace")) || FParse::Param(FCommandLine::Get(), TEXT("FaceAB"));
+		if (bOurFace && Anim != nullptr && bMade && !GAckForceLoud)
 		{
 			OurFace->SayMadeLine(Anim);
 			GAck.Said = OurFace;
@@ -3732,7 +3762,9 @@ namespace
 	// street's piece list and its golden rows are untouched. While Tom is
 	// inside, the camera's arm comes in to the plan's length (-InsideArm=N
 	// tries another), as studios bring a third-person camera in indoors.
-	struct FOffice { bool bBuilt = false, bOn = false; double X0 = 0, X1 = 0, Z0 = 0, Z1 = 0, ArmM = 2.0, LiftM = 0.25; float StreetArm = -1.0f, StreetLift = 0.0f; };
+	struct FOfficeMark { std::string Place; double X = 0, Z = 0, FaceX = 0, FaceZ = 0; };
+	struct FOffice { bool bBuilt = false, bOn = false; double X0 = 0, X1 = 0, Z0 = 0, Z1 = 0, ArmM = 2.0, LiftM = 0.25; float StreetArm = -1.0f, StreetLift = 0.0f;
+	                 std::vector<FOfficeMark> Marks; };   // a place in someone's day that is now inside, and where they stand there
 	FOffice GOffice;
 
 	FString OfficeSpecFile()
@@ -3833,6 +3865,15 @@ namespace
 				AActor* A = LedgerVignetteShot::SpawnProbePiece(World, TEXT("office_mark_") + M->GetStringField(TEXT("name")),
 					FVector((float)M->GetNumberField(TEXT("x")), 0.115f, (float)M->GetNumberField(TEXT("z"))), FVector(0.5f, 0.01f, 0.5f), TEXT("cyl"), TEXT("plaster"));
 				if (A != nullptr) { A->SetActorEnableCollision(false); PaintFlat(A, Basic, Colour(TEXT("stand"))); ++Marks; }
+				FString Place;
+				if (M->TryGetStringField(TEXT("place"), Place) && !Place.IsEmpty())
+				{
+					FOfficeMark K;
+					K.Place = Utf8(Place);
+					K.X = M->GetNumberField(TEXT("x")); K.Z = M->GetNumberField(TEXT("z"));
+					K.FaceX = M->GetNumberField(TEXT("face_x")); K.FaceZ = M->GetNumberField(TEXT("face_z"));
+					GOffice.Marks.push_back(K);
+				}
 			}
 		}
 		if (Root->TryGetArrayField(TEXT("lights"), List))
@@ -3865,6 +3906,208 @@ namespace
 			GOffice.bOn = true;
 		}
 		RouteCheck(TEXT("office-built"), Hidden > 0 && Boxes > 0, FString::Printf(TEXT("hid=%d boxes=%d marks=%d lights=%d arm_m=%.2f"), Hidden, Boxes, Marks, Lights, GOffice.ArmM));
+	}
+
+	// -PageShots=day|night|dress (1 October; Jafar: every picture judged on the page
+	// itself, at its full resolution): once play has begun, the scene file's
+	// three street cameras in turn (cam_hook, cam_A, cam_B: their own place,
+	// height, angles and field of view), Tom hidden, a frame of each at the
+	// window's own size through the game's own light and exposure, the night
+	// in the scene file's own night (the clock's condition after 19:00), saved
+	// as Saved/PageShots/<camera>-<day|night>.png; then the game closes. Run it
+	// off screen at the size wanted (-RenderOffScreen -ResX=2560 -ResY=1440).
+	void ClockLight();
+	double FeetYAt(UWorld* World, double X, double Z);
+	// -PageShots=dress (1 October): what the clothing session made, on the page at
+	// full size: Ron and Sheila each whole from the front and close (Ron's boots,
+	// Sheila's right hand and the bag in it), in the street's own light and
+	// exposure. The camera takes the first clear way round them, nearest the
+	// wanted side first, as -MouthFilmWide does.
+	bool DressView(UWorld* World, const FString& Id, FVector& Eye, FVector& Look, float& HFov)
+	{
+		AActor* Body = CardBody(Id.StartsWith(TEXT("ron")) ? "rocco" : "lena");
+		AActor* Who = Body != nullptr ? GVisualFor(Body) : nullptr;
+		if (World == nullptr || Who == nullptr) { return false; }
+		const FVector Feet = Who->GetActorLocation();
+		// A MetaHuman faces its actor's +Y (SyncVisual).
+		const FVector Toward = Who->GetActorRightVector().GetSafeNormal2D();
+		FVector Prefer = Toward;
+		TArray<float> Dists;
+		float Up = 0.0f;
+		if (Id.EndsWith(TEXT("whole")))
+		{
+			Look = Feet + FVector(0.0f, 0.0f, 88.0f); Up = 20.0f; HFov = 70.0f; Dists = { 300.0f, 260.0f, 220.0f };
+		}
+		else if (Id == TEXT("ron-boots"))
+		{
+			Look = Feet + FVector(0.0f, 0.0f, 12.0f); Up = 45.0f; HFov = 45.0f; Dists = { 120.0f, 95.0f };
+			Prefer = Toward.RotateAngleAxis(30.0f, FVector::UpVector);
+		}
+		else
+		{
+			TArray<USkeletalMeshComponent*> Parts;
+			Who->GetComponents(Parts);
+			FVector Hand = Feet + FVector(0.0f, 0.0f, 75.0f);
+			for (USkeletalMeshComponent* C : Parts) { if (C != nullptr && C->DoesSocketExist(TEXT("hand_r"))) { Hand = C->GetSocketLocation(TEXT("hand_r")); break; } }
+			// The bag hangs below the hand; seen from in front, turned toward its side.
+			Look = Hand - FVector(0.0f, 0.0f, 15.0f);
+			Prefer = (Toward + (Hand - Feet).GetSafeNormal2D()).GetSafeNormal2D();
+			Up = 15.0f; HFov = 45.0f; Dists = { 130.0f, 100.0f };
+		}
+		FCollisionQueryParams Q(TEXT("LedgerDressShot"), true, Who);
+		Q.AddIgnoredActor(Body);
+		if (GPawn != nullptr) { Q.AddIgnoredActor(GPawn); }
+		for (float Try : Dists)
+		{
+			for (int32 K = 0; K < 12; ++K)
+			{
+				const float Deg = (K % 2 == 0 ? 1.0f : -1.0f) * 30.0f * ((K + 1) / 2);
+				const FVector D = Prefer.RotateAngleAxis(Deg, FVector::UpVector);
+				const FVector E = Look + D * Try + FVector(0.0f, 0.0f, Up);
+				// From 40 cm out, clear of their own clothes and what they carry.
+				FHitResult Hit;
+				if (!World->SweepSingleByChannel(Hit, Look + D * 40.0f + FVector(0.0f, 0.0f, Up), E, FQuat::Identity, ECC_Camera, FCollisionShape::MakeSphere(15.0f), Q))
+				{
+					Eye = E;
+					return true;
+				}
+			}
+		}
+		Eye = Look + Prefer * Dists[0] + FVector(0.0f, 0.0f, Up);
+		return true;
+	}
+
+	struct FPageShot { FString Id; double X = 0, Z = 0, Eye = 1.6, Yaw = 0, Pitch = 0, VFov = 60; };
+	void PageShotsTick(UWorld* World, double Now)
+	{
+		static FString Mode;
+		static bool bRead = false;
+		static TArray<FPageShot> Shots;
+		static int32 Step = -1;
+		static double NextAt = 0.0;
+		static TWeakObjectPtr<ACameraActor> Cam;
+		if (!bRead)
+		{
+			bRead = true;
+			FParse::Value(FCommandLine::Get(), TEXT("PageShots="), Mode);
+		}
+		if (Mode.IsEmpty() || World == nullptr || Now < NextAt) { return; }
+		APlayerController* PC = World->GetFirstPlayerController();
+		// They walk their routines: the camera keeps on them, and the picture waits
+		// until they have stood within 10 cm for two seconds (its history settled),
+		// a minute and a half at most.
+		if (Mode == TEXT("dress") && Step >= 0 && (Step % 2) == 1 && Cam.IsValid() && Step / 2 < Shots.Num())
+		{
+			static FVector Anchor = FVector::ZeroVector;
+			static double StillSince = -1.0, Began = 0.0;
+			FVector Eye, Look;
+			float HFov = 60.0f;
+			if (DressView(World, Shots[Step / 2].Id, Eye, Look, HFov)) { Cam->SetActorLocationAndRotation(Eye, (Look - Eye).Rotation()); }
+			if (StillSince < 0.0) { Began = Now; StillSince = Now; Anchor = Look; }
+			if (FVector::Dist2D(Look, Anchor) > 10.0f) { StillSince = Now; Anchor = Look; }
+			if (Now - StillSince < 2.0 && Now - Began < 90.0) { return; }
+			UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: %s still %.1f s after %.1f s"), *Shots[Step / 2].Id, Now - StillSince, Now - Began);
+			StillSince = -1.0;
+		}
+		if (Step < 0)
+		{
+			if (Mode == TEXT("dress"))
+			{
+				for (const TCHAR* Id : { TEXT("ron-whole"), TEXT("ron-boots"), TEXT("sheila-whole"), TEXT("sheila-handbag") }) { FPageShot S; S.Id = Id; Shots.Add(S); }
+			}
+			else
+			{
+				FString Path = OfficeSpecFile().Replace(TEXT("mickeys-office.json"), TEXT("vignette-scene.json"));
+				FString Text;
+				TSharedPtr<FJsonObject> Root;
+				if (Path.IsEmpty() || !FFileHelper::LoadFileToString(Text, *Path)) { UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: no vignette-scene.json")); Mode.Empty(); return; }
+				const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
+				const TArray<TSharedPtr<FJsonValue>>* List = nullptr;
+				if (!FJsonSerializer::Deserialize(R, Root) || !Root.IsValid() || !Root->TryGetArrayField(TEXT("cameras"), List)) { Mode.Empty(); return; }
+				for (const TSharedPtr<FJsonValue>& V : *List)
+				{
+					const TSharedPtr<FJsonObject> C = V->AsObject();
+					if (!C.IsValid()) { continue; }
+					FPageShot S;
+					S.Id = C->GetStringField(TEXT("id"));
+					S.X = C->GetNumberField(TEXT("x_m")); S.Z = C->GetNumberField(TEXT("z_m"));
+					S.Eye = C->GetNumberField(TEXT("eye_height_m")); S.Yaw = C->GetNumberField(TEXT("yaw_deg"));
+					S.Pitch = C->GetNumberField(TEXT("pitch_deg")); S.VFov = C->GetNumberField(TEXT("fov_vertical_deg"));
+					Shots.Add(S);
+				}
+				Shots.Sort([](const FPageShot& A, const FPageShot& B) { return A.Id == TEXT("cam_hook") || (B.Id != TEXT("cam_hook") && A.Id < B.Id); });
+			}
+			if (Mode == TEXT("night"))
+			{
+				// To ten at night, as Z would take him; the clock then lights the street for it.
+				GClock.JumpTo(GameTime(GNow.Day, 22, 0));
+				GNow = GClock.Now();
+				ClockLight();
+				UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: night, clock %s"), *Un(GNow.ToString()));
+			}
+			if (GPawn != nullptr) { GPawn->SetActorHiddenInGame(true); }
+			// THE SIZE ASKED, drawn whole: the view resized (the game keeps its own
+			// saved size otherwise, off screen too) and at its full screen percentage.
+			if (GEngine != nullptr)
+			{
+				FString Size(TEXT("2560x1440"));
+				FParse::Value(FCommandLine::Get(), TEXT("PageShotSize="), Size);
+				GEngine->Exec(World, *FString::Printf(TEXT("r.SetRes %sw"), *Size));
+				GEngine->Exec(World, TEXT("r.ScreenPercentage 100"));
+			}
+			FActorSpawnParameters P;
+			P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			Cam = World->SpawnActor<ACameraActor>(FVector::ZeroVector, FRotator::ZeroRotator, P);
+			if (Cam.IsValid()) { Cam->GetCameraComponent()->bConstrainAspectRatio = false; }
+			Step = 0;
+			NextAt = Now + 6.0;   // the street settled, the light applied
+			return;
+		}
+		const int32 I = Step / 2;
+		if (I >= Shots.Num() || !Cam.IsValid() || PC == nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: done, %d frames"), Shots.Num());
+			FPlatformMisc::RequestExit(false);
+			NextAt = Now + 60.0;
+			return;
+		}
+		const FPageShot& S = Shots[I];
+		int32 SW = 16, SH = 9;
+		if (GEngine != nullptr && GEngine->GameViewport != nullptr) { FVector2D Sz; GEngine->GameViewport->GetViewportSize(Sz); SW = (int32)Sz.X; SH = (int32)Sz.Y; }
+		if (Step % 2 == 0)
+		{
+			// The scene file's frame: x along, y up, z across, as everywhere here.
+			if (Mode == TEXT("dress"))
+			{
+				FVector Eye, Look; float HFov = 60.0f;
+				if (DressView(World, S.Id, Eye, Look, HFov)) { Cam->SetActorLocationAndRotation(Eye, (Look - Eye).Rotation()); Cam->GetCameraComponent()->SetFieldOfView(HFov); }
+				UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: %s from %s at %s"), *S.Id, *Eye.ToString(), *Look.ToString());
+				PC->SetViewTargetWithBlend(Cam.Get(), 0.0f);
+				NextAt = Now;
+				++Step;
+				return;
+			}
+			else
+			{
+				// Its eye height is over the pavement under the camera, and its pitch is
+				// positive down, as VignetteShot reads it; this engine's is positive up.
+				const double Ground = FeetYAt(World, S.X, S.Z);
+				Cam->SetActorLocationAndRotation(ToUE(LedgerCrime::P3(S.X, Ground + S.Eye, S.Z)),
+					FRotator((float)-S.Pitch, (float)S.Yaw, 0.0f));
+				const double Aspect = SH > 0 ? (double)SW / (double)SH : 16.0 / 9.0;
+				Cam->GetCameraComponent()->SetFieldOfView((float)FMath::RadiansToDegrees(2.0 * std::atan(std::tan(FMath::DegreesToRadians(S.VFov) * 0.5) * Aspect)));
+			}
+			PC->SetViewTargetWithBlend(Cam.Get(), 0.0f);
+			NextAt = Now + 3.0;   // the picture's history settles at the new view
+		}
+		else
+		{
+			const FString Out = FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("PageShots") / (S.Id + TEXT("-") + Mode + TEXT(".png")));
+			FScreenshotRequest::RequestScreenshot(Out, false, false);
+			UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: %s at the view's %dx%d"), *Out, SW, SH);
+			NextAt = Now + 2.0;
+		}
+		++Step;
 	}
 
 	// The camera's arm while Tom is inside Mickey's, eased back out on the street.
@@ -4718,6 +4961,9 @@ namespace
 		if (LiveAsk(P.G, P.Card, P.Id, P.Rung, FString(P.Name), Lines[I % 6]))
 		{
 			GLive.PendingBody = P.Body;
+			// Filmed (-MouthFilm), the camera settles on them from the line on, so the
+			// answer's first frames are not the picture catching up with a cut.
+			GMouthFilmHold = GVisualFor(P.Body);
 			AckStart(P.Card, GVisualFor(P.Body));
 			GAsk.SentAt = GLive.AskedAt;
 			GAsk.HeardAt = 0.0;
@@ -5451,6 +5697,17 @@ namespace
 				continue;
 			}
 			double X = It->second.At.X, Z = It->second.At.Z;
+			double YawDeg = It->second.YawDeg;
+			// INSIDE MICKEY'S, once it is built (-MickeysInside): her day's office is
+			// her desk, not the pavement by its window.
+			for (const FOfficeMark& K : GOffice.Marks)
+			{
+				if (GOffice.bOn && K.Place == It->second.Place)
+				{
+					X = K.X; Z = K.Z;
+					YawDeg = FMath::RadiansToDegrees(std::atan2(K.FaceZ - K.Z, K.FaceX - K.X));
+				}
+			}
 			// NEVER ONTO ANOTHER OF THE THREE, wherever they stand now (placed this
 			// hour or held back by a conversation).
 			for (int Pass = 0; Pass < 2; ++Pass)
@@ -5485,7 +5742,7 @@ namespace
 					UTF8_TO_TCHAR(C), X, Z, Stand.X, Stand.Z, Stand.FeetY);
 			}
 			PlaceBodyAt(Body, Stand.X, Stand.Z, Stand.FeetY);
-			Body->SetActorRotation(FRotator(0.0f, (float)It->second.YawDeg, 0.0f));
+			Body->SetActorRotation(FRotator(0.0f, (float)YawDeg, 0.0f));
 			SyncVisual(Body);
 			ShowPerson(Body, true);
 			GAway.erase(C);
@@ -5780,6 +6037,7 @@ namespace
 		FaceABTick(Now);
 		RouteWhereTick(World, Now);
 		OfficeCameraTick((float)FApp::GetDeltaTime());
+		PageShotsTick(World, Now);
 		TalkLightTick(World, Now);
 		AckTick();
 		if (bSayOpen)

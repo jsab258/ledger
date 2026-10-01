@@ -273,6 +273,8 @@ def build(voices_only=False):
     if voices_only:
         page = page.replace("The game matches what I chose", "The voice matches what I chose")
     page = page.replace("__DATA__", json.dumps(people, ensure_ascii=False).replace("</", "<" + chr(92) + "/")).replace("__FOOT__", FOOT)
+    import page_pictures   # every picture judged on the page itself (Jafar, 1 October)
+    page = page_pictures.apply(page)
     open(os.path.join(out, "index.html"), "w", encoding="utf-8", newline="\n").write(page)
     json.dump(files, open(os.path.join(out, "files.json"), "w", encoding="utf-8"), indent=1)
     size = sum(os.path.getsize(os.path.join(REPO, v)) for v in files.values() if os.path.exists(os.path.join(REPO, v))) / 1e6
