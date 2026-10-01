@@ -185,7 +185,9 @@ namespace Ledger.PerceptionGolden
                 // away at dawn; held until the port follows.
                 // Jafar's ruling of 1 October (a witness at the middle reports): held, then
                 // emptied by the builder's port the same day.
-                var held = new string[0];
+                // The independent check of 1 October: won over is the tea or a friend,
+                // not a nudge (OnHisSide 0.5 to 0.575); held until the port follows.
+                var held = new[] { "PoliceWouldReport|Killing|0|0.3|0.55|", "PoliceOnHisSide|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -2051,6 +2053,17 @@ namespace Ledger.PerceptionGolden
                     var gm = new Gossiper("wm", "wm", new MemoryStore("wm"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, nerve, 0.5);
                     Row(sb, "PoliceWouldReportMiddle", o.ToString(), D(nerve), Bit(PoliceFile.WouldReport(gm, o, false, "t")), Bit(PoliceFile.WouldReport(gm, o, true, "t")));
                 }
+            // WHERE "ON HIS SIDE" BEGINS (the independent check of 1 October: won over is
+            // the tea or a friend, not a nudge): one nudge from the middle (0.55), just
+            // under and over the line (0.575), and the tea from a wary start (0.6), for a
+            // window and a body, the brave and the nervous.
+            foreach (var o in new[] { Offence.Damage, Offence.Killing })
+                foreach (var nerve in new[] { 0.3, 0.5 })
+                    foreach (var loyalty in new[] { 0.55, 0.57, 0.58, 0.6 })
+                    {
+                        var gs = new Gossiper("ws", "ws", new MemoryStore("ws"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, nerve, loyalty);
+                        Row(sb, "PoliceOnHisSide", o.ToString(), D(nerve), D(loyalty), Bit(PoliceFile.WouldReport(gs, o, false, "t")));
+                    }
             var quiet = new Gossiper("wq", "wq", new MemoryStore("wq"), new KnowledgeBase(), new SuspicionTracker(), "day", 0.5, 0.9, 0.1);
             quiet.Suppressed.Add("t");
             Row(sb, "PoliceWouldReport", "quiet", Bit(PoliceFile.WouldReport(quiet, Offence.Damage, true, "t")), Bit(PoliceFile.WouldReport(quiet, Offence.Killing, false, "t")),

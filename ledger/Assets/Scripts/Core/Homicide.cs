@@ -554,7 +554,11 @@ namespace Ledger.Core
         /// Written down because the shape of a missing exemption is what four
         /// sites looked like, and the fifth read looks identical from the
         /// outside.
+        /// The same line as PoliceFile.WouldReport's over a body (the builder's
+        /// independent check, 1 October: at the middle the one said yes and this
+        /// no): not on his side, PoliceFile.OnHisSide, written as its negation so
+        /// a regard a damaged save left unreadable reads the same in both.
         public static bool WouldTalkToPolice(Gossiper g) =>
-            g != null && g.Nerve < 0.35 && g.Loyalty < 0.5 && !g.Leashed;
+            g != null && g.Nerve < 0.35 && !(g.Loyalty > PoliceFile.OnHisSide) && !g.Leashed;
     }
 }

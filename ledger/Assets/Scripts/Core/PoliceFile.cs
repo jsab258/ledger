@@ -199,7 +199,7 @@ namespace Ledger.Core
         ///     list 6bp, carried until Jafar rules on his page: so that an arrest
         ///     can follow the first build's only crime): a wounding, a robbery or
         ///     criminal damage unafraid and not on his side (nerve at least 0.4,
-        ///     loyalty not above the middle, where everybody starts: Jafar's ruling
+        ///     loyalty not above OnHisSide, a little over the middle, where everybody starts: Jafar's ruling
         ///     of 1 October, seeing him do it is enough); a killing whenever not on his side, the brave because
         ///     they can and the nervous because they crack (Watched.WouldTalkToPolice
         ///     is its low-nerve half; the independent check found a band between
@@ -211,8 +211,17 @@ namespace Ledger.Core
         ///     somebody whose trade keeps them from the police (`neverToPolice`,
         ///     CastDay.NeverToPolice) reports nothing at all.
         /// Above this regard a witness is on his side and keeps what they saw
-        /// to themselves; everybody starts at it.
-        public const double OnHisSide = 0.5;
+        /// to themselves. Everybody starts at the middle, 0.5; WON OVER IS THE
+        /// TEA OR A FRIEND, NOT A NUDGE (the builder's independent check of the
+        /// port, 1 October): staying for Ada's tea (+0.25) or a beat attended
+        /// (+0.2) from the middle puts a witness here; one nudge (+0.05: leaving
+        /// the tea early, a bribe's bump, which already silences the deed it paid
+        /// for) does not. A single number cannot tell acts apart, so two nudges
+        /// together count as much as the tea from a wary start (0.35 to 0.6), and
+        /// a forgiven debt wins over only someone not squeezed first. The line
+        /// sits between the game's 0.05 steps, so no sum of them lands on it
+        /// (Watched's cap does, at nerve 0.45, and reads as not on his side).
+        public const double OnHisSide = 0.575;
 
         public static bool WouldReport(Gossiper g, Offence o, bool victim, string topic, bool neverToPolice = false)
         {
@@ -230,7 +239,7 @@ namespace Ledger.Core
             // SEEING HIM DO IT IS ENOUGH (Jafar's ruling of 1 October, on the
             // independent review's A4: everybody starts at the middle, so a rule
             // of "below it" meant nobody ever reported him): a witness reports
-            // unless on his side, won over above the middle (Ada's tea, a
+            // unless on his side, won over (Ada's tea, a
             // friend), or talked round (kept quiet, above; hooked, above).
             bool onHisSide = g.Loyalty > OnHisSide;
             if (o == Offence.Killing) return !onHisSide;
