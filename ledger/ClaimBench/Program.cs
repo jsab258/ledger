@@ -104,7 +104,7 @@ static partial class Program
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
-            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ConversationEngine.ReactFirst = args.Contains("--react"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; return await Firsts(dir, parallel);
+            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ConversationEngine.ReactFirst = args.Contains("--react"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; FirstsOnly = Arg(args, "--only", null); FirstsModel = Arg(args, "--model", null); return await Firsts(dir, parallel);
             case "bearing": return Bearing();
             case "detailbench": return await DetailBench(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
             case "causes": return await Causes(dir, parallel, Arg(args, "--third", "claude-fable-5-1"));
@@ -950,6 +950,10 @@ static partial class Program
         return 0;
     }
 
+    // One character only (--only lena) and another model for the replies (--model):
+    // Sheila's blind check of the faster model (Jafar's tap of 1 October).
+    static string FirstsOnly, FirstsModel;
+
     static async Task<int> Firsts(string dir, int parallel)
     {
         var probes = Probes();
@@ -962,7 +966,7 @@ static partial class Program
         int fallback = 0, refused = 0, n = 0, failed = 0;
         var byCard = new Dictionary<string, int>();
         var jobs = new List<(string card, string probe)>();
-        foreach (var c in new[] { "lena", "rocco", "sam" }) foreach (var p in probes) jobs.Add((c, p));
+        foreach (var c in new[] { "lena", "rocco", "sam" }) if (FirstsOnly == null || FirstsOnly == c) foreach (var p in probes) jobs.Add((c, p));
         await Task.WhenAll(jobs.Select(async job =>
         {
             await gate.WaitAsync();
@@ -970,7 +974,7 @@ static partial class Program
             {
                 // As the talk helper loads it, with the street's plain facts (town list ck).
                 var card = StreetFacts.AddTo(CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, job.card + ".md"))), job.card);
-                var engine = new ConversationEngine(client, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost) { Checker = client };
+                var engine = new ConversationEngine(client, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost, FirstsModel) { Checker = client };
                 engine.People = cast.PeopleFor(job.card, 0, 10);
                 engine.HowYouKnowHim = new PlayerIdentity().HowTheyKnowHim(true, true, null);
                 string where = cast.WhereWords(job.card, 0, 10);

@@ -40,3 +40,31 @@ Trade's thin. Has been since the d |
 | 6 | S0 | 791 | 1179 | 4555 | 0 | 0 | There's the front door key, on the ring by the till. That's the one you need.
 
 T |
+
+## The blind check (Jafar's tap of 1 October, sheila-model: try)
+
+Twenty of the newcomer's first questions put to Sheila through the whole talk
+program (rule table, check and all; ClaimBench firsts --only lena) on her model
+(Sonnet 5) and on the faster one (Haiku 4.5, --model), on the subscription, not
+the key. Each pair shuffled A/B, one fresh reviewer given her casting sheet and
+her card and nothing else, scoring each of the forty replies 1 to 5 for "this
+is Sheila" and picking the better of each pair.
+
+| | her model | the faster one |
+|---|---|---|
+| preferred | 13 | 6 (1 level) |
+| mean score | 3.45 | 3.25 |
+| scored 5 | 4 | 2 |
+| scored 1 or 2 | 5 | 4 |
+
+She sounds less like herself on the faster model, so by the rule on his page
+she stays on hers (about 0.6 s slower to her first sentence than Ron and
+Darren). The pairs, the key and the scores: F:/LedgerTools/town-scratch
+(sheila-blind-pairs.txt, sheila-blind-key.json, sheila-scores.txt).
+
+The reviewer's worst scores on both models came from the talk program, not
+the model: refused twice, the plain answer pasted her own introduction onto
+the answer about money and the one about what happens now (fixed the same
+day: her introduction only when he asks about her); and the stock line "That's
+the whole of it. The rest would be gossip." given as her first reply, which
+presumes something was said before (in FINDINGS).

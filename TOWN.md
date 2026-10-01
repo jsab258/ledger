@@ -42,11 +42,13 @@ code and its golden row; the split agreed with the builder (NOW.md).
 2. **The street's lines for the other named characters,** in their own voices
    as their casting sheets describe, within the approved story, through the
    gate (Ron's tone approved).
-   - State: SET ASIDE after three fresh blind reviews found obvious faults
-     (lines to Tom's face that refuse what he never asked, openers no reply
-     follows, the same idea in four to six mouths); the shared street lines
-     stay for these six. Why the method failed and what a next try would do:
-     ambient-lines/set-aside-2026-09-30.
+   - State: set aside after three reviews (ambient-lines/set-aside-2026-09-30);
+     his tap of 1 October gave one more try, one review. Found first: the game
+     says only two kinds of street line to Tom (a remark as he comes near, by
+     the story they hold of him; half a word once he has passed), never the
+     neighbours' small talk. So the fourth version is only those: 156 lines
+     for the six, each only for stories their day lets them hold; machine
+     check and content rule clean; with one fresh reviewer.
 3. **The text half of the delay,** when the builder's real-talk measurement
    lands: what the talk program sends and how long the first words take, cut
    on the real path.
@@ -57,9 +59,9 @@ code and its golden row; the split agreed with the builder (NOW.md).
      reaction opener (plain first sentences 8% to 21%, but a tic). Measured
      on the key, 1 October ($0.18): Sheila's first sentence 1.43 s on her
      model, 1.32 cached (nothing), no thinking by default; 0.81 s on the
-     faster one, which is his money call (page of 1 October). A leaner check
-     would save about 0.2 s (its answer is already short): left until the
-     voice, not the check, is the limit.
+     faster one. His tap: try it, blind; the reviewer preferred her own model
+     13 to 6 of 20, so she stays (DECISIONS, 1 October). A leaner check would
+     save about 0.2 s: left until the voice, not the check, is the limit. DONE.
 
 Done before this list (history in git): the empty answers by cause; the plain
 line (built, reviewed, his yes to Ron's wording); the check's tuning (kept as
@@ -78,7 +80,6 @@ reach yet.
 
 ## Waiting on Jafar
 
-- Two taps on the page of 1 October (https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz):
-  whether seeing Tom break a window is enough to report him (A4's Core half);
-  Sheila on the faster model, blind-checked; one more try at the other
-  characters' street lines, a new way, capped at one review (item 2).
+- Nothing: his three taps of 1 October are answered and acted on (police:
+  branch town-police, with the builder for its port; Sheila: stays; street
+  lines: the fourth try).
