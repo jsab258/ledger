@@ -186,8 +186,9 @@ namespace Ledger.PerceptionGolden
                 // Jafar's ruling of 1 October (a witness at the middle reports): held, then
                 // emptied by the builder's port the same day.
                 // The independent check of 1 October: won over is the tea or a friend,
-                // not a nudge (OnHisSide 0.5 to 0.575); held until the port follows.
-                var held = new[] { "PoliceWouldReport|Killing|0|0.3|0.55|", "PoliceOnHisSide|" };
+                // not a nudge (OnHisSide 0.5 to 0.575); held, then emptied by the builder's
+                // port the same day.
+                var held = new string[0];
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {

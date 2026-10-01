@@ -2896,6 +2896,18 @@ namespace Golden
 				Ans["PoliceWouldReportMiddle|" + std::string(OffenceName((Offence)Oi)) + "|" + FromDouble(Nerve)]
 					= { FromBool(PoliceFile::WouldReport(&Gm, (Offence)Oi, false, &Topic)), FromBool(PoliceFile::WouldReport(&Gm, (Offence)Oi, true, &Topic)) };
 			}
+		// Where "on his side" begins (won over is the tea or a friend, not a nudge):
+		// one nudge from the middle, just under and over the line, and the tea from a
+		// wary start; a window and a body, the brave and the nervous.
+		for (Offence O : { Offence::Damage, Offence::Killing })
+			for (double Nerve : { 0.3, 0.5 })
+				for (double Loyalty : { 0.55, 0.57, 0.58, 0.6 })
+				{
+					const Gossiper Gs("ws", "ws", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", 0.5, Nerve, Loyalty);
+					const std::string Topic = "t";
+					Ans["PoliceOnHisSide|" + std::string(OffenceName(O)) + "|" + FromDouble(Nerve) + "|" + FromDouble(Loyalty)]
+						= { FromBool(PoliceFile::WouldReport(&Gs, O, false, &Topic)) };
+				}
 		{
 			Gossiper Quiet("wq", "wq", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", 0.5, 0.9, 0.1);
 			Quiet.Suppressed.push_back("t");
@@ -2937,11 +2949,13 @@ namespace Golden
 		Answer A;
 		const bool bGrid = F[0] == "PoliceWouldReport" && F.size() >= 2 && F[1] != "quiet" && F[1] != "hooked";
 		const bool bMiddle = F[0] == "PoliceWouldReportMiddle";
-		const int Labels = bGrid ? 4 : bMiddle ? 2 : 1;
+		const bool bSide = F[0] == "PoliceOnHisSide";
+		const int Labels = bGrid ? 4 : bMiddle ? 2 : bSide ? 3 : 1;
 		if ((int)F.size() < 1 + Labels + 1) return A;
 		std::string Key = F[0] + "|" + F[1];
 		if (bGrid) Key += "|" + F[2] + "|" + (IsNumber(F[3]) ? FromDouble(D(F[3])) : F[3]) + "|" + (IsNumber(F[4]) ? FromDouble(D(F[4])) : F[4]);
 		if (bMiddle) Key += "|" + (IsNumber(F[2]) ? FromDouble(D(F[2])) : F[2]);
+		if (bSide) Key += "|" + (IsNumber(F[2]) ? FromDouble(D(F[2])) : F[2]) + "|" + (IsNumber(F[3]) ? FromDouble(D(F[3])) : F[3]);
 		const auto& Ans = PoliceFileAnswers();
 		const auto It = Ans.find(Key);
 		if (It == Ans.end()) return A;
@@ -5193,7 +5207,7 @@ namespace Golden
 			A = WaitRow(F);
 		}
 		// THE POLICE FILE ITSELF (town list 6ar): PoliceFile.h, its regression rows.
-		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "PoliceWouldReportMiddle" || Fn == "CustodyWords" || Fn == "CustodySeenTaken")
+		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "PoliceWouldReportMiddle" || Fn == "PoliceOnHisSide" || Fn == "CustodyWords" || Fn == "CustodySeenTaken")
 		{
 			A = PoliceFileRow(F);
 		}
