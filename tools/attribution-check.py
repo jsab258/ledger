@@ -152,6 +152,10 @@ WATCHED = {
     # Kenney, so it carries its own row: the sweep whitelists by path
     # containment and the token check is per-row, so both hold.
     "ledger/Assets/Props/base-mesh": "The Base Mesh",
+    # THE SHOP WINDOWS' DISPLAYS, 1 October: Poly Haven's CC0 models, cut down and
+    # joined into one glb per shop by tools/art-recipes/shop-room.py --display.
+    # Built here, but from fetched meshes and pictures: their row, not ours.
+    "production/assets/shop-displays": "Poly Haven",
     # THE SAME SHAPE AS base-mesh, AND IT HAD BEEN PASSING UNDER THE WRONG
     # NAME. `oga-vehicles` sits inside `Props`, so its 47 attributed files
     # were counted under the Kenney row and the check went green over models

@@ -1,0 +1,34 @@
+{
+ "what": "The rooms seen through the shop windows of Quay Street (item 2a, 1 October 2026; Jafar: \"fake interiors in the shop windows by interior mapping, as games do it\"; method: production/research/shop-window-interiors/NOTE.md). Each shop's room is built and rendered by tools/art-recipes/shop-room.py as one perspective picture from in front of its window, per lighting state, and the game shows it on the bay's interior card with depth (the interior material). Street metres: x along the street, z back from the pavement, heights above the road crown. One complete shop first (the pawnbroker); the rest only after Jafar has seen it in the game (CLAUDE.md: nothing is multiplied before one sample is approved).",
+ "units": "metres",
+ "states": {
+  "day": "the shop open by day: its tubes on, daylight through the front",
+  "night_lit": "open after dark or a lit window display: tubes on, no daylight",
+  "night_dark": "shut at night: only the street's sodium spill through the front and a faint back light"
+ },
+ "camera": "on the room's centre line, d in front of the front plane, framing the front rectangle W x H exactly (horizontal field 2 atan(W / 2d)); a room point (x, y, z), z behind the front plane, lands at u = 0.5 + (x / W) d / (d + z), v = 0.5 + (y / H) d / (d + z)",
+ "never": "no people (the town is simulated: a painted figure reads as a witness), no real brands, no alcohol, no gambling (no pools coupons), no children",
+ "shops": [
+  {
+   "id": "pawnbroker",
+   "block": "east_parade",
+   "bay": 2,
+   "trade": "pawnbroker (Rita's): watches, rings and chains in a glass counter, shelves crammed with radio cassettes, televisions, cameras, binoculars and clocks, boxes of stock, tools, a suitcase, every piece ticketed; a grille at night (not yet made)",
+   "room": {"w": 5.3, "h": 2.4, "d": 4.5},
+   "card": {"x0": 15.35, "x1": 20.65, "bottom": 0.65, "top": 3.05, "z": 5.875},
+   "decal": "production/art/interiors-2026-09-23/int23_pawn",
+   "pictures": "production/art/shop-rooms/pawnbroker",
+   "side": 1,
+   "camera_d": 5.3,
+   "pixels_wide": 2048,
+   "lit_at_night": true,
+   "brightness_day": 0.15,
+   "brightness_night": 0.7,
+   "spill_lumens": 350,
+   "lit_note": "Day 0.15, since the glass reflects (Thin Translucent): at 0.3 the street's reflection was a faint veil, at 0.08 the room read dim, at 0.03 the pane was nearly a mirror and the room a void (filmed 1 October; the research's 1/8 to 1/10 of the pavement is for an unlit shop, the Hook sheet's is lit and readable); night 0.7 glows without blowing the floor out; the night spill (a tube-white rect light in the window head, tipped 62 degrees down) at 350 lm on lighting channel 1 lights the display and lays a pool on the pavement and the road; the window bars are not on that channel, so they no longer flare (filmed at 250 to 2500 lm and from deep inside the shop, 1 October).",
+   "display": {"glb": "pawnbroker-display", "x0": 15.45, "x1": 18.8, "front": 5.27, "bed": 0.7, "depth": 0.55,
+               "measured": "the street model's own glass for this bay (street_glass_eg_bay2: panes at 5.245 to 5.265 m back, 0.70 to 2.91 m up, the door at 18.9 to 19.8 m) and its stallriser top (0.70 m)"},
+   "sources": "the note's section 9: Peter Marshall's Hull and 1990 photographs (links), the Black Country Living Museum pawnbroker"
+  }
+ ]
+}

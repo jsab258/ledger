@@ -234,6 +234,17 @@ directory.
 
 Attribution not required; recorded anyway under this file's standing rule.
 
+## Shop rooms and window displays — Poly Haven, CC0
+
+| | |
+|---|---|
+| **Source** | **Poly Haven** (https://polyhaven.com), models and textures fetched by `tools/art-recipes/fetch_polyhaven.py` from its public API (api.polyhaven.com/files/<id>), each with a `source.json` naming the asset, its page and its licence, kept on this PC under F:/LedgerTools/polyhaven |
+| **Licence** | CC0 1.0 Universal — https://polyhaven.com/license, no attribution required |
+| **Where** | `production/assets/shop-displays/` (a shop's window display, built by `tools/art-recipes/shop-room.py --display` from the models, cut down and joined into one `.glb` with their textures at 512 px) and `production/art/shop-rooms/` (the shop rooms rendered by `tools/art-recipes/shop-room.py` with the models and textures in them) |
+| **What** | the pawnbroker's stock and fittings: watches, cameras, binoculars, clocks, radios and cassette players, televisions, vases, jugs, picture frames, ukuleles, a till, tools, a suitcase, boxes, shelving, a long-case clock; old patterned lino and painted plaster textures |
+
+Attribution not required; recorded anyway under this file's standing rule.
+
 ## Vehicles, OpenGameArt, CC0
 
 | | |

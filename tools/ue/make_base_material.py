@@ -4031,6 +4031,16 @@ if __name__ == "__main__":
                 _f.write("figureImportStatus=RAISED figureImportReturn=2 "
                          "figureNote=%s\n"
                          % str(_fig_err).replace(" ", "~")[:160])
+    # ---- AND THE SHOP ROOMS, 1 October (item 2a) --------------------------
+    # tools/ue/make_interior_material.py: the material the shop cards wear to
+    # show their rooms with depth (VignetteShot.cpp ApplyShopInteriors).
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import make_interior_material
+            make_interior_material.main()
+        except Exception as _int_err:
+            print("make_interior_material raised: %s" % _int_err)
     # ---- AND THE GLASS, 23 September, FOR THE SAME REASON ------------------
     # tools/ue/make_glass_material.py: the see-through glass the street's
     # shop windows wear; the base material above is opaque.
@@ -4124,6 +4134,44 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("vehiclesImportStatus=RAISED vehiclesImportNote=%s\n"
                          % str(_veh_err).replace(" ", "~")[:160])
+    # ---- AND THE SHOP WINDOWS' DISPLAYS, 1 October, BY THE CARS' OWN STEP ---
+    # tools/ue/import_shop_displays.py: each production/assets/shop-displays/
+    # *.glb, the near metre behind a shop's glass (tools/art-recipes/shop-room.py
+    # --display), becomes one static mesh the game stands behind the glass.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import import_shop_displays
+            import_shop_displays.main()
+        except Exception as _disp_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("shopDisplaysImportStatus=RAISED shopDisplaysImportNote=%s\n"
+                         % str(_disp_err).replace(" ", "~")[:160])
+    # ---- AND NO MESH LEFT DRAWING NANITE'S STAND-IN, 1 October --------------
+    # tools/ue/nanite_audit.py: every static mesh under /Game/Ledger with Nanite
+    # still on, counted (twenty were, the cars and the skip among them, drawing
+    # a quarter of their triangles). A check here; the fix is the imports' own.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import nanite_audit
+            nanite_audit.main()
+        except Exception as _nan_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("naniteAuditStatus=RAISED naniteAuditNote=%s\n"
+                         % str(_nan_err).replace(" ", "~")[:160])
     # ---- AND THE STREET'S SOUNDS, 23 September, FOR THE SAME REASON --------
     # tools/ue/import_sounds.py: every clip production/specs/street-sounds.json
     # names becomes a SoundWave the probe places with Unreal's attenuation.

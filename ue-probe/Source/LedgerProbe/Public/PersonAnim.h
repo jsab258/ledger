@@ -168,6 +168,10 @@ public:
 		TEXT("CTRL_expressions_mouthFunnelDL"), TEXT("CTRL_expressions_mouthFunnelDR"),
 		TEXT("CTRL_expressions_mouthStretchL"), TEXT("CTRL_expressions_mouthStretchR") };
 	float MouthValues[MouthCurveCount] = {};
+	// THE IDLE'S OWN MOUTH (jaw, lips, teeth, tongue), held at rest while someone speaks
+	// (fix A, production/research/talking-face-faults/NOTE.md); filled once from the idle.
+	TArray<FName> IdleMouth;
+	static void MouthCurvesOf(UAnimSequenceBase* Seq, TArray<FName>& Out);
 	float SpeakLevel = 0.0f;
 	float SpeakWeight = 0.0f;
 	float SpeakClock = 0.0f;
