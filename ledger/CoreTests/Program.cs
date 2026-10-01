@@ -6322,7 +6322,8 @@ namespace Ledger.CoreTests
                 for (int d = 0; d <= 4; d += 2) { stop.Delivered(d); stop.PassedTo(d + 1, mStop, new GameTime(d + 1, 6, 0)); }
                 var stopMem = mStop.Get("rocco").Memory.Events;
                 bool stoppedTold = stop.Ended && stop.EndedWhy == "stopped" && stopMem.Count == 1 && stopMem[0].Text == Arrangement.HeardStopped
-                                   && stopMem[0].Time.Equals(new GameTime(5, 1, 0));
+                                   // Stamped when filed, at the dawn call (the review of 1 October, B3 and L4).
+                                   && stopMem[0].Time.Equals(new GameTime(5, 6, 0));
                 bool noMillNoMemory = new Arrangement().Answer(0, NightAnswer.Refused);
                 // A load between midnight and one leaves a standing night standing;
                 // a hand-over is only tonight's; a save from before 6bn keeps its
@@ -6334,7 +6335,10 @@ namespace Ledger.CoreTests
                 var gaveUpLoad = new Arrangement();
                 gaveUpLoad.Delivered(0, null, new GameTime(0, 21, 0));
                 gaveUpLoad.PassedTo(1, null, new GameTime(1, 1, 0));
-                bool passedAtOne = gaveUpLoad.Nights.Count == 1 && gaveUpLoad.Nights[0] == NightAnswer.NoShow;
+                bool notAtOne = gaveUpLoad.Nights.Count == 0;
+                // Passed at four, once no late no can come (the review of 1 October, B3).
+                gaveUpLoad.PassedTo(1, null, new GameTime(1, 4, 0));
+                bool passedAtOne = notAtOne && gaveUpLoad.Nights.Count == 1 && gaveUpLoad.Nights[0] == NightAnswer.NoShow;
                 var early = new Arrangement();
                 early.Answer(0, NightAnswer.Did);
                 bool wrongNight = !early.Delivered(2, null, new GameTime(0, 23, 0)) && early.Delivered(2, null, new GameTime(2, 20, 0));
@@ -7768,8 +7772,35 @@ namespace Ledger.CoreTests
                 var awayHeard = awayMill.Get(Arrangement.OutfitMan).Rumors.Find(r => r.TopicKey == "player.outfit_d0");
                 Check(notYet && stillNot && heard != null && heard.Hops == 0 && lateNo && lateHeard != null && lateHeard.Content.Value == "refused"
                       && awayNotYet && awayHeard != null && awayHeard.Content.Value == "noshow",
-                      "his no at half nine reaches the man at the landing when Ron goes down at eleven, as the hour turns, not at dawn; a no as of two to one still counts with the hours turning; a night away is filed at dawn",
+                      "his no at half nine reaches the man at the landing when Ron goes down at eleven, as the hour turns, not at dawn; a no as of two to one still counts with the hours turning; a night away is not filed at one",
                       $"{notYet} {stillNot} {heard != null} {lateNo} {lateHeard?.Content.Value} {awayNotYet} {awayHeard?.Content.Value}");
+                // THE HOURS HIS NO AND A NIGHT AWAY REACH THE LANDING (the independent review
+                // of 1 October, B3 and L4: a night away was filed at six, stamped one, and a
+                // no confirmed just after eleven at midnight, stamped before the rounds that
+                // ran without it). A night away reaches the landing as the hours turn, at
+                // four, once no late no can still come (his yes to Ron's question counts
+                // for three hours after it, and Ron asks only before one), not at dawn; and
+                // a story reaches the landing stamped when it is filed, never before.
+                var four = new Arrangement(0);
+                var fourMill = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) fourMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                four.Delivered(0, fourMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                foreach (var h in new[] { 1, 2, 3 }) four.TellDue(fourMill, new GameTime(1, h, 0));
+                bool fourNotYet = !fourMill.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.TopicKey == "player.outfit_d0");
+                four.TellDue(fourMill, new GameTime(1, 4, 0));
+                var fourHeard = fourMill.Get(Arrangement.OutfitMan).Rumors.Find(r => r.TopicKey == "player.outfit_d0");
+                var fourWhen = fourMill.Get(Arrangement.OutfitMan).Memory.Events.Find(e => e.Text != null && e.Text.Contains(Arrangement.Said(NightAnswer.NoShow)));
+                var afterEleven = new Arrangement(0);
+                var elevenMill = new GossipMill(null);
+                foreach (var id in new[] { Arrangement.Doorman, Arrangement.OutfitMan }) elevenMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                afterEleven.Delivered(0, elevenMill.Get(Arrangement.Doorman), new GameTime(0, 20, 0));
+                afterEleven.Answer(0, NightAnswer.Refused, null, new GameTime(0, 23, 5));
+                afterEleven.TellDue(elevenMill, new GameTime(1, 0, 0));
+                var elevenWhen = elevenMill.Get(Arrangement.OutfitMan).Memory.Events.Find(e => e.Text != null && e.Text.Contains(Arrangement.Said(NightAnswer.Refused)));
+                Check(fourNotYet && fourHeard != null && fourHeard.Content.Value == "noshow" && fourWhen != null && fourWhen.Time.Day == 1 && fourWhen.Time.Hour == 4 && fourWhen.Time.Minute == 0
+                      && elevenWhen != null && elevenWhen.Time.Day == 1 && elevenWhen.Time.Hour == 0 && elevenWhen.Time.Minute == 0,
+                      "a night away reaches the landing as the hours turn at four, once no late no can come, not at dawn; a no told when the hour turns is stamped then, never before the rounds that ran without it",
+                      $"{fourNotYet} {fourHeard?.Content.Value} {fourWhen?.Time} | {elevenWhen?.Time}");
             }
 
             // THE WITNESS BANK KEEPS THE CONTENT RULE (the independent review of 30
