@@ -215,6 +215,16 @@ quiet, which is exactly how the project ended up not knowing it had no font.
 | **Licence file** | `production/fonts/marcellus-sc/OFL.txt`, beside the font |
 | **Used for** | Rendering the street name plates' letters into images (`tools/props/make_vignette_2d.py`, `production/assets/vignette/decals2d/plate_*.png`), the nearest free face to the Kindersley capitals of 1990 British plates. The font file itself does not ship in the game; the images do. |
 
+## Fonts — THE EVENING PAPER, THE INTERFACE'S TYPE, SIL OPEN FONT LICENCE 1.1
+
+| | |
+|---|---|
+| **Files** | `production/fonts/evening-paper/`: Libre Franklin cut to 400, 450, 500, 600, 700 and 800 and its italic at 400, League Gothic at its regular width (static cuts of the variable fonts, made by `tools/ui/make_font_cuts.py` with fontTools), UnifrakturMaguntia Book and Old Standard TT Regular and Italic as published; from Google Fonts' own repository (github.com/google/fonts, ofl/librefranklin, leaguegothic, unifrakturmaguntia, oldstandardtt), 1 October 2026 |
+| **Authors** | Libre Franklin: Copyright 2020 The Libre Franklin Project Authors. League Gothic: Copyright 2010 The League Gothic Project Authors. UnifrakturMaguntia: Copyright (c) 2010 j. 'mach' wust, reserved font name "UnifrakturMaguntia"; Copyright (c) 2009 Peter Wiegel. Old Standard TT: Copyright 2011 The Old Standard Project Authors |
+| **Licence** | SIL Open Font License, Version 1.1; allowed for fonts by Jafar on 30 September 2026 (ledger-v2/research/license-allowlist.md, SHIP-SAFE 7). The cut families have no reserved font name, so the cuts keep their names; the two families with one ship unchanged |
+| **Licence files** | `production/fonts/evening-paper/OFL-*.txt`, one per family, beside the fonts |
+| **Used for** | The game's interface as Jafar approved it (production/design/ui/STYLE-GUIDE.md): these files ship in the game, staged with its data, and the game draws its screens with them |
+
 ## Textures, props, vehicles — NOTHING YET
 
 *(This heading is a LOG of the pre-M17.6 state and its first sentence stopped
