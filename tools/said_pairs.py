@@ -5,9 +5,9 @@
     python tools/said_pairs.py FACEAB_LOG FILM OUT_DIR KEY.json      # one -FaceAB run, both ways in it
 
 Two runs of the game with -MouthFilm, the same lines put to the same people:
-one as the game now plays a line made in advance (the face Epic's MetaHuman
-Animator made from its sound), one with -NoMadeFace (the mouth following the
-sound's loudness, as before). Each run's log names every thinking sound with
+one with -MadeFace (the face Epic's MetaHuman Animator made from its sound),
+one without (the mouth following the sound's loudness, which the game plays
+since his blind picks of 1 October). Each run's log names every thinking sound with
 the film frame it started at and the frame it ended at ("LedgerAck: rocco
 says let-me-think, 1.03 s, film frame 0, ..." then "LedgerAck: done (film
 frame 11)"); MADE_FILM and LOUD_FILM are the runs' Saved/MouthFilm folders.

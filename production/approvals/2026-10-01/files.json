@@ -1,8 +1,18 @@
 {
- "said-ron-well-now/well-now.wav": "content/voice/acks/rocco/well-now.wav",
- "said-ron-well-now/rocco-well-now-A.jpg": "production/approvals/2026-10-01/rocco-well-now-A.jpg",
- "said-ron-well-now/rocco-well-now-B.jpg": "production/approvals/2026-10-01/rocco-well-now-B.jpg",
- "said-darren-hmm-well-now/hmm-well-now.wav": "content/voice/acks/sam/hmm-well-now.wav",
- "said-darren-hmm-well-now/sam-hmm-well-now-A.jpg": "production/approvals/2026-10-01/sam-hmm-well-now-A.jpg",
- "said-darren-hmm-well-now/sam-hmm-well-now-B.jpg": "production/approvals/2026-10-01/sam-hmm-well-now-B.jpg"
+ "look-street-dressed/street-hook-day.webp": "production/approvals/2026-10-01/street-hook-day.webp",
+ "look-street-dressed/street-A-day.webp": "production/approvals/2026-10-01/street-A-day.webp",
+ "look-street-dressed/street-B-day.webp": "production/approvals/2026-10-01/street-B-day.webp",
+ "look-street-night/street-hook-night.webp": "production/approvals/2026-10-01/street-hook-night.webp",
+ "look-street-night/street-A-night.webp": "production/approvals/2026-10-01/street-A-night.webp",
+ "look-street-night/street-B-night.webp": "production/approvals/2026-10-01/street-B-night.webp",
+ "look-mouths-speaking/answer-darren.wav": "production/approvals/2026-10-01/answer-darren.wav",
+ "look-mouths-speaking/answer-darren.jpg": "production/approvals/2026-10-01/answer-darren.jpg",
+ "look-mouths-speaking/answer-sheila.wav": "production/approvals/2026-10-01/answer-sheila.wav",
+ "look-mouths-speaking/answer-sheila.jpg": "production/approvals/2026-10-01/answer-sheila.jpg",
+ "look-mouths-speaking/answer-ron.wav": "production/approvals/2026-10-01/answer-ron.wav",
+ "look-mouths-speaking/answer-ron.jpg": "production/approvals/2026-10-01/answer-ron.jpg",
+ "look-dressed-boots-handbag/dressed-ron.webp": "production/approvals/2026-10-01/dressed-ron.webp",
+ "look-dressed-boots-handbag/dressed-ron-boots.webp": "production/approvals/2026-10-01/dressed-ron-boots.webp",
+ "look-dressed-boots-handbag/dressed-sheila.webp": "production/approvals/2026-10-01/dressed-sheila.webp",
+ "look-dressed-boots-handbag/dressed-sheila-handbag.webp": "production/approvals/2026-10-01/dressed-sheila-handbag.webp"
 }

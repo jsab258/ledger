@@ -244,6 +244,8 @@ def build():
     for k in ("HOW_FACES", "HOW_VOICES", "FOOT"):
         page = page.replace("__%s__" % k, gate.get("page", {}).get(k.lower(), ""))
     page = page.replace("__DATA__", json.dumps(people, ensure_ascii=False).replace("</", "<\\/"))
+    import page_pictures   # every picture judged on the page itself (Jafar, 1 October)
+    page = page_pictures.apply(page)
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(page)
     with open(os.path.join(out_dir, "files.json"), "w", encoding="utf-8", newline="\n") as fh:

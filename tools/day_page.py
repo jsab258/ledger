@@ -19,7 +19,8 @@ page.json:
       "audio": "repo path of the line the speaking face follows",
       "candidates": [{"take": "Q1", "front": "repo path", "profile": "repo path",
                       "speak": {"file": "repo path", "frames": 90, "cols": 10, "rows": 9, "fps": 15}}]},
-     {"kind": "look", "key": "look-talk-light", "name": "...", "note": "...", "pictures": [{"src": "repo path", "alt": "..."}],
+     {"kind": "look", "key": "look-talk-light", "name": "...", "note": "...", "detail": "folded shut (optional)",
+      "pictures": [{"src": "repo path", "alt": "..."}],
       "options": [["yes", "Keep it"], ["no", "Not like this"]]},
      {"kind": "voice", "key": "game-sheila-dunn", "name": "...", "note": "...", "line": "...", "audio": "repo path",
       "options": [["yes", "This is her"], ["no", "Not her"]]},
@@ -116,8 +117,10 @@ function play(src, btn, onFrame){
   a.addEventListener("ended", () => { if (onFrame) onFrame(0); stop(); });
   a.play().then(() => { if (onFrame) raf = setInterval(() => { if (audio === a) onFrame(a.currentTime); }, 33); }).catch(() => stop());
 }
-function spriteBox(sp){
-  const box = el("div", {class:"speak", role:"img", "aria-label":"speaking"});
+function spriteBox(sp, audio, caption){
+  // data-film-*: the page's viewer opens the film full-screen with its sound (tools/page_pictures.py).
+  const box = el("div", {class:"speak", role:"img", "aria-label":"speaking", "data-film-sprite":JSON.stringify(sp),
+                         "data-film-audio":audio || "", "data-caption":caption || ""});
   box.style.backgroundImage = "url(" + sp.file + ")";
   box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
   const show = i => {
@@ -173,7 +176,7 @@ function render(){
             c.front ? el("img", {src:c.front, alt:s.name + " " + c.take + ", front", loading:"lazy"}) : el("div", {class:"speak"}),
             c.profile ? el("img", {src:c.profile, alt:s.name + " " + c.take + ", profile", loading:"lazy"}) : el("div", {class:"speak"})));
           if (c.speak && s.audio) {
-            const sp = spriteBox(c.speak);
+            const sp = spriteBox(c.speak, s.audio, s.name + ", " + c.take);
             const b = el("button", {type:"button", text:"Play the line"});
             b.addEventListener("click", () => play(s.audio, b, sp.at));
             box.append(sp.box, el("div", {class:"row"}, b));
@@ -193,6 +196,7 @@ function render(){
       const g = el("div", {class:"capgrid"});
       for (const p of s.pictures) g.append(el("figure", {}, el("img", {src:p.src, alt:p.alt, loading:"lazy"}), el("figcaption", {class:"was", text:p.alt})));
       sec.append(g, picks(s.key, s.options, st.pick));
+      if (s.detail) sec.append(el("details", {}, el("summary", {text:"What this is"}), el("p", {class:"was", text:s.detail})));
     } else if (s.kind === "pair") {
       const row = el("div", {class:"row"});
       for (const t of s.takes) {
@@ -204,7 +208,7 @@ function render(){
     } else if (s.kind === "said") {
       // A FACE FILMED SAYING A LINE, played in time with its own sound.
       for (const c of s.clips) {
-        const sp = spriteBox(c.sprite);
+        const sp = spriteBox(c.sprite, c.audio, s.name.split(":")[0] + ", " + c.label);
         const b = el("button", {type:"button", text:"Play " + c.label});
         b.addEventListener("click", () => play(c.audio, b, sp.at));
         sec.append(el("div", {class:"cand"}, el("div", {class:"take", text:c.label}), sp.box, el("div", {class:"row"}, b, el("q", {text:c.line}))));
@@ -251,6 +255,8 @@ def build(spec_path):
     out_dir = os.path.dirname(os.path.abspath(spec_path))
     page = "<title>" + spec.get("tab", "The Day's Page") + "</title>\n" + style() + BODY.replace(
         "__DATA__", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
+    import page_pictures   # every picture and film judged on the page itself (Jafar, 1 October)
+    page = page_pictures.apply(page)
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(page)
     with open(os.path.join(out_dir, "files.json"), "w", encoding="utf-8", newline="\n") as fh:

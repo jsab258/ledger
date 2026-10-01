@@ -384,6 +384,8 @@ def build(date):
     ldata = json.dumps(gather_lines(), ensure_ascii=False).replace("</", "<\\/")
     page = (PAGE.replace("__DATA__", data).replace("__PROOFS__", pdata).replace("__LINES__", ldata)
             .replace("__DATE__", html.escape(date)))
+    import page_pictures   # every picture judged on the page itself (Jafar, 1 October)
+    page = page_pictures.apply(page)
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(page)
     with open(os.path.join(out_dir, "files.json"), "w", encoding="utf-8", newline="\n") as fh:

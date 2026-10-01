@@ -413,7 +413,8 @@ def one_screen(day, date, done):
         parts.append("<p>Nothing is waiting on you from the town: every question on this page is answered.</p>")
     parts.append("</main>")
     parts.append(ONE_SCREEN_SCRIPT)
-    return "\n".join(parts)
+    import page_pictures   # every picture judged on the page itself (Jafar, 1 October)
+    return page_pictures.apply("\n".join(parts))
 
 
 def build(key):
@@ -455,7 +456,8 @@ def build(key):
                      f'<textarea id="{key}-note" placeholder="What to change"></textarea><p class="status" id="{key}-status"></p></article></section>')
     parts.append('<p class="status" id="store-status"></p></main>')
     parts.append(town_page.SCRIPT)
-    return "\n".join(parts)
+    import page_pictures   # every picture judged on the page itself (Jafar, 1 October)
+    return page_pictures.apply("\n".join(parts))
 
 
 def selftest():
@@ -469,7 +471,9 @@ def selftest():
         for key in done:
             assert 'data-key="%s"' % key not in page, (date, key)
     assert main(["town_day_page.py", "2099-01-01"]) == 1
-    assert "zoom-in" in town_page.STYLE and 'className = "full"' in town_page.SCRIPT
+    # Every picture judged on the page itself: the shared viewer (Jafar, 1 October).
+    import page_pictures
+    assert all(("// " + page_pictures.MARK) in build(d) for d in DAYS)
     # One phone screen (Jafar, 30 September): too many decisions, a long line,
     # an unmarked recommendation or detail left open are refused.
     ok = {"title": "t", "one_screen": True, "decisions": [("k1", "Is it right?", [("yes", "Yes"), ("no", "No")], "yes", "why")]}
