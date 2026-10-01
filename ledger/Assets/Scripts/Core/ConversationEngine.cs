@@ -666,12 +666,20 @@ namespace Ledger.Core
             if (PlainFallback && (!UseRules || ruled))
             {
                 var said = new List<string>();
+                // Their own introduction only when he asked about them, or when it
+                // is all there is: pasted onto another answer it reads as a recital
+                // (the blind review of 1 October: "Sheila Dunn. I keep the books at
+                // Mickey's ..." after the answer about money).
+                bool aboutThem = UseRules && LastRule != null && TalkRules.AboutThemselves(LastRule.Concept);
+                string ownHeld = null;
                 foreach (var b in LastBearing)
                 {
                     var s = StreetFacts.SaidFor(b);
+                    if (s != null && !aboutThem && StreetFacts.IsOwn(b, Card.Id)) { ownHeld ??= s; continue; }
                     if (s != null && !said.Contains(s)) said.Add(s);
                     if (said.Count == 2) break;
                 }
+                if (said.Count == 0 && ownHeld != null) said.Add(ownHeld);
                 if (said.Count > 0)
                 {
                     LastSaidPlainly = true;

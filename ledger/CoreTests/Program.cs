@@ -5296,6 +5296,19 @@ namespace Ledger.CoreTests
                     string other = await eo.SayToAsync("What happened in the yard?", now, "In the yard.");
                     Check(ClaimCheck.IsKnownOnly(other, eo.Card) && !eo.LastSaidPlainly && eo.LastRule == null,
                           "a line of no kind, refused twice, keeps \"that's all I know\" with the table on", other);
+                    // HER OWN INTRODUCTION ONLY WHEN HE ASKS ABOUT HER (the blind review
+                    // of 1 October: said plainly, "Sheila Dunn. I keep the books at
+                    // Mickey's ..." came pasted onto the answer about money and the one
+                    // about what happens now).
+                    var em = Engine(new ScriptedLlm("It's making a fortune.", "Money's pouring in."),
+                                    new ScriptedLlm(Flag("a fortune"), Unsupported, Flag("pouring in"), Unsupported));
+                    string money = await em.SayToAsync("Is there any money in the business?", now, "In the office.");
+                    var ew = Engine(new ScriptedLlm("I'm the Queen of Sheba.", "I'm Mickey's sister."),
+                                    new ScriptedLlm(Flag("the Queen of Sheba"), Unsupported, Flag("Mickey's sister"), Unsupported));
+                    string who = await ew.SayToAsync("Who are you?", now, "In the office.");
+                    Check(em.LastSaidPlainly && money.EndsWith("Trade's been thin.") && !money.Contains("Sheila Dunn")
+                          && ew.LastSaidPlainly && who.StartsWith("Sheila Dunn."),
+                          "said plainly, her own introduction only when he asks about her, never pasted onto another answer", money + " | " + who);
                 }
                 finally { ConversationEngine.UseRules = false; ConversationEngine.PlainFallback = false; }
             }

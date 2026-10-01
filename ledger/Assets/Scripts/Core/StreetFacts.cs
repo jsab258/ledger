@@ -103,6 +103,15 @@ namespace Ledger.Core
             return null;
         }
 
+        /// True when `known` is a fact about `who`, in their own words.
+        public static bool IsOwn(string known, string who)
+        {
+            if (string.IsNullOrEmpty(known) || string.IsNullOrEmpty(who)) return false;
+            foreach (var f in All)
+                if (f.about == who && f.own != null && f.own == known) return true;
+            return false;
+        }
+
         /// How a fact is said plainly, given the words a character holds it in
         /// (the street's, or the person's own); null for anything else, so a
         /// card's own facts, its secrets among them, are never said this way.
