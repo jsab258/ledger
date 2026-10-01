@@ -62,7 +62,7 @@ code and its golden row; the split agreed with the builder (NOW.md).
      on the key, 1 October ($0.18): Sheila's first sentence 1.43 s on her
      model, 1.32 cached (nothing), no thinking by default; 0.81 s on the
      faster one. His tap: try it, blind; the reviewer preferred her own model
-     13 to 6 of 20, so she stays (DECISIONS, 1 October). A leaner check would
+     13 to 6 of 20, so she stayed; superseded the same evening by his ruling D48: the model follows the kind of moment, for everybody. A leaner check would
      save about 0.2 s: left until the voice, not the check, is the limit. DONE.
 
 Done before this list (history in git): the empty answers by cause; the plain

@@ -449,6 +449,7 @@ static class Program
             bool knowsNameSent = false, gaveNameOut = false, callsSentByGame = false;
             List<string> present = null;
             string evidenceTopic = null;
+            bool evidenceSent = false; string momentSaid = null;
             bool suggestAsked = false; var tomKnows = new List<string>(); string suggestWith = null; var suggestShown = new List<string>();
             try
             {
@@ -500,6 +501,8 @@ static class Program
                     if (r.TryGetProperty("shown", out var sh) && sh.ValueKind == JsonValueKind.Array)
                         foreach (var k in sh.EnumerateArray()) if (k.ValueKind == JsonValueKind.String) suggestShown.Add(k.GetString());
                 }
+                // What the game says the moment is (D48): "smalltalk" or "conversation".
+                if (r.TryGetProperty("moment", out var mo) && mo.ValueKind == JsonValueKind.String) momentSaid = mo.GetString();
                 if (r.TryGetProperty("talk", out var tk) && tk.ValueKind == JsonValueKind.String)
                 {
                     talkOp = tk.GetString();
@@ -563,6 +566,7 @@ static class Program
                 }
                 if (r.TryGetProperty("evidence", out v) && v.ValueKind == JsonValueKind.Object)
                 {
+                    evidenceSent = true;
                     var acc = new DeedAccount();
                     var near = new Nearness();
                     double fam = 0.0;
@@ -1075,6 +1079,12 @@ static class Program
                             return Task.FromResult(true);
                         };
                     }
+                    // THE MODEL BY THE KIND OF MOMENT, NEVER BY WHO (Jafar's ruling D48):
+                    // real conversation when the game says so, or a deed, evidence or a
+                    // deal is standing, or it is a newcomer's real question; else small talk.
+                    bool dealStanding = askTonight || weekAsk || weekStands;
+                    lock (_askedNo) if (_askedNo.ContainsKey(to) || _askedWeek.ContainsKey(to) || _askedNo.ContainsKey(key) || _askedWeek.ContainsKey(key)) dealStanding = true;
+                    engine.Model = TalkMoment.ModelFor(TalkMoment.Of(say, deedTopic != null || evidenceSent, dealStanding, momentSaid));
                     var task = engine.SayToAsync(say, now, scene, cts.Token, onFirst);
                     var walkedOff = Task.Delay(Timeout.Infinite, walkCts.Token).ContinueWith(_ => { }, TaskScheduler.Default);
                     var timeout = Task.Delay(_patience);
@@ -1514,9 +1524,12 @@ static class Program
         public string Next = "Hm. Is that so.";
         public TimeSpan Delay = TimeSpan.Zero;
         public int Calls;
+        /// Every model asked, in order (the talk's model by the moment, D48).
+        public readonly List<string> Seen = new List<string>();
         public async Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
         {
             Calls++;
+            lock (Seen) Seen.Add(request.Model);
             if (Delay > TimeSpan.Zero) await Task.Delay(Delay, ct);
             return new LlmResponse { Text = Next, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model };
         }
@@ -1659,6 +1672,25 @@ static class Program
         var ev2 = await evH.Answer("{\"id\":302,\"to\":\"sam\",\"say\":\"Busy?\",\"day\":2,\"hour\":10,\"minute\":1," + otherDeed + "," + deedW + "}");
         Ok("a witness who saw him stays as suspicious when a line's evidence is about another deed than the line's",
            LevelOf(ev1) != null && LevelOf(ev1) != "Trusting" && LevelOf(ev2) == LevelOf(ev1), ev1 + " || " + ev2);
+
+        // THE MODEL FOLLOWS THE KIND OF MOMENT, NEVER WHO IS TALKING (Jafar's ruling D48,
+        // again on 1 October): small talk on the lighter model for Sheila as for anybody;
+        // a line with a deed standing, or a newcomer's real question, on the better one
+        // for Ron and Darren as for anybody; and what the game says the moment is wins.
+        var mf = new FakeLlm();
+        var mh = new Helper(mf, TimeSpan.FromSeconds(8));
+        LoadCards(mh, cardsDir);
+        bool Asked(string model) { lock (mf.Seen) return mf.Seen.Contains(model); }
+        mf.Seen.Clear(); await mh.Answer("{\"id\":401,\"to\":\"lena\",\"say\":\"Morning, Sheila.\"}");
+        bool smallLight = mf.Seen.Count > 0 && !Asked(Models.Core);
+        mf.Seen.Clear(); await mh.Answer("{\"id\":402,\"to\":\"rocco\",\"say\":\"Quiet night.\",\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23}}");
+        bool deedBetter = Asked(Models.Core);
+        mf.Seen.Clear(); await mh.Answer("{\"id\":403,\"to\":\"sam\",\"say\":\"Who runs things round here?\"}");
+        bool questionBetter = Asked(Models.Core);
+        mf.Seen.Clear(); await mh.Answer("{\"id\":404,\"to\":\"lena\",\"say\":\"Who runs things round here?\",\"moment\":\"smalltalk\"}");
+        bool gameWord = mf.Seen.Count > 0 && !Asked(Models.Core);
+        Ok("the talk's model follows the kind of moment, the same for everybody: small talk lighter, a deed or a real question better, the game's word first",
+           smallLight && deedBetter && questionBetter && gameWord, $"{smallLight} {deedBetter} {questionBetter} {gameWord}");
 
         var k = new Helper(new KnowledgeFake(), TimeSpan.FromSeconds(8));
         LoadCards(k, cardsDir);

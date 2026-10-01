@@ -43,6 +43,7 @@ It first writes one line:
 | `say` | required | what the player typed |
 | `day`, `hour`, `minute` | | the game's time now |
 | `scene` | | the weather and the light only; where they are comes from the cast file (town list 6u) |
+| `moment` | | `smalltalk` or `conversation`: the kind of moment this line is, which chooses the model, the same for everybody (Jafar's ruling D48: small talk lighter, real conversation better, never by who the character is); without it the program reads it itself: conversation when a `deed` or `evidence` comes with the line, a deal stands (`ask.tonight`, `week`, Ron's or Sheila's plain question), or the line is one of a newcomer's real questions about the place (TalkRules), else small talk |
 | `fresh` | | true when he walks up to somebody again: a new conversation (town list 6ae); once sent for a person, only the game starts their talk afresh, and until then the program does after six game hours apart (town list 6az) |
 | `memories` | | what the character remembers from the simulation: `day`, `hour`, `minute`, `kind`, `importance`, `text`, and `story`, the deed's topic when it is about something Tom did (town list 6ah) |
 | `knows` | | facts they hold: `subject`, `predicate`, `value` |
