@@ -179,6 +179,7 @@ namespace
 void Show(UWorld* World, const FWhen& When)
 {
 	if (GRoot.IsValid() || GEngine == nullptr || GEngine->GameViewport == nullptr) { return; }
+	LedgerPaper::UiSound(TEXT("rustle"));
 	GWorld = World;
 	GWhen = When;
 	GTaken = EAction::None;

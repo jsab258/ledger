@@ -7,12 +7,15 @@
 // not sensitive (nobody is ashamed to say they were threatened), under the
 // deed it was about ("player.threat_window_d1"), once a person and deed; the
 // street then says so to his face (StreetVoice::Recognition's two threat
-// banks). Reading his words for a threat, and whether anybody keeps quiet,
-// stay in the talk program: the port never reads what he said.
+// banks). And by Jafar's ruling of 1 October a threat talks them round: they
+// keep the deed to themselves, a body excepted. Reading his words for a
+// threat, and whether anybody keeps quiet, stay in the talk program: the port
+// never reads what he said.
 //
 // TRANSLITERATION, NOT REWRITE, as Gossip.h states the method. Checked
 // against PerceptionGolden's EmitThreats rows (ThreatIs, ThreatFiled,
-// ThreatHeld, RecognitionThreat) in ue-probe/perception-golden.txt.
+// ThreatHeld, RecognitionThreat) and ThreatSilences in
+// ue-probe/perception-golden.txt.
 //
 // NO UNREAL TYPE IS IN THIS FILE, as every file of the port.
 #pragma once
@@ -38,8 +41,9 @@ namespace LedgerCore
 		}
 
 		/// THE THREAT, FILED (town list 6cd): the one he threatened holds it
-		/// first-hand, under the deed it was about; once per deed and person.
-		/// False when it could not be.
+		/// first-hand, under the deed it was about; once per deed and person;
+		/// and it talks them round: the deed is suppressed for them (Jafar's
+		/// ruling of 1 October). False when it could not be.
 		inline bool FileThreat(GossipMill* Mill, const std::string& Who, const std::string& DeedTopic, const GameTime& At)
 		{
 			if (Mill == 0 || Who.empty() || DeedTopic.empty()) return false;
@@ -50,10 +54,22 @@ namespace LedgerCore
 			const Fact What("player", "threat_" + Stem, "threatened");
 			for (const RumorPtr& R : G->Rumors)
 			{
-				if (R && R->TopicKey() == std::string(ThreatPrefix) + Stem && R->Hops == 0) return false;
+				// Filed once a deed and person; threatened again, the silence holds even
+				// for a save from before Jafar's ruling of 1 October, which had none.
+				if (R && R->TopicKey() == std::string(ThreatPrefix) + Stem && R->Hops == 0)
+				{
+					if (!G->SuppressedHas(DeedTopic)) G->Suppressed.push_back(DeedTopic);
+					return false;
+				}
 			}
 			// Threatened to their face: remembered as that, never "I saw it myself" (B7).
 			Mill->WitnessRemembering(Who, What, ThreatSaid, false, At, ThreatMemory);
+			// A THREAT TALKS THEM ROUND (Jafar's ruling of 1 October; the independent
+			// review of 1 October, N3): frightened quiet about the deed, as one bought
+			// is, so they go to nobody about it (PoliceFile::WouldReport); never about a
+			// body, which is indelible and which no bribe or threat moves. The C#'s
+			// HashSet: added once.
+			if (!G->SuppressedHas(DeedTopic)) G->Suppressed.push_back(DeedTopic);
 			return true;
 		}
 	}

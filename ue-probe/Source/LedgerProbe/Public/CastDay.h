@@ -23,10 +23,11 @@
 // street's own JSON reader parts from the C#'s on escapes, numbers, repeated
 // keys and whitespace (an accented name would have come out with a '?').
 //
-// SCOPE: Parse (with its areas, "said", names, roles, "called", circles and
-// "namesHim", read as the C# reads them), PlaceOf, Where, Together,
+// SCOPE: Parse (with its areas, "said", names, roles, "called", "keepsQuiet",
+// circles and "namesHim", read as the C# reads them), PlaceOf, Where, Together,
 // HoursTogetherPerWeek, DaysTogetherPerWeek, FriendsMeetDays, and the few
-// lookups the game reads (NameOf, SaidOf, AreaOf, CircleOf). NOT HERE: the
+// lookups the game reads (NameOf, SaidOf, AreaOf, CircleOf, NeverToPolice,
+// MickeysOwn). NOT HERE: the
 // talk program's own reads (SpokenAreas, Fits, AreaFor, WhoNamed, Described,
 // UsualWords, PeopleFor, QuietStance), which run in the C# beside the game.
 //
@@ -192,6 +193,18 @@ namespace LedgerCore
 				if (GetString(P, "name", S) && Trim(S).size() > 0) C.Name[Id] = Trim(S);
 				if (GetString(P, "role", S) && Trim(S).size() > 0) C.Role[Id] = Trim(S);
 				if (GetString(P, "called", S) && Trim(S).size() > 0) C.Called[Id] = Trim(S);
+				// WHOM THEY KEEP QUIET FOR (CastDay.cs, the file's "keepsQuiet"): only the
+				// words it knows: a typo was read as a friend's silence, so Mickey's own
+				// reported again (the independent check of 1 October).
+				if (const Value* Kq = Get(P, "keepsQuiet"))
+				{
+					const std::string W = Kq->Type == T_STR ? Trim(Kq->Str) : std::string();
+					if (Kq->Type != T_STR || !(W == "owner" || W == "anyone" || W == "nobody" || W == "friend"))
+					{
+						Err = "person " + Id + ": keepsQuiet must be \"owner\", \"anyone\", \"nobody\" or \"friend\""; return false;
+					}
+					C.KeepsQuiet[Id] = W;
+				}
 				// NEVER TO THE POLICE (CastDay.cs 126 to 131; the town's handover 6ar):
 				// "police" is "never" or absent; the police file never takes a report
 				// from them (PoliceFile::WouldReport's bNeverToPolice).
@@ -359,8 +372,23 @@ namespace LedgerCore
 		}
 		std::string CircleOf(const std::string& Id) const { const std::string C = Lookup(Circle, Id); return C.empty() ? "day" : C; }
 		bool NamesHimOnlyOnTrust(const std::string& Id) const { return NameOnTrust.count(Id) > 0; }
-		/// CastDay.cs 482: whoever the cast file marks "police": "never".
-		bool NeverToPolice(const std::string& Id) const { return NeverPolice.count(Id) > 0; }
+		/// CastDay.cs NeverToPolice: whoever the cast file marks "police": "never",
+		/// or Mickey's own people (the file's keepsQuiet "owner": Ron and Sheila),
+		/// who never go to the police about one of their own, ever, and handle
+		/// what they saw privately (Jafar's ruling of 1 October, on the
+		/// independent review's N4). Read by PoliceFile::WouldReport and
+		/// HearTheStreet.
+		bool NeverToPolice(const std::string& Id) const { return NeverPolice.count(Id) > 0 || MickeysOwn(Id); }
+
+		/// MICKEY'S OWN PEOPLE (the file's keepsQuiet "owner": Ron and Sheila), his
+		/// inherited loyalists: they never go to the police about him and handle
+		/// what they saw privately (Jafar's ruling of 1 October; GossipMill::
+		/// KeepsHisDeedsFor).
+		bool MickeysOwn(const std::string& Id) const
+		{
+			const std::map<std::string, std::string>::const_iterator I = KeepsQuiet.find(Id);
+			return I != KeepsQuiet.end() && I->second == "owner";
+		}
 
 		/// Who keeps an area (CastDay.cs KeeperOf); empty for nobody.
 		std::string KeeperOf(const std::string& Area) const { return Lookup(KeeperOfArea, Area); }
@@ -425,6 +453,8 @@ namespace LedgerCore
 	private:
 		std::map<std::string, std::pair<double, double> > PlaceAt;
 		std::map<std::string, std::string> Said, AreaOfPlace, WithinOf, Name, Role, Called, Circle;
+		// The file's keepsQuiet word, trimmed (the C#'s _quiet, kept as its word).
+		std::map<std::string, std::string> KeepsQuiet;
 		std::map<std::string, std::vector<std::string> > AreaNames;
 		std::map<std::string, Routine> Daily;
 		std::map<std::string, std::pair<std::vector<Routine>, std::vector<bool> > > ByWeekday;

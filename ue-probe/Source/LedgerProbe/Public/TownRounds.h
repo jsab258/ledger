@@ -6,7 +6,8 @@
 // Gossip.h.
 //
 // ONE DIFFERENCE OF FORM, NOT OF BEHAVIOUR: the cast is a template parameter,
-// anything with Together(a, b, day, hour) as CastDay.h has it. The golden
+// anything with Together(a, b, day, hour) and MickeysOwn(id) as CastDay.h has
+// them (Hour and RunTo set the mill's KeepsHisDeedsFor from it, 1 October). The golden
 // rows pass a CastDay; the game's mill knows Sheila, Darren and Ron by the
 // probe's own ids (w1, n2, r3), so the game passes a CastDay that reads them
 // as the cast file's (lena, sam, rocco).
@@ -53,6 +54,20 @@ namespace LedgerCore
 
 		inline long long FloorDiv(long long A, long long B) { return A >= 0 ? A / B : -((-A + B - 1) / B); }
 
+		/// MICKEY'S OWN HANDLE IT PRIVATELY (Jafar, 1 October): the mill's
+		/// KeepsHisDeedsFor set from the cast whenever the town's rounds run with
+		/// it, as TownRounds.cs Hour and RunTo set it to cast.MickeysOwn (TCast
+		/// has MickeysOwn(id) as CastDay.h has it). The function holds the cast
+		/// as the C#'s delegate does, by reference, and the mill keeps it after
+		/// the call, so THE CAST MUST LIVE AS LONG AS THE MILL TALKS: the game
+		/// passes its own cast for the run (GCast, and the street's adapter of
+		/// it, which lives as long), never one made for a single call.
+		template <class TCast>
+		void KeepHisDeeds(GossipMill* Mill, const TCast* Cast)
+		{
+			Mill->KeepsHisDeedsFor = [Cast](const std::string& Id) { return Cast->MickeysOwn(Id); };
+		}
+
 		/// The start of an hour counted from day 0's midnight, days rounded
 		/// down (so hour -1 is the day before's eleven o'clock).
 		inline GameTime HourStart(long long H)
@@ -68,6 +83,7 @@ namespace LedgerCore
 		int Hour(GossipMill* Mill, const TCast* Cast, const GameTime& HourStartAt, const OnStreetFn& OnStreet = OnStreetFn())
 		{
 			if (Mill == nullptr || Cast == nullptr) return 0;
+			KeepHisDeeds(Mill, Cast);   // Mickey's own handle it privately (Jafar, 1 October)
 			const int Day = HourStartAt.Day, H = HourStartAt.Hour;
 			int Passed = 0;
 			for (int M = 0; M < 60; M += MinutesBetweenRounds)
@@ -124,6 +140,7 @@ namespace LedgerCore
 		int RunTo(GossipMill* Mill, const TCast* Cast, const GameTime& Now, const TownRounds::OnStreetFn& OnStreet = TownRounds::OnStreetFn())
 		{
 			if (Mill == nullptr || Cast == nullptr) return 0;
+			TownRounds::KeepHisDeeds(Mill, Cast);   // Mickey's own handle it privately (Jafar, 1 October)
 			const int Step = TownRounds::MinutesBetweenRounds;
 			const long long NowM = Now.TotalMinutes();
 			const long long HourNowStart = TownRounds::FloorDiv(NowM, 60) * 60;

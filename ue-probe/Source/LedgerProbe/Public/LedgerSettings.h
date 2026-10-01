@@ -30,4 +30,6 @@ namespace LedgerSettings
 	bool SuggestAlways();         // suggested lines always there, or on Tab only
 	float LookSensitivity();      // 0.5 to 2
 	bool InvertLook();
+	bool UiSoundsOn();             // the pages' own sounds
+	bool TypingSoundOn();         // the key sound as he types (off too when the pages' sounds are)
 }

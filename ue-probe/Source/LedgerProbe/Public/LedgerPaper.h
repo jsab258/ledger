@@ -93,6 +93,12 @@ namespace LedgerPaper
 	// Light words on the backing (subtitles, prompts).
 	TSharedRef<SWidget> OnBacking(TSharedRef<SWidget> Content, const FMargin& Padding);
 
+	// The pages' own sounds (production/audio/ui, tools/ui/make_ui_sounds.py): "rustle" as a page opens,
+	// "tick" as a choice is taken (SPaperChoice does it), the "press" looping under the loading page,
+	// and a key as he types; all quiet, and off with the settings' switches.
+	void UiSound(const FString& Name);
+	void UiKey();
+	void UiLoop(const FString& Name, bool bOn);
 	// How long things take to appear and go (the guide's table), and Reduce motion.
 	bool ReduceMotion();
 	void SetReduceMotion(bool bOn);

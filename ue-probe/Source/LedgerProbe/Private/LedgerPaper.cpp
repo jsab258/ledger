@@ -19,6 +19,13 @@
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/SOverlay.h"
 #include "Widgets/Text/STextBlock.h"
+#include "Components/AudioComponent.h"
+#include "Engine/Engine.h"
+#include "Engine/GameViewportClient.h"
+#include "Kismet/GameplayStatics.h"
+#include "LedgerSettings.h"
+#include "Misc/FileHelper.h"
+#include "Sound/SoundWaveProcedural.h"
 
 namespace LedgerPaper
 {
@@ -347,6 +354,103 @@ TSharedRef<SWidget> OnBacking(TSharedRef<SWidget> Content, const FMargin& Paddin
 	return SNew(SBorder).BorderImage_Lambda([]() { return Solid(Backing()); }).Padding(Padding)[ Content ];
 }
 
+// THE PAGES' OWN SOUNDS (STYLE-GUIDE.md, Sound; tools/ui/make_ui_sounds.py):
+// production/audio/ui/<name>.wav, read once, played as interface sounds (they
+// play while the game is paused), quiet, and off with the settings' switch.
+namespace
+{
+	struct FUiWav { TSharedPtr<TArray<uint8>> Pcm; int32 Rate = 0; int32 Channels = 0; };
+	TMap<FString, FUiWav>& UiWavs() { static TMap<FString, FUiWav>* M = new TMap<FString, FUiWav>(); return *M; }
+	TWeakObjectPtr<UAudioComponent> GUiLoop;
+
+	const FUiWav* UiWav(const FString& Name)
+	{
+		if (const FUiWav* Have = UiWavs().Find(Name)) { return Have->Pcm.IsValid() ? Have : nullptr; }
+		FUiWav W;
+		TArray<uint8> Bytes;
+		const FString Path = FPaths::Combine(Root(), TEXT("production/audio/ui"), Name + TEXT(".wav"));
+		if (FFileHelper::LoadFileToArray(Bytes, *Path) && Bytes.Num() > 44 && FMemory::Memcmp(Bytes.GetData(), "RIFF", 4) == 0)
+		{
+			// the chunks after "WAVE": "fmt " for the rate and channels, "data" for the samples
+			int32 At = 12;
+			while (At + 8 <= Bytes.Num())
+			{
+				const int32 Len = (int32)(Bytes[At + 4] | (Bytes[At + 5] << 8) | (Bytes[At + 6] << 16) | (Bytes[At + 7] << 24));
+				if (FMemory::Memcmp(&Bytes[At], "fmt ", 4) == 0 && At + 16 <= Bytes.Num())
+				{
+					W.Channels = Bytes[At + 10] | (Bytes[At + 11] << 8);
+					W.Rate = (int32)(Bytes[At + 12] | (Bytes[At + 13] << 8) | (Bytes[At + 14] << 16) | (Bytes[At + 15] << 24));
+				}
+				else if (FMemory::Memcmp(&Bytes[At], "data", 4) == 0)
+				{
+					const int32 N = FMath::Min(Len, Bytes.Num() - (At + 8));
+					W.Pcm = MakeShared<TArray<uint8>>();
+					W.Pcm->Append(&Bytes[At + 8], N);
+					break;
+				}
+				At += 8 + Len + (Len & 1);
+			}
+		}
+		if (!W.Pcm.IsValid() || W.Rate <= 0 || W.Channels <= 0)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerPaper: no interface sound %s (%s)"), *Name, *Path);
+			W.Pcm.Reset();
+		}
+		UiWavs().Add(Name, W);
+		return W.Pcm.IsValid() ? UiWavs().Find(Name) : nullptr;
+	}
+
+	USoundWaveProcedural* UiWave(const FUiWav& W)
+	{
+		USoundWaveProcedural* S = NewObject<USoundWaveProcedural>(GetTransientPackage());
+		S->SetSampleRate(W.Rate);
+		S->NumChannels = W.Channels;
+		S->Duration = INDEFINITELY_LOOPING_DURATION;
+		S->bLooping = false;
+		S->QueueAudio(W.Pcm->GetData(), W.Pcm->Num());
+		return S;
+	}
+
+	UWorld* UiWorld() { return GEngine != nullptr && GEngine->GameViewport != nullptr ? GEngine->GameViewport->GetWorld() : nullptr; }
+}
+
+void UiSound(const FString& Name)
+{
+	if (!LedgerSettings::UiSoundsOn()) { return; }
+	if (Name.StartsWith(TEXT("key")) && !LedgerSettings::TypingSoundOn()) { return; }
+	UWorld* W = UiWorld();
+	const FUiWav* Wav = W != nullptr ? UiWav(Name) : nullptr;
+	if (Wav == nullptr) { return; }
+	UGameplayStatics::PlaySound2D(W, UiWave(*Wav), 1.0f, 1.0f, 0.0f, nullptr, nullptr, true);
+}
+
+void UiKey()
+{
+	static int32 Turn = 0;
+	static const TCHAR* Keys[3] = { TEXT("key1"), TEXT("key2"), TEXT("key3") };
+	UiSound(Keys[Turn++ % 3]);
+}
+
+void UiLoop(const FString& Name, bool bOn)
+{
+	if (!bOn)
+	{
+		if (GUiLoop.IsValid()) { GUiLoop->Stop(); }
+		GUiLoop.Reset();
+		return;
+	}
+	if (GUiLoop.IsValid() || !LedgerSettings::UiSoundsOn()) { return; }
+	UWorld* W = UiWorld();
+	const FUiWav* Wav = W != nullptr ? UiWav(Name) : nullptr;
+	if (Wav == nullptr) { return; }
+	USoundWaveProcedural* S = UiWave(*Wav);
+	// round again whenever it runs short, for as long as the page is up
+	TSharedPtr<TArray<uint8>> Pcm = Wav->Pcm;
+	S->OnSoundWaveProceduralUnderflow.BindLambda([Pcm](USoundWaveProcedural* Wave, int32) { Wave->QueueAudio(Pcm->GetData(), Pcm->Num()); });
+	UAudioComponent* C = UGameplayStatics::CreateSound2D(W, S, 1.0f, 1.0f, 0.0f, nullptr, true, false);
+	if (C != nullptr) { C->bIsUISound = true; C->Play(); GUiLoop = C; }
+}
+
 namespace { bool bReduceMotion = false; }
 // The player's own setting (LedgerSettings), or -ReduceMotion for a test.
 bool ReduceMotion() { return bReduceMotion || FParse::Param(FCommandLine::Get(), TEXT("ReduceMotion")); }
@@ -426,6 +530,7 @@ FSlateColor SPaperChoice::TextColour() const
 void SPaperChoice::Take()
 {
 	if (!Enabled.Get()) { return; }
+	LedgerPaper::UiSound(TEXT("tick"));
 	PressedAt = FPlatformTime::Seconds();
 	OnChosen.ExecuteIfBound();
 }

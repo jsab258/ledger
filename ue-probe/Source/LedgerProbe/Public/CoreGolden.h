@@ -2111,6 +2111,26 @@ namespace Golden
 				for (size_t I = 0; I < W.size(); ++I) J += (I ? "," : "") + W[I];
 				Ans["TownNewsWitnesses|" + St.Id] = { J };
 			}
+			// MICKEY'S OWN HANDLE IT PRIVATELY (Jafar's ruling of 1 October): a deed Sheila
+			// or Ron saw goes no further than them through a day of the town's rounds; one
+			// Darren saw goes round; and their talk is not the street's (Loudness).
+			for (const char* KeepWho : { "lena", "rocco", "sam" })
+			{
+				std::shared_ptr<SocialGraph> Pg = std::make_shared<SocialGraph>();
+				for (const CastDay::Tie& Tt : Cast.Ties()) Pg->Link(Tt.A, Tt.B, Tt.W);
+				GossipMill Pm(Pg);
+				for (const std::string& Pid : Cast.People())
+					Pm.Add(std::make_shared<Gossiper>(Pid, Pid, std::make_shared<MemoryStore>(Pid), std::make_shared<KnowledgeBase>(), Cast.CircleOf(Pid)));
+				Pm.Witness(KeepWho, Fact("player", "window_d1", "ritas"), "the new owner put Rita's window in", true, GameTime(1, 12, 0), 1.0);
+				for (int Hh = 12; Hh < 36; ++Hh) TownRounds::Hour(&Pm, &Cast, GameTime(1 + Hh / 24, Hh % 24, 0));
+				int Others = 0;
+				for (const GossiperPtr& Ag : Pm.Agents())
+				{
+					if (Ag->Id == KeepWho) continue;
+					for (const RumorPtr& Rk : Ag->Rumors) { if (Rk->TopicKey() == "player.window_d1") { ++Others; break; } }
+				}
+				Ans["KeepsHisDeeds|" + std::string(KeepWho)] = { FromInt(Others), FromInt(PoliceFile::Loudness(&Pm)), FromBool(Cast.MickeysOwn(KeepWho)) };
+			}
 		}
 
 		// THE EDGES (EmitTownNews' regression rows).
@@ -2925,6 +2945,20 @@ namespace Golden
 					Ans["PoliceOnHisSide|" + std::string(OffenceName(O)) + "|" + FromDouble(Nerve) + "|" + FromDouble(Loyalty)]
 						= { FromBool(PoliceFile::WouldReport(&Gs, O, false, &Topic)) };
 				}
+		// A THREAT TALKS THEM ROUND (Jafar's ruling of 1 October; the independent review
+		// of 1 October, N3): a witness he threatens over a deed reports nothing of it,
+		// a body still, another deed as before. Unlabelled, as the C# writes it.
+		{
+			GossipMill ThreatMill(std::make_shared<SocialGraph>());
+			ThreatMill.Add(std::make_shared<Gossiper>("th", "th", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", 0.5, 0.7, 0.5));
+			ThreatMill.Witness("th", Fact("player", "window_d1", "ritas"), "it was the new owner that put the window in", true, GameTime(1, 12, 0), 1.0);
+			const Gossiper* Th = ThreatMill.Get("th").get();
+			const std::string Window1 = "player.window_d1", Window2 = "player.window_d2";
+			const bool bBeforeThreat = PoliceFile::WouldReport(Th, Offence::Damage, false, &Window1);
+			const bool bFiledThreat = Silence::FileThreat(&ThreatMill, "th", Window1, GameTime(2, 10, 0));
+			Ans["ThreatSilences"] = { FromBool(bBeforeThreat), FromBool(bFiledThreat), FromBool(PoliceFile::WouldReport(Th, Offence::Damage, false, &Window1)),
+				FromBool(PoliceFile::WouldReport(Th, Offence::Killing, false, &Window1)), FromBool(PoliceFile::WouldReport(Th, Offence::Damage, false, &Window2)) };
+		}
 		{
 			Gossiper Quiet("wq", "wq", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day", 0.5, 0.9, 0.1);
 			Quiet.Suppressed.push_back("t");
@@ -2967,9 +3001,10 @@ namespace Golden
 		const bool bGrid = F[0] == "PoliceWouldReport" && F.size() >= 2 && F[1] != "quiet" && F[1] != "hooked";
 		const bool bMiddle = F[0] == "PoliceWouldReportMiddle";
 		const bool bSide = F[0] == "PoliceOnHisSide";
-		const int Labels = bGrid ? 4 : bMiddle ? 2 : bSide ? 3 : 1;
+		const bool bUnlabelled = F[0] == "ThreatSilences";
+		const int Labels = bGrid ? 4 : bMiddle ? 2 : bSide ? 3 : bUnlabelled ? 0 : 1;
 		if ((int)F.size() < 1 + Labels + 1) return A;
-		std::string Key = F[0] + "|" + F[1];
+		std::string Key = bUnlabelled ? F[0] : F[0] + "|" + F[1];
 		if (bGrid) Key += "|" + F[2] + "|" + (IsNumber(F[3]) ? FromDouble(D(F[3])) : F[3]) + "|" + (IsNumber(F[4]) ? FromDouble(D(F[4])) : F[4]);
 		if (bMiddle) Key += "|" + (IsNumber(F[2]) ? FromDouble(D(F[2])) : F[2]);
 		if (bSide) Key += "|" + (IsNumber(F[2]) ? FromDouble(D(F[2])) : F[2]) + "|" + (IsNumber(F[3]) ? FromDouble(D(F[3])) : F[3]);
@@ -3401,6 +3436,16 @@ namespace Golden
 			Ans["TeaEdge|seen before one"].push_back({ FromBool(bSeen), FromInt((long long)Told), TeaStateName(Odd->Close(nullptr, T(2, 23))) });
 			Ans["TeaEdge|first ask negative"].push_back({ FromBool(AdasTea::For(-1, true) == nullptr) });
 		}
+		// Not while he is in the cells (the independent review of 1 October, M3):
+		// held at ten she does not ask; out by five, she does. Unlabelled, as the C# writes it.
+		{
+			std::unique_ptr<AdasTea> HeldTea = AdasTea::For(0, true);
+			std::string HeldL1, HeldL2;
+			const bool bHeldAsked = HeldTea->SheSeesHim(T(2, 10), HeldL1, true);
+			const std::string HeldState1 = TeaStateName(HeldTea->State());
+			const bool bOutAsked = HeldTea->SheSeesHim(T(2, 17), HeldL2, false);
+			Ans["TeaHeld"].push_back({ Escape(bHeldAsked ? HeldL1 : "none"), HeldState1, Escape(bOutAsked ? HeldL2 : "none"), TeaStateName(HeldTea->State()) });
+		}
 		{
 			const Way NanWays[] = { { "sat", 21 * 60 + 5, 22 * 60 + 40 }, { "early", 21 * 60, 21 * 60 + 50 }, { "away", -1, -1 } };
 			for (const Way& W : NanWays)
@@ -3423,7 +3468,7 @@ namespace Golden
 	{
 		Answer A;
 		static std::map<std::string, size_t> Taken;
-		const bool bUnlabelled = F[0] == "TeaSeenGoingOnce";
+		const bool bUnlabelled = F[0] == "TeaSeenGoingOnce" || F[0] == "TeaHeld";
 		const std::string Key = bUnlabelled ? F[0] : F[0] + "|" + F[1];
 		const auto& Ans = TeaAnswers();
 		const auto It = Ans.find(Key);
@@ -3611,6 +3656,33 @@ namespace Golden
 			Ans["AskEdge|dawn before one"] = Cat(AskState(Early), { FromBool(Early.AskStands(T(1, 0, 45))) });
 			Early.PassedTo(1, nullptr, &One);
 			Ans["AskEdge|dawn at one"] = Cat(AskState(Early), { FromBool(Early.AskStands(T(1, 0, 45))) });
+			// THE HOURS HIS NO AND A NIGHT AWAY REACH THE LANDING (the independent review
+			// of 1 October, B3 and L4): a night away passes as the hours turn at four,
+			// once no late no can come; a story is stamped when it is filed.
+			auto LandedAt = [](GossipMill& M, NightAnswer What) -> std::string
+			{
+				for (const MemoryEvent& E : M.Get(Arrangement::OutfitMan)->Memory->Events)
+					if (E.Text.find(Arrangement::Said(What)) != std::string::npos) return FromInt(E.Time.TotalMinutes());
+				return "none";
+			};
+			GossipMill Lh(std::make_shared<SocialGraph>());
+			for (const char* Id : { Arrangement::Doorman, Arrangement::OutfitMan })
+				Lh.Add(std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+			Arrangement AwayNight(0);
+			AwayNight.Delivered(0, Lh.Get(Arrangement::Doorman).get(), &D0);
+			AwayNight.TellDue(&Lh, T(1, 3));
+			const std::vector<std::string> AtThree = AskState(AwayNight);
+			AwayNight.TellDue(&Lh, T(1, 4));
+			Ans["LandingHours|night away"] = Cat(Cat(AtThree, AskState(AwayNight)), { LandedAt(Lh, NightAnswer::NoShow) });
+			GossipMill Lh2(std::make_shared<SocialGraph>());
+			for (const char* Id : { Arrangement::Doorman, Arrangement::OutfitMan })
+				Lh2.Add(std::make_shared<Gossiper>(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+			Arrangement LateNo(0);
+			LateNo.Delivered(0, Lh2.Get(Arrangement::Doorman).get(), &D0);
+			const GameTime FiveAfterEleven = T(0, 23, 5);
+			LateNo.Answer(0, NightAnswer::Refused, nullptr, &FiveAfterEleven);
+			LateNo.TellDue(&Lh2, T(1, 0));
+			Ans["LandingHours|no after eleven"] = { LandedAt(Lh2, NightAnswer::Refused) };
 			Arrangement U1(0), U2(0), U3(0);
 			Ans["AskEdge|answer undelivered"] = { FromBool(U1.Answer(0, NightAnswer::Undelivered)), FromBool(U2.Answer(0, NightAnswer::NoShow)), FromBool(U3.Answer(2, NightAnswer::Did)) };
 			const Arrangement Neg(-3);
@@ -5196,9 +5268,10 @@ namespace Golden
 		{
 			A = TownSaveRow(F);
 		}
-		// THE TOWN'S OWN NEWS (town list 6aq): TownNews.h and Exchange's news branch.
+		// THE TOWN'S OWN NEWS (town list 6aq): TownNews.h and Exchange's news branch;
+		// and on the same cast, Mickey's own keeping his deeds (Jafar, 1 October).
 		else if (Fn == "TownNews" || Fn == "TownNewsWitnesses" || Fn == "NewsHeard" || Fn == "ExchangeHeard" || Fn == "NewsSeed" || Fn == "NewsSeedHolder"
-		         || Fn == "NewsParse" || Fn == "Aftermath" || Fn == "KeeperHeardFirst")
+		         || Fn == "NewsParse" || Fn == "Aftermath" || Fn == "KeeperHeardFirst" || Fn == "KeepsHisDeeds")
 		{
 			A = NewsRow(F);
 		}
@@ -5224,7 +5297,8 @@ namespace Golden
 			A = WaitRow(F);
 		}
 		// THE POLICE FILE ITSELF (town list 6ar): PoliceFile.h, its regression rows.
-		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "PoliceWouldReportMiddle" || Fn == "PoliceOnHisSide" || Fn == "CustodyWords" || Fn == "CustodySeenTaken")
+		else if (Fn == "PoliceFile" || Fn == "PoliceBadSave" || Fn == "PoliceWouldReport" || Fn == "PoliceWouldReportMiddle" || Fn == "PoliceOnHisSide" || Fn == "CustodyWords" || Fn == "CustodySeenTaken"
+		         || Fn == "ThreatSilences")
 		{
 			A = PoliceFileRow(F);
 		}
@@ -5243,7 +5317,7 @@ namespace Golden
 		}
 		// ADA'S TEA (town list 6bg): FirstWeek.h.
 		else if (Fn == "Tea" || Fn == "TeaAsked" || Fn == "TeaBefore11" || Fn == "TeaClosed" || Fn == "TeaSeenGoing" || Fn == "TeaSeenGoingOnce" || Fn == "TeaSave"
-		         || Fn == "TeaBadSave" || Fn == "TeaEdge" || Fn == "TeaNaN")
+		         || Fn == "TeaBadSave" || Fn == "TeaEdge" || Fn == "TeaNaN" || Fn == "TeaHeld")
 		{
 			A = TeaRow(F);
 		}
@@ -5254,7 +5328,7 @@ namespace Golden
 		}
 		// THE OUTFIT'S ASK AND THE LANDING (town list 6z, 6cj): Arrangement.h.
 		else if (Fn == "Ask" || Fn == "AskStory" || Fn == "AskRonRemembers" || Fn == "AskLoad" || Fn == "Landing"
-		         || Fn == "AskBadSave" || Fn == "AskWound" || Fn == "AskEdge")
+		         || Fn == "AskBadSave" || Fn == "AskWound" || Fn == "AskEdge" || Fn == "LandingHours")
 		{
 			A = AskRow(F);
 		}

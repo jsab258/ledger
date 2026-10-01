@@ -365,6 +365,7 @@ namespace
 			.ColorAndOpacity_Lambda([]() { const float A = ReduceMotion() ? 1.0f : FMath::Clamp((float)((FPlatformTime::Seconds() - GLoadShownAt) / 0.4), 0.0f, 1.0f); return FLinearColor(A, A, A, 1.0f); })
 			[ LoadingPage(bContinue) ];
 		GEngine->GameViewport->AddViewportWidgetContent(GLoadRoot.ToSharedRef(), 210);
+		UiLoop(TEXT("press"), true);   // the distant run of a press, while the street is made
 		if (GRoot.IsValid()) { GRoot->SetVisibility(EVisibility::Collapsed); }    // the title waits behind, unseen
 		UE_LOG(LogTemp, Log, TEXT("LedgerTitle: the loading page, %s"), bContinue ? TEXT("continuing") : TEXT("a new story"));
 	}
@@ -376,6 +377,7 @@ namespace
 			GEngine->GameViewport->RemoveViewportWidgetContent(GLoadRoot.ToSharedRef());
 		}
 		GLoadRoot.Reset();
+		UiLoop(TEXT("press"), false);
 		if (GRoot.IsValid()) { GRoot->SetVisibility(EVisibility::SelfHitTestInvisible); }
 	}
 }
@@ -384,6 +386,7 @@ void Show(UWorld* World, bool bInCanContinue, int32 SavedDay, int32 SavedHour, i
 {
 	using namespace LedgerPaper;
 	if (bShown || GEngine == nullptr || GEngine->GameViewport == nullptr || World == nullptr) { return; }
+	UiSound(TEXT("rustle"));
 	bCanContinue = bInCanContinue;
 	GSavedDay = SavedDay;
 	GSavedHour = SavedHour;

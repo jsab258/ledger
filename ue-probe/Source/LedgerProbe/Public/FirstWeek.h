@@ -11,8 +11,8 @@
 //
 // TRANSLITERATION, NOT REWRITE, as Gossip.h states the method. Checked
 // against PerceptionGolden's EmitTea rows (Tea, TeaAsked, TeaBefore11,
-// TeaClosed, TeaSeenGoing, TeaSeenGoingOnce, TeaSave) in
-// ue-probe/perception-golden.txt.
+// TeaClosed, TeaSeenGoing, TeaSeenGoingOnce, TeaSave, and TeaHeld since the
+// review of 1 October) in ue-probe/perception-golden.txt.
 //
 // NO UNREAL TYPE IS IN THIS FILE, as every file of the port.
 #pragma once
@@ -75,10 +75,14 @@ namespace LedgerCore
 		}
 
 		/// She sees him on the tea's day before nine and asks him, once: her
-		/// line into Out, or false when it is not the moment.
-		bool SheSeesHim(const GameTime& Now, std::string& Out)
+		/// line into Out, or false when it is not the moment. Never while he is
+		/// held in the cells (bHeld, the C#'s `held`: Custody::Holds; the
+		/// independent review of 1 October, M3: she asked him in the hour he was
+		/// arrested): she asks once he is out and she sees him, if it is still
+		/// before nine.
+		bool SheSeesHim(const GameTime& Now, std::string& Out, bool bHeld = false)
 		{
-			if (StateValue != TeaState::NotAsked || Now.Day != DayValue || Now.Hour >= From) return false;
+			if (bHeld || StateValue != TeaState::NotAsked || Now.Day != DayValue || Now.Hour >= From) return false;
 			StateValue = TeaState::Asked;
 			Out = Invite;
 			return true;
