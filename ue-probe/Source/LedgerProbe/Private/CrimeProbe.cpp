@@ -2384,12 +2384,22 @@ namespace
 		{
 			return Cast != nullptr && Cast->Together(CastId(A), CastId(B), Day, Hour);
 		}
+		// MICKEY'S OWN (the cast file's keepsQuiet "owner": Sheila and Ron), read by
+		// the town's rounds into the mill's KeepsHisDeedsFor (TownRounds.h).
+		bool MickeysOwn(const std::string& Id) const
+		{
+			return Cast != nullptr && Cast->MickeysOwn(CastId(Id));
+		}
 	};
+	// ONE FOR THE RUN, NOT ONE PER CALL: the rounds leave the mill holding it
+	// (its KeepsHisDeedsFor reads MickeysOwn here whenever the mill talks), so
+	// it lives as long as the mill, as GCast does.
+	FStreetCast GStreetCast;
 
 	void TownHoursTick()
 	{
 		if (GEnc != EEncounter::Live || !GMill || !bGCast || !bLiveScript) { return; }
-		FStreetCast Street;
+		FStreetCast& Street = GStreetCast;
 		Street.Cast = &GCast;
 		// WHO THE STREET HOLDS: in the scripted encounter the game passes the
 		// story between the three itself (its staged rounds), so the town's
@@ -3104,6 +3114,7 @@ namespace
 			// the card holds the keys until he goes on
 			GNoticeCardAt = FPlatformTime::Seconds();
 			bNoticeCardUp = true;
+			UiSound(TEXT("rustle"));
 			SubsRebuild();
 			UWorld* W = GEngine->GameViewport->GetWorld();
 			if (APlayerController* PC = W != nullptr ? W->GetFirstPlayerController() : nullptr)
@@ -4786,7 +4797,9 @@ namespace
 			UE_LOG(LogTemp, Display, TEXT("LedgerNames: %s has his name now"), *Un(Card));
 		}
 		// A THREAT (the reply's "threatened"): the one threatened holds it
-		// first-hand, warier, and it buys no silence (Silence.h).
+		// first-hand, warier, and it talks them round: they keep the deed to
+		// themselves and go to nobody about it, a body excepted (Jafar's ruling
+		// of 1 October; Silence.h).
 		std::string Threat;
 		if (GMill && CastDay::GetString(&Root, "threatened", Threat) && !Threat.empty() && Silence::FileThreat(GMill.get(), G->Id, Threat, GNow))
 		{
@@ -4819,7 +4832,10 @@ namespace
 				}
 			}
 			const int Night = Arrangement::NightOf(At);
-			if (GWeek.AnswerAsk(Night, NightAnswer::Refused, GMill.get(), At))
+			// As of Ron's question (At), stamped when he said it (GNow): what Ron
+			// remembers and what reaches the landing is told now, never before the
+			// rounds that ran without it (the independent check of 1 October).
+			if (GWeek.AnswerAsk(Night, NightAnswer::Refused, GMill.get(), At, &GNow))
 			{
 				LedgerSession::Write(TEXT("refused"), TEXT("\"night\":") + FString::FromInt(Night));
 				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: he tells Ron no, night %d, as of %s"), Night, *Un(At.ToString()));
@@ -5336,6 +5352,7 @@ namespace
 	void SuggestTakeKeys()
 	{
 		if (!bSuggestPassed) { return; }
+		if (!GSug.bOpen) { LedgerPaper::UiSound(TEXT("rustle")); }
 		GSug.bOpen = GSug.bKeys = true;
 		AskSuggest();
 		RebuildSuggestRows();
@@ -5453,6 +5470,8 @@ namespace
 							.TextStyle(&Words)
 							.AutoWrapText(true)
 							.Text(FText::FromString(GSayDraft))
+							// a soft key sound for each letter typed (off in the settings, the first to go if it tires)
+							.OnTextChanged_Lambda([](const FText& T) { static int32 Was = 0; const int32 Now = T.ToString().Len(); if (Now > Was) { LedgerPaper::UiKey(); } Was = Now; })
 							.OnKeyDownHandler_Lambda([](const FGeometry&, const FKeyEvent& E)
 							{
 								// Enter says it; Esc stops typing and keeps the words; Tab hands the

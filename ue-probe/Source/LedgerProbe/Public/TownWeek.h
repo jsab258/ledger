@@ -4,8 +4,9 @@
 // work in the order the Core's own week does (ledger/TownReach/Program.cs,
 // WeekRows): six o'clock the asks' nights passed; the damage found; nine the
 // witnesses to the police and DS Ellis; ten the constable and Ada's
-// invitation; eight in the evening Ron at the door on an ask night; eleven the
-// tea's close; every hour the week's end closed and the town's talk. What the
+// invitation (never while he is held); eight in the evening Ron at the door on
+// an ask night (not while he is held); eleven the tea's close; every hour the
+// week's end closed and the town's talk. What the
 // player does (the deed, the envelope or a no, the tea, Sunday's answer) comes
 // between those steps, called by the game when he does it, or by the route's
 // acceptance replay (ue-probe/tests/route-week-test.cpp) at the moments the
@@ -66,8 +67,8 @@ namespace LedgerCore
 
 		/// 06:00: the asks' nights passed (a night away filed).
 		/// Also, as each hour turns and before anything else in it, his no or the
-		/// winding down reaches the landing when Ron goes down (Arrangement's
-		/// TellDue; the review's B3).
+		/// winding down reaches the landing when Ron goes down, and a night he
+		/// stayed away passes from four (Arrangement's TellDue; the reviews' B3).
 		void Six(GossipMill* Mill, const GameTime& Now)
 		{
 			Asks.TellDue(Mill, Now);
@@ -168,16 +169,19 @@ namespace LedgerCore
 			return C;
 		}
 
-		/// 10:00 on the tea's day: Ada's invitation line, once.
+		/// 10:00 on the tea's day: Ada's invitation line, once; never while he
+		/// is in the cells (AdasTea's held, the review of 1 October, M3).
 		bool TenTea(const GameTime& Now, std::string& Out)
 		{
-			return Tea && Now.Day == Tea->Day() && Now.Hour == 10 && Tea->SheSeesHim(Now, Out);
+			return Tea && Now.Day == Tea->Day() && Now.Hour == 10 && Tea->SheSeesHim(Now, Out, Holding(Now) != nullptr);
 		}
 
-		/// 20:00 on an ask night: Ron at the door with the envelope.
+		/// 20:00 on an ask night: Ron at the door with the envelope; not while
+		/// he is in the cells (the review of 1 October, M3: Ron's envelope while
+		/// he is held is the game's).
 		bool TwentyRon(GossipMill* Mill, const GameTime& Now)
 		{
-			if (Now.Hour != 20 || !Asks.AsksOn(Now.Day) || Mill == nullptr) return false;
+			if (Now.Hour != 20 || !Asks.AsksOn(Now.Day) || Mill == nullptr || Holding(Now)) return false;
 			const GossiperPtr Ron = Mill->Get("rocco");
 			return Asks.Delivered(Now.Day, Ron.get(), &Now);
 		}
@@ -202,6 +206,12 @@ namespace LedgerCore
 		// ---- what he does, between them ----
 
 		/// His answer to the night's ask: the envelope at the landing, or a no.
-		bool AnswerAsk(int Day, NightAnswer What, GossipMill* Mill, const GameTime& Now) { return Asks.Answer(Day, What, Mill, &Now); }
+		/// Now is the answer's "as of" (for a no, Ron's question); ToldAt, when
+		/// given, is when he said it, which stamps what is told and remembered
+		/// (Arrangement's Answer, the independent check of 1 October).
+		bool AnswerAsk(int Day, NightAnswer What, GossipMill* Mill, const GameTime& Now, const GameTime* ToldAt = nullptr)
+		{
+			return Asks.Answer(Day, What, Mill, &Now, ToldAt);
+		}
 	};
 }

@@ -40,6 +40,7 @@ FIXED = [
     "production/specs/town-news.json",   # the town's own news, for the TownNewsWitnesses rows of the golden run (30 September)
     "production/specs/mickeys-office.json",   # Mickey's office as a grey blockout, built in live play (1 October, item 6)
     "production/specs/shop-interiors.json",   # the shop rooms behind the windows (1 October, item 2a; VignetteShot.cpp ApplyShopInteriors)
+    "production/specs/suggested-lines.json",   # Tom's written suggested lines and the deals' answers (1 October, CrimeProbe.cpp ReadDeals)
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"
@@ -62,6 +63,8 @@ DIRS = [
     "production/fonts/evening-paper",
     # and its paper and halftones (tools/ui/make_paper.py, make_halftone.py)
     "production/art/ui",
+    # the pages' own sounds (tools/ui/make_ui_sounds.py; LedgerPaper.cpp UiSound)
+    "production/audio/ui",
 ]
 VOICE_ROOT = "ledger/Assets/StreamingAssets/Audio/Voice"
 SOUND_ROOT = "production/assets/sounds"

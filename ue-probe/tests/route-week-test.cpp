@@ -48,7 +48,12 @@ namespace
 		int Miss = 0;
 		for (bool bTakes : { true, false })
 		for (bool bSits : { true, false })
-		for (const char* SeenByC : { "lena", "ada", "nobody", "none" })
+		// Who sees the window (TownReach, 1 October): Sheila, one of Mickey's own, who
+		// never goes to the police about him (Jafar's ruling of 1 October); Darren, at
+		// the fish front with a body at Tuesday noon, who does (the review of 1
+		// October, M4: behind her window Ada could never see Rita's glass in play);
+		// nobody; or no window at all.
+		for (const char* SeenByC : { "lena", "sam", "nobody", "none" })
 		{
 			const std::string SeenBy = SeenByC;
 			auto Graph = std::make_shared<SocialGraph>();

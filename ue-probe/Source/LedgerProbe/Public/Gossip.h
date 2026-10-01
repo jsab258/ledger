@@ -26,7 +26,9 @@
 // list 6bs, 29 September, for the town's hourly rounds in TownRounds.h) Age
 // 1104 to 1131 with RumorHalfLifeHours, and (30 September, the town's fix
 // of his arrival) PlainFactOfHim, Leads with Lead, and ExposureOf with
-// Exposure's numbers (not its Sentence).
+// Exposure's numbers (not its Sentence), and (1 October, Jafar's ruling that
+// Mickey's own handle it privately) KeepsHisDeedsFor, KeepsHisDeeds and
+// KeepsHisDeedsToThemselves.
 //
 // OUT OF SCOPE AND NOT HERE, so a reader can tell a missing member from a
 // forgotten one: Forget, PlayerClaims, KnowsSecret, DayCircleHeat, Bribe,
@@ -679,6 +681,25 @@ namespace LedgerCore
 				                   : "I think I saw it, couldn't swear to it: " + Summary));
 		}
 
+		/// MICKEY'S OWN HANDLE IT PRIVATELY (Jafar's ruling of 1 October: "Ron and
+		/// Sheila ... handle what they saw privately: a word with him, a warning, a
+		/// favour owed"; grassing is the last thing a loyal person does): who keeps
+		/// his deeds to themselves, set from the cast (CastDay::MickeysOwn) whenever
+		/// the town's rounds run with it. They pass a story of his deeds (a
+		/// sensitive story about him) to nobody, and their talk is not the street's
+		/// (PoliceFile::Loudness); what shows to his face is still theirs. A body is
+		/// not a story: it travels as ever. Unset (the C#'s null): nobody does, as before.
+		std::function<bool(const std::string&)> KeepsHisDeedsFor;
+
+		bool KeepsHisDeeds(const Gossiper* Teller, const RumorPtr& R) const
+		{
+			return KeepsHisDeedsFor && Teller != nullptr && R && !R->Indelible && R->Sensitive
+			    && R->Content.Subject == "player" && KeepsHisDeedsFor(Teller->Id);
+		}
+
+		/// Whether this person keeps his deeds to themselves (KeepsHisDeedsFor).
+		bool KeepsHisDeedsToThemselves(const std::string& Id) const { return KeepsHisDeedsFor && KeepsHisDeedsFor(Id); }
+
 		/// Gossip.cs 433 to 541. One gossip round. `together` decides which
 		/// tied pairs are actually in a position to talk this round
 		/// (co-located in game, or always true in tests). Returns everything
@@ -737,6 +758,7 @@ namespace LedgerCore
 						// Money and hooks buy silence about STORIES. Nobody
 						// keeps a body to themselves because they were paid to.
 						if (!R->Indelible && Speaker->SuppressedHas(R->TopicKey())) continue;   // bribed or scared into silence
+						if (KeepsHisDeeds(Speaker.get(), R)) continue;   // Mickey's own handle it privately
 						if (!R->Indelible && Speaker->Leashed && R->Content.Subject == "player") continue;   // held by a hook
 						// A body arrives at the far end of the street exactly
 						// as true as it left. Hop decay is how a story turns
@@ -889,6 +911,7 @@ namespace LedgerCore
 				if (R->Confidence < MinConfidenceToShare && !R->Indelible) continue;
 				if (!R->Indelible && Partner->SuppressedHas(R->TopicKey())) continue;
 				if (!R->Indelible && Partner->Leashed) continue;
+				if (KeepsHisDeeds(Partner.get(), R)) continue;   // Mickey's own handle it privately
 
 				// A BODY ARRIVES AS TRUE AS IT LEFT, asked about or not (town
 				// list 6n): this used the decay and dropped the mark, so asking

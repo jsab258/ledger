@@ -19,7 +19,8 @@
 // PerceptionGolden's EmitAsks and EmitLanding rows (Ask, AskStory,
 // AskRonRemembers, AskLoad, Landing) and, since the town's ten fixes of 30
 // September, EmitPortReviewFixes' (FixAsk, AskSave, FixAskStory, FixLandingNo)
-// in ue-probe/perception-golden.txt.
+// and, since the review of 1 October (a night away passes at four, every
+// story stamped when it is filed), LandingHours, in ue-probe/perception-golden.txt.
 //
 // NO UNREAL TYPE IS IN THIS FILE, as every file of the port.
 #pragma once
@@ -95,6 +96,12 @@ namespace LedgerCore
 		int NextNight() const { return bEnded ? -1 : FirstDayValue + Every * (int)NightsMap.size(); }
 		bool AsksOn(int Day) const { return !bEnded && Day == NextNight(); }
 		static GameTime GaveUpAt(int Day) { return GameTime(Day + 1, GaveUpHour, 0); }
+		/// How long after he gives up a late no can still come: his yes to Ron's
+		/// question counts for three game hours after it (the talk program's
+		/// refusedAsk), and Ron asks only while the ask stands, before one.
+		static constexpr int LateNoHours = 3;
+		/// When a night he stayed away passes, as one: once no late no can come.
+		static GameTime PassesAt(int Day) { return GaveUpAt(Day).AddMinutes(LateNoHours * 60); }
 		/// The day whose night it is: until one in the morning, the day before's.
 		static int NightOf(const GameTime& Now) { return Now.Hour < GaveUpHour ? Now.Day - 1 : Now.Day; }
 		bool AskStands(const GameTime& Now) const { const int N = NightOf(Now); return AsksOn(N) && Delivered_.count(N) > 0; }
@@ -150,18 +157,24 @@ namespace LedgerCore
 		}
 		bool WasDelivered(int Day) const { return Delivered_.count(Day) > 0; }
 
-		/// He answered this night's ask; see the C#. With a mill the night's
-		/// story goes into the gossip, told at Now, which must then be given
-		/// (the C# throws without it; here the answer is refused).
 		/// AS EACH HOUR TURNS, before the rounds (Arrangement.cs TellDue, the
 		/// review's B3): his no, or the winding down, reaches the landing when
 		/// Ron goes down, not at dawn.
-		/// Only his no and the winding down: a night he stayed away is PassedTo's at
-		/// dawn, as of one, so a no across one o'clock, dated back to Ron's
-		/// question, still counts (the builder's check of the second port).
-		void TellDue(GossipMill* Mill, const GameTime& Now) { TellWoundDown(Mill, &Now); }
+		/// AND A NIGHT HE STAYED AWAY, AS THE HOURS TURN (the independent review
+		/// of 1 October, B3: still filed at dawn, stamped one): once no late no
+		/// can still come (PassesAt, four: the builder's check of the port found
+		/// a night passed at one lost his no confirmed at two past to Ron's
+		/// question at two to one). Every story is stamped when it is filed,
+		/// never before rounds that ran without it (the review's L4).
+		void TellDue(GossipMill* Mill, const GameTime& Now) { PassedTo(Now.Day, Mill, &Now); }
 
-		bool Answer(int Day, NightAnswer What, GossipMill* Mill = nullptr, const GameTime* Now = nullptr)
+		/// He answered this night's ask; see the C#. With a mill the night's
+		/// story goes into the gossip, which needs Now (the C# throws without
+		/// it; here the answer is refused). A no is answered as of when he said
+		/// it, or as of Ron's question for a yes to it (Now), with ToldAt when
+		/// he said it, which stamps what is told and remembered (nullptr: the
+		/// C#'s null, Now stamps both).
+		bool Answer(int Day, NightAnswer What, GossipMill* Mill = nullptr, const GameTime* Now = nullptr, const GameTime* ToldAt = nullptr)
 		{
 			if (Mill != nullptr && Now == nullptr) return false;
 			if (What == NightAnswer::Undelivered || !AsksOn(Day)) return false;
@@ -178,23 +191,29 @@ namespace LedgerCore
 			// (the independent check: done at nine that morning, he was filed as
 			// seeing it at nine).
 			if (Now != nullptr && What == NightAnswer::Did && !TheLanding::There(*Now)) return false;
-			if (Now != nullptr && What == NightAnswer::NoShow && Now->TotalMinutes() < GaveUpAt(Day).TotalMinutes()) return false;
+			// A night away only once no late no can come (PassesAt; the independent check of 1 October).
+			if (Now != nullptr && What == NightAnswer::NoShow && Now->TotalMinutes() < PassesAt(Day).TotalMinutes()) return false;
 			Delivered_.insert(Day);
 			// A PLAIN NO GOES DOWN WITH RON, as the wound-down word does (the
 			// port's independent check): the man at the landing knows it only
 			// when Ron has been down, at eleven or at once if later; Ron knows now.
 			if (What == NightAnswer::Refused && Now != nullptr)
 			{
+				// Now is the night's "as of" (Ron's question, for a yes to it);
+				// ToldAt, when he said it, stamps what is told and remembered (the
+				// independent check of 1 October: one time for both put the story
+				// before the rounds that ran without it).
+				const GameTime Told = ToldAt != nullptr && ToldAt->TotalMinutes() > Now->TotalMinutes() ? *ToldAt : *Now;
 				Record(Day, What, nullptr, Now);
 				if (Mill != nullptr)
 				{
 					const GossiperPtr Ron = Mill->Get(Doorman);
-					if (Ron && Ron->Memory) Ron->Memory->Append(MemoryEvent(*Now, "observation", 0.8, HeardNo));
+					if (Ron && Ron->Memory) Ron->Memory->Append(MemoryEvent(Told, "observation", 0.8, HeardNo));
 				}
 				const GameTime GoesDown(Now->Day, RonGoesDownHour, 0);
 				NoTellNight = Day;
 				NoTellAt = Now->Hour < GaveUpHour || Now->TotalMinutes() >= GoesDown.TotalMinutes() ? *Now : GoesDown;
-				TellWoundDown(Mill, Now);
+				TellWoundDown(Mill, &Told);
 				return true;
 			}
 			return Record(Day, What, Mill, Now);
@@ -206,9 +225,9 @@ namespace LedgerCore
 		int NoNight() const { return NoTellNight; }
 
 		/// The day is now Day: every ask night before it that nobody answered
-		/// counts as one he stayed away if Ron had reached him with it (told as
-		/// of one in the morning after it), and passes silently if not. With
-		/// Now, a night whose man is still waiting does not pass yet.
+		/// counts as one he stayed away if Ron had reached him with it (told
+		/// when it is filed, at Now), and passes silently if not. With Now, a
+		/// night does not pass until no late no can come (PassesAt).
 		void PassedTo(int Day, GossipMill* Mill = nullptr, const GameTime* Now = nullptr)
 		{
 			if (Mill != nullptr && Now == nullptr) return;   // the C# throws
@@ -217,11 +236,11 @@ namespace LedgerCore
 			// September: a far-future day was walked night by night, ten million
 			// nights and a 244 MB save): the save keeps days under LastDay.
 			if (Day > LastDay) Day = LastDay;
-			while (!bEnded && NextNight() < Day && (Now == nullptr || GaveUpAt(NextNight()).TotalMinutes() <= Now->TotalMinutes()))
+			while (!bEnded && NextNight() < Day && (Now == nullptr || PassesAt(NextNight()).TotalMinutes() <= Now->TotalMinutes()))
 			{
 				const int N = NextNight();
-				const GameTime Told = GaveUpAt(N);
-				if (Delivered_.count(N)) Record(N, NightAnswer::NoShow, Mill, Now != nullptr ? &Told : nullptr);
+				// Stamped when it is filed (the review of 1 October, B3 and L4).
+				if (Delivered_.count(N)) Record(N, NightAnswer::NoShow, Mill, Now);
 				else Record(N, NightAnswer::Undelivered, nullptr, nullptr);
 			}
 		}
@@ -393,17 +412,18 @@ namespace LedgerCore
 		}
 
 		// The outfit's man has the wound-down story, or a plain no, once Ron has
-		// been down (at dawn, when the game calls PassedTo, or later).
+		// been down (TellDue each hour; PassedTo at dawn; or later), stamped when
+		// it is filed (the review of 1 October, B3 and L4).
 		void TellWoundDown(GossipMill* Mill, const GameTime* Now)
 		{
 			if (Mill == nullptr || Now == nullptr) return;
 			if (NoTellNight >= 0 && Now->TotalMinutes() >= NoTellAt.TotalMinutes())
 			{
-				Mill->Witness(OutfitMan, Fact("player", "outfit_d" + std::to_string(NoTellNight), Value(NightAnswer::Refused)), Said(NightAnswer::Refused), false, NoTellAt, 1.0);
+				Mill->Witness(OutfitMan, Fact("player", "outfit_d" + std::to_string(NoTellNight), Value(NightAnswer::Refused)), Said(NightAnswer::Refused), false, *Now, 1.0);
 				NoTellNight = -1;
 			}
 			if (WoundTellNight < 0 || Now->TotalMinutes() < WoundTellAt.TotalMinutes()) return;
-			Mill->Witness(OutfitMan, Fact("player", "outfit_d" + std::to_string(WoundTellNight), "wounddown"), SaidWoundDown, false, WoundTellAt, 1.0);
+			Mill->Witness(OutfitMan, Fact("player", "outfit_d" + std::to_string(WoundTellNight), "wounddown"), SaidWoundDown, false, *Now, 1.0);
 			WoundTellNight = -1;
 		}
 

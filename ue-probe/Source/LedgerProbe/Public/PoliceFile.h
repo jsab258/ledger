@@ -453,7 +453,12 @@ namespace LedgerCore
 		{
 			if (Mill == nullptr) return 0;
 			int N = 0;
-			for (const GossiperPtr& A : Mill->Agents()) { if (A && !TalkOf(*Mill, *A).empty()) ++N; }
+			for (const GossiperPtr& A : Mill->Agents())
+			{
+				// Mickey's own keep his deeds to themselves: their talk is not the street's.
+				if (A && Mill->KeepsHisDeedsToThemselves(A->Id)) continue;
+				if (A && !TalkOf(*Mill, *A).empty()) ++N;
+			}
 			return N;
 		}
 

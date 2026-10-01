@@ -28,6 +28,8 @@ namespace
 
 	// The player's own settings, as kept in the settings file.
 	bool bSubtitles = true, bSpeakerNames = true, bSuggestAlways = false, bReduceMotion = false, bInvertLook = false, bQuietBehind = true;
+	// The interface's own sounds, and its key sound on its own, "the first thing to go if it tires" (STYLE-GUIDE.md, Sound).
+	bool bUiSounds = true, bTypingSound = true;
 	int32 GSubtitleSize = 1;                  // Small, Medium (the guide's 39), Large, Largest
 	float GSensitivity = 1.0f, GMaster = 1.0f, GBrightness = 0.5f;
 	bool bLoaded = false;
@@ -45,6 +47,8 @@ namespace
 		GConfig->SetBool(kSection, TEXT("InvertLook"), bInvertLook, GGameUserSettingsIni);
 		GConfig->SetFloat(kSection, TEXT("Master"), GMaster, GGameUserSettingsIni);
 		GConfig->SetBool(kSection, TEXT("QuietBehind"), bQuietBehind, GGameUserSettingsIni);
+		GConfig->SetBool(kSection, TEXT("UiSounds"), bUiSounds, GGameUserSettingsIni);
+		GConfig->SetBool(kSection, TEXT("TypingSound"), bTypingSound, GGameUserSettingsIni);
 		GConfig->SetFloat(kSection, TEXT("Brightness"), GBrightness, GGameUserSettingsIni);
 		GConfig->Flush(false, GGameUserSettingsIni);
 	}
@@ -247,6 +251,10 @@ namespace
 		L.Add(M);
 		L.Add(Toggle(TEXT("When the game is behind another window"), TEXT("Whether the street goes quiet while another window is in front of it."),
 			&bQuietBehind, TEXT("Quiet"), TEXT("Heard"), []() { ApplySound(); }));
+		L.Add(Toggle(TEXT("The pages' own sounds"), TEXT("A rustle of paper as a page opens, a pencil's tick as a choice is taken, a press under the loading page."),
+			&bUiSounds, TEXT("On"), TEXT("Off"), []() {}));
+		L.Add(Toggle(TEXT("A key's sound as you type"), TEXT("A soft key sound for each letter typed to somebody."),
+			&bTypingSound, TEXT("On"), TEXT("Off"), []() {}));
 		return L;
 	}
 
@@ -634,6 +642,8 @@ void Load()
 	GConfig->GetBool(kSection, TEXT("InvertLook"), bInvertLook, GGameUserSettingsIni);
 	GConfig->GetFloat(kSection, TEXT("Master"), GMaster, GGameUserSettingsIni);
 	GConfig->GetBool(kSection, TEXT("QuietBehind"), bQuietBehind, GGameUserSettingsIni);
+	GConfig->GetBool(kSection, TEXT("UiSounds"), bUiSounds, GGameUserSettingsIni);
+	GConfig->GetBool(kSection, TEXT("TypingSound"), bTypingSound, GGameUserSettingsIni);
 	GConfig->GetFloat(kSection, TEXT("Brightness"), GBrightness, GGameUserSettingsIni);
 	SetBackingStrength(Backing);
 	SetReduceMotion(bReduceMotion || FParse::Param(FCommandLine::Get(), TEXT("ReduceMotion")));
@@ -647,11 +657,14 @@ bool SpeakerNames() { Load(); return bSpeakerNames; }
 bool SuggestAlways() { Load(); return bSuggestAlways; }
 float LookSensitivity() { Load(); return GSensitivity; }
 bool InvertLook() { Load(); return bInvertLook; }
+bool UiSoundsOn() { Load(); return bUiSounds; }
+bool TypingSoundOn() { Load(); return bUiSounds && bTypingSound; }
 
 void Show(UWorld* World, TFunction<void()> OnClosed)
 {
 	if (GRoot.IsValid() || GEngine == nullptr || GEngine->GameViewport == nullptr) { return; }
 	Load();
+	UiSound(TEXT("rustle"));
 	GOnClosed = MoveTemp(OnClosed);
 	GWorld = World;
 	GShownAt = FPlatformTime::Seconds();

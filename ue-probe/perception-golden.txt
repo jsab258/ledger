@@ -55609,6 +55609,9 @@ AskWound|half eleven|1|0|-1|1|wound down|1|1|null|-1|1|1|2|{"first":0,"nights":[
 AskWound|half twelve|1|0|-1|1|wound down|1|1|null|-1|1|1|2|{"first":0,"nights":[[0,"refused"]],"delivered":[0],"woundDown":[0]}
 AskWound|day six|1|0|-1|1|wound down|0.6599999999999999|4|null|-1|1|2|2|{"first":0,"nights":[[0,"noshow"],[2,"undelivered"],[4,"undelivered"],[6,"refused"]],"delivered":[0],"woundDown":[6]}
 AskEdge|dawn before one|0|0|none|1|0|1
+AskEdge|dawn at one|0|0|none|1|0|1
+LandingHours|night away|0|0|none|1|0|2|0|none|0.6599999999999999|1|1680
+LandingHours|no after eleven|1440
 AskEdge|answer undelivered|0|0|0
 AskEdge|first day negative|0|0|none|1|0|1
 Landing|before~ten|none
@@ -55676,6 +55679,7 @@ TeaBadSave|8|null
 TeaBadSave|9|StoodUp|2|0|0|{"day":2,"state":"StoodUp","minutes":[],"seenGoing":false}
 TeaBadSave|10|null
 TeaEdge|asked at nine|none|none|NotAsked
+TeaHeld|none|NotAsked|There'll~be~a~pot~on~at~nine~tonight,~if~you~want~it.~I~don't~ask~twice,~mind.|Asked
 TeaEdge|outside the evening|1|1260|0|0
 TeaEdge|seen before one|1|1|LeftEarly
 TeaEdge|first ask negative|1
@@ -56378,6 +56382,7 @@ PoliceOnHisSide|Killing|0.5|0.57|1
 PoliceOnHisSide|Killing|0.5|0.575|1
 PoliceOnHisSide|Killing|0.5|0.58|0
 PoliceOnHisSide|Killing|0.5|0.6|0
+ThreatSilences|1|1|0|1|1
 PoliceWouldReport|quiet|0|1|0|0
 PoliceWouldReport|hooked|0
 CustodyWords|charged|I'm~arresting~you~on~suspicion~of~wounding.~You~do~not~have~to~say~anything~unless~you~wish~to~do~so,~but~what~you~say~may~be~given~in~evidence.|You~are~charged~with~the~offence(s)~shown~below.~You~do~not~have~to~say~anything~unless~you~wish~to~do~so,~but~what~you~say~may~be~given~in~evidence.~The~offence:~wounding.~You're~bailed~to~appear~at~the~magistrates'~court~on~Friday~at~ten~o'clock.~Not~turning~up~is~an~offence~in~itself.~We're~keeping~the~coat~you~had~on,~as~evidence.|1|0
@@ -57019,6 +57024,9 @@ TownNews|17|exchange/tell/news|I'll~tell~you~something.~Hal~and~Rita~had~words~i
 TownNews|18|exchange/tell/news|Talk~of~the~street,~this.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Doesn't~surprise~me.|0
 TownNews|19|exchange/tell/news|You'll~want~to~hear~this.~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Well,~I~never.|0
 TownNewsWitnesses|hal_rita_row|sam,rita,victor,hal,ines,marta,jelena
+KeepsHisDeeds|lena|0|0|1
+KeepsHisDeeds|rocco|0|0|1
+KeepsHisDeeds|sam|18|15|0
 NewsHeard|0|exchange/tell/news|Did~you~hear?~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|Well,~it's~none~of~my~business.|1
 NewsHeard|1|exchange/tell/news|Here,~Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about.|exchange/reply/news|First~I've~heard~of~it.|2
 NewsHeard|2|exchange/tell/news|Hal~and~Rita~had~words~in~the~pawn,~and~nobody~knows~what~about,~apparently.|exchange/reply/news|Go~on.|3
@@ -57821,6 +57829,7 @@ TeaGap|10|Stayed|1360
 TeaGap|11|Stayed|1360
 TeaGap|12|LeftEarly|1360
 FixAsk|did two nights early|0
+FixAsk|away before one|0|0
 FixAsk|no|1|10020|0
 AskSave|save|{"first":0,"nights":[[0,"did"],[2,"noshow"],[4,"undelivered"],[6,"refused"]],"delivered":[0,2,6],"noTell":[6,10020]}
 FixAskStory|player.outfit_d0|did|1|Mickey's~nephew~brought~the~envelope~down~the~landing
@@ -57848,8 +57857,11 @@ SweepAge|10-12-11-12|0.9856631986401876
 SweepAge|10-9-12|0.9856631986401876
 SweepConstable|null|w1|1
 SweepAsked|2|ada,ferko,franjo,hana,ines,iva,jelena,joey,katarina,lena,marla,marta,noor,rita,rocco,sam,selma,tanja,zlata,zora
+SweepHeard|2|zlata:player.window_d1:Talk,ferko:player.window_d1:Talk,sam:player.window_d1:Talk,ada:player.window_d1:Talk,noor:player.window_d1:Talk,marla:player.window_d1:Talk,joey:player.window_d1:Talk,zora:player.window_d1:Talk,iva:player.window_d1:Talk,selma:player.window_d1:Talk,tanja:player.window_d1:Talk,katarina:player.window_d1:Talk,ines:player.window_d1:Talk,marta:player.window_d1:Talk,jelena:player.window_d1:Talk,hana:player.window_d1:Talk,franjo:player.window_d1:Talk
 SweepAsked|4|ada,ferko,hana,ines,iva,jelena,joey,lena,marla,marta,noor,rita,rocco,sam,selma,tanja,zlata,zora
+SweepHeard|4|zlata:player.window_d1:Talk,ferko:player.window_d1:Talk,sam:player.window_d1:Talk,ada:player.window_d1:Talk,noor:player.window_d1:Talk,marla:player.window_d1:Talk,joey:player.window_d1:Talk,zora:player.window_d1:Talk,iva:player.window_d1:Talk,selma:player.window_d1:Talk,tanja:player.window_d1:Talk,ines:player.window_d1:Talk,marta:player.window_d1:Talk,jelena:player.window_d1:Talk,hana:player.window_d1:Talk
 SweepAsked|6|zlata
+SweepHeard|6|zlata:player.window_d1:Talk
 SweepWound|load|1|{"first":0,"nights":[[0,"undelivered"],[2,"undelivered"],[4,"undelivered"],[6,"refused"]],"delivered":[6],"woundDown":[6],"woundTell":[6,10020]}
 SweepWound|half a night|-1
 SweepWound|at one|-1

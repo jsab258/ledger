@@ -189,18 +189,17 @@ namespace Ledger.PerceptionGolden
                 // not a nudge (OnHisSide 0.5 to 0.575); held, then emptied by the builder's
                 // port the same day.
                 // Jafar's ruling of 1 October (Mickey's people never go to the police about
-                // him): what DS Ellis hears no longer has Ron's and Sheila's talk; held
-                // until the port's CastDay.NeverToPolice follows.
+                // him): what DS Ellis hears no longer has Ron's and Sheila's talk.
                 // The review of 1 October, N3: a threat talks them round (Silence.FileThreat
-                // suppresses the deed); held until the port's Silence.h follows.
-                // The review of 1 October, M3: no tea invitation while he is held; held until
-                // the port's AdasTea.SheSeesHim takes `held`.
+                // suppresses the deed).
+                // The review of 1 October, M3: no tea invitation while he is held.
                 // The review of 1 October, B3 and L4: a night away passes at four, a story
-                // stamped when filed; held until the port's Arrangement.h follows.
+                // stamped when filed.
                 // The independent check of the review's fixes, 1 October: Mickey's own keep
                 // his deeds to themselves (GossipMill.KeepsHisDeedsFor); a night away is
-                // taken only from four; held until the port follows.
-                var held = new[] { "SweepHeard|", "ThreatSilences|", "TeaHeld|", "AskEdge|dawn at one|", "LandingHours|", "KeepsHisDeeds|", "FixAsk|away before one|" };
+                // taken only from four. All five held, then emptied by the builder's port
+                // the same day.
+                var held = new string[0];
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
