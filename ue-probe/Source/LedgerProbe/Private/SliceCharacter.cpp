@@ -1,4 +1,6 @@
 #include "SliceCharacter.h"
+#include "LedgerPaper.h"
+#include "LedgerSettings.h"
 #include "HAL/PlatformMisc.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -81,10 +83,26 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	if (const APlayerController* KeysPC = Cast<APlayerController>(GetController()))
 	{
-		const float Fwd = (KeysPC->IsInputKeyDown(EKeys::W) ? 1.0f : 0.0f) - (KeysPC->IsInputKeyDown(EKeys::S) ? 1.0f : 0.0f);
-		const float Side = (KeysPC->IsInputKeyDown(EKeys::D) ? 1.0f : 0.0f) - (KeysPC->IsInputKeyDown(EKeys::A) ? 1.0f : 0.0f);
+		// A CONTROLLER, 1 October (the interface: the design's suggested lines are for a
+		// controller first): the left stick walks, as the keys do; the right stick looks,
+		// at a rate, with the player's sensitivity and inversion from the settings page.
+		auto Stick = [KeysPC](const FKey& K) { const float V = KeysPC->GetInputAnalogKeyState(K); return FMath::Abs(V) < 0.25f ? 0.0f : V; };
+		const float Fwd = FMath::Clamp((KeysPC->IsInputKeyDown(EKeys::W) ? 1.0f : 0.0f) - (KeysPC->IsInputKeyDown(EKeys::S) ? 1.0f : 0.0f) + Stick(EKeys::Gamepad_LeftY), -1.0f, 1.0f);
+		const float Side = FMath::Clamp((KeysPC->IsInputKeyDown(EKeys::D) ? 1.0f : 0.0f) - (KeysPC->IsInputKeyDown(EKeys::A) ? 1.0f : 0.0f) + Stick(EKeys::Gamepad_LeftX), -1.0f, 1.0f);
 		MoveForward(Fwd);
 		MoveRight(Side);
+		// Degrees a second at full tilt, through the same scale the mouse goes through (2.5 a unit).
+		const float PadYaw = Stick(EKeys::Gamepad_RightX) * 150.0f * DeltaSeconds / 2.5f;
+		const float PadPitch = Stick(EKeys::Gamepad_RightY) * 100.0f * DeltaSeconds / 2.5f;
+		if (PadYaw != 0.0f) { LookYaw(PadYaw); }
+		if (PadPitch != 0.0f) { LookPitch(-PadPitch); }
+		// WHICH HE IS ON NOW, for the prompts and hints: the last thing moved or pressed.
+		float MouseX = 0.0f, MouseY = 0.0f;
+		KeysPC->GetInputMouseDelta(MouseX, MouseY);
+		if (Stick(EKeys::Gamepad_LeftX) != 0.0f || Stick(EKeys::Gamepad_LeftY) != 0.0f || PadYaw != 0.0f || PadPitch != 0.0f
+		    || KeysPC->IsInputKeyDown(EKeys::Gamepad_FaceButton_Bottom) || KeysPC->IsInputKeyDown(EKeys::Gamepad_Special_Right)) { LedgerPaper::SetPadInUse(true); }
+		else if (KeysPC->IsInputKeyDown(EKeys::W) || KeysPC->IsInputKeyDown(EKeys::A) || KeysPC->IsInputKeyDown(EKeys::S) || KeysPC->IsInputKeyDown(EKeys::D)
+		         || FMath::Abs(MouseX) + FMath::Abs(MouseY) > 0.5f) { LedgerPaper::SetPadInUse(false); }
 	}
 	if (GetMesh() == nullptr) { return; }
 	// HIS FEET ON THE GROUND WHEN HE RUNS, 30 September. The person export
@@ -273,6 +291,9 @@ void ALedgerSliceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALedgerSliceCharacter::RequestAct);
 	PlayerInputComponent->BindKey(EKeys::T, IE_Pressed, this, &ALedgerSliceCharacter::RequestTalk);
 	PlayerInputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ALedgerSliceCharacter::RequestPause).bExecuteWhenPaused = true;
+	// The controller: Start pauses; A takes what the prompt in front offers (CrimeProbe reads it as use or talk).
+	PlayerInputComponent->BindKey(EKeys::Gamepad_Special_Right, IE_Pressed, this, &ALedgerSliceCharacter::RequestPause).bExecuteWhenPaused = true;
+	PlayerInputComponent->BindKey(EKeys::Gamepad_FaceButton_Bottom, IE_Pressed, this, &ALedgerSliceCharacter::RequestPadAct);
 	PlayerInputComponent->BindKey(EKeys::Q, IE_Pressed, this, &ALedgerSliceCharacter::RequestQuit).bExecuteWhenPaused = true;
 	PlayerInputComponent->BindKey(EKeys::R, IE_Pressed, this, &ALedgerSliceCharacter::RequestReport);
 	PlayerInputComponent->BindKey(EKeys::Z, IE_Pressed, this, &ALedgerSliceCharacter::RequestWait);
@@ -295,12 +316,20 @@ void ALedgerSliceCharacter::MoveRight(float Value)
 
 void ALedgerSliceCharacter::MoveBackward(float Value) { MoveForward(-Value); }
 void ALedgerSliceCharacter::MoveLeft(float Value) { MoveRight(-Value); }
-void ALedgerSliceCharacter::LookYaw(float Value) { AddControllerYawInput(Value); }
-void ALedgerSliceCharacter::LookPitch(float Value) { AddControllerPitchInput(-Value); }
+// THE PLAYER'S LOOK, from the settings page (Controls): sensitivity 0.5 to 2, and up and down inverted when he asks.
+void ALedgerSliceCharacter::LookYaw(float Value) { AddControllerYawInput(Value * LedgerSettings::LookSensitivity()); }
+void ALedgerSliceCharacter::LookPitch(float Value) { AddControllerPitchInput(-Value * LedgerSettings::LookSensitivity() * (LedgerSettings::InvertLook() ? -1.0f : 1.0f)); }
 void ALedgerSliceCharacter::RunPressed() { GetCharacterMovement()->MaxWalkSpeed = RunSpeedCm; }
 void ALedgerSliceCharacter::RunReleased() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm; }
 void ALedgerSliceCharacter::RequestAct() { ++ActRequests; }
 void ALedgerSliceCharacter::RequestTalk() { ++TalkRequests; }
+void ALedgerSliceCharacter::RequestPadAct() { ++PadActRequests; }
+int32 ALedgerSliceCharacter::ConsumePadActRequests()
+{
+	const int32 N = PadActRequests;
+	PadActRequests = 0;
+	return N;
+}
 void ALedgerSliceCharacter::RequestPause() { UGameplayStatics::SetGamePaused(this, !UGameplayStatics::IsGamePaused(this)); }
 void ALedgerSliceCharacter::RequestQuit()
 {

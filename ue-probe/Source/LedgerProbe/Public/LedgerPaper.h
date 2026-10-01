@@ -83,7 +83,12 @@ namespace LedgerPaper
 	TSharedRef<SWidget> Ear(const FString& Text, bool bFilled);
 	// A key in its ruled box (Libre Franklin 700 at 30), on newsprint over the street.
 	TSharedRef<SWidget> Key(const FString& Label);
-	// A row of key hints: each item its keys, then what they do (Libre Franklin 500 at 30).
+	// A controller's button: round, ruled in ink; "+" is the pad's cross.
+	TSharedRef<SWidget> PadButton(const FString& Label);
+	// Whether the player is on a controller now (his last input): prompts and hints draw its buttons.
+	bool PadInUse();
+	void SetPadInUse(bool bPad);
+	// A row of key hints: each item its keys ("pad:A" for a controller's button), then what they do (Libre Franklin 500 at 30).
 	TSharedRef<SWidget> Hints(const TArray<TPair<TArray<FString>, FString>>& Items);
 	// Light words on the backing (subtitles, prompts).
 	TSharedRef<SWidget> OnBacking(TSharedRef<SWidget> Content, const FMargin& Padding);
@@ -112,6 +117,8 @@ public:
 
 	void Construct(const FArguments& InArgs);
 	virtual bool SupportsKeyboardFocus() const override { return true; }
+	// No engine focus outline: the choice in hand shows itself, red with its bar.
+	virtual const FSlateBrush* GetFocusBrush() const override { return nullptr; }
 	virtual FReply OnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent) override;
 	virtual FReply OnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
 	virtual FReply OnMouseButtonUp(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;

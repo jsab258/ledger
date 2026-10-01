@@ -1044,6 +1044,8 @@ namespace
 		return Out;
 	}
 
+	bool SayBoxOpen();
+
 	void SubsRebuild()
 	{
 		if (!GSubBox.IsValid()) { return; }
@@ -1063,7 +1065,9 @@ namespace
 		}
 		if (Mine != nullptr && Speech != nullptr && Speech->Since > Mine->Since) { Mine = nullptr; }
 		auto Backed = [](TSharedRef<SWidget> W) { return OnBacking(W, FMargin(14.0f, 4.0f, 14.0f, 6.0f)); };
-		if (Caption != nullptr)
+		// WHILE HE TYPES the game's own narration steps aside: the coupon and its suggestions
+		// stand where a long caption would grow; the person's words stay, below the coupon, as drawn.
+		if (Caption != nullptr && !SayBoxOpen())
 		{
 			for (const FString& Line : SubLines(Caption->Text, 52))
 			{
@@ -1508,14 +1512,22 @@ namespace
 
 	const TCHAR* PressActKey(UWorld* World) { return PressKey(World, EKeys::E); }
 
+	// A CONTROLLER'S A, 1 October: what the prompt in front of him offers, talk or use (RoutePadActs, below).
+	int32 GPadTalks = 0, GPadActs = 0;
+	bool bTalkByPad = false;
+	void RoutePadActs();
+
 	int32 TakeActRequests(int Index)
 	{
+		RoutePadActs();
+		const int32 PadActs = GPadActs;
+		GPadActs = 0;
 		// THE SLICE'S OWN CHARACTER FIRST (24 September): the encounter's
 		// crime is committed by the player character the slice ships with.
 		if (ALedgerSliceCharacter* Slice = Cast<ALedgerSliceCharacter>(GPawn))
 		{
 			GActPawnClass[Index] = TEXT("LedgerSliceCharacter");
-			return Slice->ConsumeActRequests();
+			return Slice->ConsumeActRequests() + PadActs;
 		}
 		ALedgerCharacter* Body = Cast<ALedgerCharacter>(GPawn);
 		if (Body == nullptr)
@@ -2718,8 +2730,12 @@ namespace
 
 	int32 TakeTalkRequests()
 	{
-		if (ALedgerSliceCharacter* Slice = Cast<ALedgerSliceCharacter>(GPawn)) { return Slice->ConsumeTalkRequests(); }
-		return 0;
+		RoutePadActs();
+		int32 N = 0;
+		if (ALedgerSliceCharacter* Slice = Cast<ALedgerSliceCharacter>(GPawn)) { N = Slice->ConsumeTalkRequests(); }
+		if (N > 0) { bTalkByPad = false; }
+		if (GPadTalks > 0) { bTalkByPad = true; N += GPadTalks; GPadTalks = 0; }
+		return N;
 	}
 
 	// HIS MATE, Rocco, in the yard with the lad from the week's end on.
@@ -2950,12 +2966,67 @@ namespace
 	// THE NOTICE, plainly, before the first conversation and on F1: that the
 	// street's people answer with an AI, and where typed words go (its text is
 	// the helper's own, AiNotice, so the words live in one place).
+	// AS A SLIP OF THE EVENING PAPER, 1 October (the FIRST STEPS slip's form):
+	// at the top of the picture, clear of the coupon and its suggestions, which
+	// open at the same moment, and of the subtitles; sixteen seconds.
+	TSharedPtr<SWidget> GNoticeRoot;
+	double GNoticeUntil = -1.0;
+
+	void NoticeHide()
+	{
+		if (GNoticeRoot.IsValid() && GEngine != nullptr && GEngine->GameViewport != nullptr)
+		{
+			GEngine->GameViewport->RemoveViewportWidgetContent(GNoticeRoot.ToSharedRef());
+		}
+		GNoticeRoot.Reset();
+		GNoticeUntil = -1.0;
+	}
+
+	void NoticeTick()
+	{
+		if (GNoticeUntil >= 0.0 && NowS() >= GNoticeUntil) { NoticeHide(); }
+	}
+
 	void ShowAiNotice()
 	{
 		if (GLive.NoticeText.empty() || GLive.NoticeText == "none") { return; }
-		Say(Un(GLive.NoticeTitle == "none" ? std::string() : GLive.NoticeTitle + ": ") + Un(GLive.NoticeText), 16.0f, FColor(210, 210, 210));
-		Say(TEXT("(F1 shows this again. R reports the last reply.)"), 16.0f, FColor(170, 170, 170));
+		using namespace LedgerPaper;
+		NoticeHide();
 		GLive.bNoticeShown = true;
+		if (GEngine == nullptr || GEngine->GameViewport == nullptr) { return; }
+		const FString Title = GLive.NoticeTitle == "none" ? FString(TEXT("Before you talk to anyone")) : Un(GLive.NoticeTitle);
+		SAssignNew(GNoticeRoot, SBox)
+			[
+				SafeRegion(
+					SNew(SBox).Padding(FMargin(0.0f, 54.0f, 0.0f, 0.0f)).HAlign(HAlign_Center).VAlign(VAlign_Top)
+					[
+						SNew(SBox).WidthOverride(900.0f).Visibility(EVisibility::HitTestInvisible)
+						[
+							PaperSheet(
+								SNew(SVerticalBox)
+								+ SVerticalBox::Slot().AutoHeight()
+								[
+									SNew(STextBlock).Text(FText::FromString(Title)).TransformPolicy(ETextTransformPolicy::ToUpper)
+									.Font(Font(EFace::League, 28, 60)).ColorAndOpacity(FSlateColor(Ink()))
+								]
+								+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 4.0f, 0.0f, 8.0f))[ Rule(1.5f, Ink()) ]
+								+ SVerticalBox::Slot().AutoHeight()
+								[
+									SNew(STextBlock).Text(FText::FromString(Un(GLive.NoticeText))).AutoWrapText(true).LineHeightPercentage(1.1f)
+									.Font(Font(EFace::OldItalic, 28)).ColorAndOpacity(FSlateColor(Ink()))
+								]
+								+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 10.0f, 0.0f, 0.0f))
+								[
+									SNew(STextBlock).Text(FText::FromString(TEXT("F1 shows this again. R reports the last reply.")))
+									.Font(Font(EFace::Franklin500, 24)).ColorAndOpacity(FSlateColor(Grey()))
+								],
+								FMargin(22.0f, 14.0f, 22.0f, 18.0f))
+						]
+					])
+			];
+		GEngine->GameViewport->AddViewportWidgetContent(GNoticeRoot.ToSharedRef(), 47);
+		GNoticeUntil = NowS() + 16.0;
+		UE_LOG(LogTemp, Display, TEXT("LedgerNotice: shown, %s: %s"), *Title, *Un(GLive.NoticeText));
 	}
 
 	// THE LAST REPLY REPORTED, with no note (R, or -AskReport after the
@@ -4984,6 +5055,7 @@ namespace
 	TSharedPtr<SMultiLineEditableText> GSayText;
 	bool bSayOpen = false, bSayCommitted = false, bSayCancelled = false;
 	FString GSaid, GSayDraft;
+	bool SayBoxOpen() { return bSayOpen; }
 	double GSayOpenedAt = 0.0;
 
 	// TOM'S SUGGESTED LINES, 1 October (Jafar: "Mixed"; STYLE-GUIDE.md,
@@ -5014,6 +5086,9 @@ namespace
 	// The deals' written answers (suggested-lines.json "deals"): deal, then each answer and its lines in the file's order.
 	std::map<std::string, std::vector<std::pair<std::string, std::vector<std::string> > > > GDeals;
 	bool bDealsRead = false;
+	// THE WRITTEN LINES PASSED (the file's "status" no longer "in review"): until Jafar's yes the game shows
+	// no suggestions at all; -SuggestInReview shows them for the builder's own films, never his page.
+	bool bSuggestPassed = false;
 
 	void ReadDeals()
 	{
@@ -5025,7 +5100,12 @@ namespace
 		if (!FFileHelper::LoadFileToString(Text, *Path)) { UE_LOG(LogTemp, Display, TEXT("LedgerSuggest: no written lines yet (%s): no deal lines"), *Path); return; }
 		const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
 		const TSharedPtr<FJsonObject>* Deals = nullptr;
-		if (!FJsonSerializer::Deserialize(R, Root) || !Root.IsValid() || !Root->TryGetObjectField(TEXT("deals"), Deals)) { return; }
+		if (!FJsonSerializer::Deserialize(R, Root) || !Root.IsValid()) { return; }
+		FString Status;
+		Root->TryGetStringField(TEXT("status"), Status);
+		bSuggestPassed = !Status.StartsWith(TEXT("in review")) || FParse::Param(FCommandLine::Get(), TEXT("SuggestInReview"));
+		UE_LOG(LogTemp, Display, TEXT("LedgerSuggest: the written lines are %s"), bSuggestPassed ? TEXT("for play") : TEXT("still in review: no suggestions shown"));
+		if (!Root->TryGetObjectField(TEXT("deals"), Deals)) { return; }
 		for (const TPair<FString, TSharedPtr<FJsonValue>>& D : (*Deals)->Values)
 		{
 			const TSharedPtr<FJsonObject>* Answers = nullptr;
@@ -5058,10 +5138,11 @@ namespace
 	}
 
 	void RebuildSuggestRows();
+	void SuggestGiveKeysBack();
 
 	void AskSuggest()
 	{
-		if (GSug.PendingId != 0 || GSug.bAnswered || !GLive.bStarted || !GLive.bReady || !GLive.bSuggests || GTalkTarget.Card.empty()) { return; }
+		if (GSug.PendingId != 0 || GSug.bAnswered || !GLive.bStarted || !GLive.bReady || !GLive.bSuggests || !bSuggestPassed || GTalkTarget.Card.empty()) { return; }
 		const int Id = GLive.NextId++;
 		std::string Shown;
 		for (const std::string& S : GSug.Shown) { Shown += std::string(Shown.empty() ? "" : ",") + "\"" + JsonEsc(S) + "\""; }
@@ -5125,7 +5206,17 @@ namespace
 					UE_LOG(LogTemp, Display, TEXT("LedgerSuggest: chosen \"%s\""), *Line);
 				}));
 			if (!First.IsValid()) { First = Row; }
-			GSugRows->AddSlot().AutoHeight()[ Row ];
+			GSugRows->AddSlot().AutoHeight().Padding(FMargin(22.0f, 0.0f, 22.0f, 0.0f))[ Row ];
+		}
+		// WITH A CONTROLLER, "My own words\x2026" last: back to the coupon, for the keyboard (Steam's floating
+		// keyboard, which the design gives Y, is only there when the game runs under Steam).
+		if (LedgerPaper::PadInUse())
+		{
+			if (!GSug.Rows.empty()) { GSugRows->AddSlot().AutoHeight().Padding(FMargin(22.0f, 0.0f, 22.0f, 0.0f))[ Rule(1.0f, Grey()) ]; }
+			TSharedRef<SPaperChoice> Own = SNew(SPaperChoice).Text(FString(TEXT("My own words\x2026"))).Units(34.0f).RowHeight(68.0f)
+				.OnChosen(FSimpleDelegate::CreateLambda([]() { SuggestGiveKeysBack(); }));
+			if (!First.IsValid()) { First = Own; }
+			GSugRows->AddSlot().AutoHeight().Padding(FMargin(22.0f, 0.0f, 22.0f, 0.0f))[ Own ];
 		}
 		if (GSug.Rows.empty())
 		{
@@ -5149,6 +5240,7 @@ namespace
 	// Tab from his own words: the suggestions take the keys.
 	void SuggestTakeKeys()
 	{
+		if (!bSuggestPassed) { return; }
 		GSug.bOpen = GSug.bKeys = true;
 		AskSuggest();
 		RebuildSuggestRows();
@@ -5164,7 +5256,7 @@ namespace
 	void SuggestGiveKeysBack()
 	{
 		GSug.bKeys = false;
-		GSug.bOpen = LedgerSettings::SuggestAlways();
+		GSug.bOpen = bSuggestPassed && LedgerSettings::SuggestAlways();
 		if (GSayText.IsValid())
 		{
 			FSlateApplication::Get().SetUserFocus(0, GSayText, EFocusCause::SetDirectly);
@@ -5183,10 +5275,11 @@ namespace
 		SLATE_END_ARGS()
 		void Construct(const FArguments& InArgs) { ChildSlot[ InArgs._Content.Widget ]; }
 		virtual bool SupportsKeyboardFocus() const override { return true; }
+		virtual const FSlateBrush* GetFocusBrush() const override { return nullptr; }
 		virtual FReply OnKeyDown(const FGeometry& G, const FKeyEvent& E) override
 		{
-			if (E.GetKey() == EKeys::Tab) { SuggestGiveKeysBack(); return FReply::Handled(); }
-			if (E.GetKey() == EKeys::Escape)
+			if (E.GetKey() == EKeys::Tab || E.GetKey() == EKeys::Gamepad_FaceButton_Top) { SuggestGiveKeysBack(); return FReply::Handled(); }
+			if (E.GetKey() == EKeys::Escape || E.GetKey() == EKeys::Gamepad_FaceButton_Right)
 			{
 				GSayDraft = GSayText.IsValid() ? GSayText->GetText().ToString() : GSayDraft;
 				bSayCancelled = true;
@@ -5212,7 +5305,8 @@ namespace
 		GSug.bAnswered = false;
 		GSug.Lines.clear(); GSug.Jobs.clear(); GSug.Rows.clear();
 		GSug.bKeys = false;
-		GSug.bOpen = LedgerSettings::SuggestAlways();
+		GSug.bOpen = bSuggestPassed && (LedgerSettings::SuggestAlways() || bTalkByPad);
+		GSug.bKeys = GSug.bOpen && bTalkByPad;
 		GSug.Deal = !GDealAsked[GTalkTarget.Card].empty() ? GDealAsked[GTalkTarget.Card]
 			: (!bLiveScript && GTalkTarget.Card == "rocco" && GWeek.Asks.AskStands(GNow)) ? "ron-ask"
 			: (!bLiveScript && GTalkTarget.Card == "lena" && GWeek.Week.Stands(GNow)) ? "sheila-week" : "";
@@ -5248,18 +5342,29 @@ namespace
 						// three lines, then it scrolls
 						SNew(SBox).MinDesiredHeight(46.0f).MaxDesiredHeight(144.0f)
 						[
+							// THE HINT IN GREY ITALIC SERIF over the empty box, as drawn (the box's own hint
+							// would take the typed words' face).
+							SNew(SOverlay)
+							+ SOverlay::Slot().VAlign(VAlign_Center)
+							[
+								SNew(STextBlock)
+								.Visibility_Lambda([]() { return GSayText.IsValid() && GSayText->GetText().IsEmpty() ? EVisibility::HitTestInvisible : EVisibility::Collapsed; })
+								.Text_Lambda([]() { return FText::FromString(GSug.bKeys ? FString(TEXT("Tab to write your own words"))
+								                                                         : FString(TEXT("Say something to ")) + GTalkTarget.Name); })
+								.Font(Font(EFace::OldItalic, 32)).ColorAndOpacity(FSlateColor(Grey()))
+							]
+							+ SOverlay::Slot()
+							[
 							SAssignNew(GSayText, SMultiLineEditableText)
 							.TextStyle(&Words)
 							.AutoWrapText(true)
 							.Text(FText::FromString(GSayDraft))
-							.HintText_Lambda([]() { return FText::FromString(GSug.bKeys ? FString(TEXT("Tab to write your own words"))
-							                                                         : FString(TEXT("Say something to ")) + GTalkTarget.Name); })
 							.OnKeyDownHandler_Lambda([](const FGeometry&, const FKeyEvent& E)
 							{
 								// Enter says it; Esc stops typing and keeps the words; Tab hands the
 								// keys to the suggested lines. A box that never held the keyboard
 								// (29 September) is won back by HumanTalkTick.
-								if (E.GetKey() == EKeys::Tab) { SuggestTakeKeys(); return FReply::Handled(); }
+								if (E.GetKey() == EKeys::Tab || E.GetKey() == EKeys::Gamepad_FaceButton_Top) { SuggestTakeKeys(); return FReply::Handled(); }
 								if (E.GetKey() == EKeys::Enter && !E.IsShiftDown())
 								{
 									const FString T = GSayText.IsValid() ? GSayText->GetText().ToString().TrimStartAndEnd() : FString();
@@ -5271,7 +5376,7 @@ namespace
 									RouteCheck(TEXT("talk-typed"), Moved >= 0.0 && Moved < 1.0, FString::Printf(TEXT("chars=%d moved_cm=%.1f"), GSaid.Len(), Moved));
 									return FReply::Handled();
 								}
-								if (E.GetKey() == EKeys::Escape)
+								if (E.GetKey() == EKeys::Escape || E.GetKey() == EKeys::Gamepad_FaceButton_Right)
 								{
 									GSayDraft = GSayText.IsValid() ? GSayText->GetText().ToString() : FString();
 									UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: left with Esc, %d characters kept"), GSayDraft.Len());
@@ -5280,6 +5385,7 @@ namespace
 								}
 								return FReply::Unhandled();
 							})
+							]
 						]
 					]
 				]
@@ -5318,12 +5424,15 @@ namespace
 							]
 							+ SVerticalBox::Slot().AutoHeight().Padding(FMargin(0.0f, 0.0f, 0.0f, 10.0f))
 							[
-								SNew(SWidgetSwitcher).WidgetIndex_Lambda([]() { return GSug.bKeys ? 1 : 0; })
+								SNew(SWidgetSwitcher).WidgetIndex_Lambda([]() { return GSug.bKeys ? (LedgerPaper::PadInUse() ? 2 : 1) : 0; })
 								+ SWidgetSwitcher::Slot()
 								[
-									Hints({ MakeTuple(TArray<FString>{ TEXT("Enter") }, FString(TEXT("say it"))),
-									        MakeTuple(TArray<FString>{ TEXT("Tab") }, FString(TEXT("suggestions"))),
-									        MakeTuple(TArray<FString>{ TEXT("Esc") }, FString(TEXT("stop typing"))) })
+									bSuggestPassed
+									? Hints({ MakeTuple(TArray<FString>{ TEXT("Enter") }, FString(TEXT("say it"))),
+									          MakeTuple(TArray<FString>{ TEXT("Tab") }, FString(TEXT("suggestions"))),
+									          MakeTuple(TArray<FString>{ TEXT("Esc") }, FString(TEXT("stop typing"))) })
+									: Hints({ MakeTuple(TArray<FString>{ TEXT("Enter") }, FString(TEXT("say it"))),
+									          MakeTuple(TArray<FString>{ TEXT("Esc") }, FString(TEXT("stop typing"))) })
 								]
 								+ SWidgetSwitcher::Slot()
 								[
@@ -5331,8 +5440,18 @@ namespace
 									        MakeTuple(TArray<FString>{ TEXT("Enter") }, FString(TEXT("say it"))),
 									        MakeTuple(TArray<FString>{ TEXT("Tab") }, FString(TEXT("my own words"))) })
 								]
+								+ SWidgetSwitcher::Slot()
+								[
+									Hints({ MakeTuple(TArray<FString>{ TEXT("pad:+") }, FString(TEXT("choose"))),
+									        MakeTuple(TArray<FString>{ TEXT("pad:A") }, FString(TEXT("say it"))),
+									        MakeTuple(TArray<FString>{ TEXT("pad:Y") }, FString(TEXT("my own words"))),
+									        MakeTuple(TArray<FString>{ TEXT("pad:B") }, FString(TEXT("back"))) })
+								]
 							]
-							+ SVerticalBox::Slot().AutoHeight()[ Coupon ]
+							+ SVerticalBox::Slot().AutoHeight()
+							[
+								SNew(SBox).Visibility_Lambda([]() { return GSug.bKeys && LedgerPaper::PadInUse() ? EVisibility::Collapsed : EVisibility::Visible; })[ Coupon ]
+							]
 						]
 					])
 			];
@@ -5348,6 +5467,7 @@ namespace
 		}
 		FSlateApplication::Get().SetKeyboardFocus(GSayText);
 		bSayOpen = true;
+		SubsRebuild();
 		UE_LOG(LogTemp, Display, TEXT("LedgerSayBox: open for %s, keyboard focus %s, on the %s"), *GTalkTarget.Name,
 		       FSlateApplication::Get().GetKeyboardFocusedWidget() == GSayText ? TEXT("in the box") : TEXT("NOT in the box"), bLeft ? TEXT("left") : TEXT("right"));
 		RebuildSuggestRows();
@@ -5369,6 +5489,8 @@ namespace
 		if (GSug.bOpen) { for (size_t I = 0; I < GSug.Rows.size(); ++I) { if (std::find(GSug.Lines.begin(), GSug.Lines.end(), GSug.Rows[I]) != GSug.Lines.end()) { GSug.Shown.insert(GSug.Rows[I]); } } }
 		GSugRows.Reset(); GSugKeys.Reset();
 		GSug.bOpen = GSug.bKeys = false;
+		bSayOpen = false;
+		SubsRebuild();
 		if (World != nullptr)
 		{
 			if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetInputMode(FInputModeGameOnly()); }
@@ -6578,9 +6700,115 @@ namespace
 		}
 	}
 
+	// -PadShot=<dir> (1 October, the interface: a controller): through the
+	// player's own input, as a pad sends it, the left stick held forward
+	// (Tom must walk), the right stick held over (the view must turn), then
+	// beside Sheila the pad's A (the prompt's talk: the coupon must open, the
+	// suggestions holding the keys when they are for play), filmed, and B
+	// through Slate as the pad sends it (the coupon must close); each a check
+	// line in the session record; then the game closes.
+	void PadAxis(UWorld* World, const FKey& Key, float Value)
+	{
+		APlayerController* PC = World != nullptr ? World->GetFirstPlayerController() : nullptr;
+		if (PC == nullptr || PC->PlayerInput == nullptr) { return; }
+		FInputKeyEventArgs Args(nullptr, IPlatformInputDeviceMapper::Get().GetDefaultInputDevice(), Key, Value, (float)FApp::GetDeltaTime(), 1, FPlatformTime::Cycles64());
+		PC->InputKey(Args);
+	}
+
+	void PadShotTick(UWorld* World)
+	{
+		static FString Dir;
+		static bool bRead = false;
+		static int32 Step = 0;
+		static double At = 0.0, LiveSince = -1.0;
+		static FVector From = FVector::ZeroVector;
+		static float YawFrom = 0.0f;
+		if (!bRead) { bRead = true; FParse::Value(FCommandLine::Get(), TEXT("PadShot="), Dir); }
+		if (Dir.IsEmpty() || World == nullptr || GPawn == nullptr || GW1Body == nullptr || !GW1) { return; }
+		const bool bLive = GPhase == ECrimePhase::LiveWaitDeed || GPhase == ECrimePhase::LiveAfterDeed || GPhase == ECrimePhase::LiveRoam;
+		if (!bLive) { return; }
+		const double T = NowS();
+		if (LiveSince < 0.0) { LiveSince = T; }
+		const FIntPoint Sz = GEngine->GameViewport->Viewport->GetSizeXY();
+		APlayerController* PC = World->GetFirstPlayerController();
+		if (Step == 0 && T - LiveSince > 10.0 && GLive.bReady)
+		{
+			From = GPawn->GetActorLocation();
+			Step = 1; At = T;
+		}
+		else if (Step == 1)
+		{
+			// the left stick held forward
+			PadAxis(World, EKeys::Gamepad_LeftY, 1.0f);
+			if (T - At > 1.0)
+			{
+				PadAxis(World, EKeys::Gamepad_LeftY, 0.0f);
+				const double Moved = FVector::Dist2D(GPawn->GetActorLocation(), From);
+				RouteCheck(TEXT("pad-walk"), Moved > 50.0, FString::Printf(TEXT("moved_cm=%.0f pad=%d"), Moved, LedgerPaper::PadInUse() ? 1 : 0));
+				YawFrom = PC != nullptr ? PC->GetControlRotation().Yaw : 0.0f;
+				Step = 2; At = T;
+			}
+		}
+		else if (Step == 2)
+		{
+			// the right stick held over
+			PadAxis(World, EKeys::Gamepad_RightX, 1.0f);
+			if (T - At > 0.5)
+			{
+				PadAxis(World, EKeys::Gamepad_RightX, 0.0f);
+				const float Turned = PC != nullptr ? FMath::Abs(FRotator::NormalizeAxis(PC->GetControlRotation().Yaw - YawFrom)) : 0.0f;
+				RouteCheck(TEXT("pad-look"), Turned > 20.0f, FString::Printf(TEXT("turned_deg=%.0f"), Turned));
+				// beside Sheila, facing her
+				const FVector S = GW1Body->GetActorLocation();
+				const FVector Loc = S + FVector(90.0f, -120.0f, 0.0f);
+				GPawn->SetActorLocation(FVector(Loc.X, Loc.Y, GPawn->GetActorLocation().Z), false, nullptr, ETeleportType::TeleportPhysics);
+				const FRotator Face = (S - Loc).GetSafeNormal2D().Rotation();
+				if (AController* C = GPawn->GetController()) { C->SetControlRotation(FRotator(-8.0f, Face.Yaw + 18.0f, 0.0f)); }
+				Step = 3; At = T;
+			}
+		}
+		else if (Step == 3 && T - At > 1.5)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(Dir, FString::Printf(TEXT("pad-prompt-%d.png"), Sz.X)), true, false);
+			Step = 4; At = T;
+		}
+		else if (Step == 4 && T - At > 1.0)
+		{
+			// the pad's A: whatever the prompt offers, here talk
+			PressKey(World, EKeys::Gamepad_FaceButton_Bottom);
+			Step = 5; At = T;
+		}
+		else if (Step == 5 && (bSayOpen || T - At > 3.0))
+		{
+			RouteCheck(TEXT("pad-talk"), bSayOpen, FString::Printf(TEXT("open=%d suggestions=%d keys=%d"), bSayOpen ? 1 : 0, GSug.bOpen ? 1 : 0, GSug.bKeys ? 1 : 0));
+			Step = 6; At = T;
+		}
+		else if (Step == 6 && ((GSug.PendingId == 0 && T - At > 1.5) || T - At > 7.5))
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(Dir, FString::Printf(TEXT("pad-suggest-%d.png"), Sz.X)), true, false);
+			Step = 7; At = T;
+		}
+		else if (Step == 7 && T - At > 1.0)
+		{
+			// B, as the pad sends it to the screens
+			FSlateApplication::Get().ProcessKeyDownEvent(FKeyEvent(EKeys::Gamepad_FaceButton_Right, FModifierKeysState(), 0, false, 0, 0));
+			FSlateApplication::Get().ProcessKeyUpEvent(FKeyEvent(EKeys::Gamepad_FaceButton_Right, FModifierKeysState(), 0, false, 0, 0));
+			Step = 8; At = T;
+		}
+		else if (Step == 8 && T - At > 1.0)
+		{
+			RouteCheck(TEXT("pad-back"), !bSayOpen, FString::Printf(TEXT("open=%d"), bSayOpen ? 1 : 0));
+			UE_LOG(LogTemp, Display, TEXT("LedgerPadShot: done in %s"), *Dir);
+			FPlatformMisc::RequestExit(false);
+			Step = 9;
+		}
+	}
+
 	bool HumanTalkTick(UWorld* World, double Now)
 	{
 		TalkShotTick(World);
+		PadShotTick(World);
+		NoticeTick();
 		LiveHelperStart();
 		LiveHelperPump();
 		LiveVoiceStart();
@@ -7263,6 +7491,16 @@ namespace
 	bool bPromptWait = false;
 	double GPromptSince = 0.0;
 
+	// The pad's A presses since last asked, each taken as the prompt in front of him offers it:
+	// talk to whoever it names, or use what is there.
+	void RoutePadActs()
+	{
+		ALedgerSliceCharacter* Slice = Cast<ALedgerSliceCharacter>(GPawn);
+		const int32 N = Slice != nullptr ? Slice->ConsumePadActRequests() : 0;
+		if (N <= 0) { return; }
+		if (GPromptKey == TEXT("T")) { GPadTalks += N; } else { GPadActs += N; }
+	}
+
 	void PromptEnsure()
 	{
 		using namespace LedgerPaper;
@@ -7285,8 +7523,9 @@ namespace
 					+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
 					[
 						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot().AutoWidth()[ SNew(SBox).Visibility_Lambda([]() { return GPromptKey == TEXT("T") ? EVisibility::Visible : EVisibility::Collapsed; })[ Key(TEXT("T")) ] ]
-						+ SHorizontalBox::Slot().AutoWidth()[ SNew(SBox).Visibility_Lambda([]() { return GPromptKey == TEXT("E") ? EVisibility::Visible : EVisibility::Collapsed; })[ Key(TEXT("E")) ] ]
+						+ SHorizontalBox::Slot().AutoWidth()[ SNew(SBox).Visibility_Lambda([]() { return GPromptKey == TEXT("T") && !PadInUse() ? EVisibility::Visible : EVisibility::Collapsed; })[ Key(TEXT("T")) ] ]
+						+ SHorizontalBox::Slot().AutoWidth()[ SNew(SBox).Visibility_Lambda([]() { return GPromptKey == TEXT("E") && !PadInUse() ? EVisibility::Visible : EVisibility::Collapsed; })[ Key(TEXT("E")) ] ]
+						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)[ SNew(SBox).Visibility_Lambda([]() { return !GPromptKey.IsEmpty() && PadInUse() ? EVisibility::Visible : EVisibility::Collapsed; })[ PadButton(TEXT("A")) ] ]
 						+ SHorizontalBox::Slot().AutoWidth().VAlign(VAlign_Center)
 						[
 							OnBacking(SNew(STextBlock).Text_Lambda([]() { return FText::FromString(GPromptVerb); }).Font(Font(EFace::Franklin500, 30)).ColorAndOpacity(FSlateColor(OnDark())),
