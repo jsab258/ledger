@@ -110,9 +110,11 @@ Every part is drawn in step2/kit.html.
   - his exact words, never a summary of them (Mass Effect's wheel is the warning: a summary that says something he did not mean);
   - three at most, always in the same order of jobs: one asks about what was just said, one is personal or off the subject, one leaves; then, with a controller, "My own words…" (on a keyboard, Tab is the way back to them). The first is in hand only because it is first, never because it is better;
   - written only from what Tom himself knows (his Ledger and the talk so far), never from what the other person knows, and never ranked by whether they would work;
+  - how they are written (Jafar, 1 October, "Mixed"): the game's own written lines for hellos, goodbyes and decisions; for the rest, the small model in a call of its own, given only what Tom knows, never the same call as the other person's reply (which sees what they know and would point at their secrets); about 10 US cents more per hour of talk (an estimate from published prices, not measured), counted against the copy's talk allowance, and when that runs out the written lines are used;
   - where his answer decides something (a deal he can end with a plain yes), the yes and the no are both offered, written from the game's state, never by the model, with a third line that keeps talking without deciding;
   - never the same line twice in one conversation; the same voice and period as everyone else, and the same content rule;
   - chosen, a line goes the same way as a typed one: it is what he says;
+  - who sees them (Jafar, 1 October): with a controller they are there at once; on a keyboard only when he asks, since suggested words make people write shorter, more predictable lines;
   - on a keyboard, Tab opens them above the coupon and they take the keys while open: ↑ and ↓ choose, Enter says the one in hand, Tab goes back to his own words (no numbers, which would clash with typing digits); with a controller they are there from the start, chosen with the pad, said with A, B goes back, and "My own words…" (Y) opens Steam's floating keyboard over the game;
   - the keys keep one meaning everywhere: Enter says it, Tab moves between his own words and the suggestions, Esc stops typing and keeps the words;
   - no timers;

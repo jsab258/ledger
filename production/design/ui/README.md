@@ -43,6 +43,13 @@ The pages ask Google Fonts for their fonts (FONTS.md lists each, with its licenc
 - **The set: liked as drawn**, with one thing missing: players who use a controller, or do not want to type, choose from **suggested lines** instead of typing; typing stays. This overrides the research's "no suggested questions"; the suggestions are designed next (research first), and the style guide changes with them.
 - **The name: LEDGER stays for now.** No trade mark check yet; it is to be raised again before any Steam page, trailer or announcement (BRANDING.md).
 
+## His answers on the suggested lines (1 October 2026, read from the page's store, tapped at 15:07 UTC)
+
+- **How they are written: Mixed** (verdicts/ui-suggest-written): the game's own written lines for hellos, goodbyes and decisions, and the small model, given only what Tom knows, for the rest; about 10 US cents more per hour of talk (an estimate, not measured), within each copy's talk allowance, falling back to the written lines. In STYLE-GUIDE.md.
+- **Who sees them: a controller at once, a keyboard on Tab** (verdicts/ui-suggest-who). As drawn in step2/ (suggest, suggest-pad).
+- **A microphone: later** (verdicts/ui-speech): looked at again once the playable route works.
+- These three are the builder's to enter in DECISIONS.md when the interface is built; this job writes only here.
+
 ## Next
 
 - **The finish**, under his answer (a): scanned paper, a real halftone screen, sound; one screen finished and judged against Kingdom Come: Deliverance II before the rest. It starts once the playable route works (his rule of 30 September).
