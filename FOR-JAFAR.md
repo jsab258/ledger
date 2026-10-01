@@ -5,21 +5,23 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Thursday 1 October, 00:10)
+## Overview (Thursday 1 October, 03:35)
 
 ### Needs you
 
-(Every page's stored answers checked at 00:35: yours, the town's two; the clothing session has no page.)
+(Every page's stored answers checked at 03:30: Thursday's and Wednesday's, mine; the town's; the clothing session has no page.)
 
-1. **[The town's page](https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz), two taps.** Does seeing Tom break a window send a neighbour to the police? Recommended yes (today nobody ever reports). Sheila on the faster model? Recommended try it, blind-checked (her first sentence 0.81 s against 1.43 s, measured outside the game).
+1. **[The town's page](https://claude.ai/artifact/3dS6bihBQhirakfkSo9zNz), three taps.** Does seeing Tom break a window send a neighbour to the police? Recommended yes (today nobody ever reports). Sheila on the faster model? Recommended try it, blind-checked (her first sentence 0.81 s against 1.43 s, measured outside the game). The other characters' street lines: one more try, a new way? Recommended try once.
 2. **The route is ready for your cloud review:** main as of 760832bce, green on the build machine at 01:08 (its Core tests and the full Unreal run); what changed and the runs in the finished game before and after are in production/playtest/review-runs-2026-09-30.md. Recommended: run it.
+3. **[Thursday's page](https://claude.ai/artifact/3zqyXtiTA35rPcuufuD48K), one tap: the voice's delay.** Down from 4 s to 3 s of voice work for a short line in the game; every faster way I built runs at half speed beside the game. Recommended: this week's other items first, then research and move the voice into the game itself (about two weeks).
+4. **[Wednesday's page](https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ), four looks still open since Wednesday morning:** the street by day and at night, their mouths moving as they speak, Ron's boots and Sheila's handbag. (Its hair call is settled by your Darren S6 and Sheila S4 picks.)
 
 ### Road to worth playing
 
 (Your list of 30 September, after the audit: the playable route first; other visual work stopped while it is broken.)
 
-- **One continuous route through ordinary play** (builder the game side, town the Core side): NOT DONE, nearly ready for your cloud review. Your reviewer's three runs of the finished game showed every fault it had read, and one it missed (no conversation was ever saved). All the High faults and most of the smaller ones are fixed, a failing test first for each, with the town's half ported, and checked in the finished game: the witnesses are whoever is really there, in that hour's light; only someone who recognised him names him; Continue brings back the conversation; the Z wait stops for Ron and the landing, hour by hour. Left: the town's last Core fix (a late no across one o'clock) and Sunday's question checked in the finished game; then I tell you it is ready. Since yesterday: fixed and walked.
-- **The delay before a character speaks** (builder, item 2): MEASURED ON THE REAL PATH, 30 lines in the finished game on your key ($0.23): the words come 1.9 s after Enter (median), the first sound 5.4 s; none within your 2 s. The voice is the larger part (3.7 s). You kept Ron's game voice over the faster engine on Wednesday ("A is very flat, B is more lively"; I had missed your pick until tonight), so the research went to a faster way that keeps the game's voice: half of the voice's time was its decoder running on the processor; on the card it gives the same sound to within rounding, and the voice's work for a median line fell from 2.2 to 1.5 s on the idle PC (measured outside the game; in the game next). Streaming it comes next. The town measured Sheila's first sentence outside the game: 1.43 s, 0.81 s on the faster model (its page). Since yesterday: your Ron pick recorded; the fast engine off.
+- **One continuous route through ordinary play** (builder the game side, town the Core side): READY FOR YOUR CLOUD REVIEW (Needs you), not done until it passes. Every High fault of your reviewer's and the smaller ones fixed, a failing test first for each, the town's half ported, and the review's three runs played again in the finished game, all passing; C5's small save items remain. Since yesterday: ready for review.
+- **The delay before a character speaks** (builder, item 2): SET ASIDE, your decision (Thursday's page). On the real path the words come at 1.9 s (30 lines, 30 September); the voice's work for a short line in the game is now 2.98 s (was 3.95; its decoder on the graphics card, the same sound), so the first sound is about 4.5 s after Enter, covered by the characters' short sounds. Tried tonight and failed in the game: the voice in pieces inside the sentence (1.0 s to the first piece on the idle PC, slower with gaps in the game) and a compiled main loop (faster idle, slower in the game); frame caps, half resolution and priority changed nothing. Beside the running game every way runs at half its idle speed. Since yesterday: 1 s off, then set aside past the two-tries rule.
 - **Replies that say "that's all I know"** (town): about half of a newcomer's questions by the audit's count (31 to 38 of 60); the town's latest run, 23 of 60. Since yesterday: fewer, not solved.
 - **Replies that time out** (town, measured in play by the builder): none of 30 on the real path in the finished game this evening (29 in the character's own words, 1 ended the talk). Since this morning: measured in play.
 - **A release on a clean machine** (builder, item 3): the voice's stopgap tried and working: today's voice program packed into one folder (4.3 GB: its Python, torch and Nano's weights) runs with nothing installed behind it, passes its self-checks and speaks a line (on the processor here, slowly; on the card as fast as today). About a day more to a friends' build (the game finding it by itself, a fresh-account test); no money, all free licences. The proper conversion stays about two weeks by the note and the route for release. Since this morning: your ruling, and the stopgap proven.
@@ -72,25 +74,25 @@ Three checks found faults in my fixes; all mended.
 
 ## Builder, Thursday 1 October
 
-(Written 30 September, 22:50; refreshed by 07:00.)
+(Written 1 October, 03:45.)
 
-**No page from me;** the town's page is all answered.
+**[Thursday's page](https://claude.ai/artifact/3zqyXtiTA35rPcuufuD48K):** one tap, the voice's delay. I recommend your other items first, then the voice moved into the game.
 
-**The route: not done.** Your reviewer's three runs in the finished game showed every fault it had read, and one more: no conversation was ever saved. All the High faults are fixed, a failing test first for each, the town's half ported: the witnesses are whoever is really there, in that hour's light; people keep their day; meeting him lets them recognise him; only someone who knew him names him; talk survives Continue. Also fixed: the Z wait (hour by hour), safer saves, no talk through walls, witness lines that said "half nine" at noon.
+**The route: ready for your cloud review** (main as of 760832bce): every High fault fixed; the review's three runs pass in the finished game.
 
-**Evidence:** 38 of 38 checks; the port agrees with all 57,770 rows; the build machine passed the first push.
+**The delay:** the voice's work for a short line in the game fell from 3.95 to 2.98 s (its decoder on the graphics card, same sound). With the words at 1.9 s, the first sound comes about 4.5 s after Enter.
 
-**Failed or unproven:** I broke the Core tests once (fixed in minutes); not yet walked in the packaged game.
+**Failed, past two tries:** the voice in pieces (1.0 s to the first piece on the idle PC; slower, with gaps, in the game); a compiled main loop (slower in the game); frame caps, half resolution, priority: no change. Set aside; your call.
 
-**Past two tries:** nothing.
+**Evidence:** checks 38/38; Core tests green on GitHub.
 
-**C:** 45 GB this morning, 64.9 now. F: 8 GB.
+**Got wrong:** Wednesday's four open looks were missing from Needs you; back on.
 
-**Research:** none new tonight.
+**Research:** fast first sound (a helper); the voice in pieces in the game (mine).
 
-**Backup:** with this commit.
+**C:** 64.9 GB last night, 60.5 now (Windows' page file grew under the game-and-voice runs). F: 8 GB. Backup with this commit.
 
-**Next:** the packaged walk, then I tell you the route is ready for your cloud review.
+**Next:** the friends' build, short of the new account.
 
 ## 26 September, day
 

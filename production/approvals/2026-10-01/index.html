@@ -1,87 +1,70 @@
-#!/usr/bin/env python3
-"""The day's approval page: faces, looks and voices, in the 25 September casting page's format.
+<title>Thursday's Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:40px}
+header{display:grid;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:18px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(30px,5vw,46px)/1.02 var(--display);margin:0;text-wrap:balance}
+h2{font:700 clamp(26px,4vw,34px)/1 var(--display);margin:0;text-wrap:balance}
+h3{font:600 15px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;margin:0}
+.how{margin:0;max-width:70ch;color:var(--muted)}
+.tally,.was,.cap{font:400 13px/1.4 var(--type);color:var(--muted)}
+.tally b{color:var(--ink)}
+section.person{display:grid;gap:22px;background:var(--surface);border:1px solid var(--rule);padding:22px}
+.capgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.capgrid img{width:100%;display:block;background:var(--chip)}
+.cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.cand{display:grid;gap:8px;border:1px solid var(--rule);padding:10px;background:var(--ground)}
+.cand.picked{border-color:var(--accent);box-shadow:inset 0 3px 0 var(--accent)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pair img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--chip)}
+.speak{width:100%;aspect-ratio:4/3;background-color:var(--chip);background-repeat:no-repeat}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:600 14px/1 var(--display);letter-spacing:.04em;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:9px 12px;cursor:pointer;min-height:38px}
+button:hover{border-color:var(--ink)}
+button.playing{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+label.pick{display:flex;align-items:center;gap:6px;font:400 14px var(--type)}
+.take{font:700 20px/1 var(--display)}
+.acting{display:grid;gap:14px}
+.feel{display:grid;gap:8px;border-top:1px solid var(--rule);padding-top:12px}
+.feel .label{font:700 12px/1 var(--type);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.feel q{font-style:italic}
+textarea{width:100%;min-height:54px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:8px}
+.saved{font:400 13px var(--type);color:var(--muted)}
+footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var(--rule);padding-top:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
-    python tools/day_page.py production/approvals/<date>/page.json     # writes index.html and files.json beside it
-    python tools/day_page.py --selftest
-
-WHY, 28 September. Jafar: one approval page a day, linked first in the day's
-summary, "pictures and sound, judged in minutes", keeping the 25 September
-casting page's format (each item's pictures and sound, one pick and a note,
-stored on the page), and "anything I have not judged carries onto the next
-page". tools/weekend_page.py made one page for one weekend; this makes any
-day's from a page.json that lists its sections. Only items that passed the
-gate (CLAUDE.md) are listed there.
-
-page.json:
-  {"title": "...", "kicker": "...", "how": ["paragraph", ...], "foot": "...",
-   "sections": [
-     {"kind": "faces", "key": "face-sheila-dunn", "name": "Sheila Dunn", "pron": "her", "note": "...",
-      "audio": "repo path of the line the speaking face follows",
-      "candidates": [{"take": "Q1", "front": "repo path", "profile": "repo path",
-                      "speak": {"file": "repo path", "frames": 90, "cols": 10, "rows": 9, "fps": 15}}]},
-     {"kind": "look", "key": "look-talk-light", "name": "...", "note": "...", "pictures": [{"src": "repo path", "alt": "..."}],
-      "options": [["yes", "Keep it"], ["no", "Not like this"]]},
-     {"kind": "voice", "key": "game-sheila-dunn", "name": "...", "note": "...", "line": "...", "audio": "repo path",
-      "options": [["yes", "This is her"], ["no", "Not her"]]},
-     {"kind": "pair", "key": "act-ron-kirby-threat", "name": "...", "note": "...", "line": "...",
-      "takes": [{"label": "A", "audio": "repo path"}, {"label": "B", "audio": "repo path"}],
-      "options": [["A", "A"], ["B", "B"], ["neither", "Neither"]]},
-     {"kind": "decide", "key": "scope-x", "name": "one line", "note": "the detail, folded shut",
-      "options": [["a", "First choice (recommended)"], ["b", "Second"]]}]}
-A pair is heard blind: which take is which engine is kept in a key file, never on the page.
-Picks are stored as verdicts/<key>.
-"""
-import json
-import os
-import sys
-
-REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, os.path.join(REPO, "tools"))
-
-
-def style():
-    import candidate_page
-    page = candidate_page.PAGE
-    return page[page.index("<link rel=\"preconnect\""):page.index("</style>") + len("</style>")]
-
-
-def publishable(spec):
-    """The page's data with every repo path replaced by a published name, and the files map."""
-    files = {}
-
-    def pub(rel, prefix):
-        name = prefix + "/" + rel.replace("\\", "/").split("/")[-1]
-        base, ext = os.path.splitext(name)
-        k = 1
-        while name in files and files[name] != rel:
-            k += 1
-            name = "%s-%d%s" % (base, k, ext)
-        files[name] = rel
-        return name
-
-    out = dict(spec)
-    secs = []
-    for s in spec["sections"]:
-        s = json.loads(json.dumps(s))
-        tag = s["key"]
-        if s.get("audio"):
-            s["audio"] = pub(s["audio"], tag)
-        for c in s.get("candidates", []):
-            for shot in ("front", "profile"):
-                if c.get(shot):
-                    c[shot] = pub(c[shot], tag)
-            if c.get("speak"):
-                c["speak"]["file"] = pub(c["speak"]["file"], tag)
-        for p in s.get("pictures", []):
-            p["src"] = pub(p["src"], tag)
-        for t in s.get("takes", []):
-            t["audio"] = pub(t["audio"], tag)
-        secs.append(s)
-    out["sections"] = secs
-    return out, files
-
-
-BODY = r"""
+/* PICTURES AT FULL SIZE (tools/page_pictures.py, Jafar 30 September) */
+.capgrid,.cands,.pair{grid-template-columns:1fr!important}
+.capgrid img,.pair img,.cands img,figure img{width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important}
+main img,section img{cursor:zoom-in}
+.fullsize{position:fixed;inset:0;z-index:1000;background:#000;overflow:auto;display:none;-webkit-overflow-scrolling:touch;cursor:zoom-out}
+.fullsize.on{display:block}
+.fullsize img{max-width:none!important;width:auto!important;height:auto!important;display:block;margin:0 auto}
+.fullsize .fullhint{position:fixed;top:calc(8px + env(safe-area-inset-top, 0px));right:12px;font:600 13px/1 sans-serif;color:#fff;background:rgba(0,0,0,.6);padding:8px 10px}
+</style>
 <div class="wrap">
   <header>
     <div class="kicker" id="kicker"></div>
@@ -93,7 +76,7 @@ BODY = r"""
   <footer id="foot"></footer>
 </div>
 <script>
-const PAGE = __DATA__;
+const PAGE = {"tab": "Thursday's Page", "kicker": "LEDGER · Thursday 1 October", "title": "Thursday's page", "how": ["One decision. One tap; a note is optional. Your pick saves on the page."], "foot": "Anything you do not pick carries onto the next page.", "sections": [{"kind": "decide", "key": "scope-voice-delay", "name": "The voice's delay: down from 4 s to 3 s for a short line in the game, but every faster way I built runs at half speed beside the game. What next?", "note": "Measured in the finished game, 1 October. The voice's work for a short line (1.6 s of speech): 3.95 s before, 2.98 s now (its decoder moved to the graphics card, same sound). On the real path the words come at 1.9 s (30 lines, 30 September), so the first sound is now about 4.5 s after Enter, covered by the characters' short sounds. Tried tonight and failed in the game: making the voice in pieces inside the sentence (1.0 s to the first piece on the idle PC, but beside the game each piece took 1.5 s, so replies came slower with gaps); a compiled version of the voice's main loop (92 steps a second idle, 17 beside the game, against 25 today); a 60 and a 30 frame cap, half the picture's resolution, and a higher priority for the voice: none changed it. Beside the running game every way runs at about half its idle speed. The one lead left: the voice inside the game itself with its own high priority on the graphics card, which a separate program cannot have. Unproven; I would research it first. Moving the voice into the game is already on the road to release (about two weeks by the earlier note), since a friend's PC should not need Python. The rest of this week's list: mouths, nightly tests of the finished game, Mickey's office, filming the suit jacket (the friends' build waits on the fresh Windows account).", "options": [["items-first", "This week's other items first, then research and move the voice into the game (recommended)"], ["voice-now", "Research and move the voice into the game now; the other items wait"], ["leave", "Leave the voice as it is for now"]]}]};
 const state = {};
 let db = null, canWrite = true, audio = null, playing = null, raf = 0;
 function el(tag, attrs, ...kids){
@@ -221,51 +204,3 @@ render();
   render();
 })();
 </script>
-"""
-
-
-def build(spec_path):
-    spec = json.load(open(spec_path, encoding="utf-8"))
-    data, files = publishable(spec)
-    missing = [v for v in files.values() if not os.path.exists(os.path.join(REPO, v))]
-    if missing:
-        print("day_page: missing files: " + ", ".join(missing))
-        return 1
-    out_dir = os.path.dirname(os.path.abspath(spec_path))
-    page = "<title>" + spec.get("tab", "The Day's Page") + "</title>\n" + style() + BODY.replace(
-        "__DATA__", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
-    with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(page)
-    with open(os.path.join(out_dir, "files.json"), "w", encoding="utf-8", newline="\n") as fh:
-        json.dump(files, fh, indent=1)
-    size = sum(os.path.getsize(os.path.join(REPO, v)) for v in files.values()) / 1e6
-    print("day_page: %d sections, %d files, %.1f MB" % (len(data["sections"]), len(files), size))
-    return 0
-
-
-def selftest():
-    ok = bad = 0
-
-    def check(name, cond):
-        nonlocal ok, bad
-        if cond:
-            ok += 1
-        else:
-            bad += 1
-            print("day_page selftest FAIL " + name)
-    spec = {"sections": [{"kind": "faces", "key": "face-x", "audio": "a/line.wav",
-                          "candidates": [{"take": "Q1", "front": "c/x/Q1-front.jpg", "profile": "c/x/Q1-profile.jpg",
-                                          "speak": {"file": "c/x/Q1-speak.jpg"}},
-                                         {"take": "Q2", "front": "c/y/Q1-front.jpg"}]}]}
-    data, files = publishable(spec)
-    names = list(files)
-    check("every file gets one published name", len(files) == 5 and len(set(names)) == 5)
-    check("two files of the same name stay apart", files[data["sections"][0]["candidates"][1]["front"]] == "c/y/Q1-front.jpg")
-    s = style()
-    check("the casting page's look is borrowed", s.startswith("<link") and s.endswith("</style>"))
-    print("day_page selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
-    return 1 if bad else 0
-
-
-if __name__ == "__main__":
-    sys.exit(selftest() if "--selftest" in sys.argv else build(sys.argv[1]))
