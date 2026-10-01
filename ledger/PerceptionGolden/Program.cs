@@ -197,7 +197,10 @@ namespace Ledger.PerceptionGolden
                 // the port's AdasTea.SheSeesHim takes `held`.
                 // The review of 1 October, B3 and L4: a night away passes at four, a story
                 // stamped when filed; held until the port's Arrangement.h follows.
-                var held = new[] { "SweepHeard|", "ThreatSilences|", "TeaHeld|", "AskEdge|dawn at one|", "LandingHours|" };
+                // The independent check of the review's fixes, 1 October: Mickey's own keep
+                // his deeds to themselves (GossipMill.KeepsHisDeedsFor); a night away is
+                // taken only from four; held until the port follows.
+                var held = new[] { "SweepHeard|", "ThreatSilences|", "TeaHeld|", "AskEdge|dawn at one|", "LandingHours|", "KeepsHisDeeds|", "FixAsk|away before one|" };
                 var kept = new StringBuilder();
                 foreach (var row in text.Split('\n'))
                 {
@@ -2151,6 +2154,22 @@ namespace Ledger.PerceptionGolden
             var news = TownNews.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(root, "production", "specs", "town-news.json")));
             foreach (var st in news.Stories)
                 Row(sb, "TownNewsWitnesses", st.Id, string.Join(",", news.WitnessesOf(st, cast)));
+
+            // MICKEY'S OWN HANDLE IT PRIVATELY (Jafar's ruling of 1 October): a deed Sheila
+            // or Ron saw goes no further than them through a day of the town's rounds; one
+            // Darren saw goes round; and their talk is not the street's (Loudness).
+            foreach (var witness in new[] { "lena", "rocco", "sam" })
+            {
+                var pg = new SocialGraph();
+                foreach (var (ta, tb, tw) in cast.Ties) pg.Link(ta, tb, tw);
+                var pm = new GossipMill(pg);
+                foreach (var pid in cast.People) pm.Add(new Gossiper(pid, pid, new MemoryStore(pid), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(pid)));
+                pm.Witness(witness, new Fact("player", "window_d1", "ritas"), "the new owner put Rita's window in", true, new GameTime(1, 12, 0), 1.0);
+                for (int h = 12; h < 36; h++) TownRounds.Hour(pm, cast, new GameTime(1 + h / 24, h % 24, 0));
+                int others = 0;
+                foreach (var ag in pm.Agents) if (ag.Id != witness && ag.Rumors.Exists(r => r.TopicKey == "player.window_d1")) others++;
+                Row(sb, "KeepsHisDeeds", witness, others.ToString(Inv), PoliceFile.Loudness(pm).ToString(Inv), Bit(cast.MickeysOwn(witness)));
+            }
 
             // THE EDGES, for the port's regression (30 September): exchanges told
             // through the ledger he hears them with (news four times at most, the

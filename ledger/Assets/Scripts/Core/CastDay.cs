@@ -140,7 +140,14 @@ namespace Ledger.Core
                 if (MiniJson.GetString(p, "name") is string nm && nm.Trim().Length > 0) c._name[id] = nm.Trim();
                 if (MiniJson.GetString(p, "role") is string rl && rl.Trim().Length > 0) c._role[id] = rl.Trim();
                 if (MiniJson.GetString(p, "called") is string cl && cl.Trim().Length > 0) c._called[id] = cl.Trim();
-                if (MiniJson.GetString(p, "keepsQuiet") is string kq) c._quiet[id] = Silence.Parse(kq.Trim());
+                if (p.ContainsKey("keepsQuiet"))
+                {
+                    // Only the words it knows: a typo was read as a friend's silence, so
+                    // Mickey's own reported again (the independent check of 1 October).
+                    if (!(p["keepsQuiet"] is string kq) || !(kq.Trim() == "owner" || kq.Trim() == "anyone" || kq.Trim() == "nobody" || kq.Trim() == "friend"))
+                        throw new FormatException("person " + id + ": keepsQuiet must be \"owner\", \"anyone\", \"nobody\" or \"friend\"");
+                    c._quiet[id] = Silence.Parse(kq.Trim());
+                }
                 if (p.ContainsKey("police"))
                 {
                     if (!(p["police"] is string pol) || pol != "never")
@@ -530,7 +537,13 @@ namespace Ledger.Core
         /// own, ever, and handle what they saw privately (Jafar's ruling of 1
         /// October, on the independent review's N4). Read by PoliceFile.WouldReport
         /// and HearTheStreet.
-        public bool NeverToPolice(string id) => id != null && (_neverToPolice.Contains(id) || (_quiet.TryGetValue(id, out var q) && q == KeepsQuietFor.Owner));
+        public bool NeverToPolice(string id) => id != null && (_neverToPolice.Contains(id) || MickeysOwn(id));
+
+        /// MICKEY'S OWN PEOPLE (the file's keepsQuiet "owner": Ron and Sheila), his
+        /// inherited loyalists: they never go to the police about him and handle
+        /// what they saw privately (Jafar's ruling of 1 October; GossipMill.
+        /// KeepsHisDeedsFor).
+        public bool MickeysOwn(string id) => id != null && _quiet.TryGetValue(id, out var q) && q == KeepsQuietFor.Owner;
 
         /// Which of his worlds somebody belongs to, for the gossip (Gossiper.Circle):
         /// the file's "circle", else "day", the town he lives among by day

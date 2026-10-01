@@ -298,7 +298,11 @@ namespace Ledger.Core
             if (mill == null) return 0;
             int n = 0;
             foreach (var a in mill.Agents)
+            {
+                // Mickey's own keep his deeds to themselves: their talk is not the street's.
+                if (mill.KeepsHisDeedsToThemselves(a.Id)) continue;
                 foreach (var _ in TalkOf(mill, a)) { n++; break; }
+            }
             return n;
         }
 

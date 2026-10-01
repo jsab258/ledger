@@ -496,6 +496,23 @@ namespace Ledger.Core
             return (false, false);
         }
 
+        /// MICKEY'S OWN HANDLE IT PRIVATELY (Jafar's ruling of 1 October: "Ron and
+        /// Sheila ... handle what they saw privately: a word with him, a warning, a
+        /// favour owed"; grassing is the last thing a loyal person does): who keeps
+        /// his deeds to themselves, set from the cast (CastDay.MickeysOwn) whenever
+        /// the town's rounds run with it. They pass a story of his deeds (a
+        /// sensitive story about him) to nobody, and their talk is not the street's
+        /// (PoliceFile.Loudness); what shows to his face is still theirs. A body is
+        /// not a story: it travels as ever. Null: nobody does, as before.
+        public Func<string, bool> KeepsHisDeedsFor { get; set; }
+
+        bool KeepsHisDeeds(Gossiper teller, Rumor r) =>
+            KeepsHisDeedsFor != null && teller != null && r != null && !r.Indelible && r.Sensitive
+            && r.Content != null && r.Content.Subject == "player" && KeepsHisDeedsFor(teller.Id);
+
+        /// Whether this person keeps his deeds to themselves (KeepsHisDeedsFor).
+        public bool KeepsHisDeedsToThemselves(string id) => KeepsHisDeedsFor != null && id != null && KeepsHisDeedsFor(id);
+
         public List<GossipEvent> Tick(GameTime now, Func<string, string, bool> together = null)
         {
             var events = new List<GossipEvent>();
@@ -533,6 +550,7 @@ namespace Ledger.Core
                         // Money and hooks buy silence about STORIES. Nobody keeps
                         // a body to themselves because they were paid to.
                         if (!r.Indelible && speaker.Suppressed.Contains(r.TopicKey)) continue; // bribed/scared into silence
+                        if (KeepsHisDeeds(speaker, r)) continue; // Mickey's own handle it privately
                         if (!r.Indelible && speaker.Leashed && r.Content.Subject == "player") continue; // held by a hook
                         // A body arrives at the far end of the street exactly as
                         // true as it left. Hop decay is how a story turns into a
@@ -762,6 +780,7 @@ namespace Ledger.Core
                 if (r.Confidence < MinConfidenceToShare && !r.Indelible) continue;
                 if (!r.Indelible && partner.Suppressed.Contains(r.TopicKey)) continue;
                 if (!r.Indelible && partner.Leashed) continue;
+                if (KeepsHisDeeds(partner, r)) continue;
 
                 // A BODY ARRIVES AS TRUE AS IT LEFT, asked about or not (town list
                 // 6n): this used the decay and dropped the mark, so asking a
