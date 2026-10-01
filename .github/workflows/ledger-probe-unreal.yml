@@ -2510,6 +2510,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PROBE_OUTCOME: ${{ steps.probe.outcome }}
+          # the push's previous tip, read below; here and not in the script, because a run
+          # holding any expression is one expression, and expressions stop at 21,000 characters
+          PUSH_BEFORE: ${{ github.event.before }}
           GIT_CONFIG_COUNT: "1"
           GIT_CONFIG_KEY_0: safe.directory
           GIT_CONFIG_VALUE_0: "*"
@@ -2558,7 +2561,7 @@ jobs:
           # 20 hours old (production/d1-probe/frames-at.txt), and on any run started
           # by hand. The step's line says frames=0 or 1 and why.
           FRAMES=1; FRAMESWHY=a-run-started-by-hand-or-the-first
-          BEFORE="${{ github.event.before }}"
+          BEFORE="${PUSH_BEFORE:-}"
           if [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ] && [ -n "${GITHUB_SHA:-}" ]; then
             if git cat-file -e "${BEFORE}^{commit}" 2>/dev/null || git fetch -q --no-tags --depth=1 origin "$BEFORE" 2>/dev/null; then
               VIS="$(git diff --name-only "$BEFORE" "$GITHUB_SHA" -- production/specs production/assets ue-probe/Content tools/art-recipes tools/ue \
