@@ -62,17 +62,17 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Clothes, Saturday 3 October
 
-**Needs you:** nothing tonight. The CLO sign-in is no longer needed: the free patterns are not draped.
+**[Your page](https://claude.ai/artifact/AnCngEsNuwfnBZtDwwe52p), two taps (money):** none of the ready-made suits qualifies outright. One may: Nice Pictures' Business Jacket ($39.99, rigged for MetaHumans) hides its NoAI field until you are signed in. If it allows AI, buy it (recommended). If it is NoAI, none qualifies; then ask Husky (recommended).
 
-**Your new order, under way:** first the bar for clothes (dated photographs of British suits, 1987 to 1991, and the game's real viewing distances, as a short fixed rubric); then ready-made, rigged suits screened against it, the best free or under $40 on one page for you.
+**The bar:** a fixed rubric from four dated photographs (1988 to 1991) and the game's own camera: talk at about 5 m, a jacket about a fifth of the screen.
 
-**Free garments, searched from this PC:** CLO's free store has a professional pattern for all ten silhouettes; nothing elsewhere beats them. Kept as input; the ready-rigged items it found are screened first.
+**The screening:** 387 suits on Fab under $40, 247 NoAI (Husky's and every rigged one I could read); the free ones are patterns or unrigged.
 
-**The proof:** failed broadly on Ron, on the cut and the lapel.
+**Free garments:** CLO's free store has a pattern for all ten; kept as input.
 
 **Past two tries:** the proof's shape (nine drapes).
 
-**Research:** MetaHumans into Marvelous; seams and folds; ready-made tailoring; a shortlist of artists; free garments from this PC.
+**Research:** MetaHumans into Marvelous; seams and folds; ready-made tailoring; artists; free garments from this PC.
 
 **C: free:** 30 GB at the start, 85 now.
 
