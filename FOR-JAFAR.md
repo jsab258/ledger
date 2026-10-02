@@ -62,17 +62,19 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Clothes, Saturday 3 October
 
-**[Your page](https://claude.ai/artifact/MvGaDuwgQ9ZpxrqsWmuFb3), two taps (money):** tailored clothes are blocked: the Marvelous jacket failed its blind review on the cut and the lapel. Choose: (A, recommended) I shortlist, spending nothing, three freelance clothing artists and two ready suit patterns, judged against your bar, with prices (estimated $500 to 1,500 for the jacket on Ron and Darren); (B) buy two or three ready MetaHuman suit jackets on Fab (CHF 60 to 150) to test in the game; (C) no tailoring for now: Epic's plain clothes. And cancel Marvelous's trial before 15 October.
+**Needs you, a few clicks:** the best free garment to test, CLO's [MV2 Easy Tailored Jacket](https://connect.clo-set.com/detail/ae37b94cb2344ee2bc3f01fedacbd39d), needs your CLO sign-in: open it, Sign In (top right, Marvelous's account), Add to cart (Free), open the cart, Checkout, then Download the .zprj; leave it in Downloads.
 
-**The jacket proof:** Marvelous now runs wholly by script: our pattern, draped on Ron's own body, a game mesh, skinned; the builder filmed it in the game. Darren's film comes this morning.
+**[Your page](https://claude.ai/artifact/MvGaDuwgQ9ZpxrqsWmuFb3), two taps (money):** tailoring after the failed proof (shortlist first, recommended); cancel Marvelous's trial before 15 October (recommended).
 
-**Against your bar:** failed broadly on Ron: his right lapel collapses, the front hangs as a sack, boxy shoulders, full sleeves. Cause: Marvelous cannot turn and hold a lapel by script, and a cut fitted by measurement alone missed nine times.
+**Free garments, redone from this PC:** CLO's free CONNECT store has a professional pattern for all ten silhouettes, plain white blocks (cloth and wear ours); the cloud never reached it. Your licence rulings and the unreached rule are in.
 
-**Past two tries:** the jacket's shape (nine drapes); Darren's own drape (three).
+**The proof:** failed broadly on Ron, on the cut and the lapel; Darren's film this morning.
 
-**Research:** MetaHumans into Marvelous; turned seams and folds; ready-made tailoring, costed.
+**Past two tries:** the proof's shape (nine drapes).
 
-**C: free:** 30 GB at the start, 85 now (F: 2.4 to 42).
+**Research:** MetaHumans into Marvelous; seams and folds; ready-made tailoring; a shortlist of artists; free garments from this PC.
+
+**C: free:** 30 GB at the start, 85 now.
 
 ## Builder, Friday 2 October
 
