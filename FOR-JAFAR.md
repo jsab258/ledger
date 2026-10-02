@@ -64,8 +64,6 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Needs you, a few clicks:** the best free garment to test, CLO's [MV2 Easy Tailored Jacket](https://connect.clo-set.com/detail/ae37b94cb2344ee2bc3f01fedacbd39d), needs your CLO sign-in: open it, Sign In (top right, Marvelous's account), Add to cart (Free), open the cart, Checkout, then Download the .zprj; leave it in Downloads.
 
-**[Your page](https://claude.ai/artifact/MvGaDuwgQ9ZpxrqsWmuFb3), two taps (money):** tailoring after the failed proof (shortlist first, recommended); cancel Marvelous's trial before 15 October (recommended).
-
 **Free garments, redone from this PC:** CLO's free CONNECT store has a professional pattern for all ten silhouettes, plain white blocks (cloth and wear ours); the cloud never reached it. Your licence rulings and the unreached rule are in.
 
 **The proof:** failed broadly on Ron, on the cut and the lapel; Darren's film this morning.
