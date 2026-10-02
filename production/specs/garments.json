@@ -1,81 +1,91 @@
 {
-  "what": "The garments the clothing session hands the builder (NOW.md, Handovers), fitted on the cast in Unreal: each skinned FBX is imported onto the wearer's body skeleton in the MetaHuman project (tools/ue/import_garments.py, under /Game/Ledger/MetaHumans/Garments, never in the public repository, which the build machine mirrors with the cast) and worn in the game by following the body's pose (LedgerGarments.h). 'hides' names the parts of Epic's outfit a garment replaces ('shoes': the part whose top is within 25 cm of the soles, since Epic's outfit pieces are named only Outfits, _2 and _3); 'raise_mm' lifts the wearer so soles stand on the ground (MetaHumans stand barefoot on the floor since 5.6); 'hold' keeps a garment off until the reason given is dealt with.",
-  "garments": [
-    {
-      "who": "Rocco",
-      "name": "RonBoots",
-      "fbx": "F:/LedgerTools/garments/ron_boots/ron_boots_skinned.fbx",
-      "hides": [
-        "shoes"
-      ],
-      "raise_mm": 20,
-      "handed": "2026-09-30"
-    },
-    {
-      "who": "Lena",
-      "name": "SheilaSpectacles",
-      "fbx": "F:/LedgerTools/garments/sheila_spectacles/sheila_spectacles_skinned.fbx",
-      "handed": "2026-09-30",
-      "hold": "30 September: made on her C1 face; on her approved S4 face in the game they sit 2 to 3 cm high (F:/LedgerTools/bodies/MH_LenaS4/spectacles-on-S4-in-game.jpg). Back to the clothing session to refit on F:/LedgerTools/bodies/MH_LenaS4/MH_LenaS4_FullBody.fbx; not worn until then."
-    },
-    {
-      "who": "Lena",
-      "name": "SheilaGlassesChain",
-      "fbx": "F:/LedgerTools/garments/sheila_spectacles/sheila_glasses_chain_skinned.fbx",
-      "handed": "2026-09-30",
-      "hold": "30 September: made on her C1 face; on her approved S4 face in the game they sit 2 to 3 cm high (F:/LedgerTools/bodies/MH_LenaS4/spectacles-on-S4-in-game.jpg). Back to the clothing session to refit on F:/LedgerTools/bodies/MH_LenaS4/MH_LenaS4_FullBody.fbx; not worn until then."
-    },
-    {
-      "who": "Lena",
-      "name": "SheilaHandbag",
-      "fbx": "F:/LedgerTools/garments/sheila_handbag/sheila_handbag_skinned.fbx",
-      "handed": "2026-09-30"
-    },
-    {
-      "who": "Sam",
-      "name": "DarrenBelt",
-      "fbx": "F:/LedgerTools/garments/darren_belt_pager/darren_belt_skinned.fbx",
-      "handed": "2026-09-30",
-      "hold": "30 September: fitted and imported, but on Darren as the game dresses him now, Epic's untucked sweater covers his waist, so they would not show; worn once his own T-shirt (handed over, cloth) is fitted."
-    },
-    {
-      "who": "Sam",
-      "name": "DarrenPager",
-      "fbx": "F:/LedgerTools/garments/darren_belt_pager/darren_pager_skinned.fbx",
-      "handed": "2026-09-30",
-      "hold": "30 September: fitted and imported, but on Darren as the game dresses him now, Epic's untucked sweater covers his waist, so they would not show; worn once his own T-shirt (handed over, cloth) is fitted."
-    },
-    {
-      "who": "Rocco",
-      "name": "RonJacket",
-      "fbx": "F:/LedgerTools/bound/RonJacket/RonJacket_skinned.fbx",
-      "hides": [
-        "top"
-      ],
-      "handed": "2026-09-30",
-      "made": "The clothing session's set-aside donkey jacket (its 29 September finish) bound by the builder the way games make clothes (Jafar, 30 September): skinned to Ron's own skeleton, each sewn panel taking its weights from its own part of his body (sleeves from the arm, the rest from the trunk with no arm bones), blended at the armhole seams (tools/meshgen/blender/bind_garment.py; bind.json beside it).",
-      "hold": "30 September: a method test, not for his page (production/art/clothing/jacket-bound-test-2026-09-30): walks and raises its arms cleanly in Unreal, but sitting shows skin at the yoke and its skirt follows the thighs; RonJacketB is the better binding. Worn only with -WearHeld=RonJacket.",
-      "materials": {
-        "M_DonkeyWool": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Wool",
-        "M_DonkeyYoke": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Yoke",
-        "M_DonkeyButton": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Button"
-      }
-    },
-    {
-      "who": "Rocco",
-      "name": "RonJacketB",
-      "fbx": "F:/LedgerTools/bound/RonJacketB/RonJacketB_skinned.fbx",
-      "hides": [
-        "top"
-      ],
-      "handed": "2026-09-30",
-      "made": "The clothing session's set-aside donkey jacket (its 29 September finish) bound by the builder the way games make clothes (Jafar, 30 September): skinned to Ron's own skeleton, each sewn panel taking its weights from its own part of his body (sleeves from the arm, the rest from the trunk with no arm bones but Epic's shoulder correctives, which Unreal drives), blended at the armhole seams (tools/meshgen/blender/bind_garment.py; bind.json beside it).",
-      "hold": "30 September: a method test, not for his page (production/art/clothing/jacket-bound-test-2026-09-30): the better of the two bindings (walking, arms raised and sitting clean at the shoulders); its skirt still follows the thighs, which wants cloth, and the clothing session's own skinned remake supersedes it. Worn only with -WearHeld=RonJacketB.",
-      "materials": {
-        "M_DonkeyWool": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Wool",
-        "M_DonkeyYoke": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Yoke",
-        "M_DonkeyButton": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Button"
-      }
-    }
-  ]
+ "what": "The garments the clothing session hands the builder (NOW.md, Handovers), fitted on the cast in Unreal: each skinned FBX is imported onto the wearer's body skeleton in the MetaHuman project (tools/ue/import_garments.py, under /Game/Ledger/MetaHumans/Garments, never in the public repository, which the build machine mirrors with the cast) and worn in the game by following the body's pose (LedgerGarments.h). 'hides' names the parts of Epic's outfit a garment replaces ('shoes': the part whose top is within 25 cm of the soles, since Epic's outfit pieces are named only Outfits, _2 and _3); 'raise_mm' lifts the wearer so soles stand on the ground (MetaHumans stand barefoot on the floor since 5.6); 'hold' keeps a garment off until the reason given is dealt with.",
+ "garments": [
+  {
+   "who": "Rocco",
+   "name": "RonBoots",
+   "fbx": "F:/LedgerTools/garments/ron_boots/ron_boots_skinned.fbx",
+   "hides": [
+    "shoes"
+   ],
+   "raise_mm": 20,
+   "handed": "2026-09-30"
+  },
+  {
+   "who": "Lena",
+   "name": "SheilaSpectacles",
+   "fbx": "F:/LedgerTools/garments/sheila_spectacles/sheila_spectacles_skinned.fbx",
+   "handed": "2026-09-30",
+   "hold": "30 September: made on her C1 face; on her approved S4 face in the game they sit 2 to 3 cm high (F:/LedgerTools/bodies/MH_LenaS4/spectacles-on-S4-in-game.jpg). Back to the clothing session to refit on F:/LedgerTools/bodies/MH_LenaS4/MH_LenaS4_FullBody.fbx; not worn until then."
+  },
+  {
+   "who": "Lena",
+   "name": "SheilaGlassesChain",
+   "fbx": "F:/LedgerTools/garments/sheila_spectacles/sheila_glasses_chain_skinned.fbx",
+   "handed": "2026-09-30",
+   "hold": "30 September: made on her C1 face; on her approved S4 face in the game they sit 2 to 3 cm high (F:/LedgerTools/bodies/MH_LenaS4/spectacles-on-S4-in-game.jpg). Back to the clothing session to refit on F:/LedgerTools/bodies/MH_LenaS4/MH_LenaS4_FullBody.fbx; not worn until then."
+  },
+  {
+   "who": "Lena",
+   "name": "SheilaHandbag",
+   "fbx": "F:/LedgerTools/garments/sheila_handbag/sheila_handbag_skinned.fbx",
+   "handed": "2026-09-30"
+  },
+  {
+   "who": "Sam",
+   "name": "DarrenBelt",
+   "fbx": "F:/LedgerTools/garments/darren_belt_pager/darren_belt_skinned.fbx",
+   "handed": "2026-09-30",
+   "hold": "30 September: fitted and imported, but on Darren as the game dresses him now, Epic's untucked sweater covers his waist, so they would not show; worn once his own T-shirt (handed over, cloth) is fitted."
+  },
+  {
+   "who": "Sam",
+   "name": "DarrenPager",
+   "fbx": "F:/LedgerTools/garments/darren_belt_pager/darren_pager_skinned.fbx",
+   "handed": "2026-09-30",
+   "hold": "30 September: fitted and imported, but on Darren as the game dresses him now, Epic's untucked sweater covers his waist, so they would not show; worn once his own T-shirt (handed over, cloth) is fitted."
+  },
+  {
+   "who": "Rocco",
+   "name": "RonJacket",
+   "fbx": "F:/LedgerTools/bound/RonJacket/RonJacket_skinned.fbx",
+   "hides": [
+    "top"
+   ],
+   "handed": "2026-09-30",
+   "made": "The clothing session's set-aside donkey jacket (its 29 September finish) bound by the builder the way games make clothes (Jafar, 30 September): skinned to Ron's own skeleton, each sewn panel taking its weights from its own part of his body (sleeves from the arm, the rest from the trunk with no arm bones), blended at the armhole seams (tools/meshgen/blender/bind_garment.py; bind.json beside it).",
+   "hold": "30 September: a method test, not for his page (production/art/clothing/jacket-bound-test-2026-09-30): walks and raises its arms cleanly in Unreal, but sitting shows skin at the yoke and its skirt follows the thighs; RonJacketB is the better binding. Worn only with -WearHeld=RonJacket.",
+   "materials": {
+    "M_DonkeyWool": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Wool",
+    "M_DonkeyYoke": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Yoke",
+    "M_DonkeyButton": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Button"
+   }
+  },
+  {
+   "who": "Rocco",
+   "name": "RonJacketB",
+   "fbx": "F:/LedgerTools/bound/RonJacketB/RonJacketB_skinned.fbx",
+   "hides": [
+    "top"
+   ],
+   "handed": "2026-09-30",
+   "made": "The clothing session's set-aside donkey jacket (its 29 September finish) bound by the builder the way games make clothes (Jafar, 30 September): skinned to Ron's own skeleton, each sewn panel taking its weights from its own part of his body (sleeves from the arm, the rest from the trunk with no arm bones but Epic's shoulder correctives, which Unreal drives), blended at the armhole seams (tools/meshgen/blender/bind_garment.py; bind.json beside it).",
+   "hold": "30 September: a method test, not for his page (production/art/clothing/jacket-bound-test-2026-09-30): the better of the two bindings (walking, arms raised and sitting clean at the shoulders); its skirt still follows the thighs, which wants cloth, and the clothing session's own skinned remake supersedes it. Worn only with -WearHeld=RonJacketB.",
+   "materials": {
+    "M_DonkeyWool": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Wool",
+    "M_DonkeyYoke": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Yoke",
+    "M_DonkeyButton": "/Game/Ledger/MetaHumans/Clothing/DonkeyJacket/MI_DonkeyJacket_Button"
+   }
+  },
+  {
+   "who": "Rocco",
+   "name": "RonShirtTie",
+   "fbx": "F:/LedgerTools/tmp/builder/md-jacket-ron/ron_shirt_and_tie.fbx",
+   "hides": [
+    "top"
+   ],
+   "handed": "2026-10-02",
+   "made": "The clothing session's shirt front, collar, cuffs and tie for under the Marvelous suit jacket (F:/LedgerTools/garments/md_suit_jacket/ron, its README of 2 October), skinned to MH_RoccoP2 as exported 29 September 17:33; held, worn only in the jacket's test films (-WearHeld) until the jacket's review passes."
+  }
+ ]
 }
