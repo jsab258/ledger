@@ -5,21 +5,24 @@ target is underspecified ... freeze dated clothing references and gameplay viewi
 Every future clothing review, by me or a fresh reviewer, judges against this page and nothing else, and answers each
 line below with pass or fail and the frame it saw it in. Changed only by Jafar.
 
-## 1. How far away the game shows people (as built in the code, not yet measured in play)
+## 1. How far away the game shows people (measured in play, one route walk, 2 October)
 
-From the code (ue-probe/Source/LedgerProbe/Private/SliceCharacter.cpp 63-71, CrimeProbe.h; the builder, 2 October):
-there is no separate dialogue camera. Talk happens in the street camera: a spring arm 3.2 m behind Tom, its end 0.45 m
-to his right and 0.55 m up, at the engine's default field of view, 90 degrees horizontal (about 59 vertical at 16:9).
-A talk opens within 3.5 m (kLiveTalkM) and holds within 6 m; the route walk talks at about 1.5 to 2.5 m.
+There is no separate dialogue camera: talk happens in the street camera, a spring arm 3.2 m behind Tom, 0.45 m to his
+right and 0.55 m up, at the engine's default field of view, 90 degrees horizontal (about 59 vertical at 16:9)
+(ue-probe/Source/LedgerProbe/Private/SliceCharacter.cpp 63-71). Measured by the builder in the route walk of
+2 October, 23:30 (editor build; ue-probe/Saved/Logs, the LEDGER-ROUTE talk-open line and LedgerView lines every
+5 s): the talk to Sheila opened with Tom 1.20 m from her face and **the camera 4.42 m from it**; the people in view as
+he walked were, camera to face, 3.1, 4.4, 4.7, 6.0, 7.4, 8.2, 9.3, 10.8, 11.2, 15.2, 20.4, 27.7 and 28.1 m. One walk
+and one talk: a first sample, to be widened with later walks.
 
 | View | Camera to the person | At 2560 by 1440: one metre is | A jacket (0.8 m long) is | A lapel (9 cm wide) is |
 |---|---|---|---|---|
-| **Talk** | 4.5 to 5.5 m | 230 to 285 pixels | 185 to 230 pixels tall | about 20 to 26 pixels |
-| **Street, near** | 6 to 9 m | 140 to 215 pixels | 115 to 170 pixels | 13 to 19 pixels |
-| **Street, far** | 9 to 18 m | 70 to 140 pixels | 55 to 115 pixels | 6 to 13 pixels |
+| **Talk** | 4.4 m (measured) | about 290 pixels | about 230 pixels tall | about 26 pixels |
+| **Street, near** | 3 to 8 m | 160 to 425 pixels | 130 to 340 pixels | 14 to 38 pixels |
+| **Street, usual** | 8 to 15 m | 85 to 160 pixels | 70 to 130 pixels | 8 to 14 pixels |
+| **Street, far** | 15 to 28 m | 46 to 85 pixels | 37 to 70 pixels | 4 to 8 pixels |
 
-(One metre at distance d fills 1440 / (2 d tan 29.4°) = 1280 / d pixels.) The builder logs the real distances in a
-route walk; when they come, they replace these, and this line says so.
+(One metre at distance d fills 1440 / (2 d tan 29.4°) = 1280 / d pixels.)
 
 **What that means:** no close-up exists in play. At talk distance a jacket is about a fifth of the screen's height: its
 silhouette, shoulder line, lapel shape, button stance, length, sleeve volume, cloth colour and sheen, and how it moves
