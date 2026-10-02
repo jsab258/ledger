@@ -61,6 +61,7 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 - A SET-ASIDE NEVER SIMPLY STOPS (Jafar, 1 October, after clothing stopped silently that day), on every session: when the two-tries rule sets aside something the game cannot do without (clothes, faces, voices, the talk), it goes into the overview's Needs you at once as a blocked capability, with what was tried and why it failed, and the session proposes research in a different direction.
 - The research goes to a separate helper given the problem, not your theory about it, capped at about thirty minutes, with dated sources. Its note is saved in production/research/ under a topic folder, and the day's summary gives it one line.
 - Anything the research suggests that touches money, licences, canon or scope goes to Jafar as a decision.
+- AN UNREACHED SOURCE IS NEVER EVIDENCE (Jafar, 2 October, after the cloud's free-garments research judged items nobody saw), on every session, research included: a source that could not be reached is reported as unreached, never as evidence, and nothing is concluded about it. Research that depends on sites the cloud cannot reach (Sketchfab, Fab, CLO's CONNECT, CGTrader, ArtStation, Gumroad and the like) is done from this PC.
 
 ## Three sessions, one repository (Jafar, 28 and 29 September)
 
