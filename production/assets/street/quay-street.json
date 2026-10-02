@@ -2259,9 +2259,9 @@
    "material": "render_patch",
    "base_material": "render_patch",
    "linear_rgb": [
-    0.38,
-    0.285,
-    0.16
+    0.2,
+    0.15,
+    0.095
    ],
    "roughness": 0.85,
    "surface_map": "plaster",
@@ -2705,29 +2705,6 @@
    "emit_night": null,
    "reveal_on": null,
    "faces": 132
-  },
-  {
-   "mesh": "street_tube_lit",
-   "material": "tube_lit",
-   "base_material": "tube_lit",
-   "linear_rgb": [
-    0.9,
-    0.94,
-    1.0
-   ],
-   "roughness": 0.5,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": 12.0,
-   "emit_night": 12.0,
-   "reveal_on": null,
-   "faces": 264
   },
   {
    "mesh": "street_window_far_lit",

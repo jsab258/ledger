@@ -6630,7 +6630,10 @@ namespace
 	// street without deciding whether the figure is in it.
 	void DriveFigure(const Condition& C)
 	{
-		if (!C.LanternsOn || GFigureBarredInPlay)
+		// -NoControlQuads (frames for Jafar's page) bars it too (3 October: the stock test
+		// figure stood behind a lamp post in a night frame, a cartoon in goggles).
+		static const bool bPageFrames = FParse::Param(FCommandLine::Get(), TEXT("NoControlQuads"));
+		if (!C.LanternsOn || GFigureBarredInPlay || bPageFrames)
 		{
 			if (GFigure != nullptr) { GFigure->SetActorHiddenInGame(true); }
 			GFigureVisibleNow = false;
