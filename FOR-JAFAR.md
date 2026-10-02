@@ -56,17 +56,19 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Next:** your tap; the builder's port.
 
-## Clothes, Friday 2 October
+## Clothes, Saturday 3 October
 
-**Needs you:** one start in Marvelous Designer: open it, open its Python window, run tools\md\md_bridge.py, leave it open. Its trial becomes a paid month on 15 October: cancel before then if the proof fails.
+**Needs you (money):** tailored clothes are blocked: the Marvelous jacket failed its blind review on the cut and the lapel. Choose: (A, recommended) I shortlist, spending nothing, three freelance clothing artists and two ready suit patterns, judged against your bar, with prices (estimated $500 to 1,500 for the jacket on Ron and Darren); (B) buy two or three ready MetaHuman suit jackets on Fab (CHF 60 to 150) to test in the game; (C) no tailoring for now: Epic's plain clothes. And cancel Marvelous's trial before 15 October.
 
-**The jacket proof, your ruling:** the pattern is drafted (FreeSewing's Jaeger) for Ron and for Darren: two buttons, the lapel rolling to the top one, a centre vent, flap pockets. A bridge lets me drive Marvelous once started. Its installed terms: what you make is yours; the trial is for evaluation only.
+**The jacket proof:** Marvelous now runs wholly by script: our pattern, draped on Ron's own body, a game mesh, skinned; the builder filmed it in the game. Darren's film comes this morning.
 
-**Against your bar:** Darren's boots and Sheila's blouse and his T-shirt failed, so the builder swaps Epic's; her skirt passed. The suit jacket walked cleanly in the game, but failed seated; its cloth layer has been rebuilt.
+**Against your bar:** failed broadly on Ron: his right lapel collapses, the front hangs as a sack, boxy shoulders, full sleeves. Cause: Marvelous cannot turn and hold a lapel by script, and a cut fitted by measurement alone missed nine times.
 
-**Research:** the tailor's jacket in Marvelous; read the wardrobe research.
+**Past two tries:** the jacket's shape (nine drapes); Darren's own drape (three).
 
-**Pushes:** free tests only. **C: free:** 46 GB at the start, a dip to 20, 42 now (the swap file; the builder's cleanup page). Backup ran: OK.
+**Research:** MetaHumans into Marvelous; turned seams and folds; ready-made tailoring and its costs.
+
+**C: free:** 30 GB at the start, 85 now (F: 2.4 to 42).
 
 ## Builder, Friday 2 October
 
