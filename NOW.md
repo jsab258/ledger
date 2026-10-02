@@ -36,7 +36,7 @@ Not in his order of 1 October, kept for later:
 - [ ] 5. Nightly functional tests of the packaged game (production/research/packaged-game-testing).
 - [ ] 6. Mickey's office as a playable blockout (production/research/interior-blockout).
 
-STATE (Friday 2 October, 10:15): the drives first (his ruling this morning): retention runs nightly; C: 73 GB free, F: 2.5 GB, under its 20 GB floor, so builds, renders and voice work wait for his yes on the disk page (overview, Needs you). RS1 and RS3 made and screened, not yet heard in the game; RS2 and RS4 to RS7 written last night and built locally at 22:55, uncommitted, to build and walk once F: has room; RS8 is the town's. 1b ready for his cloud review.
+STATE (Friday 2 October, 10:45): the drives done (his ruling this morning): retention runs nightly; after his yes on the disk page C: has 107 GB free and F: 37. RS1 and RS3 made and screened, not yet heard in the game; RS2 and RS4 to RS7 compiled (10:16), uncommitted, to film and walk next; RS8 is the town's. The delay: the memory cause and the processor route measured (production/research/voice-latency/EVIDENCE-2026-10-01.md). 1b ready for his cloud review.
 
 ## Handovers to clothing
 
