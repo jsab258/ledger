@@ -45,8 +45,10 @@ PIECES = os.path.join(REPO, "production", "specs", "vignette-pieces.json")
 OUT = os.path.join(REPO, "production", "specs", "street-wear.json")
 STANDOFF_M = 0.01           # the scene file's decal standoff (decals.standoff_m)
 END_WALL_T = 0.34           # a row's end wall, one and a half bricks (terrace-front.py END_WALL_T): the gable face stands this far past the end bay
+DAMP_M = 1.0               # rising damp: the lowest metre of a solid wall darker and patchy (2 October)
+ROAD_HALF_M, ROAD_CROSSFALL, FOOTWAY_ABOVE_CROWN_M = 3.0, 0.025, 0.10   # terrace-front.py ROAD_HALF_M, ROAD_CROSSFALL, THRESHOLD_ABOVE_CROWN_M
 SPLASH_M = 0.60             # the splash-back band at the foot of a wall (2 October: 0.30 and faint did not show in the stage-1 frame)
-PICTURE = {"wash": "ours/wear_wash", "splash": "ours/wear_splash", "streak": "ours/wear_streak",
+PICTURE = {"damp": "ours/wear_damp", "wash": "ours/wear_wash", "splash": "ours/wear_splash", "streak": "ours/wear_streak",
            "algae": "ours/wear_algae", "soot": "ours/wear_soot",
            "oil": "ours/wear_oil", "puddle": "ours/puddle_01"}   # 2 October: the packs' real masks (tools/make_wear_masks.py), not their preview renders
 PUDDLES = ("ours/puddle_01", "ours/puddle_02", "ours/puddle_03")
@@ -75,6 +77,15 @@ def wall_decal(kind, x, y, z_face, facing, w, h, strength, owner):
     return {"kind": kind, "picture": PICTURE[kind], "x_m": round(x, 4), "y_m": round(y, 4),
             "z_m": round(z_face + facing * STANDOFF_M, 4), "w_m": round(w, 4), "h_m": round(h, 4),
             "yaw_deg": 0.0 if facing < 0 else 180.0, "pitch_deg": 0.0, "strength": round(strength, 3), "on": owner}
+
+
+def ground_y(z):
+    """The ground's height across the street at z (terrace-front.py road_z): 0 at the crown,
+    falling 1 in 40 to each channel 3 m out; the footway 0.10 above the crown. A ground mark
+    stands at it, since it reaches only 16 cm up and 6 cm down (2 October: placed at the
+    crown's height, the gutter puddles fell out of reach)."""
+    a = abs(z)
+    return round(-min(a, ROAD_HALF_M) * ROAD_CROSSFALL, 4) if a <= ROAD_HALF_M + 0.15 else FOOTWAY_ABOVE_CROWN_M
 
 
 def gable_decal(kind, x, y, z_mid, w, h, strength, owner):
@@ -111,6 +122,15 @@ def build(pieces):
         bottom = b["y_m"] - b["sy_m"] / 2.0
         decals.append(wall_decal("splash", b["x_m"], bottom + SPLASH_M / 2.0, zf, facing, b["sx_m"], SPLASH_M,
                                  0.5 + 0.4 * h["wear"], b["name"]))
+        # WEAR THAT READS AT A GLANCE ON EVERY FACADE (Jafar, 2 October, Friday's page:
+        # "wear that reads at a glance across every facade, not faint marks"): the wash
+        # the gables carry, down every bay's front from its top (rain off the eaves and
+        # the gutter's overflow, darkest at the head), and rising damp in its lowest metre.
+        top = b["y_m"] + b["sy_m"] / 2.0
+        decals.append(wall_decal("wash", b["x_m"], top - b["sy_m"] * 0.45, zf, facing, b["sx_m"] * 1.02, b["sy_m"] * 0.9,
+                                 0.45 + 0.35 * h["wear"], b["name"]))
+        decals.append(wall_decal("damp", b["x_m"], bottom + DAMP_M / 2.0, zf, facing, b["sx_m"] * 1.02, DAMP_M,
+                                 0.40 + 0.30 * h["wear"], b["name"]))
     # THE GABLE ENDS (2 October: the stage-1 frame's biggest wall, the side of Mickey's block,
     # carried no wear at all, since only the bays' fronts were marked): at each row's
     # south end, facing the camera's way (yaw 270), a splash band at its foot and a weathered
@@ -123,7 +143,9 @@ def build(pieces):
         decals.append(gable_decal("splash", gx, bottom + SPLASH_M / 2.0, g["z_m"], g["sz_m"], SPLASH_M,
                                   0.5 + 0.4 * hg["wear"], g["name"]))
         decals.append(gable_decal("wash", gx, bottom + g["sy_m"] * 0.5, g["z_m"], g["sz_m"] * 0.95, g["sy_m"] * 0.9,
-                                  0.35 + 0.25 * hg["wear"], g["name"]))
+                                  0.50 + 0.35 * hg["wear"], g["name"]))
+        decals.append(gable_decal("damp", gx, bottom + DAMP_M / 2.0, g["z_m"], g["sz_m"] * 0.95, DAMP_M,
+                                  0.40 + 0.30 * hg["wear"], g["name"]))
     for p in P:
         if p["bom"] == "C13_sills_lintels" and "_sill" in p["name"]:
             block = p["name"].split("_up")[0].split("_gf")[0]
@@ -167,7 +189,7 @@ def build(pieces):
             if x >= 44.0:
                 break
             w = 0.4 + 0.5 * rnd(s, "w%d" % k)   # 2 October: a drip under a parked car, not a slick
-            decals.append({"kind": "oil", "picture": PICTURE["oil"], "x_m": round(x, 4), "y_m": 0.0,
+            decals.append({"kind": "oil", "picture": PICTURE["oil"], "x_m": round(x, 4),
                            "z_m": round(z + 0.6 * (rnd(s, "z%d" % k) - 0.5), 4), "w_m": round(w * 1.4, 4),
                            "h_m": round(w, 4), "yaw_deg": round(360.0 * rnd(s, "yaw%d" % k), 2), "pitch_deg": 90.0,
                            "strength": round(0.22 + 0.18 * rnd(s, "st%d" % k), 3), "on": "ground_" + side + "_carriageway"})
@@ -186,9 +208,29 @@ def build(pieces):
             # centred a little out from the gutter, onto the road, where the camber flattens
             z = sign * (CHANNEL_Z_M - 0.1 - W * 0.35)
             decals.append({"kind": "puddle", "picture": PUDDLES[int(rnd(s, "pic%d" % k) * 3) % 3], "x_m": round(x, 4),
-                           "y_m": 0.0, "z_m": round(z, 4), "w_m": round(L, 4), "h_m": round(W, 4),
+                           "z_m": round(z, 4), "w_m": round(L, 4), "h_m": round(W, 4),
                            "yaw_deg": round(-8.0 + 16.0 * rnd(s, "yaw%d" % k), 2), "pitch_deg": 90.0,
                            "strength": round(0.75 + 0.2 * rnd(s, "st%d" % k), 3), "on": "ground_" + side + "_channel"})
+            k += 1
+    # STANDING WATER ACROSS THE CARRIAGEWAY (Jafar, 2 October: "the wet street and its
+    # reflections"): a worn British road ponds in its wheel tracks and its dips, not only
+    # at the kerb, and those mirrors of the shopfronts are what make a street read wet at
+    # a glance. Two tracks a side, a pool every few metres, long along the road.
+    for side, sign in (("east", 1.0), ("west", -1.0)):
+        s = seed_of("track_" + side)
+        x = 3.0
+        k = 0
+        while True:
+            x += 2.5 + 4.0 * rnd(s, "gap%d" % k)
+            if x >= 42.0:
+                break
+            L = 1.2 + 1.8 * rnd(s, "len%d" % k)
+            W = 0.5 + 0.7 * rnd(s, "wid%d" % k)
+            track = 0.9 if rnd(s, "track%d" % k) < 0.5 else 2.0   # the nearside and offside wheel tracks
+            decals.append({"kind": "puddle", "picture": PUDDLES[int(rnd(s, "pic%d" % k) * 3) % 3], "x_m": round(x, 4),
+                           "z_m": round(sign * track, 4), "w_m": round(L, 4), "h_m": round(W, 4),
+                           "yaw_deg": round(-12.0 + 24.0 * rnd(s, "yaw%d" % k), 2), "pitch_deg": 90.0,
+                           "strength": round(0.8 + 0.2 * rnd(s, "st%d" % k), 3), "on": "ground_" + side + "_carriageway"})
             k += 1
     # THE RECIPE'S PUDDLES ON THE FLAGS AND THE ROAD, 2 October: its mesh sheets are retired
     # (terrace-front.py WATER_AS_DECALS) and stand here as soft-masked water at the same spots,
@@ -200,6 +242,10 @@ def build(pieces):
                        "yaw_deg": round(-10.0 + 20.0 * rnd(s, "yaw"), 2), "pitch_deg": 90.0,
                        "strength": round(0.7 + 0.2 * rnd(s, "st"), 3),
                        "on": "ground_" + ("east" if cz > 0 else "west") + ("_footway" if abs(cz) > CHANNEL_Z_M + 0.2 else "_carriageway")})
+    # Every ground mark stands at the ground's own height where it lies (ground_y).
+    for d in decals:
+        if d.get("pitch_deg") == 90.0:
+            d["y_m"] = ground_y(d["z_m"])
     return houses, decals, coverage(bays, decals)
 
 

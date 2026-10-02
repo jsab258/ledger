@@ -4078,6 +4078,21 @@ namespace
 	// route-where.txt beside the game's files, so tools/route_walk.py can steer
 	// its real key presses toward a place in short legs instead of timed walks
 	// (timed walks got lost when people and cars stood in the way).
+	// HOW FAR A FACE IS, AS PLAYED (2 October, for the clothing session's bar: the
+	// talk's and the street's real viewing distances): from Tom and from the camera to
+	// somebody's face (0.7 m above the body's centre), and the camera's horizontal view.
+	bool InHisView(UWorld* World, const FVector& At);
+	FString ViewDistances(UWorld* World, AActor* Body)
+	{
+		APlayerController* PC = World != nullptr ? World->GetFirstPlayerController() : nullptr;
+		if (Body == nullptr || GPawn == nullptr || PC == nullptr || PC->PlayerCameraManager == nullptr) { return TEXT("view=unknown"); }
+		const FVector Face = Body->GetActorLocation() + FVector(0.0f, 0.0f, 70.0f);
+		const FVector Cam = PC->PlayerCameraManager->GetCameraLocation();
+		return FString::Printf(TEXT("tom_to_face_m=%.2f cam_to_face_m=%.2f hfov_deg=%.1f"),
+			FVector::Dist(GPawn->GetActorLocation() + FVector(0.0f, 0.0f, 70.0f), Face) / 100.0, FVector::Dist(Cam, Face) / 100.0,
+			PC->PlayerCameraManager->GetFOVAngle());
+	}
+
 	void RouteWhereTick(UWorld* World, double Now)
 	{
 		static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("RouteWalk"));
@@ -4105,6 +4120,19 @@ namespace
 			Text += FString::Printf(TEXT("|%s %.3f %.3f %.2f"), UTF8_TO_TCHAR(C), P.X, P.Z, LedgerCrime::kLiveTalkM);
 		}
 		FFileHelper::SaveStringToFile(Text, *(FPaths::ProjectSavedDir() / TEXT("route-where.txt")));
+		// and every five seconds, how far each of the three in view stands from the camera
+		static double NextView = 0.0;
+		if (Now >= NextView)
+		{
+			NextView = Now + 5.0;
+			for (const char* C : { "lena", "sam", "rocco" })
+			{
+				AActor* Body = CardBody(C);
+				AActor* Shown = Body != nullptr ? GVisualFor(Body) : nullptr;
+				if (Shown == nullptr || Shown->IsHidden() || !InHisView(World, Body->GetActorLocation())) { continue; }
+				UE_LOG(LogTemp, Display, TEXT("LedgerView: %s in view, %s"), UTF8_TO_TCHAR(C), *ViewDistances(World, Body));
+			}
+		}
 	}
 
 	// MICKEY'S OFFICE, A GREY BLOCKOUT (item 6, 1 October; game-design/
@@ -5711,7 +5739,8 @@ namespace
 		RebuildSuggestRows();
 		GSayOpenedAt = NowS();
 		GSayOpenPawnAt = GPawn != nullptr ? GPawn->GetActorLocation() : FVector::ZeroVector;
-		RouteCheck(TEXT("talk-open"), true, FString::Printf(TEXT("to=%s clock=%s"), *GTalkTarget.Name, *Un(GNow.ToString())));
+		RouteCheck(TEXT("talk-open"), true, FString::Printf(TEXT("to=%s clock=%s %s"), *GTalkTarget.Name, *Un(GNow.ToString()),
+			*ViewDistances(GPawn != nullptr ? GPawn->GetWorld() : nullptr, GTalkTarget.Body)));
 	}
 
 	void OpenSayBoxWith(UWorld* World, const FString& First) { GSayDraft += First; OpenSayBox(World); }

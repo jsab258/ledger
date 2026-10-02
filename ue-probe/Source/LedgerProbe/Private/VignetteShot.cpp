@@ -7494,6 +7494,7 @@ namespace
 			if (Kind == TEXT("soot")) { return FLinearColor(0.03f, 0.03f, 0.03f); }
 			if (Kind == TEXT("oil")) { return FLinearColor(0.03f, 0.03f, 0.04f); }
 			if (Kind == TEXT("splash")) { return FLinearColor(0.20f, 0.17f, 0.13f); }
+			if (Kind == TEXT("damp")) { return FLinearColor(0.10f, 0.095f, 0.08f); }   // rising damp, 2 October
 			return FLinearColor(0.15f, 0.13f, 0.11f);
 		};
 		TMap<FString, UTexture2D*> Pics;
