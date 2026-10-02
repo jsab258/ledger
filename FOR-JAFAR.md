@@ -58,7 +58,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Clothes, Saturday 3 October
 
-**Needs you (money):** tailored clothes are blocked: the Marvelous jacket failed its blind review on the cut and the lapel. Choose: (A, recommended) I shortlist, spending nothing, three freelance clothing artists and two ready suit patterns, judged against your bar, with prices (estimated $500 to 1,500 for the jacket on Ron and Darren); (B) buy two or three ready MetaHuman suit jackets on Fab (CHF 60 to 150) to test in the game; (C) no tailoring for now: Epic's plain clothes. And cancel Marvelous's trial before 15 October.
+**[Your page](https://claude.ai/artifact/MvGaDuwgQ9ZpxrqsWmuFb3), two taps (money):** tailored clothes are blocked: the Marvelous jacket failed its blind review on the cut and the lapel. Choose: (A, recommended) I shortlist, spending nothing, three freelance clothing artists and two ready suit patterns, judged against your bar, with prices (estimated $500 to 1,500 for the jacket on Ron and Darren); (B) buy two or three ready MetaHuman suit jackets on Fab (CHF 60 to 150) to test in the game; (C) no tailoring for now: Epic's plain clothes. And cancel Marvelous's trial before 15 October.
 
 **The jacket proof:** Marvelous now runs wholly by script: our pattern, draped on Ron's own body, a game mesh, skinned; the builder filmed it in the game. Darren's film comes this morning.
 
