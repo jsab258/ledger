@@ -16,7 +16,8 @@ layers, 768 wide, 12 heads) and runs it with ONNX Runtime on the card
   --check       Step against the library's model at several positions, the
                 same tokens fed to both: the largest difference in the scores.
   --export      writes the graph (about 720 MB, to F:, recorded as a large file).
-  --time        tokens a second with ONNX Runtime on the card, and the scores
+  --time        tokens a second with ONNX Runtime on the card (--cpu: three
+                processor threads; --graph nano-step-int8.onnx: the 8-bit graph), and the scores
                 against the library's at several positions.
   --pipeline    steps a second with nothing read back until the end (the
                 research's test of the round trip each token; --spin, --steps N).
@@ -131,7 +132,10 @@ def timed(argv):
     import onnxruntime as ort
     vs, torch, speaker, dev, conds = load(True)
     t3 = speaker.t3
-    path = (pathlib.Path(argv[argv.index("--out") + 1]) if "--out" in argv else OUT) / "nano-step.onnx"
+    # --graph NAME times another graph in the same folder, such as the 8-bit
+    # nano-step-int8.onnx (2 October: onnxruntime's quantize_dynamic, QInt8).
+    name = argv[argv.index("--graph") + 1] if "--graph" in argv else "nano-step.onnx"
+    path = (pathlib.Path(argv[argv.index("--out") + 1]) if "--out" in argv else OUT) / name
     where = "cpu" if "--cpu" in argv else "dml"
     providers = ["CPUExecutionProvider"] if where == "cpu" else [("DmlExecutionProvider", {"device_id": 0}), "CPUExecutionProvider"]
     so = ort.SessionOptions()

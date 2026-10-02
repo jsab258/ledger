@@ -135,10 +135,30 @@ def stage(copy=True):
             dst = os.path.join(DEST, f)
             os.makedirs(os.path.dirname(dst), exist_ok=True)
             shutil.copy2(os.path.join(REPO, f), dst)
+        # WHICH BUILD THIS IS, for the save's check (the review of 1 October, S5;
+        # CrimeProbe.cpp CrimeSha): a packaged copy is given no -LedgerCommit=.
+        sha = build_commit()
+        stamp = os.path.join(DEST, "build-commit.txt")
+        if os.path.isfile(stamp):
+            os.remove(stamp)   # never an older build's commit left behind (the independent check, 2 October)
+        if sha:
+            with open(os.path.join(DEST, "build-commit.txt"), "w", encoding="utf-8", newline="\n") as fh:
+                fh.write(sha + "\n")
     print("stage_game_data: %s %d files, %.1f MB, missing=%d%s -> ue-probe/Content/LedgerData"
           % ("copied" if copy else "would copy", len(have), size / 1e6, len(missing),
              (" (" + ", ".join(missing[:6]) + ")") if missing else ""))
     return have, missing
+
+
+def build_commit():
+    """The checkout's commit, seven characters as the workflow's runs name it; empty outside git."""
+    import subprocess
+    try:
+        out = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO, capture_output=True, text=True, timeout=30)
+        sha = out.stdout.strip()[:7]   # as the workflow names its runs (GITHUB_SHA's first seven)
+        return sha if out.returncode == 0 and len(sha) == 7 and all(c in "0123456789abcdef" for c in sha) else ""
+    except Exception:
+        return ""
 
 
 def selftest():
@@ -164,6 +184,7 @@ def selftest():
     check("the sky photograph is staged", any(f.startswith("ledger/Assets/Resources/Sky/") and f.endswith(".png") for f in files))
     check("the photographed surfaces are staged", any(f.startswith("ledger/Assets/StreamingAssets/CityPack/textures/") for f in files))
     check("the staging folder is inside the game's content", DEST.replace("\\", "/").endswith("ue-probe/Content/LedgerData"))
+    check("the build's commit is read for the save's check", len(build_commit()) == 7)
     print("stage_game_data selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

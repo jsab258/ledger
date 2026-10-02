@@ -1,6 +1,7 @@
 {
   "what": "The parked cars, for Jafar's presentable checklist (ROADMAP.md, 23 September): 'cars and props are real-looking models rather than shapes, with no recognisable real car model'. Each is a glb in production/assets/vehicles built by tools/art-recipes/car-model.py, imported by tools/ue/import_vehicles.py and placed by the Unreal probe, where the street recipe's two cars stood (terrace-front.py VEHICLE_AT: the east kerb, a hand's width off it, noses toward the quay end as British cars on that kerb park). Street metres as the scene file gives them; y is the road's own height there (1 in 40 from the crown). face_deg is the Unreal yaw the car's nose points along: 180 is down the street toward the camera.",
-  "vehicles": [
+  "vehicles": [],
+  "kept_off_the_street": [
     {
       "glb": "hatch-navy",
       "x_m": 11.0,
@@ -15,5 +16,6 @@
       "y_m": -0.049,
       "face_deg": 180
     }
-  ]
+  ],
+  "off_the_street": "Jafar, 2 October (Friday's page): the parked cars come off the street for the friends' build; no cars is better than box cars. Their places are kept under kept_off_the_street until real 1990 cars are built."
 }

@@ -3052,7 +3052,9 @@ namespace
 		// street around it in a photograph; standing them in front of the
 		// player's own spawn point would be the first thing anyone sees, and
 		// it answers a materials question nobody playing is asking.
-		if (!bInteractive)
+		// -NoControlQuads leaves them out of a film too (2 October: one stood in the night
+		// frame on Jafar's page as a four-colour square in an empty shop's window).
+		if (!bInteractive && !FParse::Param(FCommandLine::Get(), TEXT("NoControlQuads")))
 		{
 			SpawnControlQuads(World, Plane);
 		}

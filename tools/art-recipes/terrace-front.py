@@ -2211,7 +2211,11 @@ def plan_street(root, spec_rel=SPEC_REL):
                          "a-T12-fluorescent-tube/R05's-strips")
 
     _figures(out)
-    _vehicles(out)
+    # THE PARKED CARS ARE OFF THE STREET (Jafar, 2 October, Friday's page: "No cars
+    # is better than box cars"), until real 1990 cars are built; VEHICLE_AT keeps
+    # where they stood.
+    if CARS_ON_STREET:
+        _vehicles(out)
     lamps, lerr = lamp_parts(root)
     if lerr:
         # A STREET WITH NO LAMPS IN IT SAYS SO. The night frame is the one the
@@ -3936,6 +3940,7 @@ VEHICLE_AT = (
 #: with the traffic" above was true of the retired sheet, or of the mirrored
 #: street Blender draws, and it came across into the true street facing the
 #: wrong way. facing -1 is nose toward the camera at the south end.
+CARS_ON_STREET = False   # his ruling, 2 October (DECISIONS)
 VEHICLE_AT = (
     (11.0, 1.96, -1, "car_dark"),
     (15.9, 1.96, -1, "car_bluegrey"),
@@ -7604,13 +7609,19 @@ def selftest():
                   len(crane) == 2 and BACKDROP_CRANE_T <= 0.6,
                   "%d piece(s)/%.2fm" % (len(crane), BACKDROP_CRANE_T))
 
-            veh = [b for b in street if b["id"].startswith("veh0_")]
+            # NO CAR IN THE STREET, by his ruling of 2 October (CARS_ON_STREET); the
+            # car the recipe would build is still checked whole, for when real ones come.
+            check("accept/no-car-stands-in-the-street-by-his-ruling",
+                  CARS_ON_STREET or not any(b["id"].startswith("veh") for b in street))
+            made = []
+            _vehicles(made)
+            veh = [b for b in made if b["id"].startswith("veh0_")]
             # SEVENTEEN: a body, a glasshouse, a roof cap, four wheels, two
             # tail lamps and two plates - eleven, counted rather than guessed
             # at, because the first version of this check guessed twelve -
             # and since 22 September two bumpers and four hubs; since 23
             # September two headlamps, now the car faces the camera.
-            check("accept/the-street-has-a-car-in-it", len(veh) == 19,
+            check("accept/the-car-it-would-build-has-its-pieces", len(veh) == 19,
                   "%d piece(s)" % len(veh))
             body = [b for b in veh if b["id"] == "veh0_body"]
             check("accept/the-car-has-a-body", len(body) == 1)
