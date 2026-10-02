@@ -62,6 +62,13 @@ def main_after_idle(seconds=20.0):
             log(lines, "%s NO-SOUND" % name)
             return
         tools = unreal.AssetToolsHelpers.get_asset_tools()
+        # LEDGER_SPEECH_REPLACE=1 makes this line's performance and animation again
+        # (2 October: Sheila's thinking sounds, first solved full face, solved mouth
+        # only like Ron's and Darren's); otherwise an existing one stops the line.
+        if os.environ.get("LEDGER_SPEECH_REPLACE") == "1":
+            for old in ("PF_" + name + SUFFIX, "AS_" + name + SUFFIX):
+                if unreal.EditorAssetLibrary.does_asset_exist(DEST + "/" + old):
+                    unreal.EditorAssetLibrary.delete_asset(DEST + "/" + old)
         perf = tools.create_asset(asset_name="PF_" + name + SUFFIX, package_path=DEST,
                                   asset_class=unreal.MetaHumanPerformance, factory=unreal.MetaHumanPerformanceFactoryNew())
         perf.set_editor_property("input_type", unreal.DataInputType.AUDIO)

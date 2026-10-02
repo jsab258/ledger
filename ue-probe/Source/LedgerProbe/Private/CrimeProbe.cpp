@@ -477,11 +477,15 @@ namespace
 
 	FString CrimeSha()
 	{
-		FString Sha;
-		if (!FParse::Value(FCommandLine::Get(), TEXT("LedgerCommit="), Sha) || Sha.IsEmpty())
-		{
-			Sha = TEXT("SHA-UNKNOWN");
-		}
+		// The run's own commit, else the one the packaging staged (the review of
+		// 1 October, S5: every package stamped SHA-UNKNOWN), read once.
+		static const FString Sha = [] {
+			FString Arg, Staged;
+			FParse::Value(FCommandLine::Get(), TEXT("LedgerCommit="), Arg);
+			FFileHelper::LoadFileToString(Staged, *FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData"), TEXT("build-commit.txt")));
+			const std::string Stamp = LedgerCrime::BuildStamp(std::string(TCHAR_TO_UTF8(*Arg)), std::string(TCHAR_TO_UTF8(*Staged)));
+			return FString(UTF8_TO_TCHAR(Stamp.c_str()));
+		}();
 		return Sha.Replace(TEXT(" "), TEXT("~"));
 	}
 
@@ -2432,6 +2436,12 @@ namespace
 	// WHOM HE HAS MET, AND ON WHICH DAYS (the review's A4): a conversation, the
 	// walk round, Ada's tea, Ron's envelope. Who can recognise him grows from it.
 	LedgerCrime::MeetingBook GMet;
+	// WHERE THE THREE STOOD WHEN SAVED, and who was held there (the review of 1
+	// October, S1; LedgerCrime::StandingBook): a Continue puts them back, and
+	// whoever was held stays held until he walks out of earshot, as straight on.
+	LedgerCrime::StandingBook GStandLoaded;
+	std::set<std::string> GHeldAfterLoad;
+	std::map<std::string, long long> GLastLineM;   // the game minute of his last line with each (L7)
 	// How well somebody he talks to knows him now: the street has heard of the
 	// new owner (kLadFamiliarity); in free play, his meetings with them raise it.
 	double TalkFamiliarity(const std::string& Card)
@@ -2581,7 +2591,10 @@ namespace
 					if (G && G->Memory)
 					{
 						G->Memory->KeepFirst((int)Memories);
-						G->Memory->Append(MemoryEvent(GNow, "observation", 0.6, "I heard glass go over at Rita's. I never saw who did it."));
+						// Seen going in or only heard, and Rita's own in her words (the review of 1 October, B-a, B-b).
+						const bool bSawGlass = LedgerCrime::SawTheGlassGo(R.O);
+						const bool bKeeper = bGCast && R.WitnessId == GCast.KeeperOf("ritas");   // the deed's own area, as the damage tick asks it
+						G->Memory->Append(MemoryEvent(GNow, "observation", 0.6, LedgerCrime::GlassOnlyMemory(bSawGlass, bKeeper)));
 					}
 					GHeardOnly.insert(R.WitnessId);
 				}
@@ -2957,8 +2970,7 @@ namespace
 		int NextId = 1, PendingId = 0;
 		// A REPLY GIVEN UP ON AT THE PATIENCE LIMIT (the review's B4c): its facts
 		// (his no to Ron, owning up, keeping quiet) still count when it comes.
-		int LateId = 0;
-		std::string LateCard;
+		LedgerCrime::LateReplies Late;   // every reply still owed after its 30 seconds (the review of 1 October, L5)
 		FString PendingName;
 		std::string PendingCard;
 		AActor* PendingBody = nullptr;
@@ -3006,6 +3018,19 @@ namespace
 		return Card == "sam" ? GN2Body : Card == "lena" ? GW1Body : Card == "rocco" ? GR3Body : nullptr;
 	}
 	FLiveHelper GLive;
+	// HELD BY A TALK (L7): within earshot, talked with (or held so by a Continue),
+	// and the last line no more than a quarter of an hour old.
+	bool HeldByTalk(const std::string& C)
+	{
+		bool bNear = GLive.Talked.count(C) && !GLive.Left.count(C);
+		if (!bNear && GHeldAfterLoad.count(C) && GPawn != nullptr)
+		{
+			AActor* B = CardBody(C);
+			bNear = B != nullptr && FVector::Dist2D(GPawn->GetActorLocation(), B->GetActorLocation()) / 100.0 <= LedgerCrime::kEarshotM;
+		}
+		const auto It = GLastLineM.find(C);
+		return LedgerCrime::HeldAfterTalk(bNear, It == GLastLineM.end() ? -1 : It->second, GNow.TotalMinutes());
+	}
 
 	// THE NOTICE, plainly, before the first conversation and on F1: that the
 	// street's people answer with an AI, and where typed words go (its text is
@@ -3949,11 +3974,12 @@ namespace
 			}
 		}
 		const bool bOurFace = OurFace != nullptr;
-		// HIS BLIND PICKS, 1 October (item 4): the loudness mouth over the face made
-		// from the sound, in both pairs (Ron's "Well now.", Darren's "Hmm. Well now.";
-		// production/casting/said-key-2026-10-01.json). The made faces stay on file and
-		// play only with -MadeFace, or -FaceAB, which sets the two side by side.
-		static const bool bMade = FParse::Param(FCommandLine::Get(), TEXT("MadeFace")) || FParse::Param(FCommandLine::Get(), TEXT("FaceAB"));
+		// PREPARED LINES GET EPIC'S AUDIO-DRIVEN MOUTHS (his ruling of 1 October,
+		// afternoon, DECISIONS; V8), reversing that morning's blind picks for the
+		// loudness mouth (production/casting/said-key-2026-10-01.json): a thinking
+		// sound plays the face MetaHuman Animator made from it (tools/ue/speech_faces.py),
+		// and the loudness mouth only where none is made, or with -LoudFace.
+		static const bool bMade = !FParse::Param(FCommandLine::Get(), TEXT("LoudFace"));
 		if (bOurFace && Anim != nullptr && bMade && !GAckForceLoud)
 		{
 			OurFace->SayMadeLine(Anim);
@@ -3998,8 +4024,8 @@ namespace
 	// sound, then with the loudness mouth, filmed with -MouthFilm, so the two
 	// ways sit side by side in the same light and place for Jafar's blind pick
 	// (tools/said_pairs.py draws which is A). From 10:15 game time, when both
-	// are out on the street (Ron at the rank, Darren on Rita's step); the game
-	// closes after the eighth.
+	// are out on the street (Ron at the rank, Darren on Rita's step); Sheila's two
+	// after theirs (2 October, V8: her made faces, new); the game closes after the twelfth.
 	struct FFaceAB { int32 Step = -1; double NextAt = 0.0; bool bAimed = false; };
 	FFaceAB GFaceAB;
 
@@ -4015,8 +4041,9 @@ namespace
 		}
 		if (Now < GFaceAB.NextAt || GAck.Sound.IsValid()) { return; }
 		struct FOne { AActor* Body; const char* Card; int32 File; };
-		const FOne Seq[4] = { { GR3Body, "rocco", 0 }, { GR3Body, "rocco", 1 }, { GN2Body, "sam", 0 }, { GN2Body, "sam", 1 } };
-		if (GFaceAB.Step >= 8)
+		const FOne Seq[6] = { { GR3Body, "rocco", 0 }, { GR3Body, "rocco", 1 }, { GN2Body, "sam", 0 }, { GN2Body, "sam", 1 },
+		                      { GW1Body, "lena", 0 }, { GW1Body, "lena", 1 } };
+		if (GFaceAB.Step >= 12)
 		{
 			GMouthFilmHold = nullptr;
 			UE_LOG(LogTemp, Display, TEXT("LedgerFaceAB: done"));
@@ -4600,8 +4627,10 @@ namespace
 	{
 		bool bHeardOf = false;
 		if (G) { for (const RumorPtr& R : G->Rumors) { if (R && R->Content.Subject == "player") { bHeardOf = true; break; } } }
-		// Sheila has met him once her walk-round is over (town list 6s, 6cg).
-		const bool bMet = GLive.Talked.count(Card) > 0 || (Card == "lena" && bSheilaMet);
+		// From the meetings the save keeps (the review of 1 October, S4): a
+		// conversation, the envelope, the tea; Sheila once her walk-round is over
+		// (town list 6s, 6cg). A conversation of this session is a meeting too.
+		const bool bMet = LedgerCrime::MetHimForTalk(GMet, Card, bSheilaMet) || GLive.Talked.count(Card) > 0;
 		// "knowsName" once they hold the street's story of his name (town list 6ch).
 		return std::string(",\"acquaintance\":{\"met\":") + (bMet ? "true" : "false")
 			+ ",\"heardOf\":" + (bHeardOf ? "true" : "false")
@@ -4612,6 +4641,19 @@ namespace
 	// in free play: Ron knows the envelope is his to hear a no to while the
 	// night's ask stands; Sheila puts her week's-end question the first time
 	// he talks to her at Mickey's on the Sunday, and it stands after.
+	// HOW FAR SHEILA STANDS FROM WHERE HER OFFICE PUTS HER (L2): the pavement by
+	// its window from her day's place, or her desk once Mickey's inside is built.
+	double SheilaFromHerOfficeSpot()
+	{
+		AActor* Body = CardBody("lena");
+		double X = 0.0, Z = 0.0;
+		if (Body == nullptr || !bGCast || !GCast.PlaceXZ("mickeys_office", X, Z)) { return 1e9; }
+		LedgerCrime::P3 Spot = LedgerCrime::BodySpotFor(X, Z);
+		for (const FOfficeMark& K : GOffice.Marks) { if (GOffice.bOn && K.Place == "mickeys_office") { Spot.X = K.X; Spot.Z = K.Z; } }
+		const LedgerCrime::P3 At = ToStreet(Body->GetActorLocation());
+		return std::hypot(At.X - Spot.X, At.Z - Spot.Z);
+	}
+
 	std::string WeekTalkJson(const std::string& Card)
 	{
 		if (bLiveScript || !GMill) { return std::string(); }
@@ -4622,7 +4664,9 @@ namespace
 			if (GWeek.Week.Stands(GNow)) { J += ",\"week\":{\"stands\":true}"; }
 			// Asked on her Sunday while she waits, or any later day the next time
 			// he talks with her at the office (the review's B1, WeeksEnd.AsksNow).
-			else if (GWeek.Week.AsksNow(GNow, NearPlace("mickeys_office", 6.0)) && GWeek.Week.Ask(GNow, bSheilaTrusts, true))
+			// Where she is, not how near he is to the office's point (the review of 1 October, L2).
+			else if (GWeek.Week.AsksNow(GNow, LedgerCrime::SheilaAtTheOffice(SheilaFromHerOfficeSpot()))
+			         && GWeek.Week.Ask(GNow, bSheilaTrusts, true))
 			{
 				J += std::string(",\"week\":{\"ask\":true,\"realBook\":") + (bSheilaTrusts ? "true" : "false")
 					+ ",\"dayOff\":" + (CastDay::Weekday(GNow.Day) == 6 ? "true" : "false")
@@ -4680,6 +4724,7 @@ namespace
 			: std::string();
 		GLive.Talked.insert(Card);
 		GLive.Left.erase(Card);
+		GLastLineM[Card] = GNow.TotalMinutes();
 		GMet.Met(Card, GNow.Day);
 		std::string Present;
 		if (AActor* Me = CardBody(Card))
@@ -5034,15 +5079,19 @@ namespace
 			}
 			// A LATE REPLY (B4c): nothing said or shown, since the moment has
 			// gone, but what it settles (his no, owning up, keeping quiet) counts.
-			if (GLive.LateId != 0 && L.find("\"id\":" + std::to_string(GLive.LateId) + ",") != std::string::npos)
+			// Every reply still owed is kept by its number (the review of 1 October, L5),
+			// and what one settles is saved at once, as a reply on time is (S3): the
+			// talk program's next save would hold it while the game's did not.
+			if (const int LateId = GLive.Late.Answers(L))
 			{
-				if (L.find("\"went\"") != std::string::npos || L.find("\"walkedOff\":true") != std::string::npos)
+				if (LedgerCrime::LateReplies::Settles(L))
 				{
-					TakeClaimsFromReply(L, GLive.LateCard);
-					LedgerSession::Write(TEXT("reply"), TEXT("\"who\":") + LedgerSession::Str(Un(GLive.LateCard)) + TEXT(",\"how\":\"late\""));
-					UE_LOG(LogTemp, Display, TEXT("LedgerTalk: a late reply from %s, its facts kept"), *Un(GLive.LateCard));
+					const std::string LateCard = GLive.Late.Done(LateId);
+					TakeClaimsFromReply(L, LateCard);
+					LedgerSession::Write(TEXT("reply"), TEXT("\"who\":") + LedgerSession::Str(Un(LateCard)) + TEXT(",\"how\":\"late\""));
+					UE_LOG(LogTemp, Display, TEXT("LedgerTalk: a late reply from %s, its facts kept"), *Un(LateCard));
+					if (GPhase == ECrimePhase::LiveRoam) { SaveEncounterToDisk(); }
 				}
-				if (L.find("\"went\"") != std::string::npos || L.find("\"walkedOff\":true") != std::string::npos) { GLive.LateId = 0; }
 				continue;
 			}
 			if (GLive.PendingId != 0 && L.find("\"id\":" + std::to_string(GLive.PendingId) + ",") != std::string::npos)
@@ -5168,6 +5217,7 @@ namespace
 				GLive.PendingId = 0;
 				GLive.bFirstSaid = false;
 				ClockCharge(kTalkMinutes);
+				GLastLineM[GLive.PendingCard] = GNow.TotalMinutes();   // the hold runs from her reply (L7)
 				if (GPhase == ECrimePhase::LiveRoam) { SaveEncounterToDisk(); }
 			}
 		}
@@ -5193,6 +5243,13 @@ namespace
 					GLive.Left.insert(Card);
 				}
 			}
+			// and whoever a Continue left held where the save found them (S1)
+			for (auto It = GHeldAfterLoad.begin(); It != GHeldAfterLoad.end(); )
+			{
+				AActor* B = CardBody(*It);
+				if (B == nullptr || FVector::Dist2D(GPawn->GetActorLocation(), B->GetActorLocation()) / 100.0 > LedgerCrime::kEarshotM) { It = GHeldAfterLoad.erase(It); }
+				else { ++It; }
+			}
 		}
 		// THE SAVE'S TALK LOADED, or a new game's talk cleared, once ready.
 		if (GLive.bReady && (GLive.bTalkLoad || GLive.bTalkReset))
@@ -5211,8 +5268,7 @@ namespace
 		if (GLive.PendingId != 0 && NowS() - GLive.AskedAt > 30.0)
 		{
 			if (!GLive.bFirstSaid) { Say(GLive.PendingName + TEXT(" says nothing."), 6.0f, FColor::White); }
-			GLive.LateId = GLive.PendingId;
-			GLive.LateCard = GLive.PendingCard;
+			GLive.Late.Add(GLive.PendingId, GLive.PendingCard);
 			GLive.PendingId = 0;
 			GLive.bFirstSaid = false;
 		}
@@ -6483,7 +6539,7 @@ namespace
 			AActor* Body = CardBody(C);
 			if (Body == nullptr) { GPlacedFor[C] = Key; continue; }
 			if ((bSayOpen && GTalkTarget.Card == C) || (GLive.PendingId != 0 && GLive.PendingBody == Body)
-			    || (GLive.Talked.count(C) && !GLive.Left.count(C))) { continue; }
+			    || HeldByTalk(C)) { continue; }
 			const auto It = Here.find(C);
 			const bool bWaitedEnough = GHeldBackSince.count(C) && NowS() - GHeldBackSince[C] >= kPlaceWaitSeconds;
 			if (It == Here.end())
@@ -7505,6 +7561,26 @@ namespace
 			+ [] { std::string S; for (const auto& W : GWeek.Witnesses) { S += "\nwitness_" + W.first + "=" + std::to_string(W.second); } return S; }()
 			+ (bSheilaTrusts ? "\nsheilaTrusts=1" : "")
 			+ GMet.SaveLines()
+			// Where the three stand and who is held there (the review of 1 October, S1).
+			+ [] {
+				if (bLiveScript) { return std::string(); }
+				LedgerCrime::StandingBook Book;
+				for (const char* C : { "lena", "sam", "rocco" })
+				{
+					AActor* Body = CardBody(C);
+					if (Body == nullptr) { continue; }
+					const LedgerCrime::P3 At = ToStreet(Body->GetActorLocation());
+					LedgerCrime::Standing St;
+					St.X = At.X; St.Z = At.Z; St.FeetY = At.Y - LedgerCrime::kBodyHeightM * 0.5;
+					St.YawDeg = Body->GetActorRotation().Yaw;
+					St.bAway = GAway.count(C) > 0;
+					St.bHeld = HeldByTalk(C) || (bSayOpen && GTalkTarget.Card == C) || (GLive.PendingId != 0 && GLive.PendingBody == Body);
+					St.PlacedFor = GPlacedFor.count(C) ? GPlacedFor[C] : -1;
+					St.LastLineM = GLastLineM.count(C) ? GLastLineM[C] : -1;
+					Book.At[C] = St;
+				}
+				return Book.SaveLines();
+			}()
 			// When DS Ellis first came and when he was first taken (the review's C4),
 			// so the week read after a load is the week played.
 			+ "\nellisFirst=" + GWeek.EllisFirst + "\ntakenFirst=" + GWeek.TakenFirst
@@ -7603,6 +7679,9 @@ namespace
 		bLoadPlace = false;
 		bSheilaTrusts = false;
 		GMet = LedgerCrime::MeetingBook();
+		GStandLoaded = LedgerCrime::StandingBook();
+		GHeldAfterLoad.clear();
+		GLastLineM.clear();
 		GPlacedFor.clear();
 		GHeldBackSince.clear();
 		GHeardOnly.clear();
@@ -7682,6 +7761,7 @@ namespace
 				else if (Kv == TEXT("deedHour")) { GDeedHour = FCString::Atoi(*V); GWeek.DeedAt = GameTime(GDeedDay, GDeedHour, 0); }
 				else if (Kv.StartsWith(TEXT("saw_"))) { GSawHimAt[Utf8(Kv.Mid(4))] = Utf8(V); }
 				else if (GMet.TakeLine(Utf8(Kv), Utf8(V))) { }
+				else if (GStandLoaded.TakeLine(Utf8(Kv), Utf8(V))) { }
 				else if (Kv == TEXT("ellisFirst") && !V.IsEmpty()) { GWeek.EllisFirst = Utf8(V); }
 				else if (Kv == TEXT("takenFirst") && !V.IsEmpty()) { GWeek.TakenFirst = Utf8(V); }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
@@ -8203,6 +8283,27 @@ namespace
 				GLightNight = -1;
 				GPhase = bDeedDone ? ECrimePhase::LiveRoam : ECrimePhase::LiveWaitDeed;
 				RespawnMate(World);   // Ron in the street, as in a new game
+				// THE THREE WHERE THE SAVE FOUND THEM (S1), held where they were held;
+				// an older save without their spots places them by their day at once.
+				if (!GStandLoaded.At.empty())
+				{
+					for (const auto& P : GStandLoaded.At)
+					{
+						AActor* Body = CardBody(P.first);
+						if (Body == nullptr) { continue; }
+						PlaceBodyAt(Body, P.second.X, P.second.Z, P.second.FeetY);
+						Body->SetActorRotation(FRotator(0.0f, (float)P.second.YawDeg, 0.0f));
+						SyncVisual(Body);
+						ShowPerson(Body, !P.second.bAway);
+						if (P.second.bAway) { GAway.insert(P.first); } else { GAway.erase(P.first); }
+						if (P.second.PlacedFor >= 0) { GPlacedFor[P.first] = P.second.PlacedFor; }
+						if (GStandLoaded.HeldAfterLoad(P.first)) { GHeldAfterLoad.insert(P.first); }
+						if (P.second.LastLineM >= 0) { GLastLineM[P.first] = P.second.LastLineM; }
+						RouteCheck(TEXT("standing"), true, FString::Printf(TEXT("who=%s at=%.2f,%.2f held=%d away=%d"),
+							*Un(P.first), P.second.X, P.second.Z, GHeldAfterLoad.count(P.first) ? 1 : 0, P.second.bAway ? 1 : 0));
+					}
+					bPlaceNow = false;
+				}
 				GWindowLooksBroken = -1;
 				WindowLook();         // Rita's window as the record has it at this hour
 				if (bLoadPlace)
@@ -8245,6 +8346,9 @@ namespace
 				GTeaMinuteDone = -1;
 				GWaitShown.clear();
 				GMet = LedgerCrime::MeetingBook();
+				GStandLoaded = LedgerCrime::StandingBook();
+				GHeldAfterLoad.clear();
+				GLastLineM.clear();
 				GPlacedFor.clear();
 				GHeldBackSince.clear();
 				GHeardOnly.clear();

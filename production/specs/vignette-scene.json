@@ -480,20 +480,6 @@
         "note": "DRESSING. The glazed case, further up the same blank wall, in the gap between west_north's side door at 25.5 and its first window at 27.3. A case gets a timetable and a wall gets a gig bill, which is why the two carriers carry different G6 images."
       },
       {
-        "bom": "E14_dock_clutter", "asset": "skip",
-        "dims_m": [2.0000, 0.9999, 3.3083], "surface": "metal",
-        "side": "west", "x_m": 22.5, "place": "ground", "z_from_kerb_face_m": -1.15,
-        "yaw_deg": 90,
-        "note": "DRESSING, and the cheapest density on the list. Parked in the carriageway against the west kerb at the yard entrance, long axis along the street (yaw 90 turns the measured 3.31 m length up the road), 0.15 m off the kerb face. A builder's skip on the road outside a yard being cleared is a British street in one object, and it is the widest thing standing on the camber: 2.00 m across at 1 in 40 lifts its upslope corner 25 mm, which is arithmetic and not a placement fault."
-      },
-      {
-        "bom": "E14_dock_clutter", "asset": "pallet",
-        "dims_m": [1.2000, 0.1800, 1.2000], "surface": "wood",
-        "side": "west", "x_m": 21.8, "place": "ground", "z_from_kerb_face_m": 1.2,
-        "yaw_deg": 0,
-        "note": "On the pavement at the yard mouth, in front of the barrier."
-      },
-      {
         "bom": "E14_dock_clutter", "asset": "wooden_crate_01",
         "dims_m": [0.8804, 1.0447, 0.9244], "surface": "wood",
         "side": "west", "x_m": 22.4, "place": "ground", "z_from_kerb_face_m": 1.3,
@@ -652,6 +638,8 @@
       {"bom": "E6_public_bins", "asset": "swing_bin", "dims_m": [0.33, 0.7123, 0.32], "surface": "metal", "side": "west", "x_m": 33.0, "place": "ground", "z_from_kerb_face_m": 0.65, "yaw_deg": 0, "note": "DRESSING, 24 September: the west shops' own bin, one per shop group as the east parade's two are; the west pavement had none since the row became shops (Jafar 22 September)."}
     ],
     "not_placed": [
+      {"asset": "skip", "bom": "E14_dock_clutter", "why": "2 October, the builder under Jafar's ruling of 1 October (DECISIONS: the cars, phone box, skip and pallets real 1990 things or removed; the cars removed by his answer that evening): it read as a granite box in the carriageway, so it is off the street until made real (it stood at x 22.5 in the west carriageway)."},
+      {"asset": "pallet", "bom": "E14_dock_clutter", "why": "2 October, as the skip: it read as a slab at the yard mouth, off the street until made real (it stood at x 21.8 on the west pavement)."},
       { "asset": "awning_01", "bom": "E18_shop_awnings", "why": "The bill of materials names awning_02 explicitly and gives the measurement: 20 triangles and one LOD rung against awning_02's 644 and three." },
       { "asset": "weathertop_chimney", "bom": "D3_chimney_pots", "why": "MEASURED: 0.95 m across a stack whose trade depth is 0.45 m. A quarter of a metre of oversail each side is not a pot on a stack." },
       { "asset": "drain_cover_01", "bom": "A8_manhole", "why": "The bill of materials' own measured finding: 0.10 m across is an inspection cover, not a manhole, and it says to use the ManholeCover011 DECAL on the road plane and not to rescale the mesh. The decal is in the decals block; the mesh has no role this street can give it without inventing one." },

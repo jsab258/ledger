@@ -1768,6 +1768,153 @@ namespace LedgerCrime
 		}
 	};
 
+	/// REPLIES PAST THEIR MOMENT (the review of 1 October, L5): a reply that
+	/// comes after its 30 seconds is not said, but what it settles counts. Every
+	/// one still owed is kept by its request's number, so a second timeout never
+	/// drops the first's effects (there was one slot).
+	struct LateReplies
+	{
+		std::map<int, std::string> Cards;   // request number -> whose reply
+		void Add(int Id, const std::string& Card) { if (Id != 0) Cards[Id] = Card; }
+		/// The late request a line from the talk program answers, or 0.
+		int Answers(const std::string& Line) const
+		{
+			for (const auto& P : Cards) { if (Line.find("\"id\":" + std::to_string(P.first) + ",") != std::string::npos) return P.first; }
+			return 0;
+		}
+		/// Whether that line is the reply's last (it went, or he walked off).
+		static bool Settles(const std::string& Line)
+		{
+			return Line.find("\"went\"") != std::string::npos || Line.find("\"walkedOff\":true") != std::string::npos;
+		}
+		/// Whose it was; the request is no longer owed.
+		std::string Done(int Id)
+		{
+			const std::map<int, std::string>::iterator I = Cards.find(Id);
+			if (I == Cards.end()) return std::string();
+			const std::string Card = I->second;
+			Cards.erase(I);
+			return Card;
+		}
+	};
+
+	/// WHICH BUILD A SAVE BELONGS TO (the review of 1 October, S5): the commit
+	/// the run was given (-LedgerCommit=), else the one the packaging staged
+	/// beside the game's data (tools/ue/stage_game_data.py, build-commit.txt),
+	/// else SHA-UNKNOWN. Every package stamped SHA-UNKNOWN, so a save from any
+	/// older build was taken as this one's.
+	inline std::string BuildStamp(const std::string& FromArg, const std::string& Staged)
+	{
+		if (!FromArg.empty()) return FromArg;
+		std::string T = Staged;
+		while (!T.empty() && (T.back() == '\n' || T.back() == '\r' || T.back() == ' ')) T.pop_back();
+		if (T.size() < 7 || T.size() > 40 || T.find_first_not_of("0123456789abcdef") != std::string::npos) return "SHA-UNKNOWN";
+		return T;
+	}
+
+	/// WHERE SHEILA PUTS HER QUESTION (the review of 1 October, L2): "over the
+	/// book" means at Mickey's office, so it is where SHE is that counts (her
+	/// day's place this hour, or her Sunday appointment there), never how near
+	/// he stands to the office's point: on Monday at noon she is at the fish
+	/// front, a few metres from it. Her BODY, not her timetable (the independent
+	/// check of 2 October): at 13:05 her move may still wait for his eyes, or a
+	/// talk may hold her at the fish front.
+	constexpr double kAtHerSpotM = 2.0;   // placed there, or shifted 1.1 m off another's feet
+	inline bool SheilaAtTheOffice(double MetresFromHerOfficeSpot)
+	{
+		return MetresFromHerOfficeSpot <= kAtHerSpotM;
+	}
+
+	/// HOW LONG A TALK HOLDS SOMEBODY WHERE THEY STAND (the review of 1 October,
+	/// L7): while he is within earshot and the last line between them, his or her
+	/// reply, is no more than half an hour old (the clock runs two game minutes a
+	/// real second, so about fifteen seconds after her reply plays). Waiting beside Sheila past six no longer
+	/// keeps her on the street at night; walking off still lets her go at once.
+	constexpr long long kHoldAfterTalkMinutes = 30;   // from his line or her reply, whichever is later
+	inline bool HeldAfterTalk(bool bWithinEarshot, long long LastLineM, long long NowM)
+	{
+		return bWithinEarshot && LastLineM >= 0 && NowM - LastLineM <= kHoldAfterTalkMinutes;
+	}
+
+	/// WHO HAS MET HIM, AS THE TALK IS TOLD IT (the review of 1 October, S4): from
+	/// the meetings the save keeps (a conversation, the walk-round, the envelope,
+	/// the tea), never from who he has talked with since the game was started,
+	/// which a Continue forgets and which never counted the envelope or the tea.
+	inline bool MetHimForTalk(const MeetingBook& Book, const std::string& Id, bool bSheilaWalkRoundDone)
+	{
+		return Book.DaysMet(Id) > 0 || (Id == "lena" && bSheilaWalkRoundDone);
+	}
+
+	/// WHERE THE THREE STAND, AND WHO IS HELD THERE (the review of 1 October,
+	/// S1): a person he is talking with, or has talked with and not yet walked
+	/// out of earshot of, stays where they are when their day moves on, and the
+	/// deed is measured from wherever they stand. The save keeps each one's spot
+	/// as "stand_<id>=x,z,yaw,feet,away,held,placedFor,lastLine", so a Continue puts them
+	/// back where they were, still held, instead of placing them by their day at
+	/// once (the review's case: Sheila on Rita's step at 18:02, there straight on,
+	/// gone after a Continue).
+	struct Standing
+	{
+		double X = 0.0, Z = 0.0, YawDeg = 0.0, FeetY = 0.0;
+		bool bAway = false, bHeld = false;
+		int PlacedFor = -1;   // the day * 24 + hour their routine last placed them for
+		long long LastLineM = -1;   // the game minute of the last line between them, for the hold (L7)
+	};
+	struct StandingBook
+	{
+		std::map<std::string, Standing> At;
+		std::string SaveLines() const
+		{
+			std::string S;
+			for (const auto& P : At)
+			{
+				char B[192];
+				std::snprintf(B, sizeof(B), "\nstand_%s=%.2f,%.2f,%.1f,%.3f,%d,%d,%d,%lld", P.first.c_str(), P.second.X, P.second.Z,
+				              P.second.YawDeg, P.second.FeetY, P.second.bAway ? 1 : 0, P.second.bHeld ? 1 : 0, P.second.PlacedFor, P.second.LastLineM);
+				S += B;
+			}
+			return S;
+		}
+		/// One "stand_<id>" line of a save; false (and nobody placed) for any
+		/// other key or a damaged value.
+		bool TakeLine(const std::string& Key, const std::string& Value)
+		{
+			if (Key.compare(0, 6, "stand_") != 0 || Key.size() <= 6) return false;
+			std::vector<std::string> Parts;
+			size_t From = 0;
+			while (From <= Value.size())
+			{
+				size_t End = Value.find(',', From);
+				if (End == std::string::npos) End = Value.size();
+				Parts.push_back(Value.substr(From, End - From));
+				From = End + 1;
+			}
+			if (Parts.size() != 8) return false;
+			double N[4] = { 0.0, 0.0, 0.0, 0.0 };
+			for (int I = 0; I < 4; ++I)
+			{
+				char* Rest = nullptr;
+				N[I] = std::strtod(Parts[I].c_str(), &Rest);
+				if (Parts[I].empty() || Rest == nullptr || *Rest != '\0' || !std::isfinite(N[I])) return false;
+			}
+			if ((Parts[4] != "0" && Parts[4] != "1") || (Parts[5] != "0" && Parts[5] != "1")) return false;
+			if (Parts[6].empty() || Parts[6].find_first_not_of("-0123456789") != std::string::npos) return false;
+			if (Parts[7].empty() || Parts[7].find_first_not_of("-0123456789") != std::string::npos) return false;
+			Standing St;
+			St.X = N[0]; St.Z = N[1]; St.YawDeg = N[2]; St.FeetY = N[3];
+			St.bAway = Parts[4] == "1"; St.bHeld = Parts[5] == "1";
+			St.PlacedFor = std::atoi(Parts[6].c_str());
+			St.LastLineM = std::atoll(Parts[7].c_str());
+			At[Key.substr(6)] = St;
+			return true;
+		}
+		bool HeldAfterLoad(const std::string& Id) const
+		{
+			const std::map<std::string, Standing>::const_iterator I = At.find(Id);
+			return I != At.end() && I->second.bHeld && !I->second.bAway;
+		}
+	};
+
 	/// WHO CAN WITNESS, FROM WHERE, IN WHAT LIGHT (the review's A2, 30
 	/// September). The town lives by its routines: the people who can see a
 	/// deed are those whose day puts them on Quay Street at that hour, seen
@@ -1873,6 +2020,22 @@ namespace LedgerCrime
 	{
 		if (Rung <= 0) return WitnessFiles::NoiseOnly;
 		return bBankHasWords ? WitnessFiles::StoryAboutHim : WitnessFiles::Nothing;
+	}
+	/// WHETHER THE GLASS WAS SEEN GOING IN (the independent check of 2 October on
+	/// B-b): the window itself in what they saw, never merely a clear line to it;
+	/// somebody with their back to it, or side on, only heard it.
+	inline bool SawTheGlassGo(const LedgerCore::Observation& O)
+	{
+		return O.Has(LedgerCore::Slot::Victim);
+	}
+
+	/// WHAT SOMEBODY WHO NEVER SAW HIM KEEPS OF RITA'S GLASS (the review of 1
+	/// October, B-a and B-b): seen going in, or only heard; and Rita, whose
+	/// window it is, in her own words, never "over at Rita's". Never a word of him.
+	inline std::string GlassOnlyMemory(bool bSawTheGlassGo, bool bKeeper)
+	{
+		if (bKeeper) return bSawTheGlassGo ? "I saw my window go in. I never saw who did it." : "I heard my window go. I never saw who did it.";
+		return bSawTheGlassGo ? "I saw Rita's window go in. I never saw who did it." : "I heard glass go over at Rita's. I never saw who did it.";
 	}
 	/// Only somebody who saw it shouts at him.
 	inline bool WitnessShouts(int Rung) { return Rung >= 1; }
@@ -2773,6 +2936,128 @@ namespace LedgerCrime
 			       "a4-the-meetings-survive-a-save-and-a-continue");
 			Expect(R, !Back.TakeLine("met_ada", "x,-1") && Back.DaysMet("ada") == 0 && !Back.TakeLine("clock", "1"),
 			       "a4-a-damaged-meeting-line-counts-nothing");
+		}
+		// THE REVIEW OF 1 OCTOBER, S5: a packaged copy has no -LedgerCommit= but
+		// its staged commit, so a save from an older package is refused.
+		Expect(R, BuildStamp("", "1e4a3d8\n") == "1e4a3d8" && BuildStamp("", "9f0e2b1") != BuildStamp("", "1e4a3d8"),
+		       "s5-a-package-stamps-its-own-commit-so-an-older-save-is-another-builds");
+		Expect(R, BuildStamp("local-stage1q", "1e4a3d8") == "local-stage1q" && BuildStamp("", "") == "SHA-UNKNOWN"
+		          && BuildStamp("", "not a commit!") == "SHA-UNKNOWN",
+		       "s5-the-runs-own-commit-first-and-nothing-readable-is-unknown");
+		// THE REVIEW OF 1 OCTOBER, L2: Monday noon, Sheila at the fish front and
+		// he beside her, a few metres from the office's point: no question there.
+		Expect(R, !SheilaAtTheOffice(4.3) && SheilaAtTheOffice(0.0) && SheilaAtTheOffice(1.1),
+		       "l2-her-question-is-put-where-she-is-at-the-office");
+		// THE REVIEW OF 1 OCTOBER, L7: he talks with Sheila at 17:55 and stays
+		// beside her; at 18:02 she is still held there, but waiting on to 19:00
+		// she goes about her evening; walking off lets her go at once.
+		{
+			const long long Last = 17 * 60 + 55;
+			Expect(R, HeldAfterTalk(true, Last, 18 * 60 + 2), "l7-held-just-after-the-talk-while-he-is-near");
+			// Her reply moves the clock five minutes and he reads it (the clock runs two
+			// game minutes a real second): still held twenty minutes on.
+			Expect(R, HeldAfterTalk(true, Last, Last + 20), "l7-still-held-while-he-reads-her-reply");
+			Expect(R, !HeldAfterTalk(true, Last, 19 * 60) && !HeldAfterTalk(true, Last, Last + kHoldAfterTalkMinutes + 1),
+			       "l7-waiting-beside-her-past-six-lets-her-go-about-her-evening");
+			Expect(R, !HeldAfterTalk(false, Last, 18 * 60) && !HeldAfterTalk(true, -1, 18 * 60),
+			       "l7-walking-off-or-no-talk-holds-nobody");
+		}
+		// THE REVIEW OF 1 OCTOBER, B-a and B-b: Hal, 23 m off behind his window,
+		// sees the act and the window go but not who did it; Rita, whose window
+		// it is, only hears it; somebody round the corner only hears it.
+		{
+			const std::string Hal = GlassOnlyMemory(true, false), Rita = GlassOnlyMemory(false, true), Round = GlassOnlyMemory(false, false);
+			Expect(R, Hal.find("saw") != std::string::npos && Hal.find("heard") == std::string::npos && Hal.find("never saw who") != std::string::npos,
+			       "b-b-somebody-who-saw-the-glass-go-keeps-that-they-saw-it");
+			Expect(R, Rita.find("my window") != std::string::npos && Rita.find("Rita's") == std::string::npos
+			          && GlassOnlyMemory(true, true).find("my window") != std::string::npos,
+			       "b-a-rita-keeps-her-own-window-in-her-own-words");
+			Expect(R, Round.find("heard") != std::string::npos && Round.find("Rita's") != std::string::npos,
+			       "b-a-somebody-who-only-heard-it-keeps-the-noise");
+			LedgerCore::Observation SawIt, BackTurned;
+			SawIt.Slots = LedgerCore::Slot::Act | LedgerCore::Slot::Victim;
+			SawIt.Certainty = 0.8;
+			BackTurned.Slots = LedgerCore::Slot::None;
+			BackTurned.Certainty = 0.2;   // filed, a clear line to the window, but facing away
+			Expect(R, SawTheGlassGo(SawIt) && !SawTheGlassGo(BackTurned),
+			       "b-b-a-clear-line-is-not-seeing-it-the-window-must-be-in-what-they-saw");
+		}
+		// THE REVIEW OF 1 OCTOBER, L5: two replies time out in a row, Darren's
+		// (request 7, where he agrees to keep quiet) and then Sheila's (9); both
+		// come late, and both count.
+		{
+			LateReplies Late;
+			Late.Add(7, "sam");
+			Late.Add(9, "lena");
+			const std::string Darren = std::string("{\"id\":7,\"went\":true,\"claims\":[]}");
+			const std::string Sheila = std::string("{\"id\":9,\"went\":true}");
+			const int First = Late.Answers(Darren);
+			const bool bA = First == 7 && LateReplies::Settles(Darren) && Late.Done(First) == "sam";
+			const int Second = Late.Answers(Sheila);
+			const bool bB = Second == 9 && LateReplies::Settles(Sheila) && Late.Done(Second) == "lena";
+			Expect(R, bA && bB, "l5-two-late-replies-in-a-row-both-count");
+			Expect(R, Late.Cards.empty() && Late.Answers(Darren) == 0 && Late.Answers("{\"id\":70,\"went\":true}") == 0,
+			       "l5-a-settled-late-reply-is-owed-no-longer-and-numbers-do-not-run-together");
+		}
+		// THE REVIEW OF 1 OCTOBER, S4: the talk is told who has met him from the
+		// saved meetings. Straight on, Ron after the envelope and Ada after her
+		// tea have met him on their first line; after a Continue, everybody he met
+		// still has, not only Sheila.
+		{
+			MeetingBook Book;
+			Book.Met("rocco", 1);   // the envelope
+			Book.Met("ada", 2);     // her tea
+			Book.Met("sam", 0);     // a conversation
+			Expect(R, MetHimForTalk(Book, "rocco", false) && MetHimForTalk(Book, "ada", false),
+			       "s4-ron-after-the-envelope-and-ada-after-her-tea-have-met-him");
+			MeetingBook Back;
+			Back.TakeLine("met_sam", "0"); Back.TakeLine("met_rocco", "1");
+			Expect(R, MetHimForTalk(Back, "sam", false) && MetHimForTalk(Back, "rocco", false),
+			       "s4-after-a-continue-everybody-he-met-still-has");
+			Expect(R, !MetHimForTalk(Back, "rita", false) && !MetHimForTalk(MeetingBook(), "lena", false)
+			          && MetHimForTalk(MeetingBook(), "lena", true),
+			       "s4-a-stranger-has-not-and-sheila-has-once-her-walk-round-is-over");
+		}
+		// THE REVIEW OF 1 OCTOBER, S1: who stands where survives a save and a
+		// Continue, and whoever he was still within earshot of stays held there.
+		// The review's case: he talks with Sheila on Rita's step at 17:55, the
+		// 18:00 autosave; straight on she is still there at 18:02.
+		{
+			StandingBook Book;
+			Standing Sheila;
+			Sheila.X = 21.4; Sheila.Z = 4.15; Sheila.YawDeg = -90.0; Sheila.FeetY = 0.12;
+			Sheila.bHeld = true; Sheila.PlacedFor = 0 * 24 + 17; Sheila.LastLineM = 17 * 60 + 55;
+			Standing Darren;
+			Darren.X = 8.0; Darren.Z = -6.5; Darren.YawDeg = 90.0; Darren.FeetY = 0.10; Darren.PlacedFor = 18;
+			Standing Ron;
+			Ron.bAway = true; Ron.PlacedFor = 18;
+			Book.At["lena"] = Sheila; Book.At["sam"] = Darren; Book.At["rocco"] = Ron;
+			StandingBook Back;
+			const std::string Kept = Book.SaveLines();
+			size_t From = 0;
+			while (From < Kept.size())
+			{
+				size_t End = Kept.find('\n', From);
+				if (End == std::string::npos) End = Kept.size();
+				const std::string KeptLine = Kept.substr(From, End - From);
+				const size_t Eq = KeptLine.find('=');
+				if (Eq != std::string::npos) Back.TakeLine(KeptLine.substr(0, Eq), KeptLine.substr(Eq + 1));
+				From = End + 1;
+			}
+			const bool bBack = Back.At.count("lena") && Back.At.count("sam") && Back.At.count("rocco");
+			Expect(R, bBack && std::fabs(Back.At["lena"].X - 21.4) < 0.01 && std::fabs(Back.At["lena"].Z - 4.15) < 0.01
+			          && std::fabs(Back.At["lena"].YawDeg + 90.0) < 0.1 && std::fabs(Back.At["lena"].FeetY - 0.12) < 0.01
+			          && Back.At["lena"].PlacedFor == 17 && Back.At["sam"].PlacedFor == 18
+			          && Back.At["lena"].LastLineM == 17 * 60 + 55 && Back.At["sam"].LastLineM == -1,
+			       "s1-where-each-stands-survives-a-save-and-a-continue");
+			Expect(R, Back.HeldAfterLoad("lena") && !Back.HeldAfterLoad("sam") && !Back.HeldAfterLoad("rocco") && !Back.HeldAfterLoad("rita"),
+			       "s1-sheila-still-held-on-ritas-step-after-a-continue-as-straight-on");
+			Expect(R, bBack && Back.At["rocco"].bAway && !Back.At["lena"].bAway,
+			       "s1-whoever-was-off-the-street-stays-off");
+			Expect(R, !Back.TakeLine("stand_ada", "1,2,x,0,0,0,5,-1") && !Back.TakeLine("stand_ada", "1,2,3")
+			          && !Back.TakeLine("stand_ada", "nan,2,0,0,0,0,5,-1") && !Back.TakeLine("stand_ada", "1,inf,0,0,0,0,5,-1") && !Back.At.count("ada")
+			          && !Back.TakeLine("met_lena", "0"),
+			       "s1-a-damaged-standing-line-places-nobody");
 		}
 
 		// WALKING UP TO DARREN AFTER THE DEED IS NOT RUNNING FROM IT (the review's

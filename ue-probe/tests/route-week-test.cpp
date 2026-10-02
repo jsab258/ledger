@@ -127,14 +127,24 @@ namespace
 				if (bSits && Day == W.Tea->Day() && Hod == 22 && !Skip("tea", false))
 					for (int M = 0; M <= 30; ++M) W.Tea->WithHer(GameTime(Day, 22, M));
 				W.TwentyThreeTea(&Mill, Now);
-				if (Hod == 22 && W.Asks.AsksOn(Day) && !bHeld && W.Asks.WasDelivered(Day) && !Skip(bTakes ? "landing" : "ron", true))
+				// Not sitting with her, he sets off at 21:45 and is seen going in its own
+				// hour, after the rounds before it, as TownReach files it (the review of 1
+				// October, D2: this filed it in hour 22's pass, after rounds run without it).
+				if (Hod == 21 && !bSits && bTakes && Day == W.Tea->Day() && W.Asks.AsksOn(Day) && !bHeld && W.Asks.WasDelivered(Day) && !Skip("landing", true))
+				{
+					Before(45);
+					W.Tea->WentToTheLanding(&Mill, GameTime(Day, 21, 45), true);
+					HandOverAt = Abs + 2;
+				}
+				if (Hod == 22 && W.Asks.AsksOn(Day) && !bHeld && W.Asks.WasDelivered(Day) && !(!bSits && bTakes && Day == W.Tea->Day())
+				    && !Skip(bTakes ? "landing" : "ron", true))
 				{
 					const NightAnswer Answer = bTakes ? NightAnswer::Did : NightAnswer::Refused;
 					if (Answer == NightAnswer::Did && Day == W.Tea->Day())
 					{
-						if (bSits) Before(31);
-						W.Tea->WentToTheLanding(&Mill, GameTime(Day, bSits ? 22 : 21, bSits ? 31 : 45), true);
-						HandOverAt = Abs + (bSits ? 2 : 1);
+						Before(31);
+						W.Tea->WentToTheLanding(&Mill, GameTime(Day, 22, 31), true);
+						HandOverAt = Abs + 2;
 					}
 					else { Before(30); W.AnswerAsk(Day, Answer, &Mill, GameTime(Day, 22, 30)); }
 				}

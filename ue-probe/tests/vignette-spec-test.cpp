@@ -7014,17 +7014,21 @@ int main(int argc, char** argv)
 				      "a people file without its list is refused, not read as nobody", PErr);
 				bool VOk = false;
 				const std::string VText = Slurp("production/specs/street-vehicles.json", VOk);
-				std::vector<LedgerStreet::Person> Cars;
+				// THE PARKED CARS ARE OFF THE STREET (Jafar, 2 October: "no cars is better
+				// than box cars"): the file parses with none parked, and the ones kept off
+				// still have their models, for when real 1990 cars come back.
+				std::vector<LedgerStreet::Person> Cars, Kept;
 				const bool bCars = VOk && LedgerStreet::ParseVehicles(VText, Cars, PErr);
-				int CarsOnDisk = 0;
-				for (size_t I = 0; I < Cars.size(); ++I)
+				const bool bKept = VOk && LedgerStreet::ParsePlaced(VText, "kept_off_the_street", Kept, PErr);
+				int KeptOnDisk = 0;
+				for (size_t I = 0; I < Kept.size(); ++I)
 				{
 					bool GOk = false;
-					Slurp(("production/assets/vehicles/" + Cars[I].Glb + ".glb").c_str(), GOk);
-					if (GOk) { ++CarsOnDisk; }
+					Slurp(("production/assets/vehicles/" + Kept[I].Glb + ".glb").c_str(), GOk);
+					if (GOk) { ++KeptOnDisk; }
 				}
-				Check(bCars && !Cars.empty() && CarsOnDisk == (int)Cars.size(),
-				      "the parked cars parse and each has its glb", PErr);
+				Check(bCars && Cars.empty() && bKept && !Kept.empty() && KeptOnDisk == (int)Kept.size(),
+				      "no car is parked on the street, and the cars kept off still have their glbs", PErr);
 				// THE STREET'S SOUND, 23 September: every voice rides on a person
 				// the people file places, every clip and bed is on disk, and each
 				// clip names the asset the importer makes of it.
