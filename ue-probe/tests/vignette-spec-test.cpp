@@ -314,7 +314,7 @@ static PinReading ReadPins(const std::vector<LedgerVignette::Condition>& Conds,
 // THE CASCADE, COUNTED ON THE COMMITTED SPEC RATHER THAN REASONED ABOUT. The
 // day the fingerprint gains wetness, the largest identical-input group at
 // cam_hook goes from NINE rows to SEVEN and the distinct-group count from 28
-// to 30. Only vign_wet_000 and vign_wet_100 leave: vign_wet_060 carries 0.6000,
+// to 30. Only vign_wet_000 and vign_wet_100 leave: vign_wet_060 carries the judged row's wetness (0.6000, 0.8500 since 2 October),
 // which is the judged row's own wetness, so it STAYS in the group. The obvious
 // guess is six, all three wetness rows leaving, and it is wrong for that
 // reason; the number is written here because it was measured and not because
@@ -1084,7 +1084,7 @@ int main(int argc, char** argv)
 			      + " matching the judged cell at fog 0.100, " + std::to_string(CrossSkies)
 			      + " of 3 asked sky values found");
 		}
-		const double WantWet[3] = { 0.0, 0.60, 1.0 };
+		const double WantWet[3] = { 0.0, 0.85, 1.0 };   // the middle rung is the judged day's wetness: 0.60 until 2 October
 		int WetRows = 0;
 		for (int A = 0; A < 3; ++A)
 		{
@@ -1095,7 +1095,7 @@ int main(int argc, char** argv)
 			}
 		}
 		Check(WetRows == 3,
-		      "three wetness rows at 0.0, 0.60 and 1.0, both ends and the value the judged rows carry",
+		      "three wetness rows at 0.0, 0.85 and 1.0, both ends and the value the judged rows carry",
 		      std::to_string(WetRows) + " of 3");
 
 		// ---- WHICH WETNESS THE BIND CHOOSES, ON THE LIVE FILE ----------
@@ -5665,7 +5665,7 @@ int main(int argc, char** argv)
 		//
 		// QUEUE 309's ACCEPTANCE SAID THE GROUP DROPS "THE THREE wet_ ROWS"
 		// AND THE COMMITTED FILE SAYS TWO. wet_000 is at wetness 0.0 and
-		// wet_100 at 1.0, so both leave; wet_060 is at 0.6, which IS the
+		// wet_100 at 1.0, so both leave; wet_060 is at 0.85 (0.6 until 2 October; it follows the judged day), which IS the
 		// wetness the reference cell carries, so it stays and it is right that
 		// it stays: it is a genuine null sample of the day group in this
 		// engine. The number is counted off the discovered ids here rather
@@ -5680,7 +5680,7 @@ int main(int argc, char** argv)
 				if (Got[I].find("vign_wet_") == 0) { ++WetRows; }
 			}
 			std::printf("    wet ladder rows still in the null group: %d of 3 "
-			            "offered (wet_000 0.0, wet_060 0.6, wet_100 1.0)\n", WetRows);
+			            "offered (wet_000 0.0, wet_060 0.85, wet_100 1.0)\n", WetRows);
 			Check(WetRows == 1
 			      && Ids.find("vign_wet_060") != std::string::npos
 			      && Ids.find("vign_wet_000") == std::string::npos
@@ -6988,8 +6988,8 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 27 && Lk.bFromFile,
-			      "the committed look file parses and supplies all twenty-seven settings", LErr);
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 32 && Lk.bFromFile,
+			      "the committed look file parses and supplies all thirty-two settings", LErr);
 			Check(Lk.LanternLumens > 0.0 && Lk.bLanternRgb && Lk.LanternLightY > 4.0,
 			      "and the sodium lamps have real lumens and a colour of their own");
 			// THE PEOPLE, 23 September: the committed placements parse, there

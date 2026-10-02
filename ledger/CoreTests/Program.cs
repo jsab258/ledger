@@ -26720,14 +26720,14 @@ namespace Ledger.CoreTests
             }
 
             // A3: WETNESS AS A SERIES, BOTH ENDS AND THE VALUE IN FORCE.
-            var wantWet = new double[] { 0.0, 0.60, 1.0 };
+            var wantWet = new double[] { 0.0, 0.85, 1.0 };   // the middle rung is the judged day's wetness: 0.60 until 2 October
             int wetFound = 0;
             foreach (var w in wantWet)
                 foreach (var cd in plan.Conditions)
                     if (cd.Id.StartsWith("wet_") && Math.Abs(cd.Wetness - w) < 1e-9)
                     { wetFound++; break; }
             Check(wetFound == 3,
-                  "three wetness rows at 0.0, 0.60 and 1.0, so a later session can see whether 0.60 was chosen or typed",
+                  "three wetness rows at 0.0, 0.85 and 1.0, so a later session can see whether 0.85 was chosen or typed",
                   wetFound + " of 3");
 
             // FOUR MATCHED FRAMES, THE HOOK VIEWPOINT, TWENTY SIX PROBE ROWS AND

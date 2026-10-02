@@ -1,87 +1,101 @@
 {
-  "what": "The Unreal look's own settings, read by the probe at run time (ue-probe/Source/LedgerProbe/Public/StreetMeshes.h ParseLook) so that tuning the frame against the Hook sheet is a file edit and a frame, not a build. Jafar, 23 September: the look is developed in Unreal against the sheet, in one pass. A missing file or key keeps the constant the probe always used, and the verdict line says lookFrom and lookRead.",
-  "sky_seen_gain": 15.0,
-  "sky_seen_gain_note": "The sky dome as SEEN, over the sky intensity that lights the street: the sheet's sky is white over a dark street. Tuned 23 September against the sheet at the approved lens with the probe's own frame measured by region; 1.0 was the probe's constant.",
-  "street_glow_gain": 0.02,
-  "street_glow_gain_note": "Blender's glow strengths (tubes 12, lit rooms 3.4 by day and 0.7 at night) into this engine's unitless emissive. 0.10 was the first value.",
-  "fog_day_colour": [
-    1.6,
-    1.62,
-    1.7
+ "what": "The Unreal look's own settings, read by the probe at run time (ue-probe/Source/LedgerProbe/Public/StreetMeshes.h ParseLook) so that tuning the frame against the Hook sheet is a file edit and a frame, not a build. Jafar, 23 September: the look is developed in Unreal against the sheet, in one pass. A missing file or key keeps the constant the probe always used, and the verdict line says lookFrom and lookRead.",
+ "sky_seen_gain": 6.0,
+ "sky_seen_gain_note": "The sky dome as SEEN, over the sky intensity that lights the street: the sheet's sky is white over a dark street. Tuned 23 September against the sheet at the approved lens with the probe's own frame measured by region; 1.0 was the probe's constant.",
+ "street_glow_gain": 0.02,
+ "street_glow_gain_note": "Blender's glow strengths (tubes 12, lit rooms 3.4 by day and 0.7 at night) into this engine's unitless emissive. 0.10 was the first value.",
+ "fog_day_colour": [
+  1.6,
+  1.62,
+  1.7
+ ],
+ "fog_height_falloff": 0.02,
+ "wet_film_from": 0.5,
+ "wet_film_from_note": "From this wetness the road, the paving and the kerb lose their relief map: the pack's relief is strong and scattered every reflection a wet road shows (23 September, found by rendering the road without it: it mirrored the facades and the sky as the sheet's does). The day is 0.6 and the night 0.9, so both are films of water; 2.0 would mean never.",
+ "picture_room_gain": 8.0,
+ "picture_room_gain_note": "How much brighter a pictured shop room reads than the light on the facade, standing in for Blender's glow.",
+ "glass_see_through": true,
+ "glass_see_through_note": "The display glass wears M_LedgerGlass (tools/ue/make_glass_material.py): translucent, lit in the forward pass so the sky lands on it as a sheen, tinted by the glass colour. If the build lacks that material the glass is left out, as it was before it existed; the verdict line counts both.",
+ "sun_gain": 0.1,
+ "sun_gain_note": "The Unreal day's sun is this times the scene file's sun_intensity. The sheet is overcast with no sun shadow; at the file's 3.0 the parade threw a hard shadow across the road.",
+ "sky_light_gain": 1.25,
+ "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
+ "surface_gain": {
+  "brick_red": [
+   2.19,
+   2.25,
+   2.06
   ],
-  "fog_height_falloff": 0.02,
-  "wet_film_from": 0.5,
-  "wet_film_from_note": "From this wetness the road, the paving and the kerb lose their relief map: the pack's relief is strong and scattered every reflection a wet road shows (23 September, found by rendering the road without it: it mirrored the facades and the sky as the sheet's does). The day is 0.6 and the night 0.9, so both are films of water; 2.0 would mean never.",
-  "picture_room_gain": 8.0,
-  "picture_room_gain_note": "How much brighter a pictured shop room reads than the light on the facade, standing in for Blender's glow.",
-  "glass_see_through": true,
-  "glass_see_through_note": "The display glass wears M_LedgerGlass (tools/ue/make_glass_material.py): translucent, lit in the forward pass so the sky lands on it as a sheen, tinted by the glass colour. If the build lacks that material the glass is left out, as it was before it existed; the verdict line counts both.",
-  "sun_gain": 0.1,
-  "sun_gain_note": "The Unreal day's sun is this times the scene file's sun_intensity. The sheet is overcast with no sun shadow; at the file's 3.0 the parade threw a hard shadow across the road.",
-  "sky_light_gain": 0.5,
-  "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
-  "surface_gain": {
-    "brick_red": [
-      2.19,
-      2.25,
-      2.06
-    ],
-    "brick_grey": [
-      2.5,
-      2.5,
-      2.5
-    ],
-    "paving": [
-      0.72,
-      0.56,
-      0.3
-    ],
-    "interior_lit": [
-      0.05,
-      0.05,
-      0.05
-    ]
-  },
-  "surface_gain_note": "RAISED A QUARTER FOR BOTH BRICKS 23 September, when Lumen went on: the bounced light's occlusion darkened every wall by about a fifth against the frame before it (parade upper wall 0.79, west terrace 0.76-0.81, Mickey's 0.83, the sky unchanged at 1.00), and the walls had been matched to the sheet before it; the pavements were left darker, which is nearer the sheet's wet flags. Before that: Per-surface colour in this engine, by base material, over the drawn surface's own colour. Retuned 23 September again once the drawn bricks and flags carry Blender's wear (patches, the splash at the foot, streaks from the wall head, about 0.6 of the clean wall on average): brick_red lands the parade's upper wall at 78/46/33 against the sheet's 76/45/35; paving at 126/112/98 against the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain).",
-  "sky_seen_gain_night": 0.15,
-  "sky_light_gain_night": 1.0,
-  "night_exposure_bias": -1.0,
-  "night_note": "The three day gains are the day's only. The night's own, tuned 23 September by eye for the roadmap's dusk frame (the street at dusk, wet, lamps lit, a figure in silhouette) - there is no night reference sheet: the night sky photograph at 0.15 of its brightness, so the terraces stand dark against an evening sky instead of a white one, the sky light as the file has it, and the automatic exposure biased down one stop.",
-  "glass_opacity": 0.06,
-  "glass_opacity_note": "1 October: since the glass became Thin Translucent (tools/ue/make_glass_material.py) its opacity is only the dirt on the pane, in the glass row's own colour; the clean pane lets the room through by its transmittance and keeps its whole reflection. It was 0.25 while opacity also scaled the reflection away (production/research/shop-glass-reflections/NOTE.md).",
-  "glass_roughness": 0.05,
-  "wet_floor": {},
-  "wet_floor_note": "23 September, after two tries in Unreal and the recipe's own two in Blender: the flags take the recipe's wet roughness and no floor of their own. 0.25 mirrored the sky and read 1.6-2.5x the sheet and blue; 0.40 still 1.05/1.15/1.37. The sheet's shine is the shopfront reflected close to the wall, which a lower roughness does not give. SET ASIDE. The paving gain cooled to 0.72/0.56/0.30 instead: the near footway 1.04/1.04/1.17 of the sheet.",
-  "street_in_play": true,
-  "street_in_play_note": "The Blender street is shown in the playable game too - the walk, the crime, a plain launch - in place of the scene file's own terrace, ground and sign pieces, which are hidden and keep their collision, so walking, blocking and every sight line behave exactly as before. The Blender street's own collision is a later step.",
-  "fog_cap_gain_day": 3.0,
-  "fog_note": "THE FAR END'S DEPTH, tuned 23 September against the sheet with the street's new bend and hillside: the day's fog allowed three times the scene file's cap (0.100 -> 0.300; the file's number is in the names of its fog-series rows and was ruled for another street), and a light fog colour, since at the day's exposure the old 0.55 grey read as a darkening. The far end measures 120/109/101 against the sheet's 120/108/104. 24 September, the far hill, SET ASIDE AFTER TWO TRIES: a cap of 0.500 (b3f9c238) and a height falloff of 0.008 (b9b4de4c) each left the hill as it was (luma std 73.3, 72.8, 73.4) - at the day's density the fog is too thin at 110 to 200 m for either to bind, and thickening the density itself would move the far end the sheet was matched on. Both are back as tuned. The hill's distance is for a measured density pass against the sheet, not a third guess.",
-  "night_exposure_pin": 0.4,
-  "night_exposure_pin_note": "23 September. A night row that asks the scene file for no exposure pin is held here instead of left automatic: the lit rooms seen through the see-through glass throw the automatic meter, and cam_A beside Mickey's window came out black (mean 0.0 on three local takes, and on the runner in two runs of four). 0.1 is where a healthy dusk frame's automatic exposure already settles: the hook camera's dusk measured 22.1 automatic and 22.8 held at 0.1, locally. Rows with their own pin keep it. 29 September: 0.4, two stops darker than the 0.1 it was, once the lamps lit the street (lantern_lumens): at 0.1 the lamp-lit street read as floodlit; the research says to under-expose a lamp-lit night on purpose so the gaps between lamps stay dark (production/research/evening-light-1990).",
-  "street_collision": true,
-  "street_collision_note": "23 September. TRUE: the Blender street is the walls in play - its triangles collide (complex-as-simple, set at import), the shop and car glass block a body but not a sight line, and the scene file's pieces it replaces lose their collision. Switched on after the crime and the walk held on it on the runner's own build, locally, with the kerb dropped over the gully as the scene file cuts it and every probe bounds query counting non-colliding parts. False puts back the scene file's walls.",
-  "lantern_lumens": 300,
-  "lantern_lumens_note": "29 September. The all-round glow of each sodium lantern, in lumens (the scene file's Unity-era 3.2 lit almost nothing, so the night had no light). With the light hung under the lamp's glass, 800 alone floodlit the terrace; with the pool below (lantern_pool_lumens) the glow was judged on night frames at 800, 400 and 300 (F:/LedgerTools/tmp/lamps2 and lamps3): 300 lets the upper storeys between lamps fall into shade. The physical output of a 35 W low-pressure sodium lamp is about 4,550 lumens (production/research/evening-light-1990); these are look numbers at the night's held exposure, not a photometric claim. -LanternLumens= overrides it for a series.",
-  "lantern_linear_rgb": [
-    1.0,
-    0.25,
-    0.0
+  "brick_grey": [
+   2.5,
+   2.5,
+   2.5
   ],
-  "lantern_linear_rgb_note": "29 September. Low-pressure sodium is one colour, about 589 nm: chromaticity (0.569, 0.430), about linear (1.0, 0.25, 0.0) (production/research/evening-light-1990). The scene file's gamma (1, 0.857, 0) is yellower than the lamp.",
-  "lantern_light_y_m": 4.78,
-  "lantern_light_y_m_note": "29 September. The lamp's light, metres above the road's crown: 2 cm under the glass of the Blender street's lamp head (tools/art-recipes/lighting-column.py; its lens spans 4.80 to 4.82 m). At the scene file's box height (4.915 m) the light sat inside the head, above the glass, and the head shaded everything under it: the first sodium night lit the upper storeys and left the pavement under each lamp dark.",
-  "lantern_pool_lumens": 1200,
-  "lantern_pool_cone_deg": [
-    35,
-    70
+  "paving": [
+   0.72,
+   0.56,
+   0.3
   ],
-  "lantern_pool_note": "29 September. The pool under each lamp: a downward cone of light beside the lantern's point light, inner and outer half-angles in degrees. The blind review of the first sodium night: 'the lamps light the house fronts more than the pavement ... the pools on the ground are weak'. Low-pressure sodium lanterns throw their light down and along the road (production/research/evening-light-1990). Chosen from night frames at 1600, 2400 and 1200 lumens with glows of 800, 400 and 300: 1200 gives a clear pool without the near pavement blowing out; -LanternPoolLumens= overrides it for a series.",
-  "fog_night_colour": [
-    0.1,
-    0.055,
-    0.025
-  ],
-  "fog_night_colour_note": "29 September. The night haze's colour, linear: a dull orange-brown, as a town's sodium lamps light low cloud and haze (Kyba and others via Live Science 2015, in production/research/evening-light-1990). The blind review of the first sodium night: the sky was charcoal, 'without the dull orange glow a town's lamps throw on low cloud'. It was a fixed (0.06, 0.05, 0.05).",
-  "room_glow_gain_night": 0.08,
-  "room_glow_gain_night_note": "29 September. A pictured room's glow at night (the lit shops, the lit rooms behind a third of the upstairs nets), a gain on the recipe's night strength (1.6 a shop, 1.2 a lit net, 0.05 a dark one) in place of street_glow_gain, which is tuned for the fluorescent tubes at 12 and left the rooms unseen: the blind review of the sodium night found not one window lit and the shops' tubes lighting nothing. 0.08, not the first try's 0.25, at which the shops' pictured interiors washed out into blank cream panels and the lit nets read white."
+  "interior_lit": [
+   0.05,
+   0.05,
+   0.05
+  ]
+ },
+ "surface_gain_note": "RAISED A QUARTER FOR BOTH BRICKS 23 September, when Lumen went on: the bounced light's occlusion darkened every wall by about a fifth against the frame before it (parade upper wall 0.79, west terrace 0.76-0.81, Mickey's 0.83, the sky unchanged at 1.00), and the walls had been matched to the sheet before it; the pavements were left darker, which is nearer the sheet's wet flags. Before that: Per-surface colour in this engine, by base material, over the drawn surface's own colour. Retuned 23 September again once the drawn bricks and flags carry Blender's wear (patches, the splash at the foot, streaks from the wall head, about 0.6 of the clean wall on average): brick_red lands the parade's upper wall at 78/46/33 against the sheet's 76/45/35; paving at 126/112/98 against the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain).",
+ "sky_seen_gain_night": 0.15,
+ "sky_light_gain_night": 0.15,
+ "night_exposure_bias": -1.0,
+ "night_note": "The three day gains are the day's only. The night's own, tuned 23 September by eye for the roadmap's dusk frame (the street at dusk, wet, lamps lit, a figure in silhouette) - there is no night reference sheet: the night sky photograph at 0.15 of its brightness, so the terraces stand dark against an evening sky instead of a white one, the sky light as the file has it, and the automatic exposure biased down one stop.",
+ "glass_opacity": 0.06,
+ "glass_opacity_note": "1 October: since the glass became Thin Translucent (tools/ue/make_glass_material.py) its opacity is only the dirt on the pane, in the glass row's own colour; the clean pane lets the room through by its transmittance and keeps its whole reflection. It was 0.25 while opacity also scaled the reflection away (production/research/shop-glass-reflections/NOTE.md).",
+ "glass_roughness": 0.05,
+ "wet_floor": {
+  "paving": 0.12,
+  "kerbstone": 0.18
+ },
+ "wet_floor_note": "23 September, after two tries in Unreal and the recipe's own two in Blender: the flags take the recipe's wet roughness and no floor of their own. 0.25 mirrored the sky and read 1.6-2.5x the sheet and blue; 0.40 still 1.05/1.15/1.37. The sheet's shine is the shopfront reflected close to the wall, which a lower roughness does not give. SET ASIDE. The paving gain cooled to 0.72/0.56/0.30 instead: the near footway 1.04/1.04/1.17 of the sheet.",
+ "street_in_play": true,
+ "street_in_play_note": "The Blender street is shown in the playable game too - the walk, the crime, a plain launch - in place of the scene file's own terrace, ground and sign pieces, which are hidden and keep their collision, so walking, blocking and every sight line behave exactly as before. The Blender street's own collision is a later step.",
+ "fog_cap_gain_day": 3.0,
+ "fog_note": "THE FAR END'S DEPTH, tuned 23 September against the sheet with the street's new bend and hillside: the day's fog allowed three times the scene file's cap (0.100 -> 0.300; the file's number is in the names of its fog-series rows and was ruled for another street), and a light fog colour, since at the day's exposure the old 0.55 grey read as a darkening. The far end measures 120/109/101 against the sheet's 120/108/104. 24 September, the far hill, SET ASIDE AFTER TWO TRIES: a cap of 0.500 (b3f9c238) and a height falloff of 0.008 (b9b4de4c) each left the hill as it was (luma std 73.3, 72.8, 73.4) - at the day's density the fog is too thin at 110 to 200 m for either to bind, and thickening the density itself would move the far end the sheet was matched on. Both are back as tuned. The hill's distance is for a measured density pass against the sheet, not a third guess.",
+ "night_exposure_pin": 0.4,
+ "night_exposure_pin_note": "23 September. A night row that asks the scene file for no exposure pin is held here instead of left automatic: the lit rooms seen through the see-through glass throw the automatic meter, and cam_A beside Mickey's window came out black (mean 0.0 on three local takes, and on the runner in two runs of four). 0.1 is where a healthy dusk frame's automatic exposure already settles: the hook camera's dusk measured 22.1 automatic and 22.8 held at 0.1, locally. Rows with their own pin keep it. 29 September: 0.4, two stops darker than the 0.1 it was, once the lamps lit the street (lantern_lumens): at 0.1 the lamp-lit street read as floodlit; the research says to under-expose a lamp-lit night on purpose so the gaps between lamps stay dark (production/research/evening-light-1990).",
+ "street_collision": true,
+ "street_collision_note": "23 September. TRUE: the Blender street is the walls in play - its triangles collide (complex-as-simple, set at import), the shop and car glass block a body but not a sight line, and the scene file's pieces it replaces lose their collision. Switched on after the crime and the walk held on it on the runner's own build, locally, with the kerb dropped over the gully as the scene file cuts it and every probe bounds query counting non-colliding parts. False puts back the scene file's walls.",
+ "lantern_lumens": 40,
+ "lantern_lumens_note": "1 October, the proof frame's night test (production/research/aaa-street, section 3; frames in F:/LedgerTools/scratch/nighttest): with the sky light off the night barely changed; with the fog off the orange haze over the far end went; the lighting-only view showed each lamp's all-round glow lighting the house fronts to the eaves and its 70-degree pool reaching the next lamp's, so there was no darkness between. The all-round glow is now only the lamp head's own (40 lumens, which still reads in the head), and the light goes into the pool below. Before: 29 September. The all-round glow of each sodium lantern, in lumens (the scene file's Unity-era 3.2 lit almost nothing, so the night had no light). With the light hung under the lamp's glass, 800 alone floodlit the terrace; with the pool below (lantern_pool_lumens) the glow was judged on night frames at 800, 400 and 300 (F:/LedgerTools/tmp/lamps2 and lamps3): 300 lets the upper storeys between lamps fall into shade. The physical output of a 35 W low-pressure sodium lamp is about 4,550 lumens (production/research/evening-light-1990); these are look numbers at the night's held exposure, not a photometric claim. -LanternLumens= overrides it for a series.",
+ "lantern_linear_rgb": [
+  1.0,
+  0.25,
+  0.0
+ ],
+ "lantern_linear_rgb_note": "29 September. Low-pressure sodium is one colour, about 589 nm: chromaticity (0.569, 0.430), about linear (1.0, 0.25, 0.0) (production/research/evening-light-1990). The scene file's gamma (1, 0.857, 0) is yellower than the lamp.",
+ "lantern_light_y_m": 4.78,
+ "lantern_light_y_m_note": "29 September. The lamp's light, metres above the road's crown: 2 cm under the glass of the Blender street's lamp head (tools/art-recipes/lighting-column.py; its lens spans 4.80 to 4.82 m). At the scene file's box height (4.915 m) the light sat inside the head, above the glass, and the head shaded everything under it: the first sodium night lit the upper storeys and left the pavement under each lamp dark.",
+ "lantern_pool_lumens": 1800,
+ "lantern_pool_cone_deg": [
+  22,
+  42
+ ],
+ "lantern_pool_note": "1 October, the proof frame's night test (production/research/aaa-street, section 3; frames in F:/LedgerTools/scratch/nighttest): with the sky light off the night barely changed; with the fog off the orange haze over the far end went; the lighting-only view showed each lamp's all-round glow lighting the house fronts to the eaves and its 70-degree pool reaching the next lamp's, so there was no darkness between. The pool is narrowed to 22 to 42 degrees from straight down (about 4.3 m across at the lamp's 4.78 m), so the lamps, ten metres apart staggered, make pools with darkness between them, as Jafar asked; and brighter, 1,800 lumens, since the glow no longer adds to it. Before: 29 September. The pool under each lamp: a downward cone of light beside the lantern's point light, inner and outer half-angles in degrees. The blind review of the first sodium night: 'the lamps light the house fronts more than the pavement ... the pools on the ground are weak'. Low-pressure sodium lanterns throw their light down and along the road (production/research/evening-light-1990). Chosen from night frames at 1600, 2400 and 1200 lumens with glows of 800, 400 and 300: 1200 gives a clear pool without the near pavement blowing out; -LanternPoolLumens= overrides it for a series.",
+ "fog_night_colour": [
+  0.03,
+  0.02,
+  0.012
+ ],
+ "fog_night_colour_note": "1 October, the proof frame's night test (production/research/aaa-street, section 3; frames in F:/LedgerTools/scratch/nighttest): with the sky light off the night barely changed; with the fog off the orange haze over the far end went; the lighting-only view showed each lamp's all-round glow lighting the house fronts to the eaves and its 70-degree pool reaching the next lamp's, so there was no darkness between. Darker and less orange (a faint warm sky glow, not a wash). Before: 29 September. The night haze's colour, linear: a dull orange-brown, as a town's sodium lamps light low cloud and haze (Kyba and others via Live Science 2015, in production/research/evening-light-1990). The blind review of the first sodium night: the sky was charcoal, 'without the dull orange glow a town's lamps throw on low cloud'. It was a fixed (0.06, 0.05, 0.05).",
+ "room_glow_gain_night": 0.08,
+ "room_glow_gain_night_note": "29 September. A pictured room's glow at night (the lit shops, the lit rooms behind a third of the upstairs nets), a gain on the recipe's night strength (1.6 a shop, 1.2 a lit net, 0.05 a dark one) in place of street_glow_gain, which is tuned for the fluorescent tubes at 12 and left the rooms unseen: the blind review of the sodium night found not one window lit and the shops' tubes lighting nothing. 0.08, not the first try's 0.25, at which the shops' pictured interiors washed out into blank cream panels and the lit nets read white.",
+ "fog_density_gain_night": 0.2,
+ "fog_density_gain_night_note": "1 October, the proof frame's night test (production/research/aaa-street, section 3; frames in F:/LedgerTools/scratch/nighttest): with the sky light off the night barely changed; with the fog off the orange haze over the far end went; the lighting-only view showed each lamp's all-round glow lighting the house fronts to the eaves and its 70-degree pool reaching the next lamp's, so there was no darkness between. The night's fog at a fifth of the scene file's 0.022, so the far end is dark with a faint haze, not an orange wall.",
+ "fog_density_gain_day": 4.0,
+ "fog_start_day_m": 15.0,
+ "fog_density_gain_day_note": "2 October, the proof frame's stage 1, item 2 (production/research/aaa-street/3-LIGHT-AND-GRADE.md, Depth): the day's fog four times the scene file's density, starting 15 m out, so the street stays clear and the far end and the hill separate in haze. The two tries of 24 September changed the cap and the falloff, never the density or the start; this is the research's method, the third try.",
+ "sky_seen_gain_note_2_october": "15 -> 6 with sky_light_gain 0.5 -> 1.25, the same factor (2 October; production/research/aaa-street/SKY-AND-HAZE-2026-10-02.md, step 3: the captured sky light gives the dome's brightness times its own intensity, so the street keeps its light while the dome's clouds come below white). Tried before the fog cutoff: 10 and 6 alone left the sky flat (the haze covered it) and darkened the street. Also tried 4 with 1.875 (16:35): the sky only darkened (224), its spread stayed at 9.5 against 25 to 70 in the picture itself, so the clouds are squeezed at the top of the tone curve, not lost in the picture: next, the research's step 4 (local exposure, highlight contrast about 0.8).",
+ "fog_cutoff_day_m": 900.0,
+ "fog_cutoff_day_m_note": "2 October (production/research/aaa-street/SKY-AND-HAZE-2026-10-02.md, first step): no fog past 900 m by day, so the hill (110 to 200 m) keeps its haze and the sky dome (1,000 m) its clouds.",
+ "local_highlight_contrast_day": 0.8,
+ "local_highlight_contrast_day_note": "2 October (production/research/aaa-street/SKY-AND-HAZE-2026-10-02.md, step 4): local exposure's highlight contrast at 0.8 by day, so the bright overcast keeps its clouds; 1 is the engine's default.",
+ "wet_floor_note_2_october": "2 October (stage 1, item 3; the reviewer: both pavements matt and dry where the sheet's glisten): the wet floor of the flags 0.46 -> 0.12 and the kerbs 0.40 -> 0.18, so they take the sky's sheen."
 }

@@ -62,6 +62,9 @@
 #include "UObject/UnrealType.h"
 #include "Misc/Paths.h"
 #include "Misc/FileHelper.h"
+#include "Dom/JsonObject.h"
+#include "Serialization/JsonReader.h"
+#include "Serialization/JsonSerializer.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 #include "Misc/DateTime.h"
@@ -3538,7 +3541,15 @@ namespace
 			if (UExponentialHeightFogComponent* F =
 			        GFog->FindComponentByClass<UExponentialHeightFogComponent>())
 			{
-				F->SetFogDensity((float)C.FogDensity * kFogDensityGain);
+				// THE NIGHT TEST (the street research, production/research/aaa-street, section 3):
+				// -NightTest=fog or =both takes the night's fog away, -NightTest=sky or =both its
+				// sky light, one at a time in the game's own camera, to see what makes one orange wash.
+				FString NightTest;
+				FParse::Value(FCommandLine::Get(), TEXT("NightTest="), NightTest);
+				const bool bNoFog = !C.SunOn && (NightTest == TEXT("fog") || NightTest == TEXT("both"));
+				F->SetFogDensity(bNoFog ? 0.0f : (float)(C.FogDensity * kFogDensityGain * (C.SunOn ? GLook.FogDensityGainDay : GLook.FogDensityGainNight)));
+				F->SetStartDistance(C.SunOn ? (float)(GLook.FogStartDayM * 100.0) : 0.0f);   // the near street clear by day, the depth beyond (stage 1, item 2)
+				F->SetFogCutoffDistance(C.SunOn ? (float)(GLook.FogCutoffDayM * 100.0) : 0.0f);   // the sky dome left out of the day's haze
 				F->SetFogInscatteringColor(C.SunOn ? FLinearColor((float)GLook.FogDayR, (float)GLook.FogDayG,
 				                                                  (float)GLook.FogDayB, 1.0f)
 				                                   : FLinearColor((float)GLook.FogNightR, (float)GLook.FogNightG,
@@ -3601,7 +3612,10 @@ namespace
 				// OFF THE CONDITION, NOT OFF A CONSTANT KEYED ON SunOn. The
 				// ladder's control row is a DAY condition with the sky at
 				// 0.35, which the old pair of constants could not say.
-				SC->SetIntensity((float)(C.SkyIntensity
+				FString NightTest;
+				FParse::Value(FCommandLine::Get(), TEXT("NightTest="), NightTest);
+				const bool bNoSky = !C.SunOn && (NightTest == TEXT("sky") || NightTest == TEXT("both"));   // the night test, above
+				SC->SetIntensity(bNoSky ? 0.0f : (float)(C.SkyIntensity
 				                         * (C.SunOn ? GLook.SkyLightGain : GLook.SkyLightGainNight)));
 				// RECAPTURED EXPLICITLY ON THE CHANGE. Real-time capture
 				// refreshes on its own, but a shot is photographed a fixed
@@ -4047,6 +4061,10 @@ namespace
 				// Written on every shot, zero by day, so no shot inherits it.
 				PPW.bOverride_AutoExposureBias = !GExposurePinFamilySunOn;
 				PPW.AutoExposureBias = GExposurePinFamilySunOn ? 0.0f : (float)GLook.NightExposureBias;
+				// THE CLOUDS KEPT IN A BRIGHT SKY by day (2 October: the sky's cloud detail was squeezed to
+				// a third at the top of the tone curve): local exposure's highlight contrast, from the look file.
+				PPW.bOverride_LocalExposureHighlightContrastScale = GExposurePinFamilySunOn;
+				PPW.LocalExposureHighlightContrastScale = GExposurePinFamilySunOn ? (float)GLook.LocalHighlightContrastDay : 1.0f;
 				const FPostProcessSettings& PP = CC->PostProcessSettings;
 				// ASKED BESIDE READ, PER SHOT, THE WAY THE LIGHT AIM LINE
 				// DOES IT. A value that lands on the game thread and never
@@ -7370,7 +7388,11 @@ namespace
 			return false;
 		}
 		const std::string Leaf = Id.substr(Id.find_last_of('/') + 1);
-		const FString Full = GDecalRoot / FString(UTF8_TO_TCHAR((Id + "/" + Leaf + ".png").c_str()));
+		// THE PACK'S REAL MASK (2 October): <Id>/<Leaf>.png is ambientCG's preview render, a lit
+		// sphere, and the stain printed it; tools/make_wear_masks.py writes ours/stain_<Leaf> from
+		// the pack's colour and opacity maps, and it is taken whenever it is there.
+		const FString Ours = GDecalRoot / FString(UTF8_TO_TCHAR(("ours/stain_" + Leaf + "/stain_" + Leaf + ".png").c_str()));
+		const FString Full = IFileManager::Get().FileSize(*Ours) > 0 ? Ours : GDecalRoot / FString(UTF8_TO_TCHAR((Id + "/" + Leaf + ".png").c_str()));
 		int32 FW = 0, FH = 0;
 		FString LoadedAs = TEXT("no-png-at-that-path-under-the-decal-root");
 		UTexture2D* Pic = IFileManager::Get().FileSize(*Full) > 0 ? ImportTexture(Full, true, FW, FH, LoadedAs) : nullptr;
@@ -7387,14 +7409,16 @@ namespace
 		const FVector N = T.TransformVectorNoScale(FVector(0.0, 0.0, 1.0)).GetSafeNormal();
 		FActorSpawnParameters Params;
 		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		ADecalActor* Stain = World->SpawnActor<ADecalActor>(ADecalActor::StaticClass(), Quad->GetActorLocation(),
-			FRotationMatrix::MakeFromXZ(-N, V).Rotator(), Params);
+		// the picture's height up the quad's V, its width along U (THE PICTURE'S AXES in SpawnWear)
+		const FRotator Turn = FRotationMatrix::MakeFromXY(-N, V.GetSafeNormal()).Rotator();
+		ADecalActor* Stain = World->SpawnActor<ADecalActor>(ADecalActor::StaticClass(), Quad->GetActorLocation(), Turn, Params);
 		if (Stain == nullptr || Stain->GetDecal() == nullptr)
 		{
 			D.Note = "decal-spawn-refused";
 			return false;
 		}
-		Stain->GetDecal()->DecalSize = FVector(10.0, U.Size() * 0.5, V.Size() * 0.5);
+		Stain->SetActorRotation(Turn);   // set outright: see THE TURN in SpawnWear
+		Stain->GetDecal()->DecalSize = FVector(10.0, V.Size() * 0.5, U.Size() * 0.5);
 		UMaterialInstanceDynamic* M = UMaterialInstanceDynamic::Create(GGrimeMaterial, Stain);
 		if (M == nullptr)
 		{
@@ -7408,6 +7432,173 @@ namespace
 		++GStainsStood;
 		D.Note = "stood-as-a-deferred-decal/M_LedgerGrime";
 		return true;
+	}
+
+	// ---- THE WEAR LAYER, D53 (the proof frame, stage 1) --------------------
+	//
+	// Jafar, 1 October: "the wear layer I ruled for on 21 September, 'grime is
+	// the strategy', D53, was never built, so build it, with per-house
+	// variation seeds and wear masks emitted by the generator; replace the flat
+	// decal pictures with Unreal's projected decals". tools/street_wear.py
+	// places it by rule from the street's own pieces into
+	// production/specs/street-wear.json: a splash band at the foot of every
+	// wall, streaks under every sill, algae at every downpipe's shoe, soot on
+	// the stacks, oil where cars stand. Each stands here as a deferred decal
+	// with M_LedgerGrime, the stains' own material, its picture from the decal
+	// root, its strength from the file and its colour by its kind. Nothing is
+	// placed by hand; the town reuses the same rules.
+	int32 GWearStood = 0, GWearAsked = 0;
+
+	bool ReadStreetSpecFile(const TCHAR* Leaf, FString& Out)
+	{
+		const FString FileName(Leaf);
+		const FString ExeDir = FPaths::GetPath(FPlatformProcess::ExecutablePath());
+		TArray<FString> Cands;
+		FString Repo;
+		if (FParse::Value(FCommandLine::Get(), TEXT("LedgerRepo="), Repo) && !Repo.IsEmpty()) { Cands.Add(FPaths::Combine(Repo, TEXT("production/specs"), FileName)); }
+		Cands.Add(AbsProject(*(FString(TEXT("../production/specs/")) + FileName)));
+		Cands.Add(AbsProject(*(FString(TEXT("../../../../production/specs/")) + FileName)));
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(ExeDir, FString(TEXT("../../../../../../production/specs/")) + FileName)));
+		Cands.Add(FPaths::Combine(FPaths::GetPath(GSpecPath), FileName));
+		Cands.Add(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData/production/specs"), FileName));
+		for (FString C : Cands)
+		{
+			FPaths::CollapseRelativeDirectories(C);
+			if (FPaths::FileExists(C) && FFileHelper::LoadFileToString(Out, *C)) { return true; }
+		}
+		return false;
+	}
+
+	void SpawnWear(UWorld* World)
+	{
+		GWearStood = GWearAsked = 0;
+		FString Text;
+		if (World == nullptr || GDecalRoot.IsEmpty() || !ReadStreetSpecFile(TEXT("street-wear.json"), Text))
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerWear: not laid (%s)"), World == nullptr ? TEXT("no world") : GDecalRoot.IsEmpty() ? TEXT("no decal root") : TEXT("no street-wear.json"));
+			return;
+		}
+		if (GGrimeMaterial == nullptr) { GGrimeMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/M_LedgerGrime.M_LedgerGrime")); }
+		if (GGrimeMaterial == nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerWear: not laid (no M_LedgerGrime)")); return; }
+		TSharedPtr<FJsonObject> Root;
+		const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
+		const TArray<TSharedPtr<FJsonValue>>* List = nullptr;
+		if (!FJsonSerializer::Deserialize(R, Root) || !Root.IsValid() || !Root->TryGetArrayField(TEXT("decals"), List)) { return; }
+		// THE COLOUR EACH KIND DARKENS TOWARD (M_LedgerGrime's GrimeTint): weather on
+		// brick goes brown-grey, algae green, soot and oil near black.
+		auto TintOf = [](const FString& Kind) -> FLinearColor
+		{
+			if (Kind == TEXT("algae")) { return FLinearColor(0.10f, 0.17f, 0.06f); }
+			if (Kind == TEXT("soot")) { return FLinearColor(0.03f, 0.03f, 0.03f); }
+			if (Kind == TEXT("oil")) { return FLinearColor(0.03f, 0.03f, 0.04f); }
+			if (Kind == TEXT("splash")) { return FLinearColor(0.20f, 0.17f, 0.13f); }
+			return FLinearColor(0.15f, 0.13f, 0.11f);
+		};
+		TMap<FString, UTexture2D*> Pics;
+		for (const TSharedPtr<FJsonValue>& V : *List)
+		{
+			const TSharedPtr<FJsonObject> D = V->AsObject();
+			if (!D.IsValid()) { continue; }
+			++GWearAsked;
+			const FString Kind = D->GetStringField(TEXT("kind"));
+			const FString Pic = D->GetStringField(TEXT("picture"));
+			UTexture2D** Have = Pics.Find(Pic);
+			if (Have == nullptr)
+			{
+				const FString Leaf = FPaths::GetCleanFilename(Pic);
+				const FString Full = GDecalRoot / Pic / (Leaf + TEXT(".png"));
+				int32 W = 0, H = 0;
+				FString As;
+				Have = &Pics.Add(Pic, IFileManager::Get().FileSize(*Full) > 0 ? ImportTexture(Full, true, W, H, As) : nullptr);
+			}
+			if (*Have == nullptr) { continue; }
+			const double X = D->GetNumberField(TEXT("x_m")), Y = D->GetNumberField(TEXT("y_m")), Z = D->GetNumberField(TEXT("z_m"));
+			const double Wm = D->GetNumberField(TEXT("w_m")), Hm = D->GetNumberField(TEXT("h_m"));
+			const double Yaw = D->GetNumberField(TEXT("yaw_deg")), Pitch = D->GetNumberField(TEXT("pitch_deg"));
+			// Its normal, out of the surface toward the viewer: a wall decal faces the
+			// street (yaw 0 the east walls, -y in the engine; 180 the west, +y); a
+			// ground decal (pitch 90) faces up, turned about it by its yaw.
+			// THE PICTURE'S AXES (2 October): a decal reads its picture across its local Z (the
+			// picture's width) and down its local Y (its height), not Y and Z, so every mark had
+			// been turned a quarter: a wide splash strip stood on end and printed as stripes.
+			// So a wall mark's Y is up and its Z runs along the wall; a ground mark's Z runs
+			// along its yaw, its long side, as a puddle lies along the gutter.
+			FVector N;
+			FRotator Turn;
+			const double A = FMath::DegreesToRadians(Yaw);
+			if (Pitch > 45.0)
+			{
+				N = FVector(0.0, 0.0, 1.0);
+				Turn = FRotationMatrix::MakeFromXZ(-N, FVector(FMath::Cos(A), FMath::Sin(A), 0.0)).Rotator();
+			}
+			else
+			{
+				N = FVector(FMath::Sin(A), -FMath::Cos(A), 0.0);   // 0 east walls, 180 west, 270 a gable facing south (2 October)
+				Turn = FRotationMatrix::MakeFromXY(-N, FVector(0.0, 0.0, 1.0)).Rotator();
+			}
+			FActorSpawnParameters Params;
+			Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			// HOW FAR A MARK REACHES (2 October, measured with -WearTest's traces): every street wall
+			// stands within 1 cm of its stated face, stallrisers and pipes up to 14 cm proud of it.
+			// The box reaches 16 cm out and 6 cm in: a deeper reach printed the picture stretched
+			// along every door reveal it crossed (the third review's smears on the door frames).
+			// A ground mark reaches 16 cm up and 6 cm down, as before near enough.
+			const FVector Into = N * 5.0;
+			ADecalActor* Decal = World->SpawnActor<ADecalActor>(ADecalActor::StaticClass(), FVector(X * 100.0, Z * 100.0, Y * 100.0) + Into,
+				Turn, Params);
+			if (Decal == nullptr || Decal->GetDecal() == nullptr) { continue; }
+			// THE TURN, SET OUTRIGHT (2 October): ADecalActor's own component points down
+			// (pitch -90), and SpawnActor combines the spawn rotation with it, so every wall mark
+			// projected downward, smeared down the wall and cut to 60 cm tall, every ground mark
+			// sideways, and a gable's marks hardly at all. Setting the actor's rotation after
+			// spawning replaces that combination with the one asked for.
+			Decal->SetActorRotation(Turn);
+			// -WearTest: every wear decal bright red at full strength and 50 cm deep, to see where they land
+			static const bool bWearTest = FParse::Param(FCommandLine::Get(), TEXT("WearTest"));
+			Decal->GetDecal()->DecalSize = FVector(bWearTest ? 50.0 : 11.0, Hm * 50.0, Wm * 50.0);
+			// STANDING WATER (tools/ue/make_wet_material.py): darker, a near mirror, the
+			// ground drowned flat; every other kind is a stain (M_LedgerGrime).
+			static UMaterialInterface* WetMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/M_LedgerWet.M_LedgerWet"));
+			const bool bWater = Kind == TEXT("puddle");
+			if (bWater && WetMaterial == nullptr) { Decal->Destroy(); continue; }
+			UMaterialInstanceDynamic* M = UMaterialInstanceDynamic::Create(bWater ? WetMaterial : GGrimeMaterial, Decal);
+			if (M == nullptr) { Decal->Destroy(); continue; }
+			if (bWater)
+			{
+				M->SetTextureParameterValue(FName(TEXT("WetMask")), *Have);
+				M->SetScalarParameterValue(FName(TEXT("WetStrength")), (float)D->GetNumberField(TEXT("strength")));
+			}
+			else
+			{
+				M->SetTextureParameterValue(FName(TEXT("GrimeTex")), *Have);
+				M->SetScalarParameterValue(FName(TEXT("GrimeStrength")), (float)D->GetNumberField(TEXT("strength")));
+				M->SetVectorParameterValue(FName(TEXT("GrimeTint")), bWearTest ? FLinearColor(1.0f, 0.0f, 0.0f) : TintOf(Kind));
+				if (bWearTest) { M->SetScalarParameterValue(FName(TEXT("GrimeStrength")), 1.0f); }
+			}
+			Decal->SetDecalMaterial(M);
+			if (bWearTest)
+			{
+				// where the surface really is: a line from 2 m in front of the mark, through it, 2 m on
+				FHitResult Hit;
+				const FVector At(X * 100.0, Z * 100.0, Y * 100.0);
+				FCollisionQueryParams Q(FName(TEXT("WearTest")), true);
+				Q.bReturnFaceIndex = true;
+				const bool bHit = World->LineTraceSingleByChannel(Hit, At + N * 200.0, At - N * 200.0, ECC_Visibility, Q);
+				UPrimitiveComponent* HitC = Hit.GetComponent();
+				int32 Sec = -1;
+				UMaterialInterface* HitM = (bHit && HitC) ? HitC->GetMaterialFromCollisionFaceIndex(Hit.FaceIndex, Sec) : nullptr;
+				UE_LOG(LogTemp, Display, TEXT("LedgerWearTest: ... actor %s, material %s, receives decals %d, decal rot %s size %s"),
+					(bHit && Hit.GetActor()) ? *Hit.GetActor()->GetName() : TEXT("-"), HitM ? *HitM->GetName() : TEXT("-"), HitC ? (int32)HitC->bReceivesDecals : -1,
+					*Decal->GetActorRotation().ToString(), *Decal->GetDecal()->DecalSize.ToString());
+				UE_LOG(LogTemp, Display, TEXT("LedgerWearTest: %s on %s at %s yaw %.0f: %s"), *Kind, *D->GetStringField(TEXT("on")), *At.ToString(), Yaw,
+					bHit ? *FString::Printf(TEXT("surface at %s (%s)"), *Hit.ImpactPoint.ToString(), Hit.GetComponent() ? *Hit.GetComponent()->GetName() : TEXT("?")) : TEXT("no surface within 2 m"));
+			}
+#if WITH_EDITOR
+			Decal->SetActorLabel(FString::Printf(TEXT("wear_%s_%d"), *Kind, GWearStood));
+#endif
+			++GWearStood;
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerWear: %d of %d wear decals stood (street-wear.json, D53)"), GWearStood, GWearAsked);
 	}
 
 	void BindSurfaces()
@@ -7977,6 +8168,8 @@ namespace
 			GDecalResults, std::string(TCHAR_TO_UTF8(*GDecalRoot)),
 			GDecalRootFiles, GDecalRootTried);
 		PaintStreet();
+		// THE WEAR LAYER (D53), once the decal root is known and the street stands.
+		if (GEngine != nullptr && GEngine->GetWorldContexts().Num() > 0) { for (const FWorldContext& Ctx : GEngine->GetWorldContexts()) { if (Ctx.World() != nullptr && (Ctx.WorldType == EWorldType::Game || Ctx.WorldType == EWorldType::PIE)) { SpawnWear(Ctx.World()); break; } } }
 		// The scans marked "always" go on now, so play and every shot wear
 		// them; a corner shot marked scanned adds the rest.
 		DriveCornerSurfaces(std::string());
