@@ -24,7 +24,7 @@ class UWorld;
 
 namespace LedgerTitle
 {
-	enum class EChoice : uint8 { None, NewGame, Continue, Settings, Quit };
+	enum class EChoice : uint8 { None, NewGame, Continue, Settings, Credits, Quit };
 
 	// Once per PC (a mark in the game's own settings file): full screen at the
 	// desktop's size, and the benchmark's picture level.

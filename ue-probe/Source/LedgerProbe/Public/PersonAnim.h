@@ -159,6 +159,15 @@ public:
 	float WalkWeight = 0.0f, PauseLeft = 0.0f;
 	bool bToB = true;
 	int32 WalkLegs = 0;
+	// THE MINUTE AFTER, 1 October (23 September's ruling; the rulings sweep): when something
+	// happens in the street (the smash), a walker turns aside to it: it sets off after Delay
+	// seconds toward Spot, stands there looking at LookAt for Stay seconds, then walks back to
+	// where it was and takes up its round again. A body with no walk clip does not slide.
+	void GoAndLook(const FVector& Spot, const FVector& LookAt, float Delay, float Stay);
+	bool IsGathering() const { return GatherPhase >= 0; }
+	int32 GatherPhase = -1;          // -1 none, 0 setting off, 1 going, 2 looking, 3 going back
+	FVector GatherSpot = FVector::ZeroVector, GatherLook = FVector::ZeroVector, GatherFrom = FVector::ZeroVector;
+	float GatherLeft = 0.0f, GatherStay = 0.0f;
 	static constexpr int32 MouthCurveCount = 11;
 	static constexpr const TCHAR* MouthCurves[MouthCurveCount] = {
 		TEXT("CTRL_expressions_jawOpen"),

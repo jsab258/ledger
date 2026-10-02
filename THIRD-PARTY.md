@@ -20,7 +20,7 @@ one. **If you add assets, add a row. The build fails otherwise.**
 | **Source** | **CSTR VCTK Corpus** version 0.92 (Centre for Speech Technology Research, University of Edinburgh), by Junichi Yamagishi, Christophe Veaux and Kirsten MacDonald; https://doi.org/10.7488/ds/2645 |
 | **Licence** | Creative Commons Attribution 4.0 International (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/ |
 | **Where in the repo** | `game-design/picked-clips/` (the references), `voice-candidates/` (the listening pass), `ledger/Assets/StreamingAssets/Audio/Voice/` (the synthesised bark bank, 5 Aug), `game-design/voice-live/` (lines spoken by the live model), `game-design/voice-conds/` (the precomputed conditioning, 1 Sep) |
-| **Speakers used** | p225 p226 p227 p228 p231 p233 p238 p241 p244 p245 p249 p254 p256 p263 p265 p266 p272 p273 p276 p282 p287 p288 p292 (p225, p226, p233 and p254 added 24 September: June, Aldous, Zlata and Danny, cast 14 August and missing from this row) |
+| **Speakers used** | p225 p226 p227 p228 p231 p233 p238 p241 p244 p245 p249 p254 p256 p263 p265 p266 p272 p273 p276 p282 p287 p288 p292 (p225, p226, p233 and p254 added 24 September: June, Aldous, Zlata and Danny, cast 14 August and missing from this row); p267 added 1 October, Sheila Dunn's voice, Jafar's pick of 30 September (`game-design/picked-clips/lena.p267.wav`, the 15-second reference his pick was heard from) |
 
 **Required attribution text, to appear in the shipped credits:**
 
@@ -94,7 +94,7 @@ from which reference. Not shipped: the chosen voice's reference moves to
 
 | Reference | Source | Licence | Credit |
 |---|---|---|---|
-| His approved clips (lena.p228, rocco.p227, sam.p241) | the CSTR VCTK Corpus, as above | CC BY 4.0 | the VCTK credit above |
+| His approved clips (lena.p267 since 1 October, his pick; rocco.p227, sam.p241) | the CSTR VCTK Corpus, as above | CC BY 4.0 | the VCTK credit above |
 | Two Google northern English volunteers per sex (speakers nof_04310, nof_05223, nom_09697, nom_09334) | "Crowdsourced high-quality UK and Ireland English Dialect speech data set", Google, OpenSLR SLR83 (https://www.openslr.org/83/); Demirsahin, Kjartansson, Gutkin and Rivera, "Open-source Multi-speaker Corpora of the English Accents in the British Isles", LREC 2020 | CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/ | the clips derived from these references are shared under CC BY-SA 4.0 in turn. Whether a synthetic voice cloned from a ShareAlike reference must itself be ShareAlike is unsettled; it is a stated risk until he rules, and one reason these are candidates only |
 | Voices designed from a written description | Parler-TTS mini v1 (Hugging Face, parler-tts/parler-tts-mini-v1), weights Apache-2.0 | Apache-2.0 | designed from text alone; the model learned from audiobook readers, so "no real person behind it" is likely, not guaranteed |
 
@@ -123,13 +123,37 @@ latter; the FBX files are tracked because they are project inputs.
 **Courtesy credit for the shipped credits screen:** "Vehicle and prop models
 by Kenney (kenney.nl), CC0."
 
-## Engine — Unity
+## Engine — Unreal Engine 5.8, Epic Games (the game as it ships)
 
 | | |
 |---|---|
-| **What** | Unity 6000.0.58f1, built-in render pipeline |
+| **What** | Unreal Engine 5.8, the engine the game is built and packaged with (`ue-probe/`), since September 2026 |
+| **Licence** | The Unreal Engine End User License Agreement (Epic Games, Inc.); royalties apply only above its revenue threshold |
+| **Obligation** | The EULA's credit notice in the game's credits: "Unreal® Engine, Copyright 1998–2026, Epic Games, Inc. All rights reserved." (on the credits page, `production/specs/credits.json`) |
+
+## Characters — MetaHuman, Epic Games
+
+| | |
+|---|---|
+| **What** | The cast's faces and bodies (MH_RoccoP2, MH_LenaS4, MH_SamS6 and the street's people), made in MetaHuman Creator from Epic's presets and the project's own measurements, and Epic's MetaHuman garments, hair and grooms where they are worn |
+| **Licence** | The Unreal Engine EULA, which licenses MetaHumans for use in Unreal Engine products; the MetaHuman files stay out of this public repository and live on Jafar's PC (F:/LedgerTools) |
+| **Obligation** | Credited on the credits page; shipped only inside the packaged Unreal game |
+
+## Animation — Epic Games' samples (Unreal-only content)
+
+| | |
+|---|---|
+| **What** | Idles and walks from Epic's free animation samples, where the game uses them (the visual bar's V6) |
+| **Licence** | Epic's "UE-Only Content" terms under the Unreal Engine EULA: allowed in a product that requires the engine; the licence allowlist admits Epic's Unreal-only content for animation only (entry 8, 30 September) |
+| **Obligation** | Credited on the credits page |
+
+## Engine — Unity (the old build, not shipped)
+
+| | |
+|---|---|
+| **What** | Unity 6000.0.58f1, built-in render pipeline: the old build under `ledger/Assets` and `legacy/`, whose C# Core the game's simulation is ported from |
 | **Licence** | Unity Personal |
-| **Obligation** | Unity Personal requires the "Made with Unity" splash. It is not currently in the build — M22.3 |
+| **Obligation** | None while it is not shipped; the "Made with Unity" splash applies only if a Unity build is ever distributed |
 
 ## Fonts — PT SANS SHIPS, UNDER THE SIL OPEN FONT LICENCE 1.1
 

@@ -43,11 +43,11 @@
   },
   {
    "thing": "production/casting/darren-milner/SHEET.md",
-   "what": "Darren Milner: face, body, clothes, hair and voice (in the game as the MetaHuman 'Sam', take C5, the candidate Jafar approved; voice sam.p241, his pick A)",
+   "what": "Darren Milner: face, body, clothes, hair and voice (in the game as the MetaHuman 'Sam', take S6, his face with Epic's short cut, Jafar's pick on 30 September's page (DECISIONS); C5 before it; voice sam.p241, his pick A)",
    "backup": [
     {
-     "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamC5.uasset",
-     "as": "approved/darren-milner/source/MH_SamC5.uasset",
+     "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamS6.uasset",
+     "as": "approved/darren-milner/source/MH_SamS6.uasset",
      "first": true
     },
     {
@@ -56,8 +56,8 @@
      "first": true
     },
     {
-     "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamC5",
-     "as": "approved/darren-milner/built/MH_SamC5"
+     "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamS6",
+     "as": "approved/darren-milner/built/MH_SamS6"
     }
    ]
   },

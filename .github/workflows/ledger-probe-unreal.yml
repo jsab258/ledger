@@ -178,6 +178,7 @@ jobs:
       # tools/retention.py runs the retention limits first; if that is not
       # enough, the run stops here, says so, and is not retried.
       - name: Check free space on C and F
+        id: space
         shell: bash
         run: |
           python tools/retention.py space --job "the build machine's run" || {
@@ -2516,8 +2517,11 @@ jobs:
       # green: the exact colour that was read as a landing on runs 18 and
       # 22. A commit or a push that did not happen is not a landed run, so
       # it fails the job. Amendment A2, ruling of 2026-09-06.
+      # NOT AFTER A STOP FOR SPACE (2 October: the run at 43d5103 stopped at the
+      # space check and this step still published a NO-LAUNCH verdict, which turned
+      # the checks' crime-verdict self-test red for every session).
       - name: Commit the probe result
-        if: always()
+        if: always() && steps.space.outcome != 'failure'
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
