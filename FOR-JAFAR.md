@@ -66,7 +66,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Past two tries:** the jacket's shape (nine drapes); Darren's own drape (three).
 
-**Research:** MetaHumans into Marvelous; turned seams and folds; ready-made tailoring and its costs.
+**Research:** MetaHumans into Marvelous; turned seams and folds; ready-made tailoring, costed.
 
 **C: free:** 30 GB at the start, 85 now (F: 2.4 to 42).
 
