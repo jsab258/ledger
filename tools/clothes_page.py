@@ -26,24 +26,12 @@ PICTURES = [("ron-portrait.jpg", FRAMES + "/ron-stand/ue-portrait-rocco-p2-mid.p
             ("ron-side.jpg", FRAMES + "/ron-stand/ue-motion-rocco-p2-v90/f0001.png",
              "From the side: the side view reads best of all")]
 
-ASKS = [
-    ("tailoring-route", "Tailored clothes: how next? (recommended: shortlist first)",
-     [("shortlist", "Shortlist first", True), ("fab", "Buy Fab jackets", False), ("none", "No tailoring yet", False)],
-     ["<b>Shortlist first:</b> I find three freelance Marvelous clothing artists and two ready suit patterns, judge their "
-      "work against your bar and bring their prices for your yes; nothing is spent or sent. The research's estimate for a "
-      "bought pattern recut to 1990 on Ron and Darren: about $500 to 1,500 and 4 to 7 days.",
-      "<b>Buy Fab jackets:</b> two or three ready MetaHuman suit jackets on Fab (CHF 60 to 150 in all, a licence we "
-      "allow), tested on Ron and Darren in the game; none is a late-1980s cut, and on a heavy man they are likely to warp.",
-      "<b>No tailoring yet:</b> the men wear Epic's plain clothes; tailoring waits.",
-      "<b>Why the proof failed:</b> a fresh reviewer failed it broadly in the game: Ron's right lapel collapses, the front "
-      "hangs as a sack, the shoulders are boxy, the sleeves full; the jeans show through the seat. Marvelous cannot turn and "
-      "hold a lapel by script, and a cut fitted by measurement alone missed nine times. Epic's own wardrobe has no tailored "
-      "jacket. Darren's frames come tomorrow."]),
-    ("md-trial", "Marvelous Designer's trial: cancel before 15 October? (recommended: cancel)",
-     [("cancel", "Cancel it", True), ("keep", "Keep it", False)],
-     ["The free trial turns into a paid month ($39) by itself on 15 October. The proof failed, so by your ruling nothing "
-      "is bought. Cancelling is yours (in your CLO account). Keep it only if you choose a route that uses it."]),
-]
+# 2 October, evening: both questions settled by his message (DECISIONS.md, the free-garments entries): free CLO
+# patterns are tested in the Marvelous trial first, and the month is bought only if one passes, so the trial runs
+# to 15 October. The page stays, its questions withdrawn, so the link never shows a settled question.
+ASKS = []
+SETTLED = ("Settled by your message of 2 October evening: the free CLO patterns are tested first in the Marvelous "
+           "trial, and you buy the month only if one passes. Nothing to tap here.")
 
 CSS = """<title>Tailored clothes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,6 +110,7 @@ def build():
         im.save(os.path.join(OUT, name), quality=92)            # full size, as filmed (2560 by 1440)
         parts.append('<figure><img src="%s" alt="%s" width="%d" height="%d"><figcaption>%s</figcaption></figure>'
                      % (name, e(cap), im.width, im.height, e(cap)))
+    parts.append('<section class="ask"><p>%s</p></section>' % e(SETTLED))
     for key, q, opts, more in ASKS:
         btns = "\n".join('<button type="button"%s id="%s-%s" data-pick="%s" aria-pressed="false">%s</button>'
                          % (' class="rec"' if rec else "", key, v, v, e(label)) for v, label, rec in opts)
