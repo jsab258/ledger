@@ -2110,6 +2110,12 @@ def plan_street(root, spec_rel=SPEC_REL):
         _falling_slab(out, "footway_%s" % name, "paving", x0, x1, c, d,
                       footway_z(c), footway_z(d),
                       "2.0m/the-normal-British-footway/falling-1-in-40-to-its-kerb")
+        # ON TO THE CLIMB'S OWN FOOTWAYS at APPROACH_X[0] (3 October: a 4 m gap at the far end),
+        # the kerb with them.
+        _falling_slab(out, "footway_%s_join" % name, "paving", x1, APPROACH_X[0], c, d,
+                      footway_z(c), footway_z(d), "the-footway-meets-the-climb's")
+        _box(out, "kerb_%s_join" % name, "kerbstone", x1, APPROACH_X[0], min(a, b), max(a, b),
+             -0.30, kerb_top_z(), "the-kerb-meets-the-climb's")
     # ---- the double yellow lines, MEASURED off the emitted piece list -----
     # Two 0.1 m bands 0.1 m apart, 12 mm of paint, running the street's whole
     # length at 2.5 and 2.7 m from the centre - which is 0.25 m out from the
@@ -3331,13 +3337,28 @@ def _roof_along_x(out, pid, x0, x1, y_front, y_ridge, y_back, z_eaves, z_ridge, 
                 "note": note or "a-closed-roof"})
 
 
-def _curved_strip(out, pid, material, x0, x1, y0, y1, lift, n=24, note=""):
+def _curved_strip(out, pid, material, x0, x1, y0, y1, lift, n=24, note="", crown=0.0):
     """A surface following the climb and its drift, smooth: n quads from x0 to
     x1, y0..y1 shifted by approach_drift, at approach_z plus lift; with a
     lift, a kerb face down to the road along the edge nearer the road's middle.
     2 October: six stepped ramps read as a flight of steps in the second review."""
     xs = [x0 + (x1 - x0) * k / n for k in range(n + 1)]
     verts, faces = [], []
+    if crown > 0.0:
+        # CROWNED AT ITS START, the crown easing out over five metres (3 October: a flat
+        # strip met the crowned road with a hairline across the far end).
+        for x in xs:
+            d = approach_drift(x)
+            z = approach_z(x) + lift
+            fall = crown * max(0.0, 1.0 - (x - x0) / 5.0)
+            verts += [(x, y0 + d, z - fall), (x, (y0 + y1) / 2.0 + d, z), (x, y1 + d, z - fall)]
+        for k in range(n):
+            a = 3 * k
+            faces.append((a, a + 3, a + 4, a + 1))
+            faces.append((a + 1, a + 4, a + 5, a + 2))
+        out.append({"id": pid, "material": material, "kind": "mesh", "verts": verts, "faces": faces,
+                    "note": note or "a-curved-surface-following-the-climb"})
+        return
     for x in xs:
         d = approach_drift(x)
         z = approach_z(x) + lift
@@ -3447,10 +3468,14 @@ def _north_approach(out):
     th = THRESHOLD_ABOVE_CROWN_M
     # THE ROAD: level to xf, the climb to the bend, the bend's own square,
     # and the road away west.
-    _box(out, "backdrop_rise_approach_road", "asphalt", x0, xf, -3.0, 3.0, -0.30, 0.0,
-         "the-road-carries-on")
+    # CROWNED AS THE STREET IS, and joined to it (3 October: the street's road stopped at
+    # 44 m and this one began at 48 m as a flat box, so its dark 0.3 m front face showed
+    # across the far end as a lip, the fresh reviews' "seam" and "hard dark lip").
+    fall = ROAD_HALF_M * ROAD_CROSSFALL
+    _road(out, "backdrop_rise_approach_join", "asphalt", 44.0, x0, ROAD_HALF_M, fall, "the-road-meets-the-climb")
+    _road(out, "backdrop_rise_approach_road", "asphalt", x0, xf, ROAD_HALF_M, fall, "the-road-carries-on")
     _curved_strip(out, "backdrop_rise_approach_climb", "asphalt", xf, bx0 + 0.05, -3.0, 3.0, 0.0,
-                  note="and-climbs-one-in-%d/curving-west-%.0fm" % (round(1.0 / APPROACH_CLIMB), APPROACH_DRIFT_M))
+                  note="and-climbs-one-in-%d/curving-west-%.0fm" % (round(1.0 / APPROACH_CLIMB), APPROACH_DRIFT_M), crown=fall)
     dyt = approach_drift(bx0)              # the drift at the top, which the bend keeps
     _box(out, "backdrop_rise_approach_bend", "asphalt", bx0, bx1, APPROACH_BEND_Y[0], 3.0 + dyt,
          zt - 0.30, zt, "and-bends-away-west")

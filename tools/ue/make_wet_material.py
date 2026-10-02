@@ -27,8 +27,9 @@ ASSET = "M_LedgerWet"
 ASSET_PATH = PACKAGE + "/" + ASSET
 MASK_PARAM = "WetMask"
 STRENGTH_PARAM, STRENGTH_DEFAULT = "WetStrength", 0.9
-TINT_PARAM, TINT_DEFAULT = "WetTint", (0.06, 0.062, 0.066)   # 2 October: 0.025 read as holes in the first stage-1 frame
-ROUGH_PARAM, ROUGH_DEFAULT = "WetRoughness", 0.05   # 2 October, evening: 0.04 "read as holes" while every decal was turned wrong; with the turn fixed, near-mirror puddles to reflect the shopfronts (his "wet street and its reflections")
+TINT_PARAM, TINT_DEFAULT = "WetTint", (0.035, 0.036, 0.038)   # 2 October, late (production/research/aaa-street/PUDDLES-2026-10-02.md): the "holes" of the morning were the decals turned wrong; water over asphalt is near black, its brightness all reflection
+ROUGH_PARAM, ROUGH_DEFAULT = "WetRoughness", 0.02   # 2 October, late (the puddle research): water is a mirror; against a road at 0.45 it reads as one
+WATER_SPECULAR = 0.25   # water's F0 of 0.02 in Unreal's terms (F0 = 0.08 x Specular), Lagarde via the puddle research
 WHITE = "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
 FLAGS = [
     ("material_domain", "MaterialDomain", "MD_DEFERRED_DECAL"),
@@ -91,6 +92,8 @@ def main():
     strength.set_editor_property("default_value", STRENGTH_DEFAULT)
     flat = mel.create_material_expression(mat, X.MaterialExpressionConstant3Vector, -900, 750)
     flat.set_editor_property("constant", unreal.LinearColor(0.0, 0.0, 1.0, 1.0))
+    spec = mel.create_material_expression(mat, X.MaterialExpressionConstant, -900, 900)
+    spec.set_editor_property("r", WATER_SPECULAR)
     opacity = mel.create_material_expression(mat, X.MaterialExpressionMultiply, -300, 450)
     links = [(mask, "A", opacity, "A"), (strength, "", opacity, "B")]
     wired = 0
@@ -103,13 +106,14 @@ def main():
     for src, prop in ((tint, unreal.MaterialProperty.MP_BASE_COLOR),
                       (rough, unreal.MaterialProperty.MP_ROUGHNESS),
                       (flat, unreal.MaterialProperty.MP_NORMAL),
+                      (spec, unreal.MaterialProperty.MP_SPECULAR),
                       (opacity, unreal.MaterialProperty.MP_OPACITY)):
         try:
             if mel.connect_material_property(src, "", prop):
                 wired += 1
         except Exception:
             pass
-    asked = len(links) + 4
+    asked = len(links) + 5
     try:
         mel.recompile_material(mat)
     except Exception:
@@ -134,8 +138,9 @@ def selftest():
         else:
             failed += 1
             print("FAILED - %s : %s" % (name, detail))
-    line = wet_line("MADE", 6, 6, ["material_domain=taken"], True)
-    check("the line carries its wired denominator", "wetMaterialWired=6/6" in line, line)
+    line = wet_line("MADE", 7, 7, ["material_domain=taken"], True)
+    check("the line carries its wired denominator", "wetMaterialWired=7/7" in line, line)
+    check("standing water reflects as water does (Specular 0.25, F0 0.02)", abs(WATER_SPECULAR - 0.25) < 1e-9)
     check("and names the asset the game loads", "wetMaterialPath=/Game/Ledger/M_LedgerWet" in line)
     check("standing water is darker than wet asphalt (about 0.05) and a near mirror",
           max(TINT_DEFAULT) < 0.05 and ROUGH_DEFAULT < 0.1)

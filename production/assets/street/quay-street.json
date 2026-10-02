@@ -60,7 +60,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 46
+   "faces": 84
   },
   {
    "mesh": "street_brick_grey",
@@ -1880,7 +1880,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 44
+   "faces": 96
   },
   {
    "mesh": "street_lead",
@@ -2144,7 +2144,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 212
+   "faces": 264
   },
   {
    "mesh": "street_pot_buff",

@@ -204,9 +204,10 @@ def build(pieces):
             if x >= 46.0:
                 break
             L = 0.9 + 1.4 * rnd(s, "len%d" % k)
-            W = 0.45 + 0.45 * rnd(s, "wid%d" % k)
-            # centred a little out from the gutter, onto the road, where the camber flattens
-            z = sign * (CHANNEL_Z_M - 0.1 - W * 0.35)
+            W = 0.22 + 0.12 * rnd(s, "wid%d" % k)
+            # IN THE CHANNEL, between the double yellow lines and the kerb (3 October: laid
+            # across the lines, the water greyed them into a smear; the fresh review's "blob")
+            z = sign * (CHANNEL_Z_M + 0.01)
             decals.append({"kind": "puddle", "picture": PUDDLES[int(rnd(s, "pic%d" % k) * 3) % 3], "x_m": round(x, 4),
                            "z_m": round(z, 4), "w_m": round(L, 4), "h_m": round(W, 4),
                            "yaw_deg": round(-8.0 + 16.0 * rnd(s, "yaw%d" % k), 2), "pitch_deg": 90.0,
@@ -221,12 +222,12 @@ def build(pieces):
         x = 3.0
         k = 0
         while True:
-            x += 2.5 + 4.0 * rnd(s, "gap%d" % k)
+            x += 4.0 + 7.0 * rnd(s, "gap%d" % k)
             if x >= 42.0:
                 break
             L = 1.2 + 1.8 * rnd(s, "len%d" % k)
             W = 0.5 + 0.7 * rnd(s, "wid%d" % k)
-            track = 0.9 if rnd(s, "track%d" % k) < 0.5 else 2.0   # the nearside and offside wheel tracks
+            track = 1.6 + 0.6 * rnd(s, "track%d" % k)   # the nearside wheel track, wandering (3 October: a centre row read as stamped)
             decals.append({"kind": "puddle", "picture": PUDDLES[int(rnd(s, "pic%d" % k) * 3) % 3], "x_m": round(x, 4),
                            "z_m": round(sign * track, 4), "w_m": round(L, 4), "h_m": round(W, 4),
                            "yaw_deg": round(-12.0 + 24.0 * rnd(s, "yaw%d" % k), 2), "pitch_deg": 90.0,

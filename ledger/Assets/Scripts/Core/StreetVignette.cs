@@ -1829,7 +1829,7 @@ namespace Ledger.Core
                 plan.GroundAt(x, sgn * az, out double gy, out string edge);
                 var p = new Piece
                 {
-                    Bom = "G8_litter", Name = "litter" + i, Shape = "box", Surface = "plaster",
+                    Bom = "G8_litter", Name = "litter" + i, Shape = "box", Surface = "wood",   // 3 October: plaster and concrete drew it as white chips (fresh review); sodden card and paper read brown
                     X = x, Y = gy + th * 0.5, Z = sgn * az, SX = size, SY = th, SZ = size * 0.7,
                     YawDeg = r0 * 180.0, Edge = edge, Region = RegionOf(x)
                 };
