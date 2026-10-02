@@ -5,9 +5,10 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Friday 2 October, 10:45)
+## Overview (Friday 2 October, 17:15)
 
-**Disk (10-02 10:45): C: 106.6 GB free, F: 36.7 GB free, both over their floors after your yes on the disk page (47 GB of unused models, an old test build, old voice graphs and an unused language model deleted at 10:43). Grew most since yesterday afternoon: the build machine's broken download (+30 GB, deleted), the git history (+13.6 GB), your played copy of the game (+5.5 GB).**
+**Disk (10-02 17:10): C: 99.6 GB free, F: 37.8 GB free, both over their floors; the nightly cleanup runs at 04:30 and writes tomorrow's line. Grew most since yesterday afternoon: the build machine's broken download (+30 GB, deleted), the git history (+13.6 GB), your played copy of the game (+5.5 GB).**
+
 
 **The proof frame's meter (your ask):** stage 1 started Thursday 1 October at 21:38; paused at 22:31 for the rulings sweep's eight items, which your message puts ahead of it; it resumes when they are in, and the meter counts only its own hours. Builds and renders start again now that F: has room. Stage 1's frame on your page: not yet.
 
@@ -75,19 +76,21 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Builder, Friday 2 October
 
-(Written 03:20; rewritten 10:10.)
+(Rewritten 17:15.)
 
-**[Disk page](https://claude.ai/artifact/GxkF7zTNJit7cAV2xaXuB2):** your yes at 10:40; the 47 GB went at 10:43.
+**[Disk page](https://claude.ai/artifact/GxkF7zTNJit7cAV2xaXuB2):** your yes at 10:40; carried out.
 
-**Got wrong:** my 22:07 upload made the build machine download 30 GB of old history; C: hit 0 GB. Its pull now fetches recent history only. I also kept working after the disk filled; a full disk now stops a session.
+**Done:** both drives measured; 88 GB freed (41 on C:, 47 on F: with your yes); retention runs nightly. The sweep's items in the finished game, walked 11 of 11 after fixing Q on the pause page: Sheila's p267 voice and thinking sounds, Darren's S6, subtitles with their sound, the landing man's lines, the gathering, credits. Ron's Marvelous jacket filmed; it failed clothing's review.
 
-**Done:** both drives measured; 41 GB deleted on C:; retention limits run nightly at 04:30 (first run proved, 1,408 old files); a free-space check before every build, here and on the build machine; its pictures go into git once a day at most. Sheila's p267 voice kept her English accent through the game's engine (12 lines, no American); her two thinking sounds made. The street's far end rewritten and exported.
+**Failed or unproven:** the delay, past the two-tries rule (Needs you). Stage 1's frame: haze and streaks work; the sky's clouds set aside after research; not yet on your page.
 
-**Evidence:** checks 38/38 at 03:00; retention self-test passed. Unreal not built since.
+**Evidence:** checks 39/39; both game targets built; build machine probe PASS.
 
-**C:** 31 GB this morning, 107 now. **F:** 2.5 GB, 37 after your yes at 10:40. Backup with this commit.
+**Research:** the sky and haze in Unreal (production/research/aaa-street).
 
-**Next:** with room, film the street's end and Sheila talking.
+**C:** 31 GB this morning, 99.6 now. **F:** 2.5, now 37.8. Backup with this commit.
+
+**Next:** Darren's fit, stage 1's far end and wet street.
 
 ## 26 September, day
 
