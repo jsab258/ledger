@@ -442,3 +442,4 @@ crimeLogLines=1094 crimeInterestingLines=35 crimeLogFrom=C:\actions-runner-ledge
 [2026.10.01-19.47.22:802][228]LogD3D12RHI: ~FD3D12DynamicRHI
 [2026.10.01-19.47.22:810][228]LogExit: Exiting.
 [2026.10.01-19.47.22:861][228]Log file closed, 10/01/26 21:47:22
+materialLogFile=production/d1-probe/ue-material-log.txt materialLogFromScript=False materialLogStdoutLines=0 materialLogStderrLines=0 materialGeneratedAssets=2 materialGeneratedAssetNames=T_LedgerDefaultNormal.uasset/T_LedgerDefaultRough.uasset materialLogStat=line-counts-of-the-editor-process-own-output/not-of-the-slice-the-script-scanned
