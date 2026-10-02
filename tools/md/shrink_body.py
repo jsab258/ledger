@@ -1,7 +1,7 @@
 """Thinned copies of a body for Marvelous Designer: every point of the skin drawn towards its nearest bone by a
 factor, the skeleton and the joints' places unchanged, so the body keeps its height, pose and the line of its arms.
 
-    blender -b -P tools/md/shrink_body.py -- BODY.fbx OUT_PREFIX 0.8 0.85 0.9 0.95
+    blender -b -P tools/md/shrink_body.py -- BODY.fbx OUT_PREFIX 0.8 0.85 0.9 0.95 [--lift 0.10]
 
 OUT_PREFIX-k0.80.fbx and so on (centimetres, mesh and skeleton, as tools/md/pad_body.py writes them).
 
@@ -22,7 +22,12 @@ from mathutils.geometry import intersect_point_line
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 SRC, PREFIX = argv[0], argv[1]
-KS = [float(k) for k in argv[2:]]
+# --lift M: the copies raised M metres (the jacket's pieces are placed on the stock man; Darren's shoulders sit
+# 10 cm lower than Ron's against them, and his collar rode up behind his head: tools/md/finish_md_jacket.py --lift
+# lowers the drape again). Marvelous's own import offset (translationValueY) moved nothing.
+LIFT = float(argv[argv.index("--lift") + 1]) if "--lift" in argv else 0.0
+rest_args = argv[2:argv.index("--lift")] + argv[argv.index("--lift") + 2:] if "--lift" in argv else argv[2:]
+KS = [float(k) for k in rest_args]
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.fbx(filepath=SRC)
 arm = next(o for o in bpy.data.objects if o.type == "ARMATURE")
@@ -54,9 +59,10 @@ for w in rest:
     target.append(best[1])
 for o in [o for o in bpy.data.objects if o.type == "MESH" and o is not body]:
     bpy.data.objects.remove(o, do_unlink=True)
+lift = Vector((0, 0, LIFT))
 for k in KS:
     for v, w, q in zip(body.data.vertices, rest, target):
-        v.co = inv @ (q + (w - q) * k)
+        v.co = inv @ (q + (w - q) * k + lift)
     body.data.update()
     out = "%s-k%.2f.fbx" % (PREFIX, k)
     bpy.ops.object.select_all(action="DESELECT")

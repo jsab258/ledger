@@ -3,7 +3,7 @@ Designer: the pieces (each outline in millimetres, y up, left and right copies),
 piece's edge is sewn to which stretch of another's, by Jaeger's own named points), the lapel's roll line as a fold,
 which pieces are fused, and the pockets' places.
 
-    python tools/md/jaeger_spec.py PATTERN.json SPEC.json [--longer 50]
+    python tools/md/jaeger_spec.py PATTERN.json SPEC.json [--longer 50] [--front-balance 130] [--stance-drop 70]
 
 WHY, 1 October (Jafar's Marvelous proof, DECISIONS.md and CLOTHES.md item 0): the jacket is made the tailor's way
 in Marvelous Designer, from our own pattern, FreeSewing's Jaeger (MIT). A tailored jacket's pieces: two fronts (the
@@ -40,11 +40,57 @@ def longer(base, v):
     return [v[0], v[1] + LONGER * (v[1] - hips) / (hem - hips)]
 
 
+# THE FRONT BALANCE, 2 October: on Ron the front's hem rode 9 to 11 cm above the back's and the top button sat on
+# his lower chest (1.38 m; his waist is 1.14 m): Jaeger drafts the front for an average figure, and a big chest and
+# belly take up front length (production/art/clothing/md-jacket, the drape measured). The tailor's adjustment:
+# length added to the front across the chest, from --front-balance mm at centre front tapering to nothing at the
+# side seam (so the side seam keeps its length), spread over a band below the armhole (250 to 350 mm down from the
+# neck point, so the armhole keeps its shape). Everything below moves down with it: the break point and so the
+# roll line (a lower button stance), the buttons, the pockets, the hem.
+BALANCE = float(argv[argv.index("--front-balance") + 1]) if "--front-balance" in argv else 0.0
+# --stance-drop mm: the break point (the top button) and the buttons below it moved down centre front, a lower
+# button stance and a longer lapel (a 1990 two-button jacket's top button sat at or just below the waist; on Ron the
+# balanced jacket's was still 15 cm above his)
+STANCE = float(argv[argv.index("--stance-drop") + 1]) if "--stance-drop" in argv else 0.0
+BAL_Y = (250.0, 350.0)
+
+
+def balance(base, v):
+    if base != "jaeger.front" or BALANCE == 0:
+        return v
+    xs = max(q[0] for q in P["jaeger.front"]["paths"]["seam"]["points"] if q[0] is not None)
+    f = max(0.0, min(1.0, (xs - v[0]) / xs))
+    t = max(0.0, min(1.0, (v[1] - BAL_Y[0]) / (BAL_Y[1] - BAL_Y[0])))
+    return [v[0], v[1] + BALANCE * f * t * t * (3 - 2 * t)]
+
+
+def stance(base, v):
+    """The lower button stance: between the break point and the hem, near centre front (fully to 20 mm in from it,
+    nothing from 100 mm), the front squeezed down towards the hem, the break point moving --stance-drop mm, the hem
+    not at all (Jaeger's own lapelStart is at its limit; moving the buttons alone put the lower one in the curve of
+    the front edge)."""
+    if base != "jaeger.front" or STANCE == 0:
+        return v
+    pn = P["jaeger.front"]["points"]
+    yb = balance(base, longer(base, pn["lapelBreakPoint"]))[1]
+    yh = balance(base, longer(base, pn["hemEdge"]))[1]
+    if not yb - 1e-6 <= v[1] <= yh:
+        return v
+    f = max(0.0, min(1.0, (100.0 - v[0]) / 80.0))
+    return [v[0], v[1] + STANCE * f * (yh - v[1]) / (yh - yb)]
+
+
+def fitted(base, v):
+    """A point of Jaeger's drawing where this jacket has it: the skirt lengthened, the front balanced, the stance
+    lowered."""
+    return stance(base, balance(base, longer(base, v)))
+
+
 def raw(name):
     pts = [p for p in P[name]["paths"]["seam"]["points"] if p[0] is not None]
     if len(pts) > 1 and math.dist(pts[0], pts[-1]) < 0.05:
         pts = pts[:-1]
-    return [longer(name, q) for q in pts]
+    return [fitted(name, q) for q in pts]
 
 
 def near(pts, v):
@@ -116,8 +162,8 @@ def front_split():
         return CACHE["split"]
     pn = P["jaeger.front"]["points"]
     pts = [list(q) for q in raw("jaeger.front")]
-    B, R = list(pn["lapelBreakPoint"]), list(pn["shoulderRoll"])
-    lp = pn["neckEdge"]
+    B, R = fitted("jaeger.front", pn["lapelBreakPoint"]), fitted("jaeger.front", pn["shoulderRoll"])
+    lp = fitted("jaeger.front", pn["neckEdge"])
     pts, iB = insert_on(pts, B)
     n = len(pts)
     pts = pts[iB:] + pts[:iB]                    # B first
@@ -183,7 +229,7 @@ def outline(name):
 def at(name, point):
     """The index on the piece's outline nearest one of its named points."""
     pts = outline(name)
-    v = EXTRA.get(name, {}).get(point) or longer(name.split("~")[0], P[name.split("~")[0]]["points"][point])
+    v = EXTRA.get(name, {}).get(point) or fitted(name.split("~")[0], P[name.split("~")[0]]["points"][point])
     i = min(range(len(pts)), key=lambda k: (pts[k][0] - v[0]) ** 2 + (pts[k][1] - v[1]) ** 2)
     d = math.dist(pts[i], v)
     if d > 1.0:
@@ -348,8 +394,9 @@ def line_of(part, path):
     return [[x, -y] for x, y in pts]
 
 
+FP = lambda n: fitted("jaeger.front", fr[n])  # noqa: E731
 pockets = {"flapLine": line_of("jaeger.front", "frontPocket"), "chestLine": line_of("jaeger.front", "chestPocket"),
-           "buttons": [[fr["button1"][0], -fr["button1"][1]], [fr["button2"][0], -fr["button2"][1]]]}
+           "buttons": [[FP("button1")[0], -FP("button1")[1]], [FP("button2")[0], -FP("button2")[1]]]}
 # LINES DRAWN ON THE PIECES (Marvelous's internal lines): the roll lines (folds), each flap's pocket mouth, the welt's
 # two edges, and the button tacks. A tack is a 10 mm line at a button's place on centre front, the same on both
 # fronts, sewn to its twin: the jacket buttoned (the research: buttons are fastened only by hand in Marvelous, so the
@@ -358,7 +405,10 @@ internals = []
 for f in folds:
     internals.append({"piece": f["piece"], "name": "roll", "points": f["line"], "fold": f["angle"]})
 fl = pockets["flapLine"]
-mouth = [[fr["frontPocketTopLeft"][0], -fr["frontPocketTopLeft"][1]], [fr["frontPocketTopLeft"][0] + FLAP_W, -fr["frontPocketTopLeft"][1]]]
+mtl = FP("frontPocketTopLeft")
+mtr = fitted("jaeger.front", [fr["frontPocketTopLeft"][0] + FLAP_W, fr["frontPocketTopLeft"][1]])
+_m = math.dist(mtl, mtr)
+mouth = [[mtl[0], -mtl[1]], [mtl[0] + (mtr[0] - mtl[0]) * FLAP_W / _m, -(mtl[1] + (mtr[1] - mtl[1]) * FLAP_W / _m)]]
 internals += [{"piece": "frontR", "name": "flapMouth", "points": mirror(mouth), "fold": None},
               {"piece": "frontL", "name": "flapMouth", "points": mouth, "fold": None},
               {"piece": "frontL", "name": "weltTop", "points": W[0:2], "fold": None},
@@ -368,7 +418,12 @@ for k, (bx, by) in enumerate(pockets["buttons"]):
         internals.append({"piece": "front" + s, "name": "tack%d" % k, "points": [[bx - 5.0, by], [bx + 5.0, by]], "fold": None})
 # each flap held flat by its bottom edge too (it hangs that way when he stands; one wandered up the chest unheld),
 # and each lapel by its outer edge (front_split above)
-bottom = [[mouth[0][0] + FLAP_R, mouth[0][1] - FLAP_D], [mouth[0][0] + FLAP_W - FLAP_R, mouth[0][1] - FLAP_D]]
+# the flap's foot along the mouth's slope (the balance tilts the mouth a little towards centre front)
+_dx, _dy = mouth[1][0] - mouth[0][0], mouth[1][1] - mouth[0][1]
+_L = math.hypot(_dx, _dy)
+_ux, _uy = _dx / _L, _dy / _L
+bottom = [[mouth[0][0] + _ux * FLAP_R + _uy * FLAP_D, mouth[0][1] + _uy * FLAP_R - _ux * FLAP_D],
+          [mouth[0][0] + _ux * (_L - FLAP_R) + _uy * FLAP_D, mouth[0][1] + _uy * (_L - FLAP_R) - _ux * FLAP_D]]
 lt = [[x, -y] for x, y in CACHE["lapelTack"]]
 internals += [{"piece": "frontR", "name": "flapBottom", "points": mirror(bottom), "fold": None},
               {"piece": "frontL", "name": "flapBottom", "points": bottom, "fold": None},
