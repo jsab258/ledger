@@ -171,6 +171,10 @@ namespace
 				else { GTaken = EAction::Resume; }
 				return FReply::Handled();
 			}
+			// Q QUITS FROM THE PAUSE, as it did before the page took the input to itself
+			// (2 October: the route walk's "Esc, then Q" failed; the page is menu-only
+			// input, so the game's own Q binding never heard the key).
+			if (E.GetKey() == EKeys::Q && GPage == EPage::Menu) { GTaken = EAction::QuitGame; return FReply::Handled(); }
 			return FReply::Unhandled();
 		}
 	};
