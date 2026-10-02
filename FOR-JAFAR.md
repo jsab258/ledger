@@ -5,18 +5,20 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Thursday 1 October, 21:31)
+## Overview (Friday 2 October, 10:10)
 
-**The proof frame's meter (your ask):** stage 1 started Thursday 1 October at 21:38 (the interface's four sounds made and wired alongside, their check in the next build). Stage 1's frame on your page: not yet.
+**Disk (10-02 09:44): C: 72.8 GB free, F: 2.5 GB free; grew most files written in the day before: C:\actions-runner-ledger\_work +15.9 GB written, C:\Users\Jafar\ledger-local\.git +13.6 GB written, F:\LedgerTools\played-game +5.5 GB written.**
+
+**The proof frame's meter (your ask):** stage 1 started Thursday 1 October at 21:38; paused at 22:31 for the rulings sweep's eight items, which your message puts ahead of it; it resumes when they are in, and the meter counts only its own hours. Builds, renders and voice work wait for room on F: (item 1). Stage 1's frame on your page: not yet.
 
 ### Needs you
 
-(Every page's stored answers checked at 21:30: the cleanup page, nothing answered yet; the town's, your yes to Tom's written lines at 21:33, so the panel lights in the game. Your message of this evening is acted on: both research notes merged and read, the proof frame in place of V2 to V5 on the list, your rulings in DECISIONS.md, the friends' build after the proof and the street-wide pass.)
+(Every page's stored answers checked at 10:05: the new disk page, nothing answered yet; the old cleanup page answered by your message this morning and carried out; Thursday's and the town's, answers already acted on. Your message of this evening is acted on: both research notes merged and read, the proof frame in place of V2 to V5 on the list, your rulings in DECISIONS.md, the friends' build after the proof and the street-wide pass.)
 
-1. **[Drive C cleanup](https://claude.ai/artifact/4WE6ZWBMWHeStVxxSdaDNx), one tap, first by your rule (C: at 38.6 GB):** the project's build output, 5.2 GB, remade by the next build (recommended yes). Most of today's fall is Windows' swap file, about 22 GB after the game, my voice tests and Unreal ran together; it shrinks only when the PC restarts, which is yours: I recommend a restart tonight. The project's git store is 30 GB of history, mostly the build machine's pictures; I am stopping that growth.
+1. **[Disk page](https://claude.ai/artifact/GxkF7zTNJit7cAV2xaXuB2), one tap: delete 47 GB nothing uses (recommended yes).** Voice engines we stopped using, an old test copy of the game and the old player's voice graphs on F:, an unused language model on C:. F: has 2.5 GB, under your 20 GB floor, so builds, renders and voice work stop until then; after your yes it has about 38 GB. The page also shows the measurement and the retention limits that now run every night. Done this morning: 41 GB on C: (the build machine's broken 30 GB download, your 5.2 GB, a 6 GB staging copy); C: has 73 GB.
 2. **Marvelous Designer needs one start from you (clothing; no page):** whenever you are at the PC, open Marvelous Designer, open its Python script window (Script or Plugins menu), open C:\Users\Jafar\ledger-clothes\tools\md\md_bridge.py, press Run and leave it open (it looks busy while it works). The clothing session can then drive it; the jacket proof's pattern is drafted and waiting. Recommended: today, so the proof is in before Sunday.
 3. **Marvelous Designer's trial becomes a paid month by itself on 15 October (clothing; money):** its terms say the free 14 days are for evaluation only, not commercial use. If the jacket proof fails, cancel before 15 October; if it passes, letting it run is your $39 month, in which the game's garments are made, and they stay yours. Recommended: as stated.
-4. **[18 free Megascans and Epic's construction bodies](production/specs/fab-free-megascans.md), into your Fab library (your clicks):** your library holds none, as you said; I cannot click in the editor's Fab panel (it is a page inside the editor's own window, which I have no way to drive) and my browser is not signed in. The list, each a link, all free under both Fab licences: six leak and algae streaks, two oil stains, three asphalts, two pavement concretes, two red bricks and three grunge masks for the wear layer, and the "MetaHuman Clothing Construction Presets, Set of 4" for the jacket. Tap each, Add to My Library. Meanwhile stage 1 starts on Poly Haven and ambientCG (CC0, no account).
+4. **[18 free Megascans and Epic's construction bodies](production/specs/fab-free-megascans.md), into your Fab library (your clicks; you are adding them, your message this morning):** I cannot click in the editor's Fab panel (it is a page inside the editor's own window, which I have no way to drive) and my browser is not signed in. The list, each a link, all free under both Fab licences: six leak and algae streaks, two oil stains, three asphalts, two pavement concretes, two red bricks and three grunge masks for the wear layer, and the "MetaHuman Clothing Construction Presets, Set of 4" for the jacket. Tap each, Add to My Library. Meanwhile stage 1 starts on Poly Haven and ambientCG (CC0, no account).
 
 ### Road to worth playing
 
@@ -28,8 +30,8 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - **Replies that time out** (town, measured in play by the builder): none of 30 on the real path in the finished game this evening (29 in the character's own words, 1 ended the talk). Since this morning: measured in play.
 - **The friends' build** (builder, last in your order): it runs on your PC from a shortcut in a fresh Windows account; it now waits until the proof view has passed your eye (stage 2, and the cars, poses and night of stage 3) and the method has been carried across the whole street. Since this evening: your ruling.
 - **Faces and mouths** (builder, V7 and V8): faces frozen; Darren's S6 goes into the game next. Your ruling today: prepared lines get Epic's audio-driven mouths (reversing this morning's loudness pick for them); Sheila's twisting mouth and cheek seam diagnosed by research (her idle's one-sided mouth controls leaking through while she talks; the fix is in the animation, not her face). Since this morning: your rulings.
-- **Voices** (builder): Ron's and Darren's yes; Sheila's p267 your yes, with your note that it sounds flat, as Ron's first take did. The cloud research's voice-direction note says why: the clips they learn from were read, not acted; its method (a clip library per mood, direction for every line, many takes, chosen by ear in the game) is how they get worked next. Since yesterday: the method.
-- **The proof frame** (builder; your ruling of this evening, in place of V2 to V5; production/research/aaa-street): the hook camera's view by day, built by the research's method in stages. Stage 1 (the bend and rise, sky and haze, the wet street, the brick broken up with the wear layer of D53, projected decals, the light values and the night test) to your page as a whole frame with its shortfalls named; stage 2 (the three near frontages) after you have seen it; stage 3 after your yes. The research's estimate: about a week for stage 1, six to ten weeks for the whole view. V1, the pawnbroker's window, goes on Friday's page as planned. Since this evening: the method, read and ruled.
+- **Voices** (builder): Ron's and Darren's yes; Sheila's p267 your yes, with your note that it sounds flat, as Ron's first take did; through the game's own engine it kept her English accent (12 lines, no American), so it stays, and her two thinking sounds are made the same way, not yet heard in the game. The cloud research's voice-direction note says why: the clips they learn from were read, not acted; its method (a clip library per mood, direction for every line, many takes, chosen by ear in the game) is how they get worked next. Since yesterday: the method.
+- **The proof frame** (builder; your ruling of this evening, in place of V2 to V5; production/research/aaa-street): the hook camera's view by day, built by the research's method in stages. Stage 1 (the bend and rise, sky and haze, the wet street, the brick broken up with the wear layer of D53, projected decals, the light values and the night test) to your page as a whole frame with its shortfalls named; stage 2 (the three near frontages) after you have seen it; stage 3 after your yes. The research's estimate: about a week for stage 1, six to ten weeks for the whole view. V1, the pawnbroker's window, goes on Friday's page as planned. Since yesterday: the street's far end rewritten (the road climbs and bends left, the closing terrace gone, cottages, trees and the hill beyond), exported, not yet filmed.
 - **The interface** (builder): built in the game as drawn and filmed at 3440 by 1440 and 1920 by 1080: the front page and loading page, settings (the look sensitivity and invert, which did nothing, now work), the STOP PRESS pause page, subtitles, the coupon, the prompt beside a person, the FIRST STEPS slip; tonight the suggested lines above the coupon (dark until your yes on the town's page), a controller that walks, looks, talks and pauses (checked through the game's own input), and the AI notice as a card before the first talk. Left: its four sounds, tonight; then it is ready for your independent review. Since yesterday: approved and built; not yet reviewed.
 - **People dressed** (the clothing session makes, the builder fits): the wardrobe research has landed (production/research/wardrobe-at-scale); its proof, a 1990 suit jacket made the tailor's way in Marvelous Designer on Ron's and Darren's own bodies, comes to me as an Outfit Asset to fit and test walking, arms raised and sitting. Meanwhile Epic's plainest garments re-coloured and the pieces that passed (V9). Since this evening: unblocked by the research; the proof under way.
 - **The AI tester walking it** (builder; the nightly route walk is item 5): walks the finished game each time it changes; this morning it found Sheila standing on the fish market's crate and the thinking sounds falling back to the loudness mouth in the package (both fixed, walked again). New: a fixed walk of the route with real key presses, judged by the game's own check lines, passes all 11 stages in the editor build and in the finished game (typing w, a, s, d moves Tom 0 cm; Continue puts him back exactly). Since yesterday: two faults fixed; the route walk built.
@@ -67,29 +69,21 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Pushes:** free tests only. **C: free:** 46 GB at the start, a dip to 20, 42 now (the swap file; the builder's cleanup page). Backup ran: OK.
 
-## Builder, Thursday 1 October
+## Builder, Friday 2 October
 
-(Written 03:45; refreshed 05:45.)
+(Written 03:20; rewritten 10:10.)
 
-**[Thursday's page](https://claude.ai/artifact/3zqyXtiTA35rPcuufuD48K):** three taps: the voice's delay (I recommend your other items first, then the voice moved into the game), and Ron's and Darren's thinking sounds with two kinds of mouth, blind.
+**[Disk page](https://claude.ai/artifact/GxkF7zTNJit7cAV2xaXuB2):** one tap, 47 GB nothing uses; F: needs it before builds start again.
 
-**The route: ready for your cloud review.** Since: the tester found Sheila standing on the fish market's crate; fixed, test first, and seen fixed in the finished game.
+**Got wrong:** my 22:07 upload made the build machine download 30 GB of old history; C: hit 0 GB. Its pull now fetches recent history only. I also kept working after the disk filled; a full disk now stops a session.
 
-**The delay:** a short line's voice work in the game fell from 3.95 to 2.98 s. With the words at 1.9 s, the first sound comes about 4.5 s after Enter.
+**Done:** both drives measured; 41 GB deleted on C:; retention limits run nightly at 04:30 (first run proved, 1,408 old files); a free-space check before every build, here and on the build machine; its pictures go into git once a day at most. Sheila's p267 voice kept her English accent through the game's engine (12 lines, no American); her two thinking sounds made. The street's far end rewritten and exported.
 
-**Failed, past two tries:** the voice in pieces, and a compiled loop: both slower beside the game. Set aside; your call.
+**Evidence:** checks 38/38 at 03:00; retention self-test passed. Unreal not built since.
 
-**Mouths:** the thinking sounds play mouths Epic's tool made from the sound, in the finished game. The second blind review found narrow points only.
+**C:** 31 GB this morning, 73 now. **F:** 2.5 GB, held for your yes. Backup with this commit.
 
-**Evidence:** checks 38/38; Core and Unreal green.
-
-**Got wrong:** Wednesday's open looks were missing from Needs you; back on.
-
-**Research:** fast first sound (a helper); the voice in pieces (mine).
-
-**C:** 64.9 GB last night, 67.8 now. Backup with this commit.
-
-**Next:** nightly tests of the finished game.
+**Next:** with room, film the street's end and Sheila talking.
 
 ## 26 September, day
 

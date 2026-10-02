@@ -176,6 +176,7 @@ real_table() {
     sky-longlat-selftest  "$REPO"                 "$PY tools/hdr-to-longlat.py --selftest" \
     facade-drawing-selftest "$REPO"               "$PY tools/facade-drawing.py --selftest" \
     slice-perf-selftest   "$REPO"                 "$PY tools/slice-perf.py --selftest" \
+    retention-selftest    "$REPO"                 "$PY tools/retention.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \
     soak                  "$REPO"                 "dotnet run --project ledger/Soak -c Release" \
     save-chaos            "$REPO"                 "dotnet run --project ledger/SaveChaos -c Release" \

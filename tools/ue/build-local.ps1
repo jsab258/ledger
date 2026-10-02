@@ -18,7 +18,11 @@ function Wait-Runner {
   }
 }
 $repo = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$bat = "C:\Program Files\Epic Games\UE_5.8\Engine\Build\BatchFiles\Build.bat"
+# ROOM FIRST (Jafar, 2 October): C: keeps 40 GB and F: 20 GB; the limits run first,
+# and if that is not enough the build stops and goes into Needs you, never retried.
+& python "$repo\tools\retention.py" space --job "the local Unreal build"
+if ($LASTEXITCODE -ne 0) { "STOPPED: not enough free space (tools/retention.py space); put it in Needs you"; exit 3 }
+$bat ="C:\Program Files\Epic Games\UE_5.8\Engine\Build\BatchFiles\Build.bat"
 $proj = "-Project=$repo\ue-probe\LedgerProbe.uproject"
 foreach ($t in @("LedgerProbeEditor", "LedgerProbe")) {
   Wait-Runner
