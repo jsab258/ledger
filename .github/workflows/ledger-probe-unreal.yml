@@ -2806,6 +2806,15 @@ jobs:
           git diff --cached --quiet && { echo "probe result unchanged; nothing to commit"; exit 0; }
           git commit -m "UE machine probe from $(git rev-parse --short HEAD)"
           BR="${GITHUB_REF_NAME}"
+          # ONLY THE RECENT HISTORY, 2 October. This checkout is one commit
+          # deep, so when a push made during the build brings a merge whose
+          # other side reaches back past it, a plain pull fetches everything
+          # that side reaches: the whole repository's history, 28 GB, which
+          # filled C: on the night of 1 October and took the PC's sessions
+          # down with it. Nothing older than an hour before this run's own
+          # commit is fetched; every commit pushed on top of it is newer than
+          # that, so the rebase still finds its base.
+          SINCE="$(date -u -d "@$(( $(git log -1 --format=%ct "$GITHUB_SHA") - 3600 ))" +%Y-%m-%dT%H:%M:%SZ)"
           # SIX ATTEMPTS AND A LONGER BACKOFF, from 2026-09-22. Three tries
           # with a five and a ten second sleep is a fifteen-second window, and
           # a run whose evidence push lands inside somebody else's push loses
@@ -2851,7 +2860,7 @@ jobs:
             # by taking the replayed side and the rebase is CONTINUED, rather
             # than abandoned - and only a conflict OUTSIDE that directory,
             # which this step never creates, still aborts.
-            if ! git pull --rebase --autostash --no-edit origin "$BR"; then
+            if ! git pull --rebase --autostash --no-edit --shallow-since="$SINCE" origin "$BR"; then
               CONF="$(git diff --name-only --diff-filter=U || true)"
               # AND THE BASE MATERIAL AND ITS DEFAULT TEXTURES, added 23
               # September after run 35828553228 went red the same way: they
@@ -3002,8 +3011,10 @@ jobs:
           git add -- "$OUTF" 2>/dev/null || true
           if ! git diff --cached --quiet 2>/dev/null; then
             git -c user.name="LEDGER probe" -c user.email="probe@ledger.local"               commit -q -m "crime check from $SHORT" || true
+            # ONLY THE RECENT HISTORY, as in "Commit the probe result" above.
+            SINCE="$(date -u -d "@$(( $(git log -1 --format=%ct "$GITHUB_SHA") - 3600 ))" +%Y-%m-%dT%H:%M:%SZ)"
             for i in 1 2 3; do
-              git pull --rebase --autostash --no-edit origin "${GITHUB_REF_NAME}" >/dev/null 2>&1 ||                 git rebase --abort >/dev/null 2>&1 || true
+              git pull --rebase --autostash --no-edit --shallow-since="$SINCE" origin "${GITHUB_REF_NAME}" >/dev/null 2>&1 ||                 git rebase --abort >/dev/null 2>&1 || true
               git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"                 "HEAD:${GITHUB_REF_NAME}" >/dev/null 2>&1 && break
               sleep $((i * 10))
             done
