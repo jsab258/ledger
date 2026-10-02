@@ -15,11 +15,13 @@
   "C:/actions-runner-ledger/_diag",
   "C:/LedgerTools",
   "C:/Users/Jafar/AppData/Local/UnrealEngine/Common",
-  "C:/Users/Jafar/AppData/Local/Temp/claude",
   "C:/Users/Jafar/AppData/Local/CrashDumps",
   "C:/Users/Jafar/.cache/huggingface/hub",
   "C:/Users/Jafar/ledger-llama",
-  "F:/LedgerTools"
+  "F:/LedgerTools",
+  "C:/Users/Jafar/AppData/Local/Temp/claude/C--Users-Jafar-ledger-local",
+  "C:/Users/Jafar/AppData/Local/Temp/claude/C--Users-Jafar-ledger-town",
+  "C:/Users/Jafar/AppData/Local/Temp/claude/C--Users-Jafar-ledger-clothes"
  ],
  "protected": [
   "F:/LedgerTools/played-game",
@@ -101,8 +103,10 @@
     "F:/LedgerTools/tmp",
     "F:/LedgerTools/town-scratch/breaker",
     "F:/LedgerTools/review-voice-*",
-    "C:/Users/Jafar/AppData/Local/Temp/claude",
-    "C:/Users/Jafar/ledger-local/.claude/worktrees"
+    "C:/Users/Jafar/ledger-local/.claude/worktrees",
+    "C:/Users/Jafar/AppData/Local/Temp/claude/C--Users-Jafar-ledger-local",
+    "C:/Users/Jafar/AppData/Local/Temp/claude/C--Users-Jafar-ledger-town",
+    "C:/Users/Jafar/AppData/Local/Temp/claude/C--Users-Jafar-ledger-clothes"
    ]
   },
   {
@@ -182,8 +186,8 @@
    "setting": "UV_CACHE_DIR"
   },
   {
-   "name": "Claude Code's own scratch",
-   "writes": "C:/Users/Jafar/AppData/Local/Temp/claude",
+   "name": "Claude Code's scratch for the builder (the town's and clothing's beside it)",
+   "writes": "C:/Users/Jafar/AppData/Local/Temp/claude/C--Users-Jafar-ledger-local",
    "capGb": 3.0,
    "setting": "7 days, by the scratch limit"
   }

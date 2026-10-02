@@ -312,7 +312,45 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 	{
 		AActor* Owner = GetOwningActor();
 		bool bGoing = false;
-		if (Owner != nullptr)
+		// THE MINUTE AFTER (GoAndLook): off to the spot, a stand looking, then back.
+		bool bGatherStep = false;
+		if (Owner != nullptr && GatherPhase >= 0)
+		{
+			if (GatherPhase == 0) { GatherLeft -= DeltaSeconds; if (GatherLeft <= 0.0f) { GatherPhase = 1; } }
+			else if (GatherPhase == 2)
+			{
+				GatherLeft -= DeltaSeconds;
+				const FVector Face = GatherLook - Owner->GetActorLocation();
+				FRotator R = Owner->GetActorRotation();
+				R.Yaw = FMath::FixedTurn(R.Yaw, FMath::RadiansToDegrees(FMath::Atan2(Face.Y, Face.X)) + WalkYawOffset, 120.0f * DeltaSeconds);
+				Owner->SetActorRotation(R);
+				if (GatherLeft <= 0.0f) { GatherPhase = 3; }
+			}
+			if (GatherPhase == 1 || GatherPhase == 3)
+			{
+				FVector At = Owner->GetActorLocation();
+				FVector To = (GatherPhase == 1 ? GatherSpot : GatherFrom) - At;
+				To.Z = 0.0f;
+				const float Left = To.Size();
+				if (Left < 5.0f)
+				{
+					if (GatherPhase == 1) { GatherPhase = 2; GatherLeft = GatherStay; }
+					else { GatherPhase = -1; PauseLeft = FMath::FRandRange(PauseMin, PauseMax); }
+				}
+				else
+				{
+					const FVector Dir = To / Left;
+					At += Dir * FMath::Min(Left, WalkSpeedCms * WalkWeight * DeltaSeconds);
+					Owner->SetActorLocation(At);
+					bGoing = true;
+					FRotator R = Owner->GetActorRotation();
+					R.Yaw = FMath::FixedTurn(R.Yaw, FMath::RadiansToDegrees(FMath::Atan2(Dir.Y, Dir.X)) + WalkYawOffset, 180.0f * DeltaSeconds);
+					Owner->SetActorRotation(R);
+				}
+			}
+			bGatherStep = true;
+		}
+		if (Owner != nullptr && !bGatherStep)
 		{
 			if (PauseLeft > 0.0f) { PauseLeft -= DeltaSeconds; }
 			else
@@ -502,6 +540,18 @@ void ULedgerPersonAnim::SpeakTick(float Level, bool bSpeaking, float DeltaSecond
 	for (int32 I = 1; I <= 4; ++I) { MouthValues[I] = Closed; }  // lips together, four quarters
 	for (int32 I = 5; I <= 8; ++I) { MouthValues[I] = 0.25f * L * Drift; }           // funnel, four quarters
 	MouthValues[9] = MouthValues[10] = 0.18f * L * (1.0f - Drift);                    // stretch, left and right
+}
+
+void ULedgerPersonAnim::GoAndLook(const FVector& Spot, const FVector& LookAt, float Delay, float Stay)
+{
+	AActor* Owner = GetOwningActor();
+	if (WalkSequence == nullptr || Owner == nullptr || GatherPhase >= 0) { return; }
+	GatherSpot = FVector(Spot.X, Spot.Y, Owner->GetActorLocation().Z);
+	GatherLook = LookAt;
+	GatherFrom = Owner->GetActorLocation();
+	GatherLeft = FMath::Max(0.0f, Delay);
+	GatherStay = FMath::Max(1.0f, Stay);
+	GatherPhase = 0;
 }
 
 void ULedgerPersonAnim::SetupWalk(UAnimSequenceBase* InWalk, const FVector& InA, const FVector& InB, float InSpeedCms,

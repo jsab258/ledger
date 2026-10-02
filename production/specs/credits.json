@@ -1,0 +1,55 @@
+{
+  "what": "The game's credits page (LedgerCredits.cpp), from THIRD-PARTY.md's required and courtesy credits. Required: the Unreal Engine EULA's notice and the CSTR VCTK Corpus's CC BY 4.0 attribution; the rest is credited because this project names every source it uses. Keep in step with THIRD-PARTY.md: a source added there is added here (1 October; the rulings sweep found no credits page and the attributions file still on Unity).",
+  "sections": [
+    {
+      "head": "LEDGER",
+      "lines": [
+        "A game set in a northern English seaside town, 1990.",
+        "The people of the town answer in words written as you play by an AI model, Claude, made by Anthropic."
+      ]
+    },
+    {
+      "head": "Engine",
+      "lines": [
+        "Unreal® Engine, Copyright 1998–2026, Epic Games, Inc. All rights reserved."
+      ]
+    },
+    {
+      "head": "Characters",
+      "lines": [
+        "Faces and bodies made with MetaHuman, Epic Games.",
+        "Animation from Epic Games' samples, and from Adobe Mixamo."
+      ]
+    },
+    {
+      "head": "Voices",
+      "lines": [
+        "Character voices synthesised from reference recordings in the CSTR VCTK Corpus (version 0.92) by Junichi Yamagishi, Christophe Veaux and Kirsten MacDonald, Centre for Speech Technology Research, University of Edinburgh (https://doi.org/10.7488/ds/2645), used under CC BY 4.0."
+      ]
+    },
+    {
+      "head": "Type",
+      "lines": [
+        "Libre Franklin, League Gothic, UnifrakturMaguntia, Old Standard TT and Marcellus SC, each under the SIL Open Font Licence 1.1; their licences ship beside them."
+      ]
+    },
+    {
+      "head": "Textures, models and skies",
+      "lines": [
+        "Poly Haven (polyhaven.com), CC0.",
+        "ambientCG (ambientcg.com), CC0.",
+        "Kenney (kenney.nl), CC0.",
+        "The Base Mesh, CC0.",
+        "OpenGameArt contributors, CC0.",
+        "The MakeHuman community, CC0."
+      ]
+    },
+    {
+      "head": "Sound",
+      "lines": [
+        "Footsteps by sturmankin and Joseph Sardin, CC0.",
+        "The pages' own sounds were made for this game."
+      ]
+    }
+  ]
+}

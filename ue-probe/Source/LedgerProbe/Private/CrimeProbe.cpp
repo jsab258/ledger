@@ -914,9 +914,14 @@ namespace
 		// wears; C1 stays next in line.
 		const bool bRon = FCString::Strcmp(Who, TEXT("Rocco")) == 0;   // names-gate: allow (the asset MH_RoccoP2)
 		const bool bLena = FCString::Strcmp(Who, TEXT("Lena")) == 0;   // names-gate: allow (the asset MH_LenaS4)
-		const TCHAR* Approved = FCString::Strcmp(Who, TEXT("Sam")) == 0 ? TEXT("C5") : bRon ? TEXT("P2") : TEXT("S4");   // names-gate: allow (the asset MH_SamC5)
+		// DARREN'S FACE, 30 September: Jafar picked S6 on Wednesday's page (his S4 face with
+		// Epic's short cut; the same body as C5, which stays next in line). The rulings
+		// sweep of 1 October found the pick recorded and the game still on C5.
+		const bool bSam = FCString::Strcmp(Who, TEXT("Sam")) == 0;   // names-gate: allow (the asset MH_SamS6)
+		const TCHAR* Approved = bSam ? TEXT("S6") : bRon ? TEXT("P2") : TEXT("S4");
 		TArray<FString> Takes = { Approved, TEXT("T2"), TEXT("") };
 		if (bRon || bLena) { Takes.Insert(TEXT("C1"), 1); }
+		if (bSam) { Takes.Insert(TEXT("C5"), 1); }
 		FString Forced;
 		if (FParse::Value(FCommandLine::Get(), TEXT("CastTake="), Forced))
 		{
@@ -2435,6 +2440,34 @@ namespace
 		return std::max(LedgerCrime::kLadFamiliarity, LedgerCrime::FamiliarityFromMeetings(GMet.DaysMet(Card)));
 	}
 
+	// THE MINUTE AFTER (23 September's ruling, "the minute after"; the rulings sweep
+	// of 1 October found nobody gathering and nobody drifting back): everyone walking
+	// within 35 m of the window turns aside to it, after a moment that grows with the
+	// distance, stands on a half ring three to six metres out in front of the glass
+	// looking at it for forty seconds to two minutes, then drifts back to their round
+	// (ULedgerPersonAnim::GoAndLook). A body with no walk clip stays where it is.
+	void GatherAfterSmash(UWorld* World)
+	{
+		if (World == nullptr || GGlass[0] == nullptr) { return; }
+		const FVector Glass = GGlass[0]->GetActorLocation();
+		const FVector Out = FVector(0.0f, Glass.Y > 0.0f ? -1.0f : 1.0f, 0.0f);   // from the glass toward the street
+		int32 Came = 0;
+		for (TActorIterator<ASkeletalMeshActor> It(World); It; ++It)
+		{
+			if (It->IsHidden() || It->GetSkeletalMeshComponent() == nullptr) { continue; }
+			const float D = FVector::Dist2D(It->GetActorLocation(), Glass);
+			if (D > 3500.0f) { continue; }
+			ULedgerPersonAnim* A = Cast<ULedgerPersonAnim>(It->GetSkeletalMeshComponent()->GetAnimInstance());
+			if (A == nullptr || A->WalkSequence == nullptr || A->IsGathering()) { continue; }
+			const FVector Dir = Out.RotateAngleAxis(FMath::FRandRange(-65.0f, 65.0f), FVector::UpVector);
+			const FVector Spot = Glass + Dir * FMath::FRandRange(300.0f, 600.0f);
+			A->GoAndLook(Spot, Glass, 0.6f + D / 500.0f + FMath::FRandRange(0.0f, 2.0f), FMath::FRandRange(40.0f, 110.0f));
+			++Came;
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerAfter: %d of the street's people come to look at the window"), Came);
+		LedgerSession::Write(TEXT("gathered"), FString::Printf(TEXT("\"people\":%d"), Came));
+	}
+
 	void MarkDeedTime()
 	{
 		if (bDeedDone) { return; }
@@ -3280,6 +3313,23 @@ namespace
 	double GVoiceSeconds = 0.0, GVoiceAskedAt = 0.0, GVoicePlayedAt = 0.0;
 	double GVoiceStartedAt = 0.0;   // when the latest sentence's sound began to play
 
+	// A SUBTITLE ONLY WITH THE AUDIO IT BELONGS TO (23 September; the rulings sweep of
+	// 1 October found the words shown on arrival, seconds before the voice): a reply's
+	// line waits here under its voice request and is shown the moment that sound starts;
+	// with no voice it is shown at once, and if its sound never comes, after twelve seconds.
+	struct FWaitingSub { FString Line; double Since = 0.0; };
+	TMap<int32, FWaitingSub> GSubForVoice;
+	void ShowWaitingSub(int32 Id)
+	{
+		FWaitingSub W;
+		if (GSubForVoice.RemoveAndCopyValue(Id, W))
+		{
+			// The proof of the rule, for the films and the tester: how long the words waited for their sound.
+			UE_LOG(LogTemp, Display, TEXT("LedgerSubtitle: shown %.2f s after its words were ready (voice request %d)"), NowS() - W.Since, Id);
+			Say(W.Line, 20.0f, FColor::White);
+		}
+	}
+
 	// THE ROUTE'S OWN CHECK LINES (item 5, 1 October; production/research/
 	// packaged-game-testing, its recommendation): one plain line for each
 	// stage of ordinary play as it happens, whoever plays (a person, the AI
@@ -3774,6 +3824,7 @@ namespace
 		{
 			FLiveVoice::FPiece Next = GVoice.Queue[0];
 			GVoice.Queue.RemoveAt(0);
+			ShowWaitingSub(Next.Id);   // its words, now that its sound begins
 			if (Next.Who.IsValid())
 			{
 				if (GVoice.Playing.IsValid()) { GVoice.Playing->Stop(); }
@@ -3781,6 +3832,11 @@ namespace
 				GVoice.PlayingEnd = Now + Len;
 				GVoice.BusyUntil = Now + Len + 0.15;
 			}
+		}
+		{
+			TArray<int32> Late;
+			for (const TPair<int32, FWaitingSub>& W : GSubForVoice) { if (Now - W.Value.Since > 12.0 || GVoice.DroppedIds.Contains(W.Key)) { Late.Add(W.Key); } }
+			for (int32 Id : Late) { if (GVoice.DroppedIds.Contains(Id)) { GSubForVoice.Remove(Id); } else { ShowWaitingSub(Id); } }
 		}
 		MouthTick();
 	}
@@ -4470,6 +4526,16 @@ namespace
 		GVoice.Held.RemoveAll([Id](const FLiveVoice::FPiece& P) { return P.Id == Id; });
 	}
 
+	// With the voice up, the line waits for its sound (above); with none, it is shown now.
+	void SayWhenHeard(const FString& Line, int32 Id)
+	{
+		if (!GVoice.bReady || GVoice.InWrite == nullptr) { Say(Line, 20.0f, FColor::White); return; }
+		FWaitingSub W;
+		W.Line = Line;
+		W.Since = NowS();
+		GSubForVoice.Add(Id, W);
+	}
+
 	void LiveVoiceSay(int32 Id, const std::string& Card, const std::string& Text, AActor* Who, int32 Turn = 0)
 	{
 		if (!GVoice.bReady || GVoice.InWrite == nullptr || Text.empty() || Text == "none") { return; }
@@ -5014,12 +5080,13 @@ namespace
 				const std::string First = JsonField(L, "first");
 				if (First != "none")
 				{
-					Say(GLive.PendingName + TEXT(": ") + Un(First), 20.0f, FColor::White);
+					const FString Line = GLive.PendingName + TEXT(": ") + Un(First);
 					const int32 HeldId = GLive.PendingId * 10 + 7;
-					if (!GLive.PendingSaid.empty() && GLive.PendingSaid == First) { LiveVoiceRelease(HeldId); }
+					if (!GLive.PendingSaid.empty() && GLive.PendingSaid == First) { SayWhenHeard(Line, HeldId); LiveVoiceRelease(HeldId); }
 					else
 					{
 						LiveVoiceDrop(HeldId);
+						SayWhenHeard(Line, GLive.PendingId * 10);
 						LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, First, GVisualFor(GLive.PendingBody), GLive.PendingId);
 					}
 					GLive.bFirstSaid = true;
@@ -5085,14 +5152,15 @@ namespace
 					const std::string Rest = JsonField(L, "rest");
 					if (Rest != "none" && !Rest.empty())
 					{
-						Say(GLive.PendingName + TEXT(": ") + Un(Rest), 20.0f, FColor::White);
+						SayWhenHeard(GLive.PendingName + TEXT(": ") + Un(Rest), GLive.PendingId * 10 + 1);
 						LiveVoiceSay(GLive.PendingId * 10 + 1, GLive.PendingCard, Rest, GVisualFor(GLive.PendingBody), GLive.PendingId);
 						GLive.HeardSoFar += " " + Rest;
 					}
 				}
 				else
 				{
-					Say(GLive.PendingName + TEXT(": ") + Un(Reply == "none" ? std::string("...") : Reply), 20.0f, FColor::White);
+					if (Reply == "none") { Say(GLive.PendingName + TEXT(": ..."), 20.0f, FColor::White); }
+					else { SayWhenHeard(GLive.PendingName + TEXT(": ") + Un(Reply), GLive.PendingId * 10); }
 					LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, Reply, GVisualFor(GLive.PendingBody), GLive.PendingId);
 					GLive.HeardSoFar = Reply == "none" ? std::string() : Reply;
 					GLive.AnswerBody = GLive.PendingBody;
@@ -6258,16 +6326,39 @@ namespace
 			}
 		}
 		const int Night = Arrangement::NightOf(GNow);
+		// THE MAN AT THE LANDING SPEAKS HIS OWN LINES ("settled as written"; the
+		// rulings sweep of 1 October found the game's caption in their place):
+		// TheLanding::Line by the arrangement's state, said as he comes down to the
+		// quay in the man's hours ("Mickey's?", "Nothing tonight. Tomorrow, after
+		// ten.", "We're done, you and us."), then, the envelope handed over, "Right.
+		// Thursday, same again."; on an ask night without it, "Nothing for me?".
+		// Words only: no voice is cast for him without Jafar's yes.
+		static bool bAtLandingWas = false;
+		const bool bAtLanding = TheLanding::There(GNow) && NearPlace("quay", 8.0);
+		const bool bArrived = bAtLanding && !bAtLandingWas;
+		bAtLandingWas = bAtLanding;
+		auto ManSays = [](LandingMoment M)
+		{
+			std::string Line;
+			if (TheLanding::Line(&GWeek.Asks, GNow, M, LedgerCrime::Seed(GNow), Line))
+			{
+				Say(FString(TEXT("The man at the landing: ")) + Un(Line), 8.0f, FColor::White);
+				LedgerSession::Write(TEXT("landingLine"), TEXT("\"said\":") + LedgerSession::Str(Un(Line)));
+			}
+		};
+		if (bArrived) { ManSays(LandingMoment::Comes); }
 		if (GWeek.Asks.AskStands(GNow) && (GNow.Hour >= Waiting::LandingFrom || GNow.Hour < Arrangement::GaveUpHour) && NearPlace("quay", 8.0))
 		{
 			if (GWeek.Tea && Night == GWeek.Tea->Day()) { GWeek.Tea->WentToTheLanding(GMill.get(), GNow, true); }
 			if (GWeek.AnswerAsk(Night, NightAnswer::Did, GMill.get(), GNow))
 			{
-				Say(TEXT("Down at the ferry landing a man asks for Mickey's. You hand him the envelope."), 10.0f, FColor::Yellow);
+				Say(TEXT("You hand him the envelope."), 6.0f, FColor::Yellow);
+				ManSays(LandingMoment::HandsOver);
 				LedgerSession::Write(TEXT("landing"), TEXT("\"night\":") + FString::FromInt(Night));
 				UE_LOG(LogTemp, Display, TEXT("LedgerWeek: the envelope handed over at the landing, night %d, %s"), Night, *Un(GNow.ToString()));
 			}
 		}
+		else if (bArrived && GWeek.Asks.AsksOn(Night) && !GWeek.Asks.Ended()) { ManSays(LandingMoment::NothingToHand); }
 	}
 
 	// THE CLOCK, A FRAME AT A TIME (LiveClock.h): held while he talks (the box
@@ -6963,9 +7054,109 @@ namespace
 		}
 	}
 
+	// -LandingShot=<dir> and -SmashShot=<dir> (1 October, the rulings sweep's items):
+	// checks of the man at the landing's own lines and of the minute after the
+	// smash, in free play, filmed at the window's size; then the game closes.
+	// LandingShot: Tuesday 22:30 (no ask that night), Tom at the quay: the man
+	// says "Nothing tonight. Wednesday, after ten." SmashShot: Tom at Rita's window
+	// by day presses E; the street filmed from across the road at 6, 30 and 170 s.
+	void SceneShotsTick(UWorld* World)
+	{
+		static FString LandDir, SmashDir;
+		static bool bRead = false;
+		static int32 Step = 0;
+		static double At = 0.0, LiveSince = -1.0;
+		if (!bRead)
+		{
+			bRead = true;
+			FParse::Value(FCommandLine::Get(), TEXT("LandingShot="), LandDir);
+			FParse::Value(FCommandLine::Get(), TEXT("SmashShot="), SmashDir);
+		}
+		if ((LandDir.IsEmpty() && SmashDir.IsEmpty()) || World == nullptr || GPawn == nullptr || !bGCast) { return; }
+		const bool bLive = GPhase == ECrimePhase::LiveWaitDeed || GPhase == ECrimePhase::LiveAfterDeed || GPhase == ECrimePhase::LiveRoam;
+		if (!bLive) { return; }
+		const double T = FPlatformTime::Seconds();
+		if (LiveSince < 0.0) { LiveSince = T; }
+		const FIntPoint Sz = GEngine->GameViewport->Viewport->GetSizeXY();
+		APlayerController* PC = World->GetFirstPlayerController();
+		auto Put = [&](double X, double Z, double LookX, double LookZ)
+		{
+			GPawn->SetActorLocation(FVector(X * 100.0, Z * 100.0, GPawn->GetActorLocation().Z), false, nullptr, ETeleportType::TeleportPhysics);
+			const FRotator Face = (FVector(LookX * 100.0, LookZ * 100.0, 0.0) - FVector(X * 100.0, Z * 100.0, 0.0)).GetSafeNormal2D().Rotation();
+			if (PC != nullptr) { PC->SetControlRotation(FRotator(-6.0f, Face.Yaw, 0.0f)); }
+		};
+		if (!LandDir.IsEmpty())
+		{
+			double QX = 0.0, QZ = 0.0;
+			if (Step == 0 && T - LiveSince > 8.0 && GCast.PlaceXZ("quay", QX, QZ))
+			{
+				// THE HOURS RUN AS IN PLAY (2 October: a bare jump left Monday night
+				// unsettled, so the man said "Monday" on Tuesday night; waiting with Z
+				// settles each hour, a night away at four in the morning).
+				ClockHours(GClock.JumpTo(GameTime(1, 22, 30)));
+				GNow = GClock.Now();
+				ClockLight();
+				Put(QX + 6.0, QZ, QX, QZ);   // six metres off, walking down to it
+				Step = 1; At = T;
+			}
+			else if (Step == 1 && T - At > 2.0 && GCast.PlaceXZ("quay", QX, QZ))
+			{
+				Put(QX, QZ, QX - 5.0, QZ);   // at the quay
+				Step = 2; At = T;
+			}
+			else if (Step == 2 && T - At > 2.0)
+			{
+				FScreenshotRequest::RequestScreenshot(FPaths::Combine(LandDir, FString::Printf(TEXT("landing-%d.png"), Sz.X)), true, false);
+				Step = 3; At = T;
+			}
+			else if (Step == 3 && T - At > 1.0)
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerSceneShot: landing done in %s"), *LandDir);
+				FPlatformMisc::RequestExit(false);
+				Step = 99;
+			}
+			return;
+		}
+		if (GGlass[0] == nullptr) { return; }
+		const FVector G = GGlass[0]->GetActorLocation() / 100.0;   // street metres: x along, y across
+		const double Out = G.Y > 0.0 ? -1.0 : 1.0;
+		if (Step == 0 && T - LiveSince > 8.0)
+		{
+			ClockHours(GClock.JumpTo(GameTime(0, 15, 0)));   // the hours run as in play
+			GNow = GClock.Now();
+			ClockLight();
+			Put(G.X, G.Y + Out * 1.3, G.X, G.Y);   // at the window, facing it
+			Step = 1; At = T;
+		}
+		else if (Step == 1 && T - At > 2.0)
+		{
+			PressActKey(World);
+			Step = 2; At = T;
+		}
+		else if (Step == 2 && T - At > 1.0)
+		{
+			Put(G.X - 4.0, G.Y + Out * 8.5, G.X, G.Y);   // across the road, looking at the window
+			Step = 3; At = T;
+		}
+		else if ((Step == 3 && T - At > 5.0) || (Step == 4 && T - At > 29.0) || (Step == 5 && T - At > 169.0))
+		{
+			const TCHAR* When = Step == 3 ? TEXT("06s") : Step == 4 ? TEXT("30s") : TEXT("170s");
+			FScreenshotRequest::RequestScreenshot(FPaths::Combine(SmashDir, FString::Printf(TEXT("smash-%s-%d.png"), When, Sz.X)), true, false);
+			if (Step == 3) { At = T - 5.0; }
+			++Step;
+		}
+		else if (Step == 6 && T - At > 172.0)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerSceneShot: smash done in %s"), *SmashDir);
+			FPlatformMisc::RequestExit(false);
+			Step = 99;
+		}
+	}
+
 	bool HumanTalkTick(UWorld* World, double Now)
 	{
 		TalkShotTick(World);
+		SceneShotsTick(World);
 		PadShotTick(World);
 		NoticeTick();
 		LiveHelperStart();
@@ -8739,6 +8930,7 @@ namespace
 			LedgerSession::Write(TEXT("deed"), TEXT("\"what\":") + LedgerSession::Str(Un(bRitasWindow ? GWindowTopic : std::string("player.window_d1"))));
 			MarkDeedTime();
 			DeedFollows();
+			GatherAfterSmash(World);
 			// AND SEEN: broken glass on the pavement under the window, in play
 			// only (the regression's piece counts do not move). A clear pane
 			// that vanishes looks the same as a clear pane.

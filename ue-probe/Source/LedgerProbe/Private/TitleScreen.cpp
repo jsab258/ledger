@@ -2,6 +2,7 @@
 
 #include "LedgerPaper.h"
 #include "LedgerSettings.h"
+#include "LedgerCredits.h"
 
 #include "Brushes/SlateColorBrush.h"
 #include "CoreGlobals.h"
@@ -33,7 +34,7 @@ namespace
 {
 	TSharedPtr<SWidget> GRoot, GLoadRoot;
 	TSharedPtr<STextBlock> GStatus;
-	TSharedPtr<SPaperChoice> GContinue, GNew, GSettings, GQuit;
+	TSharedPtr<SPaperChoice> GContinue, GNew, GSettings, GCredits, GQuit;
 	// the loading page's words and its rule (the guide: "never a bar that guesses")
 	FString GPhase, GCount;
 	float GFill = -1.0f;              // 0 to 1 when the work can be counted, -1 when it cannot
@@ -101,7 +102,7 @@ namespace
 	// The first choice that can be taken, in hand; true once it has the keys.
 	bool FocusFirst()
 	{
-		for (const TSharedPtr<SPaperChoice>& B : { GContinue, GNew, GSettings, GQuit })
+		for (const TSharedPtr<SPaperChoice>& B : { GContinue, GNew, GSettings, GCredits, GQuit })
 		{
 			if (B.IsValid() && B->IsEnabled())
 			{
@@ -231,7 +232,7 @@ namespace
 	{
 		TSharedRef<SVerticalBox> Choices = SNew(SVerticalBox);
 		bool bFirst = true;
-		for (const TSharedPtr<SPaperChoice>& C : { GContinue, GNew, GSettings, GQuit })
+		for (const TSharedPtr<SPaperChoice>& C : { GContinue, GNew, GSettings, GCredits, GQuit })
 		{
 			if (!C.IsValid()) { continue; }
 			if (!bFirst) { Choices->AddSlot().AutoHeight()[ Between() ]; }
@@ -415,6 +416,7 @@ void Show(UWorld* World, bool bInCanContinue, int32 SavedDay, int32 SavedHour, i
 	}
 	SAssignNew(GNew, SPaperChoice).Text(FString(TEXT("New game"))).Units(50.0f).OnChosen_Lambda([]() { GChosen = EChoice::NewGame; });
 	SAssignNew(GSettings, SPaperChoice).Text(FString(TEXT("Settings"))).Units(50.0f).OnChosen_Lambda([]() { GChosen = EChoice::Settings; });
+	SAssignNew(GCredits, SPaperChoice).Text(FString(TEXT("Credits"))).Units(50.0f).OnChosen_Lambda([]() { GChosen = EChoice::Credits; });
 	SAssignNew(GQuit, SPaperChoice).Text(FString(TEXT("Quit"))).Units(50.0f).OnChosen_Lambda([]() { GChosen = EChoice::Quit; });
 
 	SAssignNew(GRoot, SBorder).BorderImage(Solid(FLinearColor::Transparent)).Padding(0.0f)
@@ -517,6 +519,18 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 				++ShotStep;
 			}
 			else if (ShotStep == 5 && Since > 10.0)
+			{
+				// and the credits page (1 October)
+				LedgerSettings::Hide();
+				LedgerCredits::Show(World, nullptr);
+				++ShotStep;
+			}
+			else if (ShotStep == 6 && Since > 11.5)
+			{
+				FScreenshotRequest::RequestScreenshot(FPaths::Combine(ShotDir, FString::Printf(TEXT("credits-%d.png"), Size.X)), true, false);
+				++ShotStep;
+			}
+			else if (ShotStep == 7 && Since > 12.5)
 			{
 				UE_LOG(LogTemp, Display, TEXT("LedgerTitle: TitleShot done in %s"), *ShotDir);
 				FPlatformMisc::RequestExit(false);
@@ -646,7 +660,7 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 	// whenever it is on none of the buttons, and moved to the first story
 	// button the moment they open.
 	const TSharedPtr<SWidget> Focused = FSlateApplication::Get().GetKeyboardFocusedWidget();
-	if (!OneOfOurs(Focused) && !LedgerSettings::IsShown()) { FocusFirst(); }
+	if (!OneOfOurs(Focused) && !LedgerSettings::IsShown() && !LedgerCredits::IsShown()) { FocusFirst(); }
 	// A story chosen early waits here until the card is ready; Quit never waits.
 	if (GChosen == EChoice::NewGame || GChosen == EChoice::Continue) { GPendingChoice = GChosen; GChosen = EChoice::None; }
 	if (GChosen == EChoice::Settings)
@@ -658,6 +672,17 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 		{
 			if (GRoot.IsValid()) { GRoot->SetVisibility(EVisibility::SelfHitTestInvisible); }
 			if (GSettings.IsValid()) { FSlateApplication::Get().SetKeyboardFocus(GSettings, EFocusCause::SetDirectly); GModeWidget.Reset(); }
+		});
+	}
+	if (GChosen == EChoice::Credits)
+	{
+		// the credits page over the title, as the settings page; Esc brings him back to Credits in hand
+		GChosen = EChoice::None;
+		if (GRoot.IsValid()) { GRoot->SetVisibility(EVisibility::Collapsed); }
+		LedgerCredits::Show(World, []()
+		{
+			if (GRoot.IsValid()) { GRoot->SetVisibility(EVisibility::SelfHitTestInvisible); }
+			if (GCredits.IsValid()) { FSlateApplication::Get().SetKeyboardFocus(GCredits, EFocusCause::SetDirectly); }
 		});
 	}
 	EChoice C = GChosen;

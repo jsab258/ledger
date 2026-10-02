@@ -41,6 +41,8 @@ FIXED = [
     "production/specs/mickeys-office.json",   # Mickey's office as a grey blockout, built in live play (1 October, item 6)
     "production/specs/shop-interiors.json",   # the shop rooms behind the windows (1 October, item 2a; VignetteShot.cpp ApplyShopInteriors)
     "production/specs/suggested-lines.json",   # Tom's written suggested lines and the deals' answers (1 October, CrimeProbe.cpp ReadDeals)
+    "production/specs/credits.json",   # the credits page (1 October, LedgerCredits.cpp)
+    "THIRD-PARTY.md",   # the attributions travel with every copy (the rulings sweep, 1 October: "the attributions themselves, for everything shipped")
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"
