@@ -171,6 +171,11 @@ def size_of(path):
 def delete(pol, path, rule, why, dry=False, protected_extra=()):
     ok, reason = may_delete(pol, path, protected_extra)
     entry = {"at": dt.datetime.now().isoformat(timespec="seconds"), "path": path, "rule": rule, "why": why}
+    if not os.path.exists(path) and not is_link(path):
+        # NOT FOUND IS NOT DELETED (2 October: a list read with Windows line endings
+        # gave every path a hidden carriage return, and each was logged as gone).
+        entry["refused"] = "not found"
+        return entry
     if not ok:
         entry["refused"] = reason
         return entry
