@@ -173,6 +173,18 @@ jobs:
       # including the negative ones: "not found" is a measurement, and a
       # missing toolchain is a finding for measurement a rather than a broken
       # run. Nothing in this step may fail the job for a negative answer.
+      # ROOM BEFORE THE BUILD (Jafar, 2 October, after C: reached 0 bytes on the
+      # night of 1 October and this runner crashed): C: keeps 40 GB and F: 20 GB.
+      # tools/retention.py runs the retention limits first; if that is not
+      # enough, the run stops here, says so, and is not retried.
+      - name: Check free space on C and F
+        shell: bash
+        run: |
+          python tools/retention.py space --job "the build machine's run" || {
+            echo "::error::Not enough free space on C: or F: (C: needs 40 GB, F: 20 GB). The run stops here; see F:/LedgerTools/retention/space-checks.log."
+            exit 3
+          }
+
       - name: Probe the machine for Unreal and a C++ toolchain
         id: probe
         timeout-minutes: 10
@@ -2569,10 +2581,16 @@ jobs:
                 ue-probe/Source/LedgerProbe/Public/SurfaceBind.h ue-probe/Source/LedgerProbe/Public/FrameStats.h 2>/dev/null | head -1 || true)"
               LASTAT="$(sed -n 's/^framesAt=\([0-9]*\).*/\1/p' production/d1-probe/frames-at.txt 2>/dev/null | head -1 || true)"
               AGE=$(( $(date -u +%s) - ${LASTAT:-0} ))
-              if [ -z "$VIS" ] && [ "$AGE" -lt 72000 ]; then
-                FRAMES=0; FRAMESWHY="nothing-shown-changed/last-pictures-${AGE}s-old"
+              # ONCE A DAY, EVEN WHEN SOMETHING SHOWN CHANGED (2 October, Jafar's
+              # retention rule: renders are kept three days unless approved, and a
+              # picture committed to git is kept for ever). Gated on change alone,
+              # the pictures still went in five to ten times a day. Every run's
+              # pictures are copied below to the build machine's renders folder,
+              # kept three days by tools/retention.py; frames-latest.txt says where.
+              if [ "$AGE" -lt 72000 ]; then
+                FRAMES=0; FRAMESWHY="last-pictures-${AGE}s-old${VIS:+/changed-but-kept-out-of-git}"
               else
-                FRAMESWHY="${VIS:-the-last-pictures-are-${AGE}s-old}"
+                FRAMESWHY="the-last-pictures-are-${AGE}s-old"
               fi
             else
               FRAMESWHY=the-previous-commit-could-not-be-fetched
@@ -2583,6 +2601,14 @@ jobs:
             git add -- production/d1-probe/frames-at.txt
           fi
           echo "frames=$FRAMES framesWhy=$FRAMESWHY"
+          # EVERY RUN'S PICTURES, OUTSIDE GIT, FOR THREE DAYS (tools/retention.py's renders limit).
+          RENDERS="$(cd "${RUNNER_WORKSPACE:-..}/.." 2>/dev/null && pwd)/renders/${SHORT}"
+          if mkdir -p "$RENDERS" 2>/dev/null; then
+            find production/d1-probe -maxdepth 1 -type f \( -name '*.png' -o -name '*.gif' -o -name '*.wav' \) -mmin -300 -exec cp -p {} "$RENDERS"/ \; 2>/dev/null || true
+            printf 'rendersAt=%s sha=%s files=%s committedToGit=%s\n' "$RENDERS" "$SHORT" "$(ls "$RENDERS" | wc -l)" "$FRAMES" > production/d1-probe/frames-latest.txt
+            git add -- production/d1-probe/frames-latest.txt
+            echo "renders=$RENDERS files=$(ls "$RENDERS" | wc -l)"
+          fi
           if [ ! -f "$UEVERDICT" ] || ! head -1 "$UEVERDICT" | grep -q "$SHORT"; then
             printf '# UE probe verdict %s @%s\n# Line 1 names the commit this was measured on, as the Unity verdict does.\n\nNO RUN - no verdict carrying this commit was produced; do not read an older file as this run.\nverdictReached=end\n' \
               "$SHORT" "$(date -u +%s)" > "$UEVERDICT"

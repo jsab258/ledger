@@ -3,7 +3,7 @@
  "placed": [
   {
    "thing": "production/casting/sheila-dunn/SHEET.md",
-   "what": "Sheila Dunn: face, body, clothes, hair and voice (in the game as the MetaHuman 'Lena', take S4, the face and hair Jafar picked on 29 September; C1 next in line; voice lena.parler-d, his pick D, taken off the page: it leans American)",
+   "what": "Sheila Dunn: face, body, clothes, hair and voice (in the game as the MetaHuman 'Lena', take S4, the face and hair Jafar picked on 29 September; C1 next in line; voice p267, his yes of 30 September, spoken through the game's own engine (Chatterbox Nano), which kept her English accent on 2 October: no American on any of 12 lines, likeness 0.70 to 0.84 against her reference; the old pick D, lena.parler-d, leaned American)",
    "backup": [
     {
      "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaS4.uasset",
@@ -11,8 +11,8 @@
      "first": true
     },
     {
-     "path": "game-design/picked-clips/lena.parler-d.mp3",
-     "as": "approved/sheila-dunn/voice/lena.parler-d.mp3",
+     "path": "game-design/picked-clips/lena.p267.wav",
+     "as": "approved/sheila-dunn/voice/lena.p267.wav",
      "first": true
     },
     {

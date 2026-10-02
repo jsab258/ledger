@@ -1,5 +1,5 @@
 {
- "about": "Every file or folder of 100 MB or more that Claude created, with what made it and why (tools/large_files.py; CLAUDE.md, Disk).",
+ "about": "Retired 2 October 2026: the nightly retention (tools/retention.py, production/retention.json) measures and limits everything instead. Kept as the history of what was recorded. Every file or folder of 100 MB or more that Claude created, with what made it and why (tools/large_files.py; CLAUDE.md, Disk).",
  "entries": [
   {
    "path": "C:/Users/Jafar/ledger-local/.claude/worktrees/agent-a0a0826911959653e",

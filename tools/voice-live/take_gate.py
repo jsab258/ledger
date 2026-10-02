@@ -88,7 +88,7 @@ def main(argv):
     clf = ac.classifier()
     labels = clf.hparams.label_encoder.decode_ndim(list(range(16)))
     local = os.path.isdir(SPK_MODEL)
-    sv = SpeakerRecognition.from_hparams(source=SPK_MODEL, savedir="F:/LedgerTools/tmp/sb-spk", run_opts={"device": "cpu"},
+    sv = SpeakerRecognition.from_hparams(source=SPK_MODEL, savedir="F:/LedgerTools/models/sb-spk", run_opts={"device": "cpu"},
                                          local_strategy=LocalStrategy.COPY, **({"overrides": {"pretrained_path": SPK_MODEL}} if local else {}))
     asr = pipeline("automatic-speech-recognition", model="openai/whisper-small.en", device="cpu")
 

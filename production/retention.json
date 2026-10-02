@@ -1,0 +1,335 @@
+{
+ "about": "What LEDGER keeps on drives C: and F:, and for how long (Jafar, 2 October 2026). tools/retention.py enforces it every night through Windows' Task Scheduler and before any build, render or large job; every deletion is logged in F:/LedgerTools/retention/deleted.log. Only paths inside `places` are ever deleted; `protected` and everything the Dropbox backup covers never are. A session that needs something past its limit adds a hold (at most 14 days) with its reason.",
+ "floors": {
+  "C": 40,
+  "F": 20
+ },
+ "places": [
+  "C:/Users/Jafar/ledger-local/ue-probe/Intermediate",
+  "C:/Users/Jafar/ledger-local/ue-probe/Saved",
+  "C:/Users/Jafar/ledger-local/ue-probe/Packaged",
+  "C:/Users/Jafar/ledger-local/ue-probe/DerivedDataCache",
+  "C:/Users/Jafar/ledger-local/.git/objects/pack",
+  "C:/Users/Jafar/ledger-local/.claude/worktrees",
+  "C:/actions-runner-ledger/_work",
+  "C:/actions-runner-ledger/_diag",
+  "C:/LedgerTools",
+  "C:/Users/Jafar/AppData/Local/UnrealEngine/Common",
+  "C:/Users/Jafar/AppData/Local/Temp/claude",
+  "C:/Users/Jafar/AppData/Local/CrashDumps",
+  "C:/Users/Jafar/.cache/huggingface/hub",
+  "C:/Users/Jafar/ledger-llama",
+  "F:/LedgerTools"
+ ],
+ "protected": [
+  "F:/LedgerTools/played-game",
+  "F:/LedgerTools/approved-cast-2026-09-25",
+  "F:/LedgerTools/bodies",
+  "F:/LedgerTools/garments",
+  "F:/LedgerTools/md-bridge",
+  "F:/LedgerTools/mh-dress/Content",
+  "F:/LedgerTools/vctk-north",
+  "F:/LedgerTools/voice-env-export",
+  "F:/LedgerTools/fab",
+  "F:/LedgerTools/polyhaven",
+  "F:/LedgerTools/presets",
+  "F:/LedgerTools/blender52",
+  "F:/LedgerTools/blender_mcp",
+  "F:/LedgerTools/uv",
+  "F:/LedgerTools/zen",
+  "F:/LedgerTools/models",
+  "F:/LedgerTools/retention",
+  "F:/LedgerTools/town-scratch/ci-tree",
+  "F:/LedgerTools/slr83",
+  "F:/LedgerTools/parler-tts",
+  "F:/LedgerTools/accent-id",
+  "C:/LedgerTools/mh-assemble",
+  "C:/LedgerTools/mh-assemble-before-dressing-2026-09-24",
+  "C:/LedgerTools/chatterbox-nano",
+  "C:/LedgerTools/blender",
+  "C:/LedgerTools/python312",
+  "C:/LedgerTools/parler-tts",
+  "C:/LedgerTools/slr83",
+  "C:/Users/Jafar/ledger-local/ue-probe/Binaries"
+ ],
+ "limits": [
+  {
+   "kind": "builds",
+   "keep": "the latest two",
+   "rule": "builds",
+   "folders": [
+    "F:/LedgerTools/played-game",
+    "F:/LedgerTools/pack-*",
+    "F:/LedgerTools/builds/*",
+    "C:/Users/Jafar/ledger-local/ue-probe/Packaged",
+    "C:/actions-runner-ledger/_work/ledger/ledger/ue-probe/Packaged"
+   ],
+   "note": "His played copy (played-game) is always one of the two. Unreal's staging copy (Saved/StagedBuilds) duplicates the build it was packaged into and goes after a day."
+  },
+  {
+   "kind": "staging copies of builds",
+   "keep": "1 day",
+   "rule": "age",
+   "days": 1,
+   "folders": [
+    "C:/Users/Jafar/ledger-local/ue-probe/Saved/StagedBuilds",
+    "C:/actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/StagedBuilds"
+   ]
+  },
+  {
+   "kind": "renders and films",
+   "keep": "3 days, or for ever once approved (the approved ones are copied into production/approvals or production/art, in git)",
+   "rule": "age",
+   "days": 3,
+   "folders": [
+    "C:/actions-runner-ledger/_work/renders",
+    "F:/LedgerTools/renders",
+    "F:/LedgerTools/scratch",
+    "F:/LedgerTools/page-frames",
+    "C:/Users/Jafar/ledger-local/ue-probe/Saved/PageShots",
+    "C:/Users/Jafar/ledger-local/ue-probe/Saved/MouthFilm",
+    "C:/Users/Jafar/ledger-local/ue-probe/Saved/LookScript",
+    "C:/Users/Jafar/ledger-local/ue-probe/Saved/Screenshots"
+   ]
+  },
+  {
+   "kind": "voice tests and scratch",
+   "keep": "7 days",
+   "rule": "age",
+   "days": 7,
+   "folders": [
+    "F:/LedgerTools/tmp",
+    "F:/LedgerTools/town-scratch/breaker",
+    "F:/LedgerTools/review-voice-*",
+    "C:/Users/Jafar/AppData/Local/Temp/claude",
+    "C:/Users/Jafar/ledger-local/.claude/worktrees"
+   ]
+  },
+  {
+   "kind": "logs and crash dumps",
+   "keep": "7 days",
+   "rule": "age",
+   "days": 7,
+   "folders": [
+    "C:/Users/Jafar/ledger-local/ue-probe/Saved/Logs",
+    "C:/Users/Jafar/ledger-local/ue-probe/Saved/Crashes",
+    "C:/actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/Logs",
+    "C:/actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/Crashes",
+    "C:/actions-runner-ledger/_diag",
+    "F:/LedgerTools/played-game/Windows/LedgerProbe/Saved/Crashes",
+    "C:/Users/Jafar/AppData/Local/CrashDumps"
+   ]
+  },
+  {
+   "kind": "unfinished git downloads",
+   "keep": "12 hours (an interrupted fetch's leftovers; git never reads them)",
+   "rule": "gitleftovers",
+   "hours": 12,
+   "folders": [
+    "C:/Users/Jafar/ledger-local/.git/objects/pack",
+    "C:/actions-runner-ledger/_work/ledger/ledger/.git/objects/pack"
+   ]
+  },
+  {
+   "kind": "models",
+   "keep": "only while something uses them: registered below with the tool that uses them; an unregistered model over 50 MB untouched for 7 days goes, and so does a registered one whose tools are gone",
+   "rule": "models",
+   "days": 7,
+   "folders": [
+    "F:/LedgerTools/hf/hub/models--*",
+    "C:/Users/Jafar/.cache/huggingface/hub/models--*"
+   ]
+  },
+  {
+   "kind": "tool caches",
+   "keep": "capped in the tool's own settings, checked where it really writes",
+   "rule": "caches"
+  }
+ ],
+ "caches": [
+  {
+   "name": "Unreal's cache server (Zen)",
+   "writes": "F:/LedgerTools/zen/Data",
+   "capGb": 6.4,
+   "setting": "tools/ue/UserEngine.ini: --gc-disksize-softlimit 6442450944 and 7 days (installed into the real AppData by the build machine's workflow; Unreal trims itself)",
+   "mustStayEmpty": [
+    "C:/Users/Jafar/AppData/Local/UnrealEngine/Common/Zen/Data",
+    "C:/Users/Jafar/AppData/Local/UnrealEngine/Common/DerivedDataCache"
+   ]
+  },
+  {
+   "name": "Unreal's old file cache",
+   "writes": "C:/Users/Jafar/AppData/Local/UnrealEngine/Common/DerivedDataCache",
+   "capGb": 0.5,
+   "setting": "tools/ue/UserEngine.ini: DeleteOnly=true, 7 days (reads and writes nothing new)"
+  },
+  {
+   "name": "Marvelous Designer",
+   "writes": "C:/Users/Jafar/AppData/Local/CLO Virtual Fashion",
+   "capGb": 2.0,
+   "setting": "its own temporary folder; the clothing session's saves go to F:/LedgerTools/tmp/clothes (7 days) and finished garments to F:/LedgerTools/garments"
+  },
+  {
+   "name": "pip's download cache",
+   "writes": "F:/LedgerTools/pip-cache",
+   "capGb": 1.0,
+   "setting": "PIP_CACHE_DIR; files over 7 days go"
+  },
+  {
+   "name": "uv's cache (the Blender connection)",
+   "writes": "F:/LedgerTools/uv",
+   "capGb": 2.5,
+   "setting": "UV_CACHE_DIR"
+  },
+  {
+   "name": "Claude Code's own scratch",
+   "writes": "C:/Users/Jafar/AppData/Local/Temp/claude",
+   "capGb": 3.0,
+   "setting": "7 days, by the scratch limit"
+  }
+ ],
+ "models": [
+  {
+   "path": "C:/LedgerTools/chatterbox-nano",
+   "usedBy": [
+    "tools/voice-live/voice-server.py"
+   ],
+   "why": "the game's live voice"
+  },
+  {
+   "path": "C:/Users/Jafar/.cache/huggingface/hub/models--ResembleAI--chatterbox",
+   "usedBy": [
+    "tools/voice-live/voice-server.py"
+   ],
+   "why": "the voice's tokenizer and voice encoder, loaded beside Nano's weights"
+  },
+  {
+   "path": "C:/Users/Jafar/.cache/huggingface/hub/models--openai--whisper-small.en",
+   "usedBy": [
+    "tools/voice-live/take_gate.py"
+   ],
+   "why": "the voice screen hears each take's words"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--openai--whisper-small.en",
+   "usedBy": [
+    "tools/voice-live/take_gate.py"
+   ],
+   "why": "the same, for tools run with HF_HOME on F:"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--speechbrain--spkrec-ecapa-voxceleb",
+   "usedBy": [
+    "tools/voice-live/take_gate.py"
+   ],
+   "why": "the voice screen's likeness check"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--Jzuluaga--accent-id-commonaccent_ecapa",
+   "usedBy": [
+    "tools/voice-live/accent_check.py"
+   ],
+   "why": "the voice screen's accent check"
+  },
+  {
+   "path": "F:/LedgerTools/models/sb-spk",
+   "usedBy": [
+    "tools/voice-live/take_gate.py"
+   ],
+   "why": "the speaker model's working copy"
+  },
+  {
+   "path": "F:/LedgerTools/parler-tts",
+   "usedBy": [
+    "tools/voice-live/longer_takes.py"
+   ],
+   "why": "designing a new character's voice from a description (casting); review on 9 October"
+  },
+  {
+   "path": "C:/Users/Jafar/.cache/huggingface/hub/models--parler-tts--parler-tts-mini-v1",
+   "usedBy": [
+    "tools/voice-live/longer_takes.py"
+   ],
+   "why": "a second copy of Parler's model, for tools run without HF_HOME; review on 9 October"
+  },
+  {
+   "path": "F:/LedgerTools/voice-graphs/nano",
+   "usedBy": [
+    "production/research/voice-in-the-game"
+   ],
+   "why": "Nano's one-token step as a compiled graph, the first piece of the voice's move into the game"
+  }
+ ],
+ "holds": [
+  {
+   "path": "F:/LedgerTools/hf/hub/models--openbmb--VoxCPM2",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/voxcpm2",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--samuel-vitorino--sopro-v2-turbo",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/sopro",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--kyutai--pocket-tts",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--kyutai--pocket-tts-without-voice-cloning",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/pocket-tts",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--dima806--english_accents_classification",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/hf/hub/models--openai--whisper-medium.en",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "C:/Users/Jafar/.cache/huggingface/hub/models--hexgrad--Kokoro-82M",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/pack-test",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/voice-graphs/game-out",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "F:/LedgerTools/voice-graphs/export-out",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  },
+  {
+   "path": "C:/Users/Jafar/ledger-llama",
+   "why": "waiting for Jafar's yes on the 2 October disk page (the safety check stopped deleting it without one)",
+   "until": "2026-10-16"
+  }
+ ]
+}

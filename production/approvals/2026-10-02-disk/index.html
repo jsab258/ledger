@@ -1,0 +1,155 @@
+<title>LEDGER Drive Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* The project's page style (the cleanup pages): one decision on top, the measurement and the limits folded below. */
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --warn:#a0631a; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --warn:#d9a052; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --warn:#d9a052; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:1000px;margin:0 auto;display:grid;gap:22px}
+header{display:grid;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:16px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(28px,5vw,42px)/1.04 var(--display);margin:0;text-wrap:balance}
+h2{font:700 clamp(20px,3.2vw,26px)/1.1 var(--display);margin:0;text-wrap:balance}
+p{margin:0;max-width:70ch}
+.meter{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.meter div{background:var(--surface);border:1px solid var(--rule);padding:10px 12px;display:grid;gap:4px}
+.meter b{font:700 28px/1 var(--display);font-variant-numeric:tabular-nums}
+.meter span{font:400 13px/1.3 var(--type);color:var(--muted)}
+.meter .low b{color:var(--accent)} .meter .good b{color:var(--ok)}
+section.decide{display:grid;gap:12px;background:var(--surface);border:1px solid var(--rule);box-shadow:inset 4px 0 0 var(--ok);padding:18px}
+.lbl{font:700 12px/1 var(--type);letter-spacing:.1em;text-transform:uppercase;color:var(--ok)}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+label.pick{display:flex;align-items:center;gap:6px;font:400 15px var(--type);cursor:pointer}
+input[type=radio]{width:18px;height:18px;accent-color:var(--ok)}
+textarea{width:100%;min-height:46px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:8px}
+textarea:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.saved{font:400 13px var(--type);color:var(--muted)}
+details{background:var(--surface);border:1px solid var(--rule)}
+summary{cursor:pointer;padding:14px 16px;font:600 17px/1.3 var(--display);list-style-position:outside}
+summary small{display:block;font:400 14px/1.4 var(--body);color:var(--muted);margin-top:4px}
+details > div{padding:0 16px 16px;display:grid;gap:12px;min-width:0}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font:400 13.5px/1.4 var(--type)}
+th{font:700 11px/1.2 var(--type);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 4px;border-bottom:1px solid var(--ink)}
+td{border-top:1px solid var(--rule);padding:6px 4px;vertical-align:top;word-break:break-word}
+td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;word-break:normal}
+td.up{color:var(--accent);font-weight:700}
+ul{margin:0;padding-left:20px;display:grid;gap:6px;max-width:72ch}
+footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var(--rule);padding-top:14px}
+</style>
+<div class="wrap">
+  <header>
+    <div class="kicker">LEDGER · disk page · Friday 2 October</div>
+    <h1>What filled both drives, and the limits that now keep them clear</h1>
+    <div class="meter" id="meter"></div>
+  </header>
+
+  <section class="decide" id="decide"></section>
+
+  <details id="d-measure"><summary>What filled the drives<small id="s-measure"></small></summary><div>
+    <p>Every place the project and its tools write, measured file by file at <span id="t-before"></span> this morning, before anything was deleted. "Written since" counts files written since yesterday at 15:00. Links are counted once, where the files really are.</p>
+    <div class="tbl"><table id="t-rows"></table></div>
+    <h2>The biggest single folders</h2>
+    <div class="tbl"><table id="t-big"></table></div>
+  </div></details>
+
+  <details id="d-held"><summary>What your yes deletes, item by item<small id="s-held"></small></summary><div>
+    <p>Nothing in this list is used by any tool in the project now. The safety check on my side stopped me deleting these without your word, so they are held (tonight's run cannot touch them either) until you answer.</p>
+    <div class="tbl"><table id="t-held"></table></div>
+  </div></details>
+
+  <details id="d-limits"><summary>The limits, enforced every night at 04:30<small>A fixed limit for every kind of output, a check before every build, and a line on the overview each morning</small></summary><div>
+    <div class="tbl"><table id="t-limits"></table></div>
+    <h2>Tool caches, capped in their own settings</h2>
+    <div class="tbl"><table id="t-caches"></table></div>
+    <ul>
+      <li>Windows' Task Scheduler runs the cleanup at 04:30 every night ("LEDGER retention"). It deletes only inside the project's own folders, never anything of yours, nothing git keeps, nothing the backup covers, and logs every deletion (F:\LedgerTools\retention\deleted.log). Its first run, this morning, removed 1,408 old scratch files and logs.</li>
+      <li>Every session writes only into known folders: scratch and voice tests in F:\LedgerTools\tmp, renders in F:\LedgerTools\renders, models registered with the tool that uses them. Anything that must outlive its limit gets a written hold, at most 14 days.</li>
+      <li>Before any build, render or large job, every session checks: C: keeps 40 GB, F: 20 GB. If cleaning cannot make room, the job stops and goes on your list; it is not retried. The build machine checks the same before it builds.</li>
+      <li>The overview's first line each morning: free space on both drives, and the three folders that grew most since the day before.</li>
+      <li>The build machine now puts its pictures into git at most once a day (it was five to ten times, about 130 MB each); every run's pictures go to its own folder for three days.</li>
+    </ul>
+  </div></details>
+
+  <details id="d-done"><summary>Already done this morning<small id="s-done"></small></summary><div>
+    <div class="tbl"><table id="t-done"></table></div>
+  </div></details>
+
+  <details id="d-cause"><summary>What caused it<small>One upload of mine, and history that only ever grew</small></summary><div>
+    <p>At 22:07 last night I uploaded a merge whose history reached far back. The build machine was in the middle of a check, and the step that saves its result downloaded the project's whole history to do it: 30 GB, until C: had nothing left and the download stopped half-finished. That half-finished file stayed behind. Its pull now fetches only recent history, so this cannot repeat.</p>
+    <p>The rest grew slowly because nothing removed it: models of voice engines we stopped using, an old test copy of the game, the old player's voice graphs, scratch from every test, and the build machine's pictures, which went into git on every run and stay there for good (about 26 GB of the 33 GB history on C:). Making the history itself smaller would rewrite it on GitHub for all three sessions; I do not recommend it while C: has room.</p>
+  </div></details>
+
+  <details id="d-yours"><summary>Your own files, and the spare drive<small>Untouched; the spare drive is not needed</small></summary><div>
+    <p>Your recycle bin on F: holds 7.6 GB, nearly all your own files from March. Emptying it is yours to do; it would give F: that much more room. Your Dropbox, Documents and Downloads were not measured file by file and nothing in them was touched.</p>
+    <p>The spare drive: not needed. After your yes, F: has about 38 GB free and C: about 84 GB, both above their floors, with the limits keeping them there. A build of the game is about 6 GB; if the game itself grows past what the limits leave, I will say so with the numbers.</p>
+  </div></details>
+
+  <footer>Measured by tools/retention.py, which reads every file in the project's places and enters no link; the limits live in production/retention.json. Free space is in gigabytes of 1,000,000,000 bytes, as Windows shows on its drive properties page.</footer>
+</div>
+<script>
+const DATA = {"freeBefore": {"C": 31.3, "F": 2.5}, "freeNow": {"C": 72.8, "F": 2.5}, "measuredBefore": "09:22", "measuredNow": "09:44", "rows": [{"name": "F:\\LedgerTools, all the project's tools and scratch", "drive": "F", "before": 109.7, "grew": 7.9, "now": 109.7}, {"name": "The build machine's working copy", "drive": "C", "before": 62.5, "grew": 51.4, "now": 26.2}, {"name": "The builder's copy of the project (mostly its git history)", "drive": "C", "before": 47.4, "grew": 14.4, "now": 42.2}, {"name": "C:\\LedgerTools (the live voice, Blender, the cast's source)", "drive": "C", "before": 11.6, "grew": 0.0, "now": 11.6}, {"name": "An old language model (ledger-llama)", "drive": "C", "before": 11.1, "grew": 0.0, "now": 11.1}, {"name": "Model caches on C: (voices, speech)", "drive": "C", "before": 10.3, "grew": 0.0, "now": 10.3}, {"name": "Windows' temporary files (Claude's own scratch among them)", "drive": "C", "before": 8.8, "grew": 0.5, "now": 8.5}, {"name": "F: outside the project (your recycle bin)", "drive": "F", "before": 7.7, "grew": 0.0, "now": 7.7}, {"name": "The picture generator's model (ledger-imagegen)", "drive": "C", "before": 6.9, "grew": 0.0, "now": 6.9}, {"name": "The town session's copy", "drive": "C", "before": 2.8, "grew": 0.2, "now": 2.8}, {"name": "The clothing session's copy", "drive": "C", "before": 2.7, "grew": 0.2, "now": 2.7}, {"name": "An old project folder (ledger-exec)", "drive": "C", "before": 1.9, "grew": 0.0, "now": 1.9}, {"name": "The animation picker (ledger-mixamo)", "drive": "C", "before": 1.7, "grew": 0.0, "now": 1.7}, {"name": "NuGet packages (.NET)", "drive": "C", "before": 0.4, "grew": 0.0, "now": 0.4}], "biggest": [{"path": "C:\\actions-runner-ledger\\_work\\ledger", "gb": 61.5, "grew": 51.4}, {"path": "C:\\Users\\Jafar\\ledger-local\\.git\\objects", "gb": 33.1, "grew": 13.0}, {"path": "F:\\LedgerTools\\tmp", "gb": 18.7, "grew": 0.1}, {"path": "F:\\LedgerTools\\hf\\hub", "gb": 14.2, "grew": 0.0}, {"path": "F:\\LedgerTools\\mh-dress\\Content", "gb": 13.9, "grew": 0.0}, {"path": "F:\\LedgerTools\\voice-graphs", "gb": 13.6, "grew": 0.0}, {"path": "C:\\Users\\Jafar\\ledger-local\\ue-probe", "gb": 11.0, "grew": 1.2}, {"path": "C:\\Users\\Jafar\\ledger-llama\\models", "gb": 11.0, "grew": 0.0}, {"path": "F:\\LedgerTools\\tmp\\clothes", "gb": 9.2, "grew": 0.0}, {"path": "F:\\LedgerTools\\zen\\Data", "gb": 8.9, "grew": 1.1}, {"path": "F:\\LedgerTools\\voice-graphs\\game-out", "gb": 8.6, "grew": 0.0}, {"path": "C:\\Users\\Jafar\\.cache\\huggingface\\hub", "gb": 8.0, "grew": 0.0}, {"path": "F:\\$RECYCLE.BIN\\S-1-5-21-456240852-3359671430-3180151885-1002", "gb": 7.6, "grew": 0.0}, {"path": "C:\\Users\\Jafar\\ledger-imagegen\\models", "gb": 6.7, "grew": 0.0}, {"path": "F:\\LedgerTools\\played-game\\Windows", "gb": 6.2, "grew": 5.5}, {"path": "C:\\Users\\Jafar\\AppData\\Local\\Temp\\claude", "gb": 5.7, "grew": 0.3}], "held": [{"path": "C:\\Users\\Jafar\\ledger-llama", "gb": 11.1, "why": "a local language model and its server from 22 September; nothing in the project uses it"}, {"path": "F:\\LedgerTools\\voice-graphs\\game-out", "gb": 8.56, "why": "the full voice model converted for the old Unity player; the game is Unreal now and speaks with Nano"}, {"path": "F:\\LedgerTools\\pack-test", "gb": 5.43, "why": "a packaged copy of the game from 24 September; the newest two builds are kept (your played copy and the build machine's)"}, {"path": "F:\\LedgerTools\\hf\\hub\\models--openbmb--VoxCPM2", "gb": 4.96, "why": "VoxCPM2's model: tried for acted lines; on 29 September you kept the game's own voice engine"}, {"path": "F:\\LedgerTools\\voice-graphs\\export-out", "gb": 4.6, "why": "the first conversion of the same, also for the old Unity player"}, {"path": "F:\\LedgerTools\\hf\\hub\\models--dima806--english_accents_classification", "gb": 4.17, "why": "a second accent classifier no tool loads (the voice screen uses another)"}, {"path": "F:\\LedgerTools\\hf\\hub\\models--openai--whisper-medium.en", "gb": 3.06, "why": "the larger speech-to-text model, used once on 29 September; the voice screen uses the small one"}, {"path": "F:\\LedgerTools\\voxcpm2", "gb": 1.46, "why": "VoxCPM2's program"}, {"path": "F:\\LedgerTools\\pocket-tts", "gb": 1.25, "why": "Pocket TTS's program"}, {"path": "F:\\LedgerTools\\sopro", "gb": 0.83, "why": "Sopro's program"}, {"path": "F:\\LedgerTools\\hf\\hub\\models--samuel-vitorino--sopro-v2-turbo", "gb": 0.63, "why": "Sopro's model: on 30 September you kept Ron on the game's engine; not offered for Sheila"}, {"path": "C:\\Users\\Jafar\\.cache\\huggingface\\hub\\models--hexgrad--Kokoro-82M", "gb": 0.33, "why": "Kokoro, an early voice engine no tool loads"}, {"path": "F:\\LedgerTools\\hf\\hub\\models--kyutai--pocket-tts", "gb": 0.22, "why": "Pocket TTS: set aside for good on 28 September"}, {"path": "F:\\LedgerTools\\hf\\hub\\models--kyutai--pocket-tts-without-voice-cloning", "gb": 0.22, "why": "Pocket TTS, second model: set aside on 28 September"}], "heldF": 35.4, "heldC": 11.4, "done": {"handGb": 41.4, "hand": [{"path": "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\.git\\objects\\pack\\tmp_pack_xgKCEW", "gb": 29.9, "why": "an interrupted download's leftover from the night of 1 October (the 28 GB fetch); git never reads it"}, {"path": "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Intermediate", "gb": 5.2, "why": "Unreal's build output, remade by the next build; Jafar's yes, 2 October"}, {"path": "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\ue-probe\\Saved\\StagedBuilds", "gb": 6.2, "why": "Unreal's staging copy of the build machine's last package; the same build sits in Packaged"}], "nightlyFiles": 1408, "nightlyGb": 0.25}, "limits": [{"kind": "builds", "keep": "the latest two"}, {"kind": "staging copies of builds", "keep": "1 day"}, {"kind": "renders and films", "keep": "3 days, or for ever once approved (the approved ones are copied into production/approvals or production/art, in git)"}, {"kind": "voice tests and scratch", "keep": "7 days"}, {"kind": "logs and crash dumps", "keep": "7 days"}, {"kind": "unfinished git downloads", "keep": "12 hours (an interrupted fetch's leftovers; git never reads them)"}, {"kind": "models", "keep": "only while something uses them: registered below with the tool that uses them; an unregistered model over 50 MB untouched for 7 days goes, and so does a registered one whose tools are gone"}, {"kind": "tool caches", "keep": "capped in the tool's own settings, checked where it really writes"}], "caches": [{"name": "Unreal's cache server (Zen)", "writes": "F:\\LedgerTools\\zen\\Data", "cap": 6.4, "gb": 8.86}, {"name": "Unreal's old file cache", "writes": "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\DerivedDataCache", "cap": 0.5, "gb": 0.0}, {"name": "Marvelous Designer", "writes": "C:\\Users\\Jafar\\AppData\\Local\\CLO Virtual Fashion", "cap": 2.0, "gb": 0.09}, {"name": "pip's download cache", "writes": "F:\\LedgerTools\\pip-cache", "cap": 1.0, "gb": 0.3}, {"name": "uv's cache (the Blender connection)", "writes": "F:\\LedgerTools\\uv", "cap": 2.5, "gb": 1.6}, {"name": "Claude Code's own scratch", "writes": "C:\\Users\\Jafar\\AppData\\Local\\Temp\\claude", "cap": 3.0, "gb": 5.53}], "floors": {"C": 40, "F": 20}};
+const KEY = "disk-2026-10-02-unused";
+let db = null, st = {};
+function el(tag, attrs, ...kids){ const n = document.createElement(tag); for (const [k,v] of Object.entries(attrs||{})) { if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v); } for (const k of kids) if (k != null) n.append(k); return n; }
+function gb(x){ return (Math.round(x * 10) / 10).toFixed(1) + " GB"; }
+function table(id, head, rows){ const t = document.getElementById(id); t.replaceChildren(); const hr = el("tr"); for (const [h, num] of head) hr.append(el("th", {class: num ? "n" : "", text: h})); t.append(el("thead", {}, hr)); const tb = el("tbody"); for (const r of rows) { const tr = el("tr"); for (const c of r) tr.append(el("td", {class: c.cls || "", text: c.t})); tb.append(tr); } t.append(tb); }
+function save(patch){ st = Object.assign({}, st, patch, {at: new Date().toISOString()}); renderDecide(); if (db) db.doc("verdicts/" + KEY).set(Object.assign({}, st)).catch(() => {}); }
+function renderDecide(){
+  const s = document.getElementById("decide"); s.replaceChildren();
+  s.append(el("div", {class:"lbl", text:"One decision · I recommend yes"}));
+  s.append(el("h2", {text:"Delete " + gb(DATA.heldF + DATA.heldC) + " nothing uses: voice models we stopped using, an old test copy of the game and the old player's voice graphs on F:, and an unused language model on C:?"}));
+  s.append(el("p", {text:"F: goes from " + gb(DATA.freeNow.F) + " to about " + gb(DATA.freeNow.F + DATA.heldF) + " free, over its 20 GB floor, so the builds and voice work that stopped for room can start again. Nothing the game, a tool or the backup uses is in it."}));
+  const picks = el("div", {class:"row"});
+  for (const [v, txt] of [["yes", "Yes, delete them"], ["no", "No, keep them"]]) { const id = "pick-" + v; const r = el("input", {type:"radio", name:"pick", id, value:v}); if (st.pick === v) r.checked = true; r.addEventListener("change", () => save({pick:v})); picks.append(el("label", {class:"pick", for:id}, r, document.createTextNode(txt))); }
+  const note = el("textarea", {id:"note", placeholder:"A word, if any (optional)"}); note.value = st.note || ""; note.addEventListener("change", () => save({note: note.value}));
+  s.append(picks, note, el("span", {class:"saved", text: st.at ? "Saved " + new Date(st.at).toLocaleString() : (db ? "" : "Answers are not being stored on this view")}));
+}
+function render(){
+  const f = DATA.freeNow, b = DATA.freeBefore;
+  document.getElementById("meter").replaceChildren(
+    el("div", {class: f.C >= DATA.floors.C ? "good" : "low"}, el("b", {text:gb(f.C)}), el("span", {text:"free on C: now (was " + gb(b.C) + "; keeps " + DATA.floors.C + ")"})),
+    el("div", {class: f.F >= DATA.floors.F ? "good" : "low"}, el("b", {text:gb(f.F)}), el("span", {text:"free on F: now (keeps " + DATA.floors.F + ")"})),
+    el("div", {class:"good"}, el("b", {text:gb(f.F + DATA.heldF)}), el("span", {text:"free on F: after your yes"})));
+  document.getElementById("t-before").textContent = DATA.measuredBefore;
+  const top = DATA.rows.slice(0, 3).map(r => r.name.split(" (")[0] + " " + gb(r.before)).join(", ");
+  document.getElementById("s-measure").textContent = "Largest first: " + top + ". The build machine's copy grew 51 GB overnight.";
+  table("t-rows", [["Place", 0], ["Drive", 0], ["Size", 1], ["Written since", 1], ["Now", 1]],
+    DATA.rows.map(r => [{t:r.name}, {t:r.drive + ":"}, {t:gb(r.before), cls:"n"}, {t:r.grew >= 0.1 ? "+" + gb(r.grew) : "-", cls: r.grew >= 5 ? "n up" : "n"}, {t:gb(r.now), cls:"n"}]));
+  table("t-big", [["Folder", 0], ["Size", 1], ["Written since", 1]],
+    DATA.biggest.map(r => [{t:r.path}, {t:gb(r.gb), cls:"n"}, {t:r.grew >= 0.1 ? "+" + gb(r.grew) : "-", cls: r.grew >= 5 ? "n up" : "n"}]));
+  document.getElementById("s-held").textContent = DATA.held.length + " items, " + gb(DATA.heldF) + " on F: and " + gb(DATA.heldC) + " on C:";
+  table("t-held", [["What", 0], ["Size", 1], ["Why nothing needs it", 0]], DATA.held.map(h => [{t:h.path}, {t:gb(h.gb), cls:"n"}, {t:h.why}]));
+  table("t-limits", [["Kind of output", 0], ["Kept", 0]], DATA.limits.map(l => [{t:l.kind}, {t:l.keep}]));
+  table("t-caches", [["Cache", 0], ["Where it really writes", 0], ["Now", 1], ["Cap", 1]], DATA.caches.map(c => [{t:c.name}, {t:c.writes}, {t:gb(c.gb), cls: c.gb > c.cap ? "n up" : "n"}, {t:gb(c.cap), cls:"n"}]));
+  const d = DATA.done;
+  document.getElementById("s-done").textContent = gb(d.handGb) + " deleted on C:, with your yes for the build output and as provable waste for the rest; then the first nightly run";
+  table("t-done", [["Deleted", 0], ["Size", 1], ["Why", 0]],
+    d.hand.map(h => [{t:h.path}, {t:gb(h.gb), cls:"n"}, {t:h.why}]).concat([[{t:d.nightlyFiles + " old scratch files and logs (the first nightly run)"}, {t:gb(d.nightlyGb), cls:"n"}, {t:"past their seven-day limit"}]]));
+  renderDecide();
+}
+render();
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (db) { try { const s = await db.doc("verdicts/" + KEY).get(); if (s.exists) st = Object.assign({}, s.data()); } catch (e) {} }
+  renderDecide();
+})();
+</script>
