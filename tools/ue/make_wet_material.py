@@ -28,7 +28,7 @@ ASSET_PATH = PACKAGE + "/" + ASSET
 MASK_PARAM = "WetMask"
 STRENGTH_PARAM, STRENGTH_DEFAULT = "WetStrength", 0.9
 TINT_PARAM, TINT_DEFAULT = "WetTint", (0.06, 0.062, 0.066)   # 2 October: 0.025 read as holes in the first stage-1 frame
-ROUGH_PARAM, ROUGH_DEFAULT = "WetRoughness", 0.12   # 2 October: at 0.04 the puddles took no sky in the first stage-1 frame and read as holes
+ROUGH_PARAM, ROUGH_DEFAULT = "WetRoughness", 0.05   # 2 October, evening: 0.04 "read as holes" while every decal was turned wrong; with the turn fixed, near-mirror puddles to reflect the shopfronts (his "wet street and its reflections")
 WHITE = "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
 FLAGS = [
     ("material_domain", "MaterialDomain", "MD_DEFERRED_DECAL"),

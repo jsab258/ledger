@@ -37,7 +37,7 @@ Not in his order of 1 October, kept for later:
 - [ ] 5. Nightly functional tests of the packaged game (production/research/packaged-game-testing).
 - [ ] 6. Mickey's office as a playable blockout (production/research/interior-blockout).
 
-STATE (Friday 2 October, 19:00): drives over their floors (C: 99 GB, F: 42 GB), retention nightly. RS2 to RS7 in the finished game, walked 11 of 11. RS1's lines to his ear on the next page. The delay measured and past the two-tries rule (Needs you). PF1 in progress (above). Ron's Marvelous jacket filmed and failed clothing's blind review; Darren's Outfit fit tomorrow; tailoring waits on Jafar. 1b: the Low items left (split with the town, mine started).
+STATE (Friday 2 October, 22:13): drives over their floors (C: 97 GB, F: 37 GB), retention nightly. Friday's page answered by message: stage 1 not ready (pushing further), Rita's window yes (eleven shopfronts next), the cars, skip and pallet off the street. 1b: my Low items in the game and walked 11 of 11; the town's wait on Jafar's go. RS1 and V7 (Sheila's voice lines and her face) on the next page, after a fresh fault check. Clothes changed course on his order (a bar first, then ready-made suits); no Marvelous fits for me. The delay: the 8-bit step 1.7x faster idle, not yet heard.
 
 ## Handovers to clothing
 

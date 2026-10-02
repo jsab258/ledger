@@ -32,9 +32,14 @@
    2.5
   ],
   "paving": [
-   0.72,
-   0.56,
-   0.3
+   0.95,
+   0.93,
+   0.9
+  ],
+  "asphalt": [
+   0.62,
+   0.62,
+   0.64
   ],
   "interior_lit": [
    0.05,
@@ -42,7 +47,7 @@
    0.05
   ]
  },
- "surface_gain_note": "RAISED A QUARTER FOR BOTH BRICKS 23 September, when Lumen went on: the bounced light's occlusion darkened every wall by about a fifth against the frame before it (parade upper wall 0.79, west terrace 0.76-0.81, Mickey's 0.83, the sky unchanged at 1.00), and the walls had been matched to the sheet before it; the pavements were left darker, which is nearer the sheet's wet flags. Before that: Per-surface colour in this engine, by base material, over the drawn surface's own colour. Retuned 23 September again once the drawn bricks and flags carry Blender's wear (patches, the splash at the foot, streaks from the wall head, about 0.6 of the clean wall on average): brick_red lands the parade's upper wall at 78/46/33 against the sheet's 76/45/35; paving at 126/112/98 against the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain).",
+ "surface_gain_note": "2 October, evening (his answer to Friday's page): the paving's grade 0.72/0.56/0.30 cut the blue so hard the wet flags came out orange whatever the recipe gave them; the drawn flags were still the colour of a recipe two passes old (98/78/53), redrawn from today's grey-tan (89/78/66), and the grade near neutral, 0.95/0.93/0.90. The asphalt graded 0.62 darker, so the wet road has its dark between the reflections. Earlier: RAISED A QUARTER FOR BOTH BRICKS 23 September, when Lumen went on: the bounced light's occlusion darkened every wall by about a fifth against the frame before it (parade upper wall 0.79, west terrace 0.76-0.81, Mickey's 0.83, the sky unchanged at 1.00), and the walls had been matched to the sheet before it; the pavements were left darker, which is nearer the sheet's wet flags. Before that: Per-surface colour in this engine, by base material, over the drawn surface's own colour. Retuned 23 September again once the drawn bricks and flags carry Blender's wear (patches, the splash at the foot, streaks from the wall head, about 0.6 of the clean wall on average): brick_red lands the parade's upper wall at 78/46/33 against the sheet's 76/45/35; paving at 126/112/98 against the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain).",
  "sky_seen_gain_night": 0.15,
  "sky_light_gain_night": 0.15,
  "night_exposure_bias": -1.0,
@@ -52,7 +57,8 @@
  "glass_roughness": 0.05,
  "wet_floor": {
   "paving": 0.12,
-  "kerbstone": 0.18
+  "kerbstone": 0.18,
+  "asphalt": 0.15
  },
  "wet_floor_note": "23 September, after two tries in Unreal and the recipe's own two in Blender: the flags take the recipe's wet roughness and no floor of their own. 0.25 mirrored the sky and read 1.6-2.5x the sheet and blue; 0.40 still 1.05/1.15/1.37. The sheet's shine is the shopfront reflected close to the wall, which a lower roughness does not give. SET ASIDE. The paving gain cooled to 0.72/0.56/0.30 instead: the near footway 1.04/1.04/1.17 of the sheet.",
  "street_in_play": true,
@@ -89,13 +95,13 @@
  "room_glow_gain_night_note": "29 September. A pictured room's glow at night (the lit shops, the lit rooms behind a third of the upstairs nets), a gain on the recipe's night strength (1.6 a shop, 1.2 a lit net, 0.05 a dark one) in place of street_glow_gain, which is tuned for the fluorescent tubes at 12 and left the rooms unseen: the blind review of the sodium night found not one window lit and the shops' tubes lighting nothing. 0.08, not the first try's 0.25, at which the shops' pictured interiors washed out into blank cream panels and the lit nets read white.",
  "fog_density_gain_night": 0.2,
  "fog_density_gain_night_note": "1 October, the proof frame's night test (production/research/aaa-street, section 3; frames in F:/LedgerTools/scratch/nighttest): with the sky light off the night barely changed; with the fog off the orange haze over the far end went; the lighting-only view showed each lamp's all-round glow lighting the house fronts to the eaves and its 70-degree pool reaching the next lamp's, so there was no darkness between. The night's fog at a fifth of the scene file's 0.022, so the far end is dark with a faint haze, not an orange wall.",
- "fog_density_gain_day": 4.0,
- "fog_start_day_m": 15.0,
+ "fog_density_gain_day": 7.0,
+ "fog_start_day_m": 10.0,
  "fog_density_gain_day_note": "2 October, the proof frame's stage 1, item 2 (production/research/aaa-street/3-LIGHT-AND-GRADE.md, Depth): the day's fog four times the scene file's density, starting 15 m out, so the street stays clear and the far end and the hill separate in haze. The two tries of 24 September changed the cap and the falloff, never the density or the start; this is the research's method, the third try.",
  "sky_seen_gain_note_2_october": "15 -> 6 with sky_light_gain 0.5 -> 1.25, the same factor (2 October; production/research/aaa-street/SKY-AND-HAZE-2026-10-02.md, step 3: the captured sky light gives the dome's brightness times its own intensity, so the street keeps its light while the dome's clouds come below white). Tried before the fog cutoff: 10 and 6 alone left the sky flat (the haze covered it) and darkened the street. Also tried 4 with 1.875 (16:35): the sky only darkened (224), its spread stayed at 9.5 against 25 to 70 in the picture itself, so the clouds are squeezed at the top of the tone curve, not lost in the picture: next, the research's step 4 (local exposure, highlight contrast about 0.8).",
  "fog_cutoff_day_m": 900.0,
  "fog_cutoff_day_m_note": "2 October (production/research/aaa-street/SKY-AND-HAZE-2026-10-02.md, first step): no fog past 900 m by day, so the hill (110 to 200 m) keeps its haze and the sky dome (1,000 m) its clouds.",
  "local_highlight_contrast_day": 0.8,
  "local_highlight_contrast_day_note": "2 October (production/research/aaa-street/SKY-AND-HAZE-2026-10-02.md, step 4): local exposure's highlight contrast at 0.8 by day, so the bright overcast keeps its clouds; 1 is the engine's default.",
- "wet_floor_note_2_october": "2 October (stage 1, item 3; the reviewer: both pavements matt and dry where the sheet's glisten): the wet floor of the flags 0.46 -> 0.12 and the kerbs 0.40 -> 0.18, so they take the sky's sheen."
+ "wet_floor_note_2_october": "2 October, later: 0.30 left the road satin and pale, wet only in its puddles (contrast 24 levels near the camera against the sheet's 56); 0.15, with the asphalt graded darker (surface_gain asphalt 0.62) so its reflections and its dark read against each other, and the puddles at 0.05 still clearer. Before that, 2 October, evening (his answer to Friday's page: the wet street and its reflections): the asphalt's floor 0.05 -> 0.30, satin as Lagarde's wet asphalt (0.15 to 0.35), so the road is no longer one mirror and the puddles, at 0.05, read as mirrors against it. Earlier: 2 October (stage 1, item 3; the reviewer: both pavements matt and dry where the sheet's glisten): the wet floor of the flags 0.46 -> 0.12 and the kerbs 0.40 -> 0.18, so they take the sky's sheen."
 }

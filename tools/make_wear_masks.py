@@ -96,7 +96,9 @@ def stains(rng):
                (leak.shape[1], leak.shape[0]))).astype(float) / 255.0, "top") * 0.8),
            "wear_splash": ramp(strip(splat, 10.0), "bottom"),
            "wear_soot": ramp(strip(grime, 5.0), "top"),
-           "wear_algae": ramp(strip(np.maximum(grime, splat), 4.0), "bottom")}
+           "wear_algae": ramp(strip(np.maximum(grime, splat), 4.0), "bottom"),
+           # rising damp: mottled, strongest at the foot, a soft ragged top edge (2 October)
+           "wear_damp": ramp(strip(grime, 6.0), "bottom") * np.clip(np.linspace(0.0, 1.6, max(8, int(grime.shape[1] / 6.0)))[:, None], 0.0, 1.0)}
     blob = puddle(rng) ** 0.7
     out["wear_oil"] = blob * np.clip(smooth_noise(rng, SIZE, (16, 32, 64, 128)) * 1.6 - 0.3, 0.0, 1.0)   # drips and smears, not a solid disc
     return out
@@ -173,7 +175,7 @@ def selftest():
     b = puddle(np.random.default_rng(19901002))
     check("seeded: the same mask each run", np.array_equal(a, b))
     st = stains(np.random.default_rng(19901003))
-    check("a stain picture for every wear kind but water", set(st) == {"wear_streak", "wear_wash", "wear_splash", "wear_soot", "wear_algae", "wear_oil"})
+    check("a stain picture for every wear kind but water", set(st) == {"wear_streak", "wear_wash", "wear_splash", "wear_soot", "wear_algae", "wear_oil", "wear_damp"})
     check("no stain is empty or solid", all(0.03 < v.mean() < 0.9 for v in st.values()))
     check("the splash band is strongest at its foot", st["wear_splash"][-len(st["wear_splash"]) // 4:].mean() > st["wear_splash"][: len(st["wear_splash"]) // 4].mean())
     check("an oil stain stays clear of its decal's edge", st["wear_oil"][0, :].max() == 0 and st["wear_oil"][:, 0].max() == 0)
