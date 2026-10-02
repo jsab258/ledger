@@ -89,6 +89,13 @@ def ramp(m, strong_at):
     return m * g
 
 
+def soften(m, radius):
+    """A mask blurred by radius pixels (PIL's Gaussian), 0..1."""
+    from PIL import ImageFilter
+    img = Image.fromarray((np.clip(m, 0, 1) * 255).astype(np.uint8), "L").filter(ImageFilter.GaussianBlur(radius))
+    return np.asarray(img).astype(float) / 255.0
+
+
 def stains(rng):
     """{leaf: mask} for every wear kind but water."""
     leak = opacity_map("Leaking005")
@@ -97,7 +104,8 @@ def stains(rng):
     out = {"wear_streak": leak[:, : leak.shape[1] // 3],            # narrow and tall, as under a sill
            "wear_wash": np.maximum(leak, ramp(np.asarray(Image.fromarray((grime * 255).astype(np.uint8)).resize(
                (leak.shape[1], leak.shape[0]))).astype(float) / 255.0, "top") * 0.8),
-           "wear_splash": ramp(strip(splat, 10.0), "bottom"),
+           # softened (3 October: the splatter read as polka dots on the stallrisers)
+           "wear_splash": ramp(strip(soften(np.maximum(splat * 0.7, grime * 0.6), 6), 10.0), "bottom"),
            "wear_soot": ramp(strip(grime, 5.0), "top"),
            "wear_algae": ramp(strip(np.maximum(grime, splat), 4.0), "bottom"),
            # rising damp: mottled, strongest at the foot, a soft ragged top edge (2 October)

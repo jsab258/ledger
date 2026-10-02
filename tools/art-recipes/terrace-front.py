@@ -397,7 +397,7 @@ MATERIALS = (
     # A CEMENT REPAIR PATCH on old brick, sampled off the new sheet's near
     # gable at 175/141/93 and pulled back a little from the orange its light
     # puts in it.
-    ("render_patch",(0.380, 0.285, 0.160), 0.85),
+    ("render_patch",(0.200, 0.150, 0.095), 0.85),   # 3 October: at 0.38 it read as a pale sticker (fresh reviews, twice); old cement, weathered toward the brick
     # RUBBED BRICK, for the window arches: on the new sheet the arch over
     # each window reads 123/67/49 against the wall beside it at 115/63/46 -
     # the same clay, finer and a touch brighter. Scaled off brick_red by that
@@ -2146,8 +2146,11 @@ def plan_street(root, spec_rel=SPEC_REL):
     xm, k = x0, 0
     while xm + CL_MARK <= x1 + 1e-9:
         _box(out, "centre_line_%d" % k, "paint_white", xm, xm + CL_MARK,
-             -CL_W / 2.0, CL_W / 2.0, fall - 0.004, fall + 0.008,
+             -CL_W / 2.0, CL_W / 2.0, road_z(0.0) - 0.004, road_z(0.0) + 0.003,
              "diagram-1008/2m-mark-4m-gap/100mm/on-the-crown")
+    # ON THE CROWN AS BUILT (3 October): the marks stood at "fall" above zero, and the
+    # crowned road's crown IS zero (road_z), so each one floated 8 cm up as a lit plank
+    # (the fresh review's "raised white planks"). 3 mm of paint, into the road below it.
         xm += CL_MARK + CL_GAP
         k += 1
 
@@ -2206,7 +2209,9 @@ def plan_street(root, spec_rel=SPEC_REL):
             # 2.85, and could not be seen from anywhere on the street. A 1980s
             # refit hung its ceiling at the transom line, which is also where
             # the sheet's strips show - in the top of the display glass.
-            if (block_id, bay) in SHOPFRONT_REFITS:
+            # NOT UNTIL THE SHOP HAS ITS ROOM (3 October: with nothing behind the glass the two
+            # tubes floated as bright bars at night, the fresh review's fault; V1 builds the rooms).
+            if (block_id, bay) in SHOPFRONT_REFITS and SHOP_TUBES:
                 ty0, ty1 = STREET_FRONTAGE_M + 0.33, STREET_FRONTAGE_M + 0.37
                 ta, tb = (ty0, ty1) if east else (-ty1, -ty0)
                 tz = THRESHOLD_ABOVE_CROWN_M + 2.30
@@ -3965,6 +3970,7 @@ VEHICLE_AT = (
 #: with the traffic" above was true of the retired sheet, or of the mirrored
 #: street Blender draws, and it came across into the true street facing the
 #: wrong way. facing -1 is nose toward the camera at the south end.
+SHOP_TUBES = False   # until the refitted shops have their rooms (V1)
 CARS_ON_STREET = False   # his ruling, 2 October (DECISIONS)
 VEHICLE_AT = (
     (11.0, 1.96, -1, "car_dark"),
