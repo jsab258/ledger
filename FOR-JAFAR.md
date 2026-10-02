@@ -62,11 +62,13 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Clothes, Saturday 3 October
 
-**Needs you, a few clicks:** the best free garment to test, CLO's [MV2 Easy Tailored Jacket](https://connect.clo-set.com/detail/ae37b94cb2344ee2bc3f01fedacbd39d), needs your CLO sign-in: open it, Sign In (top right, Marvelous's account), Add to cart (Free), open the cart, Checkout, then Download the .zprj; leave it in Downloads.
+**Needs you:** nothing tonight. The CLO sign-in is no longer needed: the free patterns are not draped.
 
-**Free garments, redone from this PC:** CLO's free CONNECT store has a professional pattern for all ten silhouettes, plain white blocks (cloth and wear ours); the cloud never reached it. Your licence rulings and the unreached rule are in.
+**Your new order, under way:** first the bar for clothes (dated photographs of British suits, 1987 to 1991, and the game's real viewing distances, as a short fixed rubric); then ready-made, rigged suits screened against it, the best free or under $40 on one page for you.
 
-**The proof:** failed broadly on Ron, on the cut and the lapel; Darren's film this morning.
+**Free garments, searched from this PC:** CLO's free store has a professional pattern for all ten silhouettes; nothing elsewhere beats them. Kept as input; the ready-rigged items it found are screened first.
+
+**The proof:** failed broadly on Ron, on the cut and the lapel.
 
 **Past two tries:** the proof's shape (nine drapes).
 
