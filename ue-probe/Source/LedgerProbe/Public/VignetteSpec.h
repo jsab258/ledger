@@ -2794,7 +2794,7 @@ namespace LedgerVignette
 	// null samples of each other. MEASURED ON THE COMMITTED FILE rather than
 	// predicted: of the three wet-ladder rows at cam_hook, wet_000 (0.0) and
 	// wet_100 (1.0) leave the group and wet_060 STAYS, because its wetness IS
-	// the 0.6 the reference cell carries and it is therefore a genuine null
+	// the wetness the reference cell carries (0.6, 0.85 since 2 October) and it is therefore a genuine null
 	// sample of the day group. The suite re-derives the whole group from the
 	// reference cell every run, so nobody has to believe that sentence.
 	//

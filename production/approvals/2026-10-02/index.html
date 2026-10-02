@@ -1,0 +1,362 @@
+<title>Friday's Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:40px}
+header{display:grid;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:18px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(30px,5vw,46px)/1.02 var(--display);margin:0;text-wrap:balance}
+h2{font:700 clamp(26px,4vw,34px)/1 var(--display);margin:0;text-wrap:balance}
+h3{font:600 15px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;margin:0}
+.how{margin:0;max-width:70ch;color:var(--muted)}
+.tally,.was,.cap{font:400 13px/1.4 var(--type);color:var(--muted)}
+.tally b{color:var(--ink)}
+section.person{display:grid;gap:22px;background:var(--surface);border:1px solid var(--rule);padding:22px}
+.capgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.capgrid img{width:100%;display:block;background:var(--chip)}
+.cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.cand{display:grid;gap:8px;border:1px solid var(--rule);padding:10px;background:var(--ground)}
+.cand.picked{border-color:var(--accent);box-shadow:inset 0 3px 0 var(--accent)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pair img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--chip)}
+.speak{width:100%;aspect-ratio:4/3;background-color:var(--chip);background-repeat:no-repeat}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:600 14px/1 var(--display);letter-spacing:.04em;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:9px 12px;cursor:pointer;min-height:38px}
+button:hover{border-color:var(--ink)}
+button.playing{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+label.pick{display:flex;align-items:center;gap:6px;font:400 14px var(--type)}
+.take{font:700 20px/1 var(--display)}
+.acting{display:grid;gap:14px}
+.feel{display:grid;gap:8px;border-top:1px solid var(--rule);padding-top:12px}
+.feel .label{font:700 12px/1 var(--type);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.feel q{font-style:italic}
+textarea{width:100%;min-height:54px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:8px}
+.saved{font:400 13px var(--type);color:var(--muted)}
+footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var(--rule);padding-top:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* PICTURES JUDGED ON THE PAGE (tools/page_pictures.py, Jafar 30 September and 1 October) */
+.capgrid,.cands,.pair{grid-template-columns:1fr!important}
+.capgrid img,.pair img,.cands img,figure img{width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important}
+main img,section img,[data-film-sprite]{cursor:zoom-in}
+.pv{position:fixed;inset:0;z-index:2147483000;background:#000;display:none;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
+.pv.on{display:block}
+.pv .pv-stage{position:absolute;inset:0;overflow:hidden}
+.pv .pv-hold{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+.pv .pv-hold img{display:block;max-width:none!important;width:auto!important;height:auto!important;-webkit-user-drag:none;pointer-events:none}
+.pv .pv-film{background-repeat:no-repeat;pointer-events:none}
+.pv .pv-bar{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top, 0px)) 12px 10px;background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,0));color:#fff;font:600 14px/1.2 system-ui,sans-serif;pointer-events:none}
+.pv .pv-bar *{pointer-events:auto}
+.pv .pv-count{opacity:.85;font-variant-numeric:tabular-nums}
+.pv .pv-close{min-width:88px;min-height:44px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;cursor:pointer}
+.pv .pv-cap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px calc(12px + env(safe-area-inset-bottom, 0px));background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.75));color:#fff;font:14px/1.35 system-ui,sans-serif;pointer-events:none}
+.pv .pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:72px;border:0;background:rgba(0,0,0,.35);color:#fff;font:700 30px/1 system-ui,sans-serif;cursor:pointer}
+.pv .pv-prev{left:0;border-radius:0 8px 8px 0}.pv .pv-next{right:0;border-radius:8px 0 0 8px}
+.pv .pv-play{position:absolute;left:50%;bottom:calc(64px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);min-height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.6);background:rgba(0,0,0,.55);color:#fff;font:700 15px/1 system-ui,sans-serif;border-radius:22px;display:none;cursor:pointer}
+.pv.film .pv-play{display:block}
+@media (hover:none){.pv .pv-nav{display:none}}
+</style>
+<div class="wrap">
+  <header>
+    <div class="kicker" id="kicker"></div>
+    <h1 id="title"></h1>
+    <div id="how"></div>
+    <div class="tally" id="tally">Loading your earlier picks…</div>
+  </header>
+  <main class="wrap" id="people"></main>
+  <footer id="foot"></footer>
+</div>
+<script>
+const PAGE = {"tab": "Friday's Page", "kicker": "LEDGER · Friday 2 October", "title": "Friday's page", "how": ["Two looks and one decision. Tap any picture to open it full-screen at its full resolution: pinch to zoom, swipe to the next, Close to come back. One tap each; a note is optional. Your picks save on the page."], "foot": "Anything you do not pick carries onto the next page.", "sections": [{"kind": "look", "key": "look-street-stage1", "name": "The street, stage 1: wet, worn, the far end climbing round a bend. Carry on this way?", "note": "Short of the Hook sheet and KCD2, said first (I do not recommend yes on the look): the pavements still read as glossy tiles, warmer than the sheet's grey stone; the road's cracks repeat everywhere and it reads drier than the sheet's; the sky has no cloud shapes; the hill is stacked boxes with blob trees; Mickey's window is black; the cars and people are stand-ins; litter shows as white slivers; at night a test pattern shows in the empty shop's window (a bug).", "detail": "WHAT IT IS: the street from the game's own camera and exposure, at 2560 by 1440. The far end climbs one in twelve and curves away round a bend, the houses stepping up with it; the distance hazes the way the research found studios do it. The road and the flags are wet with the sky's sheen. Every wall is worn by rule, from a generator: streaks under every sill, splash at the foot of every wall and gable, the gables weathered, algae at the downpipes, soot at the stacks, oil where cars stand, puddles with soft wet rims. At night the lamps make pools with darkness between them (9 to 11 stops from pool to gap). FOUND TODAY: every wear mark had been drawn wrongly since it was added (turned a quarter, and printing the packs' preview pictures, lit spheres, instead of their stain masks); fixed, which is why the walls now show wear. A fresh reviewer who had not seen it said no for a 2026 game; the faults above are theirs and mine. The sky's clouds were set aside after two tries; the next direction is known. WHAT YOUR YES MEANS: the method carries on into stage 2 (the ground surfaces, the hill, the far end), not that this frame is finished.", "pictures": [{"src": "look-street-stage1/street-stage1-day.webp", "alt": "The street by day, from the hook camera"}, {"src": "look-street-stage1/street-stage1-night-pavement.webp", "alt": "Night, on the pavement under a lamp"}, {"src": "look-street-stage1/street-stage1-night-across.webp", "alt": "Night, across the street at the shops"}], "options": [["yes", "Carry on this way"], ["no", "Not this way"]]}, {"kind": "look", "key": "look-shop-window-rita", "name": "Rita's, the pawnbroker: one shop window made the new way. Make the other eleven like it?", "detail": "WHERE IT FALLS SHORT OF THE HOOK SHEET AND KCD2 (said first, as your rule asks; I do not recommend yes): the display is sparser than a real pawnbroker's, which was crammed with gold; the room and the velvet are cleaner and more evenly lit than a real shop; the street in the glass is a soft reflection, never a sharp one; the room is softer than the goods in front of it, so its wall notices cannot be read. WHAT IT IS: a room behind the glass that shows depth as you walk past (a picture projected the way games do it, the floor kept clear because anything standing on it smeared), a real display on a velvet bed (ring trays, watches, cameras, clocks, vases, priced tickets, two notices against the glass), glass that now reflects the street (it had shown none: Unreal's see-through glass was dimming its own reflection), and at night the window lit, its white light falling on the pavement and the road beside the orange lamps. The first fresh reviewer failed an earlier cut (the floor pieces smeared; no reflection); a second passed all ten of its checks, with the notes above. The other windows are still the old flat pictures; they are made only after your yes, about half a day each. The cars, skip and pallets in these frames are the next item.", "pictures": [{"src": "look-shop-window-rita/rita-across-day.webp", "alt": "Across the road at Rita's, by day"}, {"src": "look-shop-window-rita/rita-left-day.webp", "alt": "Walking past Rita's window, by day, from the left"}, {"src": "look-shop-window-rita/rita-square-day.webp", "alt": "In front of Rita's window, by day"}, {"src": "look-shop-window-rita/rita-right-day.webp", "alt": "Walking past Rita's window, by day, from the right"}, {"src": "look-shop-window-rita/rita-across-night.webp", "alt": "Across the road at Rita's, at night"}, {"src": "look-shop-window-rita/rita-left-night.webp", "alt": "Walking past Rita's window, at night, from the left"}, {"src": "look-shop-window-rita/rita-square-night.webp", "alt": "In front of Rita's window, at night"}, {"src": "look-shop-window-rita/rita-right-night.webp", "alt": "Walking past Rita's window, at night, from the right"}], "options": [["yes", "Make the other eleven like this"], ["no", "Not like this"]]}, {"kind": "decide", "key": "scope-cars", "name": "The parked cars: take them off the street for the friends' build (recommended), or build them properly now (3 to 5 days)?", "note": "Your ruling was real 1990 things or removed. The research (production/research/period-vehicles-and-props) puts a car that passes the bar at 3 to 5 days by script, then 1 to 2 days for each other kind; the phone box, skip and pallets about 3 days together, all by script with nothing bought and no sign-in. I recommend the cars off the street for the friends' build and the phone box, skip and pallets made now; the cars come back after the build. Part of their crudeness was a fault, fixed today: they were drawing a quarter of their own triangles.", "options": [["remove", "Off the street for now (recommended)"], ["build", "Build them now, 3 to 5 days"]]}]};
+const state = {};
+let db = null, canWrite = true, audio = null, playing = null, raf = 0;
+function el(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})) { if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v); }
+  for (const k of kids) if (k) n.append(k);
+  return n;
+}
+function stop(){ if (audio) audio.pause(); if (playing) playing.classList.remove("playing"); clearInterval(raf); audio = null; playing = null; }
+function play(src, btn, onFrame){
+  const same = playing === btn; stop(); if (same) return;
+  const a = new Audio(src); audio = a; playing = btn; btn.classList.add("playing");
+  a.addEventListener("ended", () => { if (onFrame) onFrame(0); stop(); });
+  a.play().then(() => { if (onFrame) raf = setInterval(() => { if (audio === a) onFrame(a.currentTime); }, 33); }).catch(() => stop());
+}
+function spriteBox(sp, audio, caption){
+  // data-film-*: the page's viewer opens the film full-screen with its sound (tools/page_pictures.py).
+  const box = el("div", {class:"speak", role:"img", "aria-label":"speaking", "data-film-sprite":JSON.stringify(sp),
+                         "data-film-audio":audio || "", "data-caption":caption || ""});
+  box.style.backgroundImage = "url(" + sp.file + ")";
+  box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+  const show = i => {
+    i = Math.max(0, Math.min(sp.frames - 1, i));
+    const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    box.style.backgroundPosition = (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  };
+  show(0);
+  return {box, at: t => show(Math.floor(t * sp.fps))};
+}
+function save(key, patch){
+  state[key] = Object.assign({}, state[key] || {}, patch, {at: new Date().toISOString()});
+  render();
+  if (!db || !canWrite) return;
+  db.doc("verdicts/" + key).set(Object.assign({}, state[key])).catch(e => { if (e && e.code === "invalid_argument") { canWrite = false; render(); } });
+}
+function picks(key, options, cur){
+  const row = el("div", {class:"row"});
+  for (const [v, t] of options) {
+    const id = "pick-" + key + "-" + v;
+    const r = el("input", {type:"radio", name:"pick-" + key, id, value:v});
+    if (cur === v) r.checked = true;
+    r.addEventListener("change", () => save(key, {pick:v}));
+    row.append(el("label", {class:"pick", for:id}, r, document.createTextNode(t)));
+  }
+  return row;
+}
+function note(key, st){
+  const t = el("textarea", {placeholder:"What is right or wrong, in a few words (optional)"});
+  t.value = st.note || "";
+  t.addEventListener("change", () => save(key, {note:t.value}));
+  return t;
+}
+function render(){
+  const root = document.getElementById("people");
+  root.replaceChildren();
+  let judged = 0, total = 0;
+  for (const s of PAGE.sections) {
+    const st = state[s.key] || {};
+    total++; if (st.pick) judged++;
+    const sec = el("section", {class:"person", id:s.key});
+    sec.append(el("div", {}, el("h2", {text:s.name})));
+    // A DECISION FITS ONE LINE (Jafar, 30 September: every page fits one phone
+    // screen; the detail folded underneath, closed unless he opens it).
+    if (s.note && s.kind !== "decide") sec.append(el("p", {class:"was", text:s.note}));
+    if (s.kind === "faces") {
+      const grid = el("div", {class:"cands"});
+      for (const c of s.candidates.concat([{take:"none"}])) {
+        const box = el("div", {class:"cand" + (st.pick === c.take ? " picked" : "")});
+        if (c.take !== "none") {
+          box.append(el("div", {class:"take", text:c.take}));
+          box.append(el("div", {class:"pair"},
+            c.front ? el("img", {src:c.front, alt:s.name + " " + c.take + ", front", loading:"lazy"}) : el("div", {class:"speak"}),
+            c.profile ? el("img", {src:c.profile, alt:s.name + " " + c.take + ", profile", loading:"lazy"}) : el("div", {class:"speak"})));
+          if (c.speak && s.audio) {
+            const sp = spriteBox(c.speak, s.audio, s.name + ", " + c.take);
+            const b = el("button", {type:"button", text:"Play the line"});
+            b.addEventListener("click", () => play(s.audio, b, sp.at));
+            box.append(sp.box, el("div", {class:"row"}, b));
+          }
+        } else {
+          box.append(el("div", {class:"take", text:"None of these"}));
+        }
+        const id = "pick-" + s.key + "-" + c.take;
+        const radio = el("input", {type:"radio", name:"pick-" + s.key, id, value:c.take});
+        if (st.pick === c.take) radio.checked = true;
+        radio.addEventListener("change", () => save(s.key, {pick:c.take}));
+        box.append(el("label", {class:"pick", for:id}, radio, document.createTextNode(c.take === "none" ? "None is " + s.pron : "This is " + s.pron)));
+        grid.append(box);
+      }
+      sec.append(grid);
+    } else if (s.kind === "look") {
+      const g = el("div", {class:"capgrid"});
+      for (const p of s.pictures) g.append(el("figure", {}, el("img", {src:p.src, alt:p.alt, loading:"lazy"}), el("figcaption", {class:"was", text:p.alt})));
+      sec.append(g, picks(s.key, s.options, st.pick));
+      if (s.detail) sec.append(el("details", {}, el("summary", {text:"What this is"}), el("p", {class:"was", text:s.detail})));
+    } else if (s.kind === "pair") {
+      const row = el("div", {class:"row"});
+      for (const t of s.takes) {
+        const b = el("button", {type:"button", text:"Play " + t.label});
+        b.addEventListener("click", () => play(t.audio, b));
+        row.append(b);
+      }
+      sec.append(row, el("div", {class:"row"}, el("q", {text:s.line})), picks(s.key, s.options, st.pick));
+    } else if (s.kind === "said") {
+      // A FACE FILMED SAYING A LINE, played in time with its own sound.
+      for (const c of s.clips) {
+        const sp = spriteBox(c.sprite, c.audio, s.name.split(":")[0] + ", " + c.label);
+        const b = el("button", {type:"button", text:"Play " + c.label});
+        b.addEventListener("click", () => play(c.audio, b, sp.at));
+        sec.append(el("div", {class:"cand"}, el("div", {class:"take", text:c.label}), sp.box, el("div", {class:"row"}, b, el("q", {text:c.line}))));
+      }
+      sec.append(picks(s.key, s.options, st.pick));
+      if (s.detail) sec.append(el("details", {}, el("summary", {text:"What this is"}), el("p", {class:"was", text:s.detail})));
+    } else if (s.kind === "decide") {
+      sec.append(picks(s.key, s.options, st.pick));
+      if (s.note) sec.append(el("details", {}, el("summary", {text:"Why, and what was measured"}), el("p", {class:"was", text:s.note})));
+    } else if (s.kind === "voice") {
+      const b = el("button", {type:"button", text:"Play"});
+      b.addEventListener("click", () => play(s.audio, b));
+      sec.append(el("div", {class:"row"}, b, el("q", {text:s.line})), picks(s.key, s.options, st.pick));
+    }
+    sec.append(note(s.key, st), el("span", {class:"saved", text: st.at ? "Saved " + new Date(st.at).toLocaleString() : ""}));
+    root.append(sec);
+  }
+  document.getElementById("tally").innerHTML = "<b>" + judged + " of " + total + "</b> picked" + (db ? "" : " · picks are not being stored on this view");
+}
+document.getElementById("kicker").textContent = PAGE.kicker;
+document.getElementById("title").textContent = PAGE.title;
+for (const h of PAGE.how) document.getElementById("how").append(el("p", {class:"how", text:h}));
+document.getElementById("foot").textContent = PAGE.foot || "";
+render();
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db) { render(); return; }
+  for (const s of PAGE.sections) {
+    try { const d = await db.doc("verdicts/" + s.key).get(); if (d.exists) state[s.key] = Object.assign({}, d.data()); } catch (e) {}
+  }
+  render();
+})();
+
+// PICTURES JUDGED ON THE PAGE (tools/page_pictures.py): a tap opens a picture
+// full-screen at its own resolution; pinch or wheel to zoom, drag to look
+// about, double tap for its pixels one to one, swipe or arrows for the next,
+// Close or Esc to return. Filmed faces play with their own sound.
+(function(){
+  if (window.__pvReady) return; window.__pvReady = true;
+  const mk = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text) n.textContent = text; return n; };
+  const view = mk("div", "pv"); view.setAttribute("role", "dialog"); view.setAttribute("aria-label", "Picture, full screen");
+  const stage = mk("div", "pv-stage"), hold = mk("div", "pv-hold");
+  const bar = mk("div", "pv-bar"), count = mk("span", "pv-count"), close = mk("button", "pv-close", "Close");
+  const cap = mk("div", "pv-cap"), prev = mk("button", "pv-nav pv-prev", "‹"), next = mk("button", "pv-nav pv-next", "›");
+  const play = mk("button", "pv-play", "Play again");
+  close.type = prev.type = next.type = play.type = "button";
+  prev.setAttribute("aria-label", "The picture before"); next.setAttribute("aria-label", "The next picture");
+  stage.append(hold); bar.append(count, close); view.append(stage, bar, cap, prev, next, play);
+  (document.body || document.documentElement).append(view);
+
+  let items = [], idx = 0, W = 1, H = 1, fit = 1, sc = 1, tx = 0, ty = 0, audio = null, raf = 0, film = null;
+  const pts = new Map(); let pinch = null, drag = null, swipe = null, lastTap = 0;
+
+  function collect(){
+    return Array.from(document.querySelectorAll("img, [data-film-sprite]")).filter(e => !view.contains(e) && (e.tagName !== "IMG" || (e.currentSrc || e.src)));
+  }
+  function apply(){ hold.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + sc + ")"; }
+  function clampPan(){
+    const vw = stage.clientWidth, vh = stage.clientHeight, w = W * sc, h = H * sc;
+    tx = w <= vw ? (vw - w) / 2 : Math.min(0, Math.max(vw - w, tx));
+    ty = h <= vh ? (vh - h) / 2 : Math.min(0, Math.max(vh - h, ty));
+  }
+  function fitNow(){ const vw = stage.clientWidth, vh = stage.clientHeight; fit = Math.min(vw / W, vh / H); sc = fit; tx = (vw - W * sc) / 2; ty = (vh - H * sc) / 2; apply(); }
+  function zoomAt(s, cx, cy){
+    const max = Math.max(fit * 8, 4), ns = Math.min(max, Math.max(fit, s));
+    tx = cx - (cx - tx) * ns / sc; ty = cy - (cy - ty) * ns / sc; sc = ns; clampPan(); apply();
+  }
+  function stopFilm(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); film = null; }
+  function frameOf(sp, i){
+    i = Math.max(0, Math.min(sp.frames - 1, i)); const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    return (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  }
+  function runFilm(){
+    if (!film) return; stopAudioOnly();
+    const sp = film.sp; audio = film.audio ? new Audio(film.audio) : null;
+    const box = film.box; box.style.backgroundPosition = frameOf(sp, 0);
+    // THE FILM'S CLOCK IS ITS SOUND; when the sound cannot play (no sound
+    // device, or the browser refuses), its own timer, so the face still moves.
+    const t0 = performance.now(), len = sp.frames / (sp.fps || 10);
+    let silent = !audio;
+    const now = () => silent ? (performance.now() - t0) / 1000 : audio.currentTime;
+    const over = () => silent ? now() >= len : audio.ended;
+    if (audio) { audio.play().catch(() => { silent = true; }); }
+    // A plain timer, as the page's own player uses: animation frames stop in a hidden view.
+    raf = setInterval(() => { if (film === null || film.box !== box) { clearInterval(raf); return; }
+      if (over()) { clearInterval(raf); box.style.backgroundPosition = frameOf(sp, 0); return; }
+      box.style.backgroundPosition = frameOf(sp, Math.floor(now() * sp.fps)); }, 33);
+  }
+  function stopAudioOnly(){ if (audio) { audio.pause(); audio = null; } clearInterval(raf); }
+  function show(i){
+    stopFilm(); idx = (i + items.length) % items.length; const el = items[idx];
+    hold.replaceChildren(); view.classList.remove("film");
+    count.textContent = (idx + 1) + " / " + items.length;
+    cap.textContent = el.getAttribute("data-caption") || el.alt || el.getAttribute("aria-label") || "";
+    if (el.tagName === "IMG") {
+      const im = new Image(); im.alt = el.alt || ""; im.decoding = "async";
+      im.onload = () => { W = im.naturalWidth || 1; H = im.naturalHeight || 1; fitNow(); };
+      im.src = el.getAttribute("data-full") || el.currentSrc || el.src;
+      hold.append(im); W = el.naturalWidth || 1; H = el.naturalHeight || 1; fitNow();
+    } else {
+      let sp = {}; try { sp = JSON.parse(el.getAttribute("data-film-sprite")); } catch (e) {}
+      const box = mk("div", "pv-film"); const probe = new Image();
+      box.style.backgroundImage = "url(" + sp.file + ")"; box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+      hold.append(box); view.classList.add("film");
+      film = { sp, box, audio: el.getAttribute("data-film-audio") };
+      probe.onload = () => { W = Math.round(probe.naturalWidth / sp.cols); H = Math.round(probe.naturalHeight / sp.rows);
+        box.style.width = W + "px"; box.style.height = H + "px"; fitNow(); runFilm(); };
+      probe.src = sp.file;
+    }
+  }
+  function open(el){ items = collect(); const i = items.indexOf(el); if (i < 0) return;
+    view.classList.add("on"); document.documentElement.style.overflow = "hidden"; show(i); close.focus({preventScroll:true}); }
+  function shut(){ stopFilm(); view.classList.remove("on"); hold.replaceChildren(); document.documentElement.style.overflow = ""; }
+
+  document.addEventListener("click", (e) => {
+    if (view.contains(e.target)) return;
+    const el = e.target.closest ? e.target.closest("img, [data-film-sprite]") : null;
+    if (!el || (el.tagName === "IMG" && !(el.currentSrc || el.src))) return;
+    if (el.closest("a")) e.preventDefault();
+    open(el);
+  }, true);
+  close.addEventListener("click", shut);
+  prev.addEventListener("click", () => show(idx - 1));
+  next.addEventListener("click", () => show(idx + 1));
+  play.addEventListener("click", runFilm);
+  document.addEventListener("keydown", (e) => {
+    if (!view.classList.contains("on")) return;
+    if (e.key === "Escape") shut(); else if (e.key === "ArrowRight") show(idx + 1); else if (e.key === "ArrowLeft") show(idx - 1);
+    else if (e.key === "+" || e.key === "=") zoomAt(sc * 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else if (e.key === "-") zoomAt(sc / 1.5, stage.clientWidth / 2, stage.clientHeight / 2);
+    else return; e.preventDefault();
+  });
+  stage.addEventListener("wheel", (e) => { e.preventDefault(); const r = stage.getBoundingClientRect(); zoomAt(sc * Math.exp(-e.deltaY * 0.0015), e.clientX - r.left, e.clientY - r.top); }, {passive:false});
+  stage.addEventListener("pointerdown", (e) => {
+    try { stage.setPointerCapture(e.pointerId); } catch (err) {}   // some browsers refuse; the pinch must not depend on it
+    const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = {d: Math.hypot(a.x - b.x, a.y - b.y), s: sc}; drag = swipe = null; }
+    else if (pts.size === 1) { const p = pts.get(e.pointerId); drag = {x: p.x, y: p.y, tx, ty}; swipe = {x: p.x, y: p.y, t: Date.now()}; }
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!pts.has(e.pointerId)) return; const r = stage.getBoundingClientRect(); pts.set(e.pointerId, {x: e.clientX - r.left, y: e.clientY - r.top});
+    if (pinch && pts.size >= 2) { const [a, b] = [...pts.values()]; zoomAt(pinch.s * Math.hypot(a.x - b.x, a.y - b.y) / (pinch.d || 1), (a.x + b.x) / 2, (a.y + b.y) / 2); }
+    else if (drag && sc > fit * 1.02) { const p = pts.get(e.pointerId); tx = drag.tx + p.x - drag.x; ty = drag.ty + p.y - drag.y; clampPan(); apply(); }
+  });
+  function lift(e){
+    const p = pts.get(e.pointerId); pts.delete(e.pointerId);
+    if (pts.size < 2) pinch = null;
+    if (!p || pts.size) return;
+    if (swipe && sc <= fit * 1.02) {
+      const dx = p.x - swipe.x, dy = p.y - swipe.y, dt = Date.now() - swipe.t;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5 && dt < 800) { show(idx + (dx < 0 ? 1 : -1)); swipe = drag = null; return; }
+    }
+    if (swipe && Math.hypot(p.x - swipe.x, p.y - swipe.y) < 10) {
+      const now = Date.now();
+      if (now - lastTap < 320) { lastTap = 0; if (sc > fit * 1.02) fitNow(); else zoomAt(Math.max(1, fit * 2.5), p.x, p.y); }
+      else lastTap = now;
+    }
+    swipe = drag = null;
+  }
+  stage.addEventListener("pointerup", lift); stage.addEventListener("pointercancel", lift);
+  window.addEventListener("resize", () => { if (view.classList.contains("on")) fitNow(); });
+})();
+</script>

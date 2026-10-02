@@ -331,6 +331,17 @@ namespace LedgerStreet
 		// its fog-series rows and was ruled for another street, and the far
 		// end's depth against the sheet wants more haze than it allows.
 		double FogCapGainDay;
+		// THE NIGHT'S FOG, a multiplier on the scene file's night fog density (1 October,
+		// the proof frame's night test: without it the orange haze over the far end went,
+		// and the night read as pools instead of one wash).
+		double FogDensityGainNight;
+		// THE DAY'S DEPTH, 2 October (the proof frame, stage 1, item 2; production/research/aaa-street/
+		// 3-LIGHT-AND-GRADE.md: "low-density exponential height fog with Start Distance at about 10 to 20 m,
+		// so that distant roofs separate from the street"): a multiplier on the day's fog density and where it starts.
+		double FogDensityGainDay;
+		double FogStartDayM;
+		double FogCutoffDayM;
+		double LocalHighlightContrastDay;   // local exposure's highlight contrast by day, below 1 to keep the clouds (SKY-AND-HAZE-2026-10-02.md, step 4)   // no fog past this by day, so the sky dome (1,000 m) keeps its clouds (production/research/aaa-street/SKY-AND-HAZE-2026-10-02.md)
 		// THE NIGHT'S EXPOSURE, HELD, for a night row that asks the scene
 		// file for no pin. Left automatic, the lit rooms seen through the
 		// see-through glass throw the meter: a frame beside a shop window
@@ -363,14 +374,14 @@ namespace LedgerStreet
 		double LanternPoolLumens, LanternPoolInnerDeg, LanternPoolOuterDeg;
 		bool   bLanternRgb;
 		double LanternR, LanternG, LanternB;
-		int    Read;             // how many of the twenty-seven the file supplied
+		int    Read;             // how many of the thirty-two the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogNightR(0.06), FogNightG(0.05), FogNightB(0.05), RoomGlowGainNight(0.0),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05),
-		         bStreetInPlay(false), FogCapGainDay(1.0), NightExposurePin(0.0),
+		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
 		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), bLanternRgb(false),
 		         LanternR(1.0), LanternG(1.0), LanternB(1.0),
@@ -754,6 +765,16 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_BOOL) { Out.bStreetCollision = V->Bool; ++Out.Read; }
 		V = Root.Find("night_exposure_pin");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.NightExposurePin = V->Num; ++Out.Read; }
+		V = Root.Find("fog_density_gain_night");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.FogDensityGainNight = V->Num; ++Out.Read; }
+		V = Root.Find("fog_density_gain_day");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.FogDensityGainDay = V->Num; ++Out.Read; }
+		V = Root.Find("fog_start_day_m");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.FogStartDayM = V->Num; ++Out.Read; }
+		V = Root.Find("fog_cutoff_day_m");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.FogCutoffDayM = V->Num; ++Out.Read; }
+		V = Root.Find("local_highlight_contrast_day");
+		if (V != 0 && V->Type == T_NUM && V->Num > 0.0 && V->Num <= 1.0) { Out.LocalHighlightContrastDay = V->Num; ++Out.Read; }
 		V = Root.Find("fog_cap_gain_day");
 		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.FogCapGainDay = V->Num; ++Out.Read; }
 		V = Root.Find("lantern_lumens");

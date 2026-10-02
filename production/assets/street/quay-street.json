@@ -60,7 +60,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 22
+   "faces": 46
   },
   {
    "mesh": "street_brick_grey",
@@ -90,7 +90,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 3700
+   "faces": 3748
   },
   {
    "mesh": "street_brick_red",
@@ -120,7 +120,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 4057
+   "faces": 4087
   },
   {
    "mesh": "street_brick_rubbed",
@@ -170,7 +170,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1176
+   "faces": 1224
   },
   {
    "mesh": "street_card_int23_fish",
@@ -995,7 +995,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 35680
+   "faces": 38480
   },
   {
    "mesh": "street_foliage_dark",
@@ -1018,7 +1018,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 21840
+   "faces": 22960
   },
   {
    "mesh": "street_frame_metal",
@@ -2121,9 +2121,9 @@
    "material": "paving",
    "base_material": "paving",
    "linear_rgb": [
-    0.245,
-    0.151,
-    0.069
+    0.2,
+    0.152,
+    0.104
    ],
    "roughness": 0.62,
    "surface_map": "plaster",
@@ -2144,7 +2144,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 110
+   "faces": 212
   },
   {
    "mesh": "street_pot_buff",
@@ -2225,7 +2225,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 588
+   "faces": 624
   },
   {
    "mesh": "street_render_cream",
@@ -2252,7 +2252,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 312
+   "faces": 324
   },
   {
    "mesh": "street_render_patch",
@@ -2279,7 +2279,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 82
+   "faces": 142
   },
   {
    "mesh": "street_shard_a_edge",
@@ -2597,53 +2597,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1188
-  },
-  {
-   "mesh": "street_standing_water",
-   "material": "standing_water",
-   "base_material": "standing_water",
-   "linear_rgb": [
-    0.05,
-    0.05,
-    0.052
-   ],
-   "roughness": 0.05,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 71
-  },
-  {
-   "mesh": "street_standing_water_flags",
-   "material": "standing_water_flags",
-   "base_material": "standing_water_flags",
-   "linear_rgb": [
-    0.075,
-    0.056,
-    0.043
-   ],
-   "roughness": 0.05,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 144
+   "faces": 1205
   },
   {
    "mesh": "street_steel_dark",
@@ -2697,7 +2651,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1074
+   "faces": 1128
   },
   {
    "mesh": "street_tile_patterned",
@@ -2796,7 +2750,7 @@
    "emit_day": 0.0,
    "emit_night": 80.0,
    "reveal_on": null,
-   "faces": 504
+   "faces": 522
   }
  ]
 }

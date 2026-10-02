@@ -43,6 +43,7 @@ FIXED = [
     "production/specs/suggested-lines.json",   # Tom's written suggested lines and the deals' answers (1 October, CrimeProbe.cpp ReadDeals)
     "production/specs/credits.json",   # the credits page (1 October, LedgerCredits.cpp)
     "THIRD-PARTY.md",   # the attributions travel with every copy (the rulings sweep, 1 October: "the attributions themselves, for everything shipped")
+    "production/specs/street-wear.json",   # the street's wear layer, D53, placed by tools/street_wear.py (1 October, VignetteShot.cpp SpawnWear)
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"
