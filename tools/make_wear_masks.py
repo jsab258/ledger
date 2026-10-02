@@ -55,7 +55,10 @@ def puddle(rng):
     n = smooth_noise(rng, SIZE)
     field = base * 1.35 + (n - 0.5) * 0.55
     # a soft threshold: water inside, a wet rim, dry outside
-    alpha = np.clip((field - 0.28) / 0.22, 0.0, 1.0) ** 1.5
+    # AN OPAQUE CORE AND A NARROW WET RIM (2 October, late; the puddle research): a decal
+    # mixes its roughness and flat normal by its opacity, so a soft mask left most of each
+    # puddle part road, and the mirror never formed. The rim is now a few centimetres.
+    alpha = np.clip((field - 0.28) / 0.13, 0.0, 1.0)   # 3 October: at 0.06 the rims read as pasted-on edges (fresh review); an opaque core still
     return alpha
 
 
