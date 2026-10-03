@@ -24,13 +24,13 @@ Jafar's rulings binding today (2026 dates); the later of two stands. canon.md ou
 - 2 Oct: Not allowed: CGTrader's royalty-free licence with its no-AI clause; the Gent jacket draft except as a reference.
 - 16 Sep: Purchases and accounts are his alone; nothing bought without his yes, none for the street or cars (1 Oct).
 - 29 Sep: No paid voice service.
-- 29 Sep: No API calls in development. 3 Oct: LEDGER's capped key (%LOCALAPPDATA%\LEDGER\live-talk-key.txt) serves his live play and any session's measurement runs, at most $1 a day in all, each run logged with its tokens and cost; nothing else.
+- 29 Sep: No API calls in development. 3 Oct: LEDGER's key (%LOCALAPPDATA%\LEDGER\live-talk-key.txt) serves his play, measurement runs ($1 a day in all, each logged) and his friends' evenings ($5 an evening); nothing else.
 - 24 Sep, provisional: Sold once; live calls through our server, the key never shipped; each copy's allowance from the measured hourly cost, above a normal playthrough, with a spending stop; then written lines and the brush-off; an own-key mode later.
 - 28 Sep: The relay, when friends need it, runs on his existing Hetzner server.
 
 ## The look and the street
 
-- 1 Oct: Every visual but clothes (3 Oct) is judged against the Hook sheet and the KCD2 frames; yes recommended only for what would pass in a 2026 game.
+- 1 Oct: Every visual but clothes (3 Oct) is judged against the Hook sheet and the KCD2 frames; yes recommended only for what would pass in a 2026 game. 3 Oct: other games' screenshots never in the repository.
 - 30 Sep and 1 Oct: His page's pictures are taken at 2560×1440, never enlarged, open full size; films with sound.
 - 21 and 22 Sep: The Hook sheet (pass 4) governs mood, palette and composition; dated photographs govern what things looked like and win; production/research/README.md names what governs each asset; no passing reply overrides them; no design copied; references only in production/reference/.
 - 30 Sep: Lighting is judged through the game's own camera and exposure.

@@ -5,9 +5,9 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Saturday 3 October, 14:00)
+## Overview (Saturday 3 October, 14:20)
 
-**On: 1c, applying your rulings document (RULINGS.md, a 1,000-word CLAUDE.md, a 200-word NOW.md, the caps check); then 2.2, atmosphere and sky. Your six answers' work is placed: 1c now; the three voices' listening page as 4b, after the street-wide pass and before the friends' build; the threat's port when the town hands it over. Set aside: 2.1, composition (Needs you 3). Done today: 1 (git growth), 1b (licences); the nightly walk is set up.**
+**On: P3, the claim check under a spending cap (your order of 14:10; then P5, P14, P1, P4, and the proof view resumes within P1's budgets). Paused: 2.2, atmosphere and sky (fog and sky set against the sheet; the chimney smoke not showing yet). Set aside: 2.1 (Needs you 3). Done today: the git growth, licences, your rulings document applied, the pre-production review merged; the nightly walk set up.**
 
 **Disk (13:15): C: 88 GB free, F: 30 GB free (the NoAI quarantine holds 14.5 GB of it until you say), both over their floors.**
 

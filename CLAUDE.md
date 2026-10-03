@@ -30,14 +30,14 @@ canon.md (outranks everything), RULINGS.md, NOW.md, your own status file, ROADMA
 - RULINGS.md (at most 2,500 words): his ruling replaces its line and becomes a list item the same day; if code must change a ruling, ask him first.
 - DECISIONS.md: one entry per material choice (date, decision, reason, who, link). Sessions decide within canon, the pillars and his rulings, record it and carry on; he overturns what he disagrees with.
 - NOW.md (at most 200 words): his goal, the builder's list (one line an item, naming the file with its specifics), a line of state, the handovers. TOWN.md and CLOTHES.md at most 300 each; this file 1,000. tools/doc-caps.py fails the build over a cap.
-- FOR-JAFAR.md: each session's summary by 07:00, under 200 words, the day's page first, what failed named, ending in something to act on. Above them the builder's overview (by 07:30 and on change): the retention's line, the current and next item, the AI tester's nightly paragraph, Needs you (at most five, linked, recommended, gone once answered), Road to worth playing; every number from the real path or marked not.
+- FOR-JAFAR.md: each session's summary by 07:00, under 200 words, the day's page first, what failed named, ending in something to act on. Above them the builder's overview (by 07:30 and on change): the retention's line, current and next item, the tester's nightly paragraph, Mondays the risk register (production/research/pre-production/6-RISKS.md) in five lines, Needs you (at most five, linked, recommended, gone once answered), Road to worth playing; every number from the real path or marked not.
 - Read every page's stored answers before any summary or overview.
 - FINDINGS.md: open faults only, at most twenty. No notes-only commits except the day's summary, whose commit runs the backup.
 - Audits in production/audits/; each finding ends as a ruling, a rule or a list item. The feature checklist (production/archive/) is a reference, not a gate.
 
 ## How the work is done
 
-- The NOW.md list in order, one item at a time, each finished with its evidence; then the next, without asking; no stop hook of our own. After each proof-view item, one picture into the overview, no decision. An item much bigger than it looked: tell him.
+- The NOW.md list in order, one item at a time, each finished with its evidence; then the next, without asking; no stop hook. After each proof-view item, one picture into the overview, no decision. An item much bigger than it looked: tell him.
 - Research first (production/research/ first): the professional method end to end, dated, before any symptom; before trusting memory on tools, versions, APIs or licences, or calling anything impossible; on failure, question the method. A helper gets the problem, not your theory: thirty minutes, saved by topic, one summary line. An unreached source is never evidence; what the cloud cannot reach is researched from this PC.
 - Two tries, then research; one more failure, set aside and named in the summary. A set-aside the game needs goes into Needs you at once as blocked, with research in another direction.
 - Done means in the packaged release build, walked by the AI tester. A big item is "ready for review" until his independent review passes it.
