@@ -156,6 +156,8 @@ real_table() {
     content-gate-selftest "$REPO"                 "$PY tools/content-gate.py --selftest" \
     garments-selftest     "$REPO"                 "$PY tools/ue/import_garments.py --selftest" \
     git-size-selftest     "$REPO"                 "$PY tools/git-size-guard.py --selftest" \
+    nightly-selftest      "$REPO"                 "$PY tools/nightly_walk.py --selftest" \
+    route-walk-selftest   "$REPO"                 "$PY tools/route_walk.py --selftest" \
     approvals             "$REPO"                 "$PY tools/approvals.py" \
     approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \
     own-lines-page        "$REPO"                 "$PY tools/own_lines_md.py rocco --check" \
