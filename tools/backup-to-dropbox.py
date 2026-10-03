@@ -148,6 +148,16 @@ def run(srcs, dest, dry=False, verify_only=False, floor_gb=FLOOR_GB, now=None):
             if same(s, target):
                 unchanged += 1
                 continue
+            # UNLESS AN EARLIER VERSION ALREADY HOLDS THESE BYTES (3 October: the cast rebuilt
+            # without Epic's clothes was copied again, 1.46 GB, at every summary's commit,
+            # because only the first copy was compared).
+            rel = os.path.relpath(d, dest)
+            vroot = os.path.join(dest, "versions")
+            if os.path.isdir(vroot) and any(same(s, os.path.join(vroot, v, rel))
+                                            for v in sorted(os.listdir(vroot), reverse=True)
+                                            if os.path.exists(os.path.join(vroot, v, rel))):
+                unchanged += 1
+                continue
             versioned += 1
         need = os.path.getsize(s) / 1e9
         # ONCE A FIRST THING WAITS, NOTHING BEHIND IT TAKES ITS ROOM (25
@@ -217,6 +227,8 @@ def selftest():
         check("a changed file is not overwritten", open(os.path.join(dst, "b.bin"), "rb").read() == b"x")
         check("it goes beside, under versions/", open(os.path.join(dst, "versions", "2026-09-25-2330", "b.bin"), "rb").read() == b"changed"
               and "versioned=1" in third)
+        again = run(lst, dst, floor_gb=0, now=datetime.datetime(2026, 9, 26, 7, 0))
+        check("a changed file already held as a version is not copied again", "versioned=0" in again and "copied=0" in again)
         os.remove(os.path.join(src, "b.bin"))
         fourth = run(lst, dst, floor_gb=0, now=when)
         check("a file gone from the source stays in the backup", os.path.exists(os.path.join(dst, "b.bin")))
