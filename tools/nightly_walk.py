@@ -104,6 +104,8 @@ def summarise(events, verdict, bench, eyes):
         "knew_later": {k: sorted(v) for k, v in sorted(knew.items())},
         "greeted": [{"who": r["stage"][5:], "reached": r["ok"], "detail": r["detail"]} for r in town_rows],
         "replies": {"n": len(replies), "broke": sum(1 for e in replies if e.get("how") in BROKE),
+                    # P3, 3 October: how many the claim check passed, from the game's own record.
+                    "checked": sum(1 for e in replies if e.get("checked") is True),
                     "by_how": {h: sum(1 for e in replies if e.get("how") == h) for h in sorted({e.get("how") for e in replies})},
                     "seconds_median": round(statistics.median(secs), 1) if secs else None,
                     "seconds_max": round(max(secs), 1) if secs else None,
