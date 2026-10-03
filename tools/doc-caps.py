@@ -1,42 +1,3 @@
-# The check: fail the build when a file every session reads grows past its cap
-
-**What it checks.** Words counted as `wc -w` counts them:
-
-| File | Cap |
-|---|---|
-| CLAUDE.md | 1,000 |
-| RULINGS.md | 2,500 |
-| NOW.md | 200 |
-| Each session's own status file (TOWN.md, CLOTHES.md) | 300 |
-
-**How it fails:**
-- A file over its cap fails the build, which names the file, its count and its three largest sections, so the session knows where to cut.
-- A missing file fails too, because nothing measured must never read as clean, as the check runner's own rule says.
-- The script and its self-test are below. Both were run here: the self-test passes all five cases. Against today's files (main at 5db99d5) it fails all five: CLAUDE.md 4,372 words, NOW.md 3,241, TOWN.md 831, CLOTHES.md 1,732, RULINGS.md missing. Against the drafts, CLAUDE.md (997) and RULINGS.md (2,497) pass.
-
-## How it is wired
-
-1. **The new file** is tools/doc-caps.py, the script below.
-2. **Two rows go into tools/ci-checks.sh's table** (`real_table`), beside the others:
-   ```
-       doc-caps              "$REPO"                 "$PY tools/doc-caps.py" \
-       doc-caps-selftest     "$REPO"                 "$PY tools/doc-caps.py --selftest" \
-   ```
-   The core-tests workflow runs the table on every push that touches `tools/*.py` or `production/**`.
-
-   Its triggers do not include the root-level CLAUDE.md, RULINGS.md, NOW.md, TOWN.md or CLOTHES.md. **Add those five paths to `.github/workflows/ledger-core-tests.yml`'s `paths:`**, or a push that only grows them never runs the check.
-3. **One line in tools/hooks/pre-commit,** before the size guard: `python tools/doc-caps.py || exit 1`. It is cheap, under a tenth of a second, so a session cannot commit an oversize file at all, not just find out on GitHub. A session that hits it cuts its file; it never uses `--no-verify` (CLAUDE.md).
-
-## The order to land it
-
-**The check goes in the same commit that applies the drafts and trims NOW.md, TOWN.md and CLOTHES.md under their caps.** Landed alone, it turns every push red at once, because all five files fail today.
-
-- **NOW.md's 200 words** cannot hold the builder's list as he wrote it (about 1,600 words today). The cap waits on his answer to question 2: one line per item, with the detail in the research it names, is recommended.
-- **TOWN.md and CLOTHES.md** are each trimmed by their own session, to current state and the list, with history left in git.
-
-## The script (tools/doc-caps.py)
-
-```python
 #!/usr/bin/env python3
 """THE FILES EVERY SESSION READS STAY SHORT ENOUGH TO BE READ, NOT SKIMMED.
 
@@ -50,7 +11,14 @@ must never read as clean).
 Words are counted as `wc -w` counts them: runs of non-space characters.
 
   python tools/doc-caps.py             # the real files; exit 1 naming each one over
+  python tools/doc-caps.py --staged    # only the capped files a commit carries (the pre-commit hook)
   python tools/doc-caps.py --selftest  # the check itself, both ways
+
+APPLIED 3 October by the builder from production/drafts/rulings-2026-10-03 (CHECK.md), with
+two changes so it never stops another session's work: the commit hook checks only the capped
+files that commit carries (in a worktree whose branch is behind, the other files are not that
+commit's business), and the town's and clothing's status files are reported, not failed, until
+each session has trimmed its own and taken it out of NOT_YET.
 """
 import os
 import re
@@ -66,6 +34,9 @@ CAPS = [
     ("TOWN.md", 300),
     ("CLOTHES.md", 300),
 ]
+# Measured and printed, not failed, until the session that owns the file has trimmed it under its
+# cap and removed it from here (handed over 3 October).
+NOT_YET = {"TOWN.md", "CLOTHES.md"}
 
 
 def words(text):
@@ -85,7 +56,7 @@ def sections(text):
     return sorted(parts, reverse=True)[:3]
 
 
-def check(root, caps=CAPS, out=sys.stdout):
+def check(root, caps=CAPS, out=sys.stdout, not_yet=frozenset()):
     over = 0
     for rel, cap in caps:
         path = os.path.join(root, rel)
@@ -96,6 +67,9 @@ def check(root, caps=CAPS, out=sys.stdout):
         text = open(path, encoding="utf-8").read()
         n = words(text)
         ok = n <= cap
+        if not ok and rel in not_yet:
+            print("doc-caps file=%s words=%d cap=%d outcome=OVER-NOT-YET (its session trims it)" % (rel, n, cap), file=out)
+            continue
         print("doc-caps file=%s words=%d cap=%d outcome=%s" % (rel, n, cap, "PASS" if ok else "FAIL"), file=out)
         if not ok:
             over += 1
@@ -125,13 +99,36 @@ def selftest():
     case("REFUSE one word over the cap", {"A.md": "1 2 3 4 5 6", "B.md": "a"}, 1)
     case("REFUSE a missing file, never read as clean", {"A.md": "1"}, 1)
     case("REFUSE both over", {"A.md": "1 2 3 4 5 6", "B.md": "a b c d"}, 2)
+    with tempfile.TemporaryDirectory() as d:
+        open(os.path.join(d, "A.md"), "w", encoding="utf-8").write("1 2 3 4 5 6")
+        open(os.path.join(d, "B.md"), "w", encoding="utf-8").write("a")
+        got = check(d, [("A.md", 5), ("B.md", 3)], out=io.StringIO(), not_yet={"A.md"})
+        ok = got == 0
+        fails += 0 if ok else 1
+        print("  %s ACCEPT a file over its cap whose session has not trimmed it yet: over=%d" % ("ok  " if ok else "FAIL", got))
     print("doc-caps selftest: %s" % ("passed" if fails == 0 else "FAILED (%d)" % fails))
     return 1 if fails else 0
+
+
+def staged():
+    """Only the capped files the commit being made carries, as staged."""
+    import subprocess
+    names = subprocess.run(["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"],
+                           capture_output=True, text=True).stdout.split()
+    caps = [(rel, cap) for rel, cap in CAPS if rel in names]
+    over = 0
+    for rel, cap in caps:
+        n = words(subprocess.run(["git", "show", ":" + rel], capture_output=True, text=True, encoding="utf-8").stdout)
+        if n > cap:
+            over += 1
+            print("doc-caps: this commit is refused: %s is %d words, over its cap of %d (CLAUDE.md, Records). Cut it; never --no-verify." % (rel, n, cap))
+    return over
 
 
 if __name__ == "__main__":
     if "--selftest" in sys.argv[1:]:
         sys.exit(selftest())
+    if "--staged" in sys.argv[1:]:
+        sys.exit(1 if staged() else 0)
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.exit(1 if check(root) else 0)
-```
+    sys.exit(1 if check(root, not_yet=NOT_YET) else 0)
