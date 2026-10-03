@@ -5,24 +5,26 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Saturday 3 October, 09:25)
+## Overview (Saturday 3 October, 12:15)
 
-**On: item 1 of your list, the git growth (stopped and ruled; waiting only on your answer below). Next: item 2.1, the proof view's composition.**
+**On: the nightly walk's new report on whether the town knows Tom (your ruling; set up today so its first paragraph is here tomorrow). Then: item 2.1, composition, its third try after the research the rule asks for. Done today: item 1 (the git growth) and 1b (licences).**
 
-**Disk (09:21): C: 83.5 GB free, F: 36.9 GB free, both over their floors. Grew most since Friday 09:44: the Unreal project's build files (+5.1 GB), Claude's own temporary files (+4.6 GB), the jacket's renders (+1.2 GB). (The night's line said the git history grew 31.5 GB: it counted two old files git had only touched; their sizes say 0.23 GB. Fixed.)**
+**Disk (12:10): C: 85 GB free, F: 40 GB free, both over their floors.**
 
 ### Needs you
 
-(Every page's stored answers checked at 09:20: the town's page, your yes of 1 October, acted on; clothing's suit page, answered by your message: tailoring waits; Friday's page, acted on.)
+(No new page today; the town's and clothing's stored answers unchanged since 09:20.)
 
-1. **Clean the git history? (scope; no page; one choice):** it is 32.5 GB on GitHub (its own figure today), and GitHub advises under 10 GB. 30.6 GB of it is the build machine's old test pictures, committed on every run from 22 September; nothing the game needs. Nothing is added any more. Cleaning rewrites the past commits without those pictures: about 5 GB left, the three sessions and the build machine re-synced once, old commit numbers change, about an hour, nothing of yours touched. (A, recommended) clean it, at the next quiet moment between two items of the list. (B) leave it: it stays 32 GB, slow to copy, and GitHub may ask us to shrink it.
+1. **Clean the git history? (scope; no page; one choice):** it is 32.5 GB on GitHub (its own figure), and GitHub advises under 10 GB. 30.6 GB of it is the build machine's old test pictures; nothing the game needs, and nothing is added any more. Cleaning rewrites the past commits without them: about 5 GB left, every session re-synced once, old commit numbers change, about an hour. (A, recommended) clean it, at the next quiet moment between two items. (B) leave it.
+2. **Delete the NoAI material? (licence; no page; one choice):** Epic's seven garment packs and every copy (14.5 GB) are in F:/LedgerTools/quarantine-noai-2026-10-03, out of the game and the project; I never delete. Older built copies of the cast still wearing those clothes sit in the approved-cast archive on F: and in your Dropbox backup (the faces in them are the approved ones, rebuilt today in plain clothes). (A, recommended) delete the quarantine folder now, and the archive's and Dropbox's old copies once you have seen the rebuilt cast in the game. (B) keep them.
+3. **Your Claude account's "Help improve Claude" setting (licence; the asset plan's decision 5):** the Unreal licence forbids MetaHumans being used to train AI; our sessions send Claude pictures of them. (A, recommended) switch it off in your Claude privacy settings; (B) leave it.
 
 ### Road to worth playing
 
 (Your list of 3 October, one item at a time, in NOW.md.)
 
 - **The proof view** (builder, item 2): the hook camera by day built to the Hook sheet through the research's thirteen steps, each judged against the Hook sheet and the KCD2 frames; one picture here after each step, no decision; your page only when it stands beside the sheet. Since yesterday: your order; starting 2.1, composition.
-- **People dressed** (builder, within item 2): what has passed the gate and Epic's plainest garments, re-coloured, no contrast stitching, no trainers; tailoring waits (your ruling). Since yesterday: ruled.
+- **People dressed** (clothing makes, builder fits): Epic's garments are NoAI and gone; Sheila, Ron and Darren rebuilt today in the engine plugin's plain garment (faces unchanged) under what has passed (Sheila's blouse, skirt and handbag, Ron's boots, Darren's T-shirt and belt); plain trousers, jumpers and shoes asked of the clothing session, CC0 or made in Blender; judged against your floor, passers-by from eight metres. Since yesterday: your rulings; the Epic clothes out.
 - **The delay before a character speaks** (builder, item 3): about 5.5 s from Enter to the first sound (not the real path end to end); the last free test, the 8-bit decoder, about two days. Since yesterday: placed third.
 - **Replies that say "that's all I know"** (town): 23 of 60 in its latest run. Since yesterday: no change.
 - **Replies that time out** (town, measured in play): none of 30 on the real path. Since yesterday: no change.

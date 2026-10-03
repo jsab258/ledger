@@ -386,18 +386,13 @@ jobs:
           } else {
             Write-Host "metahumanCopied=NO-SOURCE/$($mhSrc -replace ' ','~')"
           }
-          # THE CLOTHES THE CAST WEAR, 24 September (overnight): Epic's free Fab
-          # garments, of which only the part the built cast depend on is kept
-          # in the scratch project (tools/ue/fab_closure.py). Fab Standard
-          # License: never in the repository, so copied here like the cast.
-          $fabSrc = "C:\LedgerTools\mh-assemble\Content\Fab"
+          # NO FAB CLOTHES, 3 October (Jafar's licence ruling): Epic's garment
+          # packages are marked on Fab "Allows usage with AI: No", so nothing is
+          # copied from Fab into the game any more; the cast wear the engine's
+          # own MetaHuman garment and the clothing session's garments. The line
+          # says whether anything from Fab is still in this checkout.
           $fabDst = Join-Path $PWD "ue-probe\Content\Fab"
-          if (Test-Path $fabSrc) {
-            robocopy $fabSrc $fabDst /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
-            Write-Host "fabClothesCopied=$(@(Get-ChildItem $fabDst -Recurse -File -ErrorAction SilentlyContinue).Count)-files"
-          } else {
-            Write-Host "fabClothesCopied=NO-SOURCE"
-          }
+          Write-Host "fabClothesCopied=NONE-NoAI fabStillInCheckout=$(Test-Path $fabDst)"
           exit 0
 
       # WAIT FOR THIS PC'S OWN UNREAL WORK, 28 September. The builder session

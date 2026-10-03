@@ -50,22 +50,22 @@ GARMENT = "/MetaHumanCharacter/Optional/Clothing/WI_DefaultGarment.WI_DefaultGar
 # by import_fab_packages(), then put on in place of GARMENT.
 FAB_DOWNLOADS = os.path.join(os.path.expanduser("~"), "Downloads")
 FAB_IMPORT_DIR = "/Game/Fab/"
+# NOTHING FROM FAB, 3 October (Jafar's licence ruling): Epic's seven garment
+# packs (sweater, jeans, slim jeans, T-shirt variants, boots, flats, sneakers)
+# are marked on Fab "Allows usage with AI: No" and left the project. The cast
+# wear the plain garment the engine's own MetaHuman plugin ships (not a Fab
+# item) under the garments the clothing session makes, which the game fits on
+# top (tools/ue/import_garments.py); nothing under /Game/Fab is ever put on.
 OUTFITS = {
-    "lena": ("sweater", "jeans", "flats"),
-    "rocco": ("sweater", "jeans", "boots"),
-    "sam": ("tshirt", "slimjeans", "sneakers"),
+    "lena": ("plain",),
+    "rocco": ("plain",),
+    "sam": ("plain",),
 }
-# THE WARDROBE ITEMS THE PACKAGES MAKE, as imported on 24 September (overnight)
-# by import_fab_clothes.py: each package lands under /Game/Fab/<file name>.
+# THE WARDROBE ITEMS, by word. /Game/Fab/ is refused by outfit_paths().
 FAB_ITEMS = {
-    "sweater": "/Game/Fab/oa_sweater/WI_OA_Sweater",
-    "jeans": "/Game/Fab/oa_jeans/WI_OA_Jeans",
-    "slimjeans": "/Game/Fab/oa_slimjeansvariants/WI_OA_Jeans_slm",
-    "tshirt": "/Game/Fab/oa_tshirtvariants/WI_OA_TshirtLngSlv",
-    "boots": "/Game/Fab/oa_boots/WI_OA_Boots",
-    "flats": "/Game/Fab/oa_flats/WI_OA_Flats",
-    "sneakers": "/Game/Fab/oa_casualsneakers/WI_OA_CasualSneakers",
+    "plain": GARMENT.split(".")[0],
 }
+NOAI_ROOTS = ("/Game/Fab/",)
 
 
 # PLAIN 1990 COLOURS, not Epic's grey with electric-blue trim (24 September,
@@ -113,8 +113,12 @@ def recolour_cloth(who, made):
 
 
 def outfit_paths(who):
-    """The wardrobe items one of the cast is dressed in, as loadable object paths."""
-    return ["%s.%s" % (FAB_ITEMS[w], FAB_ITEMS[w].split("/")[-1]) for w in OUTFITS.get(who, ())]
+    """The wardrobe items one of the cast is dressed in, as loadable object paths; never a NoAI one."""
+    out = ["%s.%s" % (FAB_ITEMS[w], FAB_ITEMS[w].split("/")[-1]) for w in OUTFITS.get(who, ())]
+    bad = [x for x in out if x.startswith(NOAI_ROOTS)]
+    if bad:
+        raise ValueError("make_cast_metahumans: NoAI wardrobe items refused: %s" % bad)
+    return out
 
 
 def fab_packages(names):
@@ -1165,12 +1169,13 @@ def selftest():
     check("a take that names a brow colour recolours the eyebrows and nothing else",
           brow_materials("lena", grooms) == ["/Game/x/Grooms/MI_WI_Eyebrows_M_SlightArch_Hair.x"] and brow_materials("sam", grooms) == [])
     use_take("")
-    check("everyone is dressed head to foot, shoes included",
-          sorted(OUTFITS) == ["lena", "rocco", "sam"] and all(len(o) == 3 for o in OUTFITS.values()))
+    check("everyone wears the plugin's own plain garment under what the clothing session makes",
+          sorted(OUTFITS) == ["lena", "rocco", "sam"] and all(o == ("plain",) for o in OUTFITS.values()))
     check("only MetaHuman packages are imported", fab_packages(["oa_jeans.mhpkg", "notes.txt", "x.zip"]) == ["oa_jeans.mhpkg"])
     check("every outfit word names an imported wardrobe item", all(w in FAB_ITEMS for o in OUTFITS.values() for w in o))
-    check("an outfit path is a loadable object path", outfit_paths("rocco")[2] == "/Game/Fab/oa_boots/WI_OA_Boots.WI_OA_Boots")
-    check("everyone has shoes", all(o[2] in ("flats", "boots", "sneakers") for o in OUTFITS.values()))
+    check("an outfit path is a loadable object path", outfit_paths("rocco")[0] == GARMENT)
+    check("nothing from Fab is ever put on (NoAI, 3 October)",
+          not [x for w in OUTFITS for x in outfit_paths(w) if x.startswith(NOAI_ROOTS)])
     check("only a recoloured garment's built material is picked",
           cloth_materials("rocco", ["/G/MH_RoccoT2/Clothing/MI_WI_OA_Boots_M_shs_boots.x", "/G/MH_RoccoT2/Clothing/MI_WI_OA_Jeans_M_btm.x",
                                     "/G/MH_RoccoT2/Face/MI_WI_OA_Boots_M.x"]) == [("/G/MH_RoccoT2/Clothing/MI_WI_OA_Boots_M_shs_boots.x", "Boots")])

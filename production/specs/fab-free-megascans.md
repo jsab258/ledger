@@ -1,5 +1,7 @@
 # Free Megascans for the proof frame, stage 1
 
+**NEVER TO BE USED (3 October).** Every item on this list is marked on Fab "Allows usage with AI: No" (each listing's own data, isAiForbidden, read from this PC on 3 October), Epic's own Game Animation Sample and construction presets included. By Jafar's ruling of that day nothing NoAI is used in the game or the project, nor as a reference or input. None was ever downloaded. The list is kept as the record of what was checked; the replacements come from Poly Haven, ambientCG and CC0 scans on Sketchfab.
+
 Each is free on Fab (Personal and Professional licence, price 0). Tap each and choose Add to My Library; the builder downloads them once they are there.
 
 1. [Leakage](https://www.fab.com/listings/67af749b-5275-420b-9b8f-b172fb5c6b18) (decal): streaks under sills and gutter joints
