@@ -1,21 +1,32 @@
 # Notes on the drafts (3 October 2026)
 
-**What this folder is.** Drafts for the builder to apply after Jafar has answered QUESTIONS.md. Nothing live is replaced.
+**What this folder is.** Drafts for the builder to apply. Jafar answered QUESTIONS.md on 3 October; his answers are folded in. Nothing live is replaced until the builder applies them.
 
 | File | Becomes | Words |
 |---|---|---|
-| RULINGS.md | RULINGS.md at the root | 2,481 |
-| CLAUDE.draft.md | CLAUDE.md | 996 |
-| QUESTIONS.md | his one page | 551 |
+| RULINGS.md | RULINGS.md at the root | 2,497 |
+| CLAUDE.draft.md | CLAUDE.md | 997 |
+| QUESTIONS.md | his six questions, answered | 647 |
 | CHECK.md | tools/doc-caps.py and its wiring | – |
 
 CLAUDE.md is a draft name here on purpose: a file named CLAUDE.md in this folder would be loaded by any session working in it.
 
-**Applying them.**
-1. Answer the questions; edit each line marked [Qn] in RULINGS.md to match.
-2. Copy RULINGS.md and CLAUDE.draft.md to the root.
-3. Trim NOW.md, TOWN.md and CLOTHES.md under their caps.
-4. Land the check in the same commit (CHECK.md).
+**Applying them** (the builder, in one commit):
+1. Copy RULINGS.md to the root, and CLAUDE.draft.md over CLAUDE.md.
+2. Trim NOW.md, TOWN.md and CLOTHES.md under their caps. Each list item becomes one line naming the file that holds its specifics, his rulings' included (his answer 2). TOWN.md and CLOTHES.md are the town's and clothing's own; trim them yourself or have each session trim its own first.
+3. Land the check in the same commit (CHECK.md).
+4. Write the brief's clause below into DECISIONS.md, place the work below on the lists, and delete this folder.
+
+## The work his answers make (3 October)
+
+His six answers are already in DECISIONS.md. Each piece of work goes on its session's own list (his answer 4). The builder places its own at a stated position and tells him where.
+
+1. **The key.** One tool already does this: `tools/talk_cost_sample.py --live` logs each run to production/playtest/talk-runs.jsonl with its tokens and dollars, and refuses a run that would pass the day's dollar or that runs under CI. Any other session's measurement run on the key goes through that same log and the same one dollar a day, shared by all sessions. That tool's opening note ("no tool reads" the key) is brought in line. Owner: whoever runs a measurement on the key.
+2. **NOW.md.** The trim in step 2 above.
+3. **The threat.** Fault N3 (production/audits/review-2026-10-01/FAULTS.md) is already the town's on the 1 October split, and is now done to his answer: a threat stops the witness's report to the police (`WouldReport`; `FileThreat` in Silence.h only files a story today), and the witness still tells the street. The test is written first, from the design. The talk program's refusal of a keep-quiet after a threat (TalkHelper/Program.cs, 854 and 866 to 868) is checked against the answer. Then the builder ports it and removes the "buys no silence" comment (CrimeProbe.cpp, 4524). Owner: the town, then the builder.
+4. **The lists.** Nothing beyond the drafts.
+5. **Three voices.** A listening page of voices that fit each casting sheet: Danny (production/casting/danny-cammack/SHEET.md), June (production/casting/june/SHEET.md) and Father Walsh (production/casting/father-emil/SHEET.md). Accent and age are judged by ear, through the gate. Each is cast only on his yes; one with none that fits keeps his pick (p243, p277, the July voice). It is needed before any of the three speaks in the game. Owner: the builder.
+6. **Licences.** No code changes. An unmarked CC-BY garment may now be used, with credit in THIRD-PARTY.md: one line for clothing under "Handovers to clothing". A licence clause only against training (Unreal's, MetaHumans', Mixamo's, CLO's) no longer rules an asset out. Owner: the builder, for the clothing line.
 
 DECISIONS.md stays as the history, appended to and not read at the start of work.
 
@@ -55,7 +66,7 @@ DECISIONS.md stays as the history, appended to and not read at the start of work
 
 ## Not settled from the dates
 
-The six questions in QUESTIONS.md. Five more were dropped; two of them he settled himself on 3 October, while the drafts were being checked:
+The six questions in QUESTIONS.md, answered by him on 3 October. Five more were dropped; two of them he settled himself on 3 October, while the drafts were being checked:
 - **NoAI against Epic's own content** (the Megascans, the Game Animation Sample, Epic's MetaHuman garments): he ruled the rule as written on 3 October; they are out.
 - **Buying clothes** (a suit under $40 on 2 October against no human-made inputs on 3 October): he ruled no purchases and no commissions for clothes on 3 October.
 - **The rulings sweep's items** against the one list: already built on 2 October.
