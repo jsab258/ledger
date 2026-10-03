@@ -54,6 +54,11 @@ BIG_KINDS = {
     ".exe", ".dll", ".pdb", ".pak", ".ucas", ".utoc", ".zip", ".7z", ".rar", ".tar", ".gz",
 }
 KEYS_DIR = os.path.join(os.environ.get("LOCALAPPDATA", ""), "LEDGER")
+# THE ONE EXCEPTION FOR PICTURES (Jafar, 3 October, evening: "so outside reviewers can see the
+# work"): a reduced preview of every proof-view step and every picture on his pages, about 1600
+# pixels wide, JPEG, under 500 KB, in production/previews/, made by tools/make_preview.py. Only
+# JPEGs go there; full-size pictures stay on the drive.
+PREVIEWS, PREVIEW_KINDS, PREVIEW_LIMIT = "production/previews/", {".jpg", ".jpeg"}, 500_000
 
 
 def place_cap(path):
@@ -67,6 +72,12 @@ def verdict(path, size, head=b"", keys=()):
     """Why this staged file may not go into git, or None when it may."""
     path = path.replace("\\", "/")
     kind = os.path.splitext(path)[1].lower()
+    if path.startswith(PREVIEWS):
+        if kind not in PREVIEW_KINDS:
+            return "only JPEG previews go in %s (tools/make_preview.py)" % PREVIEWS
+        if size >= PREVIEW_LIMIT:
+            return "a preview of %d KB, over the 500 KB a preview may be (tools/make_preview.py)" % (size // 1000)
+        return None
     cap = place_cap(path)
     if cap is None:
         if kind in BIG_KINDS:
@@ -151,6 +162,9 @@ def selftest():
     ok("a game input over its cap is refused", verdict("production/assets/street/quay-street.glb", 30_000_000))
     ok("the Hook sheet is let through", verdict("production/reference/hook-sheet.png", 4_834_247) is None)
     ok("Windows paths are read the same", verdict("production\\d1-probe\\x.png", 10))
+    ok("a reduced preview under 500 KB is let through", verdict("production/previews/proof-2.2-atmosphere-sky-2026-10-03.jpg", 420_000) is None)
+    ok("a preview of 500 KB or more is refused", verdict("production/previews/proof-2.2-big-2026-10-03.jpg", 500_000))
+    ok("a full-size PNG among the previews is refused", verdict("production/previews/proof-2.2-2026-10-03.png", 300_000))
     ok("a key in text is refused", verdict("notes.md", 100, b"token 0123456789abcdef0123 here", [b"0123456789abcdef0123"]))
     ok("a key is not looked for in a binary file", verdict("production/assets/x.glb", 100, b"\0" + b"0123456789abcdef0123", [b"0123456789abcdef0123"]) is None)
     hook = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hooks", "pre-commit")

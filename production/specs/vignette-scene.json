@@ -112,6 +112,11 @@
       "bay_width_m": 6.0,
       "depth_m": 8.0,
       "storey_heights_m": [3.40, 2.80],
+      "drawn": {
+        "storey_heights_m": [3.00],
+        "roof": {"kind": "pitched", "pitch_deg": 40.0, "eaves_overhang_m": 0.25, "surface": "roof"},
+        "why": "SINGLE-STOREY COTTAGES IN THE DRAWN STREET SINCE 3 OCTOBER (the proof view, step 2.1, composition). Laid beside the Hook sheet, this block was a two-storey parapeted wall filling the left fifth of the hook frame to the sky, where the sheet has a single-storey cottage, its eaves at about 3 m (measured off the sheet: 8.7 degrees above eye level at about 9 m), so the left half of the frame opens onto the street and the town on the hill. Canon's 'plain terraces' across from Mickey's: a terrace of cottages under a 40-degree slated roof. ONLY THE DRAWING TAKES THIS (tools/art-recipes/terrace-front.py, the street Unreal shows); the simulation's coarse pieces (the C# Core, vignette-pieces.json) keep storey_heights_m and roof below, a 6.2 m box on the same plot, about the cottage's 6.4 m ridge, so the sightlines the crime and perception checks use do not change."
+      },
       "wall_surface": "brick_grey",
       "ground_floor": "plain",
       "roof": {
@@ -134,6 +139,11 @@
       "bay_width_m": 6.0,
       "depth_m": 8.0,
       "storey_heights_m": [3.40, 2.80],
+      "drawn": {
+        "storey_heights_m": [3.40],
+        "roof": {"kind": "pitched", "pitch_deg": 35.0, "eaves_overhang_m": 0.3, "surface": "roof"},
+        "why": "ONE STOREY OF SHOPS UNDER A SLATED PITCH SINCE 3 OCTOBER (the first fresh review of the proof view's composition: two storeys and a gable at 27 m stood across the hill and sky the sheet shows over its low left side; one storey puts the ridge at 6.2 m, under the hill seen behind it; a row of lock-up shops still 'carries shops', as canon has it). PITCHED IN THE DRAWN STREET SINCE 3 OCTOBER (the proof view, step 2.1, composition): beside the Hook sheet its flat-topped parapet and blank end wall stood as a slab behind the cottages, where every roof on the sheet is slated and every end a gable; the parade's own pitch. No stack in the south gable: at 27 m it put a chimney against the sky at the frame's far left, where the sheet has sky and hill. Only the drawing takes this, as west_south's."
+      },
       "wall_surface": "brick_grey",
       "ground_floor": "shopfront",
       "roof": {
@@ -201,6 +211,8 @@
 
   "facade": {
     "bom": "D8_upper_windows",
+    "brick_length_m": 0.215,
+    "brick_length_note": "trade_standard, one British brick on its length, 215 mm; the wall thickness the drawn elevations are built to. Read from the west rows' parapets until 3 October, when the drawn west rows took pitched roofs (the proof view's composition).",
     "windows_per_bay": 2,
     "window_width_m": 0.850,
     "window_height_m": 1.500,
@@ -878,9 +890,10 @@
       "id": "cam_hook",
       "bom": "ladder_rung_1.the_street_matched_to_the_hook_sheet",
       "side": "west_carriageway",
-      "x_m": -3.2,
-      "z_m": -2.20,
-      "eye_height_m": 2.00,
+      "x_m": -3.0,
+      "z_m": -1.60,
+      "z_m_note": "FITTED TO THE SHEET, 3 October (the proof view, step 2.1, first fresh review): at x -3.2, z -2.2, eye 2.0 the camera stood nearly over the west double yellow lines (they met the frame's foot at 0.19 of its width against the sheet's 0.11) and the near-left wall loomed. Fitted by projecting Mickey's four shopfront corners and the west yellow line onto the sheet's own measured places (least squares over the camera's place and height, the yaw, pitch and lens kept so the vanishing point and horizon stay the sheet's): x -3.0, z -1.6, eye 2.2, the error a third of before. What is left, Mickey's and the parade's eaves standing about 5% higher than the sheet's, is the sheet's squatter upper storey, the facades' step.",
+      "eye_height_m": 2.20,
       "declared_ground": {"y_m": 0.0, "why": "quay_apron_at_crown_level"},
       "yaw_deg": 20.4,
       "pitch_deg": -3.4,
