@@ -31,6 +31,11 @@ import subprocess
 import sys
 
 LIMIT = 1_000_000                      # any file outside GAME_INPUTS: 1 MB
+# HAND-WRITTEN CODE (3 October: the Core tests' one file is 2 MB): git keeps each change to a
+# source file as a small difference against the last, so the history does not grow by its size;
+# generated text (logs, verdicts, tables) keeps the 1 MB limit.
+CODE_KINDS = {".cs", ".cpp", ".h", ".hpp", ".c", ".py", ".ps1", ".sh"}
+CODE_LIMIT = 5_000_000
 GAME_INPUTS = {                        # prefix: cap a file, in bytes
     "production/assets/": 25_000_000,  # meshes, textures, sounds the editor run imports
     "ue-probe/Content/": 25_000_000,   # the Unreal content the build makes and cooks
@@ -66,7 +71,10 @@ def verdict(path, size, head=b"", keys=()):
     if cap is None:
         if kind in BIG_KINDS:
             return "a %s file outside the places the build reads from git: it lives on the drives" % kind
-        if size > LIMIT:
+        if kind in CODE_KINDS:
+            if size > CODE_LIMIT:
+                return "%.1f MB of code, over the %d MB a source file may be" % (size / 1e6, CODE_LIMIT // 1_000_000)
+        elif size > LIMIT:
             return "%.1f MB, over the 1 MB a file outside the build's places may be" % (size / 1e6)
     elif size > cap:
         return "%.1f MB, over the %d MB a file in %s may be" % (size / 1e6, cap // 1_000_000, path.split("/")[0] + "/" + path.split("/")[1])
@@ -136,6 +144,9 @@ def selftest():
     ok("a Blender file is refused", verdict("tools/art-recipes/scene.blend", 200_000))
     ok("text over 1 MB is refused", verdict("production/d1-probe/ue-build.txt", 1_500_000))
     ok("code is let through", verdict("tools/retention.py", 60_000, b"import os\n") is None)
+    ok("hand-written code over 1 MB is let through: git keeps each change as a small difference",
+       verdict("ledger/CoreTests/Program.cs", 2_000_000, b"using System;\n") is None)
+    ok("but not past its own cap", verdict("ledger/CoreTests/Program.cs", 6_000_000, b"using System;\n"))
     ok("the street the build imports is let through", verdict("production/assets/street/quay-street.glb", 16_200_000) is None)
     ok("a game input over its cap is refused", verdict("production/assets/street/quay-street.glb", 30_000_000))
     ok("the Hook sheet is let through", verdict("production/reference/hook-sheet.png", 4_834_247) is None)

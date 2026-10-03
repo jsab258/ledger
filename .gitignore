@@ -166,3 +166,5 @@ ue-probe/Config/DefaultInput.ini
 ue-probe/Content/LedgerData/
 # Epic's Fab clothing the cast wear: Fab Standard License, never redistributed (24 September).
 ue-probe/Content/Fab/
+# The build machine's recorded shout: sound, kept in its renders folder, never in git (3 October).
+production/d1-probe/ue-encounter-shout.wav

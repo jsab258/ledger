@@ -195,6 +195,14 @@
  ],
  "models": [
   {
+   "path": "F:/LedgerTools/voice-portable",
+   "usedBy": [
+    "tools/voice-live/make_portable.py",
+    "ue-probe/Source/LedgerProbe/Private/CrimeProbe.cpp"
+   ],
+   "why": "the game's voice with nothing installed, linked as Voice beside the played copy (P5, 3 October: the friends' build in a fresh Windows account)"
+  },
+  {
    "path": "C:/LedgerTools/chatterbox-nano",
    "usedBy": [
     "tools/voice-live/voice-server.py"

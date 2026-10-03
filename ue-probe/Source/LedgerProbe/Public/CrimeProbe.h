@@ -1798,6 +1798,46 @@ namespace LedgerCrime
 		}
 	};
 
+	/// WHETHER A REPLY WAS CHECKED (P3, 3 October): the talk program names each
+	/// turn's steps ("steps":[["draft",1200],["check",1900]]) and whether its check
+	/// failed ("unchecked"). The session record keeps both, so a measurement of real
+	/// talk shows line by line that it was checked; 30 September's ran unchecked
+	/// because a spending cap switched the check off, and nothing showed it.
+	struct TalkSteps
+	{
+		/// The step names in order, joined by commas; empty when the reply names none.
+		static std::string Of(const std::string& Line)
+		{
+			const std::string::size_type At = Line.find("\"steps\":[");
+			if (At == std::string::npos) return std::string();
+			const std::string::size_type End = Line.find("]]", At);
+			const std::string::size_type Empty = Line.find("[]", At);
+			if (End == std::string::npos || (Empty != std::string::npos && Empty < End)) return std::string();
+			std::string Out;
+			std::string::size_type From = At + 9;
+			while (true)
+			{
+				const std::string::size_type Open = Line.find("[\"", From);
+				if (Open == std::string::npos || Open > End) break;
+				const std::string::size_type Close = Line.find('"', Open + 2);
+				if (Close == std::string::npos || Close > End) break;
+				if (!Out.empty()) Out += ',';
+				Out += Line.substr(Open + 2, Close - Open - 2);
+				From = Close + 1;
+			}
+			return Out;
+		}
+		/// Its check ran and did not fail: the whole reply checked, or its first
+		/// sentence checked (passed or flagged), and never "unchecked".
+		static bool Checked(const std::string& Line)
+		{
+			if (Line.find("\"unchecked\":false") == std::string::npos) return false;
+			const std::string Steps = "," + Of(Line) + ",";
+			return Steps.find(",check,") != std::string::npos || Steps.find(",recheck,") != std::string::npos
+			    || Steps.find(",first-flagged,") != std::string::npos;
+		}
+	};
+
 	/// WHICH BUILD A SAVE BELONGS TO (the review of 1 October, S5): the commit
 	/// the run was given (-LedgerCommit=), else the one the packaging staged
 	/// beside the game's data (tools/ue/stage_game_data.py, build-commit.txt),
@@ -2998,6 +3038,24 @@ namespace LedgerCrime
 			Expect(R, bA && bB, "l5-two-late-replies-in-a-row-both-count");
 			Expect(R, Late.Cards.empty() && Late.Answers(Darren) == 0 && Late.Answers("{\"id\":70,\"went\":true}") == 0,
 			       "l5-a-settled-late-reply-is-owed-no-longer-and-numbers-do-not-run-together");
+		}
+		// P3, 3 October: the session record says whether each reply was checked, from
+		// the talk program's own steps, so a measurement of real talk can never again
+		// run unchecked unseen (30 September's did). The shapes are the talk program's
+		// (ledger/TalkHelper/Program.cs, "steps" and "unchecked").
+		{
+			const std::string Checked = "{\"id\":3,\"reply\":\"Aye.\",\"unchecked\":false,\"fellBack\":false,\"steps\":[[\"first-written\",410],[\"first-passed\",900],[\"draft\",1200],[\"check\",1900]],\"trusts\":0}";
+			const std::string Redrafted = "{\"id\":4,\"unchecked\":false,\"steps\":[[\"first-written\",400],[\"first-flagged\",800],[\"draft\",900],[\"re-first-written\",1500],[\"re-first-passed\",1800],[\"redraft\",2100],[\"recheck\",2600]]}";
+			const std::string NoChecker = "{\"id\":5,\"unchecked\":false,\"steps\":[[\"first-written\",380],[\"draft\",1100]]}";
+			const std::string CheckFailed = "{\"id\":6,\"unchecked\":true,\"steps\":[[\"first-written\",380],[\"first-unchecked\",700],[\"draft\",1100],[\"check\",1500]]}";
+			const std::string Old = "{\"id\":7,\"reply\":\"Aye.\"}";
+			Expect(R, TalkSteps::Of(Checked) == "first-written,first-passed,draft,check" && TalkSteps::Of(NoChecker) == "first-written,draft"
+			          && TalkSteps::Of(Old).empty() && TalkSteps::Of("{\"steps\":[]}").empty(),
+			       "p3-the-turns-steps-read-in-order-from-the-talk-programs-reply");
+			Expect(R, TalkSteps::Checked(Checked) && TalkSteps::Checked(Redrafted),
+			       "p3-a-reply-whose-check-ran-is-checked-straight-or-redrafted");
+			Expect(R, !TalkSteps::Checked(NoChecker) && !TalkSteps::Checked(CheckFailed) && !TalkSteps::Checked(Old),
+			       "p3-no-check-a-failed-check-or-no-steps-is-never-counted-checked");
 		}
 		// THE REVIEW OF 1 OCTOBER, S4: the talk is told who has met him from the
 		// saved meetings. Straight on, Ron after the envelope and Ada after her

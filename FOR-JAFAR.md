@@ -5,9 +5,9 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Saturday 3 October, 14:50)
+## Overview (Saturday 3 October, 15:05)
 
-**On: P3, the claim check under a spending cap (the fix is in; checked talk is measured as soon as the build machine frees the PC). Next: P5, the friends' account; then P14, P1, P4, and the proof view resumes within P1's budgets.**
+**On: P5, the friends' build in a fresh Windows account, voice and talk included. Next: P14, the terms read and other games' frames out; then P1, P4, and the proof view resumes within P1's budgets. P3 done at 15:00: every paid reply checked in the finished game; numbers below.**
 
 ### Your orders today, reconciled (in the order you sent them)
 
@@ -47,13 +47,13 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 - **Q1.** 2.1 is set aside by the two-tries rule, but your order finishes each step before the next. When the proof view resumes: (A, recommended) at 2.2, with 2.1 waiting on Needs you 3; (B) back at 2.1 until it passes.
 - **Q2.** The threat's port (answer 3) has no place in the list: (A, recommended) straight after the item in hand when the town hands it back, about half a day; (B) after P4; (C) with the friends' build.
-- **Q3.** Sheila, Ron and Darren wear the MetaHuman tool's own plain garment: Epic's, but not a Fab item and with no NoAI mark, which answer 6 lets pass. (A, recommended) keep it as the stopgap, judged against your floor, until P14 reads the MetaHuman terms and the clothing session's plain clothes arrive; (B) out now, only what the clothing session has made.
+- **Q3.** Corrected (I wrote earlier that they wear what has passed: wrong): nothing sewn has passed, so Sheila, Ron and Darren wear only the MetaHuman tool's white base layer, which fails your floor (Sheila in a white T-shirt and shorts); your morning orders said Epic's plainest garments, your 11:45 order what has passed, and neither exists today. (A, recommended) the base layer stays until the clothing session's plain trousers, jumpers and shoes arrive, fitted when the list reaches the people (2.11) or the friends' build, whichever comes first; (B) dressing them jumps the list now, ahead of P5.
 
 **Disk (13:15): C: 88 GB free, F: 30 GB free (the NoAI quarantine holds 14.5 GB of it until you say), both over their floors.**
 
 ### Needs you
 
-(No new page today; all three pages' stored answers read at 14:45, unchanged. Your six answers to the rulings questions are applied; the Claude setting is yours, done.)
+(No new page today; all three pages' stored answers read at 14:28, unchanged. Your six answers to the rulings questions are applied; the Claude setting is yours, done.)
 
 1. **Clean the git history? (scope; no page; one choice):** it is 32.5 GB on GitHub (its own figure), and GitHub advises under 10 GB. 30.6 GB of it is the build machine's old test pictures; nothing the game needs, and nothing is added any more. Cleaning rewrites the past commits without them: about 5 GB left, every session re-synced once, old commit numbers change, about an hour. (A, recommended) clean it, at the next quiet moment between two items. (B) leave it.
 2. **Delete the NoAI material? (licence; no page; one choice):** Epic's seven garment packs and every copy (14.5 GB) are in F:/LedgerTools/quarantine-noai-2026-10-03, out of the game and the project; I never delete. Older built copies of the cast still wearing those clothes sit in the approved-cast archive on F: and in your Dropbox backup (the faces in them are the approved ones, rebuilt today in plain clothes). Also in your Dropbox backup: three duplicate copies of the rebuilt cast (4.2 GB, versions 12:58, 12:59 and 13:11 of today) that the backup wrote at each summary's commit; that fault is fixed so it cannot recur. (A, recommended) delete the quarantine folder and the three duplicates now, and the archive's and Dropbox's old outfit copies once you have seen the rebuilt cast in the game. (B) keep them.
@@ -65,10 +65,10 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 (Your list of 3 October, one item at a time, in NOW.md.)
 
 - **The proof view** (builder, item 2): the hook camera by day built to the Hook sheet through the research's thirteen steps, each judged against the Hook sheet and the KCD2 frames; one picture here after each step, no decision; your page only when it stands beside the sheet. Since yesterday: your order; starting 2.1, composition.
-- **People dressed** (clothing makes, builder fits): Epic's garments are NoAI and gone; Sheila, Ron and Darren rebuilt today in the engine plugin's plain garment (faces unchanged) under what has passed (Sheila's blouse, skirt and handbag, Ron's boots, Darren's T-shirt and belt); plain trousers, jumpers and shoes asked of the clothing session, CC0 or made in Blender; judged against your floor, passers-by from eight metres. Since yesterday: your rulings; the Epic clothes out.
-- **The delay before a character speaks** (builder, item 3): about 5.5 s from Enter to the first sound (not the real path end to end); the last free test, the 8-bit decoder, about two days. Since yesterday: placed third.
+- **People dressed** (clothing makes, builder fits): Epic's garments are NoAI and gone; Sheila, Ron and Darren, faces unchanged, wear only the MetaHuman tool's white base layer and Sheila her handbag, which fails your floor (Q3); plain trousers, jumpers and shoes asked of the clothing session, CC0 or made in Blender; judged against your floor, passers-by from eight metres. Since yesterday: your rulings; the Epic clothes out.
+- **The delay before a character speaks** (builder, item 3): 8.4 s from Enter to the first sound with every line checked, on the real path today (5.7 s when the first draft passes, 13 s when it is redrafted, as half were); the last free test, the 8-bit decoder, about two days. Since yesterday: measured checked.
 - **Replies that say "that's all I know"** (town): 23 of 60 in its latest run. Since yesterday: no change.
-- **Replies that time out** (town, measured in play): none of 30 on the real path. Since yesterday: no change.
+- **Replies that time out** (town, measured in play): none of 11 checked replies on the real path today; at the cap, the written brush-off at once. Since yesterday: measured checked. A checked line costs 4 to 6 cents: your $5 evening holds about 80.
 - **The street-wide pass** (builder, item 4): the proof view's kits and materials across the whole street. Since yesterday: placed.
 - **The friends' build** (builder, item 5): packaged, from a shortcut in a fresh Windows account, walked by the AI tester, with the twenty basics. Since yesterday: placed last.
 - **In place, not reopened:** the route (11 of 11, walked), the interface, the AI tester's walks, faces (frozen), voices (as chosen), the town's talk work from Monday.

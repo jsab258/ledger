@@ -5259,8 +5259,12 @@ namespace
 					}
 					const std::string Went = JsonField(L, "went");
 					const double Secs = (GLive.FirstAt > GLive.AskedAt ? GLive.FirstAt : NowS()) - GLive.AskedAt;
+					// WHETHER IT WAS CHECKED (P3, 3 October): the turn's steps and the verdict,
+					// so a run of real talk shows line by line that every reply was checked.
 					LedgerSession::Write(TEXT("reply"), TEXT("\"who\":") + LedgerSession::Str(Who)
-						+ (Went != "none" ? TEXT(",\"how\":") + LedgerSession::Str(Un(Went)) : FString()) + FString::Printf(TEXT(",\"s\":%.1f"), Secs));
+						+ (Went != "none" ? TEXT(",\"how\":") + LedgerSession::Str(Un(Went)) : FString()) + FString::Printf(TEXT(",\"s\":%.1f"), Secs)
+						+ TEXT(",\"steps\":") + LedgerSession::Str(Un(LedgerCrime::TalkSteps::Of(L)))
+						+ (LedgerCrime::TalkSteps::Checked(L) ? TEXT(",\"checked\":true") : TEXT(",\"checked\":false")));
 					for (const FString& Story : JsonList(L, "putToHim"))
 					{
 						LedgerSession::Write(TEXT("known"), TEXT("\"who\":") + LedgerSession::Str(Who) + TEXT(",\"how\":\"question\",\"story\":") + LedgerSession::Str(Story));

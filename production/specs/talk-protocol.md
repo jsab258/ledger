@@ -123,3 +123,15 @@ there as one line (town list T1, what is sent, measured without a key):
 `{"model", "kind", "streamed", "system", "messages", "turns", "maxTokens"}`,
 the kind being `reply`, `check-items`, `check-verify` or `check-line`, and
 `system` and `messages` in characters.
+
+## Files beside it
+
+- **His friends' evening** (P5, 3 October; Jafar: his friends talk on his key, five dollars an
+  evening): `friends-evening.json` beside the key (`%LOCALAPPDATA%\LEDGER`, or the file the
+  environment's `LEDGER_TALK_EVENING` names), `{"capUsd", "spentUsd"}`. Put there with the key for
+  the evening and taken away after it (tools/friends/evening.ps1). The talk program starts its cap
+  from `spentUsd` and writes the spend back after every reserve and settlement, so a restarted game
+  never gets a fresh cap; a file it cannot read leaves the talk offline, never uncapped.
+- **A measuring run's transcript** (P3, 3 October): with the environment's `LEDGER_TALK_TRANSCRIPT`
+  naming a file, every line written to the game is also kept there, and the session's cost line
+  last (tools/ai-tester/play.py --real-talk only).
