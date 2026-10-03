@@ -2,7 +2,7 @@
 """THE ROUTE, WALKED WITH REAL KEY PRESSES (item 5, 1 October; production/research/
 packaged-game-testing, step 2: "the audit's missing layer").
 
-    python tools/route_walk.py [--editor] [--out DIR]
+    python tools/route_walk.py [--editor] [--town] [--out DIR]
     python tools/route_walk.py --selftest
 
 A fixed script, no model: the AI tester's own key, mouse and typing commands
@@ -26,6 +26,13 @@ The stages, each with its own time limit and the tester's picture:
   street        relaunched, Continue chosen
   continue      Tom stands where he saved (within half a metre)
 
+THE TOWN ROUND, --town (Jafar, 3 October: the nightly walk reports whether the
+town visibly knows Tom): back in from Continue, after the town's hours have run,
+Tom greets Sheila, Ron and Darren in turn with the same neutral newcomer's line,
+as a player would, and each greeting's stages (town-<who>) say whether he
+reached them and how long the answer took to be heard. What each showed they
+knew is the game's own session record's (tools/nightly_walk.py reads it).
+
 Writes verdict.json (pass or fail per stage, in order) under --out (default
 production/playtest/route-walk/<stamp>) and prints one line a stage. Exits 0
 when every stage passed. Talk uses the stand-in (-TalkFake), never LEDGER's
@@ -43,6 +50,8 @@ PLAY = [sys.executable, os.path.join(REPO, "tools", "ai-tester", "play.py")]
 PACKAGED_SAVED = "F:/LedgerTools/played-game/Windows/LedgerProbe/Saved"
 EDITOR_SAVED = os.path.join(REPO, "ue-probe", "Saved")
 LINE = "Was it always this quiet and dead round here, Sheila?"   # w, a, s and d, typed into the box
+TOWN_LINE = "Morning. Anything going on round here?"            # the same neutral greeting to each, after the deed
+TOWN_WHO = (("lena", "Sheila"), ("rocco", "Ron"), ("sam", "Darren"))
 WALK_MPS = 1.6                                                  # measured 1 October: 3.2 m in 2 s
 ROAD_Z = 1.2                                                    # the road's middle, clear of the cars at the kerb
 
@@ -203,7 +212,43 @@ def start(editor, save_dir):
     return False
 
 
-def walk(editor, out):
+def greet(r, key, name):
+    """Walk to one of the three, wherever their day has them, and say TOWN_LINE."""
+    w = r.where()
+    if key not in w or "tom" not in w:
+        return r.record("town-" + name, False, "%s is not on the street" % name)
+    spot = stand_off(w[key][:2], w["tom"][:2], 1.1)
+    r.by_road(spot[0], spot[1])
+    r.go_to(0, 0, tol=0.5, legs=10,
+            follow=lambda ww: stand_off(ww[key][:2], ww["tom"][:2], 1.1) if key in ww and "tom" in ww else None)
+    w = r.where()
+    t = w.get("tom")
+    if not (t and key in w):
+        return r.record("town-" + name, False, "lost sight of %s" % name)
+    r.turn_to(bearing(t[0], t[1], w[key][0], w[key][1]))
+    w = r.where()
+    d = math.hypot(w[key][0] - w["tom"][0], w[key][1] - w["tom"][1])
+    if d > w[key][2]:
+        return r.record("town-" + name, False, "never in reach of %s (%.1f m away)" % (name, d))
+    for st in ("talk-open", "talk-typed", "reply-words", "reply-heard"):
+        r.discard(st)
+    play("say", TOWN_LINE)
+    opened = r.wait_stage("talk-open", 10)
+    words = r.wait_stage("reply-words", 40)
+    heard = r.wait_stage("reply-heard", 40)
+    play("wait", "8")
+    return r.record("town-" + name, bool(opened and words),
+                    "open=%d words=%s heard=%s" % (bool(opened), (words or {}).get("detail", "none"),
+                                                     (heard or {}).get("detail", "none")))
+
+
+def town_round(r):
+    """The three greeted in turn after the deed and the town's hours."""
+    for key, name in TOWN_WHO:
+        greet(r, key, name)
+
+
+def walk(editor, out, town=False):
     saved = EDITOR_SAVED if editor else PACKAGED_SAVED
     stamp = time.strftime("%Y-%m-%d-%H%M")
     save_dir = "F:/LedgerTools/tmp/route-walk/" + stamp
@@ -298,6 +343,8 @@ def walk(editor, out):
     c = r.wait_stage("street", 60)
     r.record("street", bool(c) and "continue" in c.get("detail", ""), (c or {}).get("detail", "no street line") + " (saved " + saved_at + ")")
     r.expect("continue", 30)
+    if town:
+        town_round(r)
     play("close")
     return r.write()
 
@@ -317,6 +364,8 @@ def selftest():
     check("headings wrap", wrap(350) == -10 and wrap(-190) == 170)
     s = stand_off([6.0, 4.6], [1.0, 4.6], 1.1)
     check("a talk spot stands off toward Tom", abs(s[0] - 4.9) < 1e-9 and abs(s[1] - 4.6) < 1e-9)
+    check("the town round greets the three who talk, the same line to each",
+          [k for k, _ in TOWN_WHO] == ["lena", "rocco", "sam"] and "Morning" in TOWN_LINE)
     print("route_walk selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -327,6 +376,6 @@ if __name__ == "__main__":
     editor = "--editor" in sys.argv
     out = sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else os.path.join(
         REPO, "production", "playtest", "route-walk", time.strftime("%Y-%m-%d-%H%M"))
-    v = walk(editor, out)
+    v = walk(editor, out, town="--town" in sys.argv)
     print("route walk: %d of %d stages passed; %s" % (v["passed"], v["stages"], out))
     sys.exit(0 if v["passed"] == v["stages"] and v["stages"] > 0 else 1)
