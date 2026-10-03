@@ -30,6 +30,10 @@ ASSET_PATH = PACKAGE + "/" + ASSET
 TINT_PARAM, TINT_DEFAULT = "GlassTint", (0.05, 0.06, 0.07)
 OPACITY_PARAM, OPACITY_DEFAULT = "GlassOpacity", 0.25
 ROUGH_PARAM, ROUGH_DEFAULT = "GlassRoughness", 0.05
+#: HOW STRONGLY THE PANE REFLECTS, 1 by day; the game turns it down at night (3 October:
+#: the lit shop outshines the street in its glass, and our soft reflections of the lamps
+#: showed as clouds over the rooms; unreal-look.json glass_specular_night)
+SPEC_PARAM, SPEC_DEFAULT = "GlassSpecular", 1.0
 #: what the clean pane lets through (the research's recipe: a faint green of float glass)
 TRANSMIT_PARAM, TRANSMIT_DEFAULT = "GlassTransmit", (0.88, 0.92, 0.90)
 
@@ -114,8 +118,9 @@ def main():
     # DefaultEngine.ini) and lets the room through by its Transmittance Color; so
     # Opacity is now only the dirt on the pane, GlassTint the dirt's colour
     # (production/research/shop-glass-reflections/NOTE.md, its recipe).
-    spec = mel.create_material_expression(mat, unreal.MaterialExpressionConstant, -500, 600)
-    spec.set_editor_property("r", 1.0)
+    spec = mel.create_material_expression(mat, unreal.MaterialExpressionScalarParameter, -500, 600)
+    spec.set_editor_property("parameter_name", SPEC_PARAM)
+    spec.set_editor_property("default_value", SPEC_DEFAULT)
     trans = mel.create_material_expression(mat, unreal.MaterialExpressionVectorParameter, -500, 700)
     trans.set_editor_property("parameter_name", TRANSMIT_PARAM)
     trans.set_editor_property("default_value", unreal.LinearColor(*TRANSMIT_DEFAULT, 1.0))

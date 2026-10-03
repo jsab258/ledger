@@ -246,6 +246,20 @@ namespace LedgerStreet
 		return -1.0;
 	}
 	inline bool TakesWater(const std::string& Base) { return WetFloorOf(Base) >= 0.0; }
+
+	// WHAT THE WEAR AND WATER MARKS MAY LAND ON (3 October): the walls' brick and render and
+	// the ground. A projected mark lands on whatever its box takes in, and on a face lying
+	// along its throw it stretches into streaks: Friday's wash and damp turned every painted
+	// window frame, sill and pier into streaked grey "marble" (the fresh reviews of the
+	// shopfronts; Rita's approved frames were clean paint). Painted joinery, frames, tiles,
+	// stone dressings, glass and doors take none.
+	inline bool TakesMarks(const std::string& Base)
+	{
+		static const char* Takes[] = { "brick_red", "brick_grey", "brick_rubbed", "render_cream", "render_patch",
+			"asphalt", "paving", "kerbstone", "standing_water", "standing_water_flags", "grime" };
+		for (const char* T : Takes) { if (Base == T) { return true; } }
+		return false;
+	}
 	// FloorOverride, when zero or more, replaces the recipe's floor for a
 	// surface that takes water - the look file's wet_floor, because the
 	// approved sheet's flags are shinier than the one Blender was tuned to.
@@ -318,6 +332,10 @@ namespace LedgerStreet
 		// of a window is glass and how much is the room, and how smooth.
 		double GlassOpacity;
 		double GlassRoughness;
+		// AND HOW STRONGLY IT REFLECTS AT NIGHT, of its daytime 1 (3 October: a lit shop at
+		// night outshines the street in its glass, and our soft reflections of the lamps and
+		// lit windows across the road showed as white and orange clouds over the rooms).
+		double GlassSpecularNight;
 		// A WET SURFACE'S ROUGHNESS FLOOR IN THIS ENGINE, by base material,
 		// where it differs from the recipe's (road 0.05, paving 0.46, kerb 0.40).
 		std::vector<std::pair<std::string, double> > WetFloors;
@@ -380,7 +398,7 @@ namespace LedgerStreet
 		         FogNightR(0.06), FogNightG(0.05), FogNightB(0.05), RoomGlowGainNight(0.0),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
-		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05),
+		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05), GlassSpecularNight(1.0),
 		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
 		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), bLanternRgb(false),
@@ -761,6 +779,8 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassOpacity = V->Num; ++Out.Read; }
 		V = Root.Find("glass_roughness");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassRoughness = V->Num; ++Out.Read; }
+		V = Root.Find("glass_specular_night");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassSpecularNight = V->Num; ++Out.Read; }
 		V = Root.Find("street_collision");
 		if (V != 0 && V->Type == T_BOOL) { Out.bStreetCollision = V->Bool; ++Out.Read; }
 		V = Root.Find("night_exposure_pin");
