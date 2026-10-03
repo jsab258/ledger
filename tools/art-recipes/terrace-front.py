@@ -7387,6 +7387,7 @@ def _export_street(bpy, args, parts):
     groups = {}
     info = {}
     skipped = 0
+    house_rows = _house_rows(args["root"])
     # THE TRANSFORMS BROUGHT UP TO DATE FIRST. The west blocks are turned
     # half round by their object's rotation, and Blender does not work out
     # an object's world matrix until something asks the scene to; the first
@@ -7427,6 +7428,16 @@ def _export_street(bpy, args, parts):
             # office in their place (production/specs/mickeys-office.json)
             # without opening any other door on the street.
             key = "mickeys_" + mat_key
+        # A HOUSE'S DRAWN WALLS AS THEIR OWN MESH (step 2.4, 4 October): the street arrives
+        # one mesh per material, so a house could not have its own brick; its walls now come
+        # as their own mesh (brick_red_h_east_parade_bay2), the base material unchanged, and
+        # the sidecar carries the house's tint (_house_tint) for the game to multiply in.
+        house = (_house_of(part.get("block"), obj.name)
+                 if key == mat_key and str(mat_key).startswith(HOUSE_OFFSET_MATERIALS) else None)
+        house_tint = None
+        if house is not None and house in house_rows:
+            key = "%s_h_%s" % (mat_key, house)
+            house_tint = list(_house_tint(part.get("block"), obj.name, mat_key, house_rows))
         # THE REFLECTION, y to -y, and nothing else moves.
         world = [mathutils.Vector((p.x, -p.y, p.z)) for p in world]
         lettered = key.startswith(("sign_", "card_"))
@@ -7443,6 +7454,7 @@ def _export_street(bpy, args, parts):
                               else (list(rgb) if rgb else None),
                 "roughness": rough,
                 "surface_map": surf[0], "tile_m": surf[1],
+                "house_tint": house_tint,
                 "decal": part.get("decal"), "decal_uv": crop,
                 "decal_emit": part.get("decal_emit") or None,
                 # WHAT THE PHOTOGRAPH'S OWN AVERAGE IS, so Unreal can do what

@@ -68,9 +68,15 @@ namespace LedgerStreet
 		// until then - the glass left in a smashed window's frame and the
 		// glass on the pavement in front of it.
 		std::string RevealOn;
+		// A HOUSE'S OWN BRICK (the proof view, step 2.4, 4 October; Jafar: "every house on the
+		// right is the same"): a house's drawn walls arrive as their own mesh carrying its
+		// weathering (as built, sooted or cleaned) and a small tint from street-wear.json,
+		// multiplied into the row's grade. White for every other row.
+		bool        bHasTint;
+		double      TintR, TintG, TintB;
 		Row() : bHasRgb(false), R(0), G(0), B(0), Roughness(-1.0), TileM(0.0),
 		        bHasMean(false), MeanR(0), MeanG(0), MeanB(0), EmitDay(-1.0), EmitNight(-1.0),
-		        DrawnW(0.0), DrawnH(0.0) {}
+		        DrawnW(0.0), DrawnH(0.0), bHasTint(false), TintR(1.0), TintG(1.0), TintB(1.0) {}
 	};
 
 	// HOW MANY COPIES OF THE PHOTOGRAPH PER METRE, or 0 when there is no
@@ -185,6 +191,13 @@ namespace LedgerStreet
 			const Value* En = M.Find("emit_night");
 			if (En != 0 && En->Type == T_NUM) { Rw.EmitNight = En->Num; }
 			Rw.RevealOn = StrOr(M, "reveal_on");
+			const Value* Ht = M.Find("house_tint");
+			if (Ht != 0 && Ht->Type == T_ARR && Ht->Arr.size() >= 3
+			    && Ht->Arr[0].Type == T_NUM && Ht->Arr[1].Type == T_NUM && Ht->Arr[2].Type == T_NUM)
+			{
+				Rw.bHasTint = true;
+				Rw.TintR = Ht->Arr[0].Num; Rw.TintG = Ht->Arr[1].Num; Rw.TintB = Ht->Arr[2].Num;
+			}
 			Out.Rows.push_back(Rw);
 		}
 		if (Out.Rows.empty()) { Err = "sidecar-meshes-list-is-empty"; return false; }
@@ -407,6 +420,15 @@ namespace LedgerStreet
 	};
 
 	// THE COLOUR GAIN FOR ONE SURFACE, white when the file names none.
+	// A ROW'S HOUSE TINT, white when it carries none: multiplied into its grade wherever the
+	// street binds a row's colour.
+	inline Grade HouseTintOf(const Row& Rw)
+	{
+		Grade T = {1.0, 1.0, 1.0};
+		if (Rw.bHasTint) { T.R = Rw.TintR; T.G = Rw.TintG; T.B = Rw.TintB; }
+		return T;
+	}
+
 	inline Grade SurfaceGainFor(const Look& Lk, const std::string& Base)
 	{
 		for (size_t I = 0; I < Lk.SurfaceGains.size(); ++I)
