@@ -270,8 +270,19 @@ static class Program
             // every reply is read for claims the character's knowledge does
             // not support before it is said. Not on the stand-in models,
             // which answer only from memory already.
-            if (_llm is AnthropicClient || CheckAlways) engine.Checker = _llm;
+            if (ChecksReplies(_llm, CheckAlways)) engine.Checker = _llm;
             return engine;
+        }
+
+        /// WHETHER EVERY REPLY THIS CLIENT WRITES IS CHECKED before it is said: the
+        /// real model is; the stand-ins, which answer only from memory, are not.
+        /// LOOKED FOR THROUGH THE KEY'S CAP (P3, 3 October): BudgetedClient wraps the real model, and
+        /// asking only "is this the Anthropic client" turned the check off for every capped run, the
+        /// only in-game measurement of real talk (30 September) among them.
+        internal static bool ChecksReplies(ILlmClient llm, bool checkAlways)
+        {
+            while (llm is BudgetedClient capped) llm = capped.Inner;
+            return checkAlways || llm is AnthropicClient;
         }
 
         /// TALK KEPT WITH THE GAME'S SAVE (town list 6r, the checklist sweep of 28
@@ -1596,6 +1607,19 @@ static class Program
 
         var c = await h.Answer("{\"id\":3,\"to\":\"nobody\",\"say\":\"Hello?\"}");
         Ok("a line to someone with no card says so", c.Contains("no-card"), c);
+
+        // THE CLAIM CHECK UNDER THE KEY'S SPENDING CAP (P3, 3 October; the rulings sweep of 1 October
+        // and production/research/pre-production): a real model wrapped in the cap is still the real
+        // model, so every reply it writes is checked, as Steam's disclosure promises; the stand-in,
+        // capped or not, answers from memory only and is not.
+        using (var real = new AnthropicClient("not-a-key-never-sent"))
+        {
+            Ok("the real model's replies are checked", Helper.ChecksReplies(real, false));
+            Ok("the real model's replies are checked under the key's spending cap",
+               Helper.ChecksReplies(new BudgetedClient(real, 1.0), false));
+            Ok("the stand-in's are not, capped or not",
+               !Helper.ChecksReplies(new KnowledgeFake(), false) && !Helper.ChecksReplies(new BudgetedClient(new KnowledgeFake(), 1.0), false));
+        }
 
         // TOM'S SUGGESTED LINES (Jafar, 1 October): with the stand-in, his written
         // lines, three, none twice in the conversation; the model's own three

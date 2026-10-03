@@ -23,6 +23,8 @@ namespace Ledger.Core
     public sealed class BudgetedClient : IStreamingLlmClient, IDisposable
     {
         readonly ILlmClient _inner;
+        /// The client this cap wraps: what the run really talks to (the claim check asks, P3).
+        public ILlmClient Inner => _inner;
         readonly object _gate = new object();
         double _spent;
 
