@@ -156,6 +156,12 @@ WATCHED = {
     # joined into one glb per shop by tools/art-recipes/shop-room.py --display.
     # Built here, but from fetched meshes and pictures: their row, not ours.
     "production/assets/shop-displays": "Poly Haven",
+    # THE SHOPS' ROOMS AS REAL GEOMETRY, 3 October: the same Poly Haven models and textures,
+    # exported room by room by tools/art-recipes/shop-room.py --export-room.
+    "production/assets/shop-rooms-3d": "Poly Haven",
+    # THE GROCER'S PRINTED LABELS, 3 October: our own sheet (tools/art-recipes/make_label_atlas.py),
+    # every maker made up, set in the project's OFL fonts; the row names the fonts' licence.
+    "production/assets/shop-goods": "Marcellus SC",
     # THE SAME SHAPE AS base-mesh, AND IT HAD BEEN PASSING UNDER THE WRONG
     # NAME. `oga-vehicles` sits inside `Props`, so its 47 attributed files
     # were counted under the Kenney row and the check went green over models

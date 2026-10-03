@@ -6978,6 +6978,15 @@ int main(int argc, char** argv)
 		Check(std::fabs(LedgerStreet::WetnessParamFor("paving", 1.0, 0.20) - 0.42 / 0.54) < 1e-9
 		      && LedgerStreet::WetnessParamFor("brick_red", 1.0, 0.20) == 0.0,
 		      "the look file's wet floor moves a wet surface's shine and gives a wall none");
+		// THE MARKS LAND ON WALLS AND GROUND ONLY (3 October: projected wash and damp streaked
+		// every painted window frame and sill into grey "marble"; Rita's approved frames were paint)
+		Check(LedgerStreet::TakesMarks("brick_red") && LedgerStreet::TakesMarks("render_cream")
+		      && LedgerStreet::TakesMarks("asphalt") && LedgerStreet::TakesMarks("paving") && LedgerStreet::TakesMarks("kerbstone"),
+		      "the wear and water marks land on brick, render and the ground");
+		Check(!LedgerStreet::TakesMarks("paint_joinery") && !LedgerStreet::TakesMarks("frame_painted")
+		      && !LedgerStreet::TakesMarks("frame_metal") && !LedgerStreet::TakesMarks("glass") && !LedgerStreet::TakesMarks("stone")
+		      && !LedgerStreet::TakesMarks("paint_stall") && !LedgerStreet::TakesMarks("tile_stall") && !LedgerStreet::TakesMarks("paint_door"),
+		      "and never on painted joinery, window frames, glass, tiles, doors or stone dressings");
 		Check(std::fabs(LedgerStreet::WetDarken("paving", 0.6) - (1.0 - 0.28 * std::pow(0.6, 0.55))) < 1e-9
 		      && LedgerStreet::WetDarken("slate", 0.6) == 1.0 && LedgerStreet::WetDarken("asphalt", 0.0) == 1.0,
 		      "wet ground darkens by the recipe's 0.28 of the bent figure; dry ground and walls do not");
@@ -6988,8 +6997,8 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 32 && Lk.bFromFile,
-			      "the committed look file parses and supplies all thirty-two settings", LErr);
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 33 && Lk.bFromFile && Lk.GlassSpecularNight > 0.0 && Lk.GlassSpecularNight < 1.0,
+			      "the committed look file parses and supplies all thirty-three settings, the night glass's dimmer reflection among them", LErr);
 			Check(Lk.LanternLumens > 0.0 && Lk.bLanternRgb && Lk.LanternLightY > 4.0,
 			      "and the sodium lamps have real lumens and a colour of their own");
 			// THE PEOPLE, 23 September: the committed placements parse, there
