@@ -10,7 +10,7 @@ GOAL (his /goal, to Sunday 4 October 20:00): the list in order, each item done w
 - [x] P14. Terms read; game frames out.
 - [x] P1. Hook camera profiled; budgets.
 - [ ] P4. Thirty minutes: free half done; real talk 4 Oct.
-- [ ] 2. Proof view: 2.3, then the hill.
+- [ ] 2. Proof view: hill; 2.3 set aside.
 - [ ] 3. Voice delay: 8-bit decoder test.
 - [ ] 4. Street-wide pass.
 - [ ] 4b. Three voices' listening page.

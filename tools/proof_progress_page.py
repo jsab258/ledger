@@ -8,7 +8,8 @@ WHY A PAGE AND NOT GIT. The overview (FOR-JAFAR.md) is text in git, and since 3 
 text and small files go into git; so the pictures sit on this one private page, linked from the
 overview's first lines, and the page is published again (same address) after each step. The
 frame comes to his approval page only when it stands beside the Hook sheet; this page asks
-nothing.
+nothing. Since the evening of 3 October each step's frame also has a reduced preview in git
+for outside reviewers (its "preview" in steps.json, made by tools/make_preview.py).
 
 WHAT IT SHOWS, from production/proof-view/steps.json (text, in git): the Hook sheet as the bar
 (flipped to canon's sides, as tools/hook-pair.py compares it), then, newest first, each finished

@@ -29,6 +29,12 @@ MASK_PARAM = "WetMask"
 STRENGTH_PARAM, STRENGTH_DEFAULT = "WetStrength", 0.9
 TINT_PARAM, TINT_DEFAULT = "WetTint", (0.035, 0.036, 0.038)   # 2 October, late (production/research/aaa-street/PUDDLES-2026-10-02.md): the "holes" of the morning were the decals turned wrong; water over asphalt is near black, its brightness all reflection
 ROUGH_PARAM, ROUGH_DEFAULT = "WetRoughness", 0.02   # 2 October, late (the puddle research): water is a mirror; against a road at 0.45 it reads as one
+# AN OPAQUE CORE WITH A SOFT RIM (3 October, the proof view, step 2.3; the puddle research's step 3):
+# a decal mixes everything by its opacity, so a soft mask left the water half road and half
+# water, and a fresh review saw stains, darker than the road with no sky in them. The mask is
+# sharpened: below CORE_FROM nothing, the rim ramps over 1/CORE_GAIN of the mask, and the
+# middle is wholly water, so it mirrors.
+CORE_FROM, CORE_GAIN = 0.30, 3.0
 WATER_SPECULAR = 0.25   # water's F0 of 0.02 in Unreal's terms (F0 = 0.08 x Specular), Lagarde via the puddle research
 WHITE = "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
 FLAGS = [
@@ -94,8 +100,14 @@ def main():
     flat.set_editor_property("constant", unreal.LinearColor(0.0, 0.0, 1.0, 1.0))
     spec = mel.create_material_expression(mat, X.MaterialExpressionConstant, -900, 900)
     spec.set_editor_property("r", WATER_SPECULAR)
+    core_from = mel.create_material_expression(mat, X.MaterialExpressionSubtract, -700, 450)
+    core_from.set_editor_property("const_b", CORE_FROM)
+    core_gain = mel.create_material_expression(mat, X.MaterialExpressionMultiply, -560, 450)
+    core_gain.set_editor_property("const_b", CORE_GAIN)
+    core = mel.create_material_expression(mat, X.MaterialExpressionSaturate, -430, 450)
     opacity = mel.create_material_expression(mat, X.MaterialExpressionMultiply, -300, 450)
-    links = [(mask, "A", opacity, "A"), (strength, "", opacity, "B")]
+    links = [(mask, "A", core_from, "A"), (core_from, "", core_gain, "A"), (core_gain, "", core, ""),
+             (core, "", opacity, "A"), (strength, "", opacity, "B")]
     wired = 0
     for a, out_name, b, in_name in links:
         try:
@@ -141,6 +153,8 @@ def selftest():
     line = wet_line("MADE", 7, 7, ["material_domain=taken"], True)
     check("the line carries its wired denominator", "wetMaterialWired=7/7" in line, line)
     check("standing water reflects as water does (Specular 0.25, F0 0.02)", abs(WATER_SPECULAR - 0.25) < 1e-9)
+    check("a puddle is wholly water in its middle, its rim soft (opacity reaches 1 at mask 0.63)",
+          0.0 < CORE_FROM < 0.5 and abs(min(1.0, (0.64 - CORE_FROM) * CORE_GAIN) - 1.0) < 1e-9 and (0.45 - CORE_FROM) * CORE_GAIN < 1.0)
     check("and names the asset the game loads", "wetMaterialPath=/Game/Ledger/M_LedgerWet" in line)
     check("standing water is darker than wet asphalt (about 0.05) and a near mirror",
           max(TINT_DEFAULT) < 0.05 and ROUGH_DEFAULT < 0.1)

@@ -6,7 +6,17 @@
    "changed": "The game's High keeps Epic's reflections and lighting, and the first launch settles there at 55% on this PC (11.0 ms a frame): the street keeps 2.5 ms of the card for the proof view by day, 1.4 ms at night, and the rooms behind the windows stay lit.",
    "verdict": "Measured, not reviewed: GPU 11.04 ms at the hook camera with the voice speaking, the same as the mix P1 chose.",
    "picture": "C:/Users/Jafar/ledger-local/ue-probe/Saved/PerfHook/ledgerhigh55.png",
-   "caption": "The played street from the hook camera at the new picture, 3440 by 1440, the game's own light. Still unfinished and owned by later steps: the people's clothes (the clothing session), the dark shop windows (2.6), the props (2.8)."
+   "caption": "The played street from the hook camera at the new picture, 3440 by 1440, the game's own light. Still unfinished and owned by later steps: the people's clothes (the clothing session), the dark shop windows (2.6), the props (2.8).",
+   "preview": "production/previews/proof-2.0-picture-budget-2026-10-03.jpg"
+  },
+  {
+   "step": "2.1",
+   "name": "Composition",
+   "changed": "Across from Mickey's, single-storey cottages under slated roofs where a two-storey wall filled the left of the frame; the shop row behind them slated in place of its flat top; the telegraph pole and its wires off the sky; the camera, vanishing point and horizon fitted to the sheet.",
+   "verdict": "Accepted by you on 3 October, evening (\"the composition is right\"), after three fresh reviews that each came closer.",
+   "picture": "F:/LedgerTools/renders/proof-2.1/v4/ue-vign_hook_day.png",
+   "preview": "production/previews/proof-2.1-composition-try3-2026-10-03.jpg",
+   "caption": "The hook camera, 2560 by 1440, the game's own light, the third try. Still unfinished and owned by later steps: the fog and sky (2.2), the wet road (2.3), the hill (2.9), Mickey's dark window (2.6)."
   },
   {
    "step": "2.2",
@@ -14,7 +24,8 @@
    "changed": "The day's fog thinner and paler, so the hill keeps its brick and cream and fades toward the sky as it climbs; the near street clear; the overcast pale, not white. No chimney smoke: the Hook sheet shows none, and the first method drew nothing.",
    "verdict": "Three fresh reviews: the street's haze, the sky and the hill's legibility pass; still short, narrowly, the haze building toward the hill's crest, its colour a shade darker than the sky, and the clouds' contrast against KCD2. Closed with those notes, carried to the hill (2.9) and the grade (2.13).",
    "picture": "F:/LedgerTools/renders/proof-2.2/fog4/ue-vign_hook_day.png",
-   "caption": "The hook camera, 2560 by 1440, the game's own light. Still unfinished and owned by later steps: the dark gable behind the cottages (2.1, set aside), the road's pale sheen (2.3), Mickey's dark window (2.6), the hill's block houses (2.9), the stiff people (2.11)."
+   "caption": "The hook camera, 2560 by 1440, the game's own light. Still unfinished and owned by later steps: the dark gable behind the cottages (2.1, set aside), the road's pale sheen (2.3), Mickey's dark window (2.6), the hill's block houses (2.9), the stiff people (2.11).",
+   "preview": "production/previews/proof-2.2-atmosphere-sky-2026-10-03.jpg"
   }
  ]
 }

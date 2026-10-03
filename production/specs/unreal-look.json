@@ -32,14 +32,19 @@
    2.5
   ],
   "paving": [
-   0.95,
-   0.93,
-   0.9
+   0.6,
+   0.59,
+   0.57
   ],
   "asphalt": [
-   0.62,
-   0.62,
-   0.64
+   0.22,
+   0.22,
+   0.23
+  ],
+  "kerbstone": [
+   0.35,
+   0.35,
+   0.36
   ],
   "interior_lit": [
    0.05,
@@ -48,6 +53,7 @@
   ]
  },
  "surface_gain_note": "2 October, evening (his answer to Friday's page): the paving's grade 0.72/0.56/0.30 cut the blue so hard the wet flags came out orange whatever the recipe gave them; the drawn flags were still the colour of a recipe two passes old (98/78/53), redrawn from today's grey-tan (89/78/66), and the grade near neutral, 0.95/0.93/0.90. The asphalt graded 0.62 darker, so the wet road has its dark between the reflections. Earlier: RAISED A QUARTER FOR BOTH BRICKS 23 September, when Lumen went on: the bounced light's occlusion darkened every wall by about a fifth against the frame before it (parade upper wall 0.79, west terrace 0.76-0.81, Mickey's 0.83, the sky unchanged at 1.00), and the walls had been matched to the sheet before it; the pavements were left darker, which is nearer the sheet's wet flags. Before that: Per-surface colour in this engine, by base material, over the drawn surface's own colour. Retuned 23 September again once the drawn bricks and flags carry Blender's wear (patches, the splash at the foot, streaks from the wall head, about 0.6 of the clean wall on average): brick_red lands the parade's upper wall at 78/46/33 against the sheet's 76/45/35; paving at 126/112/98 against the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain).",
+ "surface_gain_note_3_october": "The proof view, step 2.3, his bar: dark, glistening, reflecting the sky and the buildings. The road 0.62 -> 0.22, the flags 0.95 -> 0.6, the kerb 0.55 (it had none). The roughness view (r.BufferVisualizationTarget Roughness) showed the puddles already mirrors and the road a near mirror; what read dry and grey was the road's own colour under the overcast sky, brighter than the hill the water mirrors, so the water read as dark stains. Seven tries with a rougher road (0.10 to 0.35, relief kept or not) read damp, grainy or matte; darkness is what lets the reflections show.",
  "sky_seen_gain_night": 0.15,
  "sky_light_gain_night": 0.15,
  "night_exposure_bias": -1.0,
@@ -58,9 +64,9 @@
  "glass_specular_night": 0.2,
  "glass_specular_night_note": "3 October: how strongly the shop glass reflects at night, of its daytime 1. A lit shop at night outshines the street in its own glass, and our soft (software Lumen) reflections of the lamps and of lit windows across the road showed over the rooms as white and orange clouds (the fresh review of the eight shopfronts). Sharp mirror reflections would need hardware ray tracing or a captured picture per shop front (production/research/shop-glass-reflections), kept for later.",
  "wet_floor": {
-  "paving": 0.12,
-  "kerbstone": 0.18,
-  "asphalt": 0.07
+  "paving": 0.1,
+  "kerbstone": 0.15,
+  "asphalt": 0.06
  },
  "wet_floor_note": "23 September, after two tries in Unreal and the recipe's own two in Blender: the flags take the recipe's wet roughness and no floor of their own. 0.25 mirrored the sky and read 1.6-2.5x the sheet and blue; 0.40 still 1.05/1.15/1.37. The sheet's shine is the shopfront reflected close to the wall, which a lower roughness does not give. SET ASIDE. The paving gain cooled to 0.72/0.56/0.30 instead: the near footway 1.04/1.04/1.17 of the sheet.",
  "street_in_play": true,
@@ -106,5 +112,7 @@
  "fog_cutoff_day_m_note": "2 October (production/research/aaa-street/SKY-AND-HAZE-2026-10-02.md, first step): no fog past 900 m by day, so the hill (110 to 200 m) keeps its haze and the sky dome (1,000 m) its clouds.",
  "local_highlight_contrast_day": 0.8,
  "local_highlight_contrast_day_note": "2 October (production/research/aaa-street/SKY-AND-HAZE-2026-10-02.md, step 4): local exposure's highlight contrast at 0.8 by day, so the bright overcast keeps its clouds; 1 is the engine's default.",
- "wet_floor_note_2_october": "3 October, 00:15: a fresh reviewer put the glossy road (0.15) against the rough one with mirror puddles (0.45) and chose the glossy: it reads wet at a glance, and the sheet's road mirrors the shopfronts, lamp posts and people, so the road goes nearer a mirror, 0.07. Before, 2 October, later still (production/research/aaa-street/PUDDLES-2026-10-02.md): Lagarde's zones, a wet road kept rough (0.45, out of Lumen's weak 0.2 to 0.39 band) and darker, against puddles at 0.02 with an opaque core, water's reflectance and a flat normal. Before: 0.21 read merely damp and the puddles no clearer, so back to 0.15, the road reading wet with its reflections; the puddles reading as mirrors is past the two-tries rule and researched (production/research/aaa-street/PUDDLES-2026-10-02.md). Before: 0.30 left the road satin and pale, wet only in its puddles (contrast 24 levels near the camera against the sheet's 56); 0.15, with the asphalt graded darker (surface_gain asphalt 0.62) so its reflections and its dark read against each other, and the puddles at 0.05 still clearer. Before that, 2 October, evening (his answer to Friday's page: the wet street and its reflections): the asphalt's floor 0.05 -> 0.30, satin as Lagarde's wet asphalt (0.15 to 0.35), so the road is no longer one mirror and the puddles, at 0.05, read as mirrors against it. Earlier: 2 October (stage 1, item 3; the reviewer: both pavements matt and dry where the sheet's glisten): the wet floor of the flags 0.46 -> 0.12 and the kerbs 0.40 -> 0.18, so they take the sky's sheen."
+ "wet_floor_note_2_october": "3 October, 00:15: a fresh reviewer put the glossy road (0.15) against the rough one with mirror puddles (0.45) and chose the glossy: it reads wet at a glance, and the sheet's road mirrors the shopfronts, lamp posts and people, so the road goes nearer a mirror, 0.07. Before, 2 October, later still (production/research/aaa-street/PUDDLES-2026-10-02.md): Lagarde's zones, a wet road kept rough (0.45, out of Lumen's weak 0.2 to 0.39 band) and darker, against puddles at 0.02 with an opaque core, water's reflectance and a flat normal. Before: 0.21 read merely damp and the puddles no clearer, so back to 0.15, the road reading wet with its reflections; the puddles reading as mirrors is past the two-tries rule and researched (production/research/aaa-street/PUDDLES-2026-10-02.md). Before: 0.30 left the road satin and pale, wet only in its puddles (contrast 24 levels near the camera against the sheet's 56); 0.15, with the asphalt graded darker (surface_gain asphalt 0.62) so its reflections and its dark read against each other, and the puddles at 0.05 still clearer. Before that, 2 October, evening (his answer to Friday's page: the wet street and its reflections): the asphalt's floor 0.05 -> 0.30, satin as Lagarde's wet asphalt (0.15 to 0.35), so the road is no longer one mirror and the puddles, at 0.05, read as mirrors against it. Earlier: 2 October (stage 1, item 3; the reviewer: both pavements matt and dry where the sheet's glisten): the wet floor of the flags 0.46 -> 0.12 and the kerbs 0.40 -> 0.18, so they take the sky's sheen.",
+ "wet_floor_note_3_october": "3 October, evening: back to a near mirror (asphalt 0.06, paving 0.1, kerb 0.15) with the darker road (surface_gain_note_3_october): the road mirrors the pillar box, the facades and the posts, clean at full size, no grain.",
+ "wet_floor_note_3_october_late": "23:15, the third try after research (production/research/aaa-street/WET-ROAD-2026-10-03.md): asphalt 0.16 with its relief map kept (wet_film_from 0.95) removed the mirror's seam down the centre line but read as dry grainy asphalt, its reflections gone and the puddles dark blotches again. Back to 0.06 and a flat film (the wet9 frame: reads wet, its fault the seam); step 2.3 set aside by the two-tries rule; the kerb's gain 0.35 kept."
 }
