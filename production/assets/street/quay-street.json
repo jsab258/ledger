@@ -86,7 +86,7 @@
    ],
    "drawn_map": "production/assets/street/surfaces/brick_grey",
    "drawn_tile_m": [
-    7.2,
+    7.0875,
     7.2
    ],
    "emit_day": null,
@@ -116,7 +116,7 @@
    ],
    "drawn_map": "production/assets/street/surfaces/brick_red",
    "drawn_tile_m": [
-    7.2,
+    7.0875,
     7.2
    ],
    "emit_day": null,

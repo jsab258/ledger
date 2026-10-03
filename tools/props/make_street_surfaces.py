@@ -7,7 +7,7 @@
 WHY THIS EXISTS, 23 September. The look moved into Unreal (Jafar's ruling of
 the morning), and Blender's walls, flags and stallriser tile are not
 photographs: tools/art-recipes/terrace-front.py DRAWS them from numbers - a
-215 x 65 mm brick in stretcher bond, a 10 mm joint darkened to 0.45, each
+215 x 65 mm brick in Flemish bond since 4 October (stretcher bond before), a 10 mm joint darkened to 0.45, each
 brick a tone drawn from the range measured off the sheet's gable, faint
 staining over the top; 900 x 600 mm flags in 12 mm dark joints mixed between
 two tones; 150 mm quartered tiles. The pack's "brick" photograph that the
@@ -172,6 +172,45 @@ def bond(n, tile_w, tile_h, unit_w, unit_h, joint):
     return i, j, jmask, height
 
 
+#: FLEMISH BOND (the proof view, step 2.4, 4 October; production/research/aaa-street/
+#: BRICK-2026-10-04.md): a Victorian solid wall ties its two leaves with headers, so a street
+#: front of the 1870s to 1890s shows each course alternating a stretcher and a header, the
+#: next course shifted half that unit so every header sits centred on the stretcher below.
+#: Stretcher bond, which the street wore until now, is a cavity wall's, 1920s and later. A
+#: header is the brick's end: 102.5 mm and its joint. Headers read a shade darker, as the
+#: burnt ends of a clamp-fired brick do (an inference, not a measurement).
+HEADER_W_M = 0.1125
+HEADER_TONE = 0.88
+
+
+def flemish_bond(n, tile_w, tile_h, stretcher_w, header_w, unit_h, joint):
+    """Flemish bond over a tile: (cell index i, row j, in-joint mask, height, header mask).
+
+    Each course repeats stretcher + header; odd courses are offset by half that unit. i numbers
+    the bricks along a course (stretcher 2k, header 2k + 1) modulo the tile, so the brick
+    crossing the tile edge is one brick. Joint on the left of each brick and along the top of
+    each course, as bond() lays them."""
+    import numpy as np
+    unit = stretcher_w + header_w
+    per_row = int(round(tile_w / unit))
+    ys = (np.arange(n) + 0.5) * tile_h / n
+    xs = (np.arange(n) + 0.5) * tile_w / n
+    Y, X = np.meshgrid(ys, xs, indexing="ij")
+    j = np.floor(Y / unit_h).astype(int)
+    xx = X - (j % 2) * unit * 0.5
+    k = np.floor(xx / unit).astype(int) % per_row
+    fu = np.mod(xx, unit)
+    is_header = fu >= stretcher_w
+    fx = np.where(is_header, fu - stretcher_w, fu)
+    w = np.where(is_header, header_w, stretcher_w)
+    fy = np.mod(Y, unit_h)
+    jmask = (fx < joint) | (fy < joint)
+    dist = np.minimum(np.minimum(fx, w - fx), np.minimum(fy, unit_h - fy))
+    px = tile_w / n
+    height = np.clip((dist - joint * 0.5) / (1.5 * px), 0.0, 1.0)
+    return 2 * k + is_header.astype(int), j, jmask, height, is_header
+
+
 def normal_from_height(h, strength):
     """Tangent-space normal, DirectX convention (green down), as 0..255."""
     import numpy as np
@@ -195,7 +234,8 @@ def to_srgb8(lin):
 #: height, and the street's wall UVs are metres of height, so a tile 7.2 m
 #: tall lays them where they belong on a wall up to its eaves. 32 bricks by
 #: 96 courses at 2048 px: a brick is 64 px long, its joint just under 3.
-BRICK_TILE = (32, 96)
+#: (4 October) 21 Flemish units (a stretcher and a header each) by 96 courses: 7.0875 m wide.
+BRICK_TILE = (21, 96)
 BRICK_PX = 2048
 
 
@@ -203,10 +243,10 @@ def brick(tf, name, salt, n=None, worn=True):
     import numpy as np
     n = n or BRICK_PX
     per_row, rows = BRICK_TILE
-    tw, th = per_row * tf.BRICK_W_M, rows * tf.BRICK_H_M
-    i, j, jm, h = bond(n, tw, th, tf.BRICK_W_M, tf.BRICK_H_M, tf.BRICK_JOINT_M)
+    tw, th = per_row * (tf.BRICK_W_M + HEADER_W_M), rows * tf.BRICK_H_M
+    i, j, jm, h, hd = flemish_bond(n, tw, th, tf.BRICK_W_M, HEADER_W_M, tf.BRICK_H_M, tf.BRICK_JOINT_M)
     wear = wall_wear(tf, n, tw, th, salt, splash=tf.WEARS.get(name, False)) if worn else 1.0
-    tone = tone_through(tf.BRICK_TONES, hash01(i, j % rows, salt))
+    tone = tone_through(tf.BRICK_TONES, hash01(i, j % rows, salt)) * np.where(hd, HEADER_TONE, 1.0)
     base, rough = authored(tf, name)
     stain = 1.0 + tf.BRICK_STAIN * (periodic_noise(n, 24, SEED + salt) * 2.0 - 1.0) * 0.6
     img = np.zeros((n, n, 3))
@@ -399,8 +439,9 @@ def selftest():
     # wear cannot be mistaken for joints; the wear on its own below.
     img, nrm, r, tile = brick(tf, "brick_red", 11, worn=False)
     worn_img, _wn, _wr, _wt = brick(tf, "brick_red", 11)
-    ok("the brick tile is a whole number of bricks and courses",
-       abs(tile[0] / tf.BRICK_W_M - round(tile[0] / tf.BRICK_W_M)) < 1e-9
+    unit = tf.BRICK_W_M + HEADER_W_M
+    ok("the brick tile is a whole number of Flemish units and courses",
+       abs(tile[0] / unit - round(tile[0] / unit)) < 1e-9
        and abs(tile[1] / (2 * tf.BRICK_H_M) - round(tile[1] / (2 * tf.BRICK_H_M))) < 1e-9, tile)
     # SEAMLESS: the last column and the first are one brick where they meet,
     # so their difference is no bigger than the difference between two
@@ -418,6 +459,19 @@ def selftest():
     middle = worn_img[nb // 2 - nb // 20: nb // 2 + nb // 20, :, 0].mean()
     ok("the foot of the wall is darker than its middle, the recipe's splash",
        foot < middle * 0.9, "foot %.4f middle %.4f" % (foot, middle))
+    # FLEMISH BOND: along a course stretchers and headers alternate, and every header sits
+    # centred on a stretcher of the course below.
+    nn = 1024
+    tw = BRICK_TILE[0] * unit
+    _i, jj, jmk, _h, hd = flemish_bond(nn, tw, BRICK_TILE[1] * tf.BRICK_H_M, tf.BRICK_W_M, HEADER_W_M,
+                                       tf.BRICK_H_M, tf.BRICK_JOINT_M)
+    row0, row1 = np.where(jj[:, 0] == 2)[0][len(np.where(jj[:, 0] == 2)[0]) // 2], np.where(jj[:, 0] == 3)[0][len(np.where(jj[:, 0] == 3)[0]) // 2]
+    xs_m = (np.arange(nn) + 0.5) * tw / nn
+    centre = xs_m[(hd[row1]) & ~jmk[row1]]
+    under = hd[row0][np.clip(np.round(centre / tw * nn - 0.5).astype(int), 0, nn - 1)]
+    runs = int(np.sum(hd[row0] & ~np.roll(hd[row0], 1)))
+    ok("Flemish bond: a header after every stretcher along a course, and none of a course's headers over a header",
+       runs == BRICK_TILE[0] and not under.any(), "%d header runs, %d over headers" % (runs, int(under.sum())))
     fi_, _n, _r, _t = flags(tf)
     edge_v = np.abs(fi_[-1] - fi_[0]).mean()
     inner_v = np.abs(fi_[PX // 2] - fi_[PX // 2 - 1]).mean()
