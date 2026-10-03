@@ -6,7 +6,7 @@ Each proof is small, runs on his PC, and ends in a number or a reviewer's verdic
 
 | Proof | Settles areas (2-FEASIBILITY.md) | Days | Dollars | Owner |
 |---|---|---|---|---|
-| P3 Checked talk, measured on the real path | 20, 32 | 1 | ≤ 1 | town (fix), builder (run) |
+| P3 Checked talk, measured on the real path | 20, 32 | 1 | ≤ 0.55 | town (fix), builder (run) |
 | P5 The friends' build in a fresh Windows account | 31, 30 | 0.5–1 | 0 | builder; Jafar for the account |
 | P14 The terms, read from his PC | 36, 6, 29 | 0.5 | 0 | builder; Jafar for one ruling |
 | P1 Profile the hook camera | 19, and every budget in 4-BUDGETS.md | 1–2 | 0 | builder |
@@ -20,13 +20,14 @@ Each proof is small, runs on his PC, and ends in a number or a reviewer's verdic
 | P16 Food from allowed scans | 6 | 1 | 0 | builder, from his PC |
 | P9 A fictional car's silhouette, blind | 11 | 1 | 0 | builder |
 | P19 The hill from the kit | 8 | 1–2 (after P10) | 0 | builder |
-| P20 A grey card: night exposure and faces in passing | 10 | 0.5–1 | 0 | builder |
+| P20 A grey card: night exposure, faces in passing, the sky | 10, 9 | 1 | 0 | builder |
 | P15 Mickey's office camera, walked | 3 | 1 | 0 | builder |
 | P12 Epic's streaming face solver on one live line | 18 | 1–2 | 0 | builder |
 | P13 A CC0 ambience bed | 28 | 1 | 0 | builder; Jafar's ear |
 | P17 Combat, if ruled in | 24 | 2 | 0 | town, builder |
 | P18 Music, if ruled in | 29 | 0.5 | 0 | builder |
 | P21 One week against a dated plan | 35 | 30 minutes a week | 0 | builder |
+| P22 The phone kiosk remade, and the kerbside run | 5 | 0.5 for the kiosk | 0 | builder |
 
 Days are this review's estimates [I], in builder-days.
 
@@ -34,12 +35,14 @@ Days are this review's estimates [I], in builder-days.
 
 ## P3. Checked talk, measured on the real path
 
-**Why.** The claim check is off whenever a spending budget is set. `engine.Checker` is attached only when the client "is AnthropicClient" (ledger/TalkHelper/Program.cs line 273). The budget wraps the client in `BudgetedClient`, a separate class that is not one (Program.cs lines 1433–1444; BudgetedClient.cs line 23; read here). The AI tester's `--real-talk` and `talk_cost_sample.py --live` both set a budget. So the only in-game measurement of real talk (30 September: words 1.91 s, first sound 5.41 s, $0.23 for 30 lines) ran unchecked, and Steam's approved disclosure ("every line is checked before you hear it") is untrue for those runs. Jafar's own play sets no budget and is checked. The rulings sweep first reported this on 1 October (production/audits/rulings-sweep/SUMMARY.md line 166); it is still in the code at 79cf8db.
+**Why.** The claim check is off whenever a spending budget is set. `engine.Checker` is attached only when the client "is AnthropicClient" (ledger/TalkHelper/Program.cs line 273). The budget wraps the client in `BudgetedClient`, a separate class that is not one (Program.cs lines 1433–1444; BudgetedClient.cs line 23; read here). The AI tester's `--real-talk` sets a budget. So the only in-game measurement of real talk (30 September: words 1.91 s, first sound 5.41 s, $0.23 for 30 lines) ran unchecked, and Steam's approved disclosure ("every line is checked before you hear it") is untrue for such runs.
+
+The off-game cost sample of the same day was checked: it logs "check 4.2 s (21 turns)". But `talk_cost_sample.py --live` now sets a budget too (line 202, read here), so its next live run would be unchecked. Jafar's own play sets no budget and is checked. The rulings sweep first reported this on 1 October (production/audits/rulings-sweep/SUMMARY.md line 166); it is still in the code at 79cf8db.
 
 **Do.**
 1. Write a test from the design that fails today: a budgeted real client gets a checker.
 2. Fix the condition so it looks through the budget to the real client. This is town code: the Core and TalkHelper.
-3. Re-run the AI tester's 30-line `--real-talk` in the packaged game.
+3. Re-run the AI tester's `--real-talk` in the packaged game. **Its cap is $0.50 in code** (tools/ai-tester/play.py line 82, read here), set for the one run of 30 September (DECISIONS line 173). Thirty checked lines cost about $0.54 at the measured $0.0179 a turn, so the run would be cut short. Either run 25 lines, or raise the constant inside his ruling of 3 October (measurement runs, at most $1 a day in all). The constant is a code change for the builder.
 4. Record words on screen, first sound, cost, fallbacks, "that's all I know", and invented details labelled by a fresh reviewer.
 
 **Pass.**
@@ -47,7 +50,7 @@ Days are this review's estimates [I], in builder-days.
 - The disclosure is either true or sent to Jafar to amend.
 - Cost per 30 minutes of talk is known (feeds area 32).
 
-**Cost.** One day; at most $1, inside the key's day.
+**Cost.** One day; about $0.45–0.55, inside the key's day.
 
 ## P5. The friends' build in a fresh Windows account
 
@@ -87,7 +90,7 @@ Days are this review's estimates [I], in builder-days.
 
 **Do.** In the packaged game, at the hook camera:
 1. Capture `ProfileGPU`, `stat rhi` (draws, primitives), `memreport -full`, Windows' dedicated memory and system memory.
-2. Cover day and night, standing and a 30-second walk, at 50% and 67% scale, at scalability Epic and High.
+2. Cover day and night, standing and a 30-second walk, at 55% and 70% (the game's own rungs) and 50% (the build's timing), at scalability Epic and High.
 3. Repeat with Nanite on for the street's meshes, and with virtual shadows on.
 4. Keep the cast voice server speaking throughout.
 5. Add a triangle stress: the street's geometry four times over, to give milliseconds per million triangles on this card.
@@ -101,7 +104,11 @@ Days are this review's estimates [I], in builder-days.
 **Why.** No thirty-minute session has ever been played or recorded. The "town visibly knows them" figures are the Core's, on paper (H4b, area 6).
 
 **Do.**
-1. After P3, the AI tester plays 30 real minutes from New Game in the packaged build, as a player would, on the checked talk path, inside the day's dollar.
+1. After P3, the AI tester plays 30 real minutes from New Game in the packaged build, as a player would. Thirty minutes of checked talk cost $0.54–1.61 at the measured rates, so at the top rate it passes the day's dollar. Split it:
+   - (a) the whole thirty minutes on the stand-in talk, which is free, to count content and empty minutes;
+   - (b) the talk counts on the real checked path inside the day's dollar, about fifteen minutes of talk.
+
+   A single full run on the key needs his money ruling.
 2. Log each minute:
    - what happened;
    - who saw the deed;
@@ -115,15 +122,15 @@ This is the nightly report ruled on 3 October, run once at full length.
 
 **Pass.** A minute-by-minute table. Its empty minutes become the content list for the friends' build.
 
-**Cost.** One day; about $0.50–1.10 of talk at the measured rates. Known issue: the clock runs at two game minutes a real second while the tester thinks.
+**Cost.** One day; at most $1 of talk. Known issue: the clock runs at two game minutes a real second while the tester thinks.
 
 ## P2. The voice off the card, timed beside the game
 
-**Why.** First sound is 5.41 s median. The voice's own share is 3.66 s beside the game. It needs 2.8 GB of the card (H3, H4b). This proof is already list item 3, the 8-bit decoder on the processor. What this review adds is two measurements: frame time while it speaks, since four of six cores would be busy, and first sound on the real path.
+**Why.** First sound is 5.41 s median. The voice's own share is 3.66 s beside the game. It needs 2.8 GB of the card (H3, H4b). This proof is already list item 3, the 8-bit decoder on the processor. What this review adds is two measurements: frame time while it speaks, since the voice took four of the twelve logical processors on 2 October, and first sound on the real path.
 
 **A fact to state before the test.** Even an instant voice cannot sound before the words exist:
 - the unchecked words reached the screen at 1.91 s median in the game (30 Sep);
-- the checked first sentence is released to the voice at 2.1 s median from the turn's start (off-game, 24 turns; production/playtest/talk-cost-2026-09-30-after.md line 9).
+- the checked first sentence is released to the voice at 2.1 s median from the turn's start (off-game, 22 of 24 turns; production/playtest/talk-cost-2026-09-30-after.md line 9).
 
 So the 2 s target cannot be met by the voice alone. The thinking sounds carry the gap.
 
@@ -132,7 +139,7 @@ So the 2 s target cannot be met by the voice alone. The thinking sounds carry th
 - The frame median is no more than 1 ms worse while it speaks.
 - The slowest 1% stays under 25 ms.
 
-If it fails, a money ruling goes to Jafar: the researched paid streaming voice (about $0.28 an hour of play, production/research/live-speech-architecture/paid-voices-2026-09-28.md), or keep today's delay.
+If it fails, a money ruling goes to Jafar: the researched paid streaming voice (about $0.28 an hour of play, production/research/live-speech-architecture/paid-voices-2026-09-28.md), or keep today's delay. A paid voice would also reopen "voices as chosen" (3 Oct), would need speaker consent the VCTK recordings lack, and needs an allowlist entry: the service named is not on it.
 
 **Cost.** Two days, as listed.
 
@@ -175,7 +182,7 @@ This is the cheapest third of the asset plan's 8–14-day people proof.
 
 **Pass.**
 - Nothing flagged at 8 m.
-- Twelve people at most 0.7 ms of GPU and 600 MB (4-BUDGETS.md).
+- Twelve people at most 0.7 ms of GPU and 200 MB, with garment and body textures shared (4-BUDGETS.md).
 
 **Cost.** Three to five days.
 
@@ -201,7 +208,7 @@ This is the cheapest third of the asset plan's 8–14-day people proof.
 2. Judge it at 1–3 m beside Rita's.
 3. Measure milliseconds and megabytes with the room in view.
 
-**Pass.** Accepted at 1–3 m; at most 0.2 ms and 40 MB per room.
+**Pass.** Accepted with Tom at 1–3 m; at most 0.15 ms and 40 MB per room.
 
 **Cost.** One to two days.
 
@@ -238,17 +245,18 @@ This is the cheapest third of the asset plan's 8–14-day people proof.
 
 **Cost.** One to two days.
 
-## P20. A grey card: night exposure and faces in passing
+## P20. A grey card: night exposure, faces in passing, the sky
 
 **Do.**
 1. A grey card in the game's own camera, by day and at night. The research says this settles the disputed night exposure (aaa-street, 3-LIGHT-AND-GRADE.md).
 2. Sheila at 5 m and 10 m by day without the conversation light: measure her face against the card, try fill from the sky light, and put both to a fresh reviewer.
+3. One structured overcast from Poly Haven's CC0 skies on the dome, judged against the sheet. Cloud structure failed twice by other means (area 9).
 
 If he rules rain in, add half a day here.
 
-**Pass.** Her face reads in passing, and the night exposure is a number.
+**Pass.** Her face reads in passing, the night exposure is a number, and the sky is not flat white.
 
-**Cost.** Half a day to a day.
+**Cost.** One day.
 
 ## P15. Mickey's office camera, walked
 
@@ -303,6 +311,21 @@ Then a scope ruling for Jafar: is the office in the thirty minutes (basic 14) or
 **Pass.** After one week, a measured rate that dates the friends' build.
 
 **Cost.** Thirty minutes a week.
+
+## P22. The phone kiosk remade, and the kerbside run
+
+**Why.** Jafar called the phone box a placeholder on 1 October (DECISIONS line 196). It is one of the nine scripted pieces that had passed the gate on 29 September. So the gate's pass did not meet his bar, and about 25 kinds of street furniture are still to make (asset plan, family 4).
+
+**Do.**
+1. Remake the KX100 with the asset plan's materials: brushed stainless, grimy glass, the payphone.
+2. Check its size against the KX100's drawings; the scene file may hold the older K6's (asset-plan fault 6).
+3. Judge it at the hook camera beside a dated photograph.
+
+If it passes, the asset plan's kerbside run (4–6 days) follows.
+
+**Pass.** A fresh reviewer does not call it a placeholder at walking distance.
+
+**Cost.** Half a day for the kiosk.
 
 ## What could not be verified
 
