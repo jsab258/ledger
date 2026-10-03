@@ -112,6 +112,12 @@
    "as": "approved/approvals",
    "first": true,
    "why": "approved pictures and films, which live on the drives and in this backup, never in git (Jafar, 3 October)"
+  },
+  {
+   "path": "F:/LedgerTools/reference-other-games",
+   "as": "reference/other-games",
+   "first": true,
+   "why": "the bar's frames from other games (KCD2, GTA V), out of the public repository by his ruling of 3 October and kept only on this PC and here (P14)"
   }
  ]
 }

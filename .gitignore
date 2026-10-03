@@ -168,3 +168,6 @@ ue-probe/Content/LedgerData/
 ue-probe/Content/Fab/
 # The build machine's recorded shout: sound, kept in its renders folder, never in git (3 October).
 production/d1-probe/ue-encounter-shout.wav
+# Other games' screenshots never in the repository (Jafar, 3 October): kept at F:/LedgerTools/reference-other-games.
+production/reference/kcd2-*
+game-design/reference/gta5_*

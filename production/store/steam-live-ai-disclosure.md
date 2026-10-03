@@ -19,7 +19,9 @@ knows into words.
 
 Guardrails:
 
-- **Not a chatbot.** Every call goes through our own server, which accepts
+- **Not a chatbot.** (NOT YET TRUE, corrected 3 October, P14: the server is built
+  but not hosted; until it is, this guardrail is not claimed and nothing ships to
+  the public.) Every call goes through our own server, which accepts
   only the game's own requests (a character's reply and the checks on it),
   caps the length of every reply, and refuses anything else. The model is
   given a fixed character brief and rules written by us: stay in character,
@@ -52,7 +54,7 @@ Guardrails:
 ## For the store page's notices
 
 - Connects to 3rd-Party Service for AI Content Generation: Claude, by
-  Anthropic (through the developer's own server).
+  Anthropic (through the developer's own server, once it is hosted: not yet).
 - An internet connection is needed for live conversation; without it,
   characters speak written lines.
 
