@@ -5,19 +5,60 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Saturday 3 October, 14:20)
+## Overview (Saturday 3 October, 14:50)
 
-**On: P3, the claim check under a spending cap (your order of 14:10; then P5, P14, P1, P4, and the proof view resumes within P1's budgets). Paused: 2.2, atmosphere and sky (fog and sky set against the sheet; the chimney smoke not showing yet). Set aside: 2.1 (Needs you 3). Done today: the git growth, licences, your rulings document applied, the pre-production review merged; the nightly walk set up.**
+**On: P3, the claim check under a spending cap (the fix is in; checked talk is measured as soon as the build machine frees the PC). Next: P5, the friends' account; then P14, P1, P4, and the proof view resumes within P1's budgets.**
+
+### Your orders today, reconciled (in the order you sent them)
+
+1. Friday evening, stage 1 (clear the placeholders from the frames): replaced by 2.
+2. 09:10, the proof view built properly to the Hook sheet, its thirteen steps in order, the hill built, the frame to you only beside the sheet: list item 2; 2.1 set aside (Needs you 3), 2.2 paused; it resumes after P4.
+3. 09:10, clothes (no ready-made suit; tailoring waits; what has passed plus Epic's plainest garments): tailoring waits, standing; "Epic's garments" replaced by 15 (question 3).
+4. 09:10, the Fab list in your library: done; then replaced by 11 (all 42 listings say no AI; none used).
+5. 09:10, the Sketchfab token: stored outside the repository beside the key; used in steps 2.6 and 2.8, each scan's tags read for NoAI.
+6. 09:10, the git growth: done (item 1); cleaning the history waits on Needs you 1.
+7. 09:15, the priority reset, one ordered list: it is NOW.md's list (1 done; 2 to 5 in place), your later orders placed in it (1b, 1c, P3 to P4 above 2, 4b between 4 and 5); its Game Animation Sample and Epic garments replaced by 15.
+8. 09:15, its three rules (order changes only by a breaking fault or your order at a stated place; first lines name the current item and the next; one picture a proof-view step): in CLAUDE.md and RULINGS.md, standing.
+9. 09:16, the goal to Sunday 20:00: standing.
+10. 11:02, the clothes floor, no purchases or commissions: standing; passers-by refined by 16.
+11. 11:02, NoAI: done as item 1b (42 of 42 listings read, 14.5 GB quarantined, the cast rebuilt, sources recorded); replacements made step by step in item 2.
+12. 11:23, the same two rulings again: as 10 and 11.
+13. 11:23, the nightly report on whether the town knows Tom: set up for 02:30; first paragraph tomorrow morning.
+14. 11:45, the asset plan merged, every family by its plan: done, standing; its families' order after the proof view.
+15. 11:45, its ruling 1 (NoAI as written; poses from MetaHuman's clips and Mixamo; stopgap clothes from what has passed): listings done in 1b; poses in 2.11; sources in 2.4 to 2.9; clothes, question 3.
+16. 11:45, ruling 2, passers-by judged from eight metres: standing; 2.11.
+17. 11:45, ruling 3, an invented poll-tax campaign: step 2.6.
+18. 11:45, ruling 4, names from the town on Monday, placeholders never on your page: the town's list; 2.6 and 2.10 meanwhile.
+19. 12:45, your six answers, applied with the word-cap check: done as 1c (RULINGS.md, CLAUDE.md under 1,000 words, NOW.md under 200, the cap check on every commit); the town's and clothing's files are theirs to trim.
+20. Answer 1, the key for your play and measurement runs at a dollar a day: standing; widened by 28.
+21. Answer 2, NOW.md one line an item: done.
+22. Answer 3, a threat stops a police report, never the street's talk: on the town's list; its port to me has no place yet (question 2).
+23. Answer 4, each session its own list: done.
+24. Answer 5, the three voices' listening page: item 4b.
+25. Answer 6, licences (the NoAI mark rules out; a training-only clause does not): standing, on every source.
+26. 13:57, the pre-production review merged: done.
+27. P3 current; P5 next; P14 third (the screenshots and their history inside it); P1 fourth; P4 fifth, ending with the paragraph on the thirty minutes; then the proof view.
+28. 13:57, your friends on your key, five dollars an evening: standing; in P5 and item 5.
+29. 13:57, other games' screenshots out of the repository: in P14.
+30. 13:57, the Monday risk review: standing; first on Monday 5 October.
+31. 14:25, this reconciliation: here.
+
+**Still in conflict: three questions. Until you answer, I go with each recommendation, which changes nothing today.**
+
+- **Q1.** 2.1 is set aside by the two-tries rule, but your order finishes each step before the next. When the proof view resumes: (A, recommended) at 2.2, with 2.1 waiting on Needs you 3; (B) back at 2.1 until it passes.
+- **Q2.** The threat's port (answer 3) has no place in the list: (A, recommended) straight after the item in hand when the town hands it back, about half a day; (B) after P4; (C) with the friends' build.
+- **Q3.** Sheila, Ron and Darren wear the MetaHuman tool's own plain garment: Epic's, but not a Fab item and with no NoAI mark, which answer 6 lets pass. (A, recommended) keep it as the stopgap, judged against your floor, until P14 reads the MetaHuman terms and the clothing session's plain clothes arrive; (B) out now, only what the clothing session has made.
 
 **Disk (13:15): C: 88 GB free, F: 30 GB free (the NoAI quarantine holds 14.5 GB of it until you say), both over their floors.**
 
 ### Needs you
 
-(No new page today; the town's and clothing's stored answers unchanged since 09:20. Your six answers to the rulings questions are applied; the Claude setting is yours, done.)
+(No new page today; all three pages' stored answers read at 14:45, unchanged. Your six answers to the rulings questions are applied; the Claude setting is yours, done.)
 
 1. **Clean the git history? (scope; no page; one choice):** it is 32.5 GB on GitHub (its own figure), and GitHub advises under 10 GB. 30.6 GB of it is the build machine's old test pictures; nothing the game needs, and nothing is added any more. Cleaning rewrites the past commits without them: about 5 GB left, every session re-synced once, old commit numbers change, about an hour. (A, recommended) clean it, at the next quiet moment between two items. (B) leave it.
 2. **Delete the NoAI material? (licence; no page; one choice):** Epic's seven garment packs and every copy (14.5 GB) are in F:/LedgerTools/quarantine-noai-2026-10-03, out of the game and the project; I never delete. Older built copies of the cast still wearing those clothes sit in the approved-cast archive on F: and in your Dropbox backup (the faces in them are the approved ones, rebuilt today in plain clothes). Also in your Dropbox backup: three duplicate copies of the rebuilt cast (4.2 GB, versions 12:58, 12:59 and 13:11 of today) that the backup wrote at each summary's commit; that fault is fixed so it cannot recur. (A, recommended) delete the quarantine folder and the three duplicates now, and the archive's and Dropbox's old outfit copies once you have seen the rebuilt cast in the game. (B) keep them.
 3. **The proof view's composition is set aside (blocked step; scope; no page; one choice):** three tries, each judged by a fresh reviewer against the Hook sheet: the cottages opposite Mickey's, the shop row slated, the pole off, the camera fitted to the sheet, the far end bent right between real houses. Each came closer; the last found the vanishing point, Mickey's, the near left and the bend lined up, and failed it on a grey end wall behind the cottages, the hill's crest about 5% too high and level, the left middle row 5 to 7% high and the horizon 3% low. By your two-tries rule it is set aside and I go on to 2.2. Proposed, a different direction: the research's own advice where a generated concept disagrees with real dimensions, a paintover of our own frame toward the sheet as the agreed composition target beside it (it touches the bar, so it is yours). (A, recommended) yes, the paintover as the target; (B) no: the remaining points ride with the hill, facades and brick steps.
+4. **Three of your orders still conflict (no page; three choices):** Q1 to Q3 above, under the reconciliation, each with its recommendation.
 
 ### Road to worth playing
 

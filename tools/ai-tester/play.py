@@ -80,6 +80,7 @@ SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14,
         "enter": 0x1C, "up": 0xE048, "down": 0xE050}
 WALK_KEY = {"forward": "w", "back": "s", "left": "a", "right": "d"}
 REAL_TALK_BUDGET_USD = "0.50"            # Jafar's cap for the measuring run, 30 September
+REAL_TALK_TRANSCRIPTS = "F:/LedgerTools/tmp/builder/real-talk"   # scratch: seven days (production/retention.json)
 PIXELS_PER_DEGREE = 5.7                  # a first guess; the player sees the result and corrects
 
 PLAYBOOK = """THE PLAYBOOK (what the tester does, as before):
@@ -424,8 +425,15 @@ def start(args):
     env = dict(os.environ)
     env.pop("ANTHROPIC_API_KEY", None)
     env.pop("LEDGER_TALK_BUDGET_USD", None)
+    env.pop("LEDGER_TALK_TRANSCRIPT", None)
     if args.get("realtalk"):
         env["LEDGER_TALK_BUDGET_USD"] = REAL_TALK_BUDGET_USD
+        # P3, 3 October: the talk program keeps every line it sends the game, so the run
+        # shows reply by reply that each was checked, and its cost line, on F: (never git).
+        talk_dir = os.path.join(REAL_TALK_TRANSCRIPTS, datetime.datetime.now().strftime("%Y-%m-%d-%H%M"))
+        os.makedirs(talk_dir, exist_ok=True)
+        env["LEDGER_TALK_TRANSCRIPT"] = os.path.join(talk_dir, "talk.jsonl")
+        print("aiTester talkTranscript=%s" % env["LEDGER_TALK_TRANSCRIPT"])
     stamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     folder = os.path.join("production", "playtest", "ai-tester", datetime.datetime.now().strftime("%Y-%m-%d-%H%M"))
     os.makedirs(os.path.join(REPO, folder), exist_ok=True)
