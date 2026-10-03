@@ -71,7 +71,12 @@ namespace
 	// then 55 per cent of the screen, upscaled), and the level drops only
 	// after; the first rung at or under 16 ms, the 60-a-second line with a
 	// small margin, is kept.
-	constexpr double kTuneTargetMs = 16.0;
+	// THE ROOM THE STREET IS BUDGETED (3 October, P1): the title's frame must leave the 2.5 ms
+	// the proof view may add by day and about 1.7 ms for the voice and the spikes under the
+	// 16.7 ms line, so 12.5 ms. At 16 this PC settled on High at 70% (14.5 ms on the title),
+	// where the street with the voice and its detail would pass the line; at 12.5 it keeps 55%,
+	// where P1 measured the budget, and a faster PC keeps more of its picture.
+	constexpr double kTuneTargetMs = 12.5;
 	const float kTuneScales[3] = { 100.0f, 70.0f, 55.0f };
 	int32 GTuneLevel = 3, GTuneScale = 0;
 	// Measured only once the street is built and the card has nothing left
