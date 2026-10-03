@@ -73,6 +73,14 @@ Used as evidence for nothing:
 | production/research/prompt-caching/NOTE-2026-09-29.md line 39 | Haiku 4.5 retirement "not sooner than October 15, 2026" |
 | production/research/casting/notes/metahuman.md lines 77–78 | the 300 s rigging timeout thread (August 2026) |
 | ROADMAP.md | the relay is required "before anyone outside his friends plays", not for the friends' build |
+| the git history of production/d1-probe/ue-perf-verdict.txt | 22 measured runs, 1–3 Oct: GPU median 11.19–12.45 ms, memory 3,617–4,500 MB, slowest 1% 16.12–17.58 ms except 21.96 and 67.67 |
+| ue-probe/Source/LedgerProbe/Private/TitleScreen.cpp lines 59–76 | the first-launch ladder: 100, 70, 55%; the first rung at or under 16 ms is kept |
+| tools/ai-tester/play.py line 82; DECISIONS.md line 173 | the tester's real-talk cap is $0.50, set for the one run of 30 Sep |
+| tools/talk_cost_sample.py lines 198–202 | the sample now sets a budget for live runs |
+| production/playtest/talk-cost-2026-09-30-after.md lines 1–12 | the off-game sample of 30 Sep ran on the key and was checked ("check 4.2 s (21 turns)") |
+| production/research/grounded-replies/RULES-2026-09-30.md line 28 | the new sixty has 48 answerable questions; "that's all I know" 23–25 times |
+| DECISIONS.md lines 80, 81, 196, 200, 257 | the in-game notice on typed words; the faces failing against concept portraits; the placeholder phone box; the friends' build on his PC with no relay; the key's ruling with "nothing else uses it" |
+| production/specs/vignette-pieces.json line 653 | the back-bar picture in the fallback street spec |
 
 ## The helper notes (notes/)
 
@@ -91,3 +99,24 @@ Their notes are kept as written.
 - **H4a, area 19:** "the workflow's comment says the voice is not running in that step." The comment says so, but it is stale: the step starts Nano and records its lines. H3 is right.
 - **H4b, area 10:** "Its voice line still reports the 24 September measurement." Wrong. The voice line is written from each run's own log (nano-perf.log).
 - **H4b, area 8:** the "Q from the pause page" fix and the controller figures were not re-checked here.
+
+## The independent check
+
+A fresh reviewer tried to break the first version (notes/REVIEW-independent-check.md). It verified 24 claims as correct. Its findings were checked here, and these changed:
+
+1. **"Every measured run on the key ran unchecked" was wrong.** The off-game sample of 30 Sep was checked. Now: the tester's in-game run was unchecked, and the sample's next live run would be.
+2. **P3 and P4 could not run as written.** The tester's cap is $0.50, and thirty minutes of checked talk can pass the day's dollar. P3 now runs within the cap or with it raised under the 3 Oct ruling. P4 is split into a free stand-in run and a capped real-talk run.
+3. **The memory envelope is full today, and now says so.** The post-voice figure is corrected to 8.8 GB.
+4. **The timing history:** 22 runs, GPU 11.2–12.5 ms, memory 3.6–4.5 GB. The headroom is now 1.5–2.8 ms, not 2.6.
+5. **The base share:** 0.63 ms for the three MetaHumans together. The unmeasured stand-in and voice GPU shares are no longer subtracted. The base is now about 10.8 ms.
+6. **The budgets plan at 55%,** the game's own rung, and P1 measures 55%, 70% and 50%.
+7. **Texture density measured from the camera,** not from Tom: 1,024 px/m only where the camera comes within 2 m.
+8. **"Derived" is now limited to the totals and densities.** Per-room GPU is 0.15 ms; twelve passers-by 200 MB with shared textures.
+9. **The verdict rule now names a fix for any ! in a feasible row.** Props and the sky move to RISKY: 25 risky, 8 feasible. P22 (the kiosk) is added, and the sky goes into P20.
+10. **Search summaries are marked:** automotive materials and crowd samples. Misquotes fixed: the fresh sixty's 48 answerable, 22 of 24 turns, concept portraits, four of twelve logical processors, the in-game notice, ledger/README.md, the 4.4 cross-reference, the disclosure's two claims.
+11. **The key's ruling read one way throughout.** Friends' talk is now a conflict between his rulings (R10 raised to 16).
+12. **Praise removed.**
+13. **R2's fallback** names the reopening of "voices as chosen", consent and the allowlist.
+14. **Added:** W6 (his eye as the only final judge), W7 (the back-bar picture and the brand bible's pub), the key in plain text (R7), no target date (R9), done-lines for ground, wear and decals, the hillside, accessories and animation, budget rows for decals and particles, the internal resolutions, and a narrative-bible row in the audit.
+
+Not changed: the reviewer's point that Inworld is not on the allowlist is kept as a fact, not researched further.
