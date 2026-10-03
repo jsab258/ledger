@@ -6959,9 +6959,24 @@ int main(int argc, char** argv)
 				Check(DOk, "a drawn surface the sidecar names is on disk", Rw.DrawnMap);
 			}
 		}
-		Check(Drawn == 5 && Brick != nullptr && Brick->DrawnMap == "production/assets/street/surfaces/brick_red"
-		      && std::fabs(Brick->DrawnW - 7.2) < 1e-9,
-		      "the two bricks, the flags, the stallriser tile and the kerb are drawn, the parade's a whole wall high, 7.2 m a copy");
+		// FLEMISH BOND AND A MESH A HOUSE (4 October, the proof view, step 2.4): the brick tile is
+		// 21 Flemish units (a stretcher and a header each) wide, 7.0875 m, and each house's drawn
+		// walls are their own mesh carrying its tint, so more than five rows are drawn now (a house's
+		// rubbed-brick dressings carry its tint too, on no drawn surface).
+		int Tinted = 0, TintedDrawn = 0;
+		for (size_t I = 0; I < Sc.Rows.size(); ++I)
+		{
+			if (Sc.Rows[I].bHasTint)
+			{
+				++Tinted;
+				if (!Sc.Rows[I].DrawnMap.empty()) { ++TintedDrawn; }
+			}
+		}
+		Check(Drawn >= 5 && Brick != nullptr && Brick->DrawnMap == "production/assets/street/surfaces/brick_red"
+		      && std::fabs(Brick->DrawnW - 7.0875) < 1e-9 && std::fabs(Brick->DrawnH - 7.2) < 1e-9,
+		      "the bricks, the flags, the stallriser tile and the kerb are drawn, the brick 21 Flemish units by a whole wall high");
+		Check(Tinted >= 6 && TintedDrawn >= 6,
+		      "each house's drawn walls arrive as their own mesh with its tint (Flemish bond, a mesh a house)");
 		if (Brick != nullptr)
 		{
 			const LedgerStreet::Grade Gb = LedgerStreet::PaletteOverPhoto(*Brick);

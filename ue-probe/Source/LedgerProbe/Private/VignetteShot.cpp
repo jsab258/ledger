@@ -6934,7 +6934,8 @@ namespace
 			}
 			{
 				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, Rw.Base);
-				Gr.R *= Sg.R; Gr.G *= Sg.G; Gr.B *= Sg.B;
+				const LedgerStreet::Grade Ht = LedgerStreet::HouseTintOf(Rw);   // a house's own brick (2.4)
+				Gr.R *= Sg.R * Ht.R; Gr.G *= Sg.G * Ht.G; Gr.B *= Sg.B * Ht.B;
 			}
 			Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
 			                             FLinearColor((float)Gr.R, (float)Gr.G, (float)Gr.B, 1.0f));
@@ -7475,8 +7476,9 @@ namespace
 				if (Sc.Tex[2] != nullptr) { T[2] = Sc.Tex[2]; }
 				TU = TV = (float)(1.0 / Sc.CoversM);
 				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, Rw.Base);
-				Gc = FLinearColor((float)(Sc.Match[0] * Sg.R), (float)(Sc.Match[1] * Sg.G),
-				                  (float)(Sc.Match[2] * Sg.B), 1.0f);
+				const LedgerStreet::Grade Ht = LedgerStreet::HouseTintOf(Rw);   // a house's own brick (2.4)
+				Gc = FLinearColor((float)(Sc.Match[0] * Sg.R * Ht.R), (float)(Sc.Match[1] * Sg.G * Ht.G),
+				                  (float)(Sc.Match[2] * Sg.B * Ht.B), 1.0f);
 				GRowScan[I] = K;
 			}
 			else
