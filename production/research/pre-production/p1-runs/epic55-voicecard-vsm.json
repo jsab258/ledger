@@ -1,0 +1,61 @@
+{
+ "label": "epic55-voicecard-vsm",
+ "frames": 127,
+ "frameMedianMs": 15.0,
+ "frameSlowest1pctMs": 27.4,
+ "gpuMedianMs": 13.06,
+ "gpuLineMs": 14.0,
+ "gpuRoomMs": 0.94,
+ "verdict": "MEETS",
+ "groups": {
+  "lumen": 2.44,
+  "base pass and prepass": 2.08,
+  "shadows": 1.03,
+  "lights and lighting": 1.81,
+  "translucency and glass": 0.34,
+  "fog and sky": 0.13,
+  "upscale and post": 3.26,
+  "people (hair and skin)": 0.35,
+  "other": 1.0
+ },
+ "topPasses": [
+  [
+   "TemporalSuperResolution",
+   2.71
+  ],
+  [
+   "LumenReflections",
+   2.18
+  ],
+  [
+   "Basepass",
+   1.73
+  ],
+  [
+   "RenderDeferredLighting",
+   1.41
+  ],
+  [
+   "ShadowDepths",
+   0.63
+  ],
+  [
+   "Postprocessing",
+   0.55
+  ],
+  [
+   "Unaccounted",
+   0.46
+  ],
+  [
+   "ShadowProjection",
+   0.4
+  ]
+ ],
+ "drawCalls": 1207.0,
+ "primitives": 1579863.0,
+ "gpuMemMB": 3924.22,
+ "systemMemMB": 4708.13,
+ "walkedM": 0.0,
+ "voice": ""
+}

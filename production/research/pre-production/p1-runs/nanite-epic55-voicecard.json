@@ -1,0 +1,61 @@
+{
+ "label": "nanite-epic55-voicecard",
+ "frames": 110,
+ "frameMedianMs": 16.21,
+ "frameSlowest1pctMs": 27.83,
+ "gpuMedianMs": 13.93,
+ "gpuLineMs": 14.0,
+ "gpuRoomMs": 0.07,
+ "verdict": "MEETS",
+ "groups": {
+  "lumen": 2.8,
+  "base pass and prepass": 1.84,
+  "shadows": 1.91,
+  "lights and lighting": 1.34,
+  "translucency and glass": 0.33,
+  "fog and sky": 0.13,
+  "upscale and post": 3.31,
+  "people (hair and skin)": 0.34,
+  "other": 1.31
+ },
+ "topPasses": [
+  [
+   "TemporalSuperResolution",
+   2.73
+  ],
+  [
+   "LumenReflections",
+   2.55
+  ],
+  [
+   "ShadowDepths",
+   1.83
+  ],
+  [
+   "Basepass",
+   1.52
+  ],
+  [
+   "RenderDeferredLighting",
+   0.97
+  ],
+  [
+   "Postprocessing",
+   0.58
+  ],
+  [
+   "Unaccounted",
+   0.49
+  ],
+  [
+   "MotionBlur",
+   0.29
+  ]
+ ],
+ "drawCalls": 1459.0,
+ "primitives": 2268695.0,
+ "gpuMemMB": 4472.25,
+ "systemMemMB": 4700.61,
+ "walkedM": 0.0,
+ "voice": ""
+}
