@@ -997,6 +997,10 @@ def brick_length_m(raw):
     half-brick from the same module, and selftest asks whether the two still
     describe the same brick."""
     try:
+        # THE FACADE BLOCK SAYS IT SINCE 3 OCTOBER, when the last parapet went.
+        t = (raw.get("facade") or {}).get("brick_length_m")
+        if t:
+            return float(t)
         for b in raw.get("blocks", []) or []:
             t = (b.get("roof") or {}).get("parapet_thickness_m")
             if t:
@@ -1006,7 +1010,7 @@ def brick_length_m(raw):
     return None
 
 
-def load_spec(root, spec_rel=SPEC_REL, block_id="east_parade"):
+def load_spec(root, spec_rel=SPEC_REL, block_id="east_parade", override=None):
     """(params, error). The numbers, read from the scene file, never typed.
 
     ANY OF THE THREE BLOCKS. The street has two row types and the difference
@@ -1035,6 +1039,15 @@ def load_spec(root, spec_rel=SPEC_REL, block_id="east_parade"):
             break
     if block is None:
         return None, "spec-has-no-block/%s" % block_id.replace(" ", "~")
+    # THE DRAWN STREET'S OWN NUMBERS, 3 October (the proof view's composition): a
+    # block's "drawn" overrides what this recipe draws (the street Unreal shows),
+    # while the simulation's coarse pieces (the C# Core, vignette-pieces.json) keep
+    # the block's own storeys and roof, so the sightlines its checks use stay put.
+    if isinstance(block.get("drawn"), dict):
+        block = dict(block, **{k: v for k, v in block["drawn"].items() if k != "why"})
+    # AND A HOUSE THE RECIPE STANDS ELSEWHERE FROM THE SAME KIT (the climb's, 3 October).
+    if override:
+        block = dict(block, **override)
 
     shop = raw.get("shopfront")
     face = raw.get("facade")
@@ -1056,7 +1069,10 @@ def load_spec(root, spec_rel=SPEC_REL, block_id="east_parade"):
             "ground_floor":     str(block["ground_floor"]),
             "roof_kind":        str(roof["kind"]),
             "ground_h_m":       storeys[0],
-            "first_h_m":        storeys[1],
+            # A COTTAGE ROW HAS ONE STOREY (3 October, the proof view's composition):
+            # its first floor is nothing, and nothing upstairs is built.
+            "first_h_m":        storeys[1] if len(storeys) > 1 else 0.0,
+            "storeys":          len(storeys),
             "pitch_deg":        float(roof.get("pitch_deg", 0.0)),
             "eaves_overhang_m": float(roof.get("eaves_overhang_m", 0.0)),
             "parapet_h_m":      float(roof.get("parapet_height_m", 0.0)),
@@ -1123,6 +1139,8 @@ def load_spec(root, spec_rel=SPEC_REL, block_id="east_parade"):
 
     for key in ("bay_width_m", "depth_m", "ground_h_m", "first_h_m",
                 "window_w_m", "window_h_m", "pilaster_w_m"):
+        if key == "first_h_m" and p["storeys"] == 1:
+            continue
         if p[key] <= 0:
             return None, "non-positive-dimension/%s=%.6f" % (key, p[key])
 
@@ -1262,6 +1280,10 @@ def _side_door(parts, p, side_x0, side_x1, jamb_t, rec, joinery_proj, wall, T, f
 
 
 
+#: The sill of a cottage's window (a one-storey plain row), 3 October.
+COTTAGE_SILL_M = 0.9
+
+
 def _plain_ground(parts, p, T, wall, bay):
     """The plain row's ground floor: a coursed plane with three openings.
 
@@ -1286,7 +1308,9 @@ def _plain_ground(parts, p, T, wall, bay):
     head_z = 3.1
     door_w, door_h = p["side_door_w_m"], p["side_door_h_m"]
     win_w, win_h = p["window_w_m"], p["window_h_m"]
-    sill_z = 1.525
+    # A COTTAGE'S WINDOWS SIT UNDER ITS EAVES (3 October): sills at 0.9 m, so the
+    # heads and their arches clear a 3.0 m eaves with brick above them.
+    sill_z = 1.525 if p["storeys"] > 1 else COTTAGE_SILL_M
     sill_t = 0.075
     jamb_t = p["transom_t_m"]
 
@@ -1364,6 +1388,24 @@ def _plain_ground(parts, p, T, wall, bay):
              -p["sill_proj_m"], T, sill_z - sill_t, sill_z, "the-window's-own-sill")
         _segmental_arch(parts, "gf_arch_%d" % n, cx - win_w / 2.0, cx + win_w / 2.0,
                         sill_z + win_h, "segmental-rubbed-brick-arch/as-upstairs")
+        # A SASH AND A NET, as upstairs (3 October, the proof view's first fresh
+        # review: the cottages' windows read as arches filled with brick, no glass).
+        _sash(parts, n, cx - win_w / 2.0, cx + win_w / 2.0, sill_z, sill_z + win_h, rec, prefix="gf")
+        net = _box(parts, "gf_net_%d" % n, "interior_lit", cx - win_w / 2.0, cx + win_w / 2.0,
+                   rec + 0.05, rec + 0.06, sill_z, sill_z + win_h, "net-curtain/C12/behind-the-glass")
+        net["decal"] = NET_CURTAINS[(n + bay) % len(NET_CURTAINS)]
+        net["decal_emit"] = "net"
+    # THE DOOR'S FOUR PANELS AND ITS KNOB (3 October): a flat slab in a white
+    # casing read to the same review as a placeholder.
+    lx0, lx1 = door_cx - door_w / 2.0 + jamb_t, door_cx + door_w / 2.0 - jamb_t
+    st, mid = 0.10, (door_cx - door_w / 2.0 + jamb_t + door_cx + door_w / 2.0 - jamb_t) / 2.0
+    for rn, (pz0, pz1) in enumerate(((0.18, 0.86), (1.02, door_h - 0.14))):
+        for cn, (px0, px1) in enumerate(((lx0 + st, mid - st * 0.5), (mid + st * 0.5, lx1 - st))):
+            _box(parts, "side_door_panel_%d%d" % (rn, cn), "paint_door", px0, px1,
+                 rec - 0.012, rec, pz0, pz1, "a-raised-panel/four-panel-door")
+    kx = lx1 - 0.09 if door_cx < W / 2.0 else lx0 + 0.05
+    _box(parts, "side_door_knob", "lead", kx, kx + 0.04, rec - 0.06, rec - 0.012, 0.98, 1.03,
+         "the-knob")
 
 
 #: THE WINDOW HEADS ARE SEGMENTAL ARCHES, 22 September, and the lintels they
@@ -1534,7 +1576,7 @@ GLAZING_BAR_T = 0.022
 SASH_PROUD_M = 0.030
 
 
-def _sash(parts, i, a, b, sill_z, head_z, reveal):
+def _sash(parts, i, a, b, sill_z, head_z, reveal, prefix="upper"):
     """The white frame, its meeting rail and its bars, for one opening."""
     # ENTIRELY IN FRONT OF THE PANE, and it matters twice. Glazing really is
     # like this - the pane sits in a rebate BEHIND the face of the frame, so
@@ -1547,27 +1589,27 @@ def _sash(parts, i, a, b, sill_z, head_z, reveal):
     f = FRAME_T
     # THE OUTER FRAME: two jambs the full height, then the head and the cill
     # rail between them, so no two pieces occupy the same millimetre.
-    _box(parts, "upper_sash_jamb_l_%d" % i, "paint_joinery", a, a + f, y0, y1,
+    _box(parts, "%s_sash_jamb_l_%d" % (prefix, i), "paint_joinery", a, a + f, y0, y1,
          sill_z, head_z, "55mm-on-the-face")
-    _box(parts, "upper_sash_jamb_r_%d" % i, "paint_joinery", b - f, b, y0, y1,
+    _box(parts, "%s_sash_jamb_r_%d" % (prefix, i), "paint_joinery", b - f, b, y0, y1,
          sill_z, head_z, "55mm-on-the-face")
-    _box(parts, "upper_sash_head_%d" % i, "paint_joinery", a + f, b - f, y0, y1,
+    _box(parts, "%s_sash_head_%d" % (prefix, i), "paint_joinery", a + f, b - f, y0, y1,
          head_z - f, head_z, "under-the-lintel")
-    _box(parts, "upper_sash_cill_%d" % i, "paint_joinery", a + f, b - f, y0, y1,
+    _box(parts, "%s_sash_cill_%d" % (prefix, i), "paint_joinery", a + f, b - f, y0, y1,
          sill_z, sill_z + f, "on-the-stone")
     # THE MEETING RAIL, at mid height, where the two sashes cross. It is the
     # heaviest member and it is the one that makes a window read as a SASH
     # rather than as a picture frame.
     mid = (sill_z + head_z) * 0.5
-    _box(parts, "upper_sash_meeting_%d" % i, "paint_joinery", a + f, b - f, y0, y1,
+    _box(parts, "%s_sash_meeting_%d" % (prefix, i), "paint_joinery", a + f, b - f, y0, y1,
          mid - MEETING_RAIL_T * 0.5, mid + MEETING_RAIL_T * 0.5,
          "the-heaviest-member/where-the-two-sashes-cross")
     # ONE VERTICAL BAR IN EACH SASH: a two-over-two.
     cx = (a + b) * 0.5
     g = GLAZING_BAR_T * 0.5
-    _box(parts, "upper_sash_bar_lower_%d" % i, "paint_joinery", cx - g, cx + g, y0, y1,
+    _box(parts, "%s_sash_bar_lower_%d" % (prefix, i), "paint_joinery", cx - g, cx + g, y0, y1,
          sill_z + f, mid - MEETING_RAIL_T * 0.5, "two-over-two/the-lower-sash")
-    _box(parts, "upper_sash_bar_upper_%d" % i, "paint_joinery", cx - g, cx + g, y0, y1,
+    _box(parts, "%s_sash_bar_upper_%d" % (prefix, i), "paint_joinery", cx - g, cx + g, y0, y1,
          mid + MEETING_RAIL_T * 0.5, head_z - f, "two-over-two/the-upper-sash")
 
 
@@ -1903,6 +1945,11 @@ def plan_end_walls(p):
             verts = [(x0, 0.0, E), (x0, D, E), (x0, mid, R),
                      (x1, 0.0, E), (x1, D, E), (x1, mid, R)]
             faces = [(0, 2, 1), (3, 4, 5), (0, 1, 4, 3), (1, 2, 5, 4), (2, 0, 3, 5)]
+            # FROM BOTH SIDES (3 October, the proof view's second fresh review): the
+            # west row's gable, first seen once its roof was pitched, came out of the
+            # export wound inwards, and Unreal, which draws one side, showed the
+            # hill through an open roof; every face is emitted both ways round.
+            faces = faces + [tuple(reversed(f)) for f in faces]
             parts.append({"id": "gable_%s" % name, "material": wall, "kind": "mesh",
                           "verts": verts, "faces": faces,
                           "note": "the-gable/eaves-to-ridge/%.1fm-rise" % p["ridge_rise_m"]})
@@ -2688,13 +2735,21 @@ CLUTTER_FOR_HELD = {"decorative_bollard_02": "bollard", "swing_bin": "litter-bin
                     "outdoor_bin": "litter-bin"}
 #: The two the scene file has no line for: (piece, x, side, kerb face to the
 #: piece's centre, why here).
+#: THE TELEGRAPH POLE IS OFF THE STREET, 3 October (the proof view, step 2.1,
+#: composition): laid beside the Hook sheet it was the strongest vertical in the
+#: left third and its wires crossed the sky, where the sheet has neither; and its
+#: drop wires ran to first-floor fronts the cottages across from Mickey's no
+#: longer have. The props step (2.8) decides the street's furniture again.
 CLUTTER_ADDED = (
-    ("telegraph-pole", 12.0, "west", 0.35,
-     "the terrace's telephone drop wires: a pole at the kerb between two front doors, "
-     "clear of the lamp columns at 18 and 38 and of the yard entrance"),
     ("grit-bin", 41.0, "west", 0.55,
      "at the top of the street where it meets the rise, where a council puts one"),
 )
+#: HELD PROPS OFF THE STREET, 3 October (the proof view, step 2.1): the scene
+#: file's two traffic cones by the west bollards came into Unreal without their
+#: colour and stood there as grey cones, which the fresh review read as
+#: untextured placeholders. Off until the props step (2.8) decides the street's
+#: furniture; the Unreal frame skips them through the sidecar.
+HELD_PROPS_OFF_STREET = ("traffic_cone_01", "traffic_cone_02")
 #: The scene file stands the near public bin (swing_bin, x 8.0, 0.65 m from
 #: the kerb) inside lamp column 0's base (x 8.0, 0.73 m): a bin strapped to a
 #: column was the fetched mesh's idea, and a bin on its own post cannot share
@@ -3105,7 +3160,9 @@ FOOTWAY_PUDDLES = (
     (1.5, 3.50, 0.55, 0.25), (5.2, 3.45, 0.40, 0.20), (9.1, 3.60, 0.45, 0.22),
     (17.0, 3.45, 0.50, 0.22), (24.0, 3.50, 0.45, 0.20),
 )
-ROAD_PUDDLES = ((6.0, -2.35, 0.75, 0.22), (16.5, -2.45, 0.55, 0.18), (4.0, 2.40, 0.70, 0.20))
+#: The near west road puddle stood at x 6.0 until 3 October, where the camera fitted to the
+#: sheet saw it mirror the lamp beyond as a blocky smear (the second fresh review's fault b).
+ROAD_PUDDLES = ((12.0, -2.40, 0.75, 0.22), (16.5, -2.45, 0.55, 0.18), (4.0, 2.40, 0.70, 0.20))
 #: The puddles stand as the wear layer's decals (tools/street_wear.py), not as these sheets.
 WATER_AS_DECALS = True
 #: The gutter's wet strip, from the kerb face inward, and where it runs.
@@ -3296,7 +3353,7 @@ APPROACH_X = (48.0, 80.0)            # from the street's end to the bend's far k
 APPROACH_FLAT_TO_X = 52.0            # level this far, so the street's own end is untouched
 APPROACH_CLIMB = 1.0 / 12.0          # then up, one in twelve (2 October: one in eight faced the camera and mirrored the white sky as a pale ramp)
 APPROACH_BEND_X = (72.0, 80.0)       # the westward road's own width, along x
-APPROACH_BEND_Y = (-60.0, -3.0)      # and how far west it is seen going
+APPROACH_BEND_Y = (-3.0, 60.0)       # and how far EAST it is seen going (3 October, below)
 APPROACH_OPEN_X = (80.0, 108.8)      # past the bend, to the foot of the hill's first wall
 #: THE HOUSES ON THE FAR SIDE OF THE BEND, where the road goes west: a short
 #: row of cottages, so the road reads as going on between houses and not
@@ -3315,10 +3372,15 @@ def approach_z(x):
     return min(x, APPROACH_BEND_X[0]) * APPROACH_CLIMB - x0 * APPROACH_CLIMB
 
 
-#: THE CLIMB DRIFTS WEST as it rises (2 October, the first stage-1 frames: run
+#: THE CLIMB DRIFTS AS IT RISES (2 October, the first stage-1 frames: run
 #: straight, the climb read as a ramp ending at a wall; the sheet's street curves
 #: away). Six steps of a quadratic curve, the road and both rows with it.
+#: EAST SINCE 3 OCTOBER (the proof view's second fresh review): the sheet flipped
+#: to canon's sides bends RIGHT, behind the parade, with the far row on the outside
+#: of the bend turned to face the camera and the hill straight behind it; ours bent
+#: left into a wall. +y is east here.
 APPROACH_DRIFT_M = 8.0
+APPROACH_BEND_SIDE = 1.0                # +1 east (right from the hook camera), -1 west
 APPROACH_DRIFT_STEPS = 6
 
 
@@ -3326,7 +3388,7 @@ def approach_drift(x):
     """How far west (negative y) the climb's road stands at x."""
     x0, x1 = APPROACH_FLAT_TO_X, APPROACH_BEND_X[0]
     t = min(1.0, max(0.0, (x - x0) / (x1 - x0)))
-    return -APPROACH_DRIFT_M * t * t
+    return APPROACH_BEND_SIDE * APPROACH_DRIFT_M * t * t
 
 
 def _roof_along_x(out, pid, x0, x1, y_front, y_ridge, y_back, z_eaves, z_ridge, note=""):
@@ -3458,6 +3520,147 @@ def _row_on_the_climb(out, prefix, x_from, x_to, y_front, y_back, rnd, east):
         x = xe
 
 
+#: THE CLIMB'S HOUSES FROM THE STREET'S OWN KIT, 3 October (the proof view, step
+#: 2.1, after its first fresh review): the rows on the climb were boxes with a band
+#: of window boxes on their fronts, each stepped sideways along the curve, so the
+#: hook camera saw their blank sides and read the far end as "windowless brick
+#: boxes closing the street". Each house is now the street's own plain bay, door,
+#: sashes, arches, slated roof, gutter and stacks, two storeys as the sheet's far
+#: houses are, turned to follow the road's curve and stood at its own level, with
+#: a plinth where the road falls away under it. The research's method for the
+#: distance, the street's kit reused (5-PROOF-FRAME.md, item 9).
+CLIMB_HOUSE = {"bay_width_m": 6.0, "storey_heights_m": [3.3, 2.7], "ground_floor": "plain",
+               "roof": {"kind": "pitched", "pitch_deg": 35.0, "eaves_overhang_m": 0.3, "surface": "roof"}}
+CLIMB_WALLS = ("brick_red", "render_cream", "brick_red", "brick_grey", "brick_red", "render_cream")
+CLIMB_LIT_EVERY = 3
+
+
+def _hull(verts, faces):
+    """Faces of a convex solid, each turned to face away from its middle."""
+    cx = sum(v[0] for v in verts) / len(verts)
+    cy = sum(v[1] for v in verts) / len(verts)
+    cz = sum(v[2] for v in verts) / len(verts)
+    out = []
+    for f in faces:
+        a, b, c = verts[f[0]], verts[f[1]], verts[f[2]]
+        ux, uy, uz = b[0] - a[0], b[1] - a[1], b[2] - a[2]
+        vx, vy, vz = c[0] - a[0], c[1] - a[1], c[2] - a[2]
+        nx, ny, nz = uy * vz - uz * vy, uz * vx - ux * vz, ux * vy - uy * vx
+        mx = sum(verts[i][0] for i in f) / len(f) - cx
+        my = sum(verts[i][1] for i in f) / len(f) - cy
+        mz = sum(verts[i][2] for i in f) / len(f) - cz
+        out.append(tuple(f) if nx * mx + ny * my + nz * mz >= 0 else tuple(reversed(f)))
+    return out
+
+
+BOX_FACES = ((0, 1, 2, 3), (4, 5, 6, 7), (0, 1, 5, 4), (2, 3, 7, 6), (3, 0, 4, 7), (1, 2, 6, 5))
+
+
+def _kit_part_to_world(part, pid, to_world):
+    """One kit part, in its bay's local axes, as a mesh in the street's."""
+    q = {k: v for k, v in part.items() if k not in ("x0", "x1", "y0", "y1", "z0", "z1", "kind",
+                                                    "y_eaves", "y_ridge", "z_eaves", "z_ridge",
+                                                    "verts", "faces", "decal", "decal_emit", "decal_uv")}
+    q["id"] = pid
+    q["kind"] = "mesh"
+    if part.get("kind") == "mesh":
+        q["verts"] = [to_world(*v) for v in part["verts"]]
+        q["faces"] = [tuple(f) for f in part["faces"]]
+        return q
+    if part.get("kind") == "slope":
+        x0, x1, ye, yr, ze, zr = (part["x0"], part["x1"], part["y_eaves"], part["y_ridge"],
+                                  part["z_eaves"], part["z_ridge"])
+        top = [(x0, ye, ze), (x1, ye, ze), (x1, yr, zr), (x0, yr, zr)]
+        loc = top + [(x, y, z - 0.06) for (x, y, z) in top]
+    else:
+        x0, x1, y0, y1, z0, z1 = (part["x0"], part["x1"], part["y0"], part["y1"], part["z0"], part["z1"])
+        loc = [(x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0),
+               (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1)]
+    q["verts"] = [to_world(*v) for v in loc]
+    q["faces"] = _hull(q["verts"], BOX_FACES)
+    return q
+
+
+def _kit_row_on_the_climb(out, prefix, x_from, x_to, y_front, east, seed):
+    """One side of the climb as houses of the street's own kit, turned along the
+    road's curve, each at its own level with a plinth under its downhill end."""
+    import math as _m
+    W = CLIMB_HOUSE["bay_width_m"]
+    x = x_from
+    k = 0
+    while x + W * 0.5 <= x_to:
+        wall = CLIMB_WALLS[(k + seed) % len(CLIMB_WALLS)]
+        p, err = load_spec(ROOT, SPEC_REL, "west_south", override=dict(CLIMB_HOUSE, wall_surface=wall))
+        if err:
+            raise AssertionError("the climb's kit house did not load: %s" % err)
+        mid = x + W * 0.5
+        slope = (approach_drift(mid + 0.01) - approach_drift(mid - 0.01)) / 0.02
+        th = _m.atan(slope)
+        c, s_ = _m.cos(th), _m.sin(th)
+        dx = W * c
+        last = (x + dx + W * 0.5 > x_to)
+        ox, oy = x, y_front + approach_drift(x)
+        zb = approach_z(mid) + THRESHOLD_ABOVE_CROWN_M
+        def to_world(lx, ly, lz, ox=ox, oy=oy, c=c, s_=s_, zb=zb):
+            ax, ay = (lx, ly) if east else (W - lx, -ly)
+            return (ox + ax * c - ay * s_, oy + ax * s_ + ay * c, zb + lz)
+        parts = plan_parts(p, bay=k, party_wall=not last)
+        lit = 0
+        for part in parts:
+            pid = "%s%d_%s" % (prefix, k, part["id"])
+            if part.get("decal_emit") == "net":
+                # A NET'S PICTURE IS LAID ON A SQUARE BOX; turned, it is a pane of
+                # lit room in every third window and none in the rest.
+                lit += 1
+                if lit % CLIMB_LIT_EVERY:
+                    continue
+                part = dict(part, material="window_far_lit")
+            out.append(_kit_part_to_world(part, pid, to_world))
+        # THE PLINTH where the road falls away under the house's downhill end.
+        lo = approach_z(min(x, x + dx)) - 0.3 - zb
+        if lo < -1e-6:
+            out.append(_kit_part_to_world({"id": "plinth", "material": wall, "x0": 0.0, "x1": W,
+                                           "y0": 0.0, "y1": p["depth_m"], "z0": lo, "z1": 0.0,
+                                           "note": "the-plinth-the-climb-asks-for"},
+                                          "%s%d_plinth" % (prefix, k), to_world))
+        x += dx
+        k += 1
+    return k
+
+
+#: THE ROW ACROSS THE END (3 October): y from its west end to its east end, along the
+#: far side of the road going east, facing the hook camera.
+CROSS_ROW_Y = (-8.0, 22.0)
+
+
+def _kit_row_across(out, prefix, x_front, y_from, y_to, z_floor, seed):
+    """Houses of the street's own kit along +y, their fronts on x = x_front facing
+    south (toward the hook camera), each a bay of CLIMB_HOUSE."""
+    import math as _m
+    W = CLIMB_HOUSE["bay_width_m"]
+    n = int((y_to - y_from) // W)
+    zb = z_floor + THRESHOLD_ABOVE_CROWN_M
+    for k in range(n):
+        wall = CLIMB_WALLS[(k + seed) % len(CLIMB_WALLS)]
+        p, err = load_spec(ROOT, SPEC_REL, "west_south", override=dict(CLIMB_HOUSE, wall_surface=wall))
+        if err:
+            raise AssertionError("the cross row's kit house did not load: %s" % err)
+        oy = y_from + k * W
+        # along +y (u = (0, 1)), into the house +x: the kit's turned frame (W - x, -y)
+        # at theta 90 degrees, a rotation, so its faces still face out.
+        def to_world(lx, ly, lz, oy=oy):
+            ax, ay = W - lx, -ly
+            return (x_front - ay, oy + ax, zb + lz)
+        for part in plan_parts(p, bay=k + 2, party_wall=(k < n - 1)):
+            pid = "%s%d_%s" % (prefix, k, part["id"])
+            if part.get("decal_emit") == "net":
+                if (k + int(part["x0"])) % CLIMB_LIT_EVERY:
+                    continue
+                part = dict(part, material="window_far_lit")
+            out.append(_kit_part_to_world(part, pid, to_world))
+    return n
+
+
 def _north_approach(out):
     """The road on from the street's end, its climb between two rows, the bend
     west, and the open ground past it to the foot of the hill."""
@@ -3482,45 +3685,56 @@ def _north_approach(out):
     _curved_strip(out, "backdrop_rise_approach_climb", "asphalt", xf, bx0 + 0.05, -3.0, 3.0, 0.0,
                   note="and-climbs-one-in-%d/curving-west-%.0fm" % (round(1.0 / APPROACH_CLIMB), APPROACH_DRIFT_M), crown=fall)
     dyt = approach_drift(bx0)              # the drift at the top, which the bend keeps
-    _box(out, "backdrop_rise_approach_bend", "asphalt", bx0, bx1, APPROACH_BEND_Y[0], 3.0 + dyt,
-         zt - 0.30, zt, "and-bends-away-west")
+    _box(out, "backdrop_rise_approach_bend", "asphalt", bx0, bx1, APPROACH_BEND_Y[0] + dyt, APPROACH_BEND_Y[1],
+         zt - 0.30, zt, "and-bends-away-east")
     # THE FOOTWAYS, a kerb above the road, climbing with it.
     for side, (ya, yb) in (("e", (3.0, f)), ("w", (-f, -3.0))):
         _box(out, "backdrop_rise_approach_footway_%s" % side, "paving", x0, xf, ya, yb, -0.30, th,
              "the-%s-footway" % side)
         _curved_strip(out, "backdrop_rise_approach_footway_%s_climb" % side, "paving", xf, bx0 + 0.05,
                       ya, yb, th, note="climbing-and-curving-with-the-road")
-    _box(out, "backdrop_rise_approach_footway_corner", "paving", bx0, bx1, 3.0 + dyt, f + dyt,
-         zt - 0.30, zt + th, "the-east-footway-round-the-corner")
-    _box(out, "backdrop_rise_approach_footway_n", "paving", bx1, bx1 + 2.0, APPROACH_BEND_Y[0], RISE_Y_SPAN[1],
+    # THE OUTSIDE OF THE BEND IS THE WEST: its footway round the corner, and on
+    # along the far side of the road going east.
+    _box(out, "backdrop_rise_approach_footway_corner", "paving", bx0, bx1 + 2.0, -f + dyt, -3.0 + dyt,
+         zt - 0.30, zt + th, "the-west-footway-round-the-outside-of-the-corner")
+    _box(out, "backdrop_rise_approach_footway_n", "paving", bx1, bx1 + 2.0, -3.0 + dyt, RISE_Y_SPAN[1],
          zt - 0.30, zt + th, "the-footway-along-the-far-side-of-the-bend")
     # THE TWO ROWS ON THE CLIMB. The east row runs to the corner; the west row
     # stops where the bend opens, its last house's gable to the road going west.
-    _row_on_the_climb(out, "backdrop_rise_approach_e", x0 + rnd.uniform(0.5, 1.5), bx1 - 0.5,
-                      f, f + 8.0, rnd, True)
+    rnd.uniform(0.5, 1.5)                  # keep the generator's sequence for what follows
+    # THE INSIDE OF THE BEND (east since 3 October) stops short of the corner, so the
+    # road is seen turning behind it; the outside (west) runs to the corner.
+    _kit_row_on_the_climb(out, "backdrop_rise_approach_e", x0 + 0.5, bx0 - APPROACH_WEST_ROW_SHORT_M, f, True, 0)
     # THE WEST ROW STOPS SHORT OF THE CORNER (2 October, the first stage-1
     # frame: run to the corner it hid the road turning west, and the climb read
     # as a ramp into a wall). Its last house's gable stands back from the bend,
     # so the road is seen going round it, as the sheet's road is seen curving away.
-    _row_on_the_climb(out, "backdrop_rise_approach_w", x0 + 0.5, bx0 - APPROACH_WEST_ROW_SHORT_M,
-                      -f, -f - 8.0, rnd, False)
+    _kit_row_on_the_climb(out, "backdrop_rise_approach_w", x0 + 0.5, bx1 - 0.5, -f, False, 3)
+    # THE ROW ACROSS THE END, facing the camera on the far side of the road going east
+    # (3 October, the sheet's mid-distance terrace at about 0.15 to 0.38 of the frame's
+    # width): the kit's houses, the hill straight behind them.
+    _kit_row_across(out, "backdrop_rise_approach_x", bx1 + 2.0, CROSS_ROW_Y[0], CROSS_ROW_Y[1], zt, 1)
     # PAST THE BEND, THE GROUND OPENS. Grass a kerb above the road, to the
     # foot of the hill's first wall.
     _box(out, "backdrop_rise_approach_open_ground", "grass", bx1 + 2.0, ox1,
          RISE_Y_SPAN[0], RISE_Y_SPAN[1], zo - 0.40, zo, "gardens-and-plots-past-the-bend")
     # A GARDEN WALL along the back of the far footway, low enough to see over.
-    y = APPROACH_BEND_Y[0]
+    y = -60.0
     k = 0
     while y < RISE_Y_SPAN[1]:
         ye = min(y + rnd.uniform(6.0, 11.0), RISE_Y_SPAN[1])
-        _box(out, "backdrop_rise_approach_garden_%d" % k, "stone" if k % 3 else "brick_grey",
-             bx1 + 2.0, bx1 + 2.45, y, ye, zo - 0.2, zo + rnd.uniform(0.45, 0.7), "a-garden-wall/knee-high-so-it-never-reads-as-a-wall-across-the-road")
+        hw = zo + rnd.uniform(0.45, 0.7)
+        if ye <= CROSS_ROW_Y[0] - 1.0 or y >= CROSS_ROW_Y[1] + 1.0:
+            _box(out, "backdrop_rise_approach_garden_%d" % k, "stone" if k % 3 else "brick_grey",
+                 bx1 + 2.0, bx1 + 2.45, y, ye, zo - 0.2, hw, "a-garden-wall/knee-high-so-it-never-reads-as-a-wall-across-the-road")
         y = ye + rnd.uniform(1.0, 1.4)       # a gate's width between walls
         k += 1
     # THE COTTAGES ON THE FAR SIDE OF THE ROAD WEST, a short row of their own.
+    # THE COTTAGES ON THE FAR SIDE OF THE ROAD WEST went on 3 October with the bend:
+    # the road goes east now, and they were the pink stand-in front closing the end.
     y = APPROACH_WEST_COTTAGES_Y[0]
     n = 0
-    while y < APPROACH_WEST_COTTAGES_Y[1] - 3.0:
+    while False and y < APPROACH_WEST_COTTAGES_Y[1] - 3.0:
         w = rnd.uniform(5.0, 6.5)
         xa = bx1 + 2.0 + rnd.uniform(3.0, 4.5)
         r = rnd.random()
@@ -3533,12 +3747,12 @@ def _north_approach(out):
     # with trees: the gaps are what let the hill show.
     # NONE ON THE STREET'S OWN LINE (y about -2): a house there closes the
     # view again, which is the fault this replaced.
-    for n, (ya, w, xa) in enumerate(((-15.0, 6.0, 93.0), (16.0, 5.5, 88.0), (34.0, 6.5, 95.0))):
+    for n, (ya, w, xa) in enumerate(((-15.0, 6.0, 93.0), (34.0, 6.5, 95.0))):
         r = rnd.random()
         wall = "render_cream" if r < 0.5 else "brick_red"
         _cottage(out, "backdrop_rise_approach_cottage_n%d" % n, wall, xa, xa + 6.0, ya, ya + w,
                  zo + 0.4 + 0.3 * n, rnd.uniform(4.0, 4.8), rnd.uniform(2.4, 3.0), n * 5 + 1)
-    for k, (tx, ty, ht) in enumerate(((86.0, 6.0, 9.5), (99.0, 11.0, 11.0), (84.5, 26.0, 8.0),
+    for k, (tx, ty, ht) in enumerate(((93.0, 6.0, 9.5), (99.0, 11.0, 11.0), (84.5, 26.0, 8.0),
                                       (101.0, -12.0, 10.5), (90.0, 46.0, 9.0), (104.0, 28.0, 12.0))):
         _tree(out, "backdrop_rise_approach_tree_%d" % k, tx + rnd.uniform(-1.0, 1.0),
               ty + rnd.uniform(-1.5, 1.5), zo, ht, rnd)
@@ -4270,15 +4484,17 @@ def plan_parts(p, bay=0, party_wall=True):
         shop_depth = 1.2
         _box(parts, "carcass_shop", "interior", 0.0, W, T + shop_depth, D,
              0.0, GF, "the-back-wall-of-the-shop/1.2m-of-room-in-front-of-it")
-        _box(parts, "carcass", "interior", 0.0, W, T, D, GF, EAVES,
-             "the-flat-above/one-brick-back-like-any-window")
+        if EAVES > GF + 1e-6:
+            _box(parts, "carcass", "interior", 0.0, W, T, D, GF, EAVES,
+                 "the-flat-above/one-brick-back-like-any-window")
     else:
         _box(parts, "carcass", "interior", 0.0, W, T, D, 0.0, EAVES,
              "what-a-window-shows/starts-one-brick-back-so-the-openings-are-real")
 
     if p["ground_floor"] != "shopfront":
         _plain_ground(parts, p, T, wall, bay)
-        _upper_floor(parts, p, T, wall)
+        if p["storeys"] > 1:
+            _upper_floor(parts, p, T, wall)
         _roof_and_rainwater(parts, p, T, wall, party_wall, bay)
         return parts
 
@@ -4552,7 +4768,10 @@ def plan_parts(p, bay=0, party_wall=True):
                   zc - bh / 2.0, zc + bh / 2.0, "TO-LET/R05's-neighbouring-letting-board")
         lb["decal"] = LETTING_BOARD
 
-    _upper_floor(parts, p, T, wall)
+    # A ONE-STOREY SHOP ROW (3 October, the proof view's composition) has its
+    # roof straight off the fascia's top and nothing upstairs.
+    if p["storeys"] > 1:
+        _upper_floor(parts, p, T, wall)
     _roof_and_rainwater(parts, p, T, wall, party_wall, bay)
     return parts
 
@@ -6763,6 +6982,8 @@ def _street_replaces(args):
     # AND THE GROUND PROPS THE RECIPE NOW BUILDS FROM THE GATED CLUTTER
     # (_street_furniture), which would otherwise stand twice.
     assets.extend(a for a in CLUTTER_FOR_HELD if a not in assets)
+    # AND THOSE OFF THE STREET until the props step decides them again.
+    assets.extend(a for a in HELD_PROPS_OFF_STREET if a not in assets)
     return {"piece_name_prefixes": list(STREET_REPLACES_PREFIXES),
             "piece_shapes": list(STREET_REPLACES_SHAPES),
             "held_prop_assets": sorted(a for a in assets if a),
@@ -7412,16 +7633,46 @@ def selftest():
                       ",".join(sorted(shoppy)[:4]))
             check("accept/%s-is-the-grey-brick" % other,
                   q["wall_surface"] == "brick_grey", q["wall_surface"])
-            # A PARAPET AND A COPING, NOT A RIDGE, AND NO STACK.
-            check("accept/%s-has-a-parapet-and-a-coping" % other,
-                  any(b["id"].startswith("parapet") for b in qboxes)
-                  and any(b["id"].startswith("coping") for b in qboxes))
-            check("accept/%s-carries-no-chimney" % other,
-                  not [b for b in qboxes if "chimney" in b["id"]],
-                  "the spec found none on either west row")
-            check("accept/%s-top-is-eaves-plus-parapet-plus-coping" % other,
-                  abs(q["top_m"] - (q["eaves_m"] + q["parapet_h_m"] + q["coping_t_m"])) < 1e-9,
-                  "%.4f" % q["top_m"])
+            if q["roof_kind"] == "parapet":
+                # A PARAPET AND A COPING, NOT A RIDGE, AND NO STACK.
+                check("accept/%s-has-a-parapet-and-a-coping" % other,
+                      any(b["id"].startswith("parapet") for b in qboxes)
+                      and any(b["id"].startswith("coping") for b in qboxes))
+                check("accept/%s-carries-no-chimney" % other,
+                      not [b for b in qboxes if "chimney" in b["id"]],
+                      "the spec found none on either west row")
+                check("accept/%s-top-is-eaves-plus-parapet-plus-coping" % other,
+                      abs(q["top_m"] - (q["eaves_m"] + q["parapet_h_m"] + q["coping_t_m"])) < 1e-9,
+                      "%.4f" % q["top_m"])
+            elif q["ground_floor"] == "shopfront":
+                # THE SHOP ROW, ONE STOREY UNDER A SLATED PITCH SINCE 3 OCTOBER: its ridge
+                # under the hill seen behind it, a stack on each party wall, none in the
+                # gable the hook camera sees, nothing upstairs.
+                stacks = {b["bay"] for b in qboxes if "chimney" in b["id"]}
+                check("accept/%s-is-one-storey-shops-slated-with-stacks-on-its-party-walls" % other,
+                      q["storeys"] == 1 and q["pitch_deg"] > 0 and not q["end_stack"]
+                      and len(stacks) == q["bays"] - 1 and q["ridge_m"] < 6.5,
+                      "storeys=%d ridge=%.2f stacks on bays %s" % (q["storeys"], q["ridge_m"], sorted(stacks)))
+                check("accept/%s-builds-nothing-upstairs" % other,
+                      not [b for b in qboxes if b["id"].startswith("upper_")])
+            else:
+                # THE COTTAGES ACROSS FROM MICKEY'S (3 October): one storey under a
+                # slated pitch, eaves at about 3 m as the sheet's near-left cottage,
+                # a stack on each party wall and none upstairs, because there is none.
+                check("accept/%s-is-one-storey-under-a-pitched-roof" % other,
+                      q["storeys"] == 1 and q["pitch_deg"] > 0
+                      and abs(q["eaves_m"] - 3.0) < 1e-9, "%d %.2f" % (q["storeys"], q["eaves_m"]))
+                check("accept/%s-has-a-stack-on-each-party-wall" % other,
+                      len({b["bay"] for b in qboxes if "chimney" in b["id"]}) >= q["bays"] - 1,
+                      "%d" % len([b for b in qboxes if "chimney" in b["id"]]))
+                check("accept/%s-builds-nothing-upstairs" % other,
+                      not [b for b in qboxes if b["id"].startswith("upper_")])
+                check("accept/%s-windows-clear-the-eaves" % other,
+                      all(b["z1"] <= q["eaves_m"] - 0.3 + 1e-9 for b in qboxes if b["id"].startswith("gf_glass_")))
+                check("accept/%s-every-window-has-a-sash-and-a-net-every-door-its-panels" % other,
+                      len([b for b in qboxes if b["id"].startswith("gf_sash_meeting_")]) == 2 * q["bays"]
+                      and len([b for b in qboxes if b["id"].startswith("gf_net_")]) == 2 * q["bays"]
+                      and len([b for b in qboxes if b["id"].startswith("side_door_panel_")]) == 4 * q["bays"])
             # THE DOOR AND TWO WINDOWS, one of each per bay.
             doors = [b for b in qboxes if b["id"].startswith("side_door_leaf")]
             glass = [b for b in qboxes if b["id"].startswith("gf_glass_")]
@@ -7989,9 +8240,9 @@ def selftest():
         check("accept/clutter-%s-colours-are-the-model's-own" % piece,
               not missing and worst < 0.006, "missing=%s worst=%.4f" % (missing, worst))
     placed_kinds = sorted({sp[0] for sp in spots})
-    check("accept/seven-kinds-of-clutter-stand-in-the-street",
+    check("accept/six-kinds-of-clutter-stand-in-the-street/the-pole-off-since-3-October",
           placed_kinds == ["bollard", "dustbin", "grit-bin", "kx100-kiosk", "litter-bin",
-                           "pillar-box", "telegraph-pole"], "%s %s" % (placed_kinds, cnotes))
+                           "pillar-box"], "%s %s" % (placed_kinds, cnotes))
     check("accept/no-clutter-shares-a-lamp-column's-spot",
           all(abs(sp[1] - 8.0) >= CLUTTER_CLEAR_OF_COLUMN_M - 1e-9 or sp[2] < 0
               for sp in spots if sp[0] == "litter-bin"), "%s" % spots)
