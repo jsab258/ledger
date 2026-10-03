@@ -154,6 +154,7 @@ real_table() {
     canon-gate-selftest   "$REPO"                 "$PY tools/canon-gate.py --selftest" \
     content-gate          "$REPO"                 "$PY tools/content-gate.py" \
     content-gate-selftest "$REPO"                 "$PY tools/content-gate.py --selftest" \
+    garments-selftest     "$REPO"                 "$PY tools/ue/import_garments.py --selftest" \
     approvals             "$REPO"                 "$PY tools/approvals.py" \
     approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \
     own-lines-page        "$REPO"                 "$PY tools/own_lines_md.py rocco --check" \

@@ -85,7 +85,8 @@
     "top"
    ],
    "handed": "2026-10-02",
-   "made": "The clothing session's shirt front, collar, cuffs and tie for under the Marvelous suit jacket (F:/LedgerTools/garments/md_suit_jacket/ron, its README of 2 October), skinned to MH_RoccoP2 as exported 29 September 17:33; held, worn only in the jacket's test films (-WearHeld) until the jacket's review passes."
+   "made": "The clothing session's shirt front, collar, cuffs and tie for under the Marvelous suit jacket (F:/LedgerTools/garments/md_suit_jacket/ron, its README of 2 October), skinned to MH_RoccoP2 as exported 29 September 17:33; held, worn only in the jacket's test films (-WearHeld) until the jacket's review passes.",
+   "hold": "2 October: only a shirt front, collar, cuffs and tie for under the suit jacket, so worn alone it hid his top and left his chest and arms a hole (found filming him whole, 3 October: the entry said held but carried no hold, so the game wore it). Worn only with -WearHeld=RonShirtTie."
   }
  ]
 }

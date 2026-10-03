@@ -76,23 +76,21 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **C: free:** 30 GB at the start, 85 now.
 
-## Builder, Friday 2 October
+## Builder, Saturday 3 October
 
-(Rewritten 17:15.)
+**No page today:** nothing new passes your rule yet.
 
-**[Disk page](https://claude.ai/artifact/GxkF7zTNJit7cAV2xaXuB2):** your yes at 10:40; carried out.
+**Done:** seven more shopfronts built Rita's way, in the game on this PC by day and night: fishmonger, launderette, grocer, newsagent with the pension counter, ironmonger, tea room, ship's chandler. Fixed on the way: displays behind doors, panes showing the next shop, a black slab, the fish market's crates hiding its window. Ron's chest was a hole in the game since Friday (a shirt front for the jacket tests worn by mistake): held back, and a check now stops it.
 
-**Done:** both drives measured; 88 GB freed (41 on C:, 47 on F: with your yes); retention runs nightly. The sweep's items in the finished game, walked 11 of 11 after fixing Q on the pause page: Sheila's p267 voice and thinking sounds, Darren's S6, subtitles with their sound, the landing man's lines, the gathering, credits. Ron's Marvelous jacket filmed; it failed clothing's review.
+**Failed or unproven:** the fresh review failed all seven new windows: their goods are shapes I made in code (fish, fruit, cakes, sweet jars, rope), toys beside Rita's scanned stock. So: scanned models and photographs instead. Epic's built-in standing idle tried and kept off (wide-legged, braced).
 
-**Failed or unproven:** the delay, past the two-tries rule (Needs you). Stage 1's frame: haze and streaks work; the sky's clouds set aside after research; not yet on your page.
+**Evidence:** checks 40/40; both game targets built.
 
-**Evidence:** checks 39/39; both game targets built; build machine probe PASS.
+**Research:** shop goods, the method and free sources (under way).
 
-**Research:** the sky and haze in Unreal (production/research/aaa-street).
+**C:** 90.8 GB free, **F:** 40.9 GB; grew most: git history, the Unreal project, your played copy. Backup with this commit.
 
-**C:** 31 GB this morning, 99.6 now. **F:** 2.5, now 37.8. Backup with this commit.
-
-**Next:** Darren's fit, stage 1's far end and wet street.
+**For you:** Needs you 3 now includes Epic's free animation sample (one tap), for natural poses.
 
 ## 26 September, day
 

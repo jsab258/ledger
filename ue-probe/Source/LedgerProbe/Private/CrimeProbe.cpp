@@ -878,8 +878,15 @@ namespace
 	// EPIC'S OWN IDLE, BODY AND FACE (24 September, MetaHumanPortrait.cpp):
 	// the elizabeth idle carried over from an old street figure put the
 	// hands through the body; these are made on the cast's own skeletons.
+	// AND THE PLUGIN'S OWN STAND, TRIED AND KEPT OFF (3 October, V6; production/research/
+	// natural-idles, section 6, step 1): filmed whole beside the technical loop, its neutral
+	// stand set Ron and Sheila wide-legged and braced, a game hero's ready pose, where the
+	// loop stands them as people stand; -StandIdle brings it back for a side by side. The real
+	// set is Epic's Game Animation Sample (his Fab library). Each part takes the first idle on
+	// its skeleton that loads, so the body is never set up twice.
 	const TCHAR* kLiveIdles[] = {
 		TEXT("/MetaHumanCharacter/Optional/Animation/TemplateAnimations/Technical_Loops/Idle/mhc_mh001_fmn_b_idle.mhc_mh001_fmn_b_idle"),
+		TEXT("/MetaHumanCharacter/Optional/Animation/UEFNAnimPreset/Locomotion/AS_MH_Neutral_Stand_Idle_Loop.AS_MH_Neutral_Stand_Idle_Loop"),
 		TEXT("/MetaHumanCharacter/Optional/Animation/TemplateAnimations/Technical_Loops/Idle/mhc_mh001_fmn_f_idle.mhc_mh001_fmn_f_idle") };
 
 	AActor* GVisualFor(AActor* Body)
@@ -968,8 +975,11 @@ namespace
 			Cap->RegisterComponent();
 		}
 		int32 PartsAnimated = 0;
+		TSet<USkeletalMeshComponent*> Done;
+		const bool bStand = FParse::Param(FCommandLine::Get(), TEXT("StandIdle"));
 		for (const TCHAR* IdlePath : kLiveIdles)
 		{
+			if (bStand && FCString::Strstr(IdlePath, TEXT("Technical_Loops/Idle/mhc_mh001_fmn_b")) != nullptr) { continue; }
 			UAnimSequenceBase* Idle = LoadObject<UAnimSequenceBase>(nullptr, IdlePath);
 			if (Idle == nullptr) { continue; }
 			TArray<USkeletalMeshComponent*> Parts;
@@ -977,9 +987,12 @@ namespace
 			for (USkeletalMeshComponent* C : Parts)
 			{
 				USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
-				if (M == nullptr || M->GetSkeleton() != Idle->GetSkeleton()) { continue; }
-				// Not all in step: each starts at its own point in the loop.
+				if (M == nullptr || M->GetSkeleton() != Idle->GetSkeleton() || Done.Contains(C)) { continue; }
+				Done.Add(C);
+				// Not all in step: each starts at its own point in the loop, and plays at
+				// its own pace, 0.92 to 1.08 (the research: no two people in step).
 				const float Start = FMath::Fmod((float)GVisualsPlaced * 2.3f, FMath::Max(Idle->GetPlayLength(), 1.0f));
+				const float Rate = 0.92f + 0.08f * (float)((GVisualsPlaced * 7) % 5) / 2.0f;
 				// THE HEAD TURNS TO HIM, 29 September (town list 1): the idle
 				// through Unreal's Look At, as the street's people's
 				// (PersonAnim.h), on the body and the face alike so the two
@@ -990,11 +1003,11 @@ namespace
 				C->SetAnimInstanceClass(ULedgerPersonAnim::StaticClass());
 				if (ULedgerPersonAnim* Look = Cast<ULedgerPersonAnim>(C->GetAnimInstance()))
 				{
-					Look->Setup(Idle, Start, 1.0f, bLooks);
+					Look->Setup(Idle, Start, Rate, bLooks);
 					C->InitAnim(true);
 					GLooks.FindOrAdd(Body).Add(Look);
 					++PartsAnimated;
-					UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s plays the idle and can speak"), Who, *C->GetName());
+					UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s's %s plays %s at %.2f and can speak"), Who, *C->GetName(), *Idle->GetName(), Rate);
 					continue;
 				}
 				C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
@@ -4411,14 +4424,48 @@ namespace
 				// THE PAWNBROKER'S WINDOW FROM THE PAVEMENT (item 2a): 1.2 m out from the
 				// shopfront, from the left, square on and from the right, each looking at the
 				// window's middle, so the room behind the glass is seen to shift as a room does.
-				const double Cx = 18.0, Cz = 5.9, Pz = 3.9;
-				for (const double Px : { 15.6, 18.0, 20.4 })
+				// Any shop by -PageShop=<id> and its window's middle -PageShopX=<metres> (3 October,
+				// V1: the fishmonger at 12); the pawnbroker at 18 by default.
+				FString ShopId = TEXT("pawnbroker");
+				double Cx = 18.0;
+				FParse::Value(FCommandLine::Get(), TEXT("PageShop="), ShopId);
+				FParse::Value(FCommandLine::Get(), TEXT("PageShopX="), Cx);
+				// AND THE WEST ROW'S by -PageShopSide=-1 (the newsagent, the ironmonger, the tea room).
+				double Side = 1.0;
+				FParse::Value(FCommandLine::Get(), TEXT("PageShopSide="), Side);
+				// OR SEVERAL IN ONE LAUNCH, -PageShopList=id@x[@side]/id@x[@side]/... (3 October:
+				// eight shops at two launches each was forty minutes of start-ups).
+				struct FShopAt { FString Id; double X; double Side; };
+				TArray<FShopAt> Shops;
+				FString ListArg;
+				if (FParse::Value(FCommandLine::Get(), TEXT("PageShopList="), ListArg, false))
+				{
+					TArray<FString> Items;
+					ListArg.ParseIntoArray(Items, TEXT("/"));
+					for (const FString& It : Items)
+					{
+						TArray<FString> F;
+						It.ParseIntoArray(F, TEXT("@"));
+						if (F.Num() >= 2) { Shops.Add({ F[0], FCString::Atod(*F[1]), F.Num() >= 3 ? FCString::Atod(*F[2]) : 1.0 }); }
+					}
+				}
+				if (Shops.Num() == 0) { Shops.Add({ ShopId, Cx, Side }); }
+				for (const FShopAt& Sh : Shops)
+				{
+				ShopId = Sh.Id;
+				Cx = Sh.X;
+				Side = Sh.Side < 0.0 ? -1.0 : 1.0;
+				const double Cz = 5.9 * Side, Pz = 3.9 * Side;
+				for (const double Px : { Cx - 2.4, Cx, Cx + 2.4 })
 				{
 					FPageShot S;
-					S.Id = FString::Printf(TEXT("pawnbroker-%s"), Px < 17.0 ? TEXT("left") : Px > 19.0 ? TEXT("right") : TEXT("square"));
-					S.X = Px; S.Z = Pz; S.Eye = 1.6; S.Pitch = 4.0; S.VFov = 55.0;
+					S.Id = FString::Printf(TEXT("%s-%s"), *ShopId, Px < Cx - 1.0 ? TEXT("left") : Px > Cx + 1.0 ? TEXT("right") : TEXT("square"));
+					// LOOKING DOWN ENOUGH TO SEE THE WINDOW'S BED (3 October: at 4 degrees the square
+					// view stopped just above the fishmonger's slab, and showed none of the display).
+					S.X = Px; S.Z = Pz; S.Eye = 1.6; S.Pitch = Px < Cx - 1.0 || Px > Cx + 1.0 ? 4.0 : 12.0; S.VFov = 55.0;
 					S.Yaw = FMath::RadiansToDegrees(std::atan2(Cz - Pz, Cx - Px));
 					Shots.Add(S);
+				}
 				}
 			}
 			else

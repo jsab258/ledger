@@ -46,6 +46,28 @@ SETS = {
                            "antique_ceramic_vase_01", "standing_picture_frame_01", "standing_picture_frame_02",
                            "carved_wooden_elephant", "horse_statue_01", "seadogs_compass", "vintage_flashlight",
                            "measuring_tape_01", "jug_01", "vintage_video_camera", "vintage_radio_transceiver"],
+    # THE OTHER SHOPFRONTS (V1, 3 October; his yes to Rita's window: "make the other eleven like it").
+    # An ironmonger's: hand tools, cleaners and oils, a watering can, brooms, a blowtorch, a ladder.
+    "ironmonger": ["adjustable_wrench", "combination_wrench", "cross_pein_hammer", "wooden_hammer_01", "pliers",
+                   "tongue_groove_pliers", "screwdriver", "screwdrivers_02", "flathead_screwdriver", "handsaw_wood",
+                   "hatchet", "measuring_tape_01", "vintage_hand_drill", "watering_can_metal_01", "small_oil_can_01",
+                   "oil_tin", "brass_blowtorch", "lubricant_spray", "bleach_bottle", "multi_cleaner_bottle",
+                   "all_purpose_cleaner", "drain_cleaner", "cleaner_tin_01", "plastic_broom", "wooden_broom", "dustpan",
+                   "trowel_01", "garden_gloves_01", "mousetrap", "lightbulb_01", "metal_jug", "wooden_ladder",
+                   "metal_toolbox", "pot_enamel_01", "metal_jerrycan", "rubber_boots", "drawer_cabinet"],
+    # A ship's chandler's: buoys and a lifebuoy, a life jacket, lanterns, boots, oilskin hats, oil, crates.
+    "chandler": ["lifebuoy", "life_jacket", "ocean_buoy", "lateral_sea_marker", "seadogs_compass", "Lantern_01",
+                 "caged_hanging_light", "signal_flashlight", "rubber_boots", "fishermans_hat", "small_oil_can_01",
+                 "metal_jerrycan", "wooden_crate_01", "Barrel_01", "brass_blowtorch", "vintage_flashlight",
+                 "oil_tin", "industrial_wall_lamp", "wooden_bucket_01"],
+    # A tea room's: tables and chairs, cakes, a teapot and cups, pictures on the walls, a plant.
+    "tea_room": ["WoodenChair_01", "painted_wooden_chair_01", "round_wooden_table_01", "tea_set_01", "carrot_cake",
+                 "strawberry_chocolate_cake", "croissant", "metal_jug", "CashRegister_01", "potted_plant_01",
+                 "potted_plant_02", "hanging_picture_frame_01", "hanging_picture_frame_02", "hanging_picture_frame_03",
+                 "wall_clock", "vintage_electric_kettle", "standing_chalkboard_01"],
+    # A newsagent and tobacconist's: postcards, notepads and stationery, cigarettes (tobacco is allowed), a till.
+    "newsagent": ["cigarette_pack", "postcard_set_01", "office_notepads", "stationery_supplies", "binder_notebook",
+                  "CashRegister_01", "vintage_lighter", "wall_clock", "cardboard_box_01"],
 }
 
 
