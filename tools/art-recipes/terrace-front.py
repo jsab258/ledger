@@ -7307,6 +7307,69 @@ def _bevel_corner(bpy):
     return "cornerBevel=objects-%d/faces-%d-to-%d/width-%.3fm" % (len(targets), before, after, BEVEL_WIDTH_M)
 
 
+#: The walls that wear a drawn surface and take a house's own place on it (_house_u_offset).
+HOUSE_OFFSET_MATERIALS = ("brick_red", "brick_grey", "brick_rubbed", "render_cream", "render_patch")
+HOUSE_OFFSET_TILE_M = 7.0875   # the drawn brick tile's width: 21 Flemish units (make_street_surfaces.py's manifest)
+
+
+def _house_of(block, pid):
+    """The house a piece belongs to: block and bay for the street's frontages
+    (east_parade_bay3), the approach's own houses by their number, or None."""
+    import re
+    m = re.search(r"_bay(\d+)$", pid or "")
+    if block and m:
+        return "%s_bay%s" % (block, m.group(1))
+    m = re.match(r"backdrop_rise_approach_([a-z]\d+)", pid or "")
+    return ("approach_" + m.group(1)) if m else None
+
+
+def _house_u_offset(block, pid, material):
+    """Where along the brick tile this piece's house starts its walls, in metres: seeded by
+    the house's name, so the same house always gets the same bricks and its corners meet."""
+    import zlib
+    house = _house_of(block, pid)
+    if house is None or not str(material).startswith(HOUSE_OFFSET_MATERIALS):
+        return 0.0
+    return round((zlib.crc32(house.encode("utf-8")) % 997) / 997.0 * HOUSE_OFFSET_TILE_M, 3)
+
+
+#: A HOUSE'S BRICK (step 2.4, 4 October): tools/street_wear.py seeds each house a brick set and a
+#: tint, and until now nothing read them. The set says how its front has weathered by 1990:
+#: as built (0), sooted (1), or cleaned in the 1980s (2); the tint a small shift of its own.
+#: Vertex colours cannot exceed one, so every factor is at most one, and the walls' surface
+#: gain is raised to put the street's mean back where it was (unreal-look.json).
+HOUSE_SET_FACTOR = {0: (0.90, 0.90, 0.90), 1: (0.74, 0.74, 0.77), 2: (1.0, 0.97, 0.93)}
+
+
+def _house_rows(root):
+    """street-wear.json's houses by name: {bay: (brick_set, tint)}; empty when unreadable."""
+    import json
+    try:
+        with open(os.path.join(root, "production", "specs", "street-wear.json"), encoding="utf-8") as fh:
+            return {h["bay"]: (int(h["brick_set"]), tuple(h["tint"])) for h in json.load(fh).get("houses", [])}
+    except (OSError, ValueError, KeyError):
+        return {}
+
+
+def _house_tint(block, pid, material, rows):
+    """The colour this piece's walls carry: its house's set times its tint, scaled so no channel
+    passes one; white for anything not a house's drawn wall."""
+    house = _house_of(block, pid)
+    if house is None or house not in rows or not str(material).startswith(HOUSE_OFFSET_MATERIALS):
+        return (1.0, 1.0, 1.0)
+    bset, tint = rows[house]
+    f = HOUSE_SET_FACTOR.get(bset % 3, HOUSE_SET_FACTOR[0])
+    # BRIGHTNESS AND A LEAN WARM OR COOL ONLY: the seeded tint's three channels moved red brick
+    # toward green or blue, which no brick does.
+    lum = sum(tint) / 3.0
+    warm = max(-0.04, min(0.04, (tint[0] - tint[2]) * 0.5))
+    c = [f[0] * (lum + warm), f[1] * lum, f[2] * (lum - warm)]
+    top = max(c)
+    if top > 1.0:
+        c = [v / top for v in c]
+    return tuple(round(v, 4) for v in c)
+
+
 def _export_street(bpy, args, parts):
     """Export the street's geometry, mirrored, one mesh per material, and a sidecar."""
     import json
@@ -7343,6 +7406,13 @@ def _export_street(bpy, args, parts):
         part = by_id.get(obj.name, {})
         M = obj.matrix_world
         world = [M @ v.co for v in obj.data.vertices]
+        # EACH HOUSE ITS OWN STRETCH OF BRICK (the proof view, step 2.4, 4 October; Jafar:
+        # "every house on the right is the same"). The drawn walls are mapped in world metres
+        # from one 7.2 m tile, so every house showed the same bricks in the same places; each
+        # house now starts its walls at its own seeded place along the tile. Across only: the
+        # tile is a whole wall high and carries the soot and splash at their heights, and the
+        # courses still run level through the terrace.
+        u_off = _house_u_offset(part.get("block"), obj.name, mat_key)
         if key == "glass" and world and obj.name.startswith("furn_cl_"):
             # THE CLUTTER'S OWN GLAZING (the kiosk's) IS ITS OWN MESH, not the
             # nearest shop bay's: the crime hides a bay's glass mesh when its
@@ -7421,9 +7491,9 @@ def _export_street(bpy, args, parts):
                     if az >= ax and az >= ay:
                         uvs.append((p.x, p.y))
                     elif ax >= ay:
-                        uvs.append((p.y, p.z))
+                        uvs.append((p.y + u_off, p.z))
                     else:
-                        uvs.append((p.x, p.z))
+                        uvs.append((p.x + u_off, p.z))
             base_i = len(g["verts"])
             g["verts"].extend((p.x, p.y, p.z) for p in pts)
             g["faces"].append(tuple(range(base_i, base_i + len(pts))))
@@ -8044,6 +8114,15 @@ def selftest():
                 if "_wall_" in b["id"]:
                     tiers.setdefault(int(b["id"].split("_wall_")[1].split("_")[0]), []).append(b)
             order = [tiers[k] for k in sorted(tiers)]
+            # EACH HOUSE ITS OWN BRICKS (step 2.4, 4 October): the six parade houses start their
+            # walls at six different places along the drawn tile, the same place every time, and
+            # nothing but the drawn walls moves.
+            offs = [_house_u_offset("east_parade", "wall_bay%d" % k, "brick_red") for k in range(6)]
+            check("accept/each-house-its-own-bricks",
+                  len(set(offs)) == 6 and all(0.0 <= o < HOUSE_OFFSET_TILE_M for o in offs)
+                  and offs == [_house_u_offset("east_parade", "pier_bay%d" % k, "brick_red") for k in range(6)]
+                  and _house_u_offset("east_parade", "sill_bay0", "stone") == 0.0,
+                  "offsets %s" % ",".join("%.2f" % o for o in offs))
             check("accept/the-rise-climbs-tier-on-tier",
                   len(order) >= 3 and all(min(b["z1"] for b in order[i + 1]) > max(b["z1"] for b in order[i])
                                           and min(b["x0"] for b in order[i + 1]) > max(b["x0"] for b in order[i])
