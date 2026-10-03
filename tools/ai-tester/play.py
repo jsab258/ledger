@@ -393,6 +393,24 @@ def picture(st, label):
 
 
 # ---------------------------------------------------------------- the commands
+def friends_env(env, profile):
+    """The environment of another Windows account, as far as this one can stand in for it (P5):
+    its user folders under profile, nothing under this account's own folder on the path, and no
+    Python, conda or LEDGER talk settings of this account's."""
+    profile = os.path.abspath(profile)
+    mine = os.path.normcase(os.environ.get("USERPROFILE", r"C:\Users\Jafar"))
+    out = {k: v for k, v in env.items()
+           if not k.upper().startswith(("CONDA", "PYTHON", "VIRTUAL_ENV", "HF_", "NANO_", "LEDGER_VOICE"))}
+    out["PATH"] = os.pathsep.join(p for p in env.get("PATH", "").split(os.pathsep)
+                                  if p and not os.path.normcase(p).startswith(mine)
+                                  and "conda" not in p.lower() and "python" not in p.lower())
+    for k, sub in (("USERPROFILE", ""), ("HOME", ""), ("LOCALAPPDATA", r"AppData\Local"),
+                   ("APPDATA", r"AppData\Roaming"), ("TEMP", r"AppData\Local\Temp"), ("TMP", r"AppData\Local\Temp")):
+        out[k] = os.path.join(profile, sub) if sub else profile
+        os.makedirs(out[k], exist_ok=True)
+    return out
+
+
 def start(args):
     if user32 is None:
         print("aiTester status=NOT-WINDOWS")
@@ -478,6 +496,19 @@ def start(args):
     # double-click: the first launch's own full screen and picture level.
     if args.get("bare"):
         game_args = []
+    # --profile DIR, 3 October (P5, his friends' build in a fresh Windows account): the played
+    # copy as another account would start it. Its own user folders under DIR (where the game reads
+    # the key and the talk its evening), nothing of this account's on the path, no Python or
+    # conda settings; the game's own talk program and voice beside it, never the repository's;
+    # windowed and with -RouteWalk only so the tester can see and steer.
+    if args.get("profile"):
+        if args.get("editor"):
+            print("aiTester status=REFUSED (--profile is the finished game as another account starts it)")
+            return 2
+        env = friends_env(env, args["profile"])
+        game_args = ["-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash"] + \
+                    [x for x in args.get("extra", []) if x.startswith("-") and " " not in x]
+        print("aiTester profile=%s (another account's folders; the game's own talk and voice)" % args["profile"])
     build = "editor" if args.get("editor") else "packaged"
     print("aiTester build=%s selfContained=%s config=%s" % (build, "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
     cmd = ([EDITOR, PROJECT, "-game"] if args.get("editor") else [PACKAGED]) + game_args
@@ -691,6 +722,16 @@ def selftest():
           0 < float(REAL_TALK_BUDGET_USD) <= 0.50 and 'env["LEDGER_TALK_BUDGET_USD"] = REAL_TALK_BUDGET_USD' in src
           and '--real-talk is for the finished game only' in src)
     check("its save is never the player's", '"-EncounterSave=" + save' in src)
+    fake_home = os.path.normcase(os.environ.get("USERPROFILE", r"C:\Users\Jafar"))
+    fe = friends_env({"PATH": os.pathsep.join([os.path.join(fake_home, "miniconda3"), r"C:\Windows\System32",
+                                               r"C:\Tools\Python312"]),
+                      "CONDA_PREFIX": "x", "PYTHONHOME": "y", "LOCALAPPDATA": os.path.join(fake_home, "AppData", "Local"),
+                      "SYSTEMROOT": r"C:\Windows"},
+                     os.path.join(tempfile.gettempdir(), "ledger-friends-selftest"))
+    check("another account's folders, nothing of this one's on the path, no Python settings (P5)",
+          fe["PATH"] == r"C:\Windows\System32" and "CONDA_PREFIX" not in fe and "PYTHONHOME" not in fe
+          and fe["LOCALAPPDATA"].endswith(os.path.join("ledger-friends-selftest", "AppData", "Local"))
+          and fe["SYSTEMROOT"] == r"C:\Windows" and '"-TalkHelper=" + HELPER' not in src.split("def friends_env")[1].split("def start")[0])
     print("ai-tester selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -711,6 +752,8 @@ if __name__ == "__main__":
         a["extra"] = [rest[k + 1] for k, x in enumerate(rest) if x == "--game-arg" and k + 1 < len(rest)]
         if "--save" in rest and rest.index("--save") + 1 < len(rest):
             a["save"] = rest[rest.index("--save") + 1]
+        if "--profile" in rest and rest.index("--profile") + 1 < len(rest):
+            a["profile"] = rest[rest.index("--profile") + 1]
         sys.exit(start(a))
     if verb == "shot":
         s = running_state()
