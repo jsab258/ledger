@@ -522,7 +522,11 @@ def morning_line(snaps=None):
     t_last = dt.datetime.fromisoformat(last["at"])
     prev = None
     for s in reversed(snaps[:-1]):
-        if t_last - dt.datetime.fromisoformat(s["at"]) >= dt.timedelta(hours=20):
+        # TWELVE HOURS, NOT TWENTY (3 October): the census of 2 October ran at 09:42 and the
+        # night's at 04:30, under twenty hours apart, so the line fell back to "files written",
+        # and git touching two old packs it already had (18.9 and 12.2 GB) read as the history
+        # growing 31.5 GB; their sizes say 0.23 GB.
+        if t_last - dt.datetime.fromisoformat(s["at"]) >= dt.timedelta(hours=12):
             prev = s
             break
     level = lambda s: {r["path"]: r["gb"] for r in s["rows"] if r["level"] in (1, 2)}
@@ -542,9 +546,11 @@ def morning_line(snaps=None):
         tops = ", ".join("%s +%.1f GB" % (p, g) for g, p in picked) or "nothing over 0.05 GB"
         since = "since %s" % prev["at"][5:16].replace("T", " ")
     else:
+        # no census twelve hours old: say what was touched, never call it growth (a file git
+        # only touches counts whole here)
         rows = sorted((r for r in last["rows"] if r["level"] == 1), key=lambda r: -r["grewGb"])[:3]
-        tops = ", ".join("%s +%.1f GB written" % (r["path"], r["grewGb"]) for r in rows)
-        since = "files written in the day before"
+        tops = ", ".join("%s %.1f GB touched" % (r["path"], r["grewGb"]) for r in rows)
+        since = "(no census a day old, so not growth) files touched in the day before"
     return "Disk (%s): C: %s GB free, F: %s GB free; grew most %s: %s." % (
         last["at"][5:16].replace("T", " "), last["free"]["C"], last["free"]["F"], since, tops)
 

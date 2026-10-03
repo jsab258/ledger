@@ -2567,43 +2567,15 @@ jobs:
           # and does not move underneath anybody.
           SHORT="$(echo "${GITHUB_SHA:-}" | cut -c1-7)"
           if [ -z "$SHORT" ]; then SHORT="$(git rev-parse HEAD | cut -c1-7)"; fi
-          # PICTURES ONLY WHEN THEY CAN HAVE CHANGED, OR ONCE A DAY (1 October,
-          # the cleanup page: every run's frames, about 130 MB of PNG, GIF and WAV
-          # that never compress against the last run's, had grown the project's git
-          # store to 30 GB on Jafar's PC). The text verdicts are committed on every
-          # run as before; the pictures when this push changed something they show
-          # (the street's specs and assets, the art recipes, the Unreal content and
-          # scripts, the shot and walk code), when the last committed pictures are
-          # 20 hours old (production/d1-probe/frames-at.txt), and on any run started
-          # by hand. The step's line says frames=0 or 1 and why.
-          FRAMES=1; FRAMESWHY=a-run-started-by-hand-or-the-first
-          BEFORE="${PUSH_BEFORE:-}"
-          if [ -n "$BEFORE" ] && [ "$BEFORE" != "0000000000000000000000000000000000000000" ] && [ -n "${GITHUB_SHA:-}" ]; then
-            if git cat-file -e "${BEFORE}^{commit}" 2>/dev/null || git fetch -q --no-tags --depth=1 origin "$BEFORE" 2>/dev/null; then
-              VIS="$(git diff --name-only "$BEFORE" "$GITHUB_SHA" -- production/specs production/assets ue-probe/Content tools/art-recipes tools/ue \
-                ue-probe/Source/LedgerProbe/Private/VignetteShot.cpp ue-probe/Source/LedgerProbe/Private/WalkProbe.cpp \
-                ue-probe/Source/LedgerProbe/Public/SurfaceBind.h ue-probe/Source/LedgerProbe/Public/FrameStats.h 2>/dev/null | head -1 || true)"
-              LASTAT="$(sed -n 's/^framesAt=\([0-9]*\).*/\1/p' production/d1-probe/frames-at.txt 2>/dev/null | head -1 || true)"
-              AGE=$(( $(date -u +%s) - ${LASTAT:-0} ))
-              # ONCE A DAY, EVEN WHEN SOMETHING SHOWN CHANGED (2 October, Jafar's
-              # retention rule: renders are kept three days unless approved, and a
-              # picture committed to git is kept for ever). Gated on change alone,
-              # the pictures still went in five to ten times a day. Every run's
-              # pictures are copied below to the build machine's renders folder,
-              # kept three days by tools/retention.py; frames-latest.txt says where.
-              if [ "$AGE" -lt 72000 ]; then
-                FRAMES=0; FRAMESWHY="last-pictures-${AGE}s-old${VIS:+/changed-but-kept-out-of-git}"
-              else
-                FRAMESWHY="the-last-pictures-are-${AGE}s-old"
-              fi
-            else
-              FRAMESWHY=the-previous-commit-could-not-be-fetched
-            fi
-          fi
-          if [ "$FRAMES" = 1 ]; then
-            printf 'framesAt=%s framesFrom=%s\n' "$(date -u +%s)" "$SHORT" > production/d1-probe/frames-at.txt
-            git add -- production/d1-probe/frames-at.txt
-          fi
+          # PICTURES NEVER GO INTO GIT (3 October, Jafar: "only text and small files go
+          # into git; renders, approval pictures, audio, models and builds live on the
+          # drives and in the Dropbox backup"). This machine's pictures were 30.6 GB of
+          # the project's 32 GB history: about 130 MB of PNG, GIF and WAV a run that never
+          # compress against the last, committed on every run from 22 September and once
+          # a day from 2 October. Now no run commits them; every run's pictures are copied
+          # below to its renders folder, kept three days by tools/retention.py, and
+          # frames-latest.txt (text) says where. The verdicts stay in git as before.
+          FRAMES=0; FRAMESWHY=pictures-live-on-the-drives-never-in-git
           echo "frames=$FRAMES framesWhy=$FRAMESWHY"
           # EVERY RUN'S PICTURES, OUTSIDE GIT, FOR THREE DAYS (tools/retention.py's renders limit).
           RENDERS="$(cd "${RUNNER_WORKSPACE:-..}/.." 2>/dev/null && pwd)/renders/${SHORT}"
@@ -2693,7 +2665,7 @@ jobs:
           # stage a path this run did not name.
           vignStaged=0; vignRefused=0; vignNamed=0; vignRepeat=0; vignSeen="|"
           stage_shot_png() {
-            [ "$FRAMES" = 1 ] || return 0   # pictures only when they can have changed (above)
+            [ "$FRAMES" = 1 ] || return 0   # never: pictures stay out of git (above)
             # ONE LEAF, NO PATH. A value carrying a separator or a `..` is
             # refused and counted rather than joined onto the directory: the
             # verdict is a file this repository writes, and the day it writes
