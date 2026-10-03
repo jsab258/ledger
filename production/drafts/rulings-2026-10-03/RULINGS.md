@@ -5,8 +5,8 @@ Jafar's rulings that bind today, dated 2026; the later of two stands. canon.md o
 ## The goal and the order
 
 - 3 Oct: The goal: a thirty-minute Quay Street build his friends play on this PC, passing the Meridian Test (they do not bounce off it, the town visibly knows them, talk feels live, he would rather play it).
-- 3 Oct: One ordered builder's list in NOW.md, one item at a time, each finished with its evidence: the proof view by the thirteen items of production/research/aaa-street/5-PROOF-FRAME.md, the 8-bit voice test, the street-wide pass with the asset plan's families, the friends' build. It replaces every earlier list; only a fault that breaks the game or PC, or his order at a stated place, changes it. [Q4]
-- 3 Oct: The AI tester's nightly walk, played as a player would, reports whether the town visibly knows Tom (who noticed, who said so later and how, how many "that's all I know", each reply's delay, what broke the illusion): a paragraph in the overview each morning beside the night before.
+- 3 Oct: One ordered builder's list in NOW.md, one item at a time, each finished with its evidence: the proof view by the thirteen items of production/research/aaa-street/5-PROOF-FRAME.md, the 8-bit voice test, the street-wide pass, the friends' build. It replaces every earlier list; only a fault that breaks the game or PC, or his order at a stated place, changes it. [Q4]
+- 3 Oct: The AI tester's nightly walk, played as a player would, also reports whether the town visibly knows Tom (who noticed, who said so later and how, how many "that's all I know", each reply's delay, what broke the illusion): a paragraph in the overview each morning beside the night before; nothing else in the order changes.
 - 3 Oct: Not reopened: the route, the interface, the AI tester's walks, faces, voices, the town's talk work.
 - 3 Oct: The proof view is built to the Hook sheet, not merely cleaned; the hill built properly, never hidden in haze; to his page only when it stands beside the sheet.
 - 1 Oct: The friends' build: his PC, a shortcut in a fresh Windows account, no relay; after the street-wide pass; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
@@ -15,11 +15,12 @@ Jafar's rulings that bind today, dated 2026; the later of two stands. canon.md o
 
 ## Sources, licences and money
 
-- 3 Oct: Nothing marked NoAI (on Fab, "Allows usage with AI: No") or licensed against AI use is used, in the game or the project, nor as a reference or input; every Fab item is checked first. Out: every Megascans item, Epic's MetaHuman garments, Game Animation Sample and construction presets.
-- 3 Oct: Sources in order: free, unrestricted assets that fit (Poly Haven, ambientCG, CC0 Sketchfab scans with his token); else our own, made in Blender from real photographs and generated textures, as kits with variation; human-made inputs (buying, commissioning, hiring) only by his explicit ruling, today none (his asset-plan brief).
-- 3 Oct: Every family of assets is made by the asset plan (production/research/asset-plan), its kits and sources, never improvised.
-- 24 Sep: Nothing ships off the allowlist; a new tool enters only by a record naming its weights licence; every shipped asset credited in THIRD-PARTY.md; free allowlisted content not marked NoAI (3 Oct) downloaded without asking, named in the summary.
-- Allowed: OFL fonts with their licence (30 Sep); Mixamo on his account (16 Sep); VCTK voices, consent a stated risk (24 Sep); CC-BY garments with credit, CLO's free CONNECT patterns, the revocable clause re-checked (2 Oct).
+- 3 Oct: Nothing marked NoAI (on Fab "Allows usage with AI: No"; elsewhere its tags, read at download) is used, in the game or the project, nor as a reference or input; every asset's source and licence recorded in THIRD-PARTY.md. Out: every Megascans item, Epic's MetaHuman garments, Game Animation Sample and construction presets. [Q6]
+- 3 Oct: Unreal's licence: the engine and MetaHumans are never AI training input or datasets, so nothing we send may train a model.
+- 3 Oct: Sources in order: free, unrestricted assets that fit (Poly Haven, ambientCG, CC0 Sketchfab scans without a NoAI tag, with his token); else our own, made in Blender from real photographs and generated textures, as kits with variation; human-made inputs (buying, commissioning, hiring) only by his explicit ruling, today none (his asset-plan brief).
+- 3 Oct: Every asset family is made by the asset plan (production/research/asset-plan), its kits and sources, never improvised: its replacement where a source is now out; its order of families after the proof view.
+- 24 Sep: Nothing ships off the allowlist; a new tool enters only by a record naming its weights licence; free allowlisted content not marked NoAI (3 Oct) downloaded without asking, named in the summary.
+- Allowed: OFL fonts with their licence (30 Sep); Mixamo on his account (16 Sep); VCTK voices, consent a stated risk (24 Sep); CC-BY garments with credit, CLO's free CONNECT patterns, the revocable clause re-checked (2 Oct) [Q6].
 - 2 Oct: Not allowed: CGTrader's royalty-free licence with its no-AI clause; the Gent jacket draft except as a reference.
 - 16 Sep: Purchases and accounts are his alone; nothing bought without his yes, none for the street or cars (1 Oct).
 - 29 Sep: No paid voice service.
@@ -29,9 +30,9 @@ Jafar's rulings that bind today, dated 2026; the later of two stands. canon.md o
 
 ## The look and the street
 
-- 1 Oct: Every visual is judged against the Hook sheet and the KCD2 frames; yes recommended only for what would pass in a 2026 game.
+- 1 Oct: Every visual but clothes (3 Oct) is judged against the Hook sheet and the KCD2 frames; yes recommended only for what would pass in a 2026 game.
 - 30 Sep and 1 Oct: His page's pictures are taken at 2560×1440, never enlarged, open full size; films with sound.
-- 21 and 22 Sep: The Hook sheet (pass 4) governs mood, palette and composition; dated photographs govern what things looked like and win; production/research/README.md names what governs each asset, in its brief; a passing reply overrides none; no design copied; references only in production/reference/.
+- 21 and 22 Sep: The Hook sheet (pass 4) governs mood, palette and composition; dated photographs govern what things looked like and win; production/research/README.md names what governs each asset; no passing reply overrides them; no design copied; references only in production/reference/.
 - 30 Sep: Lighting is judged through the game's own camera and exposure.
 - 23 Sep: Blender for shapes and layout; all look development in Unreal, against the sheet.
 - 21 Sep: Grime is the strategy (D53), a seeded wear layer.
@@ -40,19 +41,19 @@ Jafar's rulings that bind today, dated 2026; the later of two stands. canon.md o
 - 23 and 24 Sep: 60 fps at 3440×1440 on the RX 6700 with the voice running, never below 30, met by drawing smaller and upscaling.
 - 2 Oct: No cars until convincing fictional 1990 cars pass ("no cars is better than box cars"); skip and pallets off until real; the KX100 phone box stays.
 - 2 Oct: Rita's window is the model; the other eleven shopfronts are made like it.
-- 3 Oct: Trades: bay 1 fishmonger, bay 3 empty unit to let (whitewashed), bay 4 launderette, bay 5 grocer; west_north a newsagent and tobacconist (no pools or gambling), an ironmonger, a tea room; east_chandler a ship's chandler; Mickey's window shows its office.
+- 3 Oct: Trades: bay 1 fishmonger, bay 3 empty unit to let (whitewashed), bay 4 launderette, bay 5 grocer; west_north a newsagent and tobacconist, an ironmonger, a tea room; east_chandler a ship's chandler; Mickey's window shows its office.
 - 1 Oct: Shop rooms from Poly Haven CC0 models, the display real models; the pawnbroker's window lit at night.
 - 3 Oct: Poll-tax posters: an invented local campaign, never real parties or people.
-- 3 Oct: The town mints the names the plan needs (car makers, police, bus company, council, paper and the rest) within canon; placeholders meanwhile, never on his page.
+- 3 Oct: The town mints the names the plan needs (car makers, police, buses, council, paper and the rest) within canon on Monday; placeholders meanwhile, never on his page.
 - D14: Every interior in scope is designed, assembled by script from designed kits, and photoreal.
 - 22 Sep: Image-to-3D generation waits until making props one at a time is the bottleneck.
 
 ## Faces, hair and voices
 
-- 30 Sep: Faces are frozen: Ron P2 (26 Sep), Sheila S4 with its hair (29 Sep), Darren S6 with Epic's short cut (30 Sep); no more portrait adjustments.
+- 30 Sep: Faces are frozen: Ron P2 (26 Sep), Sheila S4 with its hair (29 Sep), Darren S6 with Epic's short cut (30 Sep).
 - 25 and 28 Sep: The other eleven casting sheets are approved as text; their faces cast in MetaHuman from them, a generated portrait mood only.
 - 24 Sep: No voice is cast without his yes; no hiring, ever; clean references, nothing noisy.
-- 3 Oct, voices as chosen, not reopened: Sheila p267 in the game's own engine (30 Sep); Ron his July p227 (30 Sep); Darren p241 (29 Sep); Agar p226, the dispatcher p280 (24 Sep); Danny p243, June p277 and Walsh's July voice, each at odds with its sheet [Q5].
+- 3 Oct, voices as chosen: Sheila p267 in the game's own engine (30 Sep); Ron his July p227 (30 Sep); Darren p241 (29 Sep); Agar p226, the dispatcher p280 (24 Sep); Danny p243, June p277 and Walsh's July voice, each at odds with its sheet [Q5].
 - 30 Sep: Voices are judged by ear; the accent checker is a screen, never a gate.
 - 25 Sep: Ron's and Darren's lines made in advance use an acted reference.
 - 28 Sep: Before an answer, a short thinking sound of their own with a glance, cut when the answer starts; no loading sign.
@@ -81,7 +82,7 @@ Jafar's rulings that bind today, dated 2026; the later of two stands. canon.md o
 
 - 24 Sep: Everything the town says unprompted is written ahead, generated and checked once; live talk only when the player talks to someone.
 - 25 Sep: A character says only what the simulation knows; the claim check is a net, not a wall.
-- 1 Oct (D48): Everyone talks through the same model for the same kind of moment, small talk lighter and real conversation better, never by who the character is.
+- 1 Oct (D48): The model is chosen by the kind of moment (small talk lighter, real conversation better), never by the character.
 - 24 Sep: The paid router stays; a local model later as the fallback offline; three router changes owed; no training on its answers (23 Sep).
 - 23 Sep: The talk runs beside the game as the tested C# helper, not rewritten in C++.
 - 23 Sep: Offline or slow: the authored street carries on, an in-character brush-off and a small sign; a slow line dropped after about 8 s.
@@ -96,15 +97,15 @@ Jafar's rulings that bind today, dated 2026; the later of two stands. canon.md o
 ## The story and the first week
 
 - 28 Sep: The story's spine is canon's baseline; the outline is approved (game-design/story-outline-2026-09-28.md); the first hour is the plan (29 Sep).
-- 29 Sep: The first week's designs in game-design/ (hints, first ask, Ellis, Ada's tea, arrest, week's end, day one, the wait, the landing) stand as written; the town's decisions within canon stand unless he overturns them.
+- 29 Sep: The first week's nine designs in game-design/ stand as written; the town's decisions within canon stand unless he overturns them.
 - 30 Sep: Mickey died of his heart at the office early one morning; Ron found him; nobody thinks otherwise.
 - 30 Sep: Winding the business down ends Mickey's arrangement.
 - 30 Sep: The warehouse fire as drafted: the street's version is a street fact; the truth is never the street's.
 - 1 Oct: Mickey's people (Ron, Sheila) never go to the police about one of their own; they handle it privately.
 - 1 Oct: A neighbour who sees Tom put a window in reports him, unless on his side (Ada's tea, a friend) or talked round (keeps it quiet, a threat). [Q3]
 - 30 Sep: A witness's story is only as sure as the witness was: a noise or a shape is suspicion, never "he did it".
-- 28 Sep: Tom's reading of the ending's cost comes from what he saw and heard, never the true state; its signs wait for the route (30 Sep).
-- 30 Sep: The thirty regulars stand as written, into the game after the route works.
+- 28 Sep: Tom's reading of the ending's cost comes from what he saw and heard, never the true state.
+- 30 Sep: The thirty regulars stand as written.
 
 ## What the game is
 
@@ -122,5 +123,5 @@ Jafar's rulings that bind today, dated 2026; the later of two stands. canon.md o
 
 - 2 Oct: Retention runs nightly by production/retention.json (builds the latest two, his played copy always one; renders three days unless approved; scratch seven days; models while a registered tool uses them; Unreal's cache 6 GB; holds 14 days at most).
 - 2 Oct: Before any build, render or large job, C: keeps 40 GB and F: 20 GB; a session hitting a full disk stops and waits.
-- 2 Oct: Deleting beyond the limits needs his yes on a page; never deleted: what he approved, what the game or a build uses, what the backup covers, his own files.
+- 2 Oct: Never deleted: what he approved, what the game or a build uses, what the backup covers, his own files.
 - 3 Oct: Git holds text and small files only (MetaHuman files never, 24 Sep); large output on F: and in the Dropbox backup, which never deletes or overwrites (25 Sep); cleaning the old history is his decision.
