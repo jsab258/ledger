@@ -12,7 +12,7 @@
 **How it fails:**
 - A file over its cap fails the build, which names the file, its count and its three largest sections, so the session knows where to cut.
 - A missing file fails too, because nothing measured must never read as clean, as the check runner's own rule says.
-- The script and its self-test are below. Both were run here: the self-test passes all five cases. Against today's files it fails all five: CLAUDE.md 3,970 words, NOW.md 2,281, TOWN.md 831, CLOTHES.md 1,732, RULINGS.md missing. Against the drafts, CLAUDE.md (989) and RULINGS.md (2,466) pass.
+- The script and its self-test are below. Both were run here: the self-test passes all five cases. Against today's files (main at 5db99d5) it fails all five: CLAUDE.md 4,372 words, NOW.md 3,241, TOWN.md 831, CLOTHES.md 1,732, RULINGS.md missing. Against the drafts, CLAUDE.md (993) and RULINGS.md (2,490) pass.
 
 ## How it is wired
 
@@ -31,7 +31,7 @@
 
 **The check goes in the same commit that applies the drafts and trims NOW.md, TOWN.md and CLOTHES.md under their caps.** Landed alone, it turns every push red at once, because all five files fail today.
 
-- **NOW.md's 200 words** cannot hold the builder's list as he wrote it (about 600 words today). The cap waits on his answer to question 5: one line per item, with the detail in the research it names, is recommended.
+- **NOW.md's 200 words** cannot hold the builder's list as he wrote it (about 1,600 words today). The cap waits on his answer to question 2: one line per item, with the detail in the research it names, is recommended.
 - **TOWN.md and CLOTHES.md** are each trimmed by their own session, to current state and the list, with history left in git.
 
 ## The script (tools/doc-caps.py)
