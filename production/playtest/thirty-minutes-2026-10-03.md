@@ -1,4 +1,4 @@
-# Thirty minutes, played and counted (3 October 2026, P4, part a)
+# Thirty minutes, played and counted (3 and 4 October 2026, P4)
 
 Jafar's order of 3 October: "P4: the AI tester plays one full thirty-minute session as a player would, and counts its empty minutes; those become the content list." Part a, as the review planned it (3-PROOFS.md): the whole thirty minutes on the free stand-in talk, to count content and empty minutes. Part b, the talk counted on the real checked path, runs on 4 October within that day's dollar (today's is spent to $0.71).
 
@@ -66,3 +66,35 @@ The clock runs a game day in about twelve real minutes, so thirty minutes is fiv
 - **The fish market's window at night is a flat cream panel.**
 - **The stand-in talk says "the player" and quotes lines back.** The nightly walk uses it; the friends' build uses the real talk.
 - **Z stops for a beat the player cannot see** ("tea", "landing", "ellis") and then does nothing until it is past. Run 1 stood through such an evening.
+
+## Part b: the talk on the real checked path (4 October, 00:04 to 00:45)
+
+The same played copy from New game, with the game's own talk program on the key (play.py --real-talk, capped at $0.50 in code), through the same moments: Sheila before the window, the window, Ron with the envelope, the day after, and DS Ellis's visit. The tester skipped the landing.
+
+| when | to | Tom said | the reply | words / voice |
+|---|---|---|---|---|
+| day 0, before the window | Sheila | How long did you work for my uncle? | "Thirty-one years." | 2.5 / 4.5 s |
+| | Sheila | What was he like to work for? | "Fair." | 0.7 / 2.7 s |
+| after the crash | Sheila | Did you hear that noise up at Rita's? | "Glass going over." | 2.5 / 4.1 s |
+| evening, the envelope | Ron | What's in the envelope? Who's the man at the landing? | "I don't go looking in envelopes, boss, that's not my business and never was." | 2.4 / 4.7 s |
+| | Ron | Anything said about Rita's window today? | "Heard the glass go over there, round half two this afternoon." | 2.6 / 3.7 s |
+| day 1 | Sheila | Is anyone saying who did Rita's window? | "Word is somebody got a good look." | 3.6 / 5.0 s |
+| day 4, Ellis has called | Ron | A detective's been asking after me. What does he want? | "Didn't say much to me, boss, and I didn't offer much back." | 2.5 / 6.9 s |
+| | Ron (asked of Sheila) | Did that detective talk to you about me? | "That's one for her, not me. I'm just stood here on the pavement..." | 1.7 / 5.2 s |
+
+- **Checked: 8 of 8.** None fell back, so "that's all I know" came 0 times; none timed out.
+- **Delays:** words after a median 2.5 s (0.7 to 3.6 s). First sound after a median 4.6 s (2.7 to 6.9 s), never within 2 s; that is item 3's question.
+- **Cost:** $0.20 for 41 calls (8 Sonnet, 33 Haiku), under the $0.50 cap. Sunday's dollar has $0.80 left.
+- **The town knew, and stayed inside what it saw:**
+  - Ron heard the glass "round half two" (the deed was at 14:33) and never saw who.
+  - The next day Sheila had heard someone got a good look.
+  - The two passers-by who saw it went to the police, and DS Ellis came on day 4.
+  - Ron knew Tom by his clothes, and gave the detective little.
+- **Broken illusions:**
+  - The replies are very short ("Fair.", "Glass going over.").
+  - The first letter typed lands at the line's end, as in part a.
+  - T opens the talk with whoever is nearest, not the one Tom faces: the last line went to Ron, who passed it to Sheila in character.
+  - A line typed after Darren had walked off went to the game as keys.
+  - "The man at the landing: Nothing tonight" showed while Tom stood in the street.
+  - The quay end by day is box sheds against a photograph of trees.
+- Records: the session production/playtest/ai-tester/2026-10-04-0004 (local), the transcript in F:/LedgerTools/tmp/builder/real-talk/2026-10-04-0004, and the cost line in production/playtest/talk-runs.jsonl.

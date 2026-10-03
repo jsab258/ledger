@@ -2485,12 +2485,24 @@ RISE_TIERS = 5
 #: So: 110 m out, 9 m a tier - which lands the top row at 36 m and its roofs
 #: at the bible's own 45 m crest - houses set back from each wall's edge so
 #: the wall's face shows, one house to a piece, render on about a third.
-RISE_FIRST_X = 110.0
-RISE_TIER_STEP_X = 24.0
-RISE_TIER_STEP_Z = 9.0
+#: THE SECOND BUILD, 3 October, evening (Jafar: "too high, too regular and too bright"; the
+#: composition's third review: the crest about 5% of the frame too high and level). Further
+#: back (125 m) and less steep (7.5 m a tier, each tier's spacing varied), so the crest sits
+#: (the third build, 4 October: the houses 5 m back from each wall, so the wall and the front
+#: gardens show between the rows)
+#: lower in the frame and the fog softens it; the rows wander along the contour by up to
+#: RISE_CONTOUR_WANDER_M, and the walls follow it in RISE_WALL_RUN_M runs.
+RISE_FIRST_X = 125.0
+RISE_TIER_STEP_X = 27.0
+RISE_TIER_STEP_Z = 7.5
 RISE_ROW_DEPTH = 8.0
-RISE_SETBACK = 3.0
+RISE_SETBACK = 5.0
 RISE_Y_SPAN = (-120.0, 60.0)
+RISE_CONTOUR_WANDER_M = 3.0
+RISE_WALL_RUN_M = 3.0
+#: THE FAR RIDGE (4 October): its depth from foot to back and how far it climbs above the last tier.
+RISE_RIDGE_DEPTH_M = 90.0
+RISE_RIDGE_RISE_M = 14.0
 #: THE FIRST TIER'S OWN WALL above the open ground past the bend (1 October).
 RISE_FIRST_WALL_M = 2.5
 
@@ -3813,112 +3825,310 @@ def _tree(out, pid, cx, cy, ground, height, rnd):
                 crown_z + big * rnd.uniform(-0.35, 0.45), big * rnd.uniform(0.45, 0.68), rnd)
 
 
+def _contour_dx(t, y):
+    """How far tier t's contour wanders toward or away from the camera at y: a hillside's
+    rows follow the ground, never a ruler (his words of 3 October, evening: "too regular")."""
+    ph = 1.7 * t + 0.4
+    return RISE_CONTOUR_WANDER_M * math.sin(y / 27.0 + ph) + 0.4 * RISE_CONTOUR_WANDER_M * math.sin(y / 9.5 + 2.3 * ph)
+
+
+def _hipped_roof(out, pid, material, xa, xb, y0, y1, z, rise, note=""):
+    """A hipped roof over xa..xb (its front at xa, toward the camera) and y0..y1 along the
+    contour: four slopes to a ridge along y, each end set in by half the depth. Wound outwards
+    as _road is (each face's normal by the right hand)."""
+    d = xb - xa
+    xm = (xa + xb) / 2.0
+    inset = min(d / 2.0, (y1 - y0) / 2.0 - 0.05)
+    v = [(xa, y0, z), (xb, y0, z), (xb, y1, z), (xa, y1, z),
+         (xm, y0 + inset, z + rise), (xm, y1 - inset, z + rise)]
+    f = [(0, 4, 5, 3), (1, 2, 5, 4), (0, 1, 4), (2, 3, 5), (0, 3, 2, 1)]
+    out.append({"id": pid, "material": material, "kind": "mesh", "verts": v, "faces": f, "note": note})
+
+
+def _gable_on_roof(out, pid, material, x0, x1, y0, y1, z, rise, note=""):
+    """A pitched roof whose ridge runs AWAY from the camera (along x), its gable triangle
+    facing it: a terrace that climbs the slope shows its gable ends, not its long side. Two
+    slopes, two gables and a soffit, wound outwards."""
+    ym = (y0 + y1) / 2.0
+    v = [(x0, y0, z), (x1, y0, z), (x1, ym, z + rise), (x0, ym, z + rise), (x0, y1, z), (x1, y1, z)]
+    f = [(0, 1, 2, 3), (5, 4, 3, 2), (0, 3, 4), (1, 5, 2), (0, 4, 5, 1)]
+    out.append({"id": pid, "material": material, "kind": "mesh", "verts": v, "faces": f, "note": note})
+
+
+def _framed_window(out, pid, xf, ya, yb, za, zb, lit):
+    """A sash window as the hill shows it: glass on the face, a white painted frame proud of it
+    and the meeting rail across its middle (his order of 3 October, evening: white frames, sash
+    bars, glass that catches the sky). Faces toward the camera only, as single meshes: at 125 m
+    one pixel is about 5 cm, so the 9 cm frame is two, and nobody sees its back."""
+    fw = 0.09
+    out.append({"id": pid + "_glass", "material": "window_far_lit" if lit else "car_glass", "kind": "mesh",
+                "verts": [(xf - 0.02, ya, za), (xf - 0.02, ya, zb), (xf - 0.02, yb, zb), (xf - 0.02, yb, za)],
+                "faces": [(0, 1, 2, 3)], "note": "glass"})
+    x = xf - 0.06
+    zm = (za + zb) / 2.0
+    v = [(x, ya - fw, za - fw), (x, ya - fw, zb + fw), (x, yb + fw, zb + fw), (x, yb + fw, za - fw),
+         (x, ya, za), (x, ya, zb), (x, yb, zb), (x, yb, za),
+         (x, ya, zm - 0.035), (x, ya, zm + 0.035), (x, yb, zm + 0.035), (x, yb, zm - 0.035)]
+    f = [(0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7), (8, 9, 10, 11)]
+    out.append({"id": pid + "_frame", "material": "paint_white", "kind": "mesh", "verts": v, "faces": f,
+                "note": "white-frame-and-meeting-rail"})
+
+
+def _stack(out, pid, wall, xm, y, top, rnd):
+    """A chimney stack on the party wall with its pots, the roofline's rhythm."""
+    _box(out, pid, wall, xm - 0.35, xm + 0.35, y - 0.5, y + 0.5, top - 0.6, top + 1.0, "a-stack-on-the-party-wall")
+    pots = rnd.randint(2, 4)
+    for k in range(pots):
+        py = y - 0.35 + 0.7 * (k + 0.5) / pots
+        _box(out, "%s_pot%d" % (pid, k), "pot_clay" if rnd.random() < 0.7 else "pot_buff",
+             xm - 0.11, xm + 0.11, py - 0.1, py + 0.1, top + 1.0, top + 1.0 + rnd.uniform(0.35, 0.6), "a-pot")
+
+
+def _clump(out, pid, material, cx, cy, cz, r, rnd):
+    """One mass of leaves: an icosahedron, each point pushed in or out, squashed. Many small
+    ones make a crown whose outline breaks up as leaves do; a few big balls read as blobs
+    (the hill's fresh review, 4 October)."""
+    t = (1.0 + math.sqrt(5.0)) / 2.0
+    base = [(-1, t, 0), (1, t, 0), (-1, -t, 0), (1, -t, 0), (0, -1, t), (0, 1, t),
+            (0, -1, -t), (0, 1, -t), (t, 0, -1), (t, 0, 1), (-t, 0, -1), (-t, 0, 1)]
+    f = [(0, 11, 5), (0, 5, 1), (0, 1, 7), (0, 7, 10), (0, 10, 11), (1, 5, 9), (5, 11, 4),
+         (11, 10, 2), (10, 7, 6), (7, 1, 8), (3, 9, 4), (3, 4, 2), (3, 2, 6), (3, 6, 8),
+         (3, 8, 9), (4, 9, 5), (2, 4, 11), (6, 2, 10), (8, 6, 7), (9, 8, 1)]
+    n = math.sqrt(1.0 + t * t)
+    verts = []
+    for (x, y, z) in base:
+        k = r * rnd.uniform(0.7, 1.2) / n
+        verts.append((cx + x * k, cy + y * k, cz + z * k * 0.8))
+    out.append({"id": pid, "material": material, "kind": "mesh", "verts": verts, "faces": f, "note": "leaves"})
+
+
+def _leafy_tree(out, pid, cx, cy, ground, height, rnd, tall=False):
+    """A broadleaf at the hill's range: a trunk that shows below the crown, and a crown of a
+    dozen small leaf masses scattered through an ellipsoid (tall and narrow for an ash or a
+    poplar), lighter or darker green tree by tree."""
+    trunk_top = ground + height * (0.5 if tall else 0.42)
+    _box(out, pid + "_trunk", "prop_timber", cx - 0.15, cx + 0.15, cy - 0.15, cy + 0.15, ground, trunk_top, "a-trunk")
+    colour = "foliage" if rnd.random() < 0.55 else "foliage_dark"
+    rh = height * (0.32 if tall else 0.28)          # the crown's half-height
+    rw = height * (0.16 if tall else 0.3)           # its half-width
+    cz = ground + height - rh
+    # THE CORE FIRST, then the masses round it: a crown is one body of leaves with a broken
+    # edge, not loose puffs (the third build's own check, 4 October).
+    _clump(out, pid + "_core", colour, cx, cy, cz, min(rw, rh) * 0.85, rnd)
+    for k in range(rnd.randint(8, 11)):
+        a = rnd.uniform(0.0, 2.0 * math.pi)
+        d = rnd.uniform(0.25, 0.6)
+        dz = rnd.uniform(-0.6, 0.7)
+        _clump(out, "%s_l%d" % (pid, k), colour, cx + rw * d * math.cos(a), cy + rw * d * math.sin(a),
+               cz + rh * dz, rw * rnd.uniform(0.45, 0.62), rnd)
+
+
 def _north_rise(out):
-    """The inland rise: retaining walls and contour terraces, tier on tier."""
+    """The inland rise: contour terraces behind retaining walls, houses of mixed kinds,
+    gardens and trees, tier on tier, and a wooded ridge fading into the mist above it.
+
+    THE THIRD BUILD, 4 October (the proof view, step 2.9). Jafar, 3 October, evening: "the hill
+    is a wall of identical box houses, too high, too regular and too bright, where the sheet has
+    a lower, softer rise of varied houses and trees fading into mist". The second build's fresh
+    review (4 October) found the height and brightness right and the rest short: every row
+    level and square to the camera, each roof butting the wall above, no gardens or walls
+    showing, one kit's pink brick throughout, blob trees, a hard crest against the sky. So, by
+    the asset plan's method (production/research/asset-plan/5-VEGETATION-AND-DISTANCE.md, B):
+    houses set back so the walls and front gardens show; terraces that CLIMB the slope gable-on
+    among those along it; more render and paint, some red tile roofs; trees with trunks and
+    broken crowns in front of, between and behind the rows; a far wooded ridge."""
     import random
-    rnd = random.Random(20260922)       # fixed: the same hill every render
+    rnd = random.Random(20261004)       # fixed: the same hill every render
+    x0 = RISE_FIRST_X
+    zb = APPROACH_OPEN_Z + RISE_FIRST_WALL_M
+    n_lit = 0
     for t in range(RISE_TIERS):
-        x0 = RISE_FIRST_X + t * RISE_TIER_STEP_X
-        # THE HILL STANDS ON THE GROUND PAST THE BEND, 1 October: the street
-        # climbs to the bend now, so the first tier is a wall's height above
-        # that ground and not at the quay's level.
-        zb = APPROACH_OPEN_Z + RISE_FIRST_WALL_M + t * RISE_TIER_STEP_Z
-        below = zb - RISE_TIER_STEP_Z if t > 0 else APPROACH_OPEN_Z - 0.4
-        # THE RETAINING WALL holding this tier up above the one in front,
-        # in the stone the quay is built of, running the whole contour.
-        _box(out, "backdrop_rise_wall_%d" % t, "stone",
-             x0 - 1.2, x0, RISE_Y_SPAN[0], RISE_Y_SPAN[1], below, zb,
-             "retaining-wall/%.1fm/the-bible's-own-device" % (zb - below))
-        xa = x0 + RISE_SETBACK
-        xb = xa + RISE_ROW_DEPTH
-        xm = (xa + xb) / 2.0
-        # THE TIER'S OWN GROUND, grass, from this wall's edge back to the
-        # next wall: what shows between the houses now there are gaps.
-        _box(out, "backdrop_rise_ground_%d" % t, "grass", x0, x0 + RISE_TIER_STEP_X,
-             RISE_Y_SPAN[0], RISE_Y_SPAN[1], zb - 0.3, zb, "the-tier's-own-ground")
-        # TREES ALONG THE TIER'S FRONT EDGE, 24 September (attempt five, its
-        # second pass): in Unreal the stepped terraces read as real housing but
-        # the hill became a wall of it, the garden trees hidden behind the
-        # tier in front. The sheet's hillside has green among its houses, so
-        # each tier carries clumps along its front, between its wall's edge
-        # and its houses, where a slope's gardens and verges are.
+        if t > 0:
+            x0 += RISE_TIER_STEP_X * rnd.uniform(0.9, 1.2)
+            zb += RISE_TIER_STEP_Z * rnd.uniform(0.85, 1.15)
+        below = zb - RISE_TIER_STEP_Z * 1.2 if t > 0 else APPROACH_OPEN_Z - 0.4
+        next_x = x0 + RISE_TIER_STEP_X * 0.9
+        wall_mat = "stone" if rnd.random() < 0.7 else "brick_grey"
+        # THE RETAINING WALL AND THE TIER'S GROUND, in short runs along the wandering contour.
+        y = RISE_Y_SPAN[0]
+        while y < RISE_Y_SPAN[1]:
+            y1 = min(y + RISE_WALL_RUN_M, RISE_Y_SPAN[1])
+            dx = _contour_dx(t, (y + y1) / 2.0)
+            _box(out, "backdrop_rise_wall_%d_%d" % (t, int(y - RISE_Y_SPAN[0])), wall_mat,
+                 x0 + dx - 1.2, x0 + dx, y, y1, below, zb, "retaining-wall/the-contour")
+            nx = next_x + _contour_dx(t + 1, (y + y1) / 2.0) - 1.2
+            _box(out, "backdrop_rise_ground_%d_%d" % (t, int(y - RISE_Y_SPAN[0])), "grass",
+                 x0 + dx, max(nx, x0 + dx + RISE_SETBACK + RISE_ROW_DEPTH + 2.0), y, y1, zb - 0.3, zb,
+                 "the-tier-ground")
+            y = y1
+        # TREES ALONG THE TIER'S FRONT EDGE, in its front gardens.
         if t > 0:
             ty = RISE_Y_SPAN[0] + rnd.uniform(0.0, 8.0)
             while ty < RISE_Y_SPAN[1] - 2.0:
                 if rnd.random() < 0.55:
-                    r = rnd.uniform(2.4, 4.2)
-                    _tree(out, "backdrop_rise_%d_front_tree_%d" % (t, int(ty)),
-                          rnd.uniform(x0 + 0.8, x0 + RISE_SETBACK - 0.3), ty, zb, r * 2.6, rnd)
-                ty += rnd.uniform(5.0, 12.0)
+                    fx = x0 + _contour_dx(t, ty) + rnd.uniform(1.0, RISE_SETBACK - 1.0)
+                    _leafy_tree(out, "backdrop_rise_%d_front_tree_%d" % (t, int(ty)), fx, ty, zb,
+                                rnd.uniform(7.0, 11.0), rnd, tall=rnd.random() < 0.3)
+                ty += rnd.uniform(6.0, 13.0)
         y = RISE_Y_SPAN[0] + rnd.uniform(0.0, 6.0)
         n = 0
-        row_a, row_b = xa, xb
-        # ATTEMPT FIVE, 24 September: STEPPED TERRACES. Beside the sheet in
-        # Unreal the four tries still read as stadium seating - five flat
-        # rows of separate boxes. A hillside street in a British port town is
-        # a TERRACE that steps up the slope a house at a time, one roofline
-        # stepping with it, render and brick side by side, a stack on every
-        # party wall. So the houses now come in terraces of three to seven,
-        # each house its own colour and each a step higher than the last going
-        # east - to the right in the game's view, as the sheet's hillside
-        # climbs - with the gable of the step showing. Gaps, gardens and trees
-        # between terraces as before.
-        while y < RISE_Y_SPAN[1]:
-            step_x = rnd.uniform(-1.0, 1.5)
-            xa, xb = row_a + step_x, row_b + step_x
+        while y < RISE_Y_SPAN[1] - 4.0:
+            kind = rnd.choices(("brick", "render", "stone", "semi", "climb"), weights=(28, 28, 10, 20, 14))[0]
+            dx = _contour_dx(t, y + 8.0)
+            xa = x0 + dx + RISE_SETBACK + rnd.uniform(-0.8, 1.2)
+            xb = xa + RISE_ROW_DEPTH * rnd.uniform(0.8, 1.0)
             xm = (xa + xb) / 2.0
-            count = rnd.randint(3, 5)
-            w = rnd.uniform(5.0, 6.2)              # one house of the terrace
-            h = rnd.uniform(5.2, 6.2)              # its eaves, the terrace's own
-            rise = rnd.uniform(2.6, 3.4)           # its roof
-            step = rnd.uniform(0.5, 0.9)           # how far each house climbs
-            base = zb + rnd.uniform(0.0, 1.2)
-            for k in range(count):
-                y1 = min(y + w, RISE_Y_SPAN[1])
-                if y1 - y < 2.0:
-                    break
-                r = rnd.random()
-                wall = "render_cream" if r < 0.34 else ("brick_red" if r < 0.80 else "brick_grey")
-                top = base + h
-                # THE WALL RUNS DOWN TO THE TIER'S GROUND, so a house that has
-                # climbed stands on its own plinth rather than on air.
-                _prism(out, "backdrop_rise_%d_%d" % (t, n), wall,
-                       ((xb, zb), (xb, top), (xa, top), (xa, zb)), y, y1,
-                       "terraced-house/%d-of-%d/%.1fm-wide/%.1fm-up-the-slope/%s" % (k + 1, count, y1 - y, base - zb, wall))
-                _prism(out, "backdrop_rise_%d_%d_roof" % (t, n), "slate",
-                       ((xb + 0.3, top), (xm, top + rise), (xa - 0.3, top)), y, y1,
-                       "slate/%.1fm-rise" % rise)
-                for fz in (1.1, 3.6):
-                    if fz + 1.3 < h and y1 - y > 2.0:
-                        # ABOUT THREE IN TEN LIT AT NIGHT, by position (29 September).
-                        lit = (t * 5 + n * 3 + int(fz)) % 10 < 3
-                        _box(out, "backdrop_rise_%d_%d_win%d" % (t, n, int(fz)),
-                             "window_far_lit" if lit else "car_glass",
-                             xa - 0.05, xa, y + 0.8, y1 - 0.8, base + fz, base + fz + 1.3,
-                             "a-floor-of-windows")
-                # A STACK ON THE PARTY WALL, the terrace's rhythm.
-                if k > 0:
-                    _box(out, "backdrop_rise_%d_%d_stack" % (t, n), "brick_red",
-                         xm - 0.35, xm + 0.35, y - 0.45, y + 0.45,
-                         top + rise - 0.6, top + rise + 1.1, "a-stack-on-the-party-wall")
-                n += 1
-                y = y1
-                base += step
-            # TWO GAPS IN THREE ARE A GARDEN OR A PLOT, and a garden has
-            # trees: the first stepped render filled the hill wall to wall.
-            if rnd.random() < 0.67:
-                gap = rnd.uniform(8.0, 20.0)
-                k = 0
-                ty = y + 1.5
-                while ty < y + gap - 1.5 and k < 4:
-                    r = rnd.uniform(2.2, 4.0)
-                    _tree(out, "backdrop_rise_%d_%d_tree%d" % (t, n, k),
-                          rnd.uniform(xa - 1.0, xb + 4.0), ty + r * 0.8, zb, r * 2.6, rnd)
-                    ty += r * 1.6
-                    k += 1
-                y = y + gap
+            base = zb + rnd.uniform(0.0, 0.8)
+            roof_mat = "pot_clay" if rnd.random() < 0.15 else "slate"
+            y_start = y
+            if kind == "climb":
+                # A TERRACE UP THE SLOPE, gable-on to the camera: each house a step higher and
+                # further back, its own gable showing above the one in front.
+                d = rnd.uniform(6.5, 7.5)                  # across, the gable's width
+                w = rnd.uniform(5.0, 5.8)                  # each house's length up the slope
+                count = rnd.randint(2, 4)
+                h = rnd.uniform(5.2, 6.0)
+                wall = rnd.choice(("brick_red", "render_cream", "brick_rubbed", "paint_white"))
+                for k in range(count):
+                    hx0, hx1 = xa + k * w, xa + (k + 1) * w
+                    hb = base + k * rnd.uniform(1.2, 1.8)
+                    _box(out, "backdrop_rise_%d_%d" % (t, n), wall, hx0, hx1, y, y + d, zb, hb + h,
+                         "a-house-up-the-slope/%d-of-%d" % (k + 1, count))
+                    _gable_on_roof(out, "backdrop_rise_%d_%d_roof" % (t, n), roof_mat, hx0 - 0.3, hx1 + 0.3,
+                                   y - 0.3, y + d + 0.3, hb + h, rnd.uniform(2.6, 3.2), "gable-on")
+                    if k == 0:
+                        for c, z0 in ((0.3, 3.4), (0.7, 3.4), (0.3, 0.9)):
+                            yc = y + d * c
+                            _framed_window(out, "backdrop_rise_%d_%d_w%d%d" % (t, n, int(c * 10), int(z0)),
+                                           hx0, yc - 0.5, yc + 0.5, hb + z0, hb + z0 + 1.35, n_lit % 10 < 3)
+                            n_lit += 1
+                        _box(out, "backdrop_rise_%d_%d_door" % (t, n), "paint_door", hx0 - 0.04, hx0,
+                             y + d * 0.7 - 0.45, y + d * 0.7 + 0.45, hb, hb + 2.05, "a-door")
+                    _stack(out, "backdrop_rise_%d_%d_stack" % (t, n), "brick_red", hx1 - 0.4, y + d * 0.5, hb + h + 2.4, rnd)
+                    n += 1
+                y += d
+            elif kind == "semi":
+                # A PAIR OF SEMIS under one hipped roof (the 1930s ones up the hill).
+                w = rnd.uniform(6.5, 7.8)
+                h = rnd.uniform(5.4, 6.0)
+                wall = rnd.choice(("render_cream", "paint_white", "render_patch", "brick_red"))
+                for k in range(2):
+                    ya, yb = y + k * w, y + (k + 1) * w
+                    _prism(out, "backdrop_rise_%d_%d" % (t, n), wall,
+                           ((xb, zb), (xb, base + h), (xa, base + h), (xa, zb)), ya, yb,
+                           "a-semi/%s" % wall)
+                    for c, z0 in ((0.3, 3.3), (0.7, 3.3), (0.3, 0.8)):
+                        yc = ya + w * c
+                        _framed_window(out, "backdrop_rise_%d_%d_w%d%d" % (t, n, int(c * 10), int(z0)),
+                                       xa, yc - 0.55, yc + 0.55, base + z0, base + z0 + 1.35, n_lit % 10 < 3)
+                        n_lit += 1
+                    yd = ya + w * 0.72
+                    _box(out, "backdrop_rise_%d_%d_door" % (t, n), "paint_door", xa - 0.04, xa,
+                         yd - 0.45, yd + 0.45, base, base + 2.05, "a-door")
+                    n += 1
+                _hipped_roof(out, "backdrop_rise_%d_%d_roof" % (t, n), roof_mat,
+                             xa - 0.35, xb + 0.35, y - 0.35, y + 2 * w + 0.35, base + h, rnd.uniform(2.8, 3.4), "a-hipped-roof")
+                _stack(out, "backdrop_rise_%d_%d_stack" % (t, n), "brick_red", xm, y + w, base + h + 1.8, rnd)
+                y += 2 * w
             else:
-                y = y + rnd.uniform(1.5, 4.0)      # a passage, a stair
+                count = rnd.randint(2, 5)
+                w = rnd.uniform(4.8, 6.2)
+                h = rnd.uniform(5.2, 6.3)
+                rise = rnd.uniform(2.6, 3.3)
+                step = rnd.uniform(0.3, 0.8)
+                bays = rnd.random() < 0.45
+                for k in range(count):
+                    y1 = min(y + w, RISE_Y_SPAN[1])
+                    if y1 - y < 3.0:
+                        break
+                    if kind == "brick":
+                        wall = rnd.choices(("brick_red", "brick_rubbed", "brick_grey", "render_cream"), weights=(45, 25, 15, 15))[0]
+                    elif kind == "render":
+                        wall = rnd.choice(("render_cream", "paint_white", "render_patch", "render_cream", "paint_white"))
+                    else:
+                        wall = "stone"
+                    top = base + h
+                    _prism(out, "backdrop_rise_%d_%d" % (t, n), wall,
+                           ((xb, zb), (xb, top), (xa, top), (xa, zb)), y, y1,
+                           "terraced-house/%d-of-%d/%s" % (k + 1, count, wall))
+                    _prism(out, "backdrop_rise_%d_%d_roof" % (t, n), roof_mat,
+                           ((xb + 0.3, top), (xm, top + rise), (xa - 0.3, top)), y, y1, "pitched-roof")
+                    hw = y1 - y
+                    for c in (0.28, 0.72):
+                        yc = y + hw * c
+                        _framed_window(out, "backdrop_rise_%d_%d_up%d" % (t, n, int(c * 100)),
+                                       xa, yc - 0.45, yc + 0.45, base + 3.4, base + 4.8, n_lit % 10 < 3)
+                        n_lit += 1
+                    yw = y + hw * 0.3
+                    if bays:
+                        # A CANTED BAY reads at this range as a box with its own lead roof.
+                        _box(out, "backdrop_rise_%d_%d_bay" % (t, n), wall, xa - 0.7, xa, yw - 1.1, yw + 1.1,
+                             base, base + 2.7, "a-bay")
+                        _box(out, "backdrop_rise_%d_%d_bayroof" % (t, n), "lead", xa - 0.78, xa, yw - 1.18, yw + 1.18,
+                             base + 2.7, base + 2.9, "the-bay-lead")
+                        _framed_window(out, "backdrop_rise_%d_%d_bayw" % (t, n), xa - 0.7, yw - 0.8, yw + 0.8,
+                                       base + 0.9, base + 2.3, n_lit % 10 < 3)
+                    else:
+                        _framed_window(out, "backdrop_rise_%d_%d_dn" % (t, n), xa, yw - 0.55, yw + 0.55,
+                                       base + 0.9, base + 2.35, n_lit % 10 < 3)
+                    n_lit += 1
+                    yd = y + hw * 0.75
+                    _box(out, "backdrop_rise_%d_%d_door" % (t, n), "paint_door", xa - 0.04, xa,
+                         yd - 0.45, yd + 0.45, base, base + 2.05, "a-door")
+                    if k > 0:
+                        _stack(out, "backdrop_rise_%d_%d_stack" % (t, n), "brick_red", xm, y, top + rise, rnd)
+                    n += 1
+                    y = y1
+                    base += step
+            # THE FRONT: a low wall or a hedge along the gardens, on the tier's edge.
+            fy0, fy1 = y_start, y
+            fxa = x0 + _contour_dx(t, (fy0 + fy1) / 2.0) + 0.2
+            if fy1 - fy0 > 2.0:
+                if rnd.random() < 0.4:
+                    _box(out, "backdrop_rise_%d_%d_hedge" % (t, n), "foliage_dark", fxa, fxa + 0.7,
+                         fy0, fy1, zb, zb + rnd.uniform(1.0, 1.5), "a-privet-hedge")
+                else:
+                    _box(out, "backdrop_rise_%d_%d_frontwall" % (t, n), "brick_red" if kind == "brick" else "stone",
+                         fxa, fxa + 0.25, fy0, fy1, zb, zb + 0.85, "a-front-wall")
+            # BEHIND THE ROW, the back gardens' trees, tall enough to show over the roofs.
+            ty = fy0 + rnd.uniform(1.0, 6.0)
+            while ty < fy1:
+                if rnd.random() < 0.6:
+                    _leafy_tree(out, "backdrop_rise_%d_%d_back_tree_%d" % (t, n, int(ty)), xb + rnd.uniform(2.0, 7.0), ty, zb,
+                                rnd.uniform(10.0, 15.0), rnd, tall=rnd.random() < 0.35)
+                ty += rnd.uniform(5.0, 10.0)
+            # GAPS: a garden, a plot or a lane between terraces, wider than before so the walls
+            # and the green show; gardens have trees.
+            if rnd.random() < 0.7:
+                gap = rnd.uniform(9.0, 22.0)
+                k = 0
+                ty = y + 2.0
+                while ty < y + gap - 2.0 and k < 4:
+                    _leafy_tree(out, "backdrop_rise_%d_%d_tree%d" % (t, n, k), rnd.uniform(xa - 1.0, xb + 4.0), ty, zb,
+                                rnd.uniform(7.0, 12.0), rnd, tall=rnd.random() < 0.3)
+                    ty += rnd.uniform(4.0, 7.0)
+                    k += 1
+                y += gap
+            else:
+                y += rnd.uniform(2.0, 4.5)
+    # THE FAR RIDGE above the last tier: rough ground rising to a wooded skyline, so the town
+    # ends in trees fading into the mist and not at a roofline against the sky (the second
+    # build's review: "a hard line against flat sky; the sheet has a fainter wooded ridge").
+    rx0 = x0 + RISE_TIER_STEP_X * 2.2
+    rz = zb + RISE_TIER_STEP_Z * 0.6
+    _prism(out, "backdrop_rise_ridge_ground", "grass",
+           ((rx0 + RISE_RIDGE_DEPTH_M, rz - 6.0), (rx0 + RISE_RIDGE_DEPTH_M, rz + RISE_RIDGE_RISE_M * 0.7),
+            (rx0 + RISE_RIDGE_DEPTH_M * 0.55, rz + RISE_RIDGE_RISE_M), (rx0, rz), (rx0, rz - 6.0)),
+           RISE_Y_SPAN[0] - 40.0, RISE_Y_SPAN[1] + 40.0, "the-far-ridge")
+    ty = RISE_Y_SPAN[0] - 38.0
+    k = 0
+    while ty < RISE_Y_SPAN[1] + 38.0:
+        f = rnd.uniform(0.25, 0.75)
+        gx = rx0 + RISE_RIDGE_DEPTH_M * 0.55 * f
+        gz = rz + RISE_RIDGE_RISE_M * f
+        _leafy_tree(out, "backdrop_rise_ridge_tree_%d" % k, gx, ty, gz, rnd.uniform(10.0, 16.0), rnd, tall=rnd.random() < 0.25)
+        ty += rnd.uniform(6.0, 11.0)
+        k += 1
 
 
 def _backdrop(out):
@@ -7826,11 +8036,19 @@ def selftest():
                   ",".join(north_intruders[:4]))
             # AND IT CLIMBS: every tier stands higher than the one in front,
             # which is what makes it a rise and not a wall of houses.
-            walls = sorted((b for b in rise if "_wall_" in b["id"]), key=lambda b: b["x0"])
+            # THE WALLS RUN IN SHORT LENGTHS ALONG A WANDERING CONTOUR since the hill's second
+            # build (3 October): grouped by tier (backdrop_rise_wall_<tier>_<run>), each tier's
+            # wall tops stand above the one in front, and the tiers go back as they climb.
+            tiers = {}
+            for b in rise:
+                if "_wall_" in b["id"]:
+                    tiers.setdefault(int(b["id"].split("_wall_")[1].split("_")[0]), []).append(b)
+            order = [tiers[k] for k in sorted(tiers)]
             check("accept/the-rise-climbs-tier-on-tier",
-                  len(walls) >= 3 and all(walls[i + 1]["z1"] > walls[i]["z1"]
-                                          for i in range(len(walls) - 1)),
-                  "%d retaining walls" % len(walls))
+                  len(order) >= 3 and all(min(b["z1"] for b in order[i + 1]) > max(b["z1"] for b in order[i])
+                                          and min(b["x0"] for b in order[i + 1]) > max(b["x0"] for b in order[i])
+                                          for i in range(len(order) - 1)),
+                  "%d tiers of retaining wall" % len(order))
             check("accept/the-far-end-is-not-sky", len(back) >= 20,
                   "%d piece(s)" % len(back))
             # IT IS SOUTH OF THE STREET AND ENTIRELY BEHIND IT. The blocks

@@ -92,7 +92,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 2584
+   "faces": 2830
   },
   {
    "mesh": "street_brick_red",
@@ -122,7 +122,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 5389
+   "faces": 5197
   },
   {
    "mesh": "street_brick_rubbed",
@@ -149,7 +149,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 2998
+   "faces": 3082
   },
   {
    "mesh": "street_car_glass",
@@ -172,7 +172,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1002
+   "faces": 210
   },
   {
    "mesh": "street_card_int23_fish",
@@ -905,7 +905,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 37440
+   "faces": 21000
   },
   {
    "mesh": "street_foliage_dark",
@@ -928,7 +928,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 23600
+   "faces": 18972
   },
   {
    "mesh": "street_frame_metal",
@@ -1921,7 +1921,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 36
+   "faces": 1813
   },
   {
    "mesh": "street_grime",
@@ -2047,7 +2047,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1312
+   "faces": 1438
   },
   {
    "mesh": "street_lens_amber",
@@ -2185,7 +2185,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1040
+   "faces": 1574
   },
   {
    "mesh": "street_paint_joinery",
@@ -2231,7 +2231,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 208
+   "faces": 1699
   },
   {
    "mesh": "street_paint_yellow",
@@ -2311,7 +2311,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 400
+   "faces": 814
   },
   {
    "mesh": "street_pot_clay",
@@ -2338,7 +2338,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1600
+   "faces": 2494
   },
   {
    "mesh": "street_prop_timber",
@@ -2365,7 +2365,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 624
+   "faces": 1080
   },
   {
    "mesh": "street_render_cream",
@@ -2392,7 +2392,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1644
+   "faces": 1578
   },
   {
    "mesh": "street_render_patch",
@@ -2419,7 +2419,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 142
+   "faces": 220
   },
   {
    "mesh": "street_shard_a_edge",
@@ -2737,7 +2737,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1586
+   "faces": 1456
   },
   {
    "mesh": "street_steel_dark",
@@ -2791,7 +2791,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 942
+   "faces": 2496
   },
   {
    "mesh": "street_tile_patterned",
@@ -2867,7 +2867,7 @@
    "emit_day": 0.0,
    "emit_night": 80.0,
    "reveal_on": null,
-   "faces": 504
+   "faces": 171
   }
  ]
 }
