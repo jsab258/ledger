@@ -22,3 +22,5 @@ Each is free on Fab (Personal and Professional licence, price 0). Tap each and c
 18. [Stains](https://www.fab.com/listings/032aea9b-972a-4f01-92a3-8ba4c3589543) (material): a wear mask
 
 And for the clothing session's jacket: [MetaHuman Clothing Construction Presets, Set of 4](https://www.fab.com/listings/3c0c4df1-ce96-44cf-8a30-c47d744d2a0c) (Epic).
+
+And for the people's natural poses (V6; production/research/natural-idles): [Game Animation Sample](https://www.fab.com/listings/880e319a-a59e-4ed2-b268-b32dac7fa016) (Epic, free, Fab Standard License): about 1,800 animations, idles, breaks and walks, which the builder retargets onto the cast. Add to My Library; the builder then creates it on F: through the Epic Games Launcher, which must be signed in as you.

@@ -50,6 +50,14 @@ def selftest():
         ("every name is one word", all(x["name"].isalnum() for x in g), ""),
         ("every garment's file is where it says", all(os.path.isfile(x["fbx"]) for x in g) or not os.path.isdir("F:/LedgerTools"),
          str([x["fbx"] for x in g if not os.path.isfile(x["fbx"])])),
+        # 3 October: Ron's shirt front and tie, made for the jacket's test films, said "held" in
+        # its own words but carried no hold, so the game wore it and his chest was a hole.
+        ("a garment its own words call held carries a hold",
+         all("hold" in x for x in g if "held" in x.get("made", "") or "worn only" in x.get("made", "")),
+         str([x["name"] for x in g if ("held" in x.get("made", "") or "worn only" in x.get("made", "")) and "hold" not in x])),
+        ("nothing the game wears lives in a scratch folder (tmp is cleared after seven days)",
+         all("hold" in x for x in g if "/tmp/" in x["fbx"].replace("\\", "/").lower()),
+         str([x["name"] for x in g if "/tmp/" in x["fbx"].replace("\\", "/").lower() and "hold" not in x])),
     ]
     for name, ok, detail in checks:
         if not ok:
