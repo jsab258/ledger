@@ -106,6 +106,12 @@
    "as": "approved/clothing/garments",
    "first": false,
    "why": "the garments the clothing session hands back for fitting in Unreal (Jafar, 29 September: back up F:/LedgerTools/garments)"
+  },
+  {
+   "path": "F:/LedgerTools/approvals",
+   "as": "approved/approvals",
+   "first": true,
+   "why": "approved pictures and films, which live on the drives and in this backup, never in git (Jafar, 3 October)"
   }
  ]
 }

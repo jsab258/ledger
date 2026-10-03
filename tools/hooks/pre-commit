@@ -1,0 +1,11 @@
+#!/bin/sh
+# ONLY TEXT AND SMALL FILES GO INTO GIT (Jafar, 3 October): every session's commit is checked
+# by tools/git-size-guard.py, which refuses pictures, sound, film, models, builds and archives
+# outside the places the game's build reads from git, and anything over its size. The hook sits
+# in the shared git folder, so the builder's checkout and the town's and clothing's worktrees all
+# run it; it runs the main checkout's copy of the check, so a worktree whose branch is behind main
+# is checked the same. Installed with:
+#   cp tools/hooks/pre-commit "$(git rev-parse --git-common-dir)/hooks/pre-commit"
+GUARD="$(git rev-parse --git-common-dir)/../tools/git-size-guard.py"
+[ -f "$GUARD" ] || GUARD="tools/git-size-guard.py"
+exec python "$GUARD"
