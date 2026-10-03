@@ -10,7 +10,7 @@ GOAL (his /goal, to Sunday 4 October 20:00): the list in order, each item done w
 - [x] P14. Terms read; game frames out.
 - [x] P1. Hook camera profiled; budgets.
 - [ ] P4. Thirty minutes: free half done; real talk 4 Oct.
-- [ ] 2. Proof view, in P1's budgets (2.2 paused).
+- [ ] 2. Proof view: 2.3 next.
 - [ ] 3. Voice delay: 8-bit decoder test.
 - [ ] 4. Street-wide pass.
 - [ ] 4b. Three voices' listening page.
@@ -18,7 +18,7 @@ GOAL (his /goal, to Sunday 4 October 20:00): the list in order, each item done w
 
 Nightly 02:30: tester's walk, town report (no local Unreal 02:20 to 03:30).
 
-STATE (3 October, 18:56): P4b next.
+STATE (3 October, 21:07): P4b after midnight.
 
 ## Handovers (in full: production/handovers/OPEN.md)
 

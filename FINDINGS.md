@@ -4,7 +4,7 @@ Unresolved faults only, at most twenty; a fault leaves this file when fixed.
 The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 
 - Nano cannot learn a new voice on the card: the voice encoder aborts the process on DirectML (no complex numbers). Cloning runs on the processor.
-- The hill's mist does not change with the fog settings; two tries had no effect.
+- The hill's haze (3 October, step 2.2): it answers to the day's fog density (9 to 3.5 gave it back its colour), not to the fog's cap or height falloff; beyond that, the fog's colour and density stopped moving it (most likely the sky atmosphere colouring the fog), so it does not yet thicken toward the crest as the sheet's does, and stays a shade darker than the sky; carried to the hill (2.9) and the grade (2.13).
 - Street details: the ship chandler's has no name board; the broken window shows as scattered glass on the pavement and an empty frame, with no crack or falling glass, and the frame's inside card shows through. The fish market's crates, a dead end between Mickey's and Rita's until the railing became one panel on 29 September, are not yet walked.
 - No street voice rides on a cast MetaHuman yet: the street's voices find people by their stand-in's actor.
 - Suspicion is decided by the C# Core inside the conversation helper; the game's C++ port now raises it in its own gossip (a contradiction or a leak, town list 6n, 29 September) and keeps it in the save, but nothing in the game reads the port's number yet: how a person treats him (RegardFor) reads it, their talk reads the helper's.
