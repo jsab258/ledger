@@ -5,9 +5,9 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Saturday 3 October, 18:57)
+## Overview (Saturday 3 October, 21:07)
 
-**On: P4's second half, tomorrow morning on Sunday's dollar: the town's answers at the same moments on the real checked path, its "that's all I know" counted. Next: the proof view resumes, first setting the game's picture to P1's budget. Done today: P3, P14, P1 and P4's first half, below. P5 is in place but for your ten minutes (Needs you 5).**
+**On: the proof view, step 2.3 (the wet street), within P1's budgets; P4's second half runs just after midnight on Sunday's dollar, before the 02:30 nightly walk. Done today: P3, P14, P1, P4's first half, and the proof view's 2.0 (the game's picture set to P1's budget: High with Epic's reflections and lighting, settling at 55% on this PC) and 2.2 (atmosphere and sky, closed on narrow points after three fresh reviews). [The proof view, one frame a step](https://claude.ai/artifact/CaQ73RAcLMk1zqvqaNYt3r), for your eyes, nothing to decide. P5 is in place but for your ten minutes (Needs you 5).**
 
 **What the thirty minutes contain (P4, production/playtest/thirty-minutes-2026-10-03.md).**
 - **Five game days.** From a new game, a player gets Sheila's walk round and one instruction, Rita's window. The clock then carries them through five game days, one about every twelve real minutes.
