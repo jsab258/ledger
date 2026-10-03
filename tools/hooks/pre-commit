@@ -8,4 +8,9 @@
 #   cp tools/hooks/pre-commit "$(git rev-parse --git-common-dir)/hooks/pre-commit"
 GUARD="$(git rev-parse --git-common-dir)/../tools/git-size-guard.py"
 [ -f "$GUARD" ] || GUARD="tools/git-size-guard.py"
+# AND THE FILES EVERY SESSION READS STAY UNDER THEIR CAPS (3 October, RULINGS.md and CLAUDE.md):
+# only the capped files this commit carries are measured, as staged.
+CAPS="$(git rev-parse --git-common-dir)/../tools/doc-caps.py"
+[ -f "$CAPS" ] || CAPS="tools/doc-caps.py"
+if [ -f "$CAPS" ]; then python "$CAPS" --staged || exit 1; fi
 exec python "$GUARD"

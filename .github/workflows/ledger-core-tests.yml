@@ -3,6 +3,12 @@ name: LEDGER core tests
 on:
   push:
     paths:
+      # THE FILES EVERY SESSION READS, 3 October: tools/doc-caps.py fails a push that grows one past its cap.
+      - "CLAUDE.md"
+      - "RULINGS.md"
+      - "NOW.md"
+      - "TOWN.md"
+      - "CLOTHES.md"
       - "ledger/**"
       - "tools/*.py"
       - "tools/*.sh"              # ci-checks.sh and reach-check.sh ARE the job now
