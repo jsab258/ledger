@@ -1252,6 +1252,79 @@ static class Program
     /// its kind (the reply; the check's list of specifics, its second look, or
     /// its one-call check), whether it was streamed, and the characters of its
     /// system prompt and its messages. The stand-in underneath answers.
+    /// HIS FRIENDS' EVENING (P5; Jafar, 3 October: "my friends may talk on my key during the
+    /// friends' evenings, capped at five dollars an evening"). The evening is a file beside the key
+    /// (friends-evening.json, put there with the key for the evening and taken away after it, by
+    /// tools/friends/evening.ps1): its cap and what the evening has spent so far. The talk program
+    /// starts from it and writes the spend back after every reserve and settlement, so a restarted
+    /// game never gets a fresh five dollars. A damaged file refuses live talk: never uncapped.
+    sealed class EveningCap
+    {
+        public bool Ok;
+        public double CapUsd, SpentUsd;
+
+        /// Beside the key: the game reads the key from %LOCALAPPDATA%\LEDGER, and so does this.
+        public static string PathFor()
+        {
+            var named = Environment.GetEnvironmentVariable("LEDGER_TALK_EVENING");
+            if (!string.IsNullOrEmpty(named)) return named;
+            var dir = Environment.GetEnvironmentVariable("LOCALAPPDATA");
+            if (string.IsNullOrEmpty(dir)) dir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            return Path.Combine(dir, "LEDGER", "friends-evening.json");
+        }
+
+        /// null when there is no evening; Ok false when its file cannot be read as one.
+        public static EveningCap Read(string path)
+        {
+            if (!File.Exists(path)) return null;
+            try
+            {
+                using var doc = JsonDocument.Parse(File.ReadAllText(path));
+                var root = doc.RootElement;
+                double cap = root.GetProperty("capUsd").GetDouble();
+                double spent = root.TryGetProperty("spentUsd", out var sp) ? sp.GetDouble() : 0;
+                if (!(cap >= 0) || double.IsInfinity(cap) || !(spent >= 0) || double.IsInfinity(spent)) return new EveningCap { Ok = false };
+                return new EveningCap { Ok = true, CapUsd = cap, SpentUsd = spent };
+            }
+            catch (Exception) { return new EveningCap { Ok = false }; }
+        }
+
+        static readonly object Gate = new object();
+
+        public static void Write(string path, double cap, double spent)
+        {
+            lock (Gate)
+            {
+                try
+                {
+                    var tmp = path + ".tmp";
+                    File.WriteAllText(tmp, JsonSerializer.Serialize(new { capUsd = cap, spentUsd = Math.Round(spent, 6) }));
+                    File.Move(tmp, path, true);
+                }
+                catch (IOException) { }
+                catch (UnauthorizedAccessException) { }
+            }
+        }
+
+        /// The client under the evening's cap; the client unchanged when there is no evening;
+        /// null, live talk refused, when the evening's file is damaged.
+        public static ILlmClient Wrap(ILlmClient llm, string path, out string why)
+        {
+            why = "";
+            var e = Read(path);
+            if (e == null) return llm;
+            if (!e.Ok)
+            {
+                why = "the friends' evening file is damaged, so live talk is refused rather than run uncapped (" + path + ")";
+                return null;
+            }
+            var capped = new BudgetedClient(llm, e.CapUsd, e.SpentUsd);
+            capped.OnSpent = spent => Write(path, e.CapUsd, spent);
+            why = string.Format(System.Globalization.CultureInfo.InvariantCulture, "a friends' evening: US${0:0.00} of US${1:0.00} spent", e.SpentUsd, e.CapUsd);
+            return capped;
+        }
+    }
+
     sealed class SizeRecorder : IStreamingLlmClient
     {
         readonly ILlmClient _inner;
@@ -1452,6 +1525,13 @@ static class Program
             }
             llm = new BudgetedClient(llm, budget);
         }
+        // HIS FRIENDS' EVENING (P5; Jafar, 3 October): under its five dollars, kept across the
+        // game's restarts; a damaged evening file leaves the talk offline, never uncapped.
+        if (llm != null && !fake)
+        {
+            llm = EveningCap.Wrap(llm, EveningCap.PathFor(), out var eveningWhy);
+            if (eveningWhy.Length > 0) Console.Error.WriteLine("talk: " + eveningWhy);
+        }
         var helper = new Helper(llm, TimeSpan.FromSeconds(8)) { CheckAlways = sizes };
         if (relay != null && !string.IsNullOrEmpty(copy))
         {
@@ -1491,7 +1571,17 @@ static class Program
         // is written when ready, every line out under one lock.
         var outLock = new object();
         var suggesting = new List<Task>();
-        void Write(string json) { lock (outLock) { Console.Out.WriteLine(json); Console.Out.Flush(); } }
+        // A MEASUREMENT'S TRANSCRIPT (P3, 3 October): with LEDGER_TALK_TRANSCRIPT naming a
+        // file, every line written to the game is kept there too, each reply's steps and
+        // check verdict among them, and the session's cost line last; only the tester's
+        // measuring run of real talk sets it (tools/ai-tester/play.py --real-talk).
+        string transcript = Environment.GetEnvironmentVariable("LEDGER_TALK_TRANSCRIPT");
+        void Keep(string json)
+        {
+            if (string.IsNullOrEmpty(transcript)) return;
+            try { File.AppendAllText(transcript, json + "\n"); } catch (IOException) { } catch (UnauthorizedAccessException) { }
+        }
+        void Write(string json) { lock (outLock) { Console.Out.WriteLine(json); Console.Out.Flush(); Keep(json); } }
         void Suggest(string l) => suggesting.Add(Task.Run(async () => Write(await helper.Answer(l))));
         while (true)
         {
@@ -1516,7 +1606,7 @@ static class Program
         // WHAT THE SESSION COST, when the game closes the helper's input: the
         // calls, the tokens by model and the dollars at the game's own price
         // table - the measure Jafar asked for of an hour of play (23 September).
-        Console.Out.WriteLine(JsonSerializer.Serialize(new
+        var endLine = JsonSerializer.Serialize(new
         {
             cost = helper.Cost.Report(),
             usd = helper.Cost.EstimateUsd(),
@@ -1524,7 +1614,10 @@ static class Program
             // Under a budget (--budget-usd): its spend with refused calls' reserves, and the calls it refused.
             budgetSpent = llm is BudgetedClient held ? held.SpentUsd : (double?)null,
             budgetRefused = llm is BudgetedClient refusing ? refusing.Refused : (int?)null,
-        }, Plain));
+        }, Plain);
+        Console.Out.WriteLine(endLine);
+        Console.Out.Flush();
+        Keep(endLine);
         return 0;
     }
 
@@ -1619,6 +1712,34 @@ static class Program
                Helper.ChecksReplies(new BudgetedClient(real, 1.0), false));
             Ok("the stand-in's are not, capped or not",
                !Helper.ChecksReplies(new KnowledgeFake(), false) && !Helper.ChecksReplies(new BudgetedClient(new KnowledgeFake(), 1.0), false));
+        }
+
+        // HIS FRIENDS' EVENING (P5; Jafar, 3 October: they talk on his key, five dollars an
+        // evening): the evening's file beside the key holds the cap and what is spent; the talk
+        // program starts from it, keeps it as it goes, and refuses live talk when the file is
+        // damaged, never running uncapped.
+        {
+            var evDir = Path.Combine(Path.GetTempPath(), "ledger-evening-" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(evDir);
+            var ev = Path.Combine(evDir, "friends-evening.json");
+            Ok("no evening file: no evening", EveningCap.Read(ev) == null);
+            File.WriteAllText(ev, "{\"capUsd\":5,\"spentUsd\":1.25}");
+            var e1 = EveningCap.Read(ev);
+            Ok("an evening's file reads its cap and its spend", e1 != null && e1.Ok && e1.CapUsd == 5 && e1.SpentUsd == 1.25);
+            var capped = EveningCap.Wrap(new FakeLlm(), ev, out var why1) as BudgetedClient;
+            Ok("live talk under an evening starts from what it already spent", capped != null && capped.LimitUsd == 5 && capped.SpentUsd == 1.25, why1);
+            capped.CompleteAsync(new LlmRequest { Model = Models.Core, MaxTokens = 50, System = "x" }).GetAwaiter().GetResult();
+            var e2 = EveningCap.Read(ev);
+            Ok("and keeps what it spends, for the next start", e2 != null && e2.Ok && e2.SpentUsd > 1.25 && e2.CapUsd == 5);
+            File.WriteAllText(ev, "{ not json");
+            Ok("a damaged evening refuses live talk, never uncapped", EveningCap.Wrap(new FakeLlm(), ev, out var why2) == null && why2.Contains("evening"), why2);
+            File.WriteAllText(ev, "{\"capUsd\":5,\"spentUsd\":5.2}");
+            var spent = EveningCap.Wrap(new FakeLlm(), ev, out _) as BudgetedClient;
+            bool eveningRefused;
+            try { spent.CompleteAsync(new LlmRequest { Model = Models.Core, MaxTokens = 50, System = "x" }).GetAwaiter().GetResult(); eveningRefused = false; }
+            catch (BudgetSpentException) { eveningRefused = true; }
+            Ok("a spent evening refuses every paid call", eveningRefused);
+            Directory.Delete(evDir, true);
         }
 
         // TOM'S SUGGESTED LINES (Jafar, 1 October): with the stand-in, his written

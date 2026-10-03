@@ -34,10 +34,17 @@ namespace Ledger.Core
         /// How many calls were refused for the budget.
         public int Refused { get; private set; }
 
-        public BudgetedClient(ILlmClient inner, double limitUsd)
+        /// Told the spend after every reserve and settlement, outside the lock, so a
+        /// friends' evening can keep it across the game's restarts (P5, 3 October).
+        public Action<double> OnSpent { get; set; }
+
+        /// spentBefore: what this budget's evening has already spent (P5: his friends'
+        /// five dollars is an evening's, never a game start's).
+        public BudgetedClient(ILlmClient inner, double limitUsd, double spentBefore = 0)
         {
             _inner = inner ?? throw new ArgumentNullException(nameof(inner));
             LimitUsd = double.IsNaN(limitUsd) || limitUsd < 0 ? 0 : limitUsd;
+            _spent = double.IsNaN(spentBefore) || spentBefore < 0 ? 0 : spentBefore;
         }
 
         /// The most a request can cost: its input at four characters a token and
@@ -78,7 +85,14 @@ namespace Ledger.Core
                 }
                 _spent += worst;
             }
+            Report();
             return worst;
+        }
+
+        void Report()
+        {
+            var tell = OnSpent;
+            if (tell != null) tell(SpentUsd);
         }
 
         void Settle(double reserved, LlmRequest r, LlmResponse resp)
@@ -86,6 +100,7 @@ namespace Ledger.Core
             if (resp == null) return;
             double actual = ActualUsd(resp.Model ?? r.Model, resp);
             lock (_gate) _spent += actual - reserved;
+            Report();
         }
 
         public async Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)

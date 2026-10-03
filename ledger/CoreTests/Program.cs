@@ -9428,6 +9428,21 @@ namespace Ledger.CoreTests
                   && BudgetedClient.WorstCaseUsd(unknown) >= BudgetedClient.WorstCaseUsd(new LlmRequest { Model = Models.Core, MaxTokens = 100, System = "x" }),
                   "a paid run's client refuses, before sending, any call whose worst case would pass its budget; what it spends settles to the tokens used, so it stops where they reach it; an unknown model is costed at the dearest rate",
                   $"worst={worst:0.0000} sent={sent} expected={expected} spent={b.SpentUsd:0.0000}");
+
+            // A FRIENDS' EVENING (P5; Jafar, 3 October: his friends talk on his key, five dollars an
+            // evening): the cap starts from what the evening has already spent, so a restarted game
+            // never gets a fresh five dollars, and it reports every change so the evening can be kept.
+            var late = new BudgetedClient(new CountingClient(), worst * 1.5, worst * 0.9);
+            bool lateRefused;
+            try { late.CompleteAsync(req).GetAwaiter().GetResult(); lateRefused = false; } catch (BudgetSpentException) { lateRefused = true; }
+            var kept = new System.Collections.Generic.List<double>();
+            var early = new BudgetedClient(new CountingClient(), worst * 1.5, 0.0) { OnSpent = s => kept.Add(s) };
+            early.CompleteAsync(req).GetAwaiter().GetResult();
+            Check(lateRefused && Math.Abs(late.SpentUsd - worst * 0.9) < 1e-12
+                  && kept.Count == 2 && Math.Abs(kept[0] - worst) < 1e-12 && Math.Abs(kept[1] - settled) < 1e-12
+                  && Math.Abs(new BudgetedClient(new CountingClient(), 1.0, -3.0).SpentUsd) < 1e-12,
+                  "an evening's cap starts from what the evening already spent, refusing what that leaves no room for, and reports each reserve and settlement so it outlives a restart",
+                  $"lateSpent={late.SpentUsd:0.0000} kept={string.Join(",", kept)}");
         }
 
         sealed class CountingClient : ILlmClient

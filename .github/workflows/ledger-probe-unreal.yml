@@ -852,6 +852,17 @@ jobs:
           }
 
           New-Item -ItemType Directory -Force -Path (Split-Path $dst -Parent) | Out-Null
+          # THE VOICE BESIDE THE GAME (P5, 3 October): the played copy's Voice folder, where the
+          # game looks for its voice (CrimeProbe.cpp, LiveVoiceStart), is a link to the portable
+          # voice in its own lasting folder (tools/voice-live/make_portable.py), so this copy never
+          # carries 4.3 GB and never deletes the voice: the link is taken away as a link, never
+          # entered, before the old copy goes, and made again after the new one is in.
+          $voiceLink = Join-Path $dst "Windows\Voice"
+          $voiceSrc = "F:\LedgerTools\voice-portable"
+          if (Test-Path $voiceLink) {
+            $vi = Get-Item $voiceLink -Force
+            if ($vi.LinkType) { [System.IO.Directory]::Delete($voiceLink, $false) }
+          }
           Remove-Item $dst -Recurse -Force -ErrorAction SilentlyContinue
           Copy-Item -Path $src -Destination $dst -Recurse -Force
 
@@ -863,6 +874,13 @@ jobs:
           })
           $dstBytes = ($dstFiles | Measure-Object -Property Length -Sum).Sum
           if (-not $dstBytes) { $dstBytes = 0 }
+
+          if ((Test-Path (Join-Path $voiceSrc "python\python.exe")) -and (Test-Path (Join-Path $dst "Windows"))) {
+            New-Item -ItemType Junction -Path $voiceLink -Target $voiceSrc | Out-Null
+            Write-Host "playedVoice=LINKED voiceAt=$($voiceSrc -replace ' ','~')"
+          } else {
+            Write-Host "playedVoice=NONE (no portable voice at $($voiceSrc -replace ' ','~'); the game's answers stay text)"
+          }
 
           $sha = $env:GITHUB_SHA
           if ($sha) { $sha = $sha.Substring(0, [Math]::Min(7, $sha.Length)) } else { $sha = "SHA-UNKNOWN" }
@@ -2776,8 +2794,10 @@ jobs:
           # run staged the clip's DELETION, which its step does at the top
           # for provenance, and never the clip it then made.
           [ "$FRAMES" = 1 ] && git add -A -- 'production/d1-probe/ue-crime.gif' 2>/dev/null || true
-          # THE ENCOUNTER, 24 September: its three verdicts and the recorded shout.
-          git add -A -- 'production/d1-probe/ue-encounter-play-verdict.txt' 'production/d1-probe/ue-encounter-reload-verdict.txt' 'production/d1-probe/ue-encounter-unseen-verdict.txt' 'production/d1-probe/ue-encounter-shout.wav' 2>/dev/null || true
+          # THE ENCOUNTER, 24 September: its three verdicts. The recorded shout is sound and
+          # stays in the renders folder above, never in git (3 October: it went in on every
+          # run, 148 times, after the pictures had stopped).
+          git add -A -- 'production/d1-probe/ue-encounter-play-verdict.txt' 'production/d1-probe/ue-encounter-reload-verdict.txt' 'production/d1-probe/ue-encounter-unseen-verdict.txt' 2>/dev/null || true
           git add -A -- 'production/d1-probe/ue-encounter-live-1-verdict.txt' 'production/d1-probe/ue-encounter-live-2-verdict.txt' 2>/dev/null || true
           # THE BASE MATERIAL, BY NAME. It is a BUILD PRODUCT made by
           # tools/ue/make_base_material.py in the step above, never by hand,
