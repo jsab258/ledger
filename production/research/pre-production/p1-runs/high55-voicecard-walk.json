@@ -1,0 +1,61 @@
+{
+ "label": "high55-voicecard-walk",
+ "frames": 7,
+ "frameMedianMs": 9.73,
+ "frameSlowest1pctMs": 16.54,
+ "gpuMedianMs": 8.45,
+ "gpuLineMs": 14.0,
+ "gpuRoomMs": 5.55,
+ "verdict": "MEETS",
+ "groups": {
+  "lumen": 1.14,
+  "base pass and prepass": 1.92,
+  "shadows": 0.57,
+  "lights and lighting": 1.05,
+  "translucency and glass": 0.58,
+  "fog and sky": 0.15,
+  "upscale and post": 1.55,
+  "people (hair and skin)": 0.26,
+  "other": 0.93
+ },
+ "topPasses": [
+  [
+   "Basepass",
+   1.59
+  ],
+  [
+   "TemporalSuperResolution",
+   1.12
+  ],
+  [
+   "LumenReflections",
+   0.87
+  ],
+  [
+   "RenderDeferredLighting",
+   0.67
+  ],
+  [
+   "Translucency",
+   0.58
+  ],
+  [
+   "ShadowDepths",
+   0.48
+  ],
+  [
+   "Postprocessing",
+   0.43
+  ],
+  [
+   "Unaccounted",
+   0.39
+  ]
+ ],
+ "drawCalls": 1301.0,
+ "primitives": 2568867.0,
+ "gpuMemMB": 2746.25,
+ "systemMemMB": 4714.89,
+ "walkedM": 0.1,
+ "voice": ""
+}

@@ -4563,6 +4563,110 @@ namespace
 		++Step;
 	}
 
+	// -PerfHook=stand|walk (3 October, P1; Jafar: "profile the hook camera, standing and
+	// walking, with the voice speaking, with Nanite and virtual shadows on and off"): once
+	// play has begun, the scene file's cam_hook placed as -PageShots places it, Tom hidden,
+	// the game's own light (-PerfHookNight: ten at night, as -PageShots=night). "walk"
+	// then carries the camera up the street from there at a walking pace, 1.4 m/s along
+	// its own heading, its eye over the ground under it, so the street streams and changes
+	// its detail as a walk does. After the street has settled, the engine's CSV profiler
+	// records -PerfHookFrames frames (1800 by default) with its per-pass GPU timings
+	// (-csvGpuStats on the command line), and -ExitAfterCsvProfiling closes the game.
+	void PerfHookTick(UWorld* World, double Now, float Dt)
+	{
+		static FString Mode;
+		static bool bRead = false;
+		static int32 Step = -1;
+		static double NextAt = 0.0, WalkedM = 0.0;
+		static FPageShot Hook;
+		static TWeakObjectPtr<ACameraActor> Cam;
+		if (!bRead)
+		{
+			bRead = true;
+			FParse::Value(FCommandLine::Get(), TEXT("PerfHook="), Mode);
+		}
+		if (Mode.IsEmpty() || World == nullptr) { return; }
+		APlayerController* PC = World->GetFirstPlayerController();
+		if (Step < 0)
+		{
+			if (Now < NextAt) { return; }
+			FString Path = OfficeSpecFile().Replace(TEXT("mickeys-office.json"), TEXT("vignette-scene.json"));
+			FString Text;
+			TSharedPtr<FJsonObject> Root;
+			const TArray<TSharedPtr<FJsonValue>>* List = nullptr;
+			bool bFound = false;
+			if (!Path.IsEmpty() && FFileHelper::LoadFileToString(Text, *Path))
+			{
+				const TSharedRef<TJsonReader<>> R = TJsonReaderFactory<>::Create(Text);
+				if (FJsonSerializer::Deserialize(R, Root) && Root.IsValid() && Root->TryGetArrayField(TEXT("cameras"), List))
+				{
+					for (const TSharedPtr<FJsonValue>& V : *List)
+					{
+						const TSharedPtr<FJsonObject> C = V->AsObject();
+						if (!C.IsValid() || C->GetStringField(TEXT("id")) != TEXT("cam_hook")) { continue; }
+						Hook.Id = TEXT("cam_hook");
+						Hook.X = C->GetNumberField(TEXT("x_m")); Hook.Z = C->GetNumberField(TEXT("z_m"));
+						Hook.Eye = C->GetNumberField(TEXT("eye_height_m")); Hook.Yaw = C->GetNumberField(TEXT("yaw_deg"));
+						Hook.Pitch = C->GetNumberField(TEXT("pitch_deg")); Hook.VFov = C->GetNumberField(TEXT("fov_vertical_deg"));
+						bFound = true;
+					}
+				}
+			}
+			if (!bFound || PC == nullptr)
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: no cam_hook in the scene file (%s)"), *Path);
+				Mode.Empty();
+				return;
+			}
+			if (FParse::Param(FCommandLine::Get(), TEXT("PerfHookNight")))
+			{
+				GClock.JumpTo(GameTime(GNow.Day, 22, 0));
+				GNow = GClock.Now();
+				ClockLight();
+			}
+			if (GPawn != nullptr) { GPawn->SetActorHiddenInGame(true); }
+			FActorSpawnParameters P;
+			P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			Cam = World->SpawnActor<ACameraActor>(FVector::ZeroVector, FRotator::ZeroRotator, P);
+			if (!Cam.IsValid()) { Mode.Empty(); return; }
+			Cam->GetCameraComponent()->bConstrainAspectRatio = false;
+			int32 SW = 16, SH = 9;
+			if (GEngine != nullptr && GEngine->GameViewport != nullptr) { FVector2D Sz; GEngine->GameViewport->GetViewportSize(Sz); SW = (int32)Sz.X; SH = (int32)Sz.Y; }
+			const double Aspect = SH > 0 ? (double)SW / (double)SH : 16.0 / 9.0;
+			Cam->GetCameraComponent()->SetFieldOfView((float)FMath::RadiansToDegrees(2.0 * std::atan(std::tan(FMath::DegreesToRadians(Hook.VFov) * 0.5) * Aspect)));
+			PC->SetViewTargetWithBlend(Cam.Get(), 0.0f);
+			Step = 0;
+			NextAt = Now + 8.0;   // the street settled at the view, its history and streaming done
+		}
+		if (!Cam.IsValid()) { return; }
+		// Along its heading on the ground, x along the street and z across, as the scene file reads.
+		const double Yaw = FMath::DegreesToRadians(Hook.Yaw);
+		const double X = Hook.X + WalkedM * std::cos(Yaw), Z = Hook.Z + WalkedM * std::sin(Yaw);
+		Cam->SetActorLocationAndRotation(ToUE(LedgerCrime::P3(X, FeetYAt(World, X, Z) + Hook.Eye, Z)),
+			FRotator((float)-Hook.Pitch, (float)Hook.Yaw, 0.0f));
+		if (Step == 0)
+		{
+			if (Now < NextAt) { return; }
+			int32 Frames = 1800;
+			FParse::Value(FCommandLine::Get(), TEXT("PerfHookFrames="), Frames);
+			if (GEngine != nullptr) { GEngine->Exec(World, *FString::Printf(TEXT("csvprofile frames=%d"), FMath::Max(60, Frames))); }
+			// -PerfHookShot: the frame as profiled, at the window's size and the run's own settings,
+			// so a setting that makes room can be seen beside the one it replaces.
+			if (FParse::Param(FCommandLine::Get(), TEXT("PerfHookShot")))
+			{
+				FString Name = Mode;
+				FParse::Value(FCommandLine::Get(), TEXT("PerfHookShotName="), Name);
+				FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("PerfHook") / (Name + TEXT(".png"))), false, false);
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: %s at cam_hook (%.2f, %.2f) yaw %.1f, profiling %d frames%s"),
+				*Mode, Hook.X, Hook.Z, Hook.Yaw, Frames, FParse::Param(FCommandLine::Get(), TEXT("PerfHookNight")) ? TEXT(", at night") : TEXT(""));
+			Step = 1;
+			return;
+		}
+		// THE WALK: a walking pace, up to 45 m, then standing where it got to.
+		if (Mode == TEXT("walk") && WalkedM < 45.0) { WalkedM = FMath::Min(45.0, WalkedM + 1.4 * (double)Dt); }
+	}
+
 	// The camera's arm while Tom is inside Mickey's, eased back out on the street.
 	void OfficeCameraTick(float Dt)
 	{
@@ -7308,6 +7412,7 @@ namespace
 		RouteWhereTick(World, Now);
 		OfficeCameraTick((float)FApp::GetDeltaTime());
 		PageShotsTick(World, Now);
+		PerfHookTick(World, Now, (float)FApp::GetDeltaTime());
 		TalkLightTick(World, Now);
 		AckTick();
 		if (bSayOpen)

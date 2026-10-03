@@ -157,6 +157,8 @@ real_table() {
     garments-selftest     "$REPO"                 "$PY tools/ue/import_garments.py --selftest" \
     git-size-selftest     "$REPO"                 "$PY tools/git-size-guard.py --selftest" \
     nightly-selftest      "$REPO"                 "$PY tools/nightly_walk.py --selftest" \
+    perf-hook-selftest    "$REPO"                 "$PY tools/perf-hook.py --selftest" \
+    voice-load-selftest   "$REPO"                 "$PY tools/voice-live/voice_load.py --selftest" \
     doc-caps              "$REPO"                 "$PY tools/doc-caps.py" \
     doc-caps-selftest     "$REPO"                 "$PY tools/doc-caps.py --selftest" \
     route-walk-selftest   "$REPO"                 "$PY tools/route_walk.py --selftest" \

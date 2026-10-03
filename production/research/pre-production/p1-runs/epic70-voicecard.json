@@ -1,0 +1,61 @@
+{
+ "label": "epic70-voicecard",
+ "frames": 4,
+ "frameMedianMs": 22.11,
+ "frameSlowest1pctMs": 30.37,
+ "gpuMedianMs": 17.57,
+ "gpuLineMs": 14.0,
+ "gpuRoomMs": -3.57,
+ "verdict": "BELOW-60",
+ "groups": {
+  "lumen": 3.54,
+  "base pass and prepass": 2.86,
+  "shadows": 0.87,
+  "lights and lighting": 3.54,
+  "translucency and glass": 0.33,
+  "fog and sky": 0.15,
+  "upscale and post": 3.61,
+  "people (hair and skin)": 0.42,
+  "other": 1.24
+ },
+ "topPasses": [
+  [
+   "LumenReflections",
+   3.22
+  ],
+  [
+   "TemporalSuperResolution",
+   3.12
+  ],
+  [
+   "RenderDeferredLighting",
+   2.93
+  ],
+  [
+   "Basepass",
+   2.22
+  ],
+  [
+   "ShadowDepths",
+   0.73
+  ],
+  [
+   "Unaccounted",
+   0.58
+  ],
+  [
+   "Postprocessing",
+   0.49
+  ],
+  [
+   "Lights",
+   0.38
+  ]
+ ],
+ "drawCalls": 1425.0,
+ "primitives": 2879881.0,
+ "gpuMemMB": 3619.59,
+ "systemMemMB": 4714.09,
+ "walkedM": 0.0,
+ "voice": ""
+}

@@ -1,0 +1,61 @@
+{
+ "label": "high55-epicrefl-gi-voicecard-walk",
+ "frames": 96,
+ "frameMedianMs": 13.26,
+ "frameSlowest1pctMs": 22.84,
+ "gpuMedianMs": 11.49,
+ "gpuLineMs": 14.0,
+ "gpuRoomMs": 2.51,
+ "verdict": "MEETS",
+ "groups": {
+  "lumen": 2.77,
+  "base pass and prepass": 2.22,
+  "shadows": 0.83,
+  "lights and lighting": 2.02,
+  "translucency and glass": 0.33,
+  "fog and sky": 0.12,
+  "upscale and post": 1.51,
+  "people (hair and skin)": 0.29,
+  "other": 1.09
+ },
+ "topPasses": [
+  [
+   "LumenReflections",
+   2.49
+  ],
+  [
+   "Basepass",
+   1.76
+  ],
+  [
+   "RenderDeferredLighting",
+   1.67
+  ],
+  [
+   "TemporalSuperResolution",
+   1.07
+  ],
+  [
+   "ShadowDepths",
+   0.73
+  ],
+  [
+   "Postprocessing",
+   0.44
+  ],
+  [
+   "Unaccounted",
+   0.44
+  ],
+  [
+   "MotionBlur",
+   0.35
+  ]
+ ],
+ "drawCalls": 1367.0,
+ "primitives": 2738082.0,
+ "gpuMemMB": 3383.1,
+ "systemMemMB": 4711.8,
+ "walkedM": 1.7,
+ "voice": ""
+}

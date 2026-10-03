@@ -5,9 +5,16 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Saturday 3 October, 16:04)
+## Overview (Saturday 3 October, 17:27)
 
-**On: P1, the hook camera's profile (standing and walking, the voice speaking, Nanite and virtual shadows on and off). Next: P4, thirty minutes played and counted; then the proof view resumes within P1's budgets. Done today: P3 (every paid reply checked, numbers below) and P14 (the terms read from this PC, the records corrected, other games' frames out: Needs you 1 and 2). P5 is in place but for your ten minutes (Needs you 5).**
+**On: P4, thirty minutes played by the AI tester as a player would, its empty minutes counted. Next: the proof view resumes, first setting the game's picture to P1's budget. Done today: P3 (every paid reply checked), P14 (the terms read, the records corrected, other games' frames out) and P1, below. P5 is in place but for your ten minutes (Needs you 5).**
+
+**P1, plainly (production/research/pre-production/P1-RESULTS-2026-10-03.md).**
+- **Today:** at Epic with the voice on the card, the hook view takes 13.3 ms of the card. That leaves the proof view 0.7 ms, which is nothing.
+- **The settings make the room.** High everywhere frees 5 ms, but the rooms behind the shop windows go black. High with Epic's reflections and lighting looks almost the same as today and frees 2.2 ms, nearly all of it in the upscaler. That is set as the budget: the proof view may add 2.5 ms by day and 1.4 ms at night. That is enough for building detail, the rooms behind the windows and the props, but not also the cars, more passers-by and the hill's extra geometry.
+- **The voice on the processor** frees about 0.7 ms more, but today it speaks slower than real time there, so characters would answer later. It waits on item 3's test.
+- **Nanite and virtual shadows** free nothing on this street and take over a gigabyte of the card, so both stay off.
+- **Every run** stayed inside your 60-a-second line except Epic at 70%.
 
 ### Your orders today, reconciled (in the order you sent them)
 
@@ -67,7 +74,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 - **The proof view** (builder, item 2): the hook camera by day built to the Hook sheet through the research's thirteen steps, each judged against the Hook sheet and the KCD2 frames; one picture here after each step, no decision; your page only when it stands beside the sheet. Since yesterday: your order; starting 2.1, composition.
 - **People dressed** (clothing makes, builder fits): Epic's garments are NoAI and gone; Sheila, Ron and Darren, faces unchanged, wear only the MetaHuman tool's white base layer and Sheila her handbag, which fails your floor (Q3); plain trousers, jumpers and shoes asked of the clothing session, CC0 or made in Blender; judged against your floor, passers-by from eight metres. Since yesterday: your rulings; the Epic clothes out.
-- **The delay before a character speaks** (builder, item 3): 8.4 s from Enter to the first sound with every line checked, on the real path today (5.7 s when the first draft passes, 13 s when it is redrafted, as half were); the last free test, the 8-bit decoder, about two days. Since yesterday: measured checked.
+- **The delay before a character speaks** (builder, item 3; P1: the voice on the processor is slower than speech today): 8.4 s from Enter to the first sound with every line checked, on the real path today (5.7 s when the first draft passes, 13 s when it is redrafted, as half were); the last free test, the 8-bit decoder, about two days. Since yesterday: measured checked.
 - **Replies that say "that's all I know"** (town): 23 of 60 in its latest run. Since yesterday: no change.
 - **Replies that time out** (town, measured in play): none of 11 checked replies on the real path today; at the cap, the written brush-off at once. Since yesterday: measured checked. A checked line costs 4 to 6 cents: your $5 evening holds about 80.
 - **The street-wide pass** (builder, item 4): the proof view's kits and materials across the whole street. Since yesterday: placed.

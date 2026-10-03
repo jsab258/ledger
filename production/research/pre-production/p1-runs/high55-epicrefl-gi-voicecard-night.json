@@ -1,0 +1,61 @@
+{
+ "label": "high55-epicrefl-gi-voicecard-night",
+ "frames": 144,
+ "frameMedianMs": 14.11,
+ "frameSlowest1pctMs": 20.18,
+ "gpuMedianMs": 12.56,
+ "gpuLineMs": 14.0,
+ "gpuRoomMs": 1.44,
+ "verdict": "MEETS",
+ "groups": {
+  "lumen": 1.98,
+  "base pass and prepass": 2.06,
+  "shadows": 3.7,
+  "lights and lighting": 1.08,
+  "translucency and glass": 0.27,
+  "fog and sky": 0.13,
+  "upscale and post": 1.49,
+  "people (hair and skin)": 0.24,
+  "other": 1.01
+ },
+ "topPasses": [
+  [
+   "ShadowDepths",
+   3.35
+  ],
+  [
+   "LumenReflections",
+   1.86
+  ],
+  [
+   "Basepass",
+   1.74
+  ],
+  [
+   "TemporalSuperResolution",
+   1.06
+  ],
+  [
+   "Lights",
+   0.59
+  ],
+  [
+   "Unaccounted",
+   0.47
+  ],
+  [
+   "Postprocessing",
+   0.43
+  ],
+  [
+   "RenderDeferredLighting",
+   0.36
+  ]
+ ],
+ "drawCalls": 1652.0,
+ "primitives": 1999017.0,
+ "gpuMemMB": 3386.22,
+ "systemMemMB": 4719.47,
+ "walkedM": 0.0,
+ "voice": ""
+}

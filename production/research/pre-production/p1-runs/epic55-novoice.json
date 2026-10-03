@@ -1,0 +1,61 @@
+{
+ "label": "epic55-novoice",
+ "frames": 143,
+ "frameMedianMs": 13.47,
+ "frameSlowest1pctMs": 21.2,
+ "gpuMedianMs": 12.28,
+ "gpuLineMs": 14.0,
+ "gpuRoomMs": 1.72,
+ "verdict": "MEETS",
+ "groups": {
+  "lumen": 2.56,
+  "base pass and prepass": 2.03,
+  "shadows": 0.84,
+  "lights and lighting": 1.53,
+  "translucency and glass": 0.31,
+  "fog and sky": 0.11,
+  "upscale and post": 3.12,
+  "people (hair and skin)": 0.34,
+  "other": 0.98
+ },
+ "topPasses": [
+  [
+   "TemporalSuperResolution",
+   2.66
+  ],
+  [
+   "LumenReflections",
+   2.32
+  ],
+  [
+   "Basepass",
+   1.68
+  ],
+  [
+   "RenderDeferredLighting",
+   1.17
+  ],
+  [
+   "ShadowDepths",
+   0.75
+  ],
+  [
+   "Postprocessing",
+   0.46
+  ],
+  [
+   "Unaccounted",
+   0.45
+  ],
+  [
+   "MotionBlur",
+   0.27
+  ]
+ ],
+ "drawCalls": 1415.0,
+ "primitives": 2839446.0,
+ "gpuMemMB": 3719.45,
+ "systemMemMB": 4695.08,
+ "walkedM": 0.0,
+ "voice": ""
+}
