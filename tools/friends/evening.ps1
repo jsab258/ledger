@@ -24,22 +24,30 @@ param(
     [switch]$Start,
     [switch]$End,
     [string]$Account = "Friends",
-    [double]$CapUsd = 5.0
+    [double]$CapUsd = 5.0,
+    # The builder's own test only (3 October): a stand-in folder for the account's, under
+    # F:\LedgerTools\tmp, with its own log; no administrator needed there.
+    [string]$TestFolder = ""
 )
 $ErrorActionPreference = "Stop"
 if ($Start -eq $End) { Write-Host "Say -Start or -End."; exit 2 }
 
-$admin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-if (-not $admin) { Write-Host "Run PowerShell as administrator (right-click, Run as administrator), then this again."; exit 2 }
-
-$prof = Get-CimInstance Win32_UserProfile | Where-Object { (Split-Path $_.LocalPath -Leaf) -ieq $Account } | Select-Object -First 1
-if (-not $prof) { Write-Host "No folder for the account '$Account' yet: sign in to it once, sign out, then run this again."; exit 2 }
-$userDir = $prof.LocalPath
+$log = "F:\LedgerTools\friends-evenings\evenings.jsonl"
+if ($TestFolder) {
+    if (-not $TestFolder.StartsWith("F:\LedgerTools\tmp\", [StringComparison]::OrdinalIgnoreCase)) { Write-Host "A test folder lives under F:\LedgerTools\tmp."; exit 2 }
+    $userDir = $TestFolder
+    $log = Join-Path $TestFolder "evenings.jsonl"
+} else {
+    $admin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+    if (-not $admin) { Write-Host "Run PowerShell as administrator (right-click, Run as administrator), then this again."; exit 2 }
+    $prof = Get-CimInstance Win32_UserProfile | Where-Object { (Split-Path $_.LocalPath -Leaf) -ieq $Account } | Select-Object -First 1
+    if (-not $prof) { Write-Host "No folder for the account '$Account' yet: sign in to it once, sign out, then run this again."; exit 2 }
+    $userDir = $prof.LocalPath
+}
 $ledger = Join-Path $userDir "AppData\Local\LEDGER"
 $key = Join-Path $ledger "live-talk-key.txt"
 $evening = Join-Path $ledger "friends-evening.json"
 $game = "F:\LedgerTools\played-game\Windows\LedgerProbe.exe"
-$log = "F:\LedgerTools\friends-evenings\evenings.jsonl"
 
 if ($Start) {
     $mine = Join-Path ([Environment]::GetFolderPath("LocalApplicationData")) "LEDGER\live-talk-key.txt"
@@ -56,6 +64,9 @@ if ($Start) {
     New-Item -ItemType Directory -Force -Path $desk | Out-Null
     $sh = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desk "Quay Street.lnk"))
     $sh.TargetPath = $game
+    # THEIR OWN SAVED GAME (3 October): without this the played copy saves inside its own
+    # folder on F:, shared with his account and the tester and gone with each new build.
+    $sh.Arguments = '-EncounterSave="' + (Join-Path $ledger "save") + '"'
     $sh.WorkingDirectory = Split-Path $game
     $sh.Save()
     Write-Host "Ready: the key and a five-dollar evening are in '$Account', and Quay Street is on its desktop. Sign in there and double-click it."

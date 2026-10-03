@@ -6,7 +6,7 @@ GOAL (his /goal, to Sunday 4 October 20:00): the list in order, each item done w
 - [x] 1b. Nothing NoAI.
 - [x] 1c. Rulings applied.
 - [x] P3. Claim check under a cap; checked talk measured.
-- [ ] P5. Friends' build in a fresh account.
+- [ ] P5. Friends' account: waits on him.
 - [ ] P14. Terms read; game frames out.
 - [ ] P1. Hook camera profiled; budgets.
 - [ ] P4. Thirty minutes played; empty minutes.
@@ -18,7 +18,7 @@ GOAL (his /goal, to Sunday 4 October 20:00): the list in order, each item done w
 
 Nightly 02:30: tester's walk, town report (no local Unreal 02:20 to 03:30).
 
-STATE (3 October, 15:05): on P5.
+STATE (3 October, 15:55): on P14.
 
 ## Handovers (in full: production/handovers/OPEN.md)
 

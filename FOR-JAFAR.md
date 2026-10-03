@@ -5,9 +5,9 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Saturday 3 October, 15:05)
+## Overview (Saturday 3 October, 15:55)
 
-**On: P5, the friends' build in a fresh Windows account, voice and talk included. Next: P14, the terms read and other games' frames out; then P1, P4, and the proof view resumes within P1's budgets. P3 done at 15:00: every paid reply checked in the finished game; numbers below.**
+**On: P14, the terms read from this PC and other games' frames out of the repository. Next: P1, the hook camera's profile; then P4, and the proof view resumes within P1's budgets. P5 is in place but for your ten minutes (Needs you 5). P3 done at 15:00: every paid reply checked in the finished game; numbers below.**
 
 ### Your orders today, reconciled (in the order you sent them)
 
@@ -59,6 +59,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 2. **Delete the NoAI material? (licence; no page; one choice):** Epic's seven garment packs and every copy (14.5 GB) are in F:/LedgerTools/quarantine-noai-2026-10-03, out of the game and the project; I never delete. Older built copies of the cast still wearing those clothes sit in the approved-cast archive on F: and in your Dropbox backup (the faces in them are the approved ones, rebuilt today in plain clothes). Also in your Dropbox backup: three duplicate copies of the rebuilt cast (4.2 GB, versions 12:58, 12:59 and 13:11 of today) that the backup wrote at each summary's commit; that fault is fixed so it cannot recur. (A, recommended) delete the quarantine folder and the three duplicates now, and the archive's and Dropbox's old outfit copies once you have seen the rebuilt cast in the game. (B) keep them.
 3. **The proof view's composition is set aside (blocked step; scope; no page; one choice):** three tries, each judged by a fresh reviewer against the Hook sheet: the cottages opposite Mickey's, the shop row slated, the pole off, the camera fitted to the sheet, the far end bent right between real houses. Each came closer; the last found the vanishing point, Mickey's, the near left and the bend lined up, and failed it on a grey end wall behind the cottages, the hill's crest about 5% too high and level, the left middle row 5 to 7% high and the horizon 3% low. By your two-tries rule it is set aside and I go on to 2.2. Proposed, a different direction: the research's own advice where a generated concept disagrees with real dimensions, a paintover of our own frame toward the sheet as the agreed composition target beside it (it touches the bar, so it is yours). (A, recommended) yes, the paintover as the target; (B) no: the remaining points ride with the hill, facades and brick steps.
 4. **Three of your orders still conflict (no page; three choices):** Q1 to Q3 above, under the reconciliation, each with its recommendation.
+5. **P5, the friends' account, needs ten minutes of yours at the PC (no page; the session may not make Windows accounts):** everything else is in place and was played as a stand-in fresh account would play it. Sheila answered, checked, and was heard at 4.4 s on the game's own talk and voice; the five dollars now last the evening across restarts; a new account's first start prepares its graphics for 96 s. The steps are at the end of production/playtest/friends-account-2026-10-03.md: make the account Friends, sign in once, run the evening script as administrator, try one hello. (A, recommended) do it before the first friends' evening, and I carry on with P14 meanwhile.
 
 ### Road to worth playing
 
