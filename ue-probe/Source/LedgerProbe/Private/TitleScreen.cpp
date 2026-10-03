@@ -566,7 +566,10 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 			bTuning = true;
 			GTuneFrom = -1.0;
 			GTuneFrames.Reset();
-			GTuneLevel = PictureLevel() < 0 ? 3 : PictureLevel();
+			// FROM HIGH AT MOST (3 October, P1's budget): the project's High keeps Epic's
+			// reflections and lighting (Config/DefaultScalability.ini), and Highest's upscaler
+			// and post-processing take the 1.8 ms the street's detail is budgeted.
+			GTuneLevel = FMath::Min(PictureLevel() < 0 ? 3 : PictureLevel(), 2);
 			GTuneScale = 0;
 			if (UGameUserSettings* S0 = GEngine != nullptr ? GEngine->GetGameUserSettings() : nullptr)
 			{
