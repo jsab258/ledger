@@ -4,9 +4,9 @@
 
 | File | Becomes | Words |
 |---|---|---|
-| RULINGS.md | RULINGS.md at the root | 2,490 |
-| CLAUDE.draft.md | CLAUDE.md | 993 |
-| QUESTIONS.md | his one page | 378 |
+| RULINGS.md | RULINGS.md at the root | 2,481 |
+| CLAUDE.draft.md | CLAUDE.md | 996 |
+| QUESTIONS.md | his one page | 551 |
 | CHECK.md | tools/doc-caps.py and its wiring | – |
 
 CLAUDE.md is a draft name here on purpose: a file named CLAUDE.md in this folder would be loaded by any session working in it.
@@ -55,7 +55,7 @@ DECISIONS.md stays as the history, appended to and not read at the start of work
 
 ## Not settled from the dates
 
-The five questions in QUESTIONS.md. Five more were dropped; two of them he settled himself on 3 October, while the drafts were being checked:
+The six questions in QUESTIONS.md. Five more were dropped; two of them he settled himself on 3 October, while the drafts were being checked:
 - **NoAI against Epic's own content** (the Megascans, the Game Animation Sample, Epic's MetaHuman garments): he ruled the rule as written on 3 October; they are out.
 - **Buying clothes** (a suit under $40 on 2 October against no human-made inputs on 3 October): he ruled no purchases and no commissions for clothes on 3 October.
 - **The rulings sweep's items** against the one list: already built on 2 October.
@@ -85,3 +85,13 @@ A reviewer that had not seen the drafting compared them with DECISIONS.md, the a
 - **The CLAUDE.md draft:** the gate's full references, the disk safeguards, the research triggers and the graphics card's priority, all put back.
 
 A question on CLO's free licence was dropped as moot; the smaller points (the overview, the page and the working rules) were applied.
+
+A second fresh check compared the drafts with the rulings of 3 October once they had landed. It found:
+- the NoAI check confined to Fab;
+- the record of every asset's source dropped;
+- the Unreal licence's clause missing;
+- the asset plan's replacements and order thinned;
+- clothes not excepted from the visual bar;
+- a line wider than his ruling, which read literally would rule out Mixamo and the engine.
+
+All were checked and fixed. Its two further points became questions: question 2 now names his rule that each ruling goes on the list with its specifics; question 6 asks about licence clauses against AI training that carry no NoAI mark.

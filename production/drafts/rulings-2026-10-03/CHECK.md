@@ -12,7 +12,7 @@
 **How it fails:**
 - A file over its cap fails the build, which names the file, its count and its three largest sections, so the session knows where to cut.
 - A missing file fails too, because nothing measured must never read as clean, as the check runner's own rule says.
-- The script and its self-test are below. Both were run here: the self-test passes all five cases. Against today's files (main at 5db99d5) it fails all five: CLAUDE.md 4,372 words, NOW.md 3,241, TOWN.md 831, CLOTHES.md 1,732, RULINGS.md missing. Against the drafts, CLAUDE.md (993) and RULINGS.md (2,490) pass.
+- The script and its self-test are below. Both were run here: the self-test passes all five cases. Against today's files (main at 5db99d5) it fails all five: CLAUDE.md 4,372 words, NOW.md 3,241, TOWN.md 831, CLOTHES.md 1,732, RULINGS.md missing. Against the drafts, CLAUDE.md (996) and RULINGS.md (2,481) pass.
 
 ## How it is wired
 
