@@ -5,9 +5,17 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Saturday 3 October, 17:27)
+## Overview (Saturday 3 October, 18:57)
 
-**On: P4, thirty minutes played by the AI tester as a player would, its empty minutes counted. Next: the proof view resumes, first setting the game's picture to P1's budget. Done today: P3 (every paid reply checked), P14 (the terms read, the records corrected, other games' frames out) and P1, below. P5 is in place but for your ten minutes (Needs you 5).**
+**On: P4's second half, tomorrow morning on Sunday's dollar: the town's answers at the same moments on the real checked path, its "that's all I know" counted. Next: the proof view resumes, first setting the game's picture to P1's budget. Done today: P3, P14, P1 and P4's first half, below. P5 is in place but for your ten minutes (Needs you 5).**
+
+**What the thirty minutes contain (P4, production/playtest/thirty-minutes-2026-10-03.md).**
+- **Five game days.** From a new game, a player gets Sheila's walk round and one instruction, Rita's window. The clock then carries them through five game days, one about every twelve real minutes.
+- **What there is:** three night runs taking Ron's envelope to the ferry landing; Ada's invitation to tea, but the tea happens unseen; DS Ellis "asking after you", but only as a line on the screen.
+- **The town visibly knows Tom.** Ron, unprompted: "Heard you did Mickey's run." Sheila: "There he is. The busy one." Both tell him the detective asked about him.
+- **Eleven of the thirty minutes have nothing new:** the days between the errands, the unseen tea, the walks, and a quay that is a bare slab in the dark.
+- **To fill them:** something to do by day (the office, the flat, Rita), the tea as a scene, Ellis met in the street, the quay and its man built, the window's aftermath, more people to talk to, and a reminder of what is owed tonight.
+- **Faults seen on the way:** the copy is a development build whose "?" key opens a debug overlay, typing with no box open fires game keys, people stand inside each other, and everyone is still barefoot in the white base layer.
 
 **P1, plainly (production/research/pre-production/P1-RESULTS-2026-10-03.md).**
 - **Today:** at Epic with the voice on the card, the hook view takes 13.3 ms of the card. That leaves the proof view 0.7 ms, which is nothing.
