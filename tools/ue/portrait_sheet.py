@@ -5,7 +5,8 @@
 
 WHY, 24 September. Jafar: "Lena, Sam and Rocco, each in a close-up and a
 mid-shot in the street, in daylight, beside the KCD2 people frame." The KCD2
-frame is a comparison reference only (production/reference/, never shipped):
+frame is a comparison reference only, never shipped; since 3 October it lives on this PC
+(F:/LedgerTools/reference-other-games), out of the public repository by Jafar's ruling:
 its townsfolk are small, so the sheet shows the part of it where they stand,
 enlarged, at the height of the two shots.
 """
@@ -15,7 +16,9 @@ import sys
 WHO = ("lena", "sam", "rocco")
 # THE PEOPLE IN THE FOUNTAIN FRAME: the man in the orange coat, the man in
 # green and the monk, bottom left (x0, y0, x1, y1 in its 1650x825 pixels).
-KCD2 = os.path.join("production", "reference", "kcd2-town-fountain.jpg")
+# OTHER GAMES' FRAMES ARE NEVER IN THE REPOSITORY (Jafar, 3 October): kept on this PC and in his backup.
+OTHER_GAMES = "F:/LedgerTools/reference-other-games"
+KCD2 = OTHER_GAMES + "/production/reference/kcd2-town-fountain.jpg"
 KCD2_PEOPLE = (120, 480, 720, 825)
 SHOT_H = 540
 
@@ -80,7 +83,7 @@ def selftest():
     check("three of the cast", WHO == ("lena", "sam", "rocco"))
     check("the crop is inside the 1650x825 frame", 0 <= KCD2_PEOPLE[0] < KCD2_PEOPLE[2] <= 1650 and 0 <= KCD2_PEOPLE[1] < KCD2_PEOPLE[3] <= 825)
     check("the sheets land under the probe's portraits", out_path("r", "lena", "x").replace("\\", "/") == "r/production/d1-probe/portraits/lena-x.jpg")
-    check("the reference is read from the reference folder", KCD2.replace("\\", "/").startswith("production/reference/"))
+    check("the reference is read from this PC, never from the repository", KCD2.startswith(OTHER_GAMES + "/") and not KCD2.startswith("production"))
     print("portrait_sheet selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

@@ -136,7 +136,7 @@ by Kenney (kenney.nl), CC0."
 | | |
 |---|---|
 | **What** | The cast's faces and bodies (MH_RoccoP2, MH_LenaS4, MH_SamS6 and the street's people), made in MetaHuman Creator from Epic's presets and the project's own measurements, the plain garment and the hair and grooms that come with the engine's own MetaHuman plugin. EPIC'S FAB GARMENT PACKS (boots, casual sneakers, flats, jeans, slim jeans, sweater, T-shirt variants) WERE REMOVED ON 3 OCTOBER: each is marked on Fab "Allows usage with AI: No" (NoAI), and by Jafar's ruling nothing NoAI is used |
-| **Licence** | The Unreal Engine EULA, which licenses MetaHumans for use in Unreal Engine products; the MetaHuman files stay out of this public repository and live on Jafar's PC (F:/LedgerTools) |
+| **Licence** | The Unreal Engine EULA and the Epic Content License's MetaHuman addendum (read from his PC 3 October, production/research/terms-2026-10-03): Unreal-only content, used and shared only with Unreal Engine; never put in a database for, nor used to train or test, an AI (EULA 6(e)). The MetaHuman files stay out of this public repository and live on Jafar's PC (F:/LedgerTools) |
 | **Obligation** | Credited on the credits page; shipped only inside the packaged Unreal game |
 
 ## Animation — Epic Games' samples (Unreal-only content)
@@ -146,6 +146,22 @@ by Kenney (kenney.nl), CC0."
 | **What** | The idles that come with the engine's own MetaHuman plugin (/MetaHumanCharacter/Optional/Animation), where the game uses them. Not Epic's Game Animation Sample on Fab, which is marked NoAI and is never used (3 October) |
 | **Licence** | Epic's "UE-Only Content" terms under the Unreal Engine EULA: allowed in a product that requires the engine; the licence allowlist admits Epic's Unreal-only content for animation only (entry 8, 30 September) |
 | **Obligation** | Credited on the credits page |
+
+## The live voice — Chatterbox Nano, Resemble AI, and its runtimes
+
+| | |
+|---|---|
+| **What** | The game's live voice beside it (tools/voice-live/voice-server.py; for a PC with nothing installed, the portable copy at F:/LedgerTools/voice-portable, linked as the played copy's Voice folder): Chatterbox Nano's code and weights (huggingface.co/ResembleAI/chatterbox-nano, the same files), run on PyTorch 2.4.1 with torch-directml 0.2.5 on the graphics card |
+| **Licence** | MIT (Nano's code, Resemble AI 2025, and its weights' card); PyTorch BSD-3; torch-directml MIT (each read 3 October, the card in the browser on his PC and the runtimes' own licence files) |
+| **Obligation** | The MIT and BSD notices shipped with the voice when it ships; Resemble's watermark kept (the allowlist, entry 1) |
+
+## The live talk — Anthropic's Claude
+
+| | |
+|---|---|
+| **What** | The characters' replies and the checks on them, written live by Claude (Haiku 4.5, Sonnet 5) through Anthropic's API, on LEDGER's own key for his play, measurement runs and his friends' evenings (RULINGS.md) |
+| **Licence** | Anthropic's Commercial Terms, effective 17 June 2025 (read 3 October): the inputs stay ours and the outputs are ours; Anthropic may not train models on them; its usage policies apply |
+| **Obligation** | Disclosed to players before their first conversation and on Steam (production/store/steam-ai-disclosure.md) |
 
 ## Engine — Unity (the old build, not shipped)
 
@@ -442,7 +458,10 @@ screenshots of Kingdom Come: Deliverance II (Warhorse Studios, 2025),
 supplied by the project owner on 23 September as the bar for the PS5 corner.
 They are internal development references for comparison only: not assets,
 not shipped with any build, not redistributed, and no content derived from
-them is generated into the game.
+them is generated into the game. Since 3 October they are no longer in this
+repository, which is public (his ruling: other games' screenshots never in
+it); they are kept on his PC (F:/LedgerTools/reference-other-games) and in his
+backup, and remain in the repository's history until he decides on cleaning it.
 
 ## Visual reference frames — Rockstar Games
 
@@ -451,4 +470,6 @@ them is generated into the game.
 bar (roadmap M17.10). They are internal development references for
 comparison only: not assets, not shipped with any build, not redistributed,
 and no content derived from them is generated into the game. The done-test
-they serve is a side-by-side judgment by a person.
+they serve is a side-by-side judgment by a person. Since 3 October they are no
+longer in this repository (as above), kept on his PC at
+F:/LedgerTools/reference-other-games and in his backup.

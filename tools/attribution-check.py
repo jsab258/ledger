@@ -217,9 +217,10 @@ WATCHED = {
     # the game (static cuts of two variable families, tools/ui/make_font_cuts.py).
     "production/fonts/evening-paper": "THE EVENING PAPER",
     # THE PS5 CORNER'S BAR, 23 September: two Kingdom Come: Deliverance II
-    # screenshots supplied by Jafar ("that game is my stated bar"), kept where
-    # every reference lives. Files, not the folder, because the folder's other
-    # pictures are this project's own work.
+    # screenshots supplied by Jafar. Out of the repository since 3 October (his
+    # ruling: other games' screenshots never in it), kept on this PC
+    # (F:/LedgerTools/reference-other-games) and in his backup; THIRD-PARTY.md
+    # still names them, so the row stays and checks that.
     "production/reference/kcd2-town-arcades.jpg": "Warhorse Studios",
     "production/reference/kcd2-town-fountain.jpg": "Warhorse Studios",
     # THE CASTING VOICE CANDIDATES, 24 September (overnight): three lines per
