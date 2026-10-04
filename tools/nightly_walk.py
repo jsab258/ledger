@@ -86,7 +86,11 @@ def ev_kind(e):
 def summarise(events, verdict, bench, eyes):
     """The night's numbers, from the record, the walk's verdict, the bench and the eyes."""
     deeds = [e for e in events if ev_kind(e) == "deed"]
-    seen = sorted({w for e in deeds for w in (e.get("seen") or [])})
+    # WHO SAW IT is the game's witness events, one a person, saw true or false (4 October: the
+    # first report read a "seen" field the deed event never carried and said nobody).
+    seen = sorted({TOWN.get(e.get("who"), str(e.get("who", "?")).capitalize())
+                   for e in events if ev_kind(e) == "witness" and e.get("saw") is True}
+                  | {w for e in deeds for w in (e.get("seen") or [])})
     onlookers = [e for e in events if ev_kind(e) == "onlookers"]
     known = [e for e in events if ev_kind(e) == "known"]
     knew = {}
@@ -279,6 +283,11 @@ def selftest():
     b = parse_bench('firsts: a newcomer\'s first questions, 60 answered (0 failed): "that\'s all I know" 21 (lena 7, rocco 8, sam 6), refused 1; api-rate usd, not billed=0.00 -> firsts.jsonl')
     check("the bench's count and who said it are read", b["count"] == 21 and b["by_who"] == {"Sheila": 7, "Ron": 8, "Darren": 6})
     check("a bench with no count says so", parse_bench("nothing")["count"] is None)
+    # WHO SAW IT from the game's witness events, as it records them (4 October).
+    wv = [{"e": "witness", "who": "lena", "saw": True}, {"e": "witness", "who": "hal", "saw": False},
+          {"e": "witness", "who": "marta", "saw": True}, {"e": "deed", "what": "player.window_d0"}]
+    check("the witnesses who saw it are named, those who did not are not",
+          summarise(wv, None, None, None)["noticed"]["saw_the_deed"] == ["Marta", "Sheila"])
     ev = [{"e": "deed", "what": "player.window_d0", "seen": ["Ada", "Rita"]},
           {"e": "known", "who": "Sheila", "how": "question", "story": "player.window_d0"},
           {"e": "known", "who": "Sheila", "how": "look", "story": "player.window_d0"},
