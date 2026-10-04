@@ -433,6 +433,14 @@ namespace LedgerStreet
 		return T;
 	}
 
+	// WHICH SURFACE GAIN A ROW TAKES: its base material's, but a net card its own (4 October,
+	// the facades' third try): it is lace lit by the daylight now, the window's pane, and the lit
+	// room's 5% (a room makes its own light) left it near black once its day glow went.
+	inline std::string GradeKeyOf(const Row& Rw)
+	{
+		return Rw.Emit == "net" ? std::string("net_lace") : Rw.Base;
+	}
+
 	inline Grade SurfaceGainFor(const Look& Lk, const std::string& Base)
 	{
 		for (size_t I = 0; I < Lk.SurfaceGains.size(); ++I)

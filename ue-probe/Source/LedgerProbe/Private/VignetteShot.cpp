@@ -6838,7 +6838,14 @@ namespace
 					FString LoadedAs;
 					Albedo = ImportTexture(Where[W], true, FW, FH, LoadedAs);
 				}
-				if (Albedo != nullptr) { ++GStreetPictures; Rough = 0.42; }
+				// A NET CARD IS THE WINDOW'S PANE (4 October, the facades' third try): the lace
+				// behind clean glass, so it keeps the glass's smoothness from the sidecar and
+				// Lumen traces the sky in it; every other picture is paper or paint at 0.42.
+				if (Albedo != nullptr)
+				{
+					++GStreetPictures;
+					Rough = (Rw.Emit == "net" && Rw.Roughness >= 0.0) ? Rw.Roughness : 0.42;
+				}
 			}
 			// THE PHOTOGRAPH, where the surface wears one and nothing lettered
 			// is on it: the pack's own three maps, from the root the scene
@@ -6933,7 +6940,7 @@ namespace
 				Gr.R *= GLook.RoomGain; Gr.G *= GLook.RoomGain; Gr.B *= GLook.RoomGain;
 			}
 			{
-				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, Rw.Base);
+				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, LedgerStreet::GradeKeyOf(Rw));
 				const LedgerStreet::Grade Ht = LedgerStreet::HouseTintOf(Rw);   // a house's own brick (2.4)
 				Gr.R *= Sg.R * Ht.R; Gr.G *= Sg.G * Ht.G; Gr.B *= Sg.B * Ht.B;
 			}
@@ -7401,7 +7408,7 @@ namespace
 					? LedgerStreet::Grade{GScan[(size_t)Sk].Match[0], GScan[(size_t)Sk].Match[1], GScan[(size_t)Sk].Match[2]}
 					: (bPhoto ? LedgerStreet::PaletteOverPhoto(Rw) : LedgerStreet::Grade{1.0, 1.0, 1.0});
 				const double D = LedgerStreet::WetDarken(Rw.Base, C.Wetness);
-				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, Rw.Base);
+				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, LedgerStreet::GradeKeyOf(Rw));
 				Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
 					FLinearColor((float)(Gr.R * D * Sg.R), (float)(Gr.G * D * Sg.G), (float)(Gr.B * D * Sg.B), 1.0f));
 				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())),
@@ -7481,7 +7488,7 @@ namespace
 				if (Sc.Tex[1] != nullptr) { T[1] = Sc.Tex[1]; }
 				if (Sc.Tex[2] != nullptr) { T[2] = Sc.Tex[2]; }
 				TU = TV = (float)(1.0 / Sc.CoversM);
-				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, Rw.Base);
+				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, LedgerStreet::GradeKeyOf(Rw));
 				const LedgerStreet::Grade Ht = LedgerStreet::HouseTintOf(Rw);   // a house's own brick (2.4)
 				Gc = FLinearColor((float)(Sc.Match[0] * Sg.R * Ht.R), (float)(Sc.Match[1] * Sg.G * Ht.G),
 				                  (float)(Sc.Match[2] * Sg.B * Ht.B), 1.0f);

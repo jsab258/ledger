@@ -7012,8 +7012,8 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 34 && Lk.bFromFile && Lk.GlassSpecularNight > 0.0 && Lk.GlassSpecularNight < 1.0 && Lk.NetDayGain > 0.0,
-			      "the committed look file parses and supplies all thirty-four settings, the night glass's dimmer reflection and the nets' daylight among them", LErr);
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 34 && Lk.bFromFile && Lk.GlassSpecularNight > 0.0 && Lk.GlassSpecularNight < 1.0 && Lk.NetDayGain == 0.0,
+			      "the committed look file parses and supplies all thirty-four settings, the night glass's dimmer reflection among them, and the nets give no glow by day (they are the glossy pane since the facades' third try)", LErr);
 			Check(Lk.LanternLumens > 0.0 && Lk.bLanternRgb && Lk.LanternLightY > 4.0,
 			      "and the sodium lamps have real lumens and a colour of their own");
 			// THE PEOPLE, 23 September: the committed placements parse, there

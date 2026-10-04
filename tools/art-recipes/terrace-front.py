@@ -1378,13 +1378,24 @@ def _plain_ground(parts, p, T, wall, bay):
     _box(parts, "letterplate", "lead", door_cx - lp_w / 2.0, door_cx + lp_w / 2.0,
          rec - 0.015, rec, p["letterplate_at_m"], p["letterplate_at_m"] + lp_h,
          "the-one-detail-that-says-somebody-lives-here")
+    # A STONE STEP AT THE DOOR AND A PLINTH ALONG THE FOOT (4 October, the facades' first fresh
+    # review: blank door slabs, no plinths): a worn stone step out onto the pavement, and a band
+    # of blue engineering brick a little proud of the wall to sill-board height, the door left clear.
+    _box(parts, "doorstep", "stone", door_cx - door_w / 2.0 - 0.08, door_cx + door_w / 2.0 + 0.08,
+         -0.25, rec, 0.0, 0.07, "a-raised-stone-threshold/worn")
+    dx0, dx1 = door_cx - door_w / 2.0, door_cx + door_w / 2.0
+    for nm, x0, x1 in (("plinth_l", 0.0, dx0), ("plinth_r", dx1, W)):
+        if x1 - x0 > 0.05:
+            pl = _box(parts, nm, "paint_white", x0, x1, -0.022, 0.0, 0.0, 0.40, "a-tarred-and-painted-plinth")
+            pl["paint_name"], pl["paint"] = "plinth_black", (0.028, 0.028, 0.032)
 
     # The windows, with the same sills and lintels the floor above uses.
     sw = p["sill_w_m"] / 2.0
     for n, cx in enumerate(win_cx):
-        _box(parts, "gf_glass_%d" % n, "glass", cx - win_w / 2.0, cx + win_w / 2.0,
-             rec, rec + 0.02, sill_z, sill_z + win_h,
-             "set-back-one-half-brick/the-same-reveal-the-floor-above-uses")
+        if HOUSE_PANE_TRANSLUCENT:
+            _box(parts, "gf_glass_%d" % n, "glass", cx - win_w / 2.0, cx + win_w / 2.0,
+                 rec, rec + 0.02, sill_z, sill_z + win_h,
+                 "set-back-one-half-brick/the-same-reveal-the-floor-above-uses")
         _box(parts, "gf_sill_%d" % n, "stone", cx - sw, cx + sw,
              -p["sill_proj_m"], T, sill_z - sill_t, sill_z, "the-window's-own-sill")
         _segmental_arch(parts, "gf_arch_%d" % n, cx - win_w / 2.0, cx + win_w / 2.0,
@@ -1424,6 +1435,9 @@ ARCH_PROUD_M = 0.012
 ARCH_SEGMENTS = 10
 
 
+ARCH_FANLIGHT = False    # 4 October: the fanlight and its curved frame are off (see the ring)
+
+
 def _segmental_arch(parts, pid, a, b, spring_z, note):
     """An arch ring over the opening a..b, springing at spring_z, bay-local."""
     span = b - a
@@ -1442,7 +1456,14 @@ def _segmental_arch(parts, pid, a, b, spring_z, note):
     for k in range(ARCH_SEGMENTS + 1):
         t = th_l + (th_r - th_l) * k / ARCH_SEGMENTS
         prof.append((cx + R * math.cos(t), cz + R * math.sin(t)))
+    # THE RING IN RUBBED BRICK WEARING THE BRICK SCAN, graded a deeper orange-red (ps5-corner.json),
+    # so it reads as a gauged arch apart from the wall (4 October: flat brown, it read as a shield; in
+    # the wall's own brick it vanished), and no fanlight: its glass stood on the wall's face with brick
+    # behind it and read as a blank infill under a thin white strip. A segmental brick arch over
+    # the sash's head, the brick under it, is a common northern head.
     _prism(parts, pid, "brick_rubbed", prof, -ARCH_PROUD_M, 0.0, note)
+    if not ARCH_FANLIGHT:
+        return
     # AND THE WINDOW FOLLOWS THE ARCH, which is attempt two and the reason
     # the first could not be seen: on the sheet the sash's head is CURVED to
     # the arch, a white line under the brick with glass inside it, and our
@@ -1527,8 +1548,9 @@ def _upper_floor(parts, p, T, wall, bay=0):
         cx = (a + b) * 0.5
         sw = p["sill_w_m"] / 2.0
         # THE REVEAL IS HALF A BRICK, and it is why a window is not a decal.
-        _box(parts, "upper_glass_%d" % i, "glass", a, b, p["reveal_m"], p["reveal_m"] + 0.02,
-             sill_z, head_z, "set-back-one-half-brick/102.5mm/the-depth-that-stops-it-reading-flat")
+        if HOUSE_PANE_TRANSLUCENT:
+            _box(parts, "upper_glass_%d" % i, "glass", a, b, p["reveal_m"], p["reveal_m"] + 0.02,
+                 sill_z, head_z, "set-back-one-half-brick/102.5mm/the-depth-that-stops-it-reading-flat")
         _box(parts, "upper_sill_%d" % i, "stone", cx - sw, cx + sw,
              -p["sill_proj_m"], T, sill_z - p["sill_t_m"], sill_z,
              "0.95m-wide/window-plus-50mm-each-side")
@@ -1928,8 +1950,10 @@ def plan_pots(p):
     if p.get("end_stack"):                  # and a lone building's in its end wall
         stacks.append((p["bays"] - 1, p["bays"] * W - p["chimney_w_m"] / 2.0))
     for b, sx in stacks:
-        for k, dx in enumerate((-0.22, 0.22)):
-            mat = "pot_buff" if (b % 2 == 1 and k == 1) else "pot_clay"
+        # THREE OR FOUR POTS A STACK (4 October: the sheet's stacks carry three or four, ours two).
+        offs = (-0.30, 0.0, 0.30) if b % 2 == 0 else (-0.36, -0.12, 0.12, 0.36)
+        for k, dx in enumerate(offs):
+            mat = "pot_buff" if (k + b) % 3 == 1 else "pot_clay"
             v, f = _pot_mesh(sx + dx, D / 2.0, top, POT_R_FOOT_M, POT_R_TOP_M,
                              POT_H_M - POT_ROLL_H_M)
             parts.append({"id": "chimney_pot_%d_%d" % (b, k), "material": mat,
@@ -2145,7 +2169,11 @@ def plan_street(root, spec_rel=SPEC_REL):
         _standing_water(out, root)
     # THE DISH, on the cab office, where the approved sheet has it.
     _dish(out)
-    _repair_patches(out)
+    # THE CEMENT PATCHES ARE OFF (4 October): four fresh reviews in a row read them as flat grey
+    # stickers with a drawn crack; repairs come back inside the wall's own material, with the wear
+    # (production/research/aaa-street/BRICK-METHODS-2026-10-04.md).
+    if REPAIR_PATCHES_ON:
+        _repair_patches(out)
     # THE PLOTS' FLOORS, 23 September. The scene file's ground_plot pieces
     # are the ground behind each frontage - the shop floor a brick thrown
     # through the window lands on (CrimeProbe.h kBrickInsideZ: "on the shop
@@ -2332,7 +2360,7 @@ def plan_street(root, spec_rel=SPEC_REL):
 DOOR_PAINTS = (("door_black", (0.020, 0.020, 0.022)), ("door_green", (0.020, 0.075, 0.040)),
                ("door_maroon", (0.110, 0.018, 0.022)), ("door_navy", (0.018, 0.028, 0.085)),
                ("door_cream", (0.520, 0.470, 0.360)), ("door_red", (0.300, 0.025, 0.020)))
-HOUSE_FRONT_PAINT = {"east_parade_bay2": "render_cream"}
+HOUSE_FRONT_PAINT = {"east_parade_bay2": ("masonry_cream", (0.600, 0.545, 0.420))}   # 4 October: render read as concrete
 PAINTED_FRONT_PIECES = ("upper_band_below", "upper_band_above", "upper_pier_")
 
 
@@ -2357,8 +2385,9 @@ def _house_variety(parts):
         if q.get("material") == "paint_door" and "door" in q["id"]:
             name, rgb = _door_paint(house)
             q["paint_name"], q["paint"] = name, rgb
-        if house in HOUSE_FRONT_PAINT and str(q.get("material", "")).startswith("brick")                 and any(k in q["id"] for k in PAINTED_FRONT_PIECES):
-            q["material"] = HOUSE_FRONT_PAINT[house]
+        if house in HOUSE_FRONT_PAINT and str(q.get("material", "")).startswith("brick")                 and any(k in q["id"] for k in PAINTED_FRONT_PIECES + ("upper_arch_",)):
+            q["material"] = "paint_white"
+            q["paint_name"], q["paint"] = HOUSE_FRONT_PAINT[house]
 
 
 #: WHERE A PERSON STANDS, and why there is one at all.
@@ -2650,7 +2679,14 @@ CARD_EMIT_DAY, CARD_EMIT_NIGHT = 0.40, 1.60
 #: AND A NET CURTAIN'S, which stands for daylight falling on it through the
 #: glass: bright enough by day to bring the sheet's pale upstairs windows,
 #: nearly dark at night, when most front bedrooms are.
-NET_EMIT_DAY, NET_EMIT_NIGHT = 0.45, 0.05   # 0.30 until 4 October: the panes measured a quarter darker than the sheet's against the wall
+NET_EMIT_DAY, NET_EMIT_NIGHT = 0.45, 0.05
+#: A HOUSE'S WINDOW IS ONE GLOSSY SURFACE (4 October, the facades' third try, production/research/
+#: aaa-street/WINDOWS-FACADES-2026-10-04.md): the lace over a dark room seen through clean glass, its
+#: reflection traced by Lumen, so the net card itself is the pane, smooth as glass, and the thin
+#: translucent pane in front of it is gone from houses (shops keep theirs, before their displays):
+#: in front of a self-lit net card its 8% reflection was lost and every pane read one flat tone.
+HOUSE_PANE_TRANSLUCENT = False
+NET_PANE_ROUGHNESS = 0.04   # 0.30 until 4 October: the panes measured a quarter darker than the sheet's against the wall
 #: AND A LIT ROOM BEHIND A NET, 29 September: every third upstairs window
 #: along the street shows a warm room at night (the blind review of the
 #: sodium night: not one window lit, so the street read empty rather than
@@ -2711,6 +2747,9 @@ def _dish(out):
 #: parade's front above the empty unit, where a sign was taken down.
 REPAIR_PATCHES = ((2.66, 6.7, 4.05, 0.36, 0.30, "x"),
                   (24.0, 5.125, 4.45, 0.30, 0.22, "y"))
+
+
+REPAIR_PATCHES_ON = False
 
 
 def _repair_patches(out):
@@ -7558,7 +7597,7 @@ def _export_street(bpy, args, parts):
                 "material": key, "base_material": base,
                 "linear_rgb": list(part["paint"]) if part.get("paint") and not lettered
                               else (list(rgb) if rgb else None),
-                "roughness": rough,
+                "roughness": (NET_PANE_ROUGHNESS if "net_curtain" in key else rough),
                 "surface_map": surf[0], "tile_m": surf[1],
                 "house_tint": house_tint,
                 "decal": part.get("decal"), "decal_uv": crop,
@@ -8066,14 +8105,14 @@ def selftest():
                 check("accept/%s-builds-nothing-upstairs" % other,
                       not [b for b in qboxes if b["id"].startswith("upper_")])
                 check("accept/%s-windows-clear-the-eaves" % other,
-                      all(b["z1"] <= q["eaves_m"] - 0.3 + 1e-9 for b in qboxes if b["id"].startswith("gf_glass_")))
+                      all(b["z1"] <= q["eaves_m"] - 0.3 + 1e-9 for b in qboxes if b["id"].startswith(("gf_glass_", "gf_net_"))))
                 check("accept/%s-every-window-has-a-sash-and-a-net-every-door-its-panels" % other,
                       len([b for b in qboxes if b["id"].startswith("gf_sash_meeting_")]) == 2 * q["bays"]
                       and len([b for b in qboxes if b["id"].startswith("gf_net_")]) == 2 * q["bays"]
                       and len([b for b in qboxes if b["id"].startswith("side_door_panel_")]) == 4 * q["bays"])
             # THE DOOR AND TWO WINDOWS, one of each per bay.
             doors = [b for b in qboxes if b["id"].startswith("side_door_leaf")]
-            glass = [b for b in qboxes if b["id"].startswith("gf_glass_")]
+            glass = [b for b in qboxes if b["id"].startswith("gf_sill_")]
             if q["ground_floor"] == "shopfront":
                 # A SHOP ROW HAS SHOP DOORS, not household ones, and its
                 # glazing is the display run rather than a pair of sashes.

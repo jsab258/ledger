@@ -847,38 +847,6 @@
    "faces": 224
   },
   {
-   "mesh": "street_brick_rubbed_h_east_parade_bay2",
-   "material": "brick_rubbed_h_east_parade_bay2",
-   "base_material": "brick_rubbed",
-   "linear_rgb": [
-    0.307,
-    0.12,
-    0.074
-   ],
-   "roughness": 0.9,
-   "surface_map": "plaster",
-   "tile_m": 0.4,
-   "house_tint": [
-    0.6493,
-    0.528,
-    0.5884
-   ],
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": [
-    0.5225,
-    0.5166,
-    0.4732
-   ],
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 160
-  },
-  {
    "mesh": "street_brick_rubbed_h_east_parade_bay3",
    "material": "brick_rubbed_h_east_parade_bay3",
    "base_material": "brick_rubbed",
@@ -1219,7 +1187,7 @@
     0.714,
     0.344
    ],
-   "roughness": 0.9,
+   "roughness": 0.04,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -1243,7 +1211,7 @@
     0.714,
     0.344
    ],
-   "roughness": 0.9,
+   "roughness": 0.04,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -1267,7 +1235,7 @@
     0.714,
     0.344
    ],
-   "roughness": 0.9,
+   "roughness": 0.04,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -1291,7 +1259,7 @@
     0.714,
     0.344
    ],
-   "roughness": 0.9,
+   "roughness": 0.04,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,
@@ -1931,6 +1899,30 @@
    "faces": 82
   },
   {
+   "mesh": "street_fascia_masonry_cream",
+   "material": "fascia_masonry_cream",
+   "base_material": "paint_white",
+   "linear_rgb": [
+    0.6,
+    0.545,
+    0.42
+   ],
+   "roughness": 0.55,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 290
+  },
+  {
    "mesh": "street_fascia_oxblood",
    "material": "fascia_oxblood",
    "base_material": "paint_stall",
@@ -1953,6 +1945,30 @@
    "emit_night": null,
    "reveal_on": null,
    "faces": 420
+  },
+  {
+   "mesh": "street_fascia_plinth_black",
+   "material": "fascia_plinth_black",
+   "base_material": "paint_white",
+   "linear_rgb": [
+    0.028,
+    0.028,
+    0.032
+   ],
+   "roughness": 0.55,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 300
   },
   {
    "mesh": "street_fascia_slate_blue",
@@ -2267,390 +2283,6 @@
    "faces": 18
   },
   {
-   "mesh": "street_glass_eg_bay8",
-   "material": "glass_eg_bay8",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 12
-  },
-  {
-   "mesh": "street_glass_eg_bay9",
-   "material": "glass_eg_bay9",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 12
-  },
-  {
-   "mesh": "street_glass_eu_bay0",
-   "material": "glass_eu_bay0",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_eu_bay1",
-   "material": "glass_eu_bay1",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_eu_bay10",
-   "material": "glass_eu_bay10",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 19
-  },
-  {
-   "mesh": "street_glass_eu_bay11",
-   "material": "glass_eu_bay11",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 57
-  },
-  {
-   "mesh": "street_glass_eu_bay12",
-   "material": "glass_eu_bay12",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_eu_bay13",
-   "material": "glass_eu_bay13",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 266
-  },
-  {
-   "mesh": "street_glass_eu_bay2",
-   "material": "glass_eu_bay2",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_eu_bay3",
-   "material": "glass_eu_bay3",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_eu_bay4",
-   "material": "glass_eu_bay4",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_eu_bay5",
-   "material": "glass_eu_bay5",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_eu_bay6",
-   "material": "glass_eu_bay6",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_eu_bay7",
-   "material": "glass_eu_bay7",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 19
-  },
-  {
-   "mesh": "street_glass_eu_bay8",
-   "material": "glass_eu_bay8",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 64
-  },
-  {
-   "mesh": "street_glass_eu_bay9",
-   "material": "glass_eu_bay9",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 45
-  },
-  {
    "mesh": "street_glass_kx100_kiosk0",
    "material": "glass_kx100_kiosk0",
    "base_material": "glass",
@@ -2673,78 +2305,6 @@
    "emit_night": null,
    "reveal_on": null,
    "faces": 72
-  },
-  {
-   "mesh": "street_glass_wg_bay0",
-   "material": "glass_wg_bay0",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_wg_bay1",
-   "material": "glass_wg_bay1",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
-  },
-  {
-   "mesh": "street_glass_wg_bay2",
-   "material": "glass_wg_bay2",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 38
   },
   {
    "mesh": "street_glass_wg_bay3",
@@ -2843,78 +2403,6 @@
    "faces": 6
   },
   {
-   "mesh": "street_glass_wg_bay7",
-   "material": "glass_wg_bay7",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 6
-  },
-  {
-   "mesh": "street_glass_wg_bay8",
-   "material": "glass_wg_bay8",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 12
-  },
-  {
-   "mesh": "street_glass_wg_bay9",
-   "material": "glass_wg_bay9",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 6
-  },
-  {
    "mesh": "street_glass_whitened",
    "material": "glass_whitened",
    "base_material": "glass_whitened",
@@ -2941,126 +2429,6 @@
    "emit_night": null,
    "reveal_on": null,
    "faces": 6
-  },
-  {
-   "mesh": "street_glass_wu_bay10",
-   "material": "glass_wu_bay10",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 95
-  },
-  {
-   "mesh": "street_glass_wu_bay13",
-   "material": "glass_wu_bay13",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 114
-  },
-  {
-   "mesh": "street_glass_wu_bay7",
-   "material": "glass_wu_bay7",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 32
-  },
-  {
-   "mesh": "street_glass_wu_bay8",
-   "material": "glass_wu_bay8",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 64
-  },
-  {
-   "mesh": "street_glass_wu_bay9",
-   "material": "glass_wu_bay9",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 51
   },
   {
    "mesh": "street_grass",
@@ -3383,7 +2751,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 10792
+   "faces": 7912
   },
   {
    "mesh": "street_paint_white",
@@ -3490,7 +2858,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 814
+   "faces": 1714
   },
   {
    "mesh": "street_pot_clay",
@@ -3518,7 +2886,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 2494
+   "faces": 2994
   },
   {
    "mesh": "street_prop_timber",
@@ -3577,38 +2945,6 @@
    "faces": 1578
   },
   {
-   "mesh": "street_render_cream_h_east_parade_bay2",
-   "material": "render_cream_h_east_parade_bay2",
-   "base_material": "render_cream",
-   "linear_rgb": [
-    0.55,
-    0.48,
-    0.28
-   ],
-   "roughness": 0.8,
-   "surface_map": "plaster",
-   "tile_m": 1.0,
-   "house_tint": [
-    0.6493,
-    0.528,
-    0.5884
-   ],
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": [
-    0.5225,
-    0.5166,
-    0.4732
-   ],
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 130
-  },
-  {
    "mesh": "street_render_patch",
    "material": "render_patch",
    "base_material": "render_patch",
@@ -3634,7 +2970,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 220
+   "faces": 78
   },
   {
    "mesh": "street_shard_a_edge",
@@ -4021,7 +3357,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 2496
+   "faces": 2646
   },
   {
    "mesh": "street_tile_patterned",
