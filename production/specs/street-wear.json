@@ -159,7 +159,7 @@
    "h_m": 0.6,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.894,
+   "strength": 0.997,
    "on": "east_chandler_bay0"
   },
   {
@@ -198,7 +198,7 @@
    "h_m": 0.6,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.745,
+   "strength": 0.922,
    "on": "east_parade_bay0"
   },
   {
@@ -237,7 +237,7 @@
    "h_m": 0.6,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.868,
+   "strength": 0.984,
    "on": "east_parade_bay1"
   },
   {
@@ -276,7 +276,7 @@
    "h_m": 0.6,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.72,
+   "strength": 0.91,
    "on": "east_parade_bay2"
   },
   {
@@ -315,7 +315,7 @@
    "h_m": 0.6,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.732,
+   "strength": 0.916,
    "on": "east_parade_bay3"
   },
   {
@@ -354,7 +354,7 @@
    "h_m": 0.6,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.893,
+   "strength": 0.997,
    "on": "east_parade_bay4"
   },
   {
@@ -393,7 +393,7 @@
    "h_m": 0.6,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.727,
+   "strength": 0.914,
    "on": "east_parade_bay5"
   },
   {
@@ -432,7 +432,7 @@
    "h_m": 0.6,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.778,
+   "strength": 0.939,
    "on": "west_north_bay0"
   },
   {
@@ -471,7 +471,7 @@
    "h_m": 0.6,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.764,
+   "strength": 0.932,
    "on": "west_north_bay1"
   },
   {
@@ -510,7 +510,7 @@
    "h_m": 0.6,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.772,
+   "strength": 0.936,
    "on": "west_north_bay2"
   },
   {
@@ -549,7 +549,7 @@
    "h_m": 0.6,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.828,
+   "strength": 0.964,
    "on": "west_south_bay0"
   },
   {
@@ -588,7 +588,7 @@
    "h_m": 0.6,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.791,
+   "strength": 0.946,
    "on": "west_south_bay1"
   },
   {
@@ -627,7 +627,7 @@
    "h_m": 0.6,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.81,
+   "strength": 0.955,
    "on": "west_south_bay2"
   },
   {
@@ -666,7 +666,7 @@
    "h_m": 0.6,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.894,
+   "strength": 0.997,
    "on": "east_chandler_bay0"
   },
   {
@@ -705,7 +705,7 @@
    "h_m": 0.6,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.745,
+   "strength": 0.922,
    "on": "east_parade_bay0"
   },
   {
@@ -744,7 +744,7 @@
    "h_m": 0.6,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.778,
+   "strength": 0.939,
    "on": "west_north_bay0"
   },
   {
@@ -783,7 +783,7 @@
    "h_m": 0.6,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.828,
+   "strength": 0.964,
    "on": "west_south_bay0"
   },
   {
@@ -822,7 +822,7 @@
    "h_m": 0.8181,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.864,
+   "strength": 0.616,
    "on": "east_parade_bay0"
   },
   {
@@ -835,12 +835,12 @@
    "h_m": 0.8728,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.864,
+   "strength": 0.62,
    "on": "east_parade_bay0"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_c",
    "x_m": 10.5347,
    "y_m": 4.0063,
    "z_m": 5.115,
@@ -848,12 +848,12 @@
    "h_m": 1.2746,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.972,
+   "strength": 0.702,
    "on": "east_parade_bay1"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_b",
    "x_m": 13.5033,
    "y_m": 4.0827,
    "z_m": 5.115,
@@ -861,7 +861,7 @@
    "h_m": 0.9693,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.972,
+   "strength": 0.675,
    "on": "east_parade_bay1"
   },
   {
@@ -874,7 +874,7 @@
    "h_m": 0.8282,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.843,
+   "strength": 0.523,
    "on": "east_parade_bay2"
   },
   {
@@ -887,12 +887,12 @@
    "h_m": 0.8466,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.843,
+   "strength": 0.506,
    "on": "east_parade_bay2"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_c",
    "x_m": 22.5054,
    "y_m": 4.0596,
    "z_m": 5.115,
@@ -900,7 +900,7 @@
    "h_m": 1.0617,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.853,
+   "strength": 0.598,
    "on": "east_parade_bay3"
   },
   {
@@ -913,12 +913,12 @@
    "h_m": 0.8338,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.853,
+   "strength": 0.531,
    "on": "east_parade_bay3"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_b",
    "x_m": 28.4753,
    "y_m": 4.0273,
    "z_m": 5.115,
@@ -926,12 +926,12 @@
    "h_m": 1.1908,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.994,
+   "strength": 0.502,
    "on": "east_parade_bay4"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_b",
    "x_m": 31.5347,
    "y_m": 4.032,
    "z_m": 5.115,
@@ -939,12 +939,12 @@
    "h_m": 1.1719,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.994,
+   "strength": 0.711,
    "on": "east_parade_bay4"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_b",
    "x_m": 34.4667,
    "y_m": 4.1022,
    "z_m": 5.115,
@@ -952,7 +952,7 @@
    "h_m": 0.891,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.849,
+   "strength": 0.467,
    "on": "east_parade_bay5"
   },
   {
@@ -965,7 +965,7 @@
    "h_m": 0.8196,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.849,
+   "strength": 0.541,
    "on": "east_parade_bay5"
   },
   {
@@ -978,7 +978,7 @@
    "h_m": 1.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.784,
+   "strength": 0.942,
    "on": "east_parade_stack1"
   },
   {
@@ -991,7 +991,7 @@
    "h_m": 1.2,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.784,
+   "strength": 0.942,
    "on": "east_parade_stack1"
   },
   {
@@ -1004,7 +1004,7 @@
    "h_m": 1.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.876,
+   "strength": 0.988,
    "on": "east_parade_stack2"
   },
   {
@@ -1017,7 +1017,7 @@
    "h_m": 1.2,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.876,
+   "strength": 0.988,
    "on": "east_parade_stack2"
   },
   {
@@ -1030,7 +1030,7 @@
    "h_m": 1.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.765,
+   "strength": 0.933,
    "on": "east_parade_stack3"
   },
   {
@@ -1043,7 +1043,7 @@
    "h_m": 1.2,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.765,
+   "strength": 0.933,
    "on": "east_parade_stack3"
   },
   {
@@ -1056,7 +1056,7 @@
    "h_m": 1.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.774,
+   "strength": 0.937,
    "on": "east_parade_stack4"
   },
   {
@@ -1069,7 +1069,7 @@
    "h_m": 1.2,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.774,
+   "strength": 0.937,
    "on": "east_parade_stack4"
   },
   {
@@ -1082,7 +1082,7 @@
    "h_m": 1.2,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.895,
+   "strength": 0.997,
    "on": "east_parade_stack5"
   },
   {
@@ -1095,7 +1095,7 @@
    "h_m": 1.2,
    "yaw_deg": 270.0,
    "pitch_deg": 0.0,
-   "strength": 0.895,
+   "strength": 0.997,
    "on": "east_parade_stack5"
   },
   {
@@ -1230,7 +1230,7 @@
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_b",
    "x_m": 6.3047,
    "y_m": 1.2356,
    "z_m": -5.115,
@@ -1238,12 +1238,12 @@
    "h_m": 1.1578,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.937,
+   "strength": 0.656,
    "on": "west_south_bay0"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_c",
    "x_m": 8.091,
    "y_m": 1.2066,
    "z_m": -5.115,
@@ -1251,12 +1251,12 @@
    "h_m": 1.2738,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.937,
+   "strength": 0.558,
    "on": "west_south_bay0"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_c",
    "x_m": 4.4768,
    "y_m": 4.0117,
    "z_m": -5.115,
@@ -1264,7 +1264,7 @@
    "h_m": 1.2531,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.937,
+   "strength": 0.474,
    "on": "west_south_bay0"
   },
   {
@@ -1277,7 +1277,7 @@
    "h_m": 1.0198,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.937,
+   "strength": 0.567,
    "on": "west_south_bay0"
   },
   {
@@ -1290,7 +1290,7 @@
    "h_m": 0.8924,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.905,
+   "strength": 0.695,
    "on": "west_south_bay1"
   },
   {
@@ -1303,12 +1303,12 @@
    "h_m": 0.8271,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.905,
+   "strength": 0.5,
    "on": "west_south_bay1"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_b",
    "x_m": 10.4905,
    "y_m": 4.0439,
    "z_m": -5.115,
@@ -1316,7 +1316,7 @@
    "h_m": 1.1246,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.905,
+   "strength": 0.542,
    "on": "west_south_bay1"
   },
   {
@@ -1329,12 +1329,12 @@
    "h_m": 1.0046,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.905,
+   "strength": 0.632,
    "on": "west_south_bay1"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_b",
    "x_m": 18.2696,
    "y_m": 1.2451,
    "z_m": -5.115,
@@ -1342,7 +1342,7 @@
    "h_m": 1.1197,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.922,
+   "strength": 0.509,
    "on": "west_south_bay2"
   },
   {
@@ -1355,12 +1355,12 @@
    "h_m": 0.8987,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.922,
+   "strength": 0.706,
    "on": "west_south_bay2"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_b",
    "x_m": 16.5201,
    "y_m": 4.0398,
    "z_m": -5.115,
@@ -1368,12 +1368,12 @@
    "h_m": 1.1407,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.922,
+   "strength": 0.706,
    "on": "west_south_bay2"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_c",
    "x_m": 19.5314,
    "y_m": 4.0281,
    "z_m": -5.115,
@@ -1381,7 +1381,7 @@
    "h_m": 1.1877,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.922,
+   "strength": 0.671,
    "on": "west_south_bay2"
   },
   {
@@ -1438,7 +1438,7 @@
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_b",
    "x_m": 25.4609,
    "y_m": 4.0481,
    "z_m": -5.115,
@@ -1446,7 +1446,7 @@
    "h_m": 1.1078,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.894,
+   "strength": 0.508,
    "on": "west_north_bay0"
   },
   {
@@ -1459,7 +1459,7 @@
    "h_m": 0.8248,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.894,
+   "strength": 0.51,
    "on": "west_north_bay0"
   },
   {
@@ -1472,12 +1472,12 @@
    "h_m": 0.8984,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.881,
+   "strength": 0.65,
    "on": "west_north_bay1"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_c",
    "x_m": 34.5286,
    "y_m": 4.028,
    "z_m": -5.115,
@@ -1485,12 +1485,12 @@
    "h_m": 1.1879,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.881,
+   "strength": 0.682,
    "on": "west_north_bay1"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_c",
    "x_m": 37.4857,
    "y_m": 4.0405,
    "z_m": -5.115,
@@ -1498,12 +1498,12 @@
    "h_m": 1.1381,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.888,
+   "strength": 0.554,
    "on": "west_north_bay2"
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_c",
    "x_m": 40.4813,
    "y_m": 4.0716,
    "z_m": -5.115,
@@ -1511,7 +1511,7 @@
    "h_m": 1.0135,
    "yaw_deg": 180.0,
    "pitch_deg": 0.0,
-   "strength": 0.888,
+   "strength": 0.563,
    "on": "west_north_bay2"
   },
   {
@@ -1568,7 +1568,7 @@
   },
   {
    "kind": "streak",
-   "picture": "ours/wear_streak",
+   "picture": "ours/wear_streak_c",
    "x_m": 41.497,
    "y_m": 4.0452,
    "z_m": 5.115,
@@ -1576,7 +1576,7 @@
    "h_m": 1.1194,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.995,
+   "strength": 0.563,
    "on": "east_chandler_bay0"
   },
   {
@@ -1589,7 +1589,7 @@
    "h_m": 0.8914,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.995,
+   "strength": 0.528,
    "on": "east_chandler_bay0"
   },
   {

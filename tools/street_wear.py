@@ -48,6 +48,7 @@ END_WALL_T = 0.34           # a row's end wall, one and a half bricks (terrace-f
 DAMP_M = 1.0               # rising damp: the lowest metre of a solid wall darker and patchy (2 October)
 ROAD_HALF_M, ROAD_CROSSFALL, FOOTWAY_ABOVE_CROWN_M = 3.0, 0.025, 0.10   # terrace-front.py ROAD_HALF_M, ROAD_CROSSFALL, THRESHOLD_ABOVE_CROWN_M
 SPLASH_M = 0.60             # the splash-back band at the foot of a wall (2 October: 0.30 and faint did not show in the stage-1 frame)
+STREAK_PICTURES = ("ours/wear_streak", "ours/wear_streak_b", "ours/wear_streak_c")
 PICTURE = {"damp": "ours/wear_damp", "wash": "ours/wear_wash", "splash": "ours/wear_splash", "streak": "ours/wear_streak",
            "algae": "ours/wear_algae", "soot": "ours/wear_soot",
            "oil": "ours/wear_oil", "puddle": "ours/puddle_01"}   # 2 October: the packs' real masks (tools/make_wear_masks.py), not their preview renders
@@ -120,8 +121,9 @@ def build(pieces):
         zf, facing = face_of(b)
         h = house[b["name"]]
         bottom = b["y_m"] - b["sy_m"] / 2.0
+        # (4 October: at 0.5 to 0.9 the review measured the foot lighter than the wall above.)
         decals.append(wall_decal("splash", b["x_m"], bottom + SPLASH_M / 2.0, zf, facing, b["sx_m"], SPLASH_M,
-                                 0.5 + 0.4 * h["wear"], b["name"]))
+                                 0.8 + 0.2 * h["wear"], b["name"]))
         # WEAR THAT READS AT A GLANCE ON EVERY FACADE (Jafar, 2 October, Friday's page:
         # "wear that reads at a glance across every facade, not faint marks"): the wash
         # the gables carry, down every bay's front from its top (rain off the eaves and
@@ -143,7 +145,7 @@ def build(pieces):
         gx = g["x_m"] - g["sx_m"] / 2.0 - END_WALL_T - STANDOFF_M
         bottom = g["y_m"] - g["sy_m"] / 2.0
         decals.append(gable_decal("splash", gx, bottom + SPLASH_M / 2.0, g["z_m"], g["sz_m"], SPLASH_M,
-                                  0.5 + 0.4 * hg["wear"], g["name"]))
+                                  0.8 + 0.2 * hg["wear"], g["name"]))
         # THE GABLE'S WASH FLUSH WITH ITS CORNERS AND DOWN TO ITS FOOT (4 October: at 95% by 90%
         # its edges stood as a straight soot line by the corner and a clean band above the foot;
         # wider than the face it would smear round the corner onto the front).
@@ -166,8 +168,12 @@ def build(pieces):
             # FROM THE SILL'S OWN EDGE (4 October, the first fresh review of 2.4: the streaks began
             # well below the sills): the picture fades in over its top fifth, so it starts a quarter
             # of its length up, on the stone sill, which takes no marks.
-            decals.append(wall_decal("streak", p["x_m"] + 0.08 * (rnd(s, "dx") - 0.5), top - L / 2.0 + 0.25 * L, zf, facing,
-                                     p["sx_m"] * (0.8 + 0.3 * rnd(s, "w")), L, 0.65 + 0.35 * h["wear"], b["name"]))
+            # ONE OF THREE STREAKS a window, lighter and each its own (4 October: "one identical
+            # decal under every window ... inky").
+            d = wall_decal("streak", p["x_m"] + 0.08 * (rnd(s, "dx") - 0.5), top - L / 2.0 + 0.25 * L, zf, facing,
+                           p["sx_m"] * (0.8 + 0.3 * rnd(s, "w")), L, 0.35 + 0.25 * rnd(s, "st") + 0.15 * h["wear"], b["name"])
+            d["picture"] = STREAK_PICTURES[int(rnd(s, "pic") * 3) % 3]
+            decals.append(d)
         elif p["bom"] == "D5_downpipe" and p["name"].endswith("_shoe"):
             block = p["name"].split("_dp")[0]
             b = owner_bay(p["x_m"], block)
@@ -187,10 +193,10 @@ def build(pieces):
             facing = -1.0 if p["z_m"] > 0 else 1.0
             top = p["y_m"] + p["sy_m"] / 2.0
             decals.append(wall_decal("soot", p["x_m"], top - 0.6, zf, facing, p["sx_m"] * 1.05, 1.2,
-                                     0.6 + 0.3 * h["wear"], p["name"]))
+                                     0.85 + 0.15 * h["wear"], p["name"]))
             # AND ITS SOUTH FACE, the one the hook camera sees (4 October: "the chimneys are clean").
             decals.append(gable_decal("soot", p["x_m"] - p["sx_m"] / 2.0 - STANDOFF_M, top - 0.6, p["z_m"],
-                                      p["sz_m"], 1.2, 0.6 + 0.3 * h["wear"], p["name"]))
+                                      p["sz_m"], 1.2, 0.85 + 0.15 * h["wear"], p["name"]))
     # oil where cars stand: along both kerbs, a stain every few metres, by seed
     for side, z in (("east", 2.1), ("west", -2.1)):
         s = seed_of("oil_" + side)
