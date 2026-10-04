@@ -36,10 +36,10 @@
    "brightness_day": 0.15,
    "brightness_night": 0.7,
    "room_3d": true,
-   "room_lumens_day": 500,
-   "room_lumens_night": 900,
+   "room_lumens_day": 180,
+   "room_lumens_night": 300,
    "sources": "production/research/cab-office-interior-1990 (both notes: paper and voice radio, wood-effect tops, fabric swivel chairs on five-star bases, plastic trays, coiled cords, pot plants; the number signwritten on the glass); canon.md D19; his ruling of 3 October, 'Mickey's window shows its office'",
-   "lumens_note": "4 October: the room first read black at 2 m, but the black was the street's solid block behind the window (now hidden, hide_meshes); at 2,000 lm its dark wood counter came out cream; 500 by day and 900 at night, near the other rooms', for the gate to judge.",
+   "lumens_note": "4 October: the street runs on low light values (its sun at 3), so a room light is small in lumens: at 500 the room washed out (its dark wood counter cream, the night frame's median 190); 180 by day and 300 at night. The first read of black at 400 was the street's solid block behind the window (now hidden, hide_meshes).",
    "hide_meshes": [
     "street_mickeys_interior"
    ]

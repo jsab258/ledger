@@ -316,6 +316,7 @@ MATERIALS = (
     # opposite frontage lying in it.
     ("glass",       (0.085, 0.092, 0.100), 0.0),   # 0.06 until 23 September: polished float glass has none
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
+    ("brass",       (0.420, 0.300, 0.120), 0.35),   # door furniture, rubbed (4 October)
     # MEASURED: sheet 0.220, 0.202, 0.195 - EIGHT TIMES what we had, and
     # warm where ours was blue. A wet Welsh slate roof under an overcast sky
     # is a mid grey that mirrors the sky, not a black one; ours read as a
@@ -706,6 +707,7 @@ SURFACE_OF = {
     # from the scene now that raytracing is on.
     "glass":        (None, 0.0),
     "lead":         ("metal", 0.35),
+    "brass":        ("metal", 0.35),
     "steel_dark":   ("metal", 0.35),
     "pillarbox_red": (None, 0.0),
     "standing_water": (None, 0.0),
@@ -821,6 +823,12 @@ EMPTY_UNIT = ("east_parade", 3)
 #: tools/props/make_vignette_2d.py - root-relative paths, not image-lane ids.
 LETTERED = "production/assets/vignette/decals2d"
 LETTING_BOARD = LETTERED + "/board_to_let"
+#: THE BILLS ON THE EMPTY UNIT'S GLASS (tools/props/make_vignette_2d.py POSTERS, double crown):
+#: (picture, where across the glass 0..1, raised or dropped m, skew in degrees)
+POSTER_M = (0.508, 0.762)
+FLYPOSTERS_ON_EMPTY = (("poster_no_poll_tax", 0.16, 0.05, 0.0), ("poster_no_poll_tax", 0.29, 0.02, 0.0),
+                       ("poster_march", 0.52, 0.10, 0.0), ("poster_cant_pay", 0.70, -0.02, 0.0),
+                       ("poster_jumble_sale", 0.86, 0.12, 0.0))
 LETTING_BOARD_M = (0.90, 0.45)
 #: AND THE CAB OFFICE'S NAME. The spec's decal for east_parade_fascia0 is
 #: still the image lane's maroon signboard - gilt serifs and a border, a
@@ -829,7 +837,18 @@ LETTING_BOARD_M = (0.90, 0.45)
 #: so the recipe lays that instead. THE SPEC IS NOT CHANGED HERE: the Unreal
 #: probe stages the generated directory and nothing else, so moving the
 #: spec's id is a probe change and waits for one.
-SIGN_OVERRIDE = {("east_parade", 0): LETTERED + "/fascia_mickeys_plain"}
+SIGN_OVERRIDE = {("east_parade", 0): LETTERED + "/fascia_mickeys_plain",
+                 # THE IMAGE MODEL'S BOARDS RETIRED (4 October, the shopfronts step; the asset plan's
+                 # fault 2): every other shop's board our own lettering too, trade words only until
+                 # the town mints its shopkeepers' names (tools/props/make_vignette_2d.py TRADE_FASCIAS)
+                 ("east_parade", 1): LETTERED + "/fascia_trade_fishmonger",
+                 ("east_parade", 2): LETTERED + "/fascia_trade_pawnbroker",
+                 ("east_parade", 4): LETTERED + "/fascia_trade_launderette",
+                 ("east_parade", 5): LETTERED + "/fascia_trade_grocer",
+                 ("west_north", 0): LETTERED + "/fascia_trade_newsagent",
+                 ("west_north", 1): LETTERED + "/fascia_trade_ironmonger",
+                 ("west_north", 2): LETTERED + "/fascia_trade_tea_room",
+                 ("east_chandler", 0): LETTERED + "/fascia_trade_chandler"}
 
 FASCIA_PAINT = (
     # LIFTED TO THE SHEET'S OWN VALUES, 22 September. Sampled off its street
@@ -3415,11 +3434,13 @@ def _pavement_dressing(out):
     """The utility cover and the extra gully grates, flush."""
     for k, (cx, cy) in enumerate(PAVEMENT_COVERS):
         top = footway_z(cy)
-        _box(out, "dressing_cover_surround_%d" % k, "brick_rubbed",
-             cx - 0.45, cx + 0.45, cy - 0.36, cy + 0.36, top - 0.02, top + 0.004,
-             "a-red-brown-surround")
+        # A GREY STONE SURROUND, FLUSH (4 October: in rubbed brick, re-graded orange for the
+        # arches, it read as a doormat on the pavement, a fresh reviewer's finding)
+        _box(out, "dressing_cover_surround_%d" % k, "stone",
+             cx - 0.45, cx + 0.45, cy - 0.36, cy + 0.36, top - 0.02, top + 0.001,
+             "a-stone-surround/flush")
         _box(out, "dressing_cover_%d" % k, "steel_dark",
-             cx - 0.33, cx + 0.33, cy - 0.25, cy + 0.25, top - 0.02, top + 0.006,
+             cx - 0.33, cx + 0.33, cy - 0.25, cy + 0.25, top - 0.02, top + 0.002,
              "an-iron-utility-cover")
     for k, gx in enumerate(CHANNEL_GULLIES):
         _box(out, "dressing_gully_%d" % k, "steel_dark",
@@ -4959,6 +4980,18 @@ def plan_parts(p, bay=0, party_wall=True):
          disp_x0, disp_x1, rec, rec + 0.02, sr_h, tr_h,
          "whitened-from-inside/nobody-trades-here" if empty
          else "recessed-so-the-frontage-is-not-one-plane")
+    if empty:
+        # FLY-POSTED, as an empty unit's glass was (4 October, the shopfronts step): our own bills
+        # pasted on the outside of the whitened glass, a little skew, the poll tax's among them.
+        for k, (pic, fx, fz, turn) in enumerate(FLYPOSTERS_ON_EMPTY):
+            pw_, ph_ = POSTER_M
+            cx_ = disp_x0 + (disp_x1 - disp_x0) * fx
+            cz_ = sr_h + 0.15 + ph_ / 2.0 + fz
+            fp_ = _box(parts, "flyposter_%d" % k, "paint_fascia", cx_ - pw_ / 2.0, cx_ + pw_ / 2.0,
+                       rec - 0.004 - 0.001 * k, rec - 0.001 * k, cz_ - ph_ / 2.0, cz_ + ph_ / 2.0,
+                       "a-pasted-bill/" + pic)
+            fp_["decal"] = LETTERED + "/" + pic
+            fp_["turn_deg"] = turn
 
     # THE FRAME ROUND THE GLASS, which the first attempt had none of. Two
     # jambs and a sill rail; the transom below is its head. Without these the
@@ -5043,6 +5076,21 @@ def plan_parts(p, bay=0, party_wall=True):
     _box(parts, "shop_door_head_rail", joinery, shop_x0, shop_x1,
          -joinery_proj, 0.06, p["shop_door_h_m"] - jamb_t, p["shop_door_h_m"],
          "the-rail-over-the-glass")
+    # ITS FITTINGS (4 October: a fresh reviewer found the door with "no handle, letterbox or
+    # panels"): a brass push bar across the light, a letterplate in the bottom rail, and two
+    # raised panels below it.
+    cxd = (shop_x0 + shop_x1) / 2.0
+    _box(parts, "shop_door_push_bar", "brass", shop_x0 + jamb_t + 0.06, shop_x1 - jamb_t - 0.06,
+         -joinery_proj - 0.05, -joinery_proj - 0.02, 1.02, 1.05, "a-brass-push-bar")
+    for Name, X0 in (("shop_door_push_bar_stay_l", shop_x0 + jamb_t + 0.07), ("shop_door_push_bar_stay_r", shop_x1 - jamb_t - 0.09)):
+        _box(parts, Name, "brass", X0, X0 + 0.02, -joinery_proj - 0.05, -joinery_proj, 1.025, 1.045, "its-stay")
+    _box(parts, "shop_door_letterplate", "brass", cxd - 0.14, cxd + 0.14, -0.005, 0.02,
+         p["shop_glazed_from_m"] - jamb_t - 0.14, p["shop_glazed_from_m"] - jamb_t - 0.09, "a-letterplate")
+    pz0, pz1 = 0.12, p["shop_glazed_from_m"] - jamb_t - 0.20
+    if pz1 > pz0 + 0.1:
+        for Name, X0, X1 in (("shop_door_panel_l", shop_x0 + jamb_t + 0.04, cxd - 0.03),
+                             ("shop_door_panel_r", cxd + 0.03, shop_x1 - jamb_t - 0.04)):
+            _box(parts, Name, joinery, X0, X1, -0.012, 0.02, pz0, pz1, "a-raised-panel")
     # ON A REFIT THE PANEL OVER THE DOOR IS THE FRAME'S, not brick: the
     # refit replaced the whole front up to the fascia, which is why attempt
     # one's cab office had a patch of brick hanging over its own door.
@@ -5070,6 +5118,23 @@ def plan_parts(p, bay=0, party_wall=True):
                 "paint=" + paint_name)
     band["paint"] = paint_rgb
     band["paint_name"] = paint_name
+    # THE CORNICE AND ITS CONSOLES (4 October, the shopfronts step; the Hook sheet's fronts carry
+    # both, and a fresh reviewer found ours bare): a moulding stepped out over the board's top in
+    # three members, and a console bracket at each end standing on the pilaster, in the board's
+    # paint, as a joiner's shopfront of the 1880s had them.
+    for nm, y0_, z0_, z1_ in (("fascia_cornice_bed", -fp - 0.035, GF - 0.035, GF),
+                              ("fascia_cornice_corona", -fp - 0.085, GF, GF + 0.045),
+                              ("fascia_cornice_cap", -fp - 0.11, GF + 0.045, GF + 0.07)):
+        cm = _box(parts, nm, "paint_fascia", -0.02, W + 0.02, y0_, 0.0, z0_, z1_,
+                  "the-cornice's-moulding/paint=" + paint_name)
+        cm["paint"], cm["paint_name"] = paint_rgb, paint_name
+    for side_, x0_ in (("l", 0.0), ("r", W - 0.13)):
+        for nm, y0_, z0_, z1_ in (("fascia_console_foot_" + side_, -fp - 0.07, fb - 0.12, fb + 0.06),
+                                  ("fascia_console_body_" + side_, -fp - 0.10, fb + 0.06, GF - 0.035),
+                                  ("fascia_console_head_" + side_, -fp - 0.115, GF - 0.035, GF + 0.07)):
+            cs = _box(parts, nm, "paint_fascia", x0_, x0_ + 0.13, y0_, -fp, z0_, z1_,
+                      "a-console-bracket/paint=" + paint_name)
+            cs["paint"], cs["paint_name"] = paint_rgb, paint_name
     # THE SIGN IS ITS OWN THIN PIECE ON THE FACE OF THE BOARD rather than
     # a texture on the board, because the board is one box and its face,
     # its returns and its underside are all the same surface to a box
@@ -8243,13 +8308,13 @@ def selftest():
             check("accept/and-it-is-signwritten-not-the-pub's-board",
                   bool(mick) and byid[mick[0]]["decal"].endswith("fascia_mickeys_plain"),
                   byid[mick[0]]["decal"] if mick else "none")
-            west_signs = [b["id"] for b in street
-                          if b["id"].startswith("west_") and "fascia_sign" in b["id"]]
-            check("reject/no-sign-is-repeated-across-the-road", not west_signs,
-                  ",".join(west_signs[:3]))
-            cropped = [b["id"] for b in street if b.get("decal_uv") and "fascia_sign" in b["id"]]
-            check("accept/the-spec's-crops-are-read", len(cropped) == 3,
-                  "%d cropped" % len(cropped))
+            # EVERY BOARD OUR OWN LETTERING, NONE REPEATED (4 October: the image model's boards
+            # retired; the west row has its own trades' boards now)
+            boards = [b.get("decal") for b in street if "fascia_sign" in b["id"]]
+            check("reject/no-sign-is-repeated-across-the-road", len(boards) == len(set(boards)),
+                  ",".join(sorted(boards))[:120])
+            check("reject/no-board-is-the-image-model's", not [d for d in boards if str(d).startswith("generated/")],
+                  ",".join(d for d in boards if str(d).startswith("generated/")))
             g3 = byid.get("east_parade_display_glazing_bay3", {})
             check("accept/the-empty-unit-is-whitened-and-to-let",
                   g3.get("material") == "glass_whitened"

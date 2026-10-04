@@ -274,7 +274,8 @@ def build_and_render(argv):
         floor_lino = fm
     if shop["id"] == "mickeys":
         # A BROWN CARPET, trodden (offices of 1987: "dark brown carpet", cab-office-interior-1990 NOTE-2)
-        floor_lino = mat("carpet_brown", (0.095, 0.060, 0.038), rough=0.95, noise=0.45)
+        floor_lino = texmat("carpet_dirty", "dirty_carpet", 1.0, (0.55, 0.40, 0.28),
+                            base=mat("carpet_brown", (0.095, 0.060, 0.038), rough=0.95, noise=0.45))
     box("floor", -W / 2, W / 2, 0, D, -0.02, 0.0, floor_lino)
     wall = texmat("plaster_cream", "painted_plaster_wall", 1.5, (0.95, 0.86, 0.66),
                   base=mat("paint_cream", (0.55, 0.50, 0.39), rough=0.85, noise=0.3))
@@ -1297,14 +1298,30 @@ def build_and_render(argv):
     if shop["id"] == "mickeys":
         import random
         rnd = random.Random(19)
-        laminate = mat("laminate_wood_effect", (0.42, 0.29, 0.17), rough=0.38, noise=0.2)
-        front_panel = mat("counter_front", (0.17, 0.10, 0.055), rough=0.5, noise=0.2)
+        # REAL SURFACES (the second fresh review: "flat colour, no grain, seams or wear"): Poly Haven's
+        # veneers for the wood-effect laminate and the counter's front, its leather for the vinyl
+        laminate = texmat("laminate_ash", "ash_veneer", 0.8, (0.78, 0.62, 0.44),
+                          base=mat("laminate_wood_effect", (0.42, 0.29, 0.17), rough=0.38, noise=0.2))
+        front_panel = texmat("counter_walnut", "american_walnut_veneer", 0.9, (0.70, 0.58, 0.46),
+                             base=mat("counter_front", (0.17, 0.10, 0.055), rough=0.5, noise=0.2))
+
+        def metre_uvs(o, tile):
+            # UVs in metres before export, so a picture tiles at its own size on a long counter
+            bpy.ops.object.select_all(action="DESELECT")
+            o.select_set(True)
+            bpy.context.view_layer.objects.active = o
+            bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+            bpy.ops.object.mode_set(mode="EDIT")
+            bpy.ops.mesh.select_all(action="SELECT")
+            bpy.ops.uv.cube_project(cube_size=tile)
+            bpy.ops.object.mode_set(mode="OBJECT")
         kick = mat("kick_black", (0.03, 0.03, 0.03), rough=0.5)
         steel_grey = mat("steel_grey", (0.30, 0.31, 0.32), rough=0.45, metal=0.6)
         chrome = mat("chrome", (0.75, 0.75, 0.76), rough=0.2, metal=1.0)
         black = mat("plastic_black", (0.025, 0.025, 0.025), rough=0.4)
         cream_plastic = mat("phone_cream", (0.60, 0.55, 0.43), rough=0.35)
-        vinyl = mat("vinyl_oxblood", (0.085, 0.018, 0.016), rough=0.3)
+        vinyl = texmat("vinyl_leather", "fabric_leather_01", 0.6, (0.42, 0.10, 0.08),
+                       base=mat("vinyl_oxblood", (0.085, 0.018, 0.016), rough=0.3))
         fabric = mat("chair_fabric", (0.22, 0.12, 0.06), rough=0.95, noise=0.3)
         paper = mat("paper", (0.80, 0.77, 0.66), rough=0.85)
         paper_yellow = mat("paper_yellowed", (0.74, 0.66, 0.46), rough=0.85)
@@ -1330,7 +1347,7 @@ def build_and_render(argv):
 
         # THE WINDOW BOARD inside the glass, and what sits on it: a spider plant, two directories
         # gone yellow in the sun, a saucer ashtray.
-        box("window_board", -2.62, 0.86, 0.0, 0.24, 0.62, 0.655, laminate)
+        metre_uvs(box("window_board", -2.62, 0.86, 0.0, 0.24, 0.62, 0.655, laminate), 0.8)
         def lighten(root, ratio):
             # a scanned plant cut to a fraction of its triangles: at the window it reads the same
             for o in ([root] + list(root.children_recursive)) if root else []:
@@ -1340,6 +1357,10 @@ def build_and_render(argv):
         for k, (x0, w, h, c) in enumerate(((-0.55, 0.22, 0.05, (0.62, 0.52, 0.16)), (-0.53, 0.21, 0.045, (0.58, 0.48, 0.15)))):
             box("directory_%d" % k, x0, x0 + w, 0.04, 0.32, 0.655 + k * 0.05, 0.655 + k * 0.05 + h,
                 mat("directory_%d" % k, c, rough=0.8, noise=0.2))
+        # their covers printed (a district's directories, no publisher named), sun-faded
+        for k, line_ in enumerate(("TELEPHONE DIRECTORY", "MERIDIAN & DISTRICT", "1989-90")):
+            text("directory_cover_%d" % k, line_, -0.43, 0.20 - k * 0.035, 0.7555 + 0.0005, 0.016 if k else 0.019,
+                 ink, rot_x=0.0, font="evening-paper/LibreFranklin-700.ttf")
         # THE RADIATOR under the window, a pressed-steel panel with its fins
         box("radiator", -2.05, -0.65, 0.07, 0.13, 0.14, 0.58, radiator_paint)
         for k in range(14):
@@ -1360,8 +1381,10 @@ def build_and_render(argv):
 
         # THE BENCH down the left wall, oxblood vinyl on a black tube frame, where customers wait
         bx0, bx1, by0, by1 = -2.62, -2.18, 0.42, 1.95
-        box("bench_seat", bx0 + 0.04, bx1, by0, by1, 0.40, 0.47, vinyl)
-        box("bench_back", bx0, bx0 + 0.09, by0, by1, 0.49, 0.88, vinyl)
+        metre_uvs(box("bench_seat", bx0 + 0.04, bx1, by0, by1, 0.40, 0.47, vinyl), 0.6)
+        metre_uvs(box("bench_back", bx0, bx0 + 0.09, by0, by1, 0.49, 0.88, vinyl), 0.6)
+        for o_ in [ob for ob in bpy.context.scene.objects if ob.name.startswith("bench_seat") or ob.name.startswith("bench_back")]:
+            o_.modifiers.new("round", "BEVEL").width = 0.015
         for yy in (by0 + 0.05, by1 - 0.08):
             for xx in (bx0 + 0.06, bx1 - 0.05):
                 box("bench_leg", xx, xx + 0.025, yy, yy + 0.025, 0.0, 0.40, black)
@@ -1404,8 +1427,8 @@ def build_and_render(argv):
         # from the left wall to a gap at the stair wall for the staff to pass
         cy0, cy1 = 2.23, 2.73
         cx0, cx1 = -W / 2, 0.80
-        box("counter", cx0, cx1, cy0, cy1, 0.0, 0.95, front_panel)
-        box("counter_top", cx0, cx1 + 0.02, cy0 - 0.03, cy1 + 0.01, 0.95, 0.985, laminate)
+        metre_uvs(box("counter", cx0, cx1, cy0, cy1, 0.0, 0.95, front_panel), 0.9)
+        metre_uvs(box("counter_top", cx0, cx1 + 0.02, cy0 - 0.03, cy1 + 0.01, 0.95, 0.985, laminate), 0.8)
         box("counter_kick", cx0, cx1, cy0 - 0.006, cy0, 0.0, 0.1, kick)
         for k in range(4):
             xx = cx0 + 0.6 + k * 0.85
@@ -1431,8 +1454,26 @@ def build_and_render(argv):
         box("phone_handset", phx - 0.105, phx + 0.105, phy + 0.02, phy + 0.08, 1.05, 1.085, cream_plastic)
         for xx in (phx - 0.095, phx + 0.055):
             box("phone_handset_end", xx, xx + 0.04, phy + 0.01, phy + 0.09, 1.045, 1.095, cream_plastic)
-        for k in range(10):
-            cyl("phone_cord_%d" % k, phx + 0.12 + k * 0.012, phy + 0.02, 0.995, 0.009, 0.004, cream_plastic, axis="x", verts=10)
+        # ROUNDED, as moulded plastic is, and its cord a real coil (the fresh review: "stacked boxes")
+        for o in [ob for ob in bpy.context.scene.objects if ob.name.startswith("phone_")]:
+            bv = o.modifiers.new("round", "BEVEL")
+            bv.width, bv.segments = 0.006, 3
+        coil = bpy.data.curves.new("phone_cord", "CURVE")
+        coil.dimensions = "3D"
+        sp = coil.splines.new("POLY")
+        turns, n_pts = 14, 14 * 12
+        sp.points.add(n_pts - 1)
+        for i_ in range(n_pts):
+            t_ = i_ / float(n_pts - 1)
+            ang_ = t_ * turns * 2.0 * math.pi
+            # from the handset's end, round the base's side and down the counter, coiled
+            cx_, cy_ = phx + 0.11 + 0.10 * t_, phy + 0.05 - 0.06 * t_
+            sp.points[i_].co = (cx_, cy_ + 0.008 * math.cos(ang_), 1.0 - 0.012 * t_ + 0.008 * math.sin(ang_), 1.0)
+        coil.bevel_depth = 0.0018
+        coil.bevel_resolution = 1
+        cord = bpy.data.objects.new("phone_cord", coil)
+        sc.collection.objects.link(cord)
+        cord.data.materials.append(cream_plastic)
         # a second, older line: a black dial telephone for the account customers
         p2x = -0.25
         box("phone2_base", p2x - 0.09, p2x + 0.09, 2.40, 2.60, 0.985, 1.05, black)
@@ -1465,27 +1506,35 @@ def build_and_render(argv):
         # THE RADIO DESK on the staff side (the plan: z 8.4 to 8.95), grey steel under a wood-effect top
         ry0, ry1 = 3.13, 3.68
         rx0, rx1 = -1.80, -0.30
-        box("radio_desk_top", rx0, rx1, ry0, ry1, 0.71, 0.74, laminate)
-        box("radio_desk_pedestal", rx1 - 0.42, rx1, ry0 + 0.02, ry1, 0.0, 0.71, steel_grey)
-        for k in range(3):
-            box("drawer_line_%d" % k, rx1 - 0.40, rx1 - 0.02, ry0 + 0.015, ry0 + 0.02, 0.22 + k * 0.17, 0.225 + k * 0.17, black)
-        box("radio_desk_leg", rx0, rx0 + 0.04, ry0 + 0.02, ry1 - 0.02, 0.0, 0.71, steel_grey)
+        # (4 October, after the fresh review's "featureless slabs": Poly Haven's metal office
+        # desk, CC0, at 1.5 m, its top read back and the set stood on it)
+        desk = model("metal_office_desk", (rx0 + rx1) / 2.0, (ry0 + ry1) / 2.0, 0.0, turn=0.0, size=1.5)
+        desk_top = 0.74
+        if desk is not None:
+            bpy.context.view_layer.update()
+            from mathutils import Vector
+            desk_top = max((o.matrix_world @ Vector(c)).z for o in [desk] + list(desk.children_recursive)
+                           if o.type == "MESH" for c in o.bound_box)
+        dz = desk_top - 0.74
         # the base station: a dark set with its front panel, knobs and the transmit lamp
         sx0, sx1 = -1.30, -0.86
-        box("radio_set", sx0, sx1, ry0 + 0.20, ry0 + 0.48, 0.74, 0.87, black)
-        box("radio_panel", sx0 + 0.01, sx1 - 0.01, ry0 + 0.195, ry0 + 0.20, 0.755, 0.855, steel_grey)
+        box("radio_set", sx0, sx1, ry0 + 0.20, ry0 + 0.48, 0.74 + dz, 0.87 + dz, black)
+        box("radio_panel", sx0 + 0.01, sx1 - 0.01, ry0 + 0.195, ry0 + 0.20, 0.755 + dz, 0.855 + dz, steel_grey)
         for k in range(4):
-            cyl("radio_knob_%d" % k, sx0 + 0.06 + k * 0.09, ry0 + 0.19, 0.79, 0.012, 0.016, black, axis="y")
-        cyl("radio_lamp_tx", sx1 - 0.05, ry0 + 0.193, 0.835, 0.005, 0.004, red_led, axis="y")
-        cyl("radio_lamp_on", sx1 - 0.08, ry0 + 0.193, 0.835, 0.005, 0.004, green_led, axis="y")
+            cyl("radio_knob_%d" % k, sx0 + 0.06 + k * 0.09, ry0 + 0.19, 0.79 + dz, 0.012, 0.016, black, axis="y")
+        cyl("radio_lamp_tx", sx1 - 0.05, ry0 + 0.193, 0.835 + dz, 0.005, 0.004, red_led, axis="y")
+        cyl("radio_lamp_on", sx1 - 0.08, ry0 + 0.193, 0.835 + dz, 0.005, 0.004, green_led, axis="y")
         # the desk microphone on its stand, turned to the empty chair
-        cyl("mic_base", -0.70, ry0 + 0.30, 0.74, 0.06, 0.022, black)
-        cyl("mic_stem", -0.70, ry0 + 0.30, 0.762, 0.007, 0.17, chrome)
-        cyl("mic_head", -0.70, ry0 + 0.32, 0.95, 0.028, 0.07, steel_grey, axis="y")
-        cyl("mic_grille", -0.70, ry0 + 0.285, 0.95, 0.024, 0.004, black, axis="y")
+        cyl("mic_base", -0.70, ry0 + 0.30, 0.74 + dz, 0.06, 0.022, black)
+        cyl("mic_stem", -0.70, ry0 + 0.30, 0.762 + dz, 0.007, 0.17, chrome)
+        cyl("mic_head", -0.70, ry0 + 0.32, 0.95 + dz, 0.028, 0.07, steel_grey, axis="y")
+        cyl("mic_grille", -0.70, ry0 + 0.285, 0.95 + dz, 0.024, 0.004, black, axis="y")
+        # the anglepoise over the set (Poly Haven, CC0), and a clipboard of the night's jobs
+        model("desk_lamp_arm_01", -1.62, ry0 + 0.35, desk_top, turn=2.6, size=0.55)
+        model("clipboard", -0.45, ry0 + 0.18, desk_top, turn=0.3, size=0.32)
         # a pad of dockets, a biro, a second ashtray
-        box("radio_pad", -1.70, -1.46, ry0 + 0.06, ry0 + 0.24, 0.74, 0.75, paper)
-        cyl("radio_ashtray", -1.55, ry0 + 0.40, 0.74, 0.055, 0.025, steel_grey)
+        box("radio_pad", -1.40, -1.16, ry0 + 0.06, ry0 + 0.24, 0.74 + dz, 0.75 + dz, paper)
+        cyl("radio_ashtray", -1.25, ry0 + 0.42, 0.74 + dz, 0.055, 0.025, steel_grey)
         # the loudspeaker on its bracket above the desk, so the room hears every job
         box("speaker", -1.25, -0.95, D - 0.20, D - 0.02, 2.02, 2.24, mat("speaker_wood", (0.16, 0.10, 0.06), rough=0.5))
         box("speaker_cloth", -1.22, -0.98, D - 0.205, D - 0.20, 2.04, 2.22, mat("speaker_cloth", (0.06, 0.05, 0.04), rough=1.0))
@@ -1504,32 +1553,17 @@ def build_and_render(argv):
         # a jacket left over the chair's back (his)
         box("jacket_on_chair", chx - 0.23, chx + 0.23, chy + 0.24, chy + 0.30, 0.62, 1.0, mat("jacket_tweed", (0.14, 0.11, 0.08), rough=0.95, noise=0.3))
 
-        # THE DISTRICT MAP over the radio desk, the town and the estuary, pins where the cars are
-        mx0, mx1, mz0, mz1 = -2.45, -1.05, 1.18, 2.02
-        box("map_board", mx0, mx1, D - 0.012, D - 0.002, mz0, mz1, mat("map_paper", (0.80, 0.78, 0.66), rough=0.85))
-        box("map_frame_top", mx0 - 0.02, mx1 + 0.02, D - 0.02, D - 0.002, mz1, mz1 + 0.02, black)
-        box("map_frame_bottom", mx0 - 0.02, mx1 + 0.02, D - 0.02, D - 0.002, mz0 - 0.02, mz0, black)
-        box("map_estuary", mx0, mx1, D - 0.0135, D - 0.012, mz0 + 0.06, mz0 + 0.22, mat("map_water", (0.30, 0.48, 0.60), rough=0.85))
-        road = mat("map_road", (0.55, 0.10, 0.06), rough=0.85)
-        lane = mat("map_lane", (0.70, 0.55, 0.15), rough=0.85)
-        for k in range(14):
-            cx_, cz_ = rnd.uniform(mx0 + 0.1, mx1 - 0.1), rnd.uniform(mz0 + 0.25, mz1 - 0.08)
-            r = box("map_road_%d" % k, cx_ - rnd.uniform(0.15, 0.45), cx_ + rnd.uniform(0.15, 0.45), D - 0.0145, D - 0.0125,
-                    cz_, cz_ + (0.008 if k < 6 else 0.004), road if k < 6 else lane)
-            r.rotation_euler[1] = rnd.uniform(-0.6, 0.6)
-        for k in range(9):
-            cyl("map_pin_%d" % k, rnd.uniform(mx0 + 0.1, mx1 - 0.1), D - 0.025, rnd.uniform(mz0 + 0.25, mz1 - 0.08),
-                0.008, 0.018, mat("pin_red", (0.6, 0.04, 0.03), rough=0.4), axis="y", verts=10)
-        text("map_title", "MERIDIAN & DISTRICT", (mx0 + mx1) / 2, D - 0.016, mz1 - 0.06, 0.04, ink, rot_x=math.pi / 2,
-             font="evening-paper/LibreFranklin-700.ttf")
-        # the drivers' board right of the map: each car's number and a card in its slot
+        # (NO WALL MAP, 4 October: the town's geography is his to approve, with its atlas, in the
+        # new plan's phase 0; the wall over the radio desk stays bare until then)
+        # the drivers' board over the radio desk: each car's number and its status
         box("car_board", -0.92, -0.32, D - 0.012, D - 0.002, 1.25, 1.95, mat("board_cork", (0.42, 0.30, 0.17), rough=0.9, noise=0.4))
-        for k in range(8):
+        for k, status in enumerate(("RANK", "OUT", "OUT", "HOME", "RANK", "OUT", "OFF", "OUT")):
             zz = 1.88 - k * 0.08
             text("car_no_%d" % k, str(k + 1), -0.86, D - 0.016, zz - 0.02, 0.035, ink, font="evening-paper/LibreFranklin-700.ttf")
-            if rnd.random() < 0.7:
-                box("car_card_%d" % k, -0.80, -0.80 + rnd.uniform(0.22, 0.40), D - 0.016, D - 0.012, zz - 0.025, zz + 0.02,
-                    card_white if k % 3 else paper_yellow)
+            box("car_card_%d" % k, -0.80, -0.50, D - 0.016, D - 0.012, zz - 0.025, zz + 0.02,
+                card_white if k % 3 else paper_yellow)
+            text("car_status_%d" % k, status, -0.65, D - 0.0175, zz - 0.016, 0.03, ink_red if status == "OUT" else ink,
+                 font="evening-paper/LibreFranklin-700.ttf")
         # a pot plant in the corner by the stair wall, and a strip of light under the back door's head
         lighten(model("potted_plant_01", 1.55, 3.6, 0.0, turn=1.2, size=0.75), 0.1)
         # WEAR: thirty years of boots on the counter's kick and front, a trodden path in the carpet
@@ -1548,13 +1582,9 @@ def build_and_render(argv):
         box("bookings_card", -1.95, -1.55, cy0 + 0.04, cy0 + 0.05, 0.985, 1.10, card_white)
         text("bookings_word", "BOOKINGS", -1.75, cy0 + 0.035, 1.025, 0.05, ink_red, font="evening-paper/LibreFranklin-700.ttf")
         # a stacking chair for a customer by the stair wall: a moulded shell on a tube frame
-        sx, sy = 1.45, 1.10
-        shell = mat("chair_shell", (0.36, 0.14, 0.05), rough=0.4)
-        box("stack_seat", sx - 0.21, sx + 0.21, sy - 0.20, sy + 0.20, 0.43, 0.46, shell)
-        box("stack_back", sx - 0.20, sx + 0.20, sy + 0.17, sy + 0.21, 0.48, 0.82, shell).rotation_euler[0] = -0.12
-        for dx_ in (-0.18, 0.16):
-            for dy_ in (-0.17, 0.15):
-                box("stack_leg", sx + dx_, sx + dx_ + 0.02, sy + dy_, sy + dy_ + 0.02, 0.0, 0.43, chrome)
+        model("SchoolChair_01", 1.40, 1.10, 0.0, turn=-1.9, size=0.82)
+        # the lighter by the counter's ashtray
+        model("vintage_lighter", -1.62, 2.36, 0.985, turn=0.4, size=0.06)
         # a doormat inside the street door
         box("door_mat", 0.95, 1.78, 0.05, 0.70, 0.0, 0.014, mat("door_mat", (0.10, 0.07, 0.05), rough=0.98, noise=0.4))
         # A PICTURE RAIL round the room at 2.2 m, the paint above it browner with thirty years'
@@ -1569,7 +1599,7 @@ def build_and_render(argv):
         box("frieze_stair", 1.806, 1.81, 0.0, D, 2.22, H, frieze)
         # behind the counter on the left wall: a shelf of box files and ledgers, a grey four-drawer
         # cabinet under it, a fire extinguisher on its bracket
-        box("files_shelf", -W / 2, -W / 2 + 0.30, 2.85, 4.05, 1.78, 1.80, laminate)
+        metre_uvs(box("files_shelf", -W / 2, -W / 2 + 0.30, 2.85, 4.05, 1.78, 1.80, laminate), 0.8)
         for k in range(14):
             yy = 2.88 + k * 0.083
             c = rnd.choice(((0.08, 0.10, 0.22), (0.30, 0.05, 0.04), (0.10, 0.10, 0.10), (0.42, 0.36, 0.20), (0.06, 0.16, 0.10)))
@@ -1816,6 +1846,17 @@ def export_room(bpy, sc, out_dir, shop_id):
         groups[part] = objs
         taken.update(objs)
     groups["fittings"] = [o for o in sc.objects if o.type == "MESH" and o not in taken]
+    # THE PROPS' PICTURES AT 512 PX (4 October: Mickey's fittings reached 30 MB with Poly Haven's
+    # 1k maps, over git's 25 MB a file); at a window's distance 512 reads the same
+    for o in groups["fittings"]:
+        for slot in o.material_slots:
+            m = slot.material
+            if m is None or not m.use_nodes:
+                continue
+            for n in m.node_tree.nodes:
+                if n.type == "TEX_IMAGE" and n.image is not None and n.image.size[0] > 512:
+                    w_, h_ = n.image.size
+                    n.image.scale(512, max(1, int(512 * h_ / w_)))
     written = []
     for part, objs in groups.items():
         if not objs:

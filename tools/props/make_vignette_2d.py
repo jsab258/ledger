@@ -187,7 +187,7 @@ FASCIA_BOARD_MM = (5650, 460)
 #: gold, which is what signwriter's gold looks like after a year of rain.
 #: The sheet governs palette; that is all these two numbers are.
 FASCIA_PAINT_SRGB = (66, 79, 90)
-FASCIA_INK_SRGB = (196, 174, 122)
+FASCIA_INK_SRGB = (236, 206, 132)  # brighter 4 October: in the game it read as dull khaki paint
 #: CAP HEIGHT, 240 mm on a 460 mm board: the sheet's letters fill a little
 #: over half the fascia's height, and a sign is read from across the road.
 FASCIA_CAP_MM = 240
@@ -222,7 +222,7 @@ def make_fascia(name, rng, minted=None):
            stroke_width=2 * MM, stroke_fill=(24, 28, 32))
     # the gilt lighter at the top of each letter than at its foot, as leaf catches the sky
     ga = np.ones((h, w, 3), np.float32) * np.array(FASCIA_INK_SRGB, np.float32)
-    ga *= np.linspace(1.18, 0.82, h)[:, None, None]
+    ga *= np.linspace(1.22, 0.80, h)[:, None, None]
     gold = Image.fromarray(np.clip(ga, 0, 255).astype(np.uint8), "RGB")
     mask = Image.new("L", (w, h), 0)
     ImageDraw.Draw(mask).text((w // 2, h // 2), text, font=font, fill=255, anchor="mm",
@@ -234,6 +234,140 @@ def make_fascia(name, rng, minted=None):
     # a little darker than the top, on top of the ordinary mottle.
     fall = np.linspace(1.0, 0.86, h)[:, None, None]
     a = np.clip(a * (0.86 + 0.20 * dirt) * fall, 0, 1)
+    return Image.fromarray((a * 255).astype(np.uint8), "RGB")
+
+
+# ---------------------------------------------------------------------------
+# C6. The other shops' boards, our own lettering (4 October).
+# ---------------------------------------------------------------------------
+#: THE IMAGE MODEL'S FASCIAS RETIRED (the asset plan's fault 2: it printed "BRITHH WORIKER"; the
+#: proof view's shopfronts step): every word on a sign is our own text layer in OFL fonts. Trade
+#: words only, since canon mints no shopkeeper's name yet (the town mints names on Monday). Each
+#: board on its bay's own paint (terrace-front.py FASCIA_PAINT), in the manner of its trade's
+#: period front: sign-written serif capitals shaded in black, gilt on the dark boards, and a
+#: printed acrylic box sign on the launderette, a 1970s and 80s trade.
+FONTS = ROOT / "production" / "fonts"
+TRADE_FASCIAS = (
+    # file, lines [(text, cap height mm, font, colour)], board sRGB, shade
+    ("fascia_trade_fishmonger.png", [("FRESH FISH", 200, "evening-paper/OldStandard-Regular.ttf", (226, 214, 180)),
+                                     ("WET FISH  ·  SHELLFISH  ·  SMOKED", 70, "evening-paper/LibreFranklin-600.ttf", (226, 214, 180))],
+     (92, 39, 43), True),
+    ("fascia_trade_pawnbroker.png", [("PAWNBROKER", 200, "marcellus-sc/MarcellusSC-Regular.ttf", (204, 172, 104)),
+                                     ("JEWELLERY  ·  WATCHES  ·  LOANS", 70, "marcellus-sc/MarcellusSC-Regular.ttf", (204, 172, 104))],
+     (92, 39, 43), True),
+    ("fascia_trade_launderette.png", [("LAUNDERETTE", 210, "evening-paper/LibreFranklin-800.ttf", (28, 64, 140)),
+                                      ("SERVICE WASHES  ·  DRY CLEANING", 70, "evening-paper/LibreFranklin-700.ttf", (176, 30, 34))],
+     (236, 232, 222), False),
+    ("fascia_trade_grocer.png", [("GROCER", 200, "evening-paper/OldStandard-Regular.ttf", (226, 214, 180)),
+                                 ("PROVISIONS  ·  FRUIT  ·  VEGETABLES", 70, "evening-paper/LibreFranklin-600.ttf", (226, 214, 180))],
+     (68, 82, 75), True),
+    ("fascia_trade_newsagent.png", [("NEWSAGENT", 200, "evening-paper/LibreFranklin-800.ttf", (34, 62, 46)),
+                                    ("TOBACCONIST  ·  CONFECTIONER", 70, "evening-paper/LibreFranklin-700.ttf", (34, 62, 46))],
+     (190, 176, 140), False),
+    ("fascia_trade_ironmonger.png", [("IRONMONGER", 200, "marcellus-sc/MarcellusSC-Regular.ttf", (204, 172, 104)),
+                                     ("TOOLS  ·  HARDWARE  ·  PARAFFIN", 70, "marcellus-sc/MarcellusSC-Regular.ttf", (204, 172, 104))],
+     (92, 39, 43), True),
+    ("fascia_trade_tea_room.png", [("Tea Room", 220, "evening-paper/OldStandard-Italic.ttf", (226, 214, 180)),
+                                   ("LIGHT LUNCHES  ·  TEAS", 66, "evening-paper/LibreFranklin-600.ttf", (226, 214, 180))],
+     (92, 39, 43), True),
+    ("fascia_trade_chandler.png", [("SHIP CHANDLER", 200, "evening-paper/OldStandard-Regular.ttf", (30, 40, 70)),
+                                   ("ROPE  ·  PAINT  ·  CHARTS  ·  CHANDLERY", 70, "evening-paper/LibreFranklin-700.ttf", (30, 40, 70))],
+     (190, 176, 140), False),
+)
+
+
+def make_trade_fascia(lines, board_srgb, shade, rng):
+    """A shop's fascia face in our own lettering: lines centred, the first large, a shade
+    down and to the right where the trade's signwriter would lay one."""
+    w, h = FASCIA_BOARD_MM[0] * MM, FASCIA_BOARD_MM[1] * MM
+    img = Image.new("RGB", (w, h), board_srgb)
+    d = ImageDraw.Draw(img)
+    fonts = [ImageFont.truetype(str(FONTS / f), int(cap * MM / 0.68)) for _, cap, f, _ in lines]
+    heights = [cap * MM for _, cap, _, _ in lines]
+    gap = 40 * MM
+    total = sum(heights) + gap * (len(lines) - 1)
+    y = (h - total) / 2.0
+    for (text, cap, _, colour), font, hh in zip(lines, fonts, heights):
+        cy = int(y + hh / 2.0)
+        if shade:
+            off = max(3, int(cap * 0.035)) * MM
+            d.text((w // 2 + off, cy + off), text, font=font, fill=(14, 14, 16), anchor="mm")
+        d.text((w // 2, cy), text, font=font, fill=colour, anchor="mm")
+        y += hh + gap
+    a = np.asarray(img).astype(np.float32) / 255.0
+    dirt = _fbm(w, h, rng, octaves=5, cells=6)[..., None]
+    fall = np.linspace(1.0, 0.86, h)[:, None, None]
+    a = np.clip(a * (0.86 + 0.20 * dirt) * fall, 0, 1)
+    return Image.fromarray((a * 255).astype(np.uint8), "RGB")
+
+
+# ---------------------------------------------------------------------------
+# G6. Fly-posters, our own lettering (4 October).
+# ---------------------------------------------------------------------------
+#: THE POLL TAX, spring 1990, from an INVENTED LOCAL CAMPAIGN (his ruling, 3 October: never real
+#: parties, groups or people), with canon's own places for its meetings and marches (Weighhouse
+#: Lane, the Exchange); and two ordinary bills of the street. Pasted on the empty unit's whitened
+#: glass and the blank west wall (terrace-front.py POSTERS). Double crown, 508 x 762 mm.
+POSTER_MM = (508, 762)
+POSTERS = (
+    ("poster_no_poll_tax.png", (246, 222, 40), [
+        ("NO", 250, "evening-paper/LeagueGothic-Regular.ttf", (16, 16, 16)),
+        ("POLL TAX", 150, "evening-paper/LeagueGothic-Regular.ttf", (16, 16, 16)),
+        ("MERIDIAN AGAINST THE POLL TAX", 26, "evening-paper/LibreFranklin-800.ttf", (16, 16, 16)),
+        ("PUBLIC MEETING", 40, "evening-paper/LibreFranklin-800.ttf", (180, 20, 20)),
+        ("THURSDAY 7.30 PM", 34, "evening-paper/LibreFranklin-700.ttf", (16, 16, 16)),
+        ("WEIGHHOUSE LANE HALL", 30, "evening-paper/LibreFranklin-700.ttf", (16, 16, 16))]),
+    ("poster_march.png", (232, 230, 222), [
+        ("MARCH", 170, "evening-paper/LeagueGothic-Regular.ttf", (176, 22, 26)),
+        ("AGAINST THE", 60, "evening-paper/LeagueGothic-Regular.ttf", (20, 20, 20)),
+        ("POLL TAX", 150, "evening-paper/LeagueGothic-Regular.ttf", (176, 22, 26)),
+        ("SATURDAY 31 MARCH", 40, "evening-paper/LibreFranklin-800.ttf", (20, 20, 20)),
+        ("ASSEMBLE THE EXCHANGE 11 AM", 30, "evening-paper/LibreFranklin-700.ttf", (20, 20, 20)),
+        ("Hook Residents Against the Poll Tax", 26, "evening-paper/LibreFranklin-Italic-400.ttf", (20, 20, 20))]),
+    ("poster_cant_pay.png", (200, 30, 34), [
+        ("DON'T", 150, "evening-paper/LeagueGothic-Regular.ttf", (250, 250, 246)),
+        ("REGISTER", 120, "evening-paper/LeagueGothic-Regular.ttf", (250, 250, 246)),
+        ("DON'T PAY", 150, "evening-paper/LeagueGothic-Regular.ttf", (250, 250, 246)),
+        ("MERIDIAN AGAINST THE POLL TAX", 26, "evening-paper/LibreFranklin-800.ttf", (250, 250, 246))]),
+    ("poster_jumble_sale.png", (236, 228, 196), [
+        ("GRAND", 70, "evening-paper/OldStandard-Regular.ttf", (30, 40, 90)),
+        ("JUMBLE SALE", 110, "evening-paper/LeagueGothic-Regular.ttf", (30, 40, 90)),
+        ("SATURDAY 2 PM", 46, "evening-paper/LibreFranklin-800.ttf", (150, 30, 30)),
+        ("WEIGHHOUSE LANE HALL", 34, "evening-paper/LibreFranklin-700.ttf", (30, 40, 90)),
+        ("Admission 10p  ·  Teas", 32, "evening-paper/OldStandard-Italic.ttf", (30, 40, 90))]),
+)
+
+
+def make_poster(paper_srgb, lines, rng):
+    """A pasted bill: lines centred down the sheet, then the paste's wrinkles, the rain's fade
+    and a torn corner, so it reads as paper on a wall and not a printed card."""
+    w, h = POSTER_MM[0] * MM, POSTER_MM[1] * MM
+    img = Image.new("RGB", (w, h), paper_srgb)
+    d = ImageDraw.Draw(img)
+    # EACH LINE FITTED TO THE SHEET: set at its asked size, shrunk until it clears the margins
+    fonts, caps = [], []
+    for text, cap, f, _ in lines:
+        size = int(cap * MM / 0.72)
+        font = ImageFont.truetype(str(FONTS / f), size)
+        while d.textlength(text, font=font) > 0.88 * w and size > 8:
+            size = int(size * 0.94)
+            font = ImageFont.truetype(str(FONTS / f), size)
+        fonts.append(font)
+        caps.append(size * 0.72)
+    gap = 22 * MM
+    total = sum(caps) + gap * (len(lines) - 1)
+    y = (h - total) / 2.0
+    for (text, _, _, colour), font, cap in zip(lines, fonts, caps):
+        d.text((w // 2, int(y + cap / 2.0)), text, font=font, fill=colour, anchor="mm")
+        y += cap + gap
+    a = np.asarray(img).astype(np.float32) / 255.0
+    wrinkle = _fbm(w, h, rng, octaves=6, cells=8)[..., None]
+    fade = _fbm(w, h, rng, octaves=3, cells=2)[..., None]
+    a = np.clip(a * (0.84 + 0.18 * wrinkle) * (0.92 + 0.10 * fade) + 0.04 * fade, 0, 1)
+    # a torn top corner showing the wall's whitewash behind
+    t = int(rng.uniform(40, 110)) * MM
+    for yy in range(t):
+        a[yy, : max(0, int((t - yy) * rng.uniform(0.8, 1.2)))] = (0.80, 0.80, 0.77)
     return Image.fromarray((a * 255).astype(np.uint8), "RGB")
 
 
@@ -464,6 +598,15 @@ def build(dest=DEST, streets=None, districts=None):
                  lambda: make_fascia("Mickey's", _rng("C6mickeys")),
                  "5650x460mm fascia face, canon name in raised gilt Marcellus SC (OFL) with its shadow, "
                  "paint and ink sampled off the approved Hook sheet"))
+    for fname, lines, board, shade in TRADE_FASCIAS:
+        jobs.append((fname, "C6_fascia_lettering",
+                     (lambda lines=lines, board=board, shade=shade, fname=fname:
+                      make_trade_fascia(lines, board, shade, _rng("C6" + fname))),
+                     "5650x460mm fascia face, trade words only in our own OFL lettering on the bay's paint"))
+    for fname, paper, lines in POSTERS:
+        jobs.append((fname, "G6_fly_posters",
+                     (lambda paper=paper, lines=lines, fname=fname: make_poster(paper, lines, _rng("G6" + fname))),
+                     "508x762mm double crown bill, our own OFL lettering; the poll tax from an invented local campaign"))
     jobs.append(("board_to_let.png", "C6_letting_board",
                  lambda: make_letting_board(_rng("C6let")),
                  "900x450mm letting board, no agent and no number minted"))

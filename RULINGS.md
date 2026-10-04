@@ -46,7 +46,7 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 - 3 Oct: Poll-tax posters: an invented local campaign, never real parties or people.
 - 3 Oct: The town mints the names the plan needs within canon on Monday; placeholders meanwhile, never on his page.
 - D14: Every interior in scope is designed, assembled by script from designed kits, and photoreal.
-- 22 Sep: Image-to-3D waits until props made one at a time are the bottleneck.
+- 22 Sep: Image-to-3D waits until hand-made props are the bottleneck.
 
 ## Faces, hair and voices
 
@@ -57,7 +57,7 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 - 3 Oct: Danny (p243), June (p277) and Father Walsh (his July voice) get a listening page of voices fitting their sheets, each cast only on his yes; one with none that fits keeps his pick.
 - 30 Sep: Voices are judged by ear; the accent checker is a screen, never a gate.
 - 25 Sep: Ron's and Darren's lines made in advance use an acted reference.
-- 28 Sep: Before an answer, a short thinking sound of their own with a glance, cut when the answer starts; no loading sign.
+- 28 Sep: Before an answer, a short thinking sound with a glance, cut when the answer starts; no loading sign.
 - 23 Sep: A subtitle appears only with the audio it belongs to.
 - 1 Oct: Mouths: live lines follow the voice's loudness; every prepared line, the thinking sounds included, uses Epic's audio-driven mouths.
 - 1 Oct: The voice moves into the game only with evidence it shortens the delay; the friends' build packs today's voice program (30 Sep).
@@ -68,15 +68,15 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 
 - 3 Oct: Clothes are the one exception to the visual bar; tailoring waits for the tools. Their floor: plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping or holes, nobody frozen stiff; judged on it, not the Hook sheet: passers-by at eight metres, Tom's talkers close up.
 - 3 Oct: People wear what has passed the gate and garments from CC0, unmarked CC-BY with credit, or Blender; no purchases or commissions. 4 Oct: the white base layer stays until clothing makes plain trousers, jumpers and shoes to his floor (he wakes it after Monday's reset).
-- 2 Oct: Stopped: Marvelous draping, procedural tailoring, fitting every garment to six bodies, research programmes; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; the clothing session never opens Unreal.
+- 2 Oct: Stopped: Marvelous draping, procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; the clothing session never opens Unreal.
 - 30 Sep: Game clothes are skinned meshes, only loose parts simulated; shoulders judged in Unreal.
 - 29 Sep: Clothes on people are his to approve, in the game's camera.
 
 ## People and the street's life
 
 - 3 Oct: The people's poses come from MetaHuman's own movement clips and Mixamo.
-- 30 Sep: Townspeople after the route: measure 0, 5, 10 and 20 in the package; fix the walkers' feet; one person approved in the game before twenty.
-- 23 Sep: After a deed, near people look, some gather and drift back within minutes; witnesses talk quieter for an hour.
+- 30 Sep: Townspeople after the route: measure 0, 5, 10 and 20 packaged; fix the walkers' feet; one approved in the game before twenty.
+- 23 Sep: After a deed, near people look, some gather and drift back; witnesses talk quieter for an hour.
 - D25: Everyone perceives, remembers and gossips (owed at stage 2). D29: half-recognition, lying and having heard of Tom show in posture first.
 
 ## Talk and AI
@@ -93,7 +93,7 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 - 1 Oct: Suggested lines "Mixed" (written for hellos, goodbyes and decisions, else the small model), Tab on a keyboard, shown at once on a controller; Tom's written lines approved.
 - Street lines: own for Ron, Darren, Father Walsh and June; Sheila, Alison and Ada keep the shared ones (1 Oct); neighbours' talk at most every 45 s (29 Sep).
 - 30 Sep: Only regulars who knew Mickey describe him, in the two approved lines.
-- 29 Sep: The town's news: one sample stands; ten more wait until he has met it in the assembled game.
+- 29 Sep: The town's news: one sample stands; ten more wait until he meets it in the game.
 
 ## The story and the first week
 
@@ -117,7 +117,7 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 - 23 Sep, genre: no jump; crew act on orders; fists and improvised weapons, firearms rare; others drive traffic and the firm's cars; boats and buses scenery; few short skippable cutscenes; jobs, no waypoints; coat, pockets, cab-office storage; buying, selling, fencing, no crafting; English only, text out of code; no multiplayer.
 - 23 Sep: Floor: object interaction; optional presentation (photo mode, credits, after the ending); making the game.
 - D56: The crime layer owes eight verbs, in order (stage 3).
-- D13: Meridian's map is drawn from canon as data, with testable layout rules.
+- D13: Meridian's map is drawn from canon as data, with testable layout rules. 4 Oct: its geography is identity: atlas-01 stays off main until he approves it (phase 0).
 - D26: Sound is a lane, CC0 only.
 
 ## Disk, git and backup
