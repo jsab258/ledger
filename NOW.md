@@ -18,7 +18,7 @@ GOAL (his /goal, to Sunday 4 October 20:00): the list in order, each item done w
 
 Nightly 02:30: tester's walk, town report (no local Unreal 02:20 to 03:30).
 
-STATE (4 October, 07:00): shopfronts begun.
+STATE (4 October, 11:30): Mickey's room set aside.
 
 ## Handovers (in full: production/handovers/OPEN.md)
 
