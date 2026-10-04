@@ -124,6 +124,39 @@ def _complex_as_simple(unreal, mesh):
     return bs.get_editor_property("collision_trace_flag") == want
 
 
+#: THE DISTANCE FIELDS TWICE AS FINE (4 October, the facades' third try; production/research/aaa-street/
+#: WINDOWS-FACADES-2026-10-04.md): at the default 5 cm voxels, capped at 128 a side, a 10 cm window
+#: recess is two voxels and Lumen over-occludes it, so the white sashes read a third as bright as the
+#: brick around them would let them.
+DF_RESOLUTION_SCALE = 2.0
+
+
+#: SET IN THE IMPORT ITSELF: the mesh editor's subsystem is absent in this commandlet (no
+#: GEditor), so a mesh's build settings cannot be changed after the import; the glTF stack's own
+#: two pipelines (BaseEngine.ini's Assets stack) go in as the task's override, the assets one with
+#: the scale set, and the value is read back from the pipeline.
+GLTF_PIPELINES = ("/Interchange/Pipelines/DefaultGLTFAssetsPipeline.DefaultGLTFAssetsPipeline",
+                  "/Interchange/Pipelines/DefaultGLTFPipeline.DefaultGLTFPipeline")
+
+
+def _pipeline_override(unreal, scale):
+    """The glTF stack with the distance field scale set; (override, scale read back or -1)."""
+    ov = unreal.InterchangePipelineStackOverride()
+    got = -1.0
+    for path in GLTF_PIPELINES:
+        pipe = unreal.load_asset(path)
+        if pipe is None:
+            return None, -1.0
+        try:
+            mp = pipe.get_editor_property("mesh_pipeline")
+            mp.set_editor_property("distance_field_resolution_scale", scale)
+            got = mp.get_editor_property("distance_field_resolution_scale")
+        except Exception:
+            pass
+        ov.add_pipeline(pipe)
+    return ov, got
+
+
 def _nanite_off(unreal, sub, mesh):
     """Switch Nanite off on one mesh and say whether it READ BACK off."""
     ns = mesh.get_editor_property("nanite_settings")
@@ -142,7 +175,7 @@ def main():
     glb = os.path.join(root, GLB_REL)
     out = os.path.join(unreal.Paths.project_dir(), "ue-material.txt")
     note = []
-    asked = found = nanite_off = complex_ok = 0
+    asked = found = nanite_off = complex_ok = df_scaled = 0
     sign = "NOT-READ"
     status = "NOTHING"
     try:
@@ -163,6 +196,9 @@ def main():
             task.set_editor_property("automated", True)
             task.set_editor_property("replace_existing", True)
             task.set_editor_property("save", True)
+            ov, df_scaled = _pipeline_override(unreal, DF_RESOLUTION_SCALE)
+            if ov is not None:
+                task.set_editor_property("options", ov)
             unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
             sub = unreal.get_editor_subsystem(unreal.StaticMeshEditorSubsystem)
             for n in names:
@@ -196,6 +232,7 @@ def main():
         note.append(str(e).split("\n")[0][:100])
     line = street_line(status, asked, found, sign, time.time() - t0, "/".join(note[:3]))
     line += " streetImportNaniteOff=%d/%d" % (nanite_off, found)
+    line += " streetImportDistanceFieldScale=%g:%s" % (DF_RESOLUTION_SCALE, ("%g" % df_scaled) if df_scaled > 0 else "NOT-SET")
     line += " streetImportComplexAsSimple=%d/%d" % (complex_ok, found)
     with open(out, "a", encoding="utf-8") as fh:
         fh.write(line + "\n")

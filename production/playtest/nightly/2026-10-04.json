@@ -1,0 +1,71 @@
+{
+ "date": "2026-10-04",
+ "night": "F:/LedgerTools/nightly\\2026-10-04",
+ "events": 45,
+ "summary": {
+  "walk": {
+   "passed": 12,
+   "stages": 14,
+   "failed": [
+    "town-Sheila: Sheila is not on the street",
+    "town-Darren: Darren is not on the street"
+   ]
+  },
+  "noticed": {
+   "saw_the_deed": [],
+   "onlooker_lines": [
+    {
+     "t": 159.0,
+     "e": "onlookers",
+     "hour": 13,
+     "night": false,
+     "light": 1.0,
+     "measured": 14,
+     "_file": "2026-10-04-023039.jsonl"
+    }
+   ]
+  },
+  "knew_later": {},
+  "greeted": [
+   {
+    "who": "Sheila",
+    "reached": false,
+    "detail": "Sheila is not on the street"
+   },
+   {
+    "who": "Ron",
+    "reached": true,
+    "detail": "open=1 words=seconds=0.19 heard=seconds=2.70"
+   },
+   {
+    "who": "Darren",
+    "reached": false,
+    "detail": "Darren is not on the street"
+   }
+  ],
+  "replies": {
+   "n": 2,
+   "broke": 0,
+   "checked": 0,
+   "by_how": {
+    "own": 2
+   },
+   "seconds_median": 0.2,
+   "seconds_max": 0.2,
+   "source": "the walk's stand-in words with the real voice: not the real path"
+  },
+  "police_told_by": [],
+  "thats_all_i_know": {
+   "count": 0,
+   "of": 0,
+   "failed": 60,
+   "by_who": {},
+   "source": "the real engine's words, through Claude Code on the subscription, the game's talk settings"
+  },
+  "illusion": {
+   "lines": [],
+   "note": "no pictures from the walk to look at"
+  }
+ },
+ "paragraph": "**The town and Tom (the AI tester's walk of 2026-10-04, played as a player would, the stand-in's words):** the route 12 of 14 stages; failed: town-Sheila: Sheila is not on the street; town-Darren: Darren is not on the street. Who saw him break Rita's window: nobody the record names. Who showed they knew afterwards, and how: nobody. That is 0 people. \"That's all I know\" to a newcomer's sixty first questions (the real engine's words): 0 of 60. Replies heard after a median 0.2 s, at most 0.2 s (stand-in words, real voice; not the real path), 0 of 2 broke. What broke the illusion: no pictures from the walk to look at."
+}
