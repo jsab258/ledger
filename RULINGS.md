@@ -5,34 +5,34 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 ## The goal and the order
 
 - 3 Oct: The goal: a thirty-minute Quay Street build his friends play on this PC, passing the Meridian Test (they do not bounce off it, the town visibly knows them, talk feels live, he would rather play it).
-- 3 Oct: One ordered builder's list in NOW.md (the proof view by production/research/aaa-street/5-PROOF-FRAME.md), one item at a time, each finished with its evidence. The town and clothing keep their own, each under his latest ruling for it; only a fault that breaks the game or PC, or his order at a stated place, changes the order.
-- 3 Oct: The AI tester's nightly walk, played as a player would, also reports whether the town visibly knows Tom (who noticed, who mentioned it later and how, "that's all I know" counts, reply delays, broken illusions): a morning overview paragraph beside the night before.
+- 3 Oct: One ordered builder's list in NOW.md (the proof view by production/research/aaa-street/5-PROOF-FRAME.md), one item at a time, each finished with its evidence; town and clothing keep their own; only a fault breaking the game or PC, or his order at a stated place, changes the order.
+- 3 Oct: The AI tester's nightly walk, played as a player would, reports whether the town visibly knows Tom (who noticed, who mentioned it and how, "that's all I know" counts, reply delays, broken illusions): a morning paragraph.
 - 3 Oct: Not reopened: the route, the interface, the AI tester's walks, faces, the voices in the game, the town's talk work.
-- 3 Oct: The proof view is built to the Hook sheet, not merely cleaned; to his page only beside the sheet. Order: the wet street (dark, glistening, mirroring sky and buildings; puddles that look like water); the hill, built not hazed (lower, softer, varied, trees, fading into mist); windows with white frames, sash bars, sky in the glass; Mickey's interior first among the shopfronts.
-- 1 Oct: The friends' build: his PC, a shortcut in a fresh Windows account, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
-- 29 Sep: No new systems until the slice is worth playing; what was ruled for after the route (townspeople, the microphone, the ending's signs, the regulars) waits for a place on the list (3 Oct).
+- 3 Oct: The proof view is built to the Hook sheet, not merely cleaned; to his page only beside it. Bars: the wet street dark, glistening, mirroring sky and buildings, its puddles water; the hill built, not hazed (lower, softer, varied, trees, fading into mist); windows with white frames, sash bars, sky in the glass; Mickey's interior first among the shopfronts. 4 Oct: carry on past set-aside steps; the wet street (seam, icy near lane noted) and the hill return with their research once the street's kit is built.
+- 4 Oct: The friends' build: his PC and own account, a shortcut, his key capped at five dollars an evening, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
+- 29 Sep: No new systems until the slice is worth playing; what was ruled for after the route (townspeople, microphone, the ending's signs, regulars) waits for a place on the list.
 - 1 Oct: The rulings sweep's larger items are owed on ROADMAP.md's stages, with their specifics.
 
 ## Sources, licences and money
 
-- 3 Oct: Nothing marked NoAI (on Fab "Allows usage with AI: No"; elsewhere its tags, read at download) is used, in the game or the project, nor as a reference or input; every asset's source and licence recorded in THIRD-PARTY.md. Out: every NoAI Megascans item, Epic's MetaHuman garments, Game Animation Sample and construction presets.
-- 3 Oct: The NoAI mark or a "no AI" licence rules an asset out; a clause only against AI training (Unreal's, Mixamo's, CLO's) does not, while nothing we send trains a model (his "Help improve Claude" off).
-- 3 Oct: Sources in order: free assets that fit (Poly Haven, ambientCG, CC0 Sketchfab scans with his token, unmarked CC-BY with credit); else our own, made in Blender from real photographs and generated textures, as kits with variation; human-made inputs (buying, commissioning, hiring) only by his explicit ruling, today none.
+- 3 Oct: Nothing marked NoAI (on Fab "Allows usage with AI: No"; elsewhere its tags, read at download) is used anywhere, nor as a reference or input; every asset's source and licence recorded in THIRD-PARTY.md. Out: every NoAI Megascans item, Epic's MetaHuman garments, Game Animation Sample and construction presets. 4 Oct: the quarantined NoAI material is deleted; the rule stays.
+- 3 Oct: The NoAI mark or a "no AI" licence rules an asset out; a clause only against AI training (Unreal's, Mixamo's, CLO's) does not, while nothing we send trains a model.
+- 3 Oct: Sources in order: free assets that fit (Poly Haven, ambientCG, CC0 Sketchfab scans with his token, unmarked CC-BY with credit); else our own, made in Blender from real photographs and generated textures, as kits with variation; buying, commissioning or hiring only by his ruling, today none.
 - 3 Oct: Every asset family is made by the asset plan (production/research/asset-plan), its kits and sources, never improvised: its replacement where a source is now out; its order of families after the proof view.
-- 24 Sep: Nothing ships off the allowlist; a new tool enters only by a record naming its weights licence; free allowlisted content not marked NoAI (3 Oct) downloaded without asking, named in the summary.
+- 24 Sep: Nothing ships off the allowlist; a new tool enters only by a record naming its weights licence; free allowlisted, non-NoAI content downloaded without asking, named in the summary.
 - Allowed: OFL fonts with their licence (30 Sep); Mixamo on his account (16 Sep); VCTK voices, consent a stated risk (24 Sep); CLO's free CONNECT patterns, the revocable clause re-checked (2 Oct).
 - 2 Oct: Not allowed: CGTrader's royalty-free licence with its no-AI clause; the Gent jacket draft except as a reference.
 - 16 Sep: Purchases and accounts are his alone; nothing bought without his yes, none for the street or cars (1 Oct).
 - 29 Sep: No paid voice service.
 - 29 Sep: No API calls in development. 3 Oct: LEDGER's key (%LOCALAPPDATA%\LEDGER\live-talk-key.txt) serves his play, measurement runs ($1 a day in all, each logged) and his friends' evenings ($5 an evening); nothing else.
-- 24 Sep, provisional: Sold once; live calls through our server, the key never shipped; each copy's allowance from the measured hourly cost, above a normal playthrough, with a spending stop; then written lines and the brush-off; an own-key mode later.
+- 24 Sep, provisional: sold once; live calls via our server, the key never shipped; each copy's allowance above a normal playthrough's measured cost, with a spending stop, then written lines; an own-key mode later.
 - 28 Sep: The relay, when friends need it, runs on his Hetzner server.
 
 ## The look and the street
 
-- 1 Oct: Every visual but clothes (3 Oct) is judged against the Hook sheet and the KCD2 frames; yes recommended only for what would pass in a 2026 game. 3 Oct: other games' screenshots never in the repository.
+- 1 Oct: Every visual but clothes is judged against the Hook sheet and KCD2 frames; yes only for what would pass in a 2026 game; other games' screenshots never in the repository (3 Oct).
 - 30 Sep and 1 Oct: His page's pictures are taken at 2560×1440, never enlarged, open full size; films with sound.
-- 21 and 22 Sep: The Hook sheet (pass 4) governs mood, palette and composition; dated photographs govern what things looked like and win; production/research/README.md names what governs each asset; no passing reply overrides them; no design copied; references only in production/reference/.
+- 21 and 22 Sep: The Hook sheet (pass 4) governs mood, palette and composition; dated photographs govern what things looked like, and win (production/research/README.md); no design copied; references only in production/reference/.
 - 30 Sep: Lighting is judged through the game's own camera and exposure.
 - 23 Sep: Blender for shapes and layout; all look development in Unreal, against the sheet.
 - 21 Sep: Grime is the strategy (D53), a seeded wear layer.
@@ -61,13 +61,13 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 - 23 Sep: A subtitle appears only with the audio it belongs to.
 - 1 Oct: Mouths: live lines follow the voice's loudness; every prepared line, the thinking sounds included, uses Epic's audio-driven mouths.
 - 1 Oct: The voice moves into the game only with evidence it shortens the delay; the friends' build packs today's voice program (30 Sep).
-- 24 Sep: The flat voices' experiment is owed at stage 2: per-line emotion, then paralinguistic tags, livelier references, a more expressive source.
+- 24 Sep: The flat voices' experiment is owed at stage 2: per-line emotion, tags, livelier references, a more expressive source.
 - D50: The voice watermark is kept on generated speech.
 
 ## Clothes
 
-- 3 Oct: Clothes are the one exception to the visual bar; tailoring waits for the tools (revisited in a few months). Their floor: plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping, no holes, nobody frozen stiff; judged against it, not the Hook sheet: passers-by at about eight metres, the people Tom talks to close up.
-- 3 Oct: People wear what has passed the gate and garments from CC0, unmarked CC-BY with credit, or Blender; no purchases or commissions.
+- 3 Oct: Clothes are the one exception to the visual bar; tailoring waits for the tools. Their floor: plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping or holes, nobody frozen stiff; judged on it, not the Hook sheet: passers-by at eight metres, Tom's talkers close up.
+- 3 Oct: People wear what has passed the gate and garments from CC0, unmarked CC-BY with credit, or Blender; no purchases or commissions. 4 Oct: the white base layer stays until clothing makes plain trousers, jumpers and shoes to his floor (he wakes it after Monday's reset).
 - 2 Oct: Stopped: Marvelous draping, procedural tailoring, fitting every garment to six bodies, research programmes; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; the clothing session never opens Unreal.
 - 30 Sep: Game clothes are skinned meshes, only loose parts simulated; shoulders judged in Unreal.
 - 29 Sep: Clothes on people are his to approve, in the game's camera.
@@ -87,11 +87,11 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 - 24 Sep: The paid router stays; a local model later as the fallback offline; three router changes owed; no training on its answers (23 Sep).
 - 23 Sep: The talk runs beside the game as the tested C# helper, not rewritten in C++.
 - 23 Sep: Offline or slow: the authored street carries on, an in-character brush-off and a small sign; a slow line dropped after about 8 s.
-- 24 Sep: Before outsiders play: the AI notice before the first talk, a way to report any line, the content rule on all live speech; Steam's AI disclosure as drafted (30 Sep).
+- 24 Sep: Before outsiders play: the AI notice before the first talk, a way to report any line, the content rule on live speech; Steam's AI disclosure as drafted (30 Sep).
 - 29 Sep: Live talk names no real make, brand, shop, club, programme, paper or public figure, and nothing after 1992.
-- 3 Oct: A threat can stop a report to the police, never the street's talk; the checking model reads lines about a deed for a threat, in live play only.
-- 1 Oct: Suggested lines "Mixed" (written for hellos, goodbyes and decisions, the small model otherwise), on Tab with a keyboard, at once with a controller; Tom's written lines approved.
-- Street lines: own lines for Ron (30 Sep) and Darren, Father Walsh and June (1 Oct); Sheila, Alison and Ada keep the shared lines for good (1 Oct); neighbours' talk at most every 45 s (29 Sep).
+- 3 Oct: A threat can stop a report to the police, never the street's talk; the checking model reads lines about a deed for a threat, in live play only. 4 Oct: ported after the item in hand, once the town hands it back.
+- 1 Oct: Suggested lines "Mixed" (written for hellos, goodbyes and decisions, else the small model), Tab on a keyboard, shown at once on a controller; Tom's written lines approved.
+- Street lines: own for Ron, Darren, Father Walsh and June; Sheila, Alison and Ada keep the shared ones (1 Oct); neighbours' talk at most every 45 s (29 Sep).
 - 30 Sep: Only regulars who knew Mickey describe him, in the two approved lines.
 - 29 Sep: The town's news: one sample stands; ten more wait until he has met it in the assembled game.
 
@@ -114,7 +114,7 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 - D33, D34, D11: he sees his own position, never other minds; no reputation numbers; no stats, difficulty only as assists.
 - D35, D58: reloading is never stopped, the game says what is permanent; five endings, no redemption, hunted-state endings reachable.
 - D12, D20, D37: the Ledger is a notebook of people and events; no minimap; a paper map and street signs.
-- 23 Sep, genre: no jump (kerbs, low walls); crew act on orders; fists and improvised weapons, firearms rare; traffic and the firm's cars driven by others; boats and buses scenery; few short skippable cutscenes; jobs, no waypoints; coat, pockets, cab-office storage; buying, selling, fencing, no crafting; English only, text out of code; no multiplayer.
+- 23 Sep, genre: no jump; crew act on orders; fists and improvised weapons, firearms rare; others drive traffic and the firm's cars; boats and buses scenery; few short skippable cutscenes; jobs, no waypoints; coat, pockets, cab-office storage; buying, selling, fencing, no crafting; English only, text out of code; no multiplayer.
 - 23 Sep: Floor: object interaction; optional presentation (photo mode, credits, after the ending); making the game.
 - D56: The crime layer owes eight verbs, in order (stage 3).
 - D13: Meridian's map is drawn from canon as data, with testable layout rules.
@@ -125,4 +125,4 @@ Jafar's binding rulings (2026); the later of two stands; canon.md outranks them;
 - 2 Oct: Retention runs nightly by the limits in production/retention.json; holds 14 days at most.
 - 2 Oct: Before any build, render or large job, C: keeps 40 GB and F: 20 GB; a session hitting a full disk stops and waits.
 - 2 Oct: Never deleted: what he approved, what the game or a build uses, what the backup covers, his own files.
-- 3 Oct: Git holds text and small files only (MetaHuman files never, 24 Sep), plus a reduced preview (JPEG, about 1600 px, under 500 KB) of each proof-view step and page picture in production/previews/, by step and date; large output on F: and in the Dropbox backup, which never deletes or overwrites (25 Sep); cleaning the old history is his decision.
+- 3 Oct: Git holds text and small files (never MetaHuman files), plus a preview (JPEG, about 1600 px, under 500 KB) per proof-view step and page picture in production/previews/; large output on F: and in the Dropbox backup, which never deletes or overwrites. 4 Oct: the old history is cleaned by the safest method, sessions stopped, once he has seen the plan.

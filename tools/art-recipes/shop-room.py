@@ -141,12 +141,21 @@ def build_and_render(argv):
         o.data.materials.append(m)
         return o
 
-    def text(name, body, x, y, z, size, m, rot_x=math.pi / 2):
+    def text(name, body, x, y, z, size, m, rot_x=math.pi / 2, font=None):
         bpy.ops.object.text_add(location=(x, y, z), rotation=(rot_x, 0, 0))
         o = bpy.context.object
         o.name = name
         o.data.body = body
         o.data.size = size
+        if font:
+            # OUR OWN TYPEFACES (production/fonts, OFL), never Blender's default
+            o.data.font = bpy.data.fonts.load(os.path.join(REPO, "production", "fonts", font), check_existing=True)
+        if shop["id"] == "mickeys":
+            # LIGHT LETTERING for a real room in git (4 October: at Blender's curve resolution its
+            # notices made most of 615,000 triangles): coarser curves, small print flat
+            o.data.resolution_u = 3
+            if size < 0.05:
+                o.data.extrude = 0.0
         o.data.align_x = "CENTER"
         o.data.extrude = 0.002
         o.data.materials.append(m)
@@ -263,6 +272,9 @@ def build_and_render(argv):
         fnt.links.new(fbr.outputs["Color"], fp.inputs["Base Color"])
         fp.inputs["Roughness"].default_value = 0.12
         floor_lino = fm
+    if shop["id"] == "mickeys":
+        # A BROWN CARPET, trodden (offices of 1987: "dark brown carpet", cab-office-interior-1990 NOTE-2)
+        floor_lino = mat("carpet_brown", (0.095, 0.060, 0.038), rough=0.95, noise=0.45)
     box("floor", -W / 2, W / 2, 0, D, -0.02, 0.0, floor_lino)
     wall = texmat("plaster_cream", "painted_plaster_wall", 1.5, (0.95, 0.86, 0.66),
                   base=mat("paint_cream", (0.55, 0.50, 0.39), rough=0.85, noise=0.3))
@@ -324,6 +336,14 @@ def build_and_render(argv):
         wall = texmat("plaster_seagreen", "painted_plaster_wall", 1.5, (0.72, 0.80, 0.70),
                       base=mat("paint_seagreen", (0.45, 0.52, 0.45), rough=0.85, noise=0.3))
         dado = mat("paint_navy", (0.04, 0.06, 0.12), rough=0.5, noise=0.15)
+    if shop["id"] == "mickeys":
+        # MAGNOLIA GONE YELLOW WITH SMOKE over a wood-effect dado, the ceiling the same
+        # nicotine cream: a cab office open day and night since the sixties (tobacco is allowed).
+        # (darker than first built: in the game the room read as a clean beige showroom)
+        wall = texmat("plaster_nicotine", "painted_plaster_wall", 1.5, (0.66, 0.54, 0.34),
+                      base=mat("paint_nicotine", (0.38, 0.31, 0.19), rough=0.85, noise=0.3))
+        dado = mat("dado_wood_effect", (0.14, 0.085, 0.045), rough=0.45, noise=0.25)
+        ceiling = mat("ceiling_nicotine", (0.46, 0.40, 0.29), rough=0.9, noise=0.2)
     t = 0.12 if EXPORT else 0.05
     if EXPORT:
         box("floor_slab", -W / 2 - t, W / 2 + t, 0, D + t, -0.12, -0.02, floor_lino)
@@ -337,11 +357,17 @@ def build_and_render(argv):
     # The back door, half open onto a dark back room.
     door = mat("door", (0.28, 0.17, 0.10), rough=0.5, noise=0.1)
     dark = mat("back_room", (0.02, 0.02, 0.02), rough=1.0)
-    box("door_gap", 1.1, 1.95, D - 0.02, D + 0.06, 0, 2.0, dark)
+    # MICKEY'S BACK DOOR where its plan has it (production/specs/mickeys-office.json: x 5.0 to 6.1
+    # along the street, so just right of the room's centre seen from the window), onto Sheila's
+    # back room, lit: not a black gap.
+    dx = -1.12 if shop["id"] == "mickeys" else 0.0
+    if shop["id"] == "mickeys":
+        dark = mat("back_room_lit", (0.13, 0.10, 0.07), rough=0.9)
+    box("door_gap", 1.1 + dx, 1.95 + dx, D - 0.02, D + 0.06, 0, 2.0, dark)
     for name, fx0, fx1, fz0, fz1 in (("door_frame_l", 1.02, 1.1, 0, 2.08), ("door_frame_r", 1.95, 2.03, 0, 2.08),
                                      ("door_frame_head", 1.02, 2.03, 2.0, 2.08)):
-        box(name, fx0, fx1, D - 0.035, D - 0.005, fz0, fz1, door)
-    door_leaf = box("door_leaf", 1.1, 1.92, D - 0.06, D - 0.02, 0, 1.98, door)
+        box(name, fx0 + dx, fx1 + dx, D - 0.035, D - 0.005, fz0, fz1, door)
+    door_leaf = box("door_leaf", 1.1 + dx, 1.92 + dx, D - 0.06, D - 0.02, 0, 1.98, door)
     door_leaf.rotation_euler[2] = math.radians(-35)
 
     # THE TUBES: three T12 battens across the ceiling, 1.5 m long (an empty unit has a bare bulb).
@@ -1254,6 +1280,311 @@ def build_and_render(argv):
         # a worn mat inside the door, and the floor's traffic path scuffed darker
         box("door_mat", -W / 2 + 0.3, -W / 2 + 1.3, 0.05, 0.75, 0.0, 0.012, mat("mat", (0.08, 0.06, 0.05), rough=0.95, noise=0.4))
         # (no trodden path: on the textured lino it read as a flat grey slab, the second reviewer)
+
+    # MICKEY'S: A MINICAB OFFICE'S FRONT ROOM (his order, 3 October: "Mickey's interior is part of the
+    # shopfronts step, first among them"; his ruling: "Mickey's window shows its office"). Laid out
+    # from its plan (production/specs/mickeys-office.json, game-design/mickeys-office/BRIEF.md),
+    # turned into this room's frame: x across, +x the viewer's right from the street (the stair
+    # strip's side), y back from the glass. The public side: a vinyl bench down the left wall under
+    # the fares and the licence; the booking counter across, the book of every fare, the phone, an
+    # ashtray and the dockets on it; the staff side: the radio set and its desk microphone, Mickey's
+    # chair empty behind them (the brief: he worked the radio himself), the district map above; the
+    # door to Sheila's back room ajar. Dressed from the cab office research (production/research/
+    # cab-office-interior-1990): paper and voice radio, not screens; wood-effect tops, a fabric
+    # swivel chair on a five-star base, plastic trays, coiled phone cords, a pot plant; the firm's
+    # number signwritten on the glass ("the window is the sign"). Nobody in it, no brands, no drink,
+    # no betting slips; tobacco allowed.
+    if shop["id"] == "mickeys":
+        import random
+        rnd = random.Random(19)
+        laminate = mat("laminate_wood_effect", (0.42, 0.29, 0.17), rough=0.38, noise=0.2)
+        front_panel = mat("counter_front", (0.17, 0.10, 0.055), rough=0.5, noise=0.2)
+        kick = mat("kick_black", (0.03, 0.03, 0.03), rough=0.5)
+        steel_grey = mat("steel_grey", (0.30, 0.31, 0.32), rough=0.45, metal=0.6)
+        chrome = mat("chrome", (0.75, 0.75, 0.76), rough=0.2, metal=1.0)
+        black = mat("plastic_black", (0.025, 0.025, 0.025), rough=0.4)
+        cream_plastic = mat("phone_cream", (0.60, 0.55, 0.43), rough=0.35)
+        vinyl = mat("vinyl_oxblood", (0.085, 0.018, 0.016), rough=0.3)
+        fabric = mat("chair_fabric", (0.22, 0.12, 0.06), rough=0.95, noise=0.3)
+        paper = mat("paper", (0.80, 0.77, 0.66), rough=0.85)
+        paper_yellow = mat("paper_yellowed", (0.74, 0.66, 0.46), rough=0.85)
+        card_white = mat("card_white", (0.84, 0.82, 0.74), rough=0.85)
+        ink = mat("ink", (0.04, 0.04, 0.07), rough=0.8)
+        ink_red = mat("ink_red", (0.45, 0.04, 0.03), rough=0.8)
+        ink_blue = mat("ink_blue", (0.04, 0.08, 0.35), rough=0.8)
+        cloth_green = mat("ledger_cloth", (0.04, 0.10, 0.06), rough=0.7)
+        gilt = mat("gilt", (0.86, 0.64, 0.28), rough=0.25, metal=1.0)
+        radiator_paint = mat("radiator_cream", (0.70, 0.66, 0.54), rough=0.5)
+        ash_glass = mat("ashtray_glass", (0.35, 0.42, 0.38), rough=0.15)
+        ash = mat("ash_grey", (0.30, 0.29, 0.27), rough=1.0)
+        stub = mat("stub_white", (0.85, 0.82, 0.72), rough=0.8)
+        filter_tan = mat("filter_tan", (0.70, 0.45, 0.20), rough=0.8)
+        mug_brown = mat("mug_brown", (0.30, 0.15, 0.07), rough=0.3)
+        red_led = mat("led_red", (0.9, 0.05, 0.03), emit=(1.0, 0.05, 0.02), emit_strength=8.0)
+        green_led = mat("led_green", (0.05, 0.8, 0.1), emit=(0.1, 1.0, 0.15), emit_strength=6.0)
+
+        # THE STAIR STRIP'S WALL on the right (the plan: x 4.05 to 4.19 along the street), floor to
+        # ceiling; the street door opens between it and the window.
+        box("stair_wall", 1.81, 1.95, 0.0, D, 0.0, H, wall)
+        box("stair_wall_dado", 1.80, 1.81, 0.0, D, 0.0, 0.95, dado)
+
+        # THE WINDOW BOARD inside the glass, and what sits on it: a spider plant, two directories
+        # gone yellow in the sun, a saucer ashtray.
+        box("window_board", -2.62, 0.86, 0.0, 0.24, 0.62, 0.655, laminate)
+        def lighten(root, ratio):
+            # a scanned plant cut to a fraction of its triangles: at the window it reads the same
+            for o in ([root] + list(root.children_recursive)) if root else []:
+                if o.type == "MESH":
+                    o.modifiers.new("lighten", "DECIMATE").ratio = ratio
+        lighten(model("potted_plant_02", -2.25, 0.12, 0.655, turn=0.4, size=0.42), 0.3)
+        for k, (x0, w, h, c) in enumerate(((-0.55, 0.22, 0.05, (0.62, 0.52, 0.16)), (-0.53, 0.21, 0.045, (0.58, 0.48, 0.15)))):
+            box("directory_%d" % k, x0, x0 + w, 0.04, 0.32, 0.655 + k * 0.05, 0.655 + k * 0.05 + h,
+                mat("directory_%d" % k, c, rough=0.8, noise=0.2))
+        # THE RADIATOR under the window, a pressed-steel panel with its fins
+        box("radiator", -2.05, -0.65, 0.07, 0.13, 0.14, 0.58, radiator_paint)
+        for k in range(14):
+            xx = -2.0 + k * 0.1
+            box("radiator_fin_%d" % k, xx, xx + 0.03, 0.05, 0.07, 0.16, 0.56, radiator_paint)
+        for xx in (-1.98, -0.72):
+            box("radiator_bracket", xx, xx + 0.03, 0.13, 0.17, 0.30, 0.36, radiator_paint)
+
+        # THE FIRM'S NUMBER ON THE GLASS, in gilt (the 1980 Brixton photograph: the window is the
+        # sign). 0632 is the code television used for numbers that rang nowhere. Our Marcellus SC,
+        # read from the street.
+        # GILT WITH ITS BLACK SHADE behind, down and to the right, as a signwriter laid it (the
+        # first film: gold alone was lost over the lit room)
+        shade = mat("gilt_shade", (0.01, 0.01, 0.01), rough=0.6)
+        for name, body, z, size in (("glass_number", "0632  960418", 2.02, 0.17), ("glass_word", "MINICABS  ·  24 HOURS", 1.82, 0.085)):
+            text(name, body, -0.92, 0.03, z, size, gilt, font="marcellus-sc/MarcellusSC-Regular.ttf")
+            text(name + "_shade", body, -0.92 + size * 0.03, 0.036, z - size * 0.03, size, shade, font="marcellus-sc/MarcellusSC-Regular.ttf")
+
+        # THE BENCH down the left wall, oxblood vinyl on a black tube frame, where customers wait
+        bx0, bx1, by0, by1 = -2.62, -2.18, 0.42, 1.95
+        box("bench_seat", bx0 + 0.04, bx1, by0, by1, 0.40, 0.47, vinyl)
+        box("bench_back", bx0, bx0 + 0.09, by0, by1, 0.49, 0.88, vinyl)
+        for yy in (by0 + 0.05, by1 - 0.08):
+            for xx in (bx0 + 0.06, bx1 - 0.05):
+                box("bench_leg", xx, xx + 0.025, yy, yy + 0.025, 0.0, 0.40, black)
+        box("bench_rail", bx0 + 0.06, bx1 - 0.03, by0 + 0.05, by1 - 0.055, 0.10, 0.125, black)
+        # a folded evening paper left on it (no headline to read at this distance)
+        box("left_paper", bx0 + 0.15, bx0 + 0.36, 1.2, 1.5, 0.47, 0.485, mat("newsprint", (0.70, 0.69, 0.64), rough=0.9))
+
+        # THE NOTICES above the bench, facing across the room: the fares, the licence, the accounts
+        def left_notice(name, lines, y, z, w, h, cardm, font="evening-paper/LibreFranklin-700.ttf"):
+            box(name, -W / 2 + 0.002, -W / 2 + 0.006, y - w / 2, y + w / 2, z - h / 2, z + h / 2, cardm)
+            drop = 0.03
+            for i, (body, size, inkm) in enumerate(lines):
+                drop += size
+                o = text(name + "_t%d" % i, body, -W / 2 + 0.008, y, z + h / 2 - drop, size, inkm, font=font)
+                o.rotation_euler = (math.pi / 2, 0.0, math.pi / 2)
+                drop += size * 0.5
+        left_notice("notice_fares", [("FARES", 0.06, ink_red), ("Town Centre  £2.20", 0.026, ink),
+                                     ("Copper Row  £2.40", 0.026, ink), ("The Exchange  £2.60", 0.026, ink),
+                                     ("Station  £2.80", 0.026, ink), ("Ferry Landing  £3.00", 0.026, ink),
+                                     ("Hospital  £3.40", 0.026, ink), ("Waiting 10p a minute", 0.022, ink),
+                                     ("After midnight 50p extra", 0.022, ink_red)],
+                    1.05, 1.58, 0.50, 0.62, card_white)
+        left_notice("notice_licence", [("PRIVATE HIRE OPERATOR", 0.024, ink), ("Meridian Borough Council", 0.019, ink),
+                                       ("Licence No. 0417", 0.019, ink), ("M. Suddaby", 0.019, ink)],
+                    1.62, 1.66, 0.36, 0.20, paper_yellow)
+        left_notice("notice_accounts", [("ACCOUNT CUSTOMERS", 0.022, ink_blue), ("please ask for Sheila", 0.02, ink_blue)],
+                    0.48, 1.42, 0.34, 0.12, card_white)
+        # A CALENDAR from a garage on the quay, its harbour picture and October's grid
+        cal_y, cal_z = 1.62, 1.22
+        box("calendar_card", -W / 2 + 0.002, -W / 2 + 0.006, cal_y - 0.16, cal_y + 0.16, cal_z - 0.24, cal_z + 0.20, card_white)
+        cal_pic = mat("calendar_picture", (0.30, 0.42, 0.52), rough=0.6, noise=0.5)
+        box("calendar_picture", -W / 2 + 0.006, -W / 2 + 0.008, cal_y - 0.14, cal_y + 0.14, cal_z - 0.01, cal_z + 0.18, cal_pic)
+        for r in range(5):
+            box("calendar_rule_%d" % r, -W / 2 + 0.006, -W / 2 + 0.0075, cal_y - 0.14, cal_y + 0.14,
+                cal_z - 0.2 + r * 0.04, cal_z - 0.2 + r * 0.04 + 0.002, ink)
+        o = text("calendar_month", "OCTOBER 1990", -W / 2 + 0.008, cal_y, cal_z - 0.035, 0.022, ink, font="evening-paper/LibreFranklin-700.ttf")
+        o.rotation_euler = (math.pi / 2, 0.0, math.pi / 2)
+
+        # THE BOOKING COUNTER across the room (the plan: z 7.5 to 8.0 back from the pavement),
+        # from the left wall to a gap at the stair wall for the staff to pass
+        cy0, cy1 = 2.23, 2.73
+        cx0, cx1 = -W / 2, 0.80
+        box("counter", cx0, cx1, cy0, cy1, 0.0, 0.95, front_panel)
+        box("counter_top", cx0, cx1 + 0.02, cy0 - 0.03, cy1 + 0.01, 0.95, 0.985, laminate)
+        box("counter_kick", cx0, cx1, cy0 - 0.006, cy0, 0.0, 0.1, kick)
+        for k in range(4):
+            xx = cx0 + 0.6 + k * 0.85
+            box("counter_panel_bead_%d" % k, xx, xx + 0.02, cy0 - 0.008, cy0, 0.12, 0.90, laminate)
+        # on it: THE BOOK OF EVERY FARE, open, its cloth cover and ruled pages written up
+        bkx, bky = -1.20, 2.47
+        box("fare_book_cover", bkx - 0.26, bkx + 0.26, bky - 0.19, bky + 0.19, 0.985, 0.995, cloth_green)
+        for side in (-1, 1):
+            px0 = bkx + (0.005 if side > 0 else -0.25)
+            box("fare_book_page", px0, px0 + 0.245, bky - 0.18, bky + 0.18, 0.995, 1.005, paper)
+            for r in range(16):
+                yy = bky + 0.16 - r * 0.021
+                box("fare_book_rule", px0 + 0.01, px0 + 0.235, yy, yy + 0.0012, 1.005, 1.0058, ink_blue)
+                if rnd.random() < (0.85 if side < 0 else 0.45):
+                    ww = rnd.uniform(0.08, 0.21)
+                    box("fare_book_entry", px0 + 0.012, px0 + 0.012 + ww, yy + 0.004, yy + 0.011, 1.0055, 1.0062, ink)
+        bpy.ops.mesh.primitive_cylinder_add(vertices=8, radius=0.004, depth=0.14, location=(bkx + 0.12, bky - 0.05, 1.012), rotation=(0.0, math.pi / 2, 0.35))
+        bpy.context.object.data.materials.append(ink_blue)
+        # the phone, a cream push-button set of the decade, its coiled cord to the handset
+        phx, phy = -2.30, 2.45
+        box("phone_base", phx - 0.10, phx + 0.10, phy - 0.11, phy + 0.11, 0.985, 1.045, cream_plastic)
+        box("phone_keypad", phx - 0.05, phx + 0.05, phy - 0.10, phy - 0.02, 1.045, 1.05, mat("keypad_grey", (0.35, 0.34, 0.31), rough=0.4))
+        box("phone_handset", phx - 0.105, phx + 0.105, phy + 0.02, phy + 0.08, 1.05, 1.085, cream_plastic)
+        for xx in (phx - 0.095, phx + 0.055):
+            box("phone_handset_end", xx, xx + 0.04, phy + 0.01, phy + 0.09, 1.045, 1.095, cream_plastic)
+        for k in range(10):
+            cyl("phone_cord_%d" % k, phx + 0.12 + k * 0.012, phy + 0.02, 0.995, 0.009, 0.004, cream_plastic, axis="x", verts=10)
+        # a second, older line: a black dial telephone for the account customers
+        p2x = -0.25
+        box("phone2_base", p2x - 0.09, p2x + 0.09, 2.40, 2.60, 0.985, 1.05, black)
+        cyl("phone2_dial", p2x, 2.45, 1.052, 0.045, 0.006, mat("dial_cream", (0.75, 0.72, 0.62), rough=0.4))
+        box("phone2_handset", p2x - 0.10, p2x + 0.10, 2.53, 2.58, 1.05, 1.085, black)
+        # the glass ashtray, its stubs and ash
+        cyl("ashtray", -1.75, 2.42, 0.985, 0.065, 0.028, ash_glass)
+        cyl("ash", -1.75, 2.42, 1.0, 0.05, 0.006, ash)
+        for k in range(5):
+            a = rnd.uniform(0, 2 * math.pi)
+            sx, sy = -1.75 + math.cos(a) * 0.035, 2.42 + math.sin(a) * 0.035
+            bpy.ops.mesh.primitive_cylinder_add(vertices=8, radius=0.0042, depth=0.03, location=(sx, sy, 1.009), rotation=(math.pi / 2, 0.0, a))
+            bpy.context.object.data.materials.append(stub if k % 2 else filter_tan)
+        model("cigarette_pack", -1.58, 2.50, 0.985, turn=0.7, size=0.09)
+        # the dockets on their spike, a mug of tea gone cold, a pad
+        cyl("spike_base", -0.62, 2.48, 0.985, 0.03, 0.01, steel_grey)
+        cyl("spike", -0.62, 2.48, 0.995, 0.0025, 0.13, steel_grey)
+        for k in range(9):
+            box("docket_%d" % k, -0.62 - 0.045, -0.62 + 0.045, 2.48 - 0.06, 2.48 + 0.06, 1.0 + k * 0.004, 1.0025 + k * 0.004,
+                paper if k % 3 else paper_yellow).rotation_euler[2] = rnd.uniform(-0.3, 0.3)
+        cyl("mug", -0.95, 2.62, 0.985, 0.04, 0.095, mug_brown)
+        cyl("mug_tea", -0.95, 2.62, 1.06, 0.035, 0.004, mat("tea", (0.18, 0.09, 0.04), rough=0.1))
+        box("pad", 0.15, 0.36, 2.36, 2.62, 0.985, 0.995, paper_yellow)
+        # a plastic letter tray at the counter's right end
+        box("tray", 0.42, 0.74, 2.33, 2.66, 0.985, 1.05, mat("tray_brown_plastic", (0.12, 0.07, 0.04), rough=0.35))
+        box("tray_papers", 0.44, 0.72, 2.35, 2.64, 0.99, 1.035, paper)
+        # a metal bin on the customers' side
+        cyl("bin", 0.35, 1.95, 0.0, 0.14, 0.36, steel_grey, verts=20)
+
+        # THE RADIO DESK on the staff side (the plan: z 8.4 to 8.95), grey steel under a wood-effect top
+        ry0, ry1 = 3.13, 3.68
+        rx0, rx1 = -1.80, -0.30
+        box("radio_desk_top", rx0, rx1, ry0, ry1, 0.71, 0.74, laminate)
+        box("radio_desk_pedestal", rx1 - 0.42, rx1, ry0 + 0.02, ry1, 0.0, 0.71, steel_grey)
+        for k in range(3):
+            box("drawer_line_%d" % k, rx1 - 0.40, rx1 - 0.02, ry0 + 0.015, ry0 + 0.02, 0.22 + k * 0.17, 0.225 + k * 0.17, black)
+        box("radio_desk_leg", rx0, rx0 + 0.04, ry0 + 0.02, ry1 - 0.02, 0.0, 0.71, steel_grey)
+        # the base station: a dark set with its front panel, knobs and the transmit lamp
+        sx0, sx1 = -1.30, -0.86
+        box("radio_set", sx0, sx1, ry0 + 0.20, ry0 + 0.48, 0.74, 0.87, black)
+        box("radio_panel", sx0 + 0.01, sx1 - 0.01, ry0 + 0.195, ry0 + 0.20, 0.755, 0.855, steel_grey)
+        for k in range(4):
+            cyl("radio_knob_%d" % k, sx0 + 0.06 + k * 0.09, ry0 + 0.19, 0.79, 0.012, 0.016, black, axis="y")
+        cyl("radio_lamp_tx", sx1 - 0.05, ry0 + 0.193, 0.835, 0.005, 0.004, red_led, axis="y")
+        cyl("radio_lamp_on", sx1 - 0.08, ry0 + 0.193, 0.835, 0.005, 0.004, green_led, axis="y")
+        # the desk microphone on its stand, turned to the empty chair
+        cyl("mic_base", -0.70, ry0 + 0.30, 0.74, 0.06, 0.022, black)
+        cyl("mic_stem", -0.70, ry0 + 0.30, 0.762, 0.007, 0.17, chrome)
+        cyl("mic_head", -0.70, ry0 + 0.32, 0.95, 0.028, 0.07, steel_grey, axis="y")
+        cyl("mic_grille", -0.70, ry0 + 0.285, 0.95, 0.024, 0.004, black, axis="y")
+        # a pad of dockets, a biro, a second ashtray
+        box("radio_pad", -1.70, -1.46, ry0 + 0.06, ry0 + 0.24, 0.74, 0.75, paper)
+        cyl("radio_ashtray", -1.55, ry0 + 0.40, 0.74, 0.055, 0.025, steel_grey)
+        # the loudspeaker on its bracket above the desk, so the room hears every job
+        box("speaker", -1.25, -0.95, D - 0.20, D - 0.02, 2.02, 2.24, mat("speaker_wood", (0.16, 0.10, 0.06), rough=0.5))
+        box("speaker_cloth", -1.22, -0.98, D - 0.205, D - 0.20, 2.04, 2.22, mat("speaker_cloth", (0.06, 0.05, 0.04), rough=1.0))
+        # MICKEY'S CHAIR, empty: a fabric swivel chair on its five-star base, behind the desk
+        chx, chy = -1.05, 3.92
+        for k in range(5):
+            ang = k * 2 * math.pi / 5 + 0.3
+            leg = box("chair_leg_%d" % k, chx - 0.012, chx + 0.012, chy, chy + 0.30, 0.04, 0.07, black)
+            leg.rotation_euler[2] = ang
+            leg.location = (chx + math.sin(-ang) * 0.15, chy + math.cos(ang) * 0.15, 0.055)
+            cyl("chair_castor_%d" % k, chx + math.sin(-ang) * 0.29, chy + math.cos(ang) * 0.29, 0.0, 0.022, 0.04, black, verts=10)
+        cyl("chair_column", chx, chy, 0.07, 0.025, 0.36, chrome)
+        box("chair_seat", chx - 0.24, chx + 0.24, chy - 0.24, chy + 0.22, 0.43, 0.50, fabric)
+        box("chair_back", chx - 0.21, chx + 0.21, chy + 0.17, chy + 0.24, 0.56, 1.02, fabric)
+        box("chair_back_bar", chx - 0.02, chx + 0.02, chy + 0.20, chy + 0.25, 0.46, 0.60, black)
+        # a jacket left over the chair's back (his)
+        box("jacket_on_chair", chx - 0.23, chx + 0.23, chy + 0.24, chy + 0.30, 0.62, 1.0, mat("jacket_tweed", (0.14, 0.11, 0.08), rough=0.95, noise=0.3))
+
+        # THE DISTRICT MAP over the radio desk, the town and the estuary, pins where the cars are
+        mx0, mx1, mz0, mz1 = -2.45, -1.05, 1.18, 2.02
+        box("map_board", mx0, mx1, D - 0.012, D - 0.002, mz0, mz1, mat("map_paper", (0.80, 0.78, 0.66), rough=0.85))
+        box("map_frame_top", mx0 - 0.02, mx1 + 0.02, D - 0.02, D - 0.002, mz1, mz1 + 0.02, black)
+        box("map_frame_bottom", mx0 - 0.02, mx1 + 0.02, D - 0.02, D - 0.002, mz0 - 0.02, mz0, black)
+        box("map_estuary", mx0, mx1, D - 0.0135, D - 0.012, mz0 + 0.06, mz0 + 0.22, mat("map_water", (0.30, 0.48, 0.60), rough=0.85))
+        road = mat("map_road", (0.55, 0.10, 0.06), rough=0.85)
+        lane = mat("map_lane", (0.70, 0.55, 0.15), rough=0.85)
+        for k in range(14):
+            cx_, cz_ = rnd.uniform(mx0 + 0.1, mx1 - 0.1), rnd.uniform(mz0 + 0.25, mz1 - 0.08)
+            r = box("map_road_%d" % k, cx_ - rnd.uniform(0.15, 0.45), cx_ + rnd.uniform(0.15, 0.45), D - 0.0145, D - 0.0125,
+                    cz_, cz_ + (0.008 if k < 6 else 0.004), road if k < 6 else lane)
+            r.rotation_euler[1] = rnd.uniform(-0.6, 0.6)
+        for k in range(9):
+            cyl("map_pin_%d" % k, rnd.uniform(mx0 + 0.1, mx1 - 0.1), D - 0.025, rnd.uniform(mz0 + 0.25, mz1 - 0.08),
+                0.008, 0.018, mat("pin_red", (0.6, 0.04, 0.03), rough=0.4), axis="y", verts=10)
+        text("map_title", "MERIDIAN & DISTRICT", (mx0 + mx1) / 2, D - 0.016, mz1 - 0.06, 0.04, ink, rot_x=math.pi / 2,
+             font="evening-paper/LibreFranklin-700.ttf")
+        # the drivers' board right of the map: each car's number and a card in its slot
+        box("car_board", -0.92, -0.32, D - 0.012, D - 0.002, 1.25, 1.95, mat("board_cork", (0.42, 0.30, 0.17), rough=0.9, noise=0.4))
+        for k in range(8):
+            zz = 1.88 - k * 0.08
+            text("car_no_%d" % k, str(k + 1), -0.86, D - 0.016, zz - 0.02, 0.035, ink, font="evening-paper/LibreFranklin-700.ttf")
+            if rnd.random() < 0.7:
+                box("car_card_%d" % k, -0.80, -0.80 + rnd.uniform(0.22, 0.40), D - 0.016, D - 0.012, zz - 0.025, zz + 0.02,
+                    card_white if k % 3 else paper_yellow)
+        # a pot plant in the corner by the stair wall, and a strip of light under the back door's head
+        lighten(model("potted_plant_01", 1.55, 3.6, 0.0, turn=1.2, size=0.75), 0.1)
+        # WEAR: thirty years of boots on the counter's kick and front, a trodden path in the carpet
+        # from the door to the counter, the counter top's laminate rubbed pale where the book lies
+        # (no scuff boxes on the counter's foot: in the game they read as a dark skyline)
+        box("carpet_path", -0.6, 1.6, 0.6, 2.2, 0.0, 0.004, mat("carpet_trodden", (0.065, 0.045, 0.032), rough=0.98, noise=0.5))
+        box("counter_rubbed", bkx - 0.4, bkx + 0.4, cy0 - 0.02, cy0 + 0.25, 0.985, 0.9865, mat("laminate_rubbed", (0.55, 0.43, 0.30), rough=0.3))
+        # A PINBOARD right of the back door: dockets, a postcard, a card of phone numbers
+        box("pinboard", 1.00, 1.70, D - 0.012, D - 0.002, 1.15, 1.75, mat("pinboard_cork", (0.40, 0.28, 0.15), rough=0.95, noise=0.4))
+        for k in range(11):
+            px, pz = rnd.uniform(1.05, 1.58), rnd.uniform(1.18, 1.62)
+            o = box("pinned_%d" % k, px, px + rnd.uniform(0.07, 0.13), D - 0.016, D - 0.012, pz, pz + rnd.uniform(0.06, 0.12),
+                    rnd.choice((paper, paper_yellow, card_white, mat("postcard_blue", (0.25, 0.38, 0.52), rough=0.6))))
+            o.rotation_euler[1] = rnd.uniform(-0.12, 0.12)
+        # "BOOKINGS" on a stand at the counter's front edge, read from the window
+        box("bookings_card", -1.95, -1.55, cy0 + 0.04, cy0 + 0.05, 0.985, 1.10, card_white)
+        text("bookings_word", "BOOKINGS", -1.75, cy0 + 0.035, 1.025, 0.05, ink_red, font="evening-paper/LibreFranklin-700.ttf")
+        # a stacking chair for a customer by the stair wall: a moulded shell on a tube frame
+        sx, sy = 1.45, 1.10
+        shell = mat("chair_shell", (0.36, 0.14, 0.05), rough=0.4)
+        box("stack_seat", sx - 0.21, sx + 0.21, sy - 0.20, sy + 0.20, 0.43, 0.46, shell)
+        box("stack_back", sx - 0.20, sx + 0.20, sy + 0.17, sy + 0.21, 0.48, 0.82, shell).rotation_euler[0] = -0.12
+        for dx_ in (-0.18, 0.16):
+            for dy_ in (-0.17, 0.15):
+                box("stack_leg", sx + dx_, sx + dx_ + 0.02, sy + dy_, sy + dy_ + 0.02, 0.0, 0.43, chrome)
+        # a doormat inside the street door
+        box("door_mat", 0.95, 1.78, 0.05, 0.70, 0.0, 0.014, mat("door_mat", (0.10, 0.07, 0.05), rough=0.98, noise=0.4))
+        # A PICTURE RAIL round the room at 2.2 m, the paint above it browner with thirty years'
+        # smoke (the first film: the left wall one flat bright panel)
+        rail = mat("picture_rail", (0.20, 0.12, 0.065), rough=0.5)
+        frieze = mat("frieze_smoke", (0.24, 0.18, 0.10), rough=0.9, noise=0.35)
+        box("rail_left", -W / 2, -W / 2 + 0.025, 0.0, D, 2.18, 2.22, rail)
+        box("frieze_left", -W / 2, -W / 2 + 0.004, 0.0, D, 2.22, H, frieze)
+        box("rail_back", -W / 2, 1.81, D - 0.025, D, 2.18, 2.22, rail)
+        box("frieze_back", -W / 2, 1.81, D - 0.004, D, 2.22, H, frieze)
+        box("rail_stair", 1.785, 1.81, 0.0, D, 2.18, 2.22, rail)
+        box("frieze_stair", 1.806, 1.81, 0.0, D, 2.22, H, frieze)
+        # behind the counter on the left wall: a shelf of box files and ledgers, a grey four-drawer
+        # cabinet under it, a fire extinguisher on its bracket
+        box("files_shelf", -W / 2, -W / 2 + 0.30, 2.85, 4.05, 1.78, 1.80, laminate)
+        for k in range(14):
+            yy = 2.88 + k * 0.083
+            c = rnd.choice(((0.08, 0.10, 0.22), (0.30, 0.05, 0.04), (0.10, 0.10, 0.10), (0.42, 0.36, 0.20), (0.06, 0.16, 0.10)))
+            hgt = rnd.uniform(0.28, 0.34)
+            o = box("box_file_%d" % k, -W / 2 + 0.01, -W / 2 + 0.28, yy, yy + 0.075, 1.80, 1.80 + hgt,
+                    mat("file_%d_%d_%d" % tuple(int(v * 99) for v in c), c, rough=0.6))
+            if k == 13:
+                o.rotation_euler[0] = 0.25
+        box("cabinet", -W / 2 + 0.01, -W / 2 + 0.63, 3.40, 3.88, 0.0, 1.32, steel_grey)
+        for k in range(4):
+            zz = 0.06 + k * 0.32
+            box("cabinet_drawer_line_%d" % k, -W / 2 + 0.63, -W / 2 + 0.635, 3.42, 3.86, zz + 0.30, zz + 0.305, black)
+            box("cabinet_handle_%d" % k, -W / 2 + 0.635, -W / 2 + 0.65, 3.58, 3.70, zz + 0.22, zz + 0.24, chrome)
+        cyl("extinguisher", -W / 2 + 0.10, 3.05, 0.35, 0.075, 0.55, mat("extinguisher_red", (0.55, 0.03, 0.02), rough=0.3))
+        cyl("extinguisher_head", -W / 2 + 0.10, 3.05, 0.90, 0.03, 0.08, black)
 
     if EXPORT:
         export_room(bpy, sc, os.path.abspath(argv[argv.index("--export-room") + 1]), shop_id)

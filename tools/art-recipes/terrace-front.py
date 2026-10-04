@@ -1360,7 +1360,11 @@ def _plain_ground(parts, p, T, wall, bay):
             _box(parts, "gf_over_%d" % n, wall, a, b, 0.0, T, z1, hi_band,
                  "brick-over-an-opening-shorter-than-its-neighbour")
 
-    # The door, recessed, in its own paint with a joinery casing.
+    # The door, recessed, in its own paint, its frame at the back of the reveal.
+    # THE FRAME SITS AT THE BACK (4 October): it ran the full depth of the recess
+    # from the wall face, and from the hook camera's slant its white inner face
+    # covered the whole door, the "pale slab" every review named; a cottage
+    # door stands in a brick reveal with only its frame round it.
     _box(parts, "side_door_leaf", "paint_door",
          door_cx - door_w / 2.0 + jamb_t, door_cx + door_w / 2.0 - jamb_t,
          rec, rec + 0.04, 0.0, door_h,
@@ -1369,11 +1373,11 @@ def _plain_ground(parts, p, T, wall, bay):
                           door_cx - door_w / 2.0, door_cx - door_w / 2.0 + jamb_t),
                          ("side_door_casing_right",
                           door_cx + door_w / 2.0 - jamb_t, door_cx + door_w / 2.0)):
-        _box(parts, Name, "paint_joinery", X0, X1, -0.01, rec + 0.04, 0.0, door_h + jamb_t,
-             "the-casing's-upright")
+        _box(parts, Name, "paint_joinery", X0, X1, rec - DOOR_FRAME_PROUD_M, rec + 0.04,
+             0.0, door_h + jamb_t, "the-frame's-upright/at-the-back-of-the-brick-reveal")
     _box(parts, "side_door_casing_head", "paint_joinery",
-         door_cx - door_w / 2.0, door_cx + door_w / 2.0, -0.01, rec + 0.04,
-         door_h, door_h + jamb_t, "the-casing's-head")
+         door_cx - door_w / 2.0, door_cx + door_w / 2.0, rec - DOOR_FRAME_PROUD_M, rec + 0.04,
+         door_h, door_h + jamb_t, "the-frame's-head")
     lp_w, lp_h = p["letterplate_w_m"], p["letterplate_h_m"]
     _box(parts, "letterplate", "lead", door_cx - lp_w / 2.0, door_cx + lp_w / 2.0,
          rec - 0.015, rec, p["letterplate_at_m"], p["letterplate_at_m"] + lp_h,
@@ -2667,6 +2671,10 @@ INTERIORS = "production/art/interiors-2026-09-23"
 #: model drew each room inside a shop window with a strip of pavement below
 #: it, and a window frame hung behind our window frame is two frames.
 INTERIOR_PICTURE = {
+    # MICKEY'S OFFICE NOW (4 October, his order: Mickey's interior first among the shopfronts):
+    # its picture from tools/art-recipes/shop-room.py, framed on the front exactly (no crop); the
+    # game stands the real room there instead (production/specs/shop-interiors.json, room_3d).
+    ("east_parade", 0): ("production/art/shop-rooms/mickeys_day", (0.0, 0.0, 1.0, 1.0)),
     ("east_parade", 1): (INTERIORS + "/int23_fish", (0.05, 0.12, 0.95, 0.92)),
     ("east_parade", 2): (INTERIORS + "/int23_pawn", (0.06, 0.20, 0.64, 0.92)),
     ("east_parade", 4): (INTERIORS + "/int23_laundry", (0.03, 0.10, 0.73, 0.98)),
@@ -2686,6 +2694,8 @@ NET_EMIT_DAY, NET_EMIT_NIGHT = 0.45, 0.05
 #: translucent pane in front of it is gone from houses (shops keep theirs, before their displays):
 #: in front of a self-lit net card its 8% reflection was lost and every pane read one flat tone.
 HOUSE_PANE_TRANSLUCENT = False
+#: How far a cottage door's frame stands in front of its leaf, at the back of the brick reveal.
+DOOR_FRAME_PROUD_M = 0.03
 NET_PANE_ROUGHNESS = 0.04   # 0.30 until 4 October: the panes measured a quarter darker than the sheet's against the wall
 #: AND A LIT ROOM BEHIND A NET, 29 September: every third upstairs window
 #: along the street shows a warm room at night (the blind review of the
@@ -8127,6 +8137,12 @@ def selftest():
                       len(doors) == q["bays"], "%d for %d" % (len(doors), q["bays"]))
                 check("accept/%s-has-two-ground-floor-windows-per-bay" % other,
                       len(glass) == q["bays"] * 2, "%d for %d" % (len(glass), q["bays"]))
+                # THE DOOR'S FRAME AT THE BACK OF ITS REVEAL, never a white lining from the
+                # wall face that hides the door from a slanting camera.
+                frames = [b for b in qboxes if b["id"].startswith("side_door_casing")]
+                check("accept/%s-door-frames-stand-at-the-back-of-the-reveal" % other,
+                      frames and all(b["y0"] > 0.05 for b in frames),
+                      ",".join("%.3f" % b["y0"] for b in frames[:3]))
             # AND THE UPPER RHYTHM IS THE SAME ON BOTH ROWS, which is the one
             # thing the spec forbids varying: the string-course a viewer's eye
             # follows down the whole street.
@@ -8221,7 +8237,8 @@ def selftest():
                   and byid.get("east_parade_stall_plinth_bay0", {}).get("material") == "tile_stall",
                   str(byid.get("east_parade_stallriser_bay0", {}).get("material")))
             # ONE MICKEY'S, and it is the plain one.
-            mick = [b["id"] for b in street if "mickeys" in str(b.get("decal", ""))]
+            mick = [b["id"] for b in street if "mickeys" in str(b.get("decal", ""))
+                    and not b["id"].startswith("interior_card_")]   # its office's picture is no sign
             check("accept/there-is-one-mickey's-on-the-street", len(mick) == 1, ",".join(mick))
             check("accept/and-it-is-signwritten-not-the-pub's-board",
                   bool(mick) and byid[mick[0]]["decal"].endswith("fascia_mickeys_plain"),

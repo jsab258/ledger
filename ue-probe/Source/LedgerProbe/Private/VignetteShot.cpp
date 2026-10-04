@@ -7208,6 +7208,27 @@ namespace
 					if (Made3 >= 6)
 					{
 						GStreetActors[I]->SetActorHiddenInGame(true);
+						// AND WHAT THE STREET HAD STANDING IN THE ROOM'S SPACE (4 October: Mickey's
+						// solid block behind the window, street_mickeys_interior, stood 1.3 m behind the
+						// glass inside the new room and the room read black), named by the spec.
+						int32 Hid3 = 0;
+						const Value* HideList = Sh.Find("hide_meshes");
+						for (size_t H = 0; HideList != nullptr && HideList->Type == T_ARR && H < HideList->Arr.size(); ++H)
+						{
+							if (HideList->Arr[H].Type != T_STR) { continue; }
+							for (int32 J = 0; J < GStreetActors.Num() && J < (int32)GStreet.Rows.size(); ++J)
+							{
+								if (GStreetActors[J] != nullptr && GStreet.Rows[(size_t)J].Mesh == HideList->Arr[H].Str)
+								{
+									GStreetActors[J]->SetActorHiddenInGame(true);
+									++Hid3;
+								}
+							}
+						}
+						if (Hid3 > 0)
+						{
+							UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's room hides %d street mesh(es) in its space"), UTF8_TO_TCHAR(Id.c_str()), Hid3);
+						}
 						for (AActor* P3 : Parts3) { GInteriorActors.Add(P3); }
 						FString DispNote3 = TEXT("no display");
 						if (Disp3 != nullptr && Disp3->Type == T_OBJ)

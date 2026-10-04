@@ -194,9 +194,9 @@ FASCIA_CAP_MM = 240
 
 
 def make_fascia(name, rng, minted=None):
-    """A painted fascia with a canon name signwritten across it.
+    """A painted fascia with a canon name across it, in raised gilt capitals since 4 October.
 
-    PLAIN CAPITALS, NOT A PUB'S SERIF BOARD. The board this replaces was the
+    (Until then:) PLAIN CAPITALS, NOT A PUB'S SERIF BOARD. The board this replaces was the
     image lane's, made against the retired sheet when Mickey's was still a
     pub, and it was a maroon signboard with gilt serifs and a border - the
     look of a pub. The approved sheet paints the name straight onto the
@@ -212,13 +212,22 @@ def make_fascia(name, rng, minted=None):
     w, h = FASCIA_BOARD_MM[0] * MM, FASCIA_BOARD_MM[1] * MM
     img = Image.new("RGB", (w, h), FASCIA_PAINT_SRGB)
     d = ImageDraw.Draw(img)
-    # PT Sans caps are 0.70 of the em, so the em is the cap height over that.
-    font = ImageFont.truetype(str(FONT), int(FASCIA_CAP_MM * MM / 0.70))
     text = name.upper().replace("'", "\u2019")
-    # A SIGNWRITER'S WEIGHT, drawn as a stroke of the same paint: the face
-    # is PT Sans Regular and a fascia letter is heavier than a book's.
-    d.text((w // 2, h // 2), text, font=font, fill=FASCIA_INK_SRGB,
-           anchor="mm", stroke_width=5 * MM, stroke_fill=FASCIA_INK_SRGB)
+    # RAISED GILT SERIF CAPITALS, 4 October (the proof view's shopfronts step: "Mickey's in
+    # Marcellus SC gilt"; the Hook sheet's letters stand off the slate-blue board and cast a
+    # small shadow down and to the right): Marcellus SC (OFL), its caps about 0.66 of the em.
+    font = ImageFont.truetype(str(PLATE_FONT), int(FASCIA_CAP_MM * MM / 0.66))
+    off = 9 * MM
+    d.text((w // 2 + off, h // 2 + off), text, font=font, fill=(24, 28, 32), anchor="mm",
+           stroke_width=2 * MM, stroke_fill=(24, 28, 32))
+    # the gilt lighter at the top of each letter than at its foot, as leaf catches the sky
+    ga = np.ones((h, w, 3), np.float32) * np.array(FASCIA_INK_SRGB, np.float32)
+    ga *= np.linspace(1.18, 0.82, h)[:, None, None]
+    gold = Image.fromarray(np.clip(ga, 0, 255).astype(np.uint8), "RGB")
+    mask = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(mask).text((w // 2, h // 2), text, font=font, fill=255, anchor="mm",
+                              stroke_width=2 * MM, stroke_fill=255)
+    img.paste(gold, (0, 0), mask)
     a = np.asarray(img).astype(np.float32) / 255.0
     dirt = _fbm(w, h, rng, octaves=5, cells=6)[..., None]
     # RAIN RUNS DOWN A FASCIA AND COLLECTS AT ITS FOOT, so the bottom is
@@ -453,7 +462,7 @@ def build(dest=DEST, streets=None, districts=None):
              "net_curtain_b with a room lit behind it: warm tungsten through the weave")]
     jobs.append(("fascia_mickeys_plain.png", "C6_fascia_lettering",
                  lambda: make_fascia("Mickey's", _rng("C6mickeys")),
-                 "5650x460mm fascia face, canon name in plain capitals, "
+                 "5650x460mm fascia face, canon name in raised gilt Marcellus SC (OFL) with its shadow, "
                  "paint and ink sampled off the approved Hook sheet"))
     jobs.append(("board_to_let.png", "C6_letting_board",
                  lambda: make_letting_board(_rng("C6let")),

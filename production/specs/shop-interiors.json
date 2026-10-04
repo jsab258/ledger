@@ -10,12 +10,57 @@
  "never": "no people (the town is simulated: a painted figure reads as a witness), no real brands, no alcohol, no gambling (no pools coupons), no children",
  "shops": [
   {
+   "id": "mickeys",
+   "block": "east_parade",
+   "bay": 0,
+   "trade": "minicab office (Mickey's): the public side with a vinyl bench under the fares, the licence and the accounts notice; the booking counter across with the book of every fare, two phones, an ashtray, the dockets on their spike; the staff side with the radio set, its desk microphone and the loudspeaker, Mickey's swivel chair empty behind them, the district map and the drivers' board; the door to Sheila's back room ajar; the number in gilt on the glass. Laid out from production/specs/mickeys-office.json.",
+   "room": {
+    "w": 5.3,
+    "h": 2.4,
+    "d": 4.15,
+    "h_real": 2.9
+   },
+   "card": {
+    "x0": 3.35,
+    "x1": 8.65,
+    "bottom": 0.65,
+    "top": 3.05,
+    "z": 5.875
+   },
+   "decal": "production/art/shop-rooms/mickeys_day",
+   "pictures": "production/art/shop-rooms/mickeys",
+   "side": 1,
+   "camera_d": 5.3,
+   "pixels_wide": 2048,
+   "lit_at_night": true,
+   "brightness_day": 0.15,
+   "brightness_night": 0.7,
+   "room_3d": true,
+   "room_lumens_day": 500,
+   "room_lumens_night": 900,
+   "sources": "production/research/cab-office-interior-1990 (both notes: paper and voice radio, wood-effect tops, fabric swivel chairs on five-star bases, plastic trays, coiled cords, pot plants; the number signwritten on the glass); canon.md D19; his ruling of 3 October, 'Mickey's window shows its office'",
+   "lumens_note": "4 October: the room first read black at 2 m, but the black was the street's solid block behind the window (now hidden, hide_meshes); at 2,000 lm its dark wood counter came out cream; 500 by day and 900 at night, near the other rooms', for the gate to judge.",
+   "hide_meshes": [
+    "street_mickeys_interior"
+   ]
+  },
+  {
    "id": "pawnbroker",
    "block": "east_parade",
    "bay": 2,
    "trade": "pawnbroker (Rita's): watches, rings and chains in a glass counter, shelves crammed with radio cassettes, televisions, cameras, binoculars and clocks, boxes of stock, tools, a suitcase, every piece ticketed; a grille at night (not yet made)",
-   "room": {"w": 5.3, "h": 2.4, "d": 4.5},
-   "card": {"x0": 15.35, "x1": 20.65, "bottom": 0.65, "top": 3.05, "z": 5.875},
+   "room": {
+    "w": 5.3,
+    "h": 2.4,
+    "d": 4.5
+   },
+   "card": {
+    "x0": 15.35,
+    "x1": 20.65,
+    "bottom": 0.65,
+    "top": 3.05,
+    "z": 5.875
+   },
    "decal": "production/art/interiors-2026-09-23/int23_pawn",
    "pictures": "production/art/shop-rooms/pawnbroker",
    "side": 1,
@@ -26,8 +71,15 @@
    "brightness_night": 0.7,
    "spill_lumens": 350,
    "lit_note": "Day 0.15, since the glass reflects (Thin Translucent): at 0.3 the street's reflection was a faint veil, at 0.08 the room read dim, at 0.03 the pane was nearly a mirror and the room a void (filmed 1 October; the research's 1/8 to 1/10 of the pavement is for an unlit shop, the Hook sheet's is lit and readable); night 0.7 glows without blowing the floor out; the night spill (a tube-white rect light in the window head, tipped 62 degrees down) at 350 lm on lighting channel 1 lights the display and lays a pool on the pavement and the road; the window bars are not on that channel, so they no longer flare (filmed at 250 to 2500 lm and from deep inside the shop, 1 October).",
-   "display": {"glb": "pawnbroker-display", "x0": 15.45, "x1": 18.8, "front": 5.27, "bed": 0.7, "depth": 0.55,
-               "measured": "the street model's own glass for this bay (street_glass_eg_bay2: panes at 5.245 to 5.265 m back, 0.70 to 2.91 m up, the door at 18.9 to 19.8 m) and its stallriser top (0.70 m)"},
+   "display": {
+    "glb": "pawnbroker-display",
+    "x0": 15.45,
+    "x1": 18.8,
+    "front": 5.27,
+    "bed": 0.7,
+    "depth": 0.55,
+    "measured": "the street model's own glass for this bay (street_glass_eg_bay2: panes at 5.245 to 5.265 m back, 0.70 to 2.91 m up, the door at 18.9 to 19.8 m) and its stallriser top (0.70 m)"
+   },
    "sources": "the note's section 9: Peter Marshall's Hull and 1990 photographs (links), the Black Country Living Museum pawnbroker"
   }
  ]
