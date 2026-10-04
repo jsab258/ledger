@@ -127,7 +127,9 @@ def build(pieces):
         # the gables carry, down every bay's front from its top (rain off the eaves and
         # the gutter's overflow, darkest at the head), and rising damp in its lowest metre.
         top = b["y_m"] + b["sy_m"] / 2.0
-        decals.append(wall_decal("wash", b["x_m"], top - b["sy_m"] * 0.45, zf, facing, b["sx_m"] * 1.02, b["sy_m"] * 0.9,
+        # THE WASH DOWN TO THE FOOT (4 October, the first fresh review of 2.4: its edge at a tenth
+        # of the wall's height read as a straight line with clean brick below it).
+        decals.append(wall_decal("wash", b["x_m"], top - b["sy_m"] * 0.5, zf, facing, b["sx_m"] * 1.02, b["sy_m"],
                                  0.45 + 0.35 * h["wear"], b["name"]))
         decals.append(wall_decal("damp", b["x_m"], bottom + DAMP_M / 2.0, zf, facing, b["sx_m"] * 1.02, DAMP_M,
                                  0.40 + 0.30 * h["wear"], b["name"]))
@@ -142,7 +144,10 @@ def build(pieces):
         bottom = g["y_m"] - g["sy_m"] / 2.0
         decals.append(gable_decal("splash", gx, bottom + SPLASH_M / 2.0, g["z_m"], g["sz_m"], SPLASH_M,
                                   0.5 + 0.4 * hg["wear"], g["name"]))
-        decals.append(gable_decal("wash", gx, bottom + g["sy_m"] * 0.5, g["z_m"], g["sz_m"] * 0.95, g["sy_m"] * 0.9,
+        # THE GABLE'S WASH FLUSH WITH ITS CORNERS AND DOWN TO ITS FOOT (4 October: at 95% by 90%
+        # its edges stood as a straight soot line by the corner and a clean band above the foot;
+        # wider than the face it would smear round the corner onto the front).
+        decals.append(gable_decal("wash", gx, bottom + g["sy_m"] * 0.5, g["z_m"], g["sz_m"], g["sy_m"],
                                   0.50 + 0.35 * hg["wear"], g["name"]))
         decals.append(gable_decal("damp", gx, bottom + DAMP_M / 2.0, g["z_m"], g["sz_m"] * 0.95, DAMP_M,
                                   0.40 + 0.30 * hg["wear"], g["name"]))
