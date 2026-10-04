@@ -5135,6 +5135,16 @@ def plan_parts(p, bay=0, party_wall=True):
             cs = _box(parts, nm, "paint_fascia", x0_, x0_ + 0.13, y0_, -fp, z0_, z1_,
                       "a-console-bracket/paint=" + paint_name)
             cs["paint"], cs["paint_name"] = paint_rgb, paint_name
+    # A BLIND BOX under the board on a timber front (4 October, the shopfronts step: "blind
+    # boxes"): the roller blind's case across the display run, in the board's paint, the canvas's
+    # front lath showing at its foot. Not on a metal refit or the empty unit.
+    if not refit and not (here == EMPTY_UNIT):
+        bb = _box(parts, "blind_box", "paint_fascia", disp_x0, disp_x1, -fp - 0.03, 0.0,
+                  fb - 0.16, fb, "a-roller-blind's-case/paint=" + paint_name)
+        bb["paint"], bb["paint_name"] = paint_rgb, paint_name
+        bl = _box(parts, "blind_lath", "paint_fascia", disp_x0 + 0.04, disp_x1 - 0.04, -fp - 0.045, -fp - 0.03,
+                  fb - 0.17, fb - 0.13, "the-blind's-front-lath/canvas")
+        bl["paint"], bl["paint_name"] = (0.42, 0.36, 0.24), "canvas_buff"
     # THE SIGN IS ITS OWN THIN PIECE ON THE FACE OF THE BOARD rather than
     # a texture on the board, because the board is one box and its face,
     # its returns and its underside are all the same surface to a box
@@ -8315,6 +8325,15 @@ def selftest():
                   ",".join(sorted(boards))[:120])
             check("reject/no-board-is-the-image-model's", not [d for d in boards if str(d).startswith("generated/")],
                   ",".join(d for d in boards if str(d).startswith("generated/")))
+            # AND EVERY TRADING BAY HAS ITS BOARD, THE EMPTY UNIT ITS BILLS (the C6 and G6 lines the
+            # scene's retired pictures used to answer for, CoreTests' list since 4 October)
+            check("accept/every-trading-bay-has-our-own-board",
+                  len([d for d in boards if str(d).startswith(LETTERED)]) == len(SIGN_OVERRIDE),
+                  "%d boards for %d" % (len([d for d in boards if str(d).startswith(LETTERED)]), len(SIGN_OVERRIDE)))
+            bills = [b for b in street if "flyposter_" in b["id"]]
+            check("accept/the-empty-unit-is-fly-posted-with-our-own-bills",
+                  len(bills) == len(FLYPOSTERS_ON_EMPTY) and all(str(b.get("decal", "")).startswith(LETTERED) for b in bills),
+                  "%d bills" % len(bills))
             g3 = byid.get("east_parade_display_glazing_bay3", {})
             check("accept/the-empty-unit-is-whitened-and-to-let",
                   g3.get("material") == "glass_whitened"

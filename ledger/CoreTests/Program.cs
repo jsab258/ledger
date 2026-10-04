@@ -27389,9 +27389,11 @@ namespace Ledger.CoreTests
             // ERROR, and this is the accepting case's other half: plant a
             // decal on a name nothing is called and the reader has to refuse.
             var scene = File.ReadAllText(path);
+            // (planted on the leak stain over Mickey's since 4 October: the fascia's own decal left
+            // the scene with the image model's retired batch)
             var moved = StreetVignette.Read(
-                scene.Replace("\"on\": \"east_parade_fascia0\"", "\"on\": \"east_parade_fascia9\""));
-            Check(moved.Error != null && moved.Error.Contains("east_parade_fascia9"),
+                scene.Replace("\"on\": \"east_parade_bay0\"", "\"on\": \"east_parade_bay9\""));
+            Check(moved.Error != null && moved.Error.Contains("east_parade_bay9"),
                   "a decal anchored to a piece that does not exist is refused BY NAME",
                   moved.Error ?? "(no error raised)");
 
@@ -27629,7 +27631,10 @@ namespace Ledger.CoreTests
             // stops emitting fails this test, which is the whole point of
             // writing the list out rather than deriving it from the plan.
             "A5_double_yellow_lines", "A7_gully_grate", "A8_manhole",
-            "C6_fascia_lettering", "C11_lit_interior_card",
+            // C6, C11 AND G6 LEFT THIS LIST ON 4 OCTOBER: the scene's own pictures for them were the
+            // image model's batch of 3 September, retired (misspelt words, a pub's back bar); the
+            // street recipe makes all three now (our own lettering on every board, our own bills,
+            // real rooms behind the glass) and tools/art-recipes/terrace-front.py --selftest holds them.
             // C15 IS THE FIRST LINE ON THIS LIST WHOSE GEOMETRY WAS AUTHORED
             // HERE, added 2026-09-10. It is in the list for the reason the
             // list exists: the two GLBs were committed on 2026-09-09 and named
@@ -27639,7 +27644,7 @@ namespace Ledger.CoreTests
             "D3_chimney_pots", "E5_bollards", "E6_public_bins",
             "E11_cones_barrier", "E12_a_board_posters", "E14_dock_clutter",
             "E18_shop_awnings", "G1_leak_stains", "G2_asphalt_damage",
-            "G4_moss_damp", "G5_stickers", "G6_fly_posters",
+            "G4_moss_damp", "G5_stickers",
         };
 
         /// THE PLACEMENT INSTRUMENT, ON THE CASE IT MUST PASS FIRST AND THEN

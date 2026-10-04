@@ -2675,8 +2675,10 @@ int main(int argc, char** argv)
 		// ship chandler's interior.
 		Check(Tint == 14,
 		      "the tint route covers the ten interiors and the four yellow bands");
-		Check(Card == 10 && Multiply == 10,
-		      "the twenty decals split ten opaque cards and ten stains");
+		// THE IMAGE MODEL'S TEN CARDS LEFT THE SCENE ON 4 OCTOBER (misspelt words, a pub's back bar;
+		// the street recipe letters every board itself now), so the scene's decals are its ten stains.
+		Check(Card == 0 && Multiply == 10,
+		      "the scene's ten decals are all stains, the image model's ten cards retired");
 		// AND THE REJECTING CASE, PLANTED: a library surface the pack does not
 		// answer for still has no route, because inventing one would be
 		// painting over the gate.
@@ -2780,10 +2782,10 @@ int main(int argc, char** argv)
 		}
 		std::printf("    decal assets: %d parsed, %d cropped, %d refused\n",
 		            Decals, Cropped, Refused);
-		Check(Decals == 20 && Refused == 0,
+		Check(Decals == 10 && Refused == 0,
 		      "every decal asset string in the committed street parses");
-		Check(Cropped == 10,
-		      "ten carry a crop rectangle and the ten ambientCG sets do not");
+		Check(Cropped == 0,
+		      "none carries a crop rectangle: the ten ambientCG sets are whole (the cropped cards retired 4 October)");
 		const LedgerSurface::DecalAsset A =
 			LedgerSurface::SplitDecalAsset("generated/fascia_mickeys#0.0391,0.2773,0.9766,0.7168");
 		Check(A.bOk && A.bCropped && A.Id == "generated/fascia_mickeys",
