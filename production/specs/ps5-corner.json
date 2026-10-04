@@ -359,8 +359,8 @@
         0.314
       ],
       "why": "the scan's mean brought to its drawn map's mean (brick_red), so it adds detail and wear, not a new colour",
-      "always": false,
-      "always_note": "4 October, the proof view, step 2.4: off in play. Laid always, this 1.05 m scan covered the street's drawn brick, so its English-looking bond repeated every metre up the near corner (the second fresh review) and the drawn Flemish bond and each house's stretch of it never showed; the research's method is our own bond, a scan only for fine detail (production/research/aaa-street/BRICK-2026-10-04.md)."
+      "always": true,
+      "always_note": "4 October: on again after the brick step (2.4) was set aside. Off, the street's drawn Flemish brick showed without repeats but read as clean CG tile (the third fresh review: flat faces, near-black mortar, lit from below); this scan reads as real brick though it repeats every metre and its bond is the photograph's. The method that joins the two is researched in production/research/aaa-street/BRICK-METHODS-2026-10-04.md."
     },
     {
       "base": "brick_grey",
@@ -376,9 +376,9 @@
         0.648,
         0.639
       ],
-      "always": false,
+      "always": true,
       "why": "the west rows' soot-darkened brick (their roof note: 'a run of soot-blackened commercial terrace'), 24 September; covers_m COUNTED from the map, 14 courses at 75 mm, not the 3.0 first recorded; the scan's mean brought to the drawn brick_grey map's, so it adds brick, mortar and soot, not a new colour",
-      "always_note": "4 October, the proof view, step 2.4: off in play. Laid always, this 1.05 m scan covered the street's drawn brick, so its English-looking bond repeated every metre up the near corner (the second fresh review) and the drawn Flemish bond and each house's stretch of it never showed; the research's method is our own bond, a scan only for fine detail (production/research/aaa-street/BRICK-2026-10-04.md)."
+      "always_note": "4 October: on again after the brick step (2.4) was set aside. Off, the street's drawn Flemish brick showed without repeats but read as clean CG tile (the third fresh review: flat faces, near-black mortar, lit from below); this scan reads as real brick though it repeats every metre and its bond is the photograph's. The method that joins the two is researched in production/research/aaa-street/BRICK-METHODS-2026-10-04.md."
     },
     {
       "base": "asphalt",

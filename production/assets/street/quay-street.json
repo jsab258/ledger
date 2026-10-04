@@ -490,9 +490,9 @@
    "surface_map": "brick_red",
    "tile_m": 0.55,
    "house_tint": [
-    0.5502,
-    0.536,
-    0.5584
+    0.9171,
+    0.8039,
+    0.6581
    ],
    "decal": null,
    "decal_uv": null,
@@ -795,9 +795,9 @@
    "surface_map": "plaster",
    "tile_m": 0.4,
    "house_tint": [
-    0.5502,
-    0.536,
-    0.5584
+    0.9171,
+    0.8039,
+    0.6581
    ],
    "decal": null,
    "decal_uv": null,
