@@ -304,6 +304,7 @@ def flags(tf):
 TILE_PETAL_AT, TILE_PETAL_AX, TILE_PETAL_AY = 0.20, 0.17, 0.085
 TILE_RING_R, TILE_RING_W = 0.15, 0.08
 TILE_MOTIF_DARK = (0.50, 0.50, 0.40)
+TILE_GROUT = (0.26, 0.25, 0.23)
 
 
 def tiles(tf):
@@ -334,7 +335,9 @@ def tiles(tf):
     img = np.zeros((n, n, 3))
     for c in range(3):
         face = (1.0 - (1.0 - TILE_MOTIF_DARK[c]) * motif) * (1.0 - 0.15 * petal)
-        img[..., c] = base[c] * np.where(jm, 0.55, face)
+        # GROUT ITS OWN GREY (4 October: as a darker shade of the tile it vanished at 2 m and a
+        # fresh reviewer read the tiles as printed wallpaper)
+        img[..., c] = np.where(jm, TILE_GROUT[c], base[c] * face)
     dist = np.minimum(np.minimum(fx, tf.TILE_M - fx), np.minimum(fy, tf.TILE_M - fy))
     h = np.clip((dist - tf.TILE_JOINT_M * 0.5) / (1.5 * tw / n), 0.0, 1.0)
     h = h * (0.6 + 0.25 * petal + 0.15 * ring)

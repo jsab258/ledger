@@ -193,7 +193,7 @@ FASCIA_INK_SRGB = (236, 206, 132)  # brighter 4 October: in the game it read as 
 FASCIA_CAP_MM = 240
 
 
-def make_fascia(name, rng, minted=None):
+def make_fascia(name, rng, minted=None, letters=True):
     """A painted fascia with a canon name across it, in raised gilt capitals since 4 October.
 
     (Until then:) PLAIN CAPITALS, NOT A PUB'S SERIF BOARD. The board this replaces was the
@@ -218,8 +218,9 @@ def make_fascia(name, rng, minted=None):
     # small shadow down and to the right): Marcellus SC (OFL), its caps about 0.66 of the em.
     font = ImageFont.truetype(str(PLATE_FONT), int(FASCIA_CAP_MM * MM / 0.66))
     off = 9 * MM
-    d.text((w // 2 + off, h // 2 + off), text, font=font, fill=(24, 28, 32), anchor="mm",
-           stroke_width=2 * MM, stroke_fill=(24, 28, 32))
+    if letters:
+        d.text((w // 2 + off, h // 2 + off), text, font=font, fill=(24, 28, 32), anchor="mm",
+               stroke_width=2 * MM, stroke_fill=(24, 28, 32))
     # the gilt lighter at the top of each letter than at its foot, as leaf catches the sky
     ga = np.ones((h, w, 3), np.float32) * np.array(FASCIA_INK_SRGB, np.float32)
     ga *= np.linspace(1.22, 0.80, h)[:, None, None]
@@ -227,7 +228,8 @@ def make_fascia(name, rng, minted=None):
     mask = Image.new("L", (w, h), 0)
     ImageDraw.Draw(mask).text((w // 2, h // 2), text, font=font, fill=255, anchor="mm",
                               stroke_width=2 * MM, stroke_fill=255)
-    img.paste(gold, (0, 0), mask)
+    if letters:
+        img.paste(gold, (0, 0), mask)
     a = np.asarray(img).astype(np.float32) / 255.0
     dirt = _fbm(w, h, rng, octaves=5, cells=6)[..., None]
     # RAIN RUNS DOWN A FASCIA AND COLLECTS AT ITS FOOT, so the bottom is
@@ -595,9 +597,9 @@ def build(dest=DEST, streets=None, districts=None):
              lambda: net_curtain_lit(_rng("C12b"), 17.0, 0.35),
              "net_curtain_b with a room lit behind it: warm tungsten through the weave")]
     jobs.append(("fascia_mickeys_plain.png", "C6_fascia_lettering",
-                 lambda: make_fascia("Mickey's", _rng("C6mickeys")),
-                 "5650x460mm fascia face, canon name in raised gilt Marcellus SC (OFL) with its shadow, "
-                 "paint and ink sampled off the approved Hook sheet"))
+                 lambda: make_fascia("Mickey's", _rng("C6mickeys"), letters=False),
+                 "5650x460mm fascia face, the board alone: its name stands on it in raised gilt letters, "
+                 "geometry (terrace-front.py RAISED_LETTERS); paint sampled off the approved Hook sheet"))
     for fname, lines, board, shade in TRADE_FASCIAS:
         jobs.append((fname, "C6_fascia_lettering",
                      (lambda lines=lines, board=board, shade=shade, fname=fname:
