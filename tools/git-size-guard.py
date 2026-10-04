@@ -41,6 +41,9 @@ GAME_INPUTS = {                        # prefix: cap a file, in bytes
     "ue-probe/Content/": 25_000_000,   # the Unreal content the build makes and cooks
     "production/fonts/": 5_000_000,    # the game's own typefaces
     "production/reference/": 5_000_000,  # the bar every visual is judged against (the Hook sheet)
+    # THE DECAL PICTURES (4 October): the street's stains and puddles, drawn by tools/make_wear_masks.py,
+    # packaged from git by tools/ue/stage_game_data.py (DIRS); missing from this list since 3 October.
+    "ledger/Assets/StreamingAssets/Decals/": 5_000_000,
 }
 BIG_KINDS = {
     # pictures and renders

@@ -7362,6 +7362,9 @@ HOUSE_SET_FACTOR = {0: (0.90, 0.90, 0.90), 1: (0.74, 0.74, 0.77), 2: (1.0, 0.97,
 #: street's bricks are: an orange-red stock, a purple-brown, a front sooted black-brown, one
 #: cleaned in the 1980s; and a value of its own over a third of the range.
 HOUSE_LOOKS = ((1.0, 0.84, 0.66), (0.80, 0.62, 0.66), (0.60, 0.56, 0.56), (1.0, 0.95, 0.86))
+#: A HOUSE WHOSE LOOK THE HOOK SHEET DECIDES (4 October): Mickey's front fills the near right of the
+#: proof frame, and the sheet's near wall is a warm red stock with burnt headers, not a sooted one.
+HOUSE_LOOK_FIXED = {"east_parade_bay0": 0}
 
 
 def _house_rows(root):
@@ -7384,7 +7387,7 @@ def _house_tint(block, pid, material, rows):
     import zlib
     bset, tint = rows[house]
     seed = zlib.crc32(house.encode("utf-8"))
-    f = HOUSE_LOOKS[(bset + seed) % len(HOUSE_LOOKS)]
+    f = HOUSE_LOOKS[HOUSE_LOOK_FIXED.get(house, (bset + seed) % len(HOUSE_LOOKS))]
     # ITS OWN VALUE, 0.78 to 1.0 by its seed, and a lean warm or cool from its tint; never
     # green or blue, which no brick is.
     lum = 0.78 + 0.22 * ((seed >> 8) % 1000) / 999.0

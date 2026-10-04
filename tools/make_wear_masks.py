@@ -101,7 +101,13 @@ def stains(rng):
     leak = opacity_map("Leaking005")
     grime = opacity_map("SurfaceImperfections003")
     splat = opacity_map("SurfaceImperfections012")
-    out = {"wear_streak": leak[:, : leak.shape[1] // 3],            # narrow and tall, as under a sill
+    w3 = leak.shape[1] // 3
+    # THREE STREAKS, strongest under the sill and fading down (4 October, the brick's second fresh
+    # review: "one identical decal under every window ... darkest at the bottom"): the leak's three
+    # thirds, each ramped from full at its top; tools/street_wear.py picks one a window by seed.
+    out = {"wear_streak": ramp(leak[:, :w3], "top"),            # narrow and tall, as under a sill
+           "wear_streak_b": ramp(leak[:, w3:2 * w3], "top"),
+           "wear_streak_c": ramp(leak[:, 2 * w3:3 * w3], "top"),
            "wear_wash": np.maximum(leak, ramp(np.asarray(Image.fromarray((grime * 255).astype(np.uint8)).resize(
                (leak.shape[1], leak.shape[0]))).astype(float) / 255.0, "top") * 0.8),
            # softened (3 October: the splatter read as polka dots on the stallrisers)
@@ -186,7 +192,7 @@ def selftest():
     b = puddle(np.random.default_rng(19901002))
     check("seeded: the same mask each run", np.array_equal(a, b))
     st = stains(np.random.default_rng(19901003))
-    check("a stain picture for every wear kind but water", set(st) == {"wear_streak", "wear_wash", "wear_splash", "wear_soot", "wear_algae", "wear_oil", "wear_damp"})
+    check("a stain picture for every wear kind but water", set(st) == {"wear_streak", "wear_streak_b", "wear_streak_c", "wear_wash", "wear_splash", "wear_soot", "wear_algae", "wear_oil", "wear_damp"})
     check("no stain is empty or solid", all(0.03 < v.mean() < 0.9 for v in st.values()))
     check("the splash band is strongest at its foot", st["wear_splash"][-len(st["wear_splash"]) // 4:].mean() > st["wear_splash"][: len(st["wear_splash"]) // 4].mean())
     check("an oil stain stays clear of its decal's edge", st["wear_oil"][0, :].max() == 0 and st["wear_oil"][:, 0].max() == 0)

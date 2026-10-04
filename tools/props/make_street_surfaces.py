@@ -181,6 +181,8 @@ def bond(n, tile_w, tile_h, unit_w, unit_h, joint):
 #: burnt ends of a clamp-fired brick do (an inference, not a measurement).
 HEADER_W_M = 0.1125
 HEADER_TONE = 0.72   # 4 October: 0.88 did not read at the camera's angle (the first fresh review)
+#: and a plum lean, the burnt ends the Hook sheet's near wall shows (the second fresh review).
+HEADER_HUE = (1.0, 0.84, 0.97)
 
 
 def flemish_bond(n, tile_w, tile_h, stretcher_w, header_w, unit_h, joint):
@@ -251,7 +253,7 @@ def brick(tf, name, salt, n=None, worn=True):
     stain = 1.0 + tf.BRICK_STAIN * (periodic_noise(n, 24, SEED + salt) * 2.0 - 1.0) * 0.6
     img = np.zeros((n, n, 3))
     for c in range(3):
-        face = tone * tf.BRICK_FACE_LIFT * tf.BRICK_FACE_HUE[c]
+        face = tone * tf.BRICK_FACE_LIFT * tf.BRICK_FACE_HUE[c] * np.where(hd, HEADER_HUE[c], 1.0)
         v = np.where(jm, tf.BRICK_JOINT_TONE, face)
         img[..., c] = base[c] * v * stain * wear
     r = np.where(jm, min(1.0, rough + 0.08), rough) * (0.96 + 0.08 * hash01(i, j % rows, salt + 7))
