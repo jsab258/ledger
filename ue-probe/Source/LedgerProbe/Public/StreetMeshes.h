@@ -308,6 +308,10 @@ namespace LedgerStreet
 		// net), a gain on the recipe's night strength in place of GlowGain,
 		// which is tuned for the tubes at 12 and left a room at 1.2 unseen.
 		double RoomGlowGainNight;
+		// A NET CURTAIN BY DAY (4 October, the proof view, step 2.5): the daylight falling on it
+		// through the glass, a gain on the recipe's day strength; 0 leaves it unlit, as before,
+		// when the upstairs panes read flat and dark beside the sheet's pale ones.
+		double NetDayGain;
 		double FogFalloff;       // how fast the fog thins with height
 		// FROM WHAT WETNESS THE GROUND IS A FILM OF WATER: the road, the
 		// paving and the kerb lose their relief map, because the pack's
@@ -408,7 +412,7 @@ namespace LedgerStreet
 		int    Read;             // how many of the thirty-two the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
-		         FogNightR(0.06), FogNightG(0.05), FogNightB(0.05), RoomGlowGainNight(0.0),
+		         FogNightR(0.06), FogNightG(0.05), FogNightB(0.05), RoomGlowGainNight(0.0), NetDayGain(0.0),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05), GlassSpecularNight(1.0),
@@ -773,6 +777,8 @@ namespace LedgerStreet
 		}
 		V = Root.Find("room_glow_gain_night");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.RoomGlowGainNight = V->Num; ++Out.Read; }
+		V = Root.Find("net_day_gain");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.NetDayGain = V->Num; ++Out.Read; }
 		V = Root.Find("fog_night_colour");
 		if (V != 0 && V->Type == T_ARR && V->Arr.size() >= 3 && V->Arr[0].Type == T_NUM
 		    && V->Arr[1].Type == T_NUM && V->Arr[2].Type == T_NUM)

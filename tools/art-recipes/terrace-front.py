@@ -221,7 +221,7 @@ MATERIALS = (
     # and we had near-black woodwork, which is most of the reason our frame
     # has no highlights in it at all (brightest five per cent 163 against
     # 229). It is not a subtlety; it is the thing the street is made of.
-    ("paint_joinery",(0.680, 0.672, 0.640), 0.42),  # WHITE, as the sheet is
+    ("paint_joinery",(0.820, 0.812, 0.780), 0.42),  # WHITE, as the sheet is (0.68 until 4 October: read light grey in the game beside the sheet's white sashes)
     # A DARK PAINTED BOARD, not a pale one, and the check above forced it.
     # This was 0.086, 0.104, 0.090 - "lighter because it catches the sky",
     # which is a judgement made against Codex's sheet. With the brick raised
@@ -260,6 +260,7 @@ MATERIALS = (
     # refitted bay reads as a THIRD material rather than as a dirty version
     # of either.
     ("frame_metal", (0.330, 0.340, 0.352), 0.30),   # mill-finish aluminium
+    ("frame_bronze", (0.050, 0.038, 0.030), 0.35),  # 1980s bronze-anodised replacement windows (4 October)
     # AND THE TILED STALLRISER, which is the other half of what R05 shows. A
     # tile is glossier than a painted board and darker than the frame above
     # it; the PATTERN is not built, and that is said out loud rather than
@@ -1486,7 +1487,7 @@ def _dentil_course(parts, W, eaves, wall):
              "a-header-standing-proud/one-in-two")
 
 
-def _upper_floor(parts, p, T, wall):
+def _upper_floor(parts, p, T, wall, bay=0):
     """The first floor, identical on both rows.
 
     THE WINDOW RHYTHM IS THE ONE THING THE SPEC FORBIDS VARYING: two sashes at
@@ -1533,7 +1534,7 @@ def _upper_floor(parts, p, T, wall):
              "0.95m-wide/window-plus-50mm-each-side")
         _segmental_arch(parts, "upper_arch_%d" % i, a, b, head_z,
                         "segmental-rubbed-brick-arch/rise-a-seventh-of-the-span")
-        _sash(parts, i, a, b, sill_z, head_z, p["reveal_m"])
+        _sash(parts, i, a, b, sill_z, head_z, p["reveal_m"], kind=_window_kind(p.get("block_id"), bay))
         # NET CURTAINS behind the upstairs glass, 22 September. On the new
         # sheet every upstairs window is PALE - white frames over white nets,
         # 157 against our 100 to 107 - and ours looked straight through
@@ -1576,8 +1577,44 @@ GLAZING_BAR_T = 0.022
 SASH_PROUD_M = 0.030
 
 
-def _sash(parts, i, a, b, sill_z, head_z, reveal, prefix="upper"):
-    """The white frame, its meeting rail and its bars, for one opening."""
+#: EACH HOUSE ITS OWN WINDOWS (the proof view, step 2.5, 4 October; Jafar: "every house on the right
+#: is the same"; the asset plan: window type per house, original or replacement, no two neighbours
+#: alike). A house's upper windows are, by its seed: the original two-over-two sashes, plain
+#: one-over-one plate-glass sashes, or a 1980s replacement in dark anodised aluminium, a transom
+#: high up and no bars. Mickey's keeps the sheet's two-over-two.
+WINDOW_KINDS = ("2/2", "1/1", "replacement")
+WINDOW_KIND_FIXED = {"east_parade_bay0": "2/2"}
+REPLACEMENT_TRANSOM = 0.72          # the transom's height up the opening, a top-hung light above
+
+
+def _window_kind(block, bay):
+    """The upper windows' kind for a house, by its seed; never its left neighbour's."""
+    import zlib
+    house = "%s_bay%d" % (block or "", bay)
+    if house in WINDOW_KIND_FIXED:
+        return WINDOW_KIND_FIXED[house]
+    k = zlib.crc32(house.encode("utf-8")) % len(WINDOW_KINDS)
+    if bay > 0 and WINDOW_KINDS[k] == _window_kind(block, bay - 1):
+        k = (k + 1) % len(WINDOW_KINDS)
+    return WINDOW_KINDS[k]
+
+
+def _sash(parts, i, a, b, sill_z, head_z, reveal, prefix="upper", kind="2/2"):
+    """The white frame, its meeting rail and its bars, for one opening; a replacement's metal
+    frame and transom when kind says so."""
+    if kind == "replacement":
+        y1 = reveal
+        y0 = reveal - SASH_PROUD_M
+        f = FRAME_T * 1.2
+        m = "frame_bronze"
+        _box(parts, "%s_sash_jamb_l_%d" % (prefix, i), m, a, a + f, y0, y1, sill_z, head_z, "1980s-replacement/anodised")
+        _box(parts, "%s_sash_jamb_r_%d" % (prefix, i), m, b - f, b, y0, y1, sill_z, head_z, "1980s-replacement/anodised")
+        _box(parts, "%s_sash_head_%d" % (prefix, i), m, a + f, b - f, y0, y1, head_z - f, head_z, "1980s-replacement")
+        _box(parts, "%s_sash_cill_%d" % (prefix, i), m, a + f, b - f, y0, y1, sill_z, sill_z + f, "1980s-replacement")
+        tz = sill_z + (head_z - sill_z) * REPLACEMENT_TRANSOM
+        _box(parts, "%s_sash_meeting_%d" % (prefix, i), m, a + f, b - f, y0, y1, tz - f * 0.5, tz + f * 0.5,
+             "the-transom/a-top-hung-light-above")
+        return
     # ENTIRELY IN FRONT OF THE PANE, and it matters twice. Glazing really is
     # like this - the pane sits in a rebate BEHIND the face of the frame, so
     # the frame's back face and the glass's front face meet. And it lets a
@@ -1604,6 +1641,8 @@ def _sash(parts, i, a, b, sill_z, head_z, reveal, prefix="upper"):
     _box(parts, "%s_sash_meeting_%d" % (prefix, i), "paint_joinery", a + f, b - f, y0, y1,
          mid - MEETING_RAIL_T * 0.5, mid + MEETING_RAIL_T * 0.5,
          "the-heaviest-member/where-the-two-sashes-cross")
+    if kind == "1/1":
+        return                       # plate glass: no bars
     # ONE VERTICAL BAR IN EACH SASH: a two-over-two.
     cx = (a + b) * 0.5
     g = GLAZING_BAR_T * 0.5
@@ -1993,6 +2032,7 @@ def plan_street(root, spec_rel=SPEC_REL):
         if err:
             return None, err
         east = q["side"] == "east"
+        q["block_id"] = block_id         # each house's own windows are seeded by its name (2.5)
         for part in plan_row(q) + plan_end_walls(q) + plan_pots(q):
             r = dict(part)
             r["id"] = "%s_%s" % (block_id, part["id"])
@@ -2281,7 +2321,44 @@ def plan_street(root, spec_rel=SPEC_REL):
         # rather than quietly rendering an unlit street that looks deliberate.
         return None, lerr
     out.extend(lamps)
+    _house_variety(out)
     return out, ""
+
+
+#: EACH HOUSE ITS OWN FRONT (the proof view, step 2.5, 4 October; Jafar: "every house on the right is
+#: the same"). Its front door in a colour of its own from the period's paint (a British Standard 4800
+#: range, never its neighbour's), and one front in the parade painted cream over its brick, where
+#: the sheet's third house is pale.
+DOOR_PAINTS = (("door_black", (0.020, 0.020, 0.022)), ("door_green", (0.020, 0.075, 0.040)),
+               ("door_maroon", (0.110, 0.018, 0.022)), ("door_navy", (0.018, 0.028, 0.085)),
+               ("door_cream", (0.520, 0.470, 0.360)), ("door_red", (0.300, 0.025, 0.020)))
+HOUSE_FRONT_PAINT = {"east_parade_bay2": "render_cream"}
+PAINTED_FRONT_PIECES = ("upper_band_below", "upper_band_above", "upper_pier_")
+
+
+def _door_paint(house):
+    """A house's door paint by its seed, never the house to its left's."""
+    import zlib, re
+    m = re.match(r"(.+)_bay(\d+)$", house)
+    k = zlib.crc32(house.encode("utf-8")) % len(DOOR_PAINTS)
+    if m and int(m.group(2)) > 0:
+        left = "%s_bay%d" % (m.group(1), int(m.group(2)) - 1)
+        if DOOR_PAINTS[k] == _door_paint(left):
+            k = (k + 1) % len(DOOR_PAINTS)
+    return DOOR_PAINTS[k]
+
+
+def _house_variety(parts):
+    """Door paints and painted fronts over the planned street, by each piece's house."""
+    for q in parts:
+        house = _house_of(q.get("block"), q.get("id", ""))
+        if house is None or house.endswith("_bay_north"):
+            continue
+        if q.get("material") == "paint_door" and "door" in q["id"]:
+            name, rgb = _door_paint(house)
+            q["paint_name"], q["paint"] = name, rgb
+        if house in HOUSE_FRONT_PAINT and str(q.get("material", "")).startswith("brick")                 and any(k in q["id"] for k in PAINTED_FRONT_PIECES):
+            q["material"] = HOUSE_FRONT_PAINT[house]
 
 
 #: WHERE A PERSON STANDS, and why there is one at all.
@@ -2573,13 +2650,13 @@ CARD_EMIT_DAY, CARD_EMIT_NIGHT = 0.40, 1.60
 #: AND A NET CURTAIN'S, which stands for daylight falling on it through the
 #: glass: bright enough by day to bring the sheet's pale upstairs windows,
 #: nearly dark at night, when most front bedrooms are.
-NET_EMIT_DAY, NET_EMIT_NIGHT = 0.30, 0.05
+NET_EMIT_DAY, NET_EMIT_NIGHT = 0.45, 0.05   # 0.30 until 4 October: the panes measured a quarter darker than the sheet's against the wall
 #: AND A LIT ROOM BEHIND A NET, 29 September: every third upstairs window
 #: along the street shows a warm room at night (the blind review of the
 #: sodium night: not one window lit, so the street read empty rather than
 #: quiet; the research names windows as the night's only real colour). By day
 #: they are nets like the rest.
-NET_LIT_EMIT_DAY, NET_LIT_EMIT_NIGHT = 0.30, 1.20
+NET_LIT_EMIT_DAY, NET_LIT_EMIT_NIGHT = 0.45, 1.20
 NET_LIT_EVERY = 3
 NET_CURTAINS = ("production/assets/vignette/decals2d/net_curtain_a",
                 "production/assets/vignette/decals2d/net_curtain_b")
@@ -4704,7 +4781,7 @@ def plan_parts(p, bay=0, party_wall=True):
     if p["ground_floor"] != "shopfront":
         _plain_ground(parts, p, T, wall, bay)
         if p["storeys"] > 1:
-            _upper_floor(parts, p, T, wall)
+            _upper_floor(parts, p, T, wall, bay)
         _roof_and_rainwater(parts, p, T, wall, party_wall, bay)
         return parts
 
@@ -4981,7 +5058,7 @@ def plan_parts(p, bay=0, party_wall=True):
     # A ONE-STOREY SHOP ROW (3 October, the proof view's composition) has its
     # roof straight off the fascia's top and nothing upstairs.
     if p["storeys"] > 1:
-        _upper_floor(parts, p, T, wall)
+        _upper_floor(parts, p, T, wall, bay)
     _roof_and_rainwater(parts, p, T, wall, party_wall, bay)
     return parts
 
@@ -8164,6 +8241,12 @@ def selftest():
                   and offs == [_house_u_offset("east_parade", "pier_bay%d" % k, "brick_red") for k in range(6)]
                   and _house_u_offset("east_parade", "sill_bay0", "stone") == 0.0,
                   "offsets %s" % ",".join("%.2f" % o for o in offs))
+            # EACH HOUSE ITS OWN WINDOWS (step 2.5, 4 October): no two neighbours alike, all three
+            # kinds on the parade, and Mickey's the sheet's two-over-two.
+            kinds = [_window_kind("east_parade", b) for b in range(6)]
+            check("accept/each-house-its-own-windows",
+                  all(kinds[k] != kinds[k + 1] for k in range(5)) and set(kinds) == set(WINDOW_KINDS)
+                  and kinds[0] == "2/2", "kinds %s" % ",".join(kinds))
             check("accept/the-rise-climbs-tier-on-tier",
                   len(order) >= 3 and all(min(b["z1"] for b in order[i + 1]) > max(b["z1"] for b in order[i])
                                           and min(b["x0"] for b in order[i + 1]) > max(b["x0"] for b in order[i])

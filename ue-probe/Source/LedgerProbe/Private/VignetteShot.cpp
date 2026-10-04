@@ -7380,9 +7380,15 @@ namespace
 			else if ((Rw.Emit == "net" || Rw.Emit == "room") && !Rw.Decal.empty() && Rw.bHasRgb)
 			{
 				const double Gain = GLook.RoomGlowGainNight > 0.0 ? GLook.RoomGlowGainNight : GLook.GlowGain;
-				const float K = (!C.SunOn && Rw.EmitNight > 0.0) ? (float)(Rw.EmitNight * Gain) : 0.0f;
+				float K = (!C.SunOn && Rw.EmitNight > 0.0) ? (float)(Rw.EmitNight * Gain) : 0.0f;
+				// A NET BY DAY (4 October, step 2.5): the daylight on it through the glass, so the
+				// upstairs panes read pale as the sheet's do; nothing when the look file sets no gain.
+				const bool bNetDay = C.SunOn && Rw.Emit == "net" && Rw.EmitDay > 0.0 && GLook.NetDayGain > 0.0;
+				if (bNetDay) { K = (float)(Rw.EmitDay * GLook.NetDayGain); }
+				// Daylight on white lace is neutral; the row's warm colour is the lit room's, at night.
+				const FLinearColor Hue = bNetDay ? FLinearColor(0.92f, 0.92f, 0.90f) : FLinearColor((float)Rw.R, (float)Rw.G, (float)Rw.B);
 				Mid->SetVectorParameterValue(FName(TEXT("EmissiveColor")),
-					FLinearColor((float)Rw.R * K, (float)Rw.G * K, (float)Rw.B * K, 1.0f));
+					FLinearColor(Hue.R * K, Hue.G * K, Hue.B * K, 1.0f));
 				if (K > 0.0f) { ++GStreetGlowing; }
 			}
 			if (LedgerStreet::TakesWater(Rw.Base))

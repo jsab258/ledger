@@ -580,7 +580,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 460
+   "faces": 330
   },
   {
    "mesh": "street_brick_red_h_east_parade_bay3",
@@ -1229,7 +1229,7 @@
    "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
-   "emit_day": 0.3,
+   "emit_day": 0.45,
    "emit_night": 0.05,
    "reveal_on": null,
    "faces": 42
@@ -1253,7 +1253,7 @@
    "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
-   "emit_day": 0.3,
+   "emit_day": 0.45,
    "emit_night": 1.2,
    "reveal_on": null,
    "faces": 18
@@ -1277,7 +1277,7 @@
    "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
-   "emit_day": 0.3,
+   "emit_day": 0.45,
    "emit_night": 0.05,
    "reveal_on": null,
    "faces": 36
@@ -1301,7 +1301,7 @@
    "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
-   "emit_day": 0.3,
+   "emit_day": 0.45,
    "emit_night": 1.2,
    "reveal_on": null,
    "faces": 24
@@ -1787,6 +1787,150 @@
    "faces": 286
   },
   {
+   "mesh": "street_fascia_door_black",
+   "material": "fascia_door_black",
+   "base_material": "paint_door",
+   "linear_rgb": [
+    0.02,
+    0.02,
+    0.022
+   ],
+   "roughness": 0.42,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 140
+  },
+  {
+   "mesh": "street_fascia_door_cream",
+   "material": "fascia_door_cream",
+   "base_material": "paint_door",
+   "linear_rgb": [
+    0.52,
+    0.47,
+    0.36
+   ],
+   "roughness": 0.42,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 138
+  },
+  {
+   "mesh": "street_fascia_door_green",
+   "material": "fascia_door_green",
+   "base_material": "paint_door",
+   "linear_rgb": [
+    0.02,
+    0.075,
+    0.04
+   ],
+   "roughness": 0.42,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 160
+  },
+  {
+   "mesh": "street_fascia_door_maroon",
+   "material": "fascia_door_maroon",
+   "base_material": "paint_door",
+   "linear_rgb": [
+    0.11,
+    0.018,
+    0.022
+   ],
+   "roughness": 0.42,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 240
+  },
+  {
+   "mesh": "street_fascia_door_navy",
+   "material": "fascia_door_navy",
+   "base_material": "paint_door",
+   "linear_rgb": [
+    0.018,
+    0.028,
+    0.085
+   ],
+   "roughness": 0.42,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 280
+  },
+  {
+   "mesh": "street_fascia_door_red",
+   "material": "fascia_door_red",
+   "base_material": "paint_door",
+   "linear_rgb": [
+    0.3,
+    0.025,
+    0.02
+   ],
+   "roughness": 0.42,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 82
+  },
+  {
    "mesh": "street_fascia_oxblood",
    "material": "fascia_oxblood",
    "base_material": "paint_stall",
@@ -1881,6 +2025,30 @@
    "emit_night": null,
    "reveal_on": null,
    "faces": 18972
+  },
+  {
+   "mesh": "street_frame_bronze",
+   "material": "frame_bronze",
+   "base_material": "frame_bronze",
+   "linear_rgb": [
+    0.05,
+    0.038,
+    0.03
+   ],
+   "roughness": 0.35,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 1080
   },
   {
    "mesh": "street_frame_metal",
@@ -3191,16 +3359,16 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1574
+   "faces": 534
   },
   {
    "mesh": "street_paint_joinery",
    "material": "paint_joinery",
    "base_material": "paint_joinery",
    "linear_rgb": [
-    0.68,
-    0.672,
-    0.64
+    0.82,
+    0.812,
+    0.78
    ],
    "roughness": 0.42,
    "surface_map": null,
@@ -3215,7 +3383,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 12560
+   "faces": 10792
   },
   {
    "mesh": "street_paint_white",
@@ -3407,6 +3575,38 @@
    "emit_night": null,
    "reveal_on": null,
    "faces": 1578
+  },
+  {
+   "mesh": "street_render_cream_h_east_parade_bay2",
+   "material": "render_cream_h_east_parade_bay2",
+   "base_material": "render_cream",
+   "linear_rgb": [
+    0.55,
+    0.48,
+    0.28
+   ],
+   "roughness": 0.8,
+   "surface_map": "plaster",
+   "tile_m": 1.0,
+   "house_tint": [
+    0.6493,
+    0.528,
+    0.5884
+   ],
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 130
   },
   {
    "mesh": "street_render_patch",
