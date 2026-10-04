@@ -2610,6 +2610,35 @@
    "faces": 132
   },
   {
+   "mesh": "street_mickeys_card_production_art_shop_rooms_mickeys_day",
+   "material": "mickeys_card_production/art/shop-rooms/mickeys_day",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": "production/art/shop-rooms/mickeys_day",
+   "decal_uv": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "decal_emit": "room",
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 6
+  },
+  {
    "mesh": "street_mickeys_frame_painted",
    "material": "mickeys_frame_painted",
    "base_material": "frame_painted",
@@ -2667,30 +2696,6 @@
     0.032
    ],
    "roughness": 0.95,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "house_tint": null,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "reveal_on": null,
-   "faces": 6
-  },
-  {
-   "mesh": "street_mickeys_interior_lit",
-   "material": "mickeys_interior_lit",
-   "base_material": "interior_lit",
-   "linear_rgb": [
-    1.0,
-    0.714,
-    0.344
-   ],
-   "roughness": 0.9,
    "surface_map": null,
    "tile_m": 0.0,
    "house_tint": null,

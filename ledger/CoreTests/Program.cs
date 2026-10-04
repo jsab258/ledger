@@ -26381,7 +26381,9 @@ namespace Ledger.CoreTests
             Console.WriteLine($"    plan: pieces={plan.Pieces.Count} feet={plan.Feet.Count} " +
                               $"bomLines={plan.PerBom.Count} cameras={plan.Cameras.Count} " +
                               $"conditions={plan.Conditions.Count} shots={plan.Shots.Count}");
-            Check(plan.Cameras.Count == 3, "three cameras", plan.Cameras.Count.ToString());
+            // FOUR SINCE 4 OCTOBER: the pairing's cam_A and cam_B, the hook, and cam_mickeys, Mickey's
+            // window at two metres (the proof view's shopfronts step), judged day and night.
+            Check(plan.Cameras.Count == 4, "four cameras", plan.Cameras.Count.ToString());
             // TWO JUDGED CONDITIONS PLUS THE TWENTY SIX ONE-RUN PROBE ROWS.
             //
             // THE LADDER IS RETIRED, 2026-09-09, by section 9 of
@@ -26772,7 +26774,7 @@ namespace Ledger.CoreTests
             // camera, one condition, at the end) is asserted separately below,
             // so this counter and that shape cannot drift apart in silence.
             int matched = 0, probeShots = 0, probeAtHook = 0, ladderShots = 0, setterShots = 0;
-            int settleShots = 0, settleAtHook = 0, hookJudged = 0;
+            int settleShots = 0, settleAtHook = 0, hookJudged = 0, windowJudged = 0;
             foreach (var sh in plan.Shots)
             {
                 bool isJudged = sh.ConditionId == "overcast_day" || sh.ConditionId == "wet_night";
@@ -26793,6 +26795,7 @@ namespace Ledger.CoreTests
                     if (sh.CameraId == "cam_hook") probeAtHook++;
                 }
                 else if (sh.CameraId == "cam_A" || sh.CameraId == "cam_B") matched++;
+                else if (sh.CameraId == "cam_mickeys") windowJudged++;
                 else hookJudged++;
             }
             // THE TOTAL IS THE SUM OF ITS GROUPS, ADDED UP HERE RATHER THAN
@@ -26800,13 +26803,13 @@ namespace Ledger.CoreTests
             // and left another, and the sentence would still read as though
             // somebody had checked. `hookJudged` is the hook viewpoint, the row
             // that belonged to no group until this line counted it.
-            int grouped = matched + hookJudged + probeShots + ladderShots + setterShots + settleShots;
-            Check(plan.Shots.Count == 49 && grouped == plan.Shots.Count,
-                  "four matched shots plus the hook viewpoint plus twenty six probe rows plus the "
-                  + "twelve exposure rows plus the six settling rows queue 334 added, and every "
-                  + "row is in exactly one of those groups",
+            int grouped = matched + hookJudged + windowJudged + probeShots + ladderShots + setterShots + settleShots;
+            Check(plan.Shots.Count == 51 && grouped == plan.Shots.Count && windowJudged == 2,
+                  "four matched shots plus the hook viewpoint plus Mickey's window day and night plus "
+                  + "twenty six probe rows plus the twelve exposure rows plus the six settling rows "
+                  + "queue 334 added, and every row is in exactly one of those groups",
                   plan.Shots.Count + " shots, " + grouped + " accounted for as " + matched
-                  + " matched + " + hookJudged + " hook + " + probeShots + " probe + "
+                  + " matched + " + hookJudged + " hook + " + windowJudged + " window + " + probeShots + " probe + "
                   + ladderShots + " ladder + " + setterShots + " setter + " + settleShots
                   + " settling");
             Check(matched == 4, "the four judged pairs are still exactly four", matched.ToString());

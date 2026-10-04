@@ -8,7 +8,7 @@
   "clause": "no alcohol and no gambling anywhere in frame, nothing poured or consumed, no games of chance, nobody under eighteen and no school in use, nothing sexual",
   "whatThisMeansForABrand": [
    "A BRAND MAY NOT BE AN ALCOHOL OR GAMBLING BRAND. No brewery, no distillery, no off-licence, no bookmaker, no betting shop, no bingo hall, no amusement arcade.",
-   "MICKEY'S IS A PUB AND STAYS A PUB. The rule allows the place. What it does not allow is drink in it, on it or spoken of in it, so a pub entry describes a room, a frontage, a carpet and a bell, and never a pump, a cellar, a cask or a range of beers.",
+   "MICKEY'S IS A MINICAB OFFICE (canon D19, 14 September, replacing D15's pub). Other pubs stand on the street as buildings, boarded or serving food and never entered for drink: the rule allows the place, not drink in it, on it or spoken of in it, so a pub entry describes a room, a frontage, a carpet and a bell, and never a pump, a cellar, a cask or a range of beers.",
    "TOBACCO IS ALLOWED, so a tobacconist, a cigarette machine and an ashtray are all fine.",
    "NOBODY UNDER EIGHTEEN. A brand's `physical` may not put a child in the picture, and the school stands closed: a school may be named as a building and never shown in use.",
    "The football club, the paper, the radio station and the television channel are the four entries most likely to break this by accident, because real ones of each carried alcohol and pools advertising in this period. Ours do not."
@@ -19,6 +19,7 @@
    "radio",
    "television",
    "pub",
+   "minicab office",
    "cinema",
    "body",
    "ferry"
@@ -44,7 +45,7 @@
    "kind": "club",
    "founded": 1904,
    "register": "the Town, or just Town. Nobody says the full name except the paper and the announcer.",
-   "physical": "Ashlar Lane ground: one covered stand, three open sides, a corrugated end that drums in rain. Blue and white halves on scarves in pub windows and on the back shelf of cars. A club shop that is a portacabin open two hours on a Saturday.",
+   "physical": "Ashlar Lane ground: one covered stand, three open sides, a corrugated end that drums in rain. Blue and white halves on scarves in front-room windows and on the back shelf of cars. A club shop that is a portacabin open two hours on a Saturday.",
    "says": "The town had money once and spent it on a stand. Fourth tier, one promotion in living memory, a cup run in 1979 that men still date things from.",
    "neverConfuse": "Any real English club. There is no Meridian in the league pyramid and the name is chosen because it is a harbour word, not a place name borrowed from anywhere.",
    "license": "original-fiction"
@@ -85,12 +86,12 @@
   {
    "id": "mickeys",
    "name": "Mickey's",
-   "kind": "pub",
+   "kind": "minicab office",
    "founded": 1962,
    "register": "Mickey's. Never the Mickey's, never the full name of whoever Mickey was.",
-   "physical": "Etched glass, a carpet that has given up, a bell nobody rings. Sign hand-painted and repainted a shade off each time.",
-   "says": "The room where the town's memory is actually kept. Canon: this name is fixed.",
-   "neverConfuse": "Any real public house. Recorded from canon.md, not invented in this batch.",
+   "physical": "The number in gilt on the glass, a carpet that has given up, a bench under the fares, the book of every fare on the counter and a radio nobody can help overhearing. Sign hand-painted and repainted a shade off each time.",
+   "says": "The room where the town's memory is actually kept: every fare in the book. Canon: this name is fixed.",
+   "neverConfuse": "Any real minicab or taxi firm. Recorded from canon.md (D19), not invented in this batch.",
    "license": "original-fiction"
   },
   {

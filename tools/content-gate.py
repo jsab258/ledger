@@ -1534,11 +1534,18 @@ def selftest():
     bible = REPO / "content" / "brands" / "brand-bible-v1.json"
     if bible.exists():
         doc = json.loads(bible.read_text(encoding="utf-8"))
-        pub = [b for b in doc.get("brands", []) if b.get("kind") == "pub"]
-        check("the live brand bible's pub entry exists and is clean, so "
-              "'pubs may exist as places' is proved on live data",
-              len(pub) == 1 and not scan(" ".join(
-                  str(v) for v in pub[0].values() if isinstance(v, str))))
+        # MICKEY'S IS A MINICAB OFFICE SINCE D19 (the bible put right 4 October), so the bible
+        # holds no pub to prove 'pubs may exist as places' on; a pub described as D18 allows it
+        # (a room, a frontage, a carpet and a bell) stands in, and every live entry stays clean.
+        pub_fixture = {"name": "the Anchor", "kind": "pub",
+                       "physical": "A frontage on the quay, a carpet that has given up, a bell nobody rings.",
+                       "says": "A room where the street meets."}
+        check("a pub described as D18 allows (a room, a frontage, a carpet and a bell) is clean, so "
+              "'pubs may exist as places' still holds",
+              not scan(" ".join(str(v) for v in pub_fixture.values())))
+        check("every live brand bible entry is clean",
+              all(not scan(" ".join(str(v) for v in b.values() if isinstance(v, str)))
+                  for b in doc.get("brands", [])))
     else:
         check("the live brand bible was readable", False)
 

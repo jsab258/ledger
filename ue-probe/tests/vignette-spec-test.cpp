@@ -661,7 +661,7 @@ int main(int argc, char** argv)
 	// HUNDREDFOLD of sun moved band.ground.p05 by 1.06 of the null measured
 	// between two shots of one condition.
 	{
-		int Matched = 0, ProbeShots = 0, ProbeAtHook = 0, JudgedAtHook = 0;
+		int Matched = 0, ProbeShots = 0, ProbeAtHook = 0, JudgedAtHook = 0, JudgedAtWindow = 0;
 		for (size_t I = 0; I < S.Shots.size(); ++I)
 		{
 			const bool bJudged = (S.Shots[I].ConditionId == "overcast_day"
@@ -678,6 +678,12 @@ int main(int argc, char** argv)
 			else if (S.Shots[I].CameraId == "cam_hook")
 			{
 				++JudgedAtHook;
+			}
+			// MICKEY'S WINDOW AT TWO METRES (4 October, the shopfronts step: "Mickey's holding up
+			// at 2 m"), judged by day and at night, part of no pairing
+			else if (S.Shots[I].CameraId == "cam_mickeys")
+			{
+				++JudgedAtWindow;
 			}
 		}
 		int JudgedConds = 0, ProbeConds = 0;
@@ -701,10 +707,10 @@ int main(int argc, char** argv)
 		// conditions, the four judged pairs still exactly four, and every
 		// shot falling into exactly one of the classes counted below, which
 		// is the identity a bare total cannot state.
-		Check(S.Cameras.size() == 3 && JudgedConds == 2 && Matched == 4,
-		      "three cameras, two judged conditions, and the four judged pairs are still "
-		      "exactly four whatever else the file has grown");
-		Check((int)S.Shots.size() == Matched + ProbeShots + JudgedAtHook
+		Check(S.Cameras.size() == 4 && JudgedConds == 2 && Matched == 4 && JudgedAtWindow == 2,
+		      "four cameras (the pairing's two, the hook, Mickey's window at 2 m), two judged "
+		      "conditions, the four judged pairs still exactly four, the window judged day and night");
+		Check((int)S.Shots.size() == Matched + ProbeShots + JudgedAtHook + JudgedAtWindow
 		      && JudgedAtHook > 0,
 		      "every shot in the file is one of the four judged pairs, a probe row, or a "
 		      "judged row at the hook camera, and the classes sum to the total read",

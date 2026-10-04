@@ -1,5 +1,7 @@
 # The friends' build in a fresh Windows account (3 October 2026, P5)
 
+**Corrected 4 October (his order): no second account. His friends play on his own account, from the friends' shortcut, on his key with its five-dollar cap for the evening; tools/friends/evening.ps1 now opens and closes the evening there and never copies the key. What follows about a fresh account is the 3 October record.**
+
 Jafar's order of 3 October: "P5: start the friends' build in a fresh Windows account, voice and talk included. For the evening, a copy of my key is placed in that account and removed afterwards." His ruling: "my friends may talk on my key during the friends' evenings, capped at five dollars an evening."
 
 ## What was missing, and what is in place now

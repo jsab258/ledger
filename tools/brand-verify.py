@@ -29,7 +29,8 @@ CANON = os.path.join(REPO, "canon.md")
 
 REQUIRED = ("id", "name", "kind", "founded", "register", "physical",
             "says", "neverConfuse", "license")
-KINDS = ("club", "paper", "radio", "television", "pub", "cinema", "body", "ferry")
+# "minicab office": Mickey's since canon's D19 (14 September), which replaced D15's pub
+KINDS = ("club", "paper", "radio", "television", "pub", "minicab office", "cinema", "body", "ferry")
 
 # HOW THE MINTED LIST IS READ, and why this is code rather than a regex.
 #

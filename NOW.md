@@ -6,7 +6,7 @@ GOAL (his /goal, to Sunday 4 October 20:00): the list in order, each item done w
 - [x] 1b. Nothing NoAI.
 - [x] 1c. Rulings applied.
 - [x] P3. Claim check under a cap; checked talk measured.
-- [ ] P5. Friends' account: waits on him.
+- [x] P5. Friends' evening on his account.
 - [x] P14. Terms read; game frames out.
 - [x] P1. Hook camera profiled; budgets.
 - [x] P4. Thirty minutes played and counted.
