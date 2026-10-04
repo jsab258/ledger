@@ -688,122 +688,16 @@
     },
     "uv_note": "uv is [u0, v0, u1, v1] with v measured from the BOTTOM of the image, and it exists because the generated pictures are PHOTOGRAPHS OF A THING IN A STREET rather than flat artwork: fascia_fish_market is a whole shopfront with a pavement and a sky in it, and pasting all of it on a fascia band would put a photograph of a street on a street. Every rect below was read off the image by eye at full size, which is the only way to take it, and the four fascias needed four different rects because their framing is not the same. An image with no uv is used whole.",
     "items": [
-      {
-        "bom": "C6_fascia_lettering", "id": "generated/fascia_mickeys", "blend": "card",
-        "on": "east_parade_fascia0", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 2.35, "height_m": 0.55, "uv": [0.0391, 0.2773, 0.9766, 0.7168],
-        "note": "MANDATORY. The crop is the maroon signboard and its frame, 960 x 225 px, so the sign arrives at its own 4.27:1 and 2.35 m of the 6.0 m band rather than stretched across all of it: a painted board mounted on a fascia is what this image is a photograph of. review=pending in the generated manifest, and putting it in a frame is how that review happens."
-      },
-      {
-        "bom": "C6_fascia_lettering", "id": "generated/fascia_fish_market", "blend": "card",
-        "on": "east_parade_fascia1", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 4.1, "height_m": 0.55, "uv": [0.035, 0.425, 0.965, 0.675],
-        "note": "RE-CROPPED 23 SEPTEMBER to the lettering on the tiled board, 953 x 128 px, 7.44:1, and the board narrowed to 4.1 m to keep that proportion; the old crop was set on an earlier version of the picture and cut the letters. MANDATORY. This image is a whole shopfront; the crop is the blue fascia band alone, 810 x 84 px, which is 9.64:1 and fills 5.30 m of the bay at the band's own 0.55 m height. NOTE FOR THE REVIEW: the lettering reads HOOK STREATS FISH MARKET, which is a generator misspelling of a canon street name and not a real mark."
-      },
-      {
-        "bom": "C6_fascia_lettering", "id": "generated/fascia_ritas_pawn", "blend": "card",
-        "on": "east_parade_fascia2", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 2.8, "height_m": 0.55, "uv": [0.04, 0.34, 0.96, 0.70],
-        "note": "RE-CROPPED 23 SEPTEMBER: the picture had been regenerated and the old crop (the green band, 785 x 92 px) cut through the tops of the letters. Now the name board itself, RITA's with the pawnbroker's balls, 943 x 184 px, 5.12:1, at its own proportion: 2.8 m of the band at 0.55 m, a board on a fascia as Mickey's is. The garbled second line under it is left out."
-      },
-      {
-        "bom": "C6_fascia_lettering", "id": "generated/fascia_steam_laundry", "blend": "card",
-        "on": "east_parade_fascia4", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 4.7, "height_m": 0.55, "uv": [0.07, 0.235, 0.925, 0.435],
-        "note": "RE-CROPPED 23 SEPTEMBER to the cream band's lettering, 876 x 102 px, 8.59:1, and the board narrowed to 4.7 m to keep that proportion; the old crop was set on an earlier version of the picture. MANDATORY. Crop is the cream band, 845 x 87 px, 9.71:1. Bays 3 and 5 carry no fascia lettering on purpose: four signs are held and a parade with two unlettered units reads as a parade with two vacant ones, which is 1990 Britain."
-      },
-      {
-        "bom": "C11_lit_interior_card", "id": "generated/interior_shop_shelves", "blend": "card",
-        "on": "east_parade_interior0", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 3.9, "height_m": 2.0, "uv": [0.195, 0.229, 0.781, 0.678],
-        "note": "MANDATORY. THE IMAGE LANDED IN f789e129 AND THE FIRST LOOK AT IT CHANGED THIS ENTRY, which is the whole reason a picture gets opened before it is shipped: it is not a back-wall card, it is a whole corner shop photographed FROM THE STREET, with a garbled fascia reading PORIE SHUOP, a pavement and a sky. Applied whole it would have hung a photograph of a street inside a shop window, sky and all, in the night frame that is half the D1b evidence. The crop is the shelved interior seen through the glass, 450 x 230 px, and the card is sized to that 1.96:1 rather than to a round number. WAS: ASKED FOR AND NOT ON DISK. The three interior cards are in the image generator's own spec (tools/imagegen/prompts.json names interior_shop_shelves, interior_bar_back and interior_stair_landing) and the batch that makes them has not landed. Asked for here deliberately: the run then prints which images were missing by name instead of a silent zero, and the day the PNG lands the night frame gets it with no code change. No uv, because a crop cannot be read off an image nobody has seen."
-      },
-      {
-        "bom": "C11_lit_interior_card", "id": "generated/interior_bar_back", "blend": "card",
-        "on": "east_parade_interior2", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 4.95, "height_m": 1.6, "uv": [0.169, 0.375, 0.833, 0.697],
-        "note": "The second lit bay. Same finding as the shelves and the same remedy: the image is a whole pub frontage from the street (garbled fascia DERNB SOLIN), and the crop is the lit back bar seen through the glass, 510 x 165 px, 3.09:1, which is the shape of a back bar and fills the bay. lighting.window_practicals lights bays 0, 2 and 5, and these three cards are behind exactly those, because a lit window with nothing behind it is a glowing rectangle."
-      },
-      {
-        "bom": "C11_lit_interior_card", "id": "generated/interior_stair_landing", "blend": "card",
-        "on": "east_parade_interior5", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 0.79, "height_m": 2.3, "uv": [0.254, 0.049, 0.693, 0.902],
-        "note": "The third lit bay, and the crop is doing more work here than on the other two. The image is a lit stair behind a street door with a whole wet street down the right half of it, and the usable region is 225 x 655 px, 0.34:1: a tall narrow panel. So this one reads as a LIT DOORWAY at the back of the shop rather than as a back wall, which is what a 0.79 m panel on a 5.3 m card can honestly be. A stair behind a shop window is odd; a photograph of a street behind one is wrong, and this is the better of the two until C11 gets an image made for the job. The generated sign in it is mirror-writing and garbled, which is inside the crop and is a named review point."
-      },
-      {
-        "bom": "G6_fly_posters", "id": "generated/poster_gig_bill", "blend": "card",
-        "on": "prop_poster_0", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 0.6, "height_m": 0.82, "uv": [0.172, 0.118, 0.852, 0.782],
-        "note": "DRESSING, and it is what E12's carrier is FOR: the bill of materials says the carrier is held and what it carries is G6. Crop is the paper bill inside the frame, 435 x 595 px, which drops the generator's garbled yellow header band at the top of the picture."
-      },
-      {
-        "bom": "G6_fly_posters", "id": "generated/notice_ferry_times", "blend": "card",
-        "on": "prop_framed_poster_0", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 0.48, "height_m": 0.7, "uv": [0.156, 0.146, 0.836, 0.855],
-        "note": "DRESSING. Crop is the white sheet inside the board's own black frame, 435 x 635 px, because the carrier mesh already provides a frame and two frames is a picture of a noticeboard hung on a noticeboard."
-      },
-      {
-        "bom": "G6_fly_posters", "id": "generated/notice_dock_regulations", "blend": "card",
-        "on": "west_south_bay2", "face": "street", "dx_m": 1.2, "dy_m": -1.4,
-        "width_m": 0.9, "height_m": 1.286, "uv": [0.0625, 0.0569, 0.9375, 0.9498],
-        "note": "DRESSING. The harbour board notice goes straight on the blank west wall, no carrier: crop is the enamel board, 560 x 800 px. x sits in the 0.95 m of wall between west_south bay 2's two ground-floor windows at 18.3 and 20.1, measured off this file's own layout."
-      },
-      {
-        "bom": "A8_manhole", "id": "ambientcg/ManholeCover011", "blend": "multiply",
-        "on": "ground", "x_m": 17.0, "z_m": 1.6, "width_m": 0.6, "height_m": 0.6,
-        "note": "MANDATORY, and it is the route the bill of materials chose after measuring the mesh: A8's own note says use the decal on the road plane. 0.60 m is the top of the 0.45 to 0.60 m bracket that same note gives for a road manhole. In the near wheel track, where a cover is."
-      },
-      {
-        "bom": "A8_manhole", "id": "ambientcg/ManholeCover011", "blend": "multiply",
-        "on": "ground", "x_m": 33.0, "z_m": -1.5, "width_m": 0.6, "height_m": 0.6,
-        "note": "The second of the two A8 asks for, on the other side of the crown so the pair does not read as a repeat."
-      },
-      {
-        "bom": "G2_asphalt_damage", "id": "ambientcg/AsphaltDamageSet001", "blend": "multiply",
-        "on": "ground", "x_m": 9.0, "z_m": 2.2, "width_m": 2.5, "height_m": 2.5,
-        "note": "MANDATORY. Scars and patching in the gutter half of the carriageway, which is where a British road is worst and where both cameras see it."
-      },
-      {
-        "bom": "G2_asphalt_damage", "id": "ambientcg/AsphaltDamageSet001", "blend": "multiply",
-        "on": "ground", "x_m": 27.0, "z_m": -2.0, "width_m": 2.0, "height_m": 2.0,
-        "note": "The second patch, west side, by the skip."
-      },
-      {
-        "bom": "G1_leak_stains", "id": "ambientcg/Leaking005", "blend": "multiply",
-        "on": "east_parade_bay0", "face": "street", "dx_m": 2.6, "dy_m": 1.65,
-        "width_m": 1.0, "height_m": 2.7,
-        "note": "MANDATORY, and the bill of materials says why: surface history is the first-ranked item of the kept M17.10 decomposition and this is its cheapest instance. Under the hopper, on the first-floor wall, 0.4 m to the side of the downpipe D5 puts on the bay boundary at x=9. The pipe has to exist before the stain under it means anything, and it does."
-      },
-      {
-        "bom": "G1_leak_stains", "id": "ambientcg/Leaking005", "blend": "multiply",
-        "on": "east_parade_bay2", "face": "street", "dx_m": 2.6, "dy_m": 1.65,
-        "width_m": 1.0, "height_m": 2.7,
-        "note": "Under the hopper at x=21."
-      },
-      {
-        "bom": "G1_leak_stains", "id": "ambientcg/Leaking005", "blend": "multiply",
-        "on": "east_parade_bay4", "face": "street", "dx_m": 2.6, "dy_m": 1.65,
-        "width_m": 1.0, "height_m": 2.7,
-        "note": "Under the hopper at x=33. Three of the five hoppers, because a terrace where every pipe leaks is a terrace nobody has looked at."
-      },
-      {
-        "bom": "G4_moss_damp", "id": "ambientcg/Moss001", "blend": "multiply",
-        "on": "west_south_bay0", "face": "street", "dx_m": -0.6, "dy_m": -2.75,
-        "width_m": 0.9, "height_m": 0.7,
-        "note": "DRESSING. Damp growth at the foot of the north-facing soot wall, in the gap between the side door at 4.5 and the first window at 6.3. On the west and not the east because the east's ground floor is a shopfront whose stallriser and pilasters stand 0.10 to 0.15 m proud of the wall plane, so a decal on that plane would be inside them."
-      },
-      {
-        "bom": "G4_moss_damp", "id": "ambientcg/Moss001", "blend": "multiply",
-        "on": "west_north_bay2", "face": "street", "dx_m": -0.6, "dy_m": -2.75,
-        "width_m": 0.9, "height_m": 0.7,
-        "note": "The far end of the same wall."
-      },
-      {
-        "bom": "G5_stickers", "id": "ambientcg/Sticker001", "blend": "multiply",
-        "on": "pillarbox_body", "face": "street", "dx_m": 0.0, "dy_m": 0.15,
-        "width_m": 0.15, "height_m": 0.15,
-        "note": "DRESSING. G5 says posts and boxes, and the pillar box is the box. SIZED BY THE CURVE, not by taste: the body is 0.597 m across, so a flat quad 0.15 m wide sits 9.5 mm inside the cylinder at its edges against a 10 mm standoff, and anything much wider would cut into the box it is stuck to."
-      }
+      {"bom": "A8_manhole", "id": "ambientcg/ManholeCover011", "blend": "multiply", "on": "ground", "x_m": 17.0, "z_m": 1.6, "width_m": 0.6, "height_m": 0.6, "note": "MANDATORY, and it is the route the bill of materials chose after measuring the mesh: A8's own note says use the decal on the road plane. 0.60 m is the top of the 0.45 to 0.60 m bracket that same note gives for a road manhole. In the near wheel track, where a cover is."},
+      {"bom": "A8_manhole", "id": "ambientcg/ManholeCover011", "blend": "multiply", "on": "ground", "x_m": 33.0, "z_m": -1.5, "width_m": 0.6, "height_m": 0.6, "note": "The second of the two A8 asks for, on the other side of the crown so the pair does not read as a repeat."},
+      {"bom": "G2_asphalt_damage", "id": "ambientcg/AsphaltDamageSet001", "blend": "multiply", "on": "ground", "x_m": 9.0, "z_m": 2.2, "width_m": 2.5, "height_m": 2.5, "note": "MANDATORY. Scars and patching in the gutter half of the carriageway, which is where a British road is worst and where both cameras see it."},
+      {"bom": "G2_asphalt_damage", "id": "ambientcg/AsphaltDamageSet001", "blend": "multiply", "on": "ground", "x_m": 27.0, "z_m": -2.0, "width_m": 2.0, "height_m": 2.0, "note": "The second patch, west side, by the skip."},
+      {"bom": "G1_leak_stains", "id": "ambientcg/Leaking005", "blend": "multiply", "on": "east_parade_bay0", "face": "street", "dx_m": 2.6, "dy_m": 1.65, "width_m": 1.0, "height_m": 2.7, "note": "MANDATORY, and the bill of materials says why: surface history is the first-ranked item of the kept M17.10 decomposition and this is its cheapest instance. Under the hopper, on the first-floor wall, 0.4 m to the side of the downpipe D5 puts on the bay boundary at x=9. The pipe has to exist before the stain under it means anything, and it does."},
+      {"bom": "G1_leak_stains", "id": "ambientcg/Leaking005", "blend": "multiply", "on": "east_parade_bay2", "face": "street", "dx_m": 2.6, "dy_m": 1.65, "width_m": 1.0, "height_m": 2.7, "note": "Under the hopper at x=21."},
+      {"bom": "G1_leak_stains", "id": "ambientcg/Leaking005", "blend": "multiply", "on": "east_parade_bay4", "face": "street", "dx_m": 2.6, "dy_m": 1.65, "width_m": 1.0, "height_m": 2.7, "note": "Under the hopper at x=33. Three of the five hoppers, because a terrace where every pipe leaks is a terrace nobody has looked at."},
+      {"bom": "G4_moss_damp", "id": "ambientcg/Moss001", "blend": "multiply", "on": "west_south_bay0", "face": "street", "dx_m": -0.6, "dy_m": -2.75, "width_m": 0.9, "height_m": 0.7, "note": "DRESSING. Damp growth at the foot of the north-facing soot wall, in the gap between the side door at 4.5 and the first window at 6.3. On the west and not the east because the east's ground floor is a shopfront whose stallriser and pilasters stand 0.10 to 0.15 m proud of the wall plane, so a decal on that plane would be inside them."},
+      {"bom": "G4_moss_damp", "id": "ambientcg/Moss001", "blend": "multiply", "on": "west_north_bay2", "face": "street", "dx_m": -0.6, "dy_m": -2.75, "width_m": 0.9, "height_m": 0.7, "note": "The far end of the same wall."},
+      {"bom": "G5_stickers", "id": "ambientcg/Sticker001", "blend": "multiply", "on": "pillarbox_body", "face": "street", "dx_m": 0.0, "dy_m": 0.15, "width_m": 0.15, "height_m": 0.15, "note": "DRESSING. G5 says posts and boxes, and the pillar box is the box. SIZED BY THE CURVE, not by taste: the body is 0.597 m across, so a flat quad 0.15 m wide sits 9.5 mm inside the cylinder at its edges against a 10 mm standoff, and anything much wider would cut into the box it is stuck to."}
     ],
     "named_by_the_bom_and_not_applied_here": [
       { "bom": "C14_wall_grime_overlays", "why": "MEASURED, by opening them: wall_soot_brick.png and wall_salt_render.png are full-frame 1024x1024 TILING SURFACES, not stamps. Stamping a square metre of different masonry on a brick wall reads as a patch, and the right route for them is the surface path (AssetLibrary), which is a different mechanism and a separate item. wall_soot_brick also carries a garbled painted mark on one brick, which is exactly what its review=pending flag is for." },
