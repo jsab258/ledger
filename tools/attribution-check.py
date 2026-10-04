@@ -216,6 +216,7 @@ WATCHED = {
     # THE INTERFACE'S TYPE, 1 October: the evening paper's fonts, which ship in
     # the game (static cuts of two variable families, tools/ui/make_font_cuts.py).
     "production/fonts/evening-paper": "THE EVENING PAPER",
+    "production/fonts/patrick-hand": "PATRICK HAND",
     # THE PS5 CORNER'S BAR, 23 September: two Kingdom Come: Deliverance II
     # screenshots supplied by Jafar. Out of the repository since 3 October (his
     # ruling: other games' screenshots never in it), kept on this PC
@@ -379,6 +380,7 @@ OURS = {
     "production/reference": "approved reference pictures, copied in from where they were made and listed with their provenance in production/reference/README.md; hook-sheet.png (pass 4 of the 22 September regeneration, approved that night) and hook-sheet-2026-09-09-retired.png (the sheet it replaced) are both this project's own work, made by tools/imagegen running Z-Image-Turbo (Apache-2.0) through stable-diffusion.cpp (MIT) on Jafar's machine, no fetched asset as an input",
     # The reduced previews, 3 October (Jafar: "so outside reviewers can see the work"): our
     # own frames only, made smaller by tools/make_preview.py; no other game's frame is previewed.
+    "production/assets/office-print": "Mickey's office's printed matter (fares, licence, calendar, the fare book, the drivers' board, notes, the radio's faceplate), drawn by tools/props/make_office_print.py in the project's OFL fonts and Patrick Hand (OFL, credited in THIRD-PARTY.md), the calendar's picture a crop of a Poly Haven CC0 photograph already credited there",
     "production/previews": "reduced copies (about 1600 px, JPEG) of this project's own frames, each proof-view step's and each picture on Jafar's pages, made by tools/make_preview.py from the Unreal probe's renders of this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately; no other game's frame",
     "production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; the live path, unarchived; and the walk's sound, recorded by the engine from the street's own ambience and the crowd voices this file attributes separately",
     "legacy/studio-v2/production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; archived 2026-09-22 with the studio, path changed and nothing else",

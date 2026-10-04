@@ -317,6 +317,7 @@ MATERIALS = (
     ("glass",       (0.085, 0.092, 0.100), 0.0),   # 0.06 until 23 September: polished float glass has none
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
     ("brass",       (0.420, 0.300, 0.120), 0.35),   # door furniture, rubbed (4 October)
+    ("gilt",        (0.760, 0.530, 0.190), 0.22),   # raised gilt letters (4 October; no metallic in the game's surface)
     # MEASURED: sheet 0.220, 0.202, 0.195 - EIGHT TIMES what we had, and
     # warm where ours was blue. A wet Welsh slate roof under an overcast sky
     # is a mid grey that mirrors the sky, not a black one; ours read as a
@@ -708,6 +709,7 @@ SURFACE_OF = {
     "glass":        (None, 0.0),
     "lead":         ("metal", 0.35),
     "brass":        ("metal", 0.35),
+    "gilt":         (None, 0.0),
     "steel_dark":   ("metal", 0.35),
     "pillarbox_red": (None, 0.0),
     "standing_water": (None, 0.0),
@@ -837,6 +839,8 @@ LETTING_BOARD_M = (0.90, 0.45)
 #: so the recipe lays that instead. THE SPEC IS NOT CHANGED HERE: the Unreal
 #: probe stages the generated directory and nothing else, so moving the
 #: spec's id is a probe change and waits for one.
+#: RAISED GILT LETTERS, as geometry, where the sheet has them (Mickey's; 4 October)
+RAISED_LETTERS = {("east_parade", 0): ("MICKEY’S", 0.24)}
 SIGN_OVERRIDE = {("east_parade", 0): LETTERED + "/fascia_mickeys_plain",
                  # THE IMAGE MODEL'S BOARDS RETIRED (4 October, the shopfronts step; the asset plan's
                  # fault 2): every other shop's board our own lettering too, trade words only until
@@ -1295,6 +1299,20 @@ def _side_door(parts, p, side_x0, side_x1, jamb_t, rec, joinery_proj, wall, T, f
     _box(parts, "letterplate", "lead", lp_cx - lp_w / 2.0, lp_cx + lp_w / 2.0,
          rec - 0.015, rec, p["letterplate_at_m"], p["letterplate_at_m"] + lp_h,
          "the-one-detail-that-says-somebody-lives-above-the-shop")
+    # FOUR RAISED PANELS AND A KNOB (4 October: a fresh reviewer read Mickey's side door as "a
+    # plain slab"), as the cottages' doors have them
+    dl0, dl1 = side_x0 + jamb_t + 0.07, side_x1 - jamb_t - 0.07
+    dmid = (dl0 + dl1) / 2.0
+    for rn, (pz0, pz1) in enumerate(((0.15, p["letterplate_at_m"] - 0.08), (p["letterplate_at_m"] + lp_h + 0.10, p["side_door_h_m"] - 0.12))):
+        if pz1 - pz0 < 0.1:
+            continue
+        for cn, (px0, px1) in enumerate(((dl0, dmid - 0.035), (dmid + 0.035, dl1))):
+            _box(parts, "side_door_panel_%d%d" % (rn, cn), "paint_door", px0, px1,
+                 rec - 0.012, rec, pz0, pz1, "a-raised-panel/four-panel-door")
+    kx_ = side_x1 - jamb_t - 0.11
+    _box(parts, "side_door_knob", "brass", kx_, kx_ + 0.04, rec - 0.06, rec - 0.012, 0.98, 1.03, "the-knob")
+    _box(parts, "side_door_kick_plate", "brass", side_x0 + jamb_t + 0.02, side_x1 - jamb_t - 0.02,
+         rec - 0.004, rec, 0.02, 0.16, "a-brass-kick-plate")
     _box(parts, "side_door_spandrel", wall, side_x0, side_x1, 0.0, T,
          p["side_door_h_m"], fb, "brick-between-the-door-head-and-the-board")
 
@@ -4960,10 +4978,15 @@ def plan_parts(p, bay=0, party_wall=True):
         # is a plain geometric one - see _tile_pattern - and not a copy of
         # anything: a photograph says the tile was patterned, not which.
         plinth = 0.12
-        _box(parts, "stall_plinth", "tile_stall", disp_x0, disp_x1, -sr_p - 0.004, 0.0,
+        # FLUSH UNDER ITS SILL, 4 cm proud of the frontage (the dressing research: a stall riser
+        # "sits flush under the cill and never juts"; at 15 cm it read as a bench)
+        tp = 0.04
+        _box(parts, "stall_plinth", "tile_stall", disp_x0, disp_x1, -tp - 0.004, 0.0,
              0.0, plinth, "a-course-of-dark-tile-at-the-foot/the-sheet's-and-R05's")
-        _box(parts, "stallriser", "tile_patterned", disp_x0, disp_x1, -sr_p, 0.0, plinth, sr_h,
+        _box(parts, "stallriser", "tile_patterned", disp_x0, disp_x1, -tp, 0.0, plinth, sr_h,
              "patterned-glazed-tile-under-the-glass/R05")
+        _box(parts, "stall_sill", refit_of["frame"], disp_x0 - 0.01, disp_x1 + 0.01, -tp - 0.03, rec,
+             sr_h, sr_h + 0.045, "the-stall-riser's-sill")
     elif refit:
         # A TILED STALLRISER TAKES NO PAINT, which is why this branch does
         # not carry the shop's colour down to the kicked board. R05's is
@@ -5094,8 +5117,17 @@ def plan_parts(p, bay=0, party_wall=True):
     # ON A REFIT THE PANEL OVER THE DOOR IS THE FRAME'S, not brick: the
     # refit replaced the whole front up to the fascia, which is why attempt
     # one's cab office had a patch of brick hanging over its own door.
-    _box(parts, "shop_door_spandrel", joinery if refit else wall, shop_x0, shop_x1, 0.0, T,
-         p["shop_door_h_m"], fb, "brick-between-the-door-head-and-the-board")
+    if refit:
+        # A GLAZED FANLIGHT over a refit's door (4 October: a fresh reviewer read the panel there as
+        # "a blank board"; the sheet's Mickey's door has glass to its head), in the frame's section
+        _box(parts, "shop_door_fanlight", "glass", shop_x0 + jamb_t, shop_x1 - jamb_t, 0.03, 0.05,
+             p["shop_door_h_m"], fb, "a-glazed-fanlight")
+        for Name, X0, X1 in (("shop_door_fanlight_jamb_l", shop_x0, shop_x0 + jamb_t),
+                             ("shop_door_fanlight_jamb_r", shop_x1 - jamb_t, shop_x1)):
+            _box(parts, Name, joinery, X0, X1, -joinery_proj, 0.06, p["shop_door_h_m"], fb, "its-jamb")
+    else:
+        _box(parts, "shop_door_spandrel", wall, shop_x0, shop_x1, 0.0, T,
+             p["shop_door_h_m"], fb, "brick-between-the-door-head-and-the-board")
 
     if has_side_door:
         _side_door(parts, p, side_x0, side_x1, jamb_t, rec, joinery_proj, wall, T, fb)
@@ -5129,12 +5161,11 @@ def plan_parts(p, bay=0, party_wall=True):
                   "the-cornice's-moulding/paint=" + paint_name)
         cm["paint"], cm["paint_name"] = paint_rgb, paint_name
     for side_, x0_ in (("l", 0.0), ("r", W - 0.13)):
-        for nm, y0_, z0_, z1_ in (("fascia_console_foot_" + side_, -fp - 0.07, fb - 0.12, fb + 0.06),
-                                  ("fascia_console_body_" + side_, -fp - 0.10, fb + 0.06, GF - 0.035),
-                                  ("fascia_console_head_" + side_, -fp - 0.115, GF - 0.035, GF + 0.07)):
-            cs = _box(parts, nm, "paint_fascia", x0_, x0_ + 0.13, y0_, -fp, z0_, z1_,
-                      "a-console-bracket/paint=" + paint_name)
-            cs["paint"], cs["paint_name"] = paint_rgb, paint_name
+        # A BRACKET'S PROFILE, "of greater height than projection" with a curved outline (the
+        # dressing research, Durham SPD): a moulded head under the cornice, an S-curve down, a
+        # scrolled foot on the pilaster (4 October: as stacked blocks it read as "plain blocks")
+        cs = _console_mesh(parts, "fascia_console_" + side_, x0_, x0_ + 0.13, -fp, fb - 0.12, GF + 0.07)
+        cs["paint"], cs["paint_name"] = paint_rgb, paint_name
     # A BLIND BOX under the board on a timber front (4 October, the shopfronts step: "blind
     # boxes"): the roller blind's case across the display run, in the board's paint, the canvas's
     # front lath showing at its foot. Not on a metal refit or the empty unit.
@@ -5158,6 +5189,14 @@ def plan_parts(p, bay=0, party_wall=True):
                   pw * 0.5, W - pw * 0.5, -fp - 0.012, -fp,
                   fb + 0.045, GF - 0.045, "the-lettering/" + override)
         sg["decal"] = override
+        if here in RAISED_LETTERS:
+            # AND ITS NAME IN RAISED GILT LETTERS standing 12 mm off the board (the board's picture
+            # carries no lettering for this bay: tools/props/make_vignette_2d.py)
+            body_, cap_ = RAISED_LETTERS[here]
+            parts.append({"id": "fascia_letters", "material": "gilt", "kind": "text", "body": body_,
+                          "font": "production/fonts/marcellus-sc/MarcellusSC-Regular.ttf", "cap_m": cap_,
+                          "x0": pw * 0.5, "x1": W - pw * 0.5, "y0": -fp - 0.024, "y1": -fp - 0.012,
+                          "z0": fb + 0.045, "z1": GF - 0.045, "note": "raised-gilt-letters"})
     elif sign:
         # AT THE SPEC'S WIDTH AND HEIGHT, centred on the bay plus its dx, and
         # showing only the spec's crop of the picture.
@@ -5977,6 +6016,69 @@ def _face_the_street(bpy, obj, block):
     return obj
 
 
+def _console_mesh(parts, pid, x0, x1, yface, zbot, ztop):
+    """A console bracket: its side profile (y outward from the board's face, z up) extruded
+    across x0..x1, as one closed mesh piece in the board's paint."""
+    hgt = ztop - zbot
+    prof = [(0.0, ztop), (-0.115, ztop), (-0.115, ztop - 0.10 * hgt / 0.74), (-0.10, ztop - 0.13 * hgt / 0.74)]
+    for k in range(1, 13):                         # the S-curve, out at the head, in at the foot
+        t = k / 12.0
+        z = (ztop - 0.13 * hgt / 0.74) - t * (hgt * 0.62)
+        y = -0.10 + 0.05 * (0.5 - 0.5 * math.cos(math.pi * t))
+        prof.append((y, z))
+    zc = zbot + 0.07 * hgt / 0.74                  # the scroll at the foot
+    for k in range(0, 9):
+        a = math.pi * 0.5 + k * (math.pi * 1.25 / 8.0)
+        prof.append((-0.05 + 0.035 * math.cos(a) - 0.035 * math.cos(math.pi * 0.5),
+                     zc + 0.035 * math.sin(a) + 0.0))
+    prof.append((-0.02, zbot))
+    prof.append((0.0, zbot))
+    n = len(prof)
+    verts = [(x0, yface + y, z) for (y, z) in prof] + [(x1, yface + y, z) for (y, z) in prof]
+    faces = [tuple(range(n))[::-1], tuple(range(n, 2 * n))]
+    for i in range(n):
+        j = (i + 1) % n
+        faces.append((i, j, n + j, n + i))
+    part = {"id": pid, "material": "paint_fascia", "kind": "mesh", "verts": verts, "faces": faces,
+            "note": "a-console-bracket's-profile/extruded"}
+    parts.append(part)
+    return part
+
+
+def _text_object(bpy, root, part, mat):
+    """RAISED LETTERS AS GEOMETRY (4 October, the shopfronts step's third try, production/research/
+    shop-window-interiors/DRESSING-2026-10-04.md: "gilt letters: bevelled geometry"): the part's
+    words in its font, centred in its box, as deep as the box, bevelled, facing the street (an east
+    front faces -y), made a mesh so the street's export carries it like any other piece."""
+    cx, cz = (part["x0"] + part["x1"]) / 2.0, (part["z0"] + part["z1"]) / 2.0
+    depth = abs(part["y1"] - part["y0"])
+    bpy.ops.object.text_add(location=(cx, (part["y0"] + part["y1"]) / 2.0, cz), rotation=(math.pi / 2.0, 0.0, 0.0))
+    o = bpy.context.object
+    o.name = part["id"]
+    o.data.body = part["body"]
+    o.data.font = bpy.data.fonts.load(os.path.join(root, part["font"]), check_existing=True)
+    o.data.size = part["cap_m"] / 0.66
+    o.data.align_x, o.data.align_y = "CENTER", "CENTER"
+    o.data.extrude = depth / 2.0
+    o.data.bevel_depth = min(0.0015, depth / 4.0)
+    o.data.resolution_u = 4
+    if mat is not None:
+        o.data.materials.append(mat)
+    bpy.ops.object.select_all(action="DESELECT")
+    o.select_set(True)
+    bpy.context.view_layer.objects.active = o
+    bpy.ops.object.convert(target="MESH")
+    # MIRRORED HERE, because the export reflects the street y to -y on its way to Unreal (the
+    # sidecar's "mirror"): unmirrored, the first film read "S'YEKCIM" from the pavement
+    o.scale = (-1.0, 1.0, 1.0)
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    bpy.ops.object.mode_set(mode="EDIT")
+    bpy.ops.mesh.select_all(action="SELECT")
+    bpy.ops.mesh.normals_make_consistent(inside=False)
+    bpy.ops.object.mode_set(mode="OBJECT")
+    return o
+
+
 def _mesh_object(bpy, name, verts, faces, mat):
     mesh = bpy.data.meshes.new(name + "_mesh")
     mesh.from_pydata(verts, [], faces)
@@ -6143,7 +6245,7 @@ FLAG_TONE_B = (0.84, 0.87, 0.93)
 #: 0.72 AND NOT 0.55, attempt two: at 0.55 the quarters rendered as a hard
 #: black-and-white checkerboard, where the sheet's tile reads as one busy
 #: pale field.
-TILE_M, TILE_JOINT_M, TILE_DARK = 0.15, 0.003, 0.72
+TILE_M, TILE_JOINT_M, TILE_DARK = 0.15, 0.005, 0.72   # joint 3 mm until 4 October: lost at 2 m
 
 
 def _tile_pattern(bpy, mats):
@@ -6921,6 +7023,8 @@ def build_and_render(args):
             _face_the_street(bpy,
                 _mesh_object(bpy, part["id"], part["verts"], part["faces"], mat),
                 part.get("block"))
+        elif part.get("kind") == "text":
+            _text_object(bpy, args["root"], part, mat)
         else:
             _face_the_street(bpy, _box_mesh(bpy, part, mat), part.get("block"))
         built += 1

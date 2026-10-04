@@ -265,6 +265,16 @@ quiet, which is exactly how the project ended up not knowing it had no font.
 | **Licence files** | `production/fonts/evening-paper/OFL-*.txt`, one per family, beside the fonts |
 | **Used for** | The game's interface as Jafar approved it (production/design/ui/STYLE-GUIDE.md): these files ship in the game, staged with its data, and the game draws its screens with them |
 
+## Fonts — PATRICK HAND, THE HANDWRITING IN MICKEY'S OFFICE, SIL OPEN FONT LICENCE 1.1
+
+| | |
+|---|---|
+| **File** | `production/fonts/patrick-hand/PatrickHand-Regular.ttf`, from Google Fonts' own repository (github.com/google/fonts, ofl/patrickhand), 4 October 2026 |
+| **Author** | Patrick Wagesreiter — Copyright (c) 2010-2012 |
+| **Licence** | SIL Open Font License, Version 1.1; OFL fonts allowed by Jafar on 30 September 2026 (ledger-v2/research/license-allowlist.md, SHIP-SAFE 7) |
+| **Licence file** | `production/fonts/patrick-hand/OFL.txt`, beside the font |
+| **Used for** | The biro in Mickey's office's printed matter (the fare book, the notes, the licence's entries; `tools/props/make_office_print.py`, `production/assets/office-print/mickeys/`) |
+
 ## Textures, props, vehicles — NOTHING YET
 
 *(This heading is a LOG of the pre-M17.6 state and its first sentence stopped
@@ -293,7 +303,7 @@ Attribution not required; recorded anyway under this file's standing rule.
 | **Where** | `production/assets/shop-displays/` (a shop's window display, built by `tools/art-recipes/shop-room.py --display` from the models, cut down and joined into one `.glb` with their textures at 512 px; and `photos/`, small crops of Poly Haven's HDRI photographs printed on magazine covers and framed prints, each named in its `source.json`), `production/art/shop-rooms/` (the shop rooms rendered by `tools/art-recipes/shop-room.py` with the models and textures in them) and `production/assets/shop-rooms-3d/` (the same rooms as real geometry, `--export-room`, one `.glb` a part) |
 | **What** | the pawnbroker's stock and fittings: watches, cameras, binoculars, clocks, radios and cassette players, televisions, vases, jugs, picture frames, ukuleles, a till, tools, a suitcase, boxes, shelving, a long-case clock; old patterned lino and painted plaster textures; for the other shops (3 October): fruit and vegetables, cakes and croissants, hand tools, oil cans, buckets and brooms, a blowtorch, a lifebuoy, buoys, lanterns, boots, a life jacket, crates, plants, a wicker basket, moulded chairs |
 
-Mickey's office (4 October, `production/assets/shop-rooms-3d/mickeys/`): a metal office desk, an arm desk lamp, a school stacking chair, a clipboard, a lighter, notepads, a cigarette pack and two pot plants, from the same Poly Haven library; its notices, the number on its glass and every shop's fascia and fly-poster (`production/assets/vignette/decals2d/`) are our own lettering in the project's OFL fonts.
+Mickey's office (4 October, `production/assets/shop-rooms-3d/mickeys/`): a metal office desk, an arm desk lamp, a school stacking chair, a clipboard, a lighter, notepads, stationery, a wall clock, a cigarette pack and two pot plants, and the dirty carpet, American walnut and ash veneers and leather textures, from the same Poly Haven library; its notices, the number on its glass and every shop's fascia and fly-poster (`production/assets/vignette/decals2d/`) are our own lettering in the project's OFL fonts.
 
 The grocer's printed labels (`production/assets/shop-goods/labels.jpg`, `tools/art-recipes/make_label_atlas.py`) are our own: every maker and product on them is made up, set in the project's own OFL fonts (Marcellus SC, League Gothic, Libre Franklin; `production/fonts/`, each with its licence beside it).
 
