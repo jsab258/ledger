@@ -163,7 +163,10 @@ def build(pieces):
             # 2 October: at 0.5 to 1.2 m and half strength the first frame showed none; the sheet's run long
             L = 0.8 + 0.6 * rnd(s, "len") * h["wear"]
             top = p["y_m"] - p["sy_m"] / 2.0
-            decals.append(wall_decal("streak", p["x_m"] + 0.08 * (rnd(s, "dx") - 0.5), top - L / 2.0, zf, facing,
+            # FROM THE SILL'S OWN EDGE (4 October, the first fresh review of 2.4: the streaks began
+            # well below the sills): the picture fades in over its top fifth, so it starts a quarter
+            # of its length up, on the stone sill, which takes no marks.
+            decals.append(wall_decal("streak", p["x_m"] + 0.08 * (rnd(s, "dx") - 0.5), top - L / 2.0 + 0.25 * L, zf, facing,
                                      p["sx_m"] * (0.8 + 0.3 * rnd(s, "w")), L, 0.65 + 0.35 * h["wear"], b["name"]))
         elif p["bom"] == "D5_downpipe" and p["name"].endswith("_shoe"):
             block = p["name"].split("_dp")[0]
@@ -172,8 +175,9 @@ def build(pieces):
                 continue
             zf, facing = face_of(b)
             h = house[b["name"]]
-            decals.append(wall_decal("algae", p["x_m"], 0.35, zf, facing, 0.7, 0.9, 0.65 + 0.35 * h["wear"], b["name"]))
-            decals.append(wall_decal("algae", p["x_m"] + 0.12, 1.3, zf, facing, 0.3, 1.4, 0.3 + 0.3 * h["wear"], b["name"]))
+            # (4 October: at 0.65 and 0.3 the review found no algae anywhere on the dark brick.)
+            decals.append(wall_decal("algae", p["x_m"], 0.35, zf, facing, 0.8, 1.0, 0.85 + 0.15 * h["wear"], b["name"]))
+            decals.append(wall_decal("algae", p["x_m"] + 0.12, 1.3, zf, facing, 0.35, 1.5, 0.55 + 0.3 * h["wear"], b["name"]))
         elif p["bom"] == "D2_chimney_stack":
             block = p["name"].split("_stack")[0]
             b = owner_bay(p["x_m"], block)
@@ -184,6 +188,9 @@ def build(pieces):
             top = p["y_m"] + p["sy_m"] / 2.0
             decals.append(wall_decal("soot", p["x_m"], top - 0.6, zf, facing, p["sx_m"] * 1.05, 1.2,
                                      0.6 + 0.3 * h["wear"], p["name"]))
+            # AND ITS SOUTH FACE, the one the hook camera sees (4 October: "the chimneys are clean").
+            decals.append(gable_decal("soot", p["x_m"] - p["sx_m"] / 2.0 - STANDOFF_M, top - 0.6, p["z_m"],
+                                      p["sz_m"], 1.2, 0.6 + 0.3 * h["wear"], p["name"]))
     # oil where cars stand: along both kerbs, a stain every few metres, by seed
     for side, z in (("east", 2.1), ("west", -2.1)):
         s = seed_of("oil_" + side)
@@ -314,7 +321,11 @@ def selftest():
     for d in decals:
         if d["kind"] == "streak":
             sill = min(sills, key=lambda p: abs(p["x_m"] - d["x_m"]) + abs(p["z_m"] - d["z_m"]) + abs(p["y_m"] - (d["y_m"] + d["h_m"] / 2)))
-            if not d["y_m"] + d["h_m"] / 2.0 <= sill["y_m"] + 1e-6:
+            # (4 October) its faded top quarter lies over the sill and the window above, which
+            # take no marks; its body hangs below the sill's underside.
+            under = sill["y_m"] - sill["sy_m"] / 2.0
+            if not (d["y_m"] + d["h_m"] / 2.0 <= under + 0.25 * d["h_m"] + 1e-3
+                    and d["y_m"] - d["h_m"] / 2.0 < under):
                 check("a streak hangs below its sill", False)
                 break
     splash = [d for d in decals if d["kind"] == "splash"]
