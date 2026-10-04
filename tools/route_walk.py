@@ -27,8 +27,8 @@ The stages, each with its own time limit and the tester's picture:
   continue      Tom stands where he saved (within half a metre)
 
 THE TOWN ROUND, --town (Jafar, 3 October: the nightly walk reports whether the
-town visibly knows Tom): back in from Continue, after the town's hours have run,
-Tom greets Sheila, Ron and Darren in turn with the same neutral newcomer's line,
+town visibly knows Tom): back in from Continue, Tom waits to the next morning
+(the stage "morning", 4 October), then greets Sheila, Ron and Darren in turn with the same neutral newcomer's line,
 as a player would, and each greeting's stages (town-<who>) say whether he
 reached them and how long the answer took to be heard. What each showed they
 knew is the game's own session record's (tools/nightly_walk.py reads it).
@@ -242,8 +242,23 @@ def greet(r, key, name):
                                                      (heard or {}).get("detail", "none")))
 
 
+def to_next_morning(r, tries=8):
+    """Z, as a player would, until the next day's working hours (4 October: the first nightly
+    walk greeted the three at 20:00, when Sheila and Darren had gone home, and no night had
+    passed for the street's talk to travel). Recorded as its own stage, "morning"."""
+    for _ in range(tries):
+        t = r.where().get("tom")
+        if t and len(t) >= 5 and t[3] != "D0" and "08:00" <= t[4] < "17:00":
+            return r.record("morning", True, "clock=%s %s" % (t[3], t[4]))
+        play("press", "Z")
+        play("wait", "8")
+    t = r.where().get("tom")
+    return r.record("morning", False, "never reached the next day's hours: clock=%s" % (" ".join(t[3:]) if t else "?"))
+
+
 def town_round(r):
-    """The three greeted in turn after the deed and the town's hours."""
+    """The three greeted in turn the morning after the deed, once the town's night has run."""
+    to_next_morning(r)
     for key, name in TOWN_WHO:
         greet(r, key, name)
 
