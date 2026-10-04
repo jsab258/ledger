@@ -136,10 +136,17 @@ def run_bench(night):
     """The town's sixty first questions through the real engine, as the game sets its talk."""
     d = os.path.join(night, "bench")
     os.makedirs(d, exist_ok=True)
+    # THE CLAUDE CODE COMMAND BY ITS FULL PATH (4 October: under the scheduled task the bench's
+    # sixty calls all failed; its client finds the command by LEDGER_CLAUDE before PATH).
+    import shutil
+    env = dict(os.environ)
+    exe = shutil.which("claude.cmd") or shutil.which("claude") or os.path.join(os.environ.get("APPDATA", ""), "npm", "claude.cmd")
+    if exe and os.path.exists(exe):
+        env["LEDGER_CLAUDE"] = exe
     try:
         r = subprocess.run(["dotnet", "run", "--project", os.path.join(REPO, "ledger", "ClaimBench"), "-c", "Release", "--",
                             "firsts", "--rules", "--plain", "--dir", d, "--parallel", "4"],
-                           capture_output=True, text=True, cwd=REPO, timeout=3600)
+                           capture_output=True, text=True, cwd=REPO, timeout=3600, env=env)
     except subprocess.TimeoutExpired:
         return {"count": None, "of": 60, "note": "the bench ran out of its hour"}
     text = (r.stdout or "") + (r.stderr or "")
@@ -152,6 +159,10 @@ def parse_bench(text):
     m = re.search(r"firsts: a newcomer's first questions, (\d+) answered \((\d+) failed\): \"that's all I know\" (\d+) \(([^)]*)\)", text)
     if not m:
         return {"count": None, "of": 60, "note": "the bench gave no count (bench.log)"}
+    # A BENCH WHOSE CALLS ALL FAILED MEASURED NOTHING (4 October: "0 answered (60 failed)" was
+    # reported as "0 of 60", which reads as no newcomer ever brushed off).
+    if int(m.group(1)) == 0:
+        return {"count": None, "of": 60, "note": "the bench's %s calls all failed, so nothing was measured (bench.log)" % m.group(2)}
     by = {}
     for part in m.group(4).split(","):
         f = part.strip().split()
@@ -283,6 +294,8 @@ def selftest():
     b = parse_bench('firsts: a newcomer\'s first questions, 60 answered (0 failed): "that\'s all I know" 21 (lena 7, rocco 8, sam 6), refused 1; api-rate usd, not billed=0.00 -> firsts.jsonl')
     check("the bench's count and who said it are read", b["count"] == 21 and b["by_who"] == {"Sheila": 7, "Ron": 8, "Darren": 6})
     check("a bench with no count says so", parse_bench("nothing")["count"] is None)
+    check("a bench whose calls all failed measured nothing",
+          parse_bench("firsts: a newcomer's first questions, 0 answered (60 failed): \"that's all I know\" 0 (), refused 0")["count"] is None)
     # WHO SAW IT from the game's witness events, as it records them (4 October).
     wv = [{"e": "witness", "who": "lena", "saw": True}, {"e": "witness", "who": "hal", "saw": False},
           {"e": "witness", "who": "marta", "saw": True}, {"e": "deed", "what": "player.window_d0"}]
