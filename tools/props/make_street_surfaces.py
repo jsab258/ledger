@@ -180,7 +180,7 @@ def bond(n, tile_w, tile_h, unit_w, unit_h, joint):
 #: header is the brick's end: 102.5 mm and its joint. Headers read a shade darker, as the
 #: burnt ends of a clamp-fired brick do (an inference, not a measurement).
 HEADER_W_M = 0.1125
-HEADER_TONE = 0.88
+HEADER_TONE = 0.72   # 4 October: 0.88 did not read at the camera's angle (the first fresh review)
 
 
 def flemish_bond(n, tile_w, tile_h, stretcher_w, header_w, unit_h, joint):

@@ -22,14 +22,14 @@
  "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
  "surface_gain": {
   "brick_red": [
-   2.19,
-   2.25,
-   2.06
+   2.737,
+   2.812,
+   2.575
   ],
   "brick_grey": [
-   2.5,
-   2.5,
-   2.5
+   3.125,
+   3.125,
+   3.125
   ],
   "paving": [
    0.6,
@@ -54,6 +54,7 @@
  },
  "surface_gain_note": "2 October, evening (his answer to Friday's page): the paving's grade 0.72/0.56/0.30 cut the blue so hard the wet flags came out orange whatever the recipe gave them; the drawn flags were still the colour of a recipe two passes old (98/78/53), redrawn from today's grey-tan (89/78/66), and the grade near neutral, 0.95/0.93/0.90. The asphalt graded 0.62 darker, so the wet road has its dark between the reflections. Earlier: RAISED A QUARTER FOR BOTH BRICKS 23 September, when Lumen went on: the bounced light's occlusion darkened every wall by about a fifth against the frame before it (parade upper wall 0.79, west terrace 0.76-0.81, Mickey's 0.83, the sky unchanged at 1.00), and the walls had been matched to the sheet before it; the pavements were left darker, which is nearer the sheet's wet flags. Before that: Per-surface colour in this engine, by base material, over the drawn surface's own colour. Retuned 23 September again once the drawn bricks and flags carry Blender's wear (patches, the splash at the foot, streaks from the wall head, about 0.6 of the clean wall on average): brick_red lands the parade's upper wall at 78/46/33 against the sheet's 76/45/35; paving at 126/112/98 against the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain).",
  "surface_gain_note_3_october": "The proof view, step 2.3, his bar: dark, glistening, reflecting the sky and the buildings. The road 0.62 -> 0.22, the flags 0.95 -> 0.6, the kerb 0.55 (it had none). The roughness view (r.BufferVisualizationTarget Roughness) showed the puddles already mirrors and the road a near mirror; what read dry and grey was the road's own colour under the overcast sky, brighter than the hill the water mirrors, so the water read as dark stains. Seven tries with a rougher road (0.10 to 0.35, relief kept or not) read damp, grainy or matte; darkness is what lets the reflections show.",
+ "surface_gain_note_4_october": "The proof view, step 2.4: the brick's gains x1.25, because each house's own look (terrace-front.py HOUSE_LOOKS, multiplied in by the game) is at most one and averages about 0.76, so the street's mean brick stays where it was while the houses differ.",
  "sky_seen_gain_night": 0.15,
  "sky_light_gain_night": 0.15,
  "night_exposure_bias": -1.0,

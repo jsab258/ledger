@@ -7319,8 +7319,26 @@ def _house_of(block, pid):
     m = re.search(r"_bay(\d+)$", pid or "")
     if block and m:
         return "%s_bay%s" % (block, m.group(1))
+    # A ROW'S END WALLS AND GABLES belong to its end houses (the first fresh review of 2.4: the
+    # near corner's end wall kept the old brick): the south end to bay 0, the north end to the
+    # last bay, which _house_key finds among street-wear.json's houses.
+    m = re.match(r"(.+)_(?:end_wall|gable)_(south|north)$", pid or "")
+    if block and m and m.group(1) == block:
+        return "%s_bay0" % block if m.group(2) == "south" else "%s_bay_north" % block
     m = re.match(r"backdrop_rise_approach_([a-z]\d+)", pid or "")
     return ("approach_" + m.group(1)) if m else None
+
+
+def _house_key(house, rows):
+    """The street-wear.json house a house name stands for, or None: a row's north end
+    (block_bay_north) is its highest-numbered bay."""
+    if house is None:
+        return None
+    if house.endswith("_bay_north"):
+        block = house[:-len("_bay_north")]
+        bays = sorted(int(k.rsplit("_bay", 1)[1]) for k in rows if k.startswith(block + "_bay"))
+        return ("%s_bay%d" % (block, bays[-1])) if bays else None
+    return house if house in rows else None
 
 
 def _house_u_offset(block, pid, material):
@@ -7339,6 +7357,11 @@ def _house_u_offset(block, pid, material):
 #: Vertex colours cannot exceed one, so every factor is at most one, and the walls' surface
 #: gain is raised to put the street's mean back where it was (unreal-look.json).
 HOUSE_SET_FACTOR = {0: (0.90, 0.90, 0.90), 1: (0.74, 0.74, 0.77), 2: (1.0, 0.97, 0.93)}
+#: THE SECOND ROUND (4 October, the first fresh review: "only about 5-10% difference from house
+#: to house ... still one wall"): four looks a house picks by its own name, as different as one
+#: street's bricks are: an orange-red stock, a purple-brown, a front sooted black-brown, one
+#: cleaned in the 1980s; and a value of its own over a third of the range.
+HOUSE_LOOKS = ((1.0, 0.84, 0.66), (0.80, 0.62, 0.66), (0.60, 0.56, 0.56), (1.0, 0.95, 0.86))
 
 
 def _house_rows(root):
@@ -7355,13 +7378,16 @@ def _house_tint(block, pid, material, rows):
     """The colour this piece's walls carry: its house's set times its tint, scaled so no channel
     passes one; white for anything not a house's drawn wall."""
     house = _house_of(block, pid)
-    if house is None or house not in rows or not str(material).startswith(HOUSE_OFFSET_MATERIALS):
+    house = _house_key(house, rows)
+    if house is None or not str(material).startswith(HOUSE_OFFSET_MATERIALS):
         return (1.0, 1.0, 1.0)
+    import zlib
     bset, tint = rows[house]
-    f = HOUSE_SET_FACTOR.get(bset % 3, HOUSE_SET_FACTOR[0])
-    # BRIGHTNESS AND A LEAN WARM OR COOL ONLY: the seeded tint's three channels moved red brick
-    # toward green or blue, which no brick does.
-    lum = sum(tint) / 3.0
+    seed = zlib.crc32(house.encode("utf-8"))
+    f = HOUSE_LOOKS[(bset + seed) % len(HOUSE_LOOKS)]
+    # ITS OWN VALUE, 0.78 to 1.0 by its seed, and a lean warm or cool from its tint; never
+    # green or blue, which no brick is.
+    lum = 0.78 + 0.22 * ((seed >> 8) % 1000) / 999.0
     warm = max(-0.04, min(0.04, (tint[0] - tint[2]) * 0.5))
     c = [f[0] * (lum + warm), f[1] * lum, f[2] * (lum - warm)]
     top = max(c)
@@ -7435,7 +7461,7 @@ def _export_street(bpy, args, parts):
         house = (_house_of(part.get("block"), obj.name)
                  if key == mat_key and str(mat_key).startswith(HOUSE_OFFSET_MATERIALS) else None)
         house_tint = None
-        if house is not None and house in house_rows:
+        if _house_key(house, house_rows) is not None:
             key = "%s_h_%s" % (mat_key, house)
             house_tint = list(_house_tint(part.get("block"), obj.name, mat_key, house_rows))
         # THE REFLECTION, y to -y, and nothing else moves.
