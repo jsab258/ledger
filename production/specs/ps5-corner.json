@@ -404,14 +404,15 @@
         "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_nor_dx_2k.jpg",
         "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_rough_2k.jpg"
       ],
-      "covers_m": 4.0,
+      "covers_m": 1.0,
       "match_rgb": [
         0.675,
         1.011,
         1.62
       ],
       "why": "the scan's mean brought to its palette colour (frame_painted), so it adds detail and wear, not a new colour",
-      "always": true
+      "always": false,
+      "covers_note": "4 October: off in play. A painted-CONCRETE scan on timber: at 4.0 m a repeat a fresh reviewer read Mickey's frame and pilasters as tarmac at 2 m, and at 1.0 they still read as rough render; the joinery keeps the street's own paint until a painted-timber surface is made."
     },
     {
       "base": "paint_fascia",
@@ -421,14 +422,15 @@
         "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_nor_dx_2k.jpg",
         "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_rough_2k.jpg"
       ],
-      "covers_m": 4.0,
+      "covers_m": 1.0,
       "match_rgb": [
         0.675,
         1.011,
         1.62
       ],
       "why": "the scan's mean brought to its palette colour (fascia_slate_blue), so it adds detail and wear, not a new colour",
-      "always": true
+      "always": false,
+      "covers_note": "4 October: off in play. A painted-CONCRETE scan on timber: at 4.0 m a repeat a fresh reviewer read Mickey's frame and pilasters as tarmac at 2 m, and at 1.0 they still read as rough render; the joinery keeps the street's own paint until a painted-timber surface is made."
     },
     {
       "base": "brick_rubbed",
