@@ -133,21 +133,21 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **C: free:** 30 GB at the start, 85 now.
 
-## Builder, Saturday 3 October
+## Builder, Sunday 4 October
 
-**No page today:** nothing new passes your rule yet.
+**No page today:** nothing passes your rule yet. [The proof view, one frame a step](https://claude.ai/artifact/CaQ73RAcLMk1zqvqaNYt3r) now shows the accepted composition.
 
-**Done:** seven more shopfronts built Rita's way, in the game on this PC by day and night: fishmonger, launderette, grocer, newsagent with the pension counter, ironmonger, tea room, ship's chandler. Fixed on the way: displays behind doors, panes showing the next shop, a black slab, the fish market's crates hiding its window. Ron's chest was a hole in the game since Friday (a shirt front for the jacket tests worn by mistake): held back, and a check now stops it.
+**Done:** your two evening orders (previews of every step in git; the hill moved up, the windows and Mickey's room named, the wet street's bar). The composition is in. P4 is done: on the real talk, 8 of 8 replies checked, none fell back, the voice after 4.6 s, $0.20. The town knew and kept to what it saw.
 
-**Failed or unproven:** the fresh review failed all seven new windows: their goods are shapes I made in code (fish, fruit, cakes, sweet jars, rope), toys beside Rita's scanned stock. So: scanned models and photographs instead. Epic's built-in standing idle tried and kept off (wide-legged, braced).
+**Failed:** the wet street, the hill and the brick, each set aside after fresh reviews (Needs you 5). The cause of the brick's repeat: a photographed brick laid over ours since September. The nightly walk's report miscounted (no witnesses; a failed bench shown as 0 of 60). Fixed, but the bench's failure stays unproven until tonight.
 
-**Evidence:** checks 40/40; both game targets built.
+**Evidence:** checks 47/47; both game targets built; engine checks 688/688; the build machine meets 60 a second (GPU 11.3 ms).
 
-**Research:** shop goods, the method and free sources (under way).
+**Research:** the wet road, the hill, the brick, its other direction (production/research/aaa-street).
 
-**C:** 90.8 GB free, **F:** 40.9 GB; grew most: git history, the Unreal project, your played copy. Backup with this commit.
+**C:** 74 GB free, **F:** 24 GB. Backup with this commit.
 
-**For you:** Needs you 3 now includes Epic's free animation sample (one tap), for natural poses.
+**For you:** Needs you 5, one choice: go on down the list (recommended), or stop and do the three.
 
 ## 26 September, day
 
