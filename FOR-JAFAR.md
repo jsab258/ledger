@@ -3,7 +3,23 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Monday 5 October, 09:00)
+## Overview (Monday 5 October, 08:20)
+
+<!-- morning pictures: written by tools/morning_pictures.py -->
+
+**Morning, Monday 5 October. Phase 0, recover control. On: 0.3 Sweep: branches, drives, page answers, game-studio repository. Next: 0.4 CATALOGUE.md: what exists, homes table, disagreements.**
+
+| | Today, 05 Oct | Yesterday, 04 Oct |
+|---|---|---|
+| The hook camera by day | ![The hook camera by day, 2026-10-05](production/previews/morning-hook-day-2026-10-05.jpg) | none |
+| The reverse view | ![The reverse view, 2026-10-05](production/previews/morning-reverse-day-2026-10-05.jpg) | none |
+| The street at night | ![The street at night, 2026-10-05](production/previews/morning-night-2026-10-05.jpg) | none |
+
+The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
+
+No decision asked: these are for watching the street change.
+
+<!-- /morning pictures -->
 
 Disk (10-05 04:30): C: 73.1 GB free, F: 24.4 GB free; grew most since 10-04 04:30: F:\LedgerTools\renders\proof-2.6 +0.5 GB, F:\LedgerTools\tmp\builder +0.2 GB, C:\actions-runner-ledger\_work\renders +0.1 GB.
 
@@ -20,7 +36,7 @@ Disk (10-05 04:30): C: 73.1 GB free, F: 24.4 GB free; grew most since 10-04 04:3
 
 ### Needs you
 
-(All recent pages' answers re-read at 08:40: nothing new since Sunday. The full read of every page is part of 0.3.)
+(All recent pages' answers re-read at 08:10: nothing new since Sunday. The full read of every page is part of 0.3.)
 
 1. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
 
