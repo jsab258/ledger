@@ -1,0 +1,19 @@
+# LEDGER one outbox sweep - 8f5fa32 @1789107165
+# Line 1 names the commit this was run on. This step SENDS: it runs
+# tools/runner/telegram-bot.py --send-outbox once, which is the same
+# pass the bot's own loop makes. Streamed, so a timeout still leaves
+# everything it learned.
+sweepPython=C:\Users\Jafar\miniconda3\python.exe
+# QUEUE 189 GATE, and the two shas below are DIFFERENT QUESTIONS.
+# sweepCheckoutRunSha is the commit CI was started FOR. sweepCheckoutPcHeadSha is the
+# commit HIS CHECKOUT was AT when this step read it. Line 1 of this
+# file names the first one, which is why it could be true and
+# misleading at once (queue 189). CONTAINS, not equals: his PC
+# commits its own evidence, so sweepCheckoutAheadCommits above 0 is normal.
+# sweepCheckoutBehindSecByCommitTime is the run's committer time minus the
+# checkout head's, so positive means his files are older.
+sweepCheckoutRunSha=8f5fa323569b2a58aee5662ae02fb1e4f7329c85 sweepCheckoutPcHeadSha=424cc7ebfd7863f14715a7be3a07b0f23ecf3ea0 sweepCheckoutContains=no sweepCheckoutOutcome=diverged sweepCheckoutDecision=refuse
+sweepCheckoutBehindCommits=1 sweepCheckoutAheadCommits=1 sweepCheckoutBehindSecByCommitTime=-25 sweepCheckoutPcHeadCommitIso=2026-09-11T08:00:46+02:00
+sweepCheckoutWaitedSec=91/90 sweepCheckoutPolls=19 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/424cc7ebfd sweepCheckoutSeriesShown=1/1
+sweepCheckoutReason=his-checkout-is-on-a-commit-this-run-does-not-contain/nothing-was-sent/somebody-force-pushed-or-committed-there
+sweepStatus=REFUSED-STALE-CHECKOUT sweepSent=0 sweepGateExit=3

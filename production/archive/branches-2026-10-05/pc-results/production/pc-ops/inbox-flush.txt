@@ -1,0 +1,28 @@
+# LEDGER one inbox flush - 8f5fa32 @1789107288
+# Line 1 names the commit this was run on. This step PUSHES the
+# return half: his messages and the bot's own receipts, onto
+# pc-inbox. It sends nothing and loads no credentials. The return
+# half stopped at 2026-09-07 11:30 UTC. The sending half stopped too
+# and recovered at the 01:18 UTC restart on the 8th; this half did not,
+# which is why the studio went on calling the channel dead after it sent.
+# THE READING THIS STEP NOW EXISTS FOR: does the return push SUCCEED.
+# Every git call the bot makes is non-interactive and bounded since
+# 2026-09-08, so a credential prompt fails in words in seconds rather
+# than hanging. NON-INTERACTIVE FAILURE IS NOT A REPAIRED RETURN PATH:
+# read ok= and detail= below, and pcInboxHeadShort in the verify step,
+# before calling it fixed. Last measurement: HUNG at 150s, 12 waiting.
+flushPython=C:\Users\Jafar\miniconda3\python.exe
+flushRepoHead=424cc7eb
+# QUEUE 189 GATE, and the two shas below are DIFFERENT QUESTIONS.
+# flushCheckoutRunSha is the commit CI was started FOR. flushCheckoutPcHeadSha is the
+# commit HIS CHECKOUT was AT when this step read it. Line 1 of this
+# file names the first one, which is why it could be true and
+# misleading at once (queue 189). CONTAINS, not equals: his PC
+# commits its own evidence, so flushCheckoutAheadCommits above 0 is normal.
+# flushCheckoutBehindSecByCommitTime is the run's committer time minus the
+# checkout head's, so positive means his files are older.
+flushCheckoutRunSha=8f5fa323569b2a58aee5662ae02fb1e4f7329c85 flushCheckoutPcHeadSha=424cc7ebfd7863f14715a7be3a07b0f23ecf3ea0 flushCheckoutContains=no flushCheckoutOutcome=diverged flushCheckoutDecision=refuse
+flushCheckoutBehindCommits=1 flushCheckoutAheadCommits=1 flushCheckoutBehindSecByCommitTime=-25 flushCheckoutPcHeadCommitIso=2026-09-11T08:00:46+02:00
+flushCheckoutWaitedSec=30/30 flushCheckoutPolls=7 flushCheckoutPollSec=5 flushCheckoutSeries=0s/424cc7ebfd flushCheckoutSeriesShown=1/1
+flushCheckoutReason=his-checkout-is-on-a-commit-this-run-does-not-contain/nothing-was-sent/somebody-force-pushed-or-committed-there
+flushStatus=REFUSED-STALE-CHECKOUT flushPushed=0 flushGateExit=3

@@ -1,0 +1,8 @@
+refused: check
+file: production/outbox/2026-09-11T1316Z-79313220.answer.md
+kind: answer
+checked: 2026-09-22T08:20:28+00:00
+checkedEpoch: 1790065228
+hold: no
+clause: the check itself is missing at tools/producer-check.py on this machine, so nothing was checked
+detail: none

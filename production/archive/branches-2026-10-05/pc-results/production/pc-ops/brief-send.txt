@@ -1,0 +1,22 @@
+# LEDGER one daily-brief send - 8f5fa32 @1789107257
+# Line 1 names the commit this was run on. This step SENDS: it runs
+# tools/runner/telegram-bot.py --send-brief once. ONE message: the
+# brief a Producer turn wrote for today, checked here against the
+# register before it goes, carrying two buttons, readable and
+# unreadable. One receipt per day, so it is never sent twice. The
+# bot's loop does NOT also send it: one sender, no race. Streamed,
+# so a timeout still leaves everything it learned.
+briefPython=C:\Users\Jafar\miniconda3\python.exe
+# QUEUE 189 GATE, and the two shas below are DIFFERENT QUESTIONS.
+# briefCheckoutRunSha is the commit CI was started FOR. briefCheckoutPcHeadSha is the
+# commit HIS CHECKOUT was AT when this step read it. Line 1 of this
+# file names the first one, which is why it could be true and
+# misleading at once (queue 189). CONTAINS, not equals: his PC
+# commits its own evidence, so briefCheckoutAheadCommits above 0 is normal.
+# briefCheckoutBehindSecByCommitTime is the run's committer time minus the
+# checkout head's, so positive means his files are older.
+briefCheckoutRunSha=8f5fa323569b2a58aee5662ae02fb1e4f7329c85 briefCheckoutPcHeadSha=424cc7ebfd7863f14715a7be3a07b0f23ecf3ea0 briefCheckoutContains=no briefCheckoutOutcome=diverged briefCheckoutDecision=refuse
+briefCheckoutBehindCommits=1 briefCheckoutAheadCommits=1 briefCheckoutBehindSecByCommitTime=-25 briefCheckoutPcHeadCommitIso=2026-09-11T08:00:46+02:00
+briefCheckoutWaitedSec=30/30 briefCheckoutPolls=7 briefCheckoutPollSec=5 briefCheckoutSeries=0s/424cc7ebfd briefCheckoutSeriesShown=1/1
+briefCheckoutReason=his-checkout-is-on-a-commit-this-run-does-not-contain/nothing-was-sent/somebody-force-pushed-or-committed-there
+briefStatus=REFUSED-STALE-CHECKOUT briefSent=0 briefGateExit=3
