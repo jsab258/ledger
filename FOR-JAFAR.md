@@ -56,6 +56,18 @@ Retired, not asked: the brick-and-facades choice (the plan rebuilds them from th
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
+## Builder, Monday 5 October
+
+**Done:** your plan adopted with its ten edits; phase 0's items 0.1 to 0.6; the history cleaned into the new repository (30.8 GB to 3.2 GB), with guards before every push here and on GitHub, nine workflows retired, the tests green on GitHub. Every page's answers read back: 144, none new.
+
+**Failed, then fixed:** phase 0's fresh reviewer failed it on eleven old jobs waiting on GitHub to run on this PC (one installs a scheduled task); the reconnect now refuses while any wait. A retired job put a 16 MB picture on main: taken off. The finished game carried a jacket made in Marvelous Designer's evaluation-only trial: now never built in, and a check traces every file the package ships to its source (6,585 of 6,585).
+
+**Evidence:** checks 62/62 here; the core tests green on GitHub; the Shipping package rebuilt twice; the friends' evening re-run across a restart from the real shortcut (6.7 cents of calls).
+
+**C:** 57.2 GB free, **F:** 22.5 GB.
+
+**For you:** cancel the eleven old jobs (or leave them to lapse about 13:20), stop the Ledger Town session, then reconnect the build machine.
+
 ## Builder, Sunday 4 October
 
 **No page today:** nothing passed the gate. [The proof view, one frame a step](https://claude.ai/artifact/CaQ73RAcLMk1zqvqaNYt3r).
