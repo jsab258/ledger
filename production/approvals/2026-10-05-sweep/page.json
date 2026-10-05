@@ -1,0 +1,31 @@
+{
+ "tab": "Monday's Sweep",
+ "kicker": "LEDGER · Monday 5 October · phase 0, the sweep",
+ "title": "What existed that nobody looked at",
+ "how": [
+  "Everything the project has made was checked against the main copy. Two things need you: the September map of the town, which shapes the town, and tidying away old copies. Tap a picture to see it full size."
+ ],
+ "foot": "The full report is in the project's audits folder (the sweep of 5 October). Anything you do not pick carries onto the next page.",
+ "sections": [
+  {
+   "kind": "look",
+   "key": "atlas-01-map",
+   "name": "The September map: make it the town's map?",
+   "note": "Drawn 22 September and never brought in. It names canon's seven districts and puts Quay Street and Mickey's where the built street has them. Shown as drawn then: a few labels overlap the roads.",
+   "pictures": [
+    {"src": "production/previews/atlas-01-meridian-map-2026-10-05.jpg", "alt": "Meridian: seven districts, main routes, landmarks; 200 m scale"},
+    {"src": "production/previews/atlas-01-quay-street-plan-2026-10-05.jpg", "alt": "Quay Street in the Hook: Mickey's at the quay end, the fish shop next, shops across the north half"},
+    {"src": "production/previews/atlas-01-how-the-town-talks-2026-10-05.jpg", "alt": "Daily routes, escape lines and sightlines between the districts (ideas, not yet in the game)"}
+   ],
+   "options": [["adopt", "Make it the town's map (recommended)"], ["reference", "Keep it as a reference only"], ["no", "Leave it off"]],
+   "detail": "If you say yes, this map becomes the one place the town's layout is kept, and the built street is checked against it. Two differences are already known: the built street is 48 m long with the chandler's, the map's 42 m; and the built road bends and climbs at the far end. Left out either way: its design of Mickey's as a pub and the bars and beer in its drawn mood pictures, which break the content rule and your ruling that Mickey's is the cab office."
+  },
+  {
+   "kind": "decide",
+   "key": "archive-branches-2026-10-05",
+   "name": "Tidy away 68 old copies of work, each kept as a snapshot?",
+   "options": [["yes", "Yes, tidy them away (recommended)"], ["no", "Leave them as they are"]],
+   "note": "All 68 are already in the main copy, are older versions of it, or held research reports that are now copied in. Each stays as a labelled snapshot, so nothing is lost and any can be brought back."
+  }
+ ]
+}

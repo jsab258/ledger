@@ -163,6 +163,9 @@ real_table() {
     doc-caps-selftest     "$REPO"                 "$PY tools/doc-caps.py --selftest" \
     timelog-selftest      "$REPO"                 "$PY tools/timelog.py --selftest" \
     morning-selftest      "$REPO"                 "$PY tools/morning_pictures.py --selftest" \
+    page-answers          "$REPO"                 "$PY tools/page_answers.py" \
+    page-answers-selftest "$REPO"                 "$PY tools/page_answers.py --selftest" \
+    branch-sweep-selftest "$REPO"                 "$PY tools/branch_sweep.py --selftest" \
     route-walk-selftest   "$REPO"                 "$PY tools/route_walk.py --selftest" \
     approvals             "$REPO"                 "$PY tools/approvals.py" \
     approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \

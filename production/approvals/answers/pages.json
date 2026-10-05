@@ -1,0 +1,344 @@
+{
+ "about": "Every approval page Jafar has, and where each keeps his answers. The home of his page answers: production/approvals/answers/<page id>/<collection>/<answer>.json, copied from each page's own database. Read in full on 5 October 2026 (phase 0, item 0.3); read back every night (item 0.5). Built and checked by tools/page_answers.py.",
+ "pages": [
+  {
+   "id": "Pm1pF3ygCGW3nym14UvjYS",
+   "title": "Monday's Sweep",
+   "updated": "2026-10-05",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ],
+   "note": "the September map, and tidying away 68 old copies"
+  },
+  {
+   "id": "CaQ73RAcLMk1zqvqaNYt3r",
+   "title": "Proof View",
+   "updated": "2026-10-03",
+   "storage": "none",
+   "collections": [],
+   "note": "one frame a step, for his eyes; no answers asked"
+  },
+  {
+   "id": "KoqZDK2cUeBvvTKVDRhfxU",
+   "title": "Tom's suggested lines",
+   "updated": "2026-10-01",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "AnCngEsNuwfnBZtDwwe52p",
+   "title": "The ready-made suit",
+   "updated": "2026-10-02",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ],
+   "note": "no answer stored; retired 5 October (suits stopped)"
+  },
+  {
+   "id": "VDJKjJptpMWh6eaQrJ3j7Q",
+   "title": "Friday's Page",
+   "updated": "2026-10-02",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "MvGaDuwgQ9ZpxrqsWmuFb3",
+   "title": "Tailored clothes",
+   "updated": "2026-10-02",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ],
+   "note": "nothing to tap: settled by his message of 2 October"
+  },
+  {
+   "id": "GxkF7zTNJit7cAV2xaXuB2",
+   "title": "LEDGER Drive Space",
+   "updated": "2026-10-02",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "4WE6ZWBMWHeStVxxSdaDNx",
+   "title": "Drive C Cleanup (1 October)",
+   "updated": "2026-10-01",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "RZrzqngShazxh4JtrePZfZ",
+   "title": "Three characters' street lines",
+   "updated": "2026-10-01",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "KRReoxSgX8qEfPAebV4JhM",
+   "title": "LEDGER Screens, Evening Paper",
+   "updated": "2026-10-01",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "KkuYDscJkQfG2DaMbq5nYD",
+   "title": "LEDGER Interface Looks",
+   "updated": "2026-10-01",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "3zqyXtiTA35rPcuufuD48K",
+   "title": "Thursday's Page",
+   "updated": "2026-10-01",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "Gbu86NurpJTnXCca6vsGAJ",
+   "title": "Wednesday's Page",
+   "updated": "2026-09-30",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "3dS6bihBQhirakfkSo9zNz",
+   "title": "The police, and Sheila's speed",
+   "updated": "2026-09-30",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "GQwb2iMthCPhE56xArHCeJ",
+   "title": "Ron's tone",
+   "updated": "2026-09-30",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "S8N58tCo28wJeRTWHUVx1Y",
+   "title": "Three calls: how Mickey died, winding it down, threats",
+   "updated": "2026-09-29",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "BKVe5Ypxbv9fh4YD9f2ezi",
+   "title": "Drive C Cleanup (29 September)",
+   "updated": "2026-09-29",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "TXEoUnQoDTaLPfFZdHSYAL",
+   "title": "The warehouse fire, the talk's biggest fault, and Steam's wording",
+   "updated": "2026-09-29",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "XbMbZdQo9DwXf9NurNi3rR",
+   "title": "Faces and a Quicker Voice",
+   "updated": "2026-09-26",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "TmJnie1Qzo6jE6NdkyqRPo",
+   "title": "Tuesday's Page",
+   "updated": "2026-09-29",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "CKZN26j6P2cc91khC1uNRX",
+   "title": "Drive C Cleanup (28 September, later)",
+   "updated": "2026-09-28",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "JjhXofRjhrbtWjkZ91e5ot",
+   "title": "The first hour, and fifteen decisions",
+   "updated": "2026-09-29",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "SFQ1TofkLwLQ5NfYVkMACa",
+   "title": "Monday's Page",
+   "updated": "2026-09-28",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ],
+   "note": "no answer stored on the page; its items carried to Tuesday's"
+  },
+  {
+   "id": "FKSwS7qbFsDk4t4mFeR67s",
+   "title": "Town Sheets and Story",
+   "updated": "2026-09-28",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "KHjL38cq2t4nkRx4SeJB4W",
+   "title": "Drive C Cleanup (28 September)",
+   "updated": "2026-09-28",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "PWPUDrzee2hyGcdgTTjvsn",
+   "title": "Casting Approvals",
+   "updated": "2026-09-24",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "29sjrBNeLWYZqtscLK3pk7",
+   "title": "Drive C Cleanup (25 September)",
+   "updated": "2026-09-25",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "VENTjjoFEMVhGruPZpUbSq",
+   "title": "The Cast In Game",
+   "updated": "2026-09-25",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ],
+   "note": "no answer stored on the page"
+  },
+  {
+   "id": "BmG9NGPN8pAJpLoEWynM5g",
+   "title": "Faces and Voices",
+   "updated": "2026-09-25",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ]
+  },
+  {
+   "id": "KcjhMNZeMSJrDCBbSsEh3X",
+   "title": "Voice Blind Pairs",
+   "updated": "2026-09-23",
+   "storage": "db",
+   "collections": [
+    "picks"
+   ]
+  },
+  {
+   "id": "7rU1JMUr5Nc2SFTuwDm447",
+   "title": "Four Voices to Pick",
+   "updated": "2026-09-24",
+   "storage": "db",
+   "collections": [
+    "picks"
+   ]
+  },
+  {
+   "id": "GHtZMXFpxefhNqHHmC1nxD",
+   "title": "LEDGER studio status (live)",
+   "updated": "2026-09-01",
+   "storage": "status feed",
+   "collections": [],
+   "note": "a status display (status/current), no answers asked; retired"
+  },
+  {
+   "id": "6Trh9s6F14LYPqhZp2Yqu9",
+   "title": "LEDGER studio status (live)",
+   "updated": "2026-09-02",
+   "storage": "status feed",
+   "collections": [],
+   "note": "a status display, no answers asked; retired"
+  },
+  {
+   "id": "Qf37TCXHpZg6pnrUy7H2ek",
+   "title": "Meridian Night Four",
+   "updated": "2026-09-03",
+   "storage": "none",
+   "collections": [],
+   "note": "the old studio's page; its version declares no database"
+  },
+  {
+   "id": "GWHqTJq5KhYgmyW5BTC4o5",
+   "title": "Meridian Sign Shop",
+   "updated": "2026-09-02",
+   "storage": "none",
+   "collections": [],
+   "note": "the old studio's page; its version declares no database"
+  },
+  {
+   "id": "N9cj4bT3mF2nEZVWH7PDjS",
+   "title": "LEDGER - voice casting",
+   "updated": "2026-07-31",
+   "storage": "none",
+   "collections": [],
+   "note": "July; its version declares no database"
+  },
+  {
+   "id": "LWtCuBtgKX2GkWkwnbC5qZ",
+   "title": "LEDGER — voice candidates",
+   "updated": "2026-07-31",
+   "storage": "none",
+   "collections": [],
+   "note": "July; its version declares no database"
+  },
+  {
+   "id": "19KEWmTYDgC8azDcgEPd9p",
+   "title": "LEDGER — UI style directions",
+   "updated": "2026-07-26",
+   "storage": "none",
+   "collections": [],
+   "note": "July; its version declares no database"
+  }
+ ]
+}

@@ -1,0 +1,43 @@
+# The hosts this lane actually needed, one per line, probed by egress-probe.sh.
+#
+# OPTIONAL PATH. A host whose reachability depends on the path carries one,
+# space-separated, because a bare-host sweep filed raw.githubusercontent.com
+# under "other code" when it serves file content perfectly. See the note in
+# egress-probe.sh.
+#
+# This is NOT the census. The census of every host the deliveries cite is
+# hosts-cited-census.txt, 320 lines, most of them search-result aggregators
+# nobody should allowlist. This file is the curated subset that would change
+# a finding.
+dev.epicgames.com
+docs.unrealengine.com
+forums.unrealengine.com
+www.unrealengine.com
+docs.blender.org
+projects.blender.org
+developer.nvidia.com
+www.fab.com
+quixel.com
+arxiv.org
+huggingface.co
+github.com /microsoft/TRELLIS
+api.github.com /repos/microsoft/TRELLIS
+raw.githubusercontent.com /microsoft/TRELLIS/main/LICENSE
+pypi.org
+en.wikipedia.org
+www.legislation.gov.uk
+hansard.parliament.uk
+www.gov.uk
+datashare.ed.ac.uk
+www.gamedeveloper.com
+store.steampowered.com
+www.kodak.com
+link.springer.com
+ieeexplore.ieee.org
+www.sciencedirect.com
+pmc.ncbi.nlm.nih.gov
+www.brh.org.uk
+www.college.police.uk
+gdconf.com
+www.meshy.ai
+tripo3d.ai

@@ -1,0 +1,37 @@
+# egress probe, 2026-09-18T21:05:02Z
+# statistic: ONE reading per host, taken now. Not a median, not a peak.
+
+dev.epicgames.com                  000
+docs.unrealengine.com              000
+forums.unrealengine.com            000
+www.unrealengine.com               000
+docs.blender.org                   000
+projects.blender.org               000
+developer.nvidia.com               000
+www.fab.com                        000
+quixel.com                         000
+arxiv.org                          000
+huggingface.co                     000
+github.com /microsoft/TRELLIS      403
+api.github.com /repos/microsoft/TRELLIS 403
+raw.githubusercontent.com /microsoft/TRELLIS/main/LICENSE 200
+pypi.org                           200
+en.wikipedia.org                   000
+www.legislation.gov.uk             000
+hansard.parliament.uk              000
+www.gov.uk                         000
+datashare.ed.ac.uk                 000
+www.gamedeveloper.com              000
+store.steampowered.com             000
+www.kodak.com                      000
+link.springer.com                  000
+ieeexplore.ieee.org                000
+www.sciencedirect.com              000
+pmc.ncbi.nlm.nih.gov               000
+www.brh.org.uk                     000
+www.college.police.uk              000
+gdconf.com                         000
+www.meshy.ai                       000
+tripo3d.ai                         000
+
+hosts examined: 32   answered 2xx/3xx: 2   no answer (000): 28   other code: 2
