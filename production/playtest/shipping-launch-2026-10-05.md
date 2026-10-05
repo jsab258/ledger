@@ -30,7 +30,7 @@ Runs production/playtest/ai-tester/2026-10-05-1119 and -1123 (pictures on disk o
 
 ## The evening's limit across a restart
 
-Proven on the finished game on 3 October (production/playtest/friends-account-2026-10-03.md, build 2aab60b): an evening kept its 4.8 cents of spend after the game closed, and an evening at 9.8 of its 10 cents refused the next paid line with Sheila's written brush-off. The talk program has not changed since 2aab60b, and its own tests (EveningCap, checking under the cap) run in every build; not repeated with real money today.
+Proven on the finished game on 3 October (production/playtest/friends-account-2026-10-03.md, build 2aab60b): an evening kept its 4.8 cents of spend after the game closed, and an evening at 9.8 of its 10 cents refused the next paid line with Sheila's written brush-off. The talk program has not changed since 2aab60b, and its own tests (EveningCap, checking under the cap) run in every build; not repeated with real money today. Re-run later the same day with real money, after the phase 0 exit review: production/playtest/evening-restart-2026-10-05.md.
 
 ## Faults a friend would see, found on the way
 

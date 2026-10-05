@@ -60,7 +60,12 @@ if ($Start) {
     $sh.Arguments = '-EncounterSave="' + $save + '"'
     $sh.WorkingDirectory = Split-Path $game
     $sh.Save()
-    Write-Host "Ready: a five-dollar evening is on your key, and Quay Street (friends) is on your desktop."
+    # The cap the evening file holds, not a fixed "five dollars" (5 October: a ten-cent test evening
+    # was announced as five dollars).
+    $held = (Get-Content $evening -Raw | ConvertFrom-Json)
+    Write-Host ("Ready: an evening of US$" + ([double]$held.capUsd).ToString("0.00", [Globalization.CultureInfo]::InvariantCulture) +
+        " is on your key (US$" + ([double]$held.spentUsd).ToString("0.00", [Globalization.CultureInfo]::InvariantCulture) +
+        " spent so far), and Quay Street (friends) is on your desktop.")
     exit 0
 }
 

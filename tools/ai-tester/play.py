@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """THE AI TESTER, played by Claude Code itself (Jafar, 29 September).
 
-    python tools/ai-tester/play.py start [--editor | --plain | --bare] [--force] [--wait 60] [--game-arg X] [--save DIR] [--packaged EXE]
+    python tools/ai-tester/play.py start [--editor | --plain | --bare] [--force] [--wait 60] [--game-arg X] [--save DIR] [--packaged EXE] [--shortcut LNK]
     python tools/ai-tester/play.py shot
     python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run]
     python tools/ai-tester/play.py turn DEGREES          (negative left, positive right)
@@ -393,6 +393,19 @@ def picture(st, label):
 
 
 # ---------------------------------------------------------------- the commands
+def shortcut_target(lnk):
+    """(target, arguments) of a Windows shortcut, read as Explorer reads it; None if unreadable."""
+    if not os.path.isfile(lnk):
+        return None
+    ps = ("$s = (New-Object -ComObject WScript.Shell).CreateShortcut('%s'); "
+          "Write-Output $s.TargetPath; Write-Output $s.Arguments") % lnk.replace("'", "''")
+    r = subprocess.run(["powershell", "-NoProfile", "-Command", ps], capture_output=True, text=True)
+    lines = r.stdout.splitlines()
+    if r.returncode != 0 or not lines or not os.path.isfile(lines[0].strip()):
+        return None
+    return lines[0].strip(), (lines[1].strip() if len(lines) > 1 else "")
+
+
 def friends_env(env, profile):
     """The environment of another Windows account, as far as this one can stand in for it (P5):
     its user folders under profile, nothing under this account's own folder on the path, and no
@@ -468,6 +481,17 @@ def start(args):
     # old props, and the report says which.
     # --packaged EXE, 5 October (phase 0, item 0.6: the first Shipping launch): another finished
     # copy than the played one, such as a Shipping package, played the same way.
+    # --shortcut LNK, 5 October (phase 0's exit review: the Shipping launch went through a copy of
+    # the friends' shortcut, not the one tools/friends/evening.ps1 makes): the game exactly as a
+    # desktop shortcut starts it, its own target and its own arguments passed through untouched,
+    # with only a window added so the tester can see and steer.
+    sc_raw = None
+    if args.get("shortcut"):
+        sc = shortcut_target(args["shortcut"])
+        if not sc:
+            print("aiTester status=NO-SHORTCUT (%s could not be read)" % args["shortcut"])
+            return 2
+        args["packaged"], sc_raw = sc
     packaged = args.get("packaged") or PACKAGED
     pack_root = os.path.join(os.path.dirname(packaged), "LedgerProbe")
     self_contained = (not args.get("editor")) and os.path.isfile(os.path.join(
@@ -515,6 +539,10 @@ def start(args):
     build = "editor" if args.get("editor") else "packaged"
     print("aiTester build=%s selfContained=%s config=%s" % (build, "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
     cmd = ([EDITOR, PROJECT, "-game"] if args.get("editor") else [packaged]) + game_args
+    if sc_raw is not None:
+        # one command line, as Explorer passes it: the shortcut's quoting reaches the game unchanged
+        cmd = '"%s" %s -windowed -ResX=%d -ResY=%d -nosplash' % (packaged, sc_raw, RES[0], RES[1])
+        print("aiTester shortcut=%s commandLine=%s" % (args["shortcut"], cmd))
     subprocess.run(["dotnet", "build", os.path.join(REPO, "ledger", "TalkHelper"), "-c", "Release", "-nologo", "-v", "q"],
                    capture_output=True)
     if not wait_for_runner(float(args.get("wait", 60))):
@@ -759,6 +787,8 @@ if __name__ == "__main__":
             a["packaged"] = rest[rest.index("--packaged") + 1]
         if "--profile" in rest and rest.index("--profile") + 1 < len(rest):
             a["profile"] = rest[rest.index("--profile") + 1]
+        if "--shortcut" in rest and rest.index("--shortcut") + 1 < len(rest):
+            a["shortcut"] = rest[rest.index("--shortcut") + 1]
         sys.exit(start(a))
     if verb == "shot":
         s = running_state()
