@@ -832,9 +832,11 @@ LIBRARY_NOTICES = {
     "gfsdk_aftermath_lib.x64.dll": "nvidia-aftermath-nvapi-LICENSE.txt",
 }
 LIBRARY_OPEN = {
-    "d3d12sdklayers.dll": "whether it is on the Agility SDK's distributables list (FINDINGS.md)",
-    "xaudio2_9redist.dll": "the XAudio2 redistributable's terms, not yet read (FINDINGS.md)",
-    "dbghelp.dll": "DbgHelp's redistribution terms, not yet read (FINDINGS.md)",
+    # Read 5 October (production/research/engine-notices/NOTE.md). No copy is given out today: his
+    # friends play on his own PC. Before one is, each of these is settled (FINDINGS.md).
+    "d3d12sdklayers.dll": "the debug layer: Microsoft says to remove it from a game's installer; drop it from any copy given out",
+    "xaudio2_9redist.dll": "Microsoft's guide lets developers redistribute it; its package licence not yet read",
+    "dbghelp.dll": "redistributable only as Debugging Tools for Windows' copy, not Windows' own; which one Epic ships not yet read",
 }
 
 

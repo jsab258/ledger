@@ -25,8 +25,15 @@ Asked by phase 0's exit review (point 12): the Shipping package's NOTICES.txt ca
 
 The licence texts copied into production/licences/engine (with a README matching each DLL), staged into every package by tools/ue/stage_game_data.py, named on the credits page, and checked by tools/attribution-check.py --package: a library shipped with neither its licence beside it nor an open entry fails the build.
 
+## Read later the same day (Microsoft's own pages)
+
+- The Agility SDK's getting-started guide (devblogs.microsoft.com/directx/gettingstarted-dx12agility, 20 April 2021): "To ship your game, you must include the D3D12Core.dll you used to build your game", and "Remember to also remove the debug layer (D3D12SDKLayers.dll) from your application's installer ... it's not necessary to ship a game with it." So d3d12SDKLayers.dll comes out of any copy given out; Epic stages it only so a mismatched one in PATH cannot crash a debug run.
+- XAudio 2.9's redistributable guide (learn.microsoft.com, xaudio2-redistributable, updated 29 April 2025): "Developers can redistribute this version of XAudio 2.9 with their apps." Its NuGet package's licence text is not on this PC.
+- DbgHelp's versions page (learn.microsoft.com, dbghelp-versions, 14 July 2025): the Debugging Tools for Windows copies may be redistributed; "The DbgHelp.dll file that ships in Windows is not redistributable." Which copy Epic ships (version 10.0.25291) is not yet read.
+- None of this is owed today: no copy leaves his PC, where his friends play. Each is settled before one does.
+
 ## Open
 
-- Whether d3d12SDKLayers.dll is on the Agility SDK's distributables list. Epic stages it on purpose (AgilitySDK.Build.cs, lines 64 to 75: a mismatched layer DLL in PATH crashes the engine). The list is read from the SDK's package next.
-- The terms of the XAudio2 9 redistributable and of DbgHelp as shipped by the engine.
+- The XAudio2 redistributable package's licence text, and which DbgHelp copy Epic ships.
 - NVIDIA's terms for Aftermath SDK 2025.5; until read, the older NVAPI and Aftermath text the engine keeps is shipped.
+- A step that drops d3d12SDKLayers.dll from any copy given out (phase 4's frozen package is the first candidate).
