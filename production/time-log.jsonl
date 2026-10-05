@@ -13,3 +13,5 @@
 {"event": "start", "at": "2026-10-05T12:14:51", "task": "0.7 history cleaning: the plan to him", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-10-05T12:28:10", "note": "0.7 plan and rehearsal; his answer: clean in place"}
 {"event": "start", "at": "2026-10-05T12:28:11", "task": "0.7 history cleaning in place: his four points", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-10-05T13:12:10", "note": "0.7: guards and workflows"}
+{"event": "start", "at": "2026-10-05T13:12:11", "task": "0.7 history cleaning into the new repository", "phase": "0", "kind": "production"}
