@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """THE AI TESTER, played by Claude Code itself (Jafar, 29 September).
 
-    python tools/ai-tester/play.py start [--editor | --plain | --bare] [--force] [--wait 60] [--game-arg X] [--save DIR]
+    python tools/ai-tester/play.py start [--editor | --plain | --bare] [--force] [--wait 60] [--game-arg X] [--save DIR] [--packaged EXE]
     python tools/ai-tester/play.py shot
     python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run]
     python tools/ai-tester/play.py turn DEGREES          (negative left, positive right)
@@ -466,7 +466,10 @@ def start(args):
     # light and sound). A package that carries its own run-time files is run
     # ALONE, so a missing file shows as a fault here; an older one gets the
     # old props, and the report says which.
-    pack_root = os.path.join(os.path.dirname(PACKAGED), "LedgerProbe")
+    # --packaged EXE, 5 October (phase 0, item 0.6: the first Shipping launch): another finished
+    # copy than the played one, such as a Shipping package, played the same way.
+    packaged = args.get("packaged") or PACKAGED
+    pack_root = os.path.join(os.path.dirname(packaged), "LedgerProbe")
     self_contained = (not args.get("editor")) and os.path.isfile(os.path.join(
         pack_root, "Content", "LedgerData", "production", "assets", "street", "quay-street.json"))
     shipping = os.path.isfile(os.path.join(pack_root, "Binaries", "Win64", "LedgerProbe-Win64-Shipping.exe"))
@@ -511,7 +514,7 @@ def start(args):
         print("aiTester profile=%s (another account's folders; the game's own talk and voice)" % args["profile"])
     build = "editor" if args.get("editor") else "packaged"
     print("aiTester build=%s selfContained=%s config=%s" % (build, "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
-    cmd = ([EDITOR, PROJECT, "-game"] if args.get("editor") else [PACKAGED]) + game_args
+    cmd = ([EDITOR, PROJECT, "-game"] if args.get("editor") else [packaged]) + game_args
     subprocess.run(["dotnet", "build", os.path.join(REPO, "ledger", "TalkHelper"), "-c", "Release", "-nologo", "-v", "q"],
                    capture_output=True)
     if not wait_for_runner(float(args.get("wait", 60))):
@@ -752,6 +755,8 @@ if __name__ == "__main__":
         a["extra"] = [rest[k + 1] for k, x in enumerate(rest) if x == "--game-arg" and k + 1 < len(rest)]
         if "--save" in rest and rest.index("--save") + 1 < len(rest):
             a["save"] = rest[rest.index("--save") + 1]
+        if "--packaged" in rest and rest.index("--packaged") + 1 < len(rest):
+            a["packaged"] = rest[rest.index("--packaged") + 1]
         if "--profile" in rest and rest.index("--profile") + 1 < len(rest):
             a["profile"] = rest[rest.index("--profile") + 1]
         sys.exit(start(a))
