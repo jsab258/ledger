@@ -38,11 +38,9 @@ Disk (10-05 04:30): C: 73.1 GB free, F: 24.4 GB free; grew most since 10-04 04:3
 
 (Every page's answers read back at 17:10: 144, nothing new since this morning.)
 
-1. **Eleven old jobs on GitHub, before the build machine reconnects.** Cancel them (the links are in the chat of 5 October), or leave them: GitHub drops them about 13:20 on 6 October. Recommended: cancel.
-2. **The build machine, at the PC (about two minutes), after 1:** PowerShell as administrator, run `powershell -NoProfile -ExecutionPolicy Bypass -File C:\Users\Jafar\ledger-local\tools\runner\reconnect.ps1`; it asks for the token from GitHub's new-runner page and your Windows password, which only you type. When its tests pass, tell me, and the safety copy of the old history on C: goes (about 28 GB).
-3. ~~Stop the Ledger Town session.~~ Settled by his word: it has been off for days.
-4. **[Monday's sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS), one tap.** The September map of the town: make it the town's map (recommended).
-5. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
+1. **Say "it all works"** and the safety copy of the old history on C: goes (about 28 GB): the new repository, its guards, the tests on GitHub and the build machine's run of main (21:47 to 22:08, every gate passed) all work.
+2. **[Monday's sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS), one tap.** The September map of the town: make it the town's map (recommended).
+3. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
 
 Retired, not asked: the brick-and-facades choice (the plan rebuilds them from the kit in phase 2), the suit purchase and the tailoring questions (stopped by your rulings and the plan).
 
