@@ -69,7 +69,24 @@ jobs:
       # case, the rejecting case and the skip-the-rest case in about a
       # second, which is the step below.
       - name: Every cheap check, then the verdict naming which failed
-        run: bash tools/ci-checks.sh
+        # THE VERDICT WHERE ANYONE CAN READ IT (5 October 2026): a job's log needs a signed-in
+        # owner, but its annotations and step summary do not, so the verdict line and the last
+        # lines of each failed check go there too.
+        run: |
+          set -o pipefail
+          bash tools/ci-checks.sh 2>&1 | tee ci-checks.log
+          rc=$?
+          verdict="$(tail -n 1 ci-checks.log)"
+          echo "$verdict" >> "$GITHUB_STEP_SUMMARY"
+          if [ $rc -ne 0 ]; then
+            echo "::error title=ci-checks::$verdict"
+            for name in $(echo "$verdict" | sed -n 's/.*failed=//p' | tr ',' ' ' | sed 's/:rc[0-9]*//g'); do
+              lines="$(grep -B 8 "check name=$name " ci-checks.log | tr '\n' ' ' | cut -c1-900)"
+              echo "::error title=$name::$lines"
+              grep -n -i -E "fail|error|refused" ci-checks.log | grep -i "$name" | tail -n 5 >> "$GITHUB_STEP_SUMMARY" || true
+            done
+          fi
+          exit $rc
 
       # AND THE HARNESS THAT GRADED THEM, GRADED. `if: ${{ !cancelled() }}`
       # so a red check above cannot skip it — that is the exact fault this
