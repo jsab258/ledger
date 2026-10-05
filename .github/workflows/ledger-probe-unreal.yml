@@ -2820,6 +2820,16 @@ jobs:
           # here can read about why an editor process exited the way it did.
           [ -f production/d1-probe/ue-material-log.txt ] && \
             git add -- production/d1-probe/ue-material-log.txt
+          # ONLY TEXT BACK TO GIT (Jafar, 5 October 2026: "the build machine writes only text back to
+          # git, its pictures to the drive"): whatever was staged above is checked before the commit
+          # (tools/push_guard.py --staged --build-machine: no picture, nothing over 1 MB, nothing but
+          # text except the three material files the cook needs). A refusal unstages it all and
+          # fails the run loudly; nothing reaches git.
+          if ! python tools/push_guard.py --staged --build-machine; then
+            git reset -q
+            echo "BUILD MACHINE REFUSED: it staged a picture, a file over 1 MB or a binary; nothing committed"
+            exit 1
+          fi
           git diff --cached --quiet && { echo "probe result unchanged; nothing to commit"; exit 0; }
           git commit -m "UE machine probe from $(git rev-parse --short HEAD)"
           BR="${GITHUB_REF_NAME}"
@@ -3026,6 +3036,12 @@ jobs:
           # ITS OWN PUSH, and a failure to push is not a failure of the
           # check: the check's answer is what reddens this run.
           git add -- "$OUTF" 2>/dev/null || true
+          # THE SAME GUARD AS THE PROBE'S OWN COMMIT ABOVE: only text back to git.
+          if ! python tools/push_guard.py --staged --build-machine; then
+            git reset -q
+            echo "BUILD MACHINE REFUSED: the crime check staged something that is not text; nothing committed"
+            exit 1
+          fi
           if ! git diff --cached --quiet 2>/dev/null; then
             git -c user.name="LEDGER probe" -c user.email="probe@ledger.local"               commit -q -m "crime check from $SHORT" || true
             # ONLY THE RECENT HISTORY, as in "Commit the probe result" above.

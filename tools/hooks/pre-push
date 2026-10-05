@@ -1,0 +1,11 @@
+#!/bin/sh
+# NOTHING LARGE AND NOTHING FROM THE OLD HISTORY IS PUSHED (Jafar, 5 October 2026, after the
+# history was cleaned into a new repository): every commit a push would add is checked by
+# tools/push_guard.py: no file over 1 MB, no picture outside production/previews/ or of 500 KB or
+# more inside it, and no commit of the old history (the map of old to new commits). Installed in
+# the shared git folder, so every checkout of this repository on this PC runs it:
+#   cp tools/hooks/pre-push "$(git rev-parse --git-common-dir)/hooks/pre-push"
+# Never bypassed with --no-verify (CLAUDE.md).
+GUARD="$(git rev-parse --git-common-dir)/../tools/push_guard.py"
+[ -f "$GUARD" ] || GUARD="tools/push_guard.py"
+exec python "$GUARD" "$@"

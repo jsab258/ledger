@@ -1,0 +1,42 @@
+name: LEDGER push guard
+
+# NOTHING LARGE AND NOTHING FROM THE OLD HISTORY (Jafar, 5 October 2026, after the history was
+# cleaned into this new repository): the same check this PC runs before every push
+# (tools/hooks/pre-push), run again here on every push to any branch, so a push from anywhere
+# else (a cloud session, a browser edit) goes red at once. A push made by a workflow with GitHub's
+# own token starts no workflow, this one included (found 5 October, when a retired job's 16 MB
+# picture reached main unseen): the build machine checks what it stages before each commit, and
+# the second step here re-reads the whole branch since the cleaning, so anything that slipped in
+# goes red at the next push. tools/push_guard.py refuses a file
+# over 1 MB, a picture outside production/previews/ or of 500 KB or more inside it, and any
+# commit of the old history (production/audits/history-clean-2026-10/commit-map.txt).
+on:
+  push:
+
+concurrency:
+  group: push-guard-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # The history without its file contents (a few MB): the guard reads only the commits it
+      # checks, and asks for the sizes of their files, which git fetches one by one.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - name: The pushed commits against the limits and the old history
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            BEFORE="$(git rev-parse origin/main 2>/dev/null || echo 0000000000000000000000000000000000000000)"
+          fi
+          python3 tools/push_guard.py --range "$BEFORE" "$AFTER"
+      - name: The whole branch since the cleaning, for what came in by an unwatched push
+        if: ${{ !cancelled() }}
+        run: python3 tools/push_guard.py --branch HEAD
