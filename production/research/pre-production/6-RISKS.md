@@ -65,6 +65,7 @@ Changing the summary, the overview or the list is outside this review. This page
 | Date | Reviewer | What changed (IDs, scores, closed, added) | Top three |
 |---|---|---|---|
 | 2026-10-03 | this review (cloud) | Baseline; R10 raised to 16 after the independent check found the rulings conflict | R1 (25), R2 (20), R3 (20) |
+| 2026-10-05 | builder, Monday review | R3 up to 25 (L5: the audit of 4 Oct finds the visual method unproved; five proof steps set aside, Mickey's room failed three reviews). R1 level 25 (bench not re-run; 0 of 8 empty in P4). R2 level 20 (first sound 4.6 s, text 2.5 s, P4). R10 down to 9 and R7 to 10 (friends on his own account, $5 cap tool, no second account; Shipping launch and restart limits unproved, item 0.6). R9 level 12 (weekly orders and one session adopted, not yet shown). | R3 (25), R1 (25), R2 (20) |
 
 ## What could not be verified
 

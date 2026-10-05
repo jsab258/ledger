@@ -33,10 +33,13 @@ CAPS = [
     ("NOW.md", 200),
     ("TOWN.md", 300),
     ("CLOTHES.md", 300),
+    # Adopted 5 October from the outside audit's drafts (production/audits/2026-10-04-*).
+    ("CHARTER.md", 400),
+    ("PLAN.md", 1200),
 ]
 # Measured and printed, not failed, until the session that owns the file has trimmed it under its
 # cap and removed it from here (handed over 3 October).
-NOT_YET = {"TOWN.md", "CLOTHES.md"}
+NOT_YET = set()  # 5 October: TOWN.md and CLOTHES.md trimmed to bounded-task briefs; nothing exempt.
 
 
 def words(text):
