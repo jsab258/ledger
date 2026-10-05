@@ -36,6 +36,7 @@ CAPS = [
     # Adopted 5 October from the outside audit's drafts (production/audits/2026-10-04-*).
     ("CHARTER.md", 400),
     ("PLAN.md", 1200),
+    ("CATALOGUE.md", 1500),
 ]
 # Measured and printed, not failed, until the session that owns the file has trimmed it under its
 # cap and removed it from here (handed over 3 October).

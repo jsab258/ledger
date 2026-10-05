@@ -7,7 +7,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Monday 5 October. Phase 0, recover control. On: 0.4 CATALOGUE.md: what exists, homes table, disagreements. Next: 0.5 Failing checks: stale branches, homes, catalogue; nightly answers.**
+**Morning, Monday 5 October. Phase 0, recover control. On: 0.5 Failing checks: stale branches, homes, catalogue; nightly answers. Next: 0.6 Friends-build rulings mapped; P3, P14, evening limits; Shipping launch.**
 
 | | Today, 05 Oct | Yesterday, 04 Oct |
 |---|---|---|

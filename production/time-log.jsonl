@@ -5,3 +5,5 @@
 {"event": "start", "at": "2026-10-05T08:41:52", "task": "0.3 the sweep: branches, drives, page answers, studio repository", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-10-05T09:37:29", "note": "0.3: SWEEP.md, 144 answers, page Pm1pF3ygCGW3nym14UvjYS"}
 {"event": "start", "at": "2026-10-05T09:37:29", "task": "0.4 CATALOGUE.md: what exists, homes table, disagreements", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-10-05T10:39:57", "note": "0.4: CATALOGUE.md, four disagreement reports"}
+{"event": "start", "at": "2026-10-05T10:39:57", "task": "0.5 checks that fail the build; nightly answers read-back", "phase": "0", "kind": "production"}
