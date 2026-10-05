@@ -42,3 +42,12 @@ About an hour of work plus the upload, at a quiet moment. Nothing is deleted: th
 ## The other way (not recommended)
 
 Rewrite in place and ask GitHub Support: same work on our side, no new repository or runner registration, but by GitHub's stated policy Support is unlikely to act, so the 30 GB and the other games' frames would likely stay reachable through the pull requests.
+
+## Update, 5 October (phase 0, item 0.7): what changed since
+
+- **Measured again:** 30.8 GB stored; 15 pull-request references still reach the old pictures; four workflows still read the two Unity secrets, so step 5 stands.
+- **One session now.** The town's and clothing's folders (ledger-town, ledger-clothes) are retired rather than re-pointed: their branches' work is in main (the sweep, production/audits/sweep-2026-10-05/SWEEP.md), and their worktrees are clean. Two of their app sessions are still open (Ledger Town, waiting; Ledger Clothes, idle): closed before the cleaning.
+- **Fewer branches.** If he answers yes on Monday's Sweep page, the 68 old branches become archive tags first; the tags are cleaned with everything else and pushed with the branches.
+- **Quiet hours** now also avoid the nightly jobs: 02:20 to 03:30 (the walk), 04:30 to 05:45 (retention, the page answers' read-back, the morning pictures).
+- **The tool:** git-filter-repo 2.47.0 (4 December 2024), MIT for the tool itself (its test harness GPL-2, never run here), by Elijah Newren (pypi.org and the project's COPYING, read today); a development tool, never shipped; recorded in DECISIONS.md.
+- **Rehearsed first on a copy:** steps 2 to 4 run on a throwaway mirror copy before his go, touching nothing of his, the working folders, the build machine or GitHub; the result (size, branches, checks) goes to him with the question.
