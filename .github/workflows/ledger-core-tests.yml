@@ -73,9 +73,11 @@ jobs:
         # owner, but its annotations and step summary do not, so the verdict line and the last
         # lines of each failed check go there too.
         run: |
+          # GitHub runs a step with -e: a bare failing pipeline ends the step before rc is read
+          # (found 5 October: the first try wrote no annotation at all).
           set -o pipefail
-          bash tools/ci-checks.sh 2>&1 | tee ci-checks.log
-          rc=$?
+          rc=0
+          bash tools/ci-checks.sh 2>&1 | tee ci-checks.log || rc=$?
           verdict="$(tail -n 1 ci-checks.log)"
           echo "$verdict" >> "$GITHUB_STEP_SUMMARY"
           if [ $rc -ne 0 ]; then
