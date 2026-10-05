@@ -7,11 +7,11 @@ Phase 0, item 0.6 (PLAN.md): every friends'-build ruling mapped to one item, its
 | Ruling (RULINGS.md) | Item | Owner | Proof in the package | Now |
 |---|---|---|---|---|
 | Thirty minutes his friends play, passing the Meridian Test | the two newcomer routes and one checked-live route | B, T | phase 3's exit, repeated on the frozen package; the friends' first thirty minutes logged | 11 empty minutes (P4) |
-| His PC, his own account, no second account | the played copy started on this account | B | a launch from the desktop shortcut, Shipping (item 0.6) | Development copy only |
+| His PC, his own account, no second account | the played copy started on this account | B | a launch from the desktop shortcut, Shipping (item 0.6) | Shipping launched through a copy of the shortcut, 5 Oct (production/playtest/shipping-launch-2026-10-05.md) |
 | A shortcut | "Quay Street (friends)" made by tools/friends/evening.ps1 -Start | B | the shortcut opens the friends' save, apart from his | made and tested 4 Oct |
-| His key, $5 an evening, no relay | the evening file beside the key; the talk program starts from its spend | B | an evening stopped mid-way and restarted keeps its spend (item 0.6) | unit-tested in the talk program |
+| His key, $5 an evening, no relay | the evening file beside the key; the talk program starts from its spend | B | an evening stopped mid-way and restarted keeps its spend (item 0.6) | proven on the package 3 Oct (2aab60b, unchanged since); tested every build |
 | The twenty basics | twenty rows below | B, T | each on the package | below |
-| Nothing a friend sees unfinished; no debug text | no placeholder figure, base layer or debug key | B, C | a fresh reviewer walks the package against the twenty and this row | "?" opens a debug overlay; base layer; three placeholder figures |
+| Nothing a friend sees unfinished; no debug text | no placeholder figure, base layer, debug key or "not in this build" line | B, C | a fresh reviewer walks the package against the twenty and this row | the pause menu names Tom's notebook "not in this build yet"; smudges on Ron's shirt; base layer; three placeholder figures; the Development copy's "?" overlay |
 | Sheila's face whole when she talks | her talking face holds at dialogue distance | B | a filmed conversation on the package | talking-face faults researched 1 Oct |
 | Weather: a grey range, never sunshine | dry overcast, drizzle, rain; wetting and drying | B, T | the weather proof (PLAN.md) | one dry overcast day, one wet night |
 | Clothes to their floor | one plain outfit on each principal | C, B | films walking, sitting, turning at eight metres and close | white base layer, two barefoot |
@@ -29,9 +29,9 @@ Phase 0, item 0.6 (PLAN.md): every friends'-build ruling mapped to one item, its
 
 | # | Basic | Owner | Proof | Now |
 |---|---|---|---|---|
-| 1 | Starts from its own shortcut, talk and voice inside | B | the Shipping launch (item 0.6) | Development copy |
-| 2 | Shows progress while shaders compile | B | a first launch with an empty shader cache | not proven |
-| 3 | A sensible resolution and window | B | the first launch with no command line | the picture ladder sets High |
+| 1 | Starts from its own shortcut, talk and voice inside | B | the Shipping launch (item 0.6) | Shipping: through a copy of the shortcut, its own talk program and voice, 5 Oct |
+| 2 | Shows progress while shaders compile | B | a first launch with an empty shader cache | Shipping first launch: "Getting the street ready for this PC's graphics card" with progress, 5 Oct |
+| 3 | A sensible resolution and window | B | the first launch with no command line | full screen at 3440x1440 after "Finding the picture this PC can keep smooth", 5 Oct |
 | 4 | Quality presets | B | Low, Medium, High each measured | High set; others not measured |
 | 5 | A title screen: New game, Continue, Quit | B | the package's first screen | built |
 | 6 | A clear first purpose (Sheila's walk-round) | B, T | a newcomer route | in the game |
@@ -47,7 +47,7 @@ Phase 0, item 0.6 (PLAN.md): every friends'-build ruling mapped to one item, its
 | 16 | People turn toward the smash | B | the window encounter filmed | in the game |
 | 17 | The smashed window's remnants believable | B | the window close up | inside card shows (FINDINGS) |
 | 18 | Footsteps in time | B | a walk with sound | in the game |
-| 19 | Esc pauses, with Resume and Quit | B | the package | built |
-| 20 | An autosave, Continue brings him back | B, T | quit and continue on the package | built |
+| 19 | Esc pauses, with Resume and Quit | B | the package | Shipping, 5 Oct |
+| 20 | An autosave, Continue brings him back | B, T | quit and continue on the package | Shipping, 5 Oct: resumed beside Ron as saved |
 
 Every "Now" that is not proven on the frozen package is open until phase 4's exit; the walk that proves them is the two newcomer routes, repeated by a fresh reviewer who gets this table, not the maker's verdict.

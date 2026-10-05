@@ -6,8 +6,8 @@ GOAL (his /goal, to Sunday 11 Oct 20:00): PLAN.md's phases 0 and 1 done with evi
 - [x] 0.2 Time log; morning pictures.
 - [x] 0.3 Sweep: branches, drives, page answers, game-studio repository.
 - [x] 0.4 CATALOGUE.md: what exists, homes table, disagreements.
-- [ ] 0.5 Failing checks: stale branches, homes, catalogue; nightly answers.
-- [ ] 0.6 Friends-build rulings mapped; P3, P14, evening limits; Shipping launch.
+- [x] 0.5 Failing checks: stale branches, homes, catalogue; nightly answers.
+- [x] 0.6 Friends-build rulings mapped; P3, P14, evening limits; Shipping launch.
 - [ ] 0.7 History cleaning: plan to him, sessions stopped.
 - [ ] 0.8 Exit: fresh reviewer.
 
@@ -18,7 +18,7 @@ GOAL (his /goal, to Sunday 11 Oct 20:00): PLAN.md's phases 0 and 1 done with evi
 - [ ] 1.3 P2 voice, two approaches; first speech two seconds.
 - [ ] 1.4 P1 packaged: day, night, walk, memory, speech.
 
-STATE (5 Oct): 0.5 on; morning task from 6 Oct.
+STATE (5 Oct): 0.7 on; answers and pictures first run tonight.
 
 ## Handovers
 

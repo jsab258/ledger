@@ -27,5 +27,11 @@ public class LedgerProbeTarget : TargetRules
 		// Explicit, because attempt 1 died on exactly this question.
 		BuildEnvironment = TargetBuildEnvironment.Shared;
 		ExtraModuleNames.Add("LedgerProbe");
+		// NO LOG IN SHIPPING, AND WHY (5 October, phase 0 item 0.6): bUseLoggingInShipping was
+		// tried for the friends' copy and UBT refused it, "LedgerProbe modifies the values of
+		// properties ... as LedgerProbe has build products in common with UnrealGame": a shared
+		// build environment, which an installed engine requires (attempt 1 above), cannot change
+		// it. A Shipping evening leaves the game's own files, not a log
+		// (production/research/shipping-build/NOTE.md).
 	}
 }
