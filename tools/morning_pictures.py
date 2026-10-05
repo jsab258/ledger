@@ -159,8 +159,35 @@ def block(day, failure, now_text, exists=os.path.exists):
             cells.append("![%s, %s](%s)" % (words, d.isoformat(), p) if exists(os.path.join(REPO, p)) else "none")
         lines.append("| %s | %s | %s |" % (words, cells[0], cells[1]))
     lines += ["", "The Hook sheet, the bar they are held to: ![The Hook sheet](%s)" % HOOK_SHEET_PREVIEW, "",
-              "No decision asked: these are for watching the street change.", "", END]
+              "No decision asked: these are for watching the street change.", ""]
+    # MONDAYS, THE REPOSITORY'S SIZE (Jafar, 5 October 2026, after the history was cleaned from
+    # 30.8 GB to about 3 GB: "the repository's size goes into the Monday review").
+    if day.weekday() == 0:
+        lines += ["**The repository on Monday:** %s" % repo_size(), ""]
+    lines += [END]
     return "\n".join(lines)
+
+
+def repo_size():
+    """GitHub's own figure for the repository and this PC's packed history, or why not measured."""
+    import urllib.request
+    import json as _json
+    gh = "not measured (GitHub did not answer)"
+    try:
+        with urllib.request.urlopen("https://api.github.com/repos/jsab258/ledger", timeout=20) as r:
+            kb = _json.load(r).get("size")
+            if isinstance(kb, int):
+                gh = "%.2f GB on GitHub" % (kb / 1e6)
+    except Exception:
+        pass
+    local = "not measured here"
+    try:
+        out = subprocess.run(["git", "count-objects", "-v"], cwd=REPO, capture_output=True, text=True).stdout
+        kb = sum(int(l.split()[1]) for l in out.splitlines() if l.startswith(("size:", "size-pack:")))
+        local = "%.2f GB packed on this PC" % (kb / 1e6)
+    except Exception:
+        pass
+    return "%s; %s (the history was 30.8 GB before 5 October's cleaning; a guard refuses large files before every push)." % (gh, local)
 
 
 def put_block(text, blk):

@@ -166,6 +166,7 @@ real_table() {
     page-answers          "$REPO"                 "$PY tools/page_answers.py" \
     page-answers-selftest "$REPO"                 "$PY tools/page_answers.py --selftest" \
     branch-sweep-selftest "$REPO"                 "$PY tools/branch_sweep.py --selftest" \
+    push-guard-selftest   "$REPO"                 "$PY tools/push_guard.py --selftest" \
     catalogue             "$REPO"                 "$PY tools/catalogue.py" \
     catalogue-selftest    "$REPO"                 "$PY tools/catalogue.py --selftest" \
     branch-check          "$REPO"                 "$PY tools/branch_check.py" \

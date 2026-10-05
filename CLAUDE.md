@@ -57,6 +57,6 @@ canon.md (outranks everything), CHARTER.md, RULINGS.md, PLAN.md, NOW.md, CATALOG
 ## Builds, git and disk
 
 - Unfinished work goes to branch wip daily and after each finished piece, with previews; main gets only what passed review (fetch and rebase first), never on a failing check. Two Unreal builds never overlap. Commits say plainly what changed and why.
-- Git holds text and small files, plus previews (JPEG, ~1600 px, under 500 KB) in production/previews/; tools/git-size-guard.py runs on every commit; never --no-verify.
+- Git holds text, small files and previews (JPEG, ~1600 px, under 500 KB) in production/previews/; guards check every commit and push; never --no-verify.
 - Write only where production/retention.json names; lasting inputs in F:\LedgerTools; nothing large on C:. Before any build or render: `python tools/retention.py space --job "what" --drives CF`; a full disk: stop and wait.
 - Delete only what retention limits cover; else his yes on a page; nothing of his is touched.
