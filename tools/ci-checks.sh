@@ -165,6 +165,8 @@ real_table() {
     morning-selftest      "$REPO"                 "$PY tools/morning_pictures.py --selftest" \
     page-answers          "$REPO"                 "$PY tools/page_answers.py" \
     page-answers-selftest "$REPO"                 "$PY tools/page_answers.py --selftest" \
+    page-answers-fresh    "$REPO"                 "$PY tools/page_answers.py --fresh 2" \
+    morning-fresh         "$REPO"                 "$PY tools/morning_pictures.py --fresh 2" \
     branch-sweep-selftest "$REPO"                 "$PY tools/branch_sweep.py --selftest" \
     push-guard-selftest   "$REPO"                 "$PY tools/push_guard.py --selftest" \
     catalogue             "$REPO"                 "$PY tools/catalogue.py" \

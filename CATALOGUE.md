@@ -9,13 +9,13 @@ Phase 0, item 0.4 (PLAN.md; his edit 9). Search this, canon, the research librar
 | Premise, period, names, content rule | canon.md (outranks all) | everything; tools/canon-gate.py, tools/content-gate.py |
 | His rulings; how the work runs | RULINGS.md; CLAUDE.md | tools/doc-caps.py |
 | His page answers | production/approvals/answers/ | DECISIONS lines; tools/page_answers.py |
-| The town's map and districts | canon.md's seven districts; the atlas's map data if he adopts it (art/atlas-01, data/atlas.json) | the built street's place; district art. No check yet |
+| The town's map and districts | canon.md's seven districts; the atlas's map data if he adopts it (art/atlas-01, data/atlas.json) | the built street's place; district art. No automatic check yet (the map is not adopted) |
 | Quay Street as built | production/specs/vignette-scene.json | vignette-pieces.json and feet (CoreTests fails on drift), the Unreal street (tools/spec-test-check.sh) |
 | Trades and shop names | RULINGS.md (trades line) | shop-interiors.json, signs, content/brands (tools/brand-verify.py) |
-| The cast | production/casting/CASTING.md and each SHEET.md | talk cards, the Unreal cast, street lines. No check yet |
+| The cast | production/casting/CASTING.md and each SHEET.md | talk cards, the Unreal cast, street lines. No automatic check yet (cast-vs-sheets.md, 5 October, by hand) |
 | Faces and voices in use | RULINGS.md (faces frozen, voices); production/casting/voice-key.json | the game's MetaHumans and voices; tools/approvals.py |
 | The simulation's rules | the C# Core (ledger/Assets/Scripts/Core) and its golden tables | the Unreal port; tools/port-golden-check.sh, PerceptionGolden |
-| The street's people | the simulation's residents (the Core) | production/specs/street-people.json. No check yet |
+| The street's people | the simulation's residents (the Core) | production/specs/street-people.json. Checked: tools/homes_check.py (every figure on the street stands for a resident or is ruled scenery) |
 | The look | production/specs/unreal-look.json, judged against production/reference/hook-sheet.png | the Unreal materials and grade |
 | The story | game-design/story-outline-2026-09-28.md and first-hour-2026-09-29.md (approved) | talk facts and lines; canon-gate |
 | Sources and licences | THIRD-PARTY.md; ledger-v2/research/license-allowlist.md | tools/attribution-check.py |

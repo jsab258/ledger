@@ -19,6 +19,40 @@ $dir = "C:\actions-runner-ledger"
 $svc = "actions.runner.jsab258-ledger.JAFAR-DESKTOP"
 Set-Location $dir
 
+# NOTHING OLD RUNS ON THIS PC WHEN IT CONNECTS (found 5 October by the phase 0 exit's reviewer):
+# main's sixteen upload steps set off eleven September jobs (installing a scheduled task,
+# restarting the old Telegram bot, setting up compilers) that wait for this PC's label; a
+# connected runner would take them at once. So before anything is changed, every waiting run is
+# read from GitHub (public, no sign-in), and the script stops if any is from a workflow no longer
+# in the repository or for a commit that is no longer its branch's latest.
+Write-Host "0. Checking that no old job waits on GitHub for this PC."
+$api = "https://api.github.com/repos/jsab258/ledger"
+$hdr = @{ "User-Agent" = "ledger-reconnect" }
+$current = (Get-ChildItem "C:\Users\Jafar\ledger-local\.github\workflows\*.yml").Name
+$heads = @{}
+$stale = @()
+foreach ($st in "queued", "pending", "waiting", "requested") {
+    $runs = (Invoke-RestMethod -Headers $hdr "$api/actions/runs?status=$st&per_page=100").workflow_runs
+    foreach ($r in $runs) {
+        if (-not $heads.ContainsKey($r.head_branch)) {
+            try { $heads[$r.head_branch] = (Invoke-RestMethod -Headers $hdr "$api/branches/$($r.head_branch)").commit.sha }
+            catch { $heads[$r.head_branch] = "" }
+        }
+        $retired = $current -notcontains (Split-Path $r.path -Leaf)
+        $old = $r.head_sha -ne $heads[$r.head_branch]
+        if ($retired -or $old) { $stale += $r }
+    }
+}
+if ($stale.Count -gt 0) {
+    Write-Host ""
+    Write-Host "STOPPED: $($stale.Count) old jobs wait on GitHub and would run on this PC the moment it connects."
+    Write-Host "Cancel each (open the link, then 'Cancel workflow'), or wait until GitHub drops them 24 hours"
+    Write-Host "after they were made, then run this again. Nothing has been changed."
+    foreach ($r in $stale) { Write-Host ("  {0}  ({1}, made {2})  {3}" -f $r.name, $r.head_branch, $r.created_at, $r.html_url) }
+    exit 2
+}
+Write-Host "   none waiting."
+
 Write-Host "1. Stopping the old runner service, if it runs."
 Stop-Service $svc -ErrorAction SilentlyContinue
 

@@ -269,7 +269,36 @@ def selftest():
     t1 = put_block(t, b)
     t2 = put_block(t1, b2)
     check(t2.count(BEGIN) == 1 and "No morning pictures today" in t2 and t2.startswith("# For Jafar\n\n## Overview (Monday)\n"), "the block goes under the overview's heading once and is replaced, not repeated")
+    sink = io.StringIO()
+    hook = "%s-2026-10-05.jpg" % VIEWS[0][1]
+    check(fresh(2, dt.date(2026, 10, 7), [hook, "x.jpg"], sink) == 0, "pictures two days old pass")
+    check(fresh(2, dt.date(2026, 10, 8), [hook], sink) == 1, "pictures three days old fail the build")
+    check(fresh(2, dt.date(2026, 10, 5), [], sink) == 1, "no morning pictures at all fail too")
     print("morning_pictures selftest: " + ("passed" if ok else "FAILED"))
+    return 0 if ok else 1
+
+
+def fresh(days, today=None, names=None, out=sys.stdout):
+    """THE MORNING PICTURES' OWN ALARM (5 October, the phase 0 exit's reviewer: nothing failed the
+    build if the 05:15 task stopped). Fails when the newest hook-camera preview is missing or more
+    than `days` days old."""
+    if names is None:
+        d = os.path.join(REPO, "production", "previews")
+        names = os.listdir(d) if os.path.isdir(d) else []
+    pre = "%s-" % VIEWS[0][1]
+    days_seen = []
+    for n in names:
+        if n.startswith(pre) and n.endswith(".jpg"):
+            try:
+                days_seen.append(dt.date.fromisoformat(n[len(pre):-4]))
+            except ValueError:
+                pass
+    last = max(days_seen) if days_seen else None
+    age = ((today or dt.date.today()) - last).days if last else None
+    ok = age is not None and age <= days
+    print("morning-fresh newest=%s ageDays=%s limit=%d outcome=%s" % (last, age, days, "PASS" if ok else "FAIL"), file=out)
+    if not ok:
+        print("morning-fresh FAIL no morning pictures for over %d days: the task 'LEDGER morning pictures' (05:15) has stopped or failed" % days, file=out)
     return 0 if ok else 1
 
 
@@ -280,9 +309,12 @@ def main():
     ap.add_argument("--no-commit", action="store_true")
     ap.add_argument("--date")
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--fresh", type=int)
     a = ap.parse_args()
     if a.selftest:
         return selftest()
+    if a.fresh is not None:
+        return fresh(a.fresh)
     day = dt.date.fromisoformat(a.date) if a.date else dt.date.today()
     if a.block_only:
         fj = os.path.join(REPO, "FOR-JAFAR.md")

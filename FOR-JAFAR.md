@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Monday 5 October, 08:20)
+## Overview (Monday 5 October, 17:10)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -23,7 +23,7 @@ No decision asked: these are for watching the street change.
 
 Disk (10-05 04:30): C: 73.1 GB free, F: 24.4 GB free; grew most since 10-04 04:30: F:\LedgerTools\renders\proof-2.6 +0.5 GB, F:\LedgerTools\tmp\builder +0.2 GB, C:\actions-runner-ledger\_work\renders +0.1 GB.
 
-**On: phase 0, recovering control (PLAN.md).** Done, 0.1: your charter and plan, with your ten edits, are adopted as CHARTER.md and PLAN.md; the audit and both drafts are saved in production/audits; every old list is retired to production/archive/2026-10-05-retired (the builder's list, the roadmap, the town's and clothing's lists, the open handovers, Sunday's 35-item reconciliation); TOWN.md and CLOTHES.md are short task briefs within their caps, nothing exempt; your edits are in CLAUDE.md and the weather in RULINGS.md. **Next, 0.2:** the time log and the morning pictures. They start tomorrow at 07:30; none today, because the plan arrived after that time. Then 0.3, the sweep of every branch, drive folder, page answer and the old studio repository.
+**On: phase 0, recovering control (PLAN.md), 6 of 8 items done.** On, 0.7: the history is cleaned into the new repository (30.8 GB to 3.2 GB; main, wip and the map's branch), with guards before every push here and on GitHub, nine workflows retired and the tests green on GitHub. Phase 0's fresh reviewer failed it on one point, now closed by a check: eleven September jobs waiting on GitHub would have run on this PC when the build machine reconnects (one installs a scheduled task, one restarts the old Telegram bot). The reconnect now refuses while any wait. **Next, 0.8:** the reviewer again, once the build machine runs; then phase 1, Mickey's front office.
 
 **The tester's walk (5 October, 02:30, stand-in words).** It walked the whole route, 15 of 15 stages. Eight people saw Tom break Rita's window. Only Ron showed afterwards that he knew. The sixty-question bench measured nothing again, and the walk saved no pictures. Both are open faults in FINDINGS.md.
 
@@ -36,18 +36,19 @@ Disk (10-05 04:30): C: 73.1 GB free, F: 24.4 GB free; grew most since 10-04 04:3
 
 ### Needs you
 
-(All recent pages' answers re-read at 08:10: nothing new since Sunday. The full read of every page is part of 0.3.)
+(Every page's answers read back at 17:10: 144, nothing new since this morning.)
 
-1. **[Monday's sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS), one tap.** The September map of the town: make it the town's map (recommended). Its second question is settled by the new repository: the 68 old branches stay in the private archive.
-2. **The build machine, when you are back at the PC (about two minutes):** open PowerShell as administrator and run `powershell -NoProfile -ExecutionPolicy Bypass -File C:\Users\Jafar\ledger-local\tools\runner\reconnect.ps1`; it asks for the token from GitHub's new-runner page and your Windows password, which only you type.
-3. **Tell me when everything works,** so the safety copy of the old history on C: can go and free about 28 GB.
-4. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
+1. **Eleven old jobs on GitHub, before the build machine reconnects.** Cancel them (the links are in the chat of 5 October), or leave them: GitHub drops them about 13:20 on 6 October. Recommended: cancel.
+2. **The build machine, at the PC (about two minutes), after 1:** PowerShell as administrator, run `powershell -NoProfile -ExecutionPolicy Bypass -File C:\Users\Jafar\ledger-local\tools\runner\reconnect.ps1`; it asks for the token from GitHub's new-runner page and your Windows password, which only you type. When its tests pass, tell me, and the safety copy of the old history on C: goes (about 28 GB).
+3. **Stop the Ledger Town session.** It still shows mid-turn, with nothing changed since 1 October; the app does not let me stop another session. Press Stop there, or close it.
+4. **[Monday's sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS), one tap.** The September map of the town: make it the town's map (recommended).
+5. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
 
 Retired, not asked: the brick-and-facades choice (the plan rebuilds them from the kit in phase 2), the suit purchase and the tailoring questions (stopped by your rulings and the plan).
 
 ### Road to worth playing (PLAN.md)
 
-- **0. Recover control** (0.20W): in hand, 0.1 of 8 done.
+- **0. Recover control** (0.20W): 6 of 8 done; the history and the exit review open.
 - **1. Prove the bottlenecks** (1.00W): Mickey's front office first, then a complete Tom and one speaker, the voice under two seconds, and P1 packaged. If a sample fails within its ceiling, I report the failed capability.
 - **2. Quay Street from proved families** (2.00W): the brick, the facades, the wet street's seam and the hill return here.
 - **3. Thirty minutes that hold** (0.75W): N3 ported, the weather proof, P4's gaps.

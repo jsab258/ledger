@@ -10,9 +10,16 @@ and production/approvals/answers/pages.json lists every page and where it keeps 
 
   python tools/page_answers.py              # check: every page with a database read, every file sound
   python tools/page_answers.py --index      # rewrite production/approvals/answers/INDEX.md
+  python tools/page_answers.py --fresh 2   # fail when the last read-back is over two days old
   python tools/page_answers.py --selftest
+
+THE READ-BACK DATED (5 October, the phase 0 exit's reviewer): the nightly task commits only when
+an answer changed, so a night that never ran looked the same as a night with nothing new. The
+index now carries the day it was read back, so every read changes it and is committed, and
+--fresh (in tools/ci-checks.sh) fails the build when the read-back has stopped.
 """
 import argparse
+import datetime as dt
 import io
 import json
 import os
@@ -64,10 +71,14 @@ def check(home=HOME, out=sys.stdout):
     return 1 if bad else 0
 
 
-def index(home=HOME):
+READ_BACK = "Read back: "
+
+
+def index(home=HOME, today=None):
     pages = load(home)
     lines = ["# His page answers", "",
              "Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/page_answers.py --index; never edited by hand.", "",
+             READ_BACK + (today or dt.date.today()).isoformat(), "",
              "| Page | Updated | Answers | Each answer: pick or verdict, date |", "|---|---|---|---|"]
     total = 0
     for p in pages:
@@ -87,6 +98,22 @@ def index(home=HOME):
     return total
 
 
+def fresh(days, home=HOME, today=None, out=sys.stdout):
+    """Fails when the index's read-back day is missing or more than `days` days old."""
+    p = os.path.join(home, "INDEX.md")
+    day = None
+    if os.path.exists(p):
+        for line in io.open(p, encoding="utf-8"):
+            if line.startswith(READ_BACK):
+                day = dt.date.fromisoformat(line[len(READ_BACK):].strip())
+    age = ((today or dt.date.today()) - day).days if day else None
+    ok = age is not None and age <= days
+    print("page-answers-fresh readBack=%s ageDays=%s limit=%d outcome=%s" % (day, age, days, "PASS" if ok else "FAIL"), file=out)
+    if not ok:
+        print("page-answers-fresh FAIL his page answers have not been read back for over %d days: the nightly task (ledger-page-answers-nightly) has stopped" % days, file=out)
+    return 0 if ok else 1
+
+
 def selftest():
     import tempfile
     ok = True
@@ -104,7 +131,11 @@ def selftest():
         json.dump({"pick": "yes", "at": "2026-10-05T08:00:00Z"}, f)
     sink = io.StringIO()
     t(check(d, sink) == 0, "a listed page with its answers passes")
-    t(index(d) == 1 and "a: yes, 2026-10-05" in io.open(os.path.join(d, "INDEX.md"), encoding="utf-8").read(), "the index shows each answer and its date")
+    t(index(d, dt.date(2026, 10, 5)) == 1 and "a: yes, 2026-10-05" in io.open(os.path.join(d, "INDEX.md"), encoding="utf-8").read(), "the index shows each answer and its date")
+    t(fresh(2, d, dt.date(2026, 10, 7), sink) == 0, "a read-back two days old passes")
+    t(fresh(2, d, dt.date(2026, 10, 8), sink) == 1, "a read-back three days old fails the build")
+    os.remove(os.path.join(d, "INDEX.md"))
+    t(fresh(2, d, dt.date(2026, 10, 5), sink) == 1, "no dated read-back at all fails too")
     os.makedirs(os.path.join(d, "P2", "verdicts"))
     t(check(d, sink) == 1, "answers from a page nobody listed fail the check")
     print("page_answers selftest: " + ("passed" if ok else "FAILED"))
@@ -115,9 +146,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--index", action="store_true")
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--fresh", type=int)
     a = ap.parse_args()
     if a.selftest:
         return selftest()
+    if a.fresh is not None:
+        return fresh(a.fresh)
     if a.index:
         print("INDEX.md: %d answers" % index())
     return check()
