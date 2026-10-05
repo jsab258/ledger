@@ -3036,6 +3036,12 @@ jobs:
           # ITS OWN PUSH, and a failure to push is not a failure of the
           # check: the check's answer is what reddens this run.
           git add -- "$OUTF" 2>/dev/null || true
+          # THE SAME GUARD AS THE PROBE'S OWN COMMIT ABOVE: only text back to git.
+          if ! python tools/push_guard.py --staged --build-machine; then
+            git reset -q
+            echo "BUILD MACHINE REFUSED: the crime check staged something that is not text; nothing committed"
+            exit 1
+          fi
           if ! git diff --cached --quiet 2>/dev/null; then
             git -c user.name="LEDGER probe" -c user.email="probe@ledger.local"               commit -q -m "crime check from $SHORT" || true
             # ONLY THE RECENT HISTORY, as in "Commit the probe result" above.

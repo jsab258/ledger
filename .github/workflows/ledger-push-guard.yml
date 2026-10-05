@@ -3,7 +3,11 @@ name: LEDGER push guard
 # NOTHING LARGE AND NOTHING FROM THE OLD HISTORY (Jafar, 5 October 2026, after the history was
 # cleaned into this new repository): the same check this PC runs before every push
 # (tools/hooks/pre-push), run again here on every push to any branch, so a push from anywhere
-# else (the build machine, a cloud session) goes red at once. tools/push_guard.py refuses a file
+# else (a cloud session, a browser edit) goes red at once. A push made by a workflow with GitHub's
+# own token starts no workflow, this one included (found 5 October, when a retired job's 16 MB
+# picture reached main unseen): the build machine checks what it stages before each commit, and
+# the second step here re-reads the whole branch since the cleaning, so anything that slipped in
+# goes red at the next push. tools/push_guard.py refuses a file
 # over 1 MB, a picture outside production/previews/ or of 500 KB or more inside it, and any
 # commit of the old history (production/audits/history-clean-2026-10/commit-map.txt).
 on:
@@ -33,3 +37,6 @@ jobs:
             BEFORE="$(git rev-parse origin/main 2>/dev/null || echo 0000000000000000000000000000000000000000)"
           fi
           python3 tools/push_guard.py --range "$BEFORE" "$AFTER"
+      - name: The whole branch since the cleaning, for what came in by an unwatched push
+        if: ${{ !cancelled() }}
+        run: python3 tools/push_guard.py --branch HEAD

@@ -17,6 +17,7 @@ own commits, which are the baseline), it refuses:
 
   git pre-push hook (tools/hooks/pre-push):  python tools/push_guard.py <remote> <url>  < refs on stdin
   CI on every push (ledger-push-guard.yml):  python tools/push_guard.py --range BEFORE AFTER
+                                         and  python tools/push_guard.py --branch HEAD
   the build machine before its commit:     python tools/push_guard.py --staged --build-machine
   python tools/push_guard.py --selftest
 """
@@ -76,7 +77,11 @@ def commits_to_check(local_sha, remote_sha, baseline, remote="origin", repo=None
     target remote's branches count as already there."""
     if local_sha == ZERO:
         return []
-    if remote_sha != ZERO and git("cat-file", "-t", remote_sha, check=False, repo=repo).strip() == "commit":
+    if remote is None:
+        # THE WHOLE BRANCH SINCE THE CLEANING (--branch): nothing counts as already checked but the
+        # cleaned baseline, so a commit that reached GitHub unguarded is found at the next push.
+        out = git("rev-list", local_sha, repo=repo)
+    elif remote_sha != ZERO and git("cat-file", "-t", remote_sha, check=False, repo=repo).strip() == "commit":
         out = git("rev-list", local_sha, "^" + remote_sha, repo=repo)
     else:
         out = git("rev-list", local_sha, "--not", "--remotes=%s" % remote, repo=repo)
@@ -172,6 +177,9 @@ def selftest():
     t(check([(old_c, ZERO)], sink2, mp, "origin", r) == 1, "an old commit is refused even when the archive, another remote, knows it")
     t(check([(big, base)], sink2, mp, "origin", r) == 1, "a new commit carrying a file over 1 MB is refused")
     t(check([(base, ZERO)], sink2, mp, "origin", r) == 0, "the cleaned baseline itself passes")
+    rg("update-ref", "refs/remotes/origin/main", big)
+    t(check([(big, ZERO)], sink2, mp, None, r) == 1, "a big file already on the remote is still found when the whole branch is read")
+    t(check([(base, ZERO)], sink2, mp, None, r) == 0, "the whole branch read back to the baseline passes")
     print("push_guard selftest: " + ("passed" if ok else "FAILED"))
     return 0 if ok else 1
 
@@ -217,6 +225,11 @@ def main(argv):
         return selftest()
     if "--staged" in argv:
         return staged("--build-machine" in argv)
+    if "--branch" in argv:
+        # 5 October: a push made by a workflow with GitHub's own token starts no other workflow, so
+        # ledger-push-guard.yml never sees the build machine's pushes. This re-reads the whole
+        # branch since the cleaning on every push that does start it.
+        return check([(git("rev-parse", argv[argv.index("--branch") + 1]).strip(), ZERO)], remote=None)
     if "--range" in argv:
         i = argv.index("--range")
         before, after = argv[i + 1], argv[i + 2]
