@@ -34,8 +34,8 @@ PICTURES = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".tga", ".tif", ".
 ZERO = "0" * 40
 
 
-def git(*args, check=True):
-    r = subprocess.run(("git",) + args, cwd=REPO, capture_output=True, text=True, encoding="utf-8", errors="replace")
+def git(*args, check=True, repo=None):
+    r = subprocess.run(("git",) + args, cwd=repo or REPO, capture_output=True, text=True, encoding="utf-8", errors="replace")
     if check and r.returncode != 0:
         raise RuntimeError("git %s: %s" % (" ".join(args), r.stderr.strip()[:300]))
     return r.stdout
@@ -69,19 +69,23 @@ def verdict(path, size):
     return None
 
 
-def commits_to_check(local_sha, remote_sha, baseline):
+def commits_to_check(local_sha, remote_sha, baseline, remote="origin", repo=None):
+    """Every commit the push would add that is not already on THE REMOTE BEING PUSHED TO.
+    5 October, found by the guard's own test: excluding what any remote knew let an old commit
+    through, because the private archive (another remote) knows every old commit. Only the
+    target remote's branches count as already there."""
     if local_sha == ZERO:
         return []
-    if remote_sha != ZERO and git("cat-file", "-t", remote_sha, check=False).strip() == "commit":
-        out = git("rev-list", local_sha, "^" + remote_sha)
+    if remote_sha != ZERO and git("cat-file", "-t", remote_sha, check=False, repo=repo).strip() == "commit":
+        out = git("rev-list", local_sha, "^" + remote_sha, repo=repo)
     else:
-        out = git("rev-list", local_sha, "--not", "--remotes")
+        out = git("rev-list", local_sha, "--not", "--remotes=%s" % remote, repo=repo)
     return [c for c in out.split() if c not in baseline]
 
 
-def files_of(commit):
+def files_of(commit, repo=None):
     """(path, size) of every file the commit adds or changes (against its first parent)."""
-    out = git("diff-tree", "--root", "-r", "--no-commit-id", "-z", "--diff-filter=AMCR", "--no-renames", commit)
+    out = git("diff-tree", "--root", "-r", "--no-commit-id", "-z", "--diff-filter=AMCR", "--no-renames", commit, repo=repo)
     parts = out.split("\0")
     res = []
     i = 0
@@ -91,24 +95,24 @@ def files_of(commit):
         if not meta.startswith(":"):
             continue
         blob = meta.split()[3]
-        size = int(git("cat-file", "-s", blob).strip() or 0)
+        size = int(git("cat-file", "-s", blob, repo=repo).strip() or 0)
         res.append((path, size))
     return res
 
 
-def check(pairs, out=sys.stdout, map_path=MAP):
+def check(pairs, out=sys.stdout, map_path=MAP, remote="origin", repo=None):
     old, baseline = load_map(map_path)
     if old is None:
         print("push-guard FAIL the map of old to new commits is missing (%s): nothing is pushed unmeasured" % map_path, file=out)
         return 1
     bad, seen = [], 0
     for local_sha, remote_sha in pairs:
-        for c in commits_to_check(local_sha, remote_sha, baseline):
+        for c in commits_to_check(local_sha, remote_sha, baseline, remote, repo):
             seen += 1
             if c in old:
                 bad.append("%s is a commit of the old history (it is in the map of old to new commits)" % c[:10])
                 continue
-            for path, size in files_of(c):
+            for path, size in files_of(c, repo):
                 why = verdict(path, size)
                 if why:
                     bad.append("%s %s: %s" % (c[:10], path, why))
@@ -142,6 +146,32 @@ def selftest():
     sink = __import__("io").StringIO()
     t(check([], sink, os.path.join(d, "missing.txt")) == 1, "no map, no push: nothing passes unmeasured")
     t(is_text(b"probeTest=PASS\n") and not is_text(b"\x89PNG\0\0"), "text is told from a binary by its bytes")
+    # A TINY REPOSITORY, as the real one stands since 5 October: an old commit the archive (another
+    # remote) knows, a cleaned baseline on the remote being pushed to, and new work on top.
+    r = tempfile.mkdtemp()
+    def rg(*a):
+        return subprocess.run(("git",) + a, cwd=r, capture_output=True, text=True).stdout.strip()
+    rg("init", "-q"); rg("config", "user.email", "t@t"); rg("config", "user.name", "t")
+    open(os.path.join(r, "a.txt"), "w").write("old")
+    rg("add", "a.txt"); rg("commit", "-q", "-m", "old")
+    old_c = rg("rev-parse", "HEAD")
+    rg("update-ref", "refs/remotes/archive/main", old_c)
+    rg("checkout", "-q", "--orphan", "clean")
+    open(os.path.join(r, "a.txt"), "w").write("cleaned")
+    rg("add", "a.txt"); rg("commit", "-q", "-m", "cleaned")
+    base = rg("rev-parse", "HEAD")
+    rg("update-ref", "refs/remotes/origin/main", base)
+    with open(os.path.join(r, "big.bin"), "wb") as f:
+        f.write(b"x" * 1_100_000)
+    rg("add", "big.bin"); rg("commit", "-q", "-m", "big")
+    big = rg("rev-parse", "HEAD")
+    mp = os.path.join(r, "map.txt")
+    with open(mp, "w") as f:
+        f.write("old new\n%s %s\n" % (old_c, base))
+    sink2 = __import__("io").StringIO()
+    t(check([(old_c, ZERO)], sink2, mp, "origin", r) == 1, "an old commit is refused even when the archive, another remote, knows it")
+    t(check([(big, base)], sink2, mp, "origin", r) == 1, "a new commit carrying a file over 1 MB is refused")
+    t(check([(base, ZERO)], sink2, mp, "origin", r) == 0, "the cleaned baseline itself passes")
     print("push_guard selftest: " + ("passed" if ok else "FAILED"))
     return 0 if ok else 1
 
@@ -196,7 +226,8 @@ def main(argv):
         p = line.split()
         if len(p) == 4:
             pairs.append((p[1], p[3]))
-    return check(pairs)
+    remote = argv[0] if argv and not argv[0].startswith("-") else "origin"
+    return check(pairs, remote=remote)
 
 
 if __name__ == "__main__":
