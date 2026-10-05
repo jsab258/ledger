@@ -33,6 +33,7 @@ import datetime as dt
 import fnmatch
 import glob
 import json
+import ntpath
 import os
 import shutil
 import stat
@@ -539,7 +540,9 @@ def morning_line(snaps=None):
             if lv != 1:
                 continue
             g = growth.get(p, 0.0)
-            kids = sorted(((growth[k], k) for k, kl in rows.items() if kl == 2 and os.path.dirname(k) == p), reverse=True)
+            # ntpath, not os.path (5 October): the census is this PC's, its paths Windows ones, and on
+            # GitHub's Linux machine os.path.dirname saw no parent in them and failed the selftest.
+            kids = sorted(((growth[k], k) for k, kl in rows.items() if kl == 2 and ntpath.dirname(k) == p), reverse=True)
             # name the folder that grew, not its parent, when one child holds most of the growth
             items.append(kids[0] if kids and kids[0][0] >= 0.6 * g and kids[0][0] > 0 else (g, p))
         picked = [(g, p) for g, p in sorted(items, reverse=True) if g >= 0.05][:3]
