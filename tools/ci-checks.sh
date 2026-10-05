@@ -166,6 +166,12 @@ real_table() {
     page-answers          "$REPO"                 "$PY tools/page_answers.py" \
     page-answers-selftest "$REPO"                 "$PY tools/page_answers.py --selftest" \
     branch-sweep-selftest "$REPO"                 "$PY tools/branch_sweep.py --selftest" \
+    catalogue             "$REPO"                 "$PY tools/catalogue.py" \
+    catalogue-selftest    "$REPO"                 "$PY tools/catalogue.py --selftest" \
+    branch-check          "$REPO"                 "$PY tools/branch_check.py" \
+    branch-check-selftest "$REPO"                 "$PY tools/branch_check.py --selftest" \
+    homes                 "$REPO"                 "$PY tools/homes_check.py" \
+    homes-selftest        "$REPO"                 "$PY tools/homes_check.py --selftest" \
     route-walk-selftest   "$REPO"                 "$PY tools/route_walk.py --selftest" \
     approvals             "$REPO"                 "$PY tools/approvals.py" \
     approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \

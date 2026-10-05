@@ -1,0 +1,20 @@
+{
+ "about": "Disagreements between a copy and its home that are already listed in CATALOGUE.md, each with when it is meant to end (tools/homes_check.py fails on any other, and on one of these that has ended).",
+ "known": [
+  {
+   "key": "walker-without-resident:kate-idle",
+   "listed": "CATALOGUE.md, disagreement 4 (the street's walkers against the residents)",
+   "until": "phase 3: every visible person has a simulation identity (PLAN.md)"
+  },
+  {
+   "key": "walker-without-resident:leonard-idle",
+   "listed": "CATALOGUE.md, disagreement 4 (the street's walkers against the residents)",
+   "until": "phase 3: every visible person has a simulation identity (PLAN.md)"
+  },
+  {
+   "key": "walker-without-resident:martha-idle",
+   "listed": "CATALOGUE.md, disagreement 4 (the street's walkers against the residents)",
+   "until": "phase 3: every visible person has a simulation identity (PLAN.md)"
+  }
+ ]
+}

@@ -75,6 +75,14 @@ int main(int argc, char** argv)
 	std::map<std::string, int> Rows, Bad, Unknown;
 	std::vector<std::string> Order;
 	long TotalRows = 0, TotalBad = 0, TotalUnknown = 0, TotalSkipped = 0;
+	// ROWS TOO SHORT TO COMPARE, COUNTED AND NAMED (5 October 2026, phase 0's checks that fail
+	// loudly). Until then a row of fewer than three fields was dropped without a word: the
+	// table's FixPoliceOrder row (a C# fixture with no input) was read by nobody and the
+	// comparison still said it covered the table (production/audits/sweep-2026-10-05/
+	// port-vs-core.md). A short row is now a named hole or a failure, never silence.
+	std::map<std::string, int> Short;
+	long TotalShort = 0, TotalShortUnnamed = 0;
+	const char* const KnownShort[] = { "FixPoliceOrder", 0 };
 	std::vector<std::string> Detail;
 
 	// SCENARIOS THIS BUILD DOES NOT IMPLEMENT, NAMED ONE BY ONE.
@@ -103,7 +111,14 @@ int main(int argc, char** argv)
 		if (!Line.empty() && Line[Line.size() - 1] == '\r') { Line.erase(Line.size() - 1); }
 		if (Line.empty() || Line[0] == '#') continue;
 		const std::vector<std::string> F = SplitPipe(Line);
-		if (F.size() < 3) continue;
+		if (F.size() < 3)
+		{
+			bool Named = false;
+			for (int K = 0; KnownShort[K] != 0; ++K) { if (F[0] == KnownShort[K]) { Named = true; } }
+			++Short[F[0]]; ++TotalShort;
+			if (!Named) { ++TotalShortUnnamed; if (Detail.size() < 10) { Detail.push_back("SHORT-ROW " + Line); } }
+			continue;
+		}
 		const std::string& Fn = F[0];
 		if (Rows.find(Fn) == Rows.end()) { Order.push_back(Fn); Rows[Fn] = 0; Bad[Fn] = 0; Unknown[Fn] = 0; }
 
@@ -179,6 +194,12 @@ int main(int argc, char** argv)
 			            Name.c_str(), Seen, Answerable ? "YES-REMOVE-IT" : "no");
 		}
 		std::printf("    skippedTotal=%ld over %d named scenario(s)\n", TotalSkipped, Listed);
+		for (std::map<std::string, int>::const_iterator It = Short.begin(); It != Short.end(); ++It)
+		{
+			std::printf("    SHORT fn=%s rows=%d (fewer than three fields: not compared)\n", It->first.c_str(), It->second);
+		}
+		std::printf("    shortTotal=%ld unnamed=%ld\n", TotalShort, TotalShortUnnamed);
+		Loud(TotalShortUnnamed == 0, "every row too short to compare is a named hole");
 		Loud(StillUnported == Listed,
 		     "every scenario on the unported list really is unanswerable here");
 	}

@@ -1,0 +1,419 @@
+{
+ "about": "Branches older than a week kept on GitHub for a stated reason, each for at most fourteen days (tools/branch_check.py). Remove a line when its branch is archived as a tag or merged.",
+ "held": [
+  {
+   "branch": "art/atlas-01",
+   "why": "the September atlas, on his page (Monday's Sweep, atlas-01-map)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/exciting-planck-n5i2b0",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/research-aaa-street",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/research-asset-plan",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/research-free-garments",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/research-pre-production",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/research-runtime-voice-dialogue-crowds",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/research-wardrobe-at-scale",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/review-2026-09-30",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/review-2026-10-01",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/rulings-consolidation",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/rulings-sweep",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "claude/ui-design",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "pc-inbox",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "pc-results",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/1990-on-film-stock",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/agentic-studio-attempts",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/ai-npc-demos-hollow",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/asset-coverage",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/asset-packs",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/authored-stories-in-simulation",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/baseline-features",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/brief-coverage",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/british-crime-fiction-tone",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/british-policing-1988-1992",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/casting",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/clothing-assembly-line",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/clothing-pipeline",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/content-mass-and-judgement",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/conversation-model-capability",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/coverage-audit",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/coverage-audit-disco-elysium",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/coverage-audit-hitman",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/coverage-audit-kcd2",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/coverage-audit-rdr2",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/coverage-audit-shadows-of-doubt",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/crime-and-combat-coverage",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/crime-scene-1990",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/detection-legibility",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/egress-allowlist",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/emergent-story-legibility",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/ethics-and-reception",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/eyewitness-testimony",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/failure-after-arrest",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/feature-coverage",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/graphify-evaluation",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/group-standing-without-a-score",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/hardware-floor",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/hitman-density",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/holding-a-large-script",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/holding-information",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/live-speech-architecture",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/llm-inference-economics",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/local-models",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/markerless-mocap",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/meridian-test-administration",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/photoreal-on-a-budget",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/players-and-a-world-that-remembers",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/precomputed-day",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/rumour-propagation",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/runtime-ai-business",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/self-audit",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/small-team-shipping",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/small-town-networks",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/systemic-game-postmortems",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/teaching-in-thirty-minutes",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/tts-licensing-and-consent",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "research/unreal-frame-budget",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  },
+  {
+   "branch": "town",
+   "why": "archiving asked on his page (Monday's Sweep, archive-branches-2026-10-05)",
+   "since": "2026-10-05",
+   "page": "Pm1pF3ygCGW3nym14UvjYS"
+  }
+ ]
+}
