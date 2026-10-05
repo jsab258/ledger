@@ -38,8 +38,10 @@ Disk (10-05 04:30): C: 73.1 GB free, F: 24.4 GB free; grew most since 10-04 04:3
 
 (All recent pages' answers re-read at 08:10: nothing new since Sunday. The full read of every page is part of 0.3.)
 
-1. **[Monday's sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS), two taps.** The September map of the town, found on a branch nobody merged: make it the town's map (recommended). And tidying away 68 old copies of work, each kept as a snapshot (recommended).
-2. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
+1. **[Monday's sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS), one tap.** The September map of the town: make it the town's map (recommended). Its second question is settled by the new repository: the 68 old branches stay in the private archive.
+2. **The build machine, when you are back at the PC (about two minutes):** open PowerShell as administrator and run `powershell -NoProfile -ExecutionPolicy Bypass -File C:\Users\Jafar\ledger-local\tools\runner\reconnect.ps1`; it asks for the token from GitHub's new-runner page and your Windows password, which only you type.
+3. **Tell me when everything works,** so the safety copy of the old history on C: can go and free about 28 GB.
+4. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
 
 Retired, not asked: the brick-and-facades choice (the plan rebuilds them from the kit in phase 2), the suit purchase and the tailoring questions (stopped by your rulings and the plan).
 
