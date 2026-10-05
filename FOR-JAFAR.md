@@ -7,7 +7,7 @@ production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md be
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
-**Morning, Monday 5 October. Phase 0, recover control. On: 0.3 Sweep: branches, drives, page answers, game-studio repository. Next: 0.4 CATALOGUE.md: what exists, homes table, disagreements.**
+**Morning, Monday 5 October. Phase 0, recover control. On: 0.4 CATALOGUE.md: what exists, homes table, disagreements. Next: 0.5 Failing checks: stale branches, homes, catalogue; nightly answers.**
 
 | | Today, 05 Oct | Yesterday, 04 Oct |
 |---|---|---|
