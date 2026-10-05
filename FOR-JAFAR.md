@@ -40,7 +40,7 @@ Disk (10-05 04:30): C: 73.1 GB free, F: 24.4 GB free; grew most since 10-04 04:3
 
 1. **Eleven old jobs on GitHub, before the build machine reconnects.** Cancel them (the links are in the chat of 5 October), or leave them: GitHub drops them about 13:20 on 6 October. Recommended: cancel.
 2. **The build machine, at the PC (about two minutes), after 1:** PowerShell as administrator, run `powershell -NoProfile -ExecutionPolicy Bypass -File C:\Users\Jafar\ledger-local\tools\runner\reconnect.ps1`; it asks for the token from GitHub's new-runner page and your Windows password, which only you type. When its tests pass, tell me, and the safety copy of the old history on C: goes (about 28 GB).
-3. **Stop the Ledger Town session.** It still shows mid-turn, with nothing changed since 1 October; the app does not let me stop another session. Press Stop there, or close it.
+3. ~~Stop the Ledger Town session.~~ Settled by his word: it has been off for days.
 4. **[Monday's sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS), one tap.** The September map of the town: make it the town's map (recommended).
 5. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
 
@@ -66,7 +66,7 @@ Retired, not asked: the brick-and-facades choice (the plan rebuilds them from th
 
 **C:** 57.2 GB free, **F:** 22.5 GB.
 
-**For you:** cancel the eleven old jobs (or leave them to lapse about 13:20), stop the Ledger Town session, then reconnect the build machine.
+**For you:** cancel the eleven old jobs (or leave them to lapse about 13:20), then reconnect the build machine.
 
 ## Builder, Sunday 4 October
 
