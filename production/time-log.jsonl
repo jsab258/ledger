@@ -7,3 +7,5 @@
 {"event": "start", "at": "2026-10-05T09:37:29", "task": "0.4 CATALOGUE.md: what exists, homes table, disagreements", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-10-05T10:39:57", "note": "0.4: CATALOGUE.md, four disagreement reports"}
 {"event": "start", "at": "2026-10-05T10:39:57", "task": "0.5 checks that fail the build; nightly answers read-back", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-10-05T10:50:10", "note": "0.5: checks committed 405c18cfe; read-back task created, first run pending"}
+{"event": "start", "at": "2026-10-05T10:50:10", "task": "0.6 friends-build rulings mapped; P3, P14, evening limits; Shipping launch", "phase": "0", "kind": "production"}

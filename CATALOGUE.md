@@ -19,6 +19,7 @@ Phase 0, item 0.4 (PLAN.md; his edit 9). Search this, canon, the research librar
 | The look | production/specs/unreal-look.json, judged against production/reference/hook-sheet.png | the Unreal materials and grade |
 | The story | game-design/story-outline-2026-09-28.md and first-hour-2026-09-29.md (approved) | talk facts and lines; canon-gate |
 | Sources and licences | THIRD-PARTY.md; ledger-v2/research/license-allowlist.md | tools/attribution-check.py |
+| The friends' build's requirements | production/friends-build/MAP.md (every ruling and the twenty basics, each with owner and proof) | PLAN.md's phases 3 and 4 |
 | The plan and the current item | PLAN.md, then NOW.md | the overview's morning line (tools/morning_pictures.py) |
 | Time spent | production/time-log.jsonl | tools/timelog.py week |
 
