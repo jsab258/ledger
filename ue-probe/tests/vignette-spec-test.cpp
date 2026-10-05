@@ -661,7 +661,7 @@ int main(int argc, char** argv)
 	// HUNDREDFOLD of sun moved band.ground.p05 by 1.06 of the null measured
 	// between two shots of one condition.
 	{
-		int Matched = 0, ProbeShots = 0, ProbeAtHook = 0, JudgedAtHook = 0, JudgedAtWindow = 0;
+		int Matched = 0, ProbeShots = 0, ProbeAtHook = 0, JudgedAtHook = 0, JudgedAtWindow = 0, JudgedReverse = 0;
 		for (size_t I = 0; I < S.Shots.size(); ++I)
 		{
 			const bool bJudged = (S.Shots[I].ConditionId == "overcast_day"
@@ -685,6 +685,12 @@ int main(int argc, char** argv)
 			{
 				++JudgedAtWindow;
 			}
+			// THE REVERSE VIEW (5 October, Jafar's morning pictures: the hook by day, the reverse
+			// view and the street at night, every morning), judged by day, part of no pairing
+			else if (S.Shots[I].CameraId == "cam_reverse")
+			{
+				++JudgedReverse;
+			}
 		}
 		int JudgedConds = 0, ProbeConds = 0;
 		for (size_t I = 0; I < S.Conditions.size(); ++I)
@@ -707,10 +713,12 @@ int main(int argc, char** argv)
 		// conditions, the four judged pairs still exactly four, and every
 		// shot falling into exactly one of the classes counted below, which
 		// is the identity a bare total cannot state.
-		Check(S.Cameras.size() == 4 && JudgedConds == 2 && Matched == 4 && JudgedAtWindow == 2,
-		      "four cameras (the pairing's two, the hook, Mickey's window at 2 m), two judged "
-		      "conditions, the four judged pairs still exactly four, the window judged day and night");
-		Check((int)S.Shots.size() == Matched + ProbeShots + JudgedAtHook + JudgedAtWindow
+		Check(S.Cameras.size() == 5 && JudgedConds == 2 && Matched == 4 && JudgedAtWindow == 2
+		      && JudgedReverse == 1,
+		      "five cameras (the pairing's two, the hook, Mickey's window at 2 m, the reverse view), two "
+		      "judged conditions, the four judged pairs still exactly four, the window judged day and "
+		      "night, and the reverse view by day (the morning pictures; the hook's night shot counts with the hook's settling rows here)");
+		Check((int)S.Shots.size() == Matched + ProbeShots + JudgedAtHook + JudgedAtWindow + JudgedReverse
 		      && JudgedAtHook > 0,
 		      "every shot in the file is one of the four judged pairs, a probe row, or a "
 		      "judged row at the hook camera, and the classes sum to the total read",

@@ -807,6 +807,19 @@
       "fov_vertical_deg": 60.0,
       "sees": ["C"],
       "note": "MICKEY'S WINDOW AT TWO METRES, 4 October (the proof view's shopfronts step: Mickey's interior first, 'holding up at 2 m'): standing on the east footway 2.0 m out from the glass (5.25), eye 1.6 m, square to the frontage and looking a little down into the office; at x 7.8, towards the window's right end, because the passer-by standing at x 6.2, 1.2 m out, filled the frame from the window's middle. Judged by day and at night; part of no pairing."
+    },
+    {
+      "id": "cam_reverse",
+      "bom": "morning_pictures.the_reverse_view",
+      "side": "east_carriageway",
+      "x_m": 38.0,
+      "z_m": 1.6,
+      "eye_height_m": 1.70,
+      "yaw_deg": 200.4,
+      "pitch_deg": -3.4,
+      "fov_vertical_deg": 46.0,
+      "sees": ["A", "B", "C", "D", "E", "G", "H"],
+      "note": "THE REVERSE VIEW, 5 October (Jafar's morning pictures: the hook camera by day, the reverse view and the street at night, every morning by 07:30, to watch the street change; the charter's bar includes reverse views). The hook camera turned round: from the far end of the level street (x 38, before the climb at 44) on the east carriageway, mirroring the hook's place on the west, at a player's eye of 1.7 m, looking back toward the quay with the hook's own lens (46 degrees, pitch -3.4) and its 20.4 degree turn to its right, so the parade stands on the left. Judged by day; no pairing."
     }
   ],
 
@@ -1316,6 +1329,8 @@
     { "id": "vign_hook_day",            "camera": "cam_hook", "condition": "overcast_day",       "light_probe": "on" },
     { "id": "vign_mickeys_day",         "camera": "cam_mickeys", "condition": "overcast_day",    "light_probe": "on" },
     { "id": "vign_mickeys_night",       "camera": "cam_mickeys", "condition": "wet_night",       "light_probe": "on" },
+    { "id": "vign_hook_night",          "camera": "cam_hook", "condition": "wet_night",          "light_probe": "on" },
+    { "id": "vign_reverse_day",         "camera": "cam_reverse", "condition": "overcast_day",    "light_probe": "on" },
     { "id": "vign_grid_sky050_sun010",  "camera": "cam_hook", "condition": "grid_sky050_sun010", "light_probe": "on" },
     { "id": "vign_grid_sky100_sun003",  "camera": "cam_hook", "condition": "grid_sky100_sun003", "light_probe": "on" },
     { "id": "vign_grid_sky035_sun030",  "camera": "cam_hook", "condition": "grid_sky035_sun030", "light_probe": "on" },

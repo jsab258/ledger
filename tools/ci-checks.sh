@@ -161,6 +161,8 @@ real_table() {
     voice-load-selftest   "$REPO"                 "$PY tools/voice-live/voice_load.py --selftest" \
     doc-caps              "$REPO"                 "$PY tools/doc-caps.py" \
     doc-caps-selftest     "$REPO"                 "$PY tools/doc-caps.py --selftest" \
+    timelog-selftest      "$REPO"                 "$PY tools/timelog.py --selftest" \
+    morning-selftest      "$REPO"                 "$PY tools/morning_pictures.py --selftest" \
     route-walk-selftest   "$REPO"                 "$PY tools/route_walk.py --selftest" \
     approvals             "$REPO"                 "$PY tools/approvals.py" \
     approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \
