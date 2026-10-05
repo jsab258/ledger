@@ -150,6 +150,7 @@ real_table() {
     shape-check-selftest  "$REPO"                 "$PY tools/shape-check.py --selftest" \
     attribution           "$REPO"                 "$PY tools/attribution-check.py" \
     attribution-selftest  "$REPO"                 "$PY tools/attribution-check.py --selftest" \
+    package-sources       "$REPO"                 "$PY tools/attribution-check.py --package" \
     canon-gate            "$REPO"                 "$PY tools/canon-gate.py --corpus" \
     canon-gate-selftest   "$REPO"                 "$PY tools/canon-gate.py --selftest" \
     content-gate          "$REPO"                 "$PY tools/content-gate.py" \

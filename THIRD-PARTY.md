@@ -102,7 +102,7 @@ from which reference. Not shipped: the chosen voice's reference moves to
 
 | | |
 |---|---|
-| **What** | 41 animation clips and two base bodies (X Bot, Y Bot) |
+| **What** | 41 animation clips and the bodies the game ships: X Bot and Y Bot; Michelle (the street figure, `ue-probe/Content/Ledger/Figure`, by `tools/ue/import_figure.py`); and Joe, David, Martha, Leonard, Kate and Elizabeth, the street's people (`production/assets/people/*.glb` by `tools/art-recipes/person-export.py`, imported to `ue-probe/Content/Ledger/People`). Listed in full 5 October 2026, when the phase 0 exit review found the row naming only two bodies |
 | **Source** | Adobe Mixamo |
 | **Licence** | Mixamo's own terms — royalty-free use in a product, no redistribution of the assets as assets |
 | **Where in the repo** | `ledger/Assets/Characters/` |
@@ -292,6 +292,8 @@ directory.
 | **Where** | `ledger/Assets/Props/base-mesh/`, one `.glb` per model, untextured by design (SurfaceSpec tints them) |
 | **What** | bollards, bins, a builder's skip, benches, pallets, barrels, crates, chimney pots, awnings, drain covers, fingerposts, a lamp post, traffic cones, poster boards |
 
+Two pieces in that folder are this project's own, not The Base Mesh's: the shop-front fascia mouldings, made by `production/art/fascia-01/author/make_fascia_mouldings.py` (tagged in `ledger/Assets/Props/base-mesh/THIRD-PARTY.md`).
+
 Attribution not required; recorded anyway under this file's standing rule.
 
 ## Shop rooms and window displays — Poly Haven, CC0
@@ -435,6 +437,15 @@ holds and has to be corrected or widened.
 
 Attribution not required; recorded anyway under this file's standing rule.
 
+## Clothing patterns — FreeSewing, MIT
+
+| | |
+|---|---|
+| **Source** | **FreeSewing** (https://freesewing.eu/), the npm packages `@freesewing/core` and its patterns, version 4.10.2, installed in `F:/LedgerTools/freesewing` (each `package.json` read 5 October 2026: licence MIT, author Joost De Cock) |
+| **Licence** | MIT, as each package's `package.json` states (the installed packages carry no LICENSE file of their own). MIT asks that its copyright and permission notice go with copies of the software; the game ships garments cut from the patterns' output, not the software, and credits FreeSewing anyway, here and in the game's credits |
+| **Where** | Patterns drafted to the cast's measurements by the clothing session's scripts in `F:/LedgerTools/freesewing` and `F:/LedgerTools/garments`; shipped as Unreal assets in `ue-probe/Content/Ledger/MetaHumans` (the flat cap, from **Florent**) and `ue-probe/Content/Ledger/Cloth/ron_donkey` (the donkey jacket, from **Brian**) |
+| **Not shipped** | Ron's jacket draped from **Jaeger** in Marvelous Designer's 14-day trial (`ue-probe/Content/Ledger/Cloth/ron_md_jacket`): the trial's terms (section 3.1.1) allow evaluation only and nothing was bought, so `ue-probe/Config/DefaultGame.ini` never cooks it and `tools/attribution-check.py --package` refuses a package that carries it (5 October 2026) |
+
 ## What this project made itself
 
 | | |
@@ -443,6 +454,8 @@ Attribution not required; recorded anyway under this file's standing rule.
 | **Every texture in the build today** | generated at runtime by `ProceduralTexture.Generate` until M17.6 lands a real pack |
 | **All geometry** | procedural; the city, vehicles, props and held weapons are built in code |
 | **Music** | procedural layer, M13 |
+| **The Unreal street and its own pieces** (5 October 2026, listed when the phase 0 exit review found the package's Unreal content unchecked) | `ue-probe/Content/Ledger/Street` (the street, `production/assets/street/quay-street.glb` by `tools/art-recipes/terrace-front.py`), `ue-probe/Content/Ledger/Vehicles` (the hatchbacks, `tools/art-recipes/car-model.py`), the materials and default textures `ue-probe/Content/Ledger/M_Ledger*.uasset` and `T_LedgerDefault*.uasset` (`tools/ue/make_*_material.py`; the textures bound into them at run time are attributed in their own rows), the street ambience (`tools/props/make_street_ambience.py`, from seeded noise) |
+| **The clothing session's own garments** | made in Blender on this PC, kept in `F:/LedgerTools/garments` (boots, spectacles, the handbag, the belt, the pager, the jackets' fitted copies), imported into `ue-probe/Content/Ledger/MetaHumans` |
 | **All writing** | the 2,604-line bark bank, every authored beat, every character |
 
 `tools/attribution-check.py` knows this list, so our own files are recorded as

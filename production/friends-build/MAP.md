@@ -23,7 +23,7 @@ Phase 0, item 0.6 (PLAN.md): every friends'-build ruling mapped to one item, its
 | No cars until convincing; skip and pallets off | none placed | B | the street walked | off |
 | The friends' build packs today's voice program | the voice beside the game | B | the package starts its own voice | packed on 3 Oct |
 | The content rule (no alcohol, gambling, children) | every line, sign and picture (with T) | B | tools/content-gate.py and a reviewer on the package | gate passes |
-| Sources and licences recorded, nothing NoAI | THIRD-PARTY.md | B | tools/attribution-check.py on what the package carries | 15,855 files ruled, 5 Oct |
+| Sources and licences recorded, nothing NoAI | THIRD-PARTY.md | B | tools/attribution-check.py on what the package carries | the repository's 15,849 files and the Shipping package's 6,585 traced to rows, 5 Oct (attribution-check.py and --package); the trial-made jacket taken out of the package; the engine libraries' notices open (FINDINGS.md) |
 
 ## The twenty basics (production/research/checklist-sweep-2026-09-29/BUILDER.md)
 

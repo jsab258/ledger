@@ -61,7 +61,7 @@ def wanted(root):
         voice, leaf = c.split("/", 1)
         out.append((os.path.join(root, VOICE_REL, c), PACKAGE_ROOT + "/Voice/" + voice,
                     os.path.splitext(leaf)[0], False))
-    # TOM'S FOOTSTEPS, 30 September: recorded (Kenney, CC0), kept apart from
+    # TOM'S FOOTSTEPS, 30 September: recorded (sturmankin and Joseph Sardin, CC0: THIRD-PARTY.md, Footsteps), kept apart from
     # the generated beds in production/assets/steps, played one at a time
     # by the player character when a foot lands; never looped.
     for c in spec.get("steps", {}).get("clips", []):
