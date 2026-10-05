@@ -814,6 +814,30 @@ NEVER_SHIP = (
 )
 
 
+# THE ENGINE'S BUNDLED LIBRARIES (5 October, production/research/engine-notices/NOTE.md): each
+# licence asks for its notice with every binary copy, and Epic's staged NOTICES.txt carries only
+# FreeType's. Each library the package ships has its licence staged beside the game
+# (production/licences/engine, by tools/ue/stage_game_data.py), or is named here as open.
+LICENCES_STAGED = "LedgerProbe/Content/LedgerData/production/licences/engine/"
+LIBRARY_NOTICES = {
+    "libogg_64.dll": "ogg-LICENSE.txt",
+    "libvorbis_64.dll": "vorbis-LICENSE.txt",
+    "libvorbisfile_64.dll": "vorbis-LICENSE.txt",
+    "msquic.dll": "msquic-LICENSE.txt",
+    "tbb12.dll": "onetbb-LICENSE.txt",
+    "tbbmalloc.dll": "onetbb-LICENSE.txt",
+    "onnxruntime.dll": "onnxruntime-LICENSE.txt",
+    "directml.dll": "directml-LICENSE.txt",
+    "d3d12core.dll": "d3d12-agility-sdk-LICENSE.txt",
+    "gfsdk_aftermath_lib.x64.dll": "nvidia-aftermath-nvapi-LICENSE.txt",
+}
+LIBRARY_OPEN = {
+    "d3d12sdklayers.dll": "whether it is on the Agility SDK's distributables list (FINDINGS.md)",
+    "xaudio2_9redist.dll": "the XAudio2 redistributable's terms, not yet read (FINDINGS.md)",
+    "dbghelp.dll": "DbgHelp's redistribution terms, not yet read (FINDINGS.md)",
+}
+
+
 def package_files(pkg):
     out = []
     for name in ("Manifest_UFSFiles_Win64.txt", "Manifest_NonUFSFiles_Win64.txt"):
@@ -838,7 +862,19 @@ def package_audit(pkg=None, root=None, doc=None):
         return []
     known = list(WATCHED) + list(OURS)
     bad, counts = [], collections.Counter()
+    shipped = set(files)
     for f in files:
+        lib = f.rsplit("/", 1)[-1].lower()
+        if lib.endswith(".dll"):
+            if lib in LIBRARY_NOTICES:
+                if LICENCES_STAGED + LIBRARY_NOTICES[lib] not in shipped:
+                    bad.append(f"a library shipped without its licence beside it: {f} (wants {LIBRARY_NOTICES[lib]})")
+                counts["libraries with their licence"] += 1
+            elif lib in LIBRARY_OPEN:
+                print(f"  open  package {f}: {LIBRARY_OPEN[lib]}")
+                counts["libraries open"] += 1
+            else:
+                bad.append(f"a library with no licence on record: {f}")
         if any(n in "/" + f for n in NEVER_SHIP):
             bad.append(f"never to ship: {f}")
             continue
@@ -1130,6 +1166,9 @@ def selftest():
         man.write_text("\n".join(good + ["LedgerProbe/Content/Ledger/Mystery/SM_Thing.uasset\tx"]) + "\n", encoding="utf-8")
         expect_red("a package carrying a folder of the game's own content that no row names", ACCEPT_PKG,
                    "no row for the game's own content")
+        man.write_text("\n".join(good + ["Engine/Binaries/ThirdParty/Ogg/Win64/VS2015/libogg_64.dll\tx"]) + "\n", encoding="utf-8")
+        expect_red("a package shipping a library without its licence beside it", ACCEPT_PKG,
+                   "a library shipped without its licence")
 
     _fails = []
     # ACCEPTING COUNT PRINTED BESIDE THE TOTAL, because "11/11 behaved" cannot

@@ -11,7 +11,7 @@
     {
       "head": "Engine",
       "lines": [
-        "Unreal® Engine, Copyright 1998–2026, Epic Games, Inc. All rights reserved."
+        "Unreal® Engine, Copyright 1998–2026, Epic Games, Inc. All rights reserved.", "The engine's bundled libraries ship under their own licences, kept in the game's licences folder: Ogg and Vorbis (Xiph.org Foundation), oneTBB (Intel), ONNX Runtime, MsQuic, DirectML and the DirectX 12 Agility SDK (Microsoft), and NVIDIA Aftermath."
       ]
     },
     {

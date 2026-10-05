@@ -68,6 +68,11 @@ DIRS = [
     "production/art/ui",
     # the pages' own sounds (tools/ui/make_ui_sounds.py; LedgerPaper.cpp UiSound)
     "production/audio/ui",
+    # THE ENGINE'S BUNDLED LIBRARIES' LICENCES, 5 October (production/research/engine-notices):
+    # Ogg and Vorbis (BSD), MsQuic (MIT), oneTBB and ONNX Runtime, DirectML, the Agility SDK and
+    # NVIDIA's ask for their notices with every binary copy; Epic's own NOTICES.txt carries only
+    # FreeType's. tools/attribution-check.py --package refuses a library shipped without its own.
+    "production/licences/engine",
 ]
 VOICE_ROOT = "ledger/Assets/StreamingAssets/Audio/Voice"
 SOUND_ROOT = "production/assets/sounds"
