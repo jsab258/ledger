@@ -34,7 +34,7 @@ import os
 import sys
 import time
 
-CAST = [("rocco", "Jorge"), ("lena", "Grace"), ("sam", "Orlando")]
+CAST = [("rocco", "Jorge"), ("lena", "Grace"), ("sam", "Orlando"), ("tom", "Victor")]   # Tom since 6 October (item 1.2)
 PRESET_DIR = "/MetaHumanCharacter/Optional/Presets/"
 CAST_DIR = "/Game/Cast/"
 BUILD_ROOT = "/Game/Ledger/MetaHumans"
@@ -557,6 +557,30 @@ for _t in DARREN_HAIR:
     DARREN_HAIR[_t]["rocco"] = SECOND["P2"]["rocco"]
 CANDIDATES.update(DARREN_HAIR)
 
+# TOM, 6 October (phase 1, item 1.2: "one complete Tom"; production/research/pre-production/
+# 3-PROOFS.md P8: "build Tom from his casting sheet by the scripted MetaHuman route"). His sheet
+# (production/casting/tom-nowak/SHEET.md, approved as text 28 September): 32, son of a Polish
+# post-war settler and Mickey's sister; about 175 cm, lean; clean-shaven, ordinary; short dark
+# brown hair, short back and sides. The other three's faces are frozen (RULINGS 30 September):
+# Ron from Bruce, Sheila from Jelena, Darren from Orlando, so Tom leads from a preset none of
+# them leads from, Victor (his own picture reads a white European man in his thirties), or
+# Lorenzo; each led by one preset at 80% or more (the 26 September lesson: even blends average
+# toward a flat middle face), the preset's own skin set (a swapped set carries another person's
+# lids and nose), its beard and moustache taken off, no make-up, his eyes the preset's own
+# (Epic's chart places taken from Walter and Orlando came out green). A face is his to approve.
+DARK_BROWN = {"hairMelanin": 0.8, "hairRedness": 0.12, "WhiteAmount": 0.0}
+TOM_CLEAR = ("Beard", "Mustache")
+TOM = {
+    "A1": _c("Victor", {"Victor": 1.0}, None, 0.22, 0.45, 175.0, -0.5, 0.0, "WI_Hair_S_Clean", DARK_BROWN),
+    "A2": _c("Victor", {"Victor": 0.8, "Lorenzo": 0.2}, None, 0.23, 0.47, 175.0, -0.5, 0.0, "WI_Hair_S_SideSweptFringe", DARK_BROWN),
+    "A3": _c("Victor", {"Victor": 0.8, "Walter": 0.2}, None, 0.22, 0.48, 175.0, -0.6, -0.1, "WI_Hair_S_Clean", DARK_BROWN),
+    "A4": _c("Lorenzo", {"Lorenzo": 0.8, "Victor": 0.2}, None, 0.24, 0.47, 175.0, -0.5, 0.0, "WI_Hair_S_Clean", DARK_BROWN),
+    "A5": _c("Victor", {"Victor": 0.85, "Bruce": 0.15}, None, 0.23, 0.46, 175.0, -0.4, 0.1, "WI_Hair_S_SideSweptFringe", DARK_BROWN),
+}
+for _t, _b in TOM.items():
+    _b["clear"] = list(TOM_CLEAR)
+    CANDIDATES[_t] = {"tom": _b}
+
 
 def brief(who):
     """The brief the current take builds `who` to: a candidate's, the cast's, or none (a stand-in)."""
@@ -686,7 +710,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
     only = [w.strip() for w in os.environ.get("LEDGER_MH_ONLY", "").split(",") if w.strip()]
     takes = [t.strip() for t in os.environ.get("LEDGER_MH_TAKES", "").split(",") if t.strip()] or [TAKE]
     # every take asked for, each of the cast in it: (who, preset, take)
-    cast = [(w, p, t) for t in takes for (w, p) in CAST if not only or w in only]
+    cast = [(w, p, t) for t in takes for (w, p) in CAST if (not only or w in only) and (t not in CANDIDATES or w in CANDIDATES[t])]
     st = {"t0": time.time(), "h": None, "i": 0, "phase": "wait", "busy": False}
     out = os.path.join(unreal.Paths.project_dir(), "ue-material.txt")
     sub = unreal.get_editor_subsystem(unreal.MetaHumanCharacterEditorSubsystem)
@@ -1146,7 +1170,7 @@ def selftest():
         else:
             bad += 1
             print("make_cast_metahumans selftest FAIL " + name)
-    check("three of the slice's cast", [w for w, _ in CAST] == ["rocco", "lena", "sam"])
+    check("the slice's three and Tom", [w for w, _ in CAST] == ["rocco", "lena", "sam", "tom"])
     check("each from a shipped preset", all(p for _, p in CAST))
     check("the asset name is the MetaHuman convention", asset_name("rocco") == "MH_Rocco")
     check("the build lands where the probe copies from", BUILD_ROOT == "/Game/Ledger/MetaHumans")
@@ -1212,6 +1236,19 @@ def selftest():
     check("heights are the sheets' (Sheila about 160, Ron about 186, Darren about 175)",
           all(abs(CANDIDATES[t][w]["body"]["Height"] - h) <= 3 for t in FIVE for w, h in (("lena", 160), ("rocco", 186), ("sam", 175))))
     check("Ron always has his moustache", all(CANDIDATES[t]["rocco"].get("mustache") for t in FIVE))
+    toms = [t for t in CANDIDATES if "tom" in CANDIDATES[t]]
+    check("Tom's candidates: only Tom in each, five, all different",
+          len(toms) == 5 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
+          and len({repr(sorted(CANDIDATES[t]["tom"]["face"].items())) + CANDIDATES[t]["tom"]["hair"] for t in toms}) == 5)
+    check("Tom to his sheet: about 175 cm, lean, clean-shaven, short dark hair",
+          all(abs(CANDIDATES[t]["tom"]["body"]["Height"] - 175) <= 3 and CANDIDATES[t]["tom"]["body"]["Fat"] <= 0
+              and set(CANDIDATES[t]["tom"]["clear"]) == {"Beard", "Mustache"} and not CANDIDATES[t]["tom"].get("beard")
+              and not CANDIDATES[t]["tom"].get("mustache") and CANDIDATES[t]["tom"]["hair"].startswith("WI_Hair_S_")
+              and CANDIDATES[t]["tom"]["hair_colour"]["WhiteAmount"] == 0.0 for t in toms))
+    check("Tom never leads from a frozen face's preset (Bruce, Jelena, Orlando), and one preset leads at 80% or more",
+          all(CANDIDATES[t]["tom"]["base"] not in ("Bruce", "Jelena", "Orlando")
+              and max(CANDIDATES[t]["tom"]["face"].values()) >= 0.8 for t in toms))
+    check("a Tom take builds nobody else", [w for (w, _) in CAST if "A1" not in CANDIDATES or w in CANDIDATES["A1"]] == ["tom"])
     use_take("C3")
     check("a candidate take builds to its own brief", brief("rocco") is CANDIDATES["C3"]["rocco"] and asset_name("rocco") == "MH_RoccoC3")
     check("its moustache is recoloured with its hair", hair_materials("rocco", ["/G/MH_RoccoC3/Grooms/MI_WI_Mustache_L_Messy_Hair.x"]) == ["/G/MH_RoccoC3/Grooms/MI_WI_Mustache_L_Messy_Hair.x"])
