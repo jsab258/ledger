@@ -3,7 +3,8 @@
 
     python tools/ai-tester/play.py start [--editor | --plain | --bare] [--force] [--wait 60] [--game-arg X] [--save DIR] [--packaged EXE] [--shortcut LNK]
     python tools/ai-tester/play.py shot
-    python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run]
+    python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run] [--film]
+    python tools/ai-tester/play.py film                  (the run's filmed walking, stitched into one clip)
     python tools/ai-tester/play.py turn DEGREES          (negative left, positive right)
     python tools/ai-tester/play.py press E|T|Z|Esc|Q|Enter|Up|Down
     python tools/ai-tester/play.py say "WORDS"
@@ -49,6 +50,12 @@ too; a second game could take the keys meant for this one. `start` waits, up
 to --wait minutes (default 60), until the machine runs no game or Unreal of
 its own.
 
+THE WALKING RECORDING, 6 October (phase 1's exit asks for "a walking recording"): `walk ...
+--film` keeps taking the window's own picture, about eight a second, while the key is held, into
+F:/LedgerTools/tmp/ai-tester/film/<run>/ (never git: a clip is megabytes), and `film` stitches
+every frame the run filmed, in order, into one looping GIF beside them (Pillow, as
+tools/clip-from-frames.py does), printing its path and size.
+
 IT TAKES THE KEYBOARD AND MOUSE while it runs, so nobody should be using the
 PC at the time: `start` refuses when the PC was used in the last two minutes,
 unless --force.
@@ -56,6 +63,7 @@ unless --force.
 import ctypes
 import ctypes.wintypes as wt
 import datetime
+import glob
 import json
 import os
 import subprocess
@@ -70,6 +78,45 @@ PROJECT = os.path.join(REPO, "ue-probe", "LedgerProbe.uproject")
 HELPER = os.path.join(REPO, "ledger", "TalkHelper", "bin", "Release", "net8.0", "TalkHelper.exe")
 STATE_DIR = r"F:\LedgerTools\tmp\ai-tester"
 STATE = os.path.join(STATE_DIR, "state.json")
+FILM_GAP_S = 0.12                       # about eight frames a second while a filmed key is held
+FILM_WIDTH = 960                        # each filmed frame, and the clip, this wide
+
+
+def film_dir(st):
+    return os.path.join(STATE_DIR, "film", st["stamp"].replace(":", "").replace(" ", "-"))
+
+
+def film_frame(st, hwnd):
+    """One frame of the walking recording, the window's own pixels (screenshot below)."""
+    d = film_dir(st)
+    os.makedirs(d, exist_ok=True)
+    try:
+        im = screenshot(hwnd)
+    except RuntimeError:
+        return
+    st["film_n"] = st.get("film_n", 0) + 1
+    w, h = im.size
+    im.resize((FILM_WIDTH, max(1, round(h * FILM_WIDTH / float(w))))).save(
+        os.path.join(d, "f-%05d.jpg" % st["film_n"]), quality=82)
+
+
+def film(rest):
+    """Every frame this run filmed, in order, into one looping GIF beside them."""
+    st = load_state()
+    if not st:
+        print("aiTester status=NO-RUN")
+        return 1
+    d = film_dir(st)
+    frames = sorted(glob.glob(os.path.join(d, "f-*.jpg")))
+    if not frames:
+        print("aiTester film=NONE (walk with --film first)")
+        return 1
+    from PIL import Image
+    ims = [Image.open(f).convert("RGB").quantize(colors=200, method=Image.Quantize.MEDIANCUT) for f in frames]
+    out = os.path.join(d, "walk.gif")
+    ims[0].save(out, save_all=True, append_images=ims[1:], duration=int(FILM_GAP_S * 1000), loop=0, optimize=True)
+    print("aiTester film=%s frames=%d seconds=%.1f bytes=%d" % (out, len(ims), len(ims) * FILM_GAP_S, os.path.getsize(out)))
+    return 0
 RES = (1280, 720)
 
 SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14,
@@ -134,14 +181,21 @@ def tap(name):
     send_key(SCAN[name]); time.sleep(0.08); send_key(SCAN[name], up=True)
 
 
-def hold(name, seconds, run=False):
+def hold(name, seconds, run=False, each=None):
+    """Holds a key for the time given; 'each', if given, is called over and over while it is held."""
     if run:
         send_key(SCAN["shift"])
     send_key(SCAN[name])
-    time.sleep(seconds)
-    send_key(SCAN[name], up=True)
-    if run:
-        send_key(SCAN["shift"], up=True)
+    t_end = time.time() + seconds
+    try:
+        while each is not None and time.time() < t_end:
+            each()
+            time.sleep(max(0.0, min(FILM_GAP_S, t_end - time.time())))
+        time.sleep(max(0.0, t_end - time.time()))
+    finally:
+        send_key(SCAN[name], up=True)
+        if run:
+            send_key(SCAN["shift"], up=True)
 
 
 def type_text(text):
@@ -585,8 +639,11 @@ def act(verb, rest):
         direction = rest[0] if rest else "forward"
         seconds = min(4.0, max(0.2, float(rest[1]) if len(rest) > 1 else 1.0))
         running = "--run" in rest
-        hold(WALK_KEY.get(direction, "w"), seconds, running)
-        label = "walked %s for %.1f s%s" % (direction, seconds, " running" if running else "")
+        filming = "--film" in rest
+        hold(WALK_KEY.get(direction, "w"), seconds, running, each=(lambda: film_frame(st, hwnd)) if filming else None)
+        if filming:
+            save_state(st)
+        label = "walked %s for %.1f s%s%s" % (direction, seconds, " running" if running else "", " (filmed)" if filming else "")
     elif verb == "turn":
         degrees = max(-180.0, min(180.0, float(rest[0]) if rest else 0.0))
         mouse_move(degrees * PIXELS_PER_DEGREE)
@@ -763,6 +820,33 @@ def selftest():
           fe["PATH"] == r"C:\Windows\System32" and "CONDA_PREFIX" not in fe and "PYTHONHOME" not in fe
           and fe["LOCALAPPDATA"].endswith(os.path.join("ledger-friends-selftest", "AppData", "Local"))
           and fe["SYSTEMROOT"] == r"C:\Windows" and '"-TalkHelper=" + HELPER' not in src.split("def friends_env")[1].split("def start")[0])
+    # the walking recording: a held key keeps calling its filmer, and the frames stitch into one clip
+    calls = []
+    real_send = send_key
+    globals()["send_key"] = lambda *a, **k: None
+    try:
+        hold("w", 0.3, each=lambda: calls.append(1))
+    finally:
+        globals()["send_key"] = real_send
+    check("a filmed walk takes frames all the while the key is held", len(calls) >= 2)
+    global STATE_DIR, STATE
+    keep = (STATE_DIR, STATE)
+    STATE_DIR = tempfile.mkdtemp()
+    STATE = os.path.join(STATE_DIR, "state.json")
+    try:
+        from PIL import Image
+        st = {"stamp": "2026-10-06 12:00"}
+        os.makedirs(film_dir(st))
+        for i in range(3):
+            Image.new("RGB", (64, 36), (40 * i, 80, 120)).save(os.path.join(film_dir(st), "f-%05d.jpg" % (i + 1)))
+        save_state(st)
+        film([])
+        out = os.path.join(film_dir(st), "walk.gif")
+        check("the filmed frames stitch into one looping clip beside them",
+              os.path.isfile(out) and getattr(Image.open(out), "n_frames", 1) == 3)
+        check("a clip never goes into git", not film_dir(st).startswith(REPO))
+    finally:
+        STATE_DIR, STATE = keep
     print("ai-tester selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -797,6 +881,8 @@ if __name__ == "__main__":
         sys.exit(act(verb, rest))
     if verb == "note":
         sys.exit(note(rest))
+    if verb == "film":
+        sys.exit(film(rest))
     if verb == "finish":
         sys.exit(finish(rest))
     if verb == "close":

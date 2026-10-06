@@ -271,12 +271,37 @@ def transform(bm, verts, mat):
 PARTS = []
 
 
-def part(name, build, mat, bevel=0.0, segs=2, angle=30.0, smooth=True, weighted=True, profile=0.5, sharp=None):
-    """Make one part: build(bm) fills a bmesh; then bevel (Harden Normals) and Weighted Normal,
-    applied. The parts are joined into the prop at the end."""
+def part(name, build, mat, bevel=0.0, segs=2, angle=30.0, smooth=True, weighted=True, profile=0.5, sharp=None,
+         inset=None, cuts=0.3):
+    """Make one part: build(bm) fills a bmesh; support loops for the vertex masks; then bevel
+    (Harden Normals) and Weighted Normal, applied. The parts are joined into the prop at the end.
+
+    Vertex masks only know what their vertices know: a flat face whose only vertices sit on its
+    bevels reads as all edge. So each face bounded by a sharp edge gets a ring inset 2.5 bevel
+    widths in (flat vertices just past the bevel, so 'edges' falls to 0 there), and long parts are
+    cut every 'cuts' metres (ambient occlusion sampled along them)."""
     bm = bmesh.new()
     build(bm)
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    if inset is None:
+        inset = 2.5 * bevel
+    if inset > 0:
+        lim = math.radians(angle)
+        faces = [f for f in bm.faces if len(f.edges) >= 3
+                 and min(e.calc_length() for e in f.edges) > 3.0 * inset
+                 and any(e.is_manifold and e.calc_face_angle(0.0) > lim for e in f.edges)]
+        if faces:
+            bmesh.ops.inset_individual(bm, faces=faces, thickness=inset, depth=0.0, use_even_offset=True)
+    if cuts > 0 and bm.verts:
+        for axis in range(3):
+            lo = min(v.co[axis] for v in bm.verts)
+            hi = max(v.co[axis] for v in bm.verts)
+            n = int((hi - lo) / cuts)
+            for k in range(1, n + 1):
+                co, no = [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]
+                co[axis], no[axis] = lo + (hi - lo) * k / (n + 1), 1.0
+                bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], plane_co=co, plane_no=no)
+    bmesh.ops.dissolve_degenerate(bm, dist=1e-7, edges=bm.edges[:])     # no zero-length edges or empty faces
     if sharp is not None:            # thin sheet: keep its two faces' shading apart at the folds
         for e in bm.edges:
             if e.is_manifold and e.calc_face_angle(0.0) > math.radians(sharp):
@@ -410,12 +435,17 @@ def uv_overlap(objs, res=2048, want_polys=False):
         uvs = np.zeros(len(uv) * 2)
         uv.foreach_get("uv", uvs)
         uvs = uvs.reshape(-1, 2)
-        if uvs.min() < -1e-6 or uvs.max() > 1 + 1e-6:
+        if np.nanmin(uvs) < -1e-6 or np.nanmax(uvs) > 1 + 1e-6:
             inside = False
         tri = uvs[loops].reshape(-1, 3, 2) * res
         for ti, t in enumerate(tri):
             tri_ref.append((o.name, int(polys[ti])))
             gid = len(tri_ref)
+            if not np.isfinite(t).all():          # a face the projection could not place: re-cut it
+                over += 1
+                inside = False
+                bad.add(tri_ref[gid - 1])
+                continue
             (x0, y0), (x1, y1), (x2, y2) = t
             area = (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0)
             if abs(area) < 1e-12:
@@ -455,6 +485,26 @@ def uv_overlap(objs, res=2048, want_polys=False):
 POINTINESS_RANGE = (0.54, 0.58)  # Cycles Pointiness: flat 0.5, a 24-sided cylinder 0.538, a 2-segment bevel 0.557, its corners 0.589 (calibrated 6 Oct 2026)
 
 
+def _components(me):
+    """Connected-part index of every vertex (union-find over the edges)."""
+    n = len(me.vertices)
+    ev = np.zeros(len(me.edges) * 2, dtype=np.int64)
+    me.edges.foreach_get("vertices", ev)
+    parent = list(range(n))
+
+    def find(a):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+    for a, b in ev.reshape(-1, 2):
+        ra, rb = find(int(a)), find(int(b))
+        if ra != rb:
+            parent[ra] = rb
+    roots = np.array([find(i) for i in range(n)])
+    return np.unique(roots, return_inverse=True)[1]
+
+
 def bake_masks(objs, ao_distance=0.25, samples=96, occluders=()):
     """'ao': Cycles ambient occlusion; 'edges': Cycles' Pointiness through a ramp (convex edges
     1, flat and hollow 0). Both baked into point-domain float colour attributes."""
@@ -462,6 +512,8 @@ def bake_masks(objs, ao_distance=0.25, samples=96, occluders=()):
     sc.render.engine = "CYCLES"
     sc.cycles.device = "CPU"
     sc.cycles.samples = samples
+    sc.render.threads_mode = "FIXED"     # four threads: a build machine may be busy on this PC
+    sc.render.threads = 4
     if sc.world is None:
         sc.world = bpy.data.worlds.new("World")
     sc.world.light_settings.distance = ao_distance
@@ -505,10 +557,23 @@ def bake_masks(objs, ao_distance=0.25, samples=96, occluders=()):
         for s in o.material_slots:
             s.material = em
         me.color_attributes.active_color = me.color_attributes["edges"]
+        # Cycles welds any vertices closer than 0.35 mm before it measures Pointiness (its
+        # duplicate test is a squared distance under FLT_EPSILON). Where two of a prop's parts
+        # touch face to face, their vertices weld, the facing normals cancel and a flat face reads
+        # as all edge. So for this bake each connected part stands apart from the others.
+        co = np.zeros(len(me.vertices) * 3)
+        me.vertices.foreach_get("co", co)
+        k = _components(me).astype(float)
+        sp = 0.5173
+        off = np.c_[(k % 16) * sp, ((k // 16) % 16) * sp, (k // 256) * sp]
+        me.vertices.foreach_set("co", (co.reshape(-1, 3) + off).ravel())
+        me.update()
         bpy.ops.object.select_all(action="DESELECT")
         o.select_set(True)
         bpy.context.view_layer.objects.active = o
         bpy.ops.object.bake(type="EMIT")
+        me.vertices.foreach_set("co", co)
+        me.update()
         for s, m in zip(o.material_slots, keep):
             s.material = m
     bpy.data.materials.remove(em)
@@ -636,7 +701,7 @@ def preview(objs, path, wall=False, res=(800, 800), az=-35.0, el=18.0, lens=55.0
     return path
 
 
-def shading_check(objs, path, az=-35.0, el=18.0):
+def shading_check(objs, path, az=-35.0, el=18.0, wall=False):
     """A Workbench render with a shiny matcap-like studio light: faceting and normal faults show."""
     sc = bpy.context.scene
     eng = sc.render.engine
@@ -646,7 +711,7 @@ def shading_check(objs, path, az=-35.0, el=18.0):
     sh.color_type = "SINGLE"
     sh.single_color = (0.6, 0.6, 0.6)
     sh.show_specular_highlight = True
-    preview(objs, path, az=az, el=el, engine="BLENDER_WORKBENCH")
+    preview(objs, path, az=az, el=el, engine="BLENDER_WORKBENCH", wall=wall)
     sc.render.engine = eng
 
 
@@ -692,7 +757,7 @@ def finish(name, objs, args, wall=False, ao_distance=0.25, occluders=(), extra=N
     if not args.get("no_render"):
         v = view or {}
         preview(objs, prev, wall=wall, **v)
-        shading_check(objs, os.path.join(out_dir or PREVIEW_DIR, "checks", name + "_shading.png"), **{k: v[k] for k in ("az", "el") if k in v})
+        shading_check(objs, os.path.join(out_dir or PREVIEW_DIR, "checks", name + "_shading.png"), wall=wall, **{k: v[k] for k in ("az", "el") if k in v})
         rep["preview"] = prev
     os.makedirs(os.path.dirname(blend), exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=blend, compress=True)
@@ -717,7 +782,7 @@ timber = material("bench_stained_timber", (0.11, 0.058, 0.028), 0.5, dirt=0.4,
 L = A["length"]
 D = 0.50
 Y_FRONT, Y_WALL = -D / 2, D / 2
-SEAT_TOP = 0.45
+SEAT_TOP = 0.456                  # the crown's top; sat on, the seats read 0.45
 BACK_TOP = 0.78
 NSEAT = max(1, round(L / 0.53))
 GAP = 0.010
@@ -755,7 +820,7 @@ seat_w = (L - 0.04 - GAP * (NSEAT - 1)) / NSEAT
 for i in range(NSEAT):
     x0 = -L / 2 + 0.02 + i * (seat_w + GAP)
     sag = 0.016 if i == NSEAT // 2 else 0.006
-    part("seat_%d" % i, lambda bm, x0=x0, sag=sag: cushion(bm, x0, x0 + seat_w, Y_FRONT + 0.010, Y_WALL - 0.060,
+    part("seat_%d" % i, lambda bm, x0=x0, sag=sag: cushion(bm, x0, x0 + seat_w, Y_FRONT + 0.001, Y_WALL - 0.060,
                                                           board_z1, SEAT_TOP - 0.014, 0.014, sag=sag, creases=0.002),
          vinyl, bevel=0.022, segs=4, angle=35)
 part("seat_board", lambda bm: bm_box(bm, -L / 2 + 0.01, L / 2 - 0.01, Y_FRONT + 0.020, Y_WALL - 0.04, board_z0, board_z1),
@@ -801,7 +866,7 @@ part("feet", feet, steel, bevel=0.002, segs=1)
 
 bench = join("wall_bench")
 finish("bench", [bench], A, ao_distance=0.2,
-       extra={"target_m": {"length": L, "depth": D, "seat_height": SEAT_TOP, "height": BACK_TOP},
+       extra={"target_m": {"length": L, "depth": D, "seat_height": 0.45, "height": BACK_TOP},
               "measured_m": {"seat_height": round(max((bench.matrix_world @ v.co).z for v in bench.data.vertices
                                                       if (bench.matrix_world @ v.co).y < 0.1 and (bench.matrix_world @ v.co).z < 0.5), 4)}},
        view={"az": -32.0, "el": 18.0})

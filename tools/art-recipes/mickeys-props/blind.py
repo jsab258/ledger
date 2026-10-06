@@ -15,7 +15,8 @@ bottom rail 10 x 20 mm; a 6 mm hexagonal tilt wand (Cottai, 25 mm venetian blind
 https://www.cottai.com.tw/en/products-detail/25mm-venetian-Components/); headrail "24mm high x
 27mm deep" or "24mm height x 25mm depth" (Veneta Blinds specifications,
 https://venetablinds.com.au/pages/venetian-blinds-specifications). Modelled: slats 25 mm at
-21.5 mm pitch, 0.21 mm thick with a 1.8 mm crown; head rail 24 x 25 mm; bottom rail 10 x 20 mm.
+21.5 mm pitch with a 1.8 mm crown, 0.5 mm thick (not 0.21, which no eye sees and the edge
+bake cannot tell apart); head rail 24 x 25 mm; bottom rail 10 x 20 mm.
 Origin at the back face's bottom centre (the head rail's back, y=0, at the blind's lowest point);
 front toward -Y.
 """
@@ -276,12 +277,37 @@ def transform(bm, verts, mat):
 PARTS = []
 
 
-def part(name, build, mat, bevel=0.0, segs=2, angle=30.0, smooth=True, weighted=True, profile=0.5, sharp=None):
-    """Make one part: build(bm) fills a bmesh; then bevel (Harden Normals) and Weighted Normal,
-    applied. The parts are joined into the prop at the end."""
+def part(name, build, mat, bevel=0.0, segs=2, angle=30.0, smooth=True, weighted=True, profile=0.5, sharp=None,
+         inset=None, cuts=0.3):
+    """Make one part: build(bm) fills a bmesh; support loops for the vertex masks; then bevel
+    (Harden Normals) and Weighted Normal, applied. The parts are joined into the prop at the end.
+
+    Vertex masks only know what their vertices know: a flat face whose only vertices sit on its
+    bevels reads as all edge. So each face bounded by a sharp edge gets a ring inset 2.5 bevel
+    widths in (flat vertices just past the bevel, so 'edges' falls to 0 there), and long parts are
+    cut every 'cuts' metres (ambient occlusion sampled along them)."""
     bm = bmesh.new()
     build(bm)
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    if inset is None:
+        inset = 2.5 * bevel
+    if inset > 0:
+        lim = math.radians(angle)
+        faces = [f for f in bm.faces if len(f.edges) >= 3
+                 and min(e.calc_length() for e in f.edges) > 3.0 * inset
+                 and any(e.is_manifold and e.calc_face_angle(0.0) > lim for e in f.edges)]
+        if faces:
+            bmesh.ops.inset_individual(bm, faces=faces, thickness=inset, depth=0.0, use_even_offset=True)
+    if cuts > 0 and bm.verts:
+        for axis in range(3):
+            lo = min(v.co[axis] for v in bm.verts)
+            hi = max(v.co[axis] for v in bm.verts)
+            n = int((hi - lo) / cuts)
+            for k in range(1, n + 1):
+                co, no = [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]
+                co[axis], no[axis] = lo + (hi - lo) * k / (n + 1), 1.0
+                bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], plane_co=co, plane_no=no)
+    bmesh.ops.dissolve_degenerate(bm, dist=1e-7, edges=bm.edges[:])     # no zero-length edges or empty faces
     if sharp is not None:            # thin sheet: keep its two faces' shading apart at the folds
         for e in bm.edges:
             if e.is_manifold and e.calc_face_angle(0.0) > math.radians(sharp):
@@ -415,12 +441,17 @@ def uv_overlap(objs, res=2048, want_polys=False):
         uvs = np.zeros(len(uv) * 2)
         uv.foreach_get("uv", uvs)
         uvs = uvs.reshape(-1, 2)
-        if uvs.min() < -1e-6 or uvs.max() > 1 + 1e-6:
+        if np.nanmin(uvs) < -1e-6 or np.nanmax(uvs) > 1 + 1e-6:
             inside = False
         tri = uvs[loops].reshape(-1, 3, 2) * res
         for ti, t in enumerate(tri):
             tri_ref.append((o.name, int(polys[ti])))
             gid = len(tri_ref)
+            if not np.isfinite(t).all():          # a face the projection could not place: re-cut it
+                over += 1
+                inside = False
+                bad.add(tri_ref[gid - 1])
+                continue
             (x0, y0), (x1, y1), (x2, y2) = t
             area = (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0)
             if abs(area) < 1e-12:
@@ -460,6 +491,26 @@ def uv_overlap(objs, res=2048, want_polys=False):
 POINTINESS_RANGE = (0.54, 0.58)  # Cycles Pointiness: flat 0.5, a 24-sided cylinder 0.538, a 2-segment bevel 0.557, its corners 0.589 (calibrated 6 Oct 2026)
 
 
+def _components(me):
+    """Connected-part index of every vertex (union-find over the edges)."""
+    n = len(me.vertices)
+    ev = np.zeros(len(me.edges) * 2, dtype=np.int64)
+    me.edges.foreach_get("vertices", ev)
+    parent = list(range(n))
+
+    def find(a):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+    for a, b in ev.reshape(-1, 2):
+        ra, rb = find(int(a)), find(int(b))
+        if ra != rb:
+            parent[ra] = rb
+    roots = np.array([find(i) for i in range(n)])
+    return np.unique(roots, return_inverse=True)[1]
+
+
 def bake_masks(objs, ao_distance=0.25, samples=96, occluders=()):
     """'ao': Cycles ambient occlusion; 'edges': Cycles' Pointiness through a ramp (convex edges
     1, flat and hollow 0). Both baked into point-domain float colour attributes."""
@@ -467,6 +518,8 @@ def bake_masks(objs, ao_distance=0.25, samples=96, occluders=()):
     sc.render.engine = "CYCLES"
     sc.cycles.device = "CPU"
     sc.cycles.samples = samples
+    sc.render.threads_mode = "FIXED"     # four threads: a build machine may be busy on this PC
+    sc.render.threads = 4
     if sc.world is None:
         sc.world = bpy.data.worlds.new("World")
     sc.world.light_settings.distance = ao_distance
@@ -510,10 +563,23 @@ def bake_masks(objs, ao_distance=0.25, samples=96, occluders=()):
         for s in o.material_slots:
             s.material = em
         me.color_attributes.active_color = me.color_attributes["edges"]
+        # Cycles welds any vertices closer than 0.35 mm before it measures Pointiness (its
+        # duplicate test is a squared distance under FLT_EPSILON). Where two of a prop's parts
+        # touch face to face, their vertices weld, the facing normals cancel and a flat face reads
+        # as all edge. So for this bake each connected part stands apart from the others.
+        co = np.zeros(len(me.vertices) * 3)
+        me.vertices.foreach_get("co", co)
+        k = _components(me).astype(float)
+        sp = 0.5173
+        off = np.c_[(k % 16) * sp, ((k // 16) % 16) * sp, (k // 256) * sp]
+        me.vertices.foreach_set("co", (co.reshape(-1, 3) + off).ravel())
+        me.update()
         bpy.ops.object.select_all(action="DESELECT")
         o.select_set(True)
         bpy.context.view_layer.objects.active = o
         bpy.ops.object.bake(type="EMIT")
+        me.vertices.foreach_set("co", co)
+        me.update()
         for s, m in zip(o.material_slots, keep):
             s.material = m
     bpy.data.materials.remove(em)
@@ -641,7 +707,7 @@ def preview(objs, path, wall=False, res=(800, 800), az=-35.0, el=18.0, lens=55.0
     return path
 
 
-def shading_check(objs, path, az=-35.0, el=18.0):
+def shading_check(objs, path, az=-35.0, el=18.0, wall=False):
     """A Workbench render with a shiny matcap-like studio light: faceting and normal faults show."""
     sc = bpy.context.scene
     eng = sc.render.engine
@@ -651,7 +717,7 @@ def shading_check(objs, path, az=-35.0, el=18.0):
     sh.color_type = "SINGLE"
     sh.single_color = (0.6, 0.6, 0.6)
     sh.show_specular_highlight = True
-    preview(objs, path, az=az, el=el, engine="BLENDER_WORKBENCH")
+    preview(objs, path, az=az, el=el, engine="BLENDER_WORKBENCH", wall=wall)
     sc.render.engine = eng
 
 
@@ -697,7 +763,7 @@ def finish(name, objs, args, wall=False, ao_distance=0.25, occluders=(), extra=N
     if not args.get("no_render"):
         v = view or {}
         preview(objs, prev, wall=wall, **v)
-        shading_check(objs, os.path.join(out_dir or PREVIEW_DIR, "checks", name + "_shading.png"), **{k: v[k] for k in ("az", "el") if k in v})
+        shading_check(objs, os.path.join(out_dir or PREVIEW_DIR, "checks", name + "_shading.png"), wall=wall, **{k: v[k] for k in ("az", "el") if k in v})
         rep["preview"] = prev
     os.makedirs(os.path.dirname(blend), exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=blend, compress=True)
@@ -721,7 +787,7 @@ W, DROP = A["width"], A["drop"]
 TILT = math.radians(A["tilt"])
 HR_H, HR_D = 0.024, 0.025          # head rail
 BR_H, BR_D = 0.010, 0.020          # bottom rail
-SLAT_W, SLAT_T, CROWN = 0.025, 0.00021, 0.0018
+SLAT_W, SLAT_T, CROWN = 0.025, 0.0005, 0.0018   # 0.5 mm, not 0.21: Cycles welds vertices nearer than 0.35 mm
 PITCH = 0.0215
 LADDER_W = 0.028
 YC = -HR_D / 2                     # the ladders' centre plane
@@ -757,7 +823,7 @@ def slats(bm):
         bm_prism(bm, poly, "x", x0, x1)
 
 
-part("slats", slats, slat_mat, bevel=0.0, smooth=True, weighted=True, sharp=60.0)
+part("slats", slats, slat_mat, bevel=0.0, smooth=True, weighted=True, sharp=60.0, cuts=0.4)
 
 
 # THE RAILS: a pressed-steel head rail with plastic end caps; the bottom rail the same
@@ -796,7 +862,7 @@ def strings(bm):
         bm_cyl(bm, (xl + 0.004, YC, BR_H), 0.0007, DROP - HR_H - BR_H, n=6)
 
 
-part("ladders", strings, cord_mat, bevel=0.0, smooth=True, weighted=False)
+part("ladders", strings, cord_mat, bevel=0.0, smooth=True, weighted=False, cuts=0.0)
 
 
 # THE PULL CORDS on the right, to an acorn; the TILT WAND on the left
@@ -810,7 +876,7 @@ def pull_cords(bm):
                      (CORD_X + dx * 0.5, FRONT_CORD_Y, CORD_END + 0.03)], 0.0008, n=6)
 
 
-part("pull_cords", pull_cords, cord_mat, bevel=0.0, smooth=True, weighted=False)
+part("pull_cords", pull_cords, cord_mat, bevel=0.0, smooth=True, weighted=False, cuts=0.0)
 
 
 def acorn(bm):
@@ -841,7 +907,7 @@ def wand(bm):
     bm_box(bm, WAND_X - 0.002, WAND_X + 0.002, FRONT_CORD_Y, -HR_D + 0.002, DROP - HR_H - 0.012, DROP - HR_H - 0.006)
 
 
-part("tilt_wand", wand, plastic, bevel=0.0006, segs=1, angle=40)
+part("tilt_wand", wand, plastic, bevel=0.0006, segs=1, angle=40, cuts=0.0)
 
 blind = join(A["name"])
 finish(A["name"], [blind], A, wall=True, ao_distance=0.04,

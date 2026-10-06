@@ -1309,11 +1309,9 @@ def build_and_render(argv):
         import random
         rnd = random.Random(19)
         # REAL SURFACES (the second fresh review: "flat colour, no grain, seams or wear"): Poly Haven's
-        # veneers for the wood-effect laminate and the counter's front, its leather for the vinyl
+        # veneer for the wood-effect laminate (the counter, bench and chair carry their own materials)
         laminate = texmat("laminate_ash", "ash_veneer", 0.8, (0.78, 0.62, 0.44),
                           base=mat("laminate_wood_effect", (0.42, 0.29, 0.17), rough=0.38, noise=0.2))
-        front_panel = texmat("counter_walnut", "american_walnut_veneer", 0.9, (0.70, 0.58, 0.46),
-                             base=mat("counter_front", (0.17, 0.10, 0.055), rough=0.5, noise=0.2))
 
         def metre_uvs(o, tile):
             # UVs in metres before export, so a picture tiles at its own size on a long counter
@@ -1348,14 +1346,10 @@ def build_and_render(argv):
                 pr.inputs["Roughness"].default_value = 0.65
             o.data.materials.append(m)
             return o
-        kick = mat("kick_black", (0.03, 0.03, 0.03), rough=0.5)
         steel_grey = mat("steel_grey", (0.30, 0.31, 0.32), rough=0.45, metal=0.6)
         chrome = mat("chrome", (0.75, 0.75, 0.76), rough=0.2, metal=1.0)
         black = mat("plastic_black", (0.025, 0.025, 0.025), rough=0.4)
         cream_plastic = mat("phone_cream", (0.60, 0.55, 0.43), rough=0.35)
-        vinyl = texmat("vinyl_leather", "fabric_leather_01", 0.6, (0.42, 0.10, 0.08),
-                       base=mat("vinyl_oxblood", (0.085, 0.018, 0.016), rough=0.3))
-        fabric = mat("chair_fabric", (0.22, 0.12, 0.06), rough=0.95, noise=0.3)
         paper = mat("paper", (0.80, 0.77, 0.66), rough=0.85)
         paper_yellow = mat("paper_yellowed", (0.74, 0.66, 0.46), rough=0.85)
         card_white = mat("card_white", (0.84, 0.82, 0.74), rough=0.85)
@@ -1364,7 +1358,6 @@ def build_and_render(argv):
         ink_blue = mat("ink_blue", (0.04, 0.08, 0.35), rough=0.8)
         cloth_green = mat("ledger_cloth", (0.04, 0.10, 0.06), rough=0.7)
         gilt = mat("gilt", (0.86, 0.64, 0.28), rough=0.25, metal=1.0)
-        radiator_paint = mat("radiator_cream", (0.70, 0.66, 0.54), rough=0.5)
         ash_glass = mat("ashtray_glass", (0.35, 0.42, 0.38), rough=0.15)
         ash = mat("ash_grey", (0.30, 0.29, 0.27), rough=1.0)
         stub = mat("stub_white", (0.85, 0.82, 0.72), rough=0.8)
@@ -1392,13 +1385,7 @@ def build_and_render(argv):
                 mat("directory_%d" % k, c, rough=0.8, noise=0.2))
         # their covers printed (a district's directories, no publisher named), sun-faded
         print_plane("directory_cover", "directory", -0.43, 0.18, 0.7505, 0.20, 0.25, "up")
-        # THE RADIATOR under the window, a pressed-steel panel with its fins
-        box("radiator", -2.05, -0.65, 0.07, 0.13, 0.14, 0.58, radiator_paint)
-        for k in range(14):
-            xx = -2.0 + k * 0.1
-            box("radiator_fin_%d" % k, xx, xx + 0.03, 0.05, 0.07, 0.16, 0.56, radiator_paint)
-        for xx in (-1.98, -0.72):
-            box("radiator_bracket", xx, xx + 0.03, 0.13, 0.17, 0.30, 0.36, radiator_paint)
+        # (the heater under the window is a modelled prop now, placed with the others below)
 
         # THE FIRM'S NUMBER ON THE GLASS, in gilt (the 1980 Brixton photograph: the window is the
         # sign). 0632 is the code television used for numbers that rang nowhere. Our Marcellus SC,
@@ -1410,32 +1397,8 @@ def build_and_render(argv):
             text(name, body, -0.92, 0.03, z, size, gilt, font="marcellus-sc/MarcellusSC-Regular.ttf")
             text(name + "_shade", body, -0.92 + size * 0.03, 0.036, z - size * 0.03, size, shade, font="marcellus-sc/MarcellusSC-Regular.ttf")
 
-        # A VENETIAN BLIND, half down over the window's left run (the 1987 offices of the research's
-        # photographs: "venetian blinds"; the second fresh review found none): aluminium slats tilted
-        # half open on their ladder cords, under a head rail
-        slat = mat("blind_slat", (0.72, 0.71, 0.66), rough=0.35, metal=0.3)
-        bx_a, bx_b = -2.58, -1.30
-        box("blind_head", bx_a - 0.02, bx_b + 0.02, 0.05, 0.10, 2.40, 2.45, slat)
-        zz_ = 2.38
-        while zz_ > 1.62:
-            sl = box("blind_slat", bx_a, bx_b, 0.055, 0.080, zz_ - 0.002, zz_ + 0.002, slat)
-            sl.rotation_euler[0] = math.radians(35)
-            zz_ -= 0.028
-        box("blind_bottom", bx_a, bx_b, 0.05, 0.09, zz_ - 0.012, zz_, slat)
-        for cx_ in (bx_a + 0.18, (bx_a + bx_b) / 2.0, bx_b - 0.18):
-            box("blind_cord", cx_ - 0.002, cx_ + 0.002, 0.066, 0.070, zz_, 2.40, mat("blind_cord", (0.80, 0.78, 0.72), rough=0.9))
-        # THE BENCH down the left wall, oxblood vinyl on a black tube frame, where customers wait
-        bx0, bx1, by0, by1 = -2.62, -2.18, 0.42, 1.95
-        metre_uvs(box("bench_seat", bx0 + 0.04, bx1, by0, by1, 0.40, 0.47, vinyl), 0.6)
-        metre_uvs(box("bench_back", bx0, bx0 + 0.09, by0, by1, 0.49, 0.88, vinyl), 0.6)
-        for o_ in [ob for ob in bpy.context.scene.objects if ob.name.startswith("bench_seat") or ob.name.startswith("bench_back")]:
-            o_.modifiers.new("round", "BEVEL").width = 0.015
-        for yy in (by0 + 0.05, by1 - 0.08):
-            for xx in (bx0 + 0.06, bx1 - 0.05):
-                box("bench_leg", xx, xx + 0.025, yy, yy + 0.025, 0.0, 0.40, black)
-        box("bench_rail", bx0 + 0.06, bx1 - 0.03, by0 + 0.05, by1 - 0.055, 0.10, 0.125, black)
-        # a folded evening paper left on it (no headline to read at this distance)
-        box("left_paper", bx0 + 0.15, bx0 + 0.36, 1.2, 1.5, 0.47, 0.485, mat("newsprint", (0.70, 0.69, 0.64), rough=0.9))
+        # (the venetian blind half down over the window's left run is a modelled prop now, below)
+        # (the oxblood bench down the left wall is a modelled prop now, below)
 
         # THE NOTICES above the bench, printed, facing across the room: the fares, the licence, the
         # accounts card, the calendar (tools/props/make_office_print.py)
@@ -1449,12 +1412,7 @@ def build_and_render(argv):
         # from the left wall to a gap at the stair wall for the staff to pass
         cy0, cy1 = 2.23, 2.73
         cx0, cx1 = -W / 2, 0.80
-        metre_uvs(box("counter", cx0, cx1, cy0, cy1, 0.0, 0.95, front_panel), 0.9)
-        metre_uvs(box("counter_top", cx0, cx1 + 0.02, cy0 - 0.03, cy1 + 0.01, 0.95, 0.985, laminate), 0.8)
-        box("counter_kick", cx0, cx1, cy0 - 0.006, cy0, 0.0, 0.1, kick)
-        for k in range(4):
-            xx = cx0 + 0.6 + k * 0.85
-            box("counter_panel_bead_%d" % k, xx, xx + 0.02, cy0 - 0.008, cy0, 0.12, 0.90, laminate)
+        # (the counter itself is a modelled prop now, placed with the others below; its top at 0.985)
         # on it: THE BOOK OF EVERY FARE, open, its cloth cover and ruled pages written up
         bkx, bky = -1.20, 2.47
         box("fare_book_cover", bkx - 0.27, bkx + 0.27, bky - 0.19, bky + 0.19, 0.985, 0.995, cloth_green)
@@ -1488,6 +1446,20 @@ def build_and_render(argv):
             root.rotation_euler = (0.0, 0.0, turn)
             root.location = (x, y, z)
             return root
+
+        # THE FURNITURE, 6 October (set 2 of the same props, modelled by script at their researched
+        # sizes): the counter built to this room, 3.45 m from the left wall to the staff passage, its
+        # top at 0.985 and no flap (the plan leaves the passage at the stair wall open); the bench
+        # down the left wall facing across; the convector heater on the stallriser under the window;
+        # the blind half down over the window's left run, its slats tilted half open; the four-drawer
+        # cabinet behind the counter, its drawers to the window.
+        prop("counter_mickeys", (cx0 + cx1) / 2.0, (cy0 + cy1) / 2.0, 0.0)
+        prop("bench", -W / 2 + 0.255, 1.185, 0.0, turn=math.pi / 2)
+        # a folded evening paper left on it (no headline to read at this distance)
+        box("left_paper", -2.42, -2.21, 1.2, 1.5, 0.452, 0.467, mat("newsprint", (0.70, 0.69, 0.64), rough=0.9))
+        prop("heater", -1.35, 0.06, 0.14, turn=math.pi)
+        prop("blind_mickeys", -1.94, 0.05, 1.62, turn=math.pi)
+        prop("filing_cabinet", -W / 2 + 0.255, 3.61, 0.0)
 
         # the phone, a cream push-button set of the decade with its coiled cord (one line: the black
         # dial set of before was boxes)
@@ -1549,20 +1521,10 @@ def build_and_render(argv):
         # the loudspeaker on its bracket above the desk, so the room hears every job
         box("speaker", -1.25, -0.95, D - 0.20, D - 0.02, 2.02, 2.24, mat("speaker_wood", (0.16, 0.10, 0.06), rough=0.5))
         box("speaker_cloth", -1.22, -0.98, D - 0.205, D - 0.20, 2.04, 2.22, mat("speaker_cloth", (0.06, 0.05, 0.04), rough=1.0))
-        # MICKEY'S CHAIR, empty: a fabric swivel chair on its five-star base, behind the desk
-        chx, chy = -1.05, 3.92
-        for k in range(5):
-            ang = k * 2 * math.pi / 5 + 0.3
-            leg = box("chair_leg_%d" % k, chx - 0.012, chx + 0.012, chy, chy + 0.30, 0.04, 0.07, black)
-            leg.rotation_euler[2] = ang
-            leg.location = (chx + math.sin(-ang) * 0.15, chy + math.cos(ang) * 0.15, 0.055)
-            cyl("chair_castor_%d" % k, chx + math.sin(-ang) * 0.29, chy + math.cos(ang) * 0.29, 0.0, 0.022, 0.04, black, verts=10)
-        cyl("chair_column", chx, chy, 0.07, 0.025, 0.36, chrome)
-        box("chair_seat", chx - 0.24, chx + 0.24, chy - 0.24, chy + 0.22, 0.43, 0.50, fabric)
-        # HIGH-BACKED, 6 October: its back to 1.25 m, so the empty chair turned to the glass reads over
-        # the counter (the third review: "the radio desk and chair out of sight")
-        box("chair_back", chx - 0.23, chx + 0.23, chy + 0.17, chy + 0.25, 0.56, 1.25, fabric)
-        box("chair_back_bar", chx - 0.02, chx + 0.02, chy + 0.20, chy + 0.25, 0.46, 0.60, black)
+        # MICKEY'S CHAIR, empty: the modelled fabric swivel chair on its five-star base, at its real
+        # 0.80 m (the 1.25 m box back is gone: the set on its riser is what reads over the counter),
+        # pushed in under the desk's back edge and left turned a little, as he got up from it
+        prop("chair", -1.05, 3.84, 0.0, turn=0.25)
         # a jacket left over the chair's back (his)
         # (no jacket: as a box over the chair's back it read as a flat card, the second fresh review)
 
@@ -1576,7 +1538,7 @@ def build_and_render(argv):
         # from the door to the counter, the counter top's laminate rubbed pale where the book lies
         # (no scuff boxes on the counter's foot: in the game they read as a dark skyline)
         box("carpet_path", -0.6, 1.6, 0.6, 2.2, 0.0, 0.004, mat("carpet_trodden", (0.065, 0.045, 0.032), rough=0.98, noise=0.5))
-        box("counter_rubbed", bkx - 0.4, bkx + 0.4, cy0 - 0.02, cy0 + 0.25, 0.985, 0.9865, mat("laminate_rubbed", (0.55, 0.43, 0.30), rough=0.3))
+        box("counter_rubbed", bkx - 0.4, bkx + 0.4, cy0 + 0.02, cy0 + 0.25, 0.985, 0.9858, mat("laminate_rubbed", (0.55, 0.43, 0.30), rough=0.3))
         # A PINBOARD right of the back door: dockets, a postcard, a card of phone numbers
         print_plane("pinboard", "pinboard", 1.35, D - 0.008, 1.45, 0.70, 0.60, "-y")
         # "BOOKINGS" on a stand at the counter's front edge, read from the window
@@ -1584,7 +1546,7 @@ def build_and_render(argv):
         print_plane("bookings_card", "bookings", -1.75, cy0 + 0.043, 1.045, 0.40, 0.12, "-y")
         # the fares again, taped to the counter's front where the waiting customer reads them (the
         # dressing research: face the important notices to the glass)
-        print_plane("counter_fares", "fares", -1.95, cy0 - 0.012, 0.55, 0.30, 0.42, "-y")
+        print_plane("counter_fares", "fares", -1.95, cy0 + 0.019, 0.55, 0.30, 0.42, "-y")   # on the panel mouldings' face
         # a stacking chair for a customer by the stair wall: a moulded shell on a tube frame
         model("SchoolChair_01", 1.40, 1.10, 0.0, turn=-1.9, size=0.82)
         # the lighter by the counter's ashtray
@@ -1624,13 +1586,7 @@ def build_and_render(argv):
                     mat("file_%d_%d_%d" % tuple(int(v * 99) for v in c), c, rough=0.6))
             if k == 13:
                 o.rotation_euler[0] = 0.25
-        # its drawers to the window (the second review read its plain side as a monitor)
-        box("cabinet", -W / 2 + 0.02, -W / 2 + 0.49, 3.30, 3.92, 0.0, 1.32, steel_grey)
-        for k in range(4):
-            zz = 0.06 + k * 0.32
-            box("cabinet_drawer_line_%d" % k, -W / 2 + 0.03, -W / 2 + 0.48, 3.295, 3.30, zz + 0.30, zz + 0.305, black)
-            box("cabinet_handle_%d" % k, -W / 2 + 0.19, -W / 2 + 0.32, 3.28, 3.295, zz + 0.22, zz + 0.24, chrome)
-            box("cabinet_label_%d" % k, -W / 2 + 0.21, -W / 2 + 0.30, 3.293, 3.295, zz + 0.25, zz + 0.28, card_white)
+        # (the four-drawer cabinet, its drawers to the window, is a modelled prop, placed above)
         # the jug kettle on the cabinet's top, where the office makes its tea (the plan's kettle, 6 October)
         prop("jug-kettle", -W / 2 + 0.25, 3.64, 1.32, turn=0.5)
         cyl("extinguisher", -W / 2 + 0.10, 3.05, 0.35, 0.075, 0.55, mat("extinguisher_red", (0.55, 0.03, 0.02), rough=0.3))

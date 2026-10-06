@@ -33,12 +33,14 @@ def repo_root():
 
 # THE ROOMS GIT DOES NOT HOLD, 6 October: a room's fittings run to 14 MB and git takes nothing over
 # 1 MB since 5 October, so the rooms also live on F: under the same paths (tools/ue/stage_game_data.py's
-# GAME_INPUTS), where the build machine on this PC reads them. A part in the checkout is preferred.
+# GAME_INPUTS), where the build machine on this PC reads them. Where a part is in both, the newer
+# file is taken (6 October: an older copy left in the checkout won, and a film showed the old room).
 GAME_INPUTS = os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")
 
 
 def rooms(root, inputs=None):
-    """(shop, part, path) for every room part on disk, the checkout's first, then the game inputs'."""
+    """(shop, part, path) for every room part on disk, in the checkout or the game inputs; the newer
+    file where a part is in both."""
     inputs = GAME_INPUTS if inputs is None else inputs
     found = {}
     for base in (inputs, root):
@@ -47,8 +49,9 @@ def rooms(root, inputs=None):
                 continue
             for part in PARTS:
                 p = os.path.join(d, part + ".glb")
-                if os.path.isfile(p):
-                    found[(os.path.basename(d), part)] = p
+                key = (os.path.basename(d), part)
+                if os.path.isfile(p) and (key not in found or os.path.getmtime(p) > os.path.getmtime(found[key])):
+                    found[key] = p
     return [(shop, part, found[(shop, part)]) for shop, part in sorted(found, key=lambda k: (k[0], PARTS.index(k[1])))]
 
 
@@ -82,6 +85,17 @@ def selftest():
     have = {(s, p) for s, p, _ in found}
     ok("every shop the spec gives a real room has all six parts on disk",
        all((w, p) in have for w in wanted for p in PARTS), "%s vs %s" % (wanted, sorted(have)))
+    import tempfile
+    a, b = tempfile.mkdtemp(), tempfile.mkdtemp()
+    for base, age in ((a, 100), (b, 0)):
+        d = os.path.join(base, ROOMS_REL, "testshop")
+        os.makedirs(d)
+        fp = os.path.join(d, "floor.glb")
+        open(fp, "wb").write(b"x")
+        os.utime(fp, (time.time() - age, time.time() - age))
+    ok("where a part is in both the checkout and the game inputs, the newer file is taken",
+       rooms(a, inputs=b) == [("testshop", "floor", os.path.join(b, ROOMS_REL, "testshop", "floor.glb"))]
+       and rooms(b, inputs=a) == [("testshop", "floor", os.path.join(b, ROOMS_REL, "testshop", "floor.glb"))])
     ok("the mesh is named where the game loads it",
        mesh_path("launderette", "floor") == "/Game/Ledger/ShopRooms/launderette/floor/SM_launderette_floor")
     ok("the line carries its denominator", "shopRoomsImported=5/6" in rooms_line(6, 5, 5, 1.0, ["x"]))
