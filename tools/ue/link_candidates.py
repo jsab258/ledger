@@ -23,7 +23,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 SRC = r"F:\LedgerTools\mh-dress\Content\Ledger\MetaHumans"
 DST = os.path.join(REPO, "ue-probe", "Content", "Ledger", "MetaHumans")
 # Tom's candidates since 6 October (item 1.2): MH_TomA1 to MH_TomA5, then MH_TomB1 to B4.
-PATTERN = re.compile(r"^(MH_(Lena|Rocco|Sam)C\d|MH_Tom[ABD]\d|Speech)$")
+PATTERN = re.compile(r"^(MH_(Lena|Rocco|Sam)C\d|MH_Tom[ABDG]\d|Speech)$")
 
 
 def wanted(names):
