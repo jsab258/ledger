@@ -118,6 +118,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 23 Sep: Floor: object interaction; optional presentation (photo mode, credits, after the ending); making the game.
 - D56: The crime layer owes eight verbs, in order (stage 3).
 - D13: Meridian's map is drawn from canon as data, with testable layout rules. 5 Oct: the September atlas (atlas-01) is the town's map, updated to the built street: 48 m, its climb and its bend east, behind the parade, at the far end (his Hook sheet).
+- 6 Oct: phase 1's items run in parallel (helpers for props and the voice, the graphics card's work queued), the week's usage spent about twice as fast.
 - D26: Sound is a lane, CC0 only.
 
 ## Disk, git and backup
