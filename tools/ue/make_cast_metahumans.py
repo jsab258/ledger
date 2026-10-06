@@ -638,6 +638,16 @@ TOM_FOURTH = {
     "G2": _finish(TOM_THIRD["D2"], hair_colour=TOM_MATT_BROWN, accents=dict(OLDER_LIDS, **CALM_SKIN)),
 }
 TOM.update(TOM_FOURTH)
+# THE FIFTH STEP, 6 October: G1 and G2 came out with frosted white brows and lashes and a darker
+# face. Two changes were in them at once, the hair's roughness and the calmer skin, and the service
+# had been asked to wait only 30 s; so the roughness is left out and the wait doubled, to tell which.
+TOM_PLAIN_BROWN = {"hairMelanin": 0.6, "hairRedness": 0.08, "WhiteAmount": 0.0}
+TOM_FIFTH = {
+    "H1": _finish(TOM_THIRD["D2"], hair="WI_Hair_S_Clean", hair_colour=TOM_PLAIN_BROWN,
+                  accents=dict(OLDER_LIDS, **CALM_SKIN)),
+    "H2": _finish(TOM_THIRD["D2"], hair_colour=TOM_PLAIN_BROWN, accents=dict(OLDER_LIDS, **CALM_SKIN)),
+}
+TOM.update(TOM_FIFTH)
 for _t, _b in TOM.items():
     _b["clear"] = list(TOM_CLEAR)
     CANDIDATES[_t] = {"tom": _b}
@@ -1064,7 +1074,9 @@ def main_after_idle(seconds=20.0, settle=15.0):
         textured = bool(ch.get_editor_property("has_high_resolution_textures"))
         # A cast take's duplicate may still say "textured" from its base
         # preset before the service answers: the service took 30 s at least.
-        early = bool(brief(st["who"])) and now - st["asked"] < 30.0
+        # 60 s, 6 October: Tom's G takes were READY at 30 s and built with frosted brows and lashes
+        # and a darker face, which a build before the service's textures had come would give.
+        early = bool(brief(st["who"])) and now - st["asked"] < 60.0
         if rigged and textured and not early:
             write(status_line(step_name, st["who"], st["preset"], "READY", now - st["tc"],
                               "rigged-and-textured-after-%.0fs" % (now - st["asked"])))
@@ -1298,11 +1310,11 @@ def selftest():
           all(abs(CANDIDATES[t][w]["body"]["Height"] - h) <= 3 for t in FIVE for w, h in (("lena", 160), ("rocco", 186), ("sam", 175))))
     check("Ron always has his moustache", all(CANDIDATES[t]["rocco"].get("mustache") for t in FIVE))
     toms = [t for t in CANDIDATES if "tom" in CANDIDATES[t]]
-    check("Tom's candidates: only Tom in each, fourteen (five, four, three from B2, two from D2), all different",
-          len(toms) == 14 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
+    check("Tom's candidates: only Tom in each, sixteen (five, four, three from B2, two and two from D2), all different",
+          len(toms) == 16 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
           and len({repr(sorted(CANDIDATES[t]["tom"]["face"].items())) + CANDIDATES[t]["tom"]["hair"]
                    + str(CANDIDATES[t]["tom"]["skin"].get("face_texture_index"))
-                   + repr(sorted(CANDIDATES[t]["tom"].get("accents", {}))) for t in toms}) == 14)
+                   + repr(sorted(CANDIDATES[t]["tom"].get("accents", {}))) + repr(sorted(CANDIDATES[t]["tom"].get("hair_colour", {}))) for t in toms}) == 16)
     check("Tom to his sheet: about 175 cm, lean, clean-shaven, short dark hair",
           all(abs(CANDIDATES[t]["tom"]["body"]["Height"] - 175) <= 3 and CANDIDATES[t]["tom"]["body"]["Fat"] <= 0
               and set(CANDIDATES[t]["tom"]["clear"]) == {"Beard", "Mustache"} and not CANDIDATES[t]["tom"].get("beard")
@@ -1314,7 +1326,7 @@ def selftest():
     check("the second try leaves Victor's and Lorenzo's skin sets and Victor's face, and never the aged 121 (Ron's and Sheila's)",
           all(CANDIDATES[t]["tom"]["skin"].get("face_texture_index") in (13, 85) and "Victor" not in CANDIDATES[t]["tom"]["face"]
               and CANDIDATES[t]["tom"]["eyes"] == EYES_GREY_BLUE and CANDIDATES[t]["tom"]["accents"]["chin"]["lightness"] > 0.5
-              for t in toms if t[0] in "BDG"))
+              for t in toms if t[0] in "BDGH"))
     check("a Tom take builds nobody else", [w for (w, _) in CAST if "A1" not in CANDIDATES or w in CANDIDATES["A1"]] == ["tom"])
     use_take("C3")
     check("a candidate take builds to its own brief", brief("rocco") is CANDIDATES["C3"]["rocco"] and asset_name("rocco") == "MH_RoccoC3")
