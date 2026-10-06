@@ -2995,6 +2995,190 @@ def _read_glb(path):
     return parts
 
 
+def _read_glb_nodes(path):
+    """[(node name, material, verts, triangles)] from a .glb, in Blender's frame (z up), each
+    node's translation, rotation and scale applied down through its parents.
+
+    THE SHOPFRONT KIT'S DOORS (6 October) hang their leaves on their frames by a translation,
+    so their nodes carry transforms, which _read_glb refuses by design (the clutter has none and
+    a transform there would mean a script changed). Pure Python, as _read_glb is."""
+    import json
+    import struct
+    with open(path, "rb") as fh:
+        data = fh.read()
+    if data[:4] != b"glTF":
+        raise ValueError("not-a-glb")
+    jlen = struct.unpack_from("<I", data, 12)[0]
+    doc = json.loads(data[20:20 + jlen].decode("utf-8"))
+    boff = 20 + jlen
+    blob = data[boff + 8:boff + 8 + struct.unpack_from("<I", data, boff)[0]]
+
+    def read(i):
+        acc = doc["accessors"][i]
+        view = doc["bufferViews"][acc["bufferView"]]
+        start = view.get("byteOffset", 0) + acc.get("byteOffset", 0)
+        comps = {"SCALAR": 1, "VEC3": 3}[acc["type"]]
+        fmt = {5126: "f", 5125: "I", 5123: "H", 5121: "B"}[acc["componentType"]]
+        stride = view.get("byteStride", struct.calcsize("<" + fmt) * comps)
+        vals = [struct.unpack_from("<" + fmt * comps, blob, start + k * stride)
+                for k in range(acc["count"])]
+        return vals if comps > 1 else [v[0] for v in vals]
+
+    def local(node):
+        # column-major glTF TRS as a 3x4 row-major [R*S | t]
+        if "matrix" in node:
+            m = node["matrix"]
+            return [[m[0], m[4], m[8], m[12]], [m[1], m[5], m[9], m[13]], [m[2], m[6], m[10], m[14]]]
+        tx, ty, tz = node.get("translation", (0.0, 0.0, 0.0))
+        qx, qy, qz, qw = node.get("rotation", (0.0, 0.0, 0.0, 1.0))
+        sx, sy, sz = node.get("scale", (1.0, 1.0, 1.0))
+        r = [[1 - 2 * (qy * qy + qz * qz), 2 * (qx * qy - qz * qw), 2 * (qx * qz + qy * qw)],
+             [2 * (qx * qy + qz * qw), 1 - 2 * (qx * qx + qz * qz), 2 * (qy * qz - qx * qw)],
+             [2 * (qx * qz - qy * qw), 2 * (qy * qz + qx * qw), 1 - 2 * (qx * qx + qy * qy)]]
+        return [[r[i][0] * sx, r[i][1] * sy, r[i][2] * sz, (tx, ty, tz)[i]] for i in range(3)]
+
+    def compose(a, b):
+        return [[sum(a[i][k] * b[k][j] for k in range(3)) + (a[i][3] if j == 3 else 0.0)
+                 for j in range(4)] for i in range(3)]
+
+    out = []
+
+    def walk(i, parent):
+        node = doc["nodes"][i]
+        m = compose(parent, local(node))
+        if "mesh" in node:
+            for prim in doc["meshes"][node["mesh"]]["primitives"]:
+                if prim.get("mode", 4) != 4:
+                    raise ValueError("not-triangles")
+                pos = read(prim["attributes"]["POSITION"])
+                idx = read(prim["indices"]) if "indices" in prim else list(range(len(pos)))
+                mat = doc["materials"][prim["material"]]["name"] if "material" in prim else "none"
+                w = [tuple(m[r][0] * p[0] + m[r][1] * p[1] + m[r][2] * p[2] + m[r][3] for r in range(3)) for p in pos]
+                # glTF is y up with -z forward; Blender z up with +y forward (as _read_glb).
+                verts = [(p[0], -p[2], p[1]) for p in w]
+                out.append((node.get("name", "node%d" % i), mat, verts,
+                            [tuple(idx[k:k + 3]) for k in range(0, len(idx) - 2, 3)]))
+        for c in node.get("children", []):
+            walk(c, m)
+
+    ident = [[1.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0], [0.0, 0.0, 1.0, 0.0]]
+    for i in doc["scenes"][doc.get("scene", 0)]["nodes"]:
+        walk(i, ident)
+    return out
+
+
+# THE SHOPFRONT KIT (6 October; phase 1, item 1.1: "one frontage of correct geometry, material and
+# wear"). A fresh reviewer read this street's shopfronts as boxes ("a rough black reveal" beside
+# Mickey's), so a period shopfront was researched (production/research/shopfronts/
+# FRONTAGE-2026-10-06.md) and modelled by script in Blender (tools/art-recipes/shopfront-kit/,
+# production/art/shopfront-kit/README.md): a panelled pilaster with its plinth and capital, a
+# panelled or tiled stallriser with its sill, the window's frame with its mullions, transom and
+# toplight bars, the shop door and the side door in their frames. Each piece is built in this
+# recipe's own bay axes (x along, -y proud of the wall, back on y = 0, z from the threshold), so it
+# stands where the box joinery stood, and the boxes it replaces are taken out. Rita's bay first;
+# the others follow once it passes its gate.
+KIT_REL = os.path.join("production", "assets", "shopfront-kit")
+KIT_BAYS = {("east_parade", 2): {"stall": "stallriser_panelled"}}
+#: The glass the kit's frames hold, from each piece's measured report (production/art/
+#: shopfront-kit/README.md): the plane in front of the wall, and each opening (x about the piece's
+#: centre, z from the threshold).
+KIT_GLASS = {
+    "window_frame": [("display", -0.03, (-1.625, 1.625), (0.6, 2.4)),
+                     ("toplight", -0.03, (-1.625, 1.625), (2.48, 2.79))],
+    "shop_door": [("door_light", -0.047, (-0.34, 0.34), (1.0, 1.948)),
+                  ("fanlight", -0.03, (-0.453, 0.453), (2.131, 2.4)),
+                  ("toplight", -0.03, (-0.453, 0.453), (2.48, 2.79))],
+    "side_door": [("fanlight", -0.03, (-0.422, 0.422), (2.072, 2.4))],
+}
+#: The window frame's three lights, x about its centre (its report's "panes").
+KIT_PANES = ((-1.625, -0.5692), (-0.5142, 0.5142), (0.5692, 1.625))
+#: The box joinery a kit bay takes out (and the brick over its doors: the kit's frames run to the
+#: board).
+KIT_REPLACES = ("pilaster_left", "pilaster_right", "stallriser", "stall_plinth", "stall_sill",
+                "display_glazing", "display_jamb_left", "display_jamb_right", "display_sill_rail",
+                "display_mullion_1", "display_mullion_2", "transom_bar", "toplight", "toplight_mullion_1",
+                "toplight_mullion_2", "toplight_bar_over_door", "toplight_head_rail", "letterplate",
+                "zone_infill")
+KIT_REPLACES_PREFIX = ("shop_door_", "side_door_")
+
+
+def _kit_glb(name, root=None):
+    """The kit piece's path: the checkout's, else the game inputs' on F: (as the rooms)."""
+    for base in (root or ROOT, os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")):
+        path = os.path.join(base, KIT_REL, name + ".glb")
+        if os.path.isfile(path):
+            return path
+    raise FileNotFoundError("terrace-front: the shopfront kit's %s.glb is in neither the checkout nor the game inputs" % name)
+
+
+def _kit_material(piece, node, mat, pier, stall):
+    """(street material, paint) for a kit piece's material: the shop's colour on its piers and
+    stallriser, white joinery inside it, the side door in the door paint (the approved sheet's
+    parade, as the box joinery has it)."""
+    if mat == "painted_timber":
+        if piece == "pilaster":
+            return "paint_stall", pier
+        if piece.startswith("stallriser"):
+            return "paint_stall", stall
+        if piece == "side_door" and node.endswith("_leaf"):
+            return "paint_door", None
+        return "paint_joinery", None
+    return {"brass": ("brass", None), "terrazzo": ("stone", None), "stone_step": ("stone", None),
+            "grout": ("stone", None), "glazed_tile": ("tile_stall", None)}.get(mat, ("paint_joinery", None))
+
+
+def _kit_shopfront(parts, p, kit, doors_on, has_side_door, pier, stall, root=None):
+    """Takes the box joinery out of one shop bay and stands the kit's pieces in its place."""
+    W, pw = p["bay_width_m"], p["pilaster_w_m"]
+    parts[:] = [q for q in parts if q["id"] not in KIT_REPLACES and not q["id"].startswith(KIT_REPLACES_PREFIX)]
+    read = {}
+    for name in ("pilaster", kit["stall"], "window_frame", "shop_door", "side_door"):
+        read[name] = _read_glb_nodes(_kit_glb(name, root))
+
+    def width(name):
+        xs = [v[0] for _n, _m, vs, _t in read[name] for v in vs]
+        return max(xs) - min(xs)
+    win_w, shop_w = width("window_frame"), width("shop_door")
+    side_w = width("side_door") if has_side_door else 0.0
+    zone = W - 2.0 * pw
+    if abs(win_w + shop_w + side_w - zone) > 0.01:
+        raise ValueError("terrace-front: the kit's window, shop door and side door (%.3f m) do not fill the "
+                         "opening zone (%.3f m)" % (win_w + shop_w + side_w, zone))
+    if doors_on == "left":
+        side_c, shop_c, win_c = pw + side_w / 2.0, pw + side_w + shop_w / 2.0, pw + side_w + shop_w + win_w / 2.0
+    else:
+        win_c, shop_c, side_c = pw + win_w / 2.0, pw + win_w + shop_w / 2.0, pw + win_w + shop_w + side_w / 2.0
+    places = [("pilaster", "pilaster_left", pw / 2.0), ("pilaster", "pilaster_right", W - pw / 2.0),
+              (kit["stall"], "stallriser", win_c), ("window_frame", "window_frame", win_c),
+              ("shop_door", "shop_door", shop_c)]
+    if has_side_door:
+        places.append(("side_door", "side_door", side_c))
+    for piece, pid, cx in places:
+        for k, (node, mat, verts, tris) in enumerate(read[piece]):
+            street_mat, paint = _kit_material(piece, node, mat, pier, stall)
+            q = {"id": "kit_%s_%d_%s" % (pid, k, mat), "material": street_mat, "kind": "mesh",
+                 "verts": [(x + cx, y, z) for (x, y, z) in verts], "faces": tris,
+                 "note": "the-shopfront-kit/%s/%s" % (piece, node)}
+            if paint:
+                q["paint_name"], q["paint"] = paint
+            parts.append(q)
+        for what, gy, (x0, x1), (z0, z1) in KIT_GLASS.get(piece, ()):
+            _box(parts, "kit_glass_%s_%s" % (pid, what), "glass", cx + x0, cx + x1, gy - 0.003, gy + 0.003,
+                 z0, z1, "the-kit's-glass/" + what)
+    # THE DISPLAY BED behind the glass, flush with the stallriser's sill: the board the goods stand
+    # on, from the glass back to where the display's own bed starts (the boxes' glass stood 0.12 m
+    # back and the goods behind it; the kit's stands 0.03 m proud, as the guides have it).
+    bed = _box(parts, "kit_display_bed", "paint_stall", win_c - win_w / 2.0 + 0.05, win_c + win_w / 2.0 - 0.05,
+               -0.027, 0.15, 0.585, 0.6, "the-display-bed/paint=" + stall[0])
+    bed["paint_name"], bed["paint"] = stall
+    # the blind box and its lath over the display run as the kit has it
+    for q in parts:
+        if q["id"] in ("blind_box", "blind_lath"):
+            inset = 0.04 if q["id"] == "blind_lath" else 0.0
+            q["x0"], q["x1"] = win_c - win_w / 2.0 + inset, win_c + win_w / 2.0 - inset
+    return win_c, shop_c, side_c
+
+
 def _clutter_material(piece, mat):
     return CLUTTER_SAME_AS.get((piece, mat)) or "cl_%s_%s" % (piece.replace("-", "_"),
                                                              mat.replace("-", "_"))
@@ -3284,14 +3468,23 @@ def _broken_windows(out):
     notes = []
     for deed, gid in BROKEN_WINDOWS:
         g = by_id.get(gid)
+        prefix, bay = gid.split("_display_glazing_")
+        # A KIT BAY'S WINDOW (6 October): its glass is the kit's, its lights the kit frame's panes.
+        kit = g is None and ("%s_kit_glass_window_frame_display_%s" % (prefix, bay)) in by_id
+        if kit:
+            g = by_id["%s_kit_glass_window_frame_display_%s" % (prefix, bay)]
         if g is None:
             notes.append("%s=no-glazing" % deed)
             continue
-        prefix, bay = gid.split("_display_glazing_")
-        frames = sorted((p for p in out if p["id"] in (
-            "%s_display_jamb_left_%s" % (prefix, bay), "%s_display_jamb_right_%s" % (prefix, bay))
-            or p["id"].startswith("%s_display_mullion_" % prefix) and p["id"].endswith("_" + bay)),
-            key=lambda p: p["x0"])
+        if kit:
+            cx_ = (g["x0"] + g["x1"]) / 2.0
+            lights = [(cx_ + a, cx_ + b) for a, b in KIT_PANES]
+        else:
+            frames = sorted((p for p in out if p["id"] in (
+                "%s_display_jamb_left_%s" % (prefix, bay), "%s_display_jamb_right_%s" % (prefix, bay))
+                or p["id"].startswith("%s_display_mullion_" % prefix) and p["id"].endswith("_" + bay)),
+                key=lambda p: p["x0"])
+            lights = [(frames[k]["x1"], frames[k + 1]["x0"]) for k in range(len(frames) - 1)]
         sill = by_id.get("%s_display_sill_rail_%s" % (prefix, bay))
         za = sill["z1"] if sill else g["z0"]
         zb = g["z1"]
@@ -3301,15 +3494,16 @@ def _broken_windows(out):
         yb = yf + (0.008 if east else -0.008)
         rng = random.Random(BROKEN_SEED + ord(deed))
         glass, edge, ground = ([], []), ([], []), ([], [])
-        for k in range(len(frames) - 1):
-            _teeth(rng, glass, edge, frames[k]["x1"], frames[k + 1]["x0"], za, zb, yf, yb)
+        for xa, xb in lights:
+            _teeth(rng, glass, edge, xa, xb, za, zb, yf, yb)
         riser = by_id.get("%s_stallriser_%s" % (prefix, bay))
-        face_y = (riser["y0"] if east else riser["y1"]) if riser else yf
+        # the kit's stallriser stands 0.12 m in front of its glass (production/art/shopfront-kit)
+        face_y = (riser["y0"] if east else riser["y1"]) if riser else (yf + (-0.12 if east else 0.12) if kit else yf)
         _pavement_glass(rng, ground, g["x0"], g["x1"], face_y, -1.0 if east else 1.0)
         for kind, (vs, fs) in (("glass", glass), ("edge", edge), ("ground", ground)):
             out.append({"id": "shard_%s_%s" % (deed, kind), "material": "shard_%s_%s" % (deed, kind),
                         "kind": "mesh", "verts": vs, "faces": fs, "note": "the-smashed-window/" + deed})
-        notes.append("%s=%dlights/%dpieces/%dground" % (deed, len(frames) - 1, len(edge[1]), len(ground[1])))
+        notes.append("%s=%dlights/%dpieces/%dground" % (deed, len(lights), len(edge[1]), len(ground[1])))
     return " ".join(notes)
 
 
@@ -5218,11 +5412,24 @@ def plan_parts(p, bay=0, party_wall=True):
                   zc - bh / 2.0, zc + bh / 2.0, "TO-LET/R05's-neighbouring-letting-board")
         lb["decal"] = LETTING_BOARD
 
+    # THE SHOPFRONT KIT where its bay is listed: the box joinery above taken out, the kit's
+    # pieces in its place (KIT_BAYS; 6 October).
+    if here in KIT_BAYS and not refit:
+        _kit_shopfront(parts, p, KIT_BAYS[here], doors_on, has_side_door,
+                       (pier_name, pier_rgb), (stall_name, stall_rgb))
+
     # A ONE-STOREY SHOP ROW (3 October, the proof view's composition) has its
     # roof straight off the fascia's top and nothing upstairs.
     if p["storeys"] > 1:
         _upper_floor(parts, p, T, wall, bay)
     _roof_and_rainwater(parts, p, T, wall, party_wall, bay)
+    if here in KIT_BAYS and not refit:
+        # THE DOWNPIPE GOES INTO THE CORNICE and down inside the hollow pilaster, as a timber
+        # shopfront hid it (the kit's reviewer: at the wall face it ran through the pilaster's
+        # plinth and capital).
+        for q in parts:
+            if q["id"] == "downpipe":
+                q["z0"] = GF
     return parts
 
 
@@ -8192,9 +8399,28 @@ def selftest():
         check("accept/one-stack-per-internal-party-wall",
               len(stacks) == p["bays"] - 1, "%d for %d bay(s)" % (len(stacks), p["bays"]))
         # THE ONE BAY WITH NO SIDE DOOR IS THE SPEC'S, and exactly one.
-        leaves = [b for b in rboxes if b["id"].startswith("side_door_leaf")]
+        # (a kit bay's side door is the kit's mesh, 6 October, so a bay counts by either)
+        leaves = {b["bay"] for b in row if b["id"].startswith("side_door_leaf")
+                  or (b["id"].startswith("kit_side_door_") and b.get("material") == "paint_door")}
         check("accept/exactly-one-bay-has-no-side-door",
               len(leaves) == p["bays"] - 1, "%d door(s) on %d bay(s)" % (len(leaves), p["bays"]))
+        # THE KIT'S BAY (6 October): its box joinery gone, the kit standing in the opening zone, its
+        # pieces filling it from pier to pier, its glass in front of the wall and behind the piers.
+        for (blk, kb) in KIT_BAYS:
+            if blk != p.get("block_id"):
+                continue
+            kp = [b for b in row if b["bay"] == kb]
+            gone = [b["id"] for b in kp if b["id"].split("_bay")[0] in KIT_REPLACES
+                    or b["id"].startswith(KIT_REPLACES_PREFIX)]
+            check("accept/the-kit-bay-has-no-box-joinery-left", not gone, ",".join(gone[:4]))
+            meshes = [b for b in kp if b["id"].startswith("kit_") and b.get("kind") == "mesh"]
+            xs = [v[0] - kb * p["bay_width_m"] for b in meshes for v in b["verts"]]
+            check("accept/the-kit-fills-the-bay-pier-to-pier",
+                  bool(xs) and abs(min(xs)) < 1e-6 and abs(max(xs) - p["bay_width_m"]) < 1e-6,
+                  "%.3f..%.3f" % (min(xs or [0]), max(xs or [0])))
+            glass = [b for b in kp if b["id"].startswith("kit_glass_")]
+            check("accept/the-kit's-glass-is-proud-of-the-wall-and-behind-the-piers",
+                  bool(glass) and all(-0.06 < b["y0"] < b["y1"] < 0.0 for b in glass))
         # AND THE ROW IS NOT ONE STENCIL SIX TIMES. The fault the spec
         # measured on the built street was zero per-bay variation: every door
         # at the same offset down the whole row. Compared as the shop door's

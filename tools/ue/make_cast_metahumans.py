@@ -601,6 +601,26 @@ for _t, _b in TOM_SECOND.items():
     _b["eyes"] = EYES_GREY_BLUE
     _b["accents"] = SHAVED_CHIN
 TOM.update(TOM_SECOND)
+# THE THIRD STEP, from B2, 6 October afternoon. The blind reviewer passed B2 with narrow points:
+# a clear Polish-English read, lean, no likeness to Ron; but he reads 25 to 27 (the sheet's 32),
+# the brush cut's squared barber's edge reads a modern crop, the hair turns ginger in profile, and
+# beside Darren (Orlando's face too, and his eyes) a "brothers" read is a small risk. So: B2's face,
+# aged by Bruce's skin set (13, which read 42 on the heavier B1 face) or by more of Walter's shape
+# and a shadow under the eyes on his own (85); a plain side-parted cut (Epic's casual or clean); the
+# brown with less red; the brows darker, so his face reads apart from Darren's fair one.
+TOM_BROWN = {"hairMelanin": 0.7, "hairRedness": 0.06, "WhiteAmount": 0.0}
+TOM_BROWS = {"hairMelanin": 0.75, "hairRedness": 0.05, "WhiteAmount": 0.0}
+OLDER_LIDS = {"under_eye": {"redness": 0.45, "saturation": 0.4, "lightness": 0.42}}
+TOM_THIRD = {
+    "D1": _c("Orlando", {"Orlando": 0.4, "Walter": 0.6}, 13, 0.22, 0.48, 175.0, -0.5, 0.0, "WI_Hair_S_Casual", TOM_BROWN),
+    "D2": _c("Orlando", {"Orlando": 0.3, "Walter": 0.7}, 85, 0.22, 0.48, 175.0, -0.5, 0.0, "WI_Hair_S_Casual", TOM_BROWN),
+    "D3": _c("Orlando", {"Orlando": 0.4, "Walter": 0.6}, 13, 0.22, 0.48, 175.0, -0.5, 0.0, "WI_Hair_S_Clean", TOM_BROWN),
+}
+for _t, _b in TOM_THIRD.items():
+    _b["eyes"] = EYES_GREY_BLUE
+    _b["accents"] = dict(SHAVED_CHIN, **(OLDER_LIDS if _b["skin"]["face_texture_index"] == 85 else {}))
+    _b["brow_colour"] = TOM_BROWS
+TOM.update(TOM_THIRD)
 for _t, _b in TOM.items():
     _b["clear"] = list(TOM_CLEAR)
     CANDIDATES[_t] = {"tom": _b}
@@ -1261,9 +1281,10 @@ def selftest():
           all(abs(CANDIDATES[t][w]["body"]["Height"] - h) <= 3 for t in FIVE for w, h in (("lena", 160), ("rocco", 186), ("sam", 175))))
     check("Ron always has his moustache", all(CANDIDATES[t]["rocco"].get("mustache") for t in FIVE))
     toms = [t for t in CANDIDATES if "tom" in CANDIDATES[t]]
-    check("Tom's candidates: only Tom in each, nine (five, then four), all different",
-          len(toms) == 9 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
-          and len({repr(sorted(CANDIDATES[t]["tom"]["face"].items())) + CANDIDATES[t]["tom"]["hair"] for t in toms}) == 9)
+    check("Tom's candidates: only Tom in each, twelve (five, four, then three from B2), all different",
+          len(toms) == 12 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
+          and len({repr(sorted(CANDIDATES[t]["tom"]["face"].items())) + CANDIDATES[t]["tom"]["hair"]
+                   + str(CANDIDATES[t]["tom"]["skin"].get("face_texture_index")) for t in toms}) == 12)
     check("Tom to his sheet: about 175 cm, lean, clean-shaven, short dark hair",
           all(abs(CANDIDATES[t]["tom"]["body"]["Height"] - 175) <= 3 and CANDIDATES[t]["tom"]["body"]["Fat"] <= 0
               and set(CANDIDATES[t]["tom"]["clear"]) == {"Beard", "Mustache"} and not CANDIDATES[t]["tom"].get("beard")
@@ -1275,7 +1296,7 @@ def selftest():
     check("the second try leaves Victor's and Lorenzo's skin sets and Victor's face, and never the aged 121 (Ron's and Sheila's)",
           all(CANDIDATES[t]["tom"]["skin"].get("face_texture_index") in (13, 85) and "Victor" not in CANDIDATES[t]["tom"]["face"]
               and CANDIDATES[t]["tom"]["eyes"] is EYES_GREY_BLUE and CANDIDATES[t]["tom"]["accents"]["chin"]["lightness"] > 0.5
-              for t in toms if t.startswith("B")))
+              for t in toms if t[0] in "BD"))
     check("a Tom take builds nobody else", [w for (w, _) in CAST if "A1" not in CANDIDATES or w in CANDIDATES["A1"]] == ["tom"])
     use_take("C3")
     check("a candidate take builds to its own brief", brief("rocco") is CANDIDATES["C3"]["rocco"] and asset_name("rocco") == "MH_RoccoC3")

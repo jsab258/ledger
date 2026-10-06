@@ -31,6 +31,18 @@ import time
 
 GLB_REL = "production/assets/street/quay-street.glb"
 SIDECAR_REL = "production/assets/street/quay-street.json"
+# THE STREET'S GEOMETRY IS ON F:, 6 October: re-exported with the shopfront kit it is 22.6 MB, and
+# no pushed file may be over 1 MB (his order of 5 October, tools/push_guard.py), so it lives where
+# the rooms live, under the same path in the game inputs (tools/ue/stage_game_data.py's GAME_INPUTS),
+# its sidecar in git. Where a copy is in both, the newer is taken.
+GAME_INPUTS = os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")
+
+
+def street_glb(root, inputs=None):
+    """The street's GLB: the checkout's or the game inputs', the newer where both; None if neither."""
+    inputs = GAME_INPUTS if inputs is None else inputs
+    found = [p for p in (os.path.join(root, GLB_REL), os.path.join(inputs, GLB_REL)) if os.path.isfile(p)]
+    return max(found, key=os.path.getmtime) if found else None
 PACKAGE_ROOT = "/Game/Ledger/Street"
 PACKAGE_DIR = PACKAGE_ROOT + "/quay-street/StaticMeshes"
 
@@ -95,7 +107,11 @@ def selftest():
     ok("the sign this script reads back is one of them", SIGN_MESH in names, names[:5])
     ok("every name is one Unreal can make an asset of",
        all(n.replace("_", "").isalnum() and len(n) <= 60 for n in names))
-    ok("the GLB is beside it", os.path.getsize(os.path.join(root, GLB_REL)) > 100000)
+    g = street_glb(root)
+    if g is None and not os.path.isdir(GAME_INPUTS):
+        print("SKIPPED - the GLB is in the checkout or the game inputs : no game inputs on this machine")
+    else:
+        ok("the GLB is in the checkout or the game inputs", g is not None and os.path.getsize(g) > 100000, g)
     ok("the object path is the measured one",
        object_path("street_slate") == "/Game/Ledger/Street/quay-street/StaticMeshes/street_slate.street_slate")
     ok("the sign where the export put it AGREES", sign_verdict((600.0, 500.0, 322.0)) == "AGREES")
@@ -172,7 +188,7 @@ def main():
     import unreal
     t0 = time.time()
     root = repo_root()
-    glb = os.path.join(root, GLB_REL)
+    glb = street_glb(root) or os.path.join(root, GLB_REL)
     out = os.path.join(unreal.Paths.project_dir(), "ue-material.txt")
     note = []
     asked = found = nanite_off = complex_ok = df_scaled = 0

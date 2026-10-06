@@ -91,7 +91,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1040
+   "faces": 6540
   },
   {
    "mesh": "street_brick_grey",
@@ -608,7 +608,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 330
+   "faces": 278
   },
   {
    "mesh": "street_brick_red_h_east_parade_bay3",
@@ -1852,7 +1852,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 450
+   "faces": 7231
   },
   {
    "mesh": "street_fascia_door_green",
@@ -1996,7 +1996,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1760
+   "faces": 19726
   },
   {
    "mesh": "street_fascia_plinth_black",
@@ -2260,7 +2260,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 18
+   "faces": 36
   },
   {
    "mesh": "street_glass_eg_bay3",
@@ -2659,7 +2659,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1438
+   "faces": 1412
   },
   {
    "mesh": "street_lens_amber",
@@ -2832,7 +2832,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 8224
+   "faces": 25093
   },
   {
    "mesh": "street_paint_white",
@@ -3147,7 +3147,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": "crime_r",
-   "faces": 135
+   "faces": 140
   },
   {
    "mesh": "street_shard_r_glass",
@@ -3171,7 +3171,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": "crime_r",
-   "faces": 2271
+   "faces": 2350
   },
   {
    "mesh": "street_shard_r_ground",
@@ -3271,7 +3271,7 @@
   },
   {
    "mesh": "street_sign_fascia_trade_fishmonger",
-   "material": "sign_production/assets/vignette/decals2d/fascia_trade_fishmonger",
+   "material": "sign_production/assets/vignette/decals2d/fascia_trade_fishmonge",
    "base_material": "paint_fascia",
    "linear_rgb": [
     0.03,
@@ -3319,7 +3319,7 @@
   },
   {
    "mesh": "street_sign_fascia_trade_ironmonger",
-   "material": "sign_production/assets/vignette/decals2d/fascia_trade_ironmonger",
+   "material": "sign_production/assets/vignette/decals2d/fascia_trade_ironmonge",
    "base_material": "paint_fascia",
    "linear_rgb": [
     0.03,
@@ -3343,7 +3343,7 @@
   },
   {
    "mesh": "street_sign_fascia_trade_launderette",
-   "material": "sign_production/assets/vignette/decals2d/fascia_trade_launderette",
+   "material": "sign_production/assets/vignette/decals2d/fascia_trade_launderet",
    "base_material": "paint_fascia",
    "linear_rgb": [
     0.03,
@@ -3391,7 +3391,7 @@
   },
   {
    "mesh": "street_sign_fascia_trade_pawnbroker",
-   "material": "sign_production/assets/vignette/decals2d/fascia_trade_pawnbroker",
+   "material": "sign_production/assets/vignette/decals2d/fascia_trade_pawnbroke",
    "base_material": "paint_fascia",
    "linear_rgb": [
     0.03,
@@ -3639,7 +3639,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 2700
+   "faces": 3420
   },
   {
    "mesh": "street_tile_patterned",

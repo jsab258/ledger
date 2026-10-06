@@ -176,3 +176,6 @@ game-design/reference/gta5_*
 # 1 MB since 5 October (tools/push_guard.py); they live on F:/LedgerTools/game-inputs under this
 # path, where tools/ue/import_shop_rooms.py and the build machine read them.
 production/assets/shop-rooms-3d/
+# the street's geometry (22.6 MB with the shopfront kit, 6 October): on F: under the same path, as the rooms;
+# tools/ue/import_street.py reads the newer of the two; its sidecar quay-street.json stays in git
+production/assets/street/quay-street.glb
