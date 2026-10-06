@@ -68,9 +68,11 @@ SCALAR_DEFAULT = 1.0
 CLAMP_PARAM, CLAMP_DEFAULT = "HorizonClampV", 1.0
 #: AND BLURRED, the same evening: stretched sharp, the clamp row's tree tops in one direction became
 #: tall grey streaks like tower blocks over the street (the packaged walk-in). Below the row the
-#: photograph is read at a small mip of itself (each texel some 3 by 6 degrees at mip 6), so the band
-#: is the sky's own soft colour by direction, faded in over BLUR_FADE_V of V above the row.
-BLUR_MIP, BLUR_FADE_V = 6.0, 0.03
+#: photograph is read as the mean of BLUR_TAPS samples of the row spread BLUR_STEP_U apart (2.5
+#: degrees each, 20 in all), so the band is the sky's own soft colour by direction, faded in over
+#: BLUR_FADE_V of V above the row. (A small mip was tried first: the photograph is decoded at run
+#: time into a texture with no mips, so the bias did nothing and the stripes stayed.)
+BLUR_TAPS, BLUR_STEP_U, BLUR_FADE_V = 9, 2.5 / 360.0, 0.03
 
 # THE DEFAULT TEXTURE THE SAMPLER MUST CARRY TO COMPILE AT ALL. Run 23 landed
 # a perfect-looking verdict over a material that never compiled because one
@@ -202,17 +204,36 @@ def main():
     clamp_v.set_editor_property("default_value", CLAMP_DEFAULT)
     vmin = mel.create_material_expression(mat, unreal.MaterialExpressionMin, -900, 100)
     uvout = mel.create_material_expression(mat, unreal.MaterialExpressionAppendVector, -900, 0)
-    # the blurred read of the same photograph (the same parameter, so the game's one write binds both)
-    blur = mel.create_material_expression(mat, unreal.MaterialExpressionTextureSampleParameter2D, -700, 300)
-    blur.set_editor_property("parameter_name", TEXTURE_PARAM)
-    if default_tex is not None:
-        blur.set_editor_property("texture", default_tex)
-    try:
-        blur.set_editor_property("mip_value_mode", unreal.TextureMipValueMode.TMVM_MIP_LEVEL)
-        blur.set_editor_property("const_mip_value", int(BLUR_MIP))
-        flags.append("blur_mip=taken")
-    except Exception as e:
-        flags.append("blur_mip=REFUSED-%s" % type(e).__name__)
+    # the blurred read of the same photograph (the same parameter, so the game's one write binds
+    # every tap): BLUR_TAPS samples of the clamped row, each shifted along U, summed and averaged
+    taps, tap_links = [], []
+    acc = None
+    for k in range(BLUR_TAPS):
+        off = (k - (BLUR_TAPS - 1) / 2.0) * BLUR_STEP_U
+        smp = mel.create_material_expression(mat, unreal.MaterialExpressionTextureSampleParameter2D, -700, 300 + 160 * k)
+        smp.set_editor_property("parameter_name", TEXTURE_PARAM)
+        if default_tex is not None:
+            smp.set_editor_property("texture", default_tex)
+        shift = mel.create_material_expression(mat, unreal.MaterialExpressionAdd, -850, 300 + 160 * k)
+        shift.set_editor_property("const_b", off)
+        tap_links += [(mask_u, "", shift, "A"), (shift, "", smp, "UVs")]
+        if acc is None:
+            acc = smp
+        else:
+            add = mel.create_material_expression(mat, unreal.MaterialExpressionAdd, -560, 300 + 160 * k)
+            tap_links += [(acc, "", add, "A"), (smp, "", add, "B")]
+            acc = add
+        taps.append((smp, shift))
+    blur = mel.create_material_expression(mat, unreal.MaterialExpressionDivide, -430, 300)
+    blur.set_editor_property("const_b", float(BLUR_TAPS))
+    tap_links.append((acc, "", blur, "A"))
+    # each tap's V is the clamped row: the shifted U and the clamped V appended per tap
+    for smp, shift in taps:
+        uvk = mel.create_material_expression(mat, unreal.MaterialExpressionAppendVector, -760, 0)
+        tap_links = [(a, o, (uvk if (b is smp and i == "UVs") else b), ("A" if (b is smp and i == "UVs") else i))
+                     for (a, o, b, i) in tap_links]
+        tap_links += [(vmin, "", uvk, "B"), (uvk, "", smp, "UVs")]
+    flags.append("blur_taps=%d" % BLUR_TAPS)
     # the fade: 0 above the row less the fade, 1 at and below the row
     fade_c = mel.create_material_expression(mat, unreal.MaterialExpressionConstant, -1100, 300)
     fade_c.set_editor_property("r", BLUR_FADE_V)
@@ -237,7 +258,6 @@ def main():
         (mask_u, "", uvout, "A"),
         (vmin, "", uvout, "B"),
         (uv, "", tex_expr, "UVs"),
-        (uvout, "", blur, "UVs"),
         (clamp_v, "", from_v, "A"),
         (fade_c, "", from_v, "B"),
         (mask_v, "", rel_v, "A"),
@@ -248,7 +268,7 @@ def main():
         (tex_expr, "", mix, "A"),
         (blur, "", mix, "B"),
         (sat_v, "", mix, "Alpha"),
-    ]
+    ] + tap_links
     wired = 0
     refused = []
     for src, out, dst, inp in asked:

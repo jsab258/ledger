@@ -4744,7 +4744,7 @@ namespace
 			}
 		}
 		// AND THE LIGHTS ON once he is through the door.
-		if (GOffice.bDark && bIn && At.Z > GOffice.Z0 + 0.5)
+		if (GOffice.bDark && bIn && At.Z > GOffice.Z0 + 0.3)
 		{
 			GOffice.bDark = false;
 			LedgerVignetteShot::SetShopRoomLit(GOffice.Shop.c_str(), true);
