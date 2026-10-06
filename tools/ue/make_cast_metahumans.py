@@ -577,6 +577,30 @@ TOM = {
     "A4": _c("Lorenzo", {"Lorenzo": 0.8, "Victor": 0.2}, None, 0.24, 0.47, 175.0, -0.5, 0.0, "WI_Hair_S_Clean", DARK_BROWN),
     "A5": _c("Victor", {"Victor": 0.85, "Bruce": 0.15}, None, 0.23, 0.46, 175.0, -0.4, 0.1, "WI_Hair_S_SideSweptFringe", DARK_BROWN),
 }
+# THE SECOND TRY, 6 October afternoon. The blind reviewer failed all five: A1, A2, A3 and A5 were
+# one face (Victor's, his blends too slight to differ), which from the front reads Central or part
+# East Asian (narrow eyes under a heavy lid, broad flat cheekbones, a low wide nose bridge, olive
+# skin), the profile European; A4 read 50 and South Asian or Latin American; the hair modern or
+# gelled and near-black, a stubble shadow on lip and chin. So the method changes, not the dial:
+# Victor's skin set (28) and Lorenzo's are left; the faces lead from the presets whose own faces
+# read Northern European, Bruce's and Orlando's in an even pair and Walter's shape on Orlando's
+# skin: Bruce's own skin set (13, which nobody wears: Ron wears the aged 121) or Orlando's (85,
+# Darren's too, so the blind check is also asked whether any of them looks like Ron or Darren);
+# fairer skin; the chin lightened against the
+# scanned beard shadow; Epic's brush cut, a short back and sides; mid brown; the grey-blue eyes
+# whose every field was set (Sheila's, which render grey-blue, not green).
+MID_BROWN = {"hairMelanin": 0.62, "hairRedness": 0.18, "WhiteAmount": 0.0}
+SHAVED_CHIN = {"chin": {"redness": 0.5, "saturation": 0.4, "lightness": 0.6}}
+TOM_SECOND = {
+    "B1": _c("Bruce", {"Bruce": 0.5, "Orlando": 0.5}, 13, 0.24, 0.5, 175.0, -0.5, 0.0, "WI_Hair_S_BrushCut", MID_BROWN),
+    "B2": _c("Orlando", {"Orlando": 0.4, "Walter": 0.6}, 85, 0.22, 0.48, 175.0, -0.5, 0.0, "WI_Hair_S_BrushCut", MID_BROWN),
+    "B3": _c("Bruce", {"Bruce": 0.4, "Walter": 0.3, "Orlando": 0.3}, 13, 0.23, 0.5, 175.0, -0.5, 0.0, "WI_Hair_S_Casual", MID_BROWN),
+    "B4": _c("Orlando", {"Orlando": 0.5, "Bruce": 0.3, "Walter": 0.2}, 85, 0.23, 0.47, 175.0, -0.5, 0.0, "WI_Hair_S_BrushCut", MID_BROWN),
+}
+for _t, _b in TOM_SECOND.items():
+    _b["eyes"] = EYES_GREY_BLUE
+    _b["accents"] = SHAVED_CHIN
+TOM.update(TOM_SECOND)
 for _t, _b in TOM.items():
     _b["clear"] = list(TOM_CLEAR)
     CANDIDATES[_t] = {"tom": _b}
@@ -1237,17 +1261,21 @@ def selftest():
           all(abs(CANDIDATES[t][w]["body"]["Height"] - h) <= 3 for t in FIVE for w, h in (("lena", 160), ("rocco", 186), ("sam", 175))))
     check("Ron always has his moustache", all(CANDIDATES[t]["rocco"].get("mustache") for t in FIVE))
     toms = [t for t in CANDIDATES if "tom" in CANDIDATES[t]]
-    check("Tom's candidates: only Tom in each, five, all different",
-          len(toms) == 5 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
-          and len({repr(sorted(CANDIDATES[t]["tom"]["face"].items())) + CANDIDATES[t]["tom"]["hair"] for t in toms}) == 5)
+    check("Tom's candidates: only Tom in each, nine (five, then four), all different",
+          len(toms) == 9 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
+          and len({repr(sorted(CANDIDATES[t]["tom"]["face"].items())) + CANDIDATES[t]["tom"]["hair"] for t in toms}) == 9)
     check("Tom to his sheet: about 175 cm, lean, clean-shaven, short dark hair",
           all(abs(CANDIDATES[t]["tom"]["body"]["Height"] - 175) <= 3 and CANDIDATES[t]["tom"]["body"]["Fat"] <= 0
               and set(CANDIDATES[t]["tom"]["clear"]) == {"Beard", "Mustache"} and not CANDIDATES[t]["tom"].get("beard")
               and not CANDIDATES[t]["tom"].get("mustache") and CANDIDATES[t]["tom"]["hair"].startswith("WI_Hair_S_")
               and CANDIDATES[t]["tom"]["hair_colour"]["WhiteAmount"] == 0.0 for t in toms))
-    check("Tom never leads from a frozen face's preset (Bruce, Jelena, Orlando), and one preset leads at 80% or more",
+    check("the first try led from a preset none of the frozen faces leads from, at 80% or more",
           all(CANDIDATES[t]["tom"]["base"] not in ("Bruce", "Jelena", "Orlando")
-              and max(CANDIDATES[t]["tom"]["face"].values()) >= 0.8 for t in toms))
+              and max(CANDIDATES[t]["tom"]["face"].values()) >= 0.8 for t in toms if t.startswith("A")))
+    check("the second try leaves Victor's and Lorenzo's skin sets and Victor's face, and never the aged 121 (Ron's and Sheila's)",
+          all(CANDIDATES[t]["tom"]["skin"].get("face_texture_index") in (13, 85) and "Victor" not in CANDIDATES[t]["tom"]["face"]
+              and CANDIDATES[t]["tom"]["eyes"] is EYES_GREY_BLUE and CANDIDATES[t]["tom"]["accents"]["chin"]["lightness"] > 0.5
+              for t in toms if t.startswith("B")))
     check("a Tom take builds nobody else", [w for (w, _) in CAST if "A1" not in CANDIDATES or w in CANDIDATES["A1"]] == ["tom"])
     use_take("C3")
     check("a candidate take builds to its own brief", brief("rocco") is CANDIDATES["C3"]["rocco"] and asset_name("rocco") == "MH_RoccoC3")

@@ -80,10 +80,14 @@
 
 namespace LedgerMhPortrait
 {
-	const TCHAR* kWho[] = { TEXT("Lena"), TEXT("Sam"), TEXT("Rocco") };   // names-gate: allow (asset names MH_<who>T2)
+	const TCHAR* kWho[] = { TEXT("Lena"), TEXT("Sam"), TEXT("Rocco"), TEXT("Tom") };   // names-gate: allow (asset names MH_<who>T2)
+	// TOM, 6 October (item 1.2): only the candidates' pictures take him (-PortraitTakes, with
+	// -PortraitWho=Tom); he has no spoken line (his sheet: the player's words are typed), so his
+	// speaking shot is skipped. The other modes keep to the three.
+	const int32 kThree = 3;
 	// The line each speaks, by the same order: tools/ue/speech_faces.py's
 	// animation of the casting sheet's first line in the voice Jafar picked.
-	const TCHAR* kSpeech[] = { TEXT("AS_sheila_dunn"), TEXT("AS_darren_milner"), TEXT("AS_ron_kirby") };
+	const TCHAR* kSpeech[] = { TEXT("AS_sheila_dunn"), TEXT("AS_darren_milner"), TEXT("AS_ron_kirby"), TEXT("") };
 	// EPIC'S OWN IDLE, BODY AND FACE, 24 September: the MetaHuman plugin ships
 	// a standing loop on the very skeletons the cast are built on, and a face
 	// loop to go with it (blinks, breath, small looks). The elizabeth idle
@@ -636,6 +640,11 @@ namespace LedgerMhPortrait
 	// picture is exactly one frame apart whatever the game's frame rate.
 	bool StartSpeaking()
 	{
+		if (!GScan && FCString::Strlen(kSpeech[GJobs[GAt].Who]) == 0)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s has no spoken line, no speaking shot"), *Stem());
+			return false;
+		}
 		const FString Name = FString(kSpeech[GJobs[GAt].Who]) + GSpeech;
 		const FString Path = FString::Printf(TEXT("/Game/Ledger/MetaHumans/Speech/%s.%s"), *Name, *Name);
 		// A scan steps through the face idle instead, every half second.
@@ -846,7 +855,7 @@ namespace LedgerMhPortrait
 			// The candidates: every take, each of the three, front, profile, speaking.
 			TArray<FString> List;
 			Takes.ParseIntoArray(List, TEXT(","), true);
-			for (const FString& T : List) { for (int32 W = 0; W < 3; ++W) { GJobs.Add({ W, T.TrimStartAndEnd() }); } }
+			for (const FString& T : List) { for (int32 W = 0; W < UE_ARRAY_COUNT(kWho); ++W) { GJobs.Add({ W, T.TrimStartAndEnd() }); } }
 			GShots = { EShot::Front, EShot::Profile, EShot::Speak };
 			GCandidates = true;
 		}
@@ -855,7 +864,7 @@ namespace LedgerMhPortrait
 			// -PortraitTake=T2: the cast made to the brief, beside the stand-ins.
 			FString Take;
 			FParse::Value(FCommandLine::Get(), TEXT("PortraitTake="), Take);
-			for (int32 W = 0; W < 3; ++W) { GJobs.Add({ W, Take }); }
+			for (int32 W = 0; W < kThree; ++W) { GJobs.Add({ W, Take }); }
 			GShots = { EShot::Close, EShot::Mid };
 		}
 		if (FParse::Value(FCommandLine::Get(), TEXT("PortraitHat="), GHat))
@@ -920,7 +929,7 @@ namespace LedgerMhPortrait
 		{
 			GInGame = true;
 			GJobs.Reset();
-			for (int32 W = 0; W < 3; ++W) { GJobs.Add({ W, FString() }); }
+			for (int32 W = 0; W < kThree; ++W) { GJobs.Add({ W, FString() }); }
 			GShots = { EShot::Front, EShot::Speak, EShot::Mid };
 		}
 		if (GPair) { GShots = { EShot::Front, EShot::Talk, EShot::Studio }; }
