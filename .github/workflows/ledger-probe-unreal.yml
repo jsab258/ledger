@@ -96,6 +96,8 @@ on:
       # workflow that depends on a file and does not watch it cannot tell you
       # when that dependency breaks.
       - 'tools/runner/**'
+      # THE ASKED-FOR BUILD'S OWN FILE, 6 October (below): a request with no other change still runs.
+      - 'production/d1-probe/PACKAGE.md'
 
 permissions:
   contents: write
@@ -111,6 +113,16 @@ concurrency:
 
 jobs:
   probe-unreal:
+    # A PACKAGED BUILD ONLY WHEN ONE IS WANTED, 6 October. Jafar: "Pushes to the working branch, wip,
+    # no longer start a packaged build. My push rule was meant to make your work visible, not to
+    # build it eight times a day. The packaged build runs only when you ask for it as a step's
+    # evidence, in the nightly run, or when work goes to main." So a push to main builds; on wip only
+    # a commit whose message carries [package] does: a step's evidence asked for by the builder, or
+    # the night's request from tools/nightly_package.py (Windows' "LEDGER nightly package", before
+    # the nightly walk), which asks only when wip has moved since the played copy was built. A
+    # dispatch by hand still builds. Every other push to wip shows the job as skipped and costs
+    # nothing; the core tests and the push guard still run on every push.
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || contains(github.event.head_commit.message, '[package]')
     runs-on: [self-hosted, ledger-pc]
     # A CEILING ON A HANG, NOT A TARGET, AND IT MUST SIT ABOVE THE STEP CAPS.
     # It was 25 while the build step said 60, so the job would have killed a
@@ -587,16 +599,11 @@ jobs:
                 $L += "cookLogLines=0 (no cook-cold.log was written at all)"
               }
               if (Test-Path "cook-cold.err") { $L += "--- cook stderr ---"; $L += (Get-Content "cook-cold.err" -Tail 20) }
-            } else {
-              # THE INCREMENTAL COOK IS THE CYCLE NUMBER. The first one pays
-              # for every shader and every engine asset once; the second is
-              # what an edit actually costs, and it is the one comparable to
-              # Unity's 2.47 minute warm build.
-              $t5 = Get-Date
-              $p5 = Start-Process -FilePath $uat -ArgumentList $uatArgs -Wait -PassThru -NoNewWindow `
-                    -RedirectStandardOutput "cook-warm.log" -RedirectStandardError "cook-warm.err"
-              $L += "warmCookExit=$($p5.ExitCode) warmCookMinutes=$([math]::Round(((Get-Date) - $t5).TotalMinutes, 2))"
             }
+            # THE SECOND, "WARM" COOK IS GONE, 6 October (Jafar: "Remove the second cook that exists
+            # only as an old measurement"). It cooked and packaged the same commit again, about six
+            # minutes a run, to give an edit's cost beside Unity's 2.47 minute warm build; that
+            # comparison was settled long ago and nothing read its number.
             # A STAGED WINDOWS BUILD SHIPS TWO EXES WITH THE SAME NAME, and
             # run 12 ran the wrong one. The one at the archive root is a
             # LAUNCHER STUB that starts the real binary and returns; it

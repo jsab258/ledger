@@ -127,3 +127,4 @@ His binding rulings; the later stands; canon.md outranks them.
 - 2 Oct: Before any build, render or large job, C: keeps 40 GB and F: 20 GB free; a full disk means stop and wait.
 - 2 Oct: Never deleted: what he approved, what the game or a build uses, what the backup covers, his own files.
 - 3 Oct: Git holds text, small files (never MetaHuman files) and previews (JPEG, ~1600 px, under 500 KB); large output on F: and the Dropbox backup, which never deletes or overwrites. 4 Oct: unfinished work to wip daily and after each piece; main only what passed review; the history cleaned in phase 0, sessions stopped, after he hears the plan and all it touches.
+- 6 Oct: Packaged builds only for a step's evidence, nightly if wip moved, or main; no second cook; rest Monday.

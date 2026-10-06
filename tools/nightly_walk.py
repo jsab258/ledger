@@ -264,6 +264,24 @@ def main():
         rep = report(date, night, st["since"], st.get("verdict"), st.get("bench"), st.get("eyes"))
         print(rep["paragraph"])
         return 0
+    # THE NIGHT'S PACKAGED BUILD FIRST (Jafar, 6 October: pushes to wip no longer build; the
+    # nightly run does), when wip has moved since the played copy; the wait below then holds the
+    # walk until the build machine has finished and replaced the copy.
+    if "--no-package" not in sys.argv:
+        log("package")
+        try:
+            r = subprocess.run([sys.executable, os.path.join(REPO, "tools", "nightly_package.py")],
+                               capture_output=True, text=True, timeout=300)
+            log((r.stdout or r.stderr).strip()[:200])
+            if "nightlyPackage=ASKED" in r.stdout:
+                # the build machine picks the push up within a minute or two: wait for it to start,
+                # so the wait below does not find it idle and walk beside its build
+                for _ in range(20):
+                    if runner_busy():
+                        break
+                    time.sleep(30)
+        except Exception as e:
+            log("package request failed: %s" % e)
     for _ in range(90):
         if not runner_busy():
             break
