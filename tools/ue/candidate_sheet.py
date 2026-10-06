@@ -21,7 +21,7 @@ import os
 import re
 import sys
 
-WHO = {"lena": "sheila-dunn", "rocco": "ron-kirby", "sam": "darren-milner"}
+WHO = {"lena": "sheila-dunn", "rocco": "ron-kirby", "sam": "darren-milner", "tom": "tom-nowak"}   # Tom: 6 October, item 1.2 (no speaking shot)
 FPS = 15              # MetaHumanPortrait.cpp SpeakFps
 STILL = (720, 540)    # front and profile, cut from the 1280x720 frame's centre
 FRAME = (400, 300)    # each speaking frame in the sheet
@@ -100,7 +100,7 @@ def selftest():
     from PIL import Image
     im = centre_crop(Image.new("RGB", (1280, 720)), 4 / 3)
     check("the crop keeps the frame's height and centres the width", im.size == (960, 720))
-    check("every asset name has its person", sorted(WHO.values()) == ["darren-milner", "ron-kirby", "sheila-dunn"])
+    check("every asset name has its person", sorted(WHO.values()) == ["darren-milner", "ron-kirby", "sheila-dunn", "tom-nowak"])
     print("candidate_sheet selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
