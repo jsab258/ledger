@@ -1461,46 +1461,40 @@ def build_and_render(argv):
         print_plane("fare_book_spread", "farebook", bkx, bky, 1.0, 0.52, 0.36, "up")
         bpy.ops.mesh.primitive_cylinder_add(vertices=8, radius=0.004, depth=0.14, location=(bkx + 0.12, bky - 0.05, 1.012), rotation=(0.0, math.pi / 2, 0.35))
         bpy.context.object.data.materials.append(ink_blue)
-        # the phone, a cream push-button set of the decade, its coiled cord to the handset
+        # THE HERO PROPS, 6 October (phase 1, item 1.1; tools/art-recipes/mickeys-props, production/art/
+        # mickeys-props/README.md): modelled by script at their real sizes from dated period references,
+        # in place of the boxes and cylinders the third review called "plain props". Each glb lives on
+        # F:/LedgerTools/game-inputs; its base stands at z, its front toward the glass (-y) before the turn.
+        # Its ao and edge masks are left out of this room's export until the wear material reads them.
+        props_dir = os.path.join(os.environ.get("LEDGER_GAME_INPUTS", "F:/LedgerTools/game-inputs"),
+                                 "production", "assets", "mickeys-props")
+
+        def prop(name, x, y, z, turn=0.0):
+            path = os.path.join(props_dir, name + ".glb")
+            if not os.path.isfile(path):
+                print("shop-room: prop %s missing at %s" % (name, path), flush=True)
+                return None
+            before = set(bpy.data.objects)
+            bpy.ops.import_scene.gltf(filepath=path)
+            new = [o for o in bpy.data.objects if o not in before]
+            root = bpy.data.objects.new(name + "_prop", None)
+            sc.collection.objects.link(root)
+            for o in new:
+                if o.type == "MESH":
+                    for nm in [a.name for a in o.data.color_attributes]:
+                        o.data.color_attributes.remove(o.data.color_attributes[nm])
+                if o.parent is None:
+                    o.parent = root
+            root.rotation_euler = (0.0, 0.0, turn)
+            root.location = (x, y, z)
+            return root
+
+        # the phone, a cream push-button set of the decade with its coiled cord (one line: the black
+        # dial set of before was boxes)
         phx, phy = -2.30, 2.45
-        box("phone_base", phx - 0.10, phx + 0.10, phy - 0.11, phy + 0.11, 0.985, 1.045, cream_plastic)
-        print_plane("phone_keypad", "keypad", phx, phy - 0.06, 1.0465, 0.07, 0.075, "up")
-        box("phone_handset", phx - 0.105, phx + 0.105, phy + 0.02, phy + 0.08, 1.05, 1.085, cream_plastic)
-        for xx in (phx - 0.095, phx + 0.055):
-            box("phone_handset_end", xx, xx + 0.04, phy + 0.01, phy + 0.09, 1.045, 1.095, cream_plastic)
-        # ROUNDED, as moulded plastic is, and its cord a real coil (the fresh review: "stacked boxes")
-        for o in [ob for ob in bpy.context.scene.objects if ob.name.startswith("phone_")]:
-            bv = o.modifiers.new("round", "BEVEL")
-            bv.width, bv.segments = 0.006, 3
-        coil = bpy.data.curves.new("phone_cord", "CURVE")
-        coil.dimensions = "3D"
-        sp = coil.splines.new("POLY")
-        turns, n_pts = 14, 14 * 12
-        sp.points.add(n_pts - 1)
-        for i_ in range(n_pts):
-            t_ = i_ / float(n_pts - 1)
-            ang_ = t_ * turns * 2.0 * math.pi
-            # from the handset's end, round the base's side and down the counter, coiled
-            cx_, cy_ = phx + 0.11 + 0.10 * t_, phy + 0.05 - 0.06 * t_
-            sp.points[i_].co = (cx_, cy_ + 0.008 * math.cos(ang_), 1.0 - 0.012 * t_ + 0.008 * math.sin(ang_), 1.0)
-        coil.bevel_depth = 0.0018
-        coil.bevel_resolution = 1
-        cord = bpy.data.objects.new("phone_cord", coil)
-        sc.collection.objects.link(cord)
-        cord.data.materials.append(cream_plastic)
-        # a second, older line: a black dial telephone for the account customers
-        p2x = -0.25
-        box("phone2_base", p2x - 0.09, p2x + 0.09, 2.40, 2.60, 0.985, 1.05, black)
-        cyl("phone2_dial", p2x, 2.45, 1.052, 0.045, 0.006, mat("dial_cream", (0.75, 0.72, 0.62), rough=0.4))
-        box("phone2_handset", p2x - 0.10, p2x + 0.10, 2.53, 2.58, 1.05, 1.085, black)
-        # the glass ashtray, its stubs and ash
-        cyl("ashtray", -1.75, 2.42, 0.985, 0.065, 0.028, ash_glass)
-        cyl("ash", -1.75, 2.42, 1.0, 0.05, 0.006, ash)
-        for k in range(5):
-            a = rnd.uniform(0, 2 * math.pi)
-            sx, sy = -1.75 + math.cos(a) * 0.035, 2.42 + math.sin(a) * 0.035
-            bpy.ops.mesh.primitive_cylinder_add(vertices=8, radius=0.0042, depth=0.03, location=(sx, sy, 1.009), rotation=(math.pi / 2, 0.0, a))
-            bpy.context.object.data.materials.append(stub if k % 2 else filter_tan)
+        prop("telephone", phx, phy, 0.985, turn=0.25)
+        # the glass ashtray, its ash and filter ends
+        prop("ashtray", -1.75, 2.42, 0.985, turn=0.4)
         model("cigarette_pack", -1.58, 2.50, 0.985, turn=0.7, size=0.09)
         # the dockets on their spike, a mug of tea gone cold, a pad
         cyl("spike_base", -0.62, 2.48, 0.985, 0.03, 0.01, steel_grey)
@@ -1508,14 +1502,8 @@ def build_and_render(argv):
         for k in range(9):
             box("docket_%d" % k, -0.62 - 0.045, -0.62 + 0.045, 2.48 - 0.06, 2.48 + 0.06, 1.0 + k * 0.004, 1.0025 + k * 0.004,
                 paper if k % 3 else paper_yellow).rotation_euler[2] = rnd.uniform(-0.3, 0.3)
-        cyl("mug", -0.95, 2.62, 0.985, 0.04, 0.095, mug_brown)
-        cyl("mug_tea", -0.95, 2.62, 1.06, 0.035, 0.004, mat("tea", (0.18, 0.09, 0.04), rough=0.1))
-        bpy.ops.mesh.primitive_torus_add(major_radius=0.025, minor_radius=0.006, location=(-0.95 + 0.048, 2.62, 1.03),
-                                         rotation=(math.pi / 2, 0.0, 0.0))
-        bpy.context.object.name = "mug_handle"
-        bpy.context.object.data.materials.append(mug_brown)
-        # a second mug on the radio desk, and the stationery and pads of an office that works
-        cyl("mug2", -0.55, 3.13 + 0.40, 0.985, 0.04, 0.095, mat("mug_cream", (0.70, 0.66, 0.56), rough=0.3))
+        prop("mug-chipped", -0.95, 2.62, 0.985, turn=2.2)
+        # (the second mug stands on the radio desk, below) and the stationery and pads of an office that works
         model("office_notepads", 0.10, 2.50, 0.985, turn=0.2, size=0.22)
         model("stationery_supplies", -1.48, 3.13 + 0.12, 0.74 + 0.02, turn=0.5, size=0.25)
         box("pad", 0.15, 0.36, 2.36, 2.62, 0.985, 0.995, paper_yellow)
@@ -1544,30 +1532,20 @@ def build_and_render(argv):
         # below about 0.86 m: on the desk the set showed its top 9 cm, the third review's "radio desk
         # out of sight". On a riser at 1.15 m it is seen whole over the counter, as a dispatcher keeps it.
         rz = 1.15 + dz
-        box("radio_riser_shelf", -1.42, -0.74, ry0 + 0.14, ry0 + 0.54, rz - 0.03, rz, laminate)
+        box("radio_riser_shelf", -1.42, -0.74, ry0 + 0.04, ry0 + 0.54, rz - 0.03, rz, laminate)
         for xx in (-1.42, -0.77):
-            box("radio_riser_side", xx, xx + 0.03, ry0 + 0.14, ry0 + 0.54, 0.74 + dz, rz - 0.03, laminate)
-        # the base station: a dark set with its front panel, knobs and the transmit lamp
-        sx0, sx1 = -1.30, -0.86
-        box("radio_set", sx0, sx1, ry0 + 0.20, ry0 + 0.48, rz, rz + 0.13, black)
-        print_plane("radio_faceplate", "radio_faceplate", (sx0 + sx1) / 2.0, ry0 + 0.198, rz + 0.065, sx1 - sx0, 0.13, "-y")
-        for k in range(4):
-            if k < 3:   # on the faceplate's three dials: channel, volume, squelch
-                cyl("radio_knob_%d" % k, sx0 + 0.17 + k * 0.08, ry0 + 0.188, rz + 0.072, 0.018, 0.02, black, axis="y")
-        cyl("radio_lamp_tx", sx1 - 0.05, ry0 + 0.193, rz + 0.095, 0.005, 0.004, red_led, axis="y")
-        cyl("radio_lamp_on", sx1 - 0.08, ry0 + 0.193, rz + 0.095, 0.005, 0.004, green_led, axis="y")
-        # the desk microphone on its tall stand, at the dispatcher's mouth when he sits, so its head
-        # shows over the counter too
-        cyl("mic_base", -0.62, ry0 + 0.30, 0.74 + dz, 0.06, 0.022, black)
-        cyl("mic_stem", -0.62, ry0 + 0.30, 0.762 + dz, 0.007, 0.40, chrome)
-        cyl("mic_head", -0.62, ry0 + 0.32, 1.18 + dz, 0.028, 0.07, steel_grey, axis="y")
-        cyl("mic_grille", -0.62, ry0 + 0.285, 1.18 + dz, 0.024, 0.004, black, axis="y")
-        # the anglepoise over the set (Poly Haven, CC0), and a clipboard of the night's jobs
-        model("desk_lamp_arm_01", -1.62, ry0 + 0.35, desk_top, turn=2.6, size=0.55)
+            box("radio_riser_side", xx, xx + 0.03, ry0 + 0.04, ry0 + 0.54, 0.74 + dz, rz - 0.03, laminate)
+        # the base station with its desk microphone and coiled lead (the hero prop: a car set on its
+        # mains unit, as late-1980s minicab offices had it), turned a little to the window so its
+        # face, its knobs and its red channel window read from the street
+        prop("radio-base-station", -1.08, ry0 + 0.29, rz, turn=-0.45)
+        # the anglepoise over the desk, its warm pool on the dockets at night; a clipboard of the jobs
+        prop("desk-lamp", -1.62, ry0 + 0.35, desk_top, turn=2.6)
         model("clipboard", -0.45, ry0 + 0.18, desk_top, turn=0.3, size=0.32)
-        # a pad of dockets, a biro, a second ashtray
-        box("radio_pad", -1.40, -1.16, ry0 + 0.06, ry0 + 0.24, 0.74 + dz, 0.75 + dz, paper)
-        cyl("radio_ashtray", -1.25, ry0 + 0.42, 0.74 + dz, 0.055, 0.025, steel_grey)
+        # a pad of dockets, a mug gone cold, a second ashtray
+        box("radio_pad", -0.70, -0.46, ry0 + 0.32, ry0 + 0.50, 0.74 + dz, 0.75 + dz, paper)
+        prop("mug", -0.40, ry0 + 0.42, desk_top, turn=1.2)
+        prop("ashtray", -0.62, ry0 + 0.10, desk_top, turn=1.0)
         # the loudspeaker on its bracket above the desk, so the room hears every job
         box("speaker", -1.25, -0.95, D - 0.20, D - 0.02, 2.02, 2.24, mat("speaker_wood", (0.16, 0.10, 0.06), rough=0.5))
         box("speaker_cloth", -1.22, -0.98, D - 0.205, D - 0.20, 2.04, 2.22, mat("speaker_cloth", (0.06, 0.05, 0.04), rough=1.0))
@@ -1653,6 +1631,8 @@ def build_and_render(argv):
             box("cabinet_drawer_line_%d" % k, -W / 2 + 0.03, -W / 2 + 0.48, 3.295, 3.30, zz + 0.30, zz + 0.305, black)
             box("cabinet_handle_%d" % k, -W / 2 + 0.19, -W / 2 + 0.32, 3.28, 3.295, zz + 0.22, zz + 0.24, chrome)
             box("cabinet_label_%d" % k, -W / 2 + 0.21, -W / 2 + 0.30, 3.293, 3.295, zz + 0.25, zz + 0.28, card_white)
+        # the jug kettle on the cabinet's top, where the office makes its tea (the plan's kettle, 6 October)
+        prop("jug-kettle", -W / 2 + 0.25, 3.64, 1.32, turn=0.5)
         cyl("extinguisher", -W / 2 + 0.10, 3.05, 0.35, 0.075, 0.55, mat("extinguisher_red", (0.55, 0.03, 0.02), rough=0.3))
         cyl("extinguisher_head", -W / 2 + 0.10, 3.05, 0.90, 0.03, 0.08, black)
 
