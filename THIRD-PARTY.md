@@ -143,7 +143,7 @@ by Kenney (kenney.nl), CC0."
 
 | | |
 |---|---|
-| **What** | The idles that come with the engine's own MetaHuman plugin (/MetaHumanCharacter/Optional/Animation), where the game uses them. Not Epic's Game Animation Sample on Fab, which is marked NoAI and is never used (3 October) |
+| **What** | The idles and, since 6 October, the walk loops, starts and stops (UEFNAnimPreset/Locomotion) that come with the engine's own MetaHuman plugin (/MetaHumanCharacter/Optional/Animation), where the game uses them. Not Epic's Game Animation Sample on Fab, which is marked NoAI and is never used (3 October) |
 | **Licence** | Epic's "UE-Only Content" terms under the Unreal Engine EULA: allowed in a product that requires the engine; the licence allowlist admits Epic's Unreal-only content for animation only (entry 8, 30 September) |
 | **Obligation** | Credited on the credits page |
 
