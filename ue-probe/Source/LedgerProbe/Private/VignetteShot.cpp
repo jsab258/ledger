@@ -125,6 +125,8 @@
 #include "Engine/DecalActor.h"
 #include "Components/DecalComponent.h"
 #include "Components/SkyLightComponent.h"
+#include "Components/SceneCaptureComponentCube.h"
+#include "Engine/TextureRenderTargetCube.h"
 #include "Components/SkyAtmosphereComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Pawn.h"
@@ -1034,6 +1036,23 @@ namespace
 	UMaterialInterface* GGlassMaterial = nullptr;
 	// Every pane's own glass, so the night can turn its reflection down (GLook.GlassSpecularNight).
 	TArray<TWeakObjectPtr<UMaterialInstanceDynamic>> GGlassMids;
+	// THE STREET CAUGHT IN THE SHOP GLASS (6 October, item 1.1's first gate: "almost no street
+	// reflection from the pavement, and where one appears it reads as torn white and grey
+	// shapes"). Each shop window's pane gets a cube picture of the street taken half a metre in
+	// front of it, at each change of light, and shows it as a mirror at the Fresnel angle
+	// (make_glass_material.py's ReflectCube). The research's first fallback, NOTE.md section 2.
+	// One capture a frame, round the windows, so a change of light costs a frame's worth each.
+	struct FGlassCatch
+	{
+		TWeakObjectPtr<USceneCaptureComponentCube> Cap;
+		TWeakObjectPtr<UMaterialInstanceDynamic> Mid;
+		FString Mesh;
+	};
+	TArray<FGlassCatch> GGlassCatches;
+	int32 GGlassCatchLeft = 0, GGlassCatchNext = 0, GGlassCatchTaken = 0;
+	FTSTicker::FDelegateHandle GGlassCatchTicker;
+	// Twice round: the first pass can find a texture still streaming in.
+	const int32 kGlassCatchPasses = 2;
 	TMap<FString, UTexture2D*> GStreetTex;
 	int32 GStreetTextured = 0, GStreetTexAsked = 0, GStreetDrawn = 0;
 	std::string GStreetLookFor;
@@ -6203,6 +6222,11 @@ namespace
 			return;
 		}
 		GSkyDomeMid->SetTextureParameterValue(FName(kSkyMapParam), Tex);
+		// the photograph held above its own land (make_sky_material.py's HorizonClampV: V 0.5 is the horizon)
+		if (GLook.SkyHorizonClampDeg > 0.0)
+		{
+			GSkyDomeMid->SetScalarParameterValue(FName(TEXT("HorizonClampV")), (float)(0.5 - GLook.SkyHorizonClampDeg / 180.0));
+		}
 		GSkyPhotoNow = Name;
 		++GSkyPhotoBinds;
 		char B[512];
@@ -6253,7 +6277,7 @@ namespace
 			ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		GSkyDome = World->SpawnActor<AStaticMeshActor>(
 			AStaticMeshActor::StaticClass(), FVector::ZeroVector,
-			FRotator::ZeroRotator, Params);
+			FRotator(0.0f, (float)GLook.SkyDomeYawDeg, 0.0f), Params);
 		if (GSkyDome == nullptr)
 		{
 			GHdriBoundAs = "NOTHING/dome-actor-would-not-spawn";
@@ -6778,11 +6802,79 @@ namespace
 	// maps, the wet, the grade and the light are the next item and are
 	// developed here against the sheet. It exists so the first Unreal frame
 	// shows the geometry the right way round with its signs readable.
+	bool TickGlassCatch(float)
+	{
+		if (GGlassCatchLeft <= 0 || GGlassCatches.Num() == 0) { return true; }
+		const int32 I = GGlassCatchNext % GGlassCatches.Num();
+		++GGlassCatchNext;
+		--GGlassCatchLeft;
+		if (GGlassCatches[I].Cap.IsValid())
+		{
+			GGlassCatches[I].Cap->CaptureSceneDeferred();
+			++GGlassCatchTaken;
+		}
+		return true;
+	}
+
+	// The pane faces along its thin horizontal axis, toward the road's middle; a pane that is
+	// not one flat window (the kiosk's four sides) is left with the live reflection.
+	void CatchStreetInGlass(AStaticMeshActor* A, UStaticMeshComponent* Comp, UMaterialInstanceDynamic* G,
+	                        const FString& Mesh, const FVector& RoadMid)
+	{
+		if (GLook.GlassCubeStrength <= 0.0 || A == nullptr || Comp == nullptr || G == nullptr) { return; }
+		const FBox Box = Comp->Bounds.GetBox();
+		if (!Box.IsValid) { return; }
+		const FVector Ext = Box.GetExtent();
+		const FVector Mid = Box.GetCenter();
+		const bool bFacesX = Ext.X < Ext.Y;
+		const double Thin = bFacesX ? Ext.X : Ext.Y;
+		const double Wide = bFacesX ? Ext.Y : Ext.X;
+		if (Wide <= 0.0 || Thin > 0.25 * Wide) { return; }
+		FVector N = bFacesX ? FVector(1.0, 0.0, 0.0) : FVector(0.0, 1.0, 0.0);
+		const FVector ToRoad = bFacesX ? FVector(RoadMid.X - Mid.X, 0.0, 0.0) : FVector(0.0, RoadMid.Y - Mid.Y, 0.0);
+		if (FVector::DotProduct(ToRoad, N) < 0.0) { N = -N; }
+		UTextureRenderTargetCube* Rt = NewObject<UTextureRenderTargetCube>(A);
+		USceneCaptureComponentCube* Cap = NewObject<USceneCaptureComponentCube>(A);
+		if (Rt == nullptr || Cap == nullptr) { return; }
+		Rt->bHDR = true;
+		Rt->ClearColor = FLinearColor::Black;
+		Rt->InitAutoFormat((uint32)GLook.GlassCubeSize);
+		Rt->UpdateResourceImmediate(true);
+		Cap->TextureTarget = Rt;
+		Cap->bCaptureEveryFrame = false;
+		Cap->bCaptureOnMovement = false;
+		Cap->CaptureSource = ESceneCaptureSource::SCS_SceneColorHDR;
+		Cap->HiddenActors.Add(A);
+		Cap->SetMobility(EComponentMobility::Movable);
+		Cap->SetWorldLocation(Mid + N * 50.0);
+		Cap->RegisterComponent();
+		A->AddInstanceComponent(Cap);
+		G->SetTextureParameterValue(FName(TEXT("ReflectCube")), Rt);
+		// Thin translucency multiplies emissive by opacity (ThinTranslucentCommon.ush), so a
+		// true reflection is the strength over the pane's opacity.
+		const double Opacity = FMath::Max(GLook.GlassOpacity, 0.01);
+		G->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(GLook.GlassCubeStrength / Opacity));
+		FGlassCatch Gc;
+		Gc.Cap = Cap; Gc.Mid = G; Gc.Mesh = Mesh;
+		GGlassCatches.Add(Gc);
+		if (!GGlassCatchTicker.IsValid())
+		{
+			GGlassCatchTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&TickGlassCatch), 0.0f);
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerGlassCatch: %s caught from %.0f,%.0f,%.0f cm facing %.0f,%.0f, cube %d"),
+			*Mesh, Mid.X + N.X * 50.0, Mid.Y + N.Y * 50.0, Mid.Z, N.X, N.Y, GLook.GlassCubeSize);
+	}
+
 	void ApplyShopInteriors();
 	void PaintStreet()
 	{
 		if (GStreetLoaded == 0 || GBaseMaterial == nullptr) { return; }
 		GGlassMids.Reset();
+		GGlassCatches.Reset();
+		// The road's middle line, for which way each window faces: the street is laid along x about
+		// y = 0 (vignette-scene.json, the carriageway centred on z = 0). The asphalt mesh's own bounds
+		// were tried first and sat past the east frontage, turning the east side's captures inward.
+		const FVector RoadMid = FVector::ZeroVector;
 		for (int32 I = 0; I < GStreetActors.Num(); ++I)
 		{
 			AStaticMeshActor* A = GStreetActors[I];
@@ -6806,6 +6898,10 @@ namespace
 					G->SetScalarParameterValue(FName(TEXT("GlassSpecular")), 1.0f);
 					GGlassMids.Add(G);
 					for (int32 Slot = 0; Slot < Comp->GetNumMaterials(); ++Slot) { Comp->SetMaterial(Slot, G); }
+					if (Rw.RevealOn.empty())
+					{
+						CatchStreetInGlass(A, Comp, G, FString(UTF8_TO_TCHAR(Rw.Mesh.c_str())), RoadMid);
+					}
 					++GStreetGlassWorn;
 					++GStreetPainted;
 					continue;
@@ -6998,8 +7094,24 @@ namespace
 	// at the glass, its floor at the threshold, turned like the display; and one light under
 	// the ceiling's middle for the shop's tubes. Returns how many parts stood.
 	// THE REAL ROOMS' LIGHTS, each with its day and night strength (ReDriveShopInteriors' hook).
-	struct FRoomLight { TWeakObjectPtr<ARectLight> L; float Day = 0.0f; float Night = 0.0f; };
+	struct FRoomLight { TWeakObjectPtr<ARectLight> L; float Day = 0.0f; float Night = 0.0f; FString Shop; };
 	TArray<FRoomLight> GRoomLights;
+	// A ROOM'S LIGHTS SWITCHED OFF, 6 October (item 1.1's first gate: "Sheila says the office has
+	// been locked since Mickey died, and Tom walks in ... with the lights on"): the shops whose tubes
+	// and lamps are off (SetShopRoomLit), each lamp and the tubes' glowing material with what puts
+	// them out, and the light last driven, so a switch shows at once.
+	TSet<FString> GShopsDark;
+	struct FRoomSwitch
+	{
+		FString Shop;
+		TWeakObjectPtr<UPointLightComponent> Lamp;
+		float LampLumens = 0.0f;
+		TWeakObjectPtr<UStaticMeshComponent> Tubes;
+		int32 Slot = INDEX_NONE;
+		TWeakObjectPtr<UMaterialInterface> On, Off;
+	};
+	TArray<FRoomSwitch> GRoomSwitches;
+	bool GRoomLightsSunOn = true;
 
 	// -RoomLumensScale=<k> for a trial of the rooms' light without touching the spec.
 	double RoomLumensScale()
@@ -7037,6 +7149,20 @@ namespace
 				C->SetCastShadow(true);
 				C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 				C->UpdateBounds();
+				// the tubes' glowing material and the batten's plain one, to put them out by
+				if (FCString::Strcmp(Part, TEXT("fittings")) == 0)
+				{
+					const int32 TubeSlot = C->GetMaterialIndex(FName(TEXT("tube_on")));
+					const int32 PlainSlot = C->GetMaterialIndex(FName(TEXT("batten")));
+					if (TubeSlot != INDEX_NONE && PlainSlot != INDEX_NONE)
+					{
+						FRoomSwitch Sw;
+						Sw.Shop = Shop; Sw.Tubes = C; Sw.Slot = TubeSlot;
+						Sw.On = C->GetMaterial(TubeSlot); Sw.Off = C->GetMaterial(PlainSlot);
+						GRoomSwitches.Add(Sw);
+						if (GShopsDark.Contains(Shop)) { C->SetMaterial(TubeSlot, Sw.Off.Get()); }
+					}
+				}
 				const FBox PB = C->Bounds.GetBox();
 				UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's %s stands %.0f..%.0f, %.0f..%.0f, %.0f..%.0f cm"),
 					*Shop, Part, PB.Min.X, PB.Max.X, PB.Min.Y, PB.Max.Y, PB.Min.Z, PB.Max.Z);
@@ -7059,7 +7185,7 @@ namespace
 					RC->SetMobility(EComponentMobility::Movable);
 					RC->SetWorldRotation(Down);
 					RC->SetIntensityUnits(ELightUnits::Lumens);
-					RC->SetIntensity((float)Lumens);
+					RC->SetIntensity(GShopsDark.Contains(Shop) ? 0.0f : (float)Lumens);
 					RC->SetSourceWidth(150.0f);
 					RC->SetSourceHeight(40.0f);
 					RC->SetAttenuationRadius(700.0f);
@@ -7073,6 +7199,7 @@ namespace
 				RL.L = L;
 				RL.Day = (float)Lumens;
 				RL.Night = (float)NightLumens;
+				RL.Shop = Shop;
 				GRoomLights.Add(RL);
 				Out.Add(L);
 			}
@@ -7156,6 +7283,7 @@ namespace
 	{
 		GInteriorRows.Reset();
 		GRoomLights.Reset();
+		GRoomSwitches.Reset();
 		GInteriorsAsked = 0;
 		for (const TWeakObjectPtr<AActor>& W : GInteriorActors)
 		{
@@ -7233,6 +7361,11 @@ namespace
 								LC->SetLightColor(FLinearColor(1.0f, 0.78f, 0.52f));
 								LC->SetSourceRadius(3.0f);
 								Parts3.Add(PL);
+								FRoomSwitch Sw;
+								Sw.Shop = UTF8_TO_TCHAR(Id.c_str()); Sw.Lamp = LC;
+								Sw.LampLumens = (float)LedgerStreet::NumOr(Lp, "lumens", 120.0);
+								GRoomSwitches.Add(Sw);
+								if (GShopsDark.Contains(Sw.Shop)) { LC->SetIntensity(0.0f); }
 								UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's lamp %d at %.0f,%.0f,%.0f cm, %.0f lm"),
 									UTF8_TO_TCHAR(Id.c_str()), (int32)K, LAt.X, LAt.Y, LAt.Z, (float)LedgerStreet::NumOr(Lp, "lumens", 120.0));
 							}
@@ -7404,15 +7537,28 @@ namespace
 	{
 		if (GStreetMids.Num() == 0 || GStreetLookFor == C.Id) { return; }
 		GStreetLookFor = C.Id;
+		GRoomLightsSunOn = C.SunOn;
 		ReDriveShopInteriors(C.SunOn);
 		for (const TWeakObjectPtr<UMaterialInstanceDynamic>& G : GGlassMids)
 		{
 			if (G.IsValid()) { G->SetScalarParameterValue(FName(TEXT("GlassSpecular")), C.SunOn ? 1.0f : (float)GLook.GlassSpecularNight); }
 		}
+		// The caught windows keep only a share of the soft live reflection, so the two do not
+		// double, and are captured again in this light.
+		for (const FGlassCatch& Gc : GGlassCatches)
+		{
+			if (!Gc.Mid.IsValid()) { continue; }
+			const double Day = C.SunOn ? 1.0 : GLook.GlassSpecularNight;
+			Gc.Mid->SetScalarParameterValue(FName(TEXT("GlassSpecular")), (float)(Day * GLook.GlassCubeSpecular));
+		}
+		GGlassCatchLeft = GGlassCatches.Num() * kGlassCatchPasses;
 		for (const FRoomLight& RL : GRoomLights)
 		{
 			if (!RL.L.IsValid()) { continue; }
-			if (URectLightComponent* RC = Cast<URectLightComponent>(RL.L->GetLightComponent())) { RC->SetIntensity(C.SunOn ? RL.Day : RL.Night); }
+			if (URectLightComponent* RC = Cast<URectLightComponent>(RL.L->GetLightComponent()))
+			{
+				RC->SetIntensity(GShopsDark.Contains(RL.Shop) ? 0.0f : (C.SunOn ? RL.Day : RL.Night));
+			}
 		}
 		GStreetGlowing = 0; GStreetWet = 0; GStreetFilm = 0;
 		for (int32 I = 0; I < GStreetMids.Num() && I < (int32)GStreet.Rows.size(); ++I)
@@ -7701,8 +7847,13 @@ namespace
 			if (Kind == TEXT("oil")) { return FLinearColor(0.03f, 0.03f, 0.04f); }
 			if (Kind == TEXT("splash")) { return FLinearColor(0.20f, 0.17f, 0.13f); }
 			if (Kind == TEXT("damp")) { return FLinearColor(0.10f, 0.095f, 0.08f); }   // rising damp, 2 October
+			// LIGHT WEAR, 6 October (M_LedgerGrime's TintOnly): dried road splash and dust on dark
+			// paint, and paint chipped to its pale undercoat at edges and handles
+			if (Kind == TEXT("dust")) { return FLinearColor(0.30f, 0.27f, 0.22f); }
+			if (Kind == TEXT("chip")) { return FLinearColor(0.42f, 0.38f, 0.30f); }
 			return FLinearColor(0.15f, 0.13f, 0.11f);
 		};
+		auto LightWear = [](const FString& Kind) { return Kind == TEXT("dust") || Kind == TEXT("chip"); };
 		TMap<FString, UTexture2D*> Pics;
 		for (const TSharedPtr<FJsonValue>& V : *List)
 		{
@@ -7782,6 +7933,7 @@ namespace
 				M->SetTextureParameterValue(FName(TEXT("GrimeTex")), *Have);
 				M->SetScalarParameterValue(FName(TEXT("GrimeStrength")), (float)D->GetNumberField(TEXT("strength")));
 				M->SetVectorParameterValue(FName(TEXT("GrimeTint")), bWearTest ? FLinearColor(1.0f, 0.0f, 0.0f) : TintOf(Kind));
+				M->SetScalarParameterValue(FName(TEXT("TintOnly")), LightWear(Kind) ? 1.0f : 0.0f);
 				if (bWearTest) { M->SetScalarParameterValue(FName(TEXT("GrimeStrength")), 1.0f); }
 			}
 			Decal->SetDecalMaterial(M);
@@ -8705,7 +8857,7 @@ namespace
 			GNote = TEXT("none");
 			GTriedHighResThisShot = false;
 			GSizeTracker = -1;
-			if ((Now - GPhaseStart) < kSettleAfterCondition) { return true; }
+			if ((Now - GPhaseStart) < kSettleAfterCondition || GGlassCatchLeft > 0) { return true; }
 			GPhase = EPhase::Warm;
 			GPhaseStart = Now; GPhaseTicks = 0;
 			return true;
@@ -9037,6 +9189,48 @@ namespace LedgerVignetteShot
 			++Shown;
 		}
 		return Shown;
+	}
+
+	int32 SetShopRoomLit(const char* Shop, bool bLit)
+	{
+		const FString Id(UTF8_TO_TCHAR(Shop));
+		if (bLit) { GShopsDark.Remove(Id); } else { GShopsDark.Add(Id); }
+		int32 Switched = 0;
+		for (const FRoomLight& RL : GRoomLights)
+		{
+			if (RL.Shop != Id || !RL.L.IsValid()) { continue; }
+			if (URectLightComponent* RC = Cast<URectLightComponent>(RL.L->GetLightComponent()))
+			{
+				RC->SetIntensity(bLit ? (GRoomLightsSunOn ? RL.Day : RL.Night) : 0.0f);
+				++Switched;
+			}
+		}
+		for (const FRoomSwitch& Sw : GRoomSwitches)
+		{
+			if (Sw.Shop != Id) { continue; }
+			if (Sw.Lamp.IsValid()) { Sw.Lamp->SetIntensity(bLit ? Sw.LampLumens : 0.0f); ++Switched; }
+			if (Sw.Tubes.IsValid() && Sw.Slot != INDEX_NONE)
+			{
+				UMaterialInterface* M = bLit ? Sw.On.Get() : Sw.Off.Get();
+				if (M != nullptr) { Sw.Tubes->SetMaterial(Sw.Slot, M); ++Switched; }
+			}
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's lights %s (%d switched)"), *Id, bLit ? TEXT("on") : TEXT("off"), Switched);
+		return Switched;
+	}
+
+	int32 ShowStreetMeshesNamed(const char* Prefix, bool bShow)
+	{
+		int32 Done = 0;
+		for (int32 I = 0; I < GStreetActors.Num() && I < (int32)GStreet.Rows.size(); ++I)
+		{
+			AStaticMeshActor* A = GStreetActors[I];
+			if (A == nullptr || GStreet.Rows[(size_t)I].Mesh.rfind(Prefix, 0) != 0) { continue; }
+			A->SetActorHiddenInGame(!bShow);
+			A->SetActorEnableCollision(bShow);
+			++Done;
+		}
+		return Done;
 	}
 
 	FString ApplyPlayCondition(const char* Id)

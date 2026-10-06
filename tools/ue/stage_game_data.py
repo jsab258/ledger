@@ -114,6 +114,14 @@ def wanted():
         w = a.get("wav")
         if w:
             files.append(SOUND_ROOT + "/" + (w if w.endswith(".wav") else w + ".wav"))
+    # THE WEAR LAYER'S PICTURES BY NAME, 6 October: masks made since git took its last picture (the
+    # counter's rings and burns, the frontage's chips) live on F: under the same path, and the
+    # folder walk below sees only the checkout.
+    wear = _load("production/specs/street-wear.json")
+    for row in wear.get("decals", []) or []:
+        pic = row.get("picture")
+        if pic:
+            files.append(DECAL_ROOT + "/" + pic + "/" + pic.split("/")[-1] + ".png")
     for d in DIRS:
         root = os.path.join(REPO, d)
         for dirpath, _dirs, names in os.walk(root):

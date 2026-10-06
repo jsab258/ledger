@@ -60,6 +60,12 @@ ASSET_PATH = PACKAGE + "/" + ASSET
 TEXTURE_PARAM = "SkyMap"
 SCALAR_PARAM = "SkyLuminance"
 SCALAR_DEFAULT = 1.0
+#: THE PHOTOGRAPH'S LAND HELD BACK, 6 October (item 1.1's first gate: the sky photograph's field, hills
+#: and trees showed past the street's south end, where the atlas has the sea). The photograph is
+#: sampled no lower than this row of its own (V, 0 at the zenith, 0.5 at the horizon), so below it the
+#: dome shows the sky just above the land, a haze down to the sea. 1.0 (the default) changes nothing;
+#: the game sets it from the look file's sky_horizon_clamp_deg.
+CLAMP_PARAM, CLAMP_DEFAULT = "HorizonClampV", 1.0
 
 # THE DEFAULT TEXTURE THE SAMPLER MUST CARRY TO COMPILE AT ALL. Run 23 landed
 # a perfect-looking verdict over a material that never compiled because one
@@ -177,6 +183,20 @@ def main():
     lum.set_editor_property("default_value", SCALAR_DEFAULT)
     mul = mel.create_material_expression(
         mat, unreal.MaterialExpressionMultiply, -420, 60)
+    # the UVs, their V held no lower than the clamp row
+    uv = mel.create_material_expression(mat, unreal.MaterialExpressionTextureCoordinate, -1300, 0)
+    mask_u = mel.create_material_expression(mat, unreal.MaterialExpressionComponentMask, -1100, -60)
+    mask_v = mel.create_material_expression(mat, unreal.MaterialExpressionComponentMask, -1100, 60)
+    for m_, r_, g_ in ((mask_u, True, False), (mask_v, False, True)):
+        m_.set_editor_property("r", r_)
+        m_.set_editor_property("g", g_)
+        m_.set_editor_property("b", False)
+        m_.set_editor_property("a", False)
+    clamp_v = mel.create_material_expression(mat, unreal.MaterialExpressionScalarParameter, -1100, 180)
+    clamp_v.set_editor_property("parameter_name", CLAMP_PARAM)
+    clamp_v.set_editor_property("default_value", CLAMP_DEFAULT)
+    vmin = mel.create_material_expression(mat, unreal.MaterialExpressionMin, -900, 100)
+    uvout = mel.create_material_expression(mat, unreal.MaterialExpressionAppendVector, -900, 0)
 
     # EVERY CONNECTION IS COUNTED AND THE DENOMINATOR IS THE NUMBER ASKED FOR,
     # so a material with two of three wires can never print as made. The pin
@@ -186,6 +206,13 @@ def main():
     asked = [
         (tex_expr, "", mul, "A"),
         (lum, "", mul, "B"),
+        (uv, "", mask_u, ""),
+        (uv, "", mask_v, ""),
+        (mask_v, "", vmin, "A"),
+        (clamp_v, "", vmin, "B"),
+        (mask_u, "", uvout, "A"),
+        (vmin, "", uvout, "B"),
+        (uvout, "", tex_expr, "UVs"),
     ]
     wired = 0
     refused = []

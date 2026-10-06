@@ -141,7 +141,7 @@ def build_and_render(argv):
         o.data.materials.append(m)
         return o
 
-    def text(name, body, x, y, z, size, m, rot_x=math.pi / 2, font=None):
+    def text(name, body, x, y, z, size, m, rot_x=math.pi / 2, font=None, extrude=0.002, res=None):
         bpy.ops.object.text_add(location=(x, y, z), rotation=(rot_x, 0, 0))
         o = bpy.context.object
         o.name = name
@@ -157,7 +157,9 @@ def build_and_render(argv):
             if size < 0.05:
                 o.data.extrude = 0.0
         o.data.align_x = "CENTER"
-        o.data.extrude = 0.002
+        o.data.extrude = extrude
+        if res is not None:
+            o.data.resolution_u = res
         o.data.materials.append(m)
         return o
 
@@ -1368,6 +1370,14 @@ def build_and_render(argv):
         # ceiling; the street door opens between it and the window.
         box("stair_wall", 1.81, 1.95, 0.0, D, 0.0, H, wall)
         box("stair_wall_dado", 1.80, 1.81, 0.0, D, 0.0, 0.95, dado)
+        # THE REVEAL'S TIMBER LINING, 6 October (item 1.1's first gate: "the window reveal still has
+        # the black pitted scan material"; MICKEYS-OTHER-DIRECTION-2026-10-04.md: "the reveal's
+        # timber lining (replacing the black scan)"): a painted board down each side of the opening
+        # and across its head, just behind the glass, covering the walls' raw ends.
+        lining = mat("reveal_lining_gloss", (0.62, 0.58, 0.48), rough=0.35, noise=0.05)
+        box("reveal_lining_left", -W / 2, -W / 2 + 0.07, -0.02, 0.10, 0.0, H, lining)
+        box("reveal_lining_right", 1.74, 1.81, -0.02, 0.10, 0.0, H, lining)
+        box("reveal_lining_head", -W / 2, 1.81, -0.02, 0.10, H - 0.07, H, lining)
 
         # THE WINDOW BOARD inside the glass, and what sits on it: a spider plant, two directories
         # gone yellow in the sun, a saucer ashtray.
@@ -1391,9 +1401,14 @@ def build_and_render(argv):
         # GILT WITH ITS BLACK SHADE behind, down and to the right, as a signwriter laid it (the
         # first film: gold alone was lost over the lit room)
         shade = mat("gilt_shade", (0.01, 0.01, 0.01), rough=0.6)
+        # LAID ON THE GLASS AS PAINT IS, 6 October (item 1.1's first gate: "seen from inside, the
+        # gilt number is a thick black slab with a sawtooth edge"): leaf and shade flat against the
+        # pane's inside face, a hair apart, their curves smooth at the lettering's own size; from
+        # inside the room they read as a signwriter's backs do, crisp dark letters on the glass.
         for name, body, z, size in (("glass_number", "0632  960418", 2.02, 0.17), ("glass_word", "MINICABS  ·  24 HOURS", 1.82, 0.085)):
-            text(name, body, -0.92, 0.03, z, size, gilt, font="marcellus-sc/MarcellusSC-Regular.ttf")
-            text(name + "_shade", body, -0.92 + size * 0.03, 0.036, z - size * 0.03, size, shade, font="marcellus-sc/MarcellusSC-Regular.ttf")
+            text(name, body, -0.92, 0.03, z, size, gilt, font="marcellus-sc/MarcellusSC-Regular.ttf", extrude=0.0003, res=7)
+            text(name + "_shade", body, -0.92 + size * 0.03, 0.0312, z - size * 0.03, size, shade,
+                 font="marcellus-sc/MarcellusSC-Regular.ttf", extrude=0.0003, res=7)
 
         # (the venetian blind half down over the window's left run is a modelled prop now, below)
         # (the oxblood bench down the left wall is a modelled prop now, below)
@@ -1521,8 +1536,11 @@ def build_and_render(argv):
         # a jacket left over the chair's back (his)
         # (no jacket: as a box over the chair's back it read as a flat card, the second fresh review)
 
-        # (NO WALL MAP, 4 October: the town's geography is his to approve, with its atlas, in the
-        # new plan's phase 0; the wall over the radio desk stays bare until then)
+        # THE DISTRICT'S STREET PLAN over the radio desk, 6 October (the brief's "the district map
+        # above"; held back on 4 October until the town's map was his, adopted since, RULINGS D13;
+        # item 1.1's first gate: "no district map"): printed from the atlas by
+        # tools/props/make_office_print.py, Mickey's ringed in red, clear of the loudspeaker
+        print_plane("district_map", "district_map", -1.675, D - 0.008, 1.615, 0.95, 0.71, "-y")
         # the drivers' board over the radio desk: each car's number and its status
         print_plane("drivers_board", "drivers_board", -0.62, D - 0.008, 1.60, 0.60, 0.70, "-y")
         # a pot plant in the corner by the stair wall, and a strip of light under the back door's head

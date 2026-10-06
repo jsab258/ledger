@@ -648,6 +648,103 @@ TOM_FIFTH = {
     "H2": _finish(TOM_THIRD["D2"], hair_colour=TOM_PLAIN_BROWN, accents=dict(OLDER_LIDS, **CALM_SKIN)),
 }
 TOM.update(TOM_FIFTH)
+# THE SIXTH STEP, from H2, 6 October evening. The blind reviewer: H2's face is "the right man"
+# (Slavic, pale, light grey-blue eyes, nothing of Ron), with narrow points: the hair near-black in
+# front and mid brown with golden tips in profile, wet-looking, swept up (and in profile an echo of
+# Darren's bleached tips); spots on the cheeks; tired eyes and a downturned mouth. Epic's grooms
+# ship with their own highlights and ombre on (mh-hair-materials.txt: Highlights 1, Ombre 1 on
+# some), which is the golden tips; so both off and the brown's variation lowered, the cheeks calmer,
+# the upper lids lifted a little and the mouth's corners with them. I1 keeps D2's casual cut; I2
+# the brush cut, a short back and sides with a flat top.
+TOM_HAIR_PLAIN = {"hairMelanin": 0.62, "hairRedness": 0.06, "WhiteAmount": 0.0, "Ombre": 0.0, "Highlights": 0.0,
+                  "MelaninVariationFine": 0.3, "MelaninVariationRough": 0.2}
+CALMER_CHEEKS = {"cheeks": {"redness": 0.3, "saturation": 0.35, "lightness": 0.55},
+                 "chin": {"redness": 0.35, "saturation": 0.35, "lightness": 0.6}}
+TOM_RESTED = [{"at": "upper_lids", "move": [0.0, 0.0, 0.06]}, {"at": "mouth_corners", "move": [0.0, 0.0, 0.05]}]
+TOM_SIXTH = {
+    "I1": _finish(TOM_FIFTH["H2"], hair_colour=TOM_HAIR_PLAIN, accents=dict(OLDER_LIDS, **CALMER_CHEEKS), sculpt=TOM_RESTED),
+    "I2": _finish(TOM_FIFTH["H2"], hair="WI_Hair_S_BrushCut", hair_colour=TOM_HAIR_PLAIN,
+                  accents=dict(OLDER_LIDS, **CALMER_CHEEKS), sculpt=TOM_RESTED),
+}
+TOM.update(TOM_SIXTH)
+# THE SEVENTH STEP, from I2, 6 October evening. The blind reviewer failed H2, I1 and I2 and ranked
+# I2 first: its short back and sides is the sheet's cut and reads younger; what stops all three is a
+# dead, tired stare (heavy lids, the dark under the eyes), an age of 35 to 40 against the sheet's 32,
+# a soft full jaw and neck where the sheet says lean, and on I2 a bronze to ginger buzz-cut top with
+# frosted tips and a hard, cap-like hairline. So: a true dark brown with no red and no lighter tips;
+# Epic's side-swept fringe (J1) or its short messy cut (J2), each a few centimetres on top with a
+# broken front line; the lids opened a little more, the under-eye lighter, not darker; the jaw and
+# the body a little leaner. (The catchlight is the portrait's light, judged with -PortraitStudio.)
+TOM_DARK_BROWN = {"hairMelanin": 0.8, "hairRedness": 0.03, "WhiteAmount": 0.0, "Ombre": 0.0, "Highlights": 0.0,
+                  "MelaninVariationFine": 0.15, "MelaninVariationRough": 0.1}
+YOUNGER_LIDS = {"under_eye": {"redness": 0.35, "saturation": 0.35, "lightness": 0.56}}
+TOM_AWAKE = [{"at": "upper_lids", "move": [0.0, 0.0, 0.12]}, {"at": "mouth_corners", "move": [0.0, 0.0, 0.05]},
+             {"at": "jaw_angle", "width": 0.95}, {"at": "jaw_front", "width": 0.97}]
+TOM_LEAN = {"Height": 175.0, "Fat": -0.8, "Muscularity": 0.0}
+TOM_SEVENTH = {
+    "J1": _finish(TOM_FIFTH["H2"], hair="WI_Hair_S_SideSweptFringe", hair_colour=TOM_DARK_BROWN,
+                  accents=dict(YOUNGER_LIDS, **CALMER_CHEEKS), sculpt=TOM_AWAKE, body=TOM_LEAN),
+    "J2": _finish(TOM_FIFTH["H2"], hair="WI_Hair_S_Messy", hair_colour=TOM_DARK_BROWN,
+                  accents=dict(YOUNGER_LIDS, **CALMER_CHEEKS), sculpt=TOM_AWAKE, body=TOM_LEAN),
+}
+TOM.update(TOM_SEVENTH)
+# THE EIGHTH STEP, from J2, 6 October night. A fresh blind reviewer ranked J2 first: the eyes alive
+# now (catchlights, lids fine), Polish and ordinary, about 28 to 30; what stops it: the messy cut
+# worn as a tall glossy quiff (a 2020s read), brows mid brown under near-black hair, faint lashes, no
+# shave shadow on a dark-haired man (the lower face smooth, the lips pink), soft jowls. So: brows and
+# lashes as dark as the hair; a faint grey shadow on the chin; the lips' colour taken down
+# (the skin's own accents, not make-up); the jaw a little narrower again. K1 keeps J2's cut; K2 tries the brush cut again in the dark
+# brown (I2's cut was the sheet's, its colour and frosted tips what failed).
+TOM_DARK_BROWS = {"hairMelanin": 0.9, "hairRedness": 0.02, "WhiteAmount": 0.0}
+SHAVE_SHADOW = {"chin": {"redness": 0.25, "saturation": 0.2, "lightness": 0.45},
+                "lips": {"redness": 0.35, "saturation": 0.3, "lightness": 0.5}}
+TOM_FIRMER = TOM_AWAKE[:2] + [{"at": "jaw_angle", "width": 0.92}, {"at": "jaw_front", "width": 0.95},
+                              {"at": "chin_sides", "width": 0.97}]
+TOM_EIGHTH = {
+    "K1": _finish(TOM_SEVENTH["J2"], brow_colour=TOM_DARK_BROWS, accents=dict(YOUNGER_LIDS, **dict(CALMER_CHEEKS, **SHAVE_SHADOW)),
+                  sculpt=TOM_FIRMER),
+    "K2": _finish(TOM_SEVENTH["J2"], hair="WI_Hair_S_BrushCut", brow_colour=TOM_DARK_BROWS,
+                  accents=dict(YOUNGER_LIDS, **dict(CALMER_CHEEKS, **SHAVE_SHADOW)), sculpt=TOM_FIRMER),
+}
+TOM.update(TOM_EIGHTH)
+# THE NINTH STEP, from K2, 6 October night. A fourth blind reviewer ranked K2 (the brush cut) ahead:
+# about 32 to 36, eyes alive, nothing faulty in the face; what stops it: no shave shadow (the chin's
+# accent too light to show), the lips lilac, the brows still lighter than the hair, faint lashes,
+# and the cut a modern clipper crop where 1990's short back and sides has length on top, combed to
+# a side parting. The sheet keeps him clean-shaven (no stubble groom: a check holds that), so the
+# shadow is the skin's: the chin darker and greyer. The lips warmer. Epic's fine lashes in place
+# of the preset's sparse ones. L1 tries Epic's clean cut in the dark brown with no highlights (its
+# frosting in H1 was the groom's own highlights, off since I1); L2 its casual cut, combed.
+SHAVEN = {"chin": {"redness": 0.2, "saturation": 0.15, "lightness": 0.36},
+          "lips": {"redness": 0.5, "saturation": 0.45, "lightness": 0.5}}
+TOM_NINTH = {
+    "L1": _finish(TOM_EIGHTH["K2"], hair="WI_Hair_S_Clean", eyelashes="WI_Eyelashes_S_Fine",
+                  accents=dict(YOUNGER_LIDS, **dict(CALMER_CHEEKS, **SHAVEN))),
+    "L2": _finish(TOM_EIGHTH["K2"], hair="WI_Hair_S_Casual", eyelashes="WI_Eyelashes_S_Fine",
+                  accents=dict(YOUNGER_LIDS, **dict(CALMER_CHEEKS, **SHAVEN))),
+}
+TOM.update(TOM_NINTH)
+# THE TENTH STEP, from L1, 6 October night. A fifth blind reviewer: L1 (Epic's clean cut) "one narrow
+# round of fixes away" - about 30 to 33, Polish and ordinary, the eyes alive, a good tapered short back
+# and sides in profile; what stops it: still no shave shadow, the top glossy with light glints, the
+# hair near-black where the sheet says dark brown, the brows lighter and sparse, the lips pale, the
+# jaw soft. So: the brown warmed a little; Epic's dense brows (M1) or thick ones (M2) in the hair's
+# own dark; the chin's shadow much stronger (the last was too light to show); the lips muted; the
+# jaw narrower again.
+TOM_WARM_DARK = {"hairMelanin": 0.72, "hairRedness": 0.09, "WhiteAmount": 0.0, "Ombre": 0.0, "Highlights": 0.0,
+                 "MelaninVariationFine": 0.15, "MelaninVariationRough": 0.1}
+TOM_MATCHED_BROWS = {"hairMelanin": 0.8, "hairRedness": 0.08, "WhiteAmount": 0.0}
+SHAVEN_DARKER = {"chin": {"redness": 0.15, "saturation": 0.1, "lightness": 0.24},
+                 "lips": {"redness": 0.42, "saturation": 0.32, "lightness": 0.48}}
+TOM_LEANER = TOM_AWAKE[:2] + [{"at": "jaw_angle", "width": 0.9}, {"at": "jaw_front", "width": 0.94},
+                              {"at": "chin_sides", "width": 0.96}, {"at": "lower_cheeks", "width": 0.95}]
+TOM_TENTH = {
+    "M1": _finish(TOM_NINTH["L1"], hair_colour=TOM_WARM_DARK, brow_colour=TOM_MATCHED_BROWS, eyebrows="WI_Eyebrows_M_Dense",
+                  accents=dict(YOUNGER_LIDS, **dict(CALMER_CHEEKS, **SHAVEN_DARKER)), sculpt=TOM_LEANER),
+    "M2": _finish(TOM_NINTH["L1"], hair_colour=TOM_WARM_DARK, brow_colour=TOM_MATCHED_BROWS, eyebrows="WI_Eyebrows_M_Thick",
+                  accents=dict(YOUNGER_LIDS, **dict(CALMER_CHEEKS, **SHAVEN_DARKER)), sculpt=TOM_LEANER),
+}
+TOM.update(TOM_TENTH)
 for _t, _b in TOM.items():
     _b["clear"] = list(TOM_CLEAR)
     CANDIDATES[_t] = {"tom": _b}
@@ -929,7 +1026,9 @@ def main_after_idle(seconds=20.0, settle=15.0):
             except Exception as e:
                 notes.append("clear-%s-refused-%s" % (slot, type(e).__name__))
         # FACIAL HAIR (the candidates): Ron's moustache, Darren's stubble.
-        for key, folder, slot in (("mustache", "Mustaches", "Mustache"), ("beard", "Beards", "Beard")):
+        # AND THE LASHES (6 October: three reviewers in turn found Tom's preset lashes faint).
+        for key, folder, slot in (("mustache", "Mustaches", "Mustache"), ("beard", "Beards", "Beard"),
+                                  ("eyelashes", "Eyelashes", "Eyelashes"), ("eyebrows", "Eyebrows", "Eyebrows")):
             name = c.get(key)
             if not name:
                 continue
@@ -1310,11 +1409,12 @@ def selftest():
           all(abs(CANDIDATES[t][w]["body"]["Height"] - h) <= 3 for t in FIVE for w, h in (("lena", 160), ("rocco", 186), ("sam", 175))))
     check("Ron always has his moustache", all(CANDIDATES[t]["rocco"].get("mustache") for t in FIVE))
     toms = [t for t in CANDIDATES if "tom" in CANDIDATES[t]]
-    check("Tom's candidates: only Tom in each, sixteen (five, four, three from B2, two and two from D2), all different",
-          len(toms) == 16 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
+    check("Tom's candidates: only Tom in each, twenty-six (five, four, three from B2, two and two from D2, two from H2, two from I2, two from J2, two from K2, two from L1), all different",
+          len(toms) == 26 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
           and len({repr(sorted(CANDIDATES[t]["tom"]["face"].items())) + CANDIDATES[t]["tom"]["hair"]
                    + str(CANDIDATES[t]["tom"]["skin"].get("face_texture_index"))
-                   + repr(sorted(CANDIDATES[t]["tom"].get("accents", {}))) + repr(sorted(CANDIDATES[t]["tom"].get("hair_colour", {}))) for t in toms}) == 16)
+                   + repr(sorted(CANDIDATES[t]["tom"].get("accents", {}))) + repr(sorted(CANDIDATES[t]["tom"].get("hair_colour", {})))
+                   + repr(CANDIDATES[t]["tom"].get("sculpt")) + str(CANDIDATES[t]["tom"].get("eyebrows")) for t in toms}) == 26)
     check("Tom to his sheet: about 175 cm, lean, clean-shaven, short dark hair",
           all(abs(CANDIDATES[t]["tom"]["body"]["Height"] - 175) <= 3 and CANDIDATES[t]["tom"]["body"]["Fat"] <= 0
               and set(CANDIDATES[t]["tom"]["clear"]) == {"Beard", "Mustache"} and not CANDIDATES[t]["tom"].get("beard")
@@ -1326,7 +1426,7 @@ def selftest():
     check("the second try leaves Victor's and Lorenzo's skin sets and Victor's face, and never the aged 121 (Ron's and Sheila's)",
           all(CANDIDATES[t]["tom"]["skin"].get("face_texture_index") in (13, 85) and "Victor" not in CANDIDATES[t]["tom"]["face"]
               and CANDIDATES[t]["tom"]["eyes"] == EYES_GREY_BLUE and CANDIDATES[t]["tom"]["accents"]["chin"]["lightness"] > 0.5
-              for t in toms if t[0] in "BDGH"))
+              for t in toms if t[0] in "BDGHI"))
     check("a Tom take builds nobody else", [w for (w, _) in CAST if "A1" not in CANDIDATES or w in CANDIDATES["A1"]] == ["tom"])
     use_take("C3")
     check("a candidate take builds to its own brief", brief("rocco") is CANDIDATES["C3"]["rocco"] and asset_name("rocco") == "MH_RoccoC3")

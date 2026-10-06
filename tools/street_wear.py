@@ -266,6 +266,8 @@ def build(pieces):
         if d.get("pitch_deg") == 90.0:
             d["y_m"] = ground_y(d["z_m"])
     decals += room_wear()
+    decals += counter_marks()
+    decals += frontage_wear(pieces)
     return houses, decals, coverage(bays, decals)
 
 
@@ -312,6 +314,75 @@ def room_wear(spec_path=OFFICE):
         out.append({"kind": "damp", "picture": damp, "x_m": 8.3, "y_m": round(ROOM_FLOOR_M + 2.62, 4),
                     "z_m": d["z0"], "w_m": 0.9, "h_m": 0.6, "yaw_deg": 0.0, "pitch_deg": 0.0,
                     "strength": 0.6, "on": "mickeys_room"})
+    return out
+
+
+RINGS, BURNS, CHIPS = "ours/wear_rings", "ours/wear_burns", "ours/wear_chips"
+#: THE KIT BAY'S FRONT (6 October; tools/art-recipes/terrace-front.py KIT_BAYS, Rita's): its pieces'
+#: faces in street metres, from the kit's layout (the window from the bay's left pier, then the shop
+#: door, then the side door; production/art/shopfront-kit/README.md): the bay's x0, the window's run,
+#: each door's centre and width, and the faces' depths in front of the wall (5.125).
+KIT_FRONTS = {"east_parade_bay2": {"x0": 15.0, "window": (15.35, 18.70), "shop_door": (19.203, 0.90),
+                                   "side_door": (20.178, 0.838), "stall_face": 4.975, "plinth_face": 4.975,
+                                   "door_face": 5.05}}
+
+
+def frontage_wear(pieces):
+    """A SHOPFRONT WORN BY USE, by rule (6 October; item 1.1's first gate: "Rita's stallriser,
+    pilaster feet, sills and door bottoms pristine", the research naming exactly those as the most
+    worn by 1990, production/research/shopfronts/FRONTAGE-2026-10-06.md): dried road splash and dust
+    up the stallriser's foot and the piers' plinths, paint chipped to the undercoat along the sill's
+    nosing and round the shop door's handle, and boots' scuffs on both doors' bottoms. Paint wears
+    lighter, so the dust and the chips are light marks (M_LedgerGrime's TintOnly)."""
+    by = {p["name"]: p for p in pieces["pieces"]}
+    out = []
+    for bay, f in KIT_FRONTS.items():
+        b = by.get(bay)
+        if b is None:
+            continue
+        g = b["y_m"] - b["sy_m"] / 2.0
+        s = seed_of(bay + "_kit_wear")
+        w0, w1 = f["window"]
+
+        def put(kind, pic, x, y, z, w, h, strength):
+            out.append({"kind": kind, "picture": pic, "x_m": round(x, 4), "y_m": round(y, 4), "z_m": round(z - STANDOFF_M, 4),
+                        "w_m": round(w, 4), "h_m": round(h, 4), "yaw_deg": 0.0, "pitch_deg": 0.0,
+                        "strength": round(strength, 3), "on": bay})
+        put("dust", PICTURE["splash"], (w0 + w1) / 2.0, g + 0.18, f["stall_face"], w1 - w0, 0.36, 0.55 + 0.15 * rnd(s, "st"))
+        for px in (f["x0"], f["x0"] + 6.0):
+            put("dust", PICTURE["splash"], px, g + 0.22, f["plinth_face"], 0.72, 0.44, 0.5 + 0.15 * rnd(s, "p%.0f" % px))
+            put("chip", CHIPS, px, g + 0.55, f["plinth_face"], 0.72, 0.30, 0.55)
+        put("chip", CHIPS, (w0 + w1) / 2.0, g + 0.61, f["stall_face"], w1 - w0, 0.09, 0.6)
+        sx, sw = f["shop_door"]
+        put("chip", CHIPS, sx + 0.30, g + 1.02, f["door_face"], 0.30, 0.32, 0.55)
+        for x, w in (f["shop_door"], f["side_door"]):
+            put("scuff", PICTURE["splash"], x, g + 0.14, f["door_face"], w * 0.95, 0.26, 0.55 + 0.15 * rnd(s, "d%.1f" % x))
+    return out
+
+
+def counter_marks(spec_path=OFFICE):
+    """THE COUNTER'S TOP WORN BY USE (6 October; item 1.1's first gate: "the counter top clean: no
+    scuffs, rings, burns"): tea rings where the mugs stand, cigarette burns along its customers'
+    edge by the ashtray, and the laminate rubbed at the booking place; on the top's own height
+    (the room's floor at ROOM_FLOOR_M, the top 0.985 above it), facing up."""
+    if not os.path.isfile(spec_path):
+        return []
+    box = {b["name"]: b for b in json.load(open(spec_path, encoding="utf-8")).get("boxes", [])}
+    c = box.get("counter")
+    if not c:
+        return []
+    top = ROOM_FLOOR_M + 0.985 + 0.002
+    x0, x1 = c["x0"], min(c["x1"], 8.65)
+    z0, z1 = c["z0"], c["z1"]
+    out = []
+    s = seed_of("mickeys_counter_top")
+    for k, (fx, size, pic, strength) in enumerate(((0.18, 0.32, RINGS, 0.7), (0.47, 0.30, RINGS, 0.6), (0.78, 0.34, RINGS, 0.65),
+                                                   (0.30, 0.22, BURNS, 0.85), (0.62, 0.20, BURNS, 0.8))):
+        x = x0 + (x1 - x0) * fx + 0.1 * (rnd(s, "x%d" % k) - 0.5)
+        z = z0 + 0.12 + (z1 - z0 - 0.24) * rnd(s, "z%d" % k) * (0.5 if pic == BURNS else 1.0)
+        out.append({"kind": "grime", "picture": pic, "x_m": round(x, 4), "y_m": round(top, 4), "z_m": round(z, 4),
+                    "w_m": size, "h_m": size, "yaw_deg": round(360.0 * rnd(s, "yaw%d" % k), 1), "pitch_deg": 90.0,
+                    "strength": strength, "on": "mickeys_room"})
     return out
 
 

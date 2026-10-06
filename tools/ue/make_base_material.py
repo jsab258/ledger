@@ -4115,6 +4115,26 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("streetImportStatus=RAISED streetImportNote=%s\n"
                          % str(_street_err).replace(" ", "~")[:160])
+    # ---- AND THE WALK CLIPS' ROOT MOTION, 6 October (phase 1, item 1.2) -----
+    # tools/ue/make_root_motion_clips.py: the MetaHuman plugin's walk clips are
+    # authored in place; the IK Retargeter's Root Motion op gives each its travel
+    # as <name>_RM, made here and never pushed. Its own line; a fault there
+    # prints as a rootMotionClips key.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import make_root_motion_clips
+            make_root_motion_clips.main()
+        except Exception as _rm_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("rootMotionClips=RAISED rootMotionNote=%s\n"
+                         % str(_rm_err).replace(" ", "~")[:160])
     # ---- AND THE STREET'S PEOPLE, 23 September, FOR THE SAME REASON --------
     # tools/ue/import_people.py: each production/assets/people/*.glb becomes
     # a skeletal mesh and its animation, for the presentable checklist's

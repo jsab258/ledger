@@ -121,6 +121,46 @@ def stains(rng):
     return out
 
 
+def marks(rng):
+    """{leaf: mask} for the marks of use, 6 October (item 1.1's gate: "the counter top clean: no
+    scuffs, rings, burns"; "Rita's stallriser, pilaster feet, sills and door bottoms pristine"):
+    tea rings where mugs stood, short burns where a cigarette rested on an edge, and paint chipped
+    to the undercoat, densest at the foot."""
+    n = SIZE
+    yy, xx = np.mgrid[0:n, 0:n] / float(n - 1)
+    out = {}
+    ring = np.zeros((n, n))
+    for cx, cy, r, w, k in ((0.30, 0.36, 0.13, 0.012, 1.0), (0.64, 0.58, 0.12, 0.010, 0.75),
+                            (0.44, 0.74, 0.14, 0.014, 0.55)):
+        d = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2)
+        band = np.clip(1.0 - np.abs(d - r) / w, 0.0, 1.0)
+        broken = np.clip(smooth_noise(rng, n, (8, 16)) * 1.8 - 0.35, 0.0, 1.0)
+        ring = np.maximum(ring, band * broken * k)
+    out["wear_rings"] = soften(ring, 1)
+    burn = np.zeros((n, n))
+    for cx, cy, ang, length in ((0.30, 0.50, 0.2, 0.20), (0.70, 0.42, -0.4, 0.14), (0.54, 0.26, 1.2, 0.11)):
+        ux, uy = np.cos(ang), np.sin(ang)
+        t = (xx - cx) * ux + (yy - cy) * uy
+        q = -(xx - cx) * uy + (yy - cy) * ux
+        along = np.clip(1.0 - np.abs(t) / (length / 2.0), 0.0, 1.0)
+        burn = np.maximum(burn, np.clip(1.0 - np.abs(q) / (0.010 + 0.014 * along), 0.0, 1.0) * along)
+    out["wear_burns"] = soften(burn, 1)
+    flakes = (smooth_noise(rng, n, (32, 64, 128)) > 0.70).astype(float)
+    out["wear_chips"] = ramp(soften(flakes, 1), "bottom")
+    return out
+
+
+def write_marks():
+    for leaf, a in marks(np.random.default_rng(19901006)).items():
+        img = Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8), "L")
+        rgba = Image.new("RGBA", img.size, (STAIN_GREY, STAIN_GREY, STAIN_GREY, 255))
+        rgba.putalpha(img)
+        d = os.path.join(ROOT, leaf)
+        os.makedirs(d, exist_ok=True)
+        rgba.save(os.path.join(d, leaf + ".png"))
+        print("%s: %dx%d, mean mask %.3f" % (leaf, img.size[0], img.size[1], np.asarray(img).mean() / 255.0))
+
+
 def write_stains():
     for leaf, a in stains(np.random.default_rng(19901003)).items():
         img = Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8), "L")
@@ -174,6 +214,7 @@ def write():
         print("puddle_%02d: %.0f%% of the square is water or wet rim" % (i, 100.0 * (a > 0.05).mean()))
     write_stains()
     write_scene_stains()
+    write_marks()
 
 
 def selftest():

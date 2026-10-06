@@ -14,6 +14,11 @@ carried on it. Each clip comes out as <name>_RM in OUT_DIR, its root-motion flag
 made by this script in the import step (no file over 1 MB may be pushed, and these are made, not
 authored).
 
+THAT ROUTE FAILED (Step 3, measured): the clips carry no travel in the pelvis either, so the
+retargeter had nothing to copy. main() now bakes it from the planted foot (planted_travel; the
+research's route 1, production/research/sit-and-turn/LOCOMOTION-2026-10-06.md). MH_RIG, BODY_MESH
+and WORK_DIR are the first route's, kept for its record.
+
 ONE LINE, appended to ue-material.txt: asked, made, and the travel each now carries.
 """
 import os
@@ -40,11 +45,34 @@ def status_line(status, asked, made, seconds, note):
             % (status, asked, made, seconds, (note or "none").replace(" ", "~")[:220]))
 
 
+def planted_travel(left, right, hysteresis=1.0):
+    """[(x, y)] of the body's travel per frame from the two balls' component-space positions
+    [(x, y, z)], cm: the planted foot is the lower one (within the hysteresis both are down and
+    their mean is taken), and the body moves by minus that foot's horizontal step."""
+    out = [(0.0, 0.0)]
+    for f in range(1, min(len(left), len(right))):
+        zl, zr = left[f - 1][2], right[f - 1][2]
+        if abs(zl - zr) <= hysteresis:
+            feet = (left, right)
+        else:
+            feet = (left,) if zl < zr else (right,)
+        dx = sum(ft[f][0] - ft[f - 1][0] for ft in feet) / len(feet)
+        dy = sum(ft[f][1] - ft[f - 1][1] for ft in feet) / len(feet)
+        px, py = out[-1]
+        out.append((px - dx, py - dy))
+    return out
+
+
 def main():
+    """THE FOOT BAKE, 6 October evening (production/research/sit-and-turn/LOCOMOTION-2026-10-06.md,
+    route 1, the third try in a new direction): the plugin's clips carry no curves and no travel in
+    root or pelvis, so retargeting had nothing to copy. An in-place clip keeps its travel in the
+    planted foot, which slides backward at walking speed; that speed, read from the balls in
+    component space and integrated, is written into the root bone's keys (the pelvis untouched),
+    so each clip carries its walk."""
     import unreal
     t0 = time.time()
     lib = unreal.EditorAssetLibrary
-    tools = unreal.AssetToolsHelpers.get_asset_tools()
     out = os.path.join(unreal.Paths.project_dir(), "ue-material.txt")
 
     def write(status, made, note):
@@ -53,63 +81,55 @@ def main():
             fh.write(line + "\n")
         print("make_root_motion_clips: " + line)
 
-    rig = unreal.load_asset(MH_RIG)
-    mesh = unreal.load_asset(BODY_MESH)
-    clips = [unreal.load_asset(SOURCE_DIR + c + "." + c) for c in CLIPS]
-    if rig is None or mesh is None or any(c is None for c in clips):
-        write("NO-SOURCE", 0, "rig=%s mesh=%s clips=%d/%d" % (rig is not None, mesh is not None,
-                                                              sum(c is not None for c in clips), len(CLIPS)))
-        return
-    if lib.does_asset_exist(WORK_DIR + "/RTG_MH_RootMotion"):
-        lib.delete_asset(WORK_DIR + "/RTG_MH_RootMotion")
-    rtg = tools.create_asset("RTG_MH_RootMotion", WORK_DIR, unreal.IKRetargeter, unreal.IKRetargetFactory())
-    ctrl = unreal.IKRetargeterController.get_controller(rtg)
-    ctrl.set_ik_rig(unreal.RetargetSourceOrTarget.SOURCE, rig)
-    ctrl.set_ik_rig(unreal.RetargetSourceOrTarget.TARGET, rig)
-    ctrl.add_default_ops()
-    ctrl.assign_ik_rig_to_all_ops(unreal.RetargetSourceOrTarget.SOURCE, rig)
-    ctrl.assign_ik_rig_to_all_ops(unreal.RetargetSourceOrTarget.TARGET, rig)
-    ctrl.auto_map_chains(unreal.AutoMapChainType.EXACT, True)
-    # THE ROOT MOTION OP, set to make the root's travel from the target's pelvis.
-    found = False
-    for i in range(ctrl.get_num_retarget_ops()):
-        oc = ctrl.get_op_controller(i)
-        if isinstance(oc, unreal.IKRetargetRootMotionController):
-            s = oc.get_settings()
-            s.set_editor_property("root_motion_source", unreal.RootMotionSource.GENERATE_FROM_TARGET_PELVIS)
-            oc.set_settings(s)
-            found = True
-    if not found:
-        write("NO-ROOT-MOTION-OP", 0, "the default op stack has no Root Motion op")
-        return
-    inputs = unreal.IKRetargetBatchOperationInputs()
-    inputs.set_editor_property("assets_to_retarget", [unreal.AssetRegistryHelpers.create_asset_data(c) for c in clips])
-    inputs.set_editor_property("source_mesh", mesh)
-    inputs.set_editor_property("target_mesh", mesh)
-    inputs.set_editor_property("ik_retarget_asset", rtg)
-    inputs.set_editor_property("suffix", SUFFIX)
-    inputs.set_editor_property("target_path", OUT_DIR)
-    inputs.set_editor_property("include_referenced_assets", False)
-    inputs.set_editor_property("overwrite_existing_files", True)
-    unreal.IKRetargetBatchOperation.run_batch_retarget(inputs)
-    made, travel = 0, []
+    made, notes = 0, []
     for c in CLIPS:
-        a = unreal.load_asset(out_path(c))
-        if not isinstance(a, unreal.AnimSequence):
-            travel.append("%s=missing" % c[len("AS_MH_Neutral_"):])
+        short = c[len("AS_MH_Neutral_"):]
+        src = SOURCE_DIR + c
+        dst = out_path(c)
+        # loaded, not looked up: a commandlet's asset registry may not have scanned the plugin yet
+        src_obj = unreal.load_asset(src + "." + c)
+        if src_obj is None:
+            notes.append("%s=no-source" % short)
             continue
-        a.set_editor_property("enable_root_motion", True)
-        lib.save_loaded_asset(a, only_if_is_dirty=False)
-        made += 1
+        if lib.does_asset_exist(dst):
+            lib.delete_asset(dst)
+        a = lib.duplicate_loaded_asset(src_obj, dst)
+        if not isinstance(a, unreal.AnimSequence):
+            notes.append("%s=no-copy" % short)
+            continue
         try:
-            t = unreal.AnimationLibrary.extract_root_motion_from_track_range(a, 0.0, a.get_play_length(), True) \
-                if hasattr(unreal.AnimationLibrary, "extract_root_motion_from_track_range") else None
-            cm = t.translation.length() if t is not None else -1.0
-        except Exception:
-            cm = -1.0
-        travel.append("%s=%.0fcm" % (c[len("AS_MH_Neutral_"):], cm))
+            n = unreal.AnimationLibrary.get_num_frames(a)
+            opts = unreal.AnimPoseEvaluationOptions()
+            left, right = [], []
+            for f in range(n + 1):
+                pose = unreal.AnimPoseExtensions.get_anim_pose_at_frame(a, f, opts)
+                for bone, into in (("ball_l", left), ("ball_r", right)):
+                    t = unreal.AnimPoseExtensions.get_bone_pose(pose, bone, unreal.AnimPoseSpaces.WORLD)
+                    v = t.translation
+                    into.append((v.x, v.y, v.z))
+            travel = planted_travel(left, right)
+            ctrl = a.controller
+            pos = [unreal.Vector(x, y, 0.0) for (x, y) in travel]
+            rot = [unreal.Quat(0.0, 0.0, 0.0, 1.0)] * len(pos)
+            scl = [unreal.Vector(1.0, 1.0, 1.0)] * len(pos)
+            try:
+                ctrl.set_bone_track_keys("root", pos, rot, scl)
+            except Exception:
+                try:
+                    ctrl.add_bone_curve("root")
+                except Exception:
+                    ctrl.add_bone_track("root")
+                ctrl.set_bone_track_keys("root", pos, rot, scl)
+            a.set_editor_property("enable_root_motion", True)
+            lib.save_loaded_asset(a, only_if_is_dirty=False)
+            made += 1
+            cm = (travel[-1][0] ** 2 + travel[-1][1] ** 2) ** 0.5
+            secs = a.get_play_length()
+            notes.append("%s=%.0fcm/%.2fs/%.2fm_s" % (short, cm, secs, (cm / 100.0) / secs if secs > 0 else 0.0))
+        except Exception as e:
+            notes.append("%s=RAISED:%s" % (short, str(e)[:60]))
     lib.save_directory(OUT_DIR, only_if_is_dirty=False, recursive=True)
-    write("MADE" if made == len(CLIPS) else "PART", made, ",".join(travel))
+    write("MADE" if made == len(CLIPS) else ("PART" if made else "FAILED"), made, ",".join(notes))
 
 
 def selftest():
@@ -127,6 +147,13 @@ def selftest():
           out_path(CLIPS[0]) == "/Game/Ledger/Anim/RootMotion/AS_MH_Neutral_Walk_Start_F_Rfoot_RM")
     check("the line carries what was asked", "rootMotionAsked=5" in status_line("MADE", 5, 5, 1.0, "x"))
     check("a note keeps no spaces", " " not in status_line("MADE", 1, 1, 1.0, "a b").split("Note=")[1])
+    # a foot planted on the left while the right swings: the body goes forward by the foot's slide
+    lf = [(0.0, -10.0 * f, 0.0) for f in range(5)]
+    rf = [(20.0, 5.0 * f, 8.0) for f in range(5)]
+    tr = planted_travel(lf, rf)
+    check("the planted foot's backward slide is the body's forward travel", abs(tr[-1][1] - 40.0) < 1e-6 and tr[-1][0] == 0.0)
+    both = planted_travel([(0.0, -4.0 * f, 0.0) for f in range(3)], [(0.0, -2.0 * f, 0.5) for f in range(3)])
+    check("both feet down: their mean step", abs(both[-1][1] - 6.0) < 1e-6)
     print("make_root_motion_clips selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

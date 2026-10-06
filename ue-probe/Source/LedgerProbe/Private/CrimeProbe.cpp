@@ -4162,7 +4162,10 @@ namespace
 	// tries another), as studios bring a third-person camera in indoors.
 	struct FOfficeMark { std::string Place; double X = 0, Z = 0, FaceX = 0, FaceZ = 0; };
 	struct FOffice { bool bBuilt = false, bOn = false; double X0 = 0, X1 = 0, Z0 = 0, Z1 = 0, ArmM = 2.0, LiftM = 0.25, PivotM = 0.0; float StreetArm = -1.0f, StreetLift = 0.0f;
-	                 std::vector<FOfficeMark> Marks; };   // a place in someone's day that is now inside, and where they stand there
+	                 std::vector<FOfficeMark> Marks;   // a place in someone's day that is now inside, and where they stand there
+	                 // his shop door shut until Tom unlocks it, and the room dark until he is in (the spec's "door")
+	                 bool bDoorShut = false, bDark = false; double DoorX = 0, DoorZ = 0, UnlockM = 1.6;
+	                 std::string ShutPrefix, OpenTag, Shop; };
 	FOffice GOffice;
 	// Each office box's name from the spec, for the camera's probe log (an
 	// actor's label exists only in the editor).
@@ -4232,6 +4235,41 @@ namespace
 					++Hidden;
 				}
 			}
+		}
+		// HIS SHOP DOOR, 6 October (item 1.1's first gate: "in the packaged walk-in the shop door is
+		// missing, an empty opening", and "Sheila says the office has been locked since Mickey died,
+		// and Tom walks in through an open doorway with the lights on"): the door stands shut and the
+		// room dark until Tom comes to the door with the key; then the shut leaf goes and the street's
+		// own copy of it, swung in against the stair strip's wall (terrace-front.py, _open_door_parts),
+		// shows; the tubes come on once he is through. Without the spec's "door", it stands open.
+		const TSharedPtr<FJsonObject>* Door = nullptr;
+		if (Root->TryGetObjectField(TEXT("door"), Door) && Door != nullptr)
+		{
+			FString Prefix, Tag, Shop;
+			(*Door)->TryGetStringField(TEXT("shut_prefix"), Prefix);
+			(*Door)->TryGetStringField(TEXT("open_tag"), Tag);
+			(*Door)->TryGetStringField(TEXT("shop"), Shop);
+			(*Door)->TryGetNumberField(TEXT("x"), GOffice.DoorX);
+			(*Door)->TryGetNumberField(TEXT("z"), GOffice.DoorZ);
+			(*Door)->TryGetNumberField(TEXT("unlock_m"), GOffice.UnlockM);
+			GOffice.ShutPrefix = TCHAR_TO_UTF8(*Prefix);
+			GOffice.OpenTag = TCHAR_TO_UTF8(*Tag);
+			GOffice.Shop = TCHAR_TO_UTF8(*Shop);
+			const int32 Shut = LedgerVignetteShot::ShowStreetMeshesNamed(GOffice.ShutPrefix.c_str(), true);
+			GOffice.bDoorShut = Shut > 0;
+			bool bDarkUntilIn = false;
+			(*Door)->TryGetBoolField(TEXT("dark_until_inside"), bDarkUntilIn);
+			if (bDarkUntilIn && !GOffice.Shop.empty())
+			{
+				LedgerVignetteShot::SetShopRoomLit(GOffice.Shop.c_str(), false);
+				GOffice.bDark = true;
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerOffice: the shop door stands shut (%d mesh(es)), the room %s"), Shut, GOffice.bDark ? TEXT("dark") : TEXT("lit"));
+		}
+		else
+		{
+			const int32 OpenDoor = LedgerVignetteShot::RevealStreetMeshes("mickeys_inside");
+			UE_LOG(LogTemp, Display, TEXT("LedgerOffice: the shop door stands open (%d mesh(es) shown)"), OpenDoor);
 		}
 		UMaterialInterface* Basic = LoadObject<UMaterialInterface>(nullptr, TEXT("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial"));
 		auto Colour = [](const FString& Kind) -> FLinearColor
@@ -4690,6 +4728,25 @@ namespace
 		if (GOffice.StreetArm < 0.0f) { GOffice.StreetArm = Boom->TargetArmLength; GOffice.StreetLift = Boom->SocketOffset.Z; }
 		const LedgerCrime::P3 At = ToStreet(GPawn->GetActorLocation());
 		const bool bIn = At.X > GOffice.X0 && At.X < GOffice.X1 && At.Z > GOffice.Z0 && At.Z < GOffice.Z1;
+		// TOM AT THE DOOR WITH THE KEY: the shut leaf goes and the open one shows.
+		if (GOffice.bDoorShut)
+		{
+			const double Dx = At.X - GOffice.DoorX, Dz = At.Z - GOffice.DoorZ;
+			if (Dx * Dx + Dz * Dz < GOffice.UnlockM * GOffice.UnlockM)
+			{
+				GOffice.bDoorShut = false;
+				const int32 Gone = LedgerVignetteShot::ShowStreetMeshesNamed(GOffice.ShutPrefix.c_str(), false);
+				const int32 Open = LedgerVignetteShot::RevealStreetMeshes(GOffice.OpenTag.c_str());
+				UE_LOG(LogTemp, Display, TEXT("LedgerOffice: Tom unlocks the shop door at %.2f,%.2f (%d shut mesh(es) gone, %d open shown)"), At.X, At.Z, Gone, Open);
+			}
+		}
+		// AND THE LIGHTS ON once he is through the door.
+		if (GOffice.bDark && bIn && At.Z > GOffice.Z0 + 0.5)
+		{
+			GOffice.bDark = false;
+			LedgerVignetteShot::SetShopRoomLit(GOffice.Shop.c_str(), true);
+			UE_LOG(LogTemp, Display, TEXT("LedgerOffice: Tom puts the lights on at %.2f,%.2f"), At.X, At.Z);
+		}
 		const float Want = bIn ? (float)GOffice.ArmM * 100.0f : GOffice.StreetArm;
 		Boom->TargetArmLength = FMath::FInterpTo(Boom->TargetArmLength, Want, Dt, 4.0f);
 		// The pivot up and the arm's end down by as much, so the camera stands as

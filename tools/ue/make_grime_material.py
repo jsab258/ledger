@@ -38,6 +38,11 @@ ASSET_PATH = PACKAGE + "/" + ASSET
 TEX_PARAM = "GrimeTex"
 STRENGTH_PARAM, STRENGTH_DEFAULT = "GrimeStrength", 0.75
 TINT_PARAM, TINT_DEFAULT = "GrimeTint", (0.2, 0.2, 0.2)
+# LIGHT WEAR, 6 October (item 1.1's first gate: "Rita's stallriser, pilaster feet, sills and door
+# bottoms pristine"): on dark gloss paint every stain darkens nothing a player can see. Paint wears
+# LIGHTER (chips to the undercoat, dust and dried splash), so TintOnly 1 lays the tint itself through
+# the mask (its darkness times its alpha times the strength), not the tint times the picture.
+TINT_ONLY_PARAM, TINT_ONLY_DEFAULT = "TintOnly", 0.0
 WHITE = "/Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
 
 FLAGS = [
@@ -109,8 +114,13 @@ def main():
     dark = mel.create_material_expression(mat, X.MaterialExpressionOneMinus, -450, 500)
     masked = mel.create_material_expression(mat, X.MaterialExpressionMultiply, -300, 450)
     opacity = mel.create_material_expression(mat, X.MaterialExpressionMultiply, -150, 450)
+    tint_only = mel.create_material_expression(mat, X.MaterialExpressionScalarParameter, -900, 750)
+    tint_only.set_editor_property("parameter_name", TINT_ONLY_PARAM)
+    tint_only.set_editor_property("default_value", TINT_ONLY_DEFAULT)
+    pick = mel.create_material_expression(mat, X.MaterialExpressionLinearInterpolate, -300, 0)
 
     links = [(tex, "RGB", colour, "A"), (tint, "", colour, "B"),
+             (colour, "", pick, "A"), (tint, "", pick, "B"), (tint_only, "", pick, "Alpha"),
              (tex, "RGB", bright, "A"), (third, "", bright, "B"),
              (bright, "", dark, ""),
              (dark, "", masked, "A"), (tex, "A", masked, "B"),
@@ -122,7 +132,7 @@ def main():
                 wired += 1
         except Exception:
             pass
-    for src, prop in ((colour, unreal.MaterialProperty.MP_BASE_COLOR),
+    for src, prop in ((pick, unreal.MaterialProperty.MP_BASE_COLOR),
                       (opacity, unreal.MaterialProperty.MP_OPACITY)):
         try:
             if mel.connect_material_property(src, "", prop):

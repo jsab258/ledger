@@ -31,7 +31,11 @@ R = D / 2
 
 def build(empty=False):
     C.reset()
-    glass = C.material("ashtray_smoked_glass", (0.60, 0.56, 0.50), 0.04, transmission=1.0, ior=1.52)
+    # 6 October, item 1.1's first gate: "no ashtray reads as one". The see-through smoked glass
+    # came into the game as a faint translucent ghost on the counter. Pressed amber glass, the
+    # commonest heavy ashtray of the period, shown solid and glossy (its thickness makes it read
+    # nearly opaque at a metre), so its shape and rim catch the light.
+    glass = C.material("ashtray_amber_glass", (0.27, 0.15, 0.06), 0.03, coat=1.0, spec=0.6)
     prof = [
         (0.0, 0.0018), (0.050, 0.0018), (0.0545, 0.0010), (0.0565, 0.0), (0.0650, 0.0),
         (0.0690, 0.0012), (0.0712, 0.0040), (0.0730, 0.0120), (0.0748, 0.0260),
@@ -72,6 +76,7 @@ def build(empty=False):
     if not empty:
         ash = C.material("ashtray_ash", (0.32, 0.31, 0.30), 0.95)
         filt = C.material("cigarette_filter_cork", (0.78, 0.58, 0.36), 0.75)
+        paper = C.material("cigarette_paper", (0.90, 0.88, 0.82), 0.8)
         rnd = random.Random(11)
         # a low heap of ash, off-centre
         bm = bmesh.new()
@@ -80,7 +85,7 @@ def build(empty=False):
             # smooth lumps (no per-vertex noise, which folds the UVs)
             x, y, z = v.co
             v.co *= 1.0 + 0.10 * math.sin(3.1 * x + 1.3) * math.cos(2.7 * y - 0.4) + 0.06 * math.sin(5.0 * y + 2.0 * z)
-        bmesh.ops.transform(bm, matrix=C.mat4((0.008, 0.006, 0.0150), (0, 0, 0.4), (0.030, 0.024, 0.0035)),
+        bmesh.ops.transform(bm, matrix=C.mat4((0.006, 0.004, 0.0150), (0, 0, 0.4), (0.038, 0.032, 0.0045)),
                             verts=bm.verts)
         heap = C._link("ash", bm, ash)
         heap["no_wn"] = True
@@ -103,10 +108,18 @@ def build(empty=False):
             n = len(pp)
             radii = [0.0039 * (1.0 - 0.45 * i / (n - 1)) * (0.8 if i % 2 else 1.0) for i in range(n)]
             radii[0] = 0.0039
-            s = C.tube(name + "_paper", pp, 0.0039, sides=12, mat=ash, radii=radii)
+            # the white paper, then its charred crushed tip
+            cut = max(2, int(n * 0.7))
+            s = C.tube(name + "_paper", pp[:cut], 0.0039, sides=12, mat=paper, radii=radii[:cut])
             s["sharp_angle"] = 30.0
-        end("end_a", (-0.030, -0.012, 0.0192), math.radians(25), 0.002, 0.009)
-        end("end_b", (0.016, 0.022, 0.0188), math.radians(200), 0.0025, 0.007)
+            s2 = C.tube(name + "_char", pp[cut - 1:], 0.0039, sides=12, mat=ash, radii=radii[cut - 1:])
+            s2["sharp_angle"] = 30.0
+        # five ends, stubbed out over some days, crossing in the bowl
+        end("end_a", (-0.030, -0.012, 0.0192), math.radians(25), 0.003, 0.018)
+        end("end_b", (0.016, 0.022, 0.0188), math.radians(200), 0.0025, 0.010)
+        end("end_c", (0.024, -0.026, 0.0196), math.radians(130), 0.003, 0.020)
+        end("end_d", (-0.010, 0.034, 0.0200), math.radians(290), 0.0015, 0.011)
+        end("end_e", (-0.036, 0.014, 0.0204), math.radians(-20), 0.002, 0.009)
 
     o = C.cli()
     stem = "ashtray-empty" if empty else "ashtray"

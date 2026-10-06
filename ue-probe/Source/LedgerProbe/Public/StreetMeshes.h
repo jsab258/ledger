@@ -353,6 +353,19 @@ namespace LedgerStreet
 		// night outshines the street in its glass, and our soft reflections of the lamps and
 		// lit windows across the road showed as white and orange clouds over the rooms).
 		double GlassSpecularNight;
+		// THE STREET CAUGHT IN THE SHOP GLASS (6 October, item 1.1's first gate): a cube picture
+		// taken in front of each shop's window, added to the pane at this share of a true
+		// reflection (1 = physical), and the soft live reflection left on those panes. 0 = off.
+		double GlassCubeStrength;
+		double GlassCubeSpecular;
+		int GlassCubeSize;
+		// THE SKY PHOTOGRAPH TURNED ABOUT THE VERTICAL, degrees (6 October, item 1.1's first gate: "the
+		// reverse view ends ... under outsized background trees" - the photograph's own tree line,
+		// which faced down the street to the sea).
+		double SkyDomeYawDeg;
+		// AND HELD ABOVE ITS OWN LAND: the photograph sampled no lower than this elevation, degrees
+		// (0 = off), so its fields and hills past the street's ends show as the sky above them.
+		double SkyHorizonClampDeg;
 		// A WET SURFACE'S ROUGHNESS FLOOR IN THIS ENGINE, by base material,
 		// where it differs from the recipe's (road 0.05, paving 0.46, kerb 0.40).
 		std::vector<std::pair<std::string, double> > WetFloors;
@@ -416,6 +429,7 @@ namespace LedgerStreet
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05), GlassSpecularNight(1.0),
+		         GlassCubeStrength(0.0), GlassCubeSpecular(1.0), GlassCubeSize(256), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0),
 		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
 		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), bLanternRgb(false),
@@ -817,6 +831,16 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassRoughness = V->Num; ++Out.Read; }
 		V = Root.Find("glass_specular_night");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassSpecularNight = V->Num; ++Out.Read; }
+		V = Root.Find("glass_cube_strength");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 4.0) { Out.GlassCubeStrength = V->Num; ++Out.Read; }
+		V = Root.Find("glass_cube_specular");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassCubeSpecular = V->Num; ++Out.Read; }
+		V = Root.Find("glass_cube_size");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 32.0 && V->Num <= 1024.0) { Out.GlassCubeSize = (int)V->Num; ++Out.Read; }
+		V = Root.Find("sky_dome_yaw_deg");
+		if (V != 0 && V->Type == T_NUM && V->Num >= -360.0 && V->Num <= 360.0) { Out.SkyDomeYawDeg = V->Num; ++Out.Read; }
+		V = Root.Find("sky_horizon_clamp_deg");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 30.0) { Out.SkyHorizonClampDeg = V->Num; ++Out.Read; }
 		V = Root.Find("street_collision");
 		if (V != 0 && V->Type == T_BOOL) { Out.bStreetCollision = V->Bool; ++Out.Read; }
 		V = Root.Find("night_exposure_pin");

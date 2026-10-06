@@ -179,3 +179,11 @@ production/assets/shop-rooms-3d/
 # the street's geometry (22.6 MB with the shopfront kit, 6 October): on F: under the same path, as the rooms;
 # tools/ue/import_street.py reads the newer of the two; its sidecar quay-street.json stays in git
 production/assets/street/quay-street.glb
+# The walk clips with root motion made in the import step (tools/ue/make_root_motion_clips.py, 6 October): build products, never pushed
+ue-probe/Content/Ledger/Anim/RootMotion/
+ue-probe/Content/Retarget/
+# Pictures made since git took its last (6 October): they live on F:/LedgerTools/game-inputs under the same path (tools/ue/stage_game_data.py)
+ledger/Assets/StreamingAssets/Decals/ours/wear_rings/
+ledger/Assets/StreamingAssets/Decals/ours/wear_burns/
+ledger/Assets/StreamingAssets/Decals/ours/wear_chips/
+production/assets/office-print/mickeys/district_map.png

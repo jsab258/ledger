@@ -282,9 +282,114 @@ def keypad(rng):
     return img
 
 
+def district_map(rng):
+    """THE DISTRICT'S STREET PLAN on the office wall (6 October; item 1.1's first gate: "no district
+    map"; the brief's "the district map above" the radio desk, held back on 4 October until the
+    town's map was his; he adopted it, RULINGS D13). Drawn from the adopted atlas itself
+    (production/art/atlas-01/data/atlas.json: its coast, blocks, streets, rail and landmarks), as a
+    local street plan of about 1980 is printed: pale blue water, buff blocks, main roads yellow and
+    side streets white, both cased in black, footpaths dashed, a lettered grid, the title and a
+    scale; no publisher named. Then the office's own marks: Mickey's ringed in red biro and pins in
+    a few places the cars go. Every name is the atlas's; "(proposal)" is the atlas's note, not the
+    street's, and is left off."""
+    import json as _json
+    atlas = _json.load(open(os.path.join(ROOT, "production", "art", "atlas-01", "data", "atlas.json"), encoding="utf-8"))
+    W, H = 1000, 750                                     # mm, a wall street plan
+    img = sheet(W, H, (198, 216, 222))                   # the sea, edge to edge
+    d = ImageDraw.Draw(img)
+    pts = [p for p in atlas["land"]]
+    xs = [p[0] for p in pts] + [b[1] for b in atlas["blocks"]] + [b[1] + b[3] for b in atlas["blocks"]]
+    ys = [p[1] for p in pts] + [b[2] for b in atlas["blocks"]] + [b[2] + b[4] for b in atlas["blocks"]]
+    mx0, mx1, my0, my1 = min(xs) - 30, max(xs) + 30, min(ys) - 30, max(ys) + 30
+    top, margin = 70, 30                                 # mm: the title band, the grid margin
+    k = min((W - 2 * margin) / (mx1 - mx0), (H - top - margin) / (my1 - my0))
+
+    def P(e, n):                                         # atlas metres (east, north) to sheet pixels
+        return (mm(margin + (e - mx0) * k), mm(top + (my1 - n) * k))
+    d.polygon([P(*p) for p in pts], fill=(238, 232, 214), outline=(90, 110, 120))
+    for b in atlas["blocks"]:
+        _id, e, n, w, h = b[:5]
+        x0, y1 = P(e, n)
+        x1, y0 = P(e + w, n + h)
+        d.rectangle([min(x0, x1), min(y0, y1), max(x0, x1), max(y0, y1)], fill=(222, 206, 176), outline=(150, 130, 100))
+    rail = atlas.get("rail", {}).get("points", [])
+    if rail:
+        d.line([P(*p) for p in rail], fill=(30, 30, 30), width=mm(2.2))
+        d.line([P(*p) for p in rail], fill=(240, 240, 240), width=mm(1.0))
+    widths = {"main": 7.0, "minor": 4.5, "foot": 1.4}
+    fills = {"main": (238, 200, 92), "minor": (252, 250, 244), "foot": (60, 60, 60)}
+    for kind in ("foot", "minor", "main"):
+        for r in atlas["routes"]:
+            if r["kind"] != kind or len(r["points"]) < 2:
+                continue
+            line = [P(*p) for p in r["points"]]
+            if kind == "foot":
+                for i in range(len(line) - 1):
+                    (ax, ay), (bx, by) = line[i], line[i + 1]
+                    seg = max(1.0, math.hypot(bx - ax, by - ay))
+                    n = int(seg / mm(4))
+                    for j in range(0, n, 2):
+                        t0, t1 = j / float(max(n, 1)), min(1.0, (j + 1) / float(max(n, 1)))
+                        d.line([(ax + (bx - ax) * t0, ay + (by - ay) * t0), (ax + (bx - ax) * t1, ay + (by - ay) * t1)],
+                               fill=fills[kind], width=mm(widths[kind]))
+                continue
+            d.line(line, fill=(30, 30, 30), width=mm(widths[kind] + 1.6), joint="curve")
+            d.line(line, fill=fills[kind], width=mm(widths[kind]), joint="curve")
+    f_street = font(FRANKLIN, 7.0)
+    for lab in atlas.get("map_labels", []):
+        x, y = P(*lab["point"])
+        d.text((x, y), lab["text"].upper(), font=f_street, fill=(40, 40, 40), anchor="mm")
+    f_place = font(SERIF, 6.5)
+    for lm in atlas["landmarks"]:
+        x, y = P(*lm["point"])
+        d.rectangle([x - mm(2.2), y - mm(2.2), x + mm(2.2), y + mm(2.2)], fill=(30, 30, 30))
+        d.text((x + mm(4), y), lm["name"], font=f_place, fill=(30, 30, 30), anchor="lm")
+    # the grid, lettered across and numbered down, as a street plan's index has it
+    f_grid = font(FRANKLIN, 9)
+    cols, rows = 8, 6
+    for i in range(cols + 1):
+        x = mm(margin + (W - 2 * margin) * i / cols)
+        d.line([(x, mm(top)), (x, mm(H - margin))], fill=(70, 90, 110), width=mm(0.5))
+        if i < cols:
+            d.text((x + mm((W - 2 * margin) / cols / 2.0), mm(top - 8)), "ABCDEFGH"[i], font=f_grid, fill=(40, 60, 80), anchor="mm")
+    for j in range(rows + 1):
+        y = mm(top + (H - top - margin) * j / rows)
+        d.line([(mm(margin), y), (mm(W - margin), y)], fill=(70, 90, 110), width=mm(0.5))
+        if j < rows:
+            d.text((mm(margin / 2.0), y + mm((H - top - margin) / rows / 2.0)), str(j + 1), font=f_grid, fill=(40, 60, 80), anchor="mm")
+    d.rectangle([0, 0, mm(W), mm(top - 16)], fill=(28, 52, 92))
+    d.text((mm(margin), mm((top - 16) / 2.0)), "THE HOOK & DISTRICT", font=font(FRANKLIN_HEAVY, 26), fill=(246, 240, 224), anchor="lm")
+    d.text((mm(W - margin), mm((top - 16) / 2.0)), "STREET PLAN", font=font(FRANKLIN, 18), fill=(246, 240, 224), anchor="rm")
+    sb = 200.0 * k                                       # a 200 m scale bar, in mm
+    x0, y0 = mm(W - margin - sb - 10), mm(H - margin - 10)
+    d.rectangle([x0, y0, x0 + mm(sb), y0 + mm(3)], fill=(30, 30, 30))
+    d.rectangle([x0 + mm(sb / 2.0), y0, x0 + mm(sb), y0 + mm(3)], fill=(246, 240, 224), outline=(30, 30, 30))
+    d.text((x0, y0 - mm(3)), "0", font=f_place, fill=(30, 30, 30), anchor="ms")
+    d.text((x0 + mm(sb), y0 - mm(3)), "200 m", font=f_place, fill=(30, 30, 30), anchor="ms")
+    age(img, rng, 0.14, stain=False)
+    d = ImageDraw.Draw(img)
+    # THE OFFICE'S OWN MARKS: Mickey's ringed in red biro, and pins where the work goes
+    mk = next((lm for lm in atlas["landmarks"] if lm["id"] == "H1"), None)
+    if mk:
+        x, y = P(*mk["point"])
+        for t in range(2):
+            r = mm(16 + 2 * t)
+            d.ellipse([x - r, y - r * 0.85, x + r, y + r * 0.85], outline=RED, width=mm(1.2))
+    for lm in atlas["landmarks"]:
+        if lm["id"] == "H1" or rng.random() < 0.45:
+            continue
+        x, y = P(*lm["point"])
+        x += mm(rng.uniform(-6, 6))
+        y += mm(rng.uniform(-6, 6))
+        c = rng.choice(((200, 30, 30), (30, 90, 180), (230, 190, 40), (40, 140, 60)))
+        d.ellipse([x - mm(3.2), y - mm(3.2), x + mm(3.2), y + mm(3.2)], fill=c, outline=(30, 30, 30), width=mm(0.4))
+    return img
+
+
 PIECES = (("fares", fares), ("licence", licence), ("accounts", accounts), ("calendar", calendar),
           ("farebook", farebook), ("directory", directory), ("drivers_board", drivers_board),
-          ("bookings", bookings), ("pinboard", pinboard), ("radio_faceplate", radio_faceplate), ("keypad", keypad))
+          ("bookings", bookings), ("pinboard", pinboard), ("radio_faceplate", radio_faceplate), ("keypad", keypad),
+          ("district_map", district_map))
 
 
 def make():

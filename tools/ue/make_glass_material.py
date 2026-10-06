@@ -37,6 +37,15 @@ SPEC_PARAM, SPEC_DEFAULT = "GlassSpecular", 1.0
 #: what the clean pane lets through (the research's recipe: a faint green of float glass)
 TRANSMIT_PARAM, TRANSMIT_DEFAULT = "GlassTransmit", (0.88, 0.92, 0.90)
 
+#: THE STREET CAUGHT IN THE PANE, 6 October (item 1.1's first gate: "almost no street reflection
+#: from the pavement, and where one appears it reads as torn white and grey shapes"; the research's
+#: first fallback, production/research/shop-glass-reflections/NOTE.md section 2: "a static cubemap
+#: captured at each shop front, added as emissive x Fresnel: sharp and nearly free"). The game
+#: captures the street into a cube in front of the window and sets it here; ReflectStrength 0 (the
+#: default) leaves a pane as it was. Thin Translucent scales emissive by Opacity, hence a strength
+#: above 1.
+CUBE_PARAM, CUBE_DEFAULT = "ReflectCube", "/Engine/EngineMaterials/DefaultCubemap.DefaultCubemap"
+REFLECT_PARAM, REFLECT_DEFAULT = "ReflectStrength", 0.0
 #: (property, enum type name, enum value name) - read back after the write.
 FLAGS = [
     ("blend_mode", "BlendMode", "BLEND_TRANSLUCENT"),
@@ -134,7 +143,37 @@ def main():
         except Exception:
             pass
     flags.append("thin_translucent_output=%s" % ("taken" if thin_wired else "NOT-WIRED"))
+    # THE CAUGHT STREET: the cube sampled along the view's reflection, times a Schlick Fresnel
+    # (4% face on, rising toward a mirror at grazing angles) and the strength, into emissive.
+    cube = mel.create_material_expression(mat, unreal.MaterialExpressionTextureSampleParameterCube, -900, 900)
+    cube.set_editor_property("parameter_name", CUBE_PARAM)
+    default_cube = unreal.load_asset(CUBE_DEFAULT)
+    if default_cube is not None:
+        cube.set_editor_property("texture", default_cube)
+    rvec = mel.create_material_expression(mat, unreal.MaterialExpressionReflectionVectorWS, -1150, 900)
+    fres = mel.create_material_expression(mat, unreal.MaterialExpressionFresnel, -900, 1100)
+    try:
+        fres.set_editor_property("exponent", 5.0)
+        fres.set_editor_property("base_reflect_fraction", 0.04)
+    except Exception:
+        pass
+    strength = mel.create_material_expression(mat, unreal.MaterialExpressionScalarParameter, -900, 1250)
+    strength.set_editor_property("parameter_name", REFLECT_PARAM)
+    strength.set_editor_property("default_value", REFLECT_DEFAULT)
+    m1 = mel.create_material_expression(mat, unreal.MaterialExpressionMultiply, -600, 950)
+    m2 = mel.create_material_expression(mat, unreal.MaterialExpressionMultiply, -400, 1000)
+    cube_links = [(rvec, "", cube, "UVs"), (cube, "RGB", m1, "A"), (fres, "", m1, "B"),
+                  (m1, "", m2, "A"), (strength, "", m2, "B")]
+    cube_wired = 0
+    for a_, out_, b_, in_ in cube_links:
+        try:
+            if mel.connect_material_expressions(a_, out_, b_, in_):
+                cube_wired += 1
+        except Exception:
+            pass
+    flags.append("reflect_cube=%s" % ("taken" if cube_wired == len(cube_links) else "WIRED-%d-OF-%d" % (cube_wired, len(cube_links))))
     asked = [(tint, unreal.MaterialProperty.MP_BASE_COLOR),
+             (m2, unreal.MaterialProperty.MP_EMISSIVE_COLOR),
              (opac, unreal.MaterialProperty.MP_OPACITY),
              (rough, unreal.MaterialProperty.MP_ROUGHNESS),
              (spec, unreal.MaterialProperty.MP_SPECULAR)]

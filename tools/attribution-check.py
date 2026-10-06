@@ -54,6 +54,9 @@ WATCHED = {
     # production/audits/phase0-exit/BUNDLE.md, 5 October). The folders are on this PC only, so
     # the check bites here and in the package check below, not in the cloud.
     "ue-probe/Content/Ledger/MetaHumans": ("MetaHuman", "FreeSewing", "VCTK"),
+    # the MetaHuman plugin's walk clips with their travel baked in (tools/ue/make_root_motion_clips.py,
+    # 6 October): made in the import step, never pushed
+    "ue-probe/Content/Ledger/Anim": "MetaHuman",
     "ue-probe/Content/MH_Test.uasset": "MetaHuman",
     "ue-probe/Content/Ledger/Export": "MetaHuman",
     "ue-probe/Content/Ledger/Cloth": ("MakeHuman", "FreeSewing"),

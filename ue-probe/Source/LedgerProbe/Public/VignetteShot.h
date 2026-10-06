@@ -152,6 +152,17 @@ namespace LedgerVignetteShot
 	// many it showed; 0 when the Blender street is not in play.
 	int32 RevealStreetMeshes(const char* Tag);
 
+	// A SHOP ROOM'S LIGHTS ON OR OFF, 6 October (item 1.1's first gate: Mickey's office "locked
+	// since Mickey died" was walked into with its tubes lit): its tubes' light and glow and its
+	// lamps, by the shop's id in shop-interiors.json ("mickeys"), held across changes of light.
+	// Returns how many lights and materials it switched.
+	int32 SetShopRoomLit(const char* Shop, bool bLit);
+
+	// THE STREET MESHES WHOSE NAMES START WITH Prefix shown (with their collision) or hidden
+	// (without), 6 October: Mickey's shut door, street_mickeysdoor_*, taken away when Tom
+	// unlocks it. Returns how many.
+	int32 ShowStreetMeshesNamed(const char* Prefix, bool bShow);
+
 	// THE WINDOW MENDED, 30 September (the AI tester: on day 3 the window
 	// broken on day 0 was still broken, though the glazier had been by
 	// four the next working day). The two above undone: the street glass

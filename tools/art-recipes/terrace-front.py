@@ -441,6 +441,12 @@ MATERIALS = (
     ("plate_rear",  (0.480, 0.380, 0.035), 0.50),
     ("plate_front", (0.560, 0.560, 0.540), 0.50),
     ("lamp_red",    (0.160, 0.012, 0.010), 0.22),
+    # THE SOUTH QUAY KIT'S OWN FOUR (6 October; production/art/south-quay/README.md): granite setts
+    # and quay walls, the basin and the sea, black-painted cast iron, a hemp rope.
+    ("quay_stone",  (0.150, 0.146, 0.138), 0.80),
+    ("harbour_water", (0.014, 0.020, 0.019), 0.22),
+    ("iron_black",  (0.012, 0.012, 0.013), 0.50),
+    ("rope",        (0.200, 0.150, 0.085), 0.90),
     # HEADLAMPS, now the cars face the camera: clear glass over a silvered
     # reflector, which by day reads as a pale grey lozenge.
     ("lamp_clear",  (0.420, 0.420, 0.400), 0.12),
@@ -710,7 +716,11 @@ SURFACE_OF = {
     "lead":         ("metal", 0.35),
     "brass":        ("metal", 0.35),
     "gilt":         (None, 0.0),
-    "steel_dark":   ("metal", 0.35),
+    # PAINTED, SO FLAT, 6 October (item 1.1's first gate: "the window reveal still in the black
+    # pitted scan material" was the lamp column outside Mickey's, 0.4 m from cam_mickeys, under the
+    # pack's machined-plate map, which reads as pitted black rock at arm's length). Lamp columns,
+    # aerials and gully covers of the period are painted iron and steel: smooth, as the paints are.
+    "steel_dark":   (None, 0.0),
     "pillarbox_red": (None, 0.0),
     "standing_water": (None, 0.0),
     "standing_water_flags": (None, 0.0),
@@ -736,6 +746,10 @@ SURFACE_OF = {
     "plate_rear":   (None, 0.0),
     "plate_front":  (None, 0.0),
     "lamp_red":     (None, 0.0),
+    "quay_stone":   ("concrete", 0.4),
+    "harbour_water": (None, 0.0),
+    "iron_black":   (None, 0.0),
+    "rope":         (None, 0.0),
     "lamp_clear":   (None, 0.0),
     "interior_lit": (None, 0.0),
     "tube_lit":     (None, 0.0),
@@ -2188,7 +2202,8 @@ def plan_street(root, spec_rel=SPEC_REL):
     if abs(x0 - BACKDROP_ROAD_END) > 1e-9:
         raise AssertionError("the road moved and the backdrop did not: "
                              "x0=%r BACKDROP_ROAD_END=%r" % (x0, BACKDROP_ROAD_END))
-    _backdrop(out)
+    if not _south_quay(out, root):
+        _backdrop(out)
     # AND THE OTHER END, since the camera turned to face it.
     _north_rise(out)
     _north_approach(out)
@@ -4490,6 +4505,39 @@ def _north_rise(out):
         k += 1
 
 
+# THE SOUTH QUAY KIT, 6 October (item 1.1's first gate: "the built world's edge shows from Mickey's
+# pavement and doorway, the sky's field past the street's south end"). The adopted atlas has Quay
+# Street running on 30 m to a junction, an open quay apron to the harbour's edge at 70 m, the basin,
+# a jetty across it and the Hook's dockside buildings to the east; a scripted kit builds that much
+# (tools/art-recipes/south-quay/, production/art/south-quay/README.md), its nodes named
+# "<street material>__<piece>" in this recipe's frame, and stands in place of _backdrop's thin apron,
+# sheds and crane. Without its .glb the old backdrop is built as before.
+SOUTH_QUAY_REL = os.path.join("production", "assets", "south-quay", "south-quay.glb")
+
+
+def _south_quay_glb(root=None):
+    for base in (root or ROOT, os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")):
+        path = os.path.join(base, SOUTH_QUAY_REL)
+        if os.path.isfile(path):
+            return path
+    return None
+
+
+def _south_quay(out, root=None):
+    """The kit's meshes as street parts; False when there is no kit to stand."""
+    path = _south_quay_glb(root)
+    if path is None:
+        return False
+    # THE KIT IS EXPORTED AS THE STREET IS, y reflected; this recipe's parts are not, so it is
+    # reflected back, and a mirror turns faces inside out, so every triangle is re-wound.
+    for k, (node, mat, verts, tris) in enumerate(_read_glb_nodes(path)):
+        material, piece = node.split("__", 1) if "__" in node else (mat, node)
+        out.append({"id": "southquay_%s_%d" % (piece, k), "material": material, "kind": "mesh",
+                    "verts": [(x, -y, z) for (x, y, z) in verts], "faces": [(a, c, b) for (a, b, c) in tris],
+                    "note": "the-south-quay-kit/" + node})
+    return True
+
+
 def _backdrop(out):
     """The basin end: a quay apron, six sheds gable-on, one crane.
 
@@ -5423,6 +5471,8 @@ def plan_parts(p, bay=0, party_wall=True):
     if p["storeys"] > 1:
         _upper_floor(parts, p, T, wall, bay)
     _roof_and_rainwater(parts, p, T, wall, party_wall, bay)
+    if here == OPEN_DOOR_BAY:
+        parts.extend(_open_door_parts(parts))
     if here in KIT_BAYS and not refit:
         # THE DOWNPIPE GOES INTO THE CORNICE and down inside the hollow pilaster, as a timber
         # shopfront hid it (the kit's reviewer: at the wall face it ran through the pilaster's
@@ -5431,6 +5481,36 @@ def plan_parts(p, bay=0, party_wall=True):
             if q["id"] == "downpipe":
                 q["z0"] = GF
     return parts
+
+
+#: MICKEY'S DOOR, OPEN (6 October; item 1.1's first gate: "in the packaged walk-in the shop door
+#: is missing, an empty opening"): the bay whose door stands open when the office is walked into,
+#: and how far it swings, inward against the stair strip's wall as a shop door is hung.
+OPEN_DOOR_BAY = ("east_parade", 0)
+OPEN_DOOR_DEG = 96.0
+
+
+def _open_door_parts(parts):
+    """The shop door's leaf and its fittings again, turned about the hinge at its stair-side jamb so
+    it stands open into the office, each as a mesh "opendoor_<id>"; the frame stays where it is."""
+    leaf = [q for q in parts if q["id"].startswith("shop_door_") and q.get("kind") not in ("mesh", "slope", "text")
+            and not any(w in q["id"] for w in ("fanlight", "spandrel"))]
+    if not leaf:
+        return []
+    hx = min(q["x0"] for q in leaf)        # the stair-side jamb (the leaf's own stiles swing with it)
+    hy = 0.04
+    a = math.radians(OPEN_DOOR_DEG)
+    c, s_ = math.cos(a), math.sin(a)
+    out = []
+    for q in leaf:
+        corners = [(x, y, z) for z in (q["z0"], q["z1"]) for (x, y) in
+                   ((q["x0"], q["y0"]), (q["x1"], q["y0"]), (q["x1"], q["y1"]), (q["x0"], q["y1"]))]
+        turned = [(hx + (x - hx) * c - (y - hy) * s_, hy + (x - hx) * s_ + (y - hy) * c, z) for (x, y, z) in corners]
+        verts = turned[:4] + turned[4:]
+        out.append({"id": "opendoor_" + q["id"], "material": q["material"], "kind": "mesh", "verts": verts,
+                    "faces": _hull(verts, BOX_FACES), "note": "his-shop-door-standing-open/" + q["id"],
+                    **({"paint": q["paint"], "paint_name": q["paint_name"]} if "paint" in q else {})})
+    return out
 
 
 def frame_cameras(p):
@@ -7660,6 +7740,15 @@ def _mickeys_own(name):
     return name in MICKEYS_OWN or (name.startswith("east_parade_shop_door_") and name.endswith("_bay0"))
 
 
+def _mickeys_leaf(name):
+    """The leaf of his shop door shut, the pieces _open_door_parts swings (6 October, item 1.1's first
+    gate: "Sheila says the office has been locked since Mickey died, and Tom walks in through an open
+    doorway"): their own meshes, mickeysdoor_*, so the game shows the door shut until Tom unlocks it
+    and keeps the fanlight and spandrel above it standing."""
+    return (name.startswith("east_parade_shop_door_") and name.endswith("_bay0")
+            and not any(w in name for w in ("fanlight", "spandrel")))
+
+
 def _glass_key(xs, ys, zs):
     """The mesh a glass object joins, from its centre in the recipe's own
     frame (east is +y here, before the export's reflection)."""
@@ -7970,7 +8059,13 @@ def _export_street(bpy, args, parts):
             key = "glass_" + obj.name[len("furn_cl_"):].rsplit("_glass", 1)[0]
         elif key == "glass" and world:
             key = _glass_key([p.x for p in world], [p.y for p in world], [p.z for p in world])
-        if _mickeys_own(obj.name):
+        if "_opendoor_" in obj.name:
+            # his shop door again, standing open into the office: its own meshes, hidden until
+            # the office is walked into (6 October)
+            key = "mickeysopen_" + mat_key
+        elif _mickeys_leaf(obj.name):
+            key = "mickeysdoor_" + mat_key
+        elif _mickeys_own(obj.name):
             # MICKEY'S OWN MESHES (1 October, item 6): its shop door, the block
             # behind its window and its painted inside, each kept apart under
             # its own material, so the game can take them away and build the
@@ -8023,7 +8118,10 @@ def _export_street(bpy, args, parts):
                 "emit_night": _street_emit(key, lettered, True),
                 # SHOWN ONLY WHEN THE DEED HAPPENS: the smashed window's glass
                 # (_broken_windows), hidden in Unreal until then.
-                "reveal_on": ("crime_" + key.split("_")[1]) if key.startswith("shard_") else None,
+                # AND MICKEY'S SHOP DOOR STANDING OPEN, shown only when the office is open to walk
+                # into (CrimeProbe's -MickeysInside; _open_door_parts).
+                "reveal_on": ("crime_" + key.split("_")[1]) if key.startswith("shard_")
+                             else ("mickeys_inside" if key.startswith("mickeysopen_") else None),
                 "faces": 0,
             }
         for poly in obj.data.polygons:
@@ -8730,8 +8828,21 @@ def selftest():
                                           and min(b["x0"] for b in order[i + 1]) > max(b["x0"] for b in order[i])
                                           for i in range(len(order) - 1)),
                   "%d tiers of retaining wall" % len(order))
-            check("accept/the-far-end-is-not-sky", len(back) >= 20,
-                  "%d piece(s)" % len(back))
+            # THE SOUTH QUAY KIT STANDS IN THE OLD BACKDROP'S PLACE when its .glb is there (6 October):
+            # the old checks are kept for the street without it, and the kit's own are asked instead.
+            kit = [b for b in street if b["id"].startswith("southquay")]
+            check("accept/the-far-end-is-not-sky", len(back) >= 20 or len(kit) >= 20,
+                  "%d piece(s), kit %d" % (len(back), len(kit)))
+            # (its yard walls' pier caps may stand 0.3 m proud of the road end, and the atlas's block
+            # H04 behind the parade, past the street's 13.2 m depth, runs north of it by design)
+            kit_in = [b["id"] for b in kit if max(v[0] for v in b["verts"]) > BACKDROP_ROAD_END + 0.35
+                      and min(abs(v[1]) for v in b["verts"]) < 13.2
+                      and max(v[2] for v in b["verts"]) > 0.2]   # its hard standing fills Mickey's yard lane, x 0 to 3
+            check("accept/the-south-quay-kit-meets-the-street-at-its-road-end-and-stands-south-of-it",
+                  not kit or not kit_in, ",".join(kit_in[:4]))
+            kit_water = [b for b in kit if b["material"] == "harbour_water"]
+            check("accept/the-south-quay-kit's-water-reaches-the-horizon",
+                  not kit or (kit_water and min(min(v[0] for v in b["verts"]) for b in kit_water) <= -4000.0))
             # IT IS SOUTH OF THE STREET AND ENTIRELY BEHIND IT. The blocks
             # occupy x 3.0 to 42.0 and the road stops at -2.0; anything here
             # that reached past -2.0 would be standing IN the built street.
@@ -8781,13 +8892,13 @@ def selftest():
             # flat; the haze needs two depths to be a difference between.
             fronts = sorted(set(round(max(_xs(b)), 1) for b in sheds))
             check("accept/the-sheds-stand-at-two-ranges",
-                  len(fronts) >= 2 and (max(fronts) - min(fronts)) > 10.0,
+                  bool(kit) or (len(fronts) >= 2 and (max(fronts) - min(fronts)) > 10.0),
                   "%r" % (fronts,))
             # AND THE CRANE IS MOSTLY AIR. Attempt one was 1.7 m thick and
             # came back as a solid wedge the size of a building.
             crane = [b for b in back if "crane" in b["id"]]
             check("accept/the-crane-is-two-thin-pieces",
-                  len(crane) == 2 and BACKDROP_CRANE_T <= 0.6,
+                  bool(kit) or (len(crane) == 2 and BACKDROP_CRANE_T <= 0.6),
                   "%d piece(s)/%.2fm" % (len(crane), BACKDROP_CRANE_T))
 
             # NO CAR IN THE STREET, by his ruling of 2 October (CARS_ON_STREET); the
@@ -9139,6 +9250,10 @@ def selftest():
         check("accept/clutter-%s-colours-are-the-model's-own" % piece,
               not missing and worst < 0.006, "missing=%s worst=%.4f" % (missing, worst))
     placed_kinds = sorted({sp[0] for sp in spots})
+    check("accept/mickeys-door-leaf-is-its-own-mesh-and-the-fanlight-stays",
+          _mickeys_leaf("east_parade_shop_door_leaf_bay0") and _mickeys_leaf("east_parade_shop_door_light_bay0")
+          and not _mickeys_leaf("east_parade_shop_door_fanlight_bay0")
+          and not _mickeys_leaf("east_parade_shop_door_leaf_bay1"))
     check("accept/six-kinds-of-clutter-stand-in-the-street/the-pole-off-since-3-October",
           placed_kinds == ["bollard", "dustbin", "grit-bin", "kx100-kiosk", "litter-bin",
                            "pillar-box"], "%s %s" % (placed_kinds, cnotes))

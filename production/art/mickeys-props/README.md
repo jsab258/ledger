@@ -20,7 +20,7 @@ scale, with its origin at the centre of its base on z = 0 and its front toward
 | Jug kettle, corded, unplugged | MoDiP AIBDC 001258, polypropylene jug kettle, c.1990-1999, [modip.ac.uk](https://www.modip.ac.uk/artefact/aibdc-001258); form also from the V&A's [Autoboil](https://collections.vam.ac.uk/item/O1298422/autoboil-electric-jug-kettle-redring-electric-ltd/) | 220 x 130 x 220 mm | 220 x 129.9 x 220 mm (0%, -0.1%, 0%) | 6,884 | 230 KB |
 | Mug (off-white, tea line inside) | Science Museum Group Y1980.1.39, porcelain mug, Stoke-on-Trent, 1978, [collection](https://collection.sciencemuseumgroup.org.uk/objects/co8405537/flying-scotsman-commemotive-mug) | 114 (over handle) x 81 x 92 mm | 113.9 x 81 x 92 mm (-0.1%, 0%, 0%) | 4,824 | 154 KB |
 | Mug, chipped (brown glaze, chip at the rim) | as above | as above | as above | 4,876 | 151 KB |
-| Glass ashtray (smoked, four rests, ash and two filter ends) | Diameter: Ravenhead 4-slot heavy glass ashtray, England, 6 in, [listing](https://poshmark.com/listing/Vintage-Ravenhead-Glass-Co-4Slot-Ashtray-Heavy-Glass-England-6-Diameter-2-pcs-6834f1f9e48e860b88cbd467) (no height given). Height: V&A 44111 ashtray, 1963-1981, 150 x 40 mm, [V&A](https://collections.vam.ac.uk/item/O381809/44111-ashtray-robert-welch/) | 152 x 40 mm | 152 x 152 x 40 mm (0%) | 5,640 | 207 KB |
+| Glass ashtray (amber pressed glass, four rests, ash and five stubbed ends) | Diameter: Ravenhead 4-slot heavy glass ashtray, England, 6 in, [listing](https://poshmark.com/listing/Vintage-Ravenhead-Glass-Co-4Slot-Ashtray-Heavy-Glass-England-6-Diameter-2-pcs-6834f1f9e48e860b88cbd467) (no height given). Height: V&A 44111 ashtray, 1963-1981, 150 x 40 mm, [V&A](https://collections.vam.ac.uk/item/O381809/44111-ashtray-robert-welch/) | 152 x 40 mm | 152 x 152 x 40 mm (0%) | 5,640 | 207 KB |
 | Desk lamp, anglepoise-style | Anglepoise Model 90, Herbert Terry & Sons, from 1973, [vintageinfo.be](https://vintageinfo.be/anglepoise-model-90-task-light/) | Base 180 mm, shade 144 x 210 mm, posed 650 high x 450 across | Base 180 mm, shade 144 x 210 mm (by construction); posed 649 x 448 mm (-0.2%, -0.4%) | 13,044 | 516 KB |
 
 Every model is generic: no maker's name, badge or logo, and no one maker's
@@ -37,7 +37,7 @@ plain PBR materials (base colour, roughness, metallic):
 - Telephone: stone-grey ABS (body, handset, cord), grey keys, black (feet, slots, key well, hook).
 - Kettle: cream polypropylene gone slightly yellow, grey plastic (switch, lid button, shroud, foot), smoked window.
 - Mug: off-white glaze, unglazed biscuit (foot ring), tea line. Mug, chipped: brown glaze, biscuit (foot ring and the chip).
-- Ashtray: smoked glass (transmission 1, IOR 1.52; glTF KHR_materials_transmission), ash, cork filter.
+- Ashtray: amber pressed glass, solid and glossy with a clear coat (6 October: the see-through smoked glass came into the game as a faint ghost and the gate found no ashtray that read as one), ash, cork filters, white paper with charred tips.
 - Lamp: mushroom-grey enamel, chrome (springs, knuckles, turntable, switch), frosted bulb.
 
 Texture sources: none. The contact sheet's labels use Windows' Segoe UI; that
