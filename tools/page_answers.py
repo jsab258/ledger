@@ -142,16 +142,69 @@ def selftest():
     return 0 if ok else 1
 
 
+def nightly(home=HOME, out=sys.stdout):
+    """EVERY SHELL STEP OF THE NIGHTLY READ-BACK IN ONE FIXED COMMAND (6 October). The scheduled
+    task's session asks for permission per command; when it chose its own commands each night, an
+    approval given once never matched the next night's, and the 04:46 run waited for nobody. The
+    task now reads the pages with its ArtifactData tool and runs only `python tools/page_answers.py
+    --nightly`: the index, the check, a commit of this folder alone when an answer changed, and a
+    push to wip only when that is a fast-forward (never a rebase, never main)."""
+    import subprocess
+
+    def git(*args):
+        r = subprocess.run(("git",) + args, cwd=REPO, capture_output=True, text=True, encoding="utf-8", errors="replace")
+        return r.returncode, (r.stdout + r.stderr).strip()
+
+    rel = os.path.relpath(home, REPO).replace("\\", "/")
+    n = index(home)
+    sink = io.StringIO()
+    rc_check = check(home, sink)
+    print(sink.getvalue().strip(), file=out)
+    git("add", "--", rel)
+    _, changed = git("diff", "--cached", "--name-only", "--", rel)
+    changed = [c for c in changed.splitlines() if c.strip()]
+    new = [c for c in changed if c.endswith(".json") and not c.endswith("pages.json")]
+    for c in new:
+        try:
+            with io.open(os.path.join(REPO, c), encoding="utf-8") as f:
+                d = json.load(f)
+            v = d.get("pick") or d.get("verdict") or d.get("choice") or "?"
+            print("nightly new %s: %s, %s%s" % (c[len(rel) + 1:], v, (d.get("at") or "")[:10],
+                  (" (" + str(d["note"])[:120] + ")") if d.get("note") else ""), file=out)
+        except (OSError, ValueError) as e:
+            print("nightly new %s: unreadable (%s)" % (c, e), file=out)
+    committed = pushed = "no"
+    if changed:
+        msg = ("Page answers read back, %s: %d new\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
+               % (dt.date.today().isoformat(), len(new)))
+        rc, txt = git("commit", "-q", "-m", msg, "--", rel)
+        committed = "yes" if rc == 0 else "FAILED: " + txt[-300:]
+        if rc == 0:
+            git("fetch", "-q", "origin", "wip")
+            rc_ff, _ = git("merge-base", "--is-ancestor", "origin/wip", "HEAD")
+            if rc_ff == 0:
+                rc_p, txt = git("push", "-q", "origin", "HEAD:wip")
+                pushed = "yes" if rc_p == 0 else "FAILED: " + txt[-300:]
+            else:
+                pushed = "no (wip moved on; the builder pushes it with the next commit)"
+    print("nightly answers=%d changedFiles=%d new=%d committed=%s pushed=%s check=%s"
+          % (n, len(changed), len(new), committed, pushed, "PASS" if rc_check == 0 else "FAIL"), file=out)
+    return 0 if rc_check == 0 and not committed.startswith("FAILED") and not pushed.startswith("FAILED") else 1
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--index", action="store_true")
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--fresh", type=int)
+    ap.add_argument("--nightly", action="store_true")
     a = ap.parse_args()
     if a.selftest:
         return selftest()
     if a.fresh is not None:
         return fresh(a.fresh)
+    if a.nightly:
+        return nightly()
     if a.index:
         print("INDEX.md: %d answers" % index())
     return check()
