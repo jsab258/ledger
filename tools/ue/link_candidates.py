@@ -22,7 +22,8 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SRC = r"F:\LedgerTools\mh-dress\Content\Ledger\MetaHumans"
 DST = os.path.join(REPO, "ue-probe", "Content", "Ledger", "MetaHumans")
-PATTERN = re.compile(r"^(MH_(Lena|Rocco|Sam)C\d|Speech)$")
+# Tom's candidates since 6 October (item 1.2): MH_TomA1 to MH_TomA5.
+PATTERN = re.compile(r"^(MH_(Lena|Rocco|Sam)C\d|MH_TomA\d|Speech)$")
 
 
 def wanted(names):
@@ -68,7 +69,8 @@ def selftest():
             bad += 1
             print("link_candidates selftest FAIL " + name)
     check("the candidates and the speech are linked, nothing else",
-          wanted(["MH_LenaC1", "MH_RoccoC5", "MH_SamC3", "Speech", "MH_LenaT2", "MH_Test", "Clothing"]) == ["MH_LenaC1", "MH_RoccoC5", "MH_SamC3", "Speech"])
+          wanted(["MH_LenaC1", "MH_RoccoC5", "MH_SamC3", "Speech", "MH_LenaT2", "MH_Test", "Clothing", "MH_TomA3", "MH_TomT2"])
+          == ["MH_LenaC1", "MH_RoccoC5", "MH_SamC3", "MH_TomA3", "Speech"])
     check("the links land in the ignored MetaHuman folder", DST.replace("\\", "/").endswith("ue-probe/Content/Ledger/MetaHumans"))
     print("link_candidates selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0

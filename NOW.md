@@ -18,9 +18,10 @@ GOAL (his /goal, to Sunday 11 Oct 20:00): PLAN.md's phases 0 and 1 done with evi
 - [ ] 1.3 P2 voice: 3-PROOFS.md, P2.
 - [ ] 1.4 P1 packaged: 3-PROOFS.md, P1.
 
-STATE (6 Oct): phase 0 passed its fresh review; 1.1 on, research first.
+STATE (6 Oct): 1.1 room furnished; next its walk-in, the frontage, the views. 1.2: Tom's face candidates, then sitting and turning.
 
 ## Handovers
 
 - Town: TOWN.md briefs, phase 3.
 - Clothing: CLOTHES.md 1, bodies of 30 Sep.
+- Helpers: shopfront kit; Mickey's set 3 props; voice P2.
