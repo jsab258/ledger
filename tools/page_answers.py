@@ -138,11 +138,38 @@ def selftest():
     t(fresh(2, d, dt.date(2026, 10, 5), sink) == 1, "no dated read-back at all fails too")
     os.makedirs(os.path.join(d, "P2", "verdicts"))
     t(check(d, sink) == 1, "answers from a page nobody listed fail the check")
+    # THE NIGHTLY COMMAND'S COMMIT, in a throwaway repository (6 October): a new answer is committed,
+    # with the folder alone and the read-back's message; a night with nothing new commits nothing.
+    import subprocess
+    r = tempfile.mkdtemp()
+    def rg(*a):
+        return subprocess.run(("git",) + a, cwd=r, capture_output=True, text=True).stdout.strip()
+    rg("init", "-q"); rg("config", "user.email", "t@t"); rg("config", "user.name", "t")
+    rg("config", "core.hooksPath", os.path.join(r, "no-hooks"))
+    h = os.path.join(r, "answers")
+    os.makedirs(os.path.join(h, "P1", "verdicts"))
+    with io.open(os.path.join(h, "pages.json"), "w", encoding="utf-8") as f:
+        json.dump({"pages": [{"id": "P1", "title": "One", "updated": "2026-10-05", "storage": "db", "collections": ["verdicts"]}]}, f)
+    index(h, dt.date(2026, 10, 5))
+    rg("add", "-A"); rg("commit", "-q", "-m", "start")
+    sink2 = io.StringIO()
+    t(nightly(h, sink2, r, remote=False) == 0 and "new=0" in sink2.getvalue() and "check=PASS" in sink2.getvalue(),
+      "the nightly command runs with no new answer (only the index's read-back day changes)")
+    with io.open(os.path.join(h, "P1", "verdicts", "map.json"), "w", encoding="utf-8") as f:
+        json.dump({"pick": "adopt", "at": "2026-10-06T07:00:00Z"}, f)
+    sink3 = io.StringIO()
+    rc = nightly(h, sink3, r, remote=False)
+    t(rc == 0 and "new=1" in sink3.getvalue() and "committed=yes" in sink3.getvalue()
+      and rg("log", "-1", "--format=%s").startswith("Page answers read back, ") and rg("log", "-1", "--format=%s").endswith(": 1 new"),
+      "a new answer is committed by the nightly command with the read-back's message")
+    sink4 = io.StringIO()
+    nightly(h, sink4, r, remote=False)
+    t("committed=no" in sink4.getvalue(), "run again with nothing new, it commits nothing")
     print("page_answers selftest: " + ("passed" if ok else "FAILED"))
     return 0 if ok else 1
 
 
-def nightly(home=HOME, out=sys.stdout):
+def nightly(home=HOME, out=sys.stdout, repo=None, remote=True):
     """EVERY SHELL STEP OF THE NIGHTLY READ-BACK IN ONE FIXED COMMAND (6 October). The scheduled
     task's session asks for permission per command; when it chose its own commands each night, an
     approval given once never matched the next night's, and the 04:46 run waited for nobody. The
@@ -152,10 +179,10 @@ def nightly(home=HOME, out=sys.stdout):
     import subprocess
 
     def git(*args):
-        r = subprocess.run(("git",) + args, cwd=REPO, capture_output=True, text=True, encoding="utf-8", errors="replace")
+        r = subprocess.run(("git",) + args, cwd=repo or REPO, capture_output=True, text=True, encoding="utf-8", errors="replace")
         return r.returncode, (r.stdout + r.stderr).strip()
 
-    rel = os.path.relpath(home, REPO).replace("\\", "/")
+    rel = os.path.relpath(home, repo or REPO).replace("\\", "/")
     n = index(home)
     sink = io.StringIO()
     rc_check = check(home, sink)
@@ -166,7 +193,7 @@ def nightly(home=HOME, out=sys.stdout):
     new = [c for c in changed if c.endswith(".json") and not c.endswith("pages.json")]
     for c in new:
         try:
-            with io.open(os.path.join(REPO, c), encoding="utf-8") as f:
+            with io.open(os.path.join(repo or REPO, c), encoding="utf-8") as f:
                 d = json.load(f)
             v = d.get("pick") or d.get("verdict") or d.get("choice") or "?"
             print("nightly new %s: %s, %s%s" % (c[len(rel) + 1:], v, (d.get("at") or "")[:10],
@@ -179,7 +206,9 @@ def nightly(home=HOME, out=sys.stdout):
                % (dt.date.today().isoformat(), len(new)))
         rc, txt = git("commit", "-q", "-m", msg, "--", rel)
         committed = "yes" if rc == 0 else "FAILED: " + txt[-300:]
-        if rc == 0:
+        if rc == 0 and not remote:
+            pushed = "no (no remote in this run)"
+        elif rc == 0:
             git("fetch", "-q", "origin", "wip")
             rc_ff, _ = git("merge-base", "--is-ancestor", "origin/wip", "HEAD")
             if rc_ff == 0:
