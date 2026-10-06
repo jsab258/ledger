@@ -2,11 +2,11 @@
 
 Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/page_answers.py --index; never edited by hand.
 
-Read back: 2026-10-05
+Read back: 2026-10-06
 
 | Page | Updated | Answers | Each answer: pick or verdict, date |
 |---|---|---|---|
-| [Monday's Sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS) | 2026-10-05 | 0 | the September map (its second question, 68 old copies, retired 5 October: settled by the new repository) |
+| [Monday's Sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS) | 2026-10-05 | 1 | atlas-01-map: adopt, 2026-10-05 (Adopt it, but update the map to the built street's length and its bend and climb) |
 | [Proof View](https://claude.ai/artifact/CaQ73RAcLMk1zqvqaNYt3r) | 2026-10-03 | 0 | one frame a step, for his eyes; no answers asked |
 | [Tom's suggested lines](https://claude.ai/artifact/KoqZDK2cUeBvvTKVDRhfxU) | 2026-10-01 | 1 | suggest-written: yes, 2026-10-01 |
 | [The ready-made suit](https://claude.ai/artifact/AnCngEsNuwfnBZtDwwe52p) | 2026-10-02 | 0 | no answer stored; retired 5 October (suits stopped) |
@@ -45,4 +45,4 @@ Read back: 2026-10-05
 | [LEDGER — voice candidates](https://claude.ai/artifact/LWtCuBtgKX2GkWkwnbC5qZ) | 2026-07-31 | 0 | July; its version declares no database |
 | [LEDGER — UI style directions](https://claude.ai/artifact/19KEWmTYDgC8azDcgEPd9p) | 2026-07-26 | 0 | July; its version declares no database |
 
-38 pages, 144 answers.
+38 pages, 145 answers.
