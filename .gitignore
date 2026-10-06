@@ -171,3 +171,8 @@ production/d1-probe/ue-encounter-shout.wav
 # Other games' screenshots never in the repository (Jafar, 3 October): kept at F:/LedgerTools/reference-other-games.
 production/reference/kcd2-*
 game-design/reference/gta5_*
+
+# THE SHOP ROOMS AS REAL GEOMETRY, 6 October: their parts run to 14 MB and git takes nothing over
+# 1 MB since 5 October (tools/push_guard.py); they live on F:/LedgerTools/game-inputs under this
+# path, where tools/ue/import_shop_rooms.py and the build machine read them.
+production/assets/shop-rooms-3d/

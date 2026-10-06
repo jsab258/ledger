@@ -1538,20 +1538,30 @@ def build_and_render(argv):
             desk_top = max((o.matrix_world @ Vector(c)).z for o in [desk] + list(desk.children_recursive)
                            if o.type == "MESH" for c in o.bound_box)
         dz = desk_top - 0.74
+        # THE SET ON A DISPATCHER'S RISER SHELF, 6 October (phase 1, item 1.1; production/research/
+        # shop-window-interiors/MICKEYS-OTHER-DIRECTION-2026-10-04.md, method 1: compose for the window).
+        # From the pavement 1.2 m out at eye 1.6 m the counter's top edge hides everything at the desk
+        # below about 0.86 m: on the desk the set showed its top 9 cm, the third review's "radio desk
+        # out of sight". On a riser at 1.15 m it is seen whole over the counter, as a dispatcher keeps it.
+        rz = 1.15 + dz
+        box("radio_riser_shelf", -1.42, -0.74, ry0 + 0.14, ry0 + 0.54, rz - 0.03, rz, laminate)
+        for xx in (-1.42, -0.77):
+            box("radio_riser_side", xx, xx + 0.03, ry0 + 0.14, ry0 + 0.54, 0.74 + dz, rz - 0.03, laminate)
         # the base station: a dark set with its front panel, knobs and the transmit lamp
         sx0, sx1 = -1.30, -0.86
-        box("radio_set", sx0, sx1, ry0 + 0.20, ry0 + 0.48, 0.74 + dz, 0.87 + dz, black)
-        print_plane("radio_faceplate", "radio_faceplate", (sx0 + sx1) / 2.0, ry0 + 0.198, 0.805 + dz, sx1 - sx0, 0.13, "-y")
+        box("radio_set", sx0, sx1, ry0 + 0.20, ry0 + 0.48, rz, rz + 0.13, black)
+        print_plane("radio_faceplate", "radio_faceplate", (sx0 + sx1) / 2.0, ry0 + 0.198, rz + 0.065, sx1 - sx0, 0.13, "-y")
         for k in range(4):
             if k < 3:   # on the faceplate's three dials: channel, volume, squelch
-                cyl("radio_knob_%d" % k, sx0 + 0.17 + k * 0.08, ry0 + 0.188, 0.812 + dz, 0.018, 0.02, black, axis="y")
-        cyl("radio_lamp_tx", sx1 - 0.05, ry0 + 0.193, 0.835 + dz, 0.005, 0.004, red_led, axis="y")
-        cyl("radio_lamp_on", sx1 - 0.08, ry0 + 0.193, 0.835 + dz, 0.005, 0.004, green_led, axis="y")
-        # the desk microphone on its stand, turned to the empty chair
-        cyl("mic_base", -0.70, ry0 + 0.30, 0.74 + dz, 0.06, 0.022, black)
-        cyl("mic_stem", -0.70, ry0 + 0.30, 0.762 + dz, 0.007, 0.17, chrome)
-        cyl("mic_head", -0.70, ry0 + 0.32, 0.95 + dz, 0.028, 0.07, steel_grey, axis="y")
-        cyl("mic_grille", -0.70, ry0 + 0.285, 0.95 + dz, 0.024, 0.004, black, axis="y")
+                cyl("radio_knob_%d" % k, sx0 + 0.17 + k * 0.08, ry0 + 0.188, rz + 0.072, 0.018, 0.02, black, axis="y")
+        cyl("radio_lamp_tx", sx1 - 0.05, ry0 + 0.193, rz + 0.095, 0.005, 0.004, red_led, axis="y")
+        cyl("radio_lamp_on", sx1 - 0.08, ry0 + 0.193, rz + 0.095, 0.005, 0.004, green_led, axis="y")
+        # the desk microphone on its tall stand, at the dispatcher's mouth when he sits, so its head
+        # shows over the counter too
+        cyl("mic_base", -0.62, ry0 + 0.30, 0.74 + dz, 0.06, 0.022, black)
+        cyl("mic_stem", -0.62, ry0 + 0.30, 0.762 + dz, 0.007, 0.40, chrome)
+        cyl("mic_head", -0.62, ry0 + 0.32, 1.18 + dz, 0.028, 0.07, steel_grey, axis="y")
+        cyl("mic_grille", -0.62, ry0 + 0.285, 1.18 + dz, 0.024, 0.004, black, axis="y")
         # the anglepoise over the set (Poly Haven, CC0), and a clipboard of the night's jobs
         model("desk_lamp_arm_01", -1.62, ry0 + 0.35, desk_top, turn=2.6, size=0.55)
         model("clipboard", -0.45, ry0 + 0.18, desk_top, turn=0.3, size=0.32)
@@ -1571,7 +1581,9 @@ def build_and_render(argv):
             cyl("chair_castor_%d" % k, chx + math.sin(-ang) * 0.29, chy + math.cos(ang) * 0.29, 0.0, 0.022, 0.04, black, verts=10)
         cyl("chair_column", chx, chy, 0.07, 0.025, 0.36, chrome)
         box("chair_seat", chx - 0.24, chx + 0.24, chy - 0.24, chy + 0.22, 0.43, 0.50, fabric)
-        box("chair_back", chx - 0.21, chx + 0.21, chy + 0.17, chy + 0.24, 0.56, 1.02, fabric)
+        # HIGH-BACKED, 6 October: its back to 1.25 m, so the empty chair turned to the glass reads over
+        # the counter (the third review: "the radio desk and chair out of sight")
+        box("chair_back", chx - 0.23, chx + 0.23, chy + 0.17, chy + 0.25, 0.56, 1.25, fabric)
         box("chair_back_bar", chx - 0.02, chx + 0.02, chy + 0.20, chy + 0.25, 0.46, 0.60, black)
         # a jacket left over the chair's back (his)
         # (no jacket: as a box over the chair's back it read as a flat card, the second fresh review)

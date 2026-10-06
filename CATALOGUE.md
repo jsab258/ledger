@@ -61,7 +61,8 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 - interiors-2026-09-23: the four window interiors (no current approval).
 - lighting: the talk light and evening light tests.
 - mickeys-cars: the cars considered for Mickey's (cars are off until convincing).
-- shop-rooms: each shop's room plans and pictures.
+- shop-rooms: each shop's room plans and pictures. Its pawnbroker-goods-sources.md: every model in Rita's window and its licence (tools/art-recipes/verify_display_sources.py).
+- mickeys-props: Mickey's office's hero props, modelled by script in Blender (tools/art-recipes/mickeys-props/; the meshes on F:/LedgerTools/game-inputs), 6 October.
 - ui: the interface's screens.
 
 ## Research (production/research), by subject

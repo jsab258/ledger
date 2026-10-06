@@ -31,17 +31,25 @@ def repo_root():
     return os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-def rooms(root):
-    """(shop, part, path) for every room part on disk."""
-    out = []
-    for d in sorted(glob.glob(os.path.join(root, ROOMS_REL, "*"))):
-        if not os.path.isdir(d):
-            continue
-        for part in PARTS:
-            p = os.path.join(d, part + ".glb")
-            if os.path.isfile(p):
-                out.append((os.path.basename(d), part, p))
-    return out
+# THE ROOMS GIT DOES NOT HOLD, 6 October: a room's fittings run to 14 MB and git takes nothing over
+# 1 MB since 5 October, so the rooms also live on F: under the same paths (tools/ue/stage_game_data.py's
+# GAME_INPUTS), where the build machine on this PC reads them. A part in the checkout is preferred.
+GAME_INPUTS = os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")
+
+
+def rooms(root, inputs=None):
+    """(shop, part, path) for every room part on disk, the checkout's first, then the game inputs'."""
+    inputs = GAME_INPUTS if inputs is None else inputs
+    found = {}
+    for base in (inputs, root):
+        for d in sorted(glob.glob(os.path.join(base, ROOMS_REL, "*"))):
+            if not os.path.isdir(d):
+                continue
+            for part in PARTS:
+                p = os.path.join(d, part + ".glb")
+                if os.path.isfile(p):
+                    found[(os.path.basename(d), part)] = p
+    return [(shop, part, found[(shop, part)]) for shop, part in sorted(found, key=lambda k: (k[0], PARTS.index(k[1])))]
 
 
 def mesh_path(shop, part):

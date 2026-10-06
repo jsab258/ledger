@@ -4242,6 +4242,12 @@ namespace
 			if (Kind == TEXT("nogo")) { return FLinearColor(0.75f, 0.08f, 0.06f); }
 			return FLinearColor(0.32f, 0.32f, 0.32f);   // wall
 		};
+		// THE REAL ROOM, 6 October (phase 1, item 1.1): with "real_room" true the room seen through
+		// the window (tools/art-recipes/shop-room.py, stood there by ApplyShopInteriors) is the room
+		// Tom walks into. The boxes stay as its walls and furniture for the body and the camera's
+		// arm, hidden; no blue discs and no blockout lights over the real room's own.
+		bool bRealRoom = false;
+		Root->TryGetBoolField(TEXT("real_room"), bRealRoom);
 		if (Root->TryGetArrayField(TEXT("boxes"), List))
 		{
 			for (const TSharedPtr<FJsonValue>& V : *List)
@@ -4253,7 +4259,13 @@ namespace
 				const double Z0 = B->GetNumberField(TEXT("z0")), Z1 = B->GetNumberField(TEXT("z1"));
 				AActor* A = SpawnBox(World, TEXT("office_") + B->GetStringField(TEXT("name")),
 					LedgerCrime::P3((X0 + X1) * 0.5, (Y0 + Y1) * 0.5, (Z0 + Z1) * 0.5), X1 - X0, Y1 - Y0, Z1 - Z0, TEXT("plaster"));
-				if (A != nullptr) { PaintFlat(A, Basic, Colour(B->GetStringField(TEXT("kind")))); GOfficeBoxName.Add(A, B->GetStringField(TEXT("name"))); ++Boxes; }
+				if (A != nullptr)
+				{
+					if (bRealRoom) { A->SetActorHiddenInGame(true); }
+					else { PaintFlat(A, Basic, Colour(B->GetStringField(TEXT("kind")))); }
+					GOfficeBoxName.Add(A, B->GetStringField(TEXT("name")));
+					++Boxes;
+				}
 			}
 		}
 		if (Root->TryGetArrayField(TEXT("marks"), List))
@@ -4262,9 +4274,10 @@ namespace
 			{
 				const TSharedPtr<FJsonObject> M = V->AsObject();
 				if (!M.IsValid()) { continue; }
-				AActor* A = LedgerVignetteShot::SpawnProbePiece(World, TEXT("office_mark_") + M->GetStringField(TEXT("name")),
+				AActor* A = bRealRoom ? nullptr : LedgerVignetteShot::SpawnProbePiece(World, TEXT("office_mark_") + M->GetStringField(TEXT("name")),
 					FVector((float)M->GetNumberField(TEXT("x")), 0.115f, (float)M->GetNumberField(TEXT("z"))), FVector(0.5f, 0.01f, 0.5f), TEXT("cyl"), TEXT("plaster"));
-				if (A != nullptr) { A->SetActorEnableCollision(false); PaintFlat(A, Basic, Colour(TEXT("stand"))); ++Marks; }
+				if (A != nullptr) { A->SetActorEnableCollision(false); PaintFlat(A, Basic, Colour(TEXT("stand"))); }
+				++Marks;
 				FString Place;
 				if (M->TryGetStringField(TEXT("place"), Place) && !Place.IsEmpty())
 				{
@@ -4276,7 +4289,7 @@ namespace
 				}
 			}
 		}
-		if (Root->TryGetArrayField(TEXT("lights"), List))
+		if (!bRealRoom && Root->TryGetArrayField(TEXT("lights"), List))
 		{
 			for (const TSharedPtr<FJsonValue>& V : *List)
 			{
@@ -4309,7 +4322,7 @@ namespace
 			if (FParse::Value(FCommandLine::Get(), TEXT("InsideArm="), Arm) && Arm > 0.5f) { GOffice.ArmM = Arm; }
 			GOffice.bOn = true;
 		}
-		RouteCheck(TEXT("office-built"), Hidden > 0 && Boxes > 0, FString::Printf(TEXT("hid=%d boxes=%d marks=%d lights=%d arm_m=%.2f"), Hidden, Boxes, Marks, Lights, GOffice.ArmM));
+		RouteCheck(TEXT("office-built"), Hidden > 0 && Boxes > 0, FString::Printf(TEXT("hid=%d boxes=%d marks=%d lights=%d arm_m=%.2f realRoom=%d"), Hidden, Boxes, Marks, Lights, GOffice.ArmM, bRealRoom ? 1 : 0));
 	}
 
 	// -PageShots=day|night|dress (1 October; Jafar: every picture judged on the page
