@@ -334,6 +334,7 @@ OURS = {
     # from Blender primitives - boxes, cylinders, a bevel, a subdivision, two
     # boolean arches - with flat materials and no texture. No mesh, picture or
     # outline from anywhere else, and no real make's lines (canon).
+    "production/assets/shopfront-kit": "the parade's period shopfront pieces (pilaster, stallriser, window frame, doors), modelled by script in Blender by tools/art-recipes/shopfront-kit/*.py from measurements and dated guides (production/research/shopfronts/FRONTAGE-2026-10-06.md), plain materials, no texture and no fetched input; read by tools/art-recipes/terrace-front.py into the street (6 October)",
     "production/assets/vehicles": "built by tools/art-recipes/car-model.py from Blender primitives, flat materials, no texture and no fetched input",
     # THE STREET'S AMBIENCE, 23 September: made from seeded noise by
     # tools/props/make_street_ambience.py, which can prove the committed wav is
