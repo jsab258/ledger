@@ -168,6 +168,15 @@ public:
 	int32 GatherPhase = -1;          // -1 none, 0 setting off, 1 going, 2 looking, 3 going back
 	FVector GatherSpot = FVector::ZeroVector, GatherLook = FVector::ZeroVector, GatherFrom = FVector::ZeroVector;
 	float GatherLeft = 0.0f, GatherStay = 0.0f;
+	// A MOVE THAT CARRIES THE BODY, 6 October (phase 1, item 1.2; production/research/sit-and-turn/
+	// METHOD-2026-10-06.md, step 2): a clip with root motion played through the slot at the end of the
+	// loop's chain, as a dynamic montage, blended in and out. Its travel is taken out of the pose and
+	// kept for the caller, who takes it each frame (USkeletalMeshComponent::ConsumeRootMotion) and
+	// moves the person by it, so the feet stay where the clip puts them: the cast are actors, not
+	// characters, so nothing else would. False without a clip on this part's skeleton.
+	static const FName MoveSlot;
+	bool PlayMove(UAnimSequenceBase* Clip, float BlendIn = 0.15f, float BlendOut = 0.2f, float Rate = 1.0f);
+	bool IsMoving() const;
 	static constexpr int32 MouthCurveCount = 11;
 	static constexpr const TCHAR* MouthCurves[MouthCurveCount] = {
 		TEXT("CTRL_expressions_jawOpen"),

@@ -129,6 +129,7 @@
 #include "Components/AudioComponent.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "Animation/AnimSequenceBase.h"
+#include "Animation/AnimSequence.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundAttenuation.h"
 #include "Sound/SoundWave.h"
@@ -7406,8 +7407,114 @@ namespace
 		}
 	}
 
+	// THE MOVE PROOF, 6 October (phase 1, item 1.2; step 2 of production/research/sit-and-turn/
+	// METHOD-2026-10-06.md, "the one real unknown"): -MoveProof in live play. Once the cast stand,
+	// Sheila plays one of Epic's own root-motion clips (a walk's start, on the cast's skeleton) through
+	// her body's move slot (ULedgerPersonAnim::PlayMove); each frame the travel the clip took out of the
+	// pose is taken from the mesh and given to her, the simulation's body left where it is meanwhile.
+	// The line names the clip's own travel over its length, what was taken and how far she went, and
+	// passes when all three agree within 5 cm and 3 degrees. -MoveProofClip=<path> tries another clip.
+	struct FMoveProof
+	{
+		int32 Step = 0;
+		double At = 0.0;
+		TWeakObjectPtr<AActor> Body, Visual;
+		TWeakObjectPtr<ULedgerPersonAnim> Anim;
+		FVector From = FVector::ZeroVector, Taken = FVector::ZeroVector, Want = FVector::ZeroVector;
+		float YawFrom = 0.0f, YawTaken = 0.0f, YawWant = 0.0f;
+		int32 Frames = 0, FramesWithMotion = 0;
+		bool bFlagWas = false;
+		FString Clip;
+	};
+	FMoveProof GMove;
+
+	void MoveProofTick(UWorld* World, double Now)
+	{
+		static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("MoveProof"));
+		if (!bOn || World == nullptr || GMove.Step >= 3) { return; }
+		if (GMove.Step == 0)
+		{
+			AActor* Body = CardBody("lena");
+			AActor* Visual = GVisualFor(Body);
+			TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Looks = Body != nullptr ? GLooks.Find(Body) : nullptr;
+			if (Body == nullptr || Visual == nullptr || Visual == Body || Looks == nullptr || Now < 8.0) { return; }
+			GMove.Clip = TEXT("/MetaHumanCharacter/Optional/Animation/UEFNAnimPreset/Locomotion/AS_MH_Neutral_Walk_Start_F_Rfoot.AS_MH_Neutral_Walk_Start_F_Rfoot");
+			FParse::Value(FCommandLine::Get(), TEXT("MoveProofClip="), GMove.Clip);
+			UAnimSequence* Seq = LoadObject<UAnimSequence>(nullptr, *GMove.Clip);
+			ULedgerPersonAnim* Anim = nullptr;
+			for (const TWeakObjectPtr<ULedgerPersonAnim>& L : *Looks)
+			{
+				const USkeletalMeshComponent* M = L.IsValid() ? L->GetSkelMeshComponent() : nullptr;
+				if (Seq != nullptr && M != nullptr && M->GetSkeletalMeshAsset() != nullptr
+				    && M->GetSkeletalMeshAsset()->GetSkeleton() == Seq->GetSkeleton()) { Anim = L.Get(); break; }
+			}
+			if (Seq == nullptr || Anim == nullptr)
+			{
+				UE_LOG(LogTemp, Display, TEXT("ledgerMoveProof=FAIL reason=%s clip=%s"), Seq == nullptr ? TEXT("no-clip") : TEXT("no-part-on-its-skeleton"), *GMove.Clip);
+				GMove.Step = 3;
+				return;
+			}
+			GMove.bFlagWas = Seq->bEnableRootMotion;
+			Seq->bEnableRootMotion = true;
+			USkeletalMeshComponent* Mesh = Anim->GetSkelMeshComponent();
+			const FTransform Local = Seq->ExtractRootMotionFromRange(0.0, Seq->GetPlayLength(), FAnimExtractContext());
+			const FTransform World3 = Mesh->ConvertLocalRootMotionToWorld(Local);
+			GMove.Want = World3.GetTranslation();
+			GMove.YawWant = World3.GetRotation().Rotator().Yaw;
+			// HER BODY HELD STILL MEANWHILE: the visual leaves the simulation's body for the move.
+			GVisuals.Remove(Body);
+			GMove.Body = Body;
+			GMove.Visual = Visual;
+			GMove.Anim = Anim;
+			GMove.From = Visual->GetActorLocation();
+			GMove.YawFrom = Visual->GetActorRotation().Yaw;
+			Mesh->ConsumeRootMotion();   // nothing carried in from before
+			if (!Anim->PlayMove(Seq))
+			{
+				UE_LOG(LogTemp, Display, TEXT("ledgerMoveProof=FAIL reason=play-refused clip=%s"), *GMove.Clip);
+				GVisuals.Add(Body, Visual);
+				GMove.Step = 3;
+				return;
+			}
+			GMove.At = Now;
+			GMove.Step = 1;
+			UE_LOG(LogTemp, Display, TEXT("ledgerMoveProof: Sheila plays %s (%.2f s, root motion flag was %d), the clip's own travel %.1f cm, %.1f degrees"),
+				*Seq->GetName(), Seq->GetPlayLength(), GMove.bFlagWas ? 1 : 0, GMove.Want.Size2D(), GMove.YawWant);
+			return;
+		}
+		ULedgerPersonAnim* Anim = GMove.Anim.Get();
+		AActor* Visual = GMove.Visual.Get();
+		if (Anim == nullptr || Visual == nullptr) { GMove.Step = 3; return; }
+		USkeletalMeshComponent* Mesh = Anim->GetSkelMeshComponent();
+		const FRootMotionMovementParams RM = Mesh->ConsumeRootMotion();
+		++GMove.Frames;
+		if (RM.bHasRootMotion)
+		{
+			const FTransform W = Mesh->ConvertLocalRootMotionToWorld(RM.GetRootMotionTransform());
+			Visual->AddActorWorldOffset(FVector(W.GetTranslation().X, W.GetTranslation().Y, 0.0));
+			Visual->AddActorWorldRotation(FRotator(0.0f, W.GetRotation().Rotator().Yaw, 0.0f));
+			GMove.Taken += W.GetTranslation();
+			GMove.YawTaken += W.GetRotation().Rotator().Yaw;
+			++GMove.FramesWithMotion;
+		}
+		if (Anim->IsMoving() || Now - GMove.At < 0.5) { return; }
+		const FVector Went = Visual->GetActorLocation() - GMove.From;
+		const float YawWent = FRotator::NormalizeAxis(Visual->GetActorRotation().Yaw - GMove.YawFrom);
+		const double OffTaken = (FVector(GMove.Taken.X, GMove.Taken.Y, 0.0) - FVector(GMove.Want.X, GMove.Want.Y, 0.0)).Size();
+		const double OffWent = (FVector(Went.X, Went.Y, 0.0) - FVector(GMove.Want.X, GMove.Want.Y, 0.0)).Size();
+		const bool bPass = GMove.Want.Size2D() > 10.0 && OffTaken <= 5.0 && OffWent <= 5.0
+		                   && FMath::Abs(FRotator::NormalizeAxis(YawWent - GMove.YawWant)) <= 3.0f;
+		UE_LOG(LogTemp, Display, TEXT("ledgerMoveProof=%s clip=%s wantCm=%.1f takenCm=%.1f wentCm=%.1f offTakenCm=%.1f offWentCm=%.1f yawWant=%.1f yawWent=%.1f frames=%d withMotion=%d flagWas=%d seconds=%.2f"),
+			bPass ? TEXT("PASS") : TEXT("FAIL"), *FPaths::GetBaseFilename(GMove.Clip), GMove.Want.Size2D(), GMove.Taken.Size2D(),
+			Went.Size2D(), OffTaken, OffWent, GMove.YawWant, YawWent, GMove.Frames, GMove.FramesWithMotion, GMove.bFlagWas ? 1 : 0, Now - GMove.At);
+		if (AActor* Body = GMove.Body.Get()) { GVisuals.Add(Body, Visual); }
+		GMove.Step = 3;
+		if (FParse::Param(FCommandLine::Get(), TEXT("MoveProofExit"))) { FPlatformMisc::RequestExit(false); }
+	}
+
 	bool HumanTalkTick(UWorld* World, double Now)
 	{
+		MoveProofTick(World, Now);
 		TalkShotTick(World);
 		SceneShotsTick(World);
 		PadShotTick(World);

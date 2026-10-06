@@ -11,7 +11,7 @@
  "real_room": true,
  "real_room_note": "6 October (phase 1, item 1.1): the room seen through the window (tools/art-recipes/shop-room.py, mickeys) is the room walked into; these boxes are its walls and furniture for the body and the camera, hidden; no discs, no blockout lights. The boxes follow the recipe: street x = 6.0 - room x, street z = 5.27 + room y, height = room z + 0.12.",
  "hide": ["east_parade_bay0", "east_parade_interior0", "decal_04_interior_shop_shelves", "east_parade_shopdoor0", "east_parade_shopdoor0_light",
-          "street_mickeys_frame_painted", "street_mickeys_glass", "street_mickeys_interior", "street_mickeys_interior_lit"],
+          "street_mickeys_frame_painted", "street_mickeys_brass", "street_mickeys_glass", "street_mickeys_interior", "street_mickeys_interior_lit"],
  "inside": {"x0": 3.0, "x1": 9.0, "z0": 5.12, "z1": 16.5, "arm_m": 2.0, "lift_m": 0.0, "pivot_m": 0.6},
  "boxes": [
   {"name": "floor", "kind": "floor", "x0": 3.0, "x1": 9.0, "y0": -0.10, "y1": 0.12, "z0": 5.12, "z1": 16.65},

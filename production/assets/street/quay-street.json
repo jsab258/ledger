@@ -91,7 +91,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 6540
+   "faces": 6420
   },
   {
    "mesh": "street_brick_grey",
@@ -2164,7 +2164,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 918
+   "faces": 702
   },
   {
    "mesh": "street_gilt",
@@ -2212,7 +2212,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 18
+   "faces": 12
   },
   {
    "mesh": "street_glass_eg_bay1",
@@ -2686,6 +2686,34 @@
    "faces": 132
   },
   {
+   "mesh": "street_mickeys_brass",
+   "material": "mickeys_brass",
+   "base_material": "brass",
+   "linear_rgb": [
+    0.42,
+    0.3,
+    0.12
+   ],
+   "roughness": 0.35,
+   "surface_map": "metal",
+   "tile_m": 0.35,
+   "house_tint": null,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": [
+    0.1972,
+    0.1862,
+    0.1853
+   ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "reveal_on": null,
+   "faces": 120
+  },
+  {
    "mesh": "street_mickeys_card_production_art_shop_rooms_mickeys_day",
    "material": "mickeys_card_production/art/shop-rooms/mickeys_day",
    "base_material": "interior_lit",
@@ -2736,7 +2764,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 270
+   "faces": 486
   },
   {
    "mesh": "street_mickeys_glass",
@@ -2760,7 +2788,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 6
+   "faces": 12
   },
   {
    "mesh": "street_mickeys_interior",

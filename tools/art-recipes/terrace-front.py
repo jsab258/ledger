@@ -7652,6 +7652,14 @@ MICKEYS_OWN = frozenset([
     "east_parade_carcass_shop_bay0", "interior_card_east_parade_0"])
 
 
+def _mickeys_own(name):
+    """Mickey's own: the list above, and every piece of his shop door by its name (6 October: the
+    door's fittings of 4 October, its raised panels, push bar, letterplate and fanlight, were added
+    after the list and stayed in the street's shared meshes, so with the office open for walking in
+    they floated in the doorway, solid, and turned Tom aside; the AI tester's walk-in found it)."""
+    return name in MICKEYS_OWN or (name.startswith("east_parade_shop_door_") and name.endswith("_bay0"))
+
+
 def _glass_key(xs, ys, zs):
     """The mesh a glass object joins, from its centre in the recipe's own
     frame (east is +y here, before the export's reflection)."""
@@ -7962,7 +7970,7 @@ def _export_street(bpy, args, parts):
             key = "glass_" + obj.name[len("furn_cl_"):].rsplit("_glass", 1)[0]
         elif key == "glass" and world:
             key = _glass_key([p.x for p in world], [p.y for p in world], [p.z for p in world])
-        if obj.name in MICKEYS_OWN:
+        if _mickeys_own(obj.name):
             # MICKEY'S OWN MESHES (1 October, item 6): its shop door, the block
             # behind its window and its painted inside, each kept apart under
             # its own material, so the game can take them away and build the

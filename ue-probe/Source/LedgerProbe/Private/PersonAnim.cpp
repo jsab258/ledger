@@ -2,6 +2,8 @@
 
 #include "Animation/AnimCurveTypes.h"
 #include "Animation/AnimInstanceProxy.h"
+#include "Animation/AnimMontage.h"
+#include "AnimNodes/AnimNode_Slot.h"
 #include "Animation/AnimationAsset.h"
 #include "Animation/AnimNode_SequencePlayer.h"
 #include "Animation/AnimNodeSpaceConversions.h"
@@ -32,6 +34,9 @@ namespace
 		FAnimNode_SequencePlayer_Standalone WalkPlayer;
 		FAnimNode_TwoWayBlend Moving;
 		bool bHasWalk = false;
+		// THE MOVE SLOT (PlayMove, PersonAnim.h): a montage played here takes the whole body over
+		// the loop and the walk, its root motion kept for the caller.
+		FAnimNode_Slot Slot;
 		FAnimNode_ConvertLocalToComponentSpace ToComponent;
 		FAnimNode_ModifyBone Calm[ULedgerPersonAnim::CalmBones];
 		FAnimNode_LookAt Look;
@@ -78,12 +83,14 @@ namespace
 				Moving.A.SetLinkNode(&Player);
 				Moving.B.SetLinkNode(&WalkPlayer);
 				Moving.Alpha = 0.0f;
-				ToComponent.LocalPose.SetLinkNode(&Moving);
+				Slot.Source.SetLinkNode(&Moving);
 			}
 			else
 			{
-				ToComponent.LocalPose.SetLinkNode(&Player);
+				Slot.Source.SetLinkNode(&Player);
 			}
+			Slot.SlotName = ULedgerPersonAnim::MoveSlot;
+			ToComponent.LocalPose.SetLinkNode(&Slot);
 			// THE NECK AND HEAD HELD TOWARD REST against the idle's own turns,
 			// then the look (PersonAnim.h).
 			FAnimNode_Base* Into = &ToComponent;
@@ -133,6 +140,7 @@ namespace
 			OutNodes.Add(&Player);
 			OutNodes.Add(&WalkPlayer);
 			OutNodes.Add(&Moving);
+			OutNodes.Add(&Slot);
 			OutNodes.Add(&ToComponent);
 			for (int32 I = 0; I < ULedgerPersonAnim::CalmBones; ++I) { OutNodes.Add(&Calm[I]); }
 			OutNodes.Add(&Look);
@@ -184,6 +192,26 @@ namespace
 FAnimInstanceProxy* ULedgerPersonAnim::CreateAnimInstanceProxy()
 {
 	return new FLedgerPersonProxy(this);
+}
+
+const FName ULedgerPersonAnim::MoveSlot(TEXT("DefaultSlot"));
+
+bool ULedgerPersonAnim::PlayMove(UAnimSequenceBase* Clip, float BlendIn, float BlendOut, float Rate)
+{
+	const USkeletalMeshComponent* Mesh = GetSkelMeshComponent();
+	if (Clip == nullptr || Mesh == nullptr || Mesh->GetSkeletalMeshAsset() == nullptr
+	    || Clip->GetSkeleton() != Mesh->GetSkeletalMeshAsset()->GetSkeleton())
+	{
+		return false;
+	}
+	// The travel out of the pose and kept: from montages only, which is all this slot plays.
+	SetRootMotionMode(ERootMotionMode::RootMotionFromMontagesOnly);
+	return PlaySlotAnimationAsDynamicMontage(Clip, MoveSlot, BlendIn, BlendOut, Rate, 1) != nullptr;
+}
+
+bool ULedgerPersonAnim::IsMoving() const
+{
+	return IsAnyMontagePlaying();
 }
 
 void ULedgerPersonAnim::Setup(UAnimSequenceBase* InSequence, float InStartSeconds, float InPlayRate, bool bInLook)
