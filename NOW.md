@@ -18,7 +18,7 @@ GOAL (his /goal, to Sunday 11 Oct 20:00): PLAN.md's phases 0 and 1 done with evi
 - [ ] 1.3 P2 voice: 3-PROOFS.md, P2.
 - [ ] 1.4 P1 packaged: 3-PROOFS.md, P1.
 
-STATE (6 Oct): 1.1 failed its first gate (production/audits/phase1-exit); fixes in, south quay kit open; then packaged frames, second gate. 1.2: Tom's faces; root motion. 1.3: awaits his answer. 1.4: tonight.
+STATE (7 Oct, 00:10): 1.1's fixes walked in the packaged game (321b760); second gate on the nightly build. 1.2: walk travel baked; Tom's face route set aside after ten steps, method research in hand. 1.3: awaits his answer. 1.4: measuring now.
 
 ## Handovers
 

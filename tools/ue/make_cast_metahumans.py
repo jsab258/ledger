@@ -745,6 +745,24 @@ TOM_TENTH = {
                   accents=dict(YOUNGER_LIDS, **dict(CALMER_CHEEKS, **SHAVEN_DARKER)), sculpt=TOM_LEANER),
 }
 TOM.update(TOM_TENTH)
+# THE ELEVENTH STEP, a new direction, 7 October (production/research/casting/TOM-FACE-METHOD-2026-10-07.md,
+# experiment N1). After ten steps of the same blend the research found two causes the tweaks could not
+# reach: the grooms' colours are the character's own parameters, baked into the face at build (so the
+# brows stayed at the default 0.16), and Epic's table of skin textures lists 85 as carrying no stubble
+# and medium marks. So L1's face and cut, its hair, brows and lashes coloured on the character before
+# the build, on four skin textures: 85 (the control), 84 (low wrinkles, low marks, low stubble), 31 and
+# 148 (low wrinkles and marks, medium stubble); no chin accent, the skin's own shadow doing it; the
+# preset's sparse lashes replaced by Epic's fine ones and its brows by the dense ones.
+TOM_GROOM_COLOUR = {"Hair": {"Melanin": 0.75, "Redness": 0.08, "Roughness": 0.55},
+                    "Eyebrows": {"Melanin": 0.75, "Redness": 0.08},
+                    "Eyelashes": {"Melanin": 0.8, "Redness": 0.05}}
+TOM_ELEVENTH = {}
+for _k, _tex in (("N1", 85), ("N2", 84), ("N3", 31), ("N4", 148)):
+    _b = _finish(TOM_NINTH["L1"], eyebrows="WI_Eyebrows_M_Dense", eyelashes="WI_Eyelashes_S_Fine",
+                 groom_params=TOM_GROOM_COLOUR, accents=dict(YOUNGER_LIDS, cheeks=CALMER_CHEEKS["cheeks"]))
+    _b["skin"] = dict(_b["skin"], face_texture_index=_tex)
+    TOM_ELEVENTH[_k] = _b
+TOM.update(TOM_ELEVENTH)
 for _t, _b in TOM.items():
     _b["clear"] = list(TOM_CLEAR)
     CANDIDATES[_t] = {"tom": _b}
@@ -998,10 +1016,12 @@ def main_after_idle(seconds=20.0, settle=15.0):
         sub.set_body_constraints(ch, cons)
         sub.commit_body_state(ch)
         notes.append("body-%d" % held)
+        slot_items = {}   # the groom items set below, for their colours before the build
         hair = unreal.load_asset(GROOMS + c["hair"] + "." + c["hair"]) if c.get("hair") else None   # none: the preset keeps its own
         if hair is not None:
             col = ch.internal_collection
             item = col.try_add_item_from_wardrobe_item("Hair", hair)
+            slot_items["Hair"] = item
             # SWAPPED, NOT ADDED (take T3): adding a selection left the base
             # preset's haircut on as well, two grooms on one head.
             try:
@@ -1040,9 +1060,35 @@ def main_after_idle(seconds=20.0, settle=15.0):
                 col = ch.internal_collection
                 item = col.try_add_item_from_wardrobe_item(slot, wi)
                 col.default_instance.set_single_slot_selection(slot, item)
+                slot_items[slot] = item
                 notes.append(key)
             except Exception as e:
                 notes.append("%s-refused-%s" % (key, type(e).__name__))
+        # THE GROOMS' COLOURS ON THE CHARACTER, BEFORE THE BUILD (7 October; production/research/casting/
+        # TOM-FACE-METHOD-2026-10-07.md, section 2): each groom's Melanin, Redness and the rest are the
+        # character's instance parameters, and the build bakes the brows' into the face skin as a
+        # painted layer; recolour_hair's write to the built groom material afterwards left that layer
+        # at the default 0.16, so the brows read pale ash under dark hair in four reviews. Epic's own
+        # example (MetaHumanCharacter/Content/Python/examples/example_add_grooms.py): assemble for
+        # preview, read the item's instance parameters, set_float.
+        if c.get("groom_params"):
+            try:
+                sub.assemble_for_preview(character=ch)
+                set_n = 0
+                for slot, vals in c["groom_params"].items():
+                    item = slot_items.get(slot)
+                    if item is None:
+                        notes.append("groom-params-%s-no-item" % slot)
+                        continue
+                    params = ch.internal_collection.default_instance.get_instance_parameters(
+                        item_path=unreal.MetaHumanPaletteItemPath(item_key=item))
+                    for prm in params:
+                        if prm.name in vals:
+                            prm.set_float(value=float(vals[prm.name]))
+                            set_n += 1
+                notes.append("groom-params-%d" % set_n)
+            except Exception as e:
+                notes.append("groom-params-refused-%s" % type(e).__name__)
         if c.get("no_makeup"):
             sub.commit_makeup_settings(ch, unreal.MetaHumanCharacterMakeupSettings())
             notes.append("no-makeup")
@@ -1409,12 +1455,12 @@ def selftest():
           all(abs(CANDIDATES[t][w]["body"]["Height"] - h) <= 3 for t in FIVE for w, h in (("lena", 160), ("rocco", 186), ("sam", 175))))
     check("Ron always has his moustache", all(CANDIDATES[t]["rocco"].get("mustache") for t in FIVE))
     toms = [t for t in CANDIDATES if "tom" in CANDIDATES[t]]
-    check("Tom's candidates: only Tom in each, twenty-six (five, four, three from B2, two and two from D2, two from H2, two from I2, two from J2, two from K2, two from L1), all different",
-          len(toms) == 26 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
+    check("Tom's candidates: only Tom in each, thirty (five, four, three from B2, two and two from D2, two from H2, two from I2, two from J2, two from K2, two from L1, four on L1's face), all different",
+          len(toms) == 30 and all(list(CANDIDATES[t]) == ["tom"] for t in toms)
           and len({repr(sorted(CANDIDATES[t]["tom"]["face"].items())) + CANDIDATES[t]["tom"]["hair"]
                    + str(CANDIDATES[t]["tom"]["skin"].get("face_texture_index"))
                    + repr(sorted(CANDIDATES[t]["tom"].get("accents", {}))) + repr(sorted(CANDIDATES[t]["tom"].get("hair_colour", {})))
-                   + repr(CANDIDATES[t]["tom"].get("sculpt")) + str(CANDIDATES[t]["tom"].get("eyebrows")) for t in toms}) == 26)
+                   + repr(CANDIDATES[t]["tom"].get("sculpt")) + str(CANDIDATES[t]["tom"].get("eyebrows")) for t in toms}) == 30)
     check("Tom to his sheet: about 175 cm, lean, clean-shaven, short dark hair",
           all(abs(CANDIDATES[t]["tom"]["body"]["Height"] - 175) <= 3 and CANDIDATES[t]["tom"]["body"]["Fat"] <= 0
               and set(CANDIDATES[t]["tom"]["clear"]) == {"Beard", "Mustache"} and not CANDIDATES[t]["tom"].get("beard")
