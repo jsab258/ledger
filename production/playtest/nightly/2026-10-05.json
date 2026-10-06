@@ -1,0 +1,83 @@
+{
+ "date": "2026-10-05",
+ "night": "F:/LedgerTools/nightly\\2026-10-05",
+ "events": 60,
+ "summary": {
+  "walk": {
+   "passed": 15,
+   "stages": 15,
+   "failed": []
+  },
+  "noticed": {
+   "saw_the_deed": [
+    "Darren",
+    "Hana",
+    "Ines",
+    "Marla",
+    "Marta",
+    "Rita",
+    "Ron",
+    "Victor"
+   ],
+   "onlooker_lines": [
+    {
+     "t": 136.1,
+     "e": "onlookers",
+     "hour": 12,
+     "night": false,
+     "light": 1.0,
+     "measured": 15,
+     "_file": "2026-10-05-023039.jsonl"
+    }
+   ]
+  },
+  "knew_later": {
+   "rocco": [
+    "recognition"
+   ]
+  },
+  "greeted": [
+   {
+    "who": "Sheila",
+    "reached": true,
+    "detail": "open=1 words=seconds=0.19 heard=seconds=2.64"
+   },
+   {
+    "who": "Ron",
+    "reached": true,
+    "detail": "open=1 words=seconds=0.03 heard=seconds=2.20"
+   },
+   {
+    "who": "Darren",
+    "reached": true,
+    "detail": "open=1 words=seconds=0.02 heard=seconds=2.30"
+   }
+  ],
+  "replies": {
+   "n": 4,
+   "broke": 0,
+   "checked": 0,
+   "by_how": {
+    "own": 4
+   },
+   "seconds_median": 0.1,
+   "seconds_max": 0.2,
+   "source": "the walk's stand-in words with the real voice: not the real path"
+  },
+  "police_told_by": [
+   "hana",
+   "ines",
+   "marta"
+  ],
+  "thats_all_i_know": {
+   "count": null,
+   "of": 60,
+   "note": "the bench's 60 calls all failed, so nothing was measured (bench.log)"
+  },
+  "illusion": {
+   "lines": [],
+   "note": "no pictures from the walk to look at"
+  }
+ },
+ "paragraph": "**The town and Tom (the AI tester's walk of 2026-10-05, played as a player would, the stand-in's words):** the route 15 of 15 stages. Who saw him break Rita's window: Darren, Hana, Ines, Marla, Marta, Rita, Ron, Victor. Who showed they knew afterwards, and how: rocco (recognition). That is 1 people (+1 on the night before). \"That's all I know\" to a newcomer's sixty first questions (the real engine's words): not measured. Replies heard after a median 0.1 (-0.1 on the night before) s, at most 0.2 s (stand-in words, real voice; not the real path), 0 of 4 broke. What broke the illusion: no pictures from the walk to look at."
+}

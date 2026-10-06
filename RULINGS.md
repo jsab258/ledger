@@ -117,7 +117,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 23 Sep, genre: no jump; crew act on orders; fists and improvised weapons, firearms rare; others drive traffic and the firm's cars; boats and buses scenery; few short skippable cutscenes; jobs, no waypoints; coat, pockets, cab-office storage; buying, selling, fencing, no crafting; English only, text out of code; no multiplayer.
 - 23 Sep: Floor: object interaction; optional presentation (photo mode, credits, after the ending); making the game.
 - D56: The crime layer owes eight verbs, in order (stage 3).
-- D13: Meridian's map is drawn from canon as data, with testable layout rules. 5 Oct: the September atlas (atlas-01) is the town's map, updated to the built street: 48 m, its climb and its bend west at the far end (his Hook sheet).
+- D13: Meridian's map is drawn from canon as data, with testable layout rules. 5 Oct: the September atlas (atlas-01) is the town's map, updated to the built street: 48 m, its climb and its bend east, behind the parade, at the far end (his Hook sheet).
 - D26: Sound is a lane, CC0 only.
 
 ## Disk, git and backup

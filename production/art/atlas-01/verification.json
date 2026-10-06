@@ -1,0 +1,41 @@
+{
+  "kind": "local arithmetic, source checks and SVG parsing; NOT runtime tests",
+  "passed": [
+    "Owner base and the source Mickey's shell retained",
+    "Street length and widths agree with the built street (48 m, 6 m road)",
+    "The chandler's stands where the built street has it",
+    "The approach record matches terrace-front.py",
+    "Quay Street runs north to 48 m, level to 52 m, then climbs and drifts with the built road",
+    "The bend sits at x 72 to 80 and turns the way the built bend turns (APPROACH_BEND_SIDE)",
+    "Spot heights follow approach_z on the atlas datum (height = y + 4.0)",
+    "The street, its climb and its bend stay in the Hook",
+    "Seven canonical districts, unique authored IDs",
+    "Each district has a named information venue",
+    "Mickey's is the cab office (canon D19)",
+    "Map streets clear authored massing by 5m half-corridor",
+    "Quay Street's new line crosses no other route or the rail",
+    "Every flow and daily route still walks the network to Mickey's",
+    "No alcohol, gambling or children in 12 adopted text files",
+    "All 77 audited BOM lines still exist in the BOM",
+    "New IDs are separate and all related BOM IDs resolve",
+    "Every picture the audit names is in the F: archive",
+    "Seven district concept files are in the F: archive",
+    "atlas-overview.svg parses with unique SVG IDs",
+    "district-copper-plan.svg parses with unique SVG IDs",
+    "district-exchange-plan.svg parses with unique SVG IDs",
+    "district-fairview-plan.svg parses with unique SVG IDs",
+    "district-gullwing-plan.svg parses with unique SVG IDs",
+    "district-hook-plan.svg parses with unique SVG IDs",
+    "district-ironside-plan.svg parses with unique SVG IDs",
+    "district-parade-plan.svg parses with unique SVG IDs",
+    "gameplay-overlay.svg parses with unique SVG IDs",
+    "hook-detail.svg parses with unique SVG IDs",
+    "All adopted Python sources compile"
+  ],
+  "count": 30,
+  "skipped": [],
+  "bom_ids_not_audited": [
+    "C15_fascia_cornice_console"
+  ],
+  "bounds": "Map-scale 2D checks. Routes, sightlines and timings are design intentions, not simulation results."
+}

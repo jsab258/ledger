@@ -9,7 +9,7 @@ Phase 0, item 0.4 (PLAN.md; his edit 9). Search this, canon, the research librar
 | Premise, period, names, content rule | canon.md (outranks all) | everything; tools/canon-gate.py, tools/content-gate.py |
 | His rulings; how the work runs | RULINGS.md; CLAUDE.md | tools/doc-caps.py |
 | His page answers | production/approvals/answers/ | DECISIONS lines; tools/page_answers.py |
-| The town's map and districts | canon.md's seven districts; the atlas's map data if he adopts it (art/atlas-01, data/atlas.json) | the built street's place; district art. No automatic check yet (the map is not adopted) |
+| The town's map and districts | production/art/atlas-01/data/atlas.json (adopted 5 October, updated to the built street 6 October; canon.md's seven districts) | the built street's place; district art. Checked: production/art/atlas-01/scripts/check.py (the street's length, climb and bend read from the built street) |
 | Quay Street as built | production/specs/vignette-scene.json | vignette-pieces.json and feet (CoreTests fails on drift), the Unreal street (tools/spec-test-check.sh) |
 | Trades and shop names | RULINGS.md (trades line) | shop-interiors.json, signs, content/brands (tools/brand-verify.py) |
 | The cast | production/casting/CASTING.md and each SHEET.md | talk cards, the Unreal cast, street lines. No automatic check yet (cast-vs-sheets.md, 5 October, by hand) |

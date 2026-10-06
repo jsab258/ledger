@@ -41,3 +41,15 @@ A fresh reviewer (Opus, read-only, given the requirements and this bundle, not t
 14. NOW.md's lines did not name their files: they do.
 15. The 0.7 time entry includes idle time (closed by the next start): stated, not corrected after the fact.
 16. The safety copy on C: stays until he confirms.
+
+## The second review and what followed (6 October, 07:35)
+
+A second fresh reviewer (Opus, read-only) passed requirements 1 and 7, passed 2, 3, 5, 6 and 8 with narrow points, and failed requirement 4 on one point: the nightly answers read-back has never run unattended (its 04:46 run started and waited at its first command for a permission approval; the answers were read by hand at 07:22, commit 47e4ed0ac). Of the first review's 16 findings it found 13 fixes real and 3 partly real. What followed:
+
+- The nightly answers: his one approval in the task's own session (Needs you 1), then one unattended run started from here; requirement 4 closes when that run commits and pushes by itself.
+- The build machine's wip run of 004e5c085 (37366602009) failed in its build step: tools/ue/stage_game_data.py missed production/art/shop-rooms/mickeys_day.png, a run-time picture git no longer holds. Since then the staging reads such inputs from F:/LedgerTools/game-inputs under their repository paths (protected in production/retention.json; the 32 shop-room files copied there).
+- That failed run still replaced the played copy (F:/LedgerTools/played-game, stamped 004e5c0): the copy step ran on always(). It now runs only after a build that passed; the next passing run replaces it.
+- The leftover branch main-candidate-2026-10-05 (merged into main) deleted.
+- The overview rewritten at 08:00; CATALOGUE's map line and NOW.md follow with the atlas's import.
+- The time entry "0.8 review and its fixes" (320 minutes) was mostly production fixes filed as review; recorded in DECISIONS.md.
+

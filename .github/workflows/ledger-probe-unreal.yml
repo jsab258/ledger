@@ -818,7 +818,10 @@ jobs:
 
       - name: Copy the packaged build to a stable path
         id: stable-copy
-        if: always()
+        # ONLY A BUILD THAT PASSED (6 October, phase 0's second review): with always() the run of
+        # 004e5c0, whose build step failed on a missing staged picture, still replaced his played
+        # copy, which the friends' shortcut opens. A failed build leaves the played copy as it was.
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         continue-on-error: true
         timeout-minutes: 10
         shell: pwsh

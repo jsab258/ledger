@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Monday 5 October, 17:10)
+## Overview (Tuesday 6 October, 08:00)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -21,11 +21,11 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-Disk (10-05 04:30): C: 73.1 GB free, F: 24.4 GB free; grew most since 10-04 04:30: F:\LedgerTools\renders\proof-2.6 +0.5 GB, F:\LedgerTools\tmp\builder +0.2 GB, C:\actions-runner-ledger\_work\renders +0.1 GB.
+Disk (10-06 04:30): C: 52.0 GB free, F: 26.2 GB free; grew most since 10-05 04:30: C:\LedgerTools\history-safety-2026-10-05.git\objects +33.4 GB, C:\Users\Jafar\ledger-local\ue-probe +12.7 GB, C:\Users\Jafar\ledger-local\.git\objects +3.3 GB.
 
-**On: phase 0, recovering control (PLAN.md), 6 of 8 items done.** On, 0.7: the history is cleaned into the new repository (30.8 GB to 3.2 GB; main, wip and the map's branch), with guards before every push here and on GitHub, nine workflows retired and the tests green on GitHub. Phase 0's fresh reviewer failed it on one point, now closed by a check: eleven September jobs waiting on GitHub would have run on this PC when the build machine reconnects (one installs a scheduled task, one restarts the old Telegram bot). The reconnect now refuses while any wait. **Next, 0.8:** the reviewer again, once the build machine runs; then phase 1, Mickey's front office.
+**On: phase 0, recovering control (PLAN.md), 7 of 8 items done.** 0.7 closed last night: the build machine's first run in the new repository passed every gate on main. **0.8, the second fresh review (07:35), passes seven requirements and fails one, narrowly:** your page answers have never been read back unattended (the 04:46 run waited for a permission approval nobody was there to give; read by hand at 07:22). It also found the build machine's wip run of last night red, on one of Mickey's room pictures that git no longer holds, and that red build still replaced your played copy: both fixed this morning (the pictures read from F:; a failed build never replaces the played copy). Your map ruling is recorded and the map is being brought in. **Next:** your one approval, then the answers task run once unattended, then phase 1, Mickey's front office.
 
-**The tester's walk (5 October, 02:30, stand-in words).** It walked the whole route, 15 of 15 stages. Eight people saw Tom break Rita's window. Only Ron showed afterwards that he knew. The sixty-question bench measured nothing again, and the walk saved no pictures. Both are open faults in FINDINGS.md.
+**The tester's walk (6 October, 02:30, stand-in words).** 14 of 15 stages; it lost sight of Darren. Seven people saw Tom break Rita's window; only Ron showed afterwards that he knew. The sixty-question bench was not measured and the walk saved no pictures, both still open in FINDINGS.md.
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
 - R3, the street missing the bar: up, 25. The audit finds the visual method unproved: five proof-view steps were set aside, and Mickey's room failed three reviews. Phase 1's binding stop answers it.
@@ -36,17 +36,17 @@ Disk (10-05 04:30): C: 73.1 GB free, F: 24.4 GB free; grew most since 10-04 04:3
 
 ### Needs you
 
-(Every page's answers read back at 17:10: 144, nothing new since this morning.)
+(Every page's answers read back at 07:22: 145; one new, your map: adopt it, updated to the built street. Recorded in RULINGS.md, D13.)
 
-1. **Say "it all works"** and the safety copy of the old history on C: goes (about 28 GB): the new repository, its guards, the tests on GitHub and the build machine's run of main (21:47 to 22:08, every gate passed) all work.
-2. **[Monday's sweep](https://claude.ai/artifact/Pm1pF3ygCGW3nym14UvjYS), one tap.** The September map of the town: make it the town's map (recommended).
+1. **One approval, for the nightly answers (recommended: allow).** In the sidebar, under Scheduled, open "LEDGER: read back page answers (nightly)", approve the waiting command and choose to always allow it. I then run it once unattended to prove it, which closes phase 0.
+2. **Say "it all works"** and the safety copy of the old history on C: goes (about 28 GB).
 3. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
 
 Retired, not asked: the brick-and-facades choice (the plan rebuilds them from the kit in phase 2), the suit purchase and the tailoring questions (stopped by your rulings and the plan).
 
 ### Road to worth playing (PLAN.md)
 
-- **0. Recover control** (0.20W): 6 of 8 done; the history and the exit review open.
+- **0. Recover control** (0.20W): 7 of 8 done; the exit review fails only on the nightly answers' first unattended run.
 - **1. Prove the bottlenecks** (1.00W): Mickey's front office first, then a complete Tom and one speaker, the voice under two seconds, and P1 packaged. If a sample fails within its ceiling, I report the failed capability.
 - **2. Quay Street from proved families** (2.00W): the brick, the facades, the wet street's seam and the hill return here.
 - **3. Thirty minutes that hold** (0.75W): N3 ported, the weather proof, P4's gaps.

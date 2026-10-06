@@ -130,16 +130,34 @@ def wanted():
     return out
 
 
+# THE GAME'S INPUTS THAT GIT DOES NOT HOLD, 6 October (phase 0's second review): since 5 October
+# git takes no picture outside production/previews/ (tools/push_guard.py), so a run-time picture
+# such as a shop room's lives on F:, under the same path as in the repository. The build machine
+# runs on this PC and reads it there; a file in the checkout is always preferred.
+GAME_INPUTS = os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")
+
+
+def source_of(f):
+    """Where a wanted file is read from: the checkout, else the game inputs on F:, else None."""
+    for root in (REPO, GAME_INPUTS):
+        p = os.path.join(root, f)
+        if os.path.isfile(p):
+            return p
+    return None
+
+
 def stage(copy=True):
     files = wanted()
-    have = [f for f in files if os.path.isfile(os.path.join(REPO, f))]
-    missing = [f for f in files if f not in have]
-    size = sum(os.path.getsize(os.path.join(REPO, f)) for f in have)
+    src = {f: source_of(f) for f in files}
+    have = [f for f in files if src[f]]
+    missing = [f for f in files if not src[f]]
+    from_inputs = [f for f in have if not src[f].startswith(REPO)]
+    size = sum(os.path.getsize(src[f]) for f in have)
     if copy:
         for f in have:
             dst = os.path.join(DEST, f)
             os.makedirs(os.path.dirname(dst), exist_ok=True)
-            shutil.copy2(os.path.join(REPO, f), dst)
+            shutil.copy2(src[f], dst)
         # WHICH BUILD THIS IS, for the save's check (the review of 1 October, S5;
         # CrimeProbe.cpp CrimeSha): a packaged copy is given no -LedgerCommit=.
         sha = build_commit()
@@ -149,8 +167,8 @@ def stage(copy=True):
         if sha:
             with open(os.path.join(DEST, "build-commit.txt"), "w", encoding="utf-8", newline="\n") as fh:
                 fh.write(sha + "\n")
-    print("stage_game_data: %s %d files, %.1f MB, missing=%d%s -> ue-probe/Content/LedgerData"
-          % ("copied" if copy else "would copy", len(have), size / 1e6, len(missing),
+    print("stage_game_data: %s %d files, %.1f MB, fromGameInputs=%d, missing=%d%s -> ue-probe/Content/LedgerData"
+          % ("copied" if copy else "would copy", len(have), size / 1e6, len(from_inputs), len(missing),
              (" (" + ", ".join(missing[:6]) + ")") if missing else ""))
     return have, missing
 

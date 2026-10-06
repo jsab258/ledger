@@ -151,6 +151,7 @@ real_table() {
     attribution           "$REPO"                 "$PY tools/attribution-check.py" \
     attribution-selftest  "$REPO"                 "$PY tools/attribution-check.py --selftest" \
     package-sources       "$REPO"                 "$PY tools/attribution-check.py --package" \
+    atlas-check           "$REPO"                 "$PY production/art/atlas-01/scripts/check.py" \
     canon-gate            "$REPO"                 "$PY tools/canon-gate.py --corpus" \
     canon-gate-selftest   "$REPO"                 "$PY tools/canon-gate.py --selftest" \
     content-gate          "$REPO"                 "$PY tools/content-gate.py" \

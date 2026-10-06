@@ -1,0 +1,17 @@
+# Asset interface and render boundary
+
+Adopted 2026-10-06 for its axes and interface record (ADOPTED-2026-10-06.md). The Mickey's blockout recipe and render request it refers to were left out; production/specs/asset-interface.md is the home of the interface today.
+
+The owner base remains 7722b45cb3dcee2fbcee26675fae4fef641cbba7. The interface and art lane subsequently published on studio revision e5b33d1317e20d672e4f9e39c09e4db41d023e0f were read during this continuation. Their previous absence is historical, not a current blocker. [Reconciliation](RECONCILIATION.md) records the exact files read.
+
+The street uses metres, +x north, +y up, +z east. Mickey's authoring frame remains Blender X=u=north, Y=v=east, Z=h=up. Source coordinates are [3+u,0.1+h,5.125+v]. Standard Blender glTF export converts to [u,h,-v]; it must not be pre-rotated a second time. Front-facing custom props must be oriented to the studio's glTF -Z forward and checked individually; building-local coordinates are not a universal prop orientation. No export was run.
+
+The studio static-prop contract places imported bounding-box centres, permits arbitrary source pivots and forbids scaling at placement. It currently consumes exactly one untextured material slot, overwritten by the piece's surface. Available surfaces: asphalt, concrete, kerb, sidewalk, brick_red, brick_grey, plaster, wood, metal, glass, window, interior, card, roof, paint_yellow, multiply. New surface IDs and rich multi-material assets require Claude's integration decision. No material slot proposal here silently expands the live contract.
+
+The reported shipping-set range (56 to 2362 vertices, median about 800) is an observation in the studio interface, not a measured limit for this commission. UV density, texture budget, LOD distances and fidelity budgets remain provisional until a representative engine run. BaseColorMap, NormalMap, RoughnessMap, TilingU, TilingV names are retained in material briefs. A colour image alone is not a finished material.
+
+Recipe parts have one flat proxy material each. Hinges and markers are authoring aids, runtime_binding=NONE. Door behaviour, collision, navigation, room/acoustic portals, identity/perception slots and schedules belong in live placement/gameplay integration, not GLB metadata. The existing solid east_parade_bay0 proxy must be deliberately replaced when an interior is integrated, never overlaid with another shell.
+
+The published Blender workflow expects tools/art-recipes/NAME.py and passes --out. This commission cannot write that directory. The recipe now accepts --out as an alias, but the studio still needs its small named wrapper to call this recipe with --render and a fresh commission render directory. The workflow checks out a moving art branch and banks only PNGs. Claude must reconcile exact source checkout and preservation of the requested blend, input hashes and full log before running it. No workflow or scheduler change is made here; no dispatch occurred.
+
+Only Claude may schedule the existing lane. No local Blender was found on PATH in this continuation; no install or shared-PC render was attempted. Five requested cameras remain unchanged. Their images must be inspected against the plans; successful Python checks and a future Blender exit code are not visual acceptance.

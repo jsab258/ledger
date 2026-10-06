@@ -17,3 +17,4 @@
 {"event": "start", "at": "2026-10-05T13:12:11", "task": "0.7 history cleaning into the new repository", "phase": "0", "kind": "production"}
 {"event": "start", "at": "2026-10-05T16:49:19", "task": "0.8 phase 0 exit: fresh reviewer", "phase": "0", "kind": "review"}
 {"event": "stop", "at": "2026-10-05T22:09:30", "note": "0.8 review and its fixes; 0.7 closed by the build machine's run"}
+{"event": "start", "at": "2026-10-06T07:27:15", "task": "0.8 phase 0 exit: second fresh review; the atlas adopted", "phase": "0", "kind": "review"}
