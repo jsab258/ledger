@@ -201,7 +201,15 @@ def nightly(home=HOME, out=sys.stdout, repo=None, remote=True):
         except (OSError, ValueError) as e:
             print("nightly new %s: unreadable (%s)" % (c, e), file=out)
     committed = pushed = "no"
-    if changed:
+    rc_b, branch = git("rev-parse", "--abbrev-ref", "HEAD")
+    if changed and remote and branch != "wip":
+        # ONLY ON WIP (the recheck of 6 October): the working copy is the builder's, and a night
+        # on another branch must not leave the answers committed there.
+        committed = "no (the working copy is on %s, not wip; the answers are staged for the builder)" % branch
+        changed_commit = False
+    else:
+        changed_commit = bool(changed)
+    if changed_commit:
         msg = ("Page answers read back, %s: %d new\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
                % (dt.date.today().isoformat(), len(new)))
         rc, txt = git("commit", "-q", "-m", msg, "--", rel)

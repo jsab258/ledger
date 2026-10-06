@@ -787,9 +787,10 @@ jobs:
       # that step instead of adding this one risks losing workflow_dispatch
       # entirely, which is the only channel out of CI here.
       #
-      # if: always() AND READ OFF DISK, NOT FROM AN OUTCOME: a build that
-      # packaged but whose later measurement step failed must still reach
-      # Jafar, and this does not ask any later step whether it passed.
+      # THE PLAYED COPY'S COPY RUNS ONLY AFTER THE BUILD STEP PASSED (6 October;
+      # it was always(), and a failed build of 004e5c0 replaced his played copy).
+      # A build that passed but whose later measurement step failed still reaches
+      # Jafar: the copy does not ask any later step whether it passed.
       #
       # LOOK BEFORE YOU DESTROY. The destination is only cleared once a real
       # exe is confirmed on the source side: a run that packaged nothing

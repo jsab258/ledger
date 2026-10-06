@@ -9,7 +9,7 @@ GOAL (his /goal, to Sunday 11 Oct 20:00): PLAN.md's phases 0 and 1 done with evi
 - [x] 0.5 Checks: tools/ci-checks.sh.
 - [x] 0.6 production/friends-build/MAP.md.
 - [x] 0.7 History: production/audits/history-clean-2026-10/README.md.
-- [ ] 0.8 Exit: production/audits/phase0-exit/BUNDLE.md.
+- [x] 0.8 Exit: production/audits/phase0-exit/BUNDLE.md.
 
 ## Phase 1: prove the bottlenecks (1.00W; binding stop)
 
@@ -18,7 +18,7 @@ GOAL (his /goal, to Sunday 11 Oct 20:00): PLAN.md's phases 0 and 1 done with evi
 - [ ] 1.3 P2 voice: 3-PROOFS.md, P2.
 - [ ] 1.4 P1 packaged: 3-PROOFS.md, P1.
 
-STATE (5 Oct): 0.7 done, build machine green on main; 0.8 again after tonight's tasks.
+STATE (6 Oct): phase 0 passed its fresh review; 1.1 on, research first.
 
 ## Handovers
 

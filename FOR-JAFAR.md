@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Tuesday 6 October, 08:00)
+## Overview (Tuesday 6 October, 10:00)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -23,7 +23,7 @@ No decision asked: these are for watching the street change.
 
 Disk (10-06 04:30): C: 52.0 GB free, F: 26.2 GB free; grew most since 10-05 04:30: C:\LedgerTools\history-safety-2026-10-05.git\objects +33.4 GB, C:\Users\Jafar\ledger-local\ue-probe +12.7 GB, C:\Users\Jafar\ledger-local\.git\objects +3.3 GB.
 
-**On: phase 0, recovering control (PLAN.md), 7 of 8 items done.** 0.7 closed last night: the build machine's first run in the new repository passed every gate on main. **0.8, the second fresh review (07:35), passes seven requirements and fails one, narrowly:** your page answers have never been read back unattended (the 04:46 run waited for a permission approval nobody was there to give; read by hand at 07:22). It also found the build machine's wip run of last night red, on one of Mickey's room pictures that git no longer holds, and that red build still replaced your played copy: both fixed this morning (the pictures read from F:; a failed build never replaces the played copy). Your map ruling is recorded and the map is being brought in. **Next:** your one approval, then the answers task run once unattended, then phase 1, Mickey's front office.
+**Phase 0 is done (PLAN.md): its exit passed a fresh review this morning, with narrow points.** The last one closed at 09:33: your page answers read back with nobody present, after your one approval and a fix that gives the task a single fixed command. The build machine's wip build passed after the morning's fixes and is your played copy again; your map is adopted and redrawn to the built street. Narrow points left: tonight's 04:45 read-back is the first with something to commit; main takes the rest of wip once 4 October's art passes its gate; three library licences before any copy leaves your PC. **On now, phase 1, item 1.1:** Mickey's front office from the room kit, researched first (the asset plan's room kit; why the old room failed three reviews). **Next:** 1.2, Tom and a speaker.
 
 **The tester's walk (6 October, 02:30, stand-in words).** 14 of 15 stages; it lost sight of Darren. Seven people saw Tom break Rita's window; only Ron showed afterwards that he knew. The sixty-question bench was not measured and the walk saved no pictures, both still open in FINDINGS.md.
 
@@ -38,15 +38,14 @@ Disk (10-06 04:30): C: 52.0 GB free, F: 26.2 GB free; grew most since 10-05 04:3
 
 (Every page's answers read back at 07:22: 145; one new, your map: adopt it, updated to the built street. Recorded in RULINGS.md, D13.)
 
-1. **One approval, for the nightly answers (recommended: allow).** In the sidebar, under Scheduled, open "LEDGER: read back page answers (nightly)", approve the waiting command and choose to always allow it. I then run it once unattended to prove it, which closes phase 0.
-2. **Say "it all works"** and the safety copy of the old history on C: goes (about 28 GB).
-3. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
+1. **Say "it all works"** and the safety copy of the old history on C: goes (about 28 GB).
+2. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
 
 Retired, not asked: the brick-and-facades choice (the plan rebuilds them from the kit in phase 2), the suit purchase and the tailoring questions (stopped by your rulings and the plan).
 
 ### Road to worth playing (PLAN.md)
 
-- **0. Recover control** (0.20W): 7 of 8 done; the exit review fails only on the nightly answers' first unattended run.
+- **0. Recover control** (0.20W): done 6 October, passed by a fresh review with narrow points.
 - **1. Prove the bottlenecks** (1.00W): Mickey's front office first, then a complete Tom and one speaker, the voice under two seconds, and P1 packaged. If a sample fails within its ceiling, I report the failed capability.
 - **2. Quay Street from proved families** (2.00W): the brick, the facades, the wet street's seam and the hill return here.
 - **3. Thirty minutes that hold** (0.75W): N3 ported, the weather proof, P4's gaps.
