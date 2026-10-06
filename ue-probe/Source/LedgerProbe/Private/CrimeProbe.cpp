@@ -4165,7 +4165,7 @@ namespace
 	                 std::vector<FOfficeMark> Marks;   // a place in someone's day that is now inside, and where they stand there
 	                 // his shop door shut until Tom unlocks it, and the room dark until he is in (the spec's "door")
 	                 bool bDoorShut = false, bDark = false; double DoorX = 0, DoorZ = 0, UnlockM = 1.6;
-	                 std::string ShutPrefix, OpenTag, Shop; };
+	                 std::string ShutPrefix, OpenPrefix, Shop; };
 	FOffice GOffice;
 	// Each office box's name from the spec, for the camera's probe log (an
 	// actor's label exists only in the editor).
@@ -4247,13 +4247,13 @@ namespace
 		{
 			FString Prefix, Tag, Shop;
 			(*Door)->TryGetStringField(TEXT("shut_prefix"), Prefix);
-			(*Door)->TryGetStringField(TEXT("open_tag"), Tag);
+			(*Door)->TryGetStringField(TEXT("open_prefix"), Tag);
 			(*Door)->TryGetStringField(TEXT("shop"), Shop);
 			(*Door)->TryGetNumberField(TEXT("x"), GOffice.DoorX);
 			(*Door)->TryGetNumberField(TEXT("z"), GOffice.DoorZ);
 			(*Door)->TryGetNumberField(TEXT("unlock_m"), GOffice.UnlockM);
 			GOffice.ShutPrefix = TCHAR_TO_UTF8(*Prefix);
-			GOffice.OpenTag = TCHAR_TO_UTF8(*Tag);
+			GOffice.OpenPrefix = TCHAR_TO_UTF8(*Tag);
 			GOffice.Shop = TCHAR_TO_UTF8(*Shop);
 			const int32 Shut = LedgerVignetteShot::ShowStreetMeshesNamed(GOffice.ShutPrefix.c_str(), true);
 			GOffice.bDoorShut = Shut > 0;
@@ -4736,7 +4736,10 @@ namespace
 			{
 				GOffice.bDoorShut = false;
 				const int32 Gone = LedgerVignetteShot::ShowStreetMeshesNamed(GOffice.ShutPrefix.c_str(), false);
-				const int32 Open = LedgerVignetteShot::RevealStreetMeshes(GOffice.OpenTag.c_str());
+				// the open leaf stands against the stair strip's wall, where the wall's own box already
+				// stops a body; solid, its push bar narrowed the doorway below Tom's width (the packaged
+				// walk-in of 6 October stopped on the threshold), so it is shown without collision
+				const int32 Open = LedgerVignetteShot::ShowStreetMeshesNamed(GOffice.OpenPrefix.c_str(), true, false);
 				UE_LOG(LogTemp, Display, TEXT("LedgerOffice: Tom unlocks the shop door at %.2f,%.2f (%d shut mesh(es) gone, %d open shown)"), At.X, At.Z, Gone, Open);
 			}
 		}

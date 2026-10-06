@@ -66,6 +66,11 @@ SCALAR_DEFAULT = 1.0
 #: dome shows the sky just above the land, a haze down to the sea. 1.0 (the default) changes nothing;
 #: the game sets it from the look file's sky_horizon_clamp_deg.
 CLAMP_PARAM, CLAMP_DEFAULT = "HorizonClampV", 1.0
+#: AND BLURRED, the same evening: stretched sharp, the clamp row's tree tops in one direction became
+#: tall grey streaks like tower blocks over the street (the packaged walk-in). Below the row the
+#: photograph is read at a small mip of itself (each texel some 3 by 6 degrees at mip 6), so the band
+#: is the sky's own soft colour by direction, faded in over BLUR_FADE_V of V above the row.
+BLUR_MIP, BLUR_FADE_V = 6.0, 0.03
 
 # THE DEFAULT TEXTURE THE SAMPLER MUST CARRY TO COMPILE AT ALL. Run 23 landed
 # a perfect-looking verdict over a material that never compiled because one
@@ -197,6 +202,25 @@ def main():
     clamp_v.set_editor_property("default_value", CLAMP_DEFAULT)
     vmin = mel.create_material_expression(mat, unreal.MaterialExpressionMin, -900, 100)
     uvout = mel.create_material_expression(mat, unreal.MaterialExpressionAppendVector, -900, 0)
+    # the blurred read of the same photograph (the same parameter, so the game's one write binds both)
+    blur = mel.create_material_expression(mat, unreal.MaterialExpressionTextureSampleParameter2D, -700, 300)
+    blur.set_editor_property("parameter_name", TEXTURE_PARAM)
+    if default_tex is not None:
+        blur.set_editor_property("texture", default_tex)
+    try:
+        blur.set_editor_property("mip_value_mode", unreal.TextureMipValueMode.TMVM_MIP_LEVEL)
+        blur.set_editor_property("const_mip_value", int(BLUR_MIP))
+        flags.append("blur_mip=taken")
+    except Exception as e:
+        flags.append("blur_mip=REFUSED-%s" % type(e).__name__)
+    # the fade: 0 above the row less the fade, 1 at and below the row
+    fade_c = mel.create_material_expression(mat, unreal.MaterialExpressionConstant, -1100, 300)
+    fade_c.set_editor_property("r", BLUR_FADE_V)
+    from_v = mel.create_material_expression(mat, unreal.MaterialExpressionSubtract, -950, 260)
+    rel_v = mel.create_material_expression(mat, unreal.MaterialExpressionSubtract, -800, 380)
+    div_v = mel.create_material_expression(mat, unreal.MaterialExpressionDivide, -650, 420)
+    sat_v = mel.create_material_expression(mat, unreal.MaterialExpressionSaturate, -520, 420)
+    mix = mel.create_material_expression(mat, unreal.MaterialExpressionLinearInterpolate, -520, 120)
 
     # EVERY CONNECTION IS COUNTED AND THE DENOMINATOR IS THE NUMBER ASKED FOR,
     # so a material with two of three wires can never print as made. The pin
@@ -204,7 +228,7 @@ def main():
     # empty output name is the expression's default output, and A/B are the
     # multiply's two inputs.
     asked = [
-        (tex_expr, "", mul, "A"),
+        (mix, "", mul, "A"),
         (lum, "", mul, "B"),
         (uv, "", mask_u, ""),
         (uv, "", mask_v, ""),
@@ -212,7 +236,18 @@ def main():
         (clamp_v, "", vmin, "B"),
         (mask_u, "", uvout, "A"),
         (vmin, "", uvout, "B"),
-        (uvout, "", tex_expr, "UVs"),
+        (uv, "", tex_expr, "UVs"),
+        (uvout, "", blur, "UVs"),
+        (clamp_v, "", from_v, "A"),
+        (fade_c, "", from_v, "B"),
+        (mask_v, "", rel_v, "A"),
+        (from_v, "", rel_v, "B"),
+        (rel_v, "", div_v, "A"),
+        (fade_c, "", div_v, "B"),
+        (div_v, "", sat_v, ""),
+        (tex_expr, "", mix, "A"),
+        (blur, "", mix, "B"),
+        (sat_v, "", mix, "Alpha"),
     ]
     wired = 0
     refused = []

@@ -161,7 +161,7 @@ namespace LedgerVignetteShot
 	// THE STREET MESHES WHOSE NAMES START WITH Prefix shown (with their collision) or hidden
 	// (without), 6 October: Mickey's shut door, street_mickeysdoor_*, taken away when Tom
 	// unlocks it. Returns how many.
-	int32 ShowStreetMeshesNamed(const char* Prefix, bool bShow);
+	int32 ShowStreetMeshesNamed(const char* Prefix, bool bShow, bool bCollide = true);
 
 	// THE WINDOW MENDED, 30 September (the AI tester: on day 3 the window
 	// broken on day 0 was still broken, though the glazier had been by

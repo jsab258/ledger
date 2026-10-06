@@ -9219,7 +9219,7 @@ namespace LedgerVignetteShot
 		return Switched;
 	}
 
-	int32 ShowStreetMeshesNamed(const char* Prefix, bool bShow)
+	int32 ShowStreetMeshesNamed(const char* Prefix, bool bShow, bool bCollide)
 	{
 		int32 Done = 0;
 		for (int32 I = 0; I < GStreetActors.Num() && I < (int32)GStreet.Rows.size(); ++I)
@@ -9227,7 +9227,7 @@ namespace LedgerVignetteShot
 			AStaticMeshActor* A = GStreetActors[I];
 			if (A == nullptr || GStreet.Rows[(size_t)I].Mesh.rfind(Prefix, 0) != 0) { continue; }
 			A->SetActorHiddenInGame(!bShow);
-			A->SetActorEnableCollision(bShow);
+			A->SetActorEnableCollision(bShow && bCollide);
 			++Done;
 		}
 		return Done;

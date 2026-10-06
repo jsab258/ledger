@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Tuesday 6 October, 15:00)
+## Overview (Tuesday 6 October, 21:00)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -23,7 +23,7 @@ No decision asked: these are for watching the street change.
 
 Disk (10-06 04:30): C: 52.0 GB free, F: 26.2 GB free; grew most since 10-05 04:30: C:\LedgerTools\history-safety-2026-10-05.git\objects +33.4 GB, C:\Users\Jafar\ledger-local\ue-probe +12.7 GB, C:\Users\Jafar\ledger-local\.git\objects +3.3 GB.
 
-**Phase 0 is done; phase 1 runs in parallel, your pick.** **1.1, Mickey's office and Rita's frontage:** the office Tom walks into is one real room, furnished with eighteen pieces modelled at their real sizes (desk set, furniture, the last small things), its anglepoise lit at night and worn by rule; Rita's pawnshop has a real period shopfront (a kit researched and modelled today: panelled pilasters, stallriser, window frame, both doors), built into the street. Left for 1.1: the walk into the office filmed, and a fresh reviewer against the Hook sheet. **1.2, Tom:** his face is on its fourth pass (the first two failed blind review: one read Central Asian, one fifty; the third passed with narrow points, hair and skin); sitting needs your two Mixamo clips (Needs you). **1.3, the voice:** failed its proof; your call below. **1.4:** not started.
+**Phase 0 is done; phase 1 runs in parallel, your pick.** **1.1, Mickey's office and Rita's frontage:** failed its first fresh review at 17:00 (the world's edge past the street's south end, window glass with no street in it, the shop door missing in the walk-in, no visible wear, no ashtray or map that read). All answered by 21:00: the windows mirror the street across the road; the street now runs on to a harbour built to your map, the sky's own fields and trees held back; the office door is locked until Tom comes with the key, and the lights go on as he steps in; wear on the counter and Rita's front; a real ashtray and the map. The packaged game is building; then the walk-in and a second fresh review. **1.2, Tom:** his face on its tenth pass (the fifth blind review: "one narrow round away"); walking now carries real travel (Epic's clips had none; it is worked out from the feet). Sitting still needs your two Mixamo clips. **1.3, the voice:** your answer below. **1.4:** the packaged run tonight, after the build.
 
 **The tester's walk (6 October, 02:30, stand-in words).** 14 of 15 stages; it lost sight of Darren. Seven people saw Tom break Rita's window; only Ron showed afterwards that he knew. The sixty-question bench was not measured and the walk saved no pictures, both still open in FINDINGS.md.
 
