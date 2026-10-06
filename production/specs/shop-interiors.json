@@ -36,6 +36,7 @@
    "brightness_day": 0.15,
    "brightness_night": 0.7,
    "room_3d": true,
+   "lamps": [{"x": -1.45, "y": 3.35, "z": 1.05, "lumens": 150, "radius_m": 1.6, "what": "the anglepoise over the radio desk: its warm pool on the dockets, seen from the street at night (6 October, phase 1, item 1.1)"}],
    "room_lumens_day": 180,
    "room_lumens_night": 300,
    "sources": "production/research/cab-office-interior-1990 (both notes: paper and voice radio, wood-effect tops, fabric swivel chairs on five-star bases, plastic trays, coiled cords, pot plants; the number signwritten on the glass); canon.md D19; his ruling of 3 October, 'Mickey's window shows its office'",

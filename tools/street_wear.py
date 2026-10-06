@@ -265,7 +265,54 @@ def build(pieces):
     for d in decals:
         if d.get("pitch_deg") == 90.0:
             d["y_m"] = ground_y(d["z_m"])
+    decals += room_wear()
     return houses, decals, coverage(bays, decals)
+
+
+OFFICE = os.path.join(REPO, "production", "specs", "mickeys-office.json")
+ROOM_FLOOR_M = 0.12     # the real room's floor stands 12 cm up (VignetteShot.cpp SpawnShopRoom)
+
+
+def room_wear(spec_path=OFFICE):
+    """MICKEY'S OFFICE WORN BY USE, 6 October (phase 1, item 1.1; the third review: "no wear"): by
+    rule from the office's own plan, never by hand, as the street's: shoes along the counter's
+    front, heads and shoulders on the wall behind the waiting bench, hands round the back door's
+    handle, and the damp that comes in at the back's top corner. Street metres, as the plan."""
+    if not os.path.isfile(spec_path):
+        return []
+    spec = json.load(open(spec_path, encoding="utf-8"))
+    box = {b["name"]: b for b in spec.get("boxes", [])}
+    out = []
+    # the street's own prepared masks (ours/), never ambientCG's folder previews, which are
+    # sphere renders and stood in the room as round blobs (6 October, the first film)
+    smudge, rub, damp = "ours/wear_damp", "ours/wear_splash", "ours/stain_Leaking005"
+    c = box.get("counter")
+    if c:   # the customers' face of the counter, toward the window (yaw 0 faces -z): a few uneven
+        # patches where people stand to book, not one band (6 October: one decal the counter's
+        # length read as a stripe from the street)
+        x0, x1 = c["x0"], min(c["x1"], 8.65)
+        s = seed_of("mickeys_counter_scuffs")
+        for k in range(3):
+            x = x0 + 0.4 + (x1 - x0 - 0.8) * (k + rnd(s, "x%d" % k)) / 3.0
+            out.append({"kind": "scuff", "picture": rub, "x_m": round(x, 4),
+                        "y_m": round(ROOM_FLOOR_M + 0.14, 4), "z_m": c["z0"],
+                        "w_m": round(0.8 + 0.4 * rnd(s, "w%d" % k), 4), "h_m": 0.28,
+                        "yaw_deg": 0.0, "pitch_deg": 0.0, "strength": round(0.35 + 0.15 * rnd(s, "st%d" % k), 3),
+                        "on": "mickeys_room"})
+    b = box.get("bench")
+    if b:   # the room's side wall behind the bench (x 8.65, facing -x: yaw 270)
+        out.append({"kind": "grime", "picture": smudge, "x_m": 8.65, "y_m": round(ROOM_FLOOR_M + 0.95, 4),
+                    "z_m": round((b["z0"] + b["z1"]) / 2, 4), "w_m": round(b["z1"] - b["z0"], 4), "h_m": 0.5,
+                    "yaw_deg": 270.0, "pitch_deg": 0.0, "strength": 0.45, "on": "mickeys_room"})
+    d = box.get("the back door, shut")
+    if d:   # round the handle, on the door's left as the office sees it from the street
+        out.append({"kind": "grime", "picture": smudge, "x_m": round(d["x0"] + 0.15, 4), "y_m": round(ROOM_FLOOR_M + 1.0, 4),
+                    "z_m": d["z0"], "w_m": 0.35, "h_m": 0.45, "yaw_deg": 0.0, "pitch_deg": 0.0,
+                    "strength": 0.7, "on": "mickeys_room"})
+        out.append({"kind": "damp", "picture": damp, "x_m": 8.3, "y_m": round(ROOM_FLOOR_M + 2.62, 4),
+                    "z_m": d["z0"], "w_m": 0.9, "h_m": 0.6, "yaw_deg": 0.0, "pitch_deg": 0.0,
+                    "strength": 0.6, "on": "mickeys_room"})
+    return out
 
 
 def recipe_puddles():

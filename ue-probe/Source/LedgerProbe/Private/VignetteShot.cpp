@@ -7208,6 +7208,35 @@ namespace
 					if (Made3 >= 6)
 					{
 						GStreetActors[I]->SetActorHiddenInGame(true);
+						// THE ROOM'S OWN LAMPS, 6 October (phase 1, item 1.1: Mickey's anglepoise, its warm
+						// pool on the radio desk seen from the street at night): the spec's "lamps" in the
+						// room's metres (x across from its centre, y back from its front, z up from its floor),
+						// placed as the room is (turned 180 degrees on the east side).
+						const Value* Lamps3 = Sh.Find("lamps");
+						for (size_t K = 0; Lamps3 != nullptr && Lamps3->Type == T_ARR && K < Lamps3->Arr.size(); ++K)
+						{
+							const Value& Lp = Lamps3->Arr[K];
+							if (Lp.Type != T_OBJ) { continue; }
+							const double Lx = LedgerStreet::NumOr(Lp, "x", 0.0), Ly = LedgerStreet::NumOr(Lp, "y", 1.0), Lz = LedgerStreet::NumOr(Lp, "z", 1.0);
+							const float Cx3 = (float)((B3.Min.X + B3.Max.X) * 0.5);
+							const FVector LAt(Cx3 - (float)(Side3 * Lx * 100.0), (float)((Front3 + Ly) * 100.0 * Side3), (float)(12.0 + Lz * 100.0));
+							FActorSpawnParameters LP;
+							LP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+							if (APointLight* PL = World3->SpawnActor<APointLight>(APointLight::StaticClass(), LAt, FRotator::ZeroRotator, LP))
+							{
+								MakeMovable(PL);
+								UPointLightComponent* LC = PL->PointLightComponent;
+								LC->SetMobility(EComponentMobility::Movable);
+								LC->SetIntensityUnits(ELightUnits::Lumens);
+								LC->SetIntensity((float)LedgerStreet::NumOr(Lp, "lumens", 120.0));
+								LC->SetAttenuationRadius((float)(LedgerStreet::NumOr(Lp, "radius_m", 1.8) * 100.0));
+								LC->SetLightColor(FLinearColor(1.0f, 0.78f, 0.52f));
+								LC->SetSourceRadius(3.0f);
+								Parts3.Add(PL);
+								UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's lamp %d at %.0f,%.0f,%.0f cm, %.0f lm"),
+									UTF8_TO_TCHAR(Id.c_str()), (int32)K, LAt.X, LAt.Y, LAt.Z, (float)LedgerStreet::NumOr(Lp, "lumens", 120.0));
+							}
+						}
 						// AND WHAT THE STREET HAD STANDING IN THE ROOM'S SPACE (4 October: Mickey's
 						// solid block behind the window, street_mickeys_interior, stood 1.3 m behind the
 						// glass inside the new room and the room read black), named by the spec.
