@@ -160,3 +160,66 @@ all edge, so faces get a support ring just past the bevel and long parts a cut e
 - Run: `blender.exe -b --factory-startup -P tools/art-recipes/mickeys-props/<script>.py [-- --no-render]`. The counter takes `--length --depth --height --flap-side left|right|none --flap-width --name`; the blind `--width --drop --tilt --name`; the bench `--length`. `--out-dir <folder>` writes everything to a test folder instead.
 - glb: `F:\LedgerTools\game-inputs\production\assets\mickeys-props\<prop>.glb`; blend and a measured report: `F:\LedgerTools\mickeys-props\blend\<prop>.blend` and `<prop>.report.json`.
 - Previews (800 px, Eevee) `F:\LedgerTools\mickeys-props\previews\<prop>.png`, shading checks (Workbench) in its `checks` folder; contact sheet `production/previews/mickeys-props-furniture-2026-10-06.jpg`.
+
+## Set 3
+
+6 October 2026. The last box-built pieces of Mickey's office (the mickeys block of
+`tools/art-recipes/shop-room.py`), six props from six scripts by the set 2 helper, with the same
+kit block word for word (bevel with Harden Normals, Weighted Normal, support loops, Smart UV,
+the Cycles bakes, export, preview). Metres at real scale, front toward -Y in Blender (the glb is
+Y-up). Floor and desk pieces have their origin at the base's centre on z = 0; the loudspeaker,
+extinguisher and coat rail at the back face's bottom centre (the wall plane, y = 0, at the
+piece's lowest point).
+
+| Prop | Real reference (read 6 October 2026) | Reference size (m) | Model size (measured, m) | Triangles | glb |
+|---|---|---|---|---|---|
+| Extension loudspeaker: veneered cabinet, cloth front, steel U-bracket, tipped down 14 degrees | Pye Telecom: radio-telephone loudspeaker units "constructed in veneered wood cabinets, containing a loudspeaker", [product history](https://www.pyetelecomhistory.org/prodhist/control/control.html) (no sizes); no dimensioned 1985-1990 British extension speaker reached, so the room's present box | cabinet 0.30 x 0.15 x 0.22 (box 0.30 x 0.18 x 0.22) | cabinet 0.30 x 0.15 x 0.22 by construction; hung, 0.350 wide over the bracket knobs, 0.209 off the wall, 0.248 high | 2,968 | 136 KB |
+| Stacking letter tray, smoked brown, foolscap, scoop front, stacking lugs; papers and a yellow carbon copy | Foolscap trays "255w x 347d x 55h mm", [Initiative LT9465](https://www.initiativeofficeproducts.co.uk/product/lt9465-initiative-plastic-letter-tray-black-255w-x-347d-x-55h-mm/); 255 x 367 x 65 mm, [5 Star FS295829](https://www.officestationery.co.uk/product/5-star-office-letter-tray-high-impact-polystyrene-foolscap-black-295829/); smoky brown 1970s-80s trays, [Etsy](https://www.etsy.com/market/vintage_stacking_letter_trays) (search summary) | 0.255 x 0.347 to 0.367 x 0.055 to 0.065 | 0.255 (+0.0%) x 0.350 (in range) x 0.065 (in range; walls 0.061, lugs to 0.065) | 3,348 | 134 KB |
+| Docket spike: cast-iron base, steel spike, nine dockets askew and curling | Antique cast-iron receipt spike 6 5/8 x 3 in, [Poshmark](https://poshmark.com/listing/Antique-Receipt-Paper-Spike-Store-Hotel-Desk-Accessory-Cast-Iron-Paper-Holder-65ec8505d6ab5d97edf32836) (search summary); spike "6 in long", [Laurel Leaf Farm](https://laurelleaffarm.com/products/old-green-metal-desk-stand-paper-spindle-vintage-paper-spike-Laurel-Leaf-Farm-item-no-js011360.htm) | 0.168 high, base 0.076 | 0.168 high (+0.0%), base 0.076 (0%); 0.166 x 0.157 over the dockets | 4,248 | 161 KB |
+| Waste-paper bin: plain grey enamelled steel, tapered, rolled rim, back seam, a dent, three screwed-up papers | 1980s metal office bin 24 x 33 cm, [Etsy](https://www.etsy.com/listing/1903833603/vintage-1980s-blue-metal-waste-bin) (search summary; the page refused the reader); round grey bins 20 x 33 cm (same search) | 0.24 across, 0.33 high | 0.239 (-0.3%) x 0.330 (-0.0%) | 3,884 | 149 KB |
+| Water extinguisher, about 9 litres, all-red body (BS 5423), chrome head, handle, lever, pin, gauge, black hose and nozzle in a clip, wall bracket | Chubb WS9 9 litre stored-pressure water, 1979, [Science Museum Group](https://collection.sciencemuseumgroup.org.uk/objects/co45398/chubb-model-ws9-fire-extinguisher) (no sizes); 9 litre water "Height: 600mm, Diameter: 184mm", [Firechief CTX](https://www.fireandsafetycentre.co.uk/products/9-litre-water-fire-extinguisher) | 0.600 x 0.184 | 0.6039 high (+0.7%), body 0.184 (0%); 0.207 wide with the hose, 0.223 off the wall | 5,370 | 236 KB |
+| Coat rail: varnished hardwood with rounded front edges, four chrome hat-and-coat hooks, three screws | Four-hook rail "7 cm high and 2 cm thick", made 41 to 68 cm long, [Etsy](https://www.etsy.com/listing/198542320/classic-coat-rack-with-traditional-hooks) (search summary); hook of 86 mm projection, [Door Handle Company](https://www.doorhandlecompany.co.uk/heritage-brass-hat-coat-hook-86mm-projection-polished-chrome-4504/) (search summary) | rail 0.58 x 0.07 x 0.02; hooks 0.086 | rail 0.58 (0%) x 0.070 (0%) x 0.020 (0%); hooks 0.086 from the rail (0.1062 overall from the wall); 0.095 high to the hat hooks | 2,888 | 143 KB |
+
+The references give sizes and the period's arrangement only. No maker's name, badge or label on
+any piece; nothing for drink, betting or children. Where only a search summary was reached it
+says so; the loudspeaker's size is the room's, not a period record's (below).
+
+### Materials and textures
+
+No textures and no downloaded files. Plain PBR materials, two or three per prop:
+
+- Loudspeaker: teak veneer, brown speaker cloth, black steel (bracket, knobs, screws).
+- Letter tray: smoked brown plastic (opaque in the glb; any see-through is the master material's choice), white paper, a yellow carbon copy.
+- Docket spike: black cast iron, steel, buff docket paper.
+- Waste bin: grey enamel, paper.
+- Extinguisher: red, chrome, black (hose, nozzle, clip, gauge face, bracket).
+- Coat rail: varnished oak, chrome (hooks, screws).
+
+Wear as in set 2: masks in the .blend's "ao" and "edges", the glb's COLOR_0 red = ao, green =
+edges; the preview's base-colour wear comes from them and is stripped from the glb.
+
+### Checks
+
+- Each script rebuilt its prop headless from a clean start (`--factory-startup`, an empty scene), glb, .blend and report: 5 to 29 s each with `--no-render` (the loudspeaker 114 s, most of it the overlap test over its large UV islands).
+- Sizes measured from the built meshes, within 3% of every reference size in the table (the loudspeaker against the room's box, by construction).
+- Triangles 2,888 to 5,370, inside the 2k to 15k guide; materials two or three.
+- One UV map per prop, all UVs inside 0 to 1, every UV triangle rasterised at 2048 x 2048: 0 overlapping pixels on all six.
+- Colour attributes "ao", "edges" and "ao_edges" on every .blend object; each glb's COLOR_0 read back (red mean 0.51 to 0.70, green 0.28 to 0.72, blue 0, alpha 1).
+- glb sizes 135 KB to 236 KB, no images inside; each re-imported into Blender: one mesh, one UV map, one colour set, sizes as built, base on z = 0.
+- Previews and Workbench shading checks looked at. Two faults found and fixed before these: the dockets' and papers' curls showed facets (now smooth-shaded, their two faces kept apart), and the tray's papers showed square grime patches from coarse vertex AO near the walls (finer sheets, a 3 cm AO distance). No faults left that I could see.
+- All twelve set 2 and set 3 scripts carry the identical kit block.
+
+### Notes and what is not done
+
+- **Loudspeaker size:** the Pye Telecom history describes radio-telephone loudspeaker units in veneered wooden cabinets but gives no sizes, and no dimensioned 1985-1990 British extension loudspeaker was reached (radiomuseum and the vintage-radio forum gave pre-war or 1950s sets only). The cabinet keeps the room's box (0.30 x 0.22, 0.15 deep plus its bracket). A period record would settle it.
+- **Thin things thickened:** papers 0.5 to 0.6 mm per sheet with 0.6 mm between them, as for the blind's slats: Cycles' edge bake cannot tell faces nearer than 0.35 mm apart.
+- **Waste bin:** sized to the 1980s bin (0.24 x 0.33), smaller than the room's present box (0.28 x 0.36). Plain, not perforated: holes would cost thousands of triangles or a cut-out material.
+- **Extinguisher:** no instruction label (a decal for later, generic wording, no maker); the hose and nozzle are one piece with the body. The squeeze lever and pin are fixed.
+- **Not modelled:** the loudspeaker's lead (the dresser routes it to the radio), print on the dockets and papers (decals or print textures later).
+- **Previews:** rendered only when neither UnrealEditor nor Runner.Worker was running (checked every minute).
+
+### Paths
+
+- Scripts: `tools/art-recipes/mickeys-props/` (`loudspeaker.py`, `letter_tray.py`, `docket_spike.py`, `waste_bin.py`, `extinguisher.py`, `coat_rail.py`). Run as set 2 (`-- --no-render` skips the preview; `--out-dir` writes to a test folder).
+- glb: `F:\LedgerTools\game-inputs\production\assets\mickeys-props\<prop>.glb`; blend and report: `F:\LedgerTools\mickeys-props\blend\<prop>.blend` and `<prop>.report.json`.
+- Previews `F:\LedgerTools\mickeys-props\previews\<prop>.png`, shading checks in its `checks` folder; contact sheet `production/previews/mickeys-props-set3-2026-10-06.jpg`.

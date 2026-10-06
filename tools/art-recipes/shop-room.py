@@ -1346,8 +1346,6 @@ def build_and_render(argv):
                 pr.inputs["Roughness"].default_value = 0.65
             o.data.materials.append(m)
             return o
-        steel_grey = mat("steel_grey", (0.30, 0.31, 0.32), rough=0.45, metal=0.6)
-        chrome = mat("chrome", (0.75, 0.75, 0.76), rough=0.2, metal=1.0)
         black = mat("plastic_black", (0.025, 0.025, 0.025), rough=0.4)
         cream_plastic = mat("phone_cream", (0.60, 0.55, 0.43), rough=0.35)
         paper = mat("paper", (0.80, 0.77, 0.66), rough=0.85)
@@ -1469,21 +1467,16 @@ def build_and_render(argv):
         prop("ashtray", -1.75, 2.42, 0.985, turn=0.4)
         model("cigarette_pack", -1.58, 2.50, 0.985, turn=0.7, size=0.09)
         # the dockets on their spike, a mug of tea gone cold, a pad
-        cyl("spike_base", -0.62, 2.48, 0.985, 0.03, 0.01, steel_grey)
-        cyl("spike", -0.62, 2.48, 0.995, 0.0025, 0.13, steel_grey)
-        for k in range(9):
-            box("docket_%d" % k, -0.62 - 0.045, -0.62 + 0.045, 2.48 - 0.06, 2.48 + 0.06, 1.0 + k * 0.004, 1.0025 + k * 0.004,
-                paper if k % 3 else paper_yellow).rotation_euler[2] = rnd.uniform(-0.3, 0.3)
+        prop("docket_spike", -0.62, 2.48, 0.985, turn=0.3)
         prop("mug-chipped", -0.95, 2.62, 0.985, turn=2.2)
         # (the second mug stands on the radio desk, below) and the stationery and pads of an office that works
         model("office_notepads", 0.10, 2.50, 0.985, turn=0.2, size=0.22)
         model("stationery_supplies", -1.48, 3.13 + 0.12, 0.74 + 0.02, turn=0.5, size=0.25)
         box("pad", 0.15, 0.36, 2.36, 2.62, 0.985, 0.995, paper_yellow)
-        # a plastic letter tray at the counter's right end
-        box("tray", 0.42, 0.74, 2.33, 2.66, 0.985, 1.05, mat("tray_brown_plastic", (0.12, 0.07, 0.04), rough=0.35))
-        box("tray_papers", 0.44, 0.72, 2.35, 2.64, 0.99, 1.035, paper)
+        # a plastic letter tray at the counter's right end (set 3, modelled: foolscap, smoked brown)
+        prop("letter_tray", 0.58, 2.49, 0.985, turn=0.1)
         # a metal bin on the customers' side
-        cyl("bin", 0.35, 1.95, 0.0, 0.14, 0.36, steel_grey, verts=20)
+        prop("waste_bin", 0.35, 1.95, 0.0)
 
         # THE RADIO DESK on the staff side (the plan: z 8.4 to 8.95), grey steel under a wood-effect top
         ry0, ry1 = 3.13, 3.68
@@ -1519,8 +1512,8 @@ def build_and_render(argv):
         prop("mug", -0.40, ry0 + 0.42, desk_top, turn=1.2)
         prop("ashtray", -0.62, ry0 + 0.10, desk_top, turn=1.0)
         # the loudspeaker on its bracket above the desk, so the room hears every job
-        box("speaker", -1.25, -0.95, D - 0.20, D - 0.02, 2.02, 2.24, mat("speaker_wood", (0.16, 0.10, 0.06), rough=0.5))
-        box("speaker_cloth", -1.22, -0.98, D - 0.205, D - 0.20, 2.04, 2.22, mat("speaker_cloth", (0.06, 0.05, 0.04), rough=1.0))
+        # (set 3, modelled: a wooden cabinet with its cloth front, tipped down on its bracket)
+        prop("loudspeaker", -1.10, D, 2.0)
         # MICKEY'S CHAIR, empty: the modelled fabric swivel chair on its five-star base, at its real
         # 0.80 m (the 1.25 m box back is gone: the set on its riser is what reads over the counter),
         # pushed in under the desk's back edge and left turned a little, as he got up from it
@@ -1552,9 +1545,7 @@ def build_and_render(argv):
         # the lighter by the counter's ashtray
         model("vintage_lighter", -1.62, 2.36, 0.985, turn=0.4, size=0.06)
         # COAT HOOKS by the back door, a rail of four (no coats: as boxes they read as boards)
-        box("coat_rail", 1.02, 1.62, D - 0.025, D - 0.005, 1.66, 1.70, laminate)
-        for k_ in range(4):
-            cyl("coat_hook_%d" % k_, 1.10 + k_ * 0.15, D - 0.045, 1.66, 0.006, 0.05, chrome, axis="y", verts=8)
+        prop("coat_rail", 1.32, D, 1.64)
         # THE OFFICE CLOCK over the back door (Poly Haven's wall clock, CC0)
         model("wall_clock", 0.42, D - 0.03, 2.25, turn=0.0, size=0.30)
         # THE FANLIGHT'S LETTERS, reverse-gilded on the glass over the street door (the dressing
@@ -1589,8 +1580,8 @@ def build_and_render(argv):
         # (the four-drawer cabinet, its drawers to the window, is a modelled prop, placed above)
         # the jug kettle on the cabinet's top, where the office makes its tea (the plan's kettle, 6 October)
         prop("jug-kettle", -W / 2 + 0.25, 3.64, 1.32, turn=0.5)
-        cyl("extinguisher", -W / 2 + 0.10, 3.05, 0.35, 0.075, 0.55, mat("extinguisher_red", (0.55, 0.03, 0.02), rough=0.3))
-        cyl("extinguisher_head", -W / 2 + 0.10, 3.05, 0.90, 0.03, 0.08, black)
+        # the water extinguisher on its wall bracket (set 3, modelled: all red, BS 5423, before 1997's colour bands)
+        prop("extinguisher", -W / 2, 3.05, 0.45, turn=math.pi / 2)
 
     if EXPORT:
         export_room(bpy, sc, os.path.abspath(argv[argv.index("--export-room") + 1]), shop_id)
