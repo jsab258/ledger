@@ -39,7 +39,7 @@ Disk (10-06 04:30): C: 52.0 GB free, F: 26.2 GB free; grew most since 10-05 04:3
 (Every page's answers read back at 07:22: 145; one new, your map: adopt it, updated to the built street. Recorded in RULINGS.md, D13.)
 
 1. **The voice: pay, or keep the delay?** (money; P2 failed, 6 October.) Moving the free voice off the graphics card was measured two ways: it spares the game, but Sheila still takes about 3.4 s to start speaking, against 1 s needed. **(A) Keep the free voice and its delay, covered by short prepared openings: recommended.** (B) A paid streaming voice, about $0.28 an hour of play; the voices would be recast and need a licence entry. (C) One more free try with a shorter voice sample, which changes how the voices sound a little.
-2. **Two Mixamo clips** (only you can sign in): at mixamo.com, "Stand To Sit" and "Sit To Stand", each Download as FBX Binary, Without Skin, 30 fps, no keyframe reduction, left in Downloads. Tom sits and stands up with them (item 1.2).
+2. **Two Mixamo clips** (only you can sign in): at mixamo.com, "Stand To Sit" and "Sit To Stand", each Download as FBX Binary, Without Skin, 30 fps, no keyframe reduction ("In Place", if shown, left unticked), left in Downloads. Tom sits and stands up with them (item 1.2).
 3. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
 
 Retired, not asked: the brick-and-facades choice (the plan rebuilds them from the kit in phase 2), the suit purchase and the tailoring questions (stopped by your rulings and the plan).
