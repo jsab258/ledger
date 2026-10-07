@@ -39,8 +39,9 @@ Search summaries [SS] are leads only.
 | Enoki, full paper (after the check) | Encoder 69.1% F1 at 0.13 s; the slow LLM version 76.4%; Claimify 11.95 s a sentence; Table 10 is "relative comparison across methods, rather than ... exact hardware-level accounting" |
 | WorldAuditBench abstract (after the check) | Agents explore UE5 and Three.js worlds "under a fixed exploration budget"; 213 anomaly tasks; 6.6–42.3% against people's 83.4% |
 | Kimodo README (after the check) | About 17 GB of video memory on the card, less with the text encoder on the processor; "most extensively tested on GeForce RTX 3090, GeForce RTX 4090, and NVIDIA A100 GPUs" |
-| LEDGER's own files, first version | production/research/voice-off-card/CLOUD-VOICE-2026-10-07.md (the real-path timings); production/research/invented-claims/CHECK-FLOOR-PROPOSAL-2026-10-07.md (his words of 7 October); production/audits/review-2026-10-01/FAULTS.md, D1 (eleven one-line changes, at twelve lines); ue-probe/Source/LedgerProbe/Private/CrimeProbe.cpp (the notice flag; the "ready pose" comment); tools/catalogue.py |
+| LEDGER's own files, first version | production/research/voice-off-card/CLOUD-VOICE-2026-10-07.md (the real-path timings); production/research/invented-claims/CHECK-FLOOR-PROPOSAL-2026-10-07.md (his words of 7 October); production/audits/review-2026-10-01/FAULTS.md, D1 (one-line breaks at twelve lines); ue-probe/Source/LedgerProbe/Private/CrimeProbe.cpp (the notice flag; the "ready pose" comment); tools/catalogue.py |
 | LEDGER's own files, read after the independent check | RULINGS.md in full; DECISIONS.md, 30 September (lines 156, 163, 165, 168–170: planning first measured; the voice inside the game), 3 October (250–257: licences, NoAI, the nightly report, the key) and 7 October (330–340: the voice and the check study); production/research/terms-2026-10-03/NOTE.md (Unreal 6(e), Adobe 17(C), Anthropic's commercial terms B and D.4); ledger-v2/research/license-allowlist.md (entries 2 and 3); production/research/markerless-mocap/DELIVERY.md; production/research/sit-and-turn/METHOD-2026-10-06.md; production/research/natural-idles/NOTE.md; production/research/asset-plan/1-BUILDINGS-AND-INTERIORS.md (PCG); production/research/blender-mcp; tools/nightly_walk.py and production/playtest/nightly/2026-10-04 to 07 (the record; no pictures); ledger/PerceptionGolden/GossipFuzz.cs (12,000 worlds, 37 planted faults); ledger/Assets/Scripts/Core/ClaimCheck.cs (the player's words not sent, 25 September); canon.md ("No real people, voices, logos, lyrics, car models"); a search for "lyric" in the talk program, the content rules and the casting folder (none) |
+| LEDGER's own files, read after the second check | production/audits/sweep-2026-10-05/port-vs-core.md (651,000 scripts; 30 planted breaks; D1 re-tested); tools/ai-tester/play.py (step-NNN.jpg; the window's own pixels); ledger/Assets/Scripts/Core/RealWorld.cs ("a band or singer") and ConversationEngine.cs (the writer is claude-sonnet-5); ledger/ClaimBench/Program.cs (the small-talk set); production/playtest/talk-runs.jsonl (7 October: $0.1324 for five replies, Sonnet 23,339 tokens in, 264 out); production/research/ui-design/BRANDING.md (the name); production/research/prompt-caching/NOTE-2026-09-29.md (Sonnet 5.5's 512-token minimum; Haiku 5.5 promised); production/research/aaa-street/1-PIPELINE.md (Epic's MCP left open); production/research/pre-production/6-RISKS.md (W3); tools/frame-drift.py |
 
 ## The helper notes (notes/)
 
@@ -92,4 +93,26 @@ What it found, and what changed:
 | TRELLIS 2, Meshy and Tripo ruled out against the allowlist without saying so | Said so; the entry is his to re-read |
 
 Not changed: the reviewer's point that writing a training script with Claude Code would itself be "using the Services" is noted beside the check (4-FIVE-PROOFS.md, "Only if a ruling changes"); it is not settled here.
+
+## The second independent check (7 October)
+
+A second fresh reviewer checked the revised proofs against RULINGS.md, DECISIONS.md, the allowlist, the terms note and the code. It found no proof in outright breach of a ruling, nothing recommending copying another game, and no conclusion from an unreached source. It confirmed the 7 October timings, the $0.026 a reply (talk-runs.jsonl, $0.1324 for five), the GossipFuzz figures, and that nobody in the repository has tried Unreal's editor MCP server.
+
+What it found, and what changed:
+
+| Finding | Change |
+|---|---|
+| Proof 2's premise was false. The walk does save pictures, as step-NNN.jpg (tools/ai-tester/play.py); the nightly report's eyes look only for .png (tools/nightly_walk.py). The tester already takes the window's own pixels, with a fallback for black frames. | Proof 2 dropped; the mismatch reported as a fault found on the way (4-FIVE-PROOFS.md) |
+| Proof 3 ignored the port audit of 5 October (production/audits/sweep-2026-10-05/port-vs-core.md): 651,000 random scripts through both languages, 30 planted breaks, 11 uncaught, and eight of D1's twelve lines still passing. Its own re-run on 7 October: nine of twelve pass. Also, one reviewer wrote both versions of GossipFuzz, and "eleven" did not match D1's twelve lines. | Proof 3 dropped; the open lines reported as a fault found on the way, citing the audit |
+| "Choosing the facts first gave no gain" mislabelled 30 September. Choosing them by code is today's method (36 to a mean of 21.7); it was the model planning first that gained nothing. | Corrected in all three files |
+| Proof 4 searched only for "lyric". The talk's real-names rule already forbids naming "a band or singer" (RealWorld.cs), and ClaimBench's small-talk set asks about music. Only quotations are new. | Proof 4 narrowed to quotations |
+| The catalogue check fails on this folder | Not fixable from this branch (CATALOGUE.md is outside the folder); named in the pull request |
+| "What needs him" asked for choices on faults in work he has already ruled on, recommended "nothing now" on a matter his ruling parks, and put nothing as multiple choice | Rewritten as three multiple-choice questions, each with a recommendation |
+| Proof 1's frame counts disagreed (ten frames, but 75 pictures per model). It measures no faults in people, though people are what he judges most. tools/frame-drift.py was not cited. | 20 planted and 5 clean frames; the people limit stated; frame-drift cited |
+| Proof 5 did one task twice, so the second run learns from the first. The allowlist's decision record for a new tool was missing. | Two comparable tasks, order swapped; the decision record first |
+| The licence reading was settled quietly. The allowlist says "test"; his 3 October ruling and the terms note say training clauses. "As the licences require" overstated "[I, the cautious reading]". "Help improve Claude stays off, as he ruled": he said he would switch it off; the setting was never read. | Put to him as question 1; the wording corrected |
+| "The voice sets the first sound" contradicts his own words of 7 October without telling him | Said plainly, with why: his words hold for a cloud voice |
+| 2-FIT dropped "reportedly" on the Munich case | Restored |
+
+In their place: proof 2, Sonnet 5.5 writing on the real path (the live talk still writes with Sonnet 5, read here), and proof 3, the claim check on its successor before Haiku 4.5 retires (the risk register's W3, which has no proof). A trade-mark search was considered and dropped: production/research/ui-design/BRANDING.md (1 October) already covers it.
 
