@@ -36,7 +36,9 @@ def model_drawings(meshes, T, geo):
     vsec = section(joinery, 0, geo["W"] / 4, (1, 2), FRAMES["vsec"](T))
     zmid = (geo["z_lo"][0] + geo["z_lo"][1]) / 2
     hsec = section(joinery, 2, zmid, (0, 1), FRAMES["hsec"](T))
-    return {"elev": elev, "vsec": vsec, "hsec": hsec}
+    xs = geo["x_ps"] - T["sash"]["stile_width_mm"] / 2000.0
+    vst = section(joinery, 0, xs, (1, 2), FRAMES["vsec_stile"](T))
+    return {"elev": elev, "vsec": vsec, "hsec": hsec, "vsec_stile": vst}
 
 
 def dims(meshes, T, geo):
@@ -52,15 +54,18 @@ def dims(meshes, T, geo):
     lo, hi = bb("upper_stile_L")
     out["sash_thickness_mm"] = ((hi[1] - lo[1]) * 1000, s["thickness_mm"])
     out["stile_width_mm"] = ((hi[0] - lo[0]) * 1000, s["stile_width_mm"])
-    out["horn_length_mm"] = ((geo["z_up"][0] - lo[2]) * 1000, s["horn_length_mm"])
+    hl, hh = bb("upper_horn_L")
+    out["horn_length_mm"] = ((hh[2] - hl[2]) * 1000, s["horn_length_mm"])
     lo, hi = bb("lower_bottom_rail")
     out["bottom_rail_mm"] = ((hi[2] - lo[2]) * 1000, s["bottom_rail_mm"])
     lo, hi = bb("upper_top_rail")
     out["top_rail_mm"] = ((hi[2] - lo[2]) * 1000, s["top_rail_mm"])
     lo, hi = bb("lower_top_rail")
     out["meeting_rail_depth_mm"] = ((hi[2] - lo[2]) * 1000, s["meeting_rail_depth_mm"])
-    out["opening_width_mm"] = ((allv[:, 0].max() - allv[:, 0].min()) * 1000 - 2 * (T["frame"]["outer_lining_width_mm"] - T["frame"]["outer_lining_margin_mm"]), T["opening"]["width_mm"])
-    out["opening_height_mm"] = ((allv[:, 2].max() - 0.0) * 1000, T["opening"]["height_mm"])
+    xl = meshes["outer_lining_L"][0][:, 0].max()
+    xr = meshes["outer_lining_R"][0][:, 0].min()
+    out["opening_width_mm"] = ((xr - xl) * 1000 + 2 * T["frame"]["outer_lining_margin_mm"], T["opening"]["width_mm"])
+    out["opening_height_mm"] = (meshes["head_outer_lining"][0][:, 2].max() * 1000, T["opening"]["height_mm"])
     out["reveal_mm"] = ((meshes["outer_lining_L"][0][:, 1].min()) * 1000, T["frame"]["reveal_mm"])
     if "upper_bar" in meshes:
         lo, hi = bb("upper_bar")
@@ -77,13 +82,13 @@ def main(npz):
     ver = os.path.basename(npz).replace("window_", "").replace(".npz", "")
     res = {"model": npz.replace("\\", "/"), "drawings": {}, "dims": dims(meshes, T, geo)}
     ok = True
-    for k in ("elev", "vsec", "hsec"):
-        m = compare(M[k], target[k], 1.0)
+    for k in ("elev", "vsec", "hsec", "vsec_stile"):
+        m = compare(M[k], target[k], FRAMES[k](T).mm_per_px)
         m["ok"] = bool(m["iou"] >= PASS["iou"] and m["p95_mm"] is not None and m["p95_mm"] <= PASS["p95_mm"]
                    and m["max_mm"] <= PASS["max_mm"])
         ok &= m["ok"]
         res["drawings"][k] = m
-        overlay(M[k], target[k], os.path.join(BUILD, "overlay_%s_%s.png" % (ver, k)), scale=0.5 if k != "vsec" else 1)
+        overlay(M[k], target[k], os.path.join(BUILD, "overlay_%s_%s.png" % (ver, k)), scale=0.5 if k not in ("vsec", "vsec_stile") else 1)
     ok &= all(d["ok"] for d in res["dims"].values())
     res["pass"] = bool(ok)
     res["thresholds"] = PASS

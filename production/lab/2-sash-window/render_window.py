@@ -17,7 +17,7 @@ import bpy
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "tools"))
 import blender_parts  # noqa: E402
 
-COL = {"paint": (0.86, 0.85, 0.80, 1), "glass": (0.18, 0.22, 0.24, 1),
+COL = {"paint": (0.97, 0.96, 0.92, 1), "glass": (0.16, 0.19, 0.21, 1),
        "brick": (0.42, 0.22, 0.15, 1), "stone": (0.62, 0.60, 0.55, 1)}
 
 
@@ -97,7 +97,8 @@ def main():
     shots = {
         "front": camera("front", (0, -6.0, H / 2), (0, 0, H / 2), lens=85),
         "oblique": camera("oblique", (-2.2, -3.4, H * 0.65), (0, 0.12, H * 0.55), lens=60),
-        "meeting_rail": camera("meeting_rail", (-0.35, -0.75, H * 0.55), (0.25, 0.15, H * 0.50), lens=50),
+        "meeting_rail": camera("meeting_rail", (-0.10, -0.55, H * 0.47), (0.36, 0.15, H * 0.50), lens=50),
+        "street": camera("street", (1.2, -9.0, 1.6), (0, 0, H / 2), lens=70),
         "plan_section_low": camera("low", (0.0, -2.5, -0.6), (0, 0.1, 0.3), lens=60),
     }
     for nm, cam in shots.items():

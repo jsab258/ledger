@@ -84,7 +84,7 @@ def design(T):
     y_pb = (y_up[1] + clr, y_up[1] + clr + pbw)
     y_lo = (y_pb[1] + clr, y_pb[1] + clr + ts)
     y_sb = (y_lo[1] + clr, y_lo[1] + clr + sbw)
-    y_back = y_sb[1] + f.get("inner_lining_past_staff_bead_mm", 0) * MM   # pulley stile's back edge
+    y_back = y_sb[1] - ilt             # the inside lining sits under the staff bead (Fig. 400); the pulley stile butts it
     z_sill = sill["height_at_front_mm"] * MM
     z_clear = H - head_vis             # underside of the head lining's visible margin
     z_head_face = z_clear + stop       # head's face (the upper sash's top runs to it)
@@ -100,10 +100,10 @@ def design(T):
         xa, xb = sx(x_face - sbe, x_face)
         box("staff_bead_" + tag, "paint", xa, y_sb[0], z_sill, xb, y_sb[1], z_head_face)
         xa, xb = sx(x_face, x_face + ilw)
-        box("inner_lining_" + tag, "paint", xa, y_back, z_sill, xb, y_back + ilt, H)
+        box("inner_lining_" + tag, "paint", xa, y_back, z_sill, xb, y_sb[1], H)
     # head: outer lining across the top, head (pulley) lining, beads
     box("head_outer_lining", "paint", -(x_edge + olw), y0, z_clear, x_edge + olw, y0 + olt, H)
-    box("head_lining", "paint", -(x_face + pst), y0 + olt, z_head_face, x_face + pst, y_back, z_head_face + pst)
+    box("head_lining", "paint", -(x_face + pst), y0 + olt, z_head_face, x_face + pst, y_back, z_head_face + f.get("head_thickness_mm", 31.8) * MM)
     box("head_parting_bead", "paint", -x_face, y_pb[0], z_head_face - pbe, x_face, y_pb[1], z_head_face)
     box("head_staff_bead", "paint", -x_face, y_sb[0], z_head_face - sbe, x_face, y_sb[1], z_head_face)
 
@@ -111,7 +111,7 @@ def design(T):
     nose = sill["projection_mm"] * MM
     fall = sill["fall_mm"] * MM
     up = sill["upstand_mm"] * MM
-    sill_prof = [(y0 - nose, 0.0), (y_back + ilt, 0.0), (y_back + ilt, z_sill + up), (y_lo[0], z_sill + up),
+    sill_prof = [(y0 - nose, 0.0), (y_sb[1], 0.0), (y_sb[1], z_sill + up), (y_lo[0], z_sill + up),
                  (y_lo[0], z_sill), (y0 - nose, z_sill - fall)]
     prism("oak_sill", "paint", sill_prof, "x", ["y", "z"], -(x_face + pst + sill.get("horns_mm", 0) * MM),
           x_face + pst + sill.get("horns_mm", 0) * MM)
@@ -126,16 +126,42 @@ def design(T):
     z_lo = (z_sill, z_sill + sash_h)
     z_up = (z_head_face - sash_h, z_head_face)
 
+    ex = s.get("meeting_rail_extra_thickness_mm", 0) * MM
+
+    def horn_profile(yy, z0):
+        """Ellis Fig. 416's bracket in (y, z): full thickness under the rail, a small step, an ogee
+        back to half the thickness, then straight to its foot 3 in down (step and curve scaled)."""
+        step_z, step_in, og_end = 6.35 * MM, 3.175 * MM, 57.15 * MM
+        y0, y1 = yy
+        half = y0 + ts / 2
+        P = [(y0, z0), (y1, z0), (y1, z0 - step_z), (y1 - step_in, z0 - step_z)]
+        for k in range(1, 17):
+            f = k / 16.0
+            g = 0.5 - 0.5 * math.cos(math.pi * f)
+            P.append(((y1 - step_in) + (half - (y1 - step_in)) * g, z0 - step_z - (og_end - step_z) * f))
+        P += [(half, z0 - horn), (y0, z0 - horn)]
+        return P
+
     def sash(nm, yy, zz, top, bottom, horns):
         # stiles: section in (x, y), run along z; glass side toward the centre
         for side, tag in ((-1, "L"), (1, "R")):
             prof = member_profile(st, ts, rw, rd, ov, glass_side=+1)
             P = [((-x_face + u) if side < 0 else (x_face - u), yy[0] + v) for u, v in prof]
-            prism("%s_stile_%s" % (nm, tag), "paint", P, "z", ["x", "y"], zz[0] - (horn if horns else 0), zz[1])
-        # rails: section in (z, y), run along x between the stiles (tenons hidden)
+            prism("%s_stile_%s" % (nm, tag), "paint", P, "z", ["x", "y"], zz[0], zz[1])
+            if horns:
+                x0 = -x_face if side < 0 else x_face - st
+                prism("%s_horn_%s" % (nm, tag), "paint", horn_profile(yy, zz[0]), "x", ["y", "z"], x0, x0 + st)
+        # rails: section in (z, y), run along x between the stiles (tenons hidden); the meeting rails
+        # 3/8 in thicker than the stiles, into the parting bead's gap (Ellis p.127)
         for rail, depth, at_top in (("top_rail", top, True), ("bottom_rail", bottom, False)):
             prof = member_profile(depth, ts, rw, rd, ov, glass_side=+1)
+            meeting = (nm == "upper" and not at_top) or (nm == "lower" and at_top)
             P = [((zz[1] - u) if at_top else (zz[0] + u), yy[0] + v) for u, v in prof]
+            if meeting:
+                if nm == "upper":   # thickened inward (toward the room)
+                    P = [(a, b if b < yy[0] + ts - 1e-6 else b + ex) for a, b in P]
+                else:               # thickened outward
+                    P = [(a, b if b > yy[0] + 1e-6 else b - ex) for a, b in P]
             prism("%s_%s" % (nm, rail), "paint", P, "x", ["z", "y"], -x_face + st, x_face - st)
         if s.get("panes_per_sash", 1) == 2:
             P = [(u, yy[0] + v) for u, v in bar_profile(barw, ts, rw, rd, ov)]
