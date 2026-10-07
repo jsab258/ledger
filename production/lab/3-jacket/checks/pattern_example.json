@@ -1,0 +1,122 @@
+{
+ "tag": "example",
+ "lengths_in": {
+  "back_neck": 2.585,
+  "back_shoulder": 6.532,
+  "back_scye": 4.091,
+  "back_side": 21.837,
+  "back_hem": 0.0,
+  "back_cb": 28.812,
+  "neck": 4.878,
+  "gorge": 1.034,
+  "lapel_edge": 0.0,
+  "front_edge": 24.12,
+  "fore_hem": 10.46,
+  "fore_side": 21.899,
+  "scye_low": 3.088,
+  "fish_a": 11.856,
+  "fish_b": 11.678,
+  "scye_high": 9.172,
+  "front_shoulder": 6.26,
+  "forearm_t": 20.627,
+  "head": 10.987,
+  "hind_t": 23.29,
+  "cuff_t": 0.0,
+  "forearm_u": 20.627,
+  "under_top": 7.494,
+  "hind_u": 23.1,
+  "cuff_u": 0.0,
+  "collar_cb": 2.875,
+  "collar_neck": 8.247,
+  "collar_end": 0.0,
+  "collar_fall": 6.183
+ },
+ "armhole_in": 16.351,
+ "checks": [
+  {
+   "seam": "side seam",
+   "a_in": 21.837,
+   "b_in": 21.899,
+   "b_minus_a": 0.062,
+   "allowed": [
+    -0.75,
+    0.75
+   ],
+   "ok": true,
+   "why": "the two side seams meet; the plate draws them within about 1/2 in"
+  },
+  {
+   "seam": "shoulder",
+   "a_in": 6.26,
+   "b_in": 6.532,
+   "b_minus_a": 0.272,
+   "allowed": [
+    0.0,
+    0.5
+   ],
+   "ok": true,
+   "why": "back shoulder 1/4 in longer than the front's X (p. 54), eased in"
+  },
+  {
+   "seam": "fish",
+   "a_in": 11.856,
+   "b_in": 11.678,
+   "b_minus_a": -0.178,
+   "allowed": [
+    -0.25,
+    0.25
+   ],
+   "ok": true,
+   "why": "a dart's two legs are equal"
+  },
+  {
+   "seam": "forearm seam",
+   "a_in": 20.627,
+   "b_in": 20.627,
+   "b_minus_a": 0.0,
+   "allowed": [
+    -0.25,
+    0.25
+   ],
+   "ok": true,
+   "why": "top and under sleeve share the forearm line (Plate 46)"
+  },
+  {
+   "seam": "hind-arm seam",
+   "a_in": 23.1,
+   "b_in": 23.29,
+   "b_minus_a": 0.19,
+   "allowed": [
+    -0.5,
+    1.0
+   ],
+   "ok": true,
+   "why": "the top sleeve's hind arm is eased onto the under sleeve's at the elbow"
+  },
+  {
+   "seam": "sleeve head",
+   "a_in": 16.351,
+   "b_in": 18.481,
+   "b_minus_a": 2.131,
+   "allowed": [
+    0.5,
+    3.5
+   ],
+   "ok": true,
+   "why": "sleeve head eased into the scye; Thornton's own example carries about 3 in (head 12 in on a 9 in upper scye)"
+  },
+  {
+   "seam": "collar to neck",
+   "a_in": 8.186,
+   "b_in": 8.247,
+   "b_minus_a": 0.061,
+   "allowed": [
+    -0.5,
+    0.25
+   ],
+   "ok": true,
+   "why": "'the collar should measure the same as the neck of the coat' (p. 14)"
+  }
+ ],
+ "pass": true
+}
