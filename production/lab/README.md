@@ -8,6 +8,6 @@ A separate session testing one method while the builder works: give the AI an ex
 | 2. One sash window from measured numbers | [2-sash-window/NOTES.md](2-sash-window/NOTES.md) | done: passes its check and, on narrow points, a fresh review |
 | 3. One jacket from a pre-1929 draft | [3-jacket/NOTES.md](3-jacket/NOTES.md) | done: the pattern exact and checked; the drape failed its review; the lapel did not hold |
 
-The page for Jafar: [LAB-REPORT.md](LAB-REPORT.md) (at the end).
+The page for Jafar: [LAB-REPORT.md](LAB-REPORT.md), also published as a private page: https://claude.ai/artifact/GAgntnYAoqJVR6irjqjeBk
 
 Rules kept: Unreal never opened; Blender headless, Workbench only or no render at all; large files on F:\LedgerTools\lab; nothing bought; pushes to lab only. Time per test: [time-log.jsonl](time-log.jsonl). Shared tools: [tools/outline.py](tools/outline.py) (outlines and sections from triangles, compared in millimetres, no renderer) and [tools/panel_mesh.py](tools/panel_mesh.py) (flat pattern pieces to sewing meshes).
