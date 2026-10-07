@@ -24,3 +24,5 @@
 {"event": "start", "at": "2026-10-06T17:22:05", "task": "1.1 gate fixes: glass reflections, wear, the door and lights, ashtray, map, lettering, south quay", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-06T20:22:54", "note": "1.1 gate fixes in and pushed (7270ed9); the packaged walk-in found the open door's push bar, the RT warning and the sky smear; fixing"}
 {"event": "start", "at": "2026-10-06T20:22:55", "task": "1.1 second round: the packaged walk-in's three faults, then the second gate", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-07T09:35:13", "note": "1.1 second round: three packaged walk-ins, the sky band, the doorway card; Tom's eleventh step; P1's cause; the overview late after the session closed"}
+{"event": "start", "at": "2026-10-07T09:35:13", "task": "7 Oct: his answers (voice route, NoAI deleted, Mixamo clips found), night jobs close games, P1 rerun, the voice route part 1", "phase": "1", "kind": "production"}

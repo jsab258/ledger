@@ -161,6 +161,33 @@ FString PictureName()
 	return Name;
 }
 
+// THE PICTURE BUDGET FOR A COPY THAT FIRST RAN BEFORE IT (7 October; P1 packaged found the played
+// copy, first run before the 3 October budget, still drawing at Highest, whose upscaler and
+// post-processing take the 1.8 ms the budget gives the street). Once: a saved Highest comes down
+// to the project's High, which keeps Epic's reflections and lighting (DefaultScalability.ini), at
+// the scale it was drawn at. A level picked lower, a custom mix, or a choice made afterwards in
+// Settings stands.
+void PictureBudgetOnce()
+{
+	UGameUserSettings* S = GEngine != nullptr ? GEngine->GetGameUserSettings() : nullptr;
+	if (S == nullptr || GConfig == nullptr) { return; }
+	static const TCHAR* Budget = TEXT("2026-10-03");
+	FString Done;
+	GConfig->GetString(TEXT("Ledger"), TEXT("PictureBudget"), Done, GGameUserSettingsIni);
+	if (Done == Budget) { return; }
+	if (S->GetOverallScalabilityLevel() >= 3)
+	{
+		float Norm = 1.0f, Value = 100.0f, Min = 0.0f, Max = 100.0f;
+		S->GetResolutionScaleInformationEx(Norm, Value, Min, Max);
+		S->SetOverallScalabilityLevel(2);
+		S->SetResolutionScaleValueEx(Value);
+		S->ApplySettings(true);
+		UE_LOG(LogTemp, Log, TEXT("LedgerTitle: the picture budget of 3 October: Highest saved before it, now %s"), *PictureName());
+	}
+	GConfig->SetString(TEXT("Ledger"), TEXT("PictureBudget"), Budget, GGameUserSettingsIni);
+	S->SaveSettings();
+}
+
 void FirstLaunchSettings()
 {
 	UGameUserSettings* S = GEngine != nullptr ? GEngine->GetGameUserSettings() : nullptr;
@@ -178,6 +205,7 @@ void FirstLaunchSettings()
 	// Command-line window arguments (the AI tester's) still win.
 	S->ApplySettings(true);
 	GConfig->SetBool(TEXT("Ledger"), TEXT("FirstLaunchDone"), true, GGameUserSettingsIni);
+	GConfig->SetString(TEXT("Ledger"), TEXT("PictureBudget"), TEXT("2026-10-03"), GGameUserSettingsIni);
 	GConfig->Flush(false, GGameUserSettingsIni);
 	UE_LOG(LogTemp, Log, TEXT("LedgerTitle: first launch on this PC: full screen at %dx%d, picture %s (the benchmark: CPU %.0f, GPU %.0f), %.1f s"),
 		S->GetDesktopResolution().X, S->GetDesktopResolution().Y, *PictureName(),
@@ -552,7 +580,7 @@ EChoice Tick(UWorld* World, bool bStreetReady)
 	{
 		bool bDone = GConfig == nullptr;
 		if (GConfig != nullptr) { GConfig->GetBool(TEXT("Ledger"), TEXT("FirstLaunchDone"), bDone, GGameUserSettingsIni); }
-		if (bDone) { bMeasured = true; }
+		if (bDone) { bMeasured = true; PictureBudgetOnce(); }
 		else if (GMeasureFrames++ == 0)
 		{
 			// THE FIRST LAUNCH'S WORK ON THE LOADING PAGE (the guide's first-launch

@@ -7113,6 +7113,27 @@ namespace
 	TArray<FRoomSwitch> GRoomSwitches;
 	bool GRoomLightsSunOn = true;
 
+	// THE ROOMS' LIGHTS SHADOW ONLY THE ROOMS (7 October; P1 packaged: at the hook view two shop rooms'
+	// tubes, lit by day too, drew every mesh within 7 m into their shadow maps every frame, the
+	// street's merged walls and the people on the pavement among them: 4.3 ms of the card by day,
+	// 5 ms of 7 at night). A light that casts shadows from "cinematic" objects only draws just those
+	// (LightSceneInfo.cpp, the engine's light-and-primitive test), so the rooms' tubes and lamps cast
+	// shadows from the room's own walls, fittings and display, and nothing else. Their light still
+	// falls through the window onto the pavement. -RoomShadowsAll keeps the old way, to compare.
+	bool RoomShadowsOwnOnly()
+	{
+		static const bool bAll = FParse::Param(FCommandLine::Get(), TEXT("RoomShadowsAll"));
+		return !bAll;
+	}
+
+	// One of the room's own pieces, which its lights' shadows are made from.
+	void RoomCastsOwnShadow(UPrimitiveComponent* C)
+	{
+		if (C == nullptr) { return; }
+		C->bCastCinematicShadow = true;
+		C->MarkRenderStateDirty();
+	}
+
 	// -RoomLumensScale=<k> for a trial of the rooms' light without touching the spec.
 	double RoomLumensScale()
 	{
@@ -7147,6 +7168,7 @@ namespace
 				C->SetMobility(EComponentMobility::Movable);
 				C->SetStaticMesh(Mesh);
 				C->SetCastShadow(true);
+				RoomCastsOwnShadow(C);
 				C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 				C->UpdateBounds();
 				// the tubes' glowing material and the batten's plain one, to put them out by
@@ -7191,6 +7213,8 @@ namespace
 					RC->SetAttenuationRadius(700.0f);
 					RC->SetLightColor(FLinearColor(1.0f, 0.95f, 0.86f));    // the T12 tubes' white
 					RC->SetCastShadows(true);
+					RC->bCastShadowsFromCinematicObjectsOnly = RoomShadowsOwnOnly();
+					RC->MarkRenderStateDirty();
 					RC->SetVisibility(true);
 					UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's tubes, %.0f lm by day and %.0f at night, at %.0f,%.0f,%.0f cm, pointing %s"),
 						*Shop, Lumens, NightLumens, LAt.X, LAt.Y, LAt.Z, *RC->GetForwardVector().ToString());
@@ -7227,6 +7251,7 @@ namespace
 			C->SetMobility(EComponentMobility::Movable);
 			C->SetStaticMesh(Mesh);
 			C->SetCastShadow(true);
+			RoomCastsOwnShadow(C);
 			C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		}
 		GBareHide.Add(A);
@@ -7360,6 +7385,8 @@ namespace
 								LC->SetAttenuationRadius((float)(LedgerStreet::NumOr(Lp, "radius_m", 1.8) * 100.0));
 								LC->SetLightColor(FLinearColor(1.0f, 0.78f, 0.52f));
 								LC->SetSourceRadius(3.0f);
+								LC->bCastShadowsFromCinematicObjectsOnly = RoomShadowsOwnOnly();
+								LC->MarkRenderStateDirty();
 								Parts3.Add(PL);
 								FRoomSwitch Sw;
 								Sw.Shop = UTF8_TO_TCHAR(Id.c_str()); Sw.Lamp = LC;

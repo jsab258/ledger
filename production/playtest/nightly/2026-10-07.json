@@ -1,0 +1,40 @@
+{
+ "date": "2026-10-07",
+ "night": "F:/LedgerTools/nightly\\2026-10-07",
+ "events": 35,
+ "summary": {
+  "walk": {
+   "passed": 0,
+   "stages": 1,
+   "failed": [
+    "street: the game did not start"
+   ]
+  },
+  "noticed": {
+   "saw_the_deed": [],
+   "onlooker_lines": []
+  },
+  "knew_later": {},
+  "greeted": [],
+  "replies": {
+   "n": 0,
+   "broke": 0,
+   "checked": 0,
+   "by_how": {},
+   "seconds_median": null,
+   "seconds_max": null,
+   "source": "the walk's stand-in words with the real voice: not the real path"
+  },
+  "police_told_by": [],
+  "thats_all_i_know": {
+   "count": null,
+   "of": 60,
+   "note": "the bench's 60 calls all failed, so nothing was measured (bench.log)"
+  },
+  "illusion": {
+   "lines": [],
+   "note": "no pictures from the walk to look at"
+  }
+ },
+ "paragraph": "**The town and Tom (the AI tester's walk of 2026-10-07, played as a player would, the stand-in's words):** the route 0 of 1 stages; failed: street: the game did not start. Who saw him break Rita's window: nobody the record names. Who showed they knew afterwards, and how: nobody. That is 0 people (-1 on the night before). \"That's all I know\" to a newcomer's sixty first questions (the real engine's words): not measured. Replies heard after a median not measured s, at most None s (stand-in words, real voice; not the real path), 0 of 0 broke. What broke the illusion: no pictures from the walk to look at."
+}

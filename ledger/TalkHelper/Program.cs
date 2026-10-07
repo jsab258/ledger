@@ -1511,6 +1511,11 @@ static class Program
         string sizesPath = Environment.GetEnvironmentVariable("LEDGER_TALK_SIZES");
         bool sizes = fake && !string.IsNullOrEmpty(sizesPath);
         if (sizes) llm = new SizeRecorder(llm, sizesPath);
+        // THE FIRST SENTENCE BY A FASTER MODEL (Jafar, 7 October; ConversationEngine.FirstModel):
+        // --first-model NAME, or LEDGER_TALK_FIRST_MODEL; "off" or none, one model writes it all.
+        int fmi = Array.IndexOf(args, "--first-model");
+        string firstModel = fmi >= 0 && fmi + 1 < args.Length ? args[fmi + 1] : Environment.GetEnvironmentVariable("LEDGER_TALK_FIRST_MODEL");
+        ConversationEngine.FirstModel = string.IsNullOrEmpty(firstModel) || firstModel == "off" ? null : firstModel;
         // THE KEY'S CAP, ENFORCED IN CODE (Jafar, 30 September): with --budget-usd
         // (or LEDGER_TALK_BUDGET_USD) every call reserves its worst case first,
         // and none is sent that could take the run past the budget (BudgetedClient).
@@ -1980,6 +1985,47 @@ static class Program
         Ok("one the content rule refuses is not even written ahead, and without --pending nothing is",
            aheadPint.TrueForAll(l => !l.Contains("pint")) && aheadOff.TrueForAll(l => !l.Contains("\"pending\"")) && At(aheadOff, "first", "Aye.") >= 0,
            string.Join(" | ", aheadPint) + " || " + string.Join(" | ", aheadOff));
+
+        // THE FIRST SENTENCE BY A FASTER MODEL (Jafar, 7 October; ConversationEngine.FirstModel):
+        // in real conversation the faster model writes the first sentence, stopped there; it is
+        // checked and handed over as before; the turn's own model writes the rest, told what was
+        // said, and the reply is the two together, the first never said twice. In small talk,
+        // already on the faster model, and with the switch off, one model writes it all.
+        {
+            async Task<(string last, List<string> lines, FastFirstFake llm)> FastTurn(string moment, string fastWrites, string restWrites)
+            {
+                var ff = new FastFirstFake(fastWrites, restWrites);
+                var fh = new Helper(ff, TimeSpan.FromSeconds(8)) { Early = true, Pending = true, CheckAlways = true, RestPatience = TimeSpan.Zero };
+                LoadCards(fh, cardsDir);
+                var lines = new List<string>();
+                fh.Emit = line => { lock (lines) lines.Add(line); };
+                var last = await fh.Answer("{\"id\":25,\"to\":\"sam\",\"say\":\"See anything?\",\"moment\":\"" + moment + "\"}");
+                return (last, lines, ff);
+            }
+            var was = ConversationEngine.FirstModel;
+            try
+            {
+                ConversationEngine.FirstModel = Models.Ambient;
+                var fast = await FastTurn("conversation", "Aye, I saw him. Went by the chip shop at nine, I'd say.", "Aye, I saw him. Went by the chip shop at nine.");
+                Ok("in real conversation the faster model writes the first sentence, stopped there, and it is handed over as before",
+                   fast.llm.Asked.Exists(r => r.Model == Models.Ambient && r.MaxTokens == ConversationEngine.FirstMaxTokens) && fast.llm.FastStopped
+                   && At(fast.lines, "pending", "Aye, I saw him.") >= 0 && At(fast.lines, "first", "Aye, I saw him.") > At(fast.lines, "pending", "Aye, I saw him."),
+                   string.Join(" | ", fast.lines));
+                Ok("the turn's own model writes the rest, told what was said, and the first is never said twice",
+                   fast.llm.Asked.Exists(r => r.Model == Models.Core && r.System.Contains("YOUR REPLY HAS ALREADY BEGUN") && r.System.Contains("\"Aye, I saw him.\""))
+                   && Reply(fast.last) == "Aye, I saw him. Went by the chip shop at nine." && Str(fast.last, "rest") == "Went by the chip shop at nine.", fast.last);
+                var small = await FastTurn("smalltalk", "Aye. Quiet one.", "Aye. Quiet one.");
+                Ok("in small talk, already on the faster model, one model writes it all",
+                   !small.llm.Asked.Exists(r => r.System != null && r.System.Contains("YOUR REPLY HAS ALREADY BEGUN")) && Reply(small.last) == "Aye. Quiet one.", small.last);
+                ConversationEngine.FirstModel = null;
+                var allOne = await FastTurn("conversation", "Aye, I saw him. Went by the chip shop at nine, I'd say.", "Aye, I saw him. Went by the chip shop at nine.");
+                Ok("with the switch off the turn's own model writes it all",
+                   !allOne.llm.Asked.Exists(r => r.Model == Models.Ambient && r.MaxTokens == ConversationEngine.FirstMaxTokens) && Reply(allOne.last) == "Aye, I saw him. Went by the chip shop at nine.", allOne.last);
+                Ok("the rest's own copy of the first sentence is left out, and a rest of nothing leaves the first alone",
+                   ConversationEngine.GoneOn("Aye.", "Aye. Saw him.") == "Aye. Saw him." && ConversationEngine.GoneOn("Aye.", "  ") == "Aye.");
+            }
+            finally { ConversationEngine.FirstModel = was; }
+        }
 
         var restBad = await Early(new StreamFake("Aye. It was Dennis from the yard, I know it."), "Who was it?", TimeSpan.FromSeconds(8));
         Ok("if the rest invents, only the checked first sentence is said",
@@ -2765,6 +2811,44 @@ static class Program
             onText(text.Substring(0, cut) + text.Substring(cut, 1));
             try { await Task.Delay(Pause, ct); }
             catch (OperationCanceledException) { if (first) Stopped = true; throw; }
+            onText(text);
+            return new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model };
+        }
+    }
+
+    /// The stand-in for the first sentence by a faster model (ConversationEngine.FirstModel):
+    /// the faster model's short request writes `fast`, a sentence at a time, and notes being
+    /// stopped after the first; every other draft writes `rest`; the check finds nothing.
+    sealed class FastFirstFake : IStreamingLlmClient
+    {
+        readonly string _fast, _rest;
+        public readonly List<LlmRequest> Asked = new List<LlmRequest>();
+        public bool FastStopped;
+        public FastFirstFake(string fast, string rest) { _fast = fast; _rest = rest; }
+        static bool IsDraft(LlmRequest r) => r.System == null || !(r.System.StartsWith("You read one line") || r.System.StartsWith("You check details"));
+        public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
+        {
+            lock (Asked) Asked.Add(request);
+            if (!IsDraft(request))
+                return Task.FromResult(new LlmResponse { Text = request.System.StartsWith("You check details") ? "{\"verdicts\":[]}" : "{\"specifics\":[]}", InputTokens = 300, OutputTokens = 10, Model = request.Model });
+            return Task.FromResult(new LlmResponse { Text = _rest, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model });
+        }
+        public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default)
+        {
+            lock (Asked) Asked.Add(request);
+            bool fast = request.MaxTokens == ConversationEngine.FirstMaxTokens;
+            var text = fast ? _fast : _rest;
+            var cut = text.IndexOf(". ", StringComparison.Ordinal) + 2;
+            if (cut > 1)
+            {
+                onText(text.Substring(0, cut + 1));
+                await Task.Delay(50, CancellationToken.None);
+                if (ct.IsCancellationRequested)
+                {
+                    if (fast) FastStopped = true;
+                    throw new LlmStreamStoppedException(new LlmResponse { Text = text.Substring(0, cut + 1), InputTokens = 400, OutputTokens = 5, Model = request.Model }, ct);
+                }
+            }
             onText(text);
             return new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model };
         }

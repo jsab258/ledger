@@ -140,6 +140,7 @@
 #include "Widgets/Text/SMultiLineEditableText.h"
 #include "LedgerJacket.h"
 #include "LedgerTalkLight.h"
+#include "LedgerVoice.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Camera/CameraActor.h"
 #include "Camera/CameraComponent.h"
@@ -3310,10 +3311,10 @@ namespace
 	// voice's Python and script; without them the answers stay text.
 	struct FLiveVoice
 	{
-		FProcHandle Proc;
-		void* OutRead = nullptr; void* OutWrite = nullptr; void* InRead = nullptr; void* InWrite = nullptr;
-		std::string Buf;
-		bool bStarted = false, bReady = false;
+		// THE VOICE ITSELF, behind one seam (LedgerVoice.h, Jafar's 7 October ruling): today's
+		// voice server beside the game, or whichever -VoiceKind names; the rest is the game's.
+		TUniquePtr<ILedgerVoice> Impl;
+		bool bTried = false, bStarted = false, bReady = false;
 		TMap<int32, TWeakObjectPtr<AActor>> Pending;   // line id -> who says it
 		// SENTENCE BY SENTENCE: each piece is queued as it arrives and played
 		// when the one before it has finished, so the first sentence is heard
@@ -3404,35 +3405,12 @@ namespace
 
 	void LiveVoiceStart()
 	{
-		if (GVoice.bStarted) { return; }
-		FString Py, Script;
-		if (!FParse::Value(FCommandLine::Get(), TEXT("VoicePython="), Py) || !FParse::Value(FCommandLine::Get(), TEXT("VoiceScript="), Script))
-		{
-			// THE VOICE BESIDE THE GAME, 30 September (item 3's stopgap for a
-			// friends' build, Jafar's ruling): a folder "Voice" next to the game
-			// holding today's voice program with its own Python, torch and
-			// weights (tools/voice-live, made portable), started with its own
-			// paths, so a PC with nothing installed hears the cast. -NoVoice
-			// leaves it off.
-			const FString Voice = FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::RootDir(), TEXT("Voice")));
-			Py = Voice / TEXT("python/python.exe");
-			Script = Voice / TEXT("tools/voice-live/voice-server.py");
-			if (FParse::Param(FCommandLine::Get(), TEXT("NoVoice")) || !FPaths::FileExists(Py) || !FPaths::FileExists(Script)) { return; }
-			FPlatformMisc::SetEnvironmentVar(TEXT("NANO_PKG"), *(Voice / TEXT("nano/src-master/src")));
-			FPlatformMisc::SetEnvironmentVar(TEXT("NANO_WEIGHTS"), *(Voice / TEXT("nano/weights")));
-			FPlatformMisc::SetEnvironmentVar(TEXT("NANO_VOICE_CACHE"), *(Voice / TEXT("nano/voice-cache")));
-			FPlatformMisc::SetEnvironmentVar(TEXT("PYTHONNOUSERSITE"), TEXT("1"));
-			const FString Path = FPlatformMisc::GetEnvironmentVariable(TEXT("PATH"));
-			FPlatformMisc::SetEnvironmentVar(TEXT("PATH"), *(FPaths::ConvertRelativePathToFull(Voice / TEXT("python")) + TEXT(";")
-				+ FPaths::ConvertRelativePathToFull(Voice / TEXT("python/Library/bin")) + TEXT(";") + Path));
-			UE_LOG(LogTemp, Display, TEXT("LedgerVoice: the voice beside the game, %s"), *Voice);
-		}
-		GVoice.bStarted = true;   // one try, whatever happens
-		if (!FPlatformProcess::CreatePipe(GVoice.OutRead, GVoice.OutWrite) || !FPlatformProcess::CreatePipe(GVoice.InRead, GVoice.InWrite, true)) { return; }
-		// --prewarm: the cast voices are learned and run once before the server
-		// says it is ready, not on the first line said to each (26 September).
-		GVoice.Proc = FPlatformProcess::CreateProc(*Py, *FString::Printf(TEXT("\"%s\" --prewarm"), *Script), false, true, true,
-			nullptr, 0, nullptr, GVoice.OutWrite, GVoice.InRead);
+		if (GVoice.bTried) { return; }
+		GVoice.bTried = true;   // one try, whatever happens
+		GVoice.Impl = MakeLedgerVoice();
+		if (!GVoice.Impl || !GVoice.Impl->Start()) { GVoice.Impl.Reset(); return; }
+		GVoice.bStarted = true;
+		UE_LOG(LogTemp, Display, TEXT("LedgerVoice: started, the %s voice"), GVoice.Impl->Name());
 	}
 
 	// The sound in a WAV the server wrote (16-bit PCM, soundfile's own header).
@@ -3804,44 +3782,30 @@ namespace
 
 	void LiveVoicePump()
 	{
-		if (!GVoice.bStarted || GVoice.OutRead == nullptr) { return; }
-		GVoice.Buf += Utf8(FPlatformProcess::ReadPipe(GVoice.OutRead));
-		std::string::size_type Nl;
-		while ((Nl = GVoice.Buf.find('\n')) != std::string::npos)
+		if (!GVoice.bStarted || !GVoice.Impl) { return; }
+		TArray<FLedgerVoicePiece> Got;
+		GVoice.Impl->Poll(Got);
+		GVoice.bReady = GVoice.Impl->IsReady();
+		for (const FLedgerVoicePiece& P : Got)
 		{
-			const std::string L = GVoice.Buf.substr(0, Nl);
-			GVoice.Buf.erase(0, Nl + 1);
-			if (L.find("\"ready\"") != std::string::npos) { GVoice.bReady = true; continue; }
-			const std::string::size_type At = L.find("\"id\":");
-			if (At == std::string::npos) { continue; }
-			const int32 Id = atoi(L.c_str() + At + 5);
-			TWeakObjectPtr<AActor>* Who = GVoice.Pending.Find(Id);
-			const std::string Wav = JsonField(L, "wav");
-			const bool bLast = L.find("\"last\":true") != std::string::npos || L.find("\"error\"") != std::string::npos;
-			if (Id == GTimedVoiceId && GTimedPieceAt <= 0.0 && Wav != "none")
+			TWeakObjectPtr<AActor>* Who = GVoice.Pending.Find(P.Id);
+			if (P.Id == GTimedVoiceId && GTimedPieceAt <= 0.0 && !P.Wav.IsEmpty())
 			{
 				GTimedPieceAt = NowS();
-				// Numbers, not strings: read after their key.
-				auto Num = [&L](const char* Key) -> double {
-					const std::string K = std::string("\"") + Key + "\":";
-					const std::string::size_type P = L.find(K);
-					return P == std::string::npos ? -1.0 : atof(L.c_str() + P + K.size());
-				};
-				const double Ms = Num("ms");
-				GTimedPieceWorkS = Ms >= 0.0 ? Ms / 1000.0 : -1.0;
-				GTimedPieceLenS = Num("seconds");
+				GTimedPieceWorkS = P.WorkS;
+				GTimedPieceLenS = P.LenS;
 			}
-			if (Who != nullptr && Wav != "none" && !GVoice.DroppedIds.Contains(Id))
+			if (Who != nullptr && !P.Wav.IsEmpty() && !GVoice.DroppedIds.Contains(P.Id))
 			{
 				FLiveVoice::FPiece Piece;
-				Piece.Wav = Un(Wav);
+				Piece.Wav = P.Wav;
 				Piece.Who = *Who;
-				Piece.bJoined = L.find("\"joined\":true") != std::string::npos;
-				Piece.Id = Id;
-				if (GVoice.HeldIds.Contains(Id)) { GVoice.Held.Add(Piece); }
+				Piece.bJoined = P.bJoined;
+				Piece.Id = P.Id;
+				if (GVoice.HeldIds.Contains(P.Id)) { GVoice.Held.Add(Piece); }
 				else { GVoice.Queue.Add(Piece); }
 			}
-			if (bLast) { GVoice.Pending.Remove(Id); bVoiceAllIn = true; }
+			if (P.bLast) { GVoice.Pending.Remove(P.Id); bVoiceAllIn = true; }
 		}
 		const double Now = NowS();
 		// A continuing piece goes straight onto the sound still playing.
@@ -3889,7 +3853,7 @@ namespace
 	// approved voice, none of them agreeing to anything) plays at once where
 	// they stand, with its face animation when one has been made
 	// (/Game/Ledger/MetaHumans/Speech/AS_ack_<card>_<name>), and is cut off the
-	// moment the answer's own sound begins. -NoAck leaves the pause bare.
+	// moment the answer's own sound begins. Off since 7 October (Jafar: no prepared openings); -PreparedAck plays them, to compare.
 	struct FAck
 	{
 		TWeakObjectPtr<UAudioComponent> Sound;
@@ -3945,7 +3909,10 @@ namespace
 
 	void AckStart(const std::string& Card, AActor* Who)
 	{
-		static const bool bNo = FParse::Param(FCommandLine::Get(), TEXT("NoAck"));
+		// NO PREPARED OPENINGS (Jafar, 7 October: "they would repeat and read as stalling"):
+		// the recorded "well now" and "let me think" are not played; -PreparedAck brings them
+		// back only to compare.
+		static const bool bNo = !FParse::Param(FCommandLine::Get(), TEXT("PreparedAck"));
 		UWorld* World = GameWorld();
 		AckEnd(true);
 		if (bNo || World == nullptr || Who == nullptr) { return; }
@@ -4806,13 +4773,14 @@ namespace
 		if (!GVoice.HeldIds.Contains(Id)) { return; }
 		GVoice.HeldIds.Remove(Id);
 		GVoice.DroppedIds.Add(Id);
+		if (GVoice.Impl) { GVoice.Impl->Cancel(Id); }
 		GVoice.Held.RemoveAll([Id](const FLiveVoice::FPiece& P) { return P.Id == Id; });
 	}
 
 	// With the voice up, the line waits for its sound (above); with none, it is shown now.
 	void SayWhenHeard(const FString& Line, int32 Id)
 	{
-		if (!GVoice.bReady || GVoice.InWrite == nullptr) { Say(Line, 20.0f, FColor::White); return; }
+		if (!GVoice.Impl || !GVoice.Impl->IsReady()) { Say(Line, 20.0f, FColor::White); return; }
 		FWaitingSub W;
 		W.Line = Line;
 		W.Since = NowS();
@@ -4821,12 +4789,10 @@ namespace
 
 	void LiveVoiceSay(int32 Id, const std::string& Card, const std::string& Text, AActor* Who, int32 Turn = 0)
 	{
-		if (!GVoice.bReady || GVoice.InWrite == nullptr || Text.empty() || Text == "none") { return; }
+		if (!GVoice.Impl || !GVoice.Impl->IsReady() || Text.empty() || Text == "none") { return; }
 		// "turn": a conversation's turn, so the voice serves the newest first and
 		// drops an older turn's unmade sentences (voice-server.py, pick).
-		const std::string Req = "{\"id\":" + std::to_string(Id) + ",\"who\":\"" + JsonEsc(Card)
-			+ "\",\"text\":\"" + JsonEsc(Text) + "\"" + (Turn > 0 ? ",\"turn\":" + std::to_string(Turn) : std::string()) + "}\n";
-		FPlatformProcess::WritePipe(GVoice.InWrite, Un(Req));
+		GVoice.Impl->Say(Id, Card, Text, Turn);
 		GVoice.Pending.Add(Id, Who);
 		bVoiceAsked = true;
 		GVoiceAskedAt = NowS();
@@ -9568,7 +9534,7 @@ namespace
 					GLiveStep = 3; GLiveStepAt = Now;
 					return true;
 				}
-				const bool bVoiceWanted = GVoice.bStarted && GVoice.OutRead != nullptr;
+				const bool bVoiceWanted = GVoice.bStarted && GVoice.Impl.IsValid();
 				const bool bVoiceWait = bVoiceWanted && !GVoice.bReady && Now - GLiveStepAt < 90.0;
 				if (GLiveStep == 3 && Now - GLiveStepAt >= 1.0 && !bVoiceWait) { PressKey(World, EKeys::T); GLiveStep = 4; GLiveStepAt = Now; }
 				const bool bSpeaking = bVoiceAsked && !(bVoicePlayed && bVoiceAllIn && GVoice.Queue.Num() == 0) && Now - GVoiceAskedAt < 60.0;

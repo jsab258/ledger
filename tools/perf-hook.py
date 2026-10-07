@@ -39,7 +39,19 @@ def read(path, drop=0):
     with open(path, newline="", encoding="utf-8", errors="replace") as fh:
         rows = list(csv.reader(fh))
     header = rows[0]
-    body = [r for r in rows[1:] if len(r) == len(header)][drop:]
+    end = len(rows)
+    # THE WHOLE HEADER IS AT THE END (7 October): the engine adds a column when a stat first appears,
+    # so early frames carry fewer, and when any did it writes the full header again after the frames,
+    # before its "[HasHeaderRowAtEnd],1,..." line. Reading only rows[0]'s columns kept 16 to 81 of
+    # 1,800 frames; the frames are read against the full header, the shorter ones padded.
+    if rows and rows[-1] and rows[-1][0].startswith("["):
+        meta = rows[-1]
+        end -= 1
+        at_end = "[HasHeaderRowAtEnd]" in meta and meta[meta.index("[HasHeaderRowAtEnd]") + 1:][:1] == ["1"]
+        if at_end and end > 1 and rows[end - 1][:1] == rows[0][:1]:
+            header = rows[end - 1]
+            end -= 1
+    body = [r + [""] * (len(header) - len(r)) for r in rows[1:end] if 0 < len(r) <= len(header)][drop:]
     return header, body
 
 
@@ -131,6 +143,18 @@ def selftest():
     check("the walk's distance is read from the view", s["walkedM"] == 19.9)
     slow = [[str(40), "38", "3", "2", "1.5", "0.5", "900", "0"] for _ in range(200)]
     check("a frame of 40 ms is below 30", summarise(header, slow)["verdict"] == "BELOW-30")
+    import tempfile
+    with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False, newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["FrameTime", "GPUTime"])
+        for k in range(100):
+            w.writerow(["16", "14"] if k < 40 else ["16", "14", "5"])
+        w.writerow(["FrameTime", "GPUTime", "GPU/ShadowDepths"])
+        w.writerow(["[HasHeaderRowAtEnd]", "1", "[platform]", "Windows"])
+    h2, b2 = read(fh.name)
+    os.remove(fh.name)
+    check("every frame is read against the header the engine writes at the end",
+          len(b2) == 100 and h2[-1] == "GPU/ShadowDepths" and summarise(h2, b2)["groups"]["shadows"] == 5.0)
     print("perf-hook selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

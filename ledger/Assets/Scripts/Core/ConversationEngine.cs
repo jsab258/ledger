@@ -112,6 +112,34 @@ namespace Ledger.Core
         /// firsts --plan).
         public static bool PlanFirst = false;
 
+        /// THE FIRST SENTENCE BY A FASTER MODEL (Jafar, 7 October: "stream the
+        /// writing so the voice starts on the first sentence, with a faster model
+        /// for that first sentence"). When set, and the turn's own model is
+        /// another, the reply's first sentence is written by this model (Haiku
+        /// wrote one in 0.81 s on the 1 October bench, Sonnet in 1.43 s), checked
+        /// and handed over as before, and the turn's own model then writes the
+        /// rest, told what has already been said. Null: one model writes it all.
+        /// Not with the plan first, whose tag comes before any sentence.
+        public static string FirstModel = null;
+        /// The first sentence's own allowance: a sentence, never the reply.
+        public const int FirstMaxTokens = 80;
+
+        /// What the turn's own model is told when the first sentence was written
+        /// for it: the words already said, to go on from without saying again.
+        internal static string GoOnNote(string first) =>
+            "\n\nYOUR REPLY HAS ALREADY BEGUN. You have just said, aloud: \"" + first + "\"\n"
+            + "Write only what you say next, in the same voice, as the rest of that same reply; never say those words again. "
+            + "If that already says all you would say, write nothing.";
+
+        /// The first sentence and what the turn's own model wrote after it, as one
+        /// reply: the rest's own copy of the first sentence, if it wrote one, left out.
+        internal static string GoneOn(string first, string rest)
+        {
+            rest = (rest ?? "").Trim();
+            if (rest.StartsWith(first, StringComparison.Ordinal)) rest = rest.Substring(first.Length).TrimStart();
+            return rest.Length == 0 ? first : first + " " + rest;
+        }
+
         /// The last reply's plan: its intent and the fact ids it named that the
         /// character holds; null when there was none.
         public (string intent, List<string> facts)? LastPlan { get; private set; }
@@ -1422,7 +1450,7 @@ namespace Ledger.Core
             {
                 try
                 {
-                    d.Response = await streaming.StreamAsync(request, text =>
+                    void OnText(string text)
                     {
                         if (d.FirstTask != null) return;
                         // A stage direction said in the first person is never the
@@ -1471,7 +1499,43 @@ namespace Ledger.Core
                                 return (false, bad, cost);
                             return (await onFirstChecked(said).ConfigureAwait(false), bad, cost);
                         });
-                    }, stop.Token);
+                    }
+                    // THE FIRST SENTENCE BY THE FASTER MODEL (FirstModel): its stream
+                    // stopped the moment its first sentence is complete, which then
+                    // goes the same way as the turn's own model's would; the turn's
+                    // own model writes the rest. A faster model that wrote no whole
+                    // sentence, or failed, leaves the turn's own model to write it all.
+                    var main = request;
+                    string fastFirst = null;
+                    if (FirstModel != null && FirstModel != request.Model && !PlanFirst)
+                    {
+                        var fast = new LlmRequest { Model = FirstModel, System = request.System, MaxTokens = FirstMaxTokens };
+                        fast.Messages.AddRange(request.Messages);
+                        using var fastStop = CancellationTokenSource.CreateLinkedTokenSource(stop.Token);
+                        try
+                        {
+                            var whole = await streaming.StreamAsync(fast, text =>
+                            {
+                                OnText(text);
+                                if (d.FirstTask != null) { try { fastStop.Cancel(); } catch (ObjectDisposedException) { } }
+                            }, fastStop.Token);
+                            _cost?.Record(FirstModel, whole.InputTokens, whole.OutputTokens);
+                        }
+                        catch (LlmStreamStoppedException s) when (!stop.IsCancellationRequested)
+                        {
+                            if (s.SoFar != null) _cost?.Record(FirstModel, s.SoFar.InputTokens, s.SoFar.OutputTokens);
+                        }
+                        catch (Exception) when (!stop.IsCancellationRequested && !ct.IsCancellationRequested) { }
+                        if (d.FirstTask != null)
+                        {
+                            fastFirst = d.First;
+                            d.Step?.Invoke(d.Prefix + "first-fast");
+                            main = new LlmRequest { Model = request.Model, System = request.System + GoOnNote(fastFirst), MaxTokens = request.MaxTokens };
+                            main.Messages.AddRange(request.Messages);
+                        }
+                    }
+                    d.Response = await streaming.StreamAsync(main, OnText, stop.Token);
+                    if (fastFirst != null) d.Response.Text = GoneOn(fastFirst, d.Response.Text);
                 }
                 catch (Exception e) when (!ct.IsCancellationRequested && stop.IsCancellationRequested)
                 {

@@ -12,7 +12,12 @@
 # screen size (3440x1440) and the game's own 55%. Each writes one JSON line (tools/perf-hook.py) and
 # its memory line to production/research/pre-production/p1-packaged/runs.jsonl. It refuses to start
 # while the build machine or an Unreal editor runs (their graphics work would be in the numbers).
-param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660)
+param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660,
+      [string]$Tag = "", [string]$Cvars = "", [string]$Picture = "", [string[]]$Only = @())
+# A VARIANT, 7 October (P1's first packaged reading found no room, and two suspects): -Tag names it
+# (appended to each label), -Cvars adds engine settings to the game's own, -Picture runs "scalability
+# <n>" once the street is up (2 is High, the most the first launch picks, 3 Highest), and -Only
+# keeps the named captures (day-stand, night-stand, day-walk). The voice speaks only as long as asked.
 # THE LAUNCHER AND THE GAME IT STARTS, 7 October: the copy's top-level LedgerProbe.exe is a launcher stub
 # that starts LedgerProbe\Binaries\Win64\LedgerProbe.exe and lingers. The first run measured the stub
 # (1 MB) and, stopping it, left the game itself running all night; started directly from a script the
@@ -63,13 +68,16 @@ $matrix = @(
   @{ label = "packaged-night-stand"; args = @("-PerfHook=stand", "-PerfHookNight") },
   @{ label = "packaged-day-walk"; args = @("-PerfHook=walk") }
 )
+if ($Only.Count) { $matrix = @($matrix | Where-Object { $Only -contains $_.label.Replace("packaged-", "") }) }
 foreach ($m in $matrix) {
+  $label = $m.label + $(if ($Tag) { "-" + $Tag } else { "" })
   Remove-Item "$csvDir\*" -Force -ErrorAction SilentlyContinue
   $a = @("-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkFake", "-NoTitle") + $m.args + @(
          "-PerfHookFrames=$Frames", "-csvGpuStats", "-ExitAfterCsvProfiling", "-RenderOffScreen", "-ResX=3440", "-ResY=1440",
-         "-windowed", "-ForceRes", "-nosplash", "-unattended", "-dpcvars=r.ScreenPercentage=55,t.MaxFPS=0,r.VSync=0")
+         "-windowed", "-ForceRes", "-nosplash", "-unattended", "-dpcvars=r.ScreenPercentage=55,t.MaxFPS=0,r.VSync=0" + $(if ($Cvars) { "," + $Cvars } else { "" }))
+  if ($Picture) { $a += "-ExecCmds=`"scalability $Picture`"" }
   $t0 = Get-Date
-  $stub = Start-Process -FilePath $Exe -ArgumentList $a -PassThru -NoNewWindow -RedirectStandardOutput "$tmp\$($m.label).log" -RedirectStandardError "$tmp\$($m.label).err"
+  $stub = Start-Process -FilePath $Exe -ArgumentList $a -PassThru -NoNewWindow -RedirectStandardOutput "$tmp\$label.log" -RedirectStandardError "$tmp\$label.err"
   $voicePids = @(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match "voice-server.py|voice_load.py" } | ForEach-Object { $_.ProcessId })
   # the game the launcher starts, found by its path (up to a minute)
   $p = $null
@@ -78,7 +86,7 @@ foreach ($m in $matrix) {
     $g = Get-CimInstance Win32_Process -Filter "Name='LedgerProbe.exe'" | Where-Object { $_.ExecutablePath -like "*\Binaries\Win64\LedgerProbe.exe" } | Select-Object -First 1
     if ($g) { $p = Get-Process -Id $g.ProcessId -ErrorAction SilentlyContinue }
   }
-  if (-not $p) { "p1Packaged $($m.label) status=NO-GAME-PROCESS"; continue }
+  if (-not $p) { "p1Packaged $label status=NO-GAME-PROCESS"; continue }
   $samples = @()
   while (-not $p.HasExited -and ((Get-Date) - $t0).TotalMinutes -lt 8) { Start-Sleep 2; $samples += ,(Sample-Memory $p.Id $voicePids) }
   if ($stub -and -not $stub.HasExited) { Stop-Process -Id $stub.Id -Force -ErrorAction SilentlyContinue }
@@ -86,8 +94,9 @@ foreach ($m in $matrix) {
   Get-Process LedgerProbe -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue   # nothing of this capture outlives it
   Start-Sleep 2
   $csv = Get-ChildItem $csvDir -Filter *.csv -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
-  $perf = if ($csv) { (& $py tools/perf-hook.py $csv.FullName --label $m.label) -join "" } else { "{`"label`": `"$($m.label)`", `"status`": `"NO-CSV`"}" }
-  $mem = @{ label = $m.label; samples = $samples.Count }
+  if ($csv) { Copy-Item $csv.FullName (Join-Path $tmp "$label.csv") -Force }   # each capture's frames kept
+  $perf = if ($csv) { (& $py tools/perf-hook.py $csv.FullName --label $label) -join "" } else { "{`"label`": `"$label`", `"status`": `"NO-CSV`"}" }
+  $mem = @{ label = $label; samples = $samples.Count }
   foreach ($k in "cardAllMB", "cardGameMB", "cardVoiceMB", "gamePrivateMB", "gameWorkingMB", "voicePrivateMB", "systemUsedMB") {
     $v = @($samples | ForEach-Object { $_[$k] } | Where-Object { $_ -ne $null } | Sort-Object)
     if ($v.Count) { $mem[$k + "Peak"] = $v[-1]; $mem[$k + "Median"] = $v[[int][math]::Floor($v.Count / 2)] }
@@ -95,7 +104,7 @@ foreach ($m in $matrix) {
   $memLine = $mem | ConvertTo-Json -Compress
   Add-Content $runs $perf -Encoding utf8
   Add-Content $runs $memLine -Encoding utf8
-  "p1Packaged $($m.label) minutes=$([math]::Round(((Get-Date) - $t0).TotalMinutes, 1))"
+  "p1Packaged $label minutes=$([math]::Round(((Get-Date) - $t0).TotalMinutes, 1))"
   $perf
   $memLine
 }
