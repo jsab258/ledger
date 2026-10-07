@@ -7659,9 +7659,190 @@ namespace
 		if (FParse::Param(FCommandLine::Get(), TEXT("MoveProofExit"))) { FPlatformMisc::RequestExit(false); }
 	}
 
+	// TURNING TO HIM, 7 October (phase 1, item 1.2, "turning"; production/research/sit-and-turn/
+	// METHOD-2026-10-06.md, turn step 2): the head turns first (the Look At, clamped at 60 degrees);
+	// when somebody he is talking to has had him more than 60 degrees off their facing for half a
+	// second, standing, a Mixamo quarter turn plays through the move slot (tools/ue/retarget_sitting.py
+	// moved its turn into the root) and its yaw, warped to the angle he is at, turns their visual each
+	// frame. The yaw is read from the clip at the montage's own place in it, not taken from the mesh:
+	// the engine weighs root motion by the blend, and a 0.9 s turn lost 5 of its 100 degrees while
+	// blending in and out (the second run). At the end the simulation's body takes the new facing, so
+	// a later placing keeps it.
+	// -TurnProof turns Sheila to him once whether or not they talk (-TurnProofOff=-100 on her left);
+	// -NoTurn leaves the body still.
+	struct FTurn
+	{
+		TWeakObjectPtr<AActor> Visual;
+		TWeakObjectPtr<ULedgerPersonAnim> Anim;
+		TWeakObjectPtr<UAnimSequence> Seq;
+		double OffSince = -1.0, At = 0.0;
+		float Warp = 1.0f, YawFrom = 0.0f, YawWant = 0.0f, YawTaken = 0.0f;
+		bool bTurning = false;
+		int32 Shot = 0;
+		double DoneAt = -1.0;
+		FString Clip;
+	};
+	std::map<std::string, FTurn> GTurns;
+	bool GTurnProofDone = false;
+
+	void TurnTick(UWorld* World, double Now)
+	{
+		static const bool bOff = FParse::Param(FCommandLine::Get(), TEXT("NoTurn"));
+		static const bool bProof = FParse::Param(FCommandLine::Get(), TEXT("TurnProof"));
+		if (bOff || World == nullptr || GPawn == nullptr) { return; }
+		for (const char* Card : { "sam", "lena", "rocco" })
+		{
+			AActor* Body = CardBody(Card);
+			AActor* Visual = GVisualFor(Body);
+			TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Parts = Body != nullptr ? GLooks.Find(Body) : nullptr;
+			if (Body == nullptr || Visual == nullptr || Visual == Body || Parts == nullptr) { continue; }
+			FTurn& T = GTurns[Card];
+			if (bProof && T.DoneAt > 0.0 && T.Shot == 2 && Now - T.DoneAt > 0.6)
+			{
+				// THE PROOF'S LAST PICTURE: her facing him, settled; then out with -TurnProofExit.
+				FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
+					/ TEXT("TurnProof") / TEXT("turn-2.png")), false, false);
+				T.Shot = 3;
+			}
+			if (bProof && T.Shot == 3 && Now - T.DoneAt > 2.5 && FParse::Param(FCommandLine::Get(), TEXT("TurnProofExit")))
+			{
+				FPlatformMisc::RequestExit(false);
+			}
+			if (T.bTurning)
+			{
+				ULedgerPersonAnim* A = T.Anim.Get();
+				UAnimSequence* Seq = T.Seq.Get();
+				if (A == nullptr || Seq == nullptr || T.Visual.Get() != Visual) { T.bTurning = false; continue; }
+				USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent();
+				Mesh->ConsumeRootMotion();   // the mesh's own store kept empty
+				UAnimMontage* Mont = A->GetCurrentActiveMontage();
+				const float Pos = Mont != nullptr ? FMath::Min(A->Montage_GetPosition(Mont), Seq->GetPlayLength()) : Seq->GetPlayLength();
+				const float Yaw = Mesh->ConvertLocalRootMotionToWorld(Seq->ExtractRootMotionFromRange(0.0, Pos, FAnimExtractContext()))
+					.GetRotation().Rotator().Yaw * T.Warp;
+				Visual->SetActorRotation(FRotator(0.0f, T.YawFrom + Yaw, 0.0f));
+				T.YawTaken = Yaw;
+				if (bProof && T.Shot < 2 && Now - T.At >= (T.Shot == 0 ? 0.05 : 0.9))
+				{
+					FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
+						/ TEXT("TurnProof") / FString::Printf(TEXT("turn-%d.png"), T.Shot)), false, false);
+					++T.Shot;
+				}
+				if (A->IsMoving() || Now - T.At < 0.3) { continue; }
+				T.bTurning = false;
+				T.DoneAt = Now;
+				T.OffSince = -1.0;
+				// THE BODY TAKES THE FACING: a MetaHuman faces its actor's +Y, the body's yaw is its gaze.
+				Body->SetActorRotation(FRotator(0.0f, Visual->GetActorRotation().Yaw + 90.0f, 0.0f));
+				const float Went = FRotator::NormalizeAxis(Visual->GetActorRotation().Yaw - T.YawFrom);
+				const float Left = FRotator::NormalizeAxis((GPawn->GetActorLocation() - Visual->GetActorLocation()).Rotation().Yaw
+				                                           - (Visual->GetActorRotation().Yaw + 90.0f));
+				UE_LOG(LogTemp, Display, TEXT("ledgerTurn=%s who=%s clip=%s yawWant=%.1f yawWent=%.1f stillOff=%.1f warp=%.2f seconds=%.2f"),
+					FMath::Abs(Went - T.YawWant) <= 5.0f && FMath::Abs(Left) <= 15.0f ? TEXT("PASS") : TEXT("FAIL"),
+					UTF8_TO_TCHAR(Card), *T.Clip, T.YawWant, Went, Left, T.Warp, Now - T.At);
+				continue;
+			}
+			const bool bTalking = GLive.Talked.count(Card) && !GLive.Left.count(Card);
+			const bool bProofHere = bProof && !GTurnProofDone && std::string(Card) == "lena" && Now > 8.0;
+			if (!bTalking && !bProofHere) { T.OffSince = -1.0; continue; }
+			// The body part: the one on the turn clips' skeleton, looking, standing, not walking.
+			UAnimSequence* L = LoadObject<UAnimSequence>(nullptr, TEXT("/Game/Ledger/Anim/Sit/A_turn_left_MH.A_turn_left_MH"));
+			UAnimSequence* R = LoadObject<UAnimSequence>(nullptr, TEXT("/Game/Ledger/Anim/Sit/A_turn_right_MH.A_turn_right_MH"));
+			ULedgerPersonAnim* A = nullptr;
+			for (const TWeakObjectPtr<ULedgerPersonAnim>& P : *Parts)
+			{
+				const USkeletalMeshComponent* M = P.IsValid() ? P->GetSkelMeshComponent() : nullptr;
+				if (L != nullptr && M != nullptr && M->GetSkeletalMeshAsset() != nullptr
+				    && M->GetSkeletalMeshAsset()->GetSkeleton() == L->GetSkeleton()) { A = P.Get(); break; }
+			}
+			if (A == nullptr || R == nullptr || (!A->bLook && !bProofHere) || A->IsMoving() || A->IsGathering()
+			    || (A->WalkSequence != nullptr && A->WalkWeight > 0.01f)
+			    || (A->Sequence != nullptr && A->Sequence->GetName().StartsWith(TEXT("A_sit"))))
+			{
+				T.OffSince = -1.0;
+				continue;
+			}
+			if (bProofHere && T.OffSince < 0.0)
+			{
+				// THE PROOF'S START: him three metres in front of her, looking at her; then her back half
+				// turned on him, 100 degrees, so the turn must happen.
+				const FVector Her = Visual->GetActorLocation();
+				FVector Spot = Her + FRotator(0.0f, Visual->GetActorRotation().Yaw + 90.0f, 0.0f).Vector() * 300.0;
+				Spot.Z = Her.Z + 100.0;
+				GPawn->SetActorLocation(Spot, false, nullptr, ETeleportType::TeleportPhysics);
+				if (APlayerController* PC = World->GetFirstPlayerController())
+				{
+					PC->SetControlRotation((Her + FVector(0.0, 0.0, 120.0) - (Spot + FVector(0.0, 0.0, 60.0))).Rotation());
+				}
+				const float ToHim = (Spot - Her).Rotation().Yaw;
+				float Away = 100.0f;   // -TurnProofOff=-100: him on her left, the left turn
+				FParse::Value(FCommandLine::Get(), TEXT("TurnProofOff="), Away);
+				Body->SetActorRotation(FRotator(0.0f, ToHim - Away, 0.0f));
+				SyncVisual(Body);
+				// A CAMERA FROM THE SIDE, on whichever side is open, both of them in frame: his own view
+				// had her behind him and the man beside him (the first run).
+				const FVector Mid = (Her + FVector(Spot.X, Spot.Y, Her.Z)) * 0.5 + FVector(0.0, 0.0, 150.0);
+				const FVector Across = FVector::CrossProduct((Spot - Her).GetSafeNormal2D(), FVector::UpVector);
+				FVector Eye = Mid + Across * 420.0;
+				for (const double Side : { 1.0, -1.0 })
+				{
+					FHitResult Hit;
+					FCollisionQueryParams Q(FName(TEXT("TurnProofEye")), false);
+					Q.AddIgnoredActor(GPawn);
+					if (!World->LineTraceSingleByChannel(Hit, Mid, Mid + Across * Side * 440.0, ECC_Visibility, Q))
+					{
+						Eye = Mid + Across * Side * 420.0;
+						break;
+					}
+				}
+				FActorSpawnParameters SP;
+				SP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				const FVector LookAt = Her + (FVector(Spot.X, Spot.Y, Her.Z) - Her) * 0.4 + FVector(0.0, 0.0, 110.0);
+				if (ACameraActor* Cam = World->SpawnActor<ACameraActor>(Eye, (LookAt - Eye).Rotation(), SP))
+				{
+					Cam->GetCameraComponent()->SetFieldOfView(55.0f);
+					if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetViewTargetWithBlend(Cam, 0.0f); }
+				}
+			}
+			const float Facing = Visual->GetActorRotation().Yaw + 90.0f;
+			const float Off = FRotator::NormalizeAxis((GPawn->GetActorLocation() - Visual->GetActorLocation()).Rotation().Yaw - Facing);
+			if (FMath::Abs(Off) <= 60.0f) { T.OffSince = -1.0; continue; }
+			if (T.OffSince < 0.0) { T.OffSince = Now; }
+			if (Now - T.OffSince < 0.5) { continue; }
+			// Unreal's yaw grows clockwise seen from above: him to the right is a right turn.
+			UAnimSequence* Seq = Off > 0.0f ? R : L;
+			Seq->bEnableRootMotion = true;
+			USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent();
+			const float ClipYaw = Mesh->ConvertLocalRootMotionToWorld(
+				Seq->ExtractRootMotionFromRange(0.0, Seq->GetPlayLength(), FAnimExtractContext())).GetRotation().Rotator().Yaw;
+			if (FMath::Abs(ClipYaw) < 45.0f)
+			{
+				UE_LOG(LogTemp, Display, TEXT("ledgerTurn=FAIL who=%s reason=clip-turns-%.1f clip=%s"), UTF8_TO_TCHAR(Card), ClipYaw, *Seq->GetName());
+				T.OffSince = Now + 30.0;
+				continue;
+			}
+			Mesh->ConsumeRootMotion();   // nothing carried in from before
+			if (!A->PlayMove(Seq)) { T.OffSince = -1.0; continue; }
+			T.bTurning = true;
+			T.Anim = A;
+			T.Visual = Visual;
+			T.At = Now;
+			T.Clip = Seq->GetName();
+			T.Seq = Seq;
+			T.YawFrom = Visual->GetActorRotation().Yaw;
+			T.YawTaken = 0.0f;
+			// WARPED TO HIS ANGLE, within reason: past half again the clip's turn the feet would slide.
+			T.Warp = FMath::Clamp(Off / ClipYaw, 0.6f, 1.6f);
+			T.YawWant = ClipYaw * T.Warp;
+			if (bProofHere) { GTurnProofDone = true; }
+			UE_LOG(LogTemp, Display, TEXT("ledgerTurn: %s turns to him, %.1f degrees off, %s (%.1f) warped %.2f"),
+				UTF8_TO_TCHAR(Card), Off, *T.Clip, ClipYaw, T.Warp);
+		}
+	}
+
 	bool HumanTalkTick(UWorld* World, double Now)
 	{
 		MoveProofTick(World, Now);
+		TurnTick(World, Now);
 		TalkShotTick(World);
 		SceneShotsTick(World);
 		PadShotTick(World);

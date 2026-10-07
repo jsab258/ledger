@@ -1,4 +1,4 @@
-"""Sitting down, sitting and standing up: three Mixamo clips, each made ready for Unreal to retarget.
+"""Sitting down, sitting, standing up and turning: Mixamo clips, each made ready for Unreal to retarget.
 
     blender -b --python tools/meshgen/blender/sitting_clips.py -- [SOURCE_DIR] [OUT_DIR]
     python tools/meshgen/blender/sitting_clips.py --selftest      # runs without Blender
@@ -27,9 +27,19 @@ import sys
 # falls from standing (about 1.0 m) to a seat (about 0.6 m) with little travel, a stand-up the
 # reverse, a seated loop holds near 0.6 m. X Bot is 2dee24f8, Y Bot 4f5d21e1 (characters_available.txt).
 X_BOT, Y_BOT = "2dee24f8-3b49-48af-b735-c6377509eaac", "4f5d21e1-4ccc-41f1-b35b-fb2547bd8493"
+MIRROR = "mirror"
 CLIPS = (("Seated Idle_" + X_BOT, "sit_down", X_BOT),       # 1.03 to 0.65 m, 0.28 m back
          ("Sitting Talking_" + Y_BOT, "sit_talk", Y_BOT),   # 0.56 m held 44 s, hands 0.2 to 0.3 m
-         ("Sit To Stand_" + X_BOT, "stand_up", X_BOT))      # 0.57 to 1.03 m, 0.47 m forward
+         ("Sit To Stand_" + X_BOT, "stand_up", X_BOT),      # 0.57 to 1.03 m, 0.47 m forward
+         # TURNING TO A SPEAKER (7 October, late): every 90-degree turn profiled by the up-legs' side
+         # line, the head's lowest against its rest height, the hands against the hips and the lean
+         # (F:/LedgerTools/scratch/turnprofile2.txt). "Standing Turn Right 90" held the right hand at
+         # the chest throughout and both "Standing" turns crouched to 0.88 and leant: Sheila hunched
+         # in the game. X Bot's "Left Turn 90" is the plainest (head 0.98, hands down, lean 3 cm,
+         # travel 2 cm, +90.0 degrees in 29 frames); no right turn came near it, so the right turn
+         # is its mirror image (MIRROR, mirrored()).
+         ("Left Turn 90_" + X_BOT, "turn_left", X_BOT),
+         ("Left Turn 90_" + X_BOT, "turn_right", X_BOT, MIRROR))
 SOURCE_DIR = os.path.join(os.path.expanduser("~"), "ledger-mixamo", "MixamoHarvester", "animations")
 OUT_DIR = os.path.join("F:" + os.sep, "LedgerTools", "game-inputs", "production", "assets", "anim", "sit")
 
@@ -50,6 +60,33 @@ def tpose_out(out_dir, bot):
 def out_file(out_dir, take):
     """One file a clip: the two characters' skeletons differ, so each keeps its own."""
     return os.path.join(out_dir, "%s.fbx" % take)
+
+
+def flipped_name(name):
+    """A bone's other side: Mixamo names its sides Left and Right inside the name."""
+    if "Left" in name:
+        return name.replace("Left", "Right")
+    if "Right" in name:
+        return name.replace("Right", "Left")
+    return name
+
+
+def mirrored(path, index):
+    """Where a key goes in the mirror image and its sign, as Blender's own flipped paste does across
+    the armature's X (Mixamo's rest pose is symmetric across it): the bone to its other side, its
+    location's x and its rotation's y and z turned over."""
+    head, _, rest = path.partition('pose.bones["')
+    bone, _, prop = rest.partition('"]')
+    if not rest:
+        return path, 1.0
+    sign = 1.0
+    if prop == ".location" and index == 0:
+        sign = -1.0
+    elif prop == ".rotation_quaternion" and index in (2, 3):
+        sign = -1.0
+    elif prop == ".rotation_euler" and index in (1, 2):
+        sign = -1.0
+    return head + 'pose.bones["' + flipped_name(bone) + '"]' + prop, sign
 
 
 def is_tpose(hips_z, hand_z, shoulder_z, hand_out, shoulder_out):
@@ -106,7 +143,8 @@ def main(src_dir, out_dir):
         export(tpose_out(out_dir, bot), [rig, box], False)
         made.append("tpose_%s/hips-%.2f" % (bot[:8], h.z))
     # EACH CLIP AS ITS SKELETON'S MOTION ONLY, imported in Unreal onto its character's T-pose skeleton.
-    for name, take, bot in CLIPS:
+    for clip in CLIPS:
+        name, take, bot = clip[:3]
         bpy.ops.wm.read_factory_settings(use_empty=True)
         rig = load(clip_file(src_dir, name))
         if rig is None or rig.animation_data is None or rig.animation_data.action is None:
@@ -114,6 +152,49 @@ def main(src_dir, out_dir):
             return 2
         rig.name = "SitRig"
         act = rig.animation_data.action
+        if MIRROR in clip[3:]:
+            # THE MIRROR IMAGE: every key copied to its bone's other side, signs turned over; then
+            # checked: each hand and foot must land where its other side's was, reflected in x.
+            def sample(a):
+                rig.animation_data.action = a
+                out = []
+                for f in range(int(a.frame_range[0]), int(a.frame_range[1]) + 1, 3):
+                    bpy.context.scene.frame_set(f)
+                    bpy.context.view_layer.update()
+                    out.append({b.name: b.head.copy() for b in rig.pose.bones})   # in the armature's own space
+                return out
+            was = sample(act)
+            new = bpy.data.actions.new(take)
+            rig.animation_data.action = new
+            # Blender 5 keeps an action's curves in its layers' strips, one channel bag a slot.
+            curves = [fc for layer in act.layers for strip in layer.strips for bag in strip.channelbags for fc in bag.fcurves]
+            copied = 0
+            for fc in curves:
+                path, sign = mirrored(fc.data_path, fc.array_index)
+                nc = new.fcurve_ensure_for_datablock(rig, path, index=fc.array_index,
+                                                     group_name=flipped_name(fc.group.name) if fc.group else "")
+                nc.keyframe_points.add(len(fc.keyframe_points))
+                for k, nk in zip(fc.keyframe_points, nc.keyframe_points):
+                    nk.co = (k.co[0], k.co[1] * sign)
+                    nk.interpolation = k.interpolation
+                nc.update()
+                copied += 1
+            if copied == 0:
+                print("sittingClips=NO-MIRROR clip=%s fcurves-unreadable" % take)
+                return 2
+            got = sample(new)
+            worst = 0.0
+            for a, b in zip(was, got):
+                for bone in a:
+                    if not any(k in bone for k in ("Hand", "Foot", "Head")):
+                        continue
+                    o, m = a[flipped_name(bone)], b[bone]
+                    worst = max(worst, ((o.x + m.x) ** 2 + (o.y - m.y) ** 2 + (o.z - m.z) ** 2) ** 0.5)
+            print("sittingClips: %s mirrored from %s, worst hand/foot/head off its reflection %.4f (armature units)" % (take, name, worst))
+            if worst > 0.02 * max(1.0, max(v.length for v in was[0].values())):
+                print("sittingClips=MIRROR-OFF clip=%s worst=%.4f" % (take, worst))
+                return 2
+            act = new
         act.name = take
         sc = bpy.context.scene
         sc.frame_start, sc.frame_end = (int(x) for x in act.frame_range)   # the clip's own length
@@ -131,7 +212,13 @@ def selftest():
         ok, bad = (ok + 1, bad) if cond else (ok, bad + 1)
         if not cond:
             print("sitting_clips selftest FAIL " + what)
-    check("three clips: down, the seated loop, up, in that order", [c[1] for c in CLIPS] == ["sit_down", "sit_talk", "stand_up"])
+    check("down, the seated loop, up, then the two turns", [c[1] for c in CLIPS] == ["sit_down", "sit_talk", "stand_up", "turn_left", "turn_right"])
+    check("the right turn is the left one's mirror", CLIPS[4][0] == CLIPS[3][0] and MIRROR in CLIPS[4][3:])
+    check("a mirrored key goes to the other side, turned over",
+          mirrored('pose.bones["mixamorig:LeftHand"].rotation_quaternion', 2) == ('pose.bones["mixamorig:RightHand"].rotation_quaternion', -1.0)
+          and mirrored('pose.bones["mixamorig:Hips"].location', 0) == ('pose.bones["mixamorig:Hips"].location', -1.0)
+          and mirrored('pose.bones["mixamorig:Hips"].location', 1)[1] == 1.0
+          and mirrored('pose.bones["mixamorig:Spine"].rotation_quaternion', 0)[1] == 1.0)
     check("each clip is its own file", out_file(OUT_DIR, "sit_down").endswith("sit_down.fbx"))
     check("each clip goes onto its own character's T-pose skeleton", all(c[0].endswith(c[2]) for c in CLIPS)
           and tpose_out("O", X_BOT).endswith("tpose_2dee24f8.fbx"))

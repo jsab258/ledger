@@ -13,7 +13,9 @@ inputs). Each character's T-pose is imported as a skeletal mesh and its clips on
 IK rig is made for it by the engine's own auto-generation, a retargeter maps it to the MetaHuman
 plugin's IK rig by chain name and lines the T-pose up with the MetaHuman's A-pose, and one batch
 retarget puts the clips onto the cast's shared body skeleton as A_<clip>_MH under OUT_DIR, which the
-build cooks. Root motion is not made: the game places the body on its seat. (7 October: the first
+build cooks. The sitting clips carry no root motion: the game places the body on its seat. The
+two turns do (turn_to_root): the hips' turn is moved into the root, frame by frame, and taken back
+out of the pelvis, so the pose is unchanged and the game turns the person by the root's yaw. (7 October: the first
 way, each clip imported with its own skeleton, took the clip's first frame as that skeleton's rest,
 and the seated clips came out standing and twisted: production/research/sit-and-turn/
 RETARGET-FAULT-2026-10-07.md.)
@@ -24,7 +26,8 @@ import os
 import sys
 import time
 
-CLIPS = ("sit_down", "sit_talk", "stand_up")
+CLIPS = ("sit_down", "sit_talk", "stand_up", "turn_left", "turn_right")
+TURNS = ("turn_left", "turn_right")   # their turn moved into the root (turn_to_root)
 INPUTS = os.environ.get("LEDGER_GAME_INPUTS", r"F:\LedgerTools\game-inputs")
 SOURCE_REL = os.path.join("production", "assets", "anim", "sit")
 TARGET_MESH = "/Game/Ledger/MetaHumans/MH_LenaS4/Body/SKM_MH_LenaS4_BodyMesh"   # the cast's shared skeleton
@@ -35,7 +38,8 @@ SUFFIX = "_MH"
 
 
 # Which Mixamo character's skeleton each clip moves (tools/meshgen/blender/sitting_clips.py CLIPS).
-CLIP_BOT = {"sit_down": "2dee24f8", "sit_talk": "4f5d21e1", "stand_up": "2dee24f8"}
+CLIP_BOT = {"sit_down": "2dee24f8", "sit_talk": "4f5d21e1", "stand_up": "2dee24f8",
+            "turn_left": "2dee24f8", "turn_right": "2dee24f8"}
 BOTS = ("2dee24f8", "4f5d21e1")
 
 
@@ -49,6 +53,53 @@ def source_fbx(clip, inputs=None):
 
 def out_path(clip):
     return "%s/A_%s%s" % (OUT_DIR, clip, SUFFIX)
+
+
+def qmul(a, b):
+    """Quaternions as (x, y, z, w), a then b applied as Unreal's a * b (b first)."""
+    ax, ay, az, aw = a
+    bx, by, bz, bw = b
+    return (aw * bx + ax * bw + ay * bz - az * by,
+            aw * by - ax * bz + ay * bw + az * bx,
+            aw * bz + ax * by - ay * bx + az * bw,
+            aw * bw - ax * bx - ay * by - az * bz)
+
+
+def qinv(q):
+    return (-q[0], -q[1], -q[2], q[3])
+
+
+def qrot(q, v):
+    """v turned by q."""
+    x, y, z, _ = qmul(qmul(q, (v[0], v[1], v[2], 0.0)), qinv(q))
+    return (x, y, z)
+
+
+def qyaw(deg):
+    import math
+    h = math.radians(deg) / 2.0
+    return (0.0, 0.0, math.sin(h), math.cos(h))
+
+
+def unwrapped_yaws(sides):
+    """Each frame's facing from the line across the hips (thigh_l minus thigh_r, x and y), unwrapped
+    and counted from the first frame, in degrees."""
+    import math
+    out, last, turn = [], None, 0.0
+    for (x, y) in sides:
+        a = math.degrees(math.atan2(y, x))
+        if last is not None:
+            turn += (a - last + 540.0) % 360.0 - 180.0
+        last = a
+        out.append(turn)
+    return out
+
+
+def counter_turned(root_q, yaw_deg, local_t, local_q):
+    """The pelvis's local transform once the root turns by yaw_deg more: its world place and turn kept.
+    New root R' = Rz(yaw) * R; the child's local p' = R'^-1 * R * p."""
+    fix = qmul(qinv(qmul(qyaw(yaw_deg), root_q)), root_q)
+    return qrot(fix, local_t), qmul(fix, local_q)
 
 
 def status_line(status, asked, made, seconds, note):
@@ -93,6 +144,59 @@ def main():
         task.set_editor_property("options", ui)
         tools.import_asset_tasks([task])
         return [lib.load_asset(q) for q in lib.list_assets(dest, recursive=True, include_folder=False)]
+
+    def turn_to_root(seq):
+        """The hips' turn moved into the root (root motion the game takes), the pelvis turned back by
+        as much; returns the root's yaw at the end and the largest shift of the head or a foot."""
+        opts = unreal.AnimPoseEvaluationOptions()
+        opts.set_editor_property("evaluation_type", unreal.AnimDataEvalType.RAW)
+        # THE TRACKS AS STORED: evaluation retargets by default, scaling the pelvis's place to the
+        # skeleton's own height, and that scaled place written back shifted the whole body 3.17 cm.
+        opts.set_editor_property("should_retarget", False)
+        P = unreal.AnimPoseExtensions
+        W, L = unreal.AnimPoseSpaces.WORLD, unreal.AnimPoseSpaces.LOCAL
+        n = unreal.AnimationLibrary.get_num_frames(seq)
+        poses = [P.get_anim_pose_at_frame(seq, f, opts) for f in range(n + 1)]
+
+        def vec(t):
+            return (t.translation.x, t.translation.y, t.translation.z)
+
+        def quat(t):
+            q = t.rotation
+            return (q.x, q.y, q.z, q.w)
+        sides = []
+        for pose in poses:
+            l, r = vec(P.get_bone_pose(pose, "thigh_l", W)), vec(P.get_bone_pose(pose, "thigh_r", W))
+            sides.append((l[0] - r[0], l[1] - r[1]))
+        yaws = unwrapped_yaws(sides)
+        watch = ("head", "foot_l", "foot_r", "hand_r")
+        before = [[vec(P.get_bone_pose(pose, b, W)) for b in watch] for pose in poses]
+        root_pos, root_rot, root_scl, pel_pos, pel_rot, pel_scl = [], [], [], [], [], []
+        for pose, yaw in zip(poses, yaws):
+            rt, pt = P.get_bone_pose(pose, "root", L), P.get_bone_pose(pose, "pelvis", L)
+            rq = quat(rt)
+            nq = qmul(qyaw(yaw), rq)
+            root_pos.append(rt.translation)
+            root_rot.append(unreal.Quat(nq[0], nq[1], nq[2], nq[3]))
+            root_scl.append(rt.scale3d)
+            t2, q2 = counter_turned(rq, yaw, vec(pt), quat(pt))
+            pel_pos.append(unreal.Vector(t2[0], t2[1], t2[2]))
+            pel_rot.append(unreal.Quat(q2[0], q2[1], q2[2], q2[3]))
+            pel_scl.append(pt.scale3d)
+        ctrl = seq.controller
+        ctrl.set_bone_track_keys("root", root_pos, root_rot, root_scl)
+        ctrl.set_bone_track_keys("pelvis", pel_pos, pel_rot, pel_scl)
+        seq.set_editor_property("enable_root_motion", True)
+        lib.save_loaded_asset(seq, only_if_is_dirty=False)
+        moved, where = 0.0, "none"
+        for f in range(n + 1):
+            pose = P.get_anim_pose_at_frame(seq, f, opts)
+            for b, was in zip(watch, before[f]):
+                now = vec(P.get_bone_pose(pose, b, W))
+                d = sum((now[i] - was[i]) ** 2 for i in range(3)) ** 0.5
+                if d > moved:
+                    moved, where = d, "%s@%d/%d" % (b, f, n)
+        return yaws[-1], moved, where
 
     target_mesh = unreal.load_asset(TARGET_MESH)
     target_rig = unreal.load_asset(TARGET_RIG)
@@ -174,7 +278,15 @@ def main():
             if lib.does_asset_exist(want):
                 made += 1
                 done = unreal.load_asset(want)
-                notes.append("%s:%.1fs/auto-rig-%s" % (clip, done.get_play_length() if done else -1.0, "yes" if auto_ok else "NO"))
+                note = "%s:%.1fs/auto-rig-%s" % (clip, done.get_play_length() if done else -1.0, "yes" if auto_ok else "NO")
+                if clip in TURNS and done is not None:
+                    try:
+                        yaw, moved, where = turn_to_root(done)
+                        note += "/root-yaw%+.1f/pose-moved-%.2fcm-%s" % (yaw, moved, where)
+                    except Exception as e:
+                        made -= 1
+                        note += "/turn-RAISED-%s" % str(e)[:60].replace(" ", "~")
+                notes.append(note)
             else:
                 notes.append("%s:not-made" % clip)
     lib.save_directory(WORK_DIR, only_if_is_dirty=False, recursive=True)
@@ -193,7 +305,15 @@ def selftest():
         else:
             bad += 1
             print("retarget_sitting selftest FAIL " + name)
-    check("the clips the Blender step makes", CLIPS == ("sit_down", "sit_talk", "stand_up"))
+    check("the clips the Blender step makes", CLIPS == ("sit_down", "sit_talk", "stand_up", "turn_left", "turn_right"))
+    import math
+    check("a left turn counted from the first frame, across the wrap",
+          [round(y) for y in unwrapped_yaws([(math.cos(math.radians(a)), math.sin(math.radians(a))) for a in (170, 180, -170, -100)])] == [0, 10, 20, 90])
+    t, q = counter_turned((0.0, 0.0, 0.0, 1.0), 90.0, (10.0, 0.0, 95.0), (0.0, 0.0, 0.0, 1.0))
+    back = qrot(qyaw(90.0), t)
+    check("the pelvis turned back keeps its place in the world", abs(back[0] - 10.0) < 1e-6 and abs(back[1]) < 1e-6 and abs(back[2] - 95.0) < 1e-6)
+    whole = qmul(qyaw(90.0), q)
+    check("and its turn in the world", abs(whole[3] - 1.0) < 1e-6 or abs(whole[3] + 1.0) < 1e-6)
     check("a fixed name the game loads", out_path("sit_down") == "/Game/Ledger/Anim/Sit/A_sit_down_MH")
     check("it lands where the build cooks", out_path("stand_up").startswith("/Game/Ledger/"))
     check("the work stays out of the cook", not WORK_DIR.startswith("/Game/Ledger/"))

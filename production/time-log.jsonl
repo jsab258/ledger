@@ -35,3 +35,7 @@
 {"event": "stop", "at": "2026-10-07T21:01:47", "note": "the glass anti-aliasing tried three times and set aside; Ron's and Sheila's spots; Mickey's front wear; the house sides turned outward and seen closed in the editor; subtitles and prompt"}
 {"event": "start", "at": "2026-10-07T21:05:00", "task": "7 Oct night: sitting clips, the wear's cause found (two tries, set aside)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-07T21:50:00", "note": ""}
+{"event": "start", "at": "2026-10-07T21:50:00", "task": "7 Oct night: the wear in the material, the front decals dropped, sitting works (Ron seated)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-07T23:32:00", "note": ""}
+{"event": "start", "at": "2026-10-07T23:32:00", "task": "7-8 Oct night: turning to him, clips profiled, mirrored, retargeted, proof both sides, checks", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T00:12:00", "note": ""}
