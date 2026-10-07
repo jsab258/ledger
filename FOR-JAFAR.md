@@ -3,19 +3,19 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Tuesday 6 October, 21:00)
+## Overview (Wednesday 7 October, 08:50: late; the session closed at 00:30 and the 07:30 update was not written)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
 **Morning, Wednesday 7 October. Phase 1, prove the bottlenecks. On: 1.1 Mickey's front office, frontage, three views: production/research/pre-production/3-PROOFS.md. Next: 1.2 Tom and a speaker: production/casting/CASTING.md.**
 
-No morning pictures today: the film ran past 30 minutes and was stopped. Yesterday's stand below.
+Filmed by the morning task at 05:20 (at 5bd17b52); it then ran past its 30 minutes and stopped, so the block was written late by hand.
 
 | | Today, 07 Oct | Yesterday, 06 Oct |
 |---|---|---|
-| The hook camera by day | none | ![The hook camera by day, 2026-10-06](production/previews/morning-hook-day-2026-10-06.jpg) |
-| The reverse view | none | ![The reverse view, 2026-10-06](production/previews/morning-reverse-day-2026-10-06.jpg) |
-| The street at night | none | ![The street at night, 2026-10-06](production/previews/morning-night-2026-10-06.jpg) |
+| The hook camera by day | ![The hook camera by day, 2026-10-07](production/previews/morning-hook-day-2026-10-07.jpg) | ![The hook camera by day, 2026-10-06](production/previews/morning-hook-day-2026-10-06.jpg) |
+| The reverse view | ![The reverse view, 2026-10-07](production/previews/morning-reverse-day-2026-10-07.jpg) | ![The reverse view, 2026-10-06](production/previews/morning-reverse-day-2026-10-06.jpg) |
+| The street at night | ![The street at night, 2026-10-07](production/previews/morning-night-2026-10-07.jpg) | ![The street at night, 2026-10-06](production/previews/morning-night-2026-10-06.jpg) |
 
 The Hook sheet, the bar they are held to: ![The Hook sheet](production/previews/hook-sheet-2026-10-05.jpg)
 
@@ -23,11 +23,11 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-Disk (10-06 04:30): C: 52.0 GB free, F: 26.2 GB free; grew most since 10-05 04:30: C:\LedgerTools\history-safety-2026-10-05.git\objects +33.4 GB, C:\Users\Jafar\ledger-local\ue-probe +12.7 GB, C:\Users\Jafar\ledger-local\.git\objects +3.3 GB.
+Disk (10-07 08:40): C: 110.3 GB free, F: 24.2 GB free (C: rose by 58 GB since yesterday's count).
 
-**Phase 0 is done; phase 1 runs in parallel, your pick.** **1.1, Mickey's office and Rita's frontage:** failed its first fresh review at 17:00 (the world's edge past the street's south end, window glass with no street in it, the shop door missing in the walk-in, no visible wear, no ashtray or map that read). All answered by 21:00: the windows mirror the street across the road; the street now runs on to a harbour built to your map, the sky's own fields and trees held back; the office door is locked until Tom comes with the key, and the lights go on as he steps in; wear on the counter and Rita's front; a real ashtray and the map. The packaged game is building; then the walk-in and a second fresh review. **1.2, Tom:** his face on its tenth pass (the fifth blind review: "one narrow round away"); walking now carries real travel (Epic's clips had none; it is worked out from the feet). Sitting still needs your two Mixamo clips. **1.3, the voice:** your answer below. **1.4:** the packaged run tonight, after the build.
+**Phase 1: on 1.1 (Mickey's office and Rita's front); next its second fresh review.** Its first review failed at 17:00 yesterday. Every point it named is fixed and walked in the packaged game: the windows mirror the street; the street now runs on to a harbour built to your map; the office is locked until Tom comes with the key, and the lights go on as he steps in; wear, a real ashtray, the map. **1.2, Tom:** walking now carries real travel. His face failed ten passes, so that route is set aside; research found two causes the tweaks could not reach, and a new attempt is ready to build. You will see no new Tom until you approve a face. **1.3, the voice:** your answer below. **1.4:** last night's packaged measurement was cut off when the session closed; it runs again today.
 
-**The tester's walk (6 October, 02:30, stand-in words).** 14 of 15 stages; it lost sight of Darren. Seven people saw Tom break Rita's window; only Ron showed afterwards that he knew. The sixty-question bench was not measured and the walk saved no pictures, both still open in FINDINGS.md.
+**The tester's walk (7 October, 02:30): did not run.** The game could not start: three game windows from the cut-off measurement were still open. Closed at 08:35; it walks again tonight. The night's packaged build did run (your new rule: only because wip had moved).
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
 - R3, the street missing the bar: up, 25. The audit finds the visual method unproved: five proof-view steps were set aside, and Mickey's room failed three reviews. Phase 1's binding stop answers it.
@@ -55,6 +55,16 @@ Retired, not asked: the brick-and-facades choice (the plan rebuilds them from th
 - **4. The friends' candidate** (0.50W): on your own account, $5 an evening.
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Tuesday 6 October
+
+**Done:** phase 0 passed its recheck. 1.1's fixes after its failed review: reflections, the harbour at the street's end, the locked office and its lights, wear, ashtray, map; walked in the packaged game. Walking carries real travel. Your build ruling is in (below).
+
+**Failed:** 1.1's first review; P2, the voice; Tom's face after ten passes (route set aside, new method ready); the walk-in's first three tries (a door bar, an engine warning, a leftover picture blocking the doorway, all fixed); last night's measurement and walk, lost when my session closed at 00:30, and so this update was late.
+
+**Your question, builds:** 8 packaged builds yesterday, 17 to 36 minutes (median 31, 3.2 hours): about 15 minutes cooking and packaging, 6 for a second cook kept only as an old measurement (removed), 9 for tests and pictures. While one runs the graphics card stays free: I write code, records and research and send reviewers; editor work waits. Monday's estimates are ready.
+
+**Act on:** the voice (A recommended) and the two Mixamo clips, below.
 
 ## Builder, Monday 5 October
 
