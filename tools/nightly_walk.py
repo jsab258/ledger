@@ -172,10 +172,20 @@ def parse_bench(text):
             "source": "the real engine's words, through Claude Code on the subscription, the game's talk settings"}
 
 
+# The tester saves its step pictures as JPEG (tools/ai-tester/play.py, "step-%03d.jpg"); until 7 October
+# only .png was looked for, so no night's eyes ever saw a picture.
+PICTURE_KINDS = ("*.jpg", "*.jpeg", "*.png")
+
+
+def walk_pictures(runs):
+    """The walk's pictures, in order, from the tester's run folders, in every kind it saves."""
+    return sorted(p for d in runs for kind in PICTURE_KINDS for p in glob.glob(os.path.join(d, kind)))
+
+
 def run_eyes(night, since_ts, summary):
     """Claude Code looks at the walk's pictures and names what broke the illusion."""
     runs = [d for d in glob.glob(os.path.join(TESTER_RUNS, "*")) if os.path.isdir(d) and os.path.getmtime(d) >= since_ts]
-    pics = sorted(p for d in runs for p in glob.glob(os.path.join(d, "*.png")))
+    pics = walk_pictures(runs)
     if not pics:
         return {"lines": [], "note": "no pictures from the walk to look at"}
     step = max(1, len(pics) // 12)
@@ -343,6 +353,20 @@ def selftest():
     check("the paragraph compares with the night before", "(-3 on the night before)" in para and "(+1 on the night before)" in para)
     check("the paragraph says the reply times are not the real path", "not the real path" in para)
     check("the bench runs with the game's own talk settings", "--rules" in open(__file__, encoding="utf-8").read() and "--plain" in open(__file__, encoding="utf-8").read())
+    # THE TESTER'S PICTURES ARE JPEGS (Jafar, 7 October: "the nightly report has never seen the
+    # tester's pictures, because the tester saves .jpg and the report looks only for .png"; every
+    # morning paragraph from 4 to 7 October said there were no pictures to look at).
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        run = os.path.join(td, "2026-10-07-0230")
+        os.makedirs(run)
+        for name in ("step-001.jpg", "step-002.jpg", "step-003.png", "report.md"):
+            open(os.path.join(run, name), "wb").close()
+        found = [os.path.basename(p) for p in walk_pictures([run])]
+        check("the walk's pictures are found as the tester saves them, .jpg as well as .png",
+              found == ["step-001.jpg", "step-002.jpg", "step-003.png"])
+    check("the tester saves its pictures as .jpg (play.py), which the search must cover",
+          '"step-%03d.jpg"' in open(os.path.join(REPO, "tools", "ai-tester", "play.py"), encoding="utf-8").read())
     print("nightly_walk selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
