@@ -11,7 +11,7 @@ Started 7 October 2026. The method on trial: write the target as numbers from re
 | Target drawing | [target_drawing.py](target_drawing.py) | the elevation, vertical section and horizontal section drawn in 2D from target.json, the way a joinery manual draws them; never reads the model |
 | The attempt | [window_design.py](window_design.py) | the window assembled member by member as 3D joinery (box frame, moulded and rebated sashes, horns, bars, oak sill), built in Blender by [../tools/blender_parts.py](../tools/blender_parts.py) |
 | The check | [check_window.py](check_window.py) | cuts the built model where the target is drawn and compares in millimetres; pass = every drawing overlap at least 0.97, outline 95th percentile within 2 mm, worst point within 6 mm, every dimension within 1 mm |
-| Attempts | checks/check_*.json (git); models, overlays and drawings on F:edgertoolsabsashbuild | one line per attempt below |
+| Attempts | checks/check_*.json (git); models, overlays and drawings on F:/LedgerTools/lab/sash/build | one line per attempt below |
 
 ## Attempts
 
