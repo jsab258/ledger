@@ -29,7 +29,7 @@ His binding rulings; the later stands; canon.md outranks them.
 
 ## The look and the street
 
-- 1 Oct: Every visual but clothes is judged against the Hook sheet and KCD2 frames; yes only for what would pass in a 2026 game; other games' screenshots never in the repository. 4 Oct: a step passes when its reviewer fails it only on narrow points later steps deal with.
+- 1 Oct: Every visual but clothes is judged against the Hook sheet and KCD2 frames; yes only for what would pass in a 2026 game; other games' screenshots never in the repository. 7 Oct: one view per reviewer, beside its last good picture: what changed, is it a fault? New faults block; known shortfalls, listed, fail nothing alone; narrow ones pass.
 - 5 Oct, weather: a grey range (dry overcast, drizzle, rain), the street drying and wetting over time; rain changes who is out, what is heard and what is seen; never sunshine in the friends' build.
 - 30 Sep: His page's pictures are taken at 2560×1440, never enlarged, open full size; films with sound.
 - 21 Sep: The Hook sheet (pass 4) governs mood, palette and composition; dated photographs govern what things looked like, and win; no design copied; references only in production/reference/.
