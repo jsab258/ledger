@@ -12,10 +12,12 @@
 # screen size (3440x1440) and the game's own 55%. Each writes one JSON line (tools/perf-hook.py) and
 # its memory line to production/research/pre-production/p1-packaged/runs.jsonl. It refuses to start
 # while the build machine or an Unreal editor runs (their graphics work would be in the numbers).
-param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe\Binaries\Win64\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660)
-# THE REAL BINARY, 7 October: the copy's top-level LedgerProbe.exe is a launcher stub that starts this one and
-# lingers, so the first run measured the stub (1 MB) and, when stopped, left the game itself running all
-# night. The real binary takes the project's name as its first argument.
+param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660)
+# THE LAUNCHER AND THE GAME IT STARTS, 7 October: the copy's top-level LedgerProbe.exe is a launcher stub
+# that starts LedgerProbe\Binaries\Win64\LedgerProbe.exe and lingers. The first run measured the stub
+# (1 MB) and, stopping it, left the game itself running all night; started directly from a script the
+# real binary would not find its own content. So the stub starts it, and the game is then found by its
+# path and measured, waited for and, if need be, stopped itself.
 $repo = Split-Path $PSScriptRoot -Parent
 Set-Location $repo
 if (Get-Process Runner.Worker, UnrealEditor*, LedgerProbe* -ErrorAction SilentlyContinue) { "p1Packaged status=BUSY (the build machine, an editor or a game is running)"; exit 2 }
@@ -23,7 +25,7 @@ if (-not (Test-Path $Exe)) { "p1Packaged status=NO-GAME exe=$Exe"; exit 2 }
 $outDir = Join-Path $repo "production\research\pre-production\p1-packaged"
 New-Item -ItemType Directory -Force $outDir | Out-Null
 $runs = Join-Path $outDir "runs.jsonl"
-$gameDir = Split-Path (Split-Path (Split-Path $Exe -Parent) -Parent) -Parent   # ...\Windows\LedgerProbe, where Saved is
+$gameDir = Join-Path (Split-Path $Exe -Parent) "LedgerProbe"
 $csvDir = Join-Path $gameDir "Saved\Profiling\CSV"
 $tmp = "F:\LedgerTools\tmp\p1-packaged"
 New-Item -ItemType Directory -Force $tmp | Out-Null
@@ -63,14 +65,23 @@ $matrix = @(
 )
 foreach ($m in $matrix) {
   Remove-Item "$csvDir\*" -Force -ErrorAction SilentlyContinue
-  $a = @("LedgerProbe", "-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkFake", "-NoTitle") + $m.args + @(
+  $a = @("-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkFake", "-NoTitle") + $m.args + @(
          "-PerfHookFrames=$Frames", "-csvGpuStats", "-ExitAfterCsvProfiling", "-RenderOffScreen", "-ResX=3440", "-ResY=1440",
          "-windowed", "-ForceRes", "-nosplash", "-unattended", "-dpcvars=r.ScreenPercentage=55,t.MaxFPS=0,r.VSync=0")
   $t0 = Get-Date
-  $p = Start-Process -FilePath $Exe -ArgumentList $a -PassThru -NoNewWindow -RedirectStandardOutput "$tmp\$($m.label).log" -RedirectStandardError "$tmp\$($m.label).err"
+  $stub = Start-Process -FilePath $Exe -ArgumentList $a -PassThru -NoNewWindow -RedirectStandardOutput "$tmp\$($m.label).log" -RedirectStandardError "$tmp\$($m.label).err"
   $voicePids = @(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match "voice-server.py|voice_load.py" } | ForEach-Object { $_.ProcessId })
+  # the game the launcher starts, found by its path (up to a minute)
+  $p = $null
+  for ($k = 0; $k -lt 30 -and -not $p; $k++) {
+    Start-Sleep 2
+    $g = Get-CimInstance Win32_Process -Filter "Name='LedgerProbe.exe'" | Where-Object { $_.ExecutablePath -like "*\Binaries\Win64\LedgerProbe.exe" } | Select-Object -First 1
+    if ($g) { $p = Get-Process -Id $g.ProcessId -ErrorAction SilentlyContinue }
+  }
+  if (-not $p) { "p1Packaged $($m.label) status=NO-GAME-PROCESS"; continue }
   $samples = @()
   while (-not $p.HasExited -and ((Get-Date) - $t0).TotalMinutes -lt 8) { Start-Sleep 2; $samples += ,(Sample-Memory $p.Id $voicePids) }
+  if ($stub -and -not $stub.HasExited) { Stop-Process -Id $stub.Id -Force -ErrorAction SilentlyContinue }
   if (-not $p.HasExited) { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue }
   Get-Process LedgerProbe -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue   # nothing of this capture outlives it
   Start-Sleep 2

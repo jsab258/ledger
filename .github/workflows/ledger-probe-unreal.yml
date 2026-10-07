@@ -874,7 +874,21 @@ jobs:
             $vi = Get-Item $voiceLink -Force
             if ($vi.LinkType) { [System.IO.Directory]::Delete($voiceLink, $false) }
           }
+          # NOTHING RUNNING FROM THE COPY, AND NO NESTING, 7 October: at 02:52 three game windows left
+          # open overnight held the old copy's files, Remove-Item left part of it, and Copy-Item then
+          # put the new build INSIDE it (played-game\Packaged\...), the launcher gone: his shortcut and
+          # the nightly walk had nothing to start. So any game running from the copy is closed first,
+          # and if the old copy still stands the step stops and says so, leaving it as it was.
+          Get-CimInstance Win32_Process -Filter "Name='LedgerProbe.exe'" -ErrorAction SilentlyContinue |
+            Where-Object { $_.ExecutablePath -and $_.ExecutablePath.StartsWith($dst, [System.StringComparison]::OrdinalIgnoreCase) } |
+            ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue; Write-Host "stableCopyClosedGame=$($_.ProcessId)" }
+          Start-Sleep -Seconds 2
           Remove-Item $dst -Recurse -Force -ErrorAction SilentlyContinue
+          if (Test-Path $dst) {
+            Write-Host "STABLE COPY FAILED: the old copy could not be removed (a file still in use); nothing copied, so nothing is nested. Destination left: $($dst -replace ' ','~')"
+            Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value "stableCopyStatus=OLD-COPY-LOCKED" -ErrorAction SilentlyContinue
+            exit 0
+          }
           Copy-Item -Path $src -Destination $dst -Recurse -Force
 
           # THE EFFECT, NOT THE EXIT CODE. Copy-Item reports success having

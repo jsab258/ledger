@@ -51,9 +51,23 @@ CSV_DIR = r"F:\LedgerTools\played-game\Windows\LedgerProbe\Saved\Profiling\CSV"
 WHO = ("rocco", "lena", "sam")
 
 
+FIRST_CHARS = 0   # --first N (7 October): hand only each line's opening words, at most N characters
+
+
+def opening(text, n):
+    """THE OPENING WORDS of a line, at most n characters, cut at a word and ended with a full stop:
+    what a shorter first piece would give the voice (the speech ruling of 7 October: how short can
+    the first piece be, beside the game, and what does the voice then take)."""
+    if n <= 0 or len(text) <= n:
+        return text
+    cut = text.rfind(" ", 0, n + 1)
+    head = text[:cut if cut > 0 else n].rstrip(" ,;:-")
+    return head + ("" if head.endswith((".", "!", "?")) else ".")
+
+
 def lines():
     d = json.loads((ROOT / "content" / "dialogue" / "crime-witness-v1.json").read_text(encoding="utf-8"))
-    return [x["text"] for x in d["lines"] if isinstance(x, dict) and x.get("text")]
+    return [opening(x["text"], FIRST_CHARS) for x in d["lines"] if isinstance(x, dict) and x.get("text")]
 
 
 def engine_cmd(name):
@@ -375,9 +389,18 @@ def selftest():
     return 1 if bad else 0
 
 
+def _opening_checks():
+    return (opening("Dark coat, moving quick, didn't stop for anyone.", 20) == "Dark coat, moving." and
+            opening("Short one.", 20) == "Short one." and
+            opening("Nobody saw a thing round here, love.", 0) == "Nobody saw a thing round here, love.")
+
+
 if __name__ == "__main__":
     a = sys.argv[1:]
     if "--selftest" in a:
+        if not _opening_checks():
+            print("off_card_bench selftest FAIL opening words")
+            sys.exit(1)
         sys.exit(selftest())
     engine = a[a.index("--engine") + 1] if "--engine" in a else "A"
     n = int(a[a.index("--lines") + 1]) if "--lines" in a else 24
@@ -385,6 +408,9 @@ if __name__ == "__main__":
     out = a[a.index("--out") + 1] if "--out" in a else "F:/LedgerTools/tmp/voice-off-card/%s-%s-%s" % (
         engine, "game" if game else "idle", time.strftime("%H%M"))
     frames = int(a[a.index("--frames") + 1]) if "--frames" in a else 22000
+    if "--first" in a:
+        FIRST_CHARS = int(a[a.index("--first") + 1])
+        out += "-first%d" % FIRST_CHARS
     r = run(engine, n, out, game=game, frames=frames)
     if "error" in r:
         print("ERROR", r["error"], flush=True)
