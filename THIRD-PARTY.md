@@ -102,7 +102,7 @@ from which reference. Not shipped: the chosen voice's reference moves to
 
 | | |
 |---|---|
-| **What** | 41 animation clips and the bodies the game ships: X Bot and Y Bot; Michelle (the street figure, `ue-probe/Content/Ledger/Figure`, by `tools/ue/import_figure.py`); and Joe, David, Martha, Leonard, Kate and Elizabeth, the street's people (`production/assets/people/*.glb` by `tools/art-recipes/person-export.py`, imported to `ue-probe/Content/Ledger/People`). Listed in full 5 October 2026, when the phase 0 exit review found the row naming only two bodies |
+| **What** | 41 animation clips and the bodies the game ships: X Bot and Y Bot; Michelle (the street figure, `ue-probe/Content/Ledger/Figure`, by `tools/ue/import_figure.py`); and Joe, David, Martha, Leonard, Kate and Elizabeth, the street's people (`production/assets/people/*.glb` by `tools/art-recipes/person-export.py`, imported to `ue-probe/Content/Ledger/People`). Listed in full 5 October 2026, when the phase 0 exit review found the row naming only two bodies. Since 7 October also five clips carried onto the MetaHuman body (sitting down, seated talking, standing up, X Bot's "Left Turn 90" and its mirror image), from the harvest by `tools/meshgen/blender/sitting_clips.py` and `tools/ue/retarget_sitting.py`, cooked from `/Game/Ledger/Anim/Sit` |
 | **Source** | Adobe Mixamo |
 | **Licence** | Mixamo's own terms — royalty-free use in a product, no redistribution of the assets as assets |
 | **Where in the repo** | `ledger/Assets/Characters/` |

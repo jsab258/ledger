@@ -7839,9 +7839,245 @@ namespace
 		}
 	}
 
+	// THE WALK PROOF, 8 October (phase 1, item 1.2, "walking"; METHOD-2026-10-06.md, step 3): -WalkProof
+	// in live play. Sheila, turned along the pavement, walks: the plugin's start, its loop entered at the
+	// frame the start ends on and left at the frame the stop begins on, then the stop, each a root-motion
+	// clip (tools/ue/make_root_motion_clips.py) through her move slot, her visual carried by the playing
+	// clip's own travel at its exact place and set on the floor below it each frame. The clips are cut,
+	// not cross-faded, where they meet: in a cross-fade the engine counted both clips' travel while the
+	// feet showed a blend, and the body outran its feet by up to 66 cm (the third run). Where they meet was measured on both feet
+	// and hands (8 October, F:/LedgerTools/scratch/walk_phase.txt): the start's last frame is the loop's
+	// frame 97 (1.6 cm off in all), the stop's first is the loop's frame 117 (it repeats each 30). The
+	// line names the travel and each foot's worst slip while planted: it passes at 3 cm or less.
+	// -WalkProofRate=R plays the clips at R (default 0.85: the plugin's walk is 1.8 m/s, brisk).
+	struct FWalkProof
+	{
+		int32 Step = 0, Shot = 0, Frames = 0;
+		double At = 0.0, NextShot = 0.0;
+		TWeakObjectPtr<AActor> Body, Visual;
+		TWeakObjectPtr<ULedgerPersonAnim> Anim;
+		FVector From = FVector::ZeroVector;
+		FVector Planted[2] = { FVector::ZeroVector, FVector::ZeroVector };
+		bool bDown[2] = { false, false };
+		float Slip[2] = { 0.0f, 0.0f };
+		float WorstSlip = 0.0f;
+		int32 Contacts = 0;
+		float Rate = 0.85f;
+		double PlayedAt = 0.0;
+		float PlayedFrom = 0.0f, PrevPos = 0.0f;
+		TWeakObjectPtr<UAnimMontage> Mont;
+		TWeakObjectPtr<UAnimSequence> Seq;
+	};
+	FWalkProof GWalk;
+
+	void WalkProofTick(UWorld* World, double Now)
+	{
+		static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("WalkProof"));
+		if (!bOn || World == nullptr || GWalk.Step >= 5) { return; }
+		static const TCHAR* kStart = TEXT("/Game/Ledger/Anim/RootMotion/AS_MH_Neutral_Walk_Start_F_Rfoot_RM.AS_MH_Neutral_Walk_Start_F_Rfoot_RM");
+		static const TCHAR* kLoop = TEXT("/Game/Ledger/Anim/RootMotion/AS_MH_Neutral_Walk_Loop_F_RM.AS_MH_Neutral_Walk_Loop_F_RM");
+		static const TCHAR* kStop = TEXT("/Game/Ledger/Anim/RootMotion/AS_MH_Neutral_Walk_Stop_F_Lfoot_RM.AS_MH_Neutral_Walk_Stop_F_Lfoot_RM");
+		const float LoopIn = 97.0f / 30.0f, LoopOut = 117.0f / 30.0f;
+		UAnimSequence* Start = LoadObject<UAnimSequence>(nullptr, kStart);
+		UAnimSequence* Loop = LoadObject<UAnimSequence>(nullptr, kLoop);
+		UAnimSequence* Stop = LoadObject<UAnimSequence>(nullptr, kStop);
+		if (GWalk.Step == 0)
+		{
+			AActor* Body = CardBody("lena");
+			AActor* Visual = GVisualFor(Body);
+			TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Parts = Body != nullptr ? GLooks.Find(Body) : nullptr;
+			if (Body == nullptr || Visual == nullptr || Visual == Body || Parts == nullptr || Now < 8.0) { return; }
+			ULedgerPersonAnim* A = nullptr;
+			for (const TWeakObjectPtr<ULedgerPersonAnim>& P : *Parts)
+			{
+				const USkeletalMeshComponent* M = P.IsValid() ? P->GetSkelMeshComponent() : nullptr;
+				if (Start != nullptr && M != nullptr && M->GetSkeletalMeshAsset() != nullptr
+				    && M->GetSkeletalMeshAsset()->GetSkeleton() == Start->GetSkeleton()) { A = P.Get(); break; }
+			}
+			if (A == nullptr || Loop == nullptr || Stop == nullptr)
+			{
+				UE_LOG(LogTemp, Display, TEXT("ledgerWalkProof=FAIL reason=%s"), A == nullptr ? TEXT("no-part-or-clip") : TEXT("no-loop-or-stop"));
+				GWalk.Step = 5;
+				return;
+			}
+			FParse::Value(FCommandLine::Get(), TEXT("WalkProofRate="), GWalk.Rate);
+			// ALONG THE PAVEMENT: the street's own axis (its x), either way, whichever is clear for 9 m
+			// at her knee (her facing's sides sent her across the pavement into the road, the first run).
+			const FVector Her = Visual->GetActorLocation();
+			const float Facing = (ToUE(LedgerCrime::P3(1.0, 0.0, 0.0)) - ToUE(LedgerCrime::P3(0.0, 0.0, 0.0))).Rotation().Yaw - 90.0f;
+			FCollisionQueryParams Q(FName(TEXT("WalkProofPath")), false);
+			Q.AddIgnoredActor(Visual);
+			Q.AddIgnoredActor(Body);
+			if (GPawn != nullptr) { Q.AddIgnoredActor(GPawn); }
+			float Best = -1.0f, BestYaw = Facing + 90.0f;
+			for (const float Side : { 90.0f, -90.0f })
+			{
+				const FVector Dir = FRotator(0.0f, Facing + Side, 0.0f).Vector();
+				const FVector Across = FVector::CrossProduct(Dir, FVector::UpVector);
+				// a corridor her width: three lines at ankle, knee and chest, at her middle and either side
+				// (one line at her knee missed the crate she stopped against, the second run)
+				float Clear = 900.0f;
+				for (const double Up : { 15.0, 50.0, 110.0 })
+				{
+					for (const double Off : { -25.0, 0.0, 25.0 })
+					{
+						FHitResult Hit;
+						const FVector From = Her + FVector(0, 0, Up) + Across * Off;
+						if (World->LineTraceSingleByChannel(Hit, From, From + Dir * 900.0, ECC_Visibility, Q)) { Clear = FMath::Min(Clear, Hit.Distance); }
+					}
+				}
+				if (Clear > Best) { Best = Clear; BestYaw = Facing + Side; }
+			}
+			Body->SetActorRotation(FRotator(0.0f, BestYaw, 0.0f));
+			SyncVisual(Body);
+			// A CAMERA FROM WHICHEVER SIDE IS OPEN (the road's), the whole walk in frame.
+			const FVector Mid = Her + FRotator(0.0f, BestYaw, 0.0f).Vector() * 350.0 + FVector(0, 0, 150.0);
+			FVector Eye = Mid + FRotator(0.0f, BestYaw + 90.0f, 0.0f).Vector() * 700.0;
+			for (const float Side : { 90.0f, -90.0f })
+			{
+				FHitResult Hit;
+				const FVector Try = Mid + FRotator(0.0f, BestYaw + Side, 0.0f).Vector() * 700.0;
+				if (!World->LineTraceSingleByChannel(Hit, Mid, Try, ECC_Visibility, Q)) { Eye = Try; break; }
+			}
+			FActorSpawnParameters SP;
+			SP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			if (ACameraActor* Cam = World->SpawnActor<ACameraActor>(Eye, (Mid - FVector(0, 0, 60.0) - Eye).Rotation(), SP))
+			{
+				Cam->GetCameraComponent()->SetFieldOfView(70.0f);
+				if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetViewTargetWithBlend(Cam, 0.0f); }
+			}
+			// HER BODY HELD STILL MEANWHILE: the visual leaves the simulation's body for the walk.
+			GVisuals.Remove(Body);
+			GWalk.Body = Body;
+			GWalk.Visual = Visual;
+			GWalk.Anim = A;
+			GWalk.From = Visual->GetActorLocation();
+			A->GetSkelMeshComponent()->ConsumeRootMotion();
+			if (!A->PlayMove(Start, 0.25f, 0.0f, GWalk.Rate))
+			{
+				UE_LOG(LogTemp, Display, TEXT("ledgerWalkProof=FAIL reason=play-refused"));
+				GVisuals.Add(Body, Visual);
+				GWalk.Step = 5;
+				return;
+			}
+			GWalk.At = Now;
+			GWalk.PlayedAt = Now;
+			GWalk.PlayedFrom = 0.0f;
+			GWalk.PrevPos = 0.0f;
+			GWalk.Mont = A->GetCurrentActiveMontage();
+			GWalk.Seq = Start;
+			GWalk.NextShot = Now + 0.4;
+			GWalk.Step = 1;
+			UE_LOG(LogTemp, Display, TEXT("ledgerWalkProof: Sheila walks along the pavement, %.0f cm clear, rate %.2f"), Best, GWalk.Rate);
+			return;
+		}
+		ULedgerPersonAnim* A = GWalk.Anim.Get();
+		AActor* Visual = GWalk.Visual.Get();
+		if (A == nullptr || Visual == nullptr) { GWalk.Step = 5; return; }
+		USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent();
+		// THE TRAVEL: the playing clip's own, from where it was to where it is (the engine's left unused).
+		Mesh->ConsumeRootMotion();
+		UAnimSequence* Seq = GWalk.Seq.Get();
+		UAnimMontage* Mont = GWalk.Mont.Get();
+		const float Clock = GWalk.PlayedFrom + (float)(Now - GWalk.PlayedAt) * GWalk.Rate;
+		const float Pos = (Mont != nullptr && A->Montage_IsPlaying(Mont)) ? A->Montage_GetPosition(Mont)
+			: (Seq != nullptr ? FMath::Min(Clock, Seq->GetPlayLength()) : Clock);
+		if (Seq != nullptr && Pos > GWalk.PrevPos)
+		{
+			const FTransform W = Mesh->ConvertLocalRootMotionToWorld(Seq->ExtractRootMotionFromRange(GWalk.PrevPos, Pos, FAnimExtractContext()));
+			Visual->AddActorWorldOffset(FVector(W.GetTranslation().X, W.GetTranslation().Y, 0.0));
+			Visual->AddActorWorldRotation(FRotator(0.0f, W.GetRotation().Rotator().Yaw, 0.0f));
+		}
+		GWalk.PrevPos = FMath::Max(GWalk.PrevPos, Pos);
+		{
+			FCollisionQueryParams Q(FName(TEXT("WalkProofFloor")), false);
+			Q.AddIgnoredActor(Visual);
+			TArray<AActor*> Worn;
+			Visual->GetAttachedActors(Worn, true, true);
+			Q.AddIgnoredActors(Worn);
+			if (AActor* B = GWalk.Body.Get()) { Q.AddIgnoredActor(B); }
+			if (GPawn != nullptr) { Q.AddIgnoredActor(GPawn); }
+			const FVector L = Visual->GetActorLocation();
+			FHitResult Hit;
+			if (World->LineTraceSingleByChannel(Hit, L + FVector(0, 0, 60.0), L - FVector(0, 0, 120.0), ECC_Visibility, Q))
+			{
+				Visual->SetActorLocation(FVector(L.X, L.Y, Hit.ImpactPoint.Z));
+			}
+		}
+		++GWalk.Frames;
+		// EACH FOOT WHILE PLANTED: the ball within 3 cm of her feet's level; its drift is the slip.
+		const float Floor = Visual->GetActorLocation().Z;
+		const FName Balls[2] = { FName(TEXT("ball_l")), FName(TEXT("ball_r")) };
+		for (int32 I = 0; I < 2; ++I)
+		{
+			const FVector P = Mesh->GetSocketLocation(Balls[I]);
+			// planted: the ball within 1.5 cm of where a standing ball sits (about 1 cm up) and the lower
+			// foot; a swinging ball passes as low as 4 cm, which the first test counted as planted
+			const FVector Other = Mesh->GetSocketLocation(Balls[1 - I]);
+			const bool bDown = P.Z - Floor < 2.5f && P.Z <= Other.Z + 1.0f;
+			if (!bDown && GWalk.bDown[I] && GWalk.Step >= 1)
+			{
+				UE_LOG(LogTemp, Display, TEXT("ledgerWalkProof: %s planted then lifted, slip %.2f cm"), I == 0 ? TEXT("left") : TEXT("right"), GWalk.Slip[I]);
+			}
+			if (bDown && !GWalk.bDown[I]) { GWalk.Planted[I] = P; GWalk.Slip[I] = 0.0f; ++GWalk.Contacts; }
+			if (bDown && GWalk.bDown[I])
+			{
+				GWalk.Slip[I] = FMath::Max(GWalk.Slip[I], (float)FVector::Dist2D(P, GWalk.Planted[I]));
+				// only while walking, not the first or last half second of standing
+				if (GWalk.Step >= 1 && Now - GWalk.At > 0.5) { GWalk.WorstSlip = FMath::Max(GWalk.WorstSlip, GWalk.Slip[I]); }
+			}
+			GWalk.bDown[I] = bDown;
+		}
+		if (Now >= GWalk.NextShot && GWalk.Shot < 24)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
+				/ TEXT("WalkProof") / FString::Printf(TEXT("walk-%02d.png"), GWalk.Shot++)), false, false);
+			GWalk.NextShot = Now + 0.4;
+		}
+		// THE NEXT CLIP, cut in the frame before this one would run past the meeting point (a montage
+		// stops counting as active once it blends out, so the first run never saw the start end).
+		const float Next = Pos + FApp::GetDeltaTime() * GWalk.Rate;
+		auto Cut = [&](UAnimSequence* To, float From, float In, float Out)
+		{
+			GWalk.Mont = A->PlaySlotAnimationAsDynamicMontage(To, ULedgerPersonAnim::MoveSlot, In, Out, GWalk.Rate, 1, -1.0f, From);
+			GWalk.Seq = To;
+			GWalk.PlayedFrom = From;
+			GWalk.PrevPos = From;
+			GWalk.PlayedAt = Now;
+		};
+		if (GWalk.Step == 1 && Next >= Start->GetPlayLength())
+		{
+			// THE LOOP at the frame the start has reached, counted back from its frame 97.
+			Cut(Loop, LoopIn - (Start->GetPlayLength() - Pos), 0.05f, 0.0f);
+			GWalk.Step = 2;
+		}
+		else if (GWalk.Step == 2 && Next >= LoopOut)
+		{
+			// THE STOP, its first frame at the loop's 117; a short blend, their hands differ.
+			Cut(Stop, FMath::Max(0.0f, Pos - LoopOut), 0.1f, 0.3f);
+			GWalk.Step = 3;
+		}
+		else if (GWalk.Step == 3 && Pos >= Stop->GetPlayLength() - 0.01f)
+		{
+			GWalk.Step = 4;
+			GWalk.At = Now;
+		}
+		else if (GWalk.Step == 4 && Now - GWalk.At > 1.0)
+		{
+			const FVector Went = Visual->GetActorLocation() - GWalk.From;
+			const bool bPass = Went.Size2D() > 500.0 && GWalk.WorstSlip <= 3.0f;
+			UE_LOG(LogTemp, Display, TEXT("ledgerWalkProof=%s wentCm=%.1f riseCm=%.1f worstSlipCm=%.2f contacts=%d frames=%d rate=%.2f shots=%d"),
+				bPass ? TEXT("PASS") : TEXT("FAIL"), Went.Size2D(), Went.Z, GWalk.WorstSlip, GWalk.Contacts, GWalk.Frames, GWalk.Rate, GWalk.Shot);
+			if (AActor* Body = GWalk.Body.Get()) { GVisuals.Add(Body, Visual); }
+			GWalk.Step = 5;
+			if (FParse::Param(FCommandLine::Get(), TEXT("WalkProofExit"))) { FPlatformMisc::RequestExit(false); }
+		}
+	}
+
 	bool HumanTalkTick(UWorld* World, double Now)
 	{
 		MoveProofTick(World, Now);
+		WalkProofTick(World, Now);
 		TurnTick(World, Now);
 		TalkShotTick(World);
 		SceneShotsTick(World);
