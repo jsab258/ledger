@@ -7,5 +7,6 @@ The floor and the exception are RULINGS.md's Clothes section, unchanged: plain, 
 ## Open brief (PLAN.md: phase 1's complete speaker, then phase 2's P6)
 
 1. **One allowed plain outfit fitted to the exact approved bodies,** first Ron (MH_RoccoP2), then Darren (MH_SamC5) and Sheila (MH_LenaS4), each named by file and checksum from F:\LedgerTools\bodies\README.md: plain trousers, a jumper and plain shoes, replacing the white base layer. Accepted when it walks, sits, turns and raises its arms in the game's camera without clipping, holes or stiffness, judged against the floor by a fresh reviewer, with its deformation films and source records handed over.
+   State, 7 October: the outfit made by script in Blender failed three fresh reviews (the third on shape: balloon sleeves, trousers like leggings; production/audits/clothing/RON-OUTFIT-REVIEW-3.md) and is set aside by the two-tries rule. Next direction, being researched: ready-made CC0 garments (MakeHuman's fisherman sweater and wool trousers, on F:) refitted to Ron as the suit jacket was.
 
 Kept in the game: Ron's boots; Sheila's skirt, tights, handbag and spectacles; Darren's belt and pager. Tom's body is exported before his outfit is asked for.

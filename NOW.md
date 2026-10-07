@@ -18,7 +18,7 @@ GOAL (his /goal, to Sunday 11 Oct 20:00): PLAN.md's phases 0 and 1 done with evi
 - [ ] 1.3 P2 voice: 3-PROOFS.md, P2.
 - [ ] 1.4 P1 packaged: 3-PROOFS.md, P1.
 
-STATE (7 Oct, 10:45): 1.1 walked packaged; second gate next. 1.2: travel baked; Tom's face blocked after its last try, to him. 1.3: FAILED, blocked (his answer); check study proposed. 1.4: measured packaged, four fixes; 67c51f5 meets the line with room (2.7 to 3.8 ms).
+STATE (7 Oct, 18:50): 1.1 second gate failed; glass, office, black block fixed; third gate next. 1.2: Tom's face blocked; Ron's outfit set aside, CC0 route researched. 1.3: FAILED, blocked (his answer); check study proposed. 1.4: measured packaged, four fixes; 67c51f5 meets the line with room (2.7 to 3.8 ms).
 
 ## Handovers
 

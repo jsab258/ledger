@@ -3919,6 +3919,34 @@ CLIMB_HOUSE = {"bay_width_m": 6.0, "storey_heights_m": [3.3, 2.7], "ground_floor
                "roof": {"kind": "pitched", "pitch_deg": 35.0, "eaves_overhang_m": 0.3, "surface": "roof"}}
 CLIMB_WALLS = ("brick_red", "render_cream", "brick_red", "brick_grey", "brick_red", "render_cream")
 CLIMB_LIT_EVERY = 3
+#: HOW FAR A KIT HOUSE'S SIDE STANDS PROUD OF ITS ROOM BOX: enough that the two never share a
+#: plane, inside the 0.15 m the roof's verge oversails the side.
+KIT_SIDE_T = 0.03
+
+
+def _kit_house_sides(p, wall):
+    """A kit house's two sides, wall and gable in one piece each, in its bay's local axes.
+
+    WHY, 7 October (item 1.1's second fresh review, point 4: "an untextured flat black block
+    with a black gable behind the west row"). A kit bay is a front, a room box in the interior
+    material and a roof; in a row its sides were left to its neighbours. On the climb each house
+    is turned to the curve and stood at its own level, and each row ends, so from the hook
+    camera the west row's last house showed its room box's side, near black in Unreal, and
+    above it the underside of its roof where the gable should be. Each side is a pentagon,
+    eaves to ridge, drawn both ways round as the street's own gables are (plan_end_walls)."""
+    W, D = p["bay_width_m"], p["depth_m"]
+    E, R, mid = p["eaves_m"], p["eaves_m"] + p["ridge_rise_m"], D / 2.0
+    t = KIT_SIDE_T
+    parts = []
+    for name, x0, x1 in (("side_south", -t, 0.0), ("side_north", W, W + t)):
+        prof = [(0.0, 0.0), (D, 0.0), (D, E), (mid, R), (0.0, E)]
+        verts = [(x0, y, z) for (y, z) in prof] + [(x1, y, z) for (y, z) in prof]
+        faces = [(0, 1, 2, 3, 4), (9, 8, 7, 6, 5)]
+        faces += [(i, (i + 1) % 5, (i + 1) % 5 + 5, i + 5) for i in range(5)]
+        faces = faces + [tuple(reversed(f)) for f in faces]
+        parts.append({"id": name, "material": wall, "kind": "mesh", "verts": verts, "faces": faces,
+                      "note": "the-house's-side/wall-and-gable/eaves-to-ridge-%.1fm" % p["ridge_rise_m"]})
+    return parts
 
 
 def _hull(verts, faces):
@@ -3990,7 +4018,12 @@ def _kit_row_on_the_climb(out, prefix, x_from, x_to, y_front, east, seed):
         def to_world(lx, ly, lz, ox=ox, oy=oy, c=c, s_=s_, zb=zb):
             ax, ay = (lx, ly) if east else (W - lx, -ly)
             return (ox + ax * c - ay * s_, oy + ax * s_ + ay * c, zb + lz)
-        parts = plan_parts(p, bay=k, party_wall=not last)
+        # THE STACK AT A ROW'S OPEN END goes inside the end wall, as a standing building's does
+        # (end_stack): a turned row's first house carries its stack on the side that is the
+        # row's end, where half of it hung in the air beside the gable (7 October).
+        open_w = (not east and k == 0)
+        parts = plan_parts(dict(p, end_stack=True) if open_w else p, bay=k,
+                           party_wall=not (last or open_w))
         lit = 0
         for part in parts:
             pid = "%s%d_%s" % (prefix, k, part["id"])
@@ -4002,6 +4035,8 @@ def _kit_row_on_the_climb(out, prefix, x_from, x_to, y_front, east, seed):
                     continue
                 part = dict(part, material="window_far_lit")
             out.append(_kit_part_to_world(part, pid, to_world))
+        for part in _kit_house_sides(p, wall):
+            out.append(_kit_part_to_world(part, "%s%d_%s" % (prefix, k, part["id"]), to_world))
         # THE PLINTH where the road falls away under the house's downhill end.
         lo = approach_z(min(x, x + dx)) - 0.3 - zb
         if lo < -1e-6:
@@ -4037,13 +4072,17 @@ def _kit_row_across(out, prefix, x_front, y_from, y_to, z_floor, seed):
         def to_world(lx, ly, lz, oy=oy):
             ax, ay = W - lx, -ly
             return (x_front - ay, oy + ax, zb + lz)
-        for part in plan_parts(p, bay=k + 2, party_wall=(k < n - 1)):
+        open_w = (k == 0)                  # the row's open end carries its stack inside (above)
+        for part in plan_parts(dict(p, end_stack=True) if open_w else p, bay=k + 2,
+                               party_wall=(k < n - 1) and not open_w):
             pid = "%s%d_%s" % (prefix, k, part["id"])
             if part.get("decal_emit") == "net":
                 if (k + int(part["x0"])) % CLIMB_LIT_EVERY:
                     continue
                 part = dict(part, material="window_far_lit")
             out.append(_kit_part_to_world(part, pid, to_world))
+        for part in _kit_house_sides(p, wall):
+            out.append(_kit_part_to_world(part, "%s%d_%s" % (prefix, k, part["id"]), to_world))
     return n
 
 
@@ -8690,6 +8729,16 @@ def selftest():
         if serr:
             check("accept/the-street-plans-with-a-car-in-it", False, serr)
         else:
+            # ---- EVERY KIT HOUSE ON THE APPROACH HAS BOTH SIDES, wall and gable (7 October:
+            # the west row's last house showed its room box and its roof's underside).
+            import re as _re
+            kit_houses = {m.group(1) for b in street
+                          for m in [_re.match(r"(backdrop_rise_approach_[ewx]\d+)_", b["id"])] if m}
+            sides = {b["id"] for b in street if b["id"].endswith(("_side_south", "_side_north"))}
+            bare = sorted(h for h in kit_houses
+                          if not {h + "_side_south", h + "_side_north"} <= sides)
+            check("accept/every-approach-house-has-both-sides", kit_houses and not bare,
+                  "%d house(s), bare: %s" % (len(kit_houses), ",".join(bare[:4])))
             # ---- ONE FRONT IS A METAL REFIT, AND ONLY ONE.
             refits, timbers = [], []
             for b in street:
