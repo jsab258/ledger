@@ -1,0 +1,13 @@
+{
+ "status": "PROVISIONAL numbers for debugging the pipeline only; replaced from SOURCES.md before any check counts",
+ "opening": {"width_mm": 850, "height_mm": 1500},
+ "frame": {"reveal_mm": 114, "outer_lining_margin_mm": 20, "outer_lining_width_mm": 100, "outer_lining_thickness_mm": 22,
+           "outer_lining_projection_mm": 13, "pulley_stile_thickness_mm": 29, "parting_bead_width_mm": 13,
+           "parting_bead_projection_mm": 19, "staff_bead_width_mm": 19, "staff_bead_projection_mm": 19,
+           "inner_lining_thickness_mm": 22, "inner_lining_width_mm": 100, "inner_lining_past_staff_bead_mm": 0,
+           "head_visible_mm": 20},
+ "sash": {"thickness_mm": 44, "clearance_mm": 2, "stile_width_mm": 50, "top_rail_mm": 50, "bottom_rail_mm": 76,
+          "meeting_rail_depth_mm": 32, "horn_length_mm": 50, "glazing_bar_width_mm": 19, "panes_per_sash": 2,
+          "rebate_width_mm": 10, "rebate_depth_mm": 12, "ovolo_radius_mm": 8, "glass_mm": 3},
+ "sill": {"height_at_front_mm": 60, "projection_mm": 40, "fall_mm": 15, "upstand_mm": 10, "horns_mm": 0}
+}

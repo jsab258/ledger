@@ -1,2 +1,3 @@
 {"event": "start", "at": "2026-10-07T20:56:27", "task": "lab test 1: Unreal source, two answers", "phase": "lab", "kind": "production"}
 {"event": "stop", "at": "2026-10-07T21:12:09", "note": "both answers written with files and lines; the helper's six citations spot-checked; the GitHub clone refused"}
+{"event": "start", "at": "2026-10-07T21:12:49", "task": "lab test 2: sash window", "phase": "lab", "kind": "production"}

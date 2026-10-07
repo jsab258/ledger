@@ -1,0 +1,85 @@
+{
+ "model": "F:/LedgerTools/lab/sash/build/window_v0.npz",
+ "drawings": {
+  "elev": {
+   "iou": 0.998,
+   "mean_mm": 0.06,
+   "p95_mm": 1.0,
+   "max_mm": 1.0,
+   "ok": true
+  },
+  "vsec": {
+   "iou": 0.767,
+   "mean_mm": 3.68,
+   "p95_mm": 22.0,
+   "max_mm": 37.64,
+   "ok": false
+  },
+  "hsec": {
+   "iou": 0.9481,
+   "mean_mm": 0.66,
+   "p95_mm": 1.0,
+   "max_mm": 9.0,
+   "ok": false
+  }
+ },
+ "dims": {
+  "sash_thickness_mm": {
+   "model": 44.0,
+   "target": 44,
+   "ok": true
+  },
+  "stile_width_mm": {
+   "model": 50.0,
+   "target": 50,
+   "ok": true
+  },
+  "horn_length_mm": {
+   "model": 50.0,
+   "target": 50,
+   "ok": true
+  },
+  "bottom_rail_mm": {
+   "model": 76.0,
+   "target": 76,
+   "ok": true
+  },
+  "top_rail_mm": {
+   "model": 50.0,
+   "target": 50,
+   "ok": true
+  },
+  "meeting_rail_depth_mm": {
+   "model": 32.0,
+   "target": 32,
+   "ok": true
+  },
+  "opening_width_mm": {
+   "model": 876.0,
+   "target": 850,
+   "ok": false
+  },
+  "opening_height_mm": {
+   "model": 1522.0,
+   "target": 1500,
+   "ok": false
+  },
+  "reveal_mm": {
+   "model": 114.0,
+   "target": 114,
+   "ok": true
+  },
+  "glazing_bar_width_mm": {
+   "model": 19.0,
+   "target": 19,
+   "ok": true
+  }
+ },
+ "pass": false,
+ "thresholds": {
+  "iou": 0.97,
+  "p95_mm": 2.0,
+  "max_mm": 6.0,
+  "dim_mm": 1.0
+ }
+}
