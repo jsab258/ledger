@@ -172,7 +172,7 @@ def fore_outline(d, C, D):
     i = int(np.argmin(np.linalg.norm(scye - top, axis=1)))
     fish_l = smooth_through(C["fish_left"])
     fish_r = smooth_through(C["fish_right"])
-    gap = np.array([0.06, 0])
+    gap = np.array([0.15, 0])                                    # the fish's mouth on the scye, 0.3 in open
     shoulder = smooth_through(C["front_shoulder"])
     shoulder[0] = D["front_shoulder_end"]
     parts = [("neck", neck), ("gorge", gorge), ("lapel_edge", lapel), ("front_edge", front), ("fore_hem", bottom),
