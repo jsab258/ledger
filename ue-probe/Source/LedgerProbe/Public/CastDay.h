@@ -143,6 +143,15 @@ namespace LedgerCore
 				}
 				std::string Said;
 				if (GetString(P, "said", Said) && Trim(Said).size() > 0) C.Said[Key] = Trim(Said);
+				// WHERE A BODY WAITS FOR THIS PLACE ON ITS PAVEMENT, optional (7 October): an inside
+				// place's person stands on their own pavement until the room is built or unlocked
+				// (CrimeProbe.h BodySpotFor), by default straight out from the place; "body_x_m"
+				// moves them along it, to the shop's door. Only the game reads it.
+				if (const Value* BX = Get(P, "body_x_m"))
+				{
+					if (BX->Type != T_NUM) { Err = "cast file: place " + Key + "'s body_x_m must be a number"; return false; }
+					C.BodyXAt[Key] = BX->Num;
+				}
 			}
 			// The areas, optional: each a list of its places and the names people use.
 			if (const Value* Areas = GetObject(&Root, "areas"))
@@ -437,6 +446,16 @@ namespace LedgerCore
 			return true;
 		}
 
+		/// Where along the street a body waits for this place on its pavement (the file's
+		/// "body_x_m"); false where the file gives none, and the place's own x serves.
+		bool BodyXOf(const std::string& Place, double& OutX) const
+		{
+			const auto It = BodyXAt.find(Place);
+			if (It == BodyXAt.end()) return false;
+			OutX = It->second;
+			return true;
+		}
+
 		std::string NearestPlace(double X, double Z, double MaxM) const
 		{
 			std::string Best;
@@ -452,6 +471,7 @@ namespace LedgerCore
 
 	private:
 		std::map<std::string, std::pair<double, double> > PlaceAt;
+		std::map<std::string, double> BodyXAt;   // the place's optional "body_x_m"
 		std::map<std::string, std::string> Said, AreaOfPlace, WithinOf, Name, Role, Called, Circle;
 		// The file's keepsQuiet word, trimmed (the C#'s _quiet, kept as its word).
 		std::map<std::string, std::string> KeepsQuiet;

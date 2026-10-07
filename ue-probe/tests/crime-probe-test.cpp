@@ -568,6 +568,14 @@ int main(int argc, char** argv)
 		const LedgerCrime::OnlookerAt* Sheila = Find(Ten, "lena");
 		Check(Sheila && Sheila->bBody && Sheila->Place == "mickeys_office" && Sheila->At.Z < 7.0,
 		      "a2-sheila-at-the-office-stands-at-its-own-pavement");
+		// Beside its door on the far side from the window (7 October): straight out from the
+		// office's middle she stood square in front of Mickey's window and its camera (x 6.9,
+		// whose frame spans the glass from x 5.1 to 8.6 at two metres).
+		Check(Sheila && Sheila->At.X < 4.2 && Sheila->At.X > 3.0,
+		      "a2-sheila-waits-beside-the-office-door-not-in-front-of-its-window (" +
+		      std::to_string(Sheila ? Sheila->At.X : -1.0) + ")");
+		double NoX = 0.0;
+		Check(!Cast.BodyXOf("fish_counter", NoX), "a2-a-place-without-body_x_m-keeps-its-own-x");
 		// Nobody without a body counts from a pavement: the player would see nobody there.
 		bool bInvisible = false;
 		for (int H = 0; H < 24; ++H)

@@ -1979,6 +1979,15 @@ namespace LedgerCrime
 	/// street's middle, behind their windows (hook-cast.json's places).
 	inline bool IndoorPlace(double Z) { return std::fabs(Z) >= 7.0; }
 	inline P3 BodySpotFor(double X, double Z) { return IndoorPlace(Z) ? P3(X, 0.0, Z > 0.0 ? 4.6 : -4.6) : P3(X, 0.0, Z); }
+	/// THE SAME, AT THE PLACE'S OWN WAITING SPOT (7 October, item 1.1's second fresh review: Sheila,
+	/// in the locked office by her day, stood on the pavement straight out from its middle, square
+	/// in front of Mickey's window and its camera). An inside place may name where along its
+	/// pavement a body waits (hook-cast.json "body_x_m": Mickey's, at its door).
+	inline P3 BodySpotFor(const LedgerCore::CastDay& Cast, const std::string& Place, double X, double Z)
+	{
+		double BX = X;
+		return (IndoorPlace(Z) && Cast.BodyXOf(Place, BX)) ? BodySpotFor(BX, Z) : BodySpotFor(X, Z);
+	}
 	/// A PLACE TO STAND, 1 October (the AI tester, the packaged game: Sheila on
 	/// top of the fish market's pallet crate, where her day puts her at
 	/// fish_front). A person stands on the pavement, never on a thing. The
@@ -2044,7 +2053,7 @@ namespace LedgerCrime
 			O.Place = Place;
 			O.bBody = WithBodies.count(Id) > 0;
 			if (!O.bBody && !IndoorPlace(Z)) continue;
-			O.At = O.bBody ? BodySpotFor(X, Z) : P3(X, 0.0, Z);
+			O.At = O.bBody ? BodySpotFor(Cast, Place, X, Z) : P3(X, 0.0, Z);
 			O.YawDeg = StreetFacingYaw(O.At.X, O.At.Z);
 			Out.push_back(O);
 		}

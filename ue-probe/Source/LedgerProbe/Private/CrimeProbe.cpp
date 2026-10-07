@@ -4888,7 +4888,7 @@ namespace
 		AActor* Body = CardBody("lena");
 		double X = 0.0, Z = 0.0;
 		if (Body == nullptr || !bGCast || !GCast.PlaceXZ("mickeys_office", X, Z)) { return 1e9; }
-		LedgerCrime::P3 Spot = LedgerCrime::BodySpotFor(X, Z);
+		LedgerCrime::P3 Spot = LedgerCrime::BodySpotFor(GCast, "mickeys_office", X, Z);
 		for (const FOfficeMark& K : GOffice.Marks) { if (GOffice.bOn && K.Place == "mickeys_office") { Spot.X = K.X; Spot.Z = K.Z; } }
 		const LedgerCrime::P3 At = ToStreet(Body->GetActorLocation());
 		return std::hypot(At.X - Spot.X, At.Z - Spot.Z);
@@ -6774,7 +6774,7 @@ namespace
 			O.Id = "lena";
 			O.Place = "mickeys_office";
 			O.bBody = true;
-			O.At = LedgerCrime::BodySpotFor(OfficeX, OfficeZ);
+			O.At = LedgerCrime::BodySpotFor(GCast, "mickeys_office", OfficeX, OfficeZ);
 			O.YawDeg = LedgerCrime::StreetFacingYaw(O.At.X, O.At.Z);
 			Here["lena"] = O;
 		}

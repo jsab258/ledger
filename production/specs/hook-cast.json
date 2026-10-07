@@ -8,6 +8,8 @@
   "mickeys_office": {"inside": true, 
    "x_m": 6.0,
    "z_m": 7.5,
+   "body_x_m": 3.75,
+   "body_why": "7 October, item 1.1's second fresh review: while the office is locked, whoever's day puts them inside waits on the pavement; straight out from x 6.0 that was square in front of Mickey's window and its camera. Beside the door on its far side from the window (the door's middle at x 4.65), clear of the doorway Tom walks through.",
    "from": "decal_00_fascia_mickeys x, inside the front room",
    "said": "the front room of Mickey's, the cab office"
   },
