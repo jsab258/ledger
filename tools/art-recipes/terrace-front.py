@@ -4087,6 +4087,13 @@ def _kit_row_across(out, prefix, x_front, y_from, y_to, z_floor, seed):
                 if (k + int(part["x0"])) % CLIMB_LIT_EVERY:
                     continue
                 part = dict(part, material="window_far_lit")
+            if part["id"] in ROW_CONTINUOUS:
+                # ONE ROOF AND GUTTER FOR THE ROW, as plan_row's (_one_per_row): the houses stand
+                # level in a line, so the first carries them on past the last (its local x runs
+                # against the row's y, hence the negative reach).
+                if k:
+                    continue
+                part = dict(part, x0=part["x0"] - (n - 1) * W, id=part["id"] + "_row")
             out.append(_kit_part_to_world(part, pid, to_world))
         for part in _kit_house_sides(p, wall):
             out.append(_kit_part_to_world(part, "%s%d_%s" % (prefix, k, part["id"]), to_world))
@@ -5078,7 +5085,38 @@ def plan_row(p, bays=None):
                 q["x0"] = part["x0"] + b * W
                 q["x1"] = part["x1"] + b * W
             out.append(q)
-    return out
+    return _one_per_row(out)
+
+
+#: PIECES A ROW CARRIES WHOLE, not house by house (7 October, item 1.1's second fresh review,
+#: point 5: "dark seam stripes down the right-hand row's slate roofs"). Each bay's slope ran
+#: 0.15 m past both party walls, so neighbouring slopes lay in one plane for 0.3 m with their
+#: bevelled ends inside it, and the engine flickered between the two into a dark line at every
+#: wall. A terrace's slates and gutter run on unbroken from end to end.
+ROW_CONTINUOUS = ("roof_front", "roof_back", "gutter")
+
+
+def _one_per_row(out):
+    """The row's parts with each ROW_CONTINUOUS piece made one, from the first bay's start to
+    the last bay's end, where every bay's piece is the same but for where it stands along x."""
+    groups = {}
+    for q in out:
+        base = q["id"].rsplit("_bay", 1)[0]
+        if base in ROW_CONTINUOUS and "x0" in q:
+            groups.setdefault(base, []).append(q)
+
+    def shape(q):
+        return tuple(sorted((k, v) for k, v in q.items()
+                            if k not in ("id", "bay", "x0", "x1") and not isinstance(v, (list, dict))))
+
+    gone, made = set(), {}
+    for base, qs in groups.items():
+        if len(qs) < 2 or len({shape(q) for q in qs}) != 1:
+            continue
+        made[id(qs[0])] = dict(qs[0], id=base + "_row", bay=0,
+                               x0=min(q["x0"] for q in qs), x1=max(q["x1"] for q in qs))
+        gone.update(id(q) for q in qs)
+    return [made.get(id(q), q) for q in out if id(q) not in gone or id(q) in made]
 
 
 def plan_parts(p, bay=0, party_wall=True):
@@ -8746,6 +8784,14 @@ def selftest():
                           if not {h + "_side_south", h + "_side_north"} <= sides)
             check("accept/every-approach-house-has-both-sides", kit_houses and not bare,
                   "%d house(s), bare: %s" % (len(kit_houses), ",".join(bare[:4])))
+            # ---- A ROW'S SLATES ARE ONE PIECE (7 October: overlapping per-house slopes drew a
+            # dark seam at every party wall): no row of more than one house keeps a roof per house.
+            per_house = sorted({b["id"].rsplit("_bay", 1)[0] for b in street
+                                if _re.search(r"_roof_front_bay[1-9]\d*$", b["id"])})
+            across = [b["id"] for b in street
+                      if _re.match(r"backdrop_rise_approach_x\d+_roof_front", b["id"])]
+            check("accept/a-row's-roof-is-one-piece", not per_house and len(across) == 1,
+                  "per house: %s; across: %d" % (",".join(per_house), len(across)))
             # ---- ONE FRONT IS A METAL REFIT, AND ONLY ONE.
             refits, timbers = [], []
             for b in street:

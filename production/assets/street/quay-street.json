@@ -3178,7 +3178,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 2168
+   "faces": 1794
   },
   {
    "mesh": "street_lens_amber",
@@ -4306,7 +4306,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1684
+   "faces": 992
   },
   {
    "mesh": "street_steel_dark",
