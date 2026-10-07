@@ -207,6 +207,24 @@ EMISSIVE_PARAM_DEFAULT = (0.0, 0.0, 0.0, 1.0)
 WETNESS_PARAM = "Wetness"
 WETNESS_PARAM_DEFAULT = 0.0
 
+# A PAINTED FRONT'S FOOT WORN BY THE STREET, 7 October (item 1.1's second fresh review: "Rita's
+# stallriser, sills and door bottoms pristine"; production/research/street-wear/
+# PAINTED-FRONTS-2026-10-07.md). Projected marks cannot land on paint (they streak along any face
+# lying along their throw), so the dust is made here: a band rising from the pavement, strongest at
+# its foot, its top ragged by a 3D noise in the world (nothing to stretch along a ledge), the base
+# colour drawn toward road dust and the surface roughened. OFF BY DEFAULT: WearAmount 0 leaves
+# every pixel as it was, bit for bit, and the game sets it only on the painted and tiled fronts'
+# rows (VignetteShot, LedgerStreet::WearsAtFoot). Heights in the world's cm; the names are
+# SurfaceBind.h's.
+WEAR_PARAM = "WearAmount"
+WEAR_PARAM_DEFAULT = 0.0
+WEAR_GROUND_PARAM = "WearGroundZ"        # the footway's height, cm (street_wear.py: 0.10 m above the crown)
+WEAR_GROUND_DEFAULT = 10.0
+WEAR_BAND_PARAM = "WearBandHeight"       # how high the dust reaches, cm (the research: 0.45 m; 0.40 read better)
+WEAR_BAND_DEFAULT = 40.0
+WEAR_TINT_PARAM = "WearDustTint"         # dried road splash, linear (the decals' dust, darker)
+WEAR_TINT_DEFAULT = (0.085, 0.075, 0.06, 1.0)
+
 # THE ROUGHNESS A FULLY WET SURFACE APPROACHES, and this file does not get to
 # have an opinion about it. It is 1 - 0.92 where 0.92 is
 # LightModel.Smoothness's ceiling, the arithmetic lives in SurfaceBind.h where
@@ -1143,6 +1161,7 @@ WIRE_SERIES = (
     (16, "queue-299-albedograde-node-and-its-two-wires"),
     (19, "queue-186-wetness-parameter-floor-and-lerp"),
     (20, "queue-333-emissivecolor-parameter-and-its-one-wire"),
+    (46, "7-october-the-wear-at-a-painted-fronts-foot-26-wires"),
 )
 
 # The pair of markers that bound the wired region of main(). They are spelled
@@ -1174,6 +1193,7 @@ def wire_plan(texture_params=None):
         ("grade", 2, 2, "one-site-one-connection"),
         ("wetness", 3, 3, "one-site-one-connection"),
         ("emissive", 1, 1, "one-site-one-connection"),
+        ("wear", 26, 26, "one-site-one-connection"),
     ]
     return rows, sum(r[1] for r in rows), sum(r[2] for r in rows)
 
@@ -3738,11 +3758,21 @@ def main():
                 _sampler_enum(unreal, got or asked), tex, prop, out_pin, label,
                 via=via_node, via_what=via_name)
 
+    # THE WEAR'S TWO LERPS, made here so the grade and the wetness can land in them (WEAR_PARAM
+    # above): the graded colour and the wet roughness are their A pins, so at WearAmount 0 each is
+    # its A pin untouched and the material is the one this file made before.
+    col_lerp = expr(unreal.MaterialExpressionLinearInterpolate, 120, -340)
+    rough_lerp = expr(unreal.MaterialExpressionLinearInterpolate, 120, 460)
+    try:
+        rough_lerp.set_editor_property("const_b", 0.9)        # dust is matt
+    except Exception:
+        w.notes.append("wear-rough-constb-refused")
+
     # The other two wires of the grade. B rather than A because the sampler
     # took A, and the pair is what makes the multiply a multiply rather than
-    # a node with one input.
+    # a node with one input. Its product goes on into the wear's colour lerp.
     connect(grade, "", grade_mul, "B", "albedograde-to-grade")
-    connect_prop(grade_mul, "", mp.MP_BASE_COLOR, "grade-to-basecolor")
+    connect(grade_mul, "", col_lerp, "A", "grade-to-wearlerp")
 
     # The other three wires of the wetness lerp. A is the roughness sampler,
     # taken above; B is the wet floor; Alpha is the parameter. THE PIN NAMES
@@ -3753,7 +3783,88 @@ def main():
     # already exists for the head is the pattern to copy.
     connect(wet_floor, "", wet_lerp, "B", "wetfloor-to-wetlerp")
     connect(wet, "", wet_lerp, "Alpha", "wetness-to-wetlerp")
-    connect_prop(wet_lerp, "", mp.MP_ROUGHNESS, "wetlerp-to-roughness")
+    connect(wet_lerp, "", rough_lerp, "A", "wetlerp-to-wearlerp")
+
+    # ---- A PAINTED FRONT'S FOOT WORN BY THE STREET, 7 October (WEAR_PARAM above) ----
+    # h = (world z - WearGroundZ) / WearBandHeight; the band = saturate(1 - h)^1.5, nothing more
+    # than 0.2 of a band below the footway (the town's lower ground keeps its paint clean);
+    # foot = saturate((band * WearAmount - 0.45 * noise) * 2), the noise a 3D one in the world,
+    # so a ledge or a coarse door gets the same ragged top as a stallriser. Colour toward the
+    # dust by 0.7 of it, roughness toward matt by all of it. (The first look, 22:17: at a lighter
+    # dust, a sharper edge and 33 cm blobs it read as white splatter on the maroon.)
+    def wear_scalar(name, default, x, y):
+        node = expr(unreal.MaterialExpressionScalarParameter, x, y)
+        try:
+            node.set_editor_property("parameter_name", name)
+            node.set_editor_property("default_value", default)
+        except Exception:
+            w.notes.append("%s-parameter-refused" % name.lower())
+        return node
+
+    def wear_const(node, prop, value):
+        try:
+            node.set_editor_property(prop, value)
+        except Exception:
+            w.notes.append("wear-%s-refused" % prop)
+        return node
+
+    wear_amt = wear_scalar(WEAR_PARAM, WEAR_PARAM_DEFAULT, -1200, 1000)
+    wear_ground = wear_scalar(WEAR_GROUND_PARAM, WEAR_GROUND_DEFAULT, -1500, 1100)
+    wear_band = wear_scalar(WEAR_BAND_PARAM, WEAR_BAND_DEFAULT, -1500, 1200)
+    wear_tint = expr(unreal.MaterialExpressionVectorParameter, -520, -800)
+    try:
+        wear_tint.set_editor_property("parameter_name", WEAR_TINT_PARAM)
+        wear_tint.set_editor_property("default_value", unreal.LinearColor(*WEAR_TINT_DEFAULT))
+    except Exception:
+        w.notes.append("weardusttint-parameter-refused")
+    wpos = expr(unreal.MaterialExpressionWorldPosition, -1900, 1000)
+    wz = expr(unreal.MaterialExpressionComponentMask, -1750, 1000)
+    for ch, on in (("r", False), ("g", False), ("b", True), ("a", False)):
+        wear_const(wz, ch, on)
+    sub_z = expr(unreal.MaterialExpressionSubtract, -1600, 1000)
+    div_h = expr(unreal.MaterialExpressionDivide, -1450, 1000)
+    one_m = expr(unreal.MaterialExpressionOneMinus, -1300, 1000)
+    sat_b = expr(unreal.MaterialExpressionSaturate, -1150, 1000)
+    pow_b = wear_const(expr(unreal.MaterialExpressionPower, -1000, 1000), "const_exponent", 1.5)
+    add_lo = wear_const(expr(unreal.MaterialExpressionAdd, -1300, 1100), "const_b", 0.2)
+    mul_lo = wear_const(expr(unreal.MaterialExpressionMultiply, -1150, 1100), "const_b", 10.0)
+    sat_lo = expr(unreal.MaterialExpressionSaturate, -1000, 1100)
+    mul_keep = expr(unreal.MaterialExpressionMultiply, -850, 1000)
+    mul_amt = expr(unreal.MaterialExpressionMultiply, -700, 1000)
+    noise = expr(unreal.MaterialExpressionNoise, -850, 1200)
+    for prop, value in (("scale", 0.08), ("levels", 4), ("output_min", 0.0), ("output_max", 1.0)):
+        wear_const(noise, prop, value)
+    mul_n = wear_const(expr(unreal.MaterialExpressionMultiply, -700, 1200), "const_b", 0.45)
+    sub_n = expr(unreal.MaterialExpressionSubtract, -550, 1000)
+    mul_4 = wear_const(expr(unreal.MaterialExpressionMultiply, -400, 1000), "const_b", 2.0)
+    sat_f = expr(unreal.MaterialExpressionSaturate, -250, 1000)
+    mul_cov = wear_const(expr(unreal.MaterialExpressionMultiply, -100, 1000), "const_b", 0.7)
+    connect(wpos, "", wz, "", "wear-worldpos-to-mask")
+    connect(wz, "", sub_z, "A", "wear-z-to-sub")
+    connect(wear_ground, "", sub_z, "B", "wear-ground-to-sub")
+    connect(sub_z, "", div_h, "A", "wear-sub-to-div")
+    connect(wear_band, "", div_h, "B", "wear-band-to-div")
+    connect(div_h, "", one_m, "", "wear-h-to-oneminus")
+    connect(one_m, "", sat_b, "", "wear-oneminus-to-sat")
+    connect(sat_b, "", pow_b, "Base", "wear-sat-to-pow")
+    connect(div_h, "", add_lo, "A", "wear-h-to-below")
+    connect(add_lo, "", mul_lo, "A", "wear-below-to-mul")
+    connect(mul_lo, "", sat_lo, "", "wear-below-to-sat")
+    connect(pow_b, "", mul_keep, "A", "wear-band-to-keep")
+    connect(sat_lo, "", mul_keep, "B", "wear-below-to-keep")
+    connect(mul_keep, "", mul_amt, "A", "wear-keep-to-amount")
+    connect(wear_amt, "", mul_amt, "B", "wear-amount-to-amount")
+    connect(noise, "", mul_n, "A", "wear-noise-to-mul")
+    connect(mul_amt, "", sub_n, "A", "wear-amount-to-sub")
+    connect(mul_n, "", sub_n, "B", "wear-noise-to-sub")
+    connect(sub_n, "", mul_4, "A", "wear-sub-to-mul4")
+    connect(mul_4, "", sat_f, "", "wear-mul4-to-sat")
+    connect(sat_f, "", mul_cov, "A", "wear-foot-to-cover")
+    connect(wear_tint, "", col_lerp, "B", "wear-tint-to-colourlerp")
+    connect(mul_cov, "", col_lerp, "Alpha", "wear-cover-to-colourlerp")
+    connect(sat_f, "", rough_lerp, "Alpha", "wear-foot-to-roughlerp")
+    connect_prop(col_lerp, "", mp.MP_BASE_COLOR, "wearlerp-to-basecolor")
+    connect_prop(rough_lerp, "", mp.MP_ROUGHNESS, "wearlerp-to-roughness")
 
     # The emissive parameter's ONE wire, and it goes straight to the property.
     # There is no multiply and no lerp in front of it because black added is

@@ -273,6 +273,15 @@ namespace LedgerStreet
 		for (const char* T : Takes) { if (Base == T) { return true; } }
 		return false;
 	}
+	// WHAT IS WORN AT ITS FOOT BY THE STREET, 7 October (the painted fronts research,
+	// production/research/street-wear/PAINTED-FRONTS-2026-10-07.md): stallrisers, doors, their tiles
+	// and the painted plinths, in the material itself (SurfaceBind.h WearParam), where projected
+	// marks streaked. Frames, joinery, signs, glass and the walls (which have their decals) are not.
+	inline bool WearsAtFoot(const std::string& Base)
+	{
+		return Base == "paint_stall" || Base == "paint_door" || Base == "tile_stall" || Base == "tile_patterned"
+			|| Base == "paint_white";
+	}
 	// FloorOverride, when zero or more, replaces the recipe's floor for a
 	// surface that takes water - the look file's wet_floor, because the
 	// approved sheet's flags are shinier than the one Blender was tuned to.

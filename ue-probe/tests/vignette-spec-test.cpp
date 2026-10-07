@@ -7018,6 +7018,10 @@ int main(int argc, char** argv)
 		      && !LedgerStreet::TakesMarks("frame_metal") && !LedgerStreet::TakesMarks("glass") && !LedgerStreet::TakesMarks("stone")
 		      && !LedgerStreet::TakesMarks("paint_stall") && !LedgerStreet::TakesMarks("tile_stall") && !LedgerStreet::TakesMarks("paint_door"),
 		      "and never on painted joinery, window frames, glass, tiles, doors or stone dressings");
+		// AND THOSE FRONTS WEAR AT THE FOOT IN THEIR OWN MATERIAL (7 October), the frames and the walls not
+		Check(LedgerStreet::WearsAtFoot("paint_stall") && LedgerStreet::WearsAtFoot("paint_door") && LedgerStreet::WearsAtFoot("tile_stall")
+		      && !LedgerStreet::WearsAtFoot("frame_painted") && !LedgerStreet::WearsAtFoot("brick_red") && !LedgerStreet::WearsAtFoot("paint_fascia"),
+		      "stallrisers, doors and tiles wear at their foot in the material; frames, signs and walls do not");
 		Check(std::fabs(LedgerStreet::WetDarken("paving", 0.6) - (1.0 - 0.28 * std::pow(0.6, 0.55))) < 1e-9
 		      && LedgerStreet::WetDarken("slate", 0.6) == 1.0 && LedgerStreet::WetDarken("asphalt", 0.0) == 1.0,
 		      "wet ground darkens by the recipe's 0.28 of the bent figure; dry ground and walls do not");

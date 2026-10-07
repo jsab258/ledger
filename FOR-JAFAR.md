@@ -58,7 +58,7 @@ Disk (10-07 19:00): C: 96.3 GB free, F: 39.7 GB free (the NoAI folders gone, as 
 
 **Failed:** speech: 4.6 s median, 4.0 with a faster first sentence; a blocked capability, your answer. Item 1.1's second review: the glass worst, then the office lit, the cast's base layer, a black block, faint wear. Tom's face: blocked. Plain clothes: the made outfit failed its third review and the ready-made CC0 pieces their checks; failed for now (Needs you 3).
 
-**Fixed:** the frame: 59 and 51 fps to 80 with the voice speaking, card peak 5.9 GB. The glass lit and reflecting the street. Mickey's office dark until the key; the black post and white strip. Since the review: the black block (houses without sides), the west shops' rooms, the roofs' seams, Sheila and Ron out of the office camera, Enter showing a line's end; in tonight's build. The glass still steps; the shopfront wear never showed at all (projected marks cannot land on paint): set aside, research next. Your two faults done.
+**Fixed:** the frame: 59 and 51 fps to 80 with the voice speaking, card peak 5.9 GB. The glass lit and reflecting the street. Mickey's office dark until the key; the black post and white strip. Since the review: the black block (houses without sides), the west shops' rooms, the roofs' seams, Sheila and Ron out of the office camera, Enter showing a line's end; in tonight's build. The glass still steps; the shopfront wear never showed; now the grime is in the paint itself. Your two faults done.
 
 **Two-tries rule broken:** the glass, twice: past three tries before a measurement found the cause; tonight a third anti-aliasing try without fresh research. Kept: the wear stopped at two.
 

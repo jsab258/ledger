@@ -851,6 +851,11 @@ namespace LedgerSurface
 	// scalar set call and for WetnessParam IN THE SAME FILE: the declaration
 	// here cannot satisfy either.
 	inline const char* WetnessParam() { return "Wetness"; }
+	// A PAINTED FRONT'S FOOT WORN BY THE STREET, 7 October (tools/ue/make_base_material.py
+	// WEAR_PARAM): 0, the material's default, is no wear at all; the game sets it on the painted
+	// and tiled fronts' rows (LedgerStreet::WearsAtFoot). The band's height and the footway's are
+	// the material's own defaults (0.45 m, 0.10 m).
+	inline const char* WearParam() { return "WearAmount"; }
 
 	// DRY IS ZERO, AND ZERO IS THE MATERIAL'S DEFAULT. An instance that never
 	// sets this parameter renders exactly what it renders today, bit for bit,

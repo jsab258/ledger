@@ -29,14 +29,14 @@ No overall pass or fail: the maker reads the three lists against the ruling.
 | V3 | The hook view at night | morning night view; package cam_hook-night | editor-hook_night.png | the base layer; the glass steps |
 | V4 | Mickey's office through its window, day | package cam_mickeys-day | editor-mickeys_day.png, package-cam_mickeys-day.png | the reflected roofline steps (anti-aliasing tried and set aside); flat binders; brass reading as foil |
 | V5 | Mickey's office at night | package cam_mickeys-night | editor-mickeys_night.png | the rings vanishing at night; the glass |
-| V6 | Rita's front by day | package pawnbroker-square-shop | package-pawnbroker-square-shop.png | the white sawtooth in the glass; the front's wear (its projected marks never landed; set aside, research done: production/research/street-wear/PAINTED-FRONTS-2026-10-07.md) |
+| V6 | Rita's front by day | package pawnbroker-square-shop | package-pawnbroker-square-shop.png | the white sawtooth in the glass; the sill and door feet still clean (only the stallriser's foot is worn, in its material, since 7 Oct evening; chipped edges not yet) |
 | V7 | Rita's front at night | package pawnbroker-square-shopnight | package-pawnbroker-square-shopnight.png | the glass; the wear |
 | V8 | The walk-in at Mickey's door | the tester's walk-in, its step at the door | walkin-step-017.jpg | Tom's modern tracksuit (clothes) |
 | V9 | The walk-in inside the office | the tester's walk-in, its steps inside | walkin-step-022.jpg, walkin-step-024.jpg | the indoor camera close on the wall (P15, phase 2's exit); the back doorway |
 
 ## What changed on the evening of 7 October (where to look, not a verdict)
 
-The houses past the bend given brick sides and gables (V1's black block); the west shops' rooms behind their glass and each row's slates one piece (V2); Sheila beside Mickey's door and the cab rank at the door, out of the office camera (V4); Enter shows a long line's end and the talk prompt needs its person in sight (V8, V9); the office dark until Tom has the key (V4, V5).
+The houses past the bend given brick sides and gables (V1's black block); the west shops' rooms behind their glass and each row's slates one piece (V2); Sheila beside Mickey's door and the cab rank at the door, out of the office camera (V4); Enter shows a long line's end and the talk prompt needs its person in sight (V8, V9); the office dark until Tom has the key (V4, V5); grime at the foot of the painted and tiled fronts, in their own material (V1, V6, V7).
 
 ## The outputs
 

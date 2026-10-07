@@ -7855,6 +7855,14 @@ namespace
 			UMaterialInstanceDynamic* Mid = GStreetMids[I];
 			if (Mid == nullptr) { continue; }
 			const LedgerStreet::Row& Rw = GStreet.Rows[(size_t)I];
+			// A PAINTED FRONT'S FOOT WORN BY THE STREET (7 October; SurfaceBind.h WearParam): on the
+			// fronts' painted and tiled rows; -FrontWear=0 takes it off for a side by side.
+			{
+				static float FrontWear = -1.0f;
+				if (FrontWear < 0.0f) { FrontWear = 1.0f; FParse::Value(FCommandLine::Get(), TEXT("FrontWear="), FrontWear); }
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WearParam())),
+					LedgerStreet::WearsAtFoot(Rw.Base) ? FrontWear : 0.0f);
+			}
 			const double Glow = C.SunOn ? Rw.EmitDay : Rw.EmitNight;
 			if (Glow >= 0.0 && Rw.Decal.empty() && Rw.bHasRgb)
 			{
