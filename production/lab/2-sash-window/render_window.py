@@ -17,7 +17,7 @@ import bpy
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "tools"))
 import blender_parts  # noqa: E402
 
-COL = {"paint": (0.97, 0.96, 0.92, 1), "glass": (0.16, 0.19, 0.21, 1),
+COL = {"paint": (0.97, 0.96, 0.92, 1), "glass": (0.16, 0.19, 0.21, 1), "arch": (0.50, 0.27, 0.19, 1),
        "brick": (0.42, 0.22, 0.15, 1), "stone": (0.62, 0.60, 0.55, 1)}
 
 
@@ -37,15 +37,24 @@ def wall(T):
     span = 2.2
     parts = []
     # four slabs round the opening, front face at y=0
-    for nm, x0, x1, z0, z1 in (("wall_L", -span, -W / 2, -1.0, H + 1.0), ("wall_R", W / 2, span, -1.0, H + 1.0),
-                               ("wall_top", -W / 2, W / 2, H, H + 1.0), ("wall_bot", -W / 2, W / 2, -1.0, -0.075)):
+    for nm, x0, x1, z0, z1 in (("wall_L", -span, -W / 2 - 0.05, -1.0, H + 1.0), ("wall_R", W / 2 + 0.05, span, -1.0, H + 1.0),
+                               ("wall_Li", -W / 2 - 0.05, -W / 2, -1.0, H), ("wall_Ri", W / 2, W / 2 + 0.05, -1.0, H),
+                               ("wall_top", -W / 2 - 0.05, W / 2 + 0.05, H + 0.2286, H + 1.0), ("wall_top_back", -W / 2, W / 2, H, H + 0.2286),
+                               ("wall_bot", -W / 2, W / 2, -1.0, -0.127)):
         parts.append({"name": nm, "material": "brick", "profile": [[x0, 0], [x1, 0], [x1, depth], [x0, depth]],
                       "axis": "z", "plane": ["x", "y"], "start": z0, "end": z1})
     ss = T.get("stone_sill", {"projection_mm": 50, "height_mm": 75, "width_extra_mm": 100})
     p, h, e = ss["projection_mm"] / 1000, ss["height_mm"] / 1000, ss["width_extra_mm"] / 1000
+    # context, not the window under test: a weathered stone cill, sloping to a nose and throated
+    # underneath (Rivington Part I p.9: projecting at least 2 in, throated)
     parts.append({"name": "stone_sill", "material": "stone",
-                  "profile": [[-p, -h], [depth, -h], [depth, 0.0], [0.02, 0.0], [-p, -0.012]],
+                  "profile": [[-p, -h], [-p + 0.020, -h], [-p + 0.020, -h + 0.010], [-p + 0.030, -h + 0.010],
+                              [-p + 0.030, -h], [depth, -h], [depth, 0.0], [0.03, 0.0], [-p, -0.025]],
                   "axis": "x", "plane": ["y", "z"], "start": -W / 2 - e, "end": W / 2 + e})
+    # context: a flat gauged brick arch over the opening, one standard 9 in brick deep (not sourced
+    # for this window: the photographs show gauged and segmental heads), slightly lighter brick
+    parts.append({"name": "gauged_arch", "material": "arch", "profile": [[-W / 2 - 0.05, 0], [W / 2 + 0.05, 0], [W / 2 + 0.05, 0.1143], [-W / 2 - 0.05, 0.1143]],
+                  "axis": "z", "plane": ["x", "y"], "start": H, "end": H + 0.2286})
     return parts
 
 

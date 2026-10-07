@@ -52,6 +52,11 @@ def bar_section(u_mid, half_w, v_out, v_in, rebate_w, rebate_d, ovolo_r, n=6):
     return a[1:-1] + b[1:-1][::-1]
 
 
+def putty(u_glass, sgn, v_out, rebate_w, rebate_d, glass_t):
+    """Front putty in a rebate: a bevel from the rebate's outer edge on the face down to the glass."""
+    return [(u_glass - sgn * rebate_w, v_out), (u_glass - sgn * rebate_w, v_out + rebate_d - glass_t), (u_glass, v_out + rebate_d - glass_t)]
+
+
 def members(T):
     """The window as the manual draws it: a list of (name, kind, polygon) in
     the three drawings. kind: 'elev' (x, z), 'vsec' (y, z) at the drawing's
@@ -86,7 +91,8 @@ def members(T):
 
     # x: the visible clear width between outer linings, and the pulley stile faces
     x_ol = W / 2 - m                    # outer lining's inner edge
-    x_ps = x_ol + stop                  # pulley stile face (sash edges run here)
+    x_ps = x_ol + stop                  # pulley stile face
+    x_sash = x_ps - s.get("side_clearance_mm", 0) * MM   # the sashes' edges, with their play
     # y: the tracks
     y_ol0, y_ol1 = R, R + ol_t
     y_up0 = y_ol1 + clr                 # upper (outer) sash
@@ -117,15 +123,32 @@ def members(T):
     rect("elev", "outer_lining_R", x_ol, z_sill, W / 2, H)
     rect("elev", "head", -W / 2, z_top_clear, W / 2, H)
     rect("elev", "oak_sill", -W / 2, 0.0, W / 2, z_sill)
+    def horn_face(side):
+        """Ellis Fig. 416, a face view: the bracket keeps the stile's outer edge and narrows on its
+        inner edge by a small step and an ogee to its foot (scaled off the figure)."""
+        stp, og_end, foot = s["horn_step_mm"] * MM, s["horn_ogee_end_mm"] * MM, s["horn_foot_width_mm"] * MM
+        xo, xi = side * x_sash, side * (x_sash - st)            # outer and inner edges
+        xi_step = xi + side * (st * 0.06)                       # the step takes about 1/8 in off the inner edge
+        xf = xo - side * foot
+        P = [(xo, z_up0), (xi, z_up0), (xi, z_up0 - stp), (xi_step, z_up0 - stp)]
+        for k in range(1, 17):
+            t = k / 16.0
+            g = 0.5 - 0.5 * math.cos(math.pi * t)
+            P.append((xi_step + (xf - xi_step) * g, z_up0 - stp - (og_end - stp) * t))
+        P += [(xf, z_up0 - horn), (xo, z_up0 - horn)]
+        return P
+
     for nm, z0, z1, top_rail, bot_rail in (("upper", z_up0, z_up1, tr, mr), ("lower", z_lo0, z_lo1, mr, br)):
-        rect("elev", nm + "_stile_L", -x_ps, z0, -x_ps + st, z1)
-        rect("elev", nm + "_stile_R", x_ps - st, z0, x_ps, z1)
-        rect("elev", nm + "_top_rail", -x_ps, z1 - top_rail, x_ps, z1)
-        rect("elev", nm + "_bottom_rail", -x_ps, z0, x_ps, z0 + bot_rail)
-        if s.get("panes_per_sash", 1) == 2:
-            rect("elev", nm + "_bar", -bar / 2, z0, bar / 2, z1)
-    rect("elev", "horn_L", -x_ps, z_up0 - horn, -x_ps + st, z_up0)
-    rect("elev", "horn_R", x_ps - st, z_up0 - horn, x_ps, z_up0)
+        for kind in (("elev", "elev_upper") if nm == "upper" else ("elev",)):
+            rect(kind, nm + "_stile_L", -x_sash, z0, -x_sash + st, z1)
+            rect(kind, nm + "_stile_R", x_sash - st, z0, x_sash, z1)
+            rect(kind, nm + "_top_rail", -x_sash, z1 - top_rail, x_sash, z1)
+            rect(kind, nm + "_bottom_rail", -x_sash, z0, x_sash, z0 + bot_rail)
+            if s.get("panes_per_sash", 1) == 2:
+                rect(kind, nm + "_bar", -bar / 2, z0, bar / 2, z1)
+    for side, tag in ((-1, "L"), (1, "R")):
+        E.append(("horn_" + tag, "elev", horn_face(side)))
+        E.append(("horn_" + tag, "elev_upper", horn_face(side)))
 
     # ---- vertical section at x = a quarter of the width (y, z) ------------
     # sashes' rails cut across their thickness; the stone below and the brick are not joinery.
@@ -140,6 +163,10 @@ def members(T):
         bot = member_section(z0, z0 + bot_rail, y0, y1, rw_, rd_, ov_)          # glass above a bottom rail
         E.append((nm + "_top_rail", "vsec", [(v if abs(v - y0) > 1e-9 else ty0, u) for u, v in top]))
         E.append((nm + "_bottom_rail", "vsec", [(v if abs(v - y1) > 1e-9 else by1, u) for u, v in bot]))
+        if s.get("putty"):
+            g_ = s.get("glass_mm", 2.5) * MM
+            for u_glass, sgn in ((z1 - top_rail, -1.0), (z0 + bot_rail, 1.0)):
+                E.append((nm + "_putty", "vsec", [(v, u) for u, v in putty(u_glass, sgn, y0, rw_, rd_, g_)]))
     rect("vsec", "head_outer_lining", y_ol0, z_top_clear, y_ol1, H)
     head_t = f.get("head_thickness_mm", 31.8) * MM                       # 'H', 1 1/4 in, Fig. 399
     rect("vsec", "head", y_ol1, z_up1, y_il1, z_up1 + head_t)
@@ -162,34 +189,37 @@ def members(T):
         r("inner_lining_" + ("L" if side < 0 else "R"), x_ps, y_il1, x_ps + il_w, y_sb1)
         rw_, rd_, ov_ = s["rebate_width_mm"] * MM, s["rebate_depth_mm"] * MM, s["ovolo_radius_mm"] * MM
         E.append(("lower_stile_" + ("L" if side < 0 else "R"), "hsec",
-                  member_section(side * x_ps, side * (x_ps - st), y_lo0, y_lo1, rw_, rd_, ov_)))
+                  member_section(side * x_sash, side * (x_sash - st), y_lo0, y_lo1, rw_, rd_, ov_)))
+        if s.get("putty"):
+            E.append(("lower_putty", "hsec", putty(side * (x_sash - st), -side, y_lo0, rw_, rd_, s.get("glass_mm", 2.5) * MM)))
     if s.get("panes_per_sash", 1) == 2:
-        E.append(("lower_bar", "hsec", bar_section(0.0, bar / 2, y_lo0, y_lo1, rw_, rd_, ov_)))
+        brw = s.get("bar_rebate_width_mm", s["rebate_width_mm"]) * MM
+        E.append(("lower_bar", "hsec", bar_section(0.0, bar / 2, y_lo0, y_lo1, brw, rd_, ov_)))
+        if s.get("putty"):
+            for sg in (1.0, -1.0):
+                E.append(("lower_putty", "hsec", putty(sg * bar / 2, sg, y_lo0, brw, rd_, s.get("glass_mm", 2.5) * MM)))   # toward the glass
 
     # ---- vertical section through the stiles (y, z): the horn below the upper sash ------
     rect("vsec_stile", "upper_stile", y_up0, z_up0, y_up1, z_up1)
     rect("vsec_stile", "lower_stile", y_lo0, z_lo0, y_lo1, z_lo1)
-    # the horn (Ellis Fig. 416, 'bracket', 3 in): full thickness under the rail, a 1/8 in step at
-    # 1/4 in down, an ogee taking the inner face back to half the thickness by 2 1/4 in, then
-    # straight to its foot (the step and ogee scaled off the figure, not printed)
-    Hh = horn
-    step_z, step_in = 0.25 * 25.4 * MM, 0.125 * 25.4 * MM
-    og_end = 2.25 * 25.4 * MM
-    half = y_up0 + ts / 2
-    prof = [(y_up0, z_up0), (y_up1, z_up0), (y_up1, z_up0 - step_z), (y_up1 - step_in, z_up0 - step_z)]
-    for k in range(1, 13):
-        f = k / 12.0
-        g = 0.5 - 0.5 * math.cos(math.pi * f)                   # an S-curve from the step to half thickness
-        prof.append(((y_up1 - step_in) + (half - (y_up1 - step_in)) * g, z_up0 - step_z - (og_end - step_z) * f))
-    prof += [(half, z_up0 - Hh), (y_up0, z_up0 - Hh)]
-    E.append(("horn", "vsec_stile", prof))
+    # the horn: the stile carried 3 in below the meeting rail at its full thickness (Fig. 415); its ogee
+    # is in the face (elev_upper). Cut through the stile's middle it shows only where the narrowing
+    # inner edge has not yet passed the cut: down to the foot (the foot keeps 0.45 of the width, the cut
+    # is at half the width from the outer edge... so the cut leaves the horn where its width exceeds 0.5)
+    cut_from_outer = st / 2
+    stp, og_end, foot = s["horn_step_mm"] * MM, s["horn_ogee_end_mm"] * MM, s["horn_foot_width_mm"] * MM
+    # the inner edge's distance from the outer edge along the horn: st at the top, foot below the ogee
+    zs_ = [z_up0 - stp - (og_end - stp) * (k / 64.0) for k in range(65)]
+    wid = [st * 0.94 + (foot - st * 0.94) * (0.5 - 0.5 * math.cos(math.pi * k / 64.0)) for k in range(65)]
+    z_cut = next((z for z, w_ in zip(zs_, wid) if w_ < cut_from_outer), z_up0 - horn)
+    rect("vsec_stile", "horn", y_up0, z_cut, y_up1, z_up0)
     rect("vsec_stile", "head_outer_lining", y_ol0, z_top_clear, y_ol1, H_)
     rect("vsec_stile", "head", y_ol1, z_up1, y_il1, z_up1 + head_t)
     rect("vsec_stile", "head_parting_bead", y_pb0, z_up1 - pb_e, y_pb1, z_up1)
     rect("vsec_stile", "head_staff_bead", y_sb0, z_up1 - sb_e, y_sb1, z_up1)
     E.append(("oak_sill", "vsec_stile", [(y_nose, 0.0), (y_back, 0.0), (y_back, z_sill + sill["upstand_mm"] * MM),
                                          (y_lo0, z_sill + sill["upstand_mm"] * MM), (y_lo0, z_sill), (y_nose, z_sill - sill["fall_mm"] * MM)]))
-    geo = dict(x_ol=x_ol, x_ps=x_ps, y_up=(y_up0, y_up1), y_lo=(y_lo0, y_lo1), z_lo=(z_lo0, z_lo1),
+    geo = dict(x_ol=x_ol, x_ps=x_ps, x_sash=x_sash, y_up=(y_up0, y_up1), y_lo=(y_lo0, y_lo1), z_lo=(z_lo0, z_lo1),
                z_up=(z_up0, z_up1), z_sill=z_sill, z_top_clear=z_top_clear, W=W, H=H)
     return E, geo
 
@@ -199,13 +229,14 @@ FRAMES = {
     "vsec": lambda T: Frame(-0.10, -0.05, 0.40, (T["opening"]["height_mm"] + 150) * MM, 0.5),
     "hsec": lambda T: Frame(-0.60, -0.10, 1.20, 0.40, 0.5),
     "vsec_stile": lambda T: Frame(-0.10, -0.05, 0.40, (T["opening"]["height_mm"] + 150) * MM, 0.5),
+    "elev_upper": lambda T: Frame(-0.60, 0.70, 1.20, 1.10, 0.5),
 }
 
 
 def masks(T):
     E, geo = members(T)
     out = {}
-    for kind in ("elev", "vsec", "hsec", "vsec_stile"):
+    for kind in ("elev", "vsec", "hsec", "vsec_stile", "elev_upper"):
         fr = FRAMES[kind](T)
         h, w = fr.shape
         img = Image.new("1", (w, h), 0)

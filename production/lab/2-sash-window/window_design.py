@@ -121,36 +121,49 @@ def design(T):
     rw, rd, ov = s["rebate_width_mm"] * MM, s["rebate_depth_mm"] * MM, s["ovolo_radius_mm"] * MM
     barw = s["glazing_bar_width_mm"] * MM
     horn = s["horn_length_mm"] * MM
-    sash_w = 2 * x_face
+    xs_ = x_face - s.get("side_clearance_mm", 0) * MM        # the sashes' edges, with their play (Hasluck p.404)
+    sash_w = 2 * xs_
     sash_h = (z_head_face - z_sill + mr) / 2
     z_lo = (z_sill, z_sill + sash_h)
     z_up = (z_head_face - sash_h, z_head_face)
 
     ex = s.get("meeting_rail_extra_thickness_mm", 0) * MM
 
-    def horn_profile(yy, z0):
-        """Ellis Fig. 416's bracket in (y, z): full thickness under the rail, a small step, an ogee
-        back to half the thickness, then straight to its foot 3 in down (step and curve scaled)."""
-        step_z, step_in, og_end = 6.35 * MM, 3.175 * MM, 57.15 * MM
-        y0, y1 = yy
-        half = y0 + ts / 2
-        P = [(y0, z0), (y1, z0), (y1, z0 - step_z), (y1 - step_in, z0 - step_z)]
+    def horn_face(side, z0):
+        """Ellis Fig. 416's bracket, seen from the face (x, z): the stile's outer edge kept, its inner
+        edge stepped in a little and carried by an ogee to a narrow foot (scaled off the figure)."""
+        stp, og_end, foot = s["horn_step_mm"] * MM, s["horn_ogee_end_mm"] * MM, s["horn_foot_width_mm"] * MM
+        xo = side * xs_
+        xi = side * (xs_ - st)
+        xstep = xi + side * 0.06 * st
+        xf = xo - side * foot
+        P = [(xo, z0), (xi, z0), (xi, z0 - stp), (xstep, z0 - stp)]
         for k in range(1, 17):
-            f = k / 16.0
-            g = 0.5 - 0.5 * math.cos(math.pi * f)
-            P.append(((y1 - step_in) + (half - (y1 - step_in)) * g, z0 - step_z - (og_end - step_z) * f))
-        P += [(half, z0 - horn), (y0, z0 - horn)]
-        return P
+            t = k / 16.0
+            g = 0.5 - 0.5 * math.cos(math.pi * t)
+            P.append((xstep + (xf - xstep) * g, z0 - stp - (og_end - stp) * t))
+        P += [(xf, z0 - horn), (xo, z0 - horn)]
+        return P if side > 0 else P[::-1]
+
+    brw = s.get("bar_rebate_width_mm", rw) * MM if "bar_rebate_width_mm" in s else rw
+    g = s.get("glass_mm", 3) * MM
+
+    def putty_prism(name, axis, plane, start, end, u_glass, sgn, v_out, rwid):
+        # front putty: a bevel from the rebate's edge on the face to the glass (Rivington Part II pp.418-420)
+        P = [(u_glass - sgn * rwid, v_out), (u_glass - sgn * rwid, v_out + rd - g), (u_glass, v_out + rd - g)]
+        prism(name, "paint", P, axis, plane, start, end)
 
     def sash(nm, yy, zz, top, bottom, horns):
         # stiles: section in (x, y), run along z; glass side toward the centre
         for side, tag in ((-1, "L"), (1, "R")):
             prof = member_profile(st, ts, rw, rd, ov, glass_side=+1)
-            P = [((-x_face + u) if side < 0 else (x_face - u), yy[0] + v) for u, v in prof]
+            P = [((-xs_ + u) if side < 0 else (xs_ - u), yy[0] + v) for u, v in prof]
             prism("%s_stile_%s" % (nm, tag), "paint", P, "z", ["x", "y"], zz[0], zz[1])
+            if s.get("putty"):
+                putty_prism("%s_putty_stile_%s" % (nm, tag), "z", ["x", "y"], zz[0] + bottom - rd, zz[1] - top + rd,
+                            side * (xs_ - st), -side, yy[0], rw)
             if horns:
-                x0 = -x_face if side < 0 else x_face - st
-                prism("%s_horn_%s" % (nm, tag), "paint", horn_profile(yy, zz[0]), "x", ["y", "z"], x0, x0 + st)
+                prism("%s_horn_%s" % (nm, tag), "paint", horn_face(side, zz[0]), "y", ["x", "z"], yy[0], yy[1])
         # rails: section in (z, y), run along x between the stiles (tenons hidden); the meeting rails
         # 3/8 in thicker than the stiles, into the parting bead's gap (Ellis p.127)
         for rail, depth, at_top in (("top_rail", top, True), ("bottom_rail", bottom, False)):
@@ -162,15 +175,21 @@ def design(T):
                     P = [(a, b if b < yy[0] + ts - 1e-6 else b + ex) for a, b in P]
                 else:               # thickened outward
                     P = [(a, b if b > yy[0] + 1e-6 else b - ex) for a, b in P]
-            prism("%s_%s" % (nm, rail), "paint", P, "x", ["z", "y"], -x_face + st, x_face - st)
+            prism("%s_%s" % (nm, rail), "paint", P, "x", ["z", "y"], -xs_ + st, xs_ - st)
+            if s.get("putty"):
+                ug = (zz[1] - depth) if at_top else (zz[0] + depth)
+                putty_prism("%s_putty_%s" % (nm, rail), "x", ["z", "y"], -xs_ + st, xs_ - st, ug, -1.0 if at_top else 1.0, yy[0], rw)
         if s.get("panes_per_sash", 1) == 2:
-            P = [(u, yy[0] + v) for u, v in bar_profile(barw, ts, rw, rd, ov)]
+            P = [(u, yy[0] + v) for u, v in bar_profile(barw, ts, brw, rd, ov)]
             prism(nm + "_bar", "paint", P, "z", ["x", "y"], zz[0] + bottom - rd, zz[1] - top + rd)
-        # the pane(s): 4 mm glass in the rebate
-        g = s.get("glass_mm", 3) * MM
+            if s.get("putty"):
+                for sg in (1.0, -1.0):
+                    putty_prism("%s_putty_bar_%s" % (nm, "R" if sg > 0 else "L"), "z", ["x", "y"], zz[0] + bottom - rd, zz[1] - top + rd,
+                                sg * barw / 2, sg, yy[0], brw)   # the putty lies toward the glass
+        # the pane(s): glass in the rebate
         gy = yy[0] + rd - g
-        box(nm + "_glass", "glass", -x_face + st - rw + 0.001, gy, zz[0] + bottom - rw + 0.001,
-            x_face - st + rw - 0.001, gy + g, zz[1] - top + rw - 0.001)
+        box(nm + "_glass", "glass", -xs_ + st - rw + 0.001, gy, zz[0] + bottom - rw + 0.001,
+            xs_ - st + rw - 0.001, gy + g, zz[1] - top + rw - 0.001)
 
     sash("upper", y_up, z_up, tr, mr, True)
     sash("lower", y_lo, z_lo, mr, br, False)
