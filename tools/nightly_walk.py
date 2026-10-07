@@ -264,6 +264,14 @@ def main():
         rep = report(date, night, st["since"], st.get("verdict"), st.get("bench"), st.get("eyes"))
         print(rep["paragraph"])
         return 0
+    # ANY GAME WINDOW LEFT OPEN IS CLOSED FIRST (Jafar, 7 October: the night before, three copies
+    # left by a cut-off measurement kept this walk from starting its game).
+    try:
+        sys.path.insert(0, os.path.join(REPO, "tools"))
+        import close_games
+        close_games.close_games(log=log)
+    except Exception as e:
+        log("close games failed: %s" % e)
     # THE NIGHT'S PACKAGED BUILD FIRST (Jafar, 6 October: pushes to wip no longer build; the
     # nightly run does), when wip has moved since the played copy; the wait below then holds the
     # walk until the build machine has finished and replaced the copy.

@@ -799,14 +799,14 @@
       "id": "cam_mickeys",
       "bom": "proof_view_2_6.mickeys_window_at_two_metres",
       "side": "east_footway",
-      "x_m": 7.8,
+      "x_m": 6.9,
       "z_m": 3.25,
       "eye_height_m": 1.60,
       "yaw_deg": 90.0,
       "pitch_deg": -6.0,
       "fov_vertical_deg": 60.0,
       "sees": ["C"],
-      "note": "MICKEY'S WINDOW AT TWO METRES, 4 October (the proof view's shopfronts step: Mickey's interior first, 'holding up at 2 m'): standing on the east footway 2.0 m out from the glass (5.25), eye 1.6 m, square to the frontage and looking a little down into the office; at x 7.8, towards the window's right end, because the passer-by standing at x 6.2, 1.2 m out, filled the frame from the window's middle. Judged by day and at night; part of no pairing."
+      "note": "MOVED 7 OCTOBER FROM x 7.8 TO 6.9, the window's middle (Jafar: \"the rough black post\", named in his Sunday order): at 7.8 the camera stood 0.5 m from the lamp column at x 8.0, which filled a third of the frame as a black post; at 6.9 the column is 67 degrees off the axis, outside the 92-degree frame, and the whole window (x 5.12 to 8.61) still fits at two metres. MICKEY'S WINDOW AT TWO METRES, 4 October (the proof view's shopfronts step: Mickey's interior first, 'holding up at 2 m'): standing on the east footway 2.0 m out from the glass (5.25), eye 1.6 m, square to the frontage and looking a little down into the office; at x 7.8, towards the window's right end, because the passer-by standing at x 6.2, 1.2 m out, filled the frame from the window's middle. Judged by day and at night; part of no pairing."
     },
     {
       "id": "cam_reverse",

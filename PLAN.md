@@ -21,7 +21,7 @@ Every exit bundle names the commit and package, raw logs, fixed-camera images, a
 - First proof, Mickey's front office: the room Tom walks into, from the room kit, researched first; real glass reflecting the street; a 1990 cab office's wear and clutter, radio set, ashtrays, kettle, telephone, scuffed counter; no glitches. With it one frontage of correct geometry, material and wear, its window of verified CC0 goods, and three fixed street views.
 - One complete Tom and one speaker walking, sitting and turning.
 - P2, the voice: two measured approaches at most (shared graphics card; CPU or quantised), timed beside checked talk. P1 completed packaged: day, night, walking, Windows memory, sustained speech.
-- **Exit:** the samples meet the bar; the render and voice pairing has measured headroom; median first meaningful speech two seconds or less (else state-grounded prepared opening beats are tested; generic thinking sounds do not count).
+- **Exit:** the samples meet the bar; the render and voice pairing has measured headroom; median first meaningful speech two seconds or less (no prepared openings, his 7 October ruling; else the stop rule).
 - **His checkpoint:** one whole-frame and moving-character review; frozen identities preserved.
 - **Binding stop:** a sample that cannot pass within this ceiling halts expansion; the failed capability is reported plainly, never dressed as another plan.
 

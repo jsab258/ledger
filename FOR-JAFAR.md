@@ -38,13 +38,9 @@ Disk (10-07 08:40): C: 110.3 GB free, F: 24.2 GB free (C: rose by 58 GB since ye
 
 ### Needs you
 
-(Every page's answers read back at 07:22: 145; one new, your map: adopt it, updated to the built street. Recorded in RULINGS.md, D13.)
+(Every page's answers read back at 08:40: 145, none new. Your three answers of this morning are in RULINGS.md and gone from here: the voice's route, the NoAI folders, and the sitting clips, which were already in last month's Mixamo harvest with their travel.)
 
-1. **The voice: pay, or keep the delay?** (money; P2 failed, 6 October.) Moving the free voice off the graphics card was measured two ways: it spares the game, but Sheila still takes about 3.4 s to start speaking, against 1 s needed. **(A) Keep the free voice and its delay, covered by short prepared openings: recommended.** (B) A paid streaming voice, about $0.28 an hour of play; the voices would be recast and need a licence entry. (C) One more free try with a shorter voice sample, which changes how the voices sound a little.
-2. **Two Mixamo clips** (only you can sign in): at mixamo.com, "Stand To Sit" and "Sit To Stand", each Download as FBX Binary, Without Skin, 30 fps, no keyframe reduction ("In Place", if shown, left unticked), left in Downloads. Tom sits and stands up with them (item 1.2).
-3. **The NoAI material, yours to delete.** Deleting files for good is not mine to do even on your word. In Explorer: F:\LedgerTools\quarantine-noai-2026-10-03 (18 GB), and in Dropbox's LEDGER backup\versions the folders 2026-10-03-1258, 2026-10-03-1259 and 2026-10-03-1311. Then empty the Recycle Bin.
-
-Retired, not asked: the brick-and-facades choice (the plan rebuilds them from the kit in phase 2), the suit purchase and the tailoring questions (stopped by your rulings and the plan).
+Nothing waits on you this morning. The streaming cloud voice's numbers come to you on one screen when part 1 of the voice route is measured.
 
 ### Road to worth playing (PLAN.md)
 
@@ -58,13 +54,15 @@ Retired, not asked: the brick-and-facades choice (the plan rebuilds them from th
 
 ## Builder, Tuesday 6 October
 
-**Done:** phase 0 passed its recheck. 1.1's fixes after its failed review: reflections, the harbour at the street's end, the locked office and its lights, wear, ashtray, map; walked in the packaged game. Walking carries real travel. Your build ruling is in (below).
+**Done:** phase 0 passed its recheck. 1.1's review faults fixed and walked in the packaged game: reflections, a harbour at the street's end, the locked office lighting up as Tom enters, wear, ashtray, map. Walking carries real travel. Your build ruling is in.
 
-**Failed:** 1.1's first review; P2, the voice; Tom's face after ten passes (route set aside, new method ready); the walk-in's first three tries (a door bar, an engine warning, a leftover picture blocking the doorway, all fixed); last night's measurement and walk, lost when my session closed at 00:30, and so this update was late.
+**Failed:** 1.1's first review; P2, the voice; the walk-in three times (a door bar, an engine warning, a leftover picture in the doorway; fixed); last night's measurement and walk, lost when my session closed at 00:30 (I had ended my turn to wait for the night's jobs to wake me; the program closed while idle, nothing in Windows' logs says why).
 
-**Your question, builds:** 8 packaged builds yesterday, 17 to 36 minutes (median 31, 3.2 hours): about 15 minutes cooking and packaging, 6 for a second cook kept only as an old measurement (removed), 9 for tests and pictures. While one runs the graphics card stays free: I write code, records and research and send reviewers; editor work waits. Monday's estimates are ready.
+**Two-tries rule broken twice:** Tom's face, ten passes before it was set aside; the sky's band, five tries in one evening before the photograph was measured.
 
-**Act on:** the voice (A recommended) and the two Mixamo clips, below.
+**Your question, builds:** 8 yesterday, 17 to 36 minutes (median 31; 3.2 hours): 15 cooking and packaging, 6 a second cook kept only as a measurement (removed), 9 tests and pictures. While one runs the graphics card stays free: code, records, research, reviewers; editor work waits.
+
+**Act on:** nothing; the voice's numbers come on one screen.
 
 ## Builder, Monday 5 October
 

@@ -7,6 +7,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 3 Oct: The goal: a thirty-minute Quay Street build his friends play on this PC, passing the Meridian Test (they do not bounce off it, the town visibly knows them, talk feels live, he would rather play it).
 - 5 Oct: CHARTER.md and PLAN.md (the outside audit's, with his edits) replace every list; NOW.md holds the current phase. How the work runs (one session, the weekly budget, Monday orders, phase 1's binding stop, phase 0's checks) lives in CLAUDE.md.
 - 3 Oct: The AI tester's nightly walk, played as a player would, reports in a morning paragraph whether the town visibly knows Tom (who noticed and said so, "that's all I know" counts, reply delays, broken illusions).
+- 7 Oct: He deletes the NoAI folders himself. The sitting clips come from last month's Mixamo harvest.
 - 3 Oct: Not reopened: the route, the interface, the AI tester's walks, faces, the voices in the game, the town's talk work.
 - 3 Oct: The proof view is built to the Hook sheet, not cleaned; to his page only beside it. Bars: the wet street dark, glistening, mirroring sky and buildings, its puddles water; the hill built, not hazed (lower, softer, varied, trees, mist); windows with white frames, sash bars, sky in the glass. 4 Oct: the wet street (seam, icy near lane noted) and the hill return once the street's kit is built.
 - 4 Oct: The friends' build: his PC and own account (no second account), a shortcut, his key capped at five dollars an evening, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
@@ -86,6 +87,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 1 Oct (D48): The model is chosen by the kind of moment (small talk lighter, real conversation better), never by the character.
 - 24 Sep: The paid router stays; a local model later as the fallback offline; three router changes owed; no training on its answers.
 - 23 Sep: The talk runs beside the game as the tested C# helper, not rewritten in C++.
+- 7 Oct, speech: no prepared openings (they repeat and read as stalling), so no fallback: under two seconds by the voice starting on the first sentence of streamed writing, a faster model for that sentence, measured on the real path with today's free voice within the dollar-a-day rule; the voice behind one swappable seam. Then one screen of a streaming cloud voice's numbers; nothing signed up for or bought; he decides. Short of two seconds, phase 1's stop rule.
 - 23 Sep: Offline or slow: the authored street carries on, an in-character brush-off and a small sign; a slow line dropped after about 8 s.
 - 24 Sep: Before outsiders play: the AI notice before the first talk, a way to report any line, the content rule on live speech; Steam's AI disclosure as drafted.
 - 29 Sep: Live talk names no real make, brand, shop, club, programme, paper or public figure, and nothing after 1992.

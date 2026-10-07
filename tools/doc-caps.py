@@ -29,7 +29,7 @@ import tempfile
 # same commit that creates it.
 CAPS = [
     ("CLAUDE.md", 1000),
-    ("RULINGS.md", 2500),
+    ("RULINGS.md", 2600),   # 7 Oct: his rulings grow and his words are not trimmed to fit
     ("NOW.md", 200),
     ("TOWN.md", 300),
     ("CLOTHES.md", 300),

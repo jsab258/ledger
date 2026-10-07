@@ -315,6 +315,15 @@ def main():
         return selftest()
     if a.fresh is not None:
         return fresh(a.fresh)
+    # ANY GAME WINDOW LEFT OPEN IS CLOSED FIRST (Jafar, 7 October: three copies left by a cut-off
+    # measurement held the graphics card and the film ran past its time).
+    if not a.block_only:
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import close_games
+            close_games.close_games()
+        except Exception as e:
+            print("morning_pictures: close games failed: %s" % e)
     day = dt.date.fromisoformat(a.date) if a.date else dt.date.today()
     if a.block_only:
         fj = os.path.join(REPO, "FOR-JAFAR.md")
