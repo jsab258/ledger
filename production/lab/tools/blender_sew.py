@@ -70,6 +70,18 @@ def main():
     names = sorted({k[:-2] for k in b if k.endswith("_V")})
     for n in names:
         body = mesh_object("body_" + n, b[n + "_V"], b[n + "_F"])
+        if n + "_Vkey" in b and S.get("body_morph"):
+            # the body moves during the run (MetaHuman's A-pose to arms down): a shape key, keyed
+            body.shape_key_add(name="Basis")
+            key = body.shape_key_add(name="down")
+            Vk = b[n + "_Vkey"]
+            for i, v in enumerate(key.data):
+                v.co = Vk[i]
+            f0, f1 = S["body_morph"]
+            key.value = 0.0
+            key.keyframe_insert("value", frame=f0)
+            key.value = 1.0
+            key.keyframe_insert("value", frame=f1)
         body.modifiers.new("Collision", "COLLISION")
         body.collision.thickness_outer = S["body_thickness_outer"]
         body.collision.cloth_friction = S["body_friction"]
@@ -113,6 +125,7 @@ def main():
     sc.keyframe_insert("gravity", frame=S["sew_frames"])
     sc.gravity = (0, 0, -9.81)
     sc.keyframe_insert("gravity", frame=S["sew_frames"] + 10)
+    cl.settings.use_dynamic_mesh = False
 
     keep = {}
     for f in range(1, S["frames"] + 1):
