@@ -8106,10 +8106,254 @@ namespace
 		}
 	}
 
+	// THE SIT PROOF, 8 October (phase 1, item 1.2, "sitting"; METHOD-2026-10-06.md, section 5, step 3:
+	// sit down warped so the hips land on the seat, the seated loop, stand up). -SitProof, with
+	// -MickeysInside: the clock to 20:00, Ron seated on the office bench by his evening; then he stands
+	// up, stands, and sits down again. The clips put the feet in different places against their roots
+	// (F:/LedgerTools/scratch/sit_join.txt: standing up ends, and so sitting down starts, 38 cm ahead
+	// of where the idle stands; the seated ends meet within 5 cm), so through each
+	// blend the body slides by that much times the blend's weight, which keeps the planted feet where
+	// they are, and both feet are held by leg IK throughout (they never leave the floor). What the
+	// slides leave over is warped out over the sit-down, so he lands where he sat. The line names his
+	// distance from the seat at the end and each foot's worst slip: it passes at 5 cm and 3 cm.
+	struct FSitProof
+	{
+		int32 Step = 0, Shot = 0;
+		double At = 0.0, NextShot = 0.0, SlideAt = -1.0;
+		float SlideFor = 0.5f;
+		FVector Slide = FVector::ZeroVector, SlideDone = FVector::ZeroVector, Warp = FVector::ZeroVector, Seat = FVector::ZeroVector;
+		TWeakObjectPtr<AActor> Body, Visual;
+		TWeakObjectPtr<ULedgerPersonAnim> Anim;
+		FVector Planted[2] = { FVector::ZeroVector, FVector::ZeroVector };
+		float WorstSlip = 0.0f;
+	};
+	FSitProof GSit;
+
+	void SitProofTick(UWorld* World, double Now)
+	{
+		static const bool bOn = FParse::Param(FCommandLine::Get(), TEXT("SitProof"));
+		if (!bOn || World == nullptr || GSit.Step >= 9) { return; }
+		static const TCHAR* kDown = TEXT("/Game/Ledger/Anim/Sit/A_sit_down_MH.A_sit_down_MH");
+		static const TCHAR* kUp = TEXT("/Game/Ledger/Anim/Sit/A_stand_up_MH.A_stand_up_MH");
+		// Each clip's two feet's midpoint against its root at its ends, cm, (across, ahead): sit_join.txt.
+		// (The sit-down is the stand-up backwards since 8 October, so it starts where that one ends.)
+		const FVector2D IdleFeet(-9.0, 8.0), DownStart(4.5, 46.0), DownEnd(1.0, 46.0), LoopFeet(-3.0, 45.5), UpEnd(4.5, 46.0);
+		const float BlendIn = 0.3f, BlendOut = 0.5f;
+		AActor* Body = CardBody("rocco");
+		AActor* Visual = GVisualFor(Body);
+		if (GSit.Step == 0)
+		{
+			if (Now < 8.0 || Body == nullptr) { return; }
+			// RON'S EVENING: the clock to 20:00 and the office lit, as once Tom has opened it.
+			GClock.JumpTo(GameTime(GNow.Day, 20, 0));
+			GNow = GClock.Now();
+			ClockLight();
+			if (!GOffice.Shop.empty()) { LedgerVignetteShot::SetShopRoomLit(GOffice.Shop.c_str(), true); }
+			bPlaceNow = true;
+			GSit.At = Now;
+			GSit.Step = 1;
+			UE_LOG(LogTemp, Display, TEXT("ledgerSitProof: the clock to %s, waiting for Ron on his seat"), *Un(GNow.ToString()));
+			return;
+		}
+		TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Parts = Body != nullptr ? GLooks.Find(Body) : nullptr;
+		ULedgerPersonAnim* A = GSit.Anim.Get();
+		if (A == nullptr && Parts != nullptr)
+		{
+			UAnimSequence* Up = LoadObject<UAnimSequence>(nullptr, kUp);
+			for (const TWeakObjectPtr<ULedgerPersonAnim>& P : *Parts)
+			{
+				const USkeletalMeshComponent* M = P.IsValid() ? P->GetSkelMeshComponent() : nullptr;
+				if (Up != nullptr && M != nullptr && M->GetSkeletalMeshAsset() != nullptr
+				    && M->GetSkeletalMeshAsset()->GetSkeleton() == Up->GetSkeleton()) { A = P.Get(); GSit.Anim = A; break; }
+			}
+		}
+		if (GSit.Step == 1)
+		{
+			const bool bSeated = A != nullptr && A->Sequence != nullptr && A->Sequence->GetName().StartsWith(TEXT("A_sit"));
+			if (!bSeated)
+			{
+				if (Now - GSit.At > 30.0)
+				{
+					UE_LOG(LogTemp, Display, TEXT("ledgerSitProof=FAIL reason=never-seated (needs -MickeysInside)"));
+					GSit.Step = 9;
+				}
+				return;
+			}
+			if (Now - GSit.At < 3.0 || Visual == nullptr || Visual == Body) { return; }
+			// A CAMERA IN FRONT OF HIM, short of any wall, a little to his side, all of him in frame (his
+			// own clothes ignored: the first run's line stopped on them and filmed his shirt).
+			const FVector Him = Visual->GetActorLocation() + FVector(0, 0, 80.0);
+			const float Facing = Visual->GetActorRotation().Yaw + 90.0f;
+			// from his side, as far off as the room allows, either side
+			FVector Eye = Him;
+			float Room = 0.0f;
+			// against the real triangles: the office sits inside its block, whose simple collision is a
+			// solid box, so a simple line from his chest started inside it (the third run)
+			FCollisionQueryParams Q(FName(TEXT("SitProofEye")), true);
+			Q.AddIgnoredActor(Visual);
+			Q.AddIgnoredActor(Body);
+			TArray<AActor*> Worn;
+			Visual->GetAttachedActors(Worn, true, true);
+			Q.AddIgnoredActors(Worn);
+			if (GPawn != nullptr) { Q.AddIgnoredActor(GPawn); }
+			// the most open of seven directions ahead of him, from 40 cm in front (his back is to a wall)
+			const FVector From = Him + FRotator(0.0f, Facing, 0.0f).Vector() * 40.0 + FVector(0, 0, 60.0);
+			float Took = 0.0f;
+			for (const float Side : { 60.0f, -60.0f, 40.0f, -40.0f, 20.0f, -20.0f, 0.0f })
+			{
+				const FVector Dir = FRotator(0.0f, Facing + Side, 0.0f).Vector();
+				FHitResult Hit;
+				const float Free = World->LineTraceSingleByChannel(Hit, From, From + Dir * 400.0, ECC_Visibility, Q)
+					? Hit.Distance - 20.0f : 380.0f;
+				if (Hit.bBlockingHit) { UE_LOG(LogTemp, Display, TEXT("ledgerSitProof: at %.0f degrees %s at %.0f cm"), Side, *GetNameSafe(Hit.GetActor()), Hit.Distance); }
+				if (Free > Room + 30.0f) { Room = Free; Took = Side; Eye = From + Dir * Free; }
+			}
+			UE_LOG(LogTemp, Display, TEXT("ledgerSitProof: camera %.0f cm out, %.0f degrees off his facing"), Room + 40.0f, Took);
+			FActorSpawnParameters SP;
+			SP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			if (ACameraActor* Cam = World->SpawnActor<ACameraActor>(Eye, (Him - FVector(0, 0, 10.0) - Eye).Rotation(), SP))
+			{
+				Cam->GetCameraComponent()->SetFieldOfView(80.0f);
+				if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetViewTargetWithBlend(Cam, 0.0f); }
+			}
+			GVisuals.Remove(Body);   // the simulation's body held still meanwhile
+			GSit.Body = Body;
+			GSit.Visual = Visual;
+			GSit.Seat = Visual->GetActorLocation();
+			GSit.NextShot = Now;
+			GSit.At = Now;
+			GSit.Step = 2;
+			return;
+		}
+		AActor* V = GSit.Visual.Get();
+		if (A == nullptr || V == nullptr) { GSit.Step = 9; return; }
+		USkeletalMeshComponent* Mesh = A->GetSkelMeshComponent();
+		auto ToWorld = [Mesh](const FVector2D& D) { return Mesh->GetComponentTransform().TransformVector(FVector(D.X, D.Y, 0.0)); };
+		auto HoldBoth = [A, Mesh]()
+		{
+			for (int32 I = 0; I < 2; ++I)
+			{
+				A->FootHoldAt[I] = Mesh->GetSocketLocation(FName(I == 0 ? TEXT("foot_l") : TEXT("foot_r")));
+				A->FootHold[I] = 1.0f;
+			}
+		};
+		// THE SLIDE IN PROGRESS: the body moved by the blend's weight times the feet's offset.
+		if (GSit.SlideAt >= 0.0)
+		{
+			const float W = FMath::Clamp((float)(Now - GSit.SlideAt) / GSit.SlideFor, 0.0f, 1.0f);
+			const FVector Want = GSit.Slide * W;
+			V->AddActorWorldOffset(FVector(Want.X - GSit.SlideDone.X, Want.Y - GSit.SlideDone.Y, 0.0));
+			GSit.SlideDone = Want;
+			if (W >= 1.0f) { GSit.SlideAt = -1.0; }
+		}
+		// THE FEET, measured as on the walk: a ball within 2.5 cm of the floor and the lower one.
+		{
+			const float Floor = V->GetActorLocation().Z;
+			for (int32 I = 0; I < 2; ++I)
+			{
+				const FVector P = Mesh->GetSocketLocation(FName(I == 0 ? TEXT("ball_l") : TEXT("ball_r")));
+				if (GSit.Planted[I].IsZero()) { GSit.Planted[I] = P; }
+				if (P.Z - Floor < 2.5f) { GSit.WorstSlip = FMath::Max(GSit.WorstSlip, (float)FVector::Dist2D(P, GSit.Planted[I])); }
+				else { GSit.Planted[I] = P; }
+			}
+		}
+		if (Now >= GSit.NextShot && GSit.Shot < 40)
+		{
+			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
+				/ TEXT("SitProof") / FString::Printf(TEXT("sit-%02d.png"), GSit.Shot++)), false, false);
+			GSit.NextShot = Now + 0.4;
+		}
+		UAnimSequence* Up = LoadObject<UAnimSequence>(nullptr, kUp);
+		UAnimSequence* Down = LoadObject<UAnimSequence>(nullptr, kDown);
+		if (Up == nullptr || Down == nullptr) { UE_LOG(LogTemp, Display, TEXT("ledgerSitProof=FAIL reason=no-clips")); GSit.Step = 9; return; }
+		const double T = Now - GSit.At;
+		static int32 LoggedStep = -1;
+		if (LoggedStep != GSit.Step)
+		{
+			// where he is against the seat, along his facing (+ ahead) and across, at each step
+			const FVector Off = V->GetActorLocation() - GSit.Seat;
+			const FVector Fwd = FRotator(0.0f, V->GetActorRotation().Yaw + 90.0f, 0.0f).Vector();
+			UE_LOG(LogTemp, Display, TEXT("ledgerSitProof: step %d, %.1f cm ahead of the seat, %.1f across"),
+				GSit.Step, FVector::DotProduct(Off, Fwd), FVector::CrossProduct(Fwd, Off).Z);
+			LoggedStep = GSit.Step;
+		}
+		switch (GSit.Step)
+		{
+		case 2:   // STAND UP: feet held; under the clip, the idle back as the loop; out, the slide ahead.
+			if (T < 0.8) { break; }   // a picture or two of him seated first
+			HoldBoth();
+			A->PlayMove(Up, BlendIn, BlendOut, 1.0f);
+			GSit.At = Now;
+			GSit.Step = 3;
+			break;
+		case 3:
+			if (T >= BlendIn && A->Sequence != nullptr && A->Sequence->GetName().StartsWith(TEXT("A_sit"))) { SeatPerson(GSit.Body.Get(), std::string()); }
+			if (T >= Up->GetPlayLength() - BlendOut)
+			{
+				GSit.Slide = ToWorld(UpEnd - IdleFeet);
+				GSit.SlideDone = FVector::ZeroVector;
+				GSit.SlideAt = Now;
+				GSit.SlideFor = BlendOut;
+				GSit.At = Now;
+				GSit.Step = 4;
+			}
+			break;
+		case 4:   // STANDING, then SIT DOWN: in, the slide from the idle's feet to the clip's; the rest warped.
+			if (T < BlendOut + 2.5) { break; }
+			{
+				const FVector In = ToWorld(IdleFeet - DownStart), Out = ToWorld(DownEnd - LoopFeet);
+				// where he would end without a warp, against the seat he left
+				const FVector End = V->GetActorLocation() + In + Out;
+				GSit.Warp = FVector(GSit.Seat.X - End.X, GSit.Seat.Y - End.Y, 0.0);
+				GSit.Slide = In;
+				GSit.SlideDone = FVector::ZeroVector;
+				GSit.SlideAt = Now;
+				GSit.SlideFor = BlendIn;
+				HoldBoth();
+				A->PlayMove(Down, BlendIn, BlendOut, 1.0f);
+				GSit.At = Now;
+				GSit.Step = 5;
+			}
+			break;
+		case 5:   // the warp spread over the clip, after its blend
+			if (T >= BlendIn && T < Down->GetPlayLength() - BlendOut)
+			{
+				const float Dt = FApp::GetDeltaTime() / (Down->GetPlayLength() - BlendOut - BlendIn);
+				V->AddActorWorldOffset(GSit.Warp * Dt);
+			}
+			if (T >= Down->GetPlayLength() - BlendOut)
+			{
+				SeatPerson(GSit.Body.Get(), "sit_talk");
+				GSit.Slide = ToWorld(DownEnd - LoopFeet);
+				GSit.SlideDone = FVector::ZeroVector;
+				GSit.SlideAt = Now;
+				GSit.SlideFor = BlendOut;
+				GSit.At = Now;
+				GSit.Step = 6;
+			}
+			break;
+		case 6:
+			if (T < BlendOut + 2.0) { break; }
+			{
+				const float Off = (float)FVector::Dist2D(V->GetActorLocation(), GSit.Seat);
+				const bool bPass = Off <= 5.0f && GSit.WorstSlip <= 3.0f;
+				UE_LOG(LogTemp, Display, TEXT("ledgerSitProof=%s fromSeatCm=%.1f worstSlipCm=%.2f warpCm=%.1f shots=%d"),
+					bPass ? TEXT("PASS") : TEXT("FAIL"), Off, GSit.WorstSlip, GSit.Warp.Size2D(), GSit.Shot);
+				if (AActor* B = GSit.Body.Get()) { GVisuals.Add(B, V); }
+				GSit.Step = 9;
+				if (FParse::Param(FCommandLine::Get(), TEXT("SitProofExit"))) { FPlatformMisc::RequestExit(false); }
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
 	bool HumanTalkTick(UWorld* World, double Now)
 	{
 		MoveProofTick(World, Now);
 		WalkProofTick(World, Now);
+		SitProofTick(World, Now);
 		TurnTick(World, Now);
 		TalkShotTick(World);
 		SceneShotsTick(World);

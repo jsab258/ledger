@@ -28,7 +28,12 @@ import sys
 # reverse, a seated loop holds near 0.6 m. X Bot is 2dee24f8, Y Bot 4f5d21e1 (characters_available.txt).
 X_BOT, Y_BOT = "2dee24f8-3b49-48af-b735-c6377509eaac", "4f5d21e1-4ccc-41f1-b35b-fb2547bd8493"
 MIRROR = "mirror"
-CLIPS = (("Seated Idle_" + X_BOT, "sit_down", X_BOT),       # 1.03 to 0.65 m, 0.28 m back
+REVERSE = "reverse"
+# THE SIT-DOWN IS THE STAND-UP PLAYED BACKWARDS (8 October, the sit proof): the only clip that sits
+# down from standing ("Seated Idle", 1.03 to 0.65 m) lowers the body bent nearly double, its head at
+# 80 cm over hips at 75 (torso 0.05 of its rest length above the hips; F:/LedgerTools/scratch/
+# sitprofile2.txt); "Sit To Stand" keeps the head well up (0.48), and backwards it sits down.
+CLIPS = (("Sit To Stand_" + X_BOT, "sit_down", X_BOT, "reverse"),   # 1.03 to 0.57 m, 0.47 m back
          ("Sitting Talking_" + Y_BOT, "sit_talk", Y_BOT),   # 0.56 m held 44 s, hands 0.2 to 0.3 m
          ("Sit To Stand_" + X_BOT, "stand_up", X_BOT),      # 0.57 to 1.03 m, 0.47 m forward
          # TURNING TO A SPEAKER (7 October, late): every 90-degree turn profiled by the up-legs' side
@@ -195,6 +200,34 @@ def main(src_dir, out_dir):
                 print("sittingClips=MIRROR-OFF clip=%s worst=%.4f" % (take, worst))
                 return 2
             act = new
+        if REVERSE in clip[3:]:
+            # BACKWARDS: every key at the clip's other end; checked by its first and last poses swapping.
+            f0, f1 = (int(x) for x in act.frame_range)
+            new = bpy.data.actions.new(take)
+            rig.animation_data.action = new
+            curves = [fc for layer in act.layers for strip in layer.strips for bag in strip.channelbags for fc in bag.fcurves]
+            for fc in curves:
+                nc = new.fcurve_ensure_for_datablock(rig, fc.data_path, index=fc.array_index,
+                                                     group_name=fc.group.name if fc.group else "")
+                keys = sorted(((f0 + f1 - k.co[0], k.co[1]) for k in fc.keyframe_points))
+                nc.keyframe_points.add(len(keys))
+                for (t, v), nk in zip(keys, nc.keyframe_points):
+                    nk.co = (t, v)
+                    nk.interpolation = "LINEAR"
+                nc.update()
+            hips = next(b for b in rig.pose.bones if b.name.lower().endswith("hips"))
+            def hz(a, f):
+                rig.animation_data.action = a
+                bpy.context.scene.frame_set(f)
+                bpy.context.view_layer.update()
+                return hips.head.copy()
+            off = max((hz(act, f0) - hz(new, f1)).length, (hz(act, f1) - hz(new, f0)).length)
+            print("sittingClips: %s reversed from %s, ends swapped within %.3f (armature units)" % (take, name, off))
+            if off > 1.0:
+                print("sittingClips=REVERSE-OFF clip=%s off=%.3f" % (take, off))
+                return 2
+            rig.animation_data.action = new
+            act = new
         act.name = take
         sc = bpy.context.scene
         sc.frame_start, sc.frame_end = (int(x) for x in act.frame_range)   # the clip's own length
@@ -220,6 +253,7 @@ def selftest():
           and mirrored('pose.bones["mixamorig:Hips"].location', 1)[1] == 1.0
           and mirrored('pose.bones["mixamorig:Spine"].rotation_quaternion', 0)[1] == 1.0)
     check("each clip is its own file", out_file(OUT_DIR, "sit_down").endswith("sit_down.fbx"))
+    check("the sit-down is the stand-up backwards", CLIPS[0][0] == CLIPS[2][0] and REVERSE in CLIPS[0][3:])
     check("each clip goes onto its own character's T-pose skeleton", all(c[0].endswith(c[2]) for c in CLIPS)
           and tpose_out("O", X_BOT).endswith("tpose_2dee24f8.fbx"))
     check("a T-pose is told by its numbers", is_tpose(1.0, 1.42, 1.43, 0.75, 0.2) and not is_tpose(0.56, 0.9, 1.1, 0.3, 0.2))
