@@ -267,7 +267,10 @@ def build(pieces):
             d["y_m"] = ground_y(d["z_m"])
     decals += room_wear()
     decals += counter_marks()
-    decals += frontage_wear(pieces)
+    # THE FRONTS' MARKS OF USE ARE NO LONGER DECALS (7 October, evening): projected onto paint they
+    # land on nothing (TakesMarks) or streak (the try of that evening); the painted and tiled fronts
+    # wear at the foot in their own material (make_base_material.py WEAR_PARAM). frontage_wear
+    # stays for the record and for a later projection that can fade by angle.
     return houses, decals, coverage(bays, decals)
 
 
@@ -474,9 +477,11 @@ def selftest():
                                                                   for d in splash))
     check("every wall's coverage is printed and between 0 and 1", len(cov) == len(houses) and all(0.0 < c <= 1.0 for c, _ in cov))
     check("every decal names a picture", all(d["picture"] for d in decals))
-    front = [d for d in decals if d["kind"] in ("dust", "chip", "scuff")]
-    check("a front's use reads: its dust, chips and scuffs at FRONT_WEAR or more (7 October)",
-          front and all(d["strength"] >= FRONT_WEAR for d in front))
+    street_front = [d for d in decals if d["kind"] in ("dust", "chip") or (d["kind"] == "scuff" and d["on"] != "mickeys_room")]
+    check("no shopfront marks are projected onto the street's paint (7 October: they wear in their material)", not street_front)
+    counter = [d for d in decals if d["kind"] == "scuff" and d["on"] == "mickeys_room"]
+    check("the office counter's scuffs read, at FRONT_WEAR or more (7 October)",
+          counter and all(d["strength"] >= FRONT_WEAR for d in counter))
     pud = [d for d in decals if d["kind"] == "puddle"]
     check("puddles stand along both gutters", any(d["z_m"] > 2 for d in pud) and any(d["z_m"] < -2 for d in pud))
     print("street_wear selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
