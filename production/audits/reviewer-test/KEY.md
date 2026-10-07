@@ -48,3 +48,7 @@ Hidden from every reviewer until all reviews were in. Frame 26 is a clean copy o
 | frame-25 | B01 | office by day | floating object: a copy of the yellow box files hangs in mid-air in front of the blind, nothing under it | 690, 400, 852, 488 | 0.55% |
 
 The pictures themselves are not in git (the size guard keeps pictures to production/previews/); `plant_faults.py` remakes the bases and all twenty-five frames from the committed previews (`python plant_faults.py <repo> <out>`), and `key.json` is the key it wrote.
+
+## The realism check's last good pictures
+
+The same views two days earlier, cut the same way: B01 beside `proof-2.6-mickeys-2m-day-try3-2026-10-04.jpg`, B02 beside `proof-2.6-mickeys-2m-night-try3-2026-10-04.jpg`, B09 beside `proof-2.6-mickeys-try2-2026-10-04.jpg` (cut 1092, 0, 1600, 900). Frame-26 is base B09 itself, saved the same way. The reverse view's earlier version was left out because shapes reflected in its windows might be people.
