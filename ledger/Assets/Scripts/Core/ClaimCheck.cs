@@ -657,6 +657,38 @@ namespace Ledger.Core
             return cited;
         }
 
+        /// WHAT A DRAFT REACHED FOR (the talk task of 7 October, the ladder): the
+        /// texts of every item the list cites as the source of a detail, once
+        /// for each detail that cites it, so the item a draft leaned on most comes
+        /// most often. A draft the check refuses still says, through the items it
+        /// cited for what it got right, which of what the character knows bears
+        /// on his question in the writer's reading; the ladder says those plainly
+        /// (TalkLadder). Empty when the answer cites nothing or cannot be read.
+        public static List<string> CitedItems(string answer, List<(string id, string text)> items)
+        {
+            var cited = new List<string>();
+            if (string.IsNullOrEmpty(answer) || items == null) return cited;
+            var ids = new List<string>();
+            foreach (var (id, _) in items) ids.Add(id);
+            foreach (var text in TopLevelObjects(answer))
+            {
+                object parsed;
+                try { parsed = MiniJson.Deserialize(text); } catch (Exception) { continue; }
+                var list = MiniJson.AsList(MiniJson.AsObject(parsed) is Dictionary<string, object> o && o.TryGetValue("specifics", out var v) ? v : null);
+                if (list == null) continue;
+                foreach (var x in list)
+                {
+                    var src = MiniJson.GetString(MiniJson.AsObject(x), "source");
+                    var found = src == null ? null : SourceIds(src.Trim(), ids);
+                    if (found == null) continue;
+                    foreach (var id in found)
+                        foreach (var (itemId, itemText) in items)
+                            if (itemId == id) cited.Add(itemText);
+                }
+            }
+            return cited;
+        }
+
         public static IReadOnlyList<string> ParseItems(string answer, ICollection<string> validIds) => ParseItems(answer, validIds, null);
 
         /// As above, with `habits` given the flagged details the list called a

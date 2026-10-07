@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- THE TALK'S OWN TESTS (the talk task of 7 October 2026): the ladder before
+       "that's all I know", what each character has told each listener, who told
+       them a story, and the content of every line the ladder can say. A project of
+       its own because CoreTests' Program.cs is over the push guard's 1 MB and can
+       no longer be edited; it compiles the same Core, as shipped. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <RootNamespace>Ledger.TalkTests</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../Assets/Scripts/Core/**/*.cs" />
+  </ItemGroup>
+</Project>

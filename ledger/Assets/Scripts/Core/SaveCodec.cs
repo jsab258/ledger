@@ -60,7 +60,27 @@ namespace Ledger.Core
                 { "hops", r.Hops }, { "sensitive", r.Sensitive }, { "indelible", r.Indelible },
             };
             if (r.OriginRung >= 0) d["rung"] = r.OriginRung;
+            // WHO TOLD THEM (the talk task of 7 October), only when it is not who
+            // first saw it: a story one telling from the witness was told by the
+            // witness, so it saves exactly as before and is read back so
+            // (RestoreAgents); only a story retold further carries its teller.
+            if (!string.IsNullOrEmpty(r.ToldById) && r.ToldById != r.OriginId) d["teller"] = r.ToldById;
             return d;
+        }
+
+        /// Who told a saved rumour's holder: the teller written beside it, or, for
+        /// a story one telling from its first witness, that witness, which is
+        /// also what an older save means; nobody for their own sighting, for a
+        /// story further out whose teller was not written, or for a message
+        /// they took themselves (its source is the holder).
+        static string TellerOf(Dictionary<string, object> r, string holder)
+        {
+            int hops = MiniJson.GetInt(r, "hops");
+            if (hops <= 0) return null;
+            var teller = MiniJson.GetString(r, "teller");
+            if (!string.IsNullOrEmpty(teller)) return teller;
+            var origin = MiniJson.GetString(r, "origin");
+            return hops == 1 && !string.IsNullOrEmpty(origin) && origin != holder ? origin : null;
         }
 
         public static int PeekVersion(string json)
@@ -354,6 +374,7 @@ namespace Ledger.Core
                         // The first teller's rung (town list 6n): absent in older saves, and
                         // then unknown; clamped to the ladder, as a hand-edited file may say anything.
                         OriginRung = MiniJson.TryGetInt(r, "rung", out var rungSaved) ? Math.Clamp(rungSaved, -1, 4) : -1,
+                        ToldById = TellerOf(r, g.Id),
                     });
                 }
                 g.Knowledge.Facts.Clear();

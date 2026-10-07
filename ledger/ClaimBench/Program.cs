@@ -104,7 +104,7 @@ static partial class Program
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
-            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ConversationEngine.ReactFirst = args.Contains("--react"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; FirstsOnly = Arg(args, "--only", null); FirstsModel = Arg(args, "--model", null); return await Firsts(dir, parallel);
+            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ConversationEngine.ReactFirst = args.Contains("--react"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; FirstsOnly = Arg(args, "--only", null); FirstsModel = Arg(args, "--model", null); ConversationEngine.Ladder = args.Contains("--ladder"); FirstsByMoment = args.Contains("--moment"); FirstsTake = int.Parse(Arg(args, "--take", "0")); FirstsArgs = args; return await Firsts(dir, parallel);
             case "suggest": return await SuggestBench(Arg(args, "--from", "F:/LedgerTools/town-scratch/sheila-sonnet/firsts.jsonl"), Arg(args, "--out", "F:/LedgerTools/town-scratch/suggest-bench.jsonl"), parallel);
             case "bearing": return Bearing();
             case "detailbench": return await DetailBench(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
@@ -115,6 +115,10 @@ static partial class Program
             case "threats": return await Threats(dir, parallel);
             case "why": return await Why(args.Length > 1 ? args[1] : "lena", args.Length > 2 ? args[2] : "");
             case "hours": return await Hours(dir, parallel);
+            case "bait": return await Bait(args, dir, parallel);
+            case "ladder-label": return await LadderLabel(dir, parallel);
+            case "bait-label": return await BaitLabel(dir, parallel);
+            case "successors": return await Successors(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
             case "hourslook": return await HoursLook();
             case "check": _withPeople = args.Contains("--people"); return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
             case "pipeline": return await Pipeline(dir, args.Length > 1 ? args[1] : "run", parallel, Arg(args, "--checker", "v3v"),
@@ -954,14 +958,24 @@ static partial class Program
     // One character only (--only lena) and another model for the replies (--model):
     // Sheila's blind check of the faster model (Jafar's tap of 1 October).
     static string FirstsOnly, FirstsModel;
+    // --moment: each line's model by the kind of moment, as the talk program
+    // chooses it (TalkMoment); --take N: only the first N questions; the args, for --key.
+    static bool FirstsByMoment;
+    static int FirstsTake;
+    static string[] FirstsArgs = new string[0];
 
     static async Task<int> Firsts(string dir, int parallel)
     {
         var probes = Probes();
+        if (FirstsTake > 0) probes = probes.Take(FirstsTake).ToArray();
         var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
         var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
         var cost = new CostTracker();
-        using var client = new ClaudeCodeClient();
+        using var client = (IDisposable)BenchClient(FirstsArgs, "the newcomer's questions (" + (Set.Length == 0 ? "the sixty" : Set) + ")" +
+                                                    (ConversationEngine.Ladder ? ", with the ladder" : "") + (FirstsByMoment ? ", models by moment" : ""));
+        var talkClient = (ILlmClient)client;
+        int beforeEmpty = 0, afterEmpty = 0;
+        var rungs = new Dictionary<string, int>();
         var rows = new List<object>();
         var gate = new SemaphoreSlim(parallel);
         int fallback = 0, refused = 0, n = 0, failed = 0;
@@ -975,7 +989,8 @@ static partial class Program
             {
                 // As the talk helper loads it, with the street's plain facts (town list ck).
                 var card = StreetFacts.AddTo(CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, job.card + ".md"))), job.card);
-                var engine = new ConversationEngine(client, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost, FirstsModel) { Checker = client };
+                var engine = new ConversationEngine(talkClient, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost, FirstsModel) { Checker = talkClient };
+                if (FirstsByMoment && FirstsModel == null) engine.Model = TalkMoment.ModelFor(TalkMoment.Of(job.probe));
                 engine.People = cast.PeopleFor(job.card, 0, 10);
                 engine.HowYouKnowHim = new PlayerIdentity().HowTheyKnowHim(true, true, null);
                 string where = cast.WhereWords(job.card, 0, 10);
@@ -984,12 +999,24 @@ static partial class Program
                 catch (Exception) { Interlocked.Increment(ref failed); return; }
                 bool fell = ClaimCheck.IsKnownOnly(reply, card);
                 bool refusedLine = ResponseValidator.IsDeflection(reply, card.Name);
+                // THE SAME TURN, TODAY'S WAY AND THE LADDER'S (the talk task of 7
+                // October): the ladder changes only what is said once both drafts are
+                // refused, so today's reply is the engine's record of what it would
+                // have said there, and the reply itself everywhere else. Empty is
+                // "that's all I know", or the ladder's refusal.
+                string before = engine.LastWouldHaveSaid ?? reply;
+                bool beforeFell = ClaimCheck.IsKnownOnly(before, card);
+                bool afterEmpty1 = fell || engine.LastRung == "refuse";
                 lock (rows)
                 {
                     n++;
+                    if (beforeFell) beforeEmpty++;
+                    if (afterEmpty1) afterEmpty++;
+                    if (engine.LastRung != null) rungs[engine.LastRung] = (rungs.TryGetValue(engine.LastRung, out var rc) ? rc : 0) + 1;
                     if (fell) { fallback++; byCard[job.card] = (byCard.TryGetValue(job.card, out var k) ? k : 0) + 1; }
                     if (refusedLine) refused++;
-                    rows.Add(new { card = job.card, probe = job.probe, reply, fell, refused = refusedLine, invented = engine.LastInvented,
+                    rows.Add(new { card = job.card, probe = job.probe, reply, fell, refused = refusedLine, rung = engine.LastRung, before, beforeFell,
+                                   empty = afterEmpty1, model = engine.Model, leads = engine.LastLeads, invented = engine.LastInvented,
                                    refusedAgain = engine.LastRefusedAgain, bearing = engine.LastBearing, saidPlainly = engine.LastSaidPlainly,
                                    rule = engine.LastRule == null ? null : engine.LastRule.Concept + " " + engine.LastRule.Kind,
                                    known = engine.LastKnown.Select(k => k.id + ": " + k.text).ToList(),
@@ -1001,6 +1028,10 @@ static partial class Program
         WriteJsonl(Path.Combine(dir, "firsts.jsonl"), rows);
         Console.WriteLine($"firsts: a newcomer's first questions, {n} answered ({failed} failed): \"that's all I know\" {fallback} (" +
                           string.Join(", ", byCard.Select(kv => kv.Key + " " + kv.Value)) + $"), refused {refused}; api-rate usd, not billed={cost.EstimateUsd():0.00} -> firsts.jsonl");
+        if (ConversationEngine.Ladder)
+            Console.WriteLine($"ladder: empty today {beforeEmpty}/{n}, with the ladder {afterEmpty}/{n}; rungs " +
+                              string.Join(", ", rungs.OrderBy(kv => kv.Key).Select(kv => kv.Key + " " + kv.Value)));
+        LogKeyRun(n, failed > 0 ? failed + " turns failed" : null);
         return 0;
     }
 

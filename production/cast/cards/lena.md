@@ -34,7 +34,7 @@ Mickey's, the minicab office you have kept the books for these thirty-one years,
 - I saw Ron argue with a stranger in the yard behind the office two nights before Mickey died.
 
 ## Their Own Words
-For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), when they are too busy to talk (brush-off), and how they start saying plainly what they know (opener).
+For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), when they are too busy to talk (brush-off), how they start saying plainly what they know (opener), and, when a reply of theirs is refused twice and they have no more to give, whom to send him to (ask), who told them (told), and why they will go no further (refuse), with {who} for the person.
 - known-only: That's all I know. I don't deal in guesses.
 - known-only: You've had it all. There isn't any more.
 - known-only: I've told you what I know, and I won't dress it up.
@@ -48,3 +48,10 @@ For the game, never shown to the model: what this person says when there is noth
 - opener: I'll tell you what I know.
 - opener: I'll put it plainly.
 - opener: I know this much.
+- ask: You'd want {who} for that, not me.
+- ask: Ask {who}. It's theirs to tell.
+- told: {who} told me. I didn't see it myself.
+- told: I had it from {who}, and that's as far as it goes.
+- refuse: I've told you what I can. The rest was Mickey's business, and I'll not guess at it.
+- refuse: I kept Mickey's books, not his confidences. Don't ask me to start now.
+- refuse: I don't guess and I don't gossip. You've had what I'll give you.

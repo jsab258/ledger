@@ -48,7 +48,7 @@ NIGHT_ROOT = "F:/LedgerTools/nightly"
 SESSIONS = "F:/LedgerTools/played-game/Windows/LedgerProbe/Saved/Sessions"
 TESTER_RUNS = os.path.join(REPO, "production", "playtest", "ai-tester")
 TOWN = {"lena": "Sheila", "rocco": "Ron", "sam": "Darren"}
-BROKE = {"fallback", "refused", "brush", "paused"}
+BROKE = {"fallback", "refused", "brush", "paused", "ladder-refuse"}   # the ladder's refusal is an empty answer too
 
 
 def log(msg):

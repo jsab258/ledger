@@ -94,6 +94,16 @@ namespace Ledger.Core
         /// someone who does"; with it on, the plain line (PlainFallback) is said
         /// only where a rule chose the facts.
         public static bool UseRules = false;
+        /// THE LADDER BEFORE "THAT'S ALL I KNOW" (the talk task of 7 October;
+        /// TalkLadder): refused twice, the character says the next relevant fact
+        /// they have not told this listener, then whom to ask, then who told them,
+        /// and only then refuses with a reason; and what they have told each
+        /// listener is kept (HasTold), saved, and shown to the writer of their
+        /// later replies. It takes the place of PlainFallback's line. Off, as
+        /// every switch here is, until the talk program turns it on.
+        public static bool Ladder = false;
+        /// The most facts already told that a prompt lists, the latest.
+        public const int MaxToldShown = 8;
         /// A REACTION BEFORE THE ANSWER (the builder's delay note, step 5, 30
         /// September; production/research/voice-latency/NOTE-2026-09-30.md): the
         /// reply opens with a moment's reaction of the character's own that names
@@ -469,6 +479,20 @@ namespace Ledger.Core
                 sb.AppendLine(StreetHours);
             }
 
+            // WHAT THEY HAVE ALREADY TOLD HIM (Ladder): the last few facts, so a
+            // later reply does not tell him the same thing again unasked. Nothing
+            // told, nothing added: a first reply's prompt is today's, word for word.
+            if (Ladder)
+            {
+                var told = ToldFacts();
+                if (told.Count > 0)
+                {
+                    sb.AppendLine();
+                    sb.AppendLine("What you have already told him, in your talks with him (do not tell him again unless he asks for it again):");
+                    for (int i = Math.Max(0, told.Count - MaxToldShown); i < told.Count; i++) sb.AppendLine("- " + told[i]);
+                }
+            }
+
             // THE PLAN FIRST (PlanFirst): what they know, numbered, the facts that
             // bear most on his line marked, and a plan in one tag before the words.
             if (PlanFirst)
@@ -694,15 +718,42 @@ namespace Ledger.Core
             Task<(IReadOnlyList<string> invented, List<LlmResponse> calls)>> CheckFocused { get; set; } = ClaimCheck.CheckAsync;
         public string CheckerModel { get; set; } = Models.Ambient;
 
-        // What is said when both drafts were refused (PlainFallback).
+        // What is said when both drafts were refused: the ladder (Ladder), or
+        // today's line (PlainFallback's, or "that's all I know").
         string RefusedTwice()
         {
+            if (!Ladder)
+            {
+                var line = TodaysFallback(_knownOnlySaid++, out var plainly);
+                LastSaidPlainly = plainly;
+                return line;
+            }
+            LastWouldHaveSaid = TodaysFallback(_knownOnlySaid, out _);
+            int n = _knownOnlySaid++;
+            bool ruled = UseRules && LastRule != null && LastRule.Kind != TalkRules.Kind.Scene;
+            var step = TalkLadder.Climb(LadderLeads(), Marked, Card, StreetFacts.NameOf(Card.Id) ?? Card.Name,
+                                        ruled ? LastRule.Ask : null, ruled ? LastRule.Concept : null,
+                                        ruled && LastRule.Kind == TalkRules.Kind.Partial,
+                                        ruled && TalkRules.AboutThemselves(LastRule.Concept), n);
+            // Nothing that bears on it: their own "that's all I know", as today.
+            if (step.Rung == null) return ClaimCheck.KnownOnlyFor(Card, n);
+            foreach (var m in step.Marks) MarkTold(m);
+            LastRung = step.Rung;
+            LastSaidPlainly = step.Rung == "fact";
+            return step.Line;
+        }
+
+        // TODAY'S LINE when both drafts are refused (PlainFallback), as it was
+        // before the ladder, for the `n`th time in this talk; changes nothing.
+        string TodaysFallback(int n, out bool plainly)
+        {
+            plainly = false;
             // With the rule table on, said plainly only where a rule chose the
             // facts (measured: the facts shared words pick missed the question in
             // 84 of 123 plain lines); "don't know" keeps its line and whom to ask.
             bool ruled = LastRule != null && (LastRule.Kind == TalkRules.Kind.Answer || LastRule.Kind == TalkRules.Kind.Partial);
             if (UseRules && LastRule != null && LastRule.Kind == TalkRules.Kind.DontKnow)
-                return ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++) + (LastRule.Ask != null ? " You'd want " + LastRule.Ask + " for that." : "");
+                return ClaimCheck.KnownOnlyFor(Card, n) + (LastRule.Ask != null ? " You'd want " + LastRule.Ask + " for that." : "");
             if (PlainFallback && (!UseRules || ruled))
             {
                 var said = new List<string>();
@@ -722,9 +773,8 @@ namespace Ledger.Core
                 if (said.Count == 0 && ownHeld != null) said.Add(ownHeld);
                 if (said.Count > 0)
                 {
-                    LastSaidPlainly = true;
+                    plainly = true;
                     var openers = Card.Own("opener");
-                    int n = _knownOnlySaid++;
                     uint h = 2166136261;
                     foreach (char c in Card.Id ?? "") { h ^= c; h *= 16777619; }
                     string opener = openers.Count > 0 ? openers[(int)((h + (uint)n) % (uint)openers.Count)] + " " : "";
@@ -737,7 +787,7 @@ namespace Ledger.Core
                     return opener + string.Join(" ", said) + rest;
                 }
             }
-            return ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
+            return ClaimCheck.KnownOnlyFor(Card, n);
         }
 
         /// What the last reply's FIRST draft claimed without support; empty when
@@ -754,6 +804,124 @@ namespace Ledger.Core
         public IReadOnlyList<string> LastBearing { get; private set; } = new List<string>();
         /// The last reply was the chosen facts said plainly (PlainFallback).
         public bool LastSaidPlainly { get; private set; }
+        /// The ladder's rung the last reply was ("fact", "ask", "told",
+        /// "refuse"), or null when it was not on the ladder (Ladder).
+        public string LastRung { get; private set; }
+        /// What today's talk would have said in the ladder's place (its "that's
+        /// all I know" or plain line), or null: the bench measures both from the
+        /// same turn, since the ladder changes nothing before it.
+        public string LastWouldHaveSaid { get; private set; }
+
+        /// WHO THEY ARE TALKING TO, for what they have told whom: the player
+        /// unless the caller says otherwise.
+        public string Listener { get; set; } = "player";
+
+        /// WHAT THEY HAVE TOLD EACH LISTENER (the talk task of 7 October): the
+        /// ladder's marks (TalkLadder), and every fact a checked reply of their
+        /// own drew on; kept for good, saved with the talk. Read by the ladder,
+        /// so nothing is said plainly twice, and shown to the writer of later
+        /// replies (Ladder).
+        readonly Dictionary<string, List<string>> _told = new Dictionary<string, List<string>>();
+
+        /// Whether they have told this listener this fact (as they hold it).
+        public bool HasTold(string listener, string fact) =>
+            listener != null && fact != null && _told.TryGetValue(listener, out var set) && set.Contains(TalkLadder.FactMark(fact));
+
+        void MarkTold(string mark)
+        {
+            if (string.IsNullOrEmpty(mark)) return;
+            var who = Listener ?? "player";
+            if (!_told.TryGetValue(who, out var list)) _told[who] = list = new List<string>();
+            if (!list.Contains(mark)) list.Add(mark);
+        }
+
+        bool Marked(string mark) => _told.TryGetValue(Listener ?? "player", out var set) && set.Contains(mark);
+
+        /// The facts already told this listener, in the order told, for the prompt.
+        List<string> ToldFacts()
+        {
+            var facts = new List<string>();
+            if (!_told.TryGetValue(Listener ?? "player", out var set)) return facts;
+            foreach (var m in set) if (m.StartsWith("fact:", StringComparison.Ordinal)) facts.Add(m.Substring(5));
+            return facts;
+        }
+
+        /// EVERY LIST THE CHECK WROTE THIS TURN, with the items it was shown: the
+        /// whole drafts' and their first sentences', so the ladder can read what
+        /// each draft reached for. Written from the first sentence's own thread
+        /// too, so under its own lock.
+        readonly List<(List<(string id, string text)> items, string answer)> _turnLists = new List<(List<(string, string)>, string)>();
+
+        void KeepList(List<(string id, string text)> items, List<LlmResponse> calls)
+        {
+            if (items == null || calls == null || calls.Count == 0 || calls[0] == null) return;
+            lock (_turnLists) _turnLists.Add((items, calls[0].Text));
+        }
+
+        /// What the last clean check found the said reply drawing on, every item.
+        List<string> _lastCleanCitedAll = new List<string>();
+
+        // Kinds of item that are things known about the world, counted as told
+        // when a reply draws on them: hard facts, memories, the street's hours,
+        // its people.
+        static bool IsToldKind(string id) => id.Length > 0 && (id[0] == 'H' || id[0] == 'M' || id[0] == 'O' || id[0] == 'P');
+
+        /// THE LADDER'S LEADS: what bears on his line, the rule table's facts
+        /// first, then what the refused drafts cited, the most cited first. A
+        /// street fact goes with its plain words and whom it is about; a story
+        /// they heard with who told them; nothing else is a lead.
+        List<TalkLadder.Lead> LadderLeads()
+        {
+            var leads = new List<TalkLadder.Lead>();
+            var seen = new HashSet<string>();
+            void Add(string text, bool ruled)
+            {
+                if (string.IsNullOrEmpty(text) || !seen.Add(text)) return;
+                var said = StreetFacts.SaidFor(text);
+                if (said != null)
+                {
+                    var about = StreetFacts.AboutOf(text);
+                    bool other = about != null && about != Card.Id;
+                    leads.Add(new TalkLadder.Lead
+                    {
+                        // Somebody else's job, unless he asked who somebody is or the rule
+                        // table chose it as its answer: a pointer only.
+                        Key = text, Said = other && !ruled && StreetFacts.IsIntroduction(text) && !AsksWho.IsMatch(_turnInput ?? "") ? null : said,
+                        Own = StreetFacts.IsOwn(text, Card.Id), AskWho = other ? StreetFacts.NameOf(about) : null,
+                    });
+                    return;
+                }
+                var teller = TalkLadder.HeardFrom(text);
+                if (teller != null) leads.Add(new TalkLadder.Lead { Key = text, ToldBy = teller });
+            }
+            bool ruled = UseRules && LastRule != null && LastRule.Kind != TalkRules.Kind.Scene;
+            if (ruled) foreach (var f in LastRule.Facts) Add(f, true);
+            var counts = new Dictionary<string, int>();
+            var order = new List<string>();
+            lock (_turnLists)
+                foreach (var (items, answer) in _turnLists)
+                    foreach (var text in ClaimCheck.CitedItems(answer, items))
+                    {
+                        if (!counts.ContainsKey(text)) { counts[text] = 0; order.Add(text); }
+                        counts[text]++;
+                    }
+            var ranked = new List<string>(order);
+            ranked.Sort((a, b) => counts[b] != counts[a] ? counts[b].CompareTo(counts[a]) : order.IndexOf(a).CompareTo(order.IndexOf(b)));
+            foreach (var text in ranked) Add(text, false);
+            var kept = new List<string>();
+            foreach (var l in leads)
+                kept.Add((l.Said != null ? "fact" : l.AskWho != null ? "ask" : "told") + "|" + (l.AskWho ?? l.ToldBy ?? "") + "|" + l.Key);
+            LastLeads = kept;
+            return leads;
+        }
+
+        // He asked who somebody is ("Who's Sheila?", "who was that?").
+        static readonly Regex AsksWho = new Regex(@"\bwho('s|s| is| was| are| were)\b", RegexOptions.IgnoreCase);
+
+        /// THE LAST TURN'S LEADS, for reading a run (Ladder): what bore on his
+        /// line, each "fact|", "ask|who|" or "told|who|" and its item; empty when
+        /// the ladder was not climbed.
+        public IReadOnlyList<string> LastLeads { get; private set; } = new List<string>();
         /// The rule the table chose for the last line (UseRules), or null.
         public TalkRules.Choice LastRule { get; private set; }
 
@@ -1188,7 +1356,16 @@ namespace Ledger.Core
                 { "answers", AnswersJson() }, { "currentDeed", CurrentDeed }, { "asksThisTalk", _asksThisTalk },
                 { "ownedUp", new List<object>(OwnedUp) }, { "keepsQuiet", QuietJson() }, { "toldOthers", ToldOthersJson() },
                 { "talkDays", TalkDaysJson() }, { "trustEarned", TrustEarned }, { "doubted", Doubted }, { "deedEvidence", new List<object>(DeedEvidence) }, { "weekDay", WeekDay }, { "knowsHisName", KnowsHisName }, { "nameKnownFrom", NameKnownFrom }, { "askedFirstName", AskedFirstName }, { "callsRung", (int)CallsRung }, { "gameRung", (int)GameRung }, { "threatened", new List<object>(Threatened) }, { "menaced", new List<object>(Menaced) },
+                { "told", ToldJson() },
             };
+        }
+
+        // What they have told each listener, in the order told (Ladder).
+        Dictionary<string, object> ToldJson()
+        {
+            var d = new Dictionary<string, object>();
+            foreach (var kv in _told) d[kv.Key] = new List<object>(kv.Value);
+            return d;
         }
 
         /// Puts a CaptureTalk back, over whatever this engine held. What it
@@ -1227,6 +1404,7 @@ namespace Ledger.Core
             GameRung = PlayerIdentity.Rung.NewOwner;
             Threatened.Clear();
             Menaced.Clear();
+            _told.Clear();
             if (saved == null) return;
             // Saved positions to the memories actually restored, so one memory
             // skipped does not move every "shown" mark onto the wrong one.
@@ -1330,6 +1508,16 @@ namespace Ledger.Core
                 foreach (var x in thl) if (x is string xs && xs.Length > 0) { Threatened.Add(xs); Menaced.Add(xs); }
             if (saved.TryGetValue("menaced", out var mn) && mn is List<object> mnl)
                 foreach (var x in mnl) if (x is string xs && xs.Length > 0) Menaced.Add(xs);
+            // What they have told each listener (Ladder); absent in an older talk: nothing told.
+            if (saved.TryGetValue("told", out var tl) && tl is Dictionary<string, object> tld)
+                foreach (var kv in tld)
+                    if (kv.Key.Length > 0 && kv.Value is List<object> toldMarks)
+                        foreach (var x in toldMarks)
+                            if (x is string xs && xs.Length > 0)
+                            {
+                                if (!_told.TryGetValue(kv.Key, out var list)) _told[kv.Key] = list = new List<string>();
+                                if (!list.Contains(xs)) list.Add(xs);
+                            }
             // An older talk: whatever doubt and evidence its answers still show.
             Doubted = saved.TryGetValue("doubted", out var db) ? db is bool dbb && dbb
                 : ToldOthers.Count > 0 || Answers.Exists(a => a.Result == ClaimResult.Contradiction || a.SawElsewhere);
@@ -1373,6 +1561,7 @@ namespace Ledger.Core
             try
             {
                 var (found, calls) = await CheckLine(Checker, CheckerModel, known, line, ct).ConfigureAwait(false);
+                KeepList(known, calls);
                 // Out of shape is not a pass here: the first sentence waits for the whole check.
                 return (found ?? new List<string> { "(unchecked)" }, Summed(calls));
             }
@@ -1606,9 +1795,18 @@ namespace Ledger.Core
                 var focus = PlanFirst && LastPlan.HasValue && LastPlan.Value.facts.Count > 0 ? LastPlan.Value.facts : null;
                 var (found, calls) = focus != null ? await CheckFocused(Checker, CheckerModel, known, line, ct, focus) : await CheckLine(Checker, CheckerModel, known, line, ct);
                 foreach (var c in calls) _cost?.Record(CheckerModel, c.InputTokens, c.OutputTokens);
+                KeepList(known, calls);
                 // What a clean line drew on, from the list's own answer (its first call).
                 _lastCleanCited = found != null && found.Count == 0 && calls != null && calls.Count > 0
                     ? ClaimCheck.CitedMemories(calls[0].Text, known) : new List<string>();
+                _lastCleanCitedAll = new List<string>();
+                if (found != null && found.Count == 0 && calls != null && calls.Count > 0)
+                {
+                    var kinds = new Dictionary<string, string>();
+                    foreach (var (id, text) in known) kinds[text] = id;
+                    foreach (var text in ClaimCheck.CitedItems(calls[0].Text, known))
+                        if (kinds.TryGetValue(text, out var id) && IsToldKind(id) && !_lastCleanCitedAll.Contains(text)) _lastCleanCitedAll.Add(text);
+                }
                 if (found != null) return found;
             }
             catch (Exception) when (!ct.IsCancellationRequested) { }
@@ -1714,6 +1912,7 @@ namespace Ledger.Core
             LastEnded = false;
             _turnInput = playerInput;
             lock (LastSteps) LastSteps.Clear();
+            lock (_turnLists) _turnLists.Clear();
             var stepClock = System.Diagnostics.Stopwatch.StartNew();
             if (!GameMarksFresh && _lastTurn.HasValue && now.TotalMinutes - _lastTurn.Value.TotalMinutes >= FreshAfterMinutes)
                 StartFresh();
@@ -1788,6 +1987,10 @@ namespace Ledger.Core
             LastInvented = new List<string>();
             LastRefusedAgain = new List<string>();
             LastSaidPlainly = false;
+            LastRung = null;
+            LastWouldHaveSaid = null;
+            LastLeads = new List<string>();
+            _lastCleanCitedAll = new List<string>();
             LastPromised = new List<string>();
             LastRealNames = new List<string>();
             LastSpokeOf = new List<string>();
@@ -1824,6 +2027,7 @@ namespace Ledger.Core
                     if (flagged.Count > 0 && firstHeard)
                     {
                         _lastCleanCited = new List<string>();
+                        _lastCleanCitedAll = new List<string>();
                         // The checked first sentence has been heard: the rest goes.
                         reply = firstSentence;
                     }
@@ -1845,6 +2049,7 @@ namespace Ledger.Core
                             LastRefusedAgain = new List<string>(d2.FirstFlagged);
                             reply = RefusedTwice();
                             _lastCleanCited = new List<string>();
+                            _lastCleanCitedAll = new List<string>();
                         }
                         else
                         {
@@ -1855,7 +2060,7 @@ namespace Ledger.Core
                             if (!holds) LastRefusedAgain = again.Count > 0 ? new List<string>(again)
                                 : new List<string> { "(no invented detail: it repeated a refused claim, promised, or named a real person or thing)" };
                             reply = holds ? redrafted : d2.Heard ? d2.First : RefusedTwice();
-                            if (!holds) _lastCleanCited = new List<string>();
+                            if (!holds) { _lastCleanCited = new List<string>(); _lastCleanCitedAll = new List<string>(); }
                         }
                     }
                     var spoke = new List<string>();
@@ -1908,10 +2113,14 @@ namespace Ledger.Core
                 shown = ResponseValidator.IsDeflection(cleaned, Card.Name) ? heardFirst : cleaned;
             }
             reply = shown;
-            LastPutToHim = _promptRaisesDeed && CurrentDeed != null && !ResponseValidator.IsDeflection(reply, Card.Name) && !ClaimCheck.IsKnownOnly(reply, Card)
+            LastPutToHim = _promptRaisesDeed && CurrentDeed != null && !ResponseValidator.IsDeflection(reply, Card.Name) && !ClaimCheck.IsKnownOnly(reply, Card) && LastRung == null
                 ? new List<string> { CurrentDeed } : new List<string>();
             _transcript.Add(new LlmMessage("assistant", reply));
             if (_promptAsks) _asksThisTalk++;
+            // WHAT THIS REPLY TOLD HIM (Ladder): the facts a checked reply of their
+            // own drew on, when it was said as checked; the ladder marked its own.
+            if (Ladder && LastRung == null && !ResponseValidator.IsDeflection(reply, Card.Name))
+                foreach (var text in _lastCleanCitedAll) MarkTold(TalkLadder.FactMark(text));
 
             Memory.Append(new MemoryEvent(now, "conversation", EstimateImportance(playerInput),
                 ClaimCheck.PlayerSaid + $"\"{Truncate(playerInput, 200)}\""));

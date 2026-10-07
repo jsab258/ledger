@@ -590,6 +590,10 @@ static class Program
                         // How surely the naming reached them; a game that does not send it yet gets the account's own.
                         acc.NamingConfidence = a.TryGetProperty("namingConfidence", out var nc) && nc.ValueKind == JsonValueKind.Number ? nc.GetDouble() : acc.Confidence;
                         evidenceTopic = a.TryGetProperty("topic", out var atp) && atp.ValueKind == JsonValueKind.String ? atp.GetString() : null;
+                        // WHO TOLD THEM, by name, for an account they heard (the talk task
+                        // of 7 October; Rumor.ToldById): their reason then names them.
+                        acc.ToldBy = !acc.SawItMyself && a.TryGetProperty("toldBy", out var tb) && tb.ValueKind == JsonValueKind.String
+                                     && tb.GetString().Trim().Length > 0 ? tb.GetString().Trim() : null;
                     }
                     if (v.TryGetProperty("near", out var n) && n.ValueKind == JsonValueKind.Object)
                     {
@@ -1192,9 +1196,12 @@ static class Program
             var named = Cast?.WhoNamed(say) ?? new List<string>();
             // HOW THE REPLY WENT (town list 6bd), for the session record's `reply` line:
             // where a friend's talk broke, beside the "still" it may explain.
+            // A rung of the ladder (the talk task of 7 October) is "ladder-fact",
+            // "ladder-ask", "ladder-told" or "ladder-refuse".
             string went = paused != null ? "paused"
                 : timedOut && earlyFirst != null ? "cut"
                 : timedOut ? "brush"
+                : engine.LastRung != null ? "ladder-" + engine.LastRung
                 : ClaimCheck.IsKnownOnly(reply, card) ? "fallback"
                 : ResponseValidator.IsDeflection(reply, card.Name) ? "refused"
                 : (!timedOut && engine.LastEnded) ? "ended"
@@ -1218,12 +1225,15 @@ static class Program
             }
             // FELL BACK: the reply is one of the "that's all I know" wordings,
             // for the log (how often the check leaves a character nothing to say).
-            bool fellBack = !timedOut && ClaimCheck.IsKnownOnly(reply, card);
+            // The ladder's refusal (the talk task of 7 October) leaves them nothing to
+            // say as surely as "that's all I know", and is counted with it.
+            bool fellBack = !timedOut && (ClaimCheck.IsKnownOnly(reply, card) || engine.LastRung == "refuse");
             // WRITTEN BY THE MODEL, marked so (the EU's AI Act, Article 50(2):
             // generated text marked in a form a machine can read); a brush-off
             // and the fallback line are the game's own words.
             // The chosen facts said plainly are built by code from written words.
-            bool generated = reply != brush && !fellBack && !engine.LastSaidPlainly && !ResponseValidator.IsDeflection(reply, card.Name);
+            // So is every rung of the ladder, built by code from written lines and facts.
+            bool generated = reply != brush && !fellBack && !engine.LastSaidPlainly && engine.LastRung == null && !ResponseValidator.IsDeflection(reply, card.Name);
             string model = generated ? engine.Model : null;
             Keep(new Turn { Id = id, To = to, Day = day, Hour = hour, Minute = minute, Say = say, Reply = reply, Generated = generated,
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
@@ -1236,7 +1246,7 @@ static class Program
             // TRUST EARNED (town list 6bz): for somebody who names him only on
             // trust, whether they trust him after this turn, and whether this
             // turn earned it; the game keeps it and sends it back.
-            var (trusts, trustEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen && (went == "own" || went == "ended" || went == "fallback"));
+            var (trusts, trustEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen && (went == "own" || went == "ended" || went == "fallback" || went.StartsWith("ladder-", StringComparison.Ordinal)));
             await ThreatReadDone();
             return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, refusedAt = refusedAtOut, @unchecked, fellBack, generated, model, steps, trusts, trustEarned, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
         }
@@ -1494,6 +1504,11 @@ static class Program
         // production/research/grounded-replies/RULES-2026-09-30.md).
         ConversationEngine.UseRules = true;
         ConversationEngine.PlainFallback = true;
+        // THE LADDER BEFORE "THAT'S ALL I KNOW" (the talk task of 7 October,
+        // TalkLadder; measured in production/research/grounded-replies/
+        // LADDER-2026-10-07.md): refused twice, the next relevant fact, whom to
+        // ask, who told them, then a refusal with a reason.
+        ConversationEngine.Ladder = true;
         if (Array.IndexOf(args, "--selftest") >= 0) return await SelfTest(CardsDir(args));
         var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
         bool fake = Array.IndexOf(args, "--fake") >= 0 || Environment.GetEnvironmentVariable("LEDGER_TALK_FAKE") == "1";
@@ -1873,6 +1888,15 @@ static class Program
         var costBefore = q.Cost.TotalCalls;
         var only = await q.Answer("{\"id\":11,\"to\":\"sam\",\"who\":\"r3\",\"noReply\":true,\"evidence\":{" + Acc + ",\"near\":{\"heard\":true},\"familiarity\":0.2}}");
         Ok("the level alone, with no model call", Str(only, "level") == "Uneasy" && Str(only, "reply") == null && q.Cost.TotalCalls == costBefore, only);
+        // WHO TOLD THEM (the talk task of 7 October): the game sends the teller of a
+        // heard account by name, and their reason says so; without it, as before.
+        var toldBy = await q.Answer("{\"id\":17,\"to\":\"sam\",\"who\":\"t1\",\"noReply\":true,\"evidence\":{\"account\":{\"held\":true,\"seen\":false,\"names\":false," +
+            "\"confidence\":0.45,\"summary\":\"the man that did the window ran\",\"toldBy\":\"Sheila\"},\"near\":{\"heard\":true},\"familiarity\":0.2}}");
+        Ok("a heard account names who told them in the reason", Str(toldBy, "why") != null && Str(toldBy, "why").StartsWith("Sheila told me that the man"), toldBy);
+        Ok("and without a teller it reads as before", Str(only, "why") != null && Str(only, "why").StartsWith("I heard that"), only);
+        var seenTold = await q.Answer("{\"id\":18,\"to\":\"sam\",\"who\":\"t2\",\"noReply\":true,\"evidence\":{\"account\":{\"held\":true,\"seen\":true,\"rung\":2,\"names\":false," +
+            "\"confidence\":0.6,\"summary\":\"a man ran from the window\",\"toldBy\":\"Sheila\"},\"familiarity\":0.2}}");
+        Ok("their own sighting is told by nobody, whatever is sent", Str(seenTold, "why") != null && Str(seenTold, "why").StartsWith("I saw it myself"), seenTold);
 
         // KNOWING A LITTLE SHOWS IN TALK, 28 September.
         const string Little = "\"knowing\":{\"level\":\"little\",\"story\":\"the new owner was about the yard after midnight\"}";

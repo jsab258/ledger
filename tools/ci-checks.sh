@@ -202,6 +202,7 @@ real_table() {
     slice-perf-selftest   "$REPO"                 "$PY tools/slice-perf.py --selftest" \
     retention-selftest    "$REPO"                 "$PY tools/retention.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \
+    talk-tests            "$REPO"                 "dotnet run --project ledger/TalkTests -c Release" \
     soak                  "$REPO"                 "dotnet run --project ledger/Soak -c Release" \
     save-chaos            "$REPO"                 "dotnet run --project ledger/SaveChaos -c Release" \
     perception-golden     "$REPO"                 "bash tools/port-golden-check.sh" \

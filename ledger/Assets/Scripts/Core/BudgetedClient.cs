@@ -98,7 +98,12 @@ namespace Ledger.Core
         void Settle(double reserved, LlmRequest r, LlmResponse resp)
         {
             if (resp == null) return;
-            double actual = ActualUsd(resp.Model ?? r.Model, resp);
+            // THE MODEL ASKED FOR, unless the reply names one the rate card knows: the
+            // API answers under the model's dated name ("claude-haiku-4-5-20251001"),
+            // which the card does not hold, and every Haiku call was settled at the
+            // dearest rate, twice its price (the talk task of 7 October).
+            string model = resp.Model != null && Models.Cost.ContainsKey(resp.Model) ? resp.Model : r.Model ?? resp.Model;
+            double actual = ActualUsd(model, resp);
             lock (_gate) _spent += actual - reserved;
             Report();
         }
