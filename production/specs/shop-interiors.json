@@ -11,6 +11,8 @@
  "shops": [
   {
    "id": "mickeys",
+   "lit_at_start": false,
+   "lit_note": "7 October, the second gate: locked since Mickey died (Sheila), so its tubes and lamp are off until Tom steps in with the key (mickeys-office.json's door); by day the room shows by the daylight through its glass.",
    "block": "east_parade",
    "bay": 0,
    "trade": "minicab office (Mickey's): the public side with a vinyl bench under the fares, the licence and the accounts notice; the booking counter across with the book of every fare, two phones, an ashtray, the dockets on their spike; the staff side with the radio set, its desk microphone and the loudspeaker, Mickey's swivel chair empty behind them, the district map and the drivers' board; the door to Sheila's back room ajar; the number in gilt on the glass. Laid out from production/specs/mickeys-office.json.",

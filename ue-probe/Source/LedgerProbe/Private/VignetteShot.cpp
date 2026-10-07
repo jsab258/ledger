@@ -62,6 +62,8 @@
 #include "UObject/UnrealType.h"
 #include "Misc/Paths.h"
 #include "Misc/FileHelper.h"
+#include "ImageUtils.h"
+#include "Serialization/MemoryWriter.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
@@ -1051,8 +1053,9 @@ namespace
 	TArray<FGlassCatch> GGlassCatches;
 	int32 GGlassCatchLeft = 0, GGlassCatchNext = 0, GGlassCatchTaken = 0;
 	FTSTicker::FDelegateHandle GGlassCatchTicker;
-	// Twice round: the first pass can find a texture still streaming in.
-	const int32 kGlassCatchPasses = 2;
+	// Six times round (7 October; twice before): the first pass can find a texture still streaming in, and Lumen in the capture gathers over the passes.
+	// Six times round with Lumen in the capture, which gathers its light over frames (7 October).
+	const int32 kGlassCatchPasses = 6;
 	TMap<FString, UTexture2D*> GStreetTex;
 	int32 GStreetTextured = 0, GStreetTexAsked = 0, GStreetDrawn = 0;
 	std::string GStreetLookFor;
@@ -6814,6 +6817,30 @@ namespace
 	// shows the geometry the right way round with its signs readable.
 	bool TickGlassCatch(float)
 	{
+		// -GlassCatchDump (7 October, a diagnostic: the stair-stepped roofline in the caught glass,
+		// production/research/shop-glass-reflections/CAPTURE-STEPS-2026-10-07.md's split test): once
+		// every capture has run, each window's cube is written as an HDR file under Saved/GlassCatch,
+		// so its own pixels can be seen apart from the glass that samples it.
+		static bool bDumped = false;
+		if (GGlassCatchLeft <= 0 && !bDumped && GGlassCatches.Num() > 0 && FParse::Param(FCommandLine::Get(), TEXT("GlassCatchDump")))
+		{
+			static int32 Wait = 0;
+			if (++Wait < 30) { return true; }   // the last deferred captures render first
+			bDumped = true;
+			for (const FGlassCatch& Gc : GGlassCatches)
+			{
+				UTextureRenderTargetCube* Rt = Gc.Cap.IsValid() ? Gc.Cap->TextureTarget : nullptr;
+				if (Rt == nullptr) { continue; }
+				TArray<uint8> Bytes;
+				FMemoryWriter Ar(Bytes);
+				if (FImageUtils::ExportRenderTargetCubeAsHDR(Rt, Ar))
+				{
+					const FString Path = FPaths::ProjectSavedDir() / TEXT("GlassCatch") / (Gc.Mesh + TEXT(".hdr"));
+					FFileHelper::SaveArrayToFile(Bytes, *Path);
+					UE_LOG(LogTemp, Display, TEXT("LedgerGlassCatch: dumped %s (%d bytes)"), *Path, Bytes.Num());
+				}
+			}
+		}
 		if (GGlassCatchLeft <= 0 || GGlassCatches.Num() == 0) { return true; }
 		const int32 I = GGlassCatchNext % GGlassCatches.Num();
 		++GGlassCatchNext;
@@ -6847,13 +6874,35 @@ namespace
 		USceneCaptureComponentCube* Cap = NewObject<USceneCaptureComponentCube>(A);
 		if (Rt == nullptr || Cap == nullptr) { return; }
 		Rt->bHDR = true;
+		// SAMPLED SMOOTHLY (7 October): magnified from two metres a texel of the caught street showed
+		// as a hard-edged block about ten pixels wide; bilinear, a soft reflection instead.
+		Rt->Filter = TF_Bilinear;
 		Rt->ClearColor = FLinearColor::Black;
-		Rt->InitAutoFormat((uint32)GLook.GlassCubeSize);
+		bool bHero = false;
+		for (const std::string& H : GLook.GlassCubeHeroes) { if (Mesh == UTF8_TO_TCHAR(H.c_str())) { bHero = true; } }
+		const int32 CubeSize = bHero && GLook.GlassCubeHeroSize > 0 ? GLook.GlassCubeHeroSize : GLook.GlassCubeSize;
+		Rt->InitAutoFormat((uint32)CubeSize);
 		Rt->UpdateResourceImmediate(true);
 		Cap->TextureTarget = Rt;
 		Cap->bCaptureEveryFrame = false;
 		Cap->bCaptureOnMovement = false;
 		Cap->CaptureSource = ESceneCaptureSource::SCS_SceneColorHDR;
+		// THE CAUGHT STREET LIT AS THE STREET IS (7 October; the second gate: "large, flat
+		// stair-stepped cut-outs ... with no windows or brick in them"). A capture runs without Lumen
+		// (SceneCaptureComponent.cpp sets its GI and reflections to none), and this street's ambient
+		// light is Lumen's: the cube saved to disk (-GlassCatchDump) showed the houses across the road
+		// as black silhouettes on a bright sky, ten times darker against it than the main view shows
+		// them. So the capture uses Lumen too, keeping its view state so Lumen can gather over the
+		// passes (kGlassCatchPasses). -GlassCatchNoLumen keeps the old capture, to compare.
+		static const bool bNoLumen = FParse::Param(FCommandLine::Get(), TEXT("GlassCatchNoLumen"));
+		if (!bNoLumen)
+		{
+			Cap->PostProcessSettings.bOverride_DynamicGlobalIlluminationMethod = true;
+			Cap->PostProcessSettings.DynamicGlobalIlluminationMethod = EDynamicGlobalIlluminationMethod::Lumen;
+			Cap->PostProcessSettings.bOverride_ReflectionMethod = true;
+			Cap->PostProcessSettings.ReflectionMethod = EReflectionMethod::Lumen;
+			Cap->bAlwaysPersistRenderingState = true;
+		}
 		Cap->HiddenActors.Add(A);
 		Cap->SetMobility(EComponentMobility::Movable);
 		Cap->SetWorldLocation(Mid + N * 50.0);
@@ -6872,7 +6921,7 @@ namespace
 			GGlassCatchTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&TickGlassCatch), 0.0f);
 		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerGlassCatch: %s caught from %.0f,%.0f,%.0f cm facing %.0f,%.0f, cube %d"),
-			*Mesh, Mid.X + N.X * 50.0, Mid.Y + N.Y * 50.0, Mid.Z, N.X, N.Y, GLook.GlassCubeSize);
+			*Mesh, Mid.X + N.X * 50.0, Mid.Y + N.Y * 50.0, Mid.Z, N.X, N.Y, CubeSize);
 	}
 
 	void ApplyShopInteriors();
@@ -7111,6 +7160,11 @@ namespace
 	// and lamps are off (SetShopRoomLit), each lamp and the tubes' glowing material with what puts
 	// them out, and the light last driven, so a switch shows at once.
 	TSet<FString> GShopsDark;
+	// THE SHOPS PLAY HAS LIT (7 October; the second gate: "the office stands lit in the normal game
+	// behind its shut door ... Sheila says it has been locked since he died"): a shop whose spec says
+	// "lit_at_start": false starts dark, in play and in the films alike, until play lights it
+	// (SetShopRoomLit, Tom stepping in with the key), and a later pass over the interiors keeps it so.
+	TSet<FString> GShopsLitByPlay;
 	struct FRoomSwitch
 	{
 		FString Shop;
@@ -7415,6 +7469,11 @@ namespace
 		{
 			const Value& Sh = Shops->Arr[S];
 			const std::string Id = LedgerStreet::StrOr(Sh, "id");
+			const Value* LitAtStart = Sh.Find("lit_at_start");
+			if (LitAtStart != nullptr && LitAtStart->Type == T_BOOL && !LitAtStart->Bool && !GShopsLitByPlay.Contains(UTF8_TO_TCHAR(Id.c_str())))
+			{
+				GShopsDark.Add(UTF8_TO_TCHAR(Id.c_str()));
+			}
 			const std::string Decal = LedgerStreet::StrOr(Sh, "decal");
 			const std::string Pics = LedgerStreet::StrOr(Sh, "pictures");
 			const Value* Room = Sh.Find("room");
@@ -9304,7 +9363,7 @@ namespace LedgerVignetteShot
 	int32 SetShopRoomLit(const char* Shop, bool bLit)
 	{
 		const FString Id(UTF8_TO_TCHAR(Shop));
-		if (bLit) { GShopsDark.Remove(Id); } else { GShopsDark.Add(Id); }
+		if (bLit) { GShopsDark.Remove(Id); GShopsLitByPlay.Add(Id); } else { GShopsDark.Add(Id); GShopsLitByPlay.Remove(Id); }
 		int32 Switched = 0;
 		for (const FRoomLight& RL : GRoomLights)
 		{

@@ -359,6 +359,12 @@ namespace LedgerStreet
 		double GlassCubeStrength;
 		double GlassCubeSpecular;
 		int GlassCubeSize;
+		// THE WINDOWS THE CAMERAS STAND AT, CAUGHT SHARPER (7 October; the second gate: "large, flat
+		// stair-stepped cut-outs"): at 256 a side a texel of the caught street is about ten screen
+		// pixels from two metres. The panes whose street mesh is named here are caught at
+		// GlassCubeHeroSize; at 1024 a cube is 50 MB of the card, so only these.
+		std::vector<std::string> GlassCubeHeroes;
+		int GlassCubeHeroSize;
 		// THE SKY PHOTOGRAPH TURNED ABOUT THE VERTICAL, degrees (6 October, item 1.1's first gate: "the
 		// reverse view ends ... under outsized background trees" - the photograph's own tree line,
 		// which faced down the street to the sea).
@@ -429,7 +435,7 @@ namespace LedgerStreet
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05), GlassSpecularNight(1.0),
-		         GlassCubeStrength(0.0), GlassCubeSpecular(1.0), GlassCubeSize(256), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0),
+		         GlassCubeStrength(0.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0),
 		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
 		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), bLanternRgb(false),
@@ -837,6 +843,14 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassCubeSpecular = V->Num; ++Out.Read; }
 		V = Root.Find("glass_cube_size");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 32.0 && V->Num <= 1024.0) { Out.GlassCubeSize = (int)V->Num; ++Out.Read; }
+		V = Root.Find("glass_cube_heroes");
+		if (V != 0 && V->Type == T_ARR)
+		{
+			for (size_t I = 0; I < V->Arr.size(); ++I) { if (V->Arr[I].Type == T_STR && !V->Arr[I].Str.empty()) { Out.GlassCubeHeroes.push_back(V->Arr[I].Str); } }
+			++Out.Read;
+		}
+		V = Root.Find("glass_cube_hero_size");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 32.0 && V->Num <= 2048.0) { Out.GlassCubeHeroSize = (int)V->Num; ++Out.Read; }
 		V = Root.Find("sky_dome_yaw_deg");
 		if (V != 0 && V->Type == T_NUM && V->Num >= -360.0 && V->Num <= 360.0) { Out.SkyDomeYawDeg = V->Num; ++Out.Read; }
 		V = Root.Find("sky_horizon_clamp_deg");
