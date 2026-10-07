@@ -114,7 +114,10 @@ def main():
     area = 0.0
     V, F = (g["V_rest"] if "V_rest" in g else g["V"]), g["F"]
     area = 0.5 * np.linalg.norm(np.cross(V[F[:, 1]] - V[F[:, 0]], V[F[:, 2]] - V[F[:, 0]]), axis=1).sum()
-    cs.mass = max(1e-4, S["mass_kg_m2"] * area / len(V))   # Blender's mass is per vertex
+    # Blender's cloth mass is per vertex on its own scale (its presets use 0.15 to 1 whatever the mesh
+    # density); a physical value spread over thousands of vertices (drapes v1-v7: 0.06 g each) leaves
+    # gravity negligible against the springs, so nothing hangs. "vertex_mass" sets it directly.
+    cs.mass = S["vertex_mass"] if "vertex_mass" in S else max(1e-4, S["mass_kg_m2"] * area / len(V))
     cs.tension_stiffness = S["tension"]
     cs.compression_stiffness = S["compression"]
     cs.shear_stiffness = S["shear"]
