@@ -66,6 +66,11 @@ the same fact twice; never "that's all I know" while a relevant fact is unsaid.
 **What the player gets.** A character who heard a story can say who told them
 ("Sheila told me that ..."), at every retelling, not only who first saw it.
 
+**Measured** (ClaimBench `whotold`, three seeded days of 14 people, no model):
+who told them known for 0 of 177 second-hand copies before, 177 of 177 after,
+all kept through a save; reasons naming the teller 0 of 115 before, 115 of 115
+after.
+
 **What changed in the code (C#).** `Rumor.ToldById` (Core/Gossip.cs): set by
 `Tick` (the speaker) and `CompareNotes` (the partner asked); cleared when a heard
 copy becomes their own sighting (`Witness`, `PlayerIdentity`). `SaveCodec` writes
