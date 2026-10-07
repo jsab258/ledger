@@ -339,6 +339,16 @@
    "storage": "none",
    "collections": [],
    "note": "July; its version declares no database"
+  },
+  {
+   "id": "LTmrUMeRzYkaDZBKuGcEkg",
+   "title": "The Voice",
+   "updated": "2026-10-07",
+   "storage": "db",
+   "collections": [
+    "verdicts"
+   ],
+   "note": "the voice route's numbers (his 7 October ruling): stop or the cloud voice; the faster first sentence"
   }
  ]
 }

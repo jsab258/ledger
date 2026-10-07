@@ -13,7 +13,7 @@
 # its memory line to production/research/pre-production/p1-packaged/runs.jsonl. It refuses to start
 # while the build machine or an Unreal editor runs (their graphics work would be in the numbers).
 param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660,
-      [string]$Tag = "", [string]$Cvars = "", [string]$Picture = "", [string[]]$Only = @())
+      [string]$Tag = "", [string]$Cvars = "", [string]$Picture = "", [string[]]$Only = @(), [string[]]$GameArgs = @())
 # A VARIANT, 7 October (P1's first packaged reading found no room, and two suspects): -Tag names it
 # (appended to each label), -Cvars adds engine settings to the game's own, -Picture runs "scalability
 # <n>" once the street is up (2 is High, the most the first launch picks, 3 Highest), and -Only
@@ -74,8 +74,9 @@ foreach ($m in $matrix) {
   Remove-Item "$csvDir\*" -Force -ErrorAction SilentlyContinue
   $a = @("-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkFake", "-NoTitle") + $m.args + @(
          "-PerfHookFrames=$Frames", "-csvGpuStats", "-ExitAfterCsvProfiling", "-RenderOffScreen", "-ResX=3440", "-ResY=1440",
-         "-windowed", "-ForceRes", "-nosplash", "-unattended", "-dpcvars=r.ScreenPercentage=55,t.MaxFPS=0,r.VSync=0" + $(if ($Cvars) { "," + $Cvars } else { "" }))
+         "-windowed", "-ForceRes", "-nosplash", "-unattended", ("-dpcvars=r.ScreenPercentage=55,t.MaxFPS=0,r.VSync=0" + $(if ($Cvars) { "," + $Cvars } else { "" })))
   if ($Picture) { $a += "-ExecCmds=`"scalability $Picture`"" }
+  $a += $GameArgs   # -GameArgs: the game's own switches for a variant (-RoomShadowsAll, the old room shadows)
   $t0 = Get-Date
   $stub = Start-Process -FilePath $Exe -ArgumentList $a -PassThru -NoNewWindow -RedirectStandardOutput "$tmp\$label.log" -RedirectStandardError "$tmp\$label.err"
   $voicePids = @(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match "voice-server.py|voice_load.py" } | ForEach-Object { $_.ProcessId })

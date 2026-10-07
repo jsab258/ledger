@@ -1082,10 +1082,19 @@ def main_after_idle(seconds=20.0, settle=15.0):
                         continue
                     params = ch.internal_collection.default_instance.get_instance_parameters(
                         item_path=unreal.MetaHumanPaletteItemPath(item_key=item))
+                    # THE NAME IS THE ENGINE'S OWN TYPE (7 October): `prm.name in vals` looked an
+                    # unreal.Name up among plain strings and never matched, so N1 to N3 set nothing
+                    # ("groom-params-0"); Epic's example compares with ==. Read as text, and the
+                    # names found are kept when none matches.
+                    names = [str(prm.name) for prm in params]
+                    hit = 0
                     for prm in params:
-                        if prm.name in vals:
-                            prm.set_float(value=float(vals[prm.name]))
-                            set_n += 1
+                        if str(prm.name) in vals:
+                            prm.set_float(value=float(vals[str(prm.name)]))
+                            hit += 1
+                    if hit == 0:
+                        notes.append("groom-params-%s-none-of-%s" % (slot, "|".join(names[:12]) or "nothing"))
+                    set_n += hit
                 notes.append("groom-params-%d" % set_n)
             except Exception as e:
                 notes.append("groom-params-refused-%s" % type(e).__name__)

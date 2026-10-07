@@ -25,7 +25,7 @@ No decision asked: these are for watching the street change.
 
 Disk (10-07 08:40): C: 110.3 GB free, F: 24.2 GB free (C: rose by 58 GB since yesterday's count).
 
-**Phase 1: on 1.1 (Mickey's office and Rita's front); next its second fresh review.** Its first review failed at 17:00 yesterday. Every point it named is fixed and walked in the packaged game: the windows mirror the street; the street now runs on to a harbour built to your map; the office is locked until Tom comes with the key, and the lights go on as he steps in; wear, a real ashtray, the map. **1.2, Tom:** walking now carries real travel. His face failed ten passes, so that route is set aside; research found two causes the tweaks could not reach, and a new attempt is ready to build. You will see no new Tom until you approve a face. **1.3, the voice:** your answer below. **1.4:** last night's packaged measurement was cut off when the session closed; it runs again today.
+**Phase 1: on 1.1 (Mickey's office and Rita's front); next its second fresh review.** Its first review failed at 17:00 yesterday. Every point it named is fixed and walked in the packaged game: the windows mirror the street; the street now runs on to a harbour built to your map; the office is locked until Tom comes with the key, and the lights go on as he steps in; wear, a real ashtray, the map. **1.2, Tom:** walking now carries real travel. His face failed ten passes, so that route is set aside; research found two causes the tweaks could not reach, and a new attempt is ready to build. You will see no new Tom until you approve a face. **1.3, the voice (10:45):** part 1 measured on the real path; no reply reached two seconds, so phase 1's stop applies to speech; your page is under Needs you. **1.4 (10:45):** measured packaged: 59 frames a second by day and 51 at night at the hook with the voice speaking, under the line; two causes found and fixed for today's build (the picture left at Highest, and the shop rooms' lights redrawing the street's shadows every frame), measured again on it.
 
 **The tester's walk (7 October, 02:30): did not run.** Three game windows left open by the cut-off measurement held the played copy's files, so the 02:52 build was copied inside the old copy and the launcher your shortcut starts was gone: the walk had nothing to start. Your played copy was broken from 02:52 to 10:10, when it was put right by hand (last night's build, a32eeeb). The night jobs and the build's copy step now close any game window first, and the copy step no longer nests.
 
@@ -40,7 +40,7 @@ Disk (10-07 08:40): C: 110.3 GB free, F: 24.2 GB free (C: rose by 58 GB since ye
 
 (Every page's answers read back at 08:40: 145, none new. Your three answers of this morning are in RULINGS.md and gone from here: the voice's route, the NoAI folders, and the sitting clips, which were already in last month's Mixamo harvest with their travel.)
 
-Nothing waits on you this morning. The streaming cloud voice's numbers come to you on one screen when part 1 of the voice route is measured.
+1. **The voice, two seconds not reached** ([one screen](https://claude.ai/artifact/LTmrUMeRzYkaDZBKuGcEkg), added 10:45). Measured in the finished game: the first sound a median 4.6 s, 4.0 s with the faster first sentence; a cloud voice would make it about 2.4 s. Recommended: report speech as failed, keep the free voice, spend nothing; and the faster first sentence off (its replies were judged worse).
 
 ### Road to worth playing (PLAN.md)
 

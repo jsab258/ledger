@@ -1,0 +1,43 @@
+{
+ "tab": "The Voice",
+ "kicker": "LEDGER · Wednesday 7 October · phase 1, speech",
+ "title": "Two seconds not reached",
+ "how": [
+  "Shortfall first: no reply reached two seconds. In the finished game today, five lines to Sheila each way, the first sound came a median 4.6 s after Enter, and 4.0 s with a faster model writing the first sentence (best 2.6 s). The free voice takes 1.6 to 4.4 s to make it. By your rule, phase 1's stop applies to speech. The numbers are under each question."
+ ],
+ "foot": "Measured 7 October on the real path, $0.29 of the dollar a day. Nothing signed up for or bought. Anything you do not pick carries onto the next page.",
+ "sections": [
+  {
+   "kind": "decide",
+   "key": "voice-route-2026-10-07",
+   "name": "Neither way reaches two seconds. What now?",
+   "options": [
+    [
+     "stop",
+     "Report speech as failed, keep the free voice, spend nothing (recommended)"
+    ],
+    [
+     "cloud",
+     "Buy the cloud voice: about 2.4 s, $6 a month plus use"
+    ]
+   ],
+   "note": "The cloud voice: ElevenLabs Flash v2.5, Starter plan, a subscription ($6 a month with credit inside, then per character). You would create an ElevenLabs account in your name with a card. With the faster first sentence the first word would come at about 2.4 s (3.0 s without it): the voice itself would take about 0.2 s, and the check on the first sentence, 1.0 to 1.9 s after it is written, then sets the time. Writing and voice together: about $0.57 an hour at the pace played so far, $2.30 an hour of heavy talk, plus the $6. Its stock voices replace the cast you chose, and a sold game needs its $299-a-month plan. Recommended against because it still misses two seconds, and costs money, an account and the cast's voices."
+  },
+  {
+   "kind": "decide",
+   "key": "first-sentence-model-2026-10-07",
+   "name": "The faster model writing the first sentence: keep it?",
+   "options": [
+    [
+     "off",
+     "Off: one model writes each reply (recommended)"
+    ],
+    [
+     "on",
+     "On: 0.6 s sooner, replies judged worse"
+    ]
+   ],
+   "note": "Words came 0.6 s sooner (the first sentence in 0.75 s instead of 1.35 s). A fresh reader, not told which was which, judged the five pairs: the openings about even (the one model's better twice, the faster once, two equal), the whole replies worse with the faster first sentence in 4 of 5 (padded with facts nobody asked for, running on). Each reply cost 3.2 cents against 2.6."
+  }
+ ]
+}

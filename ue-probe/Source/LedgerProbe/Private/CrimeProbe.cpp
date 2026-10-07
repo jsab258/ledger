@@ -4682,6 +4682,24 @@ namespace
 			}
 			UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: %s at cam_hook (%.2f, %.2f) yaw %.1f, profiling %d frames%s"),
 				*Mode, Hook.X, Hook.Z, Hook.Yaw, Frames, FParse::Param(FCommandLine::Get(), TEXT("PerfHookNight")) ? TEXT(", at night") : TEXT(""));
+			// THE LIGHTS THAT DRAW SHADOWS, named (7 October: P1 packaged counted two besides the sun
+			// redrawing theirs every frame by day, and eleven at night, without saying which): every
+			// local light lit and casting shadows within 40 m of the view, its owner, brightness,
+			// reach and whether it shadows only the "cinematic" pieces (its own room's).
+			int32 Shadowing = 0;
+			for (TObjectIterator<ULocalLightComponent> It; It; ++It)
+			{
+				ULocalLightComponent* L = *It;
+				if (L == nullptr || L->GetWorld() != World || !L->IsRegistered() || !L->IsVisible() || !L->CastShadows || L->Intensity <= 0.0f) { continue; }
+				const double Far = FVector::Dist(L->GetComponentLocation(), Cam->GetActorLocation()) / 100.0;
+				if (Far > 40.0) { continue; }
+				++Shadowing;
+				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHookLight: %s (%s) %.0f %s, reach %.1f m, %.1f m from the view, cinematic-only %d"),
+					L->GetOwner() != nullptr ? *L->GetOwner()->GetName() : TEXT("?"), *L->GetClass()->GetName(), L->Intensity,
+					L->IntensityUnits == ELightUnits::Lumens ? TEXT("lm") : TEXT("units"), L->AttenuationRadius / 100.0, Far,
+					L->bCastShadowsFromCinematicObjectsOnly ? 1 : 0);
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerPerfHookLight: %d local lights lit and shadowing within 40 m"), Shadowing);
 			Step = 1;
 			return;
 		}

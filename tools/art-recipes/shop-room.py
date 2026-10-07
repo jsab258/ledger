@@ -384,13 +384,18 @@ def build_and_render(argv):
     # THE TUBES: three T12 battens across the ceiling, 1.5 m long (an empty unit has a bare bulb).
     # LIT IN A REAL ROOM (4 October: a fresh reviewer saw Mickey's battens dark): the exported
     # tubes glow; the pictures set their strength per lighting state below
-    tube_on = mat("tube_on", (0.9, 0.95, 0.95), rough=0.3, emit=(0.92, 0.97, 1.0), emit_strength=6.0 if EXPORT else 0.0)
+    # AN OPAL DIFFUSER OVER EACH, 7 October (his order: "the ragged white strip across the top pane"):
+    # seen from the pavement through the top pane, the bare 38 mm tube burned out to a hard white
+    # line, ragged under the game's upscaler. The office and shop fitting of 1990 was the batten
+    # with an opal diffuser: a soft white box 15 cm wide, far dimmer per square metre than the bare
+    # tube. The glowing material keeps its name, tube_on, which the game switches off and on.
+    tube_on = mat("tube_on", (0.92, 0.94, 0.93), rough=0.5, emit=(0.95, 0.97, 1.0), emit_strength=1.8 if EXPORT else 0.0)
     batten = mat("batten", (0.75, 0.75, 0.72), rough=0.5)
     for k, y in enumerate((1.0, 2.4, 3.8) if shop["id"] != "to_let" else ()):
         if y > D - 0.3:
             continue
-        box("batten_%d" % k, -0.8, 0.8, y - 0.05, y + 0.05, H - 0.06, H - 0.01, batten)
-        cyl("tube_%d" % k, 0.0, y, H - 0.075, 0.019, 1.5, tube_on, axis="x")
+        box("batten_%d" % k, -0.8, 0.8, y - 0.09, y + 0.09, H - 0.03, H - 0.01, batten)
+        box("tube_%d" % k, -0.78, 0.78, y - 0.075, y + 0.075, H - 0.09, H - 0.03, tube_on)
 
     # BOARDS, for the trades that had them (the ironmonger's and the chandler's): worn timber
     # laid over the lino, as the empty unit's are.

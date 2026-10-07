@@ -7126,6 +7126,65 @@ namespace
 		return !bAll;
 	}
 
+	// THE ROOM'S SHADOWS BY DISTANCE (7 October; P1 packaged again on c2f17fb: with the casters cut
+	// to the room's own, its two lights still took 3.4 ms by day, since the room's fittings are one
+	// mesh of 489,000 triangles in 113 parts, drawn into the tube's six shadow views and the lamp's
+	// six every frame). Near the room (the camera within 7 m of its middle: at its window or
+	// inside) the fittings cast the tube's shadows and the lamp casts its own; farther (the hook
+	// view, 12 m off), only the room's shell casts them, where the fittings' shadows are not seen,
+	// and the lamp, whose 1.6 m reach ends inside the room, casts none. Each room is looked at
+	// four times a second, and a change is a flag on one mesh and its lamps.
+	struct FRoomShadowLod
+	{
+		FString Shop;
+		FVector Middle = FVector::ZeroVector;
+		TWeakObjectPtr<UStaticMeshComponent> Fittings;
+		TArray<TWeakObjectPtr<ULocalLightComponent>> Lamps;
+		int32 Near = -1;    // unknown until first looked at
+	};
+	TArray<FRoomShadowLod> GRoomShadowLods;
+	FTSTicker::FDelegateHandle GRoomShadowTicker;
+	constexpr double kRoomShadowNearCm = 700.0;
+
+	bool TickRoomShadows(float)
+	{
+		if (GRoomShadowLods.Num() == 0 || GEngine == nullptr) { return true; }
+		UWorld* World = nullptr;
+		for (const FWorldContext& Ctx : GEngine->GetWorldContexts())
+		{
+			if (Ctx.World() != nullptr && (Ctx.WorldType == EWorldType::Game || Ctx.WorldType == EWorldType::PIE)) { World = Ctx.World(); break; }
+		}
+		APlayerController* PC = World != nullptr ? World->GetFirstPlayerController() : nullptr;
+		if (PC == nullptr) { return true; }
+		FVector Eye;
+		FRotator Look;
+		PC->GetPlayerViewPoint(Eye, Look);
+		for (FRoomShadowLod& R : GRoomShadowLods)
+		{
+			const int32 Near = FVector::Dist(Eye, R.Middle) < kRoomShadowNearCm ? 1 : 0;
+			if (Near == R.Near) { continue; }
+			R.Near = Near;
+			if (UStaticMeshComponent* F = R.Fittings.Get())
+			{
+				F->bCastCinematicShadow = Near == 1;
+				F->MarkRenderStateDirty();
+			}
+			for (const TWeakObjectPtr<ULocalLightComponent>& L : R.Lamps)
+			{
+				if (L.IsValid()) { L->SetCastShadows(Near == 1); }
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerInteriors: %s's shadows %s"), *R.Shop,
+				Near == 1 ? TEXT("near: the fittings and the lamps cast them") : TEXT("far: the shell casts them, the lamps none"));
+		}
+		return true;
+	}
+
+	FRoomShadowLod* RoomShadowLodOf(const FString& Shop)
+	{
+		for (FRoomShadowLod& R : GRoomShadowLods) { if (R.Shop == Shop) { return &R; } }
+		return nullptr;
+	}
+
 	// One of the room's own pieces, which its lights' shadows are made from.
 	void RoomCastsOwnShadow(UPrimitiveComponent* C)
 	{
@@ -7174,6 +7233,18 @@ namespace
 				// the tubes' glowing material and the batten's plain one, to put them out by
 				if (FCString::Strcmp(Part, TEXT("fittings")) == 0)
 				{
+					if (RoomShadowsOwnOnly())
+					{
+						FRoomShadowLod Lod;
+						Lod.Shop = Shop;
+						Lod.Middle = FVector(Cx, (float)((FrontM + DepthM * 0.5) * 100.0 * Side), (float)(12.0 + HeightM * 50.0));
+						Lod.Fittings = C;
+						GRoomShadowLods.Add(Lod);
+						if (!GRoomShadowTicker.IsValid())
+						{
+							GRoomShadowTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&TickRoomShadows), 0.25f);
+						}
+					}
 					const int32 TubeSlot = C->GetMaterialIndex(FName(TEXT("tube_on")));
 					const int32 PlainSlot = C->GetMaterialIndex(FName(TEXT("batten")));
 					if (TubeSlot != INDEX_NONE && PlainSlot != INDEX_NONE)
@@ -7309,6 +7380,7 @@ namespace
 		GInteriorRows.Reset();
 		GRoomLights.Reset();
 		GRoomSwitches.Reset();
+		GRoomShadowLods.Reset();
 		GInteriorsAsked = 0;
 		for (const TWeakObjectPtr<AActor>& W : GInteriorActors)
 		{
@@ -7387,6 +7459,7 @@ namespace
 								LC->SetSourceRadius(3.0f);
 								LC->bCastShadowsFromCinematicObjectsOnly = RoomShadowsOwnOnly();
 								LC->MarkRenderStateDirty();
+								if (FRoomShadowLod* Lod = RoomShadowLodOf(UTF8_TO_TCHAR(Id.c_str()))) { Lod->Lamps.Add(LC); }
 								Parts3.Add(PL);
 								FRoomSwitch Sw;
 								Sw.Shop = UTF8_TO_TCHAR(Id.c_str()); Sw.Lamp = LC;
