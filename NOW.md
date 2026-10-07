@@ -18,7 +18,7 @@ GOAL (his /goal, to Sunday 11 Oct 20:00): PLAN.md's phases 0 and 1 done with evi
 - [ ] 1.3 P2 voice: 3-PROOFS.md, P2.
 - [ ] 1.4 P1 packaged: 3-PROOFS.md, P1.
 
-STATE (7 Oct, 10:45): 1.1 walked packaged; second gate next. 1.2: travel baked; Tom's face set aside, one try owed. 1.3: under 2 s not reached (4.0 s); stop reported, his page open. 1.4: no room at the hook; two causes fixed (c2f17fb), measured again on it.
+STATE (7 Oct, 10:45): 1.1 walked packaged; second gate next. 1.2: travel baked; Tom's face set aside, one try owed. 1.3: FAILED, blocked (his answer); check study proposed. 1.4: no room at the hook; two causes fixed (c2f17fb), measured again on it.
 
 ## Handovers
 

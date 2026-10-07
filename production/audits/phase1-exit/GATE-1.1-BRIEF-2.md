@@ -27,6 +27,7 @@ Visuals against the Hook sheet (production/reference/hook-sheet.png) and the two
 - The door: shut, the office dark, until Tom comes with the key; the leaf then stands open and the lights come on as he enters.
 - Wear: decals by rule (production/specs/street-wear.json), Rita's front and the office counter.
 - The ashtray, the map, the reveal's lining, the lettering flat on the glass. The "black pitted reveal" was the lamp column outside Mickey's under a scanned metal map; dark steel is flat paint now.
+- His order of 7 October, before this review: Mickey's top pane's ragged white strip (the room's bare ceiling tube seen through it, burnt out) and the rough black post (the lamp column close in front of the office's camera). The tubes are under opal diffusers now (tools/art-recipes/shop-room.py); the office's camera stands at x 6.9 m, off the lamp column (production/specs/vignette-scene.json).
 
 ## The outputs
 

@@ -9,11 +9,14 @@ PLAN.md, phase 1, "Prove the bottlenecks": "Every exit bundle names the commit a
 | 3 | Three fixed street views | ue-probe/ue-vign_hook_day.png, ue-vign_reverse_day.png, ue-vign_hook_night.png (2560x1440); the south end closed by production/art/south-quay | filmed; with the second gate |
 | 4 | One complete Tom and one speaker walking, sitting and turning | tools/ue/make_cast_metahumans.py (Tom's takes A1 to A5); clips to come | candidates written |
 | 5 | P2, the voice: two measured approaches at most, timed beside checked talk | production/research/voice-off-card/NOTE.md, RESULTS-2026-10-06.md; tools/voice-live/off_card.py, off_card_bench.py | FAILED on its delay line (3.36 s and 4.18 s against 1.0 s); the money ruling on his overview |
-| 6 | P1 completed packaged: day, night, walking, Windows memory, sustained speech | to come | |
-| 7 | Exit: the samples meet the bar; the render and voice pairing has measured headroom; median first meaningful speech two seconds or less (else state-grounded prepared opening beats are tested) | to come | |
+| 6 | P1 completed packaged: day, night, walking, Windows memory, sustained speech | production/research/pre-production/P1-PACKAGED-2026-10-07.md; p1-packaged/runs.jsonl (every capture and its memory line); tools/p1-packaged.ps1, tools/perf-hook.py; the frames at F:/LedgerTools/tmp/p1-packaged | measured on a32eeeb (no room) and c2f17fb (the line met everywhere at High); measured again on b7bde20 |
+| 7 | Exit: the samples meet the bar; the render and voice pairing has measured headroom; median first meaningful speech two seconds or less (no prepared openings, his 7 October ruling; else the stop rule) | speech: production/research/voice-off-card/CLOUD-VOICE-2026-10-07.md (part 1 on the real path), production/playtest/talk-runs.jsonl, the game logs in F:/LedgerTools/tmp/builder/real-talk/2026-10-07-1027 and -1032 | speech FAILED: 4.6 s and 4.0 s medians against 2 s; reported, and his answer (7 October): a blocked core capability, no third attempt at the voice |
 
 ## Failures, as they happen
 
 - 1.1's first gate (6 October, 17:00): the world's edge, flat glass, the walk-in's missing door, no visible wear, props that did not read (GATE-1.1-REVIEW-1.md). The packaged walk-ins that evening then found the open door's push bar, an engine warning, the sky's band and the old room card in the doorway, each fixed and walked again.
 
 - P2 (6 October): neither processor route brings the voice's share near 1.0 s, beside the game or off it; both pass the frame lines. Reported to him as P2's clause asks (FOR-JAFAR.md, Needs you).
+
+- Speech (7 October): on the real path, five checked replies from Sheila each way, the first sound a median 4.6 s after Enter, 4.0 s with a faster model writing the first sentence; none within two seconds; the free voice takes 1.6 to 4.4 s to make the first sound. Phase 1's stop applies to speech (his ruling of 7 October); reported on his page.
+- P1 (7 October): on a32eeeb the hook view missed the line by day and at night with the voice speaking (59 and 51 fps); two causes fixed (the picture left at Highest, the rooms' shadows); on c2f17fb at High the line is met (71, 60, 75 fps), the night's GPU room still -1.4 ms; a third fix in b7bde20.

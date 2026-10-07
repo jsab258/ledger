@@ -2828,6 +2828,16 @@ namespace
 							SC->SetCastShadows(true);
 						}
 						GLanternPools.Add(S);
+						// THE POOL CASTS THE LAMP'S SHADOWS, THE GLOW NONE (7 October; P1 packaged at
+						// night, the lights named: each lamp's faint all-round glow, 40 lm reaching
+						// 18 m, drew the street into six shadow views a frame beside its pool's one,
+						// three lamps over, and the night had no room left). The shadows seen at night
+						// are the pool's; -LanternGlowShadows keeps the glow's too, to compare.
+						static const bool bGlowShadows = FParse::Param(FCommandLine::Get(), TEXT("LanternGlowShadows"));
+						if (!bGlowShadows)
+						{
+							if (UPointLightComponent* PC = Cast<UPointLightComponent>(L->GetLightComponent())) { PC->SetCastShadows(false); }
+						}
 					}
 				}
 			}
