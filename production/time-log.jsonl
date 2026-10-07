@@ -28,3 +28,5 @@
 {"event": "start", "at": "2026-10-07T09:35:13", "task": "7 Oct: his answers (voice route, NoAI deleted, Mixamo clips found), night jobs close games, P1 rerun, the voice route part 1", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-07T13:06:30", "note": "his voice answers; part 1 measured (4.6/4.0 s, failed, blocked); P1 packaged measured three times, four fixes (picture, room shadows, distance shadows, lamp glow); voice seam; check study proposed"}
 {"event": "start", "at": "2026-10-07T13:06:31", "task": "7 Oct afternoon: P1 on the last build, Mickey's window (reflection stairs research), Tom's one more try, the second gate", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-07T18:32:42", "note": "P1 complete (eb053ad 80 fps, card 5.9 GB); the glass lit and sharp in the package; Mickey's office dark; his fault fixed (nightly .jpg); PR 1 merged; Tom blocked; Ron's outfit two tries, third running; second review FAIL"}
+{"event": "start", "at": "2026-10-07T18:32:43", "task": "7 Oct evening: Ron's outfit third try and review, the records", "phase": "1", "kind": "production"}

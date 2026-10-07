@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Wednesday 7 October, 08:50: late; the session closed at 00:30 and the 07:30 update was not written)
+## Overview (Thursday 8 October, written Wednesday at 19:00 so a closed session cannot cost the 07:30 update; brought up to date in the morning)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -23,16 +23,16 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-Disk (10-07 08:40): C: 110.3 GB free, F: 24.2 GB free (C: rose by 58 GB since yesterday's count).
+Disk (10-07 19:00): C: 96.3 GB free, F: 39.7 GB free (the NoAI folders gone, as you approved).
 
-**Phase 1: on 1.1 (Mickey's office and Rita's front); its second fresh review FAILED at 15:15** (production/audits/phase1-exit/GATE-1.1-REVIEW-2.md). Worst first: the glass showed the street as flat stair-stepped cut-outs; the office stood lit behind its shut door in normal play; the cast in the face plugin's white base layer (the Fab clothes went with your NoAI ruling, and the clothing brief that replaces them is open); a black block in the hook view; the other shops' windows opaque; wear faint; the indoor camera. Fixed by 16:30 and building: the glass (the capture was unlit, and coarse: now lit by Lumen and sharp at the two camera windows) and the office dark until the key. Next: Ron's plain outfit handed to the clothing work, the black block, then a third review. **1.2, Tom:** walking now carries real travel. His face: set aside after the one more try (blocked, under Needs you). You will see no new Tom until you approve a face. **1.3, the voice:** FAILED, a blocked core capability (your answer, 12:37): no reply reached two seconds (4.6 s median; 4.0 s with the faster first sentence, now off). Your proposal for the check is under Needs you. **1.4 (10:45):** measured packaged: 59 frames a second by day and 51 at night at the hook with the voice speaking, under the line; two causes found and fixed for today's build (the picture left at Highest, and the shop rooms' lights redrawing the street's shadows every frame), measured again on it.
+**Phase 1: on 1.1 (Mickey's office and Rita's front); next its third fresh review.** The second failed yesterday at 15:15 (production/audits/phase1-exit/GATE-1.1-REVIEW-2.md). Fixed since: the glass (the capture was unlit and coarse: now lit by Lumen, sharp at the two camera windows, people left out, one window at a time so the card does not fill); Mickey's office dark until Tom has the key. Still open from it: the cast in the face plugin's white base layer (Ron's outfit is on its research step after two failed reviews), the black block in the hook view, the other shops' opaque windows, faint wear, the indoor camera. **1.2:** Tom's face blocked (Needs you); Ron's outfit as the speaker's clothes. **1.3, speech:** failed, a blocked capability, your answer. **1.4, P1:** complete: 79 fps by day, at night and walking with the voice speaking, about 3 ms to spare; the card's peak while the windows are caught is being brought down.
 
 **The night's eyes never saw a picture (your fault report, 16:00):** the nightly report looked for .png and the tester saves .jpg, so every morning from 4 to 7 October said there was nothing to look at. Fixed with a test that failed first; tonight's walk is looked at. **The tester's walk (7 October, 02:30): did not run.** Three game windows left open by the cut-off measurement held the played copy's files, so the 02:52 build was copied inside the old copy and the launcher your shortcut starts was gone: the walk had nothing to start. Your played copy was broken from 02:52 to 10:10, when it was put right by hand (last night's build, a32eeeb). The night jobs and the build's copy step now close any game window first, and the copy step no longer nests.
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
 - R3, the street missing the bar: up, 25. The audit finds the visual method unproved: five proof-view steps were set aside, and Mickey's room failed three reviews. Phase 1's binding stop answers it.
 - R1, empty or unchecked talk: level, 25. The bench's 23 to 25 empty answers have not been re-run; in play, 0 of 8 were empty (P4).
-- R2, slow replies: level, 20. The median first sound is 4.6 s, the text alone 2.5 s; phase 1's P2 is the test.
+- R2, slow replies: up, 25. Measured on the real path 7 October: first sound 4.6 s median, none within two seconds; a blocked capability by your answer.
 - R10 and R7, the friends' evening: down, 9 and 10. It runs on your account with its $5 cap and no second account. The Shipping launch and the limits surviving a restart are proved in 0.6.
 - R9, the way of working: level, 12. Orders now come weekly and there is one session, but that holds only if shown.
 
@@ -52,6 +52,16 @@ Disk (10-07 08:40): C: 110.3 GB free, F: 24.2 GB free (C: rose by 58 GB since ye
 - **4. The friends' candidate** (0.50W): on your own account, $5 an evening.
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
+
+## Builder, Wednesday 7 October
+
+**Failed:** speech: 4.6 s median, 4.0 with a faster first sentence; a blocked capability, your answer. Item 1.1's second review: the glass worst, then the office lit in normal play, the cast in the white base layer, a black block, faint wear. Tom's face: blocked. Ron's outfit: two reviews failed; its third, last try runs tonight.
+
+**Fixed:** the frame: with the voice speaking, 59 and 51 fps to 80 by day, at night and walking, the game's card peak 5.9 GB. The glass: the capture was unlit and coarse; now lit by Lumen, people left out, one window at a time; in the package it reflects the street. Mickey's office dark until the key; the black post, the white strip. Your fault: the night's eyes now see the tester's .jpg pictures, test first. Your research pull request merged.
+
+**Two-tries rule broken:** the glass went past three tries before a measurement found its cause, and two of those tries never applied (a setting the engine resets).
+
+**Act on:** Tom's face: research the other route, or pick a take?
 
 ## Builder, Tuesday 6 October
 
