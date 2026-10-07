@@ -6937,8 +6937,9 @@ namespace
 			LedgerCrime::StandPlace Stand = LedgerCrime::PlaceToStand(X, Z, [World](double PX, double PZ) { return FeetYAt(World, PX, PZ); });
 			if (Seat != nullptr)
 			{
-				const double Fx = X + 0.7 * std::cos(FMath::DegreesToRadians(YawDeg)), Fz = Z + 0.7 * std::sin(FMath::DegreesToRadians(YawDeg));
-				Stand = { X, Z, FeetYAt(World, Fx, Fz), false };
+				// the feet on the floor the stand-place search finds beside the seat (a point fixed in
+				// front of it fell on the booking counter: Ron sat a metre up, 7 October)
+				Stand = { X, Z, Stand.FeetY, false };
 			}
 			SeatPerson(Body, Seat != nullptr ? Seat->Seated : std::string());
 			if (Stand.bMoved)

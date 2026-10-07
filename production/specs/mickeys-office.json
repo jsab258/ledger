@@ -58,7 +58,8 @@
   {"name": "Sheila at her desk", "who": "lena", "x": 7.15, "z": 11.45, "place": "mickeys_office", "face_x": 5.55, "face_z": 9.5},
   {"name": "the radio's chair (Mickey's, empty: the brief)", "who": "", "x": 7.05, "z": 9.15},
   {"name": "Ron at the door", "who": "rocco", "x": 4.64, "z": 4.3},
-  {"name": "the bench", "who": "", "x": 8.7, "z": 6.4}
+  {"name": "the bench", "who": "", "x": 8.7, "z": 6.4},
+  {"name": "Ron on the bench, waiting for a fare", "who": "rocco", "x": 8.42, "z": 6.47, "place": "mickeys_office", "face_x": 6.0, "face_z": 6.47, "seated": "sit_talk", "why": "7 October (sitting, item 1.2): Ron Kirby keeps Mickey's door and the rank, and his evenings (19:00 to 23:00) are in the office; with the office open he waits for a fare on the public bench, seated (A_sit_talk_MH), facing the room. Mickey's chair stays empty (the brief)."}
  ],
  "lights": [
   {"name": "front office", "x": 6.6, "y": 2.8, "z": 6.6, "range_m": 6.0},
