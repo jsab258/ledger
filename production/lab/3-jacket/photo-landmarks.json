@@ -1,0 +1,26 @@
+{
+ "about": "Jacket landmarks read off the period photographs (PHOTOS.md) in each original's own pixels, through tools/photo_grid.py overlays, 7 October 2026. Read by eye on a 25 or 50 px grid: about +/-10 px on front-04 (1890 x 2474), +/-15 px on front-02 (2000 x 1437, read at 0.7 scale). L = vertical distance from the mean neck point (collar's outer edge meeting the shoulder line) to the hem at the side. Ratios: shoulder width / L (points at the sleeve head's top; no correction for the body's turn), notch below the neck point / L, top fastened button below the neck point / L, shoulder line's fall from the neck point (degrees, collar included).",
+ "photos": {
+  "front-04 (Foley, Waterford, 1905)": {
+   "turn": "about 20 degrees to his left", "buttons": "3, top fastened",
+   "points_px": {"neck_a": [808, 548], "neck_b": [988, 568], "shoulder_a": [640, 640], "shoulder_b": [1160, 650],
+                 "notch_a": [848, 700], "top_button": [950, 768], "hem_side": [1175, 1405]},
+   "L_px": 847, "shoulder_over_L": 0.61, "notch_over_L": 0.18, "button_over_L": 0.25, "shoulder_fall_deg": 27
+  },
+  "front-02 man 2 (Boundary Commission, Armagh, 1924)": {
+   "turn": "square", "buttons": "3, all fastened",
+   "points_px": {"neck_a": [721, 450], "neck_b": [821, 457], "shoulder_a": [571, 493], "shoulder_b": [914, 500],
+                 "notch_a": [736, 493], "top_button": [779, 621], "hem_side": [600, 936]},
+   "L_px": 483, "shoulder_over_L": 0.71, "notch_over_L": 0.08, "button_over_L": 0.35, "shoulder_fall_deg": 16
+  },
+  "front-02 man 1": {"turn": "slight", "buttons": "open", "L_px": 514, "shoulder_over_L": 0.61},
+  "front-02 man 4": {"turn": "slight", "buttons": "open", "L_px": 486, "shoulder_over_L": 0.56}
+ },
+ "bands": {
+  "shoulder_over_L": [0.56, 0.71],
+  "notch_over_L": [0.08, 0.18],
+  "button_over_L": [0.25, 0.35]
+ },
+ "side": "No true profile survives the licence and age checks (PHOTOS.md). side-03's right-hand man (rear three-quarter) and side-04 (three-quarter) show only that the hem runs level to slightly lower at the front and the back falls straight from the blades; no ratio is read from them.",
+ "precision": "Four men, three photographs: the photographs give bands, not one exact target. Each band is wider than its reading error, so it reflects real variety in cut, build and pose."
+}
