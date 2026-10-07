@@ -99,6 +99,49 @@ namespace Ledger.Core
             return leads;
         }
 
+        /// WHICH LEADS ANSWER HIM, AS A MODEL READS IT (the talk task of 7 October):
+        /// shared words could make the ladder careful or broad, never both ("How
+        /// long has the office been here?" met the office's address; "Who's the
+        /// priest round here?" met nothing in "Father Walsh, who says mass").
+        /// One short classification by the check's model: his line and the
+        /// candidates' plain words, numbered; it answers with the numbers that
+        /// answer him or part of it. Code still says only the facts, in their
+        /// written words. Null when nothing is asked (no candidate).
+        public const string JudgeRule =
+            "You judge which of a few facts a character in a small British port town in 1990 could tell the other person to answer what " +
+            "he just said. A fact answers him if it gives what he asked for, or part of it; a fact about the same thing that does not give " +
+            "what he asked for (he asks how long, it says where) does not. Answer with the numbers of the facts that answer him, the most " +
+            "useful first, separated by commas, or the word none. Nothing else.";
+
+        public static LlmRequest JudgeRequest(string model, string line, IReadOnlyList<Lead> leads)
+        {
+            var sb = new System.Text.StringBuilder("HE SAID:\n" + (line ?? "") + "\n\nFACTS:\n");
+            int n = 0;
+            foreach (var l in leads) sb.Append(++n).Append(". ").Append(JudgeWords(l)).Append("\n");
+            var r = new LlmRequest { Model = model, MaxTokens = 20, System = JudgeRule };
+            r.Messages.Add(new LlmMessage("user", sb.ToString()));
+            return r;
+        }
+
+        // A lead as the judge reads it: its plain words, or who would know, or who told them.
+        static string JudgeWords(Lead l) =>
+            l.Said ?? (l.AskWho != null ? l.AskWho + " would know: " + (StreetFacts.SaidFor(l.Key) ?? l.Key) : l.ToldBy != null ? Stamp.Replace(l.Key, "") : l.Key);
+
+        /// The judge's answer read: each lead it named bears, every other does
+        /// not. Null when the answer is unreadable (then the caller keeps its gate).
+        public static bool? ApplyJudgement(string answer, IReadOnlyList<Lead> leads)
+        {
+            if (answer == null) return null;
+            var t = answer.Trim().ToLowerInvariant();
+            if (t.StartsWith("none")) { foreach (var l in leads) l.Bears = false; return true; }
+            var picked = new HashSet<int>();
+            foreach (Match m in Regex.Matches(t, @"\d+"))
+                if (int.TryParse(m.Value, out int k) && k >= 1 && k <= leads.Count) picked.Add(k - 1);
+            if (picked.Count == 0) return null;
+            for (int i = 0; i < leads.Count; i++) leads[i].Bears = picked.Contains(i);
+            return true;
+        }
+
         /// Leads as a run's record keeps them: "fact|", "ask|who|" or "told|who|"
         /// and the item, "unrelated " before one that shares nothing with his line.
         public static List<string> Describe(IEnumerable<Lead> leads)

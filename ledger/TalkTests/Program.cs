@@ -130,9 +130,18 @@ namespace Ledger.TalkTests
         sealed class CheckLlm : ILlmClient
         {
             readonly Queue<string> _lists;
+            /// What the ladder's judge is told (TalkLadder.JudgeRequest); null throws, as a failed call.
+            public string Judge = "1";
+            public int Judged;
             public CheckLlm(params string[] lists) => _lists = new Queue<string>(lists);
             public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
             {
+                if (request.System == TalkLadder.JudgeRule)
+                {
+                    Judged++;
+                    if (Judge == null) throw new InvalidOperationException("overloaded");
+                    return Task.FromResult(new LlmResponse { Text = Judge, StopReason = "end_turn", InputTokens = 10, OutputTokens = 2, Model = request.Model });
+                }
                 bool look = request.System != null && request.System.StartsWith("You check details against", StringComparison.Ordinal);
                 var text = look ? Unsupported : _lists.Count > 1 ? _lists.Dequeue() : _lists.Peek();
                 return Task.FromResult(new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 10, OutputTokens = 10, Model = request.Model });
@@ -144,6 +153,15 @@ namespace Ledger.TalkTests
             var (talk, check) = RefusedTwice(cited);
             Swap(e, talk, check);
             return await e.SayToAsync(said, Now, Scene);
+        }
+
+        static async Task<(string reply, CheckLlm check)> JudgedTurn(ConversationEngine e, string said, string cited, string judge)
+        {
+            var (talk, check) = RefusedTwice(cited);
+            var c = (CheckLlm)check;
+            c.Judge = judge;
+            Swap(e, talk, c);
+            return (await e.SayToAsync(said, Now, Scene), c);
         }
 
         // The engine keeps its model; the tests give each turn its own script
@@ -244,6 +262,13 @@ namespace Ledger.TalkTests
                 "The Madonna in the chapel.", "Takes courage, that.", "The mobile library comes Thursdays.",
             })
                 Check(RealWorld.Find(line).Count == 0, "an ordinary word, or the town's own places, is not: " + line, string.Join(", ", RealWorld.Find(line)));
+            // The bait on the key, 7 October: Ron reads "the racing results" in the evening
+            // paper. Canon keeps gambling out of speech entirely.
+            Check(ContentRule.SpeechBreaks("Get the evening paper. Read the racing results, the weather.") != null
+                  && ContentRule.SpeechBreaks("He follows the racing.") != null
+                  && ContentRule.SpeechBreaks("He keeps racing pigeons on the allotment.") == null
+                  && ContentRule.SpeechBreaks("Racing past the rank in the rain.") == null,
+                  "the racing results are gambling talk; racing pigeons and racing past are not");
             Check(RealWorld.PromptRule.Contains("never been there") && RealWorld.PromptRule.Contains("poem")
                   && RealWorld.PromptRule.Contains("sing") && RealWorld.PromptRule.Contains("city"),
                   "the talk's rule names real places, writers, songs and poems, and saying you never went is still naming it");
@@ -359,6 +384,32 @@ namespace Ledger.TalkTests
                       "asked who they are, he says it", whoIs);
                 Check(who.LastLeads.Count == 1 && who.LastLeads[0].StartsWith("fact|") && pointer.LastLeads[0].StartsWith("ask|"),
                       "and each turn's leads are kept, for reading a run", string.Join(" / ", who.LastLeads) + " | " + string.Join(" / ", pointer.LastLeads));
+
+                // 7c. THE JUDGE (JudgeLadder): which cited facts answer him is the check
+                // model's reading, one short call; words only when the call fails.
+                ConversationEngine.JudgeLadder = true;
+                try
+                {
+                    string trade = StreetFacts.Held("trade", "rocco");
+                    var quiet = Relayed("rocco");
+                    var (q1, qc) = await JudgedTurn(quiet, "Is it always this quiet?", H(ron, trade), "1");
+                    Check(quiet.LastRung == "fact" && q1.EndsWith(StreetFacts.SaidFor(trade)) && qc.Judged == 1,
+                          "the judge says the thin trade answers \"is it always this quiet?\", which shares no word with it", q1);
+                    var notIt = Relayed("rocco");
+                    var (q2, _) = await JudgedTurn(notIt, "Who's got the keys to this place?", H(ron, door), "none");
+                    Check(notIt.LastRung == null && ClaimCheck.IsKnownOnly(q2, notIt.Card),
+                          "the judge's none stands, though a word is shared", q2);
+                    var failed = Relayed("rocco");
+                    var (q3, _) = await JudgedTurn(failed, "Who's got the keys to this place?", H(ron, door), null);
+                    var odd = Relayed("rocco");
+                    var (q4, _) = await JudgedTurn(odd, "Is it always this quiet?", H(ron, trade), "I think the second one");
+                    Check(failed.LastRung == "fact" && q3.EndsWith(doorSaid) && odd.LastRung == null,
+                          "a judge that fails, or answers out of shape, leaves the word gate to decide", q3 + " | " + q4);
+                    var noLeads = Relayed("rocco");
+                    var (q5, c5) = await JudgedTurn(noLeads, "What's in the safe?", null, "1");
+                    Check(c5.Judged == 0 && ClaimCheck.IsKnownOnly(q5, noLeads.Card), "with nothing cited, no judge is asked", q5);
+                }
+                finally { ConversationEngine.JudgeLadder = false; }
 
                 // 8. The rule table's choice still leads, as measured on 30 September.
                 ConversationEngine.UseRules = true;

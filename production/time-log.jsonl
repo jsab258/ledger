@@ -35,3 +35,4 @@
 {"event": "start", "at": "2026-10-07T17:55:00", "task": "Ron's outfit third review, set aside", "phase": "1", "kind": "review"}
 {"event": "stop", "at": "2026-10-07T18:05:00", "note": ""}
 {"event": "start", "at": "2026-10-07T21:03:02", "task": "Talk task: the ladder, who told me, two checks (branch talk)", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-07T22:35:12", "note": "talk task done: ladder (judged), who told me, bait, successors; handover production/handovers/talk.md; key US$2.27 of $3"}

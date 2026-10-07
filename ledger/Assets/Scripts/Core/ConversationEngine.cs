@@ -102,6 +102,11 @@ namespace Ledger.Core
         /// later replies. It takes the place of PlainFallback's line. Off, as
         /// every switch here is, until the talk program turns it on.
         public static bool Ladder = false;
+        /// THE LADDER'S JUDGE (TalkLadder.JudgeRequest): which facts the refused
+        /// drafts cited answer him is read by the check's model in one short call,
+        /// on the turns the ladder climbs; off, shared words decide. Off until the
+        /// talk program turns it on.
+        public static bool JudgeLadder = false;
         /// The most facts already told that a prompt lists, the latest.
         public const int MaxToldShown = 8;
         /// A REACTION BEFORE THE ANSWER (the builder's delay note, step 5, 30
@@ -720,7 +725,7 @@ namespace Ledger.Core
 
         // What is said when both drafts were refused: the ladder (Ladder), or
         // today's line (PlainFallback's, or "that's all I know").
-        string RefusedTwice()
+        async Task<string> RefusedTwiceAsync(Action<string> mark, CancellationToken ct)
         {
             if (!Ladder)
             {
@@ -731,7 +736,27 @@ namespace Ledger.Core
             LastWouldHaveSaid = TodaysFallback(_knownOnlySaid, out _);
             int n = _knownOnlySaid++;
             bool ruled = UseRules && LastRule != null && LastRule.Kind != TalkRules.Kind.Scene;
-            var step = TalkLadder.Climb(LadderLeads(), Marked, Card, StreetFacts.NameOf(Card.Id) ?? Card.Name,
+            var leads = LadderLeads();
+            // WHICH OF WHAT THE DRAFTS CITED ANSWERS HIM, read by the check's model
+            // (JudgeLadder): measured on 7 October over four question sets, the
+            // word gate left 25 of 145 answerable questions empty with 6 of its 23
+            // lines beside the point; the judge left 19 with 7 of 29. A judge that
+            // fails, or answers out of shape, leaves the word gate's reading.
+            var candidates = new List<TalkLadder.Lead>();
+            foreach (var l in leads) if (!(ruled && LastRule.Facts.Contains(l.Key))) candidates.Add(l);
+            if (JudgeLadder && Checker != null && candidates.Count > 0)
+            {
+                try
+                {
+                    var r = await Checker.CompleteAsync(TalkLadder.JudgeRequest(CheckerModel, _turnInput, candidates), ct);
+                    _cost?.Record(CheckerModel, r.InputTokens, r.OutputTokens);
+                    TalkLadder.ApplyJudgement(r.Text, candidates);
+                }
+                catch (Exception) when (!ct.IsCancellationRequested) { }
+                mark?.Invoke("ladder-judged");
+                LastLeads = TalkLadder.Describe(leads);
+            }
+            var step = TalkLadder.Climb(leads, Marked, Card, StreetFacts.NameOf(Card.Id) ?? Card.Name,
                                         ruled ? LastRule.Ask : null, ruled ? LastRule.Concept : null,
                                         ruled && LastRule.Kind == TalkRules.Kind.Partial,
                                         ruled && TalkRules.AboutThemselves(LastRule.Concept), n);
@@ -2020,7 +2045,7 @@ namespace Ledger.Core
                         if (d2.FirstFlagged != null)
                         {
                             LastRefusedAgain = new List<string>(d2.FirstFlagged);
-                            reply = RefusedTwice();
+                            reply = await RefusedTwiceAsync(Step, ct);
                             _lastCleanCited = new List<string>();
                             _lastCleanCitedAll = new List<string>();
                         }
@@ -2032,7 +2057,7 @@ namespace Ledger.Core
                             bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0 && RealWorld.Find(redrafted).Count == 0;
                             if (!holds) LastRefusedAgain = again.Count > 0 ? new List<string>(again)
                                 : new List<string> { "(no invented detail: it repeated a refused claim, promised, or named a real person or thing)" };
-                            reply = holds ? redrafted : d2.Heard ? d2.First : RefusedTwice();
+                            reply = holds ? redrafted : d2.Heard ? d2.First : await RefusedTwiceAsync(Step, ct);
                             if (!holds) { _lastCleanCited = new List<string>(); _lastCleanCitedAll = new List<string>(); }
                         }
                     }

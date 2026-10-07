@@ -1509,6 +1509,9 @@ static class Program
         // LADDER-2026-10-07.md): refused twice, the next relevant fact, whom to
         // ask, who told them, then a refusal with a reason.
         ConversationEngine.Ladder = true;
+        // And which facts answer him read by the check's model, one short call on
+        // the turns the ladder climbs (the same note).
+        ConversationEngine.JudgeLadder = true;
         if (Array.IndexOf(args, "--selftest") >= 0) return await SelfTest(CardsDir(args));
         var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
         bool fake = Array.IndexOf(args, "--fake") >= 0 || Environment.GetEnvironmentVariable("LEDGER_TALK_FAKE") == "1";

@@ -39,8 +39,14 @@ static partial class Program
     /// exactly through TalkLadder.Leads and Climb as they are now: the same
     /// drafts, the same citations, today's ladder. Writes firsts.jsonl in the
     /// shape of a run, for ladder-label.
-    static int LadderReplay(string from, string dir)
+    static async Task<int> LadderReplay(string[] args, string from, string dir)
     {
+        // --judge <model>: the leads that answer him chosen by one short call
+        // (TalkLadder.JudgeRequest), on LEDGER's key with --key; else the word gate.
+        string judgeModel = Arg(args, "--judge", null);
+        using var judgeClient = judgeModel == null ? null : (IDisposable)BenchClient(args, "the ladder's relevance judged by " + judgeModel + ", replayed on " + from);
+        int judged = 0;
+        var judgeMs = new List<long>();
         Directory.CreateDirectory(dir);
         var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
         var outRows = new List<object>();
@@ -75,6 +81,17 @@ static partial class Program
                 bool ruled = choice != null && choice.Kind != TalkRules.Kind.Scene;
                 var ruleFacts = ruled ? choice.Facts : new List<string>();
                 var leads = TalkLadder.Leads(probe, card, ruleFacts, ruled && TalkRules.AboutThemselves(choice.Concept), leadKeys.Where(k => !ruleFacts.Contains(k)), known);
+                if (judgeModel != null)
+                {
+                    var cand = leads.Where(l => !ruleFacts.Contains(l.Key)).ToList();
+                    if (cand.Count > 0)
+                    {
+                        judged++;
+                        var sw = System.Diagnostics.Stopwatch.StartNew();
+                        try { TalkLadder.ApplyJudgement((await ((ILlmClient)judgeClient).CompleteAsync(TalkLadder.JudgeRequest(judgeModel, probe, cand))).Text, cand); judgeMs.Add(sw.ElapsedMilliseconds); }
+                        catch (Exception e) { Console.WriteLine("judge failed: " + e.Message); }
+                    }
+                }
                 var step = TalkLadder.Climb(leads, _ => false, card, StreetFacts.NameOf(cardId) ?? card.Name, ruled ? choice.Ask : null, ruled ? choice.Concept : null,
                                             ruled && choice.Kind == TalkRules.Kind.Partial, ruled && TalkRules.AboutThemselves(choice.Concept), 0);
                 string now = step.Rung == null ? ClaimCheck.KnownOnlyFor(card, 0) : step.Line;
@@ -86,7 +103,10 @@ static partial class Program
             outRows.Add(new { card = cardId, probe, reply, fell, rung, before, beforeFell, empty = fell || rung == "refuse", replayedFrom = acted });
         }
         WriteJsonl(Path.Combine(dir, "firsts.jsonl"), outRows);
-        Console.WriteLine($"ladder replay: {outRows.Count} turns, the ladder acted on {replayed}, its line changed on {changed} -> {Path.Combine(dir, "firsts.jsonl")}");
+        Console.WriteLine($"ladder replay: {outRows.Count} turns, the ladder acted on {replayed}, its line changed on {changed}" +
+                          (judgeModel != null ? $", judged {judged}" + (judgeMs.Count > 0 ? $" (a judgement's time median {judgeMs.OrderBy(x => x).ElementAt(judgeMs.Count / 2)} ms, slowest {judgeMs.Max()} ms)" : "") : "") +
+                          $" -> {Path.Combine(dir, "firsts.jsonl")}");
+        if (judgeModel != null) LogKeyRun(judged);
         return 0;
     }
 

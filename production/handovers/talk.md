@@ -4,7 +4,8 @@ For the builder, from the bounded talk task on branch `talk` (Jafar's brief of
 7 October 2026). Measured in production/research/grounded-replies/LADDER-2026-10-07.md,
 production/research/invented-claims/BAIT-2026-10-07.md and
 production/research/invented-claims/SUCCESSORS-2026-10-07.md. His page of
-numbers: NUMBERS_PAGE.
+numbers: https://claude.ai/artifact/DKBhrC8w4s1uTQ5GM2krNq ("LEDGER Talk Before
+and After", private to him until he shares it).
 
 ## 1. The ladder before "that's all I know"
 
@@ -16,9 +17,16 @@ have already given, a refusal in their own voice with a reason. A first question
 they hold nothing on still gets their honest "that's all I know". Nothing on the
 ladder is the model's: every line is a written fact or a written line.
 
+**Measured** (production/research/grounded-replies/LADDER-2026-10-07.md): over
+four question sets, 145 questions the character could answer, empty answers 35
+today, 19 with the ladder (the fresh sixty: 22 to 12); 29 ladder lines, none
+inventing anything, 7 beside the point.
+
 **Wire it.** Nothing to wire in the game: it lives in the talk program, which
-turns it on at start (`ConversationEngine.Ladder = true`, beside `UseRules` and
-`PlainFallback`). The helper's reply now says `went: "ladder-fact" | "ladder-ask"
+turns it on at start (`ConversationEngine.Ladder = true` and `JudgeLadder = true`,
+beside `UseRules` and `PlainFallback`). The judge is one short call to the check's
+model on the turns the ladder climbs (median 0.54 s, slowest 1.05 s, about
+$0.0002); its step shows as `ladder-judged` in the reply's `steps`. The helper's reply now says `went: "ladder-fact" | "ladder-ask"
 | "ladder-told" | "ladder-refuse"` in place of `fallback` on those turns;
 `fellBack` is also true for `ladder-refuse`. Already done on this branch:
 production/specs/talk-protocol.md, tools/session_read.py and tools/nightly_walk.py
@@ -26,11 +34,14 @@ know the four values, `ladder-refuse` counts as talk that broke, and a ladder
 turn can earn Sheila's trust exactly where a `fallback` turn could.
 
 **What changed in the code.**
-- `Core/TalkLadder.cs` (new): the rungs, the shared lines, `HeardFrom` (who told
-  them, read from the memory of a telling).
+- `Core/TalkLadder.cs` (new): the rungs, the shared lines, `Leads` (what bears
+  on his line), the judge's request and reading, `HeardFrom` (who told them,
+  read from the memory of a telling).
 - `Core/ConversationEngine.cs`: `Ladder`, `Listener`, `HasTold`, `LastRung`,
   `LastWouldHaveSaid`, `LastLeads`; what each check's list cited this turn
-  (`ClaimCheck.CitedItems`) are the leads; what was told is saved in
+  (`ClaimCheck.CitedItems`) are the leads, judged (`JudgeLadder`) or, if the
+  judge fails, gated by a distinctive shared word (`ClaimCheck.SharesTellingWord`);
+  what was told is saved in
   `CaptureTalk` under `"told"` and shown to the writer of later replies; today's
   fallback kept, untouched, as `TodaysFallback`.
 - `Core/StreetFacts.cs`: `AboutOf`, `NameOf`, `IsIntroduction` (somebody else's
@@ -89,7 +100,7 @@ talk program reads `evidence.account.toldBy`.
 **Walk it.** After a deed, ask a second-hand hearer why they look at him like
 that: the reason names who told them.
 
-## 3. Two fixes found on the way
+## 3. Fixes found on the way
 
 - **The key's cap charged every Haiku call at the dearest rate** (`BudgetedClient`:
   the API answers under the dated name `claude-haiku-4-5-20251001`, which the
@@ -98,20 +109,51 @@ that: the reason names who told them.
   Test in ledger/TalkTests.
 - **`LlmRequest.Thinking` and `Effort`** (Core/LlmClient.cs), sent only when set:
   needed if the check moves to Haiku 5.5, which thinks unless told not to.
+- **Real places, writers and works** (Core/RealWorld.cs): the talk's rule and
+  code's list now cover them (the bait found London, Westminster and Shakespeare
+  said back); towns that are ordinary words (Hull, Bath) only as names; not
+  Madonna (the chapel's).
+- **"Stay in character"** is refused by the reply guard (Core/ResponseValidator.cs).
+- **The racing page** (Core/ContentWords.cs `racingpage`): Ron read "the racing
+  results"; canon keeps gambling out of speech. The content gate finds no written
+  line it touches.
 
 ## 4. The checks
 
-PENDING
+**Songs, poems, quotes and real names** (production/research/invented-claims/BAIT-2026-10-07.md):
+forty bait questions to each of the three. Before: 4 of 120 replies named
+something real, all echoes. After the fix: 0 of 120, and 0 of 40 on LEDGER's key
+through the API. Nothing to wire beyond this branch.
+
+**The check's successor** (production/research/invented-claims/SUCCESSORS-2026-10-07.md):
+recommended, Haiku 5.5 with the list's thinking off and the second looks'
+thinking at low effort: as accurate as Haiku 4.5 over 238 labelled details and
+60 labelled replies, the same median speed, up to 0.9 s slower in the slowest
+tenth, a tenth of the price. To switch, when you choose: set the talk program's
+`CheckerModel` apart from `Models.Ambient` (which also writes small talk); send
+`Thinking = "disabled"` on the list (`ClaimCheck.RequestItems`) and
+`Thinking = "adaptive", Effort = "low"` on the looks (`RequestVerify`), with room
+in `MaxTokens` for the thinking (+4000 in the bench); let the relay pass
+`thinking` and `output_config` (Relay.cs strips every other field today); time
+the first sentence's check on the real path before and after.
 
 ## Tests
 
 New project `ledger/TalkTests` (CoreTests' Program.cs is over the push guard's
-1 MB and cannot be edited): 90 checks, written before the code. Add it to
+1 MB and cannot be edited): 121 checks, each written before its code. Add it to
 tools/ci-checks.sh beside core-tests (done on this branch). Passing at the end
 of the task: TalkTests, CoreTests, Soak, SaveChaos, PerceptionGolden (the port
 agrees, no drift), StrangerTest, the talk program's selftest, the session and
 nightly readers' selftests, the talk-protocol check, the catalogue and the
 content gate.
+
+## Open, for you
+
+- The 19 still empty are mostly a knowledge gap: say the people lines (P items)
+  plainly next ("Who's the priest round here?" has no plain fact today).
+- The judge passes 7 of 29 facts about the same thing that do not answer (how
+  the drivers are paid, answered with how many there are): a stricter judgement
+  prompt, measured on the recorded turns with `ladder-replay --judge`.
 
 ## Merge
 

@@ -104,7 +104,7 @@ static partial class Program
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
-            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ConversationEngine.ReactFirst = args.Contains("--react"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; FirstsOnly = Arg(args, "--only", null); FirstsModel = Arg(args, "--model", null); ConversationEngine.Ladder = args.Contains("--ladder"); FirstsByMoment = args.Contains("--moment"); FirstsTake = int.Parse(Arg(args, "--take", "0")); FirstsArgs = args; return await Firsts(dir, parallel);
+            case "firsts": ConversationEngine.ChooseFirst = !args.Contains("--no-choose"); ConversationEngine.PlanFirst = args.Contains("--plan"); ConversationEngine.NarrowRedraft = args.Contains("--narrow"); ConversationEngine.PlainFallback = args.Contains("--plain"); ConversationEngine.UseRules = args.Contains("--rules"); ConversationEngine.ReactFirst = args.Contains("--react"); ClaimCheck.Looks = args.Contains("--two-looks") ? 2 : 1; FirstsOnly = Arg(args, "--only", null); FirstsModel = Arg(args, "--model", null); ConversationEngine.Ladder = args.Contains("--ladder"); ConversationEngine.JudgeLadder = args.Contains("--judge-ladder"); FirstsByMoment = args.Contains("--moment"); FirstsTake = int.Parse(Arg(args, "--take", "0")); FirstsArgs = args; return await Firsts(dir, parallel);
             case "suggest": return await SuggestBench(Arg(args, "--from", "F:/LedgerTools/town-scratch/sheila-sonnet/firsts.jsonl"), Arg(args, "--out", "F:/LedgerTools/town-scratch/suggest-bench.jsonl"), parallel);
             case "bearing": return Bearing();
             case "detailbench": return await DetailBench(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
@@ -117,7 +117,7 @@ static partial class Program
             case "hours": return await Hours(dir, parallel);
             case "bait": return await Bait(args, dir, parallel);
             case "ladder-label": return await LadderLabel(dir, parallel);
-            case "ladder-replay": return LadderReplay(Arg(args, "--from", ""), dir);
+            case "ladder-replay": return await LadderReplay(args, Arg(args, "--from", ""), dir);
             case "bait-label": return await BaitLabel(dir, parallel);
             case "successors": return await Successors(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
             case "hourslook": return await HoursLook();

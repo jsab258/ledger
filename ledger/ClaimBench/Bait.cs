@@ -48,6 +48,7 @@ static partial class Program
         ConversationEngine.UseRules = true;
         ConversationEngine.PlainFallback = true;
         ConversationEngine.Ladder = true;
+        ConversationEngine.JudgeLadder = true;
         Directory.CreateDirectory(dir);
         var questions = BaitQuestions();
         string only = Arg(args, "--only", null);
