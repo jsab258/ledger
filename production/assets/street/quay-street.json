@@ -1207,6 +1207,93 @@
    "faces": 6
   },
   {
+   "mesh": "street_card_ironmonger_day",
+   "material": "card_production/art/shop-rooms/ironmonger_day",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": "production/art/shop-rooms/ironmonger_day",
+   "decal_uv": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "decal_emit": "room",
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": 0.4,
+   "emit_night": 1.6,
+   "reveal_on": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_card_newsagent_day",
+   "material": "card_production/art/shop-rooms/newsagent_day",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": "production/art/shop-rooms/newsagent_day",
+   "decal_uv": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "decal_emit": "room",
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": 0.4,
+   "emit_night": 1.6,
+   "reveal_on": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_card_tea_room_day",
+   "material": "card_production/art/shop-rooms/tea_room_day",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "house_tint": null,
+   "decal": "production/art/shop-rooms/tea_room_day",
+   "decal_uv": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "decal_emit": "room",
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": 0.4,
+   "emit_night": 1.6,
+   "reveal_on": null,
+   "faces": 6
+  },
+  {
    "mesh": "street_card_net_curtain_a",
    "material": "card_production/assets/vignette/decals2d/net_curtain_a",
    "base_material": "interior_lit",
@@ -2984,7 +3071,7 @@
    "emit_day": 3.4,
    "emit_night": 0.7,
    "reveal_on": null,
-   "faces": 24
+   "faces": 6
   },
   {
    "mesh": "street_iron_black",

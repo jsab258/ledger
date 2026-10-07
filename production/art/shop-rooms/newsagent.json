@@ -1,0 +1,18 @@
+{
+ "shop": "newsagent",
+ "w": 5.3,
+ "h": 2.4,
+ "d": 4.5,
+ "camera_d": 5.3,
+ "pixels": [
+  2048,
+  927
+ ],
+ "states": {
+  "day": "newsagent_day.png",
+  "night_lit": "newsagent_night_lit.png",
+  "night_dark": "newsagent_night_dark.png"
+ },
+ "made_by": "tools/art-recipes/shop-room.py",
+ "samples": 64
+}

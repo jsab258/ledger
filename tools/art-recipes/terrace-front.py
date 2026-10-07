@@ -2731,6 +2731,13 @@ INTERIOR_PICTURE = {
     ("east_parade", 2): (INTERIORS + "/int23_pawn", (0.06, 0.20, 0.64, 0.92)),
     ("east_parade", 4): (INTERIORS + "/int23_laundry", (0.03, 0.10, 0.73, 0.98)),
     ("east_parade", 5): (INTERIORS + "/int23_grocer", (0.11, 0.22, 0.89, 0.93)),
+    # THE WEST ROW'S THREE SHOPS (7 October, item 1.1's second fresh review, point 5: "the Tea
+    # Room's and Ironmonger's windows opaque mustard panes"): they had no room behind the glass,
+    # only the plain card. Each now shows its own room from tools/art-recipes/shop-room.py, the
+    # recipe Mickey's picture came from, framed on the front exactly; the bays as the fascias.
+    ("west_north", 0): ("production/art/shop-rooms/newsagent_day", (0.0, 0.0, 1.0, 1.0)),
+    ("west_north", 1): ("production/art/shop-rooms/ironmonger_day", (0.0, 0.0, 1.0, 1.0)),
+    ("west_north", 2): ("production/art/shop-rooms/tea_room_day", (0.0, 0.0, 1.0, 1.0)),
 }
 #: How brightly a pictured room glows, by day and at night. By day it stands
 #: where the plain card stood, about the sheet's own window value; at night
