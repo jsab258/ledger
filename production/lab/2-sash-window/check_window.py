@@ -36,9 +36,11 @@ def model_drawings(meshes, T, geo):
     vsec = section(joinery, 0, geo["W"] / 4, (1, 2), FRAMES["vsec"](T))
     zmid = (geo["z_lo"][0] + geo["z_lo"][1]) / 2
     hsec = section(joinery, 2, zmid, (0, 1), FRAMES["hsec"](T))
-    xs = geo["x_ps"] - T["sash"]["stile_width_mm"] / 2000.0
+    xs = geo.get("x_sash", geo["x_ps"]) - T["sash"]["stile_width_mm"] / 2000.0
     vst = section(joinery, 0, xs, (1, 2), FRAMES["vsec_stile"](T))
-    return {"elev": elev, "vsec": vsec, "hsec": hsec, "vsec_stile": vst}
+    upper = {k: v for k, v in joinery.items() if k.startswith("upper_")}
+    eup = silhouette(upper, (0, 2), FRAMES["elev_upper"](T))
+    return {"elev": elev, "vsec": vsec, "hsec": hsec, "vsec_stile": vst, "elev_upper": eup}
 
 
 def dims(meshes, T, geo):
@@ -82,13 +84,13 @@ def main(npz):
     ver = os.path.basename(npz).replace("window_", "").replace(".npz", "")
     res = {"model": npz.replace("\\", "/"), "drawings": {}, "dims": dims(meshes, T, geo)}
     ok = True
-    for k in ("elev", "vsec", "hsec", "vsec_stile"):
+    for k in ("elev", "vsec", "hsec", "vsec_stile", "elev_upper"):
         m = compare(M[k], target[k], FRAMES[k](T).mm_per_px)
         m["ok"] = bool(m["iou"] >= PASS["iou"] and m["p95_mm"] is not None and m["p95_mm"] <= PASS["p95_mm"]
                    and m["max_mm"] <= PASS["max_mm"])
         ok &= m["ok"]
         res["drawings"][k] = m
-        overlay(M[k], target[k], os.path.join(BUILD, "overlay_%s_%s.png" % (ver, k)), scale=0.5 if k not in ("vsec", "vsec_stile") else 1)
+        overlay(M[k], target[k], os.path.join(BUILD, "overlay_%s_%s.png" % (ver, k)), scale=0.5 if k not in ("vsec", "vsec_stile", "elev_upper") else 1)
     ok &= all(d["ok"] for d in res["dims"].values())
     res["pass"] = bool(ok)
     res["thresholds"] = PASS

@@ -87,14 +87,20 @@ def main():
         body.collision.cloth_friction = S["body_friction"]
 
     if "V_rest" in g:
-        # the rest shape is the flat pattern (lengths and pressed folds as cut); the run starts from
-        # the pieces as placed round the body, held in a shape key
-        gar = mesh_object("garment", g["V_rest"], g["F"], edges=g["seams"])
+        # The rest shape must be the flat pattern (lengths and pressed folds as cut) while the run starts
+        # from the pieces placed round the body. ClothSettings.rest_shape_key is ignored in Blender 5.2
+        # headless (lab test, 7 Oct: a 2 m strip with a 1 m rest key stays 2 m); 'Dynamic Mesh' with a
+        # shape key works (the strip shrinks to 1 m). So: Basis = the placed pieces, key "flat" = the
+        # pattern, eased from 0 to 1 over rest_ramp frames, Dynamic Mesh on.
+        gar = mesh_object("garment", g["V"], g["F"], edges=g["seams"])
         gar.shape_key_add(name="Basis")
-        k = gar.shape_key_add(name="start")
+        k = gar.shape_key_add(name="flat")
         for i, v in enumerate(k.data):
-            v.co = g["V"][i]
+            v.co = g["V_rest"][i]
+        k.value = 0.0
+        k.keyframe_insert("value", frame=1)
         k.value = 1.0
+        k.keyframe_insert("value", frame=S.get("rest_ramp", 20))
     else:
         gar = mesh_object("garment", g["V"], g["F"], edges=g["seams"])
     if "pin" in g:
@@ -122,7 +128,7 @@ def main():
     if "pin" in g:
         cs.vertex_group_mass = "pin"
     if "V_rest" in g:
-        cs.rest_shape_key = gar.data.shape_keys.key_blocks["Basis"]
+        cs.use_dynamic_mesh = True
     cc = cl.collision_settings
     cc.distance_min = S["collision_distance"]
     cc.use_self_collision = S["self_collision"]
@@ -137,7 +143,7 @@ def main():
     sc.keyframe_insert("gravity", frame=S["sew_frames"])
     sc.gravity = (0, 0, -9.81)
     sc.keyframe_insert("gravity", frame=S["sew_frames"] + 10)
-    cl.settings.use_dynamic_mesh = False
+
 
     keep = {}
     for f in range(1, S["frames"] + 1):

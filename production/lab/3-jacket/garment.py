@@ -374,6 +374,20 @@ def build(tag="ron", ver="v1"):
         a_, b_ = side_sign(V, near, lid), side_sign(Rall, near, lid)
         if a_ != b_:
             Rall[lid, 1] *= -1
+    # each piece's flat rest layout turned and moved (rigidly: lengths and folds unchanged) onto where
+    # the piece starts, so the run's blend from start to rest passes through sensible shapes
+    # (drape v6: blending to an unaligned flat layout squashed the rest lengths mid-way and threw the
+    # garment through the body)
+    for name_, pc_ in pieces.items():
+        o_, n_ = pc_["offset"], pc_["n"]
+        A_, B_ = Rall[o_:o_ + n_], V[o_:o_ + n_]
+        ca, cb = A_.mean(0), B_.mean(0)
+        H_ = (A_ - ca).T @ (B_ - cb)
+        U_, S_, Vt_ = np.linalg.svd(H_)
+        d_ = np.sign(np.linalg.det(Vt_.T @ U_.T))
+        Rm = Vt_.T @ np.diag([1, 1, d_]) @ U_.T
+        Rall[o_:o_ + n_] = (A_ - ca) @ Rm.T + cb
+        pc_["rest_fit_rms_m"] = float(np.sqrt(np.mean(np.sum((Rall[o_:o_ + n_] - B_) ** 2, axis=1))))
     np.savez_compressed(path, V=V, F=Fa, seams=seams, pin=pin, bend=bend, V_rest=Rall)
     lap = {}
     for s_ in ("R", "L"):
