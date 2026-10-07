@@ -39,3 +39,5 @@
 {"event": "stop", "at": "2026-10-07T23:32:00", "note": ""}
 {"event": "start", "at": "2026-10-07T23:32:00", "task": "7-8 Oct night: turning to him, clips profiled, mirrored, retargeted, proof both sides, checks", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T00:12:00", "note": ""}
+{"event": "start", "at": "2026-10-08T00:12:00", "task": "8 Oct night: the speaker's walk proof, joins measured, foot hold", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T01:02:00", "note": ""}

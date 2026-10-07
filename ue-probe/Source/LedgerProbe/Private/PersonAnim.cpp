@@ -12,6 +12,7 @@
 #include "AnimNodes/AnimNode_ModifyCurve.h"
 #include "AnimNodes/AnimNode_TwoWayBlend.h"
 #include "BoneControllers/AnimNode_LookAt.h"
+#include "BoneControllers/AnimNode_TwoBoneIK.h"
 #include "BoneControllers/AnimNode_ModifyBone.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -38,6 +39,7 @@ namespace
 		// the loop and the walk, its root motion kept for the caller.
 		FAnimNode_Slot Slot;
 		FAnimNode_ConvertLocalToComponentSpace ToComponent;
+		FAnimNode_TwoBoneIK Feet[2];
 		FAnimNode_ModifyBone Calm[ULedgerPersonAnim::CalmBones];
 		FAnimNode_LookAt Look;
 		FAnimNode_ConvertComponentToLocalSpace ToLocal;
@@ -91,9 +93,29 @@ namespace
 			}
 			Slot.SlotName = ULedgerPersonAnim::MoveSlot;
 			ToComponent.LocalPose.SetLinkNode(&Slot);
+			// THE FEET HELD WHERE THEY STAND while the caller asks (PersonAnim.h, FootHold): the
+			// MetaHuman's legs only; any other body (the Mixamo street people) is left unnamed, so
+			// the nodes pass it through untouched.
+			const USkeletalMeshComponent* C = A != nullptr ? A->GetSkelMeshComponent() : nullptr;
+			const bool bLegs = C != nullptr && C->GetSkeletalMeshAsset() != nullptr
+			                   && C->GetSkeletalMeshAsset()->GetRefSkeleton().FindBoneIndex(FName(TEXT("calf_l"))) != INDEX_NONE
+			                   && C->GetSkeletalMeshAsset()->GetRefSkeleton().FindBoneIndex(FName(TEXT("foot_r"))) != INDEX_NONE;
+			FAnimNode_Base* Into = &ToComponent;
+			for (int32 I = 0; I < 2; ++I)
+			{
+				FAnimNode_TwoBoneIK& F = Feet[I];
+				F.ComponentPose.SetLinkNode(Into);
+				F.IKBone.BoneName = bLegs ? FName(I == 0 ? TEXT("foot_l") : TEXT("foot_r")) : NAME_None;
+				F.EffectorLocationSpace = BCS_WorldSpace;
+				F.JointTargetLocationSpace = BCS_BoneSpace;
+				F.JointTarget = FBoneSocketTarget(bLegs ? FName(I == 0 ? TEXT("calf_l") : TEXT("calf_r")) : NAME_None);
+				F.JointTargetLocation = FVector::ZeroVector;   // the knee where the clip has it
+				F.bAllowStretching = false;
+				F.Alpha = 0.0f;
+				Into = &F;
+			}
 			// THE NECK AND HEAD HELD TOWARD REST against the idle's own turns,
 			// then the look (PersonAnim.h).
-			FAnimNode_Base* Into = &ToComponent;
 			for (int32 I = 0; I < ULedgerPersonAnim::CalmBones; ++I)
 			{
 				FAnimNode_ModifyBone& M = Calm[I];
@@ -109,7 +131,7 @@ namespace
 			}
 			Look.ComponentPose.SetLinkNode(Into);
 			ToLocal.ComponentPose.SetLinkNode(bLooks ? static_cast<FAnimNode_Base*>(&Look)
-			                                         : static_cast<FAnimNode_Base*>(&ToComponent));
+			                                         : static_cast<FAnimNode_Base*>(&Feet[1]));
 			Mouth.SourcePose.SetLinkNode(&ToLocal);
 			Mouth.ApplyMode = EModifyCurveApplyMode::Blend;
 			Mouth.Alpha = 0.0f;
@@ -142,6 +164,8 @@ namespace
 			OutNodes.Add(&Moving);
 			OutNodes.Add(&Slot);
 			OutNodes.Add(&ToComponent);
+			OutNodes.Add(&Feet[0]);
+			OutNodes.Add(&Feet[1]);
 			for (int32 I = 0; I < ULedgerPersonAnim::CalmBones; ++I) { OutNodes.Add(&Calm[I]); }
 			OutNodes.Add(&Look);
 			OutNodes.Add(&ToLocal);
@@ -164,6 +188,11 @@ namespace
 				Said.Alpha = A->SaidWeight;
 				Said.CurveMap = A->SaidCurves;
 				if (bHasWalk) { Moving.Alpha = A->WalkWeight; }
+				for (int32 I = 0; I < 2; ++I)
+				{
+					Feet[I].Alpha = A->FootHold[I];
+					Feet[I].EffectorLocation = A->FootHoldAt[I];
+				}
 				for (int32 I = 0; I < ULedgerPersonAnim::MouthCurveCount; ++I)
 				{
 					if (float* V = Mouth.CurveMap.Find(FName(ULedgerPersonAnim::MouthCurves[I]))) { *V = A->MouthValues[I]; }

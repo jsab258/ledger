@@ -7867,8 +7867,19 @@ namespace
 		float PlayedFrom = 0.0f, PrevPos = 0.0f;
 		TWeakObjectPtr<UAnimMontage> Mont;
 		TWeakObjectPtr<UAnimSequence> Seq;
+		float LetGoAt[2] = { -1.0f, -1.0f };   // the playing clip's time each held foot lifts
+		bool bNoHold = false;
 	};
 	FWalkProof GWalk;
+
+	// A FOOT HELD where it stands until the clip lifts it at LetGo seconds (-1: held until told).
+	void HoldFoot(ULedgerPersonAnim* A, int32 I, float LetGo)
+	{
+		if (A == nullptr || GWalk.bNoHold) { return; }
+		A->FootHoldAt[I] = A->GetSkelMeshComponent()->GetSocketLocation(FName(I == 0 ? TEXT("foot_l") : TEXT("foot_r")));
+		A->FootHold[I] = 1.0f;
+		GWalk.LetGoAt[I] = LetGo;
+	}
 
 	void WalkProofTick(UWorld* World, double Now)
 	{
@@ -7901,6 +7912,7 @@ namespace
 				return;
 			}
 			FParse::Value(FCommandLine::Get(), TEXT("WalkProofRate="), GWalk.Rate);
+			GWalk.bNoHold = FParse::Param(FCommandLine::Get(), TEXT("WalkProofNoHold"));
 			// ALONG THE PAVEMENT: the street's own axis (its x), either way, whichever is clear for 9 m
 			// at her knee (her facing's sides sent her across the pavement into the road, the first run).
 			const FVector Her = Visual->GetActorLocation();
@@ -7966,6 +7978,11 @@ namespace
 			GWalk.PrevPos = 0.0f;
 			GWalk.Mont = A->GetCurrentActiveMontage();
 			GWalk.Seq = Start;
+			// THE IDLE'S FEET HELD as the start blends in, each let go once the start has it clear of
+			// the ground: the right lifts at frame 5 and is 8 cm up by 8, the left at 16 and up by 19
+			// (walk_slip.txt; let go at the lift itself, the right slid 13 cm, the fifth run).
+			HoldFoot(A, 0, 19.0f / 30.0f);
+			HoldFoot(A, 1, 8.0f / 30.0f);
 			GWalk.NextShot = Now + 0.4;
 			GWalk.Step = 1;
 			UE_LOG(LogTemp, Display, TEXT("ledgerWalkProof: Sheila walks along the pavement, %.0f cm clear, rate %.2f"), Best, GWalk.Rate);
@@ -7989,6 +8006,15 @@ namespace
 			Visual->AddActorWorldRotation(FRotator(0.0f, W.GetRotation().Rotator().Yaw, 0.0f));
 		}
 		GWalk.PrevPos = FMath::Max(GWalk.PrevPos, Pos);
+		// A HELD FOOT LET GO as the playing clip lifts it, over 0.06 s.
+		for (int32 I = 0; I < 2; ++I)
+		{
+			if (GWalk.LetGoAt[I] >= 0.0f && Pos >= GWalk.LetGoAt[I])
+			{
+				A->FootHold[I] = FMath::Max(0.0f, A->FootHold[I] - FApp::GetDeltaTime() / 0.06f);
+				if (A->FootHold[I] <= 0.0f) { GWalk.LetGoAt[I] = -1.0f; }
+			}
+		}
 		{
 			FCollisionQueryParams Q(FName(TEXT("WalkProofFloor")), false);
 			Q.AddIgnoredActor(Visual);
@@ -8054,11 +8080,17 @@ namespace
 		else if (GWalk.Step == 2 && Next >= LoopOut)
 		{
 			// THE STOP, its first frame at the loop's 117; a short blend, their hands differ.
+			// the right foot is down at the loop's 117 and lifts at the stop's frame 3: held till then
+			HoldFoot(A, 1, -1.0f);
 			Cut(Stop, FMath::Max(0.0f, Pos - LoopOut), 0.1f, 0.3f);
+			GWalk.LetGoAt[1] = GWalk.PlayedFrom + 5.0f / 30.0f;   // its shuffle's top, 5 cm, at frame 5
 			GWalk.Step = 3;
 		}
 		else if (GWalk.Step == 3 && Pos >= Stop->GetPlayLength() - 0.01f)
 		{
+			// STANDING AGAIN: both feet held where the stop left them while the idle blends back in.
+			HoldFoot(A, 0, -1.0f);
+			HoldFoot(A, 1, -1.0f);
 			GWalk.Step = 4;
 			GWalk.At = Now;
 		}

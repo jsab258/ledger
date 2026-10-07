@@ -177,6 +177,14 @@ public:
 	static const FName MoveSlot;
 	bool PlayMove(UAnimSequenceBase* Clip, float BlendIn = 0.15f, float BlendOut = 0.2f, float Rate = 1.0f);
 	bool IsMoving() const;
+	// A FOOT HELD WHERE IT STANDS, 8 October (the walk proof, item 1.2): where two clips meet, or a
+	// clip and the idle, their stances differ (the idle's feet level, the walk's start staggered 27 cm;
+	// the loop's feet 13 cm from the stop's at best), and a blend slides the planted foot across the
+	// pavement. The engine's two-bone IK on each leg, after the move slot, holds the foot at a point in
+	// the world while its alpha is up; the caller lifts the hold as the clip lifts the foot, so the
+	// swing takes up the difference. 0 left, 1 right; the knee keeps the clip's own bend.
+	FVector FootHoldAt[2] = { FVector::ZeroVector, FVector::ZeroVector };
+	float FootHold[2] = { 0.0f, 0.0f };
 	static constexpr int32 MouthCurveCount = 11;
 	static constexpr const TCHAR* MouthCurves[MouthCurveCount] = {
 		TEXT("CTRL_expressions_jawOpen"),
