@@ -14,8 +14,8 @@
   "fore_hem": 14.348,
   "fore_side": 21.65,
   "scye_low": 4.773,
-  "fish_a": 11.901,
-  "fish_b": 11.737,
+  "fish_a": 11.938,
+  "fish_b": 11.755,
   "scye_high": 12.807,
   "front_shoulder": 7.823,
   "forearm_t": 19.806,
@@ -59,9 +59,9 @@
   },
   {
    "seam": "fish",
-   "a_in": 11.901,
-   "b_in": 11.737,
-   "b_minus_a": -0.164,
+   "a_in": 11.938,
+   "b_in": 11.755,
+   "b_minus_a": -0.182,
    "allowed": [
     -0.25,
     0.25

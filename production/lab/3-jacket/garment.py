@@ -103,27 +103,32 @@ def top_band(V2, V3, edge_flat, edge3d, band_in):
     return V3 * (1 - w)[:, None] + E * w[:, None], w
 
 
-def place_sleeve(V2, side, top, l_x, hand_dir, gap, under=False):
-    """Sleeve draft (x along the arm, A at 0, hand toward -x; y across, up = -y) round the arm."""
+def place_sleeve(V2, side, fore_edge, hind_edge, l_x, gap, under=False):
+    """Sleeve draft (x along the arm, A at 0, hand toward -x; up = -y) round the A-pose arm.
+    Each vertex's place across the sleeve is its fraction between the piece's hind-arm edge and its
+    forearm edge at the same x, so the two pieces' shared seams land on the same lines; the head
+    starts at the armhole, a little inside and above the shoulder joint."""
     sj, el = SHOULDER_JOINT[side], ELBOW[side]
     ax = (el - sj) / np.linalg.norm(el - sj)
-    start = sj + np.array([0, 0, 0.05])                       # just above the joint, the cap's top
+    inward = np.array([1.0 if side == "R" else -1.0, 0, 0])
+    start = sj + np.array([0, 0, 0.045]) + inward * 0.03
     fwd = np.array([0, -1.0, 0])
     e1 = fwd - ax * (fwd @ ax); e1 /= np.linalg.norm(e1)        # toward the front of the arm
-    e2 = np.cross(ax, e1)                                       # outward (right side) or inward
-    if side == "L":
-        e2 = -e2
-    out_dir = np.array([1.0 if side == "L" else -1.0, 0, 0])
+    e2 = np.cross(ax, e1)
+    out_dir = -inward
     if e2 @ out_dir < 0:
-        e2 = -e2                                                # e2 points away from the body
-    along = (l_x - V2[:, 0]) * IN                               # from the cap's top down the arm
-    h = top                                                     # width of the piece across (in)
-    t = np.clip(-V2[:, 1] / h, 0, 1)                            # 0 at the hind seam, 1 at the forearm
-    # top sleeve: from the back of the arm (hind) over the outside to the front (forearm)
+        e2 = -e2                                                # away from the body
+    def edge_y(E, x):
+        E = np.asarray(E)
+        o = np.argsort(E[:, 0])
+        return np.interp(x, E[o, 0], E[o, 1])
+    yf = edge_y(fore_edge, V2[:, 0])
+    yh = edge_y(hind_edge, V2[:, 0])
+    t = np.clip((V2[:, 1] - yh) / np.where(np.abs(yf - yh) < 1e-6, 1e-6, yf - yh), 0, 1)
+    along = (l_x - V2[:, 0]) * IN
     ang = (-math.pi / 2 + t * math.pi) if not under else (math.pi / 2 + (1 - t) * math.pi)
-    r = 0.065 + gap
-    P = start[None, :] + along[:, None] * ax[None, :] + r * (np.cos(ang)[:, None] * e2[None, :] + np.sin(ang)[:, None] * e1[None, :])
-    return P
+    r = 0.068 + gap
+    return start[None, :] + along[:, None] * ax[None, :] + r * (np.cos(ang)[:, None] * e2[None, :] + np.sin(ang)[:, None] * e1[None, :])
 
 
 def pairs_by_length(A3, ia, B3, ib):
@@ -240,8 +245,11 @@ def build(tag="ron", ver="v1"):
                 low = w_band < 0.5
                 V3[low] = shell.hulls().push_out(V3[low], 0.015)
             elif pname in ("top_sleeve", "under_sleeve"):
-                width = float(np.max(-V2[:, 1]))
-                V3 = place_sleeve(V2, side, width, l_x_top, None, 0.02, under=(pname == "under_sleeve"))
+                fe = "forearm_t" if pname == "top_sleeve" else "forearm_u"
+                he = "hind_t" if pname == "top_sleeve" else "hind_u"
+                a_, b_ = pc["stretches"][fe]; fore_edge = np.array(pc["outline_in"])[a_:b_ + 1]
+                a_, b_ = pc["stretches"][he]; hind_edge = np.array(pc["outline_in"])[a_:b_ + 1]
+                V3 = place_sleeve(V2, side, fore_edge, hind_edge, l_x_top, 0.02, under=(pname == "under_sleeve"))
                 bw[:] = 0.2
             else:   # collar: round the neck, the fall turned down over the stand on the crease row
                 cr = np.array(pat["collar_crease"])
@@ -303,8 +311,19 @@ def build(tag="ron", ver="v1"):
         n_i = int(np.argmin(np.linalg.norm(V2all[back_scye] - P["N"], axis=1)))
         nn_i = int(np.argmin(np.linalg.norm(V2all[back_scye] - (P["N"] + np.array([0, 0.5])), axis=1)))
         upper = scye_hi[rr:] + back_scye[:n_i + 1]            # RR -> shoulder end, LL -> N
-        seams += pairs_by_length(V, S(ts, "head"), V, upper)
         lower = scye_hi[:rr + 1][::-1] + S(f, "scye_low")[::-1] + back_scye[nn_i:][::-1]   # RR -> bottom -> NN
+        # lay the band under each sleeve head along the armhole it joins (as at the shoulders)
+        for sp_, hd_, arm_ in ((ts, "head", upper), (us, "under_top", lower)):
+            o_, n_ = pieces[sp_]["offset"], pieces[sp_]["n"]
+            hid = S(sp_, hd_)
+            A3 = V[arm_]
+            cs_ = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(A3, axis=0), axis=1))])
+            cs_ /= max(cs_[-1], 1e-9)
+            def e3d(t, A3=A3, cs_=cs_):
+                return np.stack([np.interp(t, cs_, A3[:, k]) for k in range(3)], 1) + np.array([0, 0, 0.0])
+            Vs, _w = top_band(V2all[o_:o_ + n_], V[o_:o_ + n_], V2all[hid], e3d, 4.0)
+            V[o_:o_ + n_] = Vs
+        seams += pairs_by_length(V, S(ts, "head"), V, upper)
         seams += pairs_by_length(V, S(us, "under_top"), V, lower)
         # collar: neck edge E -> notch along back neck (D->GG), forepart neck (C->NN) and gorge to the notch
         gorge = S(f, "gorge")

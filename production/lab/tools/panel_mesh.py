@@ -78,6 +78,19 @@ def mesh_panel(outline, spacing=1.5, corners=None):
     keep = path.contains_points(cen)
     F = tri[keep]
     # orient all triangles the same way (counter-clockwise in x, y)
+    # every outline vertex must belong to a triangle, or the cloth holds it by seams alone and it
+    # flies off (lab test 3, run v2): a lone one is tied to its two outline neighbours
+    used = np.zeros(len(V), bool)
+    used[F.ravel()] = True
+    extra = []
+    nr = len(ring)
+    for i in range(nr):
+        if not used[i]:
+            extra.append((i - 1) % nr)
+            extra.append(i)
+            extra.append((i + 1) % nr)
+    if extra:
+        F = np.vstack([F, np.array(extra).reshape(-1, 3)])
     a, b, c = V[F[:, 0]], V[F[:, 1]], V[F[:, 2]]
     cross = (b[:, 0] - a[:, 0]) * (c[:, 1] - a[:, 1]) - (b[:, 1] - a[:, 1]) * (c[:, 0] - a[:, 0])
     F[cross < 0] = F[cross < 0][:, [0, 2, 1]]
