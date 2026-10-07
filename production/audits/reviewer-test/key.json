@@ -1,0 +1,627 @@
+[
+ {
+  "frame": "frame-01.jpg",
+  "base": "B08",
+  "source": "rita-night-kit-2026-10-06.jpg",
+  "crop": [
+   490,
+   0,
+   1600,
+   900
+  ],
+  "view": "Rita's frontage (the pawnbroker) at night, from the road",
+  "fault": "f_b08_fireflies",
+  "kind": "fireflies",
+  "box": [
+   20,
+   10,
+   1100,
+   880
+  ],
+  "what": "fireflies: about fifty bright white specks over the dark fascia and the kiosk's side",
+  "area_pct": 94.05,
+  "size": [
+   1110,
+   900
+  ],
+  "changed_pct": 0.05
+ },
+ {
+  "frame": "frame-02.jpg",
+  "base": "B07",
+  "source": "rita-day-kit-2026-10-06.jpg",
+  "crop": [
+   490,
+   0,
+   1600,
+   900
+  ],
+  "view": "Rita's frontage (the pawnbroker) by day, from the road",
+  "fault": "f_b07_mirror",
+  "kind": "mirrored text",
+  "box": [
+   652,
+   226,
+   764,
+   302
+  ],
+  "what": "mirrored text: the kiosk's 'Telephone' sign reads backwards",
+  "area_pct": 0.85,
+  "size": [
+   1110,
+   900
+  ],
+  "changed_pct": 0.37
+ },
+ {
+  "frame": "frame-03.jpg",
+  "base": "B03",
+  "source": "morning-hook-day-2026-10-07.jpg",
+  "crop": [
+   0,
+   0,
+   1600,
+   512
+  ],
+  "view": "the hook camera by day, the upper part of the frame",
+  "fault": "f_b03_stretched",
+  "kind": "stretched texture",
+  "box": [
+   1330,
+   120,
+   1530,
+   290
+  ],
+  "what": "stretched texture: the brick on the corner house's side smeared into horizontal streaks",
+  "area_pct": 4.15,
+  "size": [
+   1600,
+   512
+  ],
+  "changed_pct": 1.11
+ },
+ {
+  "frame": "frame-04.jpg",
+  "base": "B07",
+  "source": "rita-day-kit-2026-10-06.jpg",
+  "crop": [
+   490,
+   0,
+   1600,
+   900
+  ],
+  "view": "Rita's frontage (the pawnbroker) by day, from the road",
+  "fault": null,
+  "kind": "clean",
+  "box": null,
+  "what": "clean",
+  "area_pct": 0,
+  "size": [
+   1110,
+   900
+  ],
+  "changed_pct": 0.0
+ },
+ {
+  "frame": "frame-05.jpg",
+  "base": "B03",
+  "source": "morning-hook-day-2026-10-07.jpg",
+  "crop": [
+   0,
+   0,
+   1600,
+   512
+  ],
+  "view": "the hook camera by day, the upper part of the frame",
+  "fault": "f_b03_blacksquare",
+  "kind": "black square",
+  "box": [
+   448,
+   392,
+   506,
+   446
+  ],
+  "what": "black square: a flat black block over the houses at the street's far end",
+  "area_pct": 0.38,
+  "size": [
+   1600,
+   512
+  ],
+  "changed_pct": 0.39
+ },
+ {
+  "frame": "frame-06.jpg",
+  "base": "B06",
+  "source": "proof-2.6-shop-signs-and-bills-2026-10-04.jpg",
+  "crop": [
+   0,
+   0,
+   885,
+   900
+  ],
+  "view": "the shop row square on from the road, its left part (launderette, the empty unit to let)",
+  "fault": "f_b06_pane",
+  "kind": "missing window pane",
+  "box": [
+   428,
+   204,
+   455,
+   254
+  ],
+  "what": "missing window pane: the lower right pane of the middle first-floor window is a black hole",
+  "area_pct": 0.17,
+  "size": [
+   885,
+   900
+  ],
+  "changed_pct": 0.18
+ },
+ {
+  "frame": "frame-07.jpg",
+  "base": "B05",
+  "source": "morning-night-2026-10-07.jpg",
+  "crop": [
+   0,
+   0,
+   1600,
+   512
+  ],
+  "view": "the street at night, the upper part of the frame",
+  "fault": "f_b05_debug",
+  "kind": "debug text",
+  "box": [
+   8,
+   6,
+   470,
+   46
+  ],
+  "what": "debug text: the engine's red LIGHTING NEEDS TO BE REBUILT message top left",
+  "area_pct": 2.26,
+  "size": [
+   1600,
+   512
+  ],
+  "changed_pct": 0.4
+ },
+ {
+  "frame": "frame-08.jpg",
+  "base": "B05",
+  "source": "morning-night-2026-10-07.jpg",
+  "crop": [
+   0,
+   0,
+   1600,
+   512
+  ],
+  "view": "the street at night, the upper part of the frame",
+  "fault": null,
+  "kind": "clean",
+  "box": null,
+  "what": "clean",
+  "area_pct": 0,
+  "size": [
+   1600,
+   512
+  ],
+  "changed_pct": 0.0
+ },
+ {
+  "frame": "frame-09.jpg",
+  "base": "B09",
+  "source": "proof-2.6-mickeys-try3-2026-10-04.jpg",
+  "crop": [
+   1092,
+   0,
+   1600,
+   900
+  ],
+  "view": "Mickey's frontage from the hook camera, its right-hand part (the door and the corner)",
+  "fault": "f_b09_hole",
+  "kind": "hole in a wall",
+  "box": [
+   382,
+   556,
+   454,
+   623
+  ],
+  "what": "hole in a wall: a ragged hole through the corner wall with sky behind it",
+  "area_pct": 1.06,
+  "size": [
+   508,
+   900
+  ],
+  "changed_pct": 0.64
+ },
+ {
+  "frame": "frame-10.jpg",
+  "base": "B04",
+  "source": "morning-reverse-day-2026-10-07.jpg",
+  "crop": [
+   1025,
+   0,
+   1600,
+   900
+  ],
+  "view": "the reverse view by day, its right-hand part (the Ironmonger)",
+  "fault": "f_b04_floating",
+  "kind": "floating object",
+  "box": [
+   250,
+   545,
+   340,
+   790
+  ],
+  "what": "floating object: the litter bin and its post sit 55 px too high, the post's foot hanging above the pavement",
+  "area_pct": 4.26,
+  "size": [
+   575,
+   900
+  ],
+  "changed_pct": 0.83
+ },
+ {
+  "frame": "frame-11.jpg",
+  "base": "B03",
+  "source": "morning-hook-day-2026-10-07.jpg",
+  "crop": [
+   0,
+   0,
+   1600,
+   512
+  ],
+  "view": "the hook camera by day, the upper part of the frame",
+  "fault": null,
+  "kind": "clean",
+  "box": null,
+  "what": "clean",
+  "area_pct": 0,
+  "size": [
+   1600,
+   512
+  ],
+  "changed_pct": 0.0
+ },
+ {
+  "frame": "frame-12.jpg",
+  "base": "B06",
+  "source": "proof-2.6-shop-signs-and-bills-2026-10-04.jpg",
+  "crop": [
+   0,
+   0,
+   885,
+   900
+  ],
+  "view": "the shop row square on from the road, its left part (launderette, the empty unit to let)",
+  "fault": "f_b06_duplicate",
+  "kind": "duplicated object",
+  "box": [
+   152,
+   500,
+   278,
+   664
+  ],
+  "what": "duplicated object: a second pillar box stands into the first, half overlapping it",
+  "area_pct": 2.59,
+  "size": [
+   885,
+   900
+  ],
+  "changed_pct": 0.93
+ },
+ {
+  "frame": "frame-13.jpg",
+  "base": "B10",
+  "source": "proof-2.6-shop-signs-and-bills-2026-10-04.jpg",
+  "crop": [
+   975,
+   0,
+   1600,
+   900
+  ],
+  "view": "the shop row square on from the road, its right part (pawnbroker, kiosk, fishmonger)",
+  "fault": "f_b10_grey",
+  "kind": "untextured placeholder",
+  "box": [
+   420,
+   143,
+   482,
+   258
+  ],
+  "what": "untextured placeholder: the fish shop's upper window is a flat grey panel",
+  "area_pct": 1.27,
+  "size": [
+   625,
+   900
+  ],
+  "changed_pct": 0.5
+ },
+ {
+  "frame": "frame-14.jpg",
+  "base": "B02",
+  "source": "mickeys-room-furniture-night-2026-10-06.jpg",
+  "crop": null,
+  "view": "Mickey's office through its window, at night",
+  "fault": "f_b02_whitestrip",
+  "kind": "white strip in a pane",
+  "box": [
+   588,
+   92,
+   918,
+   138
+  ],
+  "what": "a ragged white strip across the top pane over the blind (the night picture had none)",
+  "area_pct": 1.05,
+  "size": [
+   1600,
+   900
+  ],
+  "changed_pct": 0.63
+ },
+ {
+  "frame": "frame-15.jpg",
+  "base": "B04",
+  "source": "morning-reverse-day-2026-10-07.jpg",
+  "crop": [
+   1025,
+   0,
+   1600,
+   900
+  ],
+  "view": "the reverse view by day, its right-hand part (the Ironmonger)",
+  "fault": "f_b04_seam",
+  "kind": "seam stripe",
+  "box": [
+   314,
+   124,
+   356,
+   296
+  ],
+  "what": "a dark seam stripe down the roof's slates from ridge to eaves",
+  "area_pct": 1.4,
+  "size": [
+   575,
+   900
+  ],
+  "changed_pct": 0.08
+ },
+ {
+  "frame": "frame-16.jpg",
+  "base": "B08",
+  "source": "rita-night-kit-2026-10-06.jpg",
+  "crop": [
+   490,
+   0,
+   1600,
+   900
+  ],
+  "view": "Rita's frontage (the pawnbroker) at night, from the road",
+  "fault": "f_b08_prompt",
+  "kind": "stray interface prompt",
+  "box": [
+   288,
+   692,
+   463,
+   730
+  ],
+  "what": "a floating 'Talk to Rita' prompt over the pavement with nobody there",
+  "area_pct": 0.67,
+  "size": [
+   1110,
+   900
+  ],
+  "changed_pct": 0.08
+ },
+ {
+  "frame": "frame-17.jpg",
+  "base": "B10",
+  "source": "proof-2.6-shop-signs-and-bills-2026-10-04.jpg",
+  "crop": [
+   975,
+   0,
+   1600,
+   900
+  ],
+  "view": "the shop row square on from the road, its right part (pawnbroker, kiosk, fishmonger)",
+  "fault": "f_b10_lowres",
+  "kind": "low-resolution texture",
+  "box": [
+   338,
+   108,
+   625,
+   326
+  ],
+  "what": "low-resolution texture: the fish shop's upper brick is blocky and blurred either side of its window",
+  "area_pct": 11.12,
+  "size": [
+   625,
+   900
+  ],
+  "changed_pct": 0.12
+ },
+ {
+  "frame": "frame-18.jpg",
+  "base": "B07",
+  "source": "rita-day-kit-2026-10-06.jpg",
+  "crop": [
+   490,
+   0,
+   1600,
+   900
+  ],
+  "view": "Rita's frontage (the pawnbroker) by day, from the road",
+  "fault": "f_b07_scale",
+  "kind": "wrong scale",
+  "box": [
+   200,
+   450,
+   284,
+   576
+  ],
+  "what": "wrong scale: one vase in the window three times the size of the goods around it",
+  "area_pct": 1.06,
+  "size": [
+   1110,
+   900
+  ],
+  "changed_pct": 0.54
+ },
+ {
+  "frame": "frame-19.jpg",
+  "base": "B09",
+  "source": "proof-2.6-mickeys-try3-2026-10-04.jpg",
+  "crop": [
+   1092,
+   0,
+   1600,
+   900
+  ],
+  "view": "Mickey's frontage from the hook camera, its right-hand part (the door and the corner)",
+  "fault": "f_b09_tiling",
+  "kind": "texture tiling",
+  "box": [
+   306,
+   330,
+   500,
+   750
+  ],
+  "what": "texture tiling: the corner wall's lower part is one small stained tile repeated in a grid, seams showing",
+  "area_pct": 17.82,
+  "size": [
+   508,
+   900
+  ],
+  "changed_pct": 3.95
+ },
+ {
+  "frame": "frame-20.jpg",
+  "base": "B10",
+  "source": "proof-2.6-shop-signs-and-bills-2026-10-04.jpg",
+  "crop": [
+   975,
+   0,
+   1600,
+   900
+  ],
+  "view": "the shop row square on from the road, its right part (pawnbroker, kiosk, fishmonger)",
+  "fault": null,
+  "kind": "clean",
+  "box": null,
+  "what": "clean",
+  "area_pct": 0,
+  "size": [
+   625,
+   900
+  ],
+  "changed_pct": 0.0
+ },
+ {
+  "frame": "frame-21.jpg",
+  "base": "B01",
+  "source": "mickeys-room-furniture-day-2026-10-06.jpg",
+  "crop": null,
+  "view": "Mickey's office through its window, by day",
+  "fault": "f_b01_testcolour",
+  "kind": "test-colour block",
+  "box": [
+   1157,
+   505,
+   1249,
+   581
+  ],
+  "what": "test-colour block: the notice board on the right wall is flat magenta (a missing material)",
+  "area_pct": 0.49,
+  "size": [
+   1600,
+   900
+  ],
+  "changed_pct": 0.5
+ },
+ {
+  "frame": "frame-22.jpg",
+  "base": "B02",
+  "source": "mickeys-room-furniture-night-2026-10-06.jpg",
+  "crop": null,
+  "view": "Mickey's office through its window, at night",
+  "fault": "f_b02_zfight",
+  "kind": "z-fighting",
+  "box": [
+   812,
+   660,
+   962,
+   795
+  ],
+  "what": "z-fighting: jagged pale stripes flicker through one panel of the counter's front",
+  "area_pct": 1.41,
+  "size": [
+   1600,
+   900
+  ],
+  "changed_pct": 0.47
+ },
+ {
+  "frame": "frame-23.jpg",
+  "base": "B01",
+  "source": "mickeys-room-furniture-day-2026-10-06.jpg",
+  "crop": null,
+  "view": "Mickey's office through its window, by day",
+  "fault": null,
+  "kind": "clean",
+  "box": null,
+  "what": "clean",
+  "area_pct": 0,
+  "size": [
+   1600,
+   900
+  ],
+  "changed_pct": 0.0
+ },
+ {
+  "frame": "frame-24.jpg",
+  "base": "B05",
+  "source": "morning-night-2026-10-07.jpg",
+  "crop": [
+   0,
+   0,
+   1600,
+   512
+  ],
+  "view": "the street at night, the upper part of the frame",
+  "fault": "f_b05_light",
+  "kind": "light where none belongs",
+  "box": [
+   1360,
+   95,
+   1520,
+   255
+  ],
+  "what": "light where none belongs: a warm glow on the blank upper wall of the corner house, no lamp",
+  "area_pct": 3.12,
+  "size": [
+   1600,
+   512
+  ],
+  "changed_pct": 0.78
+ },
+ {
+  "frame": "frame-25.jpg",
+  "base": "B01",
+  "source": "mickeys-room-furniture-day-2026-10-06.jpg",
+  "crop": null,
+  "view": "Mickey's office through its window, by day",
+  "fault": "f_b01_floating",
+  "kind": "floating object",
+  "box": [
+   690,
+   400,
+   852,
+   488
+  ],
+  "what": "floating object: a copy of the yellow box files hangs in mid-air in front of the blind, nothing under it",
+  "area_pct": 0.99,
+  "size": [
+   1600,
+   900
+  ],
+  "changed_pct": 0.55
+ }
+]
