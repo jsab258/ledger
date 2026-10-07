@@ -86,7 +86,17 @@ def main():
         body.collision.thickness_outer = S["body_thickness_outer"]
         body.collision.cloth_friction = S["body_friction"]
 
-    gar = mesh_object("garment", g["V"], g["F"], edges=g["seams"])
+    if "V_rest" in g:
+        # the rest shape is the flat pattern (lengths and pressed folds as cut); the run starts from
+        # the pieces as placed round the body, held in a shape key
+        gar = mesh_object("garment", g["V_rest"], g["F"], edges=g["seams"])
+        gar.shape_key_add(name="Basis")
+        k = gar.shape_key_add(name="start")
+        for i, v in enumerate(k.data):
+            v.co = g["V"][i]
+        k.value = 1.0
+    else:
+        gar = mesh_object("garment", g["V"], g["F"], edges=g["seams"])
     if "pin" in g:
         vgroup(gar, "pin", g["pin"])
     if "bend" in g:
@@ -96,7 +106,7 @@ def main():
     cs.quality = S["quality"]
     cs.mass = S["mass_kg_m2"] * 0.0  # set below from area
     area = 0.0
-    V, F = g["V"], g["F"]
+    V, F = (g["V_rest"] if "V_rest" in g else g["V"]), g["F"]
     area = 0.5 * np.linalg.norm(np.cross(V[F[:, 1]] - V[F[:, 0]], V[F[:, 2]] - V[F[:, 0]]), axis=1).sum()
     cs.mass = max(1e-4, S["mass_kg_m2"] * area / len(V))   # Blender's mass is per vertex
     cs.tension_stiffness = S["tension"]
@@ -111,6 +121,8 @@ def main():
         cs.bending_stiffness_max = S["bending_max"]
     if "pin" in g:
         cs.vertex_group_mass = "pin"
+    if "V_rest" in g:
+        cs.rest_shape_key = gar.data.shape_keys.key_blocks["Basis"]
     cc = cl.collision_settings
     cc.distance_min = S["collision_distance"]
     cc.use_self_collision = S["self_collision"]

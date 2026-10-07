@@ -154,14 +154,17 @@ def build(tag="ron", ver="v1"):
     sect = body_sections()
     x_cb, x_cf = 0.0, P["J"][0]                 # centre back line to the front (buttoning) line
     z_top = NAPE_Z + 0.5 * IN                   # line A is 1/2 in above D, the nape
-    allV, allF, allV2, pieces = [], [], [], {}
+    allV, allF, allV2, allR, pieces = [], [], [], [], {}
     bend, pin = [], []
     l_x_top = float(np.max(np.array(pat["pieces"]["top_sleeve"]["outline_in"])[:, 0]))
 
-    def add(name, V3, F, ring, stretches, bendw, V2):
+    def add(name, V3, F, ring, stretches, bendw, V2, R=None):
         off = sum(len(v) for v in allV)
         allV.append(V3)
         allV2.append(V2)
+        if R is None:
+            R = np.c_[V2[:, 0] * IN, np.zeros(len(V2)), -V2[:, 1] * IN]
+        allR.append(R)
         allF.append(F + off)
         bend.append(bendw)
         pieces[name] = {"offset": off, "n": len(V3), "ring": (ring + off).tolist(), "stretches": stretches}
@@ -186,6 +189,7 @@ def build(tag="ron", ver="v1"):
             if st[last][1] <= st[last][0]:
                 st[last] = (st[last][0], len(ring) + st[last][1])
             bw = np.full(len(V2), 0.15)
+            rest_piece, collar_rest = None, None
             if pname in ("back", "forepart"):
                 gap = np.full(len(V2), 0.022)
                 if pname == "forepart":
@@ -209,6 +213,7 @@ def build(tag="ron", ver="v1"):
                         over = V2[:, 0] > P["J"][0]
                         gap[over] += 0.005
                     V3 = place_torso(V2f, side, x_cb, x_cf, z_top, sect, gap + h * IN)
+                    rest_piece = np.c_[V2f[:, 0] * IN, h * IN, -V2f[:, 1] * IN]
                 else:
                     V3 = place_torso(V2, side, x_cb, x_cf, z_top, sect, gap)
                 # the band under the top edge laid over the shoulder ridge and round the neck
@@ -280,11 +285,18 @@ def build(tag="ron", ver="v1"):
                 V3[:, 1] = neck_y + rr * np.sin(ang) * 1.1
                 V3[:, 2] = zz
                 bw[:] = 1.0
+            R = rest_piece if (pname == "forepart") else None
+            if pname == "collar":
+                R = collar_rest
             if side == "L":
                 F = F[:, [0, 2, 1]]                            # keep normals outward after mirroring
-            add("%s_%s" % (pname, side), V3, F, ring, st, bw, V2)
+                if R is None:
+                    R = np.c_[V2[:, 0] * IN, np.zeros(len(V2)), -V2[:, 1] * IN]
+                R = R * np.array([-1.0, 1.0, 1.0])             # the rest layout mirrored with the piece
+            add("%s_%s" % (pname, side), V3, F, ring, st, bw, V2, R)
     V = np.vstack(allV)
     V2all = np.vstack(allV2)
+    Rall = np.vstack(allR)
     Fa = np.vstack(allF)
     bend = np.concatenate(bend)
 
@@ -346,7 +358,23 @@ def build(tag="ron", ver="v1"):
     seams = np.array(sorted({(min(a, b), max(a, b)) for a, b in seams if a != b}), dtype=np.int64)
     pin = np.zeros(len(V))
     path = os.path.join(OUT, "garment_%s.npz" % ver)
-    np.savez_compressed(path, V=V, F=Fa, seams=seams, pin=pin, bend=bend)
+    # the fold's side: a turned region must lie, in the rest layout, on the same side of its piece's
+    # surface as it does when placed on the body; flip the rest height if not
+    def side_sign(P, fid, lid):
+        tri = Fa[np.isin(Fa, fid).all(1)][:20]
+        n = np.cross(P[tri[:, 1]] - P[tri[:, 0]], P[tri[:, 2]] - P[tri[:, 0]]).mean(0)
+        return np.sign((P[lid].mean(0) - P[fid].mean(0)) @ n)
+    for s_ in ("R", "L"):
+        o = pieces["forepart_" + s_]["offset"]
+        lid = lapel_sets[s_][0] + o
+        fid = lapel_sets[s_][1] + o
+        # front vertices near the lapel: the 60 nearest in the flat
+        dflat = np.linalg.norm(V2all[fid][:, None, :] - V2all[lid][None, :, :], axis=2).min(1)
+        near = fid[np.argsort(dflat)[:60]]
+        a_, b_ = side_sign(V, near, lid), side_sign(Rall, near, lid)
+        if a_ != b_:
+            Rall[lid, 1] *= -1
+    np.savez_compressed(path, V=V, F=Fa, seams=seams, pin=pin, bend=bend, V_rest=Rall)
     lap = {}
     for s_ in ("R", "L"):
         o = pieces["forepart_" + s_]["offset"]
