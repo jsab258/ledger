@@ -1,0 +1,48 @@
+{
+ "version": "v10",
+ "lapel": {
+  "R": {
+   "turned_vertices": 61,
+   "held_fraction": 0.41,
+   "lies_outside_mean_cm": 0.1,
+   "gap_start_cm": 1.46,
+   "gap_end_cm": 1.59
+  },
+  "L": {
+   "turned_vertices": 61,
+   "held_fraction": 0.41,
+   "lies_outside_mean_cm": -0.2,
+   "gap_start_cm": 1.46,
+   "gap_end_cm": 1.6
+  }
+ },
+ "outline": {
+  "L_m": 0.7311,
+  "shoulder_width_m": 0.5463,
+  "hem_front_minus_back_cm": -1.5,
+  "ratios": {
+   "shoulder_over_L": 0.747,
+   "notch_over_L": 0.066,
+   "button_over_L": 0.275
+  },
+  "bands": {
+   "shoulder_over_L": [
+    0.56,
+    0.71
+   ],
+   "notch_over_L": [
+    0.08,
+    0.18
+   ],
+   "button_over_L": [
+    0.25,
+    0.35
+   ]
+  },
+  "in_band": {
+   "shoulder_over_L": false,
+   "notch_over_L": false,
+   "button_over_L": true
+  }
+ }
+}

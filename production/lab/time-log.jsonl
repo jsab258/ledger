@@ -3,3 +3,4 @@
 {"event": "start", "at": "2026-10-07T21:12:49", "task": "lab test 2: sash window", "phase": "lab", "kind": "production"}
 {"event": "start", "at": "2026-10-07T21:43:07", "task": "lab test 3: jacket", "phase": "lab", "kind": "production"}
 {"event": "start", "at": "2026-10-07T22:29:30", "task": "lab test 2: sash window (target and build)", "phase": "lab", "kind": "production"}
+{"event": "start", "at": "2026-10-07T23:04:32", "task": "lab test 3: jacket (drapes)", "phase": "lab", "kind": "production"}

@@ -76,4 +76,6 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 - **Play, testing and players**: baseline-features, feature-coverage, brief-coverage, coverage-audit, coverage-audit-disco-elysium, coverage-audit-hitman, coverage-audit-kcd2, coverage-audit-rdr2, coverage-audit-shadows-of-doubt, teaching-in-thirty-minutes, meridian-test-administration, packaged-game-testing, shipping-build, engine-notices, ai-tester, ui-design, ethics-and-reception.
 - **How the work is done**: pre-production, frontier-ai-uses, agentic-studio-attempts, small-team-shipping, systemic-game-postmortems, content-mass-and-judgement, self-audit, checklist-sweep-2026-09-28, checklist-sweep-2026-09-29, claude-code-goal, blender-mcp, graphify-evaluation, egress-allowlist, terms-2026-10-03, catalogue-and-homes, git-history-clean-2026-10-04.md, README.md.
 
+- **Lab**: production/lab, exact-target trials (LAB-REPORT.md).
+
 Older research outside these folders: ledger-v2/research (the licence allowlist, feasibility, the waste lessons) and legacy/studio-v2.
