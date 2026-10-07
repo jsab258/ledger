@@ -1069,8 +1069,10 @@ namespace
 	double GGlassCatchNotBefore = 0.0;
 	FTSTicker::FDelegateHandle GGlassCatchTicker;
 	// Twelve passes for each window, on consecutive frames (7 October; two round before): the first
-	// can find a texture still streaming in, and Lumen in a fresh capture gathers its light over them.
+	// can find a texture still streaming in, and Lumen in a fresh capture gathers its light over them;
+	// twenty-four with -GlassCatchAA, whose anti-aliasing needs its jitter's cycle, eleven frames, twice.
 	const int32 kGlassCatchPasses = 12;
+	int32 GlassCatchPasses() { static const bool bAA = FParse::Param(FCommandLine::Get(), TEXT("GlassCatchAA")); return bAA ? 24 : kGlassCatchPasses; }
 	TMap<FString, UTexture2D*> GStreetTex;
 	int32 GStreetTextured = 0, GStreetTexAsked = 0, GStreetDrawn = 0;
 	std::string GStreetLookFor;
@@ -6858,6 +6860,57 @@ namespace
 			Cap->PostProcessSettings.ReflectionMethod = EReflectionMethod::Lumen;
 			Cap->bAlwaysPersistRenderingState = true;
 		}
+		// THE CAUGHT STREET ANTI-ALIASED (7 October, evening; production/research/shop-glass-reflections/
+		// CLOSE-RANGE-ROUTES-2026-10-07.md): at 512 a face the house across the road came back with a
+		// stair-stepped roofline and rings in its brick (a 75 mm course at 12.5 m is 1.5 texels, past
+		// the cube's Nyquist limit), because a Scene Colour capture runs with post-processing off, so
+		// with no anti-aliasing at all. 1024 a face was clean but took the card past its 10 GB. So the
+		// capture is taken as Final Colour, where the engine's temporal anti-aliasing runs over its
+		// passes, with everything else post-processing would add neutral: a fixed exposure of 1 and
+		// no bloom, flares, grain, vignette or blur.
+		// SET ASIDE THE SAME EVENING, OFF UNLESS ASKED (-GlassCatchAA): three tries (20:05 to 20:50)
+		// made the roofline smooth and the rings go, but the caught street's lit surfaces came out at
+		// a third of the Scene Colour capture's (the sky the same, the house 0.35, the road 0.39, the
+		// office 0.11), which would empty the glass again; the cause is not found (the tone curve,
+		// local exposure and the screen-space passes ruled out). CLOSE-RANGE-ROUTES-2026-10-07.md.
+		static const bool bNoAA = !FParse::Param(FCommandLine::Get(), TEXT("GlassCatchAA"));
+		if (!bNoAA)
+		{
+			Cap->CaptureSource = ESceneCaptureSource::SCS_FinalColorHDR;
+			FPostProcessSettings& Pp = Cap->PostProcessSettings;
+			Pp.bOverride_AutoExposureMethod = true;
+			Pp.AutoExposureMethod = EAutoExposureMethod::AEM_Manual;
+			Pp.bOverride_AutoExposureBias = true;
+			Pp.AutoExposureBias = 0.0f;
+			Pp.bOverride_AutoExposureApplyPhysicalCameraExposure = true;
+			Pp.AutoExposureApplyPhysicalCameraExposure = false;
+			Pp.bOverride_BloomIntensity = true;
+			Pp.BloomIntensity = 0.0f;
+			Pp.bOverride_LensFlareIntensity = true;
+			Pp.LensFlareIntensity = 0.0f;
+			Pp.bOverride_FilmGrainIntensity = true;
+			Pp.FilmGrainIntensity = 0.0f;
+			Pp.bOverride_VignetteIntensity = true;
+			Pp.VignetteIntensity = 0.0f;
+			Pp.bOverride_MotionBlurAmount = true;
+			Pp.MotionBlurAmount = 0.0f;
+			// AND NO TONE CURVE OR LOCAL EXPOSURE: the main view draws the glass through its own,
+			// and local exposure, worked out face by face, left the caught street darker than
+			// Scene Colour and a seam where two faces meet (the first try, 7 October, 20:05).
+			Pp.bOverride_ToneCurveAmount = true;
+			Pp.ToneCurveAmount = 0.0f;
+			Pp.bOverride_LocalExposureHighlightContrastScale = true;
+			Pp.LocalExposureHighlightContrastScale = 1.0f;
+			Pp.bOverride_LocalExposureShadowContrastScale = true;
+			Pp.LocalExposureShadowContrastScale = 1.0f;
+			Pp.bOverride_LocalExposureDetailStrength = true;
+			Pp.LocalExposureDetailStrength = 1.0f;
+			Pp.bOverride_BlueCorrection = true;
+			Pp.BlueCorrection = 0.0f;
+			Pp.bOverride_ExpandGamut = true;
+			Pp.ExpandGamut = 0.0f;
+			Cap->bExcludeFromSceneTextureExtents = true;
+		}
 		Cap->HiddenActors.Add(A);
 		Cap->SetMobility(EComponentMobility::Movable);
 		Cap->SetWorldLocation(Gc.At);
@@ -6868,6 +6921,22 @@ namespace
 		// which undid this flag, and that afternoon's shadow and distance-field tests, when set before.
 		Cap->ShowFlags.SetSkeletalMeshes(false);
 		Cap->ShowFlags.SetHair(false);   // their hair is no skinned mesh: it stayed, a ball in the air
+		if (!bNoAA)
+		{
+			Cap->ShowFlags.SetAntiAliasing(true);
+			Cap->ShowFlags.SetTemporalAA(true);
+			Cap->ShowFlags.SetBloom(false);
+			Cap->ShowFlags.SetEyeAdaptation(false);
+			Cap->ShowFlags.SetLensFlares(false);
+			Cap->ShowFlags.SetGrain(false);
+			Cap->ShowFlags.SetMotionBlur(false);
+			Cap->ShowFlags.SetVignette(false);
+			// NOR THE SCREEN-SPACE PASSES THAT COME ON WITH POST-PROCESSING: each face is its own
+			// screen, so their edges met as a seam down the caught house (7 October, 20:30).
+			Cap->ShowFlags.SetAmbientOcclusion(false);
+			Cap->ShowFlags.SetScreenSpaceAO(false);
+			Cap->ShowFlags.SetScreenSpaceReflections(false);
+		}
 		A->AddInstanceComponent(Cap);
 		return Cap;
 	}
@@ -6903,7 +6972,7 @@ namespace
 		if (!Gc.Cap.IsValid())
 		{
 			Gc.Cap = MakeGlassCapture(Gc);
-			GGlassCatchPass = kGlassCatchPasses;
+			GGlassCatchPass = GlassCatchPasses();
 		}
 		if (Gc.Cap.IsValid() && GGlassCatchPass > 0)
 		{

@@ -1068,6 +1068,59 @@ namespace
 		return Out;
 	}
 
+	// HOW LONG A PAGE OF TWO LINES STAYS UP: its reading time, letters at fifteen a second, at
+	// least 1.6 s.
+	double SubPageReading(const TArray<FString>& All, int32 Page)
+	{
+		const int32 Letters = (All.IsValidIndex(Page * 2) ? All[Page * 2].Len() : 0) + (All.IsValidIndex(Page * 2 + 1) ? All[Page * 2 + 1].Len() : 0);
+		return FMath::Max(1.6, Letters / 15.0);
+	}
+
+	// WHICH PAGE A SPEECH SHOWS T SECONDS AFTER IT BEGAN, and when that page began.
+	int32 SubPageAt(const TArray<FString>& All, double T, double* PageBegan = nullptr)
+	{
+		const int32 Pages = FMath::Max(1, (All.Num() + 1) / 2);
+		int32 Page = 0;
+		double Began = 0.0;
+		for (; Page < Pages - 1; ++Page)
+		{
+			const double Reading = SubPageReading(All, Page);
+			if (T < Began + Reading) { break; }
+			Began += Reading;
+		}
+		if (PageBegan != nullptr) { *PageBegan = Began; }
+		return Page;
+	}
+
+	void SubsRebuild();
+
+	// ENTER TURNS A LONG LINE'S PAGE BEFORE IT MOVES ON (7 October, item 1.1's second fresh review:
+	// "Sheila's subtitles stopping mid-sentence"). A line longer than two rows is shown a page at a
+	// time, and Enter skipped to the next line from its first page, so its end was never read. Now,
+	// while the line said last has a page still to come, Enter shows that page; false when it was on
+	// its last page. Rest: the seconds its remaining pages need.
+	bool SubsTurnPage(const FString& Text, double& Rest)
+	{
+		Rest = 0.0;
+		const double Now = NowS();
+		for (int32 I = GSubs.Num() - 1; I >= 0; --I)
+		{
+			FSubLine& S = GSubs[I];
+			if (S.Kind == FSubLine::EKind::Caption || S.Text != Text) { continue; }
+			const TArray<FString> All = SubLines(S.Words);
+			const int32 Pages = FMath::Max(1, (All.Num() + 1) / 2);
+			double Began = 0.0;
+			const int32 Page = SubPageAt(All, Now - S.Since, &Began);
+			if (Page >= Pages - 1) { return false; }
+			S.Since = Now - (Began + SubPageReading(All, Page));
+			for (int32 P = Page + 1; P < Pages; ++P) { Rest += SubPageReading(All, P); }
+			S.Until = FMath::Max(S.Until, Now + Rest + 1.0);
+			SubsRebuild();
+			return true;
+		}
+		return false;
+	}
+
 	bool SayBoxOpen();
 	bool bNoticeCardUp = false;
 
@@ -1107,18 +1160,9 @@ namespace
 		for (const FSubLine* S : { Mine, Speech })
 		{
 			if (S == nullptr) { continue; }
-			// A page of two lines at a time; a page turns after its reading time.
+			// A page of two lines at a time; a page turns after its reading time (SubPageAt).
 			const TArray<FString> All = SubLines(S->Words);
-			const int32 Pages = FMath::Max(1, (All.Num() + 1) / 2);
-			int32 Page = 0;
-			double T = Now - S->Since;
-			for (; Page < Pages - 1; ++Page)
-			{
-				const int32 Letters = All[Page * 2].Len() + (All.IsValidIndex(Page * 2 + 1) ? All[Page * 2 + 1].Len() : 0);
-				const double Reading = FMath::Max(1.6, Letters / 15.0);
-				if (T < Reading) { break; }
-				T -= Reading;
-			}
+			const int32 Page = SubPageAt(All, Now - S->Since);
 			for (int32 K = 0; K < 2 && All.IsValidIndex(Page * 2 + K); ++K)
 			{
 				TSharedRef<SHorizontalBox> Row = SNew(SHorizontalBox);
@@ -8342,6 +8386,25 @@ namespace
 			// beside the head: the top of the person's own bounds
 			const FBox B = GVisualFor(A) != nullptr ? GVisualFor(A)->GetComponentsBoundingBox(true) : A->GetComponentsBoundingBox(true);
 			Where = B.IsValid ? FVector(B.GetCenter().X, B.GetCenter().Y, B.Max.Z - 25.0) : A->GetActorLocation() + FVector(0.0f, 0.0f, 150.0f);
+			// NOT THROUGH A WALL (7 October, item 1.1's second fresh review: "'Talk to Sheila'
+			// floating with nobody in view"): a person's prompt stood wherever their head projected,
+			// seen or not, so it hung on a wall or a window with them behind it. Now it needs a
+			// clear line from the camera to the head, past Tom and the person themselves.
+			FVector Eye;
+			FRotator Facing;
+			PC->GetPlayerViewPoint(Eye, Facing);
+			FCollisionQueryParams Q(FName(TEXT("LedgerPromptSight")), false, A);
+			if (AActor* Seen = GVisualFor(A)) { Q.AddIgnoredActor(Seen); }
+			if (APawn* Him = PC->GetPawn())
+			{
+				Q.AddIgnoredActor(Him);
+				if (AActor* HisLook = GVisualFor(Him)) { Q.AddIgnoredActor(HisLook); }
+				TArray<AActor*> On;
+				Him->GetAttachedActors(On, true, true);
+				Q.AddIgnoredActors(On);
+			}
+			FHitResult Hit;
+			if (W->LineTraceSingleByChannel(Hit, Eye, Where, ECC_Visibility, Q)) { return false; }
 		}
 		FVector2D Px;
 		int32 VX = 0, VY = 0;
@@ -8599,8 +8662,16 @@ namespace
 		// frame's input, after "just pressed" is cleared (the tester pressed
 		// Enter and nothing moved on, 30 September).
 		const bool bEnterDown = PC != nullptr && PC->IsInputKeyDown(EKeys::Enter);
-		const bool bNext = bEnterDown && !bWalkEnterWasDown && GWalkStop >= 0 && T - GWalkAt > 0.6;
+		bool bNext = bEnterDown && !bWalkEnterWasDown && GWalkStop >= 0 && T - GWalkAt > 0.6;
 		bWalkEnterWasDown = bEnterDown;
+		// A long line's next page first (SubsTurnPage), then the next stop.
+		double Rest = 0.0;
+		if (bNext && SubsTurnPage(GWalkLine, Rest))
+		{
+			bNext = false;
+			GWalkAt = T;
+			GWalkUntil = FMath::Max(GWalkUntil, T + Rest);
+		}
 		if (GWalkStop < 0 || bNext || T >= GWalkUntil)
 		{
 			if (!GWalkLine.IsEmpty()) { const FString Was = GWalkLine; GSubs.RemoveAll([&Was](const FSubLine& L) { return L.Text == Was; }); SubsRebuild(); }

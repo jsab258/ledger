@@ -299,7 +299,7 @@ def room_wear(spec_path=OFFICE):
             out.append({"kind": "scuff", "picture": rub, "x_m": round(x, 4),
                         "y_m": round(ROOM_FLOOR_M + 0.14, 4), "z_m": c["z0"],
                         "w_m": round(0.8 + 0.4 * rnd(s, "w%d" % k), 4), "h_m": 0.28,
-                        "yaw_deg": 0.0, "pitch_deg": 0.0, "strength": round(0.35 + 0.15 * rnd(s, "st%d" % k), 3),
+                        "yaw_deg": 0.0, "pitch_deg": 0.0, "strength": round(FRONT_WEAR + 0.15 * rnd(s, "st%d" % k), 3),
                         "on": "mickeys_room"})
     b = box.get("bench")
     if b:   # the room's side wall behind the bench (x 8.65, facing -x: yaw 270)
@@ -324,7 +324,22 @@ RINGS, BURNS, CHIPS = "ours/wear_rings", "ours/wear_burns", "ours/wear_chips"
 #: each door's centre and width, and the faces' depths in front of the wall (5.125).
 KIT_FRONTS = {"east_parade_bay2": {"x0": 15.0, "window": (15.35, 18.70), "shop_door": (19.203, 0.90),
                                    "side_door": (20.178, 0.838), "stall_face": 4.975, "plinth_face": 4.975,
-                                   "door_face": 5.05}}
+                                   "door_face": 5.05},
+              # MICKEY'S FRONT TOO (7 October, the second review: "Mickey's ... front clean"): its own
+              # front, not the kit's, measured off the exported street: the tiled stallriser x 5.1 to
+              # 8.6 with its face at 5.1, the office door's middle 4.65 and the side door's 3.75, both
+              # faces at 5.15, the piers' feet on the frontage at x 3.0 and 9.0.
+              "east_parade_bay0": {"x0": 3.0, "window": (5.12, 8.61), "shop_door": (4.65, 0.90),
+                                   "side_door": (3.75, 0.70), "stall_face": 5.10, "plinth_face": 4.975,
+                                   "door_face": 5.15}}
+
+
+#: HOW STRONGLY A FRONT'S USE SHOWS (7 October, item 1.1's second fresh review, point 6: "Rita's
+#: stallriser, sills and door bottoms pristine; Mickey's counter top and front clean", after the
+#: first review's same words; his order of 2 October: wear that reads at a glance, not faint marks).
+#: The pictures' masks average under a third opaque, so at 0.55 a mark darkened or lightened its
+#: paint by about a sixth; from 0.85 it reads. The door scuffs reach a boot's kick, 0.34 m.
+FRONT_WEAR = 0.85
 
 
 def frontage_wear(pieces):
@@ -348,15 +363,15 @@ def frontage_wear(pieces):
             out.append({"kind": kind, "picture": pic, "x_m": round(x, 4), "y_m": round(y, 4), "z_m": round(z - STANDOFF_M, 4),
                         "w_m": round(w, 4), "h_m": round(h, 4), "yaw_deg": 0.0, "pitch_deg": 0.0,
                         "strength": round(strength, 3), "on": bay})
-        put("dust", PICTURE["splash"], (w0 + w1) / 2.0, g + 0.18, f["stall_face"], w1 - w0, 0.36, 0.55 + 0.15 * rnd(s, "st"))
+        put("dust", PICTURE["splash"], (w0 + w1) / 2.0, g + 0.22, f["stall_face"], w1 - w0, 0.44, FRONT_WEAR + 0.15 * rnd(s, "st"))
         for px in (f["x0"], f["x0"] + 6.0):
-            put("dust", PICTURE["splash"], px, g + 0.22, f["plinth_face"], 0.72, 0.44, 0.5 + 0.15 * rnd(s, "p%.0f" % px))
-            put("chip", CHIPS, px, g + 0.55, f["plinth_face"], 0.72, 0.30, 0.55)
-        put("chip", CHIPS, (w0 + w1) / 2.0, g + 0.61, f["stall_face"], w1 - w0, 0.09, 0.6)
+            put("dust", PICTURE["splash"], px, g + 0.22, f["plinth_face"], 0.72, 0.44, FRONT_WEAR + 0.15 * rnd(s, "p%.0f" % px))
+            put("chip", CHIPS, px, g + 0.55, f["plinth_face"], 0.72, 0.30, FRONT_WEAR)
+        put("chip", CHIPS, (w0 + w1) / 2.0, g + 0.61, f["stall_face"], w1 - w0, 0.09, FRONT_WEAR)
         sx, sw = f["shop_door"]
-        put("chip", CHIPS, sx + 0.30, g + 1.02, f["door_face"], 0.30, 0.32, 0.55)
+        put("chip", CHIPS, sx + 0.30, g + 1.02, f["door_face"], 0.30, 0.32, FRONT_WEAR)
         for x, w in (f["shop_door"], f["side_door"]):
-            put("scuff", PICTURE["splash"], x, g + 0.14, f["door_face"], w * 0.95, 0.26, 0.55 + 0.15 * rnd(s, "d%.1f" % x))
+            put("scuff", PICTURE["splash"], x, g + 0.17, f["door_face"], w * 0.95, 0.34, FRONT_WEAR + 0.15 * rnd(s, "d%.1f" % x))
     return out
 
 
@@ -459,6 +474,9 @@ def selftest():
                                                                   for d in splash))
     check("every wall's coverage is printed and between 0 and 1", len(cov) == len(houses) and all(0.0 < c <= 1.0 for c, _ in cov))
     check("every decal names a picture", all(d["picture"] for d in decals))
+    front = [d for d in decals if d["kind"] in ("dust", "chip", "scuff")]
+    check("a front's use reads: its dust, chips and scuffs at FRONT_WEAR or more (7 October)",
+          front and all(d["strength"] >= FRONT_WEAR for d in front))
     pud = [d for d in decals if d["kind"] == "puddle"]
     check("puddles stand along both gutters", any(d["z_m"] > 2 for d in pud) and any(d["z_m"] < -2 for d in pud))
     print("street_wear selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))

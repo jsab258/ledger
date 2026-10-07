@@ -1981,12 +1981,13 @@ namespace LedgerCrime
 	inline P3 BodySpotFor(double X, double Z) { return IndoorPlace(Z) ? P3(X, 0.0, Z > 0.0 ? 4.6 : -4.6) : P3(X, 0.0, Z); }
 	/// THE SAME, AT THE PLACE'S OWN WAITING SPOT (7 October, item 1.1's second fresh review: Sheila,
 	/// in the locked office by her day, stood on the pavement straight out from its middle, square
-	/// in front of Mickey's window and its camera). An inside place may name where along its
-	/// pavement a body waits (hook-cast.json "body_x_m": Mickey's, at its door).
+	/// in front of Mickey's window and its camera). A place may name where along its pavement a
+	/// body stands (hook-cast.json "body_x_m": Mickey's office and its cab rank, at its door); an
+	/// inside place's body still stands on its own pavement.
 	inline P3 BodySpotFor(const LedgerCore::CastDay& Cast, const std::string& Place, double X, double Z)
 	{
 		double BX = X;
-		return (IndoorPlace(Z) && Cast.BodyXOf(Place, BX)) ? BodySpotFor(BX, Z) : BodySpotFor(X, Z);
+		return Cast.BodyXOf(Place, BX) ? BodySpotFor(BX, Z) : BodySpotFor(X, Z);
 	}
 	/// A PLACE TO STAND, 1 October (the AI tester, the packaged game: Sheila on
 	/// top of the fish market's pallet crate, where her day puts her at

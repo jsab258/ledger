@@ -3950,8 +3950,11 @@ def _kit_house_sides(p, wall):
         verts = [(x0, y, z) for (y, z) in prof] + [(x1, y, z) for (y, z) in prof]
         faces = [(0, 1, 2, 3, 4), (9, 8, 7, 6, 5)]
         faces += [(i, (i + 1) % 5, (i + 1) % 5 + 5, i + 5) for i in range(5)]
-        faces = faces + [tuple(reversed(f)) for f in faces]
+        # ONE SOLID, TURNED OUTWARD WHERE IT STANDS (7 October, evening: in the game the west
+        # row's last side still showed the dark room box; drawn both ways round, Blender kept one
+        # of each pair of coincident faces, and on the turned row that was the inward one).
         parts.append({"id": name, "material": wall, "kind": "mesh", "verts": verts, "faces": faces,
+                      "convex": True,
                       "note": "the-house's-side/wall-and-gable/eaves-to-ridge-%.1fm" % p["ridge_rise_m"]})
     return parts
 
@@ -3987,6 +3990,11 @@ def _kit_part_to_world(part, pid, to_world):
     if part.get("kind") == "mesh":
         q["verts"] = [to_world(*v) for v in part["verts"]]
         q["faces"] = [tuple(f) for f in part["faces"]]
+        if part.get("convex"):
+            # a convex solid's faces turned away from its middle in the street's own axes, so
+            # a row turned by a mirror still shows their outsides
+            q.pop("convex", None)
+            q["faces"] = _hull(q["verts"], q["faces"])
         return q
     if part.get("kind") == "slope":
         x0, x1, ye, yr, ze, zr = (part["x0"], part["x1"], part["y_eaves"], part["y_ridge"],
@@ -8784,6 +8792,23 @@ def selftest():
                           if not {h + "_side_south", h + "_side_north"} <= sides)
             check("accept/every-approach-house-has-both-sides", kit_houses and not bare,
                   "%d house(s), bare: %s" % (len(kit_houses), ",".join(bare[:4])))
+            # and each side faces out where it stands, the mirrored west row's too (7 October, evening)
+            inward = []
+            for b in street:
+                if not b["id"].endswith(("_side_south", "_side_north")):
+                    continue
+                vs = b["verts"]
+                c = [sum(v[i] for v in vs) / len(vs) for i in range(3)]
+                for f in b["faces"]:
+                    p0, p1, p2 = vs[f[0]], vs[f[1]], vs[f[2]]
+                    u = [p1[i] - p0[i] for i in range(3)]
+                    w = [p2[i] - p0[i] for i in range(3)]
+                    n = (u[1] * w[2] - u[2] * w[1], u[2] * w[0] - u[0] * w[2], u[0] * w[1] - u[1] * w[0])
+                    m = [sum(vs[k][i] for k in f) / len(f) - c[i] for i in range(3)]
+                    if sum(n[i] * m[i] for i in range(3)) < 0:
+                        inward.append(b["id"])
+                        break
+            check("accept/every-house-side-faces-out", not inward, ",".join(inward[:4]))
             # ---- A ROW'S SLATES ARE ONE PIECE (7 October: overlapping per-house slopes drew a
             # dark seam at every party wall): no row of more than one house keeps a roof per house.
             per_house = sorted({b["id"].rsplit("_bay", 1)[0] for b in street

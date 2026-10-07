@@ -30,7 +30,6 @@
 {"event": "start", "at": "2026-10-07T13:06:31", "task": "7 Oct afternoon: P1 on the last build, Mickey's window (reflection stairs research), Tom's one more try, the second gate", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-07T18:32:42", "note": "P1 complete (eb053ad 80 fps, card 5.9 GB); the glass lit and sharp in the package; Mickey's office dark; his fault fixed (nightly .jpg); PR 1 merged; Tom blocked; Ron's outfit two tries, third running; second review FAIL"}
 {"event": "start", "at": "2026-10-07T18:32:43", "task": "7 Oct evening: Ron's outfit third try and review, the records", "phase": "1", "kind": "production"}
-{"event": "start", "at": "2026-10-07T18:05:00", "task": "1.1 black block found and closed (approach houses' sides)", "phase": "1", "kind": "production"}
-{"event": "stop", "at": "2026-10-07T18:50:00", "note": ""}
-{"event": "start", "at": "2026-10-07T17:55:00", "task": "Ron's outfit third review, set aside", "phase": "1", "kind": "review"}
-{"event": "stop", "at": "2026-10-07T18:05:00", "note": ""}
+{"event": "stop", "at": "2026-10-07T20:32:16", "note": "the evening: Ron's third review (FAIL, set aside), the CC0 route researched and tried (failed its checks); 1.1's review faults: black block, west rooms, roofs, Sheila's spot, wear, subtitles, prompt; glass anti-aliasing researched and tried. Corrected: two entries added earlier with guessed times overlapped this task"}
+{"event": "start", "at": "2026-10-07T20:32:16", "task": "7 Oct night: the glass anti-aliasing checked in the editor, the evening's fixes committed before the nightly build", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-07T21:01:47", "note": "the glass anti-aliasing tried three times and set aside; Ron's and Sheila's spots; Mickey's front wear; the house sides turned outward and seen closed in the editor; subtitles and prompt"}

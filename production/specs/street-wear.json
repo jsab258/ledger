@@ -2291,7 +2291,7 @@
    "h_m": 0.28,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.416,
+   "strength": 0.916,
    "on": "mickeys_room"
   },
   {
@@ -2304,7 +2304,7 @@
    "h_m": 0.28,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.42,
+   "strength": 0.92,
    "on": "mickeys_room"
   },
   {
@@ -2317,7 +2317,7 @@
    "h_m": 0.28,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.424,
+   "strength": 0.924,
    "on": "mickeys_room"
   },
   {
@@ -2428,13 +2428,13 @@
    "kind": "dust",
    "picture": "ours/wear_splash",
    "x_m": 17.025,
-   "y_m": 0.28,
+   "y_m": 0.32,
    "z_m": 4.965,
    "w_m": 3.35,
-   "h_m": 0.36,
+   "h_m": 0.44,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.574,
+   "strength": 0.874,
    "on": "east_parade_bay2"
   },
   {
@@ -2447,7 +2447,7 @@
    "h_m": 0.44,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.546,
+   "strength": 0.896,
    "on": "east_parade_bay2"
   },
   {
@@ -2460,7 +2460,7 @@
    "h_m": 0.3,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.55,
+   "strength": 0.85,
    "on": "east_parade_bay2"
   },
   {
@@ -2473,7 +2473,7 @@
    "h_m": 0.44,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.508,
+   "strength": 0.858,
    "on": "east_parade_bay2"
   },
   {
@@ -2486,7 +2486,7 @@
    "h_m": 0.3,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.55,
+   "strength": 0.85,
    "on": "east_parade_bay2"
   },
   {
@@ -2499,7 +2499,7 @@
    "h_m": 0.09,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.6,
+   "strength": 0.85,
    "on": "east_parade_bay2"
   },
   {
@@ -2512,34 +2512,151 @@
    "h_m": 0.32,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.55,
+   "strength": 0.85,
    "on": "east_parade_bay2"
   },
   {
    "kind": "scuff",
    "picture": "ours/wear_splash",
    "x_m": 19.203,
-   "y_m": 0.24,
+   "y_m": 0.27,
    "z_m": 5.04,
    "w_m": 0.855,
-   "h_m": 0.26,
+   "h_m": 0.34,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.617,
+   "strength": 0.917,
    "on": "east_parade_bay2"
   },
   {
    "kind": "scuff",
    "picture": "ours/wear_splash",
    "x_m": 20.178,
-   "y_m": 0.24,
+   "y_m": 0.27,
    "z_m": 5.04,
    "w_m": 0.7961,
-   "h_m": 0.26,
+   "h_m": 0.34,
    "yaw_deg": 0.0,
    "pitch_deg": 0.0,
-   "strength": 0.563,
+   "strength": 0.863,
    "on": "east_parade_bay2"
+  },
+  {
+   "kind": "dust",
+   "picture": "ours/wear_splash",
+   "x_m": 6.865,
+   "y_m": 0.32,
+   "z_m": 5.09,
+   "w_m": 3.49,
+   "h_m": 0.44,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.985,
+   "on": "east_parade_bay0"
+  },
+  {
+   "kind": "dust",
+   "picture": "ours/wear_splash",
+   "x_m": 3.0,
+   "y_m": 0.32,
+   "z_m": 4.965,
+   "w_m": 0.72,
+   "h_m": 0.44,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.918,
+   "on": "east_parade_bay0"
+  },
+  {
+   "kind": "chip",
+   "picture": "ours/wear_chips",
+   "x_m": 3.0,
+   "y_m": 0.65,
+   "z_m": 4.965,
+   "w_m": 0.72,
+   "h_m": 0.3,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.85,
+   "on": "east_parade_bay0"
+  },
+  {
+   "kind": "dust",
+   "picture": "ours/wear_splash",
+   "x_m": 9.0,
+   "y_m": 0.32,
+   "z_m": 4.965,
+   "w_m": 0.72,
+   "h_m": 0.44,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.948,
+   "on": "east_parade_bay0"
+  },
+  {
+   "kind": "chip",
+   "picture": "ours/wear_chips",
+   "x_m": 9.0,
+   "y_m": 0.65,
+   "z_m": 4.965,
+   "w_m": 0.72,
+   "h_m": 0.3,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.85,
+   "on": "east_parade_bay0"
+  },
+  {
+   "kind": "chip",
+   "picture": "ours/wear_chips",
+   "x_m": 6.865,
+   "y_m": 0.71,
+   "z_m": 5.09,
+   "w_m": 3.49,
+   "h_m": 0.09,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.85,
+   "on": "east_parade_bay0"
+  },
+  {
+   "kind": "chip",
+   "picture": "ours/wear_chips",
+   "x_m": 4.95,
+   "y_m": 1.12,
+   "z_m": 5.14,
+   "w_m": 0.3,
+   "h_m": 0.32,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.85,
+   "on": "east_parade_bay0"
+  },
+  {
+   "kind": "scuff",
+   "picture": "ours/wear_splash",
+   "x_m": 4.65,
+   "y_m": 0.27,
+   "z_m": 5.14,
+   "w_m": 0.855,
+   "h_m": 0.34,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.989,
+   "on": "east_parade_bay0"
+  },
+  {
+   "kind": "scuff",
+   "picture": "ours/wear_splash",
+   "x_m": 3.75,
+   "y_m": 0.27,
+   "z_m": 5.14,
+   "w_m": 0.665,
+   "h_m": 0.34,
+   "yaw_deg": 0.0,
+   "pitch_deg": 0.0,
+   "strength": 0.867,
+   "on": "east_parade_bay0"
   }
  ],
  "coverage": [

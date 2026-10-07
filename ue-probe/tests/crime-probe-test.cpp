@@ -576,6 +576,11 @@ int main(int argc, char** argv)
 		      std::to_string(Sheila ? Sheila->At.X : -1.0) + ")");
 		double NoX = 0.0;
 		Check(!Cast.BodyXOf("fish_counter", NoX), "a2-a-place-without-body_x_m-keeps-its-own-x");
+		// And the cab rank's (7 October, evening): whoever waits there stands at Mickey's door, not a
+		// metre in front of the office camera at x 7.5.
+		double RankX = 0.0, RankZ = 0.0;
+		Check(Cast.PlaceXZ("mickeys_rank", RankX, RankZ) && LedgerCrime::BodySpotFor(Cast, "mickeys_rank", RankX, RankZ).X < 5.1,
+		      "a2-the-rank's-body-stands-at-mickeys-door");
 		// Nobody without a body counts from a pavement: the player would see nobody there.
 		bool bInvisible = false;
 		for (int H = 0; H < 24; ++H)
