@@ -98,6 +98,7 @@
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "EngineUtils.h"
 #include "Components/CapsuleComponent.h"
 // ANIMATION/, NOT ENGINE/, and run 52 is what proves it: `fatal error C1083:
 // Cannot open include file: 'Engine/SkeletalMeshActor.h'`, which cost a whole
@@ -1044,18 +1045,32 @@ namespace
 	// front of it, at each change of light, and shows it as a mirror at the Fresnel angle
 	// (make_glass_material.py's ReflectCube). The research's first fallback, NOTE.md section 2.
 	// One capture a frame, round the windows, so a change of light costs a frame's worth each.
+	// ONE WINDOW AT A TIME, AND ITS CAPTURE GONE AFTER (7 October): with Lumen in the captures each
+	// keeps a rendering state, and fifteen windows of six faces held at once filled the card (10.05 GB
+	// of its 10 during the build machine's film). So a window's capture is made when its turn comes,
+	// takes its passes on consecutive frames, and is then removed with its state; the picture it
+	// caught stays in the window's cube (Rt), and a change of light makes them again.
 	struct FGlassCatch
 	{
-		TWeakObjectPtr<USceneCaptureComponentCube> Cap;
+		TWeakObjectPtr<USceneCaptureComponentCube> Cap;   // only while this window is being caught
+		TWeakObjectPtr<UTextureRenderTargetCube> Rt;
+		TWeakObjectPtr<AActor> Owner;
 		TWeakObjectPtr<UMaterialInstanceDynamic> Mid;
+		FVector At = FVector::ZeroVector;
 		FString Mesh;
 	};
 	TArray<FGlassCatch> GGlassCatches;
-	int32 GGlassCatchLeft = 0, GGlassCatchNext = 0, GGlassCatchTaken = 0;
+	// GGlassCatchLeft: the windows still to catch in this round; GGlassCatchPass: the passes left
+	// for the one in hand, GGlassCatchNext.
+	int32 GGlassCatchLeft = 0, GGlassCatchNext = 0, GGlassCatchTaken = 0, GGlassCatchPass = 0;
+	// NOT BEFORE THE STREET IS LIT (7 October): caught in the first moments of live play, before
+	// Lumen had lit the scene, the cube showed the street black again; so a round waits until the
+	// street has settled (six seconds after the last window is made, one after a change of light).
+	double GGlassCatchNotBefore = 0.0;
 	FTSTicker::FDelegateHandle GGlassCatchTicker;
-	// Six times round (7 October; twice before): the first pass can find a texture still streaming in, and Lumen in the capture gathers over the passes.
-	// Six times round with Lumen in the capture, which gathers its light over frames (7 October).
-	const int32 kGlassCatchPasses = 6;
+	// Twelve passes for each window, on consecutive frames (7 October; two round before): the first
+	// can find a texture still streaming in, and Lumen in a fresh capture gathers its light over them.
+	const int32 kGlassCatchPasses = 12;
 	TMap<FString, UTexture2D*> GStreetTex;
 	int32 GStreetTextured = 0, GStreetTexAsked = 0, GStreetDrawn = 0;
 	std::string GStreetLookFor;
@@ -6815,6 +6830,52 @@ namespace
 	// maps, the wet, the grade and the light are the next item and are
 	// developed here against the sheet. It exists so the first Unreal frame
 	// shows the geometry the right way round with its signs readable.
+	// A window's capture, made when its turn comes (see FGlassCatch).
+	USceneCaptureComponentCube* MakeGlassCapture(FGlassCatch& Gc)
+	{
+		AActor* A = Gc.Owner.Get();
+		UTextureRenderTargetCube* Rt = Gc.Rt.Get();
+		if (A == nullptr || Rt == nullptr) { return nullptr; }
+		USceneCaptureComponentCube* Cap = NewObject<USceneCaptureComponentCube>(A);
+		if (Cap == nullptr) { return nullptr; }
+		Cap->TextureTarget = Rt;
+		Cap->bCaptureEveryFrame = false;
+		Cap->bCaptureOnMovement = false;
+		Cap->CaptureSource = ESceneCaptureSource::SCS_SceneColorHDR;
+		// THE CAUGHT STREET LIT AS THE STREET IS (7 October; the second gate: "large, flat
+		// stair-stepped cut-outs ... with no windows or brick in them"). A capture runs without Lumen
+		// (SceneCaptureComponent.cpp sets its GI and reflections to none), and this street's ambient
+		// light is Lumen's: the cube saved to disk (-GlassCatchDump) showed the houses across the road
+		// as black silhouettes on a bright sky, ten times darker against it than the main view shows
+		// them. So the capture uses Lumen too, keeping its view state over its passes.
+		// -GlassCatchNoLumen keeps the old capture, to compare.
+		static const bool bNoLumen = FParse::Param(FCommandLine::Get(), TEXT("GlassCatchNoLumen"));
+		if (!bNoLumen)
+		{
+			Cap->PostProcessSettings.bOverride_DynamicGlobalIlluminationMethod = true;
+			Cap->PostProcessSettings.DynamicGlobalIlluminationMethod = EDynamicGlobalIlluminationMethod::Lumen;
+			Cap->PostProcessSettings.bOverride_ReflectionMethod = true;
+			Cap->PostProcessSettings.ReflectionMethod = EReflectionMethod::Lumen;
+			Cap->bAlwaysPersistRenderingState = true;
+		}
+		Cap->HiddenActors.Add(A);
+		// NO PEOPLE IN THE CAUGHT STREET (7 October): the picture is taken once, so a passer-by in front
+		// of the window stayed in the glass after walking on. Every actor with a skinned body is left
+		// out of it (the show flag for skeletal meshes alone did not take them out).
+		if (UWorld* W = A->GetWorld())
+		{
+			for (TActorIterator<AActor> It(W); It; ++It)
+			{
+				if (*It != nullptr && It->FindComponentByClass<USkeletalMeshComponent>() != nullptr) { Cap->HiddenActors.Add(*It); }
+			}
+		}
+		Cap->SetMobility(EComponentMobility::Movable);
+		Cap->SetWorldLocation(Gc.At);
+		Cap->RegisterComponent();
+		A->AddInstanceComponent(Cap);
+		return Cap;
+	}
+
 	bool TickGlassCatch(float)
 	{
 		// -GlassCatchDump (7 October, a diagnostic: the stair-stepped roofline in the caught glass,
@@ -6829,7 +6890,7 @@ namespace
 			bDumped = true;
 			for (const FGlassCatch& Gc : GGlassCatches)
 			{
-				UTextureRenderTargetCube* Rt = Gc.Cap.IsValid() ? Gc.Cap->TextureTarget : nullptr;
+				UTextureRenderTargetCube* Rt = Gc.Rt.Get();
 				if (Rt == nullptr) { continue; }
 				TArray<uint8> Bytes;
 				FMemoryWriter Ar(Bytes);
@@ -6841,15 +6902,30 @@ namespace
 				}
 			}
 		}
-		if (GGlassCatchLeft <= 0 || GGlassCatches.Num() == 0) { return true; }
-		const int32 I = GGlassCatchNext % GGlassCatches.Num();
+		if (GGlassCatchLeft <= 0 || GGlassCatches.Num() == 0 || FPlatformTime::Seconds() < GGlassCatchNotBefore) { return true; }
+		FGlassCatch& Gc = GGlassCatches[GGlassCatchNext % GGlassCatches.Num()];
+		if (!Gc.Cap.IsValid())
+		{
+			Gc.Cap = MakeGlassCapture(Gc);
+			GGlassCatchPass = kGlassCatchPasses;
+		}
+		if (Gc.Cap.IsValid() && GGlassCatchPass > 0)
+		{
+			Gc.Cap->CaptureSceneDeferred();
+			--GGlassCatchPass;
+			++GGlassCatchTaken;
+			return true;
+		}
+		// Its passes rendered (the last at the end of the frame before this one): the capture goes,
+		// and the rendering state Lumen kept for it.
+		if (USceneCaptureComponentCube* Cap = Gc.Cap.Get())
+		{
+			if (AActor* A = Gc.Owner.Get()) { A->RemoveInstanceComponent(Cap); }
+			Cap->DestroyComponent();
+		}
+		Gc.Cap = nullptr;
 		++GGlassCatchNext;
 		--GGlassCatchLeft;
-		if (GGlassCatches[I].Cap.IsValid())
-		{
-			GGlassCatches[I].Cap->CaptureSceneDeferred();
-			++GGlassCatchTaken;
-		}
 		return true;
 	}
 
@@ -6871,8 +6947,7 @@ namespace
 		const FVector ToRoad = bFacesX ? FVector(RoadMid.X - Mid.X, 0.0, 0.0) : FVector(0.0, RoadMid.Y - Mid.Y, 0.0);
 		if (FVector::DotProduct(ToRoad, N) < 0.0) { N = -N; }
 		UTextureRenderTargetCube* Rt = NewObject<UTextureRenderTargetCube>(A);
-		USceneCaptureComponentCube* Cap = NewObject<USceneCaptureComponentCube>(A);
-		if (Rt == nullptr || Cap == nullptr) { return; }
+		if (Rt == nullptr) { return; }
 		Rt->bHDR = true;
 		// SAMPLED SMOOTHLY (7 October): magnified from two metres a texel of the caught street showed
 		// as a hard-edged block about ten pixels wide; bilinear, a soft reflection instead.
@@ -6883,39 +6958,18 @@ namespace
 		const int32 CubeSize = bHero && GLook.GlassCubeHeroSize > 0 ? GLook.GlassCubeHeroSize : GLook.GlassCubeSize;
 		Rt->InitAutoFormat((uint32)CubeSize);
 		Rt->UpdateResourceImmediate(true);
-		Cap->TextureTarget = Rt;
-		Cap->bCaptureEveryFrame = false;
-		Cap->bCaptureOnMovement = false;
-		Cap->CaptureSource = ESceneCaptureSource::SCS_SceneColorHDR;
-		// THE CAUGHT STREET LIT AS THE STREET IS (7 October; the second gate: "large, flat
-		// stair-stepped cut-outs ... with no windows or brick in them"). A capture runs without Lumen
-		// (SceneCaptureComponent.cpp sets its GI and reflections to none), and this street's ambient
-		// light is Lumen's: the cube saved to disk (-GlassCatchDump) showed the houses across the road
-		// as black silhouettes on a bright sky, ten times darker against it than the main view shows
-		// them. So the capture uses Lumen too, keeping its view state so Lumen can gather over the
-		// passes (kGlassCatchPasses). -GlassCatchNoLumen keeps the old capture, to compare.
-		static const bool bNoLumen = FParse::Param(FCommandLine::Get(), TEXT("GlassCatchNoLumen"));
-		if (!bNoLumen)
-		{
-			Cap->PostProcessSettings.bOverride_DynamicGlobalIlluminationMethod = true;
-			Cap->PostProcessSettings.DynamicGlobalIlluminationMethod = EDynamicGlobalIlluminationMethod::Lumen;
-			Cap->PostProcessSettings.bOverride_ReflectionMethod = true;
-			Cap->PostProcessSettings.ReflectionMethod = EReflectionMethod::Lumen;
-			Cap->bAlwaysPersistRenderingState = true;
-		}
-		Cap->HiddenActors.Add(A);
-		Cap->SetMobility(EComponentMobility::Movable);
-		Cap->SetWorldLocation(Mid + N * 50.0);
-		Cap->RegisterComponent();
-		A->AddInstanceComponent(Cap);
 		G->SetTextureParameterValue(FName(TEXT("ReflectCube")), Rt);
 		// Thin translucency multiplies emissive by opacity (ThinTranslucentCommon.ush), so a
 		// true reflection is the strength over the pane's opacity.
 		const double Opacity = FMath::Max(GLook.GlassOpacity, 0.01);
 		G->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(GLook.GlassCubeStrength / Opacity));
 		FGlassCatch Gc;
-		Gc.Cap = Cap; Gc.Mid = G; Gc.Mesh = Mesh;
+		Gc.Rt = Rt; Gc.Owner = A; Gc.Mid = G; Gc.Mesh = Mesh; Gc.At = Mid + N * 50.0;
 		GGlassCatches.Add(Gc);
+		// CAUGHT ONCE WHEN MADE (7 October): in live play the light is set once at the start, which
+		// can come before the windows are, and its round found none to catch: the glass stayed black.
+		++GGlassCatchLeft;
+		GGlassCatchNotBefore = FPlatformTime::Seconds() + 6.0;
 		if (!GGlassCatchTicker.IsValid())
 		{
 			GGlassCatchTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&TickGlassCatch), 0.0f);
@@ -7720,7 +7774,8 @@ namespace
 			const double Day = C.SunOn ? 1.0 : GLook.GlassSpecularNight;
 			Gc.Mid->SetScalarParameterValue(FName(TEXT("GlassSpecular")), (float)(Day * GLook.GlassCubeSpecular));
 		}
-		GGlassCatchLeft = GGlassCatches.Num() * kGlassCatchPasses;
+		GGlassCatchLeft = GGlassCatches.Num();   // each window in turn, its passes on consecutive frames
+		GGlassCatchNotBefore = FMath::Max(GGlassCatchNotBefore, FPlatformTime::Seconds() + 1.0);
 		for (const FRoomLight& RL : GRoomLights)
 		{
 			if (!RL.L.IsValid()) { continue; }
