@@ -21,3 +21,9 @@ With the caught reflection off, the live reflection shows the same roofline smoo
 ## The split test, and the cause (7 October, 15:00 to 16:00)
 
 The cube saved to disk (-GlassCatchDump, VignetteShot.cpp) showed the street captured almost unlit: the houses across the road black on a bright sky, about ten times darker against it than the main view shows them. A capture runs without Lumen, and this street's ambient light is Lumen's. With Lumen in the capture (its post-process settings, a kept view state, six passes) the saved cube shows brick and windows. The glass then showed the street, still blocky: each 256 texel, magnified from two metres, was a hard block about ten pixels wide. The morning's 1024 try had gone to street_mickeys_glass, which is the door's glass; Mickey's window is street_glass_eg_bay0 (caught at x 6.4) and Rita's eg_bay2. Fixed: captures lit by Lumen, sampled bilinear, and those two windows at 1024 (unreal-look.json glass_cube_heroes). At 1024 the roofline in Mickey's panes is clean. The two-tries record stands: three tries failed, and the fix came from the research's split test.
+
+## A correction (7 October, evening)
+
+Registering a capture rebuilds its show flags from its own list (USceneCaptureComponent::OnRegister calls UpdateShowFlags, SceneCaptureComponent.cpp about line 292), so a flag set before registering is undone. The afternoon's second and third tries (shadows off, distance-field AO off) were set that way and never applied: they proved nothing. The flags the capture keeps are now set after registering: no skinned meshes and no hair, so no passer-by is frozen in the glass.
+
+Memory, the editor's game mode at night without the voice: the card peaked at 5.8 GB with unlit captures, 8.0 GB with Lumen-lit ones and the two camera windows at 512, 9.2 GB at 1024. The two windows are caught at 512 now; Lumen's reach limited to 40 m saved 0.75 GB but left the capture unlit, and was undone.

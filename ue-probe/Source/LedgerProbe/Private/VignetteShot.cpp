@@ -6859,19 +6859,15 @@ namespace
 			Cap->bAlwaysPersistRenderingState = true;
 		}
 		Cap->HiddenActors.Add(A);
-		// NO PEOPLE IN THE CAUGHT STREET (7 October): the picture is taken once, so a passer-by in front
-		// of the window stayed in the glass after walking on. Every actor with a skinned body is left
-		// out of it (the show flag for skeletal meshes alone did not take them out).
-		if (UWorld* W = A->GetWorld())
-		{
-			for (TActorIterator<AActor> It(W); It; ++It)
-			{
-				if (*It != nullptr && It->FindComponentByClass<USkeletalMeshComponent>() != nullptr) { Cap->HiddenActors.Add(*It); }
-			}
-		}
 		Cap->SetMobility(EComponentMobility::Movable);
 		Cap->SetWorldLocation(Gc.At);
 		Cap->RegisterComponent();
+		// NO PEOPLE IN THE CAUGHT STREET (7 October): the picture is taken once, so a passer-by in front
+		// of the window stayed in the glass after walking on. Set AFTER registering: registering
+		// rebuilds a capture's show flags from its own list (USceneCaptureComponent::UpdateShowFlags),
+		// which undid this flag, and that afternoon's shadow and distance-field tests, when set before.
+		Cap->ShowFlags.SetSkeletalMeshes(false);
+		Cap->ShowFlags.SetHair(false);   // their hair is no skinned mesh: it stayed, a ball in the air
 		A->AddInstanceComponent(Cap);
 		return Cap;
 	}
