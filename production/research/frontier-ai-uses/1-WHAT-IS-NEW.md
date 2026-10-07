@@ -49,7 +49,7 @@ On 6 October Anthropic said its general models "have conservative cyber safeguar
 |---|---|---|---|
 | **Unreal MCP in the UE 5.8 editor** | Epic, with UE 5.8 (June) | An MCP server inside the editor at 127.0.0.1:8000, "no authentication layer", Experimental. Clients listed: Claude Code, Cursor, VS Code, Gemini, Codex. Tools for actors, lights, materials, PCG, Blueprints, automation tests, screenshots, and any editor Python. **"Cooked and shipping game builds can host an MCP server by calling `IModelContextProtocolModule::StartServer()`."** | [SHOWN, checked here] |
 | **Epic's Claude Code plugin** | Epic; MIT; in Anthropic's marketplace | Shows the model three meta-tools by default "so the prompt cache stays warm". Epic warns: arbitrary Python runs in the editor; don't skip permission prompts; commit before long sessions. | [SHOWN, README and licence] |
-| **PCG skills for language models** | UE 5.8 docs | Including `Skill_PCGShapeGrammarDefinition`, for facades and street furniture along a path | [SHOWN] |
+| **PCG skills for language models** | UE 5.8 docs | Including `Skill_PCGShapeGrammarDefinition`, for facades and street furniture along a path. Already in LEDGER's asset plan, for when a whole district must be filled. | [SHOWN] |
 | MCP for Blender 2.1.9 | 6 Oct; MIT | A `look` tool; Poly Haven import; 3D generators (cloud); anonymous telemetry on by default | [SHOWN] |
 | CraftBench-UE | arXiv 2609.23142, 19 Sep | 70 Unreal tasks. Agents' C++ beats Blueprint by 30–43 points; about half the Blueprints that pass asset checks fail at run time. | [ABS, checked here] |
 | Code4Scene | 2609.36777, 29 Sep | Unreal scene edits: best repair F1 0.527. 35.8% of edits that reach their target still change something else. | [ABS, checked here] |
@@ -60,7 +60,7 @@ On 6 October Anthropic said its general models "have conservative cyber safeguar
 
 | What | Date | Result | Mark |
 |---|---|---|---|
-| WorldAuditBench: anomalies in UE5 worlds | 30 Sep | Agents find 6.6–42.3%; humans 83.4% | [ABS, checked here] |
+| WorldAuditBench: agents that walk UE5 and Three.js worlds on a fixed exploration budget, looking for floating objects, walls you can pass through and the like | 30 Sep | Agents find 6.6–42.3% of 213 planted anomalies; people 83.4% | [ABS, checked here] |
 | VisionQ: 20 model judges pick the best image on a named criterion | 30 Sep | At most 63.1% (chance 32.2%) | [ABS] |
 | D3-Omni: judges' bias | 25 Aug | They "confirm satisfied requirements far more reliably than they detect violated ones" | [ABS] |
 | Clipping detection in game QA (six models) | 28 Jul | Many false alarms; use "as high-recall candidate filters" only | [ABS] |
@@ -80,7 +80,7 @@ On 6 October Anthropic said its general models "have conservative cyber safeguar
 | HY-World 2.x (Tencent) | Jul update | Meshes and splats [SHOWN] | **No.** The licence excludes the EU, UK and South Korea, including use of its output. Also CUDA, 80B models. |
 | NVIDIA Lyra 2.0 | 20 Jul | [SHOWN] | **No:** research-only weights; H100 timings |
 | World Labs Marble / Atlas | Sep [SS] | Splats and a mesh of about 600k triangles | Terms UNREACHED; paid |
-| TRELLIS.2, Pixal3D (image to 3D) | 2026 | [SHOWN] | **No.** NVIDIA with 24 GB or more; nvdiffrast non-commercial; trained on Objaverse-XL's Sketchfab subset (a NoAI question). |
+| TRELLIS.2, Pixal3D (image to 3D) | 2026 | [SHOWN] | **Not now.** NVIDIA with 24 GB or more; its renderer nvdiffrast is non-commercial; trained on Objaverse-XL's Sketchfab subset (a NoAI question). LEDGER's allowlist lists TRELLIS 2 as MIT, and image-to-3D waits by his 22 September ruling. |
 | Hunyuan3D-2.1 | | [SHOWN licence] | **No:** excludes the EU and UK |
 | Meshy 7 and 7.1; Tripo P2.0 | Aug–Sep [SS] | Hosted, paid; training data undisclosed | The NoAI check is impossible |
 | **LLMs writing assets as code** (Nova3D, 22 Jul; Procedura, 26 Aug; MatLoom materials, 30 Sep) | | Assets and materials as Blender programs; Nova3D meets 51 of 52 stated constraints and concedes texture realism | [ABS]. **Runs here today:** Claude plus Blender. |
@@ -93,7 +93,7 @@ On 6 October Anthropic said its general models "have conservative cyber safeguar
 | What | Date | Shown | Licence for a sold game |
 |---|---|---|---|
 | **MetaHuman Animator Markerless Motion Capture** | UE 5.8, June | "Capture body, or both body and face performance from a single camera". Processed "locally on your machine". Experimental, Windows only, **installed from Fab**. Epic recommends an RX 6800 XT or better. | Epic tool, but **its Fab "Allows usage with AI" flag is unread** [SHOWN, checked here] |
-| **NVIDIA Kimodo, SOMA "RP" weights** | Mar–Apr (background) | Text plus keyframes to motion, as BVH. "Trained on ... 700 hours" of licensed studio mocap (Bones Rigplay 1), not AMASS. About 17 GB of video memory, or under 3 GB with the text encoder on the processor. | Code Apache-2.0; weights under the NVIDIA Open Model License (the licence page itself UNREACHED). **The SMPL-X version is non-commercial.** [SHOWN, checked here] |
+| **NVIDIA Kimodo, SOMA "RP" weights** | Mar–Apr (background) | Text plus keyframes to motion, as BVH. "Trained on ... 700 hours" of licensed studio mocap (Bones Rigplay 1), not AMASS. About 17 GB of video memory, or under 3 GB with the text encoder on the processor. | Code Apache-2.0; weights under the NVIDIA Open Model License (the licence page itself UNREACHED). **The SMPL-X version is non-commercial.** "Most extensively tested" on RTX 3090, 4090 and A100. [SHOWN, checked here] |
 | NVIDIA ARDY (real-time sibling) | 10 Jul | Streaming, steerable by text, waypoints or keyboard | As Kimodo; too heavy beside the game here [I] |
 | GEM-X (video to motion); SAM 3D Body in ComfyUI | Mar; 23 Aug | Video-to-motion paths | Apache-2.0 / NVIDIA OML; SAM License [SHOWN]. CUDA, or plausibly ONNX [I]. |
 | HY-Motion, MixiMotion, FlowHMR, GVHMR, PromptHMR, GEM-SMPL | | | **Excluded:** territory-limited or non-commercial [SHOWN] |
@@ -107,14 +107,14 @@ On 6 October Anthropic said its general models "have conservative cyber safeguar
 | OpenAI GPT-Live-1: full-duplex speech that "keeps talking" while a back end reasons | API from 10 Sep | $0.05 a minute plus the back end | [SS]; UNREACHED |
 | SALMONN-duo; Context Spanning; Qwen-Audio-Agent | Sep | A fast front model speaks while a slow back end brings the facts | [ABS] |
 | NVIDIA VoiceChat-11B | about 3 Aug | Full-duplex with tool calls; **"research purposes only"**; 80 GB GPU | [SS] |
-| **RePlay** | arXiv 2609.31588, 25 Sep | Plays pre-recorded authored lines picked from the model's hidden state: median 383 ms against 2.6 s for a cascade; users preferred it 63% to 12% | [SHOWN, paper; checked here] |
-| **Enoki** | 2609.00581, 1 Sep | Checks a sentence's claims against evidence in 0.13 s (encoder) or 0.11 s (rules), against 11.95 s for an LLM pipeline. Hardware not stated. | [SHOWN, paper; checked here]. Licence file not found. |
+| **RePlay** (Disney Research) | arXiv 2609.31588, 25 Sep | Plays only pre-recorded lines, picked from a cut-down PersonaPlex's hidden state: median 383 ms, against 2.6 s for its strongest cascade, which was left out of the user study. Against a fast small-model cascade, 8 listeners preferred it in 63% of ratings against 12% (on wait, pace and back-and-forth); against a stronger one, 6 listeners, 46% against 21%, not significant. | [SHOWN, paper; checked here] |
+| **Enoki** | 2609.00581, 1 Sep | Checks a sentence's claims against evidence: its encoder version 0.13 s at 69.1% F1, against 76.4% for its slow LLM version; a rules version 0.11 s. The slowest pipeline compared (Claimify) took 11.95 s; the others under a second. The paper calls its timings a "relative comparison", hardware not stated. | [SHOWN, paper; checked here]. Licence file not found. |
 | HallDetect | 6 Aug | A 435M entailment verifier in under 1 GB | [SHOWN, paper] |
 | **LettuceDetect v2 / TinyLettuce** | Jun–Jul (v2) | Hallucinated-span detectors, 17M to 2B, "real-time on CPU" for the small ones | **MIT** [SHOWN, checked here] |
 | Speculative execution for voice agents | 2610.07641, 6 Oct | Starts tool calls on partial speech: 5.79 s to 4.60 s median | [ABS, checked here] |
 | MOSS-TTS-Nano (CPU, ONNX, voice cloning) | Apr (background) | | Apache-2.0 [SHOWN] |
 | X2Streaming-TTS | Aug–Sep | 15.8 ms to first audio token, on TensorRT (NVIDIA) | Code MIT [SHOWN] |
-| Shipped games with live LLM characters: Where Winds Meet, inZOI, Whispers from the Star | 2025–26 | **No measured latency found for any shipped game.** In Where Winds Meet, players skipped quests by asserting events in brackets, which the characters took as fact. | [SS] |
+| Shipped games with live LLM characters: Where Winds Meet, inZOI, Whispers from the Star | 2025–26 | No measured reply time was found in what could be reached; the games press was unreached, so nothing is concluded. In Where Winds Meet, players reportedly skipped quests by asserting events in brackets, which the characters took as fact. LEDGER found and closed the same failure on 25 September (ClaimCheck.cs). | [SS] |
 
 ## What could not be verified
 
