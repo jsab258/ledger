@@ -5,8 +5,8 @@ A separate session testing one method while the builder works: give the AI an ex
 | Test | Notes | State |
 |---|---|---|
 | 1. Unreal's source answers two open problems | [1-unreal-source/NOTES.md](1-unreal-source/NOTES.md) | done: both answered from the installed 5.8.2; the GitHub clone refused |
-| 2. One sash window from measured numbers | [2-sash-window/NOTES.md](2-sash-window/NOTES.md) | in progress |
-| 3. One jacket from a pre-1929 draft | [3-jacket/NOTES.md](3-jacket/NOTES.md) | in progress |
+| 2. One sash window from measured numbers | [2-sash-window/NOTES.md](2-sash-window/NOTES.md) | done: passes its check and, on narrow points, a fresh review |
+| 3. One jacket from a pre-1929 draft | [3-jacket/NOTES.md](3-jacket/NOTES.md) | done: the pattern exact and checked; the drape failed its review; the lapel did not hold |
 
 The page for Jafar: [LAB-REPORT.md](LAB-REPORT.md) (at the end).
 
