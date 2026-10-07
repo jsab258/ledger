@@ -87,7 +87,8 @@ His binding rulings; the later stands; canon.md outranks them.
 - 1 Oct (D48): The model is chosen by the kind of moment (small talk lighter, real conversation better), never by the character.
 - 24 Sep: The paid router stays; a local model later as the fallback offline; three router changes owed; no training on its answers.
 - 23 Sep: The talk runs beside the game as the tested C# helper, not rewritten in C++.
-- 7 Oct, speech: no prepared openings. Measured, two seconds not reached: reported failed as a blocked core capability. No third attempt at the voice itself; no cloud voice; the faster first sentence off. A time-boxed research step on the first sentence's check (speaking while it runs, a lighter check, the facts chosen before writing) is proposed to him.
+- 7 Oct, speech: no prepared openings. Two seconds not reached: failed, a blocked core capability. No third attempt at the voice; no cloud voice; the faster first sentence off. A time-boxed study of the first sentence's check (speak while it runs, a lighter check, facts chosen first) proposed.
+- 7 Oct, lighting: day and night now; later four or five lighting states with transitions, no moving sun; not in phase 1.
 - 23 Sep: Offline or slow: the authored street carries on, an in-character brush-off and a small sign; a slow line dropped after about 8 s.
 - 24 Sep: Before outsiders play: the AI notice before the first talk, a way to report any line, the content rule on live speech; Steam's AI disclosure as drafted.
 - 29 Sep: Live talk names no real make, brand, shop, club, programme, paper or public figure, and nothing after 1992.

@@ -1071,33 +1071,12 @@ def main_after_idle(seconds=20.0, settle=15.0):
         # at the default 0.16, so the brows read pale ash under dark hair in four reviews. Epic's own
         # example (MetaHumanCharacter/Content/Python/examples/example_add_grooms.py): assemble for
         # preview, read the item's instance parameters, set_float.
+        # SET AT THE BUILD (7 October): a character's instance parameters exist only once its
+        # collection is built (the plugin's own log: "GetAssemblyParameters failed ... because the
+        # Collection is not built"); set here, and after rigging, every groom answered with none.
+        # The build step builds, sets them (set_groom_params) and builds again.
         if c.get("groom_params"):
-            try:
-                sub.assemble_for_preview(character=ch)
-                set_n = 0
-                for slot, vals in c["groom_params"].items():
-                    item = slot_items.get(slot)
-                    if item is None:
-                        notes.append("groom-params-%s-no-item" % slot)
-                        continue
-                    params = ch.internal_collection.default_instance.get_instance_parameters(
-                        item_path=unreal.MetaHumanPaletteItemPath(item_key=item))
-                    # THE NAME IS THE ENGINE'S OWN TYPE (7 October): `prm.name in vals` looked an
-                    # unreal.Name up among plain strings and never matched, so N1 to N3 set nothing
-                    # ("groom-params-0"); Epic's example compares with ==. Read as text, and the
-                    # names found are kept when none matches.
-                    names = [str(prm.name) for prm in params]
-                    hit = 0
-                    for prm in params:
-                        if str(prm.name) in vals:
-                            prm.set_float(value=float(vals[str(prm.name)]))
-                            hit += 1
-                    if hit == 0:
-                        notes.append("groom-params-%s-none-of-%s" % (slot, "|".join(names[:12]) or "nothing"))
-                    set_n += hit
-                notes.append("groom-params-%d" % set_n)
-            except Exception as e:
-                notes.append("groom-params-refused-%s" % type(e).__name__)
+            notes.append("groom-params-at-build")
         if c.get("no_makeup"):
             sub.commit_makeup_settings(ch, unreal.MetaHumanCharacterMakeupSettings())
             notes.append("no-makeup")
@@ -1218,6 +1197,44 @@ def main_after_idle(seconds=20.0, settle=15.0):
         write(status_line(step_name, st["who"], st["preset"], "ASKED", time.time() - st["tc"],
                           "+".join(notes) + ";rig-and-textures-requested"))
 
+    def set_groom_params(ch):
+        """THE GROOMS' COLOURS ON THE CHARACTER, BEFORE THE BUILD (7 October; production/research/
+        casting/TOM-FACE-METHOD-2026-10-07.md, section 2): each groom's Melanin, Redness and the
+        rest are the character's instance parameters, and the build bakes the brows' into the face
+        skin as a painted layer; recolour_hair's write to the built groom material afterwards left
+        that layer at the default 0.16, so the brows read pale ash under dark hair in four reviews.
+        Epic's own example (MetaHumanCharacter/Content/Python/examples/example_add_grooms.py):
+        assemble for preview, read the item's instance parameters, set_float. The names are the
+        engine's own type, compared as text. Returns the note for the READY line."""
+        vals_by_slot = (brief(st["who"]) or {}).get("groom_params")
+        if not vals_by_slot:
+            return ""
+        try:
+            inst = ch.internal_collection.default_instance
+            items = {}
+            for d in inst.get_slot_selection_data():
+                sel = d.get_editor_property("selection")
+                items.setdefault(str(sel.get_editor_property("slot_name")), sel.get_editor_property("selected_item"))
+            set_n, notes = 0, []
+            for slot, vals in vals_by_slot.items():
+                item = items.get(slot)
+                if item is None:
+                    notes.append("%s-no-item" % slot)
+                    continue
+                params = inst.get_instance_parameters(item_path=unreal.MetaHumanPaletteItemPath(item_key=item))
+                names = [str(prm.name) for prm in params]
+                hit = 0
+                for prm in params:
+                    if str(prm.name) in vals:
+                        prm.set_float(value=float(vals[str(prm.name)]))
+                        hit += 1
+                if hit == 0:
+                    notes.append("%s-none-of-%s" % (slot, "|".join(names[:12]) or "nothing"))
+                set_n += hit
+            return ";groom-params-%d%s" % (set_n, ("+" + "+".join(notes)) if notes else "")
+        except Exception as e:
+            return ";groom-params-refused-%s" % type(e).__name__
+
     def poll_cloud():
         ch = st["ch"]
         now = time.time()
@@ -1253,6 +1270,12 @@ def main_after_idle(seconds=20.0, settle=15.0):
         p.set_editor_property("pipeline_quality", unreal.MetaHumanQualityLevel.MEDIUM if q == "medium" else unreal.MetaHumanQualityLevel.HIGH)
         p.set_editor_property("absolute_build_path", BUILD_ROOT)
         sub.build_meta_human(ch, p)
+        # THE GROOMS' COLOURS, ON THE BUILT CHARACTER, THEN BUILT AGAIN so the brows' painted layer
+        # in the face skin is baked with them (set_groom_params).
+        groom_note = set_groom_params(ch)
+        if groom_note and not groom_note.startswith(";groom-params-0") and "refused" not in groom_note:
+            sub.build_meta_human(ch, p)
+            groom_note += "+rebuilt"
         made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT + "/" + asset_name(st["who"], BARE), recursive=True, include_folder=False)
         recoloured = recolour_hair(st["who"], made)
         # ONLY THIS CHARACTER'S FOLDER (25 September): saving the whole build
@@ -1260,7 +1283,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
         # it, so each build ran heavier than the last until this PC ran out.
         unreal.EditorAssetLibrary.save_directory(BUILD_ROOT + "/" + asset_name(st["who"], BARE), only_if_is_dirty=False, recursive=True)
         write(status_line(step_name, st["who"], st["preset"], "BUILT", time.time() - st["tc"],
-                          "%d-assets-optimized-%s;hair-materials-recoloured-%d" % (len(made), os.environ.get("LEDGER_MH_QUALITY", "high").lower(), recoloured)))
+                          "%d-assets-optimized-%s;hair-materials-recoloured-%d%s" % (len(made), os.environ.get("LEDGER_MH_QUALITY", "high").lower(), recoloured, groom_note)))
 
     # LEDGER_MH_STEP=dress: Epic's plain clothes on a prepared take, nothing
     # else changed (24 September, overnight): the plugin's T-shirt and shorts

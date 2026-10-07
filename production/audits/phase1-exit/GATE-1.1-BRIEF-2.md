@@ -39,3 +39,12 @@ Visuals against the Hook sheet (production/reference/hook-sheet.png) and the two
 ## What the reviewer returns
 
 PASS, or FAIL with every fault worst first, each tied to the picture it is seen in; which of the first review's seven points are answered and which are not.
+
+## This round's outputs (7 October, 14:45)
+
+- The commit and package: 67c51f5, packaged by the build machine (its own result commit after it); the played copy F:/LedgerTools/played-game is that package.
+- The office through its window, by day and at night, and the three street views: ue-probe/ue-vign_mickeys_day.png, ue-vign_mickeys_night.png, ue-vign_hook_day.png, ue-vign_reverse_day.png, ue-vign_hook_night.png (2560 x 1440, filmed 14:21 in the editor's game mode from the same source; the office camera at x 6.9).
+- The walk-in in the packaged game (-MickeysInside), played by the AI tester: production/playtest/ai-tester/2026-10-07-1444 (24 step pictures and report.md) and its filmed walk, F:/LedgerTools/tmp/ai-tester/film/2026-10-07-1444/walk.gif (44 frames).
+- The game's own shop photographs from the package: F:/LedgerTools/played-game/Windows/LedgerProbe/Saved/PageShots (Rita's and Mickey's fronts, by day and at night, the newest files).
+- Faults the maker knows of and names (not a verdict): the street caught in Mickey's glass by day draws the roofline across the road as large stair steps (three tries failed, set aside: production/research/shop-glass-reflections/CAPTURE-STEPS-2026-10-07.md); the office is built only when the game is started with -MickeysInside, and without it stands lit behind a shut door.
+
