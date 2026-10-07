@@ -38,6 +38,22 @@ namespace Ledger.Core
             // public figures
             "thatcher", "kinnock", "john major", "princess diana", "prince charles", "gazza", "gascoigne", "kylie", "jason donovan",
             "bobby robson", "scargill", "gorbachev", "mandela", "saddam",
+            // REAL PLACES, WRITERS, SINGERS AND WORKS (the talk task of 7 October:
+            // asked "Ever been to London?", Sheila said "I've not been to London";
+            // asked for Shakespeare, Ron said he did not know much about him). Canon
+            // allows Britain and the town's own places; Ireland and Poland are in the
+            // cast's own stories.
+            "london", "westminster", "liverpool", "manchester", "birmingham", "glasgow", "edinburgh", "leeds", "newcastle",
+            "sheffield", "blackpool", "brighton", "bristol", "cardiff", "belfast", "dublin", "southampton", "portsmouth",
+            "plymouth", "nottingham", "leicester", "coventry", "skegness", "scarborough", "margate", "great yarmouth",
+            "isle of wight", "benidorm", "majorca", "mallorca", "costa del sol", "paris", "new york", "america", "australia",
+            "canada", "france", "spain", "germany", "italy", "amsterdam", "hollywood", "piccadilly", "soho",
+            "buckingham palace", "downing street", "big ben", "the thames",
+            "shakespeare", "dickens", "wordsworth", "keats", "tennyson", "byron", "kipling", "masefield", "agatha christie",
+            "conan doyle", "sherlock holmes", "jane austen", "orwell", "catherine cookson", "jackie collins", "jeffrey archer",
+            "james bond", "ian fleming", "beatles", "rolling stones", "elvis", "michael jackson", "cliff richard",
+            "sinatra", "abba", "bowie", "status quo", "duran duran", "star wars", "casablanca",
+            // Not "madonna": the Madonna in Father Walsh's chapel is the town's own.
             // later than 1992
             "mobile phone", "mobile", "cell phone", "cellphone", "smartphone", "internet", "website", "email", "e-mail", "wifi", "wi-fi",
             "texted", "text message", "social media", "selfie", "google", "iphone", "facebook", "twitter", "netflix", "dvd", "laptop",
@@ -48,6 +64,8 @@ namespace Ledger.Core
             "Ford", "Rover", "Jag", "Jaguar", "Transit", "Mini", "Escort", "Sierra", "Capri", "Rolls",
             "Embassy", "Regal", "Players", "Celtic", "Rangers", "Everton", "Spurs", "Arsenal", "BBC", "ITV", "Sun", "Mirror", "Guardian", "Telegraph",
             "Boots", "Heineken", "Queen",
+            // Real towns whose names are also ordinary words: only written as a name.
+            "Hull", "Bath", "Reading", "Derby", "York", "Lincoln", "Chester", "Preston", "Dover", "Wigan", "Hastings",
         };
 
         static readonly Regex AnyCaseRx = Build(AnyCase, RegexOptions.IgnoreCase);
@@ -90,7 +108,7 @@ namespace Ledger.Core
         /// The prompt's rule, in the content rule's shape (ConversationEngine;
         /// here, beside the list, so the era's words live in the one file the
         /// canon gate knows names them in order to refuse them).
-        public const string PromptRule = "- Your world has its own makes, brands, shops, clubs, papers and programmes, and none of them is a real one: never name a real make of car, cigarette, drink or food, a shop, a football club, a newspaper, a television or radio programme or channel, a band or singer, or any real public figure. Say it the way people do without the name: \"an old estate\", \"my usual\", \"the match\", \"the telly\", \"the paper\". It is 1990: nobody has a mobile phone, the internet or email; there is the phone box, a letter, the paper.";
+        public const string PromptRule = "- Your world has its own makes, brands, shops, clubs, papers and programmes, and none of them is a real one: never name a real make of car, cigarette, drink or food, a shop, a football club, a newspaper, a television or radio programme or channel, a band or singer, or any real public figure. Say it the way people do without the name: \"an old estate\", \"my usual\", \"the match\", \"the telly\", \"the paper\". It is 1990: nobody has a mobile phone, the internet or email; there is the phone box, a letter, the paper. Never name a real town, city, country or landmark either, beyond Britain itself and the places named in what you have been told here, not even to say you have never been there: it is \"down south\", \"the city\", \"abroad\". Never sing or recite the words of a real song or poem, quote a real book, film or programme, or name who wrote it: say it your own way, without the words or the name.";
 
         /// The note that asks for a second draft without them.
         public static string SecondDraftNote(IReadOnlyList<string> named) =>

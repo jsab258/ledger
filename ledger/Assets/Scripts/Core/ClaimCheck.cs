@@ -1134,6 +1134,40 @@ namespace Ledger.Core
             return chosen;
         }
 
+        /// WHETHER TWO LINES SHARE A WORD THAT TELLS WHAT THEY ARE ABOUT (the
+        /// ladder's gate, the talk task of 7 October): Bearing's own reading of
+        /// words, so "keys" meets "key" and a greeting or the time of day meets
+        /// nothing. Not a way to choose facts (measured, that misses), only a
+        /// check that one the writer reached for bears on his words at all.
+        public static bool SharesTellingWord(string a, string b) => SharesTellingWord(a, b, null);
+
+        /// As above, with `corpus` everything the character knows: a word in more
+        /// than a fifth of it ("street", "Mickey", in half of every card's items)
+        /// tells nothing about what a line is about, and does not count (the
+        /// fresh set of 7 October: "What's the street like after dark?" answered
+        /// with the cafe's hours, the street in both).
+        public static bool SharesTellingWord(string a, string b, IReadOnlyCollection<string> corpus)
+        {
+            if (string.IsNullOrWhiteSpace(a) || string.IsNullOrWhiteSpace(b)) return false;
+            var words = Telling(a);
+            List<HashSet<string>> each = null;
+            if (corpus != null && corpus.Count > 0)
+            {
+                each = new List<HashSet<string>>();
+                foreach (var t in corpus) if (!string.IsNullOrWhiteSpace(t)) each.Add(Telling(t));
+            }
+            int most = each == null ? int.MaxValue : Math.Max(1, each.Count / 5);
+            foreach (var w in Telling(b))
+            {
+                if (!words.Contains(w)) continue;
+                if (each == null) return true;
+                int df = 0;
+                foreach (var set in each) if (set.Contains(w)) df++;
+                if (df <= most) return true;
+            }
+            return false;
+        }
+
         // Words that tell what a line is about: lower case, a plural's s and a
         // possessive dropped, and none of the words every line has.
         static readonly HashSet<string> Untelling = new HashSet<string>

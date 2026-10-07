@@ -872,30 +872,7 @@ namespace Ledger.Core
         /// they heard with who told them; nothing else is a lead.
         List<TalkLadder.Lead> LadderLeads()
         {
-            var leads = new List<TalkLadder.Lead>();
-            var seen = new HashSet<string>();
-            void Add(string text, bool ruled)
-            {
-                if (string.IsNullOrEmpty(text) || !seen.Add(text)) return;
-                var said = StreetFacts.SaidFor(text);
-                if (said != null)
-                {
-                    var about = StreetFacts.AboutOf(text);
-                    bool other = about != null && about != Card.Id;
-                    leads.Add(new TalkLadder.Lead
-                    {
-                        // Somebody else's job, unless he asked who somebody is or the rule
-                        // table chose it as its answer: a pointer only.
-                        Key = text, Said = other && !ruled && StreetFacts.IsIntroduction(text) && !AsksWho.IsMatch(_turnInput ?? "") ? null : said,
-                        Own = StreetFacts.IsOwn(text, Card.Id), AskWho = other ? StreetFacts.NameOf(about) : null,
-                    });
-                    return;
-                }
-                var teller = TalkLadder.HeardFrom(text);
-                if (teller != null) leads.Add(new TalkLadder.Lead { Key = text, ToldBy = teller });
-            }
             bool ruled = UseRules && LastRule != null && LastRule.Kind != TalkRules.Kind.Scene;
-            if (ruled) foreach (var f in LastRule.Facts) Add(f, true);
             var counts = new Dictionary<string, int>();
             var order = new List<string>();
             lock (_turnLists)
@@ -907,16 +884,12 @@ namespace Ledger.Core
                     }
             var ranked = new List<string>(order);
             ranked.Sort((a, b) => counts[b] != counts[a] ? counts[b].CompareTo(counts[a]) : order.IndexOf(a).CompareTo(order.IndexOf(b)));
-            foreach (var text in ranked) Add(text, false);
-            var kept = new List<string>();
-            foreach (var l in leads)
-                kept.Add((l.Said != null ? "fact" : l.AskWho != null ? "ask" : "told") + "|" + (l.AskWho ?? l.ToldBy ?? "") + "|" + l.Key);
-            LastLeads = kept;
+            var known = new List<string>();
+            foreach (var (_, text) in LastKnown) known.Add(text);
+            var leads = TalkLadder.Leads(_turnInput, Card, ruled ? LastRule.Facts : null, ruled && TalkRules.AboutThemselves(LastRule.Concept), ranked, known);
+            LastLeads = TalkLadder.Describe(leads);
             return leads;
         }
-
-        // He asked who somebody is ("Who's Sheila?", "who was that?").
-        static readonly Regex AsksWho = new Regex(@"\bwho('s|s| is| was| are| were)\b", RegexOptions.IgnoreCase);
 
         /// THE LAST TURN'S LEADS, for reading a run (Ladder): what bore on his
         /// line, each "fact|", "ask|who|" or "told|who|" and its item; empty when

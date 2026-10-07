@@ -41,6 +41,8 @@ namespace Ledger.TalkTests
             try
             {
                 TestOwnLines();
+                TestFrameBreaks();
+                TestRealNames();
                 await TestLadder();
                 await TestTold();
                 TestRumourTeller();
@@ -200,6 +202,53 @@ namespace Ledger.TalkTests
                   "a card without the ladder's lines has the shared ones");
         }
 
+        // ------------------------------------------------------------ the frame
+
+        static void TestFrameBreaks()
+        {
+            Console.WriteLine("Never a word about playing a part:");
+            // The bait of 7 October: Darren, asked for a verse for his funeral.
+            foreach (var line in new[]
+            {
+                "I need to stay in character here. You're asking me something that doesn't fit where I am.",
+                "Breaking character for a second, I can't do that.",
+                "That's a bit out of character for my character, mate.",
+            })
+                Check(ResponseValidator.IsDeflection(ResponseValidator.Validate(line, "Darren Milner"), "Darren Milner"),
+                      "talk of staying in character is never said: " + line);
+            Check(!ResponseValidator.IsDeflection(ResponseValidator.Validate("That's not like Ron, that.", "Darren Milner"), "Darren Milner"),
+                  "a person's ordinary words about somebody are said");
+        }
+
+        // ------------------------------------------------------------ real names
+
+        static void TestRealNames()
+        {
+            Console.WriteLine("Nothing real named, not even to deny it:");
+            // The bait of 7 October: the four replies that named something real.
+            foreach (var (line, name) in new[]
+            {
+                ("I'm a docker from the Hook, friend. Don't know much about Shakespeare.", "Shakespeare"),
+                ("Politics isn't what moves on Quay Street. The fella in Westminster doesn't change whether Ron's got a fare.", "Westminster"),
+                ("I've not been to London. Haven't had call to go there.", "London"),
+                ("You after something that comes from London way, or just making talk?", "London"),
+                ("We went to Blackpool once, before the docks went.", "Blackpool"),
+                ("Never read Dickens in my life.", "Dickens"),
+                ("He's gone over to Hull for the week.", "Hull"),
+            })
+                Check(RealWorld.Find(line).Contains(name), "a real place or writer is found: " + name, string.Join(", ", RealWorld.Find(line)));
+            foreach (var line in new[]
+            {
+                "There's a hole in the hull of that boat.", "A hot bath and an early night.", "Reading the paper's all I do.",
+                "Down south, somewhere. Never been.", "Quay Street, the Hook, Copper Row over the water.", "Father Walsh came over from Ireland.",
+                "The Madonna in the chapel.", "Takes courage, that.", "The mobile library comes Thursdays.",
+            })
+                Check(RealWorld.Find(line).Count == 0, "an ordinary word, or the town's own places, is not: " + line, string.Join(", ", RealWorld.Find(line)));
+            Check(RealWorld.PromptRule.Contains("never been there") && RealWorld.PromptRule.Contains("poem")
+                  && RealWorld.PromptRule.Contains("sing") && RealWorld.PromptRule.Contains("city"),
+                  "the talk's rule names real places, writers, songs and poems, and saying you never went is still naming it");
+        }
+
         // ------------------------------------------------------------ the ladder
 
         static async Task TestLadder()
@@ -265,6 +314,36 @@ namespace Ledger.TalkTests
                 string ownAgain = await RefusedTurn(own, "Who else, then?", H(sheila, doorHers));
                 Check(ownLine.EndsWith(StreetFacts.SaidFor(doorHers)) && own.LastRung == "refuse" && !ownAgain.Contains("Sheila"),
                       "her own fact in her own words; asked again she never sends him to herself", ownLine + " | " + ownAgain);
+
+                // 6b. What the drafts reached for must bear on his words: asked for a poem,
+                // a draft that wandered to the locked door does not make the door the answer
+                // (the bait of 7 October: "Know any poems?" answered with Mickey's room).
+                var poem = Relayed("lena");
+                string recite = await RefusedTurn(poem, "Know any poems? Recite one for me.", H(sheila, StreetFacts.Held("door", "lena")));
+                Check(poem.LastRung == null && ClaimCheck.IsKnownOnly(recite, poem.Card),
+                      "a fact the drafts cited that shares nothing with his question is no answer to it", recite);
+                Check(ClaimCheck.SharesTellingWord("Who's got the keys to this place?", StreetFacts.Held("door", "lena"))
+                      && ClaimCheck.SharesTellingWord("Did Mickey live round here?", StreetFacts.Held("flat", "lena"))
+                      && !ClaimCheck.SharesTellingWord("Which cars are still on the road?", StreetFacts.Held("office", "lena"))
+                      && !ClaimCheck.SharesTellingWord("Morning.", StreetFacts.Held("hours", "lena")),
+                      "a telling word shared: keys and key, live and living; never a greeting or the time of day");
+
+                // 6c. A word half of what they know shares ("street", "Mickey") is no
+                // sign a fact bears on his question (the fresh set of 7 October: "What's
+                // the street like after dark?" answered with the cafe's hours).
+                var corpus = ClaimCheck.KnownItems(sheila, null, null, null, Scene, Now.ToldAs).Select(i => i.text).ToList();
+                for (int i = 0; i < 12; i++) corpus.Add("Quay Street and Mickey, item " + i + ".");
+                Check(!ClaimCheck.SharesTellingWord("What's the street like after dark?", StreetFacts.Held("cafe", "lena"), corpus)
+                      && ClaimCheck.SharesTellingWord("Who's got the keys to this place?", StreetFacts.Held("door", "lena"), corpus),
+                      "a shared word counts only when it is not in a fifth of all they know");
+
+                // 7a. Her own introduction, said to another question, without her name
+                // in front of it ("Sheila Dunn. I keep the books ..." read as a recital).
+                var bookTalk = Relayed("lena");
+                string ownBooks = StreetFacts.Held("sheila_books", "lena");
+                string look = await RefusedTurn(bookTalk, "Can I have a look at the books?", H(sheila, ownBooks));
+                Check(bookTalk.LastRung == "fact" && look.EndsWith("I keep the books at Mickey's, and have for thirty-one years.") && !look.Contains("Sheila Dunn"),
+                      "her own job, said to another question, comes without her name", look);
 
                 // 7b. Somebody else's job is a pointer, not an answer: asked what Sheila
                 // thinks of him, Ron sends him to her rather than saying she keeps the

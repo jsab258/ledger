@@ -47,6 +47,66 @@ namespace Ledger.Core
             public string ToldBy;
             /// A fact about the speaker themselves.
             public bool Own;
+            /// It bears on his words: the rule table chose it, or it shares a
+            /// telling word with his line (ClaimCheck.SharesTellingWord). Only such
+            /// a lead is said, pointed to or named; the rest count only towards
+            /// whether he is pressing on what they already gave him (the bait of 7
+            /// October: asked for a poem, a draft that wandered to the locked door
+            /// made the door the answer).
+            public bool Bears = true;
+        }
+
+        // He asked who somebody is ("Who's Sheila?", "who was that?").
+        static readonly Regex AsksWho = new Regex(@"\bwho('s|s| is| was| are| were)\b", RegexOptions.IgnoreCase);
+
+        /// THE LEADS FOR ONE LINE: what bears on it, the rule table's facts first
+        /// (its answer), then what the refused drafts cited, most cited first. A
+        /// street fact goes with its plain words and whom it is about; a story they
+        /// heard with who told them; nothing else is a lead. Somebody else's job
+        /// is a pointer ("You'd want Sheila for that") unless he asked who
+        /// somebody is or the rule table chose it; their own, said to another
+        /// question, loses the name it opens on. `known` is everything they know,
+        /// so a word common to half of it does not make a fact bear on his line.
+        public static List<Lead> Leads(string line, CharacterCard card, IEnumerable<string> ruleFacts, bool aboutThemselves, IEnumerable<string> cited,
+                                       IReadOnlyCollection<string> known = null)
+        {
+            var leads = new List<Lead>();
+            var seen = new HashSet<string>();
+            bool asksWho = AsksWho.IsMatch(line ?? "");
+            void Add(string text, bool ruled)
+            {
+                if (string.IsNullOrEmpty(text) || !seen.Add(text)) return;
+                var said = StreetFacts.SaidFor(text);
+                if (said != null)
+                {
+                    var about = StreetFacts.AboutOf(text);
+                    bool other = about != null && about != card.Id;
+                    if (!other && StreetFacts.IsIntroduction(text) && !aboutThemselves && !asksWho)
+                        said = WithoutOwnName(said, card.Name, StreetFacts.NameOf(card.Id));
+                    leads.Add(new Lead
+                    {
+                        Key = text, Bears = ruled || ClaimCheck.SharesTellingWord(line, text, known),
+                        Said = other && !ruled && StreetFacts.IsIntroduction(text) && !asksWho ? null : said,
+                        Own = StreetFacts.IsOwn(text, card.Id), AskWho = other ? StreetFacts.NameOf(about) : null,
+                    });
+                    return;
+                }
+                var teller = HeardFrom(text);
+                if (teller != null) leads.Add(new Lead { Key = text, ToldBy = teller, Bears = ClaimCheck.SharesTellingWord(line, text, known) });
+            }
+            if (ruleFacts != null) foreach (var f in ruleFacts) Add(f, true);
+            if (cited != null) foreach (var text in cited) Add(text, false);
+            return leads;
+        }
+
+        /// Leads as a run's record keeps them: "fact|", "ask|who|" or "told|who|"
+        /// and the item, "unrelated " before one that shares nothing with his line.
+        public static List<string> Describe(IEnumerable<Lead> leads)
+        {
+            var kept = new List<string>();
+            foreach (var l in leads)
+                kept.Add((l.Bears ? "" : "unrelated ") + (l.Said != null ? "fact" : l.AskWho != null ? "ask" : "told") + "|" + (l.AskWho ?? l.ToldBy ?? "") + "|" + l.Key);
+            return kept;
         }
 
         /// What one turn on the ladder says: the rung ("fact", "ask", "told",
@@ -87,6 +147,18 @@ namespace Ledger.Core
             return who == null ? line : line.Replace("{who}", who);
         }
 
+        /// Their own plain words without the name they open on ("Sheila Dunn. I
+        /// keep the books ..." becomes "I keep the books ..."): a sentence that
+        /// is only their name, full or short, taken off the front.
+        public static string WithoutOwnName(string said, string fullName, string shortName)
+        {
+            if (string.IsNullOrEmpty(said)) return said;
+            foreach (var name in new[] { fullName, shortName })
+                if (!string.IsNullOrWhiteSpace(name) && said.StartsWith(name.Trim() + ". ", StringComparison.Ordinal))
+                    return said.Substring(name.Trim().Length + 2).TrimStart();
+            return said;
+        }
+
         static readonly Regex Stamp = new Regex(@"^\s*\[[^\]]*\]\s*");
         static readonly Regex HeardFromRx = new Regex(@"^(?:I )?heard from (?<who>[A-Z][\w'’ .-]*?) that\b", RegexOptions.IgnoreCase);
         static readonly Regex ToldWhenAskedRx = new Regex(@"^(?<who>[A-Z][\w'’ .-]*?) told me, when I asked:");
@@ -123,10 +195,10 @@ namespace Ledger.Core
             // when it is all there is, unless he asked about them.
             Lead fact = null;
             foreach (var l in leads)
-                if (l.Said != null && !told(FactMark(l.Key)) && (aboutThemselves || !l.Own)) { fact = l; break; }
+                if (l.Bears && l.Said != null && !told(FactMark(l.Key)) && (aboutThemselves || !l.Own)) { fact = l; break; }
             if (fact == null)
                 foreach (var l in leads)
-                    if (l.Said != null && !told(FactMark(l.Key))) { fact = l; break; }
+                    if (l.Bears && l.Said != null && !told(FactMark(l.Key))) { fact = l; break; }
             if (fact != null)
             {
                 var openers = card?.Own("opener");
@@ -148,12 +220,12 @@ namespace Ledger.Core
             if (ruleAsk != null && ruleAsk != speakerName && !told(AskMark(ruleAsk, ruleTopic)))
                 return Said(step, "ask", LineFor(card, "ask", n, ruleAsk), AskMark(ruleAsk, ruleTopic));
             foreach (var l in leads)
-                if (l.AskWho != null && l.AskWho != speakerName && !told(AskMark(l.AskWho, l.Key)))
+                if (l.Bears && l.AskWho != null && l.AskWho != speakerName && !told(AskMark(l.AskWho, l.Key)))
                     return Said(step, "ask", LineFor(card, "ask", n, l.AskWho), AskMark(l.AskWho, l.Key));
 
             // 3. WHO TOLD THEM a story they only heard.
             foreach (var l in leads)
-                if (l.ToldBy != null && l.ToldBy != speakerName && !told(ToldMark(l.ToldBy, l.Key)))
+                if (l.Bears && l.ToldBy != null && l.ToldBy != speakerName && !told(ToldMark(l.ToldBy, l.Key)))
                     return Said(step, "told", LineFor(card, "told", n, l.ToldBy), ToldMark(l.ToldBy, l.Key));
 
             // 4. A REFUSAL WITH A REASON, in their own words, only at the top of a

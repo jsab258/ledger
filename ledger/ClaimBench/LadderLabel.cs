@@ -32,6 +32,64 @@ static partial class Program
         public bool fell { get; set; }
     }
 
+    /// THE SAME TURNS, THROUGH ANOTHER VERSION OF THE LADDER (ladder-replay
+    /// --from <a run> --dir <out>): the ladder is code, and acts only where both
+    /// drafts were refused; a first question is asked of a fresh engine with
+    /// nothing told. So a run that kept each turn's leads (LastLeads) is replayed
+    /// exactly through TalkLadder.Leads and Climb as they are now: the same
+    /// drafts, the same citations, today's ladder. Writes firsts.jsonl in the
+    /// shape of a run, for ladder-label.
+    static int LadderReplay(string from, string dir)
+    {
+        Directory.CreateDirectory(dir);
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var outRows = new List<object>();
+        int replayed = 0, changed = 0;
+        foreach (var line in File.ReadAllLines(Path.Combine(from, "firsts.jsonl")))
+        {
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            using var d = JsonDocument.Parse(line);
+            var r = d.RootElement;
+            string cardId = r.GetProperty("card").GetString(), probe = r.GetProperty("probe").GetString();
+            string reply = r.GetProperty("reply").GetString(), before = r.GetProperty("before").GetString();
+            bool beforeFell = r.GetProperty("beforeFell").GetBoolean();
+            string rung = r.TryGetProperty("rung", out var rg) && rg.ValueKind == JsonValueKind.String ? rg.GetString() : null;
+            var leadKeys = new List<string>();
+            if (r.TryGetProperty("leads", out var ls) && ls.ValueKind == JsonValueKind.Array)
+                foreach (var x in ls.EnumerateArray())
+                {
+                    var t = x.GetString() ?? "";
+                    int a = t.IndexOf('|'), b2 = a < 0 ? -1 : t.IndexOf('|', a + 1);
+                    if (b2 > 0) leadKeys.Add(t.Substring(b2 + 1));
+                }
+            var known = new List<string>();
+            if (r.TryGetProperty("known", out var kn) && kn.ValueKind == JsonValueKind.Array)
+                foreach (var x in kn.EnumerateArray()) { var t = x.GetString() ?? ""; int c = t.IndexOf(": ", StringComparison.Ordinal); known.Add(c > 0 ? t.Substring(c + 2) : t); }
+            var card = StreetFacts.AddTo(CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, cardId + ".md"))), cardId);
+            // Only where the ladder acted: both drafts refused, today's line its "that's all I know".
+            bool acted = rung != null || (beforeFell && (reply == before || ClaimCheck.IsKnownOnly(reply, card)));
+            if (acted)
+            {
+                replayed++;
+                var choice = TalkRules.Choose(probe, cardId);
+                bool ruled = choice != null && choice.Kind != TalkRules.Kind.Scene;
+                var ruleFacts = ruled ? choice.Facts : new List<string>();
+                var leads = TalkLadder.Leads(probe, card, ruleFacts, ruled && TalkRules.AboutThemselves(choice.Concept), leadKeys.Where(k => !ruleFacts.Contains(k)), known);
+                var step = TalkLadder.Climb(leads, _ => false, card, StreetFacts.NameOf(cardId) ?? card.Name, ruled ? choice.Ask : null, ruled ? choice.Concept : null,
+                                            ruled && choice.Kind == TalkRules.Kind.Partial, ruled && TalkRules.AboutThemselves(choice.Concept), 0);
+                string now = step.Rung == null ? ClaimCheck.KnownOnlyFor(card, 0) : step.Line;
+                if (now != reply) changed++;
+                reply = now;
+                rung = step.Rung;
+            }
+            bool fell = ClaimCheck.IsKnownOnly(reply, card);
+            outRows.Add(new { card = cardId, probe, reply, fell, rung, before, beforeFell, empty = fell || rung == "refuse", replayedFrom = acted });
+        }
+        WriteJsonl(Path.Combine(dir, "firsts.jsonl"), outRows);
+        Console.WriteLine($"ladder replay: {outRows.Count} turns, the ladder acted on {replayed}, its line changed on {changed} -> {Path.Combine(dir, "firsts.jsonl")}");
+        return 0;
+    }
+
     static Dictionary<string, string> AnswerableLabels()
     {
         var benchDir = Path.Combine(RepoRoot(), "production", "research", "invented-claims", "bench");

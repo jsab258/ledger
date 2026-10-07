@@ -117,6 +117,7 @@ static partial class Program
             case "hours": return await Hours(dir, parallel);
             case "bait": return await Bait(args, dir, parallel);
             case "ladder-label": return await LadderLabel(dir, parallel);
+            case "ladder-replay": return LadderReplay(Arg(args, "--from", ""), dir);
             case "bait-label": return await BaitLabel(dir, parallel);
             case "successors": return await Successors(args, Arg(args, "--dir", "F:/LedgerTools/town-scratch/detail-bench"), parallel);
             case "hourslook": return await HoursLook();
