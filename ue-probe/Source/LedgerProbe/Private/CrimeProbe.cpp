@@ -4171,7 +4171,9 @@ namespace
 	// street's piece list and its golden rows are untouched. While Tom is
 	// inside, the camera's arm comes in to the plan's length (-InsideArm=N
 	// tries another), as studios bring a third-person camera in indoors.
-	struct FOfficeMark { std::string Place; double X = 0, Z = 0, FaceX = 0, FaceZ = 0; };
+	// Who (empty: anyone whose day puts them there) and Seated (a seated loop's clip, empty:
+	// standing): 7 October, a mark may be someone's seat (sitting, item 1.2).
+	struct FOfficeMark { std::string Place; double X = 0, Z = 0, FaceX = 0, FaceZ = 0; std::string Who, Seated; };
 	struct FOffice { bool bBuilt = false, bOn = false; double X0 = 0, X1 = 0, Z0 = 0, Z1 = 0, ArmM = 2.0, LiftM = 0.25, PivotM = 0.0; float StreetArm = -1.0f, StreetLift = 0.0f;
 	                 std::vector<FOfficeMark> Marks;   // a place in someone's day that is now inside, and where they stand there
 	                 // his shop door shut until Tom unlocks it, and the room dark until he is in (the spec's "door")
@@ -4335,6 +4337,9 @@ namespace
 					K.Place = Utf8(Place);
 					K.X = M->GetNumberField(TEXT("x")); K.Z = M->GetNumberField(TEXT("z"));
 					K.FaceX = M->GetNumberField(TEXT("face_x")); K.FaceZ = M->GetNumberField(TEXT("face_z"));
+					FString Who, Seated;
+					if (M->TryGetStringField(TEXT("who"), Who)) { K.Who = Utf8(Who); }
+					if (M->TryGetStringField(TEXT("seated"), Seated)) { K.Seated = Utf8(Seated); }
 					GOffice.Marks.push_back(K);
 				}
 			}
@@ -4560,6 +4565,12 @@ namespace
 				GNow = GClock.Now();
 				ClockLight();
 				UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: night, clock %s"), *Un(GNow.ToString()));
+				// -OfficeLit (7 October, sitting): the office lit as it is once Tom has opened it, so
+				// whoever's evening is in it (Ron, seated on the bench) can be seen from the street.
+				if (FParse::Param(FCommandLine::Get(), TEXT("OfficeLit")) && !GOffice.Shop.empty())
+				{
+					LedgerVignetteShot::SetShopRoomLit(GOffice.Shop.c_str(), true);
+				}
 			}
 			if (GPawn != nullptr) { GPawn->SetActorHiddenInGame(true); }
 			// THE SIZE ASKED, drawn whole: the view resized (the game keeps its own
@@ -6773,6 +6784,39 @@ namespace
 		SyncVisual(Body);
 	}
 
+	// SEATED OR STANDING, 7 October (sitting, item 1.2): a person's loop becomes the seated one
+	// (A_<clip>_MH, made by tools/ue/retarget_sitting.py in the import step) on each part whose
+	// skeleton it was made for, and their own idle comes back when they stand. Empty: standing.
+	TMap<TWeakObjectPtr<ULedgerPersonAnim>, TWeakObjectPtr<UAnimSequenceBase>> GStandingLoop;
+	void SeatPerson(AActor* Body, const std::string& Clip)
+	{
+		TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Parts = Body != nullptr ? GLooks.Find(Body) : nullptr;
+		if (Parts == nullptr) { return; }
+		UAnimSequenceBase* Sit = nullptr;
+		if (!Clip.empty())
+		{
+			const FString Leaf = FString::Printf(TEXT("A_%s_MH"), UTF8_TO_TCHAR(Clip.c_str()));
+			const FString Path = FString::Printf(TEXT("/Game/Ledger/Anim/Sit/%s.%s"), *Leaf, *Leaf);
+			Sit = LoadObject<UAnimSequenceBase>(nullptr, *Path);
+			if (Sit == nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerSeat: no seated loop at %s, standing"), *Path); }
+		}
+		for (const TWeakObjectPtr<ULedgerPersonAnim>& W : *Parts)
+		{
+			ULedgerPersonAnim* A = W.Get();
+			if (A == nullptr) { continue; }
+			if (!GStandingLoop.Contains(W)) { GStandingLoop.Add(W, A->Sequence); }
+			const USkeletalMeshComponent* Mc = A->GetSkelMeshComponent();
+			const bool bFits = Sit != nullptr && Mc != nullptr && Mc->GetSkeletalMeshAsset() != nullptr
+			                   && Mc->GetSkeletalMeshAsset()->GetSkeleton() == Sit->GetSkeleton();
+			UAnimSequenceBase* Want = bFits ? Sit : GStandingLoop[W].Get();
+			if (Want != nullptr && A->Sequence != Want)
+			{
+				A->Sequence = Want;
+				UE_LOG(LogTemp, Display, TEXT("LedgerSeat: %s's %s now loops %s"), *Body->GetName(), *GetNameSafe(Mc), *Want->GetName());
+			}
+		}
+	}
+
 	void ShowPerson(AActor* Body, bool bShow)
 	{
 		TWeakObjectPtr<AActor>* V = GVisuals.Find(Body);
@@ -6850,17 +6894,21 @@ namespace
 			double YawDeg = It->second.YawDeg;
 			// INSIDE MICKEY'S, once it is built (-MickeysInside): her day's office is
 			// her desk, not the pavement by its window.
+			// A MARK NAMING SOMEONE IS THEIRS ALONE (7 October: Ron's seat on the bench is not
+			// Sheila's desk), and a seated one keeps them on it.
+			const FOfficeMark* Seat = nullptr;
 			for (const FOfficeMark& K : GOffice.Marks)
 			{
-				if (GOffice.bOn && K.Place == It->second.Place)
+				if (GOffice.bOn && K.Place == It->second.Place && (K.Who.empty() || K.Who == C))
 				{
 					X = K.X; Z = K.Z;
 					YawDeg = FMath::RadiansToDegrees(std::atan2(K.FaceZ - K.Z, K.FaceX - K.X));
+					Seat = K.Seated.empty() ? nullptr : &K;
 				}
 			}
 			// NEVER ONTO ANOTHER OF THE THREE, wherever they stand now (placed this
-			// hour or held back by a conversation).
-			for (int Pass = 0; Pass < 2; ++Pass)
+			// hour or held back by a conversation); a seat is kept.
+			for (int Pass = 0; Pass < 2 && Seat == nullptr; ++Pass)
 			{
 				for (const char* Other : Cards)
 				{
@@ -6870,7 +6918,7 @@ namespace
 					if (std::fabs(There.X - X) < 0.9 && std::fabs(There.Z - Z) < 0.9) { X += 1.1; }
 				}
 			}
-			if (GPawn != nullptr)
+			if (GPawn != nullptr && Seat == nullptr)
 			{
 				const LedgerCrime::P3 Him = ToStreet(GPawn->GetActorLocation());
 				if (std::fabs(Him.X - X) < 1.0 && std::fabs(Him.Z - Z) < 1.0) { X += 1.2; }
@@ -6884,8 +6932,15 @@ namespace
 				continue;
 			}
 			GHeldBackSince.erase(C);
-			// On the pavement, never on a thing (PlaceToStand: Sheila stood on the fish market's crate).
-			const LedgerCrime::StandPlace Stand = LedgerCrime::PlaceToStand(X, Z, [World](double PX, double PZ) { return FeetYAt(World, PX, PZ); });
+			// On the pavement, never on a thing (PlaceToStand: Sheila stood on the fish market's crate);
+			// ON a seat, though, its feet at the floor in front of it (7 October).
+			LedgerCrime::StandPlace Stand = LedgerCrime::PlaceToStand(X, Z, [World](double PX, double PZ) { return FeetYAt(World, PX, PZ); });
+			if (Seat != nullptr)
+			{
+				const double Fx = X + 0.7 * std::cos(FMath::DegreesToRadians(YawDeg)), Fz = Z + 0.7 * std::sin(FMath::DegreesToRadians(YawDeg));
+				Stand = { X, Z, FeetYAt(World, Fx, Fz), false };
+			}
+			SeatPerson(Body, Seat != nullptr ? Seat->Seated : std::string());
 			if (Stand.bMoved)
 			{
 				UE_LOG(LogTemp, Display, TEXT("LedgerDay: %s stands off a thing at (%.1f, %.1f): at (%.2f, %.2f), feet %.2f m"),

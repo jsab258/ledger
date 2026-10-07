@@ -155,6 +155,9 @@ namespace
 			FAnimInstanceProxy::PreUpdate(InAnimInstance, DeltaSeconds);
 			if (const ULedgerPersonAnim* A = Cast<ULedgerPersonAnim>(InAnimInstance))
 			{
+				// A NEW LOOP, 7 October (sitting, item 1.2): the game may swap a person's loop, the
+				// seated one for the standing idle, and the player takes it on its next update.
+				if (A->Sequence != nullptr && Player.GetSequence() != A->Sequence) { Player.SetSequence(A->Sequence); }
 				Look.Alpha = A->LookAlpha;
 				Look.LookAtLocation = A->LookTarget;
 				Mouth.Alpha = A->SpeakWeight;

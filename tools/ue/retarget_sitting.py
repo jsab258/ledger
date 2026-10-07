@@ -101,6 +101,16 @@ def main():
         rc = unreal.IKRigController.get_controller(src_rig)
         rc.set_skeletal_mesh(src_mesh)
         auto_ok = rc.apply_auto_generated_retarget_definition()
+        # THE HIPS ARE THE ROOT THE MOTION IS READ FROM (7 October, the first retarget: the
+        # auto-made rig took the skeleton's top node, the empty the Blender export adds, so the
+        # MetaHuman's pelvis came out at the floor under a standing spine, lying in mid-air).
+        hips = next((str(n) for n in src_mesh.get_editor_property("skeleton").get_reference_pose().get_bone_names()
+                     if str(n).lower().endswith("hips")), None)
+        if hips:
+            try:
+                rc.set_retarget_root(unreal.Name(hips))
+            except Exception as e:
+                notes.append("%s:retarget-root-refused-%s" % (clip, str(e)[:40].replace(" ", "~")))
         rtg = tools.create_asset("RTG_" + clip + "_to_MH", dest, unreal.IKRetargeter, unreal.IKRetargetFactory())
         ctrl = unreal.IKRetargeterController.get_controller(rtg)
         ctrl.set_ik_rig(unreal.RetargetSourceOrTarget.SOURCE, src_rig)
