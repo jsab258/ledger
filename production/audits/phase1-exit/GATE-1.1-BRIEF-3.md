@@ -33,10 +33,11 @@ No overall pass or fail: the maker reads the three lists against the ruling.
 | V7 | Rita's front at night | package pawnbroker-square-shopnight | package-pawnbroker-square-shopnight.png | the glass; the wear |
 | V8 | The walk-in at Mickey's door | the tester's walk-in, its step at the door | walkin-step-017.jpg | Tom's modern tracksuit (clothes) |
 | V9 | The walk-in inside the office | the tester's walk-in, its steps inside | walkin-step-022.jpg, walkin-step-024.jpg | the indoor camera close on the wall (P15, phase 2's exit); the back doorway |
+| V10 | Mickey's own front, day and night (two pictures, one view) | package mickeys-shop and mickeys-shopnight (-PageShopList=mickeys@6.87) | none: first time shown; judged against the bar only | the glass steps; the base layer on anyone in frame |
 
 ## What changed on the evening of 7 October (where to look, not a verdict)
 
-The houses past the bend given brick sides and gables (V1's black block); the west shops' rooms behind their glass and each row's slates one piece (V2); Sheila beside Mickey's door and the cab rank at the door, out of the office camera (V4); Enter shows a long line's end and the talk prompt needs its person in sight (V8, V9); the office dark until Tom has the key (V4, V5); grime at the foot of the painted and tiled fronts, in their own material (V1, V6, V7).
+The houses past the bend given brick sides and gables (V1's black block); the west shops' rooms behind their glass and each row's slates one piece (V2); Sheila beside Mickey's door and the cab rank at the door, out of the office camera (V4); Enter shows a long line's end and the talk prompt needs its person in sight (V8, V9); the office dark until Tom has the key (V4, V5); grime at the foot of the painted and tiled fronts, in their own material (V1, V6, V7, V10). Late that night: Ron seated on the office bench in his evening hours (V5 if the package's night is his), and the cast turning their bodies to Tom (not visible in a still).
 
 ## The outputs
 

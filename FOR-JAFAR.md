@@ -54,6 +54,16 @@ Disk (10-07 19:00): C: 96.3 GB free, F: 39.7 GB free (the NoAI folders gone, as 
 - **5. The first town:** after the pilot.
 - **Friends:** eight to twelve weeks, if phase 1 passes; low confidence.
 
+## Builder, Thursday 8 October
+
+**Failed:** the speaker's walk. Sheila walks 7 m along the pavement, but where its clips join, a planted foot slides 13 to 27 cm (the bar is 3 cm). Item 1.1's third review waits for tonight's package.
+
+**Done (in tonight's build):** turning: if someone Tom talks to has turned away, they turn to face him: asked 100°, turned 99.6° ([picture](production/previews/turn-to-him-2026-10-08.jpg)). Sitting: Ron, on the office bench in his evening hours, stands up and sits down again, landing within 1 cm of his seat with no foot slip ([picture](production/previews/sit-stand-office-2026-10-08.jpg)). The library's own turns crouched and its only sit-down bent him double, so the right turn is a left turn mirrored and the sit-down is the stand-up played backwards. Your gate ruling is in; tonight's review has ten views, one reviewer each.
+
+**Two-tries rule broken:** the walk's joins: three tries before the research, three after it; set aside.
+
+**Act on:** Tom's face: research the other route, or pick a take?
+
 ## Builder, Wednesday 7 October
 
 **Failed:** speech: 4.6 s median, 4.0 with a faster first sentence; a blocked capability, your answer. Item 1.1's second review: the glass worst, then the office lit, the cast's base layer, a black block, faint wear. Tom's face: blocked. Plain clothes: the made outfit failed its third review and the ready-made CC0 pieces their checks; failed for now (Needs you 3).

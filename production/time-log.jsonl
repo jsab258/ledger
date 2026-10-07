@@ -43,3 +43,7 @@
 {"event": "stop", "at": "2026-10-08T01:02:00", "note": ""}
 {"event": "start", "at": "2026-10-08T01:02:00", "task": "8 Oct night: sitting down and standing up, proof; walk research back", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T01:31:00", "note": ""}
+{"event": "start", "at": "2026-10-08T01:31:00", "task": "8 Oct night: walk research steps 1, 3, 4 measured and tried, set aside; summary draft", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T01:47:00", "note": ""}
+{"event": "start", "at": "2026-10-08T01:47:00", "task": "8 Oct night: walk step 6 tried and set aside; review record skeleton", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T01:48:00", "note": ""}

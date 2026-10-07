@@ -49,3 +49,13 @@
 15. Project: PersonAnim, WalkProofTick, F:\LedgerTools\scratch walk_*, METHOD, LOCOMOTION. Disk.
 
 Unreached: none.
+
+## Step 1, measured (8 October, 01:34; F:/LedgerTools/scratch/walk_idle.txt)
+
+The set's own `AS_MH_Neutral_Stand_Idle_Loop` meets the start's first frame and the stop's last within 3.6 to 5.1 cm at each ball and foot (the stop ends in the start's own first pose); its feet move at most 0.4 cm over its 300 frames. The cast's idle (mhc_mh001) is 19.5 to 27.4 cm off. But that stand idle was set aside on 3 October (V6): it set Ron and Sheila wide-legged and braced, a game hero's ready pose. So the walk keeps mh001 and needs step 6 (the travel warped before the first foot lifts) or a short weight shift into the walk's stance; steps 3 to 5 stand as written.
+
+## Steps 3 and 4, tried (8 October, 01:38 and 01:42; diffs in F:/LedgerTools/scratch/walk-*-try.diff)
+
+Step 3 as written (her travel taken to where the clip will be at the next draw, and the feet measured before she moves) made every steady step slip 16 to 20 cm: in this game the move is not a frame behind the drawn pose, so the section 2, point 4 inference does not hold here; reverted. Step 4 (the hold by the ball, the ankle's target the held ball plus the clip's ball-to-ankle): the stop fell to 3 cm, the first step rose to 27 cm; not kept. The first step is the stance mismatch, so step 6 comes next. Set aside for tonight after these tries.
+
+Step 6, tried at 01:46 on top of step 4 (walk-warp-try.diff): the body slid 25.8 cm over the left foot's first stance; the right's first step fell to 5.7 cm but the held left slid 42 cm, likely pulled out of the leg's reach (stretching off) as the body moved back. Next time: measure the leg's reach during the warp, and warp only within it, with a weight shift for the rest (section 1, "a step"). Six tries tonight in all; set aside until then.
