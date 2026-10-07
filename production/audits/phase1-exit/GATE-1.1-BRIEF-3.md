@@ -28,7 +28,7 @@ Visuals against the Hook sheet (production/reference/hook-sheet.png) and the two
 - 3: Sheila (in the locked office by her day) waits beside Mickey's door, and whoever waits at the cab rank stands at the door, not in front of the window (hook-cast.json body_x_m). The base layer stays: plain clothes are a failed capability for now, reported to Jafar (production/audits/clothing/RON-OUTFIT-REVIEW-3.md; his ruling of 4 October keeps the base layer meanwhile).
 - 4: the houses past the bend given sides and gables (tools/art-recipes/terrace-front.py _kit_house_sides). The hill is phase 2's (PLAN.md).
 - 5: the west shops show their own rooms; each row's slates one piece.
-- 6: the shopfront and counter-front wear strengthened, and Mickey's own front given it too (tools/street_wear.py FRONT_WEAR, KIT_FRONTS).
+- 6: the maker found the shopfront marks never showed (projected marks do not land on paint, a rule of 3 October against streaked "marble"); two tries tonight, set aside, research next. The maker knows the fronts read clean.
 - 7: the office camera walked is P15, phase 2's exit (PLAN.md).
 - 8, two narrow points: Enter now shows the rest of a long line before moving on; a person's talk prompt needs them in sight.
 
