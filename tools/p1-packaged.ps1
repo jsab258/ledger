@@ -12,7 +12,10 @@
 # screen size (3440x1440) and the game's own 55%. Each writes one JSON line (tools/perf-hook.py) and
 # its memory line to production/research/pre-production/p1-packaged/runs.jsonl. It refuses to start
 # while the build machine or an Unreal editor runs (their graphics work would be in the numbers).
-param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660)
+param([string]$Exe = "F:\LedgerTools\played-game\Windows\LedgerProbe\Binaries\Win64\LedgerProbe.exe", [int]$Frames = 1800, [int]$VoiceSeconds = 660)
+# THE REAL BINARY, 7 October: the copy's top-level LedgerProbe.exe is a launcher stub that starts this one and
+# lingers, so the first run measured the stub (1 MB) and, when stopped, left the game itself running all
+# night. The real binary takes the project's name as its first argument.
 $repo = Split-Path $PSScriptRoot -Parent
 Set-Location $repo
 if (Get-Process Runner.Worker, UnrealEditor*, LedgerProbe* -ErrorAction SilentlyContinue) { "p1Packaged status=BUSY (the build machine, an editor or a game is running)"; exit 2 }
@@ -20,7 +23,7 @@ if (-not (Test-Path $Exe)) { "p1Packaged status=NO-GAME exe=$Exe"; exit 2 }
 $outDir = Join-Path $repo "production\research\pre-production\p1-packaged"
 New-Item -ItemType Directory -Force $outDir | Out-Null
 $runs = Join-Path $outDir "runs.jsonl"
-$gameDir = Join-Path (Split-Path $Exe -Parent) "LedgerProbe"
+$gameDir = Split-Path (Split-Path (Split-Path $Exe -Parent) -Parent) -Parent   # ...\Windows\LedgerProbe, where Saved is
 $csvDir = Join-Path $gameDir "Saved\Profiling\CSV"
 $tmp = "F:\LedgerTools\tmp\p1-packaged"
 New-Item -ItemType Directory -Force $tmp | Out-Null
@@ -60,7 +63,7 @@ $matrix = @(
 )
 foreach ($m in $matrix) {
   Remove-Item "$csvDir\*" -Force -ErrorAction SilentlyContinue
-  $a = @("-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkFake", "-NoTitle") + $m.args + @(
+  $a = @("LedgerProbe", "-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkFake", "-NoTitle") + $m.args + @(
          "-PerfHookFrames=$Frames", "-csvGpuStats", "-ExitAfterCsvProfiling", "-RenderOffScreen", "-ResX=3440", "-ResY=1440",
          "-windowed", "-ForceRes", "-nosplash", "-unattended", "-dpcvars=r.ScreenPercentage=55,t.MaxFPS=0,r.VSync=0")
   $t0 = Get-Date
@@ -69,6 +72,7 @@ foreach ($m in $matrix) {
   $samples = @()
   while (-not $p.HasExited -and ((Get-Date) - $t0).TotalMinutes -lt 8) { Start-Sleep 2; $samples += ,(Sample-Memory $p.Id $voicePids) }
   if (-not $p.HasExited) { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue }
+  Get-Process LedgerProbe -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue   # nothing of this capture outlives it
   Start-Sleep 2
   $csv = Get-ChildItem $csvDir -Filter *.csv -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 1
   $perf = if ($csv) { (& $py tools/perf-hook.py $csv.FullName --label $m.label) -join "" } else { "{`"label`": `"$($m.label)`", `"status`": `"NO-CSV`"}" }

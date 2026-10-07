@@ -44,6 +44,7 @@ FIXED = [
     "production/specs/credits.json",   # the credits page (1 October, LedgerCredits.cpp)
     "THIRD-PARTY.md",   # the attributions travel with every copy (the rulings sweep, 1 October: "the attributions themselves, for everything shipped")
     "production/specs/street-wear.json",   # the street's wear layer, D53, placed by tools/street_wear.py (1 October, VignetteShot.cpp SpawnWear)
+    "production/specs/vignette-scene.json",   # the scene's cameras, for the packaged copy's perf hook and page shots (7 October: P1 found "no cam_hook" and waited all night)
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"

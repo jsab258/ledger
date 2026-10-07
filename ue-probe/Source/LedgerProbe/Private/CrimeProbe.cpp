@@ -4668,6 +4668,9 @@ namespace
 			{
 				UE_LOG(LogTemp, Display, TEXT("LedgerPerfHook: no cam_hook in the scene file (%s)"), *Path);
 				Mode.Empty();
+				// A MEASUREMENT THAT CANNOT START ENDS THE GAME it was asked of (7 October: the packaged
+				// copy lacked the scene file, and three captures waited all night, blocking the walk).
+				if (FParse::Param(FCommandLine::Get(), TEXT("ExitAfterCsvProfiling"))) { FPlatformMisc::RequestExit(false); }
 				return;
 			}
 			if (FParse::Param(FCommandLine::Get(), TEXT("PerfHookNight")))
