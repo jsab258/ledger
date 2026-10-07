@@ -4135,6 +4135,26 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("rootMotionClips=RAISED rootMotionNote=%s\n"
                          % str(_rm_err).replace(" ", "~")[:160])
+    # ---- AND SITTING, 7 October (phase 1, item 1.2) ---------------------------
+    # tools/ue/retarget_sitting.py: the sit-down, the seated loop and the stand-up
+    # (tools/meshgen/blender/sitting_clips.py, game inputs on F:) retargeted onto the
+    # cast's skeleton as A_<clip>_MH, made here and never pushed. Its own line; a
+    # fault there prints as a sittingClips key.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import retarget_sitting
+            retarget_sitting.main()
+        except Exception as _sit_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("sittingClips=RAISED sittingNote=%s\n"
+                         % str(_sit_err).replace(" ", "~")[:160])
     # ---- AND THE STREET'S PEOPLE, 23 September, FOR THE SAME REASON --------
     # tools/ue/import_people.py: each production/assets/people/*.glb becomes
     # a skeletal mesh and its animation, for the presentable checklist's

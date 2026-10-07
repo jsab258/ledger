@@ -57,6 +57,12 @@ WATCHED = {
     # the MetaHuman plugin's walk clips with their travel baked in (tools/ue/make_root_motion_clips.py,
     # 6 October): made in the import step, never pushed
     "ue-probe/Content/Ledger/Anim": "MetaHuman",
+    # and sitting, 7 October: Mixamo's clips retargeted onto the MetaHuman skeleton
+    # (tools/ue/retarget_sitting.py), made in the import step, never pushed
+    "ue-probe/Content/Ledger/Anim/Sit": ("Mixamo", "MetaHuman"),
+    # the retargeting's working files (each Mixamo source, its IK rig and retargeter), made by the
+    # same step under /Game/Retarget, which the build never cooks
+    "ue-probe/Content/Retarget": ("Mixamo", "MetaHuman"),
     "ue-probe/Content/MH_Test.uasset": "MetaHuman",
     "ue-probe/Content/Ledger/Export": "MetaHuman",
     "ue-probe/Content/Ledger/Cloth": ("MakeHuman", "FreeSewing"),
