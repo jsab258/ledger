@@ -1,0 +1,4527 @@
+{
+ "status": "AMENDED 8 October 2026 (cloud week 42) from the lab's target of the same day. The photographs P1 and P2 decide every point where they disagree with a book (Jafar's ruling); every element of both photographs was gone through again, edges and furniture included. self_check below is written by self_check.py.",
+ "units": "mm",
+ "axes": "x across the opening (left to right seen from outside), z up, y depth into the wall with the outside at -y. Origin: the left brick reveal edge (x=0), the top of the stone threshold under the leaf (z=0), the outside face of the brick wall (y=0). Ground is below z=0 (T1 -258, F1 -70). glb pivot: base centre on the ground, x = the opening's centre (T1 441, F1 472), y = 0, z = ground.",
+ "default_variant": "terrace_four_panel",
+ "glb_pivot": {
+  "terrace_four_panel": [
+   441.0,
+   0.0,
+   -258.0
+  ],
+  "flat_door_over_shop": [
+   472.0,
+   0.0,
+   -70.0
+  ]
+ },
+ "kind": "T1",
+ "opening": {
+  "width_mm": 882.0,
+  "crown_height_mm": 2340.0,
+  "springing_height_mm": 2322.0,
+  "camber_rise_mm": 18.0,
+  "clear_between_stops_mm": 772.0,
+  "clear_height_to_transom_mm": 1937.6,
+  "reveal_depth_mm": 114.3,
+  "wall_thickness_mm": 342.9,
+  "_src": "Derived: clear between stops 772 (leaf 812.8 + 2 x 1.6 - 2 x 22) plus the jamb showing past the brick 55 each side. Crown 2340 / ends 2322: Photo P1 head top rows 78 (centre) and 81.5 (ends), +-1.5 px = +-8 mm (lab: flat 2329.6)."
+ },
+ "leaf": {
+  "width_mm": 812.8,
+  "height_mm": 1948.0,
+  "thickness_mm": 50.8,
+  "x0_mm": 34.6,
+  "z0_mm": 10.0,
+  "outside_face_y_mm": 188.3,
+  "edge_clearance_mm": 1.6,
+  "arris_ease_mm": 1.5,
+  "stile_mm": 114.3,
+  "muntin_mm": 120.0,
+  "top_rail_mm": 127.0,
+  "lock_rail_mm": 228.6,
+  "lock_rail_centre_above_leaf_bottom_mm": 787.0,
+  "bottom_rail_mm": 192.8,
+  "hung": "left-hand hinges seen from outside (the lock stile is on the right in both photographs), opening inwards",
+  "_src": "Read: width 2 ft 8 in Hasluck p.347; thickness 2 in Ellis p.93; stiles 4 1/2 in Ellis p.93, Riley p.357; top rail 5 in Riley p.357; lock rail 9 in Ellis p.93. Photo P1 (lab D1-D4, D8): height 1948 +-31, lock rail centre 787 +-12, bottom rail 192.8 +-15. Muntin 120 +-10 re-measured on P1 (D2, revised): visible gap between mouldings 21.5 +-2 px = 111 mm, plus two laps of 4.8."
+ },
+ "panels": {
+  "openings_leaf_uv_mm": {
+   "top_left": {
+    "u0": 114.3,
+    "u1": 346.4,
+    "v0": 901.3,
+    "v1": 1821.0
+   },
+   "top_right": {
+    "u0": 466.4,
+    "u1": 698.5,
+    "v0": 901.3,
+    "v1": 1821.0
+   },
+   "bottom_left": {
+    "u0": 114.3,
+    "u1": 346.4,
+    "v0": 192.8,
+    "v1": 672.7
+   },
+   "bottom_right": {
+    "u0": 466.4,
+    "u1": 698.5,
+    "v0": 192.8,
+    "v1": 672.7
+   }
+  },
+  "groove_depth_mm": 12.7,
+  "side_play_mm": 3.2,
+  "thickness_mm": 16.9,
+  "position_in_thickness": "centred",
+  "type_outside": "flat panel, bolection moulding on all four sides",
+  "type_inside": "flat panel, single planted moulding",
+  "_src": "Read: Ellis p.92 (groove 1/2 in, play 1/8 in), Riley p.353 (third of the door), p.357 (bolection outside, single inside)."
+ },
+ "mouldings": {
+  "outside_bolection": {
+   "width_on_face_mm": 36.0,
+   "lap_over_framing_mm": 4.8,
+   "projection_above_framing_mm": 7.0,
+   "panel_face_below_framing_mm": 16.95,
+   "profile_dh_mm": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     3.5
+    ],
+    [
+     1.4,
+     5.8
+    ],
+    [
+     3.5,
+     6.9
+    ],
+    [
+     5.5,
+     7.0
+    ],
+    [
+     7.5,
+     6.4
+    ],
+    [
+     10.5,
+     4.6
+    ],
+    [
+     14.5,
+     1.0
+    ],
+    [
+     19.0,
+     -4.5
+    ],
+    [
+     24.0,
+     -10.5
+    ],
+    [
+     29.0,
+     -14.5
+    ],
+    [
+     33.0,
+     -16.3
+    ],
+    [
+     36.0,
+     -16.95
+    ]
+   ],
+   "profile_note": "(d, h): d across the face from the outer edge, h above the framing face plane; closed by (width, -16.95) -> (lap, -16.95) -> (lap, 0) -> (0, 0). A crease at d=0 (the moulding's edge sits on the framing), a rounded nose of 7 mm at d 1.4-5.5, a short fillet, a convex bead falling into a cove that ends on the panel field.",
+   "_src": "Width 36: Scaled Riley Fig. 671 (36 +-5); Photo P1 7.5 px left edge = 38, right 5.7 px = 29, mean 34 +-8 (the lab's 36 kept: both reviews found the size right). Projection 7 +-5: Scaled Riley. Profile shape: Photo P1 8x crops (lit lip, crease, ogee) and P2 (bold bevel falling to the field), Ellis p.91 Figs. 294-295."
+  },
+  "inside_single": {
+   "width_on_face_mm": 22.0,
+   "_src": "Scaled: Riley Fig. 671 (+-5). Not seen from the street."
+  },
+  "lock_rail_band": {
+   "present": true,
+   "z_above_leaf_bottom_mm": [
+    785.0,
+    857.5
+   ],
+   "height_mm": 72.5,
+   "x_mm": [
+    57.0,
+    825.0
+   ],
+   "end_gap_to_stop_mm": 2.0,
+   "max_projection_mm": 22.0,
+   "profile_zp_mm": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     17.0
+    ],
+    [
+     1.5,
+     19.5
+    ],
+    [
+     4.0,
+     20.5
+    ],
+    [
+     9.0,
+     20.5
+    ],
+    [
+     14.0,
+     19.5
+    ],
+    [
+     18.0,
+     18.0
+    ],
+    [
+     22.0,
+     15.0
+    ],
+    [
+     25.0,
+     13.0
+    ],
+    [
+     28.0,
+     14.0
+    ],
+    [
+     31.0,
+     17.5
+    ],
+    [
+     34.0,
+     20.0
+    ],
+    [
+     37.0,
+     21.0
+    ],
+    [
+     40.0,
+     20.0
+    ],
+    [
+     42.0,
+     17.0
+    ],
+    [
+     45.0,
+     16.0
+    ],
+    [
+     49.0,
+     14.5
+    ],
+    [
+     52.0,
+     15.5
+    ],
+    [
+     55.0,
+     18.5
+    ],
+    [
+     58.0,
+     20.5
+    ],
+    [
+     62.0,
+     22.0
+    ],
+    [
+     66.0,
+     21.0
+    ],
+    [
+     69.5,
+     17.0
+    ],
+    [
+     71.5,
+     10.0
+    ],
+    [
+     72.5,
+     0.0
+    ]
+   ],
+   "profile_note": "(z from the underside, p proud of the rail face). Square underside (a crisp shadow line beneath), lower fillet, cove, bead, groove, rounded top nosing; crests at z 4-9, 37 and 62, coves at z 25 and 49.",
+   "_src": "Photo P1: column profile x 145-175, rows 363.5-377.5 (top edge row 363.5, underside row 377.5, +-1 px); highlights at rows 365.5, 371, 374; darks at 367.5 and 372.5; shadow rows 378-382. Projection is Judgement (+-6) from the shadow length."
+  },
+  "weatherboard": {
+   "present": true,
+   "z_above_leaf_bottom_mm": [
+    0.0,
+    80.0
+   ],
+   "height_mm": 80.0,
+   "x_mm": [
+    57.0,
+    825.0
+   ],
+   "end_gap_to_stop_mm": 2.0,
+   "max_projection_mm": 26.0,
+   "profile_zp_mm": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     12.0
+    ],
+    [
+     2.0,
+     18.0
+    ],
+    [
+     6.0,
+     22.0
+    ],
+    [
+     14.0,
+     25.0
+    ],
+    [
+     26.0,
+     26.0
+    ],
+    [
+     40.0,
+     25.5
+    ],
+    [
+     50.0,
+     23.0
+    ],
+    [
+     54.0,
+     19.0
+    ],
+    [
+     57.0,
+     17.5
+    ],
+    [
+     60.0,
+     18.5
+    ],
+    [
+     63.0,
+     22.0
+    ],
+    [
+     67.0,
+     25.5
+    ],
+    [
+     72.0,
+     25.0
+    ],
+    [
+     76.0,
+     21.0
+    ],
+    [
+     78.5,
+     13.0
+    ],
+    [
+     80.0,
+     0.0
+    ]
+   ],
+   "profile_note": "(z from the underside, p proud of the leaf face). Flat underside, convex belly to 26 mm, a hollow at z 57, a rounded top nose rolling back onto the door at z 80.",
+   "_src": "Photo P1: column profile x 145-175, rows 513.7-529.7 (+-1 px = 16 px = 82 +-8; 80 used); highlight rows 514-517, hollow 518-519, face 520-527, edge 528-529. Projection Judgement (+-6)."
+  },
+  "frame_ovolo_radius_mm": 0.0,
+  "_ovolo": "NONE. Hasluck p.346 and Riley Fig. 671 print an ovolo on the frame's outer edge; both photographs show a flat, square-edged frame (D10)."
+ },
+ "frame": {
+  "kind": "solid frame rebated out of the solid, every arris square (eased 1 mm by the paint), no ovolo, no round",
+  "jamb_face_mm": 101.6,
+  "jamb_depth_mm": 127.0,
+  "jamb_showing_past_brick_mm": 55.0,
+  "jamb_x_mm": {
+   "left": [
+    -46.6,
+    55.0
+   ],
+   "right": [
+    827.0,
+    928.6
+   ]
+  },
+  "rebate_width_mm": 22.0,
+  "rebate_depth_mm": 53.0,
+  "stop_depth_mm": 74.0,
+  "frame_outside_face_y_mm": 114.3,
+  "frame_inside_face_y_mm": 241.3,
+  "arris": "square",
+  "arris_ease_mm": 1.0,
+  "stop_inner_bead": false,
+  "head_section_mm": {
+   "height": 101.6,
+   "depth": 127.0,
+   "z0": 2269.6,
+   "showing_below_brick_at_crown": 70.4,
+   "showing_below_brick_at_ends": 52.4,
+   "top_edge": "cambered to the arch soffit (crown 2340, ends 2322), square edged"
+  },
+  "transom": {
+   "face_height_mm": 65.0,
+   "z_stop_underside": 1937.6,
+   "z_top": 2002.6,
+   "rebate_underside_z": 1959.6,
+   "depth": 127.0,
+   "x_mm": [
+    45.0,
+    837.0
+   ],
+   "overlap_on_jamb_faces_mm": 10.0,
+   "front_profile_yz_mm": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     -12.5,
+     0.0
+    ],
+    [
+     -13.8,
+     1.2
+    ],
+    [
+     -14.0,
+     2.6
+    ],
+    [
+     -13.4,
+     4.0
+    ],
+    [
+     -10.5,
+     6.0
+    ],
+    [
+     -8.6,
+     9.0
+    ],
+    [
+     -8.0,
+     14.0
+    ],
+    [
+     -8.0,
+     40.0
+    ],
+    [
+     9.5,
+     65.0
+    ]
+   ],
+   "front_profile_note": "(y from the jamb face plane, outwards negative; z from the stop underside). Nose (lip bead and cove), vertical face, weathered top sloping back to the glass rebate at z = face height. The nose projects over the door head; the ends stop square against the jamb faces.",
+   "zones_z_mm": {
+    "lip": [
+     0.0,
+     4.0
+    ],
+    "cove": [
+     4.0,
+     14.0
+    ],
+    "face": [
+     14.0,
+     40.0
+    ],
+    "slope": [
+     40.0,
+     65.0
+    ]
+   },
+   "_src": "Photo P1: column profile x 140-175: bar rows 143.3-155.5 (12.2 px = 63 +-8; 65 kept, lab 65): slope rows 143.5-147.9 (bright 252), face 148-152.9 (235-243), crease 153-154.9 (204-209), lip 155 (244), shadow on the leaf 156-157. Projection (face 8, nose 14 forward of the jamb faces) Judgement from P2's nosing and P1's lit lip. Hasluck p.398 prints 'double rebated and weathered transom'; Riley prints 'Transome 5 x 4'."
+  },
+  "glazing": {
+   "kind": "fixed single pane, putty-and-bead glazed, no sash, no bars",
+   "opening_x_mm": [
+    55.0,
+    827.0
+   ],
+   "opening_z_mm": [
+    2002.6,
+    2269.6
+   ],
+   "bead_face_mm": 10.0,
+   "bead_proud_mm": 8.0,
+   "bead_profile_ap_mm": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     10.0,
+     0.0
+    ],
+    [
+     10.0,
+     1.5
+    ],
+    [
+     9.2,
+     4.2
+    ],
+    [
+     7.3,
+     6.3
+    ],
+    [
+     4.5,
+     7.6
+    ],
+    [
+     1.5,
+     8.0
+    ],
+    [
+     0.0,
+     8.0
+    ]
+   ],
+   "bead_note": "Planted timber bead on all four sides, mitred, its foot 10 mm inside the opening edge; (a along the face, p proud). Frame colour.",
+   "clear_glass_x_mm": [
+    65.0,
+    817.0
+   ],
+   "clear_glass_z_mm": [
+    2012.6,
+    2259.6
+   ],
+   "glass_thickness_mm": 3.0,
+   "glass_y_mm": 133.3,
+   "glass_rebate_mm": 6.4,
+   "_src": "Bead: Photo P1 (bright 2 px line at the glass foot, dark 2 px line at the glass head, 1 px lines at the sides; clear glass 47.5 px = 245 +-10 high against the 267 opening); profile Judgement. Glass 3 mm: Judgement (lab used 2.5)."
+  }
+ },
+ "step": {
+  "present": true,
+  "kind": "stone threshold (the sill) between the brick plinths, a recessed stone riser, and a deep stone step with a rounded nosing",
+  "threshold": {
+   "top_z": 0.0,
+   "thickness_mm": 76.0,
+   "front_y_mm": 0.0,
+   "back_y_mm": 241.3,
+   "nose_radius_mm": 18.0,
+   "nose_overhang_over_riser_mm": 18.0,
+   "fall_to_front_mm": 0.0,
+   "fall_note": "weathered fall of about 3 mm omitted from the drawings; the builder may add 1 in 25 toward the front",
+   "bearing_into_wall_each_side_mm": 112.0
+  },
+  "riser": {
+   "z_mm": [
+    -148.0,
+    -76.0
+   ],
+   "face_y_mm": 18.0,
+   "_src": "Photo P1: rows 548-561 (14 px = 72 +-10), recessed under the threshold's nose (dark rows 548-550)."
+  },
+  "tread": {
+   "top_z_mm": -148.0,
+   "thickness_mm": 110.0,
+   "width_mm": 960.0,
+   "x_mm": [
+    -39.0,
+    921.0
+   ],
+   "front_y_mm": -312.0,
+   "projection_beyond_wall_face_mm": 312.0,
+   "nosing_radius_mm": 30.0,
+   "plan_corner_radius_mm": 40.0,
+   "fall_to_front_mm": 6.6,
+   "ground_z_mm": -258.0,
+   "_src": "Photo P1: tread x 87-291 px (204 px, perspective-reduced: 960 +-60 mm), back edge row 561.5, front edge row 592; the rounded nosing and rounded plan corners read in the picture. Depth 312 and thickness 110 are Judgement from the view geometry (+-80, +-40); top 148 below the sill top Photo (+-25)."
+  },
+  "ground_z_mm": -258.0,
+  "_src": "Threshold: Photo P1 rows 534-547.5 (13.5 px = 70 +-10; 76 kept), its nosing lit at rows 537-540 and a rounded front at rows 541-547. Sill running past the opening into the brick: Ellis p.111-112 (the sill's horns) and Photo P1 (the step runs past the opening)."
+ },
+ "brick": {
+  "present": true,
+  "reveal": "plain 114.3 deep, brick returns; the frame sits in a check 46.6 deep behind the brick at its back",
+  "arch": {
+   "present": true,
+   "kind": "cream-brick soldier ring over a cambered head (a flat-topped gauged arch), bricks on end",
+   "ends_x_mm": [
+    -22.0,
+    904.0
+   ],
+   "bearing_beyond_reveal_each_side_mm": 22.0,
+   "bearing_on_quoin_top_course_mm": 112.0,
+   "soffit_camber_rise_mm": 18.0,
+   "top_z_mm": 2555.0,
+   "depth_at_crown_mm": 215.0,
+   "bricks": 12,
+   "joint_mm": 8.0,
+   "_src": "Photo P1: ring x 104.5-283.75 px (22 mm and 24 mm past the reveals), top row 32.5, intrados rows 71.5-77.5, 11-12 bricks (c1_arch crop); Ellis p.112 Fig. 355 draws a brick segmental arch on the head. Ring depth 215 = one brick on end (Judgement from the brick); camber Photo P1 (head top rows 78 at the centre, 81.5 at the ends)."
+  },
+  "quoins": {
+   "present": true,
+   "kind": "long-and-short buff-brick dressings both sides of the opening",
+   "course_gauge_mm": 77.0,
+   "courses": 30,
+   "z_start_mm": 12.0,
+   "header_width_mm": 112.0,
+   "stretcher_width_mm": 225.0,
+   "joint_mm": 10.0,
+   "_src": "Photo P1 (c1_arch crop): stretchers 47 px, headers 22.5 px, course pitch 15.2-15.4 px = 77 +-3 mm. Wall detail: the street's brick wall owns it; shown here so the opening is built right."
+  },
+  "plinth": "Photo P1: the wall's plinth (three courses, a splayed and dog-tooth cap) stops at the leaf's bottom level and hides the jamb feet. Wall detail, not part of the door kit; not specified."
+ },
+ "ironmongery": {
+  "letter_plate": {
+   "present": true,
+   "orientation": "vertical, on the muntin, upper half of the door",
+   "outer_w_mm": 76.0,
+   "outer_h_mm": 242.0,
+   "centre_u_mm": 406.4,
+   "centre_above_leaf_bottom_mm": 1617.0,
+   "backplate_thickness_mm": 3.0,
+   "rim_width_mm": 13.5,
+   "rim_proud_mm": 6.0,
+   "rim_outer_edge": "chamfered 45 degrees from 6 mm at the aperture edge down to the backplate",
+   "aperture_w_mm": 48.0,
+   "aperture_h_mm": 190.0,
+   "aperture_top_margin_mm": 22.0,
+   "aperture_bottom_margin_mm": 30.0,
+   "flap": "sprung flap filling the aperture, hinged at its top edge, 2 mm shadow gap at the hinge, dished 3 mm inwards, a bead-turned lifting lip 4 mm at the bottom",
+   "screws": "none seen (judge: two concealed)",
+   "metal": "brass, dull, worn bright at the flap's edge",
+   "_src": "Photo P1 16x crop: outer x 186.25-200.9 px (14.65 = 75.5 mm), rows 192.5-239.4 (46.9 px = 241.5 mm), aperture x 189.7-199.1 (48 mm), rows 196.9-233.75 (190 mm); +-1.5 px. Centre 1617 above the leaf bottom. Rim, flap, thickness: Judgement."
+  },
+  "house_number": {
+   "present": "optional",
+   "digits": 2,
+   "stacked": "vertically on the muntin under the plate",
+   "digit_w_mm": 39.0,
+   "digit_h_mm": 72.0,
+   "stroke_mm": 7.0,
+   "relief_mm": 3.0,
+   "gap_mm": 22.0,
+   "v_ranges_mm": [
+    [
+     1207.0,
+     1277.6
+    ],
+    [
+     1300.0,
+     1373.0
+    ]
+   ],
+   "centre_u_mm": 406.4,
+   "metal": "brass",
+   "note": "Digits are the town's to assign; none is canon. Leave unnumbered if no number is set.",
+   "_src": "Photo P1 16x crop: '6' rows 263.4-277.5, '9' rows 281.9-295.6, each 7.5 px wide. Relief Judgement."
+  },
+  "cylinder_lock": {
+   "present": true,
+   "kind": "flush cylinder lock, a round bore in the lock stile",
+   "centre_u_mm": 745.8,
+   "centre_above_leaf_bottom_mm": 1235.0,
+   "outer_diameter_mm": 43.5,
+   "plug_diameter_mm": 28.0,
+   "collar_proud_mm": 1.5,
+   "keyway": "vertical slot 3 x 9 mm in the plug",
+   "metal": "brass collar, brass plug, a dark gap ring between plug and collar",
+   "distance_from_stop_face_mm": 46.6,
+   "_note": "46.6 from the visible edge of the leaf (the stop face): set further in than the lab's knob, which stood about 25 mm from it.",
+   "_src": "Photo P1 16x crop: centre (258.75, 290.3) px, outer 8.4 px = 43.5 mm, plug 5.5 px = 28 mm; +-1 px. Collar and keyway Judgement."
+  },
+  "keep": {
+   "present": true,
+   "where": "the face of the right jamb's stop",
+   "w_mm": 22.0,
+   "h_mm": 72.6,
+   "centre_x_mm": 859.4,
+   "z_range_mm": [
+    1120.3,
+    1192.9
+   ],
+   "proud_mm": 3.0,
+   "kind": "dark steel box keep with a 8 x 50 mm slot",
+   "_src": "Photo P1 16x crop: x 271.9-276.25 px (22 mm), rows 300.3-314.4 (72.6 mm); dark."
+  },
+  "knob": {
+   "present": false,
+   "note": "No knob or pull in P1."
+  },
+  "knocker": {
+   "present": false,
+   "note": "None in either photograph."
+  },
+  "letter_plate_alternatives": "see the flat door variant"
+ },
+ "hinges": {
+  "visible_from_outside": false,
+  "note": "None shows in either photograph: the leaf opens inwards, the hinges are on the inside edge of the leaf. Inside, three 100 mm steel butts (top 150 from the top, bottom 200 from the bottom, one midway) on the hinge stile; the builder may omit them, the street never sees them."
+ },
+ "derived": {
+  "z_leaf_top": 1958.0,
+  "z_transom_stop_underside": 1937.6,
+  "z_transom_top": 2002.6,
+  "z_glass_opening_top": 2269.6,
+  "z_head_crown": 2340.0,
+  "z_head_springing": 2322.0,
+  "panel_opening_width_mm": 232.1,
+  "bottom_panel_height_mm": 479.9,
+  "top_panel_height_mm": 919.7
+ },
+ "photo": {
+  "P1": {
+   "file": "door-photo-01-teignmouth-four-panel-red.jpg",
+   "size_px": [
+    480,
+    640
+   ],
+   "scale": {
+    "mm_per_px": 5.15,
+    "fitted_on": "the visible width between the stop faces, 149.9 px at rows 170-185 (772 mm); the left edge leans 2.6 px in 210 rows, so the width reads 151.4 at mid-height: the vertical scale carries +-1%",
+    "x_anchor_px_at_opening_centre_x_mm": [
+     192.85,
+     441.0
+    ],
+    "z_anchor_row_at_z_mm": [
+     530.0,
+     10.0
+    ],
+    "brick_course_cross_check": "course pitch 15.2-15.4 px (autocorrelation, three regions) = 76 mm at the wall face 4.9-5.0 mm/px; the door plane is 114-188 mm further back, so 5.1 at the door: agrees with 5.15 within 1-3%"
+   },
+   "edges": {
+    "vis_top": [
+     155.5,
+     1.5
+    ],
+    "moulding_x": [
+     [
+      135.0,
+      1.5
+     ],
+     [
+      181.8,
+      1.5
+     ],
+     [
+      203.3,
+      2.0
+     ],
+     [
+      250.8,
+      1.5
+     ]
+    ],
+    "moulding_z": [
+     [
+      175.8,
+      1.5
+     ],
+     [
+      356.7,
+      1.5
+     ],
+     [
+      397.5,
+      1.5
+     ],
+     [
+      493.5,
+      1.5
+     ]
+    ],
+    "band_top": [
+     363.5,
+     1.0
+    ],
+    "band_bottom": [
+     377.5,
+     1.0
+    ],
+    "weather_top": [
+     513.7,
+     1.0
+    ],
+    "weather_bottom": [
+     529.7,
+     1.0
+    ],
+    "transom_top_glass_bottom": [
+     143.3,
+     1.0
+    ],
+    "glass_opening_top": [
+     92.5,
+     1.5
+    ],
+    "clear_glass_top": [
+     95.0,
+     1.0
+    ],
+    "head_crown_top": [
+     78.0,
+     1.5
+    ],
+    "head_end_top": [
+     81.5,
+     1.5
+    ],
+    "brick_left": [
+     108.5,
+     1.5
+    ],
+    "brick_right": [
+     279.0,
+     1.5
+    ],
+    "plate_x": [
+     186.25,
+     200.9,
+     1.5
+    ],
+    "plate_rows": [
+     192.5,
+     239.4,
+     1.5
+    ],
+    "flap_rows": [
+     196.9,
+     233.75,
+     1.5
+    ],
+    "lock_centre_px": [
+     258.75,
+     290.3,
+     1.2
+    ],
+    "lock_diameter_px": [
+     8.4,
+     1.0
+    ],
+    "keep_x": [
+     271.9,
+     276.25,
+     1.2
+    ],
+    "keep_rows": [
+     300.3,
+     314.4,
+     1.5
+    ],
+    "numeral_rows": [
+     [
+      263.4,
+      277.5
+     ],
+     [
+      281.9,
+      295.6
+     ]
+    ],
+    "arch_top_row": [
+     32.5,
+     2.5
+    ],
+    "arch_x": [
+     104.5,
+     283.75,
+     2.0
+    ],
+    "threshold_rows": [
+     534.0,
+     547.5,
+     2.0
+    ],
+    "riser_rows": [
+     548.0,
+     561.5,
+     2.0
+    ],
+    "tread_x": [
+     87.0,
+     291.0,
+     2.5
+    ],
+    "tread_back_row": [
+     561.5,
+     2.0
+    ],
+    "tread_front_row": [
+     592.0,
+     3.0
+    ]
+   },
+   "colours_srgb": {
+    "door": [
+     201,
+     41,
+     32
+    ],
+    "frame": [
+     240,
+     239,
+     245
+    ],
+    "glass": [
+     121,
+     131,
+     139
+    ],
+    "brass_plate": [
+     182,
+     181,
+     158
+    ],
+    "arch": [
+     219,
+     209,
+     190
+    ],
+    "tread": [
+     156,
+     153,
+     149
+    ],
+    "threshold": [
+     142,
+     127,
+     111
+    ],
+    "red_brick": [
+     159,
+     113,
+     85
+    ]
+   }
+  },
+  "P2": {
+   "file": "door-photo-02-tottenham-six-panel-black.jpg",
+   "size_px": [
+    675,
+    1200
+   ],
+   "scale": {
+    "mm_per_px": 2.317,
+    "fitted_on": "the visible leaf width 344 px (x 164-508) taken as the F1's clear width 797.2 mm; the photograph is a six-panel door whose true size is unknown, so heights are used as fractions"
+   },
+   "edges": {
+    "vis_left": 164.0,
+    "vis_right": 508.0,
+    "leaf_top": 122.0,
+    "leaf_bottom": 944.0,
+    "transom_rows": [
+     75.0,
+     121.0
+    ],
+    "transom_slope_rows": [
+     76.0,
+     90.0
+    ],
+    "transom_face_rows": [
+     90.0,
+     105.0
+    ],
+    "transom_nose_rows": [
+     105.0,
+     121.0
+    ],
+    "knob_centre": [
+     333.0,
+     693.0
+    ],
+    "knob_diameter_px": 30.0,
+    "cylinder_centre": [
+     488.0,
+     495.0
+    ],
+    "cylinder_diameter_px": 16.0,
+    "old_keyhole_centre": [
+     493.0,
+     447.0
+    ],
+    "plate_x": [
+     293.0,
+     377.0
+    ],
+    "plate_rows": [
+     281.0,
+     311.0
+    ],
+    "mould_width_px": 18.5,
+    "stile_px": 35.0,
+    "bottom_rail_px": 79.0,
+    "jamb_strip_left_px": [
+     142.0,
+     163.0
+    ],
+    "jamb_strip_right_px": [
+     508.0,
+     526.0
+    ]
+   },
+   "colours_srgb": {
+    "door": [
+     39,
+     40,
+     45
+    ],
+    "frame": [
+     222,
+     225,
+     229
+    ],
+    "transom": [
+     208,
+     210,
+     212
+    ],
+    "plate": [
+     149,
+     149,
+     146
+    ],
+    "threshold": [
+     81,
+     72,
+     65
+    ],
+    "glass": [
+     69,
+     84,
+     96
+    ]
+   }
+  }
+ },
+ "materials": {
+  "painted_timber_door": {
+   "metal": 0.0,
+   "roughness_new": 0.35,
+   "roughness_1990": 0.55,
+   "note": "gloss alkyd, crazed and chalky by 1990; roughness rises to 0.65 on the weather side low down"
+  },
+  "painted_timber_frame": {
+   "metal": 0.0,
+   "roughness_new": 0.35,
+   "roughness_1990": 0.5,
+   "note": "gloss white or cream, yellowed, flaking at the foot"
+  },
+  "brass": {
+   "metal": 1.0,
+   "roughness": 0.4,
+   "roughness_worn_edges": 0.25,
+   "base_srgb": [
+    181,
+    150,
+    85
+   ],
+   "note": "P1's plate and numerals read (182,181,158) pale-green-gold in the photograph: dull, verdigris-touched; polished only at the touched edges"
+  },
+  "chrome_nickel": {
+   "metal": 1.0,
+   "roughness": 0.35,
+   "base_srgb": [
+    170,
+    170,
+    168
+   ],
+   "note": "P2's plate and cylinder read (149,149,146) satin and worn"
+  },
+  "steel_dark": {
+   "metal": 1.0,
+   "roughness": 0.6,
+   "base_srgb": [
+    40,
+    40,
+    42
+   ]
+  },
+  "glass": {
+   "metal": 0.0,
+   "roughness": 0.05,
+   "ior": 1.5,
+   "base_srgb": [
+    121,
+    131,
+    139
+   ],
+   "note": "clear sheet seen against a dark interior: reads grey-blue (121,131,139) in P1, (69,84,96) dirty in P2"
+  },
+  "stone_step": {
+   "metal": 0.0,
+   "roughness": 0.85,
+   "base_srgb": [
+    156,
+    153,
+    149
+   ],
+   "note": "grey-buff sandstone or limestone; the threshold's front reads (142,127,111) stained brown-gold, the tread (156,153,149)"
+  },
+  "brick_arch_buff": {
+   "metal": 0.0,
+   "roughness": 0.9,
+   "base_srgb": [
+    219,
+    209,
+    190
+   ]
+  },
+  "brick_quoin_buff": {
+   "metal": 0.0,
+   "roughness": 0.9,
+   "base_srgb": [
+    200,
+    186,
+    158
+   ]
+  },
+  "brick_red_wall": {
+   "metal": 0.0,
+   "roughness": 0.9,
+   "base_srgb": [
+    159,
+    113,
+    85
+   ],
+   "note": "the wall's own material, not this kit's"
+  },
+  "timber_threshold_flat": {
+   "metal": 0.0,
+   "roughness": 0.7,
+   "base_srgb": [
+    81,
+    72,
+    65
+   ],
+   "note": "P2's worn painted sill"
+  }
+ },
+ "door_colours": [
+  {
+   "id": "black",
+   "name": "gloss black, faintly blue",
+   "srgb": [
+    35,
+    36,
+    40
+   ],
+   "source": "Photo P2 median (39,40,45) of the door field under overcast light",
+   "weight": 0.25
+  },
+  {
+   "id": "dark_green",
+   "name": "dark green",
+   "srgb": [
+    28,
+    59,
+    41
+   ],
+   "source": "production/research/shopfronts (Westminster and Brighton & Hove guides: dark green; the kit's own value 0.11,0.23,0.16)",
+   "weight": 0.2
+  },
+  {
+   "id": "maroon",
+   "name": "maroon / oxblood",
+   "srgb": [
+    92,
+    26,
+    32
+   ],
+   "source": "the shopfront research lists maroon; the value is Judgement",
+   "weight": 0.15
+  },
+  {
+   "id": "navy",
+   "name": "dark blue",
+   "srgb": [
+    24,
+    38,
+    78
+   ],
+   "source": "the shopfront research lists dark blue; the value is Judgement",
+   "weight": 0.15
+  },
+  {
+   "id": "brown",
+   "name": "dark brown",
+   "srgb": [
+    74,
+    48,
+    34
+   ],
+   "source": "the shopfront research lists brown; the value is Judgement",
+   "weight": 0.15
+  },
+  {
+   "id": "red",
+   "name": "bright red, gloss",
+   "srgb": [
+    201,
+    41,
+    32
+   ],
+   "source": "Photo P1 median of the door field (201,41,32), photographed 2012 in fresh paint; for 1990 multiply by 0.85 and chalk it",
+   "weight": 0.1
+  }
+ ],
+ "frame_colours": [
+  {
+   "id": "white",
+   "name": "gloss white, yellowed",
+   "srgb": [
+    226,
+    224,
+    214
+   ],
+   "source": "Photo P1 (240,239,245) fresh; P2 (222,225,229) old and flaking; the game's 1990 white is warmer and dirtier",
+   "weight": 0.7
+  },
+  {
+   "id": "cream",
+   "name": "cream",
+   "srgb": [
+    222,
+    212,
+    184
+   ],
+   "source": "Judgement: a common 1980s repaint; no photograph here",
+   "weight": 0.3
+  }
+ ],
+ "wear": {
+  "P1 (fresh, 2012)": [
+   "a glossy fresh coat, brush marks running with the grain (fine lines down the stiles and muntin)",
+   "grime on the weatherboard's and the band's top nosings, the dark crease under the band",
+   "a stained, brown-gold threshold front and a worn pale nosing on the step",
+   "the frame's foot dirty with splash",
+   "a dark shadow line under the transom nose and under the band"
+  ],
+  "P2 (old, 2024 photograph of an unrestored door)": [
+   "crazed ('alligator') paint over the whole leaf, cells 2-4 mm, dark in the cracks",
+   "bare pale patches and chipped paint on the lower right panel's moulding and on the bottom rail",
+   "dirt packed in the mouldings' angles, the bottom rail wet-grimed and flaking",
+   "the frame's paint peeling in sheets down to a darker undercoat, hairline cracks along the stop",
+   "plugged and abandoned holes (an old keyhole, screw holes), stickers and tape marks (leave out)",
+   "a worn bare-wood threshold with flaked paint; cracked paving slab in front"
+  ],
+  "1990 rule for the kit": "unrestored, not heritage-fresh: crazing and chips on arrises and mouldings' lower lips, paint 15% duller, grime in the mouldings' angles and on every upward face, wet-darkened and flaking paint on the bottom rail, the weatherboard, the frame's foot and the threshold, brass dull with bright touched edges. Cables, junction boxes, stickers and the wall lantern in the photographs are not part of the kit."
+ },
+ "edges": {
+  "_note": "Every edge the photographs show, with its treatment. 'eased' means a 1 mm paint-rounded arris, not a modelled round.",
+  "jamb, head and transom ends": "square; eased 1 mm; NO ovolo, NO bead on the outer arris, NO tube-like rounding (P1, P2); the face is one flat plane",
+  "stop's inner edge": "T1: square (one dark 1 px line in P1); F1: a planted quarter-round bead 5 wide x 2.5 proud on each jamb (P2's light line)",
+  "frame feet": "square-cut, standing on the threshold at z 0, both alike; no step, plinth or block; the brick plinth hides them in T1",
+  "leaf's outer edges": "square, eased 1.5 mm; 1.6 mm shadow gap to the rebate wall all round; the leaf's bottom edge is square, 10 mm above the threshold",
+  "bolection mouldings": "a crease where the moulding's outer edge meets the framing (0.0 on the profile), a rounded nose of about 3.5 mm radius at d 1.4-5.5, a short fillet, a convex bead falling into a cove that ends on the panel field; mitred at the corners with tight, closed mitres",
+  "lock-rail band": "square underside (the crisp shadow line), lower lip with a 3 mm round, a cove, a bead, a groove, a rounded top nosing of about 13 mm radius rolling back to the rail",
+  "weatherboard": "flat underside flush with the leaf's bottom, a convex belly, a hollow near its top, a rounded top nose of about 13 mm radius rolling back onto the door",
+  "transom": "a lip bead of 2.6 mm radius at its underside, a cove, a vertical face, a weathered slope; its ends square against the jamb faces",
+  "glazing bead": "quarter-round 10 x 8 with a 1.5 mm flat at its foot, mitred on all four sides",
+  "threshold stone": "rounded top nose, radius 18; its ends square where they enter the brick; its underside square, overhanging the riser by 18 (the shadow gap)",
+  "step tread": "bullnose, radius 30, along its front; plan corners radius 40; the top falls 6.6 mm to the front",
+  "arch bricks": "bricks on end, square arrises, 8 mm joints, the face joints raked back 4 mm (dark lines); the soffit (underside) seen as dark brick ends",
+  "letter plate": "outer corners square with a 2 mm round; the rim's outer edge chamfered 45 degrees from 6 mm down to the backplate; the flap hinged along its top edge with a 2 mm shadow gap",
+  "cylinder lock": "collar T1 plain with a bevelled edge; F1 knurled with 12 serrations; flush bore of 1.5 to 2 mm collar relief"
+ },
+ "joints_and_seams": {
+  "stile-to-rail joints": "paint-bridged hairlines 0.4 mm wide at every rail/stile meeting on the face, dark in the 1990 wear mask (P2 shows them as thin cracks)",
+  "mitres of the mouldings": "closed; a dark hairline only where the paint has cracked (wear mask), never a 0.3 mm-plus gap (the lab's review 1, fault 7)",
+  "leaf to frame": "1.6 mm shadow gap on the three sides and the head (P1, P2 dark lines); the bottom gap 10 mm to the threshold",
+  "frame to brick": "a 3 mm dark joint between the jamb and the reveal (P1); in F1 a groove of 5-7 mm between the jamb strip and the pilaster's return (P2)",
+  "band and weatherboard ends": "2 mm short of the stop faces, a dark line",
+  "transom to jambs": "the transom's front member butts on the jamb faces; a hairline each side",
+  "glass to bead": "a light putty-and-bead line 1-2 px wide (P1)"
+ },
+ "fixings": {
+  "letter plate": "T1: none seen at 5 mm a pixel; F1: four slotted screws 4 mm Dia at the rim's corners (P2)",
+  "cylinder lock": "no screws seen; a flush collar",
+  "keep": "two screws not seen",
+  "mouldings": "slot-screwed and pinned from behind (Ellis p.92): nothing on the face",
+  "hinges": "none seen from outside",
+  "frame": "plugs, wedges and horns in the wall (Ellis p.111-112): hidden",
+  "house numbers": "two screws or pins each, not seen"
+ },
+ "drips_and_throats": {
+  "weatherboard": "the drip on the door's foot: it throws rain off the bottom rail; its hollow is a throat",
+  "transom": "the weathered slope sheds rain from the glass's foot to the front; the nose's underside is a drip over the leaf's head",
+  "threshold": "the 18 mm overhang of its nose over the riser makes the shadow gap (a throat)",
+  "band": "its flat underside throws a crisp shadow; no throat",
+  "head": "none seen; the arch's soffit overhangs the frame's head by 0 (flush)"
+ },
+ "variants": {
+  "terrace_four_panel": {
+   "description": "T1: the four-panel front door of the terraces: P1's door in its brick opening with a segmental buff-brick arch, buff quoins, a stone threshold and a deep stone step. Colours: door_colours (weights), frame_colours. Count: the scene's."
+  },
+  "flat_door_over_shop": {
+   "description": "F1: the side door to a flat over a shop: the same four-panel door at the street's 0.838 x 1.981, a 102 mm moulded and weathered transom projecting 22 mm over the head, P2's furniture (turned centre knob, cylinder lock and plugged keyhole, a letter plate), no band, no weatherboard, a worn timber threshold at the pavement, no step, no brick arch (the shopfront holds the head). Colours: door_colours without 'red' (weights renormalised), frame white or cream.",
+   "parts": {
+    "kind": "F1",
+    "opening": {
+     "width_mm": 944.0,
+     "crown_height_mm": 2400.0,
+     "springing_height_mm": 2400.0,
+     "camber_rise_mm": 0.0,
+     "clear_between_stops_mm": 797.2,
+     "clear_height_to_transom_mm": 1970.6,
+     "reveal_depth_mm": 114.3,
+     "wall_thickness_mm": 342.9,
+     "_src": "SCENE-SLOTS/kit: overall 0.944 wide; jamb showing 73.4 is Derived (944 - clear 797.2)/2. P2's jamb strip is 21 px = 49 mm plus a 7 px groove: see could-not-settle (jamb 73 against 50). Head top 2400 lines up with the shop transom at 2.40 (SCENE-SLOTS)."
+    },
+    "leaf": {
+     "width_mm": 838.0,
+     "height_mm": 1981.0,
+     "thickness_mm": 50.8,
+     "x0_mm": 53.0,
+     "z0_mm": 10.0,
+     "outside_face_y_mm": 188.3,
+     "edge_clearance_mm": 1.6,
+     "arris_ease_mm": 1.5,
+     "stile_mm": 114.3,
+     "muntin_mm": 120.0,
+     "top_rail_mm": 127.0,
+     "lock_rail_mm": 228.6,
+     "lock_rail_centre_above_leaf_bottom_mm": 787.0,
+     "bottom_rail_mm": 192.8,
+     "hung": "left-hand hinges seen from outside (the lock stile is on the right in both photographs), opening inwards",
+     "_src": "Spec: SCENE-SLOTS side door 0.838 x 1.981 (the imperial 2 ft 9 in x 6 ft 6 in, First in Architecture via production/research/shopfronts, not reached by me). Members as the four-panel door (P1/Ellis/Riley); the extra 25 mm of width goes into the panels (+12.6 each), the extra 33 mm of height into the upper panels."
+    },
+    "panels": {
+     "openings_leaf_uv_mm": {
+      "top_left": {
+       "u0": 114.3,
+       "u1": 359.0,
+       "v0": 901.3,
+       "v1": 1854.0
+      },
+      "top_right": {
+       "u0": 479.0,
+       "u1": 723.7,
+       "v0": 901.3,
+       "v1": 1854.0
+      },
+      "bottom_left": {
+       "u0": 114.3,
+       "u1": 359.0,
+       "v0": 192.8,
+       "v1": 672.7
+      },
+      "bottom_right": {
+       "u0": 479.0,
+       "u1": 723.7,
+       "v0": 192.8,
+       "v1": 672.7
+      }
+     },
+     "groove_depth_mm": 12.7,
+     "side_play_mm": 3.2,
+     "thickness_mm": 16.9,
+     "position_in_thickness": "centred",
+     "type_outside": "flat panel, bolection moulding on all four sides",
+     "type_inside": "flat panel, single planted moulding",
+     "_src": "Read: Ellis p.92 (groove 1/2 in, play 1/8 in), Riley p.353 (third of the door), p.357 (bolection outside, single inside)."
+    },
+    "mouldings": {
+     "outside_bolection": {
+      "width_on_face_mm": 42.0,
+      "lap_over_framing_mm": 4.8,
+      "projection_above_framing_mm": 7.0,
+      "panel_face_below_framing_mm": 16.95,
+      "profile_dh_mm": [
+       [
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        3.5
+       ],
+       [
+        1.4,
+        5.8
+       ],
+       [
+        3.5,
+        6.9
+       ],
+       [
+        5.5,
+        7.0
+       ],
+       [
+        8.02,
+        6.4
+       ],
+       [
+        11.6,
+        4.6
+       ],
+       [
+        16.37,
+        1.0
+       ],
+       [
+        21.73,
+        -4.5
+       ],
+       [
+        27.69,
+        -10.5
+       ],
+       [
+        33.65,
+        -14.5
+       ],
+       [
+        38.42,
+        -16.3
+       ],
+       [
+        42.0,
+        -16.95
+       ]
+      ],
+      "profile_note": "(d, h): d across the face from the outer edge, h above the framing face plane; closed by (width, -16.95) -> (lap, -16.95) -> (lap, 0) -> (0, 0). A crease at d=0 (the moulding's edge sits on the framing), a rounded nose of 7 mm at d 1.4-5.5, a short fillet, a convex bead falling into a cove that ends on the panel field.",
+      "_src": "Photo P2: mouldings 18.5 px = 43 mm (2.317 mm a pixel) all round, bold bevel falling to a flat field; 42 kept."
+     },
+     "inside_single": {
+      "width_on_face_mm": 22.0,
+      "_src": "Scaled: Riley Fig. 671 (+-5). Not seen from the street."
+     },
+     "lock_rail_band": {
+      "present": false,
+      "z_above_leaf_bottom_mm": [
+       785.0,
+       857.5
+      ],
+      "height_mm": 72.5,
+      "x_mm": [
+       75.4,
+       868.6
+      ],
+      "end_gap_to_stop_mm": 2.0,
+      "max_projection_mm": 22.0,
+      "profile_zp_mm": [
+       [
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        17.0
+       ],
+       [
+        1.5,
+        19.5
+       ],
+       [
+        4.0,
+        20.5
+       ],
+       [
+        9.0,
+        20.5
+       ],
+       [
+        14.0,
+        19.5
+       ],
+       [
+        18.0,
+        18.0
+       ],
+       [
+        22.0,
+        15.0
+       ],
+       [
+        25.0,
+        13.0
+       ],
+       [
+        28.0,
+        14.0
+       ],
+       [
+        31.0,
+        17.5
+       ],
+       [
+        34.0,
+        20.0
+       ],
+       [
+        37.0,
+        21.0
+       ],
+       [
+        40.0,
+        20.0
+       ],
+       [
+        42.0,
+        17.0
+       ],
+       [
+        45.0,
+        16.0
+       ],
+       [
+        49.0,
+        14.5
+       ],
+       [
+        52.0,
+        15.5
+       ],
+       [
+        55.0,
+        18.5
+       ],
+       [
+        58.0,
+        20.5
+       ],
+       [
+        62.0,
+        22.0
+       ],
+       [
+        66.0,
+        21.0
+       ],
+       [
+        69.5,
+        17.0
+       ],
+       [
+        71.5,
+        10.0
+       ],
+       [
+        72.5,
+        0.0
+       ]
+      ],
+      "profile_note": "(z from the underside, p proud of the rail face). Square underside (a crisp shadow line beneath), lower fillet, cove, bead, groove, rounded top nosing; crests at z 4-9, 37 and 62, coves at z 25 and 49.",
+      "_src": "Photo P1: column profile x 145-175, rows 363.5-377.5 (top edge row 363.5, underside row 377.5, +-1 px); highlights at rows 365.5, 371, 374; darks at 367.5 and 372.5; shadow rows 378-382. Projection is Judgement (+-6) from the shadow length."
+     },
+     "weatherboard": {
+      "present": false,
+      "z_above_leaf_bottom_mm": [
+       0.0,
+       80.0
+      ],
+      "height_mm": 80.0,
+      "x_mm": [
+       75.4,
+       868.6
+      ],
+      "end_gap_to_stop_mm": 2.0,
+      "max_projection_mm": 26.0,
+      "profile_zp_mm": [
+       [
+        0.0,
+        0.0
+       ],
+       [
+        0.0,
+        12.0
+       ],
+       [
+        2.0,
+        18.0
+       ],
+       [
+        6.0,
+        22.0
+       ],
+       [
+        14.0,
+        25.0
+       ],
+       [
+        26.0,
+        26.0
+       ],
+       [
+        40.0,
+        25.5
+       ],
+       [
+        50.0,
+        23.0
+       ],
+       [
+        54.0,
+        19.0
+       ],
+       [
+        57.0,
+        17.5
+       ],
+       [
+        60.0,
+        18.5
+       ],
+       [
+        63.0,
+        22.0
+       ],
+       [
+        67.0,
+        25.5
+       ],
+       [
+        72.0,
+        25.0
+       ],
+       [
+        76.0,
+        21.0
+       ],
+       [
+        78.5,
+        13.0
+       ],
+       [
+        80.0,
+        0.0
+       ]
+      ],
+      "profile_note": "(z from the underside, p proud of the leaf face). Flat underside, convex belly to 26 mm, a hollow at z 57, a rounded top nose rolling back onto the door at z 80.",
+      "_src": "Photo P1: column profile x 145-175, rows 513.7-529.7 (+-1 px = 16 px = 82 +-8; 80 used); highlight rows 514-517, hollow 518-519, face 520-527, edge 528-529. Projection Judgement (+-6)."
+     },
+     "frame_ovolo_radius_mm": 0.0,
+     "_ovolo": "NONE. Hasluck p.346 and Riley Fig. 671 print an ovolo on the frame's outer edge; both photographs show a flat, square-edged frame (D10)."
+    },
+    "frame": {
+     "kind": "solid frame rebated out of the solid, every arris square (eased 1 mm by the paint), no ovolo, no round",
+     "jamb_face_mm": 101.6,
+     "jamb_depth_mm": 127.0,
+     "jamb_showing_past_brick_mm": 73.4,
+     "jamb_x_mm": {
+      "left": [
+       -28.2,
+       73.4
+      ],
+      "right": [
+       870.6,
+       972.2
+      ]
+     },
+     "rebate_width_mm": 22.0,
+     "rebate_depth_mm": 53.0,
+     "stop_depth_mm": 74.0,
+     "frame_outside_face_y_mm": 114.3,
+     "frame_inside_face_y_mm": 241.3,
+     "arris": "square",
+     "arris_ease_mm": 1.0,
+     "stop_inner_bead": true,
+     "head_section_mm": {
+      "height": 101.6,
+      "depth": 127.0,
+      "z0": 2339.6,
+      "showing_below_brick_at_crown": 60.4,
+      "showing_below_brick_at_ends": 60.4,
+      "top_edge": "flat, square edged, top at 2.40 m under the shop's own transom line"
+     },
+     "transom": {
+      "face_height_mm": 102.0,
+      "z_stop_underside": 1970.6,
+      "z_top": 2072.6,
+      "rebate_underside_z": 1992.6,
+      "depth": 127.0,
+      "x_mm": [
+       57.4,
+       886.6
+      ],
+      "overlap_on_jamb_faces_mm": 16.0,
+      "front_profile_yz_mm": [
+       [
+        0.0,
+        0.0
+       ],
+       [
+        -20.0,
+        0.0
+       ],
+       [
+        -22.0,
+        2.0
+       ],
+       [
+        -22.5,
+        5.0
+       ],
+       [
+        -21.0,
+        8.5
+       ],
+       [
+        -16.0,
+        11.5
+       ],
+       [
+        -11.0,
+        16.0
+       ],
+       [
+        -10.0,
+        22.0
+       ],
+       [
+        -10.0,
+        36.0
+       ],
+       [
+        -10.0,
+        70.0
+       ],
+       [
+        9.5,
+        102.0
+       ]
+      ],
+      "front_profile_note": "(y from the jamb face plane, outwards negative; z from the stop underside). Nose (lip bead and cove), vertical face, weathered top sloping back to the glass rebate at z = face height. The nose projects over the door head; the ends stop square against the jamb faces.",
+      "zones_z_mm": {
+       "lip_and_cove": [
+        0.0,
+        36.0
+       ],
+       "face": [
+        36.0,
+        70.0
+       ],
+       "slope": [
+        70.0,
+        102.0
+       ]
+      },
+      "_src": "Photo P2: bar rows 75-121 of the 675x1200 preview (46 px = 13.4% of the visible leaf width = 107 mm), slope rows 76-90 (30%), face 90-105 (33%), moulded nose 105-121 (35%); Riley prints 'Transome 5 x 4' (101.6): 102 kept. Nose proud of the jamb faces: Judgement from P2's shadow (22 +-8); ends overlap the jamb stops by 16 +-6 mm (P2 nosing ends 7 px beyond the stop edge)."
+     },
+     "glazing": {
+      "kind": "fixed single pane, putty-and-bead glazed, no sash, no bars",
+      "opening_x_mm": [
+       73.4,
+       870.6
+      ],
+      "opening_z_mm": [
+       2072.6,
+       2339.6
+      ],
+      "bead_face_mm": 10.0,
+      "bead_proud_mm": 8.0,
+      "bead_profile_ap_mm": [
+       [
+        0.0,
+        0.0
+       ],
+       [
+        10.0,
+        0.0
+       ],
+       [
+        10.0,
+        1.5
+       ],
+       [
+        9.2,
+        4.2
+       ],
+       [
+        7.3,
+        6.3
+       ],
+       [
+        4.5,
+        7.6
+       ],
+       [
+        1.5,
+        8.0
+       ],
+       [
+        0.0,
+        8.0
+       ]
+      ],
+      "bead_note": "Planted timber bead on all four sides, mitred, its foot 10 mm inside the opening edge; (a along the face, p proud). Frame colour.",
+      "clear_glass_x_mm": [
+       83.4,
+       860.6
+      ],
+      "clear_glass_z_mm": [
+       2082.6,
+       2329.6
+      ],
+      "glass_thickness_mm": 3.0,
+      "glass_y_mm": 133.3,
+      "glass_rebate_mm": 6.4,
+      "_src": "Bead: Photo P1 (bright 2 px line at the glass foot, dark 2 px line at the glass head, 1 px lines at the sides; clear glass 47.5 px = 245 +-10 high against the 267 opening); profile Judgement. Glass 3 mm: Judgement (lab used 2.5)."
+     }
+    },
+    "step": {
+     "present": true,
+     "kind": "painted softwood threshold at the pavement, no step (P2)",
+     "threshold": {
+      "top_z": 0.0,
+      "thickness_mm": 70.0,
+      "front_y_mm": 0.0,
+      "back_y_mm": 241.3,
+      "nose_radius_mm": 8.0,
+      "nose_overhang_over_riser_mm": 0.0,
+      "fall_to_front_mm": 0.0,
+      "bearing_into_wall_each_side_mm": 0.0,
+      "_src": "Photo P2: a dark worn timber sill, rows 945-975 (30 px x 2.3 = 70 mm), top about 40 above the paving, rounded front; the paving slab beyond is cracked."
+     },
+     "riser": {
+      "present": false
+     },
+     "tread": {
+      "present": false,
+      "ground_z_mm": -70.0
+     },
+     "ground_z_mm": -70.0
+    },
+    "brick": {
+     "present": false,
+     "reveal": "the shop pilaster's return, plain; the shopfront owns it",
+     "arch": {
+      "present": false
+     },
+     "quoins": {
+      "present": false
+     },
+     "plinth": "none"
+    },
+    "ironmongery": {
+     "letter_plate": {
+      "present": true,
+      "orientation": "vertical, on the muntin (as P1); P2's six-panel door has it horizontal, see option_six_panel",
+      "outer_w_mm": 76.0,
+      "outer_h_mm": 242.0,
+      "centre_u_mm": 419.0,
+      "centre_above_leaf_bottom_mm": 1617.0,
+      "backplate_thickness_mm": 3.0,
+      "rim_width_mm": 13.5,
+      "rim_proud_mm": 6.0,
+      "rim_outer_edge": "chamfered 45 degrees",
+      "aperture_w_mm": 48.0,
+      "aperture_h_mm": 190.0,
+      "aperture_top_margin_mm": 22.0,
+      "aperture_bottom_margin_mm": 30.0,
+      "flap": "sprung flap, hinged at the top, 2 mm gap, dished 3 mm",
+      "screws": "four slotted brass-or-nickel screws, 4 mm, at the rim's corners (P2 shows them)",
+      "metal": "nickel or chrome, worn to brass at the rim's edge",
+      "_src": "Size and place from P1 (a four-panel door); the aperture 0.19 x 0.048 holds the scene's 0.25 x 0.04 letter-plate size in its long side. Height 1617 against the scene's 1.0: photographs win (D15)."
+     },
+     "house_number": {
+      "present": "optional",
+      "digits": 3,
+      "placed": "on the leaf's top rail, centred, in a row",
+      "digit_w_mm": 51.0,
+      "digit_h_mm": 56.0,
+      "stroke_mm": 6.0,
+      "relief_mm": 3.0,
+      "gap_mm": 12.0,
+      "metal": "chrome or white-painted",
+      "_src": "Photo P2: '178' rows 134-153 (24 px = 56 mm), each 22 px wide. The town assigns the number."
+     },
+     "cylinder_lock": {
+      "present": true,
+      "kind": "flush cylinder with a knurled (serrated) collar, in a bored round hole",
+      "centre_u_mm": 771.3,
+      "centre_above_leaf_bottom_mm": 1040.0,
+      "outer_diameter_mm": 37.0,
+      "plug_diameter_mm": 18.0,
+      "collar_proud_mm": 2.0,
+      "keyway": "horizontal slot",
+      "metal": "chrome/nickel, scalloped collar of 12 serrations",
+      "distance_from_stop_face_mm": 46.3,
+      "_src": "Photo P2 5x crop: centre (488, 495) px of the 675x1200 preview, outer 16 px = 37 mm (2.317 mm a pixel, fitted on the leaf's visible width), 20 px (46 mm) from the visible right edge; serrated rim seen."
+     },
+     "old_keyhole": {
+      "present": true,
+      "centre_u_mm": 782.8,
+      "centre_above_leaf_bottom_mm": 1151.0,
+      "w_mm": 23.0,
+      "h_mm": 32.0,
+      "kind": "a plugged mortice keyhole: a keyhole-shaped dark recess with a small metal blank, 2 mm sunk",
+      "_src": "Photo P2 5x crop: (493, 447) px, 10 x 14 px."
+     },
+     "knob": {
+      "present": true,
+      "kind": "turned centre knob (a fixed pull) on a round rose let into the rail",
+      "centre_u_mm": 419.0,
+      "centre_above_leaf_bottom_mm": 787.0,
+      "diameter_mm": 69.0,
+      "projection_mm": 62.0,
+      "rose_diameter_mm": 76.0,
+      "profile_rz_mm": [
+       [
+        0,
+        0
+       ],
+       [
+        30,
+        0
+       ],
+       [
+        34.5,
+        6
+       ],
+       [
+        34.5,
+        20
+       ],
+       [
+        30,
+        34
+       ],
+       [
+        20,
+        46
+       ],
+       [
+        12,
+        54
+       ],
+       [
+        6,
+        60
+       ],
+       [
+        2,
+        62
+       ],
+       [
+        0,
+        62
+       ]
+      ],
+      "profile_note": "(r from the axis, z proud of the rose) a bulb with five turned rings (grooves 1.5 mm deep at z 10, 19, 28, 37, 46) ending in a 4 mm brass cap; the rose is a 76 mm dished ring sunk 3 mm; black-painted iron or wood.",
+      "metal": "painted, brass cap",
+      "_src": "Photo P2 8x crop: knob 30 px = 69 mm across at (333, 693) px, ringed turnings, brass-coloured centre cap, a dark circular recess 33 px around it. Height: Ellis p.93, the handle 'in the middle of depth of rail'. Projection and ring depths Judgement."
+     },
+     "keep": {
+      "present": true,
+      "where": "the face of the right jamb's stop",
+      "w_mm": 22.0,
+      "h_mm": 72.6,
+      "centre_x_mm": 903.0,
+      "z_range_mm": [
+       925.7,
+       998.3
+      ],
+      "proud_mm": 3.0,
+      "kind": "dark steel box keep",
+      "_src": "As P1 (P2 has a grey service box on the jamb at this height: modern, left out)."
+     },
+     "knocker": {
+      "present": false
+     }
+    },
+    "hinges": {
+     "visible_from_outside": false,
+     "note": "None shows in either photograph: the leaf opens inwards, the hinges are on the inside edge of the leaf. Inside, three 100 mm steel butts (top 150 from the top, bottom 200 from the bottom, one midway) on the hinge stile; the builder may omit them, the street never sees them."
+    },
+    "derived": {
+     "z_leaf_top": 1991.0,
+     "z_transom_stop_underside": 1970.6,
+     "z_transom_top": 2072.6,
+     "z_glass_opening_top": 2339.6,
+     "z_head_crown": 2400.0,
+     "z_head_springing": 2400.0,
+     "panel_opening_width_mm": 244.7,
+     "bottom_panel_height_mm": 479.9,
+     "top_panel_height_mm": 952.7
+    }
+   },
+   "against_scene_slots": {
+    "leaf 0.838 x 1.981": "kept: its visible proportion 2.46 lies inside P1's 2.47 to 2.50 (+-0.04) and 3% above P2's 2.39 (the P2 door is a squatter six-panel); no photograph contradicts it beyond its error",
+    "letter plate 0.25 x 0.04 at 1.0": "size kept as the plate's long side (outer 0.242 x 0.076, aperture 0.19 x 0.048); height changed to 1.617 above the leaf bottom (1.627 above the threshold): P1 puts it at 1.617, P2 at 1.50; BS EN 13724's 0.7-1.7 m (post-1990, via the shopfront research) contains it; the scene's 1.0 is on the panel and the photographs show nothing there",
+    "overall 0.944 wide (kit)": "kept as the shop bay's opening; the jambs then show 73 mm of face, P2 shows about 50 for the jamb strip (could not settle)",
+    "transom at 2.40": "head top set at 2.40; above it the shopfront's own fascia and spandrel (to 2.85) belong to the shopfront, not to this target"
+   }
+  },
+  "option_six_panel": {
+   "description": "Optional: P2's own layout (a six-panel door: two small panels over two long panels over two small) as fractions of the visible leaf (344 x 822 px in the 675x1200 preview): top rail 3.9%, small upper panels 14.1%, frieze rail 5.1%, long panels 40.6%, lock rail 10.5%, bottom panels 16.2%, bottom rail 9.6% of the height; stiles 10.2% of the width, muntin 13.1%, mouldings 5.4%. The centre knob then sits at 30.5% of the height, the letter plate (a horizontal 195 x 70 plate) at 78.8%, the cylinder lock at 54.6%. Not requested; for variation only.",
+   "fractions_of_visible_height": {
+    "top_rail": 0.039,
+    "small_upper_panels": 0.141,
+    "frieze_rail": 0.051,
+    "long_panels": 0.406,
+    "lock_rail": 0.105,
+    "bottom_panels": 0.162,
+    "bottom_rail": 0.096
+   },
+   "fractions_of_visible_width": {
+    "stile": 0.102,
+    "muntin": 0.131,
+    "moulding": 0.054
+   },
+   "furniture_heights_fraction_of_visible_height": {
+    "knob": 0.305,
+    "cylinder": 0.546,
+    "old_keyhole": 0.606,
+    "letter_plate": 0.788
+   },
+   "letter_plate_horizontal": {
+    "outer_w_mm": 195.0,
+    "outer_h_mm": 70.0,
+    "aperture_w_mm": 168.0,
+    "aperture_h_mm": 40.0,
+    "rim_width_mm": 12.0,
+    "lift_bar": "a 3 mm round bar across the flap with two posts, 150 mm long"
+   }
+  }
+ },
+ "disagreements_photographs_win": [
+  {
+   "id": "D1",
+   "point": "leaf height",
+   "book": "2032 (6 ft 8 in) Hasluck p.347",
+   "photo": "P1 ratio 2.505 +-0.04 (2.47 on a mean-width fit)",
+   "chosen": "1948 (kept from the lab; 1926 if the scale is fitted on the mid-door width)"
+  },
+  {
+   "id": "D2",
+   "point": "muntin",
+   "book": "101.6 (4 in) Ellis p.93, Riley p.357",
+   "photo": "P1: visible gap 21.5 +-2 px = 111, so 120 +-10 (the lab's 132.2 came from 23.8 px; the review found 14% against 16%)",
+   "chosen": "120 (photo; revised from 132.2)"
+  },
+  {
+   "id": "D3",
+   "point": "lock rail centre",
+   "book": "660 (Ellis, 2 ft 8 in less 6 in from a step); 838 (Riley)",
+   "photo": "787 +-12",
+   "chosen": "787 (photo)"
+  },
+  {
+   "id": "D4",
+   "point": "bottom rail",
+   "book": "228.6 Ellis; 279 Riley",
+   "photo": "192.8 +-15",
+   "chosen": "192.8 (photo)"
+  },
+  {
+   "id": "D5",
+   "point": "jamb showing past the brick",
+   "book": "39 (Hasluck Fig. 1148)",
+   "photo": "55 +-10",
+   "chosen": "55 (photo)"
+  },
+  {
+   "id": "D6",
+   "point": "transom height",
+   "book": "101.6 (Riley 'Transome 5 x 4')",
+   "photo": "P1 65 +-8 (P2 107 +-10)",
+   "chosen": "65 for T1 (P1); 102 for F1 (P2 and Riley agree)"
+  },
+  {
+   "id": "D7",
+   "point": "fanlight",
+   "book": "hung sash 457 high (Hasluck p.347)",
+   "photo": "fixed single pane 267 +-10, clear glass 247 inside beads",
+   "chosen": "fixed, 267 opening"
+  },
+  {
+   "id": "D8",
+   "point": "top rail",
+   "book": "114.3 Ellis",
+   "photo": "131.3 +-12",
+   "chosen": "127 (Riley, inside the photo's error)"
+  },
+  {
+   "id": "D9",
+   "point": "outside panel treatment",
+   "book": "bead butt (Hasluck p.346); bolection (Riley p.357)",
+   "photo": "moulding on all four sides",
+   "chosen": "bolection"
+  },
+  {
+   "id": "D10",
+   "point": "frame's edges",
+   "book": "ovolo on the outer arris, 19 mm (Hasluck p.346, Riley Fig. 671); the lab drew it",
+   "photo": "P1 and P2 both show a flat, square-edged frame with no round at the jambs, head or transom; P2 a small bead on the inner stop edge",
+   "chosen": "flat, square, eased 1 mm; no ovolo (photograph)"
+  },
+  {
+   "id": "D11",
+   "point": "transom's form",
+   "book": "flush, a plain 5 x 4 member (Riley Fig. 667); 'double rebated and weathered' (Hasluck p.398)",
+   "photo": "P2 a deep transom projecting over the head with a weathered slope, face and moulded nose; P1 the same, lighter",
+   "chosen": "weathered, faced and nosed, projecting 8 to 14 (T1) and 10 to 22 (F1) beyond the jamb faces"
+  },
+  {
+   "id": "D12",
+   "point": "sill",
+   "book": "stone sill drawn as a plain slab (Ellis Fig. 357, no size); oak sill otherwise (Hasluck p.398)",
+   "photo": "P1 a threshold stone, a recessed riser and a deep rounded-nosing step running past the opening; P2 a timber threshold at the pavement",
+   "chosen": "T1: threshold 76 + riser 72 + step 110 with a 30 mm nosing; F1: timber threshold 70"
+  },
+  {
+   "id": "D13",
+   "point": "weatherboard height",
+   "book": "none printed",
+   "photo": "P1 16 px = 80 +-8 (the lab's 72 from rows 515-529; the review found the build half as tall again as the photograph's lit part)",
+   "chosen": "80, with the end gaps"
+  },
+  {
+   "id": "D14",
+   "point": "bolection width",
+   "book": "36 (scaled from Riley Fig. 671)",
+   "photo": "P1 34 +-8; P2 43",
+   "chosen": "36 (T1), 42 (F1)"
+  },
+  {
+   "id": "D15",
+   "point": "letter plate height",
+   "book": "none; the scene's guess 1.0 m",
+   "photo": "P1 1.617 m; P2 1.50 m (above the leaf bottom)",
+   "chosen": "1.617 (T1 and F1)"
+  },
+  {
+   "id": "D16",
+   "point": "furniture",
+   "book": "Ellis p.93: handle in the middle of the lock rail's depth",
+   "photo": "P1 no knob, cylinder lock at 1.235 and keep at 1.147; P2 a centre knob at the rail's middle and a cylinder at 1.04",
+   "chosen": "T1 as P1; F1 as P2 (knob at 787)"
+  },
+  {
+   "id": "D17",
+   "point": "head",
+   "book": "head built into the wall under an arch (Ellis p.111)",
+   "photo": "P1 head cambered 18 mm under a buff soldier ring; lab drew it flat",
+   "chosen": "cambered 18 mm"
+  }
+ ],
+ "could_not_settle": [
+  "No dated 1975 to 2000 photograph of a four-panel door of the street's kind was reachable: P1 is dated 6 May 2012 (fresh paint, door possibly renewed), P2 is 3 February 2024 (an unrestored six-panel door). Egress refused Geograph, Wikimedia Commons, archive.org and the wider web.",
+  "The bolection moulding's width (34 +-8 on P1, 43 on P2) and the transom's, band's and weatherboard's projections (judged from shadow lengths) are not measurable at 480 px.",
+  "The step's depth (312) and thickness (110) and the ground level at the foot: perspective hides them; +-80 mm.",
+  "The jamb's visible width on the flat door: the bay's 0.944 gives 73 mm; P2 shows a 49 mm strip (and a groove) between the leaf and the shop's pilaster. If the bay can give 47 mm, the jamb shows 50.",
+  "Whether the leaf is 1948 or 1926 high (1%): the left edge leans 2.6 px over 210 rows in P1.",
+  "The lock rail band's and the weatherboard's exact sections: the photograph gives highlights and shadows, not outlines; the profiles are drawn to reproduce them, not measured.",
+  "How the transom's nose ends at the jambs (square end, return or mitre): P2 shows it rolling over the stop edge; a square end is specified.",
+  "Hinge details (inside, not seen); the plinth and dog-tooth course of P1's wall (the wall's own); the colour of an actual Hook door in 1990 (no source)."
+ ],
+ "checks": [
+  {
+   "id": "A1",
+   "group": "pass rule",
+   "name": "front view, each layer (frame, glass, leaf, panel, moulding)",
+   "measure": "the model's elevation silhouette against target_drawings.json elevation, layer by layer, 0.5 mm a pixel, inside the brick opening",
+   "expected": "IoU >= 0.97; outline p95 <= 2; worst <= 6",
+   "tol": null,
+   "unit": "mm",
+   "source": "lab check_door.py",
+   "applies": "both"
+  },
+  {
+   "id": "A2",
+   "group": "pass rule",
+   "name": "horizontal sections (lower panels, band and lock, letter plate, transom)",
+   "measure": "the model cut at each section_h* cut_z_mm against that section's polygons, all joinery layers",
+   "expected": "IoU >= 0.97; p95 <= 2; worst <= 6",
+   "tol": null,
+   "unit": "mm",
+   "source": "lab check_door.py",
+   "applies": "both"
+  },
+  {
+   "id": "A3",
+   "group": "pass rule",
+   "name": "vertical sections (left panels, muntin)",
+   "measure": "the model cut at section_v and section_v_muntin cut_x_mm against their polygons, all joinery layers",
+   "expected": "IoU >= 0.97; p95 <= 2; worst <= 6",
+   "tol": null,
+   "unit": "mm",
+   "source": "lab check_door.py",
+   "applies": "both"
+  },
+  {
+   "id": "A4",
+   "group": "pass rule",
+   "name": "profiles",
+   "measure": "each closed profile in target_drawings.json profiles against the model cut across the piece (bolection, band, weatherboard, transom front, glazing bead, threshold, step)",
+   "expected": "outline p95 <= 1.5; worst <= 3",
+   "tol": null,
+   "unit": "mm",
+   "source": "new: the lab never tested profiles, and its reviews failed on them",
+   "applies": "both"
+  },
+  {
+   "id": "B1",
+   "group": "dimensions",
+   "name": "leaf width",
+   "measure": "x extent of the leaf's members",
+   "expected": 812.8,
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Read: Hasluck p.347",
+   "applies": "T1"
+  },
+  {
+   "id": "B2",
+   "group": "dimensions",
+   "name": "leaf height",
+   "measure": "z extent of the leaf",
+   "expected": 1948.0,
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Photo P1 (D1)",
+   "applies": "T1"
+  },
+  {
+   "id": "B3",
+   "group": "dimensions",
+   "name": "leaf thickness",
+   "measure": "y extent of the leaf",
+   "expected": 50.8,
+   "tol": 0.5,
+   "unit": "mm",
+   "source": "Read: Ellis p.93",
+   "applies": "both"
+  },
+  {
+   "id": "B4",
+   "group": "dimensions",
+   "name": "stile",
+   "measure": "x extent of one stile",
+   "expected": 114.3,
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Read: Ellis p.93",
+   "applies": "both"
+  },
+  {
+   "id": "B5",
+   "group": "dimensions",
+   "name": "muntin",
+   "measure": "x extent of the muntin, and its share of the leaf's width",
+   "expected": "120.0 (14.8% of the leaf)",
+   "tol": 1.5,
+   "unit": "mm",
+   "source": "Photo P1 (D2, revised from 132.2)",
+   "applies": "both"
+  },
+  {
+   "id": "B6",
+   "group": "dimensions",
+   "name": "visible gap between the two panel mouldings of a pair",
+   "measure": "x distance between the mouldings' outer edges at one z",
+   "expected": 110.4,
+   "tol": 2.5,
+   "unit": "mm",
+   "source": "Photo P1: 21.5 +-2 px x 5.15",
+   "applies": "T1"
+  },
+  {
+   "id": "B7",
+   "group": "dimensions",
+   "name": "top, lock and bottom rails",
+   "measure": "z extents",
+   "expected": "127.0 / 228.6 / 192.8",
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Riley p.357 / Ellis p.93 / Photo P1 (D4)",
+   "applies": "both"
+  },
+  {
+   "id": "B8",
+   "group": "dimensions",
+   "name": "panel opening",
+   "measure": "x and z extent of one framing opening: 232.1 x 919.7 (upper), 232.1 x 479.9 (lower)",
+   "expected": "232.1 wide",
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Derived",
+   "applies": "T1"
+  },
+  {
+   "id": "B9",
+   "group": "dimensions",
+   "name": "panel thickness and groove",
+   "measure": "the panel's y extent; the groove's depth",
+   "expected": "16.9 and 12.7",
+   "tol": 0.5,
+   "unit": "mm",
+   "source": "Read: Riley p.353, Ellis p.92",
+   "applies": "both"
+  },
+  {
+   "id": "B10",
+   "group": "dimensions",
+   "name": "bolection width on the face",
+   "measure": "x extent of the moulding from its outer edge to the panel field",
+   "expected": "36.0 (F1 42)",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Scaled Riley; Photo P1 34 +-8, P2 43 (D14)",
+   "applies": "both"
+  },
+  {
+   "id": "B11",
+   "group": "dimensions",
+   "name": "jamb section",
+   "measure": "the jamb's section outline: 101.6 across, 127 deep",
+   "expected": "101.6 x 127.0",
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Read: Riley p.357",
+   "applies": "both"
+  },
+  {
+   "id": "B12",
+   "group": "dimensions",
+   "name": "rebate",
+   "measure": "width 22 and depth 53",
+   "expected": "22.0 x 53.0",
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Scaled: Hasluck Fig. 1148, Riley Fig. 671",
+   "applies": "both"
+  },
+  {
+   "id": "B13",
+   "group": "dimensions",
+   "name": "jamb showing past the brick (T1) / in the bay (F1)",
+   "measure": "x extent of the jamb face seen from the street",
+   "expected": "55.0 (F1 73.4)",
+   "tol": 2.0,
+   "unit": "mm",
+   "source": "Photo P1 (D5); Derived for F1",
+   "applies": "both"
+  },
+  {
+   "id": "B14",
+   "group": "dimensions",
+   "name": "transom face height",
+   "measure": "z extent of the transom bar seen from the front, slope, face, cove and lip together",
+   "expected": "65.0 (F1 102.0)",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Photo P1 (D6); P2 and Riley for F1",
+   "applies": "both"
+  },
+  {
+   "id": "B15",
+   "group": "dimensions",
+   "name": "glass opening and clear glass",
+   "measure": "bead-to-bead opening 772 x 267; clear glass 752 x 247",
+   "expected": "772 x 267; 752 x 247",
+   "tol": 2.0,
+   "unit": "mm",
+   "source": "Photo P1 (D7)",
+   "applies": "T1"
+  },
+  {
+   "id": "B16",
+   "group": "dimensions",
+   "name": "head's crown and ends (cambered, T1)",
+   "measure": "z of the head's top edge at x = 441 and at x = 0 and 882",
+   "expected": "2340.0 and 2322.0",
+   "tol": 4.0,
+   "unit": "mm",
+   "source": "Photo P1: rows 78 and 81.5 (D17)",
+   "applies": "T1"
+  },
+  {
+   "id": "B17",
+   "group": "dimensions",
+   "name": "overall extent of the frame (jambs, with the hidden parts)",
+   "measure": "x extent -46.6 to 928.6 (T1), z from the threshold to the head's top 2371.2",
+   "expected": 975.2,
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Derived",
+   "applies": "T1"
+  },
+  {
+   "id": "C1",
+   "group": "frame edges",
+   "name": "jamb, head and transom arrises are square",
+   "measure": "the jamb's horizontal section outline: each of the four outer corners has a vertex within 1.5 mm of the ideal square corner; no arc segment anywhere on the outline",
+   "expected": "0 arcs; corner deviation <= 1.5",
+   "tol": 1.5,
+   "unit": "mm",
+   "source": "Photo P1 and P2 (D10); NOT the ovolo of Hasluck p.346",
+   "applies": "both"
+  },
+  {
+   "id": "C2",
+   "group": "frame edges",
+   "name": "the jamb face is flat",
+   "measure": "area-weighted: >= 98% of the visible jamb face's normals within 3 degrees of the face normal (no tube shading)",
+   "expected": ">= 98% within 3 degrees",
+   "tol": 2.0,
+   "unit": "%",
+   "source": "Photo P1 and P2 (D10)",
+   "applies": "both"
+  },
+  {
+   "id": "C3",
+   "group": "frame edges",
+   "name": "frame feet stand square on the threshold",
+   "measure": "the jamb's lowest 20 mm has the same section as its middle; its foot face is a plane at z = 0 (+-1)",
+   "expected": "square",
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Photo P2; Ellis p.111 Fig. 357",
+   "applies": "both"
+  },
+  {
+   "id": "C4",
+   "group": "frame edges",
+   "name": "the left and right feet are alike",
+   "measure": "no step, lip or extra block at either jamb foot (the lab's left foot had one)",
+   "expected": "mirror-equal within 1",
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "review 2, fault 6",
+   "applies": "both"
+  },
+  {
+   "id": "C5",
+   "group": "frame edges",
+   "name": "the stop's inner bead (F1 only)",
+   "measure": "a 5 wide x 2.5 proud quarter-round on the stop's inner edge, both jambs",
+   "expected": "5 x 2.5",
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Photo P2; Hasluck p.346 ('beaded on the inside')",
+   "applies": "F1"
+  },
+  {
+   "id": "D1",
+   "group": "transom",
+   "name": "projects over the door head",
+   "measure": "frontmost y of the transom face and of its nose, measured from the jamb's outside face plane",
+   "expected": "face 8, nose 14 (F1: 10, 22)",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Photo P1 (light), P2 (bold) (D11)",
+   "applies": "both"
+  },
+  {
+   "id": "D2",
+   "group": "transom",
+   "name": "weathered top",
+   "measure": "the slope from the face's top to the glass shelf: angle from the horizontal",
+   "expected": "55.0 (F1 58.6)",
+   "tol": 8.0,
+   "unit": "deg",
+   "source": "Hasluck p.398 ('weathered'); Photo P1, P2",
+   "applies": "both"
+  },
+  {
+   "id": "D3",
+   "group": "transom",
+   "name": "zones, bottom to top",
+   "measure": "z of the lip (0-4), cove (4-14), face (14-40), slope (40-65); F1: nose 0-36, face 36-70, slope 70-102",
+   "expected": "as listed",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Photo P1 rows 143.3-155.5; P2 rows 75-121",
+   "applies": "both"
+  },
+  {
+   "id": "D4",
+   "group": "transom",
+   "name": "a lip bead at the underside",
+   "measure": "the profile's frontmost point lies within the lowest 6 mm (T1) / 9 mm (F1) of the bar",
+   "expected": "z 2.6 (+-3)",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Photo P1 row 155 (lit lip) and P2",
+   "applies": "both"
+  },
+  {
+   "id": "D5",
+   "group": "transom",
+   "name": "overlaps the jamb faces",
+   "measure": "x extent of the transom's front member beyond the jamb stop faces, each side",
+   "expected": "10 (F1 16)",
+   "tol": 4.0,
+   "unit": "mm",
+   "source": "Photo P2",
+   "applies": "both"
+  },
+  {
+   "id": "D6",
+   "group": "transom",
+   "name": "glazing bead on all four sides",
+   "measure": "a quarter-round bead 10 face x 8 proud, mitred, inside the 772 x 267 opening; its foot at the opening edge",
+   "expected": "10 x 8",
+   "tol": 1.5,
+   "unit": "mm",
+   "source": "Photo P1 (review 2, fault 8)",
+   "applies": "both"
+  },
+  {
+   "id": "D7",
+   "group": "transom",
+   "name": "no flat flush bar",
+   "measure": "the transom's front must not be one plane: at least 3 distinct y levels over its height",
+   "expected": ">= 3",
+   "tol": null,
+   "unit": "count",
+   "source": "review 2, fault 4",
+   "applies": "both"
+  },
+  {
+   "id": "E1",
+   "group": "band",
+   "name": "height and place",
+   "measure": "z extent above the leaf's bottom",
+   "expected": "785.0 to 857.5 (72.5)",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Photo P1 rows 363.5-377.5",
+   "applies": "T1"
+  },
+  {
+   "id": "E2",
+   "group": "band",
+   "name": "projection",
+   "measure": "max proud of the rail face",
+   "expected": 22.0,
+   "tol": 4.0,
+   "unit": "mm",
+   "source": "Judgement from the shadow length (+-6)",
+   "applies": "T1"
+  },
+  {
+   "id": "E3",
+   "group": "band",
+   "name": "profile is moulded, not a plank",
+   "measure": "the cut outline has two crests (z 37 and 62) and two coves (z 25, 49) deeper than 5 mm below the crests, a square underside and a rounded top: no segment longer than 20 mm is a straight plane",
+   "expected": "3 crests, 2 coves",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Photo P1 highlights at rows 365.5, 371, 374",
+   "applies": "T1"
+  },
+  {
+   "id": "E4",
+   "group": "band",
+   "name": "crisp shadow line",
+   "measure": "the underside is a horizontal plane (+-2 degrees) 14 to 17 mm deep before the lower fillet",
+   "expected": "flat underside",
+   "tol": 2.0,
+   "unit": "deg",
+   "source": "Photo P1 rows 378-382 (L 60 against 100 above)",
+   "applies": "T1"
+  },
+  {
+   "id": "E5",
+   "group": "band",
+   "name": "stops short of both stops",
+   "measure": "gap from each end to the jamb stop face",
+   "expected": 2.0,
+   "tol": 1.5,
+   "unit": "mm",
+   "source": "brief; review 2, fault 5",
+   "applies": "T1"
+  },
+  {
+   "id": "W1",
+   "group": "weatherboard",
+   "name": "height and place",
+   "measure": "z extent above the leaf's bottom",
+   "expected": "0 to 80",
+   "tol": 4.0,
+   "unit": "mm",
+   "source": "Photo P1 rows 513.7-529.7 (D13)",
+   "applies": "T1"
+  },
+  {
+   "id": "W2",
+   "group": "weatherboard",
+   "name": "projection",
+   "measure": "max proud of the leaf face",
+   "expected": 26.0,
+   "tol": 4.0,
+   "unit": "mm",
+   "source": "Judgement (+-6)",
+   "applies": "T1"
+  },
+  {
+   "id": "W3",
+   "group": "weatherboard",
+   "name": "profile is moulded",
+   "measure": "convex belly (max proud at z 26-40), a hollow at z 57 (>= 5 mm back from the crests either side), a rounded top nose of radius >= 8 rolling to the door at z 80; no flat wedge",
+   "expected": "1 hollow, 2 crests",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Photo P1 rows 514-529",
+   "applies": "T1"
+  },
+  {
+   "id": "W4",
+   "group": "weatherboard",
+   "name": "stops short of both stops and does not run into the jamb",
+   "measure": "gap from each end to the jamb stop face",
+   "expected": 2.0,
+   "tol": 1.5,
+   "unit": "mm",
+   "source": "brief; review 2, fault 5",
+   "applies": "T1"
+  },
+  {
+   "id": "F1",
+   "group": "ironmongery",
+   "name": "letter plate present, framed, with a flap",
+   "measure": "backplate, a raised rim, an aperture and a hinged flap (four separate pieces or surfaces)",
+   "expected": "present",
+   "tol": null,
+   "unit": "-",
+   "source": "Photo P1 (review 2, fault 3)",
+   "applies": "both"
+  },
+  {
+   "id": "F2",
+   "group": "ironmongery",
+   "name": "letter plate size",
+   "measure": "outer width x height",
+   "expected": "76.0 x 242.0",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Photo P1 16x crop",
+   "applies": "both"
+  },
+  {
+   "id": "F3",
+   "group": "ironmongery",
+   "name": "letter plate place",
+   "measure": "centre height above the leaf's bottom, and its x offset from the leaf's centre",
+   "expected": "1617.0; 0",
+   "tol": 10.0,
+   "unit": "mm",
+   "source": "Photo P1 (D15); NOT the scene's 1.0",
+   "applies": "both"
+  },
+  {
+   "id": "F4",
+   "group": "ironmongery",
+   "name": "letter plate relief",
+   "measure": "rim proud of the door face; backplate thickness",
+   "expected": "6.0; 3.0",
+   "tol": 1.5,
+   "unit": "mm",
+   "source": "Judgement",
+   "applies": "both"
+  },
+  {
+   "id": "F5",
+   "group": "ironmongery",
+   "name": "cylinder lock",
+   "measure": "diameter of the collar; of the plug; centre height above the leaf's bottom; distance of its centre from the stop face",
+   "expected": "43.5; 28.0; 1235.0; 46.6 (F1 37; 18; 1040; 46.3)",
+   "tol": 4.0,
+   "unit": "mm",
+   "source": "Photo P1; P2",
+   "applies": "both"
+  },
+  {
+   "id": "F6",
+   "group": "ironmongery",
+   "name": "lock is set well in from the edge",
+   "measure": "the collar's nearest edge to the stop face",
+   "expected": ">= 24",
+   "tol": null,
+   "unit": "mm",
+   "source": "review 2, fault 3 (the lab's knob was near the edge)",
+   "applies": "both"
+  },
+  {
+   "id": "F7",
+   "group": "ironmongery",
+   "name": "keep on the jamb's stop",
+   "measure": "size 22 x 72.6; centre x and z",
+   "expected": "x 859.4; z 1156.6 (F1 903.0; 962.0)",
+   "tol": 5.0,
+   "unit": "mm",
+   "source": "Photo P1",
+   "applies": "both"
+  },
+  {
+   "id": "F8",
+   "group": "ironmongery",
+   "name": "centre knob (F1)",
+   "measure": "diameter 69; projection 62 above the rose; rose 76; five turned rings; at the lock rail's centre (787 above the leaf's bottom)",
+   "expected": "69; 62; 76",
+   "tol": 4.0,
+   "unit": "mm",
+   "source": "Photo P2; Ellis p.93",
+   "applies": "F1"
+  },
+  {
+   "id": "F9",
+   "group": "ironmongery",
+   "name": "house number is optional",
+   "measure": "two stacked brass digits 39 x 72 (T1) or three 51 x 56 in a row (F1); absent unless the town gives a number",
+   "expected": "optional",
+   "tol": null,
+   "unit": "-",
+   "source": "Photo P1, P2",
+   "applies": "both"
+  },
+  {
+   "id": "F10",
+   "group": "ironmongery",
+   "name": "no hinges, no knocker, no chain on the outside",
+   "measure": "none of these meshes outside the leaf's y range",
+   "expected": "none",
+   "tol": null,
+   "unit": "-",
+   "source": "Photo P1, P2",
+   "applies": "both"
+  },
+  {
+   "id": "G1",
+   "group": "step",
+   "name": "threshold",
+   "measure": "stone, 76 thick, front flush with the wall (y 0 +-3), rounded top nose r 18, top at z 0",
+   "expected": "76; 0; 18",
+   "tol": 4.0,
+   "unit": "mm",
+   "source": "Photo P1 rows 534-547.5",
+   "applies": "T1"
+  },
+  {
+   "id": "G2",
+   "group": "step",
+   "name": "the threshold runs past the opening into the brick each side",
+   "measure": "x extent of the threshold stone beyond the reveals",
+   "expected": 112.0,
+   "tol": 20.0,
+   "unit": "mm",
+   "source": "Ellis p.111-112 (the sill's horns); the review (the lab's sill stopped at the opening)",
+   "applies": "T1"
+  },
+  {
+   "id": "G3",
+   "group": "step",
+   "name": "a recessed riser",
+   "measure": "the riser's face is 18 mm behind the threshold's nose; its height 72",
+   "expected": "18; 72",
+   "tol": 6.0,
+   "unit": "mm",
+   "source": "Photo P1 rows 548-561.5",
+   "applies": "T1"
+  },
+  {
+   "id": "G4",
+   "group": "step",
+   "name": "deep step with a rounded nosing",
+   "measure": "tread top 148 below the threshold's top; 312 beyond the wall face; width 960; nosing radius 30; plan corners radius 40; thickness 110",
+   "expected": "148; 312; 960; 30; 40; 110",
+   "tol": 25.0,
+   "unit": "mm",
+   "source": "Photo P1 (review 2, fault 7); perspective limits it",
+   "applies": "T1"
+  },
+  {
+   "id": "G5",
+   "group": "step",
+   "name": "the step is wider than the opening, both sides",
+   "measure": "tread x extent beyond each reveal",
+   "expected": ">= 20 (39 expected)",
+   "tol": null,
+   "unit": "mm",
+   "source": "Photo P1 (tread x 87-291 against opening 108.5-279)",
+   "applies": "T1"
+  },
+  {
+   "id": "G6",
+   "group": "step",
+   "name": "flat door: timber threshold at the pavement",
+   "measure": "70 thick, rounded front r 8, top 70 above the pavement",
+   "expected": "70; 8",
+   "tol": 5.0,
+   "unit": "mm",
+   "source": "Photo P2",
+   "applies": "F1"
+  },
+  {
+   "id": "G7",
+   "group": "head",
+   "name": "the head is a brick arch whose ends bear on the brick",
+   "measure": "ring ends 22 beyond each reveal, resting on the top quoin course (112 wide); ring depth at the crown 215; soffit cambered 18",
+   "expected": "22; 215; 18",
+   "tol": 6.0,
+   "unit": "mm",
+   "source": "Photo P1; Ellis p.112 Fig. 355 (the lab's lintel stopped flush with the opening and rested on nothing)",
+   "applies": "T1"
+  },
+  {
+   "id": "G8",
+   "group": "head",
+   "name": "the head's top edge follows the soffit",
+   "measure": "the frame head's top edge z against the brick soffit at x = 0, 220, 441, 660, 882",
+   "expected": "equal",
+   "tol": 3.0,
+   "unit": "mm",
+   "source": "Photo P1 (D17)",
+   "applies": "T1"
+  },
+  {
+   "id": "G9",
+   "group": "head",
+   "name": "ring and quoin overlap (nothing floats)",
+   "measure": "the arch ring's end faces overlap the top quoin course by area; and the quoins touch the wall",
+   "expected": "area > 0",
+   "tol": null,
+   "unit": "-",
+   "source": "review 2, fault 2",
+   "applies": "T1"
+  },
+  {
+   "id": "G10",
+   "group": "setting",
+   "name": "reveal and set-back",
+   "measure": "frame's outside face behind the wall face by 114.3; check 46.6 behind the brick",
+   "expected": "114.3",
+   "tol": 1.0,
+   "unit": "mm",
+   "source": "Read: Hasluck p.346",
+   "applies": "both"
+  },
+  {
+   "id": "H1",
+   "group": "photographs",
+   "name": "built elevation laid on P1 (scale fitted on the visible width only)",
+   "measure": "the model's front-view edges (leaf top, 8 moulding edges, band top and bottom, weatherboard top, transom top, glass top, head crown, brick edges, plate corners, lock centre, keep corners, arch ends) at 5.15 mm a pixel, anchors x 192.85 px = 441 mm, row 530.0 = z 10",
+   "expected": "each within 2.5 px (13 mm) of target.json photo.P1.edges",
+   "tol": 2.5,
+   "unit": 2.5,
+   "source": "px",
+   "applies": "self_check.py group 3"
+  },
+  {
+   "id": "H2",
+   "group": "photographs",
+   "name": "flat door against P2",
+   "measure": "transom height as a share of the visible leaf width 0.134 +-0.012; cylinder 20 px (5.8%) from the visible edge; knob 30 px (8.7%) wide; stile 10.2%",
+   "expected": "see self_check",
+   "tol": 0.012,
+   "unit": "ratio",
+   "source": "self_check.py group 4",
+   "applies": "F1"
+  },
+  {
+   "id": "I1",
+   "group": "surfaces",
+   "name": "no coplanar overlapping faces",
+   "measure": "no two faces of different parts coplanar within 0.1 mm and overlapping by more than 1 mm2 (the lab's diagonal hatching on the lintel and sill ends)",
+   "expected": 0,
+   "tol": 0,
+   "unit": "count",
+   "source": "review 2, fault 2",
+   "applies": "both"
+  },
+  {
+   "id": "I2",
+   "group": "surfaces",
+   "name": "no dark hairlines at the mouldings' ends",
+   "measure": "every moulding's mitre faces are closed against its neighbour: no gap above 0.3 mm",
+   "expected": "0.3",
+   "tol": 0.3,
+   "unit": "mm",
+   "source": "review 1, fault 7",
+   "applies": "both"
+  },
+  {
+   "id": "I3",
+   "group": "surfaces",
+   "name": "hard edges where the target has square arrises",
+   "measure": "the frame's arrises, the sill's top edge, the lock rail band's underside, the plate's rim are split (angle > 40 degrees) in the shading, the mouldings' curved faces are smooth",
+   "expected": "hard at >40 degrees",
+   "tol": null,
+   "unit": "-",
+   "source": "review 2, fault 1",
+   "applies": "both"
+  },
+  {
+   "id": "I4",
+   "group": "surfaces",
+   "name": "paint colours",
+   "measure": "base colour inside door_colours / frame_colours (sRGB, +-6 each channel); roughness 0.35 new, 0.55 aged; brass metal 1.0 roughness 0.4",
+   "expected": "see materials",
+   "tol": 6.0,
+   "unit": "sRGB",
+   "source": "Photo P1, P2; shopfront research",
+   "applies": "both"
+  },
+  {
+   "id": "I5",
+   "group": "surfaces",
+   "name": "glb",
+   "measure": "metres, z up, scale 1, pivot at the base's centre on the ground (target.json glb_pivot); one UV set; no part larger than the target's bounding box by more than 5 mm",
+   "expected": "x 975.2 +-5",
+   "tol": 5.0,
+   "unit": "mm",
+   "source": "brief",
+   "applies": "both"
+  }
+ ],
+ "self_check": {
+  "run": "self_check.py, 8 Oct 2026 (cloud week 42)",
+  "summary": "230 of 231 checks pass; 0 fail; 1 reported disagreement(s) kept visible",
+  "photo_scale_mm_per_px_P1": 5.15,
+  "failures": [],
+  "reported_disagreements": [
+   {
+    "group": "4 photo P2",
+    "check": "visible height / visible width (the six-panel door of P2 is squatter than 0.838 x 1.981)",
+    "pass": false,
+    "detail": "flat door 2.459, photograph 2.390 +-0.04",
+    "kind": "reported"
+   }
+  ],
+  "rows": [
+   {
+    "group": "1 printed",
+    "check": "leaf width 2 ft 8 in, Hasluck p.347",
+    "pass": true,
+    "detail": "source 812.8, target 812.8",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "leaf thickness 2 in, Ellis p.93 / Hasluck p.398",
+    "pass": true,
+    "detail": "source 50.8, target 50.8",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "stile 4 1/2 in, Ellis p.93 / Riley p.357",
+    "pass": true,
+    "detail": "source 114.3, target 114.3",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "top rail 5 in, Riley p.357 (Ellis 4 1/2 in overridden by P1, D8)",
+    "pass": true,
+    "detail": "source 127.0, target 127.0",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "lock rail 9 in, Ellis p.93 (P1 agrees)",
+    "pass": true,
+    "detail": "source 228.6, target 228.6",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "groove 1/2 in, Ellis p.92",
+    "pass": true,
+    "detail": "source 12.7, target 12.7",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "panel side play 1/8 in, Ellis p.92",
+    "pass": true,
+    "detail": "source 3.2, target 3.2",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "bolection lap 3/16 in, Ellis p.92",
+    "pass": true,
+    "detail": "source 4.8, target 4.8",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "reveal 4 1/2 in, Hasluck p.346",
+    "pass": true,
+    "detail": "source 114.3, target 114.3",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "frame 4 in across, Riley p.357",
+    "pass": true,
+    "detail": "source 101.6, target 101.6",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "frame 5 in deep, Riley p.357",
+    "pass": true,
+    "detail": "source 127.0, target 127.0",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "panel one-third of the door, Riley p.353",
+    "pass": true,
+    "detail": "source 16.9, target 16.9",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "F1 transom 5 x 4, Riley p.357 Fig. 667 (P2 agrees, D6)",
+    "pass": true,
+    "detail": "source 101.6, target 102.0",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "Ellis p.93: the handle in the middle of the lock rail's depth (F1 knob at the lock rail's centre)",
+    "pass": true,
+    "detail": "knob 787.0, lock rail centre 787.0",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "Hasluck p.398: a 'weathered' transom (sloped top zone present, both variants)",
+    "pass": true,
+    "detail": "slope zone listed in both",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "Ellis p.111-112: the sill's horns run beyond the frame into the wall (>= 100 mm each side)",
+    "pass": true,
+    "detail": "112.0",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "Ellis p.112 Fig. 355: a brick arch on the head (T1)",
+    "pass": true,
+    "detail": "present",
+    "kind": "check"
+   },
+   {
+    "group": "1 printed",
+    "check": "Hasluck p.346: stile rebated from the solid, a stop on the outside, the leaf opening inwards",
+    "pass": true,
+    "detail": "stop + rebate = frame depth",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D1: leaf height 6 ft 8 in, Hasluck p.347",
+    "pass": true,
+    "detail": "book/lab 2032.0, photograph 1948.0, target 1948.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D2: muntin 4 in, Ellis p.93 / Riley p.357 (revised from the lab's 132.2)",
+    "pass": true,
+    "detail": "book/lab 101.6, photograph 120.0, target 120.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D3: lock rail centre 2 ft 8 in less 6 in from a step, Ellis p.93",
+    "pass": true,
+    "detail": "book/lab 660.4, photograph 787.0, target 787.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D4: bottom rail 9 in, Ellis p.93",
+    "pass": true,
+    "detail": "book/lab 228.6, photograph 192.8, target 192.8",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D5: jamb showing past brick, Hasluck Fig. 1148 scaled 39",
+    "pass": true,
+    "detail": "book/lab 39.0, photograph 55.0, target 55.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D6: transom 4 in, Riley p.357 (T1)",
+    "pass": true,
+    "detail": "book/lab 101.6, photograph 65.0, target 65.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D7: fanlight 1 ft 6 in hung sash, Hasluck p.347",
+    "pass": true,
+    "detail": "book/lab 457.2, photograph 267.0, target 267.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D10: frame ovolo 19 mm, Hasluck p.346 / Riley Fig. 671 (the lab drew it)",
+    "pass": true,
+    "detail": "book/lab 19.0, photograph 0.0, target 0.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D11: transom flush with the jamb faces, Riley Fig. 667 (T1 projects: nose 14 forward of the jamb faces)",
+    "pass": true,
+    "detail": "book/lab 0.0, photograph 14.0, target 14.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D12: stone sill as a thin slab, 76 mm, no step (the lab's)",
+    "pass": true,
+    "detail": "book/lab 0.0, photograph 148.0, target 148.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D13: weatherboard 72 high (the lab's)",
+    "pass": true,
+    "detail": "book/lab 72.0, photograph 80.0, target 80.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D14: bolection width 36 (Riley), F1 from P2",
+    "pass": true,
+    "detail": "book/lab 36.0, photograph 42.0, target 42.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D15: letter plate centre 1000 mm (SCENE-SLOTS)",
+    "pass": true,
+    "detail": "book/lab 1000.0, photograph 1617.0, target 1617.0",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D16: knob near the edge, ~25 mm from the stop (the lab's)",
+    "pass": true,
+    "detail": "book/lab 25.0, photograph 46.6, target 46.6",
+    "kind": "check"
+   },
+   {
+    "group": "2 photo wins",
+    "check": "D17: flat head (the lab's)",
+    "pass": true,
+    "detail": "book/lab 0.0, photograph 18.0, target 18.0",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "leaf visible top (the transom's lower edge)",
+    "pass": true,
+    "detail": "drawing 155.7 px, photograph 155.5 px, diff +0.2 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "panel moulding z edge: top panel top",
+    "pass": true,
+    "detail": "drawing 175.5 px, photograph 175.8 px, diff -0.3 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "panel moulding z edge: top panel bottom",
+    "pass": true,
+    "detail": "drawing 355.9 px, photograph 356.7 px, diff -0.8 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "panel moulding z edge: bottom panel top",
+    "pass": true,
+    "detail": "drawing 398.4 px, photograph 397.5 px, diff +0.9 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "panel moulding z edge: bottom panel bottom",
+    "pass": true,
+    "detail": "drawing 493.5 px, photograph 493.5 px, diff -0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "panel moulding x edge 1 (the muntin's pair 2 and 3)",
+    "pass": true,
+    "detail": "drawing 135.2 px, photograph 135.0 px, diff +0.2 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "panel moulding x edge 2 (the muntin's pair 2 and 3)",
+    "pass": true,
+    "detail": "drawing 182.1 px, photograph 181.8 px, diff +0.3 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "panel moulding x edge 3 (the muntin's pair 2 and 3)",
+    "pass": true,
+    "detail": "drawing 203.6 px, photograph 203.3 px, diff +0.3 (allowed 3.0)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "panel moulding x edge 4 (the muntin's pair 2 and 3)",
+    "pass": true,
+    "detail": "drawing 250.5 px, photograph 250.8 px, diff -0.3 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "lock-rail band top",
+    "pass": true,
+    "detail": "drawing 363.5 px, photograph 363.5 px, diff -0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "lock-rail band bottom",
+    "pass": true,
+    "detail": "drawing 377.6 px, photograph 377.5 px, diff +0.1 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "weatherboard top",
+    "pass": true,
+    "detail": "drawing 514.5 px, photograph 513.7 px, diff +0.8 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "weatherboard bottom",
+    "pass": true,
+    "detail": "drawing 530.0 px, photograph 529.7 px, diff +0.3 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "transom's top edge (glass opening bottom)",
+    "pass": true,
+    "detail": "drawing 143.1 px, photograph 143.3 px, diff -0.2 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "glass opening top",
+    "pass": true,
+    "detail": "drawing 91.2 px, photograph 92.5 px, diff -1.3 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "clear glass top (inside the bead)",
+    "pass": true,
+    "detail": "drawing 93.2 px, photograph 95.0 px, diff -1.8 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "head's top edge at the crown",
+    "pass": true,
+    "detail": "drawing 77.6 px, photograph 78.0 px, diff -0.4 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "head's top edge at the ends",
+    "pass": true,
+    "detail": "drawing 81.0 px, photograph 81.5 px, diff -0.5 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "left brick edge",
+    "pass": true,
+    "detail": "drawing 107.2 px, photograph 108.5 px, diff -1.3 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "right brick edge",
+    "pass": true,
+    "detail": "drawing 278.5 px, photograph 279.0 px, diff -0.5 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "letter plate left edge",
+    "pass": true,
+    "detail": "drawing 185.5 px, photograph 186.2 px, diff -0.8 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "letter plate right edge",
+    "pass": true,
+    "detail": "drawing 200.2 px, photograph 200.9 px, diff -0.7 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "letter plate top",
+    "pass": true,
+    "detail": "drawing 192.5 px, photograph 192.5 px, diff +0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "letter plate bottom",
+    "pass": true,
+    "detail": "drawing 239.5 px, photograph 239.4 px, diff +0.1 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "cylinder lock centre x",
+    "pass": true,
+    "detail": "drawing 258.8 px, photograph 258.8 px, diff +0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "cylinder lock centre row",
+    "pass": true,
+    "detail": "drawing 290.2 px, photograph 290.3 px, diff -0.1 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "cylinder lock diameter (px)",
+    "pass": true,
+    "detail": "drawing 8.4 px, photograph 8.4 px, diff +0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "keep left edge",
+    "pass": true,
+    "detail": "drawing 272.0 px, photograph 271.9 px, diff +0.1 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "keep right edge",
+    "pass": true,
+    "detail": "drawing 276.2 px, photograph 276.2 px, diff -0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "keep top",
+    "pass": true,
+    "detail": "drawing 300.3 px, photograph 300.3 px, diff +0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "keep bottom",
+    "pass": true,
+    "detail": "drawing 314.4 px, photograph 314.4 px, diff +0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "numeral '9' bottom",
+    "pass": true,
+    "detail": "drawing 295.6 px, photograph 295.6 px, diff +0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "numeral '6' top",
+    "pass": true,
+    "detail": "drawing 263.4 px, photograph 263.4 px, diff -0.0 (allowed 2.5)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "arch ring left end",
+    "pass": true,
+    "detail": "drawing 102.9 px, photograph 104.5 px, diff -1.6 (allowed 4.5, wall plane)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "arch ring right end",
+    "pass": true,
+    "detail": "drawing 282.8 px, photograph 283.8 px, diff -1.0 (allowed 4.5, wall plane)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "arch ring top (wall plane: the scale is 3% finer there)",
+    "pass": true,
+    "detail": "drawing 35.8 px, photograph 32.5 px, diff +3.3 (allowed 5.0, wall plane)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "arch ring: 11 or 12 bricks counted on P1",
+    "pass": true,
+    "detail": "12 in the target",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "quoin course pitch at the wall plane (photograph 15.2-15.4 px)",
+    "pass": true,
+    "detail": "15.45 px at 0.968 x 5.15 mm a pixel (camera 5.8 m)",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "tread width agrees with a camera 3 to 8 m away (from the tread's 204 px)",
+    "pass": true,
+    "detail": "tread 960 mm over 204 px = 4.71 mm/px, camera 5.8 m",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1",
+    "check": "brick course scale and tread scale give camera distances within a factor 1.8",
+    "pass": true,
+    "detail": "from the courses 4.8 m, from the tread 5.8 m",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1 fraction",
+    "check": "visible height / visible width",
+    "pass": true,
+    "detail": "target 2.497, photograph 2.498 +-0.045",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1 fraction",
+    "check": "muntin's visible gap / visible width (the review's 14%)",
+    "pass": true,
+    "detail": "target 0.143, photograph 0.143 +-0.02",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1 fraction",
+    "check": "top rail showing / visible height",
+    "pass": true,
+    "detail": "target 0.053, photograph 0.054 +-0.01",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1 fraction",
+    "check": "lock rail showing / visible height",
+    "pass": true,
+    "detail": "target 0.114, photograph 0.109 +-0.01",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1 fraction",
+    "check": "bottom rail showing / visible height",
+    "pass": true,
+    "detail": "target 0.098, photograph 0.097 +-0.01",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1 fraction",
+    "check": "band height / visible height",
+    "pass": true,
+    "detail": "target 0.038, photograph 0.037 +-0.008",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1 fraction",
+    "check": "weatherboard height / visible height",
+    "pass": true,
+    "detail": "target 0.042, photograph 0.043 +-0.01",
+    "kind": "check"
+   },
+   {
+    "group": "3 photo P1 fraction",
+    "check": "transom bar height / visible width",
+    "pass": true,
+    "detail": "target 0.084, photograph 0.081 +-0.015",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "transom bar height / visible width",
+    "pass": true,
+    "detail": "flat door 0.128, photograph 0.134 +-0.012",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "transom slope share of the bar",
+    "pass": true,
+    "detail": "flat door 0.314, photograph 0.304 +-0.08",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "transom face share of the bar",
+    "pass": true,
+    "detail": "flat door 0.333, photograph 0.326 +-0.08",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "transom nose share of the bar",
+    "pass": true,
+    "detail": "flat door 0.353, photograph 0.348 +-0.08",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "stile showing / visible width",
+    "pass": true,
+    "detail": "flat door 0.112, photograph 0.102 +-0.015",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "bolection width / visible width",
+    "pass": true,
+    "detail": "flat door 0.053, photograph 0.054 +-0.01",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "bottom rail showing / visible height",
+    "pass": true,
+    "detail": "flat door 0.096, photograph 0.096 +-0.012",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "cylinder lock: distance of its centre from the visible edge / visible width",
+    "pass": true,
+    "detail": "flat door 0.058, photograph 0.058 +-0.01",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "cylinder lock diameter / visible width",
+    "pass": true,
+    "detail": "flat door 0.046, photograph 0.047 +-0.006",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "knob diameter / visible width",
+    "pass": true,
+    "detail": "flat door 0.087, photograph 0.087 +-0.006",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "knob centred across the leaf",
+    "pass": true,
+    "detail": "flat door 0.000, photograph -0.009 +-0.012",
+    "kind": "check"
+   },
+   {
+    "group": "4 photo P2",
+    "check": "visible height / visible width (the six-panel door of P2 is squatter than 0.838 x 1.981)",
+    "pass": false,
+    "detail": "flat door 2.459, photograph 2.390 +-0.04",
+    "kind": "reported"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: stiles + muntin + two panel openings = leaf width",
+    "pass": true,
+    "detail": "812.8 vs 812.8",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: rails + panel openings = leaf height",
+    "pass": true,
+    "detail": "1948.0 vs 1948.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: lock rail centred on its stated height",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: muntin centred on the leaf",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: bolection leaves a field of more than 100 mm",
+    "pass": true,
+    "detail": "169.7",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: leaf + two clearances = rebate to rebate",
+    "pass": true,
+    "detail": "816.0 vs 816.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: leaf starts one clearance from the left rebate",
+    "pass": true,
+    "detail": "x0 34.6",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: leaf thickness fits the rebate depth",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: stop + rebate = frame depth",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: leaf top + clearance = transom rebate underside",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: transom stop covers the leaf top by the rebate width",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: transom top = glass opening bottom, opening top = head underside",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: opening = clear between stops + two jambs showing",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: jamb showing + hidden part = jamb face",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: clear glass = opening less a bead each side",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: head's top at the crown = opening crown",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: band lies on the lock rail between the mouldings",
+    "pass": true,
+    "detail": "[785.0, 857.5]",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: band stops 2.0 short of each stop face",
+    "pass": true,
+    "detail": "[57.0, 825.0]",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: weatherboard under the bottom moulding, stops short of each stop",
+    "pass": true,
+    "detail": "[0.0, 80.0]",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: band profile spans its height; weatherboard profile spans its height",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: letter plate fits on the muntin with 20 mm either side",
+    "pass": true,
+    "detail": "76.0 in 120.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: letter plate lies on the upper panels' height, clear of the band and the top rail",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: cylinder lock lies wholly on the lock stile, 24 mm or more from the stop face",
+    "pass": true,
+    "detail": "edge distance 24.9",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: keep lies on the visible face of the right jamb's stop",
+    "pass": true,
+    "detail": "x 859.4",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: the nose projects less than the frame's rebate and the stop is deeper than the nose",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: transom's front member overlaps each jamb face by its stated amount and stays within the jamb",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: tread is wider than the opening on both sides and centred on it",
+    "pass": true,
+    "detail": "[-39.0, 921.0]",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: tread top = riser bottom; riser top = threshold bottom",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: ground = tread top less its thickness",
+    "pass": true,
+    "detail": "-258.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: arch ring ends lie the stated bearing past each reveal",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: the ring's depth at the crown = its top less the crown",
+    "pass": true,
+    "detail": "215.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: the quoins end at the arch's springing (+-3 mm)",
+    "pass": true,
+    "detail": "2322.0 vs 2322.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1: the ring's end bears on the top quoin: width 112 >= 100",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: stiles + muntin + two panel openings = leaf width",
+    "pass": true,
+    "detail": "838.0 vs 838.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: rails + panel openings = leaf height",
+    "pass": true,
+    "detail": "1981.0 vs 1981.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: lock rail centred on its stated height",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: muntin centred on the leaf",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: bolection leaves a field of more than 100 mm",
+    "pass": true,
+    "detail": "170.3",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: leaf + two clearances = rebate to rebate",
+    "pass": true,
+    "detail": "841.2 vs 841.2",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: leaf starts one clearance from the left rebate",
+    "pass": true,
+    "detail": "x0 53.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: leaf thickness fits the rebate depth",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: stop + rebate = frame depth",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: leaf top + clearance = transom rebate underside",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: transom stop covers the leaf top by the rebate width",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: transom top = glass opening bottom, opening top = head underside",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: opening = clear between stops + two jambs showing",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: jamb showing + hidden part = jamb face",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: clear glass = opening less a bead each side",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: head's top at the crown = opening crown",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: letter plate fits on the muntin with 20 mm either side",
+    "pass": true,
+    "detail": "76.0 in 120.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: letter plate lies on the upper panels' height, clear of the band and the top rail",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: cylinder lock lies wholly on the lock stile, 24 mm or more from the stop face",
+    "pass": true,
+    "detail": "edge distance 27.8",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: keep lies on the visible face of the right jamb's stop",
+    "pass": true,
+    "detail": "x 903.0",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: the nose projects less than the frame's rebate and the stop is deeper than the nose",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1: transom's front member overlaps each jamb face by its stated amount and stays within the jamb",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h: nothing floats (each part touches another within 0.1 mm)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h_lock: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h_lock: nothing floats (each part touches another within 0.1 mm)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h_band: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h_band: nothing floats (each part touches another within 0.1 mm)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h_plate: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h_plate: nothing floats (each part touches another within 0.1 mm)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h_transom: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_h_transom: nothing floats (each part touches another within 0.1 mm)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_v: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_v: nothing floats",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_v_muntin: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 section_v_muntin: nothing floats",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 plan: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 plan: nothing floats",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_h: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_h: nothing floats (each part touches another within 0.1 mm)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_h_lock: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_h_lock: nothing floats (each part touches another within 0.1 mm)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_h_plate: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_h_plate: nothing floats (each part touches another within 0.1 mm)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_h_transom: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_h_transom: nothing floats (each part touches another within 0.1 mm)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_v: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_v: nothing floats",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_v_muntin: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 section_v_muntin: nothing floats",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 plan: no two parts overlap (area > 0.05 mm2)",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "F1 plan: nothing floats",
+    "pass": true,
+    "detail": "none",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 band section: the band's ends are 2 +-0.5 mm from both jamb stops (from the drawing)",
+    "pass": true,
+    "detail": "2.00 and 2.00",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 lower-panel section: the leaf is 1.6 mm clear of both rebate walls (from the drawing)",
+    "pass": true,
+    "detail": "1.60 and 1.60",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 lower-panel section: the leaf's face sits on the stops (touching, no overlap)",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 vertical section: head and transom do not overlap the arch ring",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 vertical section: the glass stands in the transom's and the head's slots (no overlap, 0.5 mm play)",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   },
+   {
+    "group": "5 consistency",
+    "check": "T1 vertical section: the leaf's top is 1.6 mm below the transom's rebate (from the drawing)",
+    "pass": true,
+    "detail": "1.60",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "B6: gap between the pair of mouldings",
+    "pass": true,
+    "detail": "drawing 110.40, check expects 110.4 +-2.5",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "B11: jamb section width",
+    "pass": true,
+    "detail": "drawing 101.60, check expects 101.6 +-1.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "B11: jamb section depth",
+    "pass": true,
+    "detail": "drawing 127.00, check expects 127.0 +-1.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "B15: clear glass width",
+    "pass": true,
+    "detail": "drawing 752.00, check expects 752.0 +-2.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "B15: clear glass height",
+    "pass": true,
+    "detail": "drawing 247.00, check expects 247.0 +-2.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "E1: band height",
+    "pass": true,
+    "detail": "drawing 72.50, check expects 72.5 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "E1: band underside above the leaf bottom",
+    "pass": true,
+    "detail": "drawing 785.00, check expects 785.0 +-5.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "E2: band max projection",
+    "pass": true,
+    "detail": "drawing 22.00, check expects 22.0 +-4.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "E5: band end gap (x to the left stop face)",
+    "pass": true,
+    "detail": "drawing 2.00, check expects 2.0 +-1.5",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "W1: weatherboard height",
+    "pass": true,
+    "detail": "drawing 80.00, check expects 80.0 +-4.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "W1: weatherboard bottom at the leaf's bottom",
+    "pass": true,
+    "detail": "drawing 0.00, check expects 0.0 +-2.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "W2: weatherboard max projection",
+    "pass": true,
+    "detail": "drawing 26.00, check expects 26.0 +-4.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "F2: letter plate width",
+    "pass": true,
+    "detail": "drawing 76.00, check expects 76.0 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "F2: letter plate height",
+    "pass": true,
+    "detail": "drawing 242.00, check expects 242.0 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "F3: letter plate centre above the leaf's bottom",
+    "pass": true,
+    "detail": "drawing 1617.00, check expects 1617.0 +-10.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "F3: letter plate centred across the leaf",
+    "pass": true,
+    "detail": "drawing 441.00, check expects 441.0 +-4.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "F5: cylinder collar diameter",
+    "pass": true,
+    "detail": "drawing 43.50, check expects 43.5 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "F5: cylinder centre above the leaf's bottom",
+    "pass": true,
+    "detail": "drawing 1235.00, check expects 1235.0 +-8.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "F5: cylinder centre from the stop face",
+    "pass": true,
+    "detail": "drawing 46.60, check expects 46.6 +-4.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "F7: keep height",
+    "pass": true,
+    "detail": "drawing 72.60, check expects 72.6 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "F7: keep centre x",
+    "pass": true,
+    "detail": "drawing 859.40, check expects 859.4 +-5.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G1: threshold thickness",
+    "pass": true,
+    "detail": "drawing 76.00, check expects 76.0 +-4.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G1: threshold front at the wall face",
+    "pass": true,
+    "detail": "drawing 0.00, check expects 0.0 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G2: threshold bearing past the opening (left)",
+    "pass": true,
+    "detail": "drawing 112.00, check expects 112.0 +-20.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G2: threshold bearing past the opening (right)",
+    "pass": true,
+    "detail": "drawing 112.00, check expects 112.0 +-20.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G3: riser height",
+    "pass": true,
+    "detail": "drawing 72.00, check expects 72.0 +-6.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G3: riser face behind the threshold's nose",
+    "pass": true,
+    "detail": "drawing 18.00, check expects 18.0 +-6.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G4: tread projection beyond the wall face",
+    "pass": true,
+    "detail": "drawing 312.00, check expects 312.0 +-25.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G4: tread top below the threshold top",
+    "pass": true,
+    "detail": "drawing 148.00, check expects 148.0 +-25.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G4: tread width",
+    "pass": true,
+    "detail": "drawing 960.00, check expects 960.0 +-25.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G5: tread beyond the left reveal",
+    "pass": true,
+    "detail": "drawing 39.00, check expects 39.0 +-25.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G7: arch ring left end beyond the reveal",
+    "pass": true,
+    "detail": "drawing 22.00, check expects 22.0 +-6.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G7: arch ring depth at the crown",
+    "pass": true,
+    "detail": "drawing 215.00, check expects 215.0 +-6.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G7: soffit camber",
+    "pass": true,
+    "detail": "drawing 18.00, check expects 18.0 +-6.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G8: the head's top edge follows the brick soffit (max deviation over its vertices)",
+    "pass": true,
+    "detail": "0.00 mm",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "D1: transom nose projection beyond the jamb faces",
+    "pass": true,
+    "detail": "drawing 14.00, check expects 14.0 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "D1: transom face proud of the jamb faces",
+    "pass": true,
+    "detail": "drawing 8.00, check expects 8.0 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "D2: weathered slope angle",
+    "pass": true,
+    "detail": "drawing 55.01, check expects 55.0 +-8.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "D4: frontmost point of the transom within the lip zone (z)",
+    "pass": true,
+    "detail": "drawing 2.60, check expects 2.6 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "D5: transom overlap on a jamb face",
+    "pass": true,
+    "detail": "drawing 10.00, check expects 10.0 +-4.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "D3: transom face zone from z 14 to 40",
+    "pass": true,
+    "detail": "drawing 26.00, check expects 26.0 +-3.0",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "D7: the transom's front has at least 3 distinct y levels",
+    "pass": true,
+    "detail": "8 levels",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "E3: the band's outline has crests near z 6, 37 and 62 and coves near z 25 and 49",
+    "pass": true,
+    "detail": "crests [4, 9, 37, 62], coves [25, 49]",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "W3: the weatherboard's outline has a hollow near z 57 and two crests",
+    "pass": true,
+    "detail": "coves [57]",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "C1: the jamb section is a rectilinear polygon (every edge axis-parallel): no ovolo, no round",
+    "pass": true,
+    "detail": "6 vertices",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "C1: the transom's plan section is rectilinear (square ends, no returns or rounds)",
+    "pass": true,
+    "detail": "12 vertices",
+    "kind": "check"
+   },
+   {
+    "group": "6 checks",
+    "check": "G9: the arch's ends overlap the top quoin course in x (22 mm past the reveal onto a 112 mm quoin)",
+    "pass": true,
+    "detail": "",
+    "kind": "check"
+   }
+  ]
+ }
+}
