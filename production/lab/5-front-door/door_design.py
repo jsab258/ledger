@@ -46,33 +46,49 @@ def mesh(name, layer, V, F):
             "mesh": {"V": [[float(c) for c in v] for v in V], "F": [[int(i) for i in f] for f in F]}}
 
 
-def ogee_profile(width, lap, proud, face_y, panel_y, fillet_frac=0.36, n=10):
-    """The bolection, across its run: d from its outer edge inward, y depth. It stands `proud`
-    in front of the framing face over a fillet, falls in an ogee (convex then concave) to the
-    panel face at its inner edge, and its back is rebated `lap` over the framing edge."""
+def ogee_profile(width, lap, proud, face_y, panel_y, n=12, lift=0.3):
+    """The bolection, across its run: d from its outer edge inward, y depth (outside is -y).
+    Seen from the street: a rounded nose rising off the framing at its outer edge, a short flat
+    fillet at full projection, then an ogee falling to the panel: a convex bead over a deep
+    concave cove (Ellis p.91 Figs. 294-295 draw it so; the size is the target's: `width` on the
+    face, `proud` above the framing, `lap` over it). Its back is lifted `lift` off the framing
+    and the panel so no two faces lie in one plane."""
     top = face_y - proud
-    f = fillet_frac * width
-    P = [(0.0, face_y), (0.0, top), (f, top)]
-    for i in range(1, n + 1):
-        t = i / n
-        # ogee: y goes from the top to the panel face along a smooth S (cosine ease)
-        d = f + (width - f) * t
-        y = top + (panel_y - top) * (0.5 - 0.5 * math.cos(math.pi * t))
-        P.append((d, y))
-    P += [(lap, panel_y), (lap, face_y)]
+    rn = min(proud, 0.2 * width)                      # the nose's radius
+    fil = 0.12 * width                                 # the fillet at full projection
+    P = [(0.0, face_y - lift)]
+    for i in range(1, n + 1):                          # the nose: a quarter round up to the top
+        t = math.pi / 2 * i / n
+        P.append((rn - rn * math.cos(t), face_y - lift - (face_y - lift - top) * math.sin(t)))
+    d0 = rn + fil
+    P.append((d0, top))
+    run = width - d0                                   # the ogee from (d0, top) to (width, panel_y)
+    drop = panel_y - top
+    for i in range(1, 2 * n + 1):
+        t = i / (2 * n)
+        # a bead (convex) over the first 40%, a cove (concave) after: y follows a smooth ogee curve
+        if t <= 0.4:
+            u = t / 0.4
+            y = top + 0.35 * drop * (1 - math.cos(math.pi / 2 * u))
+        else:
+            u = (t - 0.4) / 0.6
+            y = top + 0.35 * drop + 0.65 * drop * math.sin(math.pi / 2 * u)
+        P.append((d0 + run * t, y))
+    P[-1] = (width, panel_y - lift)
+    P += [(lap, panel_y - lift), (lap, face_y - lift)]
     return P
 
 
-def single_profile(width, back_y, panel_back_y, n=8):
+def single_profile(width, back_y, panel_back_y, n=12, lift=0.3):
     """The inside planted moulding in the angle of framing and panel: d from the framing edge
     inward, y depth; its face an ovolo from the framing's back face down to the panel's."""
-    P = [(0.0, back_y)]
+    P = [(lift, back_y)]
     for i in range(1, n + 1):
         t = i / n
         d = width * t
-        y = back_y - (back_y - panel_back_y) * math.sin(math.pi / 2 * t)
+        y = back_y - (back_y - panel_back_y - lift) * math.sin(math.pi / 2 * t)
         P.append((d, y))
-    P += [(0.0, panel_back_y)]
+    P += [(lift, panel_back_y + lift)]
     return P
 
 
@@ -171,19 +187,42 @@ def design(T):
     bx0, bx1 = xj0, xj1
     b0, b1 = mo["lock_rail_band"]["z_above_leaf_bottom_mm"]
     bp = mo["lock_rail_band"]["projection_mm"]
-    parts.append(prism("lock_band", "moulding", [(ly0 - bp, Z(b0)), (ly0, Z(b0)), (ly0, Z(b1)), (ly0 - bp, Z(b1))],
-                       "x", ["y", "z"], bx0, bx1))
+    rt, rc = 8.0, 6.0                                  # the band's rounded top and the cove under it
+    band = [(ly0 - 0.3, Z(b0)), (ly0 - bp + rc, Z(b0))]
+    band += [(ly0 - bp + rc - rc * math.sin(math.pi / 2 * i / 8), Z(b0) + rc - rc * math.cos(math.pi / 2 * i / 8)) for i in range(1, 9)]
+    band += [(ly0 - bp, Z(b1) - rt)]
+    band += [(ly0 - bp + rt - rt * math.cos(math.pi / 2 * i / 8), Z(b1) - rt + rt * math.sin(math.pi / 2 * i / 8)) for i in range(1, 9)]
+    band += [(ly0 - 0.3, Z(b1))]
+    parts.append(prism("lock_band", "moulding", band, "x", ["y", "z"], bx0, bx1))
     w0, w1 = mo["weatherboard"]["z_above_leaf_bottom_mm"]
     wp = mo["weatherboard"]["projection_mm"]
-    parts.append(prism("weatherboard", "moulding", [(ly0 - wp, Z(w0)), (ly0, Z(w0)), (ly0, Z(w1)), (ly0 - wp, Z(w0) + 12.0)],
-                       "x", ["y", "z"], bx0, bx1))
+    rn = 6.0
+    wb = [(ly0 - 0.3, Z(w0)), (ly0 - wp + 8.0, Z(w0)), (ly0 - wp + 8.0, Z(w0) + 3.0), (ly0 - wp + 4.0, Z(w0) + 3.0),
+          (ly0 - wp + 4.0, Z(w0)), (ly0 - wp, Z(w0)), (ly0 - wp, Z(w0) + 12.0 - rn)]          # the throat under the nose
+    wb += [(ly0 - wp + rn - rn * math.cos(math.pi / 2 * i / 8), Z(w0) + 12.0 - rn + rn * math.sin(math.pi / 2 * i / 8)) for i in range(1, 9)]
+    for i in range(1, 11):                             # the weathering, slightly hollow, up to the leaf
+        t = i / 10
+        y = (ly0 - wp + rn) + (wp - rn - 0.3) * t
+        z = Z(w0) + 12.0 + (Z(w1) - Z(w0) - 12.0) * t - 3.0 * math.sin(math.pi * t)
+        wb.append((y, z))
+    parts.append(prism("weatherboard", "moulding", wb, "x", ["y", "z"], bx0, bx1))
+    # ---- ironmongery, from the main photograph (P1, scaled on the leaf's width): a vertical brass
+    #      letter plate on the upper muntin and a knob on the lock stile. Not joinery: a layer of its
+    #      own, which the check leaves out; the target has none.
+    lp_x, lp_z0, lp_z1, lp_w = X(lw / 2), 1518.0, 1751.0, 70.0
+    parts.append(prism("letter_plate", "iron", [(lp_x - lp_w / 2, ly0 - 4.0), (lp_x + lp_w / 2, ly0 - 4.0),
+                                               (lp_x + lp_w / 2, ly0 - 0.3), (lp_x - lp_w / 2, ly0 - 0.3)],
+                       "z", ["x", "y"], lp_z0, lp_z1))
+    kx, kz, kr = 791.0, 1249.0, 24.0
+    knob = [(kx + kr * math.cos(2 * math.pi * i / 24), kz + kr * math.sin(2 * math.pi * i / 24)) for i in range(24)]
+    parts.append(prism("knob", "iron", knob, "y", ["x", "z"], ly0 - 45.0, ly0 - 0.3))
     # ---- context: the stone sill, rounded at its nose, and the brick round the opening
     s = fr["sill"]
     nr = 19.0
     sp = [(s["front_y_mm"], -s["thickness_mm"]), (s["front_y_mm"], -nr)] + \
         arc(s["front_y_mm"] + nr, -nr, nr, math.pi, math.pi / 2, 8)[1:] + \
         [(s["back_y_mm"], 0.0), (s["back_y_mm"], -s["thickness_mm"])]
-    parts.append(prism("sill", "stone", sp, "x", ["y", "z"], 0.0, W))
+    parts.append(prism("sill", "stone", sp, "x", ["y", "z"], -115.0, W + 115.0))
     return parts
 
 

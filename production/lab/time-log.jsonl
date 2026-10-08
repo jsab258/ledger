@@ -12,3 +12,4 @@
 {"event": "start", "at": "2026-10-08T11:23:07", "task": "lab task 2: shop glass stair steps", "phase": "lab", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T11:29:17", "note": "GLASS-NOTES.md pushed"}
 {"event": "start", "at": "2026-10-08T11:29:35", "task": "lab task 3: front door (Ellis), phase 2", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T12:21:43", "note": "front door: built, check passed, two fresh reviews failed on detail; set aside for phase 2"}

@@ -18,7 +18,7 @@ import bpy
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "tools"))
 import blender_parts  # noqa: E402
 
-COL = {"leaf": (0.55, 0.05, 0.04, 1), "panel": (0.55, 0.05, 0.04, 1), "moulding": (0.55, 0.05, 0.04, 1),
+COL = {"iron": (0.62, 0.48, 0.20, 1), "leaf": (0.55, 0.05, 0.04, 1), "panel": (0.55, 0.05, 0.04, 1), "moulding": (0.55, 0.05, 0.04, 1),
        "frame": (0.92, 0.91, 0.88, 1), "glass": (0.16, 0.19, 0.21, 1), "stone": (0.62, 0.60, 0.55, 1),
        "brick": (0.45, 0.22, 0.14, 1), "arch": (0.72, 0.62, 0.45, 1)}
 
@@ -46,7 +46,7 @@ def wall(T):
     slab("right", W, W + span, 0.0, wt, low, top)
     slab("left_back", 0.0, jx0 if jx0 > 0 else 0.0001, rv, wt, low, top)       # nothing: the frame's recess starts at the reveal
     slab("over", 0.0, W, 0.0, rv, H + 0.2286, top)
-    slab("arch", 0.0, W, 0.0, rv, H, H + 0.2286, "arch")
+    slab("arch", -0.115, W + 0.115, 0.0, rv, H, H + 0.2286, "arch")   # the arch runs into the brick each side
     slab("over_back", jx0, jx1, rv, wt, head_top, top)
     slab("below", -span, W + span, 0.0, wt, -0.6, low)
     return [p for p in P if p["name"] != "ctx_left_back"]
@@ -81,6 +81,9 @@ def main():
         mname = ob.data.materials[0].name.split(".")[0] if ob.data.materials else "brick"
         ob.data.materials.clear()
         ob.data.materials.append(material(mname))
+        # curved mouldings shaded smooth, their arrises kept sharp (by angle)
+        ob.data.shade_smooth()
+        ob.data.set_sharp_from_angle(angle=math.radians(40))
     if glb:
         bpy.ops.object.select_all(action="DESELECT")
         for ob in door:

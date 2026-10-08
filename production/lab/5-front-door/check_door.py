@@ -42,7 +42,7 @@ def raster(polys, fr):
     return np.array(img, bool)
 
 
-JOINERY = ("frame", "glass", "leaf", "panel", "moulding")
+JOINERY = ("frame", "glass", "leaf", "panel", "moulding")   # ironmongery ("iron") and context are left out
 
 
 def target_layers(polys, fr):

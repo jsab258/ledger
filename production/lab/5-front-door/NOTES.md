@@ -18,7 +18,7 @@ The brief:
 | The target's self-check | [target/self_check.py](target/self_check.py), its result in target.json "self_check" | target helper |
 | Build | [door_design.py](door_design.py) (target.json's numbers only), ../tools/joinery.py (mitred mouldings), ../tools/blender_parts.py | me |
 | Check | [check_door.py](check_door.py), [checks/](checks/) | me |
-| Pictures and model | render_door.py, which also writes the model: F:\LedgerTools\lab\dooruild\door_v2.glb (82 KB, the door and frame without the wall). The repository's size guard (tools/git-size-guard.py) admits models only in the places the game's build imports from, so the .glb stays on F:; the scripts in git rebuild it exactly. Previews in production/previews/lab/door/ | me |
+| Pictures and model | render_door.py, which also writes the model: F:/LedgerTools/lab/door/build/door_v2.glb (82 KB, the door and frame without the wall). The repository's size guard (tools/git-size-guard.py) admits models only in the places the game's build imports from, so the .glb stays on F:; the scripts in git rebuild it exactly. Previews in production/previews/lab/door/ | me |
 | Review | [REVIEW.md](REVIEW.md) | fresh reviewer |
 
 ## The target, and how it was tested before building
@@ -84,10 +84,65 @@ The brief:
   - no tenons, wedges, hinges, lock or furniture;
   - no inside lining or architrave.
 
-## Fresh review
+## Fresh reviews
 
-(REVIEW.md; summarised in the lab report)
+**The first (REVIEW.md, v2): FAIL, on the moulding profiles, not the proportions.**
+- **What it measured right:** against the main photograph, every stile and rail, the muntin, both panel heights, the band and the weatherboard within about 1% of the door's size; the frame width, the transom light, the leaf's setback and the reveal also match; no gaps, holes or stray pieces.
+- **What failed:**
+  - the bolection mouldings read as flat facets (a square strip, then a straight bevel), where the photographs show bold curved mouldings with deep shadow;
+  - the lock-rail band was a plain plank, and the weatherboard a flat wedge;
+  - lesser: the transom is flush (the photographs' projects with a moulded top), no ironmongery, the frame's ovolo makes the jamb read round, dark hairlines along the mouldings, the sill and lintel stopping flush with the opening.
+
+**The second try (v3), inside the target's numbers.**
+- **Profiles:**
+  - the bolection given a rounded nose, a fillet and an ogee (a bead over a deep cove), at the target's 36 wide and 7 proud;
+  - the band a rounded top and a cove under;
+  - the weatherboard a rounded nose, a throat and a hollow weathering.
+- **Shading:** smooth, with the arrises kept sharp (by angle); the facets were partly flat shading.
+- **The hairlines:** every moulding lifted 0.3 mm off the faces it sits on, which were coplanar.
+- **Ironmongery:** a brass letter plate and a knob, placed from the photograph, as a layer the check leaves out because the target has none.
+- **Context:** the sill and the arch run into the brickwork.
+- **Left as the target has them, for phase 2:** the flush transom (a projecting moulded transom is a target change, and would fail the section check by more than 6 mm); the frame's ovolo of 19 mm.
+- **v3 still passes every check:** the front-view layers within 0.7 mm; the sections IoU 0.985 and 0.987, worst 3.9 and 4.9 mm; all dimensions exact.
+
+**The second fresh review (REVIEW-2.md, v3): FAIL.**
+- **What is right:** "the leaf is a close copy of the main photograph": the layout, the panel mouldings now the right size, the letter plate's size and place and the knob's height, the fanlight and the frame's width; "from the street it reads as a late-Victorian four-panel door".
+- **What fails**, sorted by where each comes from:
+  - **The target, against its own photographs** (the photographs-win rule missed these three):
+    - the frame's ovolo makes the jambs read as round tubes beside a square head and transom; both photographs show a flat, square-edged frame;
+    - the transom is flush, where the photographs show a deeper moulded transom projecting over the door;
+    - the sill is a thin slab, where photograph 1 has a deep stone step.
+  - **The build:**
+    - overlapping surfaces in the context stonework (diagonal stripes on the lintel's ends and the sill's left end) and an odd step at the left jamb's foot;
+    - the ironmongery reads as stand-ins (a flat disc knob too near the edge, a bare letter plate, no lock);
+    - the band and weatherboard still read as plain boxes, and the weatherboard runs into the frame.
+
+## Result
+
+- **Two tries, two fresh reviews failed: set aside by the two-tries rule, for phase 2.**
+- **The proportions are right by every measure:** the check (every drawing within its tolerance, all dimensions exact) and both reviewers (within about 1% of the photograph).
+- **What failed is detail the target did not write down:** profiles, ironmongery, the frame's edge as the photographs show it.
+- **Phase 2's first step is the target, not the model.**
+  - Square the frame's edges and give the transom its projecting moulded top, as the photographs show (the photographs-win rule).
+  - Write the band's and weatherboard's profiles from the photograph.
+  - Add a lock, a framed letter plate and a turned knob, and the step.
+  - Then rebuild, and remove the overlapping context faces.
+
+## Verdict on the method
+
+**It worked for the proportions and not yet for the door,** as with the window.
+
+**The exact target and the automatic check did their part:**
+- the target was tested against its sources before building: its own self-check (68 of 69), my reading of Ellis's page, and its elevation laid on the photograph;
+- the build matched it at the second run.
+
+**The fresh reviewer then found what neither carried:**
+- the profiles' character;
+- the ironmongery;
+- three places where the target followed the books against its own photographs.
+
+**The lab's lesson again:** the photographs-win rule has to be applied element by element, edges and profiles included, by the target writer and checked by someone else before building. Half of the second review's faults would have been caught there.
 
 ## Cost
 
-Lab time from 11:29, in the time log. Target helper 26 minutes; fresh reviewer, see the time log. One build and check run takes under a minute.
+Lab time from 11:29, in the time log. Target helper 26 minutes; two fresh reviewers, 8 and 6 minutes. One build and check run takes under a minute.
