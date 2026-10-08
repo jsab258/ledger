@@ -1579,6 +1579,13 @@ def _upper_floor(parts, p, T, wall, bay=0):
     sill_z = p["window_sill_m"]
     head_z = p["window_head_m"]
     hw = p["window_w_m"] / 2.0
+    kit = _sash_kit(p)
+    if kit is not None:
+        # THE PERIOD OPENING (his ruling, 8 October): the head where it was, the sill lowered to
+        # the target's height; the width is the target's, which must be the street's
+        if abs(kit[0] - p["window_w_m"]) > 1e-6:
+            raise ValueError("sash-kit-width-%.4f-is-not-the-street's-%.4f" % (kit[0], p["window_w_m"]))
+        sill_z = head_z - kit[1]
     centres = window_centres(p)
     opens = [(c - hw, c + hw) for c in centres]
 
@@ -1603,7 +1610,7 @@ def _upper_floor(parts, p, T, wall, bay=0):
         cx = (a + b) * 0.5
         sw = p["sill_w_m"] / 2.0
         # THE REVEAL IS HALF A BRICK, and it is why a window is not a decal.
-        if HOUSE_PANE_TRANSLUCENT:
+        if HOUSE_PANE_TRANSLUCENT and kit is None:
             _box(parts, "upper_glass_%d" % i, "glass", a, b, p["reveal_m"], p["reveal_m"] + 0.02,
                  sill_z, head_z, "set-back-one-half-brick/102.5mm/the-depth-that-stops-it-reading-flat")
         _box(parts, "upper_sill_%d" % i, "stone", cx - sw, cx + sw,
@@ -1611,15 +1618,19 @@ def _upper_floor(parts, p, T, wall, bay=0):
              "0.95m-wide/window-plus-50mm-each-side")
         _segmental_arch(parts, "upper_arch_%d" % i, a, b, head_z,
                         "segmental-rubbed-brick-arch/rise-a-seventh-of-the-span")
-        _sash(parts, i, a, b, sill_z, head_z, p["reveal_m"], kind=_window_kind(p.get("block_id"), bay))
+        if kit is not None:
+            _kit_sash_window(parts, i, cx, sill_z, kit)
+        else:
+            _sash(parts, i, a, b, sill_z, head_z, p["reveal_m"], kind=_window_kind(p.get("block_id"), bay))
         # NET CURTAINS behind the upstairs glass, 22 September. On the new
         # sheet every upstairs window is PALE - white frames over white nets,
         # 157 against our 100 to 107 - and ours looked straight through
         # clear glass into an unlit flat. The research names nets as the
         # per-house signature of a 1990 terrace, and the held net pictures
         # (BOM C12, DRESSING) are the two gathered weaves, alternated.
+        ny = SASH_KIT_NET_Y if kit is not None else p["reveal_m"] + 0.05
         net = _box(parts, "upper_net_%d" % i, "interior_lit", a, b,
-                   p["reveal_m"] + 0.05, p["reveal_m"] + 0.06, sill_z, head_z,
+                   ny, ny + 0.01, sill_z, head_z,
                    "net-curtain/C12/behind-the-glass")
         net["decal"] = NET_CURTAINS[i % len(NET_CURTAINS)]
         net["decal_emit"] = "net"
@@ -3137,6 +3148,51 @@ def _kit_glb(name, root=None):
         if os.path.isfile(path):
             return path
     raise FileNotFoundError("terrace-front: the shopfront kit's %s.glb is in neither the checkout nor the game inputs" % name)
+
+
+#: THE SASH WINDOW FROM THE PERIOD BOOKS AND THE PHOTOGRAPHS (8 October; his ruling: the windows
+#: follow the photographed originals, 2.5 to 3 inches of frame round the glass, 1.68 m high; kit
+#: pieces period books draw are built to a target a fresh helper writes, with an automatic check).
+#: The lab's box sash (production/lab/2-sash-window on branch lab, after Ellis 1902), its target
+#: amended from the photographs by a fresh helper (production/art/sash-window/target.json), built
+#: by tools/art-recipes/sash-window and passed by its check (production/art/sash-window/checks).
+#: The piece is in the window's own axes: x across from the opening's centre, y into the house
+#: from the brick face, z up from the stone sill's top. Mickey's row first; the others keep the
+#: box sash until his row passes (SASH_KIT_ROWS).
+SASH_KIT_REL = os.path.join("production", "assets", "sash-window", "sash_window.glb")
+SASH_TARGET_REL = os.path.join("production", "art", "sash-window", "target.json")
+SASH_KIT_ROWS = ("east_parade",)
+#: Behind the kit's inside lining (0.251 m in the lab's build), where the nets hang.
+SASH_KIT_NET_Y = 0.258
+_SASH_KIT_CACHE = {}
+
+
+def _sash_kit(p, root=None):
+    """(opening width m, opening height m, nodes) of the checked sash window for this row, or None."""
+    if p.get("block_id") not in SASH_KIT_ROWS:
+        return None
+    base = root or ROOT
+    key = base
+    if key not in _SASH_KIT_CACHE:
+        import json
+        glb = os.path.join(base, SASH_KIT_REL)
+        tj = os.path.join(base, SASH_TARGET_REL)
+        if not (os.path.isfile(glb) and os.path.isfile(tj)):
+            _SASH_KIT_CACHE[key] = None
+        else:
+            with open(tj, encoding="utf-8") as fh:
+                o = json.load(fh)["opening"]
+            _SASH_KIT_CACHE[key] = (o["width_mm"] / 1000.0, o["height_mm"] / 1000.0, _read_glb_nodes(glb))
+    return _SASH_KIT_CACHE[key]
+
+
+def _kit_sash_window(parts, i, cx, sill_z, kit, prefix="upper"):
+    """The checked sash window in one opening, its nodes as meshes in the bay's axes."""
+    for k, (node, mat, verts, tris, _cols) in enumerate(kit[2]):
+        material, piece = node.split("__", 1) if "__" in node else (mat, node)
+        parts.append({"id": "%s_sashkit_%d_%d" % (prefix, i, k), "material": "glass" if material == "glass" else "paint_joinery",
+                      "kind": "mesh", "verts": [(x + cx, y, z + sill_z) for (x, y, z) in verts], "faces": tris,
+                      "note": "sash-window/%s" % piece})
 
 
 def _kit_material(piece, node, mat, pier, stall):
@@ -8370,6 +8426,24 @@ def selftest():
     stray = [v for q in opened for v in q["verts"] if v[0] < -1e-6 or v[1] < 0.045 - 1e-6]
     check("accept/the-open-door-lies-in-the-room-not-the-wall", len(opened) == 3 and not stray,
           "%d part(s), %d corner(s) past the hinge line" % (len(opened), len(stray)))
+
+    # MICKEY'S ROW'S WINDOWS ARE THE CHECKED SASH (8 October, his ruling): when the piece and its
+    # target are in the checkout, each upper opening on the row holds it whole, spanning the
+    # target's height from the stone sill's top, and none of the box sash's members is left
+    ps, perr = load_spec(ROOT)
+    kit = _sash_kit(ps) if ps else None
+    if kit is not None:
+        up = []
+        _upper_floor(up, ps, ps["wall_t_m"], "brick_red")
+        sk = [q for q in up if "_sashkit_" in q["id"]]
+        boxes = [q for q in up if "_sash_" in q["id"] and "_sashkit_" not in q["id"]]
+        zs = [v[2] for q in sk for v in q["verts"]]
+        span = (max(zs) - min(zs)) if zs else 0.0
+        opening = ps["window_head_m"] - min(zs) if zs else 0.0
+        check("accept/mickeys-row-holds-the-checked-sash",
+              len(sk) == 2 * len(kit[2]) and not boxes and abs(opening - kit[1]) < 1e-3,
+              "%d kit part(s) for %d node(s) x 2 openings, %d box member(s) left, opening %.4f m against the target's %.4f"
+              % (len(sk), len(kit[2]), len(boxes), opening, kit[1]))
 
     # THE WEAR'S MASKS REACH THE STREET (8 October): the kit's pilaster carries its baked edges
     # in its vertex colour's G, and the stallriser's plinth-high exposure is the street's own

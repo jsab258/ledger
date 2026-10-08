@@ -58,12 +58,13 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 - facades: facade drawings and tries.
 - fascia-01: Mickey's fascia package to a real mesh.
 - hair-2026-09-29: a hair study.
-- interiors-2026-09-23: the four window interiors (no current approval).
+- interiors-2026-09-23: four window interiors (unapproved).
 - lighting: the talk light and evening light tests.
 - mickeys-cars: cars considered for Mickey's (off until convincing).
 - shop-rooms: each shop's room plans and pictures. Its pawnbroker-goods-sources.md: every model in Rita's window and its licence (tools/art-recipes/verify_display_sources.py).
-- mickeys-props: Mickey's office's hero props, modelled by script in Blender (tools/art-recipes/mickeys-props/; the meshes on F:/LedgerTools/game-inputs), 6 October.
-- shopfront-kit: the parade's shopfront pieces (pilaster, stallriser, window frame, doors), modelled by script in Blender (tools/art-recipes/shopfront-kit/), 6 October.
+- mickeys-props: Mickey's office's hero props, scripted in Blender (tools/art-recipes/mickeys-props/; meshes on F: game-inputs), 6 October.
+- shopfront-kit: the parade's shopfront pieces (pilaster, stallriser, window frame, doors), scripted in Blender (tools/art-recipes/shopfront-kit/), 6 October.
+- sash-window: the lab's box sash, its target amended from photographs (tools/art-recipes/sash-window/), 8 October.
 - south-quay: the street's south end to the atlas (road, quay, basin, jetty, dockside), scripted (tools/art-recipes/south-quay/).
 - ui: the interface's screens.
 
@@ -72,7 +73,7 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 - **The street and its look**: shopfronts, aaa-street, asset-plan, asset-coverage, asset-packs, photoreal-on-a-budget, 1990-on-film-stock, evening-light-1990, broken-window-look, chimney-smoke, shop-glass-reflections, street-wear, shop-window-interiors, interior-blockout, cab-office-interior-1990, street-clutter-1990, period-vehicles-and-props, unreal-frame-budget, unreal-cache-cap, hardware-floor, third-person-camera-interiors, footsteps, atlas-01 (the atlas's evidence), south-quay.
 - **The town and its people**: rumour-propagation, small-town-networks, small-town-meetings, eyewitness-testimony, gaze-and-knowing, group-standing-without-a-score, precomputed-day, game-clock, waiting, players-and-a-world-that-remembers, holding-information, detection-legibility, emergent-story-legibility, ending-reading, authored-stories-in-simulation, crime-and-combat-coverage, failure-after-arrest, police-response-1990, british-policing-1988-1992, crime-scene-1990, threats-1990, shop-hours-1990, cab-office-1990, british-crime-fiction-tone, casting, cast-cards, hitman-density.
 - **Talk and voices**: voice-off-card, grounded-dialogue-selection, grounded-replies, invented-claims, conversation-model-capability, local-models, local-writers, llm-inference-economics, prompt-caching, live-speech-architecture, talk-helper, ambient-lines, street-lines-1990, holding-a-large-script, voice-alternatives-2026-09-24, voice-direction, voice-in-the-game, voice-latency, nano-listening-test, tts-licensing-and-consent, runtime-ai-business, ai-npc-demos-hollow, steam-ai-disclosure, player-data-notice.
-- **People on screen**: sit-and-turn, character-pipeline, metahuman-audio-driven-animation, lip-sync, talking-face-faults, natural-idles, townspeople-animation, markerless-mocap, clothing-pipeline, clothing-assembly-line, game-clothing-pipeline, plain-1990-clothes, free-garments, wardrobe-at-scale.
+- **People on screen**: tom-face, sit-and-turn, character-pipeline, metahuman-audio-driven-animation, lip-sync, talking-face-faults, natural-idles, townspeople-animation, markerless-mocap, clothing-pipeline, clothing-assembly-line, game-clothing-pipeline, plain-1990-clothes, free-garments, wardrobe-at-scale.
 - **Play, testing and players**: baseline-features, feature-coverage, brief-coverage, coverage-audit, coverage-audit-disco-elysium, coverage-audit-hitman, coverage-audit-kcd2, coverage-audit-rdr2, coverage-audit-shadows-of-doubt, teaching-in-thirty-minutes, meridian-test-administration, packaged-game-testing, shipping-build, engine-notices, ai-tester, ui-design, ethics-and-reception.
 - **How the work is done**: pre-production, frontier-ai-uses, agentic-studio-attempts, small-team-shipping, systemic-game-postmortems, content-mass-and-judgement, self-audit, checklist-sweep-2026-09-28, checklist-sweep-2026-09-29, claude-code-goal, blender-mcp, graphify-evaluation, egress-allowlist, terms-2026-10-03, catalogue-and-homes, git-history-clean-2026-10-04.md, README.md.
 
