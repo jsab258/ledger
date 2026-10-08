@@ -352,11 +352,24 @@ def build_and_render(argv):
         box("floor_slab", -W / 2 - t, W / 2 + t, 0, D + t, -0.12, -0.02, floor_lino)
     box("wall_left", -W / 2 - t, -W / 2, 0, D, 0, H, wall)
     box("wall_right", W / 2, W / 2 + t, 0, D, 0, H, wall)
-    box("wall_back", -W / 2, W / 2, D, D + t, 0, H, wall)
+    # MICKEY'S BACK WALL OPEN AT ITS DOOR (8 October, item 1.1's third review, V9: "the room
+    # beyond the door flat untextured grey"): his back room is built behind it (below, with his
+    # fittings), where a painted board stood in the doorway
+    back_gap = (1.1 - 1.12, 1.95 - 1.12) if shop["id"] == "mickeys" else None
+    if back_gap:
+        box("wall_back", -W / 2, back_gap[0], D, D + t, 0, H, wall)
+        box("wall_back", back_gap[1], W / 2, D, D + t, 0, H, wall)
+        box("wall_back", back_gap[0], back_gap[1], D, D + t, 2.0, H, wall)
+    else:
+        box("wall_back", -W / 2, W / 2, D, D + t, 0, H, wall)
     box("ceiling", -W / 2, W / 2, 0, D, H, H + t, ceiling)
     for side, x0, x1 in (("left", -W / 2, -W / 2 + 0.01), ("right", W / 2 - 0.01, W / 2)):
         box("dado_" + side, x0, x1, 0, D, 0, 0.95, dado)
-    box("dado_back", -W / 2, W / 2, D - 0.01, D, 0, 0.95, dado)
+    if back_gap:
+        box("dado_back", -W / 2, back_gap[0], D - 0.01, D, 0, 0.95, dado)
+        box("dado_back", back_gap[1], W / 2, D - 0.01, D, 0, 0.95, dado)
+    else:
+        box("dado_back", -W / 2, W / 2, D - 0.01, D, 0, 0.95, dado)
     # The back door, half open onto a dark back room.
     door = mat("door", (0.28, 0.17, 0.10), rough=0.5, noise=0.1)
     dark = mat("back_room", (0.02, 0.02, 0.02), rough=1.0)
@@ -366,7 +379,8 @@ def build_and_render(argv):
     dx = -1.12 if shop["id"] == "mickeys" else 0.0
     if shop["id"] == "mickeys":
         dark = mat("back_room_lit", (0.13, 0.10, 0.07), rough=0.9)
-    box("door_gap", 1.1 + dx, 1.95 + dx, D - 0.02, D + 0.06, 0, 2.0, dark)
+    if not back_gap:
+        box("door_gap", 1.1 + dx, 1.95 + dx, D - 0.02, D + 0.06, 0, 2.0, dark)
     for name, fx0, fx1, fz0, fz1 in (("door_frame_l", 1.02, 1.1, 0, 2.08), ("door_frame_r", 1.95, 2.03, 0, 2.08),
                                      ("door_frame_head", 1.02, 2.03, 2.0, 2.08)):
         box(name, fx0 + dx, fx1 + dx, D - 0.035, D - 0.005, fz0, fz1, door)
@@ -1398,7 +1412,10 @@ def build_and_render(argv):
         # fore-edge to the street as newsprint in uneven layers, so the edge reads as pages; the
         # upper one dropped a few degrees askew. Geometry only: the room's glb keeps no noise.
         edge_lt = mat("directory_pages", (0.62, 0.58, 0.47), rough=0.9)
-        edge_dk = mat("directory_pages_dark", (0.47, 0.43, 0.34), rough=0.9)
+        # (second try, the night gate's reviewer: "4 or 5 even, coarse bands", "covers overhang like a
+        # hardback"): a phone book is a paperback, its covers flush with the pages, the newsprint in
+        # many thin gatherings a shade apart
+        edge_dk = mat("directory_pages_dark", (0.54, 0.50, 0.40), rough=0.9)
         def turn_about(objs, px, py, ang):
             ca, sa = math.cos(ang), math.sin(ang)
             for o in objs:
@@ -1407,16 +1424,16 @@ def build_and_render(argv):
                 o.rotation_euler[2] += ang
         for k, (x0, w, h, c, ang) in enumerate(((-0.55, 0.22, 0.05, (0.62, 0.52, 0.16), 0.0),
                                                  (-0.53, 0.21, 0.045, (0.58, 0.48, 0.15), -0.07))):
-            z0, x1, y0, y1, cv = 0.655 + k * 0.05, x0 + w, 0.04, 0.32, 0.0025
+            z0, x1, y0, y1, cv = 0.655 + k * 0.05, x0 + w, 0.04, 0.32, 0.0015
             cover = mat("directory_%d" % k, c, rough=0.8)
             parts = [box("directory_%d_back" % k, x0, x1, y0, y1, z0, z0 + cv, cover),
                      box("directory_%d_front" % k, x0, x1, y0, y1, z0 + h - cv, z0 + h, cover),
                      box("directory_%d_spine" % k, x0, x1, y1 - 0.004, y1, z0, z0 + h, cover)]
-            n = 7
+            n = 12
             for j in range(n):
-                # each gathering a millimetre or two in or out at the fore-edge, the tones alternating
-                inset = 0.003 + 0.0015 * ((j * 3 + k) % 4) / 3.0
-                parts.append(box("directory_%d_pages_%d" % (k, j), x0 + 0.003, x1 - 0.003, y0 + inset,
+                # each gathering under a millimetre in or out at the fore-edge, the tones alternating
+                inset = 0.0002 + 0.0008 * ((j * 5 + k) % 4) / 3.0
+                parts.append(box("directory_%d_pages_%d" % (k, j), x0 + 0.0005, x1 - 0.0005, y0 + inset,
                                  y1 - 0.004, z0 + cv + (h - 2 * cv) * j / n, z0 + cv + (h - 2 * cv) * (j + 1) / n,
                                  edge_lt if (j + k) % 2 == 0 else edge_dk))
             if k == 1:
@@ -1600,6 +1617,25 @@ def build_and_render(argv):
         prop("coat_rail", 1.32, D, 1.64)
         # THE OFFICE CLOCK over the back door (Poly Haven's wall clock, CC0)
         model("wall_clock", 0.42, D - 0.03, 2.25, turn=0.0, size=0.30)
+        # SHEILA'S BACK ROOM through the half-open back door (8 October, item 1.1's third review,
+        # V9: "the room beyond the door flat untextured grey"): a real room a metre deep, so the
+        # office's light falls into it and falls off, its walls, floor and skirting meeting in
+        # corners, a shelf with a mug and a coat rail on the far wall (the office's calendar is the only print, so none here)
+        bx0, bx1 = back_gap
+        by0, by1 = D + t, D + t + 1.1
+        rx0, rx1 = bx0 - 0.6, bx1 + 0.9
+        back_wall = mat("back_room_wall", (0.46, 0.40, 0.30), rough=0.9)
+        back_floor = mat("back_room_lino", (0.20, 0.15, 0.11), rough=0.6)
+        back_wood = mat("back_room_wood", (0.22, 0.14, 0.08), rough=0.6)
+        box("back_room_floor", rx0, rx1, by0, by1, -0.012, 0.0, back_floor)
+        box("back_room_far", rx0, rx1, by1, by1 + 0.05, 0.0, 2.4, back_wall)
+        box("back_room_side_l", rx0 - 0.05, rx0, by0, by1, 0.0, 2.4, back_wall)
+        box("back_room_side_r", rx1, rx1 + 0.05, by0, by1, 0.0, 2.4, back_wall)
+        box("back_room_ceiling", rx0, rx1, by0, by1, 2.4, 2.45, back_wall)
+        box("back_room_skirting", rx0, rx1, by1 - 0.015, by1, 0.0, 0.10, back_wood)
+        box("back_room_shelf", bx0 + 0.05, bx1 + 0.3, by1 - 0.22, by1, 1.10, 1.125, back_wood)
+        prop("mug", bx0 + 0.25, by1 - 0.10, 1.125, turn=0.3)
+        prop("coat_rail", bx0 + 0.45, by1, 1.64)
         # THE FANLIGHT'S LETTERS, reverse-gilded on the glass over the street door (the dressing
         # research; the second review read the fanlight as "a blank board")
         for nm_, col_, off_ in (("fanlight_word_shade", mat("gilt_shade2", (0.01, 0.01, 0.01), rough=0.6), 0.003),
