@@ -64,8 +64,8 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 - shop-rooms: each shop's room plans and pictures; pawnbroker-goods-sources.md, Rita's window models and licences (verify_display_sources.py).
 - mickeys-props: Mickey's office's hero props, scripted in Blender (tools/art-recipes/mickeys-props/; meshes on F: game-inputs), 6 October.
 - shopfront-kit: the parade's shopfront pieces (pilaster, stallriser, window frame, doors), scripted in Blender (tools/art-recipes/shopfront-kit/), 6 October.
-- sash-window: the lab's box sash, its target amended from photographs (tools/art-recipes/sash-window/), 8 October.
-- brick-colour: the brick and maroon target, from sheet and photographs, measured.
+- sash-window: the lab's box sash, target amended from photographs (tools/art-recipes/sash-window/).
+- brick-colour: brick and maroon target from sheet and photographs.
 - south-quay: the street's south end (road, quay, basin, jetty), scripted (tools/art-recipes/south-quay/).
 - ui: the interface's screens.
 
