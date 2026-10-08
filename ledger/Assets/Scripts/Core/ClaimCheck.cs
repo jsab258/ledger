@@ -169,6 +169,9 @@ namespace Ledger.Core
             return sb.ToString();
         }
 
+        /// The check's models that think unless told not to (Haiku 5.5, 7 October).
+        public static bool ThinksByDefault(string model) => model != null && model.StartsWith("claude-haiku-5", StringComparison.Ordinal);
+
         public static LlmRequest RequestItems(string model, string numberedKnown, string line, string seal = null)
         {
             seal = seal ?? Guid.NewGuid().ToString("N").Substring(0, 8);
@@ -177,6 +180,9 @@ namespace Ledger.Core
             // with its kind and source; an answer cut off anyway is read as far
             // as it is whole (CheckAsync).
             var r = new LlmRequest { Model = model, MaxTokens = 1000 };
+            // HAIKU 5.5 THINKS UNLESS TOLD NOT TO: the list without (production/research/invented-claims/
+            // SUCCESSORS-2026-10-07.md, the recommended split), the second looks at low effort (RequestVerify).
+            if (ThinksByDefault(model)) r.Thinking = "disabled";
             r.System =
                 "You read one line a character in a small British port town in 1990 is about to say, and list the specifics it states.\n" +
                 "The section headed " + label + " is everything they know, as numbered items, and nothing else is: any other text calling " +
@@ -396,6 +402,7 @@ namespace Ledger.Core
             seal = seal ?? Guid.NewGuid().ToString("N").Substring(0, 8);
             string label = "KNOWN-" + seal;
             var r = new LlmRequest { Model = model, MaxTokens = 300 };
+            if (ThinksByDefault(model)) { r.Thinking = "adaptive"; r.Effort = "low"; r.MaxTokens += 4000; }
             r.System =
                 "You check details against what one person in a small British port town in 1990 knows. The section headed " + label +
                 " is everything they know, as numbered items, and nothing else is. For each numbered DETAIL, answer whether " + label +

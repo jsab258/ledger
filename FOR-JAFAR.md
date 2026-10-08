@@ -21,7 +21,7 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-**Today, by your orders of 07:10 (the PC goes off at 19:00).** The way back is tagged (before-sky-2026-10-08). On now: the sky, the street lit by the sky it shows (two tries, judged by the gate on the hook, reverse and night views). Next: the windows to the photographs, Mickey's row first. Beside it, a helper is merging the talk branch and re-checking its numbers. At 17:00, the packaged build and its three views here. Paused: Mickey's office faults, the nightly bench, the walk's joins; I also parked my painted fronts' chips (first look made Rita's cream door grey all over).
+**Today, by your orders of 07:10 (the PC goes off at 19:00).** The way back is tagged (before-sky-2026-10-08). Done: the talk branch merged (who told me 115 of 115; the ladder 20 of 145 empty, not 19: one judge-variable turn). The sky: the street now lit by the sky it shows and the colours tuned under the dark light brought back; two tries; every view closer to the Hook sheet than this morning, but not passed: the wet road now mirrors the sky near-white, the brick is less red, the night's near pool runs hot (production/audits/sky-2026-10-08). On now: the windows to the photographs on Mickey's row (the target amended by a fresh helper to 3 inches of frame and 1.68 m; the window passes its check; going into the street). Then the Haiku timing (running) and Tom's brows (the plugin's code shows a way). At 17:00, the packaged build and its three views here.
 
 Disk (10-08 03:45): C: 88.5 GB free, F: 38.4 GB free (retention's floors: 40 and 20).
 

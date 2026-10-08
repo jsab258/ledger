@@ -1197,7 +1197,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
         write(status_line(step_name, st["who"], st["preset"], "ASKED", time.time() - st["tc"],
                           "+".join(notes) + ";rig-and-textures-requested"))
 
-    def set_groom_params(ch):
+    def set_groom_params(ch, sub=None):
         """THE GROOMS' COLOURS ON THE CHARACTER, BEFORE THE BUILD (7 October; production/research/
         casting/TOM-FACE-METHOD-2026-10-07.md, section 2): each groom's Melanin, Redness and the
         rest are the character's instance parameters, and the build bakes the brows' into the face
@@ -1210,7 +1210,20 @@ def main_after_idle(seconds=20.0, settle=15.0):
         if not vals_by_slot:
             return ""
         try:
-            inst = ch.internal_collection.default_instance
+            # ON THE PREVIEW COLLECTION, THEN COPIED TO THE CHARACTER (8 October; the plugin's own code,
+            # production/research/tom-face/BROWS-CODE-2026-10-08.md): a set reads the item's current
+            # values, which exist only in a built collection (MetaHumanCollectionBlueprintLibrary.cpp
+            # 97-107); only the preview (assemble_for_preview, MetaHumanCharacterEditorSubsystem.cpp 878)
+            # and the build's throw-away copy are ever built, never internal_collection, so the sets after
+            # the build found nothing. Epic's test (test_set_character_instance_params.py 25-154): assemble
+            # the preview, set on its instance, on_edit_preview_collection copies them in (Subsystem.cpp
+            # 816), then build.
+            if sub is not None:
+                col = sub.get_preview_collection(ch)
+                sub.assemble_for_preview(ch)
+            else:
+                col = ch.internal_collection
+            inst = col.default_instance
             items = {}
             for d in inst.get_slot_selection_data():
                 sel = d.get_editor_property("selection")
@@ -1231,7 +1244,9 @@ def main_after_idle(seconds=20.0, settle=15.0):
                 if hit == 0:
                     notes.append("%s-none-of-%s" % (slot, "|".join(names[:12]) or "nothing"))
                 set_n += hit
-            return ";groom-params-%d%s" % (set_n, ("+" + "+".join(notes)) if notes else "")
+            if sub is not None and set_n:
+                sub.on_edit_preview_collection(ch)
+            return ";groom-params-%d%s%s" % (set_n, "-preview" if sub is not None else "", ("+" + "+".join(notes)) if notes else "")
         except Exception as e:
             return ";groom-params-refused-%s" % type(e).__name__
 
@@ -1269,13 +1284,10 @@ def main_after_idle(seconds=20.0, settle=15.0):
         q = os.environ.get("LEDGER_MH_QUALITY", "high").lower()
         p.set_editor_property("pipeline_quality", unreal.MetaHumanQualityLevel.MEDIUM if q == "medium" else unreal.MetaHumanQualityLevel.HIGH)
         p.set_editor_property("absolute_build_path", BUILD_ROOT)
+        # THE GROOMS' COLOURS SET ON THE PREVIEW BEFORE THE ONE BUILD (8 October, set_groom_params), so
+        # the brows' painted layer in the face skin is baked with them
+        groom_note = set_groom_params(ch, sub)
         sub.build_meta_human(ch, p)
-        # THE GROOMS' COLOURS, ON THE BUILT CHARACTER, THEN BUILT AGAIN so the brows' painted layer
-        # in the face skin is baked with them (set_groom_params).
-        groom_note = set_groom_params(ch)
-        if groom_note and not groom_note.startswith(";groom-params-0") and "refused" not in groom_note:
-            sub.build_meta_human(ch, p)
-            groom_note += "+rebuilt"
         made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT + "/" + asset_name(st["who"], BARE), recursive=True, include_folder=False)
         recoloured = recolour_hair(st["who"], made)
         # ONLY THIS CHARACTER'S FOLDER (25 September): saving the whole build

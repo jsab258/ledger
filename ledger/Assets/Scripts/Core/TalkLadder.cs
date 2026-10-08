@@ -119,6 +119,7 @@ namespace Ledger.Core
             int n = 0;
             foreach (var l in leads) sb.Append(++n).Append(". ").Append(JudgeWords(l)).Append("\n");
             var r = new LlmRequest { Model = model, MaxTokens = 20, System = JudgeRule };
+            if (ClaimCheck.ThinksByDefault(model)) r.Thinking = "disabled";   // a one-number answer: no thinking on Haiku 5.5
             r.Messages.Add(new LlmMessage("user", sb.ToString()));
             return r;
         }

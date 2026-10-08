@@ -130,10 +130,23 @@ def summary(rows, key):
     return {"median": round(statistics.median(xs), 2), "slowest": round(max(xs), 2), "fastest": round(min(xs), 2), "n": len(xs)}
 
 
-def run(n, prewarm=False, early=False, voice="nano"):
+KEY_FILE = os.path.join(os.environ.get("LOCALAPPDATA", ""), "LEDGER", "live-talk-key.txt")
+
+
+def run(n, prewarm=False, early=False, voice="nano", live=False, checker=None):
     env = dict(os.environ)
     env.pop("ANTHROPIC_API_KEY", None)   # never a key: the stand-in only (29 September)
     hargs = [HELPER, "--fake"] + (["--early"] if early else [])
+    if live:
+        # THE REAL PATH ON LEDGER'S KEY (his order of 8 October: Haiku 5.5 against 4.5 for the check,
+        # 20 turns each; measurement runs are allowed on the key, $1 a day in all, 3 October): the key
+        # goes from the game's own key file into the helper's environment, as the game passes it
+        # (CrimeProbe.cpp), and is never printed or written.
+        with open(KEY_FILE, encoding="utf-8") as fh:
+            env["ANTHROPIC_API_KEY"] = fh.read().strip()
+        hargs = [HELPER] + (["--early"] if early else [])
+    if checker:
+        env["LEDGER_CHECKER_MODEL"] = checker
     if voice == "pocket":
         vargs = [POCKET_PY, os.path.join(ROOT, "tools", "voice-live", "pocket-server.py")]
     else:
@@ -241,7 +254,10 @@ if __name__ == "__main__":
         sys.exit(selftest())
     n = int(a[a.index("--lines") + 1]) if "--lines" in a else 12
     voice = a[a.index("--voice") + 1] if "--voice" in a else "nano"
-    res = run(n, prewarm="--prewarm" in a, early="--early" in a, voice=voice)
+    res = run(n, prewarm="--prewarm" in a, early="--early" in a, voice=voice, live="--live" in a,
+              checker=a[a.index("--checker") + 1] if "--checker" in a else None)
+    res["checker"] = a[a.index("--checker") + 1] if "--checker" in a else "default"
+    res["live"] = "--live" in a
     if "--out" in a:
         json.dump(res, open(a[a.index("--out") + 1], "w", encoding="utf-8"), indent=1)
     print("SUMMARY " + json.dumps(res.get("summary"), indent=None))

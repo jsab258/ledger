@@ -19,6 +19,7 @@ namespace Ledger.Core
         public static LlmRequest Ask(string model, string line)
         {
             var r = new LlmRequest { Model = model, MaxTokens = 40 };
+            if (ClaimCheck.ThinksByDefault(model)) r.Thinking = "disabled";   // a one-word answer: no thinking on Haiku 5.5
             r.System =
                 "You read one line a man says, in a small British port town in 1990, to somebody who knows about something he did. " +
                 "Say whether the line threatens them to keep quiet about it: a menace of harm, loss or trouble to them if they tell, " +

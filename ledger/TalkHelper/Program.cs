@@ -262,6 +262,9 @@ static class Program
             return JsonSerializer.Serialize(new { id, to, suggest = lines, jobs, generated = made, model = r.Model }, Plain);
         }
 
+        /// The claim check's model in the game (8 October, NewEngine).
+        public const string CheckerDefault = "claude-haiku-5-5";
+
         ConversationEngine NewEngine(CharacterCard card)
         {
             var engine = new ConversationEngine(_llm, card, new MemoryStore(card.Id), new KnowledgeBase(),
@@ -271,6 +274,15 @@ static class Program
             // not support before it is said. Not on the stand-in models,
             // which answer only from memory already.
             if (ChecksReplies(_llm, CheckAlways)) engine.Checker = _llm;
+            // THE CHECK'S MODEL, apart from the small talk's when LEDGER_CHECKER_MODEL names one (his
+            // order of 8 October: Haiku 5.5 timed against 4.5 on the real path; ClaimCheck.ThinksByDefault)
+            // HAIKU 5.5 FROM 8 OCTOBER, by his rule (switch unless the median first sound is more than
+            // 0.5 s slower): on the real path, 20 turns each, the first sound heard at a median 3.25 s
+            // (slowest 5.89) against 4.5's 3.84 s (6.22), the first checked sentence 1.78 s against
+            // 1.77 (F:/LedgerTools/scratch/haiku-timing; tools/voice-live/latency.py --live). Its
+            // thinking is set per request (ClaimCheck.ThinksByDefault).
+            var checker = Environment.GetEnvironmentVariable("LEDGER_CHECKER_MODEL");
+            engine.CheckerModel = string.IsNullOrEmpty(checker) ? CheckerDefault : checker;
             return engine;
         }
 
