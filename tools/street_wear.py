@@ -305,15 +305,24 @@ def room_wear(spec_path=OFFICE):
                         "yaw_deg": 0.0, "pitch_deg": 0.0, "strength": round(FRONT_WEAR + 0.15 * rnd(s, "st%d" % k), 3),
                         "on": "mickeys_room"})
     b = box.get("bench")
-    if b:   # the room's side wall behind the bench (x 8.65, facing -x: yaw 270)
-        out.append({"kind": "grime", "picture": smudge, "x_m": 8.65, "y_m": round(ROOM_FLOOR_M + 0.95, 4),
-                    "z_m": round((b["z0"] + b["z1"]) / 2, 4), "w_m": round(b["z1"] - b["z0"], 4), "h_m": 0.5,
-                    "yaw_deg": 270.0, "pitch_deg": 0.0, "strength": 0.45, "on": "mickeys_room"})
+    if b:   # the room's side wall behind the bench (x 8.65, facing -x: yaw 270): where the heads of
+        # three sitting people rest, three uneven patches, not one band (8 October, item 1.1's third
+        # review, V9: the band's straight top read as a printed strip)
+        s = seed_of("mickeys_bench_heads")
+        for k in range(3):
+            z = b["z0"] + (b["z1"] - b["z0"]) * (k + 0.5 + 0.3 * (rnd(s, "z%d" % k) - 0.5)) / 3.0
+            out.append({"kind": "grime", "picture": smudge, "x_m": 8.65,
+                        "y_m": round(ROOM_FLOOR_M + 0.9 + 0.12 * rnd(s, "y%d" % k), 4),
+                        "z_m": round(z, 4), "w_m": round(0.38 + 0.14 * rnd(s, "w%d" % k), 4),
+                        "h_m": round(0.32 + 0.12 * rnd(s, "h%d" % k), 4),
+                        "yaw_deg": 270.0, "pitch_deg": 0.0, "strength": round(0.35 + 0.15 * rnd(s, "st%d" % k), 3),
+                        "on": "mickeys_room"})
     d = box.get("the back door, shut")
-    if d:   # round the handle, on the door's left as the office sees it from the street
-        out.append({"kind": "grime", "picture": smudge, "x_m": round(d["x0"] + 0.15, 4), "y_m": round(ROOM_FLOOR_M + 1.0, 4),
-                    "z_m": d["z0"], "w_m": 0.35, "h_m": 0.45, "yaw_deg": 0.0, "pitch_deg": 0.0,
-                    "strength": 0.7, "on": "mickeys_room"})
+    if d:   # hands on the wall beside the back door's frame, off the opening itself (8 October, V9:
+        # centred 15 cm inside the door, the patch ran across the frame once the room drew it open)
+        out.append({"kind": "grime", "picture": smudge, "x_m": round(d["x1"] + 0.22, 4), "y_m": round(ROOM_FLOOR_M + 1.0, 4),
+                    "z_m": d["z0"], "w_m": 0.26, "h_m": 0.4, "yaw_deg": 0.0, "pitch_deg": 0.0,
+                    "strength": 0.6, "on": "mickeys_room"})
         out.append({"kind": "damp", "picture": damp, "x_m": 8.3, "y_m": round(ROOM_FLOOR_M + 2.62, 4),
                     "z_m": d["z0"], "w_m": 0.9, "h_m": 0.6, "yaw_deg": 0.0, "pitch_deg": 0.0,
                     "strength": 0.6, "on": "mickeys_room"})
