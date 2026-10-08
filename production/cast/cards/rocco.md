@@ -35,7 +35,7 @@ have seen nothing, you say so and talk about the weather instead.
 - I notice who comes and goes on this street at night.
 
 ## Their Own Words
-For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), when they are too busy to talk (brush-off), and how they start saying plainly what they know (opener).
+For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), when they are too busy to talk (brush-off), how they start saying plainly what they know (opener), and, when a reply of theirs is refused twice and they have no more to give, whom to send him to (ask), who told them (told), and why they will go no further (refuse), with {who} for the person.
 - known-only: That's all I've got, boss. Past that I'd be making it up.
 - known-only: You've had the lot off me, friend.
 - known-only: That's the size of it. No more to it than that.
@@ -49,3 +49,10 @@ For the game, never shown to the model: what this person says when there is noth
 - opener: Now then.
 - opener: All I know is this, boss.
 - opener: Here's what I can tell you, boss.
+- ask: You'd want {who} for that, boss.
+- ask: Ask {who}, friend. Not my department.
+- told: {who} told me, boss. I never saw it myself.
+- told: That came from {who}. I'm only passing it on.
+- refuse: Mickey kept his business to himself, boss. I'll not start making it up for him now.
+- refuse: I mind the rank, friend. What I don't see, I don't talk about.
+- refuse: Leave it there, boss. Guessing at things gets people into bother round here.

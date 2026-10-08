@@ -16,6 +16,9 @@ namespace Ledger.Core
         {
             "as an ai", "language model", "system prompt", "i cannot roleplay",
             "i'm an assistant", "i am an assistant", "my instructions", "as a chatbot",
+            // Talk of playing a part (the bait of 7 October: "I need to stay in
+            // character here"), which no person on Quay Street says.
+            "in character", "out of character", "break character", "breaking character", "my character",
         };
 
         /// `alsoCalled` is `CharacterCard.AlsoCalled` — the other names the card

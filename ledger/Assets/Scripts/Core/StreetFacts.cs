@@ -126,6 +126,35 @@ namespace Ledger.Core
             return null;
         }
 
+        /// WHOM A FACT IS ABOUT, given the words a character holds it in (the
+        /// street's or the person's own): their cast id, or null for a fact about
+        /// nobody in particular, or for anything that is not a street fact. The
+        /// ladder points him to them (TalkLadder): they hold it as their own.
+        public static string AboutOf(string known)
+        {
+            if (string.IsNullOrEmpty(known)) return null;
+            foreach (var f in All)
+                if (known == f.fact || (f.own != null && known == f.own)) return f.about.Length > 0 ? f.about : null;
+            return null;
+        }
+
+        /// WHO SOMEBODY IS, BY THEIR WORK (sheila_books, ron_rank, darren_rounds):
+        /// said by anybody else, such a fact answers "who is she?" and is a pointer
+        /// for everything else (TalkLadder: "You'd want Sheila for that"), never an
+        /// answer to it (measured on 7 October: "What does Sheila really think of
+        /// me?" answered with her thirty-one years at the books).
+        public static bool IsIntroduction(string known)
+        {
+            if (string.IsNullOrEmpty(known)) return false;
+            foreach (var f in All)
+                if ((f.id == "sheila_books" || f.id == "ron_rank" || f.id == "darren_rounds") && (known == f.fact || known == f.own)) return true;
+            return false;
+        }
+
+        /// The name the street says for one of the people the facts are about.
+        public static string NameOf(string who) =>
+            who == "lena" ? "Sheila" : who == "rocco" ? "Ron" : who == "sam" ? "Darren" : who == "june" ? "June" : null;
+
         /// Gives a card the street's facts for this person, once each.
         public static CharacterCard AddTo(CharacterCard card, string who)
         {

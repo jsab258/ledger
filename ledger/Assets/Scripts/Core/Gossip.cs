@@ -38,6 +38,12 @@ namespace Ledger.Core
     {
         public Fact Content;       // e.g. player.location_d2_evening = warehouse
         public string OriginId;    // the first-hand source
+        /// WHO TOLD THIS PERSON (the talk task of 7 October 2026): the one they
+        /// heard it from, set at every retelling, so the hearer can say "Sheila
+        /// told me" as well as the street knowing who first saw it (OriginId).
+        /// Null when they saw it themselves (Hops 0) or nobody is known to have
+        /// told them (a phone message, talk heard about the place).
+        public string ToldById;
         public string Summary;     // human/LLM-readable phrasing of the content
         public double Confidence;  // 0..1
         public int Hops;           // 0 = witnessed first-hand
@@ -401,6 +407,7 @@ namespace Ledger.Core
                 already.Indelible = true;
                 already.Confidence = NotFinite(already.Confidence) ? confidence : Math.Max(already.Confidence, confidence);
                 already.Hops = 0;
+                already.ToldById = null;
                 already.Summary = summary;
                 if (already.Confidence >= 0.95) w.Knowledge.Learn(content);
             }
@@ -411,6 +418,7 @@ namespace Ledger.Core
                 // could ever firm up an early maybe (audit 2026-07-27).
                 already.Confidence = confidence;
                 already.Hops = 0;
+                already.ToldById = null;
                 already.Summary = summary;
             }
             }
@@ -574,7 +582,7 @@ namespace Ledger.Core
                         {
                             Content = r.Content, OriginId = r.OriginId, Summary = r.Summary,
                             Confidence = passed, Hops = r.Hops + 1, Sensitive = r.Sensitive,
-                            Indelible = r.Indelible, OriginRung = r.OriginRung,
+                            Indelible = r.Indelible, OriginRung = r.OriginRung, ToldById = speaker.Id,
                         };
                         listener.Rumors.Add(heard);
                         bool firstNaming = heard.NamesHim && (namedThisTelling ??= new HashSet<string>()).Add(r.TopicKey);
@@ -799,7 +807,7 @@ namespace Ledger.Core
                 {
                     Content = r.Content, OriginId = r.OriginId, Summary = r.Summary,
                     Confidence = passed, Hops = r.Hops + 1, Sensitive = r.Sensitive,
-                    Indelible = r.Indelible, OriginRung = r.OriginRung,
+                    Indelible = r.Indelible, OriginRung = r.OriginRung, ToldById = partnerId,
                 };
                 checker.Rumors.Add(heard);
                 bool firstNaming = heard.NamesHim && (askedNamed ??= new HashSet<string>()).Add(r.TopicKey);

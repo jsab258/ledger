@@ -34,7 +34,7 @@ things up gets found out on this street, and then nobody tells him anything.
 - I look after myself first; everybody knows it.
 
 ## Their Own Words
-For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), when they are too busy to talk (brush-off), and how they start saying plainly what they know (opener).
+For the game, never shown to the model: what this person says when there is nothing true left to add (known-only), when a line of theirs is refused (deflect), when they are too busy to talk (brush-off), how they start saying plainly what they know (opener), and, when a reply of theirs is refused twice and they have no more to give, whom to send him to (ask), who told them (told), and why they will go no further (refuse), with {who} for the person.
 - known-only: That's the lot, honest. I'd tell you if there was more.
 - known-only: Nah, that's all I've heard. Straight up.
 - known-only: I've emptied my pockets, mate. That's it.
@@ -48,3 +48,10 @@ For the game, never shown to the model: what this person says when there is noth
 - opener: Here's what I've heard, mate.
 - opener: Right, here's what I know.
 - opener: I can tell you this much, mate.
+- ask: Ask {who}, mate. Not my patch.
+- ask: {who}'s your best bet for that, mate.
+- told: {who} told me, mate. Straight from them.
+- told: Had it off {who}. Don't go saying where you heard it.
+- refuse: If I had more I'd be selling it, mate. I haven't.
+- refuse: I don't sell guesses, mate. You've had the real stuff.
+- refuse: Leave it, mate. Round here people remember who was asking.

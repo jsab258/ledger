@@ -33,6 +33,8 @@
 {"event": "stop", "at": "2026-10-07T20:32:16", "note": "the evening: Ron's third review (FAIL, set aside), the CC0 route researched and tried (failed its checks); 1.1's review faults: black block, west rooms, roofs, Sheila's spot, wear, subtitles, prompt; glass anti-aliasing researched and tried. Corrected: two entries added earlier with guessed times overlapped this task"}
 {"event": "start", "at": "2026-10-07T20:32:16", "task": "7 Oct night: the glass anti-aliasing checked in the editor, the evening's fixes committed before the nightly build", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-07T21:01:47", "note": "the glass anti-aliasing tried three times and set aside; Ron's and Sheila's spots; Mickey's front wear; the house sides turned outward and seen closed in the editor; subtitles and prompt"}
+{"event": "start", "at": "2026-10-07T21:03:02", "task": "Talk task: the ladder, who told me, two checks (branch talk)", "phase": "3", "kind": "production"}
+{"event": "stop", "at": "2026-10-07T22:35:12", "note": "talk task done: ladder (judged), who told me, bait, successors; handover production/handovers/talk.md; key US$2.27 of $3"}
 {"event": "start", "at": "2026-10-07T21:05:00", "task": "7 Oct night: sitting clips, the wear's cause found (two tries, set aside)", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-07T21:50:00", "note": ""}
 {"event": "start", "at": "2026-10-07T21:50:00", "task": "7 Oct night: the wear in the material, the front decals dropped, sitting works (Ron seated)", "phase": "1", "kind": "production"}

@@ -284,6 +284,7 @@ namespace Ledger.Core
                 held.Summary = said;
                 held.Confidence = 1.0;
                 held.Hops = 0;
+                held.ToldById = null;
                 held.Sensitive = false;
             }
             g.Knowledge.Learn(fact);
