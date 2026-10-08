@@ -158,6 +158,10 @@ namespace LedgerVignetteShot
 	// Returns how many lights and materials it switched.
 	int32 SetShopRoomLit(const char* Shop, bool bLit);
 
+	// THE WINDOWS THE GLASS CATCH HAS STILL TO TAKE IN ITS ROUND, 8 October: 0 when every shop
+	// window reflects the street as it now is (the page photographs wait for it).
+	int32 GlassCatchesLeft();
+
 	// THE STREET MESHES WHOSE NAMES START WITH Prefix shown (with their collision) or hidden
 	// (without), 6 October: Mickey's shut door, street_mickeysdoor_*, taken away when Tom
 	// unlocks it. Returns how many.

@@ -9568,6 +9568,8 @@ namespace LedgerVignetteShot
 		return Shown;
 	}
 
+	int32 GlassCatchesLeft() { return GGlassCatchLeft > 0 ? GGlassCatchLeft : 0; }
+
 	int32 SetShopRoomLit(const char* Shop, bool bLit)
 	{
 		const FString Id(UTF8_TO_TCHAR(Shop));

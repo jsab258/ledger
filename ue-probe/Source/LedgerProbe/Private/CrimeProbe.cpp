@@ -4639,6 +4639,17 @@ namespace
 		}
 		else
 		{
+			// NOT WHILE THE SHOP GLASS IS BEING CAUGHT (8 October, the glass gate: Mickey's window
+			// reflected the street's houses black in every picture after 13:00, the photograph taken
+			// before its window's catch had run in this light): wait for the round, 40 s at most.
+			static double CatchWaitSince = -1.0;
+			if (LedgerVignetteShot::GlassCatchesLeft() > 0)
+			{
+				if (CatchWaitSince < 0.0) { CatchWaitSince = Now; }
+				if (Now - CatchWaitSince < 40.0) { NextAt = Now + 0.25; return; }
+				UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: the glass catch still running after 40 s; taken anyway"));
+			}
+			CatchWaitSince = -1.0;
 			const FString Out = FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("PageShots") / (S.Id + TEXT("-") + Mode + TEXT(".png")));
 			FScreenshotRequest::RequestScreenshot(Out, false, false);
 			UE_LOG(LogTemp, Display, TEXT("LedgerPageShots: %s at the view's %dx%d"), *Out, SW, SH);
