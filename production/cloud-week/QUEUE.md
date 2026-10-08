@@ -32,7 +32,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 ## 3. Kit pieces built by script, each through its check and fresh review
 
-- 3.1 in progress (23:33, try 1: building). The door.
+- 3.1 in progress (23:33; try 1 built 01:53: check PASS, T1 158 of 158, F1 109 of 109; fresh reviews, one view each). The door.
 - 3.2 open. The shopfront's parts: pilasters, consoles, fascia, stall riser, transom.
 - 3.3 open. Railings.
 - 3.4 open. Bollards.
