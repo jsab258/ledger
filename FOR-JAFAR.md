@@ -29,7 +29,13 @@ No decision asked: these are for watching the street change.
 | The reverse view | ![This morning](production/previews/morning-reverse-day-2026-10-08.jpg) | ![Midday](production/previews/morning-reverse-day-midday-2026-10-08.jpg) |
 | The street at night | ![This morning](production/previews/morning-night-2026-10-08.jpg) | ![Midday](production/previews/morning-night-midday-2026-10-08.jpg) |
 
-**Today, by your orders of 07:10 (the PC goes off at 19:00).** The way back is tagged (before-sky-2026-10-08). Done: the talk branch merged (who told me 115 of 115; the ladder 20 of 145 empty, not 19: one judge-variable turn). The sky: the street now lit by the sky it shows and the colours tuned under the dark light brought back; two tries; every view closer to the Hook sheet than this morning, but not passed: the wet road now mirrors the sky near-white, the brick is less red, the night's near pool runs hot (production/audits/sky-2026-10-08). On now: the windows to the photographs on Mickey's row (the target amended by a fresh helper to 3 inches of frame and 1.68 m; the window passes its check; going into the street). Then the Haiku timing (running) and Tom's brows (the plugin's code shows a way). At 17:00, the packaged build and its three views here.
+**Today, by your orders of 07:10 and 11:10 (the PC goes off at 19:00).** The way back is tagged (before-sky-2026-10-08). Done: the talk branch merged; the sky lit by the sky it shows (two tries, closer, not passed); Mickey's row's windows to the photographs; the claim check on Haiku 5.5; Tom keeps take L1. Your light faults, two tries each: the near lamp pool 0.5% clipped (met); the brick passes near, parade and far, the left terrace and maroon fascias still short; the road a wet grey sheen instead of a white mirror, two of its three numbers still out, its flat puddles now standing out (production/audits/road-2026-10-08). Mickey's office under the new light: four fresh reviewers, two faults blocked (the night's reflected windows too bright, the yellow lines glowing); after one try each every office and front view passes on new faults, the directories now books, a back room behind the back door (production/audits/office-2026-10-08). On now: a packaged build as 1.1's evidence and its walk-in; at 17:00 the packaged build and its three views here.
+
+Mickey's office this morning (left) and now (right), day above, night below; then his whole front by day and night (editor pictures):
+
+![Mickey's office, this morning and now](production/previews/office-morning-afternoon-2026-10-08.jpg)
+
+![Mickey's front, day and night](production/previews/mickeys-front-day-night-2026-10-08.jpg)
 
 Disk (10-08 03:45): C: 88.5 GB free, F: 38.4 GB free (retention's floors: 40 and 20).
 
