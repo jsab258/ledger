@@ -33,48 +33,8 @@
  ],
  "sleeve_girths": [
   [
-   0.0032,
-   0.0432
-  ],
-  [
-   0.0126,
-   0.0863
-  ],
-  [
-   0.0275,
-   0.1295
-  ],
-  [
-   0.047,
-   0.1727
-  ],
-  [
-   0.0696,
-   0.2159
-  ],
-  [
-   0.094,
-   0.259
-  ],
-  [
-   0.1183,
-   0.3022
-  ],
-  [
-   0.1409,
-   0.3454
-  ],
-  [
-   0.1604,
-   0.3886
-  ],
-  [
-   0.1753,
-   0.4317
-  ],
-  [
-   0.1847,
-   0.4749
+   0.0,
+   0.5181
   ],
   [
    0.1879,
@@ -93,7 +53,7 @@
    0.22
   ]
  ],
- "sleeve_s_top": 0.02,
+ "sleeve_s_top": 0.01,
  "sleeve_s_cuff": 0.636,
  "trouser_crotch_z": 0.816,
  "trouser_waist_z": 1.1835,
@@ -138,7 +98,11 @@
  "waistband_m": 1.1049,
  "hem_one_leg_m": 0.5779,
  "knee_one_leg_m": 0.6223,
- "chest_body_m": 1.2314,
  "_sleeve": "J17's 1 cm goes over the elbow's bend: along the straight axis the cuff edge is at the wrist (636 mm from the shoulder point); the pattern's lengths down the sleeve are scaled by 636/646.1",
- "_sleeve_cap": "Over the cap the sleeve's girth is the flat sleeve's width at each depth below the cap top (pattern.json jumper_sleeve cap), the depth scaled by 636/646.1; its stand-off eases from the yoke's 18.3 mm at the top to 3 mm at the cap height"
+ "sleeve_biceps_m": 0.5181,
+ "_sleeve_cap": "C4: from the shoulder point to the cap height the stand-off grows from 3 mm to the biceps line's ease along a quarter-sine",
+ "hem_drop_m": 0.008,
+ "chest_line_z": 1.45,
+ "rib_thickness_m": 0.006,
+ "rib_centre_off_m": 0.003
 }
