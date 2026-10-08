@@ -53,3 +53,5 @@
 {"event": "stop", "at": "2026-10-08T04:30:00", "note": ""}
 {"event": "start", "at": "2026-10-08T04:30:00", "task": "8 Oct early: the office rebuild (door hinge, blind, slab, chair), re-import, walk-in tests; the doorway blocked in the editor", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T05:08:00", "note": ""}
+{"event": "start", "at": "2026-10-08T05:08:00", "task": "8 Oct early: the doorway probe, the office rebuild committed, Ron's rank spot moved", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T05:57:00", "note": ""}
