@@ -1,0 +1,23 @@
+{
+ "model": "F:/LedgerTools/lab/clothes/clothes_v1.npz",
+ "tolerance_mm": 10.0,
+ "poke_through": {
+  "jumper": {
+   "covered_points": 9316,
+   "through": 0,
+   "outside_solid": 0,
+   "outside_surface": 0,
+   "closest_gap_mm": 0.3
+  },
+  "trousers": {
+   "covered_points": 6876,
+   "through": 26,
+   "outside_solid": 26,
+   "outside_surface": 21,
+   "closest_gap_mm": -0.5,
+   "worst_mm": 3.7
+  }
+ },
+ "outline": "target masks not yet written",
+ "pass": false
+}

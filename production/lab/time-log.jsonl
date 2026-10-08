@@ -5,3 +5,4 @@
 {"event": "start", "at": "2026-10-07T22:29:30", "task": "lab test 2: sash window (target and build)", "phase": "lab", "kind": "production"}
 {"event": "start", "at": "2026-10-07T23:04:32", "task": "lab test 3: jacket (drapes)", "phase": "lab", "kind": "production"}
 {"event": "stop", "at": "2026-10-07T23:14:41", "note": "three tests closed; LAB-REPORT.md written and published"}
+{"event": "start", "at": "2026-10-08T07:12:37", "task": "lab test 4: plain clothes modelled to a pattern", "phase": "lab", "kind": "production"}
