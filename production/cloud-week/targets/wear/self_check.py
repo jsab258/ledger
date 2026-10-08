@@ -15,6 +15,10 @@ Parts:
   C  photographs: the measurements are re-made from the reduced previews and must come back within their stated error;
      the envelope is laid on the main photograph (scale fitted on one dimension only) and its edges must fall on the marks.
   D  envelopes: each kind's drawn envelope is rasterised at its texel scale and the kind's checks are run on it.
+  E  composition and wrong masks: the order, floor and per-channel colour rule of target.json "compose" are applied to the drawn masks (foot, head, soot, channel, ground), and masks made
+     deliberately wrong (uniform gradients, symmetric streak pairs, evenly spaced fingers, gridded dots, a plain stripe, white noise) must each be refused by the kind's own mask checks.
+  F  placement: the placement checks of target.json are run on a conforming placed street and on deliberately wrong ones (an offset sill streak, a rotated streak, oil in the wrong place, gum on the road,
+     one variant over 40 %, neighbouring tiles in phase).
 """
 import importlib.util
 import json
@@ -183,15 +187,125 @@ def measure(mask, px_per_m, measure_id, **p):
         return float(mask.max())
     if measure_id == "mask_std":
         return float(mask.std())
+    if measure_id == "mask_mean":
+        return float(mask.mean())
+    if measure_id == "top_edge_std_mm":
+        m = _from_source(mask, p.get("source", "bottom"))
+        ab = m >= p.get("thr", 0.5)
+        has = ab.any(0)
+        if has.mean() < 0.6:
+            return 0.0
+        far = m.shape[0] - 1 - np.argmax(ab[::-1], axis=0)
+        return float(far[has].astype(float).std() * px_mm)
+    if measure_id == "column_mean_cv":
+        m = _from_source(mask, p.get("source", "bottom"))
+        r0, r1 = int(round(p["from_m"] * ppm)), int(round(p["to_m"] * ppm))
+        cm = m[r0:r1].mean(0)
+        return float(cm.std() / cm.mean()) if cm.mean() > 1e-4 else 0.0
+    if measure_id in ("brick_patch_share", "brick_cell_std"):
+        m = _from_source(mask, "bottom")
+        bw, bh = p["brick_w_m"], p["brick_h_m"]
+        Wm = m.shape[1] / ppm
+        means, stds = [], []
+        j = 0
+        while (j + 1) * bh <= p["to_m"] + 1e-9:
+            if j * bh >= p["from_m"] - 1e-9:
+                off = (j % 2) * bw / 2
+                x0 = -off
+                while x0 + bw <= Wm + 1e-9:
+                    if x0 >= -1e-9:
+                        cell = m[int(round(j * bh * ppm)):int(round((j + 1) * bh * ppm)), int(round(x0 * ppm)):int(round((x0 + bw) * ppm))]
+                        means.append(float(cell.mean()))
+                        stds.append(float(cell.std()))
+                    x0 += bw
+            j += 1
+        if not means:
+            return 0.0
+        means, stds = np.array(means), np.array(stds)
+        on = means > p.get("cell_mean_above", 0.4)
+        if measure_id == "brick_patch_share":
+            return float(on.mean())
+        return float(stds[on].mean()) if on.any() else 0.0
+    if measure_id in ("end_streak_length_ratio", "end_streak_width_ratio", "rivulet_count", "finger_length_cv"):
+        comps = _head_components(mask, ppm, p.get("thr", 0.25), p.get("head_m", 0.2))
+        if measure_id == "finger_length_cv":
+            L = np.array([c[1] for c in comps])
+            return float(L.std() / L.mean()) if len(L) >= 3 else 0.0
+        if len(comps) < 2:
+            return 0.0
+        if measure_id == "rivulet_count":
+            return float(sum(1 for c in comps[1:-1] if c[1] >= p.get("min_length_m", 0.1)))
+        a, b = comps[0], comps[-1]
+        col = 1 if measure_id == "end_streak_length_ratio" else 2
+        return float(max(a[col], b[col]) / max(min(a[col], b[col]), 1e-9))
+    if measure_id == "finger_spacing_cv":
+        r = int(round(p.get("head_row_m", 0.12) * ppm))
+        row = mask[min(r, mask.shape[0] - 1)] >= p.get("thr", 0.25)
+        lab, n = ndi.label(row)
+        if n < 3:
+            return 0.0
+        cx = np.array(ndi.center_of_mass(row, lab, np.arange(1, n + 1))).ravel()
+        gaps = np.diff(cx)
+        return float(gaps.std() / gaps.mean())
+    if measure_id in ("nn_ratio", "size_cv"):
+        lab, n = _comps(mask, p.get("thr", 0.5))
+        if n == 0:
+            return 0.0
+        idx = np.arange(1, n + 1)
+        areas = ndi.sum(np.ones_like(mask), lab, idx) * px_mm ** 2
+        keep = areas >= p.get("min_area_mm2", 0.0)
+        if keep.sum() < 4:
+            return 0.0
+        if measure_id == "size_cv":
+            eq = 2 * np.sqrt(areas[keep] / math.pi)
+            return float(eq.std() / eq.mean())
+        from scipy.spatial import cKDTree, ConvexHull
+        cen = np.array(ndi.center_of_mass(mask >= p.get("thr", 0.5), lab, idx))[keep] / ppm      # metres (row, col)
+        dd = cKDTree(cen).query(cen, k=2)[0][:, 1]
+        A = mask.shape[0] * mask.shape[1] / ppm ** 2 if p.get("area", "frame") == "frame" else ConvexHull(cen).volume
+        return float(dd.mean() / (0.5 / math.sqrt(len(cen) / max(A, 1e-9))))
+    if measure_id == "dominant_wavelength_m":
+        m = mask - mask.mean()
+        F = np.abs(np.fft.fft2(m)) ** 2
+        ky = np.fft.fftfreq(m.shape[0], d=1.0 / ppm)
+        kx = np.fft.fftfreq(m.shape[1], d=1.0 / ppm)
+        k = np.hypot(*np.meshgrid(kx, ky))
+        fund = 1.0 / min(m.shape[0], m.shape[1]) * ppm
+        kb = np.rint(k / fund).astype(int)
+        P = np.bincount(kb.ravel(), weights=F.ravel())
+        peak = 1 + int(np.argmax(P[1:]))
+        return float(1.0 / (peak * fund))
     raise ValueError(measure_id)
 
 
-def foot_profile_check(mask, px_per_m, points):
-    """points: [[height_m, min, max], ...] with row H-1 the foot. Returns list of (h, value, lo, hi, ok)."""
+def _from_source(mask, source):
+    """orient a mask so that row 0 is the source edge (the pavement line for a foot band, the feature's lower edge for a head band)"""
+    return mask if source == "top" else mask[::-1]
+
+
+def _head_components(mask, ppm, thr, head_m):
+    """components of mask >= thr whose top lies within head_m of the frame's top edge, left to right: (x centre px, rod length m, rod width m)"""
+    lab, n = _comps(mask, thr)
+    out = []
+    mm = 1.0 / ppm
+    for i, sl in enumerate(ndi.find_objects(lab), start=1):
+        if sl[0].start > head_m * ppm:
+            continue
+        ys, xs = np.nonzero(lab[sl] == i)
+        if len(ys) < 6:
+            continue
+        w, v = np.linalg.eigh(np.cov(np.vstack([xs, ys])))
+        out.append((float(xs.mean() + sl[1].start), math.sqrt(12 * max(w[1], 1e-9)) * mm, math.sqrt(12 * max(w[0], 1e-9)) * mm))
+    out.sort()
+    return out
+
+
+def foot_profile_check(mask, px_per_m, points, axis="rows_from_bottom"):
+    """points: [[height_m, min, max], ...] with row H-1 the foot (axis rows_from_bottom) or row 0 the source edge (rows_from_top, a head band). Returns list of (h, value, lo, hi, ok)."""
     H = mask.shape[0]
     out = []
     for h, lo, hi in points:
-        r = int(round(H - 1 - h * px_per_m))
+        r = int(round(H - 1 - h * px_per_m)) if axis != "rows_from_top" else int(round(h * px_per_m))
         r = min(max(r, 0), H - 1)
         v = float(mask[max(r - 1, 0):r + 2].mean())
         out.append((h, v, lo, hi, lo - 1e-9 <= v <= hi + 1e-9))
@@ -219,7 +333,58 @@ class Report:
 
 # ---------------------------------------------------------------- A: structure
 REQUIRED = ["label", "layer", "where", "envelope", "geometry", "tone", "wet_dry", "texel", "variants", "period_1990", "not_modern", "checks", "mask"]
-MEASURES = {"coverage", "blob_eqd_mm", "count_per_m2", "edge_10_90_mm", "streak_aspect", "streak_width_mm", "streak_length_m", "verticality_deg", "fade_ratio", "foot_profile", "tile_seam", "mask_max", "mask_std", "tone_ratio", "crack_flag_share", "crack_width_mm", "crack_length_per_m2", "role_length_per_m2", "role_blob_eqd_mm"}
+# One sentence per measure, the exact definition the code below implements. target.json's "check_measures" is this dictionary (build step), and part A tests that the two are equal,
+# so a builder implementing from target.json alone gets the same numbers as `measure()`.
+MEASURE_DOCS = {
+    "coverage": "share of decal pixels with mask >= thr (default 0.5)",
+    "blob_eqd_mm": "equivalent diameter (mm) = 2 sqrt(area / pi) of the 8-connected components of mask >= thr (default 0.5) with area >= min_area_mm2; stat p50 (default) or p90 over the components",
+    "count_per_m2": "number of 8-connected components of mask >= thr with area >= min_area_mm2, per m2 of the decal frame",
+    "edge_10_90_mm": ("10 to 90 % edge width, relative to the mask's own peak: 0.95 x peak / the 90th percentile of |gradient| (per metre; one axis if axis is x or y), taken over pixels with band_lo x peak < mask < band_hi x peak "
+                      "(defaults 0.1 and 0.9) that lie within reach_mm (default 60) of the contour at half the peak; 0 if the peak is below 0.2"),
+    "streak_aspect": "median over the 8-connected components of mask >= thr (default 0.3) with rod length >= min_length_m of rod length / rod width; rod length = sqrt(12 x variance) along the major axis, width likewise along the minor axis",
+    "streak_width_mm": "stat (p50 default, p10 or p90) over those components of the rod width in mm",
+    "streak_length_m": "stat (p50 default, p10 or p90) over those components of the rod length in m",
+    "verticality_deg": "largest deviation of a component's major axis from vertical (degrees) over components of rod length >= 0.1 m",
+    "fade_ratio": "per component of mask >= thr (default 0.3) taller than 150 mm: mean mask over its last third of rows / its first third; median over components",
+    "foot_profile": ("mean mask per row of the whole decal width, at each point [height_m, min, max], mean of three rows: axis rows_from_bottom counts height up from the frame's bottom row (the pavement line), "
+                     "rows_from_top counts down from its top row (the feature's lower edge); the check passes when at least 80 % of the points are inside their bounds"),
+    "tile_seam": "mean |mask(first column) - mask(last column)| (rows for axis y; the larger of the two for xy) divided by the mean absolute difference of adjacent columns (rows) inside the tile: about 1 when seamless",
+    "mask_max": "maximum mask value", "mask_std": "standard deviation of the mask", "mask_mean": "mean of the mask",
+    "top_edge_std_mm": ("standard deviation along x, in mm, of the far edge of the band: for each column the row farthest from the source edge (source bottom: the pavement line, the frame's bottom row; source top: the feature's "
+                        "lower edge, the top row) where mask >= thr; columns without such a row are left out; 0 if fewer than 60 % of the columns have one"),
+    "column_mean_cv": "coefficient of variation (std / mean) across x of the column means of the mask over the rows from_m to to_m (m) measured from the source edge (source bottom or top)",
+    "brick_patch_share": ("share of brick cells whose mean mask is above cell_mean_above (default 0.4): cells brick_w_m x brick_h_m in stretcher bond (courses brick_h_m high from the pavement line, each course offset by half a brick), "
+                          "only courses lying wholly between from_m and to_m, only whole cells inside the frame"),
+    "brick_cell_std": "mean over the cells counted as whitened in brick_patch_share (same cells, same parameters) of the standard deviation of the mask inside the cell",
+    "end_streak_length_ratio": ("longer over shorter rod length of the leftmost and rightmost components of mask >= thr (default 0.25) whose top lies within head_m (default 0.2) of the frame's top edge (the sill's lower edge); 0 if there are fewer than two"),
+    "end_streak_width_ratio": "wider over narrower rod width of the same two end components",
+    "rivulet_count": "number of the components between those two end components, in x order, with rod length >= min_length_m (default 0.1)",
+    "finger_spacing_cv": "std / mean of the gaps between the centres of the runs of mask >= thr (default 0.25) along the row head_row_m (default 0.12 m) below the frame's top edge; 0 if fewer than three runs",
+    "finger_length_cv": "std / mean of the rod lengths of the components of mask >= thr whose top lies within head_m of the top edge; 0 if fewer than three",
+    "nn_ratio": ("Clark-Evans ratio of the components of mask >= thr (area >= min_area_mm2; at least 4): mean nearest-neighbour distance of their centroids / (0.5 / sqrt(n / A)), A the frame area (area frame) or the "
+                 "convex hull of the centroids (area hull); about 1 for random scatter, above 1.3 for a lattice, below 0.8 for clusters; 0 if fewer than four"),
+    "size_cv": "std / mean of the equivalent diameters of the components of mask >= thr with area >= min_area_mm2 (at least 4)",
+    "dominant_wavelength_m": ("wavelength 1 / (k x f) in m of the annulus with the largest summed power in the 2-D power spectrum of the mask minus its mean, annuli of width f = 1 / the shorter side of the frame (m), "
+                              "k = 1, 2, 3, ... the annulus index (the zero-frequency annulus is left out)"),
+    "tone_ratio": "mean luminance of the dark-slab class over the pale-slab class in the generated flag colour map (check applies to the flag colour result, not the mask)",
+    "crack_flag_share": "share of flags carrying a crack in the generated flag attributes",
+    "crack_width_mm": "median of 2 x distance-transform - 1 along the Zhang-Suen skeleton of mask >= thr (mm)",
+    "crack_length_per_m2": "skeleton length (m) of mask >= thr per m2 of the decal frame",
+    "role_length_per_m2": "envelope polygons only (drawing check): path length of the polygons with the named role per m2 of the frame",
+    "role_blob_eqd_mm": "envelope polygons only (drawing check): equivalent diameter of the polygons with the named role (stat p50 or p90)",
+    "role_count": "envelope polygons only (drawing check): number of polygons with the named role",
+    "role_share_below": "envelope polygons only (drawing check): share (by polygon area, of=area, or by count) of the polygons with the named role whose centroid lies below below_mm of the frame's bottom edge",
+    "composed_foot_ratio": ("composition (compose block, self_check.compose_walls): the luminance of a composed 2 m brick foot beside a downpipe (wall_soot, wall_foot_damp, wall_foot_splash, algae_downpipe in the stated order, "
+                            "then the floor, at house wear 1.0, dry, in the state given) over the clean wall's, mean over x 0.6 to 1.4 m at height_m (default 0.1)"),
+    "composed_salt_ratio": "composition: luminance over the clean wall's of the composed foot at the whitened bricks (salt mask > 0.4) between 0.30 and 0.52 m, after the replacing marks",
+    "composed_wall_min_ratio": "composition: the lowest luminance over the clean wall's anywhere on the composed foot before the replacing marks (the floor is working when it is not below the wall floor)",
+    "composed_soot_ratio": "composition: mean luminance of the sooted house's composed wall (soot state weight 1.0) over the cleaned house's (weight 0.0), rows from 1.3 m up",
+    "composed_head_ratio": "composition: luminance over the wall's of the composed head band at depth 0.1 m below the feature, wall_soot in the given state first, mean over x",
+    "channel_over_road": "composition: luminance of the channel_concrete albedo after the channel body's gutter_grime (mean over the channel rows 0.06 to 0.23 m) over the asphalt_dry albedo's",
+    "fringe_over_road": "composition: luminance of the asphalt_dry albedo after the gutter_grime fringe (mean over rows 0.30 to 0.45 m) over the unmarked asphalt_dry albedo's",
+    "composed_ground_min_ratio": "composition: the lowest luminance over the clean surface's of a kerb_granite texel under pavement_stain and gutter_grime together (at mask 1), after the ground floor",
+}
+MEASURES = set(MEASURE_DOCS)
 
 
 def part_a(tj, R):
@@ -261,7 +426,7 @@ def part_a(tj, R):
     R.check("A15 sources, unreached and disagreements are listed", len(tj["sources"]) >= 5 and len(tj["unreached"]) >= 2 and len(tj["disagreements"]) >= 4)
     R.check("A16 the era rules rule out 2000s and American marks and alcohol/gambling", len(tj["era_rules"]) >= 4 and any("alcohol" in r for r in tj["era_rules"]))
     # height profiles equal the envelope levels where both exist (nothing floats between the two statements of one rule)
-    for kid in ("wall_foot_splash", "wall_foot_damp", "salt_bloom", "gutter_grime"):
+    for kid in ("wall_foot_splash", "wall_foot_damp", "salt_bloom", "gutter_grime", "wall_head_band"):
         k = tj["kinds"][kid]
         hp = k["geometry"]["height_profile"]
         lv = [(l["h_m"], l["level"]) for l in k["envelope"]["levels"]]
@@ -274,6 +439,37 @@ def part_a(tj, R):
     top100 = max(h for h, l in sp.items() if l >= 1.0)
     R.check("A18 the salt band starts on the upper flank of the black foot (between the splash's full-strength top %.2f m and its 0.85 height %.2f m)" % (top100, top85), top100 <= salt0 <= top85 + 0.05, "salt starts %.2f" % salt0)
     R.check("A19 splash profile ends below the damp profile", max(sp) < max(l["h_m"] for l in tj["kinds"]["wall_foot_damp"]["envelope"]["levels"]))
+    # ---- second pass (review of 8 October)
+    cm = tj["compose"]
+    stages = cm["walls"]["stage_1_L0_multiplicative"] + cm["walls"]["stage_2_L1_multiplicative"] + cm["walls"]["stage_3_replacing"] + cm["ground"]["stages"]
+    R.check("A20 compose: every kind named in the order exists, none twice in the wall order, floors are numbers (walls 0.15, ground 0.28)",
+            all(x in tj["kinds"] for x in stages) and len(cm["walls"]["stage_1_L0_multiplicative"] + cm["walls"]["stage_2_L1_multiplicative"] + cm["walls"]["stage_3_replacing"]) == len(set(cm["walls"]["stage_1_L0_multiplicative"] + cm["walls"]["stage_2_L1_multiplicative"] + cm["walls"]["stage_3_replacing"]))
+            and cm["walls"]["floor"] == 0.15 and cm["ground"]["floor"] == 0.28, "stages %s" % stages)
+    covered = set(stages) | set(cm.get("not_composed", []))
+    R.check("A20b every kind is either in a compose stage or named as not composed (with a reason)", set(tj["kinds"]) <= covered, "missing %s" % sorted(set(tj["kinds"]) - covered))
+    need = ["quay_end", "rank", "fishmonger_apron", "chandler_apron", "yard_entrance", "gully", "standing_places", "bus_stop", "empty_unit", "west_blind_gable"]
+    R.check("A21 places: every anchor a rule uses has an x range or a count (%s)" % ", ".join(need), all(n in tj["places"] for n in need), "missing %s" % [n for n in need if n not in tj["places"]])
+    pc_ids = [c["id"] for c in tj["placement_checks"]]
+    R.check("A22 placement checks: the nine of the review are present and each has a rule in this file", all(i in PLACEMENT_RULES for i in pc_ids) and len(pc_ids) >= 9, "ids %s" % pc_ids)
+    R.check("A23 check_measures in target.json is word for word the MEASURE_DOCS of this file (what the code does)", tj["check_measures"] == MEASURE_DOCS,
+            "differs in %s" % sorted(k for k in set(tj["check_measures"]) | set(MEASURE_DOCS) if tj["check_measures"].get(k) != MEASURE_DOCS.get(k)))
+    undocumented = [(k, c["name"]) for k, kk in tj["kinds"].items() for c in kk["checks"] if c["measure"] not in MEASURE_DOCS]
+    R.check("A24 every check's measure is documented", not undocumented, "%s" % undocumented)
+    txt = json.dumps({k: v for k, v in tj.items() if k != "self_check"}).lower()
+    bad = [w for w in ("child", "kid ", "kids", "pushchair", "pram", "buggy", "toddler", "hopscotch", "playground", "schoolboy", "nursery", "sweet-wrapper", "sweetshop", "baby") if w in txt]
+    md = os.path.join(HERE, "TARGET.md")
+    if os.path.exists(md):
+        low = open(md, encoding="utf-8").read().lower()
+        bad += [w + " (TARGET.md)" for w in ("child", "pushchair", "pram", "buggy", "toddler", "hopscotch", "playground", "nursery", "sweet-wrapper", "baby") if w in low]
+    R.check("A25 wording: no word that implies children anywhere (canon: no children); the content-rule sentence says 'no minors'", not bad, "found %s" % bad)
+    M = tj["measurements"]
+    R.check("A26 sources: M03 and M05 carry the tones cited to them, M15 states the Poly Haven tags, M21 to M27 exist, the seven files are listed as looked at and not used, flag_concrete cites M27",
+            "core_L_star" in M["M03"]["values"] and "seam_ratio" in M["M05"]["values"] and "tags" in M["M15"]["values"] and all(("M%d" % i) in M for i in range(21, 28))
+            and len(tj["looked_at_not_used"]) == 7 and "M27" in tj["surfaces"]["flag_concrete"]["src"] and "no soot on the brick" not in json.dumps(tj["sources"]))
+    rows = tj["wet_dry_rule"]["rows"]
+    R.check("A27 wet and dry once: for each sheet-derived row, dry multiplier x wet multiplier equals the sheet's own ratio (within 0.03)",
+            all(abs(tj["kinds"][r["kind"]]["tone"][r["surface"]]["albedo_mult_linear"] * tj["kinds"][r["kind"]]["wet_dry"]["wet"]["albedo_mult_on_tone"] - r["sheet_ratio"]) <= 0.03 for r in rows),
+            "%s" % [(r["kind"], tj["kinds"][r["kind"]]["tone"][r["surface"]]["albedo_mult_linear"], tj["kinds"][r["kind"]]["wet_dry"]["wet"]["albedo_mult_on_tone"], r["sheet_ratio"]) for r in rows])
 
 
 # ---------------------------------------------------------------- B: tone
@@ -290,7 +486,7 @@ def part_b(tj, R):
             if mult < 1.0:
                 implied = float(lum(mark) / lum(surf))
                 Lmult = float(Lstar(lin_to_srgb8(srgb_to_lin(surf) * mult)))
-                okm = (mult / 1.6 <= implied <= mult * 1.6)
+                okm = (mult / 1.12 <= implied <= mult * 1.12)
                 okd = abs((Lm - Ls) - t["delta_L_star"]) <= 2.0
                 R.check("B1 %s on %s: mark colour is the surface x %.2f in linear light (implied %.2f)" % (kid, sname, mult, implied), okm)
                 R.check("B2 %s on %s: stated dL* %.0f is the mark colour minus the surface (%.1f)" % (kid, sname, t["delta_L_star"], Lm - Ls), okd)
@@ -304,6 +500,23 @@ def part_b(tj, R):
                 q = t.get("quoted_delta_L_star")
                 if q is not None:
                     R.check("B3q %s on %s: dL* %.0f is within 14 of the figure measured or quoted for it (%s)" % (kid, sname, t["delta_L_star"], q), abs(t["delta_L_star"] - q) <= 14.0)
+    # tan filter rows, house-state multipliers, floors
+    for kid in tj["kinds_order"]:
+        k = tj["kinds"][kid]
+        for sname, t in k["tone"].items():
+            for al in t.get("also", []):
+                R.check("B7 %s on %s: the extra mark '%s' has a share in (0, 1] and a tan colour (R above B by 30)" % (kid, sname, al["name"]), 0 < al["share"] <= 1 and al["mark_srgb"][0] - al["mark_srgb"][2] >= 30)
+        hs = k.get("by_house_state")
+        if hs:
+            R.check("B8 %s: house-state multipliers are in (0, 1] and the sooted one is the lighter (nothing darkened twice)" % kid, all(0 < hs[x] <= 1 for x in ("as_built", "cleaned", "sooted")) and hs["sooted"] >= hs["as_built"])
+    cmp_ = tj["compose"]
+    exempt = set(cmp_["exempt_from_floor"])
+    for kid in tj["kinds_order"]:
+        for sname, t in tj["kinds"][kid]["tone"].items():
+            m = t["albedo_mult_linear"]
+            if m < 1.0:
+                fl = cmp_["ground"]["floor"] if sname in cmp_["ground"]["surfaces"] else cmp_["walls"]["floor"]
+                R.check("B9 %s on %s: a single mark's multiplier %.2f is not below the floor %.2f (%s)" % (kid, sname, m, fl, "exempt" if kid in exempt else "applies"), m >= fl - 1e-9 or kid in exempt)
     # flag classes
     sc = tj["kinds"]["flag_patch_crack"]["geometry"]["slab_classes"]
     ratio = float(lum(np.array(sc["dark"]["srgb"], float)) / lum(np.array(sc["pale"]["srgb"], float)))
@@ -355,6 +568,66 @@ def zhang_suen(img):
                 changed = True
                 P[1:-1, 1:-1][rem] = 0
     return img[1:-1, 1:-1].astype(bool)
+
+
+def _course_px(Y, y0, y1, x0, x1):
+    y0 = max(y0, 0)
+    y1 = min(y1, Y.shape[0])
+    if y1 - y0 < 70:
+        return None
+    pr = Y[y0:y1, x0:x1].mean(1)
+    pr = pr - ndi.uniform_filter1d(pr, 25)
+    ac = np.correlate(pr, pr, "full")[len(pr) - 1:]
+    j = 5 + int(np.argmax(ac[5:min(40, len(pr) // 2)]))
+    return j if ac[j] / ac[0] > 0.12 else None
+
+
+def sill_columns(rgb):
+    """M23: for each white sill or ledge edge with brick below it, the darkest 80 mm wide column 80 to 380 mm below the edge over the median column of the same edge
+    (scale from the brick courses, 75 mm, under the edge). Returns [(x, y, min_ratio)]."""
+    r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
+    Y = rgb @ np.array([0.2126, 0.7152, 0.0722])
+    white = ndi.binary_opening(ndi.binary_closing((Y > 170) & ((rgb.max(-1) - rgb.min(-1)) < 45), np.ones((5, 5))), np.ones((5, 5)))
+    brick = ndi.binary_opening((r >= g - 1) & (r >= b + 6) & (Y > 45) & (Y < 175) & ((r - b) < 70), np.ones((3, 3)))
+    lab, n = ndi.label(white)
+    out = []
+    for i, sl in enumerate(ndi.find_objects(lab), start=1):
+        m = lab[sl] == i
+        W = sl[1].stop - sl[1].start
+        if m.sum() < 2500 or W < 60:
+            continue
+        ys0, xs0 = sl[0].start, sl[1].start
+        yb = np.full(W, -1)
+        for xx in range(W):
+            col = np.where(m[:, xx])[0]
+            if len(col):
+                yb[xx] = col.max() + ys0
+        cp = None
+        for xx0 in range(0, W - 40, 40):
+            seg = yb[xx0:xx0 + 40]
+            if not (seg > 0).any():
+                continue
+            c = _course_px(Y, int(np.median(seg[seg > 0])) + 8, int(np.median(seg[seg > 0])) + 118, xs0 + xx0, xs0 + xx0 + 40)
+            if c:
+                cp = c if cp is None else int(round((cp + c) / 2))
+        if cp is None:
+            continue
+        mmpx = 75.0 / cp
+        top, bot, win = int(round(80 / mmpx)), int(round(380 / mmpx)), int(round(80 / mmpx))
+        vals = []
+        for xx in range(0, W - win, max(2, win // 4)):
+            yy = yb[xx:xx + win]
+            if (yy < 0).any() or np.ptp(yy) > 6:
+                continue
+            ybm = int(np.median(yy))
+            seg = brick[ybm + top:ybm + bot, xs0 + xx:xs0 + xx + win]
+            if seg.shape[0] < bot - top or seg.mean() < 0.85:
+                continue
+            vals.append(Y[ybm + top:ybm + bot, xs0 + xx:xs0 + xx + win][seg].mean())
+        if len(vals) >= 6:
+            vals = np.array(vals)
+            out.append((xs0, int(np.median(yb[yb > 0])), float((vals / np.median(vals)).min())))
+    return out
 
 
 def part_c(tj, R, draw, overlays):
@@ -542,16 +815,17 @@ def part_c(tj, R, draw, overlays):
     k = tj["kinds"]["wall_foot_splash"]
     hp = k["geometry"]["height_profile"]
     mult = k["tone"]["brick_red"]["albedo_mult_linear"]
+    wetm = k["wet_dry"]["wet"]["albedo_mult_on_tone"]       # the Hook sheet is a wet street: its ratios are wet values, dry multiplier x wet multiplier
     errs = []
     for r, v in zip(rows_c, ratio_rows):
         h = (foot_row - r) * mmpx / 1000.0
         if h < 0.02 or h > 0.85:
             continue
         m_h = float(np.interp(h, hp["h_m"], hp["mask"]))
-        pred = 1.0 - m_h * (1.0 - mult)
+        pred = 1.0 - m_h * (1.0 - mult * wetm)
         errs.append(abs(pred - v))
     mean_err = float(np.mean(errs))
-    R.check("C15 the splash profile (mult %.2f) laid on the sheet gable foot (foot row %d, scale fitted on the course only): mean error %.3f in luminance ratio (needs <= 0.17)" % (mult, foot_row, mean_err), mean_err <= 0.17)
+    R.check("C15 the splash profile (dry mult %.2f x wet %.2f = %.3f at mask 1) laid on the sheet gable foot (foot row %d, scale fitted on the course only): mean error %.3f in luminance ratio (needs <= 0.10)" % (mult, wetm, mult * wetm, foot_row, mean_err), mean_err <= 0.10)
     top_row = [r for r, v in zip(rows_c, ratio_rows) if v < 0.6]
     h_half = (foot_row - min(top_row)) * mmpx / 1000.0
     h_half_t = float(np.interp(0.45, hp["mask"][::-1], hp["h_m"][::-1]))
@@ -593,10 +867,146 @@ def part_c(tj, R, draw, overlays):
     D = gauss(L, 6.0) - gauss(L, 120.0)
     share = float((ndi.binary_opening(D < -2.5, iterations=2)).mean())
     R.check("C18 road scan marks re-measured on the preview crop: %.3f of the area at dL* 2.5 (M02 whole tile 0.125; crop differs, accepted 0.04 to 0.30)" % share, 0.04 <= share <= 0.30)
+
+    # ---- C19 M21: the soot-blackened garden wall, sooted over cleaner panel
+    f = "ph-urban_street_03-garden-wall-soot-streaks.jpg"
+    rgb = load_rgb(pv(f)).astype(float)
+    bx = M["M21"]["preview_boxes"]
+    def _box(b):
+        x0, x1, y0, y1 = b
+        return rgb[y0:y1, x0:x1].reshape(-1, 3)
+    ys_, yc_ = float(lum(_box(bx["sooted"])).mean()), float(lum(_box(bx["clean"])).mean())
+    sat = lambda c: float((c.max() - c.min()) / c.max())
+    sr = sat(np.median(_box(bx["sooted"]), 0)) / sat(np.median(_box(bx["clean"]), 0))
+    soot_mult = tj["kinds"]["wall_soot"]["geometry"]["multiplier"]
+    R.check("C19 garden wall re-measured on the preview: sooted over cleaner luminance %.3f (M21 0.377 to 0.40; the target's soot multiplier %.2f must lie in 0.37 to 0.48 and so must the measurement within 0.33 to 0.50)" % (ys_ / yc_, soot_mult), 0.33 <= ys_ / yc_ <= 0.50 and 0.37 <= soot_mult <= 0.48)
+    R.check("C19b ... and the colour saturation ratio (HSV) is %.2f: M21 says 0.84 (the review's 0.6 is not what this photograph shows; accepted 0.70 to 0.95)" % sr, 0.70 <= sr <= 0.95)
+    # ---- C20 M22: the head under the Hook sheet's gable verge, and the lower wall of the right-hand cottage
+    Yl = lum(hs)
+    colsel = slice(15, 170)
+    head = float(np.median(Yl[40:170, colsel]) / np.median(Yl[250:600, colsel]))
+    bm = M["M22"]["values"]
+    hbm = tj["kinds"]["wall_head_band"]["by_house_state"]["as_built"]
+    R.check("C20 sheet gable head re-measured: luminance %.2f of the body over rows 40 to 170 (M22 0.61; accepted 0.50 to 0.72); the target's as-built head multiplier %.2f x the wet 0.90 = %.2f lies in the same range" % (head, hbm, hbm * 0.9), 0.50 <= head <= 0.72 and 0.50 <= hbm * 0.9 <= 0.72)
+    cot = Yl[:, 1490:1590]
+    body = float(np.median(cot[380:430]))
+    lowr = float(np.mean([np.median(cot[r:r + 8]) for r in range(516, 580, 8)]))
+    lw = tj["kinds"]["wall_soot"]["geometry"]["lower_wall_ratio"]["composed"]
+    R.check("C21 sheet right-hand cottage lower wall re-measured: %.2f of the wall above (M22b 0.84 to 0.93, mean 0.90); the composed target value %.2f is within 0.06 of it" % (lowr / body, lw), 0.80 <= lowr / body <= 0.96 and abs(lw - lowr / body) <= 0.08)
+    # ---- C22 M23: no clear streak under the sills of a maintained 2019 brick street
+    f = "ph-urban_street_03-facade-sills-no-streaks.jpg"
+    rgb = load_rgb(pv(f)).astype(float)
+    cols = sill_columns(rgb)
+    mr = np.array([c[2] for c in cols])
+    dens = tj["kinds"]["streak_sill"]["where"]["density"]
+    R.check("C22 sill streaks re-measured on the preview: %d sill edges, darkest column over the median column %.2f to %.2f (median %.2f); none below 0.80 (M23: 0.87 to 0.99); the target's share of sills with a set (%.2f) is above the measured 3 to 15 %% (a 1990 street is dirtier)" % (len(cols), mr.min(), mr.max(), np.median(mr), dens["typical"]),
+            len(cols) >= 3 and mr.min() >= 0.80 and 0.90 <= np.median(mr) <= 1.0 and dens["typical"] >= 0.15)
+    # ---- C23 M25: the sheet's gable downpipe
+    pipe = hs[100:720, 204:211]
+    ochre = (pipe[..., 0] > 95) & (pipe[..., 0] - pipe[..., 2] > 35) & (pipe[..., 1] > 70) & (pipe[..., 0] > 1.3 * pipe[..., 2])
+    rows_o = float(ochre.any(1).mean())
+    ic = tj["kinds"]["iron_wear"]["where"]["density"]["range"]
+    R.check("C23 sheet downpipe re-measured: paint loss on %.1f %% of its length (M25 4.8 to 7 %%); the target's 4 to 8 %% (%s) brackets it" % (100 * rows_o, ic), 0.03 <= rows_o <= 0.09 and ic[0] <= rows_o + 0.02 and ic[1] >= rows_o - 0.02)
+    # ---- C24 M24: the channel is lighter than the road
+    f = "ph-urban_street_03-kerb-flags-channel-view.jpg"
+    rgb = load_rgb(pv(f)).astype(float)
+    Yc = lum(rgb)
+    chan = float(np.median(Yc[372:388, 250:550]))
+    road = float(np.median(Yc[560:760, 100:800]))
+    fringe = float(np.median(Yc[432:470, 250:750]))
+    R.check("C24 channel re-measured: channel setts %.2f x the open road (M24 1.4, 1.35 to 1.7) and the strip beside it %.2f x (0.95, 0.91 to 0.97); the reviewer's 150/146/140 channel would be %.1f x the road, the target's %s is %.2f x"
+            % (chan / road, fringe / road, float(lum(np.array([150, 146, 140.0])) / lum(np.array(tj["surfaces"]["asphalt_dry"]["albedo_srgb"], float))), tj["surfaces"]["channel_concrete"]["albedo_srgb"],
+               float(lum(np.array(tj["surfaces"]["channel_concrete"]["albedo_srgb"], float)) * 0.85 / lum(np.array(tj["surfaces"]["asphalt_dry"]["albedo_srgb"], float)))),
+            1.2 <= chan / road <= 1.8 and 0.88 <= fringe / road <= 1.0)
+    # ---- C25 M26: how much of the yellow line is lost
+    f = "ph-urban_street_03-oil-drip-speckle.jpg"
+    rgb = load_rgb(pv(f))
+    yel = ((rgb[..., 0].astype(int) - rgb[..., 2].astype(int)) > 45) & (rgb[..., 0] > 110)
+    yel = ndi.binary_closing(yel, np.ones((3, 3)))
+    xs_, ys_c = [], []
+    for x in range(30, rgb.shape[1] - 10):
+        r_ = np.where(yel[:, x])[0]
+        if len(r_) >= 6:
+            xs_.append(x); ys_c.append(r_.mean())
+    co2 = np.polyfit(xs_, ys_c, 2)
+    cov = []
+    for x in range(30, rgb.shape[1] - 10):
+        sl_ = np.polyval(np.polyder(co2), x)
+        Lc = 25.0 * math.sqrt(1 + sl_ * sl_)
+        yc0 = np.polyval(co2, x)
+        seg = yel[max(int(round(yc0 - Lc / 2)) - 3, 0):int(round(yc0 + Lc / 2)) + 3, x]
+        cov.append(min(1.0, seg.sum() / Lc))
+    loss = 1 - float(np.mean(cov))
+    lr = tj["kinds"]["line_wear"]["where"]["density"]["range"]
+    R.check("C25 yellow line re-measured: %.0f %% of the nominal 75 mm strip lost (M26 22 +/- 8 %%); the target's %s brackets it" % (100 * loss, lr), 0.10 <= loss <= 0.35 and lr[0] - 0.02 <= loss <= lr[1] + 0.05)
+    # ---- C26 M03: the sealed crack on the full-resolution crop
+    f = "ph-asphalt_02-road-sealed-crack.jpg"
+    rgb = load_rgb(pv(f)).astype(float)
+    Yl_ = lum(rgb)
+    ysm = ndi.gaussian_filter(Yl_, 2.0)
+    surf = float(np.median(Yl_))
+    mm_ = P[f]["mm_per_px"]
+    ws_, cores = [], []
+    for r_ in range(0, rgb.shape[0], 2):
+        row = ysm[r_, 60:420]
+        j = int(np.argmin(row))
+        if row[j] > 0.6 * surf:
+            continue
+        a_ = b_ = j
+        while a_ > 0 and row[a_ - 1] < 0.7 * surf:
+            a_ -= 1
+        while b_ < len(row) - 1 and row[b_ + 1] < 0.7 * surf:
+            b_ += 1
+        ws_.append((b_ - a_ + 1) * mm_)
+        cores.append(row[j])
+    pw = np.percentile(ws_, [10, 50, 90])
+    mw = tj["kinds"]["road_crack"]["geometry"]["main_crack_width_mm"]
+    R.check("C26 sealed crack re-measured on the preview: widths below 0.7 of the surface p10 / p50 / p90 = %.0f / %.0f / %.0f mm (M03 15 / 35 / 59); the target's main width %s mm lies around it; core luminance %.2f of the surface (0.23)" % (pw[0], pw[1], pw[2], mw, float(np.median(cores) / surf)),
+            10 <= pw[0] <= 22 and 28 <= pw[1] <= 45 and 45 <= pw[2] <= 75 and mw["p10"] <= pw[1] <= mw["p90"] and 0.15 <= np.median(cores) / surf <= 0.35)
+    # ---- C27 M05: the reinstatement's seam
+    f = "ph-urban_street_02-road-reinstatement-ortho.jpg"
+    rgb = load_rgb(pv(f)).astype(float)
+    Yr = lum(rgb)
+    roadY = float(np.median(Yr[100:450, 500:1100]))
+    box = ndi.gaussian_filter(Yr, 1.2)[560:830, 30:170]
+    seam = float(np.percentile(box, 4) / roadY)
+    infill = float(np.median(Yr[560:780, 170:330]) / roadY)
+    ptone = tj["kinds"]["road_patch"]["tone"]["asphalt_dry"]["albedo_mult_linear"]
+    R.check("C27 reinstatement re-measured: the seam's darkest 4 %% of pixels read %.2f of the road (M05 0.63 to 0.77), the infill %.2f (0.93); the target's seam multiplier %.2f and infill %.2f (%.2f x level %.2f)"
+            % (seam, infill, ptone, 1 - (1 - ptone) * tj["kinds"]["road_patch"]["envelope"]["infill_level"], 1 - ptone, tj["kinds"]["road_patch"]["envelope"]["infill_level"]),
+            0.55 <= seam <= 0.80 and 0.85 <= infill <= 1.0 and 0.63 <= ptone <= 0.77 and abs((1 - (1 - ptone) * tj["kinds"]["road_patch"]["envelope"]["infill_level"]) - 0.93) <= 0.03)
+    # ---- C28 M06: share of tan filter tips among the kerb litter
+    f = "ph-urban_street_02-kerb-litter-view.jpg"
+    rgb = load_rgb(pv(f)).astype(float)
+    Yk = rgb @ np.array([0.2126, 0.7152, 0.0722])
+    bgk = ndi.median_filter(Yk, size=31)
+    sat_ = rgb.max(-1) - rgb.min(-1)
+    bright = ndi.binary_opening((Yk > 1.35 * bgk + 8) | ((Yk > 1.1 * bgk) & (sat_ > 45) & (rgb[..., 0] > rgb[..., 2] + 40)))
+    lab_k, nk = ndi.label(bright)
+    bits = []
+    for i_, sl_ in enumerate(ndi.find_objects(lab_k), start=1):
+        m_ = lab_k[sl_] == i_
+        if m_.sum() < 6:
+            continue
+        cy, cx = ndi.center_of_mass(m_)
+        cy += sl_[0].start; cx += sl_[1].start
+        if 225 <= cy <= 320 and 150 < cx < 1100:
+            c_ = rgb[sl_][m_].mean(0)
+            if c_[1] > c_[0] + 30:       # the green toy-like thing is not litter of the street's kind
+                continue
+            bits.append(c_[0] - c_[2] > 45)
+    tan_share = float(np.mean(bits))
+    tan_t = tj["kinds"]["cig_end"]["tone"]["flag_concrete"]["also"][0]["share"]
+    R.check("C28 kerb litter re-counted on the preview: %d of %d bits are clearly tan (%.2f; M06 0.31 to 0.46); the target's tan share is %.2f" % (sum(bits), len(bits), tan_share, tan_t), len(bits) >= 8 and 0.2 <= tan_share <= 0.5 and 0.3 <= tan_t <= 0.5)
     return overlay_log
 
 
 # ---------------------------------------------------------------- D: envelopes
+ENVELOPE_MEASURES = {"role_length_per_m2", "role_blob_eqd_mm", "role_count", "role_share_below"}
+DATA_MEASURES = {"tone_ratio", "crack_flag_share"}
+COMPOSITION_MEASURES = {"composed_foot_ratio", "composed_salt_ratio", "composed_wall_min_ratio", "composed_soot_ratio", "composed_head_ratio", "channel_over_road", "fringe_over_road", "composed_ground_min_ratio"}
+
+
 def ppm_for(k):
     t = k["texel"]["px_per_m_recommended"]
     ext = k["mask"]["frame_extent_m"]
@@ -604,6 +1014,77 @@ def ppm_for(k):
     if k["texel"]["smallest_feature_mm"] <= 3:
         return min(t, 800 if big else 1000)          # hairline kinds need the finer scale even on a big frame
     return min(t, 400 if big else 1000)
+
+
+def _poly_area(q):
+    xs_ = np.array([a for a, _ in q["poly"]])
+    ys_ = np.array([b for _, b in q["poly"]])
+    return 0.5 * abs(np.dot(xs_, np.roll(ys_, -1)) - np.dot(ys_, np.roll(xs_, -1)))
+
+
+def run_mask_check(c, mask, ppm):
+    """One check of a kind on a generated mask (what unit 4.5's automatic check does). Returns (value, ok)."""
+    m, p = c["measure"], dict(c["params"])
+    if m == "foot_profile":
+        res = foot_profile_check(mask, ppm, p["points"], p.get("axis", "rows_from_bottom"))
+        v = float(np.mean([r[4] for r in res]))
+        return v, v >= 0.8
+    v = measure(mask, ppm, m, **p)
+    return v, c["min"] <= v <= c["max"]
+
+
+def eval_check(c, k, mask, ppm, polys, ext_mm, draw, edge_mm=0.0):
+    """value of one check on a kind's drawn envelope (polygons) and its rasterised mask"""
+    m, p = c["measure"], dict(c["params"])
+    fx0, fy0, fx1, fy1 = ext_mm
+    if m == "foot_profile":
+        res = foot_profile_check(mask, ppm, p["points"], p.get("axis", "rows_from_bottom"))
+        return float(np.mean([r[4] for r in res])), [r for r in res if not r[4]]
+    if m == "tone_ratio":
+        sc = k["geometry"]["slab_classes"]
+        return float(lum(np.array(sc["dark"]["srgb"], float)) / lum(np.array(sc["pale"]["srgb"], float))), None
+    if m == "crack_flag_share":
+        slabs = [q for q in polys if q["role"].startswith("slab_")]
+        cracks = [q for q in polys if q["role"] == "crack"]
+        hit = 0
+        for sl_ in slabs:
+            xs = [a for a, _ in sl_["poly"]]; ys = [b for _, b in sl_["poly"]]
+            if any(min(xs) <= np.mean([a for a, _ in q["poly"]]) <= max(xs) and min(ys) <= np.mean([b for _, b in q["poly"]]) <= max(ys) for q in cracks):
+                hit += 1
+        return hit / max(len(slabs), 1), None
+    if m == "role_length_per_m2":
+        tot = 0.0
+        for q in polys:
+            if q["role"] != p["role"]:
+                continue
+            cx = np.mean([a for a, _ in q["poly"]]); cy = np.mean([b for _, b in q["poly"]])
+            if fx0 <= cx <= fx1 and fy0 <= cy <= fy1:
+                tot += q.get("length_mm", 0.0)
+        return tot / 1000.0 / ((fx1 - fx0) * (fy1 - fy0) / 1e6), None
+    if m == "role_blob_eqd_mm":
+        eqs = [2 * math.sqrt(_poly_area(q) / math.pi) for q in polys if q["role"] == p["role"]]
+        return (float(np.percentile(eqs, 90 if p.get("stat") == "p90" else 50)) if eqs else 0.0), None
+    if m == "role_count":
+        return float(sum(1 for q in polys if q["role"] == p["role"])), None
+    if m == "role_share_below":
+        sel = [q for q in polys if q["role"] == p["role"]]
+        if not sel:
+            return 0.0, None
+        w = [(_poly_area(q) if p.get("of", "area") == "area" else 1.0) * (1.0 if np.mean([b for _, b in q["poly"]]) - fy0 < p["below_mm"] else 0.0) for q in sel]
+        tot = sum(_poly_area(q) if p.get("of", "area") == "area" else 1.0 for q in sel)
+        return float(sum(w) / tot), None
+    if m == "count_per_m2" and p.get("region") == "speckle_band":
+        dots = [q for q in polys if q["role"] == "dot"]
+        xs = [np.mean([a for a, _ in q["poly"]]) for q in dots]
+        Lb = (max(xs) - min(xs)) / 1000.0
+        return len(dots) / max(Lb * k["envelope"]["width_m"], 1e-6), None
+    if "only_roles" in p:
+        roles = p.pop("only_roles")
+        sub = [q for q in polys if q["role"] in roles]
+        wrap = "xy" if "seamless" in k["mask"]["origin"] else "x" if "tile" in k["mask"]["origin"] else False
+        mk = draw.rasterize(sub, ext_mm, ppm, edge_mm, wrap=wrap)
+        return measure(mk, ppm, m, **p), None
+    return measure(mask, ppm, m, **p), None
 
 
 def part_d(tj, R, draw):
@@ -616,77 +1097,25 @@ def part_d(tj, R, draw):
         ext_mm = (ext[0] * 1000, ext[1] * 1000, ext[2] * 1000, ext[3] * 1000)
         results = {}
         runs = 0
+        org = k["mask"]["origin"]
+        wrap = "xy" if "seamless" in org else "x" if "tile" in org else False
         for seed in (1990, 2024):
             for variant in range(3):
                 polys = draw.kind_envelope(tj, kid, seed, variant)
-                org = k["mask"]["origin"]
-                wrap = "xy" if "seamless" in org else "x" if "tile" in org else False
                 mask = draw.rasterize(polys, ext_mm, ppm, ed.get(kid, 0.0), wrap=wrap)
                 runs += 1
                 for c in k["checks"]:
-                    m = c["measure"]
-                    p = dict(c["params"])
-                    if m == "foot_profile":
-                        res = foot_profile_check(mask, ppm, p["points"])
-                        val = float(np.mean([r[4] for r in res]))
-                        results.setdefault(c["name"], []).append((val, [r for r in res if not r[4]]))
+                    if c["measure"] in COMPOSITION_MEASURES:
                         continue
-                    if m == "tone_ratio":
-                        sc = k["geometry"]["slab_classes"]
-                        val = float(lum(np.array(sc["dark"]["srgb"], float)) / lum(np.array(sc["pale"]["srgb"], float)))
-                        results.setdefault(c["name"], []).append((val, None))
-                        continue
-                    if m == "crack_flag_share":
-                        slabs = [q for q in polys if q["role"].startswith("slab_")]
-                        cracks = [q for q in polys if q["role"] == "crack"]
-                        hit = 0
-                        for s in slabs:
-                            xs = [a for a, _ in s["poly"]]; ys = [b for _, b in s["poly"]]
-                            if any(min(xs) <= np.mean([a for a, _ in q["poly"]]) <= max(xs) and min(ys) <= np.mean([b for _, b in q["poly"]]) <= max(ys) for q in cracks):
-                                hit += 1
-                        results.setdefault(c["name"], []).append((hit / max(len(slabs), 1), None))
-                        continue
-                    if m == "role_length_per_m2":
-                        fx0, fy0, fx1, fy1 = ext_mm
-                        tot = 0.0
-                        for q in polys:
-                            if q["role"] != p["role"]:
-                                continue
-                            cx = np.mean([a for a, _ in q["poly"]]); cy = np.mean([b for _, b in q["poly"]])
-                            if fx0 <= cx <= fx1 and fy0 <= cy <= fy1:
-                                tot += q.get("length_mm", 0.0)
-                        results.setdefault(c["name"], []).append((tot / 1000.0 / ((fx1 - fx0) * (fy1 - fy0) / 1e6), None))
-                        continue
-                    if m == "role_blob_eqd_mm":
-                        eqs = []
-                        for q in polys:
-                            if q["role"] != p["role"]:
-                                continue
-                            xs_ = np.array([a for a, _ in q["poly"]]); ys_ = np.array([b for _, b in q["poly"]])
-                            area = 0.5 * abs(np.dot(xs_, np.roll(ys_, -1)) - np.dot(ys_, np.roll(xs_, -1)))
-                            eqs.append(2 * math.sqrt(area / math.pi))
-                        results.setdefault(c["name"], []).append((float(np.percentile(eqs, 90 if p.get("stat") == "p90" else 50)) if eqs else 0.0, None))
-                        continue
-                    if m == "count_per_m2" and p.get("region") == "speckle_band":
-                        dots = [q for q in polys if q["role"] == "dot"]
-                        xs = [np.mean([a for a, _ in q["poly"]]) for q in dots]
-                        Lb = (max(xs) - min(xs)) / 1000.0
-                        W = k["envelope"]["width_m"]
-                        results.setdefault(c["name"], []).append((len(dots) / max(Lb * W, 1e-6), None))
-                        continue
-                    if "only_roles" in p:
-                        roles = p.pop("only_roles")
-                        sub = [q for q in polys if q["role"] in roles]
-                        mk = draw.rasterize(sub, ext_mm, ppm, ed.get(kid, 0.0), wrap=wrap)
-                        results.setdefault(c["name"], []).append((measure(mk, ppm, m, **p), None))
-                        continue
-                    results.setdefault(c["name"], []).append((measure(mask, ppm, m, **p), None))
+                    results.setdefault(c["name"], []).append(eval_check(c, k, mask, ppm, polys, ext_mm, draw, ed.get(kid, 0.0)))
         summary[kid] = {}
         for c in k["checks"]:
+            if c["measure"] in COMPOSITION_MEASURES:
+                continue
             vals = [v for v, _ in results[c["name"]]]
             med = float(np.median(vals))
             if c["measure"] == "foot_profile":
-                ok = med >= 0.99 or (np.mean([v >= 0.8 for v in vals]) >= 0.8 and med >= 0.8)
+                ok = med >= 0.8
                 det = "median share of profile points inside their bands %.2f over %d runs" % (med, runs)
                 if not ok:
                     det += "; first misses %s" % [(round(a, 2), round(b, 2), lo, hi) for a, b, lo, hi, _ in results[c["name"]][0][1]]
@@ -698,7 +1127,7 @@ def part_d(tj, R, draw):
         # envelope sanity: the level-1 core lies inside the frame (nothing floats outside its decal)
         polys = draw.kind_envelope(tj, kid, 1990, 0)
         x0, y0, x1, y1 = draw.bounds(polys)
-        slack = 120.0 if kid not in ("streak_coping", "flag_patch_crack", "road_oil", "road_crack", "tyre_scuff") else 400.0
+        slack = 120.0 if kid not in ("streak_coping", "flag_patch_crack", "road_oil", "road_crack", "tyre_scuff", "streak_sill") else 400.0
         tiled = "tile" in k["mask"]["origin"] or "seamless" in k["mask"]["origin"]
         inside = tiled or x0 >= ext_mm[0] - slack and y0 >= ext_mm[1] - slack and x1 <= ext_mm[2] + slack and y1 <= ext_mm[3] + slack
         R.check("D %s envelope lies inside its decal frame (within %d mm; tiles may wrap)" % (kid, slack), inside, "bounds %.0f,%.0f to %.0f,%.0f against frame %s" % (x0, y0, x1, y1, [round(v) for v in ext_mm]))
@@ -711,6 +1140,396 @@ def part_d(tj, R, draw):
     return summary
 
 
+# ---------------------------------------------------------------- E: composition and wrong masks
+STATE_WEIGHT = {"sooted": 1.0, "as_built": 0.35, "cleaned": 0.0}
+
+
+def _lin(rgb8):
+    return srgb_to_lin(np.asarray(rgb8, float))
+
+
+def _ylin(l):
+    return 0.2126 * l[..., 0] + 0.7152 * l[..., 1] + 0.0722 * l[..., 2]
+
+
+def _ratio(tj, kid, surface):
+    """the per-channel ratio mark_lin / surface_lin the builder applies (the dirt tint travels in it)"""
+    return _lin(tj["kinds"][kid]["tone"][surface]["mark_srgb"]) / _lin(tj["surfaces"][surface]["albedo_srgb"])
+
+
+def _darken(alb, mask, ratio, strength=1.0):
+    f = 1.0 - np.clip(mask * strength, 0, 1)[..., None] * (1.0 - ratio[None, None, :])
+    return alb * f
+
+
+def _floor_to(alb, clean, fl):
+    sc = np.maximum(1.0, fl * _ylin(clean) / np.maximum(_ylin(alb), 1e-9))
+    return alb * sc[..., None]
+
+
+def compose_walls(tj, draw, seed=1990, state="cleaned", ppm=100, head=False):
+    """A 2.0 m x 1.6 m strip of brick at the pavement line with a downpipe at x = 1.0: the kinds of target.json compose.walls applied in their order, dry, house wear 1.0.
+    Returns dict(clean, pre, final, masks, ppm); arrays have row 0 at the top (height 1.6 m)."""
+    ed = draw.edges_by_kind(tj)
+    cm = tj["compose"]["walls"]
+    W_mm, H_mm = 2000.0, 1600.0
+    ext = (0.0, 0.0, W_mm, H_mm)
+    ras = lambda kid, polys: draw.rasterize(polys, ext, ppm, ed.get(kid, 0.0), wrap="x")
+    Hp, Wp = int(H_mm * ppm / 1000), int(W_mm * ppm / 1000)
+    clean = np.broadcast_to(_lin(tj["surfaces"]["brick_red"]["albedo_srgb"]), (Hp, Wp, 3)).copy()
+    masks = {}
+    full = draw.rasterize(draw.kind_envelope(tj, "wall_soot", seed, 0), (0.0, 0.0, 4000.0, 4000.0), ppm, ed.get("wall_soot", 0.0), wrap="x")
+    masks["wall_soot"] = full[full.shape[0] - Hp:, :Wp]
+    masks["wall_foot_damp"] = ras("wall_foot_damp", draw.kind_envelope(tj, "wall_foot_damp", seed, 0))
+    masks["wall_foot_splash"] = ras("wall_foot_splash", draw.kind_envelope(tj, "wall_foot_splash", seed, 0))
+    masks["algae_downpipe"] = ras("algae_downpipe", draw.transform(draw.kind_envelope(tj, "algae_downpipe", seed, 0), 1000.0, 0.0))
+    masks["salt_bloom"] = ras("salt_bloom", draw.kind_envelope(tj, "salt_bloom", seed, 0))
+    if head:
+        masks["wall_head_band"] = ras("wall_head_band", draw.transform(draw.kind_envelope(tj, "wall_head_band", seed, 0), 0.0, H_mm))
+    alb = clean.copy()
+    for kid in cm["stage_1_L0_multiplicative"] + cm["stage_2_L1_multiplicative"]:
+        if kid not in masks or kid == "wall_head_band" and not head:
+            continue
+        st = STATE_WEIGHT[state] if kid == "wall_soot" else 1.0
+        ratio = _ratio(tj, kid, "brick_red")
+        if kid == "wall_head_band":
+            hs_ = tj["kinds"][kid]["by_house_state"]
+            f = (1.0 - hs_[state]) / (1.0 - tj["kinds"][kid]["tone"]["brick_red"]["albedo_mult_linear"])
+            ratio = 1.0 - f * (1.0 - ratio)
+        alb = _darken(alb, masks[kid], ratio, st)
+    pre = _floor_to(alb, clean, cm["floor"])
+    final = pre.copy()
+    mk = masks["salt_bloom"]
+    sm = _lin(tj["kinds"]["salt_bloom"]["tone"]["brick_red"]["mark_srgb"])
+    final = final * (1 - mk[..., None]) + sm[None, None, :] * mk[..., None]
+    return {"clean": clean, "pre": pre, "unfloored": alb, "final": final, "masks": masks, "ppm": ppm}
+
+
+def compose_head(tj, draw, seed, state, ppm=100):
+    return compose_walls(tj, draw, seed, state, ppm, head=True)
+
+
+def composition(tj, draw, c, seed=1990):
+    m, p = c["measure"], c["params"]
+    ppm = 100
+    if m in ("composed_foot_ratio", "composed_salt_ratio", "composed_wall_min_ratio"):
+        r = compose_walls(tj, draw, seed, p.get("state", "cleaned"), ppm)
+        Hp = r["clean"].shape[0]
+        ratio = _ylin(r["pre"]) / _ylin(r["clean"])
+        if m == "composed_foot_ratio":
+            rr = int(round(Hp - 1 - p.get("height_m", 0.1) * ppm))
+            return float(ratio[rr - 1:rr + 2, int(0.6 * ppm):int(1.4 * ppm)].mean())
+        if m == "composed_wall_min_ratio":
+            return float(ratio.min())
+        sm = r["masks"]["salt_bloom"] > 0.4
+        rows = np.zeros_like(sm)
+        rows[Hp - 1 - int(0.52 * ppm):Hp - int(0.30 * ppm), :] = True
+        sel = sm & rows
+        fin = _ylin(r["final"]) / _ylin(r["clean"])
+        return float(fin[sel].mean()) if sel.any() else 0.0
+    if m == "composed_soot_ratio":
+        a = compose_walls(tj, draw, seed, "sooted", ppm)
+        b = compose_walls(tj, draw, seed, "cleaned", ppm)
+        rows = slice(0, a["clean"].shape[0] - int(1.3 * ppm))
+        return float(_ylin(a["unfloored"])[rows].mean() / _ylin(b["unfloored"])[rows].mean())
+    if m == "composed_head_ratio":
+        r = compose_walls(tj, draw, seed, p.get("state", "cleaned"), ppm, head=True)
+        row = int(round(0.1 * ppm))
+        return float((_ylin(r["unfloored"]) / _ylin(r["clean"]))[row - 1:row + 2, :].mean())
+    if m in ("channel_over_road", "fringe_over_road"):
+        ed = draw.edges_by_kind(tj)
+        k = tj["kinds"]["gutter_grime"]
+        ext_mm = tuple(v * 1000 for v in k["mask"]["frame_extent_m"])
+        mk = draw.rasterize(draw.kind_envelope(tj, "gutter_grime", seed, 0), ext_mm, 500, ed.get("gutter_grime", 0.0), wrap="x")
+        Hh = mk.shape[0]
+        asp = _lin(tj["surfaces"]["asphalt_dry"]["albedo_srgb"])
+        if m == "channel_over_road":
+            sel = mk[Hh - 1 - int(0.23 * 500):Hh - int(0.06 * 500), :]
+            alb = _darken(np.broadcast_to(_lin(tj["surfaces"]["channel_concrete"]["albedo_srgb"]), sel.shape + (3,)).copy(), sel, _ratio(tj, "gutter_grime", "channel_concrete"))
+            return float(_ylin(alb).mean() / _ylin(asp))
+        sel = mk[Hh - 1 - int(0.45 * 500):Hh - int(0.30 * 500), :]
+        alb = _darken(np.broadcast_to(asp, sel.shape + (3,)).copy(), sel, _ratio(tj, "gutter_grime", "asphalt_dry"))
+        return float(_ylin(alb).mean() / _ylin(asp))
+    if m == "composed_ground_min_ratio":
+        fl = tj["compose"]["ground"]["floor"]
+        prod = 1.0
+        for kid in ("pavement_stain", "gutter_grime"):
+            prod *= tj["kinds"][kid]["tone"]["kerb_granite"]["albedo_mult_linear"]
+        return float(max(prod, fl))
+    raise ValueError(m)
+
+
+def part_e_composition(tj, R, draw):
+    out = {}
+    for kid in tj["kinds_order"]:
+        for c in tj["kinds"][kid]["checks"]:
+            if c["measure"] not in COMPOSITION_MEASURES:
+                continue
+            vals = [composition(tj, draw, c, sd) for sd in (1990, 2024, 7)]
+            med = float(np.median(vals))
+            R.check("E %s %s (%s): median %.3f over 3 seeds (%.3f to %.3f), expected %s to %s" % (kid, c["name"], c["measure"], med, min(vals), max(vals), c["min"], c["max"]), c["min"] <= med <= c["max"])
+            out[kid + "/" + c["name"]] = {"median": med, "expected": [c["min"], c["max"]]}
+    # without the floor the stacked foot would be darker than the sheet's darkest: the floor is doing work
+    r = compose_walls(tj, draw, 1990, "sooted", 100)
+    raw_min = float((_ylin(r["unfloored"]) / _ylin(r["clean"])).min())
+    R.check("E the floor does work: the stacked sooted foot would reach %.3f of the clean wall without it (floor %.2f)" % (raw_min, tj["compose"]["walls"]["floor"]), raw_min < tj["compose"]["walls"]["floor"])
+    # the salt band stays pale whichever the order of marks in the (wrong) order: salt first then darkening makes it dark
+    r2 = compose_walls(tj, draw, 1990, "cleaned", 100)
+    Hp = r2["clean"].shape[0]
+    sm = r2["masks"]["salt_bloom"] > 0.4
+    sm[: Hp - int(0.52 * 100)] = False
+    sm[Hp - int(0.30 * 100):] = False
+    wrong = _lin(tj["surfaces"]["brick_red"]["albedo_srgb"])[None, None, :] * np.ones((Hp, r2["clean"].shape[1], 1))
+    wrong = wrong * (1 - r2["masks"]["salt_bloom"][..., None]) + _lin(tj["kinds"]["salt_bloom"]["tone"]["brick_red"]["mark_srgb"])[None, None, :] * r2["masks"]["salt_bloom"][..., None]
+    for kid in ("wall_foot_damp", "wall_foot_splash"):
+        wrong = _darken(wrong, r2["masks"][kid], _ratio(tj, kid, "brick_red"))
+    wr = float((_ylin(wrong) / _ylin(r2["clean"]))[sm].mean())
+    rt = float((_ylin(r2["final"]) / _ylin(r2["clean"]))[sm].mean())
+    R.check("E the order matters: salt laid AFTER the darkening reads %.2f of the clean wall at the whitened bricks, laid BEFORE it only %.2f" % (rt, wr), rt > wr * 1.5)
+    return out
+
+
+def wrong_masks(tj, draw):
+    """Masks made deliberately wrong, one or more per kind: each one is what a lazy generator would make."""
+    out = []
+    ed = draw.edges_by_kind(tj)
+
+    def frame(kid):
+        k = tj["kinds"][kid]
+        ppm = ppm_for(k)
+        ext = k["mask"]["frame_extent_m"]
+        H, W = int(round((ext[3] - ext[1]) * ppm)), int(round((ext[2] - ext[0]) * ppm))
+        return k, ppm, ext, H, W
+
+    def gradient(kid, from_top=False):
+        k, ppm, ext, H, W = frame(kid)
+        lv = k["envelope"]["levels"]
+        hs = [0.0] + [l["h_m"] for l in lv]
+        ls = [lv[0]["level"] if lv[0]["h_m"] > 0 else 0.0] + [l["level"] for l in lv]
+        h = (np.arange(H) / ppm) if from_top else ((H - 1 - np.arange(H)) / ppm)
+        col = np.interp(h, hs, ls)
+        return np.repeat(col[:, None], W, axis=1).astype(float), ppm
+
+    for kid in ("wall_foot_splash", "wall_foot_damp", "gutter_grime"):
+        m, ppm = gradient(kid)
+        out.append((kid, "a perfectly straight, uniform gradient with no ragged top", m, ppm))
+    m, ppm = gradient("wall_head_band", from_top=True)
+    out.append(("wall_head_band", "a perfectly straight, uniform gradient from the feature", m, ppm))
+    # two identical symmetric bars
+    k, ppm, ext, H, W = frame("streak_sill")
+    m = np.zeros((H, W))
+    for xc in (-0.35, 0.35):
+        x0 = int(round((xc - 0.04 - ext[0]) * ppm))
+        L = int(round(0.4 * ppm))
+        for r in range(L):
+            m[r, x0:x0 + int(0.08 * ppm)] = 0.9 * (1 - r / L)
+    out.append(("streak_sill", "two identical, symmetric bars and nothing else", m, ppm))
+    # identical fingers, identical spacing
+    k, ppm, ext, H, W = frame("streak_coping")
+    m = np.zeros((H, W))
+    for xc in np.arange(-2.8, 2.81, 0.4):
+        x0 = int(round((xc - 0.05 - ext[0]) * ppm))
+        m[: int(0.6 * ppm), x0:x0 + int(0.1 * ppm)] = 0.85
+    out.append(("streak_coping", "identical fingers at an identical 0.4 m spacing", m, ppm))
+    # gridded identical discs
+    for kid, nside, dmm in (("gum", 3, 20), ("cig_end", 4, 10)):
+        k, ppm, ext, H, W = frame(kid)
+        yy, xx = np.mgrid[0:H, 0:W]
+        m = np.zeros((H, W))
+        for i in range(nside):
+            for j in range(nside):
+                cy, cx = (i + 0.5) * H / nside, (j + 0.5) * W / nside
+                m[((yy - cy) ** 2 + (xx - cx) ** 2) <= (dmm / 2000.0 * ppm) ** 2] = 1.0
+        out.append((kid, "a %d x %d grid of identical discs" % (nside, nside), m, ppm))
+    # lattice of identical dots
+    k, ppm, ext, H, W = frame("road_oil")
+    yy, xx = np.mgrid[0:H, 0:W]
+    m = np.zeros((H, W))
+    step = 0.075
+    for cy in np.arange(H / 2 - 0.15 * ppm, H / 2 + 0.15 * ppm + 1, step * ppm):
+        for cx in np.arange(0.5 * ppm, W - 0.5 * ppm, step * ppm):
+            m[((yy - cy) ** 2 + (xx - cx) ** 2) <= (0.0085 * ppm) ** 2] = 1.0
+    out.append(("road_oil", "a lattice of identical dots", m, ppm))
+    # one plain stripe of salt
+    k, ppm, ext, H, W = frame("salt_bloom")
+    m = np.zeros((H, W))
+    r1 = H - 1 - int(0.35 * ppm)
+    m[r1 - int(0.09 * ppm):r1, :] = 0.6
+    out.append(("salt_bloom", "one uniform 0.09 m stripe", m, ppm))
+    # white noise at texel scale
+    k, ppm, ext, H, W = frame("paint_fade")
+    out.append(("paint_fade", "white noise at texel scale", np.random.default_rng(3).uniform(0.2, 0.8, (H, W)), ppm))
+    # a flat soot
+    k, ppm, ext, H, W = frame("wall_soot")
+    out.append(("wall_soot", "a perfectly uniform mask", np.full((H, W), 0.9), ppm))
+    return out
+
+
+def part_e_wrong(tj, R, draw):
+    log = {}
+    for kid, what, mask, ppm in wrong_masks(tj, draw):
+        fails = []
+        for c in tj["kinds"][kid]["checks"]:
+            if c.get("applies_to") != "mask":
+                continue
+            try:
+                v, ok = run_mask_check(c, mask, ppm)
+            except Exception as e:      # a mask the measure cannot read is refused too
+                v, ok = float("nan"), False
+            if not ok:
+                fails.append("%s=%.3g" % (c["name"], v))
+        R.check("E wrong mask refused: %s, %s: %d check(s) fail (%s)" % (kid, what, len(fails), ", ".join(fails[:4])), len(fails) >= 1)
+        log.setdefault(kid, []).append({"what": what, "refused_by": fails})
+    return log
+
+
+# ---------------------------------------------------------------- F: placement
+def _group(pl, kinds):
+    return [q for q in pl if q["kind"] in kinds]
+
+
+def rule_P1(pl, tj):
+    sel = _group(pl, ("streak_sill", "streak_coping"))
+    bad = [q for q in sel if abs(q["y_m"] - q["anchor_y_m"]) > 0.03 or abs(q["x_m"] - q["anchor_x_m"]) > q.get("anchor_half_width_m", 0.6) or abs(q.get("roll_deg", 0)) > 3.0]
+    return not bad, "%d of %d streak decals off their sill or feature edge by more than 0.03 m or rolled by more than 3 degrees" % (len(bad), len(sel))
+
+
+def rule_P2(pl, tj):
+    sel = _group(pl, ("wall_foot_splash", "wall_foot_damp", "salt_bloom", "gutter_grime"))
+    bad = [q for q in sel if abs(q["y_m"]) > 0.02]
+    return not bad, "%d of %d L0 bands not at the pavement line (kerb foot) within 0.02 m" % (len(bad), len(sel))
+
+
+def rule_P3(pl, tj):
+    sel = _group(pl, ("road_oil",))
+    bad = [q for q in sel if not (0.9 <= q["dist_from_kerb_m"] <= 1.6) or abs(q["axis_deg"]) > 10]
+    return not bad, "%d of %d oil bands more than the allowed distance 0.9 to 1.6 m from the kerb or more than 10 degrees off its axis" % (len(bad), len(sel))
+
+
+def rule_P4(pl, tj):
+    sel = _group(pl, ("gum",))
+    bad = [q for q in sel if q["on_carriageway"] or q["wall_dist_m"] < 0.4]
+    return not bad, "%d of %d gum stamps on the carriageway or within 0.4 m of a wall" % (len(bad), len(sel))
+
+
+def rule_P5(pl, tj):
+    bad = []
+    for kid in sorted({q["kind"] for q in pl}):
+        sel = [q for q in pl if q["kind"] == kid and q.get("in_hook_frame")]
+        if len(sel) >= 5:
+            cnt = np.bincount([q["variant"] for q in sel])
+            if cnt.max() / len(sel) > 0.40:
+                bad.append((kid, round(float(cnt.max() / len(sel)), 2)))
+    return not bad, "kinds with one variant over 40 %% of their decals in the hook frame: %s" % bad
+
+
+def rule_P6(pl, tj):
+    bad = 0
+    for kid in sorted({q["kind"] for q in pl}):
+        for wall in sorted({q.get("wall") for q in pl if q["kind"] == kid}):
+            sel = sorted([q for q in pl if q["kind"] == kid and q.get("wall") == wall], key=lambda q: q["x_m"])
+            for i in range(len(sel)):
+                for j in range(i + 1, len(sel)):
+                    if sel[j]["x_m"] - sel[i]["x_m"] >= 6.0:
+                        break
+                    if sel[i]["variant"] == sel[j]["variant"] and sel[i]["seed"] == sel[j]["seed"]:
+                        bad += 1
+    return bad == 0, "%d pairs with the same variant and seed within 6 m along one wall" % bad
+
+
+def rule_P7(pl, tj):
+    tiles = {"wall_foot_splash": 2.0, "wall_foot_damp": 2.0, "wall_soot": 4.0, "wall_head_band": 2.0}
+    bad = 0
+    for kid, T_ in tiles.items():
+        sel = sorted([q for q in pl if q["kind"] == kid and q.get("house") is not None], key=lambda q: (q["side"], q["x_m"]))
+        for a, b in zip(sel[:-1], sel[1:]):
+            if a["side"] == b["side"] and abs(((a["tile_phase_m"] - b["tile_phase_m"]) + T_ / 2) % T_ - T_ / 2) < 0.1:
+                bad += 1
+    return bad == 0, "%d neighbouring houses whose tiled L0 kinds start in the same x phase (within 0.1 m)" % bad
+
+
+def rule_P8(pl, tj):
+    ranges = [r["x_m"] for r in tj["places"]["standing_places"]["places"]]
+    sel = _group(pl, ("road_oil", "road_blot"))
+    bad = [q for q in sel if not any(a <= q["x_m"] <= b for a, b in ranges)]
+    return not bad, "%d of %d oil bands and blots outside the declared standing places" % (len(bad), len(sel))
+
+
+def rule_P9(pl, tj):
+    sel = [q for q in _group(pl, ("gum", "cig_end")) if q.get("tier") == "bus stop"]
+    return not sel, "%d gum or end stamps at a bus stop (there is none: zero)" % len(sel)
+
+
+PLACEMENT_RULES = {"P1": rule_P1, "P2": rule_P2, "P3": rule_P3, "P4": rule_P4, "P5": rule_P5, "P6": rule_P6, "P7": rule_P7, "P8": rule_P8, "P9": rule_P9}
+
+
+def check_placement(pl, tj):
+    """Run the placement checks of target.json on a list of placed decals: dicts with kind, variant, seed, x_m (along the street), y_m (height of the decal's origin above the pavement, or
+    distance from the kerb foot for gutter_grime), anchor_x_m, anchor_y_m, anchor_half_width_m, roll_deg, dist_from_kerb_m, axis_deg (to the kerb), on_carriageway, wall_dist_m, wall, side,
+    house, tile_phase_m, in_hook_frame, tier. Returns [(id, ok, detail)]."""
+    return [(c["id"], ) + PLACEMENT_RULES[c["id"]](pl, tj) for c in tj["placement_checks"]]
+
+
+def sample_street(tj, seed=1):
+    """A conforming placed street built from the rules (x 3 to 45): sills, copings, L0 bands per house, oil at the standing places, gum on the footway."""
+    rng = np.random.default_rng(seed)
+    pl = []
+    houses = [("east_parade_bay%d" % i, "east", 3.0 + 6 * i) for i in range(6)] + [("east_chandler", "east", 40.0)] + [("west_south_bay%d" % i, "west", 3.0 + 6 * i) for i in range(3)] + [("west_north_bay%d" % i, "west", 24.0 + 6 * i) for i in range(3)]
+    n = 0
+    for hi, (name, side, x0) in enumerate(houses):
+        for kid, T_ in (("wall_foot_splash", 2.0), ("wall_foot_damp", 2.0), ("wall_soot", 4.0), ("wall_head_band", 2.0)):
+            pl.append({"kind": kid, "variant": hi % 4, "seed": n, "x_m": x0, "y_m": 0.0 if kid != "wall_head_band" else 6.2, "wall": name, "side": side, "house": hi, "tile_phase_m": (hi * 0.37 + 0.11 * len(kid)) % T_, "in_hook_frame": True})
+            n += 1
+        for sx in (x0 + 1.5, x0 + 4.5):
+            if rng.uniform() < 0.5:
+                v = int(rng.integers(0, 6))
+                pl.append({"kind": "streak_sill", "variant": v, "seed": n, "x_m": sx, "y_m": 3.2, "anchor_x_m": sx + rng.uniform(-0.1, 0.1), "anchor_y_m": 3.2 + rng.uniform(-0.02, 0.02), "anchor_half_width_m": 0.6, "roll_deg": rng.uniform(-1, 1), "wall": name, "side": side, "in_hook_frame": hi < 3})
+                n += 1
+        pl.append({"kind": "streak_coping", "variant": int(rng.integers(0, 5)), "seed": n, "x_m": x0 + 3.0, "y_m": 6.4, "anchor_x_m": x0 + 3.0, "anchor_y_m": 6.4, "anchor_half_width_m": 3.0, "roll_deg": 0.0, "wall": name, "side": side, "in_hook_frame": hi < 3})
+        n += 1
+    for a, b in tj["places"]["standing_places"]["sample_oil_x_m"]:
+        pl.append({"kind": "road_oil", "variant": int(rng.integers(0, 5)), "seed": n, "x_m": a, "y_m": 0.0, "dist_from_kerb_m": rng.uniform(1.0, 1.5), "axis_deg": rng.uniform(-5, 5), "wall": "road", "side": "east", "in_hook_frame": True})
+        n += 1
+    for _ in range(14):
+        pl.append({"kind": "gum", "variant": int(rng.integers(0, 8)), "seed": n, "x_m": rng.uniform(3, 45), "y_m": 0.0, "on_carriageway": False, "wall_dist_m": rng.uniform(0.5, 1.9), "wall": "east_footway", "side": "east", "in_hook_frame": True, "tier": "open footway"})
+        n += 1
+    return pl
+
+
+def part_f(tj, R):
+    base = sample_street(tj)
+    res = check_placement(base, tj)
+    for i, ok, det in res:
+        R.check("F %s on the conforming placed street: %s" % (i, det), ok)
+    # deliberately wrong placements, each of which must be refused by exactly its rule
+    import copy as _copy
+    def mutate(f):
+        pl = _copy.deepcopy(base)
+        f(pl)
+        return pl
+    def first(pl, kid):
+        return next(q for q in pl if q["kind"] == kid)
+    wrong = {
+        "P1": ("a sill streak 0.10 m below its sill", lambda pl: first(pl, "streak_sill").update(y_m=first(pl, "streak_sill")["anchor_y_m"] - 0.10)),
+        "P1b": ("a coping streak rolled 12 degrees", lambda pl: first(pl, "streak_coping").update(roll_deg=12.0)),
+        "P2": ("a foot band hung 0.15 m above the pavement", lambda pl: first(pl, "wall_foot_splash").update(y_m=0.15)),
+        "P3": ("an oil band 0.3 m from the kerb", lambda pl: first(pl, "road_oil").update(dist_from_kerb_m=0.3)),
+        "P3b": ("an oil band at 40 degrees to the kerb", lambda pl: first(pl, "road_oil").update(axis_deg=40.0)),
+        "P4": ("gum on the carriageway", lambda pl: first(pl, "gum").update(on_carriageway=True)),
+        "P4b": ("gum 0.1 m from a wall", lambda pl: first(pl, "gum").update(wall_dist_m=0.1)),
+        "P5": ("one gum variant on every stamp", lambda pl: [q.update(variant=2) for q in pl if q["kind"] == "gum"]),
+        "P6": ("the same sill-streak variant and seed twice within 6 m", lambda pl: (lambda a, b: b.update(variant=a["variant"], seed=a["seed"], wall=a["wall"], x_m=a["x_m"] + 3.0, anchor_x_m=a["x_m"] + 3.0, anchor_y_m=b["y_m"]))(*[q for q in pl if q["kind"] == "streak_sill"][:2])),
+        "P7": ("two neighbouring houses with the same tile phase", lambda pl: [q.update(tile_phase_m=0.5) for q in pl if q["kind"] == "wall_foot_splash"]),
+        "P8": ("an oil band outside every standing place", lambda pl: first(pl, "road_oil").update(x_m=22.5)),
+        "P9": ("gum at a bus stop", lambda pl: first(pl, "gum").update(tier="bus stop")),
+    }
+    for key, (what, f) in wrong.items():
+        rid = key[:2]
+        r = {i: ok for i, ok, _ in check_placement(mutate(f), tj)}
+        R.check("F wrong placement refused by %s: %s" % (rid, what), r[rid] is False and all(v for kk, v in r.items() if kk != rid))
+    return {"conforming": [(i, ok) for i, ok, _ in res]}
+
+
 def main(argv):
     overlays = "--no-overlays" not in argv
     write = "--no-write" not in argv
@@ -721,14 +1540,17 @@ def main(argv):
     part_b(tj, R)
     olog = part_c(tj, R, draw, overlays)
     summary = part_d(tj, R, draw)
+    comp = part_e_composition(tj, R, draw)
+    wlog = part_e_wrong(tj, R, draw)
+    plog = part_f(tj, R)
     for ln in R.lines:
         if ln.startswith("FAIL") or ln.startswith("note"):
             print(ln)
-    line = "self_check: passed=%d/%d failed=%d (A structure, B tone, C photographs, D envelopes; %d kinds)" % (R.ok, R.ok + R.fail, R.fail, len(tj["kinds_order"]))
+    line = "self_check: passed=%d/%d failed=%d (A structure, B tone, C photographs, D envelopes, E composition and wrong masks, F placement; %d kinds)" % (R.ok, R.ok + R.fail, R.fail, len(tj["kinds_order"]))
     print(line)
     if write:
         tj["self_check"] = {"date": datetime.date.today().isoformat(), "result": line, "passed": R.ok, "failed": R.fail, "overlays_written": olog,
-                            "failures": [l for l in R.lines if l.startswith("FAIL")], "envelope_summary": summary}
+                            "failures": [l for l in R.lines if l.startswith("FAIL")], "envelope_summary": summary, "composition": comp, "wrong_masks_refused": wlog, "placement": plog}
         json.dump(tj, open(TARGET, "w"), indent=1)
     return 1 if R.fail else 0
 

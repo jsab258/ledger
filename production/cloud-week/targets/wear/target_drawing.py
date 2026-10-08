@@ -159,33 +159,35 @@ def foot_band_polys(rng, kind, E, length_mm, seed_tag):
             la = l0 + (l1 - l0) * (j + 0.5) / sub
             prof.append((ha, hb, la))
     patches = E.get("brick_patches")
-    for ha, hb, la in prof:
-        if la <= 0.005:
-            continue
-        sa = 1.0 if ha == 0 else ha / htop
-        sb = hb / htop
-        lower = [(x, ha + sa * n) for x, n in zip(xs, nz)]
-        upper = [(x, hb + sb * n) for x, n in zip(xs, nz)]
-        lower = [(x, max(0.0, y)) for x, y in lower]
-        upper = [(x, max(0.0, y)) for x, y in upper]
-        if patches:
-            bw, bh = patches["brick_m"][0] * 1000.0, patches["brick_m"][1] * 1000.0
-            course = int(max(ha, 0) // bh)
-            while course * bh < hb:
-                y0, y1 = max(ha, course * bh), min(hb, (course + 1) * bh)
-                if y1 - y0 > 6:
-                    off = (course % 2) * bw / 2
-                    xx = -off
-                    while xx < length_mm:
-                        if rng.uniform() < patches["fill_fraction"]:
-                            a, b = max(xx, 0), min(xx + bw - 10, length_mm)
-                            idx = min(nx - 1, max(0, int(a / length_mm * (nx - 1))))
-                            ytop_ok = y1 <= hb + sb * nz[idx]
-                            if b > a and ytop_ok:
-                                out.append(poly(kind, la * uni(rng, [0.8, 1.0]), [(a, y0), (b, y0), (b, y1), (a, y1)], "brick_patch"))
-                        xx += bw
-                course += 1
-        else:
+    if patches:
+        # one decision per brick (a brick is whitened or not, never half), level from the profile at the brick's centre height
+        bw, bh = patches["brick_m"][0] * 1000.0, patches["brick_m"][1] * 1000.0
+        hs = [h for h, _ in lv]
+        ls = [l for _, l in lv]
+        course = 0
+        while course * bh < htop:
+            y0, y1 = course * bh, (course + 1) * bh
+            lc = float(np.interp(0.5 * (y0 + y1), hs, ls))
+            if lc > 0.02:
+                off = (course % 2) * bw / 2
+                xx = -off
+                while xx < length_mm:
+                    if rng.uniform() < patches["fill_fraction"]:
+                        a, b = max(xx, 0), min(xx + bw - 10, length_mm)
+                        if b > a:
+                            out.append(poly(kind, lc * uni(rng, [0.85, 1.0]), [(a, y0 + 5), (b, y0 + 5), (b, y1 - 5), (a, y1 - 5)], "brick_patch"))
+                    xx += bw
+            course += 1
+    else:
+        for ha, hb, la in prof:
+            if la <= 0.005:
+                continue
+            sa = 1.0 if ha == 0 else ha / htop
+            sb = hb / htop
+            lower = [(x, ha + sa * n) for x, n in zip(xs, nz)]
+            upper = [(x, hb + sb * n) for x, n in zip(xs, nz)]
+            lower = [(x, max(0.0, y)) for x, y in lower]
+            upper = [(x, max(0.0, y)) for x, y in upper]
             out.append(poly(kind, la, lower + upper[::-1], "band"))
     fg = E.get("fingers")
     if fg:
@@ -213,9 +215,21 @@ def streak_set_polys(rng, kind, E, tags):
         wh = uni(rng, [v * 1000.0 for v in ws["height_m"]])
         ov = ws["overhang_m"] * 1000.0
         out.append(poly(kind, ws["level"], [(-S / 2 - ov, 0), (S / 2 + ov, 0), (S / 2 + ov * 0.6, -wh), (-S / 2 - ov * 0.6, -wh)], "wash"))
-        for side in (-1, 1):
-            w = uni(rng, es["width_frac_of_sill"]) * S
-            L = uni(rng, [v * 1000.0 for v in es["length_m"]])
+        lens = [uni(rng, [v * 1000.0 for v in es["length_m"]]) for _ in (0, 1)]
+        wids = [uni(rng, es["width_frac_of_sill"]) * S for _ in (0, 1)]
+        lo_r, lo_w = es.get("min_length_ratio", 1.0), es.get("min_width_ratio", 1.0)
+        le = es.get("long_end")
+        if le and rng.uniform() < le["prob"]:
+            i = int(rng.integers(2))
+            lens[i] = uni(rng, [v * 1000.0 for v in le["length_m"]])
+            lens[1 - i] = max(lens[1 - i], lens[i] / 2.2)
+        a, b_ = int(np.argmax(lens)), int(np.argmin(lens))
+        if lens[a] < lens[b_] * lo_r:                      # never a symmetric pair: the longer end is at least min_length_ratio x the shorter
+            lens[a] = lens[b_] * lo_r * uni(rng, [1.0, 1.25])
+        a, b_ = int(np.argmax(wids)), int(np.argmin(wids))
+        if wids[a] < wids[b_] * lo_w:
+            wids[a] = wids[b_] * lo_w * uni(rng, [1.0, 1.2])
+        for side, L, w in zip((-1, 1), lens, wids):
             xe = side * (S / 2 - w * 0.55)
             out += streak(rng, kind, xe, 0, w, L, wander(), **common, role="end_streak")
         rv = E["rivulets"]
@@ -235,12 +249,27 @@ def streak_set_polys(rng, kind, E, tags):
         ws = E["wash"]
         wh = uni(rng, [v * 1000.0 for v in ws["height_m"]])
         out.append(poly(kind, ws["level"], [(-span / 2, 0), (span / 2, 0), (span / 2, -wh), (-span / 2, -wh * 0.8)], "wash"))
-        n = max(2, int(fg["n_per_m"][0] * span / 1000.0 + rng.uniform(0, (fg["n_per_m"][1] - fg["n_per_m"][0]) * span / 1000.0)))
-        xs = np.sort(rng.uniform(-span / 2 + 30, span / 2 - 30, n))
-        for x in xs:
+        n = uni_int(rng, fg["n_range"])
+        s_sp = math.sqrt(math.log(1.0 + fg.get("spacing_cv", 0.5) ** 2))
+        for _try in range(200):                                   # irregular gaps: spacing CV in 0.3 to 0.75, never evenly spaced
+            gaps = np.exp(rng.normal(0, s_sp, n + 1))
+            inner = gaps[1:-1]
+            cv = inner.std() / inner.mean() if len(inner) > 1 else 0.5
+            if 0.3 <= cv <= 0.75:
+                break
+        pos = np.cumsum(gaps)[:-1] / gaps.sum()
+        xs = -span / 2 + 300.0 + pos * (span - 600.0)
+        p10_, p50_, p90_ = [v * 1000.0 for v in fg["length_m_lognormal"]]
+        for _try in range(200):                                   # irregular lengths: CV at least 0.3
+            Ls = np.clip(lognormal3(rng, p10_, p50_, p90_, n), 200.0, 1800.0)
+            if Ls.std() / Ls.mean() >= 0.3:
+                break
+        fh = fg.get("full_height")
+        if fh and rng.uniform() < fh["prob_per_stamp"]:
+            Ls[int(rng.integers(n))] = uni(rng, [v * 1000.0 for v in fh["length_m"]])
+        for x, L in zip(xs, Ls):
             w = uni(rng, [v * 1000.0 for v in fg["width_m"]])
-            L = uni(rng, [v * 1000.0 for v in fg["length_m"]])
-            out += streak(rng, kind, x, 0, w, L, wander(), **common, role="finger", slices=14)
+            out += streak(rng, kind, float(x), 0, w, float(L), wander(), **common, role="finger", slices=14)
         return out
     if "fixing" in E:
         fx = E["fixing"]
@@ -486,7 +515,11 @@ def rect_patch_polys(rng, kind, E):
             mw = uni(rng, ck["main_crack_width_mm"])
             out += crack_polys(rng, kind, -w * 0.9, -h * 0.9, math.radians(80), ck.get("main_crack_length_m", 1.8) * 1000.0, mw, 60.0, 0.1, turn=0.07)
         return out
-    out.append(poly(kind, 1.0, ragged_rect(w, h, rag), "patch"))
+    out.append(poly(kind, E.get("level", 1.0), ragged_rect(w, h, rag), "patch"))
+    hl = E.get("holes")
+    if hl:
+        for _ in range(uni_int(rng, hl["n"])):
+            out.append(poly(kind, hl["level"], circle(rng.uniform(-w * 0.42, w * 0.42), rng.uniform(-h * 0.38, h * 0.38), uni(rng, hl["eqd_mm"]) / 2, 10), "hole"))
     dt = E.get("drip_tail")
     if dt and dt["length_m"][1] > 0:
         L = uni(rng, [v * 1000.0 for v in dt["length_m"]])
@@ -631,6 +664,159 @@ def mottle_polys(rng, kind, E, size_mm=(2000.0, 2000.0)):
     return out
 
 
+
+def soot_wall_polys(rng, kind, E):
+    """Facade-wide soot tile: a smoothed noise mottle around a mean level plus the darker lower wall. x tiles (periodic), y up from the pavement."""
+    W, H = [v * 1000.0 for v in E["tile_m"]]
+    wl = uni(rng, [v * 1000.0 for v in E["wavelength_m"]])
+    sigma_mm = 0.1125 * wl                       # a Gaussian-smoothed noise has its radially summed power peak at 1/(2 pi sqrt(2) sigma): this puts the peak at the stated wavelength
+    cell = 50.0 if wl < 800 else 100.0
+    nx, ny = int(round(W / cell)), int(round(H / cell))
+    g = rng.standard_normal((ny, nx))
+    g = ndi.gaussian_filter(g, sigma_mm / cell, mode=("nearest", "wrap"))
+    g = g / max(g.std(), 1e-6)
+    lw = E["lower_wall"]
+    out = []
+    cw, ch = W / nx, H / ny
+    for j in range(ny):
+        yc = (j + 0.5) * ch
+        rise = lw["extra_level"] * float(np.clip((lw["zero_at_m"] * 1000.0 - yc) / ((lw["zero_at_m"] - lw["full_to_m"]) * 1000.0), 0.0, 1.0))
+        for i in range(nx):
+            lvl = float(np.clip(E["mean_level"] + E["mottle_std"] * g[j, i] + rise, 0.0, 1.0))
+            out.append(poly(kind, lvl, [(i * cw, j * ch), ((i + 1) * cw, j * ch), ((i + 1) * cw, (j + 1) * ch), (i * cw, (j + 1) * ch)], "mottle"))
+    return out
+
+
+def head_band_polys(rng, kind, E, length_mm):
+    """The head band: a foot band drawn from the feature's lower edge downward (y negative)."""
+    polys = foot_band_polys(rng, kind, E, length_mm, kind)
+    for p in polys:
+        p["poly"] = [[x, -y] for x, y in p["poly"]]
+    return polys
+
+
+def iron_set_polys(rng, kind, E):
+    """A downpipe 75 mm wide and 2.4 m long standing on the pavement (x = 0 the centre line, y up): paint-loss patches (a share of the pipe's area, concentrated at the foot and at collars) and rust streaks below collars."""
+    Wp, Lp = E["pipe_width_m"] * 1000.0, E["length_m"] * 1000.0
+    target = uni(rng, E["patch_share"]) * Wp * Lp
+    p10, p50, p90 = E["patch_eqd_mm"]
+    pl = E["placement"]
+    collars = [c * 1000.0 for c in E["collars_m"]]
+    out = []
+    acc = 0.0
+    guard = 0
+    while acc < target and guard < 400:
+        guard += 1
+        e = min(float(lognormal3(rng, p10, p50, p90)[0]), 150.0)
+        r = rng.uniform()
+        if r < pl["foot_lowest_0.3m"]:
+            y = rng.uniform(e * 0.4, 300.0)
+        elif r < pl["foot_lowest_0.3m"] + pl["collar_within_0.08m"]:
+            y = float(rng.choice(collars)) + rng.uniform(-80.0, 80.0)
+        else:
+            y = rng.uniform(e * 0.4, Lp - e * 0.4)
+        asp = uni(rng, [1.2, 2.6])
+        pts = blob(rng, rng.uniform(-Wp * 0.2, Wp * 0.2), y, e, asp, math.pi / 2 + rng.normal(0, 0.15), n=16, rough=0.25)
+        pts = [(float(np.clip(x, -Wp / 2, Wp / 2)), yy) for x, yy in pts]
+        out.append(poly(kind, uni(rng, [0.85, 1.0]), pts, "patch"))
+        acc += math.pi * (e / 2) ** 2 * min(1.0, (Wp * 0.9) / max(e / math.sqrt(asp), 1.0))
+    st = E["streaks"]
+    for c in collars:
+        if rng.uniform() < st["prob_per_collar"]:
+            a, b_, c_ = st["width_mm_lognormal"]
+            w = float(np.clip(lognormal3(rng, a, b_, c_)[0], 8.0, 60.0))
+            L = uni(rng, [v * 1000.0 for v in st["length_m"]])
+            out += streak(rng, kind, rng.uniform(-8, 8), c - 15.0, w, L, 3.0, 0.4, 1.0, 0.9, 0.15, role="rust_streak", slices=8)
+    return out
+
+
+def grate_polys(rng, kind, E):
+    """A 0.4 m square cast-iron grate: slots and bar flanks rusted, bar tops polished, flecks on the bar tops."""
+    S = E["size_m"] * 1000.0
+    n = E["strips"]
+    wst = S / n
+    flank = 3.0
+    out = []
+    for i in range(n):
+        x0, x1 = i * wst, (i + 1) * wst
+        if i % 2 == 0:
+            out.append(poly(kind, E["slot_level"], [(x0, 10.0), (x1, 10.0), (x1, S - 10.0), (x0, S - 10.0)], "slot"))
+        else:
+            out.append(poly(kind, E["slot_level"], [(x0, 0.0), (x0 + flank, 0.0), (x0 + flank, S), (x0, S)], "flank"))
+            out.append(poly(kind, E["slot_level"], [(x1 - flank, 0.0), (x1, 0.0), (x1, S), (x1 - flank, S)], "flank"))
+            out.append(poly(kind, E["bar_top_level"], [(x0 + flank, 0.0), (x1 - flank, 0.0), (x1 - flank, S), (x0 + flank, S)], "bar_top"))
+    fl = E["flecks"]
+    for _ in range(uni_int(rng, fl["n"])):
+        bar = 2 * int(rng.integers(n // 2)) + 1
+        cx = (bar + 0.5) * wst
+        out.append(poly(kind, fl["level"], blob(rng, cx + rng.uniform(-1.5, 1.5), rng.uniform(20.0, S - 20.0), min(uni(rng, fl["eqd_mm"]), wst - 2 * flank - 1), 1.2, rng.uniform(0, math.pi), n=10, rough=0.2), "fleck"))
+    return out
+
+
+def line_loss_polys(rng, kind, E, length_mm):
+    """A 75 mm road line along x (y = 0 its centre line): the paint lost in cross gaps, edge chips and specks (the mask is the loss)."""
+    Wd = E["line_width_mm"]
+    h = Wd / 2.0
+    out = []
+    cg = E["cross_gaps"]
+    n = int(rng.poisson(uni(rng, cg["per_m"]) * length_mm / 1000.0))
+    p10, p50, p90 = cg["length_mm_lognormal"]
+    for L in lognormal3(rng, p10, p50, p90, max(n, 1))[:n]:
+        L = float(np.clip(L, 10.0, 450.0))
+        x0 = rng.uniform(0, length_mm - L)
+        j = lambda: rng.normal(0, 3.0)
+        out.append(poly(kind, 1.0, [(x0 + j(), -h), (x0 + L * 0.5, -h + j()), (x0 + L + j(), -h), (x0 + L + j(), h), (x0 + L * 0.5, h + j()), (x0 + j(), h)], "gap"))
+    ec = E["edge_chips"]
+    for _ in range(int(rng.poisson(uni(rng, ec["per_m"]) * length_mm / 1000.0))):
+        d, L = uni(rng, ec["depth_mm"]), uni(rng, ec["length_mm"])
+        x0 = rng.uniform(0, length_mm - L)
+        sgn = 1.0 if rng.uniform() < 0.5 else -1.0
+        out.append(poly(kind, 1.0, [(x0, sgn * h), (x0 + L, sgn * h), (x0 + L * 0.8, sgn * (h - d)), (x0 + L * 0.2, sgn * (h - d * 0.6))], "chip"))
+    sp = E["specks"]
+    for _ in range(int(rng.poisson(uni(rng, sp["per_m"]) * length_mm / 1000.0))):
+        out.append(poly(kind, 1.0, blob(rng, rng.uniform(0, length_mm), rng.uniform(-h + 4, h - 4), uni(rng, sp["eqd_mm"]), 1.2, rng.uniform(0, math.pi), n=8, rough=0.2), "speck"))
+    return out
+
+
+def halo_polys(rng, kind, E):
+    """A grease halo round a handle: an outer soft blob and a darker core (x, y centred on the handle)."""
+    p10, p50, p90 = [v * 1000.0 for v in E["eqd_m"]]
+    e = float(lognormal3(rng, p10, p50, p90)[0])
+    asp = uni(rng, E["aspect"])
+    out = [poly(kind, E["outer_level"], blob(rng, 0.0, 0.0, e, asp, math.pi / 2 + rng.normal(0, 0.1), n=20, rough=0.15), "halo")]
+    out.append(poly(kind, E["core_level"], blob(rng, 0.0, 0.0, e * E["core_fraction"], asp, math.pi / 2 + rng.normal(0, 0.1), n=16, rough=0.15), "core"))
+    return out
+
+
+def patch_cover_polys(rng, kind, E):
+    """Lichen on a sill top: discs of the stated sizes laid until the stated share of the region is covered."""
+    W, H = [v * 1000.0 for v in E["region_m"]]
+    share = uni(rng, E["share"])
+    p10, p50, p90 = E["eqd_mm"]
+    s_mm = 2.0
+    img = Image.new("L", (int(W / s_mm), int(H / s_mm)), 0)
+    d = ImageDraw.Draw(img)
+    out = []
+    cov = 0.0
+    guard = 0
+    while cov < share and guard < 4000:
+        guard += 1
+        e = float(lognormal3(rng, p10, p50, p90)[0])
+        # patches cluster: half are laid beside an earlier one
+        if out and rng.uniform() < 0.5:
+            q = out[int(rng.integers(len(out)))]["poly"]
+            cx = float(np.mean([a for a, _ in q])) + rng.normal(0, e * 0.8)
+            cy = float(np.mean([b for _, b in q])) + rng.normal(0, e * 0.8)
+        else:
+            cx, cy = rng.uniform(0, W), rng.uniform(0, H)
+        pts = blob(rng, cx, cy, e, uni(rng, E["aspect"]), rng.uniform(0, math.pi), n=12, rough=0.25)
+        out.append(poly(kind, 1.0, pts, "patch"))
+        d.polygon([(x / s_mm, (H - y) / s_mm) for x, y in pts], fill=255)
+        if guard % 8 == 0:
+            cov = float((np.asarray(img) > 0).mean())
+    return out
+
+
 # ------------------------------------------------------------------ one kind's envelope
 def decal_frame_mm(tj, kid):
     return [v * 1000.0 for v in tj["kinds"][kid]["mask"]["decal_frame_m"]]
@@ -675,6 +861,20 @@ def kind_envelope(tj, kid, seed=1990, variant=0, density_override=None):
         return slab_grid_polys(rng, kid, E)
     if p == "mottle":
         return mottle_polys(rng, kid, E, tuple(decal_frame_mm(tj, kid)))
+    if p == "soot_wall":
+        return soot_wall_polys(rng, kid, E)
+    if p == "head_band":
+        return head_band_polys(rng, kid, E, decal_frame_mm(tj, kid)[0])
+    if p == "iron_set":
+        return iron_set_polys(rng, kid, E)
+    if p == "grate":
+        return grate_polys(rng, kid, E)
+    if p == "line_loss":
+        return line_loss_polys(rng, kid, E, decal_frame_mm(tj, kid)[0])
+    if p == "halo":
+        return halo_polys(rng, kid, E)
+    if p == "patch_cover":
+        return patch_cover_polys(rng, kid, E)
     raise ValueError(p)
 
 
@@ -706,7 +906,9 @@ def rasterize(polys, extent_mm, px_per_m, edge_10_90_mm=0.0, wrap=False):
 PALETTE = {"streak_sill": (30, 60, 200), "streak_coping": (20, 100, 220), "wall_foot_splash": (10, 10, 10), "wall_foot_damp": (80, 60, 30), "salt_bloom": (240, 240, 230), "rust_bleed": (220, 100, 20),
            "algae_downpipe": (30, 140, 40), "paint_flake": (200, 30, 120), "paint_fade": (180, 150, 200), "render_crack": (60, 0, 0), "render_patch": (240, 200, 120), "poster_remnant": (255, 255, 255),
            "bird_dropping": (250, 250, 250), "gum": (40, 40, 40), "cig_end": (255, 240, 200), "pavement_stain": (130, 60, 20), "flag_patch_crack": (230, 230, 240), "road_oil": (20, 20, 20),
-           "road_patch": (70, 70, 70), "road_blot": (10, 10, 10), "tyre_scuff": (50, 50, 90), "road_crack": (90, 20, 20), "gutter_grime": (30, 30, 30)}
+           "road_patch": (70, 70, 70), "road_blot": (10, 10, 10), "tyre_scuff": (50, 50, 90), "road_crack": (90, 20, 20), "gutter_grime": (30, 30, 30),
+           "wall_soot": (40, 36, 34), "wall_head_band": (50, 36, 30), "iron_wear": (200, 140, 60), "grate_wear": (170, 90, 40), "line_wear": (250, 250, 250), "sign_ghost": (240, 230, 210),
+           "graffiti_buff": (120, 110, 100), "handle_wear": (60, 50, 40), "stone_top_lichen": (110, 120, 50), "footway_infill": (60, 60, 60)}
 
 
 def transform(polys, dx, dy, sx=1.0):
