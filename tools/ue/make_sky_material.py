@@ -73,6 +73,14 @@ CLAMP_PARAM, CLAMP_DEFAULT = "HorizonClampV", 1.0
 #: BLUR_FADE_V of V above the row. (A small mip was tried first: the photograph is decoded at run
 #: time into a texture with no mips, so the bias did nothing and the stripes stayed.)
 BLUR_TAPS, BLUR_STEP_U, BLUR_FADE_V = 9, 2.5 / 360.0, 0.03
+#: AND HIGHER OVER ITS ONE TALL CLUMP, 8 October (item 1.1's third review, V8: a grey slab of vertical
+#: streaks with a tree crown on top, seen past Mickey's end): the photograph's trees are under 13
+#: degrees all round but for one clump between these U, rising to about 34 (measured on its own
+#: picture), so the row at 16 ran through the clump and stretched it to the horizon. Across the clump,
+#: soft-edged over TREE_EDGE_U, the row is TreeClampV instead; 1.0 (the default) changes nothing, the
+#: game sets it from the look file's sky_tree_clamp_deg.
+TREE_PARAM, TREE_DEFAULT = "TreeClampV", 1.0
+TREE_ARC_U, TREE_EDGE_U = (0.13, 0.34), 0.02
 
 # THE DEFAULT TEXTURE THE SAMPLER MUST CARRY TO COMPILE AT ALL. Run 23 landed
 # a perfect-looking verdict over a material that never compiled because one
@@ -203,6 +211,24 @@ def main():
     clamp_v.set_editor_property("parameter_name", CLAMP_PARAM)
     clamp_v.set_editor_property("default_value", CLAMP_DEFAULT)
     vmin = mel.create_material_expression(mat, unreal.MaterialExpressionMin, -900, 100)
+    # THE CLUMP'S WINDOW along U (1 inside, 0 outside, soft edges) and the row there
+    tree_v = mel.create_material_expression(mat, unreal.MaterialExpressionScalarParameter, -1300, 260)
+    tree_v.set_editor_property("parameter_name", TREE_PARAM)
+    tree_v.set_editor_property("default_value", TREE_DEFAULT)
+    w_s0 = mel.create_material_expression(mat, unreal.MaterialExpressionSubtract, -1300, 340)
+    w_s0.set_editor_property("const_b", TREE_ARC_U[0])
+    w_d0 = mel.create_material_expression(mat, unreal.MaterialExpressionDivide, -1220, 340)
+    w_d0.set_editor_property("const_b", TREE_EDGE_U)
+    w_t0 = mel.create_material_expression(mat, unreal.MaterialExpressionSaturate, -1140, 340)
+    w_s1 = mel.create_material_expression(mat, unreal.MaterialExpressionSubtract, -1300, 420)
+    w_s1.set_editor_property("const_a", TREE_ARC_U[1])
+    w_d1 = mel.create_material_expression(mat, unreal.MaterialExpressionDivide, -1220, 420)
+    w_d1.set_editor_property("const_b", TREE_EDGE_U)
+    w_t1 = mel.create_material_expression(mat, unreal.MaterialExpressionSaturate, -1140, 420)
+    w_m = mel.create_material_expression(mat, unreal.MaterialExpressionMultiply, -1060, 380)
+    w_l = mel.create_material_expression(mat, unreal.MaterialExpressionLinearInterpolate, -980, 300)
+    w_l.set_editor_property("const_a", 1.0)
+    eff_v = mel.create_material_expression(mat, unreal.MaterialExpressionMin, -980, 200)
     uvout = mel.create_material_expression(mat, unreal.MaterialExpressionAppendVector, -900, 0)
     # the blurred read of the same photograph (the same parameter, so the game's one write binds
     # every tap): BLUR_TAPS samples of the clamped row, each shifted along U, summed and averaged
@@ -254,11 +280,23 @@ def main():
         (uv, "", mask_u, ""),
         (uv, "", mask_v, ""),
         (mask_v, "", vmin, "A"),
-        (clamp_v, "", vmin, "B"),
+        (eff_v, "", vmin, "B"),
+        (mask_u, "", w_s0, "A"),
+        (w_s0, "", w_d0, "A"),
+        (w_d0, "", w_t0, ""),
+        (mask_u, "", w_s1, "B"),
+        (w_s1, "", w_d1, "A"),
+        (w_d1, "", w_t1, ""),
+        (w_t0, "", w_m, "A"),
+        (w_t1, "", w_m, "B"),
+        (tree_v, "", w_l, "B"),
+        (w_m, "", w_l, "Alpha"),
+        (clamp_v, "", eff_v, "A"),
+        (w_l, "", eff_v, "B"),
         (mask_u, "", uvout, "A"),
         (vmin, "", uvout, "B"),
         (uv, "", tex_expr, "UVs"),
-        (clamp_v, "", from_v, "A"),
+        (eff_v, "", from_v, "A"),
         (fade_c, "", from_v, "B"),
         (mask_v, "", rel_v, "A"),
         (from_v, "", rel_v, "B"),
@@ -341,7 +379,7 @@ def selftest():
     # The C++ loads the OBJECT path (package.asset), which is the same asset
     # spelled the way LoadObject needs it. Asserting the package path alone
     # would pass over a C++ file that named a different asset in that package.
-    for name in (TEXTURE_PARAM, SCALAR_PARAM, ASSET_PATH + "." + ASSET):
+    for name in (TEXTURE_PARAM, SCALAR_PARAM, ASSET_PATH + "." + ASSET, CLAMP_PARAM, TREE_PARAM):
         checks += 1
         if ('"%s"' % name) not in src and ('TEXT("%s")' % name) not in src:
             fails.append("%s is not spelled in VignetteShot.cpp" % name)

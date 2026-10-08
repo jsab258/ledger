@@ -6256,6 +6256,11 @@ namespace
 		if (GLook.SkyHorizonClampDeg > 0.0)
 		{
 			GSkyDomeMid->SetScalarParameterValue(FName(TEXT("HorizonClampV")), (float)(0.5 - GLook.SkyHorizonClampDeg / 180.0));
+			// and higher across the photograph's tall clump of trees (make_sky_material.py, TreeClampV)
+			if (GLook.SkyTreeClampDeg > 0.0)
+			{
+				GSkyDomeMid->SetScalarParameterValue(FName(TEXT("TreeClampV")), (float)(0.5 - GLook.SkyTreeClampDeg / 180.0));
+			}
 		}
 		GSkyPhotoNow = Name;
 		++GSkyPhotoBinds;

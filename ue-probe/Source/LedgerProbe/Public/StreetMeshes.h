@@ -381,6 +381,10 @@ namespace LedgerStreet
 		// AND HELD ABOVE ITS OWN LAND: the photograph sampled no lower than this elevation, degrees
 		// (0 = off), so its fields and hills past the street's ends show as the sky above them.
 		double SkyHorizonClampDeg;
+		// AND HIGHER OVER ITS TREES (8 October, item 1.1's third review, V8): across the photograph's
+		// one tall clump (make_sky_material.py's TREE_ARC_U) the row is this elevation instead, degrees
+		// (0 = off), so the clump is not stretched down to the horizon as a grey slab.
+		double SkyTreeClampDeg;
 		// A WET SURFACE'S ROUGHNESS FLOOR IN THIS ENGINE, by base material,
 		// where it differs from the recipe's (road 0.05, paving 0.46, kerb 0.40).
 		std::vector<std::pair<std::string, double> > WetFloors;
@@ -444,7 +448,7 @@ namespace LedgerStreet
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05), GlassSpecularNight(1.0),
-		         GlassCubeStrength(0.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0),
+		         GlassCubeStrength(0.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0), SkyTreeClampDeg(0.0),
 		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
 		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), bLanternRgb(false),
@@ -864,6 +868,8 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= -360.0 && V->Num <= 360.0) { Out.SkyDomeYawDeg = V->Num; ++Out.Read; }
 		V = Root.Find("sky_horizon_clamp_deg");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 30.0) { Out.SkyHorizonClampDeg = V->Num; ++Out.Read; }
+		V = Root.Find("sky_tree_clamp_deg");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 60.0) { Out.SkyTreeClampDeg = V->Num; ++Out.Read; }
 		V = Root.Find("street_collision");
 		if (V != 0 && V->Type == T_BOOL) { Out.bStreetCollision = V->Bool; ++Out.Read; }
 		V = Root.Find("night_exposure_pin");
