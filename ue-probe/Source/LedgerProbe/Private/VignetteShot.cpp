@@ -6872,19 +6872,6 @@ namespace
 			Cap->PostProcessSettings.bOverride_ReflectionMethod = true;
 			Cap->PostProcessSettings.ReflectionMethod = EReflectionMethod::Lumen;
 			Cap->bAlwaysPersistRenderingState = true;
-			// BUT CHEAPER (8 October, the build machine's frame-rate verdict BELOW-30 on 62be907): each
-			// window's first pass ran over 33 ms, one slow frame a window, fifteen a round, and the
-			// 99th percentile went just past the bar (the same measure with -GlassCatchNoLumen: 5 slow
-			// frames, p99 26 ms). The lit houses are why the catch uses Lumen; reflections inside a
-			// small soft reflection are the least of it, so they go, and the gather runs at half.
-			// -GlassCatchFullLumen keeps the full catch, to compare.
-			static const bool bFull = FParse::Param(FCommandLine::Get(), TEXT("GlassCatchFullLumen"));
-			if (!bFull)
-			{
-				Cap->PostProcessSettings.ReflectionMethod = EReflectionMethod::None;
-				Cap->PostProcessSettings.bOverride_LumenFinalGatherQuality = true;
-				Cap->PostProcessSettings.LumenFinalGatherQuality = 0.5f;
-			}
 		}
 		// THE CAUGHT STREET ANTI-ALIASED (7 October, evening; production/research/shop-glass-reflections/
 		// CLOSE-RANGE-ROUTES-2026-10-07.md): at 512 a face the house across the road came back with a
