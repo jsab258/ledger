@@ -1179,7 +1179,6 @@ WIRE_SERIES = (
     (46, "7-october-the-wear-at-a-painted-fronts-foot-26-wires"),
     (72, "8-october-the-road's-water-level-26-wires"),
     (77, "8-october-a-lit-net-glows-as-its-picture-5-wires"),
-    (80, "8-october-the-kit's-baked-shade-as-ambient-occlusion-3-wires"),
 )
 
 # The pair of markers that bound the wired region of main(). They are spelled
@@ -1214,7 +1213,6 @@ def wire_plan(texture_params=None):
         ("wear", 26, 26, "one-site-one-connection"),
         ("water", 26, 26, "one-site-one-connection"),
         ("emissivemap", 5, 5, "one-site-one-connection"),
-        ("ao", 3, 3, "one-site-one-connection"),
     ]
     return rows, sum(r[1] for r in rows), sum(r[2] for r in rows)
 
@@ -3960,19 +3958,6 @@ def main():
     connect(emap, "", emap_lerp, "Alpha", "emissivemap-param-to-lerp")
     connect(emap_lerp, "", emap_mul, "B", "emissivemap-lerp-to-mul")
     connect_prop(emap_mul, "", mp.MP_EMISSIVE_COLOR, "emissivemap-to-emissivecolor")
-    # THE KIT'S OWN SHADE AS AMBIENT OCCLUSION, 8 October (production/research/aaa-street/
-    # WINDOWS-GRAZING-2026-10-08.md): the vertex colour's R, baked into the sash window and the shopfront
-    # kit (their channels and inside corners), made linear (the import stores it sRGB-encoded) and fed
-    # to Ambient Occlusion, which Lumen applies to the sky and bounce light only. Every other mesh carries
-    # R 1 (terrace-front.py NEUTRAL_COLOUR) or no colour (white): occlusion 1, the material as it was.
-    ao_vc = expr(unreal.MaterialExpressionVertexColor, -2200, 2700)
-    ao_lin = wear_const(expr(unreal.MaterialExpressionPower, -2050, 2700), "const_exponent", 2.2)
-    ao_r = expr(unreal.MaterialExpressionComponentMask, -1900, 2700)
-    for ch in ("r", "g", "b", "a"):
-        wear_const(ao_r, ch, ch == "r")
-    connect(ao_vc, "", ao_lin, "Base", "ao-vertexcolour-to-linear")
-    connect(ao_lin, "", ao_r, "", "ao-linear-to-occlusion")
-    connect_prop(ao_r, "", mp.MP_AMBIENT_OCCLUSION, "ao-occlusion-to-property")
     # WIRE-PLAN-REGION-END.
 
     # ---- THE COMPILE, AND THE EVIDENCE THAT IT HAPPENED ------------------

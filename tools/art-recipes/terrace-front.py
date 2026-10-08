@@ -3205,7 +3205,10 @@ def _kit_glb(name, root=None):
 #: followed once his row passed its fresh review against the photographs on narrow points (8 October,
 #: production/audits/windows-2026-10-08/REVIEW-PHOTOGRAPHS.md), and did not pass its own gate in two
 #: tries (the houses' deep-set ground-floor sashes read as white boards and slits from the street's
-#: low angles; GATE-2.md): so Mickey's row only (None would be every row).
+#: low angles; GATE-2.md); the research (production/research/aaa-street/WINDOWS-GRAZING-2026-10-08.md)
+#: found the box lit flat, without the shade its channels have, and the third try baked that shade
+#: into the piece (bake_ao.py) for every row again: no visible change at the street's angles, so set
+#: aside (10:50): Mickey's row only, the plain piece (None would be every row).
 SASH_KIT_REL = os.path.join("production", "assets", "sash-window", "sash_window.glb")
 #: Each house keeps its own kind of window (4 October): the two-over-two and the one-over-one are the
 #: checked sash (the second built to target-1over1.json, the helper's target with its bars taken out);
@@ -3244,16 +3247,21 @@ def _kit_sash_window(parts, i, cx, sill_z, nodes, prefix="upper"):
     out and the caller hangs a card where each pane is (the first look, 8 October: the piece's glass in
     front of the nets washed them to flat grey and reflected the dish as a dark blotch)."""
     panes = []
-    for k, (node, mat, verts, tris, _cols) in enumerate(nodes):
+    for k, (node, mat, verts, tris, cols) in enumerate(nodes):
         material, piece = node.split("__", 1) if "__" in node else (mat, node)
         if material == "glass":
             if not HOUSE_PANE_TRANSLUCENT:
                 panes.append((max(v[1] for v in verts), min(v[2] for v in verts) + sill_z,
                               max(v[2] for v in verts) + sill_z, max(abs(v[0]) for v in verts)))
                 continue
-        parts.append({"id": "%s_sashkit_%d_%d" % (prefix, i, k), "material": "glass" if material == "glass" else "paint_joinery",
-                      "kind": "mesh", "verts": [(x + cx, y, z + sill_z) for (x, y, z) in verts], "faces": tris,
-                      "note": "sash-window/%s" % piece})
+        part = {"id": "%s_sashkit_%d_%d" % (prefix, i, k), "material": "glass" if material == "glass" else "paint_joinery",
+                "kind": "mesh", "verts": [(x + cx, y, z + sill_z) for (x, y, z) in verts], "faces": tris,
+                "note": "sash-window/%s" % piece}
+        if cols is not None and len(cols) == len(verts):
+            # ITS OWN SHADE, baked (tools/art-recipes/sash-window/bake_ao.py): R the occlusion, as the
+            # shopfront kit's, read by M_LedgerSurface as ambient occlusion
+            part["colors"] = [tuple(c) for c in cols]
+        parts.append(part)
     return sorted(panes, key=lambda q: q[1])
 
 
