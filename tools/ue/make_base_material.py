@@ -222,6 +222,15 @@ WEAR_GROUND_PARAM = "WearGroundZ"        # the footway's height, cm (street_wear
 WEAR_GROUND_DEFAULT = 10.0
 WEAR_BAND_PARAM = "WearBandHeight"       # how high the dust reaches, cm (the research: 0.45 m; 0.40 read better)
 WEAR_BAND_DEFAULT = 40.0
+# THE ROAD'S WATER LEVEL, 8 October (production/research/street-wear/WET-ROAD-2026-10-08.md, after
+# Lagarde's "Water drop" 2b): the wet road was one flat film at roughness 0.08 edge to edge, a near-white
+# mirror of the sky once the sky light equalled the dome. Water stands only where the road is low: its
+# own hollows (the map's darker grains, as height) and broad dips (a world noise of metres, wheel paths
+# and the channel); below the level, roughness 0.04, flat and water's Specular 0.25; the wet stone above
+# it roughness 0.45 at half its relief. 0, the default, leaves the material as it was: the game sets it
+# only on the asphalt, wet (VignetteShot; SurfaceBind.h WaterLevelParam).
+WATER_PARAM = "WaterLevel"
+WATER_PARAM_DEFAULT = 0.0
 WEAR_TINT_PARAM = "WearDustTint"         # dried road splash, linear (the decals' dust, darker)
 WEAR_TINT_DEFAULT = (0.040, 0.035, 0.028, 1.0)
 
@@ -1162,6 +1171,7 @@ WIRE_SERIES = (
     (19, "queue-186-wetness-parameter-floor-and-lerp"),
     (20, "queue-333-emissivecolor-parameter-and-its-one-wire"),
     (46, "7-october-the-wear-at-a-painted-fronts-foot-26-wires"),
+    (72, "8-october-the-road's-water-level-26-wires"),
 )
 
 # The pair of markers that bound the wired region of main(). They are spelled
@@ -1194,6 +1204,7 @@ def wire_plan(texture_params=None):
         ("wetness", 3, 3, "one-site-one-connection"),
         ("emissive", 1, 1, "one-site-one-connection"),
         ("wear", 26, 26, "one-site-one-connection"),
+        ("water", 26, 26, "one-site-one-connection"),
     ]
     return rows, sum(r[1] for r in rows), sum(r[2] for r in rows)
 
@@ -3733,6 +3744,8 @@ def main():
         return s
 
     mp = unreal.MaterialProperty
+    normal_lerp = expr(unreal.MaterialExpressionLinearInterpolate, 120, 60)
+    base_smp = None
     # THE DECLARED TYPE IS THE TYPE THE RESOLVED TEXTURE DERIVES, and only
     # falls back to the intended one when nothing resolved at all. Unreal
     # compares those two and refuses the mismatch, so taking the texture's
@@ -3754,9 +3767,13 @@ def main():
             via_node = grade_mul
         elif prop == mp.MP_ROUGHNESS:
             via_node, via_name = wet_lerp, "wetlerp"
-        sampler(TEXTURE_PARAMS[I], y,
-                _sampler_enum(unreal, got or asked), tex, prop, out_pin, label,
-                via=via_node, via_what=via_name)
+        elif prop == mp.MP_NORMAL:
+            via_node, via_name = normal_lerp, "waterlerp"
+        smp = sampler(TEXTURE_PARAMS[I], y,
+                      _sampler_enum(unreal, got or asked), tex, prop, out_pin, label,
+                      via=via_node, via_what=via_name)
+        if prop == mp.MP_BASE_COLOR:
+            base_smp = smp
 
     # THE WEAR'S TWO LERPS, made here so the grade and the wetness can land in them (WEAR_PARAM
     # above): the graded colour and the wet roughness are their A pins, so at WearAmount 0 each is
@@ -3864,7 +3881,60 @@ def main():
     connect(mul_cov, "", col_lerp, "Alpha", "wear-cover-to-colourlerp")
     connect(sat_f, "", rough_lerp, "Alpha", "wear-foot-to-roughlerp")
     connect_prop(col_lerp, "", mp.MP_BASE_COLOR, "wearlerp-to-basecolor")
-    connect_prop(rough_lerp, "", mp.MP_ROUGHNESS, "wearlerp-to-roughness")
+    # ---- THE ROAD'S WATER LEVEL, 8 October (WATER_PARAM above) ----
+    # height = 0.5 * the map's grain (luminance, scaled to about 0..1) + 0.5 * a world noise of metres;
+    # water = saturate((WaterLevel - height) * 8); on = saturate(WaterLevel * 1000), 0 at the default.
+    water = wear_scalar(WATER_PARAM, WATER_PARAM_DEFAULT, -1200, 2300)
+    lumw = expr(unreal.MaterialExpressionConstant3Vector, -1750, 2250)
+    wear_const(lumw, "constant", unreal.LinearColor(0.2126, 0.7152, 0.0722, 1.0))
+    lum = expr(unreal.MaterialExpressionDotProduct, -1600, 2250)
+    grain = wear_const(expr(unreal.MaterialExpressionMultiply, -1450, 2250), "const_b", 4.0)
+    grain_s = expr(unreal.MaterialExpressionSaturate, -1300, 2250)
+    dips = expr(unreal.MaterialExpressionNoise, -1450, 2400)
+    for prop_, value in (("scale", 0.002), ("levels", 2), ("output_min", 0.0), ("output_max", 1.0)):
+        wear_const(dips, prop_, value)
+    height = wear_const(expr(unreal.MaterialExpressionLinearInterpolate, -1150, 2300), "const_alpha", 0.5)
+    lvl = expr(unreal.MaterialExpressionSubtract, -1000, 2300)
+    lvl8 = wear_const(expr(unreal.MaterialExpressionMultiply, -850, 2300), "const_b", 8.0)
+    wmask = expr(unreal.MaterialExpressionSaturate, -700, 2300)
+    on = wear_const(expr(unreal.MaterialExpressionMultiply, -1050, 2450), "const_b", 1000.0)
+    on_s = expr(unreal.MaterialExpressionSaturate, -900, 2450)
+    w_rough = wear_const(wear_const(expr(unreal.MaterialExpressionLinearInterpolate, -550, 2300), "const_a", 0.45), "const_b", 0.04)
+    rough_fin = expr(unreal.MaterialExpressionLinearInterpolate, 280, 460)
+    flat = expr(unreal.MaterialExpressionConstant3Vector, -100, 120)
+    wear_const(flat, "constant", unreal.LinearColor(0.0, 0.0, 1.0, 1.0))
+    half_up = wear_const(wear_const(expr(unreal.MaterialExpressionLinearInterpolate, -550, 2450), "const_a", 0.5), "const_b", 1.0)
+    flat_amt = expr(unreal.MaterialExpressionMultiply, -400, 2450)
+    w_on = expr(unreal.MaterialExpressionMultiply, -550, 2600)
+    spec = wear_const(wear_const(expr(unreal.MaterialExpressionLinearInterpolate, -400, 2600), "const_a", 0.5), "const_b", 0.25)
+    if base_smp is not None:
+        connect(base_smp, "RGB", lum, "A", "water-basecolour-to-grain")
+    connect(lumw, "", lum, "B", "water-weights-to-grain")
+    connect(lum, "", grain, "A", "water-grain-to-scale")
+    connect(grain, "", grain_s, "", "water-grain-to-sat")
+    connect(grain_s, "", height, "A", "water-grain-to-height")
+    connect(dips, "", height, "B", "water-dips-to-height")
+    connect(water, "", lvl, "A", "water-level-to-sub")
+    connect(height, "", lvl, "B", "water-height-to-sub")
+    connect(lvl, "", lvl8, "A", "water-depth-to-mul")
+    connect(lvl8, "", wmask, "", "water-depth-to-mask")
+    connect(water, "", on, "A", "water-level-to-on")
+    connect(on, "", on_s, "", "water-on-to-sat")
+    connect(wmask, "", w_rough, "Alpha", "water-mask-to-roughness")
+    connect(rough_lerp, "", rough_fin, "A", "wearlerp-to-waterroughness")
+    connect(w_rough, "", rough_fin, "B", "water-roughness-to-final")
+    connect(on_s, "", rough_fin, "Alpha", "water-on-to-roughness")
+    connect_prop(rough_fin, "", mp.MP_ROUGHNESS, "waterlerp-to-roughness")
+    connect(wmask, "", half_up, "Alpha", "water-mask-to-flatness")
+    connect(half_up, "", flat_amt, "A", "water-flatness-to-amount")
+    connect(on_s, "", flat_amt, "B", "water-on-to-flatness")
+    connect(flat, "", normal_lerp, "B", "water-flat-to-normal")
+    connect(flat_amt, "", normal_lerp, "Alpha", "water-flatness-to-normal")
+    connect_prop(normal_lerp, "", mp.MP_NORMAL, "waterlerp-to-normal")
+    connect(wmask, "", w_on, "A", "water-mask-to-specular")
+    connect(on_s, "", w_on, "B", "water-on-to-specular")
+    connect(w_on, "", spec, "Alpha", "water-to-specular")
+    connect_prop(spec, "", mp.MP_SPECULAR, "water-specular-to-property")
 
     # The emissive parameter's ONE wire, and it goes straight to the property.
     # There is no multiply and no lerp in front of it because black added is

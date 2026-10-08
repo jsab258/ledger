@@ -53,3 +53,31 @@ Result: 76.2 mm (3 in, 9.0% of 850) at jambs and head, the ruling's top, 2.4 mm 
 - P6 is one undated building; its brick strip belongs to the wall kit.
 - 1676.4/850 = 1.97, 1.4% under Rivington's "2 to 2 1/2 times the breadth" (Part I p.193); Hasluck's example is 1.83, Ellis's 2.06.
 - Meeting rail kept at 38.1: P6 says thinner, P7 and P8 deeper, none moulded. Its stepped look needs a camera looking up, as on the street.
+
+## Second amendment: the glazing bar
+
+Fresh helper, 8 October 2026, for REVIEW-PHOTOGRAPHS.md's first point. Bar as seen: glass edge to glass edge (fillet plus both putty bevels), half-way between glass and paint, 7-px row bands.
+
+| P6 bar | rows | px | px/mm | mm |
+|---|---|---|---|---|
+| left, upper sash | 880, 940, 1000, 1040 | 34.0, 34.3, 34.0, 33.3 | 1.53 | 22.2 |
+| right, upper sash | 880, 940, 1000 | 34.7, 35.0, 36.0 | 1.53 | 23.0 |
+| both lower sashes, upper panes | 1300, 1400 | 29.5 to 35.0 | 1.545 (between) | 19.1 to 22.7 |
+| left lower sash, lower panes | 1620, 1720 | 37.7, 39.0 | 1.56 | 24.2, 25.0 |
+| left horizontal bar | x 700 to 1100 | 24 to 32 | 1.32 down | 18 to 24 |
+| right lower sash, lower panes | 1620, 1720 | 47, 48 | 1.56 | 30 (fillet 20): repaired, set aside |
+
+Scales: 1.56 from perpends 1566, 1916, 2278 (y 1650-1760); 1.32 from bed joints 1359 to 1657, 99.3 px a 75 mm course.
+
+Upper sashes (clearest): mean 34.5 px = **22.5 mm**, +/-0.7. Lit fillet 13.5 to 16.5 px, mean 15.1 = **9.9 mm**; putty each side (34.5 - 15.1) / 2 = 9.7 px = **6.3 mm**, a thin shadow line where it meets the fillet.
+
+Not measurable: P1 (bars 4.5 to 5 px at about 6.4 mm a pixel, blurred); P7 shows no bar; P8 has no known size.
+
+| Value | Was | Now | Why |
+|---|---|---|---|
+| glazing_bar_width_mm | 15.9 | 22.2 | 7/8 in, 0.3 under 22.5 |
+| bar_rebate_width_mm | 4.8 | 6.4 | 1/4 in, Riley's least; P6 6.3 |
+
+Fillet 9.4 (P6 9.9). Ellis's "depth of rebates 3/16 in" had been read as a width; his "stouter bars, 1/4 in deep" is the rebate_depth_mm 6.4 the code already gives the bar. Both scripts run on it in memory: bar 22.2, putty 6.4.
+
+Unsure: the reviewer's 25-30 mm fits only the repaired run. Sashes sit 140-190 mm behind the scaled brick face: about 1% wider, not applied.

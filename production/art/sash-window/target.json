@@ -1,5 +1,5 @@
 {
- "amended": "8 October 2026, by a fresh helper (not the builder), for the director's ruling of 8 October: 'follow the photographed originals, 2.5 to 3 inches of frame round the glass, not Ellis's 3/4 inch, and the period height of 1.68 m, not today's 1.50 m'. Changed: opening width (850, the street's); the outside lining's margin at the jambs (42.9) and at the head (44.5), which give exactly 76.2 mm (3 in) of painted timber between the brick edge and the glass at both jambs and the head (the bottom keeps Ellis's deep bottom rail and oak sill). Each change has a _src note here and its pixels and arithmetic in TARGET-NOTES.md beside this file. Every other value is the lab's of 7 October (C:/Users/Jafar/ledger-lab/production/lab/2-sash-window/target.json), sourced in that folder's SOURCES.md.",
+ "amended": "8 October 2026, by a fresh helper (not the builder), for the director's ruling of 8 October: 'follow the photographed originals, 2.5 to 3 inches of frame round the glass, not Ellis's 3/4 inch, and the period height of 1.68 m, not today's 1.50 m'. Changed: opening width (850, the street's); the outside lining's margin at the jambs (42.9) and at the head (44.5), which give exactly 76.2 mm (3 in) of painted timber between the brick edge and the glass at both jambs and the head (the bottom keeps Ellis's deep bottom rail and oak sill). Each change has a _src note here and its pixels and arithmetic in TARGET-NOTES.md beside this file. Every other value is the lab's of 7 October (C:/Users/Jafar/ledger-lab/production/lab/2-sash-window/target.json), sourced in that folder's SOURCES.md. Second amendment, 8 October 2026, by another fresh helper (not the builder), for the first narrow point of the photograph review (production/audits/windows-2026-10-08/REVIEW-PHOTOGRAPHS.md, 'the glazing bar is too thin'): glazing_bar_width_mm 15.9 to 22.2 and bar_rebate_width_mm 4.8 to 6.4, measured on P6; each has a _src note here and its pixels and arithmetic in TARGET-NOTES.md, 'Second amendment: the glazing bar'. Nothing else changed.",
  "status": "SOURCED 7 Oct 2026: Ellis, Modern Practical Joinery (1902) pp.121-127 (SOURCES.md [1]) unless noted; every value below has its line in SOURCES.md section 1. Inches as printed, millimetres for the code.",
  "opening": {
   "width_mm": 850.0,
@@ -47,8 +47,8 @@
   "_mrt": "'necessarily 3/8 in thicker than the stiles', p.127, to close the parting bead's gap",
   "horn_length_mm": 76.2,
   "_horn": "3 in below the meeting rail, ogee, the stile's width, p.127 Figs. 415-416",
-  "glazing_bar_width_mm": 15.9,
-  "_bar": "5/8 in bars, p.127",
+  "glazing_bar_width_mm": 22.2,
+  "_src_glazing_bar_width_mm": "Was 15.9 (Ellis's 5/8 in bars, p.127). Now 7/8 in: the bar as seen from outside, painted fillet plus a putty bevel each side, glass edge to glass edge, which is what this value draws (target_drawing's elevation; window_design's bar with its putty inside the same width). P6, both upper-sash bars (the clearest), half-way points between glass and paint, 7-px row bands: left window rows 880, 940, 1000, 1040 = 34.0, 34.3, 34.0, 33.3 px; right window rows 880, 940, 1000 = 34.7, 35.0, 36.0 px; mean 34.5 px / 1.53 px/mm (TARGET-NOTES.md's brick scale, same rows) = 22.5 mm, +/-0.7 for the scale's 3%. P6's other bars: lower sashes 19 to 25 mm, the horizontal bar 18 to 24 mm; one run (right window, lower panes, 30 mm with a 20 mm fillet) looks repaired and is set aside. 22.2 is 0.3 under the clearest reading. Ellis names 'stouter bars' beside his 5/8 in (p.127); the lab's sources give 5/8 to 1 1/4 in (SOURCES.md 1, Riley).",
   "panes_per_sash": 2,
   "_panes": "two over two, Figs. 396 and 399",
   "rebate_width_mm": 9.5,
@@ -58,8 +58,8 @@
   "_ov": "moulding stuck 1/2 in on by 3/16 in down for 1 1/2 in sashes, p.127: modelled as an ovolo 3/16 in",
   "glass_mm": 2.5,
   "_glass": "21 oz sheet, about 1/10 in, Rivington Part III p.440",
-  "bar_rebate_width_mm": 4.8,
-  "_barreb": "'5/8 in bars, rebate 3/16 in', Ellis p.127 (round 1 wrongly gave the bars the stiles' 3/8 in rebate each side: no outer face left; found by the fresh review, REVIEW.md)",
+  "bar_rebate_width_mm": 6.4,
+  "_src_bar_rebate_width_mm": "Was 4.8, from Ellis p.127, whose line reads '5/8 in. bars, depth of rebates 3/16 in.; stouter bars, 1/4 in. deep': depths, not widths. Now 1/4 in wide: P6's putty band each side of the bar, (34.5 px bar - 15.1 px lit fillet) / 2 = 9.7 px / 1.53 = 6.3 mm (fillet 13.5 to 16.5 px over the same 7 rows); Riley p.382, 'the width of the rebate varies from a quarter of an inch to half an inch', the least taken. Leaves a fillet of 22.2 - 2 x 6.4 = 9.4 mm (P6: 15.1 px = 9.9 mm). The bar's rebate depth stays rebate_depth_mm, 6.4, which is Ellis's 1/4 in for stouter bars and is what window_design and target_drawing already give the bar. (Round 1 had given the bars the stiles' 3/8 in rebate each side; REVIEW.md.)",
   "side_clearance_mm": 1.6,
   "_side": "1/16 in play each side, Hasluck p.404 (round 1 had none: the stiles touched the pulley stiles)",
   "putty": true,

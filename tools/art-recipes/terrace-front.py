@@ -2251,10 +2251,20 @@ def plan_street(root, spec_rel=SPEC_REL):
     _name_plate(out)
     _broken_windows(out)
     # EVERY THIRD UPSTAIRS WINDOW HAS A LIT ROOM BEHIND ITS NET AT NIGHT.
+    # BY THE WINDOW, NOT THE CARD (8 October): the checked sash hangs a card in each of its two panes,
+    # and lit card by card a room lit one sash and left the other dark (the night's fresh review).
+    import re
     nets = [q for q in out if q.get("decal_emit") == "net" and "net_curtain" in str(q.get("decal", ""))]
-    for k, q in enumerate(nets):
+    windows = []
+    for q in nets:
+        w = re.sub(r"(_net_\d+)_\d+$", r"\1", q["id"])
+        if not windows or windows[-1][0] != w:
+            windows.append((w, []))
+        windows[-1][1].append(q)
+    for k, (_w, cards) in enumerate(windows):
         if k % NET_LIT_EVERY == 1:
-            q["decal"] = q["decal"] + "_lit"
+            for q in cards:
+                q["decal"] = q["decal"] + "_lit"
     # THE WATER IS THE WEAR LAYER'S NOW, 2 October: these sheets were hard-edged
     # sixteen-sided mirrors and straight gutter strips, which the third fresh review
     # read as "opaque grey polygons" and "holes" beside the soft-masked decal puddles
@@ -3186,8 +3196,10 @@ def _kit_glb(name, root=None):
 #: by tools/art-recipes/sash-window and passed by its check (production/art/sash-window/checks).
 #: The piece is in the window's own axes: x across from the opening's centre, y into the house
 #: from the brick face, z up from the stone sill's top. Mickey's row first; the rest of the street
-#: once his row passed its fresh review against the photographs on narrow points (8 October,
-#: production/audits/windows-2026-10-08/REVIEW-PHOTOGRAPHS.md): SASH_KIT_ROWS None is every row.
+#: followed once his row passed its fresh review against the photographs on narrow points (8 October,
+#: production/audits/windows-2026-10-08/REVIEW-PHOTOGRAPHS.md), and did not pass its own gate in two
+#: tries (the houses' deep-set ground-floor sashes read as white boards and slits from the street's
+#: low angles; GATE-2.md): so Mickey's row only (None would be every row).
 SASH_KIT_REL = os.path.join("production", "assets", "sash-window", "sash_window.glb")
 #: Each house keeps its own kind of window (4 October): the two-over-two and the one-over-one are the
 #: checked sash (the second built to target-1over1.json, the helper's target with its bars taken out);
@@ -3195,7 +3207,7 @@ SASH_KIT_REL = os.path.join("production", "assets", "sash-window", "sash_window.
 SASH_KIT_KINDS = {"2/2": SASH_KIT_REL,
                   "1/1": os.path.join("production", "assets", "sash-window", "sash_window_1over1.glb")}
 SASH_TARGET_REL = os.path.join("production", "art", "sash-window", "target.json")
-SASH_KIT_ROWS = None
+SASH_KIT_ROWS = ("east_parade",)
 _SASH_KIT_CACHE = {}
 
 

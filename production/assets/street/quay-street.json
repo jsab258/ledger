@@ -1320,7 +1320,7 @@
    "emit_day": 0.45,
    "emit_night": 0.05,
    "reveal_on": null,
-   "faces": 72
+   "faces": 60
   },
   {
    "mesh": "street_card_net_curtain_a_lit",
@@ -1349,7 +1349,7 @@
    "emit_day": 0.45,
    "emit_night": 1.2,
    "reveal_on": null,
-   "faces": 30
+   "faces": 24
   },
   {
    "mesh": "street_card_net_curtain_b",
@@ -1378,7 +1378,7 @@
    "emit_day": 0.45,
    "emit_night": 0.05,
    "reveal_on": null,
-   "faces": 66
+   "faces": 54
   },
   {
    "mesh": "street_card_net_curtain_b_lit",
@@ -1407,7 +1407,7 @@
    "emit_day": 0.45,
    "emit_night": 1.2,
    "reveal_on": null,
-   "faces": 36
+   "faces": 30
   },
   {
    "mesh": "street_cl_bollard_bollard_black",
@@ -3523,7 +3523,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 91287
+   "faces": 48823
   },
   {
    "mesh": "street_paint_white",
@@ -4457,7 +4457,7 @@
    "emit_day": 0.0,
    "emit_night": 80.0,
    "reveal_on": null,
-   "faces": 249
+   "faces": 171
   }
  ]
 }

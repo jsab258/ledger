@@ -7924,8 +7924,16 @@ namespace
 						GStreetFlatNormal = MakeFlatTexture(128, 128, 255, false, TEXT("street-flat-normal"));
 					}
 					const bool bFilm = C.Wetness >= GLook.WetFilmFrom;
+					// THE ROAD HOLDS WATER ONLY WHERE IT IS LOW (8 October; production/research/
+					// street-wear/WET-ROAD-2026-10-08.md): the asphalt keeps its relief and takes the
+					// look file's water level, which the material turns into water in its hollows and
+					// dips and wet stone between; the other ground keeps its film.
+					const double Level = (bFilm && Rw.Base == "asphalt")
+						? (C.SunOn ? GLook.WaterLevelDay : GLook.WaterLevelNight) : 0.0;
+					Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WaterLevelParam())), (float)Level);
+					const bool bFlat = bFilm && Level <= 0.0;
 					Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(1))),
-					                              bFilm && GStreetFlatNormal != nullptr ? GStreetFlatNormal : Own);
+					                              bFlat && GStreetFlatNormal != nullptr ? GStreetFlatNormal : Own);
 					if (bFilm) { ++GStreetFilm; }
 				}
 			}

@@ -856,6 +856,9 @@ namespace LedgerSurface
 	// and tiled fronts' rows (LedgerStreet::WearsAtFoot). The band's height and the footway's are
 	// the material's own defaults (0.45 m, 0.10 m).
 	inline const char* WearParam() { return "WearAmount"; }
+	// THE ROAD'S WATER LEVEL, 8 October (tools/ue/make_base_material.py WATER_PARAM): 0, the default, is
+	// the material as it was; the game sets it on the wet asphalt (the look file's water_level_day/night).
+	inline const char* WaterLevelParam() { return "WaterLevel"; }
 
 	// DRY IS ZERO, AND ZERO IS THE MATERIAL'S DEFAULT. An instance that never
 	// sets this parameter renders exactly what it renders today, bit for bit,
