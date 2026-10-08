@@ -3039,11 +3039,14 @@ def _read_glb_nodes(path):
         acc = doc["accessors"][i]
         view = doc["bufferViews"][acc["bufferView"]]
         start = view.get("byteOffset", 0) + acc.get("byteOffset", 0)
-        comps = {"SCALAR": 1, "VEC3": 3}[acc["type"]]
+        comps = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4}[acc["type"]]
         fmt = {5126: "f", 5125: "I", 5123: "H", 5121: "B"}[acc["componentType"]]
         stride = view.get("byteStride", struct.calcsize("<" + fmt) * comps)
         vals = [struct.unpack_from("<" + fmt * comps, blob, start + k * stride)
                 for k in range(acc["count"])]
+        if acc.get("normalized") and fmt in ("H", "B"):
+            top = 65535.0 if fmt == "H" else 255.0
+            vals = [tuple(c / top for c in v) for v in vals]
         return vals if comps > 1 else [v[0] for v in vals]
 
     def local(node):
@@ -3078,8 +3081,11 @@ def _read_glb_nodes(path):
                 w = [tuple(m[r][0] * p[0] + m[r][1] * p[1] + m[r][2] * p[2] + m[r][3] for r in range(3)) for p in pos]
                 # glTF is y up with -z forward; Blender z up with +y forward (as _read_glb).
                 verts = [(p[0], -p[2], p[1]) for p in w]
+                cols = read(prim["attributes"]["COLOR_0"]) if "COLOR_0" in prim["attributes"] else None
+                if cols is not None and len(cols[0]) == 3:
+                    cols = [(c[0], c[1], c[2], 1.0) for c in cols]
                 out.append((node.get("name", "node%d" % i), mat, verts,
-                            [tuple(idx[k:k + 3]) for k in range(0, len(idx) - 2, 3)]))
+                            [tuple(idx[k:k + 3]) for k in range(0, len(idx) - 2, 3)], cols))
         for c in node.get("children", []):
             walk(c, m)
 
@@ -3149,6 +3155,23 @@ def _kit_material(piece, node, mat, pier, stall):
             "grout": ("stone", None), "glazed_tile": ("tile_stall", None)}.get(mat, ("paint_joinery", None))
 
 
+#: HOW MUCH OF THE STREET'S WEAR REACHES A KIT PIECE (8 October; production/research/street-wear/
+#: PAINTED-FRONTS-2026-10-07.md, step 1), carried in its vertex colour's B beside the kit's own baked
+#: occlusion (R) and edges (G): the stallrisers, the pilasters' plinths and the doors take kicks and
+#: splash; the frames, mullions and pilasters' shafts far less. Every mesh that is not a kit piece
+#: is exported with NEUTRAL_COLOUR: no occlusion and no edges, so nothing else chips, and full
+#: exposure, so the foot's band on the street's other painted fronts is what it was.
+KIT_EXPOSURE = {"stallriser_panelled": 1.0, "stallriser_tile": 1.0, "shop_door": 1.0, "side_door": 1.0,
+                "window_frame": 0.4, "pilaster": 0.4}
+NEUTRAL_COLOUR = (1.0, 0.0, 1.0, 1.0)
+
+
+def _kit_exposure(piece, node):
+    if piece == "pilaster" and "plinth" in node.lower():
+        return 1.0
+    return KIT_EXPOSURE.get(piece, 0.4)
+
+
 def _kit_shopfront(parts, p, kit, doors_on, has_side_door, pier, stall, root=None):
     """Takes the box joinery out of one shop bay and stands the kit's pieces in its place."""
     W, pw = p["bay_width_m"], p["pilaster_w_m"]
@@ -3158,7 +3181,7 @@ def _kit_shopfront(parts, p, kit, doors_on, has_side_door, pier, stall, root=Non
         read[name] = _read_glb_nodes(_kit_glb(name, root))
 
     def width(name):
-        xs = [v[0] for _n, _m, vs, _t in read[name] for v in vs]
+        xs = [v[0] for _n, _m, vs, _t, _c in read[name] for v in vs]
         return max(xs) - min(xs)
     win_w, shop_w = width("window_frame"), width("shop_door")
     side_w = width("side_door") if has_side_door else 0.0
@@ -3176,11 +3199,14 @@ def _kit_shopfront(parts, p, kit, doors_on, has_side_door, pier, stall, root=Non
     if has_side_door:
         places.append(("side_door", "side_door", side_c))
     for piece, pid, cx in places:
-        for k, (node, mat, verts, tris) in enumerate(read[piece]):
+        for k, (node, mat, verts, tris, cols) in enumerate(read[piece]):
             street_mat, paint = _kit_material(piece, node, mat, pier, stall)
             q = {"id": "kit_%s_%d_%s" % (pid, k, mat), "material": street_mat, "kind": "mesh",
                  "verts": [(x + cx, y, z) for (x, y, z) in verts], "faces": tris,
                  "note": "the-shopfront-kit/%s/%s" % (piece, node)}
+            if cols is not None and len(cols) == len(verts):
+                ex = _kit_exposure(piece, node)
+                q["colors"] = [(c[0], c[1], ex, 1.0) for c in cols]
             if paint:
                 q["paint_name"], q["paint"] = paint
             parts.append(q)
@@ -4591,7 +4617,7 @@ def _south_quay(out, root=None):
         return False
     # THE KIT IS EXPORTED AS THE STREET IS, y reflected; this recipe's parts are not, so it is
     # reflected back, and a mirror turns faces inside out, so every triangle is re-wound.
-    for k, (node, mat, verts, tris) in enumerate(_read_glb_nodes(path)):
+    for k, (node, mat, verts, tris, _cols) in enumerate(_read_glb_nodes(path)):
         material, piece = node.split("__", 1) if "__" in node else (mat, node)
         out.append({"id": "southquay_%s_%d" % (piece, k), "material": material, "kind": "mesh",
                     "verts": [(x, -y, z) for (x, y, z) in verts], "faces": [(a, c, b) for (a, b, c) in tris],
@@ -6462,11 +6488,15 @@ def _text_object(bpy, root, part, mat):
     return o
 
 
-def _mesh_object(bpy, name, verts, faces, mat):
+def _mesh_object(bpy, name, verts, faces, mat, colors=None):
     mesh = bpy.data.meshes.new(name + "_mesh")
     mesh.from_pydata(verts, [], faces)
     mesh.validate()
     mesh.update()
+    if colors is not None and len(colors) == len(mesh.vertices):
+        attr = mesh.color_attributes.new("Col", "FLOAT_COLOR", "POINT")
+        for vi, c in enumerate(colors):
+            attr.data[vi].color = c
     obj = bpy.data.objects.new(name, mesh)
     if mat is not None:
         obj.data.materials.append(mat)
@@ -7404,7 +7434,7 @@ def build_and_render(args):
             _slope_mesh(bpy, part, mat)
         elif part.get("kind") == "mesh":
             _face_the_street(bpy,
-                _mesh_object(bpy, part["id"], part["verts"], part["faces"], mat),
+                _mesh_object(bpy, part["id"], part["verts"], part["faces"], mat, part.get("colors")),
                 part.get("block"))
         elif part.get("kind") == "text":
             _text_object(bpy, args["root"], part, mat)
@@ -8182,7 +8212,8 @@ def _export_street(bpy, args, parts):
         world = [mathutils.Vector((p.x, -p.y, p.z)) for p in world]
         lettered = key.startswith(("sign_", "card_"))
         crop = part.get("decal_uv")
-        g = groups.setdefault(key, {"verts": [], "faces": [], "uvs": []})
+        g = groups.setdefault(key, {"verts": [], "faces": [], "uvs": [], "cols": []})
+        col_attr = obj.data.color_attributes.get("Col")
         if key not in info:
             base = part.get("material", mat_key)
             rgb, rough = table.get(base, (None, None))
@@ -8251,6 +8282,7 @@ def _export_street(bpy, args, parts):
                         uvs.append((p.x + u_off, p.z))
             base_i = len(g["verts"])
             g["verts"].extend((p.x, p.y, p.z) for p in pts)
+            g["cols"].extend(tuple(col_attr.data[i].color) if col_attr is not None else NEUTRAL_COLOUR for i in idx)
             g["faces"].append(tuple(range(base_i, base_i + len(pts))))
             g["uvs"].extend(uvs)
             info[key]["faces"] += 1
@@ -8269,6 +8301,12 @@ def _export_street(bpy, args, parts):
         uv = mesh.uv_layers.new(name="UVMap")
         for li, loop in enumerate(mesh.loops):
             uv.data[li].uv = g["uvs"][loop.vertex_index]
+        # THE WEAR'S MASKS, as the vertices' colour (KIT_EXPOSURE): exported as COLOR_0
+        col = mesh.color_attributes.new("Col", "FLOAT_COLOR", "POINT")
+        for vi, c in enumerate(g["cols"]):
+            col.data[vi].color = c
+        mesh.color_attributes.active_color = col
+        mesh.color_attributes.render_color_index = mesh.color_attributes.find("Col")
         mesh.validate()
         mesh.update()
         mat = bpy.data.materials.get(key) or bpy.data.materials.new(key)
@@ -8278,9 +8316,12 @@ def _export_street(bpy, args, parts):
         made.append(name)
     out = os.path.join(args["root"], args["export_glb"])
     os.makedirs(os.path.dirname(out), exist_ok=True)
+    # export_vertex_color "ACTIVE": the default ("MATERIAL") drops a colour no material reads
+    # (the wear research's step 2)
     bpy.ops.export_scene.gltf(filepath=out, export_format="GLB", export_materials="PLACEHOLDER",
                               export_yup=True, export_texcoords=True, export_normals=True,
-                              export_cameras=False, export_animations=False, export_extras=False)
+                              export_cameras=False, export_animations=False, export_extras=False,
+                              export_vertex_color="ACTIVE")
     side = os.path.splitext(out)[0] + ".json"
     with open(side, "w", encoding="utf-8") as fh:
         json.dump({
@@ -8329,6 +8370,23 @@ def selftest():
     stray = [v for q in opened for v in q["verts"] if v[0] < -1e-6 or v[1] < 0.045 - 1e-6]
     check("accept/the-open-door-lies-in-the-room-not-the-wall", len(opened) == 3 and not stray,
           "%d part(s), %d corner(s) past the hinge line" % (len(opened), len(stray)))
+
+    # THE WEAR'S MASKS REACH THE STREET (8 October): the kit's pilaster carries its baked edges
+    # in its vertex colour's G, and the stallriser's plinth-high exposure is the street's own
+    try:
+        pil = _read_glb_nodes(_kit_glb("pilaster", ROOT))
+        gs = [c[1] for _n, _m, _v, _t, cs in pil if cs for c in cs]
+        why = "%d coloured vert(s), edges %.2f to %.2f" % (len(gs), min(gs or [0]), max(gs or [0]))
+        ok = len(gs) > 0 and max(gs) - min(gs) > 0.3
+    except (OSError, ValueError, KeyError) as exc:
+        ok, why = False, "unreadable: %s" % exc
+    check("accept/the-kit-brings-its-edges-in-its-colour", ok, why)
+    check("accept/kicked-pieces-take-all-the-wear",
+          _kit_exposure("stallriser_tile", "x") == 1.0 and _kit_exposure("pilaster", "Plinth") == 1.0
+          and _kit_exposure("window_frame", "x") < 0.5 and NEUTRAL_COLOUR[1:3] == (0.0, 1.0),
+          "stallriser %.1f, plinth %.1f, frame %.1f" % (_kit_exposure("stallriser_tile", "x"),
+                                                         _kit_exposure("pilaster", "Plinth"),
+                                                         _kit_exposure("window_frame", "x")))
 
     p, err = load_spec(ROOT)
     check("accept/spec-loads", not err, err)
