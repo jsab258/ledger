@@ -7894,6 +7894,9 @@ namespace
 				const FLinearColor Hue = bNetDay ? FLinearColor(0.92f, 0.92f, 0.90f) : FLinearColor((float)Rw.R, (float)Rw.G, (float)Rw.B);
 				Mid->SetVectorParameterValue(FName(TEXT("EmissiveColor")),
 					FLinearColor(Hue.R * K, Hue.G * K, Hue.B * K, 1.0f));
+				// AND IT GLOWS AS ITS OWN PICTURE, the lace or the room (8 October; SurfaceBind.h
+				// EmissiveFromMapParam): the flat glow read in Mickey's glass as cream cards.
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::EmissiveFromMapParam())), 1.0f);
 				if (K > 0.0f) { ++GStreetGlowing; }
 			}
 			if (LedgerStreet::TakesWater(Rw.Base))

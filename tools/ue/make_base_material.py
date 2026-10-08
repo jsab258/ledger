@@ -187,6 +187,12 @@ VECTOR_PARAM_DEFAULT = (1.0, 1.0, 1.0, 1.0)
 # container can build the graph, so the default is checked where it can be,
 # and the REFUSING case is the lit sodium triple, which exists nowhere here.
 EMISSIVE_PARAM = "EmissiveColor"
+# A LIT NET OR ROOM GLOWS AS ITS OWN PICTURE, 8 October (the night's fresh review of Mickey's glass: the
+# lit cottage opposite reflected as "flat cream cards", its glow one colour added over the lace): at 1
+# the emissive colour is multiplied by twice the base map (the lace or the room, about one on average);
+# 0, the default, is the flat glow as before. The game sets it on the net and room rows (VignetteShot).
+EMISSIVE_MAP_PARAM = "EmissiveFromMap"
+EMISSIVE_MAP_DEFAULT = 0.0
 EMISSIVE_PARAM_DEFAULT = (0.0, 0.0, 0.0, 1.0)
 
 # THE WETNESS SCALAR, ADDED BY QUEUE 186, AND IT IS NOT IN SCALAR_PARAMS ON
@@ -1172,6 +1178,8 @@ WIRE_SERIES = (
     (20, "queue-333-emissivecolor-parameter-and-its-one-wire"),
     (46, "7-october-the-wear-at-a-painted-fronts-foot-26-wires"),
     (72, "8-october-the-road's-water-level-26-wires"),
+    (77, "8-october-a-lit-net-glows-as-its-picture-5-wires"),
+    (80, "8-october-the-kit's-baked-shade-as-ambient-occlusion-3-wires"),
 )
 
 # The pair of markers that bound the wired region of main(). They are spelled
@@ -1205,6 +1213,8 @@ def wire_plan(texture_params=None):
         ("emissive", 1, 1, "one-site-one-connection"),
         ("wear", 26, 26, "one-site-one-connection"),
         ("water", 26, 26, "one-site-one-connection"),
+        ("emissivemap", 5, 5, "one-site-one-connection"),
+        ("ao", 3, 3, "one-site-one-connection"),
     ]
     return rows, sum(r[1] for r in rows), sum(r[2] for r in rows)
 
@@ -3936,12 +3946,33 @@ def main():
     connect(w_on, "", spec, "Alpha", "water-to-specular")
     connect_prop(spec, "", mp.MP_SPECULAR, "water-specular-to-property")
 
-    # The emissive parameter's ONE wire, and it goes straight to the property.
-    # There is no multiply and no lerp in front of it because black added is
-    # nothing added: the drive sets the colour it wants whole, and an instance
-    # that sets nothing is the material this file shipped yesterday.
-    connect_prop(emissive, "", mp.MP_EMISSIVE_COLOR,
-                 "emissive-to-emissivecolor")
+    # The emissive parameter's ONE wire, through the map's own pattern when EmissiveFromMap asks
+    # (8 October, EMISSIVE_MAP_PARAM above): black added is still nothing added, and at 0 the multiply
+    # is by one, so an instance that sets nothing is the material this file shipped before.
+    emap = wear_scalar(EMISSIVE_MAP_PARAM, EMISSIVE_MAP_DEFAULT, -300, -700)
+    emap2 = wear_const(expr(unreal.MaterialExpressionMultiply, -150, -760), "const_b", 2.0)
+    emap_lerp = wear_const(expr(unreal.MaterialExpressionLinearInterpolate, 0, -720), "const_a", 1.0)
+    emap_mul = expr(unreal.MaterialExpressionMultiply, 150, -720)
+    connect(emissive, "", emap_mul, "A", "emissive-to-emissivecolor")
+    if base_smp is not None:
+        connect(base_smp, "RGB", emap2, "A", "emissivemap-basecolour-to-double")
+    connect(emap2, "", emap_lerp, "B", "emissivemap-double-to-lerp")
+    connect(emap, "", emap_lerp, "Alpha", "emissivemap-param-to-lerp")
+    connect(emap_lerp, "", emap_mul, "B", "emissivemap-lerp-to-mul")
+    connect_prop(emap_mul, "", mp.MP_EMISSIVE_COLOR, "emissivemap-to-emissivecolor")
+    # THE KIT'S OWN SHADE AS AMBIENT OCCLUSION, 8 October (production/research/aaa-street/
+    # WINDOWS-GRAZING-2026-10-08.md): the vertex colour's R, baked into the sash window and the shopfront
+    # kit (their channels and inside corners), made linear (the import stores it sRGB-encoded) and fed
+    # to Ambient Occlusion, which Lumen applies to the sky and bounce light only. Every other mesh carries
+    # R 1 (terrace-front.py NEUTRAL_COLOUR) or no colour (white): occlusion 1, the material as it was.
+    ao_vc = expr(unreal.MaterialExpressionVertexColor, -2200, 2700)
+    ao_lin = wear_const(expr(unreal.MaterialExpressionPower, -2050, 2700), "const_exponent", 2.2)
+    ao_r = expr(unreal.MaterialExpressionComponentMask, -1900, 2700)
+    for ch in ("r", "g", "b", "a"):
+        wear_const(ao_r, ch, ch == "r")
+    connect(ao_vc, "", ao_lin, "Base", "ao-vertexcolour-to-linear")
+    connect(ao_lin, "", ao_r, "", "ao-linear-to-occlusion")
+    connect_prop(ao_r, "", mp.MP_AMBIENT_OCCLUSION, "ao-occlusion-to-property")
     # WIRE-PLAN-REGION-END.
 
     # ---- THE COMPILE, AND THE EVIDENCE THAT IT HAPPENED ------------------
