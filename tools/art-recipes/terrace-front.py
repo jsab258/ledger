@@ -5579,7 +5579,11 @@ def plan_parts(p, bay=0, party_wall=True):
 #: is missing, an empty opening"): the bay whose door stands open when the office is walked into,
 #: and how far it swings, inward against the stair strip's wall as a shop door is hung.
 OPEN_DOOR_BAY = ("east_parade", 0)
-OPEN_DOOR_DEG = 96.0
+#: 8 October (item 1.1's third review, V9): at 96 degrees about its outer face the leaf swung past
+#: square into the stair strip's wall, and its glass being clear, its rail, panel and brass kick plate
+#: stood in the room as floating bars. Hinged on its inner face and opened square, it lies flat
+#: against the wall's face, its whole thickness in the room, narrowing the doorway by that alone.
+OPEN_DOOR_DEG = 90.0
 
 
 def _open_door_parts(parts):
@@ -5590,7 +5594,7 @@ def _open_door_parts(parts):
     if not leaf:
         return []
     hx = min(q["x0"] for q in leaf)        # the stair-side jamb (the leaf's own stiles swing with it)
-    hy = 0.04
+    hy = max(q["y1"] for q in leaf)        # its inner face, so open square it lies on the wall, not in it
     a = math.radians(OPEN_DOOR_DEG)
     c, s_ = math.cos(a), math.sin(a)
     out = []
@@ -8314,6 +8318,17 @@ def selftest():
         else:
             failed += 1
             print("terrace-front selftest FAIL %s: %s" % (name, detail))
+
+    # HIS SHOP DOOR OPEN LIES IN THE ROOM (8 October, item 1.1's third review, V9: at 96 degrees about
+    # its outer face it swung into the stair strip's wall and its parts floated): a leaf of a stile, a
+    # panel and a kick plate, opened, keeps every corner on the room's side of its hinge line.
+    leaf = [{"id": "shop_door_" + n, "material": "m", "x0": 0.0, "x1": w, "y0": 0.0, "y1": 0.045,
+             "z0": z0, "z1": z1} for n, w, z0, z1 in (("stile", 0.1, 0.0, 2.1), ("panel", 0.9, 0.2, 0.8),
+                                                     ("kick", 0.9, 0.0, 0.2))]
+    opened = _open_door_parts(leaf)
+    stray = [v for q in opened for v in q["verts"] if v[0] < -1e-6 or v[1] < 0.045 - 1e-6]
+    check("accept/the-open-door-lies-in-the-room-not-the-wall", len(opened) == 3 and not stray,
+          "%d part(s), %d corner(s) past the hinge line" % (len(opened), len(stray)))
 
     p, err = load_spec(ROOT)
     check("accept/spec-loads", not err, err)

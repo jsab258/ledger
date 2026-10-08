@@ -1473,10 +1473,13 @@ def build_and_render(argv):
         # cabinet behind the counter, its drawers to the window.
         prop("counter_mickeys", (cx0 + cx1) / 2.0, (cy0 + cy1) / 2.0, 0.0)
         prop("bench", -W / 2 + 0.255, 1.185, 0.0, turn=math.pi / 2)
-        # a folded evening paper left on it (no headline to read at this distance)
-        box("left_paper", -2.42, -2.21, 1.2, 1.5, 0.452, 0.467, mat("newsprint", (0.70, 0.69, 0.64), rough=0.9))
+        # (no folded paper on it: a plain box with no print, it read as a blank white slab through the
+        # glass, item 1.1's third review, V10, 8 October)
         prop("heater", -1.35, 0.06, 0.14, turn=math.pi)
-        prop("blind_mickeys", -1.94, 0.05, 1.62, turn=math.pi)
+        # the blind's 1.32 m centred at -1.94 ran 0.3 m past the first mullion into the middle pane
+        # (item 1.1's third review, V10, 8 October): its right end now meets the mullion and its spare
+        # width lies behind the solid pier, seen only from inside, as a blind hung outside the recess
+        prop("blind_mickeys", -2.26, 0.05, 1.62, turn=math.pi)
         prop("filing_cabinet", -W / 2 + 0.255, 3.61, 0.0)
 
         # the phone, a cream push-button set of the decade with its coiled cord (one line: the black
@@ -1563,8 +1566,9 @@ def build_and_render(argv):
         # the fares again, taped to the counter's front where the waiting customer reads them (the
         # dressing research: face the important notices to the glass)
         print_plane("counter_fares", "fares", -1.95, cy0 + 0.019, 0.55, 0.30, 0.42, "-y")   # on the panel mouldings' face
-        # a stacking chair for a customer by the stair wall: a moulded shell on a tube frame
-        model("SchoolChair_01", 1.40, 1.10, 0.0, turn=-1.9, size=0.82)
+        # (no stacking chair by the stair wall: it stood 1.1 m inside the door, in the line Tom walks
+        # in by, and he walked through it; the bench seats the customers. Item 1.1's third review, V9,
+        # 8 October)
         # the lighter by the counter's ashtray
         model("vintage_lighter", -1.62, 2.36, 0.985, turn=0.4, size=0.06)
         # COAT HOOKS by the back door, a rail of four (no coats: as boxes they read as boards)

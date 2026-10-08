@@ -4796,6 +4796,32 @@ namespace
 				UE_LOG(LogTemp, Display, TEXT("LedgerOffice: Tom unlocks the shop door at %.2f,%.2f (%d shut mesh(es) gone, %d open shown)"), At.X, At.Z, Gone, Open);
 			}
 		}
+		// -DoorProbe (8 October, a fault being found): near the door, what stops his capsule going in.
+		static const bool bDoorProbe = FParse::Param(FCommandLine::Get(), TEXT("DoorProbe"));
+		static double NextProbe = 0.0;
+		const double NowP = FPlatformTime::Seconds();
+		if (bDoorProbe && NowP > NextProbe && FMath::Abs(At.X - GOffice.DoorX) < 1.2 && FMath::Abs(At.Z - GOffice.DoorZ) < 1.2)
+		{
+			NextProbe = NowP + 1.0;
+			if (UCapsuleComponent* Cap = GPawn->FindComponentByClass<UCapsuleComponent>())
+			{
+				const FVector From = GPawn->GetActorLocation();
+				const FVector To = From + FVector(0.0, 60.0, 0.0);   // street +z is Unreal +Y: into the office
+				FCollisionQueryParams Q(FName(TEXT("DoorProbe")), false, GPawn);
+				TArray<FHitResult> Hits;
+				GPawn->GetWorld()->SweepMultiByChannel(Hits, From, To, FQuat::Identity, ECC_Pawn,
+					FCollisionShape::MakeCapsule(Cap->GetScaledCapsuleRadius(), Cap->GetScaledCapsuleHalfHeight()), Q);
+				FString Got;
+				for (const FHitResult& H : Hits)
+				{
+					const UStaticMeshComponent* SM = Cast<UStaticMeshComponent>(H.GetComponent());
+					Got += FString::Printf(TEXT(" %s/%s@%.0f%s"), *GetNameSafe(H.GetActor()), SM != nullptr ? *GetNameSafe(SM->GetStaticMesh()) : *GetNameSafe(H.GetComponent()),
+						H.Distance, H.bBlockingHit ? TEXT("!") : TEXT(""));
+				}
+				UE_LOG(LogTemp, Display, TEXT("DoorProbe: Tom at %.2f,%.2f (radius %.0f, half %.0f) sweeping in:%s"),
+					At.X, At.Z, Cap->GetScaledCapsuleRadius(), Cap->GetScaledCapsuleHalfHeight(), Got.IsEmpty() ? TEXT(" nothing") : *Got);
+			}
+		}
 		// AND THE LIGHTS ON once he is through the door.
 		if (GOffice.bDark && bIn && At.Z > GOffice.Z0 + 0.3)
 		{
