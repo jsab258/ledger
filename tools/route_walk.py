@@ -281,9 +281,14 @@ def walk(editor, out, town=False):
     if not r.expect("street", 60):
         play("close")
         return r.write()
-    for _ in range(5):                                              # Sheila's walk round, line by line
+    # SHEILA'S WALK ROUND, line by line, until it is over: the game writes no one's place while it
+    # runs, and since long lines turn page by page on Enter (7 October) five presses no longer end it,
+    # so on 8 October the talk looked for Sheila in an empty list ("she is not on the street").
+    for _ in range(14):
+        if r.where().get("tom"):
+            break
         play("press", "Enter")
-        play("wait", "4")
+        play("wait", "3")
     # TALK: to Sheila, wherever her day has her.
     w = r.where()
     if "lena" in w and "tom" in w:
