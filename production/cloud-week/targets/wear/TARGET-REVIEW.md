@@ -357,3 +357,147 @@ Kerbside standing places matter most: the street has double yellow lines along b
 - **The era rules are mostly right:** no tactile or block paving, no anti-skid colour, no spray utility marks, no 2000s litter, no American markings, invented poll-tax posters only. Tobacco ends are kept and drink litter is excluded.
 - **The texel rule is right:** at least 6 texels across the smallest feature, never above 1,122 px/m, and LOD fades for sub-2-pixel features beyond 6 to 8 m. These are the right engineering limits.
 - **The disagreements D1 to D5 are recorded.** "Could not settle" names the right gaps: gum density, 1990 soot level, streak-to-sill ratio, salt.
+
+# Re-review (try 2)
+
+FAIL
+
+Fresh target reviewer, 8 October 2026, on the amended target: 33 kinds, a compose block, a places block, 171 checks, parts E and F. I re-ran everything on a scratch copy:
+
+- `self_check.py --no-overlays`: `passed=1142/1142 failed=0`, as stated.
+- `target_drawing.py`: 7 scenes, 33 kinds, 8,892 polygons.
+- I looked at every new preview. None shows alcohol, gambling or a child, and no word in TARGET.md breaks the content rule (searched; the only hits are the exclusions themselves).
+- I fed the amended checks my own nine wrong masks again, plus fifteen new ones (below).
+
+## The twelve faults of the first review
+
+| Fault | Status |
+|---|---|
+| 1. Soot and the dark head | **Partly.** Both are now kinds, and the terrace-front hand-over is written. But as specified they contradict the Hook sheet (faults R1 and R2 below). |
+| 2. Streaks | **Answered.** The sheet citations are withdrawn; lengths come from M16 and M17; the share of sills is 15 to 60 % from M23. I checked M23 on its preview: no visible streak under any sill. |
+| 3. Order and floor | **Answered:** the compose block, the wall floor 0.15, salt laid last. |
+| 4. Checks | **Partly.** All nine of my first-round masks are now refused, each by a real check. Six new wrong masks pass (R3). Placement checks P1 to P9 are added. |
+| 5. Gutter grime | **Answered.** I was wrong on the channel colour: 150/146/140 is a colour from the photograph's view, not an albedo. The writer's 116/111/108 (1.4 to 1.7 × the road) is right. |
+| 6. Wet and dry | **Answered.** I was wrong on the stain: the sheet's stain is 0.236 wet, so 0.30 dry is right, and so is the ground floor of 0.28. |
+| 7. Iron | **Answered** (iron_wear, grate_wear). |
+| 8. Dropped kinds | **Answered:** six new kinds plus a tile_glazed row. |
+| 9. Sources | **Answered:** S1, S2, the plaster_brick_01 tags, M27, the re-cropped crack preview. |
+| 10. Places | **Answered:** the places block, standing places on a double-yellow street, words made numbers. |
+| 11. Re-measured numbers | **Answered.** |
+| 12. Wording | **Answered.** |
+
+**Where the writer departs from my numbers:**
+- **Accepted:** channel albedo 116/111/108; stain dry 0.30; ground floor 0.28; sill share 15 to 60 %; lower wall 0.90. On the right-hand cottage I get 0.85 (rows 436 to 572 against 380 to 430), which is inside the writer's own 0.84 to 0.93.
+- **Not accepted:** soot saturation 0.84 (R1).
+
+## Faults, worst first
+
+### R1. wall_soot turns half the street soot-brown, where the Hook sheet shows no sooted house; its colour keeps the brick's chroma; the house looks are darkened twice
+
+**The share has no source.**
+- The sooted state (× 0.42) goes on 7 of 13 houses. That share comes from street-wear.json's `brick_set`, which is a random seed (`int(rnd × 3) % 3`, tools/street_wear.py line 110), not from a photograph or the sheet.
+- In the hook view the sooted houses include parade bays 2, 3 and 5, the chandler, and west_south bay 1.
+- Composed with the target's own code (`compose_walls`, dry, wall above 1.3 m): cleaned 0.99, as built 0.81, sooted 0.48. So three of the five parade houses beyond Mickey's would read about half as bright as Mickey's.
+
+**The sheet shows no such house.** I measured linear luminance between the windows, rows 190 to 400:
+- Mickey's front: 0.072 to 0.093.
+- Parade houses 2 to 5: 0.104, 0.107 (0.080 at its darkest box), 0.132, the stone house apart. Relative to Mickey's mean (0.081) that is 0.99 to 1.6: brighter with distance through the haze, and never darker than about 0.86 of Mickey's brightest box.
+- The far right terraces and the right-hand cottage read the same red.
+- No house on the sheet reads anywhere near half its neighbours.
+
+The sheet governs mood and palette (RULINGS 21 September). M21 proves soot exists; it does not decide which houses in the sheet's frame carry it.
+
+**The soot colour keeps the brick's chroma.** The tone row multiplies red brick by M21's per-channel ratios. M21 is yellow stock brick. On red brick (140/87/70, C* 27.6) the ratios give 93/56/48: CIE chroma 19.5, so 0.71 of the clean brick, and a dark saturated red-brown. The sources say soot greys the brick much more:
+- M21 per-pixel HSV saturation: 0.155 sooted against 0.228 cleaner, so 0.68.
+- M21, HSV of the median colours: 0.73.
+- M21, CIE chroma of the median colours: 7.1 against 13.1, so 0.54. Per pixel: 5.2 against 12.1, so 0.43.
+- The sheet's gable head against its body: 0.42.
+
+The writer's 0.84 comes from one HSV calculation on two JPEG median colours. Soot is a nearly neutral deposit (M21 92/81/73), not a red filter.
+
+**The house looks are darkened twice.** The recipe picks a look by `(brick_set + seed) % 4` (terrace-front.py line 8260), not by state:
+- west_north_bay1 is "as built" but carries the sooted look (0.60/0.56/0.56). It would compose to about 0.57 × 0.82 = 0.47, the very double darkening the hand-over says it prevents.
+- east_parade_bay3 is "sooted" but carries the cleaned look (1.0/0.95/0.86).
+- `HOUSE_SET_FACTOR` (line 8229) is defined and never read. Only HOUSE_LOOKS is used.
+
+**Amendment.**
+- (a) Decide the states from the sheet, not the seed:
+  - parade bays 0 to 5 and west_south bays 0 to 2: cleaned or as built;
+  - sooted only at the inland end, the chandler and one or two of west_north bays 0 to 2 (Judgement);
+  - add section 7 entry D13: M21 (soot is real) against the sheet (none in its frame).
+  - Add a composed check `house_to_house_ratio`, in albedo (no haze): every house the sheet's frame shows at 0.80 or more of Mickey's front composed upper wall (Sheet: none darker than about 0.86 on screen).
+- (b) Make the soot mark on brick_red a lerp toward M21's nearly neutral soot, at chroma 0.4 to 0.6 of the clean brick. For example 82/62/55 (L* 28.5, C* about 10.5) in place of 93/56/48, with brick_painted and render_cream likewise. Add a composed check `composed_soot_chroma_ratio` 0.4 to 0.6 (Photo M21 0.43 to 0.54; Sheet 0.42). Record in D9 that 0.84 is not what the photograph shows on any per-pixel measure.
+- (c) In the hand-over, divide every house's look by its own mean luminance (hue only), since wall_soot now carries all the brightness. Delete `HOUSE_SET_FACTOR` from the table (it is not used).
+
+### R2. wall_head_band darkens the top of every front under its eaves gutter; the sheet shows that only under a gable verge
+
+**What the target does.** The head band (× 0.56 dry to 0.2 m, about × 0.6 composed to 0.7 m) hangs from "every eaves gutter, gable verge ..., coping and string course", density 1.0. Its only measurement, M22, is the left gable under its verge: a verge with no gutter, where roof water runs straight down the brick.
+
+**What the sheet shows elsewhere.**
+- **Mickey's front, under its eaves gutter** (columns 385 to 445; the hero frontage of the hook view): 0.63 of the body in the first 0.1 m (the dentil course's shadow), then 1.00, 1.00, 1.08, 1.10 down to 0.5 m.
+- **The right-hand cottage's gable**, under its verge (columns 1560 to 1595, rows 322 to 470): flat at 0.041 to 0.054, no head at all.
+
+Composed with the target's code, Mickey's front (cleaned) reads 0.57 to 0.63 of clean from 0.1 to 0.7 m below the eaves. The sheet shows 1.0 to 1.1. Every parade front in the hook view would carry a dark band across its upper floor that the sheet does not have.
+
+**Amendment.**
+- Full strength (× 0.56) only under gable verges and barges, at weight 1.0 on the quay-facing gables (the sheet's left gable) and 0.3 to 1.0 by house seed elsewhere, since the sheet's right-hand gable shows none.
+- Under parapet and chimney copings, the coping scale (0.3 in depth) stays.
+- Under eaves gutters on the fronts: strength 0 to 0.2 and depth 0.1 to 0.3 m (Judgement). A leaking gutter is streak_coping's job.
+- Add a composed check on an eaves front: the ratio at 0.3 m below the eaves 0.90 to 1.10 (Sheet: Mickey's front 1.00 to 1.10).
+
+### R3. Six wrong masks still pass every mask check
+
+Run with the target's own `run_mask_check`:
+
+| Kind | Wrong mask | Result |
+|---|---|---|
+| wall_foot_splash, wall_foot_damp, wall_head_band, gutter_grime | the target's straight profile multiplied by a smooth vertical cosine (period 0.25 to 0.5 m, ±15 to 25 %): a band in vertical stripes, with no course steps | **passes all**. The top-edge spread is 30 to 134 mm and column_mean_cv 0.12 to 0.24, so the new checks are met by stripes. |
+| salt_bloom | a perfect checkerboard, every other brick in two courses, blurred 3 to 4 px | **passes all 8** (brick_patch_share 0.53, cell std 0.08 to 0.09) |
+| streak_sill | unequal end streaks plus four identical, evenly spaced, ruler-straight rivulets | **passes all 12** |
+| wall_soot | a correct 0.5 to 2 m mottle with no darker lower wall | **passes**. The foot_profile points at 0.2 and 0.5 m (0.85 to 1.0) overlap those at 1.6 and 3.0 m (0.7 to 0.97). |
+| iron_wear | patches spread evenly up the pipe, none at the shoe | **passes**. The 40 % at the shoe is checked only on the target's own envelope. |
+| stone_top_lichen | one flat block over half the top | **passes** (coverage 0.5, std 0.5, edge 9.8 mm) |
+
+Also refused, as they should be:
+- my nine first-round masks (my parameters, not part E's);
+- identical cigarette-end rectangles;
+- identical, evenly spaced line gaps.
+
+**Amendment:** add these mask checks.
+- **The four band kinds:** `core_column_cv` at most 0.05 in the full-strength zone (splash 0 to 0.2 m; damp 0 to 0.25 m; head 0 to 0.15 m below the feature; gutter the channel body 0.05 to 0.23 m).
+- **The brick kinds** (splash, salt, head band): `edge_on_course_share` of at least 0.6, the share of top-edge heights within 10 mm of a 75 mm course line.
+- **salt_bloom:** `brick_neighbour_same_share` 0.3 to 0.8, the share of side-by-side brick cells in a course that are both on or both off. A checkerboard gives 0.
+- **streak_sill:** `rivulet_spacing_cv` of at least 0.25 and `rivulet_length_cv` of at least 0.25 over the rivulets.
+- **wall_soot:** `lower_wall_excess` 0.05 to 0.15 (mean mask 0.1 to 0.6 m minus mean 1.5 to 3.5 m).
+- **iron_wear:** a mask check `coverage_share_below_m` (0.3 m) of 0.25 to 0.6.
+- **stone_top_lichen:** `blob_eqd_mm` p50 10 to 60 (minimum area 50 mm²) and `size_cv` of at least 0.3.
+
+### R4. Four masks a script cannot make right from target.json alone
+
+1. **line_wear:** the frame is 75 mm wide (y ±0.0375) but is placed "one instance per 100 mm band" (the scene's bands). Say that the mask is stretched across to the band (× 1.33 in y), or make the frame ±0.05 m. As written, the outer 12.5 mm of each band never wears.
+2. **footway_infill:** variants 3 to 5 are in-situ concrete, but the only tone row is bitmac 70/68/66. The concrete 150/143/136 exists only inside a source string. Add a second row, or a `variant_tone` block naming the variants.
+3. **iron_wear:** the frame is 0.08 m wide (the pipe's face) but the layer is "L0 in the iron material" on a 68 mm round pipe (circumference 0.214 m). Say whether the mask is projected from the street side (and what the back gets) or unwrapped to 0.214 m.
+4. **iron_wear's feature list** names the pillar box and lamp columns, but the only surface row is iron_black. The pillar box is red: add a row (paint loss to primer grey and rust on pillar-box red), or drop it from the list.
+
+## Narrow notes (not counted)
+
+- **The composition checks cannot test a builder's masks.** `composed_*`, `channel_over_road` and `fringe_over_road` are computed from the target's own envelopes (`draw.kind_envelope`), not from a generated mask. Give `composition()` a masks argument so unit 4.5 can run them on its own masks.
+- **`composed_foot_ratio` mixes wet and dry.** It compares a dry composite (0.19) with the sheet's wet range 0.12 to 0.30. By the target's own section 4, compare the wet composite (0.19 × 0.75 × 0.85, about 0.12, at the bottom edge) or convert the range to dry (about 0.16 to 0.40).
+- **The verge's white patches.** On the sheet's gable head, the white patches at the verge (the head overlay, top left) are neither bird_dropping placements nor sign_ghost. One sentence saying which kind owns them would close it.
+
+## What is right in the amendment
+
+- **The answers are real.** All ten fully answered faults are answered with measurements, not words. Where my numbers were wrong (channel colour, stain), the writer measured and corrected them, and recorded why in D7 and D10.
+- **New measurements, with method and error:**
+  - M21, the soot ratio;
+  - M22, the sheet's verge head;
+  - M23, sills without streaks;
+  - M24, the channel;
+  - M25, the downpipe;
+  - M26, the yellow line;
+  - M27, the flag.
+
+  I re-made M21's luminance ratio (0.37 to 0.38), M23's absence of streaks and M24's channel and strip ratios, and they agree.
+- **Placement is now constrained:** the compose block (order, floors, salt last), the wet/dry rule applied once, the places block and the nine placement checks.
+- **Every kind's figures and their source, measured or judged, are in target.json.** The check text equals the code (part A).
+- **No content-rule breach** in any new word or picture. All sources are CC0, reached and credited, and nothing is NoAI.
