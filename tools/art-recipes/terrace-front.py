@@ -2257,12 +2257,13 @@ def plan_street(root, spec_rel=SPEC_REL):
     nets = [q for q in out if q.get("decal_emit") == "net" and "net_curtain" in str(q.get("decal", ""))]
     windows = []
     for q in nets:
-        w = re.sub(r"(_net_\d+)_\d+$", r"\1", q["id"])
+        # a pane's card is <row>_<floor>_net_<window>_<pane>_bay<n>; its window, the same less the pane
+        w = re.sub(r"(_net_\d+)_\d+(_bay\d+)?$", r"\1\2", q["id"])
         if not windows or windows[-1][0] != w:
             windows.append((w, []))
         windows[-1][1].append(q)
-    for k, (_w, cards) in enumerate(windows):
-        if k % NET_LIT_EVERY == 1:
+    for k, (w, cards) in enumerate(windows):
+        if k % NET_LIT_EVERY == 1 or w in NET_LIT_ALWAYS:
             for q in cards:
                 q["decal"] = q["decal"] + "_lit"
     # THE WATER IS THE WEAR LAYER'S NOW, 2 October: these sheets were hard-edged
@@ -2812,6 +2813,11 @@ NET_PANE_ROUGHNESS = 0.04   # 0.30 until 4 October: the panes measured a quarter
 #: they are nets like the rest.
 NET_LIT_EMIT_DAY, NET_LIT_EMIT_NIGHT = 0.45, 1.20
 NET_LIT_EVERY = 3
+#: AND THE COTTAGE ACROSS FROM MICKEY'S HAS ITS FRONT ROOM LIT (8 October; production/research/
+#: shop-glass-reflections/NIGHT-2026-10-08.md, step 2: nothing lit opposite, so Mickey's window had
+#: nothing to reflect at night): someone at home at 20:30, both its windows. Windows by their key,
+#: the card's id less its pane.
+NET_LIT_ALWAYS = ("west_south_gf_net_0_bay2", "west_south_gf_net_1_bay2")
 NET_CURTAINS = ("production/assets/vignette/decals2d/net_curtain_a",
                 "production/assets/vignette/decals2d/net_curtain_b")
 

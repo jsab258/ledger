@@ -1336,12 +1336,7 @@
    "tile_m": 0.0,
    "house_tint": null,
    "decal": "production/assets/vignette/decals2d/net_curtain_a_lit",
-   "decal_uv": [
-    0.0,
-    0.5,
-    1.0,
-    1.0
-   ],
+   "decal_uv": null,
    "decal_emit": "net",
    "texture_mean": null,
    "drawn_map": null,
@@ -1378,7 +1373,7 @@
    "emit_day": 0.45,
    "emit_night": 0.05,
    "reveal_on": null,
-   "faces": 54
+   "faces": 42
   },
   {
    "mesh": "street_card_net_curtain_b_lit",
@@ -1396,9 +1391,9 @@
    "decal": "production/assets/vignette/decals2d/net_curtain_b_lit",
    "decal_uv": [
     0.0,
-    0.5,
+    0.0,
     1.0,
-    1.0
+    0.5
    ],
    "decal_emit": "net",
    "texture_mean": null,
@@ -1407,7 +1402,7 @@
    "emit_day": 0.45,
    "emit_night": 1.2,
    "reveal_on": null,
-   "faces": 30
+   "faces": 42
   },
   {
    "mesh": "street_cl_bollard_bollard_black",
