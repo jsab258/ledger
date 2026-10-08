@@ -32,6 +32,11 @@ namespace Ledger.Core
         /// What they were told or saw, as a clause ("the man that did the
         /// window looked straight in at the shop before he ran").
         public string Summary;
+        /// WHO TOLD THEM, by name, when the account is one they heard and the
+        /// copy whose words are in Summary says who told them (Rumor.ToldById;
+        /// the talk task of 7 October): their reason then says "Sheila told me
+        /// that ..." rather than "I heard that ...". Null otherwise.
+        public string ToldBy;
     }
 
     /// What one person holds about who was near the deed at the time.
@@ -91,7 +96,11 @@ namespace Ledger.Core
         /// side by side, and ranking by certainty alone let a vaguer, surer
         /// copy hide a recognition. Seen: their own sighting at its best rung.
         /// Named: any telling whose first teller recognised him.
-        public static DeedAccount AccountOf(Gossiper g, string topicKey)
+        public static DeedAccount AccountOf(Gossiper g, string topicKey) => AccountOf(g, topicKey, null);
+
+        /// As above, with `nameOf` giving a person's name from their id (the
+        /// mill's DisplayName), so a heard account says who told them.
+        public static DeedAccount AccountOf(Gossiper g, string topicKey, Func<string, string> nameOf)
         {
             var acc = new DeedAccount { Rung = -1 };
             if (g == null || string.IsNullOrEmpty(topicKey)) return acc;
@@ -126,6 +135,11 @@ namespace Ledger.Core
             var deciding = ownDeciding ?? naming ?? best;
             acc.Summary = deciding.Summary;
             acc.Confidence = deciding.Confidence;
+            if (ownDeciding == null && deciding.Hops > 0 && !string.IsNullOrEmpty(deciding.ToldById) && nameOf != null)
+            {
+                var name = nameOf(deciding.ToldById);
+                if (!string.IsNullOrWhiteSpace(name)) acc.ToldBy = name.Trim();
+            }
             if (naming != null) acc.NamingConfidence = naming.Confidence;
             return acc;
         }
@@ -137,7 +151,9 @@ namespace Ledger.Core
                 return (0.0, SuspicionLevel.Trusting, null);
             string told = string.IsNullOrWhiteSpace(account.Summary)
                 ? (account.SawItMyself ? "I saw what happened" : "I heard about what happened")
-                : (account.SawItMyself ? $"I saw it myself: {account.Summary.Trim()}" : $"I heard that {account.Summary.Trim()}");
+                : (account.SawItMyself ? $"I saw it myself: {account.Summary.Trim()}"
+                   : !string.IsNullOrWhiteSpace(account.ToldBy) ? $"{account.ToldBy.Trim()} told me that {account.Summary.Trim()}"
+                   : $"I heard that {account.Summary.Trim()}");
             int others = Math.Max(0, near.OthersNear);
 
             SuspicionLevel band;

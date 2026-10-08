@@ -657,6 +657,38 @@ namespace Ledger.Core
             return cited;
         }
 
+        /// WHAT A DRAFT REACHED FOR (the talk task of 7 October, the ladder): the
+        /// texts of every item the list cites as the source of a detail, once
+        /// for each detail that cites it, so the item a draft leaned on most comes
+        /// most often. A draft the check refuses still says, through the items it
+        /// cited for what it got right, which of what the character knows bears
+        /// on his question in the writer's reading; the ladder says those plainly
+        /// (TalkLadder). Empty when the answer cites nothing or cannot be read.
+        public static List<string> CitedItems(string answer, List<(string id, string text)> items)
+        {
+            var cited = new List<string>();
+            if (string.IsNullOrEmpty(answer) || items == null) return cited;
+            var ids = new List<string>();
+            foreach (var (id, _) in items) ids.Add(id);
+            foreach (var text in TopLevelObjects(answer))
+            {
+                object parsed;
+                try { parsed = MiniJson.Deserialize(text); } catch (Exception) { continue; }
+                var list = MiniJson.AsList(MiniJson.AsObject(parsed) is Dictionary<string, object> o && o.TryGetValue("specifics", out var v) ? v : null);
+                if (list == null) continue;
+                foreach (var x in list)
+                {
+                    var src = MiniJson.GetString(MiniJson.AsObject(x), "source");
+                    var found = src == null ? null : SourceIds(src.Trim(), ids);
+                    if (found == null) continue;
+                    foreach (var id in found)
+                        foreach (var (itemId, itemText) in items)
+                            if (itemId == id) cited.Add(itemText);
+                }
+            }
+            return cited;
+        }
+
         public static IReadOnlyList<string> ParseItems(string answer, ICollection<string> validIds) => ParseItems(answer, validIds, null);
 
         /// As above, with `habits` given the flagged details the list called a
@@ -1100,6 +1132,40 @@ namespace Ledger.Core
             top.Sort((a, b) => a.at.CompareTo(b.at));
             foreach (var (at, _) in top) chosen.Add(list[at].text);
             return chosen;
+        }
+
+        /// WHETHER TWO LINES SHARE A WORD THAT TELLS WHAT THEY ARE ABOUT (the
+        /// ladder's gate, the talk task of 7 October): Bearing's own reading of
+        /// words, so "keys" meets "key" and a greeting or the time of day meets
+        /// nothing. Not a way to choose facts (measured, that misses), only a
+        /// check that one the writer reached for bears on his words at all.
+        public static bool SharesTellingWord(string a, string b) => SharesTellingWord(a, b, null);
+
+        /// As above, with `corpus` everything the character knows: a word in more
+        /// than a fifth of it ("street", "Mickey", in half of every card's items)
+        /// tells nothing about what a line is about, and does not count (the
+        /// fresh set of 7 October: "What's the street like after dark?" answered
+        /// with the cafe's hours, the street in both).
+        public static bool SharesTellingWord(string a, string b, IReadOnlyCollection<string> corpus)
+        {
+            if (string.IsNullOrWhiteSpace(a) || string.IsNullOrWhiteSpace(b)) return false;
+            var words = Telling(a);
+            List<HashSet<string>> each = null;
+            if (corpus != null && corpus.Count > 0)
+            {
+                each = new List<HashSet<string>>();
+                foreach (var t in corpus) if (!string.IsNullOrWhiteSpace(t)) each.Add(Telling(t));
+            }
+            int most = each == null ? int.MaxValue : Math.Max(1, each.Count / 5);
+            foreach (var w in Telling(b))
+            {
+                if (!words.Contains(w)) continue;
+                if (each == null) return true;
+                int df = 0;
+                foreach (var set in each) if (set.Contains(w)) df++;
+                if (df <= most) return true;
+            }
+            return false;
         }
 
         // Words that tell what a line is about: lower case, a plural's s and a

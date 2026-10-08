@@ -91,6 +91,9 @@ namespace Ledger.Core
             new Rule("gambling", "pools", false, @"\bthe pools\b|\bfootball pools\b|\bpools coupons?\b"),
             new Rule("gambling", "accumulator", false, @"\baccumulators?\b"),
             new Rule("gambling", "stakeon", false, @"\bstake[ds]?\s+on\b|\bstakes\s+on\b"),
+            // The racing page (the talk task of 7 October: Ron, live, reads "the racing
+            // results" in the evening paper): horses and form are the betting shop's talk.
+            new Rule("gambling", "racingpage", false, @"\bracing\s+(?:results|pages?|form|tips?|papers?|news)\b|\bthe racing\b(?!\s+pigeons?)|\bthe gee-?gees\b|\bform guide\b"),
             new Rule("gambling", "dogtrack", false, @"\bdog tracks?\b|\bgreyhound\s+(?:racing|track|stadium)\b|\brace\s?courses?\b|\bracetracks?\b|\brace meetings?\b"),
             new Rule("gambling", "threecard", false, @"\bthree-?card\b|\bfind the lady\b|\bcrown and anchor\b"),
             new Rule("gambling", "moneyongame", false, @"\b(?:fiver|tenner|quid|pound|score)\s+on\s+(?:the\s+)?(?:horses|dogs|match|game|fight|nose|favourite)\b|\bcards for money\b|\bpenny a point\b"),

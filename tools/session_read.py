@@ -48,8 +48,11 @@ ENDS = {"quit", "crash"}
 PLAYERS = {"friend", "jafar"}
 HOWS = {"look", "remark", "recognition", "question", "talk"}
 # How a reply went (town list 6bd): all but "own" and "ended" are talk that broke.
-WENT = {"own", "fallback", "refused", "brush", "cut", "paused", "ended", "walkedOff"}
-BROKE = {"fallback", "refused", "brush", "paused"}
+# The ladder's rungs (the talk task of 7 October): a fact, whom to ask or who told them is
+# something said; its refusal leaves them nothing to say, and is talk that broke.
+WENT = {"own", "fallback", "refused", "brush", "cut", "paused", "ended", "walkedOff",
+        "ladder-fact", "ladder-ask", "ladder-told", "ladder-refuse"}
+BROKE = {"fallback", "refused", "brush", "paused", "ladder-refuse"}
 # The hints (FirstMoments) and the answers to the outfit's ask (Arrangement), town list 6bh.
 MOMENTS = ["StandingStill", "CanTalk", "FirstAsk", "SeenAtDeed", "OverheardAboutHim", "LedgerOpened"]
 ANSWERS = {"did", "refused", "noshow"}

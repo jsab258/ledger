@@ -20,6 +20,14 @@ namespace Ledger.Core
         public string System;
         public List<LlmMessage> Messages = new List<LlmMessage>();
         public int MaxTokens = 1024;
+        /// THE MODEL'S THINKING, when the request sets it (the talk task of 7
+        /// October, the check's successor to Haiku 4.5): "disabled", "adaptive"
+        /// or "between_tools", sent as the API's `thinking` type; null sends
+        /// nothing, as every request did before. Haiku 5.5 thinks unless told
+        /// not to, which a classifier on the voice's path cannot wait for.
+        public string Thinking;
+        /// The effort ("low" ... "max"), sent as `output_config.effort`; null sends nothing.
+        public string Effort;
     }
 
     public class LlmResponse
@@ -65,6 +73,11 @@ namespace Ledger.Core
                 // as much again as the bill.
                 { Core, (2.0, 10.0) },
                 { Ambient, (1.0, 5.0) },
+                // The check's candidate successors (the talk task of 7 October;
+                // the pricing page read that day): Haiku 5.5 for prompts up to
+                // 100,000 tokens, which every talk prompt is; Sonnet 5.5.
+                { "claude-haiku-5-5", (0.10, 0.50) },
+                { "claude-sonnet-5-5", (2.0, 10.0) },
             };
 
         /// The role a model plays, as the relay knows it (ledger/Relay): the
@@ -137,6 +150,7 @@ namespace Ledger.Core
                 { "messages", messages },
             };
             if (!string.IsNullOrEmpty(request.System)) body["system"] = request.System;
+            AddOptions(body, request);
 
             var json = MiniJson.Serialize(body);
 
@@ -198,6 +212,7 @@ namespace Ledger.Core
                 { "stream", true },
             };
             if (!string.IsNullOrEmpty(request.System)) body["system"] = request.System;
+            AddOptions(body, request);
             var msg = new HttpRequestMessage(HttpMethod.Post, MessagesUrl);
             Authorise(msg);
             msg.Content = new StringContent(MiniJson.Serialize(body), Encoding.UTF8, "application/json");
@@ -314,6 +329,13 @@ namespace Ledger.Core
                 return MiniJson.GetString(error, "message") ?? body;
             }
             catch { return body; }
+        }
+
+        /// The request's thinking and effort, when it sets them (LlmRequest.Thinking).
+        static void AddOptions(Dictionary<string, object> body, LlmRequest request)
+        {
+            if (!string.IsNullOrEmpty(request.Thinking)) body["thinking"] = new Dictionary<string, object> { { "type", request.Thinking } };
+            if (!string.IsNullOrEmpty(request.Effort)) body["output_config"] = new Dictionary<string, object> { { "effort", request.Effort } };
         }
 
         public static LlmResponse ParseResponse(string json)
