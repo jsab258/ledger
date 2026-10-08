@@ -16,3 +16,4 @@
 {"event": "start", "at": "2026-10-08T14:43:25", "task": "lab test 5b: jumper and trousers in Marvelous Designer", "phase": "lab", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T16:16:56", "note": "test 5b stopped: Marvelous bridge not started by 15:20; target amended; FAILED page"}
 {"event": "start", "at": "2026-10-08T16:16:56", "task": "lab test 6b: talk check on a local model", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T17:15:24", "note": "test 6b done: local checker less accurate, do not switch; Gemini skipped (key file empty at 17:15)"}

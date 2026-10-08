@@ -2,7 +2,7 @@ DO NOT SWITCH: the local checker is less accurate than Haiku 5.5 and no faster w
 
 # The talk check on other models (lab test 6, 8 October 2026)
 
-16:20 to {END}, branch lab. Spent: $0.00 of the $2 (no API was called).
+16:20 to 17:20, branch lab. Spent: $0.00 of the $2 (no API was called).
 
 ## What was run
 
@@ -11,7 +11,7 @@ DO NOT SWITCH: the local checker is less accurate than Haiku 5.5 and no faster w
   - **Replies:** 30 from the 28 September bench's held sets, 15 invented and 15 honest.
 - **The local checker:** LettuceDetect's TinyLettuce Ettin 68M (KRLabsOrg/tinylettuce-ettin-68m-en, MIT, 277 MB; downloaded with your yes). It runs on this PC's CPU, 6 threads, isolated in F:\LedgerTools\pylib\lettuce. It is not a prompted model: it marks the parts of a sentence that the character's known facts do not support. So "the same prompts" means the same inputs here: the known facts, the player's line, and the detail or the reply's first sentence.
 - **First sentence only,** as ordered: of each reply, only sentence 1 went to the checker. Only about 3 (by word overlap) of the 15 invented replies have their invented detail in sentence 1, so a first-sentence check can catch at most those; Haiku's whole-reply figures below are not like for like on replies.
-- **Gemini:** {GEMINI}
+- **Gemini:** skipped. The key file (F:\LedgerTools\keys\google.txt) was created empty and opened in Notepad at 16:17, with one notification to you, and was still empty at 17:15. A runner is ready if wanted later (gemini_check.py: the live check's own second-look prompt, the key sent only in a header, never printed or kept); it would cost a few cents on these 127 details.
 
 ## The table
 
