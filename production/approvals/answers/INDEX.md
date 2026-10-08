@@ -2,7 +2,7 @@
 
 Copied from each page's own database into this folder (pages.json lists the pages). Written by tools/page_answers.py --index; never edited by hand.
 
-Read back: 2026-10-06
+Read back: 2026-10-08
 
 | Page | Updated | Answers | Each answer: pick or verdict, date |
 |---|---|---|---|
@@ -44,5 +44,6 @@ Read back: 2026-10-06
 | [LEDGER - voice casting](https://claude.ai/artifact/N9cj4bT3mF2nEZVWH7PDjS) | 2026-07-31 | 0 | July; its version declares no database |
 | [LEDGER — voice candidates](https://claude.ai/artifact/LWtCuBtgKX2GkWkwnbC5qZ) | 2026-07-31 | 0 | July; its version declares no database |
 | [LEDGER — UI style directions](https://claude.ai/artifact/19KEWmTYDgC8azDcgEPd9p) | 2026-07-26 | 0 | July; its version declares no database |
+| [The Voice](https://claude.ai/artifact/LTmrUMeRzYkaDZBKuGcEkg) | 2026-10-07 | 2 | first-sentence-model-2026-10-07: off, 2026-10-07; voice-route-2026-10-07: stop, 2026-10-07 (Report it failed, as a blocked core capability. The measurements show the check ) |
 
-38 pages, 145 answers.
+39 pages, 147 answers.
