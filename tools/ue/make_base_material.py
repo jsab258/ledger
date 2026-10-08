@@ -223,7 +223,7 @@ WEAR_GROUND_DEFAULT = 10.0
 WEAR_BAND_PARAM = "WearBandHeight"       # how high the dust reaches, cm (the research: 0.45 m; 0.40 read better)
 WEAR_BAND_DEFAULT = 40.0
 WEAR_TINT_PARAM = "WearDustTint"         # dried road splash, linear (the decals' dust, darker)
-WEAR_TINT_DEFAULT = (0.085, 0.075, 0.06, 1.0)
+WEAR_TINT_DEFAULT = (0.040, 0.035, 0.028, 1.0)
 
 # THE ROUGHNESS A FULLY WET SURFACE APPROACHES, and this file does not get to
 # have an opinion about it. It is 1 - 0.92 where 0.92 is

@@ -18,28 +18,28 @@
  "glass_see_through_note": "The display glass wears M_LedgerGlass (tools/ue/make_glass_material.py): translucent, lit in the forward pass so the sky lands on it as a sheen, tinted by the glass colour. If the build lacks that material the glass is left out, as it was before it existed; the verdict line counts both.",
  "sun_gain": 0.1,
  "sun_gain_note": "The Unreal day's sun is this times the scene file's sun_intensity. The sheet is overcast with no sun shadow; at the file's 3.0 the parade threw a hard shadow across the road.",
- "sky_light_gain": 0.58,
+ "sky_light_gain": 1.4286,
  "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
  "surface_gain": {
   "brick_red": [
-   2.737,
-   2.812,
-   2.575
+   1.0,
+   0.85,
+   0.72
   ],
   "brick_grey": [
-   3.125,
-   3.125,
-   3.125
+   1.142,
+   1.142,
+   1.142
   ],
   "paving": [
-   0.6,
-   0.59,
-   0.57
+   0.42,
+   0.413,
+   0.399
   ],
   "asphalt": [
-   0.22,
-   0.22,
-   0.23
+   0.13,
+   0.13,
+   0.135
   ],
   "kerbstone": [
    0.35,
@@ -51,10 +51,30 @@
    0.05,
    0.05
   ],
+  "paint_stall": [
+   0.55,
+   0.55,
+   0.55
+  ],
+  "paint_door": [
+   0.55,
+   0.55,
+   0.55
+  ],
+  "paint_fascia": [
+   0.55,
+   0.55,
+   0.55
+  ],
+  "frame_painted": [
+   0.55,
+   0.55,
+   0.55
+  ],
   "paint_joinery": [
-   1.2,
-   1.2,
-   1.18
+   1.0,
+   1.0,
+   0.983
   ],
   "net_lace": [
    0.8,
@@ -67,7 +87,7 @@
  "surface_gain_note_4_october": "The proof view, step 2.4: the brick's gains x1.25, because each house's own look (terrace-front.py HOUSE_LOOKS, multiplied in by the game) is at most one and averages about 0.76, so the street's mean brick stays where it was while the houses differ.",
  "sky_seen_gain_night": 0.15,
  "sky_light_gain_night": 0.15,
- "night_exposure_bias": -1.0,
+ "night_exposure_bias": 0.0,
  "night_note": "The three day gains are the day's only. The night's own, tuned 23 September by eye for the roadmap's dusk frame (the street at dusk, wet, lamps lit, a figure in silhouette) - there is no night reference sheet: the night sky photograph at 0.15 of its brightness, so the terraces stand dark against an evening sky instead of a white one, the sky light as the file has it, and the automatic exposure biased down one stop.",
  "glass_opacity": 0.06,
  "glass_opacity_note": "1 October: since the glass became Thin Translucent (tools/ue/make_glass_material.py) its opacity is only the dirt on the pane, in the glass row's own colour; the clean pane lets the room through by its transmittance and keeps its whole reflection. It was 0.25 while opacity also scaled the reflection away (production/research/shop-glass-reflections/NOTE.md).",
