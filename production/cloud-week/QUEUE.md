@@ -56,3 +56,4 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 ## Log
 
 - 8 Oct 21:55: branch cloud/week-42 made from wip at 8356dda; this queue written; Blender 5.2.2 (bpy, headless) installed in the cloud session.
+- 8 Oct 22:40: the cloud environment's network policy refuses almost every host the week needs (Wikimedia Commons, Geograph, archive.org, dev.epicgames.com, unrealengine.com, arXiv, graphics blogs: 403 at the proxy). Reachable: raw.githubusercontent.com, polyhaven.com, ambientcg.com, pypi. Asked Jafar to open it (the environment's Network access: Full, or those hosts allowed). Meanwhile the units that need no new web sources go first: the door (the lab's photographs are in git on branch lab), the MCP note (Epic's own plugin instructions are on raw.githubusercontent.com), tools and fonts.
