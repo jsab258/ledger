@@ -10,9 +10,9 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 ## 1. Research notes (the professional method end to end, dated sources)
 
-- 1a. open. Deep-set sash windows reading as white boards and slits from low street angles in a real-time renderer, and the fix (production/audits/windows-2026-10-08/).
-- 1b. open. A walk without foot slide where clips join.
-- 1c. open. Night street lighting in Lumen: pools of lamp light with darkness between.
+- 1a. in progress (8 Oct 22:05). Deep-set sash windows reading as white boards and slits from low street angles in a real-time renderer, and the fix (production/audits/windows-2026-10-08/).
+- 1b. in progress (8 Oct 22:05). A walk without foot slide where clips join.
+- 1c. in progress (8 Oct 22:05). Night street lighting in Lumen: pools of lamp light with darkness between.
 - 1d. open. Shop-window reflections of the street in Unreal 5 without the frame cost (46.8 ms worst frame against 33.3 on 8 October; FOR-JAFAR.md, GLASS-NOTES.md on branch lab): how shipped games do reflective shop glass, and what fits.
 - 1e. open. Setup note for Epic's Unreal MCP server in the 5.8 editor (Experimental, loopback only): enabling it, connecting Claude Code, the toolsets that matter (scene, actors, lights, materials, screenshots, editor Python), known faults, and a first ten-minute test on our street. From production/research/frontier-ai-uses (notes HA and HB) and Epic's own documentation; only sources reached.
 
