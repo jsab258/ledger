@@ -13,3 +13,6 @@
 {"event": "stop", "at": "2026-10-08T11:29:17", "note": "GLASS-NOTES.md pushed"}
 {"event": "start", "at": "2026-10-08T11:29:35", "task": "lab task 3: front door (Ellis), phase 2", "phase": "lab", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T12:21:43", "note": "front door: built, check passed, two fresh reviews failed on detail; set aside for phase 2"}
+{"event": "start", "at": "2026-10-08T14:43:25", "task": "lab test 5b: jumper and trousers in Marvelous Designer", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T16:16:56", "note": "test 5b stopped: Marvelous bridge not started by 15:20; target amended; FAILED page"}
+{"event": "start", "at": "2026-10-08T16:16:56", "task": "lab test 6b: talk check on a local model", "phase": "lab", "kind": "production"}
