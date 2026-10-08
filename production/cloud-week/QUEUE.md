@@ -28,7 +28,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 - 2.8 open. Lamp posts.
 - 2.9 open. Shop fascia signs.
 - 2.10 open. Posters and notices.
-- 2.11 open. Wear: stains, grime, gum, cracked render.
+- 2.11 in progress (8 Oct 22:38; ahead of 2.2 to 2.10, which wait for photographs the network refuses). Wear: stains, grime, gum, cracked render.
 
 ## 3. Kit pieces built by script, each through its check and fresh review
 
