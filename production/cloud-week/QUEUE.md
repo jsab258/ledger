@@ -10,9 +10,9 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 ## 1. Research notes (the professional method end to end, dated sources)
 
-- 1a. in progress (8 Oct 22:05). Deep-set sash windows reading as white boards and slits from low street angles in a real-time renderer, and the fix (production/audits/windows-2026-10-08/).
-- 1b. in progress (8 Oct 22:05). A walk without foot slide where clips join.
-- 1c. in progress (8 Oct 22:05). Night street lighting in Lumen: pools of lamp light with darkness between.
+- 1a. in progress (8 Oct 21:58). Deep-set sash windows reading as white boards and slits from low street angles in a real-time renderer, and the fix (production/audits/windows-2026-10-08/).
+- 1b. in progress (8 Oct 21:58). A walk without foot slide where clips join.
+- 1c. in progress (8 Oct 21:58). Night street lighting in Lumen: pools of lamp light with darkness between.
 - 1d. open. Shop-window reflections of the street in Unreal 5 without the frame cost (46.8 ms worst frame against 33.3 on 8 October; FOR-JAFAR.md, GLASS-NOTES.md on branch lab): how shipped games do reflective shop glass, and what fits.
 - 1e. open. Setup note for Epic's Unreal MCP server in the 5.8 editor (Experimental, loopback only): enabling it, connecting Claude Code, the toolsets that matter (scene, actors, lights, materials, screenshots, editor Python), known faults, and a first ten-minute test on our street. From production/research/frontier-ai-uses (notes HA and HB) and Epic's own documentation; only sources reached.
 
@@ -56,4 +56,4 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 ## Log
 
 - 8 Oct 21:55: branch cloud/week-42 made from wip at 8356dda; this queue written; Blender 5.2.2 (bpy, headless) installed in the cloud session.
-- 8 Oct 22:40: the cloud environment's network policy refuses almost every host the week needs (Wikimedia Commons, Geograph, archive.org, dev.epicgames.com, unrealengine.com, arXiv, graphics blogs: 403 at the proxy). Reachable: raw.githubusercontent.com, polyhaven.com, ambientcg.com, pypi. Asked Jafar to open it (the environment's Network access: Full, or those hosts allowed). Meanwhile the units that need no new web sources go first: the door (the lab's photographs are in git on branch lab), the MCP note (Epic's own plugin instructions are on raw.githubusercontent.com), tools and fonts.
+- 8 Oct 22:05: the cloud environment's network policy refuses almost every host the week needs (Wikimedia Commons, Geograph, archive.org, dev.epicgames.com, unrealengine.com, arXiv, graphics blogs: 403 at the proxy). Reachable: raw.githubusercontent.com, polyhaven.com, ambientcg.com, pypi. Asked Jafar to open it (the environment's Network access: Full, or those hosts allowed). Meanwhile the units that need no new web sources go first: the door (the lab's photographs are in git on branch lab), the MCP note (Epic's own plugin instructions are on raw.githubusercontent.com), tools and fonts.
