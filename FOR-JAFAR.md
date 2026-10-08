@@ -29,7 +29,17 @@ No decision asked: these are for watching the street change.
 | The reverse view | ![This morning](production/previews/morning-reverse-day-2026-10-08.jpg) | ![Midday](production/previews/morning-reverse-day-midday-2026-10-08.jpg) |
 | The street at night | ![This morning](production/previews/morning-night-2026-10-08.jpg) | ![Midday](production/previews/morning-night-midday-2026-10-08.jpg) |
 
-**Today, by your orders of 07:10 and 11:10 (the PC goes off at 19:00).** The way back is tagged (before-sky-2026-10-08). Done: the talk branch merged; the sky lit by the sky it shows (two tries, closer, not passed); Mickey's row's windows to the photographs; the claim check on Haiku 5.5; Tom keeps take L1. Your light faults, two tries each: the near lamp pool 0.5% clipped (met); the brick passes near, parade and far, the left terrace and maroon fascias still short; the road a wet grey sheen instead of a white mirror, two of its three numbers still out, its flat puddles now standing out (production/audits/road-2026-10-08). Mickey's office under the new light: four fresh reviewers, two faults blocked (the night's reflected windows too bright, the yellow lines glowing); after one try each every office and front view passes on new faults, the directories now books, a back room behind the back door (production/audits/office-2026-10-08). On now: a packaged build as 1.1's evidence and its walk-in; at 17:00 the packaged build and its three views here.
+**This morning beside this evening, from the packaged game (8 October, 16:46; build 69d0948, all work to 16:06).**
+
+| | This morning, 08 Oct | This evening, 08 Oct (packaged) |
+|---|---|---|
+| The hook camera by day | ![This morning](production/previews/morning-hook-day-2026-10-08.jpg) | ![This evening](production/previews/morning-hook-day-evening-2026-10-08.jpg) |
+| The reverse view | ![This morning](production/previews/morning-reverse-day-2026-10-08.jpg) | ![This evening](production/previews/morning-reverse-day-evening-2026-10-08.jpg) |
+| The street at night | ![This morning](production/previews/morning-night-2026-10-08.jpg) | ![This evening](production/previews/morning-night-evening-2026-10-08.jpg) |
+
+**Where I stopped and what comes next (16:50).** New work stopped at 16:06 with the evening build; its views are above. Not passed: the frame rate. The shop glass's catch round costs a slow frame a window, and the evening build reads below 30 at its worst (99th percentile 46.8 ms; 33.7 this afternoon, 31.2 this morning; production/d1-probe/ue-perf-verdict.txt). Next, in order: the frame rate, by taking the glass catch out of play (at load, behind the title) and measuring it packaged; Mickey's open door walked in the packaged game (moved clear of its post, not yet walked); then the road's flags and puddles, and the lab's second glass step. Item 1.1's own known shortfalls stand: the base layer, the bare sky, faint wear, the glass's small steps.
+
+**Today, by your orders of 07:10 and 11:10 (the PC goes off at 19:00).** The way back is tagged (before-sky-2026-10-08). Done: the talk branch merged; the sky lit by the sky it shows (two tries, closer, not passed); Mickey's row's windows to the photographs; the claim check on Haiku 5.5; Tom keeps take L1. Your light faults, two tries each: the near lamp pool 0.5% clipped (met); the brick passes near, parade and far, the left terrace and maroon fascias still short; the road a wet grey sheen instead of a white mirror, two of its three numbers still out, its flat puddles now standing out (production/audits/road-2026-10-08). Mickey's office under the new light: four fresh reviewers, two faults blocked (the night's reflected windows too bright, the yellow lines glowing); after one try each every office and front view passes on new faults, the directories now books, a back room behind the back door (production/audits/office-2026-10-08). Then (your 14:30 message) the lab's glass fix: the reflections' steps halved, rings gone, the card's memory within bounds (peak 7.9 GB); and a packaged walk-in of the office (the back room reads; the open door's rails needed a second try).
 
 Mickey's office this morning (left) and now (right), day above, night below; then his whole front by day and night (editor pictures):
 
@@ -66,13 +76,13 @@ Disk (10-08 03:45): C: 88.5 GB free, F: 38.4 GB free (retention's floors: 40 and
 
 ## Builder, Thursday 8 October
 
-**Failed:** item 1.1's third review, the first by your new gate: no change of last evening made a fault, but newly seen ones block: walkers and Tom walk through things, faults in Mickey's office, and three views framed too high; most fixed by 06:00. The speaker's walk: where its clips join, a planted foot slides 13 to 27 cm (the bar is 3 cm). The tester never found Sheila on the street.
+**Failed:** the frame rate. The shop glass's catch costs a slow frame a window; the evening build reads 46.8 ms at its 99th percentile (bar 33.3). Two tries failed, set aside. The road: two of three numbers still out after two tries, its puddles more visible. The brick's left terrace and maroon fascias still short. My slip: the cover's 11:20 fix was committed without its code and came back as a doormat; restored, now checked.
 
-**Done (in tonight's build):** turning: if someone Tom talks to has turned away, they turn to face him: asked 100°, turned 99.6° ([picture](production/previews/turn-to-him-2026-10-08.jpg)). Sitting: Ron, on the office bench in his evening hours, stands up and sits down again, landing within 1 cm of his seat with no foot slip ([picture](production/previews/sit-stand-office-2026-10-08.jpg)). The library's own turns crouched and its only sit-down bent him double, so the right turn is a left turn mirrored and the sit-down is the stand-up played backwards. Your gate ruling is in; tonight's review has ten views, one reviewer each.
+**Done:** your light faults to their numbers (the near pool met). Mickey's office passes its gate under the new light: the night reflections, the yellow lines, the directories, a back room. The lab's glass fix: steps halved, rings gone, memory within the card; the glass no longer flashes an unlit street. Walked in the packaged game.
 
-**Two-tries rule broken:** the walk's joins: three tries before the research, three after it; set aside.
+**Two tries kept:** every fault stopped at two.
 
-**Act on:** Tom's face: research the other route, or pick a take?
+**Act on:** compare this evening's three views with this morning's (above); the next session starts with the frame rate.
 
 ## Builder, Wednesday 7 October
 

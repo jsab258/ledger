@@ -18,7 +18,7 @@ GOAL (his /goal, to Sunday 11 Oct 20:00): PLAN.md's phases 0 and 1 done with evi
 - [ ] 1.3 P2 voice: 3-PROOFS.md, P2.
 - [ ] 1.4 P1 packaged: 3-PROOFS.md, P1.
 
-STATE (8 Oct, 13:10): 1.1: office and front pass their gate on new faults (production/audits/office-2026-10-08); packaged walk-in this afternoon. 1.2: face blocked; clothes failed; sitting down, standing up and turning work in the editor; the walk slides at its joins. 1.3: FAILED, blocked. 1.4: done, eb053ad 80 fps.
+STATE (8 Oct, 16:50): 1.1: office and front pass their gate; walked in packaged. 1.2: face blocked; clothes failed; sitting down, standing up and turning work in the editor; the walk slides at its joins. 1.3: FAILED, blocked. 1.4: done at eb053ad, regressed 8 Oct (BELOW-30, the glass catch).
 
 ## Handovers
 

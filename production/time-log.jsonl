@@ -75,3 +75,11 @@
 {"event": "stop", "at": "2026-10-08T12:50:00", "note": "reviewers ran beside the production tries"}
 {"event": "start", "at": "2026-10-08T12:00:00", "task": "8 Oct: the office's tries (night glass, yellow lines, dark shop spill, directories, door glass), back room, package request, records", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T13:40:00", "note": ""}
+{"event": "start", "at": "2026-10-08T13:40:00", "task": "8 Oct: a packaged build as 1.1's evidence; the frame-rate verdict traced to the glass catch round; the packaged walk-in and its two reviews", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T14:35:00", "note": ""}
+{"event": "start", "at": "2026-10-08T14:35:00", "task": "8 Oct: the open door clear of its post; his 14:30 message: the lab's glass fix applied, memory measured; the street re-exported", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T15:00:00", "note": ""}
+{"event": "start", "at": "2026-10-08T15:00:00", "task": "8 Oct: the glass gate: seven fresh reviewers over three rounds", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-10-08T15:30:00", "note": "reviewers ran beside the fixes"}
+{"event": "start", "at": "2026-10-08T15:30:00", "task": "8 Oct: the glass's dark reflection found (catch timing; spare cube; photographs wait), the lost cover restored, the cheap catch taken out; the evening build asked", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T16:10:00", "note": ""}
