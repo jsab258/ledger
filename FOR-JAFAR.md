@@ -21,6 +21,14 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
+**The light change, this morning beside midday (8 October; editor pictures, same views).** The street now lit by the sky it shows, the colours tuned under the dark light brought back, the night camera a stop up and its lit windows glowing as rooms; Mickey's row's new sashes in the midday night picture. Its faults, by the gate's numbers: the brick's saturation 0.28 against the sheet's 0.53-0.65; the road mirroring the sky; the near lamp pool's clipped red 6% of the pavement (this morning's 4%).
+
+| | This morning, 08 Oct | Midday, 08 Oct |
+|---|---|---|
+| The hook camera by day | ![This morning](production/previews/morning-hook-day-2026-10-08.jpg) | ![Midday](production/previews/morning-hook-day-midday-2026-10-08.jpg) |
+| The reverse view | ![This morning](production/previews/morning-reverse-day-2026-10-08.jpg) | ![Midday](production/previews/morning-reverse-day-midday-2026-10-08.jpg) |
+| The street at night | ![This morning](production/previews/morning-night-2026-10-08.jpg) | ![Midday](production/previews/morning-night-midday-2026-10-08.jpg) |
+
 **Today, by your orders of 07:10 (the PC goes off at 19:00).** The way back is tagged (before-sky-2026-10-08). Done: the talk branch merged (who told me 115 of 115; the ladder 20 of 145 empty, not 19: one judge-variable turn). The sky: the street now lit by the sky it shows and the colours tuned under the dark light brought back; two tries; every view closer to the Hook sheet than this morning, but not passed: the wet road now mirrors the sky near-white, the brick is less red, the night's near pool runs hot (production/audits/sky-2026-10-08). On now: the windows to the photographs on Mickey's row (the target amended by a fresh helper to 3 inches of frame and 1.68 m; the window passes its check; going into the street). Then the Haiku timing (running) and Tom's brows (the plugin's code shows a way). At 17:00, the packaged build and its three views here.
 
 Disk (10-08 03:45): C: 88.5 GB free, F: 38.4 GB free (retention's floors: 40 and 20).
@@ -38,9 +46,7 @@ Disk (10-08 03:45): C: 88.5 GB free, F: 38.4 GB free (retention's floors: 40 and
 
 ### Needs you
 
-(Your orders of 8 October, 07:10, answered the check study (parked until a faster voice) and the clothes (the base layer through phase 1, the lab's work): both gone from here, both in RULINGS.md.)
-
-1. **Tom's face: the closest take, as you asked** (09:25). The one try on his brows (the plugin's code showed a way; the build set the colours) did not show in his face. A fresh reviewer ranked every existing take against his sheet: **L1 is closest**: clean-shaven, fair, blue-grey eyes, reads Northern European, brows near the hair's colour. Still short of the sheet: he looks mid-to-late thirties and soft in the jaw, not 32 and lean; his hair reads black and swept from the front, brown and bristly in profile; pale under the new light. No take would pass in a 2026 game yet ([the review](production/casting/tom-nowak/CLOSEST-2026-10-08.md)). ![Tom, take L1, front and profile](production/previews/tom-closest-l1-2026-10-08.jpg) Use L1 as Tom for now? **(A, recommended) yes, for phase 1, in place of today's stand-in**; (B) no, he stays the stand-in.
+(Your answers of 11:10 are in RULINGS.md: Tom keeps take L1; the photographs win over a period book; the two clothing checks; clothes reported failed, the base layer through phase 1. Nothing else waits on you.)
 
 ### Road to worth playing (PLAN.md)
 

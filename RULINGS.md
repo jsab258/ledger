@@ -6,10 +6,10 @@ His binding rulings; the later stands; canon.md outranks them.
 
 - 3 Oct: The goal: a thirty-minute Quay Street build his friends play on this PC, passing the Meridian Test (they do not bounce off it, the town visibly knows them, talk feels live, he would rather play it).
 - 5 Oct: CHARTER.md and PLAN.md (the outside audit's, with his edits) replace every list; NOW.md holds the current phase; how the work runs lives in CLAUDE.md.
-- 3 Oct: The AI tester's nightly walk, played as a player would, reports each morning whether the town visibly knows Tom (who noticed and said so, "that's all I know" counts, reply delays, broken illusions).
-- 7 Oct: He deletes the NoAI folders himself. The sitting clips come from last month's Mixamo harvest.
+- 3 Oct: The AI tester's nightly walk, played as a player would, reports each morning whether the town visibly knows Tom (who noticed, "that's all I know" counts, delays, broken illusions).
+- 7 Oct: He deletes the NoAI folders himself.
 - 3 Oct: Not reopened: the route, the interface, the AI tester's walks, faces, the voices in the game, the town's talk work.
-- 8 Oct: Engine questions: the installed Unreal 5.8.2 source first, file and line cited, before any tuning.
+- 8 Oct: Engine questions: the installed 5.8.2 source first, file and line cited. Two tries means two, then research and set aside.
 - 3 Oct: The proof view is built to the Hook sheet, not cleaned; to his page only beside it. Bars: the wet street dark, glistening, mirroring sky and buildings, its puddles water; the hill built, not hazed (lower, softer, varied, trees, mist); windows with white frames, sash bars, sky in the glass.
 - 4 Oct: The friends' build: his PC and own account, a shortcut, his key capped at five dollars an evening, no relay; the twenty basics; nothing a friend sees unfinished; Sheila's face whole when she talks; no debug text.
 - 29 Sep: No new systems until the slice is worth playing; what was ruled for after the route (townspeople, microphone, the ending's signs, regulars) and the sweep's larger items wait for a place in PLAN.md.
@@ -35,7 +35,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 30 Sep: His page's pictures are taken at 2560×1440, never enlarged, open full size; films with sound.
 - 21 Sep: The Hook sheet (pass 4) governs mood, palette and composition; dated photographs govern what things looked like, and win; no design copied; references only in production/reference/.
 - 30 Sep: Lighting is judged through the game's own camera and exposure.
-- 8 Oct: Kit pieces period books draw (windows, doors, shopfronts, railings): a fresh helper, never the builder, writes the target from the source; an automatic check; a fresh reviewer against photographs. Windows: 2.5 to 3 inches of frame round the glass, as photographed, not Ellis's 3/4 inch; 1.68 m high, not 1.50 m.
+- 8 Oct: Kit pieces period books draw (windows, doors, shopfronts, railings): a fresh helper, never the builder, writes the target from the source; an automatic check; a fresh reviewer against photographs. Book and photographs disagreeing, the photographs win (windows: 2.5-3 inch frames, 1.68 m).
 - 23 Sep: Blender for shapes and layout; all look development in Unreal, against the sheet.
 - 21 Sep: Grime is the strategy (D53), a seeded wear layer.
 - 15 Sep: The sky is a photograph (D40); presentation is built early (D28), its grain, grade and depth of field owed at stage 1.
@@ -53,7 +53,7 @@ His binding rulings; the later stands; canon.md outranks them.
 
 ## Faces, hair and voices
 
-- 30 Sep: Faces are frozen: Ron P2, Sheila S4 with its hair, Darren S6 with Epic's short cut.
+- 30 Sep: Faces are frozen: Ron P2, Sheila S4 with its hair, Darren S6 with Epic's short cut; 8 Oct: Tom L1.
 - 25 Sep: The other eleven casting sheets are approved as text; their faces cast in MetaHuman from them, a generated portrait mood only.
 - 24 Sep: No voice is cast without his yes; no hiring, ever; clean references, nothing noisy.
 - 3 Oct, the voices in the game: Sheila p267 in the game's own engine; Ron his July p227; Darren p241; Agar p226, the dispatcher p280.
@@ -69,9 +69,9 @@ His binding rulings; the later stands; canon.md outranks them.
 
 ## Clothes
 
-- 3 Oct: Clothes are the one exception to the visual bar; tailoring waits for the tools. Their floor: plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping or holes, nobody frozen stiff; judged on it, not the Hook sheet: passers-by at eight metres, Tom's talkers close up. 5 Oct: kept.
+- 3 Oct: Clothes are the one exception to the visual bar; tailoring waits for the tools. Their floor: plain, period-plausible, no modern giveaways (contrast-stitched slim jeans, trainers), no clipping or holes, nobody frozen stiff; judged on it, not the Hook sheet: passers-by at eight metres, Tom's talkers close up.
 - 3 Oct: People wear only gated garments from CC0, unmarked CC-BY with credit, or Blender; none bought or commissioned. 8 Oct: the white base layer stays through phase 1, reported failed; the lab's, not this session's.
-- 2 Oct: Stopped: Marvelous draping, procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; clothing work never opens Unreal. 8 Oct: no more draping of tailored jackets in Blender (drafting by code works); an outfit stays an outfit until the character is assembled (saving bakes it, cloth movement lost).
+- 2 Oct: Stopped: Marvelous draping, procedural tailoring, fitting every garment to six bodies; production/art/clothing/RUBRIC.md is the bar when tailoring resumes; clothing work never opens Unreal. 8 Oct: no more draping of tailored jackets in Blender (drafting by code works); an outfit stays an outfit until the character is assembled (saving bakes it). Garment reviews first count body points showing through; every target is tested against its body or model and its source before building.
 - 30 Sep: Game clothes are skinned meshes, only loose parts simulated; shoulders judged in Unreal.
 - 29 Sep: Clothes on people are his to approve, in the game's camera.
 
@@ -90,7 +90,7 @@ His binding rulings; the later stands; canon.md outranks them.
 - 24 Sep: The paid router stays; a local model later as the fallback offline; three router changes owed; no training on its answers.
 - 23 Sep: The talk runs beside the game as the tested C# helper, not rewritten in C++.
 - 7 Oct, speech: no prepared openings. Two seconds not reached: failed, a blocked core capability. No third attempt at the voice; no cloud voice; the faster first sentence off. 8 Oct: the check study parked until a faster voice; the ladder careful, as built.
-- 7 Oct, lighting: day and night now; later four or five lighting states with transitions, no moving sun; not in phase 1.
+- 7 Oct, lighting: day and night now; four or five states with transitions later, no moving sun, not in phase 1.
 - 23 Sep: Offline or slow: the authored street carries on, an in-character brush-off and a small sign; a slow line dropped after about 8 s.
 - 24 Sep: Before outsiders play: the AI notice before the first talk, a way to report any line, the content rule on live speech; Steam's AI disclosure as drafted.
 - 29 Sep: Live talk names no real make, brand, shop, club, programme, paper or public figure, and nothing after 1992.
