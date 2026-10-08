@@ -1363,6 +1363,13 @@ def _plain_ground(parts, p, T, wall, bay):
     # A COTTAGE'S WINDOWS SIT UNDER ITS EAVES (3 October): sills at 0.9 m, so the
     # heads and their arches clear a 3.0 m eaves with brick above them.
     sill_z = 1.525 if p["storeys"] > 1 else COTTAGE_SILL_M
+    kit = _sash_kit(p)
+    if kit is not None:
+        # THE PERIOD OPENING downstairs too (his ruling, 8 October): the head where it was, the sill
+        # lowered to the checked sash's height
+        head_gf = sill_z + win_h
+        win_h = kit[1]
+        sill_z = head_gf - win_h
     sill_t = 0.075
     jamb_t = p["transom_t_m"]
 
@@ -1457,6 +1464,15 @@ def _plain_ground(parts, p, T, wall, bay):
                         sill_z + win_h, "segmental-rubbed-brick-arch/as-upstairs")
         # A SASH AND A NET, as upstairs (3 October, the proof view's first fresh
         # review: the cottages' windows read as arches filled with brick, no glass).
+        if kit is not None:
+            # the checked sash, its net card in each pane, as upstairs (8 October)
+            for j, (gy, z0, z1, hx) in enumerate(_kit_sash_window(parts, n, cx, sill_z, kit[2]["2/2"], prefix="gf")):
+                net = _box(parts, "gf_net_%d_%d" % (n, j), "interior_lit", cx - hx, cx + hx,
+                           gy + 0.001, gy + 0.011, z0, z1, "net-curtain/C12/the-sash's-own-pane")
+                net["decal"] = NET_CURTAINS[(n + bay) % len(NET_CURTAINS)]
+                net["decal_emit"] = "net"
+                net["decal_uv"] = (0.0, 0.0, 1.0, 0.5) if j == 0 else (0.0, 0.5, 1.0, 1.0)
+            continue
         _sash(parts, n, cx - win_w / 2.0, cx + win_w / 2.0, sill_z, sill_z + win_h, rec, prefix="gf")
         net = _box(parts, "gf_net_%d" % n, "interior_lit", cx - win_w / 2.0, cx + win_w / 2.0,
                    rec + 0.05, rec + 0.06, sill_z, sill_z + win_h, "net-curtain/C12/behind-the-glass")
@@ -1618,19 +1634,31 @@ def _upper_floor(parts, p, T, wall, bay=0):
              "0.95m-wide/window-plus-50mm-each-side")
         _segmental_arch(parts, "upper_arch_%d" % i, a, b, head_z,
                         "segmental-rubbed-brick-arch/rise-a-seventh-of-the-span")
-        if kit is not None:
-            _kit_sash_window(parts, i, cx, sill_z, kit)
+        kind = _window_kind(p.get("block_id"), bay)
+        panes = None
+        if kit is not None and kind in kit[2]:
+            panes = _kit_sash_window(parts, i, cx, sill_z, kit[2][kind])
         else:
-            _sash(parts, i, a, b, sill_z, head_z, p["reveal_m"], kind=_window_kind(p.get("block_id"), bay))
+            _sash(parts, i, a, b, sill_z, head_z, p["reveal_m"], kind=kind)
+        if panes:
+            # THE NET CARD IS EACH SASH'S PANE (8 October): one card just behind each pane of the checked
+            # sash, the lace picture split between them at the meeting rail, so the card sits in the
+            # sash as glass would and no dark edge of the room shows past it
+            for j, (gy, z0, z1, hx) in enumerate(panes):
+                net = _box(parts, "upper_net_%d_%d" % (i, j), "interior_lit", cx - hx, cx + hx,
+                           gy + 0.001, gy + 0.011, z0, z1, "net-curtain/C12/the-sash's-own-pane")
+                net["decal"] = NET_CURTAINS[i % len(NET_CURTAINS)]
+                net["decal_emit"] = "net"
+                net["decal_uv"] = (0.0, 0.0, 1.0, 0.5) if j == 0 else (0.0, 0.5, 1.0, 1.0)
+            continue
         # NET CURTAINS behind the upstairs glass, 22 September. On the new
         # sheet every upstairs window is PALE - white frames over white nets,
         # 157 against our 100 to 107 - and ours looked straight through
         # clear glass into an unlit flat. The research names nets as the
         # per-house signature of a 1990 terrace, and the held net pictures
         # (BOM C12, DRESSING) are the two gathered weaves, alternated.
-        ny = SASH_KIT_NET_Y if kit is not None else p["reveal_m"] + 0.05
         net = _box(parts, "upper_net_%d" % i, "interior_lit", a, b,
-                   ny, ny + 0.01, sill_z, head_z,
+                   p["reveal_m"] + 0.05, p["reveal_m"] + 0.06, sill_z, head_z,
                    "net-curtain/C12/behind-the-glass")
         net["decal"] = NET_CURTAINS[i % len(NET_CURTAINS)]
         net["decal_emit"] = "net"
@@ -3157,42 +3185,58 @@ def _kit_glb(name, root=None):
 #: amended from the photographs by a fresh helper (production/art/sash-window/target.json), built
 #: by tools/art-recipes/sash-window and passed by its check (production/art/sash-window/checks).
 #: The piece is in the window's own axes: x across from the opening's centre, y into the house
-#: from the brick face, z up from the stone sill's top. Mickey's row first; the others keep the
-#: box sash until his row passes (SASH_KIT_ROWS).
+#: from the brick face, z up from the stone sill's top. Mickey's row first; the rest of the street
+#: once his row passed its fresh review against the photographs on narrow points (8 October,
+#: production/audits/windows-2026-10-08/REVIEW-PHOTOGRAPHS.md): SASH_KIT_ROWS None is every row.
 SASH_KIT_REL = os.path.join("production", "assets", "sash-window", "sash_window.glb")
+#: Each house keeps its own kind of window (4 October): the two-over-two and the one-over-one are the
+#: checked sash (the second built to target-1over1.json, the helper's target with its bars taken out);
+#: a 1980s replacement keeps its own frame (_sash), in the same period opening.
+SASH_KIT_KINDS = {"2/2": SASH_KIT_REL,
+                  "1/1": os.path.join("production", "assets", "sash-window", "sash_window_1over1.glb")}
 SASH_TARGET_REL = os.path.join("production", "art", "sash-window", "target.json")
-SASH_KIT_ROWS = ("east_parade",)
-#: Behind the kit's inside lining (0.251 m in the lab's build), where the nets hang.
-SASH_KIT_NET_Y = 0.258
+SASH_KIT_ROWS = None
 _SASH_KIT_CACHE = {}
 
 
 def _sash_kit(p, root=None):
-    """(opening width m, opening height m, nodes) of the checked sash window for this row, or None."""
-    if p.get("block_id") not in SASH_KIT_ROWS:
+    """(opening width m, opening height m, {kind: nodes}) of the checked sash for this row, or None."""
+    if SASH_KIT_ROWS is not None and p.get("block_id") not in SASH_KIT_ROWS:
         return None
     base = root or ROOT
     key = base
     if key not in _SASH_KIT_CACHE:
         import json
-        glb = os.path.join(base, SASH_KIT_REL)
+        glbs = {k: os.path.join(base, rel) for k, rel in SASH_KIT_KINDS.items()}
         tj = os.path.join(base, SASH_TARGET_REL)
-        if not (os.path.isfile(glb) and os.path.isfile(tj)):
+        if not (all(os.path.isfile(g) for g in glbs.values()) and os.path.isfile(tj)):
             _SASH_KIT_CACHE[key] = None
         else:
             with open(tj, encoding="utf-8") as fh:
                 o = json.load(fh)["opening"]
-            _SASH_KIT_CACHE[key] = (o["width_mm"] / 1000.0, o["height_mm"] / 1000.0, _read_glb_nodes(glb))
+            _SASH_KIT_CACHE[key] = (o["width_mm"] / 1000.0, o["height_mm"] / 1000.0,
+                                    {k: _read_glb_nodes(g) for k, g in glbs.items()})
     return _SASH_KIT_CACHE[key]
 
 
-def _kit_sash_window(parts, i, cx, sill_z, kit, prefix="upper"):
-    """The checked sash window in one opening, its nodes as meshes in the bay's axes."""
-    for k, (node, mat, verts, tris, _cols) in enumerate(kit[2]):
+def _kit_sash_window(parts, i, cx, sill_z, nodes, prefix="upper"):
+    """The checked sash window in one opening, its nodes as meshes in the bay's axes; returns its
+    panes as (y of the glass's back, z0, z1, x half width) in the bay's axes. A house's window has no
+    translucent pane (HOUSE_PANE_TRANSLUCENT): its net card is the pane, so the piece's glass is left
+    out and the caller hangs a card where each pane is (the first look, 8 October: the piece's glass in
+    front of the nets washed them to flat grey and reflected the dish as a dark blotch)."""
+    panes = []
+    for k, (node, mat, verts, tris, _cols) in enumerate(nodes):
         material, piece = node.split("__", 1) if "__" in node else (mat, node)
+        if material == "glass":
+            if not HOUSE_PANE_TRANSLUCENT:
+                panes.append((max(v[1] for v in verts), min(v[2] for v in verts) + sill_z,
+                              max(v[2] for v in verts) + sill_z, max(abs(v[0]) for v in verts)))
+                continue
         parts.append({"id": "%s_sashkit_%d_%d" % (prefix, i, k), "material": "glass" if material == "glass" else "paint_joinery",
                       "kind": "mesh", "verts": [(x + cx, y, z + sill_z) for (x, y, z) in verts], "faces": tris,
                       "note": "sash-window/%s" % piece})
+    return sorted(panes, key=lambda q: q[1])
 
 
 def _kit_material(piece, node, mat, pier, stall):
@@ -8440,10 +8484,13 @@ def selftest():
         zs = [v[2] for q in sk for v in q["verts"]]
         span = (max(zs) - min(zs)) if zs else 0.0
         opening = ps["window_head_m"] - min(zs) if zs else 0.0
+        nodes = kit[2][_window_kind(ps.get("block_id"), 0)]
+        solid = [n for n in nodes if not n[0].startswith("glass__")] if not HOUSE_PANE_TRANSLUCENT else nodes
+        cards = [q for q in up if q["id"].startswith("upper_net_")]
         check("accept/mickeys-row-holds-the-checked-sash",
-              len(sk) == 2 * len(kit[2]) and not boxes and abs(opening - kit[1]) < 1e-3,
-              "%d kit part(s) for %d node(s) x 2 openings, %d box member(s) left, opening %.4f m against the target's %.4f"
-              % (len(sk), len(kit[2]), len(boxes), opening, kit[1]))
+              len(sk) == 2 * len(solid) and not boxes and abs(opening - kit[1]) < 1e-3 and len(cards) == 4,
+              "%d kit part(s) for %d solid node(s) x 2 openings, %d box member(s) left, %d net card(s), opening %.4f m against the target's %.4f"
+              % (len(sk), len(solid), len(boxes), len(cards), opening, kit[1]))
 
     # THE WEAR'S MASKS REACH THE STREET (8 October): the kit's pilaster carries its baked edges
     # in its vertex colour's G, and the stallriser's plinth-high exposure is the street's own
@@ -8866,10 +8913,15 @@ def selftest():
                       not [b for b in qboxes if b["id"].startswith("upper_")])
                 check("accept/%s-windows-clear-the-eaves" % other,
                       all(b["z1"] <= q["eaves_m"] - 0.3 + 1e-9 for b in qboxes if b["id"].startswith(("gf_glass_", "gf_net_"))))
+                # a window's sash is the box sash's meeting rail or, from 8 October, the checked sash
+                # (gf_sashkit_<n>_*, a mesh) with a net card in each of its two panes
+                kitwin = {(b.get("bay"), b["id"].split("_")[2]) for b in qrow if b["id"].startswith("gf_sashkit_")}
+                sashes = len([b for b in qboxes if b["id"].startswith("gf_sash_meeting_")]) + len(kitwin)
+                nets = len([b for b in qboxes if b["id"].startswith("gf_net_")])
                 check("accept/%s-every-window-has-a-sash-and-a-net-every-door-its-panels" % other,
-                      len([b for b in qboxes if b["id"].startswith("gf_sash_meeting_")]) == 2 * q["bays"]
-                      and len([b for b in qboxes if b["id"].startswith("gf_net_")]) == 2 * q["bays"]
-                      and len([b for b in qboxes if b["id"].startswith("side_door_panel_")]) == 4 * q["bays"])
+                      sashes == 2 * q["bays"] and nets == (4 if kitwin else 2) * q["bays"]
+                      and len([b for b in qboxes if b["id"].startswith("side_door_panel_")]) == 4 * q["bays"],
+                      "%d sash(es), %d net card(s)" % (sashes, nets))
             # THE DOOR AND TWO WINDOWS, one of each per bay.
             doors = [b for b in qboxes if b["id"].startswith("side_door_leaf")]
             glass = [b for b in qboxes if b["id"].startswith("gf_sill_")]

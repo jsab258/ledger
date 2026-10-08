@@ -198,7 +198,7 @@ def design(T):
 
 if __name__ == "__main__":
     ver = sys.argv[1] if len(sys.argv) > 1 else "v1"
-    T = json.load(open(os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "production", "art", "sash-window"), "target.json")))
+    T = json.load(open(os.environ.get("LEDGER_SASH_TARGET") or os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "production", "art", "sash-window"), "target.json")))
     parts = design(T)
     out = os.path.join(r"F:/LedgerTools/sash-window/build", "parts_%s.json" % ver)
     os.makedirs(os.path.dirname(out), exist_ok=True)

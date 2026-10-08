@@ -25,7 +25,7 @@ from outline import Frame  # noqa: E402
 MM = 0.001
 
 
-def load_target(path=os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "production", "art", "sash-window"), "target.json")):
+def load_target(path=os.environ.get("LEDGER_SASH_TARGET") or os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "production", "art", "sash-window"), "target.json")):
     return json.load(open(path))
 
 
