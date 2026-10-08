@@ -236,6 +236,8 @@ WEAR_BAND_DEFAULT = 40.0
 # it roughness 0.45 at half its relief. 0, the default, leaves the material as it was: the game sets it
 # only on the asphalt, wet (VignetteShot; SurfaceBind.h WaterLevelParam).
 WATER_PARAM = "WaterLevel"
+FILM_SPEC_PARAM = "FilmSpecular"     # the wet asphalt's own Specular, set by the game (SurfaceBind.h)
+FILM_SPEC_DEFAULT = 0.5
 WATER_PARAM_DEFAULT = 0.0
 WEAR_TINT_PARAM = "WearDustTint"         # dried road splash, linear (the decals' dust, darker)
 WEAR_TINT_DEFAULT = (0.040, 0.035, 0.028, 1.0)
@@ -1179,6 +1181,7 @@ WIRE_SERIES = (
     (46, "7-october-the-wear-at-a-painted-fronts-foot-26-wires"),
     (72, "8-october-the-road's-water-level-26-wires"),
     (77, "8-october-a-lit-net-glows-as-its-picture-5-wires"),
+    (78, "8-october-the-road's-film-specular-1-wire"),
 )
 
 # The pair of markers that bound the wired region of main(). They are spelled
@@ -1211,7 +1214,7 @@ def wire_plan(texture_params=None):
         ("wetness", 3, 3, "one-site-one-connection"),
         ("emissive", 1, 1, "one-site-one-connection"),
         ("wear", 26, 26, "one-site-one-connection"),
-        ("water", 26, 26, "one-site-one-connection"),
+        ("water", 27, 27, "one-site-one-connection"),
         ("emissivemap", 5, 5, "one-site-one-connection"),
     ]
     return rows, sum(r[1] for r in rows), sum(r[2] for r in rows)
@@ -3942,6 +3945,13 @@ def main():
     connect(wmask, "", w_on, "A", "water-mask-to-specular")
     connect(on_s, "", w_on, "B", "water-on-to-specular")
     connect(w_on, "", spec, "Alpha", "water-to-specular")
+    # THE ROAD'S FILM REFLECTS LESS THAN A POND, 8 October (production/lab/ROAD-NOTES.md, his order 2c):
+    # a wet chipped road is only partly under unbroken water, the stone tops piercing it; below 2% F0
+    # the engine counts the shortfall as micro-shadowing and scales every reflection down, sharp still
+    # (ShadingCommon.ush:161; ShadingEnergyConservationTemplate.ush:62, 84). FilmSpecular feeds the
+    # specular's A pin; 0.5, its default, is the material as it was.
+    film_spec = wear_scalar(FILM_SPEC_PARAM, FILM_SPEC_DEFAULT, -550, 2700)
+    connect(film_spec, "", spec, "A", "water-filmspecular-to-specular")
     connect_prop(spec, "", mp.MP_SPECULAR, "water-specular-to-property")
 
     # The emissive parameter's ONE wire, through the map's own pattern when EmissiveFromMap asks

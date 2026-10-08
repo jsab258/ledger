@@ -859,6 +859,8 @@ namespace LedgerSurface
 	// THE ROAD'S WATER LEVEL, 8 October (tools/ue/make_base_material.py WATER_PARAM): 0, the default, is
 	// the material as it was; the game sets it on the wet asphalt (the look file's water_level_day/night).
 	inline const char* WaterLevelParam() { return "WaterLevel"; }
+	// THE WET ASPHALT'S SPECULAR, 8 October (make_base_material.py FILM_SPEC_PARAM): 0.5 is as before.
+	inline const char* FilmSpecularParam() { return "FilmSpecular"; }
 	// A LIT NET OR ROOM GLOWS AS ITS PICTURE, 8 October (tools/ue/make_base_material.py EMISSIVE_MAP_PARAM):
 	// 0, the default, is the flat glow; the game sets 1 on the net and room rows.
 	inline const char* EmissiveFromMapParam() { return "EmissiveFromMap"; }

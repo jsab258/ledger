@@ -104,6 +104,8 @@
  "sky_dome_yaw_note": "6 October, item 1.1's first gate: the reverse view, which looks south down Quay Street to the sea, ended 'under outsized background trees': the day photograph's own tree line (belfast_open_field) stood in that direction, taller than the street. Turned a quarter they stood west and showed over the cottages and through Mickey's window. Measured (the photograph's land and trees per 10 degrees of its compass): its trees fill about 140 degrees, rising to 35-50 degrees, and the other 150 degrees stay under 15. So -110: the tree side behind the two-storey east parade, the open side down the street to the sea and to the west.",
  "sky_horizon_clamp_deg": 16.0,
  "sky_tree_clamp_deg": 38.0,
+ "film_specular": 0.115,
+ "film_specular_note": "8 October, his order 2c, try 1 (production/lab/ROAD-NOTES.md): the wet asphalt's film at Specular 0.13 instead of 0.5, so the engine counts the stone tops piercing the water as micro-shadowing and halves the road's sky reflection, sharp still; the targets the sheet's road: hook near lane 152, reverse near centre 164, middle 183 (production/lab/road/measure_road.py).",
  "white_temp_day": 7000,
  "white_temp_day_note": "8 October, his order 2a, try 1 (production/research/aaa-street/BRICK-COLOUR-2026-10-08.md; the target production/art/brick-colour/target.json, measured by its measure_brick.py): the sky photograph lights the street at about 7,300 K and the brick's sheen took its blue, greying the brick pink and the maroons mauve; the day camera balanced at 7,000 K. Night untouched.",
  "water_level_day": 0.0,

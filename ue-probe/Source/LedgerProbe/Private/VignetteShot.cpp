@@ -7939,6 +7939,10 @@ namespace
 					const double Level = (bFilm && Rw.Base == "asphalt")
 						? (C.SunOn ? GLook.WaterLevelDay : GLook.WaterLevelNight) : 0.0;
 					Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WaterLevelParam())), (float)Level);
+					// AND THE FILM REFLECTS AS A WET CHIPPED ROAD, NOT A POND (8 October; production/lab/
+					// ROAD-NOTES.md): the look file's film_specular on the wet asphalt, 0.5 elsewhere
+					Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::FilmSpecularParam())),
+						(bFilm && Rw.Base == "asphalt") ? (float)GLook.FilmSpecular : 0.5f);
 					const bool bFlat = bFilm && Level <= 0.0;
 					Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(1))),
 					                              bFlat && GStreetFlatNormal != nullptr ? GStreetFlatNormal : Own);
