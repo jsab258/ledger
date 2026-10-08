@@ -18,7 +18,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 ## 2. Exact targets, one per family (production/research/asset-plan/SUMMARY.md)
 
-- 2.1 open. Front door (from the lab's set-aside door and its target on branch lab).
+- 2.1 in progress (8 Oct 22:24). Front door (from the lab's set-aside door and its target on branch lab).
 - 2.2 open. Shopfronts (Rita's is the model; the other eleven by kind).
 - 2.3 open. Railings.
 - 2.4 open. Bollards.
