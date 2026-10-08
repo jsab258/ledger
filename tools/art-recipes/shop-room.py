@@ -1393,11 +1393,36 @@ def build_and_render(argv):
                 if o.type == "MESH":
                     o.modifiers.new("lighten", "DECIMATE").ratio = ratio
         lighten(model("potted_plant_02", -2.25, 0.12, 0.655, turn=0.4, size=0.42), 0.3)
-        for k, (x0, w, h, c) in enumerate(((-0.55, 0.22, 0.05, (0.62, 0.52, 0.16)), (-0.53, 0.21, 0.045, (0.58, 0.48, 0.15)))):
-            box("directory_%d" % k, x0, x0 + w, 0.04, 0.32, 0.655 + k * 0.05, 0.655 + k * 0.05 + h,
-                mat("directory_%d" % k, c, rough=0.8, noise=0.2))
-        # their covers printed (a district's directories, no publisher named), sun-faded
-        print_plane("directory_cover", "directory", -0.43, 0.18, 0.7505, 0.20, 0.25, "up")
+        # EACH A BOOK, NOT A BOX (8 October, item 1.1's third review: "the two telephone directories
+        # plain boxes"): thin soft covers a little proud of the pages, the spine to the room, and the
+        # fore-edge to the street as newsprint in uneven layers, so the edge reads as pages; the
+        # upper one dropped a few degrees askew. Geometry only: the room's glb keeps no noise.
+        edge_lt = mat("directory_pages", (0.62, 0.58, 0.47), rough=0.9)
+        edge_dk = mat("directory_pages_dark", (0.47, 0.43, 0.34), rough=0.9)
+        def turn_about(objs, px, py, ang):
+            ca, sa = math.cos(ang), math.sin(ang)
+            for o in objs:
+                dx, dy = o.location.x - px, o.location.y - py
+                o.location.x, o.location.y = px + dx * ca - dy * sa, py + dx * sa + dy * ca
+                o.rotation_euler[2] += ang
+        for k, (x0, w, h, c, ang) in enumerate(((-0.55, 0.22, 0.05, (0.62, 0.52, 0.16), 0.0),
+                                                 (-0.53, 0.21, 0.045, (0.58, 0.48, 0.15), -0.07))):
+            z0, x1, y0, y1, cv = 0.655 + k * 0.05, x0 + w, 0.04, 0.32, 0.0025
+            cover = mat("directory_%d" % k, c, rough=0.8)
+            parts = [box("directory_%d_back" % k, x0, x1, y0, y1, z0, z0 + cv, cover),
+                     box("directory_%d_front" % k, x0, x1, y0, y1, z0 + h - cv, z0 + h, cover),
+                     box("directory_%d_spine" % k, x0, x1, y1 - 0.004, y1, z0, z0 + h, cover)]
+            n = 7
+            for j in range(n):
+                # each gathering a millimetre or two in or out at the fore-edge, the tones alternating
+                inset = 0.003 + 0.0015 * ((j * 3 + k) % 4) / 3.0
+                parts.append(box("directory_%d_pages_%d" % (k, j), x0 + 0.003, x1 - 0.003, y0 + inset,
+                                 y1 - 0.004, z0 + cv + (h - 2 * cv) * j / n, z0 + cv + (h - 2 * cv) * (j + 1) / n,
+                                 edge_lt if (j + k) % 2 == 0 else edge_dk))
+            if k == 1:
+                # their covers printed (a district's directories, no publisher named), sun-faded
+                parts.append(print_plane("directory_cover", "directory", -0.43, 0.18, z0 + h + 0.0005, 0.20, 0.25, "up"))
+            turn_about(parts, (x0 + x1) / 2, (y0 + y1) / 2, ang)
         # (the heater under the window is a modelled prop now, placed with the others below)
 
         # THE FIRM'S NUMBER ON THE GLASS, in gilt (the 1980 Brixton photograph: the window is the

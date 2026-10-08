@@ -7032,7 +7032,7 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 46 && Lk.bFromFile && Lk.SkyTreeClampDeg > Lk.SkyHorizonClampDeg && Lk.GlassSpecularNight > 0.0 && Lk.GlassSpecularNight < 1.0 && Lk.GlassCubeStrength > 0.0 && Lk.GlassCubeSpecular < 1.0 && Lk.NetDayGain == 0.0,
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 47 && Lk.GlassCubeStrengthNight >= 0.0 && Lk.GlassCubeStrengthNight < Lk.GlassCubeStrength && Lk.bFromFile && Lk.SkyTreeClampDeg > Lk.SkyHorizonClampDeg && Lk.GlassSpecularNight > 0.0 && Lk.GlassSpecularNight < 1.0 && Lk.GlassCubeStrength > 0.0 && Lk.GlassCubeSpecular < 1.0 && Lk.NetDayGain == 0.0,
 			      "the committed look file parses and supplies all forty-two settings, the street caught in the shop glass, the sky photograph turned and held above its land and higher over its tall trees, the night glass's dimmer reflection among them, and the nets give no glow by day (they are the glossy pane since the facades' third try)", LErr);
 			Check(Lk.LanternLumens > 0.0 && Lk.bLanternRgb && Lk.LanternLightY > 4.0,
 			      "and the sodium lamps have real lumens and a colour of their own");

@@ -46,6 +46,11 @@
    0.35,
    0.36
   ],
+  "paint_yellow": [
+   0.3,
+   0.3,
+   0.3
+  ],
   "interior_lit": [
    0.05,
    0.05,
@@ -84,6 +89,7 @@
  },
  "surface_gain_note": "2 October, evening (his answer to Friday's page): the paving's grade 0.72/0.56/0.30 cut the blue so hard the wet flags came out orange whatever the recipe gave them; the drawn flags were still the colour of a recipe two passes old (98/78/53), redrawn from today's grey-tan (89/78/66), and the grade near neutral, 0.95/0.93/0.90. The asphalt graded 0.62 darker, so the wet road has its dark between the reflections. Earlier: RAISED A QUARTER FOR BOTH BRICKS 23 September, when Lumen went on: the bounced light's occlusion darkened every wall by about a fifth against the frame before it (parade upper wall 0.79, west terrace 0.76-0.81, Mickey's 0.83, the sky unchanged at 1.00), and the walls had been matched to the sheet before it; the pavements were left darker, which is nearer the sheet's wet flags. Before that: Per-surface colour in this engine, by base material, over the drawn surface's own colour. Retuned 23 September again once the drawn bricks and flags carry Blender's wear (patches, the splash at the foot, streaks from the wall head, about 0.6 of the clean wall on average): brick_red lands the parade's upper wall at 78/46/33 against the sheet's 76/45/35; paving at 126/112/98 against the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain). 4 October, the facades' third try: net_lace, a net card's own gain (it was interior_lit's 0.05 for a self-lit room): the lace picture (mean 0.5 linear) at 0.8 lands a pane near the sheet's glass-to-frame ratio (0.44 in light).",
  "surface_gain_note_3_october": "The proof view, step 2.3, his bar: dark, glistening, reflecting the sky and the buildings. The road 0.62 -> 0.22, the flags 0.95 -> 0.6, the kerb 0.55 (it had none). The roughness view (r.BufferVisualizationTarget Roughness) showed the puddles already mirrors and the road a near mirror; what read dry and grey was the road's own colour under the overcast sky, brighter than the hill the water mirrors, so the water read as dark stains. Seven tries with a rougher road (0.10 to 0.35, relief kept or not) read damp, grainy or matte; darkness is what lets the reflections show.",
+ "surface_gain_note_8_october": "The double yellow lines at the sheet's value, 0.3 (the office gate, production/audits/office-2026-10-08): the ground took its gains on 3 October (road 0.13, flags 0.42, kerb 0.35) and the lines none, so they stood at full paint, about three times their ground; under the brighter sky light and the night camera a stop up they clipped and glowed at night the length of the street. The Hook sheet's lines measure 0.3 of ours by day (median line pixel, linear). The white paint is shared by painted fronts and plinths, so the white centre line keeps its value: a white line on dark wet asphalt about ten times the road is what paint does.",
  "surface_gain_note_4_october": "The proof view, step 2.4: the brick's gains x1.25, because each house's own look (terrace-front.py HOUSE_LOOKS, multiplied in by the game) is at most one and averages about 0.76, so the street's mean brick stays where it was while the houses differ.",
  "sky_seen_gain_night": 0.15,
  "sky_light_gain_night": 0.15,
@@ -95,11 +101,13 @@
  "glass_specular_night": 0.2,
  "glass_specular_night_note": "3 October: how strongly the shop glass reflects at night, of its daytime 1. A lit shop at night outshines the street in its own glass, and our soft (software Lumen) reflections of the lamps and of lit windows across the road showed over the rooms as white and orange clouds (the fresh review of the eight shopfronts). Sharp mirror reflections would need hardware ray tracing or a captured picture per shop front (production/research/shop-glass-reflections), kept for later.",
  "glass_cube_strength": 2.5,
+ "glass_cube_strength_night": 1.0,
+ "glass_cube_strength_night_note": "8 October, Mickey's office at night (the office gate, production/audits/office-2026-10-08): the street caught in the glass at a true reflection at night, not the day's 2.5. The day's multiple answers a lit room behind the glass; at night the office is dark until the key, and the cottage's two lit windows caught at 2.5 glowed brighter than the lamp-lit sill, reading as panels pinned to the back wall.",
  "glass_cube_specular": 0.1,
  "glass_cube_size": 256,
- "glass_cube_heroes": ["street_glass_eg_bay0", "street_glass_eg_bay2"],
+ "glass_cube_heroes": ["street_glass_eg_bay0", "street_glass_eg_bay2", "street_mickeysdoor_glass"],
  "glass_cube_hero_size": 512,
- "glass_cube_heroes_note": "7 October, the second gate (\"large, flat stair-stepped cut-outs\"): from two metres a 256 texel of the caught street is about ten screen pixels. Mickey's window (eg_bay0, its pane caught at x 6.4) and Rita's (eg_bay2, x 18.0), the two the cameras stand at, are caught at 1024 (50 MB each); the rest stay at 256. (A first try at 1024 that morning went to street_mickeys_glass, the door's glass, and so proved nothing.)",
+ "glass_cube_heroes_note": "7 October, the second gate (\"large, flat stair-stepped cut-outs\"): from two metres a 256 texel of the caught street is about ten screen pixels. Mickey's window (eg_bay0, its pane caught at x 6.4) and Rita's (eg_bay2, x 18.0), the two the cameras stand at, are caught at 1024 (50 MB each); the rest stay at 256. (A first try at 1024 that morning went to street_mickeys_glass, the door's glass, and so proved nothing.) 8 October, the office gate (production/audits/office-2026-10-08): Mickey's door glass, its own mesh with a dark hall behind it, showed its 256 catch as a heavy smear beside the window's 512: caught at 512 too.",
  "sky_dome_yaw_deg": -110.0,
  "sky_dome_yaw_note": "6 October, item 1.1's first gate: the reverse view, which looks south down Quay Street to the sea, ended 'under outsized background trees': the day photograph's own tree line (belfast_open_field) stood in that direction, taller than the street. Turned a quarter they stood west and showed over the cottages and through Mickey's window. Measured (the photograph's land and trees per 10 degrees of its compass): its trees fill about 140 degrees, rising to 35-50 degrees, and the other 150 degrees stay under 15. So -110: the tree side behind the two-storey east parade, the open side down the street to the sea and to the west.",
  "sky_horizon_clamp_deg": 16.0,

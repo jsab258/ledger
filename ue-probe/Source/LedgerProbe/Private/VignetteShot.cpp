@@ -1060,6 +1060,8 @@ namespace
 		FString Mesh;
 	};
 	TArray<FGlassCatch> GGlassCatches;
+	// The light the street was last driven to, so a window made after it catches at its strength.
+	bool GGlassSunOn = true;
 	// GGlassCatchLeft: the windows still to catch in this round; GGlassCatchPass: the passes left
 	// for the one in hand, GGlassCatchNext.
 	int32 GGlassCatchLeft = 0, GGlassCatchNext = 0, GGlassCatchTaken = 0, GGlassCatchPass = 0;
@@ -7037,7 +7039,8 @@ namespace
 		// Thin translucency multiplies emissive by opacity (ThinTranslucentCommon.ush), so a
 		// true reflection is the strength over the pane's opacity.
 		const double Opacity = FMath::Max(GLook.GlassOpacity, 0.01);
-		G->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(GLook.GlassCubeStrength / Opacity));
+		const double Strength = (!GGlassSunOn && GLook.GlassCubeStrengthNight >= 0.0) ? GLook.GlassCubeStrengthNight : GLook.GlassCubeStrength;
+		G->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(Strength / Opacity));
 		FGlassCatch Gc;
 		Gc.Rt = Rt; Gc.Owner = A; Gc.Mid = G; Gc.Mesh = Mesh; Gc.At = Mid + N * 50.0;
 		GGlassCatches.Add(Gc);
@@ -7261,7 +7264,7 @@ namespace
 	// (tools/ue/make_interior_material.py). The card's front corner comes from its
 	// own bounds in the world, logged beside the spec's numbers.
 	struct FInteriorRow { int32 Row = -1; UMaterialInstanceDynamic* Mid = nullptr; float DayGlow = 1.0f, NightGlow = 1.0f; bool bLitAtNight = false;
-		TWeakObjectPtr<ARectLight> Spill; };
+		TWeakObjectPtr<ARectLight> Spill; FString Shop; };
 	TArray<FInteriorRow> GInteriorRows;
 	int32 GInteriorsAsked = 0;
 	// What the shops stood behind their glass, taken down when the street is painted again.
@@ -7735,6 +7738,7 @@ namespace
 				Mid->SetScalarParameterValue(FName(TEXT("Side")), (float)Side);
 				FInteriorRow Ir;
 				Ir.Row = I;
+				Ir.Shop = UTF8_TO_TCHAR(Id.c_str());
 				Ir.Mid = Mid;
 				// Bright as the street's own lit rooms by default (the recipe's day and night
 				// strength times the look's gains), scaled by the spec where it says so.
@@ -7821,7 +7825,10 @@ namespace
 			Ir.Mid->SetScalarParameterValue(FName(TEXT("Brightness")), bSunOn ? Ir.DayGlow : Ir.NightGlow);
 			if (Ir.Spill.IsValid() && Ir.Spill->GetLightComponent() != nullptr)
 			{
-				Ir.Spill->GetLightComponent()->SetVisibility(!bSunOn && Ir.bLitAtNight);
+				// A DARK SHOP SPILLS NOTHING (8 October, the office gate: Mickey's, dark until the
+				// key, still threw its window's light over the pavement and the yellow lines, which
+				// glowed the length of the frame)
+				Ir.Spill->GetLightComponent()->SetVisibility(!bSunOn && Ir.bLitAtNight && !GShopsDark.Contains(Ir.Shop));
 			}
 		}
 	}
@@ -7836,6 +7843,7 @@ namespace
 		if (GStreetMids.Num() == 0 || GStreetLookFor == C.Id) { return; }
 		GStreetLookFor = C.Id;
 		GRoomLightsSunOn = C.SunOn;
+		GGlassSunOn = C.SunOn;
 		ReDriveShopInteriors(C.SunOn);
 		for (const TWeakObjectPtr<UMaterialInstanceDynamic>& G : GGlassMids)
 		{
@@ -7848,6 +7856,8 @@ namespace
 			if (!Gc.Mid.IsValid()) { continue; }
 			const double Day = C.SunOn ? 1.0 : GLook.GlassSpecularNight;
 			Gc.Mid->SetScalarParameterValue(FName(TEXT("GlassSpecular")), (float)(Day * GLook.GlassCubeSpecular));
+			const double Strength = (!C.SunOn && GLook.GlassCubeStrengthNight >= 0.0) ? GLook.GlassCubeStrengthNight : GLook.GlassCubeStrength;
+			Gc.Mid->SetScalarParameterValue(FName(TEXT("ReflectStrength")), (float)(Strength / FMath::Max(GLook.GlassOpacity, 0.01)));
 		}
 		GGlassCatchLeft = GGlassCatches.Num();   // each window in turn, its passes on consecutive frames
 		GGlassCatchNotBefore = FMath::Max(GGlassCatchNotBefore, FPlatformTime::Seconds() + 1.0);
@@ -9518,6 +9528,13 @@ namespace LedgerVignetteShot
 		const FString Id(UTF8_TO_TCHAR(Shop));
 		if (bLit) { GShopsDark.Remove(Id); GShopsLitByPlay.Add(Id); } else { GShopsDark.Add(Id); GShopsLitByPlay.Remove(Id); }
 		int32 Switched = 0;
+		// its window's spill on the pavement with its lights
+		for (const FInteriorRow& Ir : GInteriorRows)
+		{
+			if (Ir.Shop != Id || !Ir.Spill.IsValid() || Ir.Spill->GetLightComponent() == nullptr) { continue; }
+			Ir.Spill->GetLightComponent()->SetVisibility(bLit && !GRoomLightsSunOn && Ir.bLitAtNight);
+			++Switched;
+		}
 		for (const FRoomLight& RL : GRoomLights)
 		{
 			if (RL.Shop != Id || !RL.L.IsValid()) { continue; }

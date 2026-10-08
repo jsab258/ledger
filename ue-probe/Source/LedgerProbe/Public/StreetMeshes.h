@@ -366,6 +366,10 @@ namespace LedgerStreet
 		// taken in front of each shop's window, added to the pane at this share of a true
 		// reflection (1 = physical), and the soft live reflection left on those panes. 0 = off.
 		double GlassCubeStrength;
+		// AT NIGHT, A TRUE REFLECTION (8 October, Mickey's office at night: the cottage's two lit
+		// windows caught at 2.5 times a true reflection glowed brighter than the lamp-lit sill).
+		// The day's 2.5 answers a lit room behind the glass; the office is dark at night. < 0 = the day's.
+		double GlassCubeStrengthNight;
 		double GlassCubeSpecular;
 		int GlassCubeSize;
 		// THE WINDOWS THE CAMERAS STAND AT, CAUGHT SHARPER (7 October; the second gate: "large, flat
@@ -456,7 +460,7 @@ namespace LedgerStreet
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05), GlassSpecularNight(1.0),
-		         GlassCubeStrength(0.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0), SkyTreeClampDeg(0.0), WaterLevelDay(0.0), WaterLevelNight(0.0), WhiteTempDay(0.0), FilmSpecular(0.5),
+		         GlassCubeStrength(0.0), GlassCubeStrengthNight(-1.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0), SkyTreeClampDeg(0.0), WaterLevelDay(0.0), WaterLevelNight(0.0), WhiteTempDay(0.0), FilmSpecular(0.5),
 		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
 		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), bLanternRgb(false),
@@ -860,6 +864,8 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassSpecularNight = V->Num; ++Out.Read; }
 		V = Root.Find("glass_cube_strength");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 4.0) { Out.GlassCubeStrength = V->Num; ++Out.Read; }
+		V = Root.Find("glass_cube_strength_night");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 4.0) { Out.GlassCubeStrengthNight = V->Num; ++Out.Read; }
 		V = Root.Find("glass_cube_specular");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassCubeSpecular = V->Num; ++Out.Read; }
 		V = Root.Find("glass_cube_size");
