@@ -1,6 +1,6 @@
 # The wet road's near-white mirror: why, the target, the change
 
-Lab, 8 October 2026, 11:10 to 12:15. For the builder. Code read on origin/wip at 73d61fae and in the installed UE 5.8.2 (C:\Program Files\Epic Games\UE_5.8). Numbers come from production/lab/road/road_numbers.py, which reruns them. Published sources are in production/lab/road-sources.md (a helper's search, D = read at source, S = summary only, I = computed).
+Lab, 8 October 2026, 11:10 to 11:22. For the builder. Code read on origin/wip at 73d61fae and in the installed UE 5.8.2 (C:\Program Files\Epic Games\UE_5.8). Numbers come from production/lab/road/road_numbers.py, which reruns them. Published sources are in production/lab/road-sources.md (a helper's search, D = read at source, S = summary only, I = computed).
 
 ## In short
 
