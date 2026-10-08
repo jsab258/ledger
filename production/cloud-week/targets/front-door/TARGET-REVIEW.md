@@ -144,3 +144,57 @@ FAIL
 - **P2's fanlight** shows a chipped putty line at the glass foot, with no planted bead distinguishable. F1 could take putty glazing instead of the 10 x 8 bead.
 - **The house numerals'** letter form is not specified (optional).
 - **The tread's width check** compares camera distances only "within a factor 1.8". It holds (941 to 960 mm for a camera 4.8 to 5.8 m away), but the test is too loose to catch anything.
+
+## Re-review (try 2)
+
+FAIL
+
+**How it was judged.** I read the amended TARGET.md, especially section 2, and target.json. I ran self_check.py and target_drawing.py on a fresh scratch copy:
+- self_check gives 303 of 304, with the same one reported miss (P2's squatter proportion);
+- the overlay matches the committed one pixel for pixel;
+- the target's files are unchanged.
+
+I re-measured on the previews wherever the writer departed from my amendments. The network is as before: no source page could be reached.
+
+### The seven faults
+
+| # | Answered? | Re-measured |
+|---|---|---|
+| 1 Quoins | Yes. Ten blocks of three courses, the top block short, both sides in step. The drawing now changes width only at courses 3, 6 ... 27, and the overlay's blocks land on the photograph's. | Widths 122 and 237. The right reveal reads 25-26 and 49-50 px to the first red brick, joint included (at 5.03 mm a pixel), against the target's 24.3 and 47.1: within 2 px. The left reveal's lower blocks read 2-4 px wider, but its top block reads 24 px. Accepted; see the notes below. |
+| 2 Arch | Yes. A segmental ring of 13 bricks with radial joints and a curved, concentric top; the self-check tests the count, the top and the soffit. | Depth 207. Crown top row 28.5 to the ring's lower edge at row 70 is 41.5 px, which is 209 +-7 mm on the writer's wall-plane mapping; 207 is the photograph. The ring's ends read 102.5-103.5 px (left) and 285.5 to 283.5 px (right) from top to bottom, within 2 px of the target's radial ends. |
+| 3 F1 jambs | Yes. 49, with every coordinate that follows. | - |
+| 4 F1 transom | Yes. My profile points, a 3 mm groove at z 33-36, ends splayed at 45 degrees with the face running 28 past each stop edge; T1 takes the same at 10 (Judgement). | - |
+| 5 Plinth and step | **Only in part.** The step is right; the plinth stops at the reveal line (fault 1 below). | Ground -318. It sits on the writer's own wall-plane mapping at row 597.4, where photograph 1 shows the plinth's foot meeting the pavement (row about 599). Reading from the step's rounded crest down to the ground gives -300 to -330. Accepted. The splayed top course reads as a lit band at rows 528-543 over a shaded face (column x 330-380), consistent with the 45-degree, 60 mm splay. |
+| 6 F1 threshold | Yes. 45 above the paving, bedded 25. | - |
+| 7 Checks | Yes. B17, G10 and I5 are corrected for each variant; Q1-Q3, G11-G12, L1-L5 and D8 are added. | - |
+
+### Fault
+
+**1. The plinth must turn into the doorway in front of the ends of the threshold and riser. The target stops it at the reveal line (T1, close up and at the street's distance).**
+
+**What photograph 1 shows** (rows 531-561, both sides), sampled pixel by pixel:
+- **Where the brick ends.** Red brick runs inward to x 116-118 on the left and from x 265-266 on the right. That is to the leaf's visible edges (117.5 and 267.5), well inside the brick reveal lines at 108.5 and 279.
+  - Row 538, left: brick through x 118, stone from x 120.
+  - Row 538, right: stone to x 262, brick from x 266.
+  - Rows 542-556 read the same way.
+- **The corners.** The plinth's splayed corner bricks turn the corner (the 9x and 8x foot crops), and the white jambs end on them at row about 531.
+- **What shows between them.** The stained threshold and the riser show only between x about 119 and 264, roughly 700-750 mm wide.
+
+**What the target builds instead:**
+- the plinth only on the wall face beyond the reveals (x below 0 and above 882);
+- the threshold's front and the riser across the full 882;
+- L3 ("nothing of it in the clear opening") and L5 ("the plinth's edge is the reveal (x 0, 882)") written into the checks, so they would enforce the difference.
+
+**How big the difference is.** If the plinth ended at the reveal, its front corner would project to x 103.4 and 282.3 on photograph 1. The photograph's brick reaches 14-17 px further in, far beyond perspective. On the built door the threshold and riser would read about 150 mm wider than photograph 1's, with white jamb feet on bare stone where the photograph has brick corners.
+
+**Amendment** (`brick.plinth`):
+- Replace `returns_into_reveal` with: "The plinth wraps both reveal corners. A return 70 +-15 wide into the doorway (inner faces at x 70 and 812; photograph 1 gives 66-70 on the left and 80-85 on the right, with the front face 4.5% nearer than the door's plane), from its front face (y -60) back to the threshold's front (y 0). It stands from the tread's top (z -148) to z 12, and the splayed course is mitred round the corner. The threshold and riser show only between the returns; the threshold's horns run on behind them."
+- Rewrite L3 and L5 to match.
+- Add a self-check test: the plinth's inner edges at photograph 1 x 117.5 and 265.5 (rows 534-556), within 2.5 px, on the nearer plane's scale.
+- Add a builder's check: the threshold's and riser's visible length is 742 +-30.
+
+### Notes (not faults)
+
+- **The overlay draws the arch, the quoins and the plinth at the door's scale,** not at the wall's. On the picture the ring therefore looks 7-8 px low and the quoin boundaries up to 7 px low, while the self-check places them within 2.5 px on its wall-plane mapping. The legend names only the step as drawn at the door's scale. Draw those layers on the wall-plane mapping, or say so in the legend, so the next reviewer is not misled.
+- **Quoin widths:** if the left reveal's lower blocks are taken into account, 127 and 245 (the mean of both sides) would sit better than 122 and 237. Either is inside what a reviewer would notice.
+- **Everything else on photographs 1 and 2,** gone through again element by element, is as accepted in the first review. Nothing new is broken: F1's knob, cylinder, keyhole, putty glazing and splayed transom draw as specified.

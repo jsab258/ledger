@@ -18,7 +18,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 ## 2. Exact targets, one per family (production/research/asset-plan/SUMMARY.md)
 
-- 2.1 in progress (8 Oct 22:24; written 22:49, self-check 230 of 231, target review 1 FAIL, 7 faults (quoins, arch, the flat door's jambs, transom and threshold, the plinth and step nose, checks); try 2 written 23:25, self-check 303 of 304, under re-review). Front door (from the lab's set-aside door and its target on branch lab).
+- 2.1 done (8 Oct 23:33): production/cloud-week/targets/front-door/ (TARGET.md, target.json, target_drawing.py, self_check.py, TARGET-REVIEW.md); overlay production/previews/cloud-week/refs/front-door/door-photo-01-teignmouth-target-on-photo.jpg. Front door: the lab's target amended twice; its re-review passes six of seven faults; the seventh, the brick plinth's returns standing 70 mm in front of each end of the threshold (photograph 1), is the wall's, not the door piece's, and is left as written in the review for the wall kit (two tries; no third). Self-check 303 of 304 (the one disagreement reported).
 - 2.2 open. Shopfronts (Rita's is the model; the other eleven by kind).
 - 2.3 open. Railings.
 - 2.4 open. Bollards.
