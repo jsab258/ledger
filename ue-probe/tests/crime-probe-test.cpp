@@ -576,11 +576,14 @@ int main(int argc, char** argv)
 		      std::to_string(Sheila ? Sheila->At.X : -1.0) + ")");
 		double NoX = 0.0;
 		Check(!Cast.BodyXOf("fish_counter", NoX), "a2-a-place-without-body_x_m-keeps-its-own-x");
-		// And the cab rank's (7 October, evening): whoever waits there stands at Mickey's door, not a
-		// metre in front of the office camera at x 7.5.
+		// And the cab rank's (7 October, evening; 8 October): whoever waits there stands clear of the
+		// office camera (it sees x 6.3 to 7.5 at the rank's depth) and of the office doorway (4.2 to 5.1),
+		// where on 7 October they stood straight in its line.
 		double RankX = 0.0, RankZ = 0.0;
-		Check(Cast.PlaceXZ("mickeys_rank", RankX, RankZ) && LedgerCrime::BodySpotFor(Cast, "mickeys_rank", RankX, RankZ).X < 5.1,
-		      "a2-the-rank's-body-stands-at-mickeys-door");
+		const bool bRank = Cast.PlaceXZ("mickeys_rank", RankX, RankZ);
+		const double RankBodyX = bRank ? LedgerCrime::BodySpotFor(Cast, "mickeys_rank", RankX, RankZ).X : 0.0;
+		Check(bRank && (RankBodyX < 6.0 || RankBodyX > 7.8) && (RankBodyX < 3.9 || RankBodyX > 5.4),
+		      "a2-the-rank's-body-stands-clear-of-the-office-camera-and-door (" + std::to_string(RankBodyX) + ")");
 		// Nobody without a body counts from a pavement: the player would see nobody there.
 		bool bInvisible = false;
 		for (int H = 0; H < 24; ++H)
