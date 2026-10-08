@@ -1,335 +1,389 @@
-**Summary line.** Ten fascias for Quay Street, each its own trade, hand and construction (applied brass letters, red sign-writing on dark, gilt on oxblood, a painted-out bare board, a lit plastic box, Art Deco glass, cut vinyl, black shaded roman, soft teal roman, white Egyptian on navy), on the kit's 5410 x 550 mm board at one pixel a millimetre, with the lettering craft measured on one photograph (a 2019 restoration, not 1990) and the Hook sheet, and everything else said plainly to be earlier notes or judgement; self_check passes 158 of 158 and keeps 4 disagreements and gaps visible.
+# Shop fascia signs of Quay Street: the exact target
 
-# Fascia signs of Quay Street: the target for unit 4.1
+Cloud week 42, 8 October 2026. SECOND AND LAST TRY, amended after the fresh reviewer's 13 faults and 14 notes (TARGET-REVIEW.md, which this file does not touch). Unit 4.1 builds from `target.json` and this page. Nothing is committed.
 
-Cloud week 42, written 8 October 2026 by a target writer. Folder: `production/cloud-week/targets/fascia-signs/`. Reference previews: `production/previews/cloud-week/refs/fascia-signs/`. Nothing was committed, no font was added to `production/fonts/`.
+Plain summary. Ten shop fronts, ten different boards, on the kit's board of 5.41 m by 0.55 m, drawn at 1 mm to the pixel and set the way round the GAME shows them (on the east parade the low street numbers are on the viewer's right, so MICKEY'S stands over its own door, 4.055 m from the board's left edge). The name over Mickey's door, the two lit box signs, the tea room's flat panel and the four hanging signs are solid parts, not painting. Three boards carry the ghost of older lettering with its exact words. Every word is a trade description or a name already minted. Checks read the pixels of the finished board, so a mirrored board, a name at the wrong end, a wrong font or a stray ghost word is caught.
 
-Unit 4.1 makes each shop's fascia as a finished 2D texture by script, from this file alone: `target.json` has every number, `target_drawing.py` draws the layouts from it, `self_check.py` tests it against its sources. This page says what the numbers mean, where each came from, and what is not known.
+Files in this folder:
 
-## 0. What rests on what (read this first)
+- `target.json`: the whole target (10 shops, 4 hanging signs, 23 glass rows, 316 checks, the self-check result).
+- `make_target.py`: the author tool that writes `target.json` (every width is measured on the real font files).
+- `pixel_checks.py`: the REFERENCE reader of the finished picture (the pixel checks: position, glyph mask, mirror, jitter), with a crude reference renderer to test the checks themselves.
+- `target_drawing.py`: draws the boxes and baselines of every board (1 mm to the pixel) and the four hanging signs into a folder given on the command line, plus the polygons as JSON, plus a layout sheet.
+- `self_check.py`: 296 checks, writes its result into `target.json` under `self_check`.
+- `make_previews.py`: rebuilds the previews of the photographs measured.
+- Previews, in `production/previews/cloud-week/refs/fascia-signs/`: `P1-leadenhall-board-elevation.jpg` (the two ends of the board, nothing else), `P1-leadenhall-board-target-on-photo.jpg` (the drawing laid on them), `P2-...` and `P3-...` (plank textures), `H1-...` (the Hook sheet's board), `L1-quay-street-ten-fascias-layout-sheet.jpg` (the ten boards, boxes and baselines).
 
-| Kind | What rests on it | How much to trust it |
-|---|---|---|
-| **Photo, measured today** | P1, a level square-on elevation of a restored Victorian arcade fascia (Poly Haven, CC0): the keyline, the shade, the numerals, the cap height over the lettered field, the tracking. P2 and P3, two weathered painted-timber textures (CC0): the shape and size of paint loss. | Real measurements, but of a **2019 heritage restoration** (P1) and of **cladding planks** (P2, P3). They give craft proportions and the shape of wear. They give no 1990 colour, no 1990 wear amount, no provincial letter size. |
-| **Sheet, measured today** | The Hook sheet's Mickey's board and letters: colours (62,75,87) and (167,149,109), the cap over the board, the position over the door. | A generated picture, approved for mood, palette and composition. Colours and ratios, nothing else. |
-| **Read** | The game's own files (SCENE-SLOTS.md, the scene spec, the kit README, the recipes, hook-cast hours, DECISIONS 3 Oct), brand bible, OFL.txt of each font. | Exact. `self_check.py` group 1 reads them again. |
-| **Earlier notes, cited not re-read** | Picture Sheffield t13138 (25 Aug 1990: a dark fascia sign-written in red; window glass lettered in white) and t13140; Peter Marshall's Hull set 1979-1994 (painted fascias, metal fronts, trade-only boards); note 4's three generations (painted, backlit Perspex, cut vinyl). Written by earlier helpers who looked at the pictures on the PC. | The only 1990 evidence in this target. I could not reach any of those sources today, so I did not re-measure them. |
-| **Judgement** | Every colour not measured, every wear amount, the letter sizes of the provincial boards, the hanging signs, the street numbers and "est." years, the glass rows, the fonts chosen to stand in for hand lettering. | Mine. Marked `Judgement` in target.json and below. Any better source overrides it. |
+## 0. What the second try changed, in one table
 
-**No 1990 photograph of a fascia was reached.** The network refused Wikimedia, Geograph, Flickr, archive.org, Wikipedia, Picture Sheffield, Historic England and the rest (403 on every connection; list in section 12). The reviewer should treat the ten designs as a considered proposal built on one photographed craft, not as a copy of 1990 provincial boards.
-
-## 1. Sources
-
-All read 8 October 2026. "Used" means a number in target.json comes from it.
-
-| id | URL (or file) | Author | Licence | Taken | Shows | Used |
-|---|---|---|---|---|---|---|
-| **P1** | https://api.polyhaven.com/files/leadenhall_market, tone-mapped JPG at https://dl.polyhaven.org/file/ph-assets/HDRIs/extra/Tonemapped%20JPG/leadenhall_market.jpg (8192 x 4096) | Andreas Mischok, Poly Haven | CC0 1.0 (polyhaven.com/license) | 19 May 2019 (API `date_taken`) | A covered City of London arcade, **heritage-restored**: red boards, gilt shaded capitals, numbers at both ends, cut-corner keylines, gilt window lettering. Real business names are on it and **must never be copied**. A 2019 restoration, not 1990. | Yes: craft proportions only. Preview: `P1-leadenhall-chamberlain-board-elevation.jpg`, `…-front-scale.jpg`, `…-target-on-photo.jpg` |
-| **P2** | https://polyhaven.com/a/blue_painted_planks (2K diffuse) | Rob Tuytel, Poly Haven | CC0 1.0 | published 20 Jul 2018, no photo date | Weathered blue timber cladding, 1.0 m square, flaking paint | Yes: shape and size of paint loss. `P2-bluepaintedplanks-weathering-measure.jpg` |
-| **P3** | https://polyhaven.com/a/black_painted_planks (2K diffuse) | Dimitrios Savva, Poly Haven | CC0 1.0 | published 15 Oct 2025 | Black gloss planks, 1.6 m, scuffed | Yes: the luminance spread of worn dark gloss. `P3-blackpaintedplanks-scuff-measure.jpg` |
-| **H1** | `production/reference/hook-sheet.png` (preview `production/previews/hook-sheet-2026-10-05.jpg`) | the project's image lane | own work | Sep to Oct 2026 | Mickey's slate board and standing gilt letters; a white, a dark and a cream fascia beyond | Yes: Mickey's colours, cap over board, position. `H1-hook-sheet-mickeys-board-measure.jpg` |
-| G1 | `production/previews/proof-2.6-shop-signs-and-bills-2026-10-04.jpg`, `shop-fronts-whole-2026-10-08.jpg` | the project's builds | own work | 4 and 8 Oct 2026 | the fascias as they stand now | Yes: section 2 |
-| N1 | `production/research/asset-plan/4-SIGNAGE-AND-WEAR.md`, `0-SOURCES-AND-LICENCES.md`, `SUMMARY.md` s.7 | project research | own work | 3 Oct 2026 | font table; three generations of 1990 fascia | Yes |
-| N2 | `production/research/shop-window-interiors/FISHMONGER-2026-10-03.md` (Picture Sheffield t13138, 25 Aug 1990; t13140, c.1989) | Picture Sheffield | reference, linked only | 1989, 1990 | dark sign-written fascia in red; white glass lettering | Yes, as an earlier note |
-| N3 | `production/research/casting/notes/names.md` s.4 (Marshall's Hull set, Flashbak, 14 Nov 2024) | Peter Marshall | photographer copyright, linked only | 1979-1994 | naming patterns, trade-only boards ("Fresh Meat", "Boot Repairs", "Refreshments"), "Sail Makers & Ship Chandlers" | Yes, as an earlier note |
-| N4 | `production/research/shopfronts/FRONTAGE-2026-10-06.md`, `production/art/shopfront-kit/README.md`, `production/art/fascia-01/01-SPEC-fascia-package.md` | project helpers | own work | 6 Oct 2026 | fascia 0.55 m, 0.12 proud, between consoles 0.295 to 5.705; 1930s structural-glass refits; the guides' depth envelope | Yes |
-| F1 | https://raw.githubusercontent.com/google/fonts/main/ofl/<dir>/OFL.txt and the files named in section 8 | the font designers | SIL OFL 1.1, each OFL.txt read whole | n/a | licences and glyph files | Yes: every width in the target is measured on the real files |
-
-Search summaries were not used for any number.
-
-## 2. What is wrong in the game today
-
-Read from `proof-2.6-shop-signs-and-bills-2026-10-04.jpg` and `shop-fronts-whole-2026-10-08.jpg` (by eye), and `make_vignette_2d.py` TRADE_FASCIAS.
-
-1. **One designer.** Every trade board is the same recipe: a name in 200 mm capitals centred, one trade line in 70 mm capitals under it, a faint near-black drop copy 3.5 per cent of the cap away, on a flat colour. Six of eight boards share the same sans for the trade line.
-2. **The fish board reads FRESH FISH twice** across one board (`shop-fronts-whole`): the 5650 mm picture is tiled on a wider box.
-3. **The launderette is cut off** at the left edge in `proof-2.6`; it is a flat white board with blue letters, not a box sign: no frame, no depth, no lit face.
-4. **Mickey's is flat and centred**, a thin gold on flat navy; the sheet has standing gilt capitals on slate blue, over the door.
-5. **No relief, no gilding, no border, no number, no ghost of an older trade, no wear on any lettering.** The board is a clean decal on a dirty wall.
-6. **Boards run the whole 6.0 m bay** across the pilaster heads and bury the consoles' feet (kit README, "For the session").
-
-## 3. The board
-
-| Number | Value | Kind and source |
-|---|---|---|
-| Fascia band | 2.85 to 3.40 m up, 0.55 m high, 0.12 m proud of the wall | Read: SCENE-SLOTS.md; `vignette-scene.json` shopfront `fascia_bottom_m` 2.85, `fascia_projection_m` 0.12; `vignette-pieces.json` `east_parade_fascia0` 6 x 0.55 x 0.12 |
-| Board between the consoles | 0.295 to 5.705 in the bay = **5410 mm** | Read: kit README ("0.295 to 5.705 in Rita's bay"); the street's box today is 6000 mm and buries the consoles |
-| Texture | **5410 x 550 px at 1 px per mm** (double allowed) | Derived |
-| Frame | outer 24 mm: highlight on top (+3 to +14 L*), shade below (-14 to -2 L*), baked bevel | Judgement: the kit's board is a plain box |
-| Lettered field | 24 mm in on every side = 5362 x 502 mm | Derived |
-| Safe rectangle | x 150 to 5260, y 40 to 510 (150 mm off the ends where the consoles stand, 40 mm off the top and bottom) | Judgement |
-| Axes | x from the board's left as a viewer facing it sees it; y up from the board's bottom edge | east shops: low street x at the left; west shops (the block is turned a half turn): low street x at the right |
-| Pieces that are not the texture | the cornice's shadow, the weather streaks off the lead, the splash, the sun-fade, the reflection: the wear material's and Unreal's | Read: PAINTED-FRONTS-2026-10-07 |
-
-The ten boards, by street position (the recipe's turned west block puts bay 0 at the far end):
-
-| # | id | Side, street x (m) | Trade | Name on the board | Minted name? |
-|---|---|---|---|---|---|
-| 0 | mickeys | E 3 to 9 | minicab office | MICKEY’S | yes (canon, brand bible, founded 1962) |
-| 1 | fish_market | E 9 to 15 | fishmonger | FISH MARKET | yes (DECISIONS 3 Oct "the fishmonger (Fish Market)") |
-| 2 | ritas | E 15 to 21 | pawnbroker | RITA’S, PAWNBROKER | yes (cast, DECISIONS) |
-| 3 | empty_unit | E 21 to 27 | empty, to let | none | n/a |
-| 4 | steam_laundry | E 27 to 33 | launderette | STEAM LAUNDRY | yes (DECISIONS 3 Oct "the Steam Laundry as a launderette") |
-| 5 | grocer | E 33 to 39 | grocer | FAMILY GROCER | **no: trade only** |
-| 6 | newsagent | W 36 to 42 | newsagent and tobacconist | NEWSAGENT | **no: trade only** |
-| 7 | ironmonger | W 30 to 36 | ironmonger | IRONMONGER | **no: trade only** |
-| 8 | tea_rooms | W 24 to 30 | tea room | Tea Rooms | **no: trade only** |
-| 9 | chandler | E 40 to 46 | ship chandler | SHIP CHANDLER | **no: trade only** |
-
-Five boards are trade-only because canon and the town have minted no proprietor for them. That is correct; no name is invented. FAMILY GROCER is a trade description. The street counts ten shop bays in the scene (RULINGS 2 Oct says "twelve shopfronts"); section 12 says what that leaves open.
-
-## 4. How every fascia is made (rules common to all)
-
-**Order of layers**, bottom to top: ground colour and grain; the frame's baked bevel; the border or panel; old paint under (ghosts, painted-out patches); each text block (shade or extrusion, then size, then face, then outline); the technique's own details; wear (loss, runs, droppings, rust, yellowing, lifted vinyl); then the maps (roughness, metallic, height, emissive) and the layers manifest.
-
-**Letter heights are the H's (or the T of Tea Rooms), in mm at 1 px per mm.** Spacing: each block's tracking is added between glyphs on top of the font's own spacing and kerning; blocks are centred on their ink; round capitals overshoot the baseline and cap line by 1.6 per cent of the cap.
-
-**Block shade** (P1, Photo): the letter's extrusion at 45 degrees down and to the right, length **0.10 of the cap** (4.5 px on a 45 px cap), solid, hard-edged, not a blur. Colour per block. Used on hand-painted and gilded boards only (not on vinyl, applied letters or back-painted glass).
-
-**Keyline** (P1, Photo): one line, thickness 0.027 of the field, inset 0.078 (top) to 0.102 (bottom) of the field, corners cut by a concave quarter circle of radius 0.136 of the field; a panel of a gilded board.
-
-**Numbers at both ends** (P1, Photo): the street number at each end of the panel, 0.91 of the name's cap height, 25 to 46 px inside the keyline in P1. The name's ink sits 1.4 per cent of the panel width left of the panel's centre in P1; a hand's tolerance of +-1.5 per cent is allowed.
-
-**Hand jitter** on painted and gilded blocks (Judgement): each glyph's baseline +-1.6 mm, advance +-1.5 per cent, rotation +-0.35 degree, stroke weight +-3 per cent. None on vinyl, applied or glass-gilt letters.
-
-**Gilding** (Judgement): oil gilding on size for boards; fresh leaf (214,175,74), roughness 0.30, metallic 1; a matt edge 3 to 5 mm where the leaf meets the shade; chips show the size, (150,110,50). Water gilding on glass is seen from behind.
-
-**Wear model** (shape: Photo from P2 and P3; amount: Judgement):
-
-- Paint loss follows the grain: patches elongated **median 3.6:1** (p90 6.7), equivalent diameter **median 8.9 mm** (p90 17.4), largest 577 x 88 mm. P2 loses 28.6 per cent of its area; that is an upper bound for unmaintained cladding. A fascia under its cornice, repainted every few years, loses a stated share: class 1 (sound) 0.1 x, class 2 (tired) 0.2 to 0.3 x, class 3 (neglected) 0.6 x of 0.286. Each shop's `age.loss_fraction` is that share (0.02 to 0.17).
-- Worn dark gloss (P3): L* median 8, p95 22; 9 per cent of the area scuffed more than 8 L* brighter.
-- Rain runs from the cornice's lead: vertical streaks 5 to 30 mm wide, length per shop, 6 L* darker than the board. Gull droppings on the top 80 mm: pale blotches (230,226,214) with a short run. Rust runs under fixings where the shop's `rust` says so. A film of grime blended in (the share per shop), chalk lift in L* for dark gloss, yellowing for creams and acrylic. How each colour's 1990 value was got from its fresh value is `age_rules` in target.json (Judgement).
-- Edges chip 2 to 4 mm where the paint is thick.
-
-**Maps** (4.1's choice of format, the content is given): base colour sRGB; roughness; metallic; height (8-bit, 128 = board face, 1 mm over 127 steps: letter ridge +0.2 mm, keyline +0.15, vinyl +0.08, gilt +0.05, paint loss -0.3 mm, bare board -0.5, box-sign frame +3 mm); emissive on the box sign only; a **layers manifest** (per text block: string, font, size, anchor, ink box, colours). The checks read the manifest.
-
-**Materials** (colours in section 7; full table `materials` in target.json): gold leaf rough 0.30 metal 1; applied brass 0.38, 0.85; signwriter's enamel 0.35 to 0.5 (0.55 chalked); cut vinyl 0.45; back-painted glass 0.08; acrylic face 0.35; anodised bronze 0.35 metal; chrome 0.15 metal; hemp rope 0.80; whitewash 0.90; bare timber 0.85; paint loss 0.85.
-
-## 5. The ten fascias
-
-Layout boxes are in mm on the board, y up, as `[x0, y0, x1, y1]` (the ink, shade included in the effects box in target.json). Contrast is the WCAG ratio of the aged (1990) face over the aged ground. "Cap/field" is the cap over the 502 mm field.
-
-### 0. Mickey's (bay 0, x 3 to 9, proposed No. 1) — applied letters on slate
-
-- **Words:** MICKEY’S (typographic apostrophe), nothing else on the board. Glass (exists, shop-room.py): 0632  960418 and MINICABS · 24 HOURS in gilt.
-- **Board:** slate blue-grey **(62,75,87)** [Sheet: mean; p10 (48,60,70), p90 (80,91,102)], eggshell, roughness 0.55, fine orange-peel, grain along (L* +-1.2). No border.
-- **Letters:** Marcellus SC, **cap 270 mm** (0.54 of the field), tracking +0.03 em, **emboldened 3 mm each side** (the font's stem 0.09 of the cap becomes 0.11; the sheet's is about 0.15), one block, ink box **[471.7, 130.8, 2238.3, 417.6]**, baseline y 140, cap line y 410, width 1767 mm. Centre **x 1355**, which is the shop door's centre (street x 4.65) and the sheet's 0.245 of the board from the door end.
-- **Applied:** stand-off **14 mm** off the board [Judgement; the recipe's RAISED_LETTERS already stands them off], square-cut edges, flanks (112,96,68), face **brass-gilt (167,149,109)** aged [Sheet], p90 (193,171,130); fresh (205,172,86). Roughness 0.38, metallic 0.85. Contact shadow on the board: soft, 6 mm, opacity 0.35, offset (-2,-5) mm. Contrast 3.05.
-- **1990:** the sign "hand-painted and repainted a shade off each time" (brand bible): under the letters a **ghost of an older, centred, smaller MICKEY’S** in a blue 3.5 dE off the board, box [1900,120,3510,430], brush-cut edge with a 1 mm ridge, and ten dark pin holes (3 to 4 mm) of the older lettering. Class 2: loss 4 per cent, four rain runs 40 to 160 mm, two gull marks, two short rust runs under the console fixings, chalk +3 L*, grime 7 per cent.
-- **Does not match the sheet:** the sheet's letters are taller and narrower (0.69 of the board; width 3.5 caps). Marcellus SC (ruled) is 1.8 times wider; so the cap is set smaller (0.49 of the board; width 6.5 caps) rather than the font squeezed. REPORTED by self_check.
-
-### 1. Fish Market (bay 1, x 9 to 15, proposed No. 3) — red on dark
-
-- **Words:** FISH MARKET; WET FISH · SHELLFISH · SMOKED. Glass (whitewash, Patrick Hand stand-in, [Read] that t13138 had white hand lettering on the glass): FRESH DAILY, SHELLFISH, SMOKED FISH, cap 100 to 120 mm.
-- **Board:** charcoal navy **(24,30,40)** fresh, **(40,42,49)** aged, gloss enamel gone flat, roughness 0.58. [Photo, earlier note t13138: "a dark fascia sign-written in red"; the hue is mine.] Two **vermilion rules** 12 mm thick at y 34 to 46 and 504 to 516, x 120 to 5290.
-- **Name:** Oswald 600, **cap 290** (0.58 of the field), tracking +0.06, box **[1646.3, 184.1, 3763.7, 481.6]**, baseline 188, width 2117 mm. Face **vermilion (200,40,36)** fresh, **(197,75,62)** aged; block shade **cream (230,220,192)**, 29 mm. Contrast 3.04.
-- **Trade line:** Oswald 400, cap 62, tracking +0.20, box [2042.0, 81.3, 3368.1, 144.5], baseline 82, cream (236,226,198) flat, contrast 9.45.
-- **1990:** the oxblood-and-cream fish board of the game today is replaced by what the dated photograph shows. A faint ghost of an older lettering, box [900,90,4500,470], 4 dE. Class 2: loss 5 per cent, six rain runs 50 to 200 mm, three gull marks. Chalk +4 L*. The recipe's metal refit is the window frame only; the fascia stays timber.
-
-### 2. Rita’s (bay 2, x 15 to 21, proposed No. 5) — gilt on oxblood
-
-- **Words:** RITA’S; PAWNBROKER. Toplight glass (gilt, one word to a pane): WATCHES, JEWELLERY, LOANS. Hanging: the three balls (section 6). The board's trade words are not repeated.
-- **Board:** oxblood **(88,32,38)** fresh, **(93,46,49)** aged [Scaled: the game's board today is 92,39,43], oil gloss now satin, roughness 0.45. **Gilt keyline panel** [Photo P1]: one line 13 mm thick, inset 44 mm, concave quarter-circle corners of radius 70 mm; panel [68, 68, 5342, 482].
-- **Name:** Abril Fatface, **cap 230** (0.46), tracking +0.10, box **[2119.7, 217.7, 3290.4, 460.2]**, baseline 221, width 1171. Gold leaf face (214,175,74) fresh, (195,161,77) aged, **black block shade 23 mm** (0.10 of the cap). Contrast 4.49.
-- **Trade:** Old Standard TT Bold, cap 84, tracking +0.30, box [2110.8, 96.2, 3299.1, 185.1], baseline 99, same gilt, shade 8.4 mm.
-- **Ends:** the number **5** (proposed), Abril Fatface, cap 214 (0.93 of the name), boxes [200, 164.9, 365.1, 384.8] and [5044.9, 164.9, 5210.0, 384.8], baseline 168, shade 21 mm.
-- **1990:** class 1 (the model shop is the best kept): loss 3 per cent, three rain runs 40 to 140 mm, one gull mark, a small repaint patch [2300,140,3300,340] 3 dE. **The board is not lit at night;** only the window is (DECISIONS 1 Oct).
-- Rita's name is larger over its field (0.46) than the photographed board's (0.31): deliberate, a trading parade not a restored arcade. REPORTED.
-
-### 3. The empty unit (bay 3, x 21 to 27, proposed No. 7) — bare and painted out
-
-- **Words:** none on the board. The letting board (900 x 450 mm, TO LET, red on white, Libre Franklin 800, cap 130, four screws, slightly askew) is a separate asset (`board_to_let`); its place is centred at [2705, 275].
-- **Board:** bare soot-darkened timber, **(92,80,68)** fresh, **(98,85,72)** aged [Scaled: the recipe's `bare_timber` is 40,31,25 when freshly bared; a board left for years greys and lightens: Judgement], roughness 0.85, grain along with strong amplitude (L* +-4, 25 to 600 mm).
-- **Painted-out patch:** buff (176,170,150) fresh, (165,157,131) aged, box **[1105, 120, 4305, 420]** (3200 x 300 mm) where the last trade's name was, brush strokes along the board, its edge a ragged ridge 0.4 mm high, six old pin holes, **nothing legible**.
-- **1990:** class 3: loss 0.17 (0.6 of P2), ten rain runs 60 to 300 mm, six gull marks 20 to 70 mm, three rust runs from old bracket bolts. Whole window whitewashed (ruled 3 Oct, not mine).
-
-### 4. Steam Laundry (bay 4, x 27 to 33, proposed No. 9) — lit plastic box sign
-
-- **Words:** STEAM LAUNDRY; LAUNDERETTE · SERVICE WASHES · DRY CLEANING. Window glass: SERVICE WASHES in white cut vinyl. Hanging: LAUNDERETTE on a double-sided box (section 6).
-- **Construction:** a 1970s-80s box sign screwed over the old board: bronze anodised extrusion (96,76,58) fresh, outer **[105, 35, 5305, 515]**, frame 26 mm; **white acrylic face** (238,236,228) fresh, (225,217,197) aged (yellowing, b* +7), face [131, 61, 5279, 489]. The old painted board (cream) shows 105 mm each end and 35 mm top and bottom. Eight pan-head screws on the frame.
-- **Name:** Jost 800, **cap 205**, tracking +0.05, box **[1328.2, 214.8, 4081.8, 443.8]**, baseline 225, width 2754. **Royal blue vinyl (24,62,140)**, aged (46,68,136), flat, 0.08 mm, no shade. Contrast 6.5.
-- **Trade:** Jost 600, cap 66, tracking +0.14, box [1260.5, 115.1, 4149.6, 188.9], baseline 119, **scarlet vinyl (176,30,34)**, contrast 4.56.
-- **Emissive** (lit when the shop is open; hours Mon-Sat 8 to 17.30 [Read: hook-cast], so lit on winter afternoons): face colour at full; two tube rows show as +6 per cent bands at 25 and 75 per cent of the face height; the last 250 mm at each end 12 per cent dimmer; **one tube dead** (a band 500 to 700 mm wide, 15 per cent darker).
-- **1990:** class 2: yellowing at the edges, grime streaks off the top edge (seven, 60 to 220 mm), a lifted corner of the lower frame. No paint loss on the face.
-
-### 5. Grocer (bay 5, x 33 to 39, proposed No. 11) — Art Deco glass
-
-- **Words:** FAMILY GROCER; PROVISIONS · FRUIT · VEG. Trade only. Fanlight number 11.
-- **Construction:** a **1930s refit in back-painted structural glass** [N4: "the 1930s used … bronze, chrome and Vitrolite"; Vitrolite "cracks low down and round doors, patched with painted ply"]: slab [40, 25, 5370, 525], **dark bottle green (30,58,46)** fresh, (36,61,49) aged, roughness **0.08**; chrome edge strip 12 mm (196,200,202); **three chrome speed lines** 6 mm thick at y 262, 282, 302, x 52 to 640 and 4770 to 5358.
-- **Name:** Josefin Sans 700, **cap 190**, tracking +0.14, box **[1403.8, 228.9, 4006.2, 428.7]**, baseline 231, **cream (236,226,198)** back-painted, flat, no shade. Contrast 7.75.
-- **Trade:** Josefin Sans 600, cap 58, tracking +0.30, box [1913.8, 126.3, 3496.1, 189.0], baseline 129.
-- **1990:** a crazed diagonal crack across the right third (three branches), patched with a painted board 120 x 300 mm; five rain runs; grime film 6 per cent. No paint loss (glass).
-
-### 6. Newsagent and tobacconist (west bay 0, x 36 to 42, proposed No. 18) — cut vinyl on red
-
-- **Words:** NEWSAGENT; TOBACCONIST · CONFECTIONER. Trade only. Window or door glass: NEWSPAPERS · MAGAZINES in white vinyl.
-- **Board:** signal red **(176,36,40)** fresh, (175,68,63) aged, gloss, tired, roughness 0.5. One **black vinyl stripe** 26 mm at y 40 to 66, x 24 to 5386.
-- **Name:** Libre Franklin 900, **cap 240**, tracking +0.05, box **[1537.7, 225.8, 3872.3, 472.2]**, baseline 229, width 2335, **cream vinyl (236,226,198)**, flat, no shade. Contrast 4.4.
-- **Trade:** Libre Franklin 700, cap 66, tracking +0.16, box [1804.8, 122.1, 3605.1, 189.9], baseline 123.
-- **1990:** computer-cut vinyl (note 4: "beginning to appear by the end of the decade") on a plain refit. Two lifted corners (the stripe's right end lifts 30 mm), no letter lost, loss 6 per cent on the red between, five rain runs, two gull marks.
-
-### 7. Ironmonger (west bay 1, x 30 to 36, proposed No. 16) — shaded roman on buff
-
-- **Words:** IRONMONGER; TOOLS · HARDWARE · PARAFFIN. Trade only. Toplight glass: EST. 1884 (proposed). Hanging: KEYS CUT board (section 6).
-- **Board:** buff **(200,188,156)** fresh, (188,173,136) aged [Scaled: the game's is 190,176,140], gloss chalked and grimy, roughness 0.55. **Double rule**: black line 8 mm inset 36 mm, a vermilion hairline 3 mm 14 mm inside it, square corners with 30 mm black corner blocks; panel [79.5, 79.5, 5330.5, 470.5].
-- **Name:** Libre Baskerville 700, **cap 180**, tracking +0.08, box **[1618.5, 231.7, 3791.6, 416.3]**, baseline 234, width 2173, **black (26,26,24)** (aged (40,39,37)), **vermilion block shade 18 mm**. Contrast 6.73.
-- **Trade:** Libre Baskerville 400, cap 56, tracking +0.20, box [1857.4, 135.3, 3552.6, 192.7], baseline 136.
-- **Ends:** the number 16 (proposed), cap 167, boxes [210, 188.8, 450.7, 360.2] and [4959.3, 188.8, 5200, 360.2], baseline 191, vermilion shade 16.7.
-- **1990:** the metal window refit did not reach the board. Faint older lettering ghost [800,100,4600,430]. Class 2: loss 6 per cent, rust under the hanging-sign bracket bolts, chalk +4 L*, grime 12 per cent.
-
-### 8. Tea Rooms (west bay 2, x 24 to 30, proposed No. 14) — soft roman on duck-egg
-
-- **Words:** Tea Rooms (the only mixed-case name); TEAS · LIGHT LUNCHES · HOME BAKING. Trade only (hook-cast calls it "the cafe"). Window glass: Home Baking in gold leaf.
-- **Board:** duck-egg blue-green **(158,192,182)** fresh, (151,177,160) aged, gloss a few years old, roughness 0.42. Scalloped valance along the bottom: circles of radius 26 mm, pitch 80 mm, x 100 to 5310, centres y 50, deep teal, with a 6 mm rule above at y 86 to 92.
-- **Name:** Fraunces 900 (Softness 100, Optical Size 144), **cap 215** (the T's), tracking +0.02, box **[1932.8, 244.0, 3477.1, 468.5]**, baseline 248, **deep teal (24,74,76)** (aged (44,82,82)), no shade. Contrast 3.74.
-- **Trade:** Fraunces 600, cap 52, tracking +0.24, box [1738.0, 154.7, 3671.9, 209.4], baseline 156.
-- **1990:** a 1980s refit, hand-painted; class 1: loss 2 per cent, three rain runs, one gull mark.
-
-### 9. Ship chandler (east_chandler, x 40 to 46, proposed No. 13) — white Egyptian on navy
-
-- **Words:** SHIP CHANDLER; ROPE · PAINT · CHARTS · TWINE. Trade only. Toplight glass: EST. 1879 (proposed). Hanging: CHANDLERY board (section 6).
-- **Board:** navy **(28,42,78)** fresh, (44,53,83) aged, salt-weathered gloss, roughness 0.50; **painted rope keyline** 12 mm, inset 34, corner radius 40, strand pitch 28 mm, hemp (196,176,136); panel [70, 70, 5340, 480].
-- **Name:** Alfa Slab One, **cap 170** (0.34, the smallest), tracking +0.05, box **[1628.6, 235.9, 3781.4, 412.1]**, baseline 239, width 2153, **signwriter's white (238,234,220)**, **black block shade 17 mm**. Contrast 8.48.
-- **Trade:** Libre Franklin 700, cap 58, tracking +0.20, box [1870.5, 140.2, 3539.6, 199.8], baseline 141, cream.
-- **Ends:** the number 13 (proposed), cap 158, boxes [210, 193.2, 442.5, 356.8] and [4967.5, 193.2, 5200, 356.8], baseline 196, shade 15.8.
-- **1990:** metal window refit under a painted board; class 2: loss 7 per cent, six rain runs 40 to 200 mm, four gull marks 20 to 60 mm, three rust runs, salt bloom whiter along the lower edge.
-
-### Why no two are alike
-
-Nine different name-line fonts on the nine lettered boards (Marcellus SC, Oswald, Abril Fatface, Jost, Josefin Sans, Libre Franklin, Libre Baskerville, Fraunces, Alfa Slab One), ten distinct grounds (smallest dE76 between aged grounds 14.9), eight construction kinds (applied letters, sign-written, gilded, bare, box sign, glass panel, cut vinyl, hand-painted), nine different name caps from 0.34 to 0.58 of the field. `distinctness` in target.json lists every pair; `self_check` fails if one pair comes within 14 dE or shares a font.
-
-## 6. Other signage
-
-All Judgement unless marked. Geometry in metres, lettering in mm. Full numbers in `projecting_signs`, `glass_lettering`, `small_panels`.
-
-**Projecting and hanging signs (four, as the asset plan's "3 to 4").** Each has a clear drop of at least 2.5 m and a projection of 1.0 m at most (self_check tests it).
-
-| id | What | Where and size |
-|---|---|---|
-| ritas_three_balls | **The pawnbroker's three balls**: three gilt balls, 0.26 m across, two above one, on a wrought-iron scroll bracket (20 x 8 mm bar, four scrolls, a hook and a ring; plate 0.18 x 0.30 m, four bolt heads). No lettering, no mark. | Arm at 3.28 m, projection 0.85 m, on the left pilaster of bay 2 (street x 15.175); ball centres (0.57, 3.00, -0.14), (0.57, 3.00, +0.14), (0.57, 2.78, 0); lowest point 2.65 m. Gilt paint on sheet metal, roughness 0.38, metal 0.8, scuffed where hands reach; iron black, rust at the bolts. No photograph of one was reached. |
-| steam_laundry_box | A double-sided lit box: bronze extrusion, white acrylic faces, LAUNDERETTE in royal blue vinyl, Jost 800, cap 60, tracking +0.03; each face reads left to right from its own side. | 0.62 out x 0.45 high x 0.14 thick, arm at 2.95 m, left pilaster of bay 4 (street x 27.175). Emissive with the box sign above. |
-| ironmonger_hanging_board | A hanging painted board on a forged bracket (the KCD2 frame's kind): KEYS CUT, Libre Baskerville 700 cap 92, black on buff with a vermilion shade 9 mm, a black rule 6 mm inset 20 mm; both faces alike. | Board 0.55 x 0.38 x 0.04 on two rings, arm at 3.05 m, projection 0.70. |
-| chandler_hanging_board | CHANDLERY, Alfa Slab One cap 105, white on navy, black shade 10 mm, a rope border; both faces alike. | Board 0.80 x 0.50 x 0.05 on two four-link chains, arm at 3.10 m, projection 0.90. |
-
-**Glass lettering** (gilt on the inside of the glass, white vinyl or whitewash as listed): Mickey's existing number and MINICABS · 24 HOURS (Read); Rita's toplights WATCHES · JEWELLERY · LOANS, cap 90, gold leaf, black shade, one to a pane, centre 2.64 m; the fish shop's whitewash FRESH DAILY, SHELLFISH, SMOKED FISH (Read for the technique, Judgement for the words); the launderette's SERVICE WASHES; the newsagent's NEWSPAPERS · MAGAZINES; the tea room's Home Baking; EST. 1884 and EST. 1879 on the toplights. **Street numbers** 1, 3, 5, 7, 9, 11, 13 east and 14, 16, 18 west in gilt or vinyl on each side-door fanlight, cap 110, centre 2.18 m. **All numbers and years are proposed, not minted** (section 12).
-
-**Small panels.** The letting board above. An **hours plate** per shop that has hours in the cast (Rita's, fish, laundry, newsagent, tea rooms): white enamel 300 x 190 mm, black Libre Franklin 700 cap 24, blue border 4 mm, rolled edge, chips to black iron at the corners, centre 1.45 m up on the door glass or pilaster; the words are read from `hook-cast.json` at build time (Rita's: Mon, Tue, Thu to Sat 9 to 5.30; Wed 9 to 1), not written here.
-
-## 7. Palette
-
-Fresh is what the renderer paints; 1990 is the median the checks expect. Kind: Sheet, Scaled (the game's own file), Photo, Read, Judgement.
-
-| Name | Plain name | Fresh sRGB | 1990 sRGB | Kind |
-|---|---|---|---|---|
-| slate | slate blue-grey | 52,66,80 | **62,75,87** | Sheet |
-| brass_gilt | dull brass-gilt | 205,172,86 | **167,149,109** | Sheet |
-| brass_side | letter flank | 120,98,58 | 112,96,68 | Judgement |
-| gold_leaf | gold leaf | 214,175,74 | 195,161,77 | Judgement |
-| shade_black | sign-writer's black | 22,20,20 | 37,35,34 | Photo (P1 shade (66,53,42) under warm lamps, taken as near-black) |
-| oxblood | oxblood | 88,32,38 | 93,46,49 | Scaled (game 92,39,43) |
-| charcoal_navy | charcoal navy | 24,30,40 | 40,42,49 | Judgement (t13138's "dark") |
-| vermilion | signwriter's vermilion | 200,40,36 | 197,75,62 | Judgement |
-| cream / cream_shade | cream | 236,226,198 / 230,220,192 | 222,209,175 / 216,203,170 | Judgement |
-| bare_timber | bare soot-darkened timber | 92,80,68 | 98,85,72 | Scaled, Judgement |
-| painted_out | buff grey | 176,170,150 | 165,157,131 | Judgement |
-| acrylic_white | white acrylic face | 238,236,228 | 225,217,197 | Judgement |
-| vinyl_blue / vinyl_red | royal blue / scarlet | 24,62,140 / 176,30,34 | 46,68,136 / 173,50,46 | Scaled (the game's 28,64,140 and 176,30,34) |
-| bronze_anodised | bronze | 96,76,58 | 84,68,53 | Judgement |
-| deco_green_glass | bottle-green glass | 30,58,46 | 36,61,49 | Judgement |
-| chrome | chrome strip | 196,200,202 | 178,181,183 | Judgement |
-| signal_red / vinyl_black / vinyl_cream | newsagent's board, stripe, letters | 176,36,40 / 28,28,28 / 236,226,198 | 175,68,63 / 39,38,37 / 235,227,201 | Judgement |
-| buff_board / sign_black | ironmonger | 200,188,156 / 26,26,24 | 188,173,136 / 40,39,37 | Scaled (game 190,176,140), Judgement |
-| duck_egg / deep_teal | tea room | 158,192,182 / 24,74,76 | 151,177,160 / 44,82,82 | Judgement |
-| navy / white_paint / hemp | chandler | 28,42,78 / 238,234,220 / 196,176,136 | 44,53,83 / 223,216,196 / 184,162,118 | Scaled (game 30,40,70), Judgement |
-| whitewash | whitewash | 238,236,228 | 224,218,204 | Read (white on the glass, t13138) |
-
-Other sheet colours measured but **not used**: the sheet's white fascia (204,204,204), dark one (99,81,72), cream one (128,101,98) in shade.
-
-## 8. Fonts
-
-Every file named was read at https://raw.githubusercontent.com/google/fonts/main/ofl/<dir>/ on 8 October 2026 and its OFL.txt read whole: the header is "SIL OPEN FONT LICENSE Version 1.1" in all ten. The letters are rendered into pictures; the OFL puts no restriction on a picture made with the font (earlier note FAQ 1.1, 1.13); the font file itself is not modified or redistributed by this target. Unit 4.1 adds the files to `production/fonts/` with their OFL.txt, as the rule says.
-
-| Key | Family | File (in google/fonts, ofl/…) | Reserved name | Looks like | Used for |
-|---|---|---|---|---|---|
-| marcellus-sc | Marcellus SC (Astigmatic) | marcellussc/MarcellusSC-Regular.ttf | Marcellus | flared humanist capitals; already in `production/fonts` | Mickey's, glass number |
-| abril-fatface | Abril Fatface (TypeTogether) | abrilfatface/AbrilFatface-Regular.ttf | Abril, Abril Fatface | fat-face Didone | Rita's name |
-| old-standard-tt-bold | Old Standard TT (Kryukov) | oldstandardtt/OldStandard-Bold.ttf | none | Victorian modern roman | Rita's trade, glass |
-| oswald | Oswald | oswald/Oswald[wght].ttf, wght 600 and 400 | none | condensed gothic block | Fish Market |
-| jost | Jost (Owen Earl) | jost/Jost[wght].ttf, wght 800 and 600 | none | Futura-like | Steam Laundry |
-| josefin-sans | Josefin Sans (Orozco) | josefinsans/JosefinSans[wght].ttf, wght 700 and 600 | Josefin | Art Deco geometric | Grocer |
-| libre-franklin | Libre Franklin (Impallari) | librefranklin/LibreFranklin[wght].ttf, 900 and 700 | none | Franklin Gothic | Newsagent, chandler trade line, plates |
-| libre-baskerville | Libre Baskerville (Impallari) | librebaskerville/LibreBaskerville[wght].ttf, 700 and 400 | Libre Baskerville | sturdy roman | Ironmonger |
-| fraunces | Fraunces (Undercase) | fraunces/Fraunces[SOFT,WONK,opsz,wght].ttf, wght 900 and 600, Softness 100, Optical Size 144 | none | soft heavy "Cooper/Windsor" roman | Tea Rooms |
-| alfa-slab-one | Alfa Slab One (JM Solé) | alfaslabone/AlfaSlabOne-Regular.ttf | Alfa Slab | fat Egyptian | Chandler |
-| patrick-hand | Patrick Hand | already in `production/fonts/patrick-hand` | | neat hand print | fish shop's whitewash hand, with jitter |
-
-Not used: Overpass (American highway gothic, ruled out), any Apache or GPL face, Transport, Gill Sans, Futura, Helvetica, Franklin Gothic (Jost, Libre Franklin and Oswald are the stand-ins). A real signwriter drew every letter; these are starting shapes, which is why hand jitter, shade, gilt edges and wear are specified.
-
-## 9. Where the photograph wins
-
-| # | Element | The book or the game said | The photograph says | Chose |
-|---|---|---|---|---|
-| D1 | The fishmonger's colour way | oxblood board, cream letters (game; recipe's "wave") | t13138 (25 Aug 1990, earlier note): dark fascia sign-written in red | the photograph: dark ground, red letters |
-| D2 | Shade under signwriting | a near-black copy 3.5 per cent of the cap away on every board (game) | P1: a solid block shade 45 degrees, 0.10 of the cap, near-black | the photograph, only on painted and gilded boards |
-| D3 | Numbers at the ends | none | P1: both ends, 0.91 of the cap | the photograph, on Rita's, the ironmonger, the chandler (numbers proposed) |
-| D4 | Keyline corners | a plain rectangle | P1: concave quarter circle, radius 0.136 of the field | the photograph, on Rita's |
-| D5 | Fascia depth | council guides: "do not exceed 380 mm" (fascia-01 spec, search summaries, PDFs blocked) | P1: lettered field 0.45 to 0.49 m (door-leaf scale), board with bead 0.53 to 0.57 m | the street's 0.55 m stands |
-| D6 | Mickey's name position | centred (game today) | the sheet, not a photograph: over the door, 0.245 of the board from the door end | the sheet (variant V4 centres it) |
-| D7 | Size of the name | 200 mm cap on every board (game), 0.43 of the field | P1 0.31; the sheet 0.69 | 0.34 to 0.58 by trade |
-
-## 10. The checks for unit 4.1 (`checks` in target.json; 165 of them)
-
-Each has an id, a name, a scope, what to measure, the expected value, a tolerance, a unit, the method and whether it reads pixels or the layers manifest. Groups:
-
-- **G1** size 5410 x 550. **G2** frame bevel (top strip lighter, bottom darker). **G3** no repeated word on a board (the FRESH FISH FRESH FISH fault). **G4** every string in the manifest is in `approved_words` (exact) and none in `forbidden_patterns`. **G5** no tiling period under 5 m in the ground (autocorrelation peak under 0.55). **G6** grain along the board (0 to 8 degrees). **G7** distinct boards. **G8** contrast of every name line. **G9** relief present by technique.
-- **Per shop:** ground colour (median within dE76 9); **per block:** cap height (+-3 per cent or 2 mm), ink width (+-4 per cent or 6 mm), inside the safe rectangle, contrast (not below 0.85 of nominal and 2.2), face colour (dE 14), block shade (colour dE 16, length +-2 mm); border lines (+-4 mm); paint loss (fraction +-0.012 absolute or 50 per cent, median aspect at least 2.0, equivalent diameter 4 to 16 mm); the box sign's emissive map; Rita's board unlit.
-- The approved words are **44 strings** (listed in `approved_words`, 72 distinct word parts); the numerals and "EST." rows are in it as proposed.
-
-## 11. Self-check result
-
-`python self_check.py` (Python `/home/user/.bpyenv/bin/python`), run 8 October 2026 after the last change:
-
-**158 of 158 checks pass; 0 fail; 4 reported disagreements or gaps kept visible.**
-
-- Group 1 (printed): the fascia numbers return from SCENE-SLOTS.md, the scene spec, the kit README and `vignette-pieces.json`; all ten street x ranges from the scene's blocks (the west block turned); the 3 October trades; the recipe's bays; hours exist for each plate shop; Mickey's minted; the ten OFL.txt headers read.
-- Group 2 (photo wins): D1 to D7 hold in the target's own numbers.
-- Group 3 (P1): the code re-measures the saved preview (cap top and bottom, keyline top, bottom, left, right, name extent, field top and bottom) and agrees with my hand numbers within 3 preview px (largest 1.9 px); the drawing's edges, laid on the photograph at a scale fitted on **one dimension only** (the field's height, 136.5 px = 502 mm, 0.2719 px/mm), fall within 2.3 px of the photograph's (3 px is the stated error; one preview px is about 3.7 mm at the board).
-- Group 4 (sheet): Mickey's board and letter colours re-measured from `hook-sheet.png`.
-- Group 5 (consistency): every ink box inside the safe rectangle; no overlaps; panels hold their words with 15 mm to spare; contrast at least 2.2; pairwise distinct; words clear of the content rule, the real-mark lists and RealWorld.cs; every stored ink width equals a fresh measure on the real font files; P2's loss fraction recomputed from the texture.
-- Group 6 (checks): well formed, unique, the target meets its own nominal values.
-
-**Reported, kept visible:** (1) the cast and the recipe disagree about the newsagent's place (section 12); (2) Rita's name is larger over its field than P1's; (3) Mickey's cap over the board is 0.49 against the sheet's 0.69; (4) Mickey's name width over its cap is 6.5 against the sheet's 3.5.
-
-## 12. What could not be settled
-
-1. **No 1990 photograph of a fascia was reached** (above). Everything provincial rests on the earlier notes and judgement. The reviewer should expect the ten designs to need a second pass when the network opens.
-2. **Where the newsagent and the ironmonger stand.** The recipe (`terrace-front.py`, a west block turned a half turn) puts the newsagent at street x 36 to 42 and the ironmonger at 30 to 36. `hook-cast.json` puts the newsagent's pension counter at **x 32** and "Hal's shop, the same block's far end" at **x 39**. One of them is wrong. The boards are keyed by trade, so a swap is a rename. A town task, not mine to rule.
-3. **Hal's shop.** The cast has a keeper "Hal, who keeps the coin shop that sells no coins" at x 39; DECISIONS 3 Oct has no such shop in the west row. If the town keeps it, it needs a fascia (HAL'S is minted in the cast; its trade line is the town's to say). The scene has **ten shop bays** and RULINGS 2 Oct counts **twelve** shopfronts; I made ten.
-4. **Street numbers, "est." years, the hanging signs' words** (KEYS CUT, CHANDLERY), the glass words and every colour not measured are proposed. The fascias work without the numbers and years (variant V3).
-5. **The existing glass number 0632 960418** (shop-room.py) uses 0632, which from memory (not checked) was Newcastle upon Tyne's code until 1992. Meridian is fictional. Not changed: it is another family's.
-6. **P1's absolute scale** rests on the door leaf being 2.1 to 2.3 m (it gives a camera 0.93 m up, low for a panorama); every ratio used is scale-free, and the one fitted dimension is stated.
-7. **Reading at the game camera.** At 15 arcminutes a capital is readable at about 230 x its height: the 52 to 66 mm trade lines to about 12 to 15 m, the 170 to 290 mm names to 40 to 66 m (Judgement). Nobody has looked at these at the game's exposure.
-8. **Night.** Only Rita's window is ruled lit. The box sign's emissive is specified; whether it is on after dark follows the town's hours (the shop shuts at 17.30).
-9. **The wear amounts** are a stated share of two cladding photographs; no fascia was measured.
-
-### What I would read when the network opens
-
-Picture Sheffield t13137, t13138 and t13140 at full size (the fishmonger's board, the red lettering's height over the board, the glass); Peter Marshall's Hull set 1979-1994 and the Brixton 1987 fishmonger (fascia depth, letter height over board, how many box signs, painted-out boards); Geograph 1996 to 2000 northern parades (the three generations side by side, a bare board); Historic England's "Shopping Parades" (fascia depths and lettering of 1900-1935 parades); signpainting.co.uk "Letters Potent: the modern age" and Designing Buildings "Shop signs" (the dates of the shift to Perspex and vinyl); public-domain sign-writing and gilding manuals on archive.org or HathiTrust (the proportions of shade, the gilding method, numeral sizes); Wikimedia Commons categories of UK shop fronts of the 1980s, with the author, licence and date read on each file page.
-
-### Unreached today
-
-commons.wikimedia.org, geograph.org.uk, flickr.com, archive.org, en.wikipedia.org, picturesheffield.com, flashbak.com, historicengland.org.uk, signpainting.co.uk, hathitrust.org, britishnewspaperarchive.co.uk, bygonely.com: the proxy refused every connection (403). ambientcg.com answered its API but refused every file download (403), so no ambientCG photograph was measured. Reached: polyhaven.com (API and files), raw.githubusercontent.com.
-
-## 13. Files
-
-| File | What |
+| Fault | Where it is answered |
 |---|---|
-| `TARGET.md` | this page |
-| `target.json` | the numbers (written by `make_target.py`; `self_check` is written into it by `self_check.py`) |
-| `target_drawing.py` | `python target_drawing.py OUTDIR [--json drawing.json] [--sheet]`: draws each board at 1 mm a pixel (boxes, baselines, cap lines, borders, ghosts), the four projecting signs in side elevation and the P1 template, from target.json alone |
-| `self_check.py` | `python self_check.py [--fonts DIR \| --fetch-fonts DIR]`: the test above; writes `self_check` into target.json and the overlay picture |
-| `make_target.py` | author tool: the hand decisions and the computation of widths, boxes, contrast, checks; needs the font files (`--fonts DIR`) |
-| `make_previews.py` | rebuilds the reference previews from Poly Haven (CC0) |
-| `production/previews/cloud-week/refs/fascia-signs/` | `P1-…-board-elevation.jpg`, `P1-…-front-scale.jpg`, `P1-…-board-target-on-photo.jpg`, `P2-…`, `P3-…`, `H1-…`, `L1-quay-street-ten-fascias-layout-sheet.jpg`; each at most 1200 px, under 300 KB |
+| 1 axis backwards | section 2; `axis`, every shop's `board_u0_street_x_m`, Mickey's name at board x 4055, the hanging signs' street x |
+| 2 texture or geometry | section 3; `geometry` on three shops and Mickey's letters; height map within its range |
+| 3 checks did not read the pixels | section 8; `pixel_checks.py`; G10, G12 to G18 and 298 per-item checks |
+| 4 ghosts without words | section 5 and `ghost` blocks; three ghosts with exact words, two as brush texture only |
+| 5 one-designer layouts | section 5; nine different layout classes |
+| 6 too heritage | three plastic fronts, a plain caff; section 5 |
+| 7 two dark boards side by side | the fish board is the sheet's pale board with red lettering and a black shade |
+| 8 dots for scallops | the scallops are gone with the duck-egg tea room |
+| 9 signs bolted to consoles | brackets on the brick above the cornice; section 6 |
+| 10 grocer's glass | three slabs, no crack, method stated; section 5 |
+| 11 baked frame highlight | removed; planted mouldings in the height map |
+| 12 dead tube | upper row only, 1500 mm, 60 per cent |
+| 13 drink in a preview | the preview is the board's two ends only; section 9 |
 
-Credit for the previews: P1 Andreas Mischok, P2 Rob Tuytel, P3 Dimitrios Savva (Poly Haven, CC0); H1 the project's Hook sheet; L1 the project's drawing. The photographs are for measuring only: never placed in the game, never traced into a texture, never fed to an image model; the real business names visible on P1 are never to be copied.
+The full answer to each fault and each note is section 12.
+
+## 1. Reading this file
+
+- Units. Board x in millimetres runs from the board's LEFT edge as a viewer in the street, facing it, sees it IN THE GAME. y is UP from the board's bottom edge. Street x is metres along the street and is the same in the recipe and in the game. Colours are sRGB 0 to 255. Contrast is WCAG. dE is CIE76 on Lab D65.
+- Evidence kinds, on every number that matters:
+  - Read: printed in a source file.
+  - Scaled: measured off a drawing or the game's own files.
+  - Photo: measured on a photograph today.
+  - Sheet: measured on the Hook sheet (a generated picture, approved for mood, palette and composition).
+  - Derived: computed from the above.
+  - Judgement: the writer's. A better source overturns it.
+- NO PHOTOGRAPH OF A 1990 FASCIA WAS REACHED. The network refused Wikimedia, Geograph, Flickr, archive.org, Picture Sheffield, Flashbak, Historic England and the others (403). The only photograph measured is a 2019 restoration of a 19th-century arcade, used for craft ratios only, never for colour or wear. What 1990 looked like rests on earlier notes (cited, not re-measured), the Hook sheet and Judgement, and is marked.
+- A photograph beats a book. Where they differ, section 10 says which won.
+
+## 2. The board and its left-right direction (fault 1)
+
+The board texture is 5410 by 550 mm at 1 pixel to the millimetre (field [24, 24, 5386, 526], safe zone [150, 40, 5260, 510]). It is the kit's fascia between the consoles: 0.295 to 5.705 m of a 6.0 m bay, z 2.85 to 3.40 m, 0.12 m proud, the cornice top at 3.55 m. Read: SCENE-SLOTS.md, the shopfront kit README, vignette-scene.json, the fascia-01 spec.
+
+The rule, as the game shows it. The recipe builds the street with east on the +y side, where the kit README's "left to right seen from the street" is the pre-mirror frame. Then `_export_street` REFLECTS y to -y ("mirror"), and lettered faces take UVs that run "from the reader's left to the reader's right in the reflected street". Street x itself is unchanged; only the viewer's left and right swap. So, in the game:
+
+- East parade (Mickey's to the grocer, and the chandler): low street x is on the viewer's RIGHT. Board x = (u0 - street x) x 1000, where u0 = the bay's HIGH end - 0.295.
+- West block (tea room, ironmonger, newsagent): low street x is on the viewer's LEFT. Board x = (street x - u0) x 1000, where u0 = the bay's LOW end + 0.295.
+
+Evidence (all read again today):
+
+- `production/previews/shop-fronts-whole-2026-10-08.jpg`, from the left: TO LET (street x 21 to 27), PAWNBROKER (15 to 21), FRESH FISH (9 to 15), MICKEY'S (3 to 9) at the right-hand end, with Mickey's glazed door at the right of its window. The pawnbroker's door is at the left of its window, the fish shop's and the empty unit's at the right: exactly the door ends below.
+- `production/previews/morning-hook-day-2026-10-08.jpg`: Mickey's window on the left of its bay and its door at the right, the end nearer the camera.
+- terrace-front.py, the export and the UV rule (about lines 7925 to 7945 and 8455 to 8480), and the recipe's own record that "unmirrored, the first film read S'YEKCIM from the pavement" (about line 6616).
+- The earlier version of this target used the pre-mirror frame. The reviewer was right and the fault is accepted; the checks that hid it (D6) now read the door's x from `production/specs/mickeys-office.json` (4.65 m) and test the corrected mapping.
+
+Door ends (`BAY_DOORS_ON = left, left, right, left, right, right` in the recipe's Blender frame; east left = low street x; the west blocks are turned a half turn, so their left = HIGH street x; the chandler's `doors_on` is right = high):
+
+| Shop | Side | Bay street x | Door end (street) | Door on the viewer's | Board's left edge is street x |
+|---|---|---|---|---|---|
+| Mickey's | east | 3 to 9 | low | right | 8.705 |
+| fish market | east | 9 to 15 | low | right | 14.705 |
+| Rita's | east | 15 to 21 | high | left | 20.705 |
+| empty unit | east | 21 to 27 | low | right | 26.705 |
+| steam laundry | east | 27 to 33 | high | left | 32.705 |
+| grocer | east | 33 to 39 | high | left | 38.705 |
+| chandler | east | 40 to 46 | high | left | 45.705 |
+| tea rooms | west | 24 to 30 | low | left | 24.295 |
+| ironmonger | west | 30 to 36 | high | right | 30.295 |
+| newsagent | west | 36 to 42 | high | right | 36.295 |
+
+Mickey's name: over the door at street x 4.65, board x = (8.705 - 4.65) x 1000 = **4055** (the right half of the board). Variant V4 centres it (board x 2705) as the game does today. Self-check group 2 recomputes all of this from the recipe and the specs.
+
+## 3. Texture, geometry and the height map (fault 2)
+
+Texture (the picture on the board): every ground colour; every painted, gilded, cut-vinyl or back-painted letter EXCEPT Mickey's; keylines, borders, ropes, rules, panels; the ghosts; the ten pin holes; the wear (runs, gull marks, rust, loss); the box faces' printed look and their emissive map; a soft contact shadow under Mickey's letters.
+
+Height map (8 bit, 128 = board face, 0.01 mm a step, so -1.28 to +1.27 mm): letter paint ridge +0.20, keyline +0.15, vinyl +0.08, gilt +0.05, paint loss -0.30 (bare board -0.50), planted moulding +0.60 with a 4 mm chamfer (Rita's, the ironmonger's, the chandler's: the outer 24 mm), the grocer's chrome edge strip and speed lines +0.80 (a raised metal strip, in the map, not geometry), the grocer's slab joints -0.50 and bevels a 2 mm ramp to -0.30. No relief of 3 mm or more lives in the map.
+
+Geometry (solid parts a script must place; none of it is in the texture):
+
+| Part | What it is | Numbers |
+|---|---|---|
+| Mickey's letters | the recipe's `RAISED_LETTERS` (terrace-front.py line 857), AMENDED. No second set of letters in the texture. | MICKEY’S, Marcellus SC; cap 0.330 m (Blender text size 0.4708 from the font's measured cap ratio 0.701, not the recipe's 0.66 which makes them 6 per cent too tall); stand-off 0.014 m; emboldened 3 mm; face `brass_gilt` (167,149,109), flanks `brass_side`; centred at board x 4055 (street x 4.65); baseline y 100; box [2996, 90, 5114, 439]; width 2118 mm; roughness 0.38, metallic 0.85 |
+| Steam laundry box sign | a box on the board | outer [105, 35, 5305, 515] = 5200 x 480 mm; depth 0.15 m (Judgement); bronze returns (84,68,53); eight pan-head screws through the frame; the face texture on its front |
+| Newsagent box sign | a box on the board | outer [95, 40, 5315, 510]; depth 0.14 m (Judgement); returns powder black (48,46,43); eight screws |
+| Tea room panel | a flat unlit acrylic panel | outer [90, 40, 5320, 510]; depth 0.03 m; white timber returns; screwed through the frame |
+| Hanging signs | four | section 6 |
+
+The old "+3 mm" frame on the box sign is gone from the height map. The recipe's cap 0.24 m, 12 mm stand-off and its centring across the whole sign piece are replaced by the values above. Check G17 (geometry) holds the letter depth 14 mm plus or minus 2, the cap, and the bounding box centred over the door within 50 mm; G9 no longer contains an applied entry.
+
+Texture size. 5410 x 550 is not a power of two. From memory, and NOT checked in the 5.8.2 source (not on this machine; RULINGS 8 Oct wants file and line): Unreal gives such a texture no mips unless it is padded or stretched at import, and thin letters would shimmer from the hook camera. The builder checks this FIRST. If it is confirmed, either pad to 8192 x 1024 (the render in the top-left 5410 x 550; u 0 to 0.6604, v 0 to 0.5371) or stretch to 5120 x 512 (a 1.7 per cent aspect error). The checks run on the authored 5410 x 550 render before any packing. Still open (section 11).
+
+## 4. Fonts, palette, style
+
+Nine fonts, all SIL OFL 1.1, each OFL.txt read whole today at raw.githubusercontent.com; every glyph needed (’ and · included) is in its file. Letters are RENDERED into pictures: the OFL puts no restriction on a picture made with a font. The font files themselves are not copied into `production/fonts/` here. Overpass, Apache and GPL faces are excluded. Reserved Font Names are parsed from the OFL files by the author tool (Josefin Sans is reserved as "Josefin Sans", not "Josefin").
+
+| Font | Used for |
+|---|---|
+| Marcellus SC (ruled 30 Sep) | MICKEY’S, letters and ghost |
+| Abril Fatface | Rita's name and numerals |
+| Old Standard TT Bold | Rita's trade line, the ironmonger (all lines, its ghost and its hanging board), the fish ghost |
+| Oswald (500 and 600) | the fish market |
+| Jost | steam laundry, and its box sign |
+| Josefin Sans | the grocer |
+| Libre Franklin | the newsagent, the chandler's trade line, the letting board, the hours plates |
+| Fraunces | the tea room |
+| Alfa Slab One | the chandler, its numerals, its hanging board |
+| Patrick Hand (already in `production/fonts`) | the fish shop's whitewash glass |
+
+Palette: every colour has a fresh value and an aged 1990 value (from a grime film, a chalk lift, a chroma factor and a yellowing, by wear class; Judgement). Measured ones: Mickey's slate (62,75,87) and gilt (167,149,109) are the Hook sheet's means (Sheet); the fish board's pale ground is the sheet's white fascia (204,204,204) brought to a light board (196,202,206) aged. The empty unit's board is the recipe's own `bare_timber` (linear 0.021, 0.014, 0.010, which is sRGB 40,31,25 fresh, 46,37,30 aged), the colour the street draws today (DECISIONS 3 Oct keeps the unit "as the street already draws it").
+
+Style, common to the hand-lettered boards (Photo, from P1, unless marked):
+
+- Block shade: 45 degrees down and to the right, 0.10 of the cap high, a solid extrusion of the glyph, not a blurred drop; colour per block. On painted and gilded boards only. None on vinyl, applied or back-painted letters.
+- Keyline: thickness 0.027 of the field, inset 0.078 at the top and 0.102 at the bottom and 0.150 at the sides, corners cut by a concave quarter circle of radius 0.136 of the field. On Rita's board only.
+- Numerals: 0.91 of the cap, near the board's ends. On TWO boards only (Rita's "5", the chandler's "13"; the numbers are proposed).
+- Hand jitter on painted and gilded blocks: each glyph's baseline off by a normal draw of SD 0.6 to 1.6 mm (at most 1.6), advance 1.5 per cent, rotation 0.35 degrees, stroke 3 per cent (Judgement). None on vinyl, applied or glass letters.
+- Round capitals overshoot the baseline and the cap line by 1.6 per cent of the cap. Blocks are centred on the ink, not the advance box.
+- Trade lines are at least 70 mm cap. Oswald is 500 or heavier. Tracking on trade lines is at most +0.12 em on at least four boards.
+
+## 5. The ten boards
+
+Ten shops, one board each (the scene has ten shop bays; RULINGS 2 Oct counts twelve shopfronts, the gap is named in section 11). Order is the street's. Anchor "centre", "left" or "right" is the block's ink. x and baseline are in board millimetres. Contrast is aged face to aged ground. Layout classes are all different except where noted.
+
+The distinctness rule (G7, G11): every pair of boards differs in aged ground by dE >= 14 (the least is 14.8); no two boards share a name-line font; at most five boards share a centred name over a trade line (three do: Rita's, the grocer, the chandler); at most three trade lines use a middle dot (one does: the chandler's); at least six layout classes (nine are used).
+
+### 5.1 Mickey's (minicab office), `name_only_offset`
+
+Painted timber, eggshell slate (62,75,87), a little orange-peel, grain along. NO name in the texture. The name is the raised geometry of section 3, over the door at board x 4055; the texture carries the ground, a ghost, ten pin holes and a soft contact shadow under where the letters stand (blur 6 mm, opacity 0.35, offset -2, -5).
+
+Ghost (fault 4): the older, CENTRED name. MICKEY’S in Marcellus SC, not emboldened, cap 245 mm, centred at board x 2705, baseline 150, ink box [1921, 145, 3489, 400]; colour the ground +3.5 dE towards blue (64,80,96 on 62,75,87); brush-cut edge with a 1 mm ridge; not broken. Ten pin holes along the old cap line y 395, from x 1999.4 to 3410.6 at 156.8 mm. The new letters at x 2996 to 5114 overlap the ghost's right end only.
+
+Wear (class 2): loss 0.04, chalk +3 L*, grime 0.07, four runs of 40 to 160 mm, two gull marks, two short rust runs under the console fixings.
+
+The cap is 0.60 of the board (330 of 550), against the sheet's 0.69; Marcellus SC is 1.8 times wider than the sheet's tall narrow capitals, so the cap stops at 330 mm (the reviewer's note 1). Width over cap is 6.42 against the sheet's 3.52; reported, not hidden.
+
+### 5.2 Fish market, `name_left_list_right`
+
+The sheet's pale board beside Mickey's (fault 7). Ground (196,202,206) aged, gloss enamel gone flat and chalky, roughness 0.58. Two vermilion rules (y 34 to 46 and 504 to 516, x 120 to 5290). Red sign-writing (the photographed 1990 fishmonger's colour way, earlier note): vermilion (197,75,62) on the pale board, contrast 2.85, with a BLACK block shade (37,35,34), 29 mm.
+
+| Block | Text | Font | Cap | Anchor, x | Baseline | Tracking | Face |
+|---|---|---|---|---|---|---|---|
+| name | FISH MARKET | Oswald 600 | 290 | left, 1270 | 188 | 0.06 | vermilion, black shade 29 |
+| trade_1 | WET FISH | Oswald 500 | 70 | left, 3715 | 408 | 0.10 | sign black |
+| trade_2 | SHELLFISH | Oswald 500 | 70 | left, 3715 | 298 | 0.10 | sign black |
+| trade_3 | SMOKED | Oswald 500 | 70 | left, 3715 | 188 | 0.10 | sign black |
+
+The trade is a list beside the name, its three lines left-aligned at x 3715 (contrast 9.0). Door at the low end (viewer's right).
+
+Ghost: FISHMONGER, Old Standard TT Bold, cap 200 mm, centred at 2705, baseline 160, ink box [1724, 153, 3686, 365]; 4 dE DARKER than the ground (185,191,195 on 196,202,206); 60 per cent of its strokes painted over by the newer white. Trade word only, no proprietor.
+
+Wear (class 2): loss 0.05, chalk +4, grime 0.08, six runs of 50 to 200 mm, three gull marks, no rust.
+
+### 5.3 Rita's (pawnbroker), `centred_stack_with_ends`
+
+Oil-gilded capitals with a black block shade on oxblood (93,46,49 aged) inside a gilt cut-corner keyline panel (panel [68, 68, 5342, 482], line 13 mm, inset 44 mm, radius 70 mm; P1's corner). Planted moulding round the board (24 mm, +0.6 mm, 4 mm chamfer). Not lit (DECISIONS 1 Oct: only her WINDOW is lit). Oil gloss gone satin, roughness 0.45.
+
+| Block | Text | Font | Cap | Anchor, x | Baseline | Tracking | Face |
+|---|---|---|---|---|---|---|---|
+| name | RITA’S | Abril Fatface | 230 | centre, 2705 | 221 | 0.10 | gold leaf, shade 23 |
+| trade | PAWNBROKER | Old Standard TT Bold | 84 | centre, 2705 | 99 | 0.12 | gold leaf, shade 8.4 |
+| end_l | 5 | Abril Fatface | 214 | left, 200 | 168 | 0 | gold leaf, shade 21.4 |
+| end_r | 5 | Abril Fatface | 214 | right, 5210 | 168 | 0 | gold leaf, shade 21.4 |
+
+Contrast 4.49. Door at the high end (viewer's left). Ghost: a repaint patch [2300, 140, 3300, 340], 3 dE, brush-cut edge, NO GLYPHS (brush texture only; no word is invented). Wear (class 1): loss 0.03, three runs, one gull mark. Her name is larger over its field (0.458) than P1's (0.306): deliberate, a trading parade and not a restored arcade; reported.
+
+### 5.4 Empty unit, `none`
+
+Bare soot-darkened timber (the recipe's `bare_timber`, 46,37,30 aged), paint long gone, a few patches of old paint, roughness 0.85, grain strong (amplitude 3 L*). The last trade's lettering is painted out in buff: a painted-out patch [1105, 120, 4305, 420] with a 0.4 mm ragged ridge and six nail holes, NO GLYPHS. A letting board across the middle (section 6.3). Class 3 wear: loss 0.17, ten runs of 60 to 300 mm, six gull marks, three rust runs from the nail heads of the removed lettering. No text on the board, so no word to approve beyond the letting board's.
+
+### 5.5 Steam laundry, `panel_left_name_right`
+
+A lit plastic box sign, 1980s: white acrylic face (225,217,197 aged), a red cut-vinyl panel [320, 100, 2070, 450], the name in blue cut vinyl, bronze anodised frame. The old board shows round the box: `old_board` [0, 0, 5410, 550], cream painted timber with paint loss 0.08 (the first shape on the board). The box itself is geometry (section 3).
+
+| Block | Text | Font | Cap | Anchor, x | Baseline | Tracking | Face |
+|---|---|---|---|---|---|---|---|
+| name | STEAM LAUNDRY | Jost 800 | 200 | right, 5030 | 175 | 0.05 | vinyl blue (46,68,136) |
+| trade_1 | LAUNDERETTE | Jost 600 | 90 | centre, 1195 | 340 | 0.06 | vinyl cream |
+| trade_2 | SERVICE WASHES | Jost 600 | 70 | centre, 1195 | 230 | 0.06 | vinyl cream |
+| trade_3 | DRY CLEANING | Jost 600 | 70 | centre, 1195 | 120 | 0.06 | vinyl cream |
+
+The trade is three short lines in the red panel at the LEFT (contrast 5.0); the name stands alone at the right (contrast 6.5). Door at the high end (viewer's left).
+
+Emissive (the lit face): face rectangle [131, 61, 5279, 489]; two tube rows at y 168 and 382 with a 6 per cent band; tube joints every 1500 mm at x 300, 1800, 3300, 4800; tube-end shadows 60 mm wide and 10 per cent dimmer at every joint in both rows. DEAD TUBE (fault 12): the UPPER row only, x 3300 to 4800 (a 1500 mm tube), its light down to 60 per cent because the lower row still lights it. Lit when the shop is open (hours in hook-cast.json), dull and dark when shut (variant V2). Wear class 2: seven runs, no gulls, grime 0.10; the vinyl is clean.
+
+### 5.6 Grocer, `centred_stack`
+
+1930s refit, bottle green glass (36,61,49 aged), cream Art Deco capitals. METHOD (fault 10): reverse-painted CLEAR plate glass, the signwriter's glass fascia, so the cream letters are painted on the back and seen through. The word Vitrolite (colour right through, opaque) is NOT used. Judgement, from memory, no source reached. Of the reviewer's two fine ways this is the cheaper one: the letters stay in the texture and no letter geometry is added.
+
+Three slabs: joints at board x 1380 and 4030, 3 mm of dark mastic (30,30,28), a 2 mm polished bevel on every slab edge. The name's ink (1450.5 to 3959.5) lies inside the middle slab. Chrome edge strip (12 mm) and three speed lines (6 mm, at y 262, 282, 302, x 52 to 640 and 4770 to 5358) are raised metal in the height map at +0.8 mm. NO crack across the fascia: the cited note puts cracks low, at the stallriser, which is not this family.
+
+| Block | Text | Font | Cap | Anchor, x | Baseline | Tracking | Face |
+|---|---|---|---|---|---|---|---|
+| name | FAMILY GROCER | Josefin Sans 700 | 190 | centre, 2705 | 238 | 0.12 | cream, back-painted |
+| trade | HIGH CLASS PROVISIONS | Josefin Sans 600 | 70 | centre, 2705 | 122 | 0.12 | cream, back-painted |
+
+Contrast 7.75. A trade description, no proprietor. Door at the high end (viewer's left). Wear class 2: no loss, grime 0.06, five runs, one gull mark. Roughness 0.08.
+
+### 5.7 Newsagent, `name_only_rules`
+
+A lit plastic box sign: translucent red acrylic (184,70,62 aged), the name only in cream cut vinyl, two cream vinyl rules (y 90 to 104 and 446 to 460, x 220 to 5190). The trade moves to the door glass (section 6.2). `old_board` as the laundry's. The box is geometry (section 3).
+
+| Block | Text | Font | Cap | Anchor, x | Baseline | Tracking | Face |
+|---|---|---|---|---|---|---|---|
+| name | NEWSAGENT | Libre Franklin 900 | 260 | centre, 2705 | 145 | 0.08 | vinyl cream |
+
+Contrast 4.11. Emissive as the laundry's, with no dead tube. Wear class 2: five runs, two gull marks, one vinyl rule lifting 30 mm at its right end, no letter lost. West block, door at the high end (viewer's right).
+
+### 5.8 Ironmonger, `name_centre_trade_in_ends`
+
+Sign-written black roman capitals with a vermilion block shade on buff (188,173,136 aged), a black rule border (a double rule, black and vermilion) with corner blocks, and a planted moulding. The trade is in the two end panels, not under the name.
+
+| Block | Text | Font | Cap | Anchor, x | Baseline | Tracking | Face |
+|---|---|---|---|---|---|---|---|
+| name | IRONMONGER | Old Standard TT Bold | 180 | centre, 2705 | 185 | 0.08 | black, vermilion shade 18 |
+| end_l_1 | TOOLS & | Old Standard TT Bold | 70 | centre, 600 | 285 | 0.06 | black, shade 7 |
+| end_l_2 | HARDWARE | Old Standard TT Bold | 70 | centre, 600 | 190 | 0.06 | black, shade 7 |
+| end_r_1 | PAINTS & | Old Standard TT Bold | 70 | centre, 4810 | 285 | 0.06 | black, shade 7 |
+| end_r_2 | PARAFFIN | Old Standard TT Bold | 70 | centre, 4810 | 190 | 0.06 | black, shade 7 |
+
+Contrast 6.73. The font is Old Standard TT Bold (the reviewer's note 6: Libre Baskerville was rated low to medium by the period note and is gone). Ghost: IRONMONGER, Old Standard TT Bold, cap 190, centred 2705, baseline 170, 4 dE darker than the ground (177,162,126 on 188,173,136), 60 per cent broken. Wear class 2: loss 0.06, six runs, two gull marks, two rust runs from the board's OWN nail heads at the left end (not from the bracket bolts, which are on the brick: note 10). The street number "16" is on the fanlight only. West block, door at the high end (viewer's right).
+
+### 5.9 Tea rooms, `trade_above_name`
+
+A plain 1980s caff front (fault 6; the cast's "the caff", open 6.30 to 22.00). A flat, unlit acrylic panel screwed over the old board (outer [90, 40, 5320, 510], a 25 mm white-painted timber frame, face [115, 65, 5295, 485]). Brown face fresh (132,82,50), 1990 (120,74,44), roughness 0.35. Cream cut-vinyl lettering (235,227,201). `old_board` visible round the panel. No duck-egg ground, no scalloped valance (fault 8): both are deleted.
+
+| Block | Text | Font | Cap | Anchor, x | Baseline | Tracking | Face |
+|---|---|---|---|---|---|---|---|
+| trade | BREAKFASTS, LUNCHES & TEAS | Fraunces 600 | 70 | centre, 2705 | 362 | 0.06 | vinyl cream |
+| name | Tea Rooms | Fraunces 900 | 200 | centre, 2705 | 118 | 0.02 | vinyl cream |
+
+Contrast 5.81. The trade line stands ABOVE the name. The panel is geometry (section 3). Wear class 1: three runs, one gull mark. West block, door at the low end (viewer's left).
+
+### 5.10 Chandler, `centred_stack_with_ends`
+
+White Egyptian capitals with a black block shade on navy (44,53,83 aged), a painted rope border (rope 12 mm, pitch 28 mm, corner radius 40 mm, inset 34 mm, panel [70, 70, 5340, 480]), a planted moulding.
+
+| Block | Text | Font | Cap | Anchor, x | Baseline | Tracking | Face |
+|---|---|---|---|---|---|---|---|
+| name | SHIP CHANDLER | Alfa Slab One | 170 | centre, 2705 | 245 | 0.05 | white paint, shade 17 |
+| trade | ROPE · PAINT · CHARTS · TWINE | Libre Franklin 700 | 70 | centre, 2705 | 135 | 0.10 | vinyl cream |
+| end_l | 13 | Alfa Slab One | 158 | left, 210 | 196 | 0 | white paint, shade 15.8 |
+| end_r | 13 | Alfa Slab One | 158 | right, 5200 | 196 | 0 | white paint, shade 15.8 |
+
+Contrast 8.5 and 9.4. The only dotted trade line on the street. Wear class 2: loss 0.07, six runs, four gull marks, three rust runs under fixings (the quay is near). East, door at the high end (viewer's left).
+
+## 6. Hanging signs, glass lettering, small panels
+
+### 6.1 The four hanging signs (fault 9)
+
+Every bracket is fixed to the BRICK ABOVE THE CORNICE (cornice top 3.55 m): plate foot 3.60 m, plate centre 3.75 m, arm 3.75 m, over the party-wall pier at the street x below. The kit has no pilaster shaft to bolt to between 2.85 and 3.55 m: there are consoles, a capital and a cornice. The drops are lengthened so the signs hang where they did (lowest point at least 2.5 m). `clearance_below_m` is the computed lowest point.
+
+| Sign | Street x | Viewer's side | Arm | Projection | Drop | Lowest |
+|---|---|---|---|---|---|---|
+| Rita's three balls (gilt, 0.26 m each, two above and one below) | 20.825 | LEFT end of her bay, her DOOR end (high x) | 3.75 | 0.85 | hanger 0.57 | 2.65 |
+| Steam laundry double-sided box (0.62 x 0.45 x 0.14, back edge on the brick, 3.60 to 4.05 m) | 27.175 | RIGHT end of its bay (low x) | 4.05 | 0.62 | none | 3.60 |
+| Ironmonger hanging board "KEYS CUT" (0.55 x 0.38 x 0.04, two rings and chains 0.70 m longer) | 35.825 | RIGHT end of its bay (high x) | 3.75 | 0.70 | 0.76 | 2.61 |
+| Chandler hanging board "CHANDLERY" (0.80 x 0.50 x 0.05, two chains, 0.65 m longer) | 45.825 | LEFT end of its bay (high x) | 3.75 | 0.90 | 0.71 | 2.54 |
+
+Rita's balls are at her door end, not beside the fish shop (Judgement: the reviewer's recommendation). Each face of a hanging sign reads left to right from its own side (mirror-correct). KEYS CUT is the ironmonger's key-cutting (DECISIONS 7 Oct); CHANDLERY is a word not on the fascia, so the street does not repeat itself. All the numbers here are Judgement. G15 checks them.
+
+### 6.2 Glass lettering (23 rows)
+
+The fish shop's whitewash (Patrick Hand: FRESH DAILY at z 0.95, SHELLFISH at 1.52, SMOKED FISH at 2.02), the pawnbroker's gold leaf (WATCHES, JEWELLERY, LOANS at z 2.64, at street x 18.142, 17.025, 15.908), the laundry's SERVICE WASHES (white vinyl, z 2.05), the newsagent's trade line on the door glass (TOBACCONIST & CONFECTIONER, cap 70, white vinyl, z 1.35, x 40.2), EST. 1884 (ironmonger) and EST. 1879 (chandler) in gold leaf at z 2.64, and the fanlight street numbers at z 2.18 (Mickey's 1, fish 3, Rita's 5, empty 7, laundry 9, grocer 11, tea 14, ironmonger 16, newsagent 18, chandler 13). The empty unit's glass is whitewash with nothing legible (ruled 3 Oct). Street numbers, years and the EST. lines are PROPOSED (Judgement), not minted: the town mints or strikes them, and variant V3 strips them. Every lettered row not already in the game has a street x inside its bay and a check (G16): 20 rows.
+
+Mickey's two existing glass lines (the phone number 0632 960418 and MINICABS · 24 HOURS) are another family's, are NOT approved here and are not in `approved_words`. The second contradicts the cast's hours for Mickey's (7.00 to 3.00, shut 3 to 7); it goes to the town and the shop-room builder (the reviewer's note 4). Reported by the self-check.
+
+### 6.3 Small panels
+
+- Letting board on the empty unit: 900 x 450 mm, white, TO LET in Libre Franklin 800, cap 130, vinyl red, four screws, slightly askew (2 degrees), a rust run under each lower screw; centre at board x 2705, y 275. The game's own `board_to_let.png` (PT Sans) exists; the font here is an OFL replacement. No agent and no number are minted.
+- Hours plates on five shop doors (Rita's, fish, laundry, newsagent, tea rooms): 300 x 190 mm white enamel plates, black Libre Franklin 700, cap 24, blue border 4 mm. Their lines are SET AT BUILD TIME from hook-cast.json (Mon-Sat hours, a Wednesday half-day where the cast has one). Their own rule (note 11): each line must match the pattern in `hours_plate_rule` (day names, times "H" or "H.MM", a dash, OPEN or CLOSED). They are NOT in `approved_words`, so G4 does not fail them.
+
+## 7. Words
+
+45 approved strings (`approved_words`): the ten shop names or trades, every trade line, every glass row not already in the game, the numerals, the hanging signs' words, and the three ghost words. Each is a trade description or a name already minted. Minted: MICKEY’S (canon), RITA’S (the cast), FISH MARKET and STEAM LAUNDRY (DECISIONS 3 Oct). Everything else is a trade description. NO proprietor is invented. Ghost lettering carries trade words only (G14).
+
+`ghost_words` = FISHMONGER, IRONMONGER, MICKEY’S. A ghost word appears only as a ghost: FISHMONGER is on no board and no glass row. Nothing of drink, gambling or children: the newsagent has no pools or lottery, the grocer no off-licence, the chandler no bonded stores. Nothing after 1992. The word list is checked against the content rule's lists, the real-mark list and every name in RealWorld.cs's AnyCase list (210 names read). `forbidden_patterns` in the JSON holds them.
+
+## 8. Checks (316)
+
+Every check has an id, name, scope, measure, expected, tolerance, unit, method and what it reads (`pixels`, `pixels+font`, `geometry`, `manifest`). The pixel checks are the ones the first try lacked (fault 3). `pixel_checks.py` is the reference reader; the tolerances below are the ones it uses and the ones tested.
+
+- G1 texture size. G2 planted moulding: read from the HEIGHT MAP (the outer 24 mm ring against the field just inside it, and the chamfer width), not a baked highlight. G3 no repeated word on a board. G4 words: every manifest string in `approved_words` (hours plates by their own rule), none in `forbidden_patterns`. G5 no tiling period at lags 600 to 5000 mm. G6 grain along the board (0 to 8 degrees). G7 distinct fascias. G8 contrast of every name line (0.85 of nominal and not under 2.2).
+- G9 relief present: gilded 0.02 to 0.15 mm, vinyl 0.04 to 0.20, painted 0.10 to 0.35 (the applied-letter step lives in G17).
+- G10 glyph mask against the font, per block. The block's string is re-rendered from its font file (font, weight, size from the cap, tracking, anchor, origin) and compared with the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour and nearer to it than to the ground, inside the block's effects box dilated 8 mm and inside its panel). Score F is the mean of recall and precision, each against the other mask dilated 2.5 mm (hand-painted) or 1 mm (vinyl, applied, glass). Pass at F >= 0.90, and the same re-render FLIPPED about the block's centre line must score lower by at least 0.15. No string on the street is mirror-symmetric; the weakest margin is 0.175 (the chandler's "13").
+- Per-block `pos`: the ink box of the pixel face mask (widened 40 mm along the line and 8 mm up and down) has its centre (anchor centre) or its left or right edge (anchor left or right) within plus or minus 15 mm of the target and its baseline within 3 mm (the median bottom of flat-bottomed letters where the string is round-bottomed).
+- G11 layout variety: at most five boards share a centred name over a trade line, at most three trade lines use a middle dot, at least six layout classes.
+- G12 hand jitter: the SD of each glyph's bottom edge from a straight baseline is 0.6 to 1.6 mm on painted and gilded blocks, and 0 to 0.6 mm on vinyl, applied and glass blocks (the pixel grid alone gives 0.3 to 0.5 mm at 1 pixel to the millimetre, so an unjittered reference render must read at most 0.6).
+- G13 wear counts: runs, gull marks and rust runs within one of each shop's `age` numbers.
+- G14 ghosts: present at its position, 3 to 5 dE from the ground, the share of strokes painted over, and no OTHER legible string.
+- G15 hanging signs: x within 0.02 m, arm height 0.02 m, projection 0.02 m, lowest point at least 2.5 m, plate foot above the cornice top 0.05 m, both faces read left to right from their own side.
+- G16 glass lettering: the string is in `approved_words`, the cap within 5 per cent, z within 0.03 m, street x within 0.10 m.
+- G17 geometry parts: Mickey's letter depth 14 mm plus or minus 2, cap, centre over the door within 50 mm, no letter geometry left in the texture; each box's outer rectangle and depth.
+- G18 mirrored board: any block that is off centre by more than 200 mm and whose pixels sit at the board's width minus x better than at x fails.
+- Per item: `pos`, `width`, `mask`, `fit` (inside the safe zone with shade, outline and jitter), `contrast`, `face`, `shade`, `jitter` for every block; `ground`, `border` and `age` for every board; `emissive` for the laundry and the newsagent and the unlit Rita's; `mount` and `faces` for every hanging sign; one per glass row not already in the game; the letting board; the hours plates.
+
+The checks are tested on a reference render of every lettered board (self-check group 8): the true render passes all of them; the MIRRORED board fails; a board shifted 60 mm either way fails every position check and a mask check; a hand-jittered render (SD 1.0 mm) still passes position, mask, width and face; a wrong font on one block (Rita's name in Oswald) fails that block's mask.
+
+## 9. Photographs, previews and the content rule
+
+Photographs reached: Poly Haven (CC0), through its API and file host. Authors and licences were read on its pages today. The firewall refused everything else.
+
+| Id | What | Used for | Kind |
+|---|---|---|---|
+| P1 | Leadenhall Market, Andreas Mischok, taken 19 May 2019, CC0; a rectilinear, level, square-on view (yaw 90, pitch 0, 110 degrees wide, 3600 x 2400) of heritage-restored fronts | CRAFT ONLY: field proportions, keyline, shade, numerals, cap over field | Photo |
+| P2 | Blue Painted Planks, Rob Tuytel (CC0, published 2018) | paint-loss shape: median aspect 3.6, median equivalent diameter 8.9 mm; the loss fraction 0.286 as an UPPER bound | Photo |
+| P3 | Black Painted Planks, Dimitrios Savva (CC0, published 2025) | scuff fraction 0.091 and the luminance range of a worn dark gloss | Photo |
+| H1 | the Hook sheet (production/reference/hook-sheet.png) | Mickey's board and gilt colours, the white fascia beside it, cap 0.69 of the board, letters at 0.755 along the board | Sheet |
+| G1 | the game's own frames (shop-fronts-whole and morning-hook-day, 8 Oct; proof 2.6, 4 Oct) | the left-right direction; how the fascias stand today | Scaled |
+| N1 to N4 | earlier notes in `production/research/` (signage and wear; the fishmonger; Peter Marshall's Hull set; frontage) | the 1990 mix of three generations of fascia, red sign-writing on a dark board (Picture Sheffield t13138, 25 Aug 1990), whitewashed glass, that trade-only boards existed, that metal fronts and fluorescent strips were the 1989 street | cited, NOT re-measured |
+
+P1's own numbers (Photo): cap 0.306 of the field (45 of 147 view pixels); shade 0.10 of the cap; keyline thickness 0.027, top inset 0.078, bottom inset 0.102, side inset 0.150 of the field; concave corner radius 0.136; numerals 0.91 of the cap; the name sits 1.4 per cent of the panel width left of centre. Scale: fitted on ONE dimension, the lettered field's height (147 view pixels = 502 mm on our board, 0.6488 preview pixels to the millimetre); the door leaf taken as 2.1 to 2.3 m would put the camera at 0.93 m, low for a panorama, so only ratios are used. The self-check lays the drawing on P1 (cyan) and Rita's two ends (magenta) at the same scale: every edge falls within 3 view pixels.
+
+THE CONTENT RULE AND THE PREVIEWS. P1 shows, on its board and in its windows, a real business's name and a bar's lettering and hours. None of that is kept (fault 13):
+
+- `P1-leadenhall-board-elevation.jpg` is a composite of two crops of the unmasked view, the board's LEFT end (view x 1150 to 1480) and its RIGHT end (view x 2250 to 2440), at 2.2 times, 20 pixels apart. The name lies between them (view x 1492 to 2123) and is not kept. Nothing below the board's fanlight line is in the picture. No file, folder or JSON string names the business.
+- The cap, name x0 and x1, shade, door leaf and base row were measured on the unmasked view on 8 Oct and are recorded in `photo.P1.px`; they are NOT re-measurable on the saved picture, and the self-check says so (a reported line). The numerals, field and keyline are re-measured by code on the saved picture and agree with the hand measure within 3 view pixels.
+- The earlier picture of the whole front with the door leaf marked, and the earlier whole-board crops, are gone (the coordinator removed the front-scale one and renamed the board crops). `make_previews.py` no longer writes any of them. No preview shows drink, gambling or a real business's name, now or on a rebuild.
+
+## 10. Where photographs and books disagree, and the variants
+
+| Id | Element | Book | Photograph | Chosen |
+|---|---|---|---|---|
+| D1 | fishmonger's colour way | the game's oxblood board with cream letters | t13138 (1990, earlier note): dark fascia sign-written in red, another shop | red sign-writing (t13138) on the sheet's white board: the photograph settles the lettering, the sheet the ground beside Mickey's |
+| D2 | shade under sign-writing | a near-black copy 3.5 per cent of the cap away | P1: a solid block shade, 45 degrees down-right, 0.10 of the cap | the photograph, on hand-painted and gilded boards only |
+| D3 | numerals at the ends | none in the game | P1 has them both ends (a market unit-number livery, not necessarily provincial practice) | on TWO boards only (Rita's, the chandler), proposed numbers |
+| D4 | keyline corner | plain rectangle | P1: concave quarter circle, 0.14 of the field | the photograph, on Rita's |
+| D5 | fascia depth | FRONTAGE-2026-10-06 read at source: "not more than 600 mm" [CV], "at most a fifth of the front's height" [RI] | P1 field 0.45 to 0.49 m | NO DISAGREEMENT: the street's 0.55 m is inside both. The 380 mm figure was a search summary and is not used |
+| D6 | Mickey's name position | centred (the game today) | not a photograph: the Hook sheet puts the letters over the door | the sheet, mapped through the export's mirror: board x 4055 |
+| D7 | name size | 200 mm cap on every board | P1 0.31 of the field; the sheet 0.69 of the board | 0.34 to 0.66 of the field by trade |
+
+Variants: V1 ten boards; V2 day and night (the two box signs lit when open); V3 proposed marks off (strip the street numbers and EST. lines); V4 Mickey's centred (board x 2705, as the game has it today); V5 a minted name (one more line, cap 0.5 of the trade line's, on a board that has none); V6 the street keeps its 6.0 m box (centre the 5410 texture, 295 mm of plain frame each end).
+
+## 11. What could not be settled
+
+1. No 1990 photograph of a fascia was reached. The reviewer could not open t13138, t13140 or Marshall's set either. Letter heights over board, colours, wear and which shops had box signs rest on P1, the sheet, earlier notes and Judgement.
+2. Where the newsagent and the ironmonger stand. The recipe puts the newsagent at street x 36 to 42 and the ironmonger at 30 to 36; hook-cast.json puts the newsagent's pension counter at x 32 and Hal's shop at x 39. One is wrong. A town question; sign targets are keyed by trade, so a swap is a rename. Reported by the self-check.
+3. Hal's shop and the count. hook-cast.json has Hal's shop at x 39 ("the coin shop that sells no coins"); DECISIONS 3 Oct has no coin shop in the west row. If it stays it needs a fascia (HAL'S is minted in the cast; its trade line is the town's) and the street has eleven. RULINGS 2 Oct counts twelve shopfronts; the scene has ten bays. The target made ten and names the gap (the reviewer's note 14).
+4. The street numbers and EST. years are proposed (Judgement), not minted. Delete the end blocks and the proposed glass rows (V3) if the town does not mint them.
+5. No proprietor name exists for the grocer, newsagent, ironmonger, tea room or chandler, so each board says only its trade. A minted name adds one line (V5).
+6. MINICABS · 24 HOURS (contradicts the cast's hours) and 0632 960418 on Mickey's glass are another family's, not approved. From memory (unchecked), 0632 was Newcastle's STD code until 1992 and Meridian is fictional.
+7. P1's absolute scale (door leaf 2.1 to 2.3 m gives a camera at 0.93 m). Only ratios are used.
+8. The texture's non-power-of-two size and Unreal's treatment of it: from memory, NOT checked in the 5.8.2 source. The builder checks first and pads or stretches.
+9. P1's gilt shows a slightly paler rim along the face's edge (about 1 view pixel); at its resolution an outline cannot be told from the tone-map's halo. The target keeps a 3 mm rim 4 L* paler, as P1 shows, not a dark matt edge. Whether the rim is gilding or halo is open (the reviewer's note 13: left open).
+10. The grocer's glass method (reverse-painted clear plate glass, three jointed slabs), the box depths (0.15 and 0.14 m), the panel depth (0.03 m), the hanging signs' drops and the tube layout: Judgement from memory, no source reached.
+11. Legibility. The 70 mm trade lines read to about 15 m straight on (15 arcminutes); the 170 to 330 mm names to about 40 to 75 m straight on. From the hook camera the boards beyond Rita's are seen at under about 15 degrees, where nothing reads at any size (that matches the sheet). The old claim that names read to 40 to 66 m left out the angle and is gone. Nobody has looked at these at the game's exposure and internal resolution.
+12. Night: only Rita's WINDOW is ruled lit (DECISIONS 1 Oct). The box signs' emissive is specified; whether it is on after dark follows the town's hours, not this target.
+
+## 12. The review, fault by fault, and note by note
+
+Faults:
+
+1. Axis backwards. ACCEPTED, verified in the export code and on the two game frames (section 2). Board x, Mickey's name at 4055, every u0, the sides and street x of the four hanging signs, the glass rows' street x and D6 are all remapped. V4 kept. Rita's balls at her door end (20.825).
+2. Texture or geometry. ACCEPTED. Mickey's letters are the recipe's raised letters (amended: cap 0.330, board x 4055, stand-off 0.014, emboldened 3 mm, flanks brass_side) with none in the texture; the laundry box (0.15 m deep, bronze returns), the newsagent box (0.14 m) and the tea room panel (0.03 m) are geometry; the "+3 mm" frame is gone; chrome and speed lines are +0.8 mm in the map. G9's applied entry moved to G17. The cap 0.330 follows the reviewer's note 1 rather than the 0.270 in fault 2's own amendment (the note is the later and the better-fitting number).
+3. Checks. ACCEPTED, built and tested: `pos`, `mask`, G10, G12 to G18, hanging signs, glass, ghosts, wear, all reading pixels (section 8). The test of the checks themselves is in the self-check.
+4. Ghosts. ACCEPTED. Mickey's, the fish shop's and the ironmonger's are text blocks with exact words, font, size, colour and share broken (section 5); Rita's and the empty unit's are brush texture only, stated. The reviewer's colour for Mickey's (+3.5 dE) and cap 245, baseline 150 are used; the fish ghost FISHMONGER cap 200, baseline 160, 4 dE, 60 per cent; the ironmonger's cap 190, baseline 170.
+5. One designer. ACCEPTED, and done more widely than asked: nine layout classes (name left with a list right; panel left and name right; name only with rules; trade in the end panels; trade above the name; name only offset; bare; and the two centred-stack classes, which three boards use). Four trade lines are off the dotted list (laundry, grocer, newsagent moved to the door glass, tea room); the newsagent is name-only; the ironmonger's trade is in its end panels. Three boards share the centred skeleton (limit five); one trade line is dotted (limit three); trade tracking is at most +0.12 em on at least four boards. G11 added. The laundry's trade is three short lines in its red panel rather than the reviewer's single "SERVICE WASHES & DRY CLEANING" line, which gives a different skeleton; the words are the same.
+6. Heritage lean. ACCEPTED. Three plastic or modern fronts: two lit box signs and the tea room's flat caff panel (brown acrylic, white timber frame, cream vinyl, as the reviewer set it), plus the grocer's 1930s glass. The duck-egg ground is gone.
+7. Two dark boards. ACCEPTED. The fish board is the sheet's white board, ground (196,202,206) aged, vermilion letters with a black 29 mm shade, rules kept, contrast 2.85. The least ground dE on the street is 14.8, to the laundry. D1 reworded as the reviewer asked.
+8. Scallops. Moot with fault 6: deleted.
+9. Mounts. ACCEPTED. Brackets on the brick above the cornice at 3.60 to 3.75 m; drops lengthened; lowest points kept (2.65, 2.61, 2.54); the laundry box fixed by its back edge at 3.60 to 4.05 m; `clearance_below_m` is computed.
+10. Grocer's glass. ACCEPTED. Three slabs with 3 mm mastic joints at 1380 and 4030, 2 mm bevels; the crack is gone; the method is stated: reverse-painted clear plate glass, the word Vitrolite dropped. The reviewer's other way (black Vitrolite with applied chrome letters) was not taken because it adds letter geometry; both are Judgement.
+11. Baked frame highlight. ACCEPTED. Removed from the base colour; planted mouldings (+0.6 mm, 4 mm chamfer) on Rita's, the ironmonger's and the chandler's boards; G2 reads the height map.
+12. Dead tube. ACCEPTED. Upper row, x 3300 to 4800, light at 60 per cent; tube-end shadows 60 mm wide and 10 per cent dimmer every 1500 mm in both rows; the emissive check matches.
+13. Drink in a preview. ACCEPTED, and the coordinator had already removed the front-scale preview and renamed the board crops. The surviving P1 picture is now two crops of the board's ends, with no name, no window and no front; the overlay is written from it; `make_previews.py` and TARGET.md match; no file names the business (section 9).
+
+Notes: 1 adopted (Mickey's cap 330, baseline 100, 0.60 of the board; width 2118 mm, ink 2996 to 5114, inside the safe zone). 2 adopted (every trade line at least 70 mm; Oswald at least 500; the angle added to the legibility claim). 3 adopted (numerals on two boards). 4 handed to the town and the shop-room builder, not approved. 5 adopted (D5 is no disagreement; FRONTAGE cited). 6 adopted (Old Standard TT Bold; Libre Baskerville gone). 7 adopted (Reserved Font Name "Josefin Sans", parsed from the OFL file). 8 adopted (the empty unit's board is the recipe's colour again; the lighter proposal is withdrawn). 9 adopted (`old_board` under the laundry, newsagent and tea room panels). 10 adopted (the ironmonger's rust is from the board's own nail heads). 11 adopted (the hours plates have their own rule). 12 kept open and flagged for the builder. 13 left open as the reviewer advised. 14 adopted (ten boards, the gap named).
+
+## 13. Self-check
+
+`self_check.py` (8 October 2026), run with the font files fetched from the OFL sources into a scratch folder, writes its result into `target.json` under `self_check`:
+
+**296 of 296 checks pass; 0 fail; 6 reported disagreements or gaps kept visible.**
+
+Groups: 1 printed (24 rows: the numbers read again from the source files, the OFL headers, the fonts used); 2 axis (40: the export's mirror, the door ends, every board's left edge, D6, the hanging signs' sides); 3 photograph wins (6); 4 P1 (20: the saved picture re-measured by code, the drawing laid on it, the overlay written); 5 sheet H1 (5: the board and gilt colours, the white fascia, Mickey's cap); 6 consistency (154: every ink box inside its safe zone and its panel, no overlaps, contrast, ghosts, geometry, signs, glass, words, fonts, paint loss, the height map's range); 7 checks (10: every check has all its fields, the ids are unique, G1 to G18 exist, pixel checks read pixels); 8 pixels (43: the reference renders, mirrored, shifted, jittered and wrong-font tests).
+
+The six reported lines, which are departures kept in the open rather than failures: the newsagent and ironmonger positions against the cast; MINICABS · 24 HOURS against the cast's hours; the parts of P1 not re-measurable on the saved ends; Rita's name larger over its field than P1's; Mickey's cap 0.60 of the board against the sheet's 0.69; the width over cap 6.42 against the sheet's 3.52.
+
+To rebuild: `make_previews.py` (the previews), `make_target.py` (the JSON), `target_drawing.py OUTDIR --json drawing.json --sheet` (the drawings), `self_check.py` (the result). Python with Pillow, NumPy and SciPy; the fonts are fetched with `--fetch-fonts DIR` if they are not on the machine.

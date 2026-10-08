@@ -378,6 +378,10 @@ for L in tpl["layers"]:
                 dr.line([(XL(a_[0]), Ypx(a_[1])), (XL(b_[0]), Ypx(b_[1]))], fill=(0, 255, 255), width=1)
             elif a_[0] >= tpl["field_mm"][2] / 2 and b_[0] >= tpl["field_mm"][2] / 2:
                 dr.line([(XR(a_[0]), Ypx(a_[1])), (XR(b_[0]), Ypx(b_[1]))], fill=(0, 255, 255), width=1)
+            else:                                                    # a long straight edge from one end to the other: drawn in each crop up to its edge
+                lo_, hi_ = (a_, b_) if a_[0] < b_[0] else (b_, a_)
+                dr.line([(XL(lo_[0]), Ypx(lo_[1])), (LW, Ypx(lo_[1]))], fill=(0, 255, 255), width=1)
+                dr.line([(RX, Ypx(hi_[1])), (XR(hi_[0]), Ypx(hi_[1]))], fill=(0, 255, 255), width=1)
 cap_y, base_y = [t for t in tpl["text"] if t["role"] == "name"][0]["cap_y"], [t for t in tpl["text"] if t["role"] == "name"][0]["baseline_y"]
 for xa, xb in ((0, LW), (RX, Ww)):
     dr.line([(xa, Ypx(cap_y)), (xb, Ypx(cap_y))], fill=(0, 255, 255), width=1)
@@ -410,6 +414,10 @@ for sh_ in rs_["shapes"]:
                 dr.line([(XRL(a_[0]), YR(a_[1])), (XRL(b_[0]), YR(b_[1]))], fill=(255, 0, 255), width=1)
             elif a_[0] >= B["width_mm"] / 2 and b_[0] >= B["width_mm"] / 2:
                 dr.line([(XRR(a_[0]), YR(a_[1])), (XRR(b_[0]), YR(b_[1]))], fill=(255, 0, 255), width=1)
+            else:
+                lo_, hi_ = (a_, b_) if a_[0] < b_[0] else (b_, a_)
+                dr.line([(XRL(lo_[0]), YR(lo_[1])), (LW, YR(lo_[1]))], fill=(255, 0, 255), width=1)
+                dr.line([(RX, YR(hi_[1])), (XRR(hi_[0]), YR(hi_[1]))], fill=(255, 0, 255), width=1)
 for b in rs_["blocks"]:
     if b["role"] == "end":
         x0, y0, x1, y1 = b["ink_box_mm"]

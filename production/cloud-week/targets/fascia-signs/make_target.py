@@ -995,9 +995,9 @@ chk("G7", "distinct fascias", "the ten boards together", "pairwise dE76 between 
 chk("G8", "contrast of every name line", "every text block", "WCAG contrast ratio between the median face colour and the median ground colour just outside the glyphs (a 4 mm ring beyond the shade)", "see each block's contrast_1990", "0.85 x nominal minimum", "ratio", "contrast of two medians", "pixels")
 chk("G9", "relief present", "gilded, vinyl and painted blocks", "mean HEIGHT-MAP step across a glyph edge", dict(gilded_mm=[0.02, 0.15], vinyl_mm=[0.04, 0.2], painted_mm=[0.1, 0.35]), 0, "mm", "height map at glyph edges", "pixels",
     "Mickey's applied letters are not here: they are geometry (G17)")
-chk("G10", "glyph mask against the font", "every text block in the texture, ghosts excepted", "re-render the block's string from its font file (font, weight and axes, size from the cap, tracking, anchor, origin) as a mask at the target position; compare it with the rendered face mask inside the block's box dilated 12 mm", dict(iou_min=0.85, flipped_iou_must_be_lower_by=0.15), 0, "IoU",
-    "intersection over union of the two masks; and the same against the mask flipped about the block's centre line: the true mask must beat the flipped one by at least 0.15 unless the string is mirror-symmetric (listed in `symmetric_strings`)", "pixels+font",
-    "this catches a mirrored board (the recipe has already painted MICKEY'S backwards once), a wrong font, a fallback glyph, a wrong word and a wrong place; the manifest alone cannot")
+chk("G10", "glyph mask against the font", "every text block in the texture, ghosts excepted", "re-render the block's string from its font file (font, weight and axes, size from the cap, tracking, anchor, origin) as a mask at the target position; compare it with the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour and nearer to it than to the ground) inside the block's effects box dilated 8 mm and inside its panel; the score F is the mean of recall and precision, each against the other mask dilated 2.5 mm (a hand-painted block) or 1 mm (vinyl, applied, glass)", dict(f_min=0.90, flipped_f_must_be_lower_by=0.15, tolerance_mm=dict(painted_gilded=2.5, vinyl_applied_glass=1.0)), 0, "F",
+    "F of the true re-render against the pixel mask must be at least 0.90, and the F of the same re-render FLIPPED about the block's centre line must be lower by at least 0.15 (a mirror-symmetric string would be listed in `symmetric_strings`; none is: self_check group 8 lists the weakest margins, the smallest is 0.175)", "pixels+font",
+    "this catches a mirrored board (the recipe has already painted MICKEY'S backwards once), a wrong font, a fallback glyph, a wrong word and a wrong place; the manifest alone cannot. pixel_checks.py is the reference reader")
 chk("G11", "layout variety", "the ten boards together", "layout_class of each board; the strings of the trade lines", dict(max_centred_skeleton_boards=5, max_dotted_trade_lines=3, min_distinct_layout_classes=6), 0, "count", "count from target.json's layout_class and the manifest", "manifest",
     "the review's fault 5: no more than five boards share a centred name over a trade line, no more than three trade lines use ' · '")
 chk("G12", "hand jitter", "boards whose technique is painted or gilded", "the residual of each glyph's baseline (its measured bottom edge) from the block's straight baseline, SD over the block's glyphs", dict(painted_gilded_sd_mm=[0.6, 1.6], vinyl_applied_glass_sd_mm=[0.0, 0.6]), 0, "mm",
@@ -1037,10 +1037,10 @@ for s in SHOPS_C:
         chk(f"{bid}.width", f"{bid}: ink width", sid, "width of the string's ink box on the PIXELS", b["width_mm"], round(max(6.0, 0.04 * b["width_mm"]), 1), "mm", "pixel ink box of the face mask", "pixels",
             "the font file's real advance widths with the tracking given; hand jitter adds up to 1.5 per cent")
         pos_x = b["x_mm"]
-        chk(f"{bid}.pos", f"{bid}: position", sid, "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+        chk(f"{bid}.pos", f"{bid}: position", sid, "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
             dict(anchor=b["anchor"], x_mm=pos_x, baseline_mm=b["baseline_mm"], ink_box_mm=b["ink_box_mm"]), dict(x_mm=15, baseline_mm=3), "mm", "pixel ink box; for round-bottomed strings the baseline is the median bottom of the flat-bottomed letters", "pixels",
             "the review's fault 3: a block at the wrong end, a trade line above its name, or a block 1 m off passed every old check")
-        chk(f"{bid}.mask", f"{bid}: glyph mask", sid, "G10 for this block", dict(iou_min=0.85), 0, "IoU", "G10", "pixels+font")
+        chk(f"{bid}.mask", f"{bid}: glyph mask", sid, "G10 for this block", dict(f_min=0.90, flipped_f_must_be_lower_by=0.15), 0, "F", "G10", "pixels+font")
         chk(f"{bid}.fit", f"{bid}: inside the safe zone", sid, "ink box including shade, outline and hand jitter against the safe rectangle", dict(safe_mm=SAFE, min_margin_mm=0), 0, "mm", "min distance from the box to each safe edge >= 0 (the safe rectangle already keeps 150 mm off the ends and 40 mm off the top and bottom)", "manifest")
         chk(f"{bid}.contrast", f"{bid}: contrast", sid, "WCAG ratio, aged face median to aged ground median", b["contrast_1990"], f"not below {round(0.85 * b['contrast_1990'], 2)} and not below 2.2", "ratio", "median face (glyph interior eroded 2 px) vs median ring", "pixels")
         chk(f"{bid}.face", f"{bid}: face colour", sid, "median sRGB of the glyph interior (eroded 2 px)", b["face_1990"], 14.0, "dE76", "median in Lab", "pixels")
@@ -1073,7 +1073,7 @@ for s in SHOPS_C:
             "the review's fault 12: a dead tube darkens ONE ROW over ONE TUBE's length, to 60 per cent because the other row still lights it")
 for p in PROJECTING:
     chk(f"{p['id']}.mount", f"{p['id']}: mount", p["shop"], "G15: x, arm height, projection and lowest point of the placed hanging sign", dict(x_street_m=p["mount"]["x_street_m"], arm_height_m=p["mount"]["arm_height_m"], projection_m=p["mount"]["projection_m"], lowest_m=p["lowest_computed_m"], viewer_side=p["mount"]["viewer_side"]), dict(x=0.02, z=0.02, projection=0.02), "m", "G15", "geometry")
-    chk(f"{p['id']}.faces", f"{p['id']}: faces", p["shop"], "G15/G10: both faces' lettering reads left to right from its own side", dict(text=p["faces"]["text"] if "faces" in p else None), 0, "IoU", "G10 on each face's texture, the second face's reading direction reversed", "pixels+font")
+    chk(f"{p['id']}.faces", f"{p['id']}: faces", p["shop"], "G15/G10: both faces' lettering reads left to right from its own side", dict(text=p["faces"]["text"] if "faces" in p else None), 0, "F", "G10 on each face's texture, the second face's reading direction reversed", "pixels+font")
 for i_, g in enumerate(GLASS):
     if g["text"] and not g.get("existing"):
         chk(f"{g['shop']}.glass.{i_}", f"{g['shop']}: glass '{g['text']}'", g["shop"], "G16 for this row", dict(text=g["text"], cap_mm=g["cap_mm"], z_m=g["z_m"], x_street_m=g["x_street_m"], font=g["font"]), dict(cap_rel=0.05, z_m=0.03, x_m=0.10), "mm / m", "G16", "pixels+font")
@@ -1282,7 +1282,7 @@ TARGET = dict(
         spacing=dict(word_space_em=0.32, note="word spaces are the font's, widened by the tracking; the middle dot separator has a word space each side"),
         optical=dict(centre="the block is centred on the ink, not on the advance box; P1's name sits 1.4 per cent of the panel width left of the panel's centre, so +-1.5 per cent is the hand's tolerance", baseline_hang_mm="round capitals (C, O, S, G) overshoot the baseline and the cap line by 1.6 per cent of the cap"),
         trade_line_minimum_cap_mm=70,
-        symmetric_strings=[], symmetric_note="strings whose mirror image reads as itself (the mask check cannot tell them from their flip); none is known: self_check group 7 renders every block and lists any whose flipped mask is within 0.15 IoU of the true one",
+        symmetric_strings=[], symmetric_note="strings whose mirror image reads as itself (the mask check cannot tell them from their flip); none is known: self_check group 8 renders every block and lists any whose flipped mask is within 0.15 F of the true one",
     ),
     shops=SHOPS_C,
     projecting_signs=PROJECTING,

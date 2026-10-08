@@ -1097,7 +1097,7 @@
   },
   "trade_line_minimum_cap_mm": 70,
   "symmetric_strings": [],
-  "symmetric_note": "strings whose mirror image reads as itself (the mask check cannot tell them from their flip); none is known: self_check group 7 renders every block and lists any whose flipped mask is within 0.15 IoU of the true one"
+  "symmetric_note": "strings whose mirror image reads as itself (the mask check cannot tell them from their flip); none is known: self_check group 8 renders every block and lists any whose flipped mask is within 0.15 F of the true one"
  },
  "shops": [
   {
@@ -6548,15 +6548,19 @@
    "scope": "every text block in the texture, ghosts excepted",
    "reads": "pixels+font",
    "layer": "pixels+font",
-   "measure": "re-render the block's string from its font file (font, weight and axes, size from the cap, tracking, anchor, origin) as a mask at the target position; compare it with the rendered face mask inside the block's box dilated 12 mm",
+   "measure": "re-render the block's string from its font file (font, weight and axes, size from the cap, tracking, anchor, origin) as a mask at the target position; compare it with the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour and nearer to it than to the ground) inside the block's effects box dilated 8 mm and inside its panel; the score F is the mean of recall and precision, each against the other mask dilated 2.5 mm (a hand-painted block) or 1 mm (vinyl, applied, glass)",
    "expected": {
-    "iou_min": 0.85,
-    "flipped_iou_must_be_lower_by": 0.15
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15,
+    "tolerance_mm": {
+     "painted_gilded": 2.5,
+     "vinyl_applied_glass": 1.0
+    }
    },
    "tolerance": 0,
-   "unit": "IoU",
-   "method": "intersection over union of the two masks; and the same against the mask flipped about the block's centre line: the true mask must beat the flipped one by at least 0.15 unless the string is mirror-symmetric (listed in `symmetric_strings`)",
-   "why": "this catches a mirrored board (the recipe has already painted MICKEY'S backwards once), a wrong font, a fallback glyph, a wrong word and a wrong place; the manifest alone cannot"
+   "unit": "F",
+   "method": "F of the true re-render against the pixel mask must be at least 0.90, and the F of the same re-render FLIPPED about the block's centre line must be lower by at least 0.15 (a mirror-symmetric string would be listed in `symmetric_strings`; none is: self_check group 8 lists the weakest margins, the smallest is 0.175)",
+   "why": "this catches a mirrored board (the recipe has already painted MICKEY'S backwards once), a wrong font, a fallback glyph, a wrong word and a wrong place; the manifest alone cannot. pixel_checks.py is the reference reader"
   },
   {
    "id": "G11",
@@ -6916,7 +6920,7 @@
    "scope": "fish_market",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "left",
     "x_mm": 1270,
@@ -6944,10 +6948,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -7075,7 +7080,7 @@
    "scope": "fish_market",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "left",
     "x_mm": 3715,
@@ -7103,10 +7108,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -7211,7 +7217,7 @@
    "scope": "fish_market",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "left",
     "x_mm": 3715,
@@ -7239,10 +7245,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -7347,7 +7354,7 @@
    "scope": "fish_market",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "left",
     "x_mm": 3715,
@@ -7375,10 +7382,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -7586,7 +7594,7 @@
    "scope": "ritas",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -7614,10 +7622,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -7745,7 +7754,7 @@
    "scope": "ritas",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -7773,10 +7782,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -7904,7 +7914,7 @@
    "scope": "ritas",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "left",
     "x_mm": 200,
@@ -7932,10 +7942,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -8063,7 +8074,7 @@
    "scope": "ritas",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "right",
     "x_mm": 5210,
@@ -8091,10 +8102,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -8452,7 +8464,7 @@
    "scope": "steam_laundry",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "right",
     "x_mm": 5030,
@@ -8480,10 +8492,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -8570,7 +8583,7 @@
    "scope": "steam_laundry",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 1195,
@@ -8598,10 +8611,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -8688,7 +8702,7 @@
    "scope": "steam_laundry",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 1195,
@@ -8716,10 +8730,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -8806,7 +8821,7 @@
    "scope": "steam_laundry",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 1195,
@@ -8834,10 +8849,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -9072,7 +9088,7 @@
    "scope": "grocer",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -9100,10 +9116,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -9190,7 +9207,7 @@
    "scope": "grocer",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -9218,10 +9235,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -9388,7 +9406,7 @@
    "scope": "newsagent",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -9416,10 +9434,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -9646,7 +9665,7 @@
    "scope": "ironmonger",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -9674,10 +9693,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -9805,7 +9825,7 @@
    "scope": "ironmonger",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 600,
@@ -9833,10 +9853,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -9964,7 +9985,7 @@
    "scope": "ironmonger",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 600,
@@ -9992,10 +10013,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -10123,7 +10145,7 @@
    "scope": "ironmonger",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 4810,
@@ -10151,10 +10173,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -10282,7 +10305,7 @@
    "scope": "ironmonger",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 4810,
@@ -10310,10 +10333,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -10569,7 +10593,7 @@
    "scope": "tea_rooms",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -10597,10 +10621,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -10687,7 +10712,7 @@
    "scope": "tea_rooms",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -10715,10 +10740,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -10909,7 +10935,7 @@
    "scope": "chandler",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -10937,10 +10963,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -11068,7 +11095,7 @@
    "scope": "chandler",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "centre",
     "x_mm": 2705.0,
@@ -11096,10 +11123,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -11204,7 +11232,7 @@
    "scope": "chandler",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "left",
     "x_mm": 210,
@@ -11232,10 +11260,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -11363,7 +11392,7 @@
    "scope": "chandler",
    "reads": "pixels",
    "layer": "pixels",
-   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's box dilated 40 mm): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
+   "measure": "ink box of the face mask READ ON THE PIXELS (pixels within dE 14 of the face colour inside the block's effects box widened 40 mm along the line and 8 mm up and down, and inside its panel): its centre (anchor centre) or its left or right edge (anchor left or right) in x, and its bottom edge in y",
    "expected": {
     "anchor": "right",
     "x_mm": 5200,
@@ -11391,10 +11420,11 @@
    "layer": "pixels+font",
    "measure": "G10 for this block",
    "expected": {
-    "iou_min": 0.85
+    "f_min": 0.9,
+    "flipped_f_must_be_lower_by": 0.15
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10",
    "why": ""
   },
@@ -11607,7 +11637,7 @@
     "text": null
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10 on each face's texture, the second face's reading direction reversed",
    "why": ""
   },
@@ -11645,7 +11675,7 @@
     "text": "LAUNDERETTE"
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10 on each face's texture, the second face's reading direction reversed",
    "why": ""
   },
@@ -11683,7 +11713,7 @@
     "text": "KEYS CUT"
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10 on each face's texture, the second face's reading direction reversed",
    "why": ""
   },
@@ -11721,7 +11751,7 @@
     "text": "CHANDLERY"
    },
    "tolerance": 0,
-   "unit": "IoU",
+   "unit": "F",
    "method": "G10 on each face's texture, the second face's reading direction reversed",
    "why": ""
   },
@@ -13138,7 +13168,7 @@
     "group": "4 photo P1",
     "check": "the overlay was written and is under 300 KB",
     "passed": true,
-    "detail": "P1-leadenhall-board-target-on-photo.jpg 111961 bytes",
+    "detail": "P1-leadenhall-board-target-on-photo.jpg 113359 bytes",
     "kind": "check"
    },
    {
