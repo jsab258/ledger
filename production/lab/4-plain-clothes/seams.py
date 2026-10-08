@@ -1,96 +1,53 @@
-"""The seams where the pattern puts them, laid on the modelled surfaces.
+"""The seams where the pattern puts them, read from the model's own construction.
 
-Each seam is found from the pattern's own construction, never from the target's seam lines:
-- jumper side seams: front and back pieces are equal widths (pattern J03), so at each height
-  the side seam is halfway round the jumper between the centre front and the centre back;
-- the hem edge and the rib top at their levels;
-- shoulder seams: from the neck point (half the neck width, J10) to the end of the cross back
-  (J08) along the top of the shoulder;
-- armholes: straight down from the cross-back end to the armhole's step line (the lower third
-  of the armhole depth, J13), then a quarter curve out to the underarm on the side seam;
-- sleeve underarm seams: along the sleeve's inner side from its underarm to the cuff; cuff edges;
-- the neck rib seam: the neckline round the neck (back neck, neck points, front neck);
-- trousers: side seams (outseam) plumb on the leg's outer side and up the hip to the waist,
-  inside leg seams from the fork to the hem, the hems, the waistband's edges, and the crotch
-  seam down the centre front, through the fork and up the centre back.
+Each seam comes from the rules (TARGET.md O12 and the pattern), never from the target's seam lines:
+- jumper side seams: the extreme of each body section at the side, hem to underarm (O12);
+- the hem edge and the rib top: the jumper's outline round the body at those heights;
+- shoulder seams: along the top of the shoulder from the neck point to the cross-back end (J08-J10);
+- armholes: where the surface crosses the plane x = +-cross back / 2, above the underarm (O12);
+- sleeve underarm seams: the extreme of each sleeve section toward the body, cap height to cuff;
+- cuff edges: the sleeve's section at the wrist plane;
+- the neck rib seam: the foot of the rib, on the pattern's neckline (J10-J12);
+- trousers: outseams at the outer extreme of each section from the hem to the band top, inseams
+  at the inner extreme from the hem to the fork, the hems on the hem plane, the waistband's
+  edges, and the crotch seam on x = 0 (O12).
 """
 import math
 
 import numpy as np
-from scipy.spatial import cKDTree
 
 
-def ring_crossings(R):
-    """Centre front and centre back of a horizontal ring: where it crosses x = 0 (front y < 0)."""
-    out = {}
-    n = len(R)
-    for i in range(n):
-        a, b = R[i], R[(i + 1) % n]
-        if (a[0] <= 0 < b[0]) or (b[0] <= 0 < a[0]):
-            t = a[0] / (a[0] - b[0])
-            p = a + t * (b - a)
-            out["front" if p[1] < 0 else "back"] = (i, t, p)
-    return out
-
-
-def half_way_side(R, sgn):
-    """The point halfway round a ring from centre front to centre back, on the side sgn."""
-    c = ring_crossings(R)
-    if "front" not in c or "back" not in c:
-        return None
-    n = len(R)
-    i0 = c["front"][0]
-    # walk from the centre front toward the side with x * sgn > 0
-    step = 1 if R[(i0 + 1) % n][0] * sgn > 0 else -1
-    pts = [c["front"][2]]
-    j = (i0 + 1) % n if step == 1 else i0
-    for _ in range(n):
-        pts.append(R[j])
-        if np.sign(R[j][0]) != np.sign(sgn) and len(pts) > 3:
-            break
-        j = (j + step) % n
-    pts[-1] = c["back"][2]
-    P = np.array(pts)
-    s = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(P, axis=0), axis=1))])
-    h = s[-1] / 2
-    k = int(np.searchsorted(s, h)) - 1
-    t = (h - s[k]) / max(s[k + 1] - s[k], 1e-12)
-    return P[k] + t * (P[k + 1] - P[k])
-
-
-def on_surface(V, pts):
-    return V[cKDTree(V).query(pts)[1]]
-
-
-def band(V, z, tol=0.004, mask=None):
-    m = np.abs(V[:, 2] - z) < tol
-    if mask is not None:
-        m &= mask
-    Q = V[m]
-    if len(Q) == 0:
-        return Q
-    c = Q.mean(0)
-    order = np.argsort(np.arctan2(Q[:, 1] - c[1], Q[:, 0] - c[0]))
-    return Q[order]
-
-
-def surface_section(V, z, tol=0.003):
-    """The jumper surface's outline at a height, ordered round (for the side seams)."""
-    Q = V[np.abs(V[:, 2] - z) < tol]
-    c = Q.mean(0)
+def outer_ring(Q, c, bins=144):
+    """The outermost point of a set of points in each angle bin about c (x, y): an outline round."""
     ang = np.arctan2(Q[:, 1] - c[1], Q[:, 0] - c[0])
-    bins = np.linspace(-math.pi, math.pi, 145)
-    R = []
-    for a, b in zip(bins[:-1], bins[1:]):
-        s = Q[(ang >= a) & (ang < b)]
-        if len(s):
-            d = np.hypot(s[:, 0] - c[0], s[:, 1] - c[1])
-            R.append(s[np.argmax(d)])            # the outer surface
-    return np.array(R)
+    r = np.hypot(Q[:, 0] - c[0], Q[:, 1] - c[1])
+    edges = np.linspace(-math.pi, math.pi, bins + 1)
+    out = []
+    for a, b in zip(edges[:-1], edges[1:]):
+        s = (ang >= a) & (ang < b)
+        if s.any():
+            out.append(Q[s][np.argmax(r[s])])
+    return np.array(out)
+
+
+def extreme(r, sgn, flat=0.002):
+    """A section's extreme on one side: the middle of the points within `flat` of the farthest,
+    so the seam does not jump from front to back along a flat side."""
+    x = r[:, 0] * sgn
+    m = x >= x.max() - flat
+    return r[m].mean(0)
+
+
+def band_ring(V, z, tol, keep=None):
+    m = np.abs(V[:, 2] - z) < tol
+    if keep is not None:
+        m &= keep(V)
+    Q = V[m]
+    return outer_ring(Q, Q[:, :2].mean(0))
 
 
 def plane_cut(V, F, x0, z_min):
-    """Points where the surface's edges cross the plane x = x0, above z_min, ordered round."""
+    """Points where the surface's edges cross the plane x = x0, above z_min: its outermost loop."""
     E = np.vstack([F[:, [0, 1]], F[:, [1, 2]], F[:, [2, 0]]])
     a, b = V[E[:, 0], 0] - x0, V[E[:, 1], 0] - x0
     m = (a * b) < 0
@@ -99,21 +56,21 @@ def plane_cut(V, F, x0, z_min):
     P = P[P[:, 2] >= z_min]
     if len(P) == 0:
         return P
-    c = P[:, 1:].mean(0)
-    return P[np.argsort(np.arctan2(P[:, 2] - c[1], P[:, 1] - c[0]))]
+    c = np.array([P[:, 1].mean(), P[:, 2].mean()])
+    Q = outer_ring(P[:, [1, 2]], c, 72)
+    return np.c_[np.full(len(Q), x0), Q]
 
 
-def jumper_seams(P, JV, JF, sleeves, neckline_z, body_rings):
+def jumper_seams(P, JV, JF, sleeves, neckline_z, body_rings, rib_foot):
     S = {}
     z_hem, z_rib = P["jumper_hem_z"], P["jumper_hem_z"] + P["jumper_rib_m"]
     z_under = P["jumper_underarm_z"]
     xb = P["cross_back_m"] / 2
-    z_step = P["neck_point"][2] - (P["shoulder_drop_m"] + P["armhole_depth_m"] * (1 - 1 / 3))
+    R = body_rings[(body_rings[:, 0, 2] >= z_hem - 1e-6) & (body_rings[:, 0, 2] <= z_under + 1e-6)]
+    half = np.abs(R[..., 0]).max() + 0.005
+    body_x = lambda X: np.abs(X[:, 0]) < half
     for side, sgn in (("L", 1), ("R", -1)):
-        # side seams at the body section's extreme (O12), laid on the surface
-        R = body_rings[(body_rings[:, 0, 2] >= z_hem - 1e-6) & (body_rings[:, 0, 2] <= z_under + 1e-6)]
-        S["side_seam_" + side] = on_surface(JV, np.array([r[np.argmax(r[:, 0] * sgn)] for r in R]))
-        # shoulder seam: the top of the surface along the line from the neck point to the cross-back end
+        S["side_seam_" + side] = np.array([r[np.argmax(r[:, 0] * sgn)] for r in R])
         y0, y1 = P["neck_point"][1], P["shoulder_point"][1]
         sh = []
         for x in np.linspace(P["neck_point"][0] + 0.006, xb, 24):
@@ -122,66 +79,53 @@ def jumper_seams(P, JV, JF, sleeves, neckline_z, body_rings):
             if m.any():
                 sh.append(JV[m][np.argmax(JV[m][:, 2])])
         S["shoulder_seam_" + side] = np.array(sh)
-        # armhole: where the surface crosses the plane x = +-cross back / 2, above the underarm (O12)
         S["armhole_seam_" + side] = plane_cut(JV, JF, sgn * xb, z_under - 0.005)
-        # the sleeve: underarm seam along the inner side, the cuff edge
-        R = sleeves[side]
-        s0 = P["sleeve_seam_from_s"]
-        k0 = int(round((s0 - P["sleeve_s_top"]) / 0.01))
-        S["sleeve_underarm_seam_" + side] = on_surface(JV, np.array([r[np.argmin(r[:, 0] * sgn)] for r in R[k0:]]))
-        S["cuff_edge_" + side] = on_surface(JV, R[-1])
-    # the neck rib seam: round the neck, at the neckline's height, the surface point nearest the neck
-    cb, npnt, cf = P["neck_back"], P["neck_point"], P["neck_front"]
-    yc = 0.5 * (cb[1] + cf[1])
-    ry = 0.5 * (cb[1] - cf[1])
-    e = np.hypot(JV[:, 0] / npnt[0], (JV[:, 1] - yc) / ry)
-    m = (e < 1.6) & (np.abs(JV[:, 2] - neckline_z(JV)) < 0.004)
-    Q, eq = JV[m], e[m]
-    ang = np.arctan2(Q[:, 0] / npnt[0], (Q[:, 1] - yc) / ry)
-    neck = []
-    for a0 in np.linspace(-math.pi, math.pi, 73)[:-1]:
-        sel = np.abs(((ang - a0 + math.pi) % (2 * math.pi)) - math.pi) < math.pi / 72
-        if sel.any():
-            neck.append(Q[sel][np.argmin(eq[sel])])
-    S["neck_rib_seam"] = np.array(neck)
-    # the hem edge and the rib top: rings of the body (not the cuffs, which hang at the same height)
-    def body_band(z, tol):
-        r = body_rings[int(np.argmin(np.abs(body_rings[:, 0, 2] - z)))]
-        Q = JV[np.abs(JV[:, 2] - z) < tol]
-        d = cKDTree(r[:, :2]).query(Q[:, :2])[0]
-        Q = Q[d < 0.02]
-        c = Q.mean(0)
-        return Q[np.argsort(np.arctan2(Q[:, 1] - c[1], Q[:, 0] - c[0]))]
-    S["hem_edge"] = body_band(JV[:, 2].min() + 0.002, 0.003)
-    S["hem_rib_top"] = body_band(z_rib, 0.003)
+        Rs = sleeves[side]
+        k0 = int(round((P["sleeve_seam_from_s"] - P["sleeve_s_top"]) / 0.01))
+        # toward the body, on the sleeve's visible part (not where it runs into the jumper's body)
+        zs_b = R[:, 0, 2]
+        und = []
+        for r in Rs[k0:]:
+            hw = half if r[:, 2].mean() < zs_b.min() else np.abs(R[int(np.argmin(np.abs(zs_b - r[:, 2].mean())))][:, 0]).max()
+            v = r[np.abs(r[:, 0]) > hw + 0.005] if r[:, 2].mean() <= z_under + 0.08 else r
+            if len(v):
+                und.append(extreme(v, -sgn))
+        S["sleeve_underarm_seam_" + side] = np.array(und)
+        S["cuff_edge_" + side] = Rs[-1]
+    S["neck_rib_seam"] = rib_foot
+    S["hem_edge"] = band_ring(JV, JV[:, 2].min() + 0.002, 0.003, body_x)
+    S["hem_rib_top"] = band_ring(JV, z_rib, 0.003, body_x)
     return S
 
 
-def trouser_seams(P, TV, leg_rings, seat_rings):
+def trouser_seams(P, TV, TF, legs, seat):
     S = {}
     zb, zf = P["trouser_hem_back_z"], P["trouser_hem_front_z"]
-    z_fork = P["trouser_crotch_z"]
+    z_fork, z_seat = P["trouser_crotch_z"], P["trouser_seat_line_z"]
+    zd = P.get("hem_drop_m", 0.0)
+    hem0 = np.array(legs["L"][-1])
+    ybk, yfr = hem0[:, 1].max(), hem0[:, 1].min()
+    hem_z = lambda y: zb - zd + (zf - zb) * np.clip((ybk - y) / (ybk - yfr), 0, 1)
+    seat_up = [r for r in seat if r[0, 2] >= z_seat - 1e-6]
     for side, sgn in (("L", 1), ("R", -1)):
-        L = leg_rings[side]
+        L = [np.asarray(r) for r in legs[side]]
         out, ins = [], []
-        for z in np.arange(zf + 0.004, P["waistband_lower_z"] + 1e-6, 0.005):
-            Q = TV[(np.abs(TV[:, 2] - z) < 0.003)]
-            Qs = Q[Q[:, 0] * sgn > 0]
-            if len(Qs) < 5:
-                continue
-            out.append(Qs[np.argmax(Qs[:, 0] * sgn)])
-            if z <= z_fork:
-                ins.append(Qs[np.argmin(Qs[:, 0] * sgn)])
+        for r in L[::-1]:
+            z = r[0, 2]
+            po = extreme(r, sgn)
+            pi = extreme(r, -sgn)
+            if po[2] >= hem_z(po[1]) - 1e-6:
+                out.append(po)
+            if z <= z_fork + 1e-6 and pi[2] >= hem_z(pi[1]) - 1e-6:
+                ins.append(pi)
+        out += [extreme(r, sgn) for r in seat_up if r[0, 2] <= P["trouser_waist_z"] + 1e-6]
         S["outseam_" + side] = np.array(out)
         S["inseam_" + side] = np.array(ins)
-        side_m = TV[:, 0] * sgn > 0.02
-        hemz = TV[:, 2] - (zb + (zf - zb) * np.clip((L[-1][:, 1].max() - TV[:, 1]) / (L[-1][:, 1].max() - L[-1][:, 1].min()), 0, 1))
-        S["hem_" + side] = TV[side_m & (np.abs(hemz) < 0.004) & (TV[:, 2] < 0.12)]
-    S["waistband_lower_edge"] = band(TV, P["waistband_lower_z"], 0.003)
-    S["waistband_top_edge"] = band(TV, TV[:, 2].max() - 0.002, 0.003)
-    m = (np.abs(TV[:, 0]) < 0.003) & (TV[:, 2] > z_fork - 0.02) & (TV[:, 2] < P["waistband_lower_z"] + 0.001)
-    Q = TV[m]
-    c = np.array([Q[:, 1].mean(), Q[:, 2].max()])
-    order = np.argsort(np.arctan2(Q[:, 1] - c[0], -(Q[:, 2] - c[1])))
-    S["crotch_seam_front_to_back"] = Q[order]
+        on = (TV[:, 0] * sgn > 0.02) & (np.abs(TV[:, 2] - hem_z(TV[:, 1])) < 0.003) & (TV[:, 2] < 0.12)
+        Q = TV[on]
+        S["hem_" + side] = outer_ring(Q, Q[:, :2].mean(0), 72)
+    S["waistband_lower_edge"] = band_ring(TV, P["waistband_lower_z"], 0.003)
+    S["waistband_top_edge"] = band_ring(TV, TV[:, 2].max() - 0.002, 0.003)
+    cut = plane_cut(TV, TF, 0.0, z_fork - 0.005)
+    S["crotch_seam_front_to_back"] = cut[cut[:, 2] <= P["waistband_lower_z"] + 0.001]
     return S

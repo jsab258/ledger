@@ -44,9 +44,9 @@
 - **J05, J06** hem rib 6 deep, 0.90 × width (judgement).
 - **J07** armhole depth = CYC, interpolated: 26.7 (underarm z 1.333).
 - **J08** cross back = shoulder to shoulder + 1 (judgement).
-- **J09–J11** from the mesh: shoulder drop 6.8, neck width 18, back neck depth 3.3.
+- **J09–J11** mesh: shoulder drop 6.8, neck width 18, back neck depth 3.3.
 - **J12** front neck at notch + 2. **J13** armhole steps in over its lower third. **J14, J15** neck rib 2.5 deep, 0.85 × neckline (all judgement).
-- **J16** biceps + 3 in = 51.8. **J17** shoulder to wrist + 1 = 64.6. **J18–J20** cuff 6 deep, 22 round, 26 above it (all judgement).
+- **J16–J20** biceps + 3 in = 51.8; shoulder to wrist + 1 = 64.6; cuff 6 deep, 22 round, 26 above it (judgement).
 - **J21** cap seam = armhole: cap 19.1 high, elbow 37.6.
 
 ## Outline rules
@@ -58,11 +58,10 @@ The front and back views share one (x, z) silhouette.
 - **O2** Supported cloth: the body's section grown by (garment − body girth) / 2π.
 
 **Jumper**
-- **O3** Above the underarm: the upper body + chest ease (18 mm); a 2.5 cm neck rib on top.
+- **O3** Above the underarm: the upper body + chest ease (18 mm); the neck rib on top (C7).
 - **O4** Hem where J04 runs out down the centre back, hollows bridged.
 - **O5** Below the chest it falls straight: hull of the eased chest section and the body (or trousers) + 3 mm.
-- **O6** The rib grips, then blouses over 4 cm (judgement).
-- **O7** Worn over the trousers.
+- **O6, O7** The rib grips, blouses over 4 cm (judgement); worn over the trousers.
 - **O8** Sleeve: the arm's section grown to the pattern's width along the arm's axis (see C1, C4).
 
 **Trousers**
@@ -77,11 +76,14 @@ The front and back views share one (x, z) silhouette.
 
 ## Corrections (8 October, after the coordinator's check)
 
-- **C1 (sleeve):** at each station along the arm's axis the sleeve edge stands off the arm's own covered points by the ease, joined with those points + 3 mm, so never inside the arm + 3 mm. The cuff end is the wrist plane that ends the covered list (list not trimmed).
-- **C2 (feet):** points below the hem line (0.040 back to 0.0654 front) or outside the leg tube below z 0.12 leave the trousers list: 7,385 to 7,069.
+- **C1 (sleeve):** the sleeve edge stands off the arm's own section by the ease, joined with the covered points + 3 mm; cuff end = the wrist plane ending the covered list (not trimmed).
+- **C2 (feet):** points below the hem line or outside the leg tube (z < 0.12) leave the trousers list: 7,385 to 7,069.
 - **C3 (band top):** the trousers' top edge is now exactly at z 1.1835.
-- **C4 (sleeve cap):** no yoke-to-sleeve step. From the shoulder point to the cap height h (19.1) the ease grows along a quarter-sine, e = 3 mm + (e_h − 3 mm)·sin(π/2·s/h).
-- **Self-check:** `target_outline.py` fails if any covered point is over 3 mm outside its outline in any view. Now 0 of 10,318 and 0 of 7,069.
+- **C4 (cap):** no yoke-to-sleeve step: ease e = 3 mm + (e_h − 3 mm)·sin(π/2·s/h) from the shoulder point to the cap height h.
+- **C5 (sleeve ease):** arm girth was modelled (0.30 at the elbow); now Ron's own, cut square to the axis (0.345), so O8 gives about 7 mm at the elbow; smoothing dropped.
+- **C6:** side-view hem spike removed; the hem runs straight 0.0654 to 0.040.
+- **C7 (neck):** no three-point lines; both views project the yoke up to the neckline seam (ease tapering to 3 mm over 8 cm, judgement) and the 2.5 cm rib standing on it.
+- **Self-check:** the script fails if any covered point is over 3 mm outside its outline in any view; now none.
 
 ## Left open
 

@@ -75,7 +75,7 @@ class Grid:
             sd[s:s + 100000] = signed_tube(P[s:s + 100000], rings, C, A)
         self._put(I, J, K, sd)
 
-    def add_near(self, BV, BN, region, dist, depth=0.04):
+    def add_near(self, BV, BN, region, dist, depth=0.04, ceiling=None, zscale=1.0):
         """A layer lifted off the body over a region: between `depth` inside the body and
         dist(nearest body point) outside it, for points whose nearest body point is in the region."""
         pts = BV[region]
@@ -84,13 +84,29 @@ class Grid:
         I, J, K, P = self._box(lo, hi)
         full = np.zeros(len(BV))
         full[region] = dist
-        d, j = cKDTree(BV).query(P, distance_upper_bound=dmax + depth)
+        # zscale > 1 measures height as zscale times as far: the layer stands off the body sideways by
+        # dist but only dist / zscale on top of level surfaces (cloth rests on the shoulders)
+        S = np.array([1.0, 1.0, zscale])
+        Ns = BN / S
+        Ns /= np.maximum(np.linalg.norm(Ns, axis=1, keepdims=True), 1e-12)
+        d, j = cKDTree(BV * S).query(P * S, distance_upper_bound=dmax + depth)
         ok = np.isfinite(d)
         ok[ok] = region[j[ok]]
         jj = j[ok]
-        sn = np.einsum("ij,ij->i", P[ok] - BV[jj], BN[jj])
+        sn = np.einsum("ij,ij->i", (P[ok] - BV[jj]) * S, Ns[jj])
         sd = np.maximum(sn - full[jj], -depth - sn)
+        if ceiling is not None:                   # the layer ends at a height that varies over (x, y)
+            Pk = P[ok]
+            sd = np.maximum(sd, Pk[:, 2] - ceiling(Pk))
         self._put(I[ok], J[ok], K[ok], sd)
+
+    def add_wall(self, sheet, half):
+        """A thin wall of cloth (a rib): every grid point within `half` of a dense sheet of points."""
+        lo, hi = sheet.min(0) - half - 0.01, sheet.max(0) + half + 0.01
+        I, J, K, P = self._box(lo, hi)
+        # densify the sheet so the distance is to the surface, not to its sample points
+        d, _ = cKDTree(sheet).query(P)
+        self._put(I, J, K, d - half)
 
     def finish(self, sigma_m=0.004):
         self.field = ndimage.gaussian_filter(self.sdf, sigma_m / self.h) if sigma_m > 0 else self.sdf.copy()

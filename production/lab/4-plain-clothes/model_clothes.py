@@ -168,14 +168,43 @@ def girth_fn(table):
 
 
 def neckline_z(V, P):
-    """The neckline seam's height round the neck, by the angle about the neck's centre: the back
-    neck, the two neck points (the pattern's neck width) and the front neck (its front depth)."""
+    """The neckline seam's height round the neck: the pattern's neckline is a quarter-ellipse on
+    each piece (half-width the neck width J10, depth the back J11 or front J12 neck depth), so
+    below the neck point's height it drops by depth * sqrt(1 - (x / half-width)^2)."""
     cb, npnt, cf = P["neck_back"], P["neck_point"], P["neck_front"]
     yc = 0.5 * (cb[1] + cf[1])
-    a = np.arctan2(np.abs(V[:, 0]) / npnt[0], (V[:, 1] - yc) / (cb[1] - yc))   # 0 at the back, pi/2 at the side, pi at the front
-    z_back_side = cb[2] + (npnt[2] - cb[2]) * np.sin(np.clip(a, 0, np.pi / 2))
-    z_side_front = cf[2] + (npnt[2] - cf[2]) * np.sin(np.clip(np.pi - a, 0, np.pi / 2))
-    return np.where(a <= np.pi / 2, z_back_side, z_side_front)
+    depth = np.where(V[:, 1] >= yc, npnt[2] - cb[2], npnt[2] - cf[2])
+    u = np.clip(1 - (V[:, 0] / npnt[0]) ** 2, 0, 1)
+    return npnt[2] - depth * np.sqrt(u)
+
+
+def neck_ceiling(X, P):
+    """Over the neck opening, and behind and in front of the neck, the yoke stops at the
+    neckline's height (as the target grows each height's section, not the surface's normal);
+    over the shoulders it has no ceiling."""
+    cb, npnt, cf = P["neck_back"], P["neck_point"], P["neck_front"]
+    yc, ry = 0.5 * (cb[1] + cf[1]), 0.5 * (cb[1] - cf[1])
+    e = np.hypot(X[:, 0] / npnt[0], (X[:, 1] - yc) / ry)
+    a = np.arctan2(np.abs(X[:, 0]) / npnt[0], (X[:, 1] - yc) / ry)      # 0 at the back, pi at the front
+    near_cb_cf = (e < 1.8) & ((a < math.pi / 4) | (a > 3 * math.pi / 4))  # behind and in front of the neck
+    return np.where((e < 1.0) | near_cb_cf, neckline_z(X, P), 9.0)
+
+
+def neck_rib_sheet(P, n=96, m=6):
+    """The crew-neck rib (J14): a band 2.5 cm deep standing on the neckline (back neck, neck
+    points, front neck), its foot just outside the neckline seam, as a sheet of points."""
+    cb, npnt, cf = P["neck_back"], P["neck_point"], P["neck_front"]
+    yc, ry = 0.5 * (cb[1] + cf[1]), 0.5 * (cb[1] - cf[1])
+    th = np.linspace(0, 2 * math.pi, n, endpoint=False)
+    off = P.get("rib_centre_off_m", 0.003)                         # the wall's centre just outside the seam
+    x = (npnt[0] + off) * np.sin(th)
+    y = yc + (ry + off) * np.cos(th)
+    z0 = neckline_z(np.stack([x, y, np.zeros(n)], 1), P)
+    pts = []
+    top = P["neck_rib_m"] - P.get("rib_thickness_m", 0.004)     # the wall's outer top at the rib depth
+    for t in (np.linspace(0, 1, m) if m > 1 else [0.0]):
+        pts.append(np.stack([x, y, z0 + t * top], 1))
+    return np.vstack(pts)
 
 
 def by_angle(Q, c, n=96):
@@ -224,18 +253,28 @@ def jumper_body(B, P, over):
                 S = np.vstack([S, over[int(np.argmin(np.abs(zs - z)))][:, :2]])
         return offset_convex(hull(S), so)
 
-    # the eased chest: the torso's section at the chest line (where its girth reaches Ron's chest
-    # measure) grown to the finished chest
-    zc = max((z for z in np.arange(z_un, z_band, 0.005) if perimeter(hull(B.section(torso_only, z))) <= P["chest_body_m"]), default=z_un)
+    # the eased chest: the torso's section at the chest line (Ron's measured chest height) grown to
+    # the finished chest
+    zc = P["chest_line_z"]                    # measurements.json heights_m.chest
     Hc = grow(hull(B.section(torso_only, zc)), P["chest_finished_m"], so)
+    # knit falls smoothly over what is beneath it: each height takes in the sections within 2 cm
+    # above and below it (the waistband's top edge and small hollows do not print through)
+    zz = np.arange(z_hem - 0.02, zc + 1e-6, 0.005)
+    U = {round(z, 4): under(z) for z in zz}
+    win = P.get("drape_window_m", 0.02)
+
+    def under_smooth(z):
+        near = [U[k] for k in U if abs(k - z) <= win + 1e-9]
+        return hull(np.vstack(near)) if near else under(z)
     rings = []
     for z in np.arange(z_hem - 0.02, z_band + 1e-6, 0.005):
         if z >= zc:
-            Q = offset_convex(hull(B.section(torso_only, z)), yoke)
+            Q = offset_convex(hull(B.section(torso_only, z)), so + (yoke - so) * min((z - z_un) / P.get("yoke_ramp_m", 0.05), 1.0))
         else:
             # below the chest line the jumper falls straight from the eased chest (O5); between the
             # underarm and the chest line the upper body is still the chest ease off the body (O3)
-            Hb = offset_convex(hull(B.section(torso_only, z)), yoke) if z > z_un else under(z)
+            ramp = so + (yoke - so) * min((z - z_un) / P.get("yoke_ramp_m", 0.05), 1.0)
+            Hb = offset_convex(hull(B.section(torso_only, z)), ramp) if z > z_un else under_smooth(z)
             straight = resample_loop(hull(np.vstack([Hc, Hb])), 96)
             if z <= z_rib + blouse:
                 rib = Hb if perimeter(Hb) >= P["rib_girth_m"] else grow(Hb, P["rib_girth_m"], so)
@@ -274,20 +313,31 @@ def limb_tube(B, mask, axis_pts, girths, s_top, s_end, so, step=0.01, n=64, name
             H = hull(np.stack([(sl - c) @ e1, (sl - c) @ e2], 1))
         else:
             H = np.array([[0.03, 0], [0, 0.03], [-0.03, 0], [0, -0.03]])
-        # a loose sleeve: a round tube of the pattern's girth about the arm's axis, let out
-        # only where the arm itself (+ stand-off) would show through it
-        r = G(s) / (2 * math.pi)
-        tt = np.linspace(0, 2 * math.pi, n, endpoint=False)
-        Q = r * np.stack([np.cos(tt), np.sin(tt)], 1)
-        so_s = so
-        if cap is not None and s < cap[0]:      # over the cap the sleeve sits as far off the arm as the yoke
-            so_s = cap[1] + (so - cap[1]) * (s / cap[0])
-        Hb = offset_convex(H, so_s)
-        if not solidify.in_poly(Hb, Q).all():
-            Q = resample_loop(hull(np.vstack([Q, Hb])), n)
+        # O8 and C4: below the cap the arm's section grown to the pattern's width; over the cap the
+        # stand-off grows from 3 mm at the shoulder point to the biceps line's along a quarter-sine
+        if cap is not None and s < cap[0]:
+            e = so + (cap[1] - so) * math.sin(math.pi / 2 * max(s, 0.0) / cap[0])
+            Q = resample_loop(offset_convex(H, e), n)
+        else:
+            Q = resample_loop(grow(H, G(s), so), n)
         rings.append(c + Q[:, :1] * e1 + Q[:, 1:] * e2)
         axes.append(ax)
     return tube(align3d(rings), name, axes)
+
+
+def biceps_ease(B, mask, axis_pts, h, girth, so):
+    """The sleeve's ease at the biceps line (the cap height): (sleeve width - arm girth) / 2 pi."""
+    A = np.asarray(axis_pts, float)
+    seg = np.linalg.norm(np.diff(A, axis=0), axis=1)
+    cs = np.concatenate([[0], np.cumsum(seg)])
+    k = min(int(np.searchsorted(cs, h, side="right")) - 1, len(A) - 2)
+    c = A[k] + (h - cs[k]) / seg[k] * (A[k + 1] - A[k])
+    ax = (A[k + 1] - A[k]) / seg[k]
+    sl = B.plane_section(mask, c, ax)
+    sl = sl[np.linalg.norm(sl - c, axis=1) < 0.15]
+    e1 = np.cross(ax, [0, 0, 1.0]); e1 /= np.linalg.norm(e1); e2 = np.cross(ax, e1)
+    H = hull(np.stack([(sl - c) @ e1, (sl - c) @ e2], 1))
+    return max((girth - perimeter(H)) / (2 * math.pi), so)
 
 
 def superellipse(x0, x1, y0, y1, p=2.6, n=64):
@@ -320,8 +370,9 @@ def trousers(B, P):
     for side, sgn in (("R", -1), ("L", 1)):
         lmask = B.legs & (np.sign(V[:, 0]) == sgn)
 
-        def centre(z):
-            return hull(B.section(lmask, z)).mean(0)
+        def centre(z):                           # the middle of the leg's extremes at that height
+            H = hull(B.section(lmask, z))
+            return 0.5 * (H.min(0) + H.max(0))
         ck, ca = centre(z_knee), centre(0.10)
         rings = []
         rk = LG(z_knee) / (2 * math.pi)
@@ -332,8 +383,9 @@ def trousers(B, P):
         sy_f = float(S0[:, 1].min())
         for z in np.arange(z_seat, P["trouser_hem_back_z"] - 0.03, -0.005):
             if z <= z_knee:
-                t = (z_knee - z) / (z_knee - 0.10)
-                c = ck + t * (ca - ck)
+                t = min((z_knee - z) / (z_knee - 0.10), 1.0)
+                # the leg hangs plumb from the knee side to side, and follows the shin front to back
+                c = np.array([ck[0], ck[1] + t * (ca[1] - ck[1])])
                 r = LG(z) / (2 * math.pi)
                 tt = np.linspace(0, 2 * math.pi, 64, endpoint=False)
                 Q = c + r * np.stack([np.cos(tt), np.sin(tt)], 1)
@@ -346,13 +398,20 @@ def trousers(B, P):
                 y_b = ky_b + f * (back_y - ky_b)
                 Q = superellipse(x_in, x_out, y_f, y_b, p=2.0 + 0.6 * f)
                 Q[:, 0] *= sgn
-            S = B.section(lmask, z)
+            S = B.section(lmask, z) if z >= 0.12 else np.zeros((0, 2))   # below 0.12 the foot is not the leg (C2)
             if len(S) >= 3:                       # O1: never closer than the stand-off
                 Hb = offset_convex(hull(S), so)
                 if not solidify.in_poly(Hb, Q).all():
                     Q = resample_loop(hull(np.vstack([Q, Hb])), 64)
             rings.append(np.c_[Q, np.full(len(Q), z)])
         legs[side] = rings
+    # from the fork up to the seat line the trousers are one section round both legs (O10)
+    crotch = []
+    for z in np.arange(z_fork, z_seat - 1e-6, 0.005):
+        k = int(round((z_seat - z) / 0.005))
+        Q = hull(np.vstack([legs["L"][k][:, :2], legs["R"][k][:, :2]]))
+        crotch.append(np.c_[resample_loop(Q, 96), np.full(96, z)])
+    seat = crotch + seat
     return seat, legs
 
 
@@ -370,8 +429,9 @@ def build(P, ver):
     for side, sgn in (("R", -1), ("L", 1)):
         ax = [np.array(p) * np.array([sgn, 1, 1]) for p in P["arm_axis_L"]]
         mask = B.arm & (np.sign(V[:, 0]) == sgn)
+        e_h = biceps_ease(B, mask, ax, P["sleeve_seam_from_s"], P["sleeve_biceps_m"], so)
         parts["sleeve_" + side] = limb_tube(B, mask, ax, P["sleeve_girths"], P["sleeve_s_top"], P["sleeve_s_cuff"] + 0.02, so,
-                                            name="sleeve_" + side, cap=(P["sleeve_seam_from_s"], P["yoke_offset_m"]))
+                                            name="sleeve_" + side, cap=(P["sleeve_seam_from_s"], e_h))
         sleeves[side] = parts["sleeve_" + side][0].reshape(-1, 64, 3)
         n_, C_, A_ = RING_META["sleeve_" + side]
         kc = int(round((P["sleeve_s_cuff"] - P["sleeve_s_top"]) / 0.01))
@@ -386,8 +446,18 @@ def build(P, ver):
     lo, hi = allj.min(0) - 0.05, allj.max(0) + 0.05
     gj = solidify.Grid(lo, hi, h)
     gj.add_slices(parts["jumper_body"][0].reshape(-1, 96, 3))
-    dist = np.where(V[up, 2] < nl[up], P["yoke_offset_m"], so)
-    gj.add_near(V, B.N, up, dist)
+    below = up & (V[:, 2] < nl + 0.004)
+    zr = np.clip((V[below, 2] - P["jumper_underarm_z"]) / P.get("yoke_ramp_m", 0.05), 0, 1)
+    # C7: near the neck the yoke's ease tapers to the rib's 3 mm at the seam over the last 8 cm
+    seam = neck_rib_sheet(P, m=1)
+    ds = cKDTree(seam).query(V[below])[0]
+    zn = np.clip(ds / P.get("neck_taper_m", 0.08), 0, 1)
+    dist = so + (P["yoke_offset_m"] - so) * np.minimum(zr, zn)   # in over 5 cm above the underarm, out near the neck
+    gj.add_near(V, B.N, below, dist, ceiling=lambda X: neck_ceiling(X, P),   # the yoke stops at the neckline seam
+                zscale=P.get("yoke_zscale", 3.0))                         # and is grown sideways (O3), resting on top
+    gj.add_wall(neck_rib_sheet(P), P.get("rib_thickness_m", 0.004))
+    rib_zone = up & (V[:, 2] >= nl - 0.004) & (V[:, 2] < top) & (np.abs(V[:, 0]) < P["neck_point"][0] + 0.02)
+    gj.add_near(V, B.N, rib_zone, np.full(rib_zone.sum(), so))        # the rib hugs the neck inside it
     gj.finish(P.get("blur_m", 0.004))
     gs = []
     for side in ("R", "L"):
@@ -416,13 +486,16 @@ def build(P, ver):
     gt.finish(P.get("blur_m", 0.004))
     TV, TF = gt.surface()
     TV, TF = solidify.clip_open(TV, TF, np.array([0, 0, P["trouser_waist_z"]]), np.array([0, 0, 1.0]))
-    TV, TF = solidify.clip_open(TV, TF, np.array([0, yb, zb_]), -np.array([0, k, 1.0]) / math.hypot(k, 1.0))
+    # T27: the hem hollowed an inch at the front: one plane from the back of the hem to its front,
+    # set a little low (hem_drop_m) so that its sides also sit near the level hem of the front view
+    zd = P.get("hem_drop_m", 0.0045)
+    TV, TF = solidify.clip_open(TV, TF, np.array([0, yb, zb_ - zd]), -np.array([0, k, 1.0]) / math.hypot(k, 1.0))
 
     import seams as SM
     kc = int(round((P["sleeve_s_cuff"] - P["sleeve_s_top"]) / 0.01))
     S = SM.jumper_seams(P, JV, JF, {sd: r[:kc + 1] for sd, r in sleeves.items()}, lambda X: neckline_z(X, P),
-                        parts["jumper_body"][0].reshape(-1, 96, 3))
-    S.update(SM.trouser_seams(P, TV, legs, seat))
+                        parts["jumper_body"][0].reshape(-1, 96, 3), neck_rib_sheet(P, m=1))
+    S.update(SM.trouser_seams(P, TV, TF, legs, seat))
     out = {"jumper_V": JV, "jumper_F": JF, "trousers_V": TV, "trousers_F": TF}
     for kk, (Vk, Fk) in parts.items():
         out[kk + "_PV"], out[kk + "_PF"] = Vk, Fk

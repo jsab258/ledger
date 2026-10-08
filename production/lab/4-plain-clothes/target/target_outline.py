@@ -271,46 +271,78 @@ def union_outline(polys, u0, v0, w, h, res=0.001):
     return max(segs, key=len)
 
 
+def arm_sections(sgn, S, As):
+    """C5: Ron's arm cut square to its axis at each station: the cut points (3D) and the girth (convex hull
+    perimeter in the cutting plane), keeping only that arm's side (as arm_cover_points) and points within
+    10 cm of the axis, and nothing beyond the wrist plane."""
+    tw = (WRIST - ELBOW) / np.linalg.norm(WRIST - ELBOW) * np.array([sgn, 1, 1])
+    Wp = WRIST * np.array([sgn, 1, 1])
+    a, b = V[E[:, 0]], V[E[:, 1]]
+    out_pts, girth = [], np.full(len(S), np.nan)
+    tg = np.gradient(As, axis=0); tg /= np.linalg.norm(tg, axis=1)[:, None]
+    for i in range(len(S)):
+        n = tg[i]
+        da, db = (a - As[i]) @ n, (b - As[i]) @ n
+        m = (da * db) < 0
+        t = da[m] / (da[m] - db[m])
+        P = a[m] + t[:, None] * (b[m] - a[m])
+        z = P[:, 2]
+        keep = (np.linalg.norm(P - As[i], axis=1) < 0.10) & np.where(z < 1.30, sgn * P[:, 0] > arm_line(z), sgn * P[:, 0] > 0.19)
+        keep &= ((P - Wp) @ tw) <= 1e-4
+        P = P[keep]
+        out_pts.append(P)
+        if len(P) >= 6:
+            u = np.cross(n, [0, 0, 1.0]); u /= np.linalg.norm(u); w = np.cross(n, u)
+            try:
+                girth[i] = per(hull(np.c_[(P - As[i]) @ u, (P - As[i]) @ w]))
+            except Exception:
+                pass
+    return out_pts, girth
+
+
 def sleeve_outline(view_axes, sides):
     """C1/C4/O8: the sleeve from the shoulder point to the cuff, one side at a time in each view.
     At each station s along the arm's axis the sleeve edge stands off the arm's own covered points
-    (their furthest reach on that side, within +-1.5 cm of s) by an ease e(s):
+    (C5: the arm cut square to its axis at s, its furthest reach on that side) by an ease e(s):
       cap (s < cap height h, C4): e = 3 mm + (e_h - 3 mm) * sin(pi/2 * s/h), a quarter-sine from the
         shoulder point to the biceps line, so the cap's girth grows smoothly to the biceps width (J21);
-      below the cap: e = max(3 mm, (pattern width - arm girth) / 2 pi) (O8).
+      below the cap: e = max(3 mm, (pattern width - Ron's arm girth at s) / 2 pi) (O8, C5).
     Then joined with the arm's covered points grown by 3 mm, chunk by chunk (C1), so it is never inside
     the arm + 3 mm (O1); the cuff end is the wrist plane that also ends the covered list (O13)."""
     S, A = sleeve_axis()
     h = JT["sleeve_cap_height"] / 100
-    hw, hd = sleeve_half_widths(S)
-    ax, ay = np.interp(S, ARM_S, ARM_AX), np.interp(S, ARM_S, ARM_AY)
-    ease = (hw - ax) if view_axes == (0, 2) else (hd - ay)
-    e_h = float(np.interp(h, S, ease))
-    e = np.where(S < h, T + (e_h - T) * np.sin(np.pi / 2 * np.clip(S / h, 0, 1)), ease)
+    W = sleeve_radius(S) * 2 * np.pi                                  # pattern width at each station
     polys = []
     for sgn in sides:
         As = A * np.array([sgn, 1, 1])
+        secs, girth = arm_sections(sgn, S, As)                       # C5: Ron's own arm girth, square to the axis
+        ease = np.maximum(T, (W - girth) / (2 * np.pi))               # O8 / O2
+        ok = ~np.isnan(ease)
+        ease = np.interp(S, S[ok], ease[ok])
+        e_h = float(np.interp(h, S, ease))
+        e = np.where(S < h, T + (e_h - T) * np.sin(np.pi / 2 * np.clip(S / h, 0, 1)), ease)   # C4 cap
         P = arm_cover_points(sgn)
         sp = axis_param(P, As, S)
         P2 = As[:, list(view_axes)]
         t2 = np.gradient(P2, axis=0); t2 /= np.linalg.norm(t2, axis=1)[:, None] + 1e-12
         n2 = np.stack([-t2[:, 1], t2[:, 0]], 1)
         Q = P[:, list(view_axes)]
-        plus, minus = np.zeros(len(S)), np.zeros(len(S))
-        fallback = (hw if view_axes == (0, 2) else hd) - ease
+        plus, minus = np.full(len(S), np.nan), np.full(len(S), np.nan)
         for i in range(len(S)):
-            m = np.abs(sp - S[i]) < 0.015
-            if m.sum() >= 3:
-                q = (Q[m] - P2[i]) @ n2[i]
-                plus[i], minus[i] = max(q.max(), 0.0), max(-q.min(), 0.0)
-            else:
-                plus[i] = minus[i] = fallback[i]
-        ker = np.ones(3) / 3
-        plus = np.maximum(np.convolve(np.pad(plus, 1, mode="edge"), ker, "valid"), plus) + e
-        minus = np.maximum(np.convolve(np.pad(minus, 1, mode="edge"), ker, "valid"), minus) + e
+            C = secs[i]
+            if len(C) < 3:                                           # no clean cut (the cap): the covered points near s
+                m = np.abs(sp - S[i]) < 0.0075
+                if m.sum() < 3:
+                    continue
+                C = P[m]
+            q = (C[:, list(view_axes)] - P2[i]) @ n2[i]
+            plus[i], minus[i] = max(q.max(), 0.0), max(-q.min(), 0.0)
+        ok = ~np.isnan(plus)
+        plus = np.interp(S, S[ok], plus[ok]) + e
+        minus = np.interp(S, S[ok], minus[ok]) + e
         polys.append(np.vstack([P2 + n2 * plus[:, None], (P2 - n2 * minus[:, None])[::-1]]))
-        for s0 in np.arange(-0.03, S[-1] + 0.03, 0.015):                   # C1 safety: arm + 3 mm
-            m = (sp >= s0) & (sp < s0 + 0.03)
+        for s0 in np.arange(-0.015, S[-1] + 0.015, 0.0075):                # C1 safety: arm + 3 mm, 1.5 cm chunks
+            m = (sp >= s0) & (sp < s0 + 0.015)
             if m.sum() >= 3:
                 try:
                     polys.append(offset(hull(Q[m]), T))
@@ -333,23 +365,53 @@ def zs(a, b, step=0.005):
     return np.arange(a, b + 1e-9, step)
 
 
+def neck_ring(n=41):
+    """The neckline seam (J10-J12 on Ron): neck points at the sides, back neck and front seam at the centre."""
+    th = np.linspace(0, 2 * np.pi, n)
+    return np.array([[NECK_PT[0] * math.sin(a), (BACK_NECK[1] + FRONT_NECK_SEAM[1]) / 2 + (BACK_NECK[1] - FRONT_NECK_SEAM[1]) / 2 * math.cos(a),
+                      NECK_PT[2] - (NECK_PT[2] - (BACK_NECK[2] if math.cos(a) > 0 else FRONT_NECK_SEAM[2])) * abs(math.cos(a)) ** 1.5] for a in th])
+
+
 def jumper_views():
     zb = zs(Z_HEM, Z_UNDER)
     X = np.array([ext(jumper_body(z)) for z in zb])
     zy = zs(Z_UNDER, SH_PT[2])
     Y = np.array([yoke_ext(z) for z in zy])
-    # the top edge (O3): shoulder contour + ease, then the neck rib standing 2.5 cm on the neckline
+    # C7: the neck region from what the rules build: the yoke up to the neckline seam (O3, the ease tapering
+    # to 3 mm at the seam over the last 8 cm, judgement), and the rib as a band 2.5 cm tall standing on the
+    # seam (J14), both projected into each view and joined with the body by a 1 mm union.
     rib = pat["jumper_rules"].get("J14 neck rib depth (judgement)", 2.5) / 100
-    top_front = [(SH_PT[0] + D_CHEST, SH_PT[2] + D_CHEST), ((SH_PT[0] + NECK_PT[0]) / 2, 1.648 + D_CHEST), (NECK_PT[0] + T, NECK_PT[2] + rib),
-                 (0.0, BACK_NECK[2] + rib)]
-    right = [(x[1], z) for x, z in zip(X, zb)] + [(y[1], z) for y, z in zip(Y, zy)] + top_front
-    front = right + [(-x, z) for x, z in reversed(right[:-1])]
-    # side view: y extents; top: front neck rib, side neck point, back neck rib
+    right = [(x[1], z) for x, z in zip(X, zb)] + [(y[1], z) for y, z in zip(Y, zy)]
+    front = right + [(-x, z) for x, z in reversed(right)]
     yb = [(x[2], z) for x, z in zip(X, zb)] + [(y[2], z) for y, z in zip(Y, zy)]
     yk = [(x[3], z) for x, z in zip(X, zb)] + [(y[3], z) for y, z in zip(Y, zy)]
-    top_side = [(FRONT_NECK_SEAM[1] - T, FRONT_NECK_SEAM[2] + rib), (NECK_PT[1], NECK_PT[2] + rib), (BACK_NECK[1] + T, BACK_NECK[2] + rib)]
-    side_body = yb + [p for p in top_side if p[1] > yb[-1][1] - 1] + list(reversed(yk))
-    side_body = [p for p in yb] + top_side + list(reversed(yk))
+    side_body = yb + list(reversed(yk))
+    ring3 = neck_ring(181)
+    cv = cover()["jumper"]
+    Pn = V[cv]; Pn = Pn[Pn[:, 2] > SH_PT[2] - 0.06]
+    dn = np.min(np.linalg.norm(Pn[:, None, :] - ring3[None, ::4, :], axis=2), axis=1)
+    en = T + (D_CHEST - T) * np.clip(dn / 0.08, 0, 1)
+    def neck_polys(ax):
+        out = []
+        for i in range(len(ring3) - 1):                                   # the rib band, quad by quad
+            a, b = ring3[i], ring3[i + 1]
+            q = np.array([a, b, b + [0, 0, rib], a + [0, 0, rib]])[:, list(ax)]
+            if np.ptp(q[:, 0]) > 1e-6 or np.ptp(q[:, 1]) > 1e-6:
+                out.append(q)
+        Q = Pn[:, list(ax)]
+        for u0 in np.arange(Q[:, 0].min() - 0.01, Q[:, 0].max() + 0.01, 0.005):   # the yoke top, 1 cm chunks
+            m = (Q[:, 0] >= u0) & (Q[:, 0] < u0 + 0.01)
+            if m.sum() >= 3:
+                C = (Q[m][:, None, :] + en[m][:, None, None] * CIRC[None]).reshape(-1, 2)
+                out.append(hull(C))
+        return out
+    def joined(base, ax):
+        polys = [np.asarray(base)] + neck_polys(ax)
+        Pall = np.vstack(polys)
+        u0, v0 = Pall[:, 0].min() - 0.01, Pall[:, 1].min() - 0.01
+        return union_outline(polys, u0, v0, Pall[:, 0].max() - u0 + 0.01, Pall[:, 1].max() - v0 + 0.01)
+    front = joined(front, (0, 2))
+    side_body = joined(side_body, (1, 2))
     # sleeves
     S, A = sleeve_axis()
     r = sleeve_radius(S)
@@ -406,7 +468,7 @@ def trouser_views():
     front = outer_R + list(reversed(outer_L)) + inner_L + list(reversed(inner_R))
     fr = [(min(a[2], b[2]), z) for a, b, z in zip(LR, LL, zl)] + [(t[2], z) for t, z in zip(TO, zt)]
     bk = [(max(a[3], b[3]), z) for a, b, z in zip(LR, LL, zl)] + [(t[3], z) for t, z in zip(TO, zt)]
-    fr[0] = (fr[0][0], Z_HEM_T + 0.0254)          # O11 the front of the hem 1 in higher (T27)
+    fr = [(fr[0][0], Z_HEM_T + 0.0254)] + [p for p in fr[1:] if p[1] > Z_HEM_T + 0.0254]   # O11/C6: front of the hem 1 in higher, no spike
     side = fr + list(reversed(bk))
     return dict(front=[np.array(front)], side=[np.array(side)], LR=LR, LL=LL, zl=zl, TO=TO, zt=zt)
 

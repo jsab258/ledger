@@ -1,0 +1,183 @@
+{
+ "model": "F:/LedgerTools/lab/clothes/clothes_v10.npz",
+ "tolerance_mm": 10.0,
+ "poke_through": {
+  "jumper": {
+   "covered_points": 10318,
+   "through": 2,
+   "outside_solid": 0,
+   "outside_surface": 2,
+   "closest_gap_mm": -0.1,
+   "worst_mm": 42.0
+  },
+  "trousers": {
+   "covered_points": 7069,
+   "through": 10,
+   "outside_solid": 9,
+   "outside_surface": 10,
+   "closest_gap_mm": 0.0,
+   "worst_mm": 15.2
+  }
+ },
+ "trousers_through_jumper": {
+  "trouser_points_under_jumper": 11720,
+  "through": 0
+ },
+ "outline": {
+  "jumper_front": {
+   "iou": 0.9751,
+   "mean_mm": 3.31,
+   "p95_mm": 10.0,
+   "max_mm": 14.42,
+   "ok": false
+  },
+  "jumper_side": {
+   "iou": 0.9788,
+   "mean_mm": 2.35,
+   "p95_mm": 10.0,
+   "max_mm": 16.0,
+   "ok": false
+  },
+  "jumper_back": {
+   "iou": 0.9751,
+   "mean_mm": 3.31,
+   "p95_mm": 10.0,
+   "max_mm": 14.42,
+   "ok": false
+  },
+  "trousers_front": {
+   "iou": 0.9778,
+   "mean_mm": 2.29,
+   "p95_mm": 8.0,
+   "max_mm": 15.62,
+   "ok": false
+  },
+  "trousers_side": {
+   "iou": 0.9822,
+   "mean_mm": 1.82,
+   "p95_mm": 7.21,
+   "max_mm": 18.97,
+   "ok": false
+  },
+  "trousers_back": {
+   "iou": 0.9778,
+   "mean_mm": 2.29,
+   "p95_mm": 8.0,
+   "max_mm": 15.62,
+   "ok": false
+  }
+ },
+ "seams": {
+  "side_seam_L": {
+   "max_mm": 174.0,
+   "mean_mm": 108.2,
+   "ok": false
+  },
+  "shoulder_seam_L": {
+   "max_mm": 13.8,
+   "mean_mm": 7.9,
+   "ok": false
+  },
+  "armhole_seam_L": {
+   "max_mm": 78.4,
+   "mean_mm": 17.5,
+   "ok": false
+  },
+  "sleeve_underarm_seam_L": {
+   "max_mm": 134.7,
+   "mean_mm": 45.4,
+   "ok": false
+  },
+  "cuff_edge_L": {
+   "max_mm": 13.7,
+   "mean_mm": 7.5,
+   "ok": false
+  },
+  "side_seam_R": {
+   "max_mm": 165.4,
+   "mean_mm": 98.8,
+   "ok": false
+  },
+  "shoulder_seam_R": {
+   "max_mm": 14.0,
+   "mean_mm": 8.3,
+   "ok": false
+  },
+  "armhole_seam_R": {
+   "max_mm": 78.6,
+   "mean_mm": 17.1,
+   "ok": false
+  },
+  "sleeve_underarm_seam_R": {
+   "max_mm": 133.5,
+   "mean_mm": 45.6,
+   "ok": false
+  },
+  "cuff_edge_R": {
+   "max_mm": 14.5,
+   "mean_mm": 7.6,
+   "ok": false
+  },
+  "neck_rib_seam": {
+   "max_mm": 46.9,
+   "mean_mm": 21.0,
+   "ok": false
+  },
+  "hem_edge": {
+   "max_mm": 50.0,
+   "mean_mm": 6.2,
+   "ok": false
+  },
+  "hem_rib_top": {
+   "max_mm": 33.1,
+   "mean_mm": 5.1,
+   "ok": false
+  },
+  "outseam_L": {
+   "max_mm": 50.7,
+   "mean_mm": 7.8,
+   "ok": false
+  },
+  "inseam_L": {
+   "max_mm": 49.8,
+   "mean_mm": 5.9,
+   "ok": false
+  },
+  "hem_L": {
+   "max_mm": 17.6,
+   "mean_mm": 10.3,
+   "ok": false
+  },
+  "outseam_R": {
+   "max_mm": 51.7,
+   "mean_mm": 7.2,
+   "ok": false
+  },
+  "inseam_R": {
+   "max_mm": 44.6,
+   "mean_mm": 5.1,
+   "ok": false
+  },
+  "hem_R": {
+   "max_mm": 17.4,
+   "mean_mm": 9.1,
+   "ok": false
+  },
+  "waistband_lower_edge": {
+   "max_mm": 78.1,
+   "mean_mm": 6.1,
+   "ok": false
+  },
+  "waistband_top_edge": {
+   "max_mm": 54.4,
+   "mean_mm": 6.9,
+   "ok": false
+  },
+  "crotch_seam_front_to_back": {
+   "max_mm": 81.7,
+   "mean_mm": 30.5,
+   "ok": false
+  }
+ },
+ "pass": false
+}
