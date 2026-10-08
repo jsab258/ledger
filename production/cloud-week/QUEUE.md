@@ -18,7 +18,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 ## 2. Exact targets, one per family (production/research/asset-plan/SUMMARY.md)
 
-- 2.1 in progress (8 Oct 22:24; written 23:01, self-check 230 of 231, now under its fresh target review). Front door (from the lab's set-aside door and its target on branch lab).
+- 2.1 in progress (8 Oct 22:24; written 22:49, self-check 230 of 231, now under its fresh target review). Front door (from the lab's set-aside door and its target on branch lab).
 - 2.2 open. Shopfronts (Rita's is the model; the other eleven by kind).
 - 2.3 open. Railings.
 - 2.4 open. Bollards.
@@ -26,7 +26,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 - 2.6 open. The pillar box.
 - 2.7 open. Kerbs and drain covers.
 - 2.8 open. Lamp posts.
-- 2.9 in progress (8 Oct 22:43). Shop fascia signs.
+- 2.9 in progress (8 Oct 22:43; written 23:06, self-check 158 of 158, now under its fresh target review). Shop fascia signs.
 - 2.10 open. Posters and notices.
 - 2.11 in progress (8 Oct 22:38; ahead of 2.2 to 2.10, which wait for photographs the network refuses). Wear: stains, grime, gum, cracked render.
 
