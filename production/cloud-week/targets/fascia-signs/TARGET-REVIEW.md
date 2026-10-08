@@ -220,3 +220,97 @@ The 165 checks cover only cap, width, safe-zone fit, contrast, face colour, shad
 - **The wear model.** Its shape is measured, its amount is honest Judgement, and the classes are sensible.
 - **Variety of fonts, grounds and constructions** is real and checked pairwise.
 - **The self-check** re-reads its printed sources. It reports its departures from the sheet and from P1 openly instead of hiding them.
+
+## Re-review (try 2)
+
+FAIL
+
+**2 faults.** Both are narrow and each has an exact amendment below. All 13 faults of the first review are truly answered (table below). If the two amendments are made, nothing else I found would stop a pass.
+
+### How it was tested
+
+- **The amendment.** I read the amended TARGET.md whole (sections 0 to 13, with the writer's answers in sections 11 and 12), target.json, pixel_checks.py and the self-check's output.
+- **Scratch copy.** I made a scratch copy of the folder and its previews, with links back to the repository for everything else, and ran every script there. The real target and previews were byte-for-byte unchanged afterwards (md5), and no cache folder was left behind.
+- **Self-check.** `self_check.py --fonts …`: 296 of 296 pass, 6 reported, as the writer said.
+- **Drawing.** `target_drawing.py`: 10 boards and 4 projecting signs. I looked at the hanging signs' side elevations.
+- **Left and right, against the export code.** terrace-front.py about lines 7926 to 7946 says the street is reflected y to −y at export, and lettered faces take UVs "running from the reader's left to the reader's right in the reflected street". Line 6616 shows the text meshes are pre-mirrored. Line 560 is `BAY_DOORS_ON`, and lines 2127 to 2180 give the west blocks' half turn. production/specs/mickeys-office.json gives `door.x` 4.65.
+- **Left and right, in the game.** In shop-fronts-whole-2026-10-08.jpg the empty unit's, the fish shop's and Mickey's doors are at the right of their windows (low x) and Rita's at the left (high x), exactly as the new door-end table says. morning-hook-day-2026-10-08.jpg agrees.
+- **The mapping holds:**
+  - East: low street x on the viewer's right. West: low street x on the viewer's left.
+  - MICKEY’S at board x 4055 is over the door.
+  - Every hanging sign has a street x and the right side words.
+  - Every glass row stands at its own door or window end.
+- **Independent renders.** I wrote my own renderer of target.json, separate from pixel_checks' `synthetic_board`. It sizes each font from its own measured H, pens are kerned, ink is measured on the pixels, and it adds the full hand-jitter spec (baseline, advance, rotation, stroke), block shades, ghosts and seeded wear at each shop's stated loss, runs, gull marks and grime. Its ink boxes agree with target.json within 1 mm on every block except the Tea Rooms name (fault 1d).
+- **Testing pixel_checks.py on deliberately wrong boards:**
+  - **Mirrored:** all 8 lettered boards caught.
+  - **Shifted:** 20 and 30 mm caught. 8 and 12 mm pass on the newsagent, which is inside the stated ±15 mm and is invisible from the street.
+  - **Wrong font:** all six caught: Jost for Josefin Sans, Oswald for Libre Franklin, Abril Fatface for Old Standard TT, Jost for Libre Franklin, Old Standard for Fraunces, Libre Franklin for Oswald.
+  - **Wrong words:** caught: IRONMONGERS, IRONMOGNER, RITAS, PAWNBROKERS, LAUNDRETTE, PROVISIOMS, NEWSAGENTS, NEWSAGENCY, Tea Room, Tea Rooma, and a changed list.
+  - **Not caught by the glyph mask:** a single similar letter (FISH MARKFT, WET FISK, SHIP CHANDLFR) and a straight apostrophe for ’. Spelling is G4's job (an exact match against `approved_words` on the manifest), so this is a note, not a fault.
+- **Content rule and real names in every picture.** I checked all six previews:
+  - The P1 board crop and its overlay now show only the two "23" ends: no business name, window or front.
+  - L1 shows boxes, baselines and small labels.
+  - H1 is the Hook sheet's Mickey's board.
+  - P2 and P3 are plank textures.
+  - Nothing of drink, gambling or children appears. The business's name survives only as a word in `forbidden_patterns` (a list of words that may never appear), which is right.
+  - Every approved string passes canon and the content rule. FISHMONGER and IRONMONGER, the new ghost words, are trade words. The four new trade lines are trade words.
+- **Network.** The same sites were refused as in the first review (Wikimedia, Geograph, Flickr, archive.org, Picture Sheffield, Flashbak), so the 1990 period judgement still rests on the earlier notes.
+
+### Faults
+
+#### 1. The pixel checks fail correct boards, so a board built exactly to the target fails its own gate at random.
+
+The writer tested the checks on one seed, with baseline jitter only and no wear. Across seeds, with the target's whole jitter spec and its wear, correct boards fail. Every figure below comes from the writer's own `synthetic_board` and `check_board` unless it says "my renderer".
+
+**a. G12 (hand jitter) accepts the same band the renderer draws from**, which is SD 0.6 to 1.6 mm (`common_style.hand_jitter.baseline_sd_mm`). It is judged per block, on 5 to 10 flat-bottomed glyphs, so the measured SD scatters widely around the drawn SD.
+- Renderer SD 0.6, the lowest the target allows, 10 seeds: G12 fails on fish_market 10 of 10, chandler 8 of 10, ironmonger 6 of 10.
+- SD 1.0, the middle, 12 seeds: still fails on ironmonger end_r_2 3 of 12 and end_r_1 2 of 12, chandler name 2 of 12, fish name and trade_3 1 of 12 each. Measured SDs ran from 0.25 to 1.57.
+- **Amendment.** Draw the baseline jitter at SD **1.0 mm**, each glyph clipped at ±1.6 mm, so the drawn SD is no longer a range. Judge G12 **per board**, pooling the flat-bottomed glyphs of all its painted and gilded blocks: accept a pooled SD of **0.45 to 2.0 mm**. Vinyl, applied and glass blocks, pooled, must be at most 0.6 mm.
+
+**b. Rita's "5" numerals.** `pos` reads the baseline from the ink bottom when a string has no flat-bottomed glyph. The 5's round bottom overshoots by 2 to 3 mm, so an unjittered render reads 166 against 168, inside the ±3 mm tolerance by 1 mm. With jitter, `ritas.end_l.pos` and `end_r.pos` fail 2 of 40 seeds at SD 1.0, and 2 of 10 at SD 1.6.
+- **Amendment.** For a string with no flat-bottomed glyph, compare the pixel ink bottom with `ink_box_mm[1]` (165 for the 5s), ± 3 mm, not with the baseline.
+
+**c. G10 under the full hand-jitter spec.** The spec also moves each glyph's advance ±1.5 per cent, rotation ±0.35 degrees and stroke ±3 per cent, and the writer's tests leave these out.
+- On my renderer, with all four jitters and the board's wear, the ironmonger's hairline Old Standard name scores F 0.866 to 0.931 over 8 seeds, so 3 of 8 fail at F ≥ 0.90.
+- Every other name passes: 0.95 to 0.99.
+- **Amendment.**
+  - Say that advance jitter does not accumulate: each glyph's pen position is off by at most 1.5 per cent of its own advance from its true pen position, not a running sum.
+  - Dilate painted and gilded blocks **3.5 mm** in G10, up from 2.5. Tested on my renderer: the true ironmonger name then scores 0.930 to 0.968, while the mirrored board (0.344), Abril Fatface in its place (0.717) and a 20 mm shift (0.597) still fail.
+  - Add to self-check group 8: all four jitters together, plus each board's stated wear, 20 seeds a board, with **no** false failure allowed. The mirrored, ±20 mm shifted and wrong-font cases must still fail.
+
+**d. The Tea Rooms cap is defined two ways.** `tea_rooms.name.cap` measures "the T of Tea Rooms" at 200 mm. But the block's size (285.31 px a em) comes from Fraunces' **H**. At the target's axes the T is 2.4 per cent taller than the H (718 against 701 at 1000 px), so at that size the T is 204.8 mm.
+- A builder who sets the T to 200 mm, as the words say, draws the name 2.4 per cent small, and G10 fails it: F 0.871, on every seed.
+- **Amendment.** Size the Tea Rooms name by its H like every other block: 285.31 px a em, cap_mm 200 meaning the H. Change the cap check's words to "H-height 200 mm (the T then measures 204.8 mm)".
+
+#### 2. The grocer's street number is on a side door the grocer does not have.
+
+- **Where.** `glass_lettering` puts "11" on the grocer's "side-door fanlight" at street x 38.18.
+- **The recipe.** Bay 5 has no side door: terrace-front.py lines 562 to 566, `BAY_WITHOUT_SIDE_DOOR = 5` ("the grocer whose upper flat is reached from the rear yard", the spec's section 4 item 2). So a script has no fanlight to put it on, or invents one.
+- **Amendment.** "11" goes on the **shop door's fanlight**, centred on the shop door's own street x as the recipe places it (its high end, `doors_on` right). Or delete the row under V3.
+
+### The first review's 13 faults
+
+| # | Answered? | What I checked |
+|---|---|---|
+| 1 axis | yes | export code, door-end table, both 8 Oct frames, D6 reads `mickeys-office.json`; name at 4055 over the door; hanging signs and glass rows by street x |
+| 2 texture or geometry | yes | `geometry` for Mickey's letters (cap 0.330, 14 mm, centre street x 4.65), both box signs with depth, returns and `face_texture_rect_mm`, the tea panel; height map ±1.27 mm holds every relief; G9's applied entry gone, G17 added |
+| 3 checks | yes, but see new fault 1 | `pos`, `mask`, `mirror` read pixels and catch mirroring, shifts over 15 mm, wrong fonts and wrong words; G13 to G17 are specified (pixel_checks.py implements pos, mask, mirror, width, face and jitter only; the rest are 4.1's to write from their specs) |
+| 4 ghosts | yes | exact words, fonts, sizes, colours and broken shares; trade words only |
+| 5 one designer | yes | nine layout classes, one dotted trade line, G11; my render shows ten different boards |
+| 6 heritage lean | yes | two lit box signs, the brown caff panel, the 1930s glass; duck-egg gone |
+| 7 two dark boards | yes | fish board pale (196,202,206), red with a black shade; least ground dE 14.8 |
+| 8 dots | yes | deleted with the duck-egg board |
+| 9 mounts | yes | brackets on the brick above the cornice (plate foot 3.60, arm 3.75); drops lengthened; lowest points computed; the side elevations agree |
+| 10 grocer's glass | yes | three slabs, joints at 1380 and 4030, name inside the middle slab, no crack, method stated |
+| 11 baked frame | yes | no lighting in the base colour; mouldings in the height map; G2 reads it |
+| 12 dead tube | yes | upper row only, x 3300 to 4800, at 60 per cent; tube-end shadows |
+| 13 drink in a preview | yes | the front-scale picture is gone; P1 shows only the board's ends |
+
+### Notes (not blocking)
+
+1. **G10 is not a spelling check.** One similar wrong letter, or ' for ’, passes it. Say in section 8 that spelling rests on G4's exact match against the manifest.
+2. **Mickey's texture is not read by any pixel check.** Its only in-texture block is the ghost. If 4.1 also painted the name into the texture, only the manifest count in G17 would notice. Add a pixel check: no pixel within dE 14 of `brass_gilt` in Mickey's texture.
+3. **G13 to G17 have no reference implementation.** G13 (wear counts), G14 (ghosts), G15 (hanging signs), G16 (glass), G17 (geometry), G2 (moulding) and the emissive checks are specified, but pixel_checks.py does not implement them. 4.1 writes them from their specs.
+4. **One wrong sentence.** TARGET.md section 9 says "No file, folder or JSON string names the business". The forbidden list does, which is correct. Change the sentence.
+5. **The laundry box's tube ends.** The tube joints at 300, 1800, 3300 and 4800 leave 131 to 300 mm and 4800 to 5279 mm of the face with no tube stated. Say whether the end lengths are lit by shorter tubes or 12 per cent dimmer, as the first try had it.
+6. **Still open, as the target says.** The non-power-of-two texture size (check the 5.8.2 source first), the newsagent and ironmonger positions against the cast, Hal's shop and the count of ten against twelve, MINICABS · 24 HOURS against the cast's hours, and every Judgement in section 11.

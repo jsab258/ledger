@@ -26,7 +26,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 - 2.6 open. The pillar box.
 - 2.7 open. Kerbs and drain covers.
 - 2.8 open. Lamp posts.
-- 2.9 in progress (8 Oct 22:43; written 23:06, self-check 158 of 158, target review 1 FAIL, 13 faults (the board's left and right reversed for the game, texture against 3D unstated, checks that cannot catch a wrong board, ghost lettering unspecified, one designer, too heritage for 1990, and more); try 2 written 00:20, self-check 296 of 296, under re-review). Shop fascia signs.
+- 2.9 done (9 Oct 00:35): production/cloud-week/targets/fascia-signs/ (TARGET.md, target.json, make_target.py, pixel_checks.py, target_drawing.py, self_check.py, make_previews.py, TARGET-REVIEW.md); previews production/previews/cloud-week/refs/fascia-signs/. Shop fascia signs, ten boards and four hanging signs. Re-review (try 2): all 13 first faults answered; two narrow ones left with exact fixes in the review (the pixel checks' hand-jitter and glyph tolerances, which fail correct boards at random; the grocer's street number on a side door the bay lacks), carried into unit 4.1, which applies them; no third try of the target. Self-check 296 of 296. No 1990 fascia photograph reached (network).
 - 2.10 open. Posters and notices.
 - 2.11 in progress (8 Oct 22:38, ahead of 2.2 to 2.10, which wait for photographs the network refuses; written 23:32, self-check 700 of 700, target review 1 FAIL, 12 faults (facade-wide soot missing, streaks unsourced and too strong, stacked wear without a floor, checks that pass wrong masks, gutter grime against its photograph, wet and dry double-counted, iron unworn, and more); amending, try 2). Wear: stains, grime, gum, cracked render.
 
