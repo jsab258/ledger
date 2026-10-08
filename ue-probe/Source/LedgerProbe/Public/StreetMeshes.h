@@ -388,6 +388,8 @@ namespace LedgerStreet
 		// THE WET ROAD'S WATER LEVEL, day and night (8 October; tools/ue/make_base_material.py
 		// WATER_PARAM): how much of the asphalt holds standing water; 0 keeps the old film.
 		double WaterLevelDay;
+		// THE DAY CAMERA'S WHITE BALANCE in kelvin (8 October); 0 leaves the engine's 6,500.
+		double WhiteTempDay;
 		double WaterLevelNight;
 		// A WET SURFACE'S ROUGHNESS FLOOR IN THIS ENGINE, by base material,
 		// where it differs from the recipe's (road 0.05, paving 0.46, kerb 0.40).
@@ -452,7 +454,7 @@ namespace LedgerStreet
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05), GlassSpecularNight(1.0),
-		         GlassCubeStrength(0.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0), SkyTreeClampDeg(0.0), WaterLevelDay(0.0), WaterLevelNight(0.0),
+		         GlassCubeStrength(0.0), GlassCubeSpecular(1.0), GlassCubeSize(256), GlassCubeHeroSize(0), SkyDomeYawDeg(0.0), SkyHorizonClampDeg(0.0), SkyTreeClampDeg(0.0), WaterLevelDay(0.0), WaterLevelNight(0.0), WhiteTempDay(0.0),
 		         bStreetInPlay(false), FogCapGainDay(1.0), FogDensityGainNight(1.0), FogDensityGainDay(1.0), FogStartDayM(0.0), FogCutoffDayM(0.0), LocalHighlightContrastDay(1.0), NightExposurePin(0.0),
 		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
 		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), bLanternRgb(false),
@@ -876,6 +878,8 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 60.0) { Out.SkyTreeClampDeg = V->Num; ++Out.Read; }
 		V = Root.Find("water_level_day");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.WaterLevelDay = V->Num; ++Out.Read; }
+		V = Root.Find("white_temp_day");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 3000.0 && V->Num <= 12000.0) { Out.WhiteTempDay = V->Num; ++Out.Read; }
 		V = Root.Find("water_level_night");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.WaterLevelNight = V->Num; ++Out.Read; }
 		V = Root.Find("street_collision");

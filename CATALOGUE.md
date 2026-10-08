@@ -52,20 +52,21 @@ Beside what they approve (*.approval.json; tools/approvals.py): the story outlin
 
 - atlas-01, atlas-02: above.
 - clothing: garment tests, the clothes rubric (RUBRIC.md), jacket and suit films, footwear and Sheila's pieces.
-- clutter-2026-09-29: ten pieces of 1990 street clutter.
+- clutter-2026-09-29: ten 1990 street clutter pieces.
 - compare: side-by-side frames of the street against references.
-- concept-copper-row-2026-09-10, concept-fairview-2026-09-10: district concepts.
+- concept-copper-row-2026-09-10, concept-fairview-2026-09-10: above.
 - facades: facade drawings and tries.
 - fascia-01: Mickey's fascia package to a real mesh.
 - hair-2026-09-29: a hair study.
 - interiors-2026-09-23: four window interiors (unapproved).
 - lighting: the talk light and evening light tests.
-- mickeys-cars: cars considered for Mickey's (off until convincing).
-- shop-rooms: each shop's room plans and pictures. Its pawnbroker-goods-sources.md: every model in Rita's window and its licence (tools/art-recipes/verify_display_sources.py).
+- mickeys-cars: cars considered (off until convincing).
+- shop-rooms: each shop's room plans and pictures; pawnbroker-goods-sources.md, Rita's window models and licences (verify_display_sources.py).
 - mickeys-props: Mickey's office's hero props, scripted in Blender (tools/art-recipes/mickeys-props/; meshes on F: game-inputs), 6 October.
 - shopfront-kit: the parade's shopfront pieces (pilaster, stallriser, window frame, doors), scripted in Blender (tools/art-recipes/shopfront-kit/), 6 October.
 - sash-window: the lab's box sash, its target amended from photographs (tools/art-recipes/sash-window/), 8 October.
-- south-quay: the street's south end to the atlas (road, quay, basin, jetty, dockside), scripted (tools/art-recipes/south-quay/).
+- brick-colour: the brick and maroon target, from sheet and photographs, measured.
+- south-quay: the street's south end (road, quay, basin, jetty), scripted (tools/art-recipes/south-quay/).
 - ui: the interface's screens.
 
 ## Research (production/research), by subject

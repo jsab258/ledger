@@ -23,8 +23,8 @@
  "surface_gain": {
   "brick_red": [
    1.0,
-   0.85,
-   0.72
+   0.82,
+   0.68
   ],
   "brick_grey": [
    1.142,
@@ -52,9 +52,9 @@
    0.05
   ],
   "paint_stall": [
-   0.55,
-   0.55,
-   0.55
+   0.8,
+   0.8,
+   0.8
   ],
   "paint_door": [
    0.55,
@@ -62,9 +62,9 @@
    0.55
   ],
   "paint_fascia": [
-   0.55,
-   0.55,
-   0.55
+   1.0,
+   1.0,
+   1.0
   ],
   "frame_painted": [
    0.55,
@@ -104,6 +104,8 @@
  "sky_dome_yaw_note": "6 October, item 1.1's first gate: the reverse view, which looks south down Quay Street to the sea, ended 'under outsized background trees': the day photograph's own tree line (belfast_open_field) stood in that direction, taller than the street. Turned a quarter they stood west and showed over the cottages and through Mickey's window. Measured (the photograph's land and trees per 10 degrees of its compass): its trees fill about 140 degrees, rising to 35-50 degrees, and the other 150 degrees stay under 15. So -110: the tree side behind the two-storey east parade, the open side down the street to the sea and to the west.",
  "sky_horizon_clamp_deg": 16.0,
  "sky_tree_clamp_deg": 38.0,
+ "white_temp_day": 7000,
+ "white_temp_day_note": "8 October, his order 2a, try 1 (production/research/aaa-street/BRICK-COLOUR-2026-10-08.md; the target production/art/brick-colour/target.json, measured by its measure_brick.py): the sky photograph lights the street at about 7,300 K and the brick's sheen took its blue, greying the brick pink and the maroons mauve; the day camera balanced at 7,000 K. Night untouched.",
  "water_level_day": 0.0,
  "water_level_night": 0.0,
  "water_level_note": "OFF (0), 8 October, 10:05: tried at 0.40 (large blobby pools, the near lane still one mirror) and 0.28 (pale matte stone with light streaks, no longer dark and glistening); the research's one more try failed and is set aside; the film is back. Was: 8 October (production/research/street-wear/WET-ROAD-2026-10-08.md): the wet asphalt holds standing water only where it is low, its own hollows and broad dips, about 40% of the near road by day and more at night; the rest wet stone, rough, with half its relief. Replaces the road's edge-to-edge film, which mirrored the true sky near-white. 0 brings the film back.",
@@ -134,7 +136,8 @@
  "lantern_linear_rgb_note": "29 September. Low-pressure sodium is one colour, about 589 nm: chromaticity (0.569, 0.430), about linear (1.0, 0.25, 0.0) (production/research/evening-light-1990). The scene file's gamma (1, 0.857, 0) is yellower than the lamp.",
  "lantern_light_y_m": 4.78,
  "lantern_light_y_m_note": "29 September. The lamp's light, metres above the road's crown: 2 cm under the glass of the Blender street's lamp head (tools/art-recipes/lighting-column.py; its lens spans 4.80 to 4.82 m). At the scene file's box height (4.915 m) the light sat inside the head, above the glass, and the head shaded everything under it: the first sodium night lit the upper storeys and left the pavement under each lamp dark.",
- "lantern_pool_lumens": 750,
+ "lantern_pool_lumens": 500,
+ "lantern_pool_lumens_note_8_october": "750 -> 500 (his order of 8 October, 2b: the nearest pool's clipped red back to 2% of the pavement or less; it was 6.1% under the camera a stop up, 4.3% this morning; production/audits/night-2026-10-08/pool_clip.py, the flags under the lamp by Mickey's). Try 1 kept: the flags 1.1 -> 0.5%, the people's legs 15-21% -> 8-10% (this morning 6-7%); the gate's 8.3% had counted the double yellow lines, which clip as paint.",
  "lantern_pool_cone_deg": [
   22,
   46

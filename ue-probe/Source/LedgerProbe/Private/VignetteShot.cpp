@@ -4118,6 +4118,11 @@ namespace
 				// a third at the top of the tone curve): local exposure's highlight contrast, from the look file.
 				PPW.bOverride_LocalExposureHighlightContrastScale = GExposurePinFamilySunOn;
 				PPW.LocalExposureHighlightContrastScale = GExposurePinFamilySunOn ? (float)GLook.LocalHighlightContrastDay : 1.0f;
+				// THE DAY'S WHITE BALANCE, 8 October (production/research/aaa-street/BRICK-COLOUR-2026-10-08.md):
+				// the sky photograph lights the street at about 7,300 K, so a camera balanced for 6,500 K
+				// greyed the brick pink and the maroons mauve; the look file's white_temp_day, by day only.
+				PPW.bOverride_WhiteTemp = GExposurePinFamilySunOn && GLook.WhiteTempDay > 0.0;
+				PPW.WhiteTemp = (GExposurePinFamilySunOn && GLook.WhiteTempDay > 0.0) ? (float)GLook.WhiteTempDay : 6500.0f;
 				const FPostProcessSettings& PP = CC->PostProcessSettings;
 				// ASKED BESIDE READ, PER SHOT, THE WAY THE LIGHT AIM LINE
 				// DOES IT. A value that lands on the game thread and never
@@ -9582,6 +9587,9 @@ namespace LedgerVignetteShot
 			}
 			S.bOverride_AutoExposureBias = !C->SunOn;
 			S.AutoExposureBias = (float)Bias;
+			// and the day's white balance, as the shot camera's (white_temp_day)
+			S.bOverride_WhiteTemp = C->SunOn && GLook.WhiteTempDay > 0.0;
+			S.WhiteTemp = (C->SunOn && GLook.WhiteTempDay > 0.0) ? (float)GLook.WhiteTempDay : 6500.0f;
 		}
 		return FString::Printf(TEXT("%s/sun-%s/lanterns-%s/pin-%.3f/bias-%.2f/volume-%s"), UTF8_TO_TCHAR(Id),
 			C->SunOn ? TEXT("on") : TEXT("off"), C->LanternsOn ? TEXT("on") : TEXT("off"),

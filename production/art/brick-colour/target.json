@@ -1,0 +1,110 @@
+{
+ "made": "8 October 2026, by a fresh helper (not the builder), for the director's order of 8 October: 'Brick saturation on the hook frame into the Hook sheet's 0.53 to 0.65 (now 0.28); the maroon fascias back with it. A fresh helper takes the brick colour from the sheet and the photographs, as with the glazing bar.' His standing ruling: where the sheet (or a book) and the photographs disagree, the photographs win. This file is a TARGET: how the brick and the maroon fascias should READ in the game's hook frame. It proposes no game setting. Measurements, arithmetic and doubts: TARGET-NOTES.md beside this. The method: measure_brick.py beside this (python measure_brick.py [frame.png ...]; --sheet and --photos reprint the sources).",
+ "metric": {
+  "colour_space": "sRGB 0-255 as stored. Photographs carrying a non-sRGB ICC profile are converted to sRGB first (photo-03 and photo-04 are Display P3); the sheet and the game frames carry none and are read as sRGB.",
+  "mean": "the plain mean of every pixel in the region's boxes, pooled (joints included: the wall as it reads)",
+  "S_of_mean": "HSV saturation of the mean colour: (max - min) / max of the mean R, G, B. THE JUDGED NUMBER.",
+  "mean_S": "the mean of per-pixel HSV saturation, (max - min) / max per pixel (0 where max is 0). Reported, not judged; within 0.02 of S_of_mean on every brick region measured.",
+  "hue_deg": "HSV hue of the mean colour, degrees (0 red, 60 yellow; 346 is pink-mauve). Judged.",
+  "V": "HSV value of the mean colour, max / 255. Reported only: brightness is the sky gate's (scratchpad sky_regions.py), not this target's.",
+  "pale_joint_share": "share of pixels whose own saturation is under 0.6 x the region's median saturation (grey or pale mortar, light-catching joints). Reported only. Dark recessed joints (photo-03) are not separable this way. faceS is S_of_mean with those pixels left out.",
+  "boxes": "[x0, y0, x1, y1] in pixels of the image named, origin top left, x1 and y1 exclusive (numpy slicing). The hook boxes are for the 2560 x 1440 hook frame; on another size the script scales them and says so."
+ },
+ "frames": {
+  "now": "F:/LedgerTools/gate/new/sky/2026-10-08-t2/hook-day.png",
+  "this_morning": "F:/LedgerTools/gate/last-good/sky/hook-day.png"
+ },
+ "pass_rule": "A frame passes when every region below has S_of_mean inside its band AND hue_deg inside its band. Nothing else is judged. The brick's distance classes differ because the sheet's own brick loses colour with distance (0.605 near, 0.480 at the parade's second building, 0.427 far); one band for all would ask the far end to be as red as the near corner.",
+ "measured_8_october": {
+  "_how": "measure_brick.py on the two frames; S_of_mean / hue_deg / V",
+  "now": {"brick_near": [0.506, 14.2, 0.489], "brick_parade": [0.406, 13.3, 0.576], "brick_far": [0.340, 13.2, 0.533], "brick_left_terrace": [0.385, 11.2, 0.246], "fascia_maroon": [0.172, 346.9, 0.487], "verdict": "FAIL: every region's saturation under its band; hue under the band on all but the near brick; the fascias pink-mauve"},
+  "this_morning": {"brick_near": [0.605, 17.4, 0.492], "brick_parade": [0.540, 16.8, 0.560], "brick_far": [0.438, 15.2, 0.525], "brick_left_terrace": [0.577, 12.9, 0.224], "fascia_maroon": [0.281, 351.3, 0.335], "verdict": "FAIL: the near and parade brick redder than the photographs allow, the terrace slightly so, the far brick inside; the terrace's hue and the fascias' hue out"},
+  "the_gate's_0.28": "Not reproduced on the near brick (0.506 by this metric). It matches the far parade bays (boxes 2 and 3 of brick_far: 0.300 and 0.305 now, 0.427 and 0.451 this morning against the gate's 0.41), so the gate most likely set far brick against the sheet's near brick."
+ },
+ "regions": {
+  "brick_near": {
+   "what": "The right-hand row's corner house, Mickey's building: its side face (box 1), its front above Mickey's fascia right of the upper window (box 2) and left of it (box 3). Brick only: no window, sill, dish, pipe, eaves or fascia; above the dark wear at the side face's foot.",
+   "boxes": [[2240, 40, 2540, 500], [2015, 40, 2190, 510], [1700, 230, 1880, 500]],
+   "sheet_counterpart": "the near left building (Mickey's) on the sheet, gable and front: sources.sheet.near",
+   "target": {
+    "S_of_mean": [0.53, 0.56],
+    "hue_deg": [13.5, 20.0],
+    "srgb_mean_at_now_brightness": [125, 76, 57],
+    "_srgb": "The bands' middles, S 0.545 and hue 16.75, at the region's V now, 0.489: HSV (16.75, 0.545, 0.489) = 124.7/75.7/56.7. Brightness is not judged; this is the target colour at today's brightness."
+   },
+   "_src": "Floor 0.53: the director's, and the photographs agree: the faces of real red-brick terraces turned to the light read 0.537 to 0.555 (photo-03's front, overcast, three boxes; photo-04's front 0.546). Ceiling 0.56, NOT the director's 0.65: the most saturated plain red-brick wall in the photographs reads 0.555 (photo-03's front; 0.564 with its pale joints left out). The sheet's near brick reads 0.605 pooled and 0.678 in its gable's middle: redder than any photographed wall, so the photographs win. Hue 13.5 to 20: every red-brick box measured, sheet (14.1 to 19.9) and photographs (13.6 to 19.9), rounded outward to the half degree."
+  },
+  "brick_parade": {
+   "what": "The parade's upper wall over Fresh Fish (the building left of Mickey's): left of its first upper window, between that window and the lamp post, right of its second upper window.",
+   "boxes": [[1286, 520, 1308, 660], [1355, 470, 1428, 660], [1490, 430, 1528, 640]],
+   "sheet_counterpart": "the parade's second building on the sheet (the white-fronted shop's upper wall): sources.sheet.parade",
+   "target": {
+    "S_of_mean": [0.44, 0.50],
+    "hue_deg": [13.5, 20.0],
+    "srgb_mean_at_now_brightness": [147, 97, 78],
+    "_srgb": "HSV (16.75, 0.47, 0.576 = the region's V now) = 146.9/97.1/77.8."
+   },
+   "_src": "NOT the director's band, plainly: the sheet's own brick at this distance reads 0.444 to 0.499 (0.480 pooled), below its near brick's 0.605. The photographs do not measure distance and do not disagree (their walls read 0.41 to 0.56), so the sheet's own range is the band. Hue as brick_near."
+  },
+  "brick_far": {
+   "what": "Brick at the street's far end: the cross-street gable left of the street's bend (box 1) and two bays of the right-hand row past the cream house, between their upper windows (boxes 2, 3).",
+   "boxes": [[330, 595, 430, 635], [1080, 620, 1106, 690], [1008, 640, 1026, 695]],
+   "sheet_counterpart": "the sheet's far right row and its gable: sources.sheet.far",
+   "target": {
+    "S_of_mean": [0.36, 0.46],
+    "hue_deg": [13.5, 20.0],
+    "srgb_mean_at_now_brightness": [136, 96, 80],
+    "_srgb": "HSV (16.75, 0.41, 0.533 = the region's V now) = 135.9/95.7/80.2."
+   },
+   "_src": "The sheet's far brick: its far right row's gable 0.366, the row between its windows 0.460 (0.427 pooled), rounded outward. Not the director's band, for the reason under brick_parade. Small samples (6,810 pixels in the game, 4,539 on the sheet). Hue as brick_near."
+  },
+  "brick_left_terrace": {
+   "what": "The near left terrace (the cottages across the street, out of the direct light): wall between its first two windows, between the second window and the door, between the door and the third window.",
+   "boxes": [[72, 730, 118, 985], [150, 730, 180, 930], [205, 740, 232, 930]],
+   "sheet_counterpart": "the near right cottage's gable on the sheet: sources.sheet.right_cottage",
+   "target": {
+    "S_of_mean": [0.48, 0.56],
+    "hue_deg": [13.5, 20.0],
+    "srgb_mean_at_now_brightness": [63, 39, 30],
+    "_srgb": "HSV (16.75, 0.52, 0.246 = the region's V now) = 62.7/39.2/30.1."
+   },
+   "_src": "Ceiling 0.56 as brick_near (the sheet's cottage reads 0.599: redder than any photographed wall). Floor 0.48, below the director's 0.53, because the photographs say so: a face of the same wall turned from the light reads lower than the lit face (photo-03's gable 0.480 against its front 0.537 to 0.555; photo-04's return 0.510 against its front 0.546). Hue as brick_near."
+  },
+  "fascia_maroon": {
+   "what": "The plain painted fascia boards of Fresh Fish (left of the lettering; right of the lamp post) and the pawnbroker (either side of the lettering). Board only: no lettering, cornice, bracket or post.",
+   "boxes": [[1285, 705, 1336, 738], [1453, 707, 1473, 728], [1140, 732, 1163, 758], [1225, 728, 1262, 752]],
+   "sheet_counterpart": "the sheet's one red (maroon) painted shopfront, far up the left parade at x 1211-1262: its fascia board and its left pilaster: sources.sheet.maroon_front",
+   "target": {
+    "S_of_mean": [0.31, 0.53],
+    "hue_deg": [0.0, 10.0],
+    "srgb_mean_at_now_brightness": [124, 76, 72],
+    "_srgb": "HSV (5, 0.42, 0.487 = the region's V now) = 124.2/76.4/72.0."
+   },
+   "_src": "No photograph shows a maroon painted front, so the sheet governs. Its maroon front: fascia board 156/112/107 (S 0.312, hue 6.3, in the light), left pilaster 68/35/32 (S 0.530, hue 4.8, in shade): the band runs from the board to the pilaster. Hue: the sheet reads 4.8 to 6.3; the band 0 to 10 widens that by about four degrees because the only sample is one small far shop (924 pixels): a judgement, not a measurement. A red maroon, not the pink-mauve near 347 degrees the frame shows now. The sheet's other dark front (x 1082-1158) reads slate-violet (hue 258, S 0.11) and is not a maroon."
+  }
+ },
+ "sources": {
+  "sheet": {
+   "file": "C:/Users/Jafar/ledger-local/production/reference/hook-sheet.png",
+   "near": [[20, 130, 240, 280], [20, 370, 240, 780], [320, 150, 395, 400], [480, 170, 595, 440], [655, 300, 710, 450]],
+   "parade": [[838, 330, 852, 500], [888, 340, 926, 500], [950, 400, 975, 520]],
+   "far": [[1350, 525, 1395, 560], [1430, 532, 1442, 570], [1450, 532, 1464, 570], [1472, 532, 1488, 570], [1498, 532, 1516, 570], [1526, 532, 1544, 570]],
+   "right_cottage": [[1890, 560, 2040, 760]],
+   "maroon_front": {"fascia_board": [[1233, 587, 1261, 600]], "left_pilaster": [[1211, 612, 1221, 668]]},
+   "_boxes": "near: the gable above and below its plaster patch (downpipe and spalled foot left out), the front left of the first window, between the first and second windows, between the second and third (downpipe left out). far: the far right row's gable, then the row between its first-floor windows."
+  },
+  "photographs": {
+   "folder": "F:/LedgerTools/lab/sash/refs/ (sources and licences: C:/Users/Jafar/ledger-lab/production/lab/2-sash-window/SOURCES.md section 2; none copied here)",
+   "walls": {
+    "photo-03-evelyn-street-beeston-1886.jpg": {"light": "overcast, dry", "gable": [[750, 1050, 1250, 1950]], "front_upper": [[1350, 780, 1700, 1000]], "front_mid": [[1330, 1260, 1600, 1700]], "front_right": [[2400, 1600, 2600, 1800]]},
+    "photo-04-imperial-road-beeston-1896.jpg": {"light": "blue sky, no hard shadow on the boxes, dry", "front": [[1700, 1000, 1860, 1250], [2120, 1000, 2300, 1300]], "return": [[2480, 750, 2690, 1450]]},
+    "photo-02-barstow-place-west-bromwich-1897.jpg": {"light": "full sun, dry", "front_left": [[1400, 900, 1650, 1250]], "front_right": [[2480, 900, 2680, 1300], [2830, 900, 2980, 1300]]}
+   },
+   "dressings": {
+    "photo-06-cemetery-road-tottenham-sash-windows_2560px-rendering.jpg": {"light": "daylight, dry", "gauged_red_arch": [[650, 230, 1350, 480]]},
+    "photo-09-cemetery-road-tottenham-terrace-oblique_2560px-rendering.jpg": {"light": "full sun, strongly processed", "red_jambs": [[2795, 560, 2855, 1240], [3080, 560, 3135, 1240]]}
+   },
+   "not_used": "photo-01 (yellow stock wall, thin red bands, low warm sun), photo-05 (rendered wall), photo-07 and photo-08 (stone and joinery close-ups): no red-brick wall to measure."
+  }
+ }
+}
