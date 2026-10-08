@@ -5,8 +5,9 @@
 Downloads (Poly Haven, CC0; the only photograph source the cloud network reached) the tone-mapped
 Leadenhall Market panorama and two painted-plank textures into DIR (default: the scratch folder it was
 written in), renders the level square-on elevation of the panorama (yaw 90, pitch 0, 110 degrees wide,
-3600 x 2400), and writes reduced JPEGs (at most 1200 px on the long side, under 300 KB) into
-production/previews/cloud-week/refs/fascia-signs/. The photographs are for measuring only: never placed in
+3600 x 2400), and writes reduced JPEGs (under 300 KB) into production/previews/cloud-week/refs/fascia-signs/.
+P1 is written as the two END crops of the board only (no name, no lettering of a business, no hours, no drink);
+the overlay P1-leadenhall-board-target-on-photo.jpg is written by self_check.py from that file. The photographs are for measuring only: never placed in
 the game, never traced into a texture, never fed to an image model.
 """
 import json
@@ -30,9 +31,13 @@ URLS = {
     "blue_painted_planks_diff_2k.jpg": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/blue_painted_planks/blue_painted_planks_diff_2k.jpg",
     "black_painted_planks_diff_2k.jpg": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/black_painted_planks/black_painted_planks_diff_2k.jpg",
 }
-# the crop of the 3600 x 2400 elevation that is the board preview, and its reduction
-P1_CROP = (1150, 120, 2450, 400)
-P1_SCALE = 1200.0 / 1300.0
+# P1's saved preview holds ONLY the two ends of the board (numerals, keyline corners, field), side by side:
+# the name lies between them (view x 1492 to 2123) and is not kept, and nothing below the board is cropped in.
+# A real business's name, its window lettering and its hours are never written into the repository.
+P1_LEFT = (1150, 120, 1480, 400)
+P1_RIGHT = (2250, 120, 2440, 400)
+P1_SCALE = 2.2
+P1_GAP = 20
 
 
 def fetch():
@@ -78,21 +83,15 @@ def main():
     fetch()
     OUT.mkdir(parents=True, exist_ok=True)
     e90 = render(CACHE / "leadenhall_market_tm.jpg", 90, 0, 110, 3600, 2400)
-    # P1 board
-    c = e90.crop(P1_CROP)
-    save(c.resize((1200, int(round(c.size[1] * P1_SCALE))), Image.LANCZOS), "P1-leadenhall-chamberlain-board-elevation.jpg")
-    # P1 front with the door leaf for scale (annotated)
-    fr = e90.crop((1150, 100, 2450, 1560))
-    k = 1200.0 / fr.size[1]
-    fr = fr.resize((int(fr.size[0] * k), 1200), Image.LANCZOS)
-    dr = ImageDraw.Draw(fr)
-    def Y(y):
-        return (y - 100) * k
-    for y, lab, colr in ((1200, "horizon (image centre row 1200)", (0, 255, 255)), (790, "door leaf top 790", (255, 255, 0)), (1482, "door leaf bottom 1482", (255, 255, 0)),
-                         (179, "field top 179", (255, 0, 255)), (326, "field bottom 326", (255, 0, 255)), (1505, "footway at the front 1505", (0, 255, 0))):
-        dr.line([(0, Y(y)), (fr.size[0], Y(y))], fill=colr, width=1)
-        dr.text((6, Y(y) - 11), lab, fill=colr)
-    save(fr, "P1-leadenhall-chamberlain-front-scale.jpg")
+    # P1: the two ends of the board, composite (no name, no window, no front)
+    L = e90.crop(P1_LEFT)
+    R = e90.crop(P1_RIGHT)
+    L = L.resize((int(round(L.size[0] * P1_SCALE)), int(round(L.size[1] * P1_SCALE))), Image.LANCZOS)
+    R = R.resize((int(round(R.size[0] * P1_SCALE)), int(round(R.size[1] * P1_SCALE))), Image.LANCZOS)
+    comp = Image.new("RGB", (L.size[0] + P1_GAP + R.size[0], L.size[1]), (24, 24, 24))
+    comp.paste(L, (0, 0))
+    comp.paste(R, (L.size[0] + P1_GAP, 0))
+    save(comp, "P1-leadenhall-board-elevation.jpg")
     # P2 / P3
     b = Image.open(CACHE / "blue_painted_planks_diff_2k.jpg").convert("RGB")
     a = np.asarray(b).astype(float)

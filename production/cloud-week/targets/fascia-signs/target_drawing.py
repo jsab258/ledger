@@ -3,11 +3,14 @@
     /home/user/.bpyenv/bin/python target_drawing.py OUTDIR [--json drawing.json] [--sheet]
 
 For every shop: the board (5410 x 550 mm) at ONE MILLIMETRE A PIXEL, y up in the data and the picture
-upright, with the frame, the lettered field, the safe zone, each text block's ink box (and its
-effects box: shade, outline, hand jitter), its baseline and its cap line, the border shapes in their
-colours, and the painted-out patch on the empty unit. Also: the four projecting signs in side
-elevation (millimetres, one a pixel), and the photo template (the ratios measured on P1 laid out as
-a board). Everything is also written as filled polygons in millimetres into the JSON file.
+upright, x from the viewer's LEFT as the GAME shows the board (east shops: low street x on the RIGHT),
+with the lettered field, the safe zone, each text block's ink box (and its effects box: shade,
+outline, hand jitter), its baseline and its cap line, the border shapes in their colours, the old board
+under a box sign, the ghosts of older lettering (orange, dashed), the planted moulding's ring, and the
+GEOMETRY that is not texture (Mickey's raised letters, the box signs' and the tea panel's outer rectangles:
+dashed magenta, labelled). Also: the four projecting signs in side elevation, with the wall, fascia and
+cornice (millimetres, one a pixel), and the photo template (P1's ratios as a board, ends and numerals
+included). Everything is also written as filled polygons in millimetres into the JSON file.
 
 Pictures go to OUTDIR (never into git unless OUTDIR is under production/previews/).
 """
@@ -17,8 +20,7 @@ import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw
-from shapely.geometry import LineString, Point, box as sbox
-from shapely.geometry import mapping
+from shapely.geometry import LineString
 
 HERE = Path(__file__).resolve().parent
 TJ = HERE / "target.json"
@@ -72,18 +74,21 @@ def board_data(T, s):
     B = T["board"]
     W, H = B["width_mm"], B["height_mm"]
     ground = s["ground"]["colour"]
-    d = dict(id=s["id"], size_mm=[W, H], ground=ground, ground_srgb=list(col(T, ground)), layers=[], text=[])
+    d = dict(id=s["id"], size_mm=[W, H], ground=ground, ground_srgb=list(col(T, ground)), layers=[], text=[], geometry=[],
+             axis=dict(side=s["side"], rule=s["board_u_rule"], u0_street_x_m=s["board_u0_street_x_m"], door_end_street=s["door_end_street"]))
     L = d["layers"]
     bd = s.get("border") or {}
     L.append(dict(role="board", kind="fill", colour=list(col(T, ground)), poly=poly_from_box([0, 0, W, H])))
-    if bd.get("kind") == "box":
-        # a box sign: old painted board (cream, chalked) shows round it; the face is the box
-        L[0]["colour"] = list(col(T, "cream"))
     if bd.get("kind") == "glass_slab":
         L[0]["colour"] = list(col(T, "bare_timber"))
+    if bd.get("kind") in ("box", "flat_panel"):
+        L[0]["colour"] = list(col(T, "cream"))
     L.append(dict(role="frame", kind="outline", poly=poly_from_box([0, 0, W, H]), inner=poly_from_box(B["field_mm"])))
     L.append(dict(role="field", kind="outline", poly=poly_from_box(B["field_mm"])))
     L.append(dict(role="safe", kind="outline", poly=poly_from_box(B["safe_mm"])))
+    if s.get("moulding"):
+        m = s["moulding"]["width_mm"]
+        L.append(dict(role="moulding", kind="outline", poly=poly_from_box([m, m, W - m, H - m]), width_mm=m, height_mm=s["moulding"]["height_mm"], chamfer_mm=s["moulding"]["chamfer_mm"]))
     for sh in s.get("shapes", []):
         c = list(col(T, sh["colour"])) if sh.get("colour") else None
         if sh["kind"] == "rect":
@@ -94,21 +99,29 @@ def board_data(T, s):
         elif sh["kind"] == "circle":
             L.append(dict(role=sh["role"], kind="fill", colour=c, poly=circle_poly(sh["c"], sh["r"]), outline_only=True))
     g = s.get("ghost")
-    if g:
+    if g and g.get("box_mm"):
         L.append(dict(role="ghost_" + g["kind"], kind="hatch", box=g["box_mm"], poly=poly_from_box(g["box_mm"]),
                       colour=list(col(T, "painted_out")) if g["kind"] == "painted_out_patch" else None))
+    if g and g.get("pinhole_positions_mm"):
+        for p in g["pinhole_positions_mm"]:
+            L.append(dict(role="pinhole", kind="fill", colour=[10, 10, 10], poly=circle_poly(p, 2.0, 12)))
     for p in T.get("small_panels", []):
         if p.get("id") == "letting_board" and p["shop"] == s["id"]:
             cx, cy = p["centre_on_board_mm"]
             w, h = p["size_mm"]
             L.append(dict(role="letting_board", kind="fill", colour=[236, 234, 226], poly=poly_from_box([cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2]), text=p["text"], cap_mm=p["cap_mm"]))
+    for gp in s.get("geometry", []):
+        if gp["kind"] in ("box_sign", "flat_panel"):
+            d["geometry"].append(dict(id=gp["id"], kind=gp["kind"], poly=poly_from_box(gp["outer_mm"]), depth_mm=round(gp["depth_m"] * 1000)))
+        elif gp["kind"] == "applied_letters":
+            d["geometry"].append(dict(id=gp["id"], kind=gp["kind"], poly=poly_from_box(gp["bbox_board_mm"]), depth_mm=round(gp["stand_off_m"] * 1000), string=gp["string"]))
     for b in s["blocks"]:
         x0, y0, x1, y1 = b["ink_box_mm"]
         d["text"].append(dict(
-            id=b["id"], text=b["text"], font=b["font"], weight=b["weight"], cap_mm=b["cap_mm"], role=b["role"], technique=b["technique"],
+            id=b["id"], text=b["text"], font=b["font"], weight=b["weight"], cap_mm=b["cap_mm"], role=b["role"], technique=b["technique"], ghost=b["ghost"], in_texture=b["in_texture"],
             ink_box=poly_from_box(b["ink_box_mm"]), effects_box=poly_from_box(b["effects_box_mm"]),
             baseline=[[x0, b["baseline_mm"]], [x1, b["baseline_mm"]]], cap_line=[[x0, b["baseline_mm"] + b["cap_mm"]], [x1, b["baseline_mm"] + b["cap_mm"]]],
-            face=list(col(T, b["face"])), shade=(list(col(T, b["shade"]["colour"])) if b["shade"] else None), shade_d_mm=(b["shade"]["d_mm"] if b["shade"] else 0)))
+            face=list(b["face_1990"]), shade=(list(col(T, b["shade"]["colour"])) if b["shade"] else None), shade_d_mm=(b["shade"]["d_mm"] if b["shade"] else 0)))
     return d
 
 
@@ -119,30 +132,39 @@ def projecting_data(T, p):
     m = p["mount"]
     proj = m["projection_m"] * 1000
     ah = m["arm_height_m"] * 1000
-    out = dict(id=p["id"], shop=p["shop"], layers=[])
+    out = dict(id=p["id"], shop=p["shop"], x_street_m=m["x_street_m"], viewer_side=m["viewer_side"], layers=[])
     L = out["layers"]
-    L.append(dict(role="wall_face", poly=[[0, 0], [0, 4200], [-40, 4200], [-40, 0]]))
-    L.append(dict(role="plate", poly=poly_from_box([0, ah - 150, 18, ah + 150])))
-    L.append(dict(role="arm", poly=poly_from_box([0, ah - 10, proj, ah + 10])))
+    L.append(dict(role="wall_face", poly=[[0, 0], [0, 4500], [-40, 4500], [-40, 0]]))
+    L.append(dict(role="fascia", poly=poly_from_box([0, 2850, 120, 3400])))
+    L.append(dict(role="cornice", poly=poly_from_box([0, 3400, 215, 3550])))
     pa = p["parts"]
+    if m.get("plate_foot_m"):
+        L.append(dict(role="plate", poly=poly_from_box([0, m["plate_foot_m"] * 1000, 18, m["plate_foot_m"] * 1000 + 300])))
+    if "box_m" in pa and p["id"] == "steam_laundry_box":
+        w, h, t = [v * 1000 for v in pa["box_m"]]
+        L.append(dict(role="box", poly=poly_from_box([0, ah - h, w, ah]), thickness_mm=t))
+    else:
+        L.append(dict(role="arm", poly=poly_from_box([0, ah - 10, proj, ah + 10])))
     if "balls" in pa:
         r = pa["balls"]["diameter_m"] * 500
         for c in pa["balls"]["centres_m"]:
             L.append(dict(role="ball", poly=circle_poly([c[0] * 1000, c[1] * 1000], r), c=[c[0] * 1000, c[1] * 1000], r=r))
-        L.append(dict(role="hanger", poly=poly_from_box([pa["balls"]["centres_m"][0][0] * 1000 - 5, 2900, pa["balls"]["centres_m"][0][0] * 1000 + 5, ah])))
-    if "box_m" in pa and p["id"] == "steam_laundry_box":
-        w, h, t = [v * 1000 for v in pa["box_m"]]
-        L.append(dict(role="box", poly=poly_from_box([0, ah - h, w, ah]), thickness_mm=t))
+        x = pa["balls"]["centres_m"][0][0] * 1000
+        L.append(dict(role="hanger", poly=poly_from_box([x - 5, ah - pa["drop_m"] * 1000, x + 5, ah])))
     if "board_m" in pa:
         w, h, t = [v * 1000 for v in pa["board_m"]]
         x0 = proj - w - 40
-        L.append(dict(role="board", poly=poly_from_box([x0, ah - 60 - h, x0 + w, ah - 60]), thickness_mm=t))
+        top = ah - pa["drop_m"] * 1000
+        L.append(dict(role="chain", poly=poly_from_box([x0 + w * 0.2 - 4, top, x0 + w * 0.2 + 4, ah])))
+        L.append(dict(role="chain", poly=poly_from_box([x0 + w * 0.8 - 4, top, x0 + w * 0.8 + 4, ah])))
+        L.append(dict(role="board", poly=poly_from_box([x0, top - h, x0 + w, top]), thickness_mm=t))
+    out["lowest_m"] = p.get("lowest_computed_m")
     out["clearance_below_m"] = p.get("clearance_below_m")
     return out
 
 
 # --------------------------------------------------------------------------------------------
-# the photo template: P1's ratios as a board (field 502 mm high, as ours)
+# the photo template: P1's ratios as a board (field 502 mm high, as ours), name and ends
 # --------------------------------------------------------------------------------------------
 def template_data(T):
     R = T["photo_template"]["ratios"]
@@ -166,10 +188,16 @@ def template_data(T):
     base = cc - cap / 2
     w = R["name_width_over_cap"] * cap
     cx = fw / 2 + R.get("name_centre_offset_over_panel", 0.0) * (fw - 2 * side)
-    nm = dict(role="name", cap_mm=round(cap, 2), baseline_y=round(base, 2), cap_y=round(base + cap, 2), x0=round(cx - w / 2, 2), x1=round(cx + w / 2, 2))
-    out["text"].append(nm)
-    nh = R["numeral_over_cap"] * cap
-    out["text"].append(dict(role="numeral_l", height_mm=round(nh, 2), x0=round(side + 25 / 147.0 * fh, 2)))
+    out["text"].append(dict(role="name", cap_mm=round(cap, 2), baseline_y=round(base, 2), cap_y=round(base + cap, 2), x0=round(cx - w / 2, 2), x1=round(cx + w / 2, 2)))
+    ntop = fh - R["numeral_top_over_field"] * fh
+    nbot = fh - R["numeral_bottom_over_field"] * fh
+    xl0 = fw / 2 - (fw / 2 - side) + R["numeral_left_gap_over_field"] * fh + 0.0
+    xl0 = side + R["numeral_left_gap_over_field"] * fh
+    xl1 = xl0 + R["numeral_left_width_over_field"] * fh
+    xr1 = fw - side - R["numeral_right_gap_over_field"] * fh
+    xr0 = xr1 - R["numeral_right_width_over_field"] * fh
+    out["text"].append(dict(role="numeral_left", x0=round(xl0, 2), x1=round(xl1, 2), top_y=round(ntop, 2), bottom_y=round(nbot, 2)))
+    out["text"].append(dict(role="numeral_right", x0=round(xr0, 2), x1=round(xr1, 2), top_y=round(ntop, 2), bottom_y=round(nbot, 2)))
     out["shade_mm"] = round(R["shade_over_cap"] * cap, 2)
     return out
 
@@ -177,6 +205,15 @@ def template_data(T):
 # --------------------------------------------------------------------------------------------
 # pictures
 # --------------------------------------------------------------------------------------------
+def dashed_rect(dr, x0, y0, x1, y1, colour, step=14):
+    for x in range(int(x0), int(x1), step * 2):
+        dr.line([(x, y0), (min(x + step, x1), y0)], fill=colour, width=2)
+        dr.line([(x, y1), (min(x + step, x1), y1)], fill=colour, width=2)
+    for y in range(int(y0), int(y1), step * 2):
+        dr.line([(x0, y), (x0, min(y + step, y1))], fill=colour, width=2)
+        dr.line([(x1, y), (x1, min(y + step, y1))], fill=colour, width=2)
+
+
 def draw_board_png(T, d, path, scale=1):
     W, H = d["size_mm"]
     im = Image.new("RGB", (W * scale, H * scale), (40, 40, 40))
@@ -197,8 +234,8 @@ def draw_board_png(T, d, path, scale=1):
             dr.line(pts, fill=tuple(L["colour"]), width=max(1, int(round(L["width_mm"] * scale))), joint="curve")
         elif r == "frame":
             dr.polygon([P(p) for p in L["inner"]], outline=(255, 255, 255), width=1)
-        elif r == "field":
-            pass
+        elif r == "moulding":
+            dr.polygon([P(p) for p in L["poly"]], outline=(255, 200, 120), width=1)
         elif r == "safe":
             xs = [p[0] for p in L["poly"]]
             ys = [p[1] for p in L["poly"]]
@@ -221,6 +258,13 @@ def draw_board_png(T, d, path, scale=1):
                 if a[0] < c[0]:
                     dr.line([P(a), P(c)], fill=(255, 255, 255), width=1)
             dr.rectangle([P((b[0], b[3])), P((b[2], b[1]))], outline=(255, 140, 0), width=2)
+    for g in d["geometry"]:
+        xs = [p[0] for p in g["poly"]]
+        ys = [p[1] for p in g["poly"]]
+        x0, y0 = P((min(xs), max(ys)))
+        x1, y1 = P((max(xs), min(ys)))
+        dashed_rect(dr, x0, y0, x1, y1, (255, 0, 255))
+        dr.text((x0 + 6, y0 + 4), f'GEOMETRY, NOT TEXTURE: {g["kind"]} {g["id"]} depth {g["depth_mm"]} mm', fill=(255, 0, 255))
     for t in d["text"]:
         b = t["ink_box"]
         xs = [p[0] for p in b]
@@ -228,12 +272,21 @@ def draw_board_png(T, d, path, scale=1):
         e = t["effects_box"]
         exs = [p[0] for p in e]
         eys = [p[1] for p in e]
+        if t["ghost"]:
+            dashed_rect(dr, *P((min(xs), max(ys))), *P((max(xs), min(ys))), (255, 140, 0))
+            dr.text(P((min(xs) + 6, max(ys) - 4)), f'GHOST {t["text"]} cap {t["cap_mm"]:g} {t["font"]}', fill=(255, 140, 0))
+            continue
         if t["shade"]:
             dr.rectangle([P((min(exs), max(eys))), P((max(exs), min(eys)))], outline=tuple(t["shade"]) if sum(t["shade"]) > 90 else (140, 140, 140), width=1)
+        if not t["in_texture"]:
+            dr.line([P(t["baseline"][0]), P(t["baseline"][1])], fill=(255, 0, 255), width=2)
+            dr.line([P(t["cap_line"][0]), P(t["cap_line"][1])], fill=(255, 255, 0), width=1)
+            continue
         dr.rectangle([P((min(xs), max(ys))), P((max(xs), min(ys)))], outline=tuple(t["face"]), width=2)
         dr.line([P(t["baseline"][0]), P(t["baseline"][1])], fill=(255, 0, 255), width=2)
         dr.line([P(t["cap_line"][0]), P(t["cap_line"][1])], fill=(255, 255, 0), width=1)
         dr.text(P((min(xs) + 6, max(ys) - 4)), f'{t["text"]}  cap {t["cap_mm"]:g} mm  {t["font"]}', fill=(255, 255, 255))
+    dr.text((8, 4), f'{d["id"]}: board x from the VIEWER\'S LEFT in the game; {d["axis"]["rule"]}; doors at the {d["axis"]["door_end_street"]} street-x end', fill=(255, 255, 255))
     im.save(path)
     return im.size
 
@@ -249,9 +302,11 @@ def draw_projecting_png(p, path, scale=1):
     def P(pt):
         return ((pt[0] - x0) * scale, (y1 - pt[1]) * scale)
 
-    colours = dict(wall_face=(120, 80, 70), plate=(40, 40, 40), arm=(30, 30, 30), hanger=(30, 30, 30), ball=(190, 150, 70), box=(236, 236, 228), board=(90, 90, 110))
+    colours = dict(wall_face=(120, 80, 70), fascia=(160, 150, 140), cornice=(190, 180, 170), plate=(40, 40, 40), arm=(30, 30, 30), hanger=(30, 30, 30), chain=(60, 60, 60), ball=(190, 150, 70), box=(236, 236, 228), board=(90, 90, 110))
     for L in p["layers"]:
         dr.polygon([P(q) for q in L["poly"]], fill=colours.get(L["role"], (128, 128, 128)), outline=(0, 0, 0))
+    dr.line([P((x0, 2500)), P((x1, 2500))], fill=(255, 0, 0), width=1)
+    dr.text((8, 4), f'{p["id"]} at street x {p["x_street_m"]} ({p["viewer_side"]}); red line = 2.5 m', fill=(0, 0, 0))
     im.save(path)
     return im.size
 
@@ -279,7 +334,7 @@ def main(argv):
     if "--json" in argv:
         jpath = Path(argv[argv.index("--json") + 1])
     T = load()
-    out = dict(units="mm", y_up=True, px_per_mm=1, boards={}, projecting={}, template=None)
+    out = dict(units="mm", y_up=True, px_per_mm=1, board_x="from the viewer's LEFT as the game shows the board", boards={}, projecting={}, template=None)
     pics = []
     for s in T["shops"]:
         d = board_data(T, s)
