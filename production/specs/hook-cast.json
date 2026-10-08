@@ -78,12 +78,16 @@
   "cafe": {"inside": true, 
    "x_m": 24.0,
    "z_m": -7.5,
+   "body_x_m": 25.0,
+   "body_why": "8 October, item 1.1's third review (V2): its pavement spot at x 24.0 stood a body in the yard mouth's oil barrel; a metre north it stands clear, still at the cafe's door.",
    "from": "the cafe, inside, in the west block's shops across from the parade's north half (canon)",
    "said": "inside the cafe across the street from Mickey's"
   },
   "cafe_front": {
    "x_m": 24.0,
    "z_m": -4.3,
+   "body_x_m": 25.0,
+   "body_why": "8 October, item 1.1's third review (V2): at x 24.0 a body stood in the yard mouth's oil barrel and against its bollard; a metre north it stands clear, still at the cafe's door.",
    "from": "the cafe's pavement",
    "said": "the pavement outside the cafe"
   },

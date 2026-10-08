@@ -48,20 +48,20 @@
     },
     {
       "glb": "kate-idle",
-      "x_m": 27.0,
+      "x_m": 31.5,
       "z_m": -4.6,
       "face_deg": 180,
       "phase": 0.1,
       "why": "further up the west pavement, facing down the street toward the camera",
       "y_m": 0.0869,
       "walk": {
-        "to_x_m": 19.5,
+        "to_x_m": 26.0,
         "speed_ms": 0.8,
         "pause_s": [
           4,
           9
         ],
-        "why": "30 September (the twenty a friend would notice, 13): up and down her stretch of the west pavement with her shopping, pausing at each end; the walk clip's own pace, 0.8 m/s"
+        "why": "30 September (the twenty a friend would notice, 13): up and down her stretch of the west pavement with her shopping, pausing at each end; the walk clip's own pace, 0.8 m/s. 8 October (item 1.1's third review, V1, V2, V3): from 19.5 to 27 she walked through the yard mouth's crates, barrel and barrier (x 20.5 to 24.4 the whole pavement is taken) and into whoever stood at the cafe's pavement; now 26.0 to 31.5, clear of the yard and the cafe spot (25.0) and short of the swing bin at 33.0"
       }
     },
     {
