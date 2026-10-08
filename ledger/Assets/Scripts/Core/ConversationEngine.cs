@@ -848,8 +848,10 @@ namespace Ledger.Core
         /// replies (Ladder).
         readonly Dictionary<string, List<string>> _told = new Dictionary<string, List<string>>();
 
-        /// Whether they have told this listener this fact (as they hold it).
-        public bool HasTold(string listener, string fact) =>
+        /// Whether they have told this listener this fact (as they hold it): the
+        /// tests' window on the told set (the ladder reads it through Marked), so
+        /// internal, not the game's API.
+        internal bool HasTold(string listener, string fact) =>
             listener != null && fact != null && _told.TryGetValue(listener, out var set) && set.Contains(TalkLadder.FactMark(fact));
 
         void MarkTold(string mark)
