@@ -47,6 +47,16 @@
   - Both failed it on detail the target did not write down: the mouldings' profiles, the ironmongery, and the frame's square edges and projecting transom that its own photographs show. Set aside after two tries.
   - The repository's size guard keeps the door's .glb out of git (models only where the game's build imports from), so it stays on F:, and the scripts rebuild it.
 
+## 8 October, evening: Marvelous Designer, and the talk check on a local model
+
+- **Ron's clothes in Marvelous Designer: FAILED, not tried** (6-marvelous-clothes/REPORT.md).
+  - Marvelous runs scripts only from inside the open program; the builder's bridge needs one press of Run in its Python window each time it opens. You were asked once at 14:46; no bridge by the 15:20 stop.
+  - First, a fresh helper amended the target with everything the test 4 reviewer found missing (sleeve ease, a tapered leg breaking on the boot, pleats, a flush waistband and fly, ribs drawing in), and its self-check passes. It is kept for any cloth route.
+- **The talk check on a small local model: do not switch** (talk-check/REPORT.md, $0).
+  - TinyLettuce 68M (MIT) on the CPU, on the 7 October sets: at its own setting it let 60% of invented details through (Haiku 5.5: 2%). Set strict, it refused 82% of true details (Haiku 5.5: 27%).
+  - It is faster only on short first sentences (0.33 s).
+  - Haiku 5.5 as the split stays.
+
 ## What needs you
 
 1. **Lab pushes:** done (allowed 8 October).

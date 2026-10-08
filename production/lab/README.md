@@ -13,6 +13,9 @@ A separate session testing one method while the builder works: give the AI an ex
 | The shop glass's stair steps, for the builder (8 Oct) | [GLASS-NOTES.md](GLASS-NOTES.md) | done: an unanti-aliased Scene Colour capture at 512; the fix (exclude the capture from the scene-texture extents, catch the two hero windows at 1024) |
 | 5. The four-panel front door from Ellis and the photographs, for phase 2 (8 Oct) | [5-front-door/NOTES.md](5-front-door/NOTES.md) | built, passing its check, proportions right by the check and both reviewers; failed two fresh reviews on detail the target did not write down (profiles, ironmongery, the frame's square edges in the photographs): set aside for phase 2 |
 
+| Ron's clothes in Marvelous Designer (8 Oct, evening) | [6-marvelous-clothes/REPORT.md](6-marvelous-clothes/REPORT.md) | FAILED: Marvelous runs scripts only from inside the open program, and the bridge needs one Run each launch, which did not come; the amended target is kept |
+| The talk check on a small local model (8 Oct, evening) | [talk-check/REPORT.md](talk-check/REPORT.md) | done: TinyLettuce 68M on the CPU is far less accurate than Haiku 5.5 at any setting; do not switch |
+
 The page for Jafar: [LAB-REPORT.md](LAB-REPORT.md), also published as a private page: https://claude.ai/artifact/GAgntnYAoqJVR6irjqjeBk
 
 Rules kept: Unreal never opened; Blender headless, Workbench only or no render at all; large files on F:\LedgerTools\lab; nothing bought; pushes to lab only. Time per test: [time-log.jsonl](time-log.jsonl). Shared tools: [tools/outline.py](tools/outline.py) (outlines and sections from triangles, compared in millimetres, no renderer) and [tools/panel_mesh.py](tools/panel_mesh.py) (flat pattern pieces to sewing meshes).
