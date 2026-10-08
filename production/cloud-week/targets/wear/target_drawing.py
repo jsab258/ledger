@@ -109,6 +109,16 @@ def ribbon(path, widths):
 
 
 # ------------------------------------------------------------------ primitives (millimetres)
+def vis_frac(core, head_frac, fade_exp, floor=0.04, thr=0.25):
+    """Fraction of a streak's drawn length over which its mask is still at or above thr (the visible part): the run is core up to head_frac, then core x exp(-s^fade) falling to `floor` at the tail.
+    The envelopes state VISIBLE lengths (the lengths a photograph shows, Photo M16/M17), so the drawn run is longer by 1 / this fraction."""
+    k = (-math.log(floor)) ** (1.0 / fade_exp)
+    if core <= thr:
+        return 1.0
+    s = (math.log(core / thr)) ** (1.0 / fade_exp)
+    return head_frac + (1 - head_frac) * min(1.0, s / k)
+
+
 def streak(rng, kind, x0, y0, w0, length, wander, taper, fade_exp, core, head_frac, tilt_deg=0.0, slices=14, role="streak", floor=0.04):
     """A run falling from (x0,y0) downward: width w0 tapering by `taper`, centre line wandering, mask = core up to head_frac of the length
     then exp(-(s)^fade_exp) so it is darkest at the head. Returns slice polygons."""
@@ -149,6 +159,7 @@ def foot_band_polys(rng, kind, E, length_mm, seed_tag):
     if step > 0:
         nz = np.round(nz / step) * step
     htop = lv[-1][0]
+    rfrom = top.get("ragged_from_m", 0.0) * 1000.0
     out = []
     sub = 3
     prof = []
@@ -182,8 +193,11 @@ def foot_band_polys(rng, kind, E, length_mm, seed_tag):
         for ha, hb, la in prof:
             if la <= 0.005:
                 continue
-            sa = 1.0 if ha == 0 else ha / htop
-            sb = hb / htop
+            if rfrom > 0:                      # contours below ragged_from_m do not move (the channel's joints are straight); the outer fringe edge does
+                sa, sb = max(0.0, (ha - rfrom) / (htop - rfrom)), max(0.0, (hb - rfrom) / (htop - rfrom))
+            else:
+                sa = 1.0 if ha == 0 else ha / htop
+                sb = hb / htop
             lower = [(x, ha + sa * n) for x, n in zip(xs, nz)]
             upper = [(x, hb + sb * n) for x, n in zip(xs, nz)]
             lower = [(x, max(0.0, y)) for x, y in lower]
@@ -198,7 +212,10 @@ def foot_band_polys(rng, kind, E, length_mm, seed_tag):
             yb = htop * 0.5 + nz[idx]
             L = uni(rng, [v * 1000.0 for v in fg["length_m"]])
             w = uni(rng, [v * 1000.0 for v in fg["width_m"]])
-            out.append(poly(kind, 0.4, [(x - w / 2, yb), (x + w / 2, yb), (x + w * 0.2, yb + L), (x - w * 0.2, yb + L)], "finger"))
+            for dx in (0.0, -length_mm, length_mm):            # a finger at the tile's edge is repeated across the seam
+                if dx and not (-w <= x + dx <= length_mm + w):
+                    continue
+                out.append(poly(kind, 0.4, [(x + dx - w / 2, yb), (x + dx + w / 2, yb), (x + dx + w * 0.2, yb + L), (x + dx - w * 0.2, yb + L)], "finger"))
     return out
 
 
@@ -229,15 +246,21 @@ def streak_set_polys(rng, kind, E, tags):
         a, b_ = int(np.argmax(wids)), int(np.argmin(wids))
         if wids[a] < wids[b_] * lo_w:
             wids[a] = wids[b_] * lo_w * uni(rng, [1.0, 1.2])
+        vf = vis_frac(common["core"], common["head_frac"], common["fade_exp"])
         for side, L, w in zip((-1, 1), lens, wids):
             xe = side * (S / 2 - w * 0.55)
-            out += streak(rng, kind, xe, 0, w, L, wander(), **common, role="end_streak")
+            out += streak(rng, kind, xe, 0, w, min(L / vf, 1700.0), wander(), **common, role="end_streak")
         rv = E["rivulets"]
         n = uni_int(rng, rv["n"])
+        taken = [side * (S / 2 - w_ * 0.55) for side, w_ in zip((-1, 1), wids)]
         for _ in range(n):
-            xr = rng.uniform(-S / 2 + 20, S / 2 - 20)
+            for _try in range(60):                      # rivulets keep 70 mm from each other and 90 mm from an end streak, so they stay separate runs
+                xr = rng.uniform(-S / 2 + 90, S / 2 - 90)
+                if all(abs(xr - t) >= 70 for t in taken):
+                    break
+            taken.append(xr)
             w = uni(rng, [v * 1000.0 for v in rv["width_m"]])
-            L = uni(rng, [v * 1000.0 for v in rv["length_m"]])
+            L = uni(rng, [v * 1000.0 for v in rv["length_m"]]) / vf
             out += streak(rng, kind, xr, -wh * 0.2, w, L, wander() * 0.5, **common, role="rivulet", slices=8)
             if rng.uniform() < 0.25:
                 ang = rng.choice([-1, 1]) * uni(rng, [12, 25])
@@ -267,9 +290,10 @@ def streak_set_polys(rng, kind, E, tags):
         fh = fg.get("full_height")
         if fh and rng.uniform() < fh["prob_per_stamp"]:
             Ls[int(rng.integers(n))] = uni(rng, [v * 1000.0 for v in fh["length_m"]])
+        vf = vis_frac(common["core"], common["head_frac"], common["fade_exp"])
         for x, L in zip(xs, Ls):
             w = uni(rng, [v * 1000.0 for v in fg["width_m"]])
-            out += streak(rng, kind, float(x), 0, w, float(L), wander(), **common, role="finger", slices=14)
+            out += streak(rng, kind, float(x), 0, w, min(float(L) / vf, 2900.0), wander(), **common, role="finger", slices=14)
         return out
     if "fixing" in E:
         fx = E["fixing"]
@@ -603,14 +627,17 @@ def points_polys(rng, kind, E, area_mm=(1000.0, 1000.0), density=None):
                 out.append(poly(kind, ring["level"], blob(rng, x, y, float(e) + 2 * ring["width_mm"], asp, ang, n=12, rough=0.18), "rim"))
             out.append(poly(kind, 1.0, blob(rng, x, y, float(e), asp, ang, n=12, rough=0.18), "disc"))
     else:
-        (w10, w50, w90), (l10, l50, l90) = E["size_mm"]
-        ws = lognormal3(rng, w10, w50, w90, n)
-        ls = lognormal3(rng, l10, l50, l90, n)
-        for w, l in zip(ws, ls):
+        mix = E["mix"]
+        shares = np.array([m_["share"] for m_ in mix], float)
+        shares /= shares.sum()
+        for _ in range(n):
+            m_ = mix[int(rng.choice(len(mix), p=shares))]
+            w = float(lognormal3(rng, *m_["w_mm"])[0])
+            l = float(lognormal3(rng, *m_["l_mm"])[0])
             x, y, a = rng.uniform(0, W), rng.uniform(0, H), rng.uniform(0, math.pi)
             c, s = math.cos(a), math.sin(a)
             p = [(-l / 2, -w / 2), (l / 2, -w / 2), (l / 2, w / 2), (-l / 2, w / 2)]
-            out.append(poly(kind, 1.0, [(x + c * px - s * py, y + s * px + c * py) for px, py in p], "end"))
+            out.append(poly(kind, 1.0, [(x + c * px - s * py, y + s * px + c * py) for px, py in p], m_["name"]))
     return out
 
 
@@ -703,23 +730,26 @@ def iron_set_polys(rng, kind, E):
     pl = E["placement"]
     collars = [c * 1000.0 for c in E["collars_m"]]
     out = []
-    acc = 0.0
-    guard = 0
-    while acc < target and guard < 400:
-        guard += 1
+    sizes, acc = [], 0.0
+    while acc < target and len(sizes) < 40:
         e = min(float(lognormal3(rng, p10, p50, p90)[0]), 150.0)
-        r = rng.uniform()
-        if r < pl["foot_lowest_0.3m"]:
+        asp = uni(rng, [1.2, 2.6])
+        sizes.append((e, asp))
+        acc += math.pi * (e / 2) ** 2 * min(1.0, (Wp * 0.9) / max(e / math.sqrt(asp), 1.0))
+    n = len(sizes)
+    nf, nc = int(round(pl["foot_lowest_0.3m"] * n)), int(round(pl["collar_within_0.08m"] * n))
+    zones = ["foot"] * nf + ["collar"] * nc + ["any"] * max(0, n - nf - nc)       # quotas, so the foot share is the stated one however few patches there are
+    rng.shuffle(zones)
+    for (e, asp), z in zip(sizes, zones):
+        if z == "foot":
             y = rng.uniform(e * 0.4, 300.0)
-        elif r < pl["foot_lowest_0.3m"] + pl["collar_within_0.08m"]:
+        elif z == "collar":
             y = float(rng.choice(collars)) + rng.uniform(-80.0, 80.0)
         else:
-            y = rng.uniform(e * 0.4, Lp - e * 0.4)
-        asp = uni(rng, [1.2, 2.6])
+            y = rng.uniform(300.0 + e * 0.4, Lp - e * 0.4)
         pts = blob(rng, rng.uniform(-Wp * 0.2, Wp * 0.2), y, e, asp, math.pi / 2 + rng.normal(0, 0.15), n=16, rough=0.25)
         pts = [(float(np.clip(x, -Wp / 2, Wp / 2)), yy) for x, yy in pts]
         out.append(poly(kind, uni(rng, [0.85, 1.0]), pts, "patch"))
-        acc += math.pi * (e / 2) ** 2 * min(1.0, (Wp * 0.9) / max(e / math.sqrt(asp), 1.0))
     st = E["streaks"]
     for c in collars:
         if rng.uniform() < st["prob_per_collar"]:
@@ -759,21 +789,21 @@ def line_loss_polys(rng, kind, E, length_mm):
     h = Wd / 2.0
     out = []
     cg = E["cross_gaps"]
-    n = int(rng.poisson(uni(rng, cg["per_m"]) * length_mm / 1000.0))
+    n = int(round(uni(rng, cg["per_m"]) * length_mm / 1000.0))
     p10, p50, p90 = cg["length_mm_lognormal"]
     for L in lognormal3(rng, p10, p50, p90, max(n, 1))[:n]:
-        L = float(np.clip(L, 10.0, 450.0))
+        L = float(np.clip(L, 10.0, 350.0))
         x0 = rng.uniform(0, length_mm - L)
         j = lambda: rng.normal(0, 3.0)
         out.append(poly(kind, 1.0, [(x0 + j(), -h), (x0 + L * 0.5, -h + j()), (x0 + L + j(), -h), (x0 + L + j(), h), (x0 + L * 0.5, h + j()), (x0 + j(), h)], "gap"))
     ec = E["edge_chips"]
-    for _ in range(int(rng.poisson(uni(rng, ec["per_m"]) * length_mm / 1000.0))):
+    for _ in range(int(round(uni(rng, ec["per_m"]) * length_mm / 1000.0))):
         d, L = uni(rng, ec["depth_mm"]), uni(rng, ec["length_mm"])
         x0 = rng.uniform(0, length_mm - L)
         sgn = 1.0 if rng.uniform() < 0.5 else -1.0
         out.append(poly(kind, 1.0, [(x0, sgn * h), (x0 + L, sgn * h), (x0 + L * 0.8, sgn * (h - d)), (x0 + L * 0.2, sgn * (h - d * 0.6))], "chip"))
     sp = E["specks"]
-    for _ in range(int(rng.poisson(uni(rng, sp["per_m"]) * length_mm / 1000.0))):
+    for _ in range(int(round(uni(rng, sp["per_m"]) * length_mm / 1000.0))):
         out.append(poly(kind, 1.0, blob(rng, rng.uniform(0, length_mm), rng.uniform(-h + 4, h - 4), uni(rng, sp["eqd_mm"]), 1.2, rng.uniform(0, math.pi), n=8, rough=0.2), "speck"))
     return out
 
@@ -805,8 +835,8 @@ def patch_cover_polys(rng, kind, E):
         # patches cluster: half are laid beside an earlier one
         if out and rng.uniform() < 0.5:
             q = out[int(rng.integers(len(out)))]["poly"]
-            cx = float(np.mean([a for a, _ in q])) + rng.normal(0, e * 0.8)
-            cy = float(np.mean([b for _, b in q])) + rng.normal(0, e * 0.8)
+            cx = float(np.clip(np.mean([a for a, _ in q]) + rng.normal(0, e * 0.8), 0.0, W))
+            cy = float(np.clip(np.mean([b for _, b in q]) + rng.normal(0, e * 0.8), 0.0, H))
         else:
             cx, cy = rng.uniform(0, W), rng.uniform(0, H)
         pts = blob(rng, cx, cy, e, uni(rng, E["aspect"]), rng.uniform(0, math.pi), n=12, rough=0.25)
@@ -949,6 +979,8 @@ def scene_wall_bay(tj, seed):
     polys += transform(kind_envelope(tj, "streak_coping", seed, 1), 1000, 3600)
     polys += transform(kind_envelope(tj, "algae_downpipe", seed, 1), 1800, 0)
     polys += transform(kind_envelope(tj, "rust_bleed", seed, 1), 300, 2900)
+    polys += transform(kind_envelope(tj, "wall_head_band", seed, 1), 0, 3600)
+    polys += transform(kind_envelope(tj, "iron_wear", seed, 1), 1800, 0)
     polys += transform(kind_envelope(tj, "render_patch", seed, 1), 350, 1500)
     polys += transform(kind_envelope(tj, "bird_dropping", seed, 1), 1450, 2210)
     return W, H, polys
@@ -979,12 +1011,15 @@ def scene_road(tj, seed):
     rng = rng_for(seed, "road/litter")
     k = tj["kinds"]["cig_end"]["envelope"]
     nb = int(rng.uniform(*k["band"]["per_m"]) * 3.0)
-    (w10, w50, w90), (l10, l50, l90) = k["size_mm"]
+    mix = k["mix"]
+    shares = np.array([m_["share"] for m_ in mix], float)
+    shares /= shares.sum()
     for _ in range(nb):
+        m_ = mix[int(rng.choice(len(mix), p=shares))]
         x, y, a = rng.uniform(0, 3000), rng.uniform(40, 260), rng.uniform(0, math.pi)
-        w, l = float(lognormal3(rng, w10, w50, w90)[0]), float(lognormal3(rng, l10, l50, l90)[0])
+        w, l = float(lognormal3(rng, *m_["w_mm"])[0]), float(lognormal3(rng, *m_["l_mm"])[0])
         c, s = math.cos(a), math.sin(a)
-        polys.append(poly("cig_end", 1.0, [(x + c * px - s * py, y + s * px + c * py) for px, py in [(-l / 2, -w / 2), (l / 2, -w / 2), (l / 2, w / 2), (-l / 2, w / 2)]], "end"))
+        polys.append(poly("cig_end", 1.0, [(x + c * px - s * py, y + s * px + c * py) for px, py in [(-l / 2, -w / 2), (l / 2, -w / 2), (l / 2, w / 2), (-l / 2, w / 2)]], m_["name"]))
     return W, H, polys
 
 
