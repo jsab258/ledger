@@ -5736,6 +5736,12 @@ OPEN_DOOR_BAY = ("east_parade", 0)
 #: stood in the room as floating bars. Hinged on its inner face and opened square, it lies flat
 #: against the wall's face, its whole thickness in the room, narrowing the doorway by that alone.
 OPEN_DOOR_DEG = 90.0
+#: AND CLEAR OF THE ROOM'S REVEAL POST (8 October, the packaged walk-in's reviewer: "its top rail, gilt
+#: bar, mid rail and lower panel run past the door's edge, across the white post, and end in mid-air"):
+#: the office's painted reveal lining stands 10 cm into the room at the doorway's side and swallowed
+#: the leaf's hinge stile, leaving the proud rails sticking out of it. The open leaf stands that much
+#: further along the wall, its own stile in view, the hinge's gap behind the post.
+OPEN_DOOR_CLEAR_M = 0.08
 
 
 def _open_door_parts(parts):
@@ -5753,7 +5759,8 @@ def _open_door_parts(parts):
     for q in leaf:
         corners = [(x, y, z) for z in (q["z0"], q["z1"]) for (x, y) in
                    ((q["x0"], q["y0"]), (q["x1"], q["y0"]), (q["x1"], q["y1"]), (q["x0"], q["y1"]))]
-        turned = [(hx + (x - hx) * c - (y - hy) * s_, hy + (x - hx) * s_ + (y - hy) * c, z) for (x, y, z) in corners]
+        turned = [(hx + (x - hx) * c - (y - hy) * s_, hy + OPEN_DOOR_CLEAR_M + (x - hx) * s_ + (y - hy) * c, z)
+                  for (x, y, z) in corners]
         verts = turned[:4] + turned[4:]
         out.append({"id": "opendoor_" + q["id"], "material": q["material"], "kind": "mesh", "verts": verts,
                     "faces": _hull(verts, BOX_FACES), "note": "his-shop-door-standing-open/" + q["id"],

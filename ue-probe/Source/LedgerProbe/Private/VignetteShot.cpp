@@ -6871,6 +6871,19 @@ namespace
 			Cap->PostProcessSettings.bOverride_ReflectionMethod = true;
 			Cap->PostProcessSettings.ReflectionMethod = EReflectionMethod::Lumen;
 			Cap->bAlwaysPersistRenderingState = true;
+			// BUT CHEAPER (8 October, the build machine's frame-rate verdict BELOW-30 on 62be907): each
+			// window's first pass ran over 33 ms, one slow frame a window, fifteen a round, and the
+			// 99th percentile went just past the bar (the same measure with -GlassCatchNoLumen: 5 slow
+			// frames, p99 26 ms). The lit houses are why the catch uses Lumen; reflections inside a
+			// small soft reflection are the least of it, so they go, and the gather runs at half.
+			// -GlassCatchFullLumen keeps the full catch, to compare.
+			static const bool bFull = FParse::Param(FCommandLine::Get(), TEXT("GlassCatchFullLumen"));
+			if (!bFull)
+			{
+				Cap->PostProcessSettings.ReflectionMethod = EReflectionMethod::None;
+				Cap->PostProcessSettings.bOverride_LumenFinalGatherQuality = true;
+				Cap->PostProcessSettings.LumenFinalGatherQuality = 0.5f;
+			}
 		}
 		// THE CAUGHT STREET ANTI-ALIASED (7 October, evening; production/research/shop-glass-reflections/
 		// CLOSE-RANGE-ROUTES-2026-10-07.md): at 512 a face the house across the road came back with a
@@ -6921,8 +6934,13 @@ namespace
 			Pp.BlueCorrection = 0.0f;
 			Pp.bOverride_ExpandGamut = true;
 			Pp.ExpandGamut = 0.0f;
-			Cap->bExcludeFromSceneTextureExtents = true;
 		}
+		// EVERY CATCH KEPT OUT OF THE SCENE TEXTURES' SIZE (8 October; production/lab/GLASS-NOTES.md,
+		// SceneCaptureComponent.h:115-121): a cube's six faces render into one tiled target, 3072 x 2048
+		// at 1024 a face, and the renderer grew every buffer of the main view to it for the rest of the
+		// session (SceneTextures.cpp:279-309), which is what took the card past 10 GB at 1024 on
+		// 7 October. Set before only on the set-aside anti-aliased route.
+		Cap->bExcludeFromSceneTextureExtents = true;
 		Cap->HiddenActors.Add(A);
 		Cap->SetMobility(EComponentMobility::Movable);
 		Cap->SetWorldLocation(Gc.At);

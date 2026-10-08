@@ -59,3 +59,19 @@
 {"event": "stop", "at": "2026-10-08T05:57:00", "note": ""}
 {"event": "start", "at": "2026-10-08T05:57:00", "task": "8 Oct early: the tester's Sheila fault found (the route) and the route re-run 15/15; the sky's tree clump clamped", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T06:40:00", "note": ""}
+{"event": "start", "at": "2026-10-08T06:40:00", "task": "8 Oct: morning pictures, the overview, the sky's tree clamp committed", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T07:10:00", "note": ""}
+{"event": "start", "at": "2026-10-08T07:10:00", "task": "8 Oct: his 07:10 order: tag, the talk merge by a helper (re-measured), rulings and findings", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T07:25:00", "note": ""}
+{"event": "start", "at": "2026-10-08T07:25:00", "task": "8 Oct: the sky lit by the sky it shows, two tries, gate reviewers per view (times from commits, approximate)", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T08:31:00", "note": ""}
+{"event": "start", "at": "2026-10-08T08:31:00", "task": "8 Oct: Mickey's row's windows to the photographs (the lab's sash, a fresh helper's target, checks, reviews); Haiku timing; Tom's brow try", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T10:05:00", "note": ""}
+{"event": "start", "at": "2026-10-08T10:05:00", "task": "8 Oct: the night's lit windows, the lamp pool's cone, the cover, the light change on his page", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T11:20:00", "note": ""}
+{"event": "start", "at": "2026-10-08T11:20:00", "task": "8 Oct: his 11:10 order, the light's faults: brick, near pool, the road after the lab's answer, two tries each", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T11:59:00", "note": ""}
+{"event": "start", "at": "2026-10-08T11:59:00", "task": "8 Oct: the office gate under the new light: eight fresh reviewers in two rounds (road reviews before)", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-10-08T12:50:00", "note": "reviewers ran beside the production tries"}
+{"event": "start", "at": "2026-10-08T12:00:00", "task": "8 Oct: the office's tries (night glass, yellow lines, dark shop spill, directories, door glass), back room, package request, records", "phase": "1", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T13:40:00", "note": ""}
