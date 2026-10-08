@@ -25,9 +25,21 @@
 - **The lapel does not hold.** Three different ways were tried; none gave a turned lapel with a notch.
 - **Cost:** about an hour, plus 1½ hours of helpers, plus eleven short simulation runs. **Adopt: the pattern drafting, yes; draping tailored jackets in Blender, no.** Untested idea: model the jacket and check its outline against the drafted pattern, the way the window was checked.
 
+## 4. Ron's plain clothes, modelled to a pattern (8 October): the checks worked, the clothes did not
+
+- A fresh helper drafted Thornton's stout trousers and a crew-neck jumper for Ron and wrote the outline target. The garments were modelled on him, with no cloth simulation:
+  - no body point shows through either garment;
+  - the trousers' outline is within 1 cm in every view, the jumper's within 11.3 mm;
+  - 3 of 22 seams match within 1 cm.
+- Testing the target against Ron's body and its own pattern found seven faults in it, all fixed by its writer.
+- **The fresh review failed it:** "the sleeves look like skin, and the trousers look like tracksuit bottoms". Most of the faults come from the target's own choices (the pattern's thin ease on Ron's forearm, straight wide legs with no break); an outline check cannot see them.
+- **Cost:** 1 hour 31 minutes, plus 86 minutes of helpers and a 4-minute review.
+- **Adopt:** not as a way to make clothes. Yes for the body check (count the body points through a garment; gate on zero), and yes for testing a target against the body and its pattern before building to it.
+- Page: 4-plain-clothes/REPORT.md, https://claude.ai/artifact/5rTRS2pewmoWbjXgcPLiPo
+
 ## What needs you
 
-1. **Lab pushes:** the safety check stopped my pushes to the lab branch, so the work is saved on this PC only. Allow pushes to lab, or push it yourself.
+1. **Lab pushes:** done (allowed 8 October).
 2. **Epic's code (optional):** to clone Epic's code from GitHub, accept the EpicGames invitation on GitHub, on the account this PC uses. Not needed for these answers.
 3. **The street's windows: the book or the photographs?** (A, recommended) The photographed originals, 2½ to 3 inches of frame. (B) Ellis's ¾ inch.
 
