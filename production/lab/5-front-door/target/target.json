@@ -1,0 +1,628 @@
+{
+ "status": "SOURCED 8 Oct 2026, ready to build to. Book values from Ellis 1902 pp.90-93 and 111-112, gaps filled from Hasluck 1907 pp.346-347 and 398 and Riley 1905 pp.353-357 (each labelled). The photograph P1 (Teignmouth, four-panel, frontal) decides every point where it disagrees with a book (Jafar's ruling). Every value has its row in SOURCES.md section 1 with Read / Scaled / Derived / Photo / Judgement. self_check below is written by self_check.py.",
+ "units": "mm",
+ "axes": "x across the opening (left to right seen from outside), z up, y depth into the wall with the outside at -y. Origin: the left brick reveal edge (x=0), the top of the stone sill under the leaf (z=0), the outside face of the brick wall (y=0).",
+ "opening": {
+  "brick_width_mm": 882.0,
+  "brick_height_mm": 2329.6,
+  "_src": "Derived: clear between stops (772.0) plus the jamb showing past the brick each side (55, Photo P1). Height: sill top to brick head = leaf gap 10 + leaf 1948 - stop 22 + 1.6 + transom face 65 + glass sight 267 + head showing 60. See SOURCES.md 1a, 1f.",
+  "clear_between_stops_mm": 772.0,
+  "clear_height_to_transom_mm": 1937.6,
+  "reveal_depth_mm": 114.3,
+  "_reveal": "Read: '18-in. brick wall with 4 1/2-in. reveals', Hasluck p.346 (outer four-panel door with fanlight). Same figure as Ellis's sash frame set-back (lab 2 SOURCES 1b).",
+  "wall_thickness_mm": 342.9,
+  "_wall": "Judgement: 1 1/2 brick (13 1/2 in), the wall Ellis draws for the sash (lab 2 SOURCES 1a); Hasluck's example is 18 in. Only the reveal matters to this target.",
+  "game_present": {
+   "leaf_w_mm": 838,
+   "leaf_h_mm": 1981,
+   "leaf_t_mm": 60,
+   "frame": "none",
+   "fanlight": "none (brick spandrel 869 high above the leaf)",
+   "_src": "ledger repo origin/wip production/specs/vignette-pieces.json, C9_door_side rows (e.g. east_parade_sidedoor0)"
+  }
+ },
+ "leaf": {
+  "width_mm": 812.8,
+  "_w": "Read: 2 ft 8 in between the frame's rebates, Hasluck p.347 Fig. 1148 (the dimension's witness lines touch the rebate faces, checked by zoom)",
+  "height_mm": 1948.0,
+  "_h": "Photo: P1's visible leaf (stop to stop, sill to transom) is 2.505 +-0.04 times as high as wide; with the width above and the stops' 22 mm cover this gives 1948 +-31. Hasluck's printed 6 ft 8 in (2032) would show 2.63: outside the photo's error, so the photo wins (SOURCES.md 3, D1).",
+  "thickness_mm": 50.8,
+  "_t": "Read: entrance doors '2 to 2 1/2 in. thick', Ellis p.93; '2-in. four-panel door', Hasluck p.398. Hasluck Fig. 1148 scales 53.",
+  "x0_mm": 34.6,
+  "z0_mm": 10.0,
+  "_pos": "Derived: left rebate face at x=33.0 plus 1.6 clearance; leaf bottom 10 above the stone sill (Photo P1, gap 2 px +-1 px = 10 +-5)",
+  "outside_face_y_mm": 188.3,
+  "_y": "Derived: reveal 114.3 + stop depth 74.0 (frame 127 less rebate 53)",
+  "edge_clearance_mm": 1.6,
+  "_clear": "Judgement: 1/16 in, the sash play Hasluck gives on p.404 (no door figure found)",
+  "stile_mm": 114.3,
+  "_stile": "Read: 'stiles and top rails ... out of 4 1/2 in.', Ellis p.93; Riley p.357 Fig. 671 prints 4 1/2 for an outer door. Photo P1 agrees (115.4 +-11).",
+  "muntin_mm": 132.2,
+  "_muntin": "Photo: P1 shows 23.8 px = 122.6 +-15 between the panel mouldings; the outside bolection mouldings cover 4.8 of each edge, so the muntin is 132.2. Ellis p.93 and Riley p.357 both print 4 in (101.6), outside the error: the photo wins (D2). P2 (six-panel) shows about 107.",
+  "top_rail_mm": 127.0,
+  "_top": "Read: Riley p.357 Fig. 670 prints 5 in for an outer door's top rail, and P1 agrees (20.3 px showing = 104.5, plus 22 behind the transom stop and 4.8 under the moulding = 131.3 +-12). Ellis p.93's 4 1/2 in (114.3) is outside the photo's error (D8).",
+  "lock_rail_mm": 228.6,
+  "_lock": "Read: 'middle and bottom rails 9 in.', Ellis p.93. P1 agrees: 210 +-15 showing between the mouldings plus two 4.8 laps = 219.6. Riley's outer door prints 11 in (279), outside the error, not used.",
+  "lock_rail_centre_above_leaf_bottom_mm": 787.0,
+  "_lockc": "Photo: P1, 153 px x 5.15 = 787 +-12. Ellis p.93 says 2 ft 8 in, 'about 6 in. lower' when approached from a step (660); Riley p.355 says about 2 ft 9 in (838). Photo wins (D3).",
+  "bottom_rail_mm": 192.8,
+  "_bottom": "Photo: P1, 36.5 px = 188 +-15 from the leaf bottom to the moulding edge, plus a 4.8 lap. Ellis 9 in (228.6) and Riley 11 in are outside the error; photo wins (D4).",
+  "construction": "Read: stiles run full height; rails tenoned through the stiles; muntins stub-tenoned into the rails (Ellis p.90 Fig. 290; Riley p.353 Fig. 654 'stump tenon')."
+ },
+ "panels": {
+  "_layout": "Four panels, two tall above the lock rail and two short below (Ellis Fig. 290; Riley Fig. 654; Photo P1). Positions are in leaf coordinates: u from the leaf's left edge, v from its bottom. Each is the framing opening (edge of stile, rail, muntin).",
+  "openings_leaf_uv_mm": {
+   "top_left": {
+    "u0": 114.3,
+    "u1": 340.3,
+    "v0": 901.3,
+    "v1": 1821.0
+   },
+   "top_right": {
+    "u0": 472.5,
+    "u1": 698.5,
+    "v0": 901.3,
+    "v1": 1821.0
+   },
+   "bottom_left": {
+    "u0": 114.3,
+    "u1": 340.3,
+    "v0": 192.8,
+    "v1": 672.7
+   },
+   "bottom_right": {
+    "u0": 472.5,
+    "u1": 698.5,
+    "v0": 192.8,
+    "v1": 672.7
+   }
+  },
+  "_openings": "Derived from the leaf numbers above (panel openings 226.0 wide; top 919.7 high, bottom 479.9 high)",
+  "groove_depth_mm": 12.7,
+  "_groove": "Read: 'usually grooved 1/2 in. deep for the panels', Ellis p.92 (5/8 in over 2 ft wide; these are 241 wide)",
+  "side_play_mm": 3.2,
+  "_play": "Read: panels 'given 1/8 in. play sideways, but fitting close lengthways of the grain', Ellis p.92. Taken as 1/8 in in total across the width (Judgement on the reading).",
+  "thickness_mm": 16.9,
+  "_thick": "Derived: panels 'usually about one-third the thickness of the door', Riley p.353; 50.8 / 3. Riley p.355 notes outer doors' lower panels are often two-thirds and bead flush; P1 shows moulded lower panels, so one-third is kept.",
+  "position_in_thickness": "centred (Read: panels 'fit into grooves in the middle of the framing', Riley p.353)",
+  "type_outside": "flat panel with a bolection moulding (Read: 'Bolection mould' on the outside of the four-panelled outer door, Riley p.357 Fig. 671; P1 shows a raised moulding round a flat field, consistent)",
+  "type_inside": "flat panel, single (planted, sunk) moulding (Read: 'Single mould', Riley p.357 Fig. 671)"
+ },
+ "mouldings": {
+  "outside_bolection": {
+   "kind": "bolection, planted, fixed to the panel, rebated over the framing",
+   "width_on_face_mm": 36.0,
+   "_w": "Scaled: Riley p.357 Fig. 671 against its printed 4 1/2 in stile, +-5. Photo P1: 38 +-10 (agrees).",
+   "lap_over_framing_mm": 4.8,
+   "_lap": "Read: 'From 1/8 to 3/16 in. is sufficient', Ellis p.92 (bolection lap). 3/16 in used.",
+   "projection_above_framing_mm": 7.0,
+   "_proj": "Scaled: Riley Fig. 671, +-5",
+   "profile": "ogee and fillet, rebated over the framing edge (Ellis p.91 Fig. 294-295, drawn; no numbers)"
+  },
+  "inside_single": {
+   "kind": "planted sunk moulding, fixed to the framing, flush with its face",
+   "width_on_face_mm": 22.0,
+   "_w": "Scaled: Riley Fig. 671, +-5",
+   "profile": "ogee/ovolo; back edge bevelled under (Read: Ellis p.91 'The back edge of the moulding should be bevelled under')"
+  },
+  "lock_rail_band": {
+   "kind": "projecting horizontal moulding across the full width of the lock rail",
+   "z_above_leaf_bottom_mm": [
+    779.0,
+    858.5
+   ],
+   "projection_mm": 19.0,
+   "_src": "Photo: P1, rows 363-379 px. Not in any book read. Projection Judgement (the band throws a 3 px shadow)."
+  },
+  "weatherboard": {
+   "kind": "weather moulding across the bottom rail, outside",
+   "z_above_leaf_bottom_mm": [
+    5.0,
+    77.0
+   ],
+   "projection_mm": 30.0,
+   "_src": "Photo: P1, rows 515-529 px. Not in any book read. Projection Judgement."
+  },
+  "frame_ovolo_radius_mm": 19.0,
+  "_ovolo": "Read: 'the outside edge of the frame has an ovolo worked on', Hasluck p.346; 'Ovolo mould', Riley p.357. Size Scaled from Hasluck Fig. 1148, +-5."
+ },
+ "frame": {
+  "kind": "solid frame, rebated out of the solid; jambs framed between head and sill (Read: Ellis p.111)",
+  "jamb_face_mm": 101.6,
+  "jamb_depth_mm": 127.0,
+  "_jamb": "Read: '5 x 4 rebated frame', Riley p.357 Fig. 671; Scaled: Hasluck Fig. 1148 frame 103 across by 126 deep, so 4 in across the opening and 5 in into the wall",
+  "jamb_showing_past_brick_mm": 55.0,
+  "_showing": "Photo: P1, left 10 px and right 11 px x 5.15 = 52 and 57, +-10. Hasluck Fig. 1148 scales 39 (photo wins, D5).",
+  "jamb_x_mm": {
+   "left": [
+    -46.6,
+    55.0
+   ],
+   "right": [
+    827.0,
+    928.6
+   ]
+  },
+  "rebate_width_mm": 22.0,
+  "_rebate_w": "Scaled: the stop covers the leaf by 20 (Hasluck Fig. 1148) and 24 (Riley Fig. 671), mean 22 +-5",
+  "rebate_depth_mm": 53.0,
+  "_rebate_d": "Scaled: Hasluck Fig. 1148 (leaf 2 in plus play)",
+  "stop_depth_mm": 74.0,
+  "_stop": "Derived: 127 - 53; the stop is on the outside, the leaf opens inwards (Hasluck Figs. 1148-1149, Riley Fig. 671)",
+  "frame_outside_face_y_mm": 114.3,
+  "head_section_mm": {
+   "height": 101.6,
+   "depth": 127.0,
+   "z0": 2269.6,
+   "showing_below_brick": 60.0
+  },
+  "_head": "Section Read as the jambs (Riley 'Transome 5 x 4' and frame 5 x 4). Showing 60 is Photo P1 (11.5 px). Ellis p.111: the head is built into the wall under the arch or fixed to a lintel.",
+  "transom": {
+   "z_stop_underside": 1937.6,
+   "z_top": 2002.6,
+   "face_height_mm": 65.0,
+   "rebate_underside_z": 1959.6,
+   "depth": 127.0
+  },
+  "_transom": "Photo: P1 shows 12.5 px = 65 +-10 between the leaf and the glass. Riley prints a 5 x 4 transom (101.6 high); photo wins (D6). Hasluck p.398: 'double rebated and weathered transom'.",
+  "sill": {
+   "kind": "stone sill, no oak sill; frame feet held by iron plugs",
+   "top_z": 0.0,
+   "thickness_mm": 76.0,
+   "front_y_mm": 0.0,
+   "back_y_mm": 241.3,
+   "nosing": "rounded"
+  },
+  "_sill": "Read: 'The foot of the frame, when an oak sill is not framed in, is secured to the stone sill by iron plugs', Ellis p.111. Thickness Photo P1 (14 px = 72 +-10, rounded to 3 in, Judgement). Front flush with the wall face and nosing rounded: Photo P1. Back edge: Judgement, under the frame's inside face.",
+  "fanlight": {
+   "kind": "fixed single pane glazed straight into the frame, no sash, no bars",
+   "glass_sight_mm": {
+    "x0": 55.0,
+    "x1": 827.0,
+    "z0": 2002.6,
+    "z1": 2269.6
+   },
+   "glass_thickness_mm": 2.5,
+   "glass_rebate_mm": 6.4,
+   "glass_y_mm": 133.3
+  },
+  "_fanlight": "Photo: P1 glass 51.5 px = 267 +-10 high, as wide as the leaf's visible width. Hasluck p.347 prints a 1 ft 6 in (457) hung fanlight; photo wins (D7). Glass 21 oz sheet 2.5 (Rivington Part III p.440, lab 2 SOURCES 1e). Rebate 1/4 in: Judgement from Ellis's sash rebate p.127. Glass plane 19 behind the frame face: Judgement."
+ },
+ "brick": {
+  "reveal_x_mm": {
+   "left": 0.0,
+   "right": 882.0
+  },
+  "head_z_mm": 2329.6,
+  "head_kind": "flat or slightly cambered brick arch over the frame head (Photo P1; Ellis p.111 Fig. 355 shows a segmental arch on the head)"
+ },
+ "self_check": {
+  "run": "self_check.py, 8 Oct 2026",
+  "summary": "68 of 69 checks pass",
+  "photo_scale_mm_per_px_P1": 5.15,
+  "failures": [
+   {
+    "group": "2 photo P2 fraction",
+    "check": "visible height / visible width (six-panel door)",
+    "pass": false,
+    "detail": "target 2.497, photo 2.382 +-0.08 (P2 not used for numbers; six panels, sides uncertain)"
+   }
+  ],
+  "rows": [
+   {
+    "group": "1 printed",
+    "check": "leaf width 2 ft 8 in, Hasluck p.347",
+    "pass": true,
+    "detail": "source 812.8, target 812.8"
+   },
+   {
+    "group": "1 printed",
+    "check": "leaf thickness 2 in, Ellis p.93 / Hasluck p.398",
+    "pass": true,
+    "detail": "source 50.8, target 50.8"
+   },
+   {
+    "group": "1 printed",
+    "check": "stile 4 1/2 in, Ellis p.93 / Riley p.357",
+    "pass": true,
+    "detail": "source 114.3, target 114.3"
+   },
+   {
+    "group": "1 printed",
+    "check": "top rail 5 in, Riley p.357 (photo agrees; Ellis 4 1/2 in overridden, D8)",
+    "pass": true,
+    "detail": "source 127.0, target 127.0"
+   },
+   {
+    "group": "1 printed",
+    "check": "lock rail 9 in, Ellis p.93 (photo agrees)",
+    "pass": true,
+    "detail": "source 228.6, target 228.6"
+   },
+   {
+    "group": "1 printed",
+    "check": "groove 1/2 in, Ellis p.92",
+    "pass": true,
+    "detail": "source 12.7, target 12.7"
+   },
+   {
+    "group": "1 printed",
+    "check": "panel side play 1/8 in, Ellis p.92",
+    "pass": true,
+    "detail": "source 3.2, target 3.2"
+   },
+   {
+    "group": "1 printed",
+    "check": "bolection lap 3/16 in (1/8 to 3/16), Ellis p.92",
+    "pass": true,
+    "detail": "source 4.8, target 4.8"
+   },
+   {
+    "group": "1 printed",
+    "check": "reveal 4 1/2 in, Hasluck p.346",
+    "pass": true,
+    "detail": "source 114.3, target 114.3"
+   },
+   {
+    "group": "1 printed",
+    "check": "frame 4 in across, Riley p.357",
+    "pass": true,
+    "detail": "source 101.6, target 101.6"
+   },
+   {
+    "group": "1 printed",
+    "check": "frame 5 in deep, Riley p.357",
+    "pass": true,
+    "detail": "source 127.0, target 127.0"
+   },
+   {
+    "group": "1 printed",
+    "check": "panel one-third of door, Riley p.353",
+    "pass": true,
+    "detail": "source 16.9, target 16.9"
+   },
+   {
+    "group": "3 photo wins",
+    "check": "D1: leaf height 6 ft 8 in, Hasluck p.347",
+    "pass": true,
+    "detail": "book 2032.0, photo 1948.0, target 1948.0"
+   },
+   {
+    "group": "3 photo wins",
+    "check": "D2: muntin 4 in, Ellis p.93 / Riley p.357",
+    "pass": true,
+    "detail": "book 101.6, photo 132.2, target 132.2"
+   },
+   {
+    "group": "3 photo wins",
+    "check": "D3: lock rail centre 2 ft 8 in less 6 in from a step, Ellis p.93 (Riley 2 ft 9 in)",
+    "pass": true,
+    "detail": "book 660.4, photo 787.0, target 787.0"
+   },
+   {
+    "group": "3 photo wins",
+    "check": "D4: bottom rail 9 in, Ellis p.93 (Riley 11 in)",
+    "pass": true,
+    "detail": "book 228.6, photo 192.8, target 192.8"
+   },
+   {
+    "group": "3 photo wins",
+    "check": "D5: jamb showing past brick, Hasluck Fig. 1148 scaled 39",
+    "pass": true,
+    "detail": "book 39.0, photo 55.0, target 55.0"
+   },
+   {
+    "group": "3 photo wins",
+    "check": "D6: transom 4 in, Riley p.357",
+    "pass": true,
+    "detail": "book 101.6, photo 65.0, target 65.0"
+   },
+   {
+    "group": "3 photo wins",
+    "check": "D7: fanlight 1 ft 6 in, Hasluck p.347",
+    "pass": true,
+    "detail": "book 457.2, photo 267.0, target 267.0"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "leaf visible top (transom stop)",
+    "pass": true,
+    "detail": "target 155.7 px, photo 155.5 px, diff +0.2 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "panel moulding x edge 1",
+    "pass": true,
+    "detail": "target 135.2 px, photo 136.7 px, diff -1.5 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "panel moulding x edge 2",
+    "pass": true,
+    "detail": "target 180.9 px, photo 182.0 px, diff -1.1 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "panel moulding x edge 3",
+    "pass": true,
+    "detail": "target 204.8 px, photo 205.8 px, diff -1.0 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "panel moulding x edge 4",
+    "pass": true,
+    "detail": "target 250.5 px, photo 251.7 px, diff -1.2 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "panel moulding z edge 1",
+    "pass": true,
+    "detail": "target 175.5 px, photo 175.8 px, diff -0.3 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "panel moulding z edge 2",
+    "pass": true,
+    "detail": "target 355.9 px, photo 356.7 px, diff -0.8 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "panel moulding z edge 3",
+    "pass": true,
+    "detail": "target 398.4 px, photo 397.5 px, diff +0.9 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "panel moulding z edge 4",
+    "pass": true,
+    "detail": "target 493.5 px, photo 493.5 px, diff -0.0 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "lock band top",
+    "pass": true,
+    "detail": "target 363.3 px, photo 363.3 px, diff +0.0 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "lock band bottom",
+    "pass": true,
+    "detail": "target 378.7 px, photo 378.7 px, diff +0.0 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "weatherboard top",
+    "pass": true,
+    "detail": "target 515.0 px, photo 515.0 px, diff +0.0 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "glass top",
+    "pass": true,
+    "detail": "target 91.3 px, photo 92.5 px, diff -1.2 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "glass bottom",
+    "pass": true,
+    "detail": "target 143.1 px, photo 144.0 px, diff -0.9 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "head top (brick)",
+    "pass": true,
+    "detail": "target 79.6 px, photo 81.0 px, diff -1.4 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "left brick edge",
+    "pass": true,
+    "detail": "target 107.2 px, photo 108.5 px, diff -1.3 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1",
+    "check": "right brick edge",
+    "pass": true,
+    "detail": "target 278.5 px, photo 279.0 px, diff -0.5 (allowed 2.5)"
+   },
+   {
+    "group": "2 photo P1 fraction",
+    "check": "visible height / visible width",
+    "pass": true,
+    "detail": "target 2.497, photo 2.498 +-0.04"
+   },
+   {
+    "group": "2 photo P1 fraction",
+    "check": "stile showing / visible width",
+    "pass": true,
+    "detail": "target 0.115, photo 0.125 +-0.014"
+   },
+   {
+    "group": "2 photo P1 fraction",
+    "check": "top rail showing / visible height",
+    "pass": true,
+    "detail": "target 0.053, photo 0.054 +-0.008"
+   },
+   {
+    "group": "2 photo P1 fraction",
+    "check": "top panel (moulding) / visible height",
+    "pass": true,
+    "detail": "target 0.482, photo 0.483 +-0.008"
+   },
+   {
+    "group": "2 photo P1 fraction",
+    "check": "lock rail showing / visible height",
+    "pass": true,
+    "detail": "target 0.114, photo 0.109 +-0.008"
+   },
+   {
+    "group": "2 photo P1 fraction",
+    "check": "bottom panel (moulding) / visible height",
+    "pass": true,
+    "detail": "target 0.254, photo 0.256 +-0.008"
+   },
+   {
+    "group": "2 photo P1 fraction",
+    "check": "bottom rail showing / visible height",
+    "pass": true,
+    "detail": "target 0.098, photo 0.097 +-0.008"
+   },
+   {
+    "group": "2 photo P1 fraction",
+    "check": "lock rail centre / visible height",
+    "pass": true,
+    "detail": "target 0.408, photo 0.408 +-0.008"
+   },
+   {
+    "group": "2 photo P2 fraction",
+    "check": "visible height / visible width (six-panel door)",
+    "pass": false,
+    "detail": "target 2.497, photo 2.382 +-0.08 (P2 not used for numbers; six panels, sides uncertain)"
+   },
+   {
+    "group": "2 photo P2 fraction",
+    "check": "stile showing / visible width",
+    "pass": true,
+    "detail": "target 0.115, photo 0.107 +-0.03"
+   },
+   {
+    "group": "2 photo P2 fraction",
+    "check": "bottom rail showing / visible height",
+    "pass": true,
+    "detail": "target 0.098, photo 0.101 +-0.01"
+   },
+   {
+    "group": "4 consistency",
+    "check": "stiles + muntin + panel openings = leaf width",
+    "pass": true,
+    "detail": "812.8 vs 812.8"
+   },
+   {
+    "group": "4 consistency",
+    "check": "rails + panel openings = leaf height",
+    "pass": true,
+    "detail": "1948.0 vs 1948.0"
+   },
+   {
+    "group": "4 consistency",
+    "check": "lock rail centred on its stated height",
+    "pass": true,
+    "detail": "787.0"
+   },
+   {
+    "group": "4 consistency",
+    "check": "muntin centred on the leaf",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "panel width fits the grooves with the side play",
+    "pass": true,
+    "detail": "panel 248.2, groove to groove 251.4"
+   },
+   {
+    "group": "4 consistency",
+    "check": "panel thinner than the leaf and centred",
+    "pass": true,
+    "detail": "16.9 in 50.8"
+   },
+   {
+    "group": "4 consistency",
+    "check": "bolection leaves a field on every panel",
+    "pass": true,
+    "detail": "field width > 100"
+   },
+   {
+    "group": "4 consistency",
+    "check": "lock band lies on the lock rail",
+    "pass": true,
+    "detail": "band [779.0, 858.5], rail 672.7-901.3"
+   },
+   {
+    "group": "4 consistency",
+    "check": "weatherboard lies on the bottom rail below the moulding",
+    "pass": true,
+    "detail": "77.0 <= 188.0"
+   },
+   {
+    "group": "4 consistency",
+    "check": "leaf + two clearances = rebate to rebate",
+    "pass": true,
+    "detail": "816.0 vs 816.0"
+   },
+   {
+    "group": "4 consistency",
+    "check": "leaf starts one clearance from the left rebate",
+    "pass": true,
+    "detail": "x0 34.6"
+   },
+   {
+    "group": "4 consistency",
+    "check": "leaf thickness fits the rebate depth",
+    "pass": true,
+    "detail": "50.8 < 53.0"
+   },
+   {
+    "group": "4 consistency",
+    "check": "leaf face sits on the stop",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "stop + rebate = frame depth",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "leaf top + clearance = transom rebate",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "transom stop covers the leaf top by the rebate width",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "leaf clears the sill",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "jamb showing past brick + hidden part = jamb face",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "brick opening = clear between stops + jambs showing",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "glass sits on the transom and under the head",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "head showing below brick = brick head - head underside",
+    "pass": true,
+    "detail": ""
+   },
+   {
+    "group": "4 consistency",
+    "check": "frame face set back by the reveal",
+    "pass": true,
+    "detail": ""
+   }
+  ]
+ }
+}

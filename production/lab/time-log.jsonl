@@ -7,3 +7,8 @@
 {"event": "stop", "at": "2026-10-07T23:14:41", "note": "three tests closed; LAB-REPORT.md written and published"}
 {"event": "start", "at": "2026-10-08T07:12:37", "task": "lab test 4: plain clothes modelled to a pattern", "phase": "lab", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T08:43:42", "note": "lab test 4 closed: v27, checks near pass, fresh review FAIL; report published"}
+{"event": "start", "at": "2026-10-08T11:10:04", "task": "lab task 1: wet road reflection", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T11:22:32", "note": "ROAD-NOTES.md pushed for the builder"}
+{"event": "start", "at": "2026-10-08T11:23:07", "task": "lab task 2: shop glass stair steps", "phase": "lab", "kind": "production"}
+{"event": "stop", "at": "2026-10-08T11:29:17", "note": "GLASS-NOTES.md pushed"}
+{"event": "start", "at": "2026-10-08T11:29:35", "task": "lab task 3: front door (Ellis), phase 2", "phase": "lab", "kind": "production"}
