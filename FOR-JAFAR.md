@@ -54,7 +54,7 @@ Disk (10-08 03:45): C: 88.5 GB free, F: 38.4 GB free (retention's floors: 40 and
 
 ## Builder, Thursday 8 October
 
-**Failed:** item 1.1's third review, the first by your new gate: no change of last evening made a fault, but newly seen ones block: walkers and Tom walk through things, faults in Mickey's office, and three views framed too high. The speaker's walk: where its clips join, a planted foot slides 13 to 27 cm (the bar is 3 cm). The tester never found Sheila on the street.
+**Failed:** item 1.1's third review, the first by your new gate: no change of last evening made a fault, but newly seen ones block: walkers and Tom walk through things, faults in Mickey's office, and three views framed too high; most fixed by 06:00. The speaker's walk: where its clips join, a planted foot slides 13 to 27 cm (the bar is 3 cm). The tester never found Sheila on the street.
 
 **Done (in tonight's build):** turning: if someone Tom talks to has turned away, they turn to face him: asked 100°, turned 99.6° ([picture](production/previews/turn-to-him-2026-10-08.jpg)). Sitting: Ron, on the office bench in his evening hours, stands up and sits down again, landing within 1 cm of his seat with no foot slip ([picture](production/previews/sit-stand-office-2026-10-08.jpg)). The library's own turns crouched and its only sit-down bent him double, so the right turn is a left turn mirrored and the sit-down is the stand-up played backwards. Your gate ruling is in; tonight's review has ten views, one reviewer each.
 
