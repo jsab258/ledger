@@ -130,6 +130,7 @@
 #include "Components/SkyLightComponent.h"
 #include "Components/SceneCaptureComponentCube.h"
 #include "Engine/TextureRenderTargetCube.h"
+#include "UObject/StrongObjectPtr.h"
 #include "Components/SkyAtmosphereComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Pawn.h"
@@ -6971,6 +6972,29 @@ namespace
 		return Cap;
 	}
 
+	// THE WINDOW'S OWN CUBE TAKES ONLY THE FINISHED PASS (8 October, the glass gate: Mickey's window by
+	// day reflected the street's houses black on a bright sky in every picture after 13:00, while the
+	// cube dumped after the round held them lit). Lumen gathers a fresh capture's light over its passes,
+	// and every pass wrote into the cube the glass shows, so for a dozen frames each round the window
+	// reflected an unlit street; the photographs, taken a few seconds in, now fell in that time, and a
+	// player would see it flash at each change of light. The gathering passes go to a spare cube of
+	// the same size, kept for the session; the last pass to the window's own.
+	UTextureRenderTargetCube* GlassCatchScratch(UTextureRenderTargetCube* Own)
+	{
+		static TMap<int32, TStrongObjectPtr<UTextureRenderTargetCube>> Spares;
+		if (Own == nullptr) { return nullptr; }
+		const int32 Size = Own->SizeX;
+		if (TStrongObjectPtr<UTextureRenderTargetCube>* Have = Spares.Find(Size)) { return Have->Get(); }
+		UTextureRenderTargetCube* Rt = NewObject<UTextureRenderTargetCube>(GetTransientPackage());
+		if (Rt == nullptr) { return Own; }
+		Rt->bHDR = true;
+		Rt->ClearColor = FLinearColor::Black;
+		Rt->InitAutoFormat((uint32)Size);
+		Rt->UpdateResourceImmediate(true);
+		Spares.Add(Size, TStrongObjectPtr<UTextureRenderTargetCube>(Rt));
+		return Rt;
+	}
+
 	bool TickGlassCatch(float)
 	{
 		// -GlassCatchDump (7 October, a diagnostic: the stair-stepped roofline in the caught glass,
@@ -7006,6 +7030,9 @@ namespace
 		}
 		if (Gc.Cap.IsValid() && GGlassCatchPass > 0)
 		{
+			UTextureRenderTargetCube* Own = Gc.Rt.Get();
+			UTextureRenderTargetCube* Into = GGlassCatchPass > 1 ? GlassCatchScratch(Own) : Own;
+			if (Into != nullptr) { Gc.Cap->TextureTarget = Into; }
 			Gc.Cap->CaptureSceneDeferred();
 			--GGlassCatchPass;
 			++GGlassCatchTaken;

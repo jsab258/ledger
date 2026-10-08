@@ -3820,11 +3820,13 @@ def _pavement_dressing(out):
     """The utility cover and the extra gully grates, flush."""
     for k, (cx, cy) in enumerate(PAVEMENT_COVERS):
         top = footway_z(cy)
-        # A GREY STONE SURROUND, FLUSH (4 October: in rubbed brick, re-graded orange for the
-        # arches, it read as a doormat on the pavement, a fresh reviewer's finding)
-        _box(out, "dressing_cover_surround_%d" % k, "stone",
-             cx - 0.45, cx + 0.45, cy - 0.36, cy + 0.36, top - 0.02, top + 0.001,
-             "a-stone-surround/flush")
+        # A CAST-IRON FRAME, FLUSH (8 October, 11:20: as a grey stone surround, every review of the day
+        # read it as a doormat by day and a glowing yellow-edged marker at night; the frame is the
+        # cover's own, narrow and dark. Lost from this file once, by a commit that held only the
+        # decision; the self-test below now holds it.)
+        _box(out, "dressing_cover_surround_%d" % k, "steel_dark",
+             cx - 0.37, cx + 0.37, cy - 0.29, cy + 0.29, top - 0.02, top + 0.001,
+             "a-cast-iron-frame/flush")
         _box(out, "dressing_cover_%d" % k, "steel_dark",
              cx - 0.33, cx + 0.33, cy - 0.25, cy + 0.25, top - 0.02, top + 0.002,
              "an-iron-utility-cover")
@@ -8503,6 +8505,14 @@ def selftest():
     stray = [v for q in opened for v in q["verts"] if v[0] < -1e-6 or v[1] < 0.045 - 1e-6]
     check("accept/the-open-door-lies-in-the-room-not-the-wall", len(opened) == 3 and not stray,
           "%d part(s), %d corner(s) past the hinge line" % (len(opened), len(stray)))
+
+    # THE COVER BEFORE MICKEY'S IN AN IRON FRAME, NOT A STONE ONE (8 October: the stone read as a
+    # doormat; the fix was lost once from this file and came back in the street's export)
+    dressed = []
+    _pavement_dressing(dressed)
+    rims = [q for q in dressed if q["id"].startswith("dressing_cover_surround_")]
+    check("accept/the-cover-sits-in-an-iron-frame", rims and all(q["material"] == "steel_dark" for q in rims),
+          ",".join(q["material"] for q in rims))
 
     # MICKEY'S ROW'S WINDOWS ARE THE CHECKED SASH (8 October, his ruling): when the piece and its
     # target are in the checkout, each upper opening on the row holds it whole, spanning the

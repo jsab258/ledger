@@ -4345,7 +4345,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 3753
+   "faces": 3807
   },
   {
    "mesh": "street_stone",
@@ -4373,7 +4373,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 12476
+   "faces": 12422
   },
   {
    "mesh": "street_tile_patterned",
