@@ -15,7 +15,8 @@ outside at -y, z up from the top of the threshold):
   section_h_transom    plan cut through the transom's face (shows how it overlaps the jambs)
   section_v            elevation-side cut on the centre line of the left-hand panels
   section_v_muntin     cut on the muntin's centre line (the letter plate, the numerals, the knob on F1)
-  plan                 the step, the threshold and the wall seen from above
+  section_v_plinth     cut through the left plinth at x -60 (T1): the projecting base, its 45 degree splay, the wall above
+  plan                 the step, the plinth, the threshold and the wall seen from above (the tread's outline steps back beside the plinth)
   profiles             every profile as a closed polygon in its own frame (bolection, band, weatherboard,
                        transom front, jamb, glazing bead, threshold and step, plate, knob)
   furniture            the ironmongery in front view in its own frame
@@ -85,13 +86,31 @@ def consts(P):
     c.thr = S["threshold"]
     c.ground = S.get("ground_z_mm", -70.0)
     c.BR = 300.0
+    c.plinth = B.get("plinth") if isinstance(B.get("plinth"), dict) else None
+    c.splay = tr.get("end_splay", {})
+    c.glazing = gl
+    # the head's soffit: a circle through the crown and the springings (flat when there is no camber)
+    half = c.OW / 2
+    rise = O["camber_rise_mm"]
+    if rise > 0:
+        c.R = (half ** 2 + rise ** 2) / (2 * rise)
+        c.CZ = c.CROWN - c.R
+    else:
+        c.R = None
+        c.CZ = None
     return c
 
 
 def soffit_z(c, x):
-    """The brick head's underside (and the frame head's top edge) at x: cambered, rise at the crown."""
-    t = (x - c.OW / 2) / (c.OW / 2)
-    return c.SPRING + (c.CROWN - c.SPRING) * (1 - t * t)
+    """The brick head's underside (and the frame head's top edge) at x: a circle through the crown and the springings."""
+    if not c.R:
+        return c.CROWN
+    return c.CZ + math.sqrt(c.R ** 2 - (x - c.OW / 2) ** 2)
+
+
+def extrados_z(c, x):
+    a = c.brick["arch"]
+    return c.CZ + math.sqrt((c.R + a["depth_mm"]) ** 2 - (x - c.OW / 2) ** 2)
 
 
 # ---------------------------------------------------------------- drawing helpers
@@ -145,7 +164,16 @@ def centre_x(c):
 
 
 # ---------------------------------------------------------------- elevation
+def quoin_width_at(c, z):
+    q = c.brick["quoins"]
+    b = int((z - q["z_start_mm"]) // q["block_height_mm"])
+    b = max(0, min(q["blocks"] - 1, b))
+    long_ = (b % 2 == 0) == (q["bottom_block"] == "long")
+    return q["stretcher_width_mm"] if long_ else q["header_width_mm"]
+
+
 def quoin_polys(c):
+    """Blocks of three courses, long and short alternating, both sides in step."""
     out = []
     q = c.brick["quoins"]
     if not q.get("present"):
@@ -153,27 +181,88 @@ def quoin_polys(c):
     for i in range(q["courses"]):
         z0 = q["z_start_mm"] + i * q["course_gauge_mm"]
         z1 = z0 + q["course_gauge_mm"] - q["joint_mm"]
-        w = q["header_width_mm"] if i % 2 == 0 else q["stretcher_width_mm"]
+        w = quoin_width_at(c, z0 + 1.0)
         out.append(poly(f"quoin_l{i}", "buff", rect(-w, z0, 0, z1)))
         out.append(poly(f"quoin_r{i}", "buff", rect(c.OW, z0, c.OW + w, z1)))
     return out
 
 
 def arch_polys(c):
+    """A segmental ring of bricks on end: radial joints about the soffit's centre, the extrados parallel to the soffit."""
     out = []
     a = c.brick["arch"]
     if not a.get("present"):
         return out, None
-    xa, xb = a["ends_x_mm"]
+    sc = a["soffit_circle"]
+    R, cx, cz, depth = sc["radius_mm"], sc["centre_x_mm"], sc["centre_z_mm"], a["depth_mm"]
+    th = math.asin((a["soffit_ends_x_mm"][1] - cx) / R)
     n, j = a["bricks"], a["joint_mm"]
-    pitch = (xb - xa) / n
-    top = a["top_z_mm"]
+    d = (j / 2) / R
     for i in range(n):
-        x0, x1 = xa + i * pitch + (j / 2 if i else 0), xa + (i + 1) * pitch - (j / 2 if i < n - 1 else 0)
-        xm = [x0 + (x1 - x0) * k / 4 for k in range(5)]
-        low = [[x, soffit_z(c, min(max(x, 0.0), c.OW))] for x in xm]
-        out.append(poly(f"arch_brick{i}", "buff", low + [[x1, top], [x0, top]]))
-    return out, top
+        p0 = -th + 2 * th * i / n + (d if i else 0.0)
+        p1 = -th + 2 * th * (i + 1) / n - (d if i < n - 1 else 0.0)
+        ph = [p0 + (p1 - p0) * k / 6 for k in range(7)]
+        low = [[cx + R * math.sin(p), cz + R * math.cos(p)] for p in ph]
+        high = [[cx + (R + depth) * math.sin(p), cz + (R + depth) * math.cos(p)] for p in ph[::-1]]
+        out.append(poly(f"arch_brick{i}", "buff", low + high))
+    return out, a["extrados_z_at_crown_mm"]
+
+
+def plinth_polys(c):
+    out = []
+    pl = c.plinth
+    if not pl or not pl.get("present"):
+        return out
+    sp = pl["splay"]
+    x_each = pl["x_each_side_mm"]
+    ground = pl["ground_z_mm"]
+    z_face_top = sp["z_from_mm"]
+    lines = [z_face_top, -65.0, -142.0, -219.0, -296.0, ground]
+    for side, (xa, xb) in (("l", (-x_each, 0.0)), ("r", (c.OW, c.OW + x_each))):
+        for i, (zt, zb) in enumerate(zip(lines, lines[1:])):
+            out.append(poly(f"plinth_face_{side}{i}", "brick", rect(xa, zb, xb, zt - (0 if i == 0 else 10.0)), shade="plinth"))
+        n = int(x_each // sp["pitch_mm"])
+        for k in range(n):
+            if side == "l":
+                x1 = -sp["pitch_mm"] * k
+                x0 = x1 - sp["brick_face_mm"]
+            else:
+                x0 = c.OW + sp["pitch_mm"] * k
+                x1 = x0 + sp["brick_face_mm"]
+            out.append(poly(f"plinth_splay_{side}{k}", "brick", rect(x0, sp["z_from_mm"], x1, sp["z_to_mm"]), shade="splay"))
+    return out
+
+
+def tread_geometry(c):
+    """The step's nose: a full round of radius R along the front, its underside turning in to the base face."""
+    td = c.step["tread"]
+    nr = td["nosing_radius_mm"]
+    ztop_f = td["top_z_mm"] - td["fall_to_front_mm"]
+    yf = td["front_y_mm"]
+    zc = ztop_f - nr
+    cos_t = (td["undercut_mm"] - nr) / nr
+    th_end = 360.0 - math.degrees(math.acos(cos_t))     # on the lower half: 236.3 degrees for r 45, undercut 20
+    z_end = zc + nr * math.sin(math.radians(th_end))
+    return td, nr, ztop_f, yf, zc, th_end, z_end
+
+
+def nose_poly(c, za, zb, name):
+    """A transom nose zone between z (above the stop underside) za and zb: its ends splayed at 45 degrees."""
+    sp = c.splay
+    ov = c.SHOW - c.TR_X0
+    zf, zt = sp.get("from_stop_edge_z_mm", 0.0), sp.get("to_z_mm", 1.0)
+
+    def xl(z):
+        t = 0.0 if z <= zf else (1.0 if z >= zt else (z - zf) / (zt - zf))
+        return c.SHOW - ov * t
+
+    def xr(z):
+        t = 0.0 if z <= zf else (1.0 if z >= zt else (z - zf) / (zt - zf))
+        return c.OW - c.SHOW + ov * t
+    zs = sorted({za, zb} | {z for z in (zf, zt) if za < z < zb})
+    left = [[xl(z), c.Z_STOP + z] for z in zs]
+    right = [[xr(z), c.Z_STOP + z] for z in zs[::-1]]
+    return left + right
 
 
 def elevation(P):
@@ -185,8 +274,9 @@ def elevation(P):
     hole = [[0, zb_hole], [c.OW, zb_hole]] + cam[::-1]
     arch, arch_top = arch_polys(c)
     wall_top = (arch_top or c.CROWN) + c.BR
-    wall_bot = c.ground
+    wall_bot = min(c.ground, zb_hole) - 20.0
     out.append(poly("brick_wall", "brick", rect(-c.BR, wall_bot, c.OW + c.BR, wall_top), holes=[hole]))
+    out += plinth_polys(c)
     out += quoin_polys(c)
     out += arch
     # stone: threshold, riser, step
@@ -195,18 +285,23 @@ def elevation(P):
     if S["riser"].get("present", True):
         out.append(poly("riser", "stone", rect(0, S["riser"]["z_mm"][0], c.OW, S["riser"]["z_mm"][1])))
     if S["tread"].get("present", True):
-        tr = S["tread"]
-        out.append(poly("tread", "stone", rect(tr["x_mm"][0], tr["ground_z_mm"], tr["x_mm"][1], tr["top_z_mm"] - tr["fall_to_front_mm"])))
+        td, nr, ztop_f, yf, zc, th_end, z_end = tread_geometry(c)
+        x0, x1 = td["x_mm"]
+        out.append(poly("tread_base", "stone", rect(x0, td["ground_z_mm"], x1, z_end), shade="base"))
+        out.append(poly("tread_undercut_shadow", "stone", rect(x0, z_end - 24.0, x1, z_end), shade="shadow"))
+        out.append(poly("tread", "stone", rect(x0, z_end, x1, ztop_f)))
     # frame
     out.append(poly("jamb_left", "frame", rect(0, 0, c.SHOW, c.GZ1)))
     out.append(poly("jamb_right", "frame", rect(c.OW - c.SHOW, 0, c.OW, c.GZ1)))
     head = [[0, c.GZ1], [c.OW, c.GZ1]] + [[x, soffit_z(c, x)] for x in [c.OW * (12 - k) / 12 for k in range(13)]]
     out.append(poly("head", "frame", head))
-    # transom (zones drawn as stacked strips so the profile reads)
-    tp = parts_transom_profile(c, P)
+    # transom: the face and slope are full-width strips; the nose zones have splayed ends
     for zn, (za, zb) in P["frame"]["transom"]["zones_z_mm"].items():
-        out.append(poly(f"transom_{zn}", "frame", rect(c.TR_X0, c.Z_STOP + za, c.TR_X1, c.Z_STOP + zb), shade=zn))
-    # glazing: bead ring over the glass opening, clear glass inside
+        if zn in ("lip", "cove", "nose", "quirk"):
+            out.append(poly(f"transom_{zn}", "frame", nose_poly(c, za, zb, zn), shade=zn))
+        else:
+            out.append(poly(f"transom_{zn}", "frame", rect(c.TR_X0, c.Z_STOP + za, c.TR_X1, c.Z_STOP + zb), shade=zn))
+    # glazing: bead (or putty) ring over the glass opening, clear glass inside
     out.append(poly("glass_clear", "glass", rect(c.CGX0, c.CGZ0, c.CGX1, c.CGZ1)))
     out.append(poly("glazing_bead", "frame", rect(c.GX0, c.GZ0, c.GX1, c.GZ1), holes=[rect(c.CGX0, c.CGZ0, c.CGX1, c.CGZ1)]))
     # leaf, between the stops
@@ -331,6 +426,11 @@ def v_zone(c, z_cut):
 def section_h(P, z_cut):
     c = consts(P)
     out = brick_plan(c)
+    q = c.brick.get("quoins", {})
+    if q.get("present"):
+        w = quoin_width_at(c, z_cut)
+        out.append(poly("reveal_return_left", "buff", rect(-w, 0.0, 0.0, c.REV)))
+        out.append(poly("reveal_return_right", "buff", rect(c.OW, 0.0, c.OW + w, c.REV)))
     out.append(poly("jamb_left", "frame", jamb_plan(P, c, True)))
     out.append(poly("jamb_right", "frame", jamb_plan(P, c, False)))
     for left in (True, False):
@@ -490,18 +590,15 @@ def section_v(P, x_cut):
     thr += arc(t["front_y_mm"] + r, zt1 - r, r, 180, 90, 8)[1:] if r > 0 else [[t["front_y_mm"], zt1]]
     thr += [[t["back_y_mm"], zt1], [t["back_y_mm"], zt0]]
     out.append(poly("threshold", "stone", thr))
-    out.append(poly("ground", "ground", rect(-600.0, c.ground - 100.0, t["back_y_mm"], c.ground)))
+    out.append(poly("ground", "ground", rect(-600.0, c.ground - 100.0, t["back_y_mm"] if S["tread"].get("present", True) else t["front_y_mm"], c.ground)))
     if S["riser"].get("present", True):
         z0r, z1r = S["riser"]["z_mm"]
         out.append(poly("riser", "stone", [[S["riser"]["face_y_mm"], z0r], [t["back_y_mm"], z0r], [t["back_y_mm"], z1r], [S["riser"]["face_y_mm"], z1r]]))
     if S["tread"].get("present", True):
-        td = S["tread"]
-        nr = td["nosing_radius_mm"]
-        ztop_f = td["top_z_mm"] - td["fall_to_front_mm"]
-        yf = td["front_y_mm"]
+        td, nr, ztop_f, yf, zc, th_end, z_end = tread_geometry(c)
         pts = [[t["back_y_mm"], td["top_z_mm"]], [S["riser"]["face_y_mm"], td["top_z_mm"]], [yf + nr, ztop_f]]
-        pts += arc(yf + nr, ztop_f - nr, nr, 90, 180, 8)[1:]
-        pts += [[yf, td["ground_z_mm"]], [t["back_y_mm"], td["ground_z_mm"]]]
+        pts += arc(yf + nr, zc, nr, 90, th_end, 12)[1:]
+        pts += [[yf + td["undercut_mm"], td["ground_z_mm"]], [t["back_y_mm"], td["ground_z_mm"]]]
         out.append(poly("tread", "stone", pts))
     # leaf
     if not in_col:
@@ -535,7 +632,7 @@ def section_v(P, x_cut):
     a = c.brick["arch"]
     sz = soffit_z(c, x_cut)
     if a.get("present"):
-        top = a["top_z_mm"]
+        top = extrados_z(c, x_cut)
         out.append(poly("arch_ring", "buff", [[0, sz], [c.FY0, sz], [c.FY0, max(hz1, sz)], [c.WALL, max(hz1, sz)], [c.WALL, top], [0, top]]))
     else:
         out.append(poly("brick_over_head", "brick", [[0, sz], [c.FY0, sz], [c.FY0, hz1], [c.WALL, hz1], [c.WALL, hz1 + 200.0], [0, hz1 + 200.0]]))
@@ -577,6 +674,11 @@ def step_plan(P):
     out = []
     out.append(poly("wall_left", "brick", [[-c.BR, 0], [0, 0], [0, c.REV], [c.JL[0], c.REV], [c.JL[0], c.WALL], [-c.BR, c.WALL]]))
     out.append(poly("wall_right", "brick", [[c.OW, 0], [c.OW + c.BR, 0], [c.OW + c.BR, c.WALL], [c.JR[1], c.WALL], [c.JR[1], c.REV], [c.OW, c.REV]]))
+    pl = c.plinth
+    if pl and pl.get("present"):
+        yp = -pl["front_proud_of_wall_face_mm"]
+        out.append(poly("plinth_left", "brick", rect(-pl["x_each_side_mm"], yp, 0, 0), shade="plinth"))
+        out.append(poly("plinth_right", "brick", rect(c.OW, yp, c.OW + pl["x_each_side_mm"], 0), shade="plinth"))
     b = t.get("bearing_into_wall_each_side_mm", 0.0)
     out.append(poly("threshold", "stone", rect(-b, t["front_y_mm"], c.OW + b, t["back_y_mm"])))
     out.append(poly("jamb_left_foot", "frame", rect(c.JL[0], c.FY0, c.SHOW, c.FY1)))
@@ -584,11 +686,28 @@ def step_plan(P):
     if S["tread"].get("present", True):
         td = S["tread"]
         x0, x1 = td["x_mm"]
-        r = td["plan_corner_radius_mm"]
+        r_ = td["plan_corner_radius_mm"]
         yb, yf = S["riser"]["face_y_mm"], td["front_y_mm"]
-        pts = [[x0, yb], [x1, yb], [x1, yf + r]] + arc(x1 - r, yf + r, r, 0, -90, 8)[1:] + arc(x0 + r, yf + r, r, -90, -180, 8)[0:-1] + [[x0, yf + r]]
+        yp = -pl["front_proud_of_wall_face_mm"] if pl and pl.get("present") else yb
+        pts = [[x0, yp], [0.0, yp], [0.0, yb], [c.OW, yb], [c.OW, yp], [x1, yp], [x1, yf + r_]]
+        pts += arc(x1 - r_, yf + r_, r_, 0, -90, 8)[1:] + arc(x0 + r_, yf + r_, r_, -90, -180, 8)[0:-1] + [[x0, yf + r_]]
         out.append(poly("tread", "stone", pts))
     return out
+
+
+def section_v_plinth(P):
+    """A cut through the left plinth (x = -60): the projecting base, its 45 degree splay and the wall above."""
+    c = consts(P)
+    pl = c.plinth
+    if not pl or not pl.get("present"):
+        return None, None
+    sp = pl["splay"]
+    yp = -pl["front_proud_of_wall_face_mm"]
+    g = pl["ground_z_mm"]
+    out = [poly("plinth", "brick", [[yp, g], [yp, sp["z_from_mm"]], [0, sp["z_to_mm"]], [c.WALL, sp["z_to_mm"]], [c.WALL, g]], shade="plinth"),
+           poly("wall_above", "brick", rect(0, sp["z_to_mm"], c.WALL, sp["z_to_mm"] + 400.0)),
+           poly("ground", "ground", rect(-600.0, g - 100.0, c.WALL, g))]
+    return out, -60.0
 
 
 # ---------------------------------------------------------------- profiles and furniture (own frames)
@@ -616,12 +735,12 @@ def profiles(P):
     thr += [[t["front_y_mm"], t["top_z"] - r]] + arc(t["front_y_mm"] + r, t["top_z"] - r, r, 180, 90, 8)[1:] + [[t["back_y_mm"], t["top_z"]], [t["back_y_mm"], t["top_z"] - t["thickness_mm"]]]
     out["threshold (y into the wall, z)"] = thr
     if P["step"]["tread"].get("present", True):
-        td = P["step"]["tread"]
-        nr = td["nosing_radius_mm"]
-        yf = td["front_y_mm"]
-        ztf = td["top_z_mm"] - td["fall_to_front_mm"]
-        pp = [[P["step"]["riser"]["face_y_mm"], td["top_z_mm"]], [yf + nr, ztf]] + arc(yf + nr, ztf - nr, nr, 90, 180, 8)[1:] + [[yf, td["ground_z_mm"]], [P["step"]["riser"]["face_y_mm"], td["ground_z_mm"]]]
-        out["step tread (y, z)"] = pp
+        td, nr, ztop_f, yf, zc, th_end, z_end = tread_geometry(c)
+        pp = [[P["step"]["riser"]["face_y_mm"], td["top_z_mm"]], [yf + nr, ztop_f]] + arc(yf + nr, zc, nr, 90, th_end, 12)[1:] + [[yf + td["undercut_mm"], td["ground_z_mm"]], [P["step"]["riser"]["face_y_mm"], td["ground_z_mm"]]]
+        out["step tread, full round nose over an undercut (y, z)"] = pp
+    if c.plinth and c.plinth.get("present"):
+        sp = c.plinth["splay"]
+        out["plinth splay (y, z)"] = [[-c.plinth["front_proud_of_wall_face_mm"], c.plinth["ground_z_mm"]], [-c.plinth["front_proud_of_wall_face_mm"], sp["z_from_mm"]], [0, sp["z_to_mm"]], [60.0, sp["z_to_mm"]], [60.0, c.plinth["ground_z_mm"]]]
     kn = c.iron.get("knob", {})
     if kn.get("present"):
         rz = kn["profile_rz_mm"]
@@ -677,6 +796,9 @@ def all_drawings(T, variant=None):
     sm, xm = section_v_muntin(P)
     doc["section_v_muntin"] = {"axes": "y into the wall (outside -y), z up", "cut_x_mm": round(xm, 1), "polygons": sm}
     doc["plan"] = {"axes": "x across, y into the wall (outside -y), seen from above", "polygons": step_plan(P)}
+    spl, xpl = section_v_plinth(P)
+    if spl:
+        doc["section_v_plinth"] = {"axes": "y into the wall (outside -y), z up", "cut_x_mm": xpl, "polygons": spl}
     doc["profiles"] = {k: [[round(a, 2), round(b, 2)] for a, b in v] for k, v in profiles(P).items()}
     doc["furniture"] = {"axes": "each item in its own frame: mm from its centre (the cylinder shifted +120, the keep +200, the knob +300)", "polygons": furniture(P)}
     return doc
@@ -685,7 +807,7 @@ def all_drawings(T, variant=None):
 # ---------------------------------------------------------------- pictures
 LAYER_RGB = {"brick": (176, 96, 72), "buff": (214, 200, 160), "stone": (178, 176, 168), "frame": (238, 238, 232), "glass": (150, 190, 205),
              "leaf": (170, 30, 30), "panel": (205, 60, 55), "moulding": (120, 15, 15), "iron": (200, 165, 70), "ground": (120, 120, 120)}
-SHADE = {"slope": 0.0, "face": -22, "cove": -48, "lip": -8, "lip_and_cove": -30}
+SHADE = {"slope": 0.0, "face": -22, "cove": -48, "lip": -8, "lip_and_cove": -30, "nose": -30, "quirk": -70, "splay": 18, "plinth": -10, "base": -35, "shadow": -95}
 
 
 def render(polys, path, scale=1.0, flip=True, margin=20, bounds_layers=None, title=None):
@@ -770,7 +892,7 @@ def overlay_on_photo(T, photo_path, out_path, long_side=1200):
         return ((ax + (p[0] - ox) / s) * k, (zr - (p[1] - z0) / s) * k)
     colours = {"moulding": (255, 220, 0), "frame": (0, 220, 255), "glass": (80, 160, 255), "leaf": (255, 255, 255), "iron": (255, 0, 255), "buff": (0, 255, 120), "stone": (255, 140, 0), "panel": (255, 120, 120)}
     for d in elevation(P):
-        if d["layer"] in ("brick",):
+        if d["layer"] in ("brick",) and not d["name"].startswith("plinth"):
             continue
         col = colours.get(d["layer"], (255, 255, 255))
         if d["name"].startswith("quoin"):
@@ -783,7 +905,7 @@ def overlay_on_photo(T, photo_path, out_path, long_side=1200):
     # a plain key
     y = 6
     for nm, col in (("mouldings, band, weatherboard", colours["moulding"]), ("frame, transom, beads", colours["frame"]), ("ironmongery", colours["iron"]),
-                    ("arch and quoins", colours["buff"]), ("step", colours["stone"])):
+                    ("arch, quoins and plinth", colours["buff"]), ("step (door-plane scale: the stone, nearer, reads wider)", colours["stone"])):
         dr.rectangle([6, y, 16, y + 8], fill=col)
         dr.text((22, y - 1), nm, fill=(255, 255, 255))
         y += 13
@@ -831,6 +953,8 @@ def main(argv):
         info["section_v"] = render(doc["section_v"]["polygons"], out / f"section_v_{tag}.png", 0.8, True, title=f"{tag}: section_v at x={doc['section_v']['cut_x_mm']}")
         info["section_v_muntin"] = render(doc["section_v_muntin"]["polygons"], out / f"section_v_muntin_{tag}.png", 0.8, True, title=f"{tag}: section_v_muntin at x={doc['section_v_muntin']['cut_x_mm']}")
         info["plan"] = render(doc["plan"]["polygons"], out / f"plan_{tag}.png", 0.8, False, title=f"{tag}: plan")
+        if "section_v_plinth" in doc:
+            info["section_v_plinth"] = render(doc["section_v_plinth"]["polygons"], out / f"section_v_plinth_{tag}.png", 1.0, True, title=f"{tag}: section_v_plinth at x={doc['section_v_plinth']['cut_x_mm']}")
         render_profiles(doc["profiles"], out / f"profiles_{tag}.png")
         info["furniture"] = render(doc["furniture"]["polygons"], out / f"furniture_{tag}.png", 3.0, True, title=f"{tag}: furniture")
         print(tag, {k: v_ for k, v_ in info.items()})

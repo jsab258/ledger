@@ -17,6 +17,8 @@ import math
 import sys
 from pathlib import Path
 
+import numpy as np
+
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import target_drawing as td  # noqa: E402
@@ -174,15 +176,48 @@ n0 = bnd(E1, "house_number_0")
 n1 = bnd(E1, "house_number_1")
 row_test("numeral '9' bottom", px_z(n0[1]), ed["numeral_rows"][1][1], 1.5)
 row_test("numeral '6' top", px_z(n1[3]), ed["numeral_rows"][0][0], 1.5)
+# ---- the wall plane: a vertical mapping fitted on the quoin block boundaries (rows measured on P1), two parameters
+qb = ed["quoin_blocks"]
+qj = P1["brick"]["quoins"]
+bz = [z1 for z0_, z1 in qj["block_z_mm"][:-1]]                       # z of the nine boundaries, bottom to top
+brow = qb["boundary_rows_top_to_bottom"][::-1]                        # rows, bottom to top
+m_, a_ = np.polyfit(bz, brow, 1)
+s_w = -1.0 / m_
+
+
+def row_w(z):
+    return a_ + m_ * z
+
+
+res = [abs(row_w(z) - rw) for z, rw in zip(bz, brow)]
+check("3 photo P1", "quoin blocks: the nine block boundaries fall on one 231 mm pitch (fit of two parameters, worst residual)", max(res) <= qb["err"] + 0.5, f"worst {max(res):.2f} px; wall-plane scale {s_w:.3f} mm a pixel, anchor row {a_:.1f}")
+check("3 photo P1", "quoin blocks: the wall-plane scale agrees with the door plane's 5.15 less the set-back (4.9 to 5.15)", 4.9 <= s_w <= 5.15, f"{s_w:.3f}")
+row_test("quoin blocks: top of the top block (z 2322, the arch springing)", row_w(qj["block_z_mm"][-1][1]), qb["top_row"], qb["end_err"])
+row_test("quoin blocks: bottom of the bottom block (z 12, the plinth top)", row_w(qj["block_z_mm"][0][0]), qb["bottom_row"], qb["end_err"])
+qw = qb["right_edge_px_from_reveal"]
+check("3 photo P1", "quoin blocks: a short block reaches 25.3 +-1.5 px from the reveal", abs(qj["header_width_mm"] / s_w - qw["short"]) <= qw["err"] + 0.5, f"target {qj['header_width_mm'] / s_w:.1f} px, photograph {qw['short']}")
+check("3 photo P1", "quoin blocks: a long block reaches 48.2 +-1.5 px from the reveal", abs(qj["stretcher_width_mm"] / s_w - qw["long"]) <= qw["err"] + 0.5, f"target {qj['stretcher_width_mm'] / s_w:.1f} px, photograph {qw['long']}")
 ab = [d for n, d in E1.items() if n.startswith("arch_brick")]
-ax0 = min(shp(d).bounds[0] for d in ab)
-ax1 = max(shp(d).bounds[2] for d in ab)
-atop = max(shp(d).bounds[3] for d in ab)
-row_test("arch ring left end", px_x(ax0), ed["arch_x"][0], ed["arch_x"][2], True)
-row_test("arch ring right end", px_x(ax1), ed["arch_x"][1], ed["arch_x"][2], True)
-row_test("arch ring top (wall plane: the scale is 3% finer there)", px_z(atop), ed["arch_top_row"][0], ed["arch_top_row"][1], True)
-nb = len([n for n in E1 if n.startswith("arch_brick")])
-check("3 photo P1", "arch ring: 11 or 12 bricks counted on P1", nb in (11, 12), f"{nb} in the target")
+nb = len(ab)
+check("3 photo P1", "arch ring: exactly 13 bricks, as counted on P1 (12 joints)", nb == ed["arch_bricks_counted"] == 13 and len(ed["arch_joint_x_px"]) == 12, f"{nb} in the target, {ed['arch_bricks_counted']} counted")
+arc_ = P1["brick"]["arch"]
+ex_rows = ed["arch_extrados_rows_at_x_px"]
+err_ = ex_rows[3]
+row_test("arch extrados at the left end (x 106 px; wall plane)", row_w(td.extrados_z(c1, -22.0 + 1.0)), ex_rows[0][1], err_)
+row_test("arch extrados at the crown (x 184 px; wall plane)", row_w(td.extrados_z(c1, 441.0)), ex_rows[1][1], err_)
+row_test("arch extrados at the right end (x 280 px; wall plane)", row_w(td.extrados_z(c1, 904.0 - 1.0)), ex_rows[2][1], err_)
+so_rows = ed["arch_soffit_rows_at_x_px"]
+row_test("arch soffit at the left end (wall plane)", row_w(td.soffit_z(c1, 0.0)), so_rows[0][1], so_rows[3])
+row_test("arch soffit at the crown (wall plane)", row_w(td.soffit_z(c1, 441.0)), so_rows[1][1], so_rows[3])
+row_test("arch soffit at the right end (wall plane)", row_w(td.soffit_z(c1, c1.OW)), so_rows[2][1], so_rows[3])
+rise_t = row_w(td.extrados_z(c1, -21.0)) - row_w(td.extrados_z(c1, 441.0))
+rise_p = (ex_rows[0][1] + ex_rows[2][1]) / 2 - ex_rows[1][1]
+check("3 photo P1", "arch: the extrados rises from the ends to the crown by the photograph's 4.3 +-1.5 px (not flat)", abs(rise_t - rise_p) <= 1.5 and rise_t > 2.0, f"target {rise_t:.1f} px, photograph {rise_p:.1f} px")
+ratio_t = (arc_["ends_x_mm"][1] - arc_["ends_x_mm"][0]) / c1.OW
+ratio_p = (ed["arch_x"][1] - ed["arch_x"][0]) / (ed["brick_right"][0] - ed["brick_left"][0])
+check("3 photo P1", "arch ring's width against the opening's width (plane-free ratio)", abs(ratio_t - ratio_p) <= 0.02, f"target {ratio_t:.3f}, photograph {ratio_p:.3f}")
+pitch_t = arc_["pitch_along_soffit_mm"] / s_w
+check("3 photo P1", "arch: a brick's pitch along the soffit, 13.7 px on P1", abs(pitch_t - 13.7) <= 1.0, f"target {pitch_t:.1f} px")
 # the quoins: course pitch against the photograph (15.2-15.4 px at the wall face)
 q = P1["brick"]["quoins"]
 pitch_px = q["course_gauge_mm"] / (s * 0.968)
@@ -191,9 +226,11 @@ check("3 photo P1", "quoin course pitch at the wall plane (photograph 15.2-15.4 
 tw = P1["step"]["tread"]["width_mm"]
 s_tread = tw / (ed["tread_x"][1] - ed["tread_x"][0])
 dd = (P1["leaf"]["outside_face_y_mm"] + P1["step"]["tread"]["projection_beyond_wall_face_mm"]) / (1 - s_tread / s)
-dw = P1["leaf"]["outside_face_y_mm"] / (1 - 4.95 / s)
+dw = P1["leaf"]["outside_face_y_mm"] / (1 - (76.2 / 15.3) / s)     # a 3 in course gauge (Judgement) over the 15.3 px pitch
 check("3 photo P1", "tread width agrees with a camera 3 to 8 m away (from the tread's 204 px)", 3000 <= dd <= 8000, f"tread 960 mm over 204 px = {s_tread:.2f} mm/px, camera {dd / 1000:.1f} m")
-check("3 photo P1", "brick course scale and tread scale give camera distances within a factor 1.8", max(dd, dw) / min(dd, dw) <= 1.8, f"from the courses {dw / 1000:.1f} m, from the tread {dd / 1000:.1f} m")
+check("3 photo P1", "brick course scale and tread scale give camera distances within a factor 1.3", max(dd, dw) / min(dd, dw) <= 1.3, f"from the courses {dw / 1000:.1f} m, from the tread {dd / 1000:.1f} m")
+tw_pred = (ed["tread_x"][1] - ed["tread_x"][0]) * s * (dw - (P1["leaf"]["outside_face_y_mm"] + P1["step"]["tread"]["projection_beyond_wall_face_mm"])) / dw
+check("3 photo P1", "tread width the photograph implies at the courses' camera distance, against the target's 960 (+-40)", abs(tw_pred - tw) <= 40, f"{tw_pred:.0f} mm")
 # fractions
 vh = F["transom"]["z_stop_underside"] - L["z0_mm"]
 vw = c1.OW - 2 * c1.SHOW
@@ -226,9 +263,19 @@ def p2row(name, t, p, e, kind="check"):
 p2row("transom bar height / visible width", P2["frame"]["transom"]["face_height_mm"] / vw_t, (p2["transom_rows"][1] - p2["transom_rows"][0]) / vw2, 0.012)
 zn = P2["frame"]["transom"]["zones_z_mm"]
 fh = P2["frame"]["transom"]["face_height_mm"]
-p2row("transom slope share of the bar", (zn["slope"][1] - zn["slope"][0]) / fh, (p2["transom_slope_rows"][1] - p2["transom_slope_rows"][0]) / (p2["transom_rows"][1] - p2["transom_rows"][0]), 0.08)
-p2row("transom face share of the bar", (zn["face"][1] - zn["face"][0]) / fh, (p2["transom_face_rows"][1] - p2["transom_face_rows"][0]) / (p2["transom_rows"][1] - p2["transom_rows"][0]), 0.08)
-p2row("transom nose share of the bar", (zn["lip_and_cove"][1] - zn["lip_and_cove"][0]) / fh, (p2["transom_nose_rows"][1] - p2["transom_nose_rows"][0]) / (p2["transom_rows"][1] - p2["transom_rows"][0]), 0.08)
+tb_ = p2["transom_rows"][1] - p2["transom_rows"][0]
+p2row("transom slope share of the bar", (zn["slope"][1] - zn["slope"][0]) / fh, (p2["transom_slope_rows"][1] - p2["transom_slope_rows"][0]) / tb_, 0.06)
+p2row("transom face share of the bar", (zn["face"][1] - zn["face"][0]) / fh, (p2["transom_face_rows"][1] - p2["transom_face_rows"][0]) / tb_, 0.06)
+p2row("transom nose (round and quirk) share of the bar", (zn["quirk"][1] - zn["nose"][0]) / fh, (p2["transom_nose_rows"][1] - p2["transom_nose_rows"][0]) / tb_, 0.06)
+fp2 = P2["frame"]["transom"]["front_profile_yz_mm"]
+nose_ys = [y for y, z in fp2 if z <= 33.0]
+p2row("transom nose: the fullest proud of the jamb faces, mm (the nose is a single convex round to z 33; P2 shadow, Judgement 22 +-8)", -min(nose_ys) / 100.0, 0.22, 0.08)
+p2row("transom end: the face and nose top run past each stop edge by 28 +-5 mm (12 px at 2.317)", (c2.SHOW - c2.TR_X0) / 100.0, p2["transom_end_overrun_px"] * 2.317 / 100.0, 0.05)
+spl = P2["frame"]["transom"]["end_splay"]
+ang = math.degrees(math.atan2(spl["to_z_mm"] - spl["from_stop_edge_z_mm"], c2.SHOW - c2.TR_X0))
+check("4 photo P2", "transom end: splay angle 45 +-5 degrees (P2 rows 106-117 over 12 px, about 45)", abs(ang - 45.0) <= 5.0, f"{ang:.1f} degrees")
+p2row("jamb strip / visible width (P2: 21 px of 344)", c2.SHOW / vw_t, (p2["jamb_strip_left_px"][1] - p2["jamb_strip_left_px"][0]) / vw2, 0.01)
+p2row("threshold's front face above the paving, mm / 100 (P2: rows 960-979 = 19.5 px at 2.317)", -P2["step"]["ground_z_mm"] / 100.0, 19.5 * 2.317 / 100.0, 0.10)
 mo = bnd(E2, "bolection_top_left")
 p2row("stile showing / visible width", (mo[0] - c2.SHOW) / vw_t, p2["stile_px"] / vw2, 0.015)
 p2row("bolection width / visible width", P2["mouldings"]["outside_bolection"]["width_on_face_mm"] / vw_t, p2["mould_width_px"] / vw2, 0.01)
@@ -291,14 +338,24 @@ for tag, PP, cc in (("T1", P1, c1), ("F1", P2, c2)):
         td_ = st["tread"]
         check("5 consistency", f"{tag}: tread is wider than the opening on both sides and centred on it", td_["x_mm"][0] < 0 and td_["x_mm"][1] > PP["opening"]["width_mm"] and near((td_["x_mm"][0] + td_["x_mm"][1]) / 2, PP["opening"]["width_mm"] / 2, 0.5), f"{td_['x_mm']}")
         check("5 consistency", f"{tag}: tread top = riser bottom; riser top = threshold bottom", near(td_["top_z_mm"], st["riser"]["z_mm"][0], 0.1) and near(st["riser"]["z_mm"][1], st["threshold"]["top_z"] - st["threshold"]["thickness_mm"], 0.1), "")
-        check("5 consistency", f"{tag}: ground = tread top less its thickness", near(td_["ground_z_mm"], td_["top_z_mm"] - td_["thickness_mm"], 0.5), f"{td_['ground_z_mm']}")
+        _td, _nr, _zt, _yf, _zc, _th, _ze = td.tread_geometry(td.consts(PP))
+        check("5 consistency", f"{tag}: the tread's nose ends in an undercut with a base 60 to 100 mm high below it, down to the ground", 60.0 <= _ze - td_["ground_z_mm"] <= 100.0 and td_["undercut_mm"] > 0, f"nose ends z {_ze:.1f}, ground {td_['ground_z_mm']}")
+        check("5 consistency", f"{tag}: the tread's nose radius, undercut and arc: the base face lies behind the front-most point", 0 < td_["undercut_mm"] < td_["nosing_radius_mm"] and 100.0 < _th < 270.0, f"arc to {_th:.1f} degrees")
     a = PP["brick"]["arch"]
     if a.get("present"):
-        check("5 consistency", f"{tag}: arch ring ends lie the stated bearing past each reveal", near(-a["ends_x_mm"][0], a["bearing_beyond_reveal_each_side_mm"], 0.1) and near(a["ends_x_mm"][1] - PP["opening"]["width_mm"], a["bearing_beyond_reveal_each_side_mm"], 0.1), "")
-        check("5 consistency", f"{tag}: the ring's depth at the crown = its top less the crown", near(a["top_z_mm"] - PP["opening"]["crown_height_mm"], 215.0, 0.5), f"{a['top_z_mm'] - PP['opening']['crown_height_mm']}")
+        check("5 consistency", f"{tag}: the ring's extrados corners lie the stated bearing past each reveal", near(-a["ends_x_mm"][0], a["bearing_beyond_reveal_each_side_mm"], 0.1) and near(a["ends_x_mm"][1] - PP["opening"]["width_mm"], a["bearing_beyond_reveal_each_side_mm"], 0.1), "")
+        check("5 consistency", f"{tag}: the ring's depth: the extrados at the crown = the crown + depth", near(a["extrados_z_at_crown_mm"] - PP["opening"]["crown_height_mm"], a["depth_mm"], 0.5), f"{a['extrados_z_at_crown_mm'] - PP['opening']['crown_height_mm']}")
+        sc_ = a["soffit_circle"]
+        cx_, cz_, R_ = sc_["centre_x_mm"], sc_["centre_z_mm"], sc_["radius_mm"]
+        ok3 = all(abs(math.hypot(x - cx_, z - cz_) - R_) < 0.2 for x, z in ((0.0, PP["opening"]["springing_height_mm"]), (PP["opening"]["width_mm"] / 2, PP["opening"]["crown_height_mm"]), (PP["opening"]["width_mm"], PP["opening"]["springing_height_mm"])))
+        check("5 consistency", f"{tag}: the soffit circle passes through (0, spring), (441, crown), (882, spring)", ok3, f"R {R_}")
+        check("5 consistency", f"{tag}: the extrados corners lie on the radial lines through the soffit's ends", abs(math.hypot(a["ends_x_mm"][0] - cx_, a["extrados_z_at_ends_mm"] - cz_) - (R_ + a["depth_mm"])) < 0.3 and abs((a["ends_x_mm"][0] - cx_) / (a["soffit_ends_x_mm"][0] - cx_) - (R_ + a["depth_mm"]) / R_) < 1e-3, "")
+        check("5 consistency", f"{tag}: the pitch along the soffit x 13 = the soffit arc between its ends", abs(a["pitch_along_soffit_mm"] * a["bricks"] - 2 * math.asin((a["soffit_ends_x_mm"][1] - cx_) / R_) * R_) < 1.0, f"{a['pitch_along_soffit_mm']}")
         qq = PP["brick"]["quoins"]
         check("5 consistency", f"{tag}: the quoins end at the arch's springing (+-3 mm)", near(qq["z_start_mm"] + qq["courses"] * qq["course_gauge_mm"], PP["opening"]["springing_height_mm"], 3.0), f"{qq['z_start_mm'] + qq['courses'] * qq['course_gauge_mm']} vs {PP['opening']['springing_height_mm']}")
-        check("5 consistency", f"{tag}: the ring's end bears on the top quoin: width 112 >= 100", qq["header_width_mm"] >= 100 and a["bearing_on_quoin_top_course_mm"] >= 100, "")
+        check("5 consistency", f"{tag}: the ring's end bears on the top quoin block, which is short (122) and wider than the 22 mm bearing", qq["top_block"] == "short" and qq["header_width_mm"] >= 100 and a["bearing_on_quoin_top_course_mm"] == qq["header_width_mm"] and qq["header_width_mm"] > a["bearing_beyond_reveal_each_side_mm"], "")
+        check("5 consistency", f"{tag}: quoin blocks: {qq['blocks']} blocks of {qq['block_courses']} courses = {qq['courses']} courses; block height = {qq['block_courses']} x gauge; block_z_mm lists them", qq["blocks"] * qq["block_courses"] == qq["courses"] and near(qq["block_height_mm"], qq["block_courses"] * qq["course_gauge_mm"], 0.01) and len(qq["block_z_mm"]) == qq["blocks"] and near(qq["block_z_mm"][-1][1], PP["opening"]["springing_height_mm"], 3.0), "")
+        check("5 consistency", f"{tag}: quoin blocks alternate, the bottom long and the top short, both sides in step", qq["bottom_block"] == "long" and qq["top_block"] == "short" and qq["blocks"] % 2 == 0 and qq["sides_in_phase"], "")
 
 # shapes: shapely on the drawings
 docs = {"T1": td.all_drawings(T, None), "F1": td.all_drawings(T, "flat_door_over_shop")}
@@ -331,6 +388,52 @@ for tag, doc in docs.items():
     bad = []
     skip = ("brick_wall",)
     names = [n for n in E if n not in skip and E[n]["layer"] in ("frame", "leaf", "panel", "moulding", "iron", "glass")]
+# the quoins and the arch, from the elevation's polygons (T1)
+ql = sorted([(float(n[7:]), shp(d).bounds) for n, d in E1.items() if n.startswith("quoin_l")])
+qr = sorted([(float(n[7:]), shp(d).bounds) for n, d in E1.items() if n.startswith("quoin_r")])
+wl = [round(-b[0], 1) for i, b in ql]
+wr = [round(b[2] - c1.OW, 1) for i, b in qr]
+steps = [i for i in range(1, len(wl)) if abs(wl[i] - wl[i - 1]) > 1.0]
+check("5 consistency", "T1 quoins (drawing): the width changes only every 3 courses (at courses 3, 6 ... 27), nine times", steps == [3, 6, 9, 12, 15, 18, 21, 24, 27], f"changes at {steps}")
+check("5 consistency", "T1 quoins (drawing): left and right in step, the bottom three courses long, the top three short", wl == wr and wl[0] == c1.brick["quoins"]["stretcher_width_mm"] and wl[-1] == c1.brick["quoins"]["header_width_mm"], f"bottom {wl[0]}, top {wl[-1]}")
+check("5 consistency", "T1 quoins (drawing): no course is drawn alone (every run of equal widths is 3 courses)", all(wl[i:i + 3] == [wl[i]] * 3 for i in range(0, 30, 3)), "")
+ab_ = [d for n, d in E1.items() if n.startswith("arch_brick")]
+cxa, cza = P1["brick"]["arch"]["soffit_circle"]["centre_x_mm"], P1["brick"]["arch"]["soffit_circle"]["centre_z_mm"]
+Ra, Da = P1["brick"]["arch"]["soffit_circle"]["radius_mm"], P1["brick"]["arch"]["depth_mm"]
+worst_rad, worst_ring = 0.0, 0.0
+for d in ab_:
+    pts_ = d["pts"]
+    low, high = pts_[:7], pts_[7:]
+    for x, z in low:
+        worst_ring = max(worst_ring, abs(math.hypot(x - cxa, z - cza) - Ra))
+    for x, z in high:
+        worst_ring = max(worst_ring, abs(math.hypot(x - cxa, z - cza) - (Ra + Da)))
+    # the two side edges: from high[-1] to low[0] (left) and from low[-1] to high[0] (right): their angle to the radius
+    for (lx, lz), (hx, hz) in ((low[0], high[-1]), (low[-1], high[0])):
+        rad = math.atan2(lx - cxa, lz - cza)
+        edge = math.atan2(hx - lx, hz - lz)
+        worst_rad = max(worst_rad, abs(math.degrees(edge - rad)))
+check("5 consistency", "T1 arch (drawing): exactly 13 bricks", len(ab_) == 13, f"{len(ab_)}")
+check("5 consistency", "T1 arch (drawing): the soffit and the extrados are concentric circles (worst deviation of the vertices, mm)", worst_ring <= 0.2, f"{worst_ring:.3f}")
+check("5 consistency", "T1 arch (drawing): every joint is radial to the soffit's centre within 2 degrees", worst_rad <= 2.0, f"{worst_rad:.3f} degrees")
+tops = [max(z for x, z in d["pts"]) for d in ab_]
+check("5 consistency", "T1 arch (drawing): the top is highest at the crown and 19 +-6 mm lower at the ends (not flat)", 13 - 1 == len(tops) - 1 and 13 <= len(tops) and abs((tops[6] - min(tops[0], tops[-1])) - 19.1) <= 6.0, f"crown brick top {tops[6]:.1f}, end bricks {tops[0]:.1f} and {tops[-1]:.1f}")
+# the plinth, from the elevation and the plan (T1)
+spl_ = [n for n in E1 if n.startswith("plinth_splay_l")]
+sp_b = shp(E1[spl_[0]]).bounds
+check("5 consistency", "T1 plinth (drawing): the splay band spans z -48 to 12 and the plinth face runs to the ground on both sides", abs(sp_b[1] + 48.0) < 0.1 and abs(sp_b[3] - 12.0) < 0.1 and abs(shp(E1["plinth_face_l4"]).bounds[1] - P1["brick"]["plinth"]["ground_z_mm"]) < 0.1 and abs(shp(E1["plinth_face_r4"]).bounds[1] - P1["brick"]["plinth"]["ground_z_mm"]) < 0.1, "")
+sp_ = P1["brick"]["plinth"]["splay"]
+check("5 consistency", "T1 plinth: the splay is 45 degrees (rise = run = 60) and ends on the wall face at z 12", abs(math.degrees(math.atan2(sp_["rise_mm"], sp_["run_mm"])) - 45.0) < 1.0 and sp_["z_to_mm"] == 12.0 and sp_["run_mm"] == P1["brick"]["plinth"]["front_proud_of_wall_face_mm"], "")
+PLN = by_name(docs["T1"]["plan"]["polygons"])
+check("5 consistency", "T1 plan: the tread's ends butt against the plinth's front face (no overlap; they touch along y -60)", shp(PLN["tread"]).intersection(shp(PLN["plinth_left"])).area < 0.05 and shp(PLN["tread"]).intersection(shp(PLN["plinth_right"])).area < 0.05 and shp(PLN["tread"]).distance(shp(PLN["plinth_left"])) < 0.1 and shp(PLN["tread"]).distance(shp(PLN["plinth_right"])) < 0.1, "")
+check("5 consistency", "T1 plan: the plinth stands on the wall's front (touches the wall polygons) and the threshold runs behind it", shp(PLN["plinth_left"]).distance(shp(PLN["wall_left"])) < 0.1 and shp(PLN["plinth_right"]).distance(shp(PLN["wall_right"])) < 0.1, "")
+# F1's transom, from the drawing
+nose2 = [(n, d) for n, d in E2.items() if n in ("transom_nose", "transom_quirk")]
+nb2 = shp(E2["transom_nose"]).bounds
+check("5 consistency", "F1 transom (drawing): the nose's underside ends at the stop edges and its top runs 28 mm past each (45 degree splay)", abs(nb2[0] - (c2.SHOW - 28.0)) < 0.1 and abs(nb2[2] - (c2.OW - c2.SHOW + 28.0)) < 0.1 and abs(shp(E2["transom_nose"]).intersection(Polygon([(c2.SHOW + 1, c2.Z_STOP), (c2.OW - c2.SHOW - 1, c2.Z_STOP), (c2.OW - c2.SHOW - 1, c2.Z_STOP + 2.0), (c2.SHOW + 1, c2.Z_STOP + 2.0)])).area - (c2.OW - 2 * c2.SHOW - 2) * 2.0) < 0.5, f"nose x {nb2[0]:.1f} to {nb2[2]:.1f}")
+check("5 consistency", "F1 jamb strip 49 and every coordinate that follows (x0 28.6; opening 895.2; keep 878.6; glazing x 49-846.2; clear glass 59-836.2)", near(c2.SHOW, 49.0) and near(P2["leaf"]["x0_mm"], 28.6) and near(c2.OW, 895.2) and near(P2["ironmongery"]["keep"]["centre_x_mm"], 878.6) and near(c2.GX0, 49.0) and near(c2.GX1, 846.2) and near(c2.CGX0, 59.0) and near(c2.CGX1, 836.2) and P2["frame"]["jamb_x_mm"]["left"] == [-52.6, 49.0] and P2["frame"]["jamb_x_mm"]["right"] == [846.2, 947.8], "")
+check("5 consistency", "glb pivots: T1 at the tread's ground and the opening centre; F1 at its paving and 447.6", T["glb_pivot"]["terrace_four_panel"] == [441.0, 0.0, P1["step"]["ground_z_mm"]] and T["glb_pivot"]["flat_door_over_shop"] == [c2.OW / 2, 0.0, P2["step"]["ground_z_mm"]], f"{T['glb_pivot']}")
+
 # the band and the weatherboard keep clear of the jambs in the band section (T1)
 SB = by_name(docs["T1"]["section_h_band"]["polygons"])
 for nm in ("lock_rail_band",):
@@ -405,7 +508,7 @@ tp = shp(PL["tread"]).bounds
 ck("G4", "tread width", tp[2] - tp[0], 960.0, 25.0)
 ck("G5", "tread beyond the left reveal", -tp[0], 39.0, 25.0)
 ck("G7", "arch ring left end beyond the reveal", -min(shp(d).bounds[0] for d in [E1[n] for n in E1 if n.startswith("arch_brick")]), 22.0, 6.0)
-ck("G7", "arch ring depth at the crown", max(shp(E1[n]).bounds[3] for n in E1 if n.startswith("arch_brick")) - td.soffit_z(c1, c1.OW / 2), 215.0, 6.0)
+ck("G7", "arch ring depth at the crown", max(shp(E1[n]).bounds[3] for n in E1 if n.startswith("arch_brick")) - td.soffit_z(c1, c1.OW / 2), 207.0, 7.0)
 ck("G7", "soffit camber", td.soffit_z(c1, c1.OW / 2) - td.soffit_z(c1, 0.0), 18.0, 6.0)
 hd_ = by_name(td.elevation(P1))["head"]["pts"]
 dev = max(abs(p[1] - td.soffit_z(c1, p[0])) for p in hd_ if p[1] > c1.GZ1 + 1)
@@ -448,7 +551,58 @@ check("6 checks", "C1: the jamb section is a rectilinear polygon (every edge axi
 tpl = S3["transom"]["pts"]
 check("6 checks", "C1: the transom's plan section is rectilinear (square ends, no returns or rounds)", all(abs(a[0] - b_[0]) < 1e-6 or abs(a[1] - b_[1]) < 1e-6 for a, b_ in zip(tpl, tpl[1:] + tpl[:1])), f"{len(tpl)} vertices")
 # the lab's failing: lintel / sill rest on something
-check("6 checks", "G9: the arch's ends overlap the top quoin course in x (22 mm past the reveal onto a 112 mm quoin)", c1.brick["arch"]["bearing_beyond_reveal_each_side_mm"] > 0 and c1.brick["quoins"]["header_width_mm"] > c1.brick["arch"]["bearing_beyond_reveal_each_side_mm"], "")
+check("6 checks", "G9: the arch's end bricks overlap the top quoin block in x (the extrados corner 22 mm past the reveal, onto the 122 mm short block)", c1.brick["arch"]["bearing_beyond_reveal_each_side_mm"] > 0 and c1.brick["quoins"]["header_width_mm"] > c1.brick["arch"]["bearing_beyond_reveal_each_side_mm"] and shp(E1["arch_brick0"]).bounds[0] > -c1.brick["quoins"]["header_width_mm"], "")
+
+# the second review's amended checks, evaluated on the drawings (T1 and F1)
+fp2 = P2["frame"]["transom"]["front_profile_yz_mm"]
+ck("D1", "F1 transom nose projection beyond the jamb faces", -min(y for y, z in fp2), 22.0, 3.0)
+ck("D1", "F1 transom face proud of the jamb faces", -max(y for y, z in fp2 if 36.0 <= z <= 70.0), 10.0, 3.0)
+(y0_, z0_), (y1_, z1_) = fp2[-2], fp2[-1]
+ck("D2", "F1 weathered slope angle", math.degrees(math.atan2(z1_ - z0_, y1_ - y0_)), 58.6, 8.0)
+ck("D4", "F1 nose: the fullest point's z (a single full round)", min(fp2, key=lambda p: p[0])[1], 14.0, 3.0)
+nose_part = [p for p in fp2 if p[1] <= 33.0]
+imin = min(range(len(nose_part)), key=lambda i: nose_part[i][0])
+mono = all(nose_part[i][0] <= nose_part[i - 1][0] for i in range(2, imin + 1)) and all(nose_part[i][0] >= nose_part[i - 1][0] for i in range(imin + 1, len(nose_part)))
+check("6 checks", "D4: F1 nose is one convex round (y falls to the fullest point at z 14 then rises) and a 3 mm quirk follows at z 33-36", mono and abs([p for p in fp2 if p[1] == 34.5][0][0] - (-7.0)) < 0.5, f"{len(nose_part)} points")
+ck("D5", "F1 face and nose top past each stop edge", c2.SHOW - c2.TR_X0, 28.0, 5.0)
+for tag_, cc_, PP_ in (("T1", c1, P1), ("F1", c2, P2)):
+    sp_t = PP_["frame"]["transom"]["end_splay"]
+    ck("D8", f"{tag_} nose end splay angle", math.degrees(math.atan2(sp_t["to_z_mm"] - sp_t["from_stop_edge_z_mm"], cc_.SHOW - cc_.TR_X0)), 45.0, 8.0)
+ck("B13", "F1 jamb showing", c2.SHOW, 49.0, 2.0)
+ck("B17", "T1 frame x extent with the hidden parts", P1["frame"]["jamb_x_mm"]["right"][1] - P1["frame"]["jamb_x_mm"]["left"][0], 975.2, 3.0)
+ck("B17", "F1 frame x extent with the hidden parts", P2["frame"]["jamb_x_mm"]["right"][1] - P2["frame"]["jamb_x_mm"]["left"][0], 1000.4, 3.0)
+ck("B17", "T1 head top at the crown (cut to the soffit)", td.soffit_z(c1, c1.OW / 2), 2340.0, 3.0)
+ck("G10", "F1 jambs hide behind the pilaster return", -P2["frame"]["jamb_x_mm"]["left"][0], 52.6, 1.0)
+ck("G10", "T1 jambs hide behind the brick", -P1["frame"]["jamb_x_mm"]["left"][0], 46.6, 1.0)
+ck("I5", "glb bounding width T1 (joinery and brick context)", max(shp(d).bounds[2] for n, d in E1.items() if n.startswith("jamb_right")) + (P1["frame"]["jamb_x_mm"]["right"][1] - c1.OW) - min(P1["frame"]["jamb_x_mm"]["left"][0], 0.0), 975.2, 3.0)
+ck("G6", "F1 paving below the threshold's top", -P2["step"]["ground_z_mm"], 45.0, 10.0)
+thr2 = by_name(docs["F1"]["section_v"]["polygons"])["threshold"]
+ck("G6", "F1 threshold thickness", shp(thr2).bounds[3] - shp(thr2).bounds[1], 70.0, 5.0)
+check("6 checks", "G6: F1 sill's front face above the paving is its visible 45 and it is bedded 25 (the ground slab touches the sill's front)", near(shp(by_name(docs["F1"]["section_v"]["polygons"])["ground"]).bounds[3], P2["step"]["ground_z_mm"], 0.1) and shp(by_name(docs["F1"]["section_v"]["polygons"])["ground"]).distance(shp(thr2)) < 0.1, "")
+tdp = shp(SV["tread"])
+pts_t = SV["tread"]["pts"]
+base_y = min(p[0] for p in pts_t[-3:-1])
+ck("G4", "tread nose radius", P1["step"]["tread"]["nosing_radius_mm"], 45.0, 15.0)
+ck("G4", "tread undercut (the base face behind the front-most point)", base_y - tdp.bounds[0], 20.0, 10.0)
+ck("G4", "tread: the ground below the threshold's top", -P1["step"]["ground_z_mm"], 318.0, 40.0)
+ck("G4", "tread: the nose is a half-round: the arc spans 90 to 236 degrees", td.tread_geometry(c1)[5], 236.3, 10.0)
+wlq = wl
+ck("Q1", "quoin block height (the change between runs of equal width)", (steps[1] - steps[0]) * 77.0, 231.0, 8.0)
+ck("Q1", "number of quoin blocks", len(steps) + 1, 10, 0)
+ck("Q2", "short block width from the reveal (drawing)", min(wlq), 122.0, 12.0)
+ck("Q2", "long block width from the reveal (drawing)", max(wlq), 237.0, 12.0)
+ck("Q2", "course gauge", P1["brick"]["quoins"]["course_gauge_mm"], 77.0, 2.0)
+check("6 checks", "Q3: the reveal returns are buff (JSON states it; section_h shows buff blocks)", "buff" in P1["brick"]["quoins"]["return_faces"], P1["brick"]["quoins"]["return_faces"][:60])
+plb = shp(PLN["plinth_left"]).bounds
+ck("L1", "plinth front proud of the wall face", -plb[1], 60.0, 20.0)
+ck("L2", "plinth splay angle", math.degrees(math.atan2(sp_["rise_mm"], sp_["run_mm"])), 45.0, 8.0)
+ck("L2", "plinth splay's top edge z (on the wall face)", sp_["z_to_mm"], 12.0, 3.0)
+spv, xpv = td.section_v_plinth(P1)
+spb = by_name(spv)["plinth"]["pts"]
+ck("L2", "plinth section: the splay runs from (y -60, z -48) to (y 0, z 12)", math.degrees(math.atan2(spb[2][1] - spb[1][1], spb[2][0] - spb[1][0])), 45.0, 3.0)
+check("6 checks", "L3: the plinth's top (z 12) runs level through the reveal to the frame's front face; nothing of it in the clear opening", P1["brick"]["plinth"]["top_edge_z_mm"] == 12.0 and "reveal" in P1["brick"]["plinth"]["returns_into_reveal"] and shp(E1["jamb_left"]).bounds[0] >= 0.0, "")
+check("6 checks", "L4: the tread's plan outline steps back to y -60 beside the plinth (no overlap)", shp(PLN["tread"]).intersection(shp(PLN["plinth_left"])).area < 0.05 and shp(PLN["tread"]).intersection(shp(PLN["plinth_right"])).area < 0.05, "")
+check("6 checks", "L5: the jamb feet stand on the threshold (z 0) and the plinth's edge is the reveal (x 0, 882)", abs(shp(E1["jamb_left"]).bounds[1]) < 0.1 and abs(shp(E1["jamb_left"]).bounds[0]) < 0.1 and abs(shp(E1["jamb_right"]).bounds[2] - c1.OW) < 0.1, "")
 
 # ---------------------------------------------------------------- the result
 npass = sum(r["pass"] for r in rows)
