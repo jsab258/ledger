@@ -47,3 +47,5 @@
 {"event": "stop", "at": "2026-10-08T01:47:00", "note": ""}
 {"event": "start", "at": "2026-10-08T01:47:00", "task": "8 Oct night: walk step 6 tried and set aside; review record skeleton", "phase": "1", "kind": "production"}
 {"event": "stop", "at": "2026-10-08T01:48:00", "note": ""}
+{"event": "start", "at": "2026-10-08T03:26:00", "task": "8 Oct night: item 1.1's third review: package photographs, ten reviewers, the walk-in by coordinates, records", "phase": "1", "kind": "review"}
+{"event": "stop", "at": "2026-10-08T03:56:00", "note": ""}

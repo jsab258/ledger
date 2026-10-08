@@ -3,7 +3,7 @@
 The overview first; then the day's summary, under 200 words. Earlier summaries are in git and in
 production/archive/FOR-JAFAR-to-2026-10-04.md (and FOR-JAFAR-to-2026-09-24.md before that).
 
-## Overview (Thursday 8 October, written Wednesday at 19:00 so a closed session cannot cost the 07:30 update; brought up to date in the morning)
+## Overview (Thursday 8 October, written in the night and brought up to date before 07:30)
 
 <!-- morning pictures: written by tools/morning_pictures.py -->
 
@@ -23,11 +23,11 @@ No decision asked: these are for watching the street change.
 
 <!-- /morning pictures -->
 
-Disk (10-07 19:00): C: 96.3 GB free, F: 39.7 GB free (the NoAI folders gone, as you approved).
+Disk (10-08 03:45): C: 88.5 GB free, F: 38.4 GB free (retention's floors: 40 and 20).
 
-**Phase 1: on 1.1 (Mickey's office and Rita's front); next its third fresh review.** The second failed yesterday at 15:15 (production/audits/phase1-exit/GATE-1.1-REVIEW-2.md). Fixed since: the glass (the capture was unlit and coarse: now lit by Lumen, sharp at the two camera windows, people left out, one window at a time so the card does not fill); Mickey's office dark until Tom has the key; the black block in the hook view (the houses past the bend had no sides, so a room box and a roof's underside showed: brick sides and gables now, in tonight's build). Still open from it: the cast in the face plugin's white base layer (clothes a failed capability for now, Needs you 3), the other shops' opaque windows, faint wear, the indoor camera. **1.2:** Tom's face blocked (Needs you 1); the speaker's clothes (Needs you 3). **1.3, speech:** failed, a blocked capability, your answer. **1.4, P1:** complete: 79 fps by day, at night and walking with the voice speaking, about 3 ms to spare; the card's peak while the windows are caught is being brought down.
+**Phase 1: on 1.1 (Mickey's office and Rita's front); its third review did not pass.** Your new gate ran for the first time (one reviewer per view, each beside its last good picture; [the review](production/audits/phase1-exit/GATE-1.1-REVIEW-3.md)). Every change of last evening did what it was meant to and made no fault: the black block, the roofs, the west shops' rooms, Sheila and Ron out of the office camera, grime at the tiles' foot. Blocking are faults newly seen: the street's walkers walk through things (the crates, an oil drum, each other); Mickey's office (a blind that stops short, a blank white slab, a chair Tom walks through, window-frame pieces poking into the room); and three of the review's own views framed too high to see a front's foot. Not narrow, but known: the cast's base layer, the glass at night, Rita's white sawtooth, faint wear on painted fronts, a bare sky. **1.2:** turning, sitting down and standing up work in the editor and are in last night's build; the walk slides at its joins; Tom's face blocked (Needs you 1); clothes failed (Needs you 3). **1.3, speech:** failed, a blocked capability. **1.4, P1:** complete.
 
-**The night's eyes never saw a picture (your fault report, 16:00):** the nightly report looked for .png and the tester saves .jpg, so every morning from 4 to 7 October said there was nothing to look at. Fixed with a test that failed first; tonight's walk is looked at. **The tester's walk (7 October, 02:30): did not run.** Three game windows left open by the cut-off measurement held the played copy's files, so the 02:52 build was copied inside the old copy and the launcher your shortcut starts was gone: the walk had nothing to start. Your played copy was broken from 02:52 to 10:10, when it was put right by hand (last night's build, a32eeeb). The night jobs and the build's copy step now close any game window first, and the copy step no longer nests.
+**The tester's walk (8 October, 03:04, last night's build):** 10 of 13 stages. It never found Sheila on the street to talk to, and lost her the next day; Ron stayed 8.5 m away; it talked with Darren (words in 0.2 s, the stand-in's). Darren and Hana saw the window broken; Ron showed he knew. What broke the illusion, by its eyes: Tom's stand-in stands splay-legged and stiff; three frames pitch black; the camera inside Tom's back; "Talk to Ron" offered while he stood in an unlit doorway; walkers frozen mid-stride, one foot through the tea room's step. The sixty-question bench measured nothing again. Why it missed Sheila is not yet known: in a walk-in at 03:35 she stood on the pavement after her lines.
 
 **Risks, Monday's review (production/research/pre-production/6-RISKS.md).**
 - R3, the street missing the bar: up, 25. The audit finds the visual method unproved: five proof-view steps were set aside, and Mickey's room failed three reviews. Phase 1's binding stop answers it.
@@ -38,7 +38,7 @@ Disk (10-07 19:00): C: 96.3 GB free, F: 39.7 GB free (the NoAI folders gone, as 
 
 ### Needs you
 
-(Your lighting answer, 13:25: day and night now, four or five lighting states with transitions later; in RULINGS.md. Your voice page read back at 13:00: speech reported failed as a blocked core capability, no third attempt at the voice, the faster first sentence off; in RULINGS.md. Every other page's answers read back at 08:40: 145, none new. Your three answers of this morning are in RULINGS.md and gone from here: the voice's route, the NoAI folders, and the sitting clips, which were already in last month's Mixamo harvest with their travel.)
+(Your lighting answer, 13:25: day and night now, four or five lighting states with transitions later; in RULINGS.md. Your voice page read back at 13:00: speech reported failed as a blocked core capability, no third attempt at the voice, the faster first sentence off; in RULINGS.md. Every page's answers read back at 03:50 on 8 October: 147, none new. Your three answers of this morning are in RULINGS.md and gone from here: the voice's route, the NoAI folders, and the sitting clips, which were already in last month's Mixamo harvest with their travel.)
 
 1. **Tom's face is blocked** (14:40): the one more try could not set his brows' colour, the cause the research found: the face plugin offers no colour settings to a script before, during or after a build. Recommended: one more day's research on the other route (the finished face's own brow settings, as his hair's are set), then a page with the result; or you pick the closest existing take for now. Research, or pick?
 2. **The check study you asked for** (added 13:00; [the proposal](production/research/invented-claims/CHECK-FLOOR-PROPOSAL-2026-10-07.md)): one day and at most $1, three ways to clear the first sentence sooner, measured on the bench. The limit: with today's voice kept, even an instant check leaves the voice's own 1.6 to 4.4 s, so it cannot bring speech under two seconds in the game. Recommended: park it until a faster voice is on the table. Yes to run it now, or park?
@@ -56,7 +56,7 @@ Disk (10-07 19:00): C: 96.3 GB free, F: 39.7 GB free (the NoAI folders gone, as 
 
 ## Builder, Thursday 8 October
 
-**Failed:** the speaker's walk. Sheila walks 7 m along the pavement, but where its clips join, a planted foot slides 13 to 27 cm (the bar is 3 cm). Item 1.1's third review waits for tonight's package.
+**Failed:** item 1.1's third review, the first by your new gate: no change of last evening made a fault, but newly seen ones block: walkers and Tom walk through things, faults in Mickey's office, and three views framed too high. The speaker's walk: where its clips join, a planted foot slides 13 to 27 cm (the bar is 3 cm). The tester never found Sheila on the street.
 
 **Done (in tonight's build):** turning: if someone Tom talks to has turned away, they turn to face him: asked 100°, turned 99.6° ([picture](production/previews/turn-to-him-2026-10-08.jpg)). Sitting: Ron, on the office bench in his evening hours, stands up and sits down again, landing within 1 cm of his seat with no foot slip ([picture](production/previews/sit-stand-office-2026-10-08.jpg)). The library's own turns crouched and its only sit-down bent him double, so the right turn is a left turn mirrored and the sit-down is the stand-up played backwards. Your gate ruling is in; tonight's review has ten views, one reviewer each.
 
