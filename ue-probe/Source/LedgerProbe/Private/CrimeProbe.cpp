@@ -4534,6 +4534,16 @@ namespace
 					S.Yaw = FMath::RadiansToDegrees(std::atan2(Cz - Pz, Cx - Px));
 					Shots.Add(S);
 				}
+				// AND THE WHOLE FRONT, from the far pavement (8 October, item 1.1's third review: the
+				// square view, made to see into a window, ends at the sill, so the gate could not see a
+				// front's foot, its stallriser and grime, nor its fascia): fascia to pavement in frame.
+				{
+					FPageShot S;
+					S.Id = FString::Printf(TEXT("%s-front"), *ShopId);
+					S.X = Cx; S.Z = -3.6 * Side; S.Eye = 1.6; S.Pitch = 2.0; S.VFov = 50.0;
+					S.Yaw = FMath::RadiansToDegrees(std::atan2(Cz - S.Z, 0.0));
+					Shots.Add(S);
+				}
 				}
 			}
 			else
