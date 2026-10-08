@@ -16,3 +16,18 @@ His order of 11:10, step 3: "Mickey's office: pick up the third review's fault l
 ## The step
 
 Not passed: two new faults block, the night's over-bright reflected windows and the glowing road lines. Each gets two tries. The upstairs nets' flatness belongs to the windows, set aside after their two tries this morning; the Hook sheet's own upstairs windows are pale too, so the reviewer's "dark glass" is not the sheet's. The door glass and the open directories follow if time allows before 17:00.
+
+## The tries, 12:20 to 12:50: every view passes on new faults
+
+Pictures: F:/LedgerTools/gate/new/office/2026-10-08-t1, each beside the failed attempt (gate/prev/office) and its last good; a fresh reviewer per view again, plus the hook at night, which the changes touch.
+
+| View | Try 1 | Verdict |
+|---|---|---|
+| Office, night | The glass's caught street at a true reflection at night (glass_cube_strength_night 1.0): the reflected windows 105 -> 73, now about as bright as the gilt and nine times under the lamp-lit sill; the map, its title and the CARS board read through them; "a soft reflection of two lit cottage windows, not glowing panels". | **Passes.** Minor: the directories' page edges in coarse even bands, their covers proud like a hardback's. |
+| Front, night | The yellow paint at the Hook sheet's 0.3 (the ground took gains on 3 October, the lines none): no line pixel reaches 250 (15,000 did); as bright as the lit kerb top under the lamp and fading into the dark with it. The kerb face darker, no longer lit by the lines' bounce. | **Passes.** Listed: the white centre line bright on the black road (kept: by day it matches the sheet's near-white dash, and paint on wet asphalt is many times the road); the lamp post's upper streak clipped; the stallriser now the brightest part of the front. |
+| Front, day | Door glass caught at 512: the smear gone, the lower half a coarse mottle with stair-stepped edges, still no interior: the glass catch's known shortfall (its tries spent on 7 October; the lab's anti-aliased capture is the next direction). Directories: "two stacked books", fixed. Yellow lines: yellow now, a little mustard against the sheet's cream. | **No blocking fault.** Listed: the window's and the door's reflections read as two different mirrors. |
+| Hook, night | The lines dimmer by a third to a half, no longer burnt out; the shop glass less washed out (the pawnbroker's display clearer); the near lamp head a little darker (likely the bowl no longer catching the burnt-out lines below). | **No new fault; closer to the night ruling.** |
+
+Also measured: the near pool 0.5% clipped (unchanged); the road 170 / 151 / 190 (unchanged by the lines).
+
+Item 1.1 itself does not pass on this: its known shortfalls that are not narrow remain (the cast's base layer, ruled to stay through phase 1; the glass's steps, set aside for the lab's fix; the bare sky at the street's end; faint wear), and its walk-in (the lane past Mickey's end, Tom at the office door) waits for a packaged walk.
