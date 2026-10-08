@@ -28,7 +28,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 - 2.8 open. Lamp posts.
 - 2.9 in progress (8 Oct 22:43; written 23:06, self-check 158 of 158, target review 1 FAIL, 13 faults (the board's left and right reversed for the game, texture against 3D unstated, checks that cannot catch a wrong board, ghost lettering unspecified, one designer, too heritage for 1990, and more); amending, try 2). Shop fascia signs.
 - 2.10 open. Posters and notices.
-- 2.11 in progress (8 Oct 22:38, ahead of 2.2 to 2.10, which wait for photographs the network refuses; written 23:32, self-check 700 of 700, under its fresh target review). Wear: stains, grime, gum, cracked render.
+- 2.11 in progress (8 Oct 22:38, ahead of 2.2 to 2.10, which wait for photographs the network refuses; written 23:32, self-check 700 of 700, target review 1 FAIL, 12 faults (facade-wide soot missing, streaks unsourced and too strong, stacked wear without a floor, checks that pass wrong masks, gutter grime against its photograph, wet and dry double-counted, iron unworn, and more); amending, try 2). Wear: stains, grime, gum, cracked render.
 
 ## 3. Kit pieces built by script, each through its check and fresh review
 
