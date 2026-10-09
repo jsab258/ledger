@@ -32,7 +32,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 ## 3. Kit pieces built by script, each through its check and fresh review
 
-- 3.1 in progress (23:33; try 1 built 01:53: check PASS, T1 158 of 158, F1 109 of 109; fresh reviews, one view each: T1 street PASS, T1 close FAIL (the lock), T1 front FAIL (weatherboard, step nose ends, lock-rail band), T1 low PASS, F1 street PASS, F1 close PASS; try 2 started 02:55). The door.
+- 3.1 in progress (23:33; try 1 built 01:53: check PASS, T1 158 of 158, F1 109 of 109; fresh reviews, one view each: T1 street PASS, T1 close FAIL (the lock), T1 front FAIL (weatherboard, step nose ends, lock-rail band), T1 low PASS, F1 street PASS, F1 close PASS; try 2 built 05:46: check PASS, T1 162 of 162, F1 108 of 108; the lock 5 mm proud with a vertical keyway, the weatherboard sloped, the step's nose round both ends, the band in broad rolls, the narrow points, each departure from the target measured on the photographs; fresh reviews of the failed views). The door.
 - 3.2 open. The shopfront's parts: pilasters, consoles, fascia, stall riser, transom.
 - 3.3 open. Railings.
 - 3.4 open. Bollards.
