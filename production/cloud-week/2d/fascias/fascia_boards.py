@@ -165,6 +165,9 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
     if bjoints:
         fa.draw_joints(B, bjoints, dark_board=dark_board or kind == "bare")
         info["joints_x_mm"] = [round(x, 1) for x in bjoints]
+    # grime first lies on the ground (70 per cent of it); what is painted over it (letters, rules) is dirtied by the rest, after (30 per cent): lettering wears and dirties
+    # with its ground, a little less than the bare board does
+    fa.grime_film(B, mode, s["age"], bjoints, amp=0.7)
 
     # ---- 1. the shapes, in the target's order
     shape_alpha = np.zeros((H_MM, W_MM), np.float32)          # lines and frames (for the free-zone maths)
@@ -193,26 +196,26 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
                 rgb_i = B.mottle(win, col, 1.0, kinds=(("streak", 0.8), ("fine", 0.3)))
             elif role == "box_face":
                 rough, metal = 0.35, 0.0
-                rgb_i = B.mottle(win, col, 0.9, kinds=(("blot", 0.6), ("iso", 0.4), ("fine", 0.3)))
+                rgb_i = B.mottle(win, col, 0.9, kinds=(("band", 0.6), ("iso", 0.4), ("fine", 0.3)))
             elif role == "vinyl_panel":
                 rough, metal, hgt = 0.45, 0.0, 0.08
-                rgb_i = B.mottle(win, col, 0.5, kinds=(("blot", 0.6), ("fine", 0.3)))
+                rgb_i = B.mottle(win, col, 0.5, kinds=(("band", 0.6), ("fine", 0.3)))
             elif role == "rule":
                 if hand_kind:
                     rough, hgt = max(0.35, g["roughness"] - 0.10), 0.20
-                    rgb_i = B.mottle(win, col, 1.2, kinds=(("blot", 0.7), ("streak", 0.4), ("fine", 0.3)))
+                    rgb_i = B.mottle(win, col, 1.2, kinds=(("band", 0.7), ("streak", 0.4), ("fine", 0.3)))
                 else:
                     rough, hgt = 0.45, 0.08
-                    rgb_i = B.mottle(win, col, 0.4, kinds=(("blot", 0.6), ("fine", 0.3)))
+                    rgb_i = B.mottle(win, col, 0.4, kinds=(("band", 0.6), ("fine", 0.3)))
             elif role == "corner_block":
                 rough, hgt = 0.45, 0.20
-                rgb_i = B.mottle(win, col, 1.0, kinds=(("blot", 0.6), ("fine", 0.3)))
+                rgb_i = B.mottle(win, col, 1.0, kinds=(("band", 0.6), ("fine", 0.3)))
             elif role == "slab_edge":
                 rough, metal, hgt = 0.15, 1.0, 0.80
                 rgb_i = B.mottle(win, col, 2.0, kinds=(("streak", 0.8), ("fine", 0.6), ("iso", 0.3)))
             elif role == "slab_face":
                 rough, metal = 0.08, 0.0
-                rgb_i = B.mottle(win, col, 0.8, kinds=(("blot", 0.7), ("iso", 0.4), ("fine", 0.15)))
+                rgb_i = B.mottle(win, col, 0.8, kinds=(("band", 0.7), ("iso", 0.4), ("fine", 0.15)))
             elif role == "slab_joint":
                 rough, hgt = 0.55, None
                 rgb_i = col
@@ -242,16 +245,16 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
             win = B.win(min(xs) - w, min(ys) - w, max(xs) + w, max(ys) + w, pad=3)
             if role == "rope":
                 a, pat = rope_alpha_and_pattern(win, pts, w, sh["twist_pitch_mm"])
-                base = B.mottle(win, col, 1.4, kinds=(("fine", 0.6), ("blot", 0.4)))
+                base = B.mottle(win, col, 1.4, kinds=(("fine", 0.6), ("band", 0.4)))
                 rgb_i = np.clip(base * (1.0 + 0.16 * pat[..., None]), 0, 255)
                 B.paint(win, a, rgb_i, rough=0.80, metal=0.0, height=0.15)
             elif role == "keyline":
                 a = fp.poly_alpha(win, pts, w)
-                rgb_i = B.mottle(win, col, 2.0, kinds=(("blot", 0.7), ("fine", 0.4), ("iso", 0.4)))
+                rgb_i = B.mottle(win, col, 2.0, kinds=(("band", 0.7), ("fine", 0.4), ("iso", 0.4)))
                 B.paint(win, a, rgb_i, rough=0.30, metal=1.0, height=0.15)
             else:                                           # rule_outer, rule_inner: sign-written lines
                 a = fp.poly_alpha(win, pts, w)
-                rgb_i = B.mottle(win, col, 1.0, kinds=(("blot", 0.7), ("fine", 0.3)))
+                rgb_i = B.mottle(win, col, 1.0, kinds=(("band", 0.7), ("fine", 0.3)))
                 B.paint(win, a, rgb_i, rough=max(0.35, g["roughness"] - 0.10), metal=0.0, height=0.15 if role == "rule_inner" else 0.20)
             shape_alpha[win[0]:win[1], win[2]:win[3]] = np.maximum(shape_alpha[win[0]:win[1], win[2]:win[3]], a)
             info.setdefault("shapes_drawn", []).append(dict(role=role, kind="polyline", n=len(pts), width=w, colour=sh["colour"]))
@@ -318,7 +321,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         info["ghost_visible_px"] = int((visible > 0.5).sum())
         a = face * (1.0 - rep)
         gcol_rgb = np.array(gb["face_rgb"], np.float32)
-        wcol = B.mottle(win, gcol_rgb, 0.5, kinds=(("blot", 0.7), ("fine", 0.3)))
+        wcol = B.mottle(win, gcol_rgb, 0.5, kinds=(("band", 0.7), ("fine", 0.3)))
         B.paint(win, a, wcol, rough=max(0.3, g["roughness"] - 0.05))
         m = face > 0.5
         ridge = (m & ~ndi.binary_erosion(m, iterations=1)) & (rep < 0.5)
@@ -415,7 +418,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
     # ---- 4b. the ageing that works on everything painted: grime that gathers where the board is damp, cracks along the grain, paint lost
     age = s["age"]
     F = fa.Fields(B, mid=(380, 28), long=(300, 9.0), strip=(85, 5.0)) if kind == "bare" else fa.Fields(B)
-    fa.grime_film(B, mode, age, bjoints)
+    fa.grime_film(B, mode, age, bjoints, amp=0.3)
     zone = fc.free_zone_mask(s)
     allowed = np.ones((H_MM, W_MM), bool)
     allowed[:6] = allowed[-6:] = False
@@ -454,6 +457,12 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
     if gh and gh.get("kind") == "painted_out_patch":
         x0, y0, x1, y1 = gh["box_mm"]
         weight[H_MM - int(y1):H_MM - int(y0), int(x0):int(x1)] *= 0.55          # fresher paint than the soot timber round it
+    # lettering is a thicker coat than the ground and stays legible: the loss takes a third less of it (it still wears with the ground: no clean halo)
+    letter_zone = np.zeros((H_MM, W_MM), bool)
+    for b_ in blocks:
+        if b_["in_texture"] and not b_["ghost"]:
+            dilate_box(letter_zone, b_["effects_box_mm"], 4)
+    weight = np.where(letter_zone, weight * 0.62, weight).astype(np.float32)
     a1, a2, S, thr = fa.loss_alpha(F, weight, allowed, zone, frac, mode)
     tex = None
     if kind == "bare":
@@ -524,7 +533,8 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         if b["in_texture"] or b["ghost"]:
             dilate_box(text_boxes, b["effects_box_mm"], 14)
     light = not dark_board
-    drips, tracks, run_pl = fa.place_drips(B, age["runs"]["count"], age["runs"]["len_mm"], wrng, nails_top + bjoints, light)
+    avoid_runs = [(b_["effects_box_mm"][0], b_["effects_box_mm"][2], H_MM - b_["effects_box_mm"][3]) for b_ in blocks if b_["in_texture"] and not b_["ghost"]]
+    drips, tracks, run_pl = fa.place_drips(B, age["runs"]["count"], age["runs"]["len_mm"], wrng, nails_top + bjoints, light, avoid_boxes=avoid_runs)
     # gull marks: only on the top edge of the board (they fall from the cornice and run a little down the face)
     gzone = np.zeros((H_MM, W_MM), bool)
     gzone[16:62, 70:W_MM - 70] = True

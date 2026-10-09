@@ -96,7 +96,7 @@ class Board:
             else:
                 self.height[r0:r1, c0:c1] = w + (np.asarray(height, np.float32) - w) * a
 
-    def mottle(self, win, colour, amp_L, kinds=(("grain", 0.5), ("blot", 0.4), ("streak", 0.4), ("fine", 0.25))):
+    def mottle(self, win, colour, amp_L, kinds=(("grain", 0.5), ("band", 0.4), ("streak", 0.4), ("fine", 0.25))):
         """a colour with tone variation: amp_L is the SD in L* of the sum of the named noise fields"""
         r0, r1, c0, c1 = win
         colour = np.asarray(colour, np.float32)
@@ -325,8 +325,9 @@ def paint_block(B, b, ground_rough=0.55, hand=True, dx_mm=0.0, font_key=None):
         rough = max(0.35, ground_rough - 0.10)
     fcol = block_rgb(T, b)
     tech = b.get("technique", "painted")
-    amp = {"gilded": 2.2, "painted": 1.4, "vinyl": 0.4, "back_painted": 0.7}.get(tech, 1.0)
-    face_img = B.mottle(win, fcol, amp, kinds=(("blot", 0.7), ("fine", 0.35), ("iso", 0.4)))
+    amp = {"gilded": 1.4, "painted": 1.0, "vinyl": 0.4, "back_painted": 0.7}.get(tech, 1.0)
+    # try 2: no cloud mottle in the letters (the slow 'blot' noise is gone): the brush's own fine texture and a little tone along the line of the writing
+    face_img = B.mottle(win, fcol, amp, kinds=(("band", 0.35), ("fine", 0.45), ("iso", 0.25)))
     r0, r1, c0, c1 = win
     if tech == "gilded":
         # leaf joins, a paler rim 3 mm wide (the target's gilding style, P1) and a few chips down to the size

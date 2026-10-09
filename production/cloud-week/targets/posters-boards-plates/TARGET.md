@@ -1,16 +1,14 @@
 # Quay Street's paper and small boards: the exact target
 
-84 sheets, cards, boards and plates for Quay Street's paper and small boards: the poll-tax set, the chapel hall's two photocopied notices, the fights, the market, the Tivoli's quads, strips and programme (each with a NAMELESS default and a held named variant), 7 ferry and Harbour Board sheets, 5 police and council notices, 35 shop-window and newsagent cards, 5 letting boards (the default is the fascia target's), 6 street name plates (name only by default); the default street carries no unminted name: 61 placements (52 default, 9 held twins), 8 fly-posters and 4 poll-tax bills as the asset plan says, the street date Monday 29 October 1990, every item read glyph by glyph in its own pixels, 697 checks.
+84 sheets, cards, boards and plates for Quay Street's paper and small boards: the poll-tax set, the chapel hall's two photocopied notices, the fights, the market, the Tivoli's quads, strips and programme (the named variants held, and the nameless ones too where they would read as stand-ins), 7 ferry and Harbour Board sheets, 5 police and council notices, 35 shop-window and newsagent cards, 5 letting boards (the default is the fascia target's), 6 street name plates (name only by default); the default street carries no unminted name and a BARE quay gable: 62 placements (46 default, 16 held), at most 8 fly-posters and 4 poll-tax bills as the asset plan says (5 and 3 carried), the street date Monday 29 October 1990, every item read glyph by glyph in its own pixels, 780 checks.
 
-Cloud week 42, written 8 to 9 October 2026. **SECOND AND LAST TRY**, after `TARGET-REVIEW.md` (FAIL, 13 faults, all answered below). Three 2D units build from `target.json` and this page: 4.2 posters and notices, 4.3 "To Let" boards, 4.4 street name plates. Nothing is committed.
+Cloud week 42, written 8 to 9 October 2026. **SECOND AND LAST TRY**, after `TARGET-REVIEW.md` (FAIL, 13 faults, all answered below); the re-review's four faults were then fixed **by Jafar's ruling of 9 October, exactly as the reviewer wrote them, and are not re-reviewed** (section A2). Three 2D units build from `target.json` and this page: 4.2 posters and notices, 4.3 "To Let" boards, 4.4 street name plates. Nothing is committed.
 
-Self-check: **SELF-CHECK posters-boards-plates: 321 checks, 321 passed, 0 failed, 16 reported** (see section 15).
-
-Plain summary. 84 sheets, cards, boards and plates, every word ours, listed and checked against the content rule, canon and the 1990 calendar; **the street's date is Monday 29 October 1990** and every placed item's age is checked against it. The default street carries **no name the town has not minted**: the poll-tax bills say STAND TOGETHER, the dance LIVE MUSIC, the wrestling bill no ring names and no hall, the Tivoli's quads A NEW THRILLER and A NEW COMEDY, the empty unit's board is the fascia target's own TO LET (900 x 450, no agent, no number) and the flat above has no agent. The named versions are `-named` variants (and L01, L03, B01, G01, G02) marked proposed, not minted, and held. The paper is the asset plan's amount, 8 fly-posters and 4 poll-tax bills: the quay gable carries ONE layer of three bills (the plan's proof wall) beside the downpipe the Hook sheet shows, the empty unit's glass six sheets (a police appeal among them), the plain west row one bill on its poster pier and one in a window, two shop windows a notice each and a third a Tivoli programme. The jumble-sale and dance notices are photocopied A3 sheets; the Tivoli's venue and dates are a separate pasted strip; the street name plates are name-only, QUAY STREET cast aluminium, none on the yard entrance. **The checks now read the pixels glyph by glyph** (section 12): the first try's checks passed a changed date, TEA for ALE and LUNCH for BINGO; these fail every one.
+Plain summary. 84 sheets, cards, boards and plates, every word ours, listed and checked against the content rule, canon and the 1990 calendar; **the street's date is Monday 29 October 1990** and every placed item's age is checked against it. The default street carries **no name the town has not minted** and no bill that names nothing: the poll-tax bills say STAND TOGETHER, the dance LIVE MUSIC, the market bill needs no name, the empty unit's board is the fascia target's own TO LET (900 x 450, no agent, no number) and the flat above has no agent. The named versions are `-named` variants (and L01, L03, B01, G01, G02) marked proposed, not minted, and held; so are the nameless Tivoli quads and programme (A NEW THRILLER, A NEW COMEDY) and the wrestling bill with no ring names and no hall, which read as stand-ins. The paper is AT MOST the asset plan's amount, 8 fly-posters and 4 poll-tax bills (the default street carries 5 and 3): **the quay gable is bare, as the Hook sheet shows it** (the downpipe, the render patch and the damp foot, no paper and no plate), the empty unit's glass carries six sheets (a police appeal among them) as the proof sample, the plain west row one market bill on its poster pier and one poll-tax bill in a window, and two shop windows a notice each. The jumble-sale and dance notices are photocopied A3 sheets; the Tivoli's venue and dates are a separate pasted strip; the street name plates are name-only, QUAY STREET cast aluminium, none on the yard entrance. **The checks now read the pixels glyph by glyph** (section 12): the first try's checks passed a changed date, TEA for ALE and LUNCH for BINGO; these fail every one.
 
 Files in this folder:
 
-- `target.json`: the whole target (84 items, 61 placements of which 9 are held twins, 2 cases or boards, a card board, 6 piers, 8 shop fronts, 697 checks, the self-check result).
+- `target.json`: the whole target (84 items, 62 placements of which 16 are held (the named twins, the nameless stand-ins and the gable's proof wall), 2 cases or boards, a card board, 6 piers, 8 shop fronts, 780 checks, the self-check result).
 - `make_target.py`: the author tool that writes `target.json` (every width is measured on the real font files; every item's pixel scale is chosen by `glyphlib.py`).
 - `glyphlib.py`: the glyph kernels shared by the author tool and the self-check (the per-glyph score F, the separation score SEP, the table that sets each item's scale).
 - `target_drawing.py`: draws every item's boxes, baselines and clean lettering at 1 mm to the pixel, the surfaces' elevations (the gable with its downpipe, the empty unit's glass, the west piers, the plates' places) and the cases, from `target.json` alone, into a folder given on the command line, plus the polygons as JSON.
@@ -24,12 +22,12 @@ The reviewer (a fresh target reviewer, 9 October) ran `self_check.py` (215 of 21
 
 | # | Fault | Answer |
 |---|---|---|
-| 1 | the checks could not see a wrong word, date or price in the pixels | ITEM.glyphs reads one glyph at a time in its own cell (glyphlib.py, self_check.py group 12): F >= 0.85 at 0.5 mm against the glyph re-rendered from the manifest, and SEP >= 0.70 against every other glyph of the font and its own mirror, on the pixels where they differ; each item's pixel scale is chosen so that every non-twin pair differs by at least 8 pixels. Every wrong render the reviewer built (a changed date, a changed price or time, TEA for ALE, Teas for Beer, LUNCH for BINGO, a mirrored hand card, a misspelt plate) FAILS; a true render, jittered hand renders (20 seeds each of K01 and SA06, 8 each of K07a, K09a and SA15) and a true render turned 1.2 degrees and read in the placed street PASS. The reviewer's own harness, run unchanged, now also fails every PRINT wrong render (the line score includes the worst glyph); hand lines need the renderer's manifest, which is the review's own amendment (a). ART.eye, PLACE.built, ITEM.square and the square-on rule are added. |
-| 2 | unminted placeholder names were the street's default dressing | the default street carries nameless items only (STAND TOGETHER, LIVE MUSIC, A NEW THRILLER, A NEW COMEDY, no ring names, no hall, no agent); the named versions are -named variants and L01, L03, B01, G01, G02, each held_until_minted with its names; their placements are held twins; G.page.placeholders added and tested. |
+| 1 | the checks could not see a wrong word, date or price in the pixels | ITEM.glyphs reads one glyph at a time in its own cell (glyphlib.py, self_check.py group 12): F >= 0.85 at 0.5 mm against the glyph re-rendered from the manifest, and SEP >= 0.70 against every other glyph of the font and its own mirror, on the pixels where they differ; each item's pixel scale is chosen so that every non-twin pair differs by at least 8 pixels. Every wrong render the reviewer built (a changed date, a changed price or time, TEA for ALE, Teas for Beer, LUNCH for BINGO, a mirrored hand card, a misspelt plate) FAILS; a true render, jittered hand renders (20 seeds each of K01 and SA06, 8 each of K07a, K09a and SA15) and a true render turned 1.2 degrees and read in the placed street PASS. The reviewer's own harness, run unchanged, now also fails every PRINT wrong render (the line score includes the worst glyph); hand lines need the renderer's manifest, which is the review's own amendment (a). ART.eye, PLACE.built, ITEM.square and the square-on rule are added. (After the second review, by Jafar's ruling of 9 October: the true jittered renders of all 29 hand cards, 20 seeds each, and a true render of every item pass all pixel checks; ITEM.clean reads ink outside every block; a missing manifest fails.) |
+| 2 | unminted placeholder names were the street's default dressing | the default street carries nameless items only where they read naturally (STAND TOGETHER, LIVE MUSIC, no agent); the named versions are -named variants and L01, L03, B01, G01, G02, each held_until_minted with its names; their placements are held twins; G.page.placeholders added and tested. (After the second review: the nameless T02, T03 and W01, which read as stand-ins, are held like their twins.) |
 | 3 | the WEIGHHOUSE LANE plate named the yard entrance | the S02d placement and every 'proposed because canon does not name the opening' line are deleted; S02 is a kit plate like S03; the side opening is the yard entrance and carries no plate; C03 keeps DIVERSION VIA WEIGHHOUSE LANE. |
-| 4 | the paste plan was far denser than the asset plan and covered the gable the sheet shows bare | eight fly-posters and four poll-tax bills in all (G.place.paper): SF1 carries one layer of three bills (P01 u 0.70, W01 u 1.30, T02 u 1.90, bottoms z 1.00) with the 75 mm cast-iron downpipe at u 0.30 and paper 150 mm clear; the plate stays at u 1.0; SF2 carries M01, P03, P02, J01, C02 and C01a; the piers keep only W1.0; P02 is also an A3 window bill in the bay-1 window at x 12.3 (scale 0.585, top 1.90 m); no sticker on the gable, no bill on the other piers. |
+| 4 | the paste plan was far denser than the asset plan and covered the gable the sheet shows bare | at most eight fly-posters and four poll-tax bills (G.place.paper; the default street carries 5 and 3). First answer: SF1 carried one layer of three bills with the 75 mm cast-iron downpipe at u 0.30 and paper 150 mm clear. After the second review, by Jafar's ruling of 9 October, the gable is BARE as the Hook sheet shows it: the three bills, the strip and the second plate are held placements (G.place.gable: no paper and no plate on SF1; the downpipe, the render patch and the damp foot stay as fixtures). SF2 carries M01, P03, P02, J01, C02 and C01a; the west pier W1.0 (the scene's poster slot) takes M01 at class B; P02 is also an A3 window bill in the bay-1 window at x 12.3 (scale 0.585, top 1.90 m); no sticker on the gable, no bill on the other piers. |
 | 5 | two targets gave two letting boards, and C02 used the wrong address | L02 is the fascia target's board exactly (900 x 450, TO LET, Libre Franklin 800 cap 130, vinyl red, no agent, no number) and is the default on SF5; L01 (1200 x 450 with an agent) is a held variant that would need the fascia target changed in the same batch; G.letting.mount compares size, font, weight, cap and colour with the fascia target; C02 reads 'Change of use of the ground floor, 7 Quay Street,'. |
-| 6 | two proposed names collided with real ones | TIGER JIM LARKIN is BIG TED HOLROYD and THE SEA WOLF is THE HARPOONER (and MAD MAURICE and THE BARON, a television series, are SPANNER SMITH and THE STEVEDORE), all held and listed for the town to check; LARKIN, SEA WOLF and SEA WOLVES are in forbidden_patterns.real_marks, with the real wrestlers, soap powders, cinema chains and campaigns the probe listed. |
+| 6 | two proposed names collided with real ones | TIGER JIM LARKIN is TED HOLROYD (first BIG TED HOLROYD, withdrawn after the second review: 'Big Ted' is the bear of the BBC children's programme Play School; BIG TED is in real_marks) and THE SEA WOLF is THE HARPOONER (and MAD MAURICE and THE BARON, a television series, are SPANNER SMITH and THE STEVEDORE), all held and listed for the town to check; LARKIN, SEA WOLF and SEA WOLVES are in forbidden_patterns.real_marks, with the real wrestlers, soap powders, cinema chains and campaigns the probe listed. |
 | 7 | period wording and process read as the wrong decade or country | D01 says SEQUENCE; W01 says PROFESSIONAL (Oswald 700 fitted to the 428 mm measure); the Tivoli's weeks start on Thursday (T01 from THURSDAY 18 OCTOBER, T02 from THURSDAY 25 OCTOBER, T03 four lines); the venue and date are a separate letterpress strip (T01s, T02s, 1016 x 90 mm, black on white, own class, 0.25 degrees off the quad's square) and the litho's top band is blank; J01 and D01 are photocopy A3 notices in shop windows; H03 reads NOTICE TO MARINERS. |
 | 8 | no street date, so the age classes contradicted each other | calendar.street_date is Monday 29 October 1990; T03 and D01 are class B, J01 class B everywhere; G.dates.age checks every placed dated item against its class's days (event - 42 <= street date - age <= event; a notice at or after its date) and is tested on the first try's contradiction. |
 | 9 | the mirror guard of the 29 hand cards contradicted their fixings | every SA card is taped (no pins); each hand card has ONE cue matching its fixing and nothing on the right half: one tab of yellowed tape across the top-LEFT corner (K05, K06c, K07a-d, K09a-f, SA01-SA15) or the knot and sucker at the top-LEFT (K01, K06a); every crease, tear and pin-hole cue is gone; G.mirror.cues reads the 25 mm top-left and top-right patches only and is tested on all 29 cards, true and mirrored; ITEM.glyphs also fails a mirrored hand card. |
@@ -40,12 +38,25 @@ The reviewer (a fresh target reviewer, 9 October) ran `self_check.py` (215 of 21
 
 **Where this try differs from the reviewer's amendment, and why (each with its source).**
 
-- **Fault 1(b), the glyph margin.** The review asks that each glyph out-score every other glyph of its font and its own mirror by at least 0.05 on F at 0.5 mm. F is a mean over the whole glyph, so glyphs that share most of their ink score alike. Measured by `self_check.py` (group 12, `f_margin_table`): in Oswald 700, 34 mm capitals, 2 px/mm, 9 of the 36 capitals and digits cannot meet 0.05 (D against O: 0.013, O against D: 0.013, Q against O: 0.026, B against D: 0.030). The check therefore keeps the review's own gate for the glyph itself (F >= 0.85 at 0.5 mm) and scores the separation from every alternative on the pixels where the two glyphs differ (SEP, section 12), gate 0.70, a margin of 0.40. Every wrong render the reviewer built fails it, and so do 8 for 6, 3 for 8, B for R and the other near pairs.
+- **Fault 1(b), the glyph margin.** The review asks that each glyph out-score every other glyph of its font and its own mirror by at least 0.05 on F at 0.5 mm. F is a mean over the whole glyph, so glyphs that share most of their ink score alike. Measured by `self_check.py` (group 12, `f_margin_table`): in Oswald 700, 34 mm capitals, 2 px/mm, 11 of the 36 capitals and digits cannot meet 0.05 (O against D 0.013, 6 against 8 0.036). The check therefore keeps the review's own gate for the glyph itself (F >= 0.85 at 0.5 mm) and scores the separation from every alternative on the pixels where the two glyphs differ (SEP, section 12), gate 0.70, a margin of 0.40. Every wrong render the reviewer built fails it, and so do 8 for 6, 3 for 8, B for R and the other near pairs.
 - **Fault 10, K05's bottom.** The review asks 1.38 m so that K05's centre is the 1.45 m its own words give. The fascia target's vinyl row `TOBACCONIST & CONFECTIONER` (cap 70 mm, z 1.35, tolerance 0.03) is on the same shop-door glass and tops out at 1.385 m (1.415 with the tolerance), so a card at 1.38 would stand on the lettering. K05's bottom is 1.42 m and its words now say so. Source: `production/cloud-week/targets/fascia-signs/target.json`, `glass_lettering`.
-- **Fault 4, the quay gable.** The Hook sheet's gable is bare old brick with a downpipe, a render patch high up and a damp foot, and the asset plan's own proof wants "one wall in view ... three bills from three templates". The reviewer's SF1 (one layer of three bills, the downpipe added) is kept and every one of its three placements and the plate carries `proof_wall: true`: dropping them leaves the gable exactly as the sheet shows it and breaks nothing else (the paper count then falls short of the plan's 8 and 4 by three bills, which is what a bare gable means). Nothing more goes on the gable until he has approved that sample in the assembled game.
-- **Fault 4, the count.** The reviewer's own placements add to 7 fly-posters, not the 8 he cites: W01, T02, M01, J01, W01, J01 and D01. The eighth is T03, the Tivoli's programme as a window bill in the ironmonger's glass (a cinema gave its bill to the shops: Judgement). The four poll-tax bills are P01, P03, P02 and P02's A3 window copy. `G.place.paper` counts 8 and 4 and fails one more.
+- **Fault 4, the quay gable (first try, since changed).** The Hook sheet's gable is bare old brick with a downpipe, a render patch high up and a damp foot, and the asset plan's own proof wants "one wall in view ... three bills from three templates". The first answer kept one layer of three bills with the downpipe added and flagged them `proof_wall`. The re-review then asked for the sheet's bare gable and Jafar's ruling of 9 October applied it: section A2. The five `proof_wall` placements are held, and nothing more goes anywhere until he has approved a sample in the assembled game.
+- **Fault 4, the count (first try, since changed).** The reviewer's own placements added to 7 fly-posters, not the 8 he cited; the eighth was T03, the Tivoli's programme as a window bill. After the re-review the gable's three bills, T03 and W01 on the pier are off the default street and M01 stands on the pier: **the default street carries 5 fly-posters and 3 poll-tax bills (P03, P02 and P02's A3 window copy), and `G.place.paper` allows at most 8 and 4**.
 - **Fault 6, other collisions found.** MAD MAURICE and THE BARON (a 1960s television series' title) went with the two the reviewer named: SPANNER SMITH and THE STEVEDORE. None was checked against real lists (the network is closed); all four are held and listed for the town. `real_marks` now holds LARKIN, SEA WOLF, SEA WOLVES, the real wrestlers, soap powders, cinema chains and campaigns the probe listed.
 - **Notes taken.** The tide table peaks on Sunday 4 November (4.4 4.6 4.7 4.8 4.7 4.5 4.2); SA01's number is 960 471; cockles are 45p a TUB (the trade's unit, the pint, is a banned word in this project) and smoked haddock is £2.90, dearer than fresh; T01's art no longer asks for a telephone box (nor T02's for a pier: a beach, deckchairs and a breakwater) and every art slot forbids crowns, kiosk lettering, operator marks, bottles, glasses and arcade signs; the council crest is masked in the P1 previews; the forbidden lists gain plurals and near terms (SCHOOLS, BABYSITTER, PLAYGROUP, SCOUTS, CUBS, BROWNIES, INN, TAVERN, DARTS, QUIZ NIGHT) and the real names above; section 4b no longer says League Gothic is off the plan's table; the fonts off the table are removed (Libre Baskerville, Josefin Sans, the unused Abril Fatface) or recorded with a DECISIONS line (Libre Franklin, Patrick Hand); the drawing script draws the piers' and the plates' elevations.
+
+## A2. Fixes applied after the second review, by Jafar's ruling of 9 October, not re-reviewed
+
+The second review (9 October, `TARGET-REVIEW.md`, "Re-review (try 2)") found most of the first try right and four faults. Jafar ruled on 9 October that the target, set aside after its two tries, gets the reviewer's exact fixes applied. They are applied below as the reviewer wrote them, run against the reviewer's own scripts (try2_tests.py, try2_true.py, try2_allitems.py, try2_sa.py, try2_sq.py), and **no fresh reviewer has looked at them yet**.
+
+| # | Fault | Fix |
+|---|---|---|
+| 1 | the checks failed correct items and never read ink outside the blocks | ITEM.square finds the angle against the render of the item's own glyph manifest (jitter included) and reports 0 unless F at the best angle beats F at 0 degrees by 0.02: exactly square P05, K04, K03a, K03b, K02, K08 and P06 read 0 and every jittered hand card reads 0; ONE tolerance, 0.3 degrees, in target.json and TARGET.md. The glyph reader gives a pixel a neighbour's ink explains and the glyph's does not to the neighbour, even where hand-lettered glyphs touch (SA01 and SA03 had failed 11 and 15 of 20 true seeds at 8 px/mm; both now pass 20 of 20), reads big capitals at a reduced scale with the same area rule that draws its reference, and counts a space's ink only where it lies beyond 0.6 mm of every glyph (T01-named's true render passes). glyphlib.needed_ppm measures each hand pair over glyphs jittered to 3.5 sd of the block's hand style (size and rotation, four corners). ITEM.clean (new, per item): the ink-coloured pixels outside every block's glyph window, the item's own shapes, the cue patch and the art slots total at most 2 mm2; the reviewer's four planted lines (K01 BINGO TONIGHT, SA11 Babysitter, evenings., L02 ARMITAGE & STOBBS, C02 BETTING SHOP) and D01 + LICENSED BAR fail it. A missing or unreadable <ITEM>.glyphs.json fails .words and .glyphs and never crashes the reader (render contract). Group 12 reads a true render of EVERY item and 20 jittered seeds of all 29 hand cards through .pos, .mask, .glyphs, .square and .clean; any failure is a self-check failure. |
+| 2 | the nameless defaults read as stand-ins | T01, T02, T03 and W01 (the nameless Tivoli quads and programme and the wrestling bill with no ring names and no hall) are HELD like their named twins (item.held, stand_in_of, waits_for): their placements are held_until_minted with the names the twin carries, so G.page.placeholders keeps them off the built street until DECISIONS.md mints the films, the hall and the ring names. Pier W1.0 (the scene's poster slot) takes M01 at class B, a bill that needs no unminted name. G.place.paper is 'at most 8 fly-posters and 4 poll-tax bills' (the default street carries 5 and 3). |
+| 3 | BIG TED HOLROYD collides with a real children's programme | TED HOLROYD on the named wrestling bill, in PROPOSED and in every check; BIG TED is in forbidden_patterns.real_marks ('Big Ted' is the bear of the BBC children's programme Play School). |
+| 4 | the quay gable is bare, as the Hook sheet shows it | P01, W01, T02 with its strip T02s and the second QUAY STREET plate (the five proof_wall placements) are held, not in the default street; the west corner pier keeps its plate at x 20.47. G.place.gable is now 'no paper and no plate on SF1' and still checks the downpipe, the render patch and the damp foot as fixtures; the check that demanded exactly three gable bills and the one that demanded exactly 8 and 4 are reworded. |
+
+Smaller notes from the same review, taken: the held placement of L01 is sized 1.2 x 0.45 m (it had copied the 0.9 m board); the calendar note no longer cites H03 as a reason for the street date (H03 is not placed); the forbidden lists gain BABYSITTERS, INNS, PLAYGROUPS, TEENS, LAD, LASS and KIDDIES. Not taken: the review's suggestion to render at check scale and downsample for the game is a builder's option that costs the checks nothing; the scales here stay the checks' own (the largest render is 12.4 megapixels).
 
 ## 0. What this target rests on, in plain words
 
@@ -70,11 +81,11 @@ What I would read once the network opens (all unreached today):
 ## 1. Reading this file
 
 - Units. Every item has its own frame: **x in millimetres from the viewer's LEFT edge as seen IN THE GAME, y UP from the item's bottom edge**; a block's `baseline_mm` is measured up from the bottom edge. Each item is rendered at its own `px_per_mm` (2 to 12 here, chosen so that every glyph can be told from every other: section 12); row 0 of an image is its top edge. Surfaces use metres: `u` from the surface's viewer's-left edge, `z` up from the pavement; street x is metres along Quay Street (0 at the quay end), the same in the recipe and the game.
-- **Every texture is square-on.** No skew, rotation or perspective is baked into any picture: skew and rotation live only in the placement's `rot_deg`, a hand card's tilt included. `ITEM.square` fails a texture turned more than 0.3 degrees; `PLACE.built` checks the placed decal's rotation to 0.3 degrees.
+- **Every texture is square-on.** No skew, rotation or perspective is baked into any picture: skew and rotation live only in the placement's `rot_deg`, a hand card's tilt included. `ITEM.square` fails a texture turned more than 0.3 degrees, **one tolerance for every item, print and hand-lettered alike**, found against the render of the item's own glyph manifest (jitter included); `PLACE.built` checks the placed decal's rotation to 0.3 degrees.
 - Left and right are the VIEWER'S, in the game, by the fascia target's rule: the game mirrors the recipe, so low street x is on the viewer's RIGHT looking at the east parade and on the viewer's LEFT looking at the west block. Every sheet's x runs from the viewer's left; the quay gable is read looking +x, with the front corner at the viewer's left.
 - Evidence kinds: Read (printed), Scaled (off a drawing or the game's files), Photo (measured on a photograph today), Derived (computed), Judgement (mine, to be overturned), Lead (a search summary, never a number).
 - Colours are sRGB 0 to 255, contrast is WCAG, dE is CIE76. Aged colours are for four classes (section 4).
-- **Named and nameless.** An item whose id ends `-named` (and L01, L03, B01, G01, G02) carries a proposed, unminted name in a block of cap 10 mm or more: it is HELD (`held_names`) and its placements are `held_until_minted` twins of the nameless default placements.
+- **Named and nameless.** An item whose id ends `-named` (and L01, L03, B01, G01, G02) carries a proposed, unminted name in a block of cap 10 mm or more: it is HELD (`held_names`) and its placements are `held_until_minted` twins of the nameless default placements. The nameless Tivoli quads and programme (T01, T02, T03) and the wrestling bill W01 are HELD too (`stand_in_of`, `waits_for`): a bill that names no film, no hall and no ring names reads as a placeholder by another name, so it waits with its twin for the names. The `G.place.*` checks and the drawings use `held` (not in the default street, for any reason); `held_until_minted` is the reason of unminted names.
 
 The kind of each class of number in this target:
 
@@ -94,20 +105,20 @@ The kind of each class of number in this target:
 
 ## 2. Where each piece goes on the street
 
-Everything here is **Judgement on the scene's own numbers**: SCENE-SLOTS.md, `vignette-scene.json`, the recipe (`terrace-front.py`), atlas-01 and the fascia target. **The amount of paper is the asset plan's (note 4, table A5, Quay Street, the proof view): 8 fly-posters and 4 poll-tax bills**; the placements below add to exactly that (`G.place.paper`).
+Everything here is **Judgement on the scene's own numbers**: SCENE-SLOTS.md, `vignette-scene.json`, the recipe (`terrace-front.py`), atlas-01 and the fascia target. **The amount of paper is AT MOST the asset plan's (note 4, table A5, Quay Street, the proof view): 8 fly-posters and 4 poll-tax bills**; the default street carries 5 and 3 (`G.place.paper`), because the quay gable is bare.
 
 | Surface | What it is | Frame and paste zone | What goes there |
 |---|---|---|---|
-| SF1 | the quay gable: the east parade's south end wall, plane x = 3.0 m, facing -x (the big brick wall at the right of the hook frame, `morning-hook-day-2026-10-08.jpg`) | u from the front corner into the block (viewer's left), 0 to 8.0 m; z 0 to 6.3 m; paste zone u 0.15 to 6.0, z 0.45 to 2.75 | ONE layer of three bills, bottoms z 1.00: P01 u 0.70, W01 u 1.30, T02 u 1.90 (+ the strip T02s across its top band); the QUAY STREET plate at u 1.0 (centre z 2.63). A 75 mm black cast-iron downpipe at u 0.30, full height, paper kept 150 mm clear; the render patch (z 3.6 to 5.0) and the damp foot (below 0.45) bare, as the Hook sheet has them. No cases, no stickers. |
+| SF1 | the quay gable: the east parade's south end wall, plane x = 3.0 m, facing -x (the big brick wall at the right of the hook frame, `morning-hook-day-2026-10-08.jpg`) | u from the front corner into the block (viewer's left), 0 to 8.0 m; z 0 to 6.3 m; paste zone u 0.15 to 6.0, z 0.45 to 2.75 | **BARE, as the Hook sheet shows it: no paper and no plate** (`G.place.gable`). A 75 mm black cast-iron downpipe at u 0.30, full height; the render patch (z 3.6 to 5.0) and the damp foot (below 0.45) bare, as the sheet has them. The plan's proof wall (one layer of three bills, bottoms z 1.00: P01 u 0.70, W01 u 1.30, T02 u 1.90 with its strip T02s, and a QUAY STREET plate at u 1.0, centre z 2.63) is kept as HELD placements, paper 150 mm clear of the pipe, for the case that he chooses the gable for the sample. No cases, no stickers. |
 | SF2 | the empty unit's whitened glass (bay 3, east, number 7, street x 21 to 27) | u from the glass's viewer's-left edge, 0 to 3.562 m; z 0.60 to 2.40; the glass is street x 23.088 to 26.65 (the recipe's `fx` counts from the viewer's RIGHT: u = 3.562 x (1 - fx)) | one layer, six sheets: C01a (police appeal, four tape tabs) u 0.30 z 1.30; M01 0.75; P03 1.35; P02 1.95; J01 (A3 photocopy) 2.60; C02 (planning notice, number 7) 3.01. Whitewash shows above 2.0 m |
 | WEST_PIER | six brick piers of the plain west block (street x 3 to 21), each 0.95 to 0.956 m, computed from the plain row's layout | street x of the pier's centre; z from the pavement | W1.0 (x 11.4, the scene's own poster slot): W01; W2.0: the house letting board L04. No other bill on a pier or a house front. |
 | SF9 | the plain row's bay-1 window at street x 12.3 (a cottage sash, sill 0.9 m, 0.85 m wide) | street x of the window's centre, z up from the pavement | P02 as an A3 window bill: P02 x 297/508 (0.585), 297 x 446 mm, taped inside the glass, top at 1.90 m |
 | SF4 | the three lamp columns, street x 8, 28, 48 (SCENE-SLOTS: every 20 m, first at 8 m, 0.6 m back from the kerb, alternate sides) | the shaft 0.114 m across; a bill wraps it: the middle 0.17 m of an A3 shows face-on | C03 and a sticker at x 8; two stickers at x 28 |
 | SF5 | the empty unit's fascia (0.55 m, z 2.85 to 3.40, 0.12 proud) | centre street x 24.0 = the fascia target's board x 2705; the board z 2.90 to 3.35 | L02, the fascia target's own board (L01, a named agent, is the held alternative) |
 | SF6 | first-floor brick above bay 3's cornice (3.55) and below the upper sills (about 4.3), between the two upper windows (street x 22.93 to 25.07) | centre street x 24.0, z 3.70 to 4.10 | L03n, the no-agent flat board (L03 is the held alternative) |
-| SF7 | name-plate walls: the west corner pier (street x 19.92 to 21.0, brick to 3.12 m) and the quay gable at u 1.0 | centre z 2.63 | S01n twice. The yard entrance (street x 21 to 24, dropped kerb at 22.5) carries NO plate: `vignette-scene.json` and atlas-01 (`yard_gap_x [21, 24]`) call it the yard entrance and canon does not name it. S02 and S03 are kit plates. |
+| SF7 | name-plate walls: the west corner pier (street x 19.92 to 21.0, brick to 3.12 m); a second plate on the quay gable at u 1.0 is held | centre z 2.63 | S01n once (the pier's). The yard entrance (street x 21 to 24, dropped kerb at 22.5) carries NO plate: `vignette-scene.json` and atlas-01 (`yard_gap_x [21, 24]`) call it the yard entrance and canon does not name it. S02 and S03 are kit plates. |
 | SF8 | a quay-edge post, street x about -0.6 (PROPOSED: SCENE-SLOTS has no quay geometry) | z 1.20 up | H02, DANGER DEEP WATER |
-| SHOP | eight shop fronts: glass 3.562 m, shop door 0.9, side door 0.838, pilasters 0.35 (C5, C8, C9), the door order following the fascia target's door ends | u from the glass's (or the shop door's) viewer's-left edge | the cards: section 5.7; D01 in the grocer's glass, T03 in the ironmonger's, J01 in the newsagent's beside the card board |
+| SHOP | eight shop fronts: glass 3.562 m, shop door 0.9, side door 0.838, pilasters 0.35 (C5, C8, C9), the door order following the fascia target's door ends | u from the glass's (or the shop door's) viewer's-left edge | the cards: section 5.7; D01 in the grocer's glass, J01 in the newsagent's beside the card board (the Tivoli programme T03, held, would stand in the ironmonger's) |
 
 Piers (street x of the clear brick, from the recipe's bay layout; bay 1 agrees with the scene file's note that the poster slot at x 11.4 lies between a door at 10.5 and a window at 12.3):
 
@@ -115,14 +126,14 @@ Piers (street x of the clear brick, from the recipe's bay layout; bay 1 agrees w
 |---|---|---|---|---|
 | W0.0 | 4.919 to 5.875 | 5.397 | door and window | none |
 | W0.1 | 6.725 to 7.675 | 7.200 | window and window | none |
-| W1.0 | 10.919 to 11.875 | 11.397 | door and window | W01 z 1.00 |
+| W1.0 | 10.919 to 11.875 | 11.397 | door and window | M01 z 1.00 |
 | W1.1 | 12.725 to 13.675 | 13.200 | window and window | none |
 | W2.0 | 16.325 to 17.275 | 16.800 | window and window | L04 z 2.15 |
 | W2.1 | 18.125 to 19.081 | 18.603 | window and door | none |
 
 The scene file's two held props are stale: its poster at west x 11.4 is the pier W1.0 and stays; its glazed case at west x 26.4 would stand on the tea room's glass (the west block is shops, not plain, from x 24). Neither case is placed at all: the Harbour Board's belongs by the dock office and the ferry's board at a ramp, and neither is built (`unplaced`).
 
-Not placed on Quay Street, with the reason (`unplaced` in `target.json`): P04 (a spare sheet for the town (the advice evening)); B01 (held (THE DRILL HALL); a spare for the town); G01 (held (WHITEWELL); a national four-sheet belongs in a contractor's panel); G02 (held (QUAYSIDE)); T01 (a spare Tivoli quad (nameless)); T01s (the strip of T01, which is not placed); F01 (on FC1); F02 (under F01 on FC1); H01 (a gate or wall of the docks: not built); H03 (pinned in HC1); H04 (pinned in HC1); H05 (pinned in HC1); C01b (a slot filler: the simulation's other appeals); C01c (a slot filler); K01 (for a shop that shuts for lunch: none on the built street does (hook-cast hours)); K02 (the newsagent never closes at midday (hook-cast 6 to 17.30) and Hal's shop is not on the built street); K03b (the CLOSED face of K03a, shown when the shop is shut); S01d (a variant of S01n); S02n (a kit plate: no street plate on the yard entrance); S02d (a kit plate); S03n (a kit plate); S03d (a kit plate); HC1 (by the dock office (brand bible; hook-cast harbour_office): neither is built); FC1 (at each ramp (brand bible): the ramp is not built).
+Not placed on Quay Street, with the reason (`unplaced` in `target.json`): P04 (a spare sheet for the town (the advice evening)); B01 (held (THE DRILL HALL); a spare for the town); G01 (held (WHITEWELL); a national four-sheet belongs in a contractor's panel); G02 (held (QUAYSIDE)); T01 (held: a nameless stand-in, with T01-named); T01s (the strip of T01, which is not placed); F01 (on FC1); F02 (under F01 on FC1); H01 (a gate or wall of the docks: not built); H03 (pinned in HC1); H04 (pinned in HC1); H05 (pinned in HC1); C01b (a slot filler: the simulation's other appeals); C01c (a slot filler); K01 (for a shop that shuts for lunch: none on the built street does (hook-cast hours)); K02 (the newsagent never closes at midday (hook-cast 6 to 17.30) and Hal's shop is not on the built street); K03b (the CLOSED face of K03a, shown when the shop is shut); S01d (a variant of S01n); S02n (a kit plate: no street plate on the yard entrance); S02d (a kit plate); S03n (a kit plate); S03d (a kit plate); HC1 (by the dock office (brand bible; hook-cast harbour_office): neither is built); FC1 (at each ramp (brand bible): the ramp is not built).
 
 ## 3. Sizes, stocks, processes and what they look like
 
@@ -177,7 +188,7 @@ The look in one paragraph per kind (all Judgement unless a lead is named):
 
 Four classes by days on the wall: **A** fresh (0 to 7 days), **B** weeks (8 to 35), **C** months (36 to 120), **D** old (over 120). A colour fades by f = 1 - exp(-t / tau) (tau in days, per ink or stock) towards the paper, the paper yellows (30 per cent of the way to (214,200,168) at class D), and a grime film (62,58,52) mixes in at 0, 5, 12 and 22 per cent (35 per cent of that over ink). The order of fastness (Judgement) is fluorescent stock, then red, blue, black, toner.
 
-**The street date is Monday 29 October 1990** (`calendar.street_date`): the one day every dated placement allows (H03 is dated 26 October, T02's film starts on Thursday 25, P01's meeting is the 25th, GMT began on the 28th). `G.dates.age` fails a placed dated item unless some age in its class's days posts it no more than 42 days before its event and no later than it (a notice: no earlier than its date). The ages that follow: P01 B (the 25 October meeting is four days gone: a stale bill), W01 A on the gable and B on the pier, T02 A (up since the 25th), T03 B, D01 B, J01 B (the 20 October sale is nine days gone: stale), P03 B, C01a B (the night of 12 October), C02 A, M01 C. The first try's contradictions (T03 in class D under T01 in class A for the same week; D01 in class C for a 17 November dance) are tested and fail.
+**The street date is Monday 29 October 1990** (`calendar.street_date`): a day every placed dated item allows (GMT began on the 28th; the held proof wall's P01 and T02 allow it too: the meeting of the 25th is four days gone, the film started on Thursday 25). `G.dates.age` fails a placed dated item unless some age in its class's days posts it no more than 42 days before its event and no later than it (a notice: no earlier than its date). The ages that follow: P01 B (held; the 25 October meeting is four days gone: a stale bill), W01 A (held, on the gable), T02 A (held; up since the 25th), T03 B (held), D01 B, J01 B (the 20 October sale is nine days gone: stale), P03 B, C01a B (the night of 12 October), C02 A, M01 C on the glass and B on the pier. The first try's contradictions (T03 in class D under T01 in class A for the same week; D01 in class C for a 17 November dance) are tested and fail.
 
 | Stock | fresh | A | B | C | D | tau |
 |---|---|---|---|---|---|---|
@@ -471,11 +482,11 @@ An INVENTED LOCAL CAMPAIGN (ruling 3 October): no party, no person, no real grou
 
 ### 5.3 The fights, the market and the goods
 
-The default wrestling bill W01 names no ring names and no hall (it reads PROFESSIONAL WRESTLING, a heavyweight contest, a tag team contest, support bouts; 'ALL-IN' was the 1930s name). The `-named` twin carries the proposed names: THE DRILL HALL (a generic building, no street given) and four invented ring names (THE HARPOONER, SPANNER SMITH, BIG TED HOLROYD, THE STEVEDORE), renamed after the review found two of the first four real (a dock-union leader; Jack London's novel) and a third a television series. No odds, no stakes, no prize. The market bill matches `hook-cast.json`: Tuesday, Friday, Saturday, 8 to 4. The two goods are INVENTED brands (WHITEWELL washday powder, QUAYSIDE TEA), proposed, not minted, held and not placed (a national four-sheet belongs in a contractor's panel, not pasted under fly-posters); a cigarette bill is not drawn (a minted brand and the 1990 health-warning wording are both missing).
+The wrestling bill W01 names no ring names and no hall (it reads PROFESSIONAL WRESTLING, a heavyweight contest, a tag team contest, support bouts; 'ALL-IN' was the 1930s name); a bill that names nothing reads as a placeholder by another name, so **W01 is HELD with its named twin** and built only once the town mints the hall and the ring names (second review, fault 3). The `-named` twin carries the proposed names: THE DRILL HALL (a generic building, no street given) and four invented ring names (THE HARPOONER, SPANNER SMITH, TED HOLROYD, THE STEVEDORE), renamed after the review found two of the first four real (a dock-union leader; Jack London's novel) and a third a television series, and after the re-review found the first rewrite, BIG TED HOLROYD, to be the name of the bear in the BBC children's programme Play School (BIG TED is now in `real_marks`). No odds, no stakes, no prize. The market bill matches `hook-cast.json`: Tuesday, Friday, Saturday, 8 to 4. The two goods are INVENTED brands (WHITEWELL washday powder, QUAYSIDE TEA), proposed, not minted, held and not placed (a national four-sheet belongs in a contractor's panel, not pasted under fly-posters); a cigarette bill is not drawn (a minted brand and the 1990 health-warning wording are both missing).
 
 #### W01  Professional wrestling bill
 
-- 508 x 762 mm (double_crown); 3 px/mm; stock: pale yellow copier paper; process: letterpress_2col; event: FRIDAY 2 NOVEMBER; dated: event 1990-11-02
+- 508 x 762 mm (double_crown); 3 px/mm; stock: pale yellow copier paper; process: letterpress_2col; event: FRIDAY 2 NOVEMBER; dated: event 1990-11-02; HELD (a nameless stand-in; waits with W01-named for: THE DRILL HALL, THE HARPOONER, SPANNER SMITH, TED HOLROYD, THE STEVEDORE)
 - variants: 3 (age class A, B; red pass shifted; one with the date line struck through by a hand-painted band (event over): a red felt-pen stripe, NO new words; skew is the PLACEMENT's rot_deg only: every texture is square-on)
 - shape rule_a (rule): box [40, 434.0, 468, 437.4], fill black
   - `PROFESSIONAL` | oswald 700 | cap 47 | centre 254 | base 691 | black | B 13.04
@@ -491,7 +502,7 @@ The default wrestling bill W01 names no ring names and no hall (it reads PROFESS
 
 #### W01-named  Professional wrestling bill (ring names and venue named, held)
 
-- 508 x 762 mm (double_crown); 3 px/mm; stock: pale yellow copier paper; process: letterpress_2col; event: FRIDAY 2 NOVEMBER; dated: event 1990-11-02; HELD until minted: THE DRILL HALL, THE HARPOONER, SPANNER SMITH, BIG TED HOLROYD, THE STEVEDORE
+- 508 x 762 mm (double_crown); 3 px/mm; stock: pale yellow copier paper; process: letterpress_2col; event: FRIDAY 2 NOVEMBER; dated: event 1990-11-02; HELD until minted: THE DRILL HALL, THE HARPOONER, SPANNER SMITH, TED HOLROYD, THE STEVEDORE
 - variants: 3 (age class A, B; red pass shifted; one with the date line struck through by a hand-painted band (event over): a red felt-pen stripe, NO new words; skew is the PLACEMENT's rot_deg only: every texture is square-on)
 - shape rule_a (rule): box [40, 433.99999999999994, 468, 437.3999999999999], fill black
   - `PROFESSIONAL` | oswald 700 | cap 47 | centre 254 | base 691 | black | B 13.04
@@ -500,12 +511,12 @@ The default wrestling bill W01 names no ring names and no hall (it reads PROFESS
   - `FRIDAY 2 NOVEMBER` | oswald 700 | cap 39.5 | centre 254 | base 495.3 | black | B 13.04
   - `BELL 7.30 PM` | oswald 600 | cap 34 | centre 254 | base 452 | red | B 3.97
   - `THE HARPOONER` | oswald 700 | cap 45 | centre 254 | base 377 | black | B 13.04
-  - `v` | old-standard-tt-italic 400 | cap 14 | centre 254 | base 356.8 | red | B 3.97
+  - `v` | old-standard-tt-italic 400 | cap 14 | centre 254 | base 356.9 | red | B 3.97
   - `SPANNER SMITH` | oswald 700 | cap 47.5 | centre 254 | base 303.2 | black | B 13.04
-  - `BIG TED HOLROYD` | oswald 700 | cap 42.5 | centre 254 | base 233 | black | B 13.04
-  - `v` | old-standard-tt-italic 400 | cap 14 | centre 254 | base 212.8 | red | B 3.97
-  - `THE STEVEDORE` | oswald 700 | cap 38 | centre 254 | base 168.7 | black | B 13.04
-  - `AND SUPPORT BOUTS` | oswald 600 | cap 20 | centre 254 | base 127.2 | black | B 13.04
+  - `TED HOLROYD` | oswald 700 | cap 43 | centre 254 | base 232.7 | black | B 13.04
+  - `v` | old-standard-tt-italic 400 | cap 14 | centre 254 | base 212.5 | red | B 3.97
+  - `THE STEVEDORE` | oswald 700 | cap 38 | centre 254 | base 168.4 | black | B 13.04
+  - `AND SUPPORT BOUTS` | oswald 600 | cap 20 | centre 254 | base 127 | black | B 13.04
   - `RINGSIDE £4 · UNRESERVED £2.50` | libre-franklin 800 | cap 17 | centre 254 | base 76.3 | red | B 3.97
   - `TICKETS AT THE DOOR` | libre-franklin 700 | cap 14 | centre 254 | base 50 | black | B 13.04
   - `Printed by Quay Print, Meridian.` | libre-franklin 500 | cap 2.4 | centre 254 | base 24 | black | B 13.04
@@ -563,11 +574,11 @@ The default wrestling bill W01 names no ring names and no hall (it reads PROFESS
 
 ### 5.4 The Tivoli
 
-The Tivoli is minted (canon) and 'changes its programme on Thursdays' (brand bible): the films start on Thursdays (T01 from 18 October, T02 from 25 October). Its films are invented: the DEFAULT bills say A NEW THRILLER and A NEW COMEDY; the `-named` twins say THE FOURTH WITNESS and A WEEK AT GULLWING (Gullwing is a minted district) with a billing block (6 to 12 mm: a studio and three credits, placeholders); the BBFC certificate roundels are real marks and are NOT drawn. **A distributor's quad carried no venue**: the cinema pasted a strip across its top band, so the quad's own top 90 mm is blank and the strips T01s and T02s (1016 x 90 mm, letterpress black on white, 2 to 6 mm off square) carry THE TIVOLI and FROM THURSDAY ...  The quads' art comes from the image model with no words and no people (no telephone box, no pier: a lit window down a wet street; a beach with deckchairs); our text sits on a dark scrim (T01) or on a pale panel (T02). The Tivoli's own front (plastic letters on a rail, changed on Thursdays) is not this family's.
+The Tivoli is minted (canon) and 'changes its programme on Thursdays' (brand bible): the films start on Thursdays (T01 from 18 October, T02 from 25 October). Its films are invented: the nameless bills (T01 'A NEW THRILLER', T02 'A NEW COMEDY', T03's programme that names no film) read as stand-ins and are HELD with their twins (second review, fault 3); the `-named` twins say THE FOURTH WITNESS and A WEEK AT GULLWING (Gullwing is a minted district) with a billing block (6 to 12 mm: a studio and three credits, placeholders); the BBFC certificate roundels are real marks and are NOT drawn. **A distributor's quad carried no venue**: the cinema pasted a strip across its top band, so the quad's own top 90 mm is blank and the strips T01s and T02s (1016 x 90 mm, letterpress black on white, 2 to 6 mm off square) carry THE TIVOLI and FROM THURSDAY ...  The quads' art comes from the image model with no words and no people (no telephone box, no pier: a lit window down a wet street; a beach with deckchairs); our text sits on a dark scrim (T01) or on a pale panel (T02). The Tivoli's own front (plastic letters on a rail, changed on Thursdays) is not this family's.
 
 #### T01  Tivoli quad: a new thriller (no title minted)
 
-- 1016 x 762 mm (quad_crown); 2 px/mm; stock: white poster paper; process: litho_4col; event: THURSDAY 18 OCTOBER; dated: event 1990-10-18
+- 1016 x 762 mm (quad_crown); 2 px/mm; stock: white poster paper; process: litho_4col; event: THURSDAY 18 OCTOBER; dated: event 1990-10-18; HELD (a nameless stand-in; waits with T01-named for: MARSHLAND PICTURES, A. VENN, R. CORLEY, H. MADDOX, THE FOURTH WITNESS)
 - variants: 2 (age class B, C; one cut in half by a torn edge, the title half left; skew is the PLACEMENT's rot_deg only: every texture is square-on)
 - shape scrim_bottom (scrim): box [0, 0, 1016, 300], fill black - gradient, fully dark at the foot
 - shape scrim_top (scrim): box [0, 672, 1016, 762], fill black - the top band is flat dark and BLANK: no lettering of any kind in the litho; the strip T01s is pasted over it
@@ -591,7 +602,7 @@ The Tivoli is minted (canon) and 'changes its programme on Thursdays' (brand bib
 
 #### T02  Tivoli quad: a new comedy (no title minted)
 
-- 1016 x 762 mm (quad_crown); 2 px/mm; stock: white poster paper; process: litho_4col; event: THURSDAY 25 OCTOBER; dated: event 1990-10-25
+- 1016 x 762 mm (quad_crown); 2 px/mm; stock: white poster paper; process: litho_4col; event: THURSDAY 25 OCTOBER; dated: event 1990-10-25; HELD (a nameless stand-in; waits with T02-named for: MARSHLAND PICTURES, H. MADDOX, A WEEK AT GULLWING)
 - variants: 2 (age class A, B; one with the sky bleached to near white; skew is the PLACEMENT's rot_deg only: every texture is square-on)
 - shape title_panel (rect): box [110, 385, 906, 560], fill agent_white - a pale panel behind the red title so the red holds; the sky shows round it
 - ART SLOT art [0, 0, 1016, 762]: a pale empty beach under a high pale-blue sky with a row of striped deckchairs lined up empty on the sand and a wooden breakwater running to a calm sea, bright flat colours like a saucy postcard; no buildings, no pier, no people, no faces, no lettering. Forbidden: people, hands, faces, children, text, lettering, numerals, signs, crowns, kiosks, operator marks, real brands, buildings, a pier, arcade or amusement signs, drink, bottles, glasses, gambling machines. the top 90 mm stays clear flat sky (the venue strip T02s is pasted there); the sky across the top 40 per cent stays clear and flat for the title
@@ -612,7 +623,7 @@ The Tivoli is minted (canon) and 'changes its programme on Thursdays' (brand bib
 
 #### T03  Tivoli programme bill (no titles minted)
 
-- 508 x 762 mm (double_crown); 2 px/mm; stock: white poster paper; process: letterpress_2col; event: THURSDAY 18 OCTOBER; dated: event 1990-10-18
+- 508 x 762 mm (double_crown); 2 px/mm; stock: white poster paper; process: letterpress_2col; event: THURSDAY 18 OCTOBER; dated: event 1990-10-18; HELD (a nameless stand-in; waits with T03-named for: THE FOURTH WITNESS, A WEEK AT GULLWING)
 - variants: 2 (age class A, B; one with the lower half torn away; skew is the PLACEMENT's rot_deg only: every texture is square-on)
 - shape rule_a (rule): box [40, 308.00000000000006, 468, 311.40000000000003], fill black
   - `THE TIVOLI` | oswald 700 | cap 68.5 | centre 254 | base 667.5 | red | B 3.99
@@ -969,7 +980,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K07a  Grocer's star card
 
-- 170 x 170 mm (own size); 4 px/mm; stock: fluorescent yellow star card; process: felt_pen
+- 170 x 170 mm (own size); 6 px/mm; stock: fluorescent yellow star card; process: felt_pen
 - variants: 2 (taped inside the grocer's glass at 1.2 to 1.9 m; the fluorescent stock fades within weeks)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [23.1, 132.2, 48.1, 157.2] (left) and [121.9, 132.2, 146.9, 157.2] (right)
 - shape star (star): 28 points (see target.json), the card is cut to a 14-point burst (outer radius 84, inner 62); the stock colour is the star; outside it the card is transparent
@@ -979,7 +990,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K07b  Grocer's star card
 
-- 170 x 170 mm (own size); 4 px/mm; stock: fluorescent pink star card; process: felt_pen
+- 170 x 170 mm (own size); 6 px/mm; stock: fluorescent pink star card; process: felt_pen
 - variants: 2 (taped inside the grocer's glass at 1.2 to 1.9 m; the fluorescent stock fades within weeks)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [23.1, 132.2, 48.1, 157.2] (left) and [121.9, 132.2, 146.9, 157.2] (right)
 - shape star (star): 28 points (see target.json), the card is cut to a 14-point burst (outer radius 84, inner 62); the stock colour is the star; outside it the card is transparent
@@ -989,7 +1000,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K07c  Grocer's star card
 
-- 170 x 170 mm (own size); 4 px/mm; stock: fluorescent orange star card; process: felt_pen
+- 170 x 170 mm (own size); 6 px/mm; stock: fluorescent orange star card; process: felt_pen
 - variants: 2 (taped inside the grocer's glass at 1.2 to 1.9 m; the fluorescent stock fades within weeks)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [23.1, 132.2, 48.1, 157.2] (left) and [121.9, 132.2, 146.9, 157.2] (right)
 - shape star (star): 28 points (see target.json), the card is cut to a 14-point burst (outer radius 84, inner 62); the stock colour is the star; outside it the card is transparent
@@ -999,7 +1010,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K07d  Grocer's star card
 
-- 170 x 170 mm (own size); 3 px/mm; stock: fluorescent yellow star card; process: felt_pen
+- 170 x 170 mm (own size); 4 px/mm; stock: fluorescent yellow star card; process: felt_pen
 - variants: 2 (taped inside the grocer's glass at 1.2 to 1.9 m; the fluorescent stock fades within weeks)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [23.1, 132.2, 48.1, 157.2] (left) and [121.9, 132.2, 146.9, 157.2] (right)
 - shape star (star): 28 points (see target.json), the card is cut to a 14-point burst (outer radius 84, inner 62); the stock colour is the star; outside it the card is transparent
@@ -1015,7 +1026,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K09a  Fish price ticket: COD FILLET
 
-- 105 x 74 mm (own size); 3 px/mm; stock: white card, about 250 gsm; process: felt_pen
+- 105 x 74 mm (own size); 4 px/mm; stock: white card, about 250 gsm; process: felt_pen
 - variants: 2 (taped inside the glass at the slab's height, one tab at the top-left; a wet corner)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 49.0, 25.0, 74] (left) and [80.0, 49.0, 105.0, 74] (right)
   - `COD FILLET` | patrick-hand 400 | cap 13 | centre 52.5 | base 46 | felt_black hand=felt_fine | B 12.53
@@ -1023,7 +1034,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K09b  Fish price ticket: HADDOCK
 
-- 105 x 74 mm (own size); 3 px/mm; stock: white card, about 250 gsm; process: felt_pen
+- 105 x 74 mm (own size); 4 px/mm; stock: white card, about 250 gsm; process: felt_pen
 - variants: 2 (taped inside the glass at the slab's height, one tab at the top-left; a wet corner)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 49.0, 25.0, 74] (left) and [80.0, 49.0, 105.0, 74] (right)
   - `HADDOCK` | patrick-hand 400 | cap 13 | centre 52.5 | base 46 | felt_black hand=felt_fine | B 12.53
@@ -1031,7 +1042,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K09c  Fish price ticket: PLAICE
 
-- 105 x 74 mm (own size); 3 px/mm; stock: white card, about 250 gsm; process: felt_pen
+- 105 x 74 mm (own size); 4 px/mm; stock: white card, about 250 gsm; process: felt_pen
 - variants: 2 (taped inside the glass at the slab's height, one tab at the top-left; a wet corner)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 49.0, 25.0, 74] (left) and [80.0, 49.0, 105.0, 74] (right)
   - `PLAICE` | patrick-hand 400 | cap 13 | centre 52.5 | base 46 | felt_black hand=felt_fine | B 12.53
@@ -1039,7 +1050,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K09d  Fish price ticket: KIPPERS
 
-- 105 x 74 mm (own size); 3 px/mm; stock: white card, about 250 gsm; process: felt_pen
+- 105 x 74 mm (own size); 4 px/mm; stock: white card, about 250 gsm; process: felt_pen
 - variants: 2 (taped inside the glass at the slab's height, one tab at the top-left; a wet corner)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 49.0, 25.0, 74] (left) and [80.0, 49.0, 105.0, 74] (right)
   - `KIPPERS` | patrick-hand 400 | cap 13 | centre 52.5 | base 46 | felt_black hand=felt_fine | B 12.53
@@ -1047,7 +1058,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K09e  Fish price ticket: SMOKED HADDOCK
 
-- 105 x 74 mm (own size); 3 px/mm; stock: white card, about 250 gsm; process: felt_pen
+- 105 x 74 mm (own size); 4 px/mm; stock: white card, about 250 gsm; process: felt_pen
 - variants: 2 (taped inside the glass at the slab's height, one tab at the top-left; a wet corner)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 49.0, 25.0, 74] (left) and [80.0, 49.0, 105.0, 74] (right)
   - `SMOKED HADDOCK` | patrick-hand 400 | cap 8.5 | centre 52.5 | base 46 | felt_black hand=felt_fine | B 12.53
@@ -1055,7 +1066,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### K09f  Fish price ticket: COCKLES
 
-- 105 x 74 mm (own size); 3 px/mm; stock: white card, about 250 gsm; process: felt_pen
+- 105 x 74 mm (own size); 4 px/mm; stock: white card, about 250 gsm; process: felt_pen
 - variants: 2 (taped inside the glass at the slab's height, one tab at the top-left; a wet corner)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 49.0, 25.0, 74] (left) and [80.0, 49.0, 105.0, 74] (right)
   - `COCKLES` | patrick-hand 400 | cap 13 | centre 52.5 | base 46 | felt_black hand=felt_fine | B 12.53
@@ -1083,7 +1094,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA01  Newsagent window card 01
 
-- 127 x 76 mm (own size); 8 px/mm; stock: white record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: white record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `ROOM TO LET` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_blue hand=felt_fine | B 6.81
@@ -1093,7 +1104,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA02  Newsagent window card 02
 
-- 127 x 76 mm (own size); 8 px/mm; stock: blue record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: blue record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `GENTS BICYCLE` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_black hand=felt_fine | B 9.97
@@ -1103,7 +1114,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA03  Newsagent window card 03
 
-- 148 x 105 mm (own size); 8 px/mm; stock: yellow record card; process: ballpoint_card
+- 148 x 105 mm (own size); 12 px/mm; stock: yellow record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 80.0, 25.0, 105] (left) and [123.0, 80.0, 148.0, 105] (right)
   - `PIANO FOR SALE` | patrick-hand 400 | cap 7 | left 8 | base 89.5 | felt_black hand=felt_fine | B 11.54
@@ -1113,7 +1124,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA04  Newsagent window card 04
 
-- 127 x 76 mm (own size); 8 px/mm; stock: white record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: white record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `WINDOW CLEANER` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_blue hand=felt_fine | B 6.81
@@ -1122,7 +1133,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA05  Newsagent window card 05
 
-- 127 x 76 mm (own size); 8 px/mm; stock: pink record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: pink record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `DECORATING` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_black hand=felt_fine | B 9.56
@@ -1131,7 +1142,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA06  Newsagent window card 06
 
-- 148 x 105 mm (own size); 8 px/mm; stock: white record card; process: ballpoint_card
+- 148 x 105 mm (own size); 12 px/mm; stock: white record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 80.0, 25.0, 105] (left) and [123.0, 80.0, 148.0, 105] (right)
   - `LOST` | patrick-hand 400 | cap 7 | left 8 | base 89.5 | felt_black hand=felt_fine | B 12.68
@@ -1142,7 +1153,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA07  Newsagent window card 07
 
-- 127 x 76 mm (own size); 8 px/mm; stock: green record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: green record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `FOUND` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_blue hand=felt_fine | B 5.69
@@ -1151,7 +1162,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA08  Newsagent window card 08
 
-- 127 x 76 mm (own size); 8 px/mm; stock: white record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: white record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `TYPING DONE AT HOME` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_black hand=felt_fine | B 12.68
@@ -1160,7 +1171,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA09  Newsagent window card 09
 
-- 148 x 105 mm (own size); 8 px/mm; stock: blue record card; process: ballpoint_card
+- 148 x 105 mm (own size); 12 px/mm; stock: blue record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 80.0, 25.0, 105] (left) and [123.0, 80.0, 148.0, 105] (right)
   - `MAN WITH VAN` | patrick-hand 400 | cap 7 | left 8 | base 89.5 | felt_black hand=felt_fine | B 9.97
@@ -1170,7 +1181,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA10  Newsagent window card 10
 
-- 127 x 76 mm (own size); 8 px/mm; stock: yellow record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: yellow record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `GAS COOKER` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_blue hand=felt_fine | B 6.32
@@ -1179,7 +1190,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA11  Newsagent window card 11
 
-- 127 x 76 mm (own size); 8 px/mm; stock: white record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: white record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `WANTED` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_black hand=felt_fine | B 12.68
@@ -1188,7 +1199,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA12  Newsagent window card 12
 
-- 127 x 76 mm (own size); 8 px/mm; stock: pink record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: pink record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `SEWING MACHINE` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_black hand=felt_fine | B 9.56
@@ -1197,7 +1208,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA13  Newsagent window card 13
 
-- 127 x 76 mm (own size); 8 px/mm; stock: white record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: white record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `COLOUR TV` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_blue hand=felt_fine | B 6.81
@@ -1206,7 +1217,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA14  Newsagent window card 14
 
-- 127 x 76 mm (own size); 8 px/mm; stock: green record card; process: ballpoint_card
+- 127 x 76 mm (own size); 12 px/mm; stock: green record card; process: ballpoint_card
 - variants: 1 (taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg))
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 51.0, 25.0, 76] (left) and [102.0, 51.0, 127.0, 76] (right)
   - `CHIMNEY SWEEP` | patrick-hand 400 | cap 7 | left 8 | base 60.5 | felt_black hand=felt_fine | B 10.4
@@ -1215,7 +1226,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 
 #### SA15  Newsagent: ADVERTISE HERE card
 
-- 148 x 105 mm (A6L); 3 px/mm; stock: white card, about 250 gsm; process: felt_pen
+- 148 x 105 mm (A6L); 4 px/mm; stock: white card, about 250 gsm; process: felt_pen
 - variants: 1 (top of the board, taped by one tab at the top-left)
 - fixing and mirror cue: one tab of yellowed adhesive tape across the card's top-LEFT corner only; the corner patches are [0.0, 80.0, 25.0, 105] (left) and [123.0, 80.0, 148.0, 105] (right)
   - `ADVERTISE HERE` | patrick-hand 400 | cap 12 | centre 74 | base 80 | felt_red hand=felt | B 3.95
@@ -1304,7 +1315,7 @@ Cards are hand-lettered in Patrick Hand (felt pen and ballpoint) or printed. **E
 | S03n | TANNERY ROW | (none) | n | 1100 x 200 | 968.0 | vitreous_enamel_steel |
 | S03d | TANNERY ROW | IRONSIDE | d | 1100 x 220 | 968.0 | vitreous_enamel_steel |
 
-Placed: **S01n** at street x 20.47 on the west corner pier (x 19.92 to 21.0, brick to 3.12 m: the existing plate's place, kept, 80 mm of pier either side), centre z 2.63; **S01n** again on the quay gable, centre 1.0 m from the front corner, z 2.63. **NO plate stands on the yard entrance** (street x 21 to 24, the dropped kerb at 22.5): the scene file calls it the yard entrance and atlas-01 gives it as `yard_gap_x [21, 24]`; the atlas runs Weighhouse Lane about 200 m beyond the built 48 m, so naming the gap is a map fact the town has settled. **S02 (WEIGHHOUSE LANE) and S03 (TANNERY ROW)** are kit plates for the town and are not placed on Quay Street. The plate board's pictures: `L4` shows all six.
+Placed: **S01n** at street x 20.47 on the west corner pier (x 19.92 to 21.0, brick to 3.12 m: the existing plate's place, kept, 80 mm of pier either side), centre z 2.63. **The quay gable carries no plate**: the Hook sheet shows none there, and one plate on a 48 m street is enough; a second S01n at u 1.0 (centre z 2.63) is a HELD placement. **NO plate stands on the yard entrance** (street x 21 to 24, the dropped kerb at 22.5): the scene file calls it the yard entrance and atlas-01 gives it as `yard_gap_x [21, 24]`; the atlas runs Weighhouse Lane about 200 m beyond the built 48 m, so naming the gap is a map fact the town has settled. **S02 (WEIGHHOUSE LANE) and S03 (TANNERY ROW)** are kit plates for the town and are not placed on Quay Street. The plate board's pictures: `L4` shows all six.
 
 #### S01n  Street name plate: QUAY STREET (name only: the default)
 
@@ -1341,21 +1352,21 @@ Placed: **S01n** at street x 20.47 on the west corner pier (x 19.92 to 21.0, bri
 
 ## 8. The paste plan: placements
 
-Layers run from the oldest (0) to the newest; age class A to D is the paper's age on the street date (section 4). Placements marked HELD are the named twins of a default placement: built only after the town mints their names (`G.page.placeholders`, section 12). `proof_wall` marks the quay gable's sample.
+Layers run from the oldest (0) to the newest; age class A to D is the paper's age on the street date (section 4). Placements marked HELD are not in the default street: the named twins of a default placement and the nameless stand-ins (built only after the town mints their names: `G.page.placeholders`, section 12) and the five `proof_wall` placements of the quay gable (P01, W01, T02, T02s and a second QUAY STREET plate), which the bare gable holds back. The gable's `proof_wall` set is the plan's sample, kept for the case that he chooses the gable.
 
 | Surface | Item | where | z bottom (m) | rot | layer | age | size (m) | notes |
 |---|---|---|---|---|---|---|---|---|
-| SF1 | P01 | u 0.700 | 1.00 | -0.6 | 0 | B | 0.508 x 0.762 | proof_wall |
-| SF1 | W01 | u 1.300 | 1.00 | 0.5 | 0 | A | 0.508 x 0.762 | proof_wall |
-| SF1 | T02 | u 1.900 | 1.00 | -0.4 | 0 | A | 1.016 x 0.762 | proof_wall |
-| SF1 | T02s | u 1.903 | 1.68 | -0.15 | 1 | A | 1.016 x 0.090 | proof_wall |
+| SF1 | P01 | u 0.700 | 1.00 | -0.6 | 0 | B | 0.508 x 0.762 | HELD (the bare gable); proof_wall |
+| SF1 | W01 | u 1.300 | 1.00 | 0.5 | 0 | A | 0.508 x 0.762 | HELD (THE DRILL HALL, THE HARPOONER, SPANNER SMITH, TED HOLROYD, THE STEVEDORE); proof_wall |
+| SF1 | T02 | u 1.900 | 1.00 | -0.4 | 0 | A | 1.016 x 0.762 | HELD (MARSHLAND PICTURES, H. MADDOX, A WEEK AT GULLWING); proof_wall |
+| SF1 | T02s | u 1.903 | 1.68 | -0.15 | 1 | A | 1.016 x 0.090 | HELD (the bare gable); proof_wall |
 | SF2 | C01a | u 0.300 | 1.30 | 0.3 | 1 | B | 0.297 x 0.420 |  |
 | SF2 | M01 | u 0.750 | 0.80 | 0.8 | 0 | C | 0.508 x 0.762 |  |
 | SF2 | P03 | u 1.350 | 0.85 | 1.2 | 0 | B | 0.508 x 0.762 |  |
 | SF2 | P02 | u 1.950 | 0.82 | 0.6 | 0 | B | 0.508 x 0.762 |  |
 | SF2 | J01 | u 2.600 | 1.05 | -0.8 | 0 | B | 0.297 x 0.420 |  |
 | SF2 | C02 | u 3.010 | 1.50 | 0.0 | 1 | A | 0.210 x 0.297 |  |
-| WEST_PIER | W01 | street x 11.397 pier W1.0 | 1.00 | 0.0 | 0 | B | 0.508 x 0.762 |  |
+| WEST_PIER | M01 | street x 11.397 pier W1.0 | 1.00 | 0.0 | 0 | B | 0.508 x 0.762 |  |
 | WEST_PIER | L04 | street x 16.8 pier W2.0 | 2.15 | 0.0 | 2 | C | 0.600 x 0.400 |  |
 | SF9 | P02 | street x 12.3 | 1.45 | 0.0 | 0 | A | 0.297 x 0.446 | scale 0.585 |
 | SF4 | C03 | street x 8.0 | 1.55 | 0.0 | 1 | A | 0.297 x 0.420 |  |
@@ -1365,16 +1376,15 @@ Layers run from the oldest (0) to the newest; age class A to D is the paper's ag
 | SF5 | L02 | street x 24.0 | 2.90 | -1.5 | 0 | C | 0.900 x 0.450 |  |
 | SF6 | L03n | street x 24.0 | 3.70 | 1.0 | 0 | C | 0.600 x 0.400 |  |
 | SF7 | S01n | street x 20.47 | 2.53 | 0.0 | 0 | D | 0.980 x 0.200 |  |
-| SF7 | S01n | u 0.510 | 2.53 | 0.0 | 0 | D | 0.980 x 0.200 | proof_wall |
+| SF7 | S01n | u 0.510 | 2.53 | 0.0 | 0 | D | 0.980 x 0.200 | HELD (the bare gable); proof_wall |
 | SF8 | H02 | street x -0.6 | 1.20 | 0.0 | 0 | C | 0.600 x 0.450 |  |
 | SF1 | P01-named | u 0.700 | 1.00 | -0.6 | 0 | B | 0.508 x 0.762 | HELD (MERIDIAN AGAINST THE POLL TAX); proof_wall |
-| SF1 | W01-named | u 1.300 | 1.00 | 0.5 | 0 | A | 0.508 x 0.762 | HELD (THE DRILL HALL, THE HARPOONER, SPANNER SMITH, BIG TED HOLROYD, THE STEVEDORE); proof_wall |
+| SF1 | W01-named | u 1.300 | 1.00 | 0.5 | 0 | A | 0.508 x 0.762 | HELD (THE DRILL HALL, THE HARPOONER, SPANNER SMITH, TED HOLROYD, THE STEVEDORE); proof_wall |
 | SF1 | T02-named | u 1.900 | 1.00 | -0.4 | 0 | A | 1.016 x 0.762 | HELD (MARSHLAND PICTURES, H. MADDOX, A WEEK AT GULLWING); proof_wall |
 | SF2 | P03-named | u 1.350 | 0.85 | 1.2 | 0 | B | 0.508 x 0.762 | HELD (MERIDIAN AGAINST THE POLL TAX) |
 | SF2 | P02-named | u 1.950 | 0.82 | 0.6 | 0 | B | 0.508 x 0.762 | HELD (MERIDIAN AGAINST THE POLL TAX) |
-| WEST_PIER | W01-named | street x 11.397 pier W1.0 | 1.00 | 0.0 | 0 | B | 0.508 x 0.762 | HELD (THE DRILL HALL, THE HARPOONER, SPANNER SMITH, BIG TED HOLROYD, THE STEVEDORE) |
 | SF9 | P02-named | street x 12.3 | 1.45 | 0.0 | 0 | A | 0.297 x 0.446 | HELD (MERIDIAN AGAINST THE POLL TAX); scale 0.585 |
-| SF5 | L01 | street x 24.0 | 2.90 | -1.5 | 0 | C | 0.900 x 0.450 | HELD (ARMITAGE & STOBBS) |
+| SF5 | L01 | street x 24.0 | 2.90 | -1.5 | 0 | C | 1.200 x 0.450 | HELD (ARMITAGE & STOBBS) |
 | SF6 | L03 | street x 24.0 | 3.70 | 1.0 | 0 | C | 0.600 x 0.400 | HELD (ARMITAGE & STOBBS) |
 | SHOP | K09a | fish_market glass u 0.30 | 0.66 | -2 | 1 | B | 0.105 x 0.074 |  |
 | SHOP | K09b | fish_market glass u 0.95 | 0.66 | 3 | 1 | B | 0.105 x 0.074 |  |
@@ -1399,12 +1409,14 @@ Layers run from the oldest (0) to the newest; age class A to D is the paper's ag
 | SHOP | K03a | grocer door u 0.35 | 1.62 | 0.0 | 1 | B | 0.200 x 0.110 |  |
 | SHOP | K03a | chandler door u 0.35 | 1.62 | 0.0 | 1 | B | 0.200 x 0.110 |  |
 | SHOP | K03a | ironmonger door u 0.35 | 1.62 | 0.0 | 1 | B | 0.200 x 0.110 |  |
-| SHOP | T03 | ironmonger glass u 1.20 | 0.80 | -0.6 | 1 | B | 0.508 x 0.762 |  |
+| SHOP | T03 | ironmonger glass u 1.20 | 0.80 | -0.6 | 1 | B | 0.508 x 0.762 | HELD (THE FOURTH WITNESS, A WEEK AT GULLWING) |
 | SHOP | K03a | newsagent door u 0.35 | 1.62 | 0.0 | 1 | B | 0.200 x 0.110 |  |
 | SHOP | K05 | newsagent door u 0.64 | 1.42 | 1.5 | 1 | B | 0.210 x 0.148 |  |
 | SHOP | J01 | newsagent glass u 2.80 | 1.00 | 0.5 | 1 | B | 0.297 x 0.420 |  |
 | SHOP | K04 | tea_rooms door u 0.38 | 1.05 | 0.0 | 1 | B | 0.150 x 0.105 |  |
 | SHOP | K03a | tea_rooms door u 0.35 | 1.62 | 0.0 | 1 | B | 0.200 x 0.110 |  |
+| SHOP | D01-named | grocer glass u 1.25 | 0.80 | 0.8 | 1 | B | 0.297 x 0.420 | HELD (THE SANDERLING TRIO) |
+| SHOP | T03-named | ironmonger glass u 1.20 | 0.80 | -0.6 | 1 | B | 0.508 x 0.762 | HELD (THE FOURTH WITNESS, A WEEK AT GULLWING) |
 | SHOP | SB1 | newsagent glass u 1.95 | 0.90 | 0.0 | 1 | B | 0.760 x 0.560 |  |
 
 ## 9. The words, as a list
@@ -1418,7 +1430,7 @@ Layers run from the oldest (0) to the newest; age class A to D is the paper's ag
 | `ARMITAGE & STOBBS` | the estate agent on the named letting boards L01 and L03 (the brief asks for a proposed name, marked 'proposed, not minted') | L01, L03 | L01, L03 | 52 |
 | `THE SANDERLING TRIO` | the dance band on the named chapel-hall dance bill | D01-named | D01-named | 11.5 |
 | `THE HARPOONER` | a ring name on the named wrestling bill (renamed from the first try's THE SEA WOLF, which is Jack London's novel; not checked against real lists: the network is closed) | W01-named | W01-named | 45.0 |
-| `BIG TED HOLROYD` | a ring name on the named wrestling bill (renamed from TIGER JIM LARKIN, which carried a real dock-union leader's name; not checked against real lists) | W01-named | W01-named | 42.5 |
+| `TED HOLROYD` | a ring name on the named wrestling bill (TIGER JIM LARKIN carried a real dock-union leader's name; the first rewrite, BIG TED HOLROYD, is gone too: "Big Ted" is the teddy bear of the BBC children's programme Play School, a real programme's character and a child-coded name; not checked against real lists) | W01-named | W01-named | 43.0 |
 | `SPANNER SMITH` | a ring name on the named wrestling bill (renamed from MAD MAURICE; not checked against real lists) | W01-named | W01-named | 47.5 |
 | `THE STEVEDORE` | a ring name on the named wrestling bill (renamed from THE BARON, a real television series' title; not checked against real lists) | W01-named | W01-named | 38.0 |
 | `THE FOURTH WITNESS` | an invented film at the Tivoli, on the named bills T01 and T03 (a film of that name was not checkable: the network is closed) | T03-named | T01-named, T03-named | 41.0 |
@@ -1437,7 +1449,7 @@ Names canon owes and this target therefore does NOT use: the football club, the 
 
 ## 10. Variants the street needs
 
-170 seeded variants over 84 items (a poster is built once, shown in the variants its entry names; nothing is multiplied before one complete sample is approved in the assembled game, CLAUDE.md: the quay gable's three bills ARE that sample). The variants differ in: age class (always), ink registration and density, which corner is torn or lifting, tape positions, the second pass's shift, and the hours-driven face (OPEN or CLOSED, the LAST WASH hour). **Skew is never a variant of the texture**: it is the placement's rot_deg. The three police sheets are slot fillers: the same layout with another offence line. Dates move with the calendar: every event bill gives its date as computed words, so a build for another date in 1988 to 1992 re-computes the weekday (`G.dates`) and re-checks the ages (`G.dates.age`).
+170 seeded variants over 84 items (a poster is built once, shown in the variants its entry names; nothing is multiplied before one complete sample is approved in the assembled game, CLAUDE.md: the empty unit's glass, six sheets in one layer, is the sample of the default street). The variants differ in: age class (always), ink registration and density, which corner is torn or lifting, tape positions, the second pass's shift, and the hours-driven face (OPEN or CLOSED, the LAST WASH hour). **Skew is never a variant of the texture**: it is the placement's rot_deg. The three police sheets are slot fillers: the same layout with another offence line. Dates move with the calendar: every event bill gives its date as computed words, so a build for another date in 1988 to 1992 re-computes the weekday (`G.dates`) and re-checks the ages (`G.dates.age`).
 
 ## 11. Where photographs, books, the reviewer and the ruling disagree, and what I chose
 
@@ -1447,33 +1459,35 @@ Names canon owes and this target therefore does NOT use: the football club, the 
 - **the letting board.** Wins: the fascia target (cloud week 42, same batch): 900 x 450, TO LET alone, Libre Franklin 800 cap 130, vinyl red, no agent, no number. Against it: the first try's 1200 x 450 board with an agent band and a number; the game's board_to_let.png (900 x 450, PT Sans, no agent, no number). Chosen: L02 IS the fascia target's board. The 1200 x 450 agent board L01 stays as a held variant that would need the fascia target changed in the same batch with one DECISIONS line (TARGET-REVIEW fault 5)
 - **the poster prop's place.** Wins: the plain row's bay layout (terrace-front.py _plain_ground). Against it: vignette-scene.json's held-prop notes put a poster at west x 11.4 and a case at west x 26.4 'between a side door at 25.5 and a window at 27.3' (written before the west_north block became shops). Chosen: x 11.4 is the pier W1.0 (10.919 to 11.875) and stays; the case at 26.4 would stand on the tea room's glass: both cases move to the quay gable
 - **the glyph check's margin.** Wins: the computation (glyph_table() in self_check.py; glyphlib.py's docstring). Against it: TARGET-REVIEW fault 1(b): each glyph must out-score every other glyph of its font and its own mirror by at least 0.05 on F at 0.5 mm. Chosen: F is a mean over the whole glyph, so glyphs that share most of their ink score alike: O against D in Oswald 700 at 34 mm capitals scores 0.987 against the true glyph's 1.000 (a margin of 0.013), 6 against 8 0.964, and 14 of the 36 capitals and digits cannot meet 0.05 even at that size. The check therefore keeps F >= 0.85 at 0.5 mm for the glyph itself and scores the separation from each alternative on the PIXELS WHERE THE TWO GLYPHS DIFFER (SEP, 0.70 to pass: a margin of 0.40), with every item's pixel scale chosen so that at least 8 such pixels exist for every pair that is not a shape twin. The reviewer's wrong renders all fail it
-- **paper on the quay gable.** Wins: the asset plan's own proof wall and the Hook sheet together. Against it: the Hook sheet's gable is bare old brick with a downpipe, a render patch and a damp foot; the plan's proof wants 'three bills from three templates' on one wall (the nearest gable or the empty unit's stallriser). Chosen: one layer of three bills (z 1.00 to 1.76, u 0.70 to 2.92), flagged proof_wall; the downpipe, the render patch and the damp foot kept as the sheet has them, paper 150 mm clear of the pipe; nothing more until he has approved the sample in the assembled game. Dropping the three placements leaves the gable exactly as the sheet shows it
+- **paper on the quay gable.** Wins: the asset plan's own proof wall and the Hook sheet together. Against it: the Hook sheet's gable is bare old brick with a downpipe, a render patch and a damp foot; the plan's proof wants 'three bills from three templates' on one wall (the nearest gable or the empty unit's stallriser). Chosen: THE GABLE IS BARE, as the sheet shows it (second review, by Jafar's ruling of 9 October): the three bills (P01, W01, T02 with its strip) and the second QUAY STREET plate are HELD placements flagged proof_wall; the downpipe, the render patch and the damp foot stand as fixtures; the proof sample is the empty unit's glass (six sheets in one layer). Nothing more until he has approved the sample in the assembled game
 - **the one photograph measured.** Wins: judgement. Against it: the photographed notice case is a modern blue steel replacement with a wide crest header. Chosen: only its vertical fractions inform the glazed case's proportions; the 1990 case is a timber one with thinner rails (HC1)
 
 ## 12. The checks, and how the pixels are read
 
-697 checks in `target.json` (`checks`). **Per item:** `.size` (image size), `.words` (the glyph manifest's characters equal the approved strings: a manifest check, NOT a pixel check), `.pos` (each block's ink box read off the pixels, widened 8 mm along the line and 3 mm up and down, other blocks' glyphs not counted), `.cap` (letter heights at scale), `.mask` (the whole LINE re-rendered from its font compared with the ink: F at least 0.90 for printed lines, 0.85 for small print and typing, 0.78 for hand lettering, 0.55 for imprints; a PRINT line must also keep its worst single glyph at F 0.85 and pass the glyph check, so a changed word cannot hide in the mean; **a hand line's mask catches a wrong font or a shift, not a wrong word**: its jitter is only known from the manifest), `.glyphs` (the word check, below), `.square` (the texture is square-on within 0.3 degrees; hand cards 0.8), `.contrast` (WCAG on the aged render, class B), and for each art picture `ART.eye`. **Global:** `G.words.approved`, `G.forbidden`, `G.dates`, `G.dates.age`, `G.mirror`, `G.mirror.cues`, `G.fonts`, `G.proposed`, `G.page.placeholders`, `G.ferry.schedule`, `G.tides`, `G.place.inside`, `G.place.layers`, `G.place.piers`, `G.place.height`, `G.place.paper`, `G.place.gable`, `G.place.shops`, `PLACE.built`, `G.letting.mount`, `G.plates.length`, `G.plates.depth`, `G.plates.cap`, `G.plates.border`, `G.plates.make`, `G.glyph.scale`.
+780 checks in `target.json` (`checks`). **Per item:** `.size` (image size), `.words` (the glyph manifest's characters equal the approved strings: a manifest check, NOT a pixel check; a missing or unreadable `<ITEM>.glyphs.json` FAILS it), `.pos` (each block's ink box read off the pixels, widened 8 mm along the line and 3 mm up and down, other blocks' glyphs not counted), `.cap` (letter heights at scale), `.mask` (the whole LINE re-rendered from its font compared with the ink: F at least 0.90 for printed lines, 0.85 for small print and typing, 0.78 for hand lettering, 0.55 for imprints; a PRINT line must also keep its worst single glyph at F 0.85 and pass the glyph check, so a changed word cannot hide in the mean; **a hand line's mask catches a wrong font or a shift, not a wrong word**: its jitter is only known from the manifest), `.glyphs` (the word check, below), `.square` (the texture is square-on within 0.3 degrees, ONE tolerance for print and hand cards alike, found against the render of the item's own glyph manifest, jitter included, and 0 unless F at the best angle beats F at 0 by 0.02), `.clean` (**ITEM.clean**: at most 2 mm2 of ink-coloured pixels outside every block's glyph window, the item's own shapes, the cue patch and the art slots, on the class-A render before wear), `.contrast` (WCAG on the aged render, class B), and for each art picture `ART.eye`. **Global:** `G.words.approved`, `G.forbidden`, `G.dates`, `G.dates.age`, `G.mirror`, `G.mirror.cues`, `G.fonts`, `G.proposed`, `G.page.placeholders`, `G.ferry.schedule`, `G.tides`, `G.place.inside`, `G.place.layers`, `G.place.piers`, `G.place.height`, `G.place.paper`, `G.place.gable`, `G.place.shops`, `PLACE.built`, `G.letting.mount`, `G.plates.length`, `G.plates.depth`, `G.plates.cap`, `G.plates.border`, `G.plates.make`, `G.glyph.scale`.
 
 **`ITEM.glyphs`: reading one glyph at a time (TARGET-REVIEW fault 1).** The first try compared whole lines with a 1 mm (print) or 2.5 mm (hand) tolerance; a changed date, TEA for ALE, LUNCH for BINGO or a changed price scored F 0.94 to 1.00 and passed. A single glyph is a small part of a line. So:
 
-1. **The glyph manifest.** Every render writes `<ITEM>.glyphs.json`: one entry per character of the approved string, spaces included, in order: `ch, font, weight, em_mm, ox_mm, baseline_mm, rot_deg, emb_mm` (the pen origin from the item's left edge, the baseline up from its bottom edge, the hand jitter and the pen's added stroke included). A manifest whose characters are not the approved string, or whose glyphs lie outside the block's envelope (print: 0.6 mm, 0.5 mm, 0.1 degree, 1 per cent; hand: 3.5 sd of the hand style plus a little), FAILS before any pixel is read (`G.words.approved` and `.words` read the same manifest).
-2. **The cell.** Each glyph is re-rendered from its manifest entry (glyph by glyph, the same function the renderer uses) and read in its own cell: the columns between its neighbours' ink, the block's window in rows. What the reader does not credit to it: the other blocks' glyphs as THEY manifest them, the item's rules, frames and bars, and its neighbours in the line (all dilated 1 mm), unless the glyph's own ink holds the pixel.
+1. **The glyph manifest.** Every render writes `<ITEM>.glyphs.json`: one entry per character of the approved string, spaces included, in order: `ch, font, weight, em_mm, ox_mm, baseline_mm, rot_deg, emb_mm` (the pen origin from the item's left edge, the baseline up from its bottom edge, the hand jitter and the pen's added stroke included). A manifest whose characters are not the approved string, or whose glyphs lie outside the block's envelope (print: 0.6 mm, 0.5 mm, 0.1 degree, 1 per cent; hand: 3.5 sd of the hand style plus a little), FAILS before any pixel is read (`G.words.approved` and `.words` read the same manifest). **A missing, empty or unreadable `<ITEM>.glyphs.json` FAILS `.words` and `.glyphs`**: the reader reports it and never crashes.
+2. **The cell.** Each glyph is re-rendered from its manifest entry (glyph by glyph, the same function the renderer uses) and read in its own cell: the columns between its neighbours' ink, the block's window in rows. What the reader does not credit to it: the other blocks' glyphs as THEY manifest them, the item's rules, frames and bars, and its neighbours in the line (all dilated 1 mm), unless the glyph's own ink holds the pixel; and, where hand-lettered glyphs touch, **a pixel that a neighbour's ink explains and the glyph's own ink does not (within one pixel) is the neighbour's** (the first try credited it to the glyph, which failed true ballpoint cards). Big capitals are read at a reduced scale (an area rule that matches how their reference is drawn); a space carries no ink beyond 0.6 mm of every glyph of the line.
 3. **F.** F = the mean of recall and precision of the read ink against the re-rendered glyph, each against the other dilated 0.5 mm: **at least 0.85** (the review's figure).
-4. **SEP.** The glyph must be told from every other glyph of its font in A-Z a-z 0-9 £ . , ' ’ - — – & · ? : ! rendered at the same place, size and turn, and from its own mirror. Where the claimed glyph and the alternative differ, `A` is what only the claimed glyph inks and `B` what only the alternative inks (outside a 1-pixel tolerance); SEP is the share of the A and B pixels on which the read ink sides with the claimed glyph. **The gate is 0.70** (a margin of 0.40 where the review asked 0.05; see section A for why F itself cannot give a margin). Pairs that differ by fewer than 8 pixels are not told apart at that scale: the item's scale is raised until none is, so that every non-twin pair differs by at least 8 pixels at every item's own px/mm (`G.glyph.scale`, 173 font/weight/cap/stroke combinations tested). **Shape twins** (I and l, ' and ’, any pair differing by under 0.03 mm2 at 24 px/mm) and a glyph that is its own mirror (A, H, I, M, O, T, U, V, W, X, Y, 0, 8) are listed, not scored; a swap of one for the other changes no reading. Spaces must carry no ink. Imprints (cap 2.4 mm) are not read glyph by glyph: they are illegible by design and the line mask reads them at F 0.55.
-5. **Each item's scale.** `px_per_mm` is not 2 for everything: it is the smallest of 2, 3, 4, 6, 8, 12 or 16 at which the table of step 4 holds for every block, from the font's cap and the glyphs it uses (`glyphlib.needed_ppm`). In use: 2 px/mm: 35 items; 3 px/mm: 15 items; 4 px/mm: 9 items (J01, D01, D01-named, T01-named, T02-named, F01, K07a, K07b, K07c); 6 px/mm: 3 items (C01a, C01b, C01c); 8 px/mm: 15 items; 12 px/mm: 7 items (P04, P05, P06, H03, H04, H05, C02). No render is over 60 megapixels (the largest here is 12.4).
+4. **SEP.** The glyph must be told from every other glyph of its font in A-Z a-z 0-9 £ . , ' ’ - — – & · ? : ! rendered at the same place, size and turn, and from its own mirror. Where the claimed glyph and the alternative differ, `A` is what only the claimed glyph inks and `B` what only the alternative inks (outside a 1-pixel tolerance); SEP is the share of the A and B pixels on which the read ink sides with the claimed glyph. **The gate is 0.70** (a margin of 0.40 where the review asked 0.05; see section A for why F itself cannot give a margin). Pairs that differ by fewer than 8 pixels are not told apart at that scale: the item's scale is raised until none is, so that every non-twin pair differs by at least 8 pixels at every item's own px/mm (`G.glyph.scale`, 169 font/weight/cap/stroke combinations tested). **Shape twins** (I and l, ' and ’, any pair differing by under 0.03 mm2 at 24 px/mm) and a glyph that is its own mirror (A, H, I, M, O, T, U, V, W, X, Y, 0, 8) are listed, not scored; a swap of one for the other changes no reading. Spaces must carry no ink. Imprints (cap 2.4 mm) are not read glyph by glyph: they are illegible by design and the line mask reads them at F 0.55.
+5. **Each item's scale.** `px_per_mm` is not 2 for everything: it is the smallest of 2, 3, 4, 6, 8, 12 or 16 at which the table of step 4 holds for every block, from the font's cap and the glyphs it uses (`glyphlib.needed_ppm`); **for a hand-lettered block every pair is measured over glyphs jittered to 3.5 sd of its hand style (size and rotation, four corners), which raised the ballpoint cards SA01 to SA14 from 8 to 12 px/mm, K07a to K07c from 4 to 6 and K07d, K09a to K09f and SA15 by one step**, and group 12 reads 20 true jittered seeds of all 29 hand cards on top of it. In use: 2 px/mm: 35 items; 3 px/mm: 7 items (P01, P01-named, W01, W01-named, M01, K06b, L03); 4 px/mm: 14 items; 6 px/mm: 6 items (C01a, C01b, C01c, K07a, K07b, K07c); 8 px/mm: 1 items (C03); 12 px/mm: 21 items. No render is over 60 megapixels (the largest here is 12.4).
 
 **The checks are tested** (`self_check.py`, groups 10 and 12 to 13), each on a true input and a wrong one:
 
-- **The reviewer's wrong renders** (the manifest keeps the approved string, the pixels carry the change), plus near pairs: P01 `THURSDAY 25 OCTOBER` drawn as `THURSDAY 26 OCTOBER`; W01 `FRIDAY 2 NOVEMBER` drawn as `FRIDAY 9 NOVEMBER`; C01a `ON THE NIGHT OF FRIDAY 12 OCTOBER,` drawn as `ON THE NIGHT OF FRIDAY 13 OCTOBER,`; J01 `SATURDAY 20 OCTOBER` drawn as `SUNDAY 20 OCTOBER`; P04 `TUESDAY 30 OCTOBER, 7 PM` drawn as `THURSDAY 30 OCTOBER, 7 PM`; D01 `TEA AND SANDWICHES` drawn as `ALE AND SANDWICHES`; J01 `Teas and cakes` drawn as `Beer and cakes`; D01 `ALL WELCOME` drawn as `BAR OPEN 7`; F01 `LAST CROSSING 11.00` drawn as `LAST CROSSING 11.30`; F01 `LAST CROSSING 11.15` drawn as `LAST CROSSING 11.45`; T03 `ALL SEATS £2.80` drawn as `ALL SEATS £3.80`; K01 `CLOSED FOR LUNCH` drawn as `CLOSED FOR BINGO`; K07a `TEA BAGS` drawn as `GIN BAGS`; SA11 `Apply within.` drawn as `Pub, Fridays.`; K09a `£2.70 lb` drawn as `£7.20 lb`; S01n `QUAY STREET` drawn as `QUAY STRAET`; S01d `THE HOOK` drawn as `THE HULL`; P03 `10 NOVEMBER` drawn as `18 NOVEMBER`; P01 `7.30 PM` drawn as `7.80 PM`; M01 `8 AM TO 4 PM` drawn as `6 AM TO 4 PM`; K09b `£2.50 lb` drawn as `£2.60 lb`; P01 `THURSDAY 25 OCTOBER` drawn as `THURSDAY 25 OCTOBEB`; S01n `QUAY STREET` drawn as `QUAY STREEF`. **All 24 FAIL `ITEM.glyphs`**; the first try's line mask passed every one of them.
-- **True renders pass:** print renders of twelve items (every block, every glyph); hand cards under the hand style's jitter (K01 and SA06 20 seeds each, K07a, K09a and SA15 8 each: the first try's reader failed 1 seed in 20 on SA06) pass.
+- the reviewer's wrong renders: see group 12.
+- **True renders pass:** a true render of EVERY item (54 print items) and 20 true jittered seeds of ALL 29 hand cards (580 renders) pass every pixel check (`.words` from the manifest, `.mask`, `.pos`, `.glyphs`, `.square`, `.clean`); any failure is a self-check failure. SA01 and SA03, which failed 11 and 15 of 20 seeds in the re-review, pass 20 of 20; the exactly square textures P05, K04, K03a, K03b, K02, K08 and P06 read 0 degrees; T01-named's true render passes.
 - **A mirrored sheet fails,** hand cards included (K01, SA06, K07a: the old line mask was blind to them), and so does the mirrored plate, board and bill.
-- **A tilt:** a true render turned 1.2 degrees (and 0.5) is found turned (`.square`, within 0.2 degrees) and fails `.square`, as it should (skew belongs to the placement); the same render read in the PLACED street, turned back by the placement's rot_deg, passes `ITEM.glyphs`.
-- **`PLACE.built`:** each placed decal (P01, T02, L02 tested) lies within 20 mm of the target's centre, is found within 0.3 degrees of its rot_deg and its largest block reads the right way round; a mirrored decal, a decal turned 1 degree off and a decal 40 mm off FAIL.
+- **A tilt:** a true render turned 1.2 degrees (and 0.5) is found turned (`.square`, within 0.2 degrees for P01 and J01; jittered hand cards K01 and SA06 within 0.5) and fails `.square`, as it should (skew belongs to the placement); the same render read in the PLACED street, turned back by the placement's rot_deg, passes `ITEM.glyphs`.
+- **`ITEM.clean`:** the true renders have no stray ink; the review's four planted lines (K01 + BINGO TONIGHT, SA11 + Babysitter, evenings., L02 + ARMITAGE & STOBBS at 46 mm, C02 + BETTING SHOP), drawn outside every block and left out of the manifest, and D01 + LICENSED BAR, which crosses a window, FAIL it.
+- **A missing or unreadable manifest:** `glyph_check_block` returns a failure for none, an empty list, a truncated entry or a non-number (it no longer raises); `.words` fails for none, a block missing and a wrong character.
+- **`PLACE.built`:** each placed decal (P03, M01, L02 tested) lies within 20 mm of the target's centre, is found within 0.3 degrees of its rot_deg and its largest block reads the right way round; a mirrored decal, a decal turned 1 degree off and a decal 40 mm off FAIL.
 - **`G.mirror.cues`:** all 29 hand cards: the true render reads LEFT (the 25 mm top-left patch differs from the card's own colour on at least 20 per cent of its non-text pixels, the top-right on at most 3), the mirrored render RIGHT, a card with no cue neither.
 - **`G.page.placeholders`:** the default street's placed-decals manifest passes; with one held placement and no minting line it FAILS; with '- ... MINTED: ARMITAGE & STOBBS' in DECISIONS.md the L01 and L03 placements pass.
-- **`G.dates.age`**, **`G.ferry.schedule`**, **`G.letting.mount`**, **`G.place.paper`**, **`G.place.gable`**: each passes the target and fails the first try's input (T03 in class D; the far side's last crossing at 10.45; the 1200 x 450 board; one bill more; a bill 0.4 m from the downpipe).
+- **`G.dates.age`**, **`G.ferry.schedule`**, **`G.letting.mount`**, **`G.place.paper`**, **`G.place.gable`**: each passes the target and fails the first try's input (T03 in class D; the far side's last crossing at 10.45; the 1200 x 450 board; a ninth fly-poster or a fifth poll-tax bill; a bill or a plate put on the bare gable, or the held proof wall made default; the held P01 moved to 0.4 m from the downpipe).
 
-**The reference reader is in `self_check.py`** (`window_of`, `read_block`, `read_score`, `read_box`, `pos_ok` for the line level; `layout_glyphs`, `jitter_glyphs`, `render_item`, `glyph_check_block`, `estimate_rotation` for the glyph level; `glyphlib.py` for the kernels); the builder's own checker should do the same on its rendered item. The reviewer's `wrong_renders.py` still runs against it unchanged (the old names are kept): it now fails every PRINT wrong render, every mirrored plate, board and bill and every tilt, and passes all true jittered hand cards (0 of 20 seeds fail on each of five cards; `pos_ok` takes the hand style's own tolerances). It still passes a wrong word on a HAND line, because a hand line's jitter is known only from the manifest: the glyph check (`glyph_check_block` with the renderer's manifest) is what fails K01 LUNCH for BINGO, K07a GIN BAGS, SA11 and K09a. A manifest-free reading of hand lines was tried (each glyph aligned by correlation) and does not separate a true jittered glyph (F 0.55 to 0.75) from a wrong one (0.60 to 0.75): that is why the review's amendment (a) asks for the manifest.
+**The reference reader is in `self_check.py`** (`window_of`, `read_block`, `read_score`, `read_box`, `pos_ok` for the line level; `layout_glyphs`, `jitter_glyphs`, `render_item`, `glyph_check_block`, `manifest_problem`, `words_ok`, `square_estimate` (and `estimate_rotation`), `clean_ink_mm2` for the glyph and whole-item level; `glyphlib.py` for the kernels); the builder's own checker should do the same on its rendered item. The reviewer's `wrong_renders.py` still runs against it unchanged (the old names are kept): it now fails every PRINT wrong render, every mirrored plate, board and bill and every tilt, and passes all true jittered hand cards (0 of 20 seeds fail on each of the 29; `pos_ok` takes the hand style's own tolerances). It still passes a wrong word on a HAND line, because a hand line's jitter is known only from the manifest: the glyph check (`glyph_check_block` with the renderer's manifest) is what fails K01 LUNCH for BINGO, K07a GIN BAGS, SA11 and K09a. A manifest-free reading of hand lines was tried (each glyph aligned by correlation) and does not separate a true jittered glyph (F 0.55 to 0.75) from a wrong one (0.60 to 0.75): that is why the review's amendment (a) asks for the manifest.
 
 **What no pixel check can do.** `ART.eye`: nothing in the pixels can tell a person, a hand, a face, lettering, a numeral, a crown, a kiosk mark, a bottle, a glass or an arcade sign in a generated picture from a picture without; a fresh reviewer looks at each art picture at 1:1 before any text is laid. G01, T01 and T02 (and the named twins) have one.
 
@@ -1495,10 +1509,10 @@ Unreached today: en.wikipedia.org (DNS and 403); commons.wikimedia.org, geograph
 
 ## 14. The render contract and the fixings (for the builder)
 
-- Texture: EVERY TEXTURE IS SQUARE-ON: no skew, no rotation and no perspective is baked into any base-colour image. Skew and rotation live ONLY in the placement's rot_deg (a hand card's tilt and the A3 sheet's crookedness too). ITEM.square fails a texture turned by more than 0.3 degrees; PLACE.built checks the placed decal's rot_deg to 0.3 degrees.
+- Texture: EVERY TEXTURE IS SQUARE-ON: no skew, no rotation and no perspective is baked into any base-colour image. Skew and rotation live ONLY in the placement's rot_deg (a hand card's tilt and the A3 sheet's crookedness too). ITEM.square fails a texture turned by more than 0.3 degrees (ONE tolerance, print and hand-lettered alike); the angle is found against the render of the item's own glyph manifest, jitter included, and is 0 unless F at the best angle beats F at 0 degrees by 0.02; PLACE.built checks the placed decal's rot_deg to 0.3 degrees.
 - Scale: Each item is rendered at its own px_per_mm (items[].px_per_mm, chosen so that every glyph can be told from every other: glyphlib.needed_ppm). Row 0 of the image is the TOP edge; x runs from the viewer's left; y in the item frame runs up from the bottom edge.
 - Ink mask: The reader's ink mask is the set of pixels nearer (CIE76) the block's aged ink colour than its aged ground colour. Imprints (role imprint, cap 2.4 mm) are not read glyph by glyph: they are illegible by design.
-- Glyph manifest: file `<ITEM>.glyphs.json, written by the renderer beside every base-colour image (target_drawing.py and self_check.py show a reference writer)`; schema `{item, px_per_mm, size_px:[w,h], blocks:{<block id>:[{ch, font, weight, em_mm, ox_mm, baseline_mm, rot_deg, emb_mm}, ...]}}: ONE ENTRY PER CHARACTER OF THE APPROVED STRING, SPACES INCLUDED, IN ORDER. em_mm: the em of the glyph as drawn (mm, x the glyph's own size jitter); ox_mm: the pen origin from the item's left edge; baseline_mm: up from the item's bottom edge (the hand jitter included); rot_deg: counter-clockwise about the pen origin plus half the advance, on the baseline; emb_mm: the stroke added to the font's own (a felt pen), never over 0.6.`. The checker re-renders every glyph from the manifest and reads the pixels in the glyph's own cell. A manifest that is not the approved string, or whose glyphs lie outside the block's envelope, fails before any pixel is read.
+- Glyph manifest: file `<ITEM>.glyphs.json, written by the renderer beside every base-colour image (target_drawing.py and self_check.py show a reference writer)`; schema `{item, px_per_mm, size_px:[w,h], blocks:{<block id>:[{ch, font, weight, em_mm, ox_mm, baseline_mm, rot_deg, emb_mm}, ...]}}: ONE ENTRY PER CHARACTER OF THE APPROVED STRING, SPACES INCLUDED, IN ORDER. em_mm: the em of the glyph as drawn (mm, x the glyph's own size jitter); ox_mm: the pen origin from the item's left edge; baseline_mm: up from the item's bottom edge (the hand jitter included); rot_deg: counter-clockwise about the pen origin plus half the advance, on the baseline; emb_mm: the stroke added to the font's own (a felt pen), never over 0.6.`. The checker re-renders every glyph from the manifest and reads the pixels in the glyph's own cell. A manifest that is not the approved string, or whose glyphs lie outside the block's envelope, fails before any pixel is read. A MISSING, EMPTY OR UNREADABLE <ITEM>.glyphs.json FAILS .words and .glyphs (and the square estimate, which then reads the layout): the reader reports the failure and never crashes.
 - Gate: F >= 0.85 at 0.5 mm; SEP >= 0.7; at least 8 pixels between any two non-twin glyphs; tolerance 1 px; alternatives A-Z a-z 0-9 £ . , ' ’ - — – & · ? : ! (the font's own glyphs only); shape twins (I and l, ' and ’, and any pair differing by under 0.03 mm2 at 24 px/mm) and a glyph that is its own mirror are listed and not scored
 - Placed street: PLACE.built: the builder writes placed_decals.json (item, surface, centre u and z or street x, rot_deg, scale); each decal lies within 20 mm of the placement's centre and 0.3 degrees of its rot_deg, and its largest block, read in a render of the surface at 1 px per mm after turning the decal back by rot_deg, passes the glyph check.
 - Tape tab: a tab of yellowed adhesive tape, 38 x 16 mm at 40 degrees, rgb [196, 164, 84] opacity 0.85. lies across the corner on the 40-degree diagonal, centre 12 mm in from the top edge and 12 mm in from the left edge; part of it passes the card's edge. THE CUE of every taped or stuck hand card (K05, K06c, K07a-d, K09a-f, SA01-SA15): this ONE tab at the top-LEFT, nothing on the right half. (A sheet taped by its four corners, as the A3 notices are, carries four such tabs and no cue is needed: they are printed or photocopied, not hand-lettered.)
@@ -1508,25 +1522,7 @@ Unreached today: en.wikipedia.org (DNS and 403); commons.wikimedia.org, geograph
 
 ## 15. Self-check
 
-Run 2026-10-09 02:24: **SELF-CHECK posters-boards-plates: 321 checks, 321 passed, 0 failed, 16 reported**.
-
-Reported (not failures):
-- [3 words] where the proposed names stand (reported) ({"MERIDIAN AGAINST THE POLL TAX": ["P01", "P01-named", "P02", "P02-named", "P03", "P03-named", "P04", "P05", "P06"], "QUAY PRINT": ["B01", ")
-- [4 fonts] 10 fonts are already in production/fonts; 3 are to be added by the builder with their OFL.txt (['archivo', 'courier-prime', 'courier-prime-bold'])
-- [5 layout] imprints are 7 point (cap 2.4 mm) or 4.0 mm: below the 3 m legibility floor by design (18) 
-- [5 layout] cap range of lettering on the street (smallest (2.455, 'H03'), biggest (190, 'P01-named'))
-- [6 contrast] blocks that fade below 1.5 in class D (a bill a season old: reported, as intended for the oldest layer) (14 blocks, e.g. [('K01', 'l1', 1.42), ('K02', 'l1', 1.48), ('K06a', 'l1', 1.42)])
-- [8 photograph] the glazed windows were masked in the preview (the interior is flat grey) 
-- [10 line-level checks, tested] K01: the LINE mask cannot tell a mirror on a hand-lettered card (2 of 2 blocks blind): the glyph check (group 12) and the corner cue (group 13) do 
-- [10 line-level checks, tested] K01: every block is hand-lettered: the font is not checked, only the words 
-- [10 line-level checks, tested] SA06: the LINE mask cannot tell a mirror on a hand-lettered card (5 of 5 blocks blind): the glyph check (group 12) and the corner cue (group 13) do 
-- [10 line-level checks, tested] SA06: every block is hand-lettered: the font is not checked, only the words 
-- [10 line-level checks, tested] K07a: the LINE mask cannot tell a mirror on a hand-lettered card (3 of 3 blocks blind): the glyph check (group 12) and the corner cue (group 13) do 
-- [10 line-level checks, tested] K07a: every block is hand-lettered: the font is not checked, only the words 
-- [12 glyph check] shape twins found (reported: they are not scored; a swap of one for the other changes no reading) (alfa-slab-one I/l, archivo I/l, archivo ’/', courier-prime '/’, courier-prime I/l, courier-prime l/I, courier-prime-bold I/l, fraunces I/l, )
-- [12 glyph check] true renders read in 28 s 
-- [12 glyph check] P01: with its two black rules drawn in, the reader (which draws the item's shapes out of a block's window) still passes ITEM.glyphs on the blocks beside them 
-- [13 second-try guards] PLACE.built read in 18 s 
+(run `self_check.py` and then `make_doc.py` again to fill this in)
 
 ## 16. Sources
 

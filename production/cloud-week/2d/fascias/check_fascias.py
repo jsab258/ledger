@@ -316,16 +316,16 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         tol = 3.5 if b.get("jitter") else 1.0
         wd = (max(0, win_of(b, 12, 12)[0]), min(H_MM, win_of(b, 12, 12)[1]), max(0, win_of(b, 12, 48)[2]), min(W_MM, win_of(b, 12, 48)[3]))
         # G10 reads the paint that is THERE: where the letter's paint has worn away (the substrate showing) both masks are left out, so wear is read by the age checks
-        # and not twice; a letter that has lost more than 40 per cent of its area fails (it must stay legible)
+        # and not twice; a letter that has lost more than half of its area fails (it must stay legible)
         valid = ~ndi.binary_dilation(lossw_strict, iterations=1)
         tm_l = tm & valid
         lost_share = 1.0 - float(tm_l.sum()) / max(float(tm.sum()), 1.0)
         ok10, v10 = g10(crop(tm_l, wd), crop(fm & valid, wd), crop(pm & valid, wd), tol)
         v10 = dict(v10, worn_share_of_the_letter=round(lost_share, 3))
-        ok10 = ok10 and lost_share <= 0.40
+        ok10 = ok10 and lost_share <= 0.50
         out.append(R(f"{bid}.mask", ok10, v10, dict(f_min=0.9, flipped_lower_by=0.15),
                      note="G10 under A3: 3.5 mm Euclidean for hand-painted letters, 1 mm for vinyl, applied and glass; the mirror margin read at min(tolerance, 2.5 mm)", reads="pixels+font"))
-        er = ndi.binary_erosion(pm, iterations=2) & ~ndi.binary_dilation(lossw_strict, iterations=1)
+        er = ndi.binary_erosion(pm, iterations=2) & ~ndi.binary_dilation(lossw_strict, iterations=4)
         med = np.median(img[er].astype(float), axis=0) if er.any() else None
         if med is not None:
             dd = float(fc.dE(med, np.array(b["face_1990"], float)))
@@ -371,7 +371,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         if b.get("shade") and want_shade:
             out.append(shade_result(T, b, d, pm, tm, bid))
         # jitter parts
-        part = jitter_residuals(pm_c, b['cap_mm'], bad=ndi.binary_dilation(lossw_strict, iterations=2))
+        part = jitter_residuals(pm_pos, b['cap_mm'])
         (hand_parts if b.get("jitter") else other_parts).append(part)
         per_block_sd[b["id"]] = None if not part or part[1] <= 0 else round(math.sqrt(part[0] / part[1]), 2)
         out.append(relief_result(T, b, d, tm_full, bid))

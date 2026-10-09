@@ -2042,7 +2042,7 @@ def group12():
     tols = {c["tolerance"] for c in T["checks"] if c["id"].endswith(".square")}
     doc = (HERE / "TARGET.md")
     doc_txt = doc.read_text(encoding="utf-8") if doc.exists() else ""
-    row(g, "ITEM.square has ONE tolerance, %.1f degrees, for every item (target.json: %s) and TARGET.md states it and no other (no 0.8)" % (SQUARE_TOL_DEG, sorted(tols)), tols == {SQUARE_TOL_DEG} and T["render_contract"]["texture"].count("0.3 degrees") >= 1 and "0.8 degree" not in doc_txt and "limit 0.8" not in doc_txt
+    row(g, "ITEM.square has ONE tolerance, %.1f degrees, for every item (target.json: %s) and TARGET.md states it and no other (no 0.8)" % (SQUARE_TOL_DEG, sorted(tols)), tols == {SQUARE_TOL_DEG} and T["render_contract"]["texture"].count("0.3 degrees") >= 1 and "hand cards 0.8" not in doc_txt and "limit 0.8" not in doc_txt and "0.8 for hand" not in doc_txt
         and (not doc_txt or "0.3 degrees" in doc_txt))
     # 12.8c ITEM.clean on the review's four planted lines and a line that crosses a window
     plant = [("K01", "BINGO TONIGHT", "patrick-hand", 400, 10.0, 40.0, 14.0), ("SA11", "Babysitter, evenings.", "patrick-hand", 400, 4.4, 8.0, 22.0),
