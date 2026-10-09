@@ -280,11 +280,11 @@
      ],
      [
       0.0,
-      2216.3
+      2211.43
      ]
     ],
     "err": 7.79,
-    "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2275; at the first version's height 0.97, +-8",
+    "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2270, the stated tall_bar_tip_z (the review's own list ended at 2275, 5 above its stated tip: ended at 2270 on its second review); at the first version's height 0.97, +-8",
     "read_at_h": 0.97,
     "scaled_by": 0.9742
    }
@@ -421,7 +421,7 @@
    "bar_pitch": {
     "v": 97.03,
     "err": 3.08,
-    "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them)",
+    "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them); this 94.5 is the first read: the pitch the target uses is the line fit of the ten centres (95.3 at 1.15 m, kinds.R3D.bars.pitch), and 94.5 x 1.027 = 97.0 (the review's figure) lies 1.7 above it, inside the +-3",
     "read_at_h": 1.12,
     "scaled_by": 1.0268
    },
@@ -663,11 +663,11 @@
      ],
      [
       0,
-      2275
+      2270
      ]
     ],
     "err": 8,
-    "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2275; at the first version's height 0.97, +-8"
+    "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2270, the stated tall_bar_tip_z (the review's own list ended at 2275, 5 above its stated tip: ended at 2270 on its second review); at the first version's height 0.97, +-8"
    }
   },
   "R3A": {
@@ -766,7 +766,7 @@
    "bar_pitch": {
     "v": 94.5,
     "err": 3,
-    "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them)"
+    "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them); this 94.5 is the first read: the pitch the target uses is the line fit of the ten centres (95.3 at 1.15 m, kinds.R3D.bars.pitch), and 94.5 x 1.027 = 97.0 (the review's figure) lies 1.7 above it, inside the +-3"
    },
    "bar_centres_s": {
     "v": [

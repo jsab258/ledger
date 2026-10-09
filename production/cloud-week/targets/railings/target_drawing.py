@@ -3,8 +3,8 @@
     /home/user/.bpyenv/bin/python target_drawing.py OUTDIR
 writes OUTDIR/drawing.json (every view as filled polygons in millimetres: {"views": {name: {"plane", "units", "polygons": [{"layer", "poly"}]}}})
 and one PNG per view in OUTDIR (pictures never go into git outside production/previews/).
-Views: the A1 elevation (rectangular hollow-section posts and rails, 17 bars, end plates, four M10 bolts with the nuts on the posts' outer faces, the reinstatement patches),
-the A1 section across the rails at a bar-free gap, the A1 plan, the A1 bolt section (a plan cut along the top rail's bolt axis), the walking-strip section across the footway
+Views: the A1 elevation (rectangular hollow-section posts and rails, 17 bars, end plates, four M10 studs welded to the end plates with the nuts on the posts' outer faces, the reinstatement patches, which the bounding box excludes),
+the A1 section across the rails at a bar-free gap, the A1 plan, the A1 stud section (a plan cut along the top rail's stud axis), the walking-strip section across the footway
 (rail, stallriser, the fish market's awning); Q2a, Q2b and the short Q2b end bay (elevations), the plan of the base plate; the reserve railings R3B, R3A, R3D (a sample of each);
 the street plan at the guard rail; the jetty plan with the three Q2 runs and the kit's mooring rings.  The functions are imported by self_check.py (groups C and D)."""
 import json, math, os, sys
@@ -66,7 +66,7 @@ class View:
 # ------------------------------------------------------------------------------------------------------------ A1
 def a1_parts(K=None):
     """the A1 panel's solids in the elevation plane (x, z): dict layer -> list of polygons; the numbers the self-check reads back.
-    Layers: post, cap, rail (both rails), endplate, bar, weld (the 2 mm bar-end fillets), nut, thread (outside the nut), bolt_hidden (shank and head, inside the rail end and the post)"""
+    Layers: post, cap, rail (both rails), endplate, bar, weld (the 2 mm bar-end fillets), nut, thread (outside the nut), bolt_hidden (the stud inside the post and its root fillet)"""
     Kk = K or T['kinds']['A1']
     A = Kk['panel']
     P = Kk['profiles']
@@ -92,8 +92,8 @@ def a1_parts(K=None):
             out['weld'].append([(x + sx * br, bz0), (x + sx * (br + wf), bz0), (x + sx * br, bz0 + wf)])
             out['weld'].append([(x + sx * br, bz1), (x + sx * (br + wf), bz1), (x + sx * br, bz1 - wf)])
     nut_half_z = max(v for u, v in P['bolt_nut_hex'])
-    head_half_z = max(v for u, v in P['bolt_head_hex'])
     shank = P['bolt_shank_diameter'] / 2
+    rf = P['stud_root_fillet']
     for b in A['bolts']['list']:
         z = b['z']
         n0, n1 = sorted(b['nut_x'])
@@ -101,10 +101,13 @@ def a1_parts(K=None):
         te = b['thread_end_x']
         t0, t1 = (n1, te) if te > 0 else (te, n0)
         out['thread'].append(rect(min(t0, t1), max(t0, t1), z - shank, z + shank))
-        h0, h1 = sorted(b['head_x'])
-        out['bolt_hidden'].append(rect(h0, h1, z - head_half_z, z + head_half_z))
-        a_, b_ = sorted((b['head_x'][1], b['nut_x'][0]))
+        # the stud's hidden part: from the end plate's outer face (x +-975) through the post to the nut's inner face; and its 3 mm root fillet on the plate face
+        a_, b_ = sorted((b['stud_x'][0], b['nut_x'][0]))
         out['bolt_hidden'].append(rect(a_, b_, z - shank, z + shank))
+        sx = 1 if b['post_x'] > 0 else -1
+        x0 = b['stud_x'][0]
+        for sz in (-1, 1):
+            out['bolt_hidden'].append([(x0, z + sz * shank), (x0 + sx * rf, z + sz * shank), (x0, z + sz * (shank + rf))])
     return out
 
 
@@ -154,8 +157,8 @@ def a1_views():
             pl.add('nut', rect(n0, n1, -nut_half_y, nut_half_y))
             te = b['thread_end_x']
             pl.add('thread', rect(min(n1, te), max(n1, te), -5, 5) if te > 0 else rect(min(n0, te), max(n0, te), -5, 5))
-    # the bolt section: a plan cut along the top rail's bolt axis (z 985), the right-hand post
-    bs = View('A1_bolt_section', 'x (along), y (across): cut at z = %.0f through the top rail\'s bolt axis, the right-hand end' % A['top_rail']['axis_z'], [900, 1100, -40, 40], 'the rail end, the end plate, the post wall, the bolt and its nut, 2:1 in the preview')
+    # the stud section: a plan cut along the top rail's stud axis (z 985), the right-hand post
+    bs = View('A1_bolt_section', 'x (along), y (across): cut at z = %.0f through the top rail\'s stud axis, the right-hand end' % A['top_rail']['axis_z'], [900, 1100, -40, 40], 'the rail end, the end plate, the post wall, the stud welded to the plate and its nut')
     xp = A['post']['x'][1]
     R = A['top_rail']
     wall = R['wall']
@@ -166,12 +169,13 @@ def a1_views():
     bs.add('post', rect(xp - A['post']['width'] / 2, xp + A['post']['width'] / 2, -A['post']['depth'] / 2, A['post']['depth'] / 2))
     bs.add('hole', rect(xp - A['post']['width'] / 2 + A['post']['wall'], xp + A['post']['width'] / 2 - A['post']['wall'], -A['post']['depth'] / 2 + A['post']['wall'], A['post']['depth'] / 2 - A['post']['wall']))
     bt = [b for b in A['bolts']['list'] if b['post_x'] > 0 and b['z'] == R['axis_z']][0]
-    h0, h1 = sorted(bt['head_x'])
     n0, n1 = sorted(bt['nut_x'])
-    hy = max(u for u, v_ in P['bolt_head_hex'])
     ny = max(u for u, v_ in P['bolt_nut_hex'])
-    bs.add('nut', rect(h0, h1, -hy, hy))
-    bs.add('bolt', rect(h1, bt['thread_end_x'], -P['bolt_shank_diameter'] / 2, P['bolt_shank_diameter'] / 2))
+    rf = P['stud_root_fillet']
+    sh = P['bolt_shank_diameter'] / 2
+    bs.add('bolt', rect(bt['stud_x'][0], bt['thread_end_x'], -sh, sh))
+    bs.add('weld', [(bt['stud_x'][0], sh), (bt['stud_x'][0] + rf, sh), (bt['stud_x'][0], sh + rf)])
+    bs.add('weld', [(bt['stud_x'][0], -sh), (bt['stud_x'][0] + rf, -sh), (bt['stud_x'][0], -sh - rf)])
     bs.add('nut', rect(n0, n1, -ny, ny))
     # a walking-strip section across the footway
     ws = walking_section()

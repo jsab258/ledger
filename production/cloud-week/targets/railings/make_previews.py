@@ -256,7 +256,7 @@ def main(pano_dir):
     def fit(im, w):
         return im.resize((w, int(im.height * w / im.width)), Image.LANCZOS)
     rows = [fit(pics['A1_elevation'], 1100), fit(pics['Q2a_elevation'], 1100), fit(pics['Q2b_elevation'], 1100)]
-    labs = ('A1 guard rail panel: RHS posts 50 x 30 to 1030, top rail 50 x 30 flat (top 1000), bottom rail 40 x 20, 17 bars of 12 (each view fitted to the sheet\'s width, not one scale)',
+    labs = ('A1 guard rail panel: RHS posts 50 x 30 to 1030, top rail 50 x 30 flat (top 1000), bottom rail 40 x 20, 17 bars of 12, four studs (each view fitted to the sheet\'s width, not one scale)',
             'Q2a two-rail bay (3000): post 76.1, top rail 60.3, low rail 42.4', 'Q2b rail and chain bay (3000, sag 200): ears on the sides facing this bay')
     H = sum(r.height for r in rows) + 10 * len(rows)
     sheet = Image.new('RGB', (1100, H), (255, 255, 255))
@@ -270,8 +270,8 @@ def main(pano_dir):
     # the bolt section at 5 px a mm and the walking strip section
     bs = annotate_drawing(views['A1_bolt_section'], os.path.join(tmp, 'bolt.png'), [], 5.0)
     d_ = ImageDraw.Draw(bs)
-    d_.text((8, 4), 'A1: plan section along the top rail\'s bolt axis (z 985), right-hand end, 5 px a mm', fill=(180, 30, 30))
-    d_.text((8, 18), 'rail end (grey) with its 6 mm end plate, M10 bolt: head 17 across flats on the panel side inside the rail end (hidden), nut 17 x 8 on the post\'s OUTER face, 3 mm thread', fill=(180, 30, 30))
+    d_.text((8, 4), 'A1: plan section along the top rail\'s stud axis (z 985), right-hand end, 5 px a mm', fill=(180, 30, 30))
+    d_.text((8, 18), 'rail end (grey) with its 6 mm end plate; M10 stud 61 long welded to the plate\'s outer face (3 mm root fillet), through the post to x 1036; nut 17 x 8 on the post\'s OUTER face, 3 mm thread', fill=(180, 30, 30))
     d_.text((8, bs.height - 16), 'post 50 x 30 x 3 (hollow), face x 975 to 1025; nut x 1025 to 1033; thread to 1036', fill=(180, 30, 30))
     sizes['target-a1-bolt-section.jpg'] = save_jpeg(bs, os.path.join(OUT, 'target-a1-bolt-section.jpg'))
     ws = Image.open(os.path.join(tmp, 'A1_walking_section.png')).convert('RGB')
@@ -282,9 +282,9 @@ def main(pano_dir):
     sizes['target-a1-walking-section.jpg'] = save_jpeg(ws, os.path.join(OUT, 'target-a1-walking-section.jpg'))
     sizes['target-plan-street.jpg'] = save_jpeg(street_plan_picture(os.path.join(tmp, 'street_plan_sym.png')).convert('RGB'), os.path.join(OUT, 'target-plan-street.jpg'))
     sizes['target-plan-jetty.jpg'] = save_jpeg(jetty_plan_picture(os.path.join(tmp, 'jetty_plan_sym.png')).convert('RGB'), os.path.join(OUT, 'target-plan-jetty.jpg'))
-    # A1 beside the photographed railings at one scale (0.5 px a mm): R3B (bars 76.6), R3D (97.0), A1 (109.1), each 1000 wide, 900 high from z 100
+    # A1 beside the photographed railings at one scale (0.5 px a mm): R3B (bars 76.6), R3D (95.3), A1 (109.1), each 1000 wide, 900 high from z 100
     panels = []
-    for fid, s0, labtxt in (('R3B', 1000, 'R3B park railing: bar pitch 76.6'), ('R3D', 1300, 'R3D garden railing: bar pitch 97.0')):
+    for fid, s0, labtxt in (('R3B', 1000, 'R3B park railing: bar pitch 76.6'), ('R3D', 1300, 'R3D garden railing: bar pitch 95.3')):
         F_ = FRAMES[fid]
         win = dict(s0=s0, s1=s0 + 1000, z0=100 if fid == 'R3B' else 560, z1=1000 if fid == 'R3B' else 1460)
         pim = elev_image(pano_dir, F_, win, 2, F_['mask'] if fid == 'R3B' else ())

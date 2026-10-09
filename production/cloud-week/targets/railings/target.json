@@ -1045,11 +1045,11 @@
       ],
       [
        0.0,
-       2216.3
+       2211.43
       ]
      ],
      "err": 7.79,
-     "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2275; at the first version's height 0.97, +-8",
+     "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2270, the stated tall_bar_tip_z (the review's own list ended at 2275, 5 above its stated tip: ended at 2270 on its second review); at the first version's height 0.97, +-8",
      "read_at_h": 0.97,
      "scaled_by": 0.9742
     }
@@ -1186,7 +1186,7 @@
     "bar_pitch": {
      "v": 97.03,
      "err": 3.08,
-     "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them)",
+     "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them); this 94.5 is the first read: the pitch the target uses is the line fit of the ten centres (95.3 at 1.15 m, kinds.R3D.bars.pitch), and 94.5 x 1.027 = 97.0 (the review's figure) lies 1.7 above it, inside the +-3",
      "read_at_h": 1.12,
      "scaled_by": 1.0268
     },
@@ -1428,11 +1428,11 @@
       ],
       [
        0,
-       2275
+       2270
       ]
      ],
      "err": 8,
-     "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2275; at the first version's height 0.97, +-8"
+     "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2270, the stated tall_bar_tip_z (the review's own list ended at 2275, 5 above its stated tip: ended at 2270 on its second review); at the first version's height 0.97, +-8"
     }
    },
    "R3A": {
@@ -1531,7 +1531,7 @@
     "bar_pitch": {
      "v": 94.5,
      "err": 3,
-     "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them)"
+     "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them); this 94.5 is the first read: the pitch the target uses is the line fit of the ten centres (95.3 at 1.15 m, kinds.R3D.bars.pitch), and 94.5 x 1.027 = 97.0 (the review's figure) lies 1.7 above it, inside the +-3"
     },
     "bar_centres_s": {
      "v": [
@@ -1783,10 +1783,13 @@
      "count": 4,
      "per": "panel",
      "size": "M10",
-     "head": {
-      "across_flats": 17.0,
-      "height": 7.0,
-      "where": "on the panel side, against the end plate, inside the rail's end: hidden"
+     "kind": "stud (the re-review's narrow point 1: the first version's bolts had their heads inside the rail ends, which cannot be fitted)",
+     "stud": {
+      "diameter": 10.0,
+      "length": 61.0,
+      "where": "welded to the OUTER face of each 6 mm end plate (x +-975), on the rail axis, a 3 mm fillet round the root; it runs from the plate face through an 11 mm hole across the post (both 3 mm walls) to x +-1036",
+      "hole_in_post": 11.0,
+      "root_fillet": 3.0
      },
      "nut": {
       "across_flats": 17.0,
@@ -1804,14 +1807,15 @@
        "post_x": -1000.0,
        "z": 985.0,
        "y": 0.0,
-       "head_x": [
-        -962.0,
-        -969.0
-       ],
        "plate_x": [
         -969.0,
         -975.0
        ],
+       "stud_x": [
+        -975.0,
+        -1036.0
+       ],
+       "stud_length": 61.0,
        "nut_x": [
         -1025.0,
         -1033.0
@@ -1822,14 +1826,15 @@
        "post_x": -1000.0,
        "z": 200.0,
        "y": 0.0,
-       "head_x": [
-        -962.0,
-        -969.0
-       ],
        "plate_x": [
         -969.0,
         -975.0
        ],
+       "stud_x": [
+        -975.0,
+        -1036.0
+       ],
+       "stud_length": 61.0,
        "nut_x": [
         -1025.0,
         -1033.0
@@ -1840,14 +1845,15 @@
        "post_x": 1000.0,
        "z": 985.0,
        "y": 0.0,
-       "head_x": [
-        962.0,
-        969.0
-       ],
        "plate_x": [
         969.0,
         975.0
        ],
+       "stud_x": [
+        975.0,
+        1036.0
+       ],
+       "stud_length": 61.0,
        "nut_x": [
         1025.0,
         1033.0
@@ -1858,14 +1864,15 @@
        "post_x": 1000.0,
        "z": 200.0,
        "y": 0.0,
-       "head_x": [
-        962.0,
-        969.0
-       ],
        "plate_x": [
         969.0,
         975.0
        ],
+       "stud_x": [
+        975.0,
+        1036.0
+       ],
+       "stud_length": 61.0,
        "nut_x": [
         1025.0,
         1033.0
@@ -1895,7 +1902,9 @@
       41
      ],
      "roughness": 0.85,
-     "what": "about 250 x 250 round the post, ragged edges +-20, flush with the flags to +-3; the footway-side edge is one straight cut flag edge; a 5 to 15 mm dark grit joint where the patch meets the flags",
+     "what": "about 250 x 250 round the post, ragged edges +-20, flush with the flags to +-3; the footway-side edge is one straight cut flag edge; a 5 to 15 mm dark grit joint where the patch meets the flags; the two patches are exported as a separate mesh `A1_ground_patch` (z 0 +-3) and are not part of A1_bbox",
+     "mesh": "A1_ground_patch",
+     "in_bbox": false,
      "outline_xy": [
       [
        105.5,
@@ -2014,12 +2023,12 @@
      0.0,
      1030.0
     ],
-    "note": "x +-1036 includes the nuts and 3 mm of thread; y +-25 is the top rail laid flat"
+    "note": "x +-1036 includes the nuts and 3 mm of thread; y +-25 is the top rail laid flat; excluding the two ground patches, exported as a separate mesh `A1_ground_patch` (z 0 +-3)"
    },
    "ends": "the panel ends at its posts: an end post is the same post with the same cap; no return, no end rail, no stay (the one panel stops at x 12.0 beside the gully)",
-   "joins": "a second panel (none on this street) would bolt to the same post's other face with the same bolt; the bars are not offset",
+   "joins": "a second panel (none on this street) would bolt to the same post's other face with its own studs and nuts; the bars are not offset",
    "edges": "post and rail corners rounded (outer R4.5 on the 3.0 wall, R3.75 on the 2.5 wall); the post cap's edges broken R1; bar ends hidden in 2 mm welds",
-   "fixings": "an M10 bolt at each of the four rail ends: head on the panel side hidden inside the rail end, nut on the post's outer face with 3 mm of thread beyond it",
+   "fixings": "four M10 studs welded to the outer face of the end plates (x +-975, on the rail axes, a 3 mm root fillet), each 61 long through an 11 mm hole across the post to x +-1036, with a hex nut (17 AF x 8) on the post's outer face (x +-1025) and 3 mm of thread beyond it; nothing else shows",
    "seams": "the RHS's longitudinal weld seam shows as a 0.4 mm ridge on the narrow face turned to the footway (Judgement)",
    "marks": "none: no maker's plate, no council number, no crest, no stencilled letters",
    "paint": {
@@ -3022,32 +3031,6 @@
      "thickness": 3.0,
      "edge_radius": 1.0
     },
-    "bolt_head_hex": [
-     [
-      8.5,
-      4.907
-     ],
-     [
-      0.0,
-      9.815
-     ],
-     [
-      -8.5,
-      4.907
-     ],
-     [
-      -8.5,
-      -4.907
-     ],
-     [
-      -0.0,
-      -9.815
-     ],
-     [
-      8.5,
-      -4.907
-     ]
-    ],
     "bolt_nut_hex": [
      [
       8.5,
@@ -3074,9 +3057,11 @@
       -4.907
      ]
     ],
-    "bolt_head_height": 7.0,
     "bolt_nut_height": 8.0,
     "bolt_shank_diameter": 10.0,
+    "stud_length": 61.0,
+    "stud_hole_diameter": 11.0,
+    "stud_root_fillet": 3.0,
     "thread_beyond_nut": 3.0,
     "end_plate_outlines": {
      "top": [
@@ -3329,7 +3314,7 @@
    "id": "Q2",
    "name": "quay_tube_railing",
    "title": "Quay tube railing: two tube rails on round steel posts (Q2a), or one tube rail and a swag of chain (Q2b), on the jetty only",
-   "basis": "Judgement: no photograph of a tube railing on a quay was reachable. The chain is the bollards target's plain chain (Read there) and its sag is Photo on the marina chain (LHB, 215 to 240). The asset plan names the kit (\"two-rail tube railing with chain\"); the Hull photograph R08 of 1989 (read by an earlier session) shows a chain-edged quay. Second version: the top rail is 60.3 x 3.6 for the 3.0 m bays (the review's first choice; 2.0 m bays with a 48.3 rail was its second)",
+   "basis": "Judgement: no photograph of a tube railing on a quay was reachable. The chain is the bollards target's plain chain (Read there) and its sag is Photo on the marina chain (LHB, 217 to 242). The asset plan names the kit (\"two-rail tube railing with chain\"); the Hull photograph R08 of 1989 (read by an earlier session) shows a chain-edged quay. Second version: the top rail is 60.3 x 3.6 for the 3.0 m bays (the review's first choice; 2.0 m bays with a 48.3 rail was its second)",
    "frame": "local: x along the run (0 at the middle of a bay), y across (0 on the rail line, + toward the water), z up from the apron at the post foot; pivot at the middle of the bay on the ground",
    "bay": {
     "centre_to_centre": 3000.0,
@@ -3419,7 +3404,7 @@
      "note": "the bollards target's plain chain, unchanged (agrees)"
     },
     "sag": 200.0,
-    "sag_basis": "Photo LHB: the marina chain's two swags sag 215 (upper) and 240 (lower), mean 227 +-35, over a 2840 span (8 %); the bollards target's 150 is Judgement and is low; 200 (7 %) here",
+    "sag_basis": "Photo LHB: the marina chain's two swags sag 217 (upper) and 242 (lower), mean 230 +-35, over a 2865 span (8 %); the bollards target's 150 is Judgement and is low; 200 (7 %) here",
     "span_between_eyes": 2833.9,
     "arc_length": 2871.5,
     "links": 74,
@@ -4917,14 +4902,35 @@
      ],
      [
       0.0,
-      2216.3
+      2211.43
      ]
     ],
     "foot": "a small ball end (about 20 across) a few mm below the bottom rail",
     "knop": {
      "width": 89.6,
      "z": 2043.87,
-     "text": "a turned knop about 90 across at z 2044, a ring about 44 across just above it, a spire to the tip"
+     "z_err": 8.0,
+     "text": "a turned knop about 90 across at z 2044, a ring about 44 across just above it, a spire to the tip",
+     "check_16k": {
+      "centre_z": 2046.0,
+      "widest_rows_z": [
+       2034,
+       2058
+      ],
+      "widest_width": [
+       82,
+       86
+      ],
+      "ring_z": [
+       2082,
+       2106
+      ],
+      "ring_width": [
+       45,
+       49
+      ],
+      "how": "the re-review, on the 16k HDR at 0.945 (the plane of this target), 12 tall bars, rows every 4 mm: the widest rows centre on z 2046, which checks the knop at 2044 +-8"
+     }
     },
     "leaf_note": "the gate leaf right of the hinge post is swung open toward the camera: the plane magnifies it (its bars read at 86.6) so it is not measured",
     "note": "all bars at 76.6 (three inches is 76.2: the pitch at the corrected camera height is within 0.5 % of it); every second bar rises to a spire; the others stop at the middle rail with a small spear (z 1193)"
@@ -5050,7 +5056,7 @@
      ],
      [
       0.0,
-      2216.3
+      2211.43
      ]
     ],
     "bar_head_error": 7.79,
@@ -5957,7 +5963,7 @@
   {
    "element": "infill of the guard rail",
    "book": "the scene's stand-in: five 25 mm bars in 2.0 m (clear gaps of 308); the asset plan \"posts, rails, infill\"",
-   "photograph": "every photographed bar railing has its bars at 76.6 (R3B), 97 (R3D) or 120 (R3A, at 1.02 m) centres, so clear gaps of 60 to 105; none has a gap over 105. No guard rail was photographed",
+   "photograph": "every photographed bar railing has its bars at 76.6 (R3B), 95.3 (R3D) or 120 (R3A, at 1.02 m) centres, so clear gaps of 60 to 105; none has a gap over 105. No guard rail was photographed",
    "chosen": "seventeen 12 mm bars at 109.1 centres (clear gap 97.1 between bars, 96.2 to a post face): Judgement from the analogues and the search-summary lead; the five-bar stand-in is replaced"
   },
   {
@@ -5976,7 +5982,7 @@
    "element": "fixings",
    "book": "the first version: \"none visible\" (a welded panel)",
    "photograph": "none",
-   "chosen": "an M10 bolt at each rail end, nut on the post's outer face (the fresh review: a struck panel can be unbolted)"
+   "chosen": "an M10 stud welded to each end plate, through the post, its nut on the post's outer face (the fresh review: a struck panel can be unbolted; the re-review: a stud, not a bolt, since a head could not be fitted inside the rail end)"
   },
   {
    "element": "paint finish",
@@ -6000,12 +6006,12 @@
    "element": "R3B bar heads",
    "book": "the first version: a vase swelling to 60 across at 2128, tip 2300",
    "photograph": "the 16k re-measurement: a turned knop 87 to 100 across (median 95) at 2090 to 2110, tips at 2255 to 2285 (at 0.97)",
-   "chosen": "the review's profile, scaled to 0.945: a knop about 90 across, a tip at 2211 +-15"
+   "chosen": "the review's profile, scaled to 0.945 and ending at the stated tip: a turned knop about 90 across at z 2044 +-8 (the re-review's 16k reading centres it at 2046), a tip at 2211 +-15"
   },
   {
    "element": "chain sag",
    "book": "the bollards target 150 (Judgement)",
-   "photograph": "Photo LHB: 227 +-35 over 2840 (two swags: 215 and 240)",
+   "photograph": "Photo LHB: 230 +-35 over 2865 (two swags: 217 and 242)",
    "chosen": "200 for Q2b; the bollards writer should raise K5's to 200"
   },
   {
@@ -6158,19 +6164,20 @@
   },
   {
    "name": "A1_bolts",
-   "what": "M10 bolts at the rail ends: 4 per panel, each head on the panel side and its nut (17 across flats, 8 high, 3 mm thread beyond) on the post's OUTER face at x +-1025",
+   "what": "four M10 studs welded to the end plates (61 long, x +-975 to +-1036), each nut (17 across flats, 8 high, 3 mm thread beyond) on the post's OUTER face at x +-1025",
    "expected": 4,
    "tol": 0,
    "unit": "count",
    "kind": "A1",
-   "basis": "Judgement: the fresh review",
+   "basis": "Judgement: the fresh review, studs per the re-review",
    "nut_face_x": 1025,
    "nut_height": 8,
-   "thread": 3
+   "thread": 3,
+   "stud_length": 61
   },
   {
    "name": "A1_bolt_heights",
-   "what": "bolt axes at the rail axes",
+   "what": "stud axes at the rail axes",
    "expected": [
     985,
     200
@@ -6248,7 +6255,7 @@
   },
   {
    "name": "A1_bbox",
-   "what": "overall size of the built panel including nuts and thread",
+   "what": "overall size of the built panel including nuts and thread, excluding the two ground patches, exported as a separate mesh `A1_ground_patch` (z 0 +-3)",
    "expected": [
     2072,
     50,
@@ -6257,7 +6264,7 @@
    "tol": 8.0,
    "unit": "mm",
    "kind": "A1",
-   "basis": "Judgement: the fresh review"
+   "basis": "Judgement: the fresh review; the patch exclusion per the re-review"
   },
   {
    "name": "A1_outline_residual",
@@ -6270,7 +6277,7 @@
   },
   {
    "name": "A1_foot_patch",
-   "what": "dark tarmac reinstatement patch round each post, ragged, flush with the flags to +-3",
+   "what": "dark tarmac reinstatement patch round each post, ragged, flush with the flags to +-3 (checked on the separate mesh `A1_ground_patch`, which A1_bbox excludes)",
    "expected": [
     250,
     250
@@ -6278,7 +6285,8 @@
    "tol": 60,
    "unit": "mm",
    "kind": "A1",
-   "basis": "Judgement: the fresh review"
+   "basis": "Judgement: the fresh review",
+   "mesh": "A1_ground_patch"
   },
   {
    "name": "A1_lean",
@@ -6384,7 +6392,7 @@
    "tol": 50,
    "unit": "mm",
    "kind": "Q2b",
-   "basis": "Photo (LHB 227 +-35)"
+   "basis": "Photo (LHB 230 +-35)"
   },
   {
    "name": "Q2_chain_no_spikes",
@@ -6544,11 +6552,10 @@
   "No photograph of a British pedestrian guard rail of any date was reachable: the whole of A1 other than the scene's 2.0 m, 1.0 m, x and z is Judgement, and BOTH sides of its form are judgement (the first version's round tube, the fresh review's RHS with bolted ends; the review's form is also what the search-summary lead \"posts 50 x 30 mm\" describes). Eight other panoramas (urban_street_03 and 04, cambridge, birbeck, canary_wharf, adams_place_bridge, roof_garden, greenwich_park) show none. TO CONFIRM FROM THE PC before the build is gated: two dated (1985 to 1995) Geograph or Commons photographs of a British kerbside guard rail, for the sections, the post top and the clamp.",
   "Whether Quay Street's rail in 1990 was galvanised grey (the default now), black, white-and-black banded or green: no photograph either way; the photographed ironwork is black cast and wrought iron, not galvanised steel.",
   "The lower rail's height and the infill's kind (round bar, flat bar, or open with two rails only). The 1983 and 1988 accident studies (search summaries) say the conventional rail of the 1980s hid the road from short pedestrians and that a see-through type did better, which supports dense infill for the rail of 1990; no number.",
-  "The bolt: the head is hidden inside the rail end (the end plate has the rail's own outline), so the bolt could not be fitted in a real panel without an access hole or a larger plate; the nut and thread on the post's outer face are what is seen. Kept as the review wrote it.",
+  "The studs: the re-review replaced the first version's four bolts (heads hidden inside the rail ends, which cannot be fitted: the 17 AF head does not go inside the 35 x 15 hollow of the bottom rail) by M10 studs welded to the outer face of each end plate, 61 long through an 11 mm hole across the post, with the same nut and thread on the post's outer face; everything visible is unchanged. The 3 mm root fillet (radius 8 at the plate face against the hole's 5.5) is a detail a build may model as a weld bead on the plate face.",
   "Q2: whether a harbour authority of the Hook would rail the jetty tip; the kit has no railing and the asset plan names one. The Hull 1989 photograph (an earlier session's note) supports chain at a working quay edge, not a tube railing. The commonest 1990 dock-edge form may have been galvanised ball-type stanchions with rails through forged balls at 1.8 to 2.0 m (the review): not in this target.",
   "The camera heights rest on 75 mm brick courses (73 to 79 mm if Victorian): R3B 0.945 +-0.02, R3A 1.02 +-0.03, R3D 1.15 +-0.02, LHB 1.13 +-0.03, each at its own ground, +-6 % in size (R3A +-8 %). The building wall's own foot at Limehouse reads 1.052 to 1.095 (the review 1.09), 6 % under the paving the posts stand on; it is corroboration only.",
   "R3A is oblique (32 degrees): widths there are blur-doubled; only its heights, rails and pitches on the left run are used; the run right of its cast post is another pattern and is not measured.",
-  "R3B, the height of the knop: the review's head list (scaled by 0.974) puts the turned knop (about 90 across) at z 2044 and the ring above it (about 44) at about 2094; the 1 mm head close in the previews reads the knop's widest row (about 95 across) at z 2062 and the ring (about 45 across) at about 2115, 18 to 20 mm higher, while the widths, the shaft and the tip (2205 read, 2211 stated) agree. The list is kept as the review wrote it (R3B is a reserve kind and is not placed); a build of R3B would read the knop height from the head close.",
   "The bars of the R3B photograph lean about 0.7 degrees to the left going up (probably the capture's own roll: their centres at z 1800 sit 12 to 18 mm left of the same bars at z 770); the target's bars are vertical, so its overlay is up to 20 mm off at the heads. Not corrected: the numbers are heights, pitches and widths, inside their stated errors.",
   "R3A, read directly on the new 3 mm elevation (h 1.02): the course pitch of its red courses is 75 (autocorrelation, weak on an oblique brick face), which supports the height; but the strongest brightness steps of its wall edges lie 31 (coping) and 41 (lower string) above the first version's reads times 1.052, and its bottom rail 25 above; the bullnose edges are soft on an oblique view and the stated error is 8 %, so the scaled numbers stay.",
   "The paint on the photographed ironwork has been renewed since 1990 and the panoramas are 2019: none of R3A, R3B, R3D or the K5 post is known to be older than 1990; a Victorian pattern is plausible for R3B.",
@@ -6569,10 +6576,10 @@
  ],
  "handover": {
   "to_builder": "A1 replaces the scene's five-bar stand-in at the same x and z; the posts keep the scene's x 10.0 and 12.0, z 3.375; it is now an RHS panel with bolted ends and a galvanised default. Q2 is new to the south-quay kit: it needs a recipe step (twelve posts, eleven bays, nine chains, the return) or a placement from this target; the kit has no railing today.",
-  "to_bollards_writer": "the chain: sag 200, not 150 (Photo LHB, two swags 215 and 240, mean 227 +-35); lug heights 806 and 409 here (at 1.13 m) against 840 and 420 there (inside the errors); K5 height 1096 at 1.13 m against 1135 at 1.17 m (the camera heights' ratio)",
+  "to_bollards_writer": "the chain: sag 200, not 150 (Photo LHB, two swags 217 and 242 at 1.13 m, mean 230 +-35); lug heights 807 and 409 here (at 1.13 m) against 840 and 420 there (inside the errors); K5 height 1096 at 1.13 m against 1135 at 1.17 m (the camera heights' ratio)",
   "to_kerbs_writer": "the kerb stands 0.205 m in front of the guard rail's axis (granite top 170, back edge z 3.170); the flag level at the post is y 0.040 against the scene's 0.05625",
   "to_town_session": "the fish market's crates (0.92 m deep) must not stand in x 9.5 to 12.5 behind the rail: that leaves 0.655 m of footway, under a walking person's 0.68. The awning over the fish market (awning_02) reaches the rail line at 1.57 m and leaves 1.39 m clear at a 2.0 m head height. Whether the yard mouth gets gates is the town's call; this target has no yard gate",
-  "for_NOW_md": "Railings target v2 (cloud week 42, after the fresh review): guard rail A1 = 2.0 m panel of RHS (posts 50 x 30 to 1030, top rail 50 x 30 flat with its top at 1000, bottom 40 x 20 at 200, seventeen 12 mm bars, M10 bolts, nuts on the posts' outer faces), galvanised by default; quay tube railing Q2 on the jetty only (12 posts, 11 bays, 31.4 m: two bays of two rails at the tip of the basin edge, the tip and the seaward return with chain); no area railings or yard gates on the street; no guard-rail photograph reached: two dated photographs to be read from the PC before the build is gated."
+  "for_NOW_md": "Railings target v2 (cloud week 42, after the fresh review): guard rail A1 = 2.0 m panel of RHS (posts 50 x 30 to 1030, top rail 50 x 30 flat with its top at 1000, bottom 40 x 20 at 200, seventeen 12 mm bars, M10 studs welded to the end plates, nuts on the posts' outer faces), galvanised by default; quay tube railing Q2 on the jetty only (12 posts, 11 bays, 31.4 m: two bays of two rails at the tip of the basin edge, the tip and the seaward return with chain); no area railings or yard gates on the street; no guard-rail photograph reached: two dated photographs to be read from the PC before the build is gated."
  },
  "sources": [
   {
@@ -6660,7 +6667,7 @@
   "Poly Haven models: modular_chainlink_fence and large_iron_gate exist (CC0) but are not period guard rails or the street's; nothing in the catalogue is a guard rail, a tube railing or a quay chain"
  ],
  "self_check": {
-  "result": "SELF-CHECK PASS: 252 of 252 tests pass (A printed numbers 71/71, B photograph measurements 56/56, C drawing on the photographs 30/30, D internal consistency 79/79, E text and files 16/16)",
+  "result": "SELF-CHECK PASS: 257 of 257 tests pass (A printed numbers 71/71, B photograph measurements 57/57, C drawing on the photographs 29/29, D internal consistency 81/81, E text and files 19/19)",
   "tests": [
    {
     "group": "A",
@@ -7219,7 +7226,12 @@
    },
    {
     "group": "B",
-    "name": "R3B: the bar head (the review's profile x 0.974): its tip 2216 is within the head error (8) of the stated tall tip 2211; its knop is 90 across (the review 87 to 100 x 0.974 = 85 to 97) at z 2044",
+    "name": "R3B: the bar head (the review's profile x 0.974) ends at the stated tall tip: its last point (0, 2211.43) equals tall_tip_z 2211.43 (and profiles.bar_head_rz ends there too); its knop is 90 across (the review 87 to 100 x 0.974 = 85 to 97)",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the knop stays at z 2044 +-8 (one value): the re-review's 16k reading centres the widest rows (82-86 across) on z 2046, inside it, and the ring above (45-49 across) at z 2082-2106 holds the profile's ring (z 2090 to 2099)",
     "ok": true
    },
    {
@@ -7355,11 +7367,6 @@
    {
     "group": "C",
     "name": "R3B: the knops of the tall bars (z 2044) are 87 across by the median of 11 bars on the 3 mm preview and 103 on the 1 mm head close (its widest row); the target's 90 (within 22: blur on both edges)",
-    "ok": true
-   },
-   {
-    "group": "C",
-    "name": "R3B: the knop's widest row in the 1 mm head close is at z 2062, 18 mm above the review's list (z 2044 after scaling): inside 40 and recorded as unsettled",
     "ok": true
    },
    {
@@ -7519,7 +7526,7 @@
    },
    {
     "group": "D",
-    "name": "A1 profiles: the bolt head and the nut are hexagons of 17 across flats (17.00), 7 and 8 high, on a 10 shank, with 3 mm of thread beyond the nut",
+    "name": "A1 profiles: the nut is a hexagon of 17 across flats (17.00), 8 high, on a 10 stud 61 long through an 11 hole, a 3 mm root fillet, with 3 mm of thread beyond the nut; the profiles have no bolt head",
     "ok": true
    },
    {
@@ -7529,27 +7536,37 @@
    },
    {
     "group": "D",
-    "name": "A1 bolts: four, one at each rail end (x +-1000 posts, z 985 and 200), the axes along x through the posts and the rails' axes",
+    "name": "A1 studs: four, one at each rail end (x +-1000 posts, z 985 and 200), the axes along x through the posts and the rails' axes; no head and no head_x anywhere in the fixing data",
     "ok": true
    },
    {
     "group": "D",
-    "name": "A1 bolts: every nut sits on the post's OUTER face (x +-1025, 8 high to +-1033) with the thread 3 mm beyond (+-1036); the head is on the panel side (|x| 962 to 969) against the end plate (969 to 975)",
+    "name": "A1 studs: each is welded to the OUTER face of its 6 mm end plate (x +-975) and runs 61 mm to x +-1036 through an 11 hole in the post (10 stud in 11, in the 3 mm walls); its nut sits on the post's OUTER face (x +-1025, 8 high to +-1033) with the thread 3 mm beyond (+-1036)",
     "ok": true
    },
    {
     "group": "D",
-    "name": "A1 bolts: the nut (across corners 19.6) is narrower than the post's 30 face and sits on the flat of it (30 - 2 x 4.5 = 21)",
+    "name": "A1 studs: the nut (across corners 19.6) is narrower than the post's 30 face and sits on the flat of it (30 - 2 x 4.5 = 21)",
     "ok": true
    },
    {
     "group": "D",
-    "name": "A1 bolts: the head (19.6 across corners, 17 flats) fits inside the top rail's hollow (inner 24 high) but not inside the bottom rail's (15 high): the caveat is recorded in could_not_settle",
+    "name": "A1 studs: nothing visible changed by the stud: the drawn nuts and thread are at the same x as the bolts' (x +-1025 to +-1036), the 11 hole (radius 5.5) and the stud (radius 5) fit the 30 face, and the stud is hidden inside the post (x 975 to 1025) as the drawing's bolt_hidden layer",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1 studs: the fixing text and the check say studs (A1_bolts, \"four M10 studs welded to the end plates\"), and the could_not_settle item says the head could not be fitted",
     "ok": true
    },
    {
     "group": "D",
     "name": "A1: the bounding box recomputed from the drawn parts is x +-1036 (nuts and thread), y +-25 (the top rail laid flat), z 0 to 1030: 2072 x 50 x 1030; the review's [2072, 50, 1030]",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the two ground patches are exported as a separate mesh A1_ground_patch (z 0 +-3) and are excluded from the bounding box: A1_bbox and kinds.A1.bbox.note say so, A1_foot_patch checks that mesh, and the patch (250 x 250, x +-140) would otherwise widen the box",
     "ok": true
    },
    {
@@ -7894,7 +7911,7 @@
    },
    {
     "group": "E",
-    "name": "TARGET.md quotes the key numbers of target.json: 50 x 30, 40 x 20, 97.09, 96.24, 109.09, 60.3, 76.1, 3.375, 0.205, 1.575, 0.895, 2072, 1036, -110.4, -128.4, -22.8, 31.4, 10.6, 0.945, 1.02, 1.15, 1.13, 0.974, 1.052, 1.027, 1.009",
+    "name": "TARGET.md quotes the key numbers of target.json: 50 x 30, 40 x 20, 97.09, 96.24, 109.09, 60.3, 76.1, 3.375, 0.205, 1.575, 0.895, 2072, 1036, -110.4, -128.4, -22.8, 31.4, 10.6, 0.945, 1.02, 1.15, 1.13, 0.974, 1.052, 1.027, 1.009, 95.3, 807, 2046, 61 long",
     "ok": true
    },
    {
@@ -7905,6 +7922,21 @@
    {
     "group": "E",
     "name": "TARGET.md section 13 starts with the PC photographs (two dated 1985 to 1995) and names the set-back note next to LTN 2/09",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "TARGET.md has the short section \"Narrow points applied after the re-review\" and says all four: studs welded to the end plates (61 long), the patches as the separate mesh A1_ground_patch excluded from the box, the knop at 2044 with the head ending at 2211, R3D at 95.3 and the lug at 807",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "the numbers are quoted one way: R3D's pitch 95.3 (no stale \"97\" as its pitch in the text, the summary line or the preview label, the label reads 95.3) and the chain lug 807 (no 806)",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "the R3B head profile in the text ends at the stated tip and the knop is one value: no \"head close\" reading of the knop height anywhere in TARGET.md's section 12",
     "ok": true
    },
    {
