@@ -501,7 +501,7 @@ def part_a(tj, R):
     need = ["quay_end", "rank", "fishmonger_apron", "chandler_apron", "yard_entrance", "gully", "standing_places", "bus_stop", "empty_unit", "west_blind_gable"]
     R.check("A21 places: every anchor a rule uses has an x range or a count (%s)" % ", ".join(need), all(n in tj["places"] for n in need), "missing %s" % [n for n in need if n not in tj["places"]])
     pc_ids = [c["id"] for c in tj["placement_checks"]]
-    R.check("A22 placement checks: the nine of the review are present and each has a rule in this file", all(i in PLACEMENT_RULES for i in pc_ids) and len(pc_ids) >= 9, "ids %s" % pc_ids)
+    R.check("A22 placement checks: the nine of the first review and P10, P11 of the second are present and each has a rule in this file", all(i in PLACEMENT_RULES for i in pc_ids) and len(pc_ids) >= 11, "ids %s" % pc_ids)
     R.check("A23 check_measures in target.json is word for word the MEASURE_DOCS of this file (what the code does)", tj["check_measures"] == MEASURE_DOCS,
             "differs in %s" % sorted(k for k in set(tj["check_measures"]) | set(MEASURE_DOCS) if tj["check_measures"].get(k) != MEASURE_DOCS.get(k)))
     undocumented = [(k, c["name"]) for k, kk in tj["kinds"].items() for c in kk["checks"] if c["measure"] not in MEASURE_DOCS]
@@ -515,13 +515,77 @@ def part_a(tj, R):
         bad += [w + " (TARGET.md)" for w in sorted(set(pat.findall(open(md, encoding="utf-8").read().lower())))]
     R.check("A25 wording: no word that implies a minor anywhere (canon content rule), in target.json and TARGET.md", not bad, "found %s" % bad)
     M = tj["measurements"]
-    R.check("A26 sources: M03 and M05 carry the tones cited to them, M15 states the Poly Haven tags, M21 to M27 exist, the seven files are listed as looked at and not used, flag_concrete cites M27",
-            "core_L_star" in M["M03"]["values"] and "seam_ratio" in M["M05"]["values"] and "tags" in M["M15"]["values"] and all(("M%d" % i) in M for i in range(21, 28))
+    R.check("A26 sources: M03 and M05 carry the tones cited to them, M15 states the Poly Haven tags, M21 to M29 exist, the seven files are listed as looked at and not used, flag_concrete cites M27",
+            "core_L_star" in M["M03"]["values"] and "seam_ratio" in M["M05"]["values"] and "tags" in M["M15"]["values"] and all(("M%d" % i) in M for i in range(21, 30))
             and len(tj["looked_at_not_used"]) == 7 and "M27" in tj["surfaces"]["flag_concrete"]["src"] and "no soot on the brick" not in json.dumps(tj["sources"]))
     rows = tj["wet_dry_rule"]["rows"]
     R.check("A27 wet and dry once: for each sheet-derived row, dry multiplier x wet multiplier equals the sheet's own ratio (within 0.03)",
             all(abs(tj["kinds"][r["kind"]]["tone"][r["surface"]]["albedo_mult_linear"] * tj["kinds"][r["kind"]]["wet_dry"]["wet"]["albedo_mult_on_tone"] - r["sheet_ratio"]) <= 0.03 for r in rows),
             "%s" % [(r["kind"], tj["kinds"][r["kind"]]["tone"][r["surface"]]["albedo_mult_linear"], tj["kinds"][r["kind"]]["wet_dry"]["wet"]["albedo_mult_on_tone"], r["sheet_ratio"]) for r in rows])
+    part_a_third(tj, R)
+
+
+def part_a_third(tj, R):
+    """The second review's four faults (Jafar's ruling of 9 October): each fix is present in target.json as the reviewer wrote it"""
+    K_ = tj["kinds"]
+    chk = lambda kid, name: next((c for c in K_[kid]["checks"] if c["name"] == name), None)
+    # ---- R1 the houses
+    hs = tj["houses"]
+    ids = [h["id"] for h in hs["list"]]
+    st = {h["id"]: h["state"] for h in hs["list"]}
+    sw_path = os.path.join(REPO, "production", "specs", "street-wear.json")
+    sw_ids = [h["bay"] for h in json.load(open(sw_path))["houses"]] if os.path.exists(sw_path) else ids
+    sooted = [i for i in ids if st[i] == "sooted"]
+    R.check("A28 houses (R1a): the 13 houses of street-wear.json each carry a state; no parade bay and no west_south bay is sooted; sooted houses are at the inland end (the chandler, west_north) and at most 30 %% of the 13 (%s)" % sooted,
+            sorted(ids) == sorted(sw_ids) and len(ids) == 13 and all(not i.startswith(("east_parade", "west_south")) for i in sooted) and 1 <= len(sooted) <= 0.3 * 13 and set(sooted) <= {"east_chandler_bay0", "west_north_bay0", "west_north_bay1", "west_north_bay2"}
+            and st[hs["reference_house"]] != "sooted" and hs["counts"] == {k: sum(1 for i in ids if st[i] == k) for k in ("sooted", "as_built", "cleaned")})
+    alb = srgb_to_lin(np.array(tj["surfaces"]["brick_red"]["albedo_srgb"], float))
+    Yw_ = np.array([0.2126, 0.7152, 0.0722])
+    drift = max(abs(float((alb * np.array(h["look_hue_only"]) * Yw_).sum() / (alb * Yw_).sum()) - 1.0) for h in hs["list"])
+    R.check("A29 houses (R1c): every house's look is divided by its own luminance on the brick (hue only; the largest change of the wall's luminance %.4f), HOUSE_SET_FACTOR is deleted from the table, the states are the sheet's" % drift,
+            drift < 0.005 and any("HOUSE_SET_FACTOR" in r["this_target"] and "DELETE" in r["this_target"] for r in tj["compose"]["recipe_handover"]) and "D13" in [d["id"] for d in tj["disagreements"]])
+    ws = K_["wall_soot"]
+    mk = ws["tone"]["brick_red"]["mark_srgb"]
+    R.check("A30 soot colour (R1b): the sooted mark on brick_red is a grey-brown lerp toward M21's neutral soot (%s), its chroma %.2f of the clean brick's, composed 0.4 to 0.6 (composed_soot_chroma_ratio, house_to_house_ratio, lower_wall_excess are checks of wall_soot); D9 withdraws 0.84" % (mk, ws["geometry"]["chroma_ratio_of_mark"]["brick_red"]),
+            0.3 <= ws["geometry"]["chroma_ratio_of_mark"]["brick_red"] <= 0.5 and all(chk("wall_soot", n) for n in ("composed_soot_chroma_ratio", "house_to_house_ratio", "lower_wall_excess"))
+            and "withdrawn" in next(d for d in tj["disagreements"] if d["id"] == "D9")["chose"])
+    # ---- R2 the head band
+    hb = K_["wall_head_band"]
+    lv = [(l["h_m"], l["level"]) for l in hb["envelope"]["levels"]]
+    h50 = next(h0 + (h1 - h0) * (l0 - 0.5) / (l0 - l1) for (h0, l0), (h1, l1) in zip(lv[:-1], lv[1:]) if l0 >= 0.5 > l1)
+    fw = hb["envelope"]["feature_weights"]
+    qg = [g["house"] for g in tj["places"]["quay_gables"]["gables"]]
+    R.check("A31 head band (R2): full strength only under gable verges and barges (quay-facing 1.0, other 0.3 to 1.0), coping scale 0.3, eaves gutter strength 0 to 0.2 and depth 0.1 to 0.3 m (profile half-strength at %.3f m: a course line), the quay gables %s are houses of the street, composed_eaves_front_ratio 0.90 to 1.10" % (h50, qg),
+            fw["gable_verge_quay_facing"] == 1.0 and fw["gable_verge_other"] == [0.3, 1.0] and fw["eaves_gutter_front"] == [0.0, 0.2] and hb["envelope"]["depth_scale"]["coping_or_string_course"] == 0.3
+            and abs(h50 / 0.075 - round(h50 / 0.075)) < 0.02 and set(qg) <= set(ids) and (chk("wall_head_band", "composed_eaves_front_ratio")["min"], chk("wall_head_band", "composed_eaves_front_ratio")["max"]) == (0.90, 1.10))
+    # ---- R3 the new mask checks, as the reviewer wrote them
+    want = [("wall_foot_splash", "core_column_cv", 0.0, 0.05, {"from_m": 0.0, "to_m": 0.20}), ("wall_foot_damp", "core_column_cv", 0.0, 0.05, {"from_m": 0.0, "to_m": 0.25}),
+            ("wall_head_band", "core_column_cv", 0.0, 0.05, {"from_m": 0.0, "to_m": 0.15, "source": "top"}), ("gutter_grime", "core_column_cv", 0.0, 0.05, {"from_m": 0.05, "to_m": 0.23}),
+            ("wall_foot_splash", "edge_on_course_share", 0.6, 1.0, {"course_m": 0.075, "tol_mm": 10}), ("salt_bloom", "edge_on_course_share", 0.6, 1.0, {"course_m": 0.075, "tol_mm": 10}), ("wall_head_band", "edge_on_course_share", 0.6, 1.0, {"course_m": 0.075, "tol_mm": 10}),
+            ("salt_bloom", "brick_neighbour_same_share", 0.3, 0.8, {}), ("streak_sill", "rivulet_spacing_cv", 0.25, 99.0, {}), ("streak_sill", "rivulet_length_cv", 0.25, 99.0, {}),
+            ("wall_soot", "lower_wall_excess", 0.05, 0.15, {"low_from_m": 0.1, "low_to_m": 0.6, "high_from_m": 1.5, "high_to_m": 3.5}), ("iron_wear", "coverage_share_below_m", 0.25, 0.6, {"below_m": 0.3}),
+            ("stone_top_lichen", "blob_eqd_mm", 10, 60, {"stat": "p50", "min_area_mm2": 50}), ("stone_top_lichen", "size_cv", 0.3, 99.0, {})]
+    miss = []
+    for kid, meas, lo, hi, prm in want:
+        cs = [c for c in K_[kid]["checks"] if c["measure"] == meas]
+        okc = any(c["min"] == lo and (c["max"] == hi or hi == 99.0 and c["max"] >= 1.0) and all(c["params"].get(a) == b for a, b in prm.items()) for c in cs)
+        if not okc:
+            miss.append((kid, meas))
+    R.check("A32 the six wrong masks (R3): the 14 checks the reviewer listed are in the kinds with the reviewer's zones and bounds (missing %s)" % miss, not miss)
+    # ---- R4
+    lw = K_["line_wear"]
+    ext = lw["mask"]["frame_extent_m"]
+    R.check("A33 line mask (R4.1): the frame is the 100 mm band's own (y %.3f to %.3f, line_width_mm %s), the scene's bands are 100 mm" % (ext[1], ext[3], lw["envelope"]["line_width_mm"]), abs(ext[1] + 0.05) < 1e-9 and abs(ext[3] - 0.05) < 1e-9 and lw["envelope"]["line_width_mm"] == 100)
+    vt = K_["footway_infill"].get("variant_tone", {})
+    R.check("A34 infill tone (R4.2): a variant_tone block names variants 0 to 2 (bitmac 70/68/66) and 3 to 5 (in-situ concrete 150/143/136) and the tone table keeps both colours",
+            vt.get("variants_0_2", {}).get("mark_srgb") == [70, 68, 66] and vt.get("variants_3_5", {}).get("mark_srgb") == [150, 143, 136] and K_["footway_infill"]["variants"]["count"] >= 6)
+    iw = K_["iron_wear"]
+    e_ = iw["mask"]["frame_extent_m"]
+    R.check("A35 pipe mask (R4.3): unwrapped round the pipe, %.3f m wide = pi x 0.068 (%.3f), x = 0 the street-facing line, the seam at the back, the back takes the same mask" % (e_[2] - e_[0], math.pi * 0.068),
+            abs((e_[2] - e_[0]) - math.pi * 0.068) < 0.002 and abs(iw["envelope"]["circumference_m"] - math.pi * 0.068) < 0.002 and "UNWRAPPED" in iw["where"]["rule"] and "seam" in iw["mask"]["origin"])
+    R.check("A36 pillar box (R4.4): iron_wear has a pillar_box_red row (grey primer and rust through the red) and lists the surface; the surface exists", "pillar_box_red" in iw["tone"] and "pillar_box_red" in iw["where"]["surfaces"] and "pillar_box_red" in tj["surfaces"])
+    fx = tj["second_review_fixes"]
+    R.check("A37 second_review_fixes lists R1 to R4, each with what the review said, what was applied and which choice was taken", [f["id"] for f in fx] == ["R1", "R2", "R3", "R4"] and all(f.get("applied") and f.get("review_said") for f in fx))
 
 
 # ---------------------------------------------------------------- B: tone
@@ -933,7 +997,16 @@ def part_c(tj, R, draw, overlays):
     sr = sat(np.median(_box(bx["sooted"]), 0)) / sat(np.median(_box(bx["clean"]), 0))
     soot_mult = tj["kinds"]["wall_soot"]["geometry"]["multiplier"]
     R.check("C19 garden wall re-measured on the preview: sooted over cleaner luminance %.3f (M21 0.377 to 0.40; the target's soot multiplier %.2f must lie in 0.37 to 0.48 and so must the measurement within 0.33 to 0.50)" % (ys_ / yc_, soot_mult), 0.33 <= ys_ / yc_ <= 0.50 and 0.37 <= soot_mult <= 0.48)
-    R.check("C19b ... and the colour saturation ratio (HSV) is %.2f: M21 says 0.84 (the review's 0.6 is not what this photograph shows; accepted 0.70 to 0.95)" % sr, 0.70 <= sr <= 0.95)
+    ps_, pc_ = _box(bx["sooted"]), _box(bx["clean"])
+    hsv_px = lambda p_: float(((p_.max(1) - p_.min(1)) / np.maximum(p_.max(1), 1e-9)).mean())
+    r_hsv_px = hsv_px(ps_) / hsv_px(pc_)
+    r_c_med = float(chroma_px(np.median(ps_, 0)[None, :])[0] / chroma_px(np.median(pc_, 0)[None, :])[0])
+    r_c_px = float(chroma_px(ps_).mean() / chroma_px(pc_).mean())
+    cs_ = next(c for c in tj["kinds"]["wall_soot"]["checks"] if c["name"] == "composed_soot_chroma_ratio")
+    comp_c = composition(tj, draw, cs_, 1990)
+    R.check("C19b the soot keeps little of the brick's colour (second review R1b): HSV saturation of the sooted panel over the cleaner, per pixel %.2f and of the medians %.2f; CIE chroma of the medians %.2f and per pixel %.2f (M21: 0.65, 0.73, 0.455, 0.43); "
+            "the first pass's 0.84 (HSV of two medians) is not what the photograph shows on any per-pixel measure; the target's composed sooted wall keeps %.2f of the clean wall's chroma (accepted 0.4 to 0.6, and within 0.12 of the photograph's per-pixel chroma ratio)" % (r_hsv_px, sr, r_c_med, r_c_px, comp_c),
+            0.55 <= r_hsv_px <= 0.78 and 0.38 <= r_c_med <= 0.60 and 0.33 <= r_c_px <= 0.55 and 0.4 <= comp_c <= 0.6 and abs(comp_c - r_c_px) <= 0.12)
     # ---- C20 M22: the head under the Hook sheet's gable verge, and the lower wall of the right-hand cottage
     Yl = lum(hs)
     colsel = slice(15, 170)
@@ -960,6 +1033,18 @@ def part_c(tj, R, draw, overlays):
     lowr = float(np.mean([np.median(cot[r:r + 8]) for r in range(516, 580, 8)]))
     lw = tj["kinds"]["wall_soot"]["geometry"]["lower_wall_ratio"]["composed"]
     R.check("C21 sheet right-hand cottage lower wall re-measured: %.2f of the wall above (M22b 0.84 to 0.93, mean 0.90); the composed target value %.2f is within 0.06 of it" % (lowr / body, lw), 0.80 <= lowr / body <= 0.96 and abs(lw - lowr / body) <= 0.08)
+    # ---- C21b M28: the sheet shows no dark head under an eaves gutter (Mickey's front) nor under the right-hand cottage's gable verge
+    cm_ = Yl[:, 385:445]
+    mbody = float(cm_[200:331].mean())
+    first10 = float(cm_[160:170].mean() / mbody)
+    rest_ = [float(cm_[r:r + 10].mean() / mbody) for r in range(170, 340, 10)]
+    gv = Yl[322:478, 1560:1595]
+    gb = [float(gv[r:r + 16].mean()) for r in range(16, 150, 16)]
+    ce_ = next(c for c in tj["kinds"]["wall_head_band"]["checks"] if c["name"] == "composed_eaves_front_ratio")
+    comp_e = composition(tj, draw, ce_, 1990)
+    R.check("C21b Mickey's front under its eaves gutter, re-measured: %.2f of its body in the first 10 rows (the dentil course's shadow; review 0.63), then %.2f to %.2f (mean %.2f; review 1.00 to 1.10); the right-hand cottage's gable under its verge is flat: top three bands over the last three %.2f (0.85 to 1.25); "
+            "the target's eaves-gutter head composes to %.2f at 0.3 m (accepted 0.90 to 1.10: inside the sheet's range)" % (first10, min(rest_), max(rest_), float(np.mean(rest_)), float(np.mean(gb[:3]) / np.mean(gb[-3:])), comp_e),
+            0.5 <= first10 <= 0.8 and 0.90 <= float(np.mean(rest_)) <= 1.15 and 0.85 <= float(np.mean(gb[:3]) / np.mean(gb[-3:])) <= 1.25 and min(rest_) <= comp_e <= max(rest_) and 0.90 <= comp_e <= 1.10)
     # ---- C22 M23: no clear streak under the sills of a maintained 2019 brick street
     f = "ph-urban_street_03-facade-sills-no-streaks.jpg"
     rgb = load_rgb(pv(f)).astype(float)
@@ -1245,6 +1330,14 @@ def lab_chroma(lin):
     return float(np.hypot(500 * (f[0] - f[1]), 200 * (f[1] - f[2])))
 
 
+def chroma_px(srgb8):
+    """CIE chroma C* of every colour of an (n, 3) array of sRGB 0..255"""
+    lin = srgb_to_lin(np.asarray(srgb8, float))
+    xyz = (lin @ _M_XYZ.T) / _W_XYZ
+    f = np.where(xyz > 216 / 24389, np.cbrt(xyz), (24389 / 27 * xyz + 16) / 116)
+    return np.hypot(500 * (f[:, 0] - f[:, 1]), 200 * (f[:, 1] - f[:, 2]))
+
+
 def _fit_strip(m, Hp, Wp, ppm_in, ppm, from_top=False):
     """A builder's own mask fitted to the composition strip (Hp x Wp at ppm px/m): resampled to ppm, tiled across x, cropped to Hp rows counted from the pavement line (the bottom row) or,
     for from_top (the head band), from the feature (the top row); a shorter mask is padded with 0 beyond its frame"""
@@ -1392,7 +1485,17 @@ def composition(tj, draw, c, seed=1990, masks=None, masks_ppm=None):
         row = int(round(0.1 * ppm))
         return float((_ylin(r["unfloored"]) / _ylin(r["clean"]))[row - 1:row + 2, :].mean())
     if m == "composed_eaves_front_ratio":
-        r = compose_walls(tj, draw, seed, "cleaned", ppm, head=True, head_strength=p.get("strength", 0.2), head_depth_scale=p.get("depth_m", 0.3) / 0.675, **kw)
+        # the head band alone: the strip also holds the foot kinds (damp reaches 1.6 m), which are not under test here, so their masks are zero
+        mk = dict(masks or {})
+        mpp = dict(masks_ppm) if isinstance(masks_ppm, dict) else {}
+        for kid in ("wall_foot_damp", "wall_foot_splash", "algae_downpipe", "salt_bloom", "wall_soot"):
+            if kid not in mk:
+                mk[kid] = np.zeros((int(1.6 * ppm) + 1, int(2.0 * ppm) + 1))
+                mpp[kid] = ppm
+        for kid in mk:
+            if kid not in mpp:
+                mpp[kid] = masks_ppm if (masks_ppm is not None and not isinstance(masks_ppm, dict)) else ppm
+        r = compose_walls(tj, draw, seed, "cleaned", ppm, head=True, masks=mk, masks_ppm=mpp, head_strength=p.get("strength", 0.2), head_depth_scale=p.get("depth_m", 0.3) / 0.675)
         row = int(round(p.get("below_m", 0.3) * ppm))
         return float((_ylin(r["unfloored"]) / _ylin(r["clean"]))[row - 1:row + 2, :].mean())
     if m in ("channel_over_road", "fringe_over_road"):
@@ -1463,7 +1566,7 @@ def part_e_composition(tj, R, draw):
             if c["measure"] in ("composed_foot_ratio", "composed_salt_ratio", "composed_soot_ratio", "composed_soot_chroma_ratio", "composed_eaves_front_ratio", "composed_head_ratio", "house_to_house_ratio"):
                 head_ = c["measure"] in ("composed_head_ratio", "composed_eaves_front_ratio")
                 rr = compose_walls(tj, draw, 1990, "cleaned", 100, head=True)
-                mk = {k_: v for k_, v in rr["masks"].items() if k_ != "wall_head_band" or head_}
+                mk = {"wall_head_band": rr["masks"]["wall_head_band"]} if c["measure"] == "composed_eaves_front_ratio" else {k_: v for k_, v in rr["masks"].items() if k_ != "wall_head_band" or head_}
                 a_ = composition(tj, draw, c, 1990)
                 b_ = composition(tj, draw, c, 1990, masks=mk, masks_ppm=100)
                 same.append((c["name"], a_, b_))
@@ -1731,7 +1834,7 @@ def rule_P10(pl, tj):
         if not ok:
             bad.append(q)
     gables = tj["places"]["quay_gables"]["gables"]
-    missing = [g["house"] for g in gables if not any(q.get("feature") in ("gable_verge", "barge") and q.get("wall") == g["house"] and q.get("quay_facing") and abs(q["strength"] - 1.0) < 1e-9 for q in sel)]
+    missing = [g["house"] for g in gables if not any(q.get("feature") in ("gable_verge", "barge") and q.get("wall") == g["house"] and q.get("face") == "gable" and q.get("quay_facing") and abs(q["strength"] - 1.0) < 1e-9 for q in sel)]
     return not bad and not missing, "%d of %d head bands off their rule (eaves gutter: strength 0 to 0.2 and depth 0.1 to 0.3 m; gable verge or barge: 1.0 on a quay-facing gable, 0.3 to 1.0 elsewhere; coping: depth scale 0.3); quay gables without a full-strength verge band: %s" % (len(bad), len(sel), missing)
 
 
@@ -1774,7 +1877,7 @@ def sample_street(tj, seed=1):
             n += 1
         if name in quay or name == "east_chandler_bay0":                   # a gable verge: full strength on the quay-facing gables, 0.3 to 1.0 on another
             qg = name in quay
-            pl.append({"kind": "wall_head_band", "variant": (hi + 1) % 4, "seed": n, "x_m": x0, "y_m": 6.2, "wall": name + "_gable", "side": side, "house": hi, "tile_phase_m": (hi * 0.37 + 0.9) % 2.0, "in_hook_frame": qg,
+            pl.append({"kind": "wall_head_band", "variant": (hi + 1) % 4, "seed": n, "x_m": x0, "y_m": 6.2, "wall": name, "face": "gable", "side": side, "house": hi, "tile_phase_m": (hi * 0.37 + 0.9) % 2.0, "in_hook_frame": qg,
                        "feature": "gable_verge", "quay_facing": qg, "strength": 1.0 if qg else round(float(rng.uniform(0.3, 1.0)), 3), "depth_m": 1.15})
             n += 1
         for sx in (x0 + 1.5, x0 + 4.5):
@@ -1825,7 +1928,7 @@ def part_f(tj, R):
         "P11b": ("a house whose state is not the one in `houses`", lambda pl: [q.update(house_state="cleaned") for q in pl if q["kind"] == "wall_soot" and q["wall"] == "west_south_bay1"]),
     }
     for key, (what, f) in wrong.items():
-        rid = key[:2]
+        rid = key[:-1] if key.endswith("b") else key
         r = {i: ok for i, ok, _ in check_placement(mutate(f), tj)}
         R.check("F wrong placement refused by %s: %s" % (rid, what), r[rid] is False and all(v for kk, v in r.items() if kk != rid))
     return {"conforming": [(i, ok) for i, ok, _ in res]}

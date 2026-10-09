@@ -5997,7 +5997,7 @@
    "layer": "L0 in the brick and render materials: one seamless tile per house, strength by the house's state; replaces the recipe's patch noise and the house look's brightness (section 1)",
    "where": {
     "feature": "every brick, painted-brick and render wall surface of a house from the pavement to the wall head; one state per house (sooted, as built, or cleaned in the 1980s), taken from the Hook sheet and not from the recipe's random brick_set: sooted only at the inland end (the chandler and west_north bay 2), every parade bay and every west_south bay as built or cleaned (target.json `houses`, D13)",
-    "rule": "Strength by state: sooted 1.0, as built 0.35, cleaned 0.0 (Judgement; the sheet's walls read as built or cleaned). Which houses are sooted is decided from the sheet (D13): the sheet's frame shows no house darker than about 0.86 of Mickey's front, so no parade bay and no west_south bay is sooted; sooted houses are the chandler and west_north bay 2 (2 of 13). At strength 1 the albedo multiplier is 0.42 (Photo M21: 0.377, 0.37 to 0.48). THE SOOT KEEPS LITTLE OF THE BRICK'S COLOUR: soot is a nearly neutral deposit (M21 92/81/73), not a red filter. The mark on brick_red is 82/62/55 (L* 28.2, C* 10.8: 0.39 of the clean brick's chroma 27.6), a lerp toward M21's soot; brick_painted and render_cream likewise (the same luminance multiplier, their own hue, chroma x 0.39). Target: the composed sooted wall keeps 0.4 to 0.6 of the clean wall's CIE chroma (Photo M21 0.43 to 0.54, Sheet head 0.39 to 0.42). The mask is a metre-scale mottle (wavelength 0.5 to 2.0 m, std 0.07) around a mean level 0.90, plus the darker lower wall: the level rises by 0.10 below 0.7 m and is back to the body by 1.2 m, which is x 0.88 on the wall above (Sheet M22: lower wall about x 0.90 over 0.17 to 0.77 m up on the right-hand cottage; check lower_wall_excess). The mask is for the whole wall including above 4 m (the builder repeats the 4 m row).",
+    "rule": "Strength by state: sooted 1.0, as built 0.35, cleaned 0.0 (Judgement; the sheet's walls read as built or cleaned). Which houses are sooted is decided from the sheet (D13): the sheet's frame shows no house darker than about 0.86 of Mickey's front, so no parade bay and no west_south bay is sooted; sooted houses are the chandler and west_north bay 2 (2 of 13). At strength 1 the albedo multiplier is 0.42 (Photo M21: 0.377, 0.37 to 0.48). THE SOOT KEEPS LITTLE OF THE BRICK'S COLOUR: soot is a nearly neutral deposit (M21 92/81/73), not a red filter. The mark on brick_red is the review's 82/62/55 (L* 28.2, C* 10.8: 0.39 of the clean brick's chroma 27.6), a lerp toward M21's soot, stored as 81/61/54 so that its luminance is exactly x 0.42 of the brick's; brick_painted and render_cream likewise (the same luminance multiplier, their own hue, chroma x 0.39). Target: the composed sooted wall keeps 0.4 to 0.6 of the clean wall's CIE chroma (Photo M21 0.43 to 0.54, Sheet head 0.39 to 0.42). The mask is a metre-scale mottle (wavelength 0.5 to 2.0 m, std 0.07) around a mean level 0.90, plus the darker lower wall: the level rises by 0.10 below 0.7 m and is back to the body by 1.2 m, which is x 0.88 on the wall above (Sheet M22: lower wall about x 0.90 over 0.17 to 0.77 m up on the right-hand cottage; check lower_wall_excess). The mask is for the whole wall including above 4 m (the builder repeats the 4 m row).",
     "surfaces": [
      "brick_red",
      "brick_painted",
@@ -6299,7 +6299,7 @@
    "layer": "L0 in the brick and render materials, hung from each feature's lower edge by the distance below it (a 2.0 m seamless-in-x strip); ragged by brick courses",
    "where": {
     "feature": "the lower edge of a gable verge or barge (full strength), of a chimney-stack or parapet coping and a string course (the coping scale), and, at 0 to 0.2 of the strength and 0.1 to 0.3 m deep, of the eaves gutter of a front",
-    "rule": "Sheet M22 measures the left gable under its VERGE: a verge with no gutter, where roof water runs straight down the brick. The sheet shows no such head under an eaves gutter (Mickey's front: 0.64 of the body in the first 0.07 m, the dentil course's shadow, then 0.98 to 1.10 down to 0.5 m) and none under the right-hand cottage's gable verge (flat 0.036 to 0.054, columns 1560 to 1595, rows 322 to 478), so the head is a weighted rule, not a rule for every roof edge. Gable verge or barge: multiplier at mask 1 0.56 on a wall that is as built or cleaned (Sheet M22, wet 0.50 to 0.62 over the top 0.2 to 0.75 m, divided by the wet 0.90) and 0.80 on a sooted wall (Photo M21: a further x 0.80 under the coping of the sooted panel; nothing is darkened twice); weight 1.0 on the quay-facing gables (the sheet's left gable: Mickey's quay gable and west_south's, x 3) and 0.3 to 1.0 by house seed on other gables. Depth profile by distance below the feature: 1.0 to 0.2 m, 0.85 at 0.4 m, 0.70 at 0.6 m, 0.30 at 0.75 m, 0.18 at 0.95 m, 0 by 1.15 m (Sheet M22: 0.75 to 0.80 at 0.9 to 1.0 m, 1.0 by 1.4 m wet). Parapet and chimney copings and string courses keep the coping scale: the same profile x 0.3 in depth (Photo M21: a band 0.4 m deep), weight 1.0. Eaves gutter of a front: strength 0 to 0.2 and depth 0.1 to 0.3 m, the depth being where the profile reaches half strength (the profile compressed by depth / 0.675; Judgement, from Mickey's front); a leaking gutter is streak_coping's job. The lower edge is ragged by whole brick courses: the profile slides up or down by 75 mm steps (its standard deviation along x 20 to 100 mm), so the edge always lies on a course line. It REPLACES the recipe's head water paths (STREAK_DEPTH, section 1).",
+    "rule": "Sheet M22 measures the left gable under its VERGE: a verge with no gutter, where roof water runs straight down the brick. The sheet shows no such head under an eaves gutter (Mickey's front, M28: 0.64 of the body in the first 10 rows, the dentil course's shadow, then 0.85 to 1.18 by band, mean 1.0; the review 1.00 to 1.10, down to 0.5 m) and none under the right-hand cottage's gable verge (flat, 0.036 to 0.063, columns 1560 to 1595, rows 322 to 478), so the head is a weighted rule, not a rule for every roof edge. Gable verge or barge: multiplier at mask 1 0.56 on a wall that is as built or cleaned (Sheet M22, wet 0.50 to 0.62 over the top 0.2 to 0.75 m, divided by the wet 0.90) and 0.80 on a sooted wall (Photo M21: a further x 0.80 under the coping of the sooted panel; nothing is darkened twice); weight 1.0 on the quay-facing gables (the sheet's left gable: Mickey's quay gable and west_south's, x 3) and 0.3 to 1.0 by house seed on other gables. Depth profile by distance below the feature: 1.0 to 0.2 m, 0.85 at 0.4 m, 0.70 at 0.6 m, 0.30 at 0.75 m, 0.18 at 0.95 m, 0 by 1.15 m (Sheet M22: 0.75 to 0.80 at 0.9 to 1.0 m, 1.0 by 1.4 m wet). Parapet and chimney copings and string courses keep the coping scale: the same profile x 0.3 in depth (Photo M21: a band 0.4 m deep), weight 1.0. Eaves gutter of a front: strength 0 to 0.2 and depth 0.1 to 0.3 m, the depth being where the profile reaches half strength (the profile compressed by depth / 0.675; Judgement, from Mickey's front); a leaking gutter is streak_coping's job. The lower edge is ragged by whole brick courses: the profile slides up or down by 75 mm steps (its standard deviation along x 20 to 100 mm), so the edge always lies on a course line. It REPLACES the recipe's head water paths (STREAK_DEPTH, section 1).",
     "surfaces": [
      "brick_red",
      "brick_painted",
@@ -6363,8 +6363,8 @@
     "top_edge": {
      "step_m": 0.075,
      "amplitude_m": [
-      0.05,
-      0.12
+      0.08,
+      0.14
      ],
      "wavelength_m": [
       0.3,
@@ -6443,24 +6443,38 @@
     "tileable": "horizontally, seamless, 2.0 m period",
     "eaves_front": {
      "sheet_mickey_front": {
-      "0_to_0.07_m": 0.64,
-      "0.1_to_0.5_m": [
-       0.98,
-       1.1
-      ]
+      "first_10_rows": 0.64,
+      "after_by_band": [
+       0.85,
+       1.18
+      ],
+      "after_mean": 1.0,
+      "review": {
+       "first_0.1_m": 0.63,
+       "after": [
+        1.0,
+        1.0,
+        1.08,
+        1.1
+       ]
+      }
      },
      "target_ratio_at_0.3_m": [
       0.9,
       1.1
      ],
-     "src": "Sheet (this pass): Mickey's front under its eaves gutter, columns 385 to 445, rows 160 to 340, against its body (rows 200 to 330); the review found 0.63 then 1.00, 1.00, 1.08, 1.10"
+     "src": "Sheet M28: Mickey's front under its eaves gutter, columns 385 to 445, rows 160 to 340, against its body (rows 200 to 330); the review found 0.63 then 1.00, 1.00, 1.08, 1.10 and the writer's re-measurement agrees"
     },
     "gable_verge_none": {
-     "right_hand_cottage": [
+     "right_hand_cottage_Y": [
+      0.036,
+      0.063
+     ],
+     "review": [
       0.036,
       0.054
      ],
-     "src": "Sheet: the right-hand cottage's gable under its verge, columns 1560 to 1595, rows 322 to 478: flat, no head (review R2)"
+     "src": "Sheet M28: the right-hand cottage's gable under its verge, columns 1560 to 1595, rows 322 to 478: flat, no head (review R2)"
     },
     "edge_for_envelope_mm": 100
    },
@@ -6536,8 +6550,8 @@
     "differ_by": "ragged-edge seed (course steps), the depth scale (verge, coping); mirror in x; tile in x",
     "src": "Derived"
    },
-   "period_1990": "A dark head under the roof edge is run-off and dirt on uncleaned brick (Judgement; the Hook sheet shows it on the left gable and the right-hand cottage). A cleaned or newly painted front has less of it.",
-   "not_modern": "No clean wall to the roof edge; no ruler-straight lower edge; no head band without the roof edge it hangs from.",
+   "period_1990": "A dark head under a gable verge or barge is run-off and dirt on uncleaned brick (Judgement; the Hook sheet shows it on the left gable under its verge only: none under Mickey's eaves gutter and none on the right-hand cottage's gable, M28). A cleaned or newly painted front has less of it, and a front whose gutter works has almost none.",
+   "not_modern": "No clean wall to the gable's edge; no ruler-straight lower edge; no dark band across the upper floor of every front; no head band without the verge or coping it hangs from.",
    "checks": [
     {
      "name": "composed_head_ratio_gable",
@@ -6843,7 +6857,7 @@
     "px_per_m_recommended": 400,
     "px_per_m_at_1p6m_screen": 1120,
     "px_per_m_at_10m_screen": 180,
-    "note": "frame 0.08 m x 2.4 m at 400 px/m = 32 x 960"
+    "note": "frame 0.214 m x 2.4 m (the unwrapped pipe) at 400 px/m = 86 x 960"
    },
    "variants": {
     "count": 4,
@@ -6874,7 +6888,7 @@
      },
      "min": 20,
      "max": 90,
-     "src": "Sheet M25: patches 20 to 110 mm (on a 75 mm pipe neighbouring patches merge, so the measured median is a little above the drawn 45 mm)",
+     "src": "Sheet M25: patches 20 to 110 mm (on a 68 mm pipe neighbouring patches merge, so the measured median is a little above the drawn 45 mm)",
      "applies_to": "mask"
     },
     {
@@ -8647,7 +8661,60 @@
    }
   ]
  },
- "second_review_fixes": [],
+ "second_review_fixes": [
+  {
+   "id": "R1",
+   "title": "wall_soot turned half the street soot-brown where the sheet shows no sooted house; the colour kept the brick's chroma; the house looks were darkened twice",
+   "review_said": "The sooted state (x 0.42) went on 7 of 13 houses, from street-wear.json's brick_set, a random seed; the sheet shows no house darker than about 0.86 of Mickey's front. The soot mark 93/56/48 kept 0.71 of the red brick's CIE chroma; M21 and the sheet's gable head say 0.43 to 0.54. The recipe's looks are picked by (brick_set + seed) % 4, so a house carried a sooted look and an as built state; HOUSE_SET_FACTOR is never read. Amendment (a) states from the sheet, house_to_house_ratio; (b) a soot mark lerped toward M21's neutral soot at chroma 0.4 to 0.6 (82/62/55), composed_soot_chroma_ratio, D9; (c) divide every look by its own luminance, delete HOUSE_SET_FACTOR.",
+   "applied": "(a) `houses` in target.json: the 13 houses with a state each, decided from the sheet (D13): parade bays 0 to 5 and west_south bays 0 to 2 cleaned (Mickey's front and bay 1) or as built, sooted only at the inland end, the chandler and west_north bay 2 (2 of 13); the kind's density is 0.1 to 0.3 (0.15). New composed check house_to_house_ratio 0.80 to 1.40 (every house of the sheet's frame at 0.80 or more of Mickey's front, composed upper wall, albedo, no haze: 0.81 for an as built house, 1.0 for bay 1). (b) The sooted mark on brick_red is the review's 82/62/55 (L* 28.2, C* 10.8: 0.39 of the brick's 27.6; stored as 81/61/54 so that its luminance is exactly x 0.42), brick_painted and render_cream likewise (the same luminance multiplier 0.42, the surface's own hue, chroma x 0.39); composed_soot_chroma_ratio 0.4 to 0.6 (composed 0.47; Photo M21 0.43 to 0.54, Sheet 0.39 to 0.42); M21 re-made on its boxes (HSV per pixel 0.65, of medians 0.73, CIE chroma 0.455 and 0.43); D9 records that 0.84 is not what the photograph shows on any per-pixel measure. (c) The hand-over (section 1 and compose.recipe_handover) divides every house's look by its own luminance on the wall (`houses[].look_hue_only`), so wall_soot carries all the brightness, and deletes HOUSE_SET_FACTOR from the table.",
+   "choice_taken": "The review gave a choice of 'one or two of west_north bays 0 to 2' for the sooted houses: the fewest, one (bay 2, the farthest from the quay), with the chandler: 2 of 13, the closest to the sheet, in which no house is sooted. It gave 'cleaned or as built' for the parade and west_south: Mickey's front and bay 1 cleaned (the recipe's own set 2 for them), every other house as built (weight 0.35), so the houses of the sheet's frame stay between 0.81 and 1.0 of Mickey's, as the sheet shows (0.86 and up).",
+   "checks": [
+    "wall_soot/house_to_house_ratio",
+    "wall_soot/composed_soot_chroma_ratio",
+    "wall_soot/lower_wall_excess (R3)",
+    "A28 to A30",
+    "C19b",
+    "P11"
+   ]
+  },
+  {
+   "id": "R2",
+   "title": "wall_head_band darkened the top of every front under its eaves gutter; the sheet shows that only under a gable verge",
+   "review_said": "The head (x 0.56 dry to 0.2 m) hung from every eaves gutter, gable verge, coping and string course; its only measurement is the left gable under its verge. Mickey's front under its eaves reads 0.63 in the first 0.1 m, then 1.00 to 1.10; the right-hand cottage's gable under its verge is flat. Amendment: full strength only under gable verges and barges, weight 1.0 on the quay-facing gables and 0.3 to 1.0 by house seed elsewhere; the coping scale stays; under eaves gutters strength 0 to 0.2 and depth 0.1 to 0.3 m; a composed check on an eaves front at 0.3 m below the eaves 0.90 to 1.10.",
+   "applied": "The kind's feature, rule, density tiers, depth_scale and feature_weights are the review's: gable verge or barge 1.0 (quay-facing: the sheet's left gable, Mickey's quay gable and west_south's at x 3, `places.quay_gables`) or 0.3 to 1.0 by house seed; coping and string course at the coping scale (depth x 0.3, weight 1.0); eaves gutter of a front strength 0 to 0.2 and depth 0.1 to 0.3 m (the profile compressed so that its half-strength height, 0.675 m, falls at the depth). New composed check composed_eaves_front_ratio 0.90 to 1.10 at 0.3 m below the eaves at the strongest eaves setting (strength 0.2, depth 0.3 m): composed 0.96; the first pass's rule (full strength and depth) composes to 0.59 and is refused in part E. New placement check P10 (each placed head band has the right feature, strength and depth; both quay gables carry a full-strength verge band). New measurement M28 (Mickey's front 0.64 in the first rows, then 1.0; the cottage gable flat) re-made on the sheet and re-tested in C21b. The sheet's white patches at the verge are render remnants (render_patch), not this kind, bird_dropping or sign_ghost (narrow note).",
+   "choice_taken": "The review gave the eaves range 'strength 0 to 0.2, depth 0.1 to 0.3 m (Judgement)' without saying what depth means: it is read as the height at which the profile reaches half strength, the harder reading (read as the profile's whole depth, the mask is 0 at 0.3 m, the ratio is 1.0 whatever the strength, and the check would test nothing), and the one nearest the sheet, where the first 0.07 m under the eaves is darker and the rest is not.",
+   "checks": [
+    "wall_head_band/composed_eaves_front_ratio",
+    "A31",
+    "C21b",
+    "P10"
+   ]
+  },
+  {
+   "id": "R3",
+   "title": "Six wrong masks still passed every mask check",
+   "review_said": "The straight profile times a vertical cosine (stripes) passed the splash, damp, head band and gutter checks; a perfect salt checkerboard passed; four identical evenly spaced rivulets passed; a soot mottle without a darker lower wall passed; rust patches spread evenly up the pipe, none at the shoe, passed; one flat block of lichen passed. Amendment: core_column_cv at most 0.05 (splash 0 to 0.2 m, damp 0 to 0.25 m, head 0 to 0.15 m below the feature, gutter 0.05 to 0.23 m); edge_on_course_share at least 0.6 (splash, salt, head band); brick_neighbour_same_share 0.3 to 0.8 (salt); rivulet_spacing_cv and rivulet_length_cv at least 0.25 (streak_sill); lower_wall_excess 0.05 to 0.15 (wall_soot, mean 0.1 to 0.6 m minus mean 1.5 to 3.5 m); coverage_share_below_m (0.3 m) 0.25 to 0.6 (iron_wear); blob_eqd_mm p50 10 to 60 (minimum 50 mm2) and size_cv at least 0.3 (stone_top_lichen).",
+   "applied": "All 14 checks are in the kinds with the reviewer's zones and bounds (A32), their measures are in MEASURE_DOCS and implemented in measure(), and each of the six wrong masks is built in part E and refused BY ITS NEW CHECK (stripes: 12 masks, three periods and amplitudes for each of the four kinds, scaled or clipped; the checkerboard blurred 3 and 4 px; the four identical rivulets; the mottle with no lower wall; patches with none below 0.35 m and patches spread over the whole pipe; the half-top block). The target's own drawn masks pass all of them on the median of six (part D). To make a legitimate mask pass, the drawing changed: the whole head and splash profiles slide by whole 75 mm courses at once, and in the splash, damp and head the lowest band stays on its source edge (so the full-strength zone is flat and mask 0.5 lies on a course line: splash 0.45 m, head 0.675 m, the profile points moved within the sheet's +/-1 course); rivulets are drawn with unequal gaps and lengths (lognormal 0.15 / 0.25 / 0.42 m); the pipe's patches are laid by area quotas (40 % in the lowest 0.3 m).",
+   "choice_taken": "None was offered; the reviewer's bounds are used exactly. The wet-to-dry choice in the narrow note on composed_foot_ratio was taken as 'convert the range to dry': 0.16 to 0.40.",
+   "checks": [
+    "A32",
+    "part E wrong masks",
+    "part D"
+   ]
+  },
+  {
+   "id": "R4",
+   "title": "Four masks a script could not make right from target.json alone",
+   "review_said": "1 line_wear: the frame is 75 mm (y +/-0.0375) but one instance per 100 mm band: stretch it x 1.33 or make the frame +/-0.05 m. 2 footway_infill: variants 3 to 5 are in-situ concrete, the only tone row is bitmac: add a second row or a variant_tone block. 3 iron_wear: the frame is 0.08 m wide on a 68 mm round pipe: say whether the mask is projected from the street side (and what the back gets) or unwrapped to 0.214 m. 4 iron_wear lists the pillar box and lamp columns but has only iron_black: add a pillar-box row or drop it.",
+   "applied": "1 line_wear's frame is the band's own 100 mm (y +/-0.05 m), line_width_mm 100: the whole band wears and the chips stay 5 to 15 mm, as photographed. 2 footway_infill has a `variant_tone` block: variants 0 to 2 bitmac infill 70/68/66, variants 3 to 5 in-situ concrete infill 150/143/136, the placer picks the row by the variant. 3 iron_wear's mask is UNWRAPPED round the pipe, 0.214 m wide (pi x 0.068) and 2.4 m high, x = 0 the street-facing line, the seam at the back, so the back takes the same mask as the face; the share is per unit area, as the sheet measured it (M25). The pillar box takes the same mask as a 0.214 m strip tiled round its girth, mirrored on alternate repeats. 4 The pillar box has its own surface (pillar_box_red 150/30/32) and tone row (paint loss to grey primer and rust through the red, 124/104/92, mark multiplier replaced); the lamp columns and bollards keep iron_black.",
+   "choice_taken": "Frame +/-0.05 rather than stretching x 1.33 (the scene's double yellow, fitted to the sheet, is two 100 mm bands, and a stretch would enlarge every chip by a third); a variant_tone block rather than a second row (the placer reads the variant, not the surface); the pipe unwrapped rather than projected from the street (the sheet shows only the face, so the street-side projection would leave the back unspecified, and the player walks round the pipe); the pillar box row added rather than dropped (the pillar box is in the street at x 27 and loses paint at its foot like the downpipes).",
+   "checks": [
+    "A33 to A36",
+    "iron_wear/coverage_share_below_m",
+    "line_wear and iron_wear envelope checks"
+   ]
+  }
+ ],
  "review_answers": [
   {
    "n": 1,
@@ -10902,7 +10969,7 @@
    "id": "D9",
    "between": "the first pass's sooted saturation 0.84 (one HSV calculation on two JPEG median colours 92/81/73 and 146/129/110: 0.21 against 0.25), and the first review's x 0.6",
    "and": "Photo M21 on every per-pixel or chroma measure (HSV per pixel 0.65, HSV of medians 0.73, CIE chroma of medians 0.455, per pixel 0.43; the second review 0.68, 0.73, 0.54, 0.43) and the Sheet's gable head against its body (CIE chroma 0.39, the review 0.42)",
-   "chose": "chroma 0.4 to 0.6 of the clean brick's. 0.84 is not what the photograph shows on any per-pixel measure and is withdrawn. The soot mark on brick_red is the review's 82/62/55 (L* 28.2, C* 10.8 against the brick's 27.6: 0.39), a lerp toward M21's nearly neutral soot, and brick_painted and render_cream likewise (the same luminance multiplier, the surface's own hue, chroma x 0.39); the composed sooted wall is checked at 0.4 to 0.6 (composed_soot_chroma_ratio)."
+   "chose": "chroma 0.4 to 0.6 of the clean brick's. 0.84 is not what the photograph shows on any per-pixel measure and is withdrawn. The soot mark on brick_red is the review's 82/62/55 (L* 28.2, C* 10.8 against the brick's 27.6: 0.39; stored as 81/61/54 so that its luminance is exactly x 0.42), a lerp toward M21's nearly neutral soot, and brick_painted and render_cream likewise (the same luminance multiplier, the surface's own hue, chroma x 0.39); the composed sooted wall is checked at 0.4 to 0.6 (composed_soot_chroma_ratio)."
   },
   {
    "id": "D10",
@@ -12999,7 +13066,7 @@
    },
    "min": 20,
    "max": 90,
-   "src": "Sheet M25: patches 20 to 110 mm (on a 75 mm pipe neighbouring patches merge, so the measured median is a little above the drawn 45 mm)",
+   "src": "Sheet M25: patches 20 to 110 mm (on a 68 mm pipe neighbouring patches merge, so the measured median is a little above the drawn 45 mm)",
    "kind": "iron_wear",
    "applies_to": "mask"
   },
@@ -13454,5 +13521,2232 @@
   "Camera height for the panorama measurements (1.6 m) is proved only by the 75 mm yellow line (+/-6 %).",
   "The brief said ambientCG's gum and leaking assets are photographs; the metadata says procedural: unit 4.5 may use them as CC0 shapes only.",
   "The recipe hand-over (section 1) is written against terrace-front.py as read on 8 October; the builder checks the constants before changing them."
- ]
+ ],
+ "self_check": {
+  "date": "2026-10-09",
+  "result": "self_check: passed=1218/1218 failed=0 (A structure, B tone, C photographs, D envelopes, E composition and wrong masks, F placement; 33 kinds)",
+  "passed": 1218,
+  "failed": 0,
+  "overlays_written": [],
+  "failures": [],
+  "envelope_summary": {
+   "streak_sill": {
+    "streak_aspect_p50": {
+     "median": 5.746969465236138,
+     "min": 4.491649106890776,
+     "max": 7.057083815541019,
+     "expected": [
+      3,
+      30
+     ],
+     "ok": true
+    },
+    "streak_width_mm_p50": {
+     "median": 37.214923699698076,
+     "min": 32.40473395760334,
+     "max": 39.12439210307,
+     "expected": [
+      10,
+      140
+     ],
+     "ok": true
+    },
+    "streak_length_m_p90": {
+     "median": 0.4016490687197898,
+     "min": 0.323183213146866,
+     "max": 0.4877261132616453,
+     "expected": [
+      0.3,
+      0.9
+     ],
+     "ok": true
+    },
+    "streak_length_m_p50": {
+     "median": 0.22919133685559057,
+     "min": 0.14946579408097552,
+     "max": 0.3455522651722144,
+     "expected": [
+      0.12,
+      0.45
+     ],
+     "ok": true
+    },
+    "vertical_within_deg": {
+     "median": 3.132803080244331,
+     "min": 2.0586648192975057,
+     "max": 8.937746952041138,
+     "expected": [
+      0,
+      12
+     ],
+     "ok": true
+    },
+    "fade_ratio_tail_over_head": {
+     "median": 0.4729313761542401,
+     "min": 0.34801082429658253,
+     "max": 0.5142925318696915,
+     "expected": [
+      0.0,
+      0.6
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 26.736191657163523,
+     "min": 24.9209561392457,
+     "max": 27.797597600623874,
+     "expected": [
+      12,
+      45
+     ],
+     "ok": true
+    },
+    "coverage_of_decal_at_0.25": {
+     "median": 0.0396337890625,
+     "min": 0.02986328125,
+     "max": 0.049904067095588235,
+     "expected": [
+      0.01,
+      0.1
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.8999999761581421,
+     "min": 0.8999412059783936,
+     "max": 0.8999999761581421,
+     "expected": [
+      0.8,
+      1.0
+     ],
+     "ok": true
+    },
+    "end_streak_length_ratio": {
+     "median": 1.6876112089085686,
+     "min": 1.565199895986706,
+     "max": 2.1520184028458473,
+     "expected": [
+      1.15,
+      2.5
+     ],
+     "ok": true
+    },
+    "end_streak_width_ratio": {
+     "median": 1.3717727639832498,
+     "min": 1.2211718560894043,
+     "max": 1.6202927507835998,
+     "expected": [
+      1.1,
+      3.0
+     ],
+     "ok": true
+    },
+    "rivulet_count": {
+     "median": 4.5,
+     "min": 2.0,
+     "max": 7.0,
+     "expected": [
+      3,
+      7
+     ],
+     "ok": true
+    },
+    "rivulet_spacing_cv": {
+     "median": 0.4503531933363583,
+     "min": 0.0,
+     "max": 0.638316866895599,
+     "expected": [
+      0.25,
+      2.0
+     ],
+     "ok": true
+    },
+    "rivulet_length_cv": {
+     "median": 0.3148812972605224,
+     "min": 0.0,
+     "max": 0.5173562407966612,
+     "expected": [
+      0.25,
+      1.5
+     ],
+     "ok": true
+    }
+   },
+   "streak_coping": {
+    "streak_aspect_p50": {
+     "median": 5.753402331989368,
+     "min": 4.548336135583973,
+     "max": 7.004194036395705,
+     "expected": [
+      3.0,
+      40
+     ],
+     "ok": true
+    },
+    "streak_length_m_p50": {
+     "median": 0.6359919439314264,
+     "min": 0.41257332542168085,
+     "max": 1.0532341799263845,
+     "expected": [
+      0.25,
+      1.2
+     ],
+     "ok": true
+    },
+    "vertical_within_deg": {
+     "median": 2.704681740836948,
+     "min": 1.7451064677226726,
+     "max": 4.36384041197879,
+     "expected": [
+      0,
+      10
+     ],
+     "ok": true
+    },
+    "fade_ratio_tail_over_head": {
+     "median": 0.3330062790076048,
+     "min": 0.314032748557828,
+     "max": 0.3637910876877892,
+     "expected": [
+      0.0,
+      0.6
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 43.90457613402231,
+     "min": 38.798243663150444,
+     "max": 47.680478897203834,
+     "expected": [
+      20,
+      80
+     ],
+     "ok": true
+    },
+    "coverage_of_decal_at_0.25": {
+     "median": 0.01693888888888889,
+     "min": 0.0077895061728395065,
+     "max": 0.03149629629629629,
+     "expected": [
+      0.005,
+      0.12
+     ],
+     "ok": true
+    },
+    "finger_spacing_cv": {
+     "median": 0.47021990974584604,
+     "min": 0.2999071494893222,
+     "max": 0.6236722306525038,
+     "expected": [
+      0.25,
+      0.8
+     ],
+     "ok": true
+    },
+    "finger_length_cv": {
+     "median": 0.545844946731934,
+     "min": 0.4630222018167038,
+     "max": 0.6789215870153652,
+     "expected": [
+      0.25,
+      1.5
+     ],
+     "ok": true
+    }
+   },
+   "wall_foot_splash": {
+    "foot_profile": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.0,
+      1.0
+     ],
+     "ok": true
+    },
+    "profile_10_90_mm": {
+     "median": 316.67962081509575,
+     "min": 314.2668033756605,
+     "max": 316.8407124681933,
+     "expected": [
+      200,
+      450
+     ],
+     "ok": true
+    },
+    "tile_seam": {
+     "median": 0.0035206796878924497,
+     "min": 0.0,
+     "max": 0.08632439670386716,
+     "expected": [
+      0.0,
+      1.6
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.9,
+      1.0
+     ],
+     "ok": true
+    },
+    "top_edge_std_mm": {
+     "median": 37.001227059490176,
+     "min": 27.931438799988445,
+     "max": 57.17253356070553,
+     "expected": [
+      15,
+      60
+     ],
+     "ok": true
+    },
+    "column_mean_cv": {
+     "median": 0.18778850676679307,
+     "min": 0.1384348656059965,
+     "max": 0.30708898172819976,
+     "expected": [
+      0.08,
+      1.0
+     ],
+     "ok": true
+    },
+    "core_column_cv": {
+     "median": 0.0025517379648530925,
+     "min": 1.1897188865884024e-06,
+     "max": 0.0033019376236631533,
+     "expected": [
+      0.0,
+      0.05
+     ],
+     "ok": true
+    },
+    "edge_on_course_share": {
+     "median": 0.925,
+     "min": 0.925,
+     "max": 0.9625,
+     "expected": [
+      0.6,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "wall_foot_damp": {
+    "foot_profile": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.0,
+      1.0
+     ],
+     "ok": true
+    },
+    "profile_10_90_mm": {
+     "median": 861.7302773876684,
+     "min": 787.418794461686,
+     "max": 888.1932263402377,
+     "expected": [
+      700,
+      1500
+     ],
+     "ok": true
+    },
+    "tile_seam": {
+     "median": 0.16350331679538932,
+     "min": 0.020630825375629654,
+     "max": 0.5670594575711453,
+     "expected": [
+      0.0,
+      1.6
+     ],
+     "ok": true
+    },
+    "top_edge_std_mm": {
+     "median": 66.82701838170158,
+     "min": 60.739401081587886,
+     "max": 113.33878900777968,
+     "expected": [
+      40,
+      150
+     ],
+     "ok": true
+    },
+    "column_mean_cv": {
+     "median": 0.15980068651955281,
+     "min": 0.1300041749377776,
+     "max": 0.2250740747838007,
+     "expected": [
+      0.08,
+      1.0
+     ],
+     "ok": true
+    },
+    "core_column_cv": {
+     "median": 0.00111639955627713,
+     "min": 0.0007320316545201407,
+     "max": 0.0018135818781773248,
+     "expected": [
+      0.0,
+      0.05
+     ],
+     "ok": true
+    }
+   },
+   "salt_bloom": {
+    "coverage_of_decal_at_0.4": {
+     "median": 0.12952430555555555,
+     "min": 0.08676041666666667,
+     "max": 0.15218055555555557,
+     "expected": [
+      0.04,
+      0.17
+     ],
+     "ok": true
+    },
+    "ragged_edge_10_90_mm": {
+     "median": 29.181857887457486,
+     "min": 27.903824215118707,
+     "max": 30.393983454603102,
+     "expected": [
+      15,
+      100
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.69615238904953,
+     "min": 0.6946530938148499,
+     "max": 0.698651134967804,
+     "expected": [
+      0.5,
+      0.85
+     ],
+     "ok": true
+    },
+    "foot_profile": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.0,
+      1.0
+     ],
+     "ok": true
+    },
+    "top_edge_std_mm": {
+     "median": 51.88094639908146,
+     "min": 40.281443430601556,
+     "max": 62.17925678522608,
+     "expected": [
+      20,
+      70
+     ],
+     "ok": true
+    },
+    "column_mean_cv": {
+     "median": 0.3866780301960794,
+     "min": 0.36723305648308213,
+     "max": 0.5068403928800131,
+     "expected": [
+      0.08,
+      2.0
+     ],
+     "ok": true
+    },
+    "brick_patch_share": {
+     "median": 0.6176470588235294,
+     "min": 0.47058823529411764,
+     "max": 0.7058823529411765,
+     "expected": [
+      0.35,
+      0.75
+     ],
+     "ok": true
+    },
+    "brick_cell_std": {
+     "median": 0.11520862134491619,
+     "min": 0.10620560852333784,
+     "max": 0.1285703839202318,
+     "expected": [
+      0.0,
+      0.15
+     ],
+     "ok": true
+    },
+    "brick_neighbour_same_share": {
+     "median": 0.6,
+     "min": 0.4,
+     "max": 0.6666666666666666,
+     "expected": [
+      0.3,
+      0.8
+     ],
+     "ok": true
+    },
+    "edge_on_course_share": {
+     "median": 0.9152915600126232,
+     "min": 0.9119496855345912,
+     "max": 0.92125,
+     "expected": [
+      0.6,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "rust_bleed": {
+    "streak_aspect_p50": {
+     "median": 9.31338293789148,
+     "min": 3.7243046207813504,
+     "max": 14.670364952923787,
+     "expected": [
+      8,
+      120
+     ],
+     "ok": true
+    },
+    "streak_width_mm_p50": {
+     "median": 31.321082413940253,
+     "min": 14.874055533997307,
+     "max": 46.11575073751186,
+     "expected": [
+      4,
+      36
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 10.204154243673635,
+     "min": 8.956984463539149,
+     "max": 10.704115688463565,
+     "expected": [
+      6,
+      45
+     ],
+     "ok": true
+    },
+    "vertical_within_deg": {
+     "median": 1.4616153735250323,
+     "min": 0.46639714993892945,
+     "max": 10.411186275694545,
+     "expected": [
+      0,
+      8
+     ],
+     "ok": true
+    }
+   },
+   "algae_downpipe": {
+    "blob_eqd_mm_p50": {
+     "median": 189.76666566215692,
+     "min": 75.38965351185294,
+     "max": 459.92122118757294,
+     "expected": [
+      100,
+      450
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 28.39675184177308,
+     "min": 24.15156446820317,
+     "max": 32.86928253058736,
+     "expected": [
+      12,
+      100
+     ],
+     "ok": true
+    },
+    "coverage_of_decal": {
+     "median": 0.09895723104056436,
+     "min": 0.021283068783068782,
+     "max": 0.1747905643738977,
+     "expected": [
+      0.06,
+      0.4
+     ],
+     "ok": true
+    }
+   },
+   "paint_flake": {
+    "blob_eqd_mm_p50": {
+     "median": 20.040812599881207,
+     "min": 17.876888032555495,
+     "max": 21.07031126303609,
+     "expected": [
+      10,
+      30
+     ],
+     "ok": true
+    },
+    "blob_eqd_mm_p90": {
+     "median": 55.178587063049555,
+     "min": 46.74556640525789,
+     "max": 60.81502013978067,
+     "expected": [
+      25,
+      80
+     ],
+     "ok": true
+    },
+    "coverage_of_decal": {
+     "median": 0.057861499999999996,
+     "min": 0.03276,
+     "max": 0.10225,
+     "expected": [
+      0.03,
+      0.15
+     ],
+     "ok": true
+    },
+    "count_per_m2": {
+     "median": 38.5,
+     "min": 30.0,
+     "max": 45.0,
+     "expected": [
+      20,
+      60
+     ],
+     "ok": true
+    },
+    "craquelure_m_per_m2": {
+     "median": 5.83015,
+     "min": 3.7268,
+     "max": 7.4029,
+     "expected": [
+      3.0,
+      7.0
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 1.8016793677991798,
+     "min": 1.8016792984388041,
+     "max": 1.8332599002955519,
+     "expected": [
+      0.2,
+      4
+     ],
+     "ok": true
+    },
+    "tile_seam": {
+     "median": 0.5936527325382727,
+     "min": 0.17377398731132832,
+     "max": 1.578042901440268,
+     "expected": [
+      0.0,
+      1.6
+     ],
+     "ok": true
+    }
+   },
+   "paint_fade": {
+    "mask_std": {
+     "median": 0.1154733305535045,
+     "min": 0.10562351516731561,
+     "max": 0.12090588241762863,
+     "expected": [
+      0.08,
+      0.2
+     ],
+     "ok": true
+    },
+    "dominant_wavelength_m": {
+     "median": 2.0,
+     "min": 2.0,
+     "max": 2.0,
+     "expected": [
+      0.5,
+      2.0
+     ],
+     "ok": true
+    },
+    "tile_seam": {
+     "median": 1.129414889744361,
+     "min": 0.8766318570122603,
+     "max": 1.7198772239778086,
+     "expected": [
+      0.0,
+      1.6
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 1058.0928004746904,
+     "min": 975.4668086421842,
+     "max": 1136.210094462407,
+     "expected": [
+      150,
+      3000
+     ],
+     "ok": true
+    }
+   },
+   "render_crack": {
+    "crack_width_mm": {
+     "median": 3.23606797749979,
+     "min": 3.0,
+     "max": 3.4721359549995796,
+     "expected": [
+      1.5,
+      10
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 1.845623822973855,
+     "min": 1.8456237615805169,
+     "max": 1.845628578430703,
+     "expected": [
+      0.8,
+      8
+     ],
+     "ok": true
+    },
+    "crack_length_m_per_m2_of_frame": {
+     "median": 1.6612000570928767,
+     "min": 0.671813762798187,
+     "max": 2.1425841122673694,
+     "expected": [
+      0.3,
+      3.5
+     ],
+     "ok": true
+    }
+   },
+   "render_patch": {
+    "blob_eqd_mm_p50": {
+     "median": 326.0561480144961,
+     "min": 265.0090021521603,
+     "max": 404.87782676770416,
+     "expected": [
+      30,
+      350
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 11.535117862309992,
+     "min": 11.50198740124238,
+     "max": 11.634753732059659,
+     "expected": [
+      6,
+      30
+     ],
+     "ok": true
+    },
+    "coverage_of_decal": {
+     "median": 0.14916170634920634,
+     "min": 0.09849702380952381,
+     "max": 0.22990575396825397,
+     "expected": [
+      0.1,
+      0.6
+     ],
+     "ok": true
+    }
+   },
+   "poster_remnant": {
+    "blob_eqd_mm_p50": {
+     "median": 647.875279195549,
+     "min": 505.6032729267111,
+     "max": 850.2385693232532,
+     "expected": [
+      120,
+      800
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 4.908583564139835,
+     "min": 4.814178328557952,
+     "max": 4.909494728423364,
+     "expected": [
+      2,
+      14
+     ],
+     "ok": true
+    },
+    "coverage_of_decal": {
+     "median": 0.3330239898989899,
+     "min": 0.2028030303030303,
+     "max": 0.5735037878787879,
+     "expected": [
+      0.25,
+      0.75
+     ],
+     "ok": true
+    }
+   },
+   "bird_dropping": {
+    "blob_eqd_mm_p50": {
+     "median": 63.96908594791291,
+     "min": 56.57079498929849,
+     "max": 112.14207791476665,
+     "expected": [
+      25,
+      100
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 5.9580252125730535,
+     "min": 5.838487428038658,
+     "max": 7.585621920745084,
+     "expected": [
+      2,
+      20
+     ],
+     "ok": true
+    },
+    "coverage_of_frame": {
+     "median": 0.026225142045454543,
+     "min": 0.01390625,
+     "max": 0.12055397727272728,
+     "expected": [
+      0.01,
+      0.2
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.8959999978542328,
+     "min": 0.7919999957084656,
+     "max": 0.9850000143051147,
+     "expected": [
+      0.7,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "gum": {
+    "blob_eqd_mm_p50": {
+     "median": 22.17764559605115,
+     "min": 20.439709140854944,
+     "max": 33.73603779506726,
+     "expected": [
+      14,
+      28
+     ],
+     "ok": true
+    },
+    "count_per_m2_open_footway": {
+     "median": 2.5,
+     "min": 2.0,
+     "max": 2.5,
+     "expected": [
+      0.5,
+      8.0
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 3.386001347596661,
+     "min": 3.1474045648104476,
+     "max": 3.6737312164669613,
+     "expected": [
+      0.8,
+      5
+     ],
+     "ok": true
+    },
+    "coverage_of_decal": {
+     "median": 0.0013377551020408163,
+     "min": 0.001089795918367347,
+     "max": 0.0016479591836734693,
+     "expected": [
+      0.0001,
+      0.006
+     ],
+     "ok": true
+    },
+    "nn_ratio": {
+     "median": 0.6757219011136499,
+     "min": 0.4744084795500143,
+     "max": 0.8917643365612874,
+     "expected": [
+      0.5,
+      1.1
+     ],
+     "ok": true
+    },
+    "size_cv": {
+     "median": 0.34393515625234566,
+     "min": 0.2554587705412006,
+     "max": 0.40103942028038586,
+     "expected": [
+      0.25,
+      1.2
+     ],
+     "ok": true
+    }
+   },
+   "cig_end": {
+    "blob_eqd_mm_p50": {
+     "median": 16.1408572473701,
+     "min": 11.435412712326361,
+     "max": 17.168178723329724,
+     "expected": [
+      8,
+      22
+     ],
+     "ok": true
+    },
+    "count_per_m2_open_footway": {
+     "median": 4.0,
+     "min": 3.75,
+     "max": 4.0,
+     "expected": [
+      0.3,
+      10.0
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 1.8478207041589445,
+     "min": 1.8275861196087617,
+     "max": 1.850343395091759,
+     "expected": [
+      0.6,
+      4
+     ],
+     "ok": true
+    },
+    "nn_ratio": {
+     "median": 1.1198758359976564,
+     "min": 0.9704347922783465,
+     "max": 1.4682203320202278,
+     "expected": [
+      0.7,
+      1.3
+     ],
+     "ok": true
+    },
+    "size_cv": {
+     "median": 0.3845526471918874,
+     "min": 0.28921792879984987,
+     "max": 0.42650826309952156,
+     "expected": [
+      0.25,
+      1.5
+     ],
+     "ok": true
+    }
+   },
+   "pavement_stain": {
+    "blob_eqd_mm_p50": {
+     "median": 157.3027744938479,
+     "min": 55.14600369036816,
+     "max": 472.2225838913398,
+     "expected": [
+      80,
+      300
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 26.160814371528307,
+     "min": 21.81446864571276,
+     "max": 43.731721475181644,
+     "expected": [
+      8,
+      80
+     ],
+     "ok": true
+    },
+    "coverage_of_decal": {
+     "median": 0.136359375,
+     "min": 0.0018875,
+     "max": 0.55881875,
+     "expected": [
+      0.01,
+      0.3
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.9110934138298035,
+     "min": 0.8074643015861511,
+     "max": 0.984000027179718,
+     "expected": [
+      0.6,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "flag_patch_crack": {
+    "tone_ratio": {
+     "median": 0.5874327742438754,
+     "min": 0.5874327742438754,
+     "max": 0.5874327742438754,
+     "expected": [
+      0.5,
+      0.7
+     ],
+     "ok": true
+    },
+    "crack_flag_share": {
+     "median": 0.09615384615384616,
+     "min": 0.038461538461538464,
+     "max": 0.19230769230769232,
+     "expected": [
+      0.05,
+      0.2
+     ],
+     "ok": true
+    }
+   },
+   "road_oil": {
+    "dot_eqd_mm_p50": {
+     "median": 18.65858683211828,
+     "min": 17.616814099864822,
+     "max": 19.13259964331453,
+     "expected": [
+      10,
+      30
+     ],
+     "ok": true
+    },
+    "dots_per_m2_of_frame": {
+     "median": 53.205128205128204,
+     "min": 31.41025641025641,
+     "max": 91.02564102564102,
+     "expected": [
+      15,
+      170
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 6.5073723413536255,
+     "min": 6.505689398160649,
+     "max": 6.519945682507286,
+     "expected": [
+      1,
+      14
+     ],
+     "ok": true
+    },
+    "coverage_of_frame": {
+     "median": 0.022690304487179486,
+     "min": 0.01062900641025641,
+     "max": 0.03568509615384615,
+     "expected": [
+      0.002,
+      0.03
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.8500000238418579,
+     "min": 0.8500000238418579,
+     "max": 0.8500000238418579,
+     "expected": [
+      0.7,
+      1.0
+     ],
+     "ok": true
+    },
+    "nn_ratio": {
+     "median": 1.2136430645507206,
+     "min": 1.178473435879837,
+     "max": 1.327811920741057,
+     "expected": [
+      0.7,
+      1.4
+     ],
+     "ok": true
+    },
+    "size_cv": {
+     "median": 0.4352422584061927,
+     "min": 0.37244257105762124,
+     "max": 0.5866234251368919,
+     "expected": [
+      0.25,
+      1.5
+     ],
+     "ok": true
+    }
+   },
+   "road_blot": {
+    "blob_eqd_mm_p50": {
+     "median": 216.66461539660418,
+     "min": 165.71718507899698,
+     "max": 755.4348942460953,
+     "expected": [
+      120,
+      450
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 19.52497495612165,
+     "min": 19.055322303471996,
+     "max": 23.183743948958707,
+     "expected": [
+      8,
+      70
+     ],
+     "ok": true
+    },
+    "coverage_of_frame": {
+     "median": 0.044978298611111106,
+     "min": 0.0249609375,
+     "max": 0.31125868055555556,
+     "expected": [
+      0.02,
+      0.35
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.9500000178813934,
+     "min": 0.8920000195503235,
+     "max": 0.9949983358383179,
+     "expected": [
+      0.6,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "tyre_scuff": {
+    "streak_length_m_p50": {
+     "median": 2.203090342159474,
+     "min": 1.6686907560440634,
+     "max": 2.460733624901672,
+     "expected": [
+      1.2,
+      3.2
+     ],
+     "ok": true
+    },
+    "streak_aspect_p50": {
+     "median": 7.403592062147521,
+     "min": 6.183075227696421,
+     "max": 8.878815547262127,
+     "expected": [
+      5,
+      60
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 56.647054224127665,
+     "min": 56.647054224127665,
+     "max": 56.647055429994616,
+     "expected": [
+      45,
+      120
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.699999988079071,
+     "min": 0.699999988079071,
+     "max": 0.699999988079071,
+     "expected": [
+      0.6,
+      0.8
+     ],
+     "ok": true
+    }
+   },
+   "road_patch": {
+    "patch_eqd_mm": {
+     "median": 1286.9343186961978,
+     "min": 1126.5193349360193,
+     "max": 1334.7734720567566,
+     "expected": [
+      800,
+      1500
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 15.684433033454482,
+     "min": 15.307513532498906,
+     "max": 16.353786597208384,
+     "expected": [
+      3,
+      40
+     ],
+     "ok": true
+    },
+    "coverage_of_frame": {
+     "median": 0.4014930555555556,
+     "min": 0.3076253858024691,
+     "max": 0.4318769290123457,
+     "expected": [
+      0.25,
+      0.6
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.9,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "road_crack": {
+    "crack_length_m_per_m2_of_frame": {
+     "median": 0.5908126050717843,
+     "min": 0.512365107619456,
+     "max": 1.0034801663637671,
+     "expected": [
+      0.3,
+      1.2
+     ],
+     "ok": true
+    },
+    "crack_width_mm": {
+     "median": 3.75,
+     "min": 2.2855339059327378,
+     "max": 27.25438562747845,
+     "expected": [
+      2,
+      40
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 2.433892207324043,
+     "min": 2.4117514876368915,
+     "max": 2.453836281310363,
+     "expected": [
+      1,
+      15
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.9,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "gutter_grime": {
+    "foot_profile": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.0,
+      1.0
+     ],
+     "ok": true
+    },
+    "tile_seam": {
+     "median": 0.07066356763924614,
+     "min": 0.0,
+     "max": 0.3034100710324212,
+     "expected": [
+      0.0,
+      1.6
+     ],
+     "ok": true
+    },
+    "profile_10_90_mm": {
+     "median": 28.707631857772682,
+     "min": 28.707631857772682,
+     "max": 28.707631857772682,
+     "expected": [
+      15,
+      300
+     ],
+     "ok": true
+    },
+    "top_edge_std_mm": {
+     "median": 33.534808801766,
+     "min": 25.573576284907826,
+     "max": 64.53467207633429,
+     "expected": [
+      20,
+      70
+     ],
+     "ok": true
+    },
+    "column_mean_cv": {
+     "median": 0.2986595970109894,
+     "min": 0.27746712068070467,
+     "max": 0.5117252963038453,
+     "expected": [
+      0.08,
+      2.0
+     ],
+     "ok": true
+    },
+    "core_column_cv": {
+     "median": 2.3929945225456443e-16,
+     "min": 2.3929945225456443e-16,
+     "max": 2.3929945225456443e-16,
+     "expected": [
+      0.0,
+      0.05
+     ],
+     "ok": true
+    }
+   },
+   "wall_soot": {
+    "mask_mean": {
+     "median": 0.9237747990608216,
+     "min": 0.9174879993736744,
+     "max": 0.9363389999091625,
+     "expected": [
+      0.82,
+      0.97
+     ],
+     "ok": true
+    },
+    "mask_std": {
+     "median": 0.06091346413844508,
+     "min": 0.05660657597275052,
+     "max": 0.06455422274520997,
+     "expected": [
+      0.04,
+      0.14
+     ],
+     "ok": true
+    },
+    "mask_max": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.95,
+      1.0
+     ],
+     "ok": true
+    },
+    "tile_seam": {
+     "median": 1.2118354530053088,
+     "min": 0.8809162468471394,
+     "max": 1.394539354508908,
+     "expected": [
+      0.0,
+      1.6
+     ],
+     "ok": true
+    },
+    "dominant_wavelength_m": {
+     "median": 2.0,
+     "min": 1.0,
+     "max": 4.0,
+     "expected": [
+      0.5,
+      4.0
+     ],
+     "ok": true
+    },
+    "foot_profile": {
+     "median": 1.0,
+     "min": 0.75,
+     "max": 1.0,
+     "expected": [
+      0.0,
+      1.0
+     ],
+     "ok": true
+    },
+    "lower_wall_excess": {
+     "median": 0.067330723958749,
+     "min": 0.06348126768148865,
+     "max": 0.09204726622929937,
+     "expected": [
+      0.05,
+      0.15
+     ],
+     "ok": true
+    }
+   },
+   "wall_head_band": {
+    "foot_profile": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.0,
+      1.0
+     ],
+     "ok": true
+    },
+    "profile_10_90_mm": {
+     "median": 419.7471986756764,
+     "min": 413.87704142417476,
+     "max": 422.9821140248168,
+     "expected": [
+      300,
+      900
+     ],
+     "ok": true
+    },
+    "tile_seam": {
+     "median": 0.0,
+     "min": 0.0,
+     "max": 0.734622501045457,
+     "expected": [
+      0.0,
+      1.6
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.95,
+      1.0
+     ],
+     "ok": true
+    },
+    "top_edge_std_mm": {
+     "median": 49.48531501553664,
+     "min": 31.85497777058789,
+     "max": 57.303685632644616,
+     "expected": [
+      20,
+      100
+     ],
+     "ok": true
+    },
+    "column_mean_cv": {
+     "median": 0.11286002987217537,
+     "min": 0.07055707095291511,
+     "max": 0.12855224160326822,
+     "expected": [
+      0.08,
+      1.0
+     ],
+     "ok": true
+    },
+    "core_column_cv": {
+     "median": 0.001642872964530096,
+     "min": 9.375162101862909e-05,
+     "max": 0.0022739267392574715,
+     "expected": [
+      0.0,
+      0.05
+     ],
+     "ok": true
+    },
+    "edge_on_course_share": {
+     "median": 0.7890625,
+     "min": 0.590625,
+     "max": 0.896875,
+     "expected": [
+      0.6,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "iron_wear": {
+    "coverage_of_frame": {
+     "median": 0.07372214147286821,
+     "min": 0.0578609496124031,
+     "max": 0.0776889534883721,
+     "expected": [
+      0.05,
+      0.14
+     ],
+     "ok": true
+    },
+    "blob_eqd_mm_p50": {
+     "median": 43.470812320589204,
+     "min": 40.8794190573313,
+     "max": 57.584229634942425,
+     "expected": [
+      20,
+      90
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 5.38564893490319,
+     "min": 5.211770827970355,
+     "max": 5.606631920784742,
+     "expected": [
+      3,
+      25
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.9740000069141388,
+     "min": 0.9570000171661377,
+     "max": 0.9929999709129333,
+     "expected": [
+      0.8,
+      1.0
+     ],
+     "ok": true
+    },
+    "foot_concentration": {
+     "median": 0.5136517500919843,
+     "min": 0.4305803219534399,
+     "max": 0.6258114241580729,
+     "expected": [
+      0.25,
+      0.6
+     ],
+     "ok": true
+    },
+    "coverage_share_below_m": {
+     "median": 0.46848734803971237,
+     "min": 0.3799501091362644,
+     "max": 0.5101528155746284,
+     "expected": [
+      0.25,
+      0.6
+     ],
+     "ok": true
+    }
+   },
+   "grate_wear": {
+    "coverage_of_frame": {
+     "median": 0.627071875,
+     "min": 0.62330625,
+     "max": 0.63111875,
+     "expected": [
+      0.35,
+      0.7
+     ],
+     "ok": true
+    },
+    "blob_eqd_mm_p50": {
+     "median": 126.070110804872,
+     "min": 125.36693718924,
+     "max": 175.3386496103333,
+     "expected": [
+      50,
+      160
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 2.9036079271253987,
+     "min": 2.9036079271253987,
+     "max": 2.9036079271253987,
+     "expected": [
+      1,
+      12
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.8999999761581421,
+     "min": 0.8999999761581421,
+     "max": 0.8999999761581421,
+     "expected": [
+      0.85,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "line_wear": {
+    "coverage_of_frame": {
+     "median": 0.15510416666666665,
+     "min": 0.08791666666666667,
+     "max": 0.2653125,
+     "expected": [
+      0.1,
+      0.3
+     ],
+     "ok": true
+    },
+    "blob_eqd_mm_p50": {
+     "median": 35.08852446121384,
+     "min": 31.790468518622614,
+     "max": 68.86811529393324,
+     "expected": [
+      15,
+      150
+     ],
+     "ok": true
+    },
+    "size_cv": {
+     "median": 0.7100763988305898,
+     "min": 0.5505356846795053,
+     "max": 0.8226558093895171,
+     "expected": [
+      0.25,
+      2.0
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 3.9791295989328352,
+     "min": 3.9778635100732043,
+     "max": 3.979287222547371,
+     "expected": [
+      2,
+      15
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.9,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "sign_ghost": {
+    "coverage_of_frame": {
+     "median": 0.1379403409090909,
+     "min": 0.05305965909090909,
+     "max": 0.613721590909091,
+     "expected": [
+      0.03,
+      0.8
+     ],
+     "ok": true
+    },
+    "hole_count": {
+     "median": 2.5,
+     "min": 2.0,
+     "max": 4.0,
+     "expected": [
+      2,
+      4
+     ],
+     "ok": true
+    },
+    "hole_eqd_mm_p50": {
+     "median": 13.768664889894975,
+     "min": 12.440034664108927,
+     "max": 18.3728405016802,
+     "expected": [
+      10,
+      22
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 18.805289674335786,
+     "min": 18.10046963046619,
+     "max": 19.163524000401353,
+     "expected": [
+      3,
+      25
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.944830447435379,
+     "min": 0.9094183444976807,
+     "max": 0.9628291726112366,
+     "expected": [
+      0.9,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "graffiti_buff": {
+    "blob_eqd_mm_p50": {
+     "median": 1108.1062237246701,
+     "min": 424.334708534449,
+     "max": 1465.5333497665529,
+     "expected": [
+      300,
+      1500
+     ],
+     "ok": true
+    },
+    "coverage_of_frame": {
+     "median": 0.4685036057692308,
+     "min": 0.06798978365384616,
+     "max": 0.8109945913461538,
+     "expected": [
+      0.1,
+      0.9
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 8.614432403024107,
+     "min": 8.199494287889168,
+     "max": 8.614715723148946,
+     "expected": [
+      2,
+      20
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.9,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "handle_wear": {
+    "blob_eqd_mm_p50": {
+     "median": 121.25527089064056,
+     "min": 98.69286963719311,
+     "max": 186.01151746109176,
+     "expected": [
+      80,
+      290
+     ],
+     "ok": true
+    },
+    "coverage_of_frame": {
+     "median": 0.03236111111111111,
+     "min": 0.02125,
+     "max": 0.07548611111111111,
+     "expected": [
+      0.015,
+      0.4
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 60.32373558580306,
+     "min": 55.01930124528914,
+     "max": 77.53779618351588,
+     "expected": [
+      20,
+      100
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 0.9297035038471222,
+     "min": 0.8886526823043823,
+     "max": 0.9875950217247009,
+     "expected": [
+      0.85,
+      1.0
+     ],
+     "ok": true
+    }
+   },
+   "stone_top_lichen": {
+    "coverage_of_frame": {
+     "median": 0.6261953124999999,
+     "min": 0.415734375,
+     "max": 0.8020546875,
+     "expected": [
+      0.4,
+      0.85
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 4.074024446430502,
+     "min": 4.058871319242877,
+     "max": 4.087415968505797,
+     "expected": [
+      2,
+      14
+     ],
+     "ok": true
+    },
+    "mask_std": {
+     "median": 0.4563802656188519,
+     "min": 0.3743599522615516,
+     "max": 0.47895341353547194,
+     "expected": [
+      0.3,
+      0.52
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.9,
+      1.0
+     ],
+     "ok": true
+    },
+    "blob_eqd_mm_p50": {
+     "median": 32.174975231099125,
+     "min": 20.824521925488767,
+     "max": 55.94089799551301,
+     "expected": [
+      10,
+      60
+     ],
+     "ok": true
+    },
+    "size_cv": {
+     "median": 1.2022636334547068,
+     "min": 0.8801914824520077,
+     "max": 1.4712424330044611,
+     "expected": [
+      0.3,
+      3.0
+     ],
+     "ok": true
+    }
+   },
+   "footway_infill": {
+    "blob_eqd_mm_p50": {
+     "median": 1281.362187766072,
+     "min": 1101.0481709591231,
+     "max": 1443.206438715309,
+     "expected": [
+      600,
+      2200
+     ],
+     "ok": true
+    },
+    "coverage_of_frame": {
+     "median": 0.5040869140625,
+     "min": 0.37193115234375,
+     "max": 0.6390087890625,
+     "expected": [
+      0.1,
+      0.8
+     ],
+     "ok": true
+    },
+    "edge_10_90_mm": {
+     "median": 8.614715723148946,
+     "min": 8.614715723148946,
+     "max": 8.614715723148946,
+     "expected": [
+      3,
+      25
+     ],
+     "ok": true
+    },
+    "peak_mask": {
+     "median": 1.0,
+     "min": 1.0,
+     "max": 1.0,
+     "expected": [
+      0.9,
+      1.0
+     ],
+     "ok": true
+    }
+   }
+  },
+  "composition": {
+   "wall_foot_splash/composed_foot_ratio": {
+    "median": 0.16418232074465247,
+    "expected": [
+     0.16,
+     0.4
+    ]
+   },
+   "wall_foot_splash/composed_wall_min_ratio": {
+    "median": 0.14999999999999994,
+    "expected": [
+     0.149,
+     1.0
+    ]
+   },
+   "salt_bloom/composed_salt_ratio": {
+    "median": 1.3693976884460497,
+    "expected": [
+     0.57,
+     2.2
+    ]
+   },
+   "pavement_stain/composed_ground_min_ratio": {
+    "median": 0.28,
+    "expected": [
+     0.279,
+     1.0
+    ]
+   },
+   "gutter_grime/channel_over_road": {
+    "median": 1.4694758107873045,
+    "expected": [
+     1.15,
+     1.8
+    ]
+   },
+   "gutter_grime/fringe_over_road": {
+    "median": 0.9253635814215542,
+    "expected": [
+     0.85,
+     0.99
+    ]
+   },
+   "wall_soot/composed_soot_ratio": {
+    "median": 0.4801855723136353,
+    "expected": [
+     0.35,
+     0.55
+    ]
+   },
+   "wall_soot/composed_soot_chroma_ratio": {
+    "median": 0.4711972899690836,
+    "expected": [
+     0.4,
+     0.6
+    ]
+   },
+   "wall_soot/house_to_house_ratio": {
+    "median": 0.8133211975404239,
+    "expected": [
+     0.8,
+     1.4
+    ]
+   },
+   "wall_head_band/composed_head_ratio_gable": {
+    "median": 0.5505636784267194,
+    "expected": [
+     0.45,
+     0.65
+    ]
+   },
+   "wall_head_band/composed_head_ratio_gable_sooted": {
+    "median": 0.37721773766019046,
+    "expected": [
+     0.28,
+     0.48
+    ]
+   },
+   "wall_head_band/composed_eaves_front_ratio": {
+    "median": 0.9554554882773222,
+    "expected": [
+     0.9,
+     1.1
+    ]
+   }
+  },
+  "wrong_masks_refused": {
+   "wall_foot_splash": [
+    {
+     "what": "a perfectly straight, uniform gradient with no ragged top",
+     "refused_by": [
+      "top_edge_std_mm=0",
+      "column_mean_cv=1.46e-16"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.25 m, +/-25 %, scaled to peak 1): a band in vertical stripes",
+     "refused_by": [
+      "foot_profile=0.667",
+      "core_column_cv=0.177",
+      "edge_on_course_share=0.39"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.40 m, +/-20 %, clipped at 1): a band in vertical stripes",
+     "refused_by": [
+      "core_column_cv=0.0824",
+      "edge_on_course_share=0.175"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.50 m, +/-15 %, scaled to peak 1): a band in vertical stripes",
+     "refused_by": [
+      "core_column_cv=0.106",
+      "edge_on_course_share=0.345"
+     ]
+    }
+   ],
+   "wall_foot_damp": [
+    {
+     "what": "a perfectly straight, uniform gradient with no ragged top",
+     "refused_by": [
+      "top_edge_std_mm=0",
+      "column_mean_cv=1.88e-16"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.25 m, +/-25 %, scaled to peak 1): a band in vertical stripes",
+     "refused_by": [
+      "core_column_cv=0.177"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.40 m, +/-20 %, clipped at 1): a band in vertical stripes",
+     "refused_by": [
+      "core_column_cv=0.141"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.50 m, +/-15 %, scaled to peak 1): a band in vertical stripes",
+     "refused_by": [
+      "core_column_cv=0.106"
+     ]
+    }
+   ],
+   "gutter_grime": [
+    {
+     "what": "a perfectly straight, uniform gradient with no ragged top",
+     "refused_by": [
+      "top_edge_std_mm=0",
+      "column_mean_cv=0"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.25 m, +/-25 %, scaled to peak 1): a band in vertical stripes",
+     "refused_by": [
+      "core_column_cv=0.177"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.40 m, +/-20 %, clipped at 1): a band in vertical stripes",
+     "refused_by": [
+      "top_edge_std_mm=12.7",
+      "core_column_cv=0.141"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.50 m, +/-15 %, scaled to peak 1): a band in vertical stripes",
+     "refused_by": [
+      "top_edge_std_mm=10.8",
+      "core_column_cv=0.106"
+     ]
+    }
+   ],
+   "wall_head_band": [
+    {
+     "what": "a perfectly straight, uniform gradient from the feature",
+     "refused_by": [
+      "top_edge_std_mm=0",
+      "column_mean_cv=1.22e-16"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.25 m, +/-25 %, scaled to peak 1): a band in vertical stripes",
+     "refused_by": [
+      "foot_profile=0.75",
+      "core_column_cv=0.177",
+      "edge_on_course_share=0.425"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.40 m, +/-20 %, clipped at 1): a band in vertical stripes",
+     "refused_by": [
+      "core_column_cv=0.0824",
+      "edge_on_course_share=0.156"
+     ]
+    },
+    {
+     "what": "the straight profile times a vertical cosine (period 0.50 m, +/-15 %, scaled to peak 1): a band in vertical stripes",
+     "refused_by": [
+      "core_column_cv=0.106",
+      "edge_on_course_share=0.338"
+     ]
+    }
+   ],
+   "streak_sill": [
+    {
+     "what": "two identical, symmetric bars and nothing else",
+     "refused_by": [
+      "streak_length_m_p90=0.29",
+      "edge_10_90_mm=2.81",
+      "end_streak_length_ratio=1",
+      "end_streak_width_ratio=1",
+      "rivulet_count=0",
+      "rivulet_spacing_cv=0",
+      "rivulet_length_cv=0"
+     ]
+    },
+    {
+     "what": "unequal end streaks and four identical, evenly spaced, ruler-straight rivulets",
+     "refused_by": [
+      "edge_10_90_mm=4.03",
+      "rivulet_spacing_cv=0",
+      "rivulet_length_cv=0"
+     ]
+    }
+   ],
+   "streak_coping": [
+    {
+     "what": "identical fingers at an identical 0.4 m spacing",
+     "refused_by": [
+      "fade_ratio_tail_over_head=1",
+      "edge_10_90_mm=0",
+      "finger_spacing_cv=0",
+      "finger_length_cv=0"
+     ]
+    }
+   ],
+   "gum": [
+    {
+     "what": "a 3 x 3 grid of identical discs",
+     "refused_by": [
+      "edge_10_90_mm=0",
+      "nn_ratio=2",
+      "size_cv=0.00516"
+     ]
+    }
+   ],
+   "cig_end": [
+    {
+     "what": "a 4 x 4 grid of identical discs",
+     "refused_by": [
+      "edge_10_90_mm=0",
+      "nn_ratio=2",
+      "size_cv=0"
+     ]
+    }
+   ],
+   "road_oil": [
+    {
+     "what": "a lattice of identical dots",
+     "refused_by": [
+      "edge_10_90_mm=0",
+      "nn_ratio=2.29",
+      "size_cv=4.14e-16"
+     ]
+    }
+   ],
+   "salt_bloom": [
+    {
+     "what": "one uniform 0.09 m stripe",
+     "refused_by": [
+      "ragged_edge_10_90_mm=0",
+      "top_edge_std_mm=0",
+      "column_mean_cv=1.23e-16",
+      "brick_cell_std=0.18",
+      "brick_neighbour_same_share=1"
+     ]
+    },
+    {
+     "what": "a perfect checkerboard of whitened bricks in two courses, blurred 3 px",
+     "refused_by": [
+      "brick_neighbour_same_share=0"
+     ]
+    },
+    {
+     "what": "a perfect checkerboard of whitened bricks in two courses, blurred 4 px",
+     "refused_by": [
+      "brick_neighbour_same_share=0"
+     ]
+    }
+   ],
+   "paint_fade": [
+    {
+     "what": "white noise at texel scale",
+     "refused_by": [
+      "dominant_wavelength_m=0.05",
+      "edge_10_90_mm=71.3"
+     ]
+    }
+   ],
+   "wall_soot": [
+    {
+     "what": "a perfectly uniform mask",
+     "refused_by": [
+      "mask_std=1.11e-16",
+      "mask_max=0.9",
+      "lower_wall_excess=0"
+     ]
+    },
+    {
+     "what": "a 0.5 to 2 m mottle (std 0.07 around 0.90) with no darker lower wall",
+     "refused_by": [
+      "lower_wall_excess=-0.0121"
+     ]
+    }
+   ],
+   "iron_wear": [
+    {
+     "what": "rust patches none below 0.35 m",
+     "refused_by": [
+      "edge_10_90_mm=0",
+      "coverage_share_below_m=0"
+     ]
+    },
+    {
+     "what": "rust patches spread evenly over the whole pipe",
+     "refused_by": [
+      "edge_10_90_mm=0",
+      "coverage_share_below_m=0.183"
+     ]
+    }
+   ],
+   "stone_top_lichen": [
+    {
+     "what": "one flat block over half the top",
+     "refused_by": [
+      "blob_eqd_mm_p50=357",
+      "size_cv=0"
+     ]
+    }
+   ]
+  },
+  "placement": {
+   "conforming": [
+    [
+     "P1",
+     true
+    ],
+    [
+     "P2",
+     true
+    ],
+    [
+     "P3",
+     true
+    ],
+    [
+     "P4",
+     true
+    ],
+    [
+     "P5",
+     true
+    ],
+    [
+     "P6",
+     true
+    ],
+    [
+     "P7",
+     true
+    ],
+    [
+     "P8",
+     true
+    ],
+    [
+     "P9",
+     true
+    ],
+    [
+     "P10",
+     true
+    ],
+    [
+     "P11",
+     true
+    ]
+   ]
+  }
+ }
 }

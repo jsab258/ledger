@@ -270,8 +270,8 @@ def streak_set_polys(rng, kind, E, tags):
             else:
                 Ls_ = np.array([uni(rng, [v * 1000.0 for v in rv["length_m"]]) for _ in range(n)])
             gaps_ = np.diff(np.sort(xr_))
-            ok_sp = n < 3 or (gaps_.std() / gaps_.mean() >= 0.32)
-            ok_len = n < 3 or (Ls_.std() / Ls_.mean() >= 0.32)
+            ok_sp = n < 3 or (gaps_.std() / gaps_.mean() >= 0.38)
+            ok_len = n < 3 or (Ls_.std() / Ls_.mean() >= 0.40)
             if ok_sp and ok_len:
                 break
         for xr, L0 in zip(xr_, Ls_):
@@ -808,7 +808,7 @@ def grate_polys(rng, kind, E):
 
 
 def line_loss_polys(rng, kind, E, length_mm):
-    """A 75 mm road line along x (y = 0 its centre line): the paint lost in cross gaps, edge chips and specks (the mask is the loss)."""
+    """A road line along x (y = 0 its centre line; the band's own width, 100 mm): the paint lost in cross gaps, edge chips and specks (the mask is the loss)."""
     Wd = E["line_width_mm"]
     h = Wd / 2.0
     out = []
