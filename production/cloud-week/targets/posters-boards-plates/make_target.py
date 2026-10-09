@@ -1959,7 +1959,7 @@ def choose_ppm(items):
         it["megapixels"] = round(mp, 1)
 
 
-HAND_PPM_FLOOR = {}      # item id -> px/mm: the least scale at which the 20-seed true-render test of group 12 passes (raised by hand_tune when a card needed more than needed_ppm gave)
+HAND_PPM_FLOOR = {}      # item id -> px/mm floor, for a hand card that needs more than needed_ppm gave to pass the 20-seed true-render test of group 12 (empty: none did; 40 more seeds of all 29 cards were also run)
 
 
 def build():
@@ -2391,7 +2391,7 @@ RENDER_CONTRACT = dict(
         envelope=dict(print=dict(ox_mm=0.6, baseline_mm=0.5, rot_deg=0.1, em_frac=0.01, emb_mm=0.2),
                       hand="the block's hand style: baseline within 3.5 sd + 0.6 mm, rotation within 3.5 sd, size within 3.5 sd of 1, origin within 6 mm of the layout at the first glyph and within 6 mm + 5 per cent of the distance along the line, emb_mm within 0.6")),
     glyph_gate=dict(F_min=gl.F_MIN, dilation_mm=0.5, sep_gate=gl.SEP_GATE, n_min_px=gl.N_MIN, tol_px=gl.TOL_PX, alternatives="A-Z a-z 0-9 £ . , ' ’ - — – & · ? : ! (the font's own glyphs only)",
-                    twins="shape twins (I and l, ' and ’, and any pair differing by under 0.03 mm2 at 24 px/mm) and a glyph that is its own mirror are listed and not scored",
+                    twins="shape twins (I and l, ' and ’, and any pair differing by under 0.03 mm2 at 24 px/mm) and a glyph that is its own mirror (or whose mirror differs only by edge slivers: nothing survives an erosion by a pixel but fewer than 8 pixels) are listed and not scored",
                     why="see glyphlib.py's docstring and the disagreement 'the glyph check's margin'"),
     placed_street="PLACE.built: the builder writes placed_decals.json (item, surface, centre u and z or street x, rot_deg, scale); each decal lies within 20 mm of the placement's centre and 0.3 degrees of its rot_deg, and its largest block, read in a render of the surface at 1 px per mm after turning the decal back by rot_deg, passes the glyph check.",
 )
@@ -2459,7 +2459,7 @@ def fixes_after_second_review():
     return [
         dict(fix=1, short="the checks failed correct items and never read ink outside the blocks",
              answer="ITEM.square finds the angle against the render of the item's own glyph manifest (jitter included) and reports 0 unless F at the best angle beats F at 0 degrees by 0.02: exactly square P05, K04, K03a, K03b, K02, K08 and P06 read 0 and every jittered hand card reads 0; ONE tolerance, 0.3 degrees, in target.json and TARGET.md. "
-                    "The glyph reader gives a pixel a neighbour's ink explains and the glyph's does not to the neighbour, even where hand-lettered glyphs touch (SA01 and SA03 had failed 11 and 15 of 20 true seeds at 8 px/mm; both now pass 20 of 20), reads big capitals at a reduced scale with the same area rule that draws its reference, and counts a space's ink only where it lies beyond 0.6 mm of every glyph (T01-named's true render passes). "
+                    "The glyph reader gives a pixel a neighbour's ink explains and the glyph's does not to the neighbour, even where hand-lettered glyphs touch (SA01 and SA03 had failed 11 and 15 of 20 true seeds at 8 px/mm; both now pass 20 of 20), reads big capitals at a reduced scale with the same area rule that draws its reference, and counts a space's ink only where it lies beyond 0.6 mm of every glyph (T01-named's true render passes); a glyph whose mirror differs only by edge slivers (an M read at a reduced scale) is its own mirror. "
                     "glyphlib.needed_ppm measures each hand pair over glyphs jittered to 3.5 sd of the block's hand style (size and rotation, four corners). ITEM.clean (new, per item): the ink-coloured pixels outside every block's glyph window, the item's own shapes, the cue patch and the art slots total at most 2 mm2; the reviewer's four planted lines (K01 BINGO TONIGHT, SA11 Babysitter, evenings., L02 ARMITAGE & STOBBS, C02 BETTING SHOP) and D01 + LICENSED BAR fail it. A missing or unreadable <ITEM>.glyphs.json fails .words and .glyphs and never crashes the reader (render contract). Group 12 reads a true render of EVERY item and 20 jittered seeds of all 29 hand cards through .pos, .mask, .glyphs, .square and .clean; any failure is a self-check failure."),
         dict(fix=2, short="the nameless defaults read as stand-ins",
              answer="T01, T02, T03 and W01 (the nameless Tivoli quads and programme and the wrestling bill with no ring names and no hall) are HELD like their named twins (item.held, stand_in_of, waits_for): their placements are held_until_minted with the names the twin carries, so G.page.placeholders keeps them off the built street until DECISIONS.md mints the films, the hall and the ring names. "

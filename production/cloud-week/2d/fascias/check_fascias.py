@@ -529,6 +529,32 @@ def free_zone(T, s, d, pad=12):
     return m
 
 
+def local_ground(img, region, used0, sigma=20.0):
+    """the ground ROUND each pixel: a Gaussian (sigma 20 mm) average of the region's pixels that are not already lost paint. A broad grime gradient
+    (darker down the lower edge) is part of the local ground, not paint loss; only a patch that is nearer the substrate than ITS OWN surroundings is loss"""
+    w = (region & ~used0).astype(np.float32)
+    den = ndi.gaussian_filter(w, sigma)
+    out = np.empty(img.shape, np.float32)
+    for k in range(3):
+        out[..., k] = ndi.gaussian_filter(img[..., k].astype(np.float32) * w, sigma) / np.maximum(den, 1e-3)
+    return out
+
+
+def classify_loss(img, region, prim, wood, dsub):
+    """pixels of `region` nearer a substrate colour than the (local) ground round them, and within three quarters of the ground-to-substrate distance"""
+    if not region.any():
+        return np.zeros_like(region)
+    g = np.median(img[region], axis=0)
+    dg = fc.dE(img, g)
+    D = float(min(fc.dE(prim, g), fc.dE(wood, g)))
+    used0 = region & (dsub < dg) & (dsub < 0.75 * max(D, 20.0))
+    gl = local_ground(img, region, used0)
+    labg = fc.lab(gl)
+    dg = np.linalg.norm(fc.lab(img) - labg, axis=-1)
+    Dl = np.minimum(np.linalg.norm(fc.lab(prim) - labg, axis=-1), np.linalg.norm(fc.lab(wood) - labg, axis=-1))
+    return region & (dsub < dg) & (dsub < 0.75 * np.maximum(Dl, 20.0))
+
+
 def check_age(T, s, d, gm, rec):
     """paint loss by colour: pixels nearer (in Lab) to a substrate colour than to the ground round them, labelled; the board face's share and the median
     patch shape. A box sign's old-board ring is judged apart (its own 8 per cent) from the box's face (which has none)."""
@@ -545,12 +571,7 @@ def check_age(T, s, d, gm, rec):
     dsub = np.minimum(fc.dE(img, prim), fc.dE(img, wood))
 
     def classify(region):
-        if not region.any():
-            return np.zeros_like(region)
-        g = np.median(img[region], axis=0)
-        dg = fc.dE(img, g)
-        D = float(min(fc.dE(prim, g), fc.dE(wood, g)))
-        return region & (dsub < dg) & (dsub < 0.75 * max(D, 20.0))
+        return classify_loss(img, region, prim, wood, dsub)
     extra = {}
     old_ok = True
     if "box_frame" in roles:
@@ -1159,10 +1180,12 @@ def check_emissive(T, s, d):
 
 
 # ------------------------------------------------------------------ try 2: how the board AGES (pattern, placement, letters, timber, ghost)
-# The thresholds are read off the target's own photographs of real weathered timber (NOTES.md, "Measured on P2, P3 and the wear photographs"):
+# The thresholds are set against the target's own photographs of real weathered timber (NOTES.md, "Measured on P2, P3 and the wear photographs"):
 # P2 (blue-painted planks, 26 per cent lost): 60 per cent of the lost paint lies in joined strips over 50 mm across, 28 per cent over 200 mm,
-# the largest 1000 mm long, p99/p10 of the strip size 8.7, 95 per cent of the strips within 20 degrees of the grain; plank to plank the loss varies
-# 0.13 to 0.51. The thresholds below are half of P2's where P2 is the reference, and sit well clear of try 1's even confetti (share over 50 mm: 0 to 0.08).
+# the largest 1000 mm long, 95 per cent of the strips within 20 degrees of the grain; plank to plank the loss varies 0.13 to 0.51.
+# share_ge_50 (0.30) is half of P2's 0.60. p99/p10 is P2's 8.7 read at P2's coarse pixel (1.7 mm, nothing under 6 px counted); the boards are read at 1 mm, where
+# the smallest flakes count and the same pattern spreads wider, so the limit is 10 (the confetti control, try 1's even flakes, must fail: NOTES.md gives what it reads). edge_over_middle (1.6) is NOT from P2 (P2's
+# planks lose LESS at their foot than in their middle: NOTES.md) but from the brief and the fresh review: a board's foot, ends and joints fail first.
 PATTERN = dict(share_ge_50=0.30, share_ge_50_ring=0.18, largest_bbox_w=150, largest_bbox_w_ring=90, p99_over_p10=10.0, along_grain=0.80, edge_over_middle=1.6,
                lower_over_upper=1.1, share_ge_50_bare=0.50)
 
@@ -1219,7 +1242,13 @@ def loss_pattern_mask(T, s, d, rec):
     g = np.median(img[reg & ~near], axis=0) if (reg & ~near).any() else np.median(img[reg], axis=0)
     dg = fc.dE(img, g)
     D = float(min(fc.dE(prim, g), fc.dE(wood, g)))
-    used = reg & (dsub < dg) & (dsub < 0.75 * max(D, 20.0)) & (dsub < dface)
+    used0 = reg & (dsub < dg) & (dsub < 0.75 * max(D, 20.0)) & (dsub < dface)
+    # the ground round each pixel, not the board's one median: a grime gradient is not loss (try 2)
+    gl = local_ground(img, reg, used0)
+    labg = fc.lab(gl)
+    dg = np.linalg.norm(fc.lab(img) - labg, axis=-1)
+    Dl = np.minimum(np.linalg.norm(fc.lab(prim) - labg, axis=-1), np.linalg.norm(fc.lab(wood) - labg, axis=-1))
+    used = reg & (dsub < dg) & (dsub < 0.75 * np.maximum(Dl, 20.0)) & (dsub < dface)
     used = ndi.binary_opening(used, structure=np.ones((2, 2), bool)) | ndi.binary_dilation(ndi.binary_erosion(used, iterations=2), iterations=2) & used
     return used, reg
 
