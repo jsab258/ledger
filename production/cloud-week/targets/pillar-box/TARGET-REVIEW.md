@@ -1,0 +1,237 @@
+FAIL
+
+# Pillar box on Quay Street: target review (cloud week 42, 9 October 2026)
+
+A fresh reviewer, who did not write the target and will not build it, wrote this review. It covers TARGET.md, target.json, target_drawing.py, self_check.py, pb_numbers.py, scan_panoramas.py with panorama_scan.json, and the four previews. The review checked them against the earlier research (production/research/street-clutter-1990/SUMMARY-2026-09-29.md, section 1), the scene's stand-in (production/specs/vignette-scene.json, E4), canon.md and RULINGS.md.
+
+**The special condition holds.** No photograph of a pillar box was reachable for this review either. Wikimedia Commons, Geograph, Flickr, archive.org, postboxmap.co.uk and lbsg.org all returned status 000 from this cloud on 9 October. So the photographs-win test cannot be run. Every point below marked *judgement* rests on the reviewer's own knowledge of 1950s-60s cast-iron Type A boxes. It is not evidence, and the first dated photograph overrides it.
+
+**What was run.** Both scripts were run on a scratch copy in a mirrored tree under the session scratchpad, with all outputs kept there:
+
+* `self_check.py` gives SELF-CHECK PASS, 175 of 175. This reproduces the writer's result, and target.json came out byte-identical after the run.
+* `target_drawing.py` writes 74 polygons and four pictures. They were looked at.
+
+**The writer's panorama search was re-checked.**
+
+* api.polyhaven.com lists 997 HDRIs, 732 of them with coordinates. The writer's seventeen are exactly the ones in Great Britain. The other entries near 53.3 N 6.2 W are in Dublin, st_fagans_interior is a Welsh interior, and there is nothing in Northern Ireland.
+* urban_street_01, urban_street_03 and urban_street_04 were re-downloaded. Their MD5s match the catalogue.
+* All three were re-scanned with a looser threshold than the writer's, so that a box in shade would also be caught (saturation above 0.45, value above 0.12, 40 px at 4096 wide). The candidate crops and the horizon band from +20 to -35 degrees were then looked at by eye.
+* The red things found were tail lights, brick arches and courses, a red front door, road-works barriers, an A-board and a Give Way sign. **No pillar box. The writer's finding stands.**
+
+---
+
+## Faults (1)
+
+### F1. The height (1372) contradicts the repository's own figures for a Type A, and the slot, hood, cap and door stack hang on it
+
+**Where.** TARGET.md summary line, 1 (the table), 4.2, 5 (height row) and 9.1 item 1. In target.json: `overall.total_height`, `numbers.total_height`, `profile.outer_rz` above z 1215, `parts.aperture`, `parts.door`, `parts.panels`, `parts.plates`, the checks, and self-check test A "total height lies inside the research's visible range 1350 to 1470".
+
+**What is wrong.** The target reads the stand-in's *body* height (1.372, with a 0.10 cap and a 0.14 dome on top of it in the scene) as the whole box. It then justifies 1372 with the research's range of 1350 to 1470, which is "73 in casting less 15 to 20 in buried". The repository does not support that:
+
+1. **The research's own Type A figures are higher.** The research gives "Working figures: about 150 cm above ground". Its modelling breakdown agrees: "Base ... about 20 cm", "Body: a cylinder ... about 115 cm tall", "The top is at about 150 cm". The target's body ends at 1215, against the research's 1350.
+2. **The target takes the width from a source and leaves out that source's height.** The research line is: "An untraced source gives a Type A as **5 ft 4 in tall** and 1 ft 7¼ in (49 cm) wide." The target's body (489 = 19¼ in) comes from that line. The line's 5 ft 4 in (1626) appears nowhere in the target's height discussion: not in 1, not in 5, not in 9.1 and not in `photographs_win`. Item 9.1 frames the question as "1372, 1400 or 1470".
+3. **The 73 in casting is a Type B's, by the target's own lead.** Lead 2.3, row 1, reads: "a salvage dealer's Carron EIIR box, 73 in tall, about 20 in in the ground, body 15 in wide (also sold as PB42/2, Type B)". The only support for a box under 1.47 m is therefore the casting length of the narrow box, not the Type A.
+4. **The other figures in the repository cluster at about 1.6 m.** The scene's stand-in is 1612 in all. The leads (search summaries, not numbers) give a Type K of the same 19¼ in width at 63 in (1600) and a Type B at 64 in (1626).
+5. **Judgement, not evidence.** A Type A stands about shoulder height on an adult man, roughly 1.5 to 1.6 m, and is a little over three body-widths tall. Its slot sits about mid-chest. At 1372 the box is 2.8 widths tall. The drawn front elevation reads squat: a short column with the slot at elbow height. That is the first thing a British player would notice, from any distance.
+
+**The exact amendment.** Total height 1500, kind **Read** (the research's working figure, "the top is at about 150 cm"). Record 1626 (5 ft 4 in, the untraced Type A; the scene's 1612 agrees) as the upper alternative and 1350 to 1470 as a Type B's casting. Keep the slot "just under the cap" (the research, Read) by moving everything from the sill up by **+128**:
+
+| item | now | amended |
+|---|---|---|
+| total height, dome apex | 1372 | **1500** (sagitta 80 kept; dome base 1420) |
+| body | 140 to 1215 | 140 to **1343** |
+| cap: soffit / cove top / rim / bead top / neck top | 1215 / 1228 / 1228-1250 / 1262 / 1292 | **1343 / 1356 / 1356-1378 / 1390 / 1420** (add 128 to every `profile.outer_rz` point with z ≥ 1215) |
+| slot | 1127.5 to 1172.5, centre 1150 | **1255.5 to 1300.5, centre 1278** (320 x 45 kept) |
+| hood | 1172.5 / front top 1195 / top 1205 | **1300.5 / 1323 / 1333** (10 under the soffit, kept) |
+| sill | 1112 to 1127.5 | **1240 to 1255.5** |
+| lettering area | 1062 to 1102 | **1190 to 1230** (cz 1210) |
+| door | 280 to 1040 (760 high) | **280 to 1168 (888 high)**, 300 wide kept |
+| roundel / collection frame / lock / enamel frame (cz) | 960 / 790 / 690 / 590 | **1088 / 918 / 818 / 718** (each the same distance under the door's top as now) |
+| hinges (if kept, see N3) | z 420, 900 | **z 420, 1028** (each 140 in from the door's ends) |
+| buried depth | 482, Derived from 73 in | drop the 73 in derivation (it is a Type B's casting); the hidden skirt stays 150 |
+
+**What follows from F1.**
+
+* **Checks.** Change these: `total_height` 1500 ±15; `dome_apex` 1500 ±10; `cap_soffit_height` 1343 ±8; `cap_rim_diameter` measured in z 1356 to 1378; `aperture_centre_z` 1278 ±12; `door_size` 300 x 888; `hinge_count_and_place` z [420, 1028]; `lock_place` z 818; `lettering_pad_blank` cz 1210; `cypher_roundel_blank` cz 1088; `collection_frame` cz 918; `enamel_frame` cz 718; `body_straight` over z 140 to 1343.
+* **Self-check.** Test A's "inside 1350 to 1470" becomes "total height = research_working_height". Drop the test "buried depth inside 15 to 20 in".
+* **Wear.** The soot band under the cap moves to z 1318 to 1343. The wear mask runs to 1500.
+* **Handover lines.** Change them to "total height 1.500; the stand-in was 0.11 m too tall".
+* **Item 9.1.1.** Reword it to "1500 (kept) or up to 1626; a photograph settles it".
+
+The ratio becomes 1500 / 489 = 3.07 widths.
+
+---
+
+## Narrow points (each a small detail with an exact fix; for the writer before the builder starts)
+
+### N1. The checks would not catch a wrong moulding: the failure mode of 8 October
+
+Today a plain 536 x 22 disc for the cap rim, with no cove, bead or neck, passes every check. So does a foot with no quarter-round, splay or cove. Two checks are also worded so that a correct build could fail them.
+
+**Add** this check:
+
+```
+{"name": "profile_silhouette",
+ "applies_to": "foot, body, cap, dome",
+ "measure": "on the back half (y < 0, clear of the casting seam), the mesh's radius every 2 mm of z from 0 to the apex, against profile.outer_rz interpolated; largest absolute deviation, mm",
+ "expected": 0,
+ "tolerance": 1.5,
+ "kind": "Derived (the profile); 3.0 allowed within 2 mm of a bevelled edge"}
+```
+
+**Reword** these:
+
+* `cap_soffit_height` must be measured "on the back half (y < 0)". At the front the hood exceeds the body's radius from z 1172.5, which would trip the check 42 mm early.
+* In `lettering_pad_blank` and `cypher_roundel_blank`, "relief spread above its own plane" must become "relief measured radially above the pad's own curved face". A 300-wide pad that follows the cylinder departs 51 mm from a plane, and the 110 roundel departs 6 mm. As written, the check pushes the builder toward a flat pad, which would float or cut into the body.
+
+### N2. The door is 4 proud, but the research says "a flush panel" (Read), and the target does not record the disagreement
+
+**Fix:**
+
+* `door.proud` becomes **1** (outer radius 245.5). The 3 x 3 joint groove stays, and is what shows.
+* Check `door_proud` becomes 1 ±1.
+* The plate frames keep their face plane where it is now (y = 254.5), which makes `bezel_proud_at_axis` 9.
+* Add a row to `photographs_win.disagreements`.
+
+### N3. The external barrel hinges are likely wrong (judgement)
+
+A Type A's door hangs on internal hinges, for security: a knocked-out pin would open the box. From outside only the door's joint line shows on the hinge side. Two 26 x 96 red knuckles with bare iron pin heads would be an invented feature, visible close up.
+
+**Fix:**
+
+* Remove the hinge knuckles and pin heads from the geometry. Keep "hinged on the left" as the side of the joint only.
+* Replace checks `hinge_count_and_place` and `hinge_size` with: "no part on the door's left edge stands more than 1.5 mm proud of the door face".
+* In 7.5, drop the "two hinge knuckles" rust-bleed sources. In 7.7, drop "one dark rust trickle under the left hinge" and put that trickle under the hood's left end instead.
+
+### N4. The cap's overhang is less than the hood's projection
+
+* The research (Read) says the rim is "a few centimetres proud of the body". The target's rim is 23.5 proud, while the hood under it stands 30 proud.
+* So in the side elevation the hood sticks out past the cap's rim. Judgement: on a Type A the cap's rim is the outermost line above the foot, and the hood tucks inside it.
+
+**Fix:**
+
+* `cap_radius` becomes **280** (rim diameter 560, 35.5 proud). The cove keeps its height and runs from 244.5 out to 280.
+* Check `cap_rim_diameter` becomes 560 ±6.
+* The hood stays 30 proud, now 5.5 inside the rim.
+
+### N5. The blank roundel, blank pad and blank enamel plate read as placeholders (judgement, plus the project's own rule)
+
+* A real box carries its cypher and lettering as raised letters directly on the iron. It has no blank disc and no blank tablet.
+* The scene file says of a street name plate: "a blank white plate on a wall is a placeholder that looks like a bug". The same holds for a blank ivory plate in a frame on the door.
+
+**Fix:**
+
+* Delete `plates.enamel_frame` and `plates.enamel_plate`, and their check. The box carries one plate.
+* Make the roundel and the lettering pad **flush reserved areas** with no raised geometry: `reserved_for_cypher` (on the door, cz 1088 after F1, 110 across) and `reserved_for_lettering` (300 x 40, cz 1210 after F1). Their checks become "no geometry, relief 0 within the area".
+* The minted cypher is cast there once canon supplies it.
+* The `plates_blank` variant becomes "no plate and no frame" rather than an empty white plate.
+
+### N6. Facing the road leaves the poster on the kerb edge (judgement)
+
+* The foot stands 312 mm from the kerb's back. A road-facing aperture means anyone posting a letter stands on the kerb edge or in the channel.
+* A kerbside box on a 2 m footway faces the footway (the building line) or along it.
+* It also matters for the game: the player walks the footway, and would see the box's plain back.
+
+**Fix:**
+
+* `frame_numbers.scene.front_faces` becomes "the building line".
+* Check `front_faces_road` becomes `front_faces_footway`, expected 0 ±10 degrees from the direction pointing at the buildings.
+* Tell the scene owner, because StreetVignette.cs places the stand-in's slot on the road side. This is the scene's Read figure against judgement. If the scene owner keeps the road side, record why.
+
+### N7. target.json leaves two placements to the drawing script
+
+The drawing script fills these in, but target.json does not say them in words, and a builder from target.json alone would have to guess.
+
+**Fix:**
+
+* `panels.lettering_pad_BLANK` (or the reserved area of N5): add "curved, concentric with the body, outer radius 247.5".
+* `hinges` (if any survive N3): add "knuckle axis on the door's outer face, r 248.5, at x -150".
+
+### N8. The keyhole shutter (judgement, low confidence)
+
+A box's keyhole cover is painted with the door and worn at its edge, not bright brass.
+
+**Fix:** paint the shutter red 150/30/32, metal 0, with dark bare metal 60/52/46 on its edge only. If the writer keeps brass, record it as Memory.
+
+### N9. Two small slips in 2.2
+
+* "About 400 older panoramas have no coordinates": the catalogue has **265** (997 listed, 732 with coordinates).
+* "4096 to 20000 px wide": every one of the seventeen tone-mapped JPGs is **8192** wide (panorama_scan.json `source_px`).
+
+Correct both numbers.
+
+### For the first photograph, not changed now
+
+* **The slot's width.** 320 is 65 % of the body's width. Judgement, low confidence: a 1950s-60s Type A's slot is nearer half the body's width. The target's own lead says the aperture was widened to 8 in in 1957, without saying which dimension. Keep 320 (Read) until the photograph, and read it there second, after the height.
+* **The dome's rise (80) and the 30 mm neck.** These read plausibly in the drawing. Do not move them without a photograph.
+
+---
+
+## What is right
+
+**The kinds are honest.**
+
+* No number is called Photo or Scaled. 91 numbers carry their kind: 45 Read, 7 Derived and 39 Judgement, with "Memory" flagged on every judgement from general knowledge.
+* `total_height` is honestly marked Judgement (Memory/Read).
+* The self-check's part B tests that nothing is claimed.
+* The reviewer spot-checked the scene's E4 figures, the research's quoted strings, the kerbs target's +110 and +115, and the wear target's red and black. All of them trace.
+
+**The sources are honest.**
+
+* Unreached sources are listed and used for nothing. The reviewer confirmed them unreached.
+* Leads are kept out of the number registry.
+* The Poly Haven material is CC0, used only for the search, and not reproduced.
+* The panorama search is complete and correct (verified above).
+
+**The type is right.**
+
+* An EIIR-era Type A of the 1950s-60s follows the research's recommendation, and is right for an old port quarter in 1990.
+* The Type K is a variant that is not built. The Penfold is avoided.
+* There is no finial on the dome, which is right for the type (judgement).
+
+**These numbers agree with each other and with the research:**
+
+* body 489, matching the research's 49 cm, 19 in and 19¼ in, and the leads;
+* foot 576, read as the scene's 597;
+* black band 200 (Read), covering the foot and the lowest 60 mm of the body;
+* red 150/30/32, the same as the wear target;
+* the slot "just under the cap", with a hood and a sill (as in the research);
+* the front stacked in the right order (judgement): slot, lettering, door with the cypher at its top, the collection plate below it, and the lock at the side;
+* the stack checked for overlaps, with 19 mm or more between items.
+
+**The canon is safe.**
+
+* There is no cypher, crown, "POST OFFICE", "ROYAL MAIL", "ER", "GR", maker's name or date anywhere.
+* "COLLECTIONS", "MON-FRI", "5.30 PM", "SAT" and "12 NOON" name no company, operator, council, maker or reign. They are the generic words any collection notice needs, the times are invented and plausible for 1990, and they break no content rule.
+* The checks `no_marks` and `plate_words` enforce this.
+
+**It is buildable.**
+
+* The lathe profile is a point list, every part has numbers and a place, and the materials carry sRGB, roughness and metal.
+* The plate text has sizes and places, and the font comes from production/fonts (OFL).
+* The scripts run, and the drawing comes from target.json alone.
+* Apart from N7, unit 3.6 could build it from target.json alone.
+
+**The wear and the lighting are thorough and usable.** This covers the chips and paint layers, the strip of 8 repeats of 192 mm round the girth, the base, the aperture, grime, rust bleed and flyposting, and the sodium-lamp note (by night the box reads dark olive-brown, not red), which the lighting people need.
+
+**The writer's own "could not settle" list is the right list.** It needs only the corrections to item 1 above.
+
+---
+
+## (6) Fit to build without a photograph?
+
+**Not as it stands, because of F1.** Once F1 is amended, with N1's silhouette check added and N2 to N5 applied, the target is fit to build **one sample** as the street's replacement for the stand-in. That sample is not multiplied, and not put to the gate or on Jafar's page.
+
+The gate is a check against real references, and it cannot be run without a photograph. So the piece is "ready for review", not done, until a photograph comes, and the photograph overrides every Judgement and Memory number.
+
+**The single photograph that would settle the most:**
+
+* **What:** a dated, square-on front view of a 1950s-60s EIIR Type A on a provincial British street, the whole box from the footway to the dome.
+* **How taken:** camera about 1 m up and 4 to 6 m away, with the kerb's 125 mm upstand or a standing person in the frame for scale.
+* **Where from:** from this PC, since the cloud cannot reach it: Geograph or Wikimedia Commons, CC BY-SA or freer, licence and date read on the file page.
+* **What it settles at once:**
+  * the height;
+  * the slot's width and height above the footway;
+  * the cap's overhang and the dome's rise (both visible in silhouette);
+  * the door's size, and whether any hinge shows;
+  * the order and sizes of the cypher, lettering and plate.
