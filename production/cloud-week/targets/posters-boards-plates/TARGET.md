@@ -58,6 +58,8 @@ The second review (9 October, `TARGET-REVIEW.md`, "Re-review (try 2)") found mos
 | 3 | BIG TED HOLROYD collides with a real children's programme | TED HOLROYD on the named wrestling bill, in PROPOSED and in every check; BIG TED is in forbidden_patterns.real_marks ('Big Ted' is the bear of the BBC children's programme Play School). |
 | 4 | the quay gable is bare, as the Hook sheet shows it | P01, W01, T02 with its strip T02s and the second QUAY STREET plate (the five proof_wall placements) are held, not in the default street; the west corner pier keeps its plate at x 20.47. G.place.gable is now 'no paper and no plate on SF1' and still checks the downpipe, the render patch and the damp foot as fixtures; the check that demanded exactly three gable bills and the one that demanded exactly 8 and 4 are reworded. |
 
+**Run against the reviewer's own scripts on this target** (unchanged, in the session scratchpad's `posters-review/`): `try2_sq.py` finds no true jittered render of K01, SA06, K07a, K09a or SA15 turned (0 of 10 over 0.3 each; the tolerance is 0.3 for all); `try2_sa.py`: SA01 and SA03 (now 12 px/mm) fail 0 of 20 true seeds and T01-named's true render passes every glyph block; `try2_true.py`: all 29 hand cards (and F02, which has no readable block), 6 true seeds each, 0 glyph failures and 0 square failures; `try2_allitems.py`: 0 of the print items fail their own checks (it found 8 before); `try2_tests.py`: the 10 hand-card wrong words fail on 3 of 3 seeds, the same cards true pass 3 of 3, a missing manifest returns a failure instead of a TypeError, and the four planted lines (and D01 + LICENSED BAR) are the lines that only `ITEM.clean` sees: his `all_checks` has no `ITEM.clean`, so it still lists them as passing, and an amended copy that adds `clean_ink_mm2` fails every one (K01 328 mm2, SA11 72, L02 15,887, C02 71, D01 145; the true renders 0). His `wrong_renders_try2.py` and `gate_probe.py` still run unchanged and give what they gave (every print wrong render fails the line mask; BIG TED, BABYSITTERS, INNS, PLAYGROUPS, TEENS, LAD, LASS and KIDDIES are now caught).
+
 Smaller notes from the same review, taken: the held placement of L01 is sized 1.2 x 0.45 m (it had copied the 0.9 m board); the calendar note no longer cites H03 as a reason for the street date (H03 is not placed); the forbidden lists gain BABYSITTERS, INNS, PLAYGROUPS, TEENS, LAD, LASS and KIDDIES. Noted, not changed: the review's suggestion to render at check scale, check, and downsample for the game is open to the builder and costs the checks nothing; the scales here stay the checks' own (the largest render is 12.4 megapixels).
 
 ## 0. What this target rests on, in plain words
@@ -1524,7 +1526,7 @@ Unreached today: en.wikipedia.org (DNS and 403); commons.wikimedia.org, geograph
 
 ## 15. Self-check
 
-Run 2026-10-09 07:01: **SELF-CHECK posters-boards-plates: 319 checks, 319 passed, 0 failed, 15 reported**.
+Run 2026-10-09 07:34: **SELF-CHECK posters-boards-plates: 319 checks, 319 passed, 0 failed, 15 reported**.
 
 Reported (not failures):
 - [3 words] where the proposed names stand (reported) ({"MERIDIAN AGAINST THE POLL TAX": ["P01", "P01-named", "P02", "P02-named", "P03", "P03-named", "P04", "P05", "P06"], "QUAY PRINT": ["B01", ")
@@ -1541,7 +1543,7 @@ Reported (not failures):
 - [10 line-level checks, tested] K07a: every block is hand-lettered: the font is not checked, only the words 
 - [12 glyph check] shape twins found (reported: they are not scored; a swap of one for the other changes no reading) (alfa-slab-one I/l, archivo I/l, archivo ’/', courier-prime '/’, courier-prime I/l, courier-prime l/I, courier-prime-bold I/l, fraunces I/l, )
 - [12 glyph check] P01: with its two black rules drawn in, the reader (which draws the item's shapes out of a block's window) still passes ITEM.glyphs on the blocks beside them 
-- [13 second-try guards] PLACE.built read in 14 s 
+- [13 second-try guards] PLACE.built read in 15 s 
 
 ## 16. Sources
 
