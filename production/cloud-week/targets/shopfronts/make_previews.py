@@ -117,7 +117,7 @@ def main():
     out.paste(c1, (10, 30)); ImageDraw.Draw(out).text((10, 12), "cornice ends in plan: the neighbour's right return, the party line (the pipe), this bay's left return (mitres 45 degrees)", fill=(20, 20, 20))
     c2 = fit(ss, 460, 1000)
     out.paste(c2, (700, 60)); ImageDraw.Draw(out).text((700, 12), "roller shutter, lowered (side section): curtain d 170", fill=(20, 20, 20))
-    ImageDraw.Draw(out).text((700, 28), "rails d 150-190, hood 210 deep, clear of every frame", fill=(20, 20, 20))
+    ImageDraw.Draw(out).text((700, 28), "rails d 150-190, hood 210 deep set into the toplight zone (head cut away)", fill=(20, 20, 20))
     save_jpg(out, os.path.join(a.previews, "D5-cornice-ends-and-shutter.jpg"))
 
 

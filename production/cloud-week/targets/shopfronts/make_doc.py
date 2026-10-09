@@ -48,7 +48,7 @@ w(T["summary_line"])
 w()
 w("# Shopfronts of Quay Street, as a kit of parts: the exact target")
 w()
-w("Cloud week 42, 9 October 2026, SECOND TRY by the target writer, answering the fresh reviewer's FAIL of the first try (eleven faults, `TARGET-REVIEW.md`; section 17 says how each was answered, and the two places this target does not follow the review). For unit 3.2 (the parts) and the builder (the assembly). Not reviewed again. Nothing is committed. Everything in this file is in `target.json`; the checks that follow from it are in its `checks` list and its `self_check`.")
+w("Cloud week 42, 9 October 2026, SECOND TRY by the target writer, answering the fresh reviewer's FAIL of the first try (eleven faults, `TARGET-REVIEW.md`; section 17 says how each was answered, and the two places this target does not follow the review). For unit 3.2 (the parts) and the builder (the assembly). Fixes applied after the second review (section 18) by Jafar's ruling of 9 October, not re-reviewed. Nothing is committed. Everything in this file is in `target.json`; the checks that follow from it are in its `checks` list and its `self_check`.")
 w()
 w("## 0. Files, and how to read them")
 w()
@@ -72,8 +72,8 @@ w()
 w("## 1. What the target does, in one table")
 w()
 table(["part", "what the target gives", "main change from the kit, and why"], [
-    ["pilaster (4 variants + an unused tall plinth)", "plinth 600 at Rita's line, 180 proud; shaft 290 x 140 proud; necking; capital 310 on a hollow flare, top 350 x 175; panelled and fluted on the kit's base ogee, rendered on a stepped plinth with a hollow-moulded head, flush clad", "shaft 100 to 140 and plinth 150 to 180 (the shaft stands 40 or more in front of every frame); the plinth's head moulding restored; the plinth NOT raised to P1's 800 (Rita's line)"],
-    ["console (scroll, block, absent)", "240 x 180 x 550 on the capital, drawn as a two-volute scroll under a cap block, grooves ending in eye bosses, an acanthus leaf", "a scroll in the same envelope; Judgement, no photograph of a console was reached"],
+    ["pilaster (4 variants + an unused tall plinth)", "plinth 600 at Rita's line, 180 proud; shaft 290 x 140 proud; necking; capital 310 on a hollow flare, top 350 x 175; panelled and fluted on the kit's base ogee (15 proud), rendered on a stepped plinth with a hollow-moulded head, flush clad", "shaft 100 to 140 and plinth 150 to 180 (the shaft stands 40 or more in front of every frame); the plinth's head moulding restored; the plinth NOT raised to P1's 800 (Rita's line)"],
+    ["console (scroll, block, absent)", "240 x 205 x 550 rising from the front of the capital (foot 240 x 172), a two-volute scroll under a cap block, its front at least d 140 at every height, grooves ending in eye bosses, an acanthus leaf", "a scroll in a deeper envelope (the built mesh's 180 stood behind the board's bed mould); Judgement, no photograph of a console was reached"],
     ["fascia board", "5410 x 550, 120 proud, a 40 bed mould; vertical", "the bed mould"],
     ["cornice", "215 x 150 x 5892, 19-point profile with a tall corona, a mitred return closing each end", "profile and ends only: the fixed envelope stays (the photograph's crown is not measurable by the method)"],
     ["sill, stallriser (%d variants)" % len(P["stallriser"]["variants"]), "sill 75 thick, nose 150; panelled, brick tile, square tile, patterned tile, glass slab, render, boarded, grille", "sill 50 to 75; more stallriser kinds for the ten fronts"],
@@ -159,9 +159,9 @@ table(["item", "value (mm)", "kind", "source"], [
     ["sill top / sill underside", "600 / 525", "Read / Judgement", "scene stallriser 0.60; the sill is 75 thick (D8)"],
     ["transom / head / fascia / cornice (z)", "2400-2480 / 2790-2850 / 2850-3400 / 3400-3550", "Read", "scene; fascia target; fascia-01"],
     ["d: shaft front / plinth front / capital top front", "140 / 180 / 175", "Photo (bounds) and Judgement / Judgement / Judgement", "D3: the shaft 40 or more in front of every frame; the kit had 100 / 150 / 130"],
-    ["d: fascia face / console front / cornice nose", "120 / 180 / 215", "Read", "fascia target; fascia-01"],
+    ["d: fascia face / bed mould front / console front (at least) / cornice nose", "120 / 132 / 140 (205 at the volute and cap block) / 215", "Read / Judgement / Judgement / Read", "fascia target; fascia-01 (the console's 180 is deepened to 205); the console stands proud of the board at every height (CON-09)"],
     ["d: sill nose / stallriser face / frame fronts / mullion front / glass", "150 / 125 / 95 and 100 / 92 / 30", "Read / Read / Judgement / Judgement / Read", "kit; the mullion front is 62 in front of the glass (D5); the frames stand 45 (window) and 40 (doors) behind the shafts"],
-    ["d: roller shutter hood / guide rails / curtain", "210 / 150 to 190 / 170", "Judgement", "clear of every frame, the sill (150) and the threshold (130)"],
+    ["d: roller shutter hood / guide rails / curtain", "210 / 150 to 190 / 170", "Judgement", "rails and curtain clear of every frame, the sill (150) and the threshold (130); the hood is set into the toplight zone (head, bars and glass cut away behind it)"],
 ])
 w("The zones fill the opening: **door end on the viewer's LEFT**: side door [350, 1294], shop door [1294, 2300], window [2300, 5650]; **RIGHT**: window [350, 3700], shop door [3700, 4706], side door [4706, 5650]; with no side door (the grocer) the shop door takes the outer 1006 and the window the other 4294. The side door is the outermost zone, next to the pier, as the street's frames show. Self-check group 5 recomputes all ten fronts' zones.")
 w()
@@ -185,7 +185,7 @@ table(["item", "value", "kind", "source"], [
     ["capital members (z local from the neck)", "astragal 0-24 (r 12), fillet 24-34, die 34-154 at d 144 with a tablet 170 x 80 x 8 proud, hollow flare 154-244 from d 144 to 172, abacus 244-296 (d 175), ovolo top 296-310", "Judgement from P1's order; the flare after P1", "P1 shows a necking ledge, a die with three roundels, a flared cap (57 and 77 px beyond the shaft's edge), a band"],
     ["optional bosses", "3 x diameter 30, 6 proud, pitch 56, on the die's centre line at z local 94", "Photo (P1's three roundels)", "off by default (Rita's is plain); allowed on the ironmonger's and the empty unit's"],
     ["panelled shaft", "base ogee on the plinth (z 600 to 660), stiles 45, sunk 12, bead 10 (quarter-round), bottom rail 600-740, top rail 2430-2540", "Judgement (the kit's)", "FRONTAGE: raised and fielded or panelled (BC1, BH)"],
-    ["base ogee (panel and flute)", "the kit's BASE: 25 proud of the shaft's face, 60 high, 9 points, returned on both sides of the shaft", "Read (pilaster.py)", "restored: P1 shows a moulding at the shaft's foot (the first try dropped it as 'P1 shows none')"],
+    ["base ogee (panel and flute)", "the kit's BASE made 15 proud of the shaft's face (the second review's points: (140, 600) (155, 600) (155, 608) (152.6, 612) (149, 617) (146, 624) (143.6, 633) (141.8, 645) (140, 660)), 60 high, returned on both sides of the shaft", "Read (pilaster.py) and the review", "restored: P1 shows a moulding at the shaft's foot; 15 not the kit's 25 so that its front (d 155) stands on the cap's flat and does not float over the weathering"],
     ["fluted shaft", "5 flutes, 43.6 wide, 12 deep, between 12 fillets", "Judgement (the kit's)", "HE1 Skipton: fluted pilasters with consoles"],
     ["render variant: stepped plinth with a hollow head", "blocks to 360 / 450 / 484 (4 and 8 back), then a hollow (cavetto, 24 x 95) from d 172 at z 484 to d 148 at z 579 and a band 21 high to 600, the shaft 8 behind it; steps 8 / 14 / 22 in on the FREE side only", "Photo (P1's three steps and the hollow-and-band head) and Judgement (the lower blocks shortened to fit Rita's 600)", "P1's blocks are 504 / 631 / 684 on 800; the head kept whole; the steps limited by the slot's 30 mm margin"],
     ["clad variant (Mickey's, as built)", "350 wide, 140 proud (the old shaft's face), no plinth, no capital, sheet joints at z 1200 and 2400, 6 wide", "Judgement", "the Hook sheet and the street"],
@@ -213,17 +213,18 @@ w("**The kit gets right:** " + "; ".join(T["kit_vs_target"]["console"]["kit_gets
 w()
 table(["change", "reason", "kind"], [[x["what"], x["reason"], x["kind"]] for x in T["kit_vs_target"]["console"]["target_changes"]])
 table(["item", "value", "kind", "source"], [
-    ["envelope", "240 wide x 180 deep x 550 high, z 2850 to 3400", "Read", "fascia-01 (the built mesh)"],
+    ["envelope", "240 wide x 205 deep x 550 high, z 2850 to 3400 (the cornice's 215 nose oversails it by 10)", "Read (240, 550) / Judgement (205)", "fascia-01's built mesh is 180 deep and stands behind the board's bed mould (132); the second review deepened it"],
     ["centre", "u 175 and 5825; ranges 55-295 and 5705-5945", "Read", "the kit's meet; fascia-01"],
-    ["toe", "240 x 60 at z 2850 on the capital's top (350 x 175)", "Read", "fascia-01 profile"],
-    ["silhouette: upper volute", "eye at d 126, z 470, outer radius 54: the front reaches d 180 at z 470, rolls back over the top through (126, 524) and into the eye in 1.25 turns (the groove)", "Judgement", "the review's fault 5; the first try's 'volute' was a groove on a plain corbel"],
-    ["silhouette: waist and stem", "concave, narrowest d 62 at z 130, swelling to d 84 under a concave fillet into the upper volute", "Judgement", "-"],
-    ["silhouette: lower volute", "eye at d 46, z 62, outer radius 30, reaching d 76 at z 62, rolling the other way (clockwise inward)", "Judgement", "overhangs the toe by 16, well inside the capital's 175"],
-    ["silhouette: cap block", "180 deep at z 528 to 550, over a notch 4 high at the upper volute's top", "Judgement on a Read (fascia-01's 180 at 528 to 550)", "the cornice's soffit lies on it"],
-    ["side grooves", "8 inside the outline, 5 wide, 4 deep, each winding into an eye boss 16 across and 3 proud (upper 1.25 turns, lower one turn)", "Judgement", "-"],
-    ["leaf (the front)", "acanthus pendant, z local 120 to 440, up to 120 wide at the top falling to a tip, 3 lobes a side, relief 12 at the rib, a rib 8 wide 4 proud, grooves 4 x 3 between lobes", "Judgement", "no photograph"],
+    ["foot", "240 x 172 at z 2850 on the capital's flat top (350 x 175; the flat reaches d 172), so the console rises from the capital's front", "Judgement", "CON-03"],
+    ["front rule", "the front is at least d 140 at every height from 2850 to 3400, in front of the board's bed mould (132) and face (120): no board end or mould stands proud of it", "Judgement", "CON-09, recomputed from the outline"],
+    ["silhouette: lower volute", "eye at d 158, z 48, outer radius 26, reaching d 184 at z 48 (9 past the capital's front), one turn, rolling the other way (clockwise inward)", "Judgement", "-"],
+    ["silhouette: waist and stem", "concave, narrowest d 140 at z 140, swelling to d 150 at z 330 (straight to z 413, then a concave fillet r 10 into the upper volute)", "Judgement", "-"],
+    ["silhouette: upper volute", "eye at d 160, z 468, outer radius 45: the front reaches d 205 at z 468, rolls back over the top through (160, 513) and into the eye in 1.25 turns (the groove)", "Judgement", "the review's fault 5, in the re-review's deeper numbers"],
+    ["silhouette: cap block", "205 deep at z 528 to 550, over a notch 15 high at the upper volute's top", "Judgement", "the cornice's soffit lies on it"],
+    ["side grooves", "8 inside the outline, 5 wide, 4 deep, each winding into an eye boss 16 across and 3 proud (upper 1.25 turns r 37 to 10, lower one turn r 18 to 11)", "Judgement", "-"],
+    ["leaf (the front)", "acanthus pendant, z local 150 to 420, up to 120 wide at the top falling to a tip, 3 lobes a side, relief 12 at the rib, a rib 8 wide 4 proud, grooves 4 x 3 between lobes", "Judgement", "no photograph"],
     ["front chamfer", "12 down each front edge", "Read", "fascia-01 taper (1 part in 15)"],
-    ["variants", "scroll (all original fronts); block (the grocer): the scroll straightened to a 45-degree chamfer, no leaf, three bosses; absent (the empty unit's left: a stump 240 x 60 x 90 and two dowel holes)", "Judgement", "fascia-01 spec (the clipped console)"],
+    ["variants", "scroll (all original fronts); block (the grocer): the same envelope, flaring from the 172 foot to 205, no leaf, three bosses; absent (the empty unit's left: a stump 240 x 172 x 90 and two dowel holes)", "Judgement", "fascia-01 spec (the clipped console)"],
 ])
 prof_list("console", ["side_silhouette", "plan_at_neck", "eye_boss_upper", "eye_boss_lower", "leaf_outline"])
 w("`volute_upper_spiral` (%d points) and `volute_lower_spiral` (%d points) are the open centrelines of the side grooves. **Fixings:** two 12 mm hardwood dowels 40 deep from the toe into the capital and two M10 coach screws through the back into the wall plate, all hidden; a rust bleed 20 long under each on the shaded side. **What P1 shows of consoles: nothing** (its pier caps are straight stepped blocks): the scroll, the grooves and the leaf are Judgement, marked as such in the evidence table, and the console is the FIRST piece to check against a reached photograph (section 16)." % (len(P["console"]["profiles"]["volute_upper_spiral"]["points"]), len(P["console"]["profiles"]["volute_lower_spiral"]["points"])))
@@ -250,7 +251,7 @@ cd = P["cornice"]["dims"]
 table(["item", "value", "kind", "source"], [
     ["envelope", "5892 long (u 54 to 5946) x 215 deep x 150 high, soffit at z 3400, top at 3550", "Read", "fascia-01; the fascia target's cornice top 3.55"],
     ["drip groove", "d 155 to 175, 12 deep (35 outside the board's face)", "Read", "fascia-01"],
-    ["oversail", "95 past the board's face, 35 past the console's front", "Derived", "215 - 120; 215 - 180"],
+    ["oversail", "95 past the board's face, 10 past the console's front", "Derived", "215 - 120; 215 - 205"],
     ["corona face", "0 to 52 (0.35 of the height)", "Judgement", "P1's crown is not measurable by the method (section 3); the sequence of members is P1's"],
     ["ends", "a mitred return of the full 19-point section at each end, 215 deep back to the wall (a 45 degree mitre in plan from u 269 to the nose corner at u 54; right end 5731 to 5946); the nose line keeps u 54 to 5946; the lead dressed down over the return with a 25 upstand", "Judgement", "the review's fault 8: two exposed ends at each of nine party walls, seen end-on from the street; check COR-06"],
     ["wash", "falls %.1f degrees from d 205 at z 130 to the back at 150; lead 1.8 over it, an apron 100 up the wall, upstands 25 at each end (not geometry)" % cd["wash_slope_deg"], "Judgement on a Read", "fascia-01: 27 degrees; the 4.5 degrees of change is for the new profile"],
@@ -357,7 +358,7 @@ rows = []
 for k, a in T["alterations"].items():
     rows.append([k, a["what"], json.dumps(a["numbers"])[:360], ", ".join(a["applies_to"]), a["kind"]])
 table(["kind", "what", "numbers", "applies to", "evidence"], rows)
-w("**Roller-shutter box.** The four Poly Haven shutters read today have hoods 153, 168, 300 and 300 deep for curtains 1546, 1561, 1851 and 2400 high, the curtain's plane at z 20 and rails 7 wider than the curtain. The target's newsagent shutter (the review's fault 7): a **hood 300 high x 210 deep** under the fascia (z 2550 to 2850) hiding the toplights above 2550 (70 shows); two **guide rails 50 wide x 40 deep at d 150 to 190**, z 0 to 2550, standing out in front of the frames on steel spacer brackets bolted through the frames into the pilaster core (bolt heads visible); the **curtain in one plane at d 170**, 20 clear of the sill's nose (150), running across window and door to the footway, clear of the stallriser (125), threshold (130), transom and door frames (100) and mullions (92). Raised by day (the hood and the rails only); lowered at night (variant `shutter_down`). The first try's curtain at d 30 stood inside every frame. Check ALT-07; the drawing `roller_shutter_section` shows the lowered curtain against the sections.")
+w("**Roller-shutter box.** The four Poly Haven shutters read today have hoods 153, 168, 300 and 300 deep for curtains 1546, 1561, 1851 and 2400 high, the curtain's plane at z 20 and rails 7 wider than the curtain. The target's newsagent shutter (the review's fault 7): a **hood 300 high x 210 deep** under the fascia (z 2550 to 2850, u 350 to 4706) hiding the toplights above 2550 (70 shows), **set into the toplight zone: the window's and the shop door's head, the toplight bars and the toplight glass are cut away at z 2550 behind it** (the drawing clips them; the overlap test now includes the hood; ALT-09); two **guide rails 50 wide x 40 deep at d 150 to 190**, z 0 to 2550, standing out in front of the frames on steel spacer brackets bolted through the frames into the pilaster core (bolt heads visible); the **curtain in one plane at d 170**, 20 clear of the sill's nose (150), running across window and door to the footway, clear of the stallriser (125), threshold (130), transom and door frames (100) and mullions (92). Raised by day (the hood and the rails only); lowered at night (variant `shutter_down`). The first try's curtain at d 30 stood inside every frame. Check ALT-07; the drawing `roller_shutter_section` shows the lowered curtain against the sections.")
 w()
 
 # ------------------------------------------------------------------------------------------------
@@ -421,7 +422,7 @@ table(["file", "what"], [
     ["`D2-ten-fronts-sheet.jpg`", "the ten fronts assembled from the table, now with the empty unit's whitewash, the laundry's box sign, the newsagent's box sign and shutter hood, the tea room's panel and the grocer's slabs"],
     ["`D3-parts-pilaster-console-fascia.jpg`", "four pilaster variants, the scrolled console's silhouette and front, the capital / console / fascia / cornice section"],
     ["`D4-parts-sections.jpg`", "sections at x0.3 to x3: sill, transom, stallriser, plinth cap, stepped plinth head, base ogee, capital, cornice, fascia, mullions, jamb, bead, threshold"],
-    ["`D5-cornice-ends-and-shutter.jpg`", "NEW: the cornice's mitred returns in plan at a party-wall gap, and the roller shutter's lowered curtain against the frames in section"],
+    ["`D5-cornice-ends-and-shutter.jpg`", "NEW: the cornice's mitred returns in plan at a party-wall gap, and the roller shutter's lowered curtain against the frames in section (the hood set into the toplight zone, the head cut away)"],
 ])
 w("**Rita's elevation on P1** (the review's narrow point; `photo.rita_vs_p1`; self-check group 4 checks the overlay's one scale: her shaft is as wide as P1's). Where they differ:")
 w()
@@ -431,7 +432,7 @@ w()
 if SELF:
     w("**Self-check (%s):** **%d of %d checks pass; %d fail; %d departures reported and kept in the open.** Groups: " % (SELF["date"], SELF["passed"], SELF["total"], SELF["failed"], SELF["reported"]) + "; ".join("%s %d pass %d fail %d reported" % (k, v["pass"], v["fail"], v["report"]) for k, v in sorted(SELF["groups"].items())) + ".")
     w()
-    w("The groups: 1 printed (the numbers read again from SCENE-SLOTS.md, fascia-01's recipe, the kit README, the fascia target, the front-door target, and the hinge sides read off the game's Rita frame by colour); 2 photo (every row and column re-measured on the saved previews; the scale and the ratio rules recomputed); 3 wins (each disagreement recomputed); 4 overlay (the drawing's edges on the previews, worst %s px of %s edges; and Rita's elevation laid on the pier at one scale); 5 consistency (profiles are simple counter-clockwise polygons; the parts add up; the ten fronts' zones; nothing overlaps that should not and nothing floats in any of the ten drawings; paints, shops, alterations and checks well formed; the content rule); 6 faults (fifteen deliberately broken copies, each noticed)." % (SELF["stats"].get("overlay_worst_px"), SELF["stats"].get("overlay_edges")))
+    w("The groups: 1 printed (the numbers read again from SCENE-SLOTS.md, fascia-01's recipe, the kit README, the fascia target, the front-door target, and the hinge sides read off the game's Rita frame by colour); 2 photo (every row and column re-measured on the saved previews; the scale and the ratio rules recomputed); 3 wins (each disagreement recomputed); 4 overlay (the drawing's edges on the previews, worst %s px of %s edges; and Rita's elevation laid on the pier at one scale); 5 consistency (profiles are simple counter-clockwise polygons; the parts add up; the ten fronts' zones; nothing overlaps that should not and nothing floats in any of the ten drawings; paints, shops, alterations and checks well formed; the content rule); 6 faults (eighteen deliberately broken copies, each noticed)." % (SELF["stats"].get("overlay_worst_px"), SELF["stats"].get("overlay_edges")))
     w()
     w("The reported lines are not failures but departures kept visible:")
     w()
@@ -460,6 +461,14 @@ w("1. **The plinth at 800 (the review's note after fault 3, and the profile of f
 w("2. **The side door's hinge side (fault 6).** The review reads the approved model as 'the side door's knob is on its right, so it is hinged on the pier side'. The game frame (`rita-day-kit-2026-10-06.jpg`, 1600 x 900) shows the opposite: the side door's leaf spans x 215.7 to 397.3 and its two knobs stand at x 225.7 and 220.0, in the leaf's LEFT tenth (the pier side), and its letter plate (x 275 to 338) is centred on the leaf (centre 306.5). So the side door is hinged on the viewer's RIGHT, the shop-door side, and F1 (whose optional hinges the front-door target puts on its left stile) is mirrored where the door end is the viewer's left. The shop door agrees with the review: its lever (x 448 to 475) is left of its glass (x 457.7 to 604), so it is hinged on the window side. Self-check group 1 re-reads these positions from the frame by colour.")
 w()
 w("**The narrow points.** The group-4 overlay was circular; Rita's elevation is now laid on the re-projected pier at the shaft's width and the differences tabled (section 15). The laundry's aluminium refit (not in the street recipe's SHOPFRONT_REFITS) is listed beside the ironmonger, and the laundry's vent pipe through the fascia band is named as a fascias or town question (section 16). The kick plate and the foot strip are one piece in use (the strip is the plate's lowest 30). The drawings now show the empty unit's whitewash, the laundry's box sign, the tea room's panel and the grocer's slabs. P1's scale notice is England's statutory no-smoking sign, whose 2007 minimum size was A5: from memory (legislation.gov.uk unreached), which supports the A5 assumption.")
+w()
+# ------------------------------------------------------------------------------------------------
+w("## 18. Fixes applied after the second review, by Jafar's ruling of 9 October, not re-reviewed")
+w()
+w("The re-review of the second try passed all eleven first faults and upheld both departures (the plinth at 600 and the hinge sides), and listed one fault and two narrow points with exact fixes. By Jafar's ruling of 9 October a target left with only listed faults and exact fixes gets those fixes applied and its self-check run, and is done as 'fixes applied, not re-reviewed'. Applied exactly:")
+w()
+table(["item", "what was wrong", "the fix"], [[str(f["n"]), f["fault"], f["fix"]] for f in T["fixes_after_second_review"]])
+w("Self-check after the fixes: **%d of %d pass; %d fail; %d reported** (the reported lines now include the console's 205 against fascia-01's printed 180 and the base ogee's 15 against the kit's 25). Three more broken copies are noticed: the console pulled back behind the board, the hood left sharing the frames' space, the base ogee back at 25." % (SELF["passed"], SELF["total"], SELF["failed"], SELF["reported"]))
 w()
 open(os.path.join(HERE, "TARGET.md"), "w").write("\n".join(out))
 print("wrote TARGET.md", len(out), "lines")

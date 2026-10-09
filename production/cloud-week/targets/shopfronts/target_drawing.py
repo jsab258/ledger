@@ -177,13 +177,14 @@ def draw_shutter_section(t):
     sh.add("stallriser", P["stallriser"]["variants"]["panel"]["section"]["points"], (150, 60, 60), (20, 20, 20))
     sh.add("sill", P["sill"]["profiles"]["section"]["points"], (200, 200, 195), (20, 20, 20))
     sh.add("transom", [[a, b + 2400] for a, b in P["window_frame"]["profiles"]["transom_t1"]["points"]], (200, 200, 195), (20, 20, 20))
-    sh.add("head", [[a, b + 2790] for a, b in P["window_frame"]["profiles"]["head_section"]["points"]], (200, 200, 195), (20, 20, 20))
+    # the head (z 2790 to 2850), the toplight bars and the toplight glass above 2550 are CUT AWAY behind the hood: only 70 of the toplight shows
+    sh.add("toplight_glass", [(30, 2480), (36, 2480), (36, 2550), (30, 2550)], GLASS)
     sh.add("threshold", P["shop_door"]["profiles"]["threshold_section"]["points"], (190, 184, 170), (20, 20, 20))
     sh.rect("door_frame", 0, 25, 100, 2400, (215, 212, 205), (20, 20, 20))
     sh.add("glass", [(30, 625), (36, 625), (36, 2400), (30, 2400)], GLASS)
     sh.add("fascia", [[a, b + 2850] for a, b in P["fascia_board"]["profiles"]["section"]["points"]], (190, 190, 186), (20, 20, 20))
     hz0, hz1 = al["hood_z_range"]
-    sh.rect("hood", 0, hz0, al["hood_depth_d"], hz1, rgb(t, "steel_grey"), (30, 30, 30))
+    sh.rect("hood", 0, hz0, al["hood_depth_d"], hz1, rgb(t, "steel_grey"), (30, 30, 30))      # set into the toplight zone, d 0 to 210
     r0, r1 = al["guide_rail"]["d_range"]
     sh.rect("guide_rail", r0, 0, r1, hz0, rgb(t, "steel_grey"), (30, 30, 30))
     cp = al["curtain_plane_d"]
@@ -363,6 +364,39 @@ def side_slot(sh, t, shop, a0, a1, cols):
         sh.rect("slot_hinge", min(hinge_x, hinge_x + (4 if hinge_x == lu0 else -4)), zc - 50, max(hinge_x, hinge_x + (4 if hinge_x == lu0 else -4)), zc + 50, (60, 60, 60))
 
 
+def _cut_polys(polys, box, prefixes):
+    """Cut the axis-aligned boxes of the named parts away where they overlap `box` (x0, z0, x1, z1): what is left of each is up to four
+    rectangles; a part wholly inside the box goes. Used for the roller shutter's hood, set into the toplight zone."""
+    bx0, bz0, bx1, bz1 = box
+    out = []
+    for p in polys:
+        if not p["name"].startswith(prefixes) or len(p["pts"]) != 4:
+            out.append(p)
+            continue
+        xs = [q[0] for q in p["pts"]]
+        zs = [q[1] for q in p["pts"]]
+        x0, x1, z0, z1 = min(xs), max(xs), min(zs), max(zs)
+        ix0, ix1, iz0, iz1 = max(x0, bx0), min(x1, bx1), max(z0, bz0), min(z1, bz1)
+        if ix0 >= ix1 or iz0 >= iz1:
+            out.append(p)
+            continue
+        pieces = []
+        if x0 < ix0:
+            pieces.append((x0, z0, ix0, z1))
+        if ix1 < x1:
+            pieces.append((ix1, z0, x1, z1))
+        if z0 < iz0:
+            pieces.append((ix0, z0, ix1, iz0))
+        if iz1 < z1:
+            pieces.append((ix0, iz1, ix1, z1))
+        for k, (a0, b0, a1, b1) in enumerate(pieces):
+            q = dict(p)
+            q["name"] = p["name"] if k == 0 else p["name"]
+            q["pts"] = [[a0, b0], [a1, b0], [a1, b1], [a0, b1]]
+            out.append(q)
+    return out
+
+
 def draw_bay(t, shop_id, with_neighbours=True):
     shop = [s for s in t["shops"] if s["id"] == shop_id][0]
     cols = {k: rgb(t, v) for k, v in shop["paints"].items() if v}
@@ -432,9 +466,14 @@ def draw_bay(t, shop_id, with_neighbours=True):
             sh.rect("downpipe", px - 34, 0, px + 34, 3700 if False else 3550, (70, 72, 74), (30, 30, 30))
     # alterations that show in elevation
     if "roller_shutter" in shop["alterations"]:
-        # raised by day: the hood (300 high, 210 deep) hides the toplights above 2550; the guide rails stand out in front of the frames
-        sh.rect("shutter_hood", w0 if w0 < s0 else s0, 2550, max(w1, s1), 2850, rgb(t, "steel_grey"), (30, 30, 30))
-        for gx in (w0 if w0 < s0 else s0, max(w1, s1) - 50):
+        # raised by day: the hood (300 high, 210 deep) is SET INTO the toplight zone: the head, the toplight bars and the glass are cut away
+        # behind it above 2550 (70 of the toplights shows below); the guide rails stand out in front of the frames (d 150 to 190)
+        cut = t["alterations"]["roller_shutter"]["numbers"]["cut_away"]
+        hu0, hu1 = (w0 if w0 < s0 else s0), max(w1, s1)
+        cut_box = (hu0, cut["z_from"], hu1, 2850.0)
+        sh.polys = _cut_polys(sh.polys, cut_box, ("win_", "door_"))
+        sh.rect("shutter_hood", hu0, 2550, hu1, 2850, rgb(t, "steel_grey"), (30, 30, 30))
+        for gx in (hu0, hu1 - 50):
             sh.rect("guide_rail", gx, 0, gx + 50, 2550, rgb(t, "steel_grey"), (30, 30, 30))
     return sh
 

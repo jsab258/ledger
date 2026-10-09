@@ -230,22 +230,23 @@ def checks(shops):
     add("PIL-14", "pilaster", "profile fit", "capital_side, the plinth cap, plinth_stepped_side and the base ogee: two-way Hausdorff distance to the target profile", 0.0, 1.5)
     add("PIL-15", "pilaster", "relief beside the frames", "shaft face minus the front face of every frame beside it (window jamb 95, 75 or 40; shop-door frame 100; F1 frame 100) is at least 40; per shop in shops[].relief_beside_frames", 40.0, 0.0, "mm, at least")
     add("PIL-16", "pilaster", "plinth head (render variant)", "hollow moulding (cavetto) from d 172 at z 484 back to d 148 at z 579 (a quarter ellipse 24 by 95), then a band 21 high at d 148 to z 600, 8 in front of the shaft; blocks to 360 / 450 / 484", [172.0, 484.0, 148.0, 579.0, 600.0], 1.0)
-    add("PIL-17", "pilaster", "base ogee (panel and flute)", "an ogee 25 proud of the shaft's face and 60 high on the plinth's top (z 600 to 660), returned on both sides of the shaft", [25.0, 60.0, 600.0], 1.0)
+    add("PIL-17", "pilaster", "base ogee (panel and flute)", "an ogee 15 proud of the shaft's face (the kit's 25 would float over the cap's weathering beyond d 155) and 60 high on the plinth's top (z 600 to 660), returned on both sides of the shaft", [15.0, 60.0, 600.0], 1.0)
     # console
-    add("CON-01", "console", "envelope", "bounding box width x depth x height", [240.0, 180.0, 550.0], 1.0)
+    add("CON-01", "console", "envelope", "bounding box width x depth x height (the cornice's 215 nose oversails it by 10)", [240.0, 205.0, 550.0], 1.0)
     add("CON-02", "console", "centred on the pilaster", "u of the console's centre", [175.0, 5825.0], 1.0)
-    add("CON-03", "console", "foot on the capital", "every point of the toe (240 x 60 at z 2850) lies within the capital's top (u 0..350, d 0..175) and at most 1 above it", 0.0, 1.0)
+    add("CON-03", "console", "foot on the capital", "every point of the foot (240 x 172 at z 2850) lies within the capital's top (u 0..350, d 0..175; its flat reaches 172) and at most 1 above it", 0.0, 1.0)
     add("CON-04", "console", "top at the cornice's soffit", "console top z", 3400.0, 1.0)
     add("CON-05", "console", "silhouette", "two-way Hausdorff between the built side section and side_silhouette", 0.0, 2.0)
     add("CON-06", "console", "leaf", "leaf relief max 12 proud, within u +-60 and z_local 120 to 440", [12.0, 60.0, 120.0, 440.0], 1.5)
-    add("CON-07", "console", "volutes", "upper volute: eye (d 126, z 470), outer radius 54, the front reaches d 180 at z 470 and the top (126, 524); lower volute: eye (46, 62), outer radius 30, reaching d 76 at z 62; the waist narrowest d 62 at z 130; cap block 180 deep at z 528 to 550", [126.0, 470.0, 54.0, 46.0, 62.0, 30.0, 62.0, 130.0], 1.5)
+    add("CON-07", "console", "volutes", "upper volute: eye (d 160, z 468), outer radius 45, the front reaches d 205 at z 468 and the top (160, 513); lower volute: eye (158, 48), outer radius 26, reaching d 184 at z 48; the waist narrowest d 140 at z 140; the stem d 150 at z 330; cap block 205 deep at z 528 to 550", [160.0, 468.0, 45.0, 158.0, 48.0, 26.0, 140.0, 140.0], 1.5)
     add("CON-08", "console", "side grooves", "grooves 8 inside the outline at the front, 5 wide, 4 deep, winding into an eye boss 16 across and 3 proud at each eye (upper 1.25 turns, lower one turn the other way)", [8.0, 5.0, 4.0, 16.0, 3.0], 0.5)
+    add("CON-09", "console", "front stands proud of the board", "the console's front (the largest d of the section at each z) is at least 140 at every z from 2850 to 3400, in front of the fascia board's bed mould (132) and face (120); no board end or bed mould stands proud of it", 140.0, 0.0, "mm, at least")
     # fascia and cornice
     add("FAS-01", "fascia_board", "board size", "u range, z range, face d", [[295.0, 5705.0], [2850.0, 3400.0], 120.0], 1.0)
     add("FAS-02", "fascia_board", "foot on the abacus", "overlap of the board's foot with each abacus top in u", 55.0, 1.0)
-    add("FAS-03", "fascia_board", "bed mould", "z 2850 to 2890, front d 132 (43 behind the capital's top front, 175)", [2890.0, 132.0], 1.0)
+    add("FAS-03", "fascia_board", "bed mould", "z 2850 to 2890, front d 132 (43 behind the capital's top front, 175, and 8 behind the console's narrowest front, 140)", [2890.0, 132.0], 1.0)
     add("COR-01", "cornice", "size", "length x depth x height, z bottom", [5892.0, 215.0, 150.0, 3400.0], 1.0)
-    add("COR-02", "cornice", "oversail", "cornice depth minus board face; minus console depth", [95.0, 35.0], 1.0)
+    add("COR-02", "cornice", "oversail", "cornice depth minus board face; minus console depth (205)", [95.0, 10.0], 1.0)
     add("COR-03", "cornice", "soffit on the board", "gap between the soffit (3400) and the board's top and the consoles' tops", 0.0, 1.0)
     add("COR-04", "cornice", "profile", "two-way Hausdorff to the section", 0.0, 1.5)
     add("COR-05", "cornice", "stops short of the party line", "u range of the nose line", [54.0, 5946.0], 1.0)
@@ -278,13 +279,14 @@ def checks(shops):
     add("ZON-01", "assembly", "zones fill the opening", "side-door slot + shop-door slot + window = 5300 (no side door: 5300 - 1006 = 4294)", 5300.0, 1.0)
     add("ZON-02", "assembly", "window length", "default 3350; no side door 4294", [3350.0, 4294.0], 1.0)
     # alterations
-    add("ALT-01", "roller_shutter", "hood", "height x depth, z range", [300.0, 210.0, 2550.0, 2850.0], 2.0)
+    add("ALT-01", "roller_shutter", "hood", "height x depth, z range; the hood is SET INTO the toplight zone: the head, the toplight bars and the glass are cut away at z 2550 behind it over u 350 to 4706", [300.0, 210.0, 2550.0, 2850.0], 2.0)
     add("ALT-02", "roller_shutter", "guide rail", "face x depth, d range (on steel spacer brackets through the frames into the pilaster core)", [50.0, 40.0, 150.0, 190.0], 1.0)
     add("ALT-03", "aluminium_refit", "section", "stile, mullion and transom face x depth", [50.0, 75.0], 1.0)
     add("ALT-04", "empty_unit", "the absent console", "no console at u 55..295 on the empty unit; a stump 240 x 60 x 90", [240.0, 60.0, 90.0], 2.0)
     add("ALT-05", "box_sign", "stands on the board", "front d of the laundry box 270; newsagent 260; tea panel 150", [270.0, 260.0, 150.0], 2.0)
     add("ALT-06", "recessed_lobby", "depth", "the door frame's front face d: grocer -500 (recess 600 from the frame line d 100), laundry -200 (recess 300)", [-500.0, -200.0], 3.0)
     add("ALT-07", "roller_shutter", "curtain plane", "curtain plane at d 170: at least the sill's nose (150) + 15 and within the hood's depth (210); the lowered variant (the curtain from the hood to the footway in front of window and door) intersects no frame, sill, stallriser or threshold", [170.0, 15.0, 210.0], 1.0)
+    add("ALT-09", "roller_shutter", "hood shares no space with the frames", "the hood (d 0..210, z 2550..2850, u 350..4706) overlaps no other solid of the front in elevation: the head, toplight bars and glass above 2550 are cut away behind it; 70 of the toplights shows below it; the rails (d 150..190) stand in front of the frames (fronts 100), 50 clear", [2550.0, 2850.0, 350.0, 4706.0], 1.0)
     add("ALT-08", "newsagent", "board colour", "the newsagent's fascia board paint is the fascia target's old_board cream (222, 209, 175)", [222.0, 209.0, 175.0], 2.0, "sRGB units")
     # per shop assembly checks
     for s in shops:
@@ -363,7 +365,7 @@ def build():
         "schema": "cloud-week-42 target v1 (shopfronts)",
         "family": "the shopfront as a kit of parts",
         "summary_line": "The shopfront kit's target (second try): pilasters (plinth 600 at Rita's line, shaft 140 proud, necking, capital 350 x 175 on a hollow flare), two-volute scrolled consoles, fascia board and cornice with mitred returns, sill and stallriser, window frames, the shop door glazed from 600 level with the sill and its plate in the lock rail, the F1 side door's slot and ten fronts assembled by a table with a hinge side each, with the 1990 alterations by kind; measured today on one reached photograph (Leadenhall Market, at its own planes' scales), which corrects the shaft's relief, the plinth's hollow head, the door's glazing and the sill.",
-        "status": "SECOND TRY, 9 October 2026 (cloud week 42), by the target writer, answering the fresh reviewer's eleven faults (TARGET-REVIEW.md, FAIL). Not reviewed again. Nothing is committed. self_check is written by self_check.py.",
+        "status": "SECOND TRY, 9 October 2026 (cloud week 42), by the target writer, answering the fresh reviewer's eleven faults (TARGET-REVIEW.md, FAIL); then FIXES APPLIED after the second review (one fault, two narrow points) by Jafar's ruling of 9 October, NOT RE-REVIEWED. Nothing is committed. self_check is written by self_check.py.",
         "units": "millimetres; angles in degrees; colours sRGB 0-255 (aged to 1990); roughness 0-1; metal 0-1",
         "axes": {
             "u": "across the bay from the VIEWER'S left party-wall line (0) to the right one (6000), as a player standing in the street and facing the front sees it IN THE GAME (the fascia target's frame: on the east parade low street x is on the viewer's RIGHT, on the west block on the viewer's LEFT)",
@@ -376,9 +378,9 @@ def build():
                 "window_default": T.WINDOW_LEN, "window_no_side_door": T.ZONE - T.SHOP_SLOT,
                 "z": {"sill_top": 600.0, "sill_underside": 525.0, "transom": [2400.0, 2480.0], "head": [2790.0, 2850.0], "fascia": [2850.0, 3400.0], "cornice": [3400.0, 3550.0]},
                 "d": {"shaft_front": T.SHAFT_PROUD, "plinth_front": T.PLINTH_PROUD, "capital_top_front": T.CAP_TOP_PROUD, "fascia_face": 120.0, "cornice_nose": 215.0,
-                      "console_front": 180.0, "sill_nose": 150.0, "stallriser_face": 125.0, "frame_fronts": [95.0, 100.0], "mullion_front": 92.0, "glass": 30.0,
+                      "console_front": 205.0, "console_min_front": 140.0, "sill_nose": 150.0, "stallriser_face": 125.0, "frame_fronts": [95.0, 100.0], "mullion_front": 92.0, "glass": 30.0,
                       "shutter_curtain": 170.0, "shutter_rails": [150.0, 190.0], "shutter_hood": 210.0},
-                "source": "Read: SCENE-SLOTS.md, the shopfront kit README, the fascia target (board 295 to 5705, 120 proud, cornice top 3.55), fascia-01 (cornice 5892 x 215 x 150, console 240 x 180 x 550); Derived: the zones (350 + 944 + 1006 + 3350 + 350 = 6000)"},
+                "source": "Read: SCENE-SLOTS.md, the shopfront kit README, the fascia target (board 295 to 5705, 120 proud, cornice top 3.55), fascia-01 (cornice 5892 x 215 x 150; the console 240 x 180 x 550 of the built mesh is deepened to 205 by the second review); Derived: the zones (350 + 944 + 1006 + 3350 + 350 = 6000)"},
         "photo": photo,
         "derived_rules": derived,
         "parts": {"pilaster": pil, "console": con, "fascia_board": fas, "cornice": cor, "sill": sil, "stallriser": sta, "window_frame": win,
@@ -394,13 +396,14 @@ def build():
             "plinth_tall": "P1's plinth at the street's scale, 800 high (variants.plinth_tall of the pilaster): NOT used; Rita's 600 wins",
             "cornice_tall": {"use": "optional: a cornice 300 high (z 3400 to 3700), 280 deep, for a reviewer who reads P1's crown as binding; the crown is not measurable by the method, so there is no photographic basis; it would collide with the fascia target's hanging-sign brackets at 3.60 and the first-floor sills; NOT the default",
                              "dims": {"height": 300.0, "depth": 280.0}},
-            "shutter_down": "the newsagent's curtain lowered: a slatted plane at d 170 over window and door, z 0 to 2550, between the guide rails (d 150 to 190), clear of every frame, the sill (nose 150) and the threshold (130)",
+            "shutter_down": "the newsagent's curtain lowered: a slatted plane at d 170 over window and door, z 0 to 2550, between the guide rails (d 150 to 190), clear of every frame, the sill (nose 150) and the threshold (130); the hood (d 0 to 210, z 2550 to 2850) is set into the toplight zone with the head, bars and glass cut away behind it",
             "paint_fresh": "each paint's fresh value is the fascia target's where it has one (palette.srgb_fresh); the rest are the aged value lifted 8 per cent",
         },
         "evidence_basis": X.EVIDENCE,
         "kit_vs_target": X.KIT_VS_TARGET,
         "disagreements_photographs_win": X.DISAGREEMENTS,
         "review_faults_answered": X.REVIEW_FAULTS,
+        "fixes_after_second_review": X.FIXES_AFTER_SECOND_REVIEW,
         "sources": X.SOURCES,
         "unreached": X.UNREACHED,
         "would_read_when_network_opens": X.WOULD_READ,

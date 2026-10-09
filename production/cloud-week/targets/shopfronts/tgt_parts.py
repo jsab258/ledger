@@ -62,10 +62,11 @@ def pilaster():
     plinth_panel_stile = [(0, 0), (PP, 0), (PP, PT - 30), (PP - 4, PT - 24), (SP + 15, PT), (0, PT)]
     plinth_panel_field = [(0, 0), (PP, 0), (PP, 120), (PP - 4, 124), (PP - 12, 132), (PP - 12, PT - 92), (PP - 4, PT - 84), (PP, PT - 80),
                           (PP, PT - 30), (PP - 4, PT - 24), (SP + 15, PT), (0, PT)]
-    # the base ogee (the kit's BASE: pilaster.py): 25 proud of the shaft's face, 60 high, on the plinth's top, returned along both
+    # the base ogee (the kit's BASE, pilaster.py, made 15 proud instead of 25): 60 high, on the plinth's top, returned along both
     # sides of the shaft
-    base_ogee = [(SP, PT), (SP + 25, PT), (SP + 25, PT + 8), (SP + 21, PT + 12), (SP + 15, PT + 17), (SP + 10, PT + 24),
-                 (SP + 6, PT + 33), (SP + 3, PT + 45), (SP, PT + 60)]
+    # the second review's points: 15 proud, so its front (d 155) stands on the cap's flat (which runs to d 155), not over the weathering
+    base_ogee = [(SP, PT), (SP + 15, PT), (SP + 15, PT + 8), (SP + 12.6, PT + 12), (SP + 9, PT + 17), (SP + 6, PT + 24),
+                 (SP + 3.6, PT + 33), (SP + 1.8, PT + 45), (SP, PT + 60)]
     # the stepped plinth of the render variant, from P1's four members: three steps, then a hollow moulding (cavetto) and a band
     # under the shaft. P1's plinth is 1123 mm high at its own scale; Rita's line keeps ours at 600: the head (cavetto 95 + band 21,
     # as P1's) is kept whole and the three lower blocks are shortened (360 / 450 / 484 against P1's 504 / 631 / 684 on 800)
@@ -133,7 +134,7 @@ def pilaster():
         rect("plinth_field", 50, 132, 300, PT - 92, "sunk"),
         rect("plinth_rail_b", 50, 120, 300, 132), rect("plinth_rail_t", 50, PT - 92, 300, PT - 80),
         rect("plinth_cap", 0, PT - 80, 350, PT),
-        rect("base_ogee", u0 - 25, PT, u1 + 25, PT + 60, "raised"),
+        rect("base_ogee", u0 - 15, PT, u1 + 15, PT + 60, "raised"),
         rect("shaft_bottom_rail", u0, PT + 60, u1, br_top), rect("shaft_stile_l", u0, br_top, 75, 2430),
         rect("shaft_stile_r", 275, br_top, u1, 2430), rect("shaft_field", 75, br_top, 275, 2430, "sunk"),
         rect("shaft_top_rail", u0, 2430, u1, NECK_Z),
@@ -144,7 +145,7 @@ def pilaster():
         rect("plinth_field", 50, 132, 300, PT - 92, "sunk"),
         rect("plinth_rail_b", 50, 120, 300, 132), rect("plinth_rail_t", 50, PT - 92, 300, PT - 80),
         rect("plinth_cap", 0, PT - 80, 350, PT),
-        rect("base_ogee", u0 - 25, PT, u1 + 25, PT + 60, "raised"),
+        rect("base_ogee", u0 - 15, PT, u1 + 15, PT + 60, "raised"),
         rect("shaft_bottom_rail", u0, PT + 60, u1, br_top), rect("shaft_top_rail", u0, 2430, u1, NECK_Z),
     ] + [rect("flute_%d" % (k + 1), lo, br_top, hi, 2430, "sunk") for k, (lo, hi) in enumerate(reversed(flute_edges))] + cap_elev
     # the render variant, drawn for a LEFT pilaster (the free side to the right, u = 350): the steps are inset on the free side only
@@ -180,7 +181,8 @@ def pilaster():
                                      "required": 40.0},
             "plinth_top_rule": "Rita's line: the plinth's top is level with the sill's top and the stallriser's (600), on every front; P1's is 1.33 times its sill (variants.plinth_tall)",
             "shaft_bottom_rail_top_z": br_top, "shaft_top_rail_bottom_z": 2430.0,
-            "base_ogee": {"proud_of_shaft_face": 25.0, "height": 60.0, "z_range": [PT, PT + 60], "returned_on": "both sides of the shaft (to u 5 and u 345 in the slot)",
+            "base_ogee": {"proud_of_shaft_face": 15.0, "height": 60.0, "z_range": [PT, PT + 60], "returned_on": "both sides of the shaft (to u 15 and u 335 in the slot)",
+                          "kit_proud": 25.0, "why_15": "the cap's flat runs to d 155 and the weathering falls beyond it: a 25 ogee (front d 165) would float 10 over the slope (the second review's narrow point 1)",
                           "used_by": "panel and flute variants (the stepped render variant has a cavetto head instead)"},
             "stepped_head": {"cavetto_z": [head_z, PT - 21], "cavetto_d": [PP - 8, PP - 32], "band_z": [PT - 21, PT], "band_d": PP - 32,
                              "band_in_front_of_shaft": (PP - 32) - SP, "note": "P1: a hollow moulding 77.5 px (134 mm at the pilaster plane, 95 at 800/1123) high setting back about 26, a flat band 17.5 px (21 at 800/1123) on top, the shaft just behind it"},
@@ -214,12 +216,12 @@ def pilaster():
         },
         "profiles": {
             "plinth_cap_side": {"plane": "d-z", "points": pts(plinth_cap),
-                                "note": "the timber plinth's cap, the kit's: a 50 mm nose face, a 4 x 6 bead, then the top falling to the street over 21 mm from d 155 to 176 (the kit's steep weathering); the flat (d 0 to 155) takes the shaft's foot and the base ogee (d 140 to 165)"},
+                                "note": "the timber plinth's cap, the kit's: a 50 mm nose face, a 4 x 6 bead, then the top falling to the street over 21 mm from d 155 to 176 (the kit's steep weathering); the flat (d 0 to 155) takes the shaft's foot and the base ogee (d 140 to 155)"},
             "plinth_panel_side_through_stile": {"plane": "d-z", "points": pts(plinth_panel_stile)},
             "plinth_panel_side_through_field": {"plane": "d-z", "points": pts(plinth_panel_field),
                                                 "note": "sunk 12 mm between the stiles; 45 degree sticking at the field's edge; the quarter-round bead is a separate planted piece"},
             "base_ogee": {"plane": "d-z", "points": pts(base_ogee),
-                          "note": "the kit's base moulding (pilaster.py BASE): an ogee 25 proud of the shaft's face and 60 high, standing on the plinth's top (z 600 to 660), returned on both sides of the shaft; panel and flute variants only (restored: P1 shows a moulding at the shaft's foot)"},
+                          "note": "the kit's base moulding (pilaster.py BASE) at 15 proud instead of 25 (the second review's points): an ogee 15 proud of the shaft's face and 60 high, standing on the plinth's top (z 600 to 660) wholly on the cap's flat (to d 155), returned on both sides of the shaft; panel and flute variants only (restored: P1 shows a moulding at the shaft's foot)"},
             "plinth_stepped_side": {"plane": "d-z", "points": pts(stepped),
                                     "note": "render variant, P1's members at Rita's 600: block (0 to 360), a step (360 to 450) 4 back, a step (450 to 484) 8 back, a hollow (cavetto, a quarter ellipse centred at d 172, z 579, 24 by 95) from d 172 at z 484 back to d 148 at z 579, a flat band 21 high at d 148 to z 600; the shaft (140) stands 8 behind the band"},
             "plinth_tall_stepped_side": {"plane": "d-z", "points": pts(tall),
@@ -239,26 +241,34 @@ def pilaster():
 
 
 # ---- the console ---------------------------------------------------------------------------------
+CONSOLE_DEPTH = 205.0         # under the cornice's 215 nose: the oversail is 10
+CONSOLE_FOOT_D = 172.0        # the foot stands on the capital's flat top (which reaches d 172)
+CONSOLE_MIN_FRONT = 140.0     # the console's front is at least this far out at every height (the board's face is 120, its mould 132)
+
+
 def console():
-    """A scrolled bracket in the same 240 x 180 x 550 envelope (the built fascia_console_01), drawn as a scroll: the outline forms an
-    upper volute (eye at d 126, z 470, outer radius 54: the front reaches d 180 at z 470 and rolls back over the top through
-    (126, 524)), a concave waist (narrowest d 62 at z 130) and a lower volute rolling the other way (eye at d 46, z 62, outer radius 30,
-    reaching d 76), under a cap block 180 deep at z 528 to 550. Judgement: no photograph of a console was reached."""
-    UC, UR = (126.0, 470.0), 54.0
-    LC, LR_ = (46.0, 62.0), 30.0
+    """A scrolled bracket in a 240 x 205 x 550 envelope (the second review's amendment of the first try's 180: the built fascia_console_01
+    stands behind the fascia board's bed mould for most of its height), drawn as a scroll that rises from the front of the capital: a foot
+    240 x 172 on the capital's flat, a lower volute (eye d 158, z 48, outer radius 26, reaching d 184), a concave waist (narrowest d 140 at
+    z 140), a stem swelling to d 150 at z 330, an upper volute (eye d 160, z 468, outer radius 45: the front reaches d 205 at z 468 and rolls
+    back over the top through (160, 513) into the eye) and a cap block 205 deep at z 528 to 550. Judgement: no photograph of a console was
+    reached."""
+    UC, UR = (160.0, 468.0), 45.0
+    LC, LR_ = (158.0, 48.0), 26.0
 
     def circ(c, r, a0, a1, n):
         return [(c[0] + r * math.cos(math.radians(a0 + (a1 - a0) * k / n)), c[1] + r * math.sin(math.radians(a0 + (a1 - a0) * k / n))) for k in range(n + 1)]
-    zf = LC[1] - math.sqrt(LR_ ** 2 - (60.0 - LC[0]) ** 2)                      # where the foot's front (d 60) meets the lower volute
-    a0 = math.degrees(math.atan2(zf - LC[1], 60.0 - LC[0]))
-    lower = circ(LC, LR_, a0, 0.0, 5)[:-1] + circ(LC, LR_, 0.0, 40.0, 4)         # round the lower volute's front: from the foot through its eastern point (d 76 at z 62) to 40 degrees
+    zf = LC[1] - math.sqrt(LR_ ** 2 - (CONSOLE_FOOT_D - LC[0]) ** 2)             # where the foot's front (d 172) meets the lower volute
+    a0 = math.degrees(math.atan2(zf - LC[1], CONSOLE_FOOT_D - LC[0]))
+    lower = circ(LC, LR_, a0, 0.0, 5)[:-1] + circ(LC, LR_, 0.0, 40.0, 4)         # from the foot through the eastern point (d 184 at z 48) to 40 degrees
     p40 = lower[-1]
-    waist1 = bezier(p40, (p40[0] - 5.1, p40[1] + 6.1), (62.0, 115.0), (62.0, 130.0), 6)       # concave: d falls to its narrowest, 62 at z 130
-    waist2 = bezier((62.0, 130.0), (62.0, 190.0), (84.0, 300.0), (84.0, 374.0), 10)           # back out along the stem
-    fillet = circ((126.0, 374.0), 42.0, 180.0, 90.0, 8)                                       # the concave corner under the upper volute
-    upper = circ(UC, UR, 270.0, 450.0, 24)                                                   # up the front of the upper volute and over its top
-    side = [(0, 0), (60, 0), (60, zf)] + lower[1:] + waist1[1:] + waist2[1:] + fillet[1:] + upper[1:] + \
-        [(126.0, 528.0), (180.0, 528.0), (180.0, 550.0), (0.0, 550.0)]
+    waist1 = bezier(p40, (p40[0] - 16.1, p40[1] + 19.2), (140.0, 115.0), (140.0, 140.0), 8)   # concave: d falls to its narrowest, 140 at z 140
+    waist2 = bezier((140.0, 140.0), (140.0, 200.0), (150.0, 270.0), (150.0, 330.0), 10)        # swelling to d 150 at z 330
+    stem = [(150.0, 330.0), (150.0, 413.0)]
+    fillet = circ((160.0, 413.0), 10.0, 180.0, 90.0, 6)                                        # the concave corner under the upper volute
+    upper = circ(UC, UR, 270.0, 450.0, 24)                                                    # up the front of the upper volute and over its top
+    side = [(0, 0), (CONSOLE_FOOT_D, 0), (CONSOLE_FOOT_D, zf)] + lower[1:] + waist1[1:] + waist2[1:] + stem[1:] + fillet[1:] + upper[1:] + \
+        [(160.0, 528.0), (CONSOLE_DEPTH, 528.0), (CONSOLE_DEPTH, 550.0), (0.0, 550.0)]
     side = dedupe(side)
 
     # the side grooves follow the outline 8 mm inside it (5 wide, 4 deep) and wind into an eye boss 16 across, 3 proud
@@ -274,21 +284,21 @@ def console():
             a = math.radians(sign * th)
             out.append((c[0] + r * math.cos(a), c[1] + r * math.sin(a)))
         return out
-    g_up = spiral_cw_or_ccw(UC, 46.0, 10.0, 1.25, 90.0, +1)          # counter-clockwise from the front, over the top, into the eye
-    g_lo = spiral_cw_or_ccw(LC, 22.0, 12.0, 1.0, 0.0, -1, n=32)      # clockwise: rolling the other way
+    g_up = spiral_cw_or_ccw(UC, 37.0, 10.0, 1.25, 90.0, +1)          # counter-clockwise from the front, over the top, into the eye
+    g_lo = spiral_cw_or_ccw(LC, 18.0, 11.0, 1.0, 0.0, -1, n=32)      # clockwise: rolling the other way
     boss_up = circ(UC, 8.0, 0.0, 360.0, 16)[:-1]
     boss_lo = circ(LC, 8.0, 0.0, 360.0, 16)[:-1]
 
-    # the leaf on the front face (u from the console's centre line, z local): an acanthus pendant, 3 lobes
+    # the leaf on the front face (u from the console's centre line, z local): an acanthus pendant, 3 lobes, between z 150 and 420
     def leaf_outline():
         right = []
         for z, w in [(440, 58), (420, 60), (396, 52), (384, 46), (368, 54), (344, 50), (330, 42), (312, 48), (288, 42),
                      (272, 34), (252, 38), (232, 30), (212, 24), (190, 18), (160, 9), (120, 0)]:
-            right.append((w, z))
+            right.append((w, 150.0 + (z - 120.0) * 270.0 / 320.0))          # the first try's 120..440 squeezed into 150..420
         left = [(-u, z) for u, z in reversed(right[:-1])]
         return right + left
     leaf = leaf_outline()
-    plan = [(-120, 0), (120, 0), (120, 168), (108, 180), (-108, 180), (-120, 168)]
+    plan = [(-120, 0), (120, 0), (120, CONSOLE_DEPTH - 12), (108, CONSOLE_DEPTH), (-108, CONSOLE_DEPTH), (-120, CONSOLE_DEPTH - 12)]
     front_el = [{"name": "face", "kind": "face", "pts": [[-120, 0], [120, 0], [120, 550], [-120, 550]]},
                 {"name": "leaf", "kind": "relief", "pts": [[round(a, 1), round(b, 1)] for a, b in leaf]}]
     return {
@@ -296,37 +306,40 @@ def console():
         "count_per_bay": 2,
         "centre_u": [175, 5825],
         "u_range": [[55, 295], [5705, 5945]],
-        "dims": {"width": 240.0, "depth": 180.0, "height": 550.0, "z_bottom": 2850.0, "z_top": 3400.0,
-                 "toe_depth": 60.0, "toe_width": 240.0, "side_chamfer": 12.0,
-                 "foot_on_capital": "the toe (240 x 60 at z 2850) stands wholly on the capital's top, whose top is 350 x 175; the lower volute overhangs it by 16",
-                 "cap_block": {"d": 180.0, "z_local": [528.0, 550.0]},
-                 "upper_volute": {"eye_dz": [126.0, 470.0], "outer_radius": 54.0, "front_d_at_eye_z": 180.0, "top_point_dz": [126.0, 524.0], "turns": 1.25,
+        "dims": {"width": 240.0, "depth": CONSOLE_DEPTH, "height": 550.0, "z_bottom": 2850.0, "z_top": 3400.0,
+                 "toe_depth": CONSOLE_FOOT_D, "toe_width": 240.0, "side_chamfer": 12.0,
+                 "min_front_d": CONSOLE_MIN_FRONT,
+                 "front_rule": "the console's front stands at least d 140 at every height from 2850 to 3400, in front of the fascia board's bed mould (132) and face (120), so no board end is exposed beside the console; the board's ends are let into the console's sides behind its front",
+                 "foot_on_capital": "the foot (240 x 172 at z 2850) stands on the capital's flat top (which reaches d 172; nominally 350 x 175), so the console rises from the capital's front; the lower volute reaches d 184, 9 past the capital's front (175)",
+                 "cap_block": {"d": CONSOLE_DEPTH, "z_local": [528.0, 550.0]},
+                 "upper_volute": {"eye_dz": [160.0, 468.0], "outer_radius": 45.0, "front_d_at_eye_z": CONSOLE_DEPTH, "top_point_dz": [160.0, 513.0], "turns": 1.25,
                                   "direction": "counter-clockwise seen with the street to the right: up the front, over the top, back and down into the eye"},
-                 "waist": {"narrowest_d": 62.0, "at_z_local": 130.0, "concave": True},
-                 "lower_volute": {"eye_dz": [46.0, 62.0], "outer_radius": 30.0, "reach_d_at_eye_z": 76.0, "direction": "clockwise inward: rolling the other way"},
+                 "waist": {"narrowest_d": 140.0, "at_z_local": 140.0, "concave": True},
+                 "stem": {"d_at_z_local_330": 150.0},
+                 "lower_volute": {"eye_dz": [158.0, 48.0], "outer_radius": 26.0, "reach_d_at_eye_z": 184.0, "direction": "clockwise inward: rolling the other way"},
                  "side_grooves": {"inset_from_outline": 8.0, "width": 5.0, "depth": 4.0, "eye_boss_diameter": 16.0, "eye_boss_proud": 3.0,
-                                  "upper": "from the front at r 46 round the top and into the eye in 1.25 turns (r 46 to 10)", "lower": "one turn clockwise (r 22 to 12)"},
-                 "leaf": {"height": 330, "z_local": [120, 440], "max_half_width": 60, "relief_mm": 12,
+                                  "upper": "from the front at r 37 round the top and into the eye in 1.25 turns (r 37 to 10)", "lower": "one turn clockwise (r 18 to 11)"},
+                 "leaf": {"height": 270, "z_local": [150, 420], "max_half_width": 60, "relief_mm": 12,
                           "lobes_per_side": 3, "rib": "a raised central rib 8 wide, 4 proud of the leaf's dome",
                           "groove_between_lobes": {"width": 4, "depth": 3}}},
         "variants": {
             "scroll": {"use": "the original console: two volutes joined by a concave waist under a cap block, an acanthus leaf on the face (all original fronts)",
                        "elevation": front_el},
-            "block": {"use": "a plain block console (the 1930s grocer): the same envelope, the scroll straightened to a 45 degree chamfer, no leaf, three bosses",
-                      "points_side": pts([(0, 0), (60, 0), (60, 40), (180, 400), (180, 550), (0, 550)])},
-            "absent": {"use": "console gone: the foot's stump (60 x 240 x 90) and the screw holes remain on the capital (the empty unit's left console)"},
+            "block": {"use": "a plain block console (the 1930s grocer): the same 240 x 205 x 550 envelope, flaring from the 172 foot to the 205 cap, no leaf, three bosses; its front is at least 172 at every height",
+                      "points_side": pts([(0, 0), (172, 0), (172, 40), (205, 300), (205, 550), (0, 550)])},
+            "absent": {"use": "console gone: the foot's stump (172 x 240 x 90) and the screw holes remain on the capital (the empty unit's left console)"},
         },
         "profiles": {
             "side_silhouette": {"plane": "d-z", "points": pts(side),
-                                "note": "z local from the console's foot (add 2850); wall at d=0 (back), the cornice's soffit meets the top. The outline is a scroll: the toe 60 deep, the lower volute (eye 46, 62, r 30, reaching d 76), a concave waist (narrowest d 62 at z 130), a stem swelling to d 84, a concave fillet under the upper volute (eye 126, 470, r 54: front d 180 at z 470, top (126, 524)), then the cap block (d 180, z 528 to 550) over a notch 4 high at the volute's top. Judgement; the first piece to check against a reached photograph"},
+                                "note": "z local from the console's foot (add 2850); wall at d=0 (back), the cornice's soffit meets the top. A scroll that rises from the front of the capital: the foot 172 deep, the lower volute (eye 158, 48, r 26, reaching d 184), a concave waist (narrowest d 140 at z 140), a stem swelling to d 150 at z 330, a concave fillet under the upper volute (eye 160, 468, r 45: front d 205 at z 468, top (160, 513)), then the cap block (d 205, z 528 to 550) over a notch 15 high at the volute's top. The front is at least 140 at every height. Judgement; the first piece to check against a reached photograph"},
             "plan_at_neck": {"plane": "u-d", "points": pts(plan), "note": "240 wide, 12 mm chamfer down each front edge (the built mesh's per-station taper)"},
             "volute_upper_spiral": {"plane": "d-z", "points": pts(g_up, closed=False),
-                                    "note": "centreline of the groove cut in each side face: 8 inside the outline at the front, then winding into the eye (126, 470) in 1.25 turns, r 46 to 10; 5 wide, 4 deep"},
+                                    "note": "centreline of the groove cut in each side face: 8 inside the outline at the front, then winding into the eye (160, 468) in 1.25 turns, r 37 to 10; 5 wide, 4 deep"},
             "volute_lower_spiral": {"plane": "d-z", "points": pts(g_lo, closed=False),
-                                    "note": "centreline of the lower groove: one turn clockwise about (46, 62), r 22 to 12; 5 wide, 4 deep"},
-            "eye_boss_upper": {"plane": "d-z", "points": pts(boss_up), "note": "a boss 16 across, 3 proud, at the upper eye (126, 470)"},
-            "eye_boss_lower": {"plane": "d-z", "points": pts(boss_lo), "note": "a boss 16 across, 3 proud, at the lower eye (46, 62)"},
-            "leaf_outline": {"plane": "u-z", "points": pts(leaf), "note": "u from the console's centre line, z local; relief domed 12 mm at the rib, 0 at the outline"},
+                                    "note": "centreline of the lower groove: one turn clockwise about (158, 48), r 18 to 11; 5 wide, 4 deep"},
+            "eye_boss_upper": {"plane": "d-z", "points": pts(boss_up), "note": "a boss 16 across, 3 proud, at the upper eye (160, 468)"},
+            "eye_boss_lower": {"plane": "d-z", "points": pts(boss_lo), "note": "a boss 16 across, 3 proud, at the lower eye (158, 48)"},
+            "leaf_outline": {"plane": "u-z", "points": pts(leaf), "note": "u from the console's centre line, z local 150 to 420; relief domed 12 mm at the rib, 0 at the outline"},
         },
     }
 

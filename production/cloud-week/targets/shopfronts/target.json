@@ -2,7 +2,7 @@
  "schema": "cloud-week-42 target v1 (shopfronts)",
  "family": "the shopfront as a kit of parts",
  "summary_line": "The shopfront kit's target (second try): pilasters (plinth 600 at Rita's line, shaft 140 proud, necking, capital 350 x 175 on a hollow flare), two-volute scrolled consoles, fascia board and cornice with mitred returns, sill and stallriser, window frames, the shop door glazed from 600 level with the sill and its plate in the lock rail, the F1 side door's slot and ten fronts assembled by a table with a hinge side each, with the 1990 alterations by kind; measured today on one reached photograph (Leadenhall Market, at its own planes' scales), which corrects the shaft's relief, the plinth's hollow head, the door's glazing and the sill.",
- "status": "SECOND TRY, 9 October 2026 (cloud week 42), by the target writer, answering the fresh reviewer's eleven faults (TARGET-REVIEW.md, FAIL). Not reviewed again. Nothing is committed. self_check is written by self_check.py.",
+ "status": "SECOND TRY, 9 October 2026 (cloud week 42), by the target writer, answering the fresh reviewer's eleven faults (TARGET-REVIEW.md, FAIL); then FIXES APPLIED after the second review (one fault, two narrow points) by Jafar's ruling of 9 October, NOT RE-REVIEWED. Nothing is committed. self_check is written by self_check.py.",
  "units": "millimetres; angles in degrees; colours sRGB 0-255 (aged to 1990); roughness 0-1; metal 0-1",
  "axes": {
   "u": "across the bay from the VIEWER'S left party-wall line (0) to the right one (6000), as a player standing in the street and facing the front sees it IN THE GAME (the fascia target's frame: on the east parade low street x is on the viewer's RIGHT, on the west block on the viewer's LEFT)",
@@ -46,7 +46,8 @@
    "capital_top_front": 175.0,
    "fascia_face": 120.0,
    "cornice_nose": 215.0,
-   "console_front": 180.0,
+   "console_front": 205.0,
+   "console_min_front": 140.0,
    "sill_nose": 150.0,
    "stallriser_face": 125.0,
    "frame_fronts": [
@@ -62,7 +63,7 @@
    ],
    "shutter_hood": 210.0
   },
-  "source": "Read: SCENE-SLOTS.md, the shopfront kit README, the fascia target (board 295 to 5705, 120 proud, cornice top 3.55), fascia-01 (cornice 5892 x 215 x 150, console 240 x 180 x 550); Derived: the zones (350 + 944 + 1006 + 3350 + 350 = 6000)"
+  "source": "Read: SCENE-SLOTS.md, the shopfront kit README, the fascia target (board 295 to 5705, 120 proud, cornice top 3.55), fascia-01 (cornice 5892 x 215 x 150; the console 240 x 180 x 550 of the built mesh is deepened to 205 by the second review); Derived: the zones (350 + 944 + 1006 + 3350 + 350 = 6000)"
  },
  "photo": {
   "id": "P1",
@@ -1754,13 +1755,15 @@
     "shaft_bottom_rail_top_z": 740.0,
     "shaft_top_rail_bottom_z": 2430.0,
     "base_ogee": {
-     "proud_of_shaft_face": 25.0,
+     "proud_of_shaft_face": 15.0,
      "height": 60.0,
      "z_range": [
       600.0,
       660.0
      ],
-     "returned_on": "both sides of the shaft (to u 5 and u 345 in the slot)",
+     "returned_on": "both sides of the shaft (to u 15 and u 335 in the slot)",
+     "kit_proud": 25.0,
+     "why_15": "the cap's flat runs to d 155 and the weathering falls beyond it: a 25 ogee (front d 165) would float 10 over the slope (the second review's narrow point 1)",
      "used_by": "panel and flute variants (the stepped render variant has a cavetto head instead)"
     },
     "stepped_head": {
@@ -2007,19 +2010,19 @@
        "kind": "raised",
        "pts": [
         [
-         5.0,
+         15.0,
          600.0
         ],
         [
-         345.0,
+         335.0,
          600.0
         ],
         [
-         345.0,
+         335.0,
          660.0
         ],
         [
-         5.0,
+         15.0,
          660.0
         ]
        ]
@@ -2453,19 +2456,19 @@
        "kind": "raised",
        "pts": [
         [
-         5.0,
+         15.0,
          600.0
         ],
         [
-         345.0,
+         335.0,
          600.0
         ],
         [
-         345.0,
+         335.0,
          660.0
         ],
         [
-         5.0,
+         15.0,
          660.0
         ]
        ]
@@ -3498,7 +3501,7 @@
        600.0
       ]
      ],
-     "note": "the timber plinth's cap, the kit's: a 50 mm nose face, a 4 x 6 bead, then the top falling to the street over 21 mm from d 155 to 176 (the kit's steep weathering); the flat (d 0 to 155) takes the shaft's foot and the base ogee (d 140 to 165)"
+     "note": "the timber plinth's cap, the kit's: a 50 mm nose face, a 4 x 6 bead, then the top falling to the street over 21 mm from d 155 to 176 (the kit's steep weathering); the flat (d 0 to 155) takes the shaft's foot and the base ogee (d 140 to 155)"
     },
     "plinth_panel_side_through_stile": {
      "plane": "d-z",
@@ -3591,31 +3594,31 @@
        600.0
       ],
       [
-       165.0,
+       155.0,
        600.0
       ],
       [
-       165.0,
+       155.0,
        608.0
       ],
       [
-       161.0,
+       152.6,
        612.0
       ],
       [
-       155.0,
+       149.0,
        617.0
       ],
       [
-       150.0,
+       146.0,
        624.0
       ],
       [
-       146.0,
+       143.6,
        633.0
       ],
       [
-       143.0,
+       141.8,
        645.0
       ],
       [
@@ -3623,7 +3626,7 @@
        660.0
       ]
      ],
-     "note": "the kit's base moulding (pilaster.py BASE): an ogee 25 proud of the shaft's face and 60 high, standing on the plinth's top (z 600 to 660), returned on both sides of the shaft; panel and flute variants only (restored: P1 shows a moulding at the shaft's foot)"
+     "note": "the kit's base moulding (pilaster.py BASE) at 15 proud instead of 25 (the second review's points): an ogee 15 proud of the shaft's face and 60 high, standing on the plinth's top (z 600 to 660) wholly on the cap's flat (to d 155), returned on both sides of the shaft; panel and flute variants only (restored: P1 shows a moulding at the shaft's foot)"
     },
     "plinth_stepped_side": {
      "plane": "d-z",
@@ -4279,16 +4282,18 @@
    ],
    "dims": {
     "width": 240.0,
-    "depth": 180.0,
+    "depth": 205.0,
     "height": 550.0,
     "z_bottom": 2850.0,
     "z_top": 3400.0,
-    "toe_depth": 60.0,
+    "toe_depth": 172.0,
     "toe_width": 240.0,
     "side_chamfer": 12.0,
-    "foot_on_capital": "the toe (240 x 60 at z 2850) stands wholly on the capital's top, whose top is 350 x 175; the lower volute overhangs it by 16",
+    "min_front_d": 140.0,
+    "front_rule": "the console's front stands at least d 140 at every height from 2850 to 3400, in front of the fascia board's bed mould (132) and face (120), so no board end is exposed beside the console; the board's ends are let into the console's sides behind its front",
+    "foot_on_capital": "the foot (240 x 172 at z 2850) stands on the capital's flat top (which reaches d 172; nominally 350 x 175), so the console rises from the capital's front; the lower volute reaches d 184, 9 past the capital's front (175)",
     "cap_block": {
-     "d": 180.0,
+     "d": 205.0,
      "z_local": [
       528.0,
       550.0
@@ -4296,30 +4301,33 @@
     },
     "upper_volute": {
      "eye_dz": [
-      126.0,
-      470.0
+      160.0,
+      468.0
      ],
-     "outer_radius": 54.0,
-     "front_d_at_eye_z": 180.0,
+     "outer_radius": 45.0,
+     "front_d_at_eye_z": 205.0,
      "top_point_dz": [
-      126.0,
-      524.0
+      160.0,
+      513.0
      ],
      "turns": 1.25,
      "direction": "counter-clockwise seen with the street to the right: up the front, over the top, back and down into the eye"
     },
     "waist": {
-     "narrowest_d": 62.0,
-     "at_z_local": 130.0,
+     "narrowest_d": 140.0,
+     "at_z_local": 140.0,
      "concave": true
+    },
+    "stem": {
+     "d_at_z_local_330": 150.0
     },
     "lower_volute": {
      "eye_dz": [
-      46.0,
-      62.0
+      158.0,
+      48.0
      ],
-     "outer_radius": 30.0,
-     "reach_d_at_eye_z": 76.0,
+     "outer_radius": 26.0,
+     "reach_d_at_eye_z": 184.0,
      "direction": "clockwise inward: rolling the other way"
     },
     "side_grooves": {
@@ -4328,14 +4336,14 @@
      "depth": 4.0,
      "eye_boss_diameter": 16.0,
      "eye_boss_proud": 3.0,
-     "upper": "from the front at r 46 round the top and into the eye in 1.25 turns (r 46 to 10)",
-     "lower": "one turn clockwise (r 22 to 12)"
+     "upper": "from the front at r 37 round the top and into the eye in 1.25 turns (r 37 to 10)",
+     "lower": "one turn clockwise (r 18 to 11)"
     },
     "leaf": {
-     "height": 330,
+     "height": 270,
      "z_local": [
-      120,
-      440
+      150,
+      420
      ],
      "max_half_width": 60,
      "relief_mm": 12,
@@ -4379,153 +4387,153 @@
        "pts": [
         [
          58,
-         440
+         420.0
         ],
         [
          60,
-         420
+         403.1
         ],
         [
          52,
-         396
+         382.9
         ],
         [
          46,
-         384
+         372.8
         ],
         [
          54,
-         368
+         359.2
         ],
         [
          50,
-         344
+         339.0
         ],
         [
          42,
-         330
+         327.2
         ],
         [
          48,
-         312
+         312.0
         ],
         [
          42,
-         288
+         291.8
         ],
         [
          34,
-         272
+         278.2
         ],
         [
          38,
-         252
+         261.4
         ],
         [
          30,
-         232
+         244.5
         ],
         [
          24,
-         212
+         227.6
         ],
         [
          18,
-         190
+         209.1
         ],
         [
          9,
-         160
+         183.8
         ],
         [
          0,
-         120
+         150.0
         ],
         [
          -9,
-         160
+         183.8
         ],
         [
          -18,
-         190
+         209.1
         ],
         [
          -24,
-         212
+         227.6
         ],
         [
          -30,
-         232
+         244.5
         ],
         [
          -38,
-         252
+         261.4
         ],
         [
          -34,
-         272
+         278.2
         ],
         [
          -42,
-         288
+         291.8
         ],
         [
          -48,
-         312
+         312.0
         ],
         [
          -42,
-         330
+         327.2
         ],
         [
          -50,
-         344
+         339.0
         ],
         [
          -54,
-         368
+         359.2
         ],
         [
          -46,
-         384
+         372.8
         ],
         [
          -52,
-         396
+         382.9
         ],
         [
          -60,
-         420
+         403.1
         ],
         [
          -58,
-         440
+         420.0
         ]
        ]
       }
      ]
     },
     "block": {
-     "use": "a plain block console (the 1930s grocer): the same envelope, the scroll straightened to a 45 degree chamfer, no leaf, three bosses",
+     "use": "a plain block console (the 1930s grocer): the same 240 x 205 x 550 envelope, flaring from the 172 foot to the 205 cap, no leaf, three bosses; its front is at least 172 at every height",
      "points_side": [
       [
        0.0,
        0.0
       ],
       [
-       60.0,
+       172.0,
        0.0
       ],
       [
-       60.0,
+       172.0,
        40.0
       ],
       [
-       180.0,
-       400.0
+       205.0,
+       300.0
       ],
       [
-       180.0,
+       205.0,
        550.0
       ],
       [
@@ -4535,7 +4543,7 @@
      ]
     },
     "absent": {
-     "use": "console gone: the foot's stump (60 x 240 x 90) and the screw holes remain on the capital (the empty unit's left console)"
+     "use": "console gone: the foot's stump (172 x 240 x 90) and the screw holes remain on the capital (the empty unit's left console)"
     }
    },
    "profiles": {
@@ -4547,251 +4555,255 @@
        0.0
       ],
       [
-       60.0,
+       172.0,
        0.0
       ],
       [
-       60.0,
-       35.47
+       172.0,
+       26.09
       ],
       [
-       65.39,
-       39.1
+       176.08,
+       29.32
       ],
       [
-       69.86,
-       43.82
+       179.44,
+       33.29
       ],
       [
-       73.22,
-       49.38
+       181.94,
+       37.85
       ],
       [
-       75.3,
-       55.54
+       183.48,
+       42.82
       ],
       [
-       76.0,
-       62.0
+       184.0,
+       48.0
       ],
       [
-       75.54,
-       67.21
+       183.61,
+       52.51
       ],
       [
-       74.19,
-       72.26
+       182.43,
+       56.89
       ],
       [
-       71.98,
-       77.0
+       180.52,
+       61.0
       ],
       [
-       68.98,
-       81.28
+       177.92,
+       64.71
       ],
       [
-       66.69,
-       85.97
+       171.67,
+       72.43
       ],
       [
-       64.9,
-       93.29
+       165.2,
+       81.06
       ],
       [
-       63.58,
-       102.3
+       158.84,
+       90.38
       ],
       [
-       62.68,
-       112.06
+       152.92,
+       100.18
       ],
       [
-       62.16,
-       121.61
+       147.75,
+       110.25
       ],
       [
-       62.0,
-       130.0
+       143.66,
+       120.39
       ],
       [
-       62.62,
-       149.41
+       140.97,
+       130.37
       ],
       [
-       64.29,
-       171.31
+       140.0,
+       140.0
       ],
       [
-       66.75,
-       195.18
+       140.28,
+       158.28
       ],
       [
-       69.74,
-       220.5
+       141.04,
+       177.04
       ],
       [
-       73.0,
-       246.75
+       142.16,
+       196.16
       ],
       [
-       76.26,
-       273.42
+       143.52,
+       215.52
       ],
       [
-       79.25,
-       300.0
+       145.0,
+       235.0
       ],
       [
-       81.71,
-       325.97
+       146.48,
+       254.48
       ],
       [
-       83.38,
-       350.81
+       147.84,
+       273.84
       ],
       [
-       84.0,
-       374.0
+       148.96,
+       292.96
       ],
       [
-       84.81,
-       382.19
+       149.72,
+       311.72
       ],
       [
-       87.2,
-       390.07
+       150.0,
+       330.0
       ],
       [
-       91.08,
-       397.33
+       150.0,
+       413.0
       ],
       [
-       96.3,
-       403.7
+       150.34,
+       415.59
       ],
       [
-       102.67,
-       408.92
+       151.34,
+       418.0
       ],
       [
-       109.93,
-       412.8
+       152.93,
+       420.07
       ],
       [
-       117.81,
-       415.19
+       155.0,
+       421.66
       ],
       [
-       126.0,
-       416.0
+       157.41,
+       422.66
       ],
       [
-       133.05,
-       416.46
+       160.0,
+       423.0
       ],
       [
-       139.98,
-       417.84
+       165.87,
+       423.38
       ],
       [
-       146.66,
-       420.11
+       171.65,
+       424.53
       ],
       [
-       153.0,
-       423.23
+       177.22,
+       426.43
       ],
       [
-       158.87,
-       427.16
+       182.5,
+       429.03
       ],
       [
-       164.18,
-       431.82
+       187.39,
+       432.3
       ],
       [
-       168.84,
-       437.13
+       191.82,
+       436.18
       ],
       [
-       172.77,
-       443.0
+       195.7,
+       440.61
       ],
       [
-       175.89,
-       449.34
+       198.97,
+       445.5
       ],
       [
-       178.16,
-       456.02
+       201.57,
+       450.78
       ],
       [
-       179.54,
-       462.95
+       203.47,
+       456.35
       ],
       [
-       180.0,
-       470.0
+       204.62,
+       462.13
       ],
       [
-       179.54,
-       477.05
+       205.0,
+       468.0
       ],
       [
-       178.16,
-       483.98
+       204.62,
+       473.87
       ],
       [
-       175.89,
-       490.66
+       203.47,
+       479.65
       ],
       [
-       172.77,
-       497.0
+       201.57,
+       485.22
       ],
       [
-       168.84,
-       502.87
+       198.97,
+       490.5
       ],
       [
-       164.18,
-       508.18
+       195.7,
+       495.39
       ],
       [
-       158.87,
-       512.84
+       191.82,
+       499.82
       ],
       [
-       153.0,
-       516.77
+       187.39,
+       503.7
       ],
       [
-       146.66,
-       519.89
+       182.5,
+       506.97
       ],
       [
-       139.98,
-       522.16
+       177.22,
+       509.57
       ],
       [
-       133.05,
-       523.54
+       171.65,
+       511.47
       ],
       [
-       126.0,
-       524.0
+       165.87,
+       512.62
       ],
       [
-       126.0,
+       160.0,
+       513.0
+      ],
+      [
+       160.0,
        528.0
       ],
       [
-       180.0,
+       205.0,
        528.0
       ],
       [
-       180.0,
+       205.0,
        550.0
       ],
       [
@@ -4799,7 +4811,7 @@
        550.0
       ]
      ],
-     "note": "z local from the console's foot (add 2850); wall at d=0 (back), the cornice's soffit meets the top. The outline is a scroll: the toe 60 deep, the lower volute (eye 46, 62, r 30, reaching d 76), a concave waist (narrowest d 62 at z 130), a stem swelling to d 84, a concave fillet under the upper volute (eye 126, 470, r 54: front d 180 at z 470, top (126, 524)), then the cap block (d 180, z 528 to 550) over a notch 4 high at the volute's top. Judgement; the first piece to check against a reached photograph"
+     "note": "z local from the console's foot (add 2850); wall at d=0 (back), the cornice's soffit meets the top. A scroll that rises from the front of the capital: the foot 172 deep, the lower volute (eye 158, 48, r 26, reaching d 184), a concave waist (narrowest d 140 at z 140), a stem swelling to d 150 at z 330, a concave fillet under the upper volute (eye 160, 468, r 45: front d 205 at z 468, top (160, 513)), then the cap block (d 205, z 528 to 550) over a notch 15 high at the volute's top. The front is at least 140 at every height. Judgement; the first piece to check against a reached photograph"
     },
     "plan_at_neck": {
      "plane": "u-d",
@@ -4814,19 +4826,19 @@
       ],
       [
        120.0,
-       168.0
+       193.0
       ],
       [
        108.0,
-       180.0
+       205.0
       ],
       [
        -108.0,
-       180.0
+       205.0
       ],
       [
        -120.0,
-       168.0
+       193.0
       ]
      ],
      "note": "240 wide, 12 mm chamfer down each front edge (the built mesh's per-station taper)"
@@ -4835,512 +4847,512 @@
      "plane": "d-z",
      "points": [
       [
-       172.0,
-       470.0
+       197.0,
+       468.0
       ],
       [
-       171.39,
-       477.49
+       196.51,
+       474.03
       ],
       [
-       169.56,
-       484.79
+       195.04,
+       479.89
       ],
       [
-       166.57,
-       491.68
+       192.63,
+       485.44
       ],
       [
-       162.49,
-       498.0
+       189.35,
+       490.52
       ],
       [
-       157.45,
-       503.57
+       185.29,
+       495.0
       ],
       [
-       151.56,
-       508.25
+       180.56,
+       498.76
       ],
       [
-       144.98,
-       511.9
+       175.27,
+       501.7
       ],
       [
-       137.91,
-       514.43
+       169.58,
+       503.74
       ],
       [
-       130.51,
-       515.78
+       163.63,
+       504.82
       ],
       [
-       123.02,
-       515.53
+       157.6,
+       504.64
       ],
       [
-       115.85,
-       513.52
+       151.82,
+       503.07
       ],
       [
-       109.26,
-       510.42
+       146.49,
+       500.62
       ],
       [
-       103.39,
-       506.36
+       141.72,
+       497.39
       ],
       [
-       98.39,
-       501.48
+       137.64,
+       493.49
       ],
       [
-       94.35,
-       495.97
+       134.33,
+       489.06
       ],
       [
-       91.36,
-       490.0
+       131.85,
+       484.25
       ],
       [
-       89.44,
-       483.76
+       130.24,
+       479.2
       ],
       [
-       88.61,
-       477.44
+       129.5,
+       474.07
       ],
       [
-       88.83,
-       471.22
+       129.63,
+       468.99
       ],
       [
-       90.06,
-       465.27
+       130.57,
+       464.13
       ],
       [
-       92.21,
-       459.75
+       132.26,
+       459.59
       ],
       [
-       95.17,
-       454.8
+       134.64,
+       455.49
       ],
       [
-       98.82,
-       450.52
+       137.58,
+       451.94
       ],
       [
-       103.02,
-       447.02
+       141.0,
+       449.0
       ],
       [
-       107.62,
-       444.34
+       144.76,
+       446.73
       ],
       [
-       112.45,
-       442.53
+       148.74,
+       445.16
       ],
       [
-       117.38,
-       441.59
+       152.81,
+       444.3
       ],
       [
-       122.25,
-       441.5
+       156.86,
+       444.14
       ],
       [
-       126.91,
-       442.2
+       160.76,
+       444.65
       ],
       [
-       131.24,
-       443.64
+       164.42,
+       445.78
       ],
       [
-       135.14,
-       445.72
+       167.73,
+       447.45
       ],
       [
-       138.5,
-       448.35
+       170.62,
+       449.6
       ],
       [
-       141.27,
-       451.4
+       173.03,
+       452.12
       ],
       [
-       143.39,
-       454.75
+       174.92,
+       454.92
       ],
       [
-       144.84,
-       458.28
+       176.25,
+       457.89
       ],
       [
-       145.63,
-       461.87
+       177.03,
+       460.94
       ],
       [
-       145.78,
-       465.39
+       177.27,
+       463.97
       ],
       [
-       145.33,
-       468.73
+       176.99,
+       466.89
       ],
       [
-       144.35,
-       471.81
+       176.25,
+       469.6
       ],
       [
-       142.9,
-       474.53
+       175.09,
+       472.04
       ],
       [
-       141.09,
-       476.84
+       173.59,
+       474.16
       ],
       [
-       138.99,
+       171.82,
+       475.9
+      ],
+      [
+       169.86,
+       477.24
+      ],
+      [
+       167.8,
+       478.16
+      ],
+      [
+       165.71,
        478.68
       ],
       [
-       136.72,
-       480.04
+       163.67,
+       478.8
       ],
       [
-       134.37,
-       480.91
+       161.74,
+       478.56
       ],
       [
-       132.04,
-       481.3
-      ],
-      [
-       129.82,
-       481.24
-      ],
-      [
-       127.78,
-       480.79
-      ],
-      [
-       126.0,
-       480.0
+       160.0,
+       478.0
       ]
      ],
-     "note": "centreline of the groove cut in each side face: 8 inside the outline at the front, then winding into the eye (126, 470) in 1.25 turns, r 46 to 10; 5 wide, 4 deep"
+     "note": "centreline of the groove cut in each side face: 8 inside the outline at the front, then winding into the eye (160, 468) in 1.25 turns, r 37 to 10; 5 wide, 4 deep"
     },
     "volute_lower_spiral": {
      "plane": "d-z",
      "points": [
       [
-       68.0,
-       62.0
+       176.0,
+       48.0
       ],
       [
-       67.27,
-       57.77
+       175.44,
+       44.53
       ],
       [
-       65.75,
-       53.82
+       174.23,
+       41.28
       ],
       [
-       63.51,
-       50.3
+       172.42,
+       38.36
       ],
       [
-       60.67,
-       47.33
+       170.11,
+       35.89
       ],
       [
-       57.35,
-       45.01
+       167.39,
+       33.94
       ],
       [
-       53.7,
-       43.41
+       164.39,
+       32.58
       ],
       [
-       49.87,
-       42.57
+       161.21,
+       31.85
       ],
       [
-       46.0,
-       42.5
+       158.0,
+       31.75
       ],
       [
-       42.26,
-       43.18
+       154.87,
+       32.28
       ],
       [
-       38.78,
-       44.56
+       151.95,
+       33.39
       ],
       [
-       35.69,
-       46.57
+       149.34,
+       35.03
       ],
       [
-       33.1,
-       49.1
+       147.13,
+       37.13
       ],
       [
-       31.09,
-       52.03
+       145.4,
+       39.58
       ],
       [
-       29.72,
-       55.26
+       144.2,
+       42.28
       ],
       [
-       29.02,
-       58.62
+       143.56,
+       45.13
       ],
       [
-       29.0,
-       62.0
+       143.5,
+       48.0
       ],
       [
-       29.63,
-       65.26
+       143.99,
+       50.79
       ],
       [
-       30.87,
-       68.27
+       145.01,
+       53.38
       ],
       [
-       32.64,
-       70.92
+       146.49,
+       55.69
       ],
       [
-       34.86,
-       73.14
+       148.37,
+       57.63
       ],
       [
-       37.42,
-       74.84
+       150.55,
+       59.15
       ],
       [
-       40.21,
-       75.97
+       152.95,
+       60.18
       ],
       [
-       43.11,
-       76.53
+       155.47,
+       60.72
       ],
       [
-       46.0,
-       76.5
+       158.0,
+       60.75
       ],
       [
-       48.77,
-       75.91
+       160.44,
+       60.29
       ],
       [
-       51.31,
-       74.82
+       162.71,
+       59.38
       ],
       [
-       53.53,
-       73.28
+       164.72,
+       58.06
       ],
       [
-       55.37,
-       71.37
+       166.4,
+       56.4
       ],
       [
-       56.76,
-       69.19
+       167.69,
+       54.48
       ],
       [
-       57.66,
-       66.83
+       168.57,
+       52.38
       ],
       [
-       58.08,
-       64.4
+       169.0,
+       50.19
       ],
       [
-       58.0,
-       62.0
+       169.0,
+       48.0
       ]
      ],
-     "note": "centreline of the lower groove: one turn clockwise about (46, 62), r 22 to 12; 5 wide, 4 deep"
+     "note": "centreline of the lower groove: one turn clockwise about (158, 48), r 18 to 11; 5 wide, 4 deep"
     },
     "eye_boss_upper": {
      "plane": "d-z",
      "points": [
       [
-       134.0,
-       470.0
+       168.0,
+       468.0
       ],
       [
-       133.39,
-       473.06
+       167.39,
+       471.06
       ],
       [
-       131.66,
-       475.66
+       165.66,
+       473.66
       ],
       [
-       129.06,
-       477.39
+       163.06,
+       475.39
       ],
       [
-       126.0,
-       478.0
+       160.0,
+       476.0
       ],
       [
-       122.94,
-       477.39
+       156.94,
+       475.39
       ],
       [
-       120.34,
-       475.66
+       154.34,
+       473.66
       ],
       [
-       118.61,
-       473.06
+       152.61,
+       471.06
       ],
       [
-       118.0,
-       470.0
+       152.0,
+       468.0
       ],
       [
-       118.61,
-       466.94
+       152.61,
+       464.94
       ],
       [
-       120.34,
-       464.34
+       154.34,
+       462.34
       ],
       [
-       122.94,
-       462.61
+       156.94,
+       460.61
       ],
       [
-       126.0,
-       462.0
+       160.0,
+       460.0
       ],
       [
-       129.06,
-       462.61
+       163.06,
+       460.61
       ],
       [
-       131.66,
-       464.34
+       165.66,
+       462.34
       ],
       [
-       133.39,
-       466.94
+       167.39,
+       464.94
       ]
      ],
-     "note": "a boss 16 across, 3 proud, at the upper eye (126, 470)"
+     "note": "a boss 16 across, 3 proud, at the upper eye (160, 468)"
     },
     "eye_boss_lower": {
      "plane": "d-z",
      "points": [
       [
-       54.0,
-       62.0
+       166.0,
+       48.0
       ],
       [
-       53.39,
-       65.06
+       165.39,
+       51.06
       ],
       [
-       51.66,
-       67.66
+       163.66,
+       53.66
       ],
       [
-       49.06,
-       69.39
+       161.06,
+       55.39
       ],
       [
-       46.0,
-       70.0
+       158.0,
+       56.0
       ],
       [
-       42.94,
-       69.39
+       154.94,
+       55.39
       ],
       [
-       40.34,
-       67.66
+       152.34,
+       53.66
       ],
       [
-       38.61,
-       65.06
+       150.61,
+       51.06
       ],
       [
-       38.0,
-       62.0
+       150.0,
+       48.0
       ],
       [
-       38.61,
-       58.94
+       150.61,
+       44.94
       ],
       [
-       40.34,
-       56.34
+       152.34,
+       42.34
       ],
       [
-       42.94,
-       54.61
+       154.94,
+       40.61
       ],
       [
-       46.0,
-       54.0
+       158.0,
+       40.0
       ],
       [
-       49.06,
-       54.61
+       161.06,
+       40.61
       ],
       [
-       51.66,
-       56.34
+       163.66,
+       42.34
       ],
       [
-       53.39,
-       58.94
+       165.39,
+       44.94
       ]
      ],
-     "note": "a boss 16 across, 3 proud, at the lower eye (46, 62)"
+     "note": "a boss 16 across, 3 proud, at the lower eye (158, 48)"
     },
     "leaf_outline": {
      "plane": "u-z",
      "points": [
       [
        -58.0,
-       440.0
-      ],
-      [
-       -60.0,
        420.0
       ],
       [
+       -60.0,
+       403.12
+      ],
+      [
        -52.0,
-       396.0
+       382.88
       ],
       [
        -46.0,
-       384.0
+       372.75
       ],
       [
        -54.0,
-       368.0
+       359.25
       ],
       [
        -50.0,
-       344.0
+       339.0
       ],
       [
        -42.0,
-       330.0
+       327.19
       ],
       [
        -48.0,
@@ -5348,63 +5360,63 @@
       ],
       [
        -42.0,
-       288.0
+       291.75
       ],
       [
        -34.0,
-       272.0
+       278.25
       ],
       [
        -38.0,
-       252.0
+       261.38
       ],
       [
        -30.0,
-       232.0
+       244.5
       ],
       [
        -24.0,
-       212.0
+       227.62
       ],
       [
        -18.0,
-       190.0
+       209.06
       ],
       [
        -9.0,
-       160.0
+       183.75
       ],
       [
        0.0,
-       120.0
+       150.0
       ],
       [
        9.0,
-       160.0
+       183.75
       ],
       [
        18.0,
-       190.0
+       209.06
       ],
       [
        24.0,
-       212.0
+       227.62
       ],
       [
        30.0,
-       232.0
+       244.5
       ],
       [
        38.0,
-       252.0
+       261.38
       ],
       [
        34.0,
-       272.0
+       278.25
       ],
       [
        42.0,
-       288.0
+       291.75
       ],
       [
        48.0,
@@ -5412,34 +5424,34 @@
       ],
       [
        42.0,
-       330.0
+       327.19
       ],
       [
        50.0,
-       344.0
+       339.0
       ],
       [
        54.0,
-       368.0
+       359.25
       ],
       [
        46.0,
-       384.0
+       372.75
       ],
       [
        52.0,
-       396.0
+       382.88
       ],
       [
        60.0,
-       420.0
+       403.12
       ],
       [
        58.0,
-       440.0
+       420.0
       ]
      ],
-     "note": "u from the console's centre line, z local; relief domed 12 mm at the rib, 0 at the outline"
+     "note": "u from the console's centre line, z local 150 to 420; relief domed 12 mm at the rib, 0 at the outline"
     }
    }
   },
@@ -7415,7 +7427,7 @@
  "meets": [
   {
    "between": "pilaster shaft and plinth",
-   "how": "panel and flute: the shaft stands on the plinth cap's flat with the kit's base ogee (25 proud of the shaft's face, 60 high, z 600 to 660) returned on both sides; render: the hollow (cavetto) head and its band take the shaft directly, the band 8 in front of the shaft's face (P1 shows a moulding at the shaft's foot; the first try's 'P1 shows none' was wrong). A 3 mm shadow line at the foot where paint has filled the gap"
+   "how": "panel and flute: the shaft stands on the plinth cap's flat with the kit's base ogee made 15 proud of the shaft's face (front d 155, on the flat; the kit's 25 would float over the weathering), 60 high, z 600 to 660, returned on both sides; render: the hollow (cavetto) head and its band take the shaft directly, the band 8 in front of the shaft's face (P1 shows a moulding at the shaft's foot; the first try's 'P1 shows none' was wrong). A 3 mm shadow line at the foot where paint has filled the gap"
   },
   {
    "between": "pilaster pair at the party wall",
@@ -7427,11 +7439,11 @@
   },
   {
    "between": "console and capital",
-   "how": "the toe 240 x 60 stands on the abacus's top at z 2850, centred on u 175 / 5825; 0.0 mm gap; the capital's top is 350 x 175 (its flat reaches d 172, an ovolo rounds the last 3); two 12 mm hardwood dowels 40 deep from the toe into the capital; two M10 coach screws through the console's back into the wall plate (hidden); the lower volute (d 76) overhangs the capital by 16, well inside its 175"
+   "how": "the foot 240 x 172 stands on the abacus's top at z 2850, centred on u 175 / 5825; 0.0 mm gap; the capital's top is 350 x 175 (its flat reaches d 172, an ovolo rounds the last 3), so the console rises from the capital's front; two 12 mm hardwood dowels 40 deep from the foot into the capital; two M10 coach screws through the console's back into the wall plate (hidden); the lower volute (d 184) overhangs the capital's front by 9"
   },
   {
    "between": "fascia board and console",
-   "how": "the board's ends are let into the consoles' inner sides by a 12 mm rebate; a 2 mm paint-filled line shows on each side"
+   "how": "the board's ends are let into the consoles' inner sides by a 12 mm rebate; the console's front is at least d 140 at every height, in front of the board's face (120) and its bed mould (132), so no board end or mould stands proud of the console; a 2 mm paint-filled line shows on each side (check CON-09)"
   },
   {
    "between": "fascia board and capital",
@@ -7439,7 +7451,7 @@
   },
   {
    "between": "cornice and fascia",
-   "how": "the soffit lies on the board's top and the consoles' tops at z 3400 with 0 gap; the drip groove at d 155 to 175 lies outside the board's face (120) by 35; a lead apron over the wash, 100 up the wall"
+   "how": "the soffit lies on the board's top and the consoles' tops at z 3400 with 0 gap; the drip groove at d 155 to 175 lies outside the board's face (120) by 35; the nose (215) oversails the board by 95 and the console (205) by 10; a lead apron over the wash, 100 up the wall"
   },
   {
    "between": "cornice and the party wall",
@@ -7487,7 +7499,7 @@
   },
   {
    "between": "roller-shutter hood, rails and curtain",
-   "how": "the hood (300 high, 210 deep, z 2550 to 2850) is screwed to the fascia's rail and hides the toplights above 2550; the guide rails (50 wide, 40 deep, d 150 to 190, z 0 to 2550) stand on steel spacer brackets bolted through the frames into the pilaster's core; the curtain runs in one plane at d 170, 20 clear of the sill's nose, across window and door to the footway"
+   "how": "the hood (300 high, 210 deep, z 2550 to 2850, u 350 to 4706) is SET INTO the toplight zone and screwed to the fascia's rail: the head, the toplight bars and the toplight glass are cut away at z 2550 behind it, so it shares no space with them, and 70 of the toplights shows below; the guide rails (50 wide, 40 deep, d 150 to 190, z 0 to 2550) stand on steel spacer brackets bolted through the frames into the pilaster's core; the curtain runs in one plane at d 170, 20 clear of the sill's nose, across window and door to the footway"
   }
  ],
  "fixings": [
@@ -7525,7 +7537,7 @@
   },
   {
    "part": "roller-shutter box",
-   "fixing": "four M8 bolts per rail through the frame into the pilaster core, the rails standing out on steel spacer brackets (d 150 to 190), bolt heads visible; the hood on steel angle brackets screwed into the fascia's rail, 600 pitch; rivets on the end caps"
+   "fixing": "four M8 bolts per rail through the frame into the pilaster core, the rails standing out on steel spacer brackets (d 150 to 190), bolt heads visible; the hood, set into the toplight zone with the head, bars and glass cut away behind it, on steel angle brackets screwed into the fascia's rail, 600 pitch; rivets on the end caps"
   }
  ],
  "wear": {
@@ -7688,7 +7700,7 @@
    "kind": "the fascia target"
   },
   "roller_shutter": {
-   "what": "a steel roller shutter over the window and shop door: a hood under the fascia, two guide rails standing out in front of the frames on spacer brackets, a 77 mm slat curtain running in front of the sill and the stallriser to the footway",
+   "what": "a steel roller shutter over the window and shop door: a hood under the fascia set into the toplight zone (the head, bars and glass cut away behind it), two guide rails standing out in front of the frames on spacer brackets, a 77 mm slat curtain running in front of the sill and the stallriser to the footway",
    "numbers": {
     "hood_height": 300,
     "hood_depth_d": 210,
@@ -7699,6 +7711,26 @@
     "hood_front": "five-faced (octagon half)",
     "hood_ends": "end caps 3 mm, riveted",
     "hides": "the toplights above 2550 (the hood is 300 high over toplights at 2480 to 2790): 70 of the toplights' 310 shows",
+    "hood_sits": "SET INTO the toplight zone, not in front of the frames: the window's and the shop door's head (z 2790 to 2850), the toplight bars and the toplight glass are CUT AWAY at z 2550 behind the hood over its width (u 350 to 4706), so the hood (d 0 to 210) shares no space with them; the jambs stop at 2550 under it and the fascia's rail carries it",
+    "cut_away": {
+     "z_from": 2550,
+     "u_range": [
+      350,
+      4706
+     ],
+     "parts": [
+      "window head",
+      "shop-door head",
+      "window toplight bars",
+      "window toplight glass",
+      "door toplight bars",
+      "door toplight glass"
+     ],
+     "toplights_showing_z": [
+      2480,
+      2550
+     ]
+    },
     "guide_rail": {
      "face": 50,
      "depth": 40,
@@ -9810,7 +9842,7 @@
     "n_mullions": 2,
     "toplights": 8,
     "toplight_aligned": false,
-    "glazing": "ovolo beads; the shutter's hood hides the toplights above 2550, 70 shows"
+    "glazing": "ovolo beads; the shutter's hood is set into the toplight zone: the head, bars and glass are cut away above 2550 behind it and 70 of the toplights shows"
    },
    "pilaster": "panel",
    "console": "scroll",
@@ -10000,7 +10032,7 @@
     "depth": 280.0
    }
   },
-  "shutter_down": "the newsagent's curtain lowered: a slatted plane at d 170 over window and door, z 0 to 2550, between the guide rails (d 150 to 190), clear of every frame, the sill (nose 150) and the threshold (130)",
+  "shutter_down": "the newsagent's curtain lowered: a slatted plane at d 170 over window and door, z 0 to 2550, between the guide rails (d 150 to 190), clear of every frame, the sill (nose 150) and the threshold (130); the hood (d 0 to 210, z 2550 to 2850) is set into the toplight zone with the head, bars and glass cut away behind it",
   "paint_fresh": "each paint's fresh value is the fascia target's where it has one (palette.srgb_fresh); the rest are the aged value lifted 8 per cent"
  },
  "evidence_basis": {
@@ -10029,7 +10061,7 @@
   "console": {
    "photo_today": [],
    "earlier_notes": [
-    "envelope 240 x 180 x 550 of the built mesh (fascia-01)",
+    "240 wide x 550 high and a toe on the capital (the built mesh, fascia-01; its 180 depth is deepened to 205)",
     "consoles at each end of the fascia on the capitals (FRONTAGE: CV, KC, CW)"
    ],
    "judgement": [
@@ -10156,7 +10188,7 @@
     "panelled and fluted shafts as the period's timber types",
     "the plinth 600 high, level with the stallriser and the sill (Rita's line)",
     "a necking bead, a die with a raised tablet, a cap moulding",
-    "the kit's base ogee (25 proud of the shaft, 60 high), which P1 confirms: it shows a moulding at the shaft's foot",
+    "the kit's base ogee (60 high), which P1 confirms: it shows a moulding at the shaft's foot (made 15 proud, not the kit's 25, so that it stands on the cap's flat)",
     "the backing core, so no daylight shows between pilaster and frames"
    ],
    "target_changes": [
@@ -10189,17 +10221,17 @@
   },
   "console": {
    "kit_gets_right": [
-    "the 240 x 180 x 550 envelope of the street's built mesh and its toe 60 deep standing on the capital's top",
-    "the console centred on the pilaster, gap 0.0 mm"
+    "240 wide x 550 high, z 2850 to 3400, centred on the pilaster, gap 0.0 mm",
+    "the console standing on the capital's top"
    ],
    "target_changes": [
     {
-     "what": "the silhouette redrawn as a scroll: an upper volute (eye at d 126, z 470, outer radius 54, the front reaching d 180 at z 470 and rolling back over the top through (126, 524)), a concave waist (narrowest d 62 at z 130) and a lower volute rolling the other way (eye at 46, 62, radius 30, reaching d 76), under a cap block 180 deep at z 528 to 550; grooves 8 inside the outline ending in eye bosses; the acanthus leaf kept",
-     "reason": "the first try's 'volute' was a spiral groove on a flat face behind a plain corbel outline (the review's fault 5); the brief asks for the scroll, and a console is seen from the side along the street. NO photograph of a console was reached",
+     "what": "the silhouette redrawn as a scroll in a 240 x 205 x 550 envelope (the built mesh's 180 deep is deepened by 25): a foot 240 x 172 on the capital's flat, a lower volute (eye d 158, z 48, outer radius 26, reaching d 184), a concave waist (narrowest d 140 at z 140), a stem swelling to d 150 at z 330, an upper volute (eye d 160, z 468, outer radius 45, the front reaching d 205 at z 468 and rolling back over the top through (160, 513)), a cap block 205 deep at z 528 to 550; grooves 8 inside the outline ending in eye bosses; the acanthus leaf kept, between z 150 and 420",
+     "reason": "the first try's 'volute' was a groove on a plain corbel (the review's fault 5), and its scroll (waist 62, front 180) then stood BEHIND the fascia board's bed mould (132) for its lower 414 mm and set well back on the deeper capital (the re-review's fault): on all twenty consoles the board's ends showed beside the waist. Now the foot rises from the capital's front, the front is at least 140 at every height and the cornice's 215 nose oversails it by 10. NO photograph of a console was reached",
      "kind": "Judgement"
     },
     {
-     "what": "a plain block variant (the grocer) and an absent variant (the empty unit's left console)",
+     "what": "a plain block variant (the grocer, flaring from the 172 foot to 205) and an absent variant (the empty unit's left console)",
      "reason": "1930s fronts; fascia-01 spec",
      "kind": "Judgement"
     }
@@ -10424,7 +10456,7 @@
    "element": "the scrolled console",
    "book_or_scene": "the brief and the earlier reading: consoles are scrolled brackets",
    "photograph": "P1's pier caps are straight stepped blocks, not scrolls: the photograph does not show the part",
-   "chosen": "a two-volute scroll in the built envelope by Judgement; stated as not established by a photograph, and the first piece to check against a reached one",
+   "chosen": "a two-volute scroll in a 240 x 205 x 550 envelope by Judgement (the built mesh's 180 stood behind the board); stated as not established by a photograph, and the first piece to check against a reached one",
    "photo_followed": false
   },
   {
@@ -10452,7 +10484,7 @@
   {
    "n": 3,
    "fault": "the plinth's head moulding (a hollow and a band) was dropped as 'P1 shows none'",
-   "answer": "plinth_stepped_side carries a cavetto (quarter ellipse 24 x 95) and a band 21 high; the review's points are kept verbatim as plinth_tall_stepped_side (+30 in d); the kit's base ogee restored on the panel and flute variants; 'P1 shows none' struck from meets and section 5; PIL-14 covers both and PIL-16/17 state them. The head sits at Rita's 600 (see fault 3b)",
+   "answer": "plinth_stepped_side carries a cavetto (quarter ellipse 24 x 95) and a band 21 high; the review's points are kept verbatim as plinth_tall_stepped_side (+30 in d); the kit's base ogee restored on the panel and flute variants (made 15 proud after the second review); 'P1 shows none' struck from meets and section 5; PIL-14 covers both and PIL-16/17 state them. The head sits at Rita's 600 (see fault 3b)",
    "followed": true
   },
   {
@@ -10470,7 +10502,7 @@
   {
    "n": 5,
    "fault": "the 'scrolled' console was a plain corbel with a decal spiral",
-   "answer": "side_silhouette redrawn as a two-volute scroll (upper eye (126, 470) r 54 with the front at d 180 and the top at (126, 524); waist narrowest 62 at z 130; lower eye (46, 62) r 30 reaching d 76; cap block 180 deep at z 528 to 550); grooves 8 inside the outline, 5 wide, 4 deep, ending in 16 mm eye bosses 3 proud; the leaf kept; CON-07 and CON-08 follow; the console is the first item of could_not_settle",
+   "answer": "side_silhouette redrawn as a two-volute scroll; after the second review (its narrower and deeper amendment, see fixes_after_second_review) a 240 x 205 x 550 scroll with a foot 240 x 172 on the capital, a lower volute (eye (158, 48) r 26, reaching 184), a waist narrowest 140 at z 140, a stem 150 at z 330, an upper volute (eye (160, 468) r 45, front 205, top (160, 513)) and a cap block 205 deep at z 528 to 550; grooves 8 inside the outline, 5 wide and 4 deep, ending in 16 mm eye bosses 3 proud; the leaf kept (z 150 to 420); CON-07/08/09 recomputed from the outline itself; the console is the first item of could_not_settle",
    "followed": true
   },
   {
@@ -10482,7 +10514,7 @@
   {
    "n": 7,
    "fault": "the roller shutter's curtain was at the glass plane, inside the frames",
-   "answer": "curtain plane d 170 (20 clear of the sill's nose), guide rails 50 x 40 at d 150 to 190, z 0 to 2550, on steel spacer brackets through the frames into the pilaster core, hood 300 high x 210 deep; the newsagent's glazing note: the hood hides the toplights above 2550, 70 shows; ALT-01, ALT-02 and ALT-07 follow; the drawing shows the hood and rails",
+   "answer": "curtain plane d 170 (20 clear of the sill's nose), guide rails 50 x 40 at d 150 to 190, z 0 to 2550, on steel spacer brackets through the frames into the pilaster core, hood 300 high x 210 deep, set into the toplight zone (the head, bars and glass cut away behind it, after the second review); the newsagent's glazing note: the hood hides the toplights above 2550, 70 shows; ALT-01, ALT-02 and ALT-07 follow; the drawing shows the hood and rails",
    "followed": true
   },
   {
@@ -10513,6 +10545,26 @@
    "n": "notes",
    "fault": "the review's narrow points",
    "answer": "an overlay of the target's Rita elevation on the re-projected pier at the shaft's width with a differences table (photo.rita_vs_p1, previews P1-leadenhall-pier-elevation-ritas-on-photo); the laundry's refit and the vent pipe added to could_not_settle; the kick plate and foot strip: the strip is the plate's lowest 30; the drawings (D2) now show the whitewash, the laundry's box sign, the tea room's panel and the grocer's slabs; the A5 notice's statutory size noted, from memory",
+   "followed": true
+  }
+ ],
+ "fixes_after_second_review": [
+  {
+   "n": 1,
+   "fault": "the consoles stood behind the fascia board's bed mould and set back on the deeper capital (the re-review's one fault)",
+   "fix": "side_silhouette redrawn within 240 x 205 x 550: foot 240 x 172 on the capital's flat; lower volute eye (158, 48) r 26 reaching d 184; waist narrowest d 140 at z 140; stem d 150 at z 330; upper volute eye (160, 468) r 45, front d 205 at z 468, top (160, 513), 1.25 turns; cap block 205 deep at z 528 to 550; grooves 8 inside the outline ending in 16 mm bosses; leaf on the front between z 150 and 420. CON-01 [240, 205, 550], CON-03 the foot 240 x 172 within the capital's top, CON-07 the new eyes, radii and waist, COR-02 oversail [95, 10], and new CON-09: the console's front at least 140 at every z from 2850 to 3400 (so also in front of the bed mould, 132, and the board, 120: no board end stands proud of it). The meets row 'console and capital' (and 'fascia board and console', 'cornice and fascia') rewritten.",
+   "followed": true
+  },
+  {
+   "n": "p1",
+   "fault": "narrow point 1: the base ogee overhangs the timber plinth's flat (a gap of up to 11 mm under its front edge)",
+   "fix": "base_ogee 15 proud, with the review's points (140, 600) (155, 600) (155, 608) (152.6, 612) (149, 617) (146, 624) (143.6, 633) (141.8, 645) (140, 660); PIL-17 [15, 60, 600]; the check against the kit's BASE (25 proud) is now a reported departure and the review's points are the Read.",
+   "followed": true
+  },
+  {
+   "n": "p2",
+   "fault": "narrow point 2: the shutter's hood occupied the frames' space (the head, the toplight bars and the glass) and the overlap test left the hood out",
+   "fix": "the hood is SET INTO the toplight zone: the window's and the shop door's head, the toplight bars and the toplight glass are cut away at z 2550 behind it over u 350 to 4706 (the drawing clips them; 70 of the toplights shows below); the hood is in the overlap test (the guide rails, which stand in front at d 150 to 190, are tested in the section, 50 clear of every frame); new ALT-09 and a recorded `cut_away`.",
    "followed": true
   }
  ],
@@ -10612,7 +10664,7 @@
   "Manufacturers' 1980s sections for aluminium shopfronts (the extrusion widths: 50 and 75 are Judgement here)"
  ],
  "could_not_settle": [
-  "The scrolled console and its leaf: no photograph at all; the console is the FIRST piece to check against a reached photograph. The silhouette keeps the street's built envelope (240 x 180 x 550) and draws two volutes, a waist and a cap block by Judgement; the grooves, bosses and the leaf are Judgement",
+  "The scrolled console and its leaf: no photograph at all; the console is the FIRST piece to check against a reached photograph. The silhouette is a 240 x 205 x 550 scroll (the built mesh's 180 deep stood behind the board) with two volutes, a waist no narrower than d 140 and a cap block by Judgement; the grooves, bosses and the leaf are Judgement",
   "No photograph of a provincial 1900-1935 shopfront was reached (Wikimedia, Geograph, Flickr, archive.org and the council guides all refused; the other British street HDRIs on Poly Haven, urban_street_01 to 04 and bethnal_green_entrance, show no shopfront). P1 is a London arcade (c.1881, from memory) restored in 2019: it governs proportions near eye level (the plinth against the sill, the door glass against the sill, the shaft width, the foot strip, the order of members); it does not govern timber plinth heights on provincial parades, 1970s aluminium sections, a provincial fascia's slope, panel layouts, fluting, console scrolls or leaves, roller-shutter boxes, box signs, lobbies or whitewashed empty units. Those rest on the earlier notes (cited, not re-read) and Judgement, each marked",
   "P1's plinth (1.33 times its sill) against Rita's line (the plinth level with the stallriser): this target keeps Rita's 600 on every front and offers 800 only as variants.plinth_tall. It rests on one market-hall pier and the approved model; if the plan owner wants the photograph's plinth the variant is ready, a visible change to Jafar's model",
   "The 1960s-80s aluminium front's sections (50 x 75, cover caps, mastic joints): Judgement; R05 and R09 only say such fronts existed",
@@ -10814,9 +10866,9 @@
    "id": "PIL-17",
    "part": "pilaster",
    "name": "base ogee (panel and flute)",
-   "measure": "an ogee 25 proud of the shaft's face and 60 high on the plinth's top (z 600 to 660), returned on both sides of the shaft",
+   "measure": "an ogee 15 proud of the shaft's face (the kit's 25 would float over the cap's weathering beyond d 155) and 60 high on the plinth's top (z 600 to 660), returned on both sides of the shaft",
    "expected": [
-    25.0,
+    15.0,
     60.0,
     600.0
    ],
@@ -10828,10 +10880,10 @@
    "id": "CON-01",
    "part": "console",
    "name": "envelope",
-   "measure": "bounding box width x depth x height",
+   "measure": "bounding box width x depth x height (the cornice's 215 nose oversails it by 10)",
    "expected": [
     240.0,
-    180.0,
+    205.0,
     550.0
    ],
    "tolerance": 1.0,
@@ -10855,7 +10907,7 @@
    "id": "CON-03",
    "part": "console",
    "name": "foot on the capital",
-   "measure": "every point of the toe (240 x 60 at z 2850) lies within the capital's top (u 0..350, d 0..175) and at most 1 above it",
+   "measure": "every point of the foot (240 x 172 at z 2850) lies within the capital's top (u 0..350, d 0..175; its flat reaches 172) and at most 1 above it",
    "expected": 0.0,
    "tolerance": 1.0,
    "unit": "mm",
@@ -10900,16 +10952,16 @@
    "id": "CON-07",
    "part": "console",
    "name": "volutes",
-   "measure": "upper volute: eye (d 126, z 470), outer radius 54, the front reaches d 180 at z 470 and the top (126, 524); lower volute: eye (46, 62), outer radius 30, reaching d 76 at z 62; the waist narrowest d 62 at z 130; cap block 180 deep at z 528 to 550",
+   "measure": "upper volute: eye (d 160, z 468), outer radius 45, the front reaches d 205 at z 468 and the top (160, 513); lower volute: eye (158, 48), outer radius 26, reaching d 184 at z 48; the waist narrowest d 140 at z 140; the stem d 150 at z 330; cap block 205 deep at z 528 to 550",
    "expected": [
-    126.0,
-    470.0,
-    54.0,
-    46.0,
-    62.0,
-    30.0,
-    62.0,
-    130.0
+    160.0,
+    468.0,
+    45.0,
+    158.0,
+    48.0,
+    26.0,
+    140.0,
+    140.0
    ],
    "tolerance": 1.5,
    "unit": "mm",
@@ -10929,6 +10981,16 @@
    ],
    "tolerance": 0.5,
    "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "CON-09",
+   "part": "console",
+   "name": "front stands proud of the board",
+   "measure": "the console's front (the largest d of the section at each z) is at least 140 at every z from 2850 to 3400, in front of the fascia board's bed mould (132) and face (120); no board end or bed mould stands proud of it",
+   "expected": 140.0,
+   "tolerance": 0.0,
+   "unit": "mm, at least",
    "method": "mesh bounding box or section"
   },
   {
@@ -10965,7 +11027,7 @@
    "id": "FAS-03",
    "part": "fascia_board",
    "name": "bed mould",
-   "measure": "z 2850 to 2890, front d 132 (43 behind the capital's top front, 175)",
+   "measure": "z 2850 to 2890, front d 132 (43 behind the capital's top front, 175, and 8 behind the console's narrowest front, 140)",
    "expected": [
     2890.0,
     132.0
@@ -10993,10 +11055,10 @@
    "id": "COR-02",
    "part": "cornice",
    "name": "oversail",
-   "measure": "cornice depth minus board face; minus console depth",
+   "measure": "cornice depth minus board face; minus console depth (205)",
    "expected": [
     95.0,
-    35.0
+    10.0
    ],
    "tolerance": 1.0,
    "unit": "mm",
@@ -11320,7 +11382,7 @@
    "id": "ALT-01",
    "part": "roller_shutter",
    "name": "hood",
-   "measure": "height x depth, z range",
+   "measure": "height x depth, z range; the hood is SET INTO the toplight zone: the head, the toplight bars and the glass are cut away at z 2550 behind it over u 350 to 4706",
    "expected": [
     300.0,
     210.0,
@@ -11409,6 +11471,21 @@
     170.0,
     15.0,
     210.0
+   ],
+   "tolerance": 1.0,
+   "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "ALT-09",
+   "part": "roller_shutter",
+   "name": "hood shares no space with the frames",
+   "measure": "the hood (d 0..210, z 2550..2850, u 350..4706) overlaps no other solid of the front in elevation: the head, toplight bars and glass above 2550 are cut away behind it; 70 of the toplights shows below it; the rails (d 150..190) stand in front of the frames (fronts 100), 50 clear",
+   "expected": [
+    2550.0,
+    2850.0,
+    350.0,
+    4706.0
    ],
    "tolerance": 1.0,
    "unit": "mm",
@@ -11829,15 +11906,15 @@
  "self_check": {
   "date": "2026-10-09",
   "script": "self_check.py",
-  "passed": 561,
+  "passed": 569,
   "failed": 0,
-  "reported": 17,
-  "total": 578,
+  "reported": 19,
+  "total": 588,
   "groups": {
    "1 printed": {
-    "pass": 113,
+    "pass": 112,
     "fail": 0,
-    "report": 5
+    "report": 6
    },
    "2 photo": {
     "pass": 81,
@@ -11855,12 +11932,12 @@
     "report": 0
    },
    "5 consistency": {
-    "pass": 293,
+    "pass": 299,
     "fail": 0,
-    "report": 0
+    "report": 1
    },
    "6 faults": {
-    "pass": 15,
+    "pass": 18,
     "fail": 0,
     "report": 0
    }
@@ -11884,6 +11961,12 @@
     "name": "glazed from 600 differs from the scene's 1.0 (D2 lists it: level with the sill, the scene's 1.0 loses)",
     "result": "report",
     "detail": "the photograph and the books agree against the scene"
+   },
+   {
+    "group": "1 printed",
+    "name": "console depth 205 differs from fascia-01's printed 180 (the re-review: the built mesh stands behind the board's bed mould; the cornice's 215 now oversails it by 10)",
+    "result": "report",
+    "detail": "printed 180.0, target 205"
    },
    {
     "group": "1 printed",
@@ -11974,6 +12057,12 @@
     "name": "D11 the two-volute console is Judgement, not photographed",
     "result": "report",
     "detail": "no photograph of one was reached; the first item of could_not_settle"
+   },
+   {
+    "group": "5 consistency",
+    "name": "base ogee 15 proud against the kit's BASE 25 proud (pilaster.py, 9 points; the two-way Hausdorff is 10.0): shortened so that it stands on the cap's flat",
+    "result": "report",
+    "detail": "the second review's narrow point 1"
    }
   ]
  }

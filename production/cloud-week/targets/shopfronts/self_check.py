@@ -25,7 +25,7 @@ import sys
 import numpy as np
 import shapely
 from PIL import Image
-from shapely.geometry import LinearRing, Point, Polygon, box
+from shapely.geometry import LineString, LinearRing, Point, Polygon, box
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -111,15 +111,16 @@ def group1():
         chk(g, "cornice depth 215 (printed 0.2150)", near(num(cor_block, "depth_m"), cd["depth"], 0.01))
         chk(g, "cornice height 150 (printed 0.1500)", near(num(cor_block, "height_m"), cd["height"], 0.01))
         chk(g, "console width 240 (printed 0.2400)", near(num(con_block, "length_m"), T["parts"]["console"]["dims"]["width"], 0.01))
-        chk(g, "console depth 180 (printed 0.1800)", near(num(con_block, "depth_m"), T["parts"]["console"]["dims"]["depth"], 0.01))
+        dep(g, "console depth 205 differs from fascia-01's printed 180 (the re-review: the built mesh stands behind the board's bed mould; the cornice's 215 now oversails it by 10)",
+            near(num(con_block, "depth_m"), 180.0, 0.01) and T["parts"]["console"]["dims"]["depth"] == 205.0 and any(f["n"] == 1 for f in T["fixes_after_second_review"]), "printed %.1f, target 205" % num(con_block, "depth_m"))
         chk(g, "console height 550 (printed 0.5500)", near(num(con_block, "height_m"), T["parts"]["console"]["dims"]["height"], 0.01))
-        # the printed profile's envelope and its fixed points stay (the scroll is Judgement inside the same envelope)
+        # the printed width and height stay; the depth is deepened to 205 (reported above) and the scroll is Judgement inside the new envelope
         side = T["parts"]["console"]["profiles"]["side_silhouette"]["points"]
-        chk(g, "console silhouette keeps the printed envelope: bounding d 0..180, z 0..550", min(p[0] for p in side) == 0.0 and max(p[0] for p in side) == 180.0 and
+        chk(g, "console silhouette: bounding d 0..205, z 0..550 (the printed height 550 kept, the depth deepened from 180)", min(p[0] for p in side) == 0.0 and max(p[0] for p in side) == 205.0 and
             min(p[1] for p in side) == 0.0 and max(p[1] for p in side) == 550.0)
-        chk(g, "console silhouette keeps the printed toe (d 60 at z 0) and cap block (d 180 at z 528 and 550)",
-            any(near(p[0], 60.0, 0.01) and near(p[1], 0.0, 0.01) for p in side) and any(near(p[0], 180.0, 0.01) and near(p[1], 528.0, 0.01) for p in side)
-            and any(near(p[0], 180.0, 0.01) and near(p[1], 550.0, 0.01) for p in side))
+        chk(g, "console silhouette: the foot (d 172 at z 0) stands on the capital's flat top and the cap block (d 205 at z 528 and 550) lies under the cornice's 215 nose",
+            any(near(p[0], 172.0, 0.01) and near(p[1], 0.0, 0.01) for p in side) and any(near(p[0], 205.0, 0.01) and near(p[1], 528.0, 0.01) for p in side)
+            and any(near(p[0], 205.0, 0.01) and near(p[1], 550.0, 0.01) for p in side) and 205.0 < T["parts"]["cornice"]["dims"]["depth"])
         chk(g, "the printed profile's mesh is a few steps with no volute (the review's fault 5): the new outline has two eyes the printed one lacks",
             '"fascia_console_01"' in f01 and "volute" not in con_block.lower())
         cp = T["parts"]["cornice"]["profiles"]["section"]["points"]
@@ -503,12 +504,11 @@ def group5():
     chk(g, "capital flare: a hollow from d 144 at z 154 to d 172 at z 244 (it moves out %.0f over 90, the first try's 14)" % (max(p[0] for p in flare) - 144.0),
         near(min(p[0] for p in flare), 144.0, 0.01) and near(max(p[0] for p in flare), 172.0, 0.01) and near(pd_["capital_die_d"], pd_["shaft_proud"] + 4.0, 0.01))
     chk(g, "capital members add up to 310", sum(v[1] - v[0] for v in pd_["capital_members_z_local"].values()) == 310.0)
-    toe_d, toe_w = 60.0, P["console"]["dims"]["toe_width"]
+    toe_d, toe_w = P["console"]["dims"]["toe_depth"], P["console"]["dims"]["toe_width"]
     capw = pd_["capital_top_width"]
     capd = pd_["capital_top_proud"]
-    chk(g, "console foot (240 x 60) lies wholly on the capital's top (350 x 175)", toe_w <= capw and toe_d <= capd and (capw - toe_w) / 2 >= 0)
+    chk(g, "console foot (240 x 172) lies wholly on the capital's top (350 x 175)", toe_w <= capw and toe_d <= capd and (capw - toe_w) / 2 >= 0)
     side = P["console"]["profiles"]["side_silhouette"]["points"]
-    chk(g, "the console's lower volute (d %.0f) overhangs its toe (60) but stays on the capital's top (175)" % max(p[0] for p in side if p[1] < 120), 60.0 < max(p[0] for p in side if p[1] < 120) < capd)
     cu = P["console"]["u_range"]
     chk(g, "console u ranges lie inside the pilaster slots and centre on 175 / 5825", cu == [[55, 295], [5705, 5945]] and
         all(0 <= a and b <= 350 or 5650 <= a and b <= 6000 for a, b in cu) if False else (cu[0][0] >= 0 and cu[0][1] <= 350 and cu[1][0] >= 5650 and cu[1][1] <= 6000))
@@ -542,29 +542,48 @@ def group5():
     chk(g, "the unused tall plinth carries the review's profile points (+30 in d) to within %.2f mm (two-way Hausdorff)" % hausdorff(tall, [(a + 30 if a > 0 else a, b) for a, b in review]),
         hausdorff(tall, [(a + 30 if a > 0 else a, b) for a, b in review]) <= 1.5)
     kit_src = read("tools/art-recipes/shopfront-kit/pilaster.py")
+    og = pr["base_ogee"]["points"]
+    review_ogee = [(140, 600), (155, 600), (155, 608), (152.6, 612), (149, 617), (146, 624), (143.6, 633), (141.8, 645), (140, 660)]
+    chk(g, "base ogee = the second review's points (15 proud, 60 high on the plinth's top): two-way Hausdorff %.2f" % hausdorff(og, review_ogee),
+        hausdorff(og, review_ogee) <= 0.05 and pd_["base_ogee"]["proud_of_shaft_face"] == 15.0 and pd_["base_ogee"]["height"] == 60.0)
+    flat_to = max(p[0] for p in pr["plinth_cap_side"]["points"] if p[1] == 600.0)
+    chk(g, "base ogee stands wholly on the plinth cap's flat: its front (d %.0f) is within the flat (to d %.0f); no part floats over the weathering" % (max(p[0] for p in og), flat_to),
+        max(p[0] for p in og) <= flat_to and flat_to == 155.0 and all(max(p[0] for p in pr[k]["points"] if p[1] == 600.0) == 155.0 for k in ("plinth_panel_side_through_stile", "plinth_panel_side_through_field")))
     if kit_src:
         m = re.search(r"BASE = \[(.*?)\]\npart", kit_src, re.S)
         kb = [tuple(float(x) * 1000.0 for x in t_) for t_ in re.findall(r"\(([0-9.]+), ([0-9.]+)\)", m.group(1))] if m else []
-        og = pr["base_ogee"]["points"]
-        want = [(140.0 + a, 600.0 + b) for a, b in kb]
-        chk(g, "base ogee = the kit's BASE (pilaster.py), %d points, 25 proud of the shaft face and 60 high on the plinth's top: two-way Hausdorff %.2f" % (len(kb), hausdorff(og, want) if kb else -1),
-            len(kb) == 9 and hausdorff(og, want) <= 1.5 and pd_["base_ogee"]["proud_of_shaft_face"] == 25.0 and pd_["base_ogee"]["height"] == 60.0)
+        want = [(140.0 + a_, 600.0 + b_) for a_, b_ in kb]
+        dep(g, "base ogee 15 proud against the kit's BASE 25 proud (pilaster.py, %d points; the two-way Hausdorff is %.1f): shortened so that it stands on the cap's flat" % (len(kb), hausdorff(og, want) if kb else -1),
+            len(kb) == 9 and max(a_ for a_, b_ in kb) == 25.0 and pd_["base_ogee"]["kit_proud"] == 25.0, "the second review's narrow point 1")
     chk(g, "panel and flute elevations carry the base ogee on the plinth's top (z 600 to 660), the shaft's bottom rail above it", all(any(q["name"] == "base_ogee" and q["pts"][0][1] == 600 and q["pts"][2][1] == 660 for q in T["parts"]["pilaster"]["variants"][v]["elevation"]) for v in ("panel", "flute")))
-    # the console as a scroll (the review's fault 5): the numbers recomputed from the outline itself
+    # the console as a scroll (the review's fault 5) in the deeper envelope of the re-review: the numbers recomputed from the outline itself
     cs = P["console"]
     sd_ = cs["profiles"]["side_silhouette"]["points"]
-    on_up = [p for p in sd_ if abs(math.hypot(p[0] - 126.0, p[1] - 470.0) - 54.0) < 0.6]
-    chk(g, "console upper volute: %d outline points lie on the circle about the eye (126, 470), r 54; the front reaches d %.0f at z 470 and the top is (126, 524)" % (len(on_up), max(p[0] for p in sd_ if abs(p[1] - 470.0) < 1.0)),
-        len(on_up) >= 20 and near(max(p[0] for p in sd_ if abs(p[1] - 470.0) < 1.0), 180.0, 0.01) and any(near(p[0], 126.0, 0.01) and near(p[1], 524.0, 0.01) for p in sd_))
-    waist = min((p for p in sd_ if 100.0 <= p[1] <= 300.0), key=lambda p: p[0])
-    chk(g, "console waist: the narrowest d is %.1f at z %.0f (62 at 130), concave: the outline is further out above and below" % (waist[0], waist[1]), near(waist[0], 62.0, 0.5) and near(waist[1], 130.0, 1.0) and
-        max(p[0] for p in sd_ if 300.0 <= p[1] <= 410.0) > 62.0 + 20.0)
-    on_lo = [p for p in sd_ if abs(math.hypot(p[0] - 46.0, p[1] - 62.0) - 30.0) < 0.6]
-    chk(g, "console lower volute: %d points on the circle about (46, 62), r 30; it reaches d %.0f at z 62 (76)" % (len(on_lo), max(p[0] for p in sd_ if abs(p[1] - 62.0) < 1.0)),
-        len(on_lo) >= 6 and near(max(p[0] for p in sd_ if abs(p[1] - 62.0) < 1.0), 76.0, 0.01))
-    chk(g, "console cap block: d 180 from z 528 to 550", all(any(near(p[0], 180.0, 0.01) and near(p[1], z_, 0.01) for p in sd_) for z_ in (528.0, 550.0)))
     sil = Polygon(sd_)
-    for key, c0, r0, r1_, turns, sign in (("volute_upper_spiral", (126.0, 470.0), 46.0, 10.0, 1.25, +1), ("volute_lower_spiral", (46.0, 62.0), 22.0, 12.0, 1.0, -1)):
+    on_up = [p for p in sd_ if abs(math.hypot(p[0] - 160.0, p[1] - 468.0) - 45.0) < 0.6]
+    chk(g, "console upper volute: %d outline points lie on the circle about the eye (160, 468), r 45; the front reaches d %.0f at z 468 and the top is (160, 513)" % (len(on_up), max(p[0] for p in sd_ if abs(p[1] - 468.0) < 1.0)),
+        len(on_up) >= 20 and near(max(p[0] for p in sd_ if abs(p[1] - 468.0) < 1.0), 205.0, 0.01) and any(near(p[0], 160.0, 0.01) and near(p[1], 513.0, 0.01) for p in sd_))
+    waist = min((p for p in sd_ if 100.0 <= p[1] <= 300.0), key=lambda p: p[0])
+    chk(g, "console waist: the narrowest d is %.2f at z %.0f (140 at 140, at least d 140), concave: the outline is further out above and below" % (waist[0], waist[1]), near(waist[0], 140.0, 0.05) and waist[0] >= 139.99 and near(waist[1], 140.0, 1.0) and
+        max(p[0] for p in sd_ if 300.0 <= p[1] <= 410.0) > 140.0 + 5.0 and max(p[0] for p in sd_ if 0.0 < p[1] <= 100.0) > 140.0 + 20.0)
+    stem_d = max(p[0] for p in sd_ if abs(p[1] - 330.0) < 6.0)
+    chk(g, "console stem: d %.1f at z 330 (150), swelling from the waist" % stem_d, near(stem_d, 150.0, 0.5))
+    on_lo = [p for p in sd_ if abs(math.hypot(p[0] - 158.0, p[1] - 48.0) - 26.0) < 0.6]
+    chk(g, "console lower volute: %d points on the circle about (158, 48), r 26; it reaches d %.0f at z 48 (184)" % (len(on_lo), max(p[0] for p in sd_ if abs(p[1] - 48.0) < 1.0)),
+        len(on_lo) >= 6 and near(max(p[0] for p in sd_ if abs(p[1] - 48.0) < 1.0), 184.0, 0.01))
+    chk(g, "console cap block: d 205 from z 528 to 550", all(any(near(p[0], 205.0, 0.01) and near(p[1], z_, 0.01) for p in sd_) for z_ in (528.0, 550.0)))
+    # the new check: the front stands at least 140 at every height, in front of the bed mould (132) and the board (120)
+    worst_front, worst_z = 1e9, None
+    for z_ in range(0, 551):
+        ln = LineString([(-10.0, z_ + 0.01), (400.0, z_ + 0.01)]).intersection(sil)
+        if not ln.is_empty and ln.bounds[2] < worst_front:
+            worst_front, worst_z = ln.bounds[2], z_
+    bm_front = max(p[0] for p in P["fascia_board"]["profiles"]["section"]["points"])
+    chk(g, "console front: at least d %.2f at every z from 2850 to 3400 (the narrowest, at z %d), in front of the board's bed mould (%.0f) and face (120): no board end or mould stands proud of it" % (worst_front, 2850 + worst_z, bm_front),
+        worst_front >= cs["dims"]["min_front_d"] - 0.01 and cs["dims"]["min_front_d"] == 140.0 and bm_front == 132.0 and worst_front > bm_front and worst_front > 120.0)
+    chk(g, "console foot (%.0f deep, 240 wide) lies wholly on the capital's flat top (d 0..172 of 350 x 175) and the lower volute (d %.0f) overhangs the capital's front by %.0f" % (cs["dims"]["toe_depth"], max(p[0] for p in sd_ if p[1] < 120), max(p[0] for p in sd_ if p[1] < 120) - 175.0),
+        cs["dims"]["toe_depth"] == 172.0 <= P["pilaster"]["dims"]["capital_flat_top_reaches_d"] and cs["dims"]["toe_width"] <= 350.0 and 175.0 < max(p[0] for p in sd_ if p[1] < 120) < 215.0)
+    for key, c0, r0, r1_, turns, sign in (("volute_upper_spiral", (160.0, 468.0), 37.0, 10.0, 1.25, +1), ("volute_lower_spiral", (158.0, 48.0), 18.0, 11.0, 1.0, -1)):
         gr = cs["profiles"][key]["points"]
         ang = [math.atan2(p[1] - c0[1], p[0] - c0[0]) for p in gr]
         tot = 0.0
@@ -579,13 +598,15 @@ def group5():
         chk(g, "console %s: %.2f turns %s, r %.0f to %.0f, wholly inside the outline" % (key, abs(tot) / (2 * math.pi), "counter-clockwise" if tot > 0 else "clockwise", rr0, rr1),
             near(abs(tot) / (2 * math.pi), turns, 0.03) and (tot > 0) == (sign > 0) and near(rr0, r0, 0.6) and near(rr1, r1_, 0.6) and all(sil.contains(Point(p)) for p in gr))
     gd = cs["dims"]["side_grooves"]
-    chk(g, "console grooves: 8 inside the outline (the upper starts at r 46 on the r 54 volute), 5 wide, 4 deep; eye bosses %.0f across, %.0f proud" % (2 * 8.0, gd["eye_boss_proud"]),
-        gd["inset_from_outline"] == 8.0 and 54.0 - 46.0 == gd["inset_from_outline"] and gd["width"] == 5.0 and gd["depth"] == 4.0 and gd["eye_boss_diameter"] == 16.0 and gd["eye_boss_proud"] == 3.0 and
+    chk(g, "console grooves: 8 inside the outline (the upper starts at r 37 on the r 45 volute), 5 wide, 4 deep; eye bosses %.0f across, %.0f proud" % (2 * 8.0, gd["eye_boss_proud"]),
+        gd["inset_from_outline"] == 8.0 and 45.0 - 37.0 == gd["inset_from_outline"] and gd["width"] == 5.0 and gd["depth"] == 4.0 and gd["eye_boss_diameter"] == 16.0 and gd["eye_boss_proud"] == 3.0 and
         near(max(p[0] for p in cs["profiles"]["eye_boss_upper"]["points"]) - min(p[0] for p in cs["profiles"]["eye_boss_upper"]["points"]), 16.0, 0.3))
+    lf = cs["profiles"]["leaf_outline"]["points"]
+    chk(g, "console leaf: on the front between z_local 150 and 420 (%.0f to %.0f)" % (min(p[1] for p in lf), max(p[1] for p in lf)), near(min(p[1] for p in lf), 150.0, 0.5) and near(max(p[1] for p in lf), 420.0, 0.5) and cs["dims"]["leaf"]["z_local"] == [150, 420])
     # cornice over fascia
     corn = P["cornice"]["profiles"]["section"]["points"]
-    chk(g, "cornice soffit is flat to the drip groove and oversails the board face (120) by 95 and the console (180) by 35",
-        max(p[0] for p in corn) - 120 == 95 and max(p[0] for p in corn) - 180 == 35)
+    chk(g, "cornice soffit is flat to the drip groove and oversails the board face (120) by 95 and the console (205) by 10",
+        max(p[0] for p in corn) - 120 == 95 and max(p[0] for p in corn) - P["console"]["dims"]["depth"] == 10)
     chk(g, "cornice's drip groove (155..175) lies outside the board's face", 155 > 120)
     # the cornice's mitred returns (the review's fault 8)
     cp_ = P["cornice"]
@@ -693,15 +714,25 @@ def group5():
     curtain = [Polygon(q["pts"]) for q in shs.polys if q["name"] == "curtain"][0]
     hit = [(q["name"], round(Polygon(q["pts"]).intersection(curtain).area, 1)) for q in shs.polys if q["name"] not in ("curtain", "guide_rail", "hood") and Polygon(q["pts"]).intersection(curtain).area > 0.5]
     chk(g, "shutter: the lowered curtain (d 170 to 178, z 0 to 2550) intersects no frame, sill, stallriser, threshold, glass or board: %s" % (hit or "none"), not hit)
+    rail = [Polygon(q["pts"]) for q in shs.polys if q["name"] == "guide_rail"][0]
+    hood_ = [Polygon(q["pts"]) for q in shs.polys if q["name"] == "hood"][0]
+    hit2 = [(q["name"], round(Polygon(q["pts"]).intersection(rail).area, 1)) for q in shs.polys if q["name"] not in ("guide_rail", "hood", "curtain") and Polygon(q["pts"]).intersection(rail).area > 0.5]
+    hit3 = [(q["name"], round(Polygon(q["pts"]).intersection(hood_).area, 1)) for q in shs.polys if q["name"] not in ("guide_rail", "hood", "curtain") and Polygon(q["pts"]).intersection(hood_).area > 0.5]
+    chk(g, "shutter: in section the guide rails (d 150..190) share no space with any frame, sill, stallriser or glass (%s) and the hood (d 0..210, z 2550..2850) shares none with the toplight glass, transom or board (%s): the head and the toplights above 2550 are cut away behind it" % (hit2 or "none", hit3 or "none"),
+        not hit2 and not hit3 and rail.intersection(hood_).area < 1.0)
+    cut = rs["cut_away"]
+    nsh_ = [x for x in T["shops"] if x["id"] == "newsagent"][0]
+    chk(g, "shutter: the hood is set into the toplight zone: the cut-away (z from %d, u %s; head, bars and glass) is recorded and the hood spans the newsagent's window and shop door (u %s to %s), leaving 70 of the toplights" % (cut["z_from"], cut["u_range"], nsh_["zones_u"]["window"][0], nsh_["zones_u"]["shop_door"][1]),
+        cut["z_from"] == 2550 and cut["u_range"] == [nsh_["zones_u"]["window"][0], nsh_["zones_u"]["shop_door"][1]] == [350, 4706] and len(cut["parts"]) == 6 and cut["toplights_showing_z"] == [2480, 2550] and "SET INTO" in rs["hood_sits"])
     front_d = {"sill": nose, "stallriser": P["stallriser"]["dims"]["face_d"], "threshold": 130.0, "transom": 100.0, "door frame": 100.0, "mullion": 92.0, "window frame": 95.0}
     chk(g, "shutter: every frame front (%s) is behind the curtain's rear face (170)" % ", ".join("%s %.0f" % kv for kv in front_d.items()), all(v < cpl for v in front_d.values()))
     chk(g, "shutter: the hood (300 high, z 2550 to 2850) hides the toplights (2480 to 2790) above 2550: 70 shows; the newsagent's glazing note says so",
         rs["hood_height"] == 300 and rs["hood_z_range"] == [2550, 2850] and 2550 - P["window_frame"]["dims"]["toplights_z"][0] == 70 and
-        "70 shows" in [x for x in T["shops"] if x["id"] == "newsagent"][0]["glazing"]["glazing"])
+        "70 of the toplights shows" in [x for x in T["shops"] if x["id"] == "newsagent"][0]["glazing"]["glazing"])
     # the drawing: nothing overlaps that should not, nothing floats (all ten fronts)
     groups_of = lambda nm: ("pilaster" if nm.startswith("pil_") else "console" if nm.startswith("console") else "fascia" if (nm in ("fascia_board", "bed_mould") or nm.startswith("fascia_")) else
                             "cornice" if nm.startswith("cornice") else "stall" if nm.startswith(("stall", "sill", "joint", "slab", "motif", "ply", "screw", "chrome")) else
-                            "window" if nm.startswith("win_") else "shutter" if nm in ("shutter_hood", "guide_rail") else
+                            "window" if nm.startswith("win_") else "hood" if nm == "shutter_hood" else "shutter" if nm == "guide_rail" else
                             "door" if nm.startswith("door_") else "slot" if nm.startswith("slot_") else "other")
     for s in shops:
         sh = TD.draw_bay(T, s["id"], with_neighbours=True)
@@ -741,13 +772,14 @@ def group5():
     chk(g, "every check has %s" % ", ".join(need), all(all(k in c for k in need) for c in T["checks"]))
     chk(g, "a check for every part the brief names", all(any(c["part"] == p for c in T["checks"]) for p in ("pilaster", "console", "fascia_board", "cornice", "sill", "stallriser", "window_frame", "shop_door", "side_door_slot", "assembly")))
     byid = {c["id"]: c for c in T["checks"]}
-    need_ids = ("PIL-15", "PIL-16", "PIL-17", "CON-07", "CON-08", "COR-06", "DOR-06", "DOR-07", "ALT-07", "ALT-08")
+    need_ids = ("PIL-15", "PIL-16", "PIL-17", "CON-07", "CON-08", "CON-09", "COR-06", "DOR-06", "DOR-07", "ALT-07", "ALT-08", "ALT-09")
     chk(g, "the review's new checks are listed: %s" % ", ".join(need_ids), all(i in byid for i in need_ids))
     chk(g, "STA-03 reads: skirting 100 + two courses at 155.4 pitch + one half course at 79.2 + cap 35 = 525, expected 525 +-2",
         "two courses at 155.4 pitch" in byid["STA-03"]["measure"] and "one half course at 79.2" in byid["STA-03"]["measure"] and "cap 35" in byid["STA-03"]["measure"] and byid["STA-03"]["expected"] == 525.0 and byid["STA-03"]["tolerance"] == 2.0)
-    chk(g, "the amended expectations stand: DOR-02 600 +-3, DOR-05 [1000, 545], PIL-02 600, PIL-03 180, PIL-05 140, PIL-08 [350, 175], ALT-01 hood [300, 210, 2550, 2850], ALT-02 rails d 150..190",
+    chk(g, "the amended expectations stand: DOR-02 600 +-3, DOR-05 [1000, 545], PIL-02 600, PIL-03 180, PIL-05 140, PIL-08 [350, 175], PIL-17 [15, 60, 600], CON-01 [240, 205, 550], CON-09 140, COR-02 [95, 10], ALT-01 hood [300, 210, 2550, 2850], ALT-02 rails d 150..190",
         byid["DOR-02"]["expected"] == 600.0 and byid["DOR-02"]["tolerance"] == 3.0 and byid["DOR-05"]["expected"] == [1000.0, 545.0] and byid["PIL-02"]["expected"] == 600.0 and byid["PIL-03"]["expected"] == 180.0 and
-        byid["PIL-05"]["expected"] == 140.0 and byid["PIL-08"]["expected"] == [350.0, 175.0] and byid["ALT-01"]["expected"] == [300.0, 210.0, 2550.0, 2850.0] and byid["ALT-02"]["expected"][2:] == [150.0, 190.0])
+        byid["PIL-05"]["expected"] == 140.0 and byid["PIL-08"]["expected"] == [350.0, 175.0] and byid["ALT-01"]["expected"] == [300.0, 210.0, 2550.0, 2850.0] and byid["ALT-02"]["expected"][2:] == [150.0, 190.0] and
+        byid["CON-01"]["expected"] == [240.0, 205.0, 550.0] and byid["CON-09"]["expected"] == 140.0 and byid["COR-02"]["expected"] == [95.0, 10.0] and byid["PIL-17"]["expected"] == [15.0, 60.0, 600.0])
     nsh = [x for x in T["shops"] if x["id"] == "newsagent"][0]
     chk(g, "ALT-08: the newsagent's board is cream %s (the fascia target's), its piers dove grey" % T["paints"][nsh["paints"]["fascia_board"]]["srgb"], T["paints"][nsh["paints"]["fascia_board"]]["srgb"] == byid["ALT-08"]["expected"] and nsh["paints"]["pilaster"] == "dove_grey")
     chk(g, "per-shop assembly checks for all ten fronts", sum(1 for c in T["checks"] if c["id"].startswith("ASM-") and c["id"].endswith("-door")) == 10)
@@ -761,7 +793,7 @@ def group5():
 
 # ---------------------------------------------------------------- 6 the checks catch faults
 def mutation_tests():
-    """Break a copy of the target in twelve ways and see that the checks above notice each one."""
+    """Break a copy of the target in eighteen ways and see that the checks above notice each one."""
     import copy
     global T, COUNT, GROUPS, LINES
     saved = (T, COUNT, GROUPS, LINES)
@@ -842,13 +874,29 @@ def mutation_tests():
         sd = t["parts"]["console"]["profiles"]["side_silhouette"]["points"]
         t["parts"]["console"]["profiles"]["side_silhouette"]["points"] = [p for p in sd if not (p[0] > 100 and 440 < p[1] < 500)]   # the upper volute flattened
 
+    def m_front(t):
+        # the first try's scroll: the waist and stem pulled back behind the board (d scaled by 0.45 below z 400)
+        pts_ = t["parts"]["console"]["profiles"]["side_silhouette"]["points"]
+        t["parts"]["console"]["profiles"]["side_silhouette"]["points"] = [[p[0] * (0.45 if 20 < p[1] < 400 else 1.0), p[1]] for p in pts_]
+
+    def m_hood(t):
+        t["alterations"]["roller_shutter"]["numbers"]["cut_away"]["parts"] = []
+        t["alterations"]["roller_shutter"]["numbers"]["hood_sits"] = "in front of the glass"
+
+    def m_ogee(t):
+        og_ = t["parts"]["pilaster"]["profiles"]["base_ogee"]["points"]
+        t["parts"]["pilaster"]["profiles"]["base_ogee"]["points"] = [[p[0] + (10 if p[0] > 140 else 0), p[1]] for p in og_]
+        t["parts"]["pilaster"]["dims"]["base_ogee"]["proud_of_shaft_face"] = 25.0
+
     tests = [("plinth top moved to P1's 800 against Rita's line", m_plinth, [group3, group5]), ("shop door glazed from the first try's 700", m_door, [group1, group3, group5]),
              ("the letter plate back in the glass at 800", m_plate, [group5]), ("a measured row moved 20 px", m_row, [group2]), ("Rita's door end flipped", m_doorend, [group1]),
              ("a console toe wider than its capital", m_toe, [group5]), ("the bottom rail dropped below the sill", m_bottomrail, [group5]),
              ("a shop door slot narrowed", m_zone, [group5]), ("the drawing shifted 25 px on the plinth", m_mirror, [group4]),
              ("the shaft back to 110, 10 proud of the frames", m_relief, [group1, group3, group5]), ("a mirrored door end given Rita's handing", m_hinge, [group1, group5]),
              ("the shutter's curtain back at the glass plane (d 30)", m_curtain, [group5]), ("the cornice's end left open", m_cornice, [group5]),
-             ("the newsagent's board back to dove grey", m_board, [group1, group5]), ("the console's upper volute flattened", m_console, [group5])]
+             ("the newsagent's board back to dove grey", m_board, [group1, group5]), ("the console's upper volute flattened", m_console, [group5]),
+             ("the console pulled back behind the fascia board (the first try's waist)", m_front, [group5]), ("the shutter's hood left sharing the frames' space", m_hood, [group5]),
+             ("the base ogee back to 25 proud over the weathering", m_ogee, [group5])]
     out = []
     for name, mut, which in tests:
         n = run(mut, which)
