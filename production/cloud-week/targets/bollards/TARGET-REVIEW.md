@@ -168,3 +168,67 @@ Wikimedia Commons, Geograph, Flickr and archive.org all refused (proxy 403, 9 Oc
 - the Historic England entries the target lists.
 
 Every size above rests on brick gauges (75 mm modern, 73 to 79 mm Victorian) measured on Poly Haven's CC0 panoramas, reached at full resolution.
+
+## Re-review (try 2)
+
+PASS
+
+**0 faults; 4 narrow notes.** I re-reviewed the amended target (TARGET.md §15, target.json, the new calibrate.py and anchors.json, self_check.py, target_drawing.py and the new previews) against my own measurements on the five full-resolution panoramas.
+
+All scripts ran on a fresh scratch copy:
+- self_check: **SELF-CHECK PASS: 308 of 308**;
+- target_drawing.py: 8 kind pictures, the sheet, a street plan and a quay plan, and 4 overlays;
+- calibrate.py: reproduces anchors.json exactly.
+
+Nothing in the target was edited and nothing was committed.
+
+### The three faults: each truly answered
+
+**1. Camera heights and sizes.** I re-measured each bollard directly, without the writer's frames. For each I took the top and foot rows in the panorama at the bollard's column, put the axis one foot-radius behind the foot's front edge, and used H = h − d_axis × tan(angle to the top), with my own heights:
+
+| bollard | h used | top row | foot row (front edge) | d_axis | H (mine) | target |
+|---|---|---|---|---|---|---|
+| US01_b (K1) | 1.195 | 2114 | about 2707 | 2.26 m | 1.08 m | 1082 |
+| BB_b (K2a) | 1.085 | 2061 | 2465 | 3.40 m | 1.05 m | 1050 |
+| US02_a (K2b) | 0.92 | 2041, 7 px above the horizon | 2265 | 5.58 m | 0.95 m | 950 |
+
+US02_a's foot ring reads 0.21 m across at its distance, against 208 in the target.
+
+The scaled profiles, parts, mouldings, base diameters and checks all agree. K2 is 1050 high, foot ring 250, shaft Ø 193.3 at z 300 and 145.4 at z 900, collar at z 599 to 634. K2b is profiles_final.US02_a whole: cone rim 64, rise 17.6, collar at 0.59 H. K1 is 1081.7 high with a 201.6 plinth. The circular "two K2s agree" test is gone. K2b is now honestly a smaller casting, and a test checks that K2a is not taller than K1.
+
+**2. Quay and junction placements.** I checked these against tools/art-recipes/south-quay/south_quay_geom.py myself.
+- **K6:** the ten places are the kit's `BOLLARDS` exactly. The three K6b cannons are at the quay ends. The three boats' lines all go to K6a bells (the kit's `BOATS`), so no rope runs to a cannon.
+- **K5:** posts at x −69.5, y −40.5 to −31.5, with chains on the outer pairs only. The ladder's handholds (x −70.15 to −69.55, y −36 ± 0.23) sit 1.3 m from the nearest post. The fish-box stack at (−67.0, −41.5) is 2 m inshore of the chain line. Nothing collides.
+- **K7:** the cleats at x −110.25 sit on the jetty's cope; the jetty strip runs x −130 to −110 and the jetty bollards stand at −110.75. They are beside the jetty boat's berth (y −63 to −53). The jetty rings hang under the cope face, not on top.
+- **Junction:** I ran the kit's own `Junction`. Its 8 m and 6 m return tangent points are (−21.176, −3.0), (−28.986, −9.265), (−21.719, 3.0) and (−27.698, 8.502), as stated. All four posts sit **3.50 m from the nearest road centreline**, so 0.5 m behind the kerb face on the footway side, not in a carriageway. They stand on the kit's 2.0 m corner footways, leaving about 1.5 m clear to the yard walls.
+
+**3. K6b.** The profile is now the muzzle swell to r 172, a flat face at z 914, and a ball of R 105 (centre z 877) standing 68 mm proud; height 982. My drawing run shows a cannon muzzle with a ball, not a spire. The checks K6b_height, K6b_ball and K6b_muzzle_swell are present.
+
+### The twelve narrow points: all answered
+
+1. K1b is dropped: K1 has one model.
+2. K2 base_diameter is 250.
+3. K2b is "profiles_final.US02_a, whole".
+4. The D-lug is 55 / 40 / 18 with a 24 hole, centred 22 from the shaft face.
+5. The chain is plain short link, 13 mm bar, no spikes; the spiked chain is an unused option.
+6. K3 is moved to flank the scene's real 1.0 m passage at x 39 to 40. That passage is confirmed in vignette-scene.json's chandler note, and §1 now explains the four kinds by owner.
+7. K2 is black by default, with grey as one condition.
+8. K7's plan is given.
+9. K1_foot_paint_loss is "worn-foot condition ONLY".
+10. The new checks are in: 65 in all.
+11. Group B now calibrates each panorama independently, and §3 says group C tests shape, not scale.
+12. K4 is "anti-parking posts".
+
+Every street post clears doors (1.56 m and more), lamp columns, the crossover and the other furniture, and leaves 1.38 to 1.49 m of footway against the 0.68 m a walking person needs.
+
+### Narrow notes (each a small detail with an exact fix; no number the builder uses moves)
+
+1. **The US01 gate pier in calibrate.py.** The fitted pitch_tan 0.01049 sits exactly on the +15 % edge of its search range (1.15 × the 11.9 px guess), which means the fit failed. That is where the reported 0.98 (1.05 at the bed) comes from. Listed directly at cols 3800 to 3820, the joints fall at rows 2049, 2061, 2072, 2084, 2096, 2108, 2121, 2133, 2146, 2158 and 2170, a steady 12.1 px. That gives 1.09 above the pier foot and 1.16 at the bed.
+   *Fix:* set that anchor's pitch to 12.1 px (or its rows to 2045 to 2175), and make calibrate.py mark any fit that lands on its range edge as failed. The group B mean for urban_street_01 then becomes about 1.18 against the stated 1.195.
+   The BGE planter wall is curved, so its pitch changes with the column (15.3 to 16.6 px). Its 0.96 to 1.04 spread is real, but it no longer carries any number.
+2. **The quay-plan picture** from target_drawing.py draws only the north quay's land, so the jetty and east-quay posts appear over water. The coordinates are right.
+   *Fix:* draw the jetty strip (x −130 to −110, y −100 to −15) and the east quay (y ≥ 40) as land.
+3. **The east side reads as a cluster.** K3 at x 40.2 and K4 at x 41.5 stand 1.3 m apart in two materials, so four posts in 5.2 m read as a cluster from the street.
+   *Fix (judgement):* move the first K4 to **x 42.5**. It is still 2.30 m in plan from the nearest door centre (the chandler's at x 44.203), and the two pairs then read as two groups 2.3 m apart.
+4. **A muddled phrase in §3.** "the bed 1.195 plus the 0.055 to 0.07 it stands above or below the road" mixes two things.
+   *Fix:* "the bed stands about 0.055 m above the road, so the camera is about 1.25 m above the road".
