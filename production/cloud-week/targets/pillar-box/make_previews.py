@@ -38,10 +38,14 @@ def save(im, name, maxside=1200, q=88):
 
 
 def caption(im, text):
-    pad = 26
+    import textwrap
+    lines = textwrap.wrap(text, max(20, im.width // 6 - 2))
+    pad = 10 + 13 * len(lines)
     out = Image.new("RGB", (im.width, im.height + pad), BG)
     out.paste(im, (0, pad))
-    ImageDraw.Draw(out).text((6, 7), text, fill=(30, 30, 34), font=font)
+    d_ = ImageDraw.Draw(out)
+    for i, ln in enumerate(lines):
+        d_.text((6, 6 + 13 * i), ln, fill=(30, 30, 34), font=font)
     return out
 
 
@@ -52,8 +56,11 @@ plans = Image.open(os.path.join(tmp, "plans.png"))
 
 pair = Image.new("RGB", (fe.width + se.width + 10, fe.height), BG)
 pair.paste(fe, (0, 0)); pair.paste(se, (fe.width + 10, 0))
-save(caption(pair, "DRAWING from target.json (not a photograph): front and side elevation, 1 mm a pixel before reduction. 489 body, 576 foot, 536 cap, 1372 high, red 150/30/32, black band 200."), "target-quay-street-elevations.jpg")
-save(caption(plans, "DRAWING from target.json (not a photograph): plans at z 24 (foot), 420 (hinge), 690 (lock), 790 (collection frame), 1150 (slot), 1185 (hood), 1240 (cap rim), 1330 (dome). Front up the page."), "target-quay-street-plans.jpg")
+sys.path.insert(0, HERE)
+import target_drawing as TD  # noqa: E402
+levels = TD.plan_levels(TD.Box(T))
+save(caption(pair, "DRAWING from target.json (not a photograph): front and side elevation, 1 mm a pixel before reduction. 489 body, 576 foot, 560 cap, 1500 high, red 150/30/32, black band 200. The cypher and lettering areas are flush (tinted here only to show where)."), "target-quay-street-elevations.jpg")
+save(caption(plans, "DRAWING from target.json (not a photograph): plans at " + ", ".join(f"z {z} ({n.replace('_', ' ')})" for n, z in levels) + ". Front up the page."), "target-quay-street-plans.jpg")
 save(caption(sec, "DRAWING from target.json: section through the axis, front to the right"), "target-quay-street-axial-section.jpg")
 
 # swatches

@@ -1,18 +1,19 @@
 {
  "family": "pillar-box",
- "title": "Quay Street's pillar box: the target (cloud week 42, 9 October 2026)",
+ "title": "Quay Street's pillar box: the target (cloud week 42, 9 October 2026, second try)",
  "written": "2026-10-09",
+ "revision": "second try, after TARGET-REVIEW.md (FAIL on F1, the height, and nine narrow points N1 to N9, all applied)",
  "units": {
   "length": "millimetres in this file unless a key says metres (_m)",
   "glb": "metres, z up, scale 1",
-  "frame": "origin on the box's vertical axis at the footway surface; +y is the FRONT (the door and aperture side); +x is to the viewer's right when looking at the front; z up",
-  "pivot": "the axis at the footway surface (z = 0): the pivot of the .glb; the buried skirt runs to z = -150 and is hidden",
+  "frame": "origin on the box's vertical axis at the footway surface; +y is the FRONT (the door and slot side); +x is to the viewer's right when looking at the front; z up",
+  "pivot": "the axis at the footway surface (z = 0): the pivot of the .glb; the hidden skirt runs to z = -150",
   "kinds": "Read (printed in the repository), Derived (computed), Judgement (the writer's choice; basis 'Memory' where it rests on general knowledge of the type). Scaled and Photo are EMPTY: no drawing and no photograph of a pillar box was reached."
  },
- "summary_line": "Quay Street's pillar box is a cast-iron cylinder of the 1950s-60s standard 'Type A' pattern, painted pillar-box red (sRGB 150/30/32) above a black base band 200 mm high: body 489 mm across, a 576 mm foot, a 536 mm cap with a shallow 80 mm dome, 1372 mm above the footway in all (the stand-in's cap and dome go INSIDE that height, not on top), a 320 x 45 mm letter slot at 1150 mm under a 30 mm hood, a 300 x 760 mm hinged door (two barrel hinges, a keyhole escutcheon) carrying a blank cypher roundel, a blank lettering pad and two plate frames (the collection plate says only COLLECTIONS, MON-FRI 5.30 PM, SAT 12 NOON; the enamel plate is blank), no cypher, crown, operator lettering or maker's mark; NO PHOTOGRAPH OF A PILLAR BOX WAS REACHED, so no number is Photo-measured: every size is the repository's earlier figures (Read), derived from them, or the writer's judgement, and the first dated photograph overrides them.",
+ "summary_line": "Quay Street's pillar box is a cast-iron cylinder of the 1950s-60s standard 'Type A' pattern, painted pillar-box red (sRGB 150/30/32) above a black base band 200 mm high: body 489 mm across, a 576 mm foot, a 560 mm cap with a shallow 80 mm dome, 1500 mm above the footway in all (the research's working figure; the stand-in's 1612 is 0.11 m too tall), a 320 x 45 mm letter slot centred at 1278 mm under a 30 mm hood, a 300 x 888 mm door (flush: 1 mm proud, a joint groove round it, hinged on the left with no hinge showing; a keyhole escutcheon and one collection-plate frame) and, where the cypher and the operator's lettering belong, FLUSH reserved areas with no raised or cut geometry (canon owes them): no cypher, crown, operator lettering or maker's mark, the collection plate saying only COLLECTIONS, MON-FRI 5.30 PM, SAT 12 NOON, and the front facing the building line; no photograph of a pillar box was reached, so no number is Photo-measured: every size is the repository's earlier figures (Read), derived from them, or the writer's judgement, and the first dated photograph overrides them.",
  "no_photograph_measured": true,
  "decision_type": {
-  "main": "Type A, 1950s-60s, cast iron, domed cap with a moulded rim, hooded aperture, hinged door; cypher, lettering and maker's mark blank",
+  "main": "Type A, 1950s-60s, cast iron, domed cap with a moulded rim, hooded aperture, a flush door; cypher, lettering and maker's mark reserved flush and blank",
   "variant": {
    "id": "type_k_capless",
    "build": false,
@@ -41,19 +42,19 @@
     ],
     [
      244.5,
-     1290
+     1418
     ],
     [
      236,
-     1330
+     1458
     ],
     [
      150,
-     1362
+     1490
     ],
     [
      0,
-     1372
+     1500
     ]
    ],
    "differences": "no separate cap or overhanging rim; a flush rounded crown; the aperture set in a shallow recess rather than under a hood; the same 489 mm body and about the same height (Judgement; lead only)"
@@ -61,8 +62,8 @@
   "reasons_for_main": [
    "1990 on a Victorian port quarter: the stock is the older cast-iron standard boxes, not the 1980 capless replacement (the research says so, and recommends a 1950s-60s Type A: Read)",
    "the stand-in already has a cap and a dome, so the silhouette the street was blocked with is the Type A's",
-   "the Type A's cap, hood, door and plates give the sheet four things to show at the camera's 1.6 m; the capless box has fewer",
-   "the postal cypher and the operator lettering are what canon owes: on a Type A they have clear places to stay blank (a pad, a roundel), on the capless box they are cast into the aperture plate"
+   "the Type A's cap, hooded slot, door and plate give the sheet four things to show at the camera's 1.6 m; the capless box has fewer",
+   "the postal cypher and the operator lettering are what canon owes: on a Type A they have clear places to stay reserved and flush (a band, a disc); on a capless box they are cast into the aperture plate"
   ]
  },
  "frame_numbers": {
@@ -70,8 +71,10 @@
    "x_m": 27.0,
    "side": "east",
    "axis_setback_from_kerb_back_m": 0.6,
-   "front_faces": "the carriageway (the stand-in's aperture is on the road side: StreetVignette.cs PillarBox z - sgn x 0.48 x d); the target keeps that and lists the alternative in could_not_settle",
-   "kind": "Read"
+   "front_faces": "the building line: the east (shop) side, away from the carriageway (review N6)",
+   "front_direction_in_scene": "+z on the east side (toward the shops); the stand-in's slot is on the road side (StreetVignette.cs PillarBox: z - sgn x 0.48 x d, Read), so the kit piece is turned 180 degrees about the vertical against the stand-in",
+   "reason": "the foot stands 312 mm from the kerb's back, so a road-facing slot would put the poster on the kerb edge or in the channel; a kerbside box on a 2 m footway faces the footway or along it; the player walks the footway and would otherwise see the box's plain back. Judgement (the reviewer's); the scene's road side is a Read figure against it: the scene owner is told (handover) and, if the road side is kept, records why",
+   "kind": "Judgement against a Read"
   },
   "footway": {
    "flags_at_kerb_back_above_channel": 110,
@@ -95,25 +98,38 @@
   }
  },
  "overall": {
-  "total_height": 1372,
+  "total_height": 1500,
+  "height_over_body_width": 3.07,
   "body_diameter": 489,
   "foot_diameter": 576,
-  "cap_diameter": 536,
-  "aperture_centre_z": 1150,
-  "buried_depth": 482,
+  "cap_diameter": 560,
+  "aperture_centre_z": 1278,
+  "hidden_skirt": 150,
   "body_circumference": 1536.2,
+  "upper_alternative_total_height": {
+   "value": 1626,
+   "why": "the research's untraced Type A, 5 ft 4 in tall (and 1 ft 7 1/4 in wide); the scene's stand-in (1612) agrees; a photograph settles 1500 against 1626"
+  },
+  "lower_range_not_used": {
+   "value_mm": [
+    135,
+    147
+   ],
+   "why": "the 73 in listing less 15 to 20 in buried is a casting's length, and a lead sells that box as the narrow Type B; the research's own Type A figures are 150 cm and 5 ft 4 in"
+  },
   "stand_in_for_comparison": {
    "body_diameter": 597,
    "total_height": 1612,
+   "too_tall_by_mm": 112,
    "cap_diameter": 660
   }
  },
  "profile": {
-  "note": "outer surface of the lathe, (radius, z) in mm, from the foot of the buried skirt up to the apex; revolve about the axis. Hard edges get the bevels in `bevels`. The three features that are not bodies of revolution (aperture, door, hood and the rest) are in `parts`.",
+  "note": "outer surface of the lathe, (radius, z) in mm, from the foot of the hidden skirt up to the apex; revolve about the axis. Hard edges get the bevels in `bevels`. The features that are not bodies of revolution (slot, hood, sill, door, escutcheon, plate frame) are in `parts`.",
   "outer_rz": [
    [
     288,
-    -150.0
+    -150
    ],
    [
     288,
@@ -209,183 +225,183 @@
    ],
    [
     244.5,
-    1215
+    1343
    ],
    [
     244.5,
-    1215.0
+    1343.0
    ],
    [
-    244.86,
-    1217.26
+    245.04,
+    1345.26
    ],
    [
-    245.92,
-    1219.45
+    246.64,
+    1347.45
    ],
    [
-    247.65,
-    1221.5
+    249.26,
+    1349.5
    ],
    [
-    250.0,
-    1223.36
+    252.81,
+    1351.36
    ],
    [
-    252.89,
-    1224.96
+    257.18,
+    1352.96
    ],
    [
-    256.25,
-    1226.26
+    262.25,
+    1354.26
    ],
    [
-    259.96,
-    1227.22
+    267.86,
+    1355.22
    ],
    [
-    263.92,
-    1227.8
+    273.84,
+    1355.8
+   ],
+   [
+    280.0,
+    1356.0
+   ],
+   [
+    280,
+    1356
+   ],
+   [
+    280,
+    1378
+   ],
+   [
+    280.0,
+    1378.0
+   ],
+   [
+    279.59,
+    1381.11
+   ],
+   [
+    278.39,
+    1384.0
+   ],
+   [
+    276.49,
+    1386.49
+   ],
+   [
+    274.0,
+    1388.39
+   ],
+   [
+    271.11,
+    1389.59
    ],
    [
     268.0,
-    1228.0
+    1390.0
    ],
    [
     268,
-    1228
-   ],
-   [
-    268,
-    1250
-   ],
-   [
-    268.0,
-    1250.0
-   ],
-   [
-    267.59,
-    1253.11
-   ],
-   [
-    266.39,
-    1256.0
-   ],
-   [
-    264.49,
-    1258.49
-   ],
-   [
-    262.0,
-    1260.39
-   ],
-   [
-    259.11,
-    1261.59
-   ],
-   [
-    256.0,
-    1262.0
-   ],
-   [
-    256,
-    1262
+    1390
    ],
    [
     250,
-    1262
+    1390
    ],
    [
     250,
-    1262
+    1390
    ],
    [
     250,
-    1292
+    1420
    ],
    [
     250.0,
-    1292.0
+    1420.0
    ],
    [
     237.5,
-    1300.58
+    1428.58
    ],
    [
     225.0,
-    1308.54
+    1436.54
    ],
    [
     212.5,
-    1315.92
+    1443.92
    ],
    [
     200.0,
-    1322.74
+    1450.74
    ],
    [
     187.5,
-    1329.04
+    1457.04
    ],
    [
     175.0,
-    1334.84
+    1462.84
    ],
    [
     162.5,
-    1340.16
+    1468.16
    ],
    [
     150.0,
-    1345.03
+    1473.03
    ],
    [
     137.5,
-    1349.46
+    1477.46
    ],
    [
     125.0,
-    1353.46
+    1481.46
    ],
    [
     112.5,
-    1357.05
+    1485.05
    ],
    [
     100.0,
-    1360.23
+    1488.23
    ],
    [
     87.5,
-    1363.02
+    1491.02
    ],
    [
     75.0,
-    1365.42
+    1493.42
    ],
    [
     62.5,
-    1367.44
+    1495.44
    ],
    [
     50.0,
-    1369.09
+    1497.09
    ],
    [
     37.5,
-    1370.36
+    1498.36
    ],
    [
     25.0,
-    1371.27
+    1499.27
    ],
    [
     12.5,
-    1371.82
+    1499.82
    ],
    [
     0.0,
-    1372.0
+    1500.0
    ]
   ],
   "segments": [
@@ -454,7 +470,7 @@
    "sphere_radius": 430.62,
    "sagitta": 80,
    "chord_radius": 250,
-   "apex_z": 1372
+   "apex_z": 1500
   },
   "wall_thickness": 12,
   "inner_offset": "the inside is the outer profile offset 12 mm inward, closed at z = -138 (for the section drawing; a closed solid is acceptable to the build apart from the slot)"
@@ -470,19 +486,15 @@
   },
   {
    "edge": "door perimeter (outer)",
-   "radius": 2.0
+   "radius": 1.0
   },
   {
    "edge": "hood front lip",
    "radius": 2.0
   },
   {
-   "edge": "plate frame bezels (outer)",
+   "edge": "plate frame bezel (outer)",
    "radius": 1.5
-  },
-  {
-   "edge": "panel pads",
-   "radius": 1.0
   },
   {
    "edge": "slot lips",
@@ -491,14 +503,14 @@
  ],
  "parts": {
   "foot_plinth": {
-   "what": "the foot: a 48 mm vertical band at r 288 with a 12 mm quarter-round, a 45 degree splay and a cove into the body; the casting continues 482 mm below the footway",
+   "what": "the foot: a 48 mm vertical band at r 288 with a 12 mm quarter-round, a 45 degree splay and a cove into the body; the casting continues some 15 to 20 in deeper (the research); 150 mm of it is modelled as a hidden skirt",
    "z0": 0,
    "z1": 140,
    "radius": 288,
    "diameter": 576,
    "set_in_footway": {
     "datum": "z = 0 is the footway surface at the box's axis",
-    "hidden_skirt": "profile segment buried_skirt to z = -150 (the real casting goes 482 deep; only 150 are modelled) so no gap shows where paving dips",
+    "hidden_skirt": "profile segment buried_skirt to z = -150 so no gap shows where paving dips",
     "fillet": {
      "width_mm": [
       15,
@@ -519,7 +531,7 @@
   "body": {
    "what": "plain cylinder with a sand-cast surface",
    "z0": 140,
-   "z1": 1215,
+   "z1": 1343,
    "radius": 244.5,
    "surface": {
     "sand_cast_bump_mm": 0.3,
@@ -529,16 +541,17 @@
    }
   },
   "cap": {
-   "what": "the cap: an under-moulding (cove) from the body to a 268 rim, a vertical rim, a quarter-round bead, a short neck and the shallow dome",
-   "soffit_z": 1215,
-   "rim_radius": 268,
-   "rim_diameter": 536,
+   "what": "the cap: an under-moulding (cove) from the body to a 280 rim, a vertical rim, a quarter-round bead, a flat shelf, a short neck and the shallow dome. The rim is the outermost line above the foot; the hood tucks inside it.",
+   "soffit_z": 1343,
+   "rim_radius": 280,
+   "rim_diameter": 560,
+   "rim_proud_of_body": 35.5,
    "rim_z": [
-    1228,
-    1250
+    1356,
+    1378
    ],
-   "dome_base_z": 1292,
-   "apex_z": 1372,
+   "dome_base_z": 1420,
+   "apex_z": 1500,
    "sagitta": 80,
    "sphere_radius": 430.62,
    "finial": "none (no boss, no ring): the earlier research names none (Read) and no photograph shows one"
@@ -547,63 +560,64 @@
    "slot": {
     "x0": -160.0,
     "x1": 160.0,
-    "z0": 1127.5,
-    "z1": 1172.5,
+    "z0": 1255.5,
+    "z1": 1300.5,
     "width": 320,
     "height": 45,
-    "centre_z": 1150,
+    "centre_z": 1278,
     "corner_radius": 5,
     "half_angle_deg": 40.9,
     "through": "yes: through the 12 mm wall into a black interior (albedo 8/8/8, roughness 0.9)",
-    "kind": "Read (the scene's 320 x 45 at 1150)"
+    "kind": "size Read (the scene's 320 x 45); centre Derived (the scene's 1150 + 128)"
    },
    "hood": {
     "what": "a curved lip wrapped round the front above the slot",
-    "z0": 1172.5,
-    "front_top_z": 1195,
-    "top_z": 1205,
+    "z0": 1300.5,
+    "front_top_z": 1323,
+    "top_z": 1333,
     "outer_radius": 274.5,
     "projection": 30,
     "half_angle_deg": 48,
     "section_rz": [
      [
       244.5,
-      1172.5
+      1300.5
      ],
      [
       274.5,
-      1172.5
+      1300.5
      ],
      [
       274.5,
-      1195
+      1323
      ],
      [
       244.5,
-      1205
+      1333
      ]
     ],
     "cheeks": "radial planes at +-48 degrees, square",
-    "gap_to_cap_soffit": 10
+    "gap_to_cap_soffit": 10,
+    "inside_the_cap_rim_by": 5.5
    },
    "sill": {
     "what": "a lip under the slot",
     "section_rz": [
      [
       244.5,
-      1112
+      1240
      ],
      [
       256.0,
-      1123.5
+      1251.5
      ],
      [
       256.0,
-      1127.5
+      1255.5
      ],
      [
       244.5,
-      1127.5
+      1255.5
      ]
     ],
     "projection": 11.5,
@@ -626,35 +640,23 @@
    "x0": -150,
    "x1": 150,
    "z0": 280,
-   "z1": 1040,
+   "z1": 1168,
    "width": 300,
-   "height": 760,
-   "half_angle_deg": 37.1,
-   "outer_radius": 248.5,
-   "proud": 4,
+   "height": 888,
+   "half_angle_deg": 37.7,
+   "outer_radius": 245.5,
+   "proud": 1,
    "corner_radius": 10,
+   "placement": "a flush door concentric with the body: a cylindrical panel of outer radius 245.5 (1 mm proud of the body's 244.5), 300 wide as a chord (half angle 37.0 degrees), z 280 to 1168; only the 3 x 3 joint groove round it shows it",
    "joint_groove": {
     "width": 3,
     "depth": 3
    },
-   "hinged": "left edge as seen from the front",
+   "hinged": "on the left as seen from the front, as the side of the joint only: the hinges are INTERNAL (a knocked-out pin must not open the box), so no knuckle, pin or strap shows; no part on the door's left edge stands more than 1.5 mm proud of the door face",
    "face": "plain, sand-cast, a thick-painted bead along its edges",
-   "hinges": {
-    "count": 2,
-    "x": -150,
-    "z": [
-     420,
-     900
-    ],
-    "knuckle_diameter": 26,
-    "length": 96,
-    "pin_head_diameter": 18,
-    "pin_head_height": 6,
-    "side": "left as seen from the front"
-   },
    "lock": {
     "x": 112,
-    "z": 690,
+    "z": 818,
     "escutcheon_diameter": 36,
     "proud": 3,
     "keyhole_w": 4,
@@ -662,50 +664,53 @@
     "shutter_w": 22,
     "shutter_h": 10,
     "shutter_t": 2,
-    "side": "right (opposite the hinges)"
+    "shutter_srgb": [
+     150,
+     30,
+     32
+    ],
+    "shutter_metal": 0,
+    "shutter_edge_srgb": [
+     60,
+     52,
+     46
+    ],
+    "shutter_edge_width": 1,
+    "side": "right (opposite the hinged side, where the joint line is)"
    }
   },
   "panels": {
-   "lettering_pad_BLANK": {
+   "reserved_for_lettering": {
     "x0": -150,
     "x1": 150,
-    "z0": 1062,
-    "z1": 1102,
-    "proud": 3,
-    "corner_radius": 4,
+    "z0": 1190,
+    "z1": 1230,
     "surface": "body",
-    "blank": true
+    "flush": true,
+    "placement": "a flush reserved band on the body's own face (radius 244.5), concentric with the body, 300 wide as a chord (half angle 37.8 degrees) and 40 high; no raised or cut geometry at all",
+    "note": "FLUSH: no raised or cut geometry (relief 0 within the area, measured radially above the body's own curved face). The minted lettering is cast here once canon supplies it."
    },
-   "cypher_roundel_BLANK": {
+   "reserved_for_cypher": {
     "cx": 0,
-    "cz": 960,
+    "cz": 1088,
     "diameter": 110,
-    "proud": 3,
     "surface": "door",
-    "blank": true
+    "flush": true,
+    "placement": "a flush reserved disc on the door's own face (radius 245.5), concentric with the door's face and centred on the door's axis, 110 across; no raised or cut geometry at all",
+    "note": "FLUSH: no raised or cut geometry (relief 0 within the area, measured radially above the door's own curved face). The minted cypher is cast here once canon supplies it."
    },
-   "note": "both are plain raised pads: no letters, no crown, no cypher, no relief detail (relief spread within the pad <= 0.5 mm). Canon owes the postal cypher and the operator's name; they are blank on purpose (correct and incomplete)."
+   "note": "a real box carries its cypher and lettering as raised letters directly on the iron: it has no blank disc and no blank tablet (review N5). Canon owes the postal cypher and the operator's name; the box is correct and incomplete."
   },
   "plates": {
    "collection_frame": {
     "cx": 0,
-    "cz": 790,
+    "cz": 918,
     "outer_w": 210,
     "outer_h": 125,
     "bezel": 12,
-    "bezel_proud_at_axis": 6,
+    "bezel_proud_at_axis": 9,
     "plate_recess": 3,
-    "form": "flat-faced boss: its face plane is tangent to the door at the axis plus 6, its sides run back to the cylinder"
-   },
-   "enamel_frame": {
-    "cx": 0,
-    "cz": 590,
-    "outer_w": 160,
-    "outer_h": 100,
-    "bezel": 10,
-    "bezel_proud_at_axis": 6,
-    "plate_recess": 3,
-    "form": "flat-faced boss as the collection frame"
+    "form": "flat-faced boss: its face plane is the plane y = 254.5 (9 above the door's face at the axis), its sides run back to the cylinder (33 proud at its edges)"
    },
    "collection_plate": {
     "window_w": 186,
@@ -765,12 +770,7 @@
      "12 NOON"
     ]
    },
-   "enamel_plate": {
-    "window_w": 140,
-    "window_h": 80,
-    "face": "plain ivory enamel (232,229,218), no words, no border: left BLANK with its frame",
-    "allowed_words": []
-   },
+   "enamel_plate": "none: the box carries ONE plate (review N5); a blank enamel plate in a frame reads as a placeholder",
    "words_decision": {
     "on_the_object": [
      "COLLECTIONS",
@@ -780,7 +780,7 @@
      "12 NOON"
     ],
     "nowhere_else": "no other letters or numerals appear on the box",
-    "why_safe": "they are the plain English words and times a collection plate needs; none names a company, brand, council, maker or reign, none is a cypher or a crown; 'POST OFFICE', 'ROYAL MAIL', 'LETTERS' on the slot, 'PO', 'GPO', 'ER' and any foundry name are NOT used. If the brand bible later wants zero lettering the text list is removed and the plate stays a blank white frame (the self-check and the checks accept both)."
+    "why_safe": "they are the plain English words and times a collection plate needs; none names a company, brand, council, maker or reign, none is a cypher or a crown; 'POST OFFICE', 'ROYAL MAIL', 'LETTERS' on the slot, 'PO', 'GPO', 'ER' and any foundry name are NOT used. If the brand bible later wants zero lettering the text list is removed and the frame is removed with it (variant `no_plate`: a flush door; the self-check and the checks accept both)."
    }
   }
  },
@@ -821,27 +821,21 @@
    "roughness": 0.12,
    "metal": 0
   },
-  "brass_shutter": {
+  "keyhole_shutter": {
    "srgb": [
     150,
-    125,
-    70
+    30,
+    32
    ],
-   "roughness": 0.4,
-   "metal": 1
-  },
-  "hinge_iron": {
-   "srgb": [
-    35,
-    35,
-    36
-   ],
-   "note": "the hinge knuckles are painted red like the door; their pins and pin heads are bare dark iron, 60/52/46, roughness 0.6",
-   "pin_srgb": [
+   "metal": 0,
+   "roughness": 0.35,
+   "edge_srgb": [
     60,
     52,
     46
-   ]
+   ],
+   "edge_width": 1,
+   "note": "painted with the door, worn to dark bare metal at its edge only (review N8: not bright brass); if a builder prefers brass it is Memory"
   },
   "flap_and_interior": {
    "flap_srgb": [
@@ -1011,7 +1005,7 @@
    "uv_repeats_round_girth": 8,
    "repeat_width_mm": 192.0,
    "repeat_rule": "the 214 mm strip does not fit the 1536 mm girth a whole number of times (7.2); an odd count cannot be mirrored closed, so 8 repeats of 192 mm (the strip 10 % narrower), mirrored on alternate repeats, the seam at the back (x = 0, y < 0)",
-   "height": "the mask runs from z = 0 up the 1372 mm of the box (the wear target's is 2.4 m; the lowest 0.3 m keeps its 40 % of the lost paint)",
+   "height": "the mask runs from z = 0 up the 1500 mm of the box (the wear target's is 2.4 m; the lowest 0.3 m keeps its 40 % of the lost paint)",
    "share_of_area_lost": [
     0.03,
     0.06
@@ -1082,7 +1076,7 @@
     "p90": 25
    },
    "share_below_300_mm": 0.7,
-   "foot_top_edge_scuff": "the quarter-round on the foot top (z 48 to 60) is worn to bare iron over 30 % of the circumference, a band 10 to 14 mm wide, colour 96/84/76, strongest on the road side (kerb-side knocks: wheels, bags)",
+   "foot_top_edge_scuff": "the quarter-round on the foot top (z 48 to 60) is worn to bare iron over 30 % of the circumference, a band 10 to 14 mm wide, colour 96/84/76, strongest on the road side (the back: kerb-side knocks from wheels and bags)",
    "kerb_side_scrape": {
     "z": [
      380,
@@ -1094,7 +1088,7 @@
      40
     ],
     "bare_share": 0.15,
-    "side": "the road side (the front faces the carriageway)"
+    "side": "the road side (the back, 180 degrees from the front, which faces the shops)"
    }
   },
   "chips_at_the_aperture": {
@@ -1126,15 +1120,14 @@
      2,
      8
     ],
-    "on": "door perimeter, hood edge, sill edge, cap rim lips, foot top edge"
+    "on": "door perimeter, hood edge, sill edge, cap rim lips, foot top edge, the keyhole shutter's edge"
    }
   },
   "rust_bleed": {
    "sources": [
     "every chip below 400 mm",
-    "the two hinge knuckles",
-    "the cap's under-moulding joint (z 1215)",
-    "the hood's underside",
+    "the cap's under-moulding joint (z 1343)",
+    "the hood's underside, one trickle under its LEFT end",
     "the foot top edge"
    ],
    "trickle": {
@@ -1195,7 +1188,7 @@
      600,
      900
     ],
-    "where": "on the sides and back, 70 to 140 degrees round from the front (never on the door, the plates, the lock, the aperture or the hood)",
+    "where": "on the sides and back, 70 to 140 degrees round from the front (never on the door, the plate, the lock, the slot or the hood)",
     "intact_share": [
      0.2,
      0.6
@@ -1227,7 +1220,7 @@
     ],
     "same_exclusions": true
    },
-   "cross_reference": "the scene's G5 sticker decal (0.15 x 0.15 m on the street face at 0.15 m) sits on the body; it must clear the door, so move it 70 degrees off the front"
+   "cross_reference": "the scene's G5 sticker decal (0.15 x 0.15 m on the street face at 0.15 m up) sits on the box's road side, which is now the back: keep it there, clear of the door"
   },
   "grime": {
    "ground_up": {
@@ -1258,8 +1251,8 @@
    },
    "soot_under_the_cap": {
     "zone_z": [
-     1190,
-     1215
+     1318,
+     1343
     ],
     "multiplier_linear": 0.7
    },
@@ -1319,7 +1312,7 @@
    ],
    "kind": "Judgement"
   },
-  "first_look_at_1p6_m": "from the game camera the eye should read: red cylinder, dark grimy foot and black band, three or four orange-brown chip clusters low down, one dark rust trickle under the left hinge, a torn paper remnant on the side, bright white plate, black slot"
+  "first_look_at_1p6_m": "from the game camera the eye should read: a red cylinder as tall as a man's shoulder, a dark grimy foot and black band, three or four orange-brown chip clusters low down, one dark rust trickle under the hood's left end, a torn paper remnant on the side, the bright white plate, the black slot"
  },
  "variants": {
   "count_needed": 1,
@@ -1327,7 +1320,7 @@
    {
     "id": "main",
     "build": true,
-    "description": "Type A, red body, black band, tired wear"
+    "description": "Type A, red body, black band, tired wear, the collection plate lettered with the five allowed strings"
    },
    {
     "id": "no_black_band",
@@ -1341,9 +1334,9 @@
     "description": "see decision_type.variant"
    },
    {
-    "id": "plates_blank",
+    "id": "no_plate",
     "build": true,
-    "description": "the collection plate with no words, a white frame, if canon wants no lettering at all (flip the text list off)"
+    "description": "no plate and no frame (a flush door), if canon wants no lettering at all: delete the collection frame and its plate; the reserved areas are unchanged"
    }
   ]
  },
@@ -1384,14 +1377,21 @@
    "roughness": 0.12,
    "metal": 0
   },
-  "brass": {
+  "keyhole_shutter": {
    "srgb": [
     150,
-    125,
-    70
+    30,
+    32
    ],
-   "roughness": 0.4,
-   "metal": 1
+   "metal": 0,
+   "roughness": 0.35,
+   "edge_srgb": [
+    60,
+    52,
+    46
+   ],
+   "edge_width": 1,
+   "note": "painted with the door, worn to dark bare metal at its edge only (review N8: not bright brass); if a builder prefers brass it is Memory"
   },
   "bare_iron_and_rust": {
    "srgb": [
@@ -1429,48 +1429,60 @@
  "accent_budget": {
   "note": "art-direction R-B4: the red boxes are the street's whole high-chroma accent; the frame's pixels above saturation 0.6 must be non-zero and under 0.078",
   "saturation_of_the_red": 0.8,
-  "projected_area_m2": 0.71,
+  "projected_area_m2": 0.78,
   "share_of_a_2560x1440_frame": {
-   "at_5_m": 0.0222,
-   "at_8_m": 0.0087,
-   "at_12_m": 0.0039
+   "at_5_m": 0.0244,
+   "at_8_m": 0.0095,
+   "at_12_m": 0.0042
   },
   "kind": "Derived: area x (1440 / (2 d tan 23 degrees))^2 / 3.686 Mpx",
   "wet_note": "the sky's reflection lowers saturation on the cap's top and the highest bright patches to about 0.6 to 0.7; the body's vertical faces stay at 0.75 to 0.8"
  },
  "photographs_win": {
   "applies": false,
-  "why": "no photograph of a pillar box was reached, so no photograph overrides anything. The disagreements below are between the repository's own figures; each says what was chosen.",
+  "why": "no photograph of a pillar box was reached, so no photograph overrides anything. The disagreements below are between the repository's own figures (and the reviewer's judgement); each says what was chosen.",
   "disagreements": [
    {
     "item": "body width",
     "a": "the scene 597 (a trade guess)",
     "b": "the research 49 cm / 19 1/4 in (untraced) and 19 in (a c.1955 listing)",
-    "chosen": "489 for the body; the scene's 597 is read as the FOOT's size (576 chosen)"
+    "chosen": "489 for the body; the scene's 597 is read as the foot (576 chosen)"
    },
    {
     "item": "height",
-    "a": "the scene 1372 body + 100 cap + 140 dome = 1612",
-    "b": "the research 'working' 150 cm, and its own range 135 to 147",
-    "chosen": "1372 in all (the scene's body figure read as the whole box); the cap and dome are inside it"
+    "a": "the first draft's 1372 (the scene's BODY figure read as the whole box, and the 73 in listing's 135 to 147 cm)",
+    "b": "the research's working figure 150 cm ('the top is at about 150 cm'), its Type A line 5 ft 4 in (1626), the scene's own stand-in 1612",
+    "chosen": "1500 (Read: the research's working figure); 1626 recorded as the upper alternative; 1350 to 1470 is a casting's length (a lead says a Type B's) and is not used; the stand-in is 0.11 m too tall"
    },
    {
     "item": "cap width",
     "a": "the scene 660 (1.35 x the body)",
-    "b": "no source",
-    "chosen": "536 (the rim 23.5 mm proud, 'a few centimetres' in the research)"
+    "b": "the research: the rim is 'a few centimetres proud of the body'",
+    "chosen": "560 (35.5 proud), the outermost line above the foot; the hood tucks 5.5 inside it"
    },
    {
     "item": "dome rise",
-    "a": "the scene 140 (rise/diameter 0.25)",
-    "b": "no source",
-    "chosen": "80 (0.16): Judgement from the general shape of the type"
+    "a": "the scene 140",
+    "b": "none",
+    "chosen": "80 (rise / diameter 0.14 on the 560 cap)"
+   },
+   {
+    "item": "door",
+    "a": "the research: 'a flush panel with the cast cipher, a plate frame and a keyhole'",
+    "b": "the first draft: 4 proud with hinges",
+    "chosen": "1 proud (outer radius 245.5), a 3 x 3 joint groove showing the door; no hinge shows (internal hinges); the research is Read, the hinges were an invention"
+   },
+   {
+    "item": "facing",
+    "a": "the scene: the slot on the road side (StreetVignette.cs PillarBox, Read)",
+    "b": "the review (Judgement): a kerbside box on a 2 m footway faces the footway; the poster must not stand on the kerb edge, and the player walks the footway",
+    "chosen": "the building line (toward the shops); the scene owner is told and, if the road side is kept, records why"
    },
    {
     "item": "aperture",
     "a": "the scene 320 x 45 at 1150",
-    "b": "a search lead: an aperture widening in 1957 (6 1/4 to 8 in); unclear which dimension",
-    "chosen": "the scene's figures kept (Read)"
+    "b": "a search lead: an aperture widening in 1957 (6 1/4 to 8 in); unclear which dimension; the research: 'just under the cap'",
+    "chosen": "320 x 45 kept (Read); the centre moves up with the cap to 1278"
    },
    {
     "item": "red",
@@ -1493,7 +1505,7 @@
   ]
  },
  "to_read_when_the_network_opens": [
-  "dated photographs, 1975 to 2000, of Type A and Type B boxes of the 1950s-60s on provincial British streets, front, side and three-quarter, with a person or a kerb in frame for scale (Geograph, Wikimedia Commons categories of UK pillar boxes, Flickr archives of the 1980s, local archives such as Leodis, Picture Sheffield, Tyne and Wear and Hull History Centre)",
+  "dated photographs, 1975 to 2000, of Type A and Type B boxes of the 1950s-60s on provincial British streets, front, side and three-quarter, with a person or a kerb in frame for scale (Geograph, Wikimedia Commons categories of UK pillar boxes, Flickr archives of the 1980s, local archives such as Leodis, Picture Sheffield, Tyne and Wear and Hull History Centre); the one photograph that settles most is a dated, square-on front view of a Type A of the 1950s-60s with the kerb's 125 mm upstand or a standing person in frame, camera about 1 m up and 4 to 6 m away",
   "the Letter Box Study Group's type records: Type A and Type K entries (heights, widths, the order of cypher, lettering and plates, apertures by date), and its notes on how the aperture changed in 1957",
   "Royal Mail's and the Postal Museum's archives: repaint and paint specifications of the 1980s (the base band's height, the exact red), drawings of the standard boxes, the dimensions of the A and B castings",
   "Historic England and Cadw listing records for listed Type A boxes (some give measured sizes)",
@@ -1503,7 +1515,7 @@
  "unreached": [
   {
    "what": "Wikipedia, Wikimedia Commons, Geograph, Flickr, archive.org, Sketchfab, the Letter Box Study Group (lbsg.org), postboxmap.co.uk, the Postal Museum, Europeana, the National Archives, Historic England, British Pathe, Library of Congress, Internet Archive, Gutenberg, the British Library, the Open Verse API",
-   "result": "refused or no connection (curl status 000) from this cloud on 9 October 2026",
+   "result": "refused or no connection (curl status 000) from this cloud on 9 October 2026 (the reviewer found the same for six of them)",
    "used": "nothing"
   },
   {
@@ -1526,7 +1538,7 @@
   {
    "text": "a salvage dealer's listing of a Carron Elizabeth II box: 73 in tall, about 20 in in the ground, body 15 in wide (also called PB42/2 Type B, circa 1966)",
    "via": "WebSearch summary of ukaa.com",
-   "use": "corroborates the research's own 73 in and the narrower Type B width; not a number here"
+   "use": "the 73 in casting is, by this lead, a Type B's: it is NOT used for the Type A's height (review F1)"
   },
   {
    "text": "the Letter Box Study Group lists a 1937 Type B at 64 in high and 48 in in circumference (15.3 in across)",
@@ -1536,7 +1548,7 @@
   {
    "text": "the Letter Box Study Group's Type K record: cast iron, 63 in high, 19 1/4 in wide, introduced 1980; five foundries cast it",
    "via": "WebSearch summary of lbsg.org",
-   "use": "the Type K variant's width; the Type A's width has the same 19 1/4 in"
+   "use": "the Type K variant's width; the Type A's width has the same 19 1/4 in; its 63 in (1600) agrees with a total near 1.5 to 1.6 m"
   },
   {
    "text": "OSM wiki: the larger Type A box has a circumference of about 60 in (19.1 in across)",
@@ -1565,7 +1577,14 @@
   }
  ],
  "panorama_search": {
-  "method": "every British panorama listed by api.polyhaven.com/assets?type=hdris with coordinates in Britain was downloaded as its tone-mapped JPG (4096 to 16384 px wide) and searched twice: (1) saturated-red blob detection (hue within 30 degrees of red, saturation above 0.68, value above 0.30), then every blob over 80 px was looked at as a rectilinear crop; (2) eight rectilinear views at 72 degrees across each street panorama, looked at by eye. Script: scan_panoramas.py.",
+  "method": "every British panorama listed by api.polyhaven.com/assets?type=hdris with coordinates in Britain was downloaded as its tone-mapped JPG (every one is 8192 px wide) and searched twice: (1) saturated-red blob detection on a 4096 px reduction (hue within 30 degrees of red, saturation above 0.68, value above 0.30), then every blob over 80 px was looked at as a rectilinear crop; (2) eight rectilinear views at 72 degrees across each street panorama, looked at by eye. Script: scan_panoramas.py. The reviewer re-ran a looser search (saturation above 0.45, value above 0.12, 40 px) on three of them and found no pillar box either.",
+  "catalogue": {
+   "hdris_listed": 997,
+   "with_coordinates": 732,
+   "without_coordinates": 265,
+   "source": "api.polyhaven.com/assets?type=hdris on 9 October 2026 (the writer's count of 997; the review's 732 with coordinates, so 265 without)",
+   "tone_mapped_jpg_width_px": 8192
+  },
   "searched": [
    "adams_place_bridge",
    "bethnal_green_entrance",
@@ -1588,7 +1607,7 @@
   "left_out": [
    "docklands_01, docklands_02 and the other 2025 Poly Haven panoramas at 53.3 N, 6.2 W: Dublin, where boxes are green and Irish",
    "st_fagans_interior (Wales, an interior)",
-   "the older Poly Haven panoramas with no coordinates (about 400, none labelled British; a pillar box abroad is not a British one)"
+   "the 265 Poly Haven panoramas with no coordinates (none labelled British; a pillar box abroad is not a British one)"
   ],
   "result": "NO PILLAR BOX in any of them. Every saturated-red blob was a tail light, a brick wall, a painted shopfront, a refuse bin or a sign. Poly Haven's 521 CC0 models include no pillar box, post box or letter box; its textures include none; ambientCG's catalogue has none.",
   "red_blobs_checked": {
@@ -1602,31 +1621,33 @@
   }
  },
  "could_not_settle": [
-  "whether the Type A of the 1950s-60s is 1372, 1400 or 1470 mm above the footway: the research's range is 1350 to 1470 and the scene's figure is read as the whole box; a photograph beside a kerb (125 mm) or a person would settle it in a minute",
-  "the real order and positions on the front of the cypher, the operator lettering, the collection plate, the enamel plate and the lock; the pads, the roundel and the frames are placed by the writer's general knowledge (basis Memory) and each may be 40 mm or more out",
-  "the shape of the cap's moulding, the dome's rise (80 against the scene's 140), whether a finial or boss exists, and the hood's depth",
-  "whether the front faces the carriageway (the scene's choice, kept) or runs along the footway, and which side the door hinges on",
+  "whether a Type A of the 1950s-60s stands 1500 above the footway (the research's working figure, kept) or up to 1626 (5 ft 4 in, the research's untraced Type A line): a photograph beside a kerb (125) or a person settles it in a minute; read it FIRST",
+  "the slot's width: 320 is 65 % of the body's width (Read, the scene's); the reviewer's judgement is that a 1950s-60s Type A's slot is nearer half the body's width; read it SECOND, after the height",
+  "the real order and positions on the front of the cypher, the operator lettering, the collection plate and the lock; the reserved areas and the frame are placed by the writer's general knowledge (basis Memory) and each may be 40 mm or more out",
+  "the shape of the cap's moulding, the dome's rise (80 against the scene's 140) and the 30 mm neck, whether a finial or boss exists, and the hood's depth: not to be moved without a photograph",
+  "whether the front faces the building line (this target's choice, the reviewer's) or the carriageway (the scene's stand-in), and which side the door's joint is on",
   "whether '0.6 m back from the kerb' is to the axis (the scene's code; kept) or to the nearest edge: it moves the box 0.29 m and the clear footway from 1112 to 824 mm",
   "the exact 1990 red: pillar-box reds were BS 381C 538 or 539 (a lead); the sRGB 150/30/32 is the wear target's guess, kept, and is checked against the accent budget not against a paint chip",
-  "the base band's height (200 Read; about 152 as a lead) and whether a 1990 repaint kept it",
+  "the base band's height (200 Read; 152 as a lead) and whether a 1990 repaint kept it",
   "the Type K as a second variant: only worth writing once a dated photograph shows one in a street like this",
-  "a 'next collection' number tablet or rotary dial: not modelled (the research: uncertain)"
+  "a 'next collection' number tablet or rotary dial: not modelled (the research: uncertain)",
+  "the red's reflectance at 589 nm (6.5 of TARGET.md): a fitted edge gives 0.08, a bluer edge 0.12 to 0.20; a spectrum of the real paint would settle it"
  ],
  "handover": {
-  "for_scene_file": "furniture E4: replace body_diameter_m 0.597 / body_height_m 1.372 / cap 0.660 x 0.100 / dome 0.140 with the kit piece (total height 1.372 m, foot 0.576, body 0.489, cap 0.536); the piece's pivot is the axis at the footway; the stand-in was 0.24 m too tall if 1.372 was meant as the whole",
+  "for_scene_file": "furniture E4: replace body 0.597 / 1.372, cap 0.660 x 0.100 and dome 0.140 with the kit piece (total height 1.500, foot 0.576, body 0.489, cap 0.560); its pivot is the axis at the footway; the stand-in (1.612 in all) was 0.11 m too tall. THE FRONT (door, slot, plate) FACES THE BUILDING LINE, 180 degrees from the stand-in, whose slot is on the road side (StreetVignette.cs PillarBox): tell the scene owner; if the road side is kept, record why",
   "for_kerbs_and_footway": "the footway stands at +125 above the channel at the box's axis (110 at the kerb back, +15 for the fall); the box stands vertical on it; the flags are cut round the foot with a fillet (see parts.foot_plinth.set_in_footway)",
-  "for_wear": "pillar_box_red keeps 150/30/32; iron_wear strip: 8 repeats of 192 mm round the 1536 mm girth, not the 7.2 of the 214 strip; the share 0.03 to 0.06 (typical 0.04); the splash envelope applies from the footway",
+  "for_wear": "pillar_box_red keeps 150/30/32; iron_wear strip: 8 repeats of 192 mm round the 1536 mm girth, not the 7.2 of the 214 strip; the share 0.03 to 0.06 (typical 0.04); the mask runs from the footway to 1500; the foot-splash envelope applies from the footway; the road side is the back",
   "for_lighting": "the east lamp column stands at x = 28.0, 1.0 m from the box on the same line: expect the cap's dome and rim lit from above; at night under the 589 nm lantern the red box reads dark (about a tenth to a quarter as bright as a white surface), not red: the accent budget at night is the lamp's and the lit windows' (section 6 of TARGET.md)",
-  "for_NOW_md": "Pillar box target (unit 3.6/3.7 family): NO photograph of a pillar box was reached; Type A, 1372 mm above the footway, body 489, foot 576, cap 536, red 150/30/32 over a 200 black band, blank cypher and lettering pads, collection plate words COLLECTIONS / MON-FRI 5.30 PM / SAT 12 NOON only; the first dated photograph overrides every size."
+  "for_NOW_md": "Pillar box target (unit 3.6/3.7 family), second try: NO photograph of a pillar box was reached; Type A, 1500 above the footway (the research's working figure; 1626 the upper alternative), body 489, foot 576, cap 560, red 150/30/32 over a 200 black band, flush reserved areas for the cypher and the lettering, one collection plate with only COLLECTIONS / MON-FRI 5.30 PM / SAT 12 NOON, the front toward the shops; the first dated photograph overrides every size."
  },
  "checks": [
   {
    "name": "total_height",
    "applies_to": "whole piece",
    "measure": "max z of the visible mesh above the footway datum (z = 0 at the axis), in mm",
-   "expected": 1372,
+   "expected": 1500,
    "tolerance": 15,
-   "kind": "Judgement (the scene's 1372 read as the whole)"
+   "kind": "Read (the research's working figure, 150 cm)"
   },
   {
    "name": "pivot_and_datum",
@@ -1654,6 +1675,14 @@
    "kind": "Derived (the box stands vertical on a footway that falls 14 mm across the foot)"
   },
   {
+   "name": "profile_silhouette",
+   "applies_to": "foot, body, cap, dome",
+   "measure": "on the back half (y < 0, clear of the casting seam), the mesh's radius every 2 mm of z from 0 to the apex, against profile.outer_rz interpolated; largest absolute deviation, mm. A cap that is a plain disc, or a foot without its quarter-round, splay and cove, fails.",
+   "expected": 0,
+   "tolerance": 1.5,
+   "kind": "Derived (the profile); 3.0 allowed within 2 mm of a bevelled edge"
+  },
+  {
    "name": "body_diameter",
    "applies_to": "body",
    "measure": "x extent of the horizontal section at z = 1000 (the door's edges lie inside it), mm",
@@ -1672,18 +1701,18 @@
   {
    "name": "cap_rim_diameter",
    "applies_to": "cap",
-   "measure": "maximum x extent in z 1228 to 1250, mm",
-   "expected": 536,
+   "measure": "maximum x extent in z 1356 to 1378, mm",
+   "expected": 560,
    "tolerance": 6,
-   "kind": "Judgement"
+   "kind": "Judgement (the research: a few centimetres proud)"
   },
   {
    "name": "cap_soffit_height",
    "applies_to": "cap",
-   "measure": "z at which the profile radius first exceeds the body radius by 1 mm",
-   "expected": 1215,
+   "measure": "on the back half (y < 0): z at which the profile radius first exceeds the body radius by 1 mm (at the front the hood exceeds the body's radius from z 1300.5)",
+   "expected": 1343,
    "tolerance": 8,
-   "kind": "Judgement"
+   "kind": "Derived"
   },
   {
    "name": "dome_sagitta",
@@ -1697,14 +1726,14 @@
    "name": "dome_apex",
    "applies_to": "dome",
    "measure": "apex z, mm",
-   "expected": 1372,
+   "expected": 1500,
    "tolerance": 10,
-   "kind": "Judgement"
+   "kind": "Read (the research)"
   },
   {
    "name": "body_straight",
    "applies_to": "body",
-   "measure": "radius variation along z 140 to 1215 (cylinder: no taper), mm",
+   "measure": "radius variation along z 140 to 1343 on the back half (cylinder: no taper), mm",
    "expected": 0.0,
    "tolerance": 2.0,
    "kind": "Judgement"
@@ -1712,7 +1741,7 @@
   {
    "name": "aperture_width",
    "applies_to": "aperture",
-   "measure": "chord width of the slot (x extent at z = 1150), mm",
+   "measure": "chord width of the slot (x extent at its centre z), mm",
    "expected": 320,
    "tolerance": 6,
    "kind": "Read (scene)"
@@ -1729,9 +1758,9 @@
    "name": "aperture_centre_z",
    "applies_to": "aperture",
    "measure": "z of the slot's centre, mm",
-   "expected": 1150,
+   "expected": 1278,
    "tolerance": 12,
-   "kind": "Read (scene)"
+   "kind": "Derived (the scene's 1150 + 128)"
   },
   {
    "name": "aperture_centred",
@@ -1752,10 +1781,18 @@
   {
    "name": "hood_projection",
    "applies_to": "hood",
-   "measure": "radius of the hood's front above the slot minus the body radius, at z 1180, mm",
+   "measure": "radius of the hood's front above the slot minus the body radius, at z 1310.5, mm",
    "expected": 30,
    "tolerance": 4,
    "kind": "Judgement"
+  },
+  {
+   "name": "hood_inside_cap_rim",
+   "applies_to": "hood",
+   "measure": "cap rim radius minus the hood's front radius, mm (the hood tucks inside the rim)",
+   "expected": 5.5,
+   "tolerance": 3,
+   "kind": "Derived"
   },
   {
    "name": "hood_top_clear_of_cap",
@@ -1787,7 +1824,7 @@
    "measure": "width (x extent of the door face) and height (z extent), mm",
    "expected": {
     "width": 300,
-    "height": 760
+    "height": 888
    },
    "tolerance": {
     "width": 8,
@@ -1807,9 +1844,9 @@
    "name": "door_proud",
    "applies_to": "door",
    "measure": "door face radius minus body radius, mm",
-   "expected": 4,
-   "tolerance": 1.5,
-   "kind": "Judgement"
+   "expected": 1,
+   "tolerance": 1,
+   "kind": "Judgement (the research: a flush panel, Read)"
   },
   {
    "name": "door_joint",
@@ -1823,44 +1860,20 @@
    "kind": "Judgement"
   },
   {
-   "name": "hinge_count_and_place",
-   "applies_to": "hinges",
-   "measure": "number of barrel hinges, their x (left edge of the door) and z centres, mm",
-   "expected": {
-    "count": 2,
-    "x": -150,
-    "z": [
-     420,
-     900
-    ]
-   },
-   "tolerance": {
-    "x": 8,
-    "z": 12
-   },
-   "kind": "Judgement"
-  },
-  {
-   "name": "hinge_size",
-   "applies_to": "hinges",
-   "measure": "knuckle diameter and length, mm",
-   "expected": {
-    "diameter": 26,
-    "length": 96
-   },
-   "tolerance": {
-    "diameter": 3,
-    "length": 8
-   },
-   "kind": "Judgement"
+   "name": "door_left_edge_flush",
+   "applies_to": "door",
+   "measure": "no part on the door's left edge (the joint side) stands more than 1.5 mm proud of the door face: no hinge knuckle, pin or strap is modelled",
+   "expected": 1.5,
+   "tolerance": null,
+   "kind": "Judgement (internal hinges)"
   },
   {
    "name": "lock_place",
    "applies_to": "lock",
-   "measure": "x and z of the escutcheon's centre, mm (on the side opposite the hinges)",
+   "measure": "x and z of the escutcheon's centre, mm (on the side opposite the joint side)",
    "expected": {
     "x": 112,
-    "z": 690
+    "z": 818
    },
    "tolerance": 10,
    "kind": "Judgement"
@@ -1880,75 +1893,79 @@
    "kind": "Judgement"
   },
   {
-   "name": "lettering_pad_blank",
-   "applies_to": "lettering pad",
-   "measure": "pad width 300, height 40, centre z 1082, projection 3 mm; relief spread within the pad (max minus min height above its own plane) at most 0.5 mm: no letters",
+   "name": "keyhole_shutter_paint",
+   "applies_to": "lock",
+   "measure": "the shutter's albedo is the door's red, metal 0, and only its edge (1 mm) is dark bare metal 60/52/46; no bright brass",
+   "expected": {
+    "srgb": [
+     150,
+     30,
+     32
+    ],
+    "metal": 0,
+    "edge_srgb": [
+     60,
+     52,
+     46
+    ]
+   },
+   "tolerance": {
+    "srgb": 6,
+    "metal": 0.05
+   },
+   "kind": "Judgement (review N8)"
+  },
+  {
+   "name": "reserved_for_lettering",
+   "applies_to": "reserved area",
+   "measure": "flush area 300 x 40, centre z 1210: no geometry, relief measured radially above the body's own curved face (r 244.5) is 0 everywhere within it",
    "expected": {
     "width": 300,
     "height": 40,
-    "cz": 1082,
-    "proud": 3,
-    "relief_spread_max": 0.5
+    "cz": 1210.0,
+    "relief_max": 0
    },
    "tolerance": {
     "size": 8,
     "cz": 8,
-    "proud": 1.5
+    "relief": 0.3
    },
    "kind": "Judgement; canon (no operator lettering)"
   },
   {
-   "name": "cypher_roundel_blank",
-   "applies_to": "cypher roundel",
-   "measure": "roundel diameter 110, centre z 960, projection 3 mm; relief spread within the roundel at most 0.5 mm: no cypher, no crown",
+   "name": "reserved_for_cypher",
+   "applies_to": "reserved area",
+   "measure": "flush disc 110 across, centre z 1088 on the door's axis: no geometry, relief measured radially above the door's own curved face (r 245.5) is 0 everywhere within it",
    "expected": {
     "diameter": 110,
-    "cz": 960,
-    "proud": 3,
-    "relief_spread_max": 0.5
+    "cz": 1088,
+    "relief_max": 0
    },
    "tolerance": {
     "diameter": 6,
     "cz": 10,
-    "proud": 1.5
+    "relief": 0.3
    },
    "kind": "Judgement; canon (the postal cypher is owed)"
   },
   {
    "name": "collection_frame",
    "applies_to": "collection plate frame",
-   "measure": "outer width x height 210 x 125, centre z 790, bezel 12, plate recess 3, mm",
+   "measure": "outer width x height 210 x 125, centre z 918, bezel 12, plate recess 3, face plane y = 254.5, mm",
    "expected": {
     "w": 210,
     "h": 125,
-    "cz": 790,
+    "cz": 918,
     "bezel": 12,
-    "recess": 3
+    "recess": 3,
+    "face_plane_y": 254.5
    },
    "tolerance": {
     "size": 6,
     "cz": 10,
     "bezel": 2,
-    "recess": 1
-   },
-   "kind": "Judgement"
-  },
-  {
-   "name": "enamel_frame",
-   "applies_to": "enamel plate frame",
-   "measure": "outer width x height 160 x 100, centre z 590, bezel 10, plate recess 3, mm",
-   "expected": {
-    "w": 160,
-    "h": 100,
-    "cz": 590,
-    "bezel": 10,
-    "recess": 3
-   },
-   "tolerance": {
-    "size": 6,
-    "cz": 10,
-    "bezel": 2,
-    "recess": 1
+    "recess": 1,
+    "face_plane_y": 2
    },
    "kind": "Judgement"
   },
@@ -2005,8 +2022,8 @@
   },
   {
    "name": "plate_words",
-   "applies_to": "plates",
-   "measure": "every string rendered on the box is one of COLLECTIONS, MON-FRI, SAT, 5.30 PM, 12 NOON (or the list is empty); nothing else is lettered anywhere on the piece or in its textures",
+   "applies_to": "plate",
+   "measure": "every string rendered on the box is one of COLLECTIONS, MON-FRI, SAT, 5.30 PM, 12 NOON (or the list is empty and the frame with it); nothing else is lettered anywhere on the piece or in its textures",
    "expected": [
     "COLLECTIONS",
     "MON-FRI",
@@ -2028,7 +2045,7 @@
   {
    "name": "nothing_floats",
    "applies_to": "whole piece",
-   "measure": "each part (hood, sill, door, hinges, lock, pads, frames) touches or overlaps the lathe body: smallest gap, mm",
+   "measure": "each part (hood, sill, door groove, escutcheon, plate frame) touches or overlaps the lathe body: smallest gap, mm",
    "expected": 0.0,
    "tolerance": 1.0,
    "kind": "Derived"
@@ -2050,12 +2067,12 @@
    "kind": "Read / Derived"
   },
   {
-   "name": "front_faces_road",
+   "name": "front_faces_footway",
    "applies_to": "placement",
-   "measure": "angle of the aperture's normal to the direction pointing at the carriageway, degrees",
+   "measure": "angle of the slot's normal to the direction pointing at the buildings (away from the carriageway), degrees",
    "expected": 0.0,
    "tolerance": 10,
-   "kind": "Read (the stand-in's aperture is on the road side)"
+   "kind": "Judgement (review N6) against the scene's Read (the stand-in's slot is on the road side)"
   },
   {
    "name": "wear_share",
@@ -2234,7 +2251,7 @@
    "value": 1500,
    "unit": "mm",
    "kind": "Read",
-   "source": "production/research/street-clutter-1990/SUMMARY-2026-09-29.md section 1 (read on the PC; photographs of survivors after 2000; no drawing): 'working figures: about 150 cm above ground and 49 cm across' (the 150 lies above the research's own 135-147 range)"
+   "source": "production/research/street-clutter-1990/SUMMARY-2026-09-29.md section 1 (read on the PC; photographs of survivors after 2000; no drawing): 'working figures: about 150 cm above ground and 49 cm across' (ADOPTED as total_height after the review; it lies above the 135-147 cm that the 73 in listing gives, a casting that a lead says is a Type B's)"
   },
   "research_working_width": {
    "value": 490,
@@ -2414,17 +2431,28 @@
    "source": "19 1/4 in x 25.4 = 489 (the research's untraced Type A figure, 49 cm; the two listings 19 in = 483 and a Type A circumference of about 60 in (a search lead, 486) agree within 1 %)"
   },
   "total_height": {
-   "value": 1372,
+   "value": 1500,
    "unit": "mm",
-   "kind": "Judgement",
-   "source": "the scene's 1.372 m READ AS THE WHOLE BOX ABOVE THE FOOTWAY (cap and dome inside it, not on top). It sits inside the research's 135-147 cm (73 in casting less 15-20 in buried); the scene's stand-in is 1612 mm and the research's 'working' 150 cm lies above its own range",
-   "basis": "Memory/Read"
+   "kind": "Read",
+   "source": "the research's working figure: 'about 150 cm above ground' and 'the top is at about 150 cm' (its modelling breakdown: base about 20 cm, body about 115 cm, cap and dome on top). Amended 9 October after the review: the first draft read the scene's BODY figure 1.372 as the whole box and justified it by the 73 in listing's 1350-1470, which is a casting (a lead sells it as the narrow Type B), not the Type A. Upper alternative 1626 (the untraced Type A, 5 ft 4 in); the scene's own stand-in is 1612"
   },
-  "buried_depth": {
-   "value": 482,
+  "research_typeA_untraced_height": {
+   "value": 64,
+   "unit": "in",
+   "kind": "Read",
+   "source": "production/research/street-clutter-1990/SUMMARY-2026-09-29.md section 1 (read on the PC; photographs of survivors after 2000; no drawing): 'an untraced source gives a Type A as 5 ft 4 in tall' (UNVERIFIED)"
+  },
+  "upper_alternative_height": {
+   "value": 1626,
    "unit": "mm",
    "kind": "Derived",
-   "source": "73 in total casting (1854.2 mm) - 1372 mm visible = 482.2, i.e. 19 in (inside the research's 15-20 in)"
+   "source": "5 ft 4 in x 25.4 = 1625.6 (the research's untraced Type A); the scene's stand-in (1612) agrees with it; a photograph settles 1500 against 1626"
+  },
+  "hidden_skirt": {
+   "value": 150,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "how much of the casting below the footway is modelled (the real casting is some 15-20 in deeper, the research, Read; nothing below z = -150 can be seen)"
   },
   "foot_radius": {
    "value": 288,
@@ -2465,17 +2493,17 @@
    "source": "the cove runs out into the plain body here"
   },
   "cap_soffit_z": {
-   "value": 1215,
+   "value": 1343,
    "unit": "mm",
-   "kind": "Judgement",
-   "source": "where the body starts to flare into the cap's under-moulding",
+   "kind": "Derived",
+   "source": "where the body starts to flare into the cap's under-moulding: the first draft's 1215 + 128 (the review of 9 October: everything from the sill up moves up 128 so the slot stays just under the cap, the research, Read)",
    "basis": "Memory"
   },
   "cap_radius": {
-   "value": 268,
+   "value": 280,
    "unit": "mm",
    "kind": "Judgement",
-   "source": "cap rim 23.5 mm proud of the body: diameter 536 (the scene's 660 would be 1.35 times the body; the research says the rim is a few centimetres proud)",
+   "source": "cap rim 35.5 mm proud of the body: diameter 560 (the research: 'a few centimetres proud of the body'; the review: the cap's rim is the outermost line above the foot and the 30 mm hood tucks inside it; the scene's 660 would be 1.35 times the body)",
    "basis": "Memory"
   },
   "cap_cove_height": {
@@ -2485,10 +2513,10 @@
    "source": "under-moulding (cove) height"
   },
   "cap_rim_top_z": {
-   "value": 1250,
+   "value": 1378,
    "unit": "mm",
-   "kind": "Judgement",
-   "source": "top of the vertical rim"
+   "kind": "Derived",
+   "source": "top of the vertical rim (first draft 1250 + 128)"
   },
   "cap_bead_radius": {
    "value": 12,
@@ -2503,10 +2531,10 @@
    "source": "dome springs at this radius after a short neck"
   },
   "dome_base_z": {
-   "value": 1292,
+   "value": 1420,
    "unit": "mm",
-   "kind": "Judgement",
-   "source": "top of the neck, base of the dome"
+   "kind": "Derived",
+   "source": "top of the neck, base of the dome: apex 1500 less the 80 rise"
   },
   "dome_sagitta": {
    "value": 80,
@@ -2528,10 +2556,10 @@
    "source": "the scene's 0.045 kept"
   },
   "aperture_centre_z": {
-   "value": 1150,
+   "value": 1278,
    "unit": "mm",
-   "kind": "Read",
-   "source": "the scene's 1.150 kept: 1127.5 to 1172.5, 42.5 below the cap's under-moulding"
+   "kind": "Derived",
+   "source": "the scene's 1150 + 128: 1255.5 to 1300.5, 42.5 below the cap's under-moulding (the research: the slot is 'just under the cap'); the 1150 was the stand-in's height on a 1372 body"
   },
   "aperture_corner_radius": {
    "value": 5,
@@ -2550,23 +2578,23 @@
    "value": 30,
    "unit": "mm",
    "kind": "Judgement",
-   "source": "hood stands 30 proud of the body (r 274.5), about level with the cap rim (268)",
+   "source": "hood stands 30 proud of the body (r 274.5), 5.5 inside the cap rim (280): on a Type A the rim is the outermost line above the foot",
    "basis": "Memory"
   },
   "hood_z_bottom": {
-   "value": 1172.5,
+   "value": 1300.5,
    "unit": "mm",
    "kind": "Derived",
    "source": "= the slot's top edge: the hood's underside is flat on it"
   },
   "hood_front_top_z": {
-   "value": 1195,
+   "value": 1323,
    "unit": "mm",
    "kind": "Judgement",
    "source": "top of the hood's vertical front"
   },
   "hood_top_z": {
-   "value": 1205,
+   "value": 1333,
    "unit": "mm",
    "kind": "Judgement",
    "source": "the hood's sloped top meets the body here, 10 below the cap's under-moulding"
@@ -2590,7 +2618,7 @@
    "source": ""
   },
   "sill_z_bottom": {
-   "value": 1112,
+   "value": 1240,
    "unit": "mm",
    "kind": "Judgement",
    "source": "lower edge of the sill's chamfer"
@@ -2627,16 +2655,16 @@
    "source": "door's bottom edge: 80 above the black band's top (200)"
   },
   "door_z_top": {
-   "value": 1040,
+   "value": 1168,
    "unit": "mm",
    "kind": "Judgement",
-   "source": "door's top edge: 72.5 under the slot's sill chamfer"
+   "source": "door's top edge: 72 under the sill chamfer (1240); the door is 888 high"
   },
   "door_proud": {
-   "value": 4,
+   "value": 1,
    "unit": "mm",
    "kind": "Judgement",
-   "source": "door face stands 4 proud of the body"
+   "source": "door face stands 1 proud of the body (outer radius 245.5): the research says 'a flush panel' (Read), so the joint groove, not the relief, shows the door"
   },
   "door_groove": {
    "value": {
@@ -2653,29 +2681,10 @@
    "kind": "Judgement",
    "source": ""
   },
-  "hinge": {
-   "value": {
-    "count": 2,
-    "x": -150,
-    "z": [
-     420,
-     900
-    ],
-    "knuckle_diameter": 26,
-    "length": 96,
-    "pin_head_diameter": 18,
-    "pin_head_height": 6,
-    "side": "left as seen from the front"
-   },
-   "unit": "mm",
-   "kind": "Judgement",
-   "source": "two barrel hinges on the door's left edge",
-   "basis": "Memory"
-  },
   "lock": {
    "value": {
     "x": 112,
-    "z": 690,
+    "z": 818,
     "escutcheon_diameter": 36,
     "proud": 3,
     "keyhole_w": 4,
@@ -2683,73 +2692,68 @@
     "shutter_w": 22,
     "shutter_h": 10,
     "shutter_t": 2,
-    "side": "right (opposite the hinges)"
+    "shutter_srgb": [
+     150,
+     30,
+     32
+    ],
+    "shutter_metal": 0,
+    "shutter_edge_srgb": [
+     60,
+     52,
+     46
+    ],
+    "shutter_edge_width": 1,
+    "side": "right (opposite the hinged side, where the joint line is)"
    },
    "unit": "mm",
    "kind": "Judgement",
-   "source": "keyhole escutcheon with a brass swivel shutter, no maker's mark",
+   "source": "keyhole escutcheon with a swivel shutter painted with the door and worn bare at its edge only (the review: not bright brass); no maker's mark",
    "basis": "Memory"
   },
-  "lettering_panel": {
+  "lettering_area": {
    "value": {
     "x0": -150,
     "x1": 150,
-    "z0": 1062,
-    "z1": 1102,
-    "proud": 3,
-    "corner_radius": 4,
+    "z0": 1190,
+    "z1": 1230,
     "surface": "body",
-    "blank": true
+    "flush": true,
+    "placement": "a flush reserved band on the body's own face (radius 244.5), concentric with the body, 300 wide as a chord (half angle 37.8 degrees) and 40 high; no raised or cut geometry at all"
    },
    "unit": "mm",
    "kind": "Judgement",
-   "source": "BLANK raised pad where a real box carries its operator lettering; the position is a guess (the order of lettering, cypher and plates on the real type is the first thing to read from a dated photograph)",
+   "source": "FLUSH reserved area where a real box carries its operator lettering, raised on the iron; canon owes it, so nothing is cast there (the review: a blank raised pad reads as a placeholder). The position is a guess (the order of lettering, cypher and plate on the real type is the first thing to read from a dated photograph)",
    "basis": "Memory"
   },
-  "cypher_panel": {
+  "cypher_area": {
    "value": {
     "cx": 0,
-    "cz": 960,
+    "cz": 1088,
     "diameter": 110,
-    "proud": 3,
     "surface": "door",
-    "blank": true
+    "flush": true,
+    "placement": "a flush reserved disc on the door's own face (radius 245.5), concentric with the door's face and centred on the door's axis, 110 across; no raised or cut geometry at all"
    },
    "unit": "mm",
    "kind": "Judgement",
-   "source": "BLANK raised roundel where the royal cypher would be: canon owes the postal cypher",
+   "source": "FLUSH reserved area where the royal cypher would be cast: canon owes the postal cypher; the minted one is cast there once canon supplies it",
    "basis": "Memory"
   },
   "collection_plate_frame": {
    "value": {
     "cx": 0,
-    "cz": 790,
+    "cz": 918,
     "outer_w": 210,
     "outer_h": 125,
     "bezel": 12,
-    "bezel_proud_at_axis": 6,
+    "bezel_proud_at_axis": 9,
     "plate_recess": 3,
-    "form": "flat-faced boss: its face plane is tangent to the door at the axis plus 6, its sides run back to the cylinder"
+    "form": "flat-faced boss: its face plane is the plane y = 254.5 (9 above the door's face at the axis), its sides run back to the cylinder (33 proud at its edges)"
    },
    "unit": "mm",
    "kind": "Judgement",
-   "source": "frame for the collection-times plate",
-   "basis": "Memory"
-  },
-  "enamel_plate_frame": {
-   "value": {
-    "cx": 0,
-    "cz": 590,
-    "outer_w": 160,
-    "outer_h": 100,
-    "bezel": 10,
-    "bezel_proud_at_axis": 6,
-    "plate_recess": 3,
-    "form": "flat-faced boss as the collection frame"
-   },
-   "unit": "mm",
-   "kind": "Judgement",
-   "source": "frame for the small enamel instruction plate (left BLANK)",
+   "source": "frame for the collection-times plate, the only plate on the box (the review: a blank enamel plate in a frame reads as a placeholder)",
    "basis": "Memory"
   },
   "black_band_top": {
@@ -2826,37 +2830,37 @@
  "number_kinds": {
   "registry": "pb_numbers.py REG, copied whole into `numbers`",
   "counts": {
-   "Read": 45,
-   "Derived": 7,
-   "Judgement": 39
+   "Read": 46,
+   "Derived": 11,
+   "Judgement": 34
   },
   "photo_numbers": 0,
   "scaled_numbers": 0
  },
  "self_check": {
   "date": "2026-10-09",
-  "result_line": "SELF-CHECK PASS: 175 of 175 tests pass (A printed numbers 57/57, B photograph measurements 10/10 [none exist: it tests that none is claimed], C drawing 18/18 [no photograph: nothing laid on one], D internal consistency 50/50, E text and canon 40/40)",
-  "passed": 175,
-  "total": 175,
+  "result_line": "SELF-CHECK PASS: 212 of 212 tests pass (A printed numbers 61/61, B photograph measurements 13/13 [none exist: it tests that none is claimed], C drawing 21/21 [no photograph: nothing laid on one], D internal consistency 66/66, E text and canon 51/51)",
+  "passed": 212,
+  "total": 212,
   "parts": {
    "A": [
-    57,
+    61,
     0
    ],
    "B": [
-    10,
+    13,
     0
    ],
    "C": [
-    18,
+    21,
     0
    ],
    "D": [
-    50,
+    66,
     0
    ],
    "E": [
-    40,
+    51,
     0
    ]
   },
@@ -3128,19 +3132,43 @@
    },
    {
     "part": "A",
-    "name": "buried depth = 73 in - 1372 mm",
-    "ok": true,
-    "detail": "482"
-   },
-   {
-    "part": "A",
-    "name": "total height lies inside the research's visible range 1350 to 1470",
+    "name": "total height = the research's working figure 1500 (Read), kind Read",
     "ok": true,
     "detail": ""
    },
    {
     "part": "A",
-    "name": "buried depth lies inside 15 to 20 in",
+    "name": "the research says 'about 150 cm above ground' and 'The top is at about 150 cm'",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "A",
+    "name": "the research's untraced Type A line: 5 ft 4 in tall = 1626 as the upper alternative",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "A",
+    "name": "the stand-in is 112 mm too tall (1612 - 1500) and the ratio height / body is 3.07",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "A",
+    "name": "the 73 in casting range (1350 to 1470) is recorded as NOT used for the Type A",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "A",
+    "name": "no 'buried_depth' number remains (the 73 in derivation is dropped); the hidden skirt is 150",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "A",
+    "name": "every 'moved up 128' number: slot centre 1278, cap soffit 1343, hood 1300.5 / 1323 / 1333, sill 1240, apex 1500 (first draft + 128)",
     "ok": true,
     "detail": ""
    },
@@ -3236,6 +3264,18 @@
    },
    {
     "part": "B",
+    "name": "panorama counts (review N9): 997 listed, 732 with coordinates, so 265 without (not 'about 400')",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "B",
+    "name": "every tone-mapped JPG searched is 8192 px wide (review N9), as the scan recorded it, and the text says so",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "B",
     "name": "no source in `unreached` is also used as a number source",
     "ok": true,
     "detail": ""
@@ -3254,6 +3294,12 @@
    },
    {
     "part": "B",
+    "name": "the disagreement rows for height, door and facing exist (review F1, N2, N6)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "B",
     "name": "the main photograph overlay does not exist and is not claimed",
     "ok": true,
     "detail": ""
@@ -3266,33 +3312,33 @@
    },
    {
     "part": "C",
-    "name": "front elevation: overall height = total_height",
+    "name": "front elevation: overall height = total_height 1500",
     "ok": true,
-    "detail": "(-288.0, -150.0, 288.0, 1372.0)"
+    "detail": "(-288.0, -150.0, 288.0, 1500.0)"
    },
    {
     "part": "C",
     "name": "front elevation: widest at the foot = foot diameter",
     "ok": true,
-    "detail": "(-288.0, -150.0, 288.0, 1372.0)"
+    "detail": "(-288.0, -150.0, 288.0, 1500.0)"
    },
    {
     "part": "C",
-    "name": "front elevation: slot is 320 x 45 centred on z 1150",
+    "name": "front elevation: slot is 320 x 45 centred on z 1278",
     "ok": true,
-    "detail": "(-160.0, 1127.5, 160.0, 1172.5)"
+    "detail": "(-160.0, 1255.5, 160.0, 1300.5)"
    },
    {
     "part": "C",
-    "name": "front elevation: door 300 x 760, bottom at 280",
+    "name": "front elevation: door 300 x 888, bottom at 280, top at 1168",
     "ok": true,
-    "detail": "(-150.0, 280.0, 150.0, 1040.0)"
+    "detail": "(-150.0, 280.0, 150.0, 1168.0)"
    },
    {
     "part": "C",
-    "name": "front elevation: blank cypher roundel 110 across at z 960",
+    "name": "front elevation: the reserved cypher disc is 110 across at z 1088",
     "ok": true,
-    "detail": ""
+    "detail": "(-55.0, 1033.0, 55.0, 1143.0)"
    },
    {
     "part": "C",
@@ -3308,19 +3354,25 @@
    },
    {
     "part": "C",
-    "name": "front elevation: cap rim width at z 1237 = 536",
+    "name": "front elevation: cap rim width at its mid-height = 560",
     "ok": true,
-    "detail": "(-268.0, 1236.0, 268.0, 1238.0)"
+    "detail": "(-280.0, 1366.0, 280.0, 1368.0)"
    },
    {
     "part": "C",
-    "name": "side elevation: the front (hood) projects to y = 274.5, the door to 248.5, the plates to 254.5",
+    "name": "front elevation: no hinge knuckle, pin or enamel plate is drawn",
+    "ok": true,
+    "detail": "['base_black', 'body_red', 'collection_frame', 'collection_plate', 'door', 'door_joint', 'flap', 'hood', 'hood_front_edge', 'keyhole', 'keyhole_shutter', 'keyhole_shutter_edge', 'lock_escutcheon', 'reserved_for_cypher_FLUSH', 'reserved_for_lettering_FLUSH', 'ring_line', 'sill', 'sill_line', 'slot']"
+   },
+   {
+    "part": "C",
+    "name": "side elevation: the hood front at y = 274.5, the door at 245.5, the plate frame at 254.5, and the cap rim (280) is outside the hood",
     "ok": true,
     "detail": ""
    },
    {
     "part": "C",
-    "name": "side elevation: the back is the plain cylinder (no feature behind y = -244.5)",
+    "name": "side elevation: the back is the plain cylinder (nothing behind y = -289)",
     "ok": true,
     "detail": ""
    },
@@ -3338,9 +3390,15 @@
    },
    {
     "part": "C",
-    "name": "axial section: the front wall is open at the slot (no wall at z 1150 on the front)",
+    "name": "axial section: the front wall is open at the slot (no wall at z 1278 on the front)",
     "ok": true,
     "detail": "0.0"
+   },
+   {
+    "part": "C",
+    "name": "plans: eight levels, named foot, door, lock, collection_frame, slot, hood, cap_rim, dome",
+    "ok": true,
+    "detail": "['foot', 'door', 'lock', 'collection_frame', 'slot', 'hood', 'cap_rim', 'dome']"
    },
    {
     "part": "C",
@@ -3350,7 +3408,7 @@
    },
    {
     "part": "C",
-    "name": "plans: cap rim ring outer diameter 536",
+    "name": "plans: cap rim ring outer diameter 560",
     "ok": true,
     "detail": ""
    },
@@ -3359,6 +3417,12 @@
     "name": "plans: the hood reaches y = 274.5 and spans +-48 degrees",
     "ok": true,
     "detail": "(-203.99, 163.6, 203.99, 274.5)"
+   },
+   {
+    "part": "C",
+    "name": "plans: the door level shows a plain door sector and no knuckle (nothing stands out of the door's left edge)",
+    "ok": true,
+    "detail": ""
    },
    {
     "part": "C",
@@ -3376,7 +3440,7 @@
     "part": "D",
     "name": "profile: starts at z = -150 on the foot radius, ends on the axis at the total height",
     "ok": true,
-    "detail": "([288, -150.0], [0.0, 1372.0])"
+    "detail": "([288, -150], [0.0, 1500.0])"
    },
    {
     "part": "D",
@@ -3386,13 +3450,13 @@
    },
    {
     "part": "D",
-    "name": "profile: the body is a cylinder of radius 244.5 between z 200 and 1200 (read off the profile every 50 mm)",
+    "name": "profile: the body is a cylinder of radius 244.5 between z 200 and 1300 (read off the profile every 50 mm)",
     "ok": true,
     "detail": "[244.5, 244.5, 244.5]"
    },
    {
     "part": "D",
-    "name": "profile: foot radius 288, cap radius 268",
+    "name": "profile: foot radius 288, cap radius 280",
     "ok": true,
     "detail": ""
    },
@@ -3404,13 +3468,19 @@
    },
    {
     "part": "D",
-    "name": "dome: every dome point lies on the sphere",
+    "name": "dome: every dome point lies on the sphere, the base circle at z 1420 and the apex at 1500",
     "ok": true,
     "detail": ""
    },
    {
     "part": "D",
-    "name": "cap: soffit below the rim below the bead below the dome base",
+    "name": "cap: soffit 1343 below the rim (1356 to 1378) below the dome base 1420 below the apex 1500",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "cap: rim diameter 560, 35.5 proud of the body, and the cap is the outermost line above the foot",
     "ok": true,
     "detail": ""
    },
@@ -3446,31 +3516,49 @@
    },
    {
     "part": "D",
-    "name": "aperture: the hood's front is level with the cap rim to within 8 mm (the cap rim 268, the hood 274.5)",
+    "name": "aperture: the hood tucks INSIDE the cap rim (review N4): hood radius 274.5 < rim radius 280, by 5.5",
     "ok": true,
     "detail": ""
    },
    {
     "part": "D",
-    "name": "aperture: slot centre z and size equal the scene's (Read)",
+    "name": "aperture: slot size = the scene's (Read); centre = the scene's + 128 = 1278; the slot top is 42.5 under the cap soffit ('just under the cap')",
     "ok": true,
     "detail": ""
    },
    {
     "part": "D",
-    "name": "door: above the black band, below the lettering pad and the sill",
+    "name": "door: above the black band, below the lettering area and the sill",
+    "ok": true,
+    "detail": "(1168, 1190, 1230, 1240)"
+   },
+   {
+    "part": "D",
+    "name": "door: 1 proud (review N2): outer radius 245.5, a flush panel as the research says; the plate frame's face plane stays at y = 254.5 (bezel_proud_at_axis 9)",
     "ok": true,
     "detail": ""
    },
    {
     "part": "D",
-    "name": "door: angular half-width recomputes",
+    "name": "door: angular half-width recomputes from 150 / 245.5",
     "ok": true,
     "detail": ""
    },
    {
     "part": "D",
-    "name": "cypher roundel lies wholly on the door",
+    "name": "door: 888 high, from 280 to 1168",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "door: no hinges in the target (review N3): none in parts.door, none in the registry, 'hinged' says internal",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "cypher area lies wholly on the door",
     "ok": true,
     "detail": ""
    },
@@ -3482,39 +3570,27 @@
    },
    {
     "part": "D",
-    "name": "enamel frame lies wholly on the door",
-    "ok": true,
-    "detail": ""
-   },
-   {
-    "part": "D",
     "name": "lock escutcheon lies wholly on the door",
     "ok": true,
     "detail": ""
    },
    {
     "part": "D",
-    "name": "no two of the door's furniture and panels overlap",
+    "name": "no two of the door's furniture and reserved areas overlap",
     "ok": true,
     "detail": "[]"
    },
    {
     "part": "D",
-    "name": "the hinges straddle the door's left edge (x = -150) and not the right",
+    "name": "the lock is on the right and clears the collection frame by 15 mm or more",
+    "ok": true,
+    "detail": "20.15011439936694"
+   },
+   {
+    "part": "D",
+    "name": "the stack is the first draft's moved up by 128 (each item the same distance under the door's top): roundel 1088, frame 918, lock 818, lettering cz 1210",
     "ok": true,
     "detail": ""
-   },
-   {
-    "part": "D",
-    "name": "the hinge knuckles clear the collection frame by 20 mm or more",
-    "ok": true,
-    "detail": "[261.4655809088454, 32.0]"
-   },
-   {
-    "part": "D",
-    "name": "the lock clears both frames by 15 mm or more",
-    "ok": true,
-    "detail": "(20.15011439936694, 41.36831866799568)"
    },
    {
     "part": "D",
@@ -3524,13 +3600,19 @@
    },
    {
     "part": "D",
-    "name": "plate windows = frame minus twice the bezel (186 x 101 and 140 x 80)",
+    "name": "plate window = frame minus twice the bezel (186 x 101); one plate only",
     "ok": true,
     "detail": ""
    },
    {
     "part": "D",
-    "name": "cypher roundel and lettering pad are blank (flag set, relief within 0.5 mm)",
+    "name": "the cypher and lettering areas are FLUSH reserved areas: flush flag, no 'proud' number, check relief 0 (review N5)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "the placements are written in words (review N7): the reserved areas say 'concentric' and a radius; the door says 'concentric' and 245.5",
     "ok": true,
     "detail": ""
    },
@@ -3561,6 +3643,12 @@
    {
     "part": "D",
     "name": "colour: the wet red is darker than the dry and still has S > 0.6",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "the keyhole shutter is painted red 150/30/32, metal 0, with a 1 mm dark bare-metal edge 60/52/46 (review N8); the brass colour 150/125/70 is gone",
     "ok": true,
     "detail": ""
    },
@@ -3602,9 +3690,9 @@
    },
    {
     "part": "D",
-    "name": "accent budget: frame shares recompute from the projected area (within 6 %)",
+    "name": "accent budget: frame shares recompute from the projected area (within 6 %), and the area from 0.489 x 1.5 + 0.05",
     "ok": true,
-    "detail": "{5: 0.022165473725919756, 8: 0.008658388174187404, 12: 0.003848172521861069}"
+    "detail": "{5: 0.024350802121432976, 8: 0.009512032078684757, 12: 0.00422756981274878}"
    },
    {
     "part": "D",
@@ -3632,13 +3720,19 @@
    },
    {
     "part": "D",
+    "name": "wear: the mask runs to 1500 and the soot band sits under the new cap soffit (z 1318 to 1343)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
     "name": "wear: chips' bottom-layer mix sums to 1",
     "ok": true,
     "detail": ""
    },
    {
     "part": "D",
-    "name": "wear: flyposting stays off the door, plates, lock, aperture and hood",
+    "name": "wear: flyposting stays off the door, plate, lock, slot and hood",
     "ok": true,
     "detail": ""
    },
@@ -3650,13 +3744,61 @@
    },
    {
     "part": "D",
-    "name": "checks: every check has name, applies_to, measure, expected, tolerance, kind and the names are unique",
+    "name": "wear: no rust source or first-look line names a hinge; the left-end hood trickle is there (review N3)",
     "ok": true,
-    "detail": "46"
+    "detail": ""
    },
    {
     "part": "D",
-    "name": "checks: total height, body, foot, cap, black band, red equal the target's numbers",
+    "name": "wear: the road side is the back (180 degrees from the front)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "facing: the front faces the building line, with the scene's road side recorded and the scene owner told (review N6)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks: every check has name, applies_to, measure, expected, tolerance, kind and the names are unique",
+    "ok": true,
+    "detail": "47"
+   },
+   {
+    "part": "D",
+    "name": "checks: total height 1500, dome apex 1500, soffit 1343, rim 560, slot centre 1278, door 300 x 888, lock z 818, lettering cz 1210, cypher cz 1088, frame cz 918, body, foot, band, red",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks: tolerance of total_height 15, dome_apex 10, soffit 8, door_proud 1 (expected 1)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks (N1): cap_rim_diameter is measured in z 1356 to 1378 and cap_soffit_height on the back half (y < 0); body_straight over z 140 to 1343",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks (N1): the reserved-area checks measure relief 'radially above' the surrounding curved face, not above a plane",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks (N1): profile_silhouette exists: back half, every 2 mm of z, against profile.outer_rz, expected 0 within 1.5",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks (N3): no hinge checks; door_left_edge_flush replaces them (1.5 mm); (N5) no enamel check; (N6) front_faces_footway replaces front_faces_road; (N8) keyhole_shutter_paint",
     "ok": true,
     "detail": ""
    },
@@ -3664,13 +3806,31 @@
     "part": "D",
     "name": "checks: at least 35 checks, covering geometry, paint, wear, canon and placement",
     "ok": true,
+    "detail": "47"
+   },
+   {
+    "part": "D",
+    "name": "variants: main, no black band, Type K (not built), no plate; the Type K is not built",
+    "ok": true,
     "detail": ""
    },
    {
     "part": "D",
-    "name": "variants: exactly one main, one Type K coarse profile (not built), two states",
+    "name": "silhouette check: a correct build (the profile itself, or 0.8 mm out) passes the 1.5 mm tolerance",
     "ok": true,
-    "detail": ""
+    "detail": "(0.0, 0.8000000000000114)"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check: a plain 560 disc for the cap, with no cove, bead or neck, FAILS (deviation above 1.5)",
+    "ok": true,
+    "detail": "35.26106194690266"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check: a foot with no quarter-round, splay or cove FAILS",
+    "ok": true,
+    "detail": "43.5"
    },
    {
     "part": "E",
@@ -3698,7 +3858,7 @@
    },
    {
     "part": "E",
-    "name": "the cypher roundel and the lettering pad carry no text key",
+    "name": "the reserved areas carry no text key",
     "ok": true,
     "detail": ""
    },
@@ -3722,9 +3882,9 @@
    },
    {
     "part": "E",
-    "name": "TARGET.md contains '1372'",
+    "name": "TARGET.md contains '1500'",
     "ok": true,
-    "detail": "1372"
+    "detail": "1500"
    },
    {
     "part": "E",
@@ -3734,9 +3894,9 @@
    },
    {
     "part": "E",
-    "name": "TARGET.md contains '536'",
+    "name": "TARGET.md contains '560'",
     "ok": true,
-    "detail": "536"
+    "detail": "560"
    },
    {
     "part": "E",
@@ -3791,6 +3951,72 @@
     "name": "TARGET.md contains 'no maker'",
     "ok": true,
     "detail": "no maker"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains '1626'",
+    "ok": true,
+    "detail": "1626"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains '1278'",
+    "ok": true,
+    "detail": "1278"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains '1343'",
+    "ok": true,
+    "detail": "1343"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains '888'",
+    "ok": true,
+    "detail": "888"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains 'building line'",
+    "ok": true,
+    "detail": "building line"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains 'flush'",
+    "ok": true,
+    "detail": "flush"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains '265'",
+    "ok": true,
+    "detail": "265"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains '8192'",
+    "ok": true,
+    "detail": "8192"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains 'second try'",
+    "ok": true,
+    "detail": "second try"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md no longer calls 1372 the total height or the stand-in's cap and dome 'inside' it",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md no longer mentions hinge knuckles as geometry, an enamel plate frame, or brass",
+    "ok": true,
+    "detail": ""
    },
    {
     "part": "E",
@@ -3868,7 +4094,7 @@
     "part": "E",
     "name": "preview target-quay-street-elevations.jpg: JPEG, at most 1200 px long side, under 300 KB",
     "ok": true,
-    "detail": "((1105, 1200), 70608)"
+    "detail": "((1011, 1200), 63640)"
    },
    {
     "part": "E",
@@ -3880,7 +4106,7 @@
     "part": "E",
     "name": "preview target-quay-street-axial-section.jpg: JPEG, at most 1200 px long side, under 300 KB",
     "ok": true,
-    "detail": "((511, 1200), 32869)"
+    "detail": "((474, 1200), 30045)"
    },
    {
     "part": "E",
@@ -3904,7 +4130,7 @@
     "part": "E",
     "name": "preview target-quay-street-plans.jpg: JPEG, at most 1200 px long side, under 300 KB",
     "ok": true,
-    "detail": "((1200, 611), 71600)"
+    "detail": "((1200, 610), 72854)"
    },
    {
     "part": "E",

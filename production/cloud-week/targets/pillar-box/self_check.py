@@ -119,9 +119,13 @@ test("A", "SCENE-SLOTS pillar box row", "0.597 across, 1.372 high" in slots_txt 
 
 # derived numbers recompute
 test("A", "body diameter = 19.25 in x 25.4 rounded", round(V("research_width_untraced_typeA") * 25.4) == V("body_diameter"), round(V("research_width_untraced_typeA") * 25.4))
-test("A", "buried depth = 73 in - 1372 mm", round(V("research_total_casting") * 25.4 - V("total_height")) == V("buried_depth"), V("buried_depth"))
-test("A", "total height lies inside the research's visible range 1350 to 1470", V("research_visible_range_cm")[0] * 10 <= V("total_height") <= V("research_visible_range_cm")[1] * 10)
-test("A", "buried depth lies inside 15 to 20 in", V("research_buried_min") * 25.4 <= V("buried_depth") <= V("research_buried_max") * 25.4)
+test("A", "total height = the research's working figure 1500 (Read), kind Read", V("total_height") == V("research_working_height") == 1500 and N["total_height"]["kind"] == "Read" and T["overall"]["total_height"] == 1500)
+test("A", "the research says 'about 150 cm above ground' and 'The top is at about 150 cm'", "about 150 cm above ground" in res_txt and "The top is at about 150 cm" in res_txt)
+test("A", "the research's untraced Type A line: 5 ft 4 in tall = 1626 as the upper alternative", "5 ft 4 in tall" in res_txt and round(V("research_typeA_untraced_height") * 25.4) == V("upper_alternative_height") == T["overall"]["upper_alternative_total_height"]["value"] == 1626)
+test("A", "the stand-in is 112 mm too tall (1612 - 1500) and the ratio height / body is 3.07", T["overall"]["stand_in_for_comparison"]["too_tall_by_mm"] == 112 and T["overall"]["height_over_body_width"] == 3.07 and abs(1500 / 489 - 3.07) < 0.005)
+test("A", "the 73 in casting range (1350 to 1470) is recorded as NOT used for the Type A", "lower_range_not_used" in T["overall"] and T["overall"]["lower_range_not_used"]["value_mm"] == [135, 147])
+test("A", "no 'buried_depth' number remains (the 73 in derivation is dropped); the hidden skirt is 150", "buried_depth" not in N and V("hidden_skirt") == 150)
+test("A", "every 'moved up 128' number: slot centre 1278, cap soffit 1343, hood 1300.5 / 1323 / 1333, sill 1240, apex 1500 (first draft + 128)", V("aperture_centre_z") == 1150 + 128 == 1278 and V("cap_soffit_z") == 1215 + 128 and V("hood_z_bottom") == 1172.5 + 128 and V("hood_front_top_z") == 1195 + 128 and V("hood_top_z") == 1205 + 128 and V("sill_z_bottom") == 1112 + 128 and V("dome_base_z") == 1292 + 128 and V("cap_rim_top_z") == 1250 + 128)
 test("A", "footway at the axis = 110 + 0.6 m x 0.025", abs(V("flag_level_above_channel") + V("scene_setback") * 1000 * V("scene_footway_crossfall") - V("footway_at_axis_above_channel")) < 0.5)
 test("A", "footway fall across the foot = 576 x 0.025", abs(2 * V("foot_radius") * V("scene_footway_crossfall") - V("footway_fall_across_foot")) < 0.1)
 circ = math.pi * V("body_diameter")
@@ -134,21 +138,27 @@ test("A", "every Read number has a source string", all(v["source"] for v in N.va
 test("A", "every number has one of the three kinds", all(v["kind"] in ("Read", "Derived", "Judgement") for v in N.values()))
 test("A", "kind counts in target.json match the registry", T["number_kinds"]["counts"] == {k: sum(1 for v in N.values() if v["kind"] == k) for k in ("Read", "Derived", "Judgement")})
 
+
 # ------------------------------------------------------------------------------------------------------------------
 # B. photograph measurements
 # ------------------------------------------------------------------------------------------------------------------
 test("B", "no number is labelled Photo or Scaled", T["number_kinds"]["photo_numbers"] == 0 and T["number_kinds"]["scaled_numbers"] == 0 and not any(v["kind"] in ("Photo", "Scaled") for v in N.values()))
-test("B", "target.json states that no photograph was measured", T["no_photograph_measured"] is True and "NO PHOTOGRAPH OF A PILLAR BOX WAS REACHED" in T["summary_line"])
-test("B", "photographs-win block says it does not apply and lists the disagreements between the repository's own figures", T["photographs_win"]["applies"] is False and len(T["photographs_win"]["disagreements"]) >= 6)
+test("B", "target.json states that no photograph was measured", T["no_photograph_measured"] is True and "no photograph of a pillar box was reached" in T["summary_line"])
+test("B", "photographs-win block says it does not apply and lists the disagreements between the repository's own figures", T["photographs_win"]["applies"] is False and len(T["photographs_win"]["disagreements"]) >= 8)
 scan = json.load(open(os.path.join(HERE, "panorama_scan.json")))
 test("B", "panorama scan recorded: every searched panorama present, none shows a pillar box", scan["pillar_box_found"] is False and all(not v["pillar_box"] for v in scan["panoramas"].values()))
 names = set(scan["panoramas"])
 listed = {s.split(" ")[0] for s in T["panorama_search"]["searched"]}
 test("B", "the scan covers every panorama target.json says was searched", names == listed, sorted(names ^ listed))
 test("B", "no Dublin panorama among those searched", not any(n_.startswith("docklands") or n_ in ("poolbeg", "irish_institute") for n_ in names))
+cat = T["panorama_search"]["catalogue"]
+test("B", "panorama counts (review N9): 997 listed, 732 with coordinates, so 265 without (not 'about 400')", cat["hdris_listed"] - cat["with_coordinates"] == cat["without_coordinates"] == 265 and "265" in json.dumps(T["panorama_search"]["left_out"]) and "400" not in json.dumps(T["panorama_search"]))
+test("B", "every tone-mapped JPG searched is 8192 px wide (review N9), as the scan recorded it, and the text says so", all(v["source_px"][0] == 8192 for v in scan["panoramas"].values()) and cat["tone_mapped_jpg_width_px"] == 8192 and "8192" in T["panorama_search"]["method"] and "20000" not in json.dumps(T["panorama_search"]))
 test("B", "no source in `unreached` is also used as a number source", all("used" in u and u["used"] in ("nothing", "to corroborate, never as a number") for u in T["unreached"]))
 test("B", "leads are never in the number registry as sources", all("WebSearch" not in v["source"] for v in N.values()))
 test("B", "every disagreement names what was chosen", all("chosen" in d for d in T["photographs_win"]["disagreements"]))
+dis = {d["item"]: d for d in T["photographs_win"]["disagreements"]}
+test("B", "the disagreement rows for height, door and facing exist (review F1, N2, N6)", all(k in dis for k in ("height", "door", "facing")) and "1500" in dis["height"]["chosen"] and "1 proud" in dis["door"]["chosen"] and "building line" in dis["facing"]["chosen"])
 test("B", "the main photograph overlay does not exist and is not claimed", not os.path.exists(os.path.join(ROOT, "production/previews/cloud-week/refs/pillar-box/target-on-photo.jpg")))
 
 # ------------------------------------------------------------------------------------------------------------------
@@ -173,32 +183,43 @@ fe = D["views"]["front_elevation"]
 se = D["views"]["side_elevation"]
 sec = D["views"]["axial_section"]
 body = unary_union(geoms(fe, "red") + geoms(fe, "black"))
-test("C", "front elevation: overall height = total_height", abs(body.bounds[3] - T["overall"]["total_height"]) < 0.6, body.bounds)
+cap_ = T["parts"]["cap"]
+door_ = T["parts"]["door"]
+test("C", "front elevation: overall height = total_height 1500", abs(body.bounds[3] - T["overall"]["total_height"]) < 0.6 and T["overall"]["total_height"] == 1500, body.bounds)
 test("C", "front elevation: widest at the foot = foot diameter", abs((body.bounds[2] - body.bounds[0]) - T["overall"]["foot_diameter"]) < 1.0, body.bounds)
 sl = geoms(fe, name="slot")[0]
-test("C", "front elevation: slot is 320 x 45 centred on z 1150", abs((sl.bounds[2] - sl.bounds[0]) - V("aperture_width")) < 0.6 and abs((sl.bounds[3] - sl.bounds[1]) - V("aperture_height")) < 0.6 and abs((sl.bounds[1] + sl.bounds[3]) / 2 - V("aperture_centre_z")) < 0.6, sl.bounds)
+test("C", "front elevation: slot is 320 x 45 centred on z 1278", abs((sl.bounds[2] - sl.bounds[0]) - V("aperture_width")) < 0.6 and abs((sl.bounds[3] - sl.bounds[1]) - V("aperture_height")) < 0.6 and abs((sl.bounds[1] + sl.bounds[3]) / 2 - 1278) < 0.6, sl.bounds)
 dr = geoms(fe, name="door")[0]
-test("C", "front elevation: door 300 x 760, bottom at 280", abs((dr.bounds[2] - dr.bounds[0]) - 300) < 0.6 and abs((dr.bounds[3] - dr.bounds[1]) - 760) < 0.6 and abs(dr.bounds[1] - 280) < 0.6, dr.bounds)
-test("C", "front elevation: blank cypher roundel 110 across at z 960", abs(geoms(fe, name="cypher_roundel_blank")[0].bounds[2] - geoms(fe, name="cypher_roundel_blank")[0].bounds[0] - 110) < 0.8)
+test("C", "front elevation: door 300 x 888, bottom at 280, top at 1168", abs((dr.bounds[2] - dr.bounds[0]) - 300) < 0.6 and abs((dr.bounds[3] - dr.bounds[1]) - 888) < 0.6 and abs(dr.bounds[1] - 280) < 0.6, dr.bounds)
+cyd = geoms(fe, name="reserved_for_cypher_FLUSH")[0]
+test("C", "front elevation: the reserved cypher disc is 110 across at z 1088", abs(cyd.bounds[2] - cyd.bounds[0] - 110) < 0.8 and abs((cyd.bounds[1] + cyd.bounds[3]) / 2 - 1088) < 0.8, cyd.bounds)
 bl = [g for g in geoms(fe, "black")][0]
 test("C", "front elevation: the black band stops at z = 200", abs(bl.bounds[3] - 200) < 0.6, bl.bounds)
 w700 = body.intersection(box(-400, 699, 400, 701)).bounds
 test("C", "front elevation: width at z 700 = body diameter 489", abs((w700[2] - w700[0]) - 489) < 1.0, w700)
-rim = body.intersection(box(-400, 1236, 400, 1238)).bounds
-test("C", "front elevation: cap rim width at z 1237 = 536", abs((rim[2] - rim[0]) - 536) < 1.0, rim)
+zr = (cap_["rim_z"][0] + cap_["rim_z"][1]) / 2
+rim = body.intersection(box(-400, zr - 1, 400, zr + 1)).bounds
+test("C", "front elevation: cap rim width at its mid-height = 560", abs((rim[2] - rim[0]) - 560) < 1.0, rim)
+test("C", "front elevation: no hinge knuckle, pin or enamel plate is drawn", not any(("hinge" in p["name"] or "enamel" in p["name"] or "pin" == p["name"]) for p in fe["polygons"]), sorted({p["name"] for p in fe["polygons"]}))
 sbody = unary_union(geoms(se, "red") + geoms(se, "black"))
-test("C", "side elevation: the front (hood) projects to y = 274.5, the door to 248.5, the plates to 254.5", abs(sbody.intersection(box(0, 1180, 400, 1190)).bounds[2] - 274.5) < 1.0 and abs(sbody.intersection(box(0, 300, 400, 320)).bounds[2] - 248.5) < 1.0 and abs(sbody.intersection(box(0, 790, 400, 792)).bounds[2] - 254.5) < 1.0)
-test("C", "side elevation: the back is the plain cylinder (no feature behind y = -244.5)", abs(sbody.bounds[0] + max(244.5, 288)) < 1.0 or sbody.bounds[0] >= -289)
+zh = T["parts"]["aperture"]["hood"]["z0"] + 10
+cfr = T["parts"]["plates"]["collection_frame"]
+test("C", "side elevation: the hood front at y = 274.5, the door at 245.5, the plate frame at 254.5, and the cap rim (280) is outside the hood",
+     abs(sbody.intersection(box(0, zh, 400, zh + 2)).bounds[2] - 274.5) < 1.0 and abs(sbody.intersection(box(0, 300, 400, 320)).bounds[2] - 245.5) < 1.0 and abs(sbody.intersection(box(0, cfr["cz"], 400, cfr["cz"] + 2)).bounds[2] - 254.5) < 1.0
+     and abs(sbody.intersection(box(0, zr, 400, zr + 2)).bounds[2] - 280) < 1.0)
+test("C", "side elevation: the back is the plain cylinder (nothing behind y = -289)", sbody.bounds[0] >= -289)
 wall = unary_union(geoms(sec, "red") + geoms(sec, "black"))
 test("C", "axial section: the wall is ONE connected solid (nothing floats; the slot opens the front wall only)", wall.geom_type == "Polygon" or len(list(wall.geoms)) == 1, wall.geom_type)
 test("C", "axial section: wall thickness 12 at z 700 (back wall)", abs(wall.intersection(box(-400, 699, 0, 701)).bounds[2] - wall.intersection(box(-400, 699, 0, 701)).bounds[0] - 12) < 1.0)
-slot_row = wall.intersection(box(200, 1148, 400, 1152))
-test("C", "axial section: the front wall is open at the slot (no wall at z 1150 on the front)", slot_row.is_empty or slot_row.area < 1e-6, slot_row.area)
+slot_row = wall.intersection(box(200, 1276, 400, 1280))
+test("C", "axial section: the front wall is open at the slot (no wall at z 1278 on the front)", slot_row.is_empty or slot_row.area < 1e-6, slot_row.area)
 plans = D["views"]["plans"]
+test("C", "plans: eight levels, named foot, door, lock, collection_frame, slot, hood, cap_rim, dome", list(plans) == ["foot", "door", "lock", "collection_frame", "slot", "hood", "cap_rim", "dome"], list(plans))
 test("C", "plans: foot ring outer diameter 576", abs(unary_union(geoms(plans["foot"], "black")).bounds[2] - unary_union(geoms(plans["foot"], "black")).bounds[0] - 576) < 1.5)
-test("C", "plans: cap rim ring outer diameter 536", abs(unary_union(geoms(plans["cap_rim"], "red")).bounds[2] - unary_union(geoms(plans["cap_rim"], "red")).bounds[0] - 536) < 1.5)
+test("C", "plans: cap rim ring outer diameter 560", abs(unary_union(geoms(plans["cap_rim"], "red")).bounds[2] - unary_union(geoms(plans["cap_rim"], "red")).bounds[0] - 560) < 1.5)
 hood = unary_union(geoms(plans["hood"], name="hood"))
 test("C", "plans: the hood reaches y = 274.5 and spans +-48 degrees", abs(hood.bounds[3] - 274.5) < 1.5 and abs(hood.bounds[2] - 274.5 * math.sin(math.radians(48))) < 3.0, hood.bounds)
+test("C", "plans: the door level shows a plain door sector and no knuckle (nothing stands out of the door's left edge)", not any("hinge" in p["name"] or "knuckle" in p["name"] for p in plans["door"]["polygons"]))
 test("C", "NOT RUN: the drawing laid on the main photograph (no photograph of a pillar box was reached)", True, "no main photograph; nothing is claimed")
 
 # ------------------------------------------------------------------------------------------------------------------
@@ -206,59 +227,60 @@ test("C", "NOT RUN: the drawing laid on the main photograph (no photograph of a 
 # ------------------------------------------------------------------------------------------------------------------
 prof = T["profile"]["outer_rz"]
 test("D", "profile: z never decreases along the list", all(b[1] >= a[1] - 1e-9 for a, b in zip(prof[:-1], prof[1:])))
-test("D", "profile: starts at z = -150 on the foot radius, ends on the axis at the total height", prof[0] == [288.0, -150.0] and prof[-1][0] == 0 and abs(prof[-1][1] - 1372) < 0.01, (prof[0], prof[-1]))
+test("D", "profile: starts at z = -150 on the foot radius, ends on the axis at the total height", prof[0] == [288.0, -150.0] and prof[-1][0] == 0 and abs(prof[-1][1] - 1500) < 0.01, (prof[0], prof[-1]))
 test("D", "profile: all radii non-negative and none exceeds the foot radius", all(0 <= p[0] <= 288.01 for p in prof))
 rmax_foot = max(p[0] for p in prof if 0 <= p[1] <= 48)
 import target_drawing as TD  # noqa: E402
 BX = TD.Box(T)
-rbody = [BX.r_at(z_) for z_ in range(200, 1201, 50)]
-test("D", "profile: the body is a cylinder of radius 244.5 between z 200 and 1200 (read off the profile every 50 mm)", all(abs(r_ - 244.5) < 1e-6 for r_ in rbody) and len(rbody) == 21, rbody[:3])
-test("D", "profile: foot radius 288, cap radius 268", abs(rmax_foot - 288) < 1e-6 and abs(max(p[0] for p in prof if 1228 <= p[1] <= 1250) - 268) < 1e-6)
+rbody = [BX.r_at(z_) for z_ in range(200, 1301, 50)]
+test("D", "profile: the body is a cylinder of radius 244.5 between z 200 and 1300 (read off the profile every 50 mm)", all(abs(r_ - 244.5) < 1e-6 for r_ in rbody) and len(rbody) == 23, rbody[:3])
+test("D", "profile: foot radius 288, cap radius 280", abs(rmax_foot - 288) < 1e-6 and abs(max(p[0] for p in prof if cap_["rim_z"][0] <= p[1] <= cap_["rim_z"][1]) - 280) < 1e-6)
 dome = T["profile"]["dome"]
 test("D", "dome: sphere radius from sagitta 80 over chord radius 250", abs((250 ** 2 + 80 ** 2) / 160 - dome["sphere_radius"]) < 0.01)
-dp = [p for p in prof if p[1] >= 1292 - 1e-9 and p[0] <= 250]
-test("D", "dome: every dome point lies on the sphere", all(abs(math.hypot(p[0], p[1] - (1372 - dome["sphere_radius"])) - dome["sphere_radius"]) < 0.05 for p in dp))
-cap = T["parts"]["cap"]
-test("D", "cap: soffit below the rim below the bead below the dome base", cap["soffit_z"] < cap["rim_z"][0] < cap["rim_z"][1] < cap["dome_base_z"] < cap["apex_z"])
+dp = [p for p in prof if p[1] >= 1420 - 1e-9 and p[0] <= 250]
+test("D", "dome: every dome point lies on the sphere, the base circle at z 1420 and the apex at 1500", all(abs(math.hypot(p[0], p[1] - (1500 - dome["sphere_radius"])) - dome["sphere_radius"]) < 0.05 for p in dp) and len(dp) >= 20 and abs(cap_["dome_base_z"] - 1420) < 1e-9)
+test("D", "cap: soffit 1343 below the rim (1356 to 1378) below the dome base 1420 below the apex 1500", cap_["soffit_z"] == 1343 and cap_["rim_z"] == [1356, 1378] and cap_["soffit_z"] < cap_["rim_z"][0] < cap_["rim_z"][1] < cap_["dome_base_z"] < cap_["apex_z"])
+test("D", "cap: rim diameter 560, 35.5 proud of the body, and the cap is the outermost line above the foot", cap_["rim_diameter"] == 560 and cap_["rim_proud_of_body"] == 35.5 and cap_["rim_radius"] < 288)
 ap = T["parts"]["aperture"]
 sl_ = ap["slot"]
 hood_ = ap["hood"]
 sill = ap["sill"]
 test("D", "aperture: slot top = hood underside; slot bottom = sill top", abs(sl_["z1"] - hood_["z0"]) < 1e-6 and abs(sl_["z0"] - sill["section_rz"][2][1]) < 1e-6)
-test("D", "aperture: hood top 10 mm under the cap soffit (no clash)", hood_["top_z"] < cap["soffit_z"] and cap["soffit_z"] - hood_["top_z"] >= 8)
+test("D", "aperture: hood top 10 mm under the cap soffit (no clash)", hood_["top_z"] < cap_["soffit_z"] and cap_["soffit_z"] - hood_["top_z"] >= 8)
 test("D", "aperture: slot half angle < hood half angle < 90", sl_["half_angle_deg"] < hood_["half_angle_deg"] < 90)
 test("D", "aperture: slot half angle recomputes from 160 / 244.5", abs(math.degrees(math.asin(160 / 244.5)) - sl_["half_angle_deg"]) < 0.1)
 test("D", "aperture: hood projection equals outer radius minus body radius", abs(hood_["outer_radius"] - 244.5 - hood_["projection"]) < 1e-6)
-test("D", "aperture: the hood's front is level with the cap rim to within 8 mm (the cap rim 268, the hood 274.5)", abs(hood_["outer_radius"] - 268) < 8)
-test("D", "aperture: slot centre z and size equal the scene's (Read)", abs((sl_["z0"] + sl_["z1"]) / 2 - 1150) < 1e-6 and sl_["width"] == 320 and sl_["height"] == 45)
+test("D", "aperture: the hood tucks INSIDE the cap rim (review N4): hood radius 274.5 < rim radius 280, by 5.5", hood_["outer_radius"] < cap_["rim_radius"] and abs(hood_["inside_the_cap_rim_by"] - 5.5) < 1e-6)
+test("D", "aperture: slot size = the scene's (Read); centre = the scene's + 128 = 1278; the slot top is 42.5 under the cap soffit ('just under the cap')", sl_["width"] == V("scene_aperture_width") and sl_["height"] == V("scene_aperture_height") and abs((sl_["z0"] + sl_["z1"]) / 2 - (V("scene_aperture_centre_z") + 128)) < 1e-6 and abs(cap_["soffit_z"] - 1300.5 - 42.5) < 1e-6)
 dr_ = T["parts"]["door"]
 panels = T["parts"]["panels"]
 pl = T["parts"]["plates"]
-lp = panels["lettering_pad_BLANK"]; cy = panels["cypher_roundel_BLANK"]
-cf = pl["collection_frame"]; ef = pl["enamel_frame"]
-lock = dr_["lock"]; hg = dr_["hinges"]
+lp = panels["reserved_for_lettering"]; cy = panels["reserved_for_cypher"]
+cf = pl["collection_frame"]
+lock = dr_["lock"]
 black_top = T["paint"]["black_base"]["top_z"]
-test("D", "door: above the black band, below the lettering pad and the sill", black_top < dr_["z0"] and dr_["z1"] < lp["z0"] and lp["z1"] < sill["section_rz"][0][1])
-test("D", "door: angular half-width recomputes", abs(math.degrees(math.asin(150 / 248.5)) - dr_["half_angle_deg"]) < 0.1)
+test("D", "door: above the black band, below the lettering area and the sill", black_top < dr_["z0"] and dr_["z1"] < lp["z0"] and lp["z1"] < sill["section_rz"][0][1], (dr_["z1"], lp["z0"], lp["z1"], sill["section_rz"][0][1]))
+test("D", "door: 1 proud (review N2): outer radius 245.5, a flush panel as the research says; the plate frame's face plane stays at y = 254.5 (bezel_proud_at_axis 9)", dr_["proud"] == 1 and abs(dr_["outer_radius"] - 245.5) < 1e-9 and cf["bezel_proud_at_axis"] == 9 and abs(244.5 + dr_["proud"] + cf["bezel_proud_at_axis"] - 254.5) < 1e-9 and "a flush panel" in res_txt)
+test("D", "door: angular half-width recomputes from 150 / 245.5", abs(math.degrees(math.asin(150 / 245.5)) - dr_["half_angle_deg"]) < 0.1)
+test("D", "door: 888 high, from 280 to 1168", dr_["height"] == 888 and dr_["z0"] == 280 and dr_["z1"] == 1168)
+test("D", "door: no hinges in the target (review N3): none in parts.door, none in the registry, 'hinged' says internal", "hinges" not in dr_ and "hinge" not in N and "INTERNAL" in dr_["hinged"])
 door_rect = box(dr_["x0"], dr_["z0"], dr_["x1"], dr_["z1"])
 cypher_disc = Point(cy["cx"], cy["cz"]).buffer(cy["diameter"] / 2)
 col_rect = box(cf["cx"] - cf["outer_w"] / 2, cf["cz"] - cf["outer_h"] / 2, cf["cx"] + cf["outer_w"] / 2, cf["cz"] + cf["outer_h"] / 2)
-ena_rect = box(ef["cx"] - ef["outer_w"] / 2, ef["cz"] - ef["outer_h"] / 2, ef["cx"] + ef["outer_w"] / 2, ef["cz"] + ef["outer_h"] / 2)
 lock_disc = Point(lock["x"], lock["z"]).buffer(lock["escutcheon_diameter"] / 2)
-hinge_rects = [box(hg["x"] - hg["knuckle_diameter"] / 2, zc - hg["length"] / 2, hg["x"] + hg["knuckle_diameter"] / 2, zc + hg["length"] / 2) for zc in hg["z"]]
 lp_rect = box(lp["x0"], lp["z0"], lp["x1"], lp["z1"])
-for nm, g in (("cypher roundel", cypher_disc), ("collection frame", col_rect), ("enamel frame", ena_rect), ("lock escutcheon", lock_disc)):
+for nm, g in (("cypher area", cypher_disc), ("collection frame", col_rect), ("lock escutcheon", lock_disc)):
     test("D", f"{nm} lies wholly on the door", door_rect.contains(g))
-items = {"cypher roundel": cypher_disc, "collection frame": col_rect, "enamel frame": ena_rect, "lock escutcheon": lock_disc, "hinge 1": hinge_rects[0], "hinge 2": hinge_rects[1], "lettering pad": lp_rect}
+items = {"cypher area": cypher_disc, "collection frame": col_rect, "lock escutcheon": lock_disc, "lettering area": lp_rect}
 keys = list(items)
 clash = [(a, b) for i, a in enumerate(keys) for b in keys[i + 1:] if items[a].intersects(items[b])]
-test("D", "no two of the door's furniture and panels overlap", not clash, clash)
-test("D", "the hinges straddle the door's left edge (x = -150) and not the right", all(h.bounds[0] < dr_["x0"] < h.bounds[2] for h in hinge_rects) and lock["x"] > 0)
-test("D", "the hinge knuckles clear the collection frame by 20 mm or more", all(h.distance(col_rect) >= 20 for h in hinge_rects), [h.distance(col_rect) for h in hinge_rects])
-test("D", "the lock clears both frames by 15 mm or more", lock_disc.distance(col_rect) >= 15 and lock_disc.distance(ena_rect) >= 15, (lock_disc.distance(col_rect), lock_disc.distance(ena_rect)))
+test("D", "no two of the door's furniture and reserved areas overlap", not clash, clash)
+test("D", "the lock is on the right and clears the collection frame by 15 mm or more", lock["x"] > 0 and lock_disc.distance(col_rect) >= 15, lock_disc.distance(col_rect))
+test("D", "the stack is the first draft's moved up by 128 (each item the same distance under the door's top): roundel 1088, frame 918, lock 818, lettering cz 1210", cy["cz"] == 960 + 128 and cf["cz"] == 790 + 128 and lock["z"] == 690 + 128 and (lp["z0"] + lp["z1"]) / 2 == 1082 + 128)
 test("D", "every part touches the body in the elevation (nothing floats)", all(Polygon(p["exterior"], p["holes"]).intersects(body) for p in fe["polygons"] if p["name"] not in ("ring_line",)))
-test("D", "plate windows = frame minus twice the bezel (186 x 101 and 140 x 80)", pl["collection_plate"]["window_w"] == 186 and pl["collection_plate"]["window_h"] == 101 and pl["enamel_plate"]["window_w"] == 140 and pl["enamel_plate"]["window_h"] == 80)
-test("D", "cypher roundel and lettering pad are blank (flag set, relief within 0.5 mm)", lp["blank"] is True and cy["blank"] is True and any(c["name"] == "cypher_roundel_blank" and c["expected"]["relief_spread_max"] == 0.5 for c in T["checks"]))
+test("D", "plate window = frame minus twice the bezel (186 x 101); one plate only", pl["collection_plate"]["window_w"] == 186 and pl["collection_plate"]["window_h"] == 101 and "enamel_frame" not in pl and "enamel_plate_frame" not in N and pl["enamel_plate"].startswith("none"))
+test("D", "the cypher and lettering areas are FLUSH reserved areas: flush flag, no 'proud' number, check relief 0 (review N5)", lp["flush"] is True and cy["flush"] is True and "proud" not in lp and "proud" not in cy and any(c["name"] == "reserved_for_cypher" and c["expected"]["relief_max"] == 0 for c in T["checks"]))
+test("D", "the placements are written in words (review N7): the reserved areas say 'concentric' and a radius; the door says 'concentric' and 245.5", "concentric" in lp["placement"] and "244.5" in lp["placement"] and "concentric" in cy["placement"] and "245.5" in cy["placement"] and "concentric" in dr_["placement"] and "245.5" in dr_["placement"])
 test("D", "foot: radius > body radius > 0; foot band + round + splay below the cove top below the black band top", 288 > 244.5 > 0 and 48 + 12 < 72 < 140 < black_top)
 test("D", "the black band top (200) is above the foot's cove (140) and below the door (280)", 140 < black_top < dr_["z0"])
 # colour
@@ -276,6 +298,8 @@ Y = 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
 test("D", "colour: linear albedo and luminance recompute", near([round(x, 4) for x in lin], cr["albedo_linear"], 1e-9) and abs(Y - cr["relative_luminance"]) < 1e-4, Y)
 test("D", "colour: saturation 0.8 and value 0.59 recompute (the accent budget wants S > 0.6)", abs((max(red) - min(red)) / max(red) - cr["hsv"]["s"]) < 0.005 and abs(max(red) / 255 - cr["hsv"]["v"]) < 0.006 and cr["hsv"]["s"] > 0.6)
 test("D", "colour: the wet red is darker than the dry and still has S > 0.6", sum(cr["wet"]["albedo_srgb"]) < sum(red) and (max(cr["wet"]["albedo_srgb"]) - min(cr["wet"]["albedo_srgb"])) / max(cr["wet"]["albedo_srgb"]) > 0.6)
+sh = T["paint"]["keyhole_shutter"]
+test("D", "the keyhole shutter is painted red 150/30/32, metal 0, with a 1 mm dark bare-metal edge 60/52/46 (review N8); the brass colour 150/125/70 is gone", sh["srgb"] == red and sh["metal"] == 0 and sh["edge_srgb"] == [60, 52, 46] and sh["edge_width"] == 1 and "150, 125, 70" not in json.dumps(T["paint"]) + json.dumps(T["materials"]) + json.dumps(T["parts"]) and "brass_shutter" not in T["paint"] and "brass" not in T["materials"])
 import make_target as MT  # noqa: E402
 import pb_numbers as PBN  # noqa: E402
 regen, _segs, _Rs = MT.profile()
@@ -295,23 +319,69 @@ test("D", "sodium: the naive RGB product is still red (R channel high, G low) wh
 ab = T["accent_budget"]["share_of_a_2560x1440_frame"]
 area = T["accent_budget"]["projected_area_m2"]
 calc = {d_: area * (1440 / (2 * d_ * math.tan(math.radians(23)))) ** 2 / (2560 * 1440) for d_ in (5, 8, 12)}
-test("D", "accent budget: frame shares recompute from the projected area (within 6 %)", all(abs(calc[d_] / ab[f"at_{d_}_m"] - 1) < 0.06 for d_ in (5, 8, 12)), calc)
+test("D", "accent budget: frame shares recompute from the projected area (within 6 %), and the area from 0.489 x 1.5 + 0.05", all(abs(calc[d_] / ab[f"at_{d_}_m"] - 1) < 0.06 for d_ in (5, 8, 12)) and abs(area - round(0.489 * 1.5 + 0.05, 2)) < 1e-9, calc)
 test("D", "accent budget: the box at 5 m stays under the 0.078 ceiling on its own", ab["at_5_m"] < 0.078)
 # wear
 w = T["wear"]["agrees_with_wear_target"]
 test("D", "wear: repeat width = circumference / 8", abs(w["repeat_width_mm"] - circ / 8) < 0.1 and w["uv_repeats_round_girth"] == 8)
 test("D", "wear: the box's typical share lies inside both its range and (at the low end) the wear target's", w["share_of_area_lost"][0] <= w["typical_share"] <= w["share_of_area_lost"][1] and w["typical_share"] <= V("wear_iron_share")[1] and w["typical_share"] >= V("wear_iron_share")[0])
 test("D", "wear: the patch sizes and edge are the wear target's", w["patch_eqd_mm"] == [20, 45, 110] and w["edge_mm"] == 4)
+test("D", "wear: the mask runs to 1500 and the soot band sits under the new cap soffit (z 1318 to 1343)", "1500 mm" in w["height"] and T["wear"]["grime"]["soot_under_the_cap"]["zone_z"] == [1318, 1343] and T["wear"]["grime"]["soot_under_the_cap"]["zone_z"][1] == cap_["soffit_z"])
 test("D", "wear: chips' bottom-layer mix sums to 1", abs(sum(T["wear"]["layers_in_a_chip"]["mix_at_the_bottom_layer"].values()) - 1.0) < 1e-9)
-test("D", "wear: flyposting stays off the door, plates, lock, aperture and hood", "never on the door" in T["wear"]["flyposting_traces"]["patches"]["where"])
-test("D", "wear: the flyposting z range lies inside the body and above the black band", T["wear"]["flyposting_traces"]["patches"]["z_centre"][0] > black_top and T["wear"]["flyposting_traces"]["patches"]["z_centre"][1] < 1100)
+test("D", "wear: flyposting stays off the door, plate, lock, slot and hood", "never on the door" in T["wear"]["flyposting_traces"]["patches"]["where"])
+test("D", "wear: the flyposting z range lies inside the body and above the black band", T["wear"]["flyposting_traces"]["patches"]["z_centre"][0] > black_top and T["wear"]["flyposting_traces"]["patches"]["z_centre"][1] < 1300)
+test("D", "wear: no rust source or first-look line names a hinge; the left-end hood trickle is there (review N3)", "hinge" not in json.dumps(T["wear"]).lower() and any("LEFT end" in s_ for s_ in T["wear"]["rust_bleed"]["sources"]) and "hood's left end" in T["wear"]["first_look_at_1p6_m"])
+test("D", "wear: the road side is the back (180 degrees from the front)", "the back" in T["wear"]["chips_at_the_base"]["kerb_side_scrape"]["side"])
+test("D", "facing: the front faces the building line, with the scene's road side recorded and the scene owner told (review N6)", "building line" in T["frame_numbers"]["scene"]["front_faces"] and "road side" in T["frame_numbers"]["scene"]["front_direction_in_scene"] and "scene owner" in T["handover"]["for_scene_file"] and "180 degrees" in T["handover"]["for_scene_file"])
 # checks
 names_ = [c["name"] for c in T["checks"]]
 test("D", "checks: every check has name, applies_to, measure, expected, tolerance, kind and the names are unique", all(all(k in c for k in ("name", "applies_to", "measure", "expected", "tolerance", "kind")) for c in T["checks"]) and len(set(names_)) == len(names_), len(names_))
 ck = {c["name"]: c for c in T["checks"]}
-test("D", "checks: total height, body, foot, cap, black band, red equal the target's numbers", ck["total_height"]["expected"] == 1372 and ck["body_diameter"]["expected"] == 489 and ck["foot_diameter"]["expected"] == 576 and ck["cap_rim_diameter"]["expected"] == 536 and ck["black_band"]["expected"] == 200 and ck["red_albedo"]["expected"] == red)
-test("D", "checks: at least 35 checks, covering geometry, paint, wear, canon and placement", len(T["checks"]) >= 35)
-test("D", "variants: exactly one main, one Type K coarse profile (not built), two states", [v["id"] for v in T["variants"]["list"]] == ["main", "no_black_band", "type_k_capless", "plates_blank"] and T["decision_type"]["variant"]["build"] is False)
+test("D", "checks: total height 1500, dome apex 1500, soffit 1343, rim 560, slot centre 1278, door 300 x 888, lock z 818, lettering cz 1210, cypher cz 1088, frame cz 918, body, foot, band, red",
+     ck["total_height"]["expected"] == 1500 and ck["dome_apex"]["expected"] == 1500 and ck["cap_soffit_height"]["expected"] == 1343 and ck["cap_rim_diameter"]["expected"] == 560 and ck["aperture_centre_z"]["expected"] == 1278
+     and ck["door_size"]["expected"] == {"width": 300, "height": 888} and ck["lock_place"]["expected"]["z"] == 818 and ck["reserved_for_lettering"]["expected"]["cz"] == 1210 and ck["reserved_for_cypher"]["expected"]["cz"] == 1088
+     and ck["collection_frame"]["expected"]["cz"] == 918 and ck["body_diameter"]["expected"] == 489 and ck["foot_diameter"]["expected"] == 576 and ck["black_band"]["expected"] == 200 and ck["red_albedo"]["expected"] == red)
+test("D", "checks: tolerance of total_height 15, dome_apex 10, soffit 8, door_proud 1 (expected 1)", ck["total_height"]["tolerance"] == 15 and ck["dome_apex"]["tolerance"] == 10 and ck["cap_soffit_height"]["tolerance"] == 8 and ck["door_proud"]["expected"] == 1 and ck["door_proud"]["tolerance"] == 1)
+test("D", "checks (N1): cap_rim_diameter is measured in z 1356 to 1378 and cap_soffit_height on the back half (y < 0); body_straight over z 140 to 1343", "1356" in ck["cap_rim_diameter"]["measure"] and "1378" in ck["cap_rim_diameter"]["measure"] and "back half (y < 0)" in ck["cap_soffit_height"]["measure"] and "140 to 1343" in ck["body_straight"]["measure"])
+test("D", "checks (N1): the reserved-area checks measure relief 'radially above' the surrounding curved face, not above a plane", all("radially above" in ck[n_]["measure"] and "plane" not in ck[n_]["measure"].replace("no geometry", "") for n_ in ("reserved_for_lettering", "reserved_for_cypher")))
+test("D", "checks (N1): profile_silhouette exists: back half, every 2 mm of z, against profile.outer_rz, expected 0 within 1.5", "profile_silhouette" in ck and ck["profile_silhouette"]["tolerance"] == 1.5 and ck["profile_silhouette"]["expected"] == 0 and "every 2 mm" in ck["profile_silhouette"]["measure"] and "back half" in ck["profile_silhouette"]["measure"] and "plain disc" in ck["profile_silhouette"]["measure"])
+test("D", "checks (N3): no hinge checks; door_left_edge_flush replaces them (1.5 mm); (N5) no enamel check; (N6) front_faces_footway replaces front_faces_road; (N8) keyhole_shutter_paint", all(n_ not in ck for n_ in ("hinge_count_and_place", "hinge_size", "enamel_frame", "front_faces_road")) and ck["door_left_edge_flush"]["expected"] == 1.5 and ck["front_faces_footway"]["tolerance"] == 10 and "keyhole_shutter_paint" in ck)
+test("D", "checks: at least 35 checks, covering geometry, paint, wear, canon and placement", len(T["checks"]) >= 35, len(T["checks"]))
+test("D", "variants: main, no black band, Type K (not built), no plate; the Type K is not built", [v["id"] for v in T["variants"]["list"]] == ["main", "no_black_band", "type_k_capless", "no_plate"] and T["decision_type"]["variant"]["build"] is False)
+
+
+# the silhouette check has teeth (review N1): a cap or a foot without its moulding must fail it, a correct build must pass it
+def radius_fn(pts):
+    def f(z):
+        best = 0.0
+        for (r0, z0), (r1, z1) in zip(pts[:-1], pts[1:]):
+            lo, hi = min(z0, z1), max(z0, z1)
+            if lo - 1e-9 <= z <= hi + 1e-9:
+                r = max(r0, r1) if abs(z1 - z0) < 1e-9 else r0 + (r1 - r0) * (z - z0) / (z1 - z0)
+                best = max(best, r)
+        return best
+    return f
+
+
+def deviation(ref, mesh, z0=0.0, z1=1500.0, step=2.0):
+    fr, fm = radius_fn(ref), radius_fn(mesh)
+    worst = 0.0
+    z = z0
+    while z <= z1 + 1e-9:
+        worst = max(worst, abs(fr(z) - fm(z)))
+        z += step
+    return worst
+
+
+seg = {s_["name"]: s_ for s_ in T["profile"]["segments"]}
+P_ = [tuple(p) for p in prof]
+plain_cap = [p for p in P_ if p[1] <= cap_["soffit_z"]] + [(280.0, cap_["soffit_z"]), (280.0, cap_["rim_z"][1]), (250.0, cap_["rim_z"][1]), (250.0, cap_["dome_base_z"])] + [p for p in P_ if p[1] >= cap_["dome_base_z"] and p[0] <= 250]
+plain_foot = [p for p in P_ if p[1] <= 48][:3] + [(244.5, 48.0), (244.5, 140.0)] + [p for p in P_ if p[1] > 140]
+dev_ok = deviation(P_, P_)
+dev_bevel = deviation(P_, [(r + 0.8, z) for r, z in P_])
+test("D", "silhouette check: a correct build (the profile itself, or 0.8 mm out) passes the 1.5 mm tolerance", dev_ok == 0 and dev_bevel < 1.5, (dev_ok, dev_bevel))
+test("D", "silhouette check: a plain 560 disc for the cap, with no cove, bead or neck, FAILS (deviation above 1.5)", deviation(P_, plain_cap) > 1.5, deviation(P_, plain_cap))
+test("D", "silhouette check: a foot with no quarter-round, splay or cove FAILS", deviation(P_, plain_foot) > 1.5, deviation(P_, plain_foot))
 
 # ------------------------------------------------------------------------------------------------------------------
 # E. text and canon
@@ -321,10 +391,9 @@ FORBIDDEN = ["POST OFFICE", "ROYAL MAIL", "ROYAL", "MAIL", "OFFICE", "GPO", "CAR
 strings = [t_["string"] for t_ in T["parts"]["plates"]["collection_plate"]["text"] if "string" in t_]
 test("E", "the strings on the collection plate are exactly the five allowed words and times", set(strings) == ALLOWED and len(strings) == 5, strings)
 test("E", "no forbidden word is lettered anywhere on the box", not [s for s in strings if s.upper() in FORBIDDEN or any(f in s.upper().split() for f in FORBIDDEN)])
-test("E", "the allowed-word list in target.json equals this test's", set(T["parts"]["plates"]["collection_plate"]["allowed_words"]) == ALLOWED and T["parts"]["plates"]["enamel_plate"]["allowed_words"] == [])
+test("E", "the allowed-word list in target.json equals this test's", set(T["parts"]["plates"]["collection_plate"]["allowed_words"]) == ALLOWED)
 test("E", "the check plate_words lists the same words", set(ck["plate_words"]["expected"]) == ALLOWED)
-test("E", "the cypher roundel and the lettering pad carry no text key", all("text" not in x and "string" not in x for x in (lp, cy)))
-# walk every string in `parts` for letters-on-the-box keys
+test("E", "the reserved areas carry no text key", all("text" not in x and "string" not in x for x in (lp, cy)))
 bad = []
 
 
@@ -344,8 +413,10 @@ test("E", "no other `string` or `text` key anywhere in parts (nothing else is le
 md = open(os.path.join(HERE, "TARGET.md"), encoding="utf-8").read()
 first = [ln for ln in md.splitlines() if ln.strip() and not ln.startswith("#")][0]
 test("E", "TARGET.md opens with the one summary line and it says no photograph was reached", "no photograph of a pillar box was reached" in first.lower(), first[:120])
-for needle in ("489", "1372", "576", "536", "150/30/32", "35/35/36", "COLLECTIONS", "MON-FRI 5.30 PM", "SAT 12 NOON", "could not settle", "Unreached", "Type K", "no maker"):
+for needle in ("489", "1500", "576", "560", "150/30/32", "35/35/36", "COLLECTIONS", "MON-FRI 5.30 PM", "SAT 12 NOON", "could not settle", "Unreached", "Type K", "no maker", "1626", "1278", "1343", "888", "building line", "flush", "265", "8192", "second try"):
     test("E", f"TARGET.md contains '{needle}'", needle.lower() in md.lower(), needle)
+test("E", "TARGET.md no longer calls 1372 the total height or the stand-in's cap and dome 'inside' it", "1372 in all" not in md and "1372 mm above the footway in all" not in md and "go INSIDE that height" not in md)
+test("E", "TARGET.md no longer mentions hinge knuckles as geometry, an enamel plate frame, or brass", "two barrel hinges" not in md and "enamel-plate frame" not in md and "brass swivel" not in md)
 for sec_ in ("## 1.", "## 2.", "## 3.", "## 4.", "## 5.", "## 6.", "## 7.", "## 8.", "## 9."):
     test("E", f"TARGET.md has section {sec_}", sec_ in md)
 test("E", "TARGET.md says that the self-check cannot lay the drawing on a photograph", "no main photograph" in md.lower())
@@ -359,7 +430,6 @@ for f in pv:
     im = Image.open(p)
     test("E", f"preview {f}: JPEG, at most 1200 px long side, under 300 KB", f.lower().endswith(".jpg") and max(im.size) <= 1200 and os.path.getsize(p) < 300 * 1024, (im.size, os.path.getsize(p)))
     test("E", f"preview {f}: named <ref>-<place>-<what>.jpg", re.match(r"^[a-z0-9]+-[a-z0-9]+-[a-z0-9-]+\.jpg$", f) is not None, f)
-
 # ------------------------------------------------------------------------------------------------------------------
 parts = {}
 for t_ in TESTS:

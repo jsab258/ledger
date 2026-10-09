@@ -57,7 +57,7 @@ reg("research_total_casting", 73, "in", "Read", RES + ": 'the whole casting is 7
 reg("research_buried_min", 15, "in", "Read", RES + ": 15-20 in buried")
 reg("research_buried_max", 20, "in", "Read", RES + ": 15-20 in buried")
 reg("research_visible_range_cm", [135, 147], "cm", "Read", RES + ": 'about 135-147 cm above the pavement'")
-reg("research_working_height", 1500, "mm", "Read", RES + ": 'working figures: about 150 cm above ground and 49 cm across' (the 150 lies above the research's own 135-147 range)")
+reg("research_working_height", 1500, "mm", "Read", RES + ": 'working figures: about 150 cm above ground and 49 cm across' (ADOPTED as total_height after the review; it lies above the 135-147 cm that the 73 in listing gives, a casting that a lead says is a Type B's)")
 reg("research_working_width", 490, "mm", "Read", RES + ": 49 cm across")
 reg("research_base_height", 200, "mm", "Read", RES + ": 'Base: black, about 20 cm tall'")
 reg("research_aperture", "a horizontal slot with a small hood just under the cap; a flush door with plate frame and keyhole; domed cap with an overhanging moulded rim a few centimetres proud of the body", "text", "Read", RES + " Modelling")
@@ -83,9 +83,11 @@ reg("wear_bird_mark", [226, 224, 214], "sRGB", "Read", WEAR + " bird_dropping to
 BODY_D = reg("body_diameter", 489, "mm", "Derived",
              "19 1/4 in x 25.4 = 489 (the research's untraced Type A figure, 49 cm; the two listings 19 in = 483 and a Type A circumference of about 60 in (a search lead, 486) agree within 1 %)")
 R_BODY = BODY_D / 2.0
-H_TOTAL = reg("total_height", 1372, "mm", "Judgement",
-              "the scene's 1.372 m READ AS THE WHOLE BOX ABOVE THE FOOTWAY (cap and dome inside it, not on top). It sits inside the research's 135-147 cm (73 in casting less 15-20 in buried); the scene's stand-in is 1612 mm and the research's 'working' 150 cm lies above its own range", basis="Memory/Read")
-BURIED = reg("buried_depth", 482, "mm", "Derived", "73 in total casting (1854.2 mm) - 1372 mm visible = 482.2, i.e. 19 in (inside the research's 15-20 in)")
+H_TOTAL = reg("total_height", 1500, "mm", "Read",
+              "the research's working figure: 'about 150 cm above ground' and 'the top is at about 150 cm' (its modelling breakdown: base about 20 cm, body about 115 cm, cap and dome on top). Amended 9 October after the review: the first draft read the scene's BODY figure 1.372 as the whole box and justified it by the 73 in listing's 1350-1470, which is a casting (a lead sells it as the narrow Type B), not the Type A. Upper alternative 1626 (the untraced Type A, 5 ft 4 in); the scene's own stand-in is 1612")
+reg("research_typeA_untraced_height", 64, "in", "Read", RES + ": 'an untraced source gives a Type A as 5 ft 4 in tall' (UNVERIFIED)")
+reg("upper_alternative_height", 1626, "mm", "Derived", "5 ft 4 in x 25.4 = 1625.6 (the research's untraced Type A); the scene's stand-in (1612) agrees with it; a photograph settles 1500 against 1626")
+reg("hidden_skirt", 150, "mm", "Judgement", "how much of the casting below the footway is modelled (the real casting is some 15-20 in deeper, the research, Read; nothing below z = -150 can be seen)")
 # foot (plinth)
 R_FOOT = reg("foot_radius", 288, "mm", "Judgement", "the foot is wider than the body by 43.5 mm all round (diameter 576, 3.5 % under the scene's 597 body figure, which is therefore read as the foot: the widest thing at the pavement)", basis="Memory")
 FOOT_BAND = reg("foot_band_height", 48, "mm", "Judgement", "plain vertical band of the foot, then a rounded top edge and a splay", basis="Memory")
@@ -94,47 +96,44 @@ FOOT_SPLAY_TOP_R = reg("foot_splay_top_radius", 262, "mm", "Judgement", "end of 
 FOOT_SPLAY_Z = reg("foot_splay_top_z", 72, "mm", "Judgement", "end of the splay")
 COVE_TOP_Z = reg("foot_cove_top_z", 140, "mm", "Judgement", "the cove runs out into the plain body here")
 # cap
-CAP_SOFFIT_Z = reg("cap_soffit_z", 1215, "mm", "Judgement", "where the body starts to flare into the cap's under-moulding", basis="Memory")
-R_CAP = reg("cap_radius", 268, "mm", "Judgement", "cap rim 23.5 mm proud of the body: diameter 536 (the scene's 660 would be 1.35 times the body; the research says the rim is a few centimetres proud)", basis="Memory")
+CAP_SOFFIT_Z = reg("cap_soffit_z", 1343, "mm", "Derived", "where the body starts to flare into the cap's under-moulding: the first draft's 1215 + 128 (the review of 9 October: everything from the sill up moves up 128 so the slot stays just under the cap, the research, Read)", basis="Memory")
+R_CAP = reg("cap_radius", 280, "mm", "Judgement", "cap rim 35.5 mm proud of the body: diameter 560 (the research: 'a few centimetres proud of the body'; the review: the cap's rim is the outermost line above the foot and the 30 mm hood tucks inside it; the scene's 660 would be 1.35 times the body)", basis="Memory")
 CAP_COVE_H = reg("cap_cove_height", 13, "mm", "Judgement", "under-moulding (cove) height")
-CAP_RIM_TOP_Z = reg("cap_rim_top_z", 1250, "mm", "Judgement", "top of the vertical rim")
+CAP_RIM_TOP_Z = reg("cap_rim_top_z", 1378, "mm", "Derived", "top of the vertical rim (first draft 1250 + 128)")
 CAP_BEAD_R = reg("cap_bead_radius", 12, "mm", "Judgement", "quarter-round bead above the rim")
 CAP_SHOULDER_R = reg("cap_shoulder_radius", 250, "mm", "Judgement", "dome springs at this radius after a short neck")
-DOME_BASE_Z = reg("dome_base_z", 1292, "mm", "Judgement", "top of the neck, base of the dome")
+DOME_BASE_Z = reg("dome_base_z", 1420, "mm", "Derived", "top of the neck, base of the dome: apex 1500 less the 80 rise")
 DOME_SAGITTA = reg("dome_sagitta", 80, "mm", "Judgement", "a shallow bowl: rise / diameter = 0.16 (the scene's 140 is 0.25: too steep)", basis="Memory")
 # aperture
 AP_W = reg("aperture_width", 320, "mm", "Read", "the scene's 0.320 kept (a letter slot about 12.6 in wide; no photograph to overturn it)")
 AP_H = reg("aperture_height", 45, "mm", "Read", "the scene's 0.045 kept")
-AP_Z = reg("aperture_centre_z", 1150, "mm", "Read", "the scene's 1.150 kept: 1127.5 to 1172.5, 42.5 below the cap's under-moulding")
+AP_Z = reg("aperture_centre_z", 1278, "mm", "Derived", "the scene's 1150 + 128: 1255.5 to 1300.5, 42.5 below the cap's under-moulding (the research: the slot is 'just under the cap'); the 1150 was the stand-in's height on a 1372 body")
 AP_CORNER_R = reg("aperture_corner_radius", 5, "mm", "Judgement", "the slot's corner radius")
 WALL = reg("wall_thickness", 12, "mm", "Judgement", "cast iron wall, for the section drawing and the slot's depth; the build may close the interior", basis="Memory")
-HOOD_PROJ = reg("hood_projection", 30, "mm", "Judgement", "hood stands 30 proud of the body (r 274.5), about level with the cap rim (268)", basis="Memory")
-HOOD_Z0 = reg("hood_z_bottom", 1172.5, "mm", "Derived", "= the slot's top edge: the hood's underside is flat on it")
-HOOD_FRONT_TOP_Z = reg("hood_front_top_z", 1195, "mm", "Judgement", "top of the hood's vertical front")
-HOOD_TOP_Z = reg("hood_top_z", 1205, "mm", "Judgement", "the hood's sloped top meets the body here, 10 below the cap's under-moulding")
+HOOD_PROJ = reg("hood_projection", 30, "mm", "Judgement", "hood stands 30 proud of the body (r 274.5), 5.5 inside the cap rim (280): on a Type A the rim is the outermost line above the foot", basis="Memory")
+HOOD_Z0 = reg("hood_z_bottom", 1300.5, "mm", "Derived", "= the slot's top edge: the hood's underside is flat on it")
+HOOD_FRONT_TOP_Z = reg("hood_front_top_z", 1323, "mm", "Judgement", "top of the hood's vertical front")
+HOOD_TOP_Z = reg("hood_top_z", 1333, "mm", "Judgement", "the hood's sloped top meets the body here, 10 below the cap's under-moulding")
 HOOD_HALF_ANGLE = reg("hood_half_angle", 48, "deg", "Judgement", "the hood is a curved lip wrapped round the front, a little wider than the slot (slot half angle 40.9)")
 SILL_PROJ = reg("sill_projection", 11.5, "mm", "Judgement", "the sill lip below the slot")
 SILL_HALF_ANGLE = reg("sill_half_angle", 44, "deg", "Judgement", "")
-SILL_Z0 = reg("sill_z_bottom", 1112, "mm", "Judgement", "lower edge of the sill's chamfer")
+SILL_Z0 = reg("sill_z_bottom", 1240, "mm", "Judgement", "lower edge of the sill's chamfer")
 FLAP = reg("flap", {"width": 300, "height": 30, "thickness": 2, "tilt_deg": 15, "hinged": "top edge, inside the slot", "colour_srgb": [40, 40, 42]}, "mm", "Judgement", "the letter flap seen through the slot", basis="Memory")
 # door
 DOOR_HW = reg("door_half_width", 150, "mm", "Judgement", "door 300 wide in elevation (angular half-width 37 degrees)", basis="Memory")
 DOOR_Z0 = reg("door_z_bottom", 280, "mm", "Judgement", "door's bottom edge: 80 above the black band's top (200)")
-DOOR_Z1 = reg("door_z_top", 1040, "mm", "Judgement", "door's top edge: 72.5 under the slot's sill chamfer")
-DOOR_PROUD = reg("door_proud", 4, "mm", "Judgement", "door face stands 4 proud of the body")
+DOOR_Z1 = reg("door_z_top", 1168, "mm", "Judgement", "door's top edge: 72 under the sill chamfer (1240); the door is 888 high")
+DOOR_PROUD = reg("door_proud", 1, "mm", "Judgement", "door face stands 1 proud of the body (outer radius 245.5): the research says 'a flush panel' (Read), so the joint groove, not the relief, shows the door")
 DOOR_GROOVE = reg("door_groove", {"width": 3, "depth": 3}, "mm", "Judgement", "the joint line round the door")
 DOOR_CORNER = reg("door_corner_radius", 10, "mm", "Judgement", "")
-HINGE = reg("hinge", {"count": 2, "x": -150, "z": [420, 900], "knuckle_diameter": 26, "length": 96, "pin_head_diameter": 18, "pin_head_height": 6, "side": "left as seen from the front"}, "mm", "Judgement", "two barrel hinges on the door's left edge", basis="Memory")
-LOCK = reg("lock", {"x": 112, "z": 690, "escutcheon_diameter": 36, "proud": 3, "keyhole_w": 4, "keyhole_h": 12, "shutter_w": 22, "shutter_h": 10, "shutter_t": 2, "side": "right (opposite the hinges)"}, "mm", "Judgement", "keyhole escutcheon with a brass swivel shutter, no maker's mark", basis="Memory")
+LOCK = reg("lock", {"x": 112, "z": 818, "escutcheon_diameter": 36, "proud": 3, "keyhole_w": 4, "keyhole_h": 12, "shutter_w": 22, "shutter_h": 10, "shutter_t": 2, "shutter_srgb": [150, 30, 32], "shutter_metal": 0, "shutter_edge_srgb": [60, 52, 46], "shutter_edge_width": 1, "side": "right (opposite the hinged side, where the joint line is)"}, "mm", "Judgement", "keyhole escutcheon with a swivel shutter painted with the door and worn bare at its edge only (the review: not bright brass); no maker's mark", basis="Memory")
 # panels
-LETTER_PANEL = reg("lettering_panel", {"x0": -150, "x1": 150, "z0": 1062, "z1": 1102, "proud": 3, "corner_radius": 4, "surface": "body", "blank": True}, "mm", "Judgement",
-                   "BLANK raised pad where a real box carries its operator lettering; the position is a guess (the order of lettering, cypher and plates on the real type is the first thing to read from a dated photograph)", basis="Memory")
-CYPHER_PANEL = reg("cypher_panel", {"cx": 0, "cz": 960, "diameter": 110, "proud": 3, "surface": "door", "blank": True}, "mm", "Judgement",
-                   "BLANK raised roundel where the royal cypher would be: canon owes the postal cypher", basis="Memory")
-COLLECT_FRAME = reg("collection_plate_frame", {"cx": 0, "cz": 790, "outer_w": 210, "outer_h": 125, "bezel": 12, "bezel_proud_at_axis": 6, "plate_recess": 3, "form": "flat-faced boss: its face plane is tangent to the door at the axis plus 6, its sides run back to the cylinder"}, "mm", "Judgement",
-                    "frame for the collection-times plate", basis="Memory")
-ENAMEL_FRAME = reg("enamel_plate_frame", {"cx": 0, "cz": 590, "outer_w": 160, "outer_h": 100, "bezel": 10, "bezel_proud_at_axis": 6, "plate_recess": 3, "form": "flat-faced boss as the collection frame"}, "mm", "Judgement",
-                   "frame for the small enamel instruction plate (left BLANK)", basis="Memory")
+LETTER_PANEL = reg("lettering_area", {"x0": -150, "x1": 150, "z0": 1190, "z1": 1230, "surface": "body", "flush": True, "placement": "a flush reserved band on the body's own face (radius 244.5), concentric with the body, 300 wide as a chord (half angle 37.8 degrees) and 40 high; no raised or cut geometry at all"}, "mm", "Judgement",
+                   "FLUSH reserved area where a real box carries its operator lettering, raised on the iron; canon owes it, so nothing is cast there (the review: a blank raised pad reads as a placeholder). The position is a guess (the order of lettering, cypher and plate on the real type is the first thing to read from a dated photograph)", basis="Memory")
+CYPHER_PANEL = reg("cypher_area", {"cx": 0, "cz": 1088, "diameter": 110, "surface": "door", "flush": True, "placement": "a flush reserved disc on the door's own face (radius 245.5), concentric with the door's face and centred on the door's axis, 110 across; no raised or cut geometry at all"}, "mm", "Judgement",
+                   "FLUSH reserved area where the royal cypher would be cast: canon owes the postal cypher; the minted one is cast there once canon supplies it", basis="Memory")
+COLLECT_FRAME = reg("collection_plate_frame", {"cx": 0, "cz": 918, "outer_w": 210, "outer_h": 125, "bezel": 12, "bezel_proud_at_axis": 9, "plate_recess": 3, "form": "flat-faced boss: its face plane is the plane y = 254.5 (9 above the door's face at the axis), its sides run back to the cylinder (33 proud at its edges)"}, "mm", "Judgement",
+                    "frame for the collection-times plate, the only plate on the box (the review: a blank enamel plate in a frame reads as a placeholder)", basis="Memory")
 # paint
 BLACK_TOP = reg("black_band_top", 200, "mm", "Read", "the research: 'Base: black, about 20 cm tall' (a search lead: a reclamation firm shows about 6 in = 152 of black when it sets a box)")
 RED = reg("red_srgb", [150, 30, 32], "sRGB", "Read", "kept from the wear target's pillar_box_red; see TARGET.md 6 for why (value, saturation and the accent budget)")
