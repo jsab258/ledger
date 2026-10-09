@@ -487,39 +487,9 @@ def check_ground(T, s, d, gm):
 
 
 def free_zone(T, s, d, pad=12):
-    """where a loss patch can be: the field less text boxes, ghosts, lines and frames, wear and holes"""
-    m = np.ones((H_MM, W_MM), bool)
-    m[:24] = m[-24:] = False
-    m[:, :24] = m[:, -24:] = False
-    for b in s["blocks"]:
-        x0, y0, x1, y1 = b["effects_box_mm"]
-        m[max(0, H_MM - int(y1 + pad) - 1):H_MM - int(y0 - pad), max(0, int(x0 - pad)):int(x1 + pad) + 1] = False
-    gh = s.get("ghost")
-    if gh and gh.get("box_mm"):
-        x0, y0, x1, y1 = gh["box_mm"]
-        m[H_MM - int(y1) - 6:H_MM - int(y0) + 6, int(x0) - 6:int(x1) + 6] = False
-    for sh in s["shapes"]:
-        if sh["role"] in ("old_board", "box_face", "slab_face"):
-            continue
-        if sh["kind"] == "rect":
-            x0, y0, x1, y1 = sh["box"]
-            if sh["role"] in ("box_frame", "slab_edge"):
-                fr = (s["border"].get("frame_mm") or s["border"].get("edge_mm") or 12)
-                ring = np.zeros((H_MM, W_MM), bool)
-                ring[H_MM - int(y1) - 1:H_MM - int(y0) + 1, int(x0) - 1:int(x1) + 2] = True
-                inner = np.zeros((H_MM, W_MM), bool)
-                inner[H_MM - int(y1 - fr) - 1:H_MM - int(y0 + fr) + 1, int(x0 + fr) - 1:int(x1 - fr) + 2] = True
-                m &= ~(ring & ~inner)
-            else:
-                m[max(0, H_MM - int(y1) - 6):H_MM - int(y0) + 6, max(0, int(x0) - 6):int(x1) + 7] = False
-        else:
-            pts = np.array(sh["pts"])
-            for p_, q_ in zip(pts[:-1], pts[1:]):
-                n = max(2, int(np.hypot(*(q_ - p_)) / 2))
-                for t in np.linspace(0, 1, n):
-                    x, y = p_ + (q_ - p_) * t
-                    r, c = H_MM - int(y), int(x)
-                    m[max(0, r - 10):r + 10, max(0, c - 10):c + 10] = False
+    """where a loss patch can be counted: the field less text boxes, ghosts, lines, frames (fascia_common.free_zone_mask, shared with the renderer's
+    calibration), less wear marks and holes"""
+    m = fc.free_zone_mask(s, pad)
     if d.wear is not None:
         m &= ~ndi.binary_dilation(d.wear.max(axis=2) > 12, iterations=3)
     return m
@@ -774,6 +744,8 @@ def check_pinholes(T, s, d):
     n_exp = exp[0]["expected"]["count"]
     L = lab_img(img)[..., 0]
     region = np.ones((H_MM, W_MM), bool)
+    region[:20] = region[-20:] = False
+    region[:, :20] = region[:, -20:] = False
     gh = s.get("ghost")
     if gh and gh["kind"] == "painted_out_patch":
         # the empty unit's nail holes are in the painted-out buff; the rest of that board is soot-dark timber in which nothing can be told from a dot
@@ -804,7 +776,10 @@ def check_pinholes(T, s, d):
         if 4 <= area <= 40 and abs(hh - ww) <= 2:
             cnt += 1
             dias.append(2 * math.sqrt(area / math.pi))
-    ok = abs(cnt - n_exp) <= 1 and len(dias) > 0 and all(2.4 <= dd_ <= 4.8 for dd_ in dias)
+    if n_exp == 0:
+        ok = cnt == 0
+    else:
+        ok = abs(cnt - n_exp) <= 1 and len(dias) > 0 and all(2.4 <= dd_ <= 4.8 for dd_ in dias)
     return R(f"{sid}.pinholes", ok, dict(count=cnt, diameters_mm=[round(x, 1) for x in sorted(dias)]), dict(count=n_exp, diameter_mm=[3, 4]), "near-black seeds (L* under 12, in the painted-out buff for the empty unit), each grown to half its depth below its surroundings; round, 4 to 40 px; diameter from the area")
 
 
@@ -823,6 +798,10 @@ def check_shadow(T, s, d, rec):
         down |= np.roll(foot_m, k, axis=0)
     band = down & ~foot_m
     ref = ring_of(foot_m, 16, 24) & ~ndi.binary_dilation(band, iterations=12)
+    if rec.get("loss"):
+        lossm = crop(ndi.binary_dilation(loss_class(T, s, d, rec), iterations=3), (r0, r1, c0, c1))
+        band = band & ~lossm
+        ref = ref & ~lossm
     dL = float(np.median(L[band]) - np.median(L[ref]))
     return R("mickeys.name.shadow", -9 <= dL <= -3, round(dL, 2), dict(dL=[-9, -3]), "median L* of the 8 mm band under the letters' footprint (the footprint pushed down 0 to 8 mm, less the footprint) minus the median L* of the ring 16 to 24 mm out")
 
@@ -1004,6 +983,10 @@ def check_unlisted_ink(T, s, d, rec):
     for hx, hy in (rec.get("holes") or []):
         r, c = H_MM - int(hy), int(hx)
         free[max(0, r - 10):r + 10, max(0, c - 10):c + 10] = False
+    if rec.get("islands_rgb"):
+        # the empty unit's islands of old paint are listed in the manifest (their colour), as flaked paint is
+        isl = fc.dE(d.img.astype(float), np.array(rec["islands_rgb"], float)) < 14.0
+        free &= ~ndi.binary_dilation(isl, iterations=6)
     free = ndi.binary_erosion(free, iterations=16)            # away from every edge of a listed feature (the local mean reaches 15 px)
     mean = ndi.uniform_filter(L, 31)
     dev = np.abs(L - mean)
@@ -1116,6 +1099,302 @@ def check_emissive(T, s, d):
     return out
 
 
+# ------------------------------------------------------------------ try 2: how the board AGES (pattern, placement, letters, timber, ghost)
+# The thresholds are read off the target's own photographs of real weathered timber (NOTES.md, "Measured on P2, P3 and the wear photographs"):
+# P2 (blue-painted planks, 26 per cent lost): 60 per cent of the lost paint lies in joined strips over 50 mm across, 28 per cent over 200 mm,
+# the largest 1000 mm long, p99/p10 of the strip size 8.7, 95 per cent of the strips within 20 degrees of the grain; plank to plank the loss varies
+# 0.13 to 0.51. The thresholds below are half of P2's where P2 is the reference, and sit well clear of try 1's even confetti (share over 50 mm: 0 to 0.08).
+PATTERN = dict(share_ge_50=0.30, share_ge_50_ring=0.18, largest_bbox_w=150, largest_bbox_w_ring=90, p99_over_p10=10.0, along_grain=0.80, edge_over_middle=1.6,
+               lower_over_upper=1.1, share_ge_50_bare=0.50)
+
+
+def paint_region(T, s, d):
+    """pixels where paint can be lost and be seen to be lost: the face less a 6 mm rim, the lines (rules, ropes, keylines, corner blocks), frames, glass
+    and vinyl panels; a box sign's old-board ring only. Letters are IN (they wear with the ground)."""
+    m = np.ones((H_MM, W_MM), bool)
+    m[:6] = m[-6:] = False
+    m[:, :6] = m[:, -6:] = False
+    roles = [sh["role"] for sh in s["shapes"]]
+    for sh in s["shapes"]:
+        role = sh["role"]
+        if role in ("old_board",):
+            continue
+        if sh["kind"] == "rect":
+            x0, y0, x1, y1 = sh["box"]
+            if role in ("box_frame", "box_face", "slab_face", "slab_edge", "vinyl_panel", "slab_joint", "speed_line"):
+                m[max(0, H_MM - int(y1) - 10):H_MM - int(y0) + 10, max(0, int(x0) - 10):int(x1) + 11] = False
+            else:
+                m[max(0, H_MM - int(y1) - 3):H_MM - int(y0) + 3, max(0, int(x0) - 3):int(x1) + 4] = False
+        else:
+            pts = np.array(sh["pts"])
+            for p_, q_ in zip(pts[:-1], pts[1:]):
+                n = max(2, int(np.hypot(*(q_ - p_)) / 2))
+                for t_ in np.linspace(0, 1, n):
+                    x, y = p_ + (q_ - p_) * t_
+                    r, c_ = H_MM - int(y), int(x)
+                    m[max(0, r - 7):r + 8, max(0, c_ - 7):c_ + 8] = False
+    return m
+
+
+def loss_pattern_mask(T, s, d, rec):
+    """the paint lost, by colour, anywhere in the paint region (letters included): nearer a substrate colour than the ground round it AND than any letter or
+    shade colour of the board"""
+    img = d.img.astype(float)
+    reg = paint_region(T, s, d)
+    lo = rec["loss"]
+    prim = np.array(lo["substrate_primer"], float)
+    wood = np.array(lo["substrate_wood"], float)
+    dsub = np.minimum(fc.dE(img, prim), fc.dE(img, wood))
+    cols = []
+    for b in s["blocks"]:
+        if b["in_texture"] and not b["ghost"]:
+            cols.append(np.array(b["face_1990"], float))
+            if b.get("shade"):
+                cols.append(np.array(fc.pal(T, b["shade"]["colour"]), float))
+    dface = np.full(dsub.shape, 1e3)
+    for c_ in cols:
+        dface = np.minimum(dface, fc.dE(img, c_))
+    near = reg & (dsub < 14.0)
+    if reg.sum() == 0:
+        return np.zeros_like(reg), reg
+    g = np.median(img[reg & ~near], axis=0) if (reg & ~near).any() else np.median(img[reg], axis=0)
+    dg = fc.dE(img, g)
+    D = float(min(fc.dE(prim, g), fc.dE(wood, g)))
+    used = reg & (dsub < dg) & (dsub < 0.75 * max(D, 20.0)) & (dsub < dface)
+    used = ndi.binary_opening(used, structure=np.ones((2, 2), bool)) | ndi.binary_dilation(ndi.binary_erosion(used, iterations=2), iterations=2) & used
+    return used, reg
+
+
+def pattern_metrics(used, reg, bare=False):
+    """the pattern of the lost paint, the numbers P2 and the wear photographs are measured in"""
+    H, W = used.shape
+    lbl, n = ndi.label(used, structure=np.ones((3, 3)))
+    sl = ndi.find_objects(lbl)
+    out = {}
+    if n == 0:
+        return dict(n=0)
+    areas = ndi.sum(used, lbl, np.arange(1, n + 1)).astype(float)
+    ok = areas >= 6
+    ids = np.where(ok)[0]
+    if len(ids) == 0:
+        return dict(n=0)
+    eqd = 2 * np.sqrt(areas[ids] / math.pi)
+    tot = float(areas[ids].sum())
+    out["n"] = int(len(ids))
+    out["eqd_mm_p10_p50_p99"] = [round(float(np.percentile(eqd, q)), 1) for q in (10, 50, 99)]
+    out["p99_over_p10"] = round(float(np.percentile(eqd, 99) / max(np.percentile(eqd, 10), 1e-6)), 1)
+    out["share_in_strips_ge_50mm"] = round(float(areas[ids][eqd >= 50].sum() / tot), 3)
+    out["largest_bbox_w_mm"] = int(max(sl[i][1].stop - sl[i][1].start for i in ids))
+    ori = []
+    for i in ids:
+        if areas[i] < 8:
+            continue
+        ys, xs = np.nonzero(lbl[sl[i]] == i + 1)
+        cov = np.cov(np.vstack([xs, ys]))
+        ev, evec = np.linalg.eigh(cov)
+        ori.append(abs(math.degrees(math.atan2(evec[1, 1], evec[0, 1]))) % 180)
+    ori = np.array(ori)
+    out["share_along_grain_20deg"] = round(float(((ori < 20) | (ori > 160)).mean()), 3) if len(ori) else None
+    if bare:
+        lo_ = used[H // 2:][reg[H // 2:]].mean() if reg[H // 2:].any() else 0
+        up_ = used[:H // 2][reg[:H // 2]].mean() if reg[:H // 2].any() else 0
+        out["lower_half_over_upper_half_density"] = round(float(lo_ / max(up_, 1e-6)), 2)
+    else:
+        edge = np.zeros_like(used)
+        edge[-90:] = True
+        edge[:50] = True
+        edge[:, :200] = True
+        edge[:, -200:] = True
+        mid = np.zeros_like(used)
+        mid[150:400, 700:-700] = True
+        e_ = used[edge & reg].mean() if (edge & reg).any() else 0
+        m_ = used[mid & reg].mean() if (mid & reg).any() else 0
+        out["edge_over_middle_density"] = round(float(e_ / max(m_, 1e-4)), 2)
+    c = 100
+    cells = np.array([used[r:r + c, q:q + c].mean() for r in range(0, H - c + 1, c) for q in range(0, W - c + 1, c) if reg[r:r + c, q:q + c].mean() > 0.6])
+    out["cell100_density_cv"] = round(float(cells.std() / max(cells.mean(), 1e-9)), 2) if len(cells) else None
+    return out
+
+
+def check_age_pattern(T, s, d, rec):
+    """try 2 (the fresh review, fault 1): paint loss must be a PATTERN, not an even confetti of equal flakes: clusters of every size that join into strips along
+    the grain, heavy at the bottom rail, the ends and the joints, light in the open middle (a box sign's old-board ring and the empty unit's silvered timber
+    have their own reading)"""
+    sid = s["id"]
+    if not rec.get("loss") or rec["loss"].get("target_fraction", 0) <= 0:
+        return None
+    used, reg = loss_pattern_mask(T, s, d, rec)
+    roles = [sh["role"] for sh in s["shapes"]]
+    ring = "box_frame" in roles
+    bare = s["construction_kind"] == "bare"
+    m = pattern_metrics(used, reg, bare=bare)
+    fails = []
+    if m.get("n", 0) < 5:
+        fails.append("too few marks to judge")
+    else:
+        need50 = PATTERN["share_ge_50_bare"] if bare else (PATTERN["share_ge_50_ring"] if ring else PATTERN["share_ge_50"])
+        if m["share_in_strips_ge_50mm"] < need50:
+            fails.append(f"joined strips over 50 mm carry {m['share_in_strips_ge_50mm']} of the loss, need {need50}")
+        need_w = PATTERN["largest_bbox_w_ring"] if ring else PATTERN["largest_bbox_w"]
+        if m["largest_bbox_w_mm"] < need_w:
+            fails.append(f"largest strip {m['largest_bbox_w_mm']} mm long, need {need_w}")
+        if m["p99_over_p10"] < PATTERN["p99_over_p10"]:
+            fails.append(f"sizes too alike: p99/p10 {m['p99_over_p10']}, need {PATTERN['p99_over_p10']}")
+        if m.get("share_along_grain_20deg") is not None and m["share_along_grain_20deg"] < PATTERN["along_grain"]:
+            fails.append("strips do not follow the grain")
+        if bare:
+            if m["lower_half_over_upper_half_density"] < PATTERN["lower_over_upper"]:
+                fails.append("the bare timber does not silver toward its exposed lower half")
+        elif not ring and m["edge_over_middle_density"] < PATTERN["edge_over_middle"]:
+            fails.append(f"loss is not heavier at the foot and the ends: edge/middle {m['edge_over_middle_density']}, need {PATTERN['edge_over_middle']}")
+    return R(f"{sid}.age_pattern", not fails, dict(m, failing=fails), dict(PATTERN), "paint loss as a pattern, measured on the pixels and set against P2 (NOTES.md): joined strips carry the loss, one or more long strips, sizes of every order, along the grain, heavy at the foot and ends"), used, reg
+
+
+def check_letters_wear(T, s, d, rec, used, reg):
+    """the lettering wears with its ground (fault 1): the loss on the letters is of the same order as on the ground round them, no clean halo"""
+    sid = s["id"]
+    blocks = blk_list(s)
+    if not blocks or not rec.get("loss") or rec["loss"].get("target_fraction", 0) < 0.025:
+        return None
+    letters = np.zeros((H_MM, W_MM), bool)
+    for b in blocks:
+        letters |= pc.render_block_mask(T, b, None, shade=True)
+    ink = ndi.binary_erosion(letters, iterations=1)
+    near = ndi.binary_dilation(letters, iterations=60) & ~ndi.binary_dilation(letters, iterations=4) & reg
+    if ink.sum() < 500 or near.sum() < 500:
+        return None
+    f_l = float((used & ink).sum() / ink.sum())
+    f_g = float((used & near).sum() / near.sum())
+    ok = f_g < 0.003 or (0.25 * f_g <= f_l <= 5.0 * f_g)
+    return R(f"{sid}.letters_wear", ok, dict(loss_on_letters=round(f_l, 4), loss_on_the_ground_within_60mm=round(f_g, 4), ratio=None if f_g <= 0 else round(f_l / f_g, 2)),
+             dict(ratio=[0.25, 5.0]), "the share of the letters' (and shade's) pixels that show the substrate, against the share of the ground within 60 mm of them: letters wear with their ground, there is no clean halo")
+
+
+def check_wear_placement(T, s, d, rec):
+    """try 2 (fault 3 and the mid-board dashes): rain runs begin at the top edge; gull marks stand on the top edge (the cornice and ledges), few, each its own shape;
+    rust runs begin at a fixing; nothing floats in the open middle of the board"""
+    sid = s["id"]
+    if d.wear is None:
+        return None
+    flagged = []
+    stats = {}
+    for k, name in ((0, "runs"), (1, "gull"), (2, "rust")):
+        m = d.wear[..., k] > 64
+        lbl, n = ndi.label(m)
+        sl = ndi.find_objects(lbl)
+        cnt = 0
+        for i, sl_ in enumerate(sl, 1):
+            comp = lbl[sl_] == i
+            if comp.sum() < 6:
+                continue
+            cnt += 1
+            top, bot = sl_[0].start, sl_[0].stop
+            left, right = sl_[1].start, sl_[1].stop
+            if name == "runs":
+                if top > 16:
+                    flagged.append((name, "does not begin at the top edge", int(left), int(H_MM - top)))
+                if bot - top < 30:
+                    flagged.append((name, "a dash shorter than 30 mm", int(left), int(H_MM - top)))
+            elif name == "gull":
+                cy = (top + min(bot, top + 70)) / 2.0
+                if top > 75:
+                    flagged.append((name, "is not on the top edge", int(left), int(H_MM - top)))
+                wd = right - left
+                if wd > (95 if sid == "empty_unit" else 55):
+                    flagged.append((name, "too wide for a droppings mark", int(left), int(wd)))
+            else:
+                heads = (rec.get("wear") or {}).get("rust_at") or []
+                near = any(abs((left + right) / 2.0 - hx) < 20 and abs(top - (H_MM - hy)) < 20 for hx, hy in heads)
+                if not near and top > 70:
+                    flagged.append((name, "does not begin at a fixing", int(left), int(H_MM - top)))
+        stats[name] = cnt
+    # nothing else: a pale or dark dash, small and elongated, standing away from every edge and every listed feature
+    return R(f"{sid}.wear_placement", not flagged, dict(counts=stats, flagged=flagged[:6]), "runs from the top edge, gulls on the top edge, rust at fixings",
+             "every wear mark is attached to an edge or a fixing where water and birds put it; none floats mid-board; gull marks are no wider than 55 mm (95 on the empty unit)")
+
+
+def check_timber(T, s, d, rec):
+    """the empty unit's bare timber is WOOD (fault 2): planks with seams, a strong grain, a few islands of old paint, not a field of scale-shaped flecks"""
+    sid = s["id"]
+    if s["construction_kind"] != "bare":
+        return None
+    img = d.img
+    L = lab_img(img)[..., 0]
+    # grain: gradient energy across the grain over along it on the free ground
+    zone = ndi.binary_erosion(free_zone(T, s, d), iterations=4)
+    Ls = ndi.gaussian_filter(L, 1.2)
+    gy = ndi.sobel(Ls, axis=0)
+    gx = ndi.sobel(Ls, axis=1)
+    ratio = float((gy[zone] ** 2).mean() / max((gx[zone] ** 2).mean(), 1e-6))
+    # seams: rows where the 90th percentile of L* over the free columns dips
+    cols_ok = np.zeros(W_MM, bool)
+    cols_ok[60:1000] = True
+    cols_ok[4400:5350] = True
+    p90 = np.percentile(L[:, cols_ok], 90, axis=0 if False else 1)
+    p90s = ndi.gaussian_filter1d(p90, 0.8)
+    base = ndi.median_filter(p90s, size=61)
+    dip = base - p90s
+    cand = np.where(dip > 2.0)[0]
+    seams = []
+    for r in cand:
+        if 40 < r < H_MM - 40 and (not seams or r - seams[-1][-1] > 6):
+            seams.append([r])
+        elif seams:
+            seams[-1].append(r)
+    seam_rows = [int(np.mean(g)) for g in seams if len(g) >= 2]
+    # islands: pixels of the old paint's colour, in pieces 40 mm or longer
+    ip = np.array(rec.get("islands_rgb") or [84, 82, 68], float)
+    near = fc.dE(img.astype(float), ip) < 9.0
+    near = ndi.binary_opening(near, structure=np.ones((3, 3), bool))
+    lbl, n = ndi.label(near)
+    isl = 0
+    for sl_ in ndi.find_objects(lbl):
+        w_ = sl_[1].stop - sl_[1].start
+        h_ = sl_[0].stop - sl_[0].start
+        if w_ >= 40 and (lbl[sl_] > 0).sum() >= 150:
+            isl += 1
+    ok = ratio >= 5.0 and 2 <= len(seam_rows) <= 3 and 8 <= isl <= 34
+    return R(f"{sid}.timber", ok, dict(grain_gradient_across_over_along=round(ratio, 1), seams_found_rows=seam_rows, islands_of_old_paint=isl),
+             dict(grain_ratio_min=5.0, seams=[2, 3], islands=[8, 34]), "wood, not flecks: the gradient across the grain at least five times the gradient along it on the free ground; the two seams between three planks found as dips in the rows' 90th-percentile L*; 10 to 30 islands of old paint (8 to 34 counted: the weather bites them), each 40 mm or longer")
+
+
+def readable_ghost(T, s, d, gb):
+    """how well a given word can be read in the board's own contrast: the mean high-pass L* inside the word's strokes minus the ring round them, and the normalised
+    correlation of the word's mask with the high-pass L* over its box"""
+    L = lab_img(d.img)[..., 0]
+    face = pc.render_block_mask(T, gb, None)
+    x0, y0, x1, y1 = gb["effects_box_mm"]
+    r0, r1, c0, c1 = max(0, H_MM - int(y1) - 20), min(H_MM, H_MM - int(y0) + 20), max(0, int(x0) - 20), min(W_MM, int(x1) + 20)
+    Lw = L[r0:r1, c0:c1]
+    fm = face[r0:r1, c0:c1]
+    hp = Lw - ndi.gaussian_filter(Lw, 12.0)
+    inner = ndi.binary_erosion(fm, iterations=2)
+    outer = ring_of(fm, 5, 14) & ~ndi.binary_dilation(fm, iterations=4)
+    if inner.sum() < 50 or outer.sum() < 50:
+        return None
+    dL = float(hp[inner].mean() - hp[outer].mean())
+    a = (fm.astype(float) - fm.mean())
+    b = (hp - hp.mean())
+    ncc = float((a * b).sum() / math.sqrt(max((a * a).sum() * (b * b).sum(), 1e-9)))
+    return dL, ncc
+
+
+def check_no_ghost(T, s, d):
+    """try 2 (fault 4): Mickey's board shows NO old name (the Hook sheet's board is clean): the word the target had as a ghost cannot be read in the texture"""
+    if s["id"] != "mickeys":
+        return None
+    gb = s.get("ghost_block_dropped")
+    if not gb:
+        return None
+    r = readable_ghost(T, s, d, gb)
+    if r is None:
+        return R("mickeys.ghost_name.ghost", False, None, None, "no area")
+    dL, ncc = r
+    ok = abs(dL) <= 0.9 and ncc <= 0.15
+    return R("mickeys.ghost_name.ghost", ok, dict(inside_minus_ring_dL=round(dL, 2), correlation_with_the_old_word=round(ncc, 3)), dict(ghost="absent", dL_max=0.9, correlation_max=0.15),
+             "A7: the old name (Marcellus SC, cap 245, centred at 2705) cannot be read in the texture: the high-pass L* inside its strokes against the ring round them, and the correlation of its mask with the board's contrast over its box")
+
+
 # ------------------------------------------------------------------ G5, G6
 def autocorr_peak(L, gm):
     x = L.astype(np.float64)
@@ -1215,6 +1494,21 @@ def board_checks(T, s, d, fast=False):
         out.append(check_age(T, s, d, gm, d.rec)[0])
     if d.wear is not None:
         out += check_wear(T, s, d, d.rec)
+        wp = check_wear_placement(T, s, d, d.rec)
+        if wp:
+            out.append(wp)
+    pat = check_age_pattern(T, s, d, d.rec) if d.rec.get("loss") is not None else None
+    if pat:
+        out.append(pat[0])
+        lw = check_letters_wear(T, s, d, d.rec, pat[1], pat[2])
+        if lw:
+            out.append(lw)
+    tb = check_timber(T, s, d, d.rec)
+    if tb:
+        out.append(tb)
+    ng = check_no_ghost(T, s, d)
+    if ng:
+        out.append(ng)
     bd = check_border(T, s, d)
     if bd:
         out.append(bd)
@@ -1493,6 +1787,7 @@ def aggregate_G(res):
     roll("G15", lambda i: i.endswith(".mount") or (i.endswith(".faces") and not i.startswith("neg")), "the four hanging signs: mount numbers and both faces", reads="geometry+pixels")
     roll("G16", lambda i: ".glass." in i and not i.startswith("neg"), "every glass lettering row not already in the game", reads="pixels+font")
     roll("G17", lambda i: i.endswith(".geometry") or i.endswith("_box") or i.endswith("_panel") or i == "mickeys.no_letters_in_texture", "Mickey's letters, the two boxes and the tea panel, and no gilt in Mickey's texture", reads="geometry")
+    roll("AGE", lambda i: i.endswith((".age_pattern", ".letters_wear", ".wear_placement", ".timber", ".ghost_name.ghost")), "try 2: the ageing is a pattern (joined strips, heavy at the foot and ends), the letters wear with the ground, wear marks stand on edges and fixings, the empty unit is wood, Mickey's has no old name")
     roll("G5", lambda i: i.endswith(".G5"), "no tiling period")
     roll("G6", lambda i: i.endswith(".G6"), "grain direction")
     return out

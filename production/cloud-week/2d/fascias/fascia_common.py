@@ -105,6 +105,7 @@ def apply_amendments(T):
     for s in T["shops"]:
         if s["id"] == "mickeys":
             s["ghost_dropped"] = s.get("ghost")
+            s["ghost_block_dropped"] = [b for b in s["blocks"] if b["ghost"]][0]
             s["ghost"] = None
             s["blocks"] = [b for b in s["blocks"] if not b["ghost"]]
     for c in T["checks"]:
