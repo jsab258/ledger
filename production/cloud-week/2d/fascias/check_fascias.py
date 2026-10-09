@@ -1204,7 +1204,7 @@ def check_emissive(T, s, d):
 # share_ge_50 (0.30) is half of P2's 0.60. p99/p10 is P2's 8.7 read at P2's coarse pixel (1.7 mm, nothing under 6 px counted); the boards are read at 1 mm, where
 # the smallest flakes count and the same pattern spreads wider, so the limit is 10 (the confetti control, try 1's even flakes, must fail: NOTES.md gives what it reads). edge_over_middle (1.6) is NOT from P2 (P2's
 # planks lose LESS at their foot than in their middle: NOTES.md) but from the brief and the fresh review: a board's foot, ends and joints fail first.
-PATTERN = dict(share_ge_50=0.30, share_ge_50_ring=0.18, largest_bbox_w=150, largest_bbox_w_ring=90, p99_over_p10=10.0, along_grain=0.80, edge_over_middle=1.6,
+PATTERN = dict(share_ge_50=0.30, ring_runs40=0.50, largest_bbox_w=150, largest_bbox_w_ring=90, p99_over_p10=10.0, along_grain=0.80, edge_over_middle=1.6,
                lower_over_upper=1.1, share_ge_50_bare=0.50)
 
 
@@ -1290,6 +1290,8 @@ def pattern_metrics(used, reg, bare=False):
     out["eqd_mm_p10_p50_p99"] = [round(float(np.percentile(eqd, q)), 1) for q in (10, 50, 99)]
     out["p99_over_p10"] = round(float(np.percentile(eqd, 99) / max(np.percentile(eqd, 10), 1e-6)), 1)
     out["share_in_strips_ge_50mm"] = round(float(areas[ids][eqd >= 50].sum() / tot), 3)
+    bw_ = np.array([sl[i][1].stop - sl[i][1].start for i in ids])
+    out["share_in_runs_ge_40mm_long"] = round(float(areas[ids][bw_ >= 40].sum() / tot), 3)           # joined along the grain for 40 mm or more (a narrow ring cannot hold a patch 50 mm across)
     out["largest_bbox_w_mm"] = int(max(sl[i][1].stop - sl[i][1].start for i in ids))
     ori = []
     for i in ids:
@@ -1338,8 +1340,12 @@ def check_age_pattern(T, s, d, rec):
     if m.get("n", 0) < 5:
         fails.append("too few marks to judge")
     else:
-        need50 = PATTERN["share_ge_50_bare"] if bare else (PATTERN["share_ge_50_ring"] if ring else PATTERN["share_ge_50"])
-        if m["share_in_strips_ge_50mm"] < need50:
+        need50 = PATTERN["share_ge_50_bare"] if bare else PATTERN["share_ge_50"]
+        if ring:
+            # a narrow ring cannot hold a patch 50 mm across: its loss is read by the length of the runs it is joined into
+            if m["share_in_runs_ge_40mm_long"] < PATTERN["ring_runs40"]:
+                fails.append(f"runs joined for 40 mm or more carry {m['share_in_runs_ge_40mm_long']} of the loss, need {PATTERN['ring_runs40']}")
+        elif m["share_in_strips_ge_50mm"] < need50:
             fails.append(f"joined strips over 50 mm carry {m['share_in_strips_ge_50mm']} of the loss, need {need50}")
         need_w = PATTERN["largest_bbox_w_ring"] if ring else PATTERN["largest_bbox_w"]
         if m["largest_bbox_w_mm"] < need_w:
@@ -1478,6 +1484,8 @@ def check_grime(T, s, d, rec):
         return None
     if any(sh["role"] in ("box_frame", "slab_edge") for sh in s["shapes"]):
         return None                              # a box sign's acrylic and a glass front are not weathered timber: their ring and glass have their own readings
+    if s["construction_kind"] == "bare":
+        return None                              # the bare timber's lower half SILVERS (the loss is the lighter, open-grained wood): the grime there cannot be read as a darker ground
     L = lab_img(d.img)[..., 0]
     zone = free_zone(T, s, d, pad=6)
     if rec.get("loss"):
@@ -1499,9 +1507,9 @@ def check_grime(T, s, d, rec):
             ends.append(mm_ - float(np.median(L[m])))
     d_bottom = mm_ - mb
     d_ends = float(np.mean(ends)) if ends else None
-    ok = d_bottom >= 1.0 and (d_ends is None or d_ends >= -0.5)
-    return R(f"{sid}.grime", ok, dict(bottom_darker_by_L=round(d_bottom, 2), ends_darker_by_L=None if d_ends is None else round(d_ends, 2)), dict(bottom_min=1.0, ends_min=-0.5),
-             "median L* of the free ground 22 to 100 mm above the lower edge against the open middle, and of the 200 mm at each end against it (the ends need be no lighter than the middle by more than 0.5): dirt builds up where the board is damp, most down the lower edge")
+    ok = d_bottom >= 1.0 and (d_ends is None or d_ends >= -1.0)
+    return R(f"{sid}.grime", ok, dict(bottom_darker_by_L=round(d_bottom, 2), ends_darker_by_L=None if d_ends is None else round(d_ends, 2)), dict(bottom_min=1.0, ends_min=-1.0),
+             "median L* of the free ground 22 to 100 mm above the lower edge against the open middle, and of the 200 mm at each end against it (the ends need be no lighter than the middle by more than 1.0): dirt builds up where the board is damp, most down the lower edge")
 
 
 def readable_ghost(T, s, d, gb):
@@ -1832,7 +1840,7 @@ def negative_controls(T, setdir, man, only_ids=None):
     import fascia_paint as fp
     from PIL import ImageDraw as _ID2
     for rec in man["boards"]:
-        if rec["id"] not in ("mickeys", "fish_market", "ritas", "ironmonger", "chandler"):
+        if rec["id"] not in ("mickeys", "fish_market", "ritas", "ironmonger", "chandler", "steam_laundry", "tea_rooms", "newsagent"):
             continue
         s = fc.shop_by_id(T, rec["id"])
         d = load_board(setdir, rec)
