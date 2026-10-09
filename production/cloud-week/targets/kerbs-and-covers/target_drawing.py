@@ -96,8 +96,9 @@ def section_kerb(t, which):
     v = View('section_kerb_' + which, 'section', f'Kerb section, {which}, with channel, footway and road (y across: footway left, carriageway right; z up)',
              [-700, 800], [-300, 330], {'x': 'y (mm, + toward the carriageway)', 'y': 'z (mm, up)'})
     up, W = p['upstand'], p['top_width']
-    v.add('footway_bedding', 'mortar_pale', rect(-700, -50, -W, 70), 0)
-    v.add('footway_flag', 'flag_pale', rect(-700, 70, -W, 120), 1)
+    fz = up - 5          # the footway flags stand 5 below the kerb top
+    v.add('footway_bedding', 'mortar_pale', rect(-700, fz - 100, -W, fz - 50), 0)
+    v.add('footway_flag', 'flag_pale', rect(-700, fz - 50, -W, fz), 1)
     v.add('kerb_' + which, p['material'], [[a, b] for a, b in p['section_yz']], 2)
     if which == 'granite':
         ch = t['pieces']['channel_setts']
@@ -121,9 +122,10 @@ def section_crossover(t):
     r = c['ramp']
     lip = c['lip_row']
     yb, yf = r['plan_y']
-    v.add('footway_bedding', 'mortar_pale', rect(-1500, -50, yb, 70), 0)
-    v.add('footway_flag', 'flag_pale', rect(-1500, 70, yb, 120), 1)
-    v.add('ramp', 'concrete_ramp', [[yb, 120], [yf, r['z_at_lip']], [yf, -85], [yb, -85]], 1)
+    fz = r['z_at_back']
+    v.add('footway_bedding', 'mortar_pale', rect(-1500, fz - 100, yb, fz - 50), 0)
+    v.add('footway_flag', 'flag_pale', rect(-1500, fz - 50, yb, fz), 1)
+    v.add('ramp', 'concrete_ramp', [[yb, fz], [yf, r['z_at_lip']], [yf, -85], [yb, -85]], 1)
     v.add('joint_ramp_lip', 'bitumen_joint', rect(yf, -85, lip['y0'], r['z_at_lip']), 1)
     v.add('lip_row', 'granite_blue_grey', rect(lip['y0'], -120, lip['y1'], lip['top_z']), 2)
     ch = t['pieces']['channel_setts']
@@ -176,20 +178,21 @@ def plan_crossover(t, instance='street'):
     name = 'plan_crossover_street' if street else 'plan_crossover_photo03'
     half = gap / 2.0
     ext = 1700
-    v = View(name, 'plan', ('Crossing at the street\'s 3.0 m' if street else 'The photographed crossing (urban_street_03), gap 2150') +
+    v = View(name, 'plan', ('Crossing at the street\'s 3.0 m' if street else 'The photographed crossing (urban_street_03), gap %d' % ref['gap_between_kerb_ends']) +
              ' (x along the kerb, y across, + toward the carriageway = down the picture)', [-half - ext, half + ext], [-1250, channel_w + 450],
              {'x': 'x (mm)', 'y': 'y (mm, + toward the carriageway: down the picture)'})
     kg = t['pieces']['kerb_granite']
     W = kg['top_width']
+    jh = kg['joint_mm']['width'] / 2.0
     jt = c['ramp']['joint_to_lip_and_flanks_mm']
     r = c['ramp']
     fl = c['flank_strips']
     fy0, fy1 = fl['plan_y']
     v.add('footway_flags', 'flag_pale', rect(-half - ext, -1250, half + ext, fy0 - jt), 0)
     for (x, L, m) in kerb_run(t, rng, 0, ext, W):
-        v.add('kerb_block_L', m, rect(-half - x - L + 4.5, -W, -half - x - 4.5, 0), 3)
+        v.add('kerb_block_L', m, rect(-half - x - L + jh, -W, -half - x - jh, 0), 3)
     for (x, L, m) in kerb_run(t, rng, 0, ext, W):
-        v.add('kerb_block_R', m, rect(half + x + 4.5, -W, half + x + L - 4.5, 0), 3)
+        v.add('kerb_block_R', m, rect(half + x + jh, -W, half + x + L - jh, 0), 3)
     if street:
         fw = fl['width_mm']
         lx, rx_ = (-half - fw, -half), (half, half + fw)
@@ -197,7 +200,7 @@ def plan_crossover(t, instance='street'):
         lx, rx_ = tuple(ref['flank']['left_x']), tuple(ref['flank']['right_x'])
     v.add('flank_L', 'granite_grey', rect(lx[0], fy0, lx[1], fy1), 3)
     v.add('flank_R', 'granite_grey', rect(rx_[0], fy0, rx_[1], fy1), 3)
-    rx0, rx1 = (-half + jt, half - jt) if street else (-half + 17, half - jt)
+    rx0, rx1 = (-half + jt, half - jt) if street else (-half + 15, half - jt)
     v.add('ramp', 'concrete_ramp', rect(rx0, r['plan_y'][0], rx1, r['plan_y'][1]), 2)
     lip = c['lip_row']
     v.add('joint_ramp_lip', 'bitumen_joint', rect(rx0, r['plan_y'][1], rx1, lip['y0']), 2)
@@ -233,7 +236,7 @@ def elevation_crossing(t):
             xb = half + x + L
             if side < 0:
                 xa, xb = -xb, -xa
-            v.add('kerb_face', m, rect(xa + 4.5, 0, xb - 4.5, kg['upstand']), 2)
+            v.add('kerb_face', m, rect(xa + kg['joint_mm']['width'] / 2.0, 0, xb - kg['joint_mm']['width'] / 2.0, kg['upstand']), 2)
     lip = c['lip_row']
     n = int(math.ceil(2 * half / (lip['sett_along_mm'] + lip['joint_mm'])))
     pitch = 2 * half / n
@@ -247,14 +250,14 @@ def plan_gully(t, which):
     p = t['pieces']['gully_grate_' + which]
     if which == 'A':
         W, H = p['overall_along_kerb'], p['overall_across']
-        v = View('plan_gully_A', 'plan', 'Gully grate A: 485 x 325, 8 slots 18 x 285 at pitch 57, slots across the channel', [-W / 2 - 60, W / 2 + 60], [-H / 2 - 60, H / 2 + 60],
+        v = View('plan_gully_A', 'plan', 'Gully grate A: %d x %d, %d slots %d x %d at pitch %d, slots across the channel' % (W, H, p['slot_count'], p['slot_width'], p['slot_length'], p['slot_pitch']), [-W / 2 - 60, W / 2 + 60], [-H / 2 - 60, H / 2 + 60],
                  {'x': 'x along the kerb (mm)', 'y': 'y across (mm)'})
         v.add('grate', p['material'], rect(-W / 2, -H / 2, W / 2, H / 2), 0)
         for xc in p['slot_centres_x']:
             v.add('slot', 'grate_slot', rect(xc - p['slot_width'] / 2, -p['slot_length'] / 2, xc + p['slot_width'] / 2, p['slot_length'] / 2), 1)
     else:
         W, H = p['overall_along_kerb'], p['overall_across']
-        v = View('plan_gully_B', 'plan', 'Gully grate B: 7 slots trimmed to an oval field, pitch 58', [-W / 2 - 60, W / 2 + 60], [-H / 2 - 60, H / 2 + 60],
+        v = View('plan_gully_B', 'plan', 'Gully grate B: %d x %d, 7 slots %d wide trimmed to an oval field, pitch %d, two lifting holes' % (W, H, p['slot_width'], p['slot_pitch']), [-W / 2 - 60, W / 2 + 60], [-H / 2 - 60, H / 2 + 60],
                  {'x': 'x along the kerb (mm)', 'y': 'y across (mm)'})
         v.add('grate', p['material'], rect(-W / 2, -H / 2, W / 2, H / 2), 0)
         n = p['slot_count']
@@ -273,11 +276,11 @@ def plan_cover_stud(t):
     p = t['pieces']['cover_stud_square']
     S = p['outer'][0]
     inner = p['lid_inner'][0]
-    v = View('plan_cover_stud_square', 'plan', 'Cover P1: 960 square, 20 mm frame, two triangular leaves on one diagonal (5 mm joint), 10 x 10 studs 45 sq at 95, half-studs on the joint',
+    v = View('plan_cover_stud_square', 'plan', 'Cover P1: %d square, %d mm frame, two triangular leaves on one diagonal (%g mm joint), 10 x 10 studs %d sq at %d, half-studs on the joint' % (S, p['frame_rim'], p['leaves']['joint_mm'], p['pattern']['stud_mm'], p['pattern']['pitch_mm']),
              [-S / 2 - 40, S / 2 + 40], [-S / 2 - 40, S / 2 + 40], {'x': 'x (mm)', 'y': 'y (mm)'})
     v.add('frame', p['material'], rect(-S / 2, -S / 2, S / 2, S / 2), 0)
     h = inner / 2.0
-    jw = 5.0   # the joint, leaves.split
+    jw = float(p['leaves']['joint_mm'])
     n = p['pattern']['count'][0]
     st, pi = p['pattern']['stud_mm'], p['pattern']['pitch_mm']
     if LineString is None:
@@ -309,7 +312,8 @@ def plan_cover_stud(t):
     bs = p['boss']['size_mm']
     # the blank raised boss on the joint, 150 from the lower end, long axis along the joint
     d = math.sqrt(0.5)
-    bx, by = -h + 150 * d + 60, h - 150 * d - 60
+    off = 0.16 * S
+    bx, by = -h + off * d + 0.06 * S, h - off * d - 0.06 * S
     v.add('boss', p['material'], rot_pts(rect(bx - bs[0] / 2, by - bs[1] / 2, bx + bs[0] / 2, by + bs[1] / 2), -45, bx, by), 3, line=[110, 100, 92])
     return v
 
@@ -338,9 +342,10 @@ def plan_cover_recessed_footway(t):
     p = t['pieces']['cover_recessed_footway']
     W, H = p['outer']
     inf = p['infill']
-    v = View('plan_cover_recessed_footway', 'plan', 'Cover P3 (footway): 1180 x 660 frame, two-step rim, 960 x 440 infill', [-W / 2 - 40, W / 2 + 40], [-H / 2 - 40, H / 2 + 40], {'x': 'x (mm)', 'y': 'y (mm)'})
+    v = View('plan_cover_recessed_footway', 'plan', 'Cover P3 (footway): %d x %d frame, two-step rim, %d x %d infill' % (W, H, inf[0], inf[1]), [-W / 2 - 40, W / 2 + 40], [-H / 2 - 40, H / 2 + 40], {'x': 'x (mm)', 'y': 'y (mm)'})
     v.add('flange', p['material'], rect(-W / 2, -H / 2, W / 2, H / 2), 0)
-    ledge = (W - 2 * 45, H - 2 * 45)
+    fl_ = p['frame_flange_mm']
+    ledge = (W - 2 * fl_, H - 2 * fl_)
     v.add('ledge', p['material'], rect(-ledge[0] / 2, -ledge[1] / 2, ledge[0] / 2, ledge[1] / 2), 1, line=[20, 16, 14])
     v.add('infill', 'flag_pale', rect(-inf[0] / 2, -inf[1] / 2, inf[0] / 2, inf[1] / 2), 2, line=[90, 86, 80])
     fl = p['frame_lugs']
@@ -362,7 +367,7 @@ def plan_cover_recessed_footway(t):
             while y < H / 2 - 90 + 1:
                 v.add('frame_lug', p['material'], rect(xc - lh / 2, y - lw / 2, xc + lh / 2, y + lw / 2), 2, line=[110, 100, 92])
                 y += 71.4
-    c = 25
+    c = p['infill_chamfer_mm']
     v.add('infill_chamfer', 'mortar_pale', [[-inf[0] / 2 + c, -inf[1] / 2 + c], [inf[0] / 2 - c, -inf[1] / 2 + c], [inf[0] / 2 - c, inf[1] / 2 - c], [-inf[0] / 2 + c, inf[1] / 2 - c]], 3)
     return v
 
@@ -370,18 +375,18 @@ def plan_cover_recessed_footway(t):
 def plan_cover_recessed_road(t):
     p = t['pieces']['cover_recessed_road']
     W, H = p['outer']
-    v = View('plan_cover_recessed_road', 'plan', 'Cover P3 (road): tarmac-filled recess 1000 x 1050, 15 mm hairline', [-W / 2 - 60, W / 2 + 60], [-H / 2 - 60, H / 2 + 60], {'x': 'x (mm)', 'y': 'y (mm)'})
+    v = View('plan_cover_recessed_road', 'plan', 'Cover P3 (road): tarmac-filled recess %d x %d, %g mm hairline' % (W, H, p['hairline_mm']), [-W / 2 - 60, W / 2 + 60], [-H / 2 - 60, H / 2 + 60], {'x': 'x (mm)', 'y': 'y (mm)'})
     v.add('road', 'tarmac_infill', rect(-W / 2 - 60, -H / 2 - 60, W / 2 + 60, H / 2 + 60), 0)
     v.add('hairline_outer', 'bitumen_joint', rect(-W / 2, -H / 2, W / 2, H / 2), 1)
-    v.add('infill', 'tarmac_infill', rect(-W / 2 + 15, -H / 2 + 15, W / 2 - 15, H / 2 - 15), 2)
+    v.add('infill', 'tarmac_infill', rect(-W / 2 + p['hairline_mm'], -H / 2 + p['hairline_mm'], W / 2 - p['hairline_mm'], H / 2 - p['hairline_mm']), 2)
     return v
 
 
 def plan_cover_double_leaf(t):
     p = t['pieces']['cover_road_double_leaf']
     W, H = p['outer']
-    v = View('plan_cover_road_double_leaf', 'plan', 'Cover P4: two-leaf road cover 1820 x 620, fine stud tread on a 45 degree lattice', [-W / 2 - 160, W / 2 + 160], [-H / 2 - 160, H / 2 + 160], {'x': 'x (mm)', 'y': 'y (mm)'})
-    v.add('mortar_surround', 'mortar_pale', rect(-W / 2 - 150, -H / 2 - 150, W / 2 + 150, H / 2 + 150), 0)
+    v = View('plan_cover_road_double_leaf', 'plan', 'Cover P4: two-leaf road cover %d x %d, fine stud tread on a 45 degree lattice' % (W, H), [-W / 2 - 160, W / 2 + 160], [-H / 2 - 160, H / 2 + 160], {'x': 'x (mm)', 'y': 'y (mm)'})
+    v.add('mortar_surround', 'mortar_pale', rect(-W / 2 - p['surround_mm'], -H / 2 - p['surround_mm'], W / 2 + p['surround_mm'], H / 2 + p['surround_mm']), 0)
     for s in (-1, 1):
         x0, x1 = (-W / 2, -7.5) if s < 0 else (7.5, W / 2)
         v.add('leaf', p['material'], rect(x0, -H / 2, x1, H / 2), 1, line=[20, 16, 14])
@@ -518,17 +523,18 @@ def render(v, t, path, mm_per_px=1.0):
 
 # --------------------------------------------------------------------------- overlay on the main photographs
 def plan_to_px(t, x_plan, y_plan, z=None, plane='ground'):
-    """plan mm -> column, row on the MAIN ortho frame. A point at height z mm above the channel level that lies off the frame's
-    plane (the ground, or the kerb-top plane 125 mm up) is smeared away from the camera by (1600 - plane) / (1600 - z)."""
+    """plan mm -> column, row on the MAIN ortho frame (drawn at the measured camera height of urban_street_03). A point at height z mm above the
+    channel level that lies off the frame's plane (the channel, or the kerb-top plane) is smeared away from the camera by (camera - plane) / (camera - z)."""
     ref, fr = t['reference_instance'], t['photo_frames']['MAIN']
     x_local = x_plan + ref['gap_centre_local_x']
     dist = ref['foot_line_distance_from_camera'] - y_plan
     if z is not None:
-        zp = 0.0 if plane == 'ground' else 125.0
-        f = (1600.0 - zp) / (1600.0 - z)
+        cam = fr['camera_height_ground_m'] * 1000.0
+        zp = 0.0 if plane == 'ground' else fr['top_plane_z_mm']
+        f = (cam - zp) / (cam - z)
         x_local *= f
         dist *= f
-    return (x_local + 2300.0) / fr['mm_per_px'], (5000.0 - dist) / fr['mm_per_px']
+    return (x_local - fr['x0_mm']) / fr['mm_per_px'], (fr['z1_mm'] - dist) / fr['mm_per_px']
 
 
 def overlay(t, preview_dir):
@@ -541,8 +547,9 @@ def overlay(t, preview_dir):
         im = Image.open(os.path.join(preview_dir, fname)).convert('RGB')
         lay = Image.new('RGBA', im.size, (0, 0, 0, 0))
         d = ImageDraw.Draw(lay)
-        zmap = ({'lip_sett': 15, 'sett_A': 0, 'sett_B': 0, 'gully_grate_A': 0, 'gully_slot': 0} if which == 'ground'
-                else {'kerb_block_L': 125, 'kerb_block_R': 125, 'flank_L': 120, 'flank_R': 120})
+        c_ = t['pieces']['crossover']
+        zmap = ({'lip_sett': c_['lip_row']['top_z'], 'sett_A': 0, 'sett_B': 0, 'gully_grate_A': 0, 'gully_slot': 0} if which == 'ground'
+                else {'kerb_block_L': t['pieces']['kerb_granite']['upstand'], 'kerb_block_R': t['pieces']['kerb_granite']['upstand'], 'flank_L': c_['flank_strips']['top_z'], 'flank_R': c_['flank_strips']['top_z']})
         colour = {'gully_slot': (0, 255, 255, 255), 'gully_grate_A': (255, 0, 255, 255), 'lip_sett': (255, 128, 0, 255)}
         for pl in v.polys:
             if pl['name'] not in zmap:
@@ -553,8 +560,8 @@ def overlay(t, preview_dir):
             for (y, z, col) in ((0, 0, (255, 255, 255, 255)), (cw, 6, (255, 255, 0, 255))):
                 d.line([plan_to_px(t, -1800, y, z, 'ground'), plan_to_px(t, 1800, y, z, 'ground')], fill=col, width=1)
         else:
-            for (y, z) in ((ref['ramp_back_y'], 120),):
-                d.line([plan_to_px(t, -1060, y, z, 'top'), plan_to_px(t, 1060, y, z, 'top')], fill=(255, 255, 0, 255), width=1)
+            for (y, z) in ((ref['ramp_back_y'], t['pieces']['crossover']['ramp']['z_at_back']),):
+                d.line([plan_to_px(t, -ref['gap_between_kerb_ends'] / 2, y, z, 'top'), plan_to_px(t, ref['gap_between_kerb_ends'] / 2, y, z, 'top')], fill=(255, 255, 0, 255), width=1)
         out_im = Image.alpha_composite(im.convert('RGBA'), lay).convert('RGB')
         name = {'ground': 'ph-urban_street_03-target-on-photo.jpg', 'top': 'ph-urban_street_03-target-on-top-photo.jpg'}[which]
         out_im.save(os.path.join(preview_dir, name), quality=88)

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-"""Re-makes the reduced reference crops of TARGET.md (kerbs and covers family).
+"""Re-makes the reduced reference crops of TARGET.md (kerbs and covers family), each ortho drawn at the MEASURED camera height of its panorama
+(calibration_data.py), not at the 1.6 m the first draft assumed.
 
 Needs the Poly Haven tone-mapped 8k panoramas (CC0, https://api.polyhaven.com/files/<id>, 'tonemapped')
 saved as <PANO_DIR>/tm_<id>.jpg, and (for the two texture crops) the 2k diffuse of metal_grate_rusty.
@@ -97,11 +98,15 @@ def mask_wrapper(v, box):
     return out
 
 
-# The main photograph's frame (also used by self_check.py through target.json "photo_frames")
-MAIN = dict(pano='urban_street_03', yaw=272.2, x0=-2.3, x1=1.1, z0=3.15, z1=5.0, mm=3.0)
+# The main photograph's frame, in true millimetres at the measured camera height (calibration_data.py): the first draft drew it at an assumed 1.6 m
+# (x -2300 to 1100, z 3150 to 5000); the same view at the measured height spans the same angles, i.e. those numbers x h / 1.6.
+def heights():
+    import calibration_data as CD
+    return {k: v['h_m'] for k, v in CD.HEIGHTS.items()}
 
 
 def main(pano_dir, out):
+    H = heights()
     os.makedirs(out, exist_ok=True)
     P = {}
 
@@ -110,36 +115,37 @@ def main(pano_dir, out):
             P[i] = load(os.path.join(pano_dir, f'tm_{i}.jpg'))
         return P[i]
 
-    m = MAIN
-    save(ground_ortho(pano(m['pano']), m['yaw'], 1.6, m['x0'], m['x1'], m['z0'], m['z1'], m['mm']),
-         f'{out}/ph-urban_street_03-crossover-gully-ortho.jpg')
-    save(ground_ortho(pano(m['pano']), m['yaw'], 1.475, m['x0'], m['x1'], m['z0'], m['z1'], m['mm']),
-         f'{out}/ph-urban_street_03-crossover-top-ortho.jpg')
+    import corrected_numbers as CN
+    r3 = H['urban_street_03'] / 1.6
+    k_up = CN.N['U'] / 1000.0
+    h3 = H['urban_street_03']
+    x0, x1, z0, z1 = -2300 * r3 / 1000.0, 1100 * r3 / 1000.0, 3150 * r3 / 1000.0, 5000 * r3 / 1000.0
+    save(ground_ortho(pano('urban_street_03'), 272.2, h3, x0, x1, z0, z1, 3.0), f'{out}/ph-urban_street_03-crossover-gully-ortho.jpg')
+    save(ground_ortho(pano('urban_street_03'), 272.2, h3 - k_up, x0, x1, z0, z1, 3.0), f'{out}/ph-urban_street_03-crossover-top-ortho.jpg')
     save(view(pano('urban_street_03'), 100, -22, 22, 1200, 750), f'{out}/ph-urban_street_03-granite-kerb-run-view.jpg')
     save(view(pano('urban_street_03'), 281, -21, 16, 1200, 750), f'{out}/ph-urban_street_03-kerb-end-flank-view.jpg')
-    # gully grate: ortho 1.5 mm/px about the grate
-    save(ortho_at(pano('urban_street_03'), 249.9, 3.815, 272.2, 0.45, 0.28, 1.5, 1.6),
-         f'{out}/ph-urban_street_03-gully-grate-ortho.jpg')
-    # footway recessed cover (plane 0.12 m above the road)
-    save(ground_ortho(pano('urban_street_03'), 272.2, 1.48, 0.45, 1.75, 5.35, 6.05, 3.0),
-         f'{out}/ph-urban_street_03-footway-cover-ortho.jpg')
-    save(ortho_at(pano('bethnal_green_entrance'), 10.1, 1.87, 27, 0.7, 0.7, 1.5, 1.6),
-         f'{out}/ph-bethnal_green_entrance-stud-cover-ortho.jpg')
-    save(ground_ortho(pano('urban_street_02'), 180, 1.6, -0.5, 0.9, 3.0, 4.5, 3.0),
-         f'{out}/ph-urban_street_02-tarmac-infill-cover-ortho.jpg')
+    # gully grate: ortho 1.5 mm a pixel about the grate (the first draft's distance 3.815 m and half-sizes x r)
+    save(ortho_at(pano('urban_street_03'), 249.9, 3.815 * r3, 272.2, 0.45 * r3, 0.28 * r3, 1.5, h3), f'{out}/ph-urban_street_03-gully-grate-ortho.jpg')
+    # footway recessed cover: the footway plane stands (U - 5) above the channel
+    save(ground_ortho(pano('urban_street_03'), 272.2, h3 - (CN.N['FLAGS_Z'] / 1000.0), 0.45 * r3, 1.75 * r3, 5.35 * r3, 6.05 * r3, 3.0), f'{out}/ph-urban_street_03-footway-cover-ortho.jpg')
+    rb = H['bethnal_green_entrance'] / 1.6
+    save(ortho_at(pano('bethnal_green_entrance'), 10.1, 1.87 * rb, 27, 0.7 * rb, 0.7 * rb, 1.5, H['bethnal_green_entrance']), f'{out}/ph-bethnal_green_entrance-stud-cover-ortho.jpg')
+    r2 = H['urban_street_02'] / 1.6
+    save(ground_ortho(pano('urban_street_02'), 180, H['urban_street_02'], -0.5 * r2, 0.9 * r2, 3.0 * r2, 4.5 * r2, 3.0), f'{out}/ph-urban_street_02-tarmac-infill-cover-ortho.jpg')
     save(view(pano('birbeck_street_underpass'), 150, -22, 20, 1200, 750), f'{out}/ph-birbeck_street_underpass-concrete-kerb-view.jpg')
     v = view(pano('birbeck_street_underpass'), 0.96, -23, 12, 1400, 900)
-    v = mask_wrapper(v, (846, 262, 1155, 420))   # a printed crisp wrapper lies on the grate: masked with clean tarmac from beside it
+    v = mask_wrapper(v, (846, 262, 1155, 420))   # a printed crisp wrapper lies on the grate: masked with clean tarmac from below it
     save(v, f'{out}/ph-birbeck_street_underpass-gully-grate-view.jpg')
-    save(ground_ortho(pano('urban_street_04'), 135, 1.6, -4.0, 6.0, 2.5, 8.0, 9.0),
-         f'{out}/ph-urban_street_04-kerb-corner-radius-ortho.jpg')
+    r4 = H['urban_street_04'] / 1.6
+    save(ground_ortho(pano('urban_street_04'), 135, H['urban_street_04'], -4.0 * r4, 6.0 * r4, 2.5 * r4, 8.0 * r4, 9.0), f'{out}/ph-urban_street_04-kerb-corner-radius-ortho.jpg')
     save(view(pano('urban_street_04'), 15, -12, 24, 1200, 750), f'{out}/ph-urban_street_04-road-cover-view.jpg')
-    save(ground_ortho(pano('urban_street_01'), 20, 1.6, -2.0, 2.0, 2.3, 4.8, 3.5),
-         f'{out}/ph-urban_street_01-kerb-mitred-corner-ortho.jpg')
+    r1 = H['urban_street_01'] / 1.6
+    save(ground_ortho(pano('urban_street_01'), 20, H['urban_street_01'], -2.0 * r1, 2.0 * r1, 2.3 * r1, 4.8 * r1, 3.5), f'{out}/ph-urban_street_01-kerb-mitred-corner-ortho.jpg')
     tex = os.path.join(pano_dir, 'mgr_diff_2k.jpg')
     if os.path.exists(tex):
         save(load(tex), f'{out}/ph-metal_grate_rusty-tread-pattern.jpg')
 
 
 if __name__ == '__main__':
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     main(sys.argv[1], sys.argv[2])
