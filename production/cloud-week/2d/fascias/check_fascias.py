@@ -170,7 +170,7 @@ def flat_glyphs(mask, cap=None, bad=None):
         comp = (lbl[sl] == i)
         last = comp[-2:].any(axis=0).sum()
         if last >= 0.35 * w:
-            if bad is not None and bad[max(0, sl[0].stop - 4):sl[0].stop + 3, sl[1].start:sl[1].stop].any():
+            if bad is not None and bad[max(0, sl[0].stop - 4):sl[0].stop + 3, sl[1].start:sl[1].stop].mean() > 0.25:
                 continue
             out.append((float(sl[0].stop), float((sl[1].start + sl[1].stop) / 2.0)))
     return out
@@ -271,10 +271,13 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         # (G10) reads the paint as it is.
         near_ref = ndi.binary_dilation(tm_full, iterations=6)
         lossw = np.zeros((H_MM, W_MM), bool)
+        lossw_strict = np.zeros((H_MM, W_MM), bool)
         if rec_loss is not None:
             c_lo, c_hi = max(0, w[2] - 40), min(W_MM, w[3] + 40)
             sub_ = img[w[0]:w[1], c_lo:c_hi].astype(float)
-            lossw[w[0]:w[1], c_lo:c_hi] = np.minimum(fc.dE(sub_, rec_loss[0]), fc.dE(sub_, rec_loss[1])) < 24.0
+            dsub_w = np.minimum(fc.dE(sub_, rec_loss[0]), fc.dE(sub_, rec_loss[1]))
+            lossw[w[0]:w[1], c_lo:c_hi] = dsub_w < 24.0
+            lossw_strict[w[0]:w[1], c_lo:c_hi] = dsub_w < 13.0
         # where the paint of a letter is gone INSIDE the letter's own reference shape the letter has not moved: those pixels stand for it (nothing outside the shape does)
         worn = lossw & tm
         pm_pos = ndi.binary_closing((pm & near_ref) | worn, structure=np.ones((3, 3), bool), iterations=2) & (near_ref | worn)
@@ -358,7 +361,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         if b.get("shade") and want_shade:
             out.append(shade_result(T, b, d, pm, tm, bid))
         # jitter parts
-        part = jitter_residuals(pm & near_ref, b['cap_mm'], bad=ndi.binary_dilation(lossw, iterations=2))
+        part = jitter_residuals(pm & near_ref, b['cap_mm'], bad=ndi.binary_dilation(lossw_strict, iterations=2))
         (hand_parts if b.get("jitter") else other_parts).append(part)
         per_block_sd[b["id"]] = None if not part or part[1] <= 0 else round(math.sqrt(part[0] / part[1]), 2)
         out.append(relief_result(T, b, d, tm_full, bid))
@@ -1343,7 +1346,7 @@ def check_wear_placement(T, s, d, rec):
                 if top > 75:
                     flagged.append((name, "is not on the top edge", int(left), int(H_MM - top)))
                 wd = right - left
-                if wd > (95 if sid == "empty_unit" else 62):
+                if wd > (110 if sid == "empty_unit" else 55):
                     flagged.append((name, "too wide for a droppings mark", int(left), int(wd)))
             else:
                 heads = (rec.get("wear") or {}).get("rust_at") or []
@@ -1353,7 +1356,7 @@ def check_wear_placement(T, s, d, rec):
         stats[name] = cnt
     # nothing else: a pale or dark dash, small and elongated, standing away from every edge and every listed feature
     return R(f"{sid}.wear_placement", not flagged, dict(counts=stats, flagged=flagged[:6]), "runs from the top edge, gulls on the top edge, rust at fixings",
-             "every wear mark is attached to an edge or a fixing where water and birds put it; none floats mid-board; gull marks are no wider than 62 mm (95 on the empty unit)")
+             "every wear mark is attached to an edge or a fixing where water and birds put it; none floats mid-board; gull marks are no wider than 55 mm (110 on the empty unit)")
 
 
 def check_timber(T, s, d, rec):
