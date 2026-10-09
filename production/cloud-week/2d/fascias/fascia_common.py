@@ -35,7 +35,7 @@ TARGET_JSON = TARGET_DIR / "target.json"
 FONTS_DIR = ROOT / "production" / "fonts"
 HOOK_CAST = ROOT / "production" / "specs" / "hook-cast.json"
 W_MM, H_MM = 5410, 550                                           # the board, one pixel a millimetre
-SCRIPT_VERSION = "fascias-v1"
+SCRIPT_VERSION = "fascias-v2"
 
 
 # ------------------------------------------------------------------ the target, amended in memory
@@ -53,6 +53,12 @@ AMENDMENT_TEXT = [
     "A4 for a string with no flat-bottomed glyph the pixel ink bottom is compared with ink_box_mm[1], +-3 mm, not with the baseline",
     "A5 Tea Rooms is sized by its H like every other block: 285.31 px an em, cap_mm 200 meaning the H-height (the T then measures 204.8 mm)",
     "A6 the grocer's street number 11 stands on the shop door's fanlight (the grocer has no side door), centred on the shop door's own street x, 38.147 (bay 33 to 39, door at the high end, kit pilaster 0.35 + shop door 1.006 / 2), cap 110, z 2.18 (the fanlight glass is z 2.131 to 2.400)",
+    "A7 (try 2, the fresh review) Mickey's board has NO old name beside the new letters and NO pin holes: the Hook sheet (H1) shows gilt capitals on a clean slate-blue board. The target's ghost block and its ten pin holes are dropped; their check ids stay and read 'absent'",
+    "A8 (try 2) the three hanging faces are lettered as a signwriter fills a board, not shrunk to fit: KEYS over CUT on two lines at the biggest cap the board takes (about 105 mm), LAUNDERETTE and CHANDLERY in a CONDENSED face (the font squeezed to the width the board allows, its stems grown back toward their weight) at about 80 and 115 mm. The boards' sizes, mounts and lowest points are the target's",
+    "A9 (try 2) the fishmonger's three whitewash rows are BRUSHED: Patrick Hand's own centre line, laid as a flat brush lays it (thick to thin with the brush angle, a loaded blob where each stroke starts, a dry tail, a few runs, every letter its own size, slant and set). Glyph-mask tolerance for these rows 7 mm (a hand-lettered row is not a font) with the string told from its mirror image",
+    "A10 (try 2) the newsagent's TOBACCONIST & CONFECTIONER stands on the SHOP DOOR's glass in two lines (TOBACCONIST / & CONFECTIONER) at cap 40, the lower baseline at z 1.72 m, centred on the door (x 40.2): the door light is 0.68 to 0.9 m wide and the 1.69 m line of the target cannot sit on it",
+    "A11 (try 2) hours: each trade its own kind of sign, on the shop door's glass or the pilaster: the fishmonger's brushed whitewash on the glass, Rita's gold leaf with a black shade on the glass, the newsagent's white cut vinyl on the glass, the launderette's engraved black laminate plate, the caff's card written in marker pen. The caff's card reads '6.30 AM - 10 PM' and '8 AM - 12 NOON' (the plates' rule bars am and pm: it is extended for this card)",
+    "A12 (try 2) figures that read as figures: Mickey's 1 is Old Standard Bold (foot and flag; Marcellus SC's 1 is a hairline that reads as an I), the grocer's 11 is Libre Franklin 700 (Josefin Sans' 11 reads as II), the ironmonger's 16 is closed up (tracking -0.16 em: a gilder spaces figures by eye)",
 ]
 
 
@@ -95,6 +101,52 @@ def apply_amendments(T):
         if s["id"] == "grocer":
             s["fanlight_street_x_m"] = 38.147
             s["fanlight_note"] = "the SHOP door's fanlight (amendment A6): the grocer has no side door"
+    # A7: Mickey's board, a clean slate board
+    for s in T["shops"]:
+        if s["id"] == "mickeys":
+            s["ghost_dropped"] = s.get("ghost")
+            s["ghost"] = None
+            s["blocks"] = [b for b in s["blocks"] if not b["ghost"]]
+    for c in T["checks"]:
+        if c["id"] == "mickeys.pinholes":
+            c["expected"] = {"count": 0, "diameter_mm": [3, 4]}
+            c["name"] = "mickeys: no pin holes (A7)"
+        elif c["id"] == "mickeys.ghost_name.ghost":
+            c["expected"] = {"ghost": "absent"}
+            c["name"] = "mickeys: no old name (A7)"
+    # A12: figures
+    for g in T["glass_lettering"]:
+        if g["shop"] == "mickeys" and g["text"] == "1":
+            g["font"], g["weight"] = "old-standard-tt-bold", 700
+        elif g["shop"] == "grocer" and g["text"] == "11":
+            g["font"], g["weight"] = "libre-franklin", 700
+        elif g["shop"] == "ironmonger" and g["text"] == "16":
+            g["tracking_em"] = -0.16
+        # A10: the trade line of the newsagent, two lines on the door glass
+        elif g["shop"] == "newsagent" and g["text"].startswith("TOBACCONIST"):
+            g["lines"] = ["TOBACCONIST", "& CONFECTIONER"]
+            g["cap_mm"] = 40
+            g["z_m"] = 1.72
+            g["surface"] = "shop-door glass, upper light (two lines; A10)"
+        elif g["shop"] == "fish_market" and g["technique"].startswith("whitewash"):
+            g["brush"] = True
+    for c in T["checks"]:
+        if c["id"] == "newsagent.glass.16":
+            c["name"] = "newsagent: glass TOBACCONIST / & CONFECTIONER (door glass, two lines; A10)"
+            c["expected"]["cap_mm"] = 40
+            c["expected"]["z_m"] = 1.72
+    # A11: the hours signs of three trades are glass rows too (the two others are panels)
+    cast = json.loads(HOOK_CAST.read_text(encoding="utf-8")) if HOOK_CAST.exists() else None
+    if cast is not None:
+        for sid, tech, font, wt, cap, z_low, shade in (("fish_market", "whitewash brush lettering, uneven, 85 per cent opaque", "patrick-hand", 400, 44, 1.36, None),
+                                                          ("ritas", "gold leaf, black shade 3 mm", "old-standard-tt-bold", 700, 34, 1.38, 3),
+                                                          ("newsagent", "white cut vinyl", "libre-franklin", 700, 32, 1.20, None)):
+            s = shop_by_id(T, sid)
+            lo, hi = s["street_x_m"]
+            x_door = hi - 1.8 if s["door_end_street"] == "high" else lo + 1.8
+            T["glass_lettering"].append(dict(shop=sid, surface="shop-door glass (hours, A11)", text=f"HOURS {sid}", hours=True, font=font, weight=wt, cap_mm=cap, technique=tech,
+                                             z_m=z_low, x_street_m=round(x_door, 3), tol_x_m=0.1, tol_z_m=0.03, source="try 2: each trade its own hours sign (the fresh review, fault 5)",
+                                             kind="Judgement"))
     T["_amendments"] = AMENDMENT_TEXT
     return T
 

@@ -156,9 +156,10 @@ def task_sign(args):
     S, rec = fs.render_sign_face(T, sign, label, seed)
     files = write_maps(out, f"signs/{sid}", f"{sid}_face_{label}", S.B, tuple(rec["size_mm"]), wear=False)
     rec.pop("b", None)
+    rec.pop("bs", None)
     return dict(kind="sign_face", id=f"{sid}.{label}", sign=sid, shop=sign["shop"], seed=int(seed), size_px=rec["size_mm"], size_mm=rec["size_mm"], files=files,
-                block=rec["block"], cap_mm_target=rec["cap_mm_target"], cap_mm_built=rec["cap_mm_built"], available_mm=rec["available_mm"],
-                ink_width_target_cap_mm=rec["ink_width_target_cap_mm"], wear=rec["wear"], emissive=rec.get("emissive"),
+                block=rec["block"], blocks=rec["blocks"], lines=rec["lines"], squeeze=rec["squeeze"], cap_mm_target=rec["cap_mm_target"], cap_mm_built=rec["cap_mm_built"],
+                available_mm=rec["available_mm"], ink_width_target_cap_mm=rec["ink_width_target_cap_mm"], wear=rec["wear"], emissive=rec.get("emissive"),
                 reads="left to right from its own side (mirror-correct, not mirrored)")
 
 
@@ -183,20 +184,22 @@ def task_glass(args):
     S, A, face_alpha, rec = fs.render_glass_row(T, g, idx, seed)
     W, H = rec["size_mm"]
     base = np.dstack([u8(S.B.rgb), u8(A * 255.0)])
+    lines = fs.glass_lines(g)
     stem = f"{idx:02d}_{slug(g['text'])}"
     files = {}
     files["rgba"] = save(out, f"glass/{g['shop']}/{stem}_rgba.png", base, "sRGB 8-bit + straight alpha (seen from the street)", (W, H))
     files["orm"] = save(out, f"glass/{g['shop']}/{stem}_orm.png", orm8(S.B.rough, S.B.metal), "linear 8-bit: R=255, G=roughness, B=metal", (W, H))
     ink = rec["face_alpha_ink_box_in_tile_mm"]
-    # where the tile goes: street x of the ink centre, z of the baseline, the tile's own centre and size
+    # where the tile goes: street x of the ink centre, z of the (lowest line's) baseline, the tile's own centre and size
     cx_in_tile = (ink[0] + ink[2]) / 2.0
     base_row = rec["baseline_row_from_bottom_mm"]
     place = dict(x_street_m_of_ink_centre=g["x_street_m"], z_baseline_m=g["z_m"],
                  tile_left_street_offset_mm=round(-cx_in_tile, 1), tile_baseline_from_tile_bottom_mm=base_row,
-                 note="u runs from the viewer's left to right in the game; the tile's ink centre stands at x_street_m, its baseline at z_baseline_m above the pavement")
-    return dict(kind="glass_row", id=f"{g['shop']}.glass.{idx}", row=idx, shop=g["shop"], surface=g["surface"], string=g["text"], font=g["font"], weight=g["weight"],
-                cap_mm=g["cap_mm"], technique=g["technique"], style=rec["style"], seed=int(seed), size_px=[W, H], size_mm=[W, H], files=files, place=place,
-                ink_box_in_tile_mm=ink, source=g["source"], kind_of_number=g["kind"], proposed=(g["kind"] == "Judgement"))
+                 note="u runs from the viewer's left to right in the game; the tile's ink centre stands at x_street_m, its (lowest line's) baseline at z_baseline_m above the pavement")
+    return dict(kind="glass_row", id=f"{g['shop']}.glass.{idx}", row=idx, shop=g["shop"], surface=g["surface"], string=(" | ".join(lines) if g.get("hours") else g["text"]),
+                lines=rec["lines"], line_pitch_mm=rec["line_pitch_mm"], hours=bool(g.get("hours")), font=g["font"], weight=g["weight"],
+                cap_mm=g["cap_mm"], technique=g["technique"], style=rec["style"], tracking_em=rec["tracking_em"], seed=int(seed), size_px=[W, H], size_mm=[W, H], files=files, place=place,
+                ink_box_in_tile_mm=ink, source=g["source"], kind_of_number=g["kind"], proposed=(g["kind"] == "Judgement"), brush=bool(rec.get("brush")))
 
 
 def task_wash(args):
@@ -208,7 +211,7 @@ def task_wash(args):
     base = np.dstack([u8(S.B.rgb), u8(a * 255.0)])
     files = dict(rgba=save(out, "glass/empty_unit/window_whitewash_rgba.png", base, "sRGB 8-bit + straight alpha", (W, H)),
                  orm=save(out, "glass/empty_unit/window_whitewash_orm.png", orm8(S.B.rough, S.B.metal), "linear 8-bit: R=255, G=roughness, B=metal", (W, H)))
-    return dict(kind="glass_wash", id="empty_unit.glass.window", shop="empty_unit", surface="whole display window, whitewashed (ruled 3 Oct): brush arcs, nothing legible",
+    return dict(kind="glass_wash", id="empty_unit.glass.window", shop="empty_unit", surface="whole display window, whitewashed (ruled 3 Oct): whiting laid on with a cloth, soft swirls, nothing legible (try 2)",
                 string=None, seed=int(seed), size_px=[W, H], size_mm=[W, H], files=files,
                 place=dict(window_glass_x_m_about_window_centre=[-1.625, 1.625], z_m=[0.60, 2.40], window_centre_street_x_m=fc.shop_by_id(T, "empty_unit")["window_centre_street_x_m"],
                            note="the kit's display glass (terrace-front.py KIT_GLASS): 3.25 m wide, z 0.60 to 2.40; the tile covers it at one pixel a millimetre (3250 x 1800)"),
@@ -233,13 +236,18 @@ def task_hours(args):
     T = fc.load_target()
     cast = json.loads(fc.HOOK_CAST.read_text(encoding="utf-8"))
     seed = fc.seed_for("panels", seed_base, "hours", sid)
-    S, rec = fs.render_hours_plate(T, sid, cast, seed)
+    if sid == "tea_rooms":
+        S, rec = fs.render_hours_card(T, sid, cast, seed)
+        font, weight, kind = "patrick-hand", 400, "card"
+    else:
+        S, rec = fs.render_hours_plate(T, sid, cast, seed)
+        font, weight, kind = "libre-franklin", 600, "engraved laminate plate"
     W, H = rec["size_mm"]
-    files = write_maps(out, "panels/hours_plates", f"hours_{sid}", S.B, (W, H))
-    return dict(kind="panel", id=f"hours_plate.{sid}", shop=sid, seed=int(seed), size_px=[W, H], size_mm=[W, H], files=files, lines=rec["lines"],
-                font="libre-franklin", weight=700, cap_mm=rec["cap_mm"], cap_mm_target=rec["cap_mm_target"], available_mm=rec["available_mm"], widest_line_at_target_cap_mm=rec["widest_at_target_cap_mm"],
+    files = write_maps(out, "panels/hours_signs", f"hours_{sid}", S.B, (W, H))
+    return dict(kind="panel", id=f"hours_plate.{sid}", shop=sid, seed=int(seed), size_px=[W, H], size_mm=[W, H], files=files, lines=rec["lines"], sign_kind=rec["kind"],
+                font=font, weight=weight, cap_mm=rec["cap_mm"], cap_mm_target=rec["cap_mm_target"], available_mm=rec["available_mm"], widest_line_at_target_cap_mm=rec["widest_at_target_cap_mm"],
                 source="production/specs/hook-cast.json hours (read at build time)",
-                where="on the shop door's glass or the pilaster, centre 1.45 m up")
+                where="on the shop door's glass (inside) or the pilaster, centre 1.45 m up")
 
 
 def run_task(job):
@@ -271,7 +279,7 @@ def build_jobs(out, only, seed_base):
         jobs.append(("wash", out, seed_base))
     if not only or "panels" in only:
         jobs.append(("letting", out, seed_base))
-        for sid in ("ritas", "fish_market", "steam_laundry", "newsagent", "tea_rooms"):
+        for sid in ("steam_laundry", "tea_rooms"):
             jobs.append(("hours", out, sid, seed_base))
     return jobs
 
@@ -317,7 +325,7 @@ def environment():
 def fonts_used(T):
     seen = {}
     for key, w in (("marcellus-sc", 400), ("abril-fatface", 400), ("old-standard-tt-bold", 700), ("oswald", 600), ("jost", 800), ("libre-franklin", 700), ("libre-franklin", 800),
-                   ("libre-franklin", 900), ("fraunces", 900), ("alfa-slab-one", 400), ("josefin-sans", 700), ("patrick-hand", 400)):
+                   ("libre-franklin", 900), ("fraunces", 900), ("alfa-slab-one", 400), ("josefin-sans", 700), ("patrick-hand", 400), ("libre-franklin", 600)):
         rel, h = fc.font_sha(key, w)
         seen[rel] = h
     return [dict(file=k, sha256=v) for k, v in sorted(seen.items())]

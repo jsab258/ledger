@@ -57,7 +57,7 @@ class Board:
         elif kind == "fine":                    # orange-peel, speckle
             n = fc.fnoise(sh, 0.9, 0.9, r)
         elif kind == "band":                    # long soft bands along the grain (try 2: replaces the cloud-like blot as the ground's slow tone)
-            n = fc.fnoise(sh, 260.0 * fx, 9.0 * max(fy, 0.5), r)
+            n = fc.fnoise(sh, 300.0 * fx, 17.0 * max(fy, 0.5), r)
         elif kind == "iso":
             n = fc.fnoise(sh, 40.0 * min(fx, fy * 1.0), 40.0 * min(fx, fy * 1.0), r)
         else:
@@ -183,6 +183,44 @@ def jitter_draw(T, b, rng, n):
     return z
 
 
+def stem_px(fS):
+    """the vertical stem of the font at this size: the first run of ink across the middle of an H"""
+    bb = fS.getbbox("H", anchor="ls")
+    l, tp, r, bt = [int(v) for v in bb]
+    g = Image.new("L", (r - l + 8, bt - tp + 8), 0)
+    ImageDraw.Draw(g).text((4 - l, 4 - tp), "H", font=fS, fill=255, anchor="ls")
+    a = np.asarray(g) > 127
+    row = a[int(a.shape[0] * 0.28)]            # above the crossbar: the stem alone
+    xs = np.where(row)[0]
+    if not len(xs):
+        return 0.0
+    run = 1
+    for q in range(1, len(xs)):
+        if xs[q] == xs[q - 1] + 1:
+            run += 1
+        else:
+            break
+    return float(run)
+
+
+def squeeze_delta(fS, s, restore=0.55):
+    """how many 4x pixels a squeezed glyph's vertical stems are grown by each side, to keep a condensed face's stem weight (a condensed letter is drawn,
+    not squeezed: its stems keep most of their weight)"""
+    if s >= 0.999:
+        return 0
+    return int(round(restore * (1.0 - s) * stem_px(fS) / 2.0))
+
+
+def squeeze_glyph(ga, s, ox, delta):
+    """a glyph canvas squeezed to s of its width (origin ox), its stems grown back by `delta` pixels each side"""
+    h, w = ga.shape
+    nw = max(2, int(round(w * s)))
+    a = np.asarray(Image.fromarray(ga).resize((nw, h), Image.BICUBIC))
+    if delta > 0:
+        a = ndi.maximum_filter1d(a, size=2 * delta + 1, axis=1)
+    return a, int(round(ox * s))
+
+
 def text_layers(T, b, rng=None, hand=True, board_wh=(W_MM, H_MM), dx_mm=0.0, font_key=None, shade=True, extra_pad=24):
     """Draw one block's string from its font at 4x. Returns (face, shade, win): face and shade are float 1x alphas over win.
     hand=False draws it without any jitter (the clean reference)."""
@@ -197,6 +235,11 @@ def text_layers(T, b, rng=None, hand=True, board_wh=(W_MM, H_MM), dx_mm=0.0, fon
     xs = [x for x in fc.glyph_origins(fS, text, trk * SS)]
     xs = [x / SS for x in xs]
     adv = [fS.getlength(ch) / SS for ch in text]
+    s_q = float(b.get("squeeze", 1.0) or 1.0)
+    d_q = squeeze_delta(fS, s_q) if s_q != 1.0 else 0
+    if s_q != 1.0:
+        xs = [x * s_q + i * 2.0 * d_q / SS for i, x in enumerate(xs)]
+        adv = [a * s_q for a in adv]
     x0, y0, x1, y1 = b["effects_box_mm"]
     pad = extra_pad
     c0 = max(0, int(math.floor(x0)) - pad)
@@ -221,6 +264,9 @@ def text_layers(T, b, rng=None, hand=True, board_wh=(W_MM, H_MM), dx_mm=0.0, fon
         if abs(jd["rot"][i]) > 1e-6:
             g = g.rotate(float(jd["rot"][i]), resample=Image.BICUBIC, center=(ox + adv[i] * SS / 2.0, oyg))
         ga = np.asarray(g)
+        if s_q != 1.0:
+            ga, ox = squeeze_glyph(ga, s_q, ox, d_q)
+            gw = ga.shape[1]
         if abs(jd["stroke"][i]) > 1e-6:
             m = ga > 127
             if m.any():
@@ -230,7 +276,7 @@ def text_layers(T, b, rng=None, hand=True, board_wh=(W_MM, H_MM), dx_mm=0.0, fon
                 dtout = ndi.distance_transform_edt(~m)
                 sd = dtin - dtout
                 ga = (np.clip(sd + delta + 0.5, 0.0, 1.0) * 255).astype(np.uint8)
-        px_x = (b["origin_x_mm"] + xs[i] + jd["dx"][i] * adv[i] + dx_mm - c0) * SS
+        px_x = (b["origin_x_mm"] + xs[i] + jd["dx"][i] * adv[i] + dx_mm - c0) * SS + d_q
         px_y = (oy - jd["dy"][i] - r0) * SS
         gx = int(round(px_x)) - ox
         gy = int(round(px_y)) - oyg

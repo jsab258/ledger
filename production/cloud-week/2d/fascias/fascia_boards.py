@@ -102,7 +102,7 @@ def paint_ground_fill(B, s, colour, grain, rough, amp_override=None):
     amp = amp_override if amp_override is not None else grain.get("amp_L", 1.2)
     if grain.get("direction") == "along":
         # try 2: the slow tone is long bands along the grain (the old 140 x 55 mm clouds read as suede on the signs), brush marks and fibres
-        kinds = (("streak", 0.42), ("grain", 0.45), ("band", 0.62), ("iso", 0.12), ("fine", 0.22))
+        kinds = (("streak", 0.55), ("grain", 0.34), ("band", 0.52), ("iso", 0.12), ("fine", 0.22))
     else:
         kinds = (("band", 0.50), ("iso", 0.15), ("fine", 0.25))
     rgb = B.mottle(win, colour, amp, kinds=kinds)
@@ -145,7 +145,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
     blocks = s["blocks"]
     arng = B.rng("age", "layout")
     avoid_x = [(b["effects_box_mm"][0], b["effects_box_mm"][2]) for b in blocks if b["in_texture"] or b["ghost"]]
-    joints = fa.joint_positions(W_MM, avoid_x, arng, n=2) if timber else []
+    bjoints = fa.joint_positions(W_MM, avoid_x, arng, n=2) if timber else []
     nails_top = fa.fixings(W_MM, arng) if timber else []
     nails_bot = fa.fixings(W_MM, arng) if timber else []
     mode = fa.MODES.get(sid, fa.MODES["ring"])
@@ -162,9 +162,9 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         paint_ground_fill(B, s, gcol, g["grain"], g["roughness"])
     if kind != "bare":
         B.metal[:] = g.get("metallic", 0.0) if not ("old_board" in roles or "slab_edge" in roles) else 0.0
-    if joints:
-        fa.draw_joints(B, joints, dark_board=dark_board or kind == "bare")
-        info["joints_x_mm"] = [round(x, 1) for x in joints]
+    if bjoints:
+        fa.draw_joints(B, bjoints, dark_board=dark_board or kind == "bare")
+        info["joints_x_mm"] = [round(x, 1) for x in bjoints]
 
     # ---- 1. the shapes, in the target's order
     shape_alpha = np.zeros((H_MM, W_MM), np.float32)          # lines and frames (for the free-zone maths)
@@ -362,7 +362,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         n = fc.fnoise(a.shape, 5.0, 3.0, grng)
         a = np.clip((ndi.gaussian_filter(a, 2.0) - 0.5) * 4.0 + 0.5 + 0.45 * n, 0, 1)
         pcol = fc.pal(T, "painted_out")
-        img = B.mottle(win, pcol, 2.6, kinds=(("streak", 0.9), ("grain", 0.5), ("blot", 0.4), ("fine", 0.3)))
+        img = B.mottle(win, pcol, 2.4, kinds=(("band", 0.9), ("grain", 0.5), ("streak", 0.30), ("fine", 0.3)))
         B.paint(win, a, img, rough=0.75, metal=0.0)
         m = a > 0.5
         ridge = m & ~ndi.binary_erosion(m, iterations=1)
@@ -413,8 +413,8 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
 
     # ---- 4b. the ageing that works on everything painted: grime that gathers where the board is damp, cracks along the grain, paint lost
     age = s["age"]
-    F = fa.Fields(B)
-    fa.grime_film(B, mode, age, joints)
+    F = fa.Fields(B, mid=(380, 28), long=(300, 9.0), strip=(85, 5.0)) if kind == "bare" else fa.Fields(B)
+    fa.grime_film(B, mode, age, bjoints)
     zone = fc.free_zone_mask(s)
     allowed = np.ones((H_MM, W_MM), bool)
     allowed[:6] = allowed[-6:] = False
@@ -443,7 +443,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         ground_L = float(fc.lab(fc.pal(T, [sh for sh in shapes if sh["role"] == "old_board"][0]["colour"]))[0])
     prim, wood = SUBSTRATES.get(sid, SUBSTRATES["_light"] if ground_L >= 55 else SUBSTRATES["_dark"])
     prim, wood = np.array(prim, np.float32), np.array(wood, np.float32)
-    weight = fa.damp_weight(H_MM, W_MM, mode, joints, nails_top, nails_bot)
+    weight = fa.damp_weight(H_MM, W_MM, mode, bjoints, nails_top, nails_bot)
     # cracks along the grain, more where the board is damp (they cross letters: it is paint on the same board)
     if timber and mode["crack"] > 0:
         cr = fa.cracks(B, mode["crack"], allowed, weight=weight, dark_board=(ground_L < 40), prim=prim, strength=(0.8 if kind == "bare" else 0.5))
@@ -456,8 +456,21 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
     a1, a2, S, thr = fa.loss_alpha(F, weight, allowed, zone, frac, mode)
     tex = None
     if kind == "bare":
-        tex = (1.0 + 0.12 * F.long() + 0.07 * F.strip()).astype(np.float32)
+        tex = (1.0 - 0.30 * B.layers["timber_dl"] + 0.09 * F.long() + 0.05 * F.strip()).astype(np.float32)
+    if kind == "bare":
+        # the islands of the last owner's paint that survive: before the loss, so the weather takes bites out of them too
+        keep_out = np.zeros((H_MM, W_MM), bool)
+        if gh and gh.get("box_mm"):
+            dilate_box(keep_out, gh["box_mm"], 22)
+        isl, isl_boxes = ft.place_islands(B, keep_out, B.rng("timber", "islands"))
+        ft.apply_islands(B, isl)
+        info["islands_mm"] = [list(bx) for bx in isl_boxes]
+        info["islands_rgb"] = [int(v) for v in ft.OLD_PAINT]
+        B.layers["islands"] = isl
     fa.apply_loss(B, a1, a2, prim, wood, tex=tex)
+    if kind == "bare" and timber_info:
+        ft.draw_seams(B, timber_info["seams_from_top_mm"])
+        info["timber"] = dict(seams_from_top_mm=timber_info["seams_from_top_mm"], knots=timber_info["knots"])
     B.layers["loss"] = a1
     B.layers["loss_core"] = a2
     info["loss"] = dict(target_fraction=frac, drawn_fraction=round(float((a1 > 0.5).sum() / (W_MM * H_MM)), 4),
@@ -482,6 +495,10 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         sh = ndi.gaussian_filter(sh, cs["blur_mm"] / 2.0)
         r0, r1, c0, c1 = wn
         k = cs["opacity"] * np.clip(sh, 0, 1)
+        # try 2 (review note 6): only what shows outside the letters' own footprint is drawn (the part under the 14 mm stand-off letters is hidden anyway), so
+        # the texture alone shows a thin shadow below the letters' edges and not a whole dark name
+        dist_out = ndi.distance_transform_edt(~(foot > 0.5))
+        k = k * np.clip((dist_out - 0.5) / 3.0, 0.0, 1.0).astype(np.float32)
         shadow_col = np.array([14.0, 18.0, 24.0], np.float32)
         B.rgb[r0:r1, c0:c1] = B.rgb[r0:r1, c0:c1] + (shadow_col[None, None, :] - B.rgb[r0:r1, c0:c1]) * k[..., None]
         info["shadow"] = dict(win=list(wn), opacity=cs["opacity"], blur_mm=cs["blur_mm"], offset_mm=cs["offset_mm"], footprint_px=int(foot_m.sum()))
@@ -506,7 +523,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         if b["in_texture"] or b["ghost"]:
             dilate_box(text_boxes, b["effects_box_mm"], 14)
     light = not dark_board
-    drips, tracks, run_pl = fa.place_drips(B, age["runs"]["count"], age["runs"]["len_mm"], wrng, nails_top + joints, light)
+    drips, tracks, run_pl = fa.place_drips(B, age["runs"]["count"], age["runs"]["len_mm"], wrng, nails_top + bjoints, light)
     # gull marks: only on the top edge of the board (they fall from the cornice and run a little down the face)
     gzone = np.zeros((H_MM, W_MM), bool)
     gzone[16:62, 70:W_MM - 70] = True
