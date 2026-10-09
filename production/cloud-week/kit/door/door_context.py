@@ -74,6 +74,24 @@ def soffit_z(P, x):
     return cz + math.sqrt(R ** 2 - (x - cx) ** 2)
 
 
+def dark_interior(P, parts):
+    """Behind the door: a dark closing face right behind the frame (so no lit interior shows through the leaf's gaps, the plate's slot and the foot's gap),
+    and, above the transom, a dark hall: five faces of a room 2.2 m deep, open toward the fanlight, so the glass shows a dark hallway."""
+    F = P["frame"]
+    jl, jr = F["jamb_x_mm"]["left"][0], F["jamb_x_mm"]["right"][1]
+    y0 = F["frame_inside_face_y_mm"] + 0.5
+    z_tr = F["transom"]["z_top"]
+    V, Fc = bd.box(jl - 5.0, y0, -60.0, jr + 5.0, y0 + 20.0, z_tr + 3.0)
+    parts.append({"name": "ctx_closing", "V": V, "F": Fc, "kind": "dark"})
+    x0, x1, yb, zt = jl - 400.0, jr + 400.0, y0 + 2200.0, 2900.0
+    zf = z_tr - 60.0
+    quads = {"back": [(x0, yb, zf), (x1, yb, zf), (x1, yb, zt), (x0, yb, zt)], "floor": [(x0, y0, zf), (x1, y0, zf), (x1, yb, zf), (x0, yb, zf)],
+             "ceiling": [(x0, y0, zt), (x0, yb, zt), (x1, yb, zt), (x1, y0, zt)], "left": [(x0, y0, zf), (x0, yb, zf), (x0, yb, zt), (x0, y0, zt)],
+             "right": [(x1, y0, zf), (x1, y0, zt), (x1, yb, zt), (x1, yb, zf)]}
+    for nm, q in quads.items():
+        parts.append({"name": "ctx_hall_" + nm, "V": np.array(q, float), "F": [(0, 1, 2, 3)], "kind": "dark"})
+
+
 def build_T1(T):
     P = T
     O, F, S, B = P["opening"], P["frame"], P["step"], P["brick"]
@@ -125,9 +143,8 @@ def build_T1(T):
     open_rear = Polygon([(jl, ground - 1000.0), (jr, ground - 1000.0)] + [(x, soffit_z(P, x)) for x in [jl + (jr - jl) * (24 - k) / 24 for k in range(25)]])
     rear = rect.difference(unary_union([open_rear] + horns))
     extrude_region("ctx_wall_rear", rear, REV, WALL, "red", parts)
-    # the dark inside, closing the doorway behind the frame (the fanlight shows it, never the sky)
-    V, Fc = bd.box(jl - 20.0, WALL, ground + 100.0, jr + 20.0, WALL + 30.0, 2700.0)
-    parts.append({"name": "ctx_interior", "V": V, "F": Fc, "kind": "dark"})
+    # the dark inside, closing the doorway behind the frame (the leaf's gaps show it, the fanlight a dark hall, never the sky or a lit room)
+    dark_interior(P, parts)
     # ---- the plinth: 60 proud, a 45 degree splayed top course to the wall face at z 12; returns in the doorway
     sp = pl["splay"]
     yp = -pl["front_proud_of_wall_face_mm"]
@@ -172,13 +189,16 @@ def build_F1(T):
     rect = sbox(-LONG_SPAN, ground, OW + LONG_SPAN, top)
     opening = sbox(0.0, ground - 1000.0, OW, head_top)
     sill_ends = [sbox(jl - 1, -S["threshold"]["thickness_mm"] - 0.5, 0.0, 0.0), sbox(OW, -S["threshold"]["thickness_mm"] - 0.5, jr + 1, 0.0)]
-    front = rect.difference(unary_union([opening] + sill_ends))
-    extrude_region("ctx_pilaster_front", front, 0.0, REV, "render", parts)
+    # the sill's front stands at y 108.3 (D14), inside the reveal: the pilaster return is whole in front of it and notched only behind it
+    ys = S["threshold"]["front_y_mm"]
+    front_a = rect.difference(opening)
+    extrude_region("ctx_pilaster_front", front_a, 0.0, min(ys, REV), "render", parts)
+    if ys < REV:
+        extrude_region("ctx_pilaster_front_b", rect.difference(unary_union([opening] + sill_ends)), ys, REV, "render", parts)
     open_rear = sbox(jl, ground - 1000.0, jr, head_top)
     rear = rect.difference(unary_union([open_rear] + sill_ends))
     extrude_region("ctx_pilaster_rear", rear, REV, WALL, "render", parts)
-    V, Fc = bd.box(jl - 20.0, WALL, ground + 100.0, jr + 20.0, WALL + 30.0, 2700.0)
-    parts.append({"name": "ctx_interior", "V": V, "F": Fc, "kind": "dark"})
+    dark_interior(P, parts)
     return parts
 
 

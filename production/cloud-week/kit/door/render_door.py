@@ -44,7 +44,7 @@ PLAIN = {
     "arch": ((219, 209, 190), 0.9),
     "mortar": ((96, 84, 72), 0.95),          # the arch's dark, sooty, recessed joints
     "render": ((222, 225, 229), 0.9),        # the shop pilaster's painted render
-    "dark": ((18, 16, 14), 0.95),            # the inside seen through the fanlight: lit from within, so the glass reads as glass (not a black hole)
+    "dark": ((26, 24, 22), 0.97),            # the closing face behind the leaf's gaps and the dark hall behind the fanlight: matt, dark, never lit from within
 }
 
 
@@ -122,12 +122,7 @@ def brick_material(name, spec, z_shift, with_splay=False):
 
 
 def plain_material(name, srgb, rough):
-    m = bd.make_material(name, srgb, rough)
-    if name == "ctx_dark":
-        b = m.node_tree.nodes["Principled BSDF"]
-        b.inputs["Emission Color"].default_value = (0.8, 0.8, 0.82, 1.0)       # seen through the glass's tint it reads about (117, 120, 125), as photograph 1's fanlight
-        b.inputs["Emission Strength"].default_value = 1.0
-    return m
+    return bd.make_material(name, srgb, rough)
 
 
 def build_scene(T, variant, glb, blend_path):

@@ -41,6 +41,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "tools"))
+sys.path.insert(0, HERE)
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
 TARGET_JSON = os.path.join(REPO, "production", "cloud-week", "targets", "front-door", "target.json")
 ASSET_DIR = os.path.join(REPO, "production", "assets", "cloud-week", "door")
@@ -59,8 +60,13 @@ DEFAULT_PAINT = {"T1": "black", "F1": "dark_green"}
 
 
 # ------------------------------------------------------------------ the target
-def load_target():
-    return json.load(open(TARGET_JSON, encoding="utf-8"))
+def load_target(amended=True):
+    """target.json, with the try-2 departures (where the photographs win) written in unless amended=False (departures.py lists each)."""
+    T = json.load(open(TARGET_JSON, encoding="utf-8"))
+    if amended:
+        import departures
+        T, _ = departures.apply(T)
+    return T
 
 
 def variant_parts(T, variant):
@@ -541,9 +547,10 @@ class Door:
             circ = arc(kx, kz, kn["rose_diameter_mm"] / 2 + 0.5, 0, 360, 64)[:-1]
             cut(ob, *prism(circ, ("x", "z"), "y", LY0 - 1, LY0 + 3.0))
         kh = ir.get("old_keyhole", {})
-        if kh.get("present"):                                  # the plugged mortice keyhole: a dark keyhole-shaped recess 2 mm deep
-            cut(ob, *prism(self.keyhole_outline(X0 + kh["centre_u_mm"], Z0 + kh["centre_above_leaf_bottom_mm"], kh["w_mm"], kh["h_mm"]),
+        if kh.get("present"):                                  # the plugged mortice keyhole: a round head over a parallel slot, a recess 2 mm deep
+            cut(ob, *prism(self.keyhole_outline(X0 + kh["centre_u_mm"], Z0 + kh["centre_above_leaf_bottom_mm"], kh["head_diameter_mm"], kh["slot_w_mm"], kh["h_mm"]),
                            ("x", "z"), "y", LY0 - 1, LY0 + 2.0))
+        self.cut_joints(ob)
         planes = [(0, X0), (0, X0 + W), (1, LY0), (1, LY1), (2, Z0), (2, Z0 + H)]
         self.objs[-1]["bev"] = (self.L["arris_ease_mm"], lambda a, b: on_planes(a, b, planes), 1)
         # the panels, floating in their grooves (1.6 mm side play, 0.1 mm everywhere else)
@@ -553,14 +560,36 @@ class Door:
         self.build_mouldings()
 
     @staticmethod
-    def keyhole_outline(cx, cz, w, h):
-        """A keyhole, overall w x h centred on (cx, cz): a round top as wide as the recess and a narrow slot below."""
-        r = w / 2
+    def keyhole_outline(cx, cz, head_d, slot_w, h):
+        """A keyhole, overall h high, its top at cz + h/2: a round head of diameter head_d over a parallel slot slot_w wide with a round foot."""
+        from shapely.geometry import LineString, Point
+        r = head_d / 2
         top = cz + h / 2 - r
-        pts = arc(cx, top, r, 0, 180, 20)
-        sw = w * 0.17
-        pts += [(cx - sw, top - r * 0.75), (cx - sw, cz - h / 2), (cx + sw, cz - h / 2), (cx + sw, top - r * 0.75)]
-        return pts
+        foot = cz - h / 2 + slot_w / 2
+        g = Point(cx, top).buffer(r, 20).union(LineString([(cx, top), (cx, foot)]).buffer(slot_w / 2, 10))
+        pts = list(g.exterior.coords)[:-1]
+        return [(float(x), float(z)) for x, z in pts]
+
+    def cut_joints(self, ob):
+        """The joint lines where the rails meet the stiles and the muntin meets the rails: grooves, 0.8 wide and 0.8 deep, in the framing's face.
+        They stop 5 mm short of each panel opening (the moulding's lap hides that) and 3 mm short of the leaf's outer edge (the arris is eased)."""
+        jg = self.L.get("joint_groove_mm")
+        if not jg:
+            return
+        w, dpt = jg["width"], jg["depth"]
+        o = self.P["panels"]["openings_leaf_uv_mm"]
+        X0, Z0, LY0 = self.X0, self.Z0, self.LY0
+        gap = self.P["mouldings"]["outside_bolection"]["lap_over_framing_mm"] + 0.2
+        edge = 3.0
+        bl, tl = o["bottom_left"], o["top_left"]
+        br = o["bottom_right"]
+        rails = [(edge, bl["v0"] - gap), (bl["v1"] + gap, tl["v0"] - gap), (tl["v1"] + gap, self.H - edge)]     # (v from, v to) of the bottom, lock and top rails
+        for u in (bl["u0"], br["u1"]):                                                          # the stiles' inner edges
+            for v0, v1 in rails:
+                cut(ob, *box(X0 + u - w / 2, LY0 - 1.0, Z0 + v0, X0 + u + w / 2, LY0 + dpt, Z0 + v1))
+        u0, u1 = bl["u1"] + gap, o["bottom_right"]["u0"] - gap                                  # across the muntin
+        for v in (bl["v0"], bl["v1"], tl["v0"], tl["v1"]):
+            cut(ob, *box(X0 + u0, LY0 - 1.0, Z0 + v - w / 2, X0 + u1, LY0 + dpt, Z0 + v + w / 2))
 
     def build_mouldings(self):
         P = self.P
@@ -606,42 +635,58 @@ class Door:
             self.build_cylinder(cl, "brass" if t1 else "chrome_nickel")
         kp = ir.get("keep", {})
         if kp.get("present"):
-            z0k, z1k = kp["z_range_mm"]
-            xk = kp["centre_x_mm"]
-            V, Fc = box(xk - kp["w_mm"] / 2, self.FY0 - kp["proud_mm"], z0k, xk + kp["w_mm"] / 2, self.FY0 + 0.4, z1k)
-            o = self.add("iron_keep", V, Fc, "steel_dark")
-            zm = (z0k + z1k) / 2
-            cut(o, *box(xk - 4.0, self.FY0 - kp["proud_mm"] - 1, zm - 25.0, xk + 4.0, self.FY0 - 0.6, zm + 25.0))   # the 8 x 50 slot, 2.4 deep
+            self.build_bell_push(kp)
         kn = ir.get("knob", {})
         if kn.get("present"):
             self.build_knob(kn)
         kh = ir.get("old_keyhole", {})
         if kh.get("present"):
-            # the plugged mortice keyhole: the recess is cut in the leaf (2 mm); a dark iron blank fills most of it, 1.1 mm below the face,
-            # and a small brass plug sits on that (0.4 mm of each is let into the recess's floor)
+            # the plugged mortice keyhole: the recess is cut in the leaf (2 mm); a dark iron blank fills it, 1.1 mm below the face, and a pale
+            # metal blank fills the slot (0.4 mm of it let into the dark one)
+            from shapely.geometry import LineString, Polygon as SPoly
             cx, cz = X0 + kh["centre_u_mm"], Z0 + kh["centre_above_leaf_bottom_mm"]
-            outline = np.array(self.keyhole_outline(cx, cz, kh["w_mm"], kh["h_mm"]))
-            mid = np.array([cx, cz])
-            inset = (outline - mid) * 0.94 + mid
-            V, Fc = prism(inset, ("x", "z"), "y", LY0 + 1.1, LY0 + 2.4)
+            hd, sw, hh = kh["head_diameter_mm"], kh["slot_w_mm"], kh["h_mm"]
+            outline = SPoly(self.keyhole_outline(cx, cz, hd, sw, hh)).buffer(-0.5, join_style=1)
+            V, Fc = prism(list(outline.exterior.coords)[:-1], ("x", "z"), "y", LY0 + 1.1, LY0 + 2.4)
             self.add("iron_keyhole_plate", V, Fc, "steel_dark")
-            circ = arc(cx, cz + kh["h_mm"] / 2 - 11.5, 4.5, 0, 360, 24)[:-1]
-            V, Fc = prism(circ, ("x", "z"), "y", LY0 + 0.4, LY0 + 1.5)
-            self.add("iron_keyhole_blank", V, Fc, "brass")
+            top = cz + hh / 2 - hd / 2
+            foot = cz - hh / 2 + sw / 2
+            blank = LineString([(cx, top - hd / 2 + 1.5), (cx, foot)]).buffer((sw - 1.8) / 2, 10, cap_style=1)
+            V, Fc = prism(list(blank.exterior.coords)[:-1], ("x", "z"), "y", LY0 + 0.4, LY0 + 1.5)
+            self.add("iron_keyhole_blank", V, Fc, plate_mat)
+
+    def build_bell_push(self, kp):
+        """T1's fitting on the right jamb's stop (P1's dark oblong, 22 x 72.6): a period bell push, a dark oblong back with a round brass bezel and a
+        round dark button on it. Stands 0.4 into the stop's face."""
+        xk = kp["centre_x_mm"]
+        z0k, z1k = kp["z_range_mm"]
+        zm = 0.5 * (z0k + z1k)
+        w, h, r = kp["w_mm"], z1k - z0k, 6.0
+        pts = []
+        for (cx_, cz_, a0) in ((xk + w / 2 - r, z1k - r, 0), (xk - w / 2 + r, z1k - r, 90), (xk - w / 2 + r, z0k + r, 180), (xk + w / 2 - r, z0k + r, 270)):
+            pts += arc(cx_, cz_, r, a0, a0 + 90, 6)
+        V, Fc = prism(pts, ("x", "z"), "y", self.FY0 - 3.0, self.FY0 + 0.4)
+        self.add("iron_bellpush", V, Fc, "steel_dark")
+        # the bezel (a ring, 17 across, rounded, 4.9 proud of the stop face) and the button (a dome of 11 across, 5.8 proud); both start 0.4 into the back
+        Vb, Fb = lathe([(8.5, 2.6), (8.5, 4.1), (7.7, 4.9), (6.7, 4.9), (6.0, 4.1), (6.0, 2.6)], 40, hollow=True)
+        self.add("iron_bellpush_bezel", place_axis_y(Vb, xk, self.FY0, zm), Fb, "brass")
+        Vd, Fd = lathe([(0.0, 2.6), (5.6, 2.6), (5.6, 3.8), (4.4, 5.0), (2.2, 5.6), (0.0, 5.8)], 40)
+        self.add("iron_bellpush_button", place_axis_y(Vd, xk, self.FY0, zm), Fd, "steel_dark")
 
     def build_letter_plate(self, lp, mat):
         X0, Z0, LY0 = self.X0, self.Z0, self.LY0
         xc, zc = X0 + lp["centre_u_mm"], Z0 + lp["centre_above_leaf_bottom_mm"]
         w, h, aw, ah = lp["outer_w_mm"], lp["outer_h_mm"], lp["aperture_w_mm"], lp["aperture_h_mm"]
         bt, rp = lp["backplate_thickness_mm"], lp["rim_proud_mm"]
+        ch = lp.get("rim_chamfer_mm", rp - bt)                 # the rim's outer edge: 45 degrees from the rim's height down to the backplate's edge
         ztop, zbot = zc + h / 2, zc - h / 2
         ztop_ap = ztop - lp["aperture_top_margin_mm"]
         zbot_ap = ztop_ap - ah
         yb = LY0 + 0.4                       # the plate's back stands 0.4 into the leaf
         rings = [rect_ring(xc - w / 2, zbot, xc + w / 2, ztop, yb),
-                 rect_ring(xc - w / 2, zbot, xc + w / 2, ztop, LY0 - bt),                       # backplate edge, 3 proud
-                 rect_ring(xc - w / 2 + 2, zbot + 2, xc + w / 2 - 2, ztop - 2, LY0 - bt - 1),   # 2 x 1 chamfer
-                 rect_ring(xc - aw / 2, zbot_ap, xc + aw / 2, ztop_ap, LY0 - rp),                # the rim rises to 6 at the aperture
+                 rect_ring(xc - w / 2, zbot, xc + w / 2, ztop, LY0 - bt),                              # the edge, 3 proud
+                 rect_ring(xc - w / 2 + ch, zbot + ch, xc + w / 2 - ch, ztop - ch, LY0 - bt - ch),     # the 45 degree chamfer, 3 x 3, up to the rim's flat
+                 rect_ring(xc - aw / 2, zbot_ap, xc + aw / 2, ztop_ap, LY0 - rp),                       # the rim's flat, 6 proud, to the aperture
                  rect_ring(xc - aw / 2, zbot_ap, xc + aw / 2, ztop_ap, yb)]
         V, Fc = loft_rings(rings)
         self.add("iron_letter_plate", V, Fc, mat)
@@ -659,46 +704,60 @@ class Door:
         back2 = [(back[len(back) - 1 - i][0], back[len(back) - 1 - i][1] + 0.3) for i in sel[::-1]]
         V, Fc = prism(front2 + back2, ("x", "y"), "z", zbot_ap + 0.6, zbot_ap + 5.0)
         self.add("iron_letter_lip", V, Fc, mat)
-        if self.variant == "F1":             # four 4 mm slotted screws at the rim's corners
-            for sx in (-1, 1):
-                for sz in (-1, 1):
-                    cx_, cz_ = xc + sx * (w / 2 - 7.5), zc + sz * (h / 2 - 8.0)
-                    Vh, Fh = lathe([(0.0, -1.5), (2.0, -1.5), (2.0, 0.6), (1.6, 1.1), (0.9, 1.4), (0.0, 1.5)], 20)
-                    o = new_obj("iron_screw_%s%s" % ("r" if sx > 0 else "l", "t" if sz > 0 else "b"), place_axis_y(Vh, cx_, LY0 - 4.6, cz_), Fh)
-                    cut(o, *box(cx_ - 0.45, LY0 - 7.5, cz_ - 2.2, cx_ + 0.45, LY0 - 5.6, cz_ + 2.2))
-                    self.objs.append({"ob": o, "mat": mat, "bev": None})
+        pb = lp.get("pivot_bosses")
+        if pb:                                # F1: no corner screws; the two round bosses at the flap's hinge ends are its pivots (P2)
+            r_b, up = pb["diameter_mm"] / 2, pb["proud_of_rim_mm"]
+            for sx, tag in ((-1, "l"), (1, "r")):
+                cx_, cz_ = xc + sx * pb["x_from_centre_mm"], ztop_ap - 4.5
+                Vh, Fh = lathe([(0.0, -1.0), (r_b, -1.0), (r_b, up - 1.6), (r_b - 1.0, up - 0.6), (r_b - 2.2, up - 0.1), (0.0, up)], 24)
+                o = new_obj("iron_plate_pivot_" + tag, place_axis_y(Vh, cx_, LY0 - rp, cz_), Fh)
+                self.objs.append({"ob": o, "mat": mat, "bev": None})
 
     def build_cylinder(self, cl, mat):
-        """The cylinder lock: a collar flange 4 deep let into a bore, the plug behind it 28 across; one body, 0.3 into the bore's floor."""
+        """The cylinder lock: a collar flange 4 deep let into a bore, standing proud with a rounded edge, the plug behind it 28 (T1) or 18 (F1) across;
+        a vertical keyway 3 x 9 in the plug. T1 is one solid of revolution; F1's collar is a ring of 8 rounded scallops round its own plug."""
         X0, Z0, LY0 = self.X0, self.Z0, self.LY0
         cx, cz = X0 + cl["centre_u_mm"], Z0 + cl["centre_above_leaf_bottom_mm"]
         ro, rpl, proud = cl["outer_diameter_mm"] / 2, cl["plug_diameter_mm"] / 2, cl["collar_proud_mm"]
         depth = 30.3                                  # 0.3 into the bore's floor
         if self.variant == "T1":
-            # one solid of revolution (r, s: s proud of the leaf face): the plug's face 0.5 behind the collar's, a dark gap ring
-            # 0.3 wide and 2.5 deep between plug and collar, the collar plain with a bevelled edge
-            prof = [(0.0, proud - 0.5), (rpl - 0.4, proud - 0.5), (rpl, proud - 0.9), (rpl, -2.5), (rpl + 0.3, -2.5), (rpl + 0.3, proud),
-                    (ro - 0.9, proud), (ro, proud - 0.9), (ro, -4.0), (rpl, -4.0), (rpl, -depth), (0.0, -depth)]
-            V, Fc = lathe(prof, 64)
+            # one solid of revolution (r, s: s proud of the leaf face): the collar's front a flat annulus with a 3 mm round on its outer edge and a small
+            # round on its inner, the plug's face 0.6 behind the collar's, a dark gap ring 0.3 wide and 2.5 deep between plug and collar
+            rr = 3.0
+            outer = [(ro - rr + rr * math.cos(math.radians(a)), proud - rr + rr * math.sin(math.radians(a))) for a in (90, 75, 60, 45, 30, 15, 0)]
+            prof = [(0.0, proud - 0.6), (rpl - 0.4, proud - 0.6), (rpl, proud - 1.0), (rpl, -2.5), (rpl + 0.3, -2.5), (rpl + 0.3, proud - 1.0),
+                    (rpl + 0.7, proud - 0.3), (rpl + 1.3, proud)] + outer + [(ro, -4.0), (rpl, -4.0), (rpl, -depth), (0.0, -depth)]
+            V, Fc = lathe(prof, 56)
             V = place_axis_y(V, cx, LY0, cz)
             o = self.add("iron_lock", V, Fc, mat)
-            kw, kh = 3.0, 9.0                         # the keyway: a vertical slot 3 x 9, 4 deep
         else:
-            # a knurled collar of 12 serrations 1.4 deep round a plug whose face stands 1 mm behind it (the collar's inner edge is 0.3 into the plug)
-            n, per = 12, 5
+            # a collar of rounded scallops round a plug whose face stands 1 mm behind it (the collar's inner edge is 0.3 into the plug); the collar's
+            # front edge is rounded (1.2 mm, two steps)
+            n = int(cl.get("scallops", 8))
+            lobe_r, lobe_c = 7.0, ro - 7.0
+            per = 14
             outer = []
             for i in range(n):
-                a0 = 2 * math.pi * i / n
-                for f, r in ((0.0, ro), (0.30, ro), (0.42, ro - 1.4), (0.58, ro - 1.4), (0.70, ro)):
-                    a = a0 + f * 2 * math.pi / n
-                    outer.append((cx + r * math.cos(a), cz + r * math.sin(a)))
-            inner = [(cx + (rpl - 0.3) * math.cos(2 * math.pi * k / (n * per)), cz + (rpl - 0.3) * math.sin(2 * math.pi * k / (n * per))) for k in range(n * per)]
+                for k in range(per):
+                    a = 2 * math.pi * (i + k / per) / n - math.pi / n          # from one cusp round the lobe to the next
+                    # the lobe i is a circle of radius lobe_r centred at lobe_c in direction a_i = 2 pi i / n; the rim's radius there
+                    best = 0.0
+                    for j in (i - 1, i, i + 1):
+                        aj = 2 * math.pi * j / n
+                        dl = a - aj
+                        v = lobe_c * math.cos(dl) + math.sqrt(max(lobe_r ** 2 - (lobe_c * math.sin(dl)) ** 2, 0.0))
+                        best = max(best, v)
+                    outer.append((cx + best * math.cos(a), cz + best * math.sin(a)))
+            Nn = len(outer)
+            inner = [(cx + (rpl - 0.3) * math.cos(2 * math.pi * k / Nn), cz + (rpl - 0.3) * math.sin(2 * math.pi * k / Nn)) for k in range(Nn)]
             V, Fc = self.ring_prism(outer, inner, LY0 - proud, LY0 + 4.0)
-            self.add("iron_lock_collar", V, Fc, mat)
+            o0 = self.add("iron_lock_collar", V, Fc, mat)
+            ytop = LY0 - proud
+            self.objs[-1]["bev"] = (1.2, lambda a, b: abs(a.y - ytop) < 1e-3 and abs(b.y - ytop) < 1e-3, 2)
             V, Fc = lathe([(0.0, -depth), (rpl, -depth), (rpl, proud - 1.0 - 0.4), (rpl - 0.4, proud - 1.0), (0.0, proud - 1.0)], 48)
             o = self.add("iron_lock_plug", place_axis_y(V, cx, LY0, cz), Fc, mat)
-            kw, kh = 9.0, 2.5                         # the keyway: a horizontal slot
-        cut(o, *box(cx - kw / 2, LY0 - 2.0, cz - kh / 2, cx + kw / 2, LY0 + 2.0, cz + kh / 2))
+        kw, kh = cl.get("keyway_w_mm", 3.0), cl.get("keyway_h_mm", 9.0)                 # the keyway: a vertical slot, cut from in front of the plug's face
+        cut(o, *box(cx - kw / 2, LY0 - proud - 1.0, cz - kh / 2, cx + kw / 2, LY0 + 2.0, cz + kh / 2))
 
     @staticmethod
     def ring_prism(outer, inner, a, b):
@@ -767,7 +826,8 @@ class Door:
         V, Fc = box(0.5, S["riser"]["face_y_mm"], rz0 - 0.5, self.OW - 0.5, by - 1.0, rz1 + 0.5)
         self.add("stone_riser", V, Fc, "stone")
         self.objs[-1]["bev"] = (2.0, lambda a, b_: a.y < S["riser"]["face_y_mm"] + 0.1 and b_.y < S["riser"]["face_y_mm"] + 0.1 and min(a.z, b_.z) > rz0 + 0.6 and max(a.z, b_.z) < rz1 - 0.6 or False, 1)
-        # the tread: side outline extruded across, kept inside its plan outline (stepped back beside the plinth, r 40 corners)
+        # the tread: a loft of horizontal rings, each the plan outline drawn in by the nose's section at that height, so the half-round nose and its
+        # undercut run along the front AND round both ends (P1 x 87-95 and 283-291), the plan corners being the same section swept round
         td = S["tread"]
         nr = td["nosing_radius_mm"]
         ztop_f = td["top_z_mm"] - td["fall_to_front_mm"]
@@ -775,17 +835,48 @@ class Door:
         zc = ztop_f - nr
         cos_t = (td["undercut_mm"] - nr) / nr
         th_end = 360.0 - math.degrees(math.acos(cos_t))
-        side = [(by, td["top_z_mm"]), (S["riser"]["face_y_mm"], td["top_z_mm"]), (yf + nr, ztop_f)]
-        side += arc(yf + nr, zc, nr, 90, th_end, 20)[1:]
-        side += [(yf + td["undercut_mm"], td["ground_z_mm"]), (by, td["ground_z_mm"])]
         x0, x1 = td["x_mm"]
-        V, Fc = prism(side, ("y", "z"), "x", x0, x1)
-        o = self.add("stone_tread", V, Fc, "stone")
         rc = td["plan_corner_radius_mm"]
         yp = -self.P["brick"]["plinth"]["front_proud_of_wall_face_mm"]
-        plan = [(x0, yp), (0.0, yp), (0.0, by + 1.0), (self.OW, by + 1.0), (self.OW, yp), (x1, yp), (x1, yf + rc)]
-        plan += arc(x1 - rc, yf + rc, rc, 0, -90, 10)[1:] + arc(x0 + rc, yf + rc, rc, -90, -180, 10)[:-1] + [(x0, yf + rc)]
-        keep_inside(o, *prism(plan, ("x", "y"), "z", td["ground_z_mm"] - 5, td["top_z_mm"] + 5))
+        ground = td["ground_z_mm"]
+        # the section: (inset d from the plan outline, z) from the top tangent round the nose to where the base face begins, then down to the ground
+        sec = [(nr * (1.0 + math.cos(math.radians(a))), zc + nr * math.sin(math.radians(a))) for a in np.linspace(90.0, th_end, 22)]
+        sec.append((td["undercut_mm"], ground))
+        kc = 10
+        y_r = S["riser"]["face_y_mm"]
+
+        def ring(d, z):
+            pts = [(x0 + d, yp), (0.0, yp), (0.0, y_r), (0.0, by + 1.0), (self.OW, by + 1.0), (self.OW, y_r), (self.OW, yp), (x1 - d, yp), (x1 - d, yf + rc)]
+            r = rc - d
+            pts += [(x1 - rc + r * math.cos(math.radians(-90.0 * k / kc)), yf + rc + r * math.sin(math.radians(-90.0 * k / kc))) for k in range(kc + 1)][1:]
+            pts += [(x0 + rc + r * math.cos(math.radians(-90.0 - 90.0 * k / kc)), yf + rc + r * math.sin(math.radians(-90.0 - 90.0 * k / kc))) for k in range(1, kc + 1)]
+            return [(x, y, z) for x, y in pts]
+        rings = [ring(d, z) for d, z in sec]
+        n = len(rings[0])
+        V = np.array([p for r_ in rings for p in r_], float)
+        # the top falls 6.6 mm toward the front: a shear of the whole solid, nothing at the ground, the full fall at the top, none in front of the nose's tangent
+        y_n = yf + nr
+        g = td["fall_to_front_mm"] / (y_r - y_n)
+        om = np.clip((V[:, 2] - ground) / (ztop_f - ground), 0.0, 1.0)
+        V[:, 2] += g * np.clip(V[:, 1] - y_n, 0.0, y_r - y_n) * om
+        P0 = np.array([(p[0], p[1]) for p in rings[0]])
+        area = 0.5 * float(np.sum(P0[:, 0] * np.roll(P0[:, 1], -1) - np.roll(P0[:, 0], -1) * P0[:, 1]))        # > 0: counter-clockwise seen from above
+        F = []
+        for i in range(len(rings) - 1):
+            for k in range(n):
+                k1 = (k + 1) % n
+                q = (i * n + k, (i + 1) * n + k, (i + 1) * n + k1, i * n + k1)             # outward for a counter-clockwise ring
+                F.append(q if area > 0 else q[::-1])
+        # the top: two planar faces split on the riser's face line (the fall to the front stops there; behind it the top is level)
+        bot = tuple(range((len(rings) - 1) * n, len(rings) * n))[::-1]
+        front_top = tuple(list(range(0, 3)) + list(range(5, n)))                  # ring vertices 0-2 and 5..n-1 (the chord from (0, y_r) to (OW, y_r))
+        back_top = (2, 3, 4, 5)
+        for cap in (front_top, back_top):
+            F.append(cap if area > 0 else cap[::-1])
+        F.append(bot if area > 0 else bot[::-1])
+        vol = sum(np.dot(V[f[0]], np.cross(V[f[j]], V[f[j + 1]])) / 6.0 for f in F for j in range(1, len(f) - 1))
+        assert vol > 0, "tread faces point inward"
+        o = self.add("stone_tread", V, F, "stone")
         self.objs[-1]["bev"] = (2.0, None, 1)
 
     # -- everything, then finish

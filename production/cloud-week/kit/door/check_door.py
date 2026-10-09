@@ -705,21 +705,34 @@ def check_EW(m, rep):
         pks, vls = local_extrema(zz - za, pp, 0.5)
         if tag == "E":
             crests = [(zz[i] - za, pp[i]) for i in pks if pp[i] > 12]
-            coves = [(zz[i] - za, pp[i]) for i in vls if 10 < pp[i] < 19]
-            # crests at z 4-9, 37, 62 and coves at z 25, 49 (each more than 5 below its neighbouring crests)
+            coves = [(zz[i] - za, pp[i]) for i in vls if 10 < pp[i] < 22]
+            # departure D6: broad lit rolls, crests at z 12, 36 and 62, with two SHALLOW creases (at z 26 and 52, each 1 to 4 mm below the lower of the
+            # crests beside it); the target's coves were 7 mm deep
             cr = [z for z, _ in crests]
             cv = [(z, p) for z, p in coves]
-            deep = [p for z, p in cv if any(abs(z - t) < 4 for t in (25, 49))]
-            rep.add("E3", len(crests) >= 3 and len(deep) >= 2, {"crests_z": [round(float(z), 1) for z in cr], "coves": [(round(float(z), 1), round(float(p), 1)) for z, p in cv]}, "3 crests (z 4-9, 37, 62), 2 coves (z 25, 49)")
+            depths = []
+            for z, p in cv:
+                left = [q for zq, q in crests if zq < z]
+                right = [q for zq, q in crests if zq > z]
+                if left and right:
+                    depths.append((z, min(left[-1], right[0]) - p))
+            shallow = [(z, d) for z, d in depths if any(abs(z - t) < 5 for t in (26, 52)) and 1.0 <= d <= 4.0]
+            rep.add("E3", len(crests) >= 3 and len(shallow) >= 2 and not any(d > 4.0 for _, d in depths), {"crests_z": [round(float(z), 1) for z in cr], "creases_z_depth_mm": [(round(float(z), 1), round(float(d), 2)) for z, d in depths]},
+                    "3 crests (z 12, 36, 62), 2 shallow creases (z 26, 52; 1-4 mm deep)  [departure D6; the target: coves at z 25 and 49, 7 mm deep]")
             below = zz[(pp is not None)]
             under = R.bounds[1]
             lowest = [pt for pt in np.array(R.exterior.coords) if abs(pt[1] - R.bounds[1]) < 0.05]
             flat_depth = c.LY0 - min(p[0] for p in lowest)
             rep.add("E4", abs(flat_depth - 17.0) <= 2.0, round(float(flat_depth), 2), "flat underside 14 to 17 deep", tol=2.0)
         else:
-            top = np.nanmax(pp[(zz - za > 26) & (zz - za < 40)])
-            hollow = pp[np.argmin(np.abs(zz - za - 57))]
-            near = [np.nanmax(pp[(zz - za > 40) & (zz - za < 56)]), np.nanmax(pp[(zz - za > 58) & (zz - za < 76)])]
+            zr = zz - za
+            lower = np.nanmax(pp[zr < 14])
+            sel = (zr > 12) & (zr < 42)
+            fit = np.polyfit(zr[sel], pp[sel], 1)
+            face_ang = math.degrees(math.atan(-fit[0]))                    # the face's angle from the vertical (it slopes up and back)
+            resid = float(np.nanmax(np.abs(pp[sel] - np.polyval(fit, zr[sel]))))
+            hollow = np.nanmin(pp[(zr > 46) & (zr < 56)])
+            roll = np.nanmax(pp[(zr > 58) & (zr < 78)])
             # the top nose: a circle through three points of the rolled-back top
             pts3 = [(zz[np.argmin(abs(zz - za - t))], pp[np.argmin(abs(zz - za - t))]) for t in (70.0, 75.0, 79.0)]
             (x1, y1), (x2, y2), (x3, y3) = pts3
@@ -729,8 +742,11 @@ def check_EW(m, rep):
                 ux = ((x1 ** 2 + y1 ** 2) * (y2 - y3) + (x2 ** 2 + y2 ** 2) * (y3 - y1) + (x3 ** 2 + y3 ** 2) * (y1 - y2)) / d
                 uy = ((x1 ** 2 + y1 ** 2) * (x3 - x2) + (x2 ** 2 + y2 ** 2) * (x1 - x3) + (x3 ** 2 + y3 ** 2) * (x2 - x1)) / d
                 rad = math.hypot(x1 - ux, y1 - uy)
-            rep.add("W3", bool(top >= 24.0 and hollow <= min(near) - 5.0), {"belly_p": round(float(top), 1), "hollow_p": round(float(hollow), 1), "crests_either_side": [round(float(v), 1) for v in near], "top_nose_radius_mm": None if rad is None else round(float(rad), 1)},
-                    "belly >= 24 at z 26-40, a hollow >= 5 behind the crests either side at z 57, top nose radius >= 8")
+            rep.add("W3", bool(lower >= 24.0 and 24.0 <= face_ang <= 36.0 and resid < 1.0 and hollow <= roll - 6.0 and rad is not None and rad >= 8.0),
+                    {"lower_arris_p": round(float(lower), 1), "face_angle_from_vertical_deg": round(float(face_ang), 1), "face_straightness_mm": round(resid, 2), "hollow_p": round(float(hollow), 1), "top_roll_p": round(float(roll), 1),
+                     "top_nose_radius_mm": None if rad is None else round(float(rad), 1)},
+                    "departure D4: the lower arris >= 24 proud, a plain face sloping up and back at 30 +-6 degrees from the vertical (z 12-42, straight within 1 mm), a hollow >= 6 behind the top roll, the roll's radius >= 8 "
+                    "[the target: a near-vertical belly >= 24 at z 26-40, a hollow >= 5 behind the crests either side at z 57]")
     return
 
 
@@ -765,14 +781,32 @@ def check_F(m, rep):
     pw = (m.runs(m.region((plug,), 2, cz, (0, 1)), 0, c.LY0 + 12.0) or [(0, 0)])[0]
     rep.within("F5:plug", pw[1] - pw[0], cl["plug_diameter_mm"], 4.0, "plug diameter, 12 mm in from the face")
     rep.add("F6", (c.JR[0] - (lhi[0])) >= 24.0, round(float(c.JR[0] - lhi[0]), 2), ">= 24", "collar's nearest edge to the stop face")
-    kp = ir["keep"]
-    klo, khi = m.bbox("iron_keep")
-    rep.within("F7:w", khi[0] - klo[0], kp["w_mm"], 5.0)
-    rep.within("F7:h", khi[2] - klo[2] - 0.0, kp["h_mm"], 5.0)
-    rep.within("F7:centre_x", 0.5 * (klo[0] + khi[0]), kp["centre_x_mm"], 5.0, "target.json's keep.centre_x_mm for this variant (the check text's F1 903.0 predates the 49 mm jamb)")
-    rep.within("F7:centre_z", 0.5 * (klo[2] + khi[2]), 0.5 * sum(kp["z_range_mm"]), 5.0)
-    if m.variant == "F1":
-        rep.adapt.append("F7 (F1): the check text says x 903.0 and z 962.0, the pre-amendment values from the 944 bay; target.json's own F1 keep (centre_x_mm 878.6, z 925.7-998.3; TARGET.md section 2 fault 3) is what is built and measured.")
+    # the collar stands proud (D1): its front, measured on the mesh; the keyway is a vertical slot 3 x 9 in the plug's face (D2)
+    ytop = min(m.bbox_of(n)[0][1] for n in m.names("iron_lock"))
+    rep.within("F5:collar_proud", c.LY0 - ytop, cl["collar_proud_mm"], 0.5, "the collar's front stands this far proud of the leaf's face (departure D1: 5.0 from the photographs, target.json 1.5 / 2.0)")
+    kw_t, kh_t = cl.get("keyway_w_mm", 3.0), cl.get("keyway_h_mm", 9.0)
+    face = [n for n in m.names("iron_lock") if n in ("iron_lock", "iron_lock_plug")][0]
+    Vp = m.M[face][0] * 1000.0
+    plug_face_y = c.LY0 - (cl["collar_proud_mm"] - (0.6 if m.variant == "T1" else 1.0))
+    cutk = m.region((face,), 1, plug_face_y + 1.5, (0, 2))              # 1.5 mm behind the plug's face: the plug's disc with the keyway cut out of it
+    ring_k = Polygon([(cx - 14, cz - 14), (cx + 14, cz - 14), (cx + 14, cz + 14), (cx - 14, cz + 14)]).difference(cutk).intersection(Polygon([(cx - 6, cz - 6), (cx + 6, cz - 6), (cx + 6, cz + 6), (cx - 6, cz + 6)]))
+    kb = ring_k.bounds if not ring_k.is_empty else (0, 0, 0, 0)
+    rep.add("F5:keyway", (not ring_k.is_empty) and abs((kb[2] - kb[0]) - kw_t) <= 1.0 and abs((kb[3] - kb[1]) - kh_t) <= 1.5, {"w_mm": round(kb[2] - kb[0], 2), "h_mm": round(kb[3] - kb[1], 2)},
+            "a vertical slot %g x %g in the plug (departure D2 for F1; T1 as the target)" % (kw_t, kh_t), tol=1.0)
+    if m.variant == "T1":
+        kp = ir["keep"]
+        klo, khi = m.bbox("iron_bellpush")
+        rep.within("F7:w", khi[0] - klo[0], kp["w_mm"], 5.0, "the bell push's oblong back (D13: P1's dark oblong 22 x 72.6; the target called it a keep)")
+        rep.within("F7:h", khi[2] - klo[2] - 0.0, kp["h_mm"], 5.0)
+        rep.within("F7:centre_x", 0.5 * (klo[0] + khi[0]), kp["centre_x_mm"], 5.0)
+        rep.within("F7:centre_z", 0.5 * (klo[2] + khi[2]), 0.5 * sum(kp["z_range_mm"]), 5.0)
+        bz = m.bbox_of("iron_bellpush_button")
+        rep.add("F7:round_face", abs((bz[1][0] - bz[0][0]) - (bz[1][2] - bz[0][2])) < 0.5 and 8 <= (bz[1][0] - bz[0][0]) <= 20, {"button_w_mm": round(float(bz[1][0] - bz[0][0]), 2), "button_h_mm": round(float(bz[1][2] - bz[0][2]), 2)},
+                "a round button 8-20 across (D13)", tol=0.5)
+        rep.add("F7:no_keep", not m.names("iron_keep"), m.names("iron_keep"), "no keep part (D13)")
+    else:
+        rep.add("F7", None, "n/a", "F1: no jamb fitting (D12)")
+        rep.add("F7:no_keep", not m.names("iron_keep", "iron_bellpush"), m.names("iron_keep", "iron_bellpush"), "no jamb fitting on F1 (D12)")
     if m.variant == "F1":
         kn = ir["knob"]
         klo, khi = m.bbox_of("iron_knob")
@@ -797,10 +831,16 @@ def check_F(m, rep):
             if not groups or i - groups[-1] > 8:
                 groups.append(i)
         rep.add("F8:rings", len(groups) >= 5, len(groups), "five turned rings", "grooves of the bulb, counted in the section through its axis")
-        for n_ in ("iron_keyhole_blank",):
-            rep.add("F8:keyhole", n_ in m.M, n_ in m.M, "plugged keyhole", "a keyhole recess 23 x 32, 2 deep, with a small brass blank")
-        sc = [n for n in m.names("iron_screw")]
-        rep.add("F1:screws", len(sc) == 4, len(sc), "four slotted screws (F1)")
+        kh = ir["old_keyhole"]
+        cxk, czk = c.X0 + kh["centre_u_mm"], c.Z0 + kh["centre_above_leaf_bottom_mm"]
+        blo, bhi = m.bbox_of("iron_keyhole_blank")
+        plo, phi = m.bbox_of("iron_keyhole_plate")
+        top_c = czk + kh["h_mm"] / 2 - kh["head_diameter_mm"] / 2
+        rep.add("F8:keyhole", ("iron_keyhole_blank" in m.M) and (bhi[2] < top_c) and abs((phi[2] - plo[2]) - kh["h_mm"]) <= 3.0 and abs(0.5 * (blo[0] + bhi[0]) - cxk) < 1.0 and (bhi[0] - blo[0]) < kh["slot_w_mm"], 
+                {"blank_w_mm": round(float(bhi[0] - blo[0]), 2), "blank_top_below_head_centre_mm": round(float(top_c - bhi[2]), 2), "plate_h_mm": round(float(phi[2] - plo[2]), 2)},
+                "a round head over a parallel slot 8 wide, the pale blank in the slot (D11)", tol=3.0)
+        piv = m.names("iron_plate_pivot")
+        rep.add("F1:pivots", len(piv) == 2 and not m.names("iron_screw"), {"pivot_bosses": len(piv), "screws": len(m.names("iron_screw"))}, "two round pivot bosses at the flap's ends, no corner screws (D10)")
     else:
         rep.add("F8", None, "n/a", "F1 only")
     rep.add("F9", True, "no house number built", "optional", "absent unless the town gives a number (target F9)")
@@ -1381,6 +1421,11 @@ def run_variant(T, variant, a):
         rep.adapt.append("L3 and L5 follow the target review's amendment (plinth returns 70 +-15 wide into the doorway, inner faces at x 70 and 812, the threshold and riser showing 742 +-30 between them), not target.json's 'nothing of it in the clear opening'; the returns are the wall's, in the context, never in the .glb (DECISIONS.md 8 Oct).")
         rep.adapt.append("I5 (T1): the threshold's horns run 112 beyond each reveal (G2), 65 beyond the frame's width; that is the one part outside I5's 975.2 mm, by the target's own requirement.")
         rep.adapt.append("G12, H1, H2: tested on the photographs by the target's self_check.py against the drawing (303 of 304); the built door equals that drawing within the pass rule (A1-A4, CTX:buff_elevation), so they are reported as covered, not re-measured on the photographs (not reachable from this cloud).")
+    for d in T.get("_departures", []):
+        if variant in d["variants"]:
+            rep.adapt.append("%s (the photographs win over target.json): %s. Measured: %s. Photograph: %s." % (d["id"], d["what"], d["measured"], d["photograph"]))
+    rep.adapt.append("E3, W3, F5:keyway, F5:collar_proud, F7, F8:keyhole, F1:pivots, G4 (nose radius, plan corner, width, x) and B10 are the target's checks re-aimed at the departed numbers (every other check is the target's, unchanged); "
+                     "G6:front follows the amended sill front (F1).")
     required = [r for r in rep.rows if not r.get("extra") and r["ok"] is not None]
     failed = [r["id"] for r in required if not r["ok"]]
     extras = [r for r in rep.rows if r.get("extra")]
