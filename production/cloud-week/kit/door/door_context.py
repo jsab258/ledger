@@ -186,7 +186,7 @@ def build_F1(T):
     parts = []
     jl, jr = F["jamb_x_mm"]["left"][0], F["jamb_x_mm"]["right"][1]
     top = 3300.0
-    rect = sbox(-LONG_SPAN, ground, OW + LONG_SPAN, top)
+    rect = sbox(-LONG_SPAN, ground - 100.0, OW + LONG_SPAN, top)        # down past the sill's foot (25 below the paving), so no end of the sill shows below the wall
     opening = sbox(0.0, ground - 1000.0, OW, head_top)
     sill_ends = [sbox(jl - 1, -S["threshold"]["thickness_mm"] - 0.5, 0.0, 0.0), sbox(OW, -S["threshold"]["thickness_mm"] - 0.5, jr + 1, 0.0)]
     # the sill's front stands at y 108.3 (D14), inside the reveal: the pilaster return is whole in front of it and notched only behind it
