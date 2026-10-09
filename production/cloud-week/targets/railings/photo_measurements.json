@@ -2,128 +2,533 @@
  "R3B": {
   "frame": "R3B",
   "bar_centres_s_mm": [
-   610,
-   688,
-   764,
-   841,
-   922,
-   996,
-   1079,
-   1154,
-   1231,
-   1310,
-   1390,
-   1462,
-   1544,
-   1620,
-   1700,
-   1775,
-   1857,
-   1935,
-   2016,
-   2096,
-   2177,
-   2255,
-   2337,
-   2414,
-   2498,
-   2573
+   594,
+   671,
+   745,
+   820,
+   899,
+   971,
+   1052,
+   1125,
+   1201,
+   1277,
+   1356,
+   1425,
+   1505,
+   1579,
+   1657,
+   1731,
+   1811,
+   1887,
+   1966,
+   2043,
+   2122,
+   2198,
+   2279,
+   2352,
+   2435,
+   2509
   ],
-  "bar_pitch_mm": 78.54,
-  "bar_fit_first_s_mm": 605.02,
-  "bar_pitch_resid_rms_mm": 4.03,
+  "bar_pitch_mm": 76.57,
+  "bar_fit_first_s_mm": 589.97,
+  "bar_pitch_resid_rms_mm": 3.88,
   "leaf_bar_centres_s_mm": [
-   2721,
-   2779,
-   2890,
-   2971,
-   3060,
-   3142,
-   3233,
-   3319,
-   3417,
-   3500,
-   3599,
-   3685,
-   3777
+   2653,
+   2709,
+   2817,
+   2896,
+   2983,
+   3063,
+   3152,
+   3235,
+   3329,
+   3412,
+   3509,
+   3592,
+   3682
   ],
-  "leaf_bar_pitch_mm": 88.9,
+  "leaf_bar_pitch_mm": 86.64,
   "bar_fwhm_mm_median": 20.0,
   "bar_fwhm_mm_all": [
    25,
    17,
    20,
-   14,
+   15,
    13,
    34,
    20,
    18,
    21,
    17,
-   36,
+   35,
+   16,
+   21,
+   18,
+   21,
+   18,
+   23,
    17,
-   21,
-   19,
-   21,
-   18,
-   24,
-   18,
    22,
    19,
    17,
-   19,
+   17,
    22,
    21,
-   27
+   26
   ],
   "rails": [
    {
-    "z": 2103.0,
-    "depth": 21.4
+    "z": 2049.0,
+    "depth": 22.2
    },
    {
-    "z": 2083.0,
-    "depth": 18.1
+    "z": 1949.0,
+    "depth": 43.5
    },
    {
-    "z": 2000.0,
-    "depth": 42.6
+    "z": 1032.0,
+    "depth": 17.0
    },
    {
-    "z": 1059.0,
-    "depth": 16.5
+    "z": 1010.0,
+    "depth": 24.7
    },
    {
-    "z": 1036.0,
-    "depth": 24.4
+    "z": 640.0,
+    "depth": 17.1
    },
    {
-    "z": 657.0,
-    "depth": 17.2
+    "z": 429.0,
+    "depth": 18.7
    },
    {
-    "z": 441.0,
-    "depth": 18.3
-   },
-   {
-    "z": 336.0,
-    "depth": 24.2
+    "z": 327.0,
+    "depth": 24.3
    }
   ],
-  "coping_top_z_mm": 331.0,
+  "coping_top_z_mm": 321.0,
   "post_width_mm": [
-   93,
-   99,
-   105,
+   92,
    98,
-   110,
-   100,
-   99,
-   97
+   94,
+   96,
+   87,
+   93,
+   101,
+   99
   ],
   "method": "1 mm a pixel elevation (rail_lib.elevation) at the stated camera height; bars = dark minima of the column profile at z 700..900; rails = dark rows between bars; FWHM includes the blur of a 3 to 4 mm native pixel"
  },
  "hand_reads": {
+  "R3B": {
+   "bottom_rail_axis_z": {
+    "v": 433.52,
+    "err": 14.61,
+    "how": "dark row between the bars at z 440 (rows 2000+: also detected by the column-between-bars profile, depth 19); a flat bar about 18 high",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "mid_rail_axis_z": {
+    "v": 1018.04,
+    "err": 14.61,
+    "how": "row profile peak 1036, picture read 1056",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "top_rail_axis_z": {
+    "v": 1948.4,
+    "err": 9.74,
+    "how": "row profile peak, depth 43, FWHM 26 (blur included): a flat bar about 20 high",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "coping_top_z": {
+    "v": 336.1,
+    "err": 19.48,
+    "how": "the stone slab's top at its front lip: the gradient search gives 331 on the plane 110 behind the face; the lip is nearer the camera, so its true height is about 13 higher (the ray falls 110 x (0.97 - 0.35) / 5.2 over that distance)",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "short_bar_tip_z": {
+    "v": 1193.39,
+    "err": 19.48,
+    "how": "spear tips of the short bars, which stop just above the middle rail",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "tall_bar_tip_z": {
+    "v": 2211.43,
+    "err": 14.61,
+    "how": "spear tips of the tall bars (every second bar), 255 to 285 over the 16k re-measurement of the fresh review, median 2270 (the first version read 2300); 270 above the top rail",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "post_top_z": {
+    "v": 2313.72,
+    "err": 14.61,
+    "how": "the finial of the hinge post",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "post_shaft_width": {
+    "v": 97.42,
+    "err": 9.74,
+    "how": "mean of eight rows z 1700 to 1910 (93 to 110), blur included",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "post_collar_width": {
+    "v": 151.0,
+    "err": 14.61,
+    "how": "the collar at z 1995 to 2035",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "urn_width": {
+    "v": 131.52,
+    "err": 14.61,
+    "how": "the vase under the hinge post's finial, z 2150 to 2210",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "post_axis_s": {
+    "v": 2523.18,
+    "err": 14.61,
+    "how": "the hinge post's axis along the plane",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "pier_width": {
+    "v": 535.81,
+    "err": 38.97,
+    "how": "the brick pier under the hinge post, s 2530 to 3080",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   },
+   "bar_foot": {
+    "v": "each bar ends in a small ball (about 20 across) just under the bottom rail, 12 below its axis",
+    "err": null,
+    "how": "1 mm elevation of the foot",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0
+   },
+   "bar_head": {
+    "v": [
+     [
+      8.77,
+      1938.66
+     ],
+     [
+      8.77,
+      1972.75
+     ],
+     [
+      15.59,
+      1977.63
+     ],
+     [
+      19.48,
+      1987.37
+     ],
+     [
+      14.61,
+      1997.11
+     ],
+     [
+      14.61,
+      2014.65
+     ],
+     [
+      27.28,
+      2026.34
+     ],
+     [
+      44.81,
+      2043.87
+     ],
+     [
+      40.92,
+      2055.56
+     ],
+     [
+      29.23,
+      2070.17
+     ],
+     [
+      19.48,
+      2079.92
+     ],
+     [
+      21.43,
+      2089.66
+     ],
+     [
+      21.43,
+      2099.4
+     ],
+     [
+      17.54,
+      2109.14
+     ],
+     [
+      11.69,
+      2143.24
+     ],
+     [
+      5.85,
+      2182.21
+     ],
+     [
+      0.0,
+      2216.3
+     ]
+    ],
+    "err": 7.79,
+    "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2275; at the first version's height 0.97, +-8",
+    "read_at_h": 0.97,
+    "scaled_by": 0.9742
+   }
+  },
+  "R3A": {
+   "wall_top_z": {
+    "v": 820.17,
+    "err": 21.03,
+    "how": "top of the blue bullnose coping, 1 mm and 3 mm elevations",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "wall_string_z": {
+    "v": 315.45,
+    "err": 21.03,
+    "how": "top of the lower blue bullnose string",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "red_courses_between": {
+    "v": 5,
+    "err": 0,
+    "how": "five red stretcher courses between z 330 and 705 at 75 mm: the scale check on the elevation",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0
+   },
+   "bottom_rail_axis_z": {
+    "v": 883.26,
+    "err": 21.03,
+    "how": "dark row; the picture read 825",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "mid_rail_axis_z": {
+    "v": 1508.9,
+    "err": 15.77,
+    "how": "dark row, profile 1435",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "top_rail_axis_z": {
+    "v": 1729.72,
+    "err": 15.77,
+    "how": "dark row, profile 1649",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "bar_pitch_all": {
+    "v": 119.87,
+    "err": 5.26,
+    "how": "the thick (tall) bars at s 204, 435, 660, 891, 1110 on the 3 mm preview: 226.5 apart; the thin ones the same, half a pitch between: all bars 113.3 (the first reading, from the far side of the post, gave 116)",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "tall_first_s": {
+    "v": 214.51,
+    "err": 15.77,
+    "how": "the first thick bar with a fleur-de-lis head in the preview window",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "left_run_max_s": {
+    "v": 1577.25,
+    "err": 21.03,
+    "how": "the numbers of R3A are the LEFT run's (preview s < 1500 at the first version's height, the spear heads and lily plaques); right of the cast post the photograph shows a second pattern (fleur-de-lis heads about half a pitch out of step) that is not measured",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "tall_tip_z": {
+    "v": 1976.82,
+    "err": 26.29,
+    "how": "fleur-de-lis heads of the tall bars",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "post_top_z": {
+    "v": 2260.73,
+    "err": 42.06,
+    "how": "the vase and ball on the post, in the oblique view",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "post_shaft_width": {
+    "v": 105.15,
+    "err": 26.29,
+    "how": "oblique view, blur doubled by the 32 degree angle",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "bar_thick_width": {
+    "v": 23.13,
+    "err": 10.52,
+    "how": "the tall bars read 40 to 55 at 1 mm in the oblique view (blur x 2): about 22 across",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0515
+   },
+   "resolution_mm_per_px_across": {
+    "v": 10,
+    "err": null,
+    "how": "5.4 mm native at 7 m, divided by sin 32 degrees along the wall",
+    "read_at_h": 0.97,
+    "scaled_by": 1.0
+   }
+  },
+  "R3D": {
+   "wall_top_z": {
+    "v": 636.62,
+    "err": 15.4,
+    "how": "the strongest brightness step at z 608 to 621 over s 100 to 1000, eight courses plus the coping",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0268
+   },
+   "bottom_rail_axis_z": {
+    "v": 698.22,
+    "err": 15.4,
+    "how": "1 mm elevation s 1400 to 2400",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0268
+   },
+   "top_rail_axis_z": {
+    "v": 1114.08,
+    "err": 12.32,
+    "how": "1 mm elevation: a flat bar",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0268
+   },
+   "bar_tip_z": {
+    "v": 1160.28,
+    "err": 20.54,
+    "how": "the bars stand 45 above the top rail, with a small spear point",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0268
+   },
+   "bar_pitch": {
+    "v": 97.03,
+    "err": 3.08,
+    "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them)",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0268
+   },
+   "bar_centres_s": {
+    "v": [
+     1540.2,
+     1642.88,
+     1740.43,
+     1837.97,
+     1935.52,
+     2027.93,
+     2115.21,
+     2212.75,
+     2310.3,
+     2402.71
+    ],
+    "err": 6.16,
+    "how": "read by eye on the 1 mm elevation, +-6",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0268
+   },
+   "bar_width": {
+    "v": 13.35,
+    "err": 3.08,
+    "how": "blur included: a round bar of 12 to 14",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0268
+   },
+   "gate_width": {
+    "v": 1067.87,
+    "err": 154.02,
+    "how": "the leaf between the brick pier and its stile in the 38 degree view, at 5.5 m",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0268
+   },
+   "gate_top_z": {
+    "v": 1129.48,
+    "err": 41.07,
+    "how": "the gate's top rail level with the railing's",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0268
+   },
+   "paint_srgb": {
+    "v": [
+     38,
+     56,
+     36
+    ],
+    "err": 10,
+    "how": "median of the gate leaf in shade (32, 47, 28) and in light (51, 69, 45)",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0
+   }
+  },
+  "LHB": {
+   "span_mm": {
+    "v": 2865.28,
+    "err": 60.53,
+    "how": "axis to axis of the two posts, from their flanges' front edges moved back 143",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0089
+   },
+   "upper_lug_z": {
+    "v": 807.12,
+    "err": 30.27,
+    "how": "the chain's end link at the post, 2 mm elevation",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0089
+   },
+   "lower_lug_z": {
+    "v": 408.6,
+    "err": 30.27,
+    "how": "the same, lower",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0089
+   },
+   "upper_chain_lowest_z": {
+    "v": 590.21,
+    "err": 25.22,
+    "how": "lowest dark band of the upper swag at mid-span",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0089
+   },
+   "lower_chain_lowest_z": {
+    "v": 166.47,
+    "err": 25.22,
+    "how": "lowest dark band of the lower swag",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0089
+   },
+   "post_top_z": {
+    "v": 1095.67,
+    "err": 35.31,
+    "how": "the dome's top; the bollards target states 1135 at its 1.17 m (4 % higher, inside both errors)",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0089
+   },
+   "flange_bolts": {
+    "v": 4,
+    "err": 0,
+    "how": "four hex nuts on studs, two seen at the sides and one in front",
+    "read_at_h": 1.12,
+    "scaled_by": 1.0
+   }
+  }
+ },
+ "hand_reads_as_read_at_first_version": {
   "R3B": {
    "bottom_rail_axis_z": {
     "v": 445,
@@ -151,9 +556,9 @@
     "how": "spear tips of the short bars, which stop just above the middle rail"
    },
    "tall_bar_tip_z": {
-    "v": 2300,
-    "err": 20,
-    "how": "spear tips of the tall bars (every second bar), 300 above the top rail"
+    "v": 2270,
+    "err": 15,
+    "how": "spear tips of the tall bars (every second bar), 255 to 285 over the 16k re-measurement of the fresh review, median 2270 (the first version read 2300); 270 above the top rail"
    },
    "post_top_z": {
     "v": 2375,
@@ -173,7 +578,12 @@
    "urn_width": {
     "v": 135,
     "err": 15,
-    "how": "the vase under the finial, z 2150 to 2210"
+    "how": "the vase under the hinge post's finial, z 2150 to 2210"
+   },
+   "post_axis_s": {
+    "v": 2590,
+    "err": 15,
+    "how": "the hinge post's axis along the plane"
    },
    "pier_width": {
     "v": 550,
@@ -193,83 +603,71 @@
      ],
      [
       9,
-      2035
+      2025
      ],
      [
-      14,
-      2040
-     ],
-     [
-      14,
-      2048
-     ],
-     [
-      9,
-      2054
-     ],
-     [
-      9,
-      2095
+      16,
+      2030
      ],
      [
       20,
-      2112
+      2040
      ],
      [
-      30,
-      2128
+      15,
+      2050
+     ],
+     [
+      15,
+      2068
      ],
      [
       28,
-      2140
+      2080
      ],
      [
-      18,
-      2155
+      46,
+      2098
      ],
      [
-      14,
-      2165
+      42,
+      2110
+     ],
+     [
+      30,
+      2125
+     ],
+     [
+      20,
+      2135
      ],
      [
       22,
-      2185
+      2145
      ],
      [
-      24,
-      2195
+      22,
+      2155
      ],
      [
-      14,
-      2208
-     ],
-     [
-      14,
-      2230
+      18,
+      2165
      ],
      [
       12,
-      2250
+      2200
      ],
      [
-      8,
-      2275
-     ],
-     [
-      5,
-      2300
-     ],
-     [
-      2,
-      2320
+      6,
+      2240
      ],
      [
       0,
-      2335
+      2275
      ]
     ],
-    "err": 15,
-    "how": "(r, z) of a tall bar's head: a ring at 2040, a vase swelling at 2128, a bead at 2190, a spire to the tip; blur 6 mm, so +-15"
+    "err": 8,
+    "how": "(r, z) of a tall bar's head, the fresh review's 16k profile (the first version's 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2275; at the first version's height 0.97, +-8"
    }
   },
   "R3A": {
@@ -312,6 +710,11 @@
     "v": 204,
     "err": 15,
     "how": "the first thick bar with a fleur-de-lis head in the preview window"
+   },
+   "left_run_max_s": {
+    "v": 1500,
+    "err": 20,
+    "how": "the numbers of R3A are the LEFT run's (preview s < 1500 at the first version's height, the spear heads and lily plaques); right of the cast post the photograph shows a second pattern (fleur-de-lis heads about half a pitch out of step) that is not measured"
    },
    "tall_tip_z": {
     "v": 1880,
@@ -443,5 +846,23 @@
     "how": "four hex nuts on studs, two seen at the sides and one in front"
    }
   }
+ },
+ "scale": {
+  "R3B": 0.9742,
+  "R3A": 1.0515,
+  "R3D": 1.0268,
+  "LHB": 1.0089
+ },
+ "camera_heights": {
+  "R3B": 0.945,
+  "R3A": 1.02,
+  "R3D": 1.15,
+  "LHB": 1.13
+ },
+ "first_version_heights": {
+  "R3B": 0.97,
+  "R3A": 0.97,
+  "R3D": 1.12,
+  "LHB": 1.12
  }
 }

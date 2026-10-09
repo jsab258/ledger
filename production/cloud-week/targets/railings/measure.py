@@ -10,7 +10,7 @@ from scipy.signal import find_peaks
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import rail_lib as L
-from frames import FRAMES, CAMERAS
+from frames import FRAMES, OBJECTS, SCALE, FIRST_H, H_CAM
 
 
 def plane_of(F, W=8192, H=4096):
@@ -28,14 +28,16 @@ def r3b(pano_dir):
     F = FRAMES['R3B']
     pl = plane_of(F)
     win = F['window']
-    e = L.elevation(os.path.join(pano_dir, F['pano'] + '.jpg'), pl, 0, 3870, -50, 2400, 1)
-    z1 = 2400.0
+    f = SCALE['R3B']
+    e = L.elevation(os.path.join(pano_dir, F['pano'] + '.jpg'), pl, 0, win['s1'], win['z0'], 2400 * f, 1)
+    z1 = 2400.0 * f
+    z1 = float(round(z1))
 
     def zrow(z): return int(round(z1 - z))
     prof = e[zrow(900):zrow(700)].mean(0)
     d = gaussian_filter1d(gaussian_filter1d(prof, 25) - prof, 1.0)
     pk, _ = find_peaks(gaussian_filter1d(d, 1), height=15, distance=40)
-    pk = pk[(pk > 600) & (pk < 2600)]
+    pk = pk[(pk > 600 * f) & (pk < 2600 * f)]
     fit = np.polyfit(np.arange(len(pk)), pk, 1)
     res = pk - np.polyval(fit, np.arange(len(pk)))
     ws = []
@@ -47,7 +49,7 @@ def r3b(pano_dir):
         ws.append(int(idx.max() - idx.min() + 1))
     # the bars of the gate leaf to the right of the hinge post (s 2700 to 3800): their own phase
     pk_all, _ = find_peaks(gaussian_filter1d(d, 1), height=15, distance=40)
-    pk2 = pk_all[(pk_all > 2700) & (pk_all < 3820)]
+    pk2 = pk_all[(pk_all > 2700 * f) & (pk_all < 3820 * f)]
     fit2 = np.polyfit(np.arange(len(pk2)), pk2, 1)
     mids = (pk[:-1] + pk[1:]) // 2
     cols = np.concatenate([np.arange(m - 6, m + 7) for m in mids])
@@ -56,14 +58,15 @@ def r3b(pano_dir):
     rr, _ = find_peaks(gaussian_filter1d(rd, 1), height=14, distance=20)
     rails = [dict(z=float(z1 - r), depth=round(float(rd[r]), 1)) for r in rr]
     # the coping's top surface: the strongest brightness change in the band z 330..450 averaged over s 700..2400 (the stone is lighter than the shadow under the rail)
-    sub = gaussian_filter1d(e[:, 700:2400].mean(1), 2)
-    rows = range(zrow(450), zrow(330))
+    sub = gaussian_filter1d(e[:, int(700 * f):int(2400 * f)].mean(1), 2)
+    rows = range(zrow(450), zrow(290))
     gr = [(float(sub[r + 2] - sub[r - 2]), float(z1 - r)) for r in rows]
     top = max(gr)[1]
     # the hinge post: the widest dark run around s = 2590 at z 1700..1910
     pw = []
     for z in range(1700, 1920, 30):
-        row = e[zrow(z) - 2:zrow(z) + 3].mean(0)[2450:2750]
+        cx = int(round(2590 * f))
+        row = e[zrow(z) - 2:zrow(z) + 3].mean(0)[cx - 140:cx + 160]
         thr = (np.percentile(row, 90) + row.min()) / 2
         dark = row < thr
         idx = np.where(dark)[0]
@@ -85,15 +88,16 @@ HAND_READS = {
         top_rail_axis_z=dict(v=2000, err=10, how='row profile peak, depth 43, FWHM 26 (blur included): a flat bar about 20 high'),
         coping_top_z=dict(v=345, err=20, how='the stone slab\'s top at its front lip: the gradient search gives 331 on the plane 110 behind the face; the lip is nearer the camera, so its true height is about 13 higher (the ray falls 110 x (0.97 - 0.35) / 5.2 over that distance)'),
         short_bar_tip_z=dict(v=1225, err=20, how='spear tips of the short bars, which stop just above the middle rail'),
-        tall_bar_tip_z=dict(v=2300, err=20, how='spear tips of the tall bars (every second bar), 300 above the top rail'),
+        tall_bar_tip_z=dict(v=2270, err=15, how='spear tips of the tall bars (every second bar), 255 to 285 over the 16k re-measurement of the fresh review, median 2270 (the first version read 2300); 270 above the top rail'),
         post_top_z=dict(v=2375, err=15, how='the finial of the hinge post'),
         post_shaft_width=dict(v=100, err=10, how='mean of eight rows z 1700 to 1910 (93 to 110), blur included'),
         post_collar_width=dict(v=155, err=15, how='the collar at z 1995 to 2035'),
-        urn_width=dict(v=135, err=15, how='the vase under the finial, z 2150 to 2210'),
+        urn_width=dict(v=135, err=15, how='the vase under the hinge post\'s finial, z 2150 to 2210'),
+        post_axis_s=dict(v=2590, err=15, how='the hinge post\'s axis along the plane'),
         pier_width=dict(v=550, err=40, how='the brick pier under the hinge post, s 2530 to 3080'),
         bar_foot=dict(v='each bar ends in a small ball (about 20 across) just under the bottom rail, 12 below its axis', err=None, how='1 mm elevation of the foot'),
-        bar_head=dict(v=[[9, 1990], [9, 2035], [14, 2040], [14, 2048], [9, 2054], [9, 2095], [20, 2112], [30, 2128], [28, 2140], [18, 2155], [14, 2165], [22, 2185], [24, 2195], [14, 2208], [14, 2230], [12, 2250], [8, 2275], [5, 2300], [2, 2320], [0, 2335]],
-                      err=15, how='(r, z) of a tall bar\'s head: a ring at 2040, a vase swelling at 2128, a bead at 2190, a spire to the tip; blur 6 mm, so +-15'),
+        bar_head=dict(v=[[9, 1990], [9, 2025], [16, 2030], [20, 2040], [15, 2050], [15, 2068], [28, 2080], [46, 2098], [42, 2110], [30, 2125], [20, 2135], [22, 2145], [22, 2155], [18, 2165], [12, 2200], [6, 2240], [0, 2275]],
+                      err=8, how='(r, z) of a tall bar\'s head, the fresh review\'s 16k profile (the first version\'s 60 across at 2128 was wrong): a ring 40 across at 2030, a turned knop about 92 across at 2098 to 2110, a ring about 44 across at 2145 to 2155, a spire to the tip at 2275; at the first version\'s height 0.97, +-8'),
     ),
     'R3A': dict(
         wall_top_z=dict(v=780, err=20, how='top of the blue bullnose coping, 1 mm and 3 mm elevations'),
@@ -104,6 +108,7 @@ HAND_READS = {
         top_rail_axis_z=dict(v=1645, err=15, how='dark row, profile 1649'),
         bar_pitch_all=dict(v=114, err=5, how='the thick (tall) bars at s 204, 435, 660, 891, 1110 on the 3 mm preview: 226.5 apart; the thin ones the same, half a pitch between: all bars 113.3 (the first reading, from the far side of the post, gave 116)'),
         tall_first_s=dict(v=204, err=15, how='the first thick bar with a fleur-de-lis head in the preview window'),
+        left_run_max_s=dict(v=1500, err=20, how='the numbers of R3A are the LEFT run\'s (preview s < 1500 at the first version\'s height, the spear heads and lily plaques); right of the cast post the photograph shows a second pattern (fleur-de-lis heads about half a pitch out of step) that is not measured'),
         tall_tip_z=dict(v=1880, err=25, how='fleur-de-lis heads of the tall bars'),
         post_top_z=dict(v=2150, err=40, how='the vase and ball on the post, in the oblique view'),
         post_shaft_width=dict(v=100, err=25, how='oblique view, blur doubled by the 32 degree angle'),
@@ -134,8 +139,38 @@ HAND_READS = {
 }
 
 
+NOSCALE = {'red_courses_between', 'flange_bolts', 'bar_foot', 'paint_srgb', 'resolution_mm_per_px_across'}
+
+
+def _sc(v, f):
+    if isinstance(v, (int, float)):
+        return round(v * f, 2)
+    if isinstance(v, list):
+        return [_sc(x, f) for x in v]
+    return v
+
+
+def scaled_hand_reads(raw=None):
+    """every length read at the first version's pooled height, multiplied by new / first for its object (narrow point 1 of the fresh review)"""
+    raw = raw or HAND_READS
+    out = {}
+    for frame, d in raw.items():
+        f = SCALE[frame]
+        out[frame] = {}
+        for k, e in d.items():
+            e2 = dict(e)
+            if k not in NOSCALE:
+                e2['v'] = _sc(e['v'], f)
+                if e.get('err'):
+                    e2['err'] = round(e['err'] * f, 2)
+            e2['read_at_h'] = FIRST_H[frame]
+            e2['scaled_by'] = f if k not in NOSCALE else 1.0
+            out[frame][k] = e2
+    return out
+
+
 if __name__ == '__main__':
     pano_dir = sys.argv[1]
-    out = dict(R3B=r3b(pano_dir), hand_reads=HAND_READS)
+    out = dict(R3B=r3b(pano_dir), hand_reads=scaled_hand_reads(), hand_reads_as_read_at_first_version=HAND_READS, scale=SCALE, camera_heights=H_CAM, first_version_heights=FIRST_H)
     json.dump(out, open(os.path.join(HERE, 'photo_measurements.json'), 'w'), indent=1)
     print(json.dumps(out['R3B'], indent=1)[:1800])

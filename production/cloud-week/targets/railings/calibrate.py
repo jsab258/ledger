@@ -18,7 +18,7 @@ Image.MAX_IMAGE_PIXELS = None
 ANCHORS = [
     # Bethnal Green: every object here stands on, or beside a wall that stands on, the same block paving
     ('bethnal_green_entrance', 'bge_planter_wall', 5840, 5940, 2100, 2258, 2262, 75.0, 0.0, 'planter wall on the block paving (the bollards target)', 15.3),
-    ('bethnal_green_entrance', 'bge_gate_pier', 2090, 2170, 1715, 2160, 2305, 75.0, 0.0, 'brick gate pier of the park entrance, red courses above its blue-brick base, on the paving', 20.3),
+    ('bethnal_green_entrance', 'bge_gate_pier', 2090, 2170, 1715, 2160, 2309, 75.0, 0.0, 'brick gate pier of the park entrance beside R3B, red courses above its blue-brick base, on the paving (foot row re-read at 16k after the fresh review: 4618 of 8192 = 2309; the first version read 2305)', 20.3),
     ('bethnal_green_entrance', 'bge_dwarf_wall', 7535, 7550, 2100, 2175, 2243, 75.0, 0.0, 'red courses of the dwarf wall under the area railing R3a (five courses between the two blue bullnose strings)', 14.5),
     # Limehouse: the quay edge's chain posts stand on resin-bound gravel level with the clay paviors at the foot of this wall
     ('limehouse', 'lh_building_wall_a', 6890, 6910, 2165, 2392, 2397, 75.0, 0.0, 'the dock building beside the quay walk: red and blue engineering brick courses above the paving (left band)', 25.0),

@@ -1,97 +1,111 @@
 {
  "ph-bethnal_green_entrance-r3b-park-railing-elevation.jpg": {
-  "bytes": 246062,
+  "bytes": 236612,
   "px": [
-   1057,
-   833
+   1030,
+   812
   ]
  },
  "ph-bethnal_green_entrance-r3b-park-railing-target-on-photo.jpg": {
-  "bytes": 269384,
+  "bytes": 260994,
   "px": [
-   1057,
-   833
+   1030,
+   812
   ]
  },
  "ph-bethnal_green_entrance-r3b-park-railing-head-close.jpg": {
-  "bytes": 99146,
+  "bytes": 96220,
   "px": [
-   800,
-   750
+   780,
+   730
   ]
  },
  "ph-bethnal_green_entrance-r3b-park-railing-foot-close.jpg": {
-  "bytes": 77269,
+  "bytes": 74595,
   "px": [
-   800,
-   850
+   780,
+   830
   ]
  },
  "ph-bethnal_green_entrance-r3a-area-railing-elevation.jpg": {
-  "bytes": 145322,
+  "bytes": 156610,
   "px": [
-   1067,
-   783
+   1122,
+   825
   ]
  },
  "ph-bethnal_green_entrance-r3a-area-railing-target-on-photo.jpg": {
-  "bytes": 179771,
+  "bytes": 175952,
   "px": [
-   1067,
-   783
+   1122,
+   825
   ]
  },
  "ph-urban_street_01-r3d-garden-railing-elevation.jpg": {
-  "bytes": 68630,
+  "bytes": 71404,
   "px": [
-   953,
-   453
+   978,
+   465
   ]
  },
  "ph-urban_street_01-r3d-garden-railing-target-on-photo.jpg": {
-  "bytes": 87265,
+  "bytes": 89578,
   "px": [
-   953,
-   453
+   978,
+   465
   ]
  },
  "ph-limehouse-lhb-chain-bay-elevation.jpg": {
-  "bytes": 100570,
+  "bytes": 99965,
   "px": [
-   1010,
+   1016,
    375
   ]
  },
  "ph-limehouse-lhb-chain-bay-target-on-photo.jpg": {
-  "bytes": 103678,
+  "bytes": 103205,
   "px": [
-   1010,
+   1016,
    375
   ]
  },
  "target-drawing-sheet.jpg": {
-  "bytes": 78228,
+  "bytes": 82443,
   "px": [
    914,
    1200
   ]
  },
+ "target-a1-bolt-section.jpg": {
+  "bytes": 26295,
+  "px": [
+   1040,
+   440
+  ]
+ },
+ "target-a1-walking-section.jpg": {
+  "bytes": 38515,
+  "px": [
+   806,
+   1100
+  ]
+ },
  "target-plan-street.jpg": {
-  "bytes": 26485,
+  "bytes": 33122,
   "px": [
    1142,
    477
   ]
  },
  "target-plan-jetty.jpg": {
-  "bytes": 31305,
+  "bytes": 34411,
   "px": [
-   1120,
-   672
+   1008,
+   336
   ]
  },
  "target-a1-beside-photographed-bars.jpg": {
-  "bytes": 78475,
+  "bytes": 78320,
   "px": [
    1200,
    367

@@ -34,12 +34,12 @@
    1715,
    2160
   ],
-  "foot_row": 2305,
+  "foot_row": 2309,
   "image_rows": 4096,
   "pitch_tan": 0.01616,
   "gauge_mm": 75.0,
   "step_m": 0.0,
-  "what": "brick gate pier of the park entrance, red courses above its blue-brick base, on the paving",
+  "what": "brick gate pier of the park entrance beside R3B, red courses above its blue-brick base, on the paving (foot row re-read at 16k after the fresh review: 4618 of 8192 = 2309; the first version read 2305)",
   "px_pitch_by_eye": 20.3,
   "search_range_tan": [
    0.01323,
