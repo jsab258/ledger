@@ -344,44 +344,73 @@ test("D", "checks: total height 1500, dome apex 1500, soffit 1343, rim 560, slot
 test("D", "checks: tolerance of total_height 15, dome_apex 10, soffit 8, door_proud 1 (expected 1)", ck["total_height"]["tolerance"] == 15 and ck["dome_apex"]["tolerance"] == 10 and ck["cap_soffit_height"]["tolerance"] == 8 and ck["door_proud"]["expected"] == 1 and ck["door_proud"]["tolerance"] == 1)
 test("D", "checks (N1): cap_rim_diameter is measured in z 1356 to 1378 and cap_soffit_height on the back half (y < 0); body_straight over z 140 to 1343", "1356" in ck["cap_rim_diameter"]["measure"] and "1378" in ck["cap_rim_diameter"]["measure"] and "back half (y < 0)" in ck["cap_soffit_height"]["measure"] and "140 to 1343" in ck["body_straight"]["measure"])
 test("D", "checks (N1): the reserved-area checks measure relief 'radially above' the surrounding curved face, not above a plane", all("radially above" in ck[n_]["measure"] and "plane" not in ck[n_]["measure"].replace("no geometry", "") for n_ in ("reserved_for_lettering", "reserved_for_cypher")))
-test("D", "checks (N1): profile_silhouette exists: back half, every 2 mm of z, against profile.outer_rz, expected 0 within 1.5", "profile_silhouette" in ck and ck["profile_silhouette"]["tolerance"] == 1.5 and ck["profile_silhouette"]["expected"] == 0 and "every 2 mm" in ck["profile_silhouette"]["measure"] and "back half" in ck["profile_silhouette"]["measure"] and "plain disc" in ck["profile_silhouette"]["measure"])
+test("D", "checks (R1): profile_silhouette is the two-way nearest distance in the r-z plane: back half, every 0.5 mm along each, against profile.outer_rz, expected 0 within 1.5, no bevel allowance", "profile_silhouette" in ck and ck["profile_silhouette"]["tolerance"] == 1.5 and ck["profile_silhouette"]["expected"] == 0 and "nearest distance either way" in ck["profile_silhouette"]["measure"] and "r-z plane" in ck["profile_silhouette"]["measure"] and "0.5 mm" in ck["profile_silhouette"]["measure"] and "back half" in ck["profile_silhouette"]["measure"] and "plain disc" in ck["profile_silhouette"]["measure"] and "every 2 mm" not in ck["profile_silhouette"]["measure"] and "3.0" not in ck["profile_silhouette"]["kind"] and "bevel allowance" in ck["profile_silhouette"]["kind"])
+test("D", "checks (R2): dome_sagitta is measured from the top of the neck, the highest z at which the profile radius is 250 (1420), not from 'the base circle'", "1420" in ck["dome_sagitta"]["measure"] and "highest z at which the profile radius is 250" in ck["dome_sagitta"]["measure"] and "base circle" not in ck["dome_sagitta"]["measure"] and max(p[1] for p in prof if abs(p[0] - 250) < 1e-9) == 1420)
+test("D", "checks (R3): the reserved areas are painted the surrounding red with no tint, outline or mask in any texture, and the check reserved_areas_paint says albedo equals the surrounding paint within 3 per channel", all("painted the surrounding red" in T["parts"]["panels"][k_]["note"] and "no tint, outline or mask in any texture" in T["parts"]["panels"][k_]["note"] and "painted the surrounding red" in T["parts"]["panels"][k_]["placement"] for k_ in ("reserved_for_lettering", "reserved_for_cypher")) and "reserved_areas_paint" in ck and ck["reserved_areas_paint"]["tolerance"] == 3 and "surrounding paint" in ck["reserved_areas_paint"]["measure"])
+test("D", "checks (R3): the drawing paints the reserved areas the surrounding red (no 'reserved' tint); only an annotation outline marks them", all(p_["material"] in ("red", "door") for p_ in fe["polygons"] if p_["name"].endswith("_FLUSH")) and any(p_["name"].startswith("annotation_outline_reserved") for p_ in fe["polygons"]) and not any(p_["material"] == "reserved" for p_ in fe["polygons"]))
+test("D", "checks (R3): the annotation outlines are hole-free polygons (so no picture paints the reserved areas background-coloured)", all(len(p_["holes"]) == 0 for p_ in fe["polygons"] if p_["name"].startswith("annotation_outline_reserved")) and sum(1 for p_ in fe["polygons"] if p_["name"].startswith("annotation_outline_reserved")) == 2)
+test("D", "door placement (R4): the half angle in the placement text equals half_angle_deg (37.7, asin(150 / 245.5)), not 37.0", f"{dr_['half_angle_deg']:.1f} degrees" in dr_["placement"] and "37.7 degrees" in dr_["placement"] and "37.0" not in dr_["placement"] and abs(math.degrees(math.asin(150 / 245.5)) - 37.66) < 0.01)
+test("D", "bevels (R5): no bevel at the footway: the foot-band bottom entry is renamed 'skirt bottom (z -150, hidden)'", any(b_["edge"] == "skirt bottom (z -150, hidden)" for b_ in T["bevels"]) and not any("foot band bottom" in b_["edge"] for b_ in T["bevels"]))
 test("D", "checks (N3): no hinge checks; door_left_edge_flush replaces them (1.5 mm); (N5) no enamel check; (N6) front_faces_footway replaces front_faces_road; (N8) keyhole_shutter_paint", all(n_ not in ck for n_ in ("hinge_count_and_place", "hinge_size", "enamel_frame", "front_faces_road")) and ck["door_left_edge_flush"]["expected"] == 1.5 and ck["front_faces_footway"]["tolerance"] == 10 and "keyhole_shutter_paint" in ck)
 test("D", "checks: at least 35 checks, covering geometry, paint, wear, canon and placement", len(T["checks"]) >= 35, len(T["checks"]))
 test("D", "variants: main, no black band, Type K (not built), no plate; the Type K is not built", [v["id"] for v in T["variants"]["list"]] == ["main", "no_black_band", "type_k_capless", "no_plate"] and T["decision_type"]["variant"]["build"] is False)
 
 
-# the silhouette check has teeth (review N1): a cap or a foot without its moulding must fail it, a correct build must pass it
-def radius_fn(pts):
-    def f(z):
-        best = 0.0
-        for (r0, z0), (r1, z1) in zip(pts[:-1], pts[1:]):
-            lo, hi = min(z0, z1), max(z0, z1)
-            if lo - 1e-9 <= z <= hi + 1e-9:
-                r = max(r0, r1) if abs(z1 - z0) < 1e-9 else r0 + (r1 - r0) * (z - z0) / (z1 - z0)
-                best = max(best, r)
-        return best
-    return f
+# the silhouette check has teeth AND does not refuse a correct build (review N1 and R1), measured as the check is worded:
+# the largest nearest distance either way between the section's outline and the profile, in the r-z plane, sampled every 0.5 mm along each
+import shapely  # noqa: E402
+import numpy as np  # noqa: E402
+from shapely.geometry import LineString as LS  # noqa: E402
 
 
-def deviation(ref, mesh, z0=0.0, z1=1500.0, step=2.0):
-    fr, fm = radius_fn(ref), radius_fn(mesh)
-    worst = 0.0
-    z = z0
-    while z <= z1 + 1e-9:
-        worst = max(worst, abs(fr(z) - fm(z)))
-        z += step
-    return worst
+def sample(pts, step=0.5):
+    out = []
+    for (r0, z0), (r1, z1) in zip(pts[:-1], pts[1:]):
+        n = max(1, int(math.ceil(math.hypot(r1 - r0, z1 - z0) / step)))
+        for i in range(n):
+            out.append((r0 + (r1 - r0) * i / n, z0 + (z1 - z0) * i / n))
+    out.append(pts[-1])
+    return np.array(out)
 
 
-seg = {s_["name"]: s_ for s_ in T["profile"]["segments"]}
+def two_way(ref, mesh):
+    A, B = LS(ref), LS(mesh)
+    d1 = shapely.distance(shapely.points(sample(mesh)), A).max()
+    d2 = shapely.distance(shapely.points(sample(ref)), B).max()
+    return float(max(d1, d2))
+
+
 P_ = [tuple(p) for p in prof]
-plain_cap = [p for p in P_ if p[1] <= cap_["soffit_z"]] + [(280.0, cap_["soffit_z"]), (280.0, cap_["rim_z"][1]), (250.0, cap_["rim_z"][1]), (250.0, cap_["dome_base_z"])] + [p for p in P_ if p[1] >= cap_["dome_base_z"] and p[0] <= 250]
-plain_foot = [p for p in P_ if p[1] <= 48][:3] + [(244.5, 48.0), (244.5, 140.0)] + [p for p in P_ if p[1] > 140]
-dev_ok = deviation(P_, P_)
-dev_bevel = deviation(P_, [(r + 0.8, z) for r, z in P_])
-test("D", "silhouette check: a correct build (the profile itself, or 0.8 mm out) passes the 1.5 mm tolerance", dev_ok == 0 and dev_bevel < 1.5, (dev_ok, dev_bevel))
-test("D", "silhouette check: a plain 560 disc for the cap, with no cove, bead or neck, FAILS (deviation above 1.5)", deviation(P_, plain_cap) > 1.5, deviation(P_, plain_cap))
-test("D", "silhouette check: a foot with no quarter-round, splay or cove FAILS", deviation(P_, plain_foot) > 1.5, deviation(P_, plain_foot))
+S_ = {s_["name"]: (s_["first"], s_["last"]) for s_ in T["profile"]["segments"]}
+
+
+def replace_seg(name, new_pts):
+    f, l_ = S_[name]
+    return P_[:f] + list(new_pts) + P_[l_ + 1:]
+
+
+rs = T["profile"]["dome"]["sphere_radius"]
+zc = 1500 - rs
+true_sphere = replace_seg("dome", [(250.0 * (1 - i / 8), zc + math.sqrt(rs * rs - (250.0 * (1 - i / 8)) ** 2)) for i in range(9)])
+plain_cap = P_[:S_["cap_cove"][0] + 1] + [(280.0, 1343.0), (280.0, 1378.0), (250.0, 1378.0), (250.0, 1420.0)] + P_[S_["dome"][0] + 1:]
+plain_foot = P_[:S_["foot_band"][1] + 1] + [(244.5, 48.0), (244.5, 140.0)] + P_[S_["body"][1]:]
+foot_chamfer = replace_seg("foot_top_round", [(288.0, 48.0), (276.0, 60.0)])
+square_bead = replace_seg("cap_bead", [(280.0, 1378.0), (280.0, 1390.0), (268.0, 1390.0)])
+cove_chamfer = replace_seg("cap_cove", [(244.5, 1343.0), (280.0, 1356.0)])
+f_, l_ = S_["cap_cove"]
+lip_bevel = P_[:l_] + [(278.5, 1356.0), (280.0, 1357.5)] + P_[S_["cap_rim"][0] + 1:]
+rise100 = P_[:S_["dome"][0]] + [(250.0 * (1 - i / 20), 1420.0 + (100 - (((250 ** 2 + 100 ** 2) / 200) - math.sqrt(((250 ** 2 + 100 ** 2) / 200) ** 2 - (250.0 * (1 - i / 20)) ** 2)))) for i in range(21)]
+should_pass = {"the profile itself": P_, "placed 0.3 mm high": [(r, z + 0.3) for r, z in P_], "placed 1 mm high": [(r, z + 1.0) for r, z in P_],
+               "a true-sphere dome in 8 rings": true_sphere, "a 1.5 mm bevel on the rim's lower lip": lip_bevel, "0.8 mm out in r": [(r + 0.8, z) for r, z in P_]}
+should_fail = {"a plain 560 disc for the cap (no cove, bead or neck)": plain_cap, "a foot with no round, splay or cove": plain_foot, "the foot's round built as a 12 mm chamfer": foot_chamfer,
+               "the cap bead built as a square corner": square_bead, "the cap cove built as a 45 degree chamfer": cove_chamfer, "a dome rise of 100 instead of 80": rise100}
+res_pass = {k_: two_way(P_, v_) for k_, v_ in should_pass.items()}
+res_fail = {k_: two_way(P_, v_) for k_, v_ in should_fail.items()}
+for k_, v_ in res_pass.items():
+    test("D", f"silhouette check (R1) PASSES a correct build: {k_}", v_ < 1.5, round(v_, 2))
+for k_, v_ in res_fail.items():
+    test("D", f"silhouette check (R1) FAILS a wrong build: {k_}", v_ > 1.5, round(v_, 2))
+test("D", "silhouette check (R1): a build placed 1 mm high passes here and the other checks agree (the datum check allows 3 mm, the height check 15, the apex 10)", res_pass["placed 1 mm high"] < 1.5 and ck["pivot_and_datum"]["tolerance"] == 3 and ck["total_height"]["tolerance"] == 15 and ck["dome_apex"]["tolerance"] == 10)
 
 # ------------------------------------------------------------------------------------------------------------------
 # E. text and canon
@@ -413,7 +442,7 @@ test("E", "no other `string` or `text` key anywhere in parts (nothing else is le
 md = open(os.path.join(HERE, "TARGET.md"), encoding="utf-8").read()
 first = [ln for ln in md.splitlines() if ln.strip() and not ln.startswith("#")][0]
 test("E", "TARGET.md opens with the one summary line and it says no photograph was reached", "no photograph of a pillar box was reached" in first.lower(), first[:120])
-for needle in ("489", "1500", "576", "560", "150/30/32", "35/35/36", "COLLECTIONS", "MON-FRI 5.30 PM", "SAT 12 NOON", "could not settle", "Unreached", "Type K", "no maker", "1626", "1278", "1343", "888", "building line", "flush", "265", "8192", "second try"):
+for needle in ("489", "1500", "576", "560", "150/30/32", "35/35/36", "COLLECTIONS", "MON-FRI 5.30 PM", "SAT 12 NOON", "could not settle", "Unreached", "Type K", "no maker", "1626", "1278", "1343", "888", "building line", "flush", "265", "8192", "second try", "Narrow points applied after the re-review", "nearest distance", "37.7", "skirt bottom", "painted the surrounding red", "1420"):
     test("E", f"TARGET.md contains '{needle}'", needle.lower() in md.lower(), needle)
 test("E", "TARGET.md no longer calls 1372 the total height or the stand-in's cap and dome 'inside' it", "1372 in all" not in md and "1372 mm above the footway in all" not in md and "go INSIDE that height" not in md)
 test("E", "TARGET.md no longer mentions hinge knuckles as geometry, an enamel plate frame, or brass", "two barrel hinges" not in md and "enamel-plate frame" not in md and "brass swivel" not in md)

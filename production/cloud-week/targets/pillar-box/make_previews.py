@@ -59,7 +59,7 @@ pair.paste(fe, (0, 0)); pair.paste(se, (fe.width + 10, 0))
 sys.path.insert(0, HERE)
 import target_drawing as TD  # noqa: E402
 levels = TD.plan_levels(TD.Box(T))
-save(caption(pair, "DRAWING from target.json (not a photograph): front and side elevation, 1 mm a pixel before reduction. 489 body, 576 foot, 560 cap, 1500 high, red 150/30/32, black band 200. The cypher and lettering areas are flush (tinted here only to show where)."), "target-quay-street-elevations.jpg")
+save(caption(pair, "DRAWING from target.json (not a photograph): front and side elevation, 1 mm a pixel before reduction. 489 body, 576 foot, 560 cap, 1500 high, red 150/30/32, black band 200. The cypher and lettering areas are flush and painted like their surroundings (thinly outlined here only to show where)."), "target-quay-street-elevations.jpg")
 save(caption(plans, "DRAWING from target.json (not a photograph): plans at " + ", ".join(f"z {z} ({n.replace('_', ' ')})" for n, z in levels) + ". Front up the page."), "target-quay-street-plans.jpg")
 save(caption(sec, "DRAWING from target.json: section through the axis, front to the right"), "target-quay-street-axial-section.jpg")
 

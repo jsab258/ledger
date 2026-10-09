@@ -481,7 +481,7 @@
    "radius": 1.5
   },
   {
-   "edge": "foot band bottom",
+   "edge": "skirt bottom (z -150, hidden)",
    "radius": 2.0
   },
   {
@@ -647,7 +647,7 @@
    "outer_radius": 245.5,
    "proud": 1,
    "corner_radius": 10,
-   "placement": "a flush door concentric with the body: a cylindrical panel of outer radius 245.5 (1 mm proud of the body's 244.5), 300 wide as a chord (half angle 37.0 degrees), z 280 to 1168; only the 3 x 3 joint groove round it shows it",
+   "placement": "a flush door concentric with the body: a cylindrical panel of outer radius 245.5 (1 mm proud of the body's 244.5), 300 wide as a chord (half angle 37.7 degrees), z 280 to 1168; only the 3 x 3 joint groove round it shows it",
    "joint_groove": {
     "width": 3,
     "depth": 3
@@ -687,8 +687,8 @@
     "z1": 1230,
     "surface": "body",
     "flush": true,
-    "placement": "a flush reserved band on the body's own face (radius 244.5), concentric with the body, 300 wide as a chord (half angle 37.8 degrees) and 40 high; no raised or cut geometry at all",
-    "note": "FLUSH: no raised or cut geometry (relief 0 within the area, measured radially above the body's own curved face). The minted lettering is cast here once canon supplies it."
+    "placement": "a flush reserved band on the body's own face (radius 244.5), concentric with the body, 300 wide as a chord (half angle 37.8 degrees) and 40 high; no raised or cut geometry at all; painted the surrounding red (the body's), with no tint, outline or mask in any texture: invisible on the built box",
+    "note": "FLUSH: no raised or cut geometry (relief 0 within the area, measured radially above the body's own curved face), painted the surrounding red (the body's), with no tint, outline or mask in any texture: invisible on the built box. The minted lettering is cast here once canon supplies it."
    },
    "reserved_for_cypher": {
     "cx": 0,
@@ -696,8 +696,8 @@
     "diameter": 110,
     "surface": "door",
     "flush": true,
-    "placement": "a flush reserved disc on the door's own face (radius 245.5), concentric with the door's face and centred on the door's axis, 110 across; no raised or cut geometry at all",
-    "note": "FLUSH: no raised or cut geometry (relief 0 within the area, measured radially above the door's own curved face). The minted cypher is cast here once canon supplies it."
+    "placement": "a flush reserved disc on the door's own face (radius 245.5), concentric with the door's face and centred on the door's axis, 110 across; no raised or cut geometry at all; painted the surrounding red (the door's), with no tint, outline or mask in any texture: invisible on the built box",
+    "note": "FLUSH: no raised or cut geometry (relief 0 within the area, measured radially above the door's own curved face), painted the surrounding red (the door's), with no tint, outline or mask in any texture: invisible on the built box. The minted cypher is cast here once canon supplies it."
    },
    "note": "a real box carries its cypher and lettering as raised letters directly on the iron: it has no blank disc and no blank tablet (review N5). Canon owes the postal cypher and the operator's name; the box is correct and incomplete."
   },
@@ -1677,10 +1677,10 @@
   {
    "name": "profile_silhouette",
    "applies_to": "foot, body, cap, dome",
-   "measure": "on the back half (y < 0, clear of the casting seam), the mesh's radius every 2 mm of z from 0 to the apex, against profile.outer_rz interpolated; largest absolute deviation, mm. A cap that is a plain disc, or a foot without its quarter-round, splay and cove, fails.",
+   "measure": "on the back half (y < 0, clear of the casting seam), the section's outline in the r-z plane against profile.outer_rz from z 0 to the apex: the largest nearest distance either way (every point of the outline to the profile, and every point of the profile to the outline, sampled every 0.5 mm along each), mm. A cap that is a plain disc, a foot without its quarter-round, splay and cove, a square bead or a chamfered cove fails; a correct build placed up to 1 mm high, a true-sphere dome and a 1.5 mm bevel on the rim's lip pass.",
    "expected": 0,
    "tolerance": 1.5,
-   "kind": "Derived (the profile); 3.0 allowed within 2 mm of a bevelled edge"
+   "kind": "Derived (the profile); no bevel allowance is needed"
   },
   {
    "name": "body_diameter",
@@ -1717,7 +1717,7 @@
   {
    "name": "dome_sagitta",
    "applies_to": "dome",
-   "measure": "apex z minus the z of the dome's base circle (r 250), mm",
+   "measure": "apex z minus the highest z at which the profile radius is 250 (the top of the neck, 1420), mm",
    "expected": 80,
    "tolerance": 6,
    "kind": "Judgement"
@@ -1947,6 +1947,18 @@
     "relief": 0.3
    },
    "kind": "Judgement; canon (the postal cypher is owed)"
+  },
+  {
+   "name": "reserved_areas_paint",
+   "applies_to": "reserved areas",
+   "measure": "median albedo within each reserved area (the lettering band, the cypher disc) minus the surrounding paint's albedo (the body's red, the door's red), per channel: painted the surrounding red, no tint, outline or mask in any texture",
+   "expected": [
+    0,
+    0,
+    0
+   ],
+   "tolerance": 3,
+   "kind": "Judgement (review R3); canon (invisible on the built box)"
   },
   {
    "name": "collection_frame",
@@ -2719,7 +2731,7 @@
     "z1": 1230,
     "surface": "body",
     "flush": true,
-    "placement": "a flush reserved band on the body's own face (radius 244.5), concentric with the body, 300 wide as a chord (half angle 37.8 degrees) and 40 high; no raised or cut geometry at all"
+    "placement": "a flush reserved band on the body's own face (radius 244.5), concentric with the body, 300 wide as a chord (half angle 37.8 degrees) and 40 high; no raised or cut geometry at all; painted the surrounding red (the body's), with no tint, outline or mask in any texture: invisible on the built box"
    },
    "unit": "mm",
    "kind": "Judgement",
@@ -2733,7 +2745,7 @@
     "diameter": 110,
     "surface": "door",
     "flush": true,
-    "placement": "a flush reserved disc on the door's own face (radius 245.5), concentric with the door's face and centred on the door's axis, 110 across; no raised or cut geometry at all"
+    "placement": "a flush reserved disc on the door's own face (radius 245.5), concentric with the door's face and centred on the door's axis, 110 across; no raised or cut geometry at all; painted the surrounding red (the door's), with no tint, outline or mask in any texture: invisible on the built box"
    },
    "unit": "mm",
    "kind": "Judgement",
@@ -2839,9 +2851,9 @@
  },
  "self_check": {
   "date": "2026-10-09",
-  "result_line": "SELF-CHECK PASS: 212 of 212 tests pass (A printed numbers 61/61, B photograph measurements 13/13 [none exist: it tests that none is claimed], C drawing 21/21 [no photograph: nothing laid on one], D internal consistency 66/66, E text and canon 51/51)",
-  "passed": 212,
-  "total": 212,
+  "result_line": "SELF-CHECK PASS: 234 of 234 tests pass (A printed numbers 61/61, B photograph measurements 13/13 [none exist: it tests that none is claimed], C drawing 21/21 [no photograph: nothing laid on one], D internal consistency 82/82, E text and canon 57/57)",
+  "passed": 234,
+  "total": 234,
   "parts": {
    "A": [
     61,
@@ -2856,11 +2868,11 @@
     0
    ],
    "D": [
-    66,
+    82,
     0
    ],
    "E": [
-    51,
+    57,
     0
    ]
   },
@@ -3362,7 +3374,7 @@
     "part": "C",
     "name": "front elevation: no hinge knuckle, pin or enamel plate is drawn",
     "ok": true,
-    "detail": "['base_black', 'body_red', 'collection_frame', 'collection_plate', 'door', 'door_joint', 'flap', 'hood', 'hood_front_edge', 'keyhole', 'keyhole_shutter', 'keyhole_shutter_edge', 'lock_escutcheon', 'reserved_for_cypher_FLUSH', 'reserved_for_lettering_FLUSH', 'ring_line', 'sill', 'sill_line', 'slot']"
+    "detail": "['annotation_outline_reserved_for_cypher', 'annotation_outline_reserved_for_lettering', 'base_black', 'body_red', 'collection_frame', 'collection_plate', 'door', 'door_joint', 'flap', 'hood', 'hood_front_edge', 'keyhole', 'keyhole_shutter', 'keyhole_shutter_edge', 'lock_escutcheon', 'reserved_for_cy"
    },
    {
     "part": "C",
@@ -3764,7 +3776,7 @@
     "part": "D",
     "name": "checks: every check has name, applies_to, measure, expected, tolerance, kind and the names are unique",
     "ok": true,
-    "detail": "47"
+    "detail": "48"
    },
    {
     "part": "D",
@@ -3792,7 +3804,43 @@
    },
    {
     "part": "D",
-    "name": "checks (N1): profile_silhouette exists: back half, every 2 mm of z, against profile.outer_rz, expected 0 within 1.5",
+    "name": "checks (R1): profile_silhouette is the two-way nearest distance in the r-z plane: back half, every 0.5 mm along each, against profile.outer_rz, expected 0 within 1.5, no bevel allowance",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks (R2): dome_sagitta is measured from the top of the neck, the highest z at which the profile radius is 250 (1420), not from 'the base circle'",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks (R3): the reserved areas are painted the surrounding red with no tint, outline or mask in any texture, and the check reserved_areas_paint says albedo equals the surrounding paint within 3 per channel",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks (R3): the drawing paints the reserved areas the surrounding red (no 'reserved' tint); only an annotation outline marks them",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "checks (R3): the annotation outlines are hole-free polygons (so no picture paints the reserved areas background-coloured)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "door placement (R4): the half angle in the placement text equals half_angle_deg (37.7, asin(150 / 245.5)), not 37.0",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "part": "D",
+    "name": "bevels (R5): no bevel at the footway: the foot-band bottom entry is renamed 'skirt bottom (z -150, hidden)'",
     "ok": true,
     "detail": ""
    },
@@ -3806,7 +3854,7 @@
     "part": "D",
     "name": "checks: at least 35 checks, covering geometry, paint, wear, canon and placement",
     "ok": true,
-    "detail": "47"
+    "detail": "48"
    },
    {
     "part": "D",
@@ -3816,21 +3864,81 @@
    },
    {
     "part": "D",
-    "name": "silhouette check: a correct build (the profile itself, or 0.8 mm out) passes the 1.5 mm tolerance",
+    "name": "silhouette check (R1) PASSES a correct build: the profile itself",
     "ok": true,
-    "detail": "(0.0, 0.8000000000000114)"
+    "detail": "0.0"
    },
    {
     "part": "D",
-    "name": "silhouette check: a plain 560 disc for the cap, with no cove, bead or neck, FAILS (deviation above 1.5)",
+    "name": "silhouette check (R1) PASSES a correct build: placed 0.3 mm high",
     "ok": true,
-    "detail": "35.26106194690266"
+    "detail": "0.3"
    },
    {
     "part": "D",
-    "name": "silhouette check: a foot with no quarter-round, splay or cove FAILS",
+    "name": "silhouette check (R1) PASSES a correct build: placed 1 mm high",
     "ok": true,
-    "detail": "43.5"
+    "detail": "1.0"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1) PASSES a correct build: a true-sphere dome in 8 rings",
+    "ok": true,
+    "detail": "0.39"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1) PASSES a correct build: a 1.5 mm bevel on the rim's lower lip",
+    "ok": true,
+    "detail": "1.06"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1) PASSES a correct build: 0.8 mm out in r",
+    "ok": true,
+    "detail": "0.8"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1) FAILS a wrong build: a plain 560 disc for the cap (no cove, bead or neck)",
+    "ok": true,
+    "detail": "12.99"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1) FAILS a wrong build: a foot with no round, splay or cove",
+    "ok": true,
+    "detail": "28.91"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1) FAILS a wrong build: the foot's round built as a 12 mm chamfer",
+    "ok": true,
+    "detail": "3.52"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1) FAILS a wrong build: the cap bead built as a square corner",
+    "ok": true,
+    "detail": "4.96"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1) FAILS a wrong build: the cap cove built as a 45 degree chamfer",
+    "ok": true,
+    "detail": "4.99"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1) FAILS a wrong build: a dome rise of 100 instead of 80",
+    "ok": true,
+    "detail": "20.0"
+   },
+   {
+    "part": "D",
+    "name": "silhouette check (R1): a build placed 1 mm high passes here and the other checks agree (the datum check allows 3 mm, the height check 15, the apex 10)",
+    "ok": true,
+    "detail": ""
    },
    {
     "part": "E",
@@ -4008,6 +4116,42 @@
    },
    {
     "part": "E",
+    "name": "TARGET.md contains 'Narrow points applied after the re-review'",
+    "ok": true,
+    "detail": "Narrow points applied after the re-review"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains 'nearest distance'",
+    "ok": true,
+    "detail": "nearest distance"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains '37.7'",
+    "ok": true,
+    "detail": "37.7"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains 'skirt bottom'",
+    "ok": true,
+    "detail": "skirt bottom"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains 'painted the surrounding red'",
+    "ok": true,
+    "detail": "painted the surrounding red"
+   },
+   {
+    "part": "E",
+    "name": "TARGET.md contains '1420'",
+    "ok": true,
+    "detail": "1420"
+   },
+   {
+    "part": "E",
     "name": "TARGET.md no longer calls 1372 the total height or the stand-in's cap and dome 'inside' it",
     "ok": true,
     "detail": ""
@@ -4094,7 +4238,7 @@
     "part": "E",
     "name": "preview target-quay-street-elevations.jpg: JPEG, at most 1200 px long side, under 300 KB",
     "ok": true,
-    "detail": "((1011, 1200), 63640)"
+    "detail": "((1011, 1200), 66167)"
    },
    {
     "part": "E",

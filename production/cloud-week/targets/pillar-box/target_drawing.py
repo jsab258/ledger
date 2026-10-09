@@ -130,11 +130,16 @@ def front_elevation(b):
     d = b.door
     L.append(("door_joint", "line", rrect(d["x0"] - 3, d["z0"] - 3, d["x1"] + 3, d["z1"] + 3, d["corner_radius"] + 3).difference(rrect(d["x0"], d["z0"], d["x1"], d["z1"], d["corner_radius"]))))
     L.append(("door", "door", rrect(d["x0"], d["z0"], d["x1"], d["z1"], d["corner_radius"])))
-    # FLUSH reserved areas for the lettering and the cypher: no geometry, drawn as a faint tint with no relief
+    # FLUSH reserved areas for the lettering and the cypher: no geometry and painted the surrounding red (the body's, the door's);
+    # only the thin outline below is an annotation of this DRAWING, not part of the box
     lt = b.pan["reserved_for_lettering"]
-    L.append(("reserved_for_lettering_FLUSH", "reserved", box(lt["x0"], lt["z0"], lt["x1"], lt["z1"])))
+    ltb = box(lt["x0"], lt["z0"], lt["x1"], lt["z1"])
+    L.append(("reserved_for_lettering_FLUSH", "red", ltb))
+    L.append(("annotation_outline_reserved_for_lettering", "line", ltb.exterior.buffer(0.5).difference(box(lt["x0"] + 20, lt["z1"] - 1, lt["x0"] + 20.2, lt["z1"] + 1))))  # a 0.2 mm slit: no hole, so the picture does not paint the area
     cy = b.pan["reserved_for_cypher"]
-    L.append(("reserved_for_cypher_FLUSH", "reserved", disc(cy["cx"], cy["cz"], cy["diameter"])))
+    cyd = disc(cy["cx"], cy["cz"], cy["diameter"])
+    L.append(("reserved_for_cypher_FLUSH", "door", cyd))
+    L.append(("annotation_outline_reserved_for_cypher", "line", cyd.exterior.buffer(0.5).difference(box(cy["cx"] - 0.1, cy["cz"] + cy["diameter"] / 2 - 1, cy["cx"] + 0.1, cy["cz"] + cy["diameter"] / 2 + 1))))
     # the one plate frame and its plate
     fr = b.pl["collection_frame"]
     x0, x1 = fr["cx"] - fr["outer_w"] / 2, fr["cx"] + fr["outer_w"] / 2
