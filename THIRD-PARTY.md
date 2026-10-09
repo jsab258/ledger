@@ -498,3 +498,22 @@ and no content derived from them is generated into the game. The done-test
 they serve is a side-by-side judgment by a person. Since 3 October they are no
 longer in this repository (as above), kept on his PC at
 F:/LedgerTools/reference-other-games and in his backup.
+
+## Fonts for the street's signs and paper (cloud week 42, 9 October 2026), SIL Open Font Licence 1.1
+
+Fetched from Google Fonts' repository (github.com/google/fonts, `ofl/<family>/`) for the shop
+fascias (production/cloud-week/2d/fascias/) and the posters, notices, boards and plates; each
+licence was read and travels beside its font in production/fonts/<family>/OFL.txt. They are used
+to draw our own lettering into textures; the OFL allows that and allows shipping the fonts, never
+selling them on their own.
+
+| Family (folder) | Copyright, as its OFL.txt states |
+|---|---|
+| Abril Fatface (abril-fatface) | Copyright (c) 2011, TypeTogether |
+| Alfa Slab One (alfa-slab-one) | Copyright 2016 The Alfa Slab One Project Authors, Reserved Font Name "Alfa Slab" |
+| Fraunces (fraunces) | Copyright 2018 The Fraunces Project Authors |
+| Josefin Sans (josefin-sans) | Copyright 2010 The Josefin Sans Project Authors, with a Reserved Font Name |
+| Jost (jost) | Copyright 2020 The Jost Project Authors |
+| Libre Franklin (libre-franklin) | Copyright 2020 The Libre Franklin Project Authors |
+| Old Standard TT (old-standard-tt) | Copyright 2011 The Old Standard Project Authors |
+| Oswald (oswald) | Copyright 2016 The Oswald Project Authors |
