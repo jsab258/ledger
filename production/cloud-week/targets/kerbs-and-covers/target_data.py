@@ -21,7 +21,7 @@ def sources():
        'Mixed. The granite kerbs, setts and cast-iron grates are period-type objects (Victorian to 1970s, laid long before 1990); the concrete ramp looks 1970s-80s (weathered exposed aggregate); the yellow lines and the car are 2019.',
        'Granite kerbs and sett channels were laid in the 19th and early 20th century and kept; cast-iron gratings to BS 497 (1976) were the 1990 norm; vehicle crossings with a concrete ramp and granite or concrete flanks were common in the 1970s-80s. Differences in 1990: the stone would be sootier and the channel dirtier; no 2000s dropper-block crossing with tactile blisters; no ductile-iron hinged grates.')
     ph('S2', 'https://polyhaven.com/a/urban_street_01 ; files via api.polyhaven.com', 'Andreas Mischok', '2019-08-18 07:09 UTC', [51.528295, -0.053879],
-       'A resurfaced Bethnal Green street with a new granite build-out: granite kerb blocks, a mitred corner (about 112 degrees), a planter kerb.',
+       'A resurfaced Bethnal Green street with a new granite build-out: granite kerb blocks, a mitred corner (about 133 degrees), a planter kerb.',
        'yes (corner)', 'REPLACEMENT: the kerbs are new (2010s sawn-top granite, cleaner than 1990); the form (mitred corner, joint width, block length) is period.',
        'Granite kerb corners were mitred or cut to radius in the same way for a century; in 1990 they would be older, chipped and dirtier.')
     ph('S3', 'https://polyhaven.com/a/urban_street_02', 'Andreas Mischok', '2019-08-18 06:45 UTC', [51.526655, -0.056465],
@@ -33,7 +33,7 @@ def sources():
        'Granite kerb is Victorian; the road cover is utility ironwork of unknown age (a reinstatement patch around it).',
        'Studded steel or iron utility covers in a pale mortar surround are 1960s-90s; a London-smart street, so the wear is cleaner than a port town\'s.')
     ph('S5', 'https://polyhaven.com/a/bethnal_green_entrance', 'Andreas Mischok', '2019-08-18 07:01 UTC', [51.526915, -0.054044],
-       'A block-paved estate entrance with a square stud-pattern cover (used for the stud lattice only; the cover is 0.9 m from the nadir, so its size is +-8 %).',
+       'A block-paved estate entrance with a double-triangular square stud-pattern cover (two leaves split on a diagonal, 10 x 10 studs; the cover is 0.9 m from the nadir, so its size is +-8 %).',
        'yes (stud cover)', 'The block paving is 1990s-2000s; the cover is older ironwork re-set in it.',
        'Cast square-stud treads are 1960s-80s; same.')
     ph('S6', 'https://polyhaven.com/a/birbeck_street_underpass', 'Andreas Mischok', '2019-08-18 06:53 UTC', [51.525806, -0.056277],
@@ -131,8 +131,8 @@ def photo_measurements():
         'raw': {'px': [163, 108], 'mm_per_px': 3.0, 'plane_factor': 1.0, 'plane': 'ground'}, 'reading': 'columns 205 to 368, rows 437 to 545 of the main ground frame', 'error': '+-9 mm', 'kind': 'Photo'})
     pms.append({
         'id': 'PM14', 'what': 'gully grate A slot field and slot pitch', 'photo': ASS, 'taken': '2019-09-07', 'method': 'ortho_px_list',
-        'raw': {'px': [278, 190, 38], 'mm_per_px': 1.5, 'plane_factor': 1.0, 'plane': 'ground'},
-        'reading': 'slot field 278 px (first slot left edge 176 to last slot right edge 454), slot length 190 px, mean slot pitch 38 px (slot centres at 182, 218, 258, 297, [335 hidden], 372, 410, 448); 8 slots', 'error': '+-3 mm on pitch; +-8 on lengths', 'kind': 'Photo'})
+        'raw': {'px': [289, 190, 38], 'mm_per_px': 1.5, 'plane_factor': 1.0, 'plane': 'ground'},
+        'reading': 'CORRECTED after the review: slot field 289 px on the 1.5 mm preview (columns 170 to 459, first slot left edge to last slot right edge: 433 mm; the first reading, 278 px, took the first slot\'s left edge 6 px too far in), slot length 190 px, mean slot pitch 38 px (slot centres at 182, 218, 258, 297, [335 hidden under a leaf], 372, 410, 448); 8 slots. Slot widths at half level 25.5 to 34.5 (median 28.5) and bars 24 to 28.5 (PM28)', 'error': '+-3 mm on pitch; +-8 on lengths', 'kind': 'Photo'})
     pms.append({
         'id': 'PM15', 'what': 'grate B slot pitch (Birbeck Street) from the perspective view', 'photo': 'birbeck_street_underpass', 'taken': '2019-08-18', 'method': 'angular_width',
         'raw': {'px': 108, 'fov_deg': 12, 'w_px': 1400, 'distance_mm': 3550}, 'reading': 'seven slots at columns 330, 430, 530, 650, 760, 880, 990 of a 1400 px wide, 12 degree view (yaw 0.96, pitch -23; the preview is the same view reduced to 1200 px); pitch about 108 px; the slots stand about square to the view, so no foreshortening is applied', 'error': '+-6 mm', 'kind': 'Photo'})
@@ -147,7 +147,7 @@ def photo_measurements():
         'raw': {'a_px': [62, 20], 'b_px': [-18, 58], 'mm_per_px': 1.5}, 'reading': 'neighbouring studs on the rectified ortho (1.5 mm a pixel); the two vectors are at right angles (a square lattice)', 'error': '+-8 mm', 'kind': 'Photo'})
     pms.append({
         'id': 'PM18', 'what': 'stud cover: outer edges', 'photo': 'bethnal_green_entrance', 'taken': '2019-08-18', 'method': 'edge_lengths_px',
-        'raw': {'edges_px': [[515, 175], [-165, 570]], 'mm_per_px': 1.5}, 'reading': 'top edge and right edge of the cover, 0.9 m from the nadir', 'error': '+-70 mm', 'kind': 'Photo'})
+        'raw': {'edges_px': [[630, 175], [-165, 570]], 'mm_per_px': 1.5}, 'reading': 'top edge and right edge of the cover on the 1.5 mm ortho, 0.9 m from the nadir; CORRECTED after the review: the top edge runs about 650 px along (the first reading, 515, was short), giving about 980 x 920 mm', 'error': '+-70 mm', 'kind': 'Photo'})
     pms.append({
         'id': 'PM19', 'what': 'recessed utility cover in the footway: outer and infill', 'photo': ASS, 'taken': '2019-09-07', 'method': 'ortho_px_list',
         'raw': {'px': [394, 223, 320, 140, 42], 'mm_per_px': 3.0, 'plane_factor': 1.0, 'plane': 'footway, camera 1.48 m'},
@@ -163,8 +163,8 @@ def photo_measurements():
         'raw': {'px': [24], 'mm_per_px': 3.0, 'plane_factor': 1.0, 'plane': 'ground'}, 'reading': 'rows 548 to 572 at column 900; the line is 75 mm, so the scale is within 4 %', 'error': '+-5 mm', 'kind': 'Photo'})
     pms.append({
         'id': 'PM23', 'what': 'tread pattern cell (Poly Haven metal_grate_rusty, 500 mm tile)', 'photo': 'metal_grate_rusty', 'taken': 'n/a', 'method': 'listed',
-        'raw': {'results': {'period_x_mm': 71.3, 'period_y_mm': 83.5}, 'how': 'autocorrelation of the 2k diffuse, first peaks; lugs about 38 x 9 mm read by eye on the 900 px view'},
-        'reading': 'FFT autocorrelation peaks at 292 px (71.3 mm) and 342 px (83.5 mm)', 'error': '+-2 mm', 'kind': 'Photo (a texture scan of real ironwork)'})
+        'raw': {'results': {'period_x_mm': 71.4, 'period_y_mm': 83.5, 'row_spacing_mm': 41.75, 'row_shift_mm': 35.7, 'lug_mm': [36, 10.5]}, 'how': 'autocorrelation of the 2k diffuse (axis peaks 71.3 and 83.5 mm) and, after the review, lug centres read off the 1k displacement map: rows 41.75 apart, a horizontal and a vertical lug alternating every 35.7 along a row, each row shifted 35.7'},
+        'reading': 'FFT autocorrelation peaks at 292 px (71.3 mm) and 342 px (83.5 mm) took only the axis peaks and missed the centred lattice; the lug centres on the displacement map give 2 horizontal and 2 vertical lugs per 71.4 x 83.5 cell', 'error': '+-2 mm', 'kind': 'Photo (a texture scan of real ironwork)'})
     pms.append({
         'id': 'PM24', 'what': 'round cover model: outer diameter, depth, lid radius', 'photo': 'water_manhole_cover', 'taken': 'n/a', 'method': 'listed',
         'raw': {'results': {'outer_diameter_mm': 690.76, 'depth_mm': 67.62, 'lid_radius_mm': 294.1, 'ring_inner_radius_mm': 313.4}, 'how': 'glTF 1k, positions in metres read from the .bin'},
@@ -179,6 +179,24 @@ def photo_measurements():
         'raw': {'foot_row': 403, 'edge_row': 399.5, 'edge_z_mm': 117.7, 'plane_z_mm': 125},
         'reading': 'top frame: the middle of the light-to-dark fall over the right block is row 399.5 (rows 394 to 406 over columns 959 to 1109); on the kerb-top plane a point 7 mm lower is drawn 0.5 % nearer, which is corrected; foot row 403 on the ground frame',
         'error': '+-9 mm', 'kind': 'Photo'})
+    pms.append({
+        'id': 'PM27', 'what': 'mitred granite corner: interior angle (urban_street_01)', 'photo': 'urban_street_01', 'taken': '2019-08-18', 'method': 'corner_angle',
+        'raw': {'dirs_deg': [57, 11], 'dirs2_deg': [61, 14.5], 'note': 'on the 3.5 mm ground ortho ph-urban_street_01-kerb-mitred-corner-ortho.jpg: the kerb\'s road edges run at 57 and 11 degrees, the yellow lines at 61 and 13 to 16 (the review\'s readings)'},
+        'reading': 'interior angle = 180 minus the difference of the two runs\' directions: 134 from the kerb edges, 133.5 from the yellow lines', 'error': '+-5 degrees', 'kind': 'Photo'})
+    pms.append({
+        'id': 'PM28', 'what': 'grate A: slot and bar widths on the 1.5 mm preview (the review)', 'photo': ASS, 'taken': '2019-09-07', 'method': 'listed',
+        'raw': {'results': {'slot_width_median_mm': 28.5, 'slot_width_min_mm': 25.5, 'slot_width_max_mm': 34.5, 'bar_width_min_mm': 24.0, 'bar_width_max_mm': 28.5, 'black_fraction': 0.41},
+                'how': 'at half level across the slots on ph-urban_street_03-gully-grate-ortho.jpg; on a second ortho the slots read 25.5 to 31.5 (median 30) and the bars 25.5 to 28.5; the black fraction of the grate is about 0.41'},
+        'reading': 'the slots are about as wide as the bars, not two-thirds iron', 'error': '+-3 mm', 'kind': 'Photo'})
+    pms.append({
+        'id': 'PM29', 'what': 'grate B (Birbeck Street): slot width, bars, lifting holes (the review, rough)', 'photo': 'birbeck_street_underpass', 'taken': '2019-08-18', 'method': 'listed',
+        'raw': {'results': {'slot_width_mm': 28.0, 'bar_width_mm': 30.0, 'lifting_hole_diameter_mm': 25.0}, 'how': 'on the preview the slots are about half the pitch; two round lifting holes sit on the long axis beyond the two end slots'},
+        'reading': 'rough: perspective view', 'error': '+-15 %', 'kind': 'Photo'})
+    pms.append({
+        'id': 'PM30', 'what': 'grate A: centre and pitch of the slot field (centroids of the seven visible slots on the main ground frame)', 'photo': ASS, 'taken': '2019-09-07', 'method': 'listed',
+        'raw': {'results': {'x_centre_mm': -751.3, 'pitch_mm': 56.97, 'residual_std_mm': 1.0, 'slot_width_half_level_mm_mean': 28.6},
+                'how': 'brightness minima of the slots over rows 462 to 520 of the 3 mm main ground frame (columns 225.7, 244.4, 263.7, 283.3, [the fifth is under a leaf], 321.1, 339.7, 358.3); centre = mean of (3 x column - 1628 - the nominal slot centre); half-level widths 30, 27, 30, 27, 27, 24, 33 mm'},
+        'reading': 'the slot field is centred at x -751 in the crossing\'s plan frame; the pitch is 57.0; the slots are 28.6 wide at half level', 'error': '+-2 mm on the centre and pitch; +-3 on widths', 'kind': 'Photo'})
     return pms
 
 
@@ -196,14 +214,26 @@ def photographs_win():
          'chose': 'granite setts beside granite kerb; concrete channel block only beside the concrete kerb', 'why': 'the photograph shows setts; their brightness (1.35 to 1.7 times the road, Read from the wear target) is unchanged'},
         {'item': 'channel width', 'scene_or_book': '255 (Read; also the width of a BS concrete channel block)', 'photograph': '226 +-15 (two courses of setts, foot to asphalt edge)',
          'chose': '225 for the granite sett channel (two courses of 4.5 inch setts; the photograph gives 226 +-15); 255 kept for the concrete channel block', 'why': 'photographs win; the scene\'s 255 is the width of a BS concrete channel block'},
-        {'item': 'gully grate', 'scene_or_book': '400 mm square, recess 50, dish 30 (Read)', 'photograph': '489 x 324 rectangle, 8 slots 18 x 285 at pitch 57, slots across the channel, dish about 15 mm, kink in the yellow line',
-         'chose': '485 x 325, 8 slots; dish 15; recess and dish of the scene dropped', 'why': 'photographs win; the 400 square is a trade guess'},
+        {'item': 'gully grate', 'scene_or_book': '400 mm square, recess 50, dish 30 (Read)', 'photograph': '489 x 324 rectangle, 8 slots 29 wide (25.5 to 34.5) x 285 at pitch 57, bars 28 (24 to 28.5), slots across the channel, black fraction about 0.41, dish about 15 mm, kink in the yellow line',
+         'chose': '485 x 325, 8 slots 29 x 285, bars 28; dish 15; recess and dish of the scene dropped', 'why': 'photographs win; the 400 square is a trade guess'},
         {'item': 'dropped crossover upstand and taper block', 'scene_or_book': '6 mm upstand, one taper block (Read)', 'photograph': 'a row of granite setts stands 12 to 20 mm proud as the lip; a ramp 0.9 m deep at 1 in 7.4; granite flank strips; no taper block',
          'chose': 'lip 15 mm, ramp and flank strips; the taper block kept as a precast variant (Judgement, a lead)', 'why': 'the photographed crossing is the period form; 6 mm is the modern flush figure'},
-        {'item': 'corner', 'scene_or_book': 'asset plan: "kerb blocks ... drop kerb, corner" (no figures)', 'photograph': 'a mitred 112 degree corner (build-out) and a radius corner of about 6.5 m (granite blocks cut to the curve)',
+        {'item': 'corner', 'scene_or_book': 'asset plan: "kerb blocks ... drop kerb, corner" (no figures)', 'photograph': 'a mitred corner of about 133 degrees (build-out; PM27) and a radius corner of about 6.5 m (granite blocks cut to the curve)',
          'chose': 'both, as two pieces', 'why': 'both seen'},
         {'item': 'tactile paving', 'scene_or_book': 'asset plan: "leave the cone off"', 'photograph': 'no tactile surface on any dropped kerb in the photographs (the crossing in urban_street_03 is plain concrete); they are 2019 and say nothing about 1990',
          'chose': 'none', 'why': 'leads: first trial 1983, guidance 1998; a minor street in 1990 has none'},
+        {'item': 'grate slot and bar widths', 'scene_or_book': 'none printed (the first draft of this target: slot 18, bar 39)', 'photograph': 'slots 25.5 to 34.5 (median 28.5), bars 24 to 28.5; the black fraction is about 0.41 (PM28; PM14 corrected to a 289 px field)',
+         'chose': 'slot 29, bar 28, slot span 428, end walls 28.5, open fraction 0.42', 'why': 'the review re-measured the grate; the first draft read the slot field 11 px short'},
+        {'item': 'stud cover construction', 'scene_or_book': 'none printed (the first draft: one lid, 8 x 8 studs, 860)', 'photograph': 'two triangular leaves on one diagonal joint with half-studs along it, 10 x 10 studs, outer about 980 x 920, a round keyhole about 20, a blank raised oblong boss about 80 x 40; no oblong lifting pockets',
+         'chose': 'two triangular leaves, 10 x 10 studs, outer 960, keyholes and a blank boss', 'why': 'photographs win (the review re-read the Bethnal Green cover)'},
+        {'item': 'round cover tread lattice', 'scene_or_book': 'none printed (the first draft: one horizontal and one vertical lug per 71.3 x 83.5 cell)', 'photograph': 'a centred lattice: 2 horizontal and 2 vertical lugs per 71.4 x 83.5 cell, rows 41.75 apart, 36 x 10.5 lugs (PM23)',
+         'chose': 'lugs_in_cell with four lug centres', 'why': 'the autocorrelation had taken only the axis peaks'},
+        {'item': 'footway cover frame top', 'scene_or_book': 'none printed (the first draft: a flat outer flange)', 'photograph': 'the cast frame carries rows of small raised oblong lugs over its whole top (a 7 m telephoto: pattern yes, lug size no)',
+         'chose': 'a lugged frame (P2 lug 36 x 10.5 x 2.5, rows 41.75 apart)', 'why': 'photographs win; the lug size is Judgement'},
+        {'item': 'channel setts colour shares', 'scene_or_book': 'wear target M24: the channel reads 1.35 to 1.7 times the road', 'photograph': 'pale and dull setts mixed with some blue-grey (the lip row and channel boxes of PM sample set)',
+         'chose': 'sett_pale_worn 0.35, sett_dull 0.50, granite_blue_grey 0.15', 'why': 'without shares the clean setts could not land the channel inside 1.35 to 1.7; at these shares about 1.51 after the grime'},
+        {'item': 'asphalt laps the outer sett course', 'scene_or_book': 'channel course 255 (Read)', 'photograph': 'beyond the crossing\'s right end block the asphalt covers the outer 30 to 50 mm of course B, so the visible channel is 180 to 195; in front of the crossing course B shows to 225',
+         'chose': '225 modelled underneath; the asphalt laps 30 to 50 over about a third of a run', 'why': 'photographs win'},
         {'item': 'cover and grate lettering', 'scene_or_book': 'the brief: blank or generic words if photographed', 'photograph': 'no lettering legible on any cover or grate in the photographs',
          'chose': 'none', 'why': 'nothing photographed; "SV" "WATER" "GAS" allowed only if a photograph shows them'},
     ]
@@ -215,9 +245,9 @@ def variants():
         'kerb_concrete': {'count': 1, 'what': 'one section; 3 wear states (pointing cracked, arris spalled, paint blip); three runs of 4 to 8 blocks on the street, about 20 m of the 96 m of kerb, away from the crossing and the gully'},
         'crossover': {'count': 2, 'what': 'A the photographed form (ramp + flank strips + sett lip) at 3.0 m on the west side at x 22.5; B the precast dropper variant (not used unless the builder wants a second crossing)'},
         'channel': {'count': 2, 'what': 'granite setts (2 courses) beside granite; concrete channel block beside concrete'},
-        'corner': {'count': 2, 'what': 'mitred (angle 112, 90 allowed) and radius 6500; neither is in today\'s street: place at a build-out or at the cross-street end if the town adds one'},
-        'gully_grate': {'count': 2, 'what': 'A (8 slots, 485 x 325, on the street at x 12, east) and B (7 slots oval-trimmed, 490 x 445, optional second at the quay end); 3 wear states each; mirror along the kerb allowed'},
-        'covers': {'count': 4, 'what': 'four cast patterns (asset plan): P1 square-stud lattice (860 square), P2 round 600 class with lug tread, P3 recessed infill cover (footway telecom-style 1180 x 660; carriageway tarmac-filled 1000 x 1050), P4 two-leaf fine-stud road cover 1820 x 620; plus small service lids (stopcock, gas, telecom blank)'},
+        'corner': {'count': 2, 'what': 'mitred (angle 133 +-5, 90 allowed) and radius 6500; neither is in today\'s street: place at a build-out or at the cross-street end if the town adds one'},
+        'gully_grate': {'count': 2, 'what': 'A (8 slots 29 x 285, 485 x 325, on the street at x 12, east) and B (7 slots 28 wide oval-trimmed, 490 x 445, two lifting holes, optional second at the quay end); 3 wear states each; mirror along the kerb allowed'},
+        'covers': {'count': 4, 'what': 'four cast patterns (asset plan): P1 double-triangular square-stud cover (960 square, two leaves, 10 x 10 studs), P2 round 600 class with lug tread, P3 recessed infill cover (footway telecom-style 1180 x 660; carriageway tarmac-filled 1000 x 1050), P4 two-leaf fine-stud road cover 1820 x 620; plus small service lids (stopcock, gas, telecom blank)'},
         'street_counts_judgement': 'covers 10 to 14: P1 x2, P2 x2, P3 footway x2 and road x1, P4 x1, small lids x6 (3 stopcock, 2 gas, 1 telecom blank); grates 1 (the scene) to 3',
     }
 
@@ -268,14 +298,21 @@ def checks():
     add('crossover_flank', 'crossover', 'flank strip width, length, top z', {'width': 155, 'length': 715, 'top_z': 120}, {'width': 20, 'length': 30, 'top_z': 8}, 'Photo PM12')
     add('crossover_watertight', 'crossover', 'largest gap between ramp, lip, flank strips and end blocks', 15, 0, 'Judgement (bitumen joint 12 mm)')
     add('gully_grate_overall', 'gully_grate_A', 'overall size along the kerb x across', [485, 325], [10, 10], 'Photo PM13')
-    add('gully_grate_slots', 'gully_grate_A', 'slot count; slot width x length; pitch; slots perpendicular to the kerb', {'count': 8, 'width': 18, 'length': 285, 'pitch': 57}, {'count': 0, 'width': 2, 'length': 8, 'pitch': 2}, 'Photo PM14')
+    add('gully_grate_slots', 'gully_grate_A', 'slot count; slot width x length; bar width; slot span; end wall along; pitch; slots perpendicular to the kerb', {'count': 8, 'width': 29, 'length': 285, 'bar': 28, 'span': 428, 'end_wall_along': 28.5, 'pitch': 57}, {'count': 0, 'width': 4, 'length': 8, 'bar': 4, 'span': 6, 'end_wall_along': 4, 'pitch': 2}, 'Photo PM14 (field 289 px = 433), PM28 (slots 25.5 to 34.5, bars 24 to 28.5)')
+    add('gully_grate_open_fraction', 'gully_grate_A', 'slot area over the grate\'s plan area, 8 x 29 x 285 / (485 x 325)', 0.42, 0.04, 'Derived; Photo (the photograph\'s black fraction is about 0.41)')
+    add('gully_grate_B', 'gully_grate_B', 'slot count, slot width, bar width, pitch; lifting holes (count, diameter, on the long axis about 55 beyond the end slot centres); raised marks on the centre bar blank', {'slots': 7, 'width': 28, 'bar': 30, 'pitch': 58, 'holes': 2, 'hole_diameter': 25, 'beyond_end_slot_mm': 55}, {'slots': 0, 'width': 5, 'bar': 5, 'pitch': 4, 'holes': 0, 'hole_diameter': 4, 'beyond_end_slot_mm': 15}, 'Photo, rough (PM29)')
+    add('cast_iron_grate_base_colour', 'materials.cast_iron_grate', 'the base colour of the grate iron is the wear target\'s iron_grate; the rust comes from grate_wear (expected composite on the bars 92/74/66)', [58, 54, 52], 0, 'Read: wear target surfaces.iron_grate')
     add('gully_grate_place', 'gully_grate_A', 'y of the kerb-side edge', 100, 15, 'Photo (102)')
     add('gully_flush', 'gully_grate_A, covers', 'z of the top surface against the surface it is set in', 0, 3, 'Judgement (cover infill in the footway stands 8 below the flags, +-3)')
-    add('cover_stud_square', 'cover_stud_square', 'outer; stud count; pitch; stud size; stud height', {'outer': 860, 'studs': 8, 'pitch': 95, 'stud': 45, 'height': 4}, {'outer': 50, 'studs': 0, 'pitch': 4, 'stud': 4, 'height': 1}, 'Photo PM17, PM18')
+    add('cover_stud_square', 'cover_stud_square', 'outer; frame rim; lid; studs per row and column; pitch; stud size; stud height; leaves (2, triangular, one diagonal joint 5 mm with the studs on it cut to half-studs); keyhole per leaf; blank raised boss', {'outer': 960, 'rim': 20, 'lid': 920, 'studs': 10, 'pitch': 95, 'stud': 45, 'height': 4, 'leaves': 2, 'joint': 5, 'keyhole': 20, 'boss': [80, 40, 3]}, {'outer': 60, 'rim': 5, 'lid': 20, 'studs': 0, 'pitch': 4, 'stud': 4, 'height': 1, 'leaves': 0, 'joint': 2, 'keyhole': 4, 'boss': [10, 8, 1]}, 'Photo PM17, PM18 (980 x 920 +-70) and the review of bethnal_green_entrance')
     add('cover_round', 'cover_round_600', 'frame diameter; lid diameter; depth', {'frame': 690, 'lid': 590, 'depth': 68}, {'frame': 5, 'lid': 5, 'depth': 3}, 'Read from a Poly Haven model (PM24)')
+    add('cover_round_tread', 'cover_round_600', 'lug lattice: cell; lugs per cell (2 horizontal, 2 vertical) at (0,0) and (35.7,41.75) horizontal, (35.7,6) and (0,47.75) vertical; lug size and height', {'cell': [71.4, 83.5], 'lugs': 4, 'lug': [36, 10.5], 'height': 2.5}, {'cell': [1, 1], 'lugs': 0, 'lug': [3, 2], 'height': 1}, 'Photo PM23 (the review: the centred lattice)')
+    add('cover_recessed_footway_frame_lugs', 'cover_recessed_footway', 'raised oblong lugs 36 x 10.5 x 2.5 on the whole frame top, two staggered rows along the long sides, more across the wider left end (3 columns against 2)', {'lug': [36, 10.5], 'height': 2.5, 'row_pitch': 41.75}, {'lug': [4, 3], 'height': 1, 'row_pitch': 4}, 'Photo for the pattern; Judgement for the size')
     add('cover_recessed_footway', 'cover_recessed_footway', 'outer; infill', {'outer': [1180, 660], 'infill': [960, 440]}, {'outer': [40, 60], 'infill': [30, 40]}, 'Photo PM19')
     add('cover_recessed_road', 'cover_recessed_road', 'outer square', [1000, 1050], [50, 50], 'Photo PM20')
-    add('cover_road_double_leaf', 'cover_road_double_leaf', 'outer', [1820, 620], [100, 80], 'Photo PM21 (rough)')
+    add('cover_road_double_leaf', 'cover_road_double_leaf', 'outer; the leaf split is Judgement, not Photo', [1820, 620], [100, 80], 'Photo PM21 (rough); the split: Judgement')
+    add('kerb_corner', 'kerb_corner_mitre, kerb_corner_radius', 'mitre interior angle (or 90); radius corner radius on the face', {'mitre_deg': 133, 'or_deg': 90, 'radius': 6500}, {'mitre_deg': 5, 'or_deg': 2, 'radius': 600}, 'Photo PM27 (133 +-5); PM16 (6.6 m +-0.6)')
+    add('channel_setts_colour_share', 'channel_setts', 'colour shares of sett_pale_worn, sett_dull, granite_blue_grey; their linear mean over asphalt_dry after the channel body x 0.85', {'shares': [0.35, 0.50, 0.15], 'after_grime_over_road': [1.35, 1.7]}, {'shares': 0.0, 'after_grime_over_road': 0.0}, 'the review (point 6); Read: wear target M24')
     add('no_lettering', 'every cover and grate, mesh and textures', 'glyphs, crests, maker marks, council names, crowns', 0, 0, 'Brief')
     add('no_tactile_paving', 'the crossing and the street', 'blister or corduroy meshes or textures', 0, 0, 'Judgement; leads')
     add('pivot_and_units', 'every exported piece', 'pivot as in frame.pivot; metres; z up; scale 1', 'as stated', 5, 'Brief')
@@ -319,16 +356,22 @@ def edge_probes():
     image: 'ground' (camera 1.6 m plane) or 'top' (kerb top plane, camera 1.475 m); kind 'h' (constant y, along x) or 'v' (constant x, along y);
     fixed = predicted y (h) or x (v) in plan mm; span = the other coordinate's range; z_mm = height of the edge (things off the plane
     are smeared outward by (1600 - plane) / (1600 - z); the check applies that); type: 'step' (largest brightness change), 'line' (darkest
-    line, a joint) or 'step_low' (the start of a soft shadow ramp, 20 % of the rise; this one DEFINES the foot anchor); tol_mm = stated error."""
+    line, a joint), 'step_low' (the start of a soft shadow ramp, 20 % of the rise; this one DEFINES the foot anchor) or 'half_level' (a soft edge read where the
+    profile crosses the middle of the levels either side, 'outside' = -1 or +1 the side of the outer level; for the grate's slot edges the outer level is the bar level common to all slots, 'level': 'bar_median', so a lighter end wall does not move the edge); tol_mm = stated error."""
     return [
         {'id': 'foot_line_right_block', 'image': 'ground', 'kind': 'h', 'fixed': 0, 'z_mm': 0, 'type': 'step_low', 'span': [1480, 1760], 'tol_mm': 15, 'what': 'kerb face foot (the anchor of y = 0): the dark face, then the shadow ramp up to the setts, clear of the weed'},
         {'id': 'lip_front_top_edge', 'image': 'ground', 'kind': 'h', 'fixed': 0, 'z_mm': 15, 'type': 'step', 'span': [-850, 850], 'tol_mm': 12, 'what': 'light lip setts above, the dark band of their front face below'},
         {'id': 'lip_back_joint', 'image': 'ground', 'kind': 'h', 'fixed': -131, 'z_mm': 15, 'type': 'line', 'span': [-850, 850], 'tol_mm': 12, 'what': 'the dark joint between the lip row and the ramp (centre)'},
         {'id': 'channel_asphalt_edge', 'image': 'ground', 'kind': 'h', 'fixed': 225, 'z_mm': 6, 'type': 'step', 'span': [-250, 900], 'tol_mm': 15, 'what': 'pale setts above, asphalt below'},
-        {'id': 'grate_left_edge', 'image': 'ground', 'kind': 'v', 'fixed': -1014.5, 'z_mm': 0, 'type': 'step', 'span': [180, 400], 'tol_mm': 12, 'what': 'setts left of the grate against the first dark slot area'},
-        {'id': 'grate_right_edge', 'image': 'ground', 'kind': 'v', 'fixed': -525.5, 'z_mm': 0, 'type': 'step', 'span': [180, 400], 'tol_mm': 12, 'what': 'grate right edge against the setts'},
-        {'id': 'grate_slot_tops', 'image': 'ground', 'kind': 'h', 'fixed': 122, 'z_mm': 0, 'type': 'step', 'span': [-960, -580], 'tol_mm': 12, 'what': 'the upper ends of the black slots (frame 102 + end wall 20)'},
-        {'id': 'grate_slot_bottoms', 'image': 'ground', 'kind': 'h', 'fixed': 406, 'z_mm': 0, 'type': 'step', 'span': [-960, -580], 'tol_mm': 15, 'what': 'the lower ends of the black slots (frame 426 - end wall 20)'},
+        {'id': 'grate_left_edge', 'image': 'ground', 'kind': 'v', 'fixed': -751 - 242.5, 'z_mm': 0, 'type': 'half_level', 'outside': -1, 'span': [180, 400], 'tol_mm': 20, 'what': 'setts left of the grate against its left end wall (the end walls are soft: +-20; the right edge is not visible against the setts, both 100 to 120 grey levels, so it has no probe; the slot edges below carry the grate\'s width)'},
+        {'id': 'grate_slot_tops', 'image': 'ground', 'kind': 'h', 'fixed': 122, 'z_mm': 0, 'type': 'step', 'span': [-930, -570], 'tol_mm': 12, 'what': 'the upper ends of the black slots (frame 102 + end wall 20)'},
+        {'id': 'grate_slot_bottoms', 'image': 'ground', 'kind': 'h', 'fixed': 406, 'z_mm': 0, 'type': 'step', 'span': [-930, -570], 'tol_mm': 15, 'what': 'the lower ends of the black slots (frame 426 - end wall 20)'},
+        {'id': 'slot1_left_edge', 'image': 'ground', 'kind': 'v', 'fixed': -751 - 199.5 - 14.5, 'z_mm': 0, 'type': 'half_level', 'outside': -1, 'level': 'bar_median', 'span': [150, 380], 'tol_mm': 6, 'what': 'first slot, left side edge (slot 29 wide: centre -199.5 from the grate centre, edge at -14.5)'},
+        {'id': 'slot1_right_edge', 'image': 'ground', 'kind': 'v', 'fixed': -751 - 199.5 + 14.5, 'z_mm': 0, 'type': 'half_level', 'outside': 1, 'level': 'bar_median', 'span': [150, 380], 'tol_mm': 6, 'what': 'first slot, right side edge'},
+        {'id': 'slot4_left_edge', 'image': 'ground', 'kind': 'v', 'fixed': -751 - 28.5 - 14.5, 'z_mm': 0, 'type': 'half_level', 'outside': -1, 'level': 'bar_median', 'span': [150, 380], 'tol_mm': 6, 'what': 'fourth slot, left side edge'},
+        {'id': 'slot4_right_edge', 'image': 'ground', 'kind': 'v', 'fixed': -751 - 28.5 + 14.5, 'z_mm': 0, 'type': 'half_level', 'outside': 1, 'level': 'bar_median', 'span': [150, 380], 'tol_mm': 6, 'what': 'fourth slot, right side edge'},
+        {'id': 'slot8_left_edge', 'image': 'ground', 'kind': 'v', 'fixed': -751 + 199.5 - 14.5, 'z_mm': 0, 'type': 'half_level', 'outside': -1, 'level': 'bar_median', 'span': [150, 380], 'tol_mm': 6, 'what': 'eighth slot, left side edge'},
+        {'id': 'slot8_right_edge', 'image': 'ground', 'kind': 'v', 'fixed': -751 + 199.5 + 14.5, 'z_mm': 0, 'type': 'half_level', 'outside': 1, 'level': 'bar_median', 'span': [150, 380], 'tol_mm': 6, 'what': 'eighth slot, right side edge'},
         {'id': 'kerb_front_arris_right_block', 'image': 'top', 'kind': 'h', 'fixed': -32.3, 'z_mm': 117.7, 'type': 'step', 'span': [1250, 1700], 'tol_mm': 15, 'what': 'light top to dark face (the middle of the arris rounding)'},
         {'id': 'kerb_top_rear_joint_right_block', 'image': 'top', 'kind': 'h', 'fixed': -196, 'z_mm': 125, 'type': 'line', 'span': [1250, 1700], 'tol_mm': 15, 'what': 'dark joint between the kerb top and the flag behind it (centre)'},
         {'id': 'ramp_back_edge', 'image': 'top', 'kind': 'h', 'fixed': -917, 'z_mm': 120, 'type': 'step', 'span': [-800, 800], 'tol_mm': 18, 'what': 'concrete ramp against the flags'},
@@ -340,3 +383,15 @@ def edge_probes():
 
 SCALE_FIT = {'left': 'flank_left_outer_joint', 'right': 'flank_right_outer_joint', 'mm_between': 2630,
              'note': 'the scale is fitted on one dimension only (the distance between the two flank strips\' outer joints, 2630 mm in the drawing); the ortho is 3 mm a pixel by construction, so the fitted scale should be about 1.00'}
+
+
+def handover():
+    return {
+        'note': 'what this target hands to other targets and to NOW.md (review point 7)',
+        'to_wear_target': [
+            {'item': 'gutter_grime channel band', 'was': '0.255 m wide, in the kerb\'s own concrete', 'now': '0.225 m on granite stretches (granite setts, two courses 115 and 110); 0.255 m beside the concrete kerb (concrete channel block)'},
+            {'item': 'places gully entry and grate_wear grate size', 'was': '0.40 m square', 'now': '0.485 m x 0.325 m (8 slots 29 x 285, bars 28)'},
+            {'item': 'iron base colour', 'was': 'this target\'s clean rust-brown 92/74/66 against the wear target\'s iron_grate 58/54/52 with grate_wear rust 100/72/56', 'now': 'ONE base: the wear target\'s iron_grate 58/54/52; the rust comes from grate_wear; 92/74/66 is the expected composite on the bars, for checking the result'},
+        ],
+        'for_NOW_md': 'Kerbs and covers target (unit 3.7): granite kerb 125 x 190 half-battered, setts channel 225 (concrete 255), crossover 3.0 m with ramp, flank strips and a 15 mm lip, gully grate 485 x 325 (8 slots 29 x 285), four cast covers; wear target: channel band 0.225 granite / 0.255 concrete, grate 0.485 x 0.325, iron base 58/54/52.',
+    }

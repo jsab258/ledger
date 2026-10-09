@@ -100,6 +100,10 @@ def part_A():
         co = W['measurements']['M24']['values']['channel_over_road']
         chk = next(c for c in T['checks'] if c['name'] == 'channel_over_road_brightness')
         ck('A', 'wear M24 channel over road 1.35 to 1.7 = the check', [chk['expected']['min'], chk['expected']['max']] == co, f'{co}')
+        ig = W['surfaces']['iron_grate']['albedo_srgb']
+        ck('A', 'grate iron base colour = the wear target\'s iron_grate (one base; the rust is grate_wear\'s); 92/74/66 is the expected composite', T['materials']['cast_iron_grate']['srgb'] == ig and T['materials']['cast_iron_grate']['expected_composite_srgb_on_bars'] == [92, 74, 66], f'{ig}')
+        gm = W['kinds']['grate_wear']['tone']['iron_grate']['mark_srgb']
+        ck('A', 'wear grate_wear rust mark 100/72/56 named in the material kind', '%d/%d/%d' % tuple(gm) in T['materials']['cast_iron_grate']['kind'] or '100/72/56' in T['materials']['cast_iron_grate']['name'], f'{gm}')
         kg = W['surfaces']['kerb_granite']['albedo_srgb']
         mine = T['materials']['granite_grey']['srgb']
         ck('A', 'granite colour within 12 levels of the wear target kerb_granite', all(near(a, b, 12) for a, b in zip(mine, kg)), f'{mine} vs {kg}')
@@ -148,12 +152,19 @@ def part_B():
     ck('B', 'flank length within 20 of the mean of PM12 (750, 705)', near(cx['flank_strips']['length_mm'], (pms['PM12']['result']['values_mm'][2] + pms['PM12']['result']['values_mm'][3]) / 2, 20))
     ga = P['gully_grate_A']
     ck('B', 'grate overall within 9 of PM13', near(ga['overall_along_kerb'], pms['PM13']['result']['values_mm'][0], 9) and near(ga['overall_across'], pms['PM13']['result']['values_mm'][1], 9))
-    ck('B', 'grate slot span, slot length and pitch within 8/8/3 of PM14', near(ga['slot_span'], pms['PM14']['result']['values_mm'][0], 8) and near(ga['slot_length'], pms['PM14']['result']['values_mm'][1], 8) and near(ga['slot_pitch'], pms['PM14']['result']['values_mm'][2], 3))
+    ck('B', 'grate slot span (428), slot length and pitch within 8/8/3 of PM14 (field 289 px = 433)', near(ga['slot_span'], pms['PM14']['result']['values_mm'][0], 8) and near(ga['slot_length'], pms['PM14']['result']['values_mm'][1], 8) and near(ga['slot_pitch'], pms['PM14']['result']['values_mm'][2], 3), f"{pms['PM14']['result']}")
+    r28 = pms['PM28']['result']
+    ck('B', 'grate A slot width 29 inside PM28 (25.5 to 34.5, median 28.5) and bar width 28 inside 24 to 28.5', r28['slot_width_min_mm'] <= ga['slot_width'] <= r28['slot_width_max_mm'] and r28['bar_width_min_mm'] <= ga['bar_width'] <= r28['bar_width_max_mm'], f'{r28}')
+    ck('B', 'reference gully x_centre = the fitted centre of the slot field (PM30, -751 +-2) and slot pitch 57 within 1 of 56.97', near(T['reference_instance']['gully']['x_centre'], pms['PM30']['result']['x_centre_mm'], 2) and near(ga['slot_pitch'], pms['PM30']['result']['pitch_mm'], 1))
+    ck('B', 'grate A slot width 29 within 3 of PM30 half-level mean 28.6', near(ga['slot_width'], pms['PM30']['result']['slot_width_half_level_mm_mean'], 3))
+    ck('B', 'grate A open fraction 0.42 within 0.04 of the photograph\'s black fraction 0.41', near(ga['open_fraction'], r28['black_fraction'], 0.04), f"{ga['open_fraction']} vs {r28['black_fraction']}")
+    ck('B', 'grate B slot 28, bar 30, hole 25 equal the review\'s readings (PM29)', P['gully_grate_B']['slot_width'] == pms['PM29']['result']['slot_width_mm'] and P['gully_grate_B']['bar_width'] == pms['PM29']['result']['bar_width_mm'] and P['gully_grate_B']['lifting_holes']['diameter'] == pms['PM29']['result']['lifting_hole_diameter_mm'])
+    ck('B', 'mitred corner angle 133 within 5 of PM27 (134, 133.5)', near(P['kerb_corner_mitre']['angle_deg'], pms['PM27']['result']['mean_deg'], 5), f"{pms['PM27']['result']}")
     ck('B', 'grate B pitch within 6 of PM15', near(P['gully_grate_B']['slot_pitch'], pms['PM15']['result']['width_mm'], 6), f"{pms['PM15']['result']}")
     ck('B', 'corner radius within 600 of PM16', near(P['kerb_corner_radius']['radius_face_mm'], pms['PM16']['result']['radius_face_mm'], 600))
     st = P['cover_stud_square']
     ck('B', 'stud pitch within 8 of the mean of PM17 (97.7, 91.1); lattice square (cos < 0.05)', near(st['pattern']['pitch_mm'], (pms['PM17']['result']['pitch_a_mm'] + pms['PM17']['result']['pitch_b_mm']) / 2, 8) and abs(pms['PM17']['result']['dot_cos']) < 0.05)
-    ck('B', 'stud cover outer within 70 of PM18 mean', near(st['outer'][0], sum(pms['PM18']['result']['lengths_mm']) / 2, 70))
+    ck('B', 'stud cover outer 960 within 70 of PM18 mean (about 980 x 920)', near(st['outer'][0], sum(pms['PM18']['result']['lengths_mm']) / 2, 70), f"{pms['PM18']['result']}")
     r19 = pms['PM19']['result']['values_mm']
     cf = P['cover_recessed_footway']
     ck('B', 'footway cover outer 1180 x 670 within 50/100 of PM19; infill within 30/60', near(cf['outer'][0], r19[0], 50) and near(cf['outer'][1], r19[1], 100) and near(cf['infill'][0], r19[2], 30) and near(cf['infill'][1], r19[3], 60))
@@ -165,7 +176,9 @@ def part_B():
     ck('B', 'yellow line 72 mm against 75: the 1.6 m camera scale holds within 5 %', near(pms['PM22']['result']['values_mm'][0], 75, 4))
     rc = P['cover_round_600']
     ck('B', 'round cover frame 690, lid 590, depth 68 within 5/5/3 of the model', near(rc['frame_outer_diameter'], pms['PM24']['result']['outer_diameter_mm'], 5) and near(rc['lid_diameter'], 2 * pms['PM24']['result']['lid_radius_mm'], 5) and near(rc['frame_depth'], pms['PM24']['result']['depth_mm'], 3))
-    ck('B', 'lug cell = the autocorrelation periods', rc['pattern']['cell_mm'] == [pms['PM23']['result']['period_x_mm'], pms['PM23']['result']['period_y_mm']])
+    ck('B', 'lug cell = PM23 periods (71.4, 83.5); lug 36 x 10.5; row spacing 41.75 = cell height / 2; row shift 35.7 = cell width / 2', rc['pattern']['cell_mm'] == [pms['PM23']['result']['period_x_mm'], pms['PM23']['result']['period_y_mm']] and rc['pattern']['lug_mm'] == pms['PM23']['result']['lug_mm'] and near(rc['pattern']['cell_mm'][1] / 2, pms['PM23']['result']['row_spacing_mm'], 0.01) and near(rc['pattern']['cell_mm'][0] / 2, pms['PM23']['result']['row_shift_mm'], 0.01))
+    lc = {(l['orientation'], tuple(l['centre_mm'])) for l in rc['pattern']['lugs_in_cell']}
+    ck('B', 'lugs_in_cell = the review\'s four centres: horizontal (0,0) and (35.7,41.75), vertical (35.7,6) and (0,47.75)', lc == {('horizontal', (0, 0)), ('horizontal', (35.7, 41.75)), ('vertical', (35.7, 6)), ('vertical', (0, 47.75))}, str(sorted(lc)))
     # colours: recompute the albedos from the stored photograph samples
     from make_target import albedo_from, PHOTO_SAMPLES   # same function that wrote them
     ok = True
@@ -206,6 +219,30 @@ def probe(G, pr, scale):
         pred = ca
     i0 = int(round(pred))
     win = range(i0 - 8, i0 + 9)
+    if typ == 'half_level':
+        # a soft edge between two levels: the level outside the edge (4 to 8 px away, on the side 'outside' = -1 or +1) and the level inside
+        # (3 to 7 px the other way); the edge is where the profile crosses their middle, nearest the prediction (sub-pixel)
+        o = pr['outside']
+        out_l = float(np.mean([prof[i0 + o * k] for k in range(4, 9)]))
+        if pr.get('level') == 'bar_median':
+            # the bar level common to all slots: the mean brightness at the seven bar centres (half a pitch from the slot centres)
+            g_ = T['reference_instance']['gully']
+            ga_ = T['pieces']['gully_grate_A']
+            cols = []
+            for k in range(ga_['slot_count'] - 1):
+                xb = g_['x_centre'] + ((k + 0.5) - (ga_['slot_count'] - 1) / 2.0) * ga_['slot_pitch']
+                cols.append(int(round(TD.plan_to_px(T, xb * scale, 0, z, plane)[0])))
+            out_l = float(np.mean([prof[cc] for cc in cols if 0 <= cc < len(prof)]))
+        in_l = float(np.mean([prof[i0 - o * k] for k in range(3, 8)]))
+        thr = 0.5 * (out_l + in_l)
+        best, bd = None, 1e9
+        for i in range(i0 - 12, i0 + 12):
+            a_, b_ = prof[i] - thr, prof[i + 1] - thr
+            if a_ == 0 or a_ * b_ < 0:
+                x_ = i + (a_ / (a_ - b_) if a_ != b_ else 0.0)
+                if abs(x_ - pred) < bd:
+                    best, bd = x_, abs(x_ - pred)
+        return None if best is None else (best - pred) * mm
     if typ == 'step':
         d = np.abs(prof[2:] - prof[:-2]) / 2.0
         best = max(win, key=lambda i: d[i - 1])
@@ -250,6 +287,22 @@ def part_C():
             continue
         offs.append(abs(off))
         ck('C', f"edge {pr['id']} within {pr['tol_mm']} mm of the photograph's edge", abs(off) <= pr['tol_mm'], f"{pr['what']}: offset {off:+.0f} mm")
+    # the slot widths from the left and right edges of the same slot (29 +-4, the review's tolerance); an 18 mm slot would read 5 mm short on each edge
+    dets = {}
+    for pr in T['edge_probes']:
+        if pr['id'].startswith('slot'):
+            off = probe(G[pr['image']], pr, scale)
+            if off is not None:
+                dets[pr['id']] = pr['fixed'] + off
+    ws = []
+    for k in ('slot1', 'slot4', 'slot8'):
+        if k + '_left_edge' in dets and k + '_right_edge' in dets:
+            w_ = dets[k + '_right_edge'] - dets[k + '_left_edge']
+            ws.append(w_)
+            # one slot may differ from the mean: the review's own spread is 25.5 to 34.5 about a median of 28.5 (+-6)
+            ck('C', f'{k}: slot width read from its two edges is 29 +-6 (one slot; the old 18 would fail)', abs(w_ - T['pieces']['gully_grate_A']['slot_width']) <= 6, f'{w_:.1f} mm')
+    if ws:
+        ck('C', 'mean slot width of the first, fourth and eighth slots is 29 +-4 (the check gully_grate_slots tolerance)', abs(sum(ws) / len(ws) - T['pieces']['gully_grate_A']['slot_width']) <= 4, f'{sum(ws) / len(ws):.1f} mm from {[round(float(w), 1) for w in ws]}')
     if offs:
         ck('C', 'median edge offset within 9 mm', float(np.median(offs)) <= 9, f'median {np.median(offs):.1f} mm over {len(offs)} edges')
     # the overlay pictures exist
@@ -286,6 +339,25 @@ def part_D():
     # --- channel
     ch = P['channel_setts']
     ck('D', 'channel courses are contiguous and add to 225', ch['courses'][0]['y0'] == 0 and ch['courses'][0]['y1'] == ch['courses'][1]['y0'] and ch['courses'][1]['y1'] == ch['width_total'] == 225)
+    # --- channel colour shares land the channel at about 1.5 times the road
+    def lin(v):
+        v = v / 255.0
+        return v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4
+
+    def Y(rgb):
+        return 0.2126 * lin(rgb[0]) + 0.7152 * lin(rgb[1]) + 0.0722 * lin(rgb[2])
+    sh = {k: w for k, w in ch['colour_share'].items() if k != 'why'}
+    road = Y(T['photo_samples']['wear_asphalt_dry'])
+    mean_clean = sum(w * Y(T['materials'][k]['srgb']) for k, w in sh.items()) / road
+    ck('D', 'channel colour shares add to 1 and name only the channel\'s three setts', near(sum(sh.values()), 1.0, 1e-9) and set(sh) == set(ch['colour']), str(sh))
+    ck('D', 'channel setts at those shares: clean mean about 1.78 x the road (+-0.25); x 0.85 (the wear channel body) inside 1.35 to 1.7; with dark joints (x 0.96) about 1.45 to 1.5', near(mean_clean, 1.78, 0.25) and 1.35 <= 0.85 * mean_clean <= 1.7, f'clean {mean_clean:.2f}, after grime {0.85 * mean_clean:.2f}, with joints {0.85 * 0.96 * mean_clean:.2f}')
+    mc = T['pieces']['kerb_corner_mitre']
+    chk_ = {c_['name']: c_ for c_ in T['checks']}
+    ck('D', 'check kerb_corner exists: mitre 133 +-5 (or 90 +-2), radius corner 6500 +-600', chk_['kerb_corner']['expected'] == {'mitre_deg': 133, 'or_deg': 90, 'radius': 6500} and chk_['kerb_corner']['tolerance'] == {'mitre_deg': 5, 'or_deg': 2, 'radius': 600} and mc['angle_deg'] == 133 and P['kerb_corner_radius']['radius_face_mm'] == 6500)
+    ck('D', 'handover to the wear target is written down: channel band 0.225 / 0.255, grate 0.485 x 0.325, one iron base', len(T['handover']['to_wear_target']) == 3 and '0.225' in T['handover']['to_wear_target'][0]['now'] and '0.485' in T['handover']['to_wear_target'][1]['now'] and '58/54/52' in T['handover']['to_wear_target'][2]['now'])
+    ck('D', 'channel meets_asphalt says 10 to 50 wander and the asphalt laps 30 to 50 onto course B', '10 to 50' in ch['meets_asphalt'] and 'laps 30 to 50' in ch['meets_asphalt'])
+    ck('D', 'face_batter kind says the upstand and batter are one measurement (Judgement for the split)', 'not separately measured' in P['kerb_granite']['face_batter']['kind'] and 'Judgement for the split' in P['kerb_granite']['face_batter']['kind'])
+    ck('D', 'road cover leaf split is marked Judgement, not Photo', 'Judgement, not Photo' in P['cover_road_double_leaf']['leaf_split_kind'])
     # --- crossover: parts add up
     cx = P['crossover']
     lip, rp, fl = cx['lip_row'], cx['ramp'], cx['flank_strips']
@@ -345,7 +417,10 @@ def part_D():
     ga = P['gully_grate_A']
     ck('D', 'grate A: slot span + two end walls = overall along; slot length + two end walls = overall across',
        near(ga['slot_span'] + 2 * ga['end_wall_along'], ga['overall_along_kerb'], 0.01) and near(ga['slot_length'] + 2 * ga['end_wall_across'], ga['overall_across'], 0.01))
-    ck('D', 'grate A: 8 slots, bar = pitch - slot = 39, slot centres symmetric', ga['slot_count'] == 8 and ga['bar_width'] == 39 and near(sum(ga['slot_centres_x']), 0, 1e-6) and len(ga['slot_centres_x']) == 8)
+    ck('D', 'grate A: 8 slots 29 wide, bar = pitch - slot = 28, slot span 428, end walls 28.5, centres symmetric', ga['slot_count'] == 8 and ga['slot_width'] == 29 and ga['bar_width'] == 28 and ga['slot_span'] == 428 and ga['end_wall_along'] == 28.5 and near(sum(ga['slot_centres_x']), 0, 1e-6) and len(ga['slot_centres_x']) == 8)
+    ck('D', 'grate A open fraction = 8 x 29 x 285 / (485 x 325) = 0.42 +-0.04', near(8 * 29 * 285 / (485 * 325), 0.42, 0.04), f"{ga['open_fraction']}")
+    chk = {c['name']: c for c in T['checks']}
+    ck('D', 'checks gully_grate_slots (width 29 +-4, bar 28, span 428, end wall 28.5) and gully_grate_open_fraction (0.42 +-0.04) enforce the new values', chk['gully_grate_slots']['expected']['width'] == 29 and chk['gully_grate_slots']['tolerance']['width'] == 4 and chk['gully_grate_slots']['expected']['span'] == 428 and chk['gully_grate_open_fraction']['expected'] == 0.42 and chk['gully_grate_open_fraction']['tolerance'] == 0.04)
     gv = TD.plan_gully(T, 'A')
     outer = Polygon(gv.polys[0]['points'])
     slots = [Polygon(p['points']) for p in gv.polys[1:]]
@@ -358,14 +433,28 @@ def part_D():
     st = P['cover_stud_square']
     n_ = st['pattern']['count'][0]
     span = (n_ - 1) * st['pattern']['pitch_mm'] + st['pattern']['stud_mm']
-    ck('D', 'stud cover: 8 x 8 studs fit the lid with the edge margin', near((st['lid_inner'][0] - span) / 2, st['pattern']['edge_margin_mm'], 6), f'span {span}, margin {(st["lid_inner"][0] - span) / 2:.1f}')
+    ck('D', 'stud cover: 10 x 10 studs fit the lid with the edge margin 10', n_ == 10 and near((st['lid_inner'][0] - span) / 2, st['pattern']['edge_margin_mm'], 1), f'span {span}, margin {(st["lid_inner"][0] - span) / 2:.1f}')
+    sv = TD.plan_cover_stud(T)
+    full = [p for p in sv.polys if p['name'] == 'stud']
+    half = [p for p in sv.polys if p['name'] == 'stud_half']
+    leaves_ = [p for p in sv.polys if p['name'].startswith('leaf_')]
+    ck('D', 'stud cover: two triangular leaves (3 vertices each) split on one diagonal; at least 5 half-studs along the joint; 100 studs in all counting halves as cut', len(leaves_) == 2 and all(len(Polygon(p['points']).simplify(0.01).exterior.coords) - 1 == 3 for p in leaves_) and len(half) >= 5, f'{len(leaves_)} leaves, {len(full)} whole and {len(half)} half studs')
+    ck('D', 'stud cover: keyhole 20 per leaf, blank boss 80 x 40 x 3, no lifting pockets', st['keyhole_diameter_mm'] == 20 and len([p for p in sv.polys if p['name'] == 'keyhole']) == 2 and st['boss']['size_mm'] == [80, 40] and st['boss']['height_mm'] == 3 and st['boss']['blank'] and 'none' in st['lifting_pockets'])
+    chk = {c['name']: c for c in T['checks']}
+    ck('D', 'check cover_stud_square enforces outer 960 +-60, studs 10, leaves 2, joint 5, keyhole 20, boss', chk['cover_stud_square']['expected']['outer'] == 960 and chk['cover_stud_square']['tolerance']['outer'] == 60 and chk['cover_stud_square']['expected']['studs'] == 10 and chk['cover_stud_square']['expected']['leaves'] == 2 and chk['cover_stud_square']['expected']['boss'] == [80, 40, 3])
     ck('D', 'stud cover: lid inner = outer - 2 x rim', st['lid_inner'][0] == st['outer'][0] - 2 * st['frame_rim'])
     rc = P['cover_round_600']
     ck('D', 'round cover: lid < frame; ring width 50 = (690 - 590)/2', rc['lid_diameter'] < rc['frame_outer_diameter'] and near((rc['frame_outer_diameter'] - rc['lid_diameter']) / 2, rc['frame_ring_width'], 0.01))
     rv = TD.plan_cover_round(T)
     lid = Polygon(rv.polys[1]['points'])
     lugs = [Polygon(p['points']) for p in rv.polys[2:]]
-    ck('D', 'round cover: every lug inside the lid, none overlapping', len(lugs) > 20 and all(lid.contains(l) for l in lugs) and all(lugs[i].intersection(lugs[j]).area == 0 for i in range(len(lugs)) for j in range(i + 1, min(len(lugs), i + 12))), f'{len(lugs)} lugs')
+    ck('D', 'round cover: every lug inside the lid, none overlapping, all 36 x 10.5 (either way round)', len(lugs) > 20 and all(lid.contains(l) for l in lugs) and all(lugs[i].intersection(lugs[j]).area == 0 for i in range(len(lugs)) for j in range(i + 1, len(lugs))) and all(sorted([round(l.bounds[2] - l.bounds[0], 1), round(l.bounds[3] - l.bounds[1], 1)]) == [10.5, 36.0] for l in lugs), f'{len(lugs)} lugs')
+    hv = [(l.bounds[2] - l.bounds[0]) > (l.bounds[3] - l.bounds[1]) for l in lugs]
+    ck('D', 'round cover: horizontal and vertical lugs in equal number (2 + 2 per cell)', abs(sum(hv) - (len(hv) - sum(hv))) <= 6, f'{sum(hv)} horizontal, {len(hv) - sum(hv)} vertical')
+    fv = TD.plan_cover_recessed_footway(T)
+    frame_ring = Polygon(fv.polys[0]['points']).difference(Polygon(fv.polys[2]['points']).buffer(0))
+    fl = [Polygon(p['points']) for p in fv.polys if p['name'] == 'frame_lug']
+    ck('D', 'footway cover frame: raised lugs 36 x 10.5 on the frame top, all inside the rim, none overlapping; three columns at the left end, two at the right', len(fl) > 30 and all(frame_ring.contains(l) for l in fl) and all(fl[i].intersection(fl[j]).area == 0 for i in range(len(fl)) for j in range(i + 1, len(fl))), f'{len(fl)} lugs')
     cf = P['cover_recessed_footway']
     ck('D', 'footway cover: infill + 2 x rim = outer in both directions (960 + 220 = 1180; 440 + 220 = 660)', near(cf['infill'][0] + 2 * cf['frame_rim_total'], cf['outer'][0], 0.01) and near(cf['infill'][1] + 2 * cf['frame_rim_total'], cf['outer'][1], 0.01), f"{cf['infill']} + 2 x {cf['frame_rim_total']} vs {cf['outer']}")
     ck('D', 'footway cover: step widths 45 + 65 = rim 110', 45 + 65 == cf['frame_rim_total'])
@@ -403,7 +492,7 @@ def part_E():
     nums = {'upstand 125': P_['kerb_granite']['upstand'], 'top width 190': P_['kerb_granite']['top_width'], 'concrete width 160': P_['kerb_concrete']['top_width'], 'depth 255': P_['kerb_granite']['depth'],
             'length 915': P_['kerb_concrete']['length_mm']['fixed'], 'granite channel 225': P_['channel_setts']['width_total'], 'crossing 3000': P_['crossover']['width_between_kerb_ends'],
             'grate 485': P_['gully_grate_A']['overall_along_kerb'], 'grate 325': P_['gully_grate_A']['overall_across'], 'slot pitch 57': P_['gully_grate_A']['slot_pitch'],
-            'slot length 285': P_['gully_grate_A']['slot_length'], 'stud cover 860': P_['cover_stud_square']['outer'][0], 'stud pitch 95': P_['cover_stud_square']['pattern']['pitch_mm'],
+            'slot length 285': P_['gully_grate_A']['slot_length'], 'stud cover 960': P_['cover_stud_square']['outer'][0], 'stud cover 10 x 10': 10, 'slot width 29': P_['gully_grate_A']['slot_width'], 'slot span 428': P_['gully_grate_A']['slot_span'], 'corner 133': P_['kerb_corner_mitre']['angle_deg'], 'cell 71.4': P_['cover_round_600']['pattern']['cell_mm'][0], 'stud pitch 95': P_['cover_stud_square']['pattern']['pitch_mm'],
             'round frame 690': P_['cover_round_600']['frame_outer_diameter'], 'round lid 590': P_['cover_round_600']['lid_diameter'], 'footway cover 1180': P_['cover_recessed_footway']['outer'][0],
             'footway cover 660': P_['cover_recessed_footway']['outer'][1], 'infill 960': P_['cover_recessed_footway']['infill'][0], 'infill 440': P_['cover_recessed_footway']['infill'][1],
             'road recess 1050': P_['cover_recessed_road']['outer'][1], 'double leaf 1820': P_['cover_road_double_leaf']['outer'][0], 'corner radius 6500': P_['kerb_corner_radius']['radius_face_mm'],

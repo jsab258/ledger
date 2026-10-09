@@ -150,12 +150,19 @@ def channel_setts_plan(v, t, rng, x0, x1, width):
     """two courses of granite setts between x0 and x1 across 'width' (course A as in the piece, B takes the rest)"""
     p = t['pieces']['channel_setts']
     A = p['courses'][0]['across']
-    for (ya, yb, nm, mat) in ((0, A, 'A', 'sett_pale_worn'), (A, width, 'B', 'sett_dull')):
+    shares = [(k, w) for k, w in p['colour_share'].items() if k != 'why']
+    for (ya, yb, nm) in ((0, A, 'A'), (A, width, 'B')):
         x = x0
         while x < x1:
             L = min(rng.uniform(p['sett_along_mm']['min'], p['sett_along_mm']['max']), x1 - x)
             j = p['joint_mm']
-            v.add(f'sett_{nm}', mat if rng.random() > 0.2 else 'sett_dull', rect(x + j / 2, ya + j / 2, x + L - j / 2, yb - j / 2), 1)
+            r, acc, mat = rng.random(), 0.0, shares[0][0]
+            for k, w in shares:
+                acc += w
+                if r <= acc:
+                    mat = k
+                    break
+            v.add(f'sett_{nm}', mat, rect(x + j / 2, ya + j / 2, x + L - j / 2, yb - j / 2), 1)
             x += L
 
 
@@ -255,43 +262,74 @@ def plan_gully(t, which):
             xc = (i - (n - 1) / 2.0) * p['slot_pitch']
             L = p['slot_lengths'][i]
             v.add('slot', 'grate_slot', rect(xc - p['slot_width'] / 2, -L / 2, xc + p['slot_width'] / 2, L / 2), 1)
+        lh = p['lifting_holes']
+        xe = (n - 1) / 2.0 * p['slot_pitch'] + lh['beyond_end_slot_centres_mm']
+        for sgn in (-1, 1):
+            v.add('lifting_hole', 'grate_slot', circle(sgn * xe, 0, lh['diameter'] / 2.0, 24), 1)
     return v
 
 
 def plan_cover_stud(t):
     p = t['pieces']['cover_stud_square']
     S = p['outer'][0]
-    v = View('plan_cover_stud_square', 'plan', 'Cover P1: 860 square, 45 mm frame, 8 x 8 studs 45 sq at 95', [-S / 2 - 40, S / 2 + 40], [-S / 2 - 40, S / 2 + 40], {'x': 'x (mm)', 'y': 'y (mm)'})
-    v.add('frame', p['material'], rect(-S / 2, -S / 2, S / 2, S / 2), 0)
     inner = p['lid_inner'][0]
-    v.add('lid', p['material'], rect(-inner / 2, -inner / 2, inner / 2, inner / 2), 1, line=[20, 16, 14])
+    v = View('plan_cover_stud_square', 'plan', 'Cover P1: 960 square, 20 mm frame, two triangular leaves on one diagonal (5 mm joint), 10 x 10 studs 45 sq at 95, half-studs on the joint',
+             [-S / 2 - 40, S / 2 + 40], [-S / 2 - 40, S / 2 + 40], {'x': 'x (mm)', 'y': 'y (mm)'})
+    v.add('frame', p['material'], rect(-S / 2, -S / 2, S / 2, S / 2), 0)
+    h = inner / 2.0
+    jw = 5.0   # the joint, leaves.split
     n = p['pattern']['count'][0]
     st, pi = p['pattern']['stud_mm'], p['pattern']['pitch_mm']
-    for i in range(n):
-        for j in range(n):
-            cx = (i - (n - 1) / 2.0) * pi
-            cy = (j - (n - 1) / 2.0) * pi
-            v.add('stud', 'cast_iron_cover', rect(cx - st / 2, cy - st / 2, cx + st / 2, cy + st / 2), 2, line=[110, 100, 92])
+    if LineString is None:
+        v.add('lid', p['material'], rect(-h, -h, h, h), 1, line=[20, 16, 14])
+        for i in range(n):
+            for j in range(n):
+                cx, cy = (i - (n - 1) / 2.0) * pi, (j - (n - 1) / 2.0) * pi
+                v.add('stud', 'cast_iron_cover', rect(cx - st / 2, cy - st / 2, cx + st / 2, cy + st / 2), 2, line=[110, 100, 92])
+        return v
+    lid = sbox(-h, -h, h, h)
+    # the joint runs from the lower-left corner (-h, +h) to the upper-right corner (+h, -h) of the picture (y is down)
+    cut = LineString([(-h - 50, h + 50), (h + 50, -h - 50)]).buffer(jw / 2.0, cap_style=2)
+    leaves = lid.difference(cut)
+    geoms = sorted(list(leaves.geoms), key=lambda g: g.centroid.x)
+    for k, g in enumerate(geoms):
+        v.add(f'leaf_{k + 1}', p['material'], list(g.exterior.coords)[:-1], 1, line=[20, 16, 14])
+        for i in range(n):
+            for j in range(n):
+                cx, cy = (i - (n - 1) / 2.0) * pi, (j - (n - 1) / 2.0) * pi
+                sq = sbox(cx - st / 2, cy - st / 2, cx + st / 2, cy + st / 2).intersection(g)
+                if sq.is_empty or sq.area < 4:
+                    continue
+                for gg in (list(sq.geoms) if hasattr(sq, 'geoms') else [sq]):
+                    if gg.area >= 4:
+                        v.add('stud_half' if gg.area < 0.9 * st * st else 'stud', 'cast_iron_cover', list(gg.exterior.coords)[:-1], 2, line=[110, 100, 92])
+        # one round keyhole per leaf, near the middle of the leaf
+        c = g.centroid
+        v.add('keyhole', 'grate_slot', circle(c.x, c.y, p['keyhole_diameter_mm'] / 2.0, 20), 3)
+    bs = p['boss']['size_mm']
+    # the blank raised boss on the joint, 150 from the lower end, long axis along the joint
+    d = math.sqrt(0.5)
+    bx, by = -h + 150 * d + 60, h - 150 * d - 60
+    v.add('boss', p['material'], rot_pts(rect(bx - bs[0] / 2, by - bs[1] / 2, bx + bs[0] / 2, by + bs[1] / 2), -45, bx, by), 3, line=[110, 100, 92])
     return v
 
 
 def plan_cover_round(t):
     p = t['pieces']['cover_round_600']
     R = p['frame_outer_diameter'] / 2.0
-    v = View('plan_cover_round_600', 'plan', 'Cover P2: round 600 class, frame 690, lid 590, basket-lug tread', [-R - 40, R + 40], [-R - 40, R + 40], {'x': 'x (mm)', 'y': 'y (mm)'})
+    v = View('plan_cover_round_600', 'plan', 'Cover P2: round 600 class, frame 690, lid 590, centred lug tread (4 lugs per 71.4 x 83.5 cell)', [-R - 40, R + 40], [-R - 40, R + 40], {'x': 'x (mm)', 'y': 'y (mm)'})
     v.add('frame', p['material'], circle(0, 0, R), 0)
     v.add('lid', p['material'], circle(0, 0, p['lid_diameter'] / 2.0), 1, line=[20, 16, 14])
-    cell = p['pattern']['cell_mm']
-    lug = p['pattern']['lug_mm']
-    lim = p['lid_diameter'] / 2.0 - p['pattern']['rim_plain_mm']
-    nx, ny = int(2 * lim / cell[0]) + 1, int(2 * lim / cell[1]) + 1
-    for i in range(nx):
-        for j in range(ny):
-            cx = (i - (nx - 1) / 2.0) * cell[0]
-            cy = (j - (ny - 1) / 2.0) * cell[1]
-            for (dx, dy, w, h) in ((-cell[0] * 0.25, -cell[1] * 0.25, lug[0], lug[1]), (cell[0] * 0.25, cell[1] * 0.25, lug[1], lug[0])):
-                x, y = cx + dx, cy + dy
-                if math.hypot(x, y) + max(w, h) / 2 < lim:
+    pt = p['pattern']
+    cell, lug = pt['cell_mm'], pt['lug_mm']
+    lim = p['lid_diameter'] / 2.0 - pt['rim_plain_mm']
+    nx, ny = int(2 * lim / cell[0]) + 2, int(2 * lim / cell[1]) + 2
+    for i in range(-nx // 2, nx // 2 + 1):
+        for j in range(-ny // 2, ny // 2 + 1):
+            for L in pt['lugs_in_cell']:
+                x, y = i * cell[0] + L['centre_mm'][0], j * cell[1] + L['centre_mm'][1]
+                w, h = (lug[0], lug[1]) if L['orientation'] == 'horizontal' else (lug[1], lug[0])
+                if math.hypot(abs(x) + w / 2, abs(y) + h / 2) < lim:
                     v.add('lug', 'cast_iron_cover', rect(x - w / 2, y - h / 2, x + w / 2, y + h / 2), 2, line=[110, 100, 92])
     return v
 
@@ -305,6 +343,25 @@ def plan_cover_recessed_footway(t):
     ledge = (W - 2 * 45, H - 2 * 45)
     v.add('ledge', p['material'], rect(-ledge[0] / 2, -ledge[1] / 2, ledge[0] / 2, ledge[1] / 2), 1, line=[20, 16, 14])
     v.add('infill', 'flag_pale', rect(-inf[0] / 2, -inf[1] / 2, inf[0] / 2, inf[1] / 2), 2, line=[90, 86, 80])
+    fl = p['frame_lugs']
+    lw, lh = fl['lug_mm']
+    rowp = fl['row_pitch_mm']
+    # two staggered rows along each long side (centres 34 and 34 + 41.75 in from the outer edge), lugs horizontal, second row shifted 35.7
+    for sy in (-1, 1):
+        for r_, off in enumerate((34.0, 34.0 + rowp)):
+            yc = sy * (H / 2 - off)
+            x = -W / 2 + 125 + (35.7 if r_ else 0.0)
+            while x < W / 2 - 125 - lw / 2:
+                v.add('frame_lug', p['material'], rect(x - lw / 2, yc - lh / 2, x + lw / 2, yc + lh / 2), 2, line=[110, 100, 92])
+                x += 71.4
+    # the ends: three columns of vertical lugs at the left (wider) end, two at the right
+    for sx, cols in ((-1, 3), (1, 2)):
+        for k in range(cols):
+            xc = sx * (W / 2 - 22 - k * 36)
+            y = -(H / 2 - 90)
+            while y < H / 2 - 90 + 1:
+                v.add('frame_lug', p['material'], rect(xc - lh / 2, y - lw / 2, xc + lh / 2, y + lw / 2), 2, line=[110, 100, 92])
+                y += 71.4
     c = 25
     v.add('infill_chamfer', 'mortar_pale', [[-inf[0] / 2 + c, -inf[1] / 2 + c], [inf[0] / 2 - c, -inf[1] / 2 + c], [inf[0] / 2 - c, inf[1] / 2 - c], [-inf[0] / 2 + c, inf[1] / 2 - c]], 3)
     return v

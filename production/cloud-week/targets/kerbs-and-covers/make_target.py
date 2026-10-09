@@ -120,8 +120,9 @@ def build():
                           'kind': 'Photo (161/153/148, speckle std about 14 grey levels on the photograph)',
                           'roughness': 0.80, 'metal': 0},
         'flag_pale': {'name': 'old concrete flag, pale', 'srgb': albedo_from(pm['footway_flag_pale']), 'kind': 'Photo; the footway family owns the flags', 'roughness': 0.75, 'metal': 0},
-        'cast_iron_grate': {'name': 'cast iron gully grating, dull rust-brown bars, black slots', 'srgb': [92, 74, 66],
-                            'kind': 'Photo (bars 88/75/76 to 125/109/103 on a view where the road is 97/95/101), Judgement for the albedo; wear target grate_wear mark 100/72/56',
+        'cast_iron_grate': {'name': 'cast iron gully grating, bare grey-black iron: the BASE is the wear target\'s iron_grate; the rust-brown bars come from its grate_wear (mark 100/72/56)', 'srgb': [58, 54, 52],
+                            'expected_composite_srgb_on_bars': [92, 74, 66],
+                            'kind': 'Read: the base is the wear target\'s surfaces.iron_grate 58/54/52 (one base colour, so the rust is not put on twice); 92/74/66 is the EXPECTED RESULT on the bars after grate_wear, for checking it (Photo: bars 88/75/76 to 125/109/103 on a view where the road is 97/95/101)',
                             'roughness': 0.70, 'roughness_words': 'rough, rust matt; bar tops polished by wheels (0.45)', 'metal': 1,
                             'metal_note': 'bare iron is metal 1; the rust skin is dielectric: use metal 0.3 where rust covers more than half'},
         'cast_iron_cover': {'name': 'cast iron or steel cover, dark grey-brown, leaf-stained', 'srgb': [78, 66, 58],
@@ -151,7 +152,7 @@ def build():
         'section_note': ('section in the plan frame: face at y = 0, back at y = -190; HALF-BATTERED face: vertical from the foot to z = 45, then sloping back 25 mm by z = 100 (about 25 degrees from vertical), then the top arris rounded R 25 (centre y -50, z 100) into a flat top 140 wide; back vertical; '
                          'buried to z = -130 so the block is 255 deep (the street\'s depth). The buried part is not seen: a plain box is enough.'),
         'upstand': K_UP, 'top_width': K_W, 'depth': K_D, 'top_arris_radius': 25, 'end_arris_radius': 10,
-        'face_batter': {'vertical_to_z': 45, 'set_back_mm': 25, 'at_z': 100, 'kind': 'Photo PM26: the middle of the arris stands 29 +-9 mm behind the foot line'},
+        'face_batter': {'vertical_to_z': 45, 'set_back_mm': 25, 'at_z': 100, 'kind': 'Photo-consistent with PM26 and the upstand together, not separately measured; Judgement for the split. PM01, PM02 and PM26 read one ray, from the camera to the middle of the arris, against one foot: read with a vertical face PM26 puts the arris middle at about 129 mm, PM01 and PM02 at 113 to 118, and a review at two places read 129 and 133 with a vertical face and 119 to 123 with the 25 mm batter, so upstand 125 with a 25 mm batter stands'},
         'length_mm': {'min': 800, 'max': 1200, 'mean': 1000, 'law': 'random in 800 to 1200, mean 1000, never two equal in a row'},
         'joint_mm': {'width': 9, 'tolerance': 3, 'fill': 'silt-dark open joint, no mortar fillet on the face; 3 mm dark line in the top'},
         'laying_tolerance': {'face_line_offset_between_blocks': 4, 'top_level_step_between_blocks': 3, 'tilt_deg_max': 1.5,
@@ -181,8 +182,10 @@ def build():
         'sett_along_mm': {'min': 130, 'max': 230, 'mean': 180}, 'joint_mm': 12,
         'sett_top': {'z': 0, 'dome_mm': 4, 'level_scatter_mm': 3, 'note': 'course B sits up to 5 mm lower where worn'},
         'pointing': 'dark mortar recessed 8 mm, partly lost: 1 joint in 4 open to 20 mm',
-        'meets_asphalt': 'asphalt edge at y = 225 stands 6 mm proud of the setts and runs out at 1 in 40; ragged edge, 10 to 30 mm wander',
+        'meets_asphalt': 'asphalt edge at y = 225 stands 6 mm proud of the setts and runs out at 1 in 40; ragged edge, 10 to 50 mm wander; over about a third of a run the asphalt laps 30 to 50 mm onto course B (the visible channel is then 180 to 195); the setts stay modelled to 225 underneath',
         'colour': ['sett_pale_worn', 'sett_dull', 'granite_blue_grey'],
+        'colour_share': {'sett_pale_worn': 0.35, 'sett_dull': 0.50, 'granite_blue_grey': 0.15,
+                         'why': 'the clean setts at these shares average about 1.78 times the road in linear light; after the wear family\'s channel body (x 0.85) about 1.51, and about 1.45 with the dark joints: inside the 1.35 to 1.7 of check channel_over_road_brightness'},
         'long_fall': '1 in 80 along the kerb toward the gully (Judgement); cross-section flat',
         'section_yz_course_A': [[0, -140], [0, 0], [115, 0], [115, -140]], 'section_yz_course_B': [[115, -140], [115, 0], [225, 0], [225, -140]],
         'profile_yz': {'channel_top': [[0, 0], [225, 0]], 'asphalt_edge': [[225, 0], [225, 6], [260, 7.0]], 'road_surface': [[260, 7.0], [3000, 75.4]],
@@ -219,7 +222,7 @@ def build():
     # ---- corners
     pieces['kerb_corner_mitre'] = {
         'what': 'external corner formed by two granite blocks mitred at the bisector (planter and build-out corners)',
-        'angle_deg': 112, 'angle_note': 'Photo urban_street_01: about 112 degrees interior; 90 allowed', 'joint_mm': 9,
+        'angle_deg': 133, 'angle_tolerance_deg': 5, 'angle_note': 'Photo PM27 (urban_street_01, the review\'s reading of the kerb\'s road edges and the yellow lines): 133 +-5 degrees interior; 90 allowed for a street corner', 'joint_mm': 9,
         'blocks_each_arm_mm': 900, 'material': 'granite_grey',
         'top_at_corner': 'arris round continues round the mitre; a small chip at the corner',
     }
@@ -230,7 +233,7 @@ def build():
         'channel': 'the two setts courses follow the curve; setts cut slightly wedge-shaped',
     }
     # ---- gully grates
-    ga = {'overall_along_kerb': 485, 'overall_across': 325, 'slot_count': 8, 'slot_width': 18, 'slot_length': 285, 'slot_pitch': 57}
+    ga = {'overall_along_kerb': 485, 'overall_across': 325, 'slot_count': 8, 'slot_width': 29, 'slot_length': 285, 'slot_pitch': 57}
     ga['slot_span'] = (ga['slot_count'] - 1) * ga['slot_pitch'] + ga['slot_width']
     ga['end_wall_along'] = (ga['overall_along_kerb'] - ga['slot_span']) / 2
     ga['end_wall_across'] = (ga['overall_across'] - ga['slot_length']) / 2
@@ -238,7 +241,9 @@ def build():
         'what': 'road gully grating, rectangular, slots across the channel (perpendicular to the kerb): the street\'s grate, east side x 12 m',
         **ga,
         'slot_centres_x': [round((i - (ga['slot_count'] - 1) / 2) * ga['slot_pitch'], 2) for i in range(ga['slot_count'])],
-        'bar_width': ga['slot_pitch'] - ga['slot_width'], 'bar_depth_z': 45, 'slot_taper': 'slot 18 wide at the top, 14 at the bottom (casting draught)',
+        'bar_width': ga['slot_pitch'] - ga['slot_width'], 'bar_depth_z': 45, 'slot_taper': 'slot 29 wide at the top, 25 at the bottom (casting draught)',
+        'open_fraction': round(ga['slot_count'] * ga['slot_width'] * ga['slot_length'] / (ga['overall_along_kerb'] * ga['overall_across']), 3),
+        'open_fraction_note': 'slot area over plan area, 8 x 29 x 285 / (485 x 325); the photograph\'s black fraction is about 0.41 (review)',
         'edge': 'bar top edges chamfered 2 mm; frame flush with the setts; the grate sits with its kerb-side edge 100 mm from the kerb foot and 200 mm of it lies beyond the 225 channel in the carriageway',
         'plan_position': {'y0': 100, 'y1': 425, 'note': 'Photo: y 102 to 426 from the kerb foot (foot = base of the lip row, row 403)'},
         'pot': 'black void below the slots 300 deep (gully pot), silt at the bottom: the slots read black',
@@ -248,18 +253,27 @@ def build():
     }
     pieces['gully_grate_B'] = {
         'what': 'second grate design: 7 slots trimmed to an oval field (Birbeck Street); the quay end\'s grate if the builder wants variety',
-        'slot_count': 7, 'slot_width': 20, 'slot_pitch': 58, 'slot_lengths': [125, 250, 350, 395, 350, 250, 125],
-        'overall_along_kerb': 490, 'overall_across': 445, 'kind': 'Photo, rough (perspective view, +-15 %); Judgement for the frame',
+        'slot_count': 7, 'slot_width': 28, 'slot_pitch': 58, 'slot_lengths': [125, 250, 350, 395, 350, 250, 125],
+        'bar_width': 30, 'lifting_holes': {'count': 2, 'diameter': 25, 'on_long_axis': True, 'beyond_end_slot_centres_mm': 55, 'kind': 'Photo, rough (review): two round lifting holes about 25 across on the long axis beyond the two end slots'},
+        'cast_marks': 'raised marks are cast on its centre bar: they stay BLANK (no_lettering)',
+        'overall_along_kerb': 490, 'overall_across': 445, 'kind': 'Photo, rough (perspective view, +-15 %); Judgement for the frame; the slots are about half the pitch (28 wide, bars 30)',
         'material': 'cast_iron_grate', 'pivot': 'centre of the grate at the top surface',
     }
     # ---- covers
     pieces['cover_stud_square'] = {
-        'what': 'square cast cover with a lattice of raised square studs (pattern 1)',
-        'outer': [860, 860], 'outer_note': 'Photo 816 and 890, mean 853, +-70 (Bethnal Green entrance, 0.9 m from the nadir of the panorama)',
-        'frame_rim': 45, 'lid_inner': [770, 770], 'lid_recess_below_frame_mm': 0,
-        'pattern': {'type': 'square_stud_lattice', 'stud_mm': 45, 'pitch_mm': 95, 'stud_height_mm': 4, 'edge_margin_mm': 30,
-                    'count': [8, 8], 'stud_sides': '15 degree draught, top flat, arrises worn round 1 mm'},
-        'lifting_pockets': 'two oblong pockets 50 x 20 near the middle of opposite edges, silted (Judgement)',
+        'what': 'square double-triangular cast cover: two triangular leaves split on a diagonal, a lattice of raised square studs (pattern 1)',
+        'outer': [960, 960], 'outer_note': 'Photo 980 x 920 +-70 on the review\'s reading (Bethnal Green entrance, 0.9 m from the nadir of the panorama); PM18',
+        'frame_rim': 20, 'lid_inner': [920, 920], 'lid_recess_below_frame_mm': 0,
+        'leaves': {'count': 2, 'shape': 'right-angled triangles', 'split': 'one diagonal joint corner to corner, 5 mm wide',
+                   'studs_on_the_joint': 'the studs the joint crosses are cut into right-angled half-studs (half-triangles) on both leaves; at least five are visible along it',
+                   'kind': 'Photo (review, bethnal_green_entrance): one diagonal joint, half-studs along it'},
+        'pattern': {'type': 'square_stud_lattice', 'stud_mm': 45, 'pitch_mm': 95, 'stud_height_mm': 4, 'edge_margin_mm': 10,
+                    'count': [10, 10], 'stud_sides': '15 degree draught, top flat, arrises worn round 1 mm'},
+        'keyhole_diameter_mm': 20,
+        'keyholes': 'one round keyhole 20 mm across per leaf, near the middle of the leaf (Photo: one seen in one leaf; Judgement for the other)',
+        'boss': {'size_mm': [80, 40], 'height_mm': 3, 'where': 'near one end of the joint (the lower one), on the joint line', 'blank': True,
+                 'note': 'a small raised blank oblong boss, where a maker\'s mark would go: it stays blank (no_lettering)'},
+        'lifting_pockets': 'none (replaces the earlier two oblong pockets): the lifting points are the round keyholes',
         'material': 'cast_iron_cover', 'gap_to_surround_mm': 10, 'surround': 'block paving or flags, edge blocks cut to it',
         'use': 'footway and carriageway, 2 on the street', 'pivot': 'centre of the lid at its top surface',
     }
@@ -267,15 +281,18 @@ def build():
         'what': 'round manhole cover in the carriageway, 600 class (pattern 2)',
         'frame_outer_diameter': 690, 'lid_diameter': 590, 'frame_depth': 68, 'frame_ring_width': 50,
         'kind': 'frame size Read from the CC0 Poly Haven model water_manhole_cover (690.76 mm overall, 67.6 mm deep, a modelled asset, not a photograph); 600 class Judgement',
-        'pattern': {'type': 'basket_lug', 'lug_mm': [38, 9], 'cell_mm': [71.3, 83.5], 'lug_height_mm': 2.5, 'rim_plain_mm': 25,
-                    'note': 'one horizontal and one vertical lug per cell; measured on the Poly Haven CC0 texture metal_grate_rusty (a scan of a real cast tread, 500 mm tile; autocorrelation 71.3 x 83.5)'},
+        'pattern': {'type': 'basket_lug', 'lug_mm': [36, 10.5], 'cell_mm': [71.4, 83.5], 'lug_height_mm': 2.5, 'rim_plain_mm': 25,
+                    'lugs_in_cell': [{'orientation': 'horizontal', 'centre_mm': [0, 0]}, {'orientation': 'horizontal', 'centre_mm': [35.7, 41.75]},
+                                     {'orientation': 'vertical', 'centre_mm': [35.7, 6]}, {'orientation': 'vertical', 'centre_mm': [0, 47.75]}],
+                    'note': ('a centred lattice (review, read off the 1k displacement map of the Poly Haven CC0 texture metal_grate_rusty, a scan of a real cast tread, 500 mm tile): rows 41.75 apart; along each row a horizontal and a vertical lug alternate every 35.7, so the horizontal lugs repeat every 71.4; each row is shifted 35.7 from the last so a vertical lug sits above and below each horizontal one; the vertical lugs sit 6 mm below their row\'s line. So each 71.4 x 83.5 cell holds 2 horizontal and 2 vertical lugs. Lug 36 x 10.5 x 2.5.')},
         'lettering': 'none (a generic WATER or GAS is allowed only once a photograph shows it)',
         'material': 'cast_iron_cover', 'use': '2 in the carriageway', 'pivot': 'centre of the lid at its top surface',
     }
     pieces['cover_recessed_footway'] = {
         'what': 'large recessed cover in the footway, telecom-style and blank (pattern 3, footway)',
         'outer': [1180, 660], 'outer_err': [50, 100], 'frame_rim_total': 110,
-        'frame_steps': 'outer flat flange 45 wide flush with the flags, inner ledge 65 wide stepped 12 down',
+        'frame_steps': 'frame top cast with raised oblong lugs, two staggered rows along the long sides, more across the wider left end; use the P2 tread lug (36 x 10.5 x 2.5, rows 41.75 apart) [Photo for the pattern, Judgement for the size]. The rim is two bands, an outer 45 wide level with the flags and an inner 65 wide stepped 12 down, both lugged',
+        'frame_lugs': {'lug_mm': [36, 10.5], 'height_mm': 2.5, 'row_pitch_mm': 41.75, 'long_sides': 'two staggered rows on each long side (second row shifted 35.7)', 'left_end': 'three columns of vertical lugs', 'right_end': 'two columns of vertical lugs', 'kind': 'Photo for the pattern (a telephoto of the 8k at 7 m cannot measure the lug), Judgement for the size and counts'},
         'infill': [960, 440], 'infill_material': 'flag or concrete tray lid, pale, 25 mm chamfer on its edge, top 8 mm below the flags',
         'material': 'cast_iron_cover', 'use': '1 or 2 on the street, west footway beside the yard', 'pivot': 'centre of the infill at the flag surface',
         'kind': 'Photo urban_street_03 (a view 7 m away, the near edge sharp, the far edge soft)',
@@ -289,7 +306,7 @@ def build():
     }
     pieces['cover_road_double_leaf'] = {
         'what': 'long two-leaf cover with a fine stud tread in the carriageway (pattern 4, road)',
-        'outer': [1820, 620], 'outer_err': 150, 'leaf_split': 'two equal leaves with a 15 mm gap across the middle',
+        'outer': [1820, 620], 'outer_err': 150, 'leaf_split': 'two equal leaves with a 15 mm gap across the middle', 'leaf_split_kind': 'Judgement, not Photo: on a 4 mm ortho of urban_street_04 the studded field is divided by more than one seam, at least one oblique to the long axis, and no single cross-joint at the middle was seen; its period is unproven (it sits in a fresh reinstatement), so one on the street',
         'pattern': {'type': 'square_stud_lattice', 'stud_mm': 18, 'pitch_mm': 33, 'stud_height_mm': 3, 'edge_margin_mm': 30, 'lattice_rotation_deg': 45},
         'surround': 'pale mortar and a patch of lighter tarmac, 150 wide', 'material': 'cast_iron_cover',
         'kind': 'Photo urban_street_04 (seen 7 m away: shape and pattern, not exact numbers)', 'use': '1 on the street', 'pivot': 'centre at the road surface',
@@ -318,8 +335,8 @@ def build():
         'foot_line_note': 'foot = the base of the lip row and of the kerb face: the row where the dark face and its shadow start to rise toward the setts (row 403 of the 3 mm frame, +-5 px); the soft shadow under the kerb makes the middle of the rise (row 407) 12 mm lower',
         'channel_width': 225, 'lip': {'y0': -125, 'y1': 0}, 'ramp_back_y': -917, 'ramp_front_y': -137,
         'flank': {'width': 155, 'y0': -917, 'y1': -202, 'left_x': [-1403, -1232], 'right_x': [1075, 1215]},
-        'kerb_top_rear_y': -190, 'gully': {'x_centre': -770, 'y0': 102, 'y1': 426, 'along': 489, 'across': 324},
-        'note': 'the channel here is 226 wide by the gradient of its edge (PM06); the street\'s granite channel is 225, the concrete one 255 (Read); the grate position and size are as photographed',
+        'kerb_top_rear_y': -190, 'gully': {'x_centre': -751, 'y0': 102, 'y1': 426, 'along': 489, 'across': 324},
+        'note': 'the channel here is 226 wide by the gradient of its edge (PM06); the street\'s granite channel is 225, the concrete one 255 (Read); the grate position and size are as photographed (its x_centre -751 is the fitted centre of the slot field, PM30: seven slot centroids, std 1.0 mm)',
     }
     t['photo_frames'] = {
         'MAIN': {'pano': 'urban_street_03', 'yaw_deg': 272.2, 'x0_m': -2.3, 'x1_m': 1.1, 'z0_m': 3.15, 'z1_m': 5.0, 'mm_per_px': 3.0, 'size_px': [1134, 617],
@@ -347,6 +364,7 @@ def build():
     t['could_not_settle'] = D.could_not_settle()
     t['to_read_when_the_network_opens'] = D.to_read_later()
     t['edge_probes'] = D.edge_probes()
+    t['handover'] = D.handover()
     t['scale_fit'] = D.SCALE_FIT
     return t
 

@@ -78,6 +78,11 @@ def compute(pm):
         d0 = 5000 - 3 * raw['foot_row']
         d1 = (5000 - 3 * raw['edge_row']) * (1600 - raw['edge_z_mm']) / 1600.0
         return {'width_mm': round(d0 - d1, 1)}
+    if m == 'corner_angle':
+        # interior angle between two straight runs from their directions on the ground picture (degrees from the picture's x axis)
+        a = 180.0 - abs(raw['dirs_deg'][0] - raw['dirs_deg'][1])
+        b = 180.0 - abs(raw['dirs2_deg'][0] - raw['dirs2_deg'][1])
+        return {'interior_edges_deg': round(a, 1), 'interior_lines_deg': round(b, 1), 'mean_deg': round((a + b) / 2, 1)}
     if m == 'setback_from_rows':
         # foot row on the ground frame (z = 0); the arris row on the kerb-top frame (plane z = 125 mm, camera 1475 mm)
         d_foot = 5000 - 3 * raw['foot_row']
