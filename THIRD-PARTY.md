@@ -499,7 +499,7 @@ they serve is a side-by-side judgment by a person. Since 3 October they are no
 longer in this repository (as above), kept on his PC at
 F:/LedgerTools/reference-other-games and in his backup.
 
-## Fonts for the street's signs and paper (cloud week 42, 9 October 2026), SIL Open Font Licence 1.1
+## Fonts — THE STREET'S SIGNS AND PAPER, SIL OPEN FONT LICENCE 1.1 (cloud week 42, 9 October 2026)
 
 Fetched from Google Fonts' repository (github.com/google/fonts, `ofl/<family>/`) for the shop
 fascias (production/cloud-week/2d/fascias/) and the posters, notices, boards and plates; each
