@@ -243,6 +243,16 @@ WATCHED = {
     # the game (static cuts of two variable families, tools/ui/make_font_cuts.py).
     "production/fonts/evening-paper": "THE EVENING PAPER",
     "production/fonts/patrick-hand": "PATRICK HAND",
+    # THE STREET'S SIGNS AND PAPER, cloud week 42 (9 October): eight OFL families from Google Fonts'
+    # repository for the fascias, posters, notices, boards and plates, each with its OFL.txt beside it.
+    "production/fonts/abril-fatface": "THE STREET'S SIGNS AND PAPER",
+    "production/fonts/alfa-slab-one": "THE STREET'S SIGNS AND PAPER",
+    "production/fonts/fraunces": "THE STREET'S SIGNS AND PAPER",
+    "production/fonts/josefin-sans": "THE STREET'S SIGNS AND PAPER",
+    "production/fonts/jost": "THE STREET'S SIGNS AND PAPER",
+    "production/fonts/libre-franklin": "THE STREET'S SIGNS AND PAPER",
+    "production/fonts/old-standard-tt": "THE STREET'S SIGNS AND PAPER",
+    "production/fonts/oswald": "THE STREET'S SIGNS AND PAPER",
     # THE PS5 CORNER'S BAR, 23 September: two Kingdom Come: Deliverance II
     # screenshots supplied by Jafar. Out of the repository since 3 October (his
     # ruling: other games' screenshots never in it), kept on this PC
@@ -344,6 +354,11 @@ OURS = {
     # boolean arches - with flat materials and no texture. No mesh, picture or
     # outline from anywhere else, and no real make's lines (canon).
     "production/assets/shopfront-kit": "the parade's period shopfront pieces (pilaster, stallriser, window frame, doors), modelled by script in Blender by tools/art-recipes/shopfront-kit/*.py from measurements and dated guides (production/research/shopfronts/FRONTAGE-2026-10-06.md), plain materials, no texture and no fetched input; read by tools/art-recipes/terrace-front.py into the street (6 October)",
+    # Cloud week 42 (8 to 17 October): the kit pieces built by script while the PC was offline, and
+    # the scripts' own intermediates (parts lists, renders) beside them; nothing fetched goes into
+    # either. The reference photographs the targets measured are credited in THIRD-PARTY.md.
+    "production/assets/cloud-week": "the cloud week's kit pieces (the front door and the street furniture), built by script in Blender by production/cloud-week/kit/*/build_*.py to the exact targets in production/cloud-week/targets/, plain materials, no texture and no fetched input (October 2026)",
+    "production/cloud-week": "the cloud week's research, targets, kit and 2D scripts and their own intermediates (parts .npz, check overlays), made by this project's scripts from typed numbers; no fetched input",
     "production/assets/sash-window": "the street's box sash window, built by script in Blender by tools/art-recipes/sash-window/*.py to production/art/sash-window/target.json (numbers from Ellis's Modern Practical Joinery, 1902, public domain, amended from measurements of CC BY-SA photographs that are read, never copied into it); prisms from typed numbers, plain materials, no texture and no fetched input (8 October)",
     "production/assets/vehicles": "built by tools/art-recipes/car-model.py from Blender primitives, flat materials, no texture and no fetched input",
     # THE STREET'S AMBIENCE, 23 September: made from seeded noise by

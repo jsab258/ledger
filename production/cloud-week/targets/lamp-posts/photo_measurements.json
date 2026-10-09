@@ -1,0 +1,529 @@
+{
+ "written": "2026-10-09",
+ "frames": {
+  "BGE": {
+   "pano": "bethnal_green_entrance",
+   "yaw": 138.5,
+   "d": 2.73,
+   "cam": 1.02,
+   "cam_err": 0.07
+  },
+  "US01": {
+   "pano": "urban_street_01",
+   "yaw": -15.7,
+   "d": 8.8,
+   "cam": 1.16,
+   "cam_err": 0.07,
+   "d_err": 0.6
+  }
+ },
+ "method": {},
+ "bge_sleeve_width": {
+  "rows": [
+   {
+    "z": 100,
+    "xl": -52.5,
+    "xr": 70.5,
+    "width": 123.0,
+    "grad_l": -7.3,
+    "grad_r": 10.9
+   },
+   {
+    "z": 200,
+    "xl": -52.5,
+    "xr": 70.5,
+    "width": 123.0,
+    "grad_l": -5.9,
+    "grad_r": 9.3
+   },
+   {
+    "z": 300,
+    "xl": -52.5,
+    "xr": 70.5,
+    "width": 123.0,
+    "grad_l": -7.9,
+    "grad_r": 11.0
+   },
+   {
+    "z": 400,
+    "xl": -52.5,
+    "xr": 70.5,
+    "width": 123.0,
+    "grad_l": -8.4,
+    "grad_r": 9.5
+   },
+   {
+    "z": 500,
+    "xl": -56.5,
+    "xr": 67.5,
+    "width": 124.0,
+    "grad_l": -5.6,
+    "grad_r": 7.3
+   },
+   {
+    "z": 600,
+    "xl": -55.5,
+    "xr": 69.5,
+    "width": 125.0,
+    "grad_l": -9.7,
+    "grad_r": 6.8
+   },
+   {
+    "z": 700,
+    "xl": -55.5,
+    "xr": 64.5,
+    "width": 120.0,
+    "grad_l": -6.3,
+    "grad_r": 4.2
+   },
+   {
+    "z": 800,
+    "xl": -56.5,
+    "xr": 71.5,
+    "width": 128.0,
+    "grad_l": -8.1,
+    "grad_r": 9.3
+   }
+  ],
+  "mean_width": 123.6,
+  "centre_x": 7.6
+ },
+ "bge_shaft_width": {
+  "rows": [
+   {
+    "z": 1700,
+    "xl": -24.5,
+    "xr": 42.5,
+    "width": 67.0,
+    "grad_l": -25.8,
+    "grad_r": 28.4
+   },
+   {
+    "z": 1800,
+    "xl": -32.5,
+    "xr": 36.5,
+    "width": 69.0,
+    "grad_l": -23.9,
+    "grad_r": 10.0
+   },
+   {
+    "z": 1900,
+    "xl": -33.5,
+    "xr": 35.5,
+    "width": 69.0,
+    "grad_l": -20.9,
+    "grad_r": 8.1
+   },
+   {
+    "z": 3800,
+    "xl": -21.5,
+    "xr": 39.5,
+    "width": 61.0,
+    "grad_l": -8.8,
+    "grad_r": 17.2
+   },
+   {
+    "z": 3900,
+    "xl": -21.5,
+    "xr": 39.5,
+    "width": 61.0,
+    "grad_l": -9.2,
+    "grad_r": 16.9
+   },
+   {
+    "z": 4000,
+    "xl": -21.5,
+    "xr": 39.5,
+    "width": 61.0,
+    "grad_l": -9.6,
+    "grad_r": 16.6
+   }
+  ]
+ },
+ "bge_shoulder_profile": {
+  "rows": [
+   {
+    "z": 940,
+    "xl": -64.5,
+    "xr": 68.5,
+    "width": 133.0,
+    "grad_l": -4.4,
+    "grad_r": 6.5
+   },
+   {
+    "z": 950,
+    "xl": -52.5,
+    "xr": 68.5,
+    "width": 121.0,
+    "grad_l": -1.4,
+    "grad_r": 6.8
+   },
+   {
+    "z": 960,
+    "xl": -59.5,
+    "xr": 74.5,
+    "width": 134.0,
+    "grad_l": -8.8,
+    "grad_r": 4.9
+   },
+   {
+    "z": 970,
+    "xl": -64.5,
+    "xr": 58.5,
+    "width": 123.0,
+    "grad_l": -6.0,
+    "grad_r": 8.3
+   },
+   {
+    "z": 980,
+    "xl": -61.5,
+    "xr": 73.5,
+    "width": 135.0,
+    "grad_l": -9.3,
+    "grad_r": 9.1
+   },
+   {
+    "z": 990,
+    "xl": -54.5,
+    "xr": 52.5,
+    "width": 107.0,
+    "grad_l": -1.3,
+    "grad_r": 6.1
+   },
+   {
+    "z": 1000,
+    "xl": -47.5,
+    "xr": 48.5,
+    "width": 96.0,
+    "grad_l": -0.4,
+    "grad_r": 6.7
+   },
+   {
+    "z": 1010,
+    "xl": -51.5,
+    "xr": 45.5,
+    "width": 97.0,
+    "grad_l": -6.3,
+    "grad_r": 9.4
+   },
+   {
+    "z": 1020,
+    "xl": -36.5,
+    "xr": 41.5,
+    "width": 78.0,
+    "grad_l": 1.5,
+    "grad_r": 7.0
+   },
+   {
+    "z": 1030,
+    "xl": -35.5,
+    "xr": 37.5,
+    "width": 73.0,
+    "grad_l": -10.7,
+    "grad_r": 5.2
+   },
+   {
+    "z": 1040,
+    "xl": -29.5,
+    "xr": 31.5,
+    "width": 61.0,
+    "grad_l": -2.6,
+    "grad_r": 8.1
+   },
+   {
+    "z": 1050,
+    "xl": -17.5,
+    "xr": 50.5,
+    "width": 68.0,
+    "grad_l": -1.4,
+    "grad_r": 6.2
+   },
+   {
+    "z": 1060,
+    "xl": -15.5,
+    "xr": 43.5,
+    "width": 59.0,
+    "grad_l": -2.9,
+    "grad_r": 11.2
+   },
+   {
+    "z": 1070,
+    "xl": -23.5,
+    "xr": 42.5,
+    "width": 66.0,
+    "grad_l": -2.9,
+    "grad_r": 9.9
+   },
+   {
+    "z": 1080,
+    "xl": -30.5,
+    "xr": 37.5,
+    "width": 68.0,
+    "grad_l": -6.0,
+    "grad_r": 4.0
+   }
+  ]
+ },
+ "bge_pod": {
+  "sky_luminance": 251.4,
+  "widest_run_mm": 417,
+  "x_left": -193,
+  "x_right": 223,
+  "at_picture_z_mm": 4415,
+  "note": "silhouette of the pod seen from below at about 51 degrees: the horizontal extreme is in the plane through the axis, so the width is the true diameter within the scale error; its height cannot be read from below"
+ },
+ "bge_pod_angles": {
+  "top_row": 824,
+  "bottom_row": 944,
+  "el_top_deg": 53.79,
+  "el_bottom_deg": 48.52,
+  "centre_height_m": 4.41,
+  "note": "the disc's own foreshortened width (about 0.33 m seen from 51 degrees) makes up most of the 5.4 degrees between the rows; so the thickness is not read"
+ },
+ "bge_colours": {
+  "sleeve_paint_z500_900": {
+   "median": [
+    31.0,
+    31.0,
+    33.0
+   ],
+   "p10": [
+    19.0,
+    19.0,
+    20.0
+   ],
+   "p90": [
+    44.0,
+    44.0,
+    46.0
+   ]
+  },
+  "sleeve_splash_z20_250": {
+   "median": [
+    49.0,
+    46.0,
+    42.0
+   ],
+   "p10": [
+    34.0,
+    33.0,
+    31.0
+   ],
+   "p90": [
+    77.0,
+    71.0,
+    66.0
+   ]
+  },
+  "sleeve_z250_480": {
+   "median": [
+    27.0,
+    27.0,
+    28.0
+   ],
+   "p10": [
+    17.0,
+    18.0,
+    19.0
+   ],
+   "p90": [
+    57.0,
+    56.0,
+    54.0
+   ]
+  },
+  "shaft_z1300_1600": {
+   "median": [
+    44.0,
+    45.0,
+    51.0
+   ],
+   "p10": [
+    33.0,
+    34.0,
+    38.0
+   ],
+   "p90": [
+    69.0,
+    70.0,
+    75.0
+   ]
+  }
+ },
+ "us01_top": {
+  "sky_luminance": 231.2,
+  "shaft": [
+   {
+    "z": 8900,
+    "x_left": -72,
+    "x_right": 16,
+    "width": 90
+   },
+   {
+    "z": 9000,
+    "x_left": -72,
+    "x_right": 14,
+    "width": 88
+   },
+   {
+    "z": 9100,
+    "x_left": -72,
+    "x_right": 14,
+    "width": 88
+   },
+   {
+    "z": 9200,
+    "x_left": -72,
+    "x_right": 12,
+    "width": 86
+   },
+   {
+    "z": 9300,
+    "x_left": -74,
+    "x_right": 14,
+    "width": 90
+   },
+   {
+    "z": 9400,
+    "x_left": -76,
+    "x_right": 14,
+    "width": 92
+   },
+   {
+    "z": 9500,
+    "x_left": -76,
+    "x_right": 8,
+    "width": 86
+   },
+   {
+    "z": 9600,
+    "x_left": -78,
+    "x_right": 16,
+    "width": 96
+   },
+   {
+    "z": 9700,
+    "x_left": -78,
+    "x_right": 6,
+    "width": 86
+   }
+  ],
+  "stem": [
+   {
+    "z": 9800,
+    "x_left": -52,
+    "x_right": -12,
+    "width": 42
+   },
+   {
+    "z": 9900,
+    "x_left": -52,
+    "x_right": -16,
+    "width": 38
+   },
+   {
+    "z": 10000,
+    "x_left": -70,
+    "x_right": -26,
+    "width": 46
+   }
+  ],
+  "arm": [
+   {
+    "x": -1100,
+    "z_centre": 11036.0,
+    "vertical_thickness": 82
+   },
+   {
+    "x": -1020,
+    "z_centre": 10965.0,
+    "vertical_thickness": 80
+   },
+   {
+    "x": -940,
+    "z_centre": 10894.0,
+    "vertical_thickness": 78
+   },
+   {
+    "x": -860,
+    "z_centre": 10824.0,
+    "vertical_thickness": 82
+   },
+   {
+    "x": -780,
+    "z_centre": 10751.0,
+    "vertical_thickness": 84
+   },
+   {
+    "x": -700,
+    "z_centre": 10679.0,
+    "vertical_thickness": 80
+   },
+   {
+    "x": -620,
+    "z_centre": 10611.0,
+    "vertical_thickness": 80
+   },
+   {
+    "x": -540,
+    "z_centre": 10537.0,
+    "vertical_thickness": 80
+   },
+   {
+    "x": -460,
+    "z_centre": 10468.0,
+    "vertical_thickness": 82
+   },
+   {
+    "x": -380,
+    "z_centre": 10397.0,
+    "vertical_thickness": 80
+   },
+   {
+    "x": -300,
+    "z_centre": 10324.0,
+    "vertical_thickness": 78
+   },
+   {
+    "x": -220,
+    "z_centre": 10253.0,
+    "vertical_thickness": 76
+   }
+  ],
+  "arm_slope_in_picture": -0.889,
+  "shaft_mean_width": 89.1,
+  "stem_mean_width": 42.0,
+  "arm_perpendicular_width": 59.9,
+  "note": "the arm's slope in the picture (about 43 degrees) is NOT its rake: the arm points partly out of the plane; only widths are used (as ratios to the shaft)"
+ },
+ "us01_sleeve_note": {
+  "sleeve_width_mm_at_8p8m": 232,
+  "shaft_above_mm_at_8p8m": 113,
+  "sleeve_top_z": 880,
+  "reading": "by eye on the gridded elevation (g_us01_base): left edge -115, right edge +117 at z 300 to 800; shaft above -63 to +50; the ratio sleeve / shaft 2.05"
+ },
+ "us01_lit_lantern": {
+  "orange_pixels": 66611,
+  "median": [
+   251.0,
+   152.0,
+   14.0
+  ],
+  "p10": [
+   229.0,
+   105.0,
+   0.0
+  ],
+  "p90": [
+   255.0,
+   208.0,
+   77.0
+  ],
+  "core_200_brightest": [
+   252.0,
+   251.0,
+   180.0
+  ],
+  "note": "tone-mapped 2019 photograph, daylight white balance, overcast sky behind; the lamp type (sodium or not) is unknown; the clipped core is over-exposure"
+ }
+}

@@ -1,0 +1,678 @@
+{
+ "photo": "P1 Leadenhall Market, Andreas Mischok, CC0, taken 2019-05-19",
+ "view": {
+  "yaw_deg": 90.0,
+  "pitch_deg": 0,
+  "focal_px": 2400.0,
+  "origin": "principal point = eye level; y down"
+ },
+ "crops": {
+  "plinth": [
+   -1360,
+   -80,
+   350,
+   700
+  ],
+  "capital": [
+   -1360,
+   -1760,
+   350,
+   340
+  ],
+  "fascia": [
+   -1400,
+   -2340,
+   520,
+   660
+  ],
+  "sill": [
+   -1100,
+   90,
+   850,
+   530
+  ],
+  "transom": [
+   -1100,
+   -700,
+   850,
+   180
+  ],
+  "cornice": [
+   -1030,
+   -2340,
+   200,
+   380
+  ],
+  "door": [
+   430,
+   100,
+   120,
+   460
+  ],
+  "pier": [
+   -1345,
+   -2340,
+   330,
+   2980
+  ]
+ },
+ "masks": {
+  "fascia": [
+   [
+    -1395,
+    -1865,
+    -1300,
+    -1755
+   ],
+   [
+    -1012,
+    -1865,
+    -866,
+    -1750
+   ]
+  ],
+  "plinth": [
+   [
+    -1360,
+    -80,
+    -1316,
+    95
+   ]
+  ],
+  "pier": [
+   [
+    -1395,
+    -1870,
+    -1296,
+    -1750
+   ],
+   [
+    -1350,
+    -1500,
+    -1294,
+    -330
+   ],
+   [
+    -1350,
+    -330,
+    -1334,
+    640
+   ],
+   [
+    -1350,
+    -330,
+    -1318,
+    110
+   ]
+  ]
+ },
+ "features": {
+  "pil_foot": {
+   "crop": "plinth",
+   "kind": "row",
+   "y": 604.06,
+   "strength": 7.7,
+   "expected": 604,
+   "span_x": [
+    -1290,
+    -1150
+   ],
+   "what": "foot of the plinth, on the footway",
+   "sign": 0
+  },
+  "plinth_block1_top": {
+   "crop": "plinth",
+   "kind": "row",
+   "y": 194.32,
+   "strength": 15.6,
+   "expected": 195,
+   "span_x": [
+    -1290,
+    -1150
+   ],
+   "what": "top of the plinth's lowest block",
+   "sign": 0
+  },
+  "plinth_block2_top": {
+   "crop": "plinth",
+   "kind": "row",
+   "y": 91.47,
+   "strength": 14.5,
+   "expected": 91,
+   "span_x": [
+    -1290,
+    -1150
+   ],
+   "what": "top of its second block",
+   "sign": 0
+  },
+  "plinth_block3_top": {
+   "crop": "plinth",
+   "kind": "row",
+   "y": 53.28,
+   "strength": 17.6,
+   "expected": 53,
+   "span_x": [
+    -1290,
+    -1150
+   ],
+   "what": "top of its third block",
+   "sign": 0
+  },
+  "plinth_cap_top": {
+   "crop": "plinth",
+   "kind": "row",
+   "y": -45.77,
+   "strength": 17.9,
+   "expected": -46,
+   "span_x": [
+    -1290,
+    -1150
+   ],
+   "what": "top of the weathered cap slab, where the shaft starts",
+   "sign": 0
+  },
+  "plinth_block1_left": {
+   "crop": "plinth",
+   "kind": "col",
+   "x": -1330.29,
+   "strength": 4.7,
+   "expected": -1330,
+   "span_y": [
+    300,
+    560
+   ],
+   "what": "left edge of the lowest block"
+  },
+  "plinth_block2_left": {
+   "crop": "plinth",
+   "kind": "col",
+   "x": -1319.88,
+   "strength": 4.6,
+   "expected": -1320,
+   "span_y": [
+    110,
+    180
+   ],
+   "what": "left edge of the second block"
+  },
+  "plinth_block3_left": {
+   "crop": "plinth",
+   "kind": "col",
+   "x": -1311.14,
+   "strength": 7.0,
+   "expected": -1311,
+   "span_y": [
+    56,
+    84
+   ],
+   "what": "left edge of the third block"
+  },
+  "plinth_cap_left": {
+   "crop": "plinth",
+   "kind": "col",
+   "x": -1301.96,
+   "strength": 1.8,
+   "expected": -1305,
+   "span_y": [
+    -30,
+    40
+   ],
+   "what": "left edge of the weathered cap slab"
+  },
+  "neck_ledge_left": {
+   "crop": "capital",
+   "kind": "col",
+   "x": -1284.8,
+   "strength": 7.2,
+   "expected": -1285,
+   "span_y": [
+    -1556,
+    -1553
+   ],
+   "what": "left end of the necking's ledge"
+  },
+  "shaft_top": {
+   "crop": "capital",
+   "kind": "row",
+   "y": -1529.5,
+   "strength": 25.6,
+   "expected": -1529,
+   "span_x": [
+    -1215,
+    -1200
+   ],
+   "what": "top of the shaft (cream) under the necking",
+   "sign": 0
+  },
+  "neck_ledge": {
+   "crop": "capital",
+   "kind": "row",
+   "y": -1552.41,
+   "strength": 15.2,
+   "expected": -1552,
+   "span_x": [
+    -1215,
+    -1200
+   ],
+   "what": "the necking's ledge",
+   "sign": 0
+  },
+  "abacus_bottom": {
+   "crop": "capital",
+   "kind": "row",
+   "y": -1674.78,
+   "strength": 23.8,
+   "expected": -1675,
+   "span_x": [
+    -1215,
+    -1200
+   ],
+   "what": "underside of the capital's top band",
+   "sign": 0
+  },
+  "abacus_top": {
+   "crop": "capital",
+   "kind": "row",
+   "y": -1703.58,
+   "strength": 17.9,
+   "expected": -1704,
+   "span_x": [
+    -1215,
+    -1200
+   ],
+   "what": "top of the capital's top band (the fascia field's foot)",
+   "sign": 0
+  },
+  "shaft_left": {
+   "crop": "capital",
+   "kind": "col",
+   "x": -1270.07,
+   "strength": 29.7,
+   "expected": -1270,
+   "span_y": [
+    -1500,
+    -1440
+   ],
+   "what": "shaft, left edge"
+  },
+  "shaft_right": {
+   "crop": "capital",
+   "kind": "col",
+   "x": -1102.21,
+   "strength": 13.4,
+   "expected": -1102,
+   "span_y": [
+    -1500,
+    -1440
+   ],
+   "what": "shaft, right edge of the front face"
+  },
+  "shaft_return_outer": {
+   "crop": "capital",
+   "kind": "col",
+   "x": -1071.45,
+   "strength": 17.8,
+   "expected": -1072,
+   "span_y": [
+    -1500,
+    -1440
+   ],
+   "what": "the shaft's right return, outer edge (the painted return's edge)"
+  },
+  "shaft_return_frame": {
+   "crop": "capital",
+   "kind": "col",
+   "x": -1031.16,
+   "strength": 7.2,
+   "expected": -1029,
+   "span_y": [
+    -1500,
+    -1440
+   ],
+   "what": "the dark return's outer edge where the teal window frame begins (the next surface beside the shaft)"
+  },
+  "fascia_field_top": {
+   "crop": "fascia",
+   "kind": "row",
+   "y": -1989.66,
+   "strength": 11.6,
+   "expected": -1989,
+   "span_x": [
+    -960,
+    -940
+   ],
+   "what": "gilt line at the field's top",
+   "sign": 1
+  },
+  "fascia_field_bottom": {
+   "crop": "fascia",
+   "kind": "row",
+   "y": -1697.66,
+   "strength": 19.1,
+   "expected": -1705,
+   "span_x": [
+    -960,
+    -940
+   ],
+   "what": "gilt line at the field's foot (or the board's foot)",
+   "sign": 1
+  },
+  "crown_top": {
+   "crop": "fascia",
+   "kind": "row",
+   "y": -2297.94,
+   "strength": 13.4,
+   "expected": -2298,
+   "span_x": [
+    -1250,
+    -1150
+   ],
+   "what": "top edge of the upper pier cap / crown",
+   "sign": 0
+  },
+  "cornice_base": {
+   "crop": "cornice",
+   "kind": "row",
+   "y": -1989.53,
+   "strength": 9.4,
+   "expected": -1990,
+   "span_x": [
+    -1000,
+    -950
+   ],
+   "what": "the field's top: the crown's lowest fillet",
+   "sign": 0
+  },
+  "cornice_cove_top": {
+   "crop": "cornice",
+   "kind": "row",
+   "y": -2019.87,
+   "strength": 6.3,
+   "expected": -2020,
+   "span_x": [
+    -1000,
+    -950
+   ],
+   "what": "top of the first cove",
+   "sign": 0
+  },
+  "cornice_soffit_top": {
+   "crop": "cornice",
+   "kind": "row",
+   "y": -2047.57,
+   "strength": 21.8,
+   "expected": -2047,
+   "span_x": [
+    -1000,
+    -950
+   ],
+   "what": "top of the dark soffit band",
+   "sign": 0
+  },
+  "cornice_lit_top": {
+   "crop": "cornice",
+   "kind": "row",
+   "y": -2105.65,
+   "strength": 15.6,
+   "expected": -2110,
+   "span_x": [
+    -1000,
+    -950
+   ],
+   "what": "top of the broad lit member",
+   "sign": 0
+  },
+  "cornice_frieze_foot": {
+   "crop": "cornice",
+   "kind": "row",
+   "y": -2143.19,
+   "strength": 19.2,
+   "expected": -2143,
+   "span_x": [
+    -1000,
+    -950
+   ],
+   "what": "foot of the tall plain face",
+   "sign": 0
+  },
+  "cornice_top": {
+   "crop": "cornice",
+   "kind": "row",
+   "y": -2240.3,
+   "strength": 18.6,
+   "expected": -2240,
+   "span_x": [
+    -1000,
+    -950
+   ],
+   "what": "top of the crown (under the cap quirk), the first-floor wall above",
+   "sign": 0
+  },
+  "stile_left": {
+   "crop": "sill",
+   "kind": "col",
+   "x": -1034.15,
+   "strength": 2.7,
+   "expected": -1034,
+   "span_y": [
+    300,
+    500
+   ],
+   "what": "left stile, left edge (frame beside the pilaster)"
+  },
+  "stile_right": {
+   "crop": "sill",
+   "kind": "col",
+   "x": -992.96,
+   "strength": 5.4,
+   "expected": -993,
+   "span_y": [
+    300,
+    500
+   ],
+   "what": "left stile, right edge (where the teal stile ends; not the bar of the cast grille at -953)"
+  },
+  "sill_top": {
+   "crop": "sill",
+   "kind": "row",
+   "y": 106.98,
+   "strength": 7.4,
+   "expected": 107,
+   "span_x": [
+    -900,
+    -700
+   ],
+   "what": "top of the sill group (the glazing rebate's foot)",
+   "sign": 0
+  },
+  "sill_r2": {
+   "crop": "sill",
+   "kind": "row",
+   "y": 127.21,
+   "strength": 11.1,
+   "expected": 127,
+   "span_x": [
+    -900,
+    -700
+   ],
+   "what": "sill: lower edge of the bead",
+   "sign": 0
+  },
+  "sill_nose": {
+   "crop": "sill",
+   "kind": "row",
+   "y": 145.09,
+   "strength": 15.1,
+   "expected": 145,
+   "span_x": [
+    -900,
+    -700
+   ],
+   "what": "sill: the nose / weathering's lower edge",
+   "sign": 0
+  },
+  "grille_top": {
+   "crop": "sill",
+   "kind": "row",
+   "y": 200.57,
+   "strength": 4.6,
+   "expected": 200,
+   "span_x": [
+    -900,
+    -700
+   ],
+   "what": "top of the stallriser's panel (the cast grille in its frame)",
+   "sign": 0
+  },
+  "grille_bottom": {
+   "crop": "sill",
+   "kind": "row",
+   "y": 526.76,
+   "strength": 7.0,
+   "expected": 527,
+   "span_x": [
+    -900,
+    -700
+   ],
+   "what": "bottom of the stallriser's panel",
+   "sign": 0
+  },
+  "bottom_rail_foot": {
+   "crop": "sill",
+   "kind": "row",
+   "y": 559.29,
+   "strength": 5.3,
+   "expected": 559,
+   "span_x": [
+    -900,
+    -700
+   ],
+   "what": "foot of the stallriser's frame",
+   "sign": 0
+  },
+  "transom_top": {
+   "crop": "transom",
+   "kind": "row",
+   "y": -622.96,
+   "strength": 14.0,
+   "expected": -619,
+   "span_x": [
+    -800,
+    -600
+   ],
+   "what": "transom bar, top (the mid-height bar of the window)",
+   "sign": 0
+  },
+  "transom_bottom": {
+   "crop": "transom",
+   "kind": "row",
+   "y": -600.76,
+   "strength": 9.3,
+   "expected": -596,
+   "span_x": [
+    -800,
+    -600
+   ],
+   "what": "transom bar, bottom",
+   "sign": 0
+  },
+  "mullion_left": {
+   "crop": "transom",
+   "kind": "col",
+   "x": -378.08,
+   "strength": 3.8,
+   "expected": -380,
+   "span_y": [
+    -700,
+    -540
+   ],
+   "what": "central mullion, left edge"
+  },
+  "mullion_right": {
+   "crop": "transom",
+   "kind": "col",
+   "x": -285.94,
+   "strength": 3.3,
+   "expected": -285,
+   "span_y": [
+    -700,
+    -540
+   ],
+   "what": "central mullion, right edge"
+  },
+  "door_foot": {
+   "crop": "door",
+   "kind": "row",
+   "y": 547.01,
+   "strength": 8.9,
+   "expected": 547,
+   "span_x": [
+    440,
+    540
+   ],
+   "what": "foot of the door's brass strip (the leaf's bottom)",
+   "sign": 0
+  },
+  "door_foot_strip_top": {
+   "crop": "door",
+   "kind": "row",
+   "y": 531.56,
+   "strength": 26.1,
+   "expected": 532,
+   "span_x": [
+    440,
+    540
+   ],
+   "what": "top of the brass foot strip",
+   "sign": 0
+  },
+  "door_glass_bottom": {
+   "crop": "door",
+   "kind": "row",
+   "y": 128.93,
+   "strength": 12.2,
+   "expected": 128,
+   "span_x": [
+    440,
+    540
+   ],
+   "what": "bottom edge of the glazing (glass to bead to lock rail)",
+   "sign": 0
+  },
+  "door_glass_top": {
+   "crop": "door (unmasked, not saved)",
+   "kind": "row",
+   "y": -761.24,
+   "strength": 22.3,
+   "expected": -761,
+   "span_x": [
+    430,
+    540
+   ],
+   "what": "top edge of the glazing",
+   "remeasurable": false
+  },
+  "door_leaf_top": {
+   "crop": "door (unmasked, not saved)",
+   "kind": "row",
+   "y": -827.74,
+   "strength": 14.3,
+   "expected": -828,
+   "span_x": [
+    430,
+    540
+   ],
+   "what": "top of the leaf under the head",
+   "remeasurable": false
+  },
+  "_sign": {
+   "x0": 891.76,
+   "x1": 970.11,
+   "y0": 20.93,
+   "y1": 129.85,
+   "note": "an A5 notice (148 x 210 mm) taped to the shop door's glass; read on the unmasked view"
+  }
+ },
+ "seconds": 1.3
+}
