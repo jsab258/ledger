@@ -43,7 +43,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 ## 4. 2D, finished
 
-- 4.1 in progress (9 Oct 00:36; try 1 made 05:20: check 433 of 433, 47 of 47 wrong boards caught, 0 false failures in 660 seeded runs; fresh reviews). Fascia signs for the street's shops (names from canon.md and TOWN.md).
+- 4.1 in progress (9 Oct 00:36; try 1 made 05:20: check 433 of 433, 47 of 47 wrong boards caught, 0 false failures in 660 seeded runs; fresh reviews: the ten boards FAIL (ageing like a filter, the empty unit's timber, gull marks, Mickey's name twice), signs and glass FAIL (the whitewashed window, under-filled hanging signs, the fish window's lettering, the newsagent's line too wide, one hours plate on five doors, ageing, a fanlight number); try 2 started 05:39). Fascia signs for the street's shops (names from canon.md and TOWN.md).
 - 4.2 open. Posters and notices for invented 1990 events and goods, in period type (OFL fonts).
 - 4.3 open. "To Let" boards.
 - 4.4 open. Street name plates.
