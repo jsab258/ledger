@@ -1,0 +1,170 @@
+[
+ {
+  "pano": "bethnal_green_entrance",
+  "id": "bge_planter_wall",
+  "cols": [
+   5840,
+   5940
+  ],
+  "rows": [
+   2100,
+   2258
+  ],
+  "foot_row": 2262,
+  "image_rows": 4096,
+  "pitch_tan": 0.0129,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "planter wall on the block paving (the bollards target)",
+  "px_pitch_by_eye": 15.3,
+  "search_range_tan": [
+   0.00997,
+   0.0135
+  ],
+  "fit_on_edge": false
+ },
+ {
+  "pano": "bethnal_green_entrance",
+  "id": "bge_gate_pier",
+  "cols": [
+   2090,
+   2170
+  ],
+  "rows": [
+   1715,
+   2160
+  ],
+  "foot_row": 2305,
+  "image_rows": 4096,
+  "pitch_tan": 0.01616,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "brick gate pier of the park entrance, red courses above its blue-brick base, on the paving",
+  "px_pitch_by_eye": 20.3,
+  "search_range_tan": [
+   0.01323,
+   0.01791
+  ],
+  "fit_on_edge": false
+ },
+ {
+  "pano": "bethnal_green_entrance",
+  "id": "bge_dwarf_wall",
+  "cols": [
+   7535,
+   7550
+  ],
+  "rows": [
+   2100,
+   2175
+  ],
+  "foot_row": 2243,
+  "image_rows": 4096,
+  "pitch_tan": 0.01108,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "red courses of the dwarf wall under the area railing R3a (five courses between the two blue bullnose strings)",
+  "px_pitch_by_eye": 14.5,
+  "search_range_tan": [
+   0.00945,
+   0.01279
+  ],
+  "fit_on_edge": false
+ },
+ {
+  "pano": "limehouse",
+  "id": "lh_building_wall_a",
+  "cols": [
+   6890,
+   6910
+  ],
+  "rows": [
+   2165,
+   2392
+  ],
+  "foot_row": 2397,
+  "image_rows": 4096,
+  "pitch_tan": 0.01878,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "the dock building beside the quay walk: red and blue engineering brick courses above the paving (left band)",
+  "px_pitch_by_eye": 25.0,
+  "search_range_tan": [
+   0.0163,
+   0.02205
+  ],
+  "fit_on_edge": false
+ },
+ {
+  "pano": "limehouse",
+  "id": "lh_building_wall_b",
+  "cols": [
+   7030,
+   7050
+  ],
+  "rows": [
+   2165,
+   2335
+  ],
+  "foot_row": 2342,
+  "image_rows": 4096,
+  "pitch_tan": 0.01636,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "the same wall, a second column band",
+  "px_pitch_by_eye": 24.0,
+  "search_range_tan": [
+   0.01565,
+   0.02117
+  ],
+  "fit_on_edge": false
+ },
+ {
+  "pano": "urban_street_01",
+  "id": "us01_garden_wall",
+  "cols": [
+   4250,
+   4275
+  ],
+  "rows": [
+   2170,
+   2280
+  ],
+  "foot_row": 2287,
+  "image_rows": 4096,
+  "pitch_tan": 0.01203,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "dark brick garden wall on the footway, under the low railing R3d (the bollards target measured it with a 0.07 step to its bollard bed; here the railing stands on the footway itself)",
+  "px_pitch_by_eye": 15.3,
+  "search_range_tan": [
+   0.00997,
+   0.0135
+  ],
+  "fit_on_edge": false
+ },
+ {
+  "pano": "urban_street_01",
+  "id": "us01_gate_pier",
+  "cols": [
+   3800,
+   3820
+  ],
+  "rows": [
+   2045,
+   2175
+  ],
+  "foot_row": 2225,
+  "image_rows": 4096,
+  "pitch_tan": 0.00945,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "brick gate pier on the same footway (joints at rows 2049, 2061 ... 2170, a steady 12.1 px)",
+  "px_pitch_by_eye": 12.1,
+  "search_range_tan": [
+   0.00789,
+   0.01067
+  ],
+  "fit_on_edge": false
+ }
+]

@@ -1,0 +1,6367 @@
+{
+ "family": "railings",
+ "title": "Quay Street's kerbside guard rail, its quay railing and chain, and the boundary railings the street does not have",
+ "written": "2026-10-09",
+ "units": "millimetres unless a key ends in _m (metres, the street recipe's frame); the .glb is metres, z up, scale 1",
+ "scene_numbers": [
+  {
+   "id": "guard_rail_line",
+   "file": "production/cloud-week/targets/SCENE-SLOTS.md",
+   "find": "1.0 high; posts 0.05; rails 0.04; five infill bars of 0.025 a panel",
+   "what": "the scene's stand-in: 1.0 high, posts 0.05, rails 0.04, five infill bars of 0.025 a panel",
+   "value": {
+    "height_m": 1.0,
+    "post_m": 0.05,
+    "rail_m": 0.04,
+    "bars": 5,
+    "bar_m": 0.025
+   }
+  },
+  {
+   "id": "guard_rail_place",
+   "file": "production/cloud-week/targets/SCENE-SLOTS.md",
+   "find": "east side, x 10.0 to 12.0 (one 2.0 m panel, beside the gully), 0.25 m back from the kerb",
+   "what": "one 2.0 m panel, east side, x 10.0 to 12.0, 0.25 m back from the kerb",
+   "value": {
+    "x0_m": 10.0,
+    "x1_m": 12.0,
+    "setback_from_kerb_m": 0.25
+   }
+  },
+  {
+   "id": "scene_panels",
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"panels\": 1,",
+   "what": "E8 has one panel",
+   "value": 1
+  },
+  {
+   "id": "scene_setback",
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"setback_from_kerb_m\": 0.25",
+   "what": "E8 set-back 0.25 m",
+   "value": 0.25
+  },
+  {
+   "id": "scene_infill",
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"infill_per_panel\": 5",
+   "what": "E8 five infill bars",
+   "value": 5
+  },
+  {
+   "id": "scene_post_d",
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"post_diameter_m\": 0.050",
+   "what": "E8 post 0.050",
+   "value": 0.05
+  },
+  {
+   "id": "scene_rail_d",
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"rail_diameter_m\": 0.040",
+   "what": "E8 rail 0.040",
+   "value": 0.04
+  },
+  {
+   "id": "scene_infill_d",
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"infill_diameter_m\": 0.025",
+   "what": "E8 infill 0.025",
+   "value": 0.025
+  },
+  {
+   "id": "feet_post0",
+   "file": "production/specs/vignette-feet.json",
+   "find": "\"x_m\":10,\"z_m\":3.375,\"foot_y_m\":0.05625",
+   "what": "post 0 stands at x 10, z 3.375, its foot at y 0.05625 (the footway there)",
+   "value": {
+    "x_m": 10.0,
+    "z_m": 3.375,
+    "foot_y_m": 0.05625
+   }
+  },
+  {
+   "id": "feet_post1",
+   "file": "production/specs/vignette-feet.json",
+   "find": "\"name\":\"rail_post1\",\"bom\":\"E8_guard_railing\",\"edge\":\"east_footway\",\"region\":\"x12_18\",\"x_m\":12,\"z_m\":3.375",
+   "what": "post 1 stands at x 12, z 3.375",
+   "value": {
+    "x_m": 12.0,
+    "z_m": 3.375
+   }
+  },
+  {
+   "id": "pieces_lower_rail",
+   "file": "production/specs/vignette-pieces.json",
+   "find": "\"name\":\"rail_bar0_45\",\"shape\":\"cyl\",\"surface\":\"metal\",\"asset\":null,\"x_m\":11,\"y_m\":0.50625,\"z_m\":3.375",
+   "what": "the stand-in's lower rail is 0.45 above its foot (y 0.50625 over 0.05625)",
+   "value": {
+    "above_foot_m": 0.45
+   }
+  },
+  {
+   "id": "stallriser",
+   "file": "production/cloud-week/targets/SCENE-SLOTS.md",
+   "find": "stallriser 0.60 high, 0.15 proud",
+   "what": "stallriser 0.15 proud of the frontage line",
+   "value": {
+    "proud_m": 0.15
+   }
+  },
+  {
+   "id": "pilaster",
+   "file": "production/cloud-week/targets/SCENE-SLOTS.md",
+   "find": "pilasters 0.35 wide, 0.10 proud",
+   "what": "pilasters 0.10 proud",
+   "value": {
+    "proud_m": 0.1
+   }
+  },
+  {
+   "id": "frontage_z",
+   "file": "production/specs/terrace-fronts.md",
+   "find": "`frontage_z_m` 5.125",
+   "what": "the frontage line is z 5.125 (the kerb face z 3.0 + the kerb 0.125 + the footway 2.0)",
+   "value": 5.125
+  },
+  {
+   "id": "kerb_target_top",
+   "file": "production/cloud-week/targets/kerbs-and-covers/TARGET.md",
+   "find": "115 mm upstand, about 170 mm top",
+   "what": "the kerbs target: granite kerb 115 upstand, 170 top",
+   "value": {
+    "upstand": 115,
+    "top": 170
+   }
+  },
+  {
+   "id": "kerb_target_flags",
+   "file": "production/cloud-week/targets/kerbs-and-covers/TARGET.md",
+   "find": "footway flags +110",
+   "what": "the kerbs target: footway flags +110 over the channel",
+   "value": 110
+  },
+  {
+   "id": "bollard_chain_bar",
+   "file": "production/cloud-week/targets/bollards/TARGET.md",
+   "find": "plain short link, a 13 mm bar",
+   "what": "the bollards target's plain chain: short link, 13 mm bar",
+   "value": 13
+  },
+  {
+   "id": "bollard_post_spacing",
+   "file": "production/cloud-week/targets/bollards/TARGET.md",
+   "find": "post spacing 3.0 m",
+   "what": "the bollards target's chain posts 3.0 m apart",
+   "value": 3000
+  },
+  {
+   "id": "bollard_lugs",
+   "file": "production/cloud-week/targets/bollards/TARGET.md",
+   "find": "a cast **D-lug** on each side of the shaft at z **420 and 840**",
+   "what": "K5 chain eyes at z 420 and 840",
+   "value": [
+    420,
+    840
+   ]
+  },
+  {
+   "id": "bollard_sag",
+   "file": "production/cloud-week/targets/bollards/target.json",
+   "find": "\"sag_mm\": 150",
+   "what": "K5 chain sag 150 (Judgement there)",
+   "value": 150
+  },
+  {
+   "id": "kit_jetty_x",
+   "file": "tools/art-recipes/south-quay/south_quay_geom.py",
+   "find": "\"jetty_x\": (220.0 - 350.0, 240.0 - 350.0)",
+   "what": "the jetty strip x -130 to -110",
+   "value": [
+    -130.0,
+    -110.0
+   ]
+  },
+  {
+   "id": "kit_jetty_end",
+   "file": "tools/art-recipes/south-quay/south_quay_geom.py",
+   "find": "\"jetty_end_y\": 385.0 - 400.0",
+   "what": "the jetty's end at y -15",
+   "value": -15.0
+  },
+  {
+   "id": "kit_cope",
+   "file": "tools/art-recipes/south-quay/south_quay_geom.py",
+   "find": "COPING_W_M = 0.60",
+   "what": "the cope 0.60 across",
+   "value": 0.6
+  },
+  {
+   "id": "kit_parapet",
+   "file": "tools/art-recipes/south-quay/south_quay_geom.py",
+   "find": "kit.box(par, x_a, x_a + 0.80, -100.0 - COPING_W_M, at[\"jetty_end_y\"] - 8.0,",
+   "what": "the jetty's stone parapet on the seaward side: x -129.4 to -128.6, ending at y -23.0",
+   "value": {
+    "x": [
+     -129.4,
+     -128.6
+    ],
+    "y_end": -23.0
+   }
+  },
+  {
+   "id": "kit_light",
+   "file": "tools/art-recipes/south-quay/south_quay_geom.py",
+   "find": "c = ((jx0 + jx1) / 2.0, at[\"jetty_end_y\"] - 4.5)",
+   "what": "the harbour light stands at x -120, y -19.5",
+   "value": {
+    "x": -120.0,
+    "y": -19.5,
+    "plinth_half": 1.4
+   }
+  },
+  {
+   "id": "kit_no_railing",
+   "file": "production/art/south-quay/README.md",
+   "find": "Ladder | 0.45 m wide, rungs 0.30 m apart",
+   "what": "the kit has a ladder and bollards and a stone parapet on the jetty; it has no railing on any quay edge",
+   "value": "none"
+  },
+  {
+   "id": "asset_plan_rows",
+   "file": "production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md",
+   "find": "2 m guard-rail panel (posts, rails, infill); two-rail tube railing with chain",
+   "what": "the asset plan's linear kit rows",
+   "value": "2 m panel; two-rail tube railing with chain"
+  },
+  {
+   "id": "asset_plan_counts",
+   "file": "production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md",
+   "find": "Guard railing; quay railing with chain; fences",
+   "what": "guard railing 1 kit, 1 to 3 panels; quay railing with chain 1 kit, along the quay",
+   "value": "1 kit; 1 kit"
+  },
+  {
+   "id": "hull_chain_edge",
+   "file": "production/research/atlas-01/CONTINUATION.md",
+   "find": "chain-edged quay",
+   "what": "R08, River Hull, 1989 (a photograph read by an earlier session, not reachable here): a chain-edged quay",
+   "value": "chain-edged"
+  },
+  {
+   "id": "e8_not_tree_guard",
+   "file": "production/specs/vignette-bill-of-materials.md",
+   "find": "**E8 is not the railing we hold.**",
+   "what": "the held trunk_protection_railing is a tree-pit guard, not E8",
+   "value": "not E8"
+  },
+  {
+   "id": "yard_gap",
+   "file": "production/specs/vignette-scene.json",
+   "find": "The 3.0 m between west_south's end at x=21.0 and this block's start at x=24.0 is the YARD ENTRANCE",
+   "what": "the yard entrance is a 3.0 m gap in the data, x 21.0 to 24.0, west side",
+   "value": [
+    21.0,
+    24.0
+   ]
+  }
+ ],
+ "street_frame": {
+  "note": "the street recipe's frame, metres: x along the street (0 at its south end, + north), z across (the crown 0, + east); the kerb face at z +-3.0; the kerb's top 0.125 wide in the scene (170 in the kerbs target); the footway 2.0 wide to the frontage line z 5.125",
+  "kerb_face_z_m": 3.0,
+  "kerb_back_scene_z_m": 3.125,
+  "kerb_back_kerbs_target_z_m": 3.17,
+  "frontage_z_m": 5.125,
+  "stallriser_face_z_m": 4.975,
+  "pilaster_face_z_m": 5.025,
+  "channel_above_crown_m": -0.075,
+  "flags_above_channel_mm_kerbs_target": 110,
+  "footway_crossfall": "1 in 40, rising away from the kerb",
+  "foot_y_scene_m": 0.05625,
+  "foot_y_kerbs_target_m": 0.04,
+  "quay_frame": "the south-quay kit's frame: x along Quay Street (0 at its south end, + north, so the quay is at x -70), y across (east +), z up; the apron and the copes at +0.05 over the crown"
+ },
+ "calibration": {
+  "method": "horizon method of the bollards and kerbs targets (calibrate.py): camera height above a brick wall's foot = 75 mm x tan(angle of the foot) / (course pitch in tan units); the pitch by a fold of the column-band profile",
+  "horizon_anchors": [
+   {
+    "pano": "bethnal_green_entrance",
+    "id": "bge_planter_wall",
+    "cols": [
+     5840,
+     5940
+    ],
+    "rows": [
+     2100,
+     2258
+    ],
+    "foot_row": 2262,
+    "image_rows": 4096,
+    "pitch_tan": 0.0129,
+    "gauge_mm": 75.0,
+    "step_m": 0.0,
+    "what": "planter wall on the block paving (the bollards target)",
+    "px_pitch_by_eye": 15.3,
+    "search_range_tan": [
+     0.00997,
+     0.0135
+    ],
+    "fit_on_edge": false,
+    "_h": 0.9629417289620021
+   },
+   {
+    "pano": "bethnal_green_entrance",
+    "id": "bge_gate_pier",
+    "cols": [
+     2090,
+     2170
+    ],
+    "rows": [
+     1715,
+     2160
+    ],
+    "foot_row": 2305,
+    "image_rows": 4096,
+    "pitch_tan": 0.01616,
+    "gauge_mm": 75.0,
+    "step_m": 0.0,
+    "what": "brick gate pier of the park entrance, red courses above its blue-brick base, on the paving",
+    "px_pitch_by_eye": 20.3,
+    "search_range_tan": [
+     0.01323,
+     0.01791
+    ],
+    "fit_on_edge": false,
+    "_h": 0.9268711004098491
+   },
+   {
+    "pano": "bethnal_green_entrance",
+    "id": "bge_dwarf_wall",
+    "cols": [
+     7535,
+     7550
+    ],
+    "rows": [
+     2100,
+     2175
+    ],
+    "foot_row": 2243,
+    "image_rows": 4096,
+    "pitch_tan": 0.01108,
+    "gauge_mm": 75.0,
+    "step_m": 0.0,
+    "what": "red courses of the dwarf wall under the area railing R3a (five courses between the two blue bullnose strings)",
+    "px_pitch_by_eye": 14.5,
+    "search_range_tan": [
+     0.00945,
+     0.01279
+    ],
+    "fit_on_edge": false,
+    "_h": 1.020002676156812
+   },
+   {
+    "pano": "limehouse",
+    "id": "lh_building_wall_a",
+    "cols": [
+     6890,
+     6910
+    ],
+    "rows": [
+     2165,
+     2392
+    ],
+    "foot_row": 2397,
+    "image_rows": 4096,
+    "pitch_tan": 0.01878,
+    "gauge_mm": 75.0,
+    "step_m": 0.0,
+    "what": "the dock building beside the quay walk: red and blue engineering brick courses above the paving (left band)",
+    "px_pitch_by_eye": 25.0,
+    "search_range_tan": [
+     0.0163,
+     0.02205
+    ],
+    "fit_on_edge": false,
+    "_h": 1.0952941473992643
+   },
+   {
+    "pano": "limehouse",
+    "id": "lh_building_wall_b",
+    "cols": [
+     7030,
+     7050
+    ],
+    "rows": [
+     2165,
+     2335
+    ],
+    "foot_row": 2342,
+    "image_rows": 4096,
+    "pitch_tan": 0.01636,
+    "gauge_mm": 75.0,
+    "step_m": 0.0,
+    "what": "the same wall, a second column band",
+    "px_pitch_by_eye": 24.0,
+    "search_range_tan": [
+     0.01565,
+     0.02117
+    ],
+    "fit_on_edge": false,
+    "_h": 1.0516345250337749
+   },
+   {
+    "pano": "urban_street_01",
+    "id": "us01_garden_wall",
+    "cols": [
+     4250,
+     4275
+    ],
+    "rows": [
+     2170,
+     2280
+    ],
+    "foot_row": 2287,
+    "image_rows": 4096,
+    "pitch_tan": 0.01203,
+    "gauge_mm": 75.0,
+    "step_m": 0.0,
+    "what": "dark brick garden wall on the footway, under the low railing R3d (the bollards target measured it with a 0.07 step to its bollard bed; here the railing stands on the footway itself)",
+    "px_pitch_by_eye": 15.3,
+    "search_range_tan": [
+     0.00997,
+     0.0135
+    ],
+    "fit_on_edge": false,
+    "_h": 1.1558100658507227
+   },
+   {
+    "pano": "urban_street_01",
+    "id": "us01_gate_pier",
+    "cols": [
+     3800,
+     3820
+    ],
+    "rows": [
+     2045,
+     2175
+    ],
+    "foot_row": 2225,
+    "image_rows": 4096,
+    "pitch_tan": 0.00945,
+    "gauge_mm": 75.0,
+    "step_m": 0.0,
+    "what": "brick gate pier on the same footway (joints at rows 2049, 2061 ... 2170, a steady 12.1 px)",
+    "px_pitch_by_eye": 12.1,
+    "search_range_tan": [
+     0.00789,
+     0.01067
+    ],
+    "fit_on_edge": false,
+    "_h": 1.084107131651185
+   }
+  ],
+  "panoramas": {
+   "bethnal_green_entrance": {
+    "h_cam": 0.97,
+    "err": 0.06,
+    "anchors": [
+     "bge_planter_wall",
+     "bge_gate_pier",
+     "bge_dwarf_wall"
+    ],
+    "why": "three brick walls and piers on the same block paving as the railings: 0.963, 0.927 and 1.020 m (mean 0.970); the bollards target states 1.02 +-0.07 for this panorama (inside)"
+   },
+   "urban_street_01": {
+    "h_cam": 1.12,
+    "err": 0.06,
+    "anchors": [
+     "us01_garden_wall",
+     "us01_gate_pier"
+    ],
+    "why": "the garden wall and the gate pier on the footway: 1.156 and 1.084 m (mean 1.120); the bollards target adds the 0.07 step to its bed (1.23 and 1.15 there)"
+   },
+   "limehouse": {
+    "h_cam": 1.12,
+    "err": 0.07,
+    "anchors": [
+     "lh_building_wall_a",
+     "lh_building_wall_b"
+    ],
+    "why": "two column bands of the dock building beside the quay walk (1.095, 1.052 m) and the two quoted paver readings (1.15, 1.17): mean 1.117",
+    "quoted": [
+     {
+      "id": "lh_paver_100",
+      "h": 1.15,
+      "src": "bollards TARGET.md section 3: a clay paver 200 x 100 reads 146 x 280 at 1.6 m, quoted"
+     },
+     {
+      "id": "lh_paver_200",
+      "h": 1.17,
+      "src": "the same, quoted (the reviewer 1.15 to 1.18)"
+     }
+    ]
+   }
+  },
+  "camera_note": "None of the three panoramas was taken at 1.6 m: 0.97 (Bethnal Green), 1.12 (Urban Street 01 and Limehouse) above the ground each object stands on. Every length below is +-6 % in absolute size (the stated errors); counts, ratios and pitches are exact to the pixel."
+ },
+ "photo_frames": {
+  "R3B": {
+   "id": "R3B",
+   "pano": "bethnal_green_entrance",
+   "what": "the park railing on its brick plinth, with a hinge post and pier (the main photograph)",
+   "h_cam": 0.97,
+   "feet_px": [
+    [
+     2330,
+     2282
+    ],
+    [
+     3070,
+     2225
+    ]
+   ],
+   "off_mm": 110.0,
+   "window": {
+    "s0": 0,
+    "s1": 3870,
+    "z0": -50,
+    "z1": 2450
+   },
+   "preview": {
+    "s0": 700,
+    "s1": 3870,
+    "z0": -50,
+    "z1": 2450,
+    "mm": 3
+   },
+   "mask": [
+    [
+     200,
+     700,
+     1100,
+     1500
+    ]
+   ]
+  },
+  "R3A": {
+   "id": "R3A",
+   "pano": "bethnal_green_entrance",
+   "what": "the area railing on a two-stage dwarf wall in front of a housing block (oblique, 32 degrees to the line of sight)",
+   "h_cam": 0.97,
+   "feet_px": [
+    [
+     7540,
+     2243
+    ],
+    [
+     7990,
+     2155
+    ]
+   ],
+   "off_mm": 110.0,
+   "window": {
+    "s0": 0,
+    "s1": 3200,
+    "z0": -50,
+    "z1": 2300
+   },
+   "preview": {
+    "s0": 0,
+    "s1": 3200,
+    "z0": -50,
+    "z1": 2300,
+    "mm": 3
+   },
+   "mask": []
+  },
+  "R3D": {
+   "id": "R3D",
+   "pano": "urban_street_01",
+   "what": "the low green railing on a dark brick garden wall (a front garden of a council estate)",
+   "h_cam": 1.12,
+   "feet_px": [
+    [
+     3964,
+     2255
+    ],
+    [
+     4498,
+     2299
+    ]
+   ],
+   "off_mm": 110.0,
+   "window": {
+    "s0": 0,
+    "s1": 2860,
+    "z0": -60,
+    "z1": 1300
+   },
+   "preview": {
+    "s0": 0,
+    "s1": 2860,
+    "z0": -60,
+    "z1": 1300,
+    "mm": 3
+   },
+   "mask": []
+  },
+  "LHB": {
+   "id": "LHB",
+   "pano": "limehouse",
+   "what": "one bay of the marina quay edge: two bolted cast-iron chain posts and two swags of chain",
+   "h_cam": 1.12,
+   "feet_px": [
+    [
+     2741,
+     2882
+    ],
+    [
+     3376,
+     2400
+    ]
+   ],
+   "flange_r_mm": 143.0,
+   "off_mm": 0.0,
+   "window": {
+    "s0": -600,
+    "s1": 3440,
+    "z0": -100,
+    "z1": 1400
+   },
+   "preview": {
+    "s0": -600,
+    "s1": 3440,
+    "z0": -100,
+    "z1": 1400,
+    "mm": 4
+   },
+   "mask": [
+    [
+     140,
+     540,
+     470,
+     780
+    ]
+   ]
+  }
+ },
+ "photo_measurements": {
+  "R3B_auto": {
+   "frame": "R3B",
+   "bar_centres_s_mm": [
+    610,
+    688,
+    764,
+    841,
+    922,
+    996,
+    1079,
+    1154,
+    1231,
+    1310,
+    1390,
+    1462,
+    1544,
+    1620,
+    1700,
+    1775,
+    1857,
+    1935,
+    2016,
+    2096,
+    2177,
+    2255,
+    2337,
+    2414,
+    2498,
+    2573
+   ],
+   "bar_pitch_mm": 78.54,
+   "bar_fit_first_s_mm": 605.02,
+   "bar_pitch_resid_rms_mm": 4.03,
+   "leaf_bar_centres_s_mm": [
+    2721,
+    2779,
+    2890,
+    2971,
+    3060,
+    3142,
+    3233,
+    3319,
+    3417,
+    3500,
+    3599,
+    3685,
+    3777
+   ],
+   "leaf_bar_pitch_mm": 88.9,
+   "bar_fwhm_mm_median": 20.0,
+   "bar_fwhm_mm_all": [
+    25,
+    17,
+    20,
+    14,
+    13,
+    34,
+    20,
+    18,
+    21,
+    17,
+    36,
+    17,
+    21,
+    19,
+    21,
+    18,
+    24,
+    18,
+    22,
+    19,
+    17,
+    19,
+    22,
+    21,
+    27
+   ],
+   "rails": [
+    {
+     "z": 2103.0,
+     "depth": 21.4
+    },
+    {
+     "z": 2083.0,
+     "depth": 18.1
+    },
+    {
+     "z": 2000.0,
+     "depth": 42.6
+    },
+    {
+     "z": 1059.0,
+     "depth": 16.5
+    },
+    {
+     "z": 1036.0,
+     "depth": 24.4
+    },
+    {
+     "z": 657.0,
+     "depth": 17.2
+    },
+    {
+     "z": 441.0,
+     "depth": 18.3
+    },
+    {
+     "z": 336.0,
+     "depth": 24.2
+    }
+   ],
+   "coping_top_z_mm": 331.0,
+   "post_width_mm": [
+    93,
+    99,
+    105,
+    98,
+    110,
+    100,
+    99,
+    97
+   ],
+   "method": "1 mm a pixel elevation (rail_lib.elevation) at the stated camera height; bars = dark minima of the column profile at z 700..900; rails = dark rows between bars; FWHM includes the blur of a 3 to 4 mm native pixel"
+  },
+  "hand_reads": {
+   "R3B": {
+    "bottom_rail_axis_z": {
+     "v": 445,
+     "err": 15,
+     "how": "dark row between the bars at z 440 (rows 2000+: also detected by the column-between-bars profile, depth 19); a flat bar about 18 high"
+    },
+    "mid_rail_axis_z": {
+     "v": 1045,
+     "err": 15,
+     "how": "row profile peak 1036, picture read 1056"
+    },
+    "top_rail_axis_z": {
+     "v": 2000,
+     "err": 10,
+     "how": "row profile peak, depth 43, FWHM 26 (blur included): a flat bar about 20 high"
+    },
+    "coping_top_z": {
+     "v": 345,
+     "err": 20,
+     "how": "the stone slab's top at its front lip: the gradient search gives 331 on the plane 110 behind the face; the lip is nearer the camera, so its true height is about 13 higher (the ray falls 110 x (0.97 - 0.35) / 5.2 over that distance)"
+    },
+    "short_bar_tip_z": {
+     "v": 1225,
+     "err": 20,
+     "how": "spear tips of the short bars, which stop just above the middle rail"
+    },
+    "tall_bar_tip_z": {
+     "v": 2300,
+     "err": 20,
+     "how": "spear tips of the tall bars (every second bar), 300 above the top rail"
+    },
+    "post_top_z": {
+     "v": 2375,
+     "err": 15,
+     "how": "the finial of the hinge post"
+    },
+    "post_shaft_width": {
+     "v": 100,
+     "err": 10,
+     "how": "mean of eight rows z 1700 to 1910 (93 to 110), blur included"
+    },
+    "post_collar_width": {
+     "v": 155,
+     "err": 15,
+     "how": "the collar at z 1995 to 2035"
+    },
+    "urn_width": {
+     "v": 135,
+     "err": 15,
+     "how": "the vase under the finial, z 2150 to 2210"
+    },
+    "pier_width": {
+     "v": 550,
+     "err": 40,
+     "how": "the brick pier under the hinge post, s 2530 to 3080"
+    },
+    "bar_foot": {
+     "v": "each bar ends in a small ball (about 20 across) just under the bottom rail, 12 below its axis",
+     "err": null,
+     "how": "1 mm elevation of the foot"
+    },
+    "bar_head": {
+     "v": [
+      [
+       9,
+       1990
+      ],
+      [
+       9,
+       2035
+      ],
+      [
+       14,
+       2040
+      ],
+      [
+       14,
+       2048
+      ],
+      [
+       9,
+       2054
+      ],
+      [
+       9,
+       2095
+      ],
+      [
+       20,
+       2112
+      ],
+      [
+       30,
+       2128
+      ],
+      [
+       28,
+       2140
+      ],
+      [
+       18,
+       2155
+      ],
+      [
+       14,
+       2165
+      ],
+      [
+       22,
+       2185
+      ],
+      [
+       24,
+       2195
+      ],
+      [
+       14,
+       2208
+      ],
+      [
+       14,
+       2230
+      ],
+      [
+       12,
+       2250
+      ],
+      [
+       8,
+       2275
+      ],
+      [
+       5,
+       2300
+      ],
+      [
+       2,
+       2320
+      ],
+      [
+       0,
+       2335
+      ]
+     ],
+     "err": 15,
+     "how": "(r, z) of a tall bar's head: a ring at 2040, a vase swelling at 2128, a bead at 2190, a spire to the tip; blur 6 mm, so +-15"
+    }
+   },
+   "R3A": {
+    "wall_top_z": {
+     "v": 780,
+     "err": 20,
+     "how": "top of the blue bullnose coping, 1 mm and 3 mm elevations"
+    },
+    "wall_string_z": {
+     "v": 300,
+     "err": 20,
+     "how": "top of the lower blue bullnose string"
+    },
+    "red_courses_between": {
+     "v": 5,
+     "err": 0,
+     "how": "five red stretcher courses between z 330 and 705 at 75 mm: the scale check on the elevation"
+    },
+    "bottom_rail_axis_z": {
+     "v": 840,
+     "err": 20,
+     "how": "dark row; the picture read 825"
+    },
+    "mid_rail_axis_z": {
+     "v": 1435,
+     "err": 15,
+     "how": "dark row, profile 1435"
+    },
+    "top_rail_axis_z": {
+     "v": 1645,
+     "err": 15,
+     "how": "dark row, profile 1649"
+    },
+    "bar_pitch_all": {
+     "v": 114,
+     "err": 5,
+     "how": "the thick (tall) bars at s 204, 435, 660, 891, 1110 on the 3 mm preview: 226.5 apart; the thin ones the same, half a pitch between: all bars 113.3 (the first reading, from the far side of the post, gave 116)"
+    },
+    "tall_first_s": {
+     "v": 204,
+     "err": 15,
+     "how": "the first thick bar with a fleur-de-lis head in the preview window"
+    },
+    "tall_tip_z": {
+     "v": 1880,
+     "err": 25,
+     "how": "fleur-de-lis heads of the tall bars"
+    },
+    "post_top_z": {
+     "v": 2150,
+     "err": 40,
+     "how": "the vase and ball on the post, in the oblique view"
+    },
+    "post_shaft_width": {
+     "v": 100,
+     "err": 25,
+     "how": "oblique view, blur doubled by the 32 degree angle"
+    },
+    "bar_thick_width": {
+     "v": 22,
+     "err": 10,
+     "how": "the tall bars read 40 to 55 at 1 mm in the oblique view (blur x 2): about 22 across"
+    },
+    "resolution_mm_per_px_across": {
+     "v": 10,
+     "err": null,
+     "how": "5.4 mm native at 7 m, divided by sin 32 degrees along the wall"
+    }
+   },
+   "R3D": {
+    "wall_top_z": {
+     "v": 620,
+     "err": 15,
+     "how": "the strongest brightness step at z 608 to 621 over s 100 to 1000, eight courses plus the coping"
+    },
+    "bottom_rail_axis_z": {
+     "v": 680,
+     "err": 15,
+     "how": "1 mm elevation s 1400 to 2400"
+    },
+    "top_rail_axis_z": {
+     "v": 1085,
+     "err": 12,
+     "how": "1 mm elevation: a flat bar"
+    },
+    "bar_tip_z": {
+     "v": 1130,
+     "err": 20,
+     "how": "the bars stand 45 above the top rail, with a small spear point"
+    },
+    "bar_pitch": {
+     "v": 94.5,
+     "err": 3,
+     "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them)"
+    },
+    "bar_centres_s": {
+     "v": [
+      1500,
+      1600,
+      1695,
+      1790,
+      1885,
+      1975,
+      2060,
+      2155,
+      2250,
+      2340
+     ],
+     "err": 6,
+     "how": "read by eye on the 1 mm elevation, +-6"
+    },
+    "bar_width": {
+     "v": 13,
+     "err": 3,
+     "how": "blur included: a round bar of 12 to 14"
+    },
+    "gate_width": {
+     "v": 1040,
+     "err": 150,
+     "how": "the leaf between the brick pier and its stile in the 38 degree view, at 5.5 m"
+    },
+    "gate_top_z": {
+     "v": 1100,
+     "err": 40,
+     "how": "the gate's top rail level with the railing's"
+    },
+    "paint_srgb": {
+     "v": [
+      38,
+      56,
+      36
+     ],
+     "err": 10,
+     "how": "median of the gate leaf in shade (32, 47, 28) and in light (51, 69, 45)"
+    }
+   },
+   "LHB": {
+    "span_mm": {
+     "v": 2840,
+     "err": 60,
+     "how": "axis to axis of the two posts, from their flanges' front edges moved back 143"
+    },
+    "upper_lug_z": {
+     "v": 800,
+     "err": 30,
+     "how": "the chain's end link at the post, 2 mm elevation"
+    },
+    "lower_lug_z": {
+     "v": 405,
+     "err": 30,
+     "how": "the same, lower"
+    },
+    "upper_chain_lowest_z": {
+     "v": 585,
+     "err": 25,
+     "how": "lowest dark band of the upper swag at mid-span"
+    },
+    "lower_chain_lowest_z": {
+     "v": 165,
+     "err": 25,
+     "how": "lowest dark band of the lower swag"
+    },
+    "post_top_z": {
+     "v": 1086,
+     "err": 35,
+     "how": "the dome's top; the bollards target states 1135 at its 1.17 m (4 % higher, inside both errors)"
+    },
+    "flange_bolts": {
+     "v": 4,
+     "err": 0,
+     "how": "four hex nuts on studs, two seen at the sides and one in front"
+    }
+   }
+  }
+ },
+ "kinds": {
+  "A1": {
+   "id": "A1",
+   "name": "guard_rail_panel",
+   "title": "Kerbside pedestrian guard rail, one 2.0 m panel between two posts (the scene's E8)",
+   "basis": "Judgement: no photograph of a guard rail was reachable (section 3 of TARGET.md). The scene's numbers (2.0 m panel, 1.0 high, post 0.05, rail 0.04) are kept where nothing contradicts them; the infill, the lower rail and every detail are Judgement supported by the photographed bar railings R3B, R3A and R3D (bar pitch 78 to 116) and by search-summary leads (12 mm bars at no more than 100 clear)",
+   "frame": "local: x along the panel (0 at its middle), y across (0 on the rail line, + toward the carriageway), z up from the flag top at the posts; pivot at the middle of the panel on the ground",
+   "panel": {
+    "centre_to_centre": 2000.0,
+    "height": 1000.0,
+    "post": {
+     "od": 48.3,
+     "wall": 3.2,
+     "height": 1000.0,
+     "section": "round steel tube, 48.3 mm outside diameter (1.5 inch nominal bore)",
+     "x": [
+      -1000.0,
+      1000.0
+     ]
+    },
+    "cap": {
+     "od": 52.0,
+     "thickness": 8.0,
+     "z": [
+      992.0,
+      1000.0
+     ],
+     "edge_radius": 2.0,
+     "what": "a flat pressed-steel plug cap, driven into the tube and welded all round, 2 mm bead; its top is the panel's top"
+    },
+    "top_rail": {
+     "od": 42.4,
+     "wall": 2.6,
+     "axis_z": 978.8,
+     "top_z": 1000.0,
+     "x": [
+      -975.85,
+      975.85
+     ],
+     "section": "round steel tube 42.4 mm (1.25 inch nominal bore); its top is flush with the post cap"
+    },
+    "bottom_rail": {
+     "od": 33.7,
+     "wall": 2.6,
+     "axis_z": 200.0,
+     "underside_z": 183.15,
+     "x": [
+      -975.85,
+      975.85
+     ],
+     "section": "round steel tube 33.7 mm (1 inch nominal bore)"
+    },
+    "infill": {
+     "count": 17,
+     "diameter": 12.0,
+     "section": "round solid mild-steel bar, vertical, welded to the rails",
+     "clear_gap": 97.09,
+     "pitch": 109.09,
+     "x": [
+      -872.76,
+      -763.66,
+      -654.57,
+      -545.47,
+      -436.38,
+      -327.28,
+      -218.19,
+      -109.09,
+      0.0,
+      109.09,
+      218.19,
+      327.28,
+      436.38,
+      545.47,
+      654.57,
+      763.66,
+      872.76
+     ],
+     "z": [
+      200.0,
+      978.8
+     ],
+     "gap_rule": "the clear gap between bars and between a bar and a post is at most 100 (a 100 mm sphere may not pass, the present-day safety rule: the infill is 12 mm bars at 110 to 112 centres, gaps 98 to 100, a lead only; the photographed bar railings have gaps of 60 to 105)"
+    },
+    "weld": {
+     "bead": 3.0,
+     "what": "a 3 mm fillet bead round each rail end where it butts the post (saddle cut), and 2 mm at each bar end; ground smooth is NOT done: the beads show under the paint as slightly ridged rings"
+    }
+   },
+   "ground": {
+    "kind": "the posts are concreted into the footway; the flags are cut round them",
+    "ring_gap": 20.0,
+    "ring_fill": "dark bitumen or tarmac joint, 20 mm wide, flush with the flags, no collar plate and no base plate",
+    "below_ground_not_modelled": 400.0
+   },
+   "bbox": {
+    "x": [
+     -1026.0,
+     1026.0
+    ],
+    "y": [
+     -26.0,
+     26.0
+    ],
+    "z": [
+     0,
+     1000.0
+    ]
+   },
+   "ends": "the panel ends at its posts: an end post is the same post with the same cap; no return, no end rail, no stay (the one panel stops at x 12.0 beside the gully)",
+   "joins": "a second panel (not on this street) would share the post: the rails of both butt the same post; the bars are not offset",
+   "edges": "no sharp edges: the tube ends are saddle-cut and welded; the cap's rim is rounded R2; bar ends are cut square and hidden in the rail welds",
+   "fixings": "none visible: no bolts, no lugs, no plates (welded panel on welded posts, the standard form of the 1976 British Standard, Judgement)",
+   "marks": "none: no maker's plate, no council number, no crest, no stencilled letters. A paint-over of a number is NOT drawn.",
+   "paint": {
+    "default": "black gloss paint over galvanising",
+    "srgb": [
+     24,
+     24,
+     26
+    ],
+    "roughness_words": "semi-gloss, dulled by two winters",
+    "roughness": 0.42,
+    "metal": 0,
+    "note": "the same black as the street's cast bollards (bollards target K1/K2: (24, 24, 26)); the black of the photographed ironwork measures (22, 21, 21) (R3A) and (23, 24, 28) (the K5 post, LHB) and is the one paint all of it shares"
+   },
+   "wear": [
+    "the road face grimed brown-grey by tyre spray to about 500 mm, the footway face cleaner; a dirt line at the foot",
+    "top rail polished bright (steel, 150, 150, 152) along its upper surface where hands rest, in patches 150 to 300 long",
+    "paint chipped to grey galvanising or primer at the weld beads, at the lower rail's road side (kicked) and on the post caps; rust bloom (110, 60, 32) at the posts' feet and at the weld rings, 0 to 1",
+    "one or two bars bent out 5 to 15 mm at 300 to 600 high (a bumped panel), 0 to 2 per panel",
+    "a lean of the posts of 0 to 1 degree toward the carriageway",
+    "a sticker or poster remnant on the top rail 0 to 2 (pale paper scraps, no lettering)",
+    "cigarette ends and a sweet wrapper lodged between the kerb and the post (the litter set's, not this kit's)"
+   ],
+   "profiles": {
+    "note": "sections and profiles as point lists, millimetres: tubes as outer and inner circles of 32 points (x across, y along the rail), the cap as an (r, z) lathe profile from the axis up, the weld bead as a fillet triangle, the ground ring as an annulus",
+    "post_section": {
+     "outer": [
+      [
+       24.15,
+       0.0
+      ],
+      [
+       23.686,
+       4.711
+      ],
+      [
+       22.312,
+       9.242
+      ],
+      [
+       20.08,
+       13.417
+      ],
+      [
+       17.077,
+       17.077
+      ],
+      [
+       13.417,
+       20.08
+      ],
+      [
+       9.242,
+       22.312
+      ],
+      [
+       4.711,
+       23.686
+      ],
+      [
+       0.0,
+       24.15
+      ],
+      [
+       -4.711,
+       23.686
+      ],
+      [
+       -9.242,
+       22.312
+      ],
+      [
+       -13.417,
+       20.08
+      ],
+      [
+       -17.077,
+       17.077
+      ],
+      [
+       -20.08,
+       13.417
+      ],
+      [
+       -22.312,
+       9.242
+      ],
+      [
+       -23.686,
+       4.711
+      ],
+      [
+       -24.15,
+       0.0
+      ],
+      [
+       -23.686,
+       -4.711
+      ],
+      [
+       -22.312,
+       -9.242
+      ],
+      [
+       -20.08,
+       -13.417
+      ],
+      [
+       -17.077,
+       -17.077
+      ],
+      [
+       -13.417,
+       -20.08
+      ],
+      [
+       -9.242,
+       -22.312
+      ],
+      [
+       -4.711,
+       -23.686
+      ],
+      [
+       -0.0,
+       -24.15
+      ],
+      [
+       4.711,
+       -23.686
+      ],
+      [
+       9.242,
+       -22.312
+      ],
+      [
+       13.417,
+       -20.08
+      ],
+      [
+       17.077,
+       -17.077
+      ],
+      [
+       20.08,
+       -13.417
+      ],
+      [
+       22.312,
+       -9.242
+      ],
+      [
+       23.686,
+       -4.711
+      ]
+     ],
+     "inner": [
+      [
+       20.95,
+       0.0
+      ],
+      [
+       20.547,
+       4.087
+      ],
+      [
+       19.355,
+       8.017
+      ],
+      [
+       17.419,
+       11.639
+      ],
+      [
+       14.814,
+       14.814
+      ],
+      [
+       11.639,
+       17.419
+      ],
+      [
+       8.017,
+       19.355
+      ],
+      [
+       4.087,
+       20.547
+      ],
+      [
+       0.0,
+       20.95
+      ],
+      [
+       -4.087,
+       20.547
+      ],
+      [
+       -8.017,
+       19.355
+      ],
+      [
+       -11.639,
+       17.419
+      ],
+      [
+       -14.814,
+       14.814
+      ],
+      [
+       -17.419,
+       11.639
+      ],
+      [
+       -19.355,
+       8.017
+      ],
+      [
+       -20.547,
+       4.087
+      ],
+      [
+       -20.95,
+       0.0
+      ],
+      [
+       -20.547,
+       -4.087
+      ],
+      [
+       -19.355,
+       -8.017
+      ],
+      [
+       -17.419,
+       -11.639
+      ],
+      [
+       -14.814,
+       -14.814
+      ],
+      [
+       -11.639,
+       -17.419
+      ],
+      [
+       -8.017,
+       -19.355
+      ],
+      [
+       -4.087,
+       -20.547
+      ],
+      [
+       -0.0,
+       -20.95
+      ],
+      [
+       4.087,
+       -20.547
+      ],
+      [
+       8.017,
+       -19.355
+      ],
+      [
+       11.639,
+       -17.419
+      ],
+      [
+       14.814,
+       -14.814
+      ],
+      [
+       17.419,
+       -11.639
+      ],
+      [
+       19.355,
+       -8.017
+      ],
+      [
+       20.547,
+       -4.087
+      ]
+     ],
+     "od": 48.3,
+     "wall": 3.2
+    },
+    "top_rail_section": {
+     "outer": [
+      [
+       21.2,
+       0.0
+      ],
+      [
+       20.793,
+       4.136
+      ],
+      [
+       19.586,
+       8.113
+      ],
+      [
+       17.627,
+       11.778
+      ],
+      [
+       14.991,
+       14.991
+      ],
+      [
+       11.778,
+       17.627
+      ],
+      [
+       8.113,
+       19.586
+      ],
+      [
+       4.136,
+       20.793
+      ],
+      [
+       0.0,
+       21.2
+      ],
+      [
+       -4.136,
+       20.793
+      ],
+      [
+       -8.113,
+       19.586
+      ],
+      [
+       -11.778,
+       17.627
+      ],
+      [
+       -14.991,
+       14.991
+      ],
+      [
+       -17.627,
+       11.778
+      ],
+      [
+       -19.586,
+       8.113
+      ],
+      [
+       -20.793,
+       4.136
+      ],
+      [
+       -21.2,
+       0.0
+      ],
+      [
+       -20.793,
+       -4.136
+      ],
+      [
+       -19.586,
+       -8.113
+      ],
+      [
+       -17.627,
+       -11.778
+      ],
+      [
+       -14.991,
+       -14.991
+      ],
+      [
+       -11.778,
+       -17.627
+      ],
+      [
+       -8.113,
+       -19.586
+      ],
+      [
+       -4.136,
+       -20.793
+      ],
+      [
+       -0.0,
+       -21.2
+      ],
+      [
+       4.136,
+       -20.793
+      ],
+      [
+       8.113,
+       -19.586
+      ],
+      [
+       11.778,
+       -17.627
+      ],
+      [
+       14.991,
+       -14.991
+      ],
+      [
+       17.627,
+       -11.778
+      ],
+      [
+       19.586,
+       -8.113
+      ],
+      [
+       20.793,
+       -4.136
+      ]
+     ],
+     "inner": [
+      [
+       18.6,
+       0.0
+      ],
+      [
+       18.243,
+       3.629
+      ],
+      [
+       17.184,
+       7.118
+      ],
+      [
+       15.465,
+       10.334
+      ],
+      [
+       13.152,
+       13.152
+      ],
+      [
+       10.334,
+       15.465
+      ],
+      [
+       7.118,
+       17.184
+      ],
+      [
+       3.629,
+       18.243
+      ],
+      [
+       0.0,
+       18.6
+      ],
+      [
+       -3.629,
+       18.243
+      ],
+      [
+       -7.118,
+       17.184
+      ],
+      [
+       -10.334,
+       15.465
+      ],
+      [
+       -13.152,
+       13.152
+      ],
+      [
+       -15.465,
+       10.334
+      ],
+      [
+       -17.184,
+       7.118
+      ],
+      [
+       -18.243,
+       3.629
+      ],
+      [
+       -18.6,
+       0.0
+      ],
+      [
+       -18.243,
+       -3.629
+      ],
+      [
+       -17.184,
+       -7.118
+      ],
+      [
+       -15.465,
+       -10.334
+      ],
+      [
+       -13.152,
+       -13.152
+      ],
+      [
+       -10.334,
+       -15.465
+      ],
+      [
+       -7.118,
+       -17.184
+      ],
+      [
+       -3.629,
+       -18.243
+      ],
+      [
+       -0.0,
+       -18.6
+      ],
+      [
+       3.629,
+       -18.243
+      ],
+      [
+       7.118,
+       -17.184
+      ],
+      [
+       10.334,
+       -15.465
+      ],
+      [
+       13.152,
+       -13.152
+      ],
+      [
+       15.465,
+       -10.334
+      ],
+      [
+       17.184,
+       -7.118
+      ],
+      [
+       18.243,
+       -3.629
+      ]
+     ],
+     "od": 42.4,
+     "wall": 2.6
+    },
+    "bottom_rail_section": {
+     "outer": [
+      [
+       16.85,
+       0.0
+      ],
+      [
+       16.526,
+       3.287
+      ],
+      [
+       15.567,
+       6.448
+      ],
+      [
+       14.01,
+       9.361
+      ],
+      [
+       11.915,
+       11.915
+      ],
+      [
+       9.361,
+       14.01
+      ],
+      [
+       6.448,
+       15.567
+      ],
+      [
+       3.287,
+       16.526
+      ],
+      [
+       0.0,
+       16.85
+      ],
+      [
+       -3.287,
+       16.526
+      ],
+      [
+       -6.448,
+       15.567
+      ],
+      [
+       -9.361,
+       14.01
+      ],
+      [
+       -11.915,
+       11.915
+      ],
+      [
+       -14.01,
+       9.361
+      ],
+      [
+       -15.567,
+       6.448
+      ],
+      [
+       -16.526,
+       3.287
+      ],
+      [
+       -16.85,
+       0.0
+      ],
+      [
+       -16.526,
+       -3.287
+      ],
+      [
+       -15.567,
+       -6.448
+      ],
+      [
+       -14.01,
+       -9.361
+      ],
+      [
+       -11.915,
+       -11.915
+      ],
+      [
+       -9.361,
+       -14.01
+      ],
+      [
+       -6.448,
+       -15.567
+      ],
+      [
+       -3.287,
+       -16.526
+      ],
+      [
+       -0.0,
+       -16.85
+      ],
+      [
+       3.287,
+       -16.526
+      ],
+      [
+       6.448,
+       -15.567
+      ],
+      [
+       9.361,
+       -14.01
+      ],
+      [
+       11.915,
+       -11.915
+      ],
+      [
+       14.01,
+       -9.361
+      ],
+      [
+       15.567,
+       -6.448
+      ],
+      [
+       16.526,
+       -3.287
+      ]
+     ],
+     "inner": [
+      [
+       14.25,
+       0.0
+      ],
+      [
+       13.976,
+       2.78
+      ],
+      [
+       13.165,
+       5.453
+      ],
+      [
+       11.848,
+       7.917
+      ],
+      [
+       10.076,
+       10.076
+      ],
+      [
+       7.917,
+       11.848
+      ],
+      [
+       5.453,
+       13.165
+      ],
+      [
+       2.78,
+       13.976
+      ],
+      [
+       0.0,
+       14.25
+      ],
+      [
+       -2.78,
+       13.976
+      ],
+      [
+       -5.453,
+       13.165
+      ],
+      [
+       -7.917,
+       11.848
+      ],
+      [
+       -10.076,
+       10.076
+      ],
+      [
+       -11.848,
+       7.917
+      ],
+      [
+       -13.165,
+       5.453
+      ],
+      [
+       -13.976,
+       2.78
+      ],
+      [
+       -14.25,
+       0.0
+      ],
+      [
+       -13.976,
+       -2.78
+      ],
+      [
+       -13.165,
+       -5.453
+      ],
+      [
+       -11.848,
+       -7.917
+      ],
+      [
+       -10.076,
+       -10.076
+      ],
+      [
+       -7.917,
+       -11.848
+      ],
+      [
+       -5.453,
+       -13.165
+      ],
+      [
+       -2.78,
+       -13.976
+      ],
+      [
+       -0.0,
+       -14.25
+      ],
+      [
+       2.78,
+       -13.976
+      ],
+      [
+       5.453,
+       -13.165
+      ],
+      [
+       7.917,
+       -11.848
+      ],
+      [
+       10.076,
+       -10.076
+      ],
+      [
+       11.848,
+       -7.917
+      ],
+      [
+       13.165,
+       -5.453
+      ],
+      [
+       13.976,
+       -2.78
+      ]
+     ],
+     "od": 33.7,
+     "wall": 2.6
+    },
+    "bar_section": {
+     "outer": [
+      [
+       6.0,
+       0.0
+      ],
+      [
+       5.885,
+       1.171
+      ],
+      [
+       5.543,
+       2.296
+      ],
+      [
+       4.989,
+       3.333
+      ],
+      [
+       4.243,
+       4.243
+      ],
+      [
+       3.333,
+       4.989
+      ],
+      [
+       2.296,
+       5.543
+      ],
+      [
+       1.171,
+       5.885
+      ],
+      [
+       0.0,
+       6.0
+      ],
+      [
+       -1.171,
+       5.885
+      ],
+      [
+       -2.296,
+       5.543
+      ],
+      [
+       -3.333,
+       4.989
+      ],
+      [
+       -4.243,
+       4.243
+      ],
+      [
+       -4.989,
+       3.333
+      ],
+      [
+       -5.543,
+       2.296
+      ],
+      [
+       -5.885,
+       1.171
+      ],
+      [
+       -6.0,
+       0.0
+      ],
+      [
+       -5.885,
+       -1.171
+      ],
+      [
+       -5.543,
+       -2.296
+      ],
+      [
+       -4.989,
+       -3.333
+      ],
+      [
+       -4.243,
+       -4.243
+      ],
+      [
+       -3.333,
+       -4.989
+      ],
+      [
+       -2.296,
+       -5.543
+      ],
+      [
+       -1.171,
+       -5.885
+      ],
+      [
+       -0.0,
+       -6.0
+      ],
+      [
+       1.171,
+       -5.885
+      ],
+      [
+       2.296,
+       -5.543
+      ],
+      [
+       3.333,
+       -4.989
+      ],
+      [
+       4.243,
+       -4.243
+      ],
+      [
+       4.989,
+       -3.333
+      ],
+      [
+       5.543,
+       -2.296
+      ],
+      [
+       5.885,
+       -1.171
+      ]
+     ],
+     "od": 12.0
+    },
+    "cap_rz": [
+     [
+      0.0,
+      992.0
+     ],
+     [
+      24.0,
+      992.0
+     ],
+     [
+      25.4,
+      992.6
+     ],
+     [
+      26.0,
+      994.0
+     ],
+     [
+      26.0,
+      998.0
+     ],
+     [
+      25.4,
+      999.4
+     ],
+     [
+      24.0,
+      1000.0
+     ],
+     [
+      0.0,
+      1000.0
+     ]
+    ],
+    "weld_fillet": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      3.0,
+      0.0
+     ],
+     [
+      0.0,
+      3.0
+     ]
+    ],
+    "ground_ring": {
+     "outer": [
+      [
+       44.15,
+       0.0
+      ],
+      [
+       43.772,
+       5.763
+      ],
+      [
+       42.646,
+       11.427
+      ],
+      [
+       40.789,
+       16.895
+      ],
+      [
+       38.235,
+       22.075
+      ],
+      [
+       35.027,
+       26.877
+      ],
+      [
+       31.219,
+       31.219
+      ],
+      [
+       26.877,
+       35.027
+      ],
+      [
+       22.075,
+       38.235
+      ],
+      [
+       16.895,
+       40.789
+      ],
+      [
+       11.427,
+       42.646
+      ],
+      [
+       5.763,
+       43.772
+      ],
+      [
+       0.0,
+       44.15
+      ],
+      [
+       -5.763,
+       43.772
+      ],
+      [
+       -11.427,
+       42.646
+      ],
+      [
+       -16.895,
+       40.789
+      ],
+      [
+       -22.075,
+       38.235
+      ],
+      [
+       -26.877,
+       35.027
+      ],
+      [
+       -31.219,
+       31.219
+      ],
+      [
+       -35.027,
+       26.877
+      ],
+      [
+       -38.235,
+       22.075
+      ],
+      [
+       -40.789,
+       16.895
+      ],
+      [
+       -42.646,
+       11.427
+      ],
+      [
+       -43.772,
+       5.763
+      ],
+      [
+       -44.15,
+       0.0
+      ],
+      [
+       -43.772,
+       -5.763
+      ],
+      [
+       -42.646,
+       -11.427
+      ],
+      [
+       -40.789,
+       -16.895
+      ],
+      [
+       -38.235,
+       -22.075
+      ],
+      [
+       -35.027,
+       -26.877
+      ],
+      [
+       -31.219,
+       -31.219
+      ],
+      [
+       -26.877,
+       -35.027
+      ],
+      [
+       -22.075,
+       -38.235
+      ],
+      [
+       -16.895,
+       -40.789
+      ],
+      [
+       -11.427,
+       -42.646
+      ],
+      [
+       -5.763,
+       -43.772
+      ],
+      [
+       -0.0,
+       -44.15
+      ],
+      [
+       5.763,
+       -43.772
+      ],
+      [
+       11.427,
+       -42.646
+      ],
+      [
+       16.895,
+       -40.789
+      ],
+      [
+       22.075,
+       -38.235
+      ],
+      [
+       26.877,
+       -35.027
+      ],
+      [
+       31.219,
+       -31.219
+      ],
+      [
+       35.027,
+       -26.877
+      ],
+      [
+       38.235,
+       -22.075
+      ],
+      [
+       40.789,
+       -16.895
+      ],
+      [
+       42.646,
+       -11.427
+      ],
+      [
+       43.772,
+       -5.763
+      ]
+     ],
+     "inner": [
+      [
+       24.15,
+       0.0
+      ],
+      [
+       23.943,
+       3.152
+      ],
+      [
+       23.327,
+       6.25
+      ],
+      [
+       22.312,
+       9.242
+      ],
+      [
+       20.915,
+       12.075
+      ],
+      [
+       19.159,
+       14.702
+      ],
+      [
+       17.077,
+       17.077
+      ],
+      [
+       14.702,
+       19.159
+      ],
+      [
+       12.075,
+       20.915
+      ],
+      [
+       9.242,
+       22.312
+      ],
+      [
+       6.25,
+       23.327
+      ],
+      [
+       3.152,
+       23.943
+      ],
+      [
+       0.0,
+       24.15
+      ],
+      [
+       -3.152,
+       23.943
+      ],
+      [
+       -6.25,
+       23.327
+      ],
+      [
+       -9.242,
+       22.312
+      ],
+      [
+       -12.075,
+       20.915
+      ],
+      [
+       -14.702,
+       19.159
+      ],
+      [
+       -17.077,
+       17.077
+      ],
+      [
+       -19.159,
+       14.702
+      ],
+      [
+       -20.915,
+       12.075
+      ],
+      [
+       -22.312,
+       9.242
+      ],
+      [
+       -23.327,
+       6.25
+      ],
+      [
+       -23.943,
+       3.152
+      ],
+      [
+       -24.15,
+       0.0
+      ],
+      [
+       -23.943,
+       -3.152
+      ],
+      [
+       -23.327,
+       -6.25
+      ],
+      [
+       -22.312,
+       -9.242
+      ],
+      [
+       -20.915,
+       -12.075
+      ],
+      [
+       -19.159,
+       -14.702
+      ],
+      [
+       -17.077,
+       -17.077
+      ],
+      [
+       -14.702,
+       -19.159
+      ],
+      [
+       -12.075,
+       -20.915
+      ],
+      [
+       -9.242,
+       -22.312
+      ],
+      [
+       -6.25,
+       -23.327
+      ],
+      [
+       -3.152,
+       -23.943
+      ],
+      [
+       -0.0,
+       -24.15
+      ],
+      [
+       3.152,
+       -23.943
+      ],
+      [
+       6.25,
+       -23.327
+      ],
+      [
+       9.242,
+       -22.312
+      ],
+      [
+       12.075,
+       -20.915
+      ],
+      [
+       14.702,
+       -19.159
+      ],
+      [
+       17.077,
+       -17.077
+      ],
+      [
+       19.159,
+       -14.702
+      ],
+      [
+       20.915,
+       -12.075
+      ],
+      [
+       22.312,
+       -9.242
+      ],
+      [
+       23.327,
+       -6.25
+      ],
+      [
+       23.943,
+       -3.152
+      ]
+     ],
+     "width": 20.0
+    }
+   }
+  },
+  "Q2": {
+   "id": "Q2",
+   "name": "quay_tube_railing",
+   "title": "Quay tube railing: two tube rails on round steel posts (Q2a), or one tube rail and a swag of chain (Q2b)",
+   "basis": "Judgement: no photograph of a tube railing on a quay was reachable. The chain is the bollards target's plain chain (Read there) and its sag is Photo on the marina chain (LHB, 200 to 235). The asset plan names the kit (\"two-rail tube railing with chain\"); the Hull photograph R08 of 1989 (read by an earlier session) shows a chain-edged quay",
+   "frame": "local: x along the run (0 at the middle of a bay), y across (0 on the rail line, + toward the water), z up from the apron at the post foot; pivot at the middle of the bay on the ground",
+   "bay": {
+    "centre_to_centre": 3000.0,
+    "allowed": [
+     3000.0
+    ],
+    "note": "bays of 3.0 m (the bollards target's post spacing)"
+   },
+   "post": {
+    "od": 76.1,
+    "wall": 5.0,
+    "height": 1100.0,
+    "section": "round steel tube, 76.1 mm (3 inch nominal bore)",
+    "cap": {
+     "kind": "pressed domed cap, welded",
+     "od": 80.0,
+     "rise": 14.0,
+     "z": [
+      1086.0,
+      1100.0
+     ]
+    },
+    "base_plate": {
+     "size": [
+      200.0,
+      200.0
+     ],
+     "thickness": 12.0,
+     "holes": {
+      "diameter": 18.0,
+      "pitch": 150.0,
+      "count": 4
+     },
+     "fixing": "four M16 studs in the cope with hex nuts, 24 across flats and 13 high, studs 10 proud of the nuts",
+     "grout": "25 mm cement grout bedding, a 20 mm fillet round the plate, stained dark"
+    },
+    "weld": "a 5 mm fillet all round the post foot on the plate"
+   },
+   "top_rail": {
+    "od": 48.3,
+    "wall": 3.2,
+    "axis_z": 1000.0,
+    "top_z": 1024.15,
+    "x": [
+     -1461.95,
+     1461.95
+    ],
+    "section": "round steel tube 48.3 mm; saddle-welded to the posts"
+   },
+   "low_rail": {
+    "od": 42.4,
+    "wall": 2.6,
+    "axis_z": 500.0,
+    "x": [
+     -1461.95,
+     1461.95
+    ],
+    "section": "round steel tube 42.4 mm (Q2a only)"
+   },
+   "chain": {
+    "replaces": "the low rail (Q2b only)",
+    "eyes": {
+     "z": 500.0,
+     "x": [
+      -1416.95,
+      1416.95
+     ],
+     "ear": {
+      "width": 40.0,
+      "height": 70.0,
+      "thickness": 8.0,
+      "hole_diameter": 24.0,
+      "hole_centre_from_post_surface": 45.0,
+      "what": "a flat-bar ear welded to the post on the rail line, facing the bay; one each side of every post"
+     }
+    },
+    "link": {
+     "bar": 13.0,
+     "kind": "plain short link",
+     "inner_length": 39.0,
+     "inner_width": 18.0,
+     "outer_length": 65.0,
+     "outer_width": 44.0,
+     "pitch": 39.0,
+     "note": "the bollards target's plain chain, unchanged (agrees)"
+    },
+    "sag": 200.0,
+    "sag_basis": "Photo LHB: the marina chain's two swags sag 215 (upper) and 240 (lower), mean 227 +-35, over a 2840 span (8 %); the bollards target's 150 is Judgement and is low; 200 (7 %) here",
+    "span_between_eyes": 2833.9,
+    "arc_length": 2871.5,
+    "links": 74,
+    "curve": "a catenary hanging from the two eye holes: z(x) = z_eye - sag + a (cosh(x/a) - 1) with a = span^2 / (8 sag)"
+   },
+   "bbox": {
+    "x": [
+     -1538.05,
+     1538.05
+    ],
+    "y": [
+     -100.0,
+     100.0
+    ],
+    "z": [
+     0,
+     1100.0
+    ]
+   },
+   "ends": "a run ends at a post of the same kind; the last bay may be shorter only on a return (none on this quay). At a corner two runs share one post, rails mitred to it",
+   "edges": "saddle cuts and fillet welds; the cap's rim R3; the base plate's edges R2",
+   "marks": "none",
+   "paint": {
+    "default": "black, satin over galvanising",
+    "srgb": [
+     24,
+     24,
+     26
+    ],
+    "roughness_words": "satin, chalky on the sea side",
+    "roughness": 0.55,
+    "metal": 0,
+    "note": "the same black and roughness as the K5 chain post and the K6 mooring bollards beside it (bollards target); the nuts and studs bright steel (150, 150, 152), dull rust at the threads"
+   },
+   "wear": [
+    "salt bloom (pale, dry) on the sea face of posts and rails to 1.0 m; rust at the base plate, the nuts and the weld rings, 0 to 1",
+    "paint rubbed bright on the upper face of the top rail at the walking places (150, 150, 152)",
+    "the chain black, rubbed bright where the links touch (the bollards target); links slightly rusty at their crossings",
+    "a rope scuff on one post at 400 to 600 high, 0 to 1 per run",
+    "the apron around the plates stained dark by oil and rain"
+   ],
+   "profiles": {
+    "note": "sections and profiles as point lists, millimetres",
+    "post_section": {
+     "outer": [
+      [
+       38.05,
+       0.0
+      ],
+      [
+       37.319,
+       7.423
+      ],
+      [
+       35.154,
+       14.561
+      ],
+      [
+       31.637,
+       21.139
+      ],
+      [
+       26.905,
+       26.905
+      ],
+      [
+       21.139,
+       31.637
+      ],
+      [
+       14.561,
+       35.154
+      ],
+      [
+       7.423,
+       37.319
+      ],
+      [
+       0.0,
+       38.05
+      ],
+      [
+       -7.423,
+       37.319
+      ],
+      [
+       -14.561,
+       35.154
+      ],
+      [
+       -21.139,
+       31.637
+      ],
+      [
+       -26.905,
+       26.905
+      ],
+      [
+       -31.637,
+       21.139
+      ],
+      [
+       -35.154,
+       14.561
+      ],
+      [
+       -37.319,
+       7.423
+      ],
+      [
+       -38.05,
+       0.0
+      ],
+      [
+       -37.319,
+       -7.423
+      ],
+      [
+       -35.154,
+       -14.561
+      ],
+      [
+       -31.637,
+       -21.139
+      ],
+      [
+       -26.905,
+       -26.905
+      ],
+      [
+       -21.139,
+       -31.637
+      ],
+      [
+       -14.561,
+       -35.154
+      ],
+      [
+       -7.423,
+       -37.319
+      ],
+      [
+       -0.0,
+       -38.05
+      ],
+      [
+       7.423,
+       -37.319
+      ],
+      [
+       14.561,
+       -35.154
+      ],
+      [
+       21.139,
+       -31.637
+      ],
+      [
+       26.905,
+       -26.905
+      ],
+      [
+       31.637,
+       -21.139
+      ],
+      [
+       35.154,
+       -14.561
+      ],
+      [
+       37.319,
+       -7.423
+      ]
+     ],
+     "inner": [
+      [
+       33.05,
+       0.0
+      ],
+      [
+       32.415,
+       6.448
+      ],
+      [
+       30.534,
+       12.648
+      ],
+      [
+       27.48,
+       18.362
+      ],
+      [
+       23.37,
+       23.37
+      ],
+      [
+       18.362,
+       27.48
+      ],
+      [
+       12.648,
+       30.534
+      ],
+      [
+       6.448,
+       32.415
+      ],
+      [
+       0.0,
+       33.05
+      ],
+      [
+       -6.448,
+       32.415
+      ],
+      [
+       -12.648,
+       30.534
+      ],
+      [
+       -18.362,
+       27.48
+      ],
+      [
+       -23.37,
+       23.37
+      ],
+      [
+       -27.48,
+       18.362
+      ],
+      [
+       -30.534,
+       12.648
+      ],
+      [
+       -32.415,
+       6.448
+      ],
+      [
+       -33.05,
+       0.0
+      ],
+      [
+       -32.415,
+       -6.448
+      ],
+      [
+       -30.534,
+       -12.648
+      ],
+      [
+       -27.48,
+       -18.362
+      ],
+      [
+       -23.37,
+       -23.37
+      ],
+      [
+       -18.362,
+       -27.48
+      ],
+      [
+       -12.648,
+       -30.534
+      ],
+      [
+       -6.448,
+       -32.415
+      ],
+      [
+       -0.0,
+       -33.05
+      ],
+      [
+       6.448,
+       -32.415
+      ],
+      [
+       12.648,
+       -30.534
+      ],
+      [
+       18.362,
+       -27.48
+      ],
+      [
+       23.37,
+       -23.37
+      ],
+      [
+       27.48,
+       -18.362
+      ],
+      [
+       30.534,
+       -12.648
+      ],
+      [
+       32.415,
+       -6.448
+      ]
+     ],
+     "od": 76.1,
+     "wall": 5.0
+    },
+    "top_rail_section": {
+     "outer": [
+      [
+       24.15,
+       0.0
+      ],
+      [
+       23.686,
+       4.711
+      ],
+      [
+       22.312,
+       9.242
+      ],
+      [
+       20.08,
+       13.417
+      ],
+      [
+       17.077,
+       17.077
+      ],
+      [
+       13.417,
+       20.08
+      ],
+      [
+       9.242,
+       22.312
+      ],
+      [
+       4.711,
+       23.686
+      ],
+      [
+       0.0,
+       24.15
+      ],
+      [
+       -4.711,
+       23.686
+      ],
+      [
+       -9.242,
+       22.312
+      ],
+      [
+       -13.417,
+       20.08
+      ],
+      [
+       -17.077,
+       17.077
+      ],
+      [
+       -20.08,
+       13.417
+      ],
+      [
+       -22.312,
+       9.242
+      ],
+      [
+       -23.686,
+       4.711
+      ],
+      [
+       -24.15,
+       0.0
+      ],
+      [
+       -23.686,
+       -4.711
+      ],
+      [
+       -22.312,
+       -9.242
+      ],
+      [
+       -20.08,
+       -13.417
+      ],
+      [
+       -17.077,
+       -17.077
+      ],
+      [
+       -13.417,
+       -20.08
+      ],
+      [
+       -9.242,
+       -22.312
+      ],
+      [
+       -4.711,
+       -23.686
+      ],
+      [
+       -0.0,
+       -24.15
+      ],
+      [
+       4.711,
+       -23.686
+      ],
+      [
+       9.242,
+       -22.312
+      ],
+      [
+       13.417,
+       -20.08
+      ],
+      [
+       17.077,
+       -17.077
+      ],
+      [
+       20.08,
+       -13.417
+      ],
+      [
+       22.312,
+       -9.242
+      ],
+      [
+       23.686,
+       -4.711
+      ]
+     ],
+     "inner": [
+      [
+       20.95,
+       0.0
+      ],
+      [
+       20.547,
+       4.087
+      ],
+      [
+       19.355,
+       8.017
+      ],
+      [
+       17.419,
+       11.639
+      ],
+      [
+       14.814,
+       14.814
+      ],
+      [
+       11.639,
+       17.419
+      ],
+      [
+       8.017,
+       19.355
+      ],
+      [
+       4.087,
+       20.547
+      ],
+      [
+       0.0,
+       20.95
+      ],
+      [
+       -4.087,
+       20.547
+      ],
+      [
+       -8.017,
+       19.355
+      ],
+      [
+       -11.639,
+       17.419
+      ],
+      [
+       -14.814,
+       14.814
+      ],
+      [
+       -17.419,
+       11.639
+      ],
+      [
+       -19.355,
+       8.017
+      ],
+      [
+       -20.547,
+       4.087
+      ],
+      [
+       -20.95,
+       0.0
+      ],
+      [
+       -20.547,
+       -4.087
+      ],
+      [
+       -19.355,
+       -8.017
+      ],
+      [
+       -17.419,
+       -11.639
+      ],
+      [
+       -14.814,
+       -14.814
+      ],
+      [
+       -11.639,
+       -17.419
+      ],
+      [
+       -8.017,
+       -19.355
+      ],
+      [
+       -4.087,
+       -20.547
+      ],
+      [
+       -0.0,
+       -20.95
+      ],
+      [
+       4.087,
+       -20.547
+      ],
+      [
+       8.017,
+       -19.355
+      ],
+      [
+       11.639,
+       -17.419
+      ],
+      [
+       14.814,
+       -14.814
+      ],
+      [
+       17.419,
+       -11.639
+      ],
+      [
+       19.355,
+       -8.017
+      ],
+      [
+       20.547,
+       -4.087
+      ]
+     ],
+     "od": 48.3,
+     "wall": 3.2
+    },
+    "low_rail_section": {
+     "outer": [
+      [
+       21.2,
+       0.0
+      ],
+      [
+       20.793,
+       4.136
+      ],
+      [
+       19.586,
+       8.113
+      ],
+      [
+       17.627,
+       11.778
+      ],
+      [
+       14.991,
+       14.991
+      ],
+      [
+       11.778,
+       17.627
+      ],
+      [
+       8.113,
+       19.586
+      ],
+      [
+       4.136,
+       20.793
+      ],
+      [
+       0.0,
+       21.2
+      ],
+      [
+       -4.136,
+       20.793
+      ],
+      [
+       -8.113,
+       19.586
+      ],
+      [
+       -11.778,
+       17.627
+      ],
+      [
+       -14.991,
+       14.991
+      ],
+      [
+       -17.627,
+       11.778
+      ],
+      [
+       -19.586,
+       8.113
+      ],
+      [
+       -20.793,
+       4.136
+      ],
+      [
+       -21.2,
+       0.0
+      ],
+      [
+       -20.793,
+       -4.136
+      ],
+      [
+       -19.586,
+       -8.113
+      ],
+      [
+       -17.627,
+       -11.778
+      ],
+      [
+       -14.991,
+       -14.991
+      ],
+      [
+       -11.778,
+       -17.627
+      ],
+      [
+       -8.113,
+       -19.586
+      ],
+      [
+       -4.136,
+       -20.793
+      ],
+      [
+       -0.0,
+       -21.2
+      ],
+      [
+       4.136,
+       -20.793
+      ],
+      [
+       8.113,
+       -19.586
+      ],
+      [
+       11.778,
+       -17.627
+      ],
+      [
+       14.991,
+       -14.991
+      ],
+      [
+       17.627,
+       -11.778
+      ],
+      [
+       19.586,
+       -8.113
+      ],
+      [
+       20.793,
+       -4.136
+      ]
+     ],
+     "inner": [
+      [
+       18.6,
+       0.0
+      ],
+      [
+       18.243,
+       3.629
+      ],
+      [
+       17.184,
+       7.118
+      ],
+      [
+       15.465,
+       10.334
+      ],
+      [
+       13.152,
+       13.152
+      ],
+      [
+       10.334,
+       15.465
+      ],
+      [
+       7.118,
+       17.184
+      ],
+      [
+       3.629,
+       18.243
+      ],
+      [
+       0.0,
+       18.6
+      ],
+      [
+       -3.629,
+       18.243
+      ],
+      [
+       -7.118,
+       17.184
+      ],
+      [
+       -10.334,
+       15.465
+      ],
+      [
+       -13.152,
+       13.152
+      ],
+      [
+       -15.465,
+       10.334
+      ],
+      [
+       -17.184,
+       7.118
+      ],
+      [
+       -18.243,
+       3.629
+      ],
+      [
+       -18.6,
+       0.0
+      ],
+      [
+       -18.243,
+       -3.629
+      ],
+      [
+       -17.184,
+       -7.118
+      ],
+      [
+       -15.465,
+       -10.334
+      ],
+      [
+       -13.152,
+       -13.152
+      ],
+      [
+       -10.334,
+       -15.465
+      ],
+      [
+       -7.118,
+       -17.184
+      ],
+      [
+       -3.629,
+       -18.243
+      ],
+      [
+       -0.0,
+       -18.6
+      ],
+      [
+       3.629,
+       -18.243
+      ],
+      [
+       7.118,
+       -17.184
+      ],
+      [
+       10.334,
+       -15.465
+      ],
+      [
+       13.152,
+       -13.152
+      ],
+      [
+       15.465,
+       -10.334
+      ],
+      [
+       17.184,
+       -7.118
+      ],
+      [
+       18.243,
+       -3.629
+      ]
+     ],
+     "od": 42.4,
+     "wall": 2.6
+    },
+    "cap_rz": [
+     [
+      0.0,
+      1100.0
+     ],
+     [
+      20.0,
+      1097.0
+     ],
+     [
+      34.0,
+      1092.0
+     ],
+     [
+      40.0,
+      1088.0
+     ],
+     [
+      40.0,
+      1086.0
+     ],
+     [
+      38.05,
+      1086.0
+     ]
+    ],
+    "base_plate_outline": [
+     [
+      -100.0,
+      -100.0
+     ],
+     [
+      100.0,
+      -100.0
+     ],
+     [
+      100.0,
+      100.0
+     ],
+     [
+      -100.0,
+      100.0
+     ]
+    ],
+    "base_plate_holes": [
+     [
+      -75.0,
+      -75.0
+     ],
+     [
+      75.0,
+      -75.0
+     ],
+     [
+      75.0,
+      75.0
+     ],
+     [
+      -75.0,
+      75.0
+     ]
+    ],
+    "hole_diameter": 18.0,
+    "nut_hex_outline": [
+     [
+      12.0,
+      6.928
+     ],
+     [
+      0.0,
+      13.856
+     ],
+     [
+      -12.0,
+      6.928
+     ],
+     [
+      -12.0,
+      -6.928
+     ],
+     [
+      -0.0,
+      -13.856
+     ],
+     [
+      12.0,
+      -6.928
+     ]
+    ],
+    "nut_across_flats": 24.0,
+    "nut_height": 13.0,
+    "stud_diameter": 16.0,
+    "stud_above_nut": 10.0,
+    "ear_outline": {
+     "outline": [
+      [
+       0.0,
+       -35.0
+      ],
+      [
+       65.0,
+       -35.0
+      ],
+      [
+       65.0,
+       35.0
+      ],
+      [
+       0.0,
+       35.0
+      ]
+     ],
+     "hole_centre": [
+      45.0,
+      0.0
+     ],
+     "hole_diameter": 24.0,
+     "thickness": 8.0
+    },
+    "link_inplane": {
+     "outline": [
+      [
+       10.5,
+       -22.0
+      ],
+      [
+       18.919,
+       -20.325
+      ],
+      [
+       26.056,
+       -15.556
+      ],
+      [
+       30.825,
+       -8.419
+      ],
+      [
+       32.5,
+       0.0
+      ],
+      [
+       30.825,
+       8.419
+      ],
+      [
+       26.056,
+       15.556
+      ],
+      [
+       18.919,
+       20.325
+      ],
+      [
+       10.5,
+       22.0
+      ],
+      [
+       -10.5,
+       22.0
+      ],
+      [
+       -18.919,
+       20.325
+      ],
+      [
+       -26.056,
+       15.556
+      ],
+      [
+       -30.825,
+       8.419
+      ],
+      [
+       -32.5,
+       0.0
+      ],
+      [
+       -30.825,
+       -8.419
+      ],
+      [
+       -26.056,
+       -15.556
+      ],
+      [
+       -18.919,
+       -20.325
+      ],
+      [
+       -10.5,
+       -22.0
+      ]
+     ],
+     "hole": [
+      [
+       10.5,
+       -9.0
+      ],
+      [
+       13.944,
+       -8.315
+      ],
+      [
+       16.864,
+       -6.364
+      ],
+      [
+       18.815,
+       -3.444
+      ],
+      [
+       19.5,
+       0.0
+      ],
+      [
+       18.815,
+       3.444
+      ],
+      [
+       16.864,
+       6.364
+      ],
+      [
+       13.944,
+       8.315
+      ],
+      [
+       10.5,
+       9.0
+      ],
+      [
+       -10.5,
+       9.0
+      ],
+      [
+       -13.944,
+       8.315
+      ],
+      [
+       -16.864,
+       6.364
+      ],
+      [
+       -18.815,
+       3.444
+      ],
+      [
+       -19.5,
+       0.0
+      ],
+      [
+       -18.815,
+       -3.444
+      ],
+      [
+       -16.864,
+       -6.364
+      ],
+      [
+       -13.944,
+       -8.315
+      ],
+      [
+       -10.5,
+       -9.0
+      ]
+     ]
+    },
+    "link_edge_on": [
+     [
+      -32.5,
+      -6.5
+     ],
+     [
+      32.5,
+      -6.5
+     ],
+     [
+      32.5,
+      6.5
+     ],
+     [
+      -32.5,
+      6.5
+     ]
+    ],
+    "catenary_xz": [
+     [
+      -1416.95,
+      500.0
+     ],
+     [
+      -1315.74,
+      472.29
+     ],
+     [
+      -1214.53,
+      446.68
+     ],
+     [
+      -1113.32,
+      423.16
+     ],
+     [
+      -1012.11,
+      401.71
+     ],
+     [
+      -910.9,
+      382.34
+     ],
+     [
+      -809.69,
+      365.02
+     ],
+     [
+      -708.48,
+      349.76
+     ],
+     [
+      -607.26,
+      336.54
+     ],
+     [
+      -506.05,
+      325.36
+     ],
+     [
+      -404.84,
+      316.23
+     ],
+     [
+      -303.63,
+      309.13
+     ],
+     [
+      -202.42,
+      304.06
+     ],
+     [
+      -101.21,
+      301.01
+     ],
+     [
+      0.0,
+      300.0
+     ],
+     [
+      101.21,
+      301.01
+     ],
+     [
+      202.42,
+      304.06
+     ],
+     [
+      303.63,
+      309.13
+     ],
+     [
+      404.84,
+      316.23
+     ],
+     [
+      506.05,
+      325.36
+     ],
+     [
+      607.26,
+      336.54
+     ],
+     [
+      708.48,
+      349.76
+     ],
+     [
+      809.69,
+      365.02
+     ],
+     [
+      910.9,
+      382.34
+     ],
+     [
+      1012.11,
+      401.71
+     ],
+     [
+      1113.32,
+      423.16
+     ],
+     [
+      1214.53,
+      446.68
+     ],
+     [
+      1315.74,
+      472.29
+     ],
+     [
+      1416.95,
+      500.0
+     ]
+    ],
+    "catenary_note": "z of the chain's centre line every 100 mm along x, eyes at z 500, lowest point z 300"
+   }
+  },
+  "R3B": {
+   "id": "R3B",
+   "name": "park_railing_tall",
+   "title": "Tall cast-iron park railing on a brick plinth with a hinge post (RESERVE, not on Quay Street)",
+   "placed": false,
+   "frame_id": "R3B",
+   "basis": "Photo, Bethnal Green Entrance (2019), the main photograph: 1 mm a pixel elevation at 0.97 +-0.06 m; lengths +-6 %",
+   "plinth": {
+    "coping_top_z": {
+     "v": 345,
+     "err": 20,
+     "how": "the stone slab's top at its front lip: the gradient search gives 331 on the plane 110 behind the face; the lip is nearer the camera, so its true height is about 13 higher (the ray falls 110 x (0.97 - 0.35) / 5.2 over that distance)"
+    },
+    "stone_coping": "a stone slab about 50 thick with a weathered top, overhanging the brick by about 25",
+    "brick": "red-brown brick, four courses at 75 below the coping, moss and lichen on the north face",
+    "pier": {
+     "width": {
+      "v": 550,
+      "err": 40,
+      "how": "the brick pier under the hinge post, s 2530 to 3080"
+     },
+     "top": "a stone pier cap with a low pyramidal weathering at the coping level"
+    }
+   },
+   "rails": {
+    "bottom_axis_z": {
+     "v": 445,
+     "err": 15,
+     "how": "dark row between the bars at z 440 (rows 2000+: also detected by the column-between-bars profile, depth 19); a flat bar about 18 high"
+    },
+    "mid_axis_z": {
+     "v": 1045,
+     "err": 15,
+     "how": "row profile peak 1036, picture read 1056"
+    },
+    "top_axis_z": {
+     "v": 2000,
+     "err": 10,
+     "how": "row profile peak, depth 43, FWHM 26 (blur included): a flat bar about 20 high"
+    },
+    "section": "flat bar about 20 high by 10 thick, bars passed through or riveted to them (not resolved)"
+   },
+   "bars": {
+    "pitch": 78.54,
+    "count_measured": 26,
+    "first_s": 605.02,
+    "diameter": 17.0,
+    "diameter_err": 3.0,
+    "section": "round",
+    "tall_every": 2,
+    "short_tip_z": {
+     "v": 1225,
+     "err": 20,
+     "how": "spear tips of the short bars, which stop just above the middle rail"
+    },
+    "tall_tip_z": {
+     "v": 2300,
+     "err": 20,
+     "how": "spear tips of the tall bars (every second bar), 300 above the top rail"
+    },
+    "head_rz": [
+     [
+      9,
+      1990
+     ],
+     [
+      9,
+      2035
+     ],
+     [
+      14,
+      2040
+     ],
+     [
+      14,
+      2048
+     ],
+     [
+      9,
+      2054
+     ],
+     [
+      9,
+      2095
+     ],
+     [
+      20,
+      2112
+     ],
+     [
+      30,
+      2128
+     ],
+     [
+      28,
+      2140
+     ],
+     [
+      18,
+      2155
+     ],
+     [
+      14,
+      2165
+     ],
+     [
+      22,
+      2185
+     ],
+     [
+      24,
+      2195
+     ],
+     [
+      14,
+      2208
+     ],
+     [
+      14,
+      2230
+     ],
+     [
+      12,
+      2250
+     ],
+     [
+      8,
+      2275
+     ],
+     [
+      5,
+      2300
+     ],
+     [
+      2,
+      2320
+     ],
+     [
+      0,
+      2335
+     ]
+    ],
+    "foot": "a small ball end (about 20 across) a few mm below the bottom rail",
+    "leaf_note": "the gate leaf right of the hinge post is swung open toward the camera: the plane magnifies it (its bars read at 88.9) so it is not measured",
+    "note": "all bars at 78.5 (three inches is 76.2, 3 % less, inside the 6 % scale error); every second bar rises 1075 above the middle rail to a spire; the others stop at the middle rail with a small spear (z 1225)"
+   },
+   "post": {
+    "shaft_width": {
+     "v": 100,
+     "err": 10,
+     "how": "mean of eight rows z 1700 to 1910 (93 to 110), blur included"
+    },
+    "collar_width": {
+     "v": 155,
+     "err": 15,
+     "how": "the collar at z 1995 to 2035"
+    },
+    "urn_width": {
+     "v": 135,
+     "err": 15,
+     "how": "the vase under the finial, z 2150 to 2210"
+    },
+    "top_z": {
+     "v": 2375,
+     "err": 15,
+     "how": "the finial of the hinge post"
+    },
+    "kind": "cast iron, round, with a fluted collar at the top rail, a vase and a spire; a boss and a strap hinge at the bottom rail level (a gate stile)"
+   },
+   "height_to_tip": 2300,
+   "spacing_of_posts": "not seen: one hinge post in 3.9 m of railing",
+   "paint": {
+    "srgb": [
+     24,
+     24,
+     26
+    ],
+    "note": "black, semi-gloss, chalky on the plinth side; measured medians of the dark pixels (36, 43, 30) are polluted by foliage; the R3A and LHB blacks are (22, 21, 21) and (23, 24, 28)"
+   },
+   "wear": [
+    "paint flaking at the post collars; bright rust spots at the bar feet",
+    "moss and lichen on the plinth and a green-black stain under the coping",
+    "a notice board and a locked-site sign wired to the bars (not drawn)"
+   ],
+   "profiles": {
+    "bar_head_rz": [
+     [
+      9,
+      1990
+     ],
+     [
+      9,
+      2035
+     ],
+     [
+      14,
+      2040
+     ],
+     [
+      14,
+      2048
+     ],
+     [
+      9,
+      2054
+     ],
+     [
+      9,
+      2095
+     ],
+     [
+      20,
+      2112
+     ],
+     [
+      30,
+      2128
+     ],
+     [
+      28,
+      2140
+     ],
+     [
+      18,
+      2155
+     ],
+     [
+      14,
+      2165
+     ],
+     [
+      22,
+      2185
+     ],
+     [
+      24,
+      2195
+     ],
+     [
+      14,
+      2208
+     ],
+     [
+      14,
+      2230
+     ],
+     [
+      12,
+      2250
+     ],
+     [
+      8,
+      2275
+     ],
+     [
+      5,
+      2300
+     ],
+     [
+      2,
+      2320
+     ],
+     [
+      0,
+      2335
+     ]
+    ],
+    "bar_head_error": 15,
+    "hinge_post_rz": [
+     [
+      50.0,
+      1990
+     ],
+     [
+      77.5,
+      2000
+     ],
+     [
+      77.5,
+      2035
+     ],
+     [
+      42.5,
+      2060
+     ],
+     [
+      42.5,
+      2110
+     ],
+     [
+      67.5,
+      2150
+     ],
+     [
+      67.5,
+      2200
+     ],
+     [
+      30,
+      2250
+     ],
+     [
+      12,
+      2300
+     ],
+     [
+      5,
+      2350
+     ],
+     [
+      0,
+      2375
+     ]
+    ],
+    "note": "(r, z) from the ground; read by eye on the 1 mm elevation, +-15 (blur 6 mm)"
+   }
+  },
+  "R3A": {
+   "id": "R3A",
+   "name": "area_railing_on_dwarf_wall",
+   "title": "Area railing on a two-stage dwarf wall in front of a housing block (RESERVE, not on Quay Street)",
+   "placed": false,
+   "frame_id": "R3A",
+   "basis": "Photo, Bethnal Green Entrance (2019): oblique view, 10 mm a pixel along the wall, lengths +-8 %; heritage replica or 1980s work: unknown",
+   "wall": {
+    "top_z": {
+     "v": 780,
+     "err": 20,
+     "how": "top of the blue bullnose coping, 1 mm and 3 mm elevations"
+    },
+    "string_z": {
+     "v": 300,
+     "err": 20,
+     "how": "top of the lower blue bullnose string"
+    },
+    "courses": "lower stage 4 courses of blue-black engineering brick under a blue bullnose string, red wall five stretcher courses, a blue bullnose coping course; one brick thick (215, Judgement)"
+   },
+   "rails": {
+    "bottom_axis_z": {
+     "v": 840,
+     "err": 20,
+     "how": "dark row; the picture read 825"
+    },
+    "mid_axis_z": {
+     "v": 1435,
+     "err": 15,
+     "how": "dark row, profile 1435"
+    },
+    "top_axis_z": {
+     "v": 1645,
+     "err": 15,
+     "how": "dark row, profile 1649"
+    }
+   },
+   "bars": {
+    "pitch_all": {
+     "v": 114,
+     "err": 5,
+     "how": "the thick (tall) bars at s 204, 435, 660, 891, 1110 on the 3 mm preview: 226.5 apart; the thin ones the same, half a pitch between: all bars 113.3 (the first reading, from the far side of the post, gave 116)"
+    },
+    "tall_first_s": {
+     "v": 204,
+     "err": 15,
+     "how": "the first thick bar with a fleur-de-lis head in the preview window"
+    },
+    "tall_tip_z": {
+     "v": 1880,
+     "err": 25,
+     "how": "fleur-de-lis heads of the tall bars"
+    },
+    "thick_width": {
+     "v": 22,
+     "err": 10,
+     "how": "the tall bars read 40 to 55 at 1 mm in the oblique view (blur x 2): about 22 across"
+    },
+    "pattern": "thick tall bars with fleur-de-lis heads every 233, thin short bars with small lily plaques between them to the mid rail"
+   },
+   "post": {
+    "top_z": {
+     "v": 2150,
+     "err": 40,
+     "how": "the vase and ball on the post, in the oblique view"
+    },
+    "shaft_width": {
+     "v": 100,
+     "err": 25,
+     "how": "oblique view, blur doubled by the 32 degree angle"
+    },
+    "kind": "cast post with a vase and ball, scroll knees to the top rail"
+   },
+   "paint": {
+    "srgb": [
+     22,
+     21,
+     21
+    ],
+    "note": "black"
+   }
+  },
+  "R3D": {
+   "id": "R3D",
+   "name": "low_garden_railing_and_gate",
+   "title": "Low green railing, wall and gate of a council-estate front garden (RESERVE, not on Quay Street)",
+   "placed": false,
+   "frame_id": "R3D",
+   "basis": "Photo, Urban Street 01 (2019): 1 mm a pixel elevation at 1.12 +-0.06 m; lengths +-6 %; a 1960s to 80s estate form",
+   "wall": {
+    "top_z": {
+     "v": 620,
+     "err": 15,
+     "how": "the strongest brightness step at z 608 to 621 over s 100 to 1000, eight courses plus the coping"
+    },
+    "courses": "eight courses of dark brick at 75 plus a header coping; no piers in the window"
+   },
+   "rails": {
+    "bottom_axis_z": {
+     "v": 680,
+     "err": 15,
+     "how": "1 mm elevation s 1400 to 2400"
+    },
+    "top_axis_z": {
+     "v": 1085,
+     "err": 12,
+     "how": "1 mm elevation: a flat bar"
+    },
+    "section": "flat bar"
+   },
+   "bars": {
+    "pitch": {
+     "v": 92.79,
+     "err": 3,
+     "how": "line fit of the ten hand-read bar centres (hand_reads.R3D.bar_centres_s)"
+    },
+    "first_s": 1507.45,
+    "width": {
+     "v": 13,
+     "err": 3,
+     "how": "blur included: a round bar of 12 to 14"
+    },
+    "tip_z": {
+     "v": 1130,
+     "err": 20,
+     "how": "the bars stand 45 above the top rail, with a small spear point"
+    },
+    "section": "round, plain small spear points"
+   },
+   "gate": {
+    "width": {
+     "v": 1040,
+     "err": 150,
+     "how": "the leaf between the brick pier and its stile in the 38 degree view, at 5.5 m"
+    },
+    "top_z": {
+     "v": 1100,
+     "err": 40,
+     "how": "the gate's top rail level with the railing's"
+    },
+    "pattern": "a leaf of plain bars with two C-scrolls at mid height and a scroll at the foot, hung from a brick pier"
+   },
+   "paint": {
+    "srgb": [
+     38,
+     56,
+     36
+    ],
+    "name": "dark green",
+    "roughness": 0.5,
+    "note": "the only coloured ironwork reached; a council-estate green"
+   }
+  }
+ },
+ "placements": {
+  "rule": "frames: A1 in the street recipe's frame (x along, z across, metres); Q2 in the south-quay kit's frame (x along Quay Street, y across, metres)",
+  "street": [
+   {
+    "id": "E8",
+    "kind": "A1",
+    "side": "east",
+    "count": 1,
+    "panels": 1,
+    "x_m": [
+     10.0,
+     12.0
+    ],
+    "z_axis_m": 3.375,
+    "from_kerb_face_m": 0.375,
+    "behind_scene_kerb_back_m": 0.25,
+    "behind_kerbs_target_back_m": 0.205,
+    "axis_basis": "Read: vignette-feet.json (rail_post0/1 at z 3.375); the scene's \"0.25 m back from the kerb\" is taken from the kerb's back edge (3.125); the kerbs target widens the kerb to 170, leaving 0.205",
+    "foot_note": "the post feet stand on the flag top; the scene's foot level is y 0.05625 and the kerbs target's flag level is y 0.040: the builder reads the ground under the posts",
+    "facing": "the road side is the -z face (toward the carriageway)",
+    "beside": "the gully at x 12.0 in the channel (the grate 0.44 x 0.29 in the kerbs target) and the fish market's frontage behind"
+   }
+  ],
+  "quay": [
+   {
+    "id": "Q2_basin_edge",
+    "kind": "Q2a",
+    "frame": "south-quay kit",
+    "line_x_m": -110.4,
+    "behind_nose_m": 0.4,
+    "posts_xy_m": [
+     [
+      -110.4,
+      -36.4
+     ],
+     [
+      -110.4,
+      -33.4
+     ],
+     [
+      -110.4,
+      -30.4
+     ],
+     [
+      -110.4,
+      -27.4
+     ],
+     [
+      -110.4,
+      -24.4
+     ],
+     [
+      -110.4,
+      -21.4
+     ],
+     [
+      -110.4,
+      -18.4
+     ],
+     [
+      -110.4,
+      -15.4
+     ]
+    ],
+    "bays": 7,
+    "bay_m": 3.0,
+    "why": "the jetty's basin edge, from the root side of the harbour light to its tip: the public walks out to the light"
+   },
+   {
+    "id": "Q2_tip",
+    "kind": "Q2b",
+    "frame": "south-quay kit",
+    "line_y_m": -15.4,
+    "behind_nose_m": 0.4,
+    "posts_xy_m": [
+     [
+      -113.4,
+      -15.4
+     ],
+     [
+      -116.4,
+      -15.4
+     ],
+     [
+      -119.4,
+      -15.4
+     ],
+     [
+      -122.4,
+      -15.4
+     ],
+     [
+      -125.4,
+      -15.4
+     ],
+     [
+      -128.4,
+      -15.4
+     ]
+    ],
+    "bays": 6,
+    "bay_m": 3.0,
+    "shares_post_with": "Q2_basin_edge at (-110.4, -15.4)",
+    "why": "the jetty's end in front of the harbour light: the same posts with the chain in place of the low rail"
+   },
+   {
+    "id": "quay_unrailed",
+    "kind": null,
+    "why": "the north quay and the east quay stay unrailed except the bollards target's K5 chain posts about the ladder (x -69.5, y -40.5 to -31.5): working berths with boats alongside; a railing would stop the lines. The cope nose stays bare."
+   }
+  ],
+  "counts": {
+   "street_posts": 2,
+   "quay_posts": 14,
+   "quay_bays": 13
+  },
+  "absent": {
+   "area_railings": "none on Quay Street: every frontage stands on the building line (frontage_z 5.125, a doorstep only); the south-quay kit's walled yards have brick piers and boarded gates, no railings; no chapel or church stands on the street (the chapel is at x 100 in hook-cast.json, beyond the bend)",
+   "yard_gate": "none: the yard mouth (x 21.0 to 24.0, west) is a 3.0 m gap with a dropped kerb, its two corners guarded by the bollards target's K1 posts, and the scene stands a held crowd-control barrier across it (E11, prop_crowd_control_barrier_0 at x 22.5, z -4.85); the town session decides whether it is ever gated",
+   "backdrop": "the north approach's garden walls are knee-high stone boxes in the backdrop (terrace-front.py), not game objects"
+  }
+ },
+ "materials": [
+  {
+   "id": "iron_black_semi",
+   "srgb": [
+    24,
+    24,
+    26
+   ],
+   "roughness": 0.42,
+   "roughness_words": "semi-gloss, dulled",
+   "metal": 0,
+   "use": "A1 default; R3B, R3A"
+  },
+  {
+   "id": "iron_black_satin",
+   "srgb": [
+    24,
+    24,
+    26
+   ],
+   "roughness": 0.55,
+   "roughness_words": "satin, chalky",
+   "metal": 0,
+   "use": "Q2, and the K5 and K6 beside it"
+  },
+  {
+   "id": "iron_green",
+   "srgb": [
+    38,
+    56,
+    36
+   ],
+   "roughness": 0.5,
+   "roughness_words": "satin",
+   "metal": 0,
+   "use": "R3D"
+  },
+  {
+   "id": "galvanised_grey",
+   "srgb": [
+    118,
+    120,
+    122
+   ],
+   "roughness": 0.5,
+   "roughness_words": "dull sheen",
+   "metal": 1,
+   "use": "A1 variant: unpainted or chipped to the zinc"
+  },
+  {
+   "id": "bright_steel_rub",
+   "srgb": [
+    150,
+    150,
+    152
+   ],
+   "roughness": 0.35,
+   "roughness_words": "polished by hands",
+   "metal": 1,
+   "use": "top rails' upper face, nuts, studs, chain contacts"
+  },
+  {
+   "id": "rust",
+   "srgb": [
+    110,
+    60,
+    32
+   ],
+   "roughness": 0.85,
+   "roughness_words": "dry, matt",
+   "metal": 0,
+   "use": "blooms at feet, welds, nuts"
+  },
+  {
+   "id": "bitumen_joint",
+   "srgb": [
+    40,
+    38,
+    36
+   ],
+   "roughness": 0.8,
+   "roughness_words": "dull",
+   "metal": 0,
+   "use": "the ring round the A1 posts"
+  }
+ ],
+ "variants": {
+  "models": {
+   "A1": 1,
+   "Q2": 2,
+   "R3B": 1,
+   "R3A": 1,
+   "R3D": 1
+  },
+  "note": "one panel on the street, so one A1; the asset plan's \"1 kit\" holds. Q2 has two models (a, b) on one run each.",
+  "A1_conditions": [
+   {
+    "id": "A1_black_scuffed",
+    "share": 0.6,
+    "srgb": [
+     24,
+     24,
+     26
+    ],
+    "note": "default: black, scuffed, rust at the feet"
+   },
+   {
+    "id": "A1_black_chipped",
+    "share": 0.25,
+    "note": "black with the chips down to grey zinc at the road side and the caps"
+   },
+   {
+    "id": "A1_galvanised",
+    "share": 0.15,
+    "srgb": [
+     118,
+     120,
+     122
+    ],
+    "note": "unpainted dull zinc (a 1970s fitting left unpainted), rust at the welds"
+   }
+  ],
+  "seeds": {
+   "lean_deg": [
+    0.0,
+    1.0
+   ],
+   "bent_bars": [
+    0,
+    2
+   ],
+   "bend_mm": [
+    5,
+    15
+   ],
+   "bend_z_mm": [
+    300,
+    600
+   ],
+   "rust_foot": [
+    0.0,
+    1.0
+   ],
+   "dirt_height_mm": [
+    300,
+    600
+   ],
+   "rub_bright_patches": [
+    0,
+    3
+   ],
+   "sticker_remnants": [
+    0,
+    2
+   ],
+   "chips": [
+    0,
+    10
+   ]
+  },
+  "Q2_conditions": [
+   "Q2a: two rails, salt bloom and rust at the plates",
+   "Q2b: rail and chain, links rusted at the crossings"
+  ]
+ },
+ "photographs_win": [
+  {
+   "element": "infill of the guard rail",
+   "book": "the scene's stand-in: five 25 mm bars in 2.0 m (clear gaps of 308); the asset plan \"posts, rails, infill\"",
+   "photograph": "every photographed bar railing has its bars at 78.5 (R3B), 94.5 (R3D) or 114 (R3A) centres, so clear gaps of 60 to 105; none has a gap over 105. No guard rail was photographed",
+   "chosen": "seventeen 12 mm bars at 109.1 centres (clear gap 97.1): Judgement from the analogues and the search-summary lead; the five-bar stand-in is replaced"
+  },
+  {
+   "element": "lower rail height",
+   "book": "the stand-in has its lower rail at 0.45 (half height)",
+   "photograph": "R3D's bottom rail is 60 above its wall; R3B's 445 above the ground with a 380 plinth below it; the bars of both run to the bottom rail",
+   "chosen": "lower rail axis at 200: Judgement (no photograph)"
+  },
+  {
+   "element": "tube sizes",
+   "book": "post 50, rail 40",
+   "photograph": "none",
+   "chosen": "48.3 post and 42.4 top rail, 33.7 lower rail: the nearest standard tubes to the scene's 50 and 40 (Judgement; inside the scene numbers' round-off)"
+  },
+  {
+   "element": "the post cap",
+   "book": "none",
+   "photograph": "none (R3B has cast finials, R3D plain spear points: neither applies to a steel guard rail)",
+   "chosen": "a flat plug cap flush with the rail top, Judgement"
+  },
+  {
+   "element": "paint colour",
+   "book": "\"metal\" in the scene",
+   "photograph": "all photographed ironwork is black (22 to 24) except R3D's green (38, 56, 36)",
+   "chosen": "black (24, 24, 26) default, galvanised grey and chipped variants"
+  },
+  {
+   "element": "camera height",
+   "book": "1.6 m (the street writer's default)",
+   "photograph": "0.97 (Bethnal Green), 1.12 (Urban Street 01, Limehouse) at each object's ground",
+   "chosen": "the anchors in section 4; sizes +-6 %"
+  },
+  {
+   "element": "chain sag",
+   "book": "the bollards target 150 (Judgement)",
+   "photograph": "Photo LHB: 227 +-35 over 2840 (two swags: 215 and 240)",
+   "chosen": "200 for Q2b; the bollards writer should raise K5's to 200"
+  },
+  {
+   "element": "K5 post height",
+   "book": "the bollards target 1135 at 1.17 m",
+   "photograph": "LHB 1086 at 1.12 m (4.3 % lower, the same ratio as the camera heights, 1.12 / 1.17 = 0.957)",
+   "chosen": "no change: agrees inside the errors"
+  }
+ ],
+ "checks": [
+  {
+   "name": "A1_panel_length",
+   "what": "distance between the two post axes",
+   "expected": 2000,
+   "tol": 5,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Read: the scene (2.0 m) and vignette-feet (x 10 and 12)"
+  },
+  {
+   "name": "A1_height_to_top",
+   "what": "top of the top rail and of the post caps above the flag top at the post",
+   "expected": 1000,
+   "tol": 10,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Read: the scene (1.0 high)"
+  },
+  {
+   "name": "A1_post_od",
+   "what": "post outside diameter",
+   "expected": 48.3,
+   "tol": 3.0,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement (the scene 50)"
+  },
+  {
+   "name": "A1_top_rail_od",
+   "what": "top rail outside diameter",
+   "expected": 42.4,
+   "tol": 3.0,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement (the scene 40)"
+  },
+  {
+   "name": "A1_bottom_rail_od",
+   "what": "bottom rail outside diameter",
+   "expected": 33.7,
+   "tol": 3.0,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_bottom_rail_axis",
+   "what": "bottom rail axis above the flag",
+   "expected": 200,
+   "tol": 25,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_bar_count",
+   "what": "infill bars between the posts",
+   "expected": 17,
+   "tol": 1,
+   "unit": "count",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_bar_diameter",
+   "what": "infill bar diameter",
+   "expected": 12,
+   "tol": 2,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_bar_gap_max",
+   "what": "largest clear gap between bars, and bar to post",
+   "expected": 100,
+   "tol": 0,
+   "unit": "mm (maximum)",
+   "kind": "A1",
+   "basis": "Judgement",
+   "max": true
+  },
+  {
+   "name": "A1_bar_gap",
+   "what": "the clear gaps are equal",
+   "expected": 97.1,
+   "tol": 3.0,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_bars_touch_rails",
+   "what": "each bar's two ends lie within 1 mm of a rail axis",
+   "expected": 0,
+   "tol": 1.0,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_cap_top",
+   "what": "post cap top equals the rail top",
+   "expected": 0,
+   "tol": 2.0,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_street_position",
+   "what": "post axes at x 10.0 and 12.0, z 3.375",
+   "expected": [
+    10.0,
+    12.0,
+    3.375
+   ],
+   "tol": 0.05,
+   "unit": "m",
+   "kind": "A1",
+   "basis": "Read: vignette-feet.json"
+  },
+  {
+   "name": "A1_behind_kerb_back",
+   "what": "axis behind the kerbs target's 170 kerb back edge (z 3.170)",
+   "expected": 0.205,
+   "tol": 0.05,
+   "unit": "m",
+   "kind": "A1",
+   "basis": "Derived"
+  },
+  {
+   "name": "A1_walking_clear",
+   "what": "clear footway between the panel's rear face (z 3.399) and the nearest fixed frontage projection (stallriser face z 4.975)",
+   "expected": 1.576,
+   "tol": 0.0,
+   "unit": "m (at least 0.68)",
+   "kind": "A1",
+   "basis": "Derived",
+   "minimum": 0.68
+  },
+  {
+   "name": "A1_no_deep_obstacle",
+   "what": "no object deeper than 0.896 m stands behind the panel (x 9.5 to 12.5) between the rail and the frontage, so that 0.68 m remains: the fish market's 0.92 m crates may not stand there",
+   "expected": 0.896,
+   "tol": 0.0,
+   "unit": "m (maximum depth)",
+   "kind": "A1",
+   "basis": "Derived: 1.576 - 0.68",
+   "max": true
+  },
+  {
+   "name": "A1_no_lettering",
+   "what": "no lettering, number, crest, maker's mark or plate on any mesh or texture",
+   "expected": "none",
+   "tol": 0,
+   "unit": "-",
+   "kind": "A1",
+   "basis": "Read: canon, brief"
+  },
+  {
+   "name": "A1_paint_albedo",
+   "what": "base colour within 10 of the sRGB of the chosen condition",
+   "expected": [
+    24,
+    24,
+    26
+   ],
+   "tol": 10,
+   "unit": "sRGB",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_bbox",
+   "what": "overall size of the built panel",
+   "expected": [
+    2052.0,
+    52.0,
+    1000.0
+   ],
+   "tol": 8.0,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_outline_residual",
+   "what": "largest distance between a built elevation outline and the target's at the same x",
+   "expected": 0,
+   "tol": 6,
+   "unit": "mm",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_foot_ring",
+   "what": "dark joint ring round each post at the flags",
+   "expected": 20,
+   "tol": 6,
+   "unit": "mm (width)",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "A1_lean",
+   "what": "seed lean of a post",
+   "expected": [
+    0,
+    1
+   ],
+   "tol": 0,
+   "unit": "deg (range)",
+   "kind": "A1",
+   "basis": "Judgement"
+  },
+  {
+   "name": "Q2_bay",
+   "what": "post axis to post axis",
+   "expected": 3000,
+   "tol": 30,
+   "unit": "mm",
+   "kind": "Q2",
+   "basis": "Read: the bollards target (3.0 m)"
+  },
+  {
+   "name": "Q2_post_od",
+   "what": "post outside diameter",
+   "expected": 76.1,
+   "tol": 4.0,
+   "unit": "mm",
+   "kind": "Q2",
+   "basis": "Judgement"
+  },
+  {
+   "name": "Q2_post_height",
+   "what": "post top above the apron",
+   "expected": 1100,
+   "tol": 20,
+   "unit": "mm",
+   "kind": "Q2",
+   "basis": "Judgement"
+  },
+  {
+   "name": "Q2_top_rail_axis",
+   "what": "top rail axis above the apron",
+   "expected": 1000,
+   "tol": 15,
+   "unit": "mm",
+   "kind": "Q2",
+   "basis": "Judgement"
+  },
+  {
+   "name": "Q2_top_rail_od",
+   "what": "top rail outside diameter",
+   "expected": 48.3,
+   "tol": 3.0,
+   "unit": "mm",
+   "kind": "Q2",
+   "basis": "Judgement"
+  },
+  {
+   "name": "Q2_low_rail_axis",
+   "what": "low rail (Q2a) or chain eye (Q2b) above the apron",
+   "expected": 500,
+   "tol": 15,
+   "unit": "mm",
+   "kind": "Q2",
+   "basis": "Judgement"
+  },
+  {
+   "name": "Q2_base_plate",
+   "what": "base plate 200 x 200 x 12 with four nuts on a 150 square",
+   "expected": [
+    200,
+    200,
+    12
+   ],
+   "tol": 3,
+   "unit": "mm",
+   "kind": "Q2",
+   "basis": "Judgement"
+  },
+  {
+   "name": "Q2_chain_bar",
+   "what": "chain bar diameter, agreeing with the bollards target",
+   "expected": 13,
+   "tol": 1,
+   "unit": "mm",
+   "kind": "Q2",
+   "basis": "Read: bollards target"
+  },
+  {
+   "name": "Q2_chain_sag",
+   "what": "mid-span sag of the Q2b chain below its eyes",
+   "expected": 200,
+   "tol": 50,
+   "unit": "mm",
+   "kind": "Q2b",
+   "basis": "Photo (LHB 227 +-35)"
+  },
+  {
+   "name": "Q2_chain_no_spikes",
+   "what": "no spikes on any link",
+   "expected": "none",
+   "tol": 0,
+   "unit": "-",
+   "kind": "Q2b",
+   "basis": "Read: bollards target (plain chain)"
+  },
+  {
+   "name": "Q2_basin_posts",
+   "what": "eight posts on the line x -110.4, y -36.4 to -15.4 every 3.0",
+   "expected": [
+    -110.4,
+    -36.4,
+    -15.4
+   ],
+   "tol": 0.05,
+   "unit": "m",
+   "kind": "Q2",
+   "basis": "Derived"
+  },
+  {
+   "name": "Q2_tip_posts",
+   "what": "six more posts on y -15.4, x -113.4 to -128.4 every 3.0",
+   "expected": [
+    -113.4,
+    -128.4,
+    -15.4
+   ],
+   "tol": 0.05,
+   "unit": "m",
+   "kind": "Q2",
+   "basis": "Derived"
+  },
+  {
+   "name": "Q2_behind_nose",
+   "what": "rail line behind the cope nose (x -110 on the basin edge, y -15 at the tip)",
+   "expected": 0.4,
+   "tol": 0.05,
+   "unit": "m",
+   "kind": "Q2",
+   "basis": "Derived"
+  },
+  {
+   "name": "Q2_clear_of_mooring",
+   "what": "no post within 8 m of a K6 bollard (-110.75, -45) or a K7 cleat (-110.25, -52 to -64); nearest post y -36.4",
+   "expected": 8.6,
+   "tol": 0.0,
+   "unit": "m (at least 8.0)",
+   "kind": "Q2",
+   "basis": "Derived",
+   "minimum": 8.0
+  },
+  {
+   "name": "Q2_clear_of_light",
+   "what": "tip rail at least 2.5 m from the harbour light's plinth face (y -18.1)",
+   "expected": 2.7,
+   "tol": 0.0,
+   "unit": "m (at least 2.5)",
+   "kind": "Q2",
+   "basis": "Derived",
+   "minimum": 2.5
+  },
+  {
+   "name": "Q2_walking_clear",
+   "what": "a person on the jetty keeps at least 0.68 m between the rail and any fixed object (the jetty is 20 m across)",
+   "expected": 19.6,
+   "tol": 0.0,
+   "unit": "m (at least 0.68)",
+   "kind": "Q2",
+   "basis": "Derived",
+   "minimum": 0.68
+  },
+  {
+   "name": "Q2_paint_albedo",
+   "what": "base colour within 10 of the sRGB",
+   "expected": [
+    24,
+    24,
+    26
+   ],
+   "tol": 10,
+   "unit": "sRGB",
+   "kind": "Q2",
+   "basis": "Judgement"
+  },
+  {
+   "name": "Q2_no_lettering",
+   "what": "no lettering, crest or maker's mark",
+   "expected": "none",
+   "tol": 0,
+   "unit": "-",
+   "kind": "Q2",
+   "basis": "Judgement"
+  }
+ ],
+ "could_not_settle": [
+  "No photograph of a British pedestrian guard rail of any date was reachable: the whole of A1 other than the scene's 2.0 m, 1.0 m and the post and rail sizes is Judgement. Eight other panoramas (urban_street_03 and 04, cambridge, birbeck, canary_wharf, adams_place_bridge, roof_garden, greenwich_park) show none.",
+  "Whether Quay Street's rail in 1990 was black, galvanised grey, white-and-black banded or green: all the photographed ironwork is black except one council green; black is the default and the others are variants.",
+  "The lower rail's height and the infill's kind (round bar, flat bar, or open with two rails only). The 1983 and 1988 accident studies (search summaries) say the conventional rail of the 1980s hid the road from short pedestrians and that a see-through type did better, which supports dense infill for the rail of 1990; no number.",
+  "Q2: whether a harbour authority of the Hook would rail the jetty tip; the kit has no railing and the asset plan names one. The Hull 1989 photograph (an earlier session's note) supports chain at a working quay edge, not a tube railing.",
+  "The camera heights rest on 75 mm brick courses (73 to 79 mm if Victorian): +-6 %. The wall and pier anchors agree to 5 %; Limehouse's two own anchors (1.095, 1.052) are 6 % under the bollards target's paver readings (1.15, 1.17), and 1.12 is the mean.",
+  "R3A is oblique (32 degrees): widths there are blur-doubled; only its heights, rails and pitches are used.",
+  "The paint on the photographed ironwork has been renewed since 1990 and the panoramas are 2019: none of R3A, R3B, R3D or the K5 post is known to be older than 1990; a Victorian pattern is plausible for R3B.",
+  "Whether the park railing's bar section is round or square (the blur hides it): round is assumed.",
+  "The one photographed multi-rail tube railing (greenwich_park_02, a path edge) was not measured for want of an anchor: Q2's two-rail form (top 1000, low 500) is not checked against it; a five-rail form would be an alternative for the jetty."
+ ],
+ "to_read_when_the_network_opens": [
+  "BS 3049:1976 \"Specification for pedestrian guard rails (metal)\" (withdrawn 15 November 1995; BSI Knowledge or a standards retailer): post and rail sizes, infill, finish, classes; and BS 7818:1995, which replaced it",
+  "Department for Transport Local Transport Note 2/09 \"Pedestrian guardrailing\" (assets.publishing.service.gov.uk), its history section; Kent County Council's pedestrian guardrail policy (democracy.kent.gov.uk), which dates guardrail from the 1930s",
+  "Wikimedia Commons categories for pedestrian guard railings, railings in Britain and bollards and chains at quays, 1975 to 2000 photographs; Geograph squares of fishing towns (Whitby, Brixham, Grimsby, Hull, North Shields) 1980s to 1990s: the author, licence and date on each file page",
+  "Peter Marshall's River Hull photograph of 1989 (Flickr 51040207776, the atlas's R08): the chain-edged quay, its posts and its chain, if the licence allows measuring",
+  "Historic England: list entries for quay walls and railings (Truro, list entry 1201539, \"quay walls and railings\"; Bideford, 1282939, cast-iron fence posts with tubular bars and chains), the Historic England Archive's 1980s photographs of dock edges and street furniture",
+  "The Health and Safety Executive's Docks Regulations 1988 and \"Safety in Docks\" approved code of practice (what edge protection a 1990 quay needed); Torbay and North Devon harbour edge-protection audits (summaries say working fish quay berths were left unfenced)",
+  "Tyne and Wear HER and North Shields Fish Quay conservation area notes; 1980s street-furniture catalogues for guard-rail panels: sizes and finishes only, no makers' marks",
+  "The Traffic Signs Manual and the 1980s DoT \"Roads in Urban Areas\" guidance on guardrail set-back from the kerb (the scene's 0.25 m behind the kerb is a trade guess; a rule of about 0.45 m from the kerb face is remembered, not read)",
+  "The street recipe's own reference photographs of the Hook sheet, if it shows a railing"
+ ],
+ "handover": {
+  "to_builder": "A1 replaces the scene's five-bar stand-in at the same x and z; the posts keep the scene's x 10.0 and 12.0, z 3.375. Q2 is new to the south-quay kit: it needs a recipe step (fourteen posts, thirteen bays, the chain) or a placement from this target; the kit has no railing today.",
+  "to_bollards_writer": "the chain: sag 200, not 150 (Photo LHB, two swags 215 and 240, mean 227 +-35); lug heights 800 and 405 here against 840 and 420 there (inside the errors); K5 height 1086 at 1.12 m against 1135 at 1.17 m (the same 4.3 % as the camera heights)",
+  "to_kerbs_writer": "the kerb stands 0.205 m in front of the guard rail's axis (granite top 170, back edge z 3.170); the flag level at the post is y 0.040 against the scene's 0.05625",
+  "to_town_session": "the fish market's crates (0.92 m deep) must not stand in x 9.5 to 12.5 behind the rail: that leaves 0.656 m of footway, under a walking person's 0.68. Whether the yard mouth gets gates is the town's call; this target has no yard gate",
+  "for_NOW_md": "Railings target (cloud week 42): guard rail A1 = 2.0 m panel, 1.0 m, posts 48.3, rails 42.4 and 33.7 at 1000 and 200, seventeen 12 mm bars (gap 97.1), black; quay tube railing Q2 on the jetty basin edge and tip (14 posts, 13 bays, chain on the tip); no area railings or yard gates on the street; no guard-rail photograph reached."
+ },
+ "sources": [
+  {
+   "id": "S1",
+   "url": "https://polyhaven.com/a/bethnal_green_entrance",
+   "read": "2026-10-09",
+   "author": "Andreas Mischok",
+   "licence": "CC0 1.0 (https://polyhaven.com/license, read 2026-10-09)",
+   "taken": "2019-08-18 07:01 UTC (51.526915, -0.054044), api.polyhaven.com/info read 2026-10-09",
+   "shows": "a park entrance in Bethnal Green: a tall cast-iron park railing on a brick plinth with a hinge post and brick piers (R3B); a housing block's railing on a two-stage dwarf wall (R3A); a hoop-top railing and gate leaf; bollards; block paving",
+   "used": "YES: R3B main photograph, R3A; calibration anchors",
+   "period": "the Victorian pattern is long-lived but the paint, the hoop-top gate and the signs are 2000s; whether any of it stood in 1990 is unknown (R3A may be a replica); the picture is for bar proportions, rails, finials and the black paint, not as a 1990 record"
+  },
+  {
+   "id": "S2",
+   "url": "https://polyhaven.com/a/urban_street_01",
+   "read": "2026-10-09",
+   "author": "Andreas Mischok",
+   "licence": "CC0 1.0",
+   "taken": "2019-08-18 07:09 UTC (51.528295, -0.053879)",
+   "shows": "an estate street: a low dark-green railing and gate on a dark brick garden wall (R3D); park railings with spear heads on a granite plinth; bollards",
+   "used": "YES: R3D; calibration anchors",
+   "period": "an estate of the 1960s to 80s with renewed paint; the railing form is plausible for 1990 (a council green), the exact paint date is unknown"
+  },
+  {
+   "id": "S3",
+   "url": "https://polyhaven.com/a/limehouse",
+   "read": "2026-10-09",
+   "author": "Andreas Mischok",
+   "licence": "CC0 1.0",
+   "taken": "2019-05-19 15:45 UTC (51.510606, -0.036324)",
+   "shows": "a marina basin: bolted cast-iron chain posts with two swags of spiked chain, a timber-piled quay edge across the water, pontoons",
+   "used": "YES: LHB (the chain's lug heights and sag; the K5 post cross-check)",
+   "period": "a 1980s to 90s marina redevelopment; the chain is ornamental (spiked); only its sag and the post's lug heights are used"
+  },
+  {
+   "id": "S4",
+   "url": "the repository",
+   "read": "2026-10-09",
+   "author": "the project",
+   "licence": "n/a",
+   "taken": "2026-09-02 to 2026-10-09",
+   "shows": "SCENE-SLOTS.md, vignette-scene.json, vignette-feet.json, vignette-pieces.json, terrace-fronts.md, the kerbs and bollards targets, the south-quay kit (south_quay_geom.py, README, METHOD), the asset plan, the street-clutter research, atlas CONTINUATION.md (R08)",
+   "used": "YES: Read numbers",
+   "period": "n/a"
+  },
+  {
+   "id": "S5",
+   "url": "WebSearch result summaries, 2026-10-09 (three queries: BS 3049 and guard rail infill; the history of British pedestrian guardrail; harbour quay edge railings and chain)",
+   "read": "2026-10-09",
+   "author": "third-party pages reached only as summaries",
+   "licence": "n/a",
+   "taken": "n/a",
+   "shows": "leads: BS 3049:1976 was withdrawn on 15 November 1995 and replaced by BS 7818; present-day guard rails use 12 mm bars at 110 to 112 centres, 50 x 30 mm posts and a 1100 height; a 1983 London study and a 1988 article on guardrail visibility; Kent dates guardrail from the 1930s; Torbay's audit leaves working fish-quay berths unfenced; Bideford's quay has cast-iron posts with tubular bars and chains from 1899 to 1905",
+   "used": "LEADS ONLY: no number taken as a measurement; the 100 gap rule is marked Judgement",
+   "period": "n/a"
+  }
+ ],
+ "unreached": [
+  "Wikimedia Commons",
+  "Geograph",
+  "Flickr (including the Hull photograph R08)",
+  "archive.org",
+  "HathiTrust",
+  "Historic England and the Historic England Archive",
+  "British Listed Buildings",
+  "BSI Knowledge",
+  "gov.uk (LTN 2/09)",
+  "legislation.gov.uk",
+  "openverse.org",
+  "Wikipedia",
+  "Project Gutenberg",
+  "Sketchfab",
+  "europeana.eu",
+  "api.wellcomecollection.org",
+  "loc.gov",
+  "web.archive.org (all refused with 403 or not resolvable, tried 2026-10-09); only polyhaven.com and ambientcg.com answered"
+ ],
+ "looked_at_and_left_out": [
+  "greenwich_park_02 (one run of black multi-rail railing along a path edge: square posts, five slender round rails and a flat top rail on a brick edging; SEEN AND NOT MEASURED: no wall or other anchor in its view gives its camera height; it is the nearest photographed thing to a tube railing, and it says a park railing of rails without bars was common in 2019)",
+  "urban_street_02 (a steel palisade along a railway arch and a security door: a 2000s fence, not a railing of the period)",
+  "urban_street_03 and 04, cambridge, birbeck_street_underpass, leadenhall_market, greenwich_park x3, roof_garden (no railing that bears on this family; urban_street_04 has plastered balustrades of Kensington, not an ironwork form)",
+  "canary_wharf and adams_place_bridge (stainless dock-edge balustrades of the 2000s: modern-only forms, not used)",
+  "docklands_01 and 02 (Dublin, not Britain)",
+  "Poly Haven models: modular_chainlink_fence and large_iron_gate exist (CC0) but are not period guard rails or the street's; nothing in the catalogue is a guard rail, a tube railing or a quay chain"
+ ],
+ "self_check": {
+  "result": "SELF-CHECK PASS: 190 of 190 tests pass (A printed numbers 61/61, B photograph measurements 39/39, C drawing on the photographs 25/25, D internal consistency 54/54, E text and files 11/11)",
+  "tests": [
+   {
+    "group": "A",
+    "name": "printed guard_rail_line found in production/cloud-week/targets/SCENE-SLOTS.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed guard_rail_place found in production/cloud-week/targets/SCENE-SLOTS.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed scene_panels found in production/specs/vignette-scene.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed scene_setback found in production/specs/vignette-scene.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed scene_infill found in production/specs/vignette-scene.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed scene_post_d found in production/specs/vignette-scene.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed scene_rail_d found in production/specs/vignette-scene.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed scene_infill_d found in production/specs/vignette-scene.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed feet_post0 found in production/specs/vignette-feet.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed feet_post1 found in production/specs/vignette-feet.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed pieces_lower_rail found in production/specs/vignette-pieces.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed stallriser found in production/cloud-week/targets/SCENE-SLOTS.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed pilaster found in production/cloud-week/targets/SCENE-SLOTS.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed frontage_z found in production/specs/terrace-fronts.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed kerb_target_top found in production/cloud-week/targets/kerbs-and-covers/TARGET.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed kerb_target_flags found in production/cloud-week/targets/kerbs-and-covers/TARGET.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed bollard_chain_bar found in production/cloud-week/targets/bollards/TARGET.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed bollard_post_spacing found in production/cloud-week/targets/bollards/TARGET.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed bollard_lugs found in production/cloud-week/targets/bollards/TARGET.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed bollard_sag found in production/cloud-week/targets/bollards/target.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed kit_jetty_x found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed kit_jetty_end found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed kit_cope found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed kit_parapet found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed kit_light found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed kit_no_railing found in production/art/south-quay/README.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed asset_plan_rows found in production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed asset_plan_counts found in production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed hull_chain_edge found in production/research/atlas-01/CONTINUATION.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed e8_not_tree_guard found in production/specs/vignette-bill-of-materials.md",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "printed yard_gap found in production/specs/vignette-scene.json",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the scene's height is 1.0 m and A1's top is 1000",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "A1's post (48.3) and top rail (42.4) are within 10 % of the scene's 50 and 40",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the scene's five bars of 25 are replaced (A1 has more, thinner bars; the change is listed under photographs_win)",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the panel runs x 10.0 to 12.0 and is 2.0 m (c2c 2000 = 12.0 - 10.0)",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the axis z 3.375 = kerb face 3.0 + the scene's kerb 0.125 + its 0.25 set-back",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the kerbs target's back edge (3.0 + 0.170) leaves 0.205 to the axis",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the stand-in's lower rail is 0.45 above its foot (y 0.50625 - 0.05625) and A1's is 0.20",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the footway level at the posts: scene y 0.05625; kerbs target flags +110 over the channel -0.075 plus the fall 0.205/40 = 0.040",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the frontage line 5.125 = kerb face 3.0 + 0.125 + 2.0 and the stallriser face is 0.15 in front of it (4.975: the scene's \"fish market's front (4.97 m)\")",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the scene's note: three panels left 1.57 m, the crates 0.92 m deep left 0.65, under 0.68",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "walking clear behind the panel = stallriser face - the rail's rear face = 1.576 (the scene says 1.57)",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the deepest obstacle that leaves 0.68 is 1.576 - 0.68 = 0.896; the 0.92 crates exceed it",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "Q2b's chain is the bollards target's plain chain: bar, link lengths, widths and pitch equal",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "Q2's bay is the bollards target's post spacing (3.0 m)",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "Q2's chain eye height (500) is within 20 % of K5's lower eye (420) and Q2's top (1000) near K5's upper (840) +-20 %",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "Q2b's sag (200) differs from K5's (150, Judgement there) and is Photo here: LHB 227 +-35 reads inside 200 +-50",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "Q2 paint is K5's (24, 24, 26) satin 0.55",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the bollards target's jetty K6 are at (-110.75, -80) and (-110.75, -45); its K7 cleats at x -110.25, y -64, -58, -52",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "kit: the jetty's basin edge is x -110 from y -100.6 to -15 and its end y -15 from x -130 to -110.6 (live from south_quay_geom.build)",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "kit: the quay edge x -70 and the apron at the kerb top +0.05",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "kit: the cope is 0.60 across; the parapet is on the seaward side x -129.4 to -128.6 and ends at y -23.0",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "kit: the kit has no railing piece: no kit piece name contains \"rail\"",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the kit's README lists a ladder, bollards and a stone parapet but no railing",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the scene file names the yard entrance as a 3.0 m gap in the data, x 21.0 to 24.0 (no gate is placed)",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the bollards target's yard-mouth K1 posts guard the gap: x 20.7 and 24.3",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the scene stands a held crowd-control barrier at the yard mouth (x 22.5, z -4.85), an E11 prop, not this family's",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "every east frontage block stands on the building line: its near face is z 5.125 (the shops have no forecourt); the only pieces named rail are E8's",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "the street's pieces include no gate, fence, palisade or area railing by name",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "models per kind at most four (asset plan: two to four a kind)",
+    "ok": true
+   },
+   {
+    "group": "A",
+    "name": "asset plan rows: 1 kit for the guard railing, 1 for the quay railing with chain (a rail and a chain run: A1; Q2)",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "no anchor's fit is on the edge of its search range",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "anchor bge_planter_wall: pitch inside +-15 % of the pitch read by eye (0.01290 against 0.01173), height 0.963 m",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "anchor bge_gate_pier: pitch inside +-15 % of the pitch read by eye (0.01616 against 0.01557), height 0.927 m",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "anchor bge_dwarf_wall: pitch inside +-15 % of the pitch read by eye (0.01108 against 0.01112), height 1.020 m",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "anchor lh_building_wall_a: pitch inside +-15 % of the pitch read by eye (0.01878 against 0.01917), height 1.095 m",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "anchor lh_building_wall_b: pitch inside +-15 % of the pitch read by eye (0.01636 against 0.01841), height 1.052 m",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "anchor us01_garden_wall: pitch inside +-15 % of the pitch read by eye (0.01203 against 0.01173), height 1.156 m",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "anchor us01_gate_pier: pitch inside +-15 % of the pitch read by eye (0.00945 against 0.00928), height 1.084 m",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "bethnal_green_entrance: the mean of its anchors at the objects' ground, 0.970 m, is within the stated error of the stated height 0.97 +-0.06",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "bethnal_green_entrance: at least two anchors",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "urban_street_01: the mean of its anchors at the objects' ground, 1.120 m, is within the stated error of the stated height 1.12 +-0.06",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "urban_street_01: at least two anchors",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "limehouse: the mean of its anchors at the objects' ground, 1.117 m, is within the stated error of the stated height 1.12 +-0.07",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "limehouse: at least two anchors",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "no panorama is used at 1.6 m",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "the elevations were made at the stated heights",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "Bethnal Green: 0.97 lies inside the bollards target's 1.02 +-0.07 (the two families agree)",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "Limehouse: 1.12 lies inside the bollards target's 1.17 +-0.06",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the bar pitch refitted from the 26 stored bar centres equals the stated 78.54 +-0.05",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the pitch is within 4 % of three inches (76.2), inside the 6 % scale error",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the bar centres are regular (rms residual to the line at most 6 mm; the detections lie on 3 to 4 mm native pixels)",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the bar's width, 20 FWHM blur included, reads 17 +-3 round",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the top rail row 2000 and the bottom rail row 441 are in the automated rail list",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the hand-read bottom and mid rails (445, 1045) agree with the automated rows (441, 1036) within their errors",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the coping top: automated 331 on the plane 110 behind the face + 13 for the lip = the stated 345 +-20",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the post shaft, mean of the eight automated widths, equals the stated 100 +-10",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: tall tips (2300) lie 300 above the top rail (2000), short tips (1225) about 180 above the middle rail (1045)",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3B: the head profile rises to the stated tip (2335 on the profile, 2300 +-20 read: the spire's last 35 is a point under the blur) and its widest ring is 60",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3A: five red courses between z 330 and 705 are 75 each (the elevation's scale, +-5)",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3A: the wall is 780 = the string at 300 + 0.. (4 lower courses at 75 = 300) + five red 375 + the coping about 105 for two bullnose courses",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3A: the rails 840, 1435, 1645 stand 595 and 210 apart; the bars all 114 apart (tall every 228)",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3D: the wall is 620 = eight courses of 75 (600) + 20 of coping; the railing above it is 465 to the top rail",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3D: ten hand-read bar centres give a pitch of 92.8 (stated 94.5 +-3) and the stored fit equals it",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "R3D: the gate's paint (38, 56, 36) lies between the two measured medians (32, 47, 28) and (51, 69, 45)",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "LHB: the post top 1086 against the bollards target's 1135 has the ratio of the camera heights (1.12 / 1.17 = 0.957) within 2 %",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "LHB: the lugs (800, 405) against K5's (840, 420) have the same ratio within 6 %",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "LHB: both swags sag 215 to 240 below their lugs, a mean of 227 +-35; the target's 200 lies between the bollards target's 150 and the photograph's 227",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "LHB: the span read from the flanges (2840) is within 5 % of 3.0 m (the bollards target's 3.06 m between two posts, 3.0 nominal)",
+    "ok": true
+   },
+   {
+    "group": "B",
+    "name": "LHB: K5 has four flange nuts, as the bollards target says",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: 22 of 22 predicted bars have a dark minimum within 10 mm (at least 90 %)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: median residual of the bar centres against the preview 2.5 mm (at most 4), 90th percentile 5.7 (at most 9)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: the pitch scale fitted on that one dimension is 0.9992 (inside 1 +-0.02), the offset -0.8 mm",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: after the fit the residual's median is 2.5 mm (at most 3)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: bottom_rail predicted at z 445, the strongest dark row in the preview at 443 (within the 15 + 10 mm)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: mid_rail predicted at z 1045, the strongest dark row in the preview at 1031 (within the 15 + 10 mm)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: top_rail predicted at z 2000, the strongest dark row in the preview at 1997 (within the 10 + 10 mm)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: the coping's top edge in the preview is at z 347, the target's 345 - 13 for the projection = 332 (within 25)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: the tall bar at s 2411 has its tip at z 2320.0 in the head close; the target's 2300 +-20 (within 45)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: the hinge post's finial top is at z 2376.0 in the head close; the target's 2375 (within 25)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3B: the bars' FWHM in the 3 mm preview is 18 (the target's 17 round + blur: between 14 and 30)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3D: the wall's top edge in the preview is at z 622 against the target's 620 (within 30)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3D: the top rail (a pale flat bar in the photograph) at z 1081 against the target's 1085 (within 30)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3D: the bottom rail at z 655 against the target's 680 (within 35)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3D: 10 of 10 predicted bars (s 1500 to 2350) have a dark line within 12 mm (at least 5: foliage behind them)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3D: median residual 10.5 mm (at most 12: the hand-read centres are +-6 and the foliage behind the bars shifts a dark minimum by a few mm)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3A: the bottom rail at z 866 against the target's 840 (within 40, oblique view)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3A: the mid rail at z 1433 against the target's 1435 (within 40, oblique view)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3A: the top rail at z 1649 against the target's 1645 (within 40, oblique view)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3A: the wall's coping top edge at z 809 against the target's 780 (within 45)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3A: the wall's lower string edge at z 338 against the target's 300 (within 45)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "R3A: 6 of 6 predicted tall bars (s 204 + 228 k) have a dark line within 25 mm (at least 4)",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "LHB: the upper swag's lowest dark row in the preview is z 576; the target's chain (lug 800 - sag 200.0) puts it at 600 (within 60), the hand-read 585 +-25",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "LHB: the lower swag's lowest dark row in the preview is z 164; the target's chain (lug 405 - sag 200.0) puts it at 205 (within 60), the hand-read 165 +-25",
+    "ok": true
+   },
+   {
+    "group": "C",
+    "name": "LHB: the left post's top edge at z 1076 against the stated 1086 (within 45)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: all parts form one connected solid (posts, caps, rails, bars, welds); nothing floats",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the stored bar count equals the bars drawn and the listed x (17)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the bars are symmetric about the middle of the panel (x_i = -x_(n-1-i), 0.02 mm)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: every clear gap (bar to bar and bar to post) is 97.1 to 97.1 mm: equal within 0.1 and at most 100",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the stored clear gap is the computed one",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: rails end on the post faces (x = 1000 - 24.15) and the bars end on the rail axes",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the top rail's top (axis + 21.2) and the cap top equal 1000",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the bottom rail clears the ground by 183 (underside) and is the thinner tube",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the cap is wider than the post (52 against 48.3), 8 high, and its rim is rounded R2",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the bounding box is 2052 x 52 x 1000 (the caps' 52 across at x +-1000)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the check A1_bbox lists the same box within its tolerance (2048.3 against 2052 at 8)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the dark ring is 20 wide, the post foot 48.3: the flags are cut for a 88.3 hole",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the two posts do not overlap each other or the bars",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: bars do not overlap each other (clear gaps positive)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: walking clear 1.576 against 0.68, and the crates' 0.92 leave 0.656 (under it): the check names that case",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the panel stands inside the footway (z 3.375 between the kerb back 3.170 and the stallriser face 4.975) and its rear face leaves at least 0.68",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1: the panel ends at the gully's centre line (x 12.0): its end post stands 0.024 over; the gully is in the channel at z 2.8 to 3.0",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: the base plate (200) is wider than the post foot (76.1) and holds its four studs on a 150 square, each 25 from the edge",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: the nut (24 across flats, 13 high) fits between the stud holes and the post: the hole centre (75, 75) is 106 from the axis, the post radius 38.05, the nut radius 13.9",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: the top rail passes under the cap (rail top 1024.2 < post top 1100 - 14)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: the rails end on the post faces: x = 1500 - 38.05",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2b: the catenary through the eyes (span 2833.9) with sag 200 has an arc of 2871.2 mm; stated 2871.5 (within 3), and 74 links of 39 = 2886 (within one link)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2b: the eyes' x is 1500 - 38.05 - 45 = 1416.95 and the span between the holes 2833.9",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2b: the chain's lowest point (z 300) stays 300 above the apron and 200 under the eyes",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2b: the link is 3 x its bar for the inner length, the outer = inner + 2 bars, the pitch = the inner length",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: 8 posts on the basin edge x -110.4 at 3.0 and 6 more on the tip y -15.4: 14 posts, 13 bays",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: the posts are 3.0 apart (0.001) along each run, and the corner post (-110.4, -15.4) is the last of the first run, the tip run's first step from it",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: the basin run is 0.4 behind the cope nose (x -110) and the tip run 0.4 behind the end nose (y -15)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: every post is on the jetty strip (x -130 to -110, y -100 to -15) with its 200 plate: plate edge at least 0.25 behind the nose",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: the nearest post to a K6 bollard or K7 cleat is 8.61 m (at least 8.0: moorings stay clear)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: the nearest post to the harbour light's plinth is 2.70 m (at least 2.5)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: no post or plate touches the jetty's seaward parapet",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: the K5 ladder group on the north quay (x -69.5) is untouched: no Q2 post within 30 m of it",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2: a person on the jetty keeps far more than 0.68 m (the strip is 20 m across; the rail line is 0.4 behind the nose)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1 profiles: the post section is a circle of the stated OD with an inner circle of OD - 2 wall (32 points each)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1 profiles: the top rail, bottom rail and bar sections have the stated radii",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1 profiles: the cap (r, z) rises to z 1000 on the axis, is 26 across and 8 high",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "A1 profiles: the ground ring is 20 wide round the post",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2 profiles: the post section is 76.1 with a 5.0 wall; the cap rises to 1100 on the axis, 80 across",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2 profiles: the hex nut is 24 across flats (distance between opposite sides) and 13 high",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2 profiles: the stud holes are on a 150 square inside the plate, 25 from its edges",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2 profiles: the in-plane link is 65 x 44 outside and 39 x 18 inside (the bollards target's plain chain)",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "Q2 profiles: the catenary is symmetric, starts and ends at the eyes (z 500) and its lowest point is z 300 at mid-span",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "checks: 40 listed, names unique",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "checks: every one has a number or a stated value, a tolerance, a unit, a kind and a basis",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "checks: the footway one is a minimum of 0.68 m",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "checks: kinds named are A1, Q2, Q2b only",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "variants: the three A1 conditions' shares sum to 1",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "materials: unique ids, each with sRGB in 0..255, roughness 0..1",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "paint: A1 default is black (24, 24, 26), the same as Q2 and the bollards' K1 and K5",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "the reserve kinds are marked placed = false and have no placement",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "no area railing, yard gate or chapel on the street is stated in placements.absent, with the reasons",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "the photograph windows hold their objects: each preview window is inside its plane's window and its mm a pixel gives at most 1200 px",
+    "ok": true
+   },
+   {
+    "group": "D",
+    "name": "the drawing makes 11 views from target.json alone; every polygon has at least three points and finite numbers",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "14 previews exist in production/previews/cloud-week/refs/railings/",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "every preview is a JPEG of at most 1200 px and under 300 KB",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "the main photograph overlay exists: ...-target-on-photo.jpg",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "names follow <ref>-<place>-<what>.jpg (ph- or target- prefix)",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "target.json carries no maker's, council's or brand name and no word of the content rule (none)",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "TARGET.md carries none of them (none)",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "TARGET.md has a one-line summary first and states the self-check result line",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "TARGET.md names every check (0 missing)",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "TARGET.md quotes the key numbers of target.json: 48.3, 42.4, 33.7, 97.1, 109.1, 76.1, 3.375, 0.205, 1.576, 0.896, 78.5, 94.5, -110.4, -15.4, 0.97, 1.12, 200",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "TARGET.md has the sections of the brief: sources, the target part by part, photographs-win, variants, materials, wear, what the target could not settle, what to read when the network opens, the previews",
+    "ok": true
+   },
+   {
+    "group": "E",
+    "name": "the unreached sources are listed and none is used: every S-row marked unreached is absent from the used list",
+    "ok": true
+   }
+  ],
+  "details": [
+   {
+    "group": "A",
+    "name": "printed guard_rail_line found in production/cloud-week/targets/SCENE-SLOTS.md",
+    "detail": "the scene's stand-in: 1.0 high, posts 0.05, rails 0.04, five infill bars of 0.025 a panel"
+   },
+   {
+    "group": "A",
+    "name": "printed guard_rail_place found in production/cloud-week/targets/SCENE-SLOTS.md",
+    "detail": "one 2.0 m panel, east side, x 10.0 to 12.0, 0.25 m back from the kerb"
+   },
+   {
+    "group": "A",
+    "name": "printed scene_panels found in production/specs/vignette-scene.json",
+    "detail": "E8 has one panel"
+   },
+   {
+    "group": "A",
+    "name": "printed scene_setback found in production/specs/vignette-scene.json",
+    "detail": "E8 set-back 0.25 m"
+   },
+   {
+    "group": "A",
+    "name": "printed scene_infill found in production/specs/vignette-scene.json",
+    "detail": "E8 five infill bars"
+   },
+   {
+    "group": "A",
+    "name": "printed scene_post_d found in production/specs/vignette-scene.json",
+    "detail": "E8 post 0.050"
+   },
+   {
+    "group": "A",
+    "name": "printed scene_rail_d found in production/specs/vignette-scene.json",
+    "detail": "E8 rail 0.040"
+   },
+   {
+    "group": "A",
+    "name": "printed scene_infill_d found in production/specs/vignette-scene.json",
+    "detail": "E8 infill 0.025"
+   },
+   {
+    "group": "A",
+    "name": "printed feet_post0 found in production/specs/vignette-feet.json",
+    "detail": "post 0 stands at x 10, z 3.375, its foot at y 0.05625 (the footway there)"
+   },
+   {
+    "group": "A",
+    "name": "printed feet_post1 found in production/specs/vignette-feet.json",
+    "detail": "post 1 stands at x 12, z 3.375"
+   },
+   {
+    "group": "A",
+    "name": "printed pieces_lower_rail found in production/specs/vignette-pieces.json",
+    "detail": "the stand-in's lower rail is 0.45 above its foot (y 0.50625 over 0.05625)"
+   },
+   {
+    "group": "A",
+    "name": "printed stallriser found in production/cloud-week/targets/SCENE-SLOTS.md",
+    "detail": "stallriser 0.15 proud of the frontage line"
+   },
+   {
+    "group": "A",
+    "name": "printed pilaster found in production/cloud-week/targets/SCENE-SLOTS.md",
+    "detail": "pilasters 0.10 proud"
+   },
+   {
+    "group": "A",
+    "name": "printed frontage_z found in production/specs/terrace-fronts.md",
+    "detail": "the frontage line is z 5.125 (the kerb face z 3.0 + the kerb 0.125 + the footway 2.0)"
+   },
+   {
+    "group": "A",
+    "name": "printed kerb_target_top found in production/cloud-week/targets/kerbs-and-covers/TARGET.md",
+    "detail": "the kerbs target: granite kerb 115 upstand, 170 top"
+   },
+   {
+    "group": "A",
+    "name": "printed kerb_target_flags found in production/cloud-week/targets/kerbs-and-covers/TARGET.md",
+    "detail": "the kerbs target: footway flags +110 over the channel"
+   },
+   {
+    "group": "A",
+    "name": "printed bollard_chain_bar found in production/cloud-week/targets/bollards/TARGET.md",
+    "detail": "the bollards target's plain chain: short link, 13 mm bar"
+   },
+   {
+    "group": "A",
+    "name": "printed bollard_post_spacing found in production/cloud-week/targets/bollards/TARGET.md",
+    "detail": "the bollards target's chain posts 3.0 m apart"
+   },
+   {
+    "group": "A",
+    "name": "printed bollard_lugs found in production/cloud-week/targets/bollards/TARGET.md",
+    "detail": "K5 chain eyes at z 420 and 840"
+   },
+   {
+    "group": "A",
+    "name": "printed bollard_sag found in production/cloud-week/targets/bollards/target.json",
+    "detail": "K5 chain sag 150 (Judgement there)"
+   },
+   {
+    "group": "A",
+    "name": "printed kit_jetty_x found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "detail": "the jetty strip x -130 to -110"
+   },
+   {
+    "group": "A",
+    "name": "printed kit_jetty_end found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "detail": "the jetty's end at y -15"
+   },
+   {
+    "group": "A",
+    "name": "printed kit_cope found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "detail": "the cope 0.60 across"
+   },
+   {
+    "group": "A",
+    "name": "printed kit_parapet found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "detail": "the jetty's stone parapet on the seaward side: x -129.4 to -128.6, ending at y -23.0"
+   },
+   {
+    "group": "A",
+    "name": "printed kit_light found in tools/art-recipes/south-quay/south_quay_geom.py",
+    "detail": "the harbour light stands at x -120, y -19.5"
+   },
+   {
+    "group": "A",
+    "name": "printed kit_no_railing found in production/art/south-quay/README.md",
+    "detail": "the kit has a ladder and bollards and a stone parapet on the jetty; it has no railing on any quay edge"
+   },
+   {
+    "group": "A",
+    "name": "printed asset_plan_rows found in production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md",
+    "detail": "the asset plan's linear kit rows"
+   },
+   {
+    "group": "A",
+    "name": "printed asset_plan_counts found in production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md",
+    "detail": "guard railing 1 kit, 1 to 3 panels; quay railing with chain 1 kit, along the quay"
+   },
+   {
+    "group": "A",
+    "name": "printed hull_chain_edge found in production/research/atlas-01/CONTINUATION.md",
+    "detail": "R08, River Hull, 1989 (a photograph read by an earlier session, not reachable here): a chain-edged quay"
+   },
+   {
+    "group": "A",
+    "name": "printed e8_not_tree_guard found in production/specs/vignette-bill-of-materials.md",
+    "detail": "the held trunk_protection_railing is a tree-pit guard, not E8"
+   },
+   {
+    "group": "A",
+    "name": "printed yard_gap found in production/specs/vignette-scene.json",
+    "detail": "the yard entrance is a 3.0 m gap in the data, x 21.0 to 24.0, west side"
+   }
+  ]
+ }
+}

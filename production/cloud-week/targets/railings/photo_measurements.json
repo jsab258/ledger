@@ -1,0 +1,447 @@
+{
+ "R3B": {
+  "frame": "R3B",
+  "bar_centres_s_mm": [
+   610,
+   688,
+   764,
+   841,
+   922,
+   996,
+   1079,
+   1154,
+   1231,
+   1310,
+   1390,
+   1462,
+   1544,
+   1620,
+   1700,
+   1775,
+   1857,
+   1935,
+   2016,
+   2096,
+   2177,
+   2255,
+   2337,
+   2414,
+   2498,
+   2573
+  ],
+  "bar_pitch_mm": 78.54,
+  "bar_fit_first_s_mm": 605.02,
+  "bar_pitch_resid_rms_mm": 4.03,
+  "leaf_bar_centres_s_mm": [
+   2721,
+   2779,
+   2890,
+   2971,
+   3060,
+   3142,
+   3233,
+   3319,
+   3417,
+   3500,
+   3599,
+   3685,
+   3777
+  ],
+  "leaf_bar_pitch_mm": 88.9,
+  "bar_fwhm_mm_median": 20.0,
+  "bar_fwhm_mm_all": [
+   25,
+   17,
+   20,
+   14,
+   13,
+   34,
+   20,
+   18,
+   21,
+   17,
+   36,
+   17,
+   21,
+   19,
+   21,
+   18,
+   24,
+   18,
+   22,
+   19,
+   17,
+   19,
+   22,
+   21,
+   27
+  ],
+  "rails": [
+   {
+    "z": 2103.0,
+    "depth": 21.4
+   },
+   {
+    "z": 2083.0,
+    "depth": 18.1
+   },
+   {
+    "z": 2000.0,
+    "depth": 42.6
+   },
+   {
+    "z": 1059.0,
+    "depth": 16.5
+   },
+   {
+    "z": 1036.0,
+    "depth": 24.4
+   },
+   {
+    "z": 657.0,
+    "depth": 17.2
+   },
+   {
+    "z": 441.0,
+    "depth": 18.3
+   },
+   {
+    "z": 336.0,
+    "depth": 24.2
+   }
+  ],
+  "coping_top_z_mm": 331.0,
+  "post_width_mm": [
+   93,
+   99,
+   105,
+   98,
+   110,
+   100,
+   99,
+   97
+  ],
+  "method": "1 mm a pixel elevation (rail_lib.elevation) at the stated camera height; bars = dark minima of the column profile at z 700..900; rails = dark rows between bars; FWHM includes the blur of a 3 to 4 mm native pixel"
+ },
+ "hand_reads": {
+  "R3B": {
+   "bottom_rail_axis_z": {
+    "v": 445,
+    "err": 15,
+    "how": "dark row between the bars at z 440 (rows 2000+: also detected by the column-between-bars profile, depth 19); a flat bar about 18 high"
+   },
+   "mid_rail_axis_z": {
+    "v": 1045,
+    "err": 15,
+    "how": "row profile peak 1036, picture read 1056"
+   },
+   "top_rail_axis_z": {
+    "v": 2000,
+    "err": 10,
+    "how": "row profile peak, depth 43, FWHM 26 (blur included): a flat bar about 20 high"
+   },
+   "coping_top_z": {
+    "v": 345,
+    "err": 20,
+    "how": "the stone slab's top at its front lip: the gradient search gives 331 on the plane 110 behind the face; the lip is nearer the camera, so its true height is about 13 higher (the ray falls 110 x (0.97 - 0.35) / 5.2 over that distance)"
+   },
+   "short_bar_tip_z": {
+    "v": 1225,
+    "err": 20,
+    "how": "spear tips of the short bars, which stop just above the middle rail"
+   },
+   "tall_bar_tip_z": {
+    "v": 2300,
+    "err": 20,
+    "how": "spear tips of the tall bars (every second bar), 300 above the top rail"
+   },
+   "post_top_z": {
+    "v": 2375,
+    "err": 15,
+    "how": "the finial of the hinge post"
+   },
+   "post_shaft_width": {
+    "v": 100,
+    "err": 10,
+    "how": "mean of eight rows z 1700 to 1910 (93 to 110), blur included"
+   },
+   "post_collar_width": {
+    "v": 155,
+    "err": 15,
+    "how": "the collar at z 1995 to 2035"
+   },
+   "urn_width": {
+    "v": 135,
+    "err": 15,
+    "how": "the vase under the finial, z 2150 to 2210"
+   },
+   "pier_width": {
+    "v": 550,
+    "err": 40,
+    "how": "the brick pier under the hinge post, s 2530 to 3080"
+   },
+   "bar_foot": {
+    "v": "each bar ends in a small ball (about 20 across) just under the bottom rail, 12 below its axis",
+    "err": null,
+    "how": "1 mm elevation of the foot"
+   },
+   "bar_head": {
+    "v": [
+     [
+      9,
+      1990
+     ],
+     [
+      9,
+      2035
+     ],
+     [
+      14,
+      2040
+     ],
+     [
+      14,
+      2048
+     ],
+     [
+      9,
+      2054
+     ],
+     [
+      9,
+      2095
+     ],
+     [
+      20,
+      2112
+     ],
+     [
+      30,
+      2128
+     ],
+     [
+      28,
+      2140
+     ],
+     [
+      18,
+      2155
+     ],
+     [
+      14,
+      2165
+     ],
+     [
+      22,
+      2185
+     ],
+     [
+      24,
+      2195
+     ],
+     [
+      14,
+      2208
+     ],
+     [
+      14,
+      2230
+     ],
+     [
+      12,
+      2250
+     ],
+     [
+      8,
+      2275
+     ],
+     [
+      5,
+      2300
+     ],
+     [
+      2,
+      2320
+     ],
+     [
+      0,
+      2335
+     ]
+    ],
+    "err": 15,
+    "how": "(r, z) of a tall bar's head: a ring at 2040, a vase swelling at 2128, a bead at 2190, a spire to the tip; blur 6 mm, so +-15"
+   }
+  },
+  "R3A": {
+   "wall_top_z": {
+    "v": 780,
+    "err": 20,
+    "how": "top of the blue bullnose coping, 1 mm and 3 mm elevations"
+   },
+   "wall_string_z": {
+    "v": 300,
+    "err": 20,
+    "how": "top of the lower blue bullnose string"
+   },
+   "red_courses_between": {
+    "v": 5,
+    "err": 0,
+    "how": "five red stretcher courses between z 330 and 705 at 75 mm: the scale check on the elevation"
+   },
+   "bottom_rail_axis_z": {
+    "v": 840,
+    "err": 20,
+    "how": "dark row; the picture read 825"
+   },
+   "mid_rail_axis_z": {
+    "v": 1435,
+    "err": 15,
+    "how": "dark row, profile 1435"
+   },
+   "top_rail_axis_z": {
+    "v": 1645,
+    "err": 15,
+    "how": "dark row, profile 1649"
+   },
+   "bar_pitch_all": {
+    "v": 114,
+    "err": 5,
+    "how": "the thick (tall) bars at s 204, 435, 660, 891, 1110 on the 3 mm preview: 226.5 apart; the thin ones the same, half a pitch between: all bars 113.3 (the first reading, from the far side of the post, gave 116)"
+   },
+   "tall_first_s": {
+    "v": 204,
+    "err": 15,
+    "how": "the first thick bar with a fleur-de-lis head in the preview window"
+   },
+   "tall_tip_z": {
+    "v": 1880,
+    "err": 25,
+    "how": "fleur-de-lis heads of the tall bars"
+   },
+   "post_top_z": {
+    "v": 2150,
+    "err": 40,
+    "how": "the vase and ball on the post, in the oblique view"
+   },
+   "post_shaft_width": {
+    "v": 100,
+    "err": 25,
+    "how": "oblique view, blur doubled by the 32 degree angle"
+   },
+   "bar_thick_width": {
+    "v": 22,
+    "err": 10,
+    "how": "the tall bars read 40 to 55 at 1 mm in the oblique view (blur x 2): about 22 across"
+   },
+   "resolution_mm_per_px_across": {
+    "v": 10,
+    "err": null,
+    "how": "5.4 mm native at 7 m, divided by sin 32 degrees along the wall"
+   }
+  },
+  "R3D": {
+   "wall_top_z": {
+    "v": 620,
+    "err": 15,
+    "how": "the strongest brightness step at z 608 to 621 over s 100 to 1000, eight courses plus the coping"
+   },
+   "bottom_rail_axis_z": {
+    "v": 680,
+    "err": 15,
+    "how": "1 mm elevation s 1400 to 2400"
+   },
+   "top_rail_axis_z": {
+    "v": 1085,
+    "err": 12,
+    "how": "1 mm elevation: a flat bar"
+   },
+   "bar_tip_z": {
+    "v": 1130,
+    "err": 20,
+    "how": "the bars stand 45 above the top rail, with a small spear point"
+   },
+   "bar_pitch": {
+    "v": 94.5,
+    "err": 3,
+    "how": "ten bars read at s 1500, 1600, 1695, 1790, 1885, 1975, 2060, 2155, 2250, 2340 on the gridded 1 mm elevation; a line fit gives the pitch and the first bar (two automated searches found 4 bars at rms 12 mm and 65 to 70 mm pitches: the foliage behind the railing defeats them)"
+   },
+   "bar_centres_s": {
+    "v": [
+     1500,
+     1600,
+     1695,
+     1790,
+     1885,
+     1975,
+     2060,
+     2155,
+     2250,
+     2340
+    ],
+    "err": 6,
+    "how": "read by eye on the 1 mm elevation, +-6"
+   },
+   "bar_width": {
+    "v": 13,
+    "err": 3,
+    "how": "blur included: a round bar of 12 to 14"
+   },
+   "gate_width": {
+    "v": 1040,
+    "err": 150,
+    "how": "the leaf between the brick pier and its stile in the 38 degree view, at 5.5 m"
+   },
+   "gate_top_z": {
+    "v": 1100,
+    "err": 40,
+    "how": "the gate's top rail level with the railing's"
+   },
+   "paint_srgb": {
+    "v": [
+     38,
+     56,
+     36
+    ],
+    "err": 10,
+    "how": "median of the gate leaf in shade (32, 47, 28) and in light (51, 69, 45)"
+   }
+  },
+  "LHB": {
+   "span_mm": {
+    "v": 2840,
+    "err": 60,
+    "how": "axis to axis of the two posts, from their flanges' front edges moved back 143"
+   },
+   "upper_lug_z": {
+    "v": 800,
+    "err": 30,
+    "how": "the chain's end link at the post, 2 mm elevation"
+   },
+   "lower_lug_z": {
+    "v": 405,
+    "err": 30,
+    "how": "the same, lower"
+   },
+   "upper_chain_lowest_z": {
+    "v": 585,
+    "err": 25,
+    "how": "lowest dark band of the upper swag at mid-span"
+   },
+   "lower_chain_lowest_z": {
+    "v": 165,
+    "err": 25,
+    "how": "lowest dark band of the lower swag"
+   },
+   "post_top_z": {
+    "v": 1086,
+    "err": 35,
+    "how": "the dome's top; the bollards target states 1135 at its 1.17 m (4 % higher, inside both errors)"
+   },
+   "flange_bolts": {
+    "v": 4,
+    "err": 0,
+    "how": "four hex nuts on studs, two seen at the sides and one in front"
+   }
+  }
+ }
+}
