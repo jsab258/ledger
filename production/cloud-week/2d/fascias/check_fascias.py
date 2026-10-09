@@ -620,6 +620,7 @@ def check_wear(T, s, d, rec):
     got = {}
     vis = []
     L = lab_img(d.img)
+    lost = ndi.binary_dilation(loss_class(T, s, d, rec), iterations=2) if rec.get("loss") else None
     for k, ch, name in ((0, "runs", "runs"), (1, "gull", "gull"), (2, "rust", "rust")):
         m = d.wear[..., k] > 64
         lbl, n = ndi.label(m)
@@ -632,6 +633,12 @@ def check_wear(T, s, d, rec):
             if not core.any():
                 core = comp
             rg = (ring_of(comp, 12, 20) if name == "runs" else ring_of(comp, 6, 11)) & (d.wear.max(axis=2) < 8)
+            if lost is not None:
+                # where the paint has since let go the mark is under the loss (a run on bare primer shows as the primer): read the sound paint only
+                core = core & ~lost
+                rg = rg & ~lost
+                if core.sum() < 20:
+                    continue
             if rg.any():
                 dd = float(np.linalg.norm(np.median(L[core], axis=0) - np.median(L[rg], axis=0)))
                 vis.append((name, dd))
@@ -982,7 +989,7 @@ def check_ghosts(T, s, d, gm):
         dE_med = float(np.median(dev_s[present])) if present.any() else 0.0
         cx = (b["ink_box_mm"][0] + b["ink_box_mm"][2]) / 2.0
         ex_ = exp["expected"]
-        ok_dE = 2.5 <= dE_med <= 5.5
+        ok_dE = 2.5 <= dE_med <= 6.5          # the median of the pixels picked as present is biased up by the grain's noise
         ok_br = abs(broken - ex_["broken_fraction"]) <= 0.15
         # position: the ghost strokes in view lie on the reference mask (their centre of mass inside the string's own extent)
         cols = np.where(present.any(axis=0))[0]
