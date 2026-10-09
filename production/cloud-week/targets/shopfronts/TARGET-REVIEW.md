@@ -220,3 +220,110 @@ Reviewer: a fresh target reviewer who did not write the target and will not buil
   Fixings, wear, paints (sRGB, roughness, metal) and variants are all stated.
 - **What the checks catch from the street.** A console off its capital (the toe inside the capital's top, at most 1 above). A cornice not capping the fascia (soffit gap 0). Wrong zones or a mirrored bay at the zone level (per-shop u ranges and street x). The door's glazing height (once its value is corrected). What they miss is covered by the new checks in faults 1, 3, 4, 6, 7 and 8.
 - **Questions honestly raised.** Mickey's door x, the grocer's fanlight number, the ironmonger, twelve against ten fronts, the Hook sheet's recessed Mickey's door, and the downpipe.
+
+## Re-review (try 2)
+
+FAIL
+
+**One fault that matters, and two narrow points.**
+
+- **Ten of the eleven faults are truly answered**, and fault 6 is answered better than I asked.
+- **The one fault is new, and my own amendments made it worse.** The consoles now stand behind the fascia board for most of their height, and set well back on the deeper capital.
+- **Both departures are right:** (a) the plinth at 600, and (b) the hinge sides.
+
+### How this was checked (9 October 2026, second pass)
+
+- **The measuring tool reproduces.** I downloaded the 16k file again to scratch and re-ran the new measure_leadenhall.py from a scratch copy. All 45 stored rows, columns and the notice came back identical (0.00 px). The new masked door preview is byte-identical to the repository's.
+- **The door's glass foot, measured my own way.** I searched for the strongest edges with no expected row, over wide windows on both leaves (columns 445 to 525 and 770 to 880, rows 60 to 200):
+  - glass to bead at rows 128.9 to 129.5;
+  - the bead's highlight at 134.5;
+  - the red lock rail from 140;
+  - the leaf's foot at row 547 (the dark strip's face meeting the lit threshold), as stored.
+
+  So P1 is glazed from 0.296 to 0.304 of its leaf: 604 to 620 on a 2040 leaf, 46 to 67 below its own window sill (844). **"Glazed from 600, level with the sill" holds.**
+- **The stile, measured my own way.** Column edges sit at −1033.5 and −990.5 to −993.5 in three row bands below the sill, and the same pair shows above it. That is 41 to 42 px, **77 to 78 mm** at the window's plane, as the target now says.
+- **The scripts, run on a scratch mirror.** self_check.py gives 561 of 578 pass, 0 fail, 17 reported. target_drawing.py drew 50 drawings and 8 overlays. The repository was not touched.
+- **The new previews.** The pier elevation, the Rita-on-P1 overlay and the masked door foot show joinery only: lettering is masked and no drink wording is in frame. D2 now shows the whitewash, the box signs, the tea room's panel and the grocer's slabs. D5 shows the cornice returns and the shutter section.
+
+### The eleven faults
+
+| fault | answered? |
+|---|---|
+| 1 door glazed from 700 | **Yes.** 600, level with the sill; rails 0-230, 230-490, 490-600; R6 0.304 / 0.294; R9; DOR-02 and DOR-06. My independent re-measure agrees (above) |
+| 2 letter plate in the glass | **Yes.** z 545 in the lock rail; DOR-05 [1000, 545]; now drawn |
+| 3 plinth head moulding | **Yes.** Cavetto 24 × 95 and a 21 band on the stepped variant; the kit's base ogee restored; PIL-14, PIL-16, PIL-17. See narrow point 1 |
+| 4 pilaster relief, capital flare | **Yes for the pilaster:** shaft 140, plinth 180, capital 350 × 175, PIL-15 per shop. **It broke the console's seat:** see the fault below |
+| 5 console not a scroll | **Yes, it is now a two-volute scroll** (D3). But my numbers put its waist behind the board: see the fault below |
+| 6 no hinge sides | **Yes, and the writer is right where I was wrong** (see (b)) |
+| 7 shutter curtain inside the frames | **Yes.** Curtain d 170, rails d 150 to 190, ALT-07; the lowered curtain clears every frame. See narrow point 2 for the hood |
+| 8 cornice ends | **Yes.** Mitred returns of the full section (COR-06), drawn in plan |
+| 9 newsagent board colour | **Yes.** Cream (222, 209, 175), ALT-08 |
+| 10 Photo numbers | **Yes.** Stile 77, sill 844 at the window's own plane, mullion 172, crown withdrawn (R8 "not measurable"), capital an upper bound, the field renamed |
+| 11 STA-03 | **Yes.** It adds up to 525 as its variant |
+
+### (a) The plinth stays 600: right
+
+- P1's plinth is a market hall's stone-faced pier on a stepped base. It is not a parade's timber pilaster.
+- The earlier research asks only that the stallriser not rise above the pilaster's base (Kensington and Chelsea), and 600 meets that.
+- Rita's front in the game, which Jafar approved as the model on 2 October, has the plinth's top level with the stallriser's.
+- The photographs-win rule is about books against photographs of the thing itself. It does not make one photograph of a different building type outrank the approved model.
+- The target keeps P1's head moulding at Rita's height and keeps P1's 800 ready as `variants.plinth_tall`. That is the right way to leave it open for the plan owner.
+
+### (b) The hinge sides: the writer is right, and my first review misread the frame
+
+- Enlarged, rita-day-kit-2026-10-06.jpg shows the side door's knob and rim cylinder at the leaf's left edge (the pier side). So the side door is hinged on the shop-door side.
+- The shop door's lever is on its left edge, so it is hinged on the window side.
+- The table carries both, mirrored on the five fronts whose doors are on the viewer's right. F1 is used mirrored where the door end is the viewer's left, and DOR-07 checks it per shop. D2 agrees on all ten fronts.
+- My first review said the side door was "hinged on the pier side". That was wrong.
+
+### Fault (matters): the consoles stand behind the fascia board and well back on the capital
+
+- **Where:**
+  - `parts.console.profiles.side_silhouette`: the console's front is behind d 120 from z_local 0 to 414, and behind 132 up to 526. The foot is 60 deep, and the lower volute reaches only d 76.
+  - `parts.fascia_board`: the face is at d 120 and the bed mould's front at 132 (z 2850 to 2890), with the board's ends let into the consoles' sides.
+  - `parts.pilaster`: the capital's top runs to d 175 (its flat to 172).
+  - The drawing `fascia_cornice_console_capital_section` (D3, right) shows it: the grey board and its bed mould stand in front of the console from the capital up to the upper volute.
+- **From the street, on all twenty consoles:**
+  - The board's end and its bed mould stand 36 to 70 mm proud of the console over its lower 414 mm. The end faces are exposed beside the console's waist, because the board's end is only let into the console behind d 62 to 84.
+  - The capital's top runs about 100 mm bare in front of the console's foot.
+  - The console reads as sunk behind its fascia and perched at the back of its capital. Only the upper volute comes forward. Seen obliquely along the parade, which is the game's commonest view of these parts, this is plain.
+- **How it arose.** The first try already had it over 288 mm (and a foot 56 behind a 130 capital), and I missed it. My amendments (the capital at 175, and a scroll whose waist is 62) made it worse.
+- **Amendment** (Judgement, as before, and first on `could_not_settle`): redraw `side_silhouette` within **240 × 205 × 550**. 205 sits under the cornice's 215 nose, so the oversail becomes 10.
+  - **foot:** 240 × 172, standing on the capital's flat top (which reaches 172), so the console rises from the capital's front;
+  - **lower volute:** eye at (d 158, z 48), outer radius 26, reaching d 184 at z 48, one turn rolling the other way;
+  - **waist:** concave, narrowest d 140 at z 140;
+  - **stem:** swelling to d 150 at z 330;
+  - **upper volute:** eye at (d 160, z 468), outer radius 45, the front reaching d 205 at z 468, then rolling back over its top through (160, 513) into the eye in 1.25 turns;
+  - **cap block:** 205 deep at z 528 to 550;
+  - **grooves:** 8 inside the outline, 5 wide and 4 deep, ending in eye bosses 16 across and 3 proud;
+  - **leaf:** on the front between z_local 150 and 420.
+
+  Checks:
+  - CON-01 [240, 205, 550];
+  - CON-03: the toe 240 × 172 lies within the capital's top (d 0..175), at most 1 above it;
+  - CON-07: the new eyes, radii and waist;
+  - COR-02 oversail [95, 10];
+  - **new:** "the console's front is at least 140 at every z from 2850 to 3400, in front of the bed mould (132) and the board (120)".
+
+  Rewrite the `meets` row "console and capital" to match.
+
+### Narrow points (each one small detail with an exact fix)
+
+1. **The base ogee overhangs the timber plinth's flat.**
+   - `base_ogee` is 25 proud of the shaft (foot at d 165), but `plinth_cap_side` and both `plinth_panel_side_*` profiles have their flat top only to d 155, then the weathering falls to 576 at d 176.
+   - So the ogee's front 10 mm floats over the slope, with a gap of up to 11 mm under its front edge.
+   - **Fix:** make the ogee 15 proud: points (140, 600) (155, 600) (155, 608) (152.6, 612) (149, 617) (146, 624) (143.6, 633) (141.8, 645) (140, 660). PIL-17 becomes [15, 60, 600]. Alternatively, run the cap's flat to d 166 and keep 25.
+2. **The shutter's hood occupies the frames' space.**
+   - `alterations.roller_shutter` and the drawing put the hood at d 0 to 210, z 2550 to 2850, over u 350 to 4706.
+   - That is the same space as the window's and shop door's head (d 0 to 95, z 2790 to 2850) and the toplights' bars and glass (d 30 to 55).
+   - Self-check group 5 leaves "hood" out of its overlap test, so nothing catches the clash.
+   - **Fix:** say that the head, the toplight bars and the glass are cut away at z 2550 behind the hood over its width (the box set into the old toplight zone; 70 of the toplights shows below it), and include the hood in the overlap test. Or stand the hood in front of the frames: back at d 100, front at d 310.
+
+### What is right in try 2
+
+- **The photograph is used honestly at its own planes.** Every corrected edge is real and reproduces; the door and the stile agree with my own independent measurement.
+- **The pilasters now have relief.** There is a 40 mm minimum beside every frame, checked per shop. The capital flares and the plinth head is moulded as P1 shows.
+- **The doors are handed from the approved model.** Their glass starts level with the sill, the letter plate is in the lock rail, and every door has a checked hinge side.
+- **The finishing pieces are solved.** The cornice ends are closed by mitred returns. The shutter's curtain clears every frame. The newsagent's board matches the fascia target.
+- **The evidence table is now true.** The crown is withdrawn, the capital is marked an upper bound, and the stile and sill are corrected. R1 and R2 are honestly "not followed (Rita's line)", with the photograph's plinth kept as a variant.
+- **The previews are joinery only.** The Rita-on-P1 overlay replaces the circular check of the first try.
