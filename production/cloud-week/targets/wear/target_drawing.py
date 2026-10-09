@@ -202,6 +202,8 @@ def foot_band_polys(rng, kind, E, length_mm, seed_tag):
                 sb = hb / htop
             lower = [(x, ha + sa * n) for x, n in zip(xs, nz)]
             upper = [(x, hb + sb * n) for x, n in zip(xs, nz)]
+            if ha == 0:                    # the lowest band stays on its source edge (the pavement line, the feature's lower edge): the full-strength zone has no gap where the profile slides away
+                lower = [(x, 0.0) for x, _ in lower]
             lower = [(x, max(0.0, y)) for x, y in lower]
             upper = [(x, max(0.0, y)) for x, y in upper]
             out.append(poly(kind, la, lower + upper[::-1], "band"))

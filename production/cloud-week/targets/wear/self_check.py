@@ -1451,6 +1451,31 @@ def part_e_composition(tj, R, draw):
     wr = float((_ylin(wrong) / _ylin(r2["clean"]))[sm].mean())
     rt = float((_ylin(r2["final"]) / _ylin(r2["clean"]))[sm].mean())
     R.check("E the order matters: salt laid AFTER the darkening reads %.2f of the clean wall at the whitened bricks, laid BEFORE it only %.2f" % (rt, wr), rt > wr * 1.5)
+    # R2: the first pass's head band (full strength and full depth under an eaves gutter) is refused by composed_eaves_front_ratio
+    ce = next(c for c in tj["kinds"]["wall_head_band"]["checks"] if c["name"] == "composed_eaves_front_ratio")
+    wrong_e = dict(ce, params=dict(ce["params"], strength=1.0, depth_m=0.675))
+    ve = float(np.median([composition(tj, draw, wrong_e, sd) for sd in (1990, 2024, 7)]))
+    R.check("E the first pass's head band under an eaves gutter (strength 1, full depth) composes to %.2f of the wall at 0.3 m, outside %s to %s" % (ve, ce["min"], ce["max"]), not (ce["min"] <= ve <= ce["max"]))
+    # the composition checks take the builder's own masks (the second review's narrow note): the target's masks passed back in give the target's values, a wrong builder mask is refused
+    same = []
+    for kid in tj["kinds_order"]:
+        for c in tj["kinds"][kid]["checks"]:
+            if c["measure"] in ("composed_foot_ratio", "composed_salt_ratio", "composed_soot_ratio", "composed_soot_chroma_ratio", "composed_eaves_front_ratio", "composed_head_ratio", "house_to_house_ratio"):
+                head_ = c["measure"] in ("composed_head_ratio", "composed_eaves_front_ratio")
+                rr = compose_walls(tj, draw, 1990, "cleaned", 100, head=True)
+                mk = {k_: v for k_, v in rr["masks"].items() if k_ != "wall_head_band" or head_}
+                a_ = composition(tj, draw, c, 1990)
+                b_ = composition(tj, draw, c, 1990, masks=mk, masks_ppm=100)
+                same.append((c["name"], a_, b_))
+    bad = [(n_, round(a_, 4), round(b_, 4)) for n_, a_, b_ in same if abs(a_ - b_) > 0.02]
+    R.check("E composition checks run on the builder's own masks (masks argument): %d checks, the target's masks fed back give the same value within 0.02 (off: %s)" % (len(same), bad), not bad and len(same) >= 7)
+    flat = {"wall_foot_splash": np.ones((75, 200)), "wall_foot_damp": np.ones((160, 200)), "algae_downpipe": np.ones((140, 90))}
+    cf = next(c for c in tj["kinds"]["wall_foot_splash"]["checks"] if c["name"] == "composed_foot_ratio")
+    vf = composition(tj, draw, cf, 1990, masks=flat, masks_ppm=100)
+    R.check("E a builder's foot masks at 1.0 everywhere compose to %.2f of the clean wall at 0.1 m, outside %s to %s: the composition check refuses a wrong mask of the builder's" % (vf, cf["min"], cf["max"]), not (cf["min"] <= vf <= cf["max"]))
+    cs = next(c for c in tj["kinds"]["wall_soot"]["checks"] if c["name"] == "composed_soot_chroma_ratio")
+    vs = composition(tj, draw, cs, 1990, masks={"wall_soot": np.full((400, 400), 0.9)}, masks_ppm=100)
+    R.check("E the soot chroma ratio on a builder's uniform mask %.2f stays in %s to %s (the mask changes the brightness, the colour mark keeps the grey)" % (vs, cs["min"], cs["max"]), cs["min"] <= vs <= cs["max"])
     return out
 
 
@@ -1527,12 +1552,75 @@ def wrong_masks(tj, draw):
     # a flat soot
     k, ppm, ext, H, W = frame("wall_soot")
     out.append(("wall_soot", "a perfectly uniform mask", np.full((H, W), 0.9), ppm))
+
+    # ---- the second review's six wrong masks (R3), each of which passed every check of the second pass; the check that must refuse each one is named
+    # 1. the straight profile multiplied by a smooth vertical cosine: a band in vertical stripes with no course steps
+    def stripes(kid, from_top, period, amp, normalised):
+        m, ppm_ = gradient(kid, from_top)
+        x = np.arange(m.shape[1]) / ppm_
+        mod = 1.0 + amp * np.cos(2 * np.pi * x / period)
+        if normalised:
+            mod = mod / (1.0 + amp)
+        return np.clip(m * mod[None, :], 0.0, 1.0), ppm_
+    for kid, from_top in (("wall_foot_splash", False), ("wall_foot_damp", False), ("wall_head_band", True), ("gutter_grime", False)):
+        for period, amp, norm in ((0.25, 0.25, True), (0.40, 0.20, False), (0.50, 0.15, True)):
+            m, ppm_ = stripes(kid, from_top, period, amp, norm)
+            out.append((kid, "the straight profile times a vertical cosine (period %.2f m, +/-%d %%%s): a band in vertical stripes" % (period, int(amp * 100), ", clipped at 1" if not norm else ", scaled to peak 1"), m, ppm_, "core_column_cv"))
+    # 2. a perfect checkerboard of salt bricks, every other brick in two courses, blurred 3 to 4 px
+    k, ppm, ext, H, W = frame("salt_bloom")
+    for sig in (3.0, 4.0):
+        m = np.zeros((H, W))
+        for course in (4, 5):                                       # the courses 0.30 to 0.45 m, the zone the check reads
+            y0 = H - int(round((course + 1) * 0.075 * ppm)); y1 = H - int(round(course * 0.075 * ppm))
+            off = (course % 2) * 0.1075
+            for i in range(-1, int(W / ppm / 0.215) + 2):
+                if (i + course) % 2 == 0:
+                    x0 = int(round((off + i * 0.215) * ppm)); x1 = int(round((off + (i + 1) * 0.215) * ppm))
+                    m[y0:y1, max(x0, 0):max(min(x1, W), 0)] = 0.6
+        out.append(("salt_bloom", "a perfect checkerboard of whitened bricks in two courses, blurred %d px" % sig, ndi.gaussian_filter(m, sig), ppm, "brick_neighbour_same_share"))
+    # 3. unequal end streaks plus four identical, evenly spaced, ruler-straight rivulets
+    k, ppm, ext, H, W = frame("streak_sill")
+    m = np.zeros((H, W))
+    def bar(xc, wid, ln, lvl):
+        x0 = int(round((xc - wid / 2 - ext[0]) * ppm)); x1 = max(int(round((xc + wid / 2 - ext[0]) * ppm)), x0 + 1); L = int(round(ln * ppm))
+        for r in range(min(L, H)):
+            m[r, x0:x1] = lvl * (1 - 0.8 * r / L)
+    bar(-0.65, 0.045, 0.50, 0.9); bar(0.65, 0.030, 0.34, 0.8)
+    for xc in (-0.30, -0.10, 0.10, 0.30):
+        bar(xc, 0.014, 0.25, 0.7)
+    out.append(("streak_sill", "unequal end streaks and four identical, evenly spaced, ruler-straight rivulets", ndi.gaussian_filter(m, 0.6), ppm, "rivulet_spacing_cv"))
+    # 4. a correct 0.5 to 2 m mottle with no darker lower wall
+    k, ppm, ext, H, W = frame("wall_soot")
+    rg = np.random.default_rng(11)
+    mot = ndi.gaussian_filter(rg.normal(size=(H, W)), 0.22 * ppm, mode="wrap")
+    m = np.clip(0.90 + 0.07 * mot / mot.std(), 0.0, 1.0)
+    out.append(("wall_soot", "a 0.5 to 2 m mottle (std 0.07 around 0.90) with no darker lower wall", m, ppm, "lower_wall_excess"))
+    # 5. rust patches spread evenly up the pipe, none at the shoe (and a second one spread over the whole pipe)
+    k, ppm, ext, H, W = frame("iron_wear")
+    for lo, what in ((0.35, "none below 0.35 m"), (0.0, "spread evenly over the whole pipe")):
+        rg = np.random.default_rng(5)
+        yy, xx = np.mgrid[0:H, 0:W]
+        m = np.zeros((H, W))
+        cover = 0.0
+        while cover < 0.06:
+            e = float(np.clip(rg.lognormal(np.log(0.045), 0.45), 0.02, 0.11))
+            cy = (H - 1) - rg.uniform(lo, 2.4) * ppm
+            cx = rg.uniform(0, W)
+            m[((yy - cy) ** 2 + (xx - cx) ** 2) <= (e / 2 * ppm) ** 2] = 1.0
+            cover = float(m.mean())
+        out.append(("iron_wear", "rust patches %s" % what, m, ppm, "coverage_share_below_m"))
+    # 6. lichen as one flat block over half the top
+    k, ppm, ext, H, W = frame("stone_top_lichen")
+    m = np.zeros((H, W)); m[:, : W // 2] = 1.0
+    out.append(("stone_top_lichen", "one flat block over half the top", ndi.gaussian_filter(m, 1.5), ppm, "blob_eqd_mm_p50"))
     return out
 
 
 def part_e_wrong(tj, R, draw):
     log = {}
-    for kid, what, mask, ppm in wrong_masks(tj, draw):
+    for item in wrong_masks(tj, draw):
+        kid, what, mask, ppm = item[:4]
+        must = item[4] if len(item) > 4 else None
         fails = []
         for c in tj["kinds"][kid]["checks"]:
             if c.get("applies_to") != "mask":
@@ -1543,7 +1631,9 @@ def part_e_wrong(tj, R, draw):
                 v, ok = float("nan"), False
             if not ok:
                 fails.append("%s=%.3g" % (c["name"], v))
-        R.check("E wrong mask refused: %s, %s: %d check(s) fail (%s)" % (kid, what, len(fails), ", ".join(fails[:4])), len(fails) >= 1)
+        names = [f.split("=")[0] for f in fails]
+        R.check("E wrong mask refused: %s, %s: %d check(s) fail (%s)%s" % (kid, what, len(fails), ", ".join(fails[:4]), (", by the new check " + must) if must else ""),
+                len(fails) >= 1 and (must is None or must in names))
         log.setdefault(kid, []).append({"what": what, "refused_by": fails})
     return log
 
@@ -1625,7 +1715,37 @@ def rule_P9(pl, tj):
     return not sel, "%d gum or end stamps at a bus stop (there is none: zero)" % len(sel)
 
 
-PLACEMENT_RULES = {"P1": rule_P1, "P2": rule_P2, "P3": rule_P3, "P4": rule_P4, "P5": rule_P5, "P6": rule_P6, "P7": rule_P7, "P8": rule_P8, "P9": rule_P9}
+def rule_P10(pl, tj):
+    sel = _group(pl, ("wall_head_band",))
+    bad = []
+    for q in sel:
+        f = q.get("feature")
+        if f == "eaves_gutter":
+            ok = q["strength"] <= 0.2 + 1e-9 and q["depth_m"] <= 0.3 + 1e-9
+        elif f in ("gable_verge", "barge"):
+            ok = abs(q["strength"] - 1.0) < 1e-9 if q.get("quay_facing") else 0.3 - 1e-9 <= q["strength"] <= 1.0 + 1e-9
+        elif f in ("coping", "string_course"):
+            ok = q["strength"] <= 1.0 + 1e-9 and abs(q.get("depth_scale", 0) - 0.3) < 1e-9
+        else:
+            ok = False
+        if not ok:
+            bad.append(q)
+    gables = tj["places"]["quay_gables"]["gables"]
+    missing = [g["house"] for g in gables if not any(q.get("feature") in ("gable_verge", "barge") and q.get("wall") == g["house"] and q.get("quay_facing") and abs(q["strength"] - 1.0) < 1e-9 for q in sel)]
+    return not bad and not missing, "%d of %d head bands off their rule (eaves gutter: strength 0 to 0.2 and depth 0.1 to 0.3 m; gable verge or barge: 1.0 on a quay-facing gable, 0.3 to 1.0 elsewhere; coping: depth scale 0.3); quay gables without a full-strength verge band: %s" % (len(bad), len(sel), missing)
+
+
+def rule_P11(pl, tj):
+    st = {h["id"]: h["state"] for h in tj["houses"]["list"]}
+    sel = _group(pl, ("wall_soot",))
+    bad = [q["wall"] for q in sel if q.get("house_state") != st.get(q["wall"])]
+    sooted = [q for q in sel if q.get("house_state") == "sooted"]
+    near = [q["wall"] for q in sooted if q["wall"].startswith(("east_parade", "west_south"))]
+    over = len(sooted) > 0.3 * max(len(sel), 1)
+    return not bad and not near and not over, "%d of %d wall_soot decals whose house state is not the one in target.json `houses` (%s); sooted on a parade or west_south house: %s; sooted share %.2f (at most 0.30)" % (len(bad), len(sel), bad[:3], near, len(sooted) / max(len(sel), 1))
+
+
+PLACEMENT_RULES = {"P1": rule_P1, "P2": rule_P2, "P3": rule_P3, "P4": rule_P4, "P5": rule_P5, "P6": rule_P6, "P7": rule_P7, "P8": rule_P8, "P9": rule_P9, "P10": rule_P10, "P11": rule_P11}
 
 
 def check_placement(pl, tj):
@@ -1639,11 +1759,23 @@ def sample_street(tj, seed=1):
     """A conforming placed street built from the rules (x 3 to 45): sills, copings, L0 bands per house, oil at the standing places, gum on the footway."""
     rng = np.random.default_rng(seed)
     pl = []
-    houses = [("east_parade_bay%d" % i, "east", 3.0 + 6 * i) for i in range(6)] + [("east_chandler", "east", 40.0)] + [("west_south_bay%d" % i, "west", 3.0 + 6 * i) for i in range(3)] + [("west_north_bay%d" % i, "west", 24.0 + 6 * i) for i in range(3)]
+    houses = [("east_parade_bay%d" % i, "east", 3.0 + 6 * i) for i in range(6)] + [("east_chandler_bay0", "east", 40.0)] + [("west_south_bay%d" % i, "west", 3.0 + 6 * i) for i in range(3)] + [("west_north_bay%d" % i, "west", 24.0 + 6 * i) for i in range(3)]
+    state_of = {h["id"]: h["state"] for h in tj["houses"]["list"]}
+    quay = {g["house"] for g in tj["places"]["quay_gables"]["gables"]}
     n = 0
     for hi, (name, side, x0) in enumerate(houses):
         for kid, T_ in (("wall_foot_splash", 2.0), ("wall_foot_damp", 2.0), ("wall_soot", 4.0), ("wall_head_band", 2.0)):
-            pl.append({"kind": kid, "variant": hi % 4, "seed": n, "x_m": x0, "y_m": 0.0 if kid != "wall_head_band" else 6.2, "wall": name, "side": side, "house": hi, "tile_phase_m": (hi * 0.37 + 0.11 * len(kid)) % T_, "in_hook_frame": True})
+            q = {"kind": kid, "variant": hi % 4, "seed": n, "x_m": x0, "y_m": 0.0 if kid != "wall_head_band" else 6.2, "wall": name, "side": side, "house": hi, "tile_phase_m": (hi * 0.37 + 0.11 * len(kid)) % T_, "in_hook_frame": True}
+            if kid == "wall_soot":
+                q["house_state"] = state_of[name]
+            if kid == "wall_head_band":                                    # under the eaves gutter of the front: almost nothing
+                q.update(feature="eaves_gutter", strength=round(float(rng.uniform(0.0, 0.2)), 3), depth_m=round(float(rng.uniform(0.1, 0.3)), 3))
+            pl.append(q)
+            n += 1
+        if name in quay or name == "east_chandler_bay0":                   # a gable verge: full strength on the quay-facing gables, 0.3 to 1.0 on another
+            qg = name in quay
+            pl.append({"kind": "wall_head_band", "variant": (hi + 1) % 4, "seed": n, "x_m": x0, "y_m": 6.2, "wall": name + "_gable", "side": side, "house": hi, "tile_phase_m": (hi * 0.37 + 0.9) % 2.0, "in_hook_frame": qg,
+                       "feature": "gable_verge", "quay_facing": qg, "strength": 1.0 if qg else round(float(rng.uniform(0.3, 1.0)), 3), "depth_m": 1.15})
             n += 1
         for sx in (x0 + 1.5, x0 + 4.5):
             if rng.uniform() < 0.5:
@@ -1687,6 +1819,10 @@ def part_f(tj, R):
         "P7": ("two neighbouring houses with the same tile phase", lambda pl: [q.update(tile_phase_m=0.5) for q in pl if q["kind"] == "wall_foot_splash"]),
         "P8": ("an oil band in the yard entrance (west, x 22.5), which is no standing place", lambda pl: first(pl, "road_oil").update(x_m=22.5, side="west")),
         "P9": ("gum at a bus stop", lambda pl: first(pl, "gum").update(tier="bus stop")),
+        "P10": ("the first pass's head band: full strength and full depth under an eaves gutter", lambda pl: next(q for q in pl if q["kind"] == "wall_head_band" and q.get("feature") == "eaves_gutter").update(strength=1.0, depth_m=1.15)),
+        "P10b": ("a quay-facing gable verge at weight 0.5", lambda pl: next(q for q in pl if q["kind"] == "wall_head_band" and q.get("quay_facing")).update(strength=0.5)),
+        "P11": ("a parade bay sooted by the recipe's random brick set", lambda pl: [q.update(house_state="sooted") for q in pl if q["kind"] == "wall_soot" and q["wall"] == "east_parade_bay3"]),
+        "P11b": ("a house whose state is not the one in `houses`", lambda pl: [q.update(house_state="cleaned") for q in pl if q["kind"] == "wall_soot" and q["wall"] == "west_south_bay1"]),
     }
     for key, (what, f) in wrong.items():
         rid = key[:2]

@@ -2,7 +2,7 @@
  "family": "wear",
  "title": "Wear on Quay Street: stains, grime, gum, cracked render and the street's other marks",
  "written": "2026-10-08 (cloud week 42), target writer for production/cloud-week/targets/BRIEF.md",
- "summary_line": "33 kinds of seeded greyscale wear mask, each with its rule of place, size and shape in metres, density, tone per surface, wet and dry look, texel scale and checks, from 27 measurements on CC0 photographs and the Hook sheet; facade-wide soot and the dark head under every roof edge are now kinds of their own, streaks follow the photographs, wet and dry are kept apart, and nothing from 2000s Britain or America is in it.",
+ "summary_line": "33 kinds of seeded greyscale wear mask, each with its rule of place, size and shape in metres, density, tone per surface, wet and dry look, texel scale and checks, from 29 measurements on CC0 photographs and the Hook sheet; facade-wide soot (two houses of thirteen, grey) and the dark head (under gable verges, not eaves gutters) are kinds of their own, streaks follow the photographs, wet and dry are kept apart, and nothing from 2000s Britain or America is in it.",
  "units": {
   "length": "metres unless the key ends _mm",
   "tone": "sRGB 0-255, albedo multiplier in linear light, L* is CIE D65",
@@ -193,6 +193,15 @@
    ],
    "name": "weathered white road line paint (the sheet's dashed centre line)",
    "src": "Judgement; the Hook sheet's centre line; the lines family's own colour wins"
+  },
+  "pillar_box_red": {
+   "albedo_srgb": [
+    150,
+    30,
+    32
+   ],
+   "name": "pillar-box red gloss paint (the post box, furniture E4, x 27)",
+   "src": "Judgement: a deep gloss red (R4: the pillar box was named in iron_wear's list with no row of its own); the furniture family's own colour wins"
   }
  },
  "kinds_order": [
@@ -296,7 +305,12 @@
       0.14,
       0.4
      ],
-     "src": "Photo M16 (10.6 to 19.7 mm wide, 8 per metre of joint, 0.09 to 0.45 m long)"
+     "src": "Photo M16 (10.6 to 19.7 mm wide, 8 per metre of joint, 0.09 to 0.45 m long)",
+     "length_m_lognormal": [
+      0.15,
+      0.25,
+      0.42
+     ]
     },
     "wash": {
      "height_m": [
@@ -558,6 +572,32 @@
      "min": 3,
      "max": 7,
      "src": "Photo M16 (8 per metre of joint, thinned to a sill); reviewer's 3 to 7",
+     "applies_to": "mask"
+    },
+    {
+     "name": "rivulet_spacing_cv",
+     "measure": "rivulet_spacing_cv",
+     "params": {
+      "thr": 0.25,
+      "head_m": 0.2,
+      "min_length_m": 0.1
+     },
+     "min": 0.25,
+     "max": 2.0,
+     "src": "Review R3: rivulets are not evenly spaced (a wrong mask with four identical, evenly spaced, ruler-straight rivulets is refused)",
+     "applies_to": "mask"
+    },
+    {
+     "name": "rivulet_length_cv",
+     "measure": "rivulet_length_cv",
+     "params": {
+      "thr": 0.25,
+      "head_m": 0.2,
+      "min_length_m": 0.1
+     },
+     "min": 0.25,
+     "max": 1.5,
+     "src": "Review R3: rivulets differ in length (M16: 0.09 to 0.45 m)",
      "applies_to": "mask"
     }
    ],
@@ -907,8 +947,8 @@
       "level": 0.85
      },
      {
-      "h_m": 0.49,
-      "level": 0.45
+      "h_m": 0.45,
+      "level": 0.5
      },
      {
       "h_m": 0.61,
@@ -923,13 +963,14 @@
      "step_m": 0.075,
      "amplitude_m": [
       0.04,
-      0.12
+      0.1
      ],
      "wavelength_m": [
       0.15,
       0.6
      ],
-     "src": "Sheet M18: ragged top stepping by brick courses"
+     "rigid_course_shift": true,
+     "src": "Sheet M18: ragged top stepping by brick courses; the whole profile slides by whole courses, so the crossing of mask 0.5 (0.45 m) stays on a course line"
     },
     "fingers": {
      "n_per_m": 3,
@@ -949,7 +990,7 @@
       0.0,
       0.24,
       0.33,
-      0.49,
+      0.45,
       0.61,
       0.75
      ],
@@ -957,11 +998,11 @@
       1.0,
       1.0,
       0.85,
-      0.45,
+      0.5,
       0.15,
       0.0
      ],
-     "src": "Sheet M18 (wet): luminance ratio 0.12 to 0.19 below 0.24 m, 0.30 at 0.33 m, 0.57 at 0.49 m, 0.85 at 0.61 m, 0.95 above 0.8 m, inverted through the sheet's wet 0.20 (0.27 dry x 0.75 wet); the row 'plaster_brick_01' tagged 'sewer, tunnel, trimsheet' (M15) is not evidence for the profile"
+     "src": "Sheet M18 (wet): luminance ratio 0.12 to 0.19 below 0.24 m, 0.30 at 0.33 m, 0.57 at 0.49 m, 0.85 at 0.61 m, 0.95 above 0.8 m, inverted through the sheet's wet 0.20 (0.27 dry x 0.75 wet); the 0.49 m point (0.45) is read at 0.45 m (0.50), within the sheet's +/-1 course, so that mask 0.5 crosses on a course line; the plaster_brick_01 band (M15, tagged 'sewer, tunnel, trimsheet') is not evidence for the profile"
     },
     "profile_tolerance": 0.15,
     "edge_10_90_mm": [
@@ -1214,9 +1255,9 @@
       "state": "cleaned",
       "height_m": 0.1
      },
-     "min": 0.12,
-     "max": 0.3,
-     "src": "Sheet M18 (the darkest foot 0.12 to 0.30 of the wall; review 8 October): splash, damp, algae and the floor on a cleaned house at house wear 1.0, 0.1 m up beside a downpipe",
+     "min": 0.16,
+     "max": 0.4,
+     "src": "Sheet M18's darkest foot 0.12 to 0.30 of the wall is a WET range; converted to dry by the wet 0.75 (review narrow note): 0.16 to 0.40 (the wall floor 0.15 sits just under it): splash, damp, algae and the floor on a cleaned house at house wear 1.0, 0.1 m up beside a downpipe",
      "applies_to": "composition (compose block)"
     },
     {
@@ -1229,6 +1270,33 @@
      "max": 1.0,
      "src": "the wall floor 0.15 (compose block): a sooted foot beside a downpipe never goes below it",
      "applies_to": "composition (compose block)"
+    },
+    {
+     "name": "core_column_cv",
+     "measure": "core_column_cv",
+     "params": {
+      "source": "bottom",
+      "from_m": 0.0,
+      "to_m": 0.2
+     },
+     "min": 0.0,
+     "max": 0.05,
+     "src": "Review R3: the full-strength zone (0 to 0.2 m) is flat across x; a band in vertical stripes is refused",
+     "applies_to": "mask"
+    },
+    {
+     "name": "edge_on_course_share",
+     "measure": "edge_on_course_share",
+     "params": {
+      "thr": 0.5,
+      "source": "bottom",
+      "course_m": 0.075,
+      "tol_mm": 10
+     },
+     "min": 0.6,
+     "max": 1.0,
+     "src": "Review R3: the top edge lies within 10 mm of a 75 mm course line (Sheet M18: ragged top stepping by courses)",
+     "applies_to": "mask"
     }
    ],
    "mask": {
@@ -1498,6 +1566,19 @@
      "min": 0.08,
      "max": 1.0,
      "src": "Judgement (reviewer 8 October)",
+     "applies_to": "mask"
+    },
+    {
+     "name": "core_column_cv",
+     "measure": "core_column_cv",
+     "params": {
+      "source": "bottom",
+      "from_m": 0.0,
+      "to_m": 0.25
+     },
+     "min": 0.0,
+     "max": 0.05,
+     "src": "Review R3: the full-strength zone (0 to 0.25 m) is flat across x; a band in vertical stripes is refused",
      "applies_to": "mask"
     }
    ],
@@ -1826,6 +1907,35 @@
      "max": 2.2,
      "src": "Sheet M18: the whitened bricks read 0.57 to 0.75 of the wall and above it (review 8 October); laid after the darkening they stay pale; not above 2.2 (not white)",
      "applies_to": "composition (compose block)"
+    },
+    {
+     "name": "brick_neighbour_same_share",
+     "measure": "brick_neighbour_same_share",
+     "params": {
+      "brick_w_m": 0.215,
+      "brick_h_m": 0.075,
+      "from_m": 0.3,
+      "to_m": 0.45,
+      "cell_mean_above": 0.4
+     },
+     "min": 0.3,
+     "max": 0.8,
+     "src": "Review R3: side-by-side bricks of a course that are both whitened or both not; a checkerboard gives 0, random fill about 0.5",
+     "applies_to": "mask"
+    },
+    {
+     "name": "edge_on_course_share",
+     "measure": "edge_on_course_share",
+     "params": {
+      "thr": 0.4,
+      "source": "bottom",
+      "course_m": 0.075,
+      "tol_mm": 10
+     },
+     "min": 0.6,
+     "max": 1.0,
+     "src": "Review R3: the band's top edge lies within 10 mm of a 75 mm course line (whitened bricks)",
+     "applies_to": "mask"
     }
    ],
    "mask": {
@@ -5852,6 +5962,19 @@
      "max": 0.99,
      "src": "Photo M24: 0.95 (0.91 to 0.97)",
      "applies_to": "composition (compose block)"
+    },
+    {
+     "name": "core_column_cv",
+     "measure": "core_column_cv",
+     "params": {
+      "source": "bottom",
+      "from_m": 0.05,
+      "to_m": 0.23
+     },
+     "min": 0.0,
+     "max": 0.05,
+     "src": "Review R3: the channel body (0.05 to 0.23 m) is flat across x; a band in vertical stripes is refused",
+     "applies_to": "mask"
     }
    ],
    "mask": {
@@ -5873,26 +5996,26 @@
    "label": "Facade-wide soot: the sooted wall body, its metre-scale mottle and the darker lower wall",
    "layer": "L0 in the brick and render materials: one seamless tile per house, strength by the house's state; replaces the recipe's patch noise and the house look's brightness (section 1)",
    "where": {
-    "feature": "every brick, painted-brick and render wall surface of a house from the pavement to the wall head; one state per house: sooted, as built, or cleaned in the 1980s (the existing brick_set 1, 0, 2 of street-wear.json)",
-    "rule": "Strength by state: sooted 1.0, as built 0.35, cleaned 0.0 (Judgement; the Hook sheet's near walls read as built). At strength 1 the albedo multiplier is 0.42 with the per-channel tint of Photo M21 (sooted 92/81/73 against cleaner 146/129/110: linear ratios 0.37 / 0.37 / 0.43), luminance 0.377 of the cleaner panel in one measurement and 0.37 to 0.48 in two, colour saturation 0.84 of the cleaner panel (HSV; the sheet's head reads 0.65). The mask is a metre-scale mottle (wavelength 0.5 to 2.0 m, std 0.07) around a mean level 0.90, plus the darker lower wall: the level rises by 0.10 below 0.7 m and is back to the body by 1.2 m, which is x 0.88 on the wall above (Sheet M22b, lower wall about x 0.90 over 0.3 to 0.7 m up on the right-hand cottage). The mask is for the whole wall including above 4 m (the builder repeats the 4 m row).",
+    "feature": "every brick, painted-brick and render wall surface of a house from the pavement to the wall head; one state per house (sooted, as built, or cleaned in the 1980s), taken from the Hook sheet and not from the recipe's random brick_set: sooted only at the inland end (the chandler and west_north bay 2), every parade bay and every west_south bay as built or cleaned (target.json `houses`, D13)",
+    "rule": "Strength by state: sooted 1.0, as built 0.35, cleaned 0.0 (Judgement; the sheet's walls read as built or cleaned). Which houses are sooted is decided from the sheet (D13): the sheet's frame shows no house darker than about 0.86 of Mickey's front, so no parade bay and no west_south bay is sooted; sooted houses are the chandler and west_north bay 2 (2 of 13). At strength 1 the albedo multiplier is 0.42 (Photo M21: 0.377, 0.37 to 0.48). THE SOOT KEEPS LITTLE OF THE BRICK'S COLOUR: soot is a nearly neutral deposit (M21 92/81/73), not a red filter. The mark on brick_red is 82/62/55 (L* 28.2, C* 10.8: 0.39 of the clean brick's chroma 27.6), a lerp toward M21's soot; brick_painted and render_cream likewise (the same luminance multiplier, their own hue, chroma x 0.39). Target: the composed sooted wall keeps 0.4 to 0.6 of the clean wall's CIE chroma (Photo M21 0.43 to 0.54, Sheet head 0.39 to 0.42). The mask is a metre-scale mottle (wavelength 0.5 to 2.0 m, std 0.07) around a mean level 0.90, plus the darker lower wall: the level rises by 0.10 below 0.7 m and is back to the body by 1.2 m, which is x 0.88 on the wall above (Sheet M22: lower wall about x 0.90 over 0.17 to 0.77 m up on the right-hand cottage; check lower_wall_excess). The mask is for the whole wall including above 4 m (the builder repeats the 4 m row).",
     "surfaces": [
      "brick_red",
      "brick_painted",
      "render_cream"
     ],
     "height_m": "0 to the wall head; the lower-wall rise 0 to 1.2 m",
-    "sides": "Both sides; the state, not the side, decides (east parade 1.0, west block 1.0): house states are sooted 7, as built 4, cleaned 2 of 13 (street-wear.json brick_set 1, 0, 2)",
+    "sides": "Both sides; the state, not the side, decides: sooted 2 of 13 houses (the chandler, west_north bay 2), as built 9, cleaned 2 (target.json `houses`)",
     "footfall_and_wet": "Not footfall: deposit from coal smoke and traffic on uncleaned brick (Judgement; Photo M21 proves the state survives in 2019). Wet: the sooted wall reads a little darker.",
     "density": {
      "unit": "share of houses in the sooted state",
      "range": [
-      0.3,
-      0.6
+      0.1,
+      0.3
      ],
-     "typical": 0.54,
-     "src": "Derived: street-wear.json gives 7 of 13 houses brick_set 1 (HOUSE_SET_FACTOR 'sooted'); the other 6 are as built (4) or cleaned (2)"
+     "typical": 0.15,
+     "src": "Derived from the Hook sheet (D13): 2 of 13. The first pass took 7 of 13 from street-wear.json's brick_set, which is a random seed (tools/street_wear.py: int(rnd x 3) % 3), not a photograph or the sheet; Photo M21 proves soot exists on a 2019 street, it does not say which houses of the sheet's frame carry it"
     },
-    "scale_with_house_wear": "strength = state weight; the house wear (0.55 to 1.0) scales the mottle's contrast, not the state",
+    "scale_with_house_wear": "strength = state weight; the house wear (0.55 to 1.0) scales the mottle's contrast, not the state; no parade or west_south house is ever sooted (house_to_house_ratio)",
     "places": "whole facades; the mask above 1.2 m is the same for every storey"
    },
    "envelope": {
@@ -5924,11 +6047,6 @@
      0.14
     ],
     "mean_level": 0.9,
-    "tint_linear_ratio": [
-     0.372,
-     0.375,
-     0.427
-    ],
     "multiplier": 0.42,
     "sooted_over_cleaner": {
      "photo_M21": [
@@ -5939,9 +6057,13 @@
      "src": "Photo M21 (two measurements 0.377 and 0.37 to 0.48); the recipe's HOUSE_LOOKS sooted look is about 0.57, lighter than the photograph"
     },
     "saturation_ratio": {
-     "photo_M21": 0.84,
-     "sheet_M22": 0.65,
-     "src": "Photo M21 (the review's 0.6 is not what the photograph measures: 0.21 against 0.25 in HSV saturation)"
+     "hsv_median": 0.73,
+     "hsv_per_pixel": 0.65,
+     "chroma_median": 0.455,
+     "chroma_per_pixel": 0.43,
+     "sheet_head_chroma": 0.39,
+     "sheet_head_hsv": 0.61,
+     "src": "Photo M21 on every per-pixel or chroma measure (0.43 to 0.73), not the first pass's 0.84 (one HSV calculation on two JPEG median colours 92/81/73 and 146/129/110: 0.21 against 0.25); the reviewer found 0.68 (HSV per pixel), 0.73 (HSV of medians), 0.54 and 0.43 (CIE chroma of medians, per pixel); this pass re-made them: 0.65, 0.73, 0.455, 0.43; Sheet gable head against its body 0.39 (chroma), 0.42 (reviewer)"
     },
     "lower_wall_ratio": {
      "measured": 0.9,
@@ -5954,46 +6076,56 @@
     ],
     "edge_src": "Judgement: a broad mottle",
     "tileable": "horizontally, seamless, 4.0 m period; vertical profile fixed (rows from the pavement up)",
+    "chroma_ratio_of_mark": {
+     "brick_red": 0.39,
+     "all_surfaces": 0.39,
+     "composed_target": [
+      0.4,
+      0.6
+     ],
+     "src": "reviewer's example 82/62/55 on brick_red: C* 10.8 against 27.6; the same chroma ratio on the other two surfaces"
+    },
+    "houses_note": "which houses are sooted: target.json `houses`; the recipe's HOUSE_LOOKS are divided by their own mean luminance (hue only), so wall_soot carries all the brightness (section 1)",
     "edge_for_envelope_mm": 100
    },
    "tone": {
     "brick_red": {
      "mark_srgb": [
-      93,
-      56,
-      48
+      81,
+      61,
+      54
      ],
-     "name": "soot grey-brown",
+     "name": "soot grey, little red",
      "albedo_mult_linear": 0.42,
      "delta_L_star": -15,
-     "src": "Photo M21: sooted stock brick 92/81/73 against 146/129/110, luminance 0.377 (0.37 to 0.48), per-channel ratios kept; dry photograph",
-     "quoted_delta_L_star": -20,
+     "src": "Photo M21: sooted stock brick 92/81/73 (a nearly neutral deposit) against 146/129/110, luminance 0.377 (0.37 to 0.48); the review's example mark 82/62/55 (L* 28.2, C* 10.8) for red brick; dry photograph",
+     "quoted_delta_L_star": -14,
      "note_mark_srgb": "colour of the mark at mask 1 on this surface: for multiplier marks it is the surface x albedo_mult_linear with the kind's dirt tint, computed here; for replacing marks (mult 1.0) it is the stated colour"
     },
     "brick_painted": {
      "mark_srgb": [
-      101,
-      71,
-      65
+      91,
+      75,
+      69
      ],
-     "name": "soot grey-pink",
+     "name": "soot grey, little pink",
      "albedo_mult_linear": 0.42,
      "delta_L_star": -17,
-     "src": "Photo M21 ratios on a painted surface; Judgement",
-     "quoted_delta_L_star": -20,
+     "src": "Photo M21 luminance; the same chroma ratio as brick_red (x 0.39), the surface's own hue: Judgement",
+     "quoted_delta_L_star": -14,
      "note_mark_srgb": "colour of the mark at mask 1 on this surface: for multiplier marks it is the surface x albedo_mult_linear with the kind's dirt tint, computed here; for replacing marks (mult 1.0) it is the stated colour"
     },
     "render_cream": {
      "mark_srgb": [
-      144,
-      135,
-      127
+      141,
+      136,
+      128
      ],
-     "name": "soot grey-cream",
+     "name": "soot grey, little cream",
      "albedo_mult_linear": 0.42,
      "delta_L_star": -24,
-     "src": "Photo M21 ratios on a render surface; Judgement",
-     "quoted_delta_L_star": -20,
+     "src": "Photo M21 luminance; the same chroma ratio as brick_red (x 0.39), the surface's own hue: Judgement",
+     "quoted_delta_L_star": -22,
      "note_mark_srgb": "colour of the mark at mask 1 on this surface: for multiplier marks it is the surface x albedo_mult_linear with the kind's dirt tint, computed here; for replacing marks (mult 1.0) it is the stated colour"
     }
    },
@@ -6113,6 +6245,38 @@
      "max": 0.55,
      "src": "Photo M21 (0.377 to 0.48): the composed brick of a sooted house over the cleaned one, wall above 2 m",
      "applies_to": "composition (compose block)"
+    },
+    {
+     "name": "lower_wall_excess",
+     "measure": "lower_wall_excess",
+     "params": {
+      "low_from_m": 0.1,
+      "low_to_m": 0.6,
+      "high_from_m": 1.5,
+      "high_to_m": 3.5
+     },
+     "min": 0.05,
+     "max": 0.15,
+     "src": "Sheet M22 (lower wall x 0.84 to 0.93) and the review: mean mask 0.1 to 0.6 m minus mean 1.5 to 3.5 m",
+     "applies_to": "mask"
+    },
+    {
+     "name": "composed_soot_chroma_ratio",
+     "measure": "composed_soot_chroma_ratio",
+     "params": {},
+     "min": 0.4,
+     "max": 0.6,
+     "src": "Photo M21 (CIE chroma of the sooted over the cleaner panel 0.43 to 0.54) and the sheet's head (0.39 to 0.42): the composed sooted brick over the clean one, wall above 1.3 m",
+     "applies_to": "composition (compose block)"
+    },
+    {
+     "name": "house_to_house_ratio",
+     "measure": "house_to_house_ratio",
+     "params": {},
+     "min": 0.8,
+     "max": 1.4,
+     "src": "Sheet (review R1): every house the sheet's frame shows reads at 0.80 or more of Mickey's front, composed upper wall in albedo (no haze); none darker than about 0.86 on screen",
+     "applies_to": "composition (compose block)"
     }
    ],
    "mask": {
@@ -6131,30 +6295,42 @@
    }
   },
   "wall_head_band": {
-   "label": "The dark head under eaves, verges, copings and string courses",
+   "label": "The dark head under gable verges and barges, and, shallower, under copings; almost none under an eaves gutter",
    "layer": "L0 in the brick and render materials, hung from each feature's lower edge by the distance below it (a 2.0 m seamless-in-x strip); ragged by brick courses",
    "where": {
-    "feature": "the lower edge of every eaves gutter, gable verge and barge, chimney-stack and parapet coping, and string course on a brick, painted-brick or render wall; not under a window sill (streak_sill)",
-    "rule": "Multiplier at mask 1: 0.56 on a wall that is as built or cleaned (Sheet M22, wet 0.50 to 0.62 over the top 0.2 to 0.75 m of the gable, divided by the wet 0.90), and 0.80 on a sooted wall (Photo M21: a further x 0.80 under the coping of the sooted panel; the soot already carries the common darkening, so nothing is darkened twice). Depth profile by distance below the feature: 1.0 to 0.2 m, 0.85 at 0.4 m, 0.70 at 0.6 m, 0.38 at 0.75 m, 0.20 at 0.95 m, 0 by 1.15 m (Sheet M22: 0.75 to 0.80 at 0.9 to 1.2 m, 1.0 by 1.4 m wet) for a gable verge or eaves gutter; a coping or string course takes the same profile scaled by 0.3 in depth (Photo M21: a band 0.4 m deep). The lower edge is ragged by courses: 75 mm steps, its standard deviation along x 20 to 100 mm. It REPLACES the recipe's head water paths (STREAK_DEPTH, section 1).",
+    "feature": "the lower edge of a gable verge or barge (full strength), of a chimney-stack or parapet coping and a string course (the coping scale), and, at 0 to 0.2 of the strength and 0.1 to 0.3 m deep, of the eaves gutter of a front",
+    "rule": "Sheet M22 measures the left gable under its VERGE: a verge with no gutter, where roof water runs straight down the brick. The sheet shows no such head under an eaves gutter (Mickey's front: 0.64 of the body in the first 0.07 m, the dentil course's shadow, then 0.98 to 1.10 down to 0.5 m) and none under the right-hand cottage's gable verge (flat 0.036 to 0.054, columns 1560 to 1595, rows 322 to 478), so the head is a weighted rule, not a rule for every roof edge. Gable verge or barge: multiplier at mask 1 0.56 on a wall that is as built or cleaned (Sheet M22, wet 0.50 to 0.62 over the top 0.2 to 0.75 m, divided by the wet 0.90) and 0.80 on a sooted wall (Photo M21: a further x 0.80 under the coping of the sooted panel; nothing is darkened twice); weight 1.0 on the quay-facing gables (the sheet's left gable: Mickey's quay gable and west_south's, x 3) and 0.3 to 1.0 by house seed on other gables. Depth profile by distance below the feature: 1.0 to 0.2 m, 0.85 at 0.4 m, 0.70 at 0.6 m, 0.30 at 0.75 m, 0.18 at 0.95 m, 0 by 1.15 m (Sheet M22: 0.75 to 0.80 at 0.9 to 1.0 m, 1.0 by 1.4 m wet). Parapet and chimney copings and string courses keep the coping scale: the same profile x 0.3 in depth (Photo M21: a band 0.4 m deep), weight 1.0. Eaves gutter of a front: strength 0 to 0.2 and depth 0.1 to 0.3 m, the depth being where the profile reaches half strength (the profile compressed by depth / 0.675; Judgement, from Mickey's front); a leaking gutter is streak_coping's job. The lower edge is ragged by whole brick courses: the profile slides up or down by 75 mm steps (its standard deviation along x 20 to 100 mm), so the edge always lies on a course line. It REPLACES the recipe's head water paths (STREAK_DEPTH, section 1).",
     "surfaces": [
      "brick_red",
      "brick_painted",
      "render_cream"
     ],
-    "height_m": "0 to 1.15 below the feature (0 to 0.35 below a coping or string course)",
-    "sides": "Both sides; gables facing the street 1.0, the east parade 1.0, the west block 0.9",
+    "height_m": "0 to 1.15 below a gable verge or barge; 0 to 0.35 below a coping or string course; 0.1 to 0.3 below an eaves gutter of a front",
+    "sides": "Quay-facing gables 1.0; other gables 0.3 to 1.0 by house seed; fronts' eaves 0 to 0.2 (no front is darkened across its upper floor)",
     "footfall_and_wet": "Wet climate: roof run-off and the gutter's overflow wash the head; the Hook sheet's gable and the right-hand cottage both show it.",
     "density": {
-     "unit": "share of each eaves, verge, coping and string-course length",
+     "unit": "weight of the full-strength band, by feature",
      "range": [
-      1.0,
+      0.0,
       1.0
      ],
      "typical": 1.0,
-     "src": "Sheet M22 (gable verge), Photo M21 (coping): continuous, not fingers"
+     "tiers": {
+      "gable verge, quay-facing": 1.0,
+      "gable verge, other": [
+       0.3,
+       1.0
+      ],
+      "coping or string course (depth x 0.3)": 1.0,
+      "eaves gutter of a front (depth 0.1 to 0.3 m)": [
+       0.0,
+       0.2
+      ]
+     },
+     "src": "Sheet M22 (left gable under its verge) against the sheet's eaves front and right-hand cottage gable (no head); review R2"
     },
     "scale_with_house_wear": "strength x wear; depth x (0.8 + 0.2 x wear)",
-    "places": "under every roof edge of every house; at the quay-end gable (x 3, the Hook sheet's left gable) it is the hero reference"
+    "places": "the quay gables at x 3 (the sheet's left gable) at weight 1.0; the white patches at the sheet's verge are render remnants (render_patch, Judgement), not this kind and not bird_dropping or sign_ghost"
    },
    "envelope": {
     "primitive": "head_band",
@@ -6173,11 +6349,11 @@
      },
      {
       "h_m": 0.75,
-      "level": 0.38
+      "level": 0.3
      },
      {
       "h_m": 0.95,
-      "level": 0.2
+      "level": 0.18
      },
      {
       "h_m": 1.15,
@@ -6187,18 +6363,36 @@
     "top_edge": {
      "step_m": 0.075,
      "amplitude_m": [
-      0.12,
-      0.3
+      0.05,
+      0.12
      ],
      "wavelength_m": [
       0.3,
       0.7
      ],
-     "src": "Judgement: ragged by courses (peak excursion of the noise before it is rounded to 75 mm steps; the edge's standard deviation comes out at 20 to 100 mm)"
+     "rigid_course_shift": true,
+     "src": "Judgement: the whole profile slides by whole 75 mm courses, so the crossing of mask 0.5 (0.675 m) stays on a course line; the edge's standard deviation comes out at 20 to 100 mm"
     },
     "depth_scale": {
-     "gable_verge_or_eaves": 1.0,
-     "coping_or_string_course": 0.3
+     "gable_verge_or_barge": 1.0,
+     "coping_or_string_course": 0.3,
+     "eaves_gutter_front": [
+      0.15,
+      0.44
+     ],
+     "eaves_note": "depth 0.1 to 0.3 m is where the profile reaches half strength (0.675 m on the verge scale): factor depth / 0.675"
+    },
+    "feature_weights": {
+     "gable_verge_quay_facing": 1.0,
+     "gable_verge_other": [
+      0.3,
+      1.0
+     ],
+     "coping_or_string_course": 1.0,
+     "eaves_gutter_front": [
+      0.0,
+      0.2
+     ]
     }
    },
    "geometry": {
@@ -6217,11 +6411,11 @@
       1.0,
       0.85,
       0.7,
-      0.38,
-      0.2,
+      0.3,
+      0.18,
       0.0
      ],
-     "src": "Sheet M22 (wet ratios 0.50 at 0.0 to 0.2 m, 0.56 at 0.34 to 0.48, 0.62 at 0.61, 0.75 at 0.75, 0.80 at 0.88 to 1.0, 0.945 at 1.16, 1.0 at 1.4 m) divided by the wet 0.90 and inverted through the dry 0.56; 'distance below' is the axis here"
+     "src": "Sheet M22 (wet ratios 0.50 at 0.0 to 0.2 m, 0.56 at 0.34 to 0.48, 0.62 at 0.61, 0.75 at 0.75, 0.80 at 0.88 to 1.0, 0.945 at 1.16, 1.0 at 1.4 m) divided by the wet 0.90 and inverted through the dry 0.56; 'distance below' is the axis; the 0.75 m point is 0.30 (was 0.38) so that mask 0.5 crosses at 0.675 m, a course line (within the sheet's +/-1 course)"
     },
     "profile_tolerance": 0.2,
     "edge_10_90_mm": [
@@ -6247,6 +6441,27 @@
      "src": "Judgement"
     },
     "tileable": "horizontally, seamless, 2.0 m period",
+    "eaves_front": {
+     "sheet_mickey_front": {
+      "0_to_0.07_m": 0.64,
+      "0.1_to_0.5_m": [
+       0.98,
+       1.1
+      ]
+     },
+     "target_ratio_at_0.3_m": [
+      0.9,
+      1.1
+     ],
+     "src": "Sheet (this pass): Mickey's front under its eaves gutter, columns 385 to 445, rows 160 to 340, against its body (rows 200 to 330); the review found 0.63 then 1.00, 1.00, 1.08, 1.10"
+    },
+    "gable_verge_none": {
+     "right_hand_cottage": [
+      0.036,
+      0.054
+     ],
+     "src": "Sheet: the right-hand cottage's gable under its verge, columns 1560 to 1595, rows 322 to 478: flat, no head (review R2)"
+    },
     "edge_for_envelope_mm": 100
    },
    "tone": {
@@ -6325,18 +6540,18 @@
    "not_modern": "No clean wall to the roof edge; no ruler-straight lower edge; no head band without the roof edge it hangs from.",
    "checks": [
     {
-     "name": "composed_head_ratio",
+     "name": "composed_head_ratio_gable",
      "measure": "composed_head_ratio",
      "params": {
       "state": "cleaned"
      },
      "min": 0.45,
      "max": 0.65,
-     "src": "Sheet M22 (wet 0.50 to 0.62, dry 0.56): the head 0.1 m below the feature on a cleaned house",
+     "src": "Sheet M22 (wet 0.50 to 0.62, dry 0.56): the gable verge's head 0.1 m below the feature on a cleaned house",
      "applies_to": "composition (compose block)"
     },
     {
-     "name": "composed_head_ratio_sooted",
+     "name": "composed_head_ratio_gable_sooted",
      "measure": "composed_head_ratio",
      "params": {
       "state": "sooted"
@@ -6437,6 +6652,46 @@
      "max": 1.0,
      "src": "Judgement (reviewer 8 October)",
      "applies_to": "mask"
+    },
+    {
+     "name": "core_column_cv",
+     "measure": "core_column_cv",
+     "params": {
+      "source": "top",
+      "from_m": 0.0,
+      "to_m": 0.15
+     },
+     "min": 0.0,
+     "max": 0.05,
+     "src": "Review R3: the full-strength zone (0 to 0.15 m below the feature) is flat across x; a band in vertical stripes is refused",
+     "applies_to": "mask"
+    },
+    {
+     "name": "edge_on_course_share",
+     "measure": "edge_on_course_share",
+     "params": {
+      "thr": 0.5,
+      "source": "top",
+      "course_m": 0.075,
+      "tol_mm": 10
+     },
+     "min": 0.6,
+     "max": 1.0,
+     "src": "Review R3: the lower edge lies within 10 mm of a 75 mm course line",
+     "applies_to": "mask"
+    },
+    {
+     "name": "composed_eaves_front_ratio",
+     "measure": "composed_eaves_front_ratio",
+     "params": {
+      "below_m": 0.3,
+      "strength": 0.2,
+      "depth_m": 0.3
+     },
+     "min": 0.9,
+     "max": 1.1,
+     "src": "Sheet (review R2): Mickey's front reads 0.98 to 1.10 from 0.1 to 0.5 m under its eaves; the head band at its strongest eaves setting (strength 0.2, depth 0.3 m) 0.3 m below the eaves",
+     "applies_to": "composition (compose block)"
     }
    ],
    "mask": {
@@ -6456,12 +6711,13 @@
   },
   "iron_wear": {
    "label": "Paint loss and rust on downpipes, railings, hopper heads and bollards",
-   "layer": "L0 in the iron material (the patches) plus L1 at collars (the streaks)",
+   "layer": "L0 in the iron material (the patches, UNWRAPPED round the pipe) plus L1 at collars (the streaks)",
    "where": {
-    "feature": "downpipes (68 mm round, vignette-scene.json), hopper heads, the guard-railing panel (x 10 to 12), bollards (x 20.7 and 24.3), lamp-column bases, pillar box, letter-box and bracket ironwork",
-    "rule": "Paint loss and rust over 4 to 8 % of the length or area, in patches of 20 to 110 mm (p50 45 mm, Sheet M25), 40 % of them in the lowest 0.3 m (the shoe), 30 % within 0.08 m of a collar or bracket, 30 % anywhere. Below 4 in 10 collars a rust streak: width p50 24 mm, aspect 4 to 12, 0.10 to 0.30 m long, 16 mm edges (Photo M13). The patch colour is a pale ochre, 141/102/72 on the wet sheet's near-black paint 50/40/37 (Sheet M25), 152/110/78 dry.",
+    "feature": "downpipes (68 mm round, circumference 0.214 m, vignette-scene.json), hopper heads, the guard-railing panel (x 10 to 12), bollards (x 20.7 and 24.3), lamp-column bases, the pillar box (x 27), letter-box and bracket ironwork",
+    "rule": "THE MASK IS UNWRAPPED round the round pipe: 0.214 m wide (the circumference of a 68 mm pipe) and 2.4 m high, x = 0 the street-facing centre line and x = +/-0.107 m the seam at the back, so the back of the pipe, against the wall, takes the same mask as the face (the sheet shows only the face; the share is the sheet's, per unit area, so the face is as measured; the first pass's 0.08 m face-on frame left the sides and back unspecified). Paint loss and rust over 4 to 8 % of the unwrapped area, in patches of 20 to 110 mm (p50 45 mm, Sheet M25), 40 % of the lost paint (by area) in the lowest 0.3 m (the shoe), 30 % within 0.08 m of a collar or bracket, 30 % anywhere. Below 4 in 10 collars one or two rust streaks at any angle round the pipe: width p50 24 mm, aspect 4 to 12, 0.10 to 0.30 m long, 16 mm edges (Photo M13). The patch colour is a pale ochre, 141/102/72 on the wet sheet's near-black paint 50/40/37 (Sheet M25), 152/110/78 dry. The PILLAR BOX (red, 0.597 m across, x 27) takes the same mask as a 0.214 m strip tiled round its circumference (mirrored on alternate repeats) with its own row: paint loss to grey primer and rust on pillar-box red.",
     "surfaces": [
-     "iron_black"
+     "iron_black",
+     "pillar_box_red"
     ],
     "height_m": "0 to 2.4 m of a downpipe from the pavement, then the same rule on the first-floor pipe",
     "sides": "East parade (wet) 1.0; west block 0.8; the gable downpipe at the quay end (the sheet's) is the hero reference",
@@ -6479,7 +6735,6 @@
    },
    "envelope": {
     "primitive": "iron_set",
-    "pipe_width_m": 0.075,
     "length_m": 2.4,
     "collars_m": [
      0.6,
@@ -6511,14 +6766,16 @@
       0.1,
       0.3
      ]
-    }
+    },
+    "circumference_m": 0.214,
+    "pipe_diameter_m": 0.068
    },
    "geometry": {
     "patch_eqd_mm": {
      "p10": 20,
      "p50": 45,
      "p90": 110,
-     "src": "Sheet M25 (patches 20 to 156 mm long on a 48 mm wide pipe, as pixels)"
+     "src": "Sheet M25 (patches 20 to 156 mm long on a 48 mm wide visible strip)"
     },
     "streak_width_mm": {
      "p10": 14,
@@ -6531,6 +6788,13 @@
      25
     ],
     "edge_src": "Photo M13 16 mm for the streaks; Judgement 3 mm for chipped paint",
+    "round_pipe": {
+     "diameter_m": 0.068,
+     "circumference_m": 0.214,
+     "unwrapped": true,
+     "seam": "at the back (x = +/-0.107 m)",
+     "src": "vignette-scene.json roofline.downpipe (68 mm round, trade standard); review R4.3"
+    },
     "edge_for_envelope_mm": 4
    },
    "tone": {
@@ -6544,6 +6808,19 @@
      "albedo_mult_linear": 1.0,
      "delta_L_star": 36,
      "src": "Sheet M25 is wet: ochre 141/102/72 (the review) or 125/86/64 (this pass) on paint 45 to 50 / 33 to 40 / 26 to 37; dry = the review's 141/102/72 divided by the wet 0.85 in luminance = 152/110/78, used once; replaces, mixed at mask x 0.9",
+     "quoted_delta_L_star": null,
+     "note_mark_srgb": "colour of the mark at mask 1 on this surface: for multiplier marks it is the surface x albedo_mult_linear with the kind's dirt tint, computed here; for replacing marks (mult 1.0) it is the stated colour"
+    },
+    "pillar_box_red": {
+     "mark_srgb": [
+      124,
+      104,
+      92
+     ],
+     "name": "grey primer and rust showing through the red",
+     "albedo_mult_linear": 1.0,
+     "delta_L_star": 13,
+     "src": "Judgement: paint loss on pillar-box red shows grey primer (about 118/112/106) and rust (141/102/72); the mean of the two, R4.4 of the second review",
      "quoted_delta_L_star": null,
      "note_mark_srgb": "colour of the mark at mask 1 on this surface: for multiplier marks it is the surface x albedo_mult_linear with the kind's dirt tint, computed here; for replacing marks (mult 1.0) it is the stated colour"
     }
@@ -6584,7 +6861,7 @@
      },
      "min": 0.05,
      "max": 0.14,
-     "src": "Sheet M25 (4.8 to 7 % of the pipe lost) plus the streaks",
+     "src": "Sheet M25 (4.8 to 7 % of the pipe lost) plus the streaks, over the unwrapped 0.214 x 2.4 m frame",
      "applies_to": "mask"
     },
     {
@@ -6627,26 +6904,38 @@
      "params": {
       "role": "patch",
       "below_mm": 300,
-      "of": "count"
+      "of": "area"
      },
      "min": 0.25,
      "max": 0.6,
-     "src": "Sheet M25 / Judgement: 40 % of the patches (by count, in quotas) are in the lowest 0.3 m",
+     "src": "Sheet M25 / Judgement: 40 % of the lost paint, by patch area, is in the lowest 0.3 m (quotas by area); the mask check coverage_share_below_m tests the same on any generated mask",
      "applies_to": "envelope (drawing polygons)"
+    },
+    {
+     "name": "coverage_share_below_m",
+     "measure": "coverage_share_below_m",
+     "params": {
+      "thr": 0.5,
+      "below_m": 0.3
+     },
+     "min": 0.25,
+     "max": 0.6,
+     "src": "Review R3: the lost paint is concentrated at the shoe (Sheet M25: 40 % in the lowest 0.3 m); patches spread evenly up the pipe are refused",
+     "applies_to": "mask"
     }
    ],
    "mask": {
     "frame_extent_m": [
-     -0.04,
+     -0.107,
      0.0,
-     0.04,
+     0.107,
      2.4
     ],
     "decal_frame_m": [
-     0.08,
+     0.214,
      2.4
     ],
-    "origin": "origin = the foot of the pipe (the shoe) on the pavement, x = the pipe's centre line; y up the pipe",
+    "origin": "UNWRAPPED round the 68 mm pipe (circumference 0.214 m): origin = the foot of the pipe (the shoe) on the pavement, x = 0 the street-facing centre line, x = +/-0.107 m the seam at the back; y up the pipe. The pillar box takes it as a 0.214 m strip tiled round its girth",
     "encoding": "8-bit greyscale 0 none to 255 full; see layers.mask_encoding"
    }
   },
@@ -6809,8 +7098,8 @@
    "label": "Worn double yellow and white lines: paint lost in cracks, gaps and chips",
    "layer": "L2 ground (virtual texture); the lines family's colour and geometry are the base, this mask is the loss",
    "where": {
-    "feature": "the two yellow bands of each kerb's double line (100 mm each, 100 mm apart, 0.25 m from the kerb face, vignette-scene.json) and the white dashed centre line; one instance per band, different seeds",
-    "rule": "Photo M26: 22 % of the nominal 75 mm strip was lost (10 to 30 %: 8 gaps in 4 m, most about 15 mm, one about 0.5 m, plus ragged chips on both edges). Cross gaps the full width of the line, 1.2 to 2.4 per metre, lengths 20 / 60 / 300 mm (p10 / p50 / p90); edge chips 5 to 15 mm deep, 20 to 150 mm long, 3 to 8 per metre; specks 4 to 9 mm. The paint that remains is faded and filmed with dirt (the surface colour 195/168/100). The mask is the LOSS: 1 shows the road.",
+    "feature": "each 100 mm yellow band of each kerb's double line (two bands 100 mm apart, 0.25 m from the kerb face, vignette-scene.json) and the white dashed centre line (also placed at 100 mm); one instance per band, different seeds",
+    "rule": "The mask frame is the band's own 100 mm (y +/- 0.05 m, so the whole band wears: no stretching, nothing left unworn at the edges). Photo M26 measured a 75 mm single line: 22 % of the nominal strip lost (10 to 30 %: 8 gaps in 4 m, most about 15 mm, one about 0.5 m, plus ragged chips on both edges); the share and the gap lengths carry over to the 100 mm band, the chips are 5 to 15 mm deep on both edges. Cross gaps the full width of the band, 1.2 to 2.4 per metre, lengths 20 / 60 / 300 mm (p10 / p50 / p90); edge chips 5 to 15 mm deep, 20 to 150 mm long, 3 to 8 per metre; specks 4 to 9 mm. The paint that remains is faded and filmed with dirt (the surface colour 195/168/100). The mask is the LOSS: 1 shows the road.",
     "surfaces": [
      "line_yellow",
      "line_white"
@@ -6831,7 +7120,7 @@
    },
    "envelope": {
     "primitive": "line_loss",
-    "line_width_mm": 75,
+    "line_width_mm": 100,
     "length_m": 3.0,
     "cross_gaps": {
      "per_m": [
@@ -6885,6 +7174,11 @@
      15
     ],
     "edge_src": "Judgement: paint chips are hard-edged; the 3 mm pixel and JPEG soften them",
+    "band_mm": {
+     "mask_frame": 100,
+     "measured_line": 75,
+     "src": "vignette-scene.json paint.double_yellow (two 100 mm bands); Photo M26 measured a 75 mm line"
+    },
     "edge_for_envelope_mm": 3
    },
    "tone": {
@@ -6933,7 +7227,7 @@
     "px_per_m_recommended": 1120,
     "px_per_m_at_1p6m_screen": 1120,
     "px_per_m_at_10m_screen": 180,
-    "note": "a line is 75 mm to 100 mm wide: 1120 px/m gives 84 to 112 texels; beyond 6 m fade the specks"
+    "note": "a band is 100 mm wide: 1120 px/m gives 112 texels; beyond 6 m fade the specks"
    },
    "variants": {
     "count": 6,
@@ -7004,15 +7298,15 @@
    "mask": {
     "frame_extent_m": [
      0.0,
-     -0.0375,
+     -0.05,
      3.0,
-     0.0375
+     0.05
     ],
     "decal_frame_m": [
      3.0,
-     0.075
+     0.1
     ],
-    "origin": "origin = the start of a 3.0 m length of line, y = the line's centre; tile along x; one instance per 100 mm band",
+    "origin": "origin = the start of a 3.0 m length of line, y = the line's centre; the frame is the band's own 100 mm, so the whole band wears; tile along x; one instance per 100 mm band",
     "encoding": "8-bit greyscale 0 none to 255 full; see layers.mask_encoding"
    }
   },
@@ -7739,6 +8033,31 @@
      "max": 1.0,
      "src": "Derived",
      "applies_to": "mask"
+    },
+    {
+     "name": "blob_eqd_mm_p50",
+     "measure": "blob_eqd_mm",
+     "params": {
+      "thr": 0.5,
+      "stat": "p50",
+      "min_area_mm2": 50
+     },
+     "min": 10,
+     "max": 60,
+     "src": "Review R3: patches of 10 to 60 mm, not one block",
+     "applies_to": "mask"
+    },
+    {
+     "name": "size_cv",
+     "measure": "size_cv",
+     "params": {
+      "thr": 0.5,
+      "min_area_mm2": 50
+     },
+     "min": 0.3,
+     "max": 3.0,
+     "src": "Review R3: patches differ in size",
+     "applies_to": "mask"
     }
    ],
    "mask": {
@@ -7914,6 +8233,31 @@
      "applies_to": "mask"
     }
    ],
+   "variant_tone": {
+    "variants_0_2": {
+     "name": "bitmac infill",
+     "surface": "flag_concrete",
+     "mark_srgb": [
+      70,
+      68,
+      66
+     ],
+     "albedo_mult_linear": 1.0,
+     "src": "Judgement (review 8 October)"
+    },
+    "variants_3_5": {
+     "name": "in-situ concrete infill, rough aggregate",
+     "surface": "flag_concrete",
+     "mark_srgb": [
+      150,
+      143,
+      136
+     ],
+     "albedo_mult_linear": 1.0,
+     "src": "Photo M07b: the in-situ strip reads 161/153/149 on the tone-mapped view where the dark flags read 136/132/131; the review's 150/145/140 and this 150/143/136 agree"
+    },
+    "src": "Review R4.2: variants 3 to 5 are in-situ concrete and the tone table had only the bitmac row; the placer picks the row by the variant"
+   },
    "mask": {
     "frame_extent_m": [
      -0.4,
@@ -7971,6 +8315,13 @@
   "nn_ratio": "Clark-Evans ratio of the components of mask >= thr (area >= min_area_mm2; at least 4): mean nearest-neighbour distance of their centroids / (0.5 / sqrt(n / A)), A the frame area (area frame) or the convex hull of the centroids (area hull); about 1 for random scatter, above 1.3 for a lattice, below 0.8 for clusters; 0 if fewer than four",
   "size_cv": "std / mean of the equivalent diameters of the components of mask >= thr with area >= min_area_mm2 (at least 4)",
   "dominant_wavelength_m": "wavelength 1 / (k x f) in m of the annulus with the largest summed power in the 2-D power spectrum of the mask minus its mean, annuli of width f = 1 / the shorter side of the frame (m), k = 1, 2, 3, ... the annulus index (the zero-frequency annulus is left out)",
+  "core_column_cv": "coefficient of variation (std / mean) across x of the column means of the mask over the FULL-STRENGTH zone, the rows from_m to to_m (m) measured from the source edge (source bottom or top); a band in vertical stripes is refused",
+  "edge_on_course_share": "share of columns whose far edge of the band (as in top_edge_std_mm, at mask >= thr, measured from the source edge: the row farthest from it, taken as the outer boundary of that row) lies within tol_mm (default 10) of a multiple of course_m (default 0.075 m, a brick course) from the source edge; 0 if fewer than 60 % of the columns have an edge",
+  "brick_neighbour_same_share": "share of pairs of side-by-side brick cells in a course (cells as in brick_patch_share, same parameters) that are both on (cell mean above cell_mean_above) or both off; a checkerboard gives 0, a random fill of 0.55 about 0.5, a solid stripe 1",
+  "rivulet_spacing_cv": "std / mean of the gaps between the x centres of the rivulet components (the components between the two end components, rod length >= min_length_m, as for rivulet_count); 0 if there are fewer than three",
+  "rivulet_length_cv": "std / mean of the rod lengths of the same rivulet components; 0 if there are fewer than three",
+  "lower_wall_excess": "mean of the mask over the rows low_from_m to low_to_m (default 0.1 to 0.6 m) minus its mean over the rows high_from_m to high_to_m (default 1.5 to 3.5 m), heights from the bottom row (the pavement line)",
+  "coverage_share_below_m": "share of the pixels with mask >= thr (default 0.5) that lie in the lowest below_m (default 0.3 m) of the frame (its bottom rows); 0 if there are none",
   "tone_ratio": "mean luminance of the dark-slab class over the pale-slab class in the generated flag colour map (check applies to the flag colour result, not the mask)",
   "crack_flag_share": "share of flags carrying a crack in the generated flag attributes",
   "crack_width_mm": "median of 2 x distance-transform - 1 along the Zhang-Suen skeleton of mask >= thr (mm)",
@@ -7979,7 +8330,10 @@
   "role_blob_eqd_mm": "envelope polygons only (drawing check): equivalent diameter of the polygons with the named role (stat p50 or p90)",
   "role_count": "envelope polygons only (drawing check): number of polygons with the named role",
   "role_share_below": "envelope polygons only (drawing check): share (by polygon area, of=area, or by count) of the polygons with the named role whose centroid lies below below_mm of the frame's bottom edge",
-  "composed_foot_ratio": "composition (compose block, self_check.compose_walls): the luminance of a composed 2 m brick foot beside a downpipe (wall_soot, wall_foot_damp, wall_foot_splash, algae_downpipe in the stated order, then the floor, at house wear 1.0, dry, in the state given) over the clean wall's, mean over x 0.6 to 1.4 m at height_m (default 0.1)",
+  "house_to_house_ratio": "composition: for every house of target.json `houses` that the Hook sheet's frame shows, the mean linear luminance of its composed upper wall (rows from 1.3 m up, wall_soot at the house's state weight, albedo, no haze) over Mickey's front's (east_parade_bay0); the value returned is the one furthest from 1 (so the darkest and the brightest are both tested)",
+  "composed_soot_chroma_ratio": "composition: CIE chroma (L*a*b*, D65) of the mean colour of the composed sooted wall (state sooted, rows from 1.3 m up, brick_red) over the clean brick's",
+  "composed_eaves_front_ratio": "composition: luminance over the wall's, mean over x, of a wall under its eaves gutter composed with wall_head_band at the stated strength (default 0.2) and depth_m (default 0.3: the profile compressed in depth so that its half-strength height, 0.675 m, falls at depth_m, factor depth_m / 0.675), at below_m (default 0.3 m) below the eaves",
+  "composed_foot_ratio": "composition (compose block, self_check.compose_walls; every composition measure takes either the target's own drawn envelopes or, for unit 4.5, a `masks` dict of the builder's own masks): the luminance of a composed 2 m brick foot beside a downpipe (wall_soot, wall_foot_damp, wall_foot_splash, algae_downpipe in the stated order, then the floor, at house wear 1.0, dry, in the state given) over the clean wall's, mean over x 0.6 to 1.4 m at height_m (default 0.1)",
   "composed_salt_ratio": "composition: luminance over the clean wall's of the composed foot at the whitened bricks (salt mask > 0.4) between 0.30 and 0.52 m, after the replacing marks",
   "composed_wall_min_ratio": "composition: the lowest luminance over the clean wall's anywhere on the composed foot before the replacing marks (the floor is working when it is not below the wall floor)",
   "composed_soot_ratio": "composition: mean luminance of the sooted house's composed wall (soot state weight 1.0) over the cleaned house's (weight 0.0), rows from 1.3 m up",
@@ -7987,6 +8341,207 @@
   "channel_over_road": "composition: luminance of the channel_concrete albedo after the channel body's gutter_grime (mean over the channel rows 0.06 to 0.23 m) over the asphalt_dry albedo's",
   "fringe_over_road": "composition: luminance of the asphalt_dry albedo after the gutter_grime fringe (mean over rows 0.30 to 0.45 m) over the unmarked asphalt_dry albedo's",
   "composed_ground_min_ratio": "composition: the lowest luminance over the clean surface's of a kerb_granite texel under pavement_stain and gutter_grime together (at mask 1), after the ground floor"
+ },
+ "houses": {
+  "rule": "The state of each house is decided from the Hook sheet, not from street-wear.json's brick_set (a random seed: int(rnd x 3) % 3, tools/street_wear.py), D13. Parade bays 0 to 5 and west_south bays 0 to 2 are cleaned or as built; sooted only at the inland end, the chandler and west_north bay 2 (the fewest the second review allowed: the chandler and one of west_north bays 0 to 2, Judgement). Mickey's front (east_parade_bay0) and east_parade_bay1 are cleaned (as the recipe's set 2 had them); every other house is as built.",
+  "reference_house": "east_parade_bay0",
+  "counts": {
+   "sooted": 2,
+   "as_built": 9,
+   "cleaned": 2
+  },
+  "state_weight": {
+   "sooted": 1.0,
+   "as_built": 0.35,
+   "cleaned": 0.0
+  },
+  "look_rule": "`look_hue_only` is the recipe's look for the house (HOUSE_LOOKS picked by (brick_set + seed) % 4, bay 0 fixed at look 0, times its own value 0.78 to 1.0 and warm lean, as _house_tint computes it) divided by the luminance it gives on the brick (brick_red) wall, so only its hue is kept and wall_soot's state carries all of the brightness. On render or painted brick the builder divides by the look's luminance on that surface in the same way. HOUSE_SET_FACTOR is never read by the recipe (terrace-front.py line 8229) and is dropped.",
+  "in_sheet_frame_note": "true for the houses the sheet's frame shows: the parade, the west_south terraces and west_north bays 0 and 1; false for the chandler and west_north bay 2 (x 36 to 46, at the sheet's far haze, where its houses read brighter than Mickey's anyway). house_to_house_ratio tests the houses of the frame: every one at 0.80 or more of Mickey's front, in albedo with no haze.",
+  "list": [
+   {
+    "id": "east_chandler_bay0",
+    "side": "east",
+    "state": "sooted",
+    "in_sheet_frame": false,
+    "recipe_brick_set_not_used": 1,
+    "recipe_look_index": 0,
+    "look_hue_only": [
+     1.1232,
+     0.9186,
+     0.7022
+    ],
+    "wear": 0.985
+   },
+   {
+    "id": "east_parade_bay0",
+    "side": "east",
+    "state": "cleaned",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 2,
+    "recipe_look_index": 0,
+    "look_hue_only": [
+     1.0814,
+     0.948,
+     0.776
+    ],
+    "wear": 0.612
+   },
+   {
+    "id": "east_parade_bay1",
+    "side": "east",
+    "state": "cleaned",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 2,
+    "recipe_look_index": 0,
+    "look_hue_only": [
+     1.1298,
+     0.9139,
+     0.6905
+    ],
+    "wear": 0.919
+   },
+   {
+    "id": "east_parade_bay2",
+    "side": "east",
+    "state": "as_built",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 1,
+    "recipe_look_index": 1,
+    "look_hue_only": [
+     1.1141,
+     0.906,
+     1.0098
+    ],
+    "wear": 0.551
+   },
+   {
+    "id": "east_parade_bay3",
+    "side": "east",
+    "state": "as_built",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 1,
+    "recipe_look_index": 3,
+    "look_hue_only": [
+     1.0041,
+     1.0001,
+     0.9472
+    ],
+    "wear": 0.579
+   },
+   {
+    "id": "east_parade_bay4",
+    "side": "east",
+    "state": "as_built",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 0,
+    "recipe_look_index": 1,
+    "look_hue_only": [
+     1.1697,
+     0.8687,
+     0.8845
+    ],
+    "wear": 0.983
+   },
+   {
+    "id": "east_parade_bay5",
+    "side": "east",
+    "state": "as_built",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 1,
+    "recipe_look_index": 0,
+    "look_hue_only": [
+     1.1253,
+     0.9171,
+     0.6984
+    ],
+    "wear": 0.568
+   },
+   {
+    "id": "west_north_bay0",
+    "side": "west",
+    "state": "as_built",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 1,
+    "recipe_look_index": 1,
+    "look_hue_only": [
+     1.1144,
+     0.9058,
+     1.0092
+    ],
+    "wear": 0.696
+   },
+   {
+    "id": "west_north_bay1",
+    "side": "west",
+    "state": "as_built",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 0,
+    "recipe_look_index": 2,
+    "look_hue_only": [
+     1.0127,
+     0.9877,
+     1.0302
+    ],
+    "wear": 0.661
+   },
+   {
+    "id": "west_north_bay2",
+    "side": "west",
+    "state": "sooted",
+    "in_sheet_frame": false,
+    "recipe_brick_set_not_used": 1,
+    "recipe_look_index": 1,
+    "look_hue_only": [
+     1.1691,
+     0.8691,
+     0.8859
+    ],
+    "wear": 0.68
+   },
+   {
+    "id": "west_south_bay0",
+    "side": "west",
+    "state": "as_built",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 0,
+    "recipe_look_index": 1,
+    "look_hue_only": [
+     1.1251,
+     0.8986,
+     0.9849
+    ],
+    "wear": 0.821
+   },
+   {
+    "id": "west_south_bay1",
+    "side": "west",
+    "state": "as_built",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 1,
+    "recipe_look_index": 0,
+    "look_hue_only": [
+     1.1289,
+     0.9145,
+     0.6921
+    ],
+    "wear": 0.728
+   },
+   {
+    "id": "west_south_bay2",
+    "side": "west",
+    "state": "as_built",
+    "in_sheet_frame": true,
+    "recipe_brick_set_not_used": 0,
+    "recipe_look_index": 1,
+    "look_hue_only": [
+     1.1165,
+     0.9044,
+     1.0043
+    ],
+    "wear": 0.776
+   }
+  ],
+  "src": "production/specs/street-wear.json (13 houses; tint, wear); tools/art-recipes/terrace-front.py lines 8229 to 8270 (read 9 October); Hook sheet (M29); the second review R1"
  },
  "compose": {
   "rule": "Marks are applied to the clean albedo in a fixed order, then clamped at a floor, then the replacing marks are laid. A darkening mark (albedo_mult_linear < 1) multiplies per channel by lerp(1, ratio_c, mask x strength) with ratio_c = mark_lin_c / surface_lin_c (the dirt tint travels in the stored mark colour; linear light); a replacing mark (multiplier 1.0) is lerp(colour, mark_lin, mask x strength) over the colour already darkened. Strength = house wear (0.55 to 1.0) x the side weight x, for wall_soot, the state weight. One surface per decal: the placer picks the tone row from the material under the decal's origin and a decal that crosses two surfaces is split at the joint.",
@@ -8067,12 +8622,12 @@
    "sooted": 1.0,
    "as_built": 0.35,
    "cleaned": 0.0,
-   "src": "Judgement; houses by brick_set 1, 0, 2 of street-wear.json (7, 4, 2 of 13)"
+   "src": "Judgement; the houses' states are decided from the Hook sheet, not from street-wear.json's brick_set (target.json `houses`: sooted 2, as built 9, cleaned 2 of 13; D13)"
   },
   "recipe_handover": [
    {
-    "recipe": "per-house brightness: HOUSE_LOOKS (sooted look 0.60/0.56/0.56, about 0.57) and HOUSE_SET_FACTOR (0: 0.90, 1: 0.74, 2: 1.0 / 0.97 / 0.93)",
-    "this_target": "the looks keep their hue and their own value spread; the brightness each set carried is taken over by wall_soot's state: set 1 sooted (x 0.42 at mask 0.9, about x 0.48 on average), set 0 as built (weight 0.35, about x 0.82), set 2 cleaned (weight 0, the warm shift kept). The builder divides a sooted house's look by its own mean so nothing is darkened twice; the photograph is 0.37 to 0.48, the recipe's 0.57 was lighter (D8)."
+    "recipe": "per-house brightness: HOUSE_LOOKS (sooted look 0.60/0.56/0.56, about 0.57), picked by (brick_set + seed) % 4 and not by state, with HOUSE_SET_FACTOR (0: 0.90, 1: 0.74, 2: 1.0 / 0.97 / 0.93), which the recipe defines and never reads",
+    "this_target": "DIVIDE EVERY HOUSE'S LOOK BY ITS OWN LUMINANCE (hue only): target.json `houses[].look_hue_only` is the look divided by the luminance it gives on the brick wall; wall_soot's state now carries all the brightness (sooted x 0.42 at mask 0.9, about x 0.48 on average; as built weight 0.35, about x 0.82; cleaned 0), so nothing is darkened twice (the review's west_north_bay1 sat in a sooted look and an as built state: 0.57 x 0.82). DELETE HOUSE_SET_FACTOR from the table, it is not used. The states are the sheet's, not the seed's (D13): `houses`. Raise the walls' surface gain to put the street's mean back, as the recipe did."
    },
    {
     "recipe": "patch noise: WEAR_PATCH_SCALE 0.45 cycles/m, WEAR_PATCH_DEPTH 0.28 (the dirtiest patch x 0.28), on every surface in WEARS",
@@ -8084,7 +8639,7 @@
    },
    {
     "recipe": "head water paths: tall noise STREAK_ACROSS 6.0 / STREAK_DOWN 0.35, STREAK_DEPTH 0.70, STREAK_FROM_Z 3.6, STREAK_FULL_Z 6.4",
-    "this_target": "wall_head_band gives the head under every roof edge and streak_coping the leaking-joint fingers: set STREAK_DEPTH to 1.0, so the recipe's streaks give way and no head is darkened twice."
+    "this_target": "wall_head_band gives the head under gable verges and barges (full strength) and copings (the coping scale), almost none under an eaves gutter, and streak_coping the leaking-joint fingers: set STREAK_DEPTH to 1.0, so the recipe's streaks give way and no head is darkened twice."
    },
    {
     "recipe": "_wear() then _wetten()",
@@ -8092,11 +8647,12 @@
    }
   ]
  },
+ "second_review_fixes": [],
  "review_answers": [
   {
    "n": 1,
    "title": "Facade-wide soot and the dark head had no kind and no owner.",
-   "answer": "Measured (M21: the garden-wall panels, sooted 0.377 of the cleaner, 0.37 to 0.48; saturation 0.84, not the review's 0.6; M22: the sheet's head 0.50 to 0.62 over the top 0.2 to 0.75 m, the right-hand cottage's lower wall 0.90) and made two kinds, `wall_soot` (state weights sooted 1.0 / as built 0.35 / cleaned 0.0, x 0.42, mottle, lower wall) and `wall_head_band` (x 0.56 dry on a wall that is not sooted, x 0.80 on a sooted one, depth profile, ragged by courses, coping scale 0.3). Section 1 records the terrace-front wear layer (patch noise, foot rise, head water paths, house looks) and says which each kind replaces, so no foot or head is darkened twice; the sooted look's 0.57 is lighter than the photograph's 0.42 (D8)."
+   "answer": "Measured (M21: the garden-wall panels, sooted 0.377 of the cleaner, 0.37 to 0.48; saturation re-made in the third pass, D9; M22: the sheet's head 0.50 to 0.62 over the top 0.2 to 0.75 m, the right-hand cottage's lower wall 0.90) and made two kinds, `wall_soot` (state weights sooted 1.0 / as built 0.35 / cleaned 0.0, x 0.42, mottle, lower wall) and `wall_head_band` (x 0.56 dry on a wall that is not sooted, x 0.80 on a sooted one, depth profile, ragged by courses, coping scale 0.3). Section 1 records the terrace-front wear layer (patch noise, foot rise, head water paths, house looks) and says which each kind replaces, so no foot or head is darkened twice; the sooted look's 0.57 is lighter than the photograph's 0.42 (D8). Amended by the second review (R1, R2): the states, the soot colour and the features the head hangs from changed, see the section 'Fixes applied after the second review'."
   },
   {
    "n": 2,
@@ -8212,6 +8768,28 @@
     46
    ],
    "src": "SCENE-SLOTS.md: east_chandler, a ship's chandler (x 40 to 46)"
+  },
+  "quay_gables": {
+   "gables": [
+    {
+     "house": "east_parade_bay0",
+     "side": "east",
+     "x_m": 3.0,
+     "note": "Mickey's quay gable"
+    },
+    {
+     "house": "west_south_bay0",
+     "side": "west",
+     "x_m": 3.0,
+     "note": "west_south's quay gable"
+    }
+   ],
+   "weight": 1.0,
+   "other_gables_weight": [
+    0.3,
+    1.0
+   ],
+   "src": "Hook sheet M22 (the left gable under its verge) against M28 (the right-hand cottage's gable under its verge: none); vignette-scene.json blocks start_x_m 3.0; review R2"
   },
   "yard_entrance": {
    "side": "west",
@@ -8478,6 +9056,24 @@
    ],
    "rule": "zero at a bus stop (there is none)",
    "src": "review 8 October, fault 10"
+  },
+  {
+   "id": "P10",
+   "name": "the head band hangs from the right feature",
+   "applies_to": [
+    "wall_head_band"
+   ],
+   "rule": "gable verge or barge: strength 1.0 on the quay gables (places.quay_gables), 0.3 to 1.0 on other gables; coping or string course: depth scale 0.3; eaves gutter of a front: strength 0 to 0.2 and depth 0.1 to 0.3 m; every quay gable carries a full-strength verge band",
+   "src": "second review 8 October, R2"
+  },
+  {
+   "id": "P11",
+   "name": "house states are the sheet's, not the seed's",
+   "applies_to": [
+    "wall_soot"
+   ],
+   "rule": "each placed wall_soot decal carries the state of its house in target.json `houses`; no parade or west_south house is sooted; sooted houses are at most 30 % of the placed houses",
+   "src": "second review 8 October, R1; D13"
   }
  ],
  "wet_dry_rule": {
@@ -9427,7 +10023,14 @@
     ],
     "saturation_hsv_sooted": 0.207,
     "saturation_hsv_clean": 0.247,
-    "saturation_ratio": 0.84,
+    "saturation_ratio": {
+     "hsv_of_median_colours": 0.73,
+     "hsv_per_pixel": 0.65,
+     "cie_chroma_of_median_colours": 0.455,
+     "cie_chroma_per_pixel": 0.43,
+     "withdrawn_first_pass_value": 0.84,
+     "note": "re-made on the same boxes in the third pass (sooted median 89/80/73, C* 6.0 per median and 5.6 per pixel; cleaner 146/129/110, C* 13.1 and 12.8); the second review found 0.68, 0.73, 0.54 and 0.43; the first pass's 0.84 was one HSV calculation on two JPEG median colours and is not what the photograph shows on any per-pixel measure"
+    },
     "linear_ratio_per_channel": [
      0.372,
      0.375,
@@ -9505,7 +10108,7 @@
     ],
     "format": "[x0, x1, y0, y1] in preview pixels"
    },
-   "reading": "Soot is real and facade-wide on this 2019 street: the sooted panel is 0.377 of the cleaner one in luminance (0.37 to 0.48 by two measurers), nearly neutral per channel (0.37 / 0.37 / 0.43 in linear light), saturation 0.84 of the cleaner panel's (the review's 0.6 is not what this photograph shows); under the coping a band about 0.4 m deep is a further x 0.77 to 0.80 on the sooted panel only."
+   "reading": "Soot is real and facade-wide on this 2019 street: the sooted panel is 0.377 of the cleaner one in luminance (0.37 to 0.48 by two measurers), nearly neutral per channel (0.37 / 0.37 / 0.43 in linear light), CIE chroma 0.43 to 0.46 and HSV saturation 0.65 to 0.73 of the cleaner panel's (soot is a nearly neutral deposit; the first pass's 0.84 was wrong, D9); under the coping a band about 0.4 m deep is a further x 0.77 to 0.80 on the sooted panel only."
   },
   "M22": {
    "label": "Hook sheet: the dark head under the left gable's verge, and the lower wall of the right-hand cottage (mood bar, not a photograph)",
@@ -9844,6 +10447,83 @@
     "m07_dark_class_L_star": 54
    },
    "reading": "A weathered flag is 134/122/110, L* 52: the same luminance as M07's dark class (133/130/130, L* 54) in a warmer hue; the target takes the scan's hue for the albedo."
+  },
+  "M28": {
+   "label": "Hook sheet: Mickey's front under its eaves gutter, and the right-hand cottage's gable under its verge (mood bar, not a photograph)",
+   "files": [
+    "production/previews/hook-sheet-2026-10-05.jpg (1600 x 850)"
+   ],
+   "method": "Mickey's front: columns 385 to 445, 10-row bands from row 160 (under the eaves gutter) to row 340, linear luminance relative to the same columns' body (rows 200 to 330); the second review's metres are 10 rows = about 0.07 m. The right-hand cottage's gable: columns 1560 to 1595, rows 322 to 478 in 16-row bands, linear luminance. The second review measured both first; the writer repeated them in the third pass.",
+   "error": "+/-0.1 in the ratio per band (window frames, the dentil course); the sheet is generated and wet.",
+   "values": {
+    "mickey_front_first_10_rows_ratio": 0.64,
+    "mickey_front_ratio_bands_after": [
+     0.94,
+     0.95,
+     1.01,
+     1.18,
+     1.02,
+     1.01,
+     1.11,
+     1.18,
+     1.05,
+     0.87,
+     0.85,
+     0.96
+    ],
+    "mickey_front_ratio_review": [
+     1.0,
+     1.0,
+     1.08,
+     1.1
+    ],
+    "mickey_front_ratio_mean_0.1_to_0.5_m": 1.0,
+    "cottage_gable_Y_bands": [
+     0.046,
+     0.05,
+     0.046,
+     0.063,
+     0.05,
+     0.044,
+     0.043,
+     0.046,
+     0.044
+    ],
+    "cottage_gable_Y_range_review": [
+     0.036,
+     0.054
+    ],
+    "gable_head_chroma_ratio": 0.39,
+    "gable_head_chroma_ratio_review": 0.42
+   },
+   "reading": "Under its eaves gutter Mickey's front has no dark head: 0.64 of the body in the first 10 rows (the dentil course's shadow), then 0.85 to 1.18 (mean 1.0, the review 1.00 to 1.10). The right-hand cottage's gable is flat under its verge. So the head band of M22 belongs to a gable verge with no gutter (the left gable), not to every roof edge (R2)."
+  },
+  "M29": {
+   "label": "Hook sheet: the brightness of each house between its windows (mood bar, not a photograph)",
+   "files": [
+    "production/previews/hook-sheet-2026-10-05.jpg"
+   ],
+   "method": "Linear luminance between the windows, rows 190 to 400, by house, as the second review measured it (the writer did not repeat it: the review's boxes were not given). Relative to Mickey's mean 0.081.",
+   "error": "+/-15 % (window frames in the boxes, haze rising with distance).",
+   "values": {
+    "mickey_front": [
+     0.072,
+     0.093
+    ],
+    "mickey_mean": 0.081,
+    "parade_houses_2_to_5": [
+     0.104,
+     0.107,
+     0.132
+    ],
+    "parade_house_3_darkest_box": 0.08,
+    "relative_to_mickey_mean": [
+     0.99,
+     1.6
+    ],
+    "never_darker_than_of_mickeys_brightest_box": 0.86
+   },
+   "reading": "No house of the sheet's frame reads darker than about 0.86 of Mickey's front; the houses further down the parade read 0.99 to 1.6 of it, brighter through the haze; the far right terraces and the right-hand cottage the same red. The basis of D13 and of the house states: no parade or west_south house is sooted."
   }
  },
  "previews": {
@@ -10220,9 +10900,9 @@
   },
   {
    "id": "D9",
-   "between": "the review's sooted saturation x 0.6",
-   "and": "Photo M21 (HSV saturation 0.207 sooted against 0.247 cleaner = 0.84; linear per-channel ratios 0.37 / 0.37 / 0.43) and Sheet M22 (head 0.65)",
-   "chose": "the photograph's per-channel ratios (nearly neutral, a little less saturated); the 0.6 belongs to the sheet's head, not to the photographed sooted panel."
+   "between": "the first pass's sooted saturation 0.84 (one HSV calculation on two JPEG median colours 92/81/73 and 146/129/110: 0.21 against 0.25), and the first review's x 0.6",
+   "and": "Photo M21 on every per-pixel or chroma measure (HSV per pixel 0.65, HSV of medians 0.73, CIE chroma of medians 0.455, per pixel 0.43; the second review 0.68, 0.73, 0.54, 0.43) and the Sheet's gable head against its body (CIE chroma 0.39, the review 0.42)",
+   "chose": "chroma 0.4 to 0.6 of the clean brick's. 0.84 is not what the photograph shows on any per-pixel measure and is withdrawn. The soot mark on brick_red is the review's 82/62/55 (L* 28.2, C* 10.8 against the brick's 27.6: 0.39), a lerp toward M21's nearly neutral soot, and brick_painted and render_cream likewise (the same luminance multiplier, the surface's own hue, chroma x 0.39); the composed sooted wall is checked at 0.4 to 0.6 (composed_soot_chroma_ratio)."
   },
   {
    "id": "D10",
@@ -10241,6 +10921,12 @@
    "between": "the review's ground floor 0.35 of the clean albedo",
    "and": "Sheet M20 (the sheet's own stain is 0.236 wet = 0.295 dry, below 0.35) and Photo M24/M05 (marks 0.70 to 0.92)",
    "chose": "a ground floor of 0.28 (dry): above the sheet's darkest measured ground mark, so the sheet's stains pass unclamped and only stacks go lower; the walls' 0.15 follows the review (the sheet's darkest foot is 0.12 to 0.30 of its wall)."
+  },
+  {
+   "id": "D13",
+   "between": "Photo M21 (soot is real on a 2019 street: a sooted panel at 0.377 of a cleaner one) with the first pass's 7 sooted houses of 13 (from street-wear.json's brick_set, a random seed: int(rnd x 3) % 3)",
+   "and": "the Hook sheet, in whose frame no house reads darker than about 0.86 of Mickey's front (parade houses 2 to 5 read 0.99 to 1.6 of Mickey's mean, brighter with distance; the far-right terraces and the right-hand cottage the same red)",
+   "chose": "the sheet decides which houses are sooted, and the photograph decides how a sooted house looks. States come from the sheet, not the seed: parade bays 0 to 5 and west_south bays 0 to 2 are cleaned (bays 0 and 1, Mickey's among them) or as built, and only the inland end is sooted, the fewest the review allows: the chandler and west_north bay 2 (2 of 13). The check house_to_house_ratio holds every house of the sheet's frame at 0.80 or more of Mickey's front (composed upper wall, albedo, no haze); the two sooted houses are at 39 to 46 m, out of the sheet's frame."
   }
  ],
  "checks": [
@@ -10395,6 +11081,34 @@
    "min": 3,
    "max": 7,
    "src": "Photo M16 (8 per metre of joint, thinned to a sill); reviewer's 3 to 7",
+   "kind": "streak_sill",
+   "applies_to": "mask"
+  },
+  {
+   "name": "rivulet_spacing_cv",
+   "measure": "rivulet_spacing_cv",
+   "params": {
+    "thr": 0.25,
+    "head_m": 0.2,
+    "min_length_m": 0.1
+   },
+   "min": 0.25,
+   "max": 2.0,
+   "src": "Review R3: rivulets are not evenly spaced (a wrong mask with four identical, evenly spaced, ruler-straight rivulets is refused)",
+   "kind": "streak_sill",
+   "applies_to": "mask"
+  },
+  {
+   "name": "rivulet_length_cv",
+   "measure": "rivulet_length_cv",
+   "params": {
+    "thr": 0.25,
+    "head_m": 0.2,
+    "min_length_m": 0.1
+   },
+   "min": 0.25,
+   "max": 1.5,
+   "src": "Review R3: rivulets differ in length (M16: 0.09 to 0.45 m)",
    "kind": "streak_sill",
    "applies_to": "mask"
   },
@@ -10616,9 +11330,9 @@
     "state": "cleaned",
     "height_m": 0.1
    },
-   "min": 0.12,
-   "max": 0.3,
-   "src": "Sheet M18 (the darkest foot 0.12 to 0.30 of the wall; review 8 October): splash, damp, algae and the floor on a cleaned house at house wear 1.0, 0.1 m up beside a downpipe",
+   "min": 0.16,
+   "max": 0.4,
+   "src": "Sheet M18's darkest foot 0.12 to 0.30 of the wall is a WET range; converted to dry by the wet 0.75 (review narrow note): 0.16 to 0.40 (the wall floor 0.15 sits just under it): splash, damp, algae and the floor on a cleaned house at house wear 1.0, 0.1 m up beside a downpipe",
    "kind": "wall_foot_splash",
    "applies_to": "composition (compose block)"
   },
@@ -10633,6 +11347,35 @@
    "src": "the wall floor 0.15 (compose block): a sooted foot beside a downpipe never goes below it",
    "kind": "wall_foot_splash",
    "applies_to": "composition (compose block)"
+  },
+  {
+   "name": "core_column_cv",
+   "measure": "core_column_cv",
+   "params": {
+    "source": "bottom",
+    "from_m": 0.0,
+    "to_m": 0.2
+   },
+   "min": 0.0,
+   "max": 0.05,
+   "src": "Review R3: the full-strength zone (0 to 0.2 m) is flat across x; a band in vertical stripes is refused",
+   "kind": "wall_foot_splash",
+   "applies_to": "mask"
+  },
+  {
+   "name": "edge_on_course_share",
+   "measure": "edge_on_course_share",
+   "params": {
+    "thr": 0.5,
+    "source": "bottom",
+    "course_m": 0.075,
+    "tol_mm": 10
+   },
+   "min": 0.6,
+   "max": 1.0,
+   "src": "Review R3: the top edge lies within 10 mm of a 75 mm course line (Sheet M18: ragged top stepping by courses)",
+   "kind": "wall_foot_splash",
+   "applies_to": "mask"
   },
   {
    "name": "foot_profile",
@@ -10719,6 +11462,20 @@
    "min": 0.08,
    "max": 1.0,
    "src": "Judgement (reviewer 8 October)",
+   "kind": "wall_foot_damp",
+   "applies_to": "mask"
+  },
+  {
+   "name": "core_column_cv",
+   "measure": "core_column_cv",
+   "params": {
+    "source": "bottom",
+    "from_m": 0.0,
+    "to_m": 0.25
+   },
+   "min": 0.0,
+   "max": 0.05,
+   "src": "Review R3: the full-strength zone (0 to 0.25 m) is flat across x; a band in vertical stripes is refused",
    "kind": "wall_foot_damp",
    "applies_to": "mask"
   },
@@ -10858,6 +11615,37 @@
    "src": "Sheet M18: the whitened bricks read 0.57 to 0.75 of the wall and above it (review 8 October); laid after the darkening they stay pale; not above 2.2 (not white)",
    "kind": "salt_bloom",
    "applies_to": "composition (compose block)"
+  },
+  {
+   "name": "brick_neighbour_same_share",
+   "measure": "brick_neighbour_same_share",
+   "params": {
+    "brick_w_m": 0.215,
+    "brick_h_m": 0.075,
+    "from_m": 0.3,
+    "to_m": 0.45,
+    "cell_mean_above": 0.4
+   },
+   "min": 0.3,
+   "max": 0.8,
+   "src": "Review R3: side-by-side bricks of a course that are both whitened or both not; a checkerboard gives 0, random fill about 0.5",
+   "kind": "salt_bloom",
+   "applies_to": "mask"
+  },
+  {
+   "name": "edge_on_course_share",
+   "measure": "edge_on_course_share",
+   "params": {
+    "thr": 0.4,
+    "source": "bottom",
+    "course_m": 0.075,
+    "tol_mm": 10
+   },
+   "min": 0.6,
+   "max": 1.0,
+   "src": "Review R3: the band's top edge lies within 10 mm of a 75 mm course line (whitened bricks)",
+   "kind": "salt_bloom",
+   "applies_to": "mask"
   },
   {
    "name": "streak_aspect_p50",
@@ -11880,6 +12668,20 @@
    "applies_to": "composition (compose block)"
   },
   {
+   "name": "core_column_cv",
+   "measure": "core_column_cv",
+   "params": {
+    "source": "bottom",
+    "from_m": 0.05,
+    "to_m": 0.23
+   },
+   "min": 0.0,
+   "max": 0.05,
+   "src": "Review R3: the channel body (0.05 to 0.23 m) is flat across x; a band in vertical stripes is refused",
+   "kind": "gutter_grime",
+   "applies_to": "mask"
+  },
+  {
    "name": "mask_mean",
    "measure": "mask_mean",
    "params": {},
@@ -11976,19 +12778,54 @@
    "applies_to": "composition (compose block)"
   },
   {
-   "name": "composed_head_ratio",
+   "name": "lower_wall_excess",
+   "measure": "lower_wall_excess",
+   "params": {
+    "low_from_m": 0.1,
+    "low_to_m": 0.6,
+    "high_from_m": 1.5,
+    "high_to_m": 3.5
+   },
+   "min": 0.05,
+   "max": 0.15,
+   "src": "Sheet M22 (lower wall x 0.84 to 0.93) and the review: mean mask 0.1 to 0.6 m minus mean 1.5 to 3.5 m",
+   "kind": "wall_soot",
+   "applies_to": "mask"
+  },
+  {
+   "name": "composed_soot_chroma_ratio",
+   "measure": "composed_soot_chroma_ratio",
+   "params": {},
+   "min": 0.4,
+   "max": 0.6,
+   "src": "Photo M21 (CIE chroma of the sooted over the cleaner panel 0.43 to 0.54) and the sheet's head (0.39 to 0.42): the composed sooted brick over the clean one, wall above 1.3 m",
+   "kind": "wall_soot",
+   "applies_to": "composition (compose block)"
+  },
+  {
+   "name": "house_to_house_ratio",
+   "measure": "house_to_house_ratio",
+   "params": {},
+   "min": 0.8,
+   "max": 1.4,
+   "src": "Sheet (review R1): every house the sheet's frame shows reads at 0.80 or more of Mickey's front, composed upper wall in albedo (no haze); none darker than about 0.86 on screen",
+   "kind": "wall_soot",
+   "applies_to": "composition (compose block)"
+  },
+  {
+   "name": "composed_head_ratio_gable",
    "measure": "composed_head_ratio",
    "params": {
     "state": "cleaned"
    },
    "min": 0.45,
    "max": 0.65,
-   "src": "Sheet M22 (wet 0.50 to 0.62, dry 0.56): the head 0.1 m below the feature on a cleaned house",
+   "src": "Sheet M22 (wet 0.50 to 0.62, dry 0.56): the gable verge's head 0.1 m below the feature on a cleaned house",
    "kind": "wall_head_band",
    "applies_to": "composition (compose block)"
   },
   {
-   "name": "composed_head_ratio_sooted",
+   "name": "composed_head_ratio_gable_sooted",
    "measure": "composed_head_ratio",
    "params": {
     "state": "sooted"
@@ -12098,6 +12935,49 @@
    "applies_to": "mask"
   },
   {
+   "name": "core_column_cv",
+   "measure": "core_column_cv",
+   "params": {
+    "source": "top",
+    "from_m": 0.0,
+    "to_m": 0.15
+   },
+   "min": 0.0,
+   "max": 0.05,
+   "src": "Review R3: the full-strength zone (0 to 0.15 m below the feature) is flat across x; a band in vertical stripes is refused",
+   "kind": "wall_head_band",
+   "applies_to": "mask"
+  },
+  {
+   "name": "edge_on_course_share",
+   "measure": "edge_on_course_share",
+   "params": {
+    "thr": 0.5,
+    "source": "top",
+    "course_m": 0.075,
+    "tol_mm": 10
+   },
+   "min": 0.6,
+   "max": 1.0,
+   "src": "Review R3: the lower edge lies within 10 mm of a 75 mm course line",
+   "kind": "wall_head_band",
+   "applies_to": "mask"
+  },
+  {
+   "name": "composed_eaves_front_ratio",
+   "measure": "composed_eaves_front_ratio",
+   "params": {
+    "below_m": 0.3,
+    "strength": 0.2,
+    "depth_m": 0.3
+   },
+   "min": 0.9,
+   "max": 1.1,
+   "src": "Sheet (review R2): Mickey's front reads 0.98 to 1.10 from 0.1 to 0.5 m under its eaves; the head band at its strongest eaves setting (strength 0.2, depth 0.3 m) 0.3 m below the eaves",
+   "kind": "wall_head_band",
+   "applies_to": "composition (compose block)"
+  },
+  {
    "name": "coverage_of_frame",
    "measure": "coverage",
    "params": {
@@ -12105,7 +12985,7 @@
    },
    "min": 0.05,
    "max": 0.14,
-   "src": "Sheet M25 (4.8 to 7 % of the pipe lost) plus the streaks",
+   "src": "Sheet M25 (4.8 to 7 % of the pipe lost) plus the streaks, over the unwrapped 0.214 x 2.4 m frame",
    "kind": "iron_wear",
    "applies_to": "mask"
   },
@@ -12152,13 +13032,26 @@
    "params": {
     "role": "patch",
     "below_mm": 300,
-    "of": "count"
+    "of": "area"
    },
    "min": 0.25,
    "max": 0.6,
-   "src": "Sheet M25 / Judgement: 40 % of the patches (by count, in quotas) are in the lowest 0.3 m",
+   "src": "Sheet M25 / Judgement: 40 % of the lost paint, by patch area, is in the lowest 0.3 m (quotas by area); the mask check coverage_share_below_m tests the same on any generated mask",
    "kind": "iron_wear",
    "applies_to": "envelope (drawing polygons)"
+  },
+  {
+   "name": "coverage_share_below_m",
+   "measure": "coverage_share_below_m",
+   "params": {
+    "thr": 0.5,
+    "below_m": 0.3
+   },
+   "min": 0.25,
+   "max": 0.6,
+   "src": "Review R3: the lost paint is concentrated at the shoe (Sheet M25: 40 % in the lowest 0.3 m); patches spread evenly up the pipe are refused",
+   "kind": "iron_wear",
+   "applies_to": "mask"
   },
   {
    "name": "coverage_of_frame",
@@ -12480,6 +13373,33 @@
    "params": {
     "thr": 0.5,
     "stat": "p50",
+    "min_area_mm2": 50
+   },
+   "min": 10,
+   "max": 60,
+   "src": "Review R3: patches of 10 to 60 mm, not one block",
+   "kind": "stone_top_lichen",
+   "applies_to": "mask"
+  },
+  {
+   "name": "size_cv",
+   "measure": "size_cv",
+   "params": {
+    "thr": 0.5,
+    "min_area_mm2": 50
+   },
+   "min": 0.3,
+   "max": 3.0,
+   "src": "Review R3: patches differ in size",
+   "kind": "stone_top_lichen",
+   "applies_to": "mask"
+  },
+  {
+   "name": "blob_eqd_mm_p50",
+   "measure": "blob_eqd_mm",
+   "params": {
+    "thr": 0.5,
+    "stat": "p50",
     "min_area_mm2": 100000
    },
    "min": 600,
@@ -12526,7 +13446,7 @@
  ],
  "could_not_settle": [
   "Gum density per m2: no photograph with gum was reached; the 2019 London panoramas show low-gum residential streets. Tiers are Judgement and kept low (gum staining grew after 1990). Read Keep Britain Tidy / Defra litter surveys and Geograph shopping-street photographs when the network opens.",
-  "1990 soot level on Quay Street's brick: every reachable photograph is 2018 to 2026 and cleaner. Photo M21 measures a sooted 2019 panel at 0.377 of a cleaner one (0.37 to 0.48); how many of the street's houses were sooted in 1990 (7 of 13 here, from the existing house sets) and how sooted is Judgement; the head and foot strengths are set from the wet Hook sheet and converted to dry.",
+  "1990 soot level on Quay Street's brick: every reachable photograph is 2018 to 2026 and cleaner. Photo M21 measures a sooted 2019 panel at 0.377 of a cleaner one (0.37 to 0.48); how many of the street's houses were sooted in 1990 (2 of 13 here, the fewest the Hook sheet allows, D13; the first pass took 7 from a random seed) and how sooted is Judgement; the head and foot strengths are set from the wet Hook sheet and converted to dry.",
   "Sill streaks in 1990: the photographs (M23) give 3 to 15 % of sills with a visible streak on a maintained 2019 street; the 1990 share (15 to 60 %, typical 35 %) and darkness (x 0.70) are Judgement from Jafar's 'not faint marks' (D6). Streak width as a fraction of sill width is bounded by M16 and M17, not measured.",
   "Salt bloom height and share: only the Hook sheet shows it; the rule for a port is Judgement (BRE 245 search lead).",
   "Fly-poster, bird-dropping, paint fade, sign ghosts, buffed graffiti, handle wear, stone lichen share and footway infill: no measured photograph; shapes and shares are Judgement (the review's suggested numbers where it gave them).",
@@ -12534,1930 +13454,5 @@
   "Camera height for the panorama measurements (1.6 m) is proved only by the 75 mm yellow line (+/-6 %).",
   "The brief said ambientCG's gum and leaking assets are photographs; the metadata says procedural: unit 4.5 may use them as CC0 shapes only.",
   "The recipe hand-over (section 1) is written against terrace-front.py as read on 8 October; the builder checks the constants before changing them."
- ],
- "self_check": {
-  "date": "2026-10-08",
-  "result": "self_check: passed=1142/1142 failed=0 (A structure, B tone, C photographs, D envelopes, E composition and wrong masks, F placement; 33 kinds)",
-  "passed": 1142,
-  "failed": 0,
-  "overlays_written": [
-   "ph-urban_street_03-oil-drip-speckle-target-on-photo.jpg",
-   "hook-sheet-gable-foot-target-on-sheet.jpg",
-   "hook-sheet-gable-head-target-on-sheet.jpg"
-  ],
-  "failures": [],
-  "envelope_summary": {
-   "streak_sill": {
-    "streak_aspect_p50": {
-     "median": 5.072004153494113,
-     "min": 4.32409814676191,
-     "max": 5.7066985218005435,
-     "expected": [
-      3,
-      30
-     ],
-     "ok": true
-    },
-    "streak_width_mm_p50": {
-     "median": 38.741272566993615,
-     "min": 35.18810787680234,
-     "max": 54.00891216715145,
-     "expected": [
-      10,
-      140
-     ],
-     "ok": true
-    },
-    "streak_length_m_p90": {
-     "median": 0.3573478060720854,
-     "min": 0.28877193217045816,
-     "max": 0.5315602807943435,
-     "expected": [
-      0.3,
-      0.9
-     ],
-     "ok": true
-    },
-    "streak_length_m_p50": {
-     "median": 0.2201797074555285,
-     "min": 0.19135790977780182,
-     "max": 0.3524448599479159,
-     "expected": [
-      0.12,
-      0.45
-     ],
-     "ok": true
-    },
-    "vertical_within_deg": {
-     "median": 4.130228489544333,
-     "min": 2.0511666825260826,
-     "max": 8.937746952041138,
-     "expected": [
-      0,
-      12
-     ],
-     "ok": true
-    },
-    "fade_ratio_tail_over_head": {
-     "median": 0.4424147680902373,
-     "min": 0.4022935862940728,
-     "max": 0.6092105539876048,
-     "expected": [
-      0.0,
-      0.6
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 26.546696055741613,
-     "min": 25.296102700151867,
-     "max": 28.416713279958437,
-     "expected": [
-      12,
-      45
-     ],
-     "ok": true
-    },
-    "coverage_of_decal_at_0.25": {
-     "median": 0.039118508731617645,
-     "min": 0.02716452205882353,
-     "max": 0.04947093290441176,
-     "expected": [
-      0.01,
-      0.1
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.8999999761581421,
-     "min": 0.8999412059783936,
-     "max": 0.8999999761581421,
-     "expected": [
-      0.8,
-      1.0
-     ],
-     "ok": true
-    },
-    "end_streak_length_ratio": {
-     "median": 1.682692230244667,
-     "min": 1.565199895986706,
-     "max": 1.9953095327210324,
-     "expected": [
-      1.15,
-      2.5
-     ],
-     "ok": true
-    },
-    "end_streak_width_ratio": {
-     "median": 1.2266038784575515,
-     "min": 1.0187721318748784,
-     "max": 1.3542030992774643,
-     "expected": [
-      1.1,
-      3.0
-     ],
-     "ok": true
-    },
-    "rivulet_count": {
-     "median": 5.0,
-     "min": 3.0,
-     "max": 6.0,
-     "expected": [
-      3,
-      7
-     ],
-     "ok": true
-    }
-   },
-   "streak_coping": {
-    "streak_aspect_p50": {
-     "median": 5.753402331989368,
-     "min": 4.548336135583973,
-     "max": 7.004194036395705,
-     "expected": [
-      3.0,
-      40
-     ],
-     "ok": true
-    },
-    "streak_length_m_p50": {
-     "median": 0.6359919439314264,
-     "min": 0.41257332542168085,
-     "max": 1.0532341799263845,
-     "expected": [
-      0.25,
-      1.2
-     ],
-     "ok": true
-    },
-    "vertical_within_deg": {
-     "median": 2.704681740836948,
-     "min": 1.7451064677226726,
-     "max": 4.36384041197879,
-     "expected": [
-      0,
-      10
-     ],
-     "ok": true
-    },
-    "fade_ratio_tail_over_head": {
-     "median": 0.3330062790076048,
-     "min": 0.314032748557828,
-     "max": 0.3637910876877892,
-     "expected": [
-      0.0,
-      0.6
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 43.90457613402231,
-     "min": 38.798243663150444,
-     "max": 47.680478897203834,
-     "expected": [
-      20,
-      80
-     ],
-     "ok": true
-    },
-    "coverage_of_decal_at_0.25": {
-     "median": 0.01693888888888889,
-     "min": 0.0077895061728395065,
-     "max": 0.03149629629629629,
-     "expected": [
-      0.005,
-      0.12
-     ],
-     "ok": true
-    },
-    "finger_spacing_cv": {
-     "median": 0.47021990974584604,
-     "min": 0.2999071494893222,
-     "max": 0.6236722306525038,
-     "expected": [
-      0.25,
-      0.8
-     ],
-     "ok": true
-    },
-    "finger_length_cv": {
-     "median": 0.545844946731934,
-     "min": 0.4630222018167038,
-     "max": 0.6789215870153652,
-     "expected": [
-      0.25,
-      1.5
-     ],
-     "ok": true
-    }
-   },
-   "wall_foot_splash": {
-    "foot_profile": {
-     "median": 1.0,
-     "min": 0.8333333333333334,
-     "max": 1.0,
-     "expected": [
-      0.0,
-      1.0
-     ],
-     "ok": true
-    },
-    "profile_10_90_mm": {
-     "median": 301.8563356946665,
-     "min": 296.4789987871753,
-     "max": 308.739253060592,
-     "expected": [
-      200,
-      450
-     ],
-     "ok": true
-    },
-    "tile_seam": {
-     "median": 0.0,
-     "min": 0.0,
-     "max": 0.0332768575686113,
-     "expected": [
-      0.0,
-      1.6
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.9,
-      1.0
-     ],
-     "ok": true
-    },
-    "top_edge_std_mm": {
-     "median": 25.581174523611423,
-     "min": 18.422048345240412,
-     "max": 37.400894953989734,
-     "expected": [
-      15,
-      60
-     ],
-     "ok": true
-    },
-    "column_mean_cv": {
-     "median": 0.13115686394477058,
-     "min": 0.08947453418674817,
-     "max": 0.2009160996222707,
-     "expected": [
-      0.08,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "wall_foot_damp": {
-    "foot_profile": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.0,
-      1.0
-     ],
-     "ok": true
-    },
-    "profile_10_90_mm": {
-     "median": 795.2893247489981,
-     "min": 758.6058079313186,
-     "max": 818.433361918125,
-     "expected": [
-      700,
-      1500
-     ],
-     "ok": true
-    },
-    "tile_seam": {
-     "median": 0.2543622044860223,
-     "min": 0.01269826625475508,
-     "max": 0.5141176449492247,
-     "expected": [
-      0.0,
-      1.6
-     ],
-     "ok": true
-    },
-    "top_edge_std_mm": {
-     "median": 66.82701838170158,
-     "min": 60.739401081587886,
-     "max": 113.33878900777968,
-     "expected": [
-      40,
-      150
-     ],
-     "ok": true
-    },
-    "column_mean_cv": {
-     "median": 0.15980068651955281,
-     "min": 0.1300041749377776,
-     "max": 0.2250740747838007,
-     "expected": [
-      0.08,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "salt_bloom": {
-    "coverage_of_decal_at_0.4": {
-     "median": 0.12952430555555555,
-     "min": 0.08676041666666667,
-     "max": 0.15218055555555557,
-     "expected": [
-      0.04,
-      0.17
-     ],
-     "ok": true
-    },
-    "ragged_edge_10_90_mm": {
-     "median": 29.181857887457486,
-     "min": 27.903824215118707,
-     "max": 30.393983454603102,
-     "expected": [
-      15,
-      100
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.69615238904953,
-     "min": 0.6946530938148499,
-     "max": 0.698651134967804,
-     "expected": [
-      0.5,
-      0.85
-     ],
-     "ok": true
-    },
-    "foot_profile": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.0,
-      1.0
-     ],
-     "ok": true
-    },
-    "top_edge_std_mm": {
-     "median": 51.88094639908146,
-     "min": 40.281443430601556,
-     "max": 62.17925678522608,
-     "expected": [
-      20,
-      70
-     ],
-     "ok": true
-    },
-    "column_mean_cv": {
-     "median": 0.3866780301960794,
-     "min": 0.36723305648308213,
-     "max": 0.5068403928800131,
-     "expected": [
-      0.08,
-      2.0
-     ],
-     "ok": true
-    },
-    "brick_patch_share": {
-     "median": 0.6176470588235294,
-     "min": 0.47058823529411764,
-     "max": 0.7058823529411765,
-     "expected": [
-      0.35,
-      0.75
-     ],
-     "ok": true
-    },
-    "brick_cell_std": {
-     "median": 0.11520862134491619,
-     "min": 0.10620560852333784,
-     "max": 0.1285703839202318,
-     "expected": [
-      0.0,
-      0.15
-     ],
-     "ok": true
-    }
-   },
-   "rust_bleed": {
-    "streak_aspect_p50": {
-     "median": 9.31338293789148,
-     "min": 3.7243046207813504,
-     "max": 14.670364952923787,
-     "expected": [
-      8,
-      120
-     ],
-     "ok": true
-    },
-    "streak_width_mm_p50": {
-     "median": 31.321082413940253,
-     "min": 14.874055533997307,
-     "max": 46.11575073751186,
-     "expected": [
-      4,
-      36
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 10.204154243673635,
-     "min": 8.956984463539149,
-     "max": 10.704115688463565,
-     "expected": [
-      6,
-      45
-     ],
-     "ok": true
-    },
-    "vertical_within_deg": {
-     "median": 1.4616153735250323,
-     "min": 0.46639714993892945,
-     "max": 10.411186275694545,
-     "expected": [
-      0,
-      8
-     ],
-     "ok": true
-    }
-   },
-   "algae_downpipe": {
-    "blob_eqd_mm_p50": {
-     "median": 189.76666566215692,
-     "min": 75.38965351185294,
-     "max": 459.92122118757294,
-     "expected": [
-      100,
-      450
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 28.39675184177308,
-     "min": 24.15156446820317,
-     "max": 32.86928253058736,
-     "expected": [
-      12,
-      100
-     ],
-     "ok": true
-    },
-    "coverage_of_decal": {
-     "median": 0.09895723104056436,
-     "min": 0.021283068783068782,
-     "max": 0.1747905643738977,
-     "expected": [
-      0.06,
-      0.4
-     ],
-     "ok": true
-    }
-   },
-   "paint_flake": {
-    "blob_eqd_mm_p50": {
-     "median": 20.040812599881207,
-     "min": 17.876888032555495,
-     "max": 21.07031126303609,
-     "expected": [
-      10,
-      30
-     ],
-     "ok": true
-    },
-    "blob_eqd_mm_p90": {
-     "median": 55.178587063049555,
-     "min": 46.74556640525789,
-     "max": 60.81502013978067,
-     "expected": [
-      25,
-      80
-     ],
-     "ok": true
-    },
-    "coverage_of_decal": {
-     "median": 0.057861499999999996,
-     "min": 0.03276,
-     "max": 0.10225,
-     "expected": [
-      0.03,
-      0.15
-     ],
-     "ok": true
-    },
-    "count_per_m2": {
-     "median": 38.5,
-     "min": 30.0,
-     "max": 45.0,
-     "expected": [
-      20,
-      60
-     ],
-     "ok": true
-    },
-    "craquelure_m_per_m2": {
-     "median": 5.83015,
-     "min": 3.7268,
-     "max": 7.4029,
-     "expected": [
-      3.0,
-      7.0
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 1.8016793677991798,
-     "min": 1.8016792984388041,
-     "max": 1.8332599002955519,
-     "expected": [
-      0.2,
-      4
-     ],
-     "ok": true
-    },
-    "tile_seam": {
-     "median": 0.5936527325382727,
-     "min": 0.17377398731132832,
-     "max": 1.578042901440268,
-     "expected": [
-      0.0,
-      1.6
-     ],
-     "ok": true
-    }
-   },
-   "paint_fade": {
-    "mask_std": {
-     "median": 0.1154733305535045,
-     "min": 0.10562351516731561,
-     "max": 0.12090588241762863,
-     "expected": [
-      0.08,
-      0.2
-     ],
-     "ok": true
-    },
-    "dominant_wavelength_m": {
-     "median": 2.0,
-     "min": 2.0,
-     "max": 2.0,
-     "expected": [
-      0.5,
-      2.0
-     ],
-     "ok": true
-    },
-    "tile_seam": {
-     "median": 1.129414889744361,
-     "min": 0.8766318570122603,
-     "max": 1.7198772239778086,
-     "expected": [
-      0.0,
-      1.6
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 1058.0928004746904,
-     "min": 975.4668086421842,
-     "max": 1136.210094462407,
-     "expected": [
-      150,
-      3000
-     ],
-     "ok": true
-    }
-   },
-   "render_crack": {
-    "crack_width_mm": {
-     "median": 3.23606797749979,
-     "min": 3.0,
-     "max": 3.4721359549995796,
-     "expected": [
-      1.5,
-      10
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 1.845623822973855,
-     "min": 1.8456237615805169,
-     "max": 1.845628578430703,
-     "expected": [
-      0.8,
-      8
-     ],
-     "ok": true
-    },
-    "crack_length_m_per_m2_of_frame": {
-     "median": 1.6612000570928767,
-     "min": 0.671813762798187,
-     "max": 2.1425841122673694,
-     "expected": [
-      0.3,
-      3.5
-     ],
-     "ok": true
-    }
-   },
-   "render_patch": {
-    "blob_eqd_mm_p50": {
-     "median": 326.0561480144961,
-     "min": 265.0090021521603,
-     "max": 404.87782676770416,
-     "expected": [
-      30,
-      350
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 11.535117862309992,
-     "min": 11.50198740124238,
-     "max": 11.634753732059659,
-     "expected": [
-      6,
-      30
-     ],
-     "ok": true
-    },
-    "coverage_of_decal": {
-     "median": 0.14916170634920634,
-     "min": 0.09849702380952381,
-     "max": 0.22990575396825397,
-     "expected": [
-      0.1,
-      0.6
-     ],
-     "ok": true
-    }
-   },
-   "poster_remnant": {
-    "blob_eqd_mm_p50": {
-     "median": 647.875279195549,
-     "min": 505.6032729267111,
-     "max": 850.2385693232532,
-     "expected": [
-      120,
-      800
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 4.908583564139835,
-     "min": 4.814178328557952,
-     "max": 4.909494728423364,
-     "expected": [
-      2,
-      14
-     ],
-     "ok": true
-    },
-    "coverage_of_decal": {
-     "median": 0.3330239898989899,
-     "min": 0.2028030303030303,
-     "max": 0.5735037878787879,
-     "expected": [
-      0.25,
-      0.75
-     ],
-     "ok": true
-    }
-   },
-   "bird_dropping": {
-    "blob_eqd_mm_p50": {
-     "median": 63.96908594791291,
-     "min": 56.57079498929849,
-     "max": 112.14207791476665,
-     "expected": [
-      25,
-      100
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 5.9580252125730535,
-     "min": 5.838487428038658,
-     "max": 7.585621920745084,
-     "expected": [
-      2,
-      20
-     ],
-     "ok": true
-    },
-    "coverage_of_frame": {
-     "median": 0.026225142045454543,
-     "min": 0.01390625,
-     "max": 0.12055397727272728,
-     "expected": [
-      0.01,
-      0.2
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.8959999978542328,
-     "min": 0.7919999957084656,
-     "max": 0.9850000143051147,
-     "expected": [
-      0.7,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "gum": {
-    "blob_eqd_mm_p50": {
-     "median": 22.17764559605115,
-     "min": 20.439709140854944,
-     "max": 33.73603779506726,
-     "expected": [
-      14,
-      28
-     ],
-     "ok": true
-    },
-    "count_per_m2_open_footway": {
-     "median": 2.5,
-     "min": 2.0,
-     "max": 2.5,
-     "expected": [
-      0.5,
-      8.0
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 3.386001347596661,
-     "min": 3.1474045648104476,
-     "max": 3.6737312164669613,
-     "expected": [
-      0.8,
-      5
-     ],
-     "ok": true
-    },
-    "coverage_of_decal": {
-     "median": 0.0013377551020408163,
-     "min": 0.001089795918367347,
-     "max": 0.0016479591836734693,
-     "expected": [
-      0.0001,
-      0.006
-     ],
-     "ok": true
-    },
-    "nn_ratio": {
-     "median": 0.6757219011136499,
-     "min": 0.4744084795500143,
-     "max": 0.8917643365612874,
-     "expected": [
-      0.5,
-      1.1
-     ],
-     "ok": true
-    },
-    "size_cv": {
-     "median": 0.34393515625234566,
-     "min": 0.2554587705412006,
-     "max": 0.40103942028038586,
-     "expected": [
-      0.25,
-      1.2
-     ],
-     "ok": true
-    }
-   },
-   "cig_end": {
-    "blob_eqd_mm_p50": {
-     "median": 16.1408572473701,
-     "min": 11.435412712326361,
-     "max": 17.168178723329724,
-     "expected": [
-      8,
-      22
-     ],
-     "ok": true
-    },
-    "count_per_m2_open_footway": {
-     "median": 4.0,
-     "min": 3.75,
-     "max": 4.0,
-     "expected": [
-      0.3,
-      10.0
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 1.8478207041589445,
-     "min": 1.8275861196087617,
-     "max": 1.850343395091759,
-     "expected": [
-      0.6,
-      4
-     ],
-     "ok": true
-    },
-    "nn_ratio": {
-     "median": 1.1198758359976564,
-     "min": 0.9704347922783465,
-     "max": 1.4682203320202278,
-     "expected": [
-      0.7,
-      1.3
-     ],
-     "ok": true
-    },
-    "size_cv": {
-     "median": 0.3845526471918874,
-     "min": 0.28921792879984987,
-     "max": 0.42650826309952156,
-     "expected": [
-      0.25,
-      1.5
-     ],
-     "ok": true
-    }
-   },
-   "pavement_stain": {
-    "blob_eqd_mm_p50": {
-     "median": 157.3027744938479,
-     "min": 55.14600369036816,
-     "max": 472.2225838913398,
-     "expected": [
-      80,
-      300
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 26.160814371528307,
-     "min": 21.81446864571276,
-     "max": 43.731721475181644,
-     "expected": [
-      8,
-      80
-     ],
-     "ok": true
-    },
-    "coverage_of_decal": {
-     "median": 0.136359375,
-     "min": 0.0018875,
-     "max": 0.55881875,
-     "expected": [
-      0.01,
-      0.3
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.9110934138298035,
-     "min": 0.8074643015861511,
-     "max": 0.984000027179718,
-     "expected": [
-      0.6,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "flag_patch_crack": {
-    "tone_ratio": {
-     "median": 0.5874327742438754,
-     "min": 0.5874327742438754,
-     "max": 0.5874327742438754,
-     "expected": [
-      0.5,
-      0.7
-     ],
-     "ok": true
-    },
-    "crack_flag_share": {
-     "median": 0.09615384615384616,
-     "min": 0.038461538461538464,
-     "max": 0.19230769230769232,
-     "expected": [
-      0.05,
-      0.2
-     ],
-     "ok": true
-    }
-   },
-   "road_oil": {
-    "dot_eqd_mm_p50": {
-     "median": 18.65858683211828,
-     "min": 17.616814099864822,
-     "max": 19.13259964331453,
-     "expected": [
-      10,
-      30
-     ],
-     "ok": true
-    },
-    "dots_per_m2_of_frame": {
-     "median": 53.205128205128204,
-     "min": 31.41025641025641,
-     "max": 91.02564102564102,
-     "expected": [
-      15,
-      170
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 6.5073723413536255,
-     "min": 6.505689398160649,
-     "max": 6.519945682507286,
-     "expected": [
-      1,
-      14
-     ],
-     "ok": true
-    },
-    "coverage_of_frame": {
-     "median": 0.022690304487179486,
-     "min": 0.01062900641025641,
-     "max": 0.03568509615384615,
-     "expected": [
-      0.002,
-      0.03
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.8500000238418579,
-     "min": 0.8500000238418579,
-     "max": 0.8500000238418579,
-     "expected": [
-      0.7,
-      1.0
-     ],
-     "ok": true
-    },
-    "nn_ratio": {
-     "median": 1.2136430645507206,
-     "min": 1.178473435879837,
-     "max": 1.327811920741057,
-     "expected": [
-      0.7,
-      1.4
-     ],
-     "ok": true
-    },
-    "size_cv": {
-     "median": 0.4352422584061927,
-     "min": 0.37244257105762124,
-     "max": 0.5866234251368919,
-     "expected": [
-      0.25,
-      1.5
-     ],
-     "ok": true
-    }
-   },
-   "road_blot": {
-    "blob_eqd_mm_p50": {
-     "median": 216.66461539660418,
-     "min": 165.71718507899698,
-     "max": 755.4348942460953,
-     "expected": [
-      120,
-      450
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 19.52497495612165,
-     "min": 19.055322303471996,
-     "max": 23.183743948958707,
-     "expected": [
-      8,
-      70
-     ],
-     "ok": true
-    },
-    "coverage_of_frame": {
-     "median": 0.044978298611111106,
-     "min": 0.0249609375,
-     "max": 0.31125868055555556,
-     "expected": [
-      0.02,
-      0.35
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.9500000178813934,
-     "min": 0.8920000195503235,
-     "max": 0.9949983358383179,
-     "expected": [
-      0.6,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "tyre_scuff": {
-    "streak_length_m_p50": {
-     "median": 2.203090342159474,
-     "min": 1.6686907560440634,
-     "max": 2.460733624901672,
-     "expected": [
-      1.2,
-      3.2
-     ],
-     "ok": true
-    },
-    "streak_aspect_p50": {
-     "median": 7.403592062147521,
-     "min": 6.183075227696421,
-     "max": 8.878815547262127,
-     "expected": [
-      5,
-      60
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 56.647054224127665,
-     "min": 56.647054224127665,
-     "max": 56.647055429994616,
-     "expected": [
-      45,
-      120
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.699999988079071,
-     "min": 0.699999988079071,
-     "max": 0.699999988079071,
-     "expected": [
-      0.6,
-      0.8
-     ],
-     "ok": true
-    }
-   },
-   "road_patch": {
-    "patch_eqd_mm": {
-     "median": 1286.9343186961978,
-     "min": 1126.5193349360193,
-     "max": 1334.7734720567566,
-     "expected": [
-      800,
-      1500
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 15.684433033454482,
-     "min": 15.307513532498906,
-     "max": 16.353786597208384,
-     "expected": [
-      3,
-      40
-     ],
-     "ok": true
-    },
-    "coverage_of_frame": {
-     "median": 0.4014930555555556,
-     "min": 0.3076253858024691,
-     "max": 0.4318769290123457,
-     "expected": [
-      0.25,
-      0.6
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.9,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "road_crack": {
-    "crack_length_m_per_m2_of_frame": {
-     "median": 0.5908126050717843,
-     "min": 0.512365107619456,
-     "max": 1.0034801663637671,
-     "expected": [
-      0.3,
-      1.2
-     ],
-     "ok": true
-    },
-    "crack_width_mm": {
-     "median": 3.75,
-     "min": 2.2855339059327378,
-     "max": 27.25438562747845,
-     "expected": [
-      2,
-      40
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 2.433892207324043,
-     "min": 2.4117514876368915,
-     "max": 2.453836281310363,
-     "expected": [
-      1,
-      15
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.9,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "gutter_grime": {
-    "foot_profile": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.0,
-      1.0
-     ],
-     "ok": true
-    },
-    "tile_seam": {
-     "median": 0.07066356763924614,
-     "min": 0.0,
-     "max": 0.3034100710324212,
-     "expected": [
-      0.0,
-      1.6
-     ],
-     "ok": true
-    },
-    "profile_10_90_mm": {
-     "median": 28.707631857772682,
-     "min": 28.707631857772682,
-     "max": 28.707631857772682,
-     "expected": [
-      15,
-      300
-     ],
-     "ok": true
-    },
-    "top_edge_std_mm": {
-     "median": 33.534808801766,
-     "min": 25.573576284907826,
-     "max": 64.53467207633429,
-     "expected": [
-      20,
-      70
-     ],
-     "ok": true
-    },
-    "column_mean_cv": {
-     "median": 0.2986595970109894,
-     "min": 0.27746712068070467,
-     "max": 0.5117252963038453,
-     "expected": [
-      0.08,
-      2.0
-     ],
-     "ok": true
-    }
-   },
-   "wall_soot": {
-    "mask_mean": {
-     "median": 0.9237747990608216,
-     "min": 0.9174879993736744,
-     "max": 0.9363389999091625,
-     "expected": [
-      0.82,
-      0.97
-     ],
-     "ok": true
-    },
-    "mask_std": {
-     "median": 0.06091346413844508,
-     "min": 0.05660657597275052,
-     "max": 0.06455422274520997,
-     "expected": [
-      0.04,
-      0.14
-     ],
-     "ok": true
-    },
-    "mask_max": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.95,
-      1.0
-     ],
-     "ok": true
-    },
-    "tile_seam": {
-     "median": 1.2118354530053088,
-     "min": 0.8809162468471394,
-     "max": 1.394539354508908,
-     "expected": [
-      0.0,
-      1.6
-     ],
-     "ok": true
-    },
-    "dominant_wavelength_m": {
-     "median": 2.0,
-     "min": 1.0,
-     "max": 4.0,
-     "expected": [
-      0.5,
-      4.0
-     ],
-     "ok": true
-    },
-    "foot_profile": {
-     "median": 1.0,
-     "min": 0.75,
-     "max": 1.0,
-     "expected": [
-      0.0,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "wall_head_band": {
-    "foot_profile": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.0,
-      1.0
-     ],
-     "ok": true
-    },
-    "profile_10_90_mm": {
-     "median": 482.2318576166348,
-     "min": 473.27876228335606,
-     "max": 491.2156159813799,
-     "expected": [
-      300,
-      900
-     ],
-     "ok": true
-    },
-    "tile_seam": {
-     "median": 0.0020569228934857534,
-     "min": 0.0,
-     "max": 0.21689333030363941,
-     "expected": [
-      0.0,
-      1.6
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.95,
-      1.0
-     ],
-     "ok": true
-    },
-    "top_edge_std_mm": {
-     "median": 51.03531280669776,
-     "min": 29.102375198383722,
-     "max": 66.25990307764852,
-     "expected": [
-      20,
-      100
-     ],
-     "ok": true
-    },
-    "column_mean_cv": {
-     "median": 0.11326788342746046,
-     "min": 0.06034975753951259,
-     "max": 0.13679427455677548,
-     "expected": [
-      0.08,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "iron_wear": {
-    "coverage_of_frame": {
-     "median": 0.0791015625,
-     "min": 0.061360677083333336,
-     "max": 0.11988932291666667,
-     "expected": [
-      0.05,
-      0.14
-     ],
-     "ok": true
-    },
-    "blob_eqd_mm_p50": {
-     "median": 50.6652057791777,
-     "min": 33.35645470909101,
-     "max": 90.52107453746373,
-     "expected": [
-      20,
-      90
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 4.978109004903207,
-     "min": 3.8120720032231494,
-     "max": 5.533793208985881,
-     "expected": [
-      3,
-      25
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.9634999930858612,
-     "min": 0.9229868650436401,
-     "max": 0.9909999966621399,
-     "expected": [
-      0.8,
-      1.0
-     ],
-     "ok": true
-    },
-    "foot_concentration": {
-     "median": 0.3333333333333333,
-     "min": 0.3333333333333333,
-     "max": 0.5,
-     "expected": [
-      0.25,
-      0.6
-     ],
-     "ok": true
-    }
-   },
-   "grate_wear": {
-    "coverage_of_frame": {
-     "median": 0.627071875,
-     "min": 0.62330625,
-     "max": 0.63111875,
-     "expected": [
-      0.35,
-      0.7
-     ],
-     "ok": true
-    },
-    "blob_eqd_mm_p50": {
-     "median": 126.070110804872,
-     "min": 125.36693718924,
-     "max": 175.3386496103333,
-     "expected": [
-      50,
-      160
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 2.9036079271253987,
-     "min": 2.9036079271253987,
-     "max": 2.9036079271253987,
-     "expected": [
-      1,
-      12
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.8999999761581421,
-     "min": 0.8999999761581421,
-     "max": 0.8999999761581421,
-     "expected": [
-      0.85,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "line_wear": {
-    "coverage_of_frame": {
-     "median": 0.16344444444444445,
-     "min": 0.099,
-     "max": 0.2715,
-     "expected": [
-      0.1,
-      0.3
-     ],
-     "ok": true
-    },
-    "blob_eqd_mm_p50": {
-     "median": 35.212710701608245,
-     "min": 31.914408377619537,
-     "max": 59.50796151604146,
-     "expected": [
-      15,
-      150
-     ],
-     "ok": true
-    },
-    "size_cv": {
-     "median": 0.6604769566661748,
-     "min": 0.4875149935738885,
-     "max": 0.7641179034510756,
-     "expected": [
-      0.25,
-      2.0
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 3.979106637883153,
-     "min": 3.9790902158654844,
-     "max": 3.9791847209217446,
-     "expected": [
-      2,
-      15
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.9,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "sign_ghost": {
-    "coverage_of_frame": {
-     "median": 0.1379403409090909,
-     "min": 0.05305965909090909,
-     "max": 0.613721590909091,
-     "expected": [
-      0.03,
-      0.8
-     ],
-     "ok": true
-    },
-    "hole_count": {
-     "median": 2.5,
-     "min": 2.0,
-     "max": 4.0,
-     "expected": [
-      2,
-      4
-     ],
-     "ok": true
-    },
-    "hole_eqd_mm_p50": {
-     "median": 13.768664889894975,
-     "min": 12.440034664108927,
-     "max": 18.3728405016802,
-     "expected": [
-      10,
-      22
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 18.805289674335786,
-     "min": 18.10046963046619,
-     "max": 19.163524000401353,
-     "expected": [
-      3,
-      25
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.944830447435379,
-     "min": 0.9094183444976807,
-     "max": 0.9628291726112366,
-     "expected": [
-      0.9,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "graffiti_buff": {
-    "blob_eqd_mm_p50": {
-     "median": 1108.1062237246701,
-     "min": 424.334708534449,
-     "max": 1465.5333497665529,
-     "expected": [
-      300,
-      1500
-     ],
-     "ok": true
-    },
-    "coverage_of_frame": {
-     "median": 0.4685036057692308,
-     "min": 0.06798978365384616,
-     "max": 0.8109945913461538,
-     "expected": [
-      0.1,
-      0.9
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 8.614432403024107,
-     "min": 8.199494287889168,
-     "max": 8.614715723148946,
-     "expected": [
-      2,
-      20
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.9,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "handle_wear": {
-    "blob_eqd_mm_p50": {
-     "median": 121.25527089064056,
-     "min": 98.69286963719311,
-     "max": 186.01151746109176,
-     "expected": [
-      80,
-      290
-     ],
-     "ok": true
-    },
-    "coverage_of_frame": {
-     "median": 0.03236111111111111,
-     "min": 0.02125,
-     "max": 0.07548611111111111,
-     "expected": [
-      0.015,
-      0.4
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 60.32373558580306,
-     "min": 55.01930124528914,
-     "max": 77.53779618351588,
-     "expected": [
-      20,
-      100
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 0.9297035038471222,
-     "min": 0.8886526823043823,
-     "max": 0.9875950217247009,
-     "expected": [
-      0.85,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "stone_top_lichen": {
-    "coverage_of_frame": {
-     "median": 0.6261953124999999,
-     "min": 0.415734375,
-     "max": 0.8020546875,
-     "expected": [
-      0.4,
-      0.85
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 4.074024446430502,
-     "min": 4.058871319242877,
-     "max": 4.087415968505797,
-     "expected": [
-      2,
-      14
-     ],
-     "ok": true
-    },
-    "mask_std": {
-     "median": 0.4563802656188519,
-     "min": 0.3743599522615516,
-     "max": 0.47895341353547194,
-     "expected": [
-      0.3,
-      0.52
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.9,
-      1.0
-     ],
-     "ok": true
-    }
-   },
-   "footway_infill": {
-    "blob_eqd_mm_p50": {
-     "median": 1281.362187766072,
-     "min": 1101.0481709591231,
-     "max": 1443.206438715309,
-     "expected": [
-      600,
-      2200
-     ],
-     "ok": true
-    },
-    "coverage_of_frame": {
-     "median": 0.5040869140625,
-     "min": 0.37193115234375,
-     "max": 0.6390087890625,
-     "expected": [
-      0.1,
-      0.8
-     ],
-     "ok": true
-    },
-    "edge_10_90_mm": {
-     "median": 8.614715723148946,
-     "min": 8.614715723148946,
-     "max": 8.614715723148946,
-     "expected": [
-      3,
-      25
-     ],
-     "ok": true
-    },
-    "peak_mask": {
-     "median": 1.0,
-     "min": 1.0,
-     "max": 1.0,
-     "expected": [
-      0.9,
-      1.0
-     ],
-     "ok": true
-    }
-   }
-  },
-  "composition": {
-   "wall_foot_splash/composed_foot_ratio": {
-    "median": 0.18954696757426165,
-    "expected": [
-     0.12,
-     0.3
-    ]
-   },
-   "wall_foot_splash/composed_wall_min_ratio": {
-    "median": 0.14999999999999994,
-    "expected": [
-     0.149,
-     1.0
-    ]
-   },
-   "salt_bloom/composed_salt_ratio": {
-    "median": 1.3621523522832748,
-    "expected": [
-     0.57,
-     2.2
-    ]
-   },
-   "pavement_stain/composed_ground_min_ratio": {
-    "median": 0.28,
-    "expected": [
-     0.279,
-     1.0
-    ]
-   },
-   "gutter_grime/channel_over_road": {
-    "median": 1.4694758107873045,
-    "expected": [
-     1.15,
-     1.8
-    ]
-   },
-   "gutter_grime/fringe_over_road": {
-    "median": 0.9253635814215542,
-    "expected": [
-     0.85,
-     0.99
-    ]
-   },
-   "wall_soot/composed_soot_ratio": {
-    "median": 0.4805203249887821,
-    "expected": [
-     0.35,
-     0.55
-    ]
-   },
-   "wall_head_band/composed_head_ratio": {
-    "median": 0.5734420086791739,
-    "expected": [
-     0.45,
-     0.65
-    ]
-   },
-   "wall_head_band/composed_head_ratio_sooted": {
-    "median": 0.38200964330684056,
-    "expected": [
-     0.28,
-     0.48
-    ]
-   }
-  },
-  "wrong_masks_refused": {
-   "wall_foot_splash": [
-    {
-     "what": "a perfectly straight, uniform gradient with no ragged top",
-     "refused_by": [
-      "top_edge_std_mm=0",
-      "column_mean_cv=0"
-     ]
-    }
-   ],
-   "wall_foot_damp": [
-    {
-     "what": "a perfectly straight, uniform gradient with no ragged top",
-     "refused_by": [
-      "top_edge_std_mm=0",
-      "column_mean_cv=1.88e-16"
-     ]
-    }
-   ],
-   "gutter_grime": [
-    {
-     "what": "a perfectly straight, uniform gradient with no ragged top",
-     "refused_by": [
-      "top_edge_std_mm=0",
-      "column_mean_cv=0"
-     ]
-    }
-   ],
-   "wall_head_band": [
-    {
-     "what": "a perfectly straight, uniform gradient from the feature",
-     "refused_by": [
-      "top_edge_std_mm=0",
-      "column_mean_cv=1.16e-16"
-     ]
-    }
-   ],
-   "streak_sill": [
-    {
-     "what": "two identical, symmetric bars and nothing else",
-     "refused_by": [
-      "streak_length_m_p90=0.29",
-      "edge_10_90_mm=2.81",
-      "end_streak_length_ratio=1",
-      "end_streak_width_ratio=1",
-      "rivulet_count=0"
-     ]
-    }
-   ],
-   "streak_coping": [
-    {
-     "what": "identical fingers at an identical 0.4 m spacing",
-     "refused_by": [
-      "fade_ratio_tail_over_head=1",
-      "edge_10_90_mm=0",
-      "finger_spacing_cv=0",
-      "finger_length_cv=0"
-     ]
-    }
-   ],
-   "gum": [
-    {
-     "what": "a 3 x 3 grid of identical discs",
-     "refused_by": [
-      "edge_10_90_mm=0",
-      "nn_ratio=2",
-      "size_cv=0.00516"
-     ]
-    }
-   ],
-   "cig_end": [
-    {
-     "what": "a 4 x 4 grid of identical discs",
-     "refused_by": [
-      "edge_10_90_mm=0",
-      "nn_ratio=2",
-      "size_cv=0"
-     ]
-    }
-   ],
-   "road_oil": [
-    {
-     "what": "a lattice of identical dots",
-     "refused_by": [
-      "edge_10_90_mm=0",
-      "nn_ratio=2.29",
-      "size_cv=4.14e-16"
-     ]
-    }
-   ],
-   "salt_bloom": [
-    {
-     "what": "one uniform 0.09 m stripe",
-     "refused_by": [
-      "ragged_edge_10_90_mm=0",
-      "top_edge_std_mm=0",
-      "column_mean_cv=1.23e-16",
-      "brick_cell_std=0.18"
-     ]
-    }
-   ],
-   "paint_fade": [
-    {
-     "what": "white noise at texel scale",
-     "refused_by": [
-      "dominant_wavelength_m=0.05",
-      "edge_10_90_mm=71.3"
-     ]
-    }
-   ],
-   "wall_soot": [
-    {
-     "what": "a perfectly uniform mask",
-     "refused_by": [
-      "mask_std=1.11e-16",
-      "mask_max=0.9"
-     ]
-    }
-   ]
-  },
-  "placement": {
-   "conforming": [
-    [
-     "P1",
-     true
-    ],
-    [
-     "P2",
-     true
-    ],
-    [
-     "P3",
-     true
-    ],
-    [
-     "P4",
-     true
-    ],
-    [
-     "P5",
-     true
-    ],
-    [
-     "P6",
-     true
-    ],
-    [
-     "P7",
-     true
-    ],
-    [
-     "P8",
-     true
-    ],
-    [
-     "P9",
-     true
-    ]
-   ]
-  }
- }
+ ]
 }

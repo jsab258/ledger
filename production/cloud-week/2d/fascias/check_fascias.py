@@ -266,10 +266,8 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         pmx = pc.face_mask(img, b, xmargin=40)
         tm, tm_full, fm = ref_masks(T, b, fonts_dir)
         # try 2: the letters wear with their ground (paint lost from a letter shows the older coat or the wood) and the board carries cracks and flakes of its own.
-        # POSITION, WIDTH, CAP and JITTER read the face-coloured pixels that stand within 6 mm of the letter's reference shape (a stray crack or a dark flake far from the
-        # letter is not the letter), with the chips in a letter closed over (3 x 3, twice); a letter 20 mm out of place has none within 6 mm and fails. The glyph mask
-        # (G10) reads the paint as it is.
-        near_ref = ndi.binary_dilation(tm_full, iterations=6)
+        # POSITION, WIDTH, CAP and JITTER read the letters' pixels with the hair-fine cracks opened away and the chips in a letter closed over; the glyph mask (G10) reads
+        # the paint as it is.
         lossw = np.zeros((H_MM, W_MM), bool)
         lossw_strict = np.zeros((H_MM, W_MM), bool)
         if rec_loss is not None:
@@ -278,10 +276,14 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
             dsub_w = np.minimum(fc.dE(sub_, rec_loss[0]), fc.dE(sub_, rec_loss[1]))
             lossw[w[0]:w[1], c_lo:c_hi] = dsub_w < 24.0
             lossw_strict[w[0]:w[1], c_lo:c_hi] = dsub_w < 13.0
-        # where the paint of a letter is gone INSIDE the letter's own reference shape the letter has not moved: those pixels stand for it (nothing outside the shape does)
-        worn = lossw_strict & tm & ndi.binary_dilation(pm & near_ref, iterations=5)
-        pm_pos = ndi.binary_closing((pm & near_ref) | worn, structure=np.ones((3, 3), bool), iterations=2) & (near_ref | worn)
-        pmx_pos = ndi.binary_closing((pmx & near_ref) | worn, structure=np.ones((3, 3), bool), iterations=2) & (near_ref | worn)
+        # a stray crack or the dark rim of a flake is a line a pixel or two wide: opening 3 x 3 removes it, a letter's stroke is not touched
+        pm_c = ndi.binary_opening(pm, structure=np.ones((3, 3), bool))
+        pmx_c = ndi.binary_opening(pmx, structure=np.ones((3, 3), bool))
+        # where the paint of a letter is gone INSIDE the letter's own reference shape, next to paint of the letter that is left, the letter has not moved: those pixels
+        # stand for it (nothing outside the shape does)
+        worn = lossw_strict & tm & ndi.binary_dilation(pm_c, iterations=20)
+        pm_pos = ndi.binary_closing(pm_c | worn, structure=np.ones((3, 3), bool), iterations=2)
+        pmx_pos = ndi.binary_closing(pmx_c | worn, structure=np.ones((3, 3), bool), iterations=2)
         bb = pc.ink_bbox_mm(pmx_pos)
         if bb is None:
             for k in ("pos", "mask", "width", "face", "contrast", "cap", "fit"):
@@ -361,7 +363,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         if b.get("shade") and want_shade:
             out.append(shade_result(T, b, d, pm, tm, bid))
         # jitter parts
-        part = jitter_residuals(pm & near_ref, b['cap_mm'], bad=ndi.binary_dilation(lossw_strict, iterations=2))
+        part = jitter_residuals(pm_c, b['cap_mm'], bad=ndi.binary_dilation(lossw_strict, iterations=2))
         (hand_parts if b.get("jitter") else other_parts).append(part)
         per_block_sd[b["id"]] = None if not part or part[1] <= 0 else round(math.sqrt(part[0] / part[1]), 2)
         out.append(relief_result(T, b, d, tm_full, bid))
