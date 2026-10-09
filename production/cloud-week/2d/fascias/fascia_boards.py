@@ -10,13 +10,27 @@ import numpy as np
 from PIL import Image, ImageDraw
 from scipy import ndimage as ndi
 
+import fascia_age as fa
 import fascia_common as fc
 import fascia_paint as fp
+import fascia_timber as ft
 import fascia_wear as fw
 from fascia_common import H_MM, W_MM
 
 LINE_ROLES = {"rule", "rule_outer", "rule_inner", "corner_block", "keyline", "rope", "speed_line", "slab_joint", "slab_edge", "box_frame", "vinyl_panel"}
 CONTAINER_ROLES = {"old_board", "box_face", "slab_face"}
+TIMBER_KINDS = ("signwritten", "gilded", "applied_letters", "bare")
+# the substrate colours (older coat, bare wood) of the paint lost, per board: the previous owner's coat is each board's own, within a few dE of grey
+SUBSTRATES = {
+    "mickeys": ((126, 130, 136), (116, 102, 86)),       # an older blue-grey undercoat
+    "fish_market": ((168, 162, 138), (122, 108, 92)),    # an older cream-yellow gloss
+    "ritas": ((122, 134, 120), (116, 102, 86)),          # an older dull green
+    "ironmonger": ((124, 126, 112), (104, 90, 76)),      # an older olive stone
+    "chandler": ((148, 150, 146), (116, 102, 86)),       # an older pale grey (salt-bleached)
+    "empty_unit": ((114, 102, 88), (98, 86, 72)),        # the silvered open-grained timber
+    "_light": ((138, 134, 124), (104, 90, 76)),
+    "_dark": ((142, 138, 130), (116, 102, 86)),
+}
 
 
 # ------------------------------------------------------------------ small drawing helpers
@@ -87,45 +101,32 @@ def paint_ground_fill(B, s, colour, grain, rough, amp_override=None):
     win = (0, H_MM, 0, W_MM)
     amp = amp_override if amp_override is not None else grain.get("amp_L", 1.2)
     if grain.get("direction") == "along":
-        kinds = (("streak", 0.38), ("grain", 0.45), ("blot", 0.65), ("iso", 0.3), ("fine", 0.22))
+        # try 2: the slow tone is long bands along the grain (the old 140 x 55 mm clouds read as suede on the signs), brush marks and fibres
+        kinds = (("streak", 0.42), ("grain", 0.45), ("band", 0.62), ("iso", 0.12), ("fine", 0.22))
     else:
-        kinds = (("blot", 0.55), ("iso", 0.4), ("fine", 0.25))
+        kinds = (("band", 0.50), ("iso", 0.15), ("fine", 0.25))
     rgb = B.mottle(win, colour, amp, kinds=kinds)
     B.rgb[:] = rgb
-    rn = B.noise("blot") * 0.03 + B.noise("fine") * 0.012
+    rn = B.noise("band") * 0.03 + B.noise("fine") * 0.012
     B.rough[:] = np.clip(rough + rn, 0.02, 1.0)
     B.metal[:] = 0.0
     B.height[:] = (B.noise("streak") * 0.012 + B.noise("fine") * 0.006).astype(np.float32) if grain.get("direction") == "along" else (B.noise("fine") * 0.004).astype(np.float32)
 
 
-def grime(B, s):
-    """a grime film heavier along the top and bottom edges (the soot under the cornice, the road spray), zero-mean on the board, so the ground's
-    aged median (the target's palette, which already holds the grime film) is kept"""
-    age = s["age"]
-    rows = np.arange(H_MM, dtype=np.float32)
-    d_top, d_bot = rows, H_MM - 1 - rows
-    prof = np.exp(-d_bot / 70.0) * 1.0 + np.exp(-d_top / 45.0) * 0.8
-    prof = prof - prof.mean()
-    delta = (age["grime_film"] * 0.9) * prof[:, None]                       # +: toward grime
-    tint = np.where(delta[..., None] > 0, GRIME_BLEND_DARK, GRIME_BLEND_LIGHT)
-    B.rgb += (tint - B.rgb) * delta[..., None] * 0.5
-
-
 def chalk(B, s):
-    """the chalk bloom of old gloss (each shop's `chalk_dL`): L* lifted in patches over EVERYTHING on the surface, zero-mean on the board"""
+    """the chalk bloom of old gloss (each shop's `chalk_dL`): L* lifted in long bands over EVERYTHING on the surface (letters and shade chalk with the
+    ground), most on the exposed upper part, zero-mean on the board"""
     age = s["age"]
     if not age.get("chalk_dL"):
         return
-    lift = np.clip(B.noise("blot") * 0.5 + 0.35, 0, 1.2) * age["chalk_dL"]
+    rows = np.arange(H_MM, dtype=np.float32)[:, None]
+    top = 0.6 + 0.9 * np.exp(-rows / 160.0)
+    lift = np.clip(B.noise("band") * 0.55 + 0.35, 0, 1.3) * top * age["chalk_dL"]
     lift = lift - float(lift.mean())
     luma = (0.2126 * B.rgb[..., 0] + 0.7152 * B.rgb[..., 1] + 0.0722 * B.rgb[..., 2]) / 255.0
     L_approx = 100.0 * np.power(np.maximum(luma, 1e-4), 0.45)
     B.rgb *= (1.0 + 1.36 * lift / np.maximum(L_approx, 15.0))[..., None]
     np.clip(B.rgb, 0, 255, out=B.rgb)
-
-
-GRIME_BLEND_DARK = np.array([88.0, 82.0, 74.0], np.float32)
-GRIME_BLEND_LIGHT = np.array([200.0, 198.0, 190.0], np.float32)
 
 
 # ------------------------------------------------------------------ the board
@@ -140,15 +141,30 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
     gcol = fc.pal(T, g["colour"])
 
     # ---- 0. what the whole board is under everything
+    timber = kind in TIMBER_KINDS
+    blocks = s["blocks"]
+    arng = B.rng("age", "layout")
+    avoid_x = [(b["effects_box_mm"][0], b["effects_box_mm"][2]) for b in blocks if b["in_texture"] or b["ghost"]]
+    joints = fa.joint_positions(W_MM, avoid_x, arng, n=2) if timber else []
+    nails_top = fa.fixings(W_MM, arng) if timber else []
+    nails_bot = fa.fixings(W_MM, arng) if timber else []
+    mode = fa.MODES.get(sid, fa.MODES["ring"])
+    dark_board = float(fc.lab(gcol)[0]) < 45
+    timber_info = None
     if "old_board" in roles:
         ob = [sh for sh in shapes if sh["role"] == "old_board"][0]
         paint_ground_fill(B, s, fc.pal(T, ob["colour"]), dict(direction="along", amp_L=1.6, scale_mm=[30, 300]), 0.65)
     elif "slab_edge" in roles:
         paint_ground_fill(B, s, fc.pal(T, "mastic"), dict(direction="along", amp_L=1.0, scale_mm=[40, 400]), 0.55, amp_override=1.0)
+    elif kind == "bare":
+        timber_info = ft.paint_bare_timber(B, T, s)
     else:
         paint_ground_fill(B, s, gcol, g["grain"], g["roughness"])
-    B.metal[:] = g.get("metallic", 0.0) if not ("old_board" in roles or "slab_edge" in roles) else 0.0
-    grime(B, s)
+    if kind != "bare":
+        B.metal[:] = g.get("metallic", 0.0) if not ("old_board" in roles or "slab_edge" in roles) else 0.0
+    if joints:
+        fa.draw_joints(B, joints, dark_board=dark_board or kind == "bare")
+        info["joints_x_mm"] = [round(x, 1) for x in joints]
 
     # ---- 1. the shapes, in the target's order
     shape_alpha = np.zeros((H_MM, W_MM), np.float32)          # lines and frames (for the free-zone maths)
@@ -363,62 +379,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         # the unit's own free zone is not blocked by the patch (runs and marks may cross buff paint)
     info["blocked_frac"] = float(blocked.mean())
 
-    # ---- 3. paint loss
-    loss_frac = s["age"]["loss_fraction"]
-    ob_frac = s["age"].get("old_board", {}).get("loss_fraction", 0.0) if "old_board" in s["age"] else 0.0
-    free_loss = fw.gather_free(B, blocked.copy(), margin=24) & ~loss_block
-    if "box_frame" in roles:
-        bf = [sh for sh in shapes if sh["role"] == "box_frame"][0]["box"]
-        inside = np.zeros((H_MM, W_MM), bool)
-        dilate_box(inside, bf, 8)
-        free_loss &= ~inside                          # the ring of old board only
-        ring_px = float(free_loss.sum())
-        frac = ob_frac * ring_px / float(W_MM * H_MM)
-        info["old_board_loss_target"] = ob_frac
-    elif "slab_edge" in roles:
-        frac = 0.0
-    else:
-        frac = loss_frac
-    if sid == "mickeys":
-        for gb in blocks:
-            if not gb["in_texture"]:
-                dilate_box(blocked, gb["effects_box_mm"], 34)
-        free_loss &= ~blocked
-        sh_zone = np.zeros((H_MM, W_MM), bool)
-        dilate_box(sh_zone, [2996.0, 90.0, 5114.0, 439.0], 34)
-        free_loss &= ~sh_zone
-    lrng = B.rng("loss")
-    # flaking is not even: it gathers where the board is damp (the foot, under the cornice) and in patches
-    rr_ = np.arange(H_MM, dtype=np.float32)[:, None]
-    bands = fc.fnoise((H_MM, W_MM), 260.0, 16.0, B.rng("lossbands"))          # long damp bands along the board, where the paint lets go
-    wgt = np.exp(1.5 * bands + 0.9 * B.noise("blot") + 0.5 * B.noise("iso")) * (0.35 + 1.8 * np.exp(-(H_MM - 1 - rr_) / 60.0) + 0.9 * np.exp(-rr_ / 35.0))
-    la, lsub = fp.loss_patches(B, free_loss, frac, lrng, gcol, weight=wgt, gap=(2 if frac < 0.1 else 1), big_prob=(0.022 if frac < 0.1 else 0.09))
-    ground_lab = float(fc.lab(gcol)[0])
-    if "old_board" in roles:
-        ground_lab = float(fc.lab(fc.pal(T, [sh for sh in shapes if sh["role"] == "old_board"][0]["colour"]))[0])
-    if sid == "empty_unit":
-        prim, wood = np.array([104.0, 92.0, 78.0]), np.array([104.0, 92.0, 78.0])             # the silvered timber under the soot film
-    elif ground_lab >= 55:
-        prim, wood = np.array([138.0, 134.0, 124.0]), np.array([104.0, 90.0, 76.0])
-    else:
-        prim, wood = np.array([142.0, 138.0, 130.0]), np.array([116.0, 102.0, 86.0])
-    if la.any():
-        for code, colr, hgt in ((1, prim, -0.30), (2, wood, -0.50)):
-            m = (lsub == code)
-            if not m.any():
-                continue
-            a = la * m
-            sel = a > 0.002
-            B.rgb[sel] = B.rgb[sel] + (colr[None, :] * (1.0 + 0.035 * B.noise("fine")[sel][:, None] + 0.04 * B.noise("iso")[sel][:, None]) - B.rgb[sel]) * a[sel][:, None]
-            B.rough[sel] = B.rough[sel] + (0.85 - B.rough[sel]) * a[sel]
-            B.metal[sel] = B.metal[sel] * (1 - a[sel])
-            B.height[sel] = B.height[sel] + (hgt - B.height[sel]) * a[sel]
-    B.layers["loss"] = la
-    B.layers["loss_sub"] = lsub
-    info["loss"] = dict(target_fraction=frac, drawn_fraction=round(float((la > 0.5).sum() / (W_MM * H_MM)), 4),
-                        substrate_primer=[int(v) for v in prim], substrate_wood=[int(v) for v in wood])
-
-    # ---- 4. the letters
+    # ---- 4. the letters (they are painted before the ageing: they wear with the ground)
     if with_text:
         for b in blocks:
             if b["ghost"] or not b["in_texture"]:
@@ -449,6 +410,59 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
             gb = [b for b in blocks if b["id"] == gd["id"]][0]
             info["blocks"].append(dict(id=gb["id"], string=gb["text"], font=gb["font"], weight=gb["weight"], cap_mm=gb["cap_mm"], role="ghost",
                                        technique=gb["technique"], baseline_mm=gb["baseline_mm"], x_mm=gb["x_mm"], ink_box_mm=gb["ink_box_mm"]))
+
+    # ---- 4b. the ageing that works on everything painted: grime that gathers where the board is damp, cracks along the grain, paint lost
+    age = s["age"]
+    F = fa.Fields(B)
+    fa.grime_film(B, mode, age, joints)
+    zone = fc.free_zone_mask(s)
+    allowed = np.ones((H_MM, W_MM), bool)
+    allowed[:6] = allowed[-6:] = False
+    allowed[:, :6] = allowed[:, -6:] = False
+    loss_frac = age["loss_fraction"]
+    ob_frac = age.get("old_board", {}).get("loss_fraction", 0.0) if "old_board" in age else 0.0
+    frac = loss_frac
+    if "box_frame" in roles:
+        bf = [sh for sh in shapes if sh["role"] == "box_frame"][0]["box"]
+        inside = np.zeros((H_MM, W_MM), bool)
+        dilate_box(inside, bf, 8)
+        allowed &= ~inside                               # the ring of old board only: the frame and the acrylic face are not paint
+        zone &= ~inside
+        ring_px = float(zone.sum())
+        frac = ob_frac * ring_px / float(W_MM * H_MM)
+        info["old_board_loss_target"] = ob_frac
+    elif "slab_edge" in roles:
+        frac = 0.0
+        allowed[:] = False
+    for sh in shapes:
+        if sh["role"] == "vinyl_panel":
+            x0, y0, x1, y1 = sh["box"]
+            allowed[max(0, H_MM - int(y1) - 1):H_MM - int(y0) + 1, max(0, int(x0) - 1):int(x1) + 2] = False
+    ground_L = float(fc.lab(gcol)[0])
+    if "old_board" in roles:
+        ground_L = float(fc.lab(fc.pal(T, [sh for sh in shapes if sh["role"] == "old_board"][0]["colour"]))[0])
+    prim, wood = SUBSTRATES.get(sid, SUBSTRATES["_light"] if ground_L >= 55 else SUBSTRATES["_dark"])
+    prim, wood = np.array(prim, np.float32), np.array(wood, np.float32)
+    weight = fa.damp_weight(H_MM, W_MM, mode, joints, nails_top, nails_bot)
+    # cracks along the grain, more where the board is damp (they cross letters: it is paint on the same board)
+    if timber and mode["crack"] > 0:
+        cr = fa.cracks(B, mode["crack"], allowed, weight=weight, dark_board=(ground_L < 40), prim=prim, strength=(0.8 if kind == "bare" else 0.5))
+        B.layers["cracks"] = cr
+    if kind == "bare":
+        weight = np.where(np.arange(H_MM)[:, None] > 280, weight * 1.35, weight * 0.55).astype(np.float32)
+    if gh and gh.get("kind") == "painted_out_patch":
+        x0, y0, x1, y1 = gh["box_mm"]
+        weight[H_MM - int(y1):H_MM - int(y0), int(x0):int(x1)] *= 0.55          # fresher paint than the soot timber round it
+    a1, a2, S, thr = fa.loss_alpha(F, weight, allowed, zone, frac, mode)
+    tex = None
+    if kind == "bare":
+        tex = (1.0 + 0.12 * F.long() + 0.07 * F.strip()).astype(np.float32)
+    fa.apply_loss(B, a1, a2, prim, wood, tex=tex)
+    B.layers["loss"] = a1
+    B.layers["loss_core"] = a2
+    info["loss"] = dict(target_fraction=frac, drawn_fraction=round(float((a1 > 0.5).sum() / (W_MM * H_MM)), 4),
+                        drawn_fraction_in_zone=round(float(((a1 > 0.5) & zone).sum() / (W_MM * H_MM)), 4),
+                        substrate_primer=[int(v) for v in prim], substrate_wood=[int(v) for v in wood], thresholds=thr)
 
     # ---- 5. specials: Mickey's contact shadow, nail and pin holes, the lifting vinyl rule
     if sid == "mickeys":
@@ -485,43 +499,29 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         B.layers["holes"] = holes_layer
         info["holes"] = [[round(x, 1), round(y, 1)] for x, y in hole_pts]
 
-    # ---- 6. wear: rain runs, gull marks, rust runs
-    age = s["age"]
-    free = fw.gather_free(B, blocked.copy(), margin=14)
-    for b in blocks:
-        if b["in_texture"] and not b["ghost"]:
-            dilate_box(blocked, b["effects_box_mm"], 14)
-    text_only = np.zeros((H_MM, W_MM), bool)
+    # ---- 6. wear: rain runs from the top edge, gull marks on the top edge, rust runs from the fixings
+    wrng = B.rng("wear")
+    text_boxes = np.zeros((H_MM, W_MM), bool)
     for b in blocks:
         if b["in_texture"] or b["ghost"]:
-            dilate_box(text_only, b["effects_box_mm"], 10)
-    wrng = B.rng("wear")
-    face_free = free.copy()
+            dilate_box(text_boxes, b["effects_box_mm"], 14)
+    light = not dark_board
+    drips, tracks, run_pl = fa.place_drips(B, age["runs"]["count"], age["runs"]["len_mm"], wrng, nails_top + joints, light)
+    # gull marks: only on the top edge of the board (they fall from the cornice and run a little down the face)
+    gzone = np.zeros((H_MM, W_MM), bool)
+    gzone[16:62, 70:W_MM - 70] = True
+    gzone &= ~text_boxes
+    gzone &= ~ndi.binary_dilation(drips > 0.05, iterations=14)
     if "box_frame" in roles:
-        # the old board's ring takes the runs of a box sign too, and so does the box face: the frame itself does not
-        fr = [sh for sh in shapes if sh["role"] == "box_frame"][0]["box"]
-        fa = [sh for sh in shapes if sh["role"] == "box_face"][0]["box"]
-        ring = np.zeros((H_MM, W_MM), bool)
-        dilate_box(ring, fr, 8)
-        inner = np.zeros((H_MM, W_MM), bool)
-        dilate_box(inner, [fa[0] + 6, fa[1] + 6, fa[2] - 6, fa[3] - 6], 0)
-        face_free = free & (inner | ~ring) & ~ndi.binary_dilation(shape_alpha > 0.03, iterations=8)
-        # keep the frame band itself out
-        band = np.zeros((H_MM, W_MM), bool)
-        dilate_box(band, fr, 4)
-        inband = np.zeros((H_MM, W_MM), bool)
-        dilate_box(inband, [fr[0] + 22, fr[1] + 22, fr[2] - 22, fr[3] - 22], 0)
-        face_free &= ~(band & ~inband)
-    if "slab_face" in roles:
-        sf = [sh for sh in shapes if sh["role"] == "slab_face"][0]["box"]
-        inner = np.zeros((H_MM, W_MM), bool)
-        dilate_box(inner, [sf[0] + 8, sf[1] + 8, sf[2] - 8, sf[3] - 8], 0)
-        face_free = free & inner & ~ndi.binary_dilation(shape_alpha > 0.03, iterations=8)
-    light = is_light(gcol) if "old_board" not in roles else True
-    runs_layer, runs_pl = fw.place_runs(B, face_free, age["runs"]["count"], age["runs"]["len_mm"], wrng, light)
-    gfree = face_free & ~ndi.binary_dilation(runs_layer > 0.02, iterations=12)
-    core, halo, gull_pl = fw.place_gull(B, gfree, age["gull"]["count"], age["gull"]["size_mm"], wrng)
-    # rust: where the fixings are
+        bf = [sh for sh in shapes if sh["role"] == "box_frame"][0]["box"]
+        top_ring = np.zeros((H_MM, W_MM), bool)
+        dilate_box(top_ring, bf, 8)
+        gzone &= ~top_ring
+        gzone[40:] = False
+    n_gull = age["gull"]["count"]
+    n_gull = max(0, n_gull - 1) if n_gull >= 2 else n_gull            # the target counts within one: 'a few', so one fewer where it has two or more
+    forbid_g = text_boxes | ndi.binary_dilation(drips > 0.05, iterations=14)
+    core, centre, spat, gull_pl = fa.place_gulls(B, n_gull, age["gull"]["size_mm"], wrng, gzone, forbid_g, big_ok=(sid == "empty_unit"))
     rn = age["rust"]["count"]
     heads, lens = [], []
     if rn:
@@ -536,12 +536,12 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         heads = heads[:rn]
         lens = [float(wrng.uniform(28, 70)) for _ in heads]
     rust_layer = fw.place_rust(B, heads, lens, wrng, light) if heads else np.zeros((H_MM, W_MM), np.float32)
-    fw.apply_runs(B, runs_layer, light)
-    fw.apply_gull(B, core, halo)
+    fa.apply_drips(B, drips, tracks, light)
+    fa.apply_gulls(B, core, centre, spat)
     fw.apply_rust(B, rust_layer)
-    B.layers["runs"], B.layers["gull"], B.layers["rust"] = runs_layer, core, rust_layer
-    info["wear"] = dict(runs=len(runs_pl), gull=len(gull_pl), rust=len(heads), runs_at=[[int(x), int(y), int(l)] for x, y, l, _ in runs_pl],
-                        gull_at=[[int(x), int(y), round(float(sz), 1)] for x, y, sz in gull_pl], rust_at=[[round(float(x), 1), round(float(y), 1)] for x, y in heads])
+    B.layers["runs"], B.layers["gull"], B.layers["rust"] = drips, core, rust_layer
+    info["wear"] = dict(runs=len(run_pl), gull=len(gull_pl), rust=len(heads), runs_at=[[int(x), int(r0), int(l)] for x, r0, l, _ in run_pl],
+                        gull_at=[[int(x), int(y), float(sz)] for x, y, sz in gull_pl], rust_at=[[round(float(x), 1), round(float(y), 1)] for x, y in heads])
 
     # the newsagent's lower vinyl rule lifts 30 mm at its right end
     if sid == "newsagent":
@@ -557,7 +557,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
 
     # the chandler's lower edge: salt bloom, the board whiter near the foot
     if sid == "chandler":
-        prof = np.exp(-np.arange(H_MM)[::-1] / 28.0).astype(np.float32)[:, None] * (0.6 + 0.4 * np.clip(B.noise("blot"), -1, 1))
+        prof = np.exp(-np.arange(H_MM)[::-1] / 28.0).astype(np.float32)[:, None] * (0.6 + 0.4 * np.clip(B.noise("band"), -1, 1))
         B.rgb += (np.array([190.0, 194.0, 200.0])[None, None, :] - B.rgb) * (0.10 * np.clip(prof, 0, 1))[..., None]
 
     chalk(B, s)
