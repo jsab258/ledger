@@ -215,3 +215,86 @@ The scene's 0.25 m behind the kerb leaves the rail's road face 0.35 m from the k
   * The previews are cropped and masked (the boat's name board, the notice, the figure, the flange mark), and none shows alcohol, gambling or children.
 * **Build from target.json alone.** As written, unit 3.3 could build A1 and Q2 from target.json without other sources: sections as point lists, the cap and catenary profiles, the link and ear outlines, the base plate and nuts, post lists, materials, wear words and seeds. After the two amendments it still can, because every new part is given as numbers above.
 * **The scripts.** self_check.py passes 190/190 on a clean copy, and target_drawing.py draws all 11 views from target.json alone.
+
+## Re-review (try 2)
+
+PASS
+
+**0 faults, 4 narrow points.** Both faults and all nine narrow points from the first review are answered, in the form and numbers asked. The writer's bolt problem is real, but nothing visible depends on it, and it has an exact fix (narrow point 1 below). Nothing the amendment introduced fails from the street or close up.
+
+How it was checked:
+* I ran self_check.py and target_drawing.py on a fresh scratch copy, with the repository linked read-only, including `awning_02.glb`. The self-check gave **SELF-CHECK PASS 252/252**, and the drawing script wrote 14 views from target.json alone.
+* I recomputed the clearances, the walking strip (from the awning mesh) and the R3B knop (on the 16k HDR, at the new 0.945).
+* I opened all 16 previews.
+
+### Each item, checked
+
+* **Fault 1 (A1's form): answered.**
+  * **Sections, fixings and box**: the posts are rectangular hollow section 50 x 30 x 3, standing to 1030 under a 3 mm cap plate. The top rail is 50 x 30 laid flat, with its top at 1000. The bottom rail is 40 x 20 x 2.5 at 200. The 17 bars are unchanged, with clear gaps of 97.09 and 96.24. Each of the four rail ends has an end plate and an M10 nut with 3 mm of thread showing on the post's outer face. The overall box is 2072 x 50 x 1030.
+  * **Walking strip**: the rear face is at 3.400, which leaves 1.575 m at the ground, and the obstacle limit is 0.895. These match my amendment exactly, and the drawing shows them.
+  * **The round tube**: it is kept only as a recorded alternative, marked "not to be built".
+  * **Photograph check**: the photograph check from Jafar's PC is first in section 13 and is named in section 12. Section 3 says honestly that both forms are judgement.
+* **Fault 2 (Q2's runs): answered.** The runs now go as follows:
+  * a basin stub at y −21.4 / −18.4 / −15.4;
+  * the tip unchanged;
+  * a return along x −128.4 to an end post at (−128.4, −22.8).
+
+  In all: 12 posts, 11 bays, 31.4 m. I recomputed the clearances:
+
+  | clearance | measured |
+  | --- | --- |
+  | nearest post or rail to the kit's ring at (−110.05, −32) | 10.6 m (the other ring is 40 m away) |
+  | nearest post to the bollard at y −45 | 23.6 m |
+  | tip rail to the light's plinth | 2.7 m |
+
+  The rings are read live from the kit and drawn on the jetty plan. The checks Q2_clear_of_rings, Q2_corner_closed, Q2_return_posts and Q2_totals are added. The 18 ears and the 1.4 m end bay (sag 87, 32 links) add up.
+* **Narrow points 1 to 9: answered.**
+  * **Camera heights (point 1)**: every object now has its own height: R3B 0.945, R3A 1.02, R3D 1.15, LHB 1.13. Section 4 says which anchor stands at whose ground, and the Photo lengths are rescaled.
+  * **R3B heads (point 2)**: the profile is in, at 0.945.
+  * **R3A (point 3)**: only the left run is used.
+  * **Ground detail (point 4)**: the tarmac reinstatement patch is in.
+  * **Paint (point 5)**: galvanised is the default, at 55 %.
+  * **Q2 bays (point 6)**: the 3.0 m bays stay, with a 60.3 x 3.6 top rail.
+  * **Walking strip (point 7)**: it is now checked from 0 to 2.0 m high.
+  * **Ears (point 8)**: ears only face Q2b bays.
+  * **Set-back (point 9)**: it is a note in section 13.
+* **The walking strip, rechecked independently.**
+  * The awning mesh is one flat sloping sheet, from the wall at mesh height 0 to the front at −0.995 over 1.735 m deep, with only a valance at the front (down to −1.318). So the writer's linear underside is the right model, and my straight line from the valance's bottom was too cautious.
+  * At a 2.0 m head the sheet clears from z ≈ 3.585, which gives **1.39 m**.
+  * The valance hangs 1.57 m above the footway at z 3.39, over the rail and 10 mm in front of its rear face.
+  * The check is now the least clear width from 0 to 2.0 m high, so a lowered awning would be caught.
+* **The R3B knop, the disagreement the writer left open, measured.** On the 16k HDR at 0.945 (the writer's plane; 12 tall bars, rows every 4 mm):
+  * the widest rows are 82 to 86 across in z 2034 to 2058, centred at **z 2046**;
+  * the ring above is 45 to 49 across at z 2082 to 2106.
+
+  The stated knop at z 2044 is right. The 1 mm head close (+18 mm) is the outlier; it was made from the 8k image.
+
+### Narrow points (each with its exact fix)
+
+1. **The bolt.** As written, each of the four bolts has its head inside the hollow rail end, behind the welded end plate. It cannot be fitted in a real panel:
+   * in the 40 x 20 x 2.5 bottom rail, the 17 AF head does not fit the 35 x 15 inside;
+   * in the top rail, a captive head inside a closed tube could not be held while the nut is tightened.
+
+   Nothing visible depends on the head: it is hidden, and modelled as given it stays inside the rail's outer surface (19.6 across corners against 20). So this is a narrow point and not a fault. **Fix:**
+   * In kinds.A1.panel.bolts, replace the four bolts with **M10 studs welded to the outer face of each 6 mm end plate** (a 3 mm fillet round the root, on the rail axis). Each stud runs from x ±975 through an 11 mm hole across the post to ±1036 (61 long), with the same nut (17 AF x 8, face at ±1025) and 3 mm of thread beyond.
+   * Delete `head` and the `head_x` entries.
+   * Change A1_bolts to "four M10 studs welded to the end plates, each nut on the post's outer face".
+   * Change section 12's bolt paragraph to the studs.
+   * A1_bolt_heights, A1_bbox, the drawings and everything visible stay as they are.
+2. **A1_bbox and the ground patches.** The tarmac patch (about 250 x 250 round each post) is part of A1, but the 2072 x 50 x 1030 box would fail if the patch is exported in the same mesh. **Fix**: in A1_bbox "what" and kinds.A1.bbox.note, add "excluding the two ground patches, exported as a separate mesh `A1_ground_patch` (z 0 ±3)". A1_foot_patch checks that mesh.
+3. **R3B knop: one value, not two.** Section 12 says "a build of R3B would read the knop height from the head close" (2062). The 16k reading above says 2046. **Fix**:
+   * keep the knop at **2044 ±8** and delete that sentence, giving the 16k centre 2046 as the check of it;
+   * end head_rz at the stated tip, (0, 2211), not (0, 2216.3), so the profile and tall_tip_z agree. The 5 mm gap came from my own first list.
+4. **The same numbers quoted differently.** R3D's bar pitch is 95.27 ±3 in target.json, but "97" in the summary line, section 3 (layer 2), the photographs-win infill row and the label of `target-a1-beside-photographed-bars.jpg`. LHB's upper lug is "807" in 6.2 but "806" in section 15. **Fix**: use 95.3 (with "97 at the review's scaling, inside the ±3" where it helps) and 807 throughout.
+
+**Note, no change needed.** The return's end post leaves a clear slot of about 0.24 m to the parapet's corner (centre 0.283 m away, less the post's radius of 0.038). That is shut to the game's 0.68 m walker, so the corner counts as closed. If an integrator wants a tighter close, move the end post to (−128.5, −22.9). That leaves a slot of about 0.10 m, and the plate's corner just meets the parapet's corner at ground level. Q2_corner_closed then reads [0.1, 0.1].
+
+### What the amendment got right besides
+* **The record.** Section 0 records every change in one line each.
+* **The review's own numbers were checked.** The writer tested my numbers against the photographs instead of copying them:
+  * R3D's and R3A's brick courses read 75 at the new heights;
+  * R3B's bars come out at 76.57, i.e. three inches.
+* **The disagreements are recorded rather than hidden**: the knop, the 0.7° lean of the bars in the photograph, and R3A's soft edges.
+* **The awning is read from the real asset** and checked live.
+* **Rules.** No real maker's or council name appears on anything, and the previews are within size and content rules.
+* **Buildable from target.json alone.** Unit 3.3 can still build A1 and Q2 from target.json alone: the end plates, nuts and thread are given as x positions, and the patch outline as 24 points.
