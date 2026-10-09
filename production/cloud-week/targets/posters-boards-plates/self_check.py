@@ -1,4 +1,4 @@
-"""Tests target.json against its own sources before anything is built (cloud week 42, 8 to 9 October 2026; SECOND TRY).
+"""Tests target.json against its own sources before anything is built (cloud week 42, 8 to 9 October 2026; SECOND TRY, with the four fixes of the second review applied by Jafar's ruling of 9 October).
 
     /home/user/.bpyenv/bin/python self_check.py [--fonts DIR] [--no-write] [--fetch-fonts DIR] [--quick]
 
@@ -15,7 +15,8 @@ Groups:
   10 the line-level checks (.mask, .pos) tested on reference renders: a true render passes, a mirrored, shifted or wrong-font render fails
   11 the world: hours, market days, the ferry's last crossing, the cod price
   12 the GLYPH check (ITEM.glyphs), tested: every glyph of every block has a pixel scale at which it can be told from every other; the reviewer's wrong renders all FAIL;
-     true renders (print, jittered hand cards, a tilt read in the placed street) PASS
+     a true render of EVERY item and 20 jittered seeds of ALL 29 hand cards PASS every pixel check (.words, .mask, .pos, .glyphs, .square, .clean); ITEM.clean fails the planted lines;
+     a missing manifest fails; a tilt is found, read in the placed street it passes
   13 the second try's other guards, each tested on a good and a bad input: G.page.placeholders, G.dates.age, G.mirror.cues, G.ferry.schedule, G.letting.mount, G.place.paper,
      G.place.gable, the plates, PLACE.built, ITEM.square
 It prints a result line and writes the result into target.json under "self_check" (unless --no-write).
@@ -1994,7 +1995,7 @@ def group12():
     for iid in ("SA01", "SA03"):
         if iid in per:
             nb = sum(1 for sd, f in per[iid] if f)
-            row(g, "%s (ballpoint, 8 px/mm): %d of %d true jittered seeds fail (the first try failed SA01 11 of 20 and SA03 15 of 20: a neighbour's ink was credited to the glyph)" % (iid, nb, ns), nb == 0)
+            row(g, "%s (ballpoint, %d px/mm): %d of %d true jittered seeds fail (the first try failed SA01 11 of 20 and SA03 15 of 20 at 8 px/mm: a neighbour's ink was credited to the glyph)" % (iid, ITEMS[iid]["px_per_mm"], nb, ns), nb == 0)
     # 12.5 the reviewer's wrong renders, and some near pairs: the manifest keeps the approved string, the pixels do not
     cases = [("P01", "THURSDAY 25 OCTOBER", "THURSDAY 26 OCTOBER"), ("W01", "FRIDAY 2 NOVEMBER", "FRIDAY 9 NOVEMBER"), ("C01a", "ON THE NIGHT OF FRIDAY 12 OCTOBER,", "ON THE NIGHT OF FRIDAY 13 OCTOBER,"),
              ("J01", "SATURDAY 20 OCTOBER", "SUNDAY 20 OCTOBER"), ("P04", "TUESDAY 30 OCTOBER, 7 PM", "THURSDAY 30 OCTOBER, 7 PM"), ("D01", "TEA AND SANDWICHES", "ALE AND SANDWICHES"),
