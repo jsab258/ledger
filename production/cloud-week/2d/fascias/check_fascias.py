@@ -154,9 +154,10 @@ def ref_masks(T, b, fonts_dir=None):
     return face, full, flipped
 
 
-def flat_glyphs(mask, cap=None):
+def flat_glyphs(mask, cap=None, bad=None):
     """(bottom_row_stop, x_centre) of every flat-bottomed glyph (pixel_checks.glyph_bottoms); with `cap`, only glyphs at least 0.85 cap tall
-    (capitals and tall figures: the round bottoms of lower-case letters are not flat baselines)"""
+    (capitals and tall figures: the round bottoms of lower-case letters are not flat baselines); with `bad` (a bool plane: worn paint), glyphs whose bottom edge is
+    touched by it are left out (a chipped bottom is not a baseline)"""
     lbl, n = ndi.label(mask)
     out = []
     for i, sl in enumerate(ndi.find_objects(lbl), 1):
@@ -169,12 +170,14 @@ def flat_glyphs(mask, cap=None):
         comp = (lbl[sl] == i)
         last = comp[-2:].any(axis=0).sum()
         if last >= 0.35 * w:
+            if bad is not None and bad[max(0, sl[0].stop - 4):sl[0].stop + 3, sl[1].start:sl[1].stop].any():
+                continue
             out.append((float(sl[0].stop), float((sl[1].start + sl[1].stop) / 2.0)))
     return out
 
 
-def jitter_residuals(mask, cap=None):
-    g = flat_glyphs(mask, cap)
+def jitter_residuals(mask, cap=None, bad=None):
+    g = flat_glyphs(mask, cap, bad)
     if len(g) < 2:
         return None
     ys = np.array([p[0] for p in g])
@@ -262,18 +265,20 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         pm = pc.face_mask(img, b)
         pmx = pc.face_mask(img, b, xmargin=40)
         tm, tm_full, fm = ref_masks(T, b, fonts_dir)
-        # try 2: letters wear with their ground (paint lost from a letter shows the older coat or the wood). A worn letter has not moved: where the paint of the
-        # letter is gone but the letter's place is plain (within 2 mm of its reference shape) the pixel still stands for the letter in the POSITION, WIDTH, CAP and
-        # JITTER readings. The glyph mask score (G10) reads the paint as it is.
+        # try 2: the letters wear with their ground (paint lost from a letter shows the older coat or the wood) and the board carries cracks and flakes of its own.
+        # POSITION, WIDTH, CAP and JITTER read the face-coloured pixels that stand within 6 mm of the letter's reference shape (a stray crack or a dark flake far from the
+        # letter is not the letter), with the chips in a letter closed over (3 x 3, twice); a letter 20 mm out of place has none within 6 mm and fails. The glyph mask
+        # (G10) reads the paint as it is.
+        near_ref = ndi.binary_dilation(tm_full, iterations=6)
+        lossw = np.zeros((H_MM, W_MM), bool)
         if rec_loss is not None:
-            dsub_ = np.minimum(fc.dE(img[w[0]:w[1], max(0, w[2] - 40):w[3] + 40].astype(float), rec_loss[0]), fc.dE(img[w[0]:w[1], max(0, w[2] - 40):w[3] + 40].astype(float), rec_loss[1]))
-            lossw = np.zeros((H_MM, W_MM), bool)
-            lossw[w[0]:w[1], max(0, w[2] - 40):w[3] + 40] = dsub_ < 24.0
-            refd = ndi.binary_dilation(tm, iterations=2)
-            pm_pos = pm | (lossw & refd)
-            pmx_pos = pmx | (lossw & refd)
-        else:
-            pm_pos, pmx_pos = pm, pmx
+            c_lo, c_hi = max(0, w[2] - 40), min(W_MM, w[3] + 40)
+            sub_ = img[w[0]:w[1], c_lo:c_hi].astype(float)
+            lossw[w[0]:w[1], c_lo:c_hi] = np.minimum(fc.dE(sub_, rec_loss[0]), fc.dE(sub_, rec_loss[1])) < 24.0
+        # where the paint of a letter is gone INSIDE the letter's own reference shape the letter has not moved: those pixels stand for it (nothing outside the shape does)
+        worn = lossw & tm
+        pm_pos = ndi.binary_closing((pm & near_ref) | worn, structure=np.ones((3, 3), bool), iterations=2) & (near_ref | worn)
+        pmx_pos = ndi.binary_closing((pmx & near_ref) | worn, structure=np.ones((3, 3), bool), iterations=2) & (near_ref | worn)
         bb = pc.ink_bbox_mm(pmx_pos)
         if bb is None:
             for k in ("pos", "mask", "width", "face", "contrast", "cap", "fit"):
@@ -286,7 +291,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
             got, want = bb[0], x0
         else:
             got, want = bb[2], x1
-        gb = flat_glyphs(pm_pos, b['cap_mm'])
+        gb = flat_glyphs(pm_pos, b['cap_mm'], bad=None)
         if gb:
             base_got = float(H_MM - np.median([p[0] for p in gb]))
             base_ok = abs(base_got - b["baseline_mm"]) <= 3.0
@@ -353,7 +358,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         if b.get("shade") and want_shade:
             out.append(shade_result(T, b, d, pm, tm, bid))
         # jitter parts
-        part = jitter_residuals(pm_pos, b['cap_mm'])
+        part = jitter_residuals(pm & near_ref, b['cap_mm'], bad=ndi.binary_dilation(lossw, iterations=2))
         (hand_parts if b.get("jitter") else other_parts).append(part)
         per_block_sd[b["id"]] = None if not part or part[1] <= 0 else round(math.sqrt(part[0] / part[1]), 2)
         out.append(relief_result(T, b, d, tm_full, bid))

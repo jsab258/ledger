@@ -3,11 +3,11 @@
 
     /home/user/.bpyenv/bin/python make_previews.py SETDIR [--out production/previews/cloud-week/fascias] [--date 2026-10-09]
 
-Writes JPEGs, each at most 1600 px wide and under 500 KB (the push guard's reduced-preview rule), named fascias-<what>-v1-<date>.jpg:
-  fascias-all-ten-v1-...          the ten boards in street order as the GAME shows them (each board's left is a viewer's left, facing it), labelled
-  fascias-<board>-v1-...          each board alone: the whole board at 1600 px, and below it the middle 1600 mm at one pixel a millimetre
-  fascias-mickeys-with-letters-v1 Mickey's board with the raised gilt letters laid flat over it where the geometry stands (the letters are NOT texture)
-  fascias-signs-glass-v1-...      the four hanging signs' faces (the balls as lit spheres), the glass lettering rows on dark glass, the letting board,
+Writes JPEGs, each at most 1600 px wide and under 500 KB (the push guard's reduced-preview rule), named fascias-<what>-<ver>-<date>.jpg (default v2):
+  fascias-all-ten-<ver>-...          the ten boards in street order as the GAME shows them (each board's left is a viewer's left, facing it), labelled
+  fascias-<board>-<ver>-...          each board alone: the whole board at 1600 px, and below it the middle 1600 mm at one pixel a millimetre
+  fascias-mickeys-with-letters-<ver>Mickey's board with the raised gilt letters laid flat over it where the geometry stands (the letters are NOT texture)
+  fascias-signs-glass-<ver>-...      the four hanging signs' faces (the balls as lit spheres), the glass lettering rows on dark glass, the letting board,
                                   the hours plates and the empty unit's whitewashed window
 The pictures are made from the PNGs only; nothing here is a render of the game.
 """
@@ -63,7 +63,7 @@ def street_sort(T):
     return sorted(T["shops"], key=lambda s: (0 if s["side"] == "east" else 1, s["street_x_m"][0]))
 
 
-def sheet_all(T, setdir, out, date):
+def sheet_all(T, setdir, out, date, ver="v2"):
     W = 1600
     pad = 10
     lab = 26
@@ -88,11 +88,11 @@ def sheet_all(T, setdir, out, date):
         d.text((pad + 190, y + 6), f"street x {lo:g} to {hi:g}; door at the {'right' if (s['side'] == 'east') == (s['door_end_street'] == 'low') else 'left'} of the board", font=f2, fill=(170, 168, 160))
         sheet.paste(im, (pad, y + lab))
         y += lab + bh + 8
-    q, sz = save_jpeg(sheet, Path(out) / f"fascias-all-ten-v1-{date}.jpg")
-    return f"fascias-all-ten-v1-{date}.jpg", sheet.size, q, sz
+    q, sz = save_jpeg(sheet, Path(out) / f"fascias-all-ten-{ver}-{date}.jpg")
+    return f"fascias-all-ten-{ver}-{date}.jpg", sheet.size, q, sz
 
 
-def sheet_board(T, setdir, out, date, bid, extra_overlay=None, name=None, centre=2705):
+def sheet_board(T, setdir, out, date, bid, extra_overlay=None, name=None, centre=2705, ver="v2"):
     s = fc.shop_by_id(T, bid)
     im = load_board(setdir, bid)
     W = 1600
@@ -113,7 +113,7 @@ def sheet_board(T, setdir, out, date, bid, extra_overlay=None, name=None, centre
     sheet.paste(top, (0, cap))
     d.text((8, cap + bh + 6 + 4), f"1600 mm of the board at one pixel a millimetre (board x {centre - 800} to {centre + 800})", font=f1, fill=FG)
     sheet.paste(mid, (0, cap + bh + 6 + cap))
-    fn = name or f"fascias-{bid.replace('_', '-')}-v1-{date}.jpg"
+    fn = name or f"fascias-{bid.replace('_', '-')}-{ver}-{date}.jpg"
     q, sz = save_jpeg(sheet, Path(out) / fn)
     return fn, sheet.size, q, sz
 
@@ -166,7 +166,7 @@ def sphere_view(tex, size=260):
     return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
 
 
-def sheet_signs_glass(T, setdir, out, date):
+def sheet_signs_glass(T, setdir, out, date, ver="v2"):
     man = json.loads((Path(setdir) / "manifest.json").read_text(encoding="utf-8"))
     W = 1600
     f1, f2, f3 = font(15), font(12), font(11)
@@ -180,7 +180,7 @@ def sheet_signs_glass(T, setdir, out, date):
                 row.append((sphere_view(tex), f"{h['id']}: ball {f['id'][-1]} (0.26 m, lit sphere)"))
         else:
             for f in h["faces"]:
-                row.append((Image.open(Path(setdir) / f["files"]["basecolour"]["file"]).convert("RGB"), f"{h['id']}: face {f['id'][-1]}  {f['size_mm'][0]} x {f['size_mm'][1]} mm" + (f"  (cap {f['cap_mm_built']:g}, the target's {f['cap_mm_target']:g} will not fit)" if f["cap_mm_built"] != f["cap_mm_target"] else "")))
+                row.append((Image.open(Path(setdir) / f["files"]["basecolour"]["file"]).convert("RGB"), f"{h['id']}: face {f['id'][-1]}  {f['size_mm'][0]} x {f['size_mm'][1]} mm" + (f"  (cap {f['cap_mm_built']:g} mm" + (f", condensed to {f['squeeze']:.2f}" if f.get("squeeze") and f["squeeze"] < 0.999 else "") + f"; the target's {f['cap_mm_target']:g} in one line)")))
     # layout: flow into rows of 1600 px
     pad = 10
     pieces = []
@@ -224,7 +224,7 @@ def sheet_signs_glass(T, setdir, out, date):
             bgc = (46, 52, 56) if shop != "empty_unit" else (40, 44, 46)
             tile = Image.new("RGBA", (w + 8, h + 8), bgc + (255,))
             tile.alpha_composite(im, (4, 4))
-            cap = f"{shop}: {(g['string'] or 'whole window')[:28]}" + note
+            cap = f"{shop}: {('hours' if g.get('hours') else (g['string'] or 'whole window'))[:28]}" + note
             if gx + tile.width + pad > W:
                 gx = pad
                 gy += gh + 20
@@ -260,11 +260,11 @@ def sheet_signs_glass(T, setdir, out, date):
     for im, cap, x, y in glass_rows:
         sheet.paste(im, (x, y))
         d.text((x, y + im.height + 2), cap, font=f3, fill=(170, 168, 160))
-    d.text((pad, gy_end), "the letting board and the hours plates", font=f1, fill=FG)
+    d.text((pad, gy_end), "the letting board and the hours signs on panels (the launderette's plate, the caff's card)", font=f1, fill=FG)
     for im, cap, x, y in panels:
         sheet.paste(im, (x, y))
         d.text((x, y + im.height + 2), cap, font=f3, fill=(170, 168, 160))
-    fn = f"fascias-signs-glass-v1-{date}.jpg"
+    fn = f"fascias-signs-glass-{ver}-{date}.jpg"
     q, sz = save_jpeg(sheet, Path(out) / fn)
     return fn, sheet.size, q, sz
 
@@ -274,14 +274,15 @@ def main(argv=None):
     ap.add_argument("setdir")
     ap.add_argument("--out", default=str(fc.ROOT / "production" / "previews" / "cloud-week" / "fascias"))
     ap.add_argument("--date", default="2026-10-09")
+    ap.add_argument("--ver", default="v2")
     a = ap.parse_args(argv)
     T = fc.load_target()
     Path(a.out).mkdir(parents=True, exist_ok=True)
-    res = [sheet_all(T, a.setdir, a.out, a.date)]
+    res = [sheet_all(T, a.setdir, a.out, a.date, a.ver)]
     for s in T["shops"]:
-        res.append(sheet_board(T, a.setdir, a.out, a.date, s["id"]))
-    res.append(sheet_board(T, a.setdir, a.out, a.date, "mickeys", extra_overlay=mickeys_overlay(T, a.setdir), name=f"fascias-mickeys-with-letters-v1-{a.date}.jpg", centre=4055))
-    res.append(sheet_signs_glass(T, a.setdir, a.out, a.date))
+        res.append(sheet_board(T, a.setdir, a.out, a.date, s["id"], ver=a.ver))
+    res.append(sheet_board(T, a.setdir, a.out, a.date, "mickeys", extra_overlay=mickeys_overlay(T, a.setdir), name=f"fascias-mickeys-with-letters-{a.ver}-{a.date}.jpg", centre=4055, ver=a.ver))
+    res.append(sheet_signs_glass(T, a.setdir, a.out, a.date, a.ver))
     for fn, size, q, sz in res:
         print(f"{fn}  {size[0]}x{size[1]}  q{q}  {sz // 1000} KB")
 

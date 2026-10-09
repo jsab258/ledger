@@ -339,8 +339,9 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         win = B.win(x0, y0, x1, y1, pad=10)
         a = fp.rect_alpha(win, x0, y0, x1, y1)
         r0, r1, c0, c1 = win
-        n = fc.fnoise(a.shape, 3.0, 3.0, grng)
-        a = np.clip((ndi.gaussian_filter(a, 1.5) - 0.5) * 5.0 + 0.5 + 0.33 * n, 0, 1)
+        n = fc.fnoise(a.shape, 16.0, 11.0, grng)
+        n2 = fc.fnoise(a.shape, 4.0, 4.0, grng)
+        a = np.clip((ndi.gaussian_filter(a, 7.0) - 0.5) * 2.4 + 0.5 + 0.30 * n + 0.10 * n2, 0, 1)      # a brush-cut, feathered, uneven edge (review note 2)
         pc = lab_shift(gcol, 2.1, -0.7, -2.0)
         d0 = float(fc.dE(pc, gcol))
         pc = lab_shift(gcol, 2.1 * gh["dE"] / d0, -0.7 * gh["dE"] / d0, -2.0 * gh["dE"] / d0)

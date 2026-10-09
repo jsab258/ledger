@@ -310,6 +310,11 @@ def render_sign_face(T, sign, face_label, seed, lit_off=False):
         # lit from inside when the shop is open: face colour x 0.85; the bronze frame does not glow
         level = np.zeros((H, W), np.float32)
         level[int(frame):H - int(frame), int(frame):W - int(frame)] = 0.85
+        # two tubes inside a 140 mm box: a soft bright band along each, the light falling off toward the frame and into the corners (try 2, signs note 1)
+        yy_, xx_ = np.mgrid[0:H, 0:W].astype(np.float32)
+        band = 1.0 + 0.09 * np.exp(-((yy_ - H * 0.32) / 42.0) ** 2) + 0.09 * np.exp(-((yy_ - H * 0.68) / 42.0) ** 2)
+        edge_fall = 1.0 - 0.12 * np.exp(-np.minimum(np.minimum(xx_ - frame, W - frame - xx_), np.minimum(yy_ - frame, H - frame - yy_)) / 45.0)
+        level = level * band * edge_fall
         B.emis = np.clip(B.rgb * level[..., None], 0, 255)
         rec["emissive"] = dict(level=0.85, face_mm=[frame, frame, W - frame, H - frame])
     else:
