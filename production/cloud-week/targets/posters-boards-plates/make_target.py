@@ -1,17 +1,17 @@
-"""Author tool: writes target.json for Quay Street's paper and small boards (cloud week 42, 8 October 2026).
+"""Author tool: writes target.json for Quay Street's paper and small boards (cloud week 42, 8 to 9 October 2026; SECOND TRY).
 
     /home/user/.bpyenv/bin/python make_target.py [--fonts DIR]
 
 Three 2D units in one target:
   4.2  posters and notices (fly-posters, shop-window cards, council, police and Harbour Board notices,
        the poll-tax bills, the Tivoli's bills, the chapel hall's bills, the ferry timetable);
-  4.3  "To Let" boards (the empty unit's board and the flats' boards, an invented agent);
+  4.3  "To Let" boards (the empty unit's board, the flats' and the house's boards);
   4.4  street name plates.
 
 The hand-made decisions live in the tables below. Everything that can be computed is computed here and
 written down, so that target_drawing.py and self_check.py can read target.json ALONE: ink widths from the
 real OFL font files, cap heights, contrast ratios, aged colours, weekdays of every dated bill, the plates'
-lengths, the checks' nominal values.
+lengths, the pixel scale each item needs to be read glyph by glyph (glyphlib.py), the checks' nominal values.
 
 The fonts are read from DIR (default: $PBP_FONTS, then the scratch folder this was written in, then
 production/fonts for the ones the repository already holds). They are NOT stored in git and NOT added to
@@ -34,6 +34,9 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+sys.dont_write_bytecode = True
+import glyphlib as gl
 ROOT = HERE.parents[3]
 SCRATCH_FONTS = "/tmp/claude-0/-home-user-ledger/6ce8dcad-c1af-55c1-8a8d-c9e781414d13/scratchpad/posters/fonts"
 FONT_DIR = os.environ.get("PBP_FONTS", SCRATCH_FONTS)
@@ -94,10 +97,10 @@ def rgb_hex(c):
 # of a pasted bill was reached); the shape of the numbers follows the usual order of fastness: fluorescent
 # dyes go first, then red and magenta, yellow, blue, and black carbon last.
 AGE = {
-    "A": dict(label="fresh, 0 to 7 days", t_days=3, grime=0.00, yellow=0.00),
-    "B": dict(label="weeks, 8 to 35 days", t_days=18, grime=0.05, yellow=0.20),
-    "C": dict(label="months, 36 to 120 days", t_days=70, grime=0.12, yellow=0.50),
-    "D": dict(label="old, over 120 days", t_days=200, grime=0.22, yellow=1.00),
+    "A": dict(label="fresh, 0 to 7 days", t_days=3, grime=0.00, yellow=0.00, days=[0, 7]),
+    "B": dict(label="weeks, 8 to 35 days", t_days=18, grime=0.05, yellow=0.20, days=[8, 35]),
+    "C": dict(label="months, 36 to 120 days", t_days=70, grime=0.12, yellow=0.50, days=[36, 120]),
+    "D": dict(label="old, over 120 days", t_days=200, grime=0.22, yellow=1.00, days=[121, 400]),
 }
 GRIME = (62, 58, 52)
 YELLOWED = (214, 200, 168)
@@ -157,6 +160,8 @@ PAINTS = {
     "cork": dict(rgb=(176, 138, 96), name="cork board"),
     "sleeve": dict(rgb=(226, 230, 232), name="polythene sleeve highlight"),
     "vinyl_white": dict(rgb=(238, 238, 232), name="printed adhesive vinyl, white"),
+    "vinyl_red": dict(rgb=(176, 30, 34), name="vinyl red (the fascia target's vinyl_red, 176,30,34)"),
+    "brass": dict(rgb=(176, 140, 60), name="brass paper-fastener"),
 }
 
 
@@ -212,19 +217,12 @@ FONTS = {
                                     designer="Alexey Kryukov", rfn=None, in_repo=True, looks_like="the regular cut, for body lines"),
     "old-standard-tt-italic": dict(family="Old Standard TT", file="evening-paper/OldStandard-Italic.ttf", dir="oldstandardtt", axes={},
                                    designer="Alexey Kryukov", rfn=None, in_repo=True, looks_like="the italic, for 'and' and 'by'"),
-    "abril-fatface": dict(family="Abril Fatface", file="abril-fatface/AbrilFatface-Regular.ttf", dir="abrilfatface", axes={}, designer="TypeTogether",
-                          rfn="Abril, Abril Fatface", in_repo=True, looks_like="fat-face Didone poster capitals"),
-    "josefin-sans": dict(family="Josefin Sans", file="josefin-sans/JosefinSans[wght].ttf", dir="josefinsans", axes={"Weight": None},
-                         designer="Santiago Orozco", rfn="Josefin Sans", in_repo=True, looks_like="Art Deco geometric capitals: the Tivoli (founded 1937)"),
     "archivo": dict(family="Archivo", file="Archivo-var.ttf", dir="archivo", axes={"Weight": None, "Width": 100}, designer="Omnibus-Type", rfn=None,
                     in_repo=False, looks_like="neutral grotesque: council notices, enamel signs, the police appeal"),
     "courier-prime": dict(family="Courier Prime", file="CourierPrime-Regular.ttf", dir="courierprime", axes={}, designer="Alan Dague-Greene", rfn=None,
                           in_repo=False, looks_like="IBM Courier: typed notices (Harbour Board, police, council)"),
     "courier-prime-bold": dict(family="Courier Prime", file="CourierPrime-Bold.ttf", dir="courierprime", axes={}, designer="Alan Dague-Greene",
                                rfn=None, in_repo=False, looks_like="Courier struck twice for a heading"),
-    "libre-baskerville": dict(family="Libre Baskerville", file="LibreBaskerville-var.ttf", dir="librebaskerville", axes={"Weight": None},
-                              designer="Impallari Type", rfn="Libre Baskerville", in_repo=False,
-                              looks_like="Baskerville text roman: typeset official notices"),
     "patrick-hand": dict(family="Patrick Hand", file="patrick-hand/PatrickHand-Regular.ttf", dir="patrickhand", axes={}, designer="Patrick Wagesreiter",
                          rfn=None, in_repo=True, looks_like="neat adult print capitals and figures: felt-pen and ballpoint cards"),
 }
@@ -341,6 +339,9 @@ def weekday_name(d, m, year=YEAR):
     return DAYS[datetime.date(year, m, d).weekday()]
 
 
+STREET_DATE = datetime.date(1990, 10, 29)     # Monday 29 October 1990: the one day every dated placement allows (TARGET-REVIEW fault 8)
+
+
 def dated(d, m, short=False, year=YEAR):
     """'SATURDAY 20 OCTOBER' for 20 October 1990 (the weekday is computed, never typed)."""
     names = {v: k for k, v in MONTHS.items()}
@@ -371,7 +372,7 @@ def new_item(id_, unit, part, title, w, h, stock=None, process=None, ppm=2, marg
     it = dict(id=id_, unit=unit, part=part, title=title, kind=kind, format=dict(name=fmt, w_mm=w, h_mm=h,
               std=(FORMATS[fmt]["std"] if fmt in FORMATS else "as stated")),
               px_per_mm=ppm, stock=stock, process=process, safe_mm=[margin, margin, w - margin, h - margin],
-              blocks=[], shapes=[], art=[], placements=[], variants={}, wear={}, notes=[], words=[], proposed_names=[])
+              blocks=[], shapes=[], art=[], placements=[], variants={}, wear={}, notes=[], words=[], proposed_names=[], paper_class=None, dated=None)
     it.update(kw)
     ITEMS.append(it)
     return it
@@ -433,7 +434,7 @@ def T(item, id_, text, fkey, wt, cap, base, x, anchor="centre", ink="black", on=
     b = dict(id=id_, text=text, font=fkey, weight=wt, cap_mm=cap, tracking_em=trk, anchor=anchor, x_mm=round(x, 1), baseline_mm=round(base, 1),
              origin_x_mm=round(ox, 1), ink_box_mm=box, width_mm=round(wd, 1), size_px_per_em=round(px, 2), cap_ratio=round(cap_ratio(fkey, wt), 3),
              ink=(ink_paint or ink), on=on, ink_colour=col, ground=gc, contrast=cr, role=role, technique=tech, hand=hand, rotation_deg=rot,
-             overlap_ok=overlap_ok, note=note, min_contrast=min_contrast)
+             overlap_ok=overlap_ok, note=note, min_contrast=min_contrast, glyph_check=(role != "imprint"))
     item["blocks"].append(b)
     item["words"].append(text)
     return b
@@ -517,26 +518,56 @@ HALL = "THE CHAPEL HALL"                            # hook-cast.json: places cha
 PRINTER = "QUAY PRINT"                              # proposed printer's imprint, not minted
 IMPRINT = "Printed by Quay Print, Meridian."
 PUBLISHER = "Published by Meridian Against the Poll Tax."
+GENERIC_FOOTER = "STAND TOGETHER"                   # what the default poll-tax bills carry where the named ones carry CAMPAIGN
 PROPOSED = [
     dict(name="MERIDIAN AGAINST THE POLL TAX", what="the invented local anti-poll-tax campaign (ruling 3 Oct: an invented local campaign, never real parties or people). First proposed by the asset plan note 4, used by the 4 Oct bills.", mint="town task"),
-    dict(name="QUAY PRINT", what="the jobbing printer named in the imprint of every printed bill (an imprint was the custom and is expected on political and campaign matter)", mint="town task"),
-    dict(name="ARMITAGE & STOBBS", what="the estate agent on the letting boards (the brief asks for a proposed name, marked 'proposed, not minted')", mint="town task"),
-    dict(name="THE SANDERLING TRIO", what="the dance band on the chapel hall's bill", mint="town task"),
-    dict(name="THE SEA WOLF, MAD MAURICE, TIGER JIM LARKIN, THE BARON", what="four invented ring names on the wrestling bill", mint="town task"),
-    dict(name="THE FOURTH WITNESS, A WEEK AT GULLWING", what="two invented films at the Tivoli (Gullwing is a minted district)", mint="town task"),
-    dict(name="WHITEWELL, QUAYSIDE TEA", what="two invented goods on hoarding bills (a washday powder and a tea)", mint="town task"),
-    dict(name="MARSHLAND PICTURES; A. VENN, R. CORLEY, H. MADDOX", what="the invented studio and three invented credits on the two film bills' billing block", mint="town task"),
-    dict(name="THE DRILL HALL", what="the hall where the boxing and wrestling bills are held (generic building, no street given)", mint="town task"),
-    dict(name="MR1", what="a placeholder postal district for one variant of the street plates (MR is not a real UK postcode area)", mint="town task; NEVER on his page"),
+    dict(name="QUAY PRINT", what="the jobbing printer named in the imprint of every printed bill (an imprint was the custom and is expected on political and campaign matter); 2.4 mm, illegible, allowed on the default street", mint="town task"),
+    dict(name="ARMITAGE & STOBBS", what="the estate agent on the named letting boards L01 and L03 (the brief asks for a proposed name, marked 'proposed, not minted')", mint="town task"),
+    dict(name="THE SANDERLING TRIO", what="the dance band on the named chapel-hall dance bill", mint="town task"),
+    dict(name="THE HARPOONER", what="a ring name on the named wrestling bill (renamed from the first try's THE SEA WOLF, which is Jack London's novel; not checked against real lists: the network is closed)", mint="town task"),
+    dict(name="BIG TED HOLROYD", what="a ring name on the named wrestling bill (renamed from TIGER JIM LARKIN, which carried a real dock-union leader's name; not checked against real lists)", mint="town task"),
+    dict(name="SPANNER SMITH", what="a ring name on the named wrestling bill (renamed from MAD MAURICE; not checked against real lists)", mint="town task"),
+    dict(name="THE STEVEDORE", what="a ring name on the named wrestling bill (renamed from THE BARON, a real television series' title; not checked against real lists)", mint="town task"),
+    dict(name="THE FOURTH WITNESS", what="an invented film at the Tivoli, on the named bills T01 and T03 (a film of that name was not checkable: the network is closed)", mint="town task"),
+    dict(name="A WEEK AT GULLWING", what="an invented film at the Tivoli, on the named bills T02 and T03 (Gullwing is a minted district)", mint="town task"),
+    dict(name="WHITEWELL", what="an invented washday powder on the four-sheet G01", mint="town task"),
+    dict(name="QUAYSIDE", what="an invented tea on the bill G02", mint="town task"),
+    dict(name="MARSHLAND PICTURES", what="the invented studio in the named films' billing block (6 to 12 mm)", mint="town task"),
+    dict(name="A. VENN", what="an invented credit in the named films' billing block", mint="town task"),
+    dict(name="R. CORLEY", what="an invented credit in the named films' billing block", mint="town task"),
+    dict(name="H. MADDOX", what="an invented credit in the named films' billing block", mint="town task"),
+    dict(name="THE DRILL HALL", what="the hall where the boxing and the named wrestling bills are held (a generic building, no street given)", mint="town task"),
 ]
+HELD_CAP_MM = 10.0     # a proposed name in a block of this cap or more is READABLE from across the street (about 8 px a capital at 8 m): the item is held until the town mints it
+
+
+def held_names(item):
+    """The proposed names an item carries in blocks of cap 10 mm or more, alone or running over consecutive lines (empty: the item may stand on the default street)."""
+    out = []
+    big = [b for b in item["blocks"] if b["role"] != "imprint" and b["cap_mm"] >= HELD_CAP_MM and not b.get("ghost")]
+    texts = [b["text"] for b in big] + [" ".join(b["text"] for b in big)]
+    for t in texts:
+        for p in PROPOSED:
+            if p["name"].lower() in t.lower() and p["name"] not in out:
+                out.append(p["name"])
+    return out
+
+
+def nid(base, named):
+    return base + "-named" if named else base
+
+
 
 
 # --------------------------------------------------------------------------------------------
 # 5. Printed bills (unit 4.2): the poll-tax set, the chapel hall's, the fights, the market, the Tivoli, the goods.
 # --------------------------------------------------------------------------------------------
-OSW, FRK, JOS, ALF, FRA, OST, OSTR, ABR, JSF, ARC = ("oswald", "libre-franklin", "jost", "alfa-slab-one", "fraunces", "old-standard-tt",
-                                                       "old-standard-tt-regular", "abril-fatface", "josefin-sans", "archivo")
-CPR, CPB, LBK, PAT, MAR = "courier-prime", "courier-prime-bold", "libre-baskerville", "patrick-hand", "marcellus-sc"
+
+OSW, FRK, JOS, ALF, FRA, OST, OSTR, ARC = ("oswald", "libre-franklin", "jost", "alfa-slab-one", "fraunces", "old-standard-tt",
+                                           "old-standard-tt-regular", "archivo")
+CPR, CPB, PAT, MAR = "courier-prime", "courier-prime-bold", "patrick-hand", "marcellus-sc"
+OSI = "old-standard-tt-italic"
+SKEW_NOTE = "skew is the PLACEMENT's rot_deg only: every texture is square-on"
 
 
 def L(text, f, w, cap=None, gap=None, ink="black", on="stock", trk=0.0, tech=None, role="text", **kw):
@@ -547,8 +578,18 @@ def L(text, f, w, cap=None, gap=None, ink="black", on="stock", trk=0.0, tech=Non
     return d
 
 
+def meta(it, paper_class, dated_kind=None, d=None, m=None, label=None, named_of=None):
+    it["paper_class"] = paper_class
+    if dated_kind:
+        it["dated"] = dict(kind=dated_kind, date="1990-%02d-%02d" % (m, d), label=label)
+    if named_of:
+        it["named_of"] = named_of
+    return it
+
+
 def imprint(item, text, y=20, cx=None, cap=2.4, ink="black", on="stock"):
-    """The printer's imprint, set in 7 point (cap 2.4 mm): legal matter on printed bills, texture at game distance."""
+    """The printer's imprint, set in 7 point (cap 2.4 mm): legal matter on printed bills, texture at game distance. Proposed names are allowed here
+    (illegible, under the 10 mm line); the glyph check does not read imprints."""
     cx = item["format"]["w_mm"] / 2.0 if cx is None else cx
     return T(item, "imprint", text, FRK, 500, cap, y, cx, "centre", ink=ink, on=on, role="imprint", tech="7 point, below the legibility floor at 3 m by design")
 
@@ -557,12 +598,12 @@ def footer_bar(it, box, text=CAMPAIGN, cap=None, ink="paper", bar_fill="black", 
     S(it, "footer_bar", "rect", box=box, fill=bar_fill, fill_kind="ink")
     cx = (box[0] + box[2]) / 2.0
     cap = cap or capfit(f, w, text, (box[2] - box[0]) - 24, trk)
-    cap = min(cap, 0.55 * (box[3] - box[1]))
+    cap = min(cap, 0.45 * (box[3] - box[1]))
     T(it, "campaign", text, f, w, cap, (box[1] + box[3]) / 2.0 - cap / 2.0, cx, "centre", ink=ink, on="ink:" + bar_fill, trk=trk, role="name")
 
 
-def bill_poll_meeting():
-    it = new_item("P01", "4.2", "poll_tax_bills", "Poll tax: public meeting bill", 508, 762, stock="fluor_yellow", process="screen_2col", fmt="double_crown", margin=18)
+def bill_poll_meeting(named=False):
+    it = new_item(nid("P01", named), "4.2", "poll_tax_bills", "Poll tax: public meeting bill" + (" (named campaign, held)" if named else ""), 508, 762, stock="fluor_yellow", process="screen_2col", fmt="double_crown", margin=18)
     y = stack(it, "L", [
         L("NO", OSW, 700, 190, gap=12, ink="black", tech="screen black"),
         L("POLL TAX", OSW, 700, fitw=462, gap=14, ink="red", tech="screen red", trk=0.02),
@@ -579,16 +620,16 @@ def bill_poll_meeting():
         L("WHAT TO DO IF YOU GET A SUMMONS", FRK, 800, fitw=400, gap=8, ink="black", trk=0.03),
         L("EVERYONE WELCOME", FRK, 700, 15, gap=8, ink="black", trk=0.05),
     ], 254, y - 14)
-    footer_bar(it, [18, 30, 490, 82])
+    footer_bar(it, [18, 30, 490, 82], text=(CAMPAIGN if named else GENERIC_FOOTER))
     imprint(it, PUBLISHER + " " + IMPRINT, y=20)
-    it["variants"] = dict(n=3, vary=["age class A, B, C", "skew -1.2 to +1.2 degrees", "red pass shifted 0.3 to 0.8 mm", "one has a top corner torn 60 to 140 mm"])
+    it["variants"] = dict(n=3, vary=["age class A, B, C", "red pass shifted 0.3 to 0.8 mm", "one has a top corner torn 60 to 140 mm", SKEW_NOTE])
     it["event"] = dict(date="THURSDAY 25 OCTOBER", d=25, m=10)
     it["bottom_y"] = y
-    return it
+    return meta(it, "poll_tax_bill", "event", 25, 10, "the public meeting", named_of=("P01" if named else None))
 
 
-def bill_dont_pay():
-    it = new_item("P02", "4.2", "poll_tax_bills", "Poll tax: don't pay bill", 508, 762, stock="fluor_orange", process="screen_1col", fmt="double_crown", margin=18)
+def bill_dont_pay(named=False):
+    it = new_item(nid("P02", named), "4.2", "poll_tax_bills", "Poll tax: don't pay bill" + (" (named campaign, held)" if named else ""), 508, 762, stock="fluor_orange", process="screen_1col", fmt="double_crown", margin=18)
     y = stack(it, "L", [
         L("DON’T", OSW, 700, fitw=440, gap=10, ink="black", tech="screen black"),
         L("PAY", OSW, 700, fitw=330, gap=18, ink="black"),
@@ -600,15 +641,16 @@ def bill_dont_pay():
         L("JOIN US EVERY THURSDAY", FRK, 800, 19, gap=12, ink="black", trk=0.05),
         L("7.30 PM · THE CHAPEL HALL", FRK, 800, 19, gap=10, ink="black", trk=0.05),
     ], 254, y - 18, fill_bottom=130)
-    footer_bar(it, [18, 30, 490, 82])
+    footer_bar(it, [18, 30, 490, 82], text=(CAMPAIGN if named else GENERIC_FOOTER))
     imprint(it, PUBLISHER + " " + IMPRINT, y=20)
-    it["variants"] = dict(n=3, vary=["age class B, C, C", "skew", "one overposted by P03 over its lower third"])
+    it["variants"] = dict(n=3, vary=["age class A, B, C", "one overposted by P03 over its lower third", SKEW_NOTE,
+                                     "the A3 window version (placement scale 0.585: 297 x 446 mm, taped inside the glass) is this texture scaled by the placement, not a new item"])
     it["bottom_y"] = y
-    return it
+    return meta(it, "poll_tax_bill", named_of=("P02" if named else None))
 
 
-def bill_march():
-    it = new_item("P03", "4.2", "poll_tax_bills", "Poll tax: march bill", 508, 762, stock="white_poster", process="letterpress_2col", fmt="double_crown", margin=18)
+def bill_march(named=False):
+    it = new_item(nid("P03", named), "4.2", "poll_tax_bills", "Poll tax: march bill" + (" (named campaign, held)" if named else ""), 508, 762, stock="white_poster", process="letterpress_2col", fmt="double_crown", margin=18)
     S(it, "bar_left", "rect", box=[18, 100, 46, 744], fill="red", fill_kind="ink")
     L0 = 64
     y = stack(it, "L", [
@@ -624,12 +666,12 @@ def bill_march():
         L("BRING YOUR NEIGHBOURS", FRK, 800, 20, gap=8, ink="red", trk=0.04),
         L("BRING A BANNER", FRK, 800, 20, gap=8, ink="red", trk=0.04),
     ], 0, y - 16, anchor="left", left=L0, fill_bottom=118)
-    footer_bar(it, [64, 30, 490, 82])
+    footer_bar(it, [64, 30, 490, 82], text=(CAMPAIGN if named else GENERIC_FOOTER))
     imprint(it, PUBLISHER + " " + IMPRINT, y=20, cx=277)
-    it["variants"] = dict(n=3, vary=["age class A, B, C", "ink density", "overposted by P01 at the foot in one"])
+    it["variants"] = dict(n=3, vary=["age class A, B, C", "ink density", "overposted by P01 at the foot in one", SKEW_NOTE])
     it["event"] = dict(date=dated(10, 11), d=10, m=11)
     it["bottom_y"] = y
-    return it
+    return meta(it, "poll_tax_bill", "event", 10, 11, "the march", named_of=("P03" if named else None))
 
 
 def bill_summons_a4():
@@ -645,15 +687,15 @@ def bill_summons_a4():
         L("TUESDAY 30 OCTOBER, 7 PM", ARC, 800, 8.5, gap=5, ink="toner"),
         L("THE CHAPEL HALL", ARC, 800, 8.5, gap=12, ink="toner"),
     ], 16, y - 6, anchor="left", left=16)
-    typed = ["Bring your summons and any letters you have had.", "We will go through them with you.", "Free and confidential. Come on your own", "or bring a neighbour."]
-    for i, t in enumerate(typed):
+    typed_lines = ["Bring your summons and any letters you have had.", "We will go through them with you.", "Free and confidential. Come on your own", "or bring a neighbour."]
+    for i, t in enumerate(typed_lines):
         T(it, "typed%d" % (i + 1), t, CPR, 400, 2.455, y - 6 - i * 8.47, 16, "left", ink="toner", tech="typed, 10 pitch, photocopied", role="body")
-    y2 = y - 6 - len(typed) * 8.47 - 8
+    y2 = y - 6 - len(typed_lines) * 8.47 - 8
     T(it, "campaign", CAMPAIGN, ARC, 800, 6.0, 22, 105, "centre", ink="toner", trk=0.06, role="name", tech="photocopied")
-    it["variants"] = dict(n=3, vary=["paper: pale green, pale yellow, white", "skew 0.2 to 1.5 degrees", "toner speckle and a copier edge shadow"])
+    it["variants"] = dict(n=3, vary=["paper: pale green, pale yellow, white", "toner speckle and a copier edge shadow", SKEW_NOTE + " (0.2 to 1.5 degrees)"])
     it["event"] = dict(date="TUESDAY 30 OCTOBER", d=30, m=10)
     it["bottom_y"] = y2
-    return it
+    return meta(it, "poll_tax_bill", "event", 30, 10, "the advice evening")
 
 
 def sticker_polltax():
@@ -666,7 +708,7 @@ def sticker_polltax():
     T(it, "campaign", CAMPAIGN, OSW, 600, 3.6, 7, 47.5, "centre", ink="black", trk=0.06, role="name")
     it["variants"] = dict(n=2, vary=["on a lamp column, pillar, kiosk or wall: corners lifting, one scratched, one half scraped"])
     it["bottom_y"] = y
-    return it
+    return meta(it, "sticker")
 
 
 def sticker_cantpay():
@@ -675,92 +717,92 @@ def sticker_cantpay():
     T(it, "slogan", "CAN’T PAY — WON’T PAY", OSW, 700, capfit(OSW, 700, "CAN’T PAY — WON’T PAY", 130, 0.03), 24, 74, "centre", ink="paper", on="ink:black", trk=0.03, role="name")
     T(it, "campaign", CAMPAIGN, OSW, 600, 4.0, 10, 74, "centre", ink="paper", on="ink:black", trk=0.06)
     it["variants"] = dict(n=2, vary=["as P05"])
-    return it
-
-
-OSI = "old-standard-tt-italic"
+    return meta(it, "sticker")
 
 
 def bill_jumble():
-    it = new_item("J01", "4.2", "chapel_hall", "Jumble sale bill (chapel hall)", 381, 508, stock="pale_pink", process="letterpress_2col", fmt="crown", margin=14)
-    S(it, "frame", "frame", box=[12, 12, 369, 496], fill="black", fill_kind="ink", width_mm=3.2, note="two brass rules, 3 pt, mitred at the corners; hairline gaps at the joints")
+    """A photocopied A3 notice (TARGET-REVIEW fault 7: a 1990 jumble-sale notice 'is Letraset, photocopy or two-colour screen print', asset-plan note 4)."""
+    it = new_item("J01", "4.2", "chapel_hall", "Jumble sale notice (chapel hall), A3 photocopy", 297, 420, stock="pale_pink", process="photocopy_a3", fmt="A3", margin=12)
+    S(it, "frame", "frame", box=[8, 8, 289, 412], fill="toner", fill_kind="ink", width_mm=2.4, note="two rules photocopied from a printed original, 2.4 mm; hairline gaps at the corner joints")
     y = stack(it, "L", [
-        L("GRAND", OST, 700, 34, gap=10, ink="red", trk=0.30, tech="letterpress red"),
-        L("JUMBLE SALE", OSW, 700, fitw=320, gap=12, ink="black"),
-        L("THE CHAPEL HALL", OSW, 600, 26, gap=16, ink="black", trk=0.08),
-    ], 190.5, 486, fill_bottom=380)
-    S(it, "rule_a", "rule", box=[40, y - 2, 341, y + 1.2], fill="black")
+        L("GRAND", OST, 700, 22, gap=6, ink="toner", trk=0.30, tech="Letraset-style heading, photocopied"),
+        L("JUMBLE SALE", OSW, 700, fitw=240, gap=8, ink="toner"),
+        L("THE CHAPEL HALL", OSW, 600, 16, gap=10, ink="toner", trk=0.08),
+    ], 148.5, 402, fill_bottom=290)
+    S(it, "rule_a", "rule", box=[24, y - 2, 273, y + 0.6], fill="toner", fill_kind="ink")
     y = stack(it, "M", [
-        L(dated(20, 10), OSW, 700, fitw=300, gap=10, ink="red", trk=0.02),
-        L("DOORS OPEN 2 PM", OSW, 600, 24, gap=18, ink="black", trk=0.06),
-        L("CLOTHING · BOOKS · BRIC-A-BRAC · HOUSEHOLD", OSTR, 400, fitw=300, gap=14, ink="black", trk=0.02),
-        L("Teas and cakes", OSI, 400, 15, gap=20, ink="black"),
-        L("ADMISSION 20p", FRK, 800, 19, gap=12, ink="black", trk=0.05),
-        L("IN AID OF THE CHAPEL ROOF FUND", FRK, 700, 10, gap=8, ink="black", trk=0.05),
-    ], 190.5, y - 14, fill_bottom=70)
-    imprint(it, IMPRINT, y=22)
-    it["variants"] = dict(n=3, vary=["age class A, B, C", "skew +-1.5 degrees", "red pass shifted 0.3 to 0.6 mm", "one half-covered by P03 or W01"])
+        L(dated(20, 10), OSW, 700, fitw=230, gap=8, ink="toner", trk=0.02),
+        L("DOORS OPEN 2 PM", OSW, 600, 15, gap=12, ink="toner", trk=0.06),
+        L("CLOTHING · BOOKS · BRIC-A-BRAC · HOUSEHOLD", OSTR, 400, fitw=245, gap=10, ink="toner", trk=0.02),
+        L("Teas and cakes", OSI, 400, 10, gap=12, ink="toner"),
+        L("ADMISSION 20p", FRK, 800, 11, gap=8, ink="toner", trk=0.05),
+        L("IN AID OF THE CHAPEL ROOF FUND", FRK, 700, 8, gap=6, ink="toner", trk=0.05),
+    ], 148.5, y - 10, fill_bottom=36)
+    imprint(it, IMPRINT, y=17)
+    it["variants"] = dict(n=3, vary=["age class A, B", "toner density and edge shadow (processes.photocopy_a3)", "one half-covered by P03 or W01 (never placed so by default)", SKEW_NOTE + " (0.2 to 1.5 degrees)"])
     it["event"] = dict(date=dated(20, 10), d=20, m=10)
     it["bottom_y"] = y
-    return it
+    return meta(it, "fly_poster", "event", 20, 10, "the jumble sale")
 
 
-def bill_dance():
-    it = new_item("D01", "4.2", "chapel_hall", "Old-time dance bill (chapel hall)", 508, 762, stock="cream", process="letterpress_2col", fmt="double_crown", margin=18)
-    S(it, "frame", "frame", box=[16, 16, 492, 746], fill="blue", fill_kind="ink", width_mm=4.0)
+def bill_dance(named=False):
+    """A photocopied A3 notice, as J01. The nameless default says LIVE MUSIC where the named variant names the band."""
+    it = new_item(nid("D01", named), "4.2", "chapel_hall", "Old-time and sequence dance notice (chapel hall), A3 photocopy" + (" (named band, held)" if named else ""), 297, 420, stock="pale_yellow", process="photocopy_a3", fmt="A3", margin=12)
+    S(it, "frame", "frame", box=[8, 8, 289, 412], fill="toner", fill_kind="ink", width_mm=2.8, note="a double-width rule photocopied from a printed original")
     y = stack(it, "L", [
-        L("OLD TIME", OST, 700, fitw=400, gap=8, ink="blue", tech="letterpress blue"),
-        L("and", OSI, 400, 26, gap=6, ink="black"),
-        L("NEW VOGUE", OST, 700, fitw=400, gap=10, ink="blue"),
-        L("DANCING", ALF, 400, fitw=400, gap=22, ink="black"),
-    ], 254, 728, fill_bottom=520)
-    y = stack(it, "M", [
-        L(dated(17, 11), OSW, 700, fitw=360, gap=14, ink="black", trk=0.02),
-        L("7.30 TO 11 PM", OSW, 600, 42, gap=16, ink="blue", trk=0.04),
-        L("THE CHAPEL HALL", OSW, 600, 30, gap=26, ink="black", trk=0.06),
-        L("Music by", OSI, 400, 18, gap=8, ink="black"),
-        L("THE SANDERLING TRIO", OST, 700, fitw=360, gap=26, ink="black", trk=0.04),
-        L("TEA AND SANDWICHES", FRK, 800, 16, gap=10, ink="black", trk=0.06),
-        L("ADMISSION £1.50", FRK, 800, 16, gap=10, ink="black", trk=0.06),
-        L("ALL WELCOME", FRK, 800, 16, gap=8, ink="blue", trk=0.08),
-    ], 254, y - 20, fill_bottom=60)
-    imprint(it, IMPRINT, y=28)
-    it["variants"] = dict(n=3, vary=["age class A, B, C", "blue pass shifted 0.3 to 0.7 mm", "skew"])
+        L("OLD TIME", OST, 700, fitw=230, gap=5, ink="toner", tech="photocopied from a printed original"),
+        L("and", OSI, 400, 15, gap=4, ink="toner"),
+        L("SEQUENCE", OST, 700, fitw=230, gap=14, ink="toner"),
+        L("DANCING", ALF, 400, fitw=230, gap=12, ink="toner"),
+    ], 148.5, 402, fill_bottom=270)
+    lines = [
+        L(dated(17, 11), OSW, 700, fitw=210, gap=8, ink="toner", trk=0.02),
+        L("7.30 TO 11 PM", OSW, 600, 24, gap=9, ink="toner", trk=0.04),
+        L("THE CHAPEL HALL", OSW, 600, 17, gap=14, ink="toner", trk=0.06),
+    ]
+    if named:
+        lines += [L("Music by", OSI, 400, 11, gap=5, ink="toner"), L("THE SANDERLING TRIO", OST, 700, fitw=210, gap=14, ink="toner", trk=0.04)]
+    else:
+        lines += [L("LIVE MUSIC", OST, 700, fitw=170, gap=14, ink="toner", trk=0.04)]
+    lines += [L("TEA AND SANDWICHES", FRK, 800, 9.5, gap=6, ink="toner", trk=0.06),
+              L("ADMISSION £1.50", FRK, 800, 9.5, gap=6, ink="toner", trk=0.06),
+              L("ALL WELCOME", FRK, 800, 9.5, gap=6, ink="toner", trk=0.08)]
+    y = stack(it, "M", lines, 148.5, y - 12, fill_bottom=34)
+    imprint(it, IMPRINT, y=17)
+    it["variants"] = dict(n=3, vary=["age class A, B", "toner density and edge shadow", SKEW_NOTE + " (0.2 to 1.5 degrees)"])
     it["event"] = dict(date=dated(17, 11), d=17, m=11)
     it["bottom_y"] = y
-    return it
+    return meta(it, "fly_poster", "event", 17, 11, "the dance", named_of=("D01" if named else None))
 
 
-def bill_wrestling():
-    it = new_item("W01", "4.2", "fights", "All-in wrestling bill", 508, 762, stock="pale_yellow", process="letterpress_2col", fmt="double_crown", margin=18)
-    y = stack(it, "L", [
-        L("ALL-IN", OSW, 700, 60, gap=8, ink="black", trk=0.12),
-        L("WRESTLING", OSW, 700, fitw=460, gap=14, ink="red", tech="letterpress red"),
-        L("THE DRILL HALL", OSW, 600, 34, gap=12, ink="black", trk=0.08),
-        L(dated(2, 11), OSW, 700, fitw=420, gap=8, ink="black", trk=0.02),
-        L("BELL 7.30 PM", OSW, 600, 34, gap=24, ink="red", trk=0.06),
-    ], 254, 738, fill_bottom=452)
+def bill_wrestling(named=False):
+    it = new_item(nid("W01", named), "4.2", "fights", "Professional wrestling bill" + (" (ring names and venue named, held)" if named else ""), 508, 762, stock="pale_yellow", process="letterpress_2col", fmt="double_crown", margin=18)
+    top = [L("PROFESSIONAL", OSW, 700, fitw=428, gap=8, ink="black", trk=0.12),
+           L("WRESTLING", OSW, 700, fitw=460, gap=14, ink="red", tech="letterpress red")]
+    if named:
+        top.append(L("THE DRILL HALL", OSW, 600, 34, gap=12, ink="black", trk=0.08))
+    top += [L(dated(2, 11), OSW, 700, fitw=420, gap=8, ink="black", trk=0.02), L("BELL 7.30 PM", OSW, 600, 34, gap=24, ink="red", trk=0.06)]
+    y = stack(it, "L", top, 254, 738, fill_bottom=452)
     S(it, "rule_a", "rule", box=[40, y + 6, 468, y + 9.4], fill="black")
-    y = stack(it, "M", [
-        L("THE SEA WOLF", OSW, 700, fitw=380, gap=4, ink="black"),
-        L("v", OSI, 400, 14, gap=4, ink="red"),
-        L("MAD MAURICE", OSW, 700, fitw=380, gap=18, ink="black"),
-        L("TIGER JIM LARKIN", OSW, 700, fitw=380, gap=4, ink="black"),
-        L("v", OSI, 400, 14, gap=4, ink="red"),
-        L("THE BARON", OSW, 700, fitw=300, gap=14, ink="black"),
-        L("AND SUPPORT BOUTS", OSW, 600, 20, gap=22, ink="black", trk=0.08),
-        L("RINGSIDE £4 · UNRESERVED £2.50", FRK, 800, 17, gap=8, ink="red", trk=0.04),
-        L("TICKETS AT THE DOOR", FRK, 700, 14, gap=8, ink="black", trk=0.08),
-    ], 254, y - 6, fill_bottom=50)
+    if named:
+        mid = [L("THE HARPOONER", OSW, 700, fitw=380, gap=4, ink="black"), L("v", OSI, 400, 14, gap=4, ink="red"),
+               L("SPANNER SMITH", OSW, 700, fitw=380, gap=18, ink="black"), L("BIG TED HOLROYD", OSW, 700, fitw=380, gap=4, ink="black"),
+               L("v", OSI, 400, 14, gap=4, ink="red"), L("THE STEVEDORE", OSW, 700, fitw=300, gap=14, ink="black")]
+    else:
+        mid = [L("HEAVYWEIGHT CONTEST", OSW, 700, fitw=380, gap=14, ink="black"), L("TAG TEAM CONTEST", OSW, 700, fitw=380, gap=16, ink="black")]
+    mid += [L("AND SUPPORT BOUTS", OSW, 600, 20, gap=22, ink="black", trk=0.08),
+            L("RINGSIDE £4 · UNRESERVED £2.50", FRK, 800, 17, gap=8, ink="red", trk=0.04),
+            L("TICKETS AT THE DOOR", FRK, 700, 14, gap=8, ink="black", trk=0.08)]
+    y = stack(it, "M", mid, 254, y - 6, fill_bottom=50)
     imprint(it, IMPRINT, y=24)
-    it["variants"] = dict(n=3, vary=["age class A, B, C", "red pass shifted", "one with the date line struck through by a hand-painted band (event over): a red felt-pen stripe, NO new words"])
+    it["variants"] = dict(n=3, vary=["age class A, B", "red pass shifted", "one with the date line struck through by a hand-painted band (event over): a red felt-pen stripe, NO new words", SKEW_NOTE])
     it["event"] = dict(date=dated(2, 11), d=2, m=11)
     it["bottom_y"] = y
-    return it
+    return meta(it, "fly_poster", "event", 2, 11, "the wrestling night", named_of=("W01" if named else None))
 
 
 def bill_boxing():
-    it = new_item("B01", "4.2", "fights", "Boxing night bill", 508, 762, stock="pale_blue", process="letterpress_2col", fmt="double_crown", margin=18)
+    it = new_item("B01", "4.2", "fights", "Boxing night bill (venue named, held)", 508, 762, stock="pale_blue", process="letterpress_2col", fmt="double_crown", margin=18)
     y = stack(it, "L", [
         L("BOXING", ALF, 400, fitw=440, gap=24, ink="black", tech="letterpress black"),
         L("TEN BOUTS", OSW, 700, fitw=400, gap=34, ink="red", trk=0.06),
@@ -774,10 +816,10 @@ def bill_boxing():
         L("TICKETS AT THE DOOR", FRK, 700, 18, gap=8, ink="black", trk=0.08),
     ], 254, y - 6, fill_bottom=90)
     imprint(it, IMPRINT, y=24)
-    it["variants"] = dict(n=2, vary=["age class B, C", "skew"])
+    it["variants"] = dict(n=2, vary=["age class A, B", SKEW_NOTE])
     it["event"] = dict(date=dated(16, 11), d=16, m=11)
     it["bottom_y"] = y
-    return it
+    return meta(it, "fly_poster", "event", 16, 11, "the boxing night")
 
 
 def bill_market():
@@ -795,88 +837,116 @@ def bill_market():
         L("ENQUIRIES: THE MARKET OFFICE", FRK, 700, 14, gap=8, ink="black", trk=0.06),
     ], 254, y - 10, fill_bottom=70)
     imprint(it, IMPRINT, y=24)
-    it["variants"] = dict(n=2, vary=["age class B, D (the old one is mostly paste and one torn half)", "skew"])
+    it["variants"] = dict(n=2, vary=["age class B, D (the old one is mostly paste and one torn half)", SKEW_NOTE])
     it["bottom_y"] = y
-    return it
+    return meta(it, "fly_poster")
 
 
 def goods_whitewell():
-    it = new_item("G01", "4.2", "goods", "Washday powder four-sheet (invented brand)", 1016, 1524, stock="white_poster", process="litho_4col", fmt="four_sheet", margin=30)
+    it = new_item("G01", "4.2", "goods", "Washday powder four-sheet (invented brand, held)", 1016, 1524, stock="white_poster", process="litho_4col", fmt="four_sheet", margin=30)
     it["art"].append(dict(id="art", box_mm=[0, 420, 1016, 1524], kind="litho_picture", seed="G01", nominal_rgb=[196, 214, 232],
                           describe="a washing line of white sheets and towels in a bright cold wind over a terraced back-yard wall, the sky pale blue; no people, no faces, no lettering anywhere in the picture",
-                          forbidden="people, hands, faces, children, text, numerals, logos, any real product", zone_note="the sheets are the whitest area; the sky is behind the title"))
+                          forbidden="people, hands, faces, children, text, lettering, numerals, logos, crowns, kiosk lettering, operator marks, bottles, glasses, arcade or amusement signs, any real product",
+                          zone_note="the sheets are the whitest area; the sky is behind the title"))
     S(it, "title_band", "rect", box=[0, 0, 1016, 420], fill="blue", fill_kind="ink")
     T(it, "name", "WHITEWELL", ALF, 400, capfit(ALF, 400, "WHITEWELL", 900), 250, 508, "centre", ink="paper", on="ink:blue", trk=0.02, role="name")
     T(it, "line1", "WASHES WHITE", OSW, 700, 70, 150, 508, "centre", ink="paper", on="ink:blue", trk=0.1, role="line")
     T(it, "line2", "FOR TWIN-TUB, AUTOMATIC AND HAND WASHING", FRK, 700, 24, 90, 508, "centre", ink="paper", on="ink:blue", trk=0.06)
     imprint(it, IMPRINT, y=40, cap=4.0, ink="paper", on="ink:blue")
     it["variants"] = dict(n=2, vary=["age class C, D", "one with the lower half pasted over by P03 and P01"])
-    return it
+    it["notes"].append("A national-style four-sheet advertisement belongs in a contractor's framed panel in 1990, not pasted under fly-posters (TARGET-REVIEW note): this item is held AND not placed on Quay Street.")
+    return meta(it, "fly_poster")
+
+
+RING = dict(kind="ring", note="a white ring: centre, inner and outer radius in mm")
 
 
 def goods_tea():
-    it = new_item("G02", "4.2", "goods", "Tea bill (invented brand)", 508, 762, stock="cream", process="letterpress_2col", fmt="double_crown", margin=18)
+    it = new_item("G02", "4.2", "goods", "Tea bill (invented brand, held)", 508, 762, stock="cream", process="letterpress_2col", fmt="double_crown", margin=18)
     y = stack(it, "L", [
         L("QUAYSIDE", ALF, 400, fitw=440, gap=10, ink="red", tech="letterpress red"),
         L("TEA", ALF, 400, fitw=300, gap=22, ink="black"),
         L("A good strong cup", FRA, 700, fitw=420, gap=24, ink="black"),
     ], 254, 738)
-    S(it, "cup", "roundel", box=[134, y - 250, 374, y - 10], fill="red", fill_kind="ink", note="a flat red disc standing for a cup seen from above, a white ring inside; our own drawing, no photograph")
+    cx, cy, R = 254.0, y - 130.0, 120.0
+    S(it, "cup", "roundel", box=[cx - R, cy - R, cx + R, cy + R], fill="red", fill_kind="ink", note="a flat red disc standing for a cup seen from above; our own drawing, no photograph")
+    S(it, "cup_ring", "ring", centre_mm=[cx, cy], r_inner_mm=0.70 * R - 8.0, r_outer_mm=0.70 * R + 8.0, fill="paper", fill_kind="stock",
+      note="the cup's white ring: 16 mm wide, centred on 0.70 of the disc's radius (TARGET-REVIEW fault 11)")
     T(it, "price", "80 BAGS · £1.35", OSW, 700, 52, 100, 254, "centre", ink="black", role="line", trk=0.03)
     imprint(it, IMPRINT, y=30)
-    it["variants"] = dict(n=2, vary=["age class B, C", "skew"])
+    it["variants"] = dict(n=2, vary=["age class B, C", SKEW_NOTE])
     it["bottom_y"] = y
-    return it
+    return meta(it, "fly_poster")
 
 
-def tivoli_witness():
-    it = new_item("T01", "4.2", "tivoli", "Tivoli quad: THE FOURTH WITNESS", 1016, 762, stock="white_poster", process="litho_4col", fmt="quad_crown", margin=26)
+# ---- the Tivoli ------------------------------------------------------------------------------------
+STRIP_H = 90.0
+
+
+def tivoli_strip(film, d, m):
+    """The venue and date strip pasted across the top band of a quad (TARGET-REVIEW fault 7: a distributor's quad carried no venue; the cinema pasted its own strip)."""
+    it = new_item("%ss" % film, "4.2", "tivoli", "Tivoli venue strip for %s, 1016 x 90, letterpress black on white" % film, 1016, 90, stock="white_poster", process="letterpress_1col", fmt=None, margin=8)
+    T(it, "tivoli", "THE TIVOLI", OSW, 700, 36, 27, 30, "left", ink="black", trk=0.20, role="name", tech="letterpress black")
+    T(it, "start", "FROM " + dated(d, m), OSW, 600, 30, 29, 986, "right", ink="black", trk=0.12, role="line", tech="letterpress black")
+    it["variants"] = dict(n=2, vary=["age class B (the quad's own class) and A", "set 2 to 6 mm off square on the quad's top band: the placement's rot_deg carries it; the strip's own texture is square-on"])
+    it["event"] = dict(date=dated(d, m), d=d, m=m)
+    return meta(it, "strip", "event", d, m, "the film's first day")
+
+
+def tivoli_witness(named=False):
+    it = new_item(nid("T01", named), "4.2", "tivoli", "Tivoli quad: " + ("THE FOURTH WITNESS (named film, held)" if named else "a new thriller (no title minted)"), 1016, 762, stock="white_poster", process="litho_4col", fmt="quad_crown", margin=26)
     it["art"].append(dict(id="art", box_mm=[0, 0, 1016, 762], kind="litho_picture", seed="T01", nominal_rgb=[16, 20, 34],
-                          describe="a narrow wet street at night seen from a first-floor window, lamplight in orange pools on the cobbles, a telephone box lit at the far end, rain on the glass in the near corner; dark blue and black with orange; no people, no faces, no lettering",
-                          forbidden="people, hands, faces, children, text, numerals, signs, real brands, real places, vehicles with plates",
-                          zone_note="the lower third and a top strip must stay dark and low in detail: a scrim is laid there for the words"))
+                          describe="a narrow wet cobbled street at night seen from a first-floor window, lamplight in orange pools on the cobbles, one lit window far down the street, rain on the glass in the near corner; dark blue and black with orange; no people, no faces, no lettering, no signs, no telephone box",
+                          forbidden="people, hands, faces, children, text, lettering, numerals, signs, crowns, kiosks or telephone boxes, operator marks, real brands, real places, vehicles with plates, bottles, glasses, arcade or amusement signs",
+                          zone_note="the top 90 mm stays blank and dark (the venue strip T01s is pasted there); the lower third and the left must stay dark and low in detail: a scrim is laid there for the words"))
     S(it, "scrim_bottom", "scrim", box=[0, 0, 1016, 300], rgb=[10, 14, 26], alpha_top=0.0, alpha_bottom=0.85, note="gradient, fully dark at the foot")
-    S(it, "scrim_top", "scrim", box=[0, 690, 1016, 762], rgb=[10, 14, 26], alpha_top=0.8, alpha_bottom=0.0)
+    S(it, "scrim_top", "scrim", box=[0, 672, 1016, 762], rgb=[10, 14, 26], alpha_top=0.9, alpha_bottom=0.9, note="the top band is flat dark and BLANK: no lettering of any kind in the litho; the strip T01s is pasted over it")
     ART = "art:16,20,34"
-    T(it, "tivoli", "THE TIVOLI", JSF, 700, 20, 706, 70, "left", ink_paint="agent_white", on=ART, trk=0.3, role="name")
-    T(it, "start", "FROM SUNDAY 21 OCTOBER", JSF, 600, 20, 706, 990, "right", ink_paint="agent_white", on=ART, trk=0.2)
-    T(it, "tag", "Somebody saw. Somebody will pay.", FRA, 600, 30, 640, 508, "centre", ink_paint="agent_white", on=ART, role="tagline")
-    T(it, "title1", "THE FOURTH", OSW, 700, 128, 250, 70, "left", ink_paint="agent_white", on=ART, trk=0.02, role="title")
-    T(it, "title2", "WITNESS", OSW, 700, 128, 98, 70, "left", ink_paint="lamp_orange", on=ART, trk=0.02, role="title")
-    T(it, "billing", "A MARSHLAND PICTURES PRODUCTION · SCREENPLAY BY A. VENN · MUSIC BY R. CORLEY · DIRECTED BY H. MADDOX", OSW, 500, 6.0, 40, 70, "left", ink_paint="agent_white", on=ART, trk=0.06, role="billing")
-    it["variants"] = dict(n=2, vary=["age class B, C", "one cut in half by a torn edge, the title half left"])
-    it["event"] = dict(date="SUNDAY 21 OCTOBER", d=21, m=10)
-    return it
+    T(it, "tag", "Somebody saw. Somebody will pay.", FRA, 600, 30, 628, 508, "centre", ink_paint="agent_white", on=ART, role="tagline")
+    if named:
+        T(it, "title1", "THE FOURTH", OSW, 700, 128, 250, 70, "left", ink_paint="agent_white", on=ART, trk=0.02, role="title")
+        T(it, "title2", "WITNESS", OSW, 700, 128, 98, 70, "left", ink_paint="lamp_orange", on=ART, trk=0.02, role="title")
+        T(it, "billing1", "A MARSHLAND PICTURES PRODUCTION · SCREENPLAY BY A. VENN", OSW, 500, 12.0, 62, 70, "left", ink_paint="agent_white", on=ART, trk=0.06, role="billing")
+        T(it, "billing2", "MUSIC BY R. CORLEY · DIRECTED BY H. MADDOX", OSW, 500, 12.0, 40, 70, "left", ink_paint="agent_white", on=ART, trk=0.06, role="billing")
+    else:
+        T(it, "title1", "A NEW", OSW, 700, 128, 250, 70, "left", ink_paint="agent_white", on=ART, trk=0.02, role="title")
+        T(it, "title2", "THRILLER", OSW, 700, 128, 98, 70, "left", ink_paint="lamp_orange", on=ART, trk=0.02, role="title")
+    it["variants"] = dict(n=2, vary=["age class B, C", "one cut in half by a torn edge, the title half left", SKEW_NOTE])
+    it["event"] = dict(date="THURSDAY 18 OCTOBER", d=18, m=10)
+    return meta(it, "fly_poster", "event", 18, 10, "the film's first day", named_of=("T01" if named else None))
 
 
-def tivoli_gullwing():
-    it = new_item("T02", "4.2", "tivoli", "Tivoli quad: A WEEK AT GULLWING", 1016, 762, stock="white_poster", process="litho_4col", fmt="quad_crown", margin=26)
+def tivoli_gullwing(named=False):
+    it = new_item(nid("T02", named), "4.2", "tivoli", "Tivoli quad: " + ("A WEEK AT GULLWING (named film, held)" if named else "a new comedy (no title minted)"), 1016, 762, stock="white_poster", process="litho_4col", fmt="quad_crown", margin=26)
     it["art"].append(dict(id="art", box_mm=[0, 0, 1016, 762], kind="litho_picture", seed="T02", nominal_rgb=[50, 100, 168],
-                          describe="a faded seaside pier under a high pale-blue sky with striped deckchairs lined up empty on the sand in the foreground, bright flat colours like a saucy postcard; no people, no faces, no lettering",
-                          forbidden="people, hands, faces, children, text, numerals, signs, real brands, drink, bottles, glasses, gambling machines",
-                          zone_note="the sky across the top 40 per cent stays clear and flat for the title"))
+                          describe="a pale empty beach under a high pale-blue sky with a row of striped deckchairs lined up empty on the sand and a wooden breakwater running to a calm sea, bright flat colours like a saucy postcard; no buildings, no pier, no people, no faces, no lettering",
+                          forbidden="people, hands, faces, children, text, lettering, numerals, signs, crowns, kiosks, operator marks, real brands, buildings, a pier, arcade or amusement signs, drink, bottles, glasses, gambling machines",
+                          zone_note="the top 90 mm stays clear flat sky (the venue strip T02s is pasted there); the sky across the top 40 per cent stays clear and flat for the title"))
     ART = "art:50,100,168"
-    T(it, "tivoli", "THE TIVOLI", JSF, 700, 20, 706, 70, "left", ink_paint="agent_white", on=ART, trk=0.3, role="name")
-    T(it, "start", "FROM THURSDAY 25 OCTOBER", JSF, 600, 20, 706, 990, "right", ink_paint="agent_white", on=ART, trk=0.2)
-    T(it, "title1", "A WEEK AT", FRA, 900, 90, 600, 508, "centre", ink_paint="agent_white", on=ART, trk=0.0, role="title")
-    T(it, "title2", "GULLWING", FRA, 900, capfit(FRA, 900, "GULLWING", 760), 440, 508, "centre", ink_paint="agent_red", on="paint:agent_white", role="title")
+    if named:
+        T(it, "title1", "A WEEK AT", FRA, 900, 80, 585, 508, "centre", ink_paint="agent_white", on=ART, trk=0.0, role="title")
+        T(it, "title2", "GULLWING", FRA, 900, min(125.0, capfit(FRA, 900, "GULLWING", 760)), 415, 508, "centre", ink_paint="agent_red", on="paint:agent_white", role="title")
+    else:
+        T(it, "title1", "A NEW", FRA, 900, 80, 585, 508, "centre", ink_paint="agent_white", on=ART, trk=0.0, role="title")
+        T(it, "title2", "COMEDY", FRA, 900, min(125.0, capfit(FRA, 900, "COMEDY", 760)), 415, 508, "centre", ink_paint="agent_red", on="paint:agent_white", role="title")
     T(it, "tag", "The funniest week of their lives.", FRA, 600, 30, 70, 508, "centre", ink_paint="agent_navy", on="art:236,214,150", role="tagline")
-    T(it, "billing", "A MARSHLAND PICTURES PRODUCTION · DIRECTED BY H. MADDOX", OSW, 500, 6.0, 36, 508, "centre", ink_paint="agent_navy", on="art:236,214,150", trk=0.06, role="billing")
-    S(it, "title_panel", "rect", box=[110, 410, 906, 590], fill="agent_white", fill_kind="paint", note="a pale panel behind GULLWING so the red holds; the sky shows round it")
-    it["variants"] = dict(n=2, vary=["age class B, C", "one with the sky bleached to near white"])
+    if named:
+        T(it, "billing", "A MARSHLAND PICTURES PRODUCTION · DIRECTED BY H. MADDOX", OSW, 500, 12.0, 36, 508, "centre", ink_paint="agent_navy", on="art:236,214,150", trk=0.06, role="billing")
+    S(it, "title_panel", "rect", box=[110, 385, 906, 560], fill="agent_white", fill_kind="paint", note="a pale panel behind the red title so the red holds; the sky shows round it")
+    it["variants"] = dict(n=2, vary=["age class A, B", "one with the sky bleached to near white", SKEW_NOTE])
     it["event"] = dict(date="THURSDAY 25 OCTOBER", d=25, m=10)
-    return it
+    return meta(it, "fly_poster", "event", 25, 10, "the film's first day", named_of=("T02" if named else None))
 
 
-def tivoli_programme():
-    it = new_item("T03", "4.2", "tivoli", "Tivoli programme bill", 508, 762, stock="white_poster", process="letterpress_2col", fmt="double_crown", margin=18)
+def tivoli_programme(named=False):
+    it = new_item(nid("T03", named), "4.2", "tivoli", "Tivoli programme bill" + (" (named films, held)" if named else " (no titles minted)"), 508, 762, stock="white_poster", process="letterpress_2col", fmt="double_crown", margin=18)
+    t1, t2 = ("THE FOURTH WITNESS", "A WEEK AT GULLWING") if named else ("A NEW THRILLER", "A NEW COMEDY")
     y = stack(it, "L", [
-        L("THE TIVOLI", JSF, 700, fitw=440, gap=18, ink="red", trk=0.10, tech="letterpress red"),
-        L("FROM SUNDAY 21 OCTOBER", OSW, 600, 32, gap=34, ink="black", trk=0.06),
-        L("SUNDAY TO WEDNESDAY", OSW, 600, 30, gap=10, ink="red", trk=0.06),
-        L("THE FOURTH WITNESS", OSW, 700, fitw=440, gap=30, ink="black"),
-        L("THURSDAY TO SATURDAY", OSW, 600, 30, gap=10, ink="red", trk=0.06),
-        L("A WEEK AT GULLWING", OSW, 700, fitw=440, gap=34, ink="black"),
+        L("THE TIVOLI", OSW, 700, fitw=440, gap=18, ink="red", trk=0.10, tech="letterpress red"),
+        L("FROM THURSDAY 18 OCTOBER", OSW, 600, fitw=420, gap=10, ink="black", trk=0.06),
+        L(t1, OSW, 700, fitw=440, gap=30, ink="black"),
+        L("FROM THURSDAY 25 OCTOBER", OSW, 600, fitw=420, gap=10, ink="black", trk=0.06),
+        L(t2, OSW, 700, fitw=440, gap=34, ink="black"),
     ], 254, 736, fill_bottom=330)
     S(it, "rule_a", "rule", box=[40, y + 12, 468, y + 15.4], fill="black")
     y = stack(it, "M", [
@@ -886,11 +956,10 @@ def tivoli_programme():
         L("O.A.P. AND UNWAGED £1.50", FRK, 800, fitw=440, gap=8, ink="red", trk=0.04),
     ], 254, y - 10, fill_bottom=70)
     imprint(it, IMPRINT, y=24)
-    it["variants"] = dict(n=2, vary=["age class A, B", "one with the lower half torn away"])
+    it["variants"] = dict(n=2, vary=["age class A, B", "one with the lower half torn away", SKEW_NOTE])
+    it["event"] = dict(date="THURSDAY 18 OCTOBER", d=18, m=10)
     it["bottom_y"] = y
-    return it
-
-
+    return meta(it, "fly_poster", "event", 18, 10, "the first film's first day", named_of=("T03" if named else None))
 def typed(item, prefix, lines, x, top, pitch=4.233, f=CPR, wt=400, cap=2.455, ink="typed", tech="typed, 10 pitch", role="body", on="stock", anchor="left"):
     """Typewritten lines at a fixed pitch: Courier Prime at 12 point (cap 2.455 mm, 10 characters to the inch = 2.54 mm advance)."""
     for i, t in enumerate(lines):
@@ -901,33 +970,33 @@ def typed(item, prefix, lines, x, top, pitch=4.233, f=CPR, wt=400, cap=2.455, in
 
 
 def ferry_times():
-    """The timetable as numbers, so the check can prove it is a service one vessel could run: the boat crosses in 15 minutes, leaves
-    the Hook at :00 and :30 and the far side at :15 and :45 by day, and ends the night on the far side."""
-    mon_sat_hook = ["6.30", "7.00", "7.30"]
+    """The timetable as numbers, so the check can prove it is a service ONE vessel could run: the boat crosses in 15 minutes, leaves the Hook at :00 and :30
+    by day and the far side 15 minutes later, and each day ENDS where the next day's first sailing LEAVES (TARGET-REVIEW fault 12): the far side's last
+    crossing is 11.15 PM, so the boat is back at the Hook at 11.30 PM and the street's 'last crossing's at eleven' still holds from the Hook."""
     return dict(
         crossing_minutes=15,
         mon_sat=dict(hook_first=["6.30", "7.00", "7.30"], hook_half_hourly_until="5.30 PM", hook_then=["6.30", "7.30", "8.30", "9.30", "10.30"], hook_last="11.00",
-                     far_first=["6.45", "7.15", "7.45"], far_half_hourly_until="5.45 PM", far_then=["6.45", "7.45", "8.45", "9.45"], far_last="10.45"),
+                     far_first=["6.45", "7.15", "7.45"], far_half_hourly_until="5.45 PM", far_then=["6.45", "7.45", "8.45", "9.45", "10.45"], far_last="11.15"),
         sunday=dict(hook_from="9.00 AM", hook_until="6.00 PM", far_from="9.15 AM", far_until="6.15 PM", hourly=True),
+        boat_overnight_at="the Hook (Monday to Saturday: in at 11.30 PM, out at 6.30 AM; Sunday: in at 6.30 PM, out at 9.00 AM)",
         fares=dict(single_p=60, return_pounds=1.00, cycle_p=30, oap="half fare"),
-        note="Last crossing: the Hook at 11.00 PM, matching the street's own line 'Last crossing's at eleven' (game-design/tier2-batch-1.json line 2893).")
+        note="Last crossing: the Hook at 11.00 PM, matching the street's own line 'Last crossing's at eleven' (game-design/tier2-batch-1.json line 2893); the far side's last, 11.15 PM, brings the one vessel home.")
 
 
 def ferry_timetable():
-    it = new_item("F01", "4.2", "harbour_and_ferry", "Meridian Ferry winter timetable (A2 sheet in the ramp case)", 420, 594, stock="white_poster", process="litho_2col", fmt="A2", margin=12)
+    it = new_item("F01", "4.2", "harbour_and_ferry", "Meridian Ferry winter timetable (A2 sheet for the ramp board)", 420, 594, stock="white_poster", process="litho_2col", fmt="A2", margin=12)
     BB = "paint:enamel_blue"
     S(it, "head_band", "rect", box=[0, 490, 420, 594], fill="enamel_blue", fill_kind="paint")
     T(it, "name", "MERIDIAN FERRY", ALF, 400, capfit(ALF, 400, "MERIDIAN FERRY", 384), 536, 210, "centre", ink_paint="enamel_white", on=BB, trk=0.02, role="name")
     T(it, "season", "WINTER SERVICE", OSW, 700, 24, 504, 210, "centre", ink_paint="enamel_white", on=BB, trk=0.14, role="line")
     T(it, "from", "FROM MONDAY 1 OCTOBER", OSW, 600, 17, 458, 210, "centre", ink="blue", trk=0.08, role="line")
-    # two columns
     CX = (110, 310)
     S(it, "col_rule", "rule", box=[208.5, 130, 211.5, 440], fill="blue", fill_kind="ink")
     for col, (hdr, x) in enumerate((("FROM THE HOOK", CX[0]), ("FROM THE FAR SIDE", CX[1]))):
         T(it, "h%d" % col, hdr, OSW, 700, 15, 425, x, "centre", ink="black", trk=0.06, role="line")
     T(it, "ms", "MONDAY TO SATURDAY", OSW, 700, 13, 398, 210, "centre", ink="blue", trk=0.08, role="line")
     hook = ["6.30  7.00  7.30", "and every half hour", "until 5.30 PM", "then 6.30  7.30  8.30", "9.30  10.30", "LAST CROSSING 11.00"]
-    far = ["6.45  7.15  7.45", "and every half hour", "until 5.45 PM", "then 6.45  7.45  8.45", "9.45", "LAST CROSSING 10.45"]
+    far = ["6.45  7.15  7.45", "and every half hour", "until 5.45 PM", "then 6.45  7.45  8.45", "9.45  10.45", "LAST CROSSING 11.15"]
     for col, (lines, x) in enumerate(((hook, CX[0]), (far, CX[1]))):
         for i, t in enumerate(lines):
             T(it, "ms%d_%d" % (col, i), t, FRK, 700 if i in (0, 3, 4, 5) else 500, 10.5, 372 - i * 21, x, "centre", ink="black", role="times")
@@ -942,8 +1011,9 @@ def ferry_timetable():
     T(it, "fog", "CROSSINGS MAY BE CANCELLED IN FOG OR HIGH WIND", OSW, 600, 11, 40, 210, "centre", ink="red", trk=0.06, role="line", min_contrast=3.9)
     imprint(it, IMPRINT, y=20, cap=2.4)
     it["schedule"] = ferry_times()
-    it["variants"] = dict(n=2, vary=["pasted over the summer sheet F02 (offset +14 mm right, -16 mm down) in both", "age class B and C; the C one has two drawing-pin holes and a rain stain from the top"])
-    return it
+    it["variants"] = dict(n=2, vary=["PASTED over the summer sheet F02 (offset +14 mm right, -16 mm down) on the ramp board FC1 in both", "age class B and C; the C one has two drawing-pin holes and a rain stain from the top"])
+    it["event"] = dict(date="MONDAY 1 OCTOBER", d=1, m=10)
+    return meta(it, "notice", "event", 1, 10, "the winter service starts")
 
 
 def ferry_summer():
@@ -951,45 +1021,55 @@ def ferry_summer():
     BB = "paint:enamel_blue"
     S(it, "head_band", "rect", box=[0, 490, 420, 594], fill="enamel_blue", fill_kind="paint")
     T(it, "name", "MERIDIAN FERRY", ALF, 400, capfit(ALF, 400, "MERIDIAN FERRY", 384), 536, 210, "centre", ink_paint="enamel_white", on=BB, trk=0.02, role="name")
-    b = T(it, "season", "SUMMER SERVICE", OSW, 700, 24, 504, 210, "centre", ink_paint="enamel_white", on=BB, trk=0.14, role="line")
-    b2 = T(it, "dates", "14 MAY TO 30 SEPTEMBER", OSW, 600, 17, 458, 210, "centre", ink="blue", trk=0.08, role="line")
+    T(it, "season", "SUMMER SERVICE", OSW, 700, 24, 504, 210, "centre", ink_paint="enamel_white", on=BB, trk=0.14, role="line")
+    T(it, "dates", "14 MAY TO 30 SEPTEMBER", OSW, 600, 17, 458, 210, "centre", ink="blue", trk=0.08, role="line")
     for bb in it["blocks"]:
         bb["ghost"] = True
+        bb["glyph_check"] = False
         bb["note"] = "Mostly covered by F01 (offset +14 mm right, -16 mm down): at most the top strip of the blue band and a torn window show. Any word that shows is one of these three."
     S(it, "col_rule", "rule", box=[208.5, 130, 211.5, 440], fill="blue", fill_kind="ink")
     it["notes"].append("The older sheet carries the same table in other numbers. Nothing of it is legible: it is covered. Only the three ghost words may show, and only through a tear.")
     it["variants"] = dict(n=1, vary=["age class D: brown paste halo, loose at the left edge"])
-    return it
+    return meta(it, "notice")
+
+
+def harbour_head(it):
+    T(it, "head", "MERIDIAN HARBOUR BOARD", OST, 700, capfit(OST, 700, "MERIDIAN HARBOUR BOARD", 176, 0.06), 274, 105, "centre", ink="typed", role="name", trk=0.06)
+    S(it, "rule_a", "rule", box=[20, 268, 190, 269.2], fill="typed", fill_kind="ink")
 
 
 def harbour_notice_berths():
     it = new_item("H03", "4.2", "harbour_and_ferry", "Harbour Board notice: berths closed (typed A4)", 210, 297, stock="white_bond", process="typed_carbon", fmt="A4", margin=14)
-    T(it, "head", "MERIDIAN HARBOUR BOARD", LBK, 700, capfit(LBK, 700, "MERIDIAN HARBOUR BOARD", 176, 0.06), 274, 105, "centre", ink="typed", role="name", trk=0.06)
-    S(it, "rule_a", "rule", box=[20, 268, 190, 269.2], fill="typed", fill_kind="ink")
-    T(it, "kind", "NOTICE TO SHIPMASTERS", CPB, 700, 3.6, 255, 105, "centre", ink="typed", role="line", tech="typed twice for bold")
+    harbour_head(it)
+    T(it, "kind", "NOTICE TO MARINERS", CPB, 700, 3.6, 255, 105, "centre", ink="typed", role="line", tech="typed twice for bold")
     lines = ["Berths 3 and 4 on the Hook quay will be closed to all", "shipping from Monday 5 November until further notice,", "for repairs to the quay wall.", "",
              "Masters should apply to the Harbour Master's office", "for other berths.", "", "By order of the Board.", "", "26 October 1990"]
     typed(it, "t", lines, 24, 238, pitch=8.466)
-    it["variants"] = dict(n=2, vary=["pinned in the case: four drawing pins; a tan tape tab; one curling top corner"])
+    it["variants"] = dict(n=2, vary=["pinned in the case: four drawing pins; a tan tape tab; one curling top corner (held: the case HC1 is not built until the dock office is)"])
     it["event"] = dict(date="26 OCTOBER 1990", d=26, m=10)
-    return it
+    return meta(it, "notice", "notice", 26, 10, "dated 26 October")
+
+
+# Heights of the day's higher high water, Thursday 1 to Wednesday 7 November 1990: the full moon of 2 to 3 November puts the springs' peak on Sunday 4 November
+# (TARGET-REVIEW note). The day's other high water is 0.1 m lower. Judgement: invented, in the right shape.
+TIDE_DAY_M = [4.4, 4.6, 4.7, 4.8, 4.7, 4.5, 4.2]
 
 
 def tide_table():
-    """Seven days of invented high waters: successive highs 12 h 25 min apart (a semi-diurnal tide), heights on a spring-neap swing."""
+    """Seven days of invented high waters: successive highs 12 h 25 min apart (a semi-diurnal tide), the heights peaking on Sunday 4 November."""
     t0 = datetime.datetime(1990, 11, 1, 5, 42)
     rows = []
     for k in range(14):
         t = t0 + datetime.timedelta(minutes=745 * k)
-        h = 4.05 + 0.65 * math.cos(2 * math.pi * k / 29.5)
-        rows.append((t, round(h, 1)))
+        day = (t.date() - datetime.date(1990, 11, 1)).days
+        base = TIDE_DAY_M[min(day, 6)]
+        rows.append((t, round(base if t.hour < 12 else base - 0.1, 1)))
     return rows
 
 
 def harbour_notice_tides():
     it = new_item("H04", "4.2", "harbour_and_ferry", "Harbour Board notice: tide table (typed A4)", 210, 297, stock="white_bond", process="typed_carbon", fmt="A4", margin=14)
-    T(it, "head", "MERIDIAN HARBOUR BOARD", LBK, 700, capfit(LBK, 700, "MERIDIAN HARBOUR BOARD", 176, 0.06), 274, 105, "centre", ink="typed", role="name", trk=0.06)
-    S(it, "rule_a", "rule", box=[20, 268, 190, 269.2], fill="typed", fill_kind="ink")
+    harbour_head(it)
     T(it, "kind", "HIGH WATER, THE HOOK", CPB, 700, 3.6, 255, 105, "centre", ink="typed", role="line")
     T(it, "month", "NOVEMBER 1990", CPB, 700, 3.6, 247, 105, "centre", ink="typed", role="line")
     rows = tide_table()
@@ -1009,20 +1089,19 @@ def harbour_notice_tides():
     lines += ["", "Heights in metres above chart datum.", "Times are Greenwich Mean Time."]
     typed(it, "t", lines, 30, 232, pitch=8.466)
     it["tide_rows"] = [dict(t=t.strftime("%Y-%m-%d %H:%M"), m=h) for t, h in rows]
-    it["variants"] = dict(n=1, vary=["pinned in the case, a corner curling"])
-    return it
+    it["variants"] = dict(n=1, vary=["pinned in the case, a corner curling (held: the case HC1 is not built until the dock office is)"])
+    return meta(it, "notice")
 
 
 def harbour_notice_vacancy():
     it = new_item("H05", "4.2", "harbour_and_ferry", "Harbour Board notice: vacancy (typed A4)", 210, 297, stock="pale_yellow", process="typed_carbon", fmt="A4", margin=14)
-    T(it, "head", "MERIDIAN HARBOUR BOARD", LBK, 700, capfit(LBK, 700, "MERIDIAN HARBOUR BOARD", 176, 0.06), 274, 105, "centre", ink="typed", role="name", trk=0.06)
-    S(it, "rule_a", "rule", box=[20, 268, 190, 269.2], fill="typed", fill_kind="ink")
+    harbour_head(it)
     T(it, "kind", "VACANCY", CPB, 700, 9, 244, 105, "centre", ink="typed", role="line")
     T(it, "job", "QUAY LABOURER", CPB, 700, 5.4, 224, 105, "centre", ink="typed", role="line")
     lines = ["Applications in writing, giving age and experience,", "to the Secretary, Meridian Harbour Board,", "to arrive by Friday 16 November.", "", "Wages by agreement."]
     typed(it, "t", lines, 24, 202, pitch=8.466)
-    it["variants"] = dict(n=1, vary=["pinned in the case"])
-    return it
+    it["variants"] = dict(n=1, vary=["pinned in the case (held: the case HC1 is not built until the dock office is)"])
+    return meta(it, "notice")
 
 
 POLICE_ROWS = {
@@ -1060,10 +1139,10 @@ def police_notice(suffix, d, m, hours, offence_lines):
         y -= PITCH
     T(it, "conf", "YOUR INFORMATION WILL BE TREATED IN CONFIDENCE.", ARC, 600, 6.5, 30, 148.5, "centre", ink="toner", role="body")
     it["event"] = dict(date=dated(d, m), d=d, m=m)
-    it["variants"] = dict(n=2, vary=["photocopy: a grey edge band 3 to 6 mm at the left, toner speckle", "taped inside a window with four tabs of yellowed tape, or in a polythene sleeve cable-tied to a lamp column"])
+    it["variants"] = dict(n=2, vary=["photocopy: a grey edge band 3 to 6 mm at the left, toner speckle", "taped inside a window with four tabs of yellowed tape (the empty unit's glass, SF2: C01a), or in a polythene sleeve cable-tied to a lamp column", SKEW_NOTE + " (0.2 to 1.5 degrees)"])
     it["sample_slot"] = suffix
     it["bottom_y"] = y
-    return it
+    return meta(it, "notice", "notice", d, m, "the night of the offence")
 
 
 def police_notices():
@@ -1075,17 +1154,18 @@ def planning_notice():
     T(it, "head", "PLANNING APPLICATION", ARC, 900, capfit(ARC, 900, "PLANNING APPLICATION", 180), 270, 105, "centre", ink="toner", role="name")
     S(it, "rule_a", "rule", box=[16, 262, 194, 264], fill="toner", fill_kind="ink")
     T(it, "kind", "NOTICE", ARC, 700, 6.5, 250, 105, "centre", ink="toner", role="line", trk=0.3)
-    body = [("PROPOSAL", 700), ("Change of use of the ground floor, 21 to 27 Quay Street,", 400), ("from shop to estate agent's office.", 400), ("", 0),
+    body = [("PROPOSAL", 700), ("Change of use of the ground floor, 7 Quay Street,", 400), ("from shop to estate agent's office.", 400), ("", 0),
             ("COMMENTS", 700), ("Anyone wishing to comment may write to the Planning", 400), ("Officer by Friday 9 November.", 400), ("", 0),
             ("THE PLANS", 700), ("may be seen at the Planning Department, Monday to", 400), ("Friday, 9 a.m. to 4.30 p.m.", 400)]
     y = 232
     for i, (t, w) in enumerate(body):
         if t:
-            T(it, "b%d" % (i + 1), t, LBK if w == 400 else ARC, w if w == 400 else 800, 3.6 if w == 400 else 3.4, y, 22, "left", ink="toner", role="body", tech="typeset, photocopied")
+            T(it, "b%d" % (i + 1), t, OSTR if w == 400 else ARC, 400 if w == 400 else 800, 3.6 if w == 400 else 3.4, y, 22, "left", ink="toner", role="body", tech="typeset, photocopied")
         y -= 8.2
     it["event"] = dict(date="FRIDAY 9 NOVEMBER", d=9, m=11)
-    it["variants"] = dict(n=2, vary=["in a clear polythene sleeve, cable-tied to a lamp column or taped inside the empty unit's glass; water beads in the lower sleeve; a yellowing"])
-    return it
+    it["variants"] = dict(n=2, vary=["in a clear polythene sleeve, cable-tied to a lamp column or taped inside the empty unit's glass (SF2, number 7); water beads in the lower sleeve; a yellowing", SKEW_NOTE])
+    it["notes"].append("The empty unit is number 7 (the fascia target: street_number 7); the first try's '21 to 27 Quay Street' used street x in metres as house numbers.")
+    return meta(it, "notice", "event", 9, 11, "the comment deadline")
 
 
 def road_closure_notice():
@@ -1102,83 +1182,117 @@ def road_closure_notice():
         y -= c + 18
     T(it, "ped", "PEDESTRIAN ACCESS WILL BE MAINTAINED.", ARC, 700, 8.0, y - 4, 148.5, "centre", ink="toner", role="body")
     T(it, "div", "DIVERSION VIA WEIGHHOUSE LANE.", ARC, 700, 8.0, y - 26, 148.5, "centre", ink="toner", role="body")
-    T(it, "sorry", "We apologise for any inconvenience.", LBK, 400, 6.0, 40, 148.5, "centre", ink="toner", role="body")
+    T(it, "sorry", "We apologise for any inconvenience.", OSTR, 400, 6.0, 40, 148.5, "centre", ink="toner", role="body")
     it["event"] = dict(date=dated(4, 11), d=4, m=11)
     it["variants"] = dict(n=2, vary=["cable-tied in a sleeve to a lamp column at 1.6 to 2.0 m, facing the street", "the sleeve fogged inside, the notice yellowed, a cable tie tail left long"])
-    return it
-
-
+    return meta(it, "notice", "event", 4, 11, "the closure")
 # --------------------------------------------------------------------------------------------
 # 6. Shop-window cards and the newsagent's board (unit 4.2). Hand lettering is Patrick Hand (production/fonts).
+#    EVERY hand-lettered card carries one mirror cue that matches its fixing and sits on ONE half only (TARGET-REVIEW fault 9):
+#    a taped or stuck card: one tab of yellowed tape across its top-LEFT corner; a string-hung card: the knot and sucker at its top-LEFT.
 # --------------------------------------------------------------------------------------------
-HAND_FELT = dict(stroke_mm=2.6, baseline_sd_mm=1.2, rotation_sd_deg=1.0, size_sd=0.04, word_gap_sd=0.12, density_sd=0.08,
+HAND_FELT = dict(stroke_mm=2.6, baseline_sd_mm=1.2, rotation_sd_deg=1.0, size_sd=0.04, word_gap_sd=0.12, density_sd=0.08, embolden_mm=0.30,
                  note="felt-tip marker: a fat even line, ends a shade darker where the nib rested, a little bleed into the card")
-HAND_FELT_FINE = dict(stroke_mm=1.4, baseline_sd_mm=0.8, rotation_sd_deg=0.8, size_sd=0.04, word_gap_sd=0.10, density_sd=0.08,
+HAND_FELT_FINE = dict(stroke_mm=1.4, baseline_sd_mm=0.8, rotation_sd_deg=0.8, size_sd=0.04, word_gap_sd=0.10, density_sd=0.08, embolden_mm=0.15,
                       note="fine felt tip for the small lines")
-HAND_BALL = dict(stroke_mm=0.55, baseline_sd_mm=0.6, rotation_sd_deg=1.4, size_sd=0.06, word_gap_sd=0.15, density_sd=0.12,
+HAND_BALL = dict(stroke_mm=0.55, baseline_sd_mm=0.6, rotation_sd_deg=1.4, size_sd=0.06, word_gap_sd=0.15, density_sd=0.12, embolden_mm=0.05,
                  note="ballpoint: a thin line, pressure shows (lighter on joins), a blot at some stroke ends")
+
+TAPE = dict(kind="tape", what="one tab of yellowed adhesive tape across the card's top-LEFT corner only", cue="top-left")
+STRING = dict(kind="string", what="a string loop 220 mm long from a knot and a rubber sucker, at the card's top-LEFT only", cue="top-left")
+
+
+def fixing_for(kind):
+    return dict(TAPE if kind == "tape" else STRING)
 
 
 def card_closed_lunch():
     it = new_item("K01", "4.2", "window_cards", "Closed for lunch card (felt pen)", 210, 148, stock="white_card", process="felt_pen", fmt="A5L", margin=8, kind="card")
     T(it, "l1", "CLOSED FOR LUNCH", PAT, 400, capfit(PAT, 400, "CLOSED FOR LUNCH", 186), 92, 105, "centre", ink="felt_red", tech="felt pen", hand=HAND_FELT, role="line")
     T(it, "l2", "BACK AT 2 O’CLOCK", PAT, 400, 14, 52, 105, "centre", ink="felt_black", tech="felt pen", hand=HAND_FELT, role="line")
-    it["variants"] = dict(n=3, vary=["BACK AT 1.30 / 2 / 2.30 are not separate cards: the hour line is one of the approved strings 'BACK AT 2 O’CLOCK'", "hung on a string with a rubber sucker or taped; slightly tilted; age class A to C"])
-    it["fixing"] = dict(kind="string loop 220 mm and a rubber sucker, or two strips of tape at the top corners")
-    return it
+    it["variants"] = dict(n=3, vary=["the hour line is the one approved string 'BACK AT 2 O’CLOCK' (BACK AT 1.30 and 2.30 are not separate cards)", "hung on a string with a rubber sucker; slightly tilted (the placement's rot_deg); age class A to C"])
+    it["fixing"] = fixing_for("string")
+    return meta(it, "card")
 
 
 def card_back_at():
-    it = new_item("K02", "4.2", "window_cards", "BACK AT clock card (printed)", 130, 170, stock="buff_card", process="litho_2col", fmt=None, margin=8, kind="card")
+    """Unplaced (TARGET-REVIEW fault 10): the newsagent never closes at midday (hook-cast 6 to 17.30) and Hal's shop is not on the built street."""
+    it = new_item("K02", "4.2", "window_cards", "BACK AT clock card (printed; not placed)", 130, 170, stock="buff_card", process="litho_2col", fmt=None, margin=8, kind="card")
     T(it, "l1", "BACK AT", ALF, 400, capfit(ALF, 400, "BACK AT", 108), 140, 65, "centre", ink="red", role="line")
-    S(it, "clock", "roundel", box=[20, 12, 110, 102], fill="white", note="a printed clock face: white disc, black rim 2 mm, 12 tick marks, two cardboard hands on a brass paper-fastener, set to 12 o'clock", hands_deg=dict(hour=0, minute=0))
-    for k, (t, x, y) in enumerate((("12", 65, 90), ("3", 100, 52), ("6", 65, 20), ("9", 30, 52))):
-        T(it, "n%s" % t, t, OSW, 700, 8, y, x, "centre", ink="black", role="numeral")
-    it["variants"] = dict(n=2, vary=["hands at 12 (Hal's Monday break ends at 12 in hook-cast.json) and at 2", "hung on a string"])
-    it["fixing"] = dict(kind="string loop and a rubber sucker")
-    return it
+    cx, cy, R = 65.0, 57.0, 45.0
+    S(it, "clock", "roundel", box=[cx - R, cy - R, cx + R, cy + R], fill="white", note="a printed clock face: white disc 90 mm across, black rim 2 mm")
+    ticks = []
+    for k in range(12):
+        a = math.radians(90 - 30 * k)
+        r0, r1 = 35.0, 43.0
+        ticks.append(dict(p0=[round(cx + r0 * math.cos(a), 2), round(cy + r0 * math.sin(a), 2)], p1=[round(cx + r1 * math.cos(a), 2), round(cy + r1 * math.sin(a), 2)]))
+    S(it, "ticks", "ticks", fill="black", fill_kind="ink", segments_mm=ticks, width_mm=2.0, note="twelve ticks 2 x 8 mm, from 35 to 43 mm out from the centre (no numerals: the hands would cover the 12)")
+    S(it, "hand_hour", "hand", centre_mm=[cx, cy], length_mm=30.0, width_mm=5.0, pointing="by variant", fill="buff_card", note="hour hand, buff card, 30 x 5 mm, rounded end, set by the variant (12 or 2 o'clock)")
+    S(it, "hand_min", "hand", centre_mm=[cx, cy], length_mm=40.0, width_mm=4.0, pointing="12", fill="buff_card", note="minute hand, buff card, 40 x 4 mm, pointing at 12")
+    S(it, "fastener", "roundel", box=[cx - 3.0, cy - 3.0, cx + 3.0, cy + 3.0], fill="brass", fill_kind="paint", note="a brass paper-fastener, 6 mm across, through both hands and the card")
+    it["variants"] = dict(n=2, vary=["hands at 12 and at 2", "hung on a string with a rubber sucker (NOT PLACED: hook-cast gives the newsagent no midday break, and Hal's shop is not on the built street)"])
+    it["fixing"] = fixing_for("string")
+    it["notes"].append("Not placed on Quay Street (TARGET-REVIEW fault 10).")
+    return meta(it, "card")
 
 
 def card_open_closed():
     its = []
     for face, text, paint, id_ in (("OPEN", "OPEN", "agent_green", "K03a"), ("CLOSED", "CLOSED", "agent_red", "K03b")):
         it = new_item(id_, "4.2", "window_cards", "OPEN / CLOSED hanging sign, face %s" % face, 200, 110, stock="white_card", process="plastic_print", fmt=None, margin=8, kind="card")
-        S(it, "face", "rect", box=[0, 0, 200, 110], fill=paint, fill_kind="paint", note="rounded corners 8 mm; a hole at the top centre; a bead chain")
+        S(it, "face", "rect", box=[0, 0, 200, 110], fill=paint, fill_kind="paint", corner_radius_mm=8.0,
+          note="a plastic card, corners rounded 8 mm; a hole 5 mm across at the top centre, 8 mm down; a bead chain of 2.5 mm beads on a loop 60 mm long through the hole")
+        S(it, "hole", "roundel", box=[97.5, 100.5, 102.5, 105.5], fill="paper", fill_kind="stock", note="the hanging hole, 5 mm across, centre 8 mm below the top edge")
         T(it, "word", text, ARC, 800, capfit(ARC, 800, text, 168), 40, 100, "centre", ink_paint="agent_white", on="paint:" + paint, trk=0.06, role="line")
         it["variants"] = dict(n=1, vary=["one face outward at a time, from the shop's hours (hook-cast.json); the chain shows"])
-        its.append(it)
+        its.append(meta(it, "card"))
     return its
 
 
 def card_no_dogs():
     it = new_item("K04", "4.2", "window_cards", "NO DOGS sticker, 150 x 105", 150, 105, stock="white_poster", process="sticker_print", fmt=None, margin=6, kind="sticker")
-    S(it, "roundel", "roundel", box=[8, 17, 78, 87], fill="red", fill_kind="ink", note="a red ring 7 mm wide with a diagonal bar; inside it a black dog silhouette seen from the side, our own drawing")
+    cx, cy, R, ring = 43.0, 52.0, 35.0, 7.0
+    S(it, "roundel", "ring", centre_mm=[cx, cy], r_inner_mm=R - ring, r_outer_mm=R, fill="red", fill_kind="ink", note="a red ring 7 mm wide, 70 mm across; no dog silhouette (TARGET-REVIEW fault 11: the L3 sheet shows a bare ring)")
+    a = math.radians(45)
+    r_in = R - ring
+    p0 = (cx - r_in * math.cos(a), cy + r_in * math.sin(a))       # inside top-left
+    p1 = (cx + r_in * math.cos(a), cy - r_in * math.sin(a))       # inside bottom-right
+    hw = 3.5                                                       # half of the 7 mm bar
+    nx, ny = math.sin(a) * hw, math.cos(a) * hw
+    pts = [[round(p0[0] - nx, 2), round(p0[1] - ny, 2)], [round(p0[0] + nx, 2), round(p0[1] + ny, 2)], [round(p1[0] + nx, 2), round(p1[1] + ny, 2)], [round(p1[0] - nx, 2), round(p1[1] - ny, 2)]]
+    S(it, "bar", "poly", pts=pts, fill="red", fill_kind="ink", note="a bar 7 mm wide at 45 degrees from the ring's inside top-left to its inside bottom-right, same red")
     T(it, "l1", "NO", ARC, 900, 12, 58, 112, "centre", ink="black", role="line")
     T(it, "l2", "DOGS", ARC, 900, 12, 36, 112, "centre", ink="black", role="line")
     it["variants"] = dict(n=2, vary=["inside the glass of a shop door at 1.1 to 1.4 m, or outside on the door; one half peeled at a corner"])
-    return it
+    return meta(it, "sticker")
 
 
 def card_shut_door():
     it = new_item("K05", "4.2", "window_cards", "PLEASE SHUT THE DOOR (felt pen)", 210, 148, stock="white_card", process="felt_pen", fmt="A5L", margin=8, kind="card")
     T(it, "l1", "PLEASE SHUT", PAT, 400, 22, 96, 105, "centre", ink="felt_black", tech="felt pen", hand=HAND_FELT, role="line")
     T(it, "l2", "THE DOOR", PAT, 400, 22, 56, 105, "centre", ink="felt_black", tech="felt pen", hand=HAND_FELT, role="line")
-    it["variants"] = dict(n=2, vary=["taped to a door's glass at 1.45 m; one with a second line underlined in red felt"])
-    return it
+    it["variants"] = dict(n=2, vary=["taped to a door's glass, bottom at 1.42 m (centre 1.494 m: just above the shop's vinyl trade lettering, which tops out at 1.385 m +- 0.03 on the fascia target); one with the second line underlined in red felt"])
+    it["fixing"] = fixing_for("tape")
+    return meta(it, "card")
 
 
 def cards_launderette():
     a = new_item("K06a", "4.2", "window_cards", "Launderette: LAST WASH (felt pen)", 210, 148, stock="white_card", process="felt_pen", fmt="A5L", margin=8, kind="card")
     T(a, "l1", "LAST WASH", PAT, 400, 22, 92, 105, "centre", ink="felt_red", tech="felt pen", hand=HAND_FELT, role="line")
     T(a, "l2", "4.30 PM", PAT, 400, 26, 50, 105, "centre", ink="felt_black", tech="felt pen", hand=HAND_FELT, role="line")
-    a["variants"] = dict(n=2, vary=["the hour comes from the shop's closing time in hook-cast.json (laundry 8 to 5.30): LAST WASH is an hour before"])
+    a["variants"] = dict(n=2, vary=["the hour comes from the shop's closing time in hook-cast.json (laundry 8 to 5.30): LAST WASH is an hour before", "hung inside the glass on a string and a rubber sucker"])
+    a["fixing"] = fixing_for("string")
+    meta(a, "card")
     b = new_item("K06b", "4.2", "window_cards", "Launderette: PLEASE DO NOT OVERLOAD (printed sticker)", 210, 148, stock="white_poster", process="sticker_print", fmt="A5L", margin=8, kind="sticker")
     stack(b, "L", [L("PLEASE DO NOT", ARC, 800, 15, gap=8, ink="black", trk=0.04), L("OVERLOAD", ARC, 900, fitw=186, gap=8, ink="red"), L("THE MACHINES", ARC, 800, 15, gap=8, ink="black", trk=0.04)], 105, 134)
     b["variants"] = dict(n=2, vary=["stuck on the glass above a machine door"])
+    meta(b, "sticker")
     c = new_item("K06c", "4.2", "window_cards", "OUT OF ORDER (felt pen)", 148, 105, stock="white_card", process="felt_pen", fmt="A6L", margin=6, kind="card")
     T(c, "l1", "OUT OF", PAT, 400, 14, 66, 74, "centre", ink="felt_red", tech="felt pen", hand=HAND_FELT, role="line")
     T(c, "l2", "ORDER", PAT, 400, 14, 38, 74, "centre", ink="felt_red", tech="felt pen", hand=HAND_FELT, role="line")
-    c["variants"] = dict(n=3, vary=["taped on a machine door or the glass, a corner of tape lifting"])
+    c["variants"] = dict(n=3, vary=["taped on a machine door or the glass; the tab lifting at one end"])
+    c["fixing"] = fixing_for("tape")
+    meta(c, "card")
     return [a, b, c]
 
 
@@ -1199,13 +1313,14 @@ def cards_stars():
     out = []
     for id_, stock, lines in specs:
         it = new_item(id_, "4.2", "window_cards", "Grocer's star card", 170, 170, stock=stock, process="felt_pen", fmt=None, margin=36, kind="card")
-        S(it, "star", "star", pts=star_pts(85, 85, 84, 62, 14), fill="paper", note="the card is cut to a 14-point burst; the stock colour is the star")
+        S(it, "star", "star", pts=star_pts(85, 85, 84, 62, 14), fill="paper", note="the card is cut to a 14-point burst (outer radius 84, inner 62); the stock colour is the star; outside it the card is transparent")
         n = len(lines)
         y0 = 85 + (n * 21) / 2.0 - 12
         for i, (t, cap, ink) in enumerate(lines):
             T(it, "l%d" % (i + 1), t, PAT, 400, cap, y0 - i * 21 - cap / 2.0, 85, "centre", ink=ink, tech="felt pen", hand=HAND_FELT, role="line")
         it["variants"] = dict(n=2, vary=["taped inside the grocer's glass at 1.2 to 1.9 m; the fluorescent stock fades within weeks"])
-        out.append(it)
+        it["fixing"] = fixing_for("tape")
+        out.append(meta(it, "card"))
     return out
 
 
@@ -1213,25 +1328,27 @@ def card_no_credit():
     it = new_item("K08", "4.2", "window_cards", "SORRY NO CREDIT GIVEN (printed card)", 210, 148, stock="white_card", process="letterpress_2col", fmt="A5L", margin=8, kind="card")
     stack(it, "L", [L("SORRY", ARC, 900, 20, gap=10, ink="red"), L("NO CREDIT GIVEN", ARC, 900, fitw=186, gap=8, ink="black", trk=0.04)], 105, 128)
     it["variants"] = dict(n=2, vary=["on a shop counter's glass screen or the door"])
-    return it
+    return meta(it, "card")
 
 
 def cards_fish():
+    # smoked haddock is dearer than fresh (TARGET-REVIEW note); cockles are sold by the tub (the unit the trade used, 'pint', is a banned word in this project)
     items = [("K09a", "COD FILLET", "£2.70 lb"), ("K09b", "HADDOCK", "£2.50 lb"), ("K09c", "PLAICE", "£2.30 lb"), ("K09d", "KIPPERS", "95p PAIR"),
-             ("K09e", "SMOKED HADDOCK", "£2.40 lb"), ("K09f", "COCKLES", "45p")]
+             ("K09e", "SMOKED HADDOCK", "£2.90 lb"), ("K09f", "COCKLES", "45p TUB")]
     out = []
     for id_, a, b in items:
         it = new_item(id_, "4.2", "window_cards", "Fish price ticket: %s" % a, 105, 74, stock="white_card", process="felt_pen", fmt=None, margin=6, kind="card")
         T(it, "l1", a, PAT, 400, min(13, capfit(PAT, 400, a, 90)), 46, 52.5, "centre", ink="felt_black", tech="felt pen", hand=HAND_FELT_FINE, role="line")
         T(it, "l2", b, PAT, 400, 15, 16, 52.5, "centre", ink="felt_red", tech="felt pen", hand=HAND_FELT, role="line")
-        it["variants"] = dict(n=2, vary=["stuck in the fish on the slab, or taped to the glass; a wet corner"])
-        it["notes"].append("Price: ONS average cod fillet 1990 574 p/kg, about 2.60 a lb, January 2.42, December 2.85 (production/research/shop-window-interiors/FISHMONGER-2026-10-03.md, read in this repository); the other prices are Judgement.")
-        out.append(it)
+        it["variants"] = dict(n=2, vary=["taped inside the glass at the slab's height, one tab at the top-left; a wet corner"])
+        it["fixing"] = fixing_for("tape")
+        it["notes"].append("Price: ONS average cod fillet 1990 574 p/kg, about 2.60 a lb, January 2.42, December 2.85 (production/research/shop-window-interiors/FISHMONGER-2026-10-03.md, read in this repository); the other prices are Judgement (smoked haddock is dearer than fresh).")
+        out.append(meta(it, "card"))
     return out
 
 
 SMALL_ADS = [
-    ("SA01", "index_white", (127, 76), [("ROOM TO LET", "head"), ("Clean, quiet, gas fire.", ""), ("£28 per week. No pets.", ""), ("Ring 960 417 after 5.", "")]),
+    ("SA01", "index_white", (127, 76), [("ROOM TO LET", "head"), ("Clean, quiet, gas fire.", ""), ("£28 per week. No pets.", ""), ("Ring 960 471 after 5.", "")]),
     ("SA02", "index_blue", (127, 76), [("GENTS BICYCLE", "head"), ("3-speed, good tyres.", ""), ("£18 or nearest offer.", ""), ("Tel. 960 233.", "")]),
     ("SA03", "index_yellow", (148, 105), [("PIANO FOR SALE", "head"), ("Upright, good tone.", ""), ("Buyer collects. £120.", ""), ("Ring 960 528.", "")]),
     ("SA04", "index_white", (127, 76), [("WINDOW CLEANER", "head"), ("Reliable. Free estimates.", ""), ("Tel. 960 361.", "")]),
@@ -1265,26 +1382,30 @@ def small_ads():
                 T(it, "l%d" % (i + 1), t, PAT, 400, cap, y - cap, 8, "left", ink=ink, tech="ballpoint", hand=HAND_BALL, role="body", on="stock")
                 y -= cap + 4.6
         it["bottom_y"] = y
-        it["variants"] = dict(n=1, vary=["pinned or taped on the newsagent's board: a pin or a tab of tape at the top; slight tilt"])
-        out.append(it)
+        it["variants"] = dict(n=1, vary=["taped on the newsagent's board: one tab of yellowed tape across the top-LEFT corner; slight tilt (the card board's rot_deg)"])
+        it["fixing"] = fixing_for("tape")
+        out.append(meta(it, "card"))
     tariff = new_item("SA15", "4.2", "newsagent_board", "Newsagent: ADVERTISE HERE card", 148, 105, stock="white_card", process="felt_pen", fmt="A6L", margin=6, kind="card")
     T(tariff, "l1", "ADVERTISE HERE", PAT, 400, 12, 80, 74, "centre", ink="felt_red", tech="felt pen", hand=HAND_FELT, role="line")
     T(tariff, "l2", "20p PER WEEK", PAT, 400, 14, 56, 74, "centre", ink="felt_black", tech="felt pen", hand=HAND_FELT, role="line")
     T(tariff, "l3", "PAY AT THE COUNTER", PAT, 400, 8, 34, 74, "centre", ink="felt_black", tech="felt pen", hand=HAND_FELT_FINE, role="line")
-    tariff["variants"] = dict(n=1, vary=["top of the board, taped"])
+    tariff["variants"] = dict(n=1, vary=["top of the board, taped by one tab at the top-left"])
+    tariff["fixing"] = fixing_for("tape")
     tariff["notes"].append("20p a week is Judgement; the one search lead for it (a forum comment) is undated and not used.")
-    out.append(tariff)
+    out.append(meta(tariff, "card"))
     return out
+# --------------------------------------------------------------------------------------------
+# 7. Boards and plates (units 4.2 enamel, 4.3 letting boards, 4.4 street name plates).
+# --------------------------------------------------------------------------------------------
+ENAMEL_EDGE_R = 6.0     # mm: the rolled edge of a vitreous enamel sign is a roll of 6 mm radius (TARGET-REVIEW fault 11; Judgement)
 
 
-# --------------------------------------------------------------------------------------------
-# 7. Boards and plates (units 4.2 enamel, 4.3 letting boards, 4.4 street name plates). 1 px to the mm.
-# --------------------------------------------------------------------------------------------
 def enamel_no_admittance():
     it = new_item("H01", "4.2", "harbour_and_ferry", "Harbour Board enamel sign: NO ADMITTANCE", 600, 450, stock=None, process="enamel", ppm=1, margin=40, fmt=None, kind="plate")
     it["stock"] = "white_poster"      # unused: plate colours are paints
     B = "paint:enamel_blue"
-    S(it, "face", "rect", box=[0, 0, 600, 450], fill="enamel_blue", fill_kind="paint", note="vitreous enamel on 1.6 mm pressed steel; corners rounded 25 mm; rolled edge 12 mm")
+    S(it, "face", "rect", box=[0, 0, 600, 450], fill="enamel_blue", fill_kind="paint", corner_radius_mm=25.0, edge_roll_radius_mm=ENAMEL_EDGE_R,
+      note="vitreous enamel on 1.6 mm pressed steel; corners rounded 25 mm; rolled edge of 6 mm radius")
     S(it, "border", "frame", box=[18, 18, 582, 432], fill="enamel_white", fill_kind="paint", width_mm=10, note="white band 10 mm, 18 mm in from the edge")
     stack(it, "L", [
         L("NO ADMITTANCE", ARC, 900, fitw=470, gap=22, paint="enamel_white", on=B, trk=0.04),
@@ -1295,14 +1416,14 @@ def enamel_no_admittance():
     it["fixing"] = dict(kind="four holes 10 mm across at 36 mm in from each corner; bolts through the plate to a gate post or a wall plug", holes_mm=[[36, 36], [564, 36], [36, 414], [564, 414]])
     it["wear"] = dict(chips="12 to 30 chips 2 to 9 mm to black steel, at the corners, the bolt holes and the lower edge; a rust halo 3 to 8 mm round each; crazing near the holes; a bird-lime streak down from the top edge")
     it["variants"] = dict(n=2, vary=["clean to grimy (age classes B and D)", "one shot-peppered by the old catapult: six small chips in a loose group (a chip is not a bullet hole)"])
-    return it
+    return meta(it, "plate")
 
 
 def enamel_danger_water():
     it = new_item("H02", "4.2", "harbour_and_ferry", "Harbour Board enamel sign: DANGER DEEP WATER", 600, 450, stock=None, process="enamel", ppm=1, margin=40, fmt=None, kind="plate")
     it["stock"] = "white_poster"
-    B = "paint:enamel_blue"
-    S(it, "face", "rect", box=[0, 0, 600, 450], fill="enamel_white", fill_kind="paint", note="vitreous enamel on 1.6 mm pressed steel; corners rounded 25 mm; rolled edge 12 mm")
+    S(it, "face", "rect", box=[0, 0, 600, 450], fill="enamel_white", fill_kind="paint", corner_radius_mm=25.0, edge_roll_radius_mm=ENAMEL_EDGE_R,
+      note="vitreous enamel on 1.6 mm pressed steel; corners rounded 25 mm; rolled edge of 6 mm radius")
     S(it, "danger_band", "rect", box=[0, 300, 600, 450], fill="enamel_red", fill_kind="paint")
     S(it, "border", "frame", box=[14, 14, 586, 436], fill="enamel_blue", fill_kind="paint", width_mm=10)
     T(it, "danger", "DANGER", ARC, 900, capfit(ARC, 900, "DANGER", 450, 0.1), 332, 300, "centre", ink_paint="enamel_white", on="paint:enamel_red", trk=0.1, role="title")
@@ -1312,7 +1433,7 @@ def enamel_danger_water():
     it["fixing"] = dict(kind="four holes 10 mm across at 36 mm in from each corner; bolts to a quay-edge post or the railing", holes_mm=[[36, 36], [564, 36], [36, 414], [564, 414]])
     it["wear"] = dict(chips="as H01, plus salt bloom (white fur) along the lower edge and rust bleeding from the bolt holes in long tears, 150 to 400 mm")
     it["variants"] = dict(n=2, vary=["age class B, D"])
-    return it
+    return meta(it, "plate")
 
 
 AGENT = "ARMITAGE & STOBBS"
@@ -1324,7 +1445,8 @@ def letting_board(id_, title, w, h, named, name_cap, to_cap, sub, sub_cap, band_
     it = new_item(id_, "4.3", "letting_boards", title, w, h, stock=None, process="agent_board", ppm=1, margin=10, fmt=None, kind="board")
     it["stock"] = "white_poster"
     W = "paint:agent_white"
-    S(it, "face", "rect", box=[0, 0, w, h], fill="agent_white", fill_kind="paint", note="18 mm exterior plywood painted white gloss, corners rounded 4 mm, the cut edges painted, a 25 x 18 mm batten on the back at each end")
+    S(it, "face", "rect", box=[0, 0, w, h], fill="agent_white", fill_kind="paint", corner_radius_mm=4.0, thickness_mm=18.0,
+      note="18 mm exterior plywood painted white gloss, corners rounded 4 mm, the cut edges painted, a 25 x 18 mm batten on the back at each end")
     if named:
         S(it, "band", "rect", box=[0, h - band_h, w, h], fill="agent_navy", fill_kind="paint")
         T(it, "agent", AGENT, JOS, 700, name_cap, h - 14 - name_cap, w / 2.0, "centre", ink_paint="agent_white", on="paint:agent_navy", trk=0.12, role="name")
@@ -1348,71 +1470,123 @@ def letting_board(id_, title, w, h, named, name_cap, to_cap, sub, sub_cap, band_
     it["bottom_y"] = y
     it["mount"] = mount
     it["variants"] = variants
-    return it
+    return meta(it, "board")
+
+
+def letting_board_fascia(mount):
+    """L02: the fascia target's board EXACTLY (TARGET-REVIEW fault 5): 900 x 450, white face, TO LET alone in Libre Franklin 800, cap 130, vinyl red, no agent, no number."""
+    it = new_item("L02", "4.3", "letting_boards", "Letting board, empty unit (the fascia target's board: 900 x 450, TO LET)", 900, 450, stock=None, process="agent_board", ppm=1, margin=10, fmt=None, kind="board")
+    it["stock"] = "white_poster"
+    S(it, "face", "rect", box=[0, 0, 900, 450], fill="agent_white", fill_kind="paint", corner_radius_mm=4.0, thickness_mm=18.0,
+      note="18 mm exterior plywood painted white gloss, corners rounded 4 mm, the cut edges painted, a 25 x 18 mm batten on the back at each end; no border, no band (the fascia target's board has none)")
+    T(it, "tolet", "TO LET", FRK, 800, 130, 160, 450, "centre", ink_paint="vinyl_red", on="paint:agent_white", trk=0.0, role="title")
+    it["mount"] = mount
+    it["fascia_target"] = dict(id="small_panels.letting_board", size_mm=[900, 450], text="TO LET", font="libre-franklin", weight=800, cap_mm=130, colour="vinyl_red", agent=None, number=None)
+    it["variants"] = dict(n=3, vary=["askew -2, 0, +2 degrees (the placement's rot_deg)", "age class B, C, D (the D board has the white yellowed and the red faded to rust-pink)", "four screws, a rust run under each lower one (fascia target)"])
+    return meta(it, "board")
 
 
 def letting_boards():
-    mount_shop = dict(surface="the empty unit's fascia (bay 3, east, street x 21 to 27)", centre_street_x_m=24.0, z_bottom_m=2.90, z_top_m=3.35,
+    mount_shop = dict(surface="the empty unit's fascia (bay 3, east, street x 21 to 27; number 7)", centre_street_x_m=24.0, z_bottom_m=2.90, z_top_m=3.35,
                       screws="four 8 mm dome-head coach screws at 40 mm in from each corner; a rust run 40 to 140 mm under each lower screw",
                       askew_deg="-2 to +2", proud_of_fascia_m=0.043, note="the fascia is 0.55 m tall (2.85 to 3.40): the board leaves 50 mm above and below; its centre is the fascia target's own letting-board centre (board x 2705, y 275)")
-    a = letting_board("L01", "Letting board, shop, with agent (1200 x 450)", 1200, 450, True, 52, 150, "SHOP AND PREMISES · APPROX. 520 SQ. FT.", 24, 118, 46, mount_shop,
-                      dict(n=3, vary=["askew -2, 0, +2 degrees", "age class B, C, D (the D board has the white yellowed and the red faded to rust-pink)", "one with a diagonal LET strip: NOT USED (no new word)"]))
-    b = letting_board("L02", "Letting board, shop, no agent (1200 x 450)", 1200, 450, False, 0, 190, None, 0, 0, 56, mount_shop,
-                      dict(n=2, vary=["askew", "age class B, D"]))
+    b = letting_board_fascia(mount_shop)
+    a = letting_board("L01", "Letting board, shop, with agent (1200 x 450; NOT the fascia target's board; named agent, held)", 1200, 450, True, 52, 150, "SHOP AND PREMISES · APPROX. 520 SQ. FT.", 24, 118, 46, mount_shop,
+                      dict(n=3, vary=["askew -2, 0, +2 degrees", "age class B, C, D (the D board has the white yellowed and the red faded to rust-pink)", "NOT used by default: it disagrees with the fascia target (900 x 450, TO LET only); using it needs the fascia target changed in the same batch with one DECISIONS line"]))
     mount_flat = dict(surface="first-floor brick above the empty unit's cornice, between the two upper windows", centre_street_x_m=24.0, z_bottom_m=3.70, z_top_m=4.10,
                       screws="four 6 mm screws and plugs", askew_deg="-1.5 to +1.5", note="the cornice top is 3.55 m, the upper sill about 4.3 m (facade: head 0.4 below the ceiling, window 1.5 high): 0.75 m of plain brick; Rita's hanging sign is at street x 20.825 and the laundry's at 27.175, both outside bay 3")
-    c = letting_board("L03", "Letting board, flat, with agent (600 x 400)", 600, 400, True, 30, 106, "SELF-CONTAINED FLAT", 24, 84, 34, mount_flat,
+    c = letting_board("L03", "Letting board, flat, with agent (600 x 400; named agent, held)", 600, 400, True, 30, 106, "SELF-CONTAINED FLAT", 24, 84, 34, mount_flat,
                       dict(n=2, vary=["age class C, D", "the agent's board has been up a long time: grime streaks from the top edge"]))
+    c2 = letting_board("L03n", "Letting board, flat, no agent (600 x 400)", 600, 400, False, 0, 104, "SELF-CONTAINED FLAT", 26, 0, 32, mount_flat,
+                       dict(n=2, vary=["age class C, D", "grime streaks from the top edge"]))
     mount_house = dict(surface="the west terrace (bay 2 of the plain block, street x 15 to 21): the brick pier between the two windows", centre_street_x_m=16.8, z_bottom_m=2.15, z_top_m=2.55,
                        screws="four 6 mm screws and plugs", askew_deg="-1.5 to +1.5", note="pier 16.35 to 17.25 (window 15.9 and 17.7, 0.85 wide, from the plain row's bay layout, mirrored in bay 2); the board is 0.6 wide")
     d = letting_board("L04", "Letting board, house, no agent (600 x 400)", 600, 400, False, 0, 104, "TWO BEDROOMS", 30, 0, 32, mount_house,
                       dict(n=2, vary=["age class B, D"]))
-    return [a, b, c, d]
+    return [a, b, c, c2, d]
 
 
 # ---- street name plates ----------------------------------------------------------------
 PLATE_CAP = 90.0       # Judgement: 90 mm capitals, the South Kesteven and Charnwood specs' figure (Lead, search summary) and the project's own plate
+PLATE_MIN_DEPTH = 200  # mm: the street-clutter note's 20 to 25 cm (TARGET-REVIEW fault 13)
+RELIEF = dict(raised_mm=None, draft_deg=10.0, top_radius_mm=0.8, note="raised letters and border: 10 degrees of draft each side and a 0.8 mm radius on the top edge (Judgement)")
+
+
+def stroke_stats(name, cap_mm=PLATE_CAP):
+    """Thinnest and thickest strokes of the name set in Marcellus SC at the plate's cap, from the distance transform of the rendered glyphs (Derived)."""
+    ppm = 2.0
+    bb, px = measure(MAR, 400, name, cap_mm, 0.04)
+    r = cap_ratio(MAR, 400)
+    f = font(MAR, 400, px * ppm)
+    pad = int(px * ppm * 0.5)
+    img = Image.new("L", (int(f.getlength(name) + 2 * pad), int(px * ppm * 1.9)), 0)
+    ImageDraw.Draw(img).text((pad, int(px * ppm * 1.2)), name, font=f, fill=255, anchor="ls")
+    a = np.asarray(img) > 100
+    from scipy import ndimage as ndi
+    e = ndi.distance_transform_edt(a)
+    ridge = (e == ndi.maximum_filter(e, size=5)) & (e >= 1.0)
+    vals = e[ridge] * 2.0 / ppm
+    return dict(thin_mm=round(float(np.percentile(vals, 5)), 1), median_mm=round(float(np.percentile(vals, 50)), 1), thick_mm=round(float(np.percentile(vals, 95)), 1))
 
 
 def street_plate(id_, name, district, variant, material):
-    """A plate whose length follows its name. variant: 'd' name and district line (default), 'n' name only, 'p' name, district, and a placeholder postal district."""
+    """A plate whose length follows its name. variant: 'n' name only (the DEFAULT and the placed one), 'd' name and a district line (a variant until a dated photograph shows one)."""
     bb, px = measure(MAR, 400, name, PLATE_CAP, 0.04)
     ink_w = bb[2] - bb[0]
-    EDGE, BORDER, GAP = 6, 12, 22
+    EDGE, BORDER = 6, 12
     side_margin = EDGE + BORDER + 44
     w = int(math.ceil((ink_w + 2 * side_margin) / 10.0) * 10)
     desc = max(24, int(math.ceil(-bb[1] + 6)))   # room under the baseline for a Q's tail (it dips 0.4 of the cap) and the border
-    have_dist = variant in ("d", "p")
+    have_dist = variant == "d"
     dist_cap = 30.0
-    h = EDGE + BORDER + 20 + (dist_cap + 22 if have_dist else 0) + PLATE_CAP + desc + BORDER + EDGE
-    h = int(math.ceil(h / 5.0) * 5)
-    it = new_item(id_, "4.4", "street_name_plates", "Street name plate: %s (%s)" % (name, {"d": "name and district", "n": "name only", "p": "name, district and placeholder postal district"}[variant]),
+    h_min = EDGE + BORDER + 16 + (dist_cap + 22 if have_dist else 0) + PLATE_CAP + desc + BORDER + EDGE
+    h = max(PLATE_MIN_DEPTH, int(math.ceil(h_min / 5.0) * 5))
+    slack = h - h_min
+    it = new_item(id_, "4.4", "street_name_plates", "Street name plate: %s (%s)" % (name, "name only: the default" if variant == "n" else "name and district line: a variant"),
                   w, h, stock=None, process=material, ppm=1, margin=EDGE, fmt=None, kind="plate")
     it["stock"] = "white_poster"
     P = "paint:plate_white"
-    S(it, "face", "rect", box=[0, 0, w, h], fill="plate_white", fill_kind="paint", note="corners rounded 6 mm")
+    S(it, "face", "rect", box=[0, 0, w, h], fill="plate_white", fill_kind="paint", corner_radius_mm=6.0, note="corners rounded 6 mm")
     S(it, "border", "frame", box=[EDGE, EDGE, w - EDGE, h - EDGE], fill="plate_black", fill_kind="paint", width_mm=BORDER, note="the border band 12 mm wide, 6 mm in from the edge (the South Kesteven figure, Lead)")
-    base = EDGE + BORDER + desc - 2
-    T(it, "name", name, MAR, 400, PLATE_CAP, base, w / 2.0, "centre", ink_paint="plate_black", on=P, trk=0.04, role="name",
+    base = EDGE + BORDER + desc - 2 + slack / 2.0
+    T(it, "name", name, MAR, 400, PLATE_CAP, round(base, 1), w / 2.0, "centre", ink_paint="plate_black", on=P, trk=0.04, role="name",
       note="Marcellus SC, ruled 30 Sep for the street name plates (the earlier note's Kindersley MOT serif has no allowed free version); tracking 0.04 em")
     if have_dist:
-        T(it, "district", district, MAR, 400, dist_cap, base + PLATE_CAP + 22, w / 2.0, "centre", ink_paint="plate_black", on=P, trk=0.18, role="line")
-    if variant == "p":
-        T(it, "postal", "MR1", MAR, 400, 22, base + PLATE_CAP + 22 + 4, EDGE + BORDER + 22, "left", ink_paint="plate_black", on=P, trk=0.1, role="line",
-          note="PLACEHOLDER postal district, not minted, never on his page; MR is not a real UK postcode area")
-    it["fixing"] = dict(kind="four fixings at the corners, 30 mm in", holes_mm=[[30, 30], [w - 30, 30], [30, h - 30], [w - 30, h - 30]], head="10 mm dome-head galvanised screw into fibre plugs (brick); the cast plate has the holes cast in 12 mm across")
+        T(it, "district", district, MAR, 400, dist_cap, round(base + PLATE_CAP + 22, 1), w / 2.0, "centre", ink_paint="plate_black", on=P, trk=0.18, role="line")
+    it["fixing"] = dict(kind="four fixings at the corners, 30 mm in", holes_mm=[[30, 30], [w - 30, 30], [30, h - 30], [w - 30, h - 30]],
+                        head="10 mm dome-head galvanised screw into fibre plugs (brick); the cast plate has the holes cast in 12 mm across")
     it["variants"] = dict(n=3, vary=["age class C, D, D", "paint flake share 0.03 to 0.06 at the letter edges", "rust runs under the screws: 0 to 4 of 4", "a sticker or its ghost (P05 or P06) in one, never over the name"])
-    it["name_plate"] = dict(street=name, district=district, variant=variant, material=material, plate_w_mm=w, plate_h_mm=h, ink_w_mm=round(ink_w, 1), cap_mm=PLATE_CAP)
-    return it
+    st = stroke_stats(name)
+    relief = dict(RELIEF)
+    if material == "cast_aluminium_raised":
+        relief["raised_mm"] = 3.0
+        relief["edge"] = "a plain cast edge 6 mm thick with a 2 mm arris radius; face 6 mm thick; letters and border raised 3 mm"
+    elif material == "pressed_aluminium_enamel":
+        relief["raised_mm"] = 1.5
+        relief["edge"] = "rolled edge, radius 3 mm; 2 mm sheet; letters and border raised 1.5 mm by the press"
+    else:
+        relief["raised_mm"] = 0.0
+        relief["edge"] = "rolled edge, radius %g mm; flat vitreous enamel, no relief" % ENAMEL_EDGE_R
+        relief["draft_deg"] = None
+        relief["top_radius_mm"] = None
+    top_w = None
+    if relief["raised_mm"]:
+        top_w = round(st["thin_mm"] - 2 * relief["raised_mm"] * math.tan(math.radians(relief["draft_deg"])), 2)
+    it["relief"] = relief
+    it["lettering_suit"] = dict(strokes_mm=st, top_width_of_thinnest_stroke_mm=top_w,
+                                rule="a cast or pressed letter needs a top width of 1.5 mm or more on its thinnest stroke after the draft; thinnest = the 5th percentile of the ridge widths of the glyphs' distance transform at 2 px/mm; Marcellus SC's hairlines at 90 mm capitals are thicker than that, so the ruled letter suits every make here",
+                                ok=(top_w is None or top_w >= 1.5))
+    it["name_plate"] = dict(street=name, district=district, variant=variant, material=material, plate_w_mm=w, plate_h_mm=h, ink_w_mm=round(ink_w, 1), cap_mm=PLATE_CAP, min_depth_mm=PLATE_MIN_DEPTH)
+    return meta(it, "plate")
 
 
-PLATE_STREETS = [("QUAY STREET", "THE HOOK", "cast_iron_raised"), ("WEIGHHOUSE LANE", "COPPER ROW", "pressed_aluminium_enamel"), ("TANNERY ROW", "IRONSIDE", "vitreous_enamel_steel")]
+PLATE_STREETS = [("QUAY STREET", "THE HOOK", "cast_aluminium_raised"), ("WEIGHHOUSE LANE", "COPPER ROW", "pressed_aluminium_enamel"), ("TANNERY ROW", "IRONSIDE", "vitreous_enamel_steel")]
 
 
 def street_plates():
     out = []
     for n, (name, dist, mat) in enumerate(PLATE_STREETS, start=1):
-        for v in ("d", "n", "p"):
+        for v in ("n", "d"):
             out.append(street_plate("S%02d%s" % (n, v), name, dist, v, mat))
     return out
 
@@ -1448,16 +1622,18 @@ PROCESSES = {
     "ballpoint_card": dict(name="ballpoint on a record card, felt-tip heading", ballpoint=HAND_BALL, heading=HAND_FELT_FINE),
     "sticker_print": dict(name="printed self-adhesive label or sticker, die-cut", corner_radius_mm=3, edge_lift_mm=[8, 20], adhesive_ring_mm=0.5, scratch_lines=[0, 4], uv_fade="as the ink tau"),
     "plastic_print": dict(name="screen-printed plastic card on a chain", gloss=0.5, corner_radius_mm=8),
-    "enamel": dict(name="vitreous enamel on pressed steel", roughness=0.12, metallic=0.0, chips="to black steel with a rust halo", edge="rolled 12 mm", thickness_mm=1.6,
+    "enamel": dict(name="vitreous enamel on pressed steel", roughness=0.12, metallic=0.0, chips="to black steel with a rust halo", edge="rolled edge of 6 mm radius", edge_roll_radius_mm=6.0, thickness_mm=1.6,
                    lead="the Harbour Board's 'blue and white enamel signage on gates, cranes and the weighbridge' (content/brands/brand-bible-v1.json)"),
     "agent_board": dict(name="painted exterior plywood, sign-written or screen-printed vinyl", roughness=0.35, metallic=0.0, edge="cut edge painted, swells and darkens at the bottom",
                         peel_fraction=[0.01, 0.03], note="gloss gone to satin outdoors in a few years"),
-    "cast_iron_raised": dict(name="cast iron, raised lettering and border, painted white with black letters", roughness=0.55, metallic=0.2, relief_mm=4.0, face_thickness_mm=8.0,
-                             flake=dict(fraction=[0.03, 0.06], note="paint flakes first from the raised letter edges, showing grey iron and a thin rust film"),
-                             lead="Hull's cast plates of the 1920s were black on white and the paint faded or flaked, needing regular repainting (search summary of a Geograph caption)"),
+    "cast_aluminium_raised": dict(name="cast aluminium, letters and border raised 3 mm, painted white with black letters (by the 1950s raised plates were cast aluminium, not iron: TARGET-REVIEW fault 13)", roughness=0.5, metallic=0.5, relief_mm=3.0, draft_deg=10.0, top_radius_mm=0.8,
+                                  face_thickness_mm=6.0, edge="a plain cast edge 6 mm thick, arris radius 2 mm",
+                                  flake=dict(fraction=[0.03, 0.06], note="paint flakes first from the raised letter edges, showing bare grey aluminium and a thin pale oxide bloom"),
+                                  lead="Hull's cast plates of the 1920s were black on white and the paint faded or flaked, needing regular repainting (search summary of a Geograph caption); a Lead only: that was iron"),
     "pressed_aluminium_enamel": dict(name="die-pressed aluminium sheet, letters and border raised 1.5 mm, stove enamelled black on white", roughness=0.3, metallic=0.6,
-                                     thickness_mm=2.0, relief_mm=1.5, edge="rolled", lead="current specs: 11 SWG aluminium, die-pressed, stove-enamelled (South Kesteven, Charnwood: search summaries)"),
-    "vitreous_enamel_steel": dict(name="vitreous enamel on pressed steel, rolled edge", roughness=0.12, metallic=0.0, chips="to black steel with a rust halo"),
+                                     thickness_mm=2.0, relief_mm=1.5, draft_deg=10.0, top_radius_mm=0.8, edge="rolled edge, radius 3 mm", edge_roll_radius_mm=3.0, lead="current specs: 11 SWG aluminium, die-pressed, stove-enamelled (South Kesteven, Charnwood: search summaries)"),
+    "vitreous_enamel_steel": dict(name="vitreous enamel on pressed steel, rolled edge of 6 mm radius", roughness=0.12, metallic=0.0, chips="to black steel with a rust halo", edge_roll_radius_mm=6.0),
+    "letterpress_1col": dict(name="one-colour letterpress from metal type (a pasted venue strip)", passes=["black"], impression_mm=[0.10, 0.18], ink_mottle=dict(amount=0.10, scale_mm=[3, 8]), baseline_error_mm=0.4, edge_rag_mm=0.2, tone="flat black on white poster paper, slightly uneven"),
 }
 
 # ---- the two cases --------------------------------------------------------------------------
@@ -1477,32 +1653,39 @@ CASE_RATIOS = dict(top_band_over_h=0.152, window_over_h=0.763, bottom_band_over_
                    note="mean of cases 2 to 4 for the vertical fractions (top 0.155, 0.150, 0.148; window 0.783, 0.762, 0.753); side bands 0.205 to 0.213 of the apparent width; apparent aspect 0.44, 0.42, 0.39 and falling: the true aspect is not measurable from this view (about 0.5, Judgement)")
 
 
+
+
 def make_cases():
+    """HC1 and FC1. NEITHER IS PLACED on Quay Street (TARGET-REVIEW fault 10): the Harbour Board's case belongs 'by the dock office' (brand bible; hook-cast's
+    harbour_office is in the docks), the ferry's board at a ramp; neither is built. FC1 is a painted timber board with no glazing (the brand bible: 'a timetable
+    board at each ramp with the winter service pasted over the summer one')."""
     harbour = dict(
-        id="HC1", title="Harbour Board notice case", kind="case", unit="4.2",
+        id="HC1", title="Harbour Board notice case (not placed until the dock office is built)", kind="case", unit="4.2",
         outer_mm=[640, 880], depth_mm=60, frame_mm=dict(left=46, right=46, top=52, bottom=52), window_radius_mm=6,
+        rail_section_mm=[46, 60], chamfer_mm=4.0, chamfer_where="the outer arris of every rail",
+        glass=dict(thickness_mm=4.0, bead_mm=[10, 10], note="4 mm glass held in a 10 x 10 mm timber bead on the inside of the door's frame, putty-run on the outside"),
         colours=dict(frame="case_timber", lining="cork", glass="4 mm clear glass, a little green at the edge, dirty on the outside"),
-        construction="varnished timber frame (dark, grain showing, varnish crazed and lifting at the lower rails), mitred corners, one glazed door hinged on the left with two brass butt hinges, a brass lock and escutcheon 20 mm across on the right stile at 0.5 of the height, a cork lining 8 mm thick, a drip rail on top 14 mm proud",
+        construction="varnished timber frame (rails 46 x 60 mm, a 4 mm chamfer on the outer arris; dark, grain showing, varnish crazed and lifting at the lower rails), mitred corners, one glazed door hinged on the left with two brass butt hinges, a brass lock and escutcheon 20 mm across on the right stile at 0.5 of the height, a cork lining 8 mm thick, a drip rail on top 14 mm proud",
         fixing="four 8 mm coach screws through the back rails at 40 mm in from the corners, on 20 mm timber battens; rust runs 40 to 180 mm below each screw",
         wear="a crack across one lower corner of the glass (30 per cent of the cases), a brown water line inside the lower glass, flies and dead leaves on the cork foot, varnish lifted at the bottom rail, one hinge screw missing",
         inside_mm=[548, 776],
         children=[dict(item="H03", x_mm=24, y_mm=470, rot_deg=0.8, pins=4), dict(item="H04", x_mm=300, y_mm=455, rot_deg=-1.2, pins=4),
                   dict(item="H05", x_mm=160, y_mm=100, rot_deg=0.5, pins=4)],
         scraps="two older yellowed sheets behind the new ones, showing 20 to 40 per cent; NO legible word (their ink is gone to brown)",
-        place=dict(surface="SF1", u_m=6.95, z_bottom_m=1.20),
-        photo_proportions=dict(note="the photographed case is blue steel with a 0.152 header and a 0.085 foot; the target is a 1990 timber case with 52 mm top and bottom rails (0.059 each of the height), 46 mm stiles (0.072 of the width each): the photograph's wide crest header and thick steel frame are replacement-stock features and are NOT taken (Judgement: photograph of a later object)"))
+        place=None, not_placed="by the dock office (brand bible; hook-cast harbour_office): neither is built",
+        photo_proportions=dict(note="the photographed case is blue steel with a 0.152 header and a 0.085 foot; the target is a 1990 timber case with 52 mm top and bottom rails (0.059 each of the height), 46 mm stiles (0.072 of the width each): the photograph's wide crest header and thick steel frame are replacement-stock features and are NOT taken (Judgement: photograph of a later object); the council crest on the photographed header is masked in the preview"))
     ferry = dict(
-        id="FC1", title="Ferry timetable case at the ramp", kind="case", unit="4.2",
-        outer_mm=[530, 710], depth_mm=45, frame_mm=dict(left=34, right=34, top=36, bottom=36), window_radius_mm=4,
-        colours=dict(frame="enamel_blue", lining="white backing board", glass="3 mm perspex, scratched and crazed in places"),
-        construction="a painted steel frame in Board blue, a hinged perspex door on the left, a cylinder lock on the right at mid height, the timetable sheet F01 held behind the perspex by the frame lip; F02 underneath",
-        fixing="four 8 mm screws at the corners into plugs",
-        wear="perspex yellowed and scratched, a hairline crack from one corner, white salt bloom along the foot, paint chipped at the lock, rust at the lower screws",
-        inside_mm=[462, 638],
-        children=[dict(item="F02", x_mm=7, y_mm=38, rot_deg=0.0, pins=0, note="older sheet, 14 mm left and 16 mm higher than F01 so its edges peek out at the left and the top"),
-                  dict(item="F01", x_mm=21, y_mm=22, rot_deg=0.0, pins=0)],
-        place=dict(surface="SF1", u_m=6.20, z_bottom_m=1.20),
-        photo_proportions=dict(note="as HC1: only vertical fractions of the photograph are exact; this frame is a thin painted steel one"))
+        id="FC1", title="Ferry timetable board at the ramp (painted timber, no glazing; not placed until the ramp is built)", kind="board", unit="4.2",
+        outer_mm=[600, 800], depth_mm=22, frame_mm=dict(left=40, right=40, top=40, bottom=40), window_radius_mm=0,
+        colours=dict(frame="enamel_blue", lining="white backing board", glass="none: the sheets are pasted straight on the board"),
+        construction="a 22 mm exterior plywood board, 600 x 800 mm, painted Board blue (24,68,140) with a 40 mm border all round and a 520 x 720 mm white panel; NO glazing, no frame lip; the winter sheet F01 pasted over the summer sheet F02 with wallpaper paste; two 60 x 40 mm timber battens on the back",
+        fixing="four 8 mm screws at the corners, 30 mm in, into plugs; a rust run under each lower screw",
+        wear="paste halo round both sheets, the older sheet's edge peeling at the left and the top, rain stains from the top edge, paint chipped at the lower corners, salt bloom along the foot, rust at the lower screws",
+        inside_mm=[520, 720],
+        children=[dict(item="F02", x_mm=50, y_mm=82, rot_deg=0.0, pins=0, note="older sheet, 14 mm left and 16 mm higher than F01 so its edges peek out at the left and the top"),
+                  dict(item="F01", x_mm=64, y_mm=66, rot_deg=0.0, pins=0)],
+        place=None, not_placed="at each ramp (brand bible): the ramp is not built",
+        photo_proportions=dict(note="a board, not a case: no photograph proportions apply"))
     return [harbour, ferry]
 
 
@@ -1511,6 +1694,10 @@ def make_cases():
 #    recipe and in the game. Surfaces carry their own 2D frame; every placement names the item, a surface and numbers.
 #    Left and right are the VIEWER'S, in the game (the fascia target's rule: low street x is on the viewer's RIGHT looking
 #    at the east parade, on the viewer's LEFT looking at the west block).
+#
+#    THE AMOUNT OF PAPER is the asset plan's, no more (note 4, table A5, Quay Street, the proof view): 8 fly-posters and 4 poll-tax bills. The quay gable
+#    keeps what the Hook sheet shows (a black downpipe 0.3 m from the front corner, a render patch high up, a dark damp foot) and carries ONE LAYER OF THREE
+#    BILLS, the plan's proof wall ("three bills from three templates"); NOTHING MORE until he has approved that sample in the assembled game (CLAUDE.md).
 # --------------------------------------------------------------------------------------------
 BAY_DOOR = 0.419      # side door 0.838 / 2
 BAY_WIN = 0.425       # window 0.85 / 2
@@ -1542,16 +1729,23 @@ SURFACES = {
     "SF1": dict(id="SF1", name="the quay gable: east parade's south end wall", plane="x = 3.0 m, facing -x (toward the quay and the hook camera)",
                 frame="u in metres from the FRONT CORNER along the wall into the block (the viewer's left edge, looking +x), z in metres up from the pavement",
                 u_range=[0.0, 8.0], z_range=[0.0, 6.3], paste_zone=dict(u=[0.15, 6.0], z=[0.45, 2.75]), wall="brick_red, the parade's gable (plan_end_walls); the pavement turns the corner at it",
-                reach_note="a billposter pastes to about 2.7 m from the ground; scraps of older bills higher up are allowed to 3.5 m"),
-    "SF2": dict(id="SF2", name="the empty unit's whitened display glass (bay 3, east, street x 21 to 27)", plane="the street face of the glazing, set back 0.12 m",
+                reach_note="a billposter pastes to about 2.7 m from the ground",
+                fixtures=[dict(id="downpipe", kind="round cast-iron downpipe, black", u_m=0.30, diameter_mm=75, z_m=[0.0, 6.0], keep_paper_clear_mm=150,
+                               source="the Hook sheet's gable: a black downpipe about 0.2 to 0.4 m from the front corner, full height (TARGET-REVIEW fault 4, read off the sheet by the reviewer)"),
+                          dict(id="render_patch", kind="a patch of pale render high up", z_m=[3.6, 5.0], note="above the paste zone: nothing pasted there"),
+                          dict(id="damp_foot", kind="dark damp foot", z_m=[0.0, 0.45], note="below the paste zone: nothing pasted there")],
+                sheet_note="The Hook sheet's gable is bare old brick. The plan's proof wall is the one place paper goes on it, in ONE layer at z 1.00 to 1.76, u 0.70 to 2.92; everything else stays as the sheet has it. The three placements carry proof_wall = true: dropping them leaves the gable exactly as the sheet shows it and breaks nothing else."),
+    "SF2": dict(id="SF2", name="the empty unit's whitened display glass (bay 3, east, number 7, street x 21 to 27)", plane="the street face of the glazing, set back 0.12 m",
                 frame="u in metres from the glass's viewer's-LEFT edge (the high-x end, street x 26.65), z up from the pavement; glass 3.562 m wide, z 0.60 to 2.40",
                 u_range=[0.0, 3.562], z_range=[0.60, 2.40], glass_street_x=[23.088, 26.65], note="the recipe's fx counts from the viewer's RIGHT: u = 3.562 x (1 - fx)"),
     "SF4": dict(id="SF4", name="the lamp columns", plane="the shaft, 0.114 m across", frame="street x of the column, z up the shaft", columns_street_x=[8.0, 28.0, 48.0],
                 note="SCENE-SLOTS: every 20 m, alternate sides, first at 8 m, 0.6 m back from the kerb; a bill wraps the shaft, so the middle 0.17 m of an A3 shows face-on"),
     "SF5": dict(id="SF5", name="the empty unit's fascia", plane="fascia face, 0.12 m proud", frame="centre street x and z", fascia_z=[2.85, 3.40], bay_centre_street_x=24.0),
     "SF6": dict(id="SF6", name="first-floor brick above the empty unit's cornice", plane="brick face", frame="centre street x and z", z_range=[3.55, 4.3], window_gap_street_x=[22.93, 25.07]),
-    "SF7": dict(id="SF7", name="name-plate walls", note="see the plate placements"),
+    "SF7": dict(id="SF7", name="name-plate walls", note="the west corner pier (street x 19.92 to 21.0, brick to 3.12 m) and the quay gable at u 1.0; the yard entrance (street x 21 to 24, the dropped kerb at 22.5) carries NO plate: vignette-scene.json and atlas-01 call it the yard entrance and canon does not name it"),
     "SF8": dict(id="SF8", name="the quay-edge post", plane="a 100 mm post at the quay end, street x about -0.6", frame="z up the post", note="no quay geometry in SCENE-SLOTS: proposed, the builder places the post"),
+    "SF9": dict(id="SF9", name="the plain west row's bay-1 window", plane="the glass of the cottage sash at street x 12.3 (centre), 0.85 m wide, sill 0.9 m", frame="street x of the window's centre, z up from the pavement",
+                window_street_x=[11.875, 12.725], z_range=[0.9, 2.4], note="bay 1 of the plain row (street x 9 to 15): door at 10.5, windows at 12.3 and 14.1 (terrace-front.py _plain_ground; the scene file's poster slot at x 11.4 is the pier between)"),
 }
 
 
@@ -1563,94 +1757,83 @@ def poly_overlap_area(a, b):
     return max(0.0, w) * max(0.0, h)
 
 
-def _dims_m(item_id, items_by_id):
+def _dims_m(item_id, items_by_id, scale=1.0):
     f = items_by_id[item_id]["format"]
-    return f["w_mm"] / 1000.0, f["h_mm"] / 1000.0
-
-
-def _gable_try(items_by_id, seed):
-    rng = np.random.RandomState(seed)
-    layers = [
-        [("M01", "D"), ("T03", "D"), ("G01", "C")],
-        [("W01", "B"), ("J01", "B"), ("D01", "C"), ("T02", "B"), ("B01", "B")],
-        [("P01", "A"), ("P03", "A"), ("P02", "B"), ("T01", "A")],
-    ]
-    placed = []
-    for li, layer in enumerate(layers):
-        u = 0.20 + 0.30 * li + float(rng.uniform(0.0, 0.15))
-        for item, age in layer:
-            w, h = _dims_m(item, items_by_id)
-            zb = float(round(rng.uniform(0.50 + 0.22 * li, 1.00 + 0.20 * li), 2))
-            if h < 2.0:
-                zb = min(zb, round(2.75 - h, 2))
-            placed.append(dict(item=item, surface="SF1", u_m=round(u, 2), z_bottom_m=round(zb, 2), rot_deg=round(float(rng.uniform(-1.4, 1.4)), 1), layer=li,
-                               age_class=age, w_m=w, h_m=h))
-            u += w + float(rng.uniform(0.02, 0.12)) + (0.25 if li == 1 else 0.0)
-    return placed
-
-
-def plan_gable(items_by_id, seed=20261008):
-    """Three layers of bills on SF1, laid by a seeded packer and kept only if every older bill keeps enough of its face
-    (layer 0 at least 30 per cent, layer 1 at least 45, the top layer all of it). The seed that passed is written into the target."""
-    for k in range(400):
-        placed = _gable_try(items_by_id, seed + k)
-        vf = visible_fractions(placed)
-        ok = all((v >= 0.30 if p["layer"] == 0 else v >= 0.45 if p["layer"] == 1 else v >= 0.97) for p, v in zip(placed, vf))
-        extent = max(p["u_m"] + p["w_m"] for p in placed)
-        if ok and extent <= 6.0:
-            for p in placed:
-                p["seed"] = seed + k
-            return placed
-    raise RuntimeError("no gable packing satisfied the visibility rule")
+    return f["w_mm"] * scale / 1000.0, f["h_mm"] * scale / 1000.0
 
 
 def plan_all(items_by_id):
     P = []
-    P += plan_gable(items_by_id)
-    # stickers on top of the gable's bills
-    for item, u, zb, age in (("P05", 0.34, 1.02, "B"), ("P06", 2.55, 0.52, "C"), ("P05", 3.10, 1.45, "D")):
-        w, h = _dims_m(item, items_by_id)
-        P.append(dict(item=item, surface="SF1", u_m=u, z_bottom_m=zb, rot_deg=0.0, layer=3, age_class=age, w_m=w, h_m=h))
-    # cases
-    for case in make_cases():
-        pl = case["place"]
-        P.append(dict(item=case["id"], surface=pl["surface"], u_m=pl["u_m"], z_bottom_m=pl["z_bottom_m"], rot_deg=0.0, layer=0, age_class="C",
-                      w_m=case["outer_mm"][0] / 1000.0, h_m=case["outer_mm"][1] / 1000.0, kind="case"))
-    # the empty unit's glass
-    for item, u, zb, rot, layer, age in (("M01", 0.10, 0.78, 0.8, 0, "C"), ("P03", 0.62, 0.90, 1.2, 1, "B"), ("P01", 1.20, 0.82, 0.0, 1, "B"), ("P01", 1.55, 0.78, -1.5, 2, "A"),
-                                         ("P02", 2.20, 0.95, 0.6, 1, "B"), ("J01", 2.74, 1.05, -0.8, 1, "C"), ("C02", 3.10, 1.50, 0.0, 2, "A"), ("P06", 1.02, 0.66, 0.0, 3, "B")):
-        w, h = _dims_m(item, items_by_id)
-        P.append(dict(item=item, surface="SF2", u_m=u, z_bottom_m=zb, rot_deg=rot, layer=layer, age_class=age, w_m=w, h_m=h))
-    # the plain west block's piers
+
+    def add(item, surface, age, z, rot=0.0, layer=0, u=None, x=None, scale=1.0, **kw):
+        w, h = _dims_m(item, items_by_id, scale)
+        d = dict(item=item, surface=surface, z_bottom_m=round(z, 3), rot_deg=round(rot, 3), layer=layer, age_class=age, w_m=round(w, 4), h_m=round(h, 4))
+        if u is not None:
+            d["u_m"] = u
+        if x is not None:
+            d["street_x_m"] = x
+        if scale != 1.0:
+            d["scale"] = scale
+        d.update(kw)
+        P.append(d)
+        return d
+
+    # ---- the quay gable SF1: one layer of three bills (the plan's proof), bottoms at z 1.00; the plate above
+    add("P01", "SF1", "B", 1.00, rot=-0.6, u=0.70, proof_wall=True, note="poll tax; the meeting of Thursday 25 October is four days gone on the street date (a stale bill, class B)")
+    add("W01", "SF1", "A", 1.00, rot=0.5, u=1.30, proof_wall=True, note="professional wrestling, Friday 2 November: class A")
+    w02, h02 = _dims_m("T02", items_by_id)
+    add("T02", "SF1", "A", 1.00, rot=-0.4, u=1.90, proof_wall=True, note="the Tivoli quad, from Thursday 25 October: class A, four days up")
+    add("T02s", "SF1", "A", 1.00 + h02 - STRIP_H / 1000.0 + 0.004, rot=-0.4 + 0.25, u=1.90 + 0.003, layer=1, proof_wall=True, parent="T02",
+        note="the venue strip across the quad's top band: set 4 mm high and 3 mm in, 0.25 degrees off the quad's own square (TARGET-REVIEW fault 7: 2 to 6 mm off square)")
+    # ---- the empty unit's glass SF2: one layer (u from the glass's viewer's-left edge)
+    add("C01a", "SF2", "B", 1.30, rot=0.3, u=0.30, layer=1, fixing="four tabs of yellowed tape, one at each corner", note="the police appeal for Friday 12 October, inside the empty unit's glass (TARGET-REVIEW fault 10)")
+    add("M01", "SF2", "C", 0.80, rot=0.8, u=0.75)
+    add("P03", "SF2", "B", 0.85, rot=1.2, u=1.35, note="the march of Saturday 10 November")
+    add("P02", "SF2", "B", 0.82, rot=0.6, u=1.95)
+    add("J01", "SF2", "B", 1.05, rot=-0.8, u=2.60, note="the jumble sale of Saturday 20 October is nine days gone: stale, class B")
+    add("C02", "SF2", "A", 1.50, rot=0.0, u=3.01, layer=1, note="planning notice for number 7, in its sleeve, taped inside the glass")
+    # ---- the plain west row: the scene's own poster slot (x 11.4 = pier W1.0) and one window bill
     piers = {p["id"]: p for p in west_piers()}
-    for pid, item, zb, age in (("W0.0", "C01a", 1.30, "B"), ("W0.1", "M01", 0.85, "C"), ("W1.0", "W01", 1.00, "B"), ("W1.1", "P02", 0.95, "B"), ("W2.0", "J01", 1.00, "C"),
-                               ("W2.1", "D01", 0.90, "C")):
-        pr = piers[pid]
-        w, h = _dims_m(item, items_by_id)
-        P.append(dict(item=item, surface="WEST_PIER", pier=pid, street_x_m=pr["cx"], z_bottom_m=zb, rot_deg=0.0, layer=1, age_class=age, w_m=w, h_m=h, pier_w_m=pr["w"]))
-    for pid, item, zb in (("W2.0", "L04", 2.15),):
-        pr = piers[pid]
-        w, h = _dims_m(item, items_by_id)
-        P.append(dict(item=item, surface="WEST_PIER", pier=pid, street_x_m=pr["cx"], z_bottom_m=zb, rot_deg=0.0, layer=2, age_class="C", w_m=w, h_m=h, pier_w_m=pr["w"]))
-    # the lamp columns
-    for item, x, zb, age in (("C03", 8.0, 1.55, "A"), ("P05", 8.0, 1.25, "C"), ("P06", 28.0, 1.45, "B"), ("P05", 28.0, 1.85, "D")):
-        w, h = _dims_m(item, items_by_id)
-        P.append(dict(item=item, surface="SF4", street_x_m=x, z_bottom_m=zb, rot_deg=0.0, layer=1, age_class=age, w_m=w, h_m=h))
-    # the letting boards
-    w, h = _dims_m("L01", items_by_id)
-    P.append(dict(item="L01", surface="SF5", street_x_m=24.0, z_bottom_m=2.90, rot_deg=-1.5, layer=0, age_class="C", w_m=w, h_m=h, note="L02 is the alternative (no agent)"))
-    w, h = _dims_m("L03", items_by_id)
-    P.append(dict(item="L03", surface="SF6", street_x_m=24.0, z_bottom_m=3.70, rot_deg=1.0, layer=0, age_class="C", w_m=w, h_m=h))
-    # the name plates
-    for pid, surface, x, zc, note in (("S01d", "SF7", 20.47, 2.63, "west corner pier (x 19.92 to 21.0, brick to 3.12 m): the existing plate's place, kept; 80 mm of pier either side"),
-                                       ("S01d", "SF7", None, 2.63, "second QUAY STREET plate on the quay gable, centre 1.0 m from the front corner; z centre 2.63"),
-                                       ("S02d", "SF7", None, 2.63, "WEIGHHOUSE LANE plate on the near flank of the first shop beyond the side opening (x = 24.0 plane, facing -x), centre 0.9 m from its front corner; PROPOSED: the opening's name is not decided in canon")):
-        w, h = _dims_m(pid, items_by_id)
-        P.append(dict(item=pid, surface=surface, street_x_m=x, z_bottom_m=round(zc - h / 2, 3), rot_deg=0.0, layer=0, age_class="D", w_m=w, h_m=h, note=note))
-    # harbour enamel
-    w, h = _dims_m("H02", items_by_id)
-    P.append(dict(item="H02", surface="SF8", street_x_m=-0.6, z_bottom_m=1.20, rot_deg=0.0, layer=0, age_class="C", w_m=w, h_m=h, note="PROPOSED: on a post at the quay edge; no quay geometry in SCENE-SLOTS"))
+    pr = piers["W1.0"]
+    add("W01", "WEST_PIER", "B", 1.00, x=pr["cx"], pier="W1.0", pier_w_m=pr["w"], note="the scene file's poster slot, x 11.4 (a second seed of the wrestling bill)")
+    pr = piers["W2.0"]
+    add("L04", "WEST_PIER", "C", 2.15, x=pr["cx"], pier="W2.0", pier_w_m=pr["w"], layer=2)
+    add("P02", "SF9", "A", 1.90 - 0.4458, x=12.3, scale=0.585, taped_inside=True, inside=True,
+        note="P02 scaled by 297/508 (0.585) to 297 x 446 mm, taped inside the glass, top at 1.90 m (TARGET-REVIEW fault 4)")
+    # ---- the lamp columns
+    add("C03", "SF4", "A", 1.55, x=8.0, layer=1)
+    add("P05", "SF4", "C", 1.25, x=8.0, layer=1)
+    add("P06", "SF4", "B", 1.45, x=28.0, layer=1)
+    add("P05", "SF4", "D", 1.85, x=28.0, layer=1)
+    # ---- the letting boards: the fascia target's board on the fascia; a no-agent flat board above
+    add("L02", "SF5", "C", 2.90, rot=-1.5, x=24.0, note="the fascia target's own board (900 x 450, TO LET); L01 (a named agent, 1200 x 450) is the held alternative")
+    add("L03n", "SF6", "C", 3.70, rot=1.0, x=24.0, note="no agent, no name; L03 (a named agent) is the held alternative")
+    # ---- name plates: the nameless plate `n`, two QUAY STREET plates and NO plate on the yard entrance
+    h = _dims_m("S01n", items_by_id)[1]
+    add("S01n", "SF7", "D", 2.63 - h / 2, x=20.47, note="west corner pier (x 19.92 to 21.0, brick to 3.12 m): the existing plate's place, kept; 80 mm of pier either side")
+    add("S01n", "SF7", "D", 2.63 - h / 2, u=1.0 - _dims_m("S01n", items_by_id)[0] / 2, host="SF1", u_centre_m=1.0, proof_wall=True,
+        note="second QUAY STREET plate on the quay gable, centre 1.0 m from the front corner, centre z 2.63 (above the three bills' tops, 1.76 m)")
+    # ---- harbour enamel
+    add("H02", "SF8", "C", 1.20, x=-0.6, note="PROPOSED: on a post at the quay edge; no quay geometry in SCENE-SLOTS")
     return P
+
+
+def held_alternates(placements, items_by_id):
+    """Every default placement whose item has a NAMED variant gets a held twin: the named item at the same place, held_until_minted. The named letting boards are
+    twins of the nameless ones too (L02 -> L01, L03n -> L03)."""
+    out = []
+    twin = {"L02": "L01", "L03n": "L03"}
+    for p in placements:
+        alt = twin.get(p["item"]) or (p["item"] + "-named" if (p["item"] + "-named") in items_by_id else None)
+        if alt and alt in items_by_id:
+            q = dict(p)
+            q["item"] = alt
+            q["held_until_minted"] = True
+            q["names"] = items_by_id[alt].get("held_names", [])
+            q["alt_of"] = p["item"]
+            q["note"] = "HELD: the named variant of the placement above; built only after the town mints " + ", ".join(q["names"])
+            out.append(q)
+    return out
 
 
 # --------------------------------------------------------------------------------------------
@@ -1658,9 +1841,10 @@ def plan_all(items_by_id):
 # --------------------------------------------------------------------------------------------
 def all_items():
     ITEMS.clear()
-    bill_poll_meeting(); bill_dont_pay(); bill_march(); bill_summons_a4(); sticker_polltax(); sticker_cantpay()
-    bill_jumble(); bill_dance(); bill_wrestling(); bill_boxing(); bill_market(); goods_whitewell(); goods_tea()
-    tivoli_witness(); tivoli_gullwing(); tivoli_programme()
+    bill_poll_meeting(); bill_poll_meeting(True); bill_dont_pay(); bill_dont_pay(True); bill_march(); bill_march(True); bill_summons_a4(); sticker_polltax(); sticker_cantpay()
+    bill_jumble(); bill_dance(); bill_dance(True); bill_wrestling(); bill_wrestling(True); bill_boxing(); bill_market(); goods_whitewell(); goods_tea()
+    tivoli_witness(); tivoli_witness(True); tivoli_gullwing(); tivoli_gullwing(True); tivoli_programme(); tivoli_programme(True)
+    tivoli_strip("T01", 18, 10); tivoli_strip("T02", 25, 10)
     ferry_timetable(); ferry_summer(); enamel_no_admittance(); enamel_danger_water()
     harbour_notice_berths(); harbour_notice_tides(); harbour_notice_vacancy()
     police_notices(); planning_notice(); road_closure_notice()
@@ -1670,15 +1854,25 @@ def all_items():
 
 
 FORBIDDEN_WORDS = dict(
-    alcohol_gambling_children=["beer", "lager", "ale", "stout", "pint", "whisky", "whiskey", "vodka", "gin", "rum", "wine", "cider", "champagne", "cocktail", "liquor", "spirits",
-                               "booze", "pub", "bar", "licensed", "brewery", "bingo", "raffle", "tombola", "lottery", "pools", "bet", "betting", "bookie", "bookmaker", "odds",
-                               "stake", "casino", "gamble", "gambling", "jackpot", "dice", "poker", "whist", "draw", "prize", "child", "children", "kid", "kids", "baby", "toddler",
-                               "pram", "school", "pupil", "playground", "nursery", "teenage", "junior", "infant", "family", "toy", "toys", "santa", "grotto", "youth", "boys", "girls"],
+    alcohol_gambling_children=["beer", "beers", "lager", "ale", "stout", "pint", "pints", "whisky", "whiskey", "vodka", "gin", "rum", "wine", "cider", "champagne", "cocktail", "liquor", "spirits",
+                               "booze", "pub", "pubs", "bar", "bars", "inn", "tavern", "licensed", "brewery", "shandy", "bitter", "nightclub", "disco", "happy hour",
+                               "bingo", "raffle", "tombola", "lottery", "pools", "bet", "betting", "bookie", "bookies", "bookmaker", "odds", "stake", "casino", "gamble", "gambling",
+                               "jackpot", "dice", "poker", "whist", "whist drive", "beetle drive", "draw", "prize", "sweepstake", "tote", "scratchcard", "fruit machine", "amusements", "arcade",
+                               "lucky dip", "darts", "quiz", "quiz night",
+                               "child", "children", "kid", "kids", "baby", "babies", "babysitter", "toddler", "toddlers", "pram", "pushchair", "school", "schools", "pupil", "playground",
+                               "playgroup", "nursery", "creche", "christening", "teenage", "teenagers", "junior", "juniors", "infant", "family", "families", "toy", "toys", "santa",
+                               "grotto", "youth", "boys", "girls", "scout", "scouts", "cubs", "brownies", "guides", "student", "students", "son", "sons", "daughter", "daughters"],
     real_marks=["ROYAL MAIL", "POST OFFICE", "BRITISH RAIL", "BRITISH TELECOM", "BRITISH GAS", "NATIONAL LOTTERY", "CRIMESTOPPERS", "NEIGHBOURHOOD WATCH", "LETRASET", "DYMO",
-                "BBC", "ITV", "THATCHER", "KINNOCK", "LABOUR", "CONSERVATIVE", "TORY", "TORIES", "SDP", "LIBERAL", "FEDERATION"],
+                "BBC", "ITV", "THATCHER", "KINNOCK", "LABOUR", "CONSERVATIVE", "TORY", "TORIES", "SDP", "LIBERAL", "FEDERATION",
+                "LARKIN", "SEA WOLF", "SEA WOLVES", "MILITANT", "SOCIALIST WORKER", "ANTI-POLL TAX UNION", "ALL BRITAIN",
+                "PERSIL", "DAZ", "ARIEL", "OMO", "BOLD", "SURF", "ODEON", "ABC", "RANK", "PG TIPS", "TYPHOO", "BROOKE BOND", "TETLEY",
+                "BIG DADDY", "GIANT HAYSTACKS", "KENDO NAGASAKI", "MICK MCMANUS", "JACKIE PALLO", "ROLLERBALL ROCCO",
+                "CROWN", "KIOSK", "TELEPHONE BOX", "PHONE BOX", "OPERATOR", "BBFC", "CERTIFICATE", "TRANSCO", "NORTHERN GAS",
+                "HULL", "GRIMSBY", "SUNDERLAND", "NEWCASTLE", "LIVERPOOL", "LONDON", "LEEDS", "MANCHESTER", "SHEFFIELD", "BRISTOL", "CARDIFF", "GLASGOW", "EDINBURGH", "DOVER", "HARWICH", "FELIXSTOWE", "SOUTHAMPTON",
+                "PLYMOUTH", "WHITBY", "HARTLEPOOL", "MIDDLESBROUGH", "TEESSIDE", "TYNESIDE", "MERSEYSIDE", "YORKSHIRE", "LANCASHIRE", "ENGLAND", "BRITAIN", "SCOTLAND", "WALES", "UK"],
     names_not_minted=["MERIDIAN TOWN", "AFC", "ARGUS", "TIDELINE", "COASTWAY", "COUNCIL", "BOROUGH", "CITY OF", "CONSTABULARY", "METROPOLITAN"],
     after_1992=["MOBILE", "INTERNET", "EMAIL", "E-MAIL", "WWW", "WEBSITE", "EURO", "DVD", "TEXT"],
-    note="word-boundary, case-insensitive. ARMITAGE & STOBBS, QUAY PRINT, MERIDIAN AGAINST THE POLL TAX and the others in 'proposed_names' are PLACEHOLDERS allowed on the sheets and NEVER on his page. "
+    note="word-boundary, case-insensitive. The names in 'proposed_names' are PLACEHOLDERS allowed on the sheets and NEVER on his page, and a proposed name in a block of cap 10 mm or more holds its item (held_until_minted). "
          "self_check.py also runs tools/content-gate.py's rule table and RealWorld.cs's AnyCase names and imagegen's forbidden tokens over every string.")
 
 
@@ -1686,26 +1880,73 @@ def norm(s):
     return s.replace("’", "'").replace("‘", "'").replace("—", "-").replace("–", "-")
 
 
+def choose_ppm(items):
+    """Each item's pixel scale is the smallest at which every glyph of every block (but the imprints) is told from every other glyph of its font by at least
+    glyphlib.N_MIN pixels, and never under 2 px/mm (glyphlib.needed_ppm; self_check.py re-derives the same table and fails the item if its scale is lower)."""
+    unions = {}
+    for it in items:
+        for b in it["blocks"]:
+            if not b.get("glyph_check") or b.get("ghost"):
+                continue
+            emb = (b["hand"] or {}).get("embolden_mm", 0.0) if b.get("hand") else 0.0
+            unions.setdefault((b["font"], b["weight"], b["cap_mm"], emb), set()).update(b["text"])
+    need = {}
+    cache_p = Path(os.environ.get("PBP_PPM_CACHE", "")) if os.environ.get("PBP_PPM_CACHE") else None
+    cache = json.loads(cache_p.read_text()) if cache_p and cache_p.exists() else {}
+    for k, chars in sorted(unions.items()):
+        key, wt, cap, emb = k
+        ck = json.dumps([key, wt, cap, emb, "".join(sorted(chars)), gl.N_MIN, gl.TOL_PX])
+        if ck in cache:
+            need[k] = cache[ck]
+            continue
+        ppm, _t = gl.needed_ppm(font, key, wt, cap, cap_ratio(key, wt), sorted(chars), emb_mm=emb)
+        need[k] = ppm if ppm else 16
+        cache[ck] = need[k]
+    if cache_p:
+        cache_p.write_text(json.dumps(cache))
+    for it in items:
+        m = 2
+        for b in it["blocks"]:
+            if not b.get("glyph_check") or b.get("ghost"):
+                continue
+            emb = (b["hand"] or {}).get("embolden_mm", 0.0) if b.get("hand") else 0.0
+            m = max(m, need[(b["font"], b["weight"], b["cap_mm"], emb)])
+        it["px_per_mm"] = m
+        mp = it["format"]["w_mm"] * it["format"]["h_mm"] * m * m / 1e6
+        assert mp <= 60, "%s would be %.0f megapixels at %d px/mm" % (it["id"], mp, m)
+        it["megapixels"] = round(mp, 1)
+
+
 def build():
     items = all_items()
     by_id = {it["id"]: it for it in items}
-    # hand-lettered cards cannot be told from a mirror image by their words: each carries one asymmetric cue the renderer must draw
-    cues = [("a tab of yellowed tape across the top-LEFT corner only", "top-left"), ("a drawing-pin hole at the top-RIGHT only and a torn lower-LEFT corner", "top-right"),
-            ("a string loop and rubber sucker at the top-LEFT, a crease running from the top-right corner", "top-left"),
-            ("two tape tabs, a long one at the top-LEFT and a short one at the top-RIGHT, the left one lifting", "top-left")]
-    n = 0
+    for it in items:
+        it["held_names"] = held_names(it)
+        it["held"] = bool(it["held_names"])
+    choose_ppm(items)
+    # every hand-lettered card carries ONE cue that matches its fixing and sits on the left half only (TARGET-REVIEW fault 9)
     for it in items:
         if it["blocks"] and all(b.get("hand") for b in it["blocks"]):
-            what, side = cues[n % len(cues)]
-            it["mirror_cue"] = dict(what=what, side=side, rule="drawn at the stated side of the card as the viewer sees it in the game; the check G.mirror.cues reads the corner's brightness against the opposite corner")
-            n += 1
-    # check fit
+            fx = it["fixing"]
+            w, h = it["format"]["w_mm"], it["format"]["h_mm"]
+            stars = [s for s in it["shapes"] if s["kind"] == "star"]
+            if stars:
+                tip = max(stars[0]["pts_mm"][0::2], key=lambda p: p[1] - p[0])      # the outer point nearest the top-left corner
+                cx, cy = round(tip[0] + 3.0, 1), round(tip[1] - 6.0, 1)
+                left = [round(cx - 12.5, 1), round(cy - 12.5, 1), round(cx + 12.5, 1), round(cy + 12.5, 1)]
+            else:
+                cx, cy = 12.0, h - 12.0
+                left = [0.0, h - 25.0, 25.0, h]
+            right = [round(w - left[2], 1), left[1], round(w - left[0], 1), left[3]]
+            it["mirror_cue"] = dict(kind=fx["kind"], what=fx["what"], side="left", corner="top-left", patch_mm=25, tab_centre_mm=[cx, cy], patch_left_mm=left, patch_right_mm=right,
+                                    rule="drawn at the card's top-LEFT as the viewer sees it in the game, nothing on the right half; G.mirror.cues compares the two 25 mm patches (non-text pixels)")
     problems = []
     for it in items:
         problems += check_fit(it)
     assert not problems, problems
     cases = make_cases()
     placements = plan_all(by_id)
+    placements += held_alternates(placements, by_id)
     return items, by_id, cases, placements
 
 
@@ -1765,64 +2006,103 @@ def make_checks(items, by_id, cases, placements):
         iid = it["id"]
         ppm = it["px_per_mm"]
         w, h = it["format"]["w_mm"], it["format"]["h_mm"]
-        C.append(chk(iid + ".size", "image size", iid, "width and height of the base-colour image", [int(round(w * ppm)), int(round(h * ppm))], 0, "px at %d px/mm" % ppm, "image size",
-                     why="1 pixel is 1/%d mm so a letter's height in pixels is its height in millimetres times %d" % (ppm, ppm)))
+        C.append(chk(iid + ".size", "image size", iid, "width and height of the base-colour image", [int(round(w * ppm)), int(round(h * ppm))], 0, "px at %g px/mm" % ppm, "image size",
+                     why="1 pixel is 1/%g mm" % ppm))
         words = sorted({norm(b["text"]) for b in it["blocks"]})
-        C.append(chk(iid + ".words", "words exactly as approved", iid, "the strings the renderer drew for this item (its manifest), apostrophes and dashes normalised",
-                     words, 0, "strings", "set equality with the manifest; then, if an OCR pass is run, every token it reads is in approved_word_parts", reads="manifest",
+        C.append(chk(iid + ".words", "words exactly as approved", iid, "the strings in the glyph manifest (every character as drawn), apostrophes and dashes normalised",
+                     words, 0, "strings", "the manifest's characters, joined per block, equal the approved string; THIS IS NOT THE PIXEL CHECK: ITEM.glyphs reads the pixels", reads="manifest",
                      why="the words are ours; the image model never draws one"))
-        if not it["blocks"]:
+        blocks = [b for b in it["blocks"] if not b.get("ghost")]
+        if not blocks:
             continue
-        pos = []
-        caps = []
-        masks = []
+        C.append(chk(iid + ".pos", "block positions", iid, "ink box of each block's glyph mask read off the pixels, widened 8 mm along the line (other blocks' glyphs excluded)",
+                     [[b["id"], block_tols(b, ppm)["pos_mm"], block_tols(b, ppm)["base_mm"]] for b in blocks], "per block [id, centre tol mm, baseline tol mm]", "mm",
+                     "centre (anchor centre) or left/right edge within the tolerance; baseline within the baseline tolerance (the median bottom of flat-bottomed letters)"))
+        C.append(chk(iid + ".cap", "letter heights at scale", iid, "cap height of each block read off its flat-bottomed capitals",
+                     [[b["id"], b["cap_mm"], block_tols(b, ppm)["cap_frac"]] for b in blocks], "per block [id, cap mm, tolerance as a fraction]", "fraction of the cap",
+                     "height of the tallest flat-topped, flat-bottomed capital in the block's mask / cap_mm; also cap_px = cap_mm x px_per_mm"))
+        C.append(chk(iid + ".mask", "glyph mask of the line against the font", iid, "the block re-rendered from its font file compared with the ink-coloured pixels",
+                     [[b["id"], block_tols(b, ppm)["F"]] for b in blocks], "per block [id, min F]", "F score",
+                     "mean of recall and precision, each against the other mask dilated 2.5 mm (hand) or 1 mm (print); a PRINT line must also keep every single glyph at F 0.85 or more at 0.5 mm. A HAND line's mask catches a wrong font or a shift, not a wrong word (TARGET-REVIEW fault 1): ITEM.glyphs reads those from the manifest"))
+        gb = [b for b in blocks if b.get("glyph_check")]
+        if gb:
+            C.append(chk(iid + ".glyphs", "every glyph read from the pixels", iid,
+                         "for each block (not the imprints) and each character of the manifest, in its own cell: F at 0.5 mm of the glyph re-rendered from the manifest, and SEP against every other glyph of its font and against its own mirror",
+                         [[b["id"], len(b["text"])] for b in gb], "per block [id, characters]", "F >= 0.85 and SEP >= 0.70 (a margin of 0.40) against every alternative the pixels can tell apart",
+                         "glyphlib.py: the manifest's characters equal the approved string; each glyph's origin, baseline, rotation and size lie in the block's envelope; F; SEP; spaces carry no ink. Alternatives: A-Z a-z 0-9 £ . , ' ’ - — – & · ? : !; shape twins (I and l, ' and ’) and a glyph that is its own mirror are listed, not scored",
+                         why="TARGET-REVIEW fault 1: a changed date, TEA for ALE, LUNCH for BINGO, a changed price or time passed the line mask at F 0.94 to 1.00"))
+        C.append(chk(iid + ".square", "the texture is square-on", iid, "rotation of the render, found by turning the expected ink until the largest blocks agree best (0.1 degree steps, +-3 degrees)",
+                     0.0, 0.3, "degrees", "|angle| <= 0.3 degrees", why="skew and rotation live only in the placement's rot_deg (TARGET-REVIEW fault 1d)"))
         cons = []
-        for b in it["blocks"]:
-            t = block_tols(b, ppm)
-            pos.append(dict(block=b["id"], ink_box_mm=b["ink_box_mm"], anchor=b["anchor"], tol_mm=round(t["pos_mm"], 1), baseline_tol_mm=t["base_mm"]))
-            caps.append(dict(block=b["id"], cap_mm=b["cap_mm"], tol_frac=t["cap_frac"], cap_px=round(b["cap_mm"] * ppm, 1)))
-            masks.append(dict(block=b["id"], min_F=t["F"], font=b["font"], weight=b["weight"], tracking_em=b["tracking_em"], size_px_per_em=round(b["size_px_per_em"] * ppm, 2)))
+        for b in blocks:
             nominal = b["contrast"]["B"]
             floor = 3.0 if b["cap_mm"] >= 12 else 4.5
             mn = max(2.2, min(floor, 0.9 * nominal))
             if b["role"] == "imprint":
                 mn = 1.8
-            cons.append(dict(block=b["id"], nominal_B=nominal, nominal_C=b["contrast"]["C"], min_B=round(mn, 2), cap_mm=b["cap_mm"]))
-        C.append(chk(iid + ".pos", "block positions", iid, "ink box of each block's glyph mask read off the pixels, widened 8 mm along the line", pos, "per block", "mm",
-                     "centre (anchor centre) or left/right edge within tol_mm; baseline within baseline_tol_mm (the median bottom of flat-bottomed letters)"))
-        C.append(chk(iid + ".cap", "letter heights at scale", iid, "cap height of each block read off its flat-bottomed capitals", caps, "per block", "fraction of the cap",
-                     "height of the tallest flat-topped, flat-bottomed capital in the block's mask / cap_mm; also cap_px = cap_mm x px_per_mm"))
-        C.append(chk(iid + ".mask", "glyph mask against the font", iid, "the block re-rendered from its font file (font, weight, size, tracking, anchor) compared with the ink-coloured pixels",
-                     masks, "per block", "F score, mean of recall and precision, each against the other mask dilated 2.5 mm (hand), 1 mm (print)",
-                     "pass at min_F, and the same re-render FLIPPED about the item's vertical centre line must score lower by 0.15"))
-        C.append(chk(iid + ".contrast", "contrast", iid, "WCAG ratio of the block's mean ink colour to the mean ground colour in its box, on the aged render (class B)", cons, "per block", "ratio",
-                     "ink = pixels nearer the ink colour than the ground; ground = the rest of the box; min_B per block"))
-    # global checks
+            cons.append([b["id"], round(mn, 2), nominal])
+        C.append(chk(iid + ".contrast", "contrast", iid, "WCAG ratio of the block's mean ink colour to the mean ground colour in its box, on the aged render (class B)", cons,
+                     "per block [id, min ratio, nominal ratio in class B]", "ratio", "ink = pixels nearer the ink colour than the ground; ground = the rest of the box"))
+        if it["art"]:
+            C.append(chk("ART.eye." + iid, "the art picture carries no person, hand, face, lettering, numeral, crown, kiosk mark, bottle, glass or arcade sign", iid,
+                         "a fresh reviewer looks at the generated picture at 1:1 (the art slot's box), before any text is laid", "none of the listed things", 0, "count",
+                         "a pass needs a person who has not seen the prompt; the first pass of the picture is the one judged", reads="eye",
+                         why="an image model that draws a pier or a phone box adds people, lettering, a crown or AMUSEMENTS signs (TARGET-REVIEW fault 1c); there is no pixel test for it"))
+    # ---- global checks
     C.append(chk("G.words.approved", "no word outside the approved list", "all items", "every token of every manifest string", "tokens subset of approved_word_parts", 0, "tokens",
                  "split on spaces; apostrophes, dashes and the middle dot normalised; digits and times match the number patterns", reads="manifest"))
     C.append(chk("G.forbidden", "no forbidden word", "all items", "forbidden_patterns (alcohol, gambling, children, real marks, names not minted, after 1992) and tools/content-gate.py's rule table over every manifest string",
                  0, 0, "hits", "word-boundary, case-insensitive", reads="manifest"))
     C.append(chk("G.dates", "every dated bill's weekday is right for the year", "bills with an event", "weekday of the printed date in 1990", "equal", 0, "days", "datetime.date", reads="manifest"))
+    C.append(chk("G.dates.age", "a placed dated item's age class agrees with its event and the street date", "placed items with a date",
+                 "calendar.street_date minus the days of the placement's age class (age_classes[class].days)",
+                 dict(street_date="1990-10-29", event="the class's earliest posting date must fall at or before the event and no more than 42 days before it; a notice at or after its date"),
+                 0, "days", "for each placement of an item with `dated`: exists an age a in the class's days with event - 42 <= street_date - a <= event (kind event) or street_date - a >= date (kind notice)",
+                 reads="geometry", why="the first try put T03 in class D under T01 in class A for the same week (TARGET-REVIEW fault 8)"))
     C.append(chk("G.mirror", "no sheet is mirrored", "all items", "for each asymmetric block, the glyph mask scores higher at its own position than at the position mirrored about the item's centre line", "true", 0.0, "bool",
-                 "the fascia family's first try drew its board the wrong way round; the same fault on a bill or a plate would put MICKEY'S backwards"))
+                 "the fascia family's first try drew its board the wrong way round; ITEM.glyphs also fails a mirrored block at its own cells"))
     cue_items = [it["id"] for it in items if it.get("mirror_cue")]
-    C.append(chk("G.mirror.cues", "a hand-lettered card carries its asymmetric cue on the stated side", "cards: %s" % ", ".join(cue_items), "the corner patch at the cue's side differs from the opposite corner (tape, pin hole, tear, crease)",
-                 {it["id"]: it["mirror_cue"]["side"] for it in items if it.get("mirror_cue")}, 0.0, "bool", "mean luminance and edge density of the 40 mm corner patches", reads="pixels",
-                 why="the words of a centred hand-lettered card read the same mirrored; this cue is the only thing that can tell"))
+    C.append(chk("G.mirror.cues", "a hand-lettered card carries its one cue on the left half", "cards: %s" % ", ".join(cue_items),
+                 "the 25 mm top-left and top-right corner patches (non-text pixels): the yellowed tape tab, or the knot and sucker, shows in the left one only",
+                 {it["id"]: it["mirror_cue"]["side"] for it in items if it.get("mirror_cue")}, 0.0, "bool",
+                 "left patch differs from the card's own colour by dE >= 6 and the right by <= 2.5; mirrored: the opposite", reads="pixels",
+                 why="the words of a centred hand-lettered card read alike mirrored at line level; ITEM.glyphs also fails them, this is the second guard"))
     C.append(chk("G.fonts", "fonts are the OFL list", "all items", "the font name of every block", sorted(FONTS), 0, "names", "block.font in this list; Overpass, Apache and GPL faces refused", reads="manifest"))
-    C.append(chk("G.proposed", "proposed names stay where listed", "all items", "ARMITAGE & STOBBS, QUAY PRINT, MERIDIAN AGAINST THE POLL TAX etc. appear only on the items that list them", "listed", 0, "strings", "manifest", reads="manifest",
+    C.append(chk("G.proposed", "proposed names stay where listed", "all items", "each proposed name appears only on the items proposed_names lists for it", "listed", 0, "strings", "manifest", reads="manifest",
                  why="placeholders, never on his page (RULINGS 3 Oct)"))
-    C.append(chk("G.ferry.schedule", "the ferry timetable is a service one boat can run", "F01", "crossing 15 minutes; Hook departures at :00/:30 by day, far side at :15/:45; last crossing 11.00 PM from the Hook", "consistent", 0, "minutes", "parse the schedule", reads="manifest"))
-    C.append(chk("G.tides", "the tide table advances 12 h 25 min a high water", "H04", "difference between successive HW times", 745, 5, "minutes", "parse the rows", reads="manifest"))
+    C.append(chk("G.page.placeholders", "no held placement is built while its name has no DECISIONS.md minting line", "the built street's placed-decals manifest",
+                 "every placement with held_until_minted: true", "none in the built street unless DECISIONS.md carries a line 'MINTED: <NAME>' for each name in the placement's `names`", 0, "placements",
+                 "the builder writes placed_decals.json; the check fails any held placement found in it whose names are not all minted (a line of DECISIONS.md that starts '- ' and holds 'MINTED:' then the name)",
+                 reads="manifest", why="placeholders are never on his page; whole street frames go on his page (RULINGS 3 Oct; TARGET-REVIEW fault 2)"))
+    C.append(chk("G.ferry.schedule", "the ferry timetable is a service one boat can run, and each day ends where the next begins", "F01",
+                 "crossing 15 minutes; Hook departures at :00/:30 by day, far side at :15/:45; last Hook crossing 11.00 PM, last far-side crossing 11.15 PM; the boat ends each day at the Hook",
+                 "consistent", 0, "minutes", "parse the printed blocks, simulate the one vessel through Monday to Saturday, Sunday and Monday", reads="manifest"))
+    C.append(chk("G.tides", "the tide table advances 12 h 25 min a high water and peaks on Sunday 4 November", "H04", "difference between successive HW times; the day's higher height", [745, [4.4, 4.6, 4.7, 4.8, 4.7, 4.5, 4.2]], 5, "minutes", "parse the rows", reads="manifest"))
     # placements
     C.append(chk("G.place.inside", "each placement lies inside its surface's paste zone", "placements", "rectangle inside the zone", "inside", 0.0, "m", "geometry", reads="geometry"))
     C.append(chk("G.place.layers", "same-layer bills do not overlap; every older bill keeps its share of face", "SF1, SF2", "visible fraction by raster", dict(layer0=0.30, layer1=0.45, top=0.97), 0.0, "fraction", "visible_fractions()", reads="geometry"))
     C.append(chk("G.place.piers", "a bill on a west pier fits the brick with 40 mm each side, and clears the openings", "WEST_PIER", "bill width <= pier width - 0.08", "true", 0.0, "m", "geometry", reads="geometry"))
-    C.append(chk("G.place.height", "nothing pasted above 2.75 m except scraps", "SF1", "top edge of every full bill", 2.75, 0.0, "m", "geometry", reads="geometry"))
-    C.append(chk("G.letting.mount", "letting board sits on the fascia with 50 mm clear above and below", "L01, L02", "z range 2.90 to 3.35 inside 2.85 to 3.40", [2.90, 3.35], 0.01, "m", "geometry", reads="geometry"))
+    C.append(chk("G.place.height", "nothing pasted above 2.75 m", "SF1", "top edge of every full bill and plate", 2.75, 0.0, "m", "geometry", reads="geometry"))
+    C.append(chk("G.place.paper", "the amount of paper is the asset plan's: 8 fly-posters and 4 poll-tax bills on Quay Street", "default placements (not held)",
+                 "count of placed items by paper_class: fly_poster, poll_tax_bill", dict(fly_poster=8, poll_tax_bill=4), 0, "count", "geometry", reads="geometry",
+                 why="asset-plan note 4, table A5, row 'Fly-posters and gig bills 8' and 'Poll-tax and election bills 4' (TARGET-REVIEW fault 4)"))
+    C.append(chk("G.place.gable", "the gable keeps what the Hook sheet shows", "SF1", "no paper within 150 mm of the downpipe (u 0.30 +- 0.0375), none above 2.75 m, none in the damp foot (below 0.45 m); the three bills sit in one layer", "true", 0.0, "m", "geometry", reads="geometry"))
+    C.append(chk("G.place.shops", "shop cards lie inside their glass or door glass, clear the hours plate and each other", "SHOP", "rectangles", "true", 0.0, "m", "geometry", reads="geometry"))
+    C.append(chk("PLACE.built", "each placed decal is where the target puts it and reads the right way round in the placed street", "the built street's placed-decals manifest and one render of each surface",
+                 "centre of each decal against the placement's u and z (or street x); its rotation; the decal's largest block read in the render after turning back by rot_deg",
+                 dict(centre_mm=20, rot_deg=0.3, read="the glyph check on the largest block of the item, run on the surface render at 1 px per mm after turning the decal back by the placement's rot_deg"),
+                 20, "mm", "locate the decal by correlation of the item's expected ink in a +-60 mm window; rotation by the best angle in +-1.5 degrees; then ITEM.glyphs on the largest block; a mirrored decal or a decal turned more than 0.3 degrees off fails",
+                 reads="pixels", why="TARGET-REVIEW fault 1e"))
+    C.append(chk("G.letting.mount", "the default letting board IS the fascia target's board", "L02 and the fascia target's small_panels.letting_board",
+                 "size 900 x 450, text TO LET, font libre-franklin 800, cap 130, colour vinyl_red (176,30,34), no agent, no number; sits z 2.90 to 3.35 inside the fascia 2.85 to 3.40",
+                 dict(size_mm=[900, 450], font="libre-franklin", weight=800, cap_mm=130, z=[2.90, 3.35]), 0.01, "m", "compare with fascia-signs/target.json", reads="geometry",
+                 why="TARGET-REVIEW fault 5; a different board changes the fascia target's entry in the same batch with a DECISIONS line"))
     C.append(chk("G.plates.length", "plate length follows the name", "S**", "ink width + 2 x 62 mm margins, rounded up to 10 mm", "see name_plate", 10, "mm", "geometry", reads="geometry"))
-    C.append(chk("G.plates.cap", "plate capitals are 90 mm", "S**", "cap height of the name block", PLATE_CAP, 3.0, "mm", "pixels at 1 px/mm"))
-    C.append(chk("G.plates.border", "border band 12 mm, 6 mm in from the edge", "S**", "dark band width on a scan line through the plate's middle", 12, 1.0, "mm", "pixels at 1 px/mm"))
+    C.append(chk("G.plates.depth", "no plate is shallower than 200 mm", "S**", "plate height", 200, 0, "mm", "geometry", reads="geometry", why="the street-clutter note's 20 to 25 cm (TARGET-REVIEW fault 13)"))
+    C.append(chk("G.plates.cap", "plate capitals are 90 mm", "S**", "cap height of the name block", PLATE_CAP, 3.0, "mm", "pixels at 2 px/mm"))
+    C.append(chk("G.plates.border", "border band 12 mm, 6 mm in from the edge", "S**", "dark band width on a scan line through the plate's middle", 12, 1.0, "mm", "pixels at 2 px/mm"))
+    C.append(chk("G.plates.make", "the plate's relief suits the make", "S**", "raised mm, draft, top radius, edge radius; the thinnest stroke's top width after the draft >= 1.5 mm", "see relief and lettering_suit", 0, "mm", "geometry", reads="geometry"))
+    C.append(chk("G.glyph.scale", "each item's pixel scale is enough to tell its glyphs apart", "all items", "glyphlib.needed_ppm for every (font, weight, cap) of the item", "item.px_per_mm >= needed", 0, "px/mm", "separation_table", reads="geometry"))
     return C
 
 
@@ -1870,28 +2150,32 @@ WOULD_READ = [
 DISAGREEMENTS = [
     dict(topic="street plate lettering", wins="the 30 September ruling (Marcellus SC)", others="the street-clutter note (Kindersley MOT serif, recommended 1952) and a search summary of a Hull caption (1920s to 1930s cast plates used the MOT SANS alphabets; Kindersley from 1951)",
          choice="Marcellus SC capitals, 90 mm, tracking +0.04 em. No photograph reached: the ruling stands until one disagrees."),
-    dict(topic="postal district on a plate", wins="judgement", others="the street-clutter note lists 'postcodes' as wrong for 1990; a search summary found NO source of 1980s provincial plates carrying a postal district; London plates did carry the district",
-         choice="the default plate carries the DISTRICT NAME as a small line (THE HOOK, COPPER ROW, IRONSIDE: canon's minted districts) and no postcode; the postcode-style variant (MR1) exists as a placeholder, never default; the council's name and crest are omitted (canon owes the council's name)"),
+    dict(topic="postal district and district line on a plate", wins="the project's own street-clutter note (a plain name plate; 'postcodes' wrong for 1990) and the absence of any source", others="a search summary: London plates carried the borough and the postal district; the first try's default carried the district's name as a small line",
+         choice="the default and the placed plate is `n` (the name only); `d` (the name and a district line) stays as a variant until a dated photograph shows one; the postal-district variant (MR1) is deleted (TARGET-REVIEW fault 13)"),
     dict(topic="the 4 October bills", wins="this target", others="tools/props/make_vignette_2d.py: clean flat bills, League Gothic, all four on one generic layout, a spring date (SATURDAY 31 MARCH), 'Admission 10p', 'WEIGHHOUSE LANE HALL', the bills' own fine print readable and straight",
          choice="autumn 1990 dates with computed weekdays, the chapel hall named as hook-cast.json names it, imprints, ageing in four classes, layered pasting, different processes and layouts"),
-    dict(topic="the letting board", wins="this target", others="board_to_let.png: 900 x 450, PT Sans, no agent, no number, a white box with a red border",
-         choice="1200 x 450 with an agent band, TO LET, size, a number; the no-agent variant keeps a number; 900 x 450 would need cap 110 and drop the agent band"),
+    dict(topic="the letting board", wins="the fascia target (cloud week 42, same batch): 900 x 450, TO LET alone, Libre Franklin 800 cap 130, vinyl red, no agent, no number", others="the first try's 1200 x 450 board with an agent band and a number; the game's board_to_let.png (900 x 450, PT Sans, no agent, no number)",
+         choice="L02 IS the fascia target's board. The 1200 x 450 agent board L01 stays as a held variant that would need the fascia target changed in the same batch with one DECISIONS line (TARGET-REVIEW fault 5)"),
     dict(topic="the poster prop's place", wins="the plain row's bay layout (terrace-front.py _plain_ground)", others="vignette-scene.json's held-prop notes put a poster at west x 11.4 and a case at west x 26.4 'between a side door at 25.5 and a window at 27.3' (written before the west_north block became shops)",
          choice="x 11.4 is the pier W1.0 (10.919 to 11.875) and stays; the case at 26.4 would stand on the tea room's glass: both cases move to the quay gable"),
+    dict(topic="the glyph check's margin", wins="the computation (glyph_table() in self_check.py; glyphlib.py's docstring)", others="TARGET-REVIEW fault 1(b): each glyph must out-score every other glyph of its font and its own mirror by at least 0.05 on F at 0.5 mm",
+         choice="F is a mean over the whole glyph, so glyphs that share most of their ink score alike: O against D in Oswald 700 at 34 mm capitals scores 0.987 against the true glyph's 1.000 (a margin of 0.013), 6 against 8 0.964, and 14 of the 36 capitals and digits cannot meet 0.05 even at that size. The check therefore keeps F >= 0.85 at 0.5 mm for the glyph itself and scores the separation from each alternative on the PIXELS WHERE THE TWO GLYPHS DIFFER (SEP, 0.70 to pass: a margin of 0.40), with every item's pixel scale chosen so that at least 8 such pixels exist for every pair that is not a shape twin. The reviewer's wrong renders all fail it"),
+    dict(topic="paper on the quay gable", wins="the asset plan's own proof wall and the Hook sheet together", others="the Hook sheet's gable is bare old brick with a downpipe, a render patch and a damp foot; the plan's proof wants 'three bills from three templates' on one wall (the nearest gable or the empty unit's stallriser)",
+         choice="one layer of three bills (z 1.00 to 1.76, u 0.70 to 2.92), flagged proof_wall; the downpipe, the render patch and the damp foot kept as the sheet has them, paper 150 mm clear of the pipe; nothing more until he has approved the sample in the assembled game. Dropping the three placements leaves the gable exactly as the sheet shows it"),
     dict(topic="the one photograph measured", wins="judgement", others="the photographed notice case is a modern blue steel replacement with a wide crest header",
          choice="only its vertical fractions inform the glazed case's proportions; the 1990 case is a timber one with thinner rails (HC1)"),
 ]
 COULD_NOT_SETTLE = [
     "No photograph of a 1990 street name plate, letting board, fly-posted wall or paper notice was reached. Every size of those is Judgement on search-summary leads (90 mm capitals, 150 to 230 mm plates, 12 mm borders: modern specs).",
-    "Whether provincial plates of 1990 carried a postal district, the council's name or a crest: not found. The target omits the council and uses a district-name line.",
-    "The name of the side opening at street x 21 to 24 on the west: not in canon. The WEIGHHOUSE LANE plate there is proposed; the town may name it otherwise.",
+    "Whether provincial plates of 1990 carried a postal district, a district line, the council's name or a crest: not found. The default plate is the name only.",
+    "The side opening at street x 21 to 24 is the YARD ENTRANCE (vignette-scene.json, the dropped kerb at x 22.5) and atlas-01 gives it `yard_gap_x [21, 24]`: no plate names it, and the road closure sends traffic round by WEIGHHOUSE LANE and TANNERY ROW, which the atlas does name.",
     "Whether the scene has a quay-edge post, a hoarding, a gable wall at x = 3 that faces the hook camera with the geometry assumed here (8 m deep, eaves 6.3 m): read from vignette-scene.json and the recipe, not from the mesh.",
     "Tobacco bills (cigarettes were advertised on hoardings in 1990): omitted: they need a minted brand and the exact government health-warning wording, which was not read.",
     "The BBFC certificate roundels on film bills are real marks and are not drawn; the 1990 bills carried them.",
-    "A police appeal board (the yellow A-board) in 1990: the only dated photograph found is from 2007; this target uses an A3 photocopy taped in a window or sleeved on a column instead.",
+    "A police appeal board (the yellow A-board) in 1990: the only dated photograph found is from 2007; this target uses an A3 photocopy taped inside the empty unit's glass or sleeved on a column instead.",
     "The local paper's contents bill, the football club's bills and the radio station's stickers: the names are owed (canon), so none is drawn; the brand bible's proposals (Meridian Town AFC, the Argus, Radio Tideline, Coastway) are NOT used.",
-    "Real-name coincidence: the invented film titles, ring names, credits, brands and the agent's name were not checked against real lists (the network refused the sources); each is listed in proposed_names for the town to mint or strike.",
-    "Prices (cinema 2.80, wrestling 4 and 2.50, ferry 60p, tea 1.35) are Judgement except cod (ONS via the earlier note).",
+    "Real-name coincidence: the network was closed, so NOTHING proposed was checked against real lists: QUAY PRINT, ARMITAGE & STOBBS, THE FOURTH WITNESS (a film of that name), the four ring names (renamed after TARGET-REVIEW found LARKIN and THE SEA WOLF real), MARSHLAND PICTURES and the three credits. Each is listed in proposed_names for the town to mint or strike, and none stands on the default street.",
+    "Prices (cinema 2.80, wrestling 4 and 2.50, ferry 60p, tea 1.35) are Judgement except cod (ONS via the earlier note); smoked haddock 2.90 is dearer than fresh by Judgement.",
     "Texture size and mip: not checked in the 5.8.2 source; the builder checks whether bills need padding to powers of two (the fascia target has the same open question).",
 ]
 
@@ -1926,120 +2210,12 @@ def write_json(target, path=None):
     Path(path).write_text("{\n" + ",\n".join(parts) + "\n}\n", encoding="utf-8")
 
 
-def main():
-    items, by_id, cases, placements = build()
-    placements = placements + shop_placements(by_id)
-    cb = card_board(by_id)
-    placements.append(dict(item="SB1", surface="SHOP", shop="newsagent", where="glass", u_m=cb["glass_u_m"], z_bottom_m=cb["z_bottom_m"], w_m=cb["area_mm"][0] / 1000.0,
-                           h_m=cb["area_mm"][1] / 1000.0, rot_deg=0.0, layer=1, age_class="B", inside=True, note="the card board: 15 cards, see card_board"))
-    wt = wear_tables()
-    wmap = {}
-    for iid in ("P01", "P02", "P03", "J01", "D01", "W01", "B01", "M01", "G01", "G02", "T01", "T02", "T03", "F01", "F02", "P04"):
-        wmap[iid] = "bill_pasted"
-    for iid in ("C01a", "C01b", "C01c", "C02", "C03", "H03", "H04", "H05"):
-        wmap[iid] = "notice_sleeve"
-    for it in items:
-        k = it["id"]
-        if k in wmap:
-            it["wear"] = dict(table=wmap[k], classes=[p["age_class"] for p in placements if p["item"] == k])
-        elif k.startswith("SA"):
-            it["wear"] = dict(table="card_ballpoint", classes=["B", "C"])
-        elif k in ("P05", "P06", "K04", "K06b"):
-            it["wear"] = dict(table="sticker", classes=["B", "C", "D"])
-        elif k.startswith("K"):
-            it["wear"] = dict(table="card_felt", classes=["A", "B", "C"])
-        elif k in ("H01", "H02"):
-            it["wear"] = dict(table="enamel_plate", classes=["B", "D"])
-        elif k.startswith("S01"):
-            it["wear"] = dict(table="cast_iron_plate", classes=["C", "D"])
-        elif k.startswith("S0"):
-            it["wear"] = dict(table="pressed_plate", classes=["C", "D"])
-        elif k.startswith("L"):
-            it["wear"] = dict(table="letting_board", classes=["B", "C", "D"])
-    fonts = {}
-    for k, v in FONTS.items():
-        d = dict(v)
-        d["ofl"] = ofl_info(v["dir"])
-        d["cap_ratio_700"] = round(cap_ratio(k, 700), 3)
-        d["path_hint"] = ("production/fonts/" + v["file"]) if v["in_repo"] else "NOT in production/fonts: the builder adds it with its OFL.txt (fetch: self_check.py --fetch-fonts DIR)"
-        d["coverage"] = {ch: glyph_ok(k, ch) for ch in "£’·—–&.,?:0123456789"}
-        fonts[k] = d
-    # word lists
-    words = sorted({norm(b["text"]) for it in items for b in it["blocks"] if not b.get("ghost")})
-    ghosts = sorted({norm(b["text"]) for it in items for b in it["blocks"] if b.get("ghost")})
-    tokens = sorted({t for w in words + ghosts for t in re.findall(r"[A-Za-z0-9£'&.\-]+", w)})
-    # items out
-    items_out = []
-    hand_key = {id(HAND_FELT): "felt", id(HAND_FELT_FINE): "felt_fine", id(HAND_BALL): "ballpoint"}
-    for it in items:
-        o = dict(it)
-        if it["kind"] in ("plate", "board"):
-            o["stock"] = None      # painted faces: the colours are in the shapes and the paint table, not a paper stock
-        o["words"] = sorted({norm(b["text"]) for b in it["blocks"]})
-        nb = []
-        for b in it["blocks"]:
-            c = dict(b)
-            c.pop("ink_colour", None)
-            c.pop("ground", None)
-            c["hand"] = hand_key.get(id(b["hand"])) if b.get("hand") else None
-            c["contrast"] = {k: v for k, v in b["contrast"].items()}
-            nb.append(c)
-        o["blocks"] = nb
-        items_out.append(o)
-    ages = {c: dict(AGE[c]) for c in AGE}
-    palette = dict(
-        stocks={k: dict(name=v["name"], fresh=list(v["rgb"]), fade_to=(list(v["fade_to"]) if v["fade_to"] else None), tau_days=v["tau"], gsm=v["gsm"], aged={c: list(age_stock(k, c)) for c in AGE}) for k, v in STOCKS.items()},
-        inks={k: dict(name=v["name"], fresh=(list(v["rgb"]) if v["rgb"] else None), tau_days=v["tau"]) for k, v in INKS.items()},
-        paints={k: dict(name=v["name"], fresh=list(v["rgb"]), aged={c: list(age_paint(v["rgb"], c)) for c in AGE}) for k, v in PAINTS.items()},
-        grime=list(GRIME), yellowed=list(YELLOWED))
-    checks = make_checks(items, by_id, cases, placements)
-    target = dict(
-        schema="ledger.cloud-week-42.target.posters-boards-plates/1", family="posters-boards-plates",
-        status="FIRST TRY, 8 October 2026 (cloud week 42), written from the PC's earlier notes, the repository and one reached photograph set; unit 4.2, 4.3 and 4.4 build from this file alone. self_check below is written by self_check.py.",
-        summary_line=("%d sheets, cards, boards and plates for Quay Street's paper and small boards: 16 bills and stickers (the poll-tax set, the chapel hall's, the fights, the market, the Tivoli, two goods), "
-                      "7 ferry and Harbour Board sheets, 5 police and council notices, 35 shop-window and newsagent cards, 4 letting boards with a proposed agent, 9 street name plates, 2 notice cases; every word ours and listed, "
-                      "autumn 1990 dates with the weekdays computed, four ageing classes, a layered paste plan for the quay gable and the empty unit's glass, %d placements and %d checks." % (len(items), len(placements), len(checks))),
-        units=dict(mm="every item's own frame: x from the viewer's LEFT edge as seen in the game, y UP from the bottom edge; baseline_mm is measured up from the bottom edge",
-                   m="surfaces: u from the surface's viewer's-left edge, z up from the pavement; street x along the street (0 south)", colour="sRGB 0..255; contrast is WCAG; dE is CIE76 on Lab D65",
-                   px_per_mm="2 for paper and cards (so 2.4 mm of fine print is 4.8 px), 1 for boards and plates"),
-        kinds=dict(Read="printed in a source file", Scaled="measured off a drawing or the game's own files", Photo="measured on a photograph today", Derived="computed from the above",
-                   Judgement="the writer's, overturned by a better source", Lead="a search summary: never a number"),
-        axis=dict(rule="as the fascia target: the game mirrors the recipe, so low street x is on the viewer's RIGHT looking at the east parade and on the viewer's LEFT looking at the west block; every item's x runs from the viewer's left; the gable SF1 is read looking +x with the front corner at the viewer's left",
-                  evidence=["production/cloud-week/targets/fascia-signs/TARGET.md section 2", "production/previews/morning-hook-day-2026-10-08.jpg: the quay gable is the big brick wall at the right of the hook frame"]),
-        calendar=dict(year=YEAR, window="1 October to 30 November 1990 by default; the dated bills' weekdays are computed, so any date in 1988 to 1992 can be set with date_slot rules",
-                      note="1 October 1990 was a Monday. Every printed weekday is computed from datetime.date and checked by G.dates."),
-        formats={k: dict(v) for k, v in FORMATS.items()},
-        fonts=fonts, palette=palette, age_classes=ages,
-        age_rules=dict(note="Four classes by days on the wall. Colour fade by ink: f = 1 - exp(-t / tau), tau in days (palette.inks, palette.stocks); paper yellows 30 per cent of YELLOWED at class D; grime film GRIME mixed 0, 5, 12, 22 per cent over the paper and 35 per cent of that over ink. Order of fastness (Judgement): fluorescent stock, then red, then blue, then black, then photocopier toner.",
-                       paper_wear=dict(wrinkle=dict(amplitude_mm=[0.4, 1.5], wavelength_mm=[12, 40], note="wallpaper-paste cockling in the height map, stronger along the paste's brush direction (vertical)"),
-                                       edge_lift=dict(corners=[0, 3], radius_mm=[15, 60], class_A=0, class_D=3), tears=dict(count=[0, 4], width_mm=[20, 140], from_edge=True),
-                                       rain_runs=dict(count_per_m=[2, 8], length_mm=[10, 60], width_mm=[0.4, 1.5], opacity=[0.15, 0.4], direction="down from the top edge and from any lifted corner", ink="red and dye inks run first"),
-                                       paste_halo=dict(width_mm=[2, 10], colour=[168, 148, 110], opacity=[0.15, 0.4], note="class C and D only, round the edges where a bill is lifting"),
-                                       glue_stain=dict(note="dark (60,50,40) 0.25 opacity patches where a later bill has pasted over a lower one's tear"),
-                                       loss=dict(class_B=[0, 0.05], class_C=[0.03, 0.2], class_D=[0.3, 0.6], note="share of the sheet gone: bottom corners and lower third first"),
-                                       wet=dict(darken=0.12, saturation=1.1, note="a runtime hint for the material: bills darken and saturate when the wall is wet; roughness drops to 0.55 for a shower"),
-                                       skew_deg=[-1.5, 1.5], overposting=dict(layers=[1, 3], note="each newer bill may cover up to 55 per cent of an older one; edges overlap 0 to 40 mm; the newer bill lies flatter"))),
-        processes=PROCESSES, surfaces=SURFACES, west_piers=west_piers(), shops=shop_geometry(), card_board=cb, wear_tables=wt, placements=placements, cases=cases,
-        photo=dict(P1=CASE_PHOTO, ratios=CASE_RATIOS, preview=["production/previews/cloud-week/refs/posters-boards-plates/P1-urban-street-01-notice-case.jpg",
-                                                              "production/previews/cloud-week/refs/posters-boards-plates/P1-urban-street-01-notice-case-target-on-photo.jpg"]),
-        items=items_out, approved_words=words, approved_word_parts=tokens, ghost_words=ghosts, proposed_names=PROPOSED,
-        forbidden_patterns=FORBIDDEN_WORDS, checks=checks, disagreements_photographs_win=DISAGREEMENTS, sources=SOURCES, unreached=UNREACHED,
-        would_read_when_network_opens=WOULD_READ, could_not_settle=COULD_NOT_SETTLE,
-        evidence_split=dict(
-            photographs_measured_today="the vertical proportions of one glazed notice case (P1); nothing else",
-            earlier_notes="the 1990 mix of print (Letraset, photocopy, two-colour), the Kindersley recommendation of 1952, the 1 October 1990 winter timetable date, cod at about 2.60 a lb, the Harbour Board's blue and white enamel, the ferry's pasted winter sheets, the pound-and-pence prices of 1990 (all cited from the repository, not re-measured)",
-            judgement="every size, colour, layout, wording, price, ageing number and placement not listed above"),
-        self_check=None)
-    target["hand_styles"] = dict(felt=HAND_FELT, felt_fine=HAND_FELT_FINE, ballpoint=HAND_BALL)
-    write_json(target)
-    print("wrote target.json", len(items), "items", len(checks), "checks", len(placements), "placements")
-
-
 
 # --------------------------------------------------------------------------------------------
 # 13. Shop windows and doors: the cards. Geometry from the fascia target (street x, door ends) and the recipe's shopfront numbers.
 # --------------------------------------------------------------------------------------------
 PIL_W, GLASS_W, DOOR_W, SIDE_W = 0.35, 3.562, 0.90, 0.838
+HOURS_PLATE = dict(w_mm=300, h_mm=190, z_m=[1.355, 1.545], assumed_centre_u_m=0.45, note="the fascia target: a 300 x 190 plate centred 1.45 m up, on the shop door's glass or the pilaster; its horizontal place is not fixed there, so this target ASSUMES it centred on the door glass (u 0.30 to 0.60) and keeps door cards off that column in z 1.355 to 1.545")
 SHOPS = {
     # id: (side, street x range, door end as the VIEWER sees it, the shop's name in hook-cast.json)
     "fish_market": ("east", (9.0, 15.0), "right"), "ritas": ("east", (15.0, 21.0), "left"), "steam_laundry": ("east", (27.0, 33.0), "left"),
@@ -2072,12 +2248,12 @@ def shop_geometry():
 
 
 def card_board(items_by_id, seed=1990):
-    """The newsagent's window board: 15 cards laid on a 1100 x 900 mm area of the glass, no overlaps beyond the pins' corners."""
+    """The newsagent's window board: 15 cards laid on a 760 x 560 mm area of the glass, no overlaps beyond a corner. EVERY card is taped, by one tab at its top-LEFT
+    (TARGET-REVIEW fault 9): pins are for a cork board, and the cue of a taped card is one tab across the top-left corner."""
     rng = np.random.RandomState(seed)
     ids = [i for i in items_by_id if i.startswith("SA")]
     W, H = 760.0, 560.0
     placed = []
-    # the tariff card first, top left; then rows from the top
     order = ["SA15"] + [i for i in ids if i != "SA15"]
     x, y, rowh = 20.0, H - 20.0, 0.0
     for iid in order:
@@ -2086,40 +2262,42 @@ def card_board(items_by_id, seed=1990):
             x, y, rowh = 20.0, y - rowh - 28, 0.0
         jitter = float(rng.uniform(-6, 6)), float(rng.uniform(-8, 8))
         placed.append(dict(item=iid, x_mm=round(x + jitter[0], 1), y_mm=round(y - h + jitter[1], 1), w_mm=w, h_mm=h, rot_deg=round(float(rng.uniform(-2.5, 2.5)), 1),
-                           fixing=["pin top", "tape top-left", "tape top-right", "pin top and tape"][int(rng.randint(0, 4))]))
+                           fixing="tape: one tab across the top-left corner"))
         x += w + 26 + float(rng.uniform(0, 14))
         rowh = max(rowh, h)
     return dict(id="SB1", title="the newsagent's window board of cards", area_mm=[W, H], glass_u_m=1.95, z_bottom_m=0.90, cards=placed, seed=seed,
-                note="cards are taped to the inside of the glass (pins are for a cork board); 15 cards; no card overlaps another by more than a pin's corner; the area sits at glass u 1.95 to 2.71 m from the glass's viewer's-left edge, z 0.90 to 1.46 m")
+                note="cards are taped to the inside of the glass, each by ONE tab of yellowed tape across its top-left corner (pins are for a cork board); 15 cards; no card overlaps another by more than a corner; the area sits at glass u 1.95 to 2.71 m from the glass's viewer's-left edge, z 0.90 to 1.46 m")
 
 
 def shop_placements(items_by_id):
     P = []
 
-    def add(item, shop, where, u, z, rot=0.0, age="B", inside=False, note=None, show_when=None):
+    def add(item, shop, where, u, z, rot=0.0, age="B", inside=False, note=None, show_when=None, layer=1):
         it = items_by_id[item]
         P.append(dict(item=item, surface="SHOP", shop=shop, where=where, u_m=u, z_bottom_m=z, w_m=it["format"]["w_mm"] / 1000.0, h_m=it["format"]["h_mm"] / 1000.0,
-                      rot_deg=rot, layer=1, age_class=age, inside=inside, note=note, show_when=show_when))
+                      rot_deg=rot, layer=layer, age_class=age, inside=inside, note=note, show_when=show_when))
     # u for where="glass": metres from the glass's viewer's-left edge; for where="door": from the shop door's viewer's-left edge
     for k, (iid, u) in enumerate((("K09a", 0.30), ("K09b", 0.95), ("K09c", 1.60), ("K09d", 2.25), ("K09e", 2.80), ("K09f", 3.30))):
-        add(iid, "fish_market", "glass", u, 0.66, rot=[-2, 3, -1, 2, -3, 1][k], inside=True, note="stuck in the fish on the slab, behind the glass: the shop-room builder's slab at about 0.6 m; decal cards on the interior card")
+        add(iid, "fish_market", "glass", u, 0.66, rot=[-2, 3, -1, 2, -3, 1][k], inside=True, note="taped inside the glass at the slab's height (one tab at the top-left): the shop-room builder's slab is at about 0.6 m; decal cards on the interior card")
     add("K04", "fish_market", "door", 0.375, 1.05, note="NO DOGS, on the shop door's glass below the hours plate")
     add("K03a", "fish_market", "door", 0.35, 1.62, inside=True, show_when="open", note="the OPEN face when the shop is open (hook-cast hours); K03b when it is shut")
     add("K03a", "ritas", "door", 0.35, 1.62, inside=True, show_when="open")
     add("K03a", "steam_laundry", "door", 0.35, 1.62, inside=True, show_when="open")
-    add("K06a", "steam_laundry", "glass", 0.20, 1.25, rot=1.0, inside=True, note="LAST WASH: the hour is an hour before the closing time in hook-cast.json (laundry 8 to 5.30)")
+    add("K06a", "steam_laundry", "glass", 0.20, 1.25, rot=1.0, inside=True, note="LAST WASH: the hour is an hour before the closing time in hook-cast.json (laundry 8 to 5.30); hung on a string and a sucker")
     add("K06b", "steam_laundry", "glass", 1.85, 1.00, rot=-0.8, note="a printed sticker on the outside of the glass")
     add("K06c", "steam_laundry", "interior", 0.0, 0.85, rot=2.0, inside=True, note="on a machine door, inside: the shop-room builder's; the card is the item")
     for k, (iid, u, z) in enumerate((("K07a", 0.20, 1.55), ("K07b", 0.95, 1.20), ("K07c", 1.70, 1.60), ("K07d", 2.45, 1.25))):
         add(iid, "grocer", "glass", u, z, rot=[-3, 2, -2, 4][k], inside=True, note="taped inside the glass; the fluorescent stock fades within weeks (tau 45 to 50 days)")
     add("K08", "grocer", "glass", 3.00, 0.95, inside=True, note="SORRY NO CREDIT GIVEN, A5 landscape, low in the glass")
+    add("D01", "grocer", "glass", 1.25, 0.80, rot=0.8, inside=True, age="B", note="the chapel hall's dance notice (A3 photocopy), taped inside the grocer's glass")
     add("K04", "grocer", "door", 0.375, 1.05)
     add("K03a", "grocer", "door", 0.35, 1.62, inside=True, show_when="open")
     add("K03a", "chandler", "door", 0.35, 1.62, inside=True, show_when="open")
     add("K03a", "ironmonger", "door", 0.35, 1.62, inside=True, show_when="open")
+    add("T03", "ironmonger", "glass", 1.20, 0.80, rot=-0.6, inside=True, age="B", note="the Tivoli's programme as a window bill: a cinema gave shops its bill for the window (Judgement)")
     add("K03a", "newsagent", "door", 0.35, 1.62, inside=True, show_when="open")
-    add("K05", "newsagent", "door", 0.345, 1.12, rot=1.5, note="PLEASE SHUT THE DOOR, taped to the door glass below the hours plate (1.355 to 1.545)")
-    add("K02", "newsagent", "glass", 0.30, 1.20, inside=True, show_when="Monday 11.00 to 12.00 (hook-cast.json hals hours_breaks mon [11, 12]); hands at 12", note="BACK AT, hands at 12 o'clock")
+    add("K05", "newsagent", "door", 0.64, 1.42, rot=1.5, age="B", note="PLEASE SHUT THE DOOR, taped to the door glass, bottom 1.42 m (centre 1.494 m). TARGET-REVIEW fault 10 asked bottom 1.38 so that its centre is the 1.45 m of its own words; the fascia target's vinyl row TOBACCONIST & CONFECTIONER on the same glass is at z 1.35, cap 70 mm (top 1.385, tolerance 0.03), so the card sits just above it and the words now say bottom 1.42. To the right of the assumed hours plate (300 mm centred on the door glass: u 0.30 to 0.60)")
+    add("J01", "newsagent", "glass", 2.80, 1.00, rot=0.5, inside=True, age="B", note="the chapel hall's jumble-sale notice (A3 photocopy), taped inside the newsagent's glass beside the card board SB1 (u 1.95 to 2.71)")
     add("K04", "tea_rooms", "door", 0.375, 1.05)
     add("K03a", "tea_rooms", "door", 0.35, 1.62, inside=True, show_when="open")
     return P
@@ -2127,18 +2305,258 @@ def shop_placements(items_by_id):
 
 def wear_tables():
     return dict(
-        bill_pasted=dict(applies="P01 to P03, J01, D01, W01, B01, M01, G01, G02, T01 to T03: pasted bills", classes="age_rules", gable_extra="soot streaks from the eaves on the upper edge of every bill (opacity 0.1 to 0.25, 20 to 120 mm long), splash-back dirt in the lower 0.4 m (class C and D: 0.2 to 0.35 darker), bills lie over brick courses: the mortar lines show through as a 0.5 mm relief at 75 mm pitch"),
-        glass_bill=dict(applies="bills on the empty unit's whitened glass", note="pasted on the outside of the glass: smooth, no brick relief; condensation runs stain the lower third of the paper, whitewash shows round and under, the lower edge curls out 3 to 8 mm, sun-fade is stronger (tau x 0.7)"),
+        bill_pasted=dict(applies="P01 to P03, W01, B01, M01, G01, G02, T01 to T03 (and their named variants), T01s, T02s: pasted bills", classes="age_rules", gable_extra="soot streaks from the eaves on the upper edge of every bill (opacity 0.1 to 0.25, 20 to 120 mm long), splash-back dirt in the lower 0.4 m (class C and D: 0.2 to 0.35 darker), bills lie over brick courses: the mortar lines show through as a 0.5 mm relief at 75 mm pitch"),
+        glass_bill=dict(applies="bills and photocopies on the empty unit's whitened glass or a shop's window", note="smooth, no brick relief; condensation runs stain the lower third of the paper, whitewash shows round and under, the lower edge curls out 3 to 8 mm, sun-fade is stronger (tau x 0.7); every taped sheet: four tabs of yellowed tape at its corners (the hand cards: one tab at the top-left)"),
         notice_sleeve=dict(applies="C01 a to c, C02, C03", sleeve="clear polythene 80 microns; a crease line across the sleeve 1 or 2 per sheet; fog on the inside 0.1 to 0.3 opacity in the lower third; water beads 6 to 20, 2 to 6 mm across, in the lower third; cable ties: 2, tails 40 to 90 mm left uncut; the paper inside yellows to class C within a season; the sheet slides down 5 to 20 mm inside the sleeve"),
-        card_felt=dict(applies="K01, K02, K05, K06 a and c, K09, SA15 and the star cards", dog_ears="0 to 2 corners, radius 6 to 14 mm", smudge="0 or 1 finger smudge 5 to 12 mm", sun="the top third bleaches first (tau x 0.8)", tape="yellowed tape ghosts 25 x 40 mm at two corners where an older card hung", warp_mm=1.5),
-        card_ballpoint=dict(applies="SA01 to SA14", note="record cards curl 1 to 3 mm, a pin hole top-centre, tape tabs yellowing, the ballpoint blue fades (tau 250 d), the felt heading fades slower; some cards sit crooked by 1 to 4 degrees; the board's oldest cards are class C"),
+        card_felt=dict(applies="K01, K05, K06 a and c, K09, SA15 and the star cards", dog_ears="0 to 2 corners, radius 6 to 14 mm", smudge="0 or 1 finger smudge 5 to 12 mm", sun="the top third bleaches first (tau x 0.8)", tape="the ONE tab of yellowed tape at the top-left is the cue; older tape ghosts may show only on the LEFT half", warp_mm=1.5),
+        card_ballpoint=dict(applies="SA01 to SA14", note="record cards curl 1 to 3 mm, one tab of tape yellowing at the top-left, the ballpoint blue fades (tau 250 d), the felt heading fades slower; some cards sit crooked by 1 to 4 degrees; the board's oldest cards are class C"),
         sticker=dict(applies="P05, P06, K04, K06b", edge_lift_mm=[8, 20], scratches=[0, 4], loss_class_C=[0.05, 0.15], loss_class_D=[0.3, 0.6], note="a sticker on a lamp column wraps the shaft; peeled strips leave white paper-fibre residue"),
         enamel_plate=dict(applies="H01, H02", chips=[12, 30], chip_mm=[2, 9], rust_halo_mm=[3, 8], crazing="short crack lines 10 to 25 mm near the bolt holes", rust_tears_mm=[150, 400], bird_lime="1 streak from the top edge, 20 to 50 mm wide", salt_bloom="H02: white fur along the lower edge"),
-        cast_iron_plate=dict(applies="S01 a, n, p (QUAY STREET)", flake_share=[0.03, 0.06], flake_note="paint lifts first at the raised letter edges, showing grey iron and a rust film (110,70,45)", face="white yellowed to class C/D (232,230,220 -> 214,208,190)", letters="black faded to 44,44,48", grime_gradient=0.12, screw_rust_mm=[20, 80], bird_lime="1 or 2 patches 20 to 50 mm on the top border"),
+        cast_aluminium_plate=dict(applies="S01 n, d (QUAY STREET)", flake_share=[0.03, 0.06], flake_note="paint lifts first at the raised letter and border edges, showing bare grey aluminium and a pale oxide bloom (150,150,146)", face="white yellowed to class C/D (232,230,220 -> 214,208,190)", letters="black faded to 44,44,48", grime_gradient=0.12, screw_rust_mm=[20, 80], bird_lime="1 or 2 patches 20 to 50 mm on the top border"),
         pressed_plate=dict(applies="S02 and S03 (WEIGHHOUSE LANE, TANNERY ROW)", note="stove enamel on aluminium or vitreous enamel on steel: chips at the corners and at the screws only (4 to 12 chips of 2 to 6 mm), a grime gradient, no flaking of the letters; the enamel keeps its gloss (roughness 0.3 or 0.12)"),
-        letting_board=dict(applies="L01 to L04", peel_bottom_edge="1 to 3 per cent of the area along the bottom edge, 2 to 6 mm bites", grime_streaks="3 to 7 streaks 100 to 300 mm from the top edge, 0.15 to 0.3 opacity", algae="class D: a 20 mm film along the foot, (62,78,52) at 0.3", rust_runs_mm=[40, 140], red_fade="the agent's red (178,34,40) fades towards chalk-pink (196,128,118) by 0.3 at class D", white_yellowing="agent white (236,236,230) to (214,206,184) at class D"),
-        case=dict(applies="HC1, FC1", note="see the cases' own wear strings"),
+        letting_board=dict(applies="L01 to L04 (L03n too)", peel_bottom_edge="1 to 3 per cent of the area along the bottom edge, 2 to 6 mm bites", grime_streaks="3 to 7 streaks 100 to 300 mm from the top edge, 0.15 to 0.3 opacity", algae="class D: a 20 mm film along the foot, (62,78,52) at 0.3", rust_runs_mm=[40, 140], red_fade="the red fades towards chalk-pink (196,128,118) by 0.3 at class D", white_yellowing="white (236,236,230) to (214,206,184) at class D"),
+        case=dict(applies="HC1, FC1 (neither placed)", note="see the cases' own wear strings"),
     )
+
+
+# --------------------------------------------------------------------------------------------
+# 14. The render contract, the fixings, the second-try answers.
+# --------------------------------------------------------------------------------------------
+RENDER_CONTRACT = dict(
+    texture="EVERY TEXTURE IS SQUARE-ON: no skew, no rotation and no perspective is baked into any base-colour image. Skew and rotation live ONLY in the placement's rot_deg (a hand card's tilt and the A3 sheet's crookedness too). ITEM.square fails a texture turned by more than 0.3 degrees; PLACE.built checks the placed decal's rot_deg to 0.3 degrees.",
+    scale="Each item is rendered at its own px_per_mm (items[].px_per_mm, chosen so that every glyph can be told from every other: glyphlib.needed_ppm). Row 0 of the image is the TOP edge; x runs from the viewer's left; y in the item frame runs up from the bottom edge.",
+    ink_mask="The reader's ink mask is the set of pixels nearer (CIE76) the block's aged ink colour than its aged ground colour. Imprints (role imprint, cap 2.4 mm) are not read glyph by glyph: they are illegible by design.",
+    glyph_manifest=dict(
+        file="<ITEM>.glyphs.json, written by the renderer beside every base-colour image (target_drawing.py and self_check.py show a reference writer)",
+        schema="{item, px_per_mm, size_px:[w,h], blocks:{<block id>:[{ch, font, weight, em_mm, ox_mm, baseline_mm, rot_deg, emb_mm}, ...]}}: ONE ENTRY PER CHARACTER OF THE APPROVED STRING, SPACES INCLUDED, IN ORDER. "
+               "em_mm: the em of the glyph as drawn (mm, x the glyph's own size jitter); ox_mm: the pen origin from the item's left edge; baseline_mm: up from the item's bottom edge (the hand jitter included); rot_deg: counter-clockwise about the pen origin plus half the advance, on the baseline; emb_mm: the stroke added to the font's own (a felt pen), never over 0.6.",
+        rule="The checker re-renders every glyph from the manifest and reads the pixels in the glyph's own cell. A manifest that is not the approved string, or whose glyphs lie outside the block's envelope, fails before any pixel is read.",
+        envelope=dict(print=dict(ox_mm=0.6, baseline_mm=0.5, rot_deg=0.1, em_frac=0.01, emb_mm=0.2),
+                      hand="the block's hand style: baseline within 3.5 sd + 0.6 mm, rotation within 3.5 sd, size within 3.5 sd of 1, origin within 6 mm of the layout at the first glyph and within 6 mm + 5 per cent of the distance along the line, emb_mm within 0.6")),
+    glyph_gate=dict(F_min=gl.F_MIN, dilation_mm=0.5, sep_gate=gl.SEP_GATE, n_min_px=gl.N_MIN, tol_px=gl.TOL_PX, alternatives="A-Z a-z 0-9 £ . , ' ’ - — – & · ? : ! (the font's own glyphs only)",
+                    twins="shape twins (I and l, ' and ’, and any pair differing by under 0.03 mm2 at 24 px/mm) and a glyph that is its own mirror are listed and not scored",
+                    why="see glyphlib.py's docstring and the disagreement 'the glyph check's margin'"),
+    placed_street="PLACE.built: the builder writes placed_decals.json (item, surface, centre u and z or street x, rot_deg, scale); each decal lies within 20 mm of the placement's centre and 0.3 degrees of its rot_deg, and its largest block, read in a render of the surface at 1 px per mm after turning the decal back by rot_deg, passes the glyph check.",
+)
+FIXINGS = dict(
+    tape_tab=dict(kind="a tab of yellowed adhesive tape", length_mm=38, width_mm=16, angle_deg=40, centre_in_mm=[12, 12], from_corner="top-left", rgb=[196, 164, 84], opacity=0.85, lifting_edge_mm=3,
+                  note="lies across the corner on the 40-degree diagonal, centre 12 mm in from the top edge and 12 mm in from the left edge; part of it passes the card's edge. THE CUE of every taped or stuck hand card (K05, K06c, K07a-d, K09a-f, SA01-SA15): this ONE tab at the top-LEFT, nothing on the right half. (A sheet taped by its four corners, as the A3 notices are, carries four such tabs and no cue is needed: they are printed or photocopied, not hand-lettered.)"),
+    string_sucker=dict(kind="a string loop and a rubber sucker", loop_mm=220, knot_mm=8, sucker_diameter_mm=22, sucker_centre_in_mm=[14, 14], from_corner="top-left", sucker_rgb=[150, 150, 146], sucker_opacity=0.90, string_rgb=[236, 232, 220],
+                       note="THE CUE of the string-hung hand cards (K01, K06a): the knot and the sucker at the top-LEFT, the loop rising from them past the card's top edge; nothing on the right half"),
+    four_tabs=dict(kind="four tabs of yellowed tape, one at each corner of an A3 or A4 sheet", length_mm=38, width_mm=16, angle_deg=40, rgb=[196, 164, 84], opacity=0.85),
+    cue_patch_mm=25,
+)
+PLACEHOLDER_RULE = dict(
+    rule="A placement whose item carries a proposed (unminted) name in a block of cap 10 mm or more is HELD: held_until_minted true, `names` listing the names. G.page.placeholders fails while any held placement is in the built street and any of its names lacks a DECISIONS.md line of the form '- ... MINTED: <NAME> ...'.",
+    why="the 3 October ruling: placeholders never reach his page; whole street frames do; from across the street an agent's name at 52 mm capitals is about 8 px a capital at 8 m",
+    default_street="carries only nameless items: P01-P03 say STAND TOGETHER, W01 names no ring names or hall, D01 says LIVE MUSIC, T01 to T03 say A NEW THRILLER and A NEW COMEDY, L02 and L03n have no agent. The named versions (-named, L01, L03, B01, G01, G02) are held.",
+    allowed_unheld="proposed names under the 10 mm line stay: the 2.4 mm imprints (QUAY PRINT, the campaign, the publisher), the 3.6 to 6 mm campaign lines on P04 to P06")
+
+UNPLACED_WHY = {
+    "HC1": "the Harbour Board's case belongs by the dock office (brand bible; hook-cast harbour_office): not built",
+    "FC1": "the timetable board belongs at each ramp (brand bible): not built",
+    "H03": "pinned in HC1", "H04": "pinned in HC1", "H05": "pinned in HC1", "F01": "on FC1", "F02": "under F01 on FC1",
+    "K02": "the newsagent never closes at midday (hook-cast 6 to 17.30) and Hal's shop is not on the built street",
+    "B01": "held (THE DRILL HALL); a spare for the town", "G01": "held (WHITEWELL); a national four-sheet belongs in a contractor's panel",
+    "G02": "held (QUAYSIDE)", "T01": "a spare Tivoli quad (nameless)", "T03": "(placed in a shop window)", "T01s": "the strip of T01, which is not placed",
+    "P04": "a spare sheet for the town (the advice evening)", "C01b": "a slot filler: the simulation's other appeals", "C01c": "a slot filler",
+    "K03b": "the CLOSED face of K03a, shown when the shop is shut", "L01": "held (the agent's name); disagrees with the fascia target", "L03": "held (the agent's name)",
+    "K01": "for a shop that shuts for lunch: none on the built street does (hook-cast hours)", "H01": "a gate or wall of the docks: not built",
+    "S02n": "a kit plate: no street plate on the yard entrance", "S02d": "a kit plate", "S03n": "a kit plate", "S03d": "a kit plate", "S01d": "a variant of S01n",
+}
+
+
+def second_try_answers():
+    return [
+        dict(fault=1, short="the checks could not see a wrong word, date or price in the pixels",
+             answer="ITEM.glyphs reads one glyph at a time in its own cell (glyphlib.py, self_check.py group 12): F >= 0.85 at 0.5 mm against the glyph re-rendered from the manifest, and SEP >= 0.70 against every other glyph of the font and its own mirror, on the pixels where they differ; each item's pixel scale is chosen so that every non-twin pair differs by at least 8 pixels. Every wrong render the reviewer built (a changed date, a changed price or time, TEA for ALE, Teas for Beer, LUNCH for BINGO, a mirrored hand card, a misspelt plate) FAILS; a true render, jittered hand renders (20 seeds each of K01 and SA06, 8 each of K07a, K09a and SA15) and a true render turned 1.2 degrees and read in the placed street PASS. The reviewer's own harness, run unchanged, now also fails every PRINT wrong render (the line score includes the worst glyph); hand lines need the renderer's manifest, which is the review's own amendment (a). ART.eye, PLACE.built, ITEM.square and the square-on rule are added."),
+        dict(fault=2, short="unminted placeholder names were the street's default dressing",
+             answer="the default street carries nameless items only (STAND TOGETHER, LIVE MUSIC, A NEW THRILLER, A NEW COMEDY, no ring names, no hall, no agent); the named versions are -named variants and L01, L03, B01, G01, G02, each held_until_minted with its names; their placements are held twins; G.page.placeholders added and tested."),
+        dict(fault=3, short="the WEIGHHOUSE LANE plate named the yard entrance",
+             answer="the S02d placement and every 'proposed because canon does not name the opening' line are deleted; S02 is a kit plate like S03; the side opening is the yard entrance and carries no plate; C03 keeps DIVERSION VIA WEIGHHOUSE LANE."),
+        dict(fault=4, short="the paste plan was far denser than the asset plan and covered the gable the sheet shows bare",
+             answer="eight fly-posters and four poll-tax bills in all (G.place.paper): SF1 carries one layer of three bills (P01 u 0.70, W01 u 1.30, T02 u 1.90, bottoms z 1.00) with the 75 mm cast-iron downpipe at u 0.30 and paper 150 mm clear; the plate stays at u 1.0; SF2 carries M01, P03, P02, J01, C02 and C01a; the piers keep only W1.0; P02 is also an A3 window bill in the bay-1 window at x 12.3 (scale 0.585, top 1.90 m); no sticker on the gable, no bill on the other piers."),
+        dict(fault=5, short="two targets gave two letting boards, and C02 used the wrong address",
+             answer="L02 is the fascia target's board exactly (900 x 450, TO LET, Libre Franklin 800 cap 130, vinyl red, no agent, no number) and is the default on SF5; L01 (1200 x 450 with an agent) is a held variant that would need the fascia target changed in the same batch; G.letting.mount compares size, font, weight, cap and colour with the fascia target; C02 reads 'Change of use of the ground floor, 7 Quay Street,'."),
+        dict(fault=6, short="two proposed names collided with real ones",
+             answer="TIGER JIM LARKIN is BIG TED HOLROYD and THE SEA WOLF is THE HARPOONER (and MAD MAURICE and THE BARON, a television series, are SPANNER SMITH and THE STEVEDORE), all held and listed for the town to check; LARKIN, SEA WOLF and SEA WOLVES are in forbidden_patterns.real_marks, with the real wrestlers, soap powders, cinema chains and campaigns the probe listed."),
+        dict(fault=7, short="period wording and process read as the wrong decade or country",
+             answer="D01 says SEQUENCE; W01 says PROFESSIONAL (Oswald 700 fitted to the 428 mm measure); the Tivoli's weeks start on Thursday (T01 from THURSDAY 18 OCTOBER, T02 from THURSDAY 25 OCTOBER, T03 four lines); the venue and date are a separate letterpress strip (T01s, T02s, 1016 x 90 mm, black on white, own class, 0.25 degrees off the quad's square) and the litho's top band is blank; J01 and D01 are photocopy A3 notices in shop windows; H03 reads NOTICE TO MARINERS."),
+        dict(fault=8, short="no street date, so the age classes contradicted each other",
+             answer="calendar.street_date is Monday 29 October 1990; T03 and D01 are class B, J01 class B everywhere; G.dates.age checks every placed dated item against its class's days (event - 42 <= street date - age <= event; a notice at or after its date) and is tested on the first try's contradiction."),
+        dict(fault=9, short="the mirror guard of the 29 hand cards contradicted their fixings",
+             answer="every SA card is taped (no pins); each hand card has ONE cue matching its fixing and nothing on the right half: one tab of yellowed tape across the top-LEFT corner (K05, K06c, K07a-d, K09a-f, SA01-SA15) or the knot and sucker at the top-LEFT (K01, K06a); every crease, tear and pin-hole cue is gone; G.mirror.cues reads the 25 mm top-left and top-right patches only and is tested on all 29 cards, true and mirrored; ITEM.glyphs also fails a mirrored hand card."),
+        dict(fault=10, short="placements contradicted the brand bible and the items' own words",
+             answer="HC1 and FC1 are not placed (FC1 is a painted timber board, 600 x 800, F01 over F02, no glazing); C01a is inside the empty unit's glass (SF2, u 0.30, z 1.30, four tape tabs); K02 is unplaced; K05's bottom is 1.42 m (not 1.38: the fascia target's vinyl lettering on the same glass tops out at 1.385) at u 0.64, beside the assumed hours plate."),
+        dict(fault=11, short="parts a script could not make from target.json alone",
+             answer="K04: ring 7 mm and a 7 mm bar at 45 degrees, polygon given; G02: a white ring 16 mm wide at 0.70 of the disc's radius; K02: ticks 2 x 8, hour hand 30 x 5, minute hand 40 x 4 (buff card), a 6 mm brass fastener; plates: 10 degrees of draft and a 0.8 mm top radius on raised letters and border, pressed aluminium rolled edge radius 3 mm, enamel rolled edge 6 mm, cast edge 6 mm with a 2 mm arris; HC1: rails 46 x 60 with a 4 mm chamfer, glass 4 mm in a 10 x 10 mm bead; also K03's hole and chain, and every enamel board's corner and roll radii."),
+        dict(fault=12, short="the ferry stranded its one boat",
+             answer="the far-side column ends '9.45 10.45 / LAST CROSSING 11.15', so the boat is at the Hook at 11.30 each night and the street's 'last crossing's at eleven' holds from the Hook; G.ferry.schedule simulates the one vessel from the printed blocks and checks that each day ends where the next day's first sailing leaves (Monday to Saturday, Sunday, Monday)."),
+        dict(fault=13, short="name plates against the project's own note",
+             answer="the default and placed variant is `n` (name only); `d` stays a variant; S01p, S02p, S03p and MR1 are deleted; QUAY STREET is cast aluminium with letters and border raised 3 mm, painted white with black letters, the paint flaking at the raised edges; every plate is at least 200 mm deep; the relief, draft and edge radii are in numbers and G.plates.make checks the lettering against them (Marcellus SC's thinnest stroke at 90 mm capitals is thick enough for a cast or pressed letter)."),
+    ]
+
+
+def font_decisions():
+    return [
+        dict(font="Libre Franklin", plan="not on asset-plan note 4's table (Helvetica and Arial stand-ins: Arimo, Inter, Archivo, Hanken Grotesk, Work Sans)", why="the fascia target (same batch) already sets the letting board's TO LET in Libre Franklin 800; this target compares L02 with it, and Libre Franklin is in production/fonts; Franklin Gothic is also the right 1990 newsagent and notice face",
+             decisions_line="9 Oct 2026 | Libre Franklin (OFL, already in production/fonts) is used for notice, card and bill copy and the letting board's TO LET, though not on asset-plan note 4's font table | the fascia target already does; Franklin Gothic is the period face | the cloud's target writer | production/cloud-week/targets/posters-boards-plates/TARGET.md"),
+        dict(font="Patrick Hand", plan="not on the table (Caveat Brush, Kalam, Gochi Hand are the 'hand-marked tickets and bills' faces)", why="Patrick Hand is a neat adult print capital with plain figures, which is what a shopkeeper's felt-pen ticket and a ballpoint record card are; Kalam and Caveat Brush are slanted and read as script, and the reviewer notes they look more like a felt marker; Patrick Hand is already in production/fonts. Judgement: the town may swap the hand face without touching the checks (they read whatever face the manifest names)",
+             decisions_line="9 Oct 2026 | Patrick Hand (OFL, already in production/fonts) is the hand-lettering face for felt-pen cards and ballpoint record cards, though the asset plan's table names Caveat Brush, Kalam and Gochi Hand | neat print capitals and plain figures read as a shopkeeper's felt pen; the table's faces are scripts | the cloud's target writer | production/cloud-week/targets/posters-boards-plates/TARGET.md"),
+        dict(font="Libre Baskerville and Josefin Sans", plan="not on the table", why="REMOVED in the second try: the typeset notices use Old Standard TT Regular and Bold (the table's 'Old Standard'), and the Tivoli's strip and programme use Oswald (the table's 'the Tivoli's letters'); Abril Fatface, defined but never used, is removed too", decisions_line=None),
+    ]
+
+
+WEAR_OF = {}
+
+
+def wear_table_for(it):
+    k = it["id"]
+    base = k.replace("-named", "")
+    if base in ("P01", "P02", "P03", "W01", "B01", "M01", "G01", "G02", "T01", "T02", "T03", "T01s", "T02s", "F01", "F02"):
+        return "bill_pasted", None
+    if base in ("J01", "D01", "P04"):
+        return "glass_bill", None
+    if base in ("C01a", "C01b", "C01c", "C02", "C03", "H03", "H04", "H05"):
+        return "notice_sleeve", None
+    if base.startswith("SA"):
+        return "card_ballpoint", ["B", "C"]
+    if base in ("P05", "P06", "K04", "K06b"):
+        return "sticker", ["B", "C", "D"]
+    if base in ("K03a", "K03b", "K08"):
+        return "card_felt", ["A", "B", "C"]
+    if base.startswith("K"):
+        return "card_felt", ["A", "B", "C"]
+    if base in ("H01", "H02"):
+        return "enamel_plate", ["B", "D"]
+    if base.startswith("S01"):
+        return "cast_aluminium_plate", ["C", "D"]
+    if base.startswith("S0"):
+        return "pressed_plate", ["C", "D"]
+    if base.startswith("L"):
+        return "letting_board", ["B", "C", "D"]
+    return "bill_pasted", None
+
+
+def main():
+    items, by_id, cases, placements = build()
+    placements = placements + shop_placements(by_id)
+    cb = card_board(by_id)
+    placements.append(dict(item="SB1", surface="SHOP", shop="newsagent", where="glass", u_m=cb["glass_u_m"], z_bottom_m=cb["z_bottom_m"], w_m=cb["area_mm"][0] / 1000.0,
+                           h_m=cb["area_mm"][1] / 1000.0, rot_deg=0.0, layer=1, age_class="B", inside=True, note="the card board: 15 cards, see card_board"))
+    wt = wear_tables()
+    for it in items:
+        k = it["id"]
+        tbl, default_classes = wear_table_for(it)
+        cl = sorted({p["age_class"] for p in placements if p["item"] == k})
+        it["wear"] = dict(table=tbl, classes=(cl or default_classes or ["B", "C"]))
+    # which proposed names stand on which items
+    prop = []
+    for p in PROPOSED:
+        q = dict(p)
+        q["items"] = sorted(it["id"] for it in items if any(p["name"].lower() in b["text"].lower() for b in it["blocks"]))
+        q["held_items"] = sorted(it["id"] for it in items if p["name"] in it.get("held_names", []))
+        q["max_cap_mm"] = max([b["cap_mm"] for it in items for b in it["blocks"] if p["name"].lower() in b["text"].lower()] or [0])
+        prop.append(q)
+    fonts = {}
+    for k, v in FONTS.items():
+        d = dict(v)
+        d["ofl"] = ofl_info(v["dir"])
+        d["cap_ratio_700"] = round(cap_ratio(k, 700), 3)
+        d["path_hint"] = ("production/fonts/" + v["file"]) if v["in_repo"] else "NOT in production/fonts: the builder adds it with its OFL.txt (fetch: self_check.py --fetch-fonts DIR)"
+        d["coverage"] = {ch: glyph_ok(k, ch) for ch in "£’·—–&.,?:0123456789"}
+        fonts[k] = d
+    words = sorted({norm(b["text"]) for it in items for b in it["blocks"] if not b.get("ghost")})
+    ghosts = sorted({norm(b["text"]) for it in items for b in it["blocks"] if b.get("ghost")})
+    tokens = sorted({t for w in words + ghosts for t in re.findall(r"[A-Za-z0-9£'&.\-]+", w)})
+    items_out = []
+    hand_key = {id(HAND_FELT): "felt", id(HAND_FELT_FINE): "felt_fine", id(HAND_BALL): "ballpoint"}
+    for it in items:
+        o = dict(it)
+        if it["kind"] in ("plate", "board"):
+            o["stock"] = None
+        o["words"] = sorted({norm(b["text"]) for b in it["blocks"]})
+        nb = []
+        for b in it["blocks"]:
+            c = dict(b)
+            c.pop("ink_colour", None)
+            c.pop("ground", None)
+            c["hand"] = hand_key.get(id(b["hand"])) if b.get("hand") else None
+            c["contrast"] = {k: v for k, v in b["contrast"].items()}
+            c["tol"] = block_tols(b, it["px_per_mm"])
+            nb.append(c)
+        o["blocks"] = nb
+        items_out.append(o)
+    ages = {c: dict(AGE[c]) for c in AGE}
+    palette = dict(
+        stocks={k: dict(name=v["name"], fresh=list(v["rgb"]), fade_to=(list(v["fade_to"]) if v["fade_to"] else None), tau_days=v["tau"], gsm=v["gsm"], aged={c: list(age_stock(k, c)) for c in AGE}) for k, v in STOCKS.items()},
+        inks={k: dict(name=v["name"], fresh=(list(v["rgb"]) if v["rgb"] else None), tau_days=v["tau"]) for k, v in INKS.items()},
+        paints={k: dict(name=v["name"], fresh=list(v["rgb"]), aged={c: list(age_paint(v["rgb"], c)) for c in AGE}) for k, v in PAINTS.items()},
+        grime=list(GRIME), yellowed=list(YELLOWED))
+    checks = make_checks(items, by_id, cases, placements)
+    default_pl = [p for p in placements if not p.get("held_until_minted")]
+    placed_ids = {p["item"] for p in placements}
+    on_board = {c["item"] for c in cb["cards"]}
+    unplaced = {}
+    for it in items:
+        k = it["id"]
+        if k in placed_ids:
+            continue
+        if k in UNPLACED_WHY:
+            unplaced[k] = UNPLACED_WHY[k]
+        elif k in on_board:
+            unplaced[k] = "on the newsagent's card board SB1 (card_board)"
+        elif it.get("named_of"):
+            unplaced[k] = "the named twin of %s: held (its placements are the held twins)" % it["named_of"]
+        else:
+            unplaced[k] = "not placed by default"
+    for c in cases:
+        unplaced[c["id"]] = c["not_placed"]
+    n_held = sum(1 for p in placements if p.get("held_until_minted"))
+    target = dict(
+        schema="ledger.cloud-week-42.target.posters-boards-plates/2", family="posters-boards-plates",
+        status="SECOND AND LAST TRY, 9 October 2026 (cloud week 42), after TARGET-REVIEW.md (FAIL, 13 faults); unit 4.2, 4.3 and 4.4 build from this file alone. self_check below is written by self_check.py.",
+        summary_line=("%d sheets, cards, boards and plates for Quay Street's paper and small boards: the poll-tax set, the chapel hall's two photocopied notices, the fights, the market, the Tivoli's quads, strips and programme "
+                      "(each with a NAMELESS default and a held named variant), 7 ferry and Harbour Board sheets, 5 police and council notices, 35 shop-window and newsagent cards, 5 letting boards (the default is the fascia target's), "
+                      "6 street name plates (name only by default); the default street carries no unminted name: %d placements (%d default, %d held twins), 8 fly-posters and 4 poll-tax bills as the asset plan says, "
+                      "the street date Monday 29 October 1990, every item read glyph by glyph in its own pixels, %d checks." % (len(items), len(placements), len(default_pl), n_held, len(checks))),
+        units=dict(mm="every item's own frame: x from the viewer's LEFT edge as seen in the game, y UP from the bottom edge; baseline_mm is measured up from the bottom edge",
+                   m="surfaces: u from the surface's viewer's-left edge, z up from the pavement; street x along the street (0 south)", colour="sRGB 0..255; contrast is WCAG; dE is CIE76 on Lab D65",
+                   px_per_mm="each item's own (items[].px_per_mm, 2 to 16): the scale at which every glyph can be told from every other"),
+        kinds=dict(Read="printed in a source file", Scaled="measured off a drawing or the game's own files", Photo="measured on a photograph today", Derived="computed from the above",
+                   Judgement="the writer's, overturned by a better source", Lead="a search summary: never a number"),
+        axis=dict(rule="as the fascia target: the game mirrors the recipe, so low street x is on the viewer's RIGHT looking at the east parade and on the viewer's LEFT looking at the west block; every item's x runs from the viewer's left; the gable SF1 is read looking +x with the front corner at the viewer's left",
+                  evidence=["production/cloud-week/targets/fascia-signs/TARGET.md section 2", "production/previews/morning-hook-day-2026-10-08.jpg: the quay gable is the big brick wall at the right of the hook frame"]),
+        calendar=dict(year=YEAR, street_date="Monday 29 October 1990", street_date_iso="1990-10-29",
+                      window="1 October to 30 November 1990 by default; the dated bills' weekdays are computed, so any date in 1988 to 1992 can be set with date_slot rules",
+                      note="1 October 1990 was a Monday. 29 October is the one day every dated placement allows (H03 is dated 26 October; T02's film starts on Thursday 25; P01's meeting is the 25th). GMT began on Sunday 28 October. Every printed weekday is computed from datetime.date and checked by G.dates; G.dates.age checks each placed item's age class against the street date."),
+        formats={k: dict(v) for k, v in FORMATS.items()},
+        fonts=fonts, font_decisions=font_decisions(), palette=palette, age_classes=ages,
+        age_rules=dict(note="Four classes by days on the wall (age_classes[class].days). Colour fade by ink: f = 1 - exp(-t / tau), tau in days (palette.inks, palette.stocks); paper yellows 30 per cent of YELLOWED at class D; grime film GRIME mixed 0, 5, 12, 22 per cent over the paper and 35 per cent of that over ink. Order of fastness (Judgement): fluorescent stock, then red, then blue, then black, then photocopier toner.",
+                       paper_wear=dict(wrinkle=dict(amplitude_mm=[0.4, 1.5], wavelength_mm=[12, 40], note="wallpaper-paste cockling in the height map, stronger along the paste's brush direction (vertical)"),
+                                       edge_lift=dict(corners=[0, 3], radius_mm=[15, 60], class_A=0, class_D=3), tears=dict(count=[0, 4], width_mm=[20, 140], from_edge=True),
+                                       rain_runs=dict(count_per_m=[2, 8], length_mm=[10, 60], width_mm=[0.4, 1.5], opacity=[0.15, 0.4], direction="down from the top edge and from any lifted corner", ink="red and dye inks run first"),
+                                       paste_halo=dict(width_mm=[2, 10], colour=[168, 148, 110], opacity=[0.15, 0.4], note="class C and D only, round the edges where a bill is lifting"),
+                                       glue_stain=dict(note="dark (60,50,40) 0.25 opacity patches where a later bill has pasted over a lower one's tear"),
+                                       loss=dict(class_B=[0, 0.05], class_C=[0.03, 0.2], class_D=[0.3, 0.6], note="share of the sheet lost: bottom corners and lower third first"),
+                                       wet=dict(darken=0.12, saturation=1.1, note="a runtime hint for the material: bills darken and saturate when the wall is wet; roughness drops to 0.55 for a shower"),
+                                       skew_deg=[-1.5, 1.5], skew_note="the PLACEMENT's rot_deg only: every texture is square-on",
+                                       overposting=dict(layers=[1, 3], note="each newer bill may cover up to 55 per cent of an older one; edges overlap 0 to 40 mm; the newer bill lies flatter; NOT used on the quay gable's one layer"))),
+        render_contract=RENDER_CONTRACT, fixings=FIXINGS, placeholders=PLACEHOLDER_RULE,
+        processes=PROCESSES, surfaces=SURFACES, west_piers=west_piers(), shops=shop_geometry(), hours_plate=HOURS_PLATE, card_board=cb, wear_tables=wt, placements=placements, unplaced=unplaced, cases=cases,
+        photo=dict(P1=CASE_PHOTO, ratios=CASE_RATIOS, preview=["production/previews/cloud-week/refs/posters-boards-plates/P1-urban-street-01-notice-case.jpg",
+                                                              "production/previews/cloud-week/refs/posters-boards-plates/P1-urban-street-01-notice-case-target-on-photo.jpg"]),
+        items=items_out, approved_words=words, approved_word_parts=tokens, ghost_words=ghosts, proposed_names=prop,
+        forbidden_patterns=FORBIDDEN_WORDS, checks=checks, disagreements_photographs_win=DISAGREEMENTS, sources=SOURCES, unreached=UNREACHED,
+        would_read_when_network_opens=WOULD_READ, could_not_settle=COULD_NOT_SETTLE, second_try=second_try_answers(),
+        evidence_split=dict(
+            photographs_measured_today="the vertical proportions of one glazed notice case (P1); nothing else",
+            earlier_notes="the 1990 mix of print (Letraset, photocopy, two-colour), the Kindersley recommendation of 1952, the 1 October 1990 winter timetable date, cod at about 2.60 a lb, the Harbour Board's blue and white enamel, the ferry's pasted winter sheets, the pound-and-pence prices of 1990 (all cited from the repository, not re-measured)",
+            judgement="every size, colour, layout, wording, price, ageing number and placement not listed above"),
+        self_check=None)
+    target["hand_styles"] = dict(felt=HAND_FELT, felt_fine=HAND_FELT_FINE, ballpoint=HAND_BALL)
+    write_json(target)
+    print("wrote target.json", len(items), "items", len(checks), "checks", len(placements), "placements")
 
 
 if __name__ == "__main__":

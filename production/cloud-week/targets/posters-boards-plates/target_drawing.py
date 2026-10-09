@@ -8,7 +8,7 @@ Writes into OUT_DIR (never into git; pictures belong in production/previews/ onl
     items/<ID>.png        each item at 1 pixel to the millimetre: the ground colour (aged class B), the shapes, the lettering rendered clean
                           from its font where the font file is found, each block's INK BOX (magenta) and BASELINE (cyan), the safe zone (grey)
     sheet_*.png           contact sheets (bills, cards, boards and plates)
-    elevation_*.png       SF1 (the quay gable), SF2 (the empty unit's glass), the west piers, the plates' places, at 4 mm to the pixel
+    elevation_*.png       SF1 (the quay gable with its downpipe), SF2 (the empty unit's glass), piers (the plain west row), plates (where the name plates stand); the default placements only
     case_*.png            the two notice cases and the photographed case's proportions
 
 The fonts are looked up in DIR (--fonts, $PBP_FONTS), then production/fonts. A missing font is not an error: the block is drawn as a box.
@@ -82,6 +82,8 @@ def fill_rgb(sh):
     f, k = sh.get("fill"), sh.get("fill_kind")
     if f == "paper" or f == "white":
         return None
+    if f in pal["stocks"]:
+        return rgb(pal["stocks"][f]["aged"]["B"])
     if k == "paint" and f in pal["paints"]:
         return rgb(pal["paints"][f]["aged"]["B"])
     if k == "ink" and f in pal["inks"] and pal["inks"][f]["fresh"]:
@@ -133,6 +135,10 @@ def polys_for(item):
             P.append(dict(kind="shape:" + sh["kind"], id=sh["id"], pts=[[x0, y0], [x1, y0], [x1, y1], [x0, y1]], fill=sh.get("fill")))
         elif sh.get("pts_mm"):
             P.append(dict(kind="shape:" + sh["kind"], id=sh["id"], pts=[list(p) for p in sh["pts_mm"]], fill=sh.get("fill")))
+        elif sh.get("centre_mm"):
+            P.append(dict(kind="shape:" + sh["kind"], id=sh["id"], centre=list(sh["centre_mm"]), r_inner_mm=sh.get("r_inner_mm"), r_outer_mm=sh.get("r_outer_mm"), length_mm=sh.get("length_mm"), width_mm=sh.get("width_mm"), fill=sh.get("fill")))
+        elif sh.get("segments_mm"):
+            P.append(dict(kind="shape:ticks", id=sh["id"], segments=sh["segments_mm"], width_mm=sh.get("width_mm")))
     for a in item["art"]:
         x0, y0, x1, y1 = a["box_mm"]
         P.append(dict(kind="art", id=a["id"], pts=[[x0, y0], [x1, y0], [x1, y1], [x0, y1]], describe=a["describe"]))
@@ -180,12 +186,27 @@ def draw_item(item, out, with_text=True):
                     d.rectangle([x0 + i, H - y1 + i, x1 - i, H - y0 - i], outline=c)
         elif k == "roundel" and sh.get("box_mm"):
             x0, y0, x1, y1 = sh["box_mm"]
-            if c is not None:
+            if c is not None and sh.get("fill_kind") in ("ink", "paint") and sh.get("fill") not in ("white",):
+                d.ellipse([x0, H - y1, x1, H - y0], fill=c)
+            elif c is not None:
                 d.ellipse([x0, H - y1, x1, H - y0], outline=c, width=max(2, int((x1 - x0) * 0.08)))
             else:
                 d.ellipse([x0, H - y1, x1, H - y0], outline=(40, 40, 40), width=2)
         elif k == "star" and sh.get("pts_mm"):
             d.polygon([(x, H - y) for x, y in sh["pts_mm"]], fill=None, outline=(120, 120, 120))
+        elif k == "ring" and sh.get("centre_mm"):
+            cx, cy = sh["centre_mm"]
+            ro, ri = sh["r_outer_mm"], sh["r_inner_mm"]
+            col = c if c is not None else ground_rgb(item)
+            d.ellipse([cx - ro, H - cy - ro, cx + ro, H - cy + ro], outline=col, width=max(1, int(round(ro - ri))))
+        elif k == "poly" and sh.get("pts_mm"):
+            d.polygon([(x, H - y) for x, y in sh["pts_mm"]], fill=c if c is not None else (60, 60, 60))
+        elif k == "ticks" and sh.get("segments_mm"):
+            for sg in sh["segments_mm"]:
+                d.line([(sg["p0"][0], H - sg["p0"][1]), (sg["p1"][0], H - sg["p1"][1])], fill=(20, 20, 20), width=max(1, int(sh.get("width_mm", 2))))
+        elif k == "hand" and sh.get("centre_mm"):
+            cx, cy = sh["centre_mm"]
+            d.line([(cx, H - cy), (cx, H - cy - sh["length_mm"])], fill=c or (224, 204, 160), width=max(2, int(sh["width_mm"])))
     for a in item["art"]:
         x0, y0, x1, y1 = a["box_mm"]
         d.rectangle([x0, H - y1, x1, H - y0], outline=(150, 110, 200), width=2)
@@ -217,10 +238,15 @@ def contact_sheet(imgs, labels, out, cols, cell):
     sheet.save(out)
 
 
+def _label(d, x, y, text):
+    d.text((x + 3, y + 3), text, fill=(0, 0, 0))
+
+
 def elevation(surface_id, placements, items, out, scale_mm_per_px=4):
+    """SF1 (the quay gable, u 0 to 4.5 m, z 0 to 3.2 m) and SF2 (the empty unit's glass): the DEFAULT placements to scale, held twins left out; the gable shows its downpipe, the paste zone and the plates."""
     S = T["surfaces"][surface_id]
     if surface_id == "SF1":
-        ur, zr = S["u_range"], [0.0, 3.2]
+        ur, zr = [0.0, 4.5], [0.0, 3.2]
     else:
         ur, zr = S["u_range"], S["z_range"]
     W = int((ur[1] - ur[0]) * 1000 / scale_mm_per_px)
@@ -229,22 +255,117 @@ def elevation(surface_id, placements, items, out, scale_mm_per_px=4):
     d = ImageDraw.Draw(img)
     by = {i["id"]: i for i in items}
     pal = T["palette"]
-    for p in sorted([p for p in placements if p["surface"] == surface_id], key=lambda p: p["layer"]):
-        x0 = (p["u_m"] - ur[0]) * 1000 / scale_mm_per_px
-        x1 = x0 + p["w_m"] * 1000 / scale_mm_per_px
-        y1 = H - (p["z_bottom_m"] - zr[0]) * 1000 / scale_mm_per_px
-        y0 = y1 - p["h_m"] * 1000 / scale_mm_per_px
+    k = 1000.0 / scale_mm_per_px
+    if surface_id == "SF1":
+        for f in S["fixtures"]:
+            if f["id"] == "downpipe":
+                x0 = (f["u_m"] - f["diameter_mm"] / 2000.0) * k
+                d.rectangle([x0, 0, x0 + f["diameter_mm"] / scale_mm_per_px, H], fill=(24, 24, 26))
+                cl = f["keep_paper_clear_mm"] / scale_mm_per_px
+                d.rectangle([x0 - cl, 0, x0 + f["diameter_mm"] / scale_mm_per_px + cl, H], outline=(255, 255, 255))
+            if f["id"] == "damp_foot":
+                d.rectangle([0, H - 0.45 * k, W, H], fill=(80, 64, 56))
+    pls = [p for p in placements if not p.get("held_until_minted") and (p["surface"] == surface_id or (surface_id == "SF1" and p.get("host") == "SF1"))]
+    for p in sorted(pls, key=lambda p: p["layer"]):
+        if p.get("u_m") is None:
+            continue
+        x0 = (p["u_m"] - ur[0]) * k
+        x1 = x0 + p["w_m"] * k
+        y1 = H - (p["z_bottom_m"] - zr[0]) * k
+        y0 = y1 - p["h_m"] * k
         it = by.get(p["item"])
         col = (225, 225, 215)
-        if it and it.get("stock"):
+        if it and it.get("stock") and it["kind"] in ("sheet", "card", "sticker"):
             col = rgb(pal["stocks"][it["stock"]]["aged"][p["age_class"]])
+        elif it and it["kind"] == "plate":
+            col = rgb(pal["paints"]["plate_white"]["aged"][p["age_class"]])
         d.rectangle([x0, y0, x1, y1], fill=col, outline=(30, 30, 30))
-        d.text((x0 + 3, y0 + 3), "%s %s" % (p["item"], p["age_class"]), fill=(0, 0, 0))
+        _label(d, x0, y0, "%s %s" % (p["item"], p["age_class"]))
     if surface_id == "SF1":
         z = S["paste_zone"]["z"]
-        d.rectangle([S["paste_zone"]["u"][0] * 1000 / scale_mm_per_px, H - z[1] * 1000 / scale_mm_per_px, S["paste_zone"]["u"][1] * 1000 / scale_mm_per_px, H - z[0] * 1000 / scale_mm_per_px], outline=(255, 255, 0))
+        d.rectangle([S["paste_zone"]["u"][0] * k, H - z[1] * k, min(W - 1, S["paste_zone"]["u"][1] * k), H - z[0] * k], outline=(255, 255, 0))
     img.save(out)
     return img
+
+
+def elevation_piers(placements, items, out, scale_mm_per_px=8):
+    """The plain west row (street x 3 to 21): brick, the openings between the piers, and what is placed on the piers, in the window at x 12.3 and on the corner pier. z 0 to 3.2 m."""
+    x0m, x1m, zmax = 3.0, 21.2, 3.2
+    k = 1000.0 / scale_mm_per_px
+    W, H = int((x1m - x0m) * k), int(zmax * k)
+    img = Image.new("RGB", (W, H), (150, 110, 96))
+    d = ImageDraw.Draw(img)
+    by = {i["id"]: i for i in items}
+    pal = T["palette"]
+    piers = T["west_piers"]
+    # openings: the gaps between the piers inside each bay
+    for bay in range(3):
+        s0 = 3.0 + 6.0 * bay
+        ps = sorted([p for p in piers if p["bay"] == bay], key=lambda p: p["x0"])
+        edges = [s0] + [v for p in ps for v in (p["x0"], p["x1"])] + [s0 + 6.0]
+        for a, b in zip(edges[0::2], edges[1::2]):
+            if b > a:
+                d.rectangle([(a - x0m) * k, H - 2.4 * k, (b - x0m) * k, H], fill=(60, 62, 70))
+    for p in piers:
+        d.rectangle([(p["x0"] - x0m) * k, 0, (p["x1"] - x0m) * k, H], outline=(255, 255, 0))
+        d.text(((p["x0"] - x0m) * k + 3, H - 14), p["id"], fill=(255, 255, 255))
+    for p in placements:
+        if p.get("held_until_minted") or p["surface"] not in ("WEST_PIER", "SF9", "SF7") or p.get("street_x_m") is None:
+            continue
+        w = p["w_m"] * k
+        xc = (p["street_x_m"] - x0m) * k
+        y1 = H - p["z_bottom_m"] * k
+        y0 = y1 - p["h_m"] * k
+        it = by.get(p["item"])
+        col = (225, 225, 215)
+        if it and it.get("stock") and it["kind"] in ("sheet", "card", "sticker"):
+            col = rgb(pal["stocks"][it["stock"]]["aged"][p["age_class"]])
+        elif it and it["kind"] == "plate":
+            col = rgb(pal["paints"]["plate_white"]["aged"][p["age_class"]])
+        d.rectangle([xc - w / 2, y0, xc + w / 2, y1], fill=col, outline=(30, 30, 30))
+        _label(d, xc - w / 2, y0, "%s %s" % (p["item"], p["age_class"]))
+    img.save(out)
+    return img
+
+
+def elevation_plates(placements, items, out, scale_mm_per_px=2):
+    """Where the name plates stand: the west corner pier (street x 19.92 to 21.0, brick to 3.12 m) and the quay gable's first 2.6 m; the yard entrance (x 21 to 24) carries none. z 2.0 to 3.4 m."""
+    k = 1000.0 / scale_mm_per_px
+    by = {i["id"]: i for i in items}
+    pal = T["palette"]
+    panels = []
+    for title, x0m, x1m, key in (("west corner pier, street x 19.92 to 21.0", 19.6, 21.3, "street"), ("quay gable, u 0 to 2.6 m", 0.0, 2.6, "u")):
+        W, H = int((x1m - x0m) * k), int(1.5 * k)
+        img = Image.new("RGB", (W, H), (150, 110, 96))
+        d = ImageDraw.Draw(img)
+        d.text((4, 4), title, fill=(255, 255, 255))
+        if key == "street":
+            d.rectangle([(19.92 - x0m) * k, int(0.4 * k), (21.0 - x0m) * k, H], outline=(255, 255, 0))
+            d.line([(21.0 - x0m) * k, 0, (21.0 - x0m) * k, H], fill=(255, 255, 255))
+        for p in placements:
+            if p.get("held_until_minted") or p["surface"] != "SF7":
+                continue
+            if key == "street" and p.get("street_x_m") is not None:
+                xc = (p["street_x_m"] - x0m) * k
+            elif key == "u" and p.get("host") == "SF1":
+                xc = (p["u_m"] + p["w_m"] / 2 - x0m) * k
+            else:
+                continue
+            w = p["w_m"] * k
+            y1 = H - (p["z_bottom_m"] - 1.9) * k
+            y0 = y1 - p["h_m"] * k
+            it = by[p["item"]]
+            d.rectangle([xc - w / 2, y0, xc + w / 2, y1], fill=rgb(pal["paints"]["plate_white"]["aged"][p["age_class"]]), outline=(30, 30, 30))
+            _label(d, xc - w / 2, y0, "%s centre z %.2f" % (p["item"], p["z_bottom_m"] + p["h_m"] / 2))
+        panels.append(img)
+    Wt = max(p.size[0] for p in panels)
+    sheet = Image.new("RGB", (Wt, sum(p.size[1] for p in panels) + 8), (255, 255, 255))
+    y = 0
+    for p in panels:
+        sheet.paste(p, (0, y))
+        y += p.size[1] + 8
+    sheet.save(out)
+    return sheet
 
 
 def polys_case(case):
@@ -323,7 +444,7 @@ def main():
         J["items"][it["id"]] = dict(title=it["title"], format=it["format"], px_per_mm=it["px_per_mm"], polys=polys_for(it))
         imgs[it["id"]] = draw_item(it, out / "items" / (it["id"] + ".png"))
     groups = {"bills": [i for i in items if i["part"] in ("poll_tax_bills", "chapel_hall", "fights", "market", "goods", "tivoli") and i["format"]["w_mm"] >= 300],
-              "notices": [i for i in items if i["part"] in ("council_police", "harbour_and_ferry")],
+              "notices": [i for i in items if i["part"] in ("council_police", "harbour_and_ferry", "chapel_hall")],
               "cards": [i for i in items if i["part"] in ("window_cards", "newsagent_board") or i["format"]["w_mm"] < 300 and i["part"] == "poll_tax_bills"],
               "boards_plates": [i for i in items if i["part"] in ("letting_boards", "street_name_plates")]}
     if not only:
@@ -331,6 +452,8 @@ def main():
             contact_sheet([imgs[i["id"]] for i in lst], [i["id"] for i in lst], out / ("sheet_%s.png" % g), cols=6 if g != "boards_plates" else 3, cell=(220, 300) if g != "boards_plates" else (440, 200))
     for sid in ("SF1", "SF2"):
         elevation(sid, T["placements"], items, out / ("elevation_%s.png" % sid))
+    elevation_piers(T["placements"], items, out / "elevation_piers.png")
+    elevation_plates(T["placements"], items, out / "elevation_plates.png")
     for c in T["cases"]:
         J["cases"][c["id"]] = polys_case(c)
         draw_case(c, items, out / ("case_%s.png" % c["id"]))

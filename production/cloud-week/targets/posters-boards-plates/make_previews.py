@@ -85,6 +85,22 @@ def photo_previews():
         x0, y0, x1, y1 = P["px"][key]["window"]
         X0, Y0, X1, Y1 = [(x0 - cx) * sc, (y0 - cy) * sc, (x1 - cx) * sc, (y1 - cy) * sc]
         d.rectangle([X0, Y0, X1, Y1], fill=(176, 176, 176))
+    # mask the council crest (blurred) in each case's header: the middle half of the band between the outer top and the window, filled with the band's own blue
+    arr = np.asarray(crop).copy()
+    for key in ("c1", "c2", "c3", "c4"):
+        ox0, oy0, ox1, oy1 = P["px"][key]["outer"]
+        wx0, wy0, wx1, wy1 = P["px"][key]["window"]
+        X0, X1 = int((ox0 - cx) * sc), int((ox1 - cx) * sc)
+        Y0, Y1 = int((oy0 - cy) * sc), int((wy0 - cy) * sc)
+        if X1 <= 0 or X0 >= arr.shape[1] or Y1 <= 0 or Y0 >= arr.shape[0]:
+            continue
+        xa, xb = max(0, X0 + int((X1 - X0) * 0.25)), min(arr.shape[1], X0 + int((X1 - X0) * 0.75))
+        ya, yb = max(0, Y0 + int((Y1 - Y0) * 0.12)), min(arr.shape[0], Y1 - 4)
+        side = arr[ya:yb, max(0, X0 + 6):max(1, X0 + 20)].reshape(-1, 3)
+        if side.size and xb > xa and yb > ya:
+            arr[ya:yb, xa:xb] = np.median(side, axis=0).astype(np.uint8)
+    crop = Image.fromarray(arr)
+    d = ImageDraw.Draw(crop)
     n1 = save_jpeg(crop, OUT / "P1-urban-street-01-notice-case.jpg")
     # the overlay: scale fitted on ONE dimension, the outer height of case 2; the other edges are the test
     r = T["photo"]["ratios"]
@@ -118,14 +134,19 @@ def sheet_previews():
         p = DRAW / src
         if p.exists():
             print(dst, save_jpeg(Image.open(p).convert("RGB"), OUT / dst))
-    a = DRAW / "elevation_SF1.png"
-    b = DRAW / "elevation_SF2.png"
-    if a.exists() and b.exists():
-        ia, ib = Image.open(a).convert("RGB"), Image.open(b).convert("RGB")
-        ib = ib.resize((ia.size[0], int(ib.size[1] * ia.size[0] / ib.size[0])))
-        sheet = Image.new("RGB", (ia.size[0], ia.size[1] + ib.size[1] + 8), (255, 255, 255))
-        sheet.paste(ia, (0, 0))
-        sheet.paste(ib, (0, ia.size[1] + 8))
+    parts = [DRAW / n for n in ("elevation_SF1.png", "elevation_SF2.png", "elevation_piers.png", "elevation_plates.png")]
+    if all(p.exists() for p in parts):
+        ims = [Image.open(p).convert("RGB") for p in parts]
+
+        def fit(im, w):
+            return im.resize((w, max(1, int(im.size[1] * w / im.size[0]))))
+        a, b2, c, d = fit(ims[0], 590), fit(ims[1], 590), fit(ims[2], 1190), fit(ims[3], 590)
+        h1 = max(a.size[1], b2.size[1])
+        sheet = Image.new("RGB", (1190, h1 + 8 + c.size[1] + 8 + d.size[1]), (255, 255, 255))
+        sheet.paste(a, (0, 0))
+        sheet.paste(b2, (600, 0))
+        sheet.paste(c, (0, h1 + 8))
+        sheet.paste(d, (0, h1 + 16 + c.size[1]))
         print("L5", save_jpeg(sheet, OUT / "L5-quay-street-gable-and-glass-paste-plan.jpg"))
 
 
