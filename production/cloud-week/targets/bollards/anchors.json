@@ -1,0 +1,116 @@
+[
+ {
+  "pano": "urban_street_01",
+  "id": "us01_garden_wall",
+  "cols": [
+   4250,
+   4275
+  ],
+  "rows": [
+   2170,
+   2280
+  ],
+  "foot_row": 2287,
+  "image_rows": 4096,
+  "pitch_tan": 0.01203,
+  "gauge_mm": 75.0,
+  "step_m": 0.07,
+  "what": "garden wall on the footway behind US01_b; the bollard stands in a bed 0.07 m below that footway",
+  "px_pitch_by_eye": 15.3
+ },
+ {
+  "pano": "urban_street_01",
+  "id": "us01_gate_pier",
+  "cols": [
+   3760,
+   3830
+  ],
+  "rows": [
+   2170,
+   2222
+  ],
+  "foot_row": 2225,
+  "image_rows": 4096,
+  "pitch_tan": 0.01049,
+  "gauge_mm": 75.0,
+  "step_m": 0.07,
+  "what": "brick gate pier on the same footway",
+  "px_pitch_by_eye": 11.9
+ },
+ {
+  "pano": "bethnal_green_entrance",
+  "id": "bge_planter_wall",
+  "cols": [
+   5840,
+   5940
+  ],
+  "rows": [
+   2100,
+   2258
+  ],
+  "foot_row": 2262,
+  "image_rows": 4096,
+  "pitch_tan": 0.0129,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "planter wall on the same block paving as BGE_a",
+  "px_pitch_by_eye": 15.3
+ },
+ {
+  "pano": "birbeck_street_underpass",
+  "id": "bb_viaduct_wall",
+  "cols": [
+   3700,
+   3760
+  ],
+  "rows": [
+   1845,
+   2015
+  ],
+  "foot_row": 2318,
+  "image_rows": 4096,
+  "pitch_tan": 0.01502,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "yellow-stock wall above the paint, on BB_b's own footway (to 79 mm if Victorian courses)",
+  "px_pitch_by_eye": 19.7
+ },
+ {
+  "pano": "urban_street_02",
+  "id": "us02_building_wall",
+  "cols": [
+   740,
+   840
+  ],
+  "rows": [
+   2045,
+   2192
+  ],
+  "foot_row": 2194,
+  "image_rows": 4096,
+  "pitch_tan": 0.00963,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "the building wall behind US02_a, on its footway",
+  "px_pitch_by_eye": 11.75
+ },
+ {
+  "pano": "urban_street_02",
+  "id": "us02_gate_pier",
+  "cols": [
+   7970,
+   8000
+  ],
+  "rows": [
+   2028,
+   2215
+  ],
+  "foot_row": 2226,
+  "image_rows": 4096,
+  "pitch_tan": 0.01121,
+  "gauge_mm": 75.0,
+  "step_m": 0.0,
+  "what": "gate pier at the panorama seam, on the same footway",
+  "px_pitch_by_eye": 14.77
+ }
+]

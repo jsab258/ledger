@@ -11,19 +11,22 @@ every r and z by h_cam / h_read.
 # the photographs: Poly Haven CC0 panoramas (Andreas Mischok), 8k tone-mapped JPG, camera height CALIBRATED per panorama
 # ------------------------------------------------------------------------------------------------------------
 PANOS = {
-    'urban_street_01': dict(date_taken='2019-08-18 07:09 UTC', coords=(51.528295, -0.053879), h_cam=1.16, h_cam_err=0.06,
-                            h_why='brick course gauge 75 mm on the garden wall behind the bollard (rectified: 75 to 76 mm at 1.15 m, so 1.13 to 1.15); '
-                                  'the single yellow line (98 mm at 1.6 m, so 75 mm at 1.22 m); mean 1.16'),
-    'bethnal_green_entrance': dict(date_taken='2019-08-18 07:01 UTC', coords=(51.526915, -0.054044), h_cam=1.02, h_cam_err=0.08,
-                                   h_why='brick course gauge 75 mm on the gate pier and its blue plinth (rectified 92 mm at 1.15 m, so 0.94; stretcher module 255 mm for 225, so 1.02); '
-                                         'taken as 1.02'),
-    'birbeck_street_underpass': dict(date_taken='2019-08-18 06:53 UTC', coords=(51.525806, -0.056277), h_cam=1.22, h_cam_err=0.10,
-                                     h_why='the double yellow line (each line 97 mm at 1.6 m, so 75 mm at 1.24 m); no second anchor'),
-    'urban_street_02': dict(date_taken='2019-08-18 06:45 UTC', coords=(51.526655, -0.056465), h_cam=1.15, h_cam_err=0.12,
-                            h_why='no anchor of its own (the brick wall gave 0.84 to 0.9 but its bricks are not a 75 mm gauge); the pooled value 1.15 is used; '
-                                  'it makes this K2 bollard 1188 high, the same as the Birbeck one (1186) read at its own calibrated 1.22'),
+    'urban_street_01': dict(date_taken='2019-08-18 07:09 UTC', coords=(51.528295, -0.053879), h_cam=1.195, h_cam_err=0.07,
+                            h_why='measured at the bollard\'s own ground, the planted bed, which is 0.07 m below the footway the walls stand on: the garden wall and the gate pier '
+                                  '(courses to the horizon, 75 mm gauge: 1.16 and 1.12 above the footway by the reviewer, 1.16 and 0.98 by calibrate.py) plus the 0.07 step, and the single yellow line '
+                                  '(98 mm at 1.6 m, so 1.22 above the road, 1.165 above the bed); 1.17 to 1.23, taken as 1.195'),
+    'bethnal_green_entrance': dict(date_taken='2019-08-18 07:01 UTC', coords=(51.526915, -0.054044), h_cam=1.02, h_cam_err=0.07,
+                                   h_why='the planter wall on the same block paving as BGE_a (courses to the horizon: 1.03 to 1.04 by the reviewer, 0.96 by calibrate.py); '
+                                         'the gate pier\'s brick course (0.94) and stretcher module (1.02) by re-projection; taken as 1.02'),
+    'birbeck_street_underpass': dict(date_taken='2019-08-18 06:53 UTC', coords=(51.525806, -0.056277), h_cam=1.085, h_cam_err=0.06,
+                                     h_why='at the FOOTWAY BB_b stands on, 0.10 to 0.11 m above the road: the yellow line (1.24 above the road, so 1.14 above the footway) and the viaduct wall on the footway '
+                                           '(courses to the horizon, 75 mm gauge: 1.04 to 1.05; to 1.10 for a 79 mm Victorian course); mean 1.085'),
+    'urban_street_02': dict(date_taken='2019-08-18 06:45 UTC', coords=(51.526655, -0.056465), h_cam=0.92, h_cam_err=0.04,
+                            h_why='two brick surfaces on US02_a\'s own footway, courses to the horizon at a 75 mm gauge: the building wall behind it (0.93 by the reviewer, 0.88 by calibrate.py) '
+                                  'and the gate pier at the panorama seam (0.91, 0.92); taken as 0.92. (The earlier pooled 1.15 had no anchor and would need 95 mm courses.)'),
     'limehouse': dict(date_taken='2019-05-19 15:45 UTC', coords=(51.510606, -0.036324), h_cam=1.17, h_cam_err=0.06,
-                      h_why='the clay brick paviors: course pitch 146 mm and stretcher 280 mm at 1.6 m against 105 and 205 (a 200 x 100 paver with a 5 mm joint): 1.15 and 1.17; taken as 1.17'),
+                      h_why='the clay brick paviors: course pitch 146 mm and stretcher 280 mm at 1.6 m against 105 and 205 (a 200 x 100 paver with a 5 mm joint): 1.15 and 1.17; '
+                            'the blue-brick building on the same paving (the reviewer): 1.15 to 1.18; taken as 1.17'),
 }
 
 # the five bollards measured
@@ -72,7 +75,7 @@ K5_READ = [  # LH_b
     (84, 1090), (62, 1095), (58, 1108), (48, 1120), (30, 1130), (14, 1134), (0, 1135),    # the step and the dome
 ]
 # the second K2 top, read on US02_a (final scale): from the shaft top up, replacing the flat plate
-K2B_TOP_FINAL = [(72, 1100), (72, 1135), (79.5, 1148), (80, 1160), (76, 1166), (50, 1178), (25, 1184), (0, 1188)]
+K2B_TOP_READ = [(72, 1100), (72, 1135), (79.5, 1148), (80, 1160), (76, 1166), (50, 1178), (25, 1184), (0, 1188)]   # at h_read 1.15
 
 # eyeballed readings on the gridded elevations (z, left t, right t) at h_read, kept for self_check B
 READINGS = {
@@ -122,6 +125,14 @@ PRINTED = [
     dict(id='asset_plan_lean_deg', value=3, file='production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md', find='lean of 1 to 3 degrees on poles and bollards', what='seed lean 1 to 3 degrees'),
     dict(id='yard_mouth_no_bands', value=0, file='production/research/street-clutter-1990/SUMMARY-2026-09-29.md', find='Wrong for 1990: reflective bands, stainless steel, gold paint.', what='no reflective bands'),
     dict(id='clutter_bollard_summary_height_cm', value=90, file='production/research/street-clutter-1990/SUMMARY-2026-09-29.md', find='Older ones were often about 90 cm (**uncertain**)', what='older cast bollards about 90 cm (uncertain)'),
+    dict(id='kit_bollards_north_quay', value=[[-69.25, -88.0], [-69.25, -58.0], [-69.25, -28.0], [-69.25, 2.0], [-69.25, 30.0]], file='tools/art-recipes/south-quay/south_quay_geom.py',
+         find='BOLLARDS = ((-69.25, -88.0), (-69.25, -58.0), (-69.25, -28.0), (-69.25, 2.0), (-69.25, 30.0),', what='five bollards on the north quay'),
+    dict(id='kit_bollards_jetty_and_east', value=[[-110.75, -80.0], [-110.75, -45.0], [-95.0, 40.75], [-115.0, 40.75], [-140.0, 40.75]], file='tools/art-recipes/south-quay/south_quay_geom.py',
+         find='(-110.75, -80.0), (-110.75, -45.0), (-95.0, 40.75), (-115.0, 40.75), (-140.0, 40.75))', what='two on the jetty (x -110.75), three on the east quay (y 40.75)'),
+    dict(id='kit_ladder_y_m', value=-36.0, file='tools/art-recipes/south-quay/south_quay_geom.py', find='LADDER_Y = -36.0', what='the quay ladder at y -36, 0.45 m wide'),
+    dict(id='kit_jetty_x_m', value=[-130.0, -110.0], file='tools/art-recipes/south-quay/south_quay_geom.py', find='"jetty_x": (220.0 - 350.0, 240.0 - 350.0)', what='the jetty strip x -130 to -110: stone with a granite cope, no timber fender'),
+    dict(id='kit_jetty_boat', value=[-107.75, -58.0, 10.0], file='tools/art-recipes/south-quay/south_quay_geom.py', find='("boat_jetty", (-107.75, -58.0), (0.0, 1.0), 10.0, 3.8', what='the jetty boat lies at y -63 to -53 alongside the jetty'),
+    dict(id='kit_kerb_radii_m', value=[8.0, 6.0, 12.0], file='tools/art-recipes/south-quay/south_quay_geom.py', find='KERB_RADIUS_NW_M = 8.0', what='kerb returns 8 m (inside Quay Street\'s turn west), 6 m (the Harbour Board approach), 12 m (outside)'),
 ]
 
 # ------------------------------------------------------------------------------------------------------------
@@ -135,20 +146,20 @@ US02_FOOT_RING_R_READ = 132.0
 US02_COLLAR_Z_READ = 703.0
 
 # calibration anchors (raw numbers; self_check.py recomputes each camera height from them)
-CAL = [
-    dict(id='us01_brick', pano='urban_street_01', measured_mm=75.5, plane_h=1.15, true_mm=75.0, what='brick course pitch on the garden wall, rectified at 1.15 m'),
-    dict(id='us01_line', pano='urban_street_01', measured_mm=98.3, plane_h=1.6, true_mm=75.0, what='single yellow line width at 1.6 m (distance transform, median ridge)'),
-    dict(id='bge_brick_course', pano='bethnal_green_entrance', measured_mm=92.0, plane_h=1.15, true_mm=75.0, what='brick course pitch, gate pier and blue plinth'),
-    dict(id='bge_brick_stretcher', pano='bethnal_green_entrance', measured_mm=255.0, plane_h=1.15, true_mm=225.0, what='stretcher module (215 + 10) on the same wall'),
-    dict(id='bb_line', pano='birbeck_street_underpass', measured_mm=97.0, plane_h=1.6, true_mm=75.0, what='each line of the double yellow, at 1.6 m'),
-    dict(id='lh_paver_course', pano='limehouse', measured_mm=146.0, plane_h=1.6, true_mm=105.0, what='clay paver 100 wide + 5 joint, course pitch'),
-    dict(id='lh_paver_stretcher', pano='limehouse', measured_mm=280.0, plane_h=1.6, true_mm=205.0, what='clay paver 200 long + 5 joint'),
+CAL = [   # anchors by re-projection onto a plane at an ASSUMED height (measured at plane_h); the true height scales as plane_h * true / measured; step_m is added to reach the bollard's ground
+    dict(id='us01_line', pano='urban_street_01', measured_mm=98.3, plane_h=1.6, true_mm=75.0, step_m=-0.055, what='single yellow line width at 1.6 m (distance transform, median ridge); the line is on the road, the bed is about 0.055 m above it'),
+    dict(id='bge_brick_course', pano='bethnal_green_entrance', measured_mm=92.0, plane_h=1.15, true_mm=75.0, step_m=0.0, what='brick course pitch, gate pier and blue plinth'),
+    dict(id='bge_brick_stretcher', pano='bethnal_green_entrance', measured_mm=255.0, plane_h=1.15, true_mm=225.0, step_m=0.0, what='stretcher module (215 + 10) on the same wall'),
+    dict(id='bb_line', pano='birbeck_street_underpass', measured_mm=97.0, plane_h=1.6, true_mm=75.0, step_m=-0.105, what='each line of the double yellow, at 1.6 m; it is on the road, BB_b stands on the footway 0.105 m higher'),
+    dict(id='lh_paver_course', pano='limehouse', measured_mm=146.0, plane_h=1.6, true_mm=105.0, step_m=0.0, what='clay paver 100 wide + 5 joint, course pitch'),
+    dict(id='lh_paver_stretcher', pano='limehouse', measured_mm=280.0, plane_h=1.6, true_mm=205.0, step_m=0.0, what='clay paver 200 long + 5 joint'),
 ]
+# (the wall anchors by the horizon method are in anchors.json, written by calibrate.py, and carried into target.json)
 
 # set-backs read on the ground plans (z = 0 plane, axis at the centre): along the bearing from the axis to the kerb face foot line (or the top arris
 # corrected to the foot), the angle between the kerb line and the perpendicular to the bearing, in degrees
 SETBACKS = [
-    dict(id='US01_b', along_mm=330, kerb_angle_deg=14, h_assumed=1.16, note='the bollard stands in the inside corner of a kerb build-out; both kerb faces are about 0.33 m from the axis'),
-    dict(id='BB_b', along_mm=1090, kerb_angle_deg=16, h_assumed=1.22, note='concrete bullnosed kerb; footway about 2.5 m wide; the road-side foot line read'),
-    dict(id='US02_a', along_mm=1610, kerb_angle_deg=45, h_assumed=1.15, note='the kerb top inner arris at 1.61 m along the bearing after correcting its 125 mm height; add about 0.15 for the kerb top'),
+    dict(id='US01_b', along_mm=340, kerb_angle_deg=14, h_assumed=1.195, note='the bollard stands in the inside corner of a kerb build-out; both kerb faces are about 0.33 m from the axis'),
+    dict(id='BB_b', along_mm=970, kerb_angle_deg=16, h_assumed=1.085, note='concrete bullnosed kerb; footway about 2.5 m wide; the road-side foot line read'),
+    dict(id='US02_a', along_mm=1288, kerb_angle_deg=45, h_assumed=0.92, note='the kerb top inner arris after correcting its 125 mm height; add about 0.15 for the kerb top'),
 ]

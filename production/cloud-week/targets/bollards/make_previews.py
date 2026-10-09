@@ -122,7 +122,8 @@ def main(pano_dir, out):
         fname = f'ph-{pano}-{fid.lower()}-{F["kind"].lower()}-elevation.jpg'
         save(masked, os.path.join(out, fname))
         frames[fid] = dict(file=fname, pano=pano, mm_per_px=mmpx, t_left_mm=t0, z_top_mm=z1, h_cam_m=h, d_axis_m=round(da, 4), psi_deg=F['psi'],
-                           axis_offset_mm=round(float(a0), 1), lean_deg=round(float(lean), 2), fit_score=round(float(sc), 1), kind=F['kind'])
+                           axis_offset_mm=round(float(a0), 1), lean_deg=round(float(lean), 2), fit_score=round(float(sc), 1), kind=F['kind'],
+                           comparison_only=(fid == 'BGE_a'))
         # foot close-up (unmasked): paving or ground and the foot, 400 mm wide
         foot = rectify(imgs[pano], F['psi'], da, h, -200, 200, -70, 230, 1.0)
         if fid == 'LH_b':

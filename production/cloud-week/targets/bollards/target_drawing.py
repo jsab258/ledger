@@ -40,8 +40,12 @@ def polygons():
             b = K['fixings']['bolts']
             d['bolts_plan'] = [circle(b['nut_across_flats'] / 2.0 / math.cos(math.radians(30)), 6, b['pitch_circle_r'] * math.cos(math.radians(a)),
                                       b['pitch_circle_r'] * math.sin(math.radians(a))) for a in b['angles_deg']]
-            ln = K['chain']['link']
+            ln = K['chain']['plain']
             d['chain_link_elevation'] = rounded_rect(ln['outer_length'], ln['outer_width'], ln['bar_diameter'])
+            lg = K['fixings']['chain_eyes']['lug']
+            # the D-lug seen from the side: a block lug['proud'] out of the shaft face, lug['height'] high, a hole in it
+            d['chain_lug_side'] = [[0, -lg['height'] / 2], [lg['proud'] - 12, -lg['height'] / 2], [lg['proud'], -lg['height'] / 2 + 12], [lg['proud'], lg['height'] / 2 - 12], [lg['proud'] - 12, lg['height'] / 2], [0, lg['height'] / 2]]
+            d['chain_lug_hole'] = circle(lg['hole_diameter'] / 2.0, 24, lg['hole_centre_from_shaft_face'], 0.0)
             d['chain_eye_z'] = K['fixings']['chain_eyes']['z']
         if kid == 'K6' and 'variants' in K:
             for v in K['variants']:
@@ -50,7 +54,15 @@ def polygons():
         if kid == 'K7':
             half = K['elevation_half_xz']
             d['elevation'] = [[-x, z] for x, z in reversed(half)] + [[x, z] for x, z in half[1:]]
-            d['plan'] = [[-K['length'] / 2, -K['width'] / 2], [K['length'] / 2, -K['width'] / 2], [K['length'] / 2, K['width'] / 2], [-K['length'] / 2, K['width'] / 2]]
+            pl = K['plan']
+            Lb, Wb, Rb = pl['base']['length'], pl['base']['width'], pl['base']['end_radius']
+            d['plan'] = stadium(Lb, Wb, Rb)
+            d['plan_pedestal'] = stadium(pl['pedestal']['length'], pl['pedestal']['width'], min(pl['pedestal']['length'], pl['pedestal']['width']) / 2.0)
+            d['plan_outline'] = d['plan']
+            d['plan_bolts'] = [circle(12.0, 12, -150.0, 0.0), circle(12.0, 12, 150.0, 0.0)]
+            # round-section horns: two tapered capsules along the long axis, 32 at the pedestal to 22 at the tips
+            d1_, d2_ = pl['horns']['diameter_at_pedestal'], pl['horns']['diameter_at_tips']
+            d['plan_horns'] = [[[sg * 48.0, -d1_ / 2], [sg * 195.0, -d2_ / 2], [sg * 195.0, d2_ / 2], [sg * 48.0, d1_ / 2]] for sg in (-1, 1)]
         P[kid] = d
     # the places: small plan polygons in metres of street frame (x along, z across), r from the kind's base radius
     pl = T['placements']
@@ -61,8 +73,32 @@ def polygons():
         zs = zs if isinstance(zs, list) else [zs] * len(xs)
         for x, z in zip(xs, zs):
             marks.append(dict(id=e['id'], kind=e['kind'], x_m=x, z_m=z))
+    for p in pl['junction']['points']:
+        marks.append(dict(id=p['id'], kind='K2', x_m=p['x_m'], z_m=p['y_m']))
+    for e in pl['quay']:
+        if e['id'] == 'quay_edge':
+            for q in e['places']:
+                marks.append(dict(id=e['id'], kind='K6', x_m=q['x_m'], z_m=q['y_m'], model=q['model']))
+        elif e['id'] == 'ladder_head':
+            for y in e['y_m']:
+                marks.append(dict(id=e['id'], kind='K5', x_m=e['x_m'], z_m=y))
+        elif e['id'] == 'cleats':
+            for y in e['y_m']:
+                marks.append(dict(id=e['id'], kind='K7', x_m=e['x_m'], z_m=y))
     P['places'] = marks
     return P
+
+
+def stadium(L_, W, R_, n=12):
+    """a plate L_ x W with its four corners rounded to radius R_ (R_ = W/2 gives rounded ends: a stadium)"""
+    R_ = min(R_, W / 2.0, L_ / 2.0)
+    pts = []
+    for (sx, sy, a0) in ((1, 1, 0.0), (-1, 1, 90.0), (-1, -1, 180.0), (1, -1, 270.0)):
+        cx, cy = sx * (L_ / 2 - R_), sy * (W / 2 - R_)
+        for i in range(n + 1):
+            a = math.radians(a0 + 90.0 * i / n)
+            pts.append([round(cx + R_ * math.cos(a), 2), round(cy + R_ * math.sin(a), 2)])
+    return pts
 
 
 def rounded_rect(L_, W, bar):
@@ -105,6 +141,9 @@ def draw_kind(kid, outpath, poly, key='elevation', margin=40):
         if poly.get('bolts_plan'):
             for b in poly['bolts_plan']:
                 d.polygon([(cx + p[0], H - margin - 30 - max(abs(q[1]) for q in plan) + p[1]) for p in b], fill=(190, 190, 195), outline=INK)
+        for key_, fill_ in (('plan_pedestal', (90, 90, 96)), ('plan_horns', (120, 120, 126)), ('plan_bolts', (190, 190, 195))):
+            for shp in (poly.get(key_) or []) if key_ != 'plan_pedestal' else [poly.get(key_)] if poly.get(key_) else []:
+                d.polygon([(cx + p[0], H - margin - 30 - max(abs(q[1]) for q in plan) + p[1]) for p in shp], fill=fill_, outline=INK)
     d.line([(margin, H - 14), (margin + 100, H - 14)], fill=INK, width=2)
     d.text((margin + 104, H - 20), '100 mm', fill=INK)
     d.text((margin, 4), f'{kid}  H {z1:.0f}  r max {max(abs(x) for x in xs):.0f}', fill=INK)
@@ -115,6 +154,8 @@ def draw_kind(kid, outpath, poly, key='elevation', margin=40):
 def overlay(preview_dir, out_dir):
     done = []
     for fid, F in (T.get('photo_frames') or {}).items():
+        if F.get('comparison_only'):
+            continue
         pth = os.path.join(preview_dir, F['file'])
         if not os.path.exists(pth):
             continue
@@ -152,11 +193,35 @@ def street_plan(outpath, poly):
         d.rectangle([P(0, z0_)[0], P(0, z0_)[1], P(48, z1_)[0], P(48, z1_)[1]], fill=(205, 205, 200))
     col = {'K1': (20, 20, 20), 'K2': (90, 90, 160), 'K3': (150, 100, 40), 'K4': (40, 140, 60), 'K5': (160, 40, 40), 'K6': (0, 0, 0), 'K7': (0, 0, 0)}
     for m in poly['places']:
+        if m['x_m'] < -4.0:
+            continue
         cx, cy = P(m['x_m'], m['z_m'])
         r = 100 / mm * 2
         d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=col.get(m['kind'], (0, 0, 0)))
         d.text((cx - 8, cy - 22), m['kind'], fill=(0, 0, 0))
     d.text((8, 6), 'Quay Street, x 0 to 48 m (south end left), z across; bollards by kind; 25 mm a pixel', fill=(0, 0, 0))
+    im.save(outpath)
+
+
+def quay_plan(outpath, poly):
+    mm = 100.0
+    x0, x1, y0, y1 = -150000, 0, -100000, 60000
+    W = int((y1 - y0) / mm); H = int((x1 - x0) / mm)
+    im = Image.new('RGB', (W, H), (190, 205, 215))
+    d = ImageDraw.Draw(im)
+    P = lambda x, y: ((y * 1000 - y0) / mm, (x1 - x * 1000) / mm)
+    # the north quay's land (x > -70), the jetty (x -130 to -110, y -90 to 10?) and the east quay's land are drawn as plain blocks from the places only: this is a diagram
+    d.rectangle([P(0, -100)[0], P(0, -100)[1], P(-70, 60)[0], P(-70, 60)[1]], fill=(215, 212, 205))
+    d.rectangle([P(-70, -90)[0], P(-70, -90)[1], P(-130, -62)[0], P(-130, -62)[1]], fill=(215, 212, 205)) if False else None
+    col = {'K1': (20, 20, 20), 'K2': (90, 90, 160), 'K3': (150, 100, 40), 'K4': (40, 140, 60), 'K5': (160, 40, 40), 'K6': (0, 0, 0), 'K7': (120, 0, 120)}
+    for m in poly['places']:
+        if m['x_m'] > -4.0 and m['kind'] not in ('K2',):
+            continue
+        cx, cy = P(m['x_m'], m['z_m'])
+        r = 14
+        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=col.get(m['kind'], (0, 0, 0)))
+        d.text((cx + r + 2, cy - 6), m['kind'] + (m.get('model', '')[-1:] if m.get('model') else ''), fill=(0, 0, 0))
+    d.text((8, 6), 'the quay end: x south (down), y east (right); 100 mm a pixel; K2 junction, K6 mooring (a = bell, b = cannon), K5 chain posts, K7 cleats', fill=(0, 0, 0))
     im.save(outpath)
 
 
@@ -184,6 +249,7 @@ def main(out_dir, preview_dir=None, overlay_dir=None):
         sheet.paste(i, (x, Ht - i.height)); x += i.width + 10
     sheet.save(os.path.join(out_dir, 'target-drawing-sheet.png'))
     street_plan(os.path.join(out_dir, 'street-plan-bollards.png'), poly)
+    quay_plan(os.path.join(out_dir, 'quay-plan-bollards.png'), poly)
     if overlay_dir:
         os.makedirs(overlay_dir, exist_ok=True)
         # a reduced sheet for the previews folder: two rows (the street's kinds; the quay's), at most 1200 px wide, a JPEG under 300 KB
