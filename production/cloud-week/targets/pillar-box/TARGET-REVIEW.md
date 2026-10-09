@@ -235,3 +235,101 @@ The gate is a check against real references, and it cannot be run without a phot
   * the cap's overhang and the dome's rise (both visible in silhouette);
   * the door's size, and whether any hinge shows;
   * the order and sizes of the cypher, lettering and plate.
+
+---
+
+## Re-review (try 2)
+
+PASS
+
+Re-reviewed 9 October 2026 by the same reviewer. This round looked at the amended TARGET.md, target.json (47 checks), self_check.py, target_drawing.py and the four new previews.
+
+**What was run.** All on a fresh scratch copy (a mirrored tree under the session scratchpad; outputs kept there):
+
+* `self_check.py` gives SELF-CHECK PASS, 212 of 212. This reproduces the writer's result, and target.json came out byte-identical after the run.
+* `target_drawing.py` writes 67 polygons; the elevations, section and plans were looked at.
+* The new `profile_silhouette` check was **tested on real meshes**. The script built lathe meshes with bpy (a bmesh spin, 64 segments round) from `profile.outer_rz` and from altered versions of it. It then applied the check exactly as worded: on the back half, the mesh's largest radius at every 2 mm of z from 0 to the apex, against the profile interpolated. The tolerance was 1.5, with 3.0 allowed within 2 mm of the rim's lips.
+
+There are **no faults**. The one fault and all nine narrow points are truly answered (details below). There are five new narrow points, each with an exact fix; the first must be made before unit 3.6 runs its check.
+
+### The fault and the nine points: answered?
+
+| | answered? | how it was checked |
+|---|---|---|
+| F1, the height | **yes** | `total_height` 1500, kind Read (the research's working figure). 1626 is recorded as the upper alternative and 1350-1470 as a Type B's casting, not used. The `buried_depth` derivation is dropped. Every number from the sill up is +128, as written: soffit 1343, rim 1356-1378, bead to 1390, neck to 1420, apex 1500; slot 1255.5-1300.5 (centre 1278); hood 1300.5 / 1323 / 1333; sill 1240-1255.5; lettering area 1190-1230; door 280-1168; cypher area cz 1088, frame cz 918, lock z 818. The checks, the self-check's test, the soot band (1318-1343), the mask (to 1500), the accent area (0.78 m2) and the handover lines (0.11 m too tall) all follow. Height to body width is now 3.07. |
+| N1, the checks | **yes, with one new flaw (R1 below)** | `profile_silhouette` exists. `cap_soffit_height` and `body_straight` are measured on the back half. Both reserved-area checks measure relief radially above the curved face. On real meshes the new check **fails a plain 560 disc cap** (35.3 mm off at z 1344) and **fails a foot without its round, splay and cove** (43.2 mm at z 50). It also fails subtler moulding errors: the foot's round as a 12 mm chamfer (4.9), the cap bead as a square corner (12.0), the cap cove as a 45 degree chamfer (14.5). It **passes a correct build** (0.00), a correct build with a 1.5 mm bevel on the rim's lower lip (1.24), and a cove built as a true ellipse in 4 segments (1.05). |
+| N2, a flush door | yes | `door.proud` 1, outer radius 245.5, check 1 ±1. The frame's face stays at y 254.5 (9 above the door), and a row in section 5 records the disagreement. |
+| N3, no hinges showing | yes | The knuckles and pins are gone from parts, drawing and plans (a self-check test covers this). `door_left_edge_flush` replaces the hinge checks. The rust trickle is now under the hood's left end (7.5, 7.7). |
+| N4, cap over hood | yes | Cap 560 (35.5 proud). The hood at 274.5 sits 5.5 inside the rim: check `hood_inside_cap_rim`, and the side elevation shows it. |
+| N5, no placeholders | yes | The cypher and lettering areas are flush with no geometry, the enamel plate and frame are deleted ("none"), and the `no_plate` variant is a flush door. |
+| N6, facing | yes | The front faces the building line. `front_faces_footway` replaces `front_faces_road`. The scene owner is told in 9.2, which says to record why if the road side is kept. The road side is now the back in the wear (the scrape, the sticker). |
+| N7, placements in words | yes | The door and both reserved areas are "concentric", with their radii (245.5, 244.5, 245.5). |
+| N8, the keyhole shutter | yes | Painted 150/30/32, metal 0, with a 1 mm bare edge 60/52/46. Check `keyhole_shutter_paint`. |
+| N9, two slips | yes | "265 without coordinates" and "8192 px wide" are corrected, recorded as numbers and tested. |
+
+**Canon** still holds. The only words are COLLECTIONS, MON-FRI, 5.30 PM, SAT and 12 NOON. There is no cypher, crown, "POST OFFICE", "ROYAL MAIL", operator, reign or maker's mark, and `no_marks` and `plate_words` are intact.
+
+**Number kinds** are still honest: 91 numbers (46 Read, 11 Derived, 34 Judgement), no Photo, no Scaled, and Memory flagged.
+
+### New narrow points, each with an exact fix
+
+These are for the writer, or for unit 3.6 to apply as written.
+
+**R1. `profile_silhouette`, as worded, refuses correct builds that are off by an invisible fraction of a millimetre.**
+
+The check reads the radius at a fixed z. Where the profile runs nearly horizontal, a tiny height error turns into a large radius error: the dome near its apex, the cove arriving at the rim's lip, and the top of the foot's round. On the real meshes, a correct build fails in three ways:
+
+* placed **0.3 mm high**: 15.2 mm off at z 1500, and 7.2 at z 1356;
+* placed **1 mm high**: 28.7 mm off. The datum check allows 3 mm, the height check 15 and the apex check 10, so the checks contradict each other;
+* with the dome built as a **true sphere in 8 rings** instead of the profile's 20 points: 1.9 mm at z 1498.
+
+The self-check's own proof missed this, because its "correct build" test moves the profile only in r, by 0.8 mm, never in z.
+
+**Exact fix.** The measure becomes:
+
+> "on the back half (y < 0, clear of the casting seam), the section's outline in the r-z plane against profile.outer_rz from z 0 to the apex: the largest nearest distance either way (every point of the outline to the profile, and every point of the profile to the outline, sampled every 0.5 mm along each), mm"
+
+* expected 0, tolerance **1.5**;
+* drop the 3.0 bevel allowance, which is no longer needed: a 1.5 mm bevel on the rim's lip gives 0.57 under this measure.
+
+Tested on the same cases, this measure:
+
+* **fails** the plain cap (13.0), the plain foot (28.9), the foot chamfer (3.5), the square bead (4.9), the cove chamfer (5.0) and a dome rise of 100 instead of 80 (20.0);
+* **passes** the exact build (0.00), 1 mm high (1.00), 0.3 mm high (0.30), the true-sphere dome (0.38) and the bevelled lip (0.57).
+
+Add those two kinds of case (a z shift and a different dome tessellation) to the self-check's proof.
+
+**R2. `dome_sagitta` has an ambiguous reference height.** "the z of the dome's base circle (r 250)" matches every z from 1390 to 1420, because the 30 mm neck stands at r 250. Measured from 1390, a correct build reads 110 and fails the 80 ±6. This was already in the first draft and the first review missed it.
+
+**Exact fix:** "apex z minus the highest z at which the profile radius is 250 (the top of the neck, 1420)".
+
+**R3. Nothing says the reserved areas are painted like their surroundings.** The drawing tints them, and the preview's caption says "tinted here only to show where", but target.json does not.
+
+**Exact fix:** add to both reserved areas "painted the surrounding red (body or door), with no tint, outline or mask in any texture: invisible on the built box". Add a check: "albedo within each reserved area equals the surrounding paint within 3 per channel".
+
+**R4. A slip in `parts.door.placement`.** It says "half angle 37.0 degrees", while `half_angle_deg` and TARGET.md say 37.7 (asin(150/245.5) = 37.66).
+
+**Exact fix:** change "37.0" to "37.7".
+
+**R5. The bevels table names an edge that has no place at the footway.** It lists "foot band bottom 2.0", but the profile runs straight from the hidden skirt (z -150) through z 0 to 48 at r 288, so there is no edge at the footway. A builder could read it as a 2 mm groove at the ground line.
+
+**Exact fix:** rename it "skirt bottom (z -150, hidden), 2.0", or delete it.
+
+### Judged again, without a photograph (judgement, not evidence)
+
+At 1500 high and 3.07 body-widths, with a 560 cap overhanging a hood that tucks under it, a slot at chest height (1278), a flush door with no hinges showing, one plate and a lock on the right, all facing the footway, the box no longer reads squat or invented.
+
+What remains open are exactly the things the target already lists for the photograph: 1500 against 1626, the slot's width (320), the dome's rise and neck, and the order of the cypher, lettering and plate.
+
+### (6) Fit to build without a photograph?
+
+**Yes, for one sample, once R1's fix is applied** (without it the automatic check can refuse a correct build). R2 to R5 can be applied by the builder as written.
+
+Build one box as the street's replacement for the stand-in. It is not multiplied, and not put to the gate or on Jafar's page. It stays "ready for review", not done, until one photograph comes, because the gate's check against real references cannot be run without one. The photograph overrides every Judgement and Memory number.
+
+**The single photograph that would settle the most:**
+
+* **What:** a dated, square-on front view of a 1950s-60s EIIR Type A on a provincial British street, the whole box from the footway to the dome.
+* **How taken:** camera about 1 m up and 4 to 6 m away, with the kerb's 125 mm upstand or a standing person in the frame.
+* **Where from:** from this PC: Geograph or Wikimedia Commons, CC BY-SA or freer, licence and date read on the file page.
+* **What it settles at once:** 1500 against 1626, the slot's width and height, the cap's overhang and the dome's rise in silhouette, the door's size, and the order of the cypher, lettering and plate.
