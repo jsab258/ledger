@@ -515,8 +515,8 @@ def part_a(tj, R):
         bad += [w + " (TARGET.md)" for w in sorted(set(pat.findall(open(md, encoding="utf-8").read().lower())))]
     R.check("A25 wording: no word that implies a minor anywhere (canon content rule), in target.json and TARGET.md", not bad, "found %s" % bad)
     M = tj["measurements"]
-    R.check("A26 sources: M03 and M05 carry the tones cited to them, M15 states the Poly Haven tags, M21 to M29 exist, the seven files are listed as looked at and not used, flag_concrete cites M27",
-            "core_L_star" in M["M03"]["values"] and "seam_ratio" in M["M05"]["values"] and "tags" in M["M15"]["values"] and all(("M%d" % i) in M for i in range(21, 30))
+    R.check("A26 sources: M03 and M05 carry the tones cited to them, M15 states the Poly Haven tags, M21 to M30 exist, the seven files are listed as looked at and not used, flag_concrete cites M27",
+            "core_L_star" in M["M03"]["values"] and "seam_ratio" in M["M05"]["values"] and "tags" in M["M15"]["values"] and all(("M%d" % i) in M for i in range(21, 31))
             and len(tj["looked_at_not_used"]) == 7 and "M27" in tj["surfaces"]["flag_concrete"]["src"] and "no soot on the brick" not in json.dumps(tj["sources"]))
     rows = tj["wet_dry_rule"]["rows"]
     R.check("A27 wet and dry once: for each sheet-derived row, dry multiplier x wet multiplier equals the sheet's own ratio (within 0.03)",
@@ -584,8 +584,56 @@ def part_a_third(tj, R):
     R.check("A35 pipe mask (R4.3): unwrapped round the pipe, %.3f m wide = pi x 0.068 (%.3f), x = 0 the street-facing line, the seam at the back, the back takes the same mask" % (e_[2] - e_[0], math.pi * 0.068),
             abs((e_[2] - e_[0]) - math.pi * 0.068) < 0.002 and abs(iw["envelope"]["circumference_m"] - math.pi * 0.068) < 0.002 and "UNWRAPPED" in iw["where"]["rule"] and "seam" in iw["mask"]["origin"])
     R.check("A36 pillar box (R4.4): iron_wear has a pillar_box_red row (grey primer and rust through the red) and lists the surface; the surface exists", "pillar_box_red" in iw["tone"] and "pillar_box_red" in iw["where"]["surfaces"] and "pillar_box_red" in tj["surfaces"])
+    part_a_camera(tj, R)
     fx = tj["second_review_fixes"]
     R.check("A37 second_review_fixes lists R1 to R4, each with what the review said, what was applied and which choice was taken", [f["id"] for f in fx] == ["R1", "R2", "R3", "R4"] and all(f.get("applied") and f.get("review_said") for f in fx))
+
+
+def part_a_camera(tj, R):
+    """Camera heights corrected, 9 October: the heights used, the scale of the three ortho previews, and every size and density per m2 taken from a panorama agrees with its measurement"""
+    M30 = tj["measurements"]["M30"]["values"]
+    used = M30["used"]
+    H3, H3f, H2 = used["urban_street_03"]["above_road_m"], used["urban_street_03"]["above_footway_m"], used["urban_street_02"]["above_road_m"]
+    a = used["assumed_before_m"]
+    k3, k3f, k2 = H3 / a["urban_street_03_road"], H3f / a["urban_street_03_footway"], H2 / a["urban_street_02_road"]
+    sc_ = M30["scale"]
+    R.check("A38 camera heights (M30): urban_street_03 %.2f m above its road (%.2f above its footway) and urban_street_02 %.2f m above its road, none 1.6 m; the scale factors %.3f / %.3f / %.3f are those of the heights" % (H3, H3f, H2, k3, k3f, k2),
+            (H3, H2) == (1.44, 1.01) and abs(sc_["urban_street_03_road"] - k3) < 0.005 and abs(sc_["urban_street_03_footway"] - k3f) < 0.005 and abs(sc_["urban_street_02_road"] - k2) < 0.005)
+    # the own readings (this writer's, made independently) agree with the heights used within the two errors; recomputed from their raw rows
+    own = M30["this_writer"]
+    bad = []
+    for key in ("urban_street_03", "urban_street_02"):
+        for an in own[key]["anchors"]:
+            h = 75.0 * an["tan_foot"] / an["pitch_tan"]
+            if abs(h - an["h_above_foot_mm"]) > 6.0 or abs(math.tan((an["foot_row"] - 2048) * math.pi / 4096) - an["tan_foot"]) > 2e-4:
+                bad.append(an["id"])
+    r3 = own["urban_street_03"]["above_footway_wall_mean_m"] + own["urban_street_03"]["kerb_upstand_m"]
+    r2 = own["urban_street_02"]["above_footway_boundary_wall_mean_m"] + own["urban_street_02"]["kerb_upstand_m"]
+    R.check("A38b the own readings, recomputed from their raw rows (%d anchors, off: %s): urban_street_03 %.2f m at the road (used %.2f +/- %.2f), urban_street_02 %.2f m (used %.2f +/- %.2f): each within the used error plus the own one"
+            % (len(own["urban_street_03"]["anchors"]) + len(own["urban_street_02"]["anchors"]), bad, r3, H3, used["urban_street_03"]["error_m"], r2, H2, used["urban_street_02"]["error_m"]),
+            not bad and abs(r3 - H3) <= used["urban_street_03"]["error_m"] + own["urban_street_03"]["own_error_m"] and abs(r2 - H2) <= used["urban_street_02"]["error_m"] + own["urban_street_02"]["own_error_m"])
+    P = tj["previews"]
+    mm_ok = (abs(P["ph-urban_street_03-oil-drip-speckle.jpg"]["mm_per_px"] - 3.0 * k3) <= 0.03 and abs(P["ph-urban_street_03-flags-patched-ortho.jpg"]["mm_per_px"] - 4.0 * k3f) <= 0.04 and abs(P["ph-urban_street_02-road-reinstatement-ortho.jpg"]["mm_per_px"] - 3.0 * k2) <= 0.03)
+    R.check("A38c the three ortho previews carry the corrected scale (3.0 x %.3f = %.2f, 4.0 x %.3f = %.2f, 3.0 x %.3f = %.2f mm per pixel; the pictures are the same pixels)" % (k3, 3.0 * k3, k3f, 4.0 * k3f, k2, 3.0 * k2), mm_ok)
+    # every number derived from a panorama equals its measurement (or lies inside the range built from it)
+    K_ = tj["kinds"]
+    M = tj["measurements"]
+    m4, m5, m6, m7, m26 = M["M04"]["values"], M["M05"]["values"], M["M06"]["values"], M["M07"]["values"], M["M26"]["values"]
+    ro, rp, ce, lw, fl = K_["road_oil"], K_["road_patch"], K_["cig_end"], K_["line_wear"], K_["flag_patch_crack"]
+    errs = []
+    chk = lambda name, ok: errs.append(name) if not ok else None
+    chk("road_oil band width", abs(ro["geometry"]["band_width_m"]["p5_95"] - m4["band_width_m"]) <= 0.005 and abs(ro["envelope"]["width_m"] - m4["band_width_m"]) <= 0.005)
+    chk("road_oil dot sizes", all(abs(a - b) <= 0.1 for a, b in zip(ro["envelope"]["dot_eqd_mm"], m4["eqd_mm_p10_50_90_rel0.85"])))
+    chk("road_oil density", ro["envelope"]["density_per_m2"][0] <= m4["in_band_per_m2_rel0.75"] <= ro["envelope"]["density_per_m2"][1])
+    chk("road_patch cover size", rp["envelope"]["patch_m"][0][0] <= m5["seam_rect_m"] + 0.01 and m5["w_m"] <= rp["envelope"]["patch_m"][0][1] + 0.01 and abs(rp["geometry"]["cover_reinstatement_m"]["w"] - m5["w_m"]) <= 0.02)
+    chk("road_patch seam", rp["envelope"]["seam_mm"][0] <= m5["seam_mm"][0] and m5["seam_mm"][1] <= rp["envelope"]["seam_mm"][1])
+    tiers = ce["where"]["density"]["tiers"]
+    chk("cig_end kerb and road densities", tiers["kerb band per metre of kerb"][0] <= m6["kerb_per_m_of_kerb"] <= tiers["kerb band per metre of kerb"][1] and tiers["open road per m2"][0] <= m6["road_per_m2"] <= tiers["open road per m2"][1]
+        and ce["envelope"]["band"]["depth_m"] >= m6["kerb_band_depth_m"])
+    chk("line_wear loss share", lw["where"]["density"]["range"][0] <= m26["loss_share"] <= lw["where"]["density"]["range"][1] and lw["checks"][0]["min"] <= m26["loss_share"] <= lw["checks"][0]["max"])
+    chk("flag slab size", m7["slab_m"][0] - 0.01 <= fl["envelope"]["slab_m"][0] <= m7["slab_m"][1] + 0.02)
+    unfixed = [k for k, v in {"M04": M["M04"]["method"], "M05": M["M05"]["method"], "M06": M["M06"]["method"], "M26": M["M26"]["method"]}.items() if "assumed" not in v and "1.6 m" in v and "MEASURED" not in v and "measured" not in v]
+    R.check("A38d every size and density taken from these panoramas agrees with its corrected measurement (off: %s); no method still rests on an unmeasured 1.6 m (%s)" % (errs, unfixed), not errs and not unfixed)
 
 
 # ---------------------------------------------------------------- B: tone
@@ -776,7 +824,7 @@ def part_c(tj, R, draw, overlays):
     t_unworn = float(np.percentile(thick, 90))              # the UNWORN line is the gauge: a worn line's median thickness is narrower than its 75 mm (the first pass used the median and so took 1.6 m for a camera that is at 1.40 m)
     scale_line = 75.0 / t_unworn
     scale_mm = mm                                           # the stated scale (M30: camera 1.40 m above the road); the line only has to agree with it
-    R.check("C1 scale fitted on one dimension (the unworn yellow line, the 90th percentile of its thickness, %.1f px = 75 mm; the median %.1f px is a worn line's) agrees with the stated %.3f mm/px (camera 1.40 m, M30) within 6 %%" % (t_unworn, t_med, mm),
+    R.check("C1 scale fitted on one dimension (the unworn yellow line, the 90th percentile of its thickness, %.1f px = 75 mm; the median %.1f px is a worn line's) agrees with the stated %.3f mm/px (camera 1.44 m, M30) within 6 %%" % (t_unworn, t_med, mm),
             abs(scale_line - mm) / mm <= 0.06, "fitted %.3f mm/px" % scale_line)
     xs = np.array([x for x in range(W) if line_row[x] > 0])
     ys = np.array([line_row[x] for x in xs])
@@ -1094,7 +1142,7 @@ def part_c(tj, R, draw, overlays):
     loss = 1 - float(np.mean(cov))
     lr = tj["kinds"]["line_wear"]["where"]["density"]["range"]
     m26 = M["M26"]["values"]["loss_share"]
-    R.check("C25 yellow line re-measured: %.0f %% of the nominal 75 mm strip (%.1f px at %.3f mm/px) lost (M26 %.0f +/- 8 %%, camera 1.40 m; 22 %% at the assumed 1.6 m); the target's %s brackets it" % (100 * loss, 75.0 / P[f]["mm_per_px"], P[f]["mm_per_px"], 100 * m26, lr), abs(loss - m26) <= 0.08 and lr[0] - 0.02 <= loss <= lr[1] + 0.05)
+    R.check("C25 yellow line re-measured: %.0f %% of the nominal 75 mm strip (%.1f px at %.3f mm/px) lost (M26 %.0f +/- 8 %%, camera 1.44 m; 22 %% at the assumed 1.6 m); the target's %s brackets it" % (100 * loss, 75.0 / P[f]["mm_per_px"], P[f]["mm_per_px"], 100 * m26, lr), abs(loss - m26) <= 0.08 and lr[0] - 0.02 <= loss <= lr[1] + 0.05)
     # ---- C26 M03: the sealed crack on the full-resolution crop
     f = "ph-asphalt_02-road-sealed-crack.jpg"
     rgb = load_rgb(pv(f)).astype(float)

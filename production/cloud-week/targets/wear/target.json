@@ -4004,7 +4004,7 @@
    "layer": "L2 ground (stamped), plus PCG-scattered instances at the kerb band",
    "where": {
     "feature": "the kerb foot (channel) and the strip 0 to 0.3 m inside it, shop doorways and their steps, the cab-office rank, under bins, drain grates, the pavement edge by the wall",
-    "rule": "Two bands: (1) kerb band, 0 to 0.2 m from the kerb foot (Photo M06: 0.18 m), 4 to 9 pieces per metre of kerb, piled at gully grates; (2) doorway aprons, 4 to 10 per m2 within 1.2 m of a shop door; open footway 0.5 to 2.0 per m2 and open road 0.8 to 2.0 per m2 (M06). Each end 8 mm x 25 to 30 mm; white filter or tan filter, some burnt-orange, some flattened. Tobacco is allowed (canon).",
+    "rule": "Two bands: (1) kerb band, 0 to 0.2 m from the kerb foot (Photo M06: 0.19 m), 4 to 9 pieces per metre of kerb, piled at gully grates; (2) doorway aprons, 4 to 10 per m2 within 1.2 m of a shop door; open footway 0.5 to 2.0 per m2 and open road 0.8 to 2.0 per m2 (M06: 1.8). Each end 8 mm x 25 to 30 mm; white filter or tan filter, some burnt-orange, some flattened. Tobacco is allowed (canon).",
     "surfaces": [
      "flag_concrete",
      "asphalt_dry",
@@ -4019,7 +4019,7 @@
       4,
       9
      ],
-     "typical": 6.6,
+     "typical": 6.3,
      "tiers": {
       "kerb band per metre of kerb": [
        4,
@@ -4038,7 +4038,7 @@
        2.0
       ]
      },
-     "src": "Photo M06 (urban_street_02, counted by eye: 22 pieces over 3.35 m of kerb = 6.6 per m; road 10 pieces over 5.0 m2 = 2.0 per m2; +/-35 %; camera 0.97 m. The first pass divided by 5 m and 13.6 m2 at an assumed 1.6 m: 4.4 per m and 0.7 per m2)"
+     "src": "Photo M06 (urban_street_02, counted by eye: 22 pieces over 3.49 m of kerb = 6.3 per m; road 10 pieces over 5.4 m2 = 1.8 per m2; +/-35 %; camera 1.01 m. The first pass divided by 5 m and 13.6 m2 at an assumed 1.6 m: 4.4 per m and 0.7 per m2)"
     }
    },
    "envelope": {
@@ -4120,7 +4120,7 @@
      "eqd_p10": 8,
      "eqd_p50": 14,
      "eqd_p90": 28,
-     "src": "Derived from the stamp mix (ends 8 x 26 mm Read, fragments, matchsticks, scraps). Photo M06's detected bright bits are 4.6 / 6.8 / 16.8 mm at the corrected camera height 0.97 m (7.6 / 11.2 / 27.7 mm at the assumed 1.6 m): they are the bright parts of a piece, not whole ends"
+     "src": "Derived from the stamp mix (ends 8 x 26 mm Read, fragments, matchsticks, scraps). Photo M06's detected bright bits are 4.8 / 7.1 / 17.5 mm at the corrected camera height 1.01 m (7.6 / 11.2 / 27.7 mm at the assumed 1.6 m): they are the bright parts of a piece, not whole ends"
     },
     "cig_dimensions_mm": [
      8,
@@ -4133,7 +4133,7 @@
     ],
     "edge_src": "Judgement",
     "piece_mix": {
-     "src": "Photo M06: bright bits of 4.6 / 6.8 / 16.8 mm (p10 / p50 / p90, camera 0.97 m) belong to cigarette ends (8 x 27 mm), paper scraps and matchsticks in the shares stated: ends 50, fragments 25, matchsticks 10, paper scraps 15 %; Judgement for the shares"
+     "src": "Photo M06: bright bits of 4.8 / 7.1 / 17.5 mm (p10 / p50 / p90, camera 1.01 m) belong to cigarette ends (8 x 27 mm), paper scraps and matchsticks in the shares stated: ends 50, fragments 25, matchsticks 10, paper scraps 15 %; Judgement for the shares"
     },
     "edge_for_envelope_mm": 1.5
    },
@@ -4251,7 +4251,7 @@
      },
      "min": 8,
      "max": 22,
-     "src": "Derived from the stamp mix (ends 8 x 26 mm, Read); Photo M06 at the corrected scale (bright bits 4.6 / 6.8 / 16.8 mm)",
+     "src": "Derived from the stamp mix (ends 8 x 26 mm, Read); Photo M06 at the corrected scale (bright bits 4.8 / 7.1 / 17.5 mm)",
      "applies_to": "mask"
     },
     {
@@ -4263,7 +4263,7 @@
      },
      "min": 0.3,
      "max": 10.0,
-     "src": "Photo M06 (open road 2.0 per m2 at 0.97 m), Judgement",
+     "src": "Photo M06 (open road 1.8 per m2 at 1.01 m), Judgement",
      "applies_to": "mask"
     },
     {
@@ -4598,7 +4598,7 @@
      0.6,
      0.6
     ],
-    "slab_src": "Photo M07 (about 0.51 to 0.60 m, +/-15 %, camera 1.27 m above the footway; 0.6 to 0.7 m at the assumed 1.48 m); Read: BS 7263 flags 600 x 600 or 450 x 600 mm, pre-metric 24 in x 18 in",
+    "slab_src": "Photo M07 (about 0.52 to 0.61 m, +/-15 %, camera 1.28 m above the footway; 0.6 to 0.7 m at the assumed 1.48 m); Read: BS 7263 flags 600 x 600 or 450 x 600 mm, pre-metric 24 in x 18 in",
     "dark_to_pale_luminance_ratio": 0.58,
     "ratio_range": [
      0.5,
@@ -4703,7 +4703,7 @@
    "layer": "L2 ground (virtual texture)",
    "where": {
     "feature": "standing places: the engine position of each vehicle that stands at the kerb (the rank, the loading aprons, the private places; section 4 places)",
-    "rule": "One band per standing car: 0.28 m wide x 1.0 to 2.5 m long, 160 to 340 dots per m2 inside it (counted at the darker threshold; the lighter threshold counts 2.5 times as many), dots 9 to 26 mm, centred 0.9 to 1.6 m from the kerb (beneath the engine); the band lies along the car, so its long axis is parallel to the kerb (free yaw only within +/-10 degrees). Blots and scuffs are separate kinds. Sizes and densities are at the corrected camera height 1.40 m (M30); the first pass's 1.6 m gave 0.32 m, 120 to 260 per m2 and 11 to 29 mm.",
+    "rule": "One band per standing car: 0.29 m wide x 1.0 to 2.5 m long, 150 to 330 dots per m2 inside it (counted at the darker threshold; the lighter threshold counts 2.5 times as many), dots 10 to 26 mm, centred 0.9 to 1.6 m from the kerb (beneath the engine); the band lies along the car, so its long axis is parallel to the kerb (free yaw only within +/-10 degrees). Blots and scuffs are separate kinds. Sizes and densities are at the corrected camera height 1.44 m (M30); the first pass's 1.6 m gave 0.32 m, 120 to 260 per m2 and 11 to 29 mm.",
     "surfaces": [
      "asphalt_dry"
     ],
@@ -4717,7 +4717,7 @@
       1.0
      ],
      "typical": 0.8,
-     "src": "Photo M04 (one band per car; 199 dots per m2 inside the band at rel < 0.75, 492 at rel < 0.85; camera 1.40 m, first pass 154 and 379 at 1.6 m); Judgement"
+     "src": "Photo M04 (one band per car; 189 dots per m2 inside the band at rel < 0.75, 465 at rel < 0.85; camera 1.44 m, first pass 154 and 379 at 1.6 m); Judgement"
     }
    },
    "envelope": {
@@ -4726,31 +4726,31 @@
      1.0,
      2.5
     ],
-    "width_m": 0.28,
+    "width_m": 0.29,
     "dot_eqd_mm": [
-     9.2,
-     14.8,
-     25.7
+     9.5,
+     15.2,
+     26.4
     ],
     "density_per_m2": [
-     160,
-     340
+     150,
+     330
     ]
    },
    "geometry": {
     "dot_eqd_mm": {
-     "p10": 9.2,
-     "p50": 14.8,
-     "p90": 25.7,
-     "src": "Photo M04 (rel luminance < 0.85, n 222 in 1.02 m2, camera 1.40 m; the first pass's 10.6 / 16.9 / 29.4 mm were at 1.6 m)"
+     "p10": 9.5,
+     "p50": 15.2,
+     "p90": 26.4,
+     "src": "Photo M04 (rel luminance < 0.85, n 222 in 1.08 m2, camera 1.44 m; the first pass's 10.6 / 16.9 / 29.4 mm were at 1.6 m)"
     },
     "band_width_m": {
-     "p5_95": 0.28,
-     "src": "Photo M04 (camera 1.40 m; 0.32 m at 1.6 m)"
+     "p5_95": 0.29,
+     "src": "Photo M04 (camera 1.44 m; 0.32 m at 1.6 m)"
     },
     "band_length_m": {
-     "visible": 1.6,
-     "src": "Photo M04, cut by the frame: at least (camera 1.40 m; 1.83 m at 1.6 m)"
+     "visible": 1.65,
+     "src": "Photo M04, cut by the frame: at least (camera 1.44 m; 1.83 m at 1.6 m)"
     },
     "edge_10_90_mm": [
      2,
@@ -4813,7 +4813,7 @@
      },
      "min": 9,
      "max": 26,
-     "src": "Photo M04 (p50 14.8 mm at camera 1.40 m; first pass 16.9 at 1.6 m)",
+     "src": "Photo M04 (p50 15.2 mm at camera 1.44 m; first pass 16.9 at 1.6 m)",
      "applies_to": "mask"
     },
     {
@@ -4825,7 +4825,7 @@
      },
      "min": 20,
      "max": 220,
-     "src": "Photo M04: 199 per m2 inside the band, a band of 0.28 x 1.0 to 2.5 m inside the 2.6 x 0.6 m frame",
+     "src": "Photo M04: 189 per m2 inside the band, a band of 0.29 x 1.0 to 2.5 m inside the 2.6 x 0.6 m frame",
      "applies_to": "mask"
     },
     {
@@ -4848,7 +4848,7 @@
      },
      "min": 0.002,
      "max": 0.03,
-     "src": "Derived: dots 15 mm across, 199 per m2 over 0.28 m x 1 to 2.5 m",
+     "src": "Derived: dots 15 mm across, 189 per m2 over 0.29 m x 1 to 2.5 m",
      "applies_to": "mask"
     },
     {
@@ -5251,7 +5251,7 @@
    "layer": "L2 ground (virtual texture) with a 2 to 12 mm height step",
    "where": {
     "feature": "carriageway: trench reinstatements across the lane and along the channel, round covers and gully grates, pothole patches",
-    "rule": "Reinstatement: a cover 0.55 to 0.70 m square (Photo M05 at the corrected camera height 0.97 m; the first pass's 0.9 to 1.2 m was at 1.6 m), or a trench 0.5 to 1.2 m wide and 1.0 to 6.0 m long (Judgement), edges 18 to 32 mm dark seam with grass or weed at corners; slightly darker and smoother, or paler and rougher, than the old surface; 1 to 3 along the 48 m street.",
+    "rule": "Reinstatement: a cover 0.57 to 0.70 m square (Photo M05 at the corrected camera height 1.01 m; the first pass's 0.9 to 1.2 m was at 1.6 m), or a trench 0.5 to 1.2 m wide and 1.0 to 6.0 m long (Judgement), edges 19 to 32 mm dark seam with grass or weed at corners; slightly darker and smoother, or paler and rougher, than the old surface; 1 to 3 along the 48 m street.",
     "surfaces": [
      "asphalt_dry"
     ],
@@ -5272,11 +5272,11 @@
     "primitive": "rect_patch",
     "patch_m": [
      [
-      0.55,
+      0.57,
       0.7
      ],
      [
-      0.55,
+      0.57,
       0.7
      ]
     ],
@@ -5285,23 +5285,23 @@
      60
     ],
     "seam_mm": [
-     18,
+     19,
      32
     ],
     "infill_level": 0.23
    },
    "geometry": {
     "cover_reinstatement_m": {
-     "w": 0.65,
-     "h": 0.65,
+     "w": 0.7,
+     "h": 0.68,
      "tol": 0.07,
-     "src": "Photo M05 (ortho 1.82 mm/px at camera 0.97 m: 370 x 360 px with the damp fringe, the seam rectangle 300 px = 0.55 m; first pass 1.0 x 1.1 m at 1.6 m)"
+     "src": "Photo M05 (ortho 1.89 mm/px at camera 1.01 m: 370 x 360 px with the damp fringe, the seam rectangle 300 px = 0.57 m; first pass 1.0 x 1.1 m at 1.6 m)"
     },
     "seam_mm": [
-     18,
+     19,
      32
     ],
-    "seam_src": "Photo M05 (10 to 17 px at 1.82 mm/px; first pass 30 to 50 mm at 1.6 m)",
+    "seam_src": "Photo M05 (10 to 17 px at 1.89 mm/px; first pass 30 to 50 mm at 1.6 m)",
     "edge_10_90_mm": [
      5,
      25
@@ -5349,12 +5349,12 @@
     "src": "Read WET-ROAD + Judgement"
    },
    "texel": {
-    "smallest_feature_mm": 18,
+    "smallest_feature_mm": 19,
     "px_per_m_min": 340,
     "px_per_m_recommended": 400,
     "px_per_m_at_1p6m_screen": 1120,
     "px_per_m_at_10m_screen": 180,
-    "note": "the seam is 18 to 32 mm wide: 400 px/m gives 7 to 13 texels"
+    "note": "the seam is 19 to 32 mm wide: 400 px/m gives 8 to 13 texels"
    },
    "variants": {
     "count": 5,
@@ -5374,7 +5374,7 @@
      },
      "min": 500,
      "max": 900,
-     "src": "Photo M05 (a 0.55 to 0.70 m cover, camera 0.97 m): infill counted at 0.2",
+     "src": "Photo M05 (a 0.57 to 0.70 m cover, camera 1.01 m): infill counted at 0.2",
      "applies_to": "mask"
     },
     {
@@ -5397,7 +5397,7 @@
      },
      "min": 0.15,
      "max": 0.45,
-     "src": "Derived: a 0.55 to 0.70 m patch in a 1.2 x 1.2 m frame (infill counted at 0.2)",
+     "src": "Derived: a 0.57 to 0.70 m patch in a 1.2 x 1.2 m frame (infill counted at 0.2)",
      "applies_to": "mask"
     },
     {
@@ -5615,7 +5615,7 @@
    "layer": "L2 ground (virtual texture) plus L0 kerb material",
    "where": {
     "feature": "the kerb channel course (0.255 m wide, SCENE-SLOTS, in the kerb's own concrete), the joints either side of it, the strip of asphalt 0.3 m beyond it, the kerb face, gully grates (x 12)",
-    "rule": "Photo M24 (dry): the channel setts read 1.4 x the open road's luminance and the asphalt 0 to 0.53 m off the kerb 0.95 x the open road, so the channel is LIGHTER than the road and the fringe barely darker. Channel body: x 0.85 (mask 0.23). Asphalt fringe 0.255 to 0.55 m, ragged: x 0.92 at most (mask 0.12 at the edge falling to 0). The darkest grime is two lines 20 to 40 mm wide in the kerb-channel and channel-asphalt joints (x 0.35, mask 1.0). Gully piles (grit, leaf mulch, litter): 0.4 m radius, mask 0.8, colour 70/62/52, at the gully (x 12) and one more per 20 m. Weeds in the channel: 0.05 to 0.15 m across, 1 per 6 to 10 m in the open stretches. Kerb-face tyre scuff: a pale polished streak +8 L*, 0.05 to 0.12 m up the face, 0.3 to 1.5 m long, 1 per 10 m of kerb. One surface per decal: the channel rows use channel_concrete, the fringe asphalt_dry, the kerb face kerb_granite (split at the joint).",
+    "rule": "Photo M24 (dry): the channel setts read 1.4 x the open road's luminance and the asphalt 0 to 0.54 m off the kerb 0.95 x the open road, so the channel is LIGHTER than the road and the fringe barely darker. Channel body: x 0.85 (mask 0.23). Asphalt fringe 0.255 to 0.55 m, ragged: x 0.92 at most (mask 0.12 at the edge falling to 0). The darkest grime is two lines 20 to 40 mm wide in the kerb-channel and channel-asphalt joints (x 0.35, mask 1.0). Gully piles (grit, leaf mulch, litter): 0.4 m radius, mask 0.8, colour 70/62/52, at the gully (x 12) and one more per 20 m. Weeds in the channel: 0.05 to 0.15 m across, 1 per 6 to 10 m in the open stretches. Kerb-face tyre scuff: a pale polished streak +8 L*, 0.05 to 0.12 m up the face, 0.3 to 1.5 m long, 1 per 10 m of kerb. One surface per decal: the channel rows use channel_concrete, the fringe asphalt_dry, the kerb face kerb_granite (split at the joint).",
     "surfaces": [
      "channel_concrete",
      "asphalt_dry",
@@ -5702,7 +5702,7 @@
       0.1,
       0.3
      ],
-     "src": "SCENE-SLOTS channel course 0.255 m; Photo M06 kerb litter band 0.18 m (camera 0.97 m; 0.3 m at the assumed 1.6 m): the fringe stays Judgement"
+     "src": "SCENE-SLOTS channel course 0.255 m; Photo M06 kerb litter band 0.19 m (camera 1.01 m; 0.3 m at the assumed 1.6 m): the fringe stays Judgement"
     },
     "height_profile": {
      "h_m": [
@@ -7113,7 +7113,7 @@
    "layer": "L2 ground (virtual texture); the lines family's colour and geometry are the base, this mask is the loss",
    "where": {
     "feature": "each 100 mm yellow band of each kerb's double line (two bands 100 mm apart, 0.25 m from the kerb face, vignette-scene.json) and the white dashed centre line (also placed at 100 mm); one instance per band, different seeds",
-    "rule": "The mask frame is the band's own 100 mm (y +/- 0.05 m, so the whole band wears: no stretching, nothing left unworn at the edges). Photo M26 measured a 75 mm single line at the corrected camera height 1.40 m: 28 % of the nominal strip lost (20 to 36 %: 11 gaps in 3.5 m, most about 13 mm, one about 0.45 m, plus ragged chips on both edges; 22 % at the assumed 1.6 m); the share and the gap lengths carry over to the 100 mm band, the chips are 5 to 15 mm deep on both edges. Cross gaps the full width of the band, 2.0 to 3.6 per metre, lengths 20 / 60 / 300 mm (p10 / p50 / p90); edge chips 5 to 15 mm deep, 20 to 150 mm long, 3 to 8 per metre; specks 4 to 9 mm. The paint that remains is faded and filmed with dirt (the surface colour 195/168/100). The mask is the LOSS: 1 shows the road.",
+    "rule": "The mask frame is the band's own 100 mm (y +/- 0.05 m, so the whole band wears: no stretching, nothing left unworn at the edges). Photo M26 measured a 75 mm single line at the corrected camera height 1.44 m: 27 % of the nominal strip lost (19 to 35 %: 10 gaps in 3.6 m, most about 14 mm, one about 0.47 m, plus ragged chips on both edges; 22 % at the assumed 1.6 m); the share and the gap lengths carry over to the 100 mm band, the chips are 5 to 15 mm deep on both edges. Cross gaps the full width of the band, 2.0 to 3.6 per metre, lengths 20 / 60 / 300 mm (p10 / p50 / p90); edge chips 5 to 15 mm deep, 20 to 150 mm long, 3 to 8 per metre; specks 4 to 9 mm. The paint that remains is faded and filmed with dirt (the surface colour 195/168/100). The mask is the LOSS: 1 shows the road.",
     "surfaces": [
      "line_yellow",
      "line_white"
@@ -7127,8 +7127,8 @@
       0.15,
       0.35
      ],
-     "typical": 0.26,
-     "src": "Photo M26 (28 +/- 8 % at camera 1.40 m; 22 % at the assumed 1.6 m); reviewer 10 to 30 %"
+     "typical": 0.25,
+     "src": "Photo M26 (27 +/- 8 % at camera 1.44 m; 22 % at the assumed 1.6 m); reviewer 10 to 30 %"
     },
     "places": "the double yellow along both kerbs, x 0 to 48"
    },
@@ -7177,7 +7177,7 @@
      "p10": 20,
      "p50": 60,
      "p90": 300,
-     "src": "Photo M26 (gaps 3 to 49 mm, one 450 mm, at camera 1.40 m; 3 to 55 and 515 at 1.6 m); reviewer 20 to 300 mm"
+     "src": "Photo M26 (gaps 3 to 50 mm, one 466 mm, at camera 1.44 m; 3 to 55 and 515 at 1.6 m); reviewer 20 to 300 mm"
     },
     "edge_ragged_mm": [
      5,
@@ -7259,7 +7259,7 @@
      },
      "min": 0.15,
      "max": 0.4,
-     "src": "Photo M26 (28 % at camera 1.40 m), reviewer 10 to 30 %",
+     "src": "Photo M26 (27 % at camera 1.44 m), reviewer 10 to 30 %",
      "applies_to": "mask"
     },
     {
@@ -8108,7 +8108,7 @@
       3
      ],
      "typical": 2,
-     "src": "Judgement (reviewer 8 October); Photo M07b (one strip and one patch in about 3.4 m of footway at camera 1.27 m)"
+     "src": "Judgement (reviewer 8 October); Photo M07b (one strip and one patch in about 3.5 m of footway at camera 1.28 m)"
     },
     "places": "both footways, x 3 to 42; never across the yard entrance's dropped kerb (x 21 to 24) unless it is the crossover's own concrete"
    },
@@ -8149,7 +8149,7 @@
       0.6,
       3.0
      ],
-     "src": "Judgement (reviewer 8 October); Photo M07 (flags 0.5 to 0.6 m at camera 1.27 m)"
+     "src": "Judgement (reviewer 8 October); Photo M07 (flags 0.52 to 0.61 m at camera 1.28 m)"
     },
     "edge_10_90_mm": [
      3,
@@ -8714,6 +8714,183 @@
     "line_wear and iron_wear envelope checks"
    ]
   }
+ ],
+ "camera_correction": [
+  [
+   "M04 oil band (urban_street_03 road)",
+   "camera height above the road",
+   "1.6 m",
+   "1.44 m",
+   "M30, the kerbs writer's measurement, checked: own reading 1.40 m"
+  ],
+  [
+   "M04",
+   "drip band (width x visible length)",
+   "0.32 x 1.83 m",
+   "0.29 x 1.65 m",
+   "x 0.90"
+  ],
+  [
+   "M04",
+   "dot equivalent diameter p10 / p50 / p90 (rel < 0.85)",
+   "10.6 / 16.9 / 29.4 mm",
+   "9.5 / 15.2 / 26.4 mm",
+   "x 0.90"
+  ],
+  [
+   "M04",
+   "dot equivalent diameter p10 / p50 / p90 (rel < 0.75)",
+   "10.3 / 13.7 / 21.4 mm",
+   "9.3 / 12.3 / 19.3 mm",
+   "x 0.90"
+  ],
+  [
+   "M04",
+   "dots per m2, whole region (rel < 0.85 / 0.75)",
+   "167 / 68",
+   "206 / 83",
+   "x 1.23; region 1.33 m2 becomes 1.08 m2"
+  ],
+  [
+   "M04",
+   "dots per m2 inside the band (rel < 0.75 / 0.85)",
+   "153 / 377",
+   "189 / 465",
+   "x 1.23"
+  ],
+  [
+   "road_oil",
+   "band width, dot sizes, density in the band",
+   "0.32 m; 10.6 / 16.9 / 29.4 mm; 120 to 260 per m2",
+   "0.29 m; 9.5 / 15.2 / 26.4 mm; 150 to 330 per m2",
+   "checks: dot p50 10 to 30 becomes 9 to 26 mm; dots per m2 of frame 15 to 170 becomes 20 to 220"
+  ],
+  [
+   "M05 reinstatement (urban_street_02 road)",
+   "camera height above the road",
+   "1.6 m",
+   "1.01 m",
+   "M30, the kerbs writer's measurement, checked: own reading 0.97 m"
+  ],
+  [
+   "M05",
+   "cover reinstatement",
+   "1.0 x 1.1 m",
+   "0.70 x 0.68 m (the seam rectangle 0.57 m)",
+   "x 0.63"
+  ],
+  [
+   "M05",
+   "dark seam",
+   "30 to 50 mm",
+   "19 to 32 mm",
+   "x 0.63"
+  ],
+  [
+   "road_patch",
+   "cover size, seam, frame",
+   "0.9 to 1.2 m square; 30 to 50 mm; frame 1.8 m",
+   "0.57 to 0.70 m square; 19 to 32 mm; frame 1.2 m",
+   "checks: patch size 800 to 1500 becomes 500 to 900 mm; coverage 0.25 to 0.6 becomes 0.15 to 0.45"
+  ],
+  [
+   "M06 litter (urban_street_02)",
+   "pieces per metre of kerb (22 pieces) and the band's depth",
+   "4.4 per m over 5 m; 0.3 m",
+   "6.3 per m over 3.49 m; 0.19 m",
+   "counts by eye unchanged; lengths x 0.63"
+  ],
+  [
+   "M06",
+   "pieces per m2 on the road (10 pieces)",
+   "0.7 over 13.6 m2",
+   "1.8 over 5.4 m2",
+   "areas x 0.40"
+  ],
+  [
+   "M06",
+   "detected bright bits p10 / p50 / p90",
+   "7.6 / 11.2 / 27.7 mm",
+   "4.8 / 7.1 / 17.5 mm",
+   "x 0.63"
+  ],
+  [
+   "cig_end",
+   "kerb band, depth, open road, open footway",
+   "3 to 6 per m (4.4); 0.3 m; 0.2 to 0.8 per m2; 0.3 to 1.0 per m2",
+   "4 to 9 per m (6.3); 0.2 m; 0.8 to 2.0 per m2; 0.5 to 2.0 per m2",
+   "the stamp sizes (ends 8 x 26 mm) are Read and unchanged; the piece p50 is Derived from the mix, 14 mm (was 11 from M06)"
+  ],
+  [
+   "M07 flags (urban_street_03 footway)",
+   "camera height above the footway",
+   "1.48 m",
+   "1.28 m",
+   "M30: own reading 1.25 m above the wall foot"
+  ],
+  [
+   "M07",
+   "slab size",
+   "0.6 to 0.7 m",
+   "0.52 to 0.61 m",
+   "x 0.865; BS 7263 600 x 600 and 450 x 600 mm fit"
+  ],
+  [
+   "flag_patch_crack, footway_infill",
+   "slab text; one strip and one patch in",
+   "0.6 to 0.7 m; about 4 m of footway",
+   "0.52 to 0.61 m; about 3.5 m",
+   "the kind's slab (0.6 m, Read) and patch sizes are unchanged"
+  ],
+  [
+   "M26 yellow line (urban_street_03 road)",
+   "camera height above the road; nominal 75 mm strip in the picture",
+   "1.6 m; 25 px",
+   "1.44 m; 27.8 px",
+   "the unworn line reads 28 px = 75.6 mm: the line now agrees with 75 mm"
+  ],
+  [
+   "M26",
+   "share of the line lost; gaps; median gap; largest gap; edge raggedness",
+   "22 %; 8; 15 mm; 515 mm; 79 mm",
+   "27 %; 10; 14 mm; 466 mm; 71 mm",
+   "the loss rises because the nominal strip is wider in pixels than the first pass took it"
+  ],
+  [
+   "line_wear",
+   "density of loss; cross gaps per m; edge chips per m",
+   "10 to 30 % (18); 1.2 to 2.4; 2 to 6",
+   "15 to 35 % (25); 2.0 to 3.6; 3 to 8",
+   "coverage check 0.10 to 0.30 becomes 0.15 to 0.40"
+  ],
+  [
+   "M24 channel (urban_street_03)",
+   "the strip beside the channel, from the kerb",
+   "0.1 to 0.6 m",
+   "0.09 to 0.54 m",
+   "the ratios (1.35 to 1.7, 0.91 to 0.97) do not change"
+  ],
+  [
+   "M25 gully grate in the ortho",
+   "size in the picture",
+   "0.48 x 0.36 m",
+   "0.43 x 0.32 m",
+   "the scene's grate is 0.40 m"
+  ],
+  [
+   "gutter_grime",
+   "kerb litter band (text only)",
+   "0.3 m",
+   "0.19 m",
+   "the fringe (0.10 to 0.30 m) stays Judgement"
+  ],
+  [
+   "not changed",
+   "M17, M21, M23 (scale from brick courses), M16, M01 to M03, M08 to M15, M18 to M20, M22, M27 (scans, the sheet)",
+   "-",
+   "-",
+   "no panorama height enters them; M21's wall distance agrees (6.4 m by the horizon method, 6.7 m by its courses)"
+  ]
  ],
  "review_answers": [
   {
@@ -9394,46 +9571,46 @@
    "files": [
     "urban_street_03 8k, Andreas Mischok, taken 2019-09-07"
    ],
-   "method": "Panorama re-projected to a top-down ortho tile with the camera at its MEASURED height above the road, 1.40 m (M30: courses of the garden wall and the kerb 1.37, the unworn 75 mm yellow line 1.43), 2.625 mm/px. The first pass used an assumed 1.6 m (3 mm/px, the same pixels) and 'proved' it by the median thickness of the worn line (25 px), which is narrower than the line; the unworn line is 28 px = 73.5 mm at 2.625 mm/px. Dots = pixels darker than 0.85, 0.75, 0.65 of a 25 px median; components of 4 px or more.",
-   "error": "Height 1.40 +/-0.06 m gives +/-4 % on lengths and +/-9 % on areas and densities; dot sizes +/-2 mm (2.6 mm pixel); threshold changes density by a factor 2.5 (218 to 88 per m2).",
+   "method": "Panorama re-projected to a top-down ortho tile with the camera at its MEASURED height above the road, 1.44 m (M30: the kerbs writer's bricks and car wheel 1.44 +/-0.07, used; this writer's own garden wall with the kerb 1.37 and the unworn 75 mm line 1.43 agree), 2.7 mm/px. The first pass used an assumed 1.6 m (3 mm/px, the same pixels) and 'proved' it by the median thickness of the worn line (25 px), which is narrower than the line; the unworn line is 28 px = 75.6 mm at 2.7 mm/px. Dots = pixels darker than 0.85, 0.75, 0.65 of a 25 px median; components of 4 px or more.",
+   "error": "Height 1.44 +/-0.07 m gives +/-5 % on lengths and +/-10 % on areas and densities; dot sizes +/-2 mm (2.7 mm pixel); threshold changes density by a factor 2.5 (206 to 83 per m2).",
    "values": {
     "dots_n_rel0.85": 222,
-    "region_m2": 1.02,
-    "per_m2_rel0.85": 218.0,
-    "per_m2_rel0.75": 88.0,
+    "region_m2": 1.08,
+    "per_m2_rel0.85": 206.0,
+    "per_m2_rel0.75": 83.0,
     "eqd_mm_p10_50_90_rel0.85": [
-     9.2,
-     14.8,
-     25.7
+     9.5,
+     15.2,
+     26.4
     ],
     "eqd_mm_p10_50_90_rel0.75": [
-     9.0,
-     12.0,
-     18.8
+     9.3,
+     12.3,
+     19.3
     ],
     "luminance_ratio_in_dots": 0.7,
-    "in_band_per_m2_rel0.75": 199.0,
-    "in_band_per_m2_rel0.85": 492.0,
-    "note_region": "per_m2_* are over the whole 1.02 m2 region of the view, which includes clean asphalt around the dotted band; in_band_* divide by the band's own area (length x width, central 90 % of the dots)",
-    "band_length_m_visible": 1.6,
-    "band_width_m": 0.28
+    "in_band_per_m2_rel0.75": 189.0,
+    "in_band_per_m2_rel0.85": 465.0,
+    "note_region": "per_m2_* are over the whole 1.08 m2 region of the view, which includes clean asphalt around the dotted band; in_band_* divide by the band's own area (length x width, central 90 % of the dots)",
+    "band_length_m_visible": 1.65,
+    "band_width_m": 0.29
    },
-   "reading": "A parked car's drip band: about 0.28 m x 1.6 m (at least), dots 15 mm, 0.7 of the road's luminance, 199 per m2 inside the band at the darker threshold (492 at the lighter). At the first pass's assumed 1.6 m these were 0.32 x 1.8 m, 17 mm, 154 and 379."
+   "reading": "A parked car's drip band: about 0.29 m x 1.6 m (at least), dots 15 mm, 0.7 of the road's luminance, 189 per m2 inside the band at the darker threshold (465 at the lighter). At the first pass's assumed 1.6 m these were 0.32 x 1.8 m, 17 mm, 154 and 379 (camera 1.44 m now)."
   },
   "M05": {
    "label": "Utility reinstatement in asphalt (urban_street_02, ortho tile)",
    "files": [
     "urban_street_02 8k, Andreas Mischok, taken 2019-08-18"
    ],
-   "method": "Ortho tile at the measured camera height 0.97 m (M30), 1.82 mm/px (first pass: an assumed 1.6 m, 3 mm/px, the same pixels): the patch with its damp fringe spans 370 x 360 px, the seam rectangle about 300 px; seam a dark line 10 to 17 px wide; grass tufts at 3 corners. Second pass (the review re-measured it): luminance profiles across the left seam (mean of 210 rows), seam core against the road's median in a 350 x 600 px open patch; seam colour by 5 px; infill median of x 170 to 330, y 560 to 780; the damp fringe in three boxes.",
-   "error": "+/-0.05 m on the height = +/-5 % on sizes, +/-4 mm on the seam; luminance ratios +/-0.05 (JPEG, 8 bit, the line is 3 to 5 px wide).",
+   "method": "Ortho tile at the measured camera height 1.01 m (M30), 1.89 mm/px (first pass: an assumed 1.6 m, 3 mm/px, the same pixels): the patch with its damp fringe spans 370 x 360 px, the seam rectangle about 300 px; seam a dark line 10 to 17 px wide; grass tufts at 3 corners. Second pass (the review re-measured it): luminance profiles across the left seam (mean of 210 rows), seam core against the road's median in a 350 x 600 px open patch; seam colour by 5 px; infill median of x 170 to 330, y 560 to 780; the damp fringe in three boxes.",
+   "error": "+/-0.06 m on the height = +/-6 % on sizes, +/-4 mm on the seam; luminance ratios +/-0.05 (JPEG, 8 bit, the line is 3 to 5 px wide).",
    "values": {
-    "w_m": 0.67,
-    "h_m": 0.66,
-    "seam_rect_m": 0.55,
+    "w_m": 0.7,
+    "h_m": 0.68,
+    "seam_rect_m": 0.57,
     "seam_mm": [
-     18,
-     31
+     19,
+     32
     ],
     "seam_ratio": [
      0.63,
@@ -9455,23 +9632,23 @@
      0.86
     ]
    },
-   "reading": "A cover reinstatement is about 0.65 x 0.65 m (the seam rectangle 0.55 m; 1.0 x 1.1 m at the assumed 1.6 m) with a dark seam of 18 to 31 mm (30 to 50 mm at 1.6 m) that reads 0.63 to 0.77 of the road (not 0.5), brown-shifted (125/113/100 on 139/127/123); the infill is 0.92 to 0.93 of the road; a damp fringe of 0.80 to 0.86 runs along three edges."
+   "reading": "A cover reinstatement is about 0.70 x 0.68 m (the seam rectangle 0.57 m; 1.0 x 1.1 m at the assumed 1.6 m) with a dark seam of 19 to 32 mm (30 to 50 mm at 1.6 m) that reads 0.63 to 0.77 of the road (not 0.5), brown-shifted (125/113/100 on 139/127/123); the infill is 0.92 to 0.93 of the road; a damp fringe of 0.80 to 0.86 runs along three edges."
   },
   "M06": {
    "label": "Litter along the kerb and on the road (urban_street_02, rectilinear view yaw -165, pitch -20)",
    "files": [
     "urban_street_02 8k"
    ],
-   "method": "Pieces counted by eye on a marked picture (automatic bright-blob detection also hit aggregate glints and was rejected): kerb strip about 22 pieces over 3.35 m of kerb, band 0.18 m deep; road 10 pieces over 5.0 m2 (lengths and areas at the MEASURED camera height 0.97 m above the road, M30; the first pass divided by 5 m, 0.3 m and 13.6 m2 at an assumed 1.6 m). Detected bright bits (aggregate included) had size 4.6, 6.8, 16.8 mm at p10/50/90 (7.6, 11.2, 27.7 mm at 1.6 m). Second pass: the same kerb strip (x 150 to 1100, y 225 to 320 of the view) re-segmented by luminance against a 31 px median and colour; each bit classed tan when R - B > 45 on its mean colour.",
+   "method": "Pieces counted by eye on a marked picture (automatic bright-blob detection also hit aggregate glints and was rejected): kerb strip about 22 pieces over 3.49 m of kerb, band 0.19 m deep; road 10 pieces over 5.4 m2 (lengths and areas at the MEASURED camera height 1.01 m above the road, M30; the first pass divided by 5 m, 0.3 m and 13.6 m2 at an assumed 1.6 m). Detected bright bits (aggregate included) had size 4.8, 7.1, 17.5 mm at p10/50/90 (7.6, 11.2, 27.7 mm at 1.6 m). Second pass: the same kerb strip (x 150 to 1100, y 225 to 320 of the view) re-segmented by luminance against a 31 px median and colour; each bit classed tan when R - B > 45 on its mean colour.",
    "error": "+/-35 % on counts; +/-5 % on sizes (the height); 8k pixel at 4 m is 3 mm.",
    "values": {
-    "kerb_per_m_of_kerb": 6.6,
-    "kerb_band_depth_m": 0.18,
-    "road_per_m2": 2.0,
+    "kerb_per_m_of_kerb": 6.3,
+    "kerb_band_depth_m": 0.19,
+    "road_per_m2": 1.8,
     "piece_mm_p10_50_90": [
-     4.6,
-     6.8,
-     16.8
+     4.8,
+     7.1,
+     17.5
     ],
     "tan_bits": 4,
     "bits": 13,
@@ -9492,15 +9669,15 @@
     ],
     "note_tan": "4 of 13 bits are clearly tan (R - B > 45), 6 of 13 with the borderline ones; the reviewer counted 9 of 24 (0.38) and a tan median 177/140/110 on his exposure; the view's exposure is brighter, the ratios R:G:B agree (1 : 0.79 : 0.62)"
    },
-   "reading": "The kerb gathers about 6.6 pieces per metre in a band 0.18 m deep; open road about 2.0 per m2 (a scruffier estate road; a 1990 shop street would be at or above this). First pass at 1.6 m: 4.4 per m, 0.3 m, 0.7 per m2. About 4 in 10 filter tips are tan cork-pattern (0.31 to 0.46), the rest white."
+   "reading": "The kerb gathers about 6.3 pieces per metre in a band 0.19 m deep; open road about 1.8 per m2 (a scruffier estate road; a 1990 shop street would be at or above this). First pass at 1.6 m: 4.4 per m, 0.3 m, 0.7 per m2. About 4 in 10 filter tips are tan cork-pattern (0.31 to 0.46), the rest white."
   },
   "M07": {
-   "label": "Patched flags (urban_street_03, ortho tile of the footway, camera-to-footway 1.27 m, M30)",
+   "label": "Patched flags (urban_street_03, ortho tile of the footway, camera-to-footway 1.28 m, M30)",
    "files": [
     "urban_street_03 8k"
    ],
    "method": "Six slab samples by rectangle, mean linear luminance and sRGB; dark slabs 0.20 to 0.24, pale 0.34 to 0.42 (same light); shares and cracks by eye over about 18 slabs.",
-   "error": "Luminance ratio +/-0.08; shares +/-10 points; slab size +/-15 % (height of the footway 1.27 +/-0.05 m, M30; the first pass used 1.48 m).",
+   "error": "Luminance ratio +/-0.08; shares +/-10 points; slab size +/-15 % (height of the footway 1.28 +/-0.07 m, M30; the first pass used 1.48 m).",
    "values": {
     "dark_over_pale": 0.58,
     "dark_srgb": [
@@ -9523,8 +9700,8 @@
     "share_mid": 0.15,
     "cracked_slab_share": 0.11,
     "slab_m": [
-     0.51,
-     0.6
+     0.52,
+     0.61
     ],
     "insitu_strip_srgb_in_view": [
      161,
@@ -10330,7 +10507,7 @@
    "files": [
     "urban_street_03 8k, Andreas Mischok, taken 2019-09-07"
    ],
-   "method": "Median linear luminance of boxes in the preview: channel setts x 250 to 550, y 372 to 388; the asphalt strip beside the channel x 250 to 750, y 432 to 470 (the first 0.09 to 0.53 m off the kerb at the corrected camera height 1.40 m; 0.1 to 0.6 m at the assumed 1.6 m); the open road x 100 to 800, y 560 to 760; row profiles in 5 px bands. The review measured 0.236 for the setts against 0.161 to 0.170 for the asphalt.",
+   "method": "Median linear luminance of boxes in the preview: channel setts x 250 to 550, y 372 to 388; the asphalt strip beside the channel x 250 to 750, y 432 to 470 (the first 0.09 to 0.54 m off the kerb at the corrected camera height 1.44 m; 0.1 to 0.6 m at the assumed 1.6 m); the open road x 100 to 800, y 560 to 760; row profiles in 5 px bands. The review measured 0.236 for the setts against 0.161 to 0.170 for the asphalt.",
    "error": "+/-0.1 in the ratio (the setts are narrow and sloped; JPEG); same exposure for all boxes.",
    "values": {
     "channel_Y": [
@@ -10386,7 +10563,7 @@
     ],
     "format": "[x0, x1, y0, y1] in preview pixels"
    },
-   "reading": "The channel is LIGHTER than the road, 1.35 to 1.7 x (the scene says it is 'in the kerb's own concrete rather than asphalt'), and the asphalt 0 to 0.53 m off the kerb is 0.91 to 0.97 of the open road. On the wet Hook sheet the strip between the inner yellow line and the kerb reads about 0.7 of the road (D7)."
+   "reading": "The channel is LIGHTER than the road, 1.35 to 1.7 x (the scene says it is 'in the kerb's own concrete rather than asphalt'), and the asphalt 0 to 0.54 m off the kerb is 0.91 to 0.97 of the open road. On the wet Hook sheet the strip between the inner yellow line and the kerb reads about 0.7 of the road (D7)."
   },
   "M25": {
    "label": "Paint loss and rust on the Hook sheet's gable downpipe; the gully grate of urban_street_03",
@@ -10446,33 +10623,33 @@
     ]
    },
    "preview": "hook-sheet-downpipe-paint-loss.jpg",
-   "reading": "The sheet's downpipe carries paint loss over 5 to 7 % of its length in patches of 20 to 160 mm, pale ochre (125 to 141 / 86 to 102 / 64 to 72) on near-black paint, at the shoe, a collar and a joint. The photographed gully grate is dull red-brown (R - B only 22) with black slots, not bright rust. At the corrected scale (2.625 mm/px) the grate in the ortho tile is 0.42 x 0.31 m (0.48 x 0.36 m at the assumed 1.6 m); the scene's grate is 0.40 m."
+   "reading": "The sheet's downpipe carries paint loss over 5 to 7 % of its length in patches of 20 to 160 mm, pale ochre (125 to 141 / 86 to 102 / 64 to 72) on near-black paint, at the shoe, a collar and a joint. The photographed gully grate is dull red-brown (R - B only 22) with black slots, not bright rust. At the corrected scale (2.7 mm/px) the grate in the ortho tile is 0.43 x 0.32 m (0.48 x 0.36 m at the assumed 1.6 m); the scene's grate is 0.40 m."
   },
   "M26": {
-   "label": "The worn yellow line (urban_street_03, ortho tile, camera 1.40 m above the road, M30)",
+   "label": "The worn yellow line (urban_street_03, ortho tile, camera 1.44 m above the road, M30)",
    "files": [
     "urban_street_03 8k, Andreas Mischok, taken 2019-09-07"
    ],
-   "method": "The line's centre fitted by a quadratic through the yellow pixels (R - B > 45, R > 110); for each column the yellow pixels over the nominal 75 mm strip (28.6 px along the normal at 2.625 mm/px; the first pass took 25 px at an assumed 1.6 m); loss = 1 - mean coverage; gaps = runs of columns with coverage under 0.6; colour of the pixels 5 px inside the yellow mask.",
+   "method": "The line's centre fitted by a quadratic through the yellow pixels (R - B > 45, R > 110); for each column the yellow pixels over the nominal 75 mm strip (27.8 px along the normal at 2.7 mm/px; the first pass took 25 px at an assumed 1.6 m); loss = 1 - mean coverage; gaps = runs of columns with coverage under 0.6; colour of the pixels 5 px inside the yellow mask.",
    "error": "+/-8 points on the loss (the edge pixels blend with the road); gap lengths +/-6 mm.",
    "values": {
-    "loss_share": 0.28,
+    "loss_share": 0.27,
     "loss_share_range": [
-     0.2,
-     0.36
+     0.19,
+     0.35
     ],
-    "gaps": 11,
-    "gap_mm_median": 13,
-    "gap_mm_largest": 450,
-    "top_edge_raggedness_std_mm": 69,
+    "gaps": 10,
+    "gap_mm_median": 14,
+    "gap_mm_largest": 466,
+    "top_edge_raggedness_std_mm": 71,
     "line_thickness_px_p10_50_90": [
      14,
      25,
      28
     ],
     "line_unworn_mm": [
-     65.6,
-     73.5
+     67.5,
+     75.6
     ],
     "first_pass_at_1.6_m": {
      "loss_share": 0.22,
@@ -10497,7 +10674,7 @@
      120
     ]
    },
-   "reading": "About 28 % (20 to 36) of a street yellow line is lost in chips and gaps (most about 13 mm, one 0.45 m), its edge ragged, its colour a faded, dirt-filmed cream-yellow (about 181/162/120 as albedo, against the scene's fresh 199/168/46)."
+   "reading": "About 27 % (19 to 35) of a street yellow line is lost in chips and gaps (most about 14 mm, one 0.47 m), its edge ragged, its colour a faded, dirt-filmed cream-yellow (about 181/162/120 as albedo, against the scene's fresh 199/168/46)."
   },
   "M27": {
    "label": "Weathered concrete paving flag albedo (concrete_pavement_02)",
@@ -10605,229 +10782,273 @@
    "reading": "No house of the sheet's frame reads darker than about 0.86 of Mickey's front; the houses further down the parade read 0.99 to 1.6 of it, brighter through the haze; the far right terraces and the right-hand cottage the same red. The basis of D13 and of the house states: no parade or west_south house is sooted."
   },
   "M30": {
-   "label": "Camera heights of urban_street_02 and urban_street_03, measured (the correction of 9 October: none was at 1.6 m)",
+   "label": "Camera heights of urban_street_02 and urban_street_03: measured twice, independently (the correction of 9 October: none was at 1.6 m)",
    "files": [
-    "urban_street_02 8k and urban_street_03 8k, Andreas Mischok (CC0), re-tone-mapped here; production/cloud-week/targets/bollards/ (calibrate.py, anchors.json, TARGET.md section 3: read, method and two anchors reproduced)"
+    "urban_street_02 8k and urban_street_03 8k, Andreas Mischok (CC0), re-tone-mapped here; production/cloud-week/targets/kerbs-and-covers/ (calibrate.py, calibration_data.py, target.json `calibration`: read, the numbers USED); production/cloud-week/targets/bollards/ (calibrate.py, anchors.json, TARGET.md section 3: read, method and two anchors reproduced)"
    ],
-   "method": "The HORIZON method, as the bollards' writer and its reviewer: in a levelled equirectangular panorama the horizon is the middle row (2048 of 4096); on a vertical wall the courses of a 75 mm brick wall are evenly spaced in tan(angle below the horizon); camera height above the wall's foot = 75 mm x tan(angle of the foot) / (course pitch in tan units). The pitch is a fold fit of the column band's profile in tan units, then checked by drawing the fitted joints on the picture (every line on a mortar joint, the last on the wall's foot); the foot row is read where the wall meets the flags. urban_street_03: four bands of the stock-brick garden wall (the wall of M21), cols 1100 to 1610. urban_street_02: the two anchors of the bollards' writer, reproduced on this copy to 1 mm (building wall 875 mm, gate pier 918 mm), and four bands of the brick boundary wall of the litter view. Kerb upstand: camera height above the road / above the footway = tan(angle of the kerb foot) / tan(angle of the kerb's top edge) at one azimuth. The yellow line: its unworn width measured in the panorama at half maximum is 0.0525 x the camera height (radial), so a 75 mm line puts the camera 1.43 m above the road.",
-   "error": "Each wall band +/-3 % (the foot row +/-3 rows, the joint count); the gauge of an old wall 75 to 77 mm (+1 to +3 %); the horizon assumed at the middle row (a levelled panorama); the kerb upstand +/-0.02 m. Adopted heights +/-0.06 m (urban_street_03) and +/-0.05 m (urban_street_02).",
+   "method": "USED: the kerbs-and-covers writer's heights, each at the ground its measurements sit on: bricks by the horizon method (in a levelled equirectangular panorama the horizon is the middle row; the courses of a 75 mm brick wall are evenly spaced in tan(angle below the horizon); camera height above the wall's foot = 75 mm x tan(angle of the foot) / course pitch in tan units) plus the kerb upstand, and, on urban_street_03, a car's wheel of known diameter. CHECKED against this writer's own readings, made first and independently: urban_street_03, four bands of the stock-brick garden wall of M21 (cols 1100 to 1610; the fitted joints were drawn on the picture, every line on a mortar joint, the last on the wall's foot) and the kerb face (rows 2509 and 2547.5 at col 2300: upstand 0.12 m); urban_street_02, the bollards' writer's two anchors reproduced to 1 mm on this copy (building wall 875, gate pier 918) and four bands of the boundary wall of the litter view, with the kerb there (upstand 0.04 to 0.05 m). The 75 mm yellow line is a third, weaker check: its unworn width in the panorama at half maximum is 0.0525 x the camera height (radial), so 75 mm puts the camera 1.43 m above the road (the kerbs writer's reading of it is 64 to 82 mm: inconclusive, consistent with 1.44 if the line is 75 mm).",
+   "error": "USED heights +/-0.07 m (urban_street_03) and +/-0.06 m (urban_street_02), i.e. +/-5 % on lengths and +/-10 % on areas and densities per m2. Remaining: the gauge of an old wall 73 to 79 mm (+/-4 %), the horizon assumed at the middle row, the kerb upstand +/-0.02 m.",
    "values": {
-    "urban_street_03": {
-     "anchors": [
-      {
-       "pano": "urban_street_03",
-       "id": "us03_garden_wall_1100",
-       "cols": [
-        1100,
-        1150
-       ],
-       "rows": [
-        1995,
-        2250
-       ],
-       "foot_row": 2255.5,
-       "pitch_tan": 0.00988,
-       "tan_foot": 0.1605,
-       "courses_to_horizon": 16.24,
-       "h_above_foot_mm": 1218,
-       "what": "stock-brick garden wall on the footway, yaw -125 to -105 (M21); foot where the wall meets the flags"
-      },
-      {
-       "pano": "urban_street_03",
-       "id": "us03_garden_wall_1250",
-       "cols": [
-        1250,
-        1300
-       ],
-       "rows": [
-        1995,
-        2275
-       ],
-       "foot_row": 2280.5,
-       "pitch_tan": 0.01061,
-       "tan_foot": 0.1802,
-       "courses_to_horizon": 16.98,
-       "h_above_foot_mm": 1274,
-       "what": "stock-brick garden wall on the footway, yaw -125 to -105 (M21); foot where the wall meets the flags"
-      },
-      {
-       "pano": "urban_street_03",
-       "id": "us03_garden_wall_1400",
-       "cols": [
-        1400,
-        1440
-       ],
-       "rows": [
-        1995,
-        2290
-       ],
-       "foot_row": 2297.5,
-       "pitch_tan": 0.01159,
-       "tan_foot": 0.1937,
-       "courses_to_horizon": 16.71,
-       "h_above_foot_mm": 1253,
-       "what": "stock-brick garden wall on the footway, yaw -125 to -105 (M21); foot where the wall meets the flags"
-      },
-      {
-       "pano": "urban_street_03",
-       "id": "us03_garden_wall_1560",
-       "cols": [
-        1560,
-        1610
-       ],
-       "rows": [
-        1990,
-        2300
-       ],
-       "foot_row": 2310.0,
-       "pitch_tan": 0.01237,
-       "tan_foot": 0.2037,
-       "courses_to_horizon": 16.46,
-       "h_above_foot_mm": 1235,
-       "what": "stock-brick garden wall on the footway, yaw -125 to -105 (M21); foot where the wall meets the flags"
-      }
-     ],
-     "above_footway_wall_mean_m": 1.245,
-     "kerb_upstand_m": 0.12,
-     "kerb_rows_top_foot_at_col_2300": [
-      2509,
-      2547.5
-     ],
-     "above_road_wall_plus_kerb_m": 1.37,
-     "yellow_line": {
-      "radial_width_per_height": 0.0525,
-      "unworn_width_mm_at_1.40_m": 73.5,
-      "height_if_line_is_75_mm_m": 1.43
+    "used": {
+     "urban_street_03": {
+      "above_road_m": 1.44,
+      "error_m": 0.07,
+      "above_footway_m": 1.28,
+      "source": "kerbs-and-covers target.json calibration: bricks mean 1.28 above the wall foot (+ 0.15 kerb = 1.43), the car wheel 1.46"
      },
-     "adopted": {
-      "above_road_m": 1.4,
-      "above_footway_m": 1.27,
+     "urban_street_02": {
+      "above_road_m": 1.01,
       "error_m": 0.06,
-      "assumed_before_m": {
-       "road": 1.6,
-       "footway": 1.48
-      }
+      "source": "kerbs-and-covers target.json calibration: building wall 0.986 and gate pier 1.029 at the road (0.875 and 0.919 above their footway + 0.11)"
+     },
+     "assumed_before_m": {
+      "urban_street_03_road": 1.6,
+      "urban_street_03_footway": 1.48,
+      "urban_street_02_road": 1.6
      }
     },
-    "urban_street_02": {
-     "anchors": [
-      {
-       "pano": "urban_street_02",
-       "id": "us02_boundary_wall_150",
-       "cols": [
-        150,
-        200
-       ],
-       "rows": [
-        2062,
-        2226
-       ],
-       "foot_row": 2226.0,
-       "pitch_tan": 0.01093,
-       "tan_foot": 0.1374,
-       "courses_to_horizon": 12.57,
-       "h_above_foot_mm": 943,
-       "what": "brick boundary wall on the footway in the litter view (yaw -165), foot at the flags"
-      },
-      {
-       "pano": "urban_street_02",
-       "id": "us02_boundary_wall_250",
-       "cols": [
-        250,
-        300
-       ],
-       "rows": [
-        2062,
-        2226
-       ],
-       "foot_row": 2226.0,
-       "pitch_tan": 0.01072,
-       "tan_foot": 0.1374,
-       "courses_to_horizon": 12.82,
-       "h_above_foot_mm": 961,
-       "what": "brick boundary wall on the footway in the litter view (yaw -165), foot at the flags"
-      },
-      {
-       "pano": "urban_street_02",
-       "id": "us02_boundary_wall_320",
-       "cols": [
-        320,
-        380
-       ],
-       "rows": [
-        2062,
-        2226
-       ],
-       "foot_row": 2226.0,
-       "pitch_tan": 0.01051,
-       "tan_foot": 0.1374,
-       "courses_to_horizon": 13.07,
-       "h_above_foot_mm": 980,
-       "what": "brick boundary wall on the footway in the litter view (yaw -165), foot at the flags"
-      },
-      {
-       "pano": "urban_street_02",
-       "id": "us02_boundary_wall_380",
-       "cols": [
-        380,
-        430
-       ],
-       "rows": [
-        2062,
-        2226
-       ],
-       "foot_row": 2226.0,
-       "pitch_tan": 0.01033,
-       "tan_foot": 0.1374,
-       "courses_to_horizon": 13.3,
-       "h_above_foot_mm": 998,
-       "what": "brick boundary wall on the footway in the litter view (yaw -165), foot at the flags"
-      }
-     ],
-     "anchors_bollards_writer_mm": {
-      "us02_building_wall": 875,
-      "us02_gate_pier": 918
+    "kerbs_writer": {
+     "urban_street_03": {
+      "bricks_m": [
+       1.401,
+       1.413,
+       1.477,
+       1.329,
+       1.529
+      ],
+      "wheel_m": 1.458,
+      "mean_m": 1.435
      },
-     "anchors_bollards_reviewer_mm": [
-      930,
-      910
-     ],
-     "above_footway_this_writer_m": 0.971,
-     "kerb_upstand_m": 0.045,
-     "kerb_rows_top_foot_at_col_460": [
-      2328,
-      2340
-     ],
-     "adopted": {
-      "above_road_m": 0.97,
-      "above_footway_m": 0.92,
-      "error_m": 0.05,
-      "assumed_before_m": {
-       "road": 1.6
-      }
+     "urban_street_02": {
+      "bricks_m": [
+       0.986,
+       1.029
+      ],
+      "mean_m": 1.007
      },
-     "note": "the bollards' writer adds an assumed 0.125 m kerb (1.03 m at the road); the kerb at this writer's litter view is 0.04 to 0.05 m"
+     "not_used_here": {
+      "urban_street_01": [
+       1.23,
+       0.08
+      ],
+      "bethnal_green_entrance": [
+       1.0,
+       0.06
+      ],
+      "birbeck_street_underpass": [
+       1.165,
+       0.07
+      ],
+      "urban_street_04": [
+       1.5,
+       0.1
+      ]
+     }
     },
-    "other_panoramas": "urban_street_01, bethnal_green_entrance, birbeck_street_underpass, limehouse and urban_street_04 were looked at and nothing of this target is measured on them; the bollards' writer found 1.195, 1.02, 1.085 and 1.17 m above their grounds",
+    "this_writer": {
+     "urban_street_03": {
+      "anchors": [
+       {
+        "pano": "urban_street_03",
+        "id": "us03_garden_wall_1100",
+        "cols": [
+         1100,
+         1150
+        ],
+        "rows": [
+         1995,
+         2250
+        ],
+        "foot_row": 2255.5,
+        "pitch_tan": 0.00988,
+        "tan_foot": 0.1605,
+        "courses_to_horizon": 16.24,
+        "h_above_foot_mm": 1218,
+        "what": "stock-brick garden wall on the footway, yaw -125 to -105 (M21); foot where the wall meets the flags"
+       },
+       {
+        "pano": "urban_street_03",
+        "id": "us03_garden_wall_1250",
+        "cols": [
+         1250,
+         1300
+        ],
+        "rows": [
+         1995,
+         2275
+        ],
+        "foot_row": 2280.5,
+        "pitch_tan": 0.01061,
+        "tan_foot": 0.1802,
+        "courses_to_horizon": 16.98,
+        "h_above_foot_mm": 1274,
+        "what": "stock-brick garden wall on the footway, yaw -125 to -105 (M21); foot where the wall meets the flags"
+       },
+       {
+        "pano": "urban_street_03",
+        "id": "us03_garden_wall_1400",
+        "cols": [
+         1400,
+         1440
+        ],
+        "rows": [
+         1995,
+         2290
+        ],
+        "foot_row": 2297.5,
+        "pitch_tan": 0.01159,
+        "tan_foot": 0.1937,
+        "courses_to_horizon": 16.71,
+        "h_above_foot_mm": 1253,
+        "what": "stock-brick garden wall on the footway, yaw -125 to -105 (M21); foot where the wall meets the flags"
+       },
+       {
+        "pano": "urban_street_03",
+        "id": "us03_garden_wall_1560",
+        "cols": [
+         1560,
+         1610
+        ],
+        "rows": [
+         1990,
+         2300
+        ],
+        "foot_row": 2310.0,
+        "pitch_tan": 0.01237,
+        "tan_foot": 0.2037,
+        "courses_to_horizon": 16.46,
+        "h_above_foot_mm": 1235,
+        "what": "stock-brick garden wall on the footway, yaw -125 to -105 (M21); foot where the wall meets the flags"
+       }
+      ],
+      "above_footway_wall_mean_m": 1.245,
+      "kerb_upstand_m": 0.12,
+      "kerb_rows_top_foot_at_col_2300": [
+       2509,
+       2547.5
+      ],
+      "above_road_wall_plus_kerb_m": 1.37,
+      "yellow_line": {
+       "radial_width_per_height": 0.0525,
+       "unworn_width_mm_at_1.44_m": 75.6,
+       "height_if_line_is_75_mm_m": 1.43
+      },
+      "own_estimate_above_road_m": 1.4,
+      "own_error_m": 0.06
+     },
+     "urban_street_02": {
+      "anchors": [
+       {
+        "pano": "urban_street_02",
+        "id": "us02_boundary_wall_150",
+        "cols": [
+         150,
+         200
+        ],
+        "rows": [
+         2062,
+         2226
+        ],
+        "foot_row": 2226.0,
+        "pitch_tan": 0.01093,
+        "tan_foot": 0.1374,
+        "courses_to_horizon": 12.57,
+        "h_above_foot_mm": 943,
+        "what": "brick boundary wall on the footway in the litter view (yaw -165), foot at the flags"
+       },
+       {
+        "pano": "urban_street_02",
+        "id": "us02_boundary_wall_250",
+        "cols": [
+         250,
+         300
+        ],
+        "rows": [
+         2062,
+         2226
+        ],
+        "foot_row": 2226.0,
+        "pitch_tan": 0.01072,
+        "tan_foot": 0.1374,
+        "courses_to_horizon": 12.82,
+        "h_above_foot_mm": 961,
+        "what": "brick boundary wall on the footway in the litter view (yaw -165), foot at the flags"
+       },
+       {
+        "pano": "urban_street_02",
+        "id": "us02_boundary_wall_320",
+        "cols": [
+         320,
+         380
+        ],
+        "rows": [
+         2062,
+         2226
+        ],
+        "foot_row": 2226.0,
+        "pitch_tan": 0.01051,
+        "tan_foot": 0.1374,
+        "courses_to_horizon": 13.07,
+        "h_above_foot_mm": 980,
+        "what": "brick boundary wall on the footway in the litter view (yaw -165), foot at the flags"
+       },
+       {
+        "pano": "urban_street_02",
+        "id": "us02_boundary_wall_380",
+        "cols": [
+         380,
+         430
+        ],
+        "rows": [
+         2062,
+         2226
+        ],
+        "foot_row": 2226.0,
+        "pitch_tan": 0.01033,
+        "tan_foot": 0.1374,
+        "courses_to_horizon": 13.3,
+        "h_above_foot_mm": 998,
+        "what": "brick boundary wall on the footway in the litter view (yaw -165), foot at the flags"
+       }
+      ],
+      "above_footway_boundary_wall_mean_m": 0.971,
+      "anchors_bollards_writer_mm": {
+       "us02_building_wall": 875,
+       "us02_gate_pier": 918
+      },
+      "kerb_upstand_m": 0.045,
+      "kerb_rows_top_foot_at_col_460": [
+       2328,
+       2340
+      ],
+      "own_estimate_above_road_m": 0.97,
+      "own_error_m": 0.05
+     }
+    },
+    "agreement": {
+     "urban_street_03": "1.40 +/-0.06 (own) against 1.44 +/-0.07 (used): within the errors",
+     "urban_street_02": "0.97 +/-0.05 (own) against 1.01 +/-0.06 (used): within the errors"
+    },
+    "other_panoramas": "no measurement of this target is taken on urban_street_01, bethnal_green_entrance, birbeck_street_underpass, limehouse or urban_street_04 (looked at only), so their heights are not used here",
     "scale": {
-     "urban_street_03_road": 0.875,
-     "urban_street_03_footway": 0.858,
-     "urban_street_02_road": 0.606,
+     "urban_street_03_road": 0.9,
+     "urban_street_03_footway": 0.865,
+     "urban_street_02_road": 0.631,
      "rule": "lengths x k, areas and densities per m2 x k^2 and 1/k^2; ratios and tones unchanged; the previews are the same pixels with a new mm per pixel (the re-projection at the corrected height with its footprint scaled by k is identical, checked to 0 levels)"
     }
    },
-   "reading": "None of the panoramas was taken at 1.6 m: urban_street_03 is 1.40 m above its road (1.27 above its footway), urban_street_02 0.97 m above its road (0.92 above its footway). The first pass 'proved' 1.6 m by the median thickness (25 px) of the worn yellow line; the line is narrower there than where it is unworn (28 px = 73.5 mm at the corrected scale), and 75 mm is its nominal width. Every size and density per m2 taken from these two panoramas (M04, M05, M06, M07, M26) is corrected in this version; the measurements that use brick courses (M17, M21, M23) or a scan's own scale were not affected, and M21's wall distance agrees (6.4 m from the horizon method, 6.7 m from its course scale)."
+   "reading": "None of the panoramas was taken at 1.6 m: urban_street_03 is 1.44 m above its road (1.28 above its footway) and urban_street_02 1.01 m above its road. The first pass 'proved' 1.6 m by the median thickness (25 px) of the worn yellow line, which is narrower than the line's 75 mm; the unworn line is 28 px = 75.6 mm at the corrected scale. Every size and density per m2 taken from these two panoramas (M04, M05, M06, M07, M26) is corrected in this version; the measurements that use brick courses (M17, M21, M23) or a scan's own scale were not affected, and M21's wall distance agrees (6.4 m from the horizon method, 6.7 m from its course scale)."
   }
  },
  "previews": {
   "ph-urban_street_03-oil-drip-speckle.jpg": {
-   "mm_per_px": 2.625,
+   "mm_per_px": 2.7,
    "size": [
     1200,
     800
    ],
    "kb": 105,
-   "note": "ortho tile, 2.625 mm per pixel (camera 1.40 m above the road, M30; first pass 3 mm at an assumed 1.6 m, the same pixels); the 75 mm yellow line reads 28 px where unworn; Andreas Mischok, CC0",
+   "note": "ortho tile, 2.7 mm per pixel (camera 1.44 m above the road, M30; first pass 3 mm at an assumed 1.6 m, the same pixels); the 75 mm yellow line reads 28 px where unworn; Andreas Mischok, CC0",
    "credit": "Andreas Mischok, Poly Haven urban_street_03 (CC0, taken 2019-09-07)"
   },
   "ph-urban_street_03-bay-sill-bracket-streak.jpg": {
@@ -10841,13 +11062,13 @@
    "credit": "Andreas Mischok, Poly Haven urban_street_03 (CC0, taken 2019-09-07)"
   },
   "ph-urban_street_03-flags-patched-ortho.jpg": {
-   "mm_per_px": 3.43,
+   "mm_per_px": 3.46,
    "size": [
     1200,
     750
    ],
    "kb": 79,
-   "note": "footway ortho at 3.43 mm per pixel (camera 1.27 m above the footway, M30; first pass 4 mm at an assumed 1.48 m, the same pixels; footway plane 0.13 m above the road); Andreas Mischok, CC0",
+   "note": "footway ortho at 3.46 mm per pixel (camera 1.28 m above the footway, M30; first pass 4 mm at an assumed 1.48 m, the same pixels; footway plane 0.16 m above the road); Andreas Mischok, CC0",
    "credit": "Andreas Mischok, Poly Haven urban_street_03 (CC0, taken 2019-09-07)"
   },
   "ph-urban_street_03-garden-wall-soot-streaks.jpg": {
@@ -10871,13 +11092,13 @@
    "credit": "Andreas Mischok, Poly Haven urban_street_03 (CC0, taken 2019-09-07)"
   },
   "ph-urban_street_02-road-reinstatement-ortho.jpg": {
-   "mm_per_px": 1.82,
+   "mm_per_px": 1.89,
    "size": [
     1200,
     1000
    ],
    "kb": 152,
-   "note": "ortho tile, 1.82 mm per pixel (camera 0.97 m above the road, M30; first pass 3 mm at an assumed 1.6 m, the same pixels): cover reinstatement with seam and weeds; Andreas Mischok, CC0",
+   "note": "ortho tile, 1.89 mm per pixel (camera 1.01 m above the road, M30; first pass 3 mm at an assumed 1.6 m, the same pixels): cover reinstatement with seam and weeds; Andreas Mischok, CC0",
    "credit": "Andreas Mischok, Poly Haven urban_street_02 (CC0, taken 2019-08-18)"
   },
   "ph-urban_street_02-kerb-litter-view.jpg": {
@@ -11224,8 +11445,8 @@
   {
    "id": "D14",
    "between": "the first pass's camera height of 1.6 m for every panorama measurement (proved, it said, by the 75 mm yellow line: 24 to 26 px)",
-   "and": "this writer's horizon measurements on urban_street_03 (1.25 m above the footway, 1.37 above the road) and urban_street_02 (0.92 above the footway, 0.97 above the road), the unworn yellow line (1.43 m) and the bollards' writer and reviewer (0.9 to 1.3 m above each panorama's own ground; 1.6 m 25 % high at urban_street_01's road and 55 % high at urban_street_02's)",
-   "chose": "the measured heights (M30): urban_street_03 1.40 m above its road and 1.27 above its footway, urban_street_02 0.97 above its road. The line was a bad gauge in the first pass because its median thickness is that of a WORN line. Sizes of the oil band, the dots, the reinstatement, the litter bands, the flags and the line's gaps are corrected; ratios and tones are not."
+   "and": "the kerbs writer's measurements (urban_street_03 1.44 m, urban_street_02 1.01 m above the road), this writer's own (1.40 and 0.97 m; the unworn yellow line 1.43 m) and the bollards' writer and reviewer (0.9 to 1.3 m above each panorama's own ground; 1.6 m 25 % high at urban_street_01's road and 55 % high at urban_street_02's)",
+   "chose": "the measured heights (M30, the kerbs writer's, checked against this writer's own): urban_street_03 1.44 m above its road and 1.28 above its footway, urban_street_02 1.01 above its road. The line was a bad gauge in the first pass because its median thickness is that of a WORN line. Sizes of the oil band, the dots, the reinstatement, the litter bands, the flags and the line's gaps are corrected; ratios and tones are not."
   }
  ],
  "checks": [
@@ -12427,7 +12648,7 @@
    },
    "min": 8,
    "max": 22,
-   "src": "Derived from the stamp mix (ends 8 x 26 mm, Read); Photo M06 at the corrected scale (bright bits 4.6 / 6.8 / 16.8 mm)",
+   "src": "Derived from the stamp mix (ends 8 x 26 mm, Read); Photo M06 at the corrected scale (bright bits 4.8 / 7.1 / 17.5 mm)",
    "kind": "cig_end",
    "applies_to": "mask"
   },
@@ -12440,7 +12661,7 @@
    },
    "min": 0.3,
    "max": 10.0,
-   "src": "Photo M06 (open road 2.0 per m2 at 0.97 m), Judgement",
+   "src": "Photo M06 (open road 1.8 per m2 at 1.01 m), Judgement",
    "kind": "cig_end",
    "applies_to": "mask"
   },
@@ -12574,7 +12795,7 @@
    },
    "min": 9,
    "max": 26,
-   "src": "Photo M04 (p50 14.8 mm at camera 1.40 m; first pass 16.9 at 1.6 m)",
+   "src": "Photo M04 (p50 15.2 mm at camera 1.44 m; first pass 16.9 at 1.6 m)",
    "kind": "road_oil",
    "applies_to": "mask"
   },
@@ -12587,7 +12808,7 @@
    },
    "min": 20,
    "max": 220,
-   "src": "Photo M04: 199 per m2 inside the band, a band of 0.28 x 1.0 to 2.5 m inside the 2.6 x 0.6 m frame",
+   "src": "Photo M04: 189 per m2 inside the band, a band of 0.29 x 1.0 to 2.5 m inside the 2.6 x 0.6 m frame",
    "kind": "road_oil",
    "applies_to": "mask"
   },
@@ -12612,7 +12833,7 @@
    },
    "min": 0.002,
    "max": 0.03,
-   "src": "Derived: dots 15 mm across, 199 per m2 over 0.28 m x 1 to 2.5 m",
+   "src": "Derived: dots 15 mm across, 189 per m2 over 0.29 m x 1 to 2.5 m",
    "kind": "road_oil",
    "applies_to": "mask"
   },
@@ -12763,7 +12984,7 @@
    },
    "min": 500,
    "max": 900,
-   "src": "Photo M05 (a 0.55 to 0.70 m cover, camera 0.97 m): infill counted at 0.2",
+   "src": "Photo M05 (a 0.57 to 0.70 m cover, camera 1.01 m): infill counted at 0.2",
    "kind": "road_patch",
    "applies_to": "mask"
   },
@@ -12788,7 +13009,7 @@
    },
    "min": 0.15,
    "max": 0.45,
-   "src": "Derived: a 0.55 to 0.70 m patch in a 1.2 x 1.2 m frame (infill counted at 0.2)",
+   "src": "Derived: a 0.57 to 0.70 m patch in a 1.2 x 1.2 m frame (infill counted at 0.2)",
    "kind": "road_patch",
    "applies_to": "mask"
   },
@@ -13409,7 +13630,7 @@
    },
    "min": 0.15,
    "max": 0.4,
-   "src": "Photo M26 (28 % at camera 1.40 m), reviewer 10 to 30 %",
+   "src": "Photo M26 (27 % at camera 1.44 m), reviewer 10 to 30 %",
    "kind": "line_wear",
    "applies_to": "mask"
   },
@@ -13750,14 +13971,14 @@
   "Salt bloom height and share: only the Hook sheet shows it; the rule for a port is Judgement (BRE 245 search lead).",
   "Fly-poster, bird-dropping, paint fade, sign ghosts, buffed graffiti, handle wear, stone lichen share and footway infill: no measured photograph; shapes and shares are Judgement (the review's suggested numbers where it gave them).",
   "Iron wear: one pipe on the sheet (M25) and one gully grate in a 2019 photograph; the grate's rust colour is between the photograph's dull brown and the sheet's red-brown.",
-  "Camera height for the panorama measurements: none was taken at 1.6 m. M30 measures urban_street_03 at 1.40 +/-0.06 m above its road (1.27 above its footway) and urban_street_02 at 0.97 +/-0.05 m above its road (0.92 above its footway) from brick courses to the horizon, the kerb upstand and the 75 mm yellow line; the gauge of an old wall (75 to 77 mm) and the horizon row (levelled panoramas) are the remaining +/-4 %.",
+  "Camera height for the panorama measurements: none was taken at 1.6 m. M30 uses the kerbs writer's measurements, urban_street_03 at 1.44 +/-0.07 m above its road (1.28 above its footway) and urban_street_02 at 1.01 +/-0.06 m above its road, from brick courses to the horizon and car wheels, and agrees with this writer's own (1.40 +/-0.06 and 0.97 +/-0.05); the gauge of an old wall (75 to 77 mm) and the horizon row (levelled panoramas) are the remaining +/-4 %.",
   "The brief said ambientCG's gum and leaking assets are photographs; the metadata says procedural: unit 4.5 may use them as CC0 shapes only.",
   "The recipe hand-over (section 1) is written against terrace-front.py as read on 8 October; the builder checks the constants before changing them."
  ],
  "self_check": {
   "date": "2026-10-09",
-  "result": "self_check: passed=1218/1218 failed=0 (A structure, B tone, C photographs, D envelopes, E composition and wrong masks, F placement; 33 kinds)",
-  "passed": 1218,
+  "result": "self_check: passed=1222/1222 failed=0 (A structure, B tone, C photographs, D envelopes, E composition and wrong masks, F placement; 33 kinds)",
+  "passed": 1222,
   "failed": 0,
   "overlays_written": [],
   "failures": [],
@@ -14738,9 +14959,9 @@
    },
    "road_oil": {
     "dot_eqd_mm_p50": {
-     "median": 16.568882275755108,
-     "min": 16.08140162606437,
-     "max": 17.38949084575512,
+     "median": 17.3834643339802,
+     "min": 16.688952945311364,
+     "max": 18.062879984608916,
      "expected": [
       9,
       26
@@ -14748,9 +14969,9 @@
      "ok": true
     },
     "dots_per_m2_of_frame": {
-     "median": 58.33333333333333,
-     "min": 35.8974358974359,
-     "max": 100.0,
+     "median": 60.8974358974359,
+     "min": 33.333333333333336,
+     "max": 102.56410256410255,
      "expected": [
       20,
       220
@@ -14758,9 +14979,9 @@
      "ok": true
     },
     "edge_10_90_mm": {
-     "median": 6.52539002630788,
-     "min": 6.5207306611142055,
-     "max": 6.5494808025173015,
+     "median": 6.520393155380541,
+     "min": 6.516632681399312,
+     "max": 6.550454541324493,
      "expected": [
       1,
       14
@@ -14768,9 +14989,9 @@
      "ok": true
     },
     "coverage_of_frame": {
-     "median": 0.01928084935897436,
-     "min": 0.009939903846153847,
-     "max": 0.03223557692307692,
+     "median": 0.02021834935897436,
+     "min": 0.009795673076923077,
+     "max": 0.03344150641025641,
      "expected": [
       0.002,
       0.03
@@ -14788,9 +15009,9 @@
      "ok": true
     },
     "nn_ratio": {
-     "median": 1.2331921069694354,
-     "min": 1.2071674263279601,
-     "max": 1.3058420154879509,
+     "median": 1.2532972508162263,
+     "min": 1.134919745902188,
+     "max": 1.2960411007156558,
      "expected": [
       0.7,
       1.4
@@ -14798,9 +15019,9 @@
      "ok": true
     },
     "size_cv": {
-     "median": 0.44591424405641034,
-     "min": 0.3619043496141676,
-     "max": 0.5244055581426817,
+     "median": 0.4216770868880582,
+     "min": 0.3758773684527176,
+     "max": 0.5433296960784763,
      "expected": [
       0.25,
       1.5
@@ -14894,9 +15115,9 @@
    },
    "road_patch": {
     "patch_eqd_mm": {
-     "median": 777.0721109024736,
-     "min": 693.1557544686247,
-     "max": 799.5185510257335,
+     "median": 789.7721950070724,
+     "min": 716.1263962303441,
+     "max": 808.904048566055,
      "expected": [
       500,
       900
@@ -14904,9 +15125,9 @@
      "ok": true
     },
     "edge_10_90_mm": {
-     "median": 16.127409101450464,
-     "min": 15.663822989710384,
-     "max": 16.888447570139988,
+     "median": 16.08210829461506,
+     "min": 15.623341103209508,
+     "max": 16.872379454944173,
      "expected": [
       3,
       40
@@ -14914,9 +15135,9 @@
      "ok": true
     },
     "coverage_of_frame": {
-     "median": 0.32939236111111114,
-     "min": 0.2620529513888889,
-     "max": 0.3486458333333333,
+     "median": 0.3402452256944445,
+     "min": 0.2797092013888889,
+     "max": 0.3568793402777778,
      "expected": [
       0.15,
       0.45
