@@ -173,7 +173,7 @@ def build():
         horizon_anchors=horizon,
         anchors=D.CAL,
         kerbs_and_covers_note=('The kerbs-and-covers target takes 1.6 m for urban_street_01 and urban_street_02 (the Bethnal Green session of 18 August 2019). At the ROAD (where its kerbs and covers lie) '
-                               'the heights are about 1.25 to 1.27 m in urban_street_01 (the bed, 1.195, plus the 0.055 to 0.07 it stands above or below the road) and about 1.03 m in urban_street_02 (0.92 on the footway plus the '
+                               'the heights are about 1.25 to 1.27 m in urban_street_01 (the bed stands about 0.055 m above the road, so the camera is about 1.25 m above the road) and about 1.03 m in urban_street_02 (0.92 on the footway plus the '
                                '0.125 kerb): 1.6 m is about 25 % high in urban_street_01 and about 55 % high in urban_street_02. Its numbers from those two panoramas (the mitred corner, the tarmac-filled cover) '
                                'should be re-checked.'))
     T['scene_numbers'] = D.PRINTED
@@ -326,7 +326,7 @@ def build():
             dict(id='side_passage', kind='K3', count=2, side='east', x_m=[38.8, 40.2], axis_from_kerb_face_m=0.5, z_m=3.5,
                  guards='either side of the mouth of the 1.0 m passage between the parade and the chandler (x 39 to 40), the path to the yard and steps behind, so a car cannot nose onto the footway there',
                  basis='Judgement: the plain precast posts the clutter research names at terrace corners; no photograph'),
-            dict(id='chandler_front', kind='K4', count=2, side='east', x_m=[41.5, 44.0], axis_from_kerb_face_m=0.45, z_m=3.45, guards='anti-parking posts at the chandler\'s front (the chandler\'s own private posts)',
+            dict(id='chandler_front', kind='K4', count=2, side='east', x_m=[42.5, 44.0], axis_from_kerb_face_m=0.45, z_m=3.45, guards='anti-parking posts at the chandler\'s front (the chandler\'s own private posts); the first stands 2.30 m in plan from the chandler\'s door centre (x 44.203), so the east side\'s posts read as two groups (K3 at 38.8 and 40.2, K4 at 42.5 and 44.0)',
                  basis='Judgement: a shop front\'s own posts; no photograph')],
         junction=dict(id='junction_corners', kind='K2', count=4, axis_from_kerb_face_m=0.5, points=kit_junction(),
                       rule=('the two tangent points of the 8 m return (inside Quay Street\'s turn west) and the two of the 6 m return (the Harbour Board approach), each moved 0.5 m from the kerb face '

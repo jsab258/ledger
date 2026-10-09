@@ -15,7 +15,7 @@ Image.MAX_IMAGE_PIXELS = None
 # (the joints counted on a 4x crop; the Fourier fit then refines it inside +-15 %: it can otherwise lock on a harmonic)
 ANCHORS = [
     ('urban_street_01', 'us01_garden_wall', 4250, 4275, 2170, 2280, 2287, 75.0, 0.07, 'garden wall on the footway behind US01_b; the bollard stands in a bed 0.07 m below that footway', 15.3),
-    ('urban_street_01', 'us01_gate_pier', 3760, 3830, 2170, 2222, 2225, 75.0, 0.07, 'brick gate pier on the same footway', 11.9),
+    ('urban_street_01', 'us01_gate_pier', 3800, 3820, 2045, 2175, 2225, 75.0, 0.07, 'brick gate pier on the same footway (the joints at rows 2049, 2061, 2072 ... 2170, a steady 12.1 px)', 12.1),
     ('bethnal_green_entrance', 'bge_planter_wall', 5840, 5940, 2100, 2258, 2262, 75.0, 0.0, 'planter wall on the same block paving as BGE_a', 15.3),
     ('birbeck_street_underpass', 'bb_viaduct_wall', 3700, 3760, 1845, 2015, 2318, 75.0, 0.0, 'yellow-stock wall above the paint, on BB_b\'s own footway (to 79 mm if Victorian courses)', 19.7),
     ('urban_street_02', 'us02_building_wall', 740, 840, 2045, 2192, 2194, 75.0, 0.0, 'the building wall behind US02_a, on its footway', 11.75),
@@ -44,16 +44,20 @@ def pitch_and_h(path, x0, x1, y0, y1, foot, gauge, px_pitch):
         m = np.array([pu[idx == k].mean() if (idx == k).any() else 0.0 for k in range(nb)])
         return m.var()
     cs = np.array([folded(q) for q in ps])
-    p = float(ps[int(np.argmax(cs))])
+    k = int(np.argmax(cs))
+    p = float(ps[k])
+    edge = k <= 2 or k >= len(ps) - 3          # a fit on the edge of its search range has failed: the true pitch lies outside it
     tf = math.tan((foot - H / 2) * math.pi / H)
-    return p, tf, gauge * tf / p, H
+    return p, tf, gauge * tf / p, H, edge, (float(ps[0]), float(ps[-1]))
 
 
 if __name__ == '__main__':
     d = sys.argv[1]
     out = []
     for pano, name, x0, x1, y0, y1, foot, gauge, step, what, pxp in ANCHORS:
-        p, tf, h, H = pitch_and_h(os.path.join(d, f'tm_{pano}.jpg'), x0, x1, y0, y1, foot, gauge, pxp)
-        print(f'{name}: pitch_tan {p:.5f}, tan(foot) {tf:.4f}, {tf / p:.2f} courses to the horizon, h above the wall foot {h:.0f} mm (+ {step} step -> {h / 1000 + step:.3f} at the bollard\'s ground)')
-        out.append(dict(pano=pano, id=name, cols=[x0, x1], rows=[y0, y1], foot_row=foot, image_rows=H, pitch_tan=round(p, 5), gauge_mm=gauge, step_m=step, what=what, px_pitch_by_eye=pxp))
+        p, tf, h, H, edge, rng = pitch_and_h(os.path.join(d, f'tm_{pano}.jpg'), x0, x1, y0, y1, foot, gauge, pxp)
+        print(('FAILED (the fit is on the edge of its range) ' if edge else '') + f'{name}: pitch_tan {p:.5f}, tan(foot) {tf:.4f}, {tf / p:.2f} courses to the horizon, h above the wall foot {h:.0f} mm (+ {step} step -> {h / 1000 + step:.3f} at the bollard\'s ground)')
+        out.append(dict(pano=pano, id=name, cols=[x0, x1], rows=[y0, y1], foot_row=foot, image_rows=H, pitch_tan=round(p, 5), gauge_mm=gauge, step_m=step, what=what, px_pitch_by_eye=pxp, search_range_tan=[round(rng[0], 5), round(rng[1], 5)], fit_on_edge=bool(edge)))
+    if any(a['fit_on_edge'] for a in out):
+        print('AT LEAST ONE FIT FAILED: widen the search or correct the by-eye pitch')
     json.dump(out, open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'anchors.json'), 'w'), indent=1)

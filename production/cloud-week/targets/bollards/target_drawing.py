@@ -210,9 +210,13 @@ def quay_plan(outpath, poly):
     im = Image.new('RGB', (W, H), (190, 205, 215))
     d = ImageDraw.Draw(im)
     P = lambda x, y: ((y * 1000 - y0) / mm, (x1 - x * 1000) / mm)
-    # the north quay's land (x > -70), the jetty (x -130 to -110, y -90 to 10?) and the east quay's land are drawn as plain blocks from the places only: this is a diagram
-    d.rectangle([P(0, -100)[0], P(0, -100)[1], P(-70, 60)[0], P(-70, 60)[1]], fill=(215, 212, 205))
-    d.rectangle([P(-70, -90)[0], P(-70, -90)[1], P(-130, -62)[0], P(-130, -62)[1]], fill=(215, 212, 205)) if False else None
+    # land (the diagram's, from the kit's frame): the north quay (x > -70), the jetty strip (x -130 to -110, y -100 to -15) and the east quay (y >= 40, x -150 to -70)
+    def land(xa, xb, ya, yb):
+        (ax, ay), (bx, by) = P(xa, ya), P(xb, yb)
+        d.rectangle([min(ax, bx), min(ay, by), max(ax, bx), max(ay, by)], fill=(215, 212, 205), outline=(120, 120, 120))
+    land(0, -70, -100, 60)
+    land(-110, -130, -100, -15)
+    land(-70, -150, 40, 60)
     col = {'K1': (20, 20, 20), 'K2': (90, 90, 160), 'K3': (150, 100, 40), 'K4': (40, 140, 60), 'K5': (160, 40, 40), 'K6': (0, 0, 0), 'K7': (120, 0, 120)}
     for m in poly['places']:
         if m['x_m'] > -4.0 and m['kind'] not in ('K2',):

@@ -16,26 +16,36 @@
   "gauge_mm": 75.0,
   "step_m": 0.07,
   "what": "garden wall on the footway behind US01_b; the bollard stands in a bed 0.07 m below that footway",
-  "px_pitch_by_eye": 15.3
+  "px_pitch_by_eye": 15.3,
+  "search_range_tan": [
+   0.00997,
+   0.0135
+  ],
+  "fit_on_edge": false
  },
  {
   "pano": "urban_street_01",
   "id": "us01_gate_pier",
   "cols": [
-   3760,
-   3830
+   3800,
+   3820
   ],
   "rows": [
-   2170,
-   2222
+   2045,
+   2175
   ],
   "foot_row": 2225,
   "image_rows": 4096,
-  "pitch_tan": 0.01049,
+  "pitch_tan": 0.00945,
   "gauge_mm": 75.0,
   "step_m": 0.07,
-  "what": "brick gate pier on the same footway",
-  "px_pitch_by_eye": 11.9
+  "what": "brick gate pier on the same footway (the joints at rows 2049, 2061, 2072 ... 2170, a steady 12.1 px)",
+  "px_pitch_by_eye": 12.1,
+  "search_range_tan": [
+   0.00789,
+   0.01067
+  ],
+  "fit_on_edge": false
  },
  {
   "pano": "bethnal_green_entrance",
@@ -54,7 +64,12 @@
   "gauge_mm": 75.0,
   "step_m": 0.0,
   "what": "planter wall on the same block paving as BGE_a",
-  "px_pitch_by_eye": 15.3
+  "px_pitch_by_eye": 15.3,
+  "search_range_tan": [
+   0.00997,
+   0.0135
+  ],
+  "fit_on_edge": false
  },
  {
   "pano": "birbeck_street_underpass",
@@ -73,7 +88,12 @@
   "gauge_mm": 75.0,
   "step_m": 0.0,
   "what": "yellow-stock wall above the paint, on BB_b's own footway (to 79 mm if Victorian courses)",
-  "px_pitch_by_eye": 19.7
+  "px_pitch_by_eye": 19.7,
+  "search_range_tan": [
+   0.01284,
+   0.01738
+  ],
+  "fit_on_edge": false
  },
  {
   "pano": "urban_street_02",
@@ -92,7 +112,12 @@
   "gauge_mm": 75.0,
   "step_m": 0.0,
   "what": "the building wall behind US02_a, on its footway",
-  "px_pitch_by_eye": 11.75
+  "px_pitch_by_eye": 11.75,
+  "search_range_tan": [
+   0.00766,
+   0.01036
+  ],
+  "fit_on_edge": false
  },
  {
   "pano": "urban_street_02",
@@ -111,6 +136,11 @@
   "gauge_mm": 75.0,
   "step_m": 0.0,
   "what": "gate pier at the panorama seam, on the same footway",
-  "px_pitch_by_eye": 14.77
+  "px_pitch_by_eye": 14.77,
+  "search_range_tan": [
+   0.00963,
+   0.01303
+  ],
+  "fit_on_edge": false
  }
 ]

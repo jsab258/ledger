@@ -104,6 +104,9 @@ for pano, hs in byp.items():
     m = sum(vals) / len(vals)
     t('B', f'camera height {pano} at the bollard\'s ground: anchors {", ".join("%s %.3f" % (n.split()[1], h) for h, n in hs)} -> mean {m:.3f}; stated {P["h_cam"]} +-{P["h_cam_err"]}', near(m, P['h_cam'], P['h_cam_err']))
     t('B', f'camera height {pano}: every anchor within 0.15 m of the stated height (the spread is the error)', all(abs(h - P['h_cam']) <= 0.15 for h in vals))
+for a in cal['horizon_anchors']:
+    lo, hi = a['search_range_tan']
+    t('B', f'horizon anchor {a["id"]}: the fit (pitch_tan {a["pitch_tan"]}) is inside its search range {lo} to {hi}, not on its edge, and was not flagged by calibrate.py', not a['fit_on_edge'] and lo + 0.01 * (hi - lo) < a['pitch_tan'] < hi - 0.01 * (hi - lo))
 t('B', 'all five panoramas have at least two anchors, and the four with walls have a horizon-method anchor of their own', all(len(v) >= 2 for v in byp.values()) and {a['pano'] for a in cal['horizon_anchors']} == {'urban_street_01', 'bethnal_green_entrance', 'birbeck_street_underpass', 'urban_street_02'})
 t('B', 'the level steps are in: the bed 0.07 m below US01\'s footway, the road 0.105 m below BB_b\'s footway', any(a['step_m'] == 0.07 for a in cal['horizon_anchors'] if a['pano'] == 'urban_street_01') and any(a['step_m'] == -0.105 for a in cal['anchors'] if a['pano'] == 'birbeck_street_underpass'))
 t('B', 'urban_street_02 is at its own 0.92 +-0.04 m (the pooled 1.15 is gone: it would need 95 mm courses)', near(cal['panoramas']['urban_street_02']['h_cam'], 0.92, 0.001) and 'pooled 1.15' in cal['panoramas']['urban_street_02']['h_why'])
@@ -323,6 +326,9 @@ for e in pl['street_proper']:
 dm = min(math.hypot(a[1] - b[1], a[2] - b[2]) for i_, a in enumerate(allp) for b in allp[i_ + 1:])
 t('D', f'no two street bollards closer than 1.0 m (closest {dm:.2f} m)', dm >= 1.0)
 t('D', 'the K3 pair flanks the 1.0 m passage (x 39 to 40) at 0.2 m beyond each edge', pl['street_proper'][1]['id'] == 'side_passage' and near(pl['street_proper'][1]['x_m'][0], 38.8, 1e-9) and near(pl['street_proper'][1]['x_m'][1], 40.2, 1e-9))
+k3x = pl['street_proper'][1]['x_m']; k4x = [e for e in pl['street_proper'] if e['id'] == 'chandler_front'][0]['x_m']
+chd = [x for sd, x in doors if sd == 'east' and abs(x - 44.203) < 0.01]
+t('D', 'the east side reads as two groups: K3 pair (38.8, 40.2) and K4 pair (42.5, 44.0), 2.3 m between the groups and at most 1.5 m within them; the first K4 is 2.30 m in plan from the chandler\'s door centre (44.203)', k4x == [42.5, 44.0] and near(k4x[0] - k3x[1], 2.3, 1e-9) and max(k3x[1] - k3x[0], k4x[1] - k4x[0]) <= 1.5 and bool(chd) and near(math.hypot(k4x[0] - 44.203, 1.55), 2.30, 0.01))
 t('D', 'every street placement says what it guards and the plan says why four kinds share one street', all('guards' in e for e in pl['street_proper']) and 'why_four_kinds' in pl)
 t('D', 'K2 default paint is black; the grey is one condition (the 1990 norm was black)', T['kinds']['K2']['paint']['srgb'] == [24, 24, 26] and 'grey' in ' '.join(T['kinds']['K2']['variants'][-1]['states']))
 
