@@ -457,13 +457,14 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
     if gh and gh.get("kind") == "painted_out_patch":
         x0, y0, x1, y1 = gh["box_mm"]
         weight[H_MM - int(y1):H_MM - int(y0), int(x0):int(x1)] *= 0.55          # fresher paint than the soot timber round it
-    # lettering is a thicker coat than the ground and stays legible: the loss takes a third less of it (it still wears with the ground: no clean halo)
+    # lettering is a thicker coat than the ground and stays legible: the loss takes over a quarter less of it (it still wears with the ground: no clean halo)
     letter_zone = np.zeros((H_MM, W_MM), bool)
     for b_ in blocks:
         if b_["in_texture"] and not b_["ghost"]:
             dilate_box(letter_zone, b_["effects_box_mm"], 4)
-    weight = np.where(letter_zone, weight * 0.62, weight).astype(np.float32)
-    a1, a2, S, thr = fa.loss_alpha(F, weight, allowed, zone, frac, mode)
+    weight = np.where(letter_zone, weight * 0.72, weight).astype(np.float32)
+    # the bare timber's silvered strips are read by colour on the pixels a little over what is drawn (the soft edges and the checks beside them): 7 per cent under, so the read lands on the target
+    a1, a2, S, thr = fa.loss_alpha(F, weight, allowed, zone, frac * (0.93 if kind == "bare" else 1.0), mode)
     tex = None
     if kind == "bare":
         tex = (1.0 - 0.30 * B.layers["timber_dl"] + 0.09 * F.long() + 0.05 * F.strip()).astype(np.float32)

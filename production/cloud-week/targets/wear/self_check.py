@@ -773,8 +773,11 @@ def part_c(tj, R, draw, overlays):
             thick.append(len(r))
             line_row[x] = r.mean()
     t_med = float(np.median(thick))
-    scale_mm = 75.0 / t_med                                # one dimension only: the yellow line is 75 mm
-    R.check("C1 scale fitted on one dimension (yellow line 75 mm = %.1f px) agrees with the stated 3.0 mm/px" % t_med, abs(scale_mm - mm) / mm <= 0.12, "fitted %.2f mm/px" % scale_mm)
+    t_unworn = float(np.percentile(thick, 90))              # the UNWORN line is the gauge: a worn line's median thickness is narrower than its 75 mm (the first pass used the median and so took 1.6 m for a camera that is at 1.40 m)
+    scale_line = 75.0 / t_unworn
+    scale_mm = mm                                           # the stated scale (M30: camera 1.40 m above the road); the line only has to agree with it
+    R.check("C1 scale fitted on one dimension (the unworn yellow line, the 90th percentile of its thickness, %.1f px = 75 mm; the median %.1f px is a worn line's) agrees with the stated %.3f mm/px (camera 1.40 m, M30) within 6 %%" % (t_unworn, t_med, mm),
+            abs(scale_line - mm) / mm <= 0.06, "fitted %.3f mm/px" % scale_line)
     xs = np.array([x for x in range(W) if line_row[x] > 0])
     ys = np.array([line_row[x] for x in xs])
     coef = np.polyfit(xs, ys, 1)
@@ -792,7 +795,7 @@ def part_c(tj, R, draw, overlays):
     lab, n = ndi.label(dots)
     px = np.array(ndi.sum(dots, lab, np.arange(1, n + 1)))
     pxmm2 = (scale_mm / 1000.0) ** 2
-    keep = px * pxmm2 * 1e6 >= 70.0      # M04's smallest dots are 10.6 mm across = 88 mm2; 70 mm2 and up
+    keep = px >= 7.5                     # 7.5 px and up (70 mm2 at the first pass's 3.06 mm/px; M04's smallest dots are about 9 mm across at the corrected scale)
     area_m2 = region.sum() * pxmm2
     dens = float(keep.sum() / area_m2)
     # dot density only inside the dotted band: restrict to the dotted strip (2.5 sigma of the dot rows)
@@ -1084,13 +1087,14 @@ def part_c(tj, R, draw, overlays):
     cov = []
     for x in range(30, rgb.shape[1] - 10):
         sl_ = np.polyval(np.polyder(co2), x)
-        Lc = 25.0 * math.sqrt(1 + sl_ * sl_)
+        Lc = (75.0 / P[f]["mm_per_px"]) * math.sqrt(1 + sl_ * sl_)
         yc0 = np.polyval(co2, x)
         seg = yel[max(int(round(yc0 - Lc / 2)) - 3, 0):int(round(yc0 + Lc / 2)) + 3, x]
         cov.append(min(1.0, seg.sum() / Lc))
     loss = 1 - float(np.mean(cov))
     lr = tj["kinds"]["line_wear"]["where"]["density"]["range"]
-    R.check("C25 yellow line re-measured: %.0f %% of the nominal 75 mm strip lost (M26 22 +/- 8 %%); the target's %s brackets it" % (100 * loss, lr), 0.10 <= loss <= 0.35 and lr[0] - 0.02 <= loss <= lr[1] + 0.05)
+    m26 = M["M26"]["values"]["loss_share"]
+    R.check("C25 yellow line re-measured: %.0f %% of the nominal 75 mm strip (%.1f px at %.3f mm/px) lost (M26 %.0f +/- 8 %%, camera 1.40 m; 22 %% at the assumed 1.6 m); the target's %s brackets it" % (100 * loss, 75.0 / P[f]["mm_per_px"], P[f]["mm_per_px"], 100 * m26, lr), abs(loss - m26) <= 0.08 and lr[0] - 0.02 <= loss <= lr[1] + 0.05)
     # ---- C26 M03: the sealed crack on the full-resolution crop
     f = "ph-asphalt_02-road-sealed-crack.jpg"
     rgb = load_rgb(pv(f)).astype(float)
