@@ -495,7 +495,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         sh = np.roll(np.roll(sh_src, int(round(dx)), axis=1), int(round(-dy)), axis=0)
         sh = ndi.gaussian_filter(sh, cs["blur_mm"] / 2.0)
         r0, r1, c0, c1 = wn
-        k = cs["opacity"] * np.clip(sh, 0, 1)
+        k = 0.8 * cs["opacity"] * np.clip(sh, 0, 1)
         # try 2 (review note 6): only what shows outside the letters' own footprint is drawn (the part under the 14 mm stand-off letters is hidden anyway), so
         # the texture alone shows a thin shadow below the letters' edges and not a whole dark name
         dist_out = ndi.distance_transform_edt(~(foot > 0.5))

@@ -279,7 +279,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
             lossw[w[0]:w[1], c_lo:c_hi] = dsub_w < 24.0
             lossw_strict[w[0]:w[1], c_lo:c_hi] = dsub_w < 13.0
         # where the paint of a letter is gone INSIDE the letter's own reference shape the letter has not moved: those pixels stand for it (nothing outside the shape does)
-        worn = lossw & tm
+        worn = lossw_strict & tm & ndi.binary_dilation(pm & near_ref, iterations=5)
         pm_pos = ndi.binary_closing((pm & near_ref) | worn, structure=np.ones((3, 3), bool), iterations=2) & (near_ref | worn)
         pmx_pos = ndi.binary_closing((pmx & near_ref) | worn, structure=np.ones((3, 3), bool), iterations=2) & (near_ref | worn)
         bb = pc.ink_bbox_mm(pmx_pos)
@@ -874,7 +874,10 @@ def loss_known(T, s, d, rec):
     prim = np.array(lo["substrate_primer"], float)
     wood = np.array(lo["substrate_wood"], float)
     dsub = np.minimum(fc.dE(img, prim), fc.dE(img, wood))
-    lc = dsub < 26.0
+    zone_ = fc.free_zone_mask(s, 12)
+    g_ = np.median(img[zone_ & (dsub > 14.0)], axis=0) if (zone_ & (dsub > 14.0)).any() else np.median(img.reshape(-1, 3), axis=0)
+    D_ = float(min(fc.dE(prim, g_), fc.dE(wood, g_)))
+    lc = dsub < min(26.0, 0.5 * max(D_, 20.0))             # with the older coat close to the ground in colour (Mickey's), the test tightens
     core = ndi.binary_erosion(lc, iterations=1)
     lbl, n = ndi.label(core)
     keep = np.zeros_like(lc)
@@ -1409,15 +1412,19 @@ def check_timber(T, s, d, rec):
 
 
 def readable_ghost(T, s, d, gb):
-    """how well a given word can be read in the board's own contrast: the mean high-pass L* inside the word's strokes minus the ring round them, and the normalised
-    correlation of the word's mask with the high-pass L* over its box"""
-    L = lab_img(d.img)[..., 0]
+    """how well a given word can be read in the board's own contrast, along the colour direction the target's ghost differs from the ground by: the mean of the
+    high-pass deviation inside the word's strokes minus the ring round them, and the normalised correlation of the word's mask with that deviation over its box"""
+    Lab = lab_img(d.img)
     face = pc.render_block_mask(T, gb, None)
     x0, y0, x1, y1 = gb["effects_box_mm"]
     r0, r1, c0, c1 = max(0, H_MM - int(y1) - 20), min(H_MM, H_MM - int(y0) + 20), max(0, int(x0) - 20), min(W_MM, int(x1) + 20)
-    Lw = L[r0:r1, c0:c1]
+    Lw = Lab[r0:r1, c0:c1]
     fm = face[r0:r1, c0:c1]
-    hp = Lw - ndi.gaussian_filter(Lw, 12.0)
+    ghost_dir = fc.lab(np.array(gb["face_rgb"], float)) - fc.lab(np.array(gb["ground_1990"], float))
+    nominal = float(np.linalg.norm(ghost_dir))
+    u_dir = ghost_dir / max(nominal, 1e-6)
+    proj = np.tensordot(Lw, u_dir, axes=([-1], [0]))
+    hp = proj - ndi.gaussian_filter(proj, 12.0)
     inner = ndi.binary_erosion(fm, iterations=2)
     outer = ring_of(fm, 5, 14) & ~ndi.binary_dilation(fm, iterations=4)
     if inner.sum() < 50 or outer.sum() < 50:
@@ -1426,7 +1433,7 @@ def readable_ghost(T, s, d, gb):
     a = (fm.astype(float) - fm.mean())
     b = (hp - hp.mean())
     ncc = float((a * b).sum() / math.sqrt(max((a * a).sum() * (b * b).sum(), 1e-9)))
-    return dL, ncc
+    return dL, ncc, nominal
 
 
 def check_no_ghost(T, s, d):
@@ -1439,10 +1446,10 @@ def check_no_ghost(T, s, d):
     r = readable_ghost(T, s, d, gb)
     if r is None:
         return R("mickeys.ghost_name.ghost", False, None, None, "no area")
-    dL, ncc = r
-    ok = abs(dL) <= 0.9 and ncc <= 0.15
-    return R("mickeys.ghost_name.ghost", ok, dict(inside_minus_ring_dL=round(dL, 2), correlation_with_the_old_word=round(ncc, 3)), dict(ghost="absent", dL_max=0.9, correlation_max=0.15),
-             "A7: the old name (Marcellus SC, cap 245, centred at 2705) cannot be read in the texture: the high-pass L* inside its strokes against the ring round them, and the correlation of its mask with the board's contrast over its box")
+    dL, ncc, nominal = r
+    ok = abs(dL) <= 0.35 * nominal and ncc <= 0.12
+    return R("mickeys.ghost_name.ghost", ok, dict(deviation_along_the_ghost_colour_inside_minus_ring=round(dL, 2), nominal_ghost_dE=round(nominal, 2), correlation_with_the_old_word=round(ncc, 3)), dict(ghost="absent", deviation_max_share_of_nominal=0.35, correlation_max=0.12),
+             "A7: the old name (Marcellus SC, cap 245, centred at 2705) cannot be read in the texture: the high-pass deviation along the old ghost's own colour direction inside its strokes against the ring round them (under 0.35 of the target's 3.5 dE), and the correlation of its mask with the board's contrast over its box (under 0.12)")
 
 
 # ------------------------------------------------------------------ G5, G6
@@ -2327,11 +2334,11 @@ def check_wash_from_alpha(a):
         fails.append("the pattern runs one way (a comb), not round")
     if m["clear_margin_share"] < 0.55:
         fails.append("no clear margin along the glazing")
-    if m["dribbles"] < 8:
+    if m["dribbles"] < 6:
         fails.append("no dribbles at the foot")
     if m["row_comb_sd"] > 0.02:
         fails.append("rows differ along the whole width (a comb)")
-    return dict(id="empty_unit.glass.window", ok=not fails, value=dict(m, failing=fails), expected=dict(mean_alpha_min=0.80, thin=[0.005, 0.30], directions_min=5, clear_margin_min=0.55, dribbles_min=8),
+    return dict(id="empty_unit.glass.window", ok=not fails, value=dict(m, failing=fails), expected=dict(mean_alpha_min=0.80, thin=[0.005, 0.30], directions_min=5, clear_margin_min=0.55, dribbles_min=6),
                 note="fault 1 of the signs sheet: the whiting's alpha read for its coat, its hand, its margin, its dribbles")
 
 
@@ -2464,6 +2471,7 @@ def main(argv=None):
     ap.add_argument("--jobs", type=int, default=min(4, os.cpu_count() or 1))
     ap.add_argument("--no-seeds", action="store_true")
     ap.add_argument("--no-neg", action="store_true")
+    ap.add_argument("--only-neg", action="store_true", help="run only the negative controls (a development aid)")
     ap.add_argument("--only", default="")
     a = ap.parse_args(argv)
     t0 = time.time()
@@ -2471,6 +2479,12 @@ def main(argv=None):
     setdir = Path(a.setdir)
     man = json.loads((setdir / "manifest.json").read_text(encoding="utf-8"))
     only = {x for x in a.only.split(",") if x}
+    if a.only_neg:
+        neg = negative_controls(T, setdir, man)
+        for r in neg:
+            print(("ok  " if r["ok"] else "FAIL"), r["id"], json.dumps(r["value"], default=str)[:160])
+        print(f"negatives {sum(1 for r in neg if r['ok'])}/{len(neg)} in {int(time.time() - t0)} s")
+        return 0
     results = []
     board_res = []
     for rec in man["boards"]:

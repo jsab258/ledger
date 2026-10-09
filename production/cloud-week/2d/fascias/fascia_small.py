@@ -364,7 +364,7 @@ def render_ball(T, k, seed):
             B.rgb[q, cols] = B.rgb[q, cols] + (np.array([112.0, 62.0, 34.0]) - B.rgb[q, cols]) * (0.55 * fade * prof)[:, None]
     # the equator seam: a fine groove
     sm = np.exp(-((rows - H / 2.0) / 1.2) ** 2).astype(np.float32)
-    B.rgb *= (1.0 - 0.25 * sm)[..., None]
+    B.rgb *= (1.0 - 0.11 * sm)[..., None]
     B.height += -0.2 * sm
     fa.grime_film(B, fa.MODES["hanging"], dict(grime_film=0.10), [], amp=1.0)
     return S, dict(size_mm=[W, H], note="equirectangular: u round the ball, v pole to pole; one texture per ball, each with its own seed")
@@ -567,6 +567,7 @@ def render_window_wash(T, seed, W=3250, H=1800):
     a = np.clip(a + 0.012 * fc.fnoise((H, W), 1.3, 1.3, r), 0, 1.0)
     # thin and clear spots: finger-wiped, cloth-wiped places where the coat is thin
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    spot_noise = fc.fnoise((H, W), 34, 24, r)
     for i in range(int(r.integers(10, 16))):
         cx, cy = r.uniform(80, W - 80), r.uniform(80, H - 80)
         rx, ry = r.uniform(60, 200), r.uniform(28, 95)
@@ -574,8 +575,8 @@ def render_window_wash(T, seed, W=3250, H=1800):
         u = (xx - cx) * math.cos(ang) + (yy - cy) * math.sin(ang)
         v = -(xx - cx) * math.sin(ang) + (yy - cy) * math.cos(ang)
         dd = np.sqrt((u / rx) ** 2 + (v / ry) ** 2)
-        dd = dd + 0.25 * fc.fnoise((H, W), 14, 14, r)[0:1, 0:1] * 0
-        spot = np.clip((1.0 - dd) * 1.6, 0, 1) * r.uniform(0.18, 0.38)
+        dd = dd + 0.40 * spot_noise                                   # irregular, not a neat ellipse
+        spot = np.clip((1.0 - dd) * 1.3, 0, 1) * r.uniform(0.12, 0.26)
         a = a - spot
     # the margin: the wash does not reach the glazing everywhere; the edge is ragged, corners are missed
     edge_n = [np.abs(fc.fnoise((1, max(W, H) + 16), 70, 0.01, r)[0]) * 0.7 + np.abs(fc.fnoise((1, max(W, H) + 16), 14, 0.01, r)[0]) * 0.5 + np.abs(fc.fnoise((1, max(W, H) + 16), 4, 0.01, r)[0]) * 0.25
@@ -596,7 +597,7 @@ def render_window_wash(T, seed, W=3250, H=1800):
             dd = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2) + 18 * fc.fnoise((H, W), 22, 22, r)
             a = a * np.clip((dd - sz) / 10.0, 0, 1)
     # dribbles: a thin run of whiting hanging from the foot of the coat
-    for i in range(int(r.integers(16, 26))):
+    for i in range(int(r.integers(22, 32))):
         x = int(r.uniform(60, W - 60))
         y0 = int(H - mb[x] - 4)
         L = int(r.uniform(35, 190))

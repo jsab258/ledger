@@ -193,7 +193,9 @@ def foot_band_polys(rng, kind, E, length_mm, seed_tag):
         for ha, hb, la in prof:
             if la <= 0.005:
                 continue
-            if rfrom > 0:                      # contours below ragged_from_m do not move (the channel's joints are straight); the outer fringe edge does
+            if top.get("rigid_course_shift"):  # the whole profile slides up or down by whole courses at once: the threshold crossing stays on a course line
+                sa = sb = 1.0
+            elif rfrom > 0:                    # contours below ragged_from_m do not move (the channel's joints are straight); the outer fringe edge does
                 sa, sb = max(0.0, (ha - rfrom) / (htop - rfrom)), max(0.0, (hb - rfrom) / (htop - rfrom))
             else:
                 sa = 1.0 if ha == 0 else ha / htop
@@ -252,15 +254,27 @@ def streak_set_polys(rng, kind, E, tags):
             out += streak(rng, kind, xe, 0, w, min(L / vf, 1700.0), wander(), **common, role="end_streak")
         rv = E["rivulets"]
         n = uni_int(rng, rv["n"])
-        taken = [side * (S / 2 - w_ * 0.55) for side, w_ in zip((-1, 1), wids)]
-        for _ in range(n):
-            for _try in range(60):                      # rivulets keep 70 mm from each other and 90 mm from an end streak, so they stay separate runs
-                xr = rng.uniform(-S / 2 + 90, S / 2 - 90)
-                if all(abs(xr - t) >= 70 for t in taken):
-                    break
-            taken.append(xr)
+        ends_x = [side * (S / 2 - w_ * 0.55) for side, w_ in zip((-1, 1), wids)]
+        for _try in range(300):                         # rivulets keep 70 mm from each other and 90 mm from an end streak, and are never evenly spaced or of one length
+            xr_ = []
+            for _ in range(n):
+                for _t2 in range(60):
+                    x_ = rng.uniform(-S / 2 + 90, S / 2 - 90)
+                    if all(abs(x_ - t) >= 70 for t in ends_x + xr_):
+                        break
+                xr_.append(x_)
+            if "length_m_lognormal" in rv:
+                Ls_ = np.clip(lognormal3(rng, *[v * 1000.0 for v in rv["length_m_lognormal"]], n), 100.0, 600.0)
+            else:
+                Ls_ = np.array([uni(rng, [v * 1000.0 for v in rv["length_m"]]) for _ in range(n)])
+            gaps_ = np.diff(np.sort(xr_))
+            ok_sp = n < 3 or (gaps_.std() / gaps_.mean() >= 0.32)
+            ok_len = n < 3 or (Ls_.std() / Ls_.mean() >= 0.32)
+            if ok_sp and ok_len:
+                break
+        for xr, L0 in zip(xr_, Ls_):
             w = uni(rng, [v * 1000.0 for v in rv["width_m"]])
-            L = uni(rng, [v * 1000.0 for v in rv["length_m"]]) / vf
+            L = float(L0) / vf
             out += streak(rng, kind, xr, -wh * 0.2, w, L, wander() * 0.5, **common, role="rivulet", slices=8)
             if rng.uniform() < 0.25:
                 ang = rng.choice([-1, 1]) * uni(rng, [12, 25])
@@ -723,40 +737,48 @@ def head_band_polys(rng, kind, E, length_mm):
 
 
 def iron_set_polys(rng, kind, E):
-    """A downpipe 75 mm wide and 2.4 m long standing on the pavement (x = 0 the centre line, y up): paint-loss patches (a share of the pipe's area, concentrated at the foot and at collars) and rust streaks below collars."""
-    Wp, Lp = E["pipe_width_m"] * 1000.0, E["length_m"] * 1000.0
-    target = uni(rng, E["patch_share"]) * Wp * Lp
+    """A round downpipe (68 mm: circumference 0.214 m) standing on the pavement, its surface UNWRAPPED into a mask 0.214 m wide and 2.4 m high (x = 0 the street-facing centre line, x = +/-107 mm the seam at the back; y up from the shoe):
+    paint-loss patches (a share of the unwrapped area, concentrated at the foot and at collars, quotas by area) and rust streaks below collars."""
+    C, Lp = E["circumference_m"] * 1000.0, E["length_m"] * 1000.0
+    target = uni(rng, E["patch_share"]) * C * Lp
     p10, p50, p90 = E["patch_eqd_mm"]
     pl = E["placement"]
     collars = [c * 1000.0 for c in E["collars_m"]]
-    out = []
     sizes, acc = [], 0.0
-    while acc < target and len(sizes) < 40:
+    while acc < target and len(sizes) < 80:
         e = min(float(lognormal3(rng, p10, p50, p90)[0]), 150.0)
         asp = uni(rng, [1.2, 2.6])
         sizes.append((e, asp))
-        acc += math.pi * (e / 2) ** 2 * min(1.0, (Wp * 0.9) / max(e / math.sqrt(asp), 1.0))
-    n = len(sizes)
-    nf, nc = int(round(pl["foot_lowest_0.3m"] * n)), int(round(pl["collar_within_0.08m"] * n))
-    zones = ["foot"] * nf + ["collar"] * nc + ["any"] * max(0, n - nf - nc)       # quotas, so the foot share is the stated one however few patches there are
-    rng.shuffle(zones)
-    for (e, asp), z in zip(sizes, zones):
+        acc += math.pi * (e / 2) ** 2
+    # zone quotas by AREA (the largest patches first, each to the zone furthest below its share), so the foot holds the stated share of the lost paint however few patches there are
+    want = {"foot": pl["foot_lowest_0.3m"], "collar": pl["collar_within_0.08m"], "any": pl["anywhere"]}
+    have = {k: 0.0 for k in want}
+    order = sorted(range(len(sizes)), key=lambda i: -sizes[i][0] + rng.uniform(-3, 3))
+    zone_of = {}
+    tot = sum(math.pi * (e / 2) ** 2 for e, _ in sizes) or 1.0
+    for i in order:
+        z = max(want, key=lambda k: want[k] - have[k] / tot)
+        zone_of[i] = z
+        have[z] += math.pi * (sizes[i][0] / 2) ** 2
+    out = []
+    for i, (e, asp) in enumerate(sizes):
+        z = zone_of[i]
         if z == "foot":
             y = rng.uniform(e * 0.4, 300.0)
         elif z == "collar":
             y = float(rng.choice(collars)) + rng.uniform(-80.0, 80.0)
         else:
             y = rng.uniform(300.0 + e * 0.4, Lp - e * 0.4)
-        pts = blob(rng, rng.uniform(-Wp * 0.2, Wp * 0.2), y, e, asp, math.pi / 2 + rng.normal(0, 0.15), n=16, rough=0.25)
-        pts = [(float(np.clip(x, -Wp / 2, Wp / 2)), yy) for x, yy in pts]
-        out.append(poly(kind, uni(rng, [0.85, 1.0]), pts, "patch"))
+        pts = blob(rng, rng.uniform(-C / 2 + e * 0.4, C / 2 - e * 0.4), y, e, asp, math.pi / 2 + rng.normal(0, 0.15), n=16, rough=0.25)
+        out.append(poly(kind, uni(rng, [0.85, 1.0]), [(float(np.clip(x, -C / 2, C / 2)), yy) for x, yy in pts], "patch"))
     st = E["streaks"]
     for c in collars:
         if rng.uniform() < st["prob_per_collar"]:
-            a, b_, c_ = st["width_mm_lognormal"]
-            w = float(np.clip(lognormal3(rng, a, b_, c_)[0], 8.0, 60.0))
-            L = uni(rng, [v * 1000.0 for v in st["length_m"]])
-            out += streak(rng, kind, rng.uniform(-8, 8), c - 15.0, w, L, 3.0, 0.4, 1.0, 0.9, 0.15, role="rust_streak", slices=8)
+            for _ in range(int(rng.integers(1, 3))):          # one or two runs below a collar, at any angle round the pipe
+                a, b_, c_ = st["width_mm_lognormal"]
+                w = float(np.clip(lognormal3(rng, a, b_, c_)[0], 8.0, 60.0))
+                L = uni(rng, [v * 1000.0 for v in st["length_m"]])
+                out += streak(rng, kind, rng.uniform(-C / 2 + 30, C / 2 - 30), c - 15.0, w, L, 3.0, 0.4, 1.0, 0.9, 0.15, role="rust_streak", slices=8)
     return out
 
 
