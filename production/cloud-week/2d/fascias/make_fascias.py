@@ -130,6 +130,7 @@ def task_fascia(args):
                size_px=[W_MM, H_MM], size_mm=[W_MM, H_MM], files=files, strings_drawn=info["blocks"], ghosts=info["ghosts"], wear=info["wear"],
                loss=info["loss"], shapes_drawn=info.get("shapes_drawn", []), moulding=info.get("moulding"), emissive=info.get("emissive"),
                shadow=info.get("shadow"), holes=info.get("holes"), vinyl_lift=info.get("vinyl_lift"), old_board_loss_target=info.get("old_board_loss_target"),
+               timber=info.get("timber"), islands_mm=info.get("islands_mm"), islands_rgb=info.get("islands_rgb"), joints_x_mm=info.get("joints_x_mm"),
                geometry=geometry_rows(T, s), seconds=round(time.time() - t0, 1))
     rec["words"] = sorted({b["string"] for b in info["blocks"] if b.get("string")})
     rec["fonts"] = sorted({b["font"] for b in info["blocks"] if b.get("font")})
@@ -227,7 +228,7 @@ def task_letting(args):
     files = write_maps(out, "panels/letting_board", "letting_board", S.B, (W, H))
     return dict(kind="panel", id="letting_board", shop="empty_unit", seed=int(seed), size_px=[W, H], size_mm=[W, H], files=files, string="TO LET",
                 block=dict(font=rec["block"]["font"], weight=rec["block"]["weight"], cap_mm=rec["block"]["cap_mm"], ink_box_mm=[round(v, 1) for v in rec["block"]["ink_box_mm"]]),
-                screws_mm=rec["screws"], askew_deg=rec["askew_deg"], centre_on_fascia_mm=rec["centre_on_fascia_mm"],
+                screws_mm=rec["screws"], askew_deg=rec["askew_deg"], centre_on_fascia_mm=rec["centre_on_fascia_mm"], wear=rec.get("wear"),
                 note="a separate board screwed over the empty unit's fascia: geometry 900 x 450 mm, turned 2 degrees; not painted into the fascia texture")
 
 

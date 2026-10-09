@@ -134,6 +134,8 @@ def age_small(B, mode_key, frac, grime, anchors=None, drips=(1, (40, 110)), prim
         fa.apply_loss(B, a1, a2, np.array(prim, np.float32), np.array(wood, np.float32))
         B.layers["loss"] = a1
         info["loss_drawn_fraction"] = round(float((a1 > 0.5).sum() / (H * W)), 4)
+        info["substrate_primer"] = [int(v) for v in prim]
+        info["substrate_wood"] = [int(v) for v in wood]
     drip_layer = np.zeros((H, W), np.float32)
     placed = []
     if runs_allowed and drips[0]:
@@ -316,7 +318,7 @@ def render_sign_face(T, sign, face_label, seed, lit_off=False):
         chain_x = [W * 0.14, W * 0.86] if sid == "chandler_hanging_board" else [W * 0.18, W * 0.82]
         drips, info = age_small(B, "hanging", frac, 0.16, anchors=chain_x, drips=(2, (40, 120)), prim=prim, wood=wood, crack=0.15 if sid == "ironmonger_hanging_board" else 0.10,
                                 scale=0.25, dark=not light)
-        rec["wear"] = dict(runs=info["drips"], loss_fraction_drawn=info.get("loss_drawn_fraction"))
+        rec["wear"] = dict(runs=info["drips"], loss_fraction_drawn=info.get("loss_drawn_fraction"), substrate_primer=info.get("substrate_primer"), substrate_wood=info.get("substrate_wood"))
     return S, rec
 
 
@@ -560,9 +562,9 @@ def render_window_wash(T, seed, W=3250, H=1800):
     a = np.clip(a + 0.012 * fc.fnoise((H, W), 1.3, 1.3, r), 0, 1.0)
     # thin and clear spots: finger-wiped, cloth-wiped places where the coat is thin
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    for i in range(int(r.integers(5, 9))):
+    for i in range(int(r.integers(10, 16))):
         cx, cy = r.uniform(80, W - 80), r.uniform(80, H - 80)
-        rx, ry = r.uniform(45, 140), r.uniform(22, 70)
+        rx, ry = r.uniform(60, 200), r.uniform(28, 95)
         ang = r.uniform(0, math.pi)
         u = (xx - cx) * math.cos(ang) + (yy - cy) * math.sin(ang)
         v = -(xx - cx) * math.sin(ang) + (yy - cy) * math.cos(ang)

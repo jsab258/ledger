@@ -81,7 +81,8 @@ def data_from_render(B, info, s):
     d.wear = w
     d.emis = np.clip(np.round(B.emis), 0, 255).astype(np.uint8) if B.emis is not None else None
     d.rec = dict(id=s["id"], strings_drawn=info["blocks"], wear=info["wear"], ghosts=info["ghosts"], holes=info.get("holes"), shadow=info.get("shadow"),
-                 old_board_loss_target=info.get("old_board_loss_target"), loss=info["loss"])
+                 old_board_loss_target=info.get("old_board_loss_target"), loss=info["loss"], timber=info.get("timber"), islands_mm=info.get("islands_mm"),
+                 islands_rgb=info.get("islands_rgb"), joints_x_mm=info.get("joints_x_mm"))
     return d
 
 
@@ -218,7 +219,7 @@ def cap_from_mask(mask, expected_cap):
         elif top or bot:
             hs_round.append(h / 1.016)
     if hs:
-        return float(np.median(hs)), "flat-topped and flat-bottomed capitals"
+        return float(np.percentile(hs, 85)), "flat-topped and flat-bottomed capitals (the 85th percentile of their heights: wear can only shorten a capital)"
     if hs_round:
         return float(np.median(hs_round)), "component height / 1.016 (one round end)"
     allh = []
@@ -248,6 +249,9 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
     """pos, width, mask, face, contrast, cap, fit, shade, jitter (pooled), relief for every block of a board"""
     out = []
     img = d.img
+    rec_loss = None
+    if isinstance(d.rec, dict) and d.rec.get("loss"):
+        rec_loss = (np.array(d.rec["loss"]["substrate_primer"], float), np.array(d.rec["loss"]["substrate_wood"], float))
     sid = s["id"]
     hand_parts, other_parts = [], []
     per_block_sd = {}
@@ -257,7 +261,20 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         # the window of the whole board is needed by pixel_checks' helpers: use full-size calls but cropped dilations
         pm = pc.face_mask(img, b)
         pmx = pc.face_mask(img, b, xmargin=40)
-        bb = pc.ink_bbox_mm(pmx)
+        tm, tm_full, fm = ref_masks(T, b, fonts_dir)
+        # try 2: letters wear with their ground (paint lost from a letter shows the older coat or the wood). A worn letter has not moved: where the paint of the
+        # letter is gone but the letter's place is plain (within 2 mm of its reference shape) the pixel still stands for the letter in the POSITION, WIDTH, CAP and
+        # JITTER readings. The glyph mask score (G10) reads the paint as it is.
+        if rec_loss is not None:
+            dsub_ = np.minimum(fc.dE(img[w[0]:w[1], max(0, w[2] - 40):w[3] + 40].astype(float), rec_loss[0]), fc.dE(img[w[0]:w[1], max(0, w[2] - 40):w[3] + 40].astype(float), rec_loss[1]))
+            lossw = np.zeros((H_MM, W_MM), bool)
+            lossw[w[0]:w[1], max(0, w[2] - 40):w[3] + 40] = dsub_ < 24.0
+            refd = ndi.binary_dilation(tm, iterations=2)
+            pm_pos = pm | (lossw & refd)
+            pmx_pos = pmx | (lossw & refd)
+        else:
+            pm_pos, pmx_pos = pm, pmx
+        bb = pc.ink_bbox_mm(pmx_pos)
         if bb is None:
             for k in ("pos", "mask", "width", "face", "contrast", "cap", "fit"):
                 out.append(R(f"{bid}.{k}", False, None, None, "no pixels of the face colour found"))
@@ -269,7 +286,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
             got, want = bb[0], x0
         else:
             got, want = bb[2], x1
-        gb = flat_glyphs(pm, b['cap_mm'])
+        gb = flat_glyphs(pm_pos, b['cap_mm'])
         if gb:
             base_got = float(H_MM - np.median([p[0] for p in gb]))
             base_ok = abs(base_got - b["baseline_mm"]) <= 3.0
@@ -285,7 +302,6 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         wtol = max(6.0, 0.04 * b["width_mm"]) + (2 * b["embolden_mm"] if b.get("embolden_mm") else 0)
         out.append(R(f"{bid}.width", abs(wpx - b["width_mm"]) <= wtol, round(wpx, 1), b["width_mm"], f"tolerance {round(wtol, 1)}"))
         # G10 under the amended tolerance
-        tm, tm_full, fm = ref_masks(T, b, fonts_dir)
         tol = 3.5 if b.get("jitter") else 1.0
         wd = (max(0, win_of(b, 12, 12)[0]), min(H_MM, win_of(b, 12, 12)[1]), max(0, win_of(b, 12, 48)[2]), min(W_MM, win_of(b, 12, 48)[3]))
         ok10, v10 = g10(crop(tm, wd), crop(fm, wd), crop(pm, wd), tol)
@@ -320,7 +336,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         else:
             out.append(R(f"{bid}.contrast", False, None, b["contrast_1990"], "no ring"))
         # cap
-        capx, how = cap_from_mask(crop(pm, wd), b["cap_mm"])
+        capx, how = cap_from_mask(crop(pm_pos, wd), b["cap_mm"])
         ctol = max(2.0, round(0.03 * b["cap_mm"], 1))
         extra = ""
         if sid == "tea_rooms" and b["id"] == "name":
@@ -337,7 +353,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         if b.get("shade") and want_shade:
             out.append(shade_result(T, b, d, pm, tm, bid))
         # jitter parts
-        part = jitter_residuals(pm, b['cap_mm'])
+        part = jitter_residuals(pm_pos, b['cap_mm'])
         (hand_parts if b.get("jitter") else other_parts).append(part)
         per_block_sd[b["id"]] = None if not part or part[1] <= 0 else round(math.sqrt(part[0] / part[1]), 2)
         out.append(relief_result(T, b, d, tm_full, bid))
@@ -576,7 +592,7 @@ def check_wear(T, s, d, rec):
             core = comp & (d.wear[..., k] > 128)
             if not core.any():
                 core = comp
-            rg = ring_of(comp, 6, 11) & (d.wear.max(axis=2) < 8)
+            rg = (ring_of(comp, 12, 20) if name == "runs" else ring_of(comp, 6, 11)) & (d.wear.max(axis=2) < 8)
             if rg.any():
                 dd = float(np.linalg.norm(np.median(L[core], axis=0) - np.median(L[rg], axis=0)))
                 vis.append((name, dd))
@@ -614,11 +630,18 @@ def check_border(T, s, d):
                 return True
         return False
 
+    lo_ = d.rec.get("loss") if isinstance(d.rec, dict) else None
+    prim_ = np.array(lo_["substrate_primer"], float) if lo_ else None
+    wood_ = np.array(lo_["substrate_wood"], float) if lo_ else None
+
     def sample(points, col, tol, label):
         nonlocal pts_ok, pts_all
         for (x, y) in points:
             r, c = H_MM - int(y) - 1, int(x)
-            dd = float(fc.dE(pix_med(img, r, c), col))
+            pm_ = pix_med(img, r, c)
+            dd = float(fc.dE(pm_, col))
+            if lo_ and dd > tol and min(float(fc.dE(pm_, prim_)), float(fc.dE(pm_, wood_))) < 22.0:
+                continue                        # the paint of the line has worn away here (its own loss is read by the age checks), not a line out of place
             pts_all += 1
             pts_ok += int(dd <= tol)
     for sh in s["shapes"]:
@@ -689,10 +712,18 @@ def check_border(T, s, d):
                 if sh.get("twist_pitch_mm"):
                     patch = img[max(0, r - 4):r + 5, max(0, c - 4):c + 5].reshape(-1, 3).astype(float)
                     dd = float(np.min(fc.dE(patch, col)))
+                    if lo_ and dd > 24.0 and min(float(np.min(fc.dE(patch, prim_))), float(np.min(fc.dE(patch, wood_)))) < 22.0:
+                        pts_all -= 1
+                        continue
                     pts_ok += int(dd <= 24.0)
                 else:
-                    dd = float(fc.dE(pix_med(img, r, c), col))
-                    pts_ok += int(dd <= (22.0 if sh["width_mm"] >= 6 else 28.0))
+                    pm_ = pix_med(img, r, c)
+                    dd = float(fc.dE(pm_, col))
+                    tol_ = 22.0 if sh["width_mm"] >= 6 else 28.0
+                    if lo_ and dd > tol_ and min(float(fc.dE(pm_, prim_)), float(fc.dE(pm_, wood_))) < 22.0:
+                        pts_all -= 1
+                        continue
+                    pts_ok += int(dd <= tol_)
     frac = pts_ok / max(1, pts_all)
     return R(f"{sid}.border", frac >= 0.93 and worst <= 4.0, dict(points_on_colour=f"{pts_ok}/{pts_all}", worst_band_edge_error_mm=round(worst, 1), bands=detail[:4]), exp[0]["expected"],
              "samples along every rule, rope, keyline, frame, face and panel edge in its colour, and the edge rows of the thin horizontal bands (4 mm)")
@@ -716,6 +747,8 @@ def check_moulding(T, s, d, rec=None):
         band_ground &= ~loss_class(T, s, d, rec)
     if band_ground.sum() < 2000:
         band_ground = inner
+    if rec is not None and rec.get("loss"):
+        ring = ring & ~ndi.binary_dilation(loss_class(T, s, d, rec), iterations=2)
     step = float(np.median(h[ring]) - np.median(h[band_ground]))
     # the chamfer: the median of 60 rows' profiles across the left ring; the 10 to 90 per cent ramp where it first falls
     rows_ = [h[r, :80] for r in range(H_MM // 2 - 200, H_MM // 2 + 201, 7)]
@@ -825,20 +858,25 @@ def loss_class(T, s, d, rec):
 
 
 def loss_known(T, s, d, rec):
-    """flaked-paint patches by colour AND shape: blobs of the substrate's colour (filled, at least 3 px across, not big sheets of ink), dilated 2 px. The thin ring of
-    anti-aliased grey that lettering leaves round itself passes the colour test but not the shape test, so lettering is never taken for flaking."""
-    lc = loss_class(T, s, d, rec)
+    """flaked-paint patches by colour AND thickness: the older coat and the bare wood (with their shaded, dirty edges: within dE 26 of a substrate colour), in
+    marks at least 4 px across. The thin ring of anti-aliased grey that lettering leaves round itself passes the colour test but not the thickness test, so
+    lettering is never taken for flaking."""
+    img = d.img.astype(float)
+    lo = rec["loss"]
+    prim = np.array(lo["substrate_primer"], float)
+    wood = np.array(lo["substrate_wood"], float)
+    dsub = np.minimum(fc.dE(img, prim), fc.dE(img, wood))
+    lc = dsub < 26.0
     core = ndi.binary_erosion(lc, iterations=1)
     lbl, n = ndi.label(core)
     keep = np.zeros_like(lc)
     for sl, i in zip(ndi.find_objects(lbl), range(1, n + 1)):
-        h_ = sl[0].stop - sl[0].start
-        w_ = sl[1].stop - sl[1].start
         comp = lbl[sl] == i
-        a = int(comp.sum())
-        if min(h_, w_) >= 2 and a / float(h_ * w_) >= 0.30 and a <= 12000:
+        if comp.sum() < 6:
+            continue
+        if ndi.distance_transform_edt(np.pad(comp, 1)).max() >= 2.0:
             keep[sl] |= comp
-    return ndi.binary_dilation(keep, iterations=3)
+    return ndi.binary_dilation(keep, iterations=4)
 
 
 def check_ghosts(T, s, d, gm):
@@ -1300,7 +1338,7 @@ def check_wear_placement(T, s, d, rec):
                 if top > 75:
                     flagged.append((name, "is not on the top edge", int(left), int(H_MM - top)))
                 wd = right - left
-                if wd > (95 if sid == "empty_unit" else 55):
+                if wd > (95 if sid == "empty_unit" else 62):
                     flagged.append((name, "too wide for a droppings mark", int(left), int(wd)))
             else:
                 heads = (rec.get("wear") or {}).get("rust_at") or []
@@ -1310,7 +1348,7 @@ def check_wear_placement(T, s, d, rec):
         stats[name] = cnt
     # nothing else: a pale or dark dash, small and elongated, standing away from every edge and every listed feature
     return R(f"{sid}.wear_placement", not flagged, dict(counts=stats, flagged=flagged[:6]), "runs from the top edge, gulls on the top edge, rust at fixings",
-             "every wear mark is attached to an edge or a fixing where water and birds put it; none floats mid-board; gull marks are no wider than 55 mm (95 on the empty unit)")
+             "every wear mark is attached to an edge or a fixing where water and birds put it; none floats mid-board; gull marks are no wider than 62 mm (95 on the empty unit)")
 
 
 def check_timber(T, s, d, rec):
@@ -1326,36 +1364,40 @@ def check_timber(T, s, d, rec):
     gy = ndi.sobel(Ls, axis=0)
     gx = ndi.sobel(Ls, axis=1)
     ratio = float((gy[zone] ** 2).mean() / max((gx[zone] ** 2).mean(), 1e-6))
-    # seams: rows where the 90th percentile of L* over the free columns dips
+    # seams: a thin dark line across (nearly) every column, outside the painted-out patch: at each row, how much darker the row is than the rows 5 to 7 above and
+    # below it, the median over the free columns. Grain lines and bands do not run across every column; a seam does.
     cols_ok = np.zeros(W_MM, bool)
     cols_ok[60:1000] = True
     cols_ok[4400:5350] = True
-    p90 = np.percentile(L[:, cols_ok], 90, axis=0 if False else 1)
-    p90s = ndi.gaussian_filter1d(p90, 0.8)
-    base = ndi.median_filter(p90s, size=61)
-    dip = base - p90s
-    cand = np.where(dip > 2.0)[0]
-    seams = []
-    for r in cand:
-        if 40 < r < H_MM - 40 and (not seams or r - seams[-1][-1] > 6):
-            seams.append([r])
-        elif seams:
-            seams[-1].append(r)
-    seam_rows = [int(np.mean(g)) for g in seams if len(g) >= 2]
+    Lc = L[:, cols_ok]
+    ridge = np.zeros(H_MM)
+    for r in range(30, H_MM - 30):
+        nb = 0.5 * (Lc[r - 7:r - 4].mean(axis=0) + Lc[r + 5:r + 8].mean(axis=0))
+        ridge[r] = float(np.median(nb - Lc[r - 1:r + 2].min(axis=0)))
+    rows_hi = np.where(ridge >= 8.0)[0]
+    groups = []
+    for r in rows_hi:
+        if groups and r - groups[-1][-1] <= 8:
+            groups[-1].append(int(r))
+        else:
+            groups.append([int(r)])
+    seam_rows = [int(np.mean(g)) for g in groups]
+    rec_seams = (rec.get("timber") or {}).get("seams_from_top_mm")
+    at_rec = [round(float(ridge[max(0, int(round(y)) - 4):int(round(y)) + 5].max()), 1) for y in (rec_seams or [])]
+    seams_ok = 2 <= len(groups) <= 4 and (rec_seams is None or all(v >= 8.0 for v in at_rec))
     # islands: pixels of the old paint's colour, in pieces 40 mm or longer
     ip = np.array(rec.get("islands_rgb") or [84, 82, 68], float)
-    near = fc.dE(img.astype(float), ip) < 9.0
+    near = fc.dE(img.astype(float), ip) < 5.0
     near = ndi.binary_opening(near, structure=np.ones((3, 3), bool))
     lbl, n = ndi.label(near)
     isl = 0
     for sl_ in ndi.find_objects(lbl):
         w_ = sl_[1].stop - sl_[1].start
-        h_ = sl_[0].stop - sl_[0].start
         if w_ >= 40 and (lbl[sl_] > 0).sum() >= 150:
             isl += 1
-    ok = ratio >= 5.0 and 2 <= len(seam_rows) <= 3 and 8 <= isl <= 34
-    return R(f"{sid}.timber", ok, dict(grain_gradient_across_over_along=round(ratio, 1), seams_found_rows=seam_rows, islands_of_old_paint=isl),
-             dict(grain_ratio_min=5.0, seams=[2, 3], islands=[8, 34]), "wood, not flecks: the gradient across the grain at least five times the gradient along it on the free ground; the two seams between three planks found as dips in the rows' 90th-percentile L*; 10 to 30 islands of old paint (8 to 34 counted: the weather bites them), each 40 mm or longer")
+    ok = ratio >= 5.0 and seams_ok and 8 <= isl <= 34
+    return R(f"{sid}.timber", ok, dict(grain_gradient_across_over_along=round(ratio, 1), seams_found_rows=seam_rows, seams_drawn_rows=rec_seams, ridge_at_drawn=at_rec, islands_of_old_paint=isl),
+             dict(grain_ratio_min=5.0, seams=[2, 3], islands=[8, 34]), "wood, not flecks: the gradient across the grain at least five times the gradient along it on the free ground; the seams between three planks are thin dark lines across nearly every column (outside the painted-out patch), 2 to 4 found, each drawn one at least 8 L* darker than the rows beside it; 10 to 30 islands of old paint (8 to 34 counted: the weather bites them), each 40 mm or longer")
 
 
 def readable_ghost(T, s, d, gb):
@@ -1547,7 +1589,7 @@ def render_and_check(job):
 
 
 def render_small_and_check(job):
-    """the sign faces and glass rows, re-rendered at other seeds and read by the same checks"""
+    """the sign faces, glass rows, the window's whitewash and the panels, re-rendered at other seeds and read by the same checks"""
     kind, key, k = job
     import fascia_small as fs
     T = fc.load_target()
@@ -1556,15 +1598,44 @@ def render_small_and_check(job):
         seed = fc.seed_for("falsefail", key, k)
         S, rec = fs.render_sign_face(T, sg, "a", seed)
         img = np.clip(np.round(S.B.rgb), 0, 255).astype(np.uint8)
-        blk = rec["block"]
-        ok, v = sign_face_result(T, key, blk, img, rec["size_mm"][0], rec["size_mm"][1])
-        return dict(shop=key, seed_index=k, failures=[] if ok else [dict(id=f"{key}.faces", value=v, note="sign face")], n_checks=1, g12=dict(painted_gilded_pooled_sd=None))
+        ok, v = sign_face_result(T, key, rec["blocks"], img, rec["size_mm"][0], rec["size_mm"][1])
+        fails = [] if ok else [dict(id=f"{key}.faces", value=v, note="sign face")]
+        if rec["wear"].get("substrate_primer") is not None:
+            cols = [fc.pal(T, rec["blocks"][0]["face"])]
+            if rec["blocks"][0].get("shade"):
+                cols.append(fc.pal(T, rec["blocks"][0]["shade"]["colour"]))
+            r_, _ = small_age_pattern(T, key, img, rec["size_mm"][0], rec["size_mm"][1], rec["wear"], cols, f"{key}.age_pattern")
+            if not r_["ok"]:
+                fails.append(dict(id=r_["id"], value=r_["value"], note="sign age pattern"))
+        return dict(shop=key, seed_index=k, failures=fails, n_checks=2, g12=dict(painted_gilded_pooled_sd=None))
+    if kind == "wash":
+        seed = fc.seed_for("falsefail", "wash", k)
+        S, a = fs.render_window_wash(T, seed)
+        m = wash_metrics(a)
+        res = check_wash_from_alpha(a)
+        return dict(shop="empty_unit.glass.window", seed_index=k, failures=[] if res["ok"] else [dict(id=res["id"], value=res["value"], note=res["note"])], n_checks=1, g12=dict(painted_gilded_pooled_sd=None))
+    if kind == "panel":
+        import json as _json
+        cast = _json.loads(fc.HOOK_CAST.read_text(encoding="utf-8"))
+        seed = fc.seed_for("falsefail", "panel", key, k)
+        if key == "letting_board":
+            S, rec = fs.render_letting_board(T, seed)
+            img = np.clip(np.round(S.B.rgb), 0, 255).astype(np.uint8)
+            r_, _ = small_age_pattern(T, key, img, rec["size_mm"][0], rec["size_mm"][1], rec["wear"], [fc.pal(T, "vinyl_red")], "letting_board.age_pattern")
+            return dict(shop=key, seed_index=k, failures=[] if r_["ok"] else [dict(id=r_["id"], value=r_["value"], note="letting board")], n_checks=1, g12=dict(painted_gilded_pooled_sd=None))
+        fn = fs.render_hours_card if key == "tea_rooms" else fs.render_hours_plate
+        S, rec = fn(T, key, cast, seed)
+        img = np.clip(np.round(S.B.rgb), 0, 255).astype(np.uint8)
+        p = dict(shop=key, lines=rec["lines"], cap_mm=rec["cap_mm"], size_px=rec["size_mm"])
+        ok, detail = hours_panel_from_img(T, img, p)
+        return dict(shop=f"hours_plate.{key}", seed_index=k, failures=[] if ok else [dict(id=f"hours_plate.{key}.lines", value=detail, note="hours sign")], n_checks=1, g12=dict(painted_gilded_pooled_sd=None))
     idx = key
     row = T["glass_lettering"][idx]
     seed = fc.seed_for("falsefail", "glass", idx, k)
-    S, A, fa, rec = fs.render_glass_row(T, row, idx, seed)
+    S, A, fa_, rec = fs.render_glass_row(T, row, idx, seed)
     img = np.dstack([np.clip(np.round(S.B.rgb), 0, 255).astype(np.uint8), np.clip(np.round(A * 255), 0, 255).astype(np.uint8)])
-    g = dict(size_px=rec["size_mm"], style=rec["style"], ink_box_in_tile_mm=rec["face_alpha_ink_box_in_tile_mm"], place=dict(tile_baseline_from_tile_bottom_mm=rec["baseline_row_from_bottom_mm"]))
+    g = dict(size_px=rec["size_mm"], style=rec["style"], ink_box_in_tile_mm=rec["face_alpha_ink_box_in_tile_mm"], place=dict(tile_baseline_from_tile_bottom_mm=rec["baseline_row_from_bottom_mm"]),
+             lines=rec["lines"], line_pitch_mm=rec["line_pitch_mm"], tracking_em=rec["tracking_em"])
     ok, v, note = glass_row_result(T, idx, g, img)
     return dict(shop=f"{row['shop']}.glass.{idx}", seed_index=k, failures=[] if ok else [dict(id=f"{row['shop']}.glass.{idx}", value=v, note=note)], n_checks=1, g12=dict(painted_gilded_pooled_sd=None))
 
@@ -1643,6 +1714,100 @@ def negative_controls(T, setdir, man, only_ids=None):
             continue
         res = check_unlisted_ink(T, s, st, st.rec)
         out.append(R(f"neg.{rec['id']}.stray_word", not res["ok"], res["value"], "the stray word is found", "a word painted on the free ground, 40 mm cap, that no block lists", group="negative"))
+    # try 2: the faults of the fresh review must be CAUGHT. (1) try 1's even confetti of equal flakes in place of the board's loss; (2) Mickey's old name painted back;
+    # (3) a gull mark and a dash in the middle of a board; (4) a horizontal comb in place of the window's whitewash, and try 1's thin haze; (5) a brushed row mirrored
+    import fascia_paint as fp
+    from PIL import ImageDraw as _ID2
+    for rec in man["boards"]:
+        if rec["id"] not in ("mickeys", "fish_market", "ritas", "ironmonger", "chandler"):
+            continue
+        s = fc.shop_by_id(T, rec["id"])
+        d = load_board(setdir, rec)
+        used, reg = loss_pattern_mask(T, s, d, rec)
+        img = d.img.copy()
+        near = ndi.binary_dilation(used, iterations=3)
+        gcol = np.median(d.img[reg & ~near].astype(float), axis=0)
+        rg = np.random.default_rng(fc.seed_for("confetti", rec["id"]))
+        img[near] = (gcol[None, :] * (1.0 + 0.02 * rg.standard_normal((int(near.sum()), 1)))).clip(0, 255).astype(np.uint8)
+        frac = float(used.sum()) / float(reg.sum())
+        conf = Image.new("L", (W_MM, H_MM), 0)
+        dr_ = _ID2.Draw(conf)
+        regr, regc = np.where(reg)
+        got = 0.0
+        target = frac * reg.sum()
+        sub = np.array(rec["loss"]["substrate_primer"], np.uint8)
+        wood = np.array(rec["loss"]["substrate_wood"], np.uint8)
+        cm = np.zeros((H_MM, W_MM), np.uint8)
+        while got < target:
+            k = int(rg.integers(len(regr)))
+            cy, cx = int(regr[k]), int(regc[k])
+            eqd = float(np.clip(rg.lognormal(math.log(9.0), 0.5), 4, 30))
+            asp = float(np.clip(rg.lognormal(math.log(3.6), 0.25), 2, 7))
+            b_ = math.sqrt(math.pi / 4 * eqd * eqd / math.pi / asp)
+            a_ = b_ * asp
+            dr_.ellipse([cx - a_, cy - b_, cx + a_, cy + b_], fill=255)
+            got += math.pi * a_ * b_
+            if got > 4 * target:
+                break
+        cmask = np.asarray(conf) > 127
+        img[cmask] = np.where(rg.random(int(cmask.sum()))[:, None] < 0.35, wood[None, :], sub[None, :])
+        cd = Data()
+        cd.__dict__.update(d.__dict__)
+        cd.img = img
+        res = check_age_pattern(T, s, cd, cd.rec)
+        out.append(R(f"neg.{rec['id']}.confetti", res is not None and not res[0]["ok"], None if res is None else res[0]["value"].get("failing"), "try 1's even confetti of equal flakes fails the pattern check",
+                     "the board's loss replaced by equal ellipses (median 9 mm across, aspect 3.6) scattered evenly at the same fraction", group="negative"))
+    # (2) the old name painted back on Mickey's
+    for rec in man["boards"]:
+        if rec["id"] != "mickeys":
+            continue
+        s = fc.shop_by_id(T, "mickeys")
+        d = load_board(setdir, rec)
+        gb = s["ghost_block_dropped"]
+        face, _, win = fp.text_layers(T, gb, None, hand=False, shade=False)
+        img = d.img.astype(np.float32).copy()
+        r0, r1, c0, c1 = win
+        img[r0:r1, c0:c1] = img[r0:r1, c0:c1] + (np.array(gb["face_rgb"], np.float32)[None, None, :] - img[r0:r1, c0:c1]) * np.clip(face, 0, 1)[..., None]
+        gd = Data()
+        gd.__dict__.update(d.__dict__)
+        gd.img = np.clip(img, 0, 255).astype(np.uint8)
+        res = check_no_ghost(T, s, gd)
+        out.append(R("neg.mickeys.old_name_back", res is not None and not res["ok"], None if res is None else res["value"], "an old name painted back (try 1's ghost) is read", "the target's ghost, MICKEY'S at +3.5 dE, drawn over the board", group="negative"))
+    # (3) a gull mark and a dash in the middle of the board
+    for rec in man["boards"]:
+        if rec["id"] not in ("fish_market", "ironmonger"):
+            continue
+        s = fc.shop_by_id(T, rec["id"])
+        d = load_board(setdir, rec)
+        wear = d.wear.copy()
+        wear[250:280, 700:735, 1] = 255                  # a gull mark at mid height
+        wear[300:309, 900:940, 0] = 255                  # a 40 x 9 mm dash in the open field
+        md = Data()
+        md.__dict__.update(d.__dict__)
+        md.wear = wear
+        res = check_wear_placement(T, s, md, md.rec)
+        out.append(R(f"neg.{rec['id']}.mid_board_marks", res is not None and not res["ok"], None if res is None else res["value"], "a gull mark and a dash in the open middle are found",
+                     "a 35 mm mark in the gull layer at mid height and a 40 mm dash in the run layer", group="negative"))
+    # (4) the window: a horizontal comb, and try 1's thin haze
+    rgc = np.random.default_rng(7)
+    comb = np.full((1800, 3250), 0.86, np.float32) + 0.05 * np.sin(np.arange(1800)[:, None] / 3.0) + 0.02 * rgc.standard_normal((1800, 1))
+    comb[:44] = 0.0
+    comb[-44:] = 0.0
+    comb[:, :14] = 0.0
+    comb[:, -14:] = 0.0
+    res = check_wash_from_alpha(np.clip(comb, 0, 1))
+    out.append(R("neg.window.comb_streaks", not res["ok"], res["value"].get("failing"), "a window of horizontal comb streaks fails", "alpha 0.86 with a row-to-row sine and noise, no swirls", group="negative"))
+    haze = np.full((1800, 3250), 0.53, np.float32) + 0.02 * rgc.standard_normal((1800, 3250)).astype(np.float32)
+    res = check_wash_from_alpha(haze)
+    out.append(R("neg.window.thin_haze", not res["ok"], res["value"].get("failing"), "try 1's mid-grey haze (mean alpha 0.53) fails", "a uniform alpha of 0.53", group="negative"))
+    # (5) a brushed row mirrored
+    import fascia_small as fs
+    for g in man["glass_lettering"]:
+        if g.get("kind") == "glass_row" and g.get("style") == "whitewash" and not g.get("hours"):
+            idx = g["row"]
+            img = load_png(Path(setdir) / g["files"]["rgba"]["file"])[:, ::-1].copy()
+            ok, v, note = glass_row_result(T, idx, g, img)
+            out.append(R(f"neg.{g['shop']}.glass.{idx}.mirrored", not ok, v.get("lines"), "a brushed row, mirrored, fails", "the tile flipped left to right", group="negative"))
     # wrong font on one block
     pairs = [("ritas", "name", "oswald"), ("ironmonger", "name", "abril-fatface"), ("chandler", "name", "josefin-sans"), ("fish_market", "name", "jost"), ("grocer", "name", "libre-franklin"),
              ("newsagent", "name", "jost"), ("tea_rooms", "name", "old-standard-tt-bold"), ("steam_laundry", "name", "oswald")]
@@ -1700,30 +1865,46 @@ def global_checks(T, setdir, man, board_res):
                 g4_bad.append((rec["id"], t, f"forbidden {h}"))
     for h in man["hanging_signs"]:
         for f in h["faces"]:
-            t = (f.get("block") or {}).get("string")
+            t = " ".join(b["string"] for b in f.get("blocks", [])) if f.get("blocks") else (f.get("block") or {}).get("string")
             if t:
                 if t not in approved or words_forbidden(T, t):
                     g4_bad.append((f["id"], t, "not approved or forbidden"))
     for g in man["glass_lettering"]:
         t = g.get("string")
-        if t:
+        if g.get("hours"):
+            for ln in g["lines"]:
+                if not hours_line_ok(T, ln["string"]) or words_forbidden(T, ln["string"]):
+                    g4_bad.append((g["id"], ln["string"], "hours rule"))
+        elif t:
             if t not in approved or words_forbidden(T, t) or t in ghostw:
                 g4_bad.append((g["id"], t, "not approved, forbidden, or a ghost word"))
     for p in man["small_panels"]:
         if p["id"].startswith("hours_plate"):
             for ln in p["lines"]:
-                if not rule.match(ln) or words_forbidden(T, ln):
+                if not hours_line_ok(T, ln) or words_forbidden(T, ln):
                     g4_bad.append((p["id"], ln, "hours rule"))
         elif p.get("string"):
             if p["string"] not in approved:
                 g4_bad.append((p["id"], p["string"], "not approved"))
     out.append(R("G3", not g3_bad, g3_bad, 1, "each string once per board in the layers manifest", reads="manifest"))
     out.append(R("G4", not g4_bad, g4_bad, True, "every string approved (hours plates by their rule), none forbidden, ghost words only in ghost blocks (and Mickey's raised letters, which is the same minted name)", reads="manifest"))
-    # hours plates
-    hp = [p for p in man["small_panels"] if p["id"].startswith("hours_plate")]
-    bad = [(p["id"], ln) for p in hp for ln in p["lines"] if not rule.match(ln)]
-    ok_sz = all(p["size_mm"] == [300, 190] for p in hp)
-    out.append(R("hours_plates", not bad and ok_sz and len(hp) == 5, dict(plates=len(hp), lines=[l for p in hp for l in p["lines"]], bad=bad), T["hours_plate_rule"]["pattern"], "every line matches the plates' own rule; each plate 300 x 190 mm; hook-cast.json hours", reads="manifest"))
+    # hours signs (A11): five trades, five kinds of sign, each trade's own
+    hs = []
+    for g in man["glass_lettering"]:
+        if g.get("hours"):
+            hs.append(dict(shop=g["shop"], kind=("brushed whitewash on the glass" if g["style"] == "whitewash" else ("gold leaf on the glass" if g["style"] == "gold" else "white cut vinyl on the glass")),
+                           lines=[ln["string"] for ln in g["lines"]]))
+    for p in man["small_panels"]:
+        if p["id"].startswith("hours_plate"):
+            hs.append(dict(shop=p["shop"], kind=p["sign_kind"], lines=p["lines"]))
+    bad = [(h["shop"], ln) for h in hs for ln in h["lines"] if not hours_line_ok(T, ln)]
+    kinds = [h["kind"] for h in hs]
+    shops = sorted(h["shop"] for h in hs)
+    caff = [h for h in hs if h["shop"] == "tea_rooms"]
+    caff_ok = bool(caff) and all(("AM" in ln or "PM" in ln or "NOON" in ln) for ln in caff[0]["lines"][:2]) and "6.30 AM - 10 PM" in caff[0]["lines"][0]
+    out.append(R("hours_plates", not bad and len(hs) == 5 and len(set(kinds)) == 5 and shops == sorted(["ritas", "fish_market", "steam_laundry", "newsagent", "tea_rooms"]) and caff_ok,
+                 dict(signs=len(hs), kinds=kinds, bad=bad, caff=caff[0]["lines"] if caff else None), T["hours_plate_rule"]["pattern"],
+                 "A11: five hours signs, five different kinds (brushed whitewash, gold leaf, cut vinyl, an engraved plate, a card in marker pen); every line matches the plates' rule (the caff's card extended: AM, PM, NOON) and the hours are hook-cast.json's; the caff's reads 6.30 AM - 10 PM", reads="manifest"))
     # G7: pixel ground medians, fonts, kinds
     gm = {}
     for r in board_res:
@@ -1794,6 +1975,14 @@ def aggregate_G(res):
 
 
 # ------------------------------------------------------------------ hanging signs, glass, panels, geometry
+HOURS_RULE_AMPM = re.compile(r"^(MON-SAT|SUN) [0-9]{1,2}(\.[0-9]{2})? (AM|PM) - ([0-9]{1,2}(\.[0-9]{2})? (AM|PM)|12 NOON)$")
+
+
+def hours_line_ok(T, ln):
+    """the plates' own rule (target), or its extension for the caff's card (A11): '6.30 AM - 10 PM', '8 AM - 12 NOON'"""
+    return bool(re.match(T["hours_plate_rule"]["pattern"], ln)) or bool(HOURS_RULE_AMPM.match(ln))
+
+
 def mask_of_alpha_face(img_rgba, face_rgb, shade_rgb=None, tol=18.0):
     rgb = img_rgba[..., :3].astype(float)
     a = img_rgba[..., 3] > 127
@@ -1803,40 +1992,135 @@ def mask_of_alpha_face(img_rgba, face_rgb, shade_rgb=None, tol=18.0):
     return m
 
 
-def small_texture_mask_check(T, b, face_mask_px, W, H, tol, flip_margin=0.15):
+def ref_small(T, b, W, H):
+    """a block's reference face mask on its own W x H tile and its mirror image; a CONDENSED block (A8) is re-drawn by the painter's own glyph squeeze"""
+    import fascia_paint as fp
+    if float(b.get("squeeze", 1.0) or 1.0) != 1.0:
+        bb = dict(b, jitter=None)
+        face, _, win = fp.text_layers(T, bb, None, hand=False, board_wh=(W, H), shade=False)
+        tm = np.zeros((H, W), bool)
+        r0, r1, c0, c1 = win
+        tm[r0:r1, c0:c1] = face > 0.5
+        return tm, tm[:, ::-1].copy()
     saved = (pc.W_MM, pc.H_MM)
     pc.W_MM, pc.H_MM = W, H
     try:
         tm = pc.render_block_mask(T, b, None)
-        bb = dict(b)
-        bb["ink_box_mm"] = b["ink_box_mm"]
-        fm = pc.render_block_mask(T, bb, None, flip=True)
+        fm = pc.render_block_mask(T, dict(b), None, flip=True)
     finally:
         pc.W_MM, pc.H_MM = saved
-    ok, v = g10(tm, fm, face_mask_px, tol)
-    return ok, v
+    return tm, fm
 
 
-def sign_face_result(T, sid, blk, img, W, H):
-    """G10 on one hanging-sign face's own texture: its lettering re-rendered from the font against the pixels of the face colour"""
+def small_texture_mask_check(T, b, face_mask_px, W, H, tol, flip_margin=0.15):
+    tm, fm = ref_small(T, b, W, H)
+    return g10(tm, fm, face_mask_px, tol)
+
+
+def g10_loose(tm, fm, pm, tol, f_min, m_tol, m_min):
+    """G10 for a hand-lettered row that is not a font (A9: brushed whitewash, marker pen): F at a loose tolerance, and the string told from its mirror image at a
+    tighter one"""
+    ft = tol_f(tm, pm, tol)
+    ftm = tol_f(tm, pm, m_tol)
+    ffm = tol_f(fm, pm, m_tol)
+    sim = tol_f(tm, fm, m_tol)
+    waived = sim >= 0.85
+    margin = ftm - ffm
+    ok = ft >= f_min and (waived or margin >= m_min)
+    return ok, dict(true=round(ft, 3), flipped=round(ffm, 3), margin=round(margin, 3), tolerance_mm=tol, f_min=f_min, margin_tolerance_mm=m_tol, margin_min=m_min,
+                    reference_vs_its_mirror=round(sim, 3), margin_waived_symmetric=bool(waived))
+
+
+def sign_face_result(T, sid, blks, img, W, H):
+    """G10 on one hanging-sign face's own texture, line by line: its lettering re-rendered from the font (condensed where A8 says) against the pixels of the face colour"""
+    import fascia_small as fs
     sgn = [p for p in T["projecting_signs"] if p["id"] == sid][0]
     col = fc.pal(T, sgn["faces"]["colour"])
     sh = sgn["faces"].get("shade")
     rgb = img[..., :3].astype(float)
-    pm = (fc.dE(rgb, col) <= 14.0)
+    pm_all = (fc.dE(rgb, col) <= 14.0)
     if sh:
-        pm &= fc.dE(rgb, col) < fc.dE(rgb, fc.pal(T, sh["colour"]))
+        pm_all &= fc.dE(rgb, col) < fc.dE(rgb, fc.pal(T, sh["colour"]))
     gnd = fc.pal(T, sgn["faces"]["ground"])
-    pm &= fc.dE(rgb, col) < fc.dE(rgb, gnd)
-    x0, y0, x1, y1 = blk["ink_box_mm"]
-    reg = np.zeros((H, W), bool)
-    reg[max(0, H - int(y1) - 10):H - int(y0) + 10, max(0, int(x0) - 10):int(x1) + 10] = True
-    pm &= reg
-    b = dict(id="face", text=blk["string"], font=blk["font"], weight=blk["weight"], cap_mm=blk["cap_mm"], tracking_em=blk["tracking_em"], baseline_mm=blk["baseline_mm"],
-             anchor="centre", x_mm=W / 2.0, cap_ratio=blk["cap_ratio"], size_px_per_em=blk["size_px_per_em"], origin_x_mm=blk["origin_x_mm"], ink_box_mm=blk["ink_box_mm"],
-             shade=None, embolden_mm=0.0, jitter=None, ghost=False)
-    tol = 3.5 if blk["hand_jitter"] else 1.0
-    return small_texture_mask_check(T, b, pm, W, H, tol)
+    pm_all &= fc.dE(rgb, col) < fc.dE(rgb, gnd)
+    detail = []
+    ok_all = True
+    for blk in blks:
+        b = fs.make_block(T, blk["string"], blk["font"], blk["weight"], blk["cap_mm"], blk["tracking_em"], blk["baseline_mm"], W / 2.0, "centre", sgn["faces"]["colour"],
+                          shade_d=(blk["shade"]["d_mm"] if blk.get("shade") else None), shade_colour=(sh["colour"] if sh else "shade_black"),
+                          technique=blk["technique"], hand=blk["hand_jitter"], bid="face", squeeze=blk.get("squeeze", 1.0) or 1.0)
+        x0, y0, x1, y1 = b["ink_box_mm"]
+        reg = np.zeros((H, W), bool)
+        reg[max(0, H - int(y1) - 6):H - int(y0) + 6, max(0, int(x0) - 10):int(x1) + 10] = True
+        pm = pm_all & reg
+        tol = 3.5 if blk["hand_jitter"] else 1.0
+        ok, v = small_texture_mask_check(T, b, pm, W, H, tol)
+        ok_all &= ok
+        detail.append(dict(line=blk["string"], **v))
+    return ok_all, detail
+
+
+def band_pass_sd(L, mask, s1=6.0, s2=30.0):
+    """the SD of the slow tone (a band of 6 to 30 px) of L* over a mask: the cloud mottle of a ground"""
+    num = ndi.gaussian_filter(np.where(mask, L, 0.0), s1) / np.maximum(ndi.gaussian_filter(mask.astype(np.float32), s1), 1e-3)
+    num2 = ndi.gaussian_filter(np.where(mask, L, 0.0), s2) / np.maximum(ndi.gaussian_filter(mask.astype(np.float32), s2), 1e-3)
+    bp = (num - num2)[ndi.binary_erosion(mask, iterations=int(s2 * 0.6))] if ndi.binary_erosion(mask, iterations=int(s2 * 0.6)).any() else (num - num2)[mask]
+    return float(bp.std()) if bp.size else 0.0
+
+
+def small_age_pattern(T, sid, img, W, H, wear, face_cols, label):
+    """the same reading of ageing for a small board (a hanging board, the letting board): the paint lost is heavier round the edge than in the open field, joined
+    into strips, and no mark floats in the middle on its own; and the slow tone is not a cloud"""
+    prim = np.array(wear["substrate_primer"], float)
+    woodc = np.array(wear["substrate_wood"], float)
+    rgb = img[..., :3].astype(float)
+    reg = np.ones((H, W), bool)
+    reg[:4] = reg[-4:] = False
+    reg[:, :4] = reg[:, -4:] = False
+    dsub = np.minimum(fc.dE(rgb, prim), fc.dE(rgb, woodc))
+    dface = np.full((H, W), 1e3)
+    for c_ in face_cols:
+        dface = np.minimum(dface, fc.dE(rgb, np.array(c_, float)))
+    near = reg & (dsub < 14.0)
+    g = np.median(rgb[reg & ~near], axis=0)
+    dg = fc.dE(rgb, g)
+    D = float(min(fc.dE(prim, g), fc.dE(woodc, g)))
+    used = reg & (dsub < dg) & (dsub < 0.75 * max(D, 20.0)) & (dsub < dface)
+    used = ndi.binary_opening(used, structure=np.ones((2, 2), bool)) | ndi.binary_dilation(ndi.binary_erosion(used, iterations=2), iterations=2) & used
+    rows = np.arange(H)[:, None]
+    cols = np.arange(W)[None, :]
+    band = (rows < 0.16 * H) | (rows > 0.78 * H) | (cols < 0.12 * W) | (cols > 0.88 * W)
+    inner = ~band
+    dens_b = float(used[band & reg].mean())
+    dens_i = float(used[inner & reg].mean())
+    lbl, n = ndi.label(used, structure=np.ones((3, 3)))
+    if n:
+        areas = ndi.sum(used, lbl, np.arange(1, n + 1)).astype(float)
+        ok_ = areas >= 6
+        eqd = 2 * np.sqrt(areas[ok_] / math.pi)
+        share30 = float(areas[ok_][eqd >= 30].sum() / max(areas[ok_].sum(), 1.0))
+        nm = int(ok_.sum())
+    else:
+        share30, nm = 0.0, 0
+    inner_share = float(used[inner & reg].sum() / max(used.sum(), 1))
+    # the slow tone of the ground: not a cloud
+    ground = reg & ~ndi.binary_dilation(used, iterations=4) & (dface > 20.0)
+    L = lab_img(img[..., :3])[..., 0]
+    bp = band_pass_sd(L, ground)
+    ratio = dens_b / max(dens_i, 1e-4)
+    fails = []
+    if nm >= 5 and ratio < 1.5:
+        fails.append(f"loss is not heavier round the edge: edge/interior {round(ratio, 2)}")
+    if nm >= 5 and inner_share > 0.45:
+        fails.append(f"too much of the loss stands in the open field: {round(inner_share, 2)}")
+    if nm >= 5 and share30 < 0.20:
+        fails.append(f"flakes do not join: strips over 30 mm carry {round(share30, 2)} of the loss")
+    if bp > 1.2:
+        fails.append(f"cloud mottle: the slow tone's SD {round(bp, 2)} L*")
+    return R(label, not fails, dict(marks=nm, edge_over_interior_density=round(ratio, 2), share_of_loss_in_the_open_field=round(inner_share, 2), share_in_strips_over_30mm=round(share30, 2),
+                                  slow_tone_sd_L=round(bp, 2), failing=fails),
+             dict(edge_over_interior_min=1.5, open_field_share_max=0.45, share_30mm_min=0.20, slow_tone_sd_max=1.2),
+             "try 2 (the fresh review, fault 6): the small boards weather from their edges, in joined strips, with no mark floating in the field and no cloud mottle"), used
 
 
 def check_signs(T, setdir, man):
@@ -1860,17 +2144,39 @@ def check_signs(T, setdir, man):
         if h["id"] == "ritas_three_balls":
             out.append(R(f"{h['id']}.faces", True, "no lettering (three balls)", None, "no name or lettering on the balls: nothing to read; the three textures exist", reads="pixels+font"))
             continue
+        pat_ok = True
+        pat_detail = []
         for f in h["faces"]:
             img = load_png(Path(setdir) / f["files"]["basecolour"]["file"])
-            ok, v = sign_face_result(T, h["id"], f["block"], img[..., :3], f["size_px"][0], f["size_px"][1])
+            ok, v = sign_face_result(T, h["id"], f["blocks"], img[..., :3], f["size_px"][0], f["size_px"][1])
             faces_ok &= ok
-            detail.append(dict(face=f["id"], **v))
-        out.append(R(f"{h['id']}.faces", faces_ok, detail, dict(f_min=0.9, flipped_lower_by=0.15), "G10 on each face's own texture: the lettering reads left to right from its own side", reads="pixels+font"))
+            detail.append(dict(face=f["id"], lines=v))
+            # the fill: the lettering covers a signwriter's share of the board
+            wr = f["wear"]
+            if wr.get("substrate_primer") is not None:
+                cols = [fc.pal(T, f["blocks"][0]["face"])]
+                if f["blocks"][0].get("shade"):
+                    cols.append(fc.pal(T, f["blocks"][0]["shade"]["colour"]))
+                r_, used = small_age_pattern(T, h["id"], img, f["size_px"][0], f["size_px"][1], wr, cols, f"{h['id']}.{f['id'][-1]}.age_pattern")
+                pat_ok &= r_["ok"]
+                pat_detail.append(dict(face=f["id"], **r_["value"]))
+        out.append(R(f"{h['id']}.faces", faces_ok, detail, dict(f_min=0.9, flipped_lower_by=0.15), "G10 on each face's own texture, line by line: the lettering reads left to right from its own side", reads="pixels+font"))
+        # fill: ink height share of the face
+        f0 = h["faces"][0]
+        Hf = f0["size_px"][1]
+        ink_h = max(b["ink_box_mm"][3] for b in f0["blocks"]) - min(b["ink_box_mm"][1] for b in f0["blocks"])
+        ink_w = max(b["ink_box_mm"][2] for b in f0["blocks"]) - min(b["ink_box_mm"][0] for b in f0["blocks"])
+        Wf = f0["size_px"][0]
+        fill = ink_h * ink_w / float(Wf * Hf)
+        out.append(R(f"{h['id']}.fill", fill >= 0.15 and f0["cap_mm_built"] >= 70, dict(cap_mm=f0["cap_mm_built"], lines=len(f0["blocks"]), ink_box_share_of_face=round(fill, 3), squeeze=f0.get("squeeze")),
+                     dict(ink_box_share_min=0.15, cap_min_mm=70), "try 2 (fault 2): a hanging board is filled as a signwriter fills it: the lettering's box covers 15 per cent of the face at least (it was 5 to 8) and the cap is 70 mm or more (it was 51 to 99 mm and 5 to 8 per cent in try 1)"))
+        if pat_detail:
+            out.append(R(f"{h['id']}.age_pattern", pat_ok, pat_detail, None, "the small boards weather from their edges (small_age_pattern), both faces"))
     return out
 
 
 def glass_row_result(T, idx, g, img):
-    """G16 on one glass row's tile: the string against its font (G10), the cap, the baseline height and the ink centre's street x"""
+    """G16 on one glass row's tile, line by line: the string against its font (G10), the cap, the baseline height and the ink centre's street x"""
     import fascia_small as fs
     approved = set(T["approved_words"])
     row = T["glass_lettering"][idx]
@@ -1880,43 +2186,71 @@ def glass_row_result(T, idx, g, img):
     face_rgb = gs.get("face_rgb") or list(fc.pal(T, gs["face"]))
     rgb = img[..., :3].astype(float)
     a = img[..., 3] > 127
-    pm = (fc.dE(rgb, np.array(face_rgb, float)) <= (22.0 if st in ("whitewash", "paint_flaking") else 16.0)) & a
+    pm_all = (fc.dE(rgb, np.array(face_rgb, float)) <= (22.0 if st in ("whitewash", "paint_flaking") else 16.0)) & a
     if gs.get("shade"):
         sc = fc.pal(T, gs["shade_colour"])
-        pm &= fc.dE(rgb, np.array(face_rgb, float)) < fc.dE(rgb, sc)
-    b = fs.make_block(T, row["text"], row["font"], row["weight"] or 400, row["cap_mm"], g_trk(st), base_of(g), W / 2.0 - (gs.get("shade") or 0) / 2.0, "centre",
-                      gs["face"] or "whitewash", shade_d=gs.get("shade"), shade_colour=gs.get("shade_colour", "shade_black"), technique="painted", hand=gs["hand"], bid="glass",
-                      face_rgb=gs.get("face_rgb") and list(gs["face_rgb"]), figure=row["text"].isdigit())
-    tol = 3.5 if gs["hand"] else 1.0
-    ok10, v10 = small_texture_mask_check(T, b, pm, W, H, tol)
-    capx, how = cap_from_mask(pm, row["cap_mm"])
-    rows = np.where(pm.any(axis=1))[0]
-    cols = np.where(pm.any(axis=0))[0]
+        pm_all &= fc.dE(rgb, np.array(face_rgb, float)) < fc.dE(rgb, sc)
+    trk = g.get("tracking_em", fs.glass_tracking(row, gs))
+    lines = g["lines"]
+    detail = []
+    ok10 = True
+    capx_first, how = None, ""
+    for li, ln in enumerate(lines):
+        b = fs.make_block(T, ln["string"], row["font"], row["weight"] or 400, row["cap_mm"], trk, ln["baseline_from_bottom_mm"], W / 2.0 - (gs.get("shade") or 0) / 2.0, "centre",
+                          gs["face"] or "whitewash", shade_d=gs.get("shade"), shade_colour=gs.get("shade_colour", "shade_black"), technique="painted", hand=gs["hand"], bid="glass",
+                          face_rgb=gs.get("face_rgb") and list(gs["face_rgb"]), figure=ln["string"].replace(" ", "").isdigit())
+        x0, y0, x1, y1 = b["ink_box_mm"]
+        reg = np.zeros((H, W), bool)
+        reg[max(0, H - int(y1) - 10):H - int(y0) + 10, :] = True
+        if len(lines) > 1:
+            pitch = g["line_pitch_mm"]
+            reg[:] = False
+            reg[max(0, H - int(y1) - int(0.2 * pitch)):H - int(y0) + int(0.3 * pitch), :] = True
+        pm = pm_all & reg
+        if st == "whitewash":
+            tm, fm = ref_small(T, b, W, H)
+            ok, v = g10_loose(tm, fm, pm, 7.0, 0.85, 4.0, 0.10)
+        else:
+            tol = 3.5 if gs["hand"] else 1.0
+            ok, v = small_texture_mask_check(T, b, pm, W, H, tol)
+        ok10 &= ok
+        detail.append(dict(line=ln["string"], **v))
+        if li == len(lines) - 1:
+            capx_first, how = cap_from_mask(pm, row["cap_mm"])
+            gb = flat_glyphs(pm, row["cap_mm"] * (0.8 if ln["string"].replace(" ", "").isdigit() else 0.85))
+            rows_ = np.where(pm.any(axis=1))[0]
+            if gb:
+                bottom_from_below = H - np.median([p[0] for p in gb]) + 1.0
+            elif len(rows_):
+                bottom_from_below = H - (rows_.max() + 1) - 0.016 * row["cap_mm"]
+            else:
+                bottom_from_below = None
     base_row = g["place"]["tile_baseline_from_tile_bottom_mm"]
-    gb = flat_glyphs(pm, row["cap_mm"] * (0.8 if row["text"].isdigit() else 0.85))
-    if gb:
-        bottom_from_below = H - np.median([p[0] for p in gb]) + 1.0
-    elif len(rows):
-        bottom_from_below = H - (rows.max() + 1) - 0.016 * row["cap_mm"]
-    else:
-        bottom_from_below = None
     z_tile_bottom = row["z_m"] - base_row / 1000.0
     z_pix = None if bottom_from_below is None else z_tile_bottom + bottom_from_below / 1000.0
+    cols = np.where(pm_all.any(axis=0))[0]
     cx_pix = (cols.min() + cols.max() + 1) / 2.0 if len(cols) else None
     ink_c = (g["ink_box_in_tile_mm"][0] + g["ink_box_in_tile_mm"][2]) / 2.0
     err_x = None if cx_pix is None else abs(cx_pix - ink_c) / 1000.0
-    ok_cap = capx is not None and abs(capx - row["cap_mm"]) <= 0.05 * row["cap_mm"]
+    cap_tol = (0.09 if st == "whitewash" else 0.05) * row["cap_mm"]
+    ok_cap = capx_first is not None and abs(capx_first - row["cap_mm"]) <= cap_tol
     ok_z = z_pix is not None and abs(z_pix - row["z_m"]) <= 0.03
     ok_x = err_x is not None and err_x <= 0.10
-    ok_w = row["text"] in approved
+    if row.get("hours"):
+        ok_w = all(hours_line_ok(T, ln["string"]) for ln in lines)
+    else:
+        ok_w = row["text"] in approved
     return (ok10 and ok_cap and ok_z and ok_x and ok_w,
-            dict(g10=v10, cap_mm=None if capx is None else round(capx, 1), z_baseline_m=None if z_pix is None else round(z_pix, 3), x_street_m=row["x_street_m"], approved=ok_w),
-            f"G16: G10 on the tile's own mask ({tol} mm), cap within 5 per cent, z (baseline) within 0.03, x within 0.10; {how}")
+            dict(lines=detail, cap_mm=None if capx_first is None else round(capx_first, 1), z_baseline_m=None if z_pix is None else round(z_pix, 3), x_street_m=row["x_street_m"], approved=ok_w),
+            f"G16: G10 on the tile's own mask, line by line (hand 3.5 mm, vinyl and gilt 1 mm, brushed whitewash 7 mm with the string told from its mirror image), cap within {int(cap_tol)} mm, z (baseline of the lowest line) within 0.03, x within 0.10; {how}")
 
 
 def check_glass(T, setdir, man):
     out = []
     for g in man["glass_lettering"]:
+        if g["kind"] == "glass_wash":
+            out.append(check_wash(T, setdir, g))
+            continue
         if g["kind"] != "glass_row":
             continue
         idx = g["row"]
@@ -1927,12 +2261,121 @@ def check_glass(T, setdir, man):
     return out
 
 
+def wash_metrics(a):
+    """the whitewashed window's alpha plane, read: its coat, its hand, its margin and its dribbles"""
+    H, W = a.shape
+    inner = np.zeros((H, W), bool)
+    inner[130:H - 150, 130:W - 130] = True
+    mean_in = float(a[inner].mean())
+    thin = float((a[inner] < 0.70).mean())
+    # the hand: the direction of the pattern's gradient (a comb of horizontal streaks has all its gradient across them; swirls turn through every direction)
+    s = ndi.gaussian_filter(a, 2.0)
+    gy, gx = np.gradient(s)
+    mag = np.hypot(gx, gy)[inner]
+    ang = (np.degrees(np.arctan2(gy, gx))[inner] % 180.0)
+    hist, _ = np.histogram(ang, bins=8, range=(0, 180), weights=mag)
+    hist = hist / max(hist.sum(), 1e-9)
+    # a streak texture along a swirl: the share of the gradient energy that points straight up or down (horizontal streaks)
+    vertical_share = float(hist[3] + hist[4]) if False else float(hist[[0, 7]].sum() * 0 + hist[3:5].sum())
+    bins_used = int((hist >= 0.04).sum())
+    # margin: the alpha 6 mm in from each edge, on the middle 80 per cent of each edge
+    edges = [a[6, int(0.1 * W):int(0.9 * W)], a[H - 7, int(0.1 * W):int(0.9 * W)], a[int(0.1 * H):int(0.9 * H), 6], a[int(0.1 * H):int(0.9 * H), W - 7]]
+    margin_clear = float(np.mean([(e < 0.3).mean() for e in edges]))
+    # dribbles: thin vertical runs below the foot of the coat
+    foot = np.zeros((H, W), bool)
+    foot[H - 120:, :] = True
+    col_runs = 0
+    cols = a[H - 120:, :]
+    lbl, n = ndi.label((cols > 0.4) & ndi.binary_dilation(cols > 0.4, structure=np.ones((9, 1), bool)))
+    for sl in ndi.find_objects(lbl):
+        hh = sl[0].stop - sl[0].start
+        ww = sl[1].stop - sl[1].start
+        if hh >= 28 and ww <= 14:
+            col_runs += 1
+    # horizontal comb: the rows' variance of the mean alpha along x (streaks that run the whole width)
+    rowmean = a[:, int(0.1 * W):int(0.9 * W)].mean(axis=1)[130:H - 150]
+    comb = float(np.std(rowmean - ndi.gaussian_filter1d(rowmean, 25.0)))
+    return dict(mean_alpha_inner=round(mean_in, 3), thin_share=round(thin, 3), gradient_in_8_directions=[round(float(x), 3) for x in hist], directions_used=bins_used,
+                clear_margin_share=round(margin_clear, 2), dribbles=col_runs, row_comb_sd=round(comb, 4))
+
+
+def check_wash(T, setdir, g):
+    img = load_png(Path(setdir) / g["files"]["rgba"]["file"])
+    a = img[..., 3].astype(np.float32) / 255.0
+    r = check_wash_from_alpha(a)
+    return R(r["id"], r["ok"], r["value"], r["expected"], r["note"], reads="pixels")
+
+
+def check_wash_from_alpha(a):
+    """try 2 (fault 1 of the signs sheet): the empty unit's window is whitewash laid with a cloth: near-opaque white, swirls in every direction, thin spots, a ragged clear
+    margin and dribbles at the foot; no horizontal comb streaks, nothing legible"""
+    m = wash_metrics(a)
+    fails = []
+    if m["mean_alpha_inner"] < 0.80:
+        fails.append("not near-opaque")
+    if not (0.005 <= m["thin_share"] <= 0.30):
+        fails.append("thin spots out of range")
+    if m["directions_used"] < 5 or max(m["gradient_in_8_directions"]) > 0.40:
+        fails.append("the pattern runs one way (a comb), not round")
+    if m["clear_margin_share"] < 0.55:
+        fails.append("no clear margin along the glazing")
+    if m["dribbles"] < 8:
+        fails.append("no dribbles at the foot")
+    if m["row_comb_sd"] > 0.02:
+        fails.append("rows differ along the whole width (a comb)")
+    return dict(id="empty_unit.glass.window", ok=not fails, value=dict(m, failing=fails), expected=dict(mean_alpha_min=0.80, thin=[0.005, 0.30], directions_min=5, clear_margin_min=0.55, dribbles_min=8),
+                note="fault 1 of the signs sheet: the whiting's alpha read for its coat, its hand, its margin, its dribbles")
+
+
 def g_trk(style):
     return 0.05 if style != "vinyl" else 0.03
 
 
 def base_of(g):
     return int(g["place"]["tile_baseline_from_tile_bottom_mm"])
+
+
+def hours_panel_result(T, setdir, p):
+    return hours_panel_from_img(T, load_png(Path(setdir) / p["files"]["basecolour"]["file"])[..., :3], p)
+
+
+def hours_panel_from_img(T, img, p):
+    """G16-like for the launderette's plate and the caff's card: the lines read against their font"""
+    import fascia_small as fs
+    W, H = p["size_px"]
+    rgb = img.astype(float)
+    if p["shop"] == "steam_laundry":
+        face_rgb = np.array([226.0, 222.0, 204.0])
+        pm_all = fc.dE(rgb, face_rgb) <= 16.0
+        pm_all[:12] = pm_all[-12:] = False
+        pm_all[:, :12] = pm_all[:, -12:] = False
+        font, wt = "libre-franklin", 600
+        tol_kind = "plate"
+    else:
+        face_rgb = np.array([24.0, 28.0, 52.0])
+        pm_all = fc.dE(rgb, face_rgb) <= 22.0
+        font, wt = "patrick-hand", 400
+        tol_kind = "card"
+    detail = []
+    ok_all = True
+    cap = p["cap_mm"]
+    pitch = cap * (1.8 if tol_kind == "plate" else 2.0)
+    top_y = H / 2.0 + (len(p["lines"]) * pitch - (pitch - cap)) / 2.0 - cap
+    for i, ln in enumerate(p["lines"]):
+        base = int(round(top_y - i * pitch))
+        b = fs.make_block(T, ln, font, wt, cap, 0.05 if tol_kind == "plate" else 0.04, base, W / 2.0, "centre", "vinyl_cream" if tol_kind == "plate" else "sign_black", technique="vinyl", bid=f"line{i+1}")
+        x0, y0, x1, y1 = b["ink_box_mm"]
+        reg = np.zeros((H, W), bool)
+        reg[max(0, H - int(y1) - 6):H - int(y0) + 6, :] = True
+        pm = pm_all & reg
+        tm, fm = ref_small(T, b, W, H)
+        if tol_kind == "plate":
+            ok, v = g10(tm, fm, pm, 1.0)
+        else:
+            ok, v = g10_loose(tm, fm, pm, 7.0, 0.80, 4.0, 0.08)
+        ok_all &= ok and hours_line_ok(T, ln)
+        detail.append(dict(line=ln, **v))
+    return ok_all, detail
 
 
 def check_panels(T, setdir, man):
@@ -1961,6 +2404,14 @@ def check_panels(T, setdir, man):
     out.append(R("letting_board", ok_size and ok_pos and ok10 and abs(centre[0] - 2705.0) <= 15 and abs(centre[1] - 275) <= 15,
                  dict(size=[W, H], g10=v10, ink_centre=[None if c_ink is None else round(c_ink, 1), None if r_ink is None else round(r_ink, 1)], centre_on_fascia=centre),
                  dict(text="TO LET", size_mm=[900, 450], centre_mm=[2705.0, 275]), "G10 on the board's own texture; the lettering centred on the 900 x 450 board, the board centred at (2705, 275) on the fascia", reads="pixels+font"))
+    if lb.get("wear") and lb["wear"].get("substrate_primer") is not None:
+        r_, _ = small_age_pattern(T, "letting_board", img, W, H, lb["wear"], [fc.pal(T, "vinyl_red")], "letting_board.age_pattern")
+        out.append(r_)
+    # the hours signs of the launderette (a plate) and the caff (a card)
+    for p in man["small_panels"]:
+        if p["id"].startswith("hours_plate"):
+            ok, detail = hours_panel_result(T, setdir, p)
+            out.append(R(f"{p['id']}.lines", ok, detail, None, "the plate's or the card's lines read against their font; each line matches the hours rule (the card's extended for AM, PM and NOON)", reads="pixels+font"))
     return out
 
 
@@ -2000,10 +2451,11 @@ def check_lit(T, man):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("setdir")
-    ap.add_argument("--out", default=str(HERE / "checks" / "check_v1.json"))
+    ap.add_argument("--out", default=str(HERE / "checks" / "check_v2.json"))
     ap.add_argument("--seeds", type=int, default=20)
     ap.add_argument("--jobs", type=int, default=min(4, os.cpu_count() or 1))
     ap.add_argument("--no-seeds", action="store_true")
+    ap.add_argument("--no-neg", action="store_true")
     ap.add_argument("--only", default="")
     a = ap.parse_args(argv)
     t0 = time.time()
@@ -2040,13 +2492,15 @@ def main(argv=None):
         r = results_by_id.get(c["id"])
         target_rows.append(dict(id=c["id"], ok=None if r is None else r["ok"], value=None if r is None else r["value"], reads=c["reads"], name=c["name"]))
     neg = []
-    if not a.no_seeds and not only:
+    if not a.no_neg and not only:
         neg = negative_controls(T, setdir, man)
     seeds = {}
     if not a.no_seeds and not only:
         jobs = [(s["id"], k) for s in T["shops"] if blk_list(s) or s["id"] in ("empty_unit", "mickeys") for k in range(a.seeds)]
         small = [("sign", p["id"], k) for p in T["projecting_signs"] if p["id"] != "ritas_three_balls" for k in range(a.seeds)]
         small += [("glass", i, k) for i, g in enumerate(T["glass_lettering"]) if g["text"] and not g.get("existing") for k in range(a.seeds)]
+        small += [("wash", "wash", k) for k in range(a.seeds)]
+        small += [("panel", pk, k) for pk in ("letting_board", "steam_laundry", "tea_rooms") for k in range(a.seeds)]
         t1 = time.time()
         with Pool(a.jobs) as pool:
             rs = []

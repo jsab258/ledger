@@ -45,10 +45,21 @@ CROPS = {
     "sill":     (-1100, 90, 850, 530),
     "transom":  (-1100, -700, 850, 180),
     "cornice":  (-1030, -2340, 200, 380),
+    "door":     (430, 100, 120, 460),        # the shop door's glass foot to its foot, glass above row 118 filled flat
+    "pier":     (-1345, -2340, 330, 2980),   # the whole pier strip, foot to crown (shown in three tiles)
 }
 # lettering to mask in the previews (virtual-image boxes: x0, y0, x1, y1): the house numerals and a logo fragment
 MASKS = {"fascia": [(-1395, -1865, -1300, -1755), (-1012, -1865, -866, -1750)],
-         "plinth": [(-1360, -80, -1316, 95)]}   # the numerals; a fragment of a shop-window logo behind the plinth
+         "plinth": [(-1360, -80, -1316, 95)],    # the numerals; a fragment of a shop-window logo behind the plinth
+         # the pier strip: the numerals; everything seen through the shop window beside the shaft and the plinth
+         # (a logo fragment, a letter, shop goods), filled flat; the teal frame and every pier member stay real
+         "pier": [(-1395, -1870, -1296, -1750),
+                  (-1350, -1500, -1294, -330),
+                  (-1350, -330, -1334, 640),
+                  (-1350, -330, -1318, 110)]}
+# the shop door preview: the glass above row 118 carries lettering and notices, so it is filled flat; the glass foot
+# (row 128.9), the lock rail and the foot strip stay real (door_foot, door_foot_strip_top, door_glass_bottom)
+DOOR_FILL_ROWS = (100, 118)
 
 
 def ensure_pano(work):
@@ -163,7 +174,7 @@ FEATURES = [
     ("cornice_top", "cornice", "R", -2240, -1000, -950, 12, "top of the crown (under the cap quirk), the first-floor wall above"),
     # the window frame, sill and stallriser
     ("stile_left", "sill", "C", -1034, 300, 500, 10, "left stile, left edge (frame beside the pilaster)"),
-    ("stile_right", "sill", "C", -953, 300, 500, 10, "left stile, right edge"),
+    ("stile_right", "sill", "C", -993, 300, 500, 6, "left stile, right edge (where the teal stile ends; not the bar of the cast grille at -953)"),
     ("sill_top", "sill", "R", 107, -900, -700, 12, "top of the sill group (the glazing rebate's foot)"),
     ("sill_r2", "sill", "R", 127, -900, -700, 10, "sill: lower edge of the bead"),
     ("sill_nose", "sill", "R", 145, -900, -700, 10, "sill: the nose / weathering's lower edge"),
@@ -174,6 +185,10 @@ FEATURES = [
     ("transom_bottom", "transom", "R", -596, -800, -600, 10, "transom bar, bottom"),
     ("mullion_left", "transom", "C", -380, -700, -540, 12, "central mullion, left edge"),
     ("mullion_right", "transom", "C", -285, -700, -540, 12, "central mullion, right edge"),
+    # the shop door, on the masked door preview (the glass is filled flat above row 118)
+    ("door_foot", "door", "R", 547, 440, 540, 8, "foot of the door's brass strip (the leaf's bottom)"),
+    ("door_foot_strip_top", "door", "R", 532, 440, 540, 10, "top of the brass foot strip"),
+    ("door_glass_bottom", "door", "R", 128, 440, 540, 6, "bottom edge of the glazing (glass to bead to lock rail)"),
 ]
 
 
@@ -204,9 +219,6 @@ def main():
     # the shop door (the unmasked view; the glass carries lettering, so these are NOT re-measurable on a preview)
     dc = crop(P, 380, -900, 200, 1520)
     for fid, kind, exp, pa, pb, win, what in [
-            ("door_foot", "R", 551, 440, 540, 6, "foot of the door's brass strip (the leaf's bottom)"),
-            ("door_foot_strip_top", "R", 532, 440, 540, 10, "top of the brass foot strip"),
-            ("door_glass_bottom", "R", 96, 430, 540, 15, "bottom edge of the glazing (the lock rail's top)"),
             ("door_glass_top", "R", -761, 430, 540, 20, "top edge of the glazing"),
             ("door_leaf_top", "R", -828, 430, 540, 25, "top of the leaf under the head")]:
         pos, st = snap(dc, "R", exp + 900, pa - 380, pb - 380, win)
@@ -230,7 +242,16 @@ def main():
     os.makedirs(a.previews, exist_ok=True)
     names = {"plinth": "P1-leadenhall-pilaster-plinth", "capital": "P1-leadenhall-pilaster-capital",
              "fascia": "P1-leadenhall-pier-fascia-cornice", "sill": "P1-leadenhall-sill-stallriser-stile",
-             "transom": "P1-leadenhall-transom-mullion", "cornice": "P1-leadenhall-cornice-run"}
+             "transom": "P1-leadenhall-transom-mullion", "cornice": "P1-leadenhall-cornice-run",
+             "door": "P1-leadenhall-shop-door-glass-foot", "pier": "P1-leadenhall-pier-elevation"}
+
+    def save(img, path):
+        for q in (88, 84, 80, 74, 68, 62):
+            img.save(path, quality=q, optimize=True)
+            if os.path.getsize(path) < 295_000:
+                break
+        print(path, img.size, os.path.getsize(path))
+
     for k, im in arr.items():
         x0, y0, w, h = CROPS[k]
         img = Image.fromarray(im.copy())
@@ -242,12 +263,20 @@ def main():
             col = tuple(int(v) for v in np.median(ring.reshape(-1, 3), axis=0))
             patch = Image.new("RGB", (box[2] - box[0], box[3] - box[1]), col)
             img.paste(patch, box[:2])
-        path = os.path.join(a.previews, names[k] + ".jpg")
-        for q in (88, 84, 80, 74, 68):
-            img.save(path, quality=q, optimize=True)
-            if os.path.getsize(path) < 295_000:
-                break
-        print(path, img.size, os.path.getsize(path))
+        if k == "door":
+            # the glass above row 118 carries lettering and notices: fill it flat with the glass's own median
+            ia = np.asarray(img)
+            r0, r1 = DOOR_FILL_ROWS[0] - y0, DOOR_FILL_ROWS[1] - y0
+            col = tuple(int(v) for v in np.median(ia[r1 + 1:r1 + 8].reshape(-1, 3), axis=0))
+            img.paste(Image.new("RGB", (w, r1 - r0), col), (0, r0))
+        if k == "pier":
+            seg = 1000
+            tiles = [img.crop((0, i * seg, w, min(h, (i + 1) * seg))) for i in range((h + seg - 1) // seg)]
+            comp = Image.new("RGB", (len(tiles) * (w + 4) - 4, seg), (255, 0, 255))
+            for i, t_ in enumerate(tiles):
+                comp.paste(t_, (i * (w + 4), 0))
+            img = comp
+        save(img, os.path.join(a.previews, names[k] + ".jpg"))
     print("measured", len(meas), "features in", out["seconds"], "s ->", a.out)
 
 
