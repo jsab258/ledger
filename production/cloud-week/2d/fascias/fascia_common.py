@@ -261,3 +261,42 @@ def shop_by_id(T, sid):
 
 def hand_blocks(s):
     return [b for b in s["blocks"] if b.get("jitter") and not b["ghost"] and b["in_texture"]]
+
+
+def free_zone_mask(s, pad=12, W=W_MM, H=H_MM):
+    """where a loss patch can be counted: the field less text boxes, ghosts, lines, frames (the check's own definition, without the wear marks).
+    The renderer calibrates its paint loss on this zone and check_fascias.py reads it back from the pixels."""
+    from scipy import ndimage as ndi
+    m = np.ones((H, W), bool)
+    m[:24] = m[-24:] = False
+    m[:, :24] = m[:, -24:] = False
+    for b in s["blocks"]:
+        x0, y0, x1, y1 = b["effects_box_mm"]
+        m[max(0, H - int(y1 + pad) - 1):H - int(y0 - pad), max(0, int(x0 - pad)):int(x1 + pad) + 1] = False
+    gh = s.get("ghost")
+    if gh and gh.get("box_mm"):
+        x0, y0, x1, y1 = gh["box_mm"]
+        m[H - int(y1) - 6:H - int(y0) + 6, int(x0) - 6:int(x1) + 6] = False
+    for sh in s["shapes"]:
+        if sh["role"] in ("old_board", "box_face", "slab_face"):
+            continue
+        if sh["kind"] == "rect":
+            x0, y0, x1, y1 = sh["box"]
+            if sh["role"] in ("box_frame", "slab_edge"):
+                fr = (s["border"].get("frame_mm") or s["border"].get("edge_mm") or 12)
+                ring = np.zeros((H, W), bool)
+                ring[H - int(y1) - 1:H - int(y0) + 1, int(x0) - 1:int(x1) + 2] = True
+                inner = np.zeros((H, W), bool)
+                inner[H - int(y1 - fr) - 1:H - int(y0 + fr) + 1, int(x0 + fr) - 1:int(x1 - fr) + 2] = True
+                m &= ~(ring & ~inner)
+            else:
+                m[max(0, H - int(y1) - 6):H - int(y0) + 6, max(0, int(x0) - 6):int(x1) + 7] = False
+        else:
+            pts = np.array(sh["pts"])
+            for p_, q_ in zip(pts[:-1], pts[1:]):
+                n = max(2, int(np.hypot(*(q_ - p_)) / 2))
+                for t in np.linspace(0, 1, n):
+                    x, y = p_ + (q_ - p_) * t
+                    r, c = H - int(y), int(x)
+                    m[max(0, r - 10):r + 10, max(0, c - 10):c + 10] = False
+    return m

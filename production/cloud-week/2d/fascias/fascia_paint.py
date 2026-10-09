@@ -56,6 +56,8 @@ class Board:
             n = fc.fnoise(sh, 140.0 * fx, 55.0 * fy, r)
         elif kind == "fine":                    # orange-peel, speckle
             n = fc.fnoise(sh, 0.9, 0.9, r)
+        elif kind == "band":                    # long soft bands along the grain (try 2: replaces the cloud-like blot as the ground's slow tone)
+            n = fc.fnoise(sh, 260.0 * fx, 9.0 * max(fy, 0.5), r)
         elif kind == "iso":
             n = fc.fnoise(sh, 40.0 * min(fx, fy * 1.0), 40.0 * min(fx, fy * 1.0), r)
         else:
