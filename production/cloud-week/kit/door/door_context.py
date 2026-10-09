@@ -199,6 +199,10 @@ def build_F1(T):
     rear = rect.difference(unary_union([open_rear] + sill_ends))
     extrude_region("ctx_pilaster_rear", rear, REV, WALL, "render", parts)
     dark_interior(P, parts)
+    # the paving: a slab whose top is the ground (the sill stands 45 above it and is bedded 25 below), so the review's pavement plane, which review_render
+    # puts at the scene's lowest point, is not under the sill's foot (the sill would stand 70 above it)
+    V, Fc = bd.box(-6000.0, -6000.0, ground - 300.0, OW + 6000.0, WALL + 500.0, ground)
+    parts.append({"name": "ctx_paving", "V": V, "F": Fc, "kind": "paving"})
     return parts
 
 

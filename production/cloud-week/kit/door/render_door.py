@@ -44,6 +44,7 @@ PLAIN = {
     "arch": ((219, 209, 190), 0.9),
     "mortar": ((96, 84, 72), 0.95),          # the arch's dark, sooty, recessed joints
     "render": ((222, 225, 229), 0.9),        # the shop pilaster's painted render
+    "paving": ((84, 84, 83), 0.7),           # F1's paving slab, as review_render's own dark damp slabs
     "dark": ((26, 24, 22), 0.97),            # the closing face behind the leaf's gaps and the dark hall behind the fanlight: matt, dark, never lit from within
 }
 
