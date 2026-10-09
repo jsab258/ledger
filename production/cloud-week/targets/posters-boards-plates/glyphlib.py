@@ -64,6 +64,17 @@ def dil(a, n):
     return d
 
 
+def ero(a, n=1):
+    """Erosion by n pixels with the 3 x 3 square (the dilation of the background)."""
+    return ~dil(~a, n)
+
+
+def sliver_only(A, B, n=1):
+    """True when the pixels in which a glyph and its mirror differ are slivers (nothing thicker than 2n pixels survives an erosion by n and fewer than N_MIN pixels remain): such a glyph is its
+    own mirror for any viewer (an M or an A whose two diagonals differ by an edge) and its mirror is not scored."""
+    return int(ero(A, n).sum()) + int(ero(B, n).sum()) < N_MIN
+
+
 def glyph_patch(font_fn, key, weight, ch, em_mm, ppm, rot_deg=0.0, emb_mm=0.0, tight=False):
     """The glyph as a boolean patch. Returns (patch, ox, base): the pen origin and the baseline in patch pixels (ox from the left, base from the top).
     em_mm: the em in millimetres. rot_deg: counter-clockwise about (origin + half the advance, baseline). emb_mm: radius of added stroke.

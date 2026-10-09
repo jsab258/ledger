@@ -114,18 +114,20 @@ def _grime_edge(B, k=0.05):
 
 # ------------------------------------------------------------------ the small wear: how a hanging board or a plate really weathers
 def age_small(B, mode_key, frac, grime, anchors=None, drips=(1, (40, 110)), prim=None, wood=None, crack=0.0, scale=0.2, allowed=None, rim=3,
-              dark=False, runs_allowed=True):
+              dark=False, runs_allowed=True, protect=()):
     """grime that gathers at the foot and corners, paint lost where water and hands work it (the foot, the corners, the chain eyes), cracks along the
     grain, and a drip or two from the top edge; returns the drips layer (the wear layer R) and the info"""
     H, W = B.H, B.W
     mode = fa.MODES[mode_key]
     F = fa.Fields(B, scale=scale, mid=(240, 15), long=(105, 2.0), strip=(26, 1.3))
-    fa.grime_film(B, mode, dict(grime_film=grime), [])
+    fa.grime_film(B, mode, dict(grime_film=grime), [], modulation=0.10)
     if allowed is None:
         allowed = np.ones((H, W), bool)
         allowed[:rim] = allowed[-rim:] = False
         allowed[:, :rim] = allowed[:, -rim:] = False
     weight = fa.damp_weight(H, W, mode, [], anchors or [], [])
+    for (bx0, by0, bx1, by1) in protect:                     # lettering is a thicker coat and stays legible: the loss takes less of it
+        weight[max(0, H - int(by1) - 4):H - int(by0) + 4, max(0, int(bx0) - 4):int(bx1) + 4] *= 0.5
     if crack > 0:
         fa.cracks(B, crack, allowed, weight=weight, dark_board=dark, prim=np.array(prim) if prim is not None else None, strength=0.5)
     info = {}
@@ -287,7 +289,7 @@ def render_sign_face(T, sign, face_label, seed, lit_off=False):
     # ---- wear: from the edges, not in the open field
     if sid == "steam_laundry_box":
         # acrylic: it yellows at the edges, the grime gathers at the foot, dead flies lie along the foot inside, a weep from the top seal
-        fa.grime_film(B, fa.MODES["hanging"], dict(grime_film=0.08), [], amp=1.0)
+        fa.grime_film(B, fa.MODES["hanging"], dict(grime_film=0.05), [], amp=1.0, modulation=0.08)
         rows = np.arange(H, dtype=np.float32)[:, None]
         cols = np.arange(W, dtype=np.float32)[None, :]
         edge = np.minimum(np.minimum(rows - frame, H - frame - rows), np.minimum(cols - frame, W - frame - cols))
@@ -322,7 +324,7 @@ def render_sign_face(T, sign, face_label, seed, lit_off=False):
         frac = 0.04 if sid == "ironmonger_hanging_board" else 0.035
         chain_x = [W * 0.14, W * 0.86] if sid == "chandler_hanging_board" else [W * 0.18, W * 0.82]
         drips, info = age_small(B, "hanging", frac, 0.08, anchors=chain_x, drips=(2, (40, 120)), prim=prim, wood=wood, crack=0.15 if sid == "ironmonger_hanging_board" else 0.10,
-                                scale=0.25, dark=not light)
+                                scale=0.25, dark=not light, protect=[b_["effects_box_mm"] for b_ in blocks])
         rec["wear"] = dict(runs=info["drips"], loss_fraction_drawn=info.get("loss_drawn_fraction"), substrate_primer=info.get("substrate_primer"), substrate_wood=info.get("substrate_wood"))
     return S, rec
 

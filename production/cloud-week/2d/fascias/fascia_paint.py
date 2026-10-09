@@ -351,7 +351,7 @@ def paint_block(B, b, ground_rough=0.55, hand=True, dx_mm=0.0, font_key=None):
                 chip = np.clip(chip * 4.0, 0, 1) * (face > 0.9)
                 face_img = face_img * (1 - chip[..., None]) + np.array([150, 110, 50], np.float32)[None, None, :] * chip[..., None]
     if sh is not None:
-        scol = B.mottle(win, fc.pal(T, b["shade"]["colour"]), 0.8, kinds=(("fine", 0.5), ("blot", 0.5)))
+        scol = B.mottle(win, fc.pal(T, b["shade"]["colour"]), 0.8, kinds=(("fine", 0.5), ("band", 0.5)))
         sa = np.clip(sh, 0, 1)
         B.paint(win, sa, scol, rough=max(0.35, ground_rough - 0.10), metal=0.0)
         if tech in ("painted", "gilded"):

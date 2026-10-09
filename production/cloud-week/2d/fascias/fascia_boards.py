@@ -450,7 +450,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
     weight = fa.damp_weight(H_MM, W_MM, mode, bjoints, nails_top, nails_bot)
     # cracks along the grain, more where the board is damp (they cross letters: it is paint on the same board)
     if timber and mode["crack"] > 0:
-        cr = fa.cracks(B, mode["crack"], allowed, weight=weight, dark_board=(ground_L < 40), prim=prim, strength=(0.8 if kind == "bare" else 0.5))
+        cr = fa.cracks(B, mode["crack"], allowed, weight=weight, dark_board=(ground_L < 40), prim=prim, strength=(0.8 if kind == "bare" else 0.38))
         B.layers["cracks"] = cr
     if kind == "bare":
         weight = np.where(np.arange(H_MM)[:, None] > 280, weight * 1.35, weight * 0.55).astype(np.float32)
@@ -501,14 +501,13 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         sh = np.zeros_like(foot)
         sh_src = foot_m.astype(np.float32)
         dx, dy = cs["offset_mm"]
-        sh = np.roll(np.roll(sh_src, int(round(dx)), axis=1), int(round(-dy)), axis=0)
-        sh = ndi.gaussian_filter(sh, cs["blur_mm"] / 2.0)
+        raw = np.roll(np.roll(sh_src, int(round(dx)), axis=1), int(round(-dy)), axis=0) > 0.5
         r0, r1, c0, c1 = wn
-        k = 0.8 * cs["opacity"] * np.clip(sh, 0, 1)
-        # try 2 (review note 6): only what shows outside the letters' own footprint is drawn (the part under the 14 mm stand-off letters is hidden anyway), so
-        # the texture alone shows a thin shadow below the letters' edges and not a whole dark name
-        dist_out = ndi.distance_transform_edt(~(foot > 0.5))
-        k = k * np.clip((dist_out - 0.5) / 3.0, 0.0, 1.0).astype(np.float32)
+        # try 2 (review note 6): only the crescent that shows OUTSIDE the letters (below and to the left of each stroke, where the shadow of a letter standing 14 mm off the
+        # board falls) is drawn; the part under the letters is hidden by them anyway, and the texture alone shows a thin shadow, not a dark name
+        vis = raw & ~ndi.binary_dilation(foot_m, iterations=1)
+        sh = ndi.gaussian_filter(vis.astype(np.float32), cs["blur_mm"] / 3.0)
+        k = 0.8 * cs["opacity"] * np.clip(sh * 2.0, 0, 1)
         shadow_col = np.array([14.0, 18.0, 24.0], np.float32)
         B.rgb[r0:r1, c0:c1] = B.rgb[r0:r1, c0:c1] + (shadow_col[None, None, :] - B.rgb[r0:r1, c0:c1]) * k[..., None]
         info["shadow"] = dict(win=list(wn), opacity=cs["opacity"], blur_mm=cs["blur_mm"], offset_mm=cs["offset_mm"], footprint_px=int(foot_m.sum()))

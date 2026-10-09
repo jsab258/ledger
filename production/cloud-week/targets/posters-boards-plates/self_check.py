@@ -1486,7 +1486,7 @@ def glyph_check_block(item, img, b, man, exp=None, ppm=None, only_alts=None, oth
         for name, ra in cands:
             A = own & ~gl.dil(ra, gl.TOL_PX)
             Bs = ra & ~dco
-            sp_ = gl.sep_score(rd, A, Bs, read_d=rd_d)
+            sp_ = None if (name == "mirror" and gl.sliver_only(A, Bs)) else gl.sep_score(rd, A, Bs, read_d=rd_d)
             if sp_ is None:
                 res["equiv"] += 1
                 continue
@@ -1885,12 +1885,38 @@ def _w_hand(args):
 
 
 def pmap(fn, args, procs=4):
-    """fn over args on a pool of forked workers (the fonts and the target are inherited); in order."""
-    import multiprocessing as mp
+    """fn over args on `procs` forked workers (the fonts and the target are inherited through the fork; nothing but the results is sent back, so it also works when this file is loaded
+    under another module name, as the reviewer's scripts do); in order. A worker's exception is raised here."""
     if procs <= 1 or len(args) < 4:
         return [fn(a) for a in args]
-    with mp.get_context("fork").Pool(procs) as pool:
-        return pool.map(fn, args, chunksize=1)
+    import multiprocessing as mp
+    ctx = mp.get_context("fork")
+    q = ctx.Queue()
+
+    def work(k):
+        for i in range(k, len(args), procs):
+            try:
+                q.put((i, True, fn(args[i])))
+            except Exception as e:                       # report, do not hang the parent
+                q.put((i, False, repr(e)))
+        q.put((-1, True, None))
+    ps = [ctx.Process(target=work, args=(k,)) for k in range(procs)]
+    for p_ in ps:
+        p_.start()
+    out, done, err = [None] * len(args), 0, None
+    while done < procs:
+        i, ok, r = q.get()
+        if i < 0:
+            done += 1
+        elif ok:
+            out[i] = r
+        else:
+            err = err or r
+    for p_ in ps:
+        p_.join()
+    if err:
+        raise RuntimeError("a worker failed: " + err)
+    return out
 
 
 def stamp_line(it, img, text, font_key, weight, cap_mm, x_mm, base_mm):

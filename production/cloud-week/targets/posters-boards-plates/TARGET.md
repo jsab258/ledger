@@ -56,7 +56,7 @@ The second review (9 October, `TARGET-REVIEW.md`, "Re-review (try 2)") found mos
 | 3 | BIG TED HOLROYD collides with a real children's programme | TED HOLROYD on the named wrestling bill, in PROPOSED and in every check; BIG TED is in forbidden_patterns.real_marks ('Big Ted' is the bear of the BBC children's programme Play School). |
 | 4 | the quay gable is bare, as the Hook sheet shows it | P01, W01, T02 with its strip T02s and the second QUAY STREET plate (the five proof_wall placements) are held, not in the default street; the west corner pier keeps its plate at x 20.47. G.place.gable is now 'no paper and no plate on SF1' and still checks the downpipe, the render patch and the damp foot as fixtures; the check that demanded exactly three gable bills and the one that demanded exactly 8 and 4 are reworded. |
 
-Smaller notes from the same review, taken: the held placement of L01 is sized 1.2 x 0.45 m (it had copied the 0.9 m board); the calendar note no longer cites H03 as a reason for the street date (H03 is not placed); the forbidden lists gain BABYSITTERS, INNS, PLAYGROUPS, TEENS, LAD, LASS and KIDDIES. Not taken: the review's suggestion to render at check scale and downsample for the game is a builder's option that costs the checks nothing; the scales here stay the checks' own (the largest render is 12.4 megapixels).
+Smaller notes from the same review, taken: the held placement of L01 is sized 1.2 x 0.45 m (it had copied the 0.9 m board); the calendar note no longer cites H03 as a reason for the street date (H03 is not placed); the forbidden lists gain BABYSITTERS, INNS, PLAYGROUPS, TEENS, LAD, LASS and KIDDIES. Noted, not changed: the review's suggestion to render at check scale, check, and downsample for the game is open to the builder and costs the checks nothing; the scales here stay the checks' own (the largest render is 12.4 megapixels).
 
 ## 0. What this target rests on, in plain words
 
@@ -1445,7 +1445,7 @@ Layers run from the oldest (0) to the newest; age class A to D is the paper's ag
 
 Names canon owes and this target therefore does NOT use: the football club, the local paper, the pirate radio station, the regional television channel, the telephone operator, the postal cypher, the council's name. The brand bible v1 carries proposals for four of them (Meridian Town AFC, The Meridian Argus, Radio Tideline, Coastway Television); canon.md still lists them as owed, so none is drawn here.
 
-**The placeholder rule** (`placeholders`): A placement whose item carries a proposed (unminted) name in a block of cap 10 mm or more is HELD: held_until_minted true, `names` listing the names. G.page.placeholders fails while any held placement is in the built street and any of its names lacks a DECISIONS.md line of the form '- ... MINTED: <NAME> ...'.
+**The placeholder rule** (`placeholders`): A placement whose item carries a proposed (unminted) name in a block of cap 10 mm or more is HELD: held_until_minted true, `names` listing the names. G.page.placeholders fails while any held placement is in the built street and any of its names lacks a DECISIONS.md line of the form '- ... MINTED: <NAME> ...'. The placements of the four nameless stand-ins (T01, T02, T03, W01; `stand_in` true) carry the names of their named twin in `names` and are held the same way. `held` is true of every placement outside the default street, whatever the reason (unminted names; the bare gable's proof wall).
 
 ## 10. Variants the street needs
 
