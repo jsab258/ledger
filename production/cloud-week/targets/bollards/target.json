@@ -1,0 +1,3679 @@
+{
+ "family": "bollards",
+ "title": "Quay Street bollards and the quay's mooring ironwork: the target (cloud week 42, 9 October 2026)",
+ "written": "2026-10-09",
+ "units": "millimetres unless a key says _m (metres); angles in degrees; the .glb is metres, z up, scale 1",
+ "summary_line": "Quay Street's bollards are black cast-iron posts about 1.05 m high (a domed cap, one big collar bead at half height, a plinth foot, 0.2 m across at the foot), plain tapered iron posts about 1.18 m high with a collar band at 0.59 H and a rolled foot ring, and (judgement, no reached photograph) concrete and steel-tube posts, 6 on the street and 4 at the quay-end junction, with 10 mooring bollards, 4 chain posts and 3 cleats on the quay; all unmarked, unbanded, 0.5 m behind the kerb face.",
+ "frame": {
+  "profile": "(r, z): r the radius from the axis, z up from the ground at the foot; every lathe profile runs from (0,0) up the outline to the axis at the top",
+  "pivot": "the centre of the base on the ground (the footway flag top, +120 mm above the channel; the quay apron, level with the kerb top)",
+  "axis": "vertical; the seed lean is a rotation about the pivot of 0 to 2 degrees",
+  "elevation_polygon": "mirrored about the axis: left (t = -r), right (t = +r)",
+  "glb": "metres, z up, scale 1; one mesh per variant; bolts, chain eyes and chains as separate meshes of the same piece"
+ },
+ "calibration": {
+  "method": "Poly Haven's 8k tone-mapped panoramas (CC0) are re-projected to a flat, square-on elevation of one bollard (a vertical plane through its axis, perpendicular to the line of sight, 1 mm a pixel). The camera height is NOT known and is NOT 1.6 m here: it is found per panorama from objects of known size (a 75 mm brick course, a 75 mm yellow line, a 200 x 100 clay paver) and every length scales with it (+-6 to +-10 %).",
+  "panoramas": {
+   "urban_street_01": {
+    "date_taken": "2019-08-18 07:09 UTC",
+    "coords": [
+     51.528295,
+     -0.053879
+    ],
+    "h_cam": 1.16,
+    "h_cam_err": 0.06,
+    "h_why": "brick course gauge 75 mm on the garden wall behind the bollard (rectified: 75 to 76 mm at 1.15 m, so 1.13 to 1.15); the single yellow line (98 mm at 1.6 m, so 75 mm at 1.22 m); mean 1.16"
+   },
+   "bethnal_green_entrance": {
+    "date_taken": "2019-08-18 07:01 UTC",
+    "coords": [
+     51.526915,
+     -0.054044
+    ],
+    "h_cam": 1.02,
+    "h_cam_err": 0.08,
+    "h_why": "brick course gauge 75 mm on the gate pier and its blue plinth (rectified 92 mm at 1.15 m, so 0.94; stretcher module 255 mm for 225, so 1.02); taken as 1.02"
+   },
+   "birbeck_street_underpass": {
+    "date_taken": "2019-08-18 06:53 UTC",
+    "coords": [
+     51.525806,
+     -0.056277
+    ],
+    "h_cam": 1.22,
+    "h_cam_err": 0.1,
+    "h_why": "the double yellow line (each line 97 mm at 1.6 m, so 75 mm at 1.24 m); no second anchor"
+   },
+   "urban_street_02": {
+    "date_taken": "2019-08-18 06:45 UTC",
+    "coords": [
+     51.526655,
+     -0.056465
+    ],
+    "h_cam": 1.15,
+    "h_cam_err": 0.12,
+    "h_why": "no anchor of its own (the brick wall gave 0.84 to 0.9 but its bricks are not a 75 mm gauge); the pooled value 1.15 is used; it makes this K2 bollard 1188 high, the same as the Birbeck one (1186) read at its own calibrated 1.22"
+   },
+   "limehouse": {
+    "date_taken": "2019-05-19 15:45 UTC",
+    "coords": [
+     51.510606,
+     -0.036324
+    ],
+    "h_cam": 1.17,
+    "h_cam_err": 0.06,
+    "h_why": "the clay brick paviors: course pitch 146 mm and stretcher 280 mm at 1.6 m against 105 and 205 (a 200 x 100 paver with a 5 mm joint): 1.15 and 1.17; taken as 1.17"
+   }
+  },
+  "anchors": [
+   {
+    "id": "us01_brick",
+    "pano": "urban_street_01",
+    "measured_mm": 75.5,
+    "plane_h": 1.15,
+    "true_mm": 75.0,
+    "what": "brick course pitch on the garden wall, rectified at 1.15 m"
+   },
+   {
+    "id": "us01_line",
+    "pano": "urban_street_01",
+    "measured_mm": 98.3,
+    "plane_h": 1.6,
+    "true_mm": 75.0,
+    "what": "single yellow line width at 1.6 m (distance transform, median ridge)"
+   },
+   {
+    "id": "bge_brick_course",
+    "pano": "bethnal_green_entrance",
+    "measured_mm": 92.0,
+    "plane_h": 1.15,
+    "true_mm": 75.0,
+    "what": "brick course pitch, gate pier and blue plinth"
+   },
+   {
+    "id": "bge_brick_stretcher",
+    "pano": "bethnal_green_entrance",
+    "measured_mm": 255.0,
+    "plane_h": 1.15,
+    "true_mm": 225.0,
+    "what": "stretcher module (215 + 10) on the same wall"
+   },
+   {
+    "id": "bb_line",
+    "pano": "birbeck_street_underpass",
+    "measured_mm": 97.0,
+    "plane_h": 1.6,
+    "true_mm": 75.0,
+    "what": "each line of the double yellow, at 1.6 m"
+   },
+   {
+    "id": "lh_paver_course",
+    "pano": "limehouse",
+    "measured_mm": 146.0,
+    "plane_h": 1.6,
+    "true_mm": 105.0,
+    "what": "clay paver 100 wide + 5 joint, course pitch"
+   },
+   {
+    "id": "lh_paver_stretcher",
+    "pano": "limehouse",
+    "measured_mm": 280.0,
+    "plane_h": 1.6,
+    "true_mm": 205.0,
+    "what": "clay paver 200 long + 5 joint"
+   }
+  ],
+  "warning": "The kerbs-and-covers target takes 1.6 m for urban_street_01 and urban_street_02 (the Bethnal Green session of 18 August 2019). The anchors above give 1.0 to 1.2 m for that session; if a brick course on urban_street_01 is 75 mm, a 1.6 m height reads it 108 mm. Its numbers from those two panoramas (the mitred corner, the tarmac-filled cover) should be re-checked."
+ },
+ "scene_numbers": [
+  {
+   "id": "street_length_m",
+   "value": 48.0,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"length_m\": 48.0",
+   "what": "the street is 48 m long"
+  },
+  {
+   "id": "carriageway_half_m",
+   "value": 3.0,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"half_width_m\": 3.0",
+   "what": "kerb face at z = +-3.0 m"
+  },
+  {
+   "id": "footway_width_m",
+   "value": 2.0,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"width_m\": 2.0,\n      \"crossfall\": 0.025,\n      \"surface\": \"sidewalk\"",
+   "what": "footway 2.0 m"
+  },
+  {
+   "id": "kerb_upstand_m",
+   "value": 0.125,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"upstand_m\": 0.125",
+   "what": "kerb upstand 125 mm (the kerbs target keeps it for granite)"
+  },
+  {
+   "id": "dropped_kerb_centre_x_m",
+   "value": 22.5,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"centre_x_m\": 22.5",
+   "what": "the west crossover centre"
+  },
+  {
+   "id": "dropped_kerb_width_m",
+   "value": 3.0,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"crossover_width_m\": 3.0",
+   "what": "crossover 3.0 m wide"
+  },
+  {
+   "id": "column_first_offset_m",
+   "value": 8.0,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"first_offset_m\": 8.0",
+   "what": "lamp columns at 8, 18 (west), 28, 38 (west)"
+  },
+  {
+   "id": "kiosk_x_m",
+   "value": 16.5,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"x_m\": 16.5",
+   "what": "kiosk x"
+  },
+  {
+   "id": "pillar_box_x_m",
+   "value": 27.0,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"x_m\": 27.0",
+   "what": "pillar box x"
+  },
+  {
+   "id": "guard_rail_x_m",
+   "value": 10.0,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"x_m\": 10.0",
+   "what": "guard rail x 10 to 12"
+  },
+  {
+   "id": "dustbin_x_m",
+   "value": 21.4,
+   "file": "production/specs/vignette-scene.json",
+   "find": "\"x_m\": 21.4",
+   "what": "dustbins x 21.4 and 22.0 (east)"
+  },
+  {
+   "id": "existing_bollard_0_x_m",
+   "value": 20.7,
+   "file": "production/specs/vignette-pieces.json",
+   "find": "\"name\":\"prop_decorative_bollard_02_0\",\"shape\":\"mesh\",\"surface\":\"metal\",\"asset\":\"decorative_bollard_02\",\"x_m\":20.7",
+   "what": "the scene file already places two bollards flanking the yard mouth, 20.7 and 24.3, 0.5 m behind the west kerb"
+  },
+  {
+   "id": "existing_bollard_1_x_m",
+   "value": 24.3,
+   "file": "production/specs/vignette-pieces.json",
+   "find": "\"name\":\"prop_decorative_bollard_02_1\",\"shape\":\"mesh\",\"surface\":\"metal\",\"asset\":\"decorative_bollard_02\",\"x_m\":24.3",
+   "what": "second yard-mouth bollard"
+  },
+  {
+   "id": "existing_bollard_z_m",
+   "value": -3.5,
+   "file": "production/specs/vignette-pieces.json",
+   "find": "\"x_m\":20.7,\"y_m\":0.563525,\"z_m\":-3.5",
+   "what": "west footway, 0.5 m behind the kerb face"
+  },
+  {
+   "id": "existing_bollard_height_m",
+   "value": 1.0083,
+   "file": "production/specs/vignette-pieces.json",
+   "find": "\"sy_m\":1.0083",
+   "what": "the held stand-in mesh is 1.008 high"
+  },
+  {
+   "id": "clutter_bollard_height_m",
+   "value": 0.765,
+   "file": "production/art/clutter-2026-09-29/README.md",
+   "find": "cast-iron cannon-and-ball bollard",
+   "what": "the street recipe builds a 0.765 m cannon-and-ball clutter bollard (glb bounds, read from production/assets/street/clutter/bollard.glb)"
+  },
+  {
+   "id": "quay_bollard_height_m",
+   "value": 0.72,
+   "file": "tools/art-recipes/south-quay/south_quay_geom.py",
+   "find": "(0.11, 0.71), (0.0, 0.72))",
+   "what": "the south-quay kit bollard profile ends at 0.72"
+  },
+  {
+   "id": "quay_bollard_base_r_m",
+   "value": 0.25,
+   "file": "tools/art-recipes/south-quay/south_quay_geom.py",
+   "find": "BOLLARD_PROFILE = ((0.25, 0.00)",
+   "what": "its flange radius 0.25"
+  },
+  {
+   "id": "quay_bollard_set_back_m",
+   "value": 0.75,
+   "file": "production/research/south-quay/METHOD-2026-10-06.md",
+   "find": "set 0.75 m back from the cope",
+   "what": "ten bollards 0.75 m back from the cope nose"
+  },
+  {
+   "id": "quay_bollard_count",
+   "value": 10,
+   "file": "production/research/south-quay/METHOD-2026-10-06.md",
+   "find": "ten of them",
+   "what": "ten bell bollards on the quay"
+  },
+  {
+   "id": "quay_edge_x_m",
+   "value": -70.0,
+   "file": "tools/art-recipes/south-quay/south_quay_geom.py",
+   "find": "\"north_quay_x\": 280.0 - 350.0",
+   "what": "the north quay edge, 70 m south of the street end"
+  },
+  {
+   "id": "quay_bollard_x_m",
+   "value": -69.25,
+   "file": "tools/art-recipes/south-quay/south_quay_geom.py",
+   "find": "BOLLARDS = ((-69.25, -88.0)",
+   "what": "bollards at x -69.25"
+  },
+  {
+   "id": "asset_plan_bollard_models",
+   "value": 3,
+   "file": "production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md",
+   "find": "| Bollards (cannon, concrete, steel) | 3 | 3 each | 6 to 10 |",
+   "what": "3 models, 3 variants each, 6 to 10 on the street"
+  },
+  {
+   "id": "asset_plan_lean_deg",
+   "value": 3,
+   "file": "production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md",
+   "find": "lean of 1 to 3 degrees on poles and bollards",
+   "what": "seed lean 1 to 3 degrees"
+  },
+  {
+   "id": "yard_mouth_no_bands",
+   "value": 0,
+   "file": "production/research/street-clutter-1990/SUMMARY-2026-09-29.md",
+   "find": "Wrong for 1990: reflective bands, stainless steel, gold paint.",
+   "what": "no reflective bands"
+  },
+  {
+   "id": "clutter_bollard_summary_height_cm",
+   "value": 90,
+   "file": "production/research/street-clutter-1990/SUMMARY-2026-09-29.md",
+   "find": "Older ones were often about 90 cm (**uncertain**)",
+   "what": "older cast bollards about 90 cm (uncertain)"
+  }
+ ],
+ "profiles_final": {
+  "US01_b": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    94.82,
+    0.0
+   ],
+   [
+    97.84,
+    3.03
+   ],
+   [
+    97.84,
+    117.01
+   ],
+   [
+    96.33,
+    122.05
+   ],
+   [
+    92.8,
+    125.08
+   ],
+   [
+    79.08,
+    135.17
+   ],
+   [
+    68.89,
+    497.29
+   ],
+   [
+    73.13,
+    501.32
+   ],
+   [
+    78.68,
+    509.39
+   ],
+   [
+    82.21,
+    520.49
+   ],
+   [
+    83.22,
+    531.58
+   ],
+   [
+    81.7,
+    542.68
+   ],
+   [
+    77.17,
+    552.77
+   ],
+   [
+    71.11,
+    558.82
+   ],
+   [
+    67.18,
+    561.84
+   ],
+   [
+    57.5,
+    907.83
+   ],
+   [
+    54.97,
+    922.96
+   ],
+   [
+    53.46,
+    938.09
+   ],
+   [
+    53.46,
+    948.17
+   ],
+   [
+    60.52,
+    951.2
+   ],
+   [
+    67.08,
+    955.23
+   ],
+   [
+    68.09,
+    961.29
+   ],
+   [
+    67.58,
+    968.35
+   ],
+   [
+    63.55,
+    973.39
+   ],
+   [
+    59.01,
+    976.42
+   ],
+   [
+    58.5,
+    980.45
+   ],
+   [
+    59.01,
+    988.52
+   ],
+   [
+    59.01,
+    995.58
+   ],
+   [
+    51.44,
+    996.59
+   ],
+   [
+    50.43,
+    1008.7
+   ],
+   [
+    47.91,
+    1020.8
+   ],
+   [
+    43.37,
+    1032.9
+   ],
+   [
+    36.31,
+    1040.97
+   ],
+   [
+    26.23,
+    1046.02
+   ],
+   [
+    14.12,
+    1049.04
+   ],
+   [
+    0.0,
+    1050.05
+   ]
+  ],
+  "BGE_a": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    84.93,
+    0.0
+   ],
+   [
+    87.63,
+    2.93
+   ],
+   [
+    87.63,
+    112.97
+   ],
+   [
+    86.28,
+    117.84
+   ],
+   [
+    83.12,
+    120.76
+   ],
+   [
+    70.83,
+    130.5
+   ],
+   [
+    61.7,
+    480.12
+   ],
+   [
+    65.5,
+    484.01
+   ],
+   [
+    70.47,
+    491.8
+   ],
+   [
+    73.63,
+    502.52
+   ],
+   [
+    74.54,
+    513.22
+   ],
+   [
+    73.18,
+    523.94
+   ],
+   [
+    69.12,
+    533.68
+   ],
+   [
+    63.69,
+    539.52
+   ],
+   [
+    60.17,
+    542.44
+   ],
+   [
+    51.5,
+    876.48
+   ],
+   [
+    49.23,
+    891.09
+   ],
+   [
+    47.88,
+    905.7
+   ],
+   [
+    47.88,
+    915.43
+   ],
+   [
+    54.21,
+    918.35
+   ],
+   [
+    60.08,
+    922.25
+   ],
+   [
+    60.99,
+    928.1
+   ],
+   [
+    60.53,
+    934.91
+   ],
+   [
+    56.92,
+    939.78
+   ],
+   [
+    52.85,
+    942.7
+   ],
+   [
+    52.4,
+    946.59
+   ],
+   [
+    52.85,
+    954.39
+   ],
+   [
+    52.85,
+    961.2
+   ],
+   [
+    46.07,
+    962.18
+   ],
+   [
+    45.17,
+    973.87
+   ],
+   [
+    42.91,
+    985.55
+   ],
+   [
+    38.84,
+    997.23
+   ],
+   [
+    32.52,
+    1005.02
+   ],
+   [
+    23.49,
+    1009.9
+   ],
+   [
+    12.65,
+    1012.82
+   ],
+   [
+    0.0,
+    1013.79
+   ]
+  ],
+  "BB_b": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    133.96,
+    0.0
+   ],
+   [
+    139.44,
+    4.24
+   ],
+   [
+    140.54,
+    12.73
+   ],
+   [
+    138.35,
+    23.34
+   ],
+   [
+    132.85,
+    33.95
+   ],
+   [
+    125.17,
+    42.43
+   ],
+   [
+    121.87,
+    48.8
+   ],
+   [
+    93.32,
+    673.65
+   ],
+   [
+    96.62,
+    678.96
+   ],
+   [
+    101.02,
+    685.32
+   ],
+   [
+    102.66,
+    693.81
+   ],
+   [
+    102.11,
+    700.17
+   ],
+   [
+    98.82,
+    706.54
+   ],
+   [
+    94.43,
+    710.78
+   ],
+   [
+    92.78,
+    712.9
+   ],
+   [
+    77.95,
+    1113.91
+   ],
+   [
+    77.41,
+    1154.23
+   ],
+   [
+    82.34,
+    1158.47
+   ],
+   [
+    84.0,
+    1162.71
+   ],
+   [
+    84.0,
+    1171.2
+   ],
+   [
+    79.06,
+    1176.5
+   ],
+   [
+    65.88,
+    1178.63
+   ],
+   [
+    32.94,
+    1179.69
+   ],
+   [
+    0.0,
+    1180.22
+   ]
+  ],
+  "US02_a": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    123.77,
+    0.0
+   ],
+   [
+    128.83,
+    4.27
+   ],
+   [
+    129.85,
+    12.81
+   ],
+   [
+    127.83,
+    23.49
+   ],
+   [
+    122.75,
+    34.17
+   ],
+   [
+    115.65,
+    42.71
+   ],
+   [
+    112.6,
+    49.12
+   ],
+   [
+    86.22,
+    678.09
+   ],
+   [
+    89.27,
+    683.44
+   ],
+   [
+    93.34,
+    689.84
+   ],
+   [
+    94.85,
+    698.38
+   ],
+   [
+    94.34,
+    704.79
+   ],
+   [
+    91.3,
+    711.2
+   ],
+   [
+    87.25,
+    715.47
+   ],
+   [
+    85.72,
+    717.6
+   ],
+   [
+    72.0,
+    1100.0
+   ],
+   [
+    72.0,
+    1135.0
+   ],
+   [
+    79.5,
+    1148.0
+   ],
+   [
+    80.0,
+    1160.0
+   ],
+   [
+    76.0,
+    1166.0
+   ],
+   [
+    50.0,
+    1178.0
+   ],
+   [
+    25.0,
+    1184.0
+   ],
+   [
+    0.0,
+    1188.0
+   ]
+  ],
+  "LH_b": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    143.0,
+    0.0
+   ],
+   [
+    143.0,
+    36.0
+   ],
+   [
+    141.0,
+    40.0
+   ],
+   [
+    125.0,
+    50.0
+   ],
+   [
+    105.0,
+    72.0
+   ],
+   [
+    95.0,
+    90.0
+   ],
+   [
+    91.0,
+    100.0
+   ],
+   [
+    91.0,
+    278.0
+   ],
+   [
+    95.0,
+    285.0
+   ],
+   [
+    101.0,
+    297.0
+   ],
+   [
+    105.0,
+    315.0
+   ],
+   [
+    105.0,
+    335.0
+   ],
+   [
+    103.0,
+    352.0
+   ],
+   [
+    98.0,
+    372.0
+   ],
+   [
+    92.0,
+    390.0
+   ],
+   [
+    90.0,
+    398.0
+   ],
+   [
+    87.0,
+    600.0
+   ],
+   [
+    86.0,
+    868.0
+   ],
+   [
+    93.0,
+    874.0
+   ],
+   [
+    100.0,
+    888.0
+   ],
+   [
+    101.0,
+    900.0
+   ],
+   [
+    98.0,
+    915.0
+   ],
+   [
+    90.0,
+    922.0
+   ],
+   [
+    88.0,
+    926.0
+   ],
+   [
+    80.0,
+    932.0
+   ],
+   [
+    80.0,
+    1000.0
+   ],
+   [
+    90.0,
+    1012.0
+   ],
+   [
+    102.0,
+    1028.0
+   ],
+   [
+    107.0,
+    1042.0
+   ],
+   [
+    106.0,
+    1055.0
+   ],
+   [
+    100.0,
+    1066.0
+   ],
+   [
+    92.0,
+    1072.0
+   ],
+   [
+    84.0,
+    1075.0
+   ],
+   [
+    84.0,
+    1090.0
+   ],
+   [
+    62.0,
+    1095.0
+   ],
+   [
+    58.0,
+    1108.0
+   ],
+   [
+    48.0,
+    1120.0
+   ],
+   [
+    30.0,
+    1130.0
+   ],
+   [
+    14.0,
+    1134.0
+   ],
+   [
+    0.0,
+    1135.0
+   ]
+  ]
+ },
+ "variant_fits": {
+  "K1b_from_BGE_a": {
+   "z_factor": 0.9655,
+   "r_factor": 0.8957,
+   "max_resid_mm": 9.8,
+   "rms_mm": 2.7,
+   "note": "BGE_a read at its calibrated 1.02 m: 3.5 % shorter and 9 % slimmer than US01_b; it stands on block paving, its foot paint mostly gone"
+  },
+  "K2b_from_US02_a": {
+   "z_factor": 1.0066,
+   "r_factor": 0.9239,
+   "max_resid_mm": 3.0,
+   "rms_mm": 1.2,
+   "note": "US02_a read at the pooled 1.15 m: the same height as BB_b (1188 against 1180), the same collar height ratio (0.592 against 0.587), a low cone cap, black"
+  }
+ },
+ "readings": {
+  "US01_b": [
+   [
+    10,
+    -99,
+    96
+   ],
+   [
+    60,
+    -100,
+    96
+   ],
+   [
+    100,
+    -100,
+    96
+   ],
+   [
+    150,
+    -75,
+    80
+   ],
+   [
+    200,
+    -73,
+    80
+   ],
+   [
+    400,
+    -65,
+    75
+   ],
+   [
+    450,
+    -59,
+    78
+   ],
+   [
+    520,
+    -71,
+    93
+   ],
+   [
+    570,
+    -55,
+    78
+   ],
+   [
+    600,
+    -54,
+    77
+   ],
+   [
+    670,
+    -50,
+    74
+   ],
+   [
+    700,
+    -49,
+    77
+   ],
+   [
+    900,
+    -41,
+    73
+   ],
+   [
+    930,
+    -33,
+    73
+   ],
+   [
+    950,
+    -46,
+    88
+   ],
+   [
+    980,
+    -38,
+    78
+   ]
+  ],
+  "BB_b": [
+   [
+    100,
+    -107,
+    113
+   ],
+   [
+    640,
+    -80,
+    91
+   ],
+   [
+    654,
+    -88,
+    98
+   ],
+   [
+    700,
+    -82,
+    85
+   ],
+   [
+    950,
+    -67,
+    77
+   ],
+   [
+    1050,
+    -66,
+    77
+   ]
+  ],
+  "LH_b": [
+   [
+    200,
+    -90,
+    92
+   ],
+   [
+    330,
+    -102,
+    108
+   ],
+   [
+    450,
+    -87,
+    93
+   ],
+   [
+    600,
+    -82,
+    93
+   ],
+   [
+    850,
+    -80,
+    92
+   ],
+   [
+    900,
+    -92,
+    108
+   ],
+   [
+    960,
+    -70,
+    89
+   ],
+   [
+    1042,
+    -98,
+    117
+   ]
+  ]
+ },
+ "readings_r_correction": {
+  "BB_b": 1.035,
+  "note": "the first eyeball radii of BB_b were 3.5 % low: the overlay showed its left edge 8 mm and its right 1 mm out; the profile carries the factor"
+ },
+ "bge_halfwidth_read": [
+  [
+   200,
+   79.5
+  ],
+  [
+   240,
+   77.5
+  ],
+  [
+   320,
+   76.5
+  ],
+  [
+   360,
+   75.0
+  ],
+  [
+   400,
+   74.0
+  ],
+  [
+   440,
+   72.5
+  ],
+  [
+   480,
+   71.5
+  ],
+  [
+   520,
+   71.0
+  ],
+  [
+   560,
+   70.0
+  ],
+  [
+   640,
+   68.0
+  ],
+  [
+   680,
+   67.5
+  ],
+  [
+   720,
+   66.5
+  ],
+  [
+   760,
+   65.5
+  ],
+  [
+   800,
+   64.5
+  ],
+  [
+   840,
+   63.0
+  ]
+ ],
+ "us02_halfwidth_read": [
+  [
+   40,
+   112
+  ],
+  [
+   80,
+   111
+  ],
+  [
+   120,
+   107.5
+  ],
+  [
+   160,
+   105
+  ],
+  [
+   200,
+   104.5
+  ],
+  [
+   240,
+   103
+  ],
+  [
+   280,
+   103
+  ],
+  [
+   320,
+   101
+  ],
+  [
+   360,
+   99.5
+  ],
+  [
+   400,
+   98
+  ],
+  [
+   440,
+   95.5
+  ],
+  [
+   480,
+   94
+  ],
+  [
+   520,
+   94
+  ],
+  [
+   560,
+   91.5
+  ],
+  [
+   600,
+   91
+  ],
+  [
+   640,
+   90.5
+  ],
+  [
+   760,
+   86
+  ],
+  [
+   800,
+   84
+  ],
+  [
+   840,
+   83
+  ],
+  [
+   880,
+   81
+  ],
+  [
+   920,
+   79
+  ],
+  [
+   960,
+   79
+  ],
+  [
+   1000,
+   76
+  ],
+  [
+   1040,
+   75
+  ],
+  [
+   1080,
+   74
+  ],
+  [
+   1120,
+   72
+  ]
+ ],
+ "frames": {
+  "US01_b": {
+   "pano": "urban_street_01",
+   "kind": "K1",
+   "psi": 12.67,
+   "depr": 28.801,
+   "R": 97.0,
+   "h_read": 1.15,
+   "yaw_view": 12.6,
+   "what": "a cast-iron domed bollard in a kerb build-out, the big collar at 0.5 H",
+   "h_cam_m": 1.16
+  },
+  "BGE_a": {
+   "pano": "bethnal_green_entrance",
+   "kind": "K1",
+   "psi": 67.342,
+   "depr": 23.858,
+   "R": 102.0,
+   "h_read": 1.15,
+   "what": "the same family on block paving, paint lost from the foot",
+   "h_cam_m": 1.02
+  },
+  "BB_b": {
+   "pano": "birbeck_street_underpass",
+   "kind": "K2",
+   "psi": -24.711,
+   "depr": 18.37,
+   "R": 128.0,
+   "h_read": 1.15,
+   "what": "a plain tapered iron bollard, grey, flat top, rolled foot ring",
+   "h_cam_m": 1.22
+  },
+  "US02_a": {
+   "pano": "urban_street_02",
+   "kind": "K2",
+   "psi": -148.8,
+   "depr": 9.477,
+   "R": 132.0,
+   "h_read": 1.15,
+   "what": "the plain tapered bollard in black with a low cone cap, on flags 0.6 m behind the kerb",
+   "h_cam_m": 1.15
+  },
+  "LH_b": {
+   "pano": "limehouse",
+   "kind": "K5",
+   "psi": -59.492,
+   "depr": 36.562,
+   "R": 143.0,
+   "h_read": 1.17,
+   "what": "a bolted chain post at a marina edge",
+   "h_cam_m": 1.17
+  }
+ },
+ "photo_frames": {
+  "US01_b": {
+   "file": "ph-urban_street_01-us01_b-k1-elevation.jpg",
+   "pano": "urban_street_01",
+   "mm_per_px": 1.0,
+   "t_left_mm": -170,
+   "z_top_mm": 1110.05,
+   "h_cam_m": 1.16,
+   "d_axis_m": 2.2078,
+   "psi_deg": 12.67,
+   "axis_offset_mm": -5.0,
+   "lean_deg": 1.6,
+   "fit_score": 5191.8,
+   "kind": "K1"
+  },
+  "BGE_a": {
+   "file": "ph-bethnal_green_entrance-bge_a-k1-elevation.jpg",
+   "pano": "bethnal_green_entrance",
+   "mm_per_px": 1.0,
+   "t_left_mm": -170,
+   "z_top_mm": 1073.79,
+   "h_cam_m": 1.02,
+   "d_axis_m": 2.3968,
+   "psi_deg": 67.342,
+   "axis_offset_mm": 2.0,
+   "lean_deg": 0.7,
+   "fit_score": 3798.2,
+   "kind": "K1"
+  },
+  "BB_b": {
+   "file": "ph-birbeck_street_underpass-bb_b-k2-elevation.jpg",
+   "pano": "birbeck_street_underpass",
+   "mm_per_px": 1.15,
+   "t_left_mm": -170,
+   "z_top_mm": 1240.22,
+   "h_cam_m": 1.22,
+   "d_axis_m": 3.8097,
+   "psi_deg": -24.711,
+   "axis_offset_mm": 1.0,
+   "lean_deg": 0.0,
+   "fit_score": 2861.5,
+   "kind": "K2"
+  },
+  "US02_a": {
+   "file": "ph-urban_street_02-us02_a-k2-elevation.jpg",
+   "pano": "urban_street_02",
+   "mm_per_px": 1.15,
+   "t_left_mm": -170,
+   "z_top_mm": 1248.0,
+   "h_cam_m": 1.15,
+   "d_axis_m": 7.0211,
+   "psi_deg": -148.8,
+   "axis_offset_mm": -5.0,
+   "lean_deg": 1.0,
+   "fit_score": 3497.5,
+   "kind": "K2"
+  },
+  "LH_b": {
+   "file": "ph-limehouse-lh_b-k5-elevation.jpg",
+   "pano": "limehouse",
+   "mm_per_px": 1.1,
+   "t_left_mm": -170,
+   "z_top_mm": 1195.0,
+   "h_cam_m": 1.17,
+   "d_axis_m": 1.7206,
+   "psi_deg": -59.492,
+   "axis_offset_mm": -3.0,
+   "lean_deg": 0.7,
+   "fit_score": 4708.2,
+   "kind": "K5"
+  }
+ },
+ "setbacks_photo": [
+  {
+   "id": "US01_b",
+   "along_mm": 330,
+   "kerb_angle_deg": 14,
+   "h_assumed": 1.16,
+   "note": "the bollard stands in the inside corner of a kerb build-out; both kerb faces are about 0.33 m from the axis"
+  },
+  {
+   "id": "BB_b",
+   "along_mm": 1090,
+   "kerb_angle_deg": 16,
+   "h_assumed": 1.22,
+   "note": "concrete bullnosed kerb; footway about 2.5 m wide; the road-side foot line read"
+  },
+  {
+   "id": "US02_a",
+   "along_mm": 1610,
+   "kerb_angle_deg": 45,
+   "h_assumed": 1.15,
+   "note": "the kerb top inner arris at 1.61 m along the bearing after correcting its 125 mm height; add about 0.15 for the kerb top"
+  }
+ ],
+ "kinds": {
+  "K1": {
+   "name": "cast_iron_domed",
+   "title": "Cast-iron street bollard, domed head, one collar bead (the cannon type's plain cousin)",
+   "basis": "Photo (US01_b main, BGE_a second); scale +-7 %",
+   "height": 1050.05,
+   "base_diameter": 195.7,
+   "profile_rz": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     94.82,
+     0.0
+    ],
+    [
+     97.84,
+     3.03
+    ],
+    [
+     97.84,
+     117.01
+    ],
+    [
+     96.33,
+     122.05
+    ],
+    [
+     92.8,
+     125.08
+    ],
+    [
+     79.08,
+     135.17
+    ],
+    [
+     68.89,
+     497.29
+    ],
+    [
+     73.13,
+     501.32
+    ],
+    [
+     78.68,
+     509.39
+    ],
+    [
+     82.21,
+     520.49
+    ],
+    [
+     83.22,
+     531.58
+    ],
+    [
+     81.7,
+     542.68
+    ],
+    [
+     77.17,
+     552.77
+    ],
+    [
+     71.11,
+     558.82
+    ],
+    [
+     67.18,
+     561.84
+    ],
+    [
+     57.5,
+     907.83
+    ],
+    [
+     54.97,
+     922.96
+    ],
+    [
+     53.46,
+     938.09
+    ],
+    [
+     53.46,
+     948.17
+    ],
+    [
+     60.52,
+     951.2
+    ],
+    [
+     67.08,
+     955.23
+    ],
+    [
+     68.09,
+     961.29
+    ],
+    [
+     67.58,
+     968.35
+    ],
+    [
+     63.55,
+     973.39
+    ],
+    [
+     59.01,
+     976.42
+    ],
+    [
+     58.5,
+     980.45
+    ],
+    [
+     59.01,
+     988.52
+    ],
+    [
+     59.01,
+     995.58
+    ],
+    [
+     51.44,
+     996.59
+    ],
+    [
+     50.43,
+     1008.7
+    ],
+    [
+     47.91,
+     1020.8
+    ],
+    [
+     43.37,
+     1032.9
+    ],
+    [
+     36.31,
+     1040.97
+    ],
+    [
+     26.23,
+     1046.02
+    ],
+    [
+     14.12,
+     1049.04
+    ],
+    [
+     0.0,
+     1050.05
+    ]
+   ],
+   "parts": [
+    {
+     "name": "plinth",
+     "z0": 0,
+     "z1": 117.0,
+     "r_min": 0.0,
+     "r_max": 97.8,
+     "what": "a plain cylinder, a 3 mm chamfer at the foot, its top edge rounded about R6"
+    },
+    {
+     "name": "shoulder",
+     "z0": 117.0,
+     "z1": 135.2,
+     "r_min": 79.1,
+     "r_max": 97.8,
+     "what": "the plinth top sloping in to the shaft (a cove, 20 mm run)"
+    },
+    {
+     "name": "shaft_lower",
+     "z0": 135.2,
+     "z1": 497.3,
+     "r_min": 68.9,
+     "r_max": 79.1,
+     "what": "one straight taper (about 1.6 degrees a side), r 79 to 69"
+    },
+    {
+     "name": "bead",
+     "z0": 497.3,
+     "z1": 561.8,
+     "r_min": 67.2,
+     "r_max": 83.2,
+     "what": "a half-round bead, 64 high and 14 proud, fuller below its middle; a thin fillet ring (about 4 high, 1 proud) on its top edge"
+    },
+    {
+     "name": "shaft_upper",
+     "z0": 561.8,
+     "z1": 907.8,
+     "r_min": 57.5,
+     "r_max": 67.2,
+     "what": "the same taper carried on, r 67 to 57.5"
+    },
+    {
+     "name": "neck",
+     "z0": 907.8,
+     "z1": 948.2,
+     "r_min": 53.5,
+     "r_max": 57.5,
+     "what": "a slight cove, r 57.5 to 53.5"
+    },
+    {
+     "name": "cap_collar",
+     "z0": 948.2,
+     "z1": 976.4,
+     "r_min": 53.5,
+     "r_max": 68.1,
+     "what": "a fat rounded ring, 25 high, 14 proud of the neck, max r 68"
+    },
+    {
+     "name": "quirk_and_ring",
+     "z0": 976.4,
+     "z1": 995.6,
+     "r_min": 56.6,
+     "r_max": 59.0,
+     "what": "a 4 mm groove, then a thin plain ring 15 high at r 59"
+    },
+    {
+     "name": "dome",
+     "z0": 995.6,
+     "z1": 1050.1,
+     "r_min": 6.3,
+     "r_max": 58.9,
+     "what": "a flattened dome, r 51.5 at its foot, 53 high, a little less than a hemisphere"
+    }
+   ],
+   "mouldings": [
+    {
+     "name": "collar_bead",
+     "z": [
+      497.3,
+      561.8
+     ],
+     "r_peak": 83.2,
+     "note": "half-round, fuller below its middle; its underside is the drip; no beading or fluting on it"
+    },
+    {
+     "name": "cap_collar",
+     "z": [
+      948.2,
+      976.4
+     ],
+     "r_peak": 68.1,
+     "note": "fat rounded ring with a flat underside at the neck"
+    },
+    {
+     "name": "quirk",
+     "z": [
+      976.4,
+      980.5
+     ],
+     "r": 58.5,
+     "note": "a 4 mm groove between the collar and the thin ring"
+    },
+    {
+     "name": "thin_ring",
+     "z": [
+      980.5,
+      995.6
+     ],
+     "r": 59.0,
+     "note": "plain, 15 high"
+    },
+    {
+     "name": "plinth_edge",
+     "z": [
+      117.0,
+      135.2
+     ],
+     "note": "top edge R6, then a cove to the shaft"
+    }
+   ],
+   "edges": "no sharp edges: every step is rounded (R4 to R8) or coved; the plinth foot has a 3 mm chamfer; no flats, no facets",
+   "seams": "none visible at 5 mm a pixel; a faint casting parting line down each side may be added at 0.3 mm (Judgement)",
+   "fixings": "none visible: rooted (cast in or set in a footing), nothing bolted",
+   "root": {
+    "on_flags": "the plinth stands directly on the paving; the paving is cut round it or butts it; a 5 to 15 mm dark grit joint, no mortar fillet, no collar plate (Photo BGE_a)",
+    "in_planting": "in a bed it stands on the soil with bark chips and leaves banked 20 mm against the plinth (Photo US01_b)",
+    "pivot": "centre of the plinth at the ground"
+   },
+   "paint": {
+    "colour": "black",
+    "srgb": [
+     24,
+     24,
+     26
+    ],
+    "srgb_measured": "median 10 to 38 across the panoramas (tone-mapping differs); 24 chosen",
+    "roughness_words": "glossy, the sky shows in it",
+    "roughness": 0.35,
+    "metal": 0,
+    "note": "black gloss on cast iron; NO white or yellow band (none in any photograph); no reflective band; no sleeve"
+   },
+   "wear": [
+    "paint lost in vertical flakes and scuffs at the foot: one pale 15 x 65 mm chip at z 70 to 135 on one side (Photo US01_b), or the lower 110 mm of the plinth bare grey-brown metal in a speckled pattern over 60 to 70 % of its area (Photo BGE_a)",
+    "fine scratches and dull rub marks where bags and wheels touch it, below 0.5 m",
+    "dust and tyre grime on the plinth and the lower shaft, cleaner above 0.7 m; the gloss keeps a bright sky reflection on the dome, the collars and the shoulder",
+    "no rust streaks, no graffiti, no stickers, no dents (cast iron)"
+   ],
+   "variants": [
+    {
+     "id": "K1a",
+     "note": "the US01_b proportions (the target profile)"
+    },
+    {
+     "id": "K1b",
+     "note": "BGE_a: z x 0.965, r x 0.896 of K1a",
+     "z_factor": 0.9655,
+     "r_factor": 0.8957
+    },
+    {
+     "id": "K1_condition",
+     "states": [
+      "glossy repaint, a few scuffs (US01_b)",
+      "worn foot: plinth paint 60 to 70 % gone (BGE_a)",
+      "dull and chalky, grimy, a rust bloom at the foot (Judgement)"
+     ]
+    }
+   ],
+   "marks": "none: plain castings, no maker, no council, no crest, no monogram, no lettering, no band"
+  },
+  "K2": {
+   "name": "cast_iron_plain",
+   "title": "Plain tapered iron bollard, collar band at 0.59 H, rolled foot ring",
+   "basis": "Photo (BB_b main at its calibrated 1.22 m, US02_a second at 1.15 m); scale +-8 %",
+   "height": 1180.22,
+   "base_diameter": 271.6,
+   "profile_rz": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     133.96,
+     0.0
+    ],
+    [
+     139.44,
+     4.24
+    ],
+    [
+     140.54,
+     12.73
+    ],
+    [
+     138.35,
+     23.34
+    ],
+    [
+     132.85,
+     33.95
+    ],
+    [
+     125.17,
+     42.43
+    ],
+    [
+     121.87,
+     48.8
+    ],
+    [
+     93.32,
+     673.65
+    ],
+    [
+     96.62,
+     678.96
+    ],
+    [
+     101.02,
+     685.32
+    ],
+    [
+     102.66,
+     693.81
+    ],
+    [
+     102.11,
+     700.17
+    ],
+    [
+     98.82,
+     706.54
+    ],
+    [
+     94.43,
+     710.78
+    ],
+    [
+     92.78,
+     712.9
+    ],
+    [
+     77.95,
+     1113.91
+    ],
+    [
+     77.41,
+     1154.23
+    ],
+    [
+     82.34,
+     1158.47
+    ],
+    [
+     84.0,
+     1162.71
+    ],
+    [
+     84.0,
+     1171.2
+    ],
+    [
+     79.06,
+     1176.5
+    ],
+    [
+     65.88,
+     1178.63
+    ],
+    [
+     32.94,
+     1179.69
+    ],
+    [
+     0.0,
+     1180.22
+    ]
+   ],
+   "parts": [
+    {
+     "name": "foot_ring",
+     "z0": 0,
+     "z1": 48.8,
+     "r_min": 0.0,
+     "r_max": 140.5,
+     "what": "a rolled foot ring: r 140 at its fullest (z about 12), its top sloping in to the shaft"
+    },
+    {
+     "name": "shaft_lower",
+     "z0": 48.8,
+     "z1": 673.7,
+     "r_min": 93.3,
+     "r_max": 121.9,
+     "what": "one straight taper, r 121 to 94"
+    },
+    {
+     "name": "collar_band",
+     "z0": 673.7,
+     "z1": 712.9,
+     "r_min": 92.8,
+     "r_max": 102.6,
+     "what": "a thin rounded band, 37 high, 8 proud (r 103 at its fullest), at 0.59 of the height"
+    },
+    {
+     "name": "shaft_upper",
+     "z0": 712.9,
+     "z1": 1154.2,
+     "r_min": 77.4,
+     "r_max": 92.8,
+     "what": "a gentler taper, r 93 to 77"
+    },
+    {
+     "name": "cap_plate",
+     "z0": 1154.2,
+     "z1": 1180.2,
+     "r_min": 1.2,
+     "r_max": 84.0,
+     "what": "a flat plate that overhangs the shaft by about 6 and is slightly domed (5 mm)"
+    }
+   ],
+   "mouldings": [
+    {
+     "name": "collar_band",
+     "z": [
+      673.7,
+      712.9
+     ],
+     "r_peak": 102.6,
+     "note": "a thin rounded band, no beads either side"
+    },
+    {
+     "name": "foot_ring",
+     "z": [
+      0,
+      48.8
+     ],
+     "r_peak": 140.5,
+     "note": "rolled, 49 high; the top slopes in; a lighter rub mark round it"
+    }
+   ],
+   "edges": "rounded or coved throughout; the cap plate edge R3",
+   "seams": "none visible; a vertical dark scratch about 40 mm long at z 840 to 880 on BB_b is damage, not a seam",
+   "fixings": "none visible",
+   "root": {
+    "on_flags": "the foot ring sits on the paving or tarmac; a darker 20 mm ring of dirt round it; no collar plate (Photo BB_b, US02_a)",
+    "pivot": "centre of the foot ring at the ground"
+   },
+   "paint": {
+    "colour": "mid-dark grey or black",
+    "srgb_grey": [
+     88,
+     89,
+     91
+    ],
+    "srgb_black": [
+     24,
+     24,
+     26
+    ],
+    "srgb_measured": "BB_b median (97, 77, 70) under the underpass's orange light, lightness 81; US02_a median (15, 16, 18)",
+    "roughness_words": "satin (grey) to semi-gloss (black)",
+    "roughness": 0.5,
+    "metal": 0,
+    "note": "no band; the cap plate is the same paint (the orange rim in BB_b is the underpass light on the plate, not brass)"
+   },
+   "wear": [
+    "a lighter, scuffed ring round the foot ring (Photo BB_b, US02_a)",
+    "a few chips and thin dark scratches on the upper shaft (Photo BB_b)",
+    "dust and a tan dirt line at the foot",
+    "no rust, no dents"
+   ],
+   "variants": [
+    {
+     "id": "K2a",
+     "note": "flat, slightly domed cap plate, grey (BB_b: the target profile)"
+    },
+    {
+     "id": "K2b",
+     "note": "low cone cap, black (US02_a): profile K2 up to z 1088, then the cone given in profiles_final.US02_a",
+     "z_factor": 1.0066,
+     "r_factor": 0.9239
+    },
+    {
+     "id": "K2_condition",
+     "states": [
+      "clean satin",
+      "scuffed with chips",
+      "black gloss"
+     ]
+    }
+   ],
+   "marks": "none: plain castings, no maker, no council, no crest, no monogram, no lettering, no band"
+  },
+  "K3": {
+   "name": "concrete_round",
+   "title": "Round precast concrete bollard (1960s to 80s)",
+   "basis": "Judgement: no photograph of one was reached; leads only (an asset-plan row, a search summary of a 230 mm precast unit at 600 or 915 above ground, a 160 x 750 post)",
+   "height": 850,
+   "base_diameter": 250,
+   "profile_rz": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     124.0,
+     0.0
+    ],
+    [
+     125.0,
+     3.0
+    ],
+    [
+     100.0,
+     805.0
+    ],
+    [
+     98.5,
+     815.0
+    ],
+    [
+     90.0,
+     832.0
+    ],
+    [
+     70.0,
+     842.0
+    ],
+    [
+     40.0,
+     847.0
+    ],
+    [
+     0.0,
+     850.0
+    ]
+   ],
+   "parts": [
+    {
+     "name": "shaft",
+     "z0": 0,
+     "z1": 805,
+     "r_min": 100,
+     "r_max": 125,
+     "what": "a tapered cylinder, r 125 to 100"
+    },
+    {
+     "name": "top",
+     "z0": 805,
+     "z1": 850,
+     "r_min": 0,
+     "r_max": 100,
+     "what": "a 20 mm chamfer into a shallow dome (rise 18)"
+    }
+   ],
+   "mouldings": [],
+   "edges": "top arris chamfered 20, foot arris chipped",
+   "seams": "two vertical mould lines 180 degrees apart, 1 mm, and a horizontal pour line at z 400 +-60",
+   "fixings": "none",
+   "root": {
+    "on_flags": "cast into a footing; the flags butt it; a 10 mm tarmac or mortar fillet",
+    "pivot": "centre at the ground"
+   },
+   "paint": {
+    "colour": "bare concrete",
+    "srgb": [
+     152,
+     150,
+     144
+    ],
+    "roughness_words": "dry, rough",
+    "roughness": 0.9,
+    "metal": 0,
+    "note": "never painted; no band"
+   },
+   "wear": [
+    "a dark grime band to 150 mm, rain streaks below the chamfer, a darker top",
+    "chipped top arris with the aggregate showing",
+    "a rust-coloured stain 40 mm wide from a cut-off lifting eye (Judgement)"
+   ],
+   "variants": [
+    {
+     "id": "K3",
+     "note": "one model; condition: clean-ish, grimy, chipped"
+    }
+   ],
+   "marks": "none: plain castings, no maker, no council, no crest, no monogram, no lettering, no band"
+  },
+  "K4": {
+   "name": "steel_tube",
+   "title": "Steel tube bollard with a welded cap",
+   "basis": "Judgement: no photograph reached; a 114.3 mm tube (the asset plan's 60 to 114 mm), 1.0 m above ground (a search-summary lead for a round bollard 1000 high)",
+   "height": 1000,
+   "base_diameter": 114.3,
+   "profile_rz": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     57.15,
+     0.0
+    ],
+    [
+     57.15,
+     982.0
+    ],
+    [
+     54.0,
+     989.0
+    ],
+    [
+     44.0,
+     995.0
+    ],
+    [
+     26.0,
+     999.0
+    ],
+    [
+     0.0,
+     1000.0
+    ]
+   ],
+   "parts": [
+    {
+     "name": "tube",
+     "z0": 0,
+     "z1": 982,
+     "r_min": 57.15,
+     "r_max": 57.15,
+     "what": "a plain tube 114.3 OD"
+    },
+    {
+     "name": "cap",
+     "z0": 982,
+     "z1": 1000,
+     "r_min": 0,
+     "r_max": 57.15,
+     "what": "a welded dome cap, a bead of weld round its edge"
+    }
+   ],
+   "mouldings": [],
+   "edges": "the cap is a shallow dome (rise 18) with a 2 mm weld bead",
+   "seams": "a vertical weld seam up the tube (Judgement)",
+   "fixings": "none",
+   "root": {
+    "on_flags": "set in a concrete footing flush with the paving, a 15 mm tarmac fillet round the tube",
+    "pivot": "centre at the ground"
+   },
+   "paint": {
+    "colour": "black gloss or dull galvanised",
+    "srgb_black": [
+     24,
+     24,
+     26
+    ],
+    "srgb_galvanised": [
+     120,
+     122,
+     124
+    ],
+    "roughness_words": "gloss (black); dull sheen (galvanised)",
+    "roughness": 0.4,
+    "metal": 1,
+    "note": "black variant: metal 0 (paint); galvanised variant: metal 1; NO band, NO sleeve (reflective bands are later)"
+   },
+   "wear": [
+    "scuffs and a rust bloom 100 mm high at the foot where the paint is gone",
+    "a dent and a scrape at 0.4 to 0.6 m",
+    "a lean of up to 2 degrees where a van has leant on it"
+   ],
+   "variants": [
+    {
+     "id": "K4",
+     "note": "one model; black, galvanised, black with a rusted foot"
+    }
+   ],
+   "marks": "none: plain castings, no maker, no council, no crest, no monogram, no lettering, no band"
+  },
+  "K5": {
+   "name": "chain_post",
+   "title": "Bolted cast-iron chain post (the quay edge, ladder head and steps)",
+   "basis": "Photo (LH_b only, a 2019 marina); scale +-6 %; period doubtful, see the sources",
+   "height": 1135.0,
+   "base_diameter": 286,
+   "profile_rz": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     143.0,
+     0.0
+    ],
+    [
+     143.0,
+     36.0
+    ],
+    [
+     141.0,
+     40.0
+    ],
+    [
+     125.0,
+     50.0
+    ],
+    [
+     105.0,
+     72.0
+    ],
+    [
+     95.0,
+     90.0
+    ],
+    [
+     91.0,
+     100.0
+    ],
+    [
+     91.0,
+     278.0
+    ],
+    [
+     95.0,
+     285.0
+    ],
+    [
+     101.0,
+     297.0
+    ],
+    [
+     105.0,
+     315.0
+    ],
+    [
+     105.0,
+     335.0
+    ],
+    [
+     103.0,
+     352.0
+    ],
+    [
+     98.0,
+     372.0
+    ],
+    [
+     92.0,
+     390.0
+    ],
+    [
+     90.0,
+     398.0
+    ],
+    [
+     87.0,
+     600.0
+    ],
+    [
+     86.0,
+     868.0
+    ],
+    [
+     93.0,
+     874.0
+    ],
+    [
+     100.0,
+     888.0
+    ],
+    [
+     101.0,
+     900.0
+    ],
+    [
+     98.0,
+     915.0
+    ],
+    [
+     90.0,
+     922.0
+    ],
+    [
+     88.0,
+     926.0
+    ],
+    [
+     80.0,
+     932.0
+    ],
+    [
+     80.0,
+     1000.0
+    ],
+    [
+     90.0,
+     1012.0
+    ],
+    [
+     102.0,
+     1028.0
+    ],
+    [
+     107.0,
+     1042.0
+    ],
+    [
+     106.0,
+     1055.0
+    ],
+    [
+     100.0,
+     1066.0
+    ],
+    [
+     92.0,
+     1072.0
+    ],
+    [
+     84.0,
+     1075.0
+    ],
+    [
+     84.0,
+     1090.0
+    ],
+    [
+     62.0,
+     1095.0
+    ],
+    [
+     58.0,
+     1108.0
+    ],
+    [
+     48.0,
+     1120.0
+    ],
+    [
+     30.0,
+     1130.0
+    ],
+    [
+     14.0,
+     1134.0
+    ],
+    [
+     0.0,
+     1135.0
+    ]
+   ],
+   "parts": [
+    {
+     "name": "flange",
+     "z0": 0,
+     "z1": 100,
+     "r_min": 0.0,
+     "r_max": 143.0,
+     "what": "a round cast flange r 143, rim 36 high with a rounded top edge, its top sloping up to the shaft"
+    },
+    {
+     "name": "shaft_lower",
+     "z0": 100,
+     "z1": 278,
+     "r_min": 91.0,
+     "r_max": 91.0,
+     "what": "a cylinder r 91"
+    },
+    {
+     "name": "lower_bead",
+     "z0": 278,
+     "z1": 398,
+     "r_min": 90.0,
+     "r_max": 105.0,
+     "what": "a fat bead, r 105 at its fullest, 120 high, flared below and rounded above"
+    },
+    {
+     "name": "shaft_mid",
+     "z0": 398,
+     "z1": 868,
+     "r_min": 86.0,
+     "r_max": 90.0,
+     "what": "a cylinder r 90 narrowing to 86"
+    },
+    {
+     "name": "upper_bead",
+     "z0": 868,
+     "z1": 926,
+     "r_min": 86.0,
+     "r_max": 101.0,
+     "what": "a second, smaller bead, r 101 at its fullest, with a fillet ring on top"
+    },
+    {
+     "name": "neck",
+     "z0": 926,
+     "z1": 1000,
+     "r_min": 80.0,
+     "r_max": 88.0,
+     "what": "a cylinder r 80"
+    },
+    {
+     "name": "cap_collar",
+     "z0": 1000,
+     "z1": 1075,
+     "r_min": 80.0,
+     "r_max": 107.0,
+     "what": "a flaring collar to a rounded rim r 107 (at z 1042), then a quirk and a step to r 84"
+    },
+    {
+     "name": "dome",
+     "z0": 1075,
+     "z1": 1135,
+     "r_min": 0.0,
+     "r_max": 84.0,
+     "what": "a step r 84 up to z 1090, then a dome r 62 at its foot, 40 high"
+    }
+   ],
+   "mouldings": [
+    {
+     "name": "lower_bead",
+     "z": [
+      278,
+      398
+     ],
+     "r_peak": 105
+    },
+    {
+     "name": "upper_bead",
+     "z": [
+      868,
+      926
+     ],
+     "r_peak": 101
+    },
+    {
+     "name": "cap_collar",
+     "z": [
+      1000,
+      1075
+     ],
+     "r_peak": 107
+    }
+   ],
+   "edges": "rounded or coved throughout",
+   "seams": "none visible",
+   "fixings": {
+    "bolts": {
+     "count": 4,
+     "pitch_circle_r": 124,
+     "nut_across_flats": 22,
+     "nut_height": 14,
+     "stud_above_nut": 14,
+     "angles_deg": [
+      45,
+      135,
+      225,
+      315
+     ],
+     "note": "hex nuts on studs through the flange, at 45 degrees to the line of posts (Photo LH_b: two at the sides, one at the front, one hidden)"
+    },
+    "chain_eyes": {
+     "z": [
+      420,
+      840
+     ],
+     "note": "a cast D-lug on each side of the shaft at two heights, in the line of the posts; the chain's end link passes through it"
+    }
+   },
+   "chain": {
+    "post_spacing_m": 3.0,
+    "link": {
+     "bar_diameter": 12,
+     "inner_length": 55,
+     "inner_width": 25,
+     "outer_length": 79,
+     "outer_width": 49,
+     "pitch": 55
+    },
+    "spikes": {
+     "every_nth_link": 2,
+     "per_link": 2,
+     "length": 28,
+     "base": 8,
+     "note": "conical, cast on, at right angles to the link plane (Photo LH_b: the spikes show on every second link)"
+    },
+    "sag_mm": 150,
+    "sag_note": "mid-span sag of the upper chain (Judgement: 0.15 m); two chains, at the eye heights",
+    "error": "link dimensions +-15 %"
+   },
+   "root": {
+    "on_flags": "the flange stands on resin-bound gravel (Photo) or the quay apron; the nuts stand proud",
+    "pivot": "centre of the flange at the ground"
+   },
+   "paint": {
+    "colour": "black",
+    "srgb": [
+     24,
+     24,
+     26
+    ],
+    "srgb_measured": "median (17, 19, 27) with a blue sheen from the sky",
+    "roughness_words": "matt to satin, chalky",
+    "roughness": 0.55,
+    "metal": 0,
+    "note": "the nuts and studs are bright steel (srgb 150, 150, 152, metal 1) with dull rust at the threads; chain black, rubbed bright where the links touch (Photo)"
+   },
+   "wear": [
+    "dust on the flange, pale dry splash marks to 0.2 m",
+    "chain rubbed to bright steel at the contact points of the links",
+    "no rust on the casting, no graffiti"
+   ],
+   "marks": "an embossed mark about 45 mm long on the right of the shaft at z 80 to 110 (unreadable): LEAVE BLANK, no maker's mark",
+   "variants": [
+    {
+     "id": "K5",
+     "note": "one model; with or without chain; chain-eye heights 420 and 840 (+-30)"
+    }
+   ]
+  },
+  "K6": {
+   "name": "mooring_bollard",
+   "title": "Quay mooring bollard (cast iron)",
+   "basis": "Read for the bell pattern (the south-quay kit: 0.72 m, flange r 250, barrel r 150, head r 220); Judgement for the cannon pattern; no photograph of either was reached",
+   "height": 720,
+   "base_diameter": 500,
+   "profile_rz": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     250.0,
+     0.0
+    ],
+    [
+     250.0,
+     40.0
+    ],
+    [
+     190.0,
+     60.0
+    ],
+    [
+     170.0,
+     80.0
+    ],
+    [
+     150.0,
+     470.0
+    ],
+    [
+     130.0,
+     510.0
+    ],
+    [
+     130.0,
+     550.0
+    ],
+    [
+     210.0,
+     590.0
+    ],
+    [
+     220.0,
+     630.0
+    ],
+    [
+     200.0,
+     670.0
+    ],
+    [
+     110.0,
+     710.0
+    ],
+    [
+     0.0,
+     720.0
+    ]
+   ],
+   "parts": [
+    {
+     "name": "flange",
+     "z0": 0,
+     "z1": 80,
+     "r_min": 170,
+     "r_max": 250,
+     "what": "a round flange 40 thick then a cone to the barrel (kit)"
+    },
+    {
+     "name": "barrel",
+     "z0": 80,
+     "z1": 550,
+     "r_min": 130,
+     "r_max": 170,
+     "what": "a tapered barrel r 150 (kit)"
+    },
+    {
+     "name": "head",
+     "z0": 550,
+     "z1": 720,
+     "r_min": 0,
+     "r_max": 220,
+     "what": "a flared head r 220 that overhangs the barrel by 70, then a dome (kit)"
+    }
+   ],
+   "mouldings": [],
+   "edges": "rounded",
+   "seams": "none",
+   "fixings": "set in the quay masonry, 0.75 m behind the cope nose; no bolts shown",
+   "root": {
+    "on_flags": "stands in a cut in the granite sett apron or the cope, a lead or mortar joint 10 mm",
+    "pivot": "centre at the apron level"
+   },
+   "paint": {
+    "colour": "black, worn",
+    "srgb": [
+     26,
+     26,
+     28
+    ],
+    "roughness_words": "scuffed, dull",
+    "roughness": 0.6,
+    "metal": 0,
+    "note": "the kit's iron_black"
+   },
+   "wear": [
+    "rope wear: a bright groove polished into the barrel at z 480 to 520 (Judgement), ropes' rust-brown and green weed stain below the quay's high-water line is NOT on it",
+    "paint gone to rust-brown on the head's upper rim and the flange",
+    "dents and chips"
+   ],
+   "variants": [
+    {
+     "id": "K6a",
+     "note": "bell bollard (the kit profile)"
+    },
+    {
+     "id": "K6b",
+     "note": "upturned cannon barrel (Charlestown lead: a quay with one): profile_rz below",
+     "profile_rz": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       190.0,
+       0.0
+      ],
+      [
+       190.0,
+       30.0
+      ],
+      [
+       176.0,
+       60.0
+      ],
+      [
+       170.0,
+       600.0
+      ],
+      [
+       176.0,
+       604.0
+      ],
+      [
+       176.0,
+       640.0
+      ],
+      [
+       162.0,
+       646.0
+      ],
+      [
+       150.0,
+       700.0
+      ],
+      [
+       150.0,
+       760.0
+      ],
+      [
+       156.0,
+       764.0
+      ],
+      [
+       156.0,
+       790.0
+      ],
+      [
+       140.0,
+       796.0
+      ],
+      [
+       120.0,
+       840.0
+      ],
+      [
+       95.0,
+       880.0
+      ],
+      [
+       60.0,
+       905.0
+      ],
+      [
+       50.0,
+       915.0
+      ],
+      [
+       40.0,
+       940.0
+      ],
+      [
+       30.0,
+       955.0
+      ],
+      [
+       0.0,
+       965.0
+      ]
+     ],
+     "height": 965
+    }
+   ],
+   "marks": "none: plain castings, no maker, no council, no crest, no monogram, no lettering, no band"
+  },
+  "K7": {
+   "name": "cleat",
+   "title": "Horn cleat (quay or jetty)",
+   "basis": "Judgement: no photograph reached",
+   "length": 400,
+   "width": 110,
+   "height": 126,
+   "elevation_half_xz": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     200.0,
+     0.0
+    ],
+    [
+     200.0,
+     22.0
+    ],
+    [
+     62.0,
+     22.0
+    ],
+    [
+     48.0,
+     70.0
+    ],
+    [
+     185.0,
+     98.0
+    ],
+    [
+     200.0,
+     120.0
+    ],
+    [
+     172.0,
+     126.0
+    ],
+    [
+     130.0,
+     108.0
+    ],
+    [
+     0.0,
+     92.0
+    ]
+   ],
+   "parts": [
+    {
+     "name": "base",
+     "note": "400 x 110 x 22, two 16 mm bolts (nut across flats 24) 300 apart"
+    },
+    {
+     "name": "pedestal",
+     "note": "96 wide, 48 high"
+    },
+    {
+     "name": "horns",
+     "note": "tapering from 32 to 22 thick, tips 126 above the base, curving up"
+    }
+   ],
+   "paint": {
+    "colour": "black or bare iron",
+    "srgb": [
+     26,
+     26,
+     28
+    ],
+    "roughness": 0.6,
+    "metal": 0
+   },
+   "wear": [
+    "rope polish on the underside of the horns, rust at the bolts"
+   ],
+   "variants": [
+    {
+     "id": "K7",
+     "note": "one model"
+    }
+   ],
+   "marks": "none: plain castings, no maker, no council, no crest, no monogram, no lettering, no band"
+  }
+ },
+ "placements": {
+  "rule": "Bollards stand 0.5 m behind the kerb face (axis), on the footway, where a vehicle could mount it: at the two corners of a yard mouth, at the ends of the street, at the junction's kerb returns, and along the quay edge. Never in front of a door, a lamp column, a drain or the crossover.",
+  "street_proper": [
+   {
+    "id": "yard_mouth",
+    "kind": "K1",
+    "count": 2,
+    "side": "west",
+    "x_m": [
+     20.7,
+     24.3
+    ],
+    "axis_from_kerb_face_m": 0.5,
+    "z_m": -3.5,
+    "basis": "Read: the scene file already places them (vignette-pieces E5); Photo: US01_b, BGE_a show the pattern at a corner"
+   },
+   {
+    "id": "chandler_front",
+    "kind": "K4",
+    "count": 2,
+    "side": "east",
+    "x_m": [
+     40.5,
+     44.0
+    ],
+    "axis_from_kerb_face_m": 0.45,
+    "z_m": 3.45,
+    "basis": "Judgement: a shop-front guard for the metal-refit chandler's window; no photograph"
+   },
+   {
+    "id": "north_end",
+    "kind": "K3",
+    "count": 2,
+    "side": "both",
+    "x_m": [
+     47.2,
+     47.2
+    ],
+    "z_m": [
+     3.5,
+     -3.5
+    ],
+    "axis_from_kerb_face_m": 0.5,
+    "basis": "Judgement: the street's top end, where the kerbs begin to climb and bend; the plain precast ones the clutter research names at terrace corners"
+   }
+  ],
+  "junction": {
+   "id": "junction_corners",
+   "kind": "K2",
+   "count": 4,
+   "x_m": -30.0,
+   "axis_from_kerb_face_m": 0.5,
+   "note": "at the four kerb-return tangent points of the quay-end junction (atlas (400,320), x = -30), each 0.5 m behind the kerb face, read from the south-quay kit's junction; Judgement"
+  },
+  "quay": [
+   {
+    "id": "quay_edge",
+    "kind": "K6",
+    "count": 10,
+    "x_m": -69.25,
+    "behind_cope_nose_m": 0.75,
+    "spacing_m": 30,
+    "basis": "Read: the south-quay kit places ten, 0.75 m behind the cope nose, 30 m apart on the north quay; K6a 7, K6b 3 (Judgement)"
+   },
+   {
+    "id": "ladder_head",
+    "kind": "K5",
+    "count": 4,
+    "behind_cope_nose_m": 0.5,
+    "post_spacing_m": 3.0,
+    "basis": "Judgement: two each side of the quay ladder (y -36), with the chain run across its head"
+   },
+   {
+    "id": "cleats",
+    "kind": "K7",
+    "count": 3,
+    "basis": "Judgement: on the jetty's timber fender, 6 m apart, 0.1 m behind its edge"
+   }
+  ],
+  "counts": {
+   "street_proper": 6,
+   "junction": 4,
+   "street_and_junction": 10,
+   "quay_K6": 10,
+   "quay_K5": 4,
+   "quay_K7": 3
+  },
+  "by_kind": {
+   "K1": 2,
+   "K2": 4,
+   "K3": 2,
+   "K4": 2,
+   "K5": 4,
+   "K6": 10,
+   "K7": 3
+  },
+  "clearances": {
+   "from_door_centre_m": 1.2,
+   "from_lamp_column_m": 1.5,
+   "from_crossover_edge_m": 0.25,
+   "from_other_furniture_m": 0.6,
+   "footway_clear_min_m": 1.2
+  }
+ },
+ "variants": {
+  "rule": "two to four models a kind at most; the town's council fits one design to a street, so repeats are true; variety is age and condition (the asset plan)",
+  "models": {
+   "K1": 2,
+   "K2": 2,
+   "K3": 1,
+   "K4": 1,
+   "K5": 1,
+   "K6": 2,
+   "K7": 1
+  },
+  "conditions_per_model": 3,
+  "seeds": {
+   "lean_deg": [
+    0,
+    2.0
+   ],
+   "lean_note": "Photo: 0.2 to 1.0 degree in the viewing plane on five bollards, inside the panoramas' own tilt error; the asset plan's 1 to 3 degrees is the rule; 2 is the cap here",
+   "paint_fade": [
+    0,
+    1
+   ],
+   "dirt_height_mm": [
+    80,
+    600
+   ],
+   "rust": [
+    0,
+    1
+   ],
+   "chips": [
+    0,
+    12
+   ],
+   "foot_paint_loss_height_mm": [
+    0,
+    120
+   ],
+   "dents": [
+    0,
+    2
+   ]
+  }
+ },
+ "materials": {
+  "iron_black_gloss": {
+   "srgb": [
+    24,
+    24,
+    26
+   ],
+   "roughness": 0.35,
+   "metal": 0,
+   "use": "K1, K2b"
+  },
+  "iron_grey_satin": {
+   "srgb": [
+    88,
+    89,
+    91
+   ],
+   "roughness": 0.5,
+   "metal": 0,
+   "use": "K2a"
+  },
+  "iron_black_matt": {
+   "srgb": [
+    24,
+    24,
+    26
+   ],
+   "roughness": 0.55,
+   "metal": 0,
+   "use": "K5, K6"
+  },
+  "bare_iron_foot": {
+   "srgb": [
+    64,
+    58,
+    52
+   ],
+   "roughness": 0.7,
+   "metal": 0,
+   "use": "paint loss at the foot of K1 (Photo BGE_a: median 4.5 times the painted body's lightness)"
+  },
+  "concrete_grey": {
+   "srgb": [
+    152,
+    150,
+    144
+   ],
+   "roughness": 0.9,
+   "metal": 0,
+   "use": "K3"
+  },
+  "galvanised": {
+   "srgb": [
+    120,
+    122,
+    124
+   ],
+   "roughness": 0.5,
+   "metal": 1,
+   "use": "K4 variant"
+  },
+  "rust": {
+   "srgb": [
+    110,
+    60,
+    32
+   ],
+   "roughness": 0.85,
+   "metal": 0,
+   "use": "rust blooms"
+  },
+  "bright_steel": {
+   "srgb": [
+    150,
+    150,
+    152
+   ],
+   "roughness": 0.4,
+   "metal": 1,
+   "use": "K5 nuts, studs"
+  }
+ },
+ "kerb_frame": {
+  "kerb_face_line": "y = 0 (the kerbs target's plan frame: the foot of the face at the channel); the axis stands at y = -500 mm toward the footway",
+  "pivot_z": "footway flag top, +120 mm above the channel top; the kerb top is +125 (granite)",
+  "existing_stand_in": "0.765 m high, r 108 (the street recipe's cannon-and-ball clutter bollard); the held decorative_bollard_02 is 1.008 m high, 0.201 across"
+ },
+ "could_not_settle": [
+  "The camera heights (1.0 to 1.22 m, per panorama) rest on brick gauge, line width and paver size; every length is +-6 to +-10 % until a photograph with a measuring scale in the plane is reached.",
+  "Whether any of these bollards stood in a 1990 British street: every photograph is from 2019 or later. K1's and K2's patterns (a plinth, taper, bead and domed or flat cap) are the long-lived cast pattern; the borough of K1 and K2 is not known.",
+  "Concrete (K3), steel tube (K4), mooring bollards (K6), cleats (K7): no photograph reached; their numbers are the kit's, the asset plan's or judgement.",
+  "Whether a chain post (K5) belongs on a 1990 quay: the LH_b post is on a marina built in the 1980s to 1990s.",
+  "Casting marks: none is shown on K1 or K2; K5 has one unreadable embossed mark near the foot, left blank."
+ ],
+ "to_read_when_the_network_opens": [
+  "Wikimedia Commons: Category Bollards in the United Kingdom, and its cannon, mooring and concrete subcategories (1975 to 2000 photographs with the author and date on the file page)",
+  "Geograph: 1980s and 1990s squares of dock and harbour towns with cast bollards, cleats and concrete posts (CC BY-SA, the date taken on each page)",
+  "Historic England list entries 1202530 (Bristol, Floating Harbour quay wall and bollards, 1893), 1272267 (Docks 1 to 6 quay walls and bollards) and the Kent and Derbyshire HER pages for cannon bollards",
+  "The Bristol Industrial Archaeological Society's Journal 3, Grahame Farr's 1970 paper on the quay bollards (types with sizes)",
+  "BS 7263 and the Traffic Signs Manual chapter 3 on bollards and their set-backs; a 1980s highways standard detail for a precast and a cast bollard",
+  "The Hook sheet's own bollard, if it has one, at full size, and the street recipe's clutter bollard's reference photographs"
+ ],
+ "checks": [
+  {
+   "name": "K1_height",
+   "applies_to": "K1",
+   "measure": "z of the top of the dome above the foot",
+   "expected": 1050.05,
+   "tolerance": 40,
+   "kind": "Photo US01_b 1050; BGE_a 1014 (read at calibrated camera heights)"
+  },
+  {
+   "name": "K1_base_diameter",
+   "applies_to": "K1",
+   "measure": "diameter of the plinth at z 60",
+   "expected": 195.7,
+   "tolerance": 14,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K1_plinth_top_z",
+   "applies_to": "K1",
+   "measure": "z where the plinth stops and the shoulder begins",
+   "expected": 117,
+   "tolerance": 20,
+   "kind": "Photo US01_b 117; BGE_a about 137"
+  },
+  {
+   "name": "K1_shaft_diameter_z300",
+   "applies_to": "K1",
+   "measure": "diameter at z 300",
+   "expected": 148.9,
+   "tolerance": 10,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K1_shaft_diameter_z800",
+   "applies_to": "K1",
+   "measure": "diameter at z 800",
+   "expected": 121.0,
+   "tolerance": 10,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K1_taper",
+   "applies_to": "K1",
+   "measure": "dr/dz of the shaft between z 140 and 490 (a straight taper)",
+   "expected": -0.0279,
+   "tolerance": 0.008,
+   "kind": "Photo US01_b; BGE_a -0.0258"
+  },
+  {
+   "name": "K1_collar_max_diameter",
+   "applies_to": "K1",
+   "measure": "largest diameter of the bead",
+   "expected": 166.4,
+   "tolerance": 10,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K1_collar_centre_z",
+   "applies_to": "K1",
+   "measure": "z of the bead's fullest point",
+   "expected": 531,
+   "tolerance": 30,
+   "kind": "Photo US01_b 0.506 H; BGE_a 0.53 H"
+  },
+  {
+   "name": "K1_collar_height",
+   "applies_to": "K1",
+   "measure": "z extent of the bead",
+   "expected": 64,
+   "tolerance": 12,
+   "kind": "Photo US01_b"
+  },
+  {
+   "name": "K1_neck_diameter",
+   "applies_to": "K1",
+   "measure": "diameter at z 935",
+   "expected": 107.5,
+   "tolerance": 8,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K1_cap_collar_max_diameter",
+   "applies_to": "K1",
+   "measure": "largest diameter of the cap collar",
+   "expected": 136.2,
+   "tolerance": 8,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K1_cap_collar_z",
+   "applies_to": "K1",
+   "measure": "z of the cap collar's fullest point",
+   "expected": 960,
+   "tolerance": 15,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K1_dome_foot_diameter",
+   "applies_to": "K1",
+   "measure": "diameter of the dome at its foot (z 1000)",
+   "expected": 102.3,
+   "tolerance": 8,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K1_dome_rise",
+   "applies_to": "K1",
+   "measure": "height of the dome above its foot",
+   "expected": 53,
+   "tolerance": 8,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K1_silhouette_deviation",
+   "applies_to": "K1",
+   "measure": "largest radial distance between the built outline and profile_rz at the same z",
+   "expected": 0,
+   "tolerance": 6,
+   "kind": "the whole elevation, 5 mm a pixel photographs"
+  },
+  {
+   "name": "K1_lean_seed",
+   "applies_to": "K1 and all rooted kinds",
+   "measure": "rotation of an instance about its pivot",
+   "expected": [
+    0,
+    2.0
+   ],
+   "tolerance": 0.1,
+   "kind": "Photo 0.2 to 1.0 degree in the viewing plane; asset plan 1 to 3; cap 2"
+  },
+  {
+   "name": "K1_paint_albedo",
+   "applies_to": "K1",
+   "measure": "base colour of the painted metal, sRGB",
+   "expected": [
+    24,
+    24,
+    26
+   ],
+   "tolerance": 10,
+   "kind": "Photo (median 10 to 38 across four tone-mapped panoramas)"
+  },
+  {
+   "name": "K1_paint_roughness",
+   "applies_to": "K1",
+   "measure": "roughness of the paint",
+   "expected": 0.35,
+   "tolerance": 0.15,
+   "kind": "Photo (the sky shows in the dome and the bead)"
+  },
+  {
+   "name": "K1_foot_paint_loss",
+   "applies_to": "K1 variant worn",
+   "measure": "share of the plinth's lower 110 mm bare (exposed iron material), speckled",
+   "expected": [
+    0.6,
+    0.7
+   ],
+   "tolerance": 0.1,
+   "kind": "Photo BGE_a"
+  },
+  {
+   "name": "K1_no_band_no_mark",
+   "applies_to": "K1, K2, K3, K4, K5, K6, K7",
+   "measure": "no white, yellow or reflective band material, no lettering, no crest, no monogram, no maker's mark on any mesh or texture",
+   "expected": 0,
+   "tolerance": 0,
+   "kind": "canon, the brief; no photograph shows a band"
+  },
+  {
+   "name": "K2_height",
+   "applies_to": "K2",
+   "measure": "z of the top of the cap",
+   "expected": 1180.22,
+   "tolerance": 50,
+   "kind": "Photo BB_b 1180 (at its calibrated 1.22 m); US02_a 1188 (at 1.15 m)"
+  },
+  {
+   "name": "K2_foot_ring_diameter",
+   "applies_to": "K2",
+   "measure": "largest diameter of the rolled foot ring",
+   "expected": 281.0,
+   "tolerance": 16,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K2_shaft_diameter_z300",
+   "applies_to": "K2",
+   "measure": "diameter at z 300",
+   "expected": 220.8,
+   "tolerance": 12,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K2_shaft_diameter_z900",
+   "applies_to": "K2",
+   "measure": "diameter at z 900",
+   "expected": 171.7,
+   "tolerance": 10,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K2_collar_z_over_height",
+   "applies_to": "K2",
+   "measure": "z of the collar band's middle divided by the height",
+   "expected": 0.59,
+   "tolerance": 0.03,
+   "kind": "Photo BB_b 0.587; US02_a 0.592"
+  },
+  {
+   "name": "K2_collar_proud",
+   "applies_to": "K2",
+   "measure": "radial projection of the collar band beyond the taper",
+   "expected": 8,
+   "tolerance": 4,
+   "kind": "Photo"
+  },
+  {
+   "name": "K2_cap_overhang",
+   "applies_to": "K2",
+   "measure": "radial overhang of the cap plate beyond the shaft under it",
+   "expected": 6,
+   "tolerance": 4,
+   "kind": "Photo BB_b"
+  },
+  {
+   "name": "K2_silhouette_deviation",
+   "applies_to": "K2",
+   "measure": "largest radial distance between the built outline and profile_rz at the same z",
+   "expected": 0,
+   "tolerance": 7,
+   "kind": "photographs"
+  },
+  {
+   "name": "K2_paint_albedo",
+   "applies_to": "K2",
+   "measure": "base colour, sRGB (grey variant / black variant)",
+   "expected": [
+    [
+     88,
+     89,
+     91
+    ],
+    [
+     24,
+     24,
+     26
+    ]
+   ],
+   "tolerance": 10,
+   "kind": "Photo (grey is Judgement-neutralised from a warm-lit measurement)"
+  },
+  {
+   "name": "K5_height",
+   "applies_to": "K5",
+   "measure": "z of the top of the dome",
+   "expected": 1135.0,
+   "tolerance": 40,
+   "kind": "Photo LH_b (scale +-6 %)"
+  },
+  {
+   "name": "K5_flange_diameter",
+   "applies_to": "K5",
+   "measure": "diameter of the flange",
+   "expected": 286,
+   "tolerance": 16,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K5_flange_thickness",
+   "applies_to": "K5",
+   "measure": "height of the flange rim",
+   "expected": 36,
+   "tolerance": 8,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K5_shaft_diameter_z600",
+   "applies_to": "K5",
+   "measure": "diameter at z 600",
+   "expected": 174.0,
+   "tolerance": 10,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K5_lower_bead",
+   "applies_to": "K5",
+   "measure": "largest diameter of the lower bead and its z centre",
+   "expected": [
+    210,
+    330
+   ],
+   "tolerance": [
+    10,
+    30
+   ],
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K5_upper_bead",
+   "applies_to": "K5",
+   "measure": "largest diameter of the upper bead and its z centre",
+   "expected": [
+    202,
+    892
+   ],
+   "tolerance": [
+    10,
+    30
+   ],
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K5_cap_collar_max_diameter",
+   "applies_to": "K5",
+   "measure": "largest diameter of the cap collar",
+   "expected": 214,
+   "tolerance": 10,
+   "kind": "Photo (scale +-7 %)"
+  },
+  {
+   "name": "K5_bolts",
+   "applies_to": "K5",
+   "measure": "number of bolts, pitch-circle radius, nut across flats",
+   "expected": [
+    4,
+    124,
+    22
+   ],
+   "tolerance": [
+    0,
+    8,
+    4
+   ],
+   "kind": "Photo LH_b"
+  },
+  {
+   "name": "K5_chain_eyes_z",
+   "applies_to": "K5",
+   "measure": "z of the two chain eyes",
+   "expected": [
+    420,
+    840
+   ],
+   "tolerance": 30,
+   "kind": "Photo LH_b"
+  },
+  {
+   "name": "K5_chain",
+   "applies_to": "K5",
+   "measure": "bar diameter, link outer length, post spacing (m)",
+   "expected": [
+    12,
+    79,
+    3.0
+   ],
+   "tolerance": [
+    3,
+    12,
+    0.3
+   ],
+   "kind": "Photo scaled +-15 %"
+  },
+  {
+   "name": "K5_blank",
+   "applies_to": "K5",
+   "measure": "the embossed mark near the foot is not copied: the shaft is smooth",
+   "expected": 0,
+   "tolerance": 0,
+   "kind": "the brief"
+  },
+  {
+   "name": "street_bollards_by_kind",
+   "applies_to": "street x 0 to 48",
+   "measure": "count of K1, K3, K4 on the street proper",
+   "expected": [
+    2,
+    2,
+    2
+   ],
+   "tolerance": 0,
+   "kind": "Read (K1: the scene file) and Judgement"
+  },
+  {
+   "name": "street_total_with_junction",
+   "applies_to": "street and its junction",
+   "measure": "count of all bollards in x -36 to 48",
+   "expected": 10,
+   "tolerance": 0,
+   "kind": "asset plan: 6 to 10 on the street"
+  },
+  {
+   "name": "axis_from_kerb_face_mm",
+   "applies_to": "street K1 to K4",
+   "measure": "distance from the kerb face to the axis",
+   "expected": 500,
+   "tolerance": 100,
+   "kind": "Read (the scene file 0.5 m); Photo 0.33 to 1.25 m on kerb-side bollards"
+  },
+  {
+   "name": "footway_clear_min_m",
+   "applies_to": "every street bollard",
+   "measure": "clear width between the base and the building line (footway 2.0 m)",
+   "expected": 1.2,
+   "tolerance": 0,
+   "kind": "Judgement (a wheelchair needs 1.0)"
+  },
+  {
+   "name": "clear_of_crossover",
+   "applies_to": "K1 at the yard mouth",
+   "measure": "distance from the crossover edge (x 21.0 and 24.0)",
+   "expected": 0.3,
+   "tolerance": 0.1,
+   "kind": "Read"
+  },
+  {
+   "name": "clear_of_doors_m",
+   "applies_to": "east and west bollards",
+   "measure": "distance in plan from the axis to any shop door or side door centre (taken on the building line, z +-5.0)",
+   "expected": 1.2,
+   "tolerance": 0,
+   "kind": "the shopfronts target door centres"
+  },
+  {
+   "name": "quay_set_back_m",
+   "applies_to": "K6",
+   "measure": "axis behind the cope nose",
+   "expected": 0.75,
+   "tolerance": 0.1,
+   "kind": "Read (the south-quay kit)"
+  },
+  {
+   "name": "quay_counts",
+   "applies_to": "the quay",
+   "measure": "K6, K5, K7",
+   "expected": [
+    10,
+    4,
+    3
+   ],
+   "tolerance": 0,
+   "kind": "Read (K6); Judgement"
+  },
+  {
+   "name": "K3_dimensions",
+   "applies_to": "K3",
+   "measure": "height, foot diameter, top diameter",
+   "expected": [
+    850,
+    250,
+    200
+   ],
+   "tolerance": [
+    100,
+    30,
+    30
+   ],
+   "kind": "Judgement (leads: 600 or 915 above ground, 230 mm; 160 x 750)"
+  },
+  {
+   "name": "K4_dimensions",
+   "applies_to": "K4",
+   "measure": "height, tube diameter",
+   "expected": [
+    1000,
+    114.3
+   ],
+   "tolerance": [
+    100,
+    8
+   ],
+   "kind": "Judgement (the asset plan's 60 to 114 mm tube)"
+  },
+  {
+   "name": "K6_dimensions",
+   "applies_to": "K6a",
+   "measure": "height, flange diameter, barrel diameter, head diameter",
+   "expected": [
+    720,
+    500,
+    300,
+    440
+   ],
+   "tolerance": [
+    80,
+    40,
+    30,
+    40
+   ],
+   "kind": "Read (the south-quay kit); Judgement"
+  },
+  {
+   "name": "K7_dimensions",
+   "applies_to": "K7",
+   "measure": "length, width, height",
+   "expected": [
+    400,
+    110,
+    126
+   ],
+   "tolerance": [
+    60,
+    20,
+    20
+   ],
+   "kind": "Judgement"
+  },
+  {
+   "name": "material_paint_values",
+   "applies_to": "all",
+   "measure": "metal 0 for painted iron and concrete; metal 1 only for galvanised steel and bright nuts",
+   "expected": 1,
+   "tolerance": 0,
+   "kind": "target.json materials"
+  }
+ ],
+ "self_check": {
+  "result": "SELF-CHECK PASS: 260 of 260 tests pass (A printed numbers 39/39, B photograph measurements 21/21, C drawing on the photographs 30/30, D internal consistency 92/92, E text and files 78/78)",
+  "tests": 260,
+  "passed": 260,
+  "groups": {
+   "A": {
+    "passed": 39,
+    "of": 39
+   },
+   "B": {
+    "passed": 21,
+    "of": 21
+   },
+   "C": {
+    "passed": 30,
+    "of": 30
+   },
+   "D": {
+    "passed": 92,
+    "of": 92
+   },
+   "E": {
+    "passed": 78,
+    "of": 78
+   }
+  },
+  "photograph_fit": {
+   "US01_b": {
+    "scale_fitted_on_one_dimension": 0.997,
+    "median_abs_mm": 0.85,
+    "p90_abs_mm": 7.28,
+    "coverage": 1.0,
+    "axis_offset_mm": -5.0,
+    "lean_deg": 1.6
+   },
+   "BGE_a": {
+    "scale_fitted_on_one_dimension": 1.001,
+    "median_abs_mm": 2.38,
+    "p90_abs_mm": 7.59,
+    "coverage": 1.0,
+    "axis_offset_mm": 2.0,
+    "lean_deg": 0.7
+   },
+   "BB_b": {
+    "scale_fitted_on_one_dimension": 0.986,
+    "median_abs_mm": 2.28,
+    "p90_abs_mm": 7.13,
+    "coverage": 0.81,
+    "axis_offset_mm": 1.0,
+    "lean_deg": 0.0
+   },
+   "US02_a": {
+    "scale_fitted_on_one_dimension": 0.987,
+    "median_abs_mm": 2.46,
+    "p90_abs_mm": 7.0,
+    "coverage": 1.0,
+    "axis_offset_mm": -5.0,
+    "lean_deg": 1.0
+   },
+   "LH_b": {
+    "scale_fitted_on_one_dimension": 1.001,
+    "median_abs_mm": 2.26,
+    "p90_abs_mm": 9.15,
+    "coverage": 0.96,
+    "axis_offset_mm": -3.0,
+    "lean_deg": 0.7
+   }
+  },
+  "failed": []
+ }
+}

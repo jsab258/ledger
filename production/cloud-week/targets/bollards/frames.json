@@ -1,0 +1,72 @@
+{
+ "US01_b": {
+  "file": "ph-urban_street_01-us01_b-k1-elevation.jpg",
+  "pano": "urban_street_01",
+  "mm_per_px": 1.0,
+  "t_left_mm": -170,
+  "z_top_mm": 1110.05,
+  "h_cam_m": 1.16,
+  "d_axis_m": 2.2078,
+  "psi_deg": 12.67,
+  "axis_offset_mm": -5.0,
+  "lean_deg": 1.6,
+  "fit_score": 5191.8,
+  "kind": "K1"
+ },
+ "BGE_a": {
+  "file": "ph-bethnal_green_entrance-bge_a-k1-elevation.jpg",
+  "pano": "bethnal_green_entrance",
+  "mm_per_px": 1.0,
+  "t_left_mm": -170,
+  "z_top_mm": 1073.79,
+  "h_cam_m": 1.02,
+  "d_axis_m": 2.3968,
+  "psi_deg": 67.342,
+  "axis_offset_mm": 2.0,
+  "lean_deg": 0.7,
+  "fit_score": 3798.2,
+  "kind": "K1"
+ },
+ "BB_b": {
+  "file": "ph-birbeck_street_underpass-bb_b-k2-elevation.jpg",
+  "pano": "birbeck_street_underpass",
+  "mm_per_px": 1.15,
+  "t_left_mm": -170,
+  "z_top_mm": 1240.22,
+  "h_cam_m": 1.22,
+  "d_axis_m": 3.8097,
+  "psi_deg": -24.711,
+  "axis_offset_mm": 1.0,
+  "lean_deg": 0.0,
+  "fit_score": 2861.5,
+  "kind": "K2"
+ },
+ "US02_a": {
+  "file": "ph-urban_street_02-us02_a-k2-elevation.jpg",
+  "pano": "urban_street_02",
+  "mm_per_px": 1.15,
+  "t_left_mm": -170,
+  "z_top_mm": 1248.0,
+  "h_cam_m": 1.15,
+  "d_axis_m": 7.0211,
+  "psi_deg": -148.8,
+  "axis_offset_mm": -5.0,
+  "lean_deg": 1.0,
+  "fit_score": 3497.5,
+  "kind": "K2"
+ },
+ "LH_b": {
+  "file": "ph-limehouse-lh_b-k5-elevation.jpg",
+  "pano": "limehouse",
+  "mm_per_px": 1.1,
+  "t_left_mm": -170,
+  "z_top_mm": 1195.0,
+  "h_cam_m": 1.17,
+  "d_axis_m": 1.7206,
+  "psi_deg": -59.492,
+  "axis_offset_mm": -3.0,
+  "lean_deg": 0.7,
+  "fit_score": 4708.2,
+  "kind": "K5"
+ }
+}
