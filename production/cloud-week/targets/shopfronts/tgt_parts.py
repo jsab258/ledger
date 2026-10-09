@@ -131,6 +131,7 @@ def pilaster():
         rect("plinth_skirting", 0, 0, 350, 120),
         rect("plinth_stile_l", 0, 120, 50, PT - 80), rect("plinth_stile_r", 300, 120, 350, PT - 80),
         rect("plinth_field", 50, 132, 300, PT - 92, "sunk"),
+        rect("plinth_rail_b", 50, 120, 300, 132), rect("plinth_rail_t", 50, PT - 92, 300, PT - 80),
         rect("plinth_cap", 0, PT - 80, 350, PT),
         rect("base_ogee", u0 - 25, PT, u1 + 25, PT + 60, "raised"),
         rect("shaft_bottom_rail", u0, PT + 60, u1, br_top), rect("shaft_stile_l", u0, br_top, 75, 2430),
@@ -141,6 +142,7 @@ def pilaster():
         rect("plinth_skirting", 0, 0, 350, 120),
         rect("plinth_stile_l", 0, 120, 50, PT - 80), rect("plinth_stile_r", 300, 120, 350, PT - 80),
         rect("plinth_field", 50, 132, 300, PT - 92, "sunk"),
+        rect("plinth_rail_b", 50, 120, 300, 132), rect("plinth_rail_t", 50, PT - 92, 300, PT - 80),
         rect("plinth_cap", 0, PT - 80, 350, PT),
         rect("base_ogee", u0 - 25, PT, u1 + 25, PT + 60, "raised"),
         rect("shaft_bottom_rail", u0, PT + 60, u1, br_top), rect("shaft_top_rail", u0, 2430, u1, NECK_Z),
@@ -249,7 +251,7 @@ def console():
         return [(c[0] + r * math.cos(math.radians(a0 + (a1 - a0) * k / n)), c[1] + r * math.sin(math.radians(a0 + (a1 - a0) * k / n))) for k in range(n + 1)]
     zf = LC[1] - math.sqrt(LR_ ** 2 - (60.0 - LC[0]) ** 2)                      # where the foot's front (d 60) meets the lower volute
     a0 = math.degrees(math.atan2(zf - LC[1], 60.0 - LC[0]))
-    lower = circ(LC, LR_, a0, 40.0, 8)                                           # round the lower volute's front: from the foot to 40 degrees
+    lower = circ(LC, LR_, a0, 0.0, 5)[:-1] + circ(LC, LR_, 0.0, 40.0, 4)         # round the lower volute's front: from the foot through its eastern point (d 76 at z 62) to 40 degrees
     p40 = lower[-1]
     waist1 = bezier(p40, (p40[0] - 5.1, p40[1] + 6.1), (62.0, 115.0), (62.0, 130.0), 6)       # concave: d falls to its narrowest, 62 at z 130
     waist2 = bezier((62.0, 130.0), (62.0, 190.0), (84.0, 300.0), (84.0, 374.0), 10)           # back out along the stem

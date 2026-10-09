@@ -160,7 +160,8 @@ FEATURES = [
     ("abacus_top", "capital", "R", -1704, -1215, -1200, 8, "top of the capital's top band (the fascia field's foot)"),
     ("shaft_left", "capital", "C", -1270, -1500, -1440, 8, "shaft, left edge"),
     ("shaft_right", "capital", "C", -1102, -1500, -1440, 8, "shaft, right edge of the front face"),
-    ("shaft_return_outer", "capital", "C", -1072, -1500, -1440, 8, "the shaft's right return, outer edge (where it meets the wall)"),
+    ("shaft_return_outer", "capital", "C", -1072, -1500, -1440, 8, "the shaft's right return, outer edge (the painted return's edge)"),
+    ("shaft_return_frame", "capital", "C", -1029, -1500, -1440, 10, "the dark return's outer edge where the teal window frame begins (the next surface beside the shaft)"),
     # the fascia end (the cornice's lowest and highest edges)
     ("fascia_field_top", "fascia", "R", -1989, -960, -940, 10, "gilt line at the field's top"),
     ("fascia_field_bottom", "fascia", "R", -1705, -960, -940, 8, "gilt line at the field's foot (or the board's foot)"),

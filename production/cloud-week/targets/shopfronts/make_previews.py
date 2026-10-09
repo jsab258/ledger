@@ -9,6 +9,7 @@
   D2-ten-fronts-sheet.jpg                   the ten fronts assembled from the table
   D3-parts-pilaster-console-fascia.jpg      pilaster variants, console, capital / console / fascia / cornice section
   D4-parts-sections.jpg                     sill, stallriser, transom, mullion, jamb, bead, threshold sections (x3)
+  D5-cornice-ends-and-shutter.jpg           the cornice's mitred returns in plan; the roller shutter in section
 JPEG, at most 1200 px on the long side, under 300 KB. Nothing here shows lettering, drink, gambling or children.
 """
 import argparse
@@ -65,7 +66,7 @@ def main():
     cells = []
     for v, paint in (("panel", TD.rgb(t, "oxblood")), ("flute", TD.rgb(t, "dark_green")), ("render", TD.rgb(t, "cream")), ("clad", TD.rgb(t, "slate"))):
         cells.append((TD.draw_pilaster(t, v, False, paint).render(1.0), "pilaster " + v))
-    cells.append((TD.draw_console(t).render(1.0), "console: side silhouette + volute; front + leaf"))
+    cells.append((TD.draw_console(t).render(1.0), "console: two-volute scroll in side view, grooves and bosses; front + leaf"))
     cells.append((TD.draw_cornice_fascia(t).render(1.0), "capital / console / fascia / cornice, side section"))
     W, H = 1200, 1100
     out = Image.new("RGB", (W, H), (236, 234, 228))
@@ -87,7 +88,8 @@ def main():
     P = t["parts"]
     for nm, pr, fill in [("sill", P["sill"]["profiles"]["section"], (200, 200, 195)), ("transom T1", P["window_frame"]["profiles"]["transom_t1"], (200, 200, 195)),
                          ("stallriser panel", P["stallriser"]["variants"]["panel"]["section"], (150, 60, 60)), ("stallriser tile", P["stallriser"]["variants"]["tile"]["section"], (150, 60, 60)),
-                         ("plinth cap", P["pilaster"]["profiles"]["plinth_cap_side"], (150, 100, 95)), ("plinth stepped", P["pilaster"]["profiles"]["plinth_stepped_side"], (150, 100, 95)),
+                         ("plinth cap", P["pilaster"]["profiles"]["plinth_cap_side"], (150, 100, 95)), ("plinth stepped, hollow head", P["pilaster"]["profiles"]["plinth_stepped_side"], (150, 100, 95)),
+                         ("base ogee", P["pilaster"]["profiles"]["base_ogee"], (150, 100, 95)),
                          ("capital (neck at z 2540)", P["pilaster"]["profiles"]["capital_side"], (150, 100, 95)),
                          ("cornice", P["cornice"]["profiles"]["section"], (170, 140, 100)), ("fascia + bed mould", P["fascia_board"]["profiles"]["section"], (190, 190, 186)),
                          ("mullion T1 plan", P["window_frame"]["profiles"]["mullion_t1_plan"], (200, 200, 195)), ("mullion T2 plan", P["window_frame"]["profiles"]["mullion_t2_plan"], (200, 200, 195)),
@@ -107,6 +109,16 @@ def main():
         out.paste(c, (x + 6, y + 22))
         ImageDraw.Draw(out).text((x + 6, y + 5), "%s (x%.1f)" % (nm, s), fill=(20, 20, 20))
     save_jpg(out, os.path.join(a.previews, "D4-parts-sections.jpg"))
+    # sheet 5: the cornice's mitred returns in plan, and the roller shutter's lowered curtain in section
+    ce = TD.draw_cornice_end(t).render(1.0)
+    ss = TD.draw_shutter_section(t).render(1.0)
+    out = Image.new("RGB", (1200, 1100), (236, 234, 228))
+    c1 = fit(ce, 640, 420)
+    out.paste(c1, (10, 30)); ImageDraw.Draw(out).text((10, 12), "cornice ends in plan: the neighbour's right return, the party line (the pipe), this bay's left return (mitres 45 degrees)", fill=(20, 20, 20))
+    c2 = fit(ss, 460, 1000)
+    out.paste(c2, (700, 60)); ImageDraw.Draw(out).text((700, 12), "roller shutter, lowered (side section): curtain d 170", fill=(20, 20, 20))
+    ImageDraw.Draw(out).text((700, 28), "rails d 150-190, hood 210 deep, clear of every frame", fill=(20, 20, 20))
+    save_jpg(out, os.path.join(a.previews, "D5-cornice-ends-and-shutter.jpg"))
 
 
 if __name__ == "__main__":

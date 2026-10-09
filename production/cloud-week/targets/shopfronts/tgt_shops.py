@@ -40,6 +40,9 @@ PAINTS = {
     "brass": {"srgb": [160, 120, 55], "plain": "aged brass", "rough": 0.38, "metal": 1.0, "kind": "Judgement", "note": "the kit's brass: linear 0.55, 0.40, 0.17 (sRGB 194,170,112 lit), here the worn mid-tone"},
     "chrome": {"srgb": [170, 172, 174], "plain": "chrome, spotted", "rough": 0.20, "metal": 1.0, "kind": "Judgement", "note": "the kit's chrome"},
     "terrazzo": {"srgb": [190, 184, 170], "plain": "grey terrazzo with white chips", "rough": 0.30, "metal": 0.0, "kind": "Judgement", "note": "the kit's terrazzo threshold"},
+    "acrylic_white": {"srgb": [225, 217, 197], "plain": "white acrylic, yellowed", "rough": 0.30, "metal": 0.0, "kind": "Scaled", "note": "the fascia target's acrylic_white, aged"},
+    "acrylic_red": {"srgb": [197, 75, 62], "plain": "red acrylic face, faded", "rough": 0.30, "metal": 0.0, "kind": "Scaled", "note": "the fascia target's vermilion, aged (the newsagent's box face)"},
+    "powder_black": {"srgb": [37, 35, 34], "plain": "black powder-coat", "rough": 0.40, "metal": 0.2, "kind": "Scaled", "note": "the fascia target's shade black; the newsagent box's returns"},
     "steel_grey": {"srgb": [88, 90, 90], "plain": "galvanised steel, painted grey", "rough": 0.55, "metal": 0.6, "kind": "Judgement", "note": "roller shutter box and curtain"},
 }
 
@@ -95,6 +98,16 @@ def shop(id_, order, trade, block, bay, side, x_low, x_high, door_end, side_door
             "side_door": street_x(side, x_low, x_high, sum(lay["side_door"]) / 2) if lay["side_door"] else None},
     }
     d.update(kw)
+    opp = "R" if door_end == "L" else "L"
+    # the door handing, from Rita's front in the game today (rita-day-kit-2026-10-06.jpg): both leaves' levers / knobs are on the leaf's
+    # edge toward the door end (the viewer's left in Rita's), so both are hinged on the opposite edge (the window / shop-door side)
+    d["shop_door_hinge_viewer"] = opp
+    d["shop_door_lever_viewer"] = door_end
+    d["side_door_hinge_viewer"] = opp if side_door else None
+    d["side_door_knob_viewer"] = door_end if side_door else None
+    d["letter_plate_viewer"] = "centre"
+    d["shop_door_glass_foot_z"] = {"T1": 600.0, "M2": 600.0, "M1": 198.0}[d["shop_door"]]
+    d["door_glass_rule_applies"] = d["shop_door"] in ("T1", "M2")
     return d
 
 
@@ -157,6 +170,7 @@ def fronts():
                   paints={"pilaster": "bare_timber", "console": "bare_timber", "cornice": "bare_timber", "fascia_board": "bare_timber", "stallriser": "bare_timber",
                           "window_frame": "bleached_white", "shop_door": "black_door", "side_door": "black_door", "metal": "brass"},
                   fascia_target_id="empty_unit",
+                  whitewash={"over": "every pane of the window and the shop door's glass", "colour": "whitewash"},
                   notes="The left console (high street x, viewer's left: u 55 to 295) was clipped off and never put back (fascia-01 spec, bay x 26.825). The street draws this front bare."))
     S.append(shop("steam_laundry", 4, "launderette (Steam Laundry)", "east_parade", 4, "east", 27.0, 33.0, "L", True,
                   "A1 aluminium replacement front (1980s) with a plastic box sign",
@@ -172,6 +186,7 @@ def fronts():
                   paints={"pilaster": "cream", "console": "cream", "cornice": "cream", "fascia_board": "cream", "stallriser": "tile_white",
                           "window_frame": "alu_bronze", "shop_door": "alu_bronze", "side_door": "dark_brown", "metal": "chrome"},
                   fascia_target_id="steam_laundry",
+                  fascia_sign={"kind": "box_sign", "u": [400.0, 5600.0], "z": [2885.0, 3365.0], "depth": 150.0, "front_d": 270.0, "face": "acrylic_white", "returns": "alu_bronze", "source": "the fascia target (steam_laundry_box: outer 105, 35, 5305, 515)"},
                   notes="The lit box sign (fascia target: 5200 x 480 x 150, bronze returns) stands on the old cream board between the consoles."))
     S.append(shop("grocer", 5, "grocer", "east_parade", 5, "east", 33.0, 39.0, "L", False,
                   "R 1930s refit: bronze bars, glass stallriser, deep recessed lobby",
@@ -219,6 +234,7 @@ def fronts():
                   paints={"pilaster": "brown", "console": "brown", "cornice": "brown", "fascia_board": "cream", "stallriser": "brown",
                           "window_frame": "door_cream", "shop_door": "door_cream", "side_door": "dark_brown", "metal": "brass"},
                   fascia_target_id="tea_rooms",
+                  fascia_sign={"kind": "flat_panel", "u": [385.0, 5615.0], "z": [2890.0, 3360.0], "depth": 30.0, "front_d": 150.0, "face": "brown", "returns": "white_joinery", "source": "the fascia target (tea_rooms_panel: outer 90, 40, 5320, 510)"},
                   notes="A 1980s caff: the brown acrylic panel on the old board (fascia target), the timber painted brown and cream."))
     S.append(shop("ironmonger", 8, "ironmonger", "west_north", 1, "west", 30.0, 36.0, "R", True,
                   "O original timber front, repainted dark green",
@@ -241,14 +257,15 @@ def fronts():
                   stallriser={"variant": "panel", "paint": "dove_grey", "height": 600, "panels": 3},
                   lobby={"kind": "flush"},
                   glazing={"pattern": "3L-8T", "window_frame": "T1", "mullion": "T1", "mullion_face": 70, "n_mullions": 2,
-                           "toplights": 8, "toplight_aligned": False, "glazing": "ovolo beads; the shutter's box hides the toplights' top 100"},
+                           "toplights": 8, "toplight_aligned": False, "glazing": "ovolo beads; the shutter's hood hides the toplights above 2550, 70 shows"},
                   pilaster="panel", console="scroll", cornice="timber",
                   shop_door="T1", side_door_variant="F1",
-                  paints={"pilaster": "dove_grey", "console": "dove_grey", "cornice": "dove_grey", "fascia_board": "dove_grey", "stallriser": "dove_grey",
+                  paints={"pilaster": "dove_grey", "console": "dove_grey", "cornice": "dove_grey", "fascia_board": "cream", "stallriser": "dove_grey",
                           "window_frame": "white_joinery", "shop_door": "dove_grey", "side_door": "dark_blue", "metal": "brass"},
                   fascia_target_id="newsagent",
-                  roller_shutter={"over": "window and shop door", "state": "raised by day: box and guide rails only; lowered by night (variant)"},
-                  notes="The lit box sign (fascia target, 5220 x 470 x 140, powder-black returns) on the board; the steel hood under it over window and door."))
+                  roller_shutter={"over": "window and shop door (u 350 to 4706)", "state": "raised by day: hood and guide rails only; lowered by night (variant shutter_down)"},
+                  fascia_sign={"kind": "box_sign", "u": [390.0, 5610.0], "z": [2890.0, 3360.0], "depth": 140.0, "front_d": 260.0, "face": "acrylic_red", "returns": "powder_black", "source": "the fascia target (newsagent_box: outer 95, 40, 5315, 510 on a 5410 x 550 board)"},
+                  notes="The lit box sign (fascia target, 5220 x 470 x 140, powder-black returns) stands on the old CREAM board (the fascia target's old_board colour; the board's edges, ends and bed mould are cream like its face), the piers, consoles and cornice dove grey; the steel hood under it over window and door."))
     return S
 
 
@@ -285,25 +302,31 @@ ALTERATIONS = {
     },
     "box_sign": {
         "what": "a lit plastic box over the old fascia (fascia target's geometry: laundry 5200 x 480 x 150, newsagent 5220 x 470 x 140); the old board stays under it",
-        "numbers": {"stands_proud_of_board": [140, 150], "front_d": [260, 270], "beyond_cornice_nose": [45, 55], "fixings": "eight pan-head screws through the frame into the board"},
+        "numbers": {"stands_proud_of_board": [140, 150], "front_d": [260, 270], "beyond_cornice_nose": [45, 55], "fixings": "eight pan-head screws through the frame into the board",
+                    "u_z": {"steam_laundry": {"u": [400, 5600], "z": [2885, 3365]}, "newsagent": {"u": [390, 5610], "z": [2890, 3360]}},
+                    "board": "the old CREAM board stays under it on both fronts (the fascia target's old_board colour)"},
         "applies_to": ["steam_laundry", "newsagent"],
         "kind": "the fascia target (Judgement there)",
     },
     "flat_panel_sign": {
         "what": "a flat acrylic panel screwed over the old board (fascia target: 5230 x 470 x 30)",
-        "numbers": {"stands_proud_of_board": 30, "front_d": 150},
+        "numbers": {"stands_proud_of_board": 30, "front_d": 150, "u_z": {"tea_rooms": {"u": [385, 5615], "z": [2890, 3360]}}, "board": "the old cream board stays under it"},
         "applies_to": ["tea_rooms"],
         "kind": "the fascia target",
     },
     "roller_shutter": {
-        "what": "a steel roller shutter over the window and shop door: a hood under the fascia, two guide rails on the frames, a 77 mm slat curtain",
-        "numbers": {"hood_height": 300, "hood_depth_d": 190, "hood_z_range": [2550, 2850], "hood_front": "five-faced (octagon half)", "hood_ends": "end caps 3 mm, riveted",
-                    "guide_rail": {"face": 50, "depth": 40, "fixing": "four M8 bolts per rail through the frame into the pilaster's core, bolt heads visible"},
-                    "curtain_slat_pitch": 77.0, "curtain_front_d": 30, "bottom_rail": {"height": 50, "locks": 2},
+        "what": "a steel roller shutter over the window and shop door: a hood under the fascia, two guide rails standing out in front of the frames on spacer brackets, a 77 mm slat curtain running in front of the sill and the stallriser to the footway",
+        "numbers": {"hood_height": 300, "hood_depth_d": 210, "hood_z_range": [2550, 2850], "hood_front": "five-faced (octagon half)", "hood_ends": "end caps 3 mm, riveted",
+                    "hides": "the toplights above 2550 (the hood is 300 high over toplights at 2480 to 2790): 70 of the toplights' 310 shows",
+                    "guide_rail": {"face": 50, "depth": 40, "d_range": [150, 190], "z_range": [0, 2550],
+                                   "fixing": "steel spacer brackets bolted through the frames into the pilaster core, four M8 bolts per rail, bolt heads visible"},
+                    "curtain_slat_pitch": 77.0, "curtain_plane_d": 170, "curtain_clear_of_sill_nose": 20,
+                    "curtain_runs": "across window and door in one plane, to the footway, between the rails; it clears the sill's nose (150), the stallriser (125), the threshold (130), the transom (100), the door frame (100) and the mullions (92)",
+                    "bottom_rail": {"height": 50, "locks": 2},
                     "colours": "galvanised steel painted grey (88,90,90)"},
         "applies_to": ["newsagent"],
-        "source": "Poly Haven CC0 roller shutters (rollershutter_window_01/02/03, rollershutter_door; author MP, published 2023-10-11): the glTFs read today give a hood 150 deep for a 1.55 m shutter and 300 deep for 1.85 and 2.4 m, a curtain plane at z 20 and rails 7 wider than the curtain. They are 2023 products: the form, not the date, is used",
-        "kind": "Photo-scan geometry measured today (hood depth, rail width); the slat pitch and the bolts are Judgement",
+        "source": "Poly Haven CC0 roller shutters (rollershutter_window_01/02/03, rollershutter_door; author MP, published 2023-10-11): the glTFs read today give a hood 150 deep for a 1.55 m shutter and 300 deep for 1.85 and 2.4 m, a curtain plane at z 20 and rails 7 wider than the curtain. They are 2023 products: the form, not the date, is used. The target's 210 deep hood is the reviewer's Judgement between the two",
+        "kind": "Photo-scan geometry measured today (hood depths, rail width); the curtain plane, the rail depth range and the hood's 210 are Judgement fixed by clearing the frames; the slat pitch and the bolts are Judgement",
     },
     "empty_unit": {
         "what": "an empty unit: the panelling painted out and a ply or hardboard sheet screwed over the stallriser, the glass whitewashed from inside, the door's lower leaf hardboarded, a TO LET board on the fascia, one console gone",

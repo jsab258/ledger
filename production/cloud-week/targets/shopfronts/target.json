@@ -1,8 +1,8 @@
 {
  "schema": "cloud-week-42 target v1 (shopfronts)",
  "family": "the shopfront as a kit of parts",
- "summary_line": "The shopfront kit's target: pilasters (plinth, shaft, necking, capital), consoles, fascia board and cornice, sill and stallriser, window frames with mullions, transom and toplights, the shop door and the F1 side door's slot, ten fronts assembled by a table, with the 1990 alterations by kind; measured today on one reached photograph (Leadenhall Market), which moves the plinth to 800, the shop door's glazing to 0.70 m and the sill to 75 mm.",
- "status": "FIRST TRY, 9 October 2026 (cloud week 42), by a fresh target writer. Not reviewed. Nothing is committed. self_check is written by self_check.py.",
+ "summary_line": "The shopfront kit's target (second try): pilasters (plinth 600 at Rita's line, shaft 140 proud, necking, capital 350 x 175 on a hollow flare), two-volute scrolled consoles, fascia board and cornice with mitred returns, sill and stallriser, window frames, the shop door glazed from 600 level with the sill and its plate in the lock rail, the F1 side door's slot and ten fronts assembled by a table with a hinge side each, with the 1990 alterations by kind; measured today on one reached photograph (Leadenhall Market, at its own planes' scales), which corrects the shaft's relief, the plinth's hollow head, the door's glazing and the sill.",
+ "status": "SECOND TRY, 9 October 2026 (cloud week 42), by the target writer, answering the fresh reviewer's eleven faults (TARGET-REVIEW.md, FAIL). Not reviewed again. Nothing is committed. self_check is written by self_check.py.",
  "units": "millimetres; angles in degrees; colours sRGB 0-255 (aged to 1990); roughness 0-1; metal 0-1",
  "axes": {
   "u": "across the bay from the VIEWER'S left party-wall line (0) to the right one (6000), as a player standing in the street and facing the front sees it IN THE GAME (the fascia target's frame: on the east parade low street x is on the viewer's RIGHT, on the west block on the viewer's LEFT)",
@@ -41,9 +41,9 @@
    ]
   },
   "d": {
-   "shaft_front": 110.0,
-   "plinth_front": 150.0,
-   "capital_top_front": 130.0,
+   "shaft_front": 140.0,
+   "plinth_front": 180.0,
+   "capital_top_front": 175.0,
    "fascia_face": 120.0,
    "cornice_nose": 215.0,
    "console_front": 180.0,
@@ -54,7 +54,13 @@
     100.0
    ],
    "mullion_front": 92.0,
-   "glass": 30.0
+   "glass": 30.0,
+   "shutter_curtain": 170.0,
+   "shutter_rails": [
+    150.0,
+    190.0
+   ],
+   "shutter_hood": 210.0
   },
   "source": "Read: SCENE-SLOTS.md, the shopfront kit README, the fascia target (board 295 to 5705, 120 proud, cornice top 3.55), fascia-01 (cornice 5892 x 215 x 150, console 240 x 180 x 550); Derived: the zones (350 + 944 + 1006 + 3350 + 350 = 6000)"
  },
@@ -103,6 +109,18 @@
     -2340,
     200,
     380
+   ],
+   "door": [
+    430,
+    100,
+    120,
+    460
+   ],
+   "pier": [
+    -1345,
+    -2340,
+    330,
+    2980
    ]
   },
   "previews": {
@@ -111,7 +129,9 @@
    "fascia": "P1-leadenhall-pier-fascia-cornice.jpg",
    "sill": "P1-leadenhall-sill-stallriser-stile.jpg",
    "transom": "P1-leadenhall-transom-mullion.jpg",
-   "cornice": "P1-leadenhall-cornice-run.jpg"
+   "cornice": "P1-leadenhall-cornice-run.jpg",
+   "door": "P1-leadenhall-shop-door-glass-foot.jpg",
+   "pier": "P1-leadenhall-pier-elevation.jpg"
   },
   "scale": {
    "fit_dimension": "an A5 notice (148 x 210 mm) taped to the shop door's glass",
@@ -122,12 +142,17 @@
    "mm_per_px_door_plane": 1.9085,
    "door_plane_over_pilaster_plane": 1.1043,
    "mm_per_px_pilaster_plane": 1.7282,
-   "mm_per_px_wall_plane": 1.7772,
+   "window_plane_over_pilaster_plane": 1.08,
+   "mm_per_px_window_plane": 1.8666,
    "camera_height_mm_above_footway": 1044.0,
+   "plane_depths_behind_pier_face_mm": {
+    "window_frame": 332.0,
+    "shop_door": 433.0
+   },
    "error_pct": 8,
    "kind": "Photo",
-   "method": "the notice measured by edge snapping on the unmasked view (78.35 x 108.90 px, ratio 0.719 against A5's 0.705); the door plane's depth from the ratio of the plinth's foot row (604.1) to the door's foot row (547.0), both at the same footway level; error: notice 1 px (1.3 per cent), plane ratio 3 per cent, the notice assumed to be A5, say 8 per cent in all. Ratios do not carry it",
-   "note": "an elevation of a plane parallel to the wall is at one scale; parts proud of the wall appear larger by Z / (Z - p): up to 6 per cent for the plinth, which the error covers"
+   "method": "the notice measured by edge snapping on the unmasked view (78.35 x 108.90 px, ratio 0.719 against A5's 0.705); a plane's depth from the ratio of the plinth's foot row (604.1) to that plane's own foot row (the door's 547.0, the window frame's 559.3), all at the same footway level: mm per px on a plane = camera height / its foot row; error: notice 1 px (1.3 per cent), plane ratio 3 per cent, the notice assumed to be A5 (England's statutory no-smoking sign, whose 2007 minimum size was A5: from memory, legislation.gov.uk unreached), say 8 per cent in all. Ratios do not carry it",
+   "note": "an elevation of a plane parallel to the wall is at one scale, and each plane has its own: the pier's front 1.7282, the window frame's 1.8666, the door's 1.9085 mm a pixel. Parts above eye level and proud of their plane are drawn taller by D.p/(D - p) (D the height above the eye, p the projection over the camera's distance): the crown and the capital are NOT measurable this way, only bounded"
   },
   "features": {
    "pil_foot": {
@@ -341,7 +366,19 @@
      -1500,
      -1440
     ],
-    "what": "the shaft's right return, outer edge (where it meets the wall)"
+    "what": "the shaft's right return, outer edge (the painted return's edge)"
+   },
+   "shaft_return_frame": {
+    "crop": "capital",
+    "kind": "col",
+    "x": -1031.16,
+    "strength": 7.2,
+    "expected": -1029,
+    "span_y": [
+     -1500,
+     -1440
+    ],
+    "what": "the dark return's outer edge where the teal window frame begins (the next surface beside the shaft)"
    },
    "fascia_field_top": {
     "crop": "fascia",
@@ -475,14 +512,14 @@
    "stile_right": {
     "crop": "sill",
     "kind": "col",
-    "x": -952.74,
-    "strength": 4.8,
-    "expected": -953,
+    "x": -992.96,
+    "strength": 5.4,
+    "expected": -993,
     "span_y": [
      300,
      500
     ],
-    "what": "left stile, right edge"
+    "what": "left stile, right edge (where the teal stile ends; not the bar of the cast grille at -953)"
    },
    "sill_top": {
     "crop": "sill",
@@ -613,20 +650,20 @@
     "what": "central mullion, right edge"
    },
    "door_foot": {
-    "crop": "door (unmasked, not saved)",
+    "crop": "door",
     "kind": "row",
     "y": 547.01,
     "strength": 8.9,
-    "expected": 551,
+    "expected": 547,
     "span_x": [
      440,
      540
     ],
     "what": "foot of the door's brass strip (the leaf's bottom)",
-    "remeasurable": false
+    "sign": 0
    },
    "door_foot_strip_top": {
-    "crop": "door (unmasked, not saved)",
+    "crop": "door",
     "kind": "row",
     "y": 531.56,
     "strength": 26.1,
@@ -636,20 +673,20 @@
      540
     ],
     "what": "top of the brass foot strip",
-    "remeasurable": false
+    "sign": 0
    },
    "door_glass_bottom": {
-    "crop": "door (unmasked, not saved)",
+    "crop": "door",
     "kind": "row",
-    "y": 95.66,
-    "strength": 1.5,
-    "expected": 96,
+    "y": 128.93,
+    "strength": 12.2,
+    "expected": 128,
     "span_x": [
-     430,
+     440,
      540
     ],
-    "what": "bottom edge of the glazing (the lock rail's top)",
-    "remeasurable": false
+    "what": "bottom edge of the glazing (glass to bead to lock rail)",
+    "sign": 0
    },
    "door_glass_top": {
     "crop": "door (unmasked, not saved)",
@@ -689,35 +726,51 @@
    "shaft_width": 290.1,
    "shaft_return_px": 30.76,
    "shaft_proud": 117.4,
+   "shaft_proud_note": "the painted return between the shaft's face and the next surface beside it: a LOWER bound on the relief; to the teal window frame it is 276 (the frame's own foot row puts it 332 behind the pier's face)",
+   "shaft_proud_to_window_frame": 276.0,
    "plinth_block1_top_z": 708.0,
    "plinth_block2_top_z": 886.0,
    "plinth_block3_top_z": 952.0,
    "plinth_top_z": 1123.0,
+   "plinth_cavetto_foot_z": 952.0,
    "shaft_top_z": 3687.0,
    "neck_ledge_z": 3727.0,
    "abacus_top_z": 3988.0,
    "capital_height": 301.0,
-   "fascia_field_height": 505.0,
+   "capital_height_note": "an UPPER bound: the flare's and the abacus's undersides lie inside the 174 px, adding roughly 30 to 60 mm",
+   "board_between_crown_and_capital_top": 505.0,
+   "board_between_note": "the board between the crown's lowest fillet and the capital's top (not between the gilt keylines: the keyline sits about 65 px lower)",
    "front_height_to_cornice_top": 4916.0,
-   "sill_top_z_wall_plane": 883.0,
-   "window_stile_face": 145.0,
-   "mullion_face": 164.0,
-   "transom_bar_face": 39.0,
-   "stallriser_panel_height": 580.0,
+   "front_height_note": "includes the crown, drawn taller by D.p/(D - p): good to about 5 per cent",
+   "sill_top_z_window_plane": 844.0,
+   "window_stile_face": 77.0,
+   "mullion_face": 172.0,
+   "transom_bar_face": 41.0,
+   "stallriser_panel_height": 609.0,
    "door_leaf_height_door_plane": 2624.0,
-   "door_glazed_from_fraction": 0.328,
+   "door_glass_foot_door_plane": 798.0,
+   "door_glazed_from_fraction": 0.304,
    "door_glazed_to_fraction": 0.952,
-   "door_foot_strip_height": 29.0
+   "door_foot_strip_height": 29.0,
+   "crown_apparent_height_pilaster_plane": 433.0,
+   "crown_true_range": [
+    170,
+    300
+   ],
+   "crown_note": "NOT measurable by this method: the apparent 433 (446 on the wall plane the first try used) includes D.p/(D - p) for the projecting members (130 to 270); the true crown is between 170 and 300"
   },
   "ratios": {
-   "plinth_top_over_sill_top": 1.271,
+   "plinth_top_over_sill_top": 1.33,
    "plinth_top_over_front_height": 0.228,
-   "sill_top_over_front_height": 0.18,
+   "sill_top_over_front_height": 0.172,
    "capital_height_over_shaft_width": 1.037,
    "shaft_proud_over_shaft_width": 0.405,
-   "mullion_over_light": 0.16,
-   "crown_over_field": 0.859,
-   "crown_height_mm_wall_plane": 446.0
+   "mullion_over_light": 0.15,
+   "crown_apparent_over_board": 0.859,
+   "crown_true_over_board_range": [
+    0.35,
+    0.6
+   ]
   },
   "instance_polys_px": [
    {
@@ -821,7 +874,7 @@
       ]
      },
      {
-      "name": "plinth_cap",
+      "name": "plinth_cavetto_and_band",
       "pts": [
        [
         -1301.96,
@@ -884,6 +937,33 @@
        [
         "row",
         "shaft_top"
+       ]
+      ]
+     },
+     {
+      "name": "shaft_return",
+      "pts": [
+       [
+        -1102.21,
+        -1510
+       ],
+       [
+        -1071.45,
+        -1510
+       ],
+       [
+        -1071.45,
+        -1440
+       ],
+       [
+        -1102.21,
+        -1440
+       ]
+      ],
+      "tested": [
+       [
+        "col",
+        "shaft_return_outer"
        ]
       ]
      },
@@ -951,7 +1031,7 @@
     "crop": "fascia",
     "polys": [
      {
-      "name": "fascia_field",
+      "name": "board_between_crown_and_capital_top",
       "pts": [
        [
         -1010,
@@ -1021,11 +1101,11 @@
         90
        ],
        [
-        -952.74,
+        -992.96,
         90
        ],
        [
-        -952.74,
+        -992.96,
         560
        ],
        [
@@ -1048,19 +1128,19 @@
       "name": "sill_group",
       "pts": [
        [
-        -952.74,
+        -992.96,
         106.98
        ],
        [
-        -392.74,
+        -432.96,
         106.98
        ],
        [
-        -392.74,
+        -432.96,
         145.09
        ],
        [
-        -952.74,
+        -992.96,
         145.09
        ]
       ],
@@ -1079,19 +1159,19 @@
       "name": "stallriser_panel",
       "pts": [
        [
-        -922.74,
+        -962.96,
         200.57
        ],
        [
-        -422.74,
+        -462.96,
         200.57
        ],
        [
-        -422.74,
+        -462.96,
         526.76
        ],
        [
-        -922.74,
+        -962.96,
         526.76
        ]
       ],
@@ -1110,19 +1190,19 @@
       "name": "bottom_rail",
       "pts": [
        [
-        -952.74,
+        -992.96,
         526.76
        ],
        [
-        -392.74,
+        -432.96,
         526.76
        ],
        [
-        -392.74,
+        -432.96,
         559.29
        ],
        [
-        -952.74,
+        -992.96,
         559.29
        ]
       ],
@@ -1345,6 +1425,69 @@
       ]
      }
     ]
+   },
+   {
+    "crop": "door",
+    "polys": [
+     {
+      "name": "door_glazing_foot_bead",
+      "pts": [
+       [
+        440,
+        122.93
+       ],
+       [
+        540,
+        122.93
+       ],
+       [
+        540,
+        128.93
+       ],
+       [
+        440,
+        128.93
+       ]
+      ],
+      "tested": [
+       [
+        "row",
+        "door_glass_bottom"
+       ]
+      ]
+     },
+     {
+      "name": "door_foot_strip",
+      "pts": [
+       [
+        440,
+        531.56
+       ],
+       [
+        540,
+        531.56
+       ],
+       [
+        540,
+        547.01
+       ],
+       [
+        440,
+        547.01
+       ]
+      ],
+      "tested": [
+       [
+        "row",
+        "door_foot_strip_top"
+       ],
+       [
+        "row",
+        "door_foot"
+       ]
+      ]
+     }
+    ]
    }
   ],
   "tolerances_px": {
@@ -1354,42 +1497,137 @@
    "note": "an edge is tested by re-snapping to the strongest gradient within the tolerance of the drawn edge on the saved preview"
   },
   "not_remeasurable_on_previews": [
-   "door_foot",
-   "door_foot_strip_top",
-   "door_glass_bottom",
    "door_glass_top",
    "door_leaf_top",
    "_sign"
+  ],
+  "rita_overlay": {
+   "crop": "pier",
+   "mm_per_px_pilaster_plane": 1.7282,
+   "mm_per_px_window_plane": 1.8666,
+   "foot_row": 604.06,
+   "window_foot_row": 559.29,
+   "shaft_centre_col": -1186.14,
+   "tile_rows": 1000,
+   "tile_width": 330,
+   "tile_gap": 4,
+   "note": "the target's Rita pilaster (the left one, u 0 to 350, shaft centre u 175) drawn in cyan at the pilaster plane's scale, so its shaft is as wide as P1's; the window-zone members (sill, transom, head) in yellow at the window plane's scale from the window's own foot row"
+  },
+  "rita_vs_p1": [
+   {
+    "item": "plinth top",
+    "target": 600,
+    "p1": 1123.0,
+    "unit": "mm",
+    "reading": "P1's 1.33 times its sill; Rita's line (the plinth level with the stallriser) is kept: D1"
+   },
+   {
+    "item": "shaft width",
+    "target": 290,
+    "p1": 290.0,
+    "unit": "mm",
+    "reading": "the fit: 290.1 at the scale fitted on the notice, so the overlay is at one scale"
+   },
+   {
+    "item": "shaft face in front of the next surface",
+    "target": "40 to 45 (the frames' 95 and 100 behind 140)",
+    "p1": "117 (the painted return) to 276 (the teal frame)",
+    "unit": "mm",
+    "reading": "the target lies inside P1's two bounds; P1's window frame stands 332 and its door 433 behind the pier's face, which Rita's frames (fixed at 95 and 100 by the kit) cannot copy"
+   },
+   {
+    "item": "capital height",
+    "target": 310,
+    "p1": "at most 301",
+    "unit": "mm",
+    "reading": "upper bound: D4"
+   },
+   {
+    "item": "capital top above the footway",
+    "target": 2850,
+    "p1": 3988.0,
+    "unit": "mm",
+    "reading": "P1's front is 4916 high to the crown's top against the street's 3550: a market hall's storey, not a parade's"
+   },
+   {
+    "item": "sill top",
+    "target": 600,
+    "p1": 844.0,
+    "unit": "mm",
+    "reading": "P1's sill is 0.172 of its front's height against 0.169: D9; the absolute 844 follows from the taller front"
+   },
+   {
+    "item": "door glass foot above the footway",
+    "target": 600,
+    "p1": 798.0,
+    "unit": "mm",
+    "reading": "level with the sill in both (P1: 798 against its sill 844, 46 apart; 0.304 of the leaf against the target's 0.294): D2"
+   },
+   {
+    "item": "door leaf height",
+    "target": 2040,
+    "p1": 2624.0,
+    "unit": "mm",
+    "reading": "P1's double doors are a market hall's"
+   },
+   {
+    "item": "window stile face",
+    "target": 50,
+    "p1": 77.0,
+    "unit": "mm",
+    "reading": "not followed (a heavy arcade frame)"
+   },
+   {
+    "item": "mullion face",
+    "target": 70,
+    "p1": 172.0,
+    "unit": "mm",
+    "reading": "partly followed: D5"
+   },
+   {
+    "item": "front height to the cornice top",
+    "target": 3550,
+    "p1": 4916.0,
+    "unit": "mm",
+    "reading": "the fascia target fixes the street's"
+   },
+   {
+    "item": "crown (cornice) height",
+    "target": 150,
+    "p1": "170 to 300 (the apparent 433 is inflated by parts above eye level and proud of the plane)",
+    "unit": "mm",
+    "reading": "not measurable by this method: D7"
+   }
   ]
  },
  "derived_rules": [
   {
    "id": "R1",
    "name": "plinth top over sill top",
-   "photo": 1.271,
-   "target": 1.333,
+   "photo": 1.33,
+   "target": 1.0,
    "tolerance_pct": 12,
-   "reading": "P1's plinth stands about 1.3 times higher than its sill; the street's 800 / 600 is 1.33",
-   "within": true,
-   "followed": true
+   "followed": false,
+   "reading": "P1's plinth stands 1.33 times its sill (800 at the street's scale); Rita's front, the approved model, has the plinth's top level with the stallriser (1.0): Rita's line is kept and the photograph's is offered as variants.plinth_tall (D1)",
+   "within": false
   },
   {
    "id": "R2",
    "name": "plinth top over the front's height",
    "photo": 0.228,
-   "target": 0.225,
+   "target": 0.169,
    "tolerance_pct": 8,
-   "reading": "0.228 against 0.225",
-   "within": true,
-   "followed": true
+   "followed": false,
+   "reading": "0.228 against 0.169: Rita's line kept (D1)",
+   "within": false
   },
   {
    "id": "R3",
    "name": "sill top over the front's height",
-   "photo": 0.18,
+   "photo": 0.172,
    "target": 0.169,
    "tolerance_pct": 10,
-   "reading": "no disagreement with the scene's 600",
+   "reading": "the window's own plane puts P1's sill top at 844 mm: 0.172 against 0.169; no disagreement with the scene's 600",
    "within": true,
    "followed": true
   },
@@ -1399,39 +1637,32 @@
    "photo": 1.037,
    "target": 1.069,
    "tolerance_pct": 8,
-   "reading": "310 / 290",
-   "within": true,
-   "followed": true
+   "followed": false,
+   "kind": "upper bound",
+   "reading": "P1's 1.04 is an UPPER bound (the flare's and abacus's undersides add 30 to 60 mm to the 174 px); 310 / 290 = 1.069 is Judgement (the capital must carry the console's toe and the board's foot)",
+   "within": true
   },
   {
    "id": "R5",
    "name": "shaft proud over shaft width",
    "photo": 0.405,
-   "target": 0.379,
-   "tolerance_pct": 12,
-   "reading": "110 / 290",
+   "photo_high": 0.952,
+   "target": 0.483,
+   "tolerance_pct": 0,
+   "range": true,
+   "reading": "P1's painted return (117) is the LOWER bound and the teal window frame (about 276 in front of it) the upper: the shaft's relief beside the next surface; 140 sits inside both",
    "within": true,
    "followed": true
   },
   {
    "id": "R6",
    "name": "shop door glazed from, over the leaf",
-   "photo": 0.328,
-   "target": 0.343,
+   "photo": 0.304,
+   "target": 0.294,
    "tolerance_pct": 8,
-   "reading": "700 / 2040; the scene's 1000 / 2040 = 0.49 is far outside",
+   "reading": "P1 0.304 of its leaf (620 on a 2040 leaf); 600 / 2040 = 0.294; the scene's 1000 / 2040 = 0.49 is far outside",
    "within": true,
    "followed": true
-  },
-  {
-   "id": "R8",
-   "name": "crown height over the fascia field",
-   "photo": 0.859,
-   "target": 0.273,
-   "tolerance_pct": 0,
-   "followed": false,
-   "reading": "P1's crown is 0.86 of its field; the street's cornice is 0.27 of its fascia: NOT followed (D7)",
-   "within": false
   },
   {
    "id": "R7",
@@ -1440,6 +1671,27 @@
    "target": 290.0,
    "tolerance_pct": 8,
    "reading": "scale error 8 per cent",
+   "within": true,
+   "followed": true
+  },
+  {
+   "id": "R8",
+   "name": "crown height over the board",
+   "photo": 0.859,
+   "target": 0.273,
+   "tolerance_pct": 0,
+   "followed": false,
+   "kind": "not measurable",
+   "reading": "not measurable by this method: the apparent 0.86 includes D.p/(D - p) for projecting members above eye level; the true crown is 170 to 300 (0.35 to 0.6 of the board). The street's 0.27 stands (the fascia target fixes the cornice top); the corona's 0.35 of the height is Judgement (D7)",
+   "within": false
+  },
+  {
+   "id": "R9",
+   "name": "door glass foot minus window sill top (mm)",
+   "photo": -46.0,
+   "target": 0.0,
+   "tolerance_abs": 60.0,
+   "reading": "P1: the door's glass (798 on the door's plane) starts 46 below its window's sill (844): level to within the scale error; the target puts them level (600)",
    "within": true,
    "followed": true
   }
@@ -1466,21 +1718,68 @@
     "slot_width": 350.0,
     "height": 2850.0,
     "shaft_width": 290.0,
-    "shaft_proud": 110.0,
+    "shaft_proud": 140.0,
     "shaft_u_in_slot": [
      30.0,
      320.0
     ],
-    "plinth_top_z": 800.0,
-    "plinth_proud": 150.0,
+    "plinth_top_z": 600.0,
+    "plinth_proud": 180.0,
     "plinth_width": 350.0,
     "neck_z": 2540.0,
     "capital_height": 310.0,
     "capital_top_z": 2850.0,
     "capital_top_width": 350.0,
-    "capital_top_proud": 130.0,
-    "shaft_bottom_rail_top_z": 940.0,
+    "capital_top_proud": 175.0,
+    "capital_flat_top_reaches_d": 172.0,
+    "capital_die_d": 144.0,
+    "capital_flare_d": [
+     144.0,
+     172.0
+    ],
+    "relief_beside_frames": {
+     "rule": "the shaft's face stands at least 40 in front of the front face of every frame beside it (window jamb, shop-door frame, F1 frame)",
+     "frame_fronts_d": {
+      "T1": 95.0,
+      "T2": 95.0,
+      "M1": 75.0,
+      "M2": 40.0,
+      "door": 100.0,
+      "F1": 100.0
+     },
+     "min_relief": 40.0,
+     "required": 40.0
+    },
+    "plinth_top_rule": "Rita's line: the plinth's top is level with the sill's top and the stallriser's (600), on every front; P1's is 1.33 times its sill (variants.plinth_tall)",
+    "shaft_bottom_rail_top_z": 740.0,
     "shaft_top_rail_bottom_z": 2430.0,
+    "base_ogee": {
+     "proud_of_shaft_face": 25.0,
+     "height": 60.0,
+     "z_range": [
+      600.0,
+      660.0
+     ],
+     "returned_on": "both sides of the shaft (to u 5 and u 345 in the slot)",
+     "used_by": "panel and flute variants (the stepped render variant has a cavetto head instead)"
+    },
+    "stepped_head": {
+     "cavetto_z": [
+      484.0,
+      579.0
+     ],
+     "cavetto_d": [
+      172.0,
+      148.0
+     ],
+     "band_z": [
+      579.0,
+      600.0
+     ],
+     "band_d": 148.0,
+     "band_in_front_of_shaft": 8.0,
+     "note": "P1: a hollow moulding 77.5 px (134 mm at the pilaster plane, 95 at 800/1123) high setting back about 26, a flat band 17.5 px (21 at 800/1123) on top, the shaft just behind it"
+    },
     "panel_stile_width": 45.0,
     "panel_sunk_mm": 12.0,
     "panel_bead_mm": 10.0,
@@ -1533,20 +1832,20 @@
      "z_ranges": [
       [
        0,
-       800
+       600.0
       ],
       [
        2540,
        2850
       ]
      ],
-     "at": "each party line (u 0 and 6000): both neighbours' plinths and capitals are notched; the D5 pipe (68 across, axis d 94) stands in it"
+     "at": "each party line (u 0 and 6000): both neighbours' plinths and capitals are notched; the D5 pipe (68 across, axis d 94, front d 128) stands in it, 12 behind the shafts' faces (140)"
     },
-    "backing": "a solid core board 330 wide x 110 deep behind shaft and capital (the kit's backing board), so the faces between pilaster and frames close with no daylight"
+    "backing": "a solid core board 330 wide x 140 deep behind shaft and capital (the kit's backing board, deepened by the 30 the shaft has gained), so the faces between pilaster and frames close with no daylight"
    },
    "variants": {
     "panel": {
-     "use": "original timber pilaster: sunk-panelled plinth and shaft (Rita's, the empty unit, tea rooms, ironmonger, chandler, fish)",
+     "use": "original timber pilaster: sunk-panelled plinth and shaft on a base ogee (Rita's, the empty unit, fish, chandler, newsagent)",
      "material": "painted softwood",
      "elevation": [
       {
@@ -1585,11 +1884,11 @@
         ],
         [
          50,
-         720
+         520.0
         ],
         [
          0,
-         720
+         520.0
         ]
        ]
       },
@@ -1607,11 +1906,11 @@
         ],
         [
          350,
-         720
+         520.0
         ],
         [
          300,
-         720
+         520.0
         ]
        ]
       },
@@ -1629,11 +1928,55 @@
         ],
         [
          300,
-         708
+         508.0
         ],
         [
          50,
-         708
+         508.0
+        ]
+       ]
+      },
+      {
+       "name": "plinth_rail_b",
+       "kind": "face",
+       "pts": [
+        [
+         50,
+         120
+        ],
+        [
+         300,
+         120
+        ],
+        [
+         300,
+         132
+        ],
+        [
+         50,
+         132
+        ]
+       ]
+      },
+      {
+       "name": "plinth_rail_t",
+       "kind": "face",
+       "pts": [
+        [
+         50,
+         508.0
+        ],
+        [
+         300,
+         508.0
+        ],
+        [
+         300,
+         520.0
+        ],
+        [
+         50,
+         520.0
         ]
        ]
       },
@@ -1643,19 +1986,41 @@
        "pts": [
         [
          0,
-         720
+         520.0
         ],
         [
          350,
-         720
+         520.0
         ],
         [
          350,
-         800
+         600.0
         ],
         [
          0,
-         800
+         600.0
+        ]
+       ]
+      },
+      {
+       "name": "base_ogee",
+       "kind": "raised",
+       "pts": [
+        [
+         5.0,
+         600.0
+        ],
+        [
+         345.0,
+         600.0
+        ],
+        [
+         345.0,
+         660.0
+        ],
+        [
+         5.0,
+         660.0
         ]
        ]
       },
@@ -1665,19 +2030,19 @@
        "pts": [
         [
          30.0,
-         800
+         660.0
         ],
         [
          320.0,
-         800
+         660.0
         ],
         [
          320.0,
-         940
+         740.0
         ],
         [
          30.0,
-         940
+         740.0
         ]
        ]
       },
@@ -1687,11 +2052,11 @@
        "pts": [
         [
          30.0,
-         940
+         740.0
         ],
         [
          75,
-         940
+         740.0
         ],
         [
          75,
@@ -1709,11 +2074,11 @@
        "pts": [
         [
          275,
-         940
+         740.0
         ],
         [
          320.0,
-         940
+         740.0
         ],
         [
          320.0,
@@ -1731,11 +2096,11 @@
        "pts": [
         [
          75,
-         940
+         740.0
         ],
         [
          275,
-         940
+         740.0
         ],
         [
          275,
@@ -1926,7 +2291,7 @@
      ]
     },
     "flute": {
-     "use": "original timber pilaster with five flutes (one alternative on the original fronts; the newsagent)",
+     "use": "original timber pilaster with five flutes on a base ogee (the tea room, the ironmonger)",
      "material": "painted softwood",
      "elevation": [
       {
@@ -1965,11 +2330,11 @@
         ],
         [
          50,
-         720
+         520.0
         ],
         [
          0,
-         720
+         520.0
         ]
        ]
       },
@@ -1987,11 +2352,11 @@
         ],
         [
          350,
-         720
+         520.0
         ],
         [
          300,
-         720
+         520.0
         ]
        ]
       },
@@ -2009,11 +2374,55 @@
         ],
         [
          300,
-         708
+         508.0
         ],
         [
          50,
-         708
+         508.0
+        ]
+       ]
+      },
+      {
+       "name": "plinth_rail_b",
+       "kind": "face",
+       "pts": [
+        [
+         50,
+         120
+        ],
+        [
+         300,
+         120
+        ],
+        [
+         300,
+         132
+        ],
+        [
+         50,
+         132
+        ]
+       ]
+      },
+      {
+       "name": "plinth_rail_t",
+       "kind": "face",
+       "pts": [
+        [
+         50,
+         508.0
+        ],
+        [
+         300,
+         508.0
+        ],
+        [
+         300,
+         520.0
+        ],
+        [
+         50,
+         520.0
         ]
        ]
       },
@@ -2023,19 +2432,41 @@
        "pts": [
         [
          0,
-         720
+         520.0
         ],
         [
          350,
-         720
+         520.0
         ],
         [
          350,
-         800
+         600.0
         ],
         [
          0,
-         800
+         600.0
+        ]
+       ]
+      },
+      {
+       "name": "base_ogee",
+       "kind": "raised",
+       "pts": [
+        [
+         5.0,
+         600.0
+        ],
+        [
+         345.0,
+         600.0
+        ],
+        [
+         345.0,
+         660.0
+        ],
+        [
+         5.0,
+         660.0
         ]
        ]
       },
@@ -2045,19 +2476,19 @@
        "pts": [
         [
          30.0,
-         800
+         660.0
         ],
         [
          320.0,
-         800
+         660.0
         ],
         [
          320.0,
-         940
+         740.0
         ],
         [
          30.0,
-         940
+         740.0
         ]
        ]
       },
@@ -2089,11 +2520,11 @@
        "pts": [
         [
          42.0,
-         940
+         740.0
         ],
         [
          85.6,
-         940
+         740.0
         ],
         [
          85.6,
@@ -2111,11 +2542,11 @@
        "pts": [
         [
          97.6,
-         940
+         740.0
         ],
         [
          141.2,
-         940
+         740.0
         ],
         [
          141.2,
@@ -2133,11 +2564,11 @@
        "pts": [
         [
          153.2,
-         940
+         740.0
         ],
         [
          196.8,
-         940
+         740.0
         ],
         [
          196.8,
@@ -2155,11 +2586,11 @@
        "pts": [
         [
          208.8,
-         940
+         740.0
         ],
         [
          252.4,
-         940
+         740.0
         ],
         [
          252.4,
@@ -2177,11 +2608,11 @@
        "pts": [
         [
          264.4,
-         940
+         740.0
         ],
         [
          308.0,
-         940
+         740.0
         ],
         [
          308.0,
@@ -2350,7 +2781,7 @@
      ]
     },
     "render": {
-     "use": "painted render or cement pier on a stepped plinth (the 1930s grocer; the laundry's re-clad pier)",
+     "use": "painted render or cement pier on a stepped plinth with a hollow-moulded head (the 1930s grocer; the laundry's re-clad pier)",
      "material": "painted render, arrises 1 mm eased",
      "elevation": [
       {
@@ -2367,11 +2798,11 @@
         ],
         [
          350,
-         504
+         360
         ],
         [
          0,
-         504
+         360
         ]
        ]
       },
@@ -2381,19 +2812,19 @@
        "pts": [
         [
          0,
-         504
+         360
         ],
         [
-         335,
-         504
+         342.0,
+         360
         ],
         [
-         335,
-         631
+         342.0,
+         450
         ],
         [
          0,
-         631
+         450
         ]
        ]
       },
@@ -2403,41 +2834,63 @@
        "pts": [
         [
          0,
-         631
+         450
         ],
         [
-         324,
-         631
+         336.0,
+         450
         ],
         [
-         324,
-         680
+         336.0,
+         484.0
         ],
         [
          0,
-         680
+         484.0
         ]
        ]
       },
       {
-       "name": "plinth_cap",
+       "name": "plinth_cavetto",
        "kind": "face",
        "pts": [
         [
          0,
-         680
+         484.0
         ],
         [
-         312,
-         680
+         328.0,
+         484.0
         ],
         [
-         312,
-         800
+         328.0,
+         579.0
         ],
         [
          0,
-         800
+         579.0
+        ]
+       ]
+      },
+      {
+       "name": "plinth_band",
+       "kind": "face",
+       "pts": [
+        [
+         0,
+         579.0
+        ],
+        [
+         328.0,
+         579.0
+        ],
+        [
+         328.0,
+         600.0
+        ],
+        [
+         0,
+         600.0
         ]
        ]
       },
@@ -2447,11 +2900,11 @@
        "pts": [
         [
          30.0,
-         800
+         600.0
         ],
         [
          320.0,
-         800
+         600.0
         ],
         [
          320.0,
@@ -2619,24 +3072,30 @@
       }
      ],
      "painted_keyline": {
-      "what": "P1's shaft carries a painted line panel, not a moulding: a line 10 wide in a darker, redder tone (about 25 L* below the cream), inset 35 from the shaft's edges, its top corners cut 35 at 45 degrees; z from 940 to 2400",
+      "what": "P1's shaft carries a painted line panel, not a moulding: a line 10 wide in a darker, redder tone (about 25 L* below the cream), inset 35 from the shaft's edges, its top corners cut 35 at 45 degrees; z from 1000 to 2400",
       "width": 10.0,
       "inset": 35.0,
       "corner_cut": 35.0,
       "z_range": [
-       940,
+       1000,
        2400
       ],
       "kind": "Photo (texture, not geometry)"
      },
      "stepped_plinth_inset_free_side": {
-      "block2": 15,
-      "block3": 26,
-      "cap": 38
-     }
+      "block2": 8.0,
+      "block3": 14.0,
+      "head": 22.0
+     },
+     "step_heights_z": [
+      360,
+      450,
+      484.0,
+      600.0
+     ]
     },
     "clad": {
-     "use": "a 1960s-80s flush clad pier, no plinth, no capital (Mickey's, painted steel; kept as built)",
+     "use": "a 1960s-80s flush clad pier, no plinth, no capital (Mickey's, painted steel): the casing follows the old shaft's face",
      "material": "steel or aluminium sheet on a timber core, or painted board, 3 sheets",
      "elevation": [
       {
@@ -2707,7 +3166,7 @@
       }
      ],
      "dims": {
-      "proud": 100.0,
+      "proud": 140.0,
       "width": 350.0,
       "sheet_joints_z": [
        1200,
@@ -2715,6 +3174,299 @@
       ],
       "joint_width": 6.0
      }
+    },
+    "plinth_tall": {
+     "use": "NOT USED by the ten fronts: P1's plinth at the street's scale, 800 high, 1.33 times the sill (R1 = 1.330). It breaks Rita's line (the plinth's top level with the stallriser), so Rita's 600 wins; offered here so that the builder can try it if the plan owner asks. The stepped (render) form: blocks to 504 / 631 / 684, the cavetto 684 to 779, the band 779 to 800; for the panel and flute forms move the plinth cap up 200 (cap 720 to 800), lengthen the stiles and field by 200, move the base ogee and the shaft's bottom rail up 200",
+     "plinth_top_z": 800.0,
+     "elevation": [
+      {
+       "name": "plinth_block1",
+       "kind": "face",
+       "pts": [
+        [
+         0,
+         0
+        ],
+        [
+         350,
+         0
+        ],
+        [
+         350,
+         504
+        ],
+        [
+         0,
+         504
+        ]
+       ]
+      },
+      {
+       "name": "plinth_block2",
+       "kind": "face",
+       "pts": [
+        [
+         0,
+         504
+        ],
+        [
+         342.0,
+         504
+        ],
+        [
+         342.0,
+         631
+        ],
+        [
+         0,
+         631
+        ]
+       ]
+      },
+      {
+       "name": "plinth_block3",
+       "kind": "face",
+       "pts": [
+        [
+         0,
+         631
+        ],
+        [
+         336.0,
+         631
+        ],
+        [
+         336.0,
+         684
+        ],
+        [
+         0,
+         684
+        ]
+       ]
+      },
+      {
+       "name": "plinth_cavetto",
+       "kind": "face",
+       "pts": [
+        [
+         0,
+         684
+        ],
+        [
+         328.0,
+         684
+        ],
+        [
+         328.0,
+         779.0
+        ],
+        [
+         0,
+         779.0
+        ]
+       ]
+      },
+      {
+       "name": "plinth_band",
+       "kind": "face",
+       "pts": [
+        [
+         0,
+         779.0
+        ],
+        [
+         328.0,
+         779.0
+        ],
+        [
+         328.0,
+         800.0
+        ],
+        [
+         0,
+         800.0
+        ]
+       ]
+      },
+      {
+       "name": "shaft",
+       "kind": "face",
+       "pts": [
+        [
+         30.0,
+         800.0
+        ],
+        [
+         320.0,
+         800.0
+        ],
+        [
+         320.0,
+         2540.0
+        ],
+        [
+         30.0,
+         2540.0
+        ]
+       ]
+      },
+      {
+       "name": "astragal",
+       "kind": "face",
+       "pts": [
+        [
+         18.0,
+         2540.0
+        ],
+        [
+         332.0,
+         2540.0
+        ],
+        [
+         332.0,
+         2564.0
+        ],
+        [
+         18.0,
+         2564.0
+        ]
+       ]
+      },
+      {
+       "name": "neck_fillet",
+       "kind": "face",
+       "pts": [
+        [
+         27.0,
+         2564.0
+        ],
+        [
+         323.0,
+         2564.0
+        ],
+        [
+         323.0,
+         2574.0
+        ],
+        [
+         27.0,
+         2574.0
+        ]
+       ]
+      },
+      {
+       "name": "die",
+       "kind": "face",
+       "pts": [
+        [
+         30.0,
+         2574.0
+        ],
+        [
+         320.0,
+         2574.0
+        ],
+        [
+         320.0,
+         2694.0
+        ],
+        [
+         30.0,
+         2694.0
+        ]
+       ]
+      },
+      {
+       "name": "die_tablet",
+       "kind": "raised",
+       "pts": [
+        [
+         90,
+         2594.0
+        ],
+        [
+         260,
+         2594.0
+        ],
+        [
+         260,
+         2674.0
+        ],
+        [
+         90,
+         2674.0
+        ]
+       ]
+      },
+      {
+       "name": "flare",
+       "kind": "face",
+       "pts": [
+        [
+         30.0,
+         2694.0
+        ],
+        [
+         320.0,
+         2694.0
+        ],
+        [
+         350,
+         2784.0
+        ],
+        [
+         0,
+         2784.0
+        ]
+       ]
+      },
+      {
+       "name": "abacus",
+       "kind": "face",
+       "pts": [
+        [
+         0,
+         2784.0
+        ],
+        [
+         350,
+         2784.0
+        ],
+        [
+         350,
+         2836.0
+        ],
+        [
+         0,
+         2836.0
+        ]
+       ]
+      },
+      {
+       "name": "top_moulding",
+       "kind": "face",
+       "pts": [
+        [
+         0,
+         2836.0
+        ],
+        [
+         350,
+         2836.0
+        ],
+        [
+         350,
+         2850.0
+        ],
+        [
+         0,
+         2850.0
+        ]
+       ]
+      }
+     ],
+     "side_profile_ref": "profiles.plinth_tall_stepped_side"
     }
    },
    "profiles": {
@@ -2723,34 +3475,30 @@
      "points": [
       [
        0.0,
-       720.0
+       520.0
       ],
       [
-       150.0,
-       720.0
+       180.0,
+       520.0
       ],
       [
-       150.0,
-       764.0
+       180.0,
+       570.0
       ],
       [
-       147.0,
-       770.0
+       176.0,
+       576.0
       ],
       [
-       130.0,
-       794.0
-      ],
-      [
-       124.0,
-       800.0
+       155.0,
+       600.0
       ],
       [
        0.0,
-       800.0
+       600.0
       ]
      ],
-     "note": "the weathered cap: a 44 mm nose face, a 6 mm bead, then the top falling 30 mm toward the street over 23 mm (the kit's steep weathering); the shaft's foot stands on the flat (d 0 to 124)"
+     "note": "the timber plinth's cap, the kit's: a 50 mm nose face, a 4 x 6 bead, then the top falling to the street over 21 mm from d 155 to 176 (the kit's steep weathering); the flat (d 0 to 155) takes the shaft's foot and the base ogee (d 140 to 165)"
     },
     "plinth_panel_side_through_stile": {
      "plane": "d-z",
@@ -2760,28 +3508,24 @@
        0.0
       ],
       [
-       150.0,
+       180.0,
        0.0
       ],
       [
-       150.0,
-       764.0
+       180.0,
+       570.0
       ],
       [
-       147.0,
-       770.0
+       176.0,
+       576.0
       ],
       [
-       130.0,
-       794.0
-      ],
-      [
-       124.0,
-       800.0
+       155.0,
+       600.0
       ],
       [
        0.0,
-       800.0
+       600.0
       ]
      ]
     },
@@ -2793,55 +3537,93 @@
        0.0
       ],
       [
-       150.0,
+       180.0,
        0.0
       ],
       [
-       150.0,
+       180.0,
        120.0
       ],
       [
-       146.0,
+       176.0,
        124.0
       ],
       [
-       138.0,
+       168.0,
        132.0
       ],
       [
-       138.0,
-       708.0
+       168.0,
+       508.0
       ],
       [
-       146.0,
-       716.0
+       176.0,
+       516.0
       ],
       [
-       150.0,
-       720.0
+       180.0,
+       520.0
       ],
       [
-       150.0,
-       764.0
+       180.0,
+       570.0
       ],
       [
-       147.0,
-       770.0
+       176.0,
+       576.0
       ],
       [
-       130.0,
-       794.0
-      ],
-      [
-       124.0,
-       800.0
+       155.0,
+       600.0
       ],
       [
        0.0,
-       800.0
+       600.0
       ]
      ],
      "note": "sunk 12 mm between the stiles; 45 degree sticking at the field's edge; the quarter-round bead is a separate planted piece"
+    },
+    "base_ogee": {
+     "plane": "d-z",
+     "points": [
+      [
+       140.0,
+       600.0
+      ],
+      [
+       165.0,
+       600.0
+      ],
+      [
+       165.0,
+       608.0
+      ],
+      [
+       161.0,
+       612.0
+      ],
+      [
+       155.0,
+       617.0
+      ],
+      [
+       150.0,
+       624.0
+      ],
+      [
+       146.0,
+       633.0
+      ],
+      [
+       143.0,
+       645.0
+      ],
+      [
+       140.0,
+       660.0
+      ]
+     ],
+     "note": "the kit's base moulding (pilaster.py BASE): an ogee 25 proud of the shaft's face and 60 high, standing on the plinth's top (z 600 to 660), returned on both sides of the shaft; panel and flute variants only (restored: P1 shows a moulding at the shaft's foot)"
     },
     "plinth_stepped_side": {
      "plane": "d-z",
@@ -2851,43 +3633,105 @@
        0.0
       ],
       [
-       150.0,
+       180.0,
        0.0
       ],
       [
-       150.0,
+       180.0,
+       360.0
+      ],
+      [
+       176.0,
+       360.0
+      ],
+      [
+       176.0,
+       450.0
+      ],
+      [
+       172.0,
+       450.0
+      ],
+      [
+       172.0,
+       484.0
+      ],
+      [
+       162.82,
+       491.23
+      ],
+      [
+       155.03,
+       511.82
+      ],
+      [
+       149.83,
+       542.65
+      ],
+      [
+       148.0,
+       579.0
+      ],
+      [
+       148.0,
+       600.0
+      ],
+      [
+       0.0,
+       600.0
+      ]
+     ],
+     "note": "render variant, P1's members at Rita's 600: block (0 to 360), a step (360 to 450) 4 back, a step (450 to 484) 8 back, a hollow (cavetto, a quarter ellipse centred at d 172, z 579, 24 by 95) from d 172 at z 484 back to d 148 at z 579, a flat band 21 high at d 148 to z 600; the shaft (140) stands 8 behind the band"
+    },
+    "plinth_tall_stepped_side": {
+     "plane": "d-z",
+     "points": [
+      [
+       0.0,
+       0.0
+      ],
+      [
+       180.0,
+       0.0
+      ],
+      [
+       180.0,
        504.0
       ],
       [
-       146.0,
+       176.0,
        504.0
       ],
       [
-       146.0,
+       176.0,
        631.0
       ],
       [
-       142.0,
+       172.0,
        631.0
       ],
       [
-       142.0,
-       680.0
+       172.0,
+       684.0
       ],
       [
-       136.0,
-       680.0
+       162.82,
+       691.23
       ],
       [
-       136.0,
-       770.0
+       155.03,
+       711.82
       ],
       [
-       133.0,
-       776.0
+       149.83,
+       742.65
       ],
       [
-       120.0,
+       148.0,
+       779.0
+      ],
+      [
+       148.0,
        800.0
       ],
       [
@@ -2895,7 +3739,7 @@
        800.0
       ]
      ],
-     "note": "four members as the photograph: block (0 to 504), a step (504 to 631) 4 mm back, a step (631 to 680) 8 mm back, a weathered cap slab (680 to 800)"
+     "note": "UNUSED variant plinth_tall: P1's own members at 800 (the reviewer's points, 150 -> 180 in d): block 0-504, steps to 631 and 684, the cavetto 684-779 from d 172 to 148, the band 779-800 at d 148"
     },
     "panel_bead": {
      "plane": "a-p",
@@ -2940,54 +3784,54 @@
       ],
       [
        320.0,
-       110.0
+       140.0
       ],
       [
        275.0,
-       110.0
+       140.0
       ],
       [
        275.0,
-       108.0
+       138.0
       ],
       [
        273.5,
-       102.9
+       132.9
       ],
       [
        270.0,
-       99.0
+       129.0
       ],
       [
        265.0,
-       98.0
+       128.0
       ],
       [
        85.0,
-       98.0
+       128.0
       ],
       [
        80.0,
-       99.0
+       129.0
       ],
       [
        76.5,
-       102.9
+       132.9
       ],
       [
        75.0,
-       108.0
+       138.0
       ],
       [
        75.0,
-       110.0
+       140.0
       ],
       [
        30.0,
-       110.0
+       140.0
       ]
      ],
-     "note": "through the sunk field: 45 mm stiles at full projection, the field 12 mm down, a 10 mm quarter-round bead each side"
+     "note": "through the sunk field: 45 mm stiles at full projection (140), the field 12 mm down, a 10 mm quarter-round bead each side"
     },
     "shaft_flute_plan": {
      "plane": "u-d",
@@ -3002,231 +3846,231 @@
       ],
       [
        320.0,
-       110.0
+       140.0
       ],
       [
        308.0,
-       110.0
+       140.0
       ],
       [
        306.93,
-       106.29
+       136.29
       ],
       [
        303.84,
-       102.95
+       132.95
       ],
       [
        299.01,
-       100.29
+       130.29
       ],
       [
        292.94,
-       98.59
+       128.59
       ],
       [
        286.2,
-       98.0
+       128.0
       ],
       [
        279.46,
-       98.59
+       128.59
       ],
       [
        273.39,
-       100.29
+       130.29
       ],
       [
        268.56,
-       102.95
+       132.95
       ],
       [
        265.47,
-       106.29
+       136.29
       ],
       [
        264.4,
-       110.0
+       140.0
       ],
       [
        252.4,
-       110.0
+       140.0
       ],
       [
        251.33,
-       106.29
+       136.29
       ],
       [
        248.24,
-       102.95
+       132.95
       ],
       [
        243.41,
-       100.29
+       130.29
       ],
       [
        237.34,
-       98.59
+       128.59
       ],
       [
        230.6,
-       98.0
+       128.0
       ],
       [
        223.86,
-       98.59
+       128.59
       ],
       [
        217.79,
-       100.29
+       130.29
       ],
       [
        212.96,
-       102.95
+       132.95
       ],
       [
        209.87,
-       106.29
+       136.29
       ],
       [
        208.8,
-       110.0
+       140.0
       ],
       [
        196.8,
-       110.0
+       140.0
       ],
       [
        195.73,
-       106.29
+       136.29
       ],
       [
        192.64,
-       102.95
+       132.95
       ],
       [
        187.81,
-       100.29
+       130.29
       ],
       [
        181.74,
-       98.59
+       128.59
       ],
       [
        175.0,
-       98.0
+       128.0
       ],
       [
        168.26,
-       98.59
+       128.59
       ],
       [
        162.19,
-       100.29
+       130.29
       ],
       [
        157.36,
-       102.95
+       132.95
       ],
       [
        154.27,
-       106.29
+       136.29
       ],
       [
        153.2,
-       110.0
+       140.0
       ],
       [
        141.2,
-       110.0
+       140.0
       ],
       [
        140.13,
-       106.29
+       136.29
       ],
       [
        137.04,
-       102.95
+       132.95
       ],
       [
        132.21,
-       100.29
+       130.29
       ],
       [
        126.14,
-       98.59
+       128.59
       ],
       [
        119.4,
-       98.0
+       128.0
       ],
       [
        112.66,
-       98.59
+       128.59
       ],
       [
        106.59,
-       100.29
+       130.29
       ],
       [
        101.76,
-       102.95
+       132.95
       ],
       [
        98.67,
-       106.29
+       136.29
       ],
       [
        97.6,
-       110.0
+       140.0
       ],
       [
        85.6,
-       110.0
+       140.0
       ],
       [
        84.53,
-       106.29
+       136.29
       ],
       [
        81.44,
-       102.95
+       132.95
       ],
       [
        76.61,
-       100.29
+       130.29
       ],
       [
        70.54,
-       98.59
+       128.59
       ],
       [
        63.8,
-       98.0
+       128.0
       ],
       [
        57.06,
-       98.59
+       128.59
       ],
       [
        50.99,
-       100.29
+       130.29
       ],
       [
        46.16,
-       102.95
+       132.95
       ],
       [
        43.07,
-       106.29
+       136.29
       ],
       [
        42.0,
-       110.0
+       140.0
       ],
       [
        30.0,
-       110.0
+       140.0
       ]
      ],
      "note": "five flutes (segmental, 12 deep) between 12 mm fillets"
@@ -3244,19 +4088,19 @@
       ],
       [
        320.0,
-       108.0
+       138.0
       ],
       [
        317.0,
-       110.0
+       140.0
       ],
       [
        33.0,
-       110.0
+       140.0
       ],
       [
        30.0,
-       108.0
+       138.0
       ]
      ],
      "note": "plain face, arrises eased 3 mm by paint build-up"
@@ -3274,19 +4118,19 @@
       ],
       [
        350.0,
-       96.0
+       136.0
       ],
       [
        346.0,
-       100.0
+       140.0
       ],
       [
        4.0,
-       100.0
+       140.0
       ],
       [
        0.0,
-       96.0
+       136.0
       ]
      ]
     },
@@ -3298,111 +4142,111 @@
        0.0
       ],
       [
-       110.0,
+       140.0,
        0.0
       ],
       [
-       114.59,
+       144.59,
        0.91
       ],
       [
-       118.49,
+       148.49,
        3.51
       ],
       [
-       121.09,
+       151.09,
        7.41
       ],
       [
-       122.0,
+       152.0,
        12.0
       ],
       [
-       121.09,
+       151.09,
        16.59
       ],
       [
-       118.49,
+       148.49,
        20.49
       ],
       [
-       114.59,
+       144.59,
        23.09
       ],
       [
-       110.0,
+       140.0,
        24.0
       ],
       [
-       116.0,
+       146.0,
        24.0
       ],
       [
-       116.0,
+       146.0,
        34.0
       ],
       [
-       114.0,
+       144.0,
        34.0
       ],
       [
-       114.0,
+       144.0,
        154.0
       ],
       [
-       114.27,
+       144.54,
        171.56
       ],
       [
-       115.07,
+       146.13,
        188.44
       ],
       [
-       116.36,
+       148.72,
        204.0
       ],
       [
-       118.1,
+       152.2,
        217.64
       ],
       [
-       120.22,
+       156.44,
        228.83
       ],
       [
-       122.64,
+       161.28,
        237.15
       ],
       [
-       125.27,
+       166.54,
        242.27
       ],
       [
-       128.0,
+       172.0,
        244.0
       ],
       [
-       130.0,
+       175.0,
        244.0
       ],
       [
-       130.0,
+       175.0,
        296.0
       ],
       [
-       129.6,
-       300.0
+       174.77,
+       301.36
       ],
       [
-       128.0,
-       304.0
+       174.12,
+       305.9
       ],
       [
-       126.0,
-       308.0
+       173.15,
+       308.93
       ],
       [
-       124.0,
+       172.0,
        310.0
       ],
       [
@@ -3410,7 +4254,7 @@
        310.0
       ]
      ],
-     "note": "z is local from the neck (add NECK_Z 2540): astragal (r 12), neck fillet, die, a hollow flare 90 high from d 114 to 128, abacus 52, a small ovolo top; flat top at 310 (z 2850) from the wall to d 130, where the console's toe and the fascia's bed mould meet it"
+     "note": "z is local from the neck (add NECK_Z 2540): astragal (r 12), neck fillet, die at d 144 (4 proud of the shaft), a hollow flare 90 high from d 144 to 172, abacus front 175 (52 high), a small ovolo back to d 172 and the flat top at 310 (z 2850), nominally 350 x 175, where the console's toe (240 x 60) and the fascia's bed mould (front 132) stand"
     }
    },
    "elevation_frame": "u 0..350 across the slot (left pilaster; the right pilaster is the same piece, symmetric), z from the footway",
@@ -3442,16 +4286,51 @@
     "toe_depth": 60.0,
     "toe_width": 240.0,
     "side_chamfer": 12.0,
-    "foot_on_capital": "the toe (240 x 60 at z 2850) stands wholly on the capital's top, whose top is 350 x 130",
-    "neck_flat": [
-     528,
-     550
-    ],
-    "scroll_eye_centre_dz": [
-     34,
-     82
-    ],
-    "scroll_outer_radius": 24.0,
+    "foot_on_capital": "the toe (240 x 60 at z 2850) stands wholly on the capital's top, whose top is 350 x 175; the lower volute overhangs it by 16",
+    "cap_block": {
+     "d": 180.0,
+     "z_local": [
+      528.0,
+      550.0
+     ]
+    },
+    "upper_volute": {
+     "eye_dz": [
+      126.0,
+      470.0
+     ],
+     "outer_radius": 54.0,
+     "front_d_at_eye_z": 180.0,
+     "top_point_dz": [
+      126.0,
+      524.0
+     ],
+     "turns": 1.25,
+     "direction": "counter-clockwise seen with the street to the right: up the front, over the top, back and down into the eye"
+    },
+    "waist": {
+     "narrowest_d": 62.0,
+     "at_z_local": 130.0,
+     "concave": true
+    },
+    "lower_volute": {
+     "eye_dz": [
+      46.0,
+      62.0
+     ],
+     "outer_radius": 30.0,
+     "reach_d_at_eye_z": 76.0,
+     "direction": "clockwise inward: rolling the other way"
+    },
+    "side_grooves": {
+     "inset_from_outline": 8.0,
+     "width": 5.0,
+     "depth": 4.0,
+     "eye_boss_diameter": 16.0,
+     "eye_boss_proud": 3.0,
+     "upper": "from the front at r 46 round the top and into the eye in 1.25 turns (r 46 to 10)",
+     "lower": "one turn clockwise (r 22 to 12)"
+    },
     "leaf": {
      "height": 330,
      "z_local": [
@@ -3470,7 +4349,7 @@
    },
    "variants": {
     "scroll": {
-     "use": "the original console: S-curve, volute on each side, an acanthus leaf on the face (all original fronts)",
+     "use": "the original console: two volutes joined by a concave waist under a cap block, an acanthus leaf on the face (all original fronts)",
      "elevation": [
       {
        "name": "face",
@@ -3627,7 +4506,7 @@
      ]
     },
     "block": {
-     "use": "a plain block console (the 1930s grocer): the same envelope, the S curve straightened to a 45 degree chamfer, no leaf, three bosses",
+     "use": "a plain block console (the 1930s grocer): the same envelope, the scroll straightened to a 45 degree chamfer, no leaf, three bosses",
      "points_side": [
       [
        0.0,
@@ -3672,196 +4551,240 @@
        0.0
       ],
       [
-       67.0,
-       1.88
+       60.0,
+       35.47
       ],
       [
-       72.12,
-       7.0
+       65.39,
+       39.1
       ],
       [
-       74.0,
-       14.0
+       69.86,
+       43.82
       ],
       [
-       74.0,
-       26.0
+       73.22,
+       49.38
       ],
       [
-       72.94,
-       31.54
+       75.3,
+       55.54
       ],
       [
-       70.11,
-       36.93
+       76.0,
+       62.0
       ],
       [
-       66.61,
-       42.75
+       75.54,
+       67.21
       ],
       [
-       63.54,
-       49.58
+       74.19,
+       72.26
       ],
       [
-       62.0,
-       58.0
+       71.98,
+       77.0
+      ],
+      [
+       68.98,
+       81.28
+      ],
+      [
+       66.69,
+       85.97
+      ],
+      [
+       64.9,
+       93.29
+      ],
+      [
+       63.58,
+       102.3
+      ],
+      [
+       62.68,
+       112.06
       ],
       [
        62.16,
-       68.35
+       121.61
       ],
       [
-       63.28,
-       80.26
+       62.0,
+       130.0
       ],
       [
-       65.12,
-       93.18
+       62.62,
+       149.41
       ],
       [
-       67.44,
-       106.61
+       64.29,
+       171.31
       ],
       [
-       70.0,
-       120.0
+       66.75,
+       195.18
       ],
       [
-       72.86,
-       133.41
+       69.74,
+       220.5
       ],
       [
-       76.19,
-       147.18
+       73.0,
+       246.75
       ],
       [
-       79.89,
-       161.26
+       76.26,
+       273.42
       ],
       [
-       83.86,
-       175.55
+       79.25,
+       300.0
       ],
       [
-       88.0,
-       190.0
+       81.71,
+       325.97
       ],
       [
-       92.38,
-       204.68
+       83.38,
+       350.81
       ],
       [
-       97.07,
-       219.64
+       84.0,
+       374.0
       ],
       [
-       101.97,
-       234.76
+       84.81,
+       382.19
       ],
       [
-       106.98,
-       249.92
+       87.2,
+       390.07
       ],
       [
-       112.0,
-       265.0
+       91.08,
+       397.33
       ],
       [
-       117.17,
-       280.08
+       96.3,
+       403.7
       ],
       [
-       122.54,
-       295.24
+       102.67,
+       408.92
       ],
       [
-       127.94,
-       310.36
+       109.93,
+       412.8
       ],
       [
-       133.15,
-       325.32
+       117.81,
+       415.19
       ],
       [
-       138.0,
-       340.0
+       126.0,
+       416.0
       ],
       [
-       142.51,
-       354.48
+       133.05,
+       416.46
       ],
       [
-       146.82,
-       368.84
+       139.98,
+       417.84
       ],
       [
-       150.86,
-       382.96
+       146.66,
+       420.11
       ],
       [
-       154.61,
-       396.72
+       153.0,
+       423.23
       ],
       [
-       158.0,
-       410.0
+       158.87,
+       427.16
       ],
       [
-       161.01,
-       422.88
+       164.18,
+       431.82
       ],
       [
-       163.66,
-       435.44
+       168.84,
+       437.13
       ],
       [
-       166.02,
-       447.56
+       172.77,
+       443.0
       ],
       [
-       168.11,
-       459.12
+       175.89,
+       449.34
       ],
       [
-       170.0,
+       178.16,
+       456.02
+      ],
+      [
+       179.54,
+       462.95
+      ],
+      [
+       180.0,
        470.0
       ],
       [
-       171.62,
-       480.47
+       179.54,
+       477.05
       ],
       [
-       172.93,
-       490.62
+       178.16,
+       483.98
       ],
       [
-       174.03,
-       500.02
+       175.89,
+       490.66
       ],
       [
-       175.02,
-       508.29
+       172.77,
+       497.0
       ],
       [
-       176.0,
-       515.0
+       168.84,
+       502.87
       ],
       [
-       176.99,
-       519.86
+       164.18,
+       508.18
       ],
       [
-       177.94,
-       523.13
+       158.87,
+       512.84
       ],
       [
-       178.78,
-       525.27
+       153.0,
+       516.77
       ],
       [
-       179.49,
-       526.74
+       146.66,
+       519.89
+      ],
+      [
+       139.98,
+       522.16
+      ],
+      [
+       133.05,
+       523.54
+      ],
+      [
+       126.0,
+       524.0
+      ],
+      [
+       126.0,
+       528.0
       ],
       [
        180.0,
@@ -3876,7 +4799,7 @@
        550.0
       ]
      ],
-     "note": "z local from the console's foot (add 2850); the same envelope as the built fascia_console_01; wall at d=0 (back), the cornice's soffit meets the top"
+     "note": "z local from the console's foot (add 2850); wall at d=0 (back), the cornice's soffit meets the top. The outline is a scroll: the toe 60 deep, the lower volute (eye 46, 62, r 30, reaching d 76), a concave waist (narrowest d 62 at z 130), a stem swelling to d 84, a concave fillet under the upper volute (eye 126, 470, r 54: front d 180 at z 470, top (126, 524)), then the cap block (d 180, z 528 to 550) over a notch 4 high at the volute's top. Judgement; the first piece to check against a reached photograph"
     },
     "plan_at_neck": {
      "plane": "u-d",
@@ -3908,175 +4831,485 @@
      ],
      "note": "240 wide, 12 mm chamfer down each front edge (the built mesh's per-station taper)"
     },
-    "volute_spiral": {
+    "volute_upper_spiral": {
      "plane": "d-z",
      "points": [
       [
-       31.18,
-       80.97
+       172.0,
+       470.0
       ],
       [
-       31.14,
-       79.94
+       171.39,
+       477.49
       ],
       [
-       31.48,
-       78.83
+       169.56,
+       484.79
       ],
       [
-       32.23,
-       77.78
+       166.57,
+       491.68
       ],
       [
-       33.38,
-       76.94
+       162.49,
+       498.0
+      ],
+      [
+       157.45,
+       503.57
+      ],
+      [
+       151.56,
+       508.25
+      ],
+      [
+       144.98,
+       511.9
+      ],
+      [
+       137.91,
+       514.43
+      ],
+      [
+       130.51,
+       515.78
+      ],
+      [
+       123.02,
+       515.53
+      ],
+      [
+       115.85,
+       513.52
+      ],
+      [
+       109.26,
+       510.42
+      ],
+      [
+       103.39,
+       506.36
+      ],
+      [
+       98.39,
+       501.48
+      ],
+      [
+       94.35,
+       495.97
+      ],
+      [
+       91.36,
+       490.0
+      ],
+      [
+       89.44,
+       483.76
+      ],
+      [
+       88.61,
+       477.44
+      ],
+      [
+       88.83,
+       471.22
+      ],
+      [
+       90.06,
+       465.27
+      ],
+      [
+       92.21,
+       459.75
+      ],
+      [
+       95.17,
+       454.8
+      ],
+      [
+       98.82,
+       450.52
+      ],
+      [
+       103.02,
+       447.02
+      ],
+      [
+       107.62,
+       444.34
+      ],
+      [
+       112.45,
+       442.53
+      ],
+      [
+       117.38,
+       441.59
+      ],
+      [
+       122.25,
+       441.5
+      ],
+      [
+       126.91,
+       442.2
+      ],
+      [
+       131.24,
+       443.64
+      ],
+      [
+       135.14,
+       445.72
+      ],
+      [
+       138.5,
+       448.35
+      ],
+      [
+       141.27,
+       451.4
+      ],
+      [
+       143.39,
+       454.75
+      ],
+      [
+       144.84,
+       458.28
+      ],
+      [
+       145.63,
+       461.87
+      ],
+      [
+       145.78,
+       465.39
+      ],
+      [
+       145.33,
+       468.73
+      ],
+      [
+       144.35,
+       471.81
+      ],
+      [
+       142.9,
+       474.53
+      ],
+      [
+       141.09,
+       476.84
+      ],
+      [
+       138.99,
+       478.68
+      ],
+      [
+       136.72,
+       480.04
+      ],
+      [
+       134.37,
+       480.91
+      ],
+      [
+       132.04,
+       481.3
+      ],
+      [
+       129.82,
+       481.24
+      ],
+      [
+       127.78,
+       480.79
+      ],
+      [
+       126.0,
+       480.0
+      ]
+     ],
+     "note": "centreline of the groove cut in each side face: 8 inside the outline at the front, then winding into the eye (126, 470) in 1.25 turns, r 46 to 10; 5 wide, 4 deep"
+    },
+    "volute_lower_spiral": {
+     "plane": "d-z",
+     "points": [
+      [
+       68.0,
+       62.0
+      ],
+      [
+       67.27,
+       57.77
+      ],
+      [
+       65.75,
+       53.82
+      ],
+      [
+       63.51,
+       50.3
+      ],
+      [
+       60.67,
+       47.33
+      ],
+      [
+       57.35,
+       45.01
+      ],
+      [
+       53.7,
+       43.41
+      ],
+      [
+       49.87,
+       42.57
+      ],
+      [
+       46.0,
+       42.5
+      ],
+      [
+       42.26,
+       43.18
+      ],
+      [
+       38.78,
+       44.56
+      ],
+      [
+       35.69,
+       46.57
+      ],
+      [
+       33.1,
+       49.1
+      ],
+      [
+       31.09,
+       52.03
+      ],
+      [
+       29.72,
+       55.26
+      ],
+      [
+       29.02,
+       58.62
+      ],
+      [
+       29.0,
+       62.0
+      ],
+      [
+       29.63,
+       65.26
+      ],
+      [
+       30.87,
+       68.27
+      ],
+      [
+       32.64,
+       70.92
       ],
       [
        34.86,
-       76.44
+       73.14
       ],
       [
-       36.55,
-       76.4
+       37.42,
+       74.84
       ],
       [
-       38.31,
-       76.91
+       40.21,
+       75.97
       ],
       [
-       39.97,
-       77.97
+       43.11,
+       76.53
       ],
       [
-       41.34,
-       79.58
+       46.0,
+       76.5
       ],
       [
-       42.24,
-       81.64
+       48.77,
+       75.91
       ],
       [
-       42.54,
-       84.01
+       51.31,
+       74.82
       ],
       [
-       42.13,
-       86.51
+       53.53,
+       73.28
       ],
       [
-       40.98,
-       88.92
+       55.37,
+       71.37
       ],
       [
-       39.1,
-       91.01
+       56.76,
+       69.19
       ],
       [
-       36.58,
-       92.56
+       57.66,
+       66.83
       ],
       [
-       33.6,
-       93.39
+       58.08,
+       64.4
       ],
       [
-       30.36,
-       93.36
-      ],
-      [
-       27.13,
-       92.38
-      ],
-      [
-       24.17,
-       90.47
-      ],
-      [
-       21.76,
-       87.71
-      ],
-      [
-       20.16,
-       84.25
-      ],
-      [
-       19.54,
-       80.35
-      ],
-      [
-       20.05,
-       76.29
-      ],
-      [
-       21.71,
-       72.4
-      ],
-      [
-       24.47,
-       69.0
-      ],
-      [
-       28.17,
-       66.4
-      ],
-      [
-       32.58,
-       64.88
-      ],
-      [
-       37.38,
-       64.63
-      ],
-      [
-       42.2,
-       65.73
-      ],
-      [
-       46.67,
-       68.18
-      ],
-      [
-       50.39,
-       71.86
-      ],
-      [
-       53.03,
-       76.54
-      ],
-      [
-       54.32,
-       81.91
-      ],
-      [
-       54.09,
-       87.57
-      ],
-      [
-       52.27,
-       93.09
-      ],
-      [
-       48.94,
-       98.02
-      ],
-      [
-       44.27,
-       101.94
-      ],
-      [
-       38.58,
-       104.49
-      ],
-      [
-       32.26,
-       105.41
-      ],
-      [
-       25.79,
-       104.55
+       58.0,
+       62.0
       ]
      ],
-     "note": "centreline of the groove cut in each side face: 1.75 turns from r 3 (the eye, centre d 34, z 82) to r 24, inside the silhouette; groove 5 wide, 4 deep"
+     "note": "centreline of the lower groove: one turn clockwise about (46, 62), r 22 to 12; 5 wide, 4 deep"
+    },
+    "eye_boss_upper": {
+     "plane": "d-z",
+     "points": [
+      [
+       134.0,
+       470.0
+      ],
+      [
+       133.39,
+       473.06
+      ],
+      [
+       131.66,
+       475.66
+      ],
+      [
+       129.06,
+       477.39
+      ],
+      [
+       126.0,
+       478.0
+      ],
+      [
+       122.94,
+       477.39
+      ],
+      [
+       120.34,
+       475.66
+      ],
+      [
+       118.61,
+       473.06
+      ],
+      [
+       118.0,
+       470.0
+      ],
+      [
+       118.61,
+       466.94
+      ],
+      [
+       120.34,
+       464.34
+      ],
+      [
+       122.94,
+       462.61
+      ],
+      [
+       126.0,
+       462.0
+      ],
+      [
+       129.06,
+       462.61
+      ],
+      [
+       131.66,
+       464.34
+      ],
+      [
+       133.39,
+       466.94
+      ]
+     ],
+     "note": "a boss 16 across, 3 proud, at the upper eye (126, 470)"
+    },
+    "eye_boss_lower": {
+     "plane": "d-z",
+     "points": [
+      [
+       54.0,
+       62.0
+      ],
+      [
+       53.39,
+       65.06
+      ],
+      [
+       51.66,
+       67.66
+      ],
+      [
+       49.06,
+       69.39
+      ],
+      [
+       46.0,
+       70.0
+      ],
+      [
+       42.94,
+       69.39
+      ],
+      [
+       40.34,
+       67.66
+      ],
+      [
+       38.61,
+       65.06
+      ],
+      [
+       38.0,
+       62.0
+      ],
+      [
+       38.61,
+       58.94
+      ],
+      [
+       40.34,
+       56.34
+      ],
+      [
+       42.94,
+       54.61
+      ],
+      [
+       46.0,
+       54.0
+      ],
+      [
+       49.06,
+       54.61
+      ],
+      [
+       51.66,
+       56.34
+      ],
+      [
+       53.39,
+       58.94
+      ]
+     ],
+     "note": "a boss 16 across, 3 proud, at the lower eye (46, 62)"
     },
     "leaf_outline": {
      "plane": "u-z",
@@ -4272,7 +5505,7 @@
        550.0
       ]
      ],
-     "note": "z local from the board's foot (2850); the bed mould's front stands 12 proud of the face and 2 proud of the capital's top front (130), so the board's foot overhangs the capitals by the mould only"
+     "note": "z local from the board's foot (2850); the bed mould's front stands 12 proud of the face and 43 behind the capital's top front (175), so the board's foot stands wholly on the capitals' tops"
     }
    },
    "ends": "each end is let into the console's side with a 12 mm rebate; at the capital the foot rests on the abacus for 55 mm (u 295 to 350)",
@@ -4304,13 +5537,21 @@
     },
     "stops_each_end": 54.0,
     "reason_for_length": "the D5 downpipe at each party wall stands 94 from the wall, 68 across: 6000 - 68 - 2 x 20 = 5892 (fascia-01 spec)",
-    "lead": "a 1.8 mm lead apron over the wash, turned 100 up the wall behind (a grey line on the brick), an upstand 25 at each end; not geometry",
+    "lead": "a 1.8 mm lead apron over the wash, turned 100 up the wall behind (a grey line on the brick), dressed down over each return with a 25 upstand where it meets the wall; not geometry",
     "wash_slope_deg": 20.0,
     "corona_face": [
      0,
      52
     ],
     "corona_face_fraction_of_height": 0.347
+   },
+   "ends": {
+    "kind": "mitred return",
+    "rule": "each end of the run is closed by a mitred return of the full 19-point section: the moulding turns through 90 degrees at the mitre (a 45 degree line in plan from the wall at u 269 / 5731 to the nose corner at u 54 / 5946) and runs back to the wall, 215 deep, so the nose line keeps the full 5892 (u 54 to 5946) and the back (soffit and wall line) is 5462 (u 269 to 5731); seen from the street at an angle the end is a moulded face, not an open box",
+    "return_depth": 215.0,
+    "plan_note": "plan in u (right) and d (up the page, the wall at d 0); the returns are the two right triangles with 215 legs, the front run the trapezoid between them",
+    "faces_outward": "the returns' moulded faces look along -u (left end) and +u (right end); the section turned 90 degrees (profiles.return_left_uz / return_right_uz, u from the end plane, z local from the soffit)",
+    "lead": "the lead apron is dressed down over each return with a 25 upstand; a lead flashing 100 up the wall behind, as the front run"
    },
    "profiles": {
     "section": {
@@ -4393,11 +5634,234 @@
        150.0
       ]
      ],
-     "note": "z local from the soffit (3400): flat soffit, drip groove 12 deep, a tall corona face 52 (0.35 of the height, as P1's plain face is 0.39 of its crown), a fillet, a cyma reversa back to d 200 at z 86, a fillet, a cap ovolo out to d 208 at z 110, a short face, then the wash falling 20 mm over 55 mm to a flat top at 150 that runs back to the wall"
+     "note": "z local from the soffit (3400): flat soffit, drip groove 12 deep, a tall corona face 52 (0.35 of the height: Judgement), a fillet, a cyma reversa back to d 200 at z 86, a fillet, a cap ovolo out to d 208 at z 110, a short face, then the wash falling 20 mm over 55 mm to a flat top at 150 that runs back to the wall"
+    },
+    "return_left_uz": {
+     "plane": "u-z",
+     "points": [
+      [
+       269.0,
+       150.0
+      ],
+      [
+       119.0,
+       150.0
+      ],
+      [
+       64.0,
+       130.0
+      ],
+      [
+       62.0,
+       124.0
+      ],
+      [
+       61.0,
+       110.0
+      ],
+      [
+       62.0,
+       98.0
+      ],
+      [
+       66.0,
+       90.0
+      ],
+      [
+       69.0,
+       86.0
+      ],
+      [
+       68.0,
+       76.0
+      ],
+      [
+       64.0,
+       68.0
+      ],
+      [
+       58.0,
+       60.0
+      ],
+      [
+       58.0,
+       56.0
+      ],
+      [
+       54.0,
+       52.0
+      ],
+      [
+       54.0,
+       0.0
+      ],
+      [
+       94.0,
+       0.0
+      ],
+      [
+       94.0,
+       12.0
+      ],
+      [
+       114.0,
+       12.0
+      ],
+      [
+       114.0,
+       0.0
+      ],
+      [
+       269.0,
+       0.0
+      ]
+     ],
+     "note": "the section turned 90 degrees at the left end: u = 54 + (215 - d), nose at u 54, back at u 269; z local from the soffit"
+    },
+    "return_right_uz": {
+     "plane": "u-z",
+     "points": [
+      [
+       5731.0,
+       0.0
+      ],
+      [
+       5886.0,
+       0.0
+      ],
+      [
+       5886.0,
+       12.0
+      ],
+      [
+       5906.0,
+       12.0
+      ],
+      [
+       5906.0,
+       0.0
+      ],
+      [
+       5946.0,
+       0.0
+      ],
+      [
+       5946.0,
+       52.0
+      ],
+      [
+       5942.0,
+       56.0
+      ],
+      [
+       5942.0,
+       60.0
+      ],
+      [
+       5936.0,
+       68.0
+      ],
+      [
+       5932.0,
+       76.0
+      ],
+      [
+       5931.0,
+       86.0
+      ],
+      [
+       5934.0,
+       90.0
+      ],
+      [
+       5938.0,
+       98.0
+      ],
+      [
+       5939.0,
+       110.0
+      ],
+      [
+       5938.0,
+       124.0
+      ],
+      [
+       5936.0,
+       130.0
+      ],
+      [
+       5881.0,
+       150.0
+      ],
+      [
+       5731.0,
+       150.0
+      ]
+     ],
+     "note": "the section turned 90 degrees at the right end: u = 5731 + d, back at u 5731, nose at u 5946"
+    },
+    "plan_front_run": {
+     "plane": "u-d",
+     "points": [
+      [
+       269.0,
+       0.0
+      ],
+      [
+       5731.0,
+       0.0
+      ],
+      [
+       5946.0,
+       215.0
+      ],
+      [
+       54.0,
+       215.0
+      ]
+     ],
+     "note": "plan of the front run between the mitres"
+    },
+    "plan_return_left": {
+     "plane": "u-d",
+     "points": [
+      [
+       54.0,
+       0.0
+      ],
+      [
+       269.0,
+       0.0
+      ],
+      [
+       54.0,
+       215.0
+      ]
+     ],
+     "note": "plan of the left return: a right triangle, legs 215, the mitre its hypotenuse"
+    },
+    "plan_return_right": {
+     "plane": "u-d",
+     "points": [
+      [
+       5731.0,
+       0.0
+      ],
+      [
+       5946.0,
+       0.0
+      ],
+      [
+       5946.0,
+       215.0
+      ]
+     ],
+     "note": "plan of the right return"
     }
    },
    "joints": [
-    "a 45 degree scarf in the timber every 2.4 m at most (none visible on a 5.9 m run, painted over); a butt at each console's side is not needed (the cornice runs over the consoles' tops)"
+    "a 45 degree scarf in the timber every 2.4 m at most (none visible on a 5.9 m run, painted over); a butt at each console's side is not needed (the cornice runs over the consoles' tops)",
+    "a 45 degree mitre at each end, glued and cramped, with a loose tongue; the return's back is screwed to the wall plate"
    ]
   },
   "sill": {
@@ -4492,7 +5956,7 @@
     "face_d": 125.0,
     "sill": "see sill (z 525 to 600)",
     "length_default": 3350.0,
-    "plinth_meets_pilaster": "the stallriser's ends butt the pilaster plinths' sides at u 350 / 5650; its face (125) is 25 behind the plinth's front (150)"
+    "plinth_meets_pilaster": "the stallriser's ends butt the pilaster plinths' sides at u 350 / 5650; its face (125) is 55 behind the plinth's front (180) and 25 behind the sill's nose (150)"
    },
    "variants": {
     "panel": {
@@ -4754,10 +6218,10 @@
      525,
      2850
     ],
-    "sits_on": "the sill's flat bed (z 600) through a bottom rail 90 high (z 600 to 690)",
+    "sits_on": "the sill's flat bed (z 600) through a 25 mm seat (the glazing rebate's foot and its bead): the lights stand on the sill, as P1's sill group is the glazing rebate's foot, and the glass starts within 25 of the shop door's glass beside it",
     "bottom_rail": [
      600,
-     690
+     625
     ],
     "transom": [
      2400.0,
@@ -4768,7 +6232,7 @@
      2850.0
     ],
     "lower_lights_z": [
-     690,
+     625,
      2400
     ],
     "toplights_z": [
@@ -5509,41 +6973,60 @@
     "leaf_height": 2040.0,
     "leaf_thickness": 50.0,
     "leaf_gap": 3.0,
+    "leaf_foot_z": 28.0,
+    "leaf_top_z": 2068.0,
+    "z_note": "every z below is a height above the footway, as the sill's 600; the leaf's foot stands 28 up (the threshold's 25 + 3 clear), so the bottom rail is 202 clear",
     "frame_jamb_face": 50.0,
     "frame_depth": 100.0,
     "leaf_front_d": 70.0,
     "stile": 115.0,
     "top_rail": 115.0,
+    "top_rail_z": [
+     1953.0,
+     2068.0
+    ],
     "lock_rail": [
-     590,
-     700
+     490.0,
+     600.0
     ],
     "bottom_rail": [
-     0,
-     230
+     0.0,
+     230.0
     ],
     "lower_panel": [
-     230,
-     590
+     230.0,
+     490.0
     ],
-    "glazed_from": 700.0,
-    "glazed_to": 1925.0,
-    "glazed_fraction_of_leaf_from": 0.343,
+    "glazed_from": 600.0,
+    "glazed_to": 1953.0,
+    "glazed_fraction_of_leaf_from": 0.294,
+    "glazed_fraction_note": "glazed_from over the leaf's height, both from the footway (600 / 2040); counted from the leaf's own foot (28 up) it is 572 / 2040 = 0.280",
+    "glazed_from_rule": "level with the window's sill top (600) on every timber (T1) and 1930s (M2) front: the door's glass line and the sill line run on as one line along the shopfront (P1: within 46 mm; Coventry: the door's bottom panel the stallriser's height)",
     "kick_plate": {
      "height": 170.0,
      "width": 770.0,
      "metal": "brass",
-     "screws": 8
+     "screws": 8,
+     "z_range": [
+      28.0,
+      198.0
+     ],
+     "used_by": "T1 (Rita's model)"
     },
     "foot_strip": {
      "height": 30.0,
      "metal": "brass",
-     "proud": 3.0
+     "proud": 3.0,
+     "z_range": [
+      28.0,
+      58.0
+     ],
+     "note": "the strip is the plate's lowest 30 mm, a separate bar 3 proud over the plate's foot (P1 shows a strip over a bare leaf; the game's Rita door a plate): on a door without a kick plate (M1, M2) it stands alone"
     },
     "threshold": "terrazzo or tiled, 25 at the leaf falling to 12 at a rounded nose out on the pavement, the full frame width",
     "fanlight": {
      "z_range": [
-      2043,
+      2131,
       2400
      ],
      "bars": "none (one pane) or two bars when the door is wider"
@@ -5560,7 +7043,14 @@
     "hinges": {
      "count": 3,
      "size": "100 x 75 butt, brass or steel, at 150 from top, 150 from bottom, middle",
-     "screws": 6
+     "screws": 6,
+     "side": "on the window side of the leaf (the end away from the side door or the pier); shops[].shop_door_hinge_viewer gives the viewer's side"
+    },
+    "handing": {
+     "rule": "taken from Rita's front in the game today (rita-day-kit-2026-10-06.jpg): the shop door's lever is on the leaf's LEFT edge, the side-door side, so it is hinged on the window side (the viewer's right in Rita's, whose doors are on the viewer's left); the same rule on a front with its doors on the right gives the mirror: hinged on the viewer's left, the lever on the viewer's right. The grocer (no side door): hinged on the window side, the lever on the pier side. The letter plate is centred on the leaf's width on every door",
+     "lever_side": "the edge opposite the hinges (the viewer's side of the door end)",
+     "fields": "shops[].shop_door_hinge_viewer, shop_door_lever_viewer, side_door_hinge_viewer, side_door_knob_viewer, letter_plate_viewer",
+     "game_today_note": "the street's recipe (terrace-front.py _kit_shopfront) places the kit's door by translation only, so every bay carries Rita's handing; this target gives the five mirrored fronts (Mickey's, fish, empty unit, ironmonger, newsagent) the mirror: a change for the builder"
     },
     "furniture": {
      "lever_handles": {
@@ -5570,17 +7060,22 @@
        240,
        40
       ],
-      "metal": "brass"
+      "metal": "brass",
+      "edge": "the lock edge, opposite the hinges"
      },
      "latch": "a rim night-latch (cylinder and case) on the inside, a mortice lock's keyhole escutcheon on the lock stile at z 950",
      "letter_plate": {
       "width": 250.0,
       "height": 40.0,
-      "z": 800.0,
-      "on": "the lower panel's centre"
+      "z": 545.0,
+      "z_range": [
+       525.0,
+       565.0
+      ],
+      "on": "the lock rail (490 to 600), 35 clear above and below, centred on the leaf's width"
      },
      "push_plate": "none on timber doors",
-     "seen_in_P1_not_adopted": "P1's double doors carry octagonal brass knobs on the lock rail and long brass pull plates: an alternative to the lever set for a 1900s front (Judgement: a 65 mm octagonal knob at z 780)"
+     "seen_in_P1_not_adopted": "P1's double doors carry octagonal brass knobs on the lock rail and long brass pull plates: an alternative to the lever set for a 1900s front (Judgement: a 65 mm octagonal knob on the lock rail at z 545)"
     }
    },
    "profiles": {
@@ -5755,9 +7250,9 @@
     }
    },
    "variants": {
-    "T1": "half-glazed timber leaf (Rita's, empty, tea, ironmonger, newsagent)",
-    "M1": "aluminium-framed glass door 900 x 2040: 50 stiles, 100 top rail, 170 bottom rail, a 300 chrome D pull and a push plate (fish, laundry, chandler)",
-    "M2": "bronze-framed glass door, a 150 kick plate in bronze (grocer, 1930s)"
+    "T1": "half-glazed timber leaf, glazed from 600: bottom rail, one raised and fielded lower panel (230 to 490), a lock rail 110 high carrying the letter plate (Rita's, empty, tea, ironmonger, newsagent)",
+    "M1": "aluminium-framed glass door 900 x 2040: 50 stiles, 100 top rail, 170 bottom rail, a 300 chrome D pull and a push plate (fish, laundry, chandler, Mickey's); its glass runs from the bottom rail, so the door-glass-level rule is not asked of it",
+    "M2": "bronze-framed glass door with a bronze kick panel to 600 (level with the lobby's kick panels and the sill), glazed from 600 (grocer, 1930s)"
    }
   },
   "side_door_slot": {
@@ -5810,10 +7305,11 @@
    },
    "mapping_from_F1": {
     "x": "F1 x 0 is the left edge of the brick reveal; the slot is centred on the F1 opening (x 447.6): u_bay = u_slot_centre + (x_F1 - 447.6)",
-    "y": "F1 y = 0 is its brick face; its frame's outside face is at F1 y 114.3. In the bay the frame's outside face stands at d = 100 (flush with the shop door's and window's frames, 10 behind the pilaster shaft's face): d = 214.3 - y_F1, i.e. the leaf's outside face (F1 188.3) is at d 26",
+    "y": "F1 y = 0 is its brick face; its frame's outside face is at F1 y 114.3. In the bay the frame's outside face stands at d = 100 (flush with the shop door's frame, 40 behind the pilaster shaft's face, 140): d = 214.3 - y_F1, i.e. the leaf's outside face (F1 188.3) is at d 26",
+    "hinge": "the leaf is hinged on the SHOP-DOOR side (the viewer's right where the doors are on the left, as Rita's; its knob and lock on the pier side). The front-door target gives optional butts on F1's left stile seen from outside (its 'Hinges' row) and a centred knob: F1 is therefore used mirrored where the door end is the viewer's left (Rita's), and as drawn where it is the viewer's right. Measured on the game's Rita frame (rita-day-kit-2026-10-06.jpg, 1600 x 900): the side door's leaf spans x 215.7 to 397.3 and its two knobs stand at x 225.7 and 220.0, in the leaf's left tenth: the knob is on the pier side, not the shop-door side",
     "z": "F1 z 0 is the top of its threshold, 45 above the pavement (F1 ground z -45): z_bay = z_F1 + 45. Its head's visible face (F1 2339.6 to 2400) therefore reaches z 2445: the shop transom (2400 to 2480) covers the top 45, so the builder trims the F1 head at z 2400",
     "trim": [
-     "the threshold board's front (F1 y 0, d 214) is cut back to d 130, flush with the shop door's threshold nose and under the plinth's 150",
+     "the threshold board's front (F1 y 0, d 214) is cut back to d 130, flush with the shop door's threshold nose and 50 behind the plinth's front (180)",
      "F1's brick arch, quoins, plinth and step are NOT built: the shopfront holds the head"
     ]
    },
@@ -5919,15 +7415,19 @@
  "meets": [
   {
    "between": "pilaster shaft and plinth",
-   "how": "the shaft stands on the cap's flat; a 3 mm shadow line at the foot where paint has filled the gap; the base mould (a small ogee 25 x 60 in the kit) is dropped: P1 shows none, the plinth's cap takes the shaft directly (Photo)"
+   "how": "panel and flute: the shaft stands on the plinth cap's flat with the kit's base ogee (25 proud of the shaft's face, 60 high, z 600 to 660) returned on both sides; render: the hollow (cavetto) head and its band take the shaft directly, the band 8 in front of the shaft's face (P1 shows a moulding at the shaft's foot; the first try's 'P1 shows none' was wrong). A 3 mm shadow line at the foot where paint has filled the gap"
   },
   {
    "between": "pilaster pair at the party wall",
-   "how": "two 350 piers butt at u = 0 / 6000: a vertical joint 2 mm wide, paint-cracked, 0 to 2850; capitals touch; plinth caps touch. The shafts (290 in a 350 slot) stand 60 apart across the party line. The D5 downpipe (68 across, axis 94 from the wall, so d 60 to 128) stands in that gap, 18 proud of the shafts' faces (110); the plinths and the capitals are notched for it by a chase 76 wide (u +-38) from d 50 to their fronts (z 0 to 800 and 2540 to 2850); the cornice stops 54 short of each side and the consoles stand 110 apart, so the pipe passes all the way up"
+   "how": "two 350 piers butt at u = 0 / 6000: a vertical joint 2 mm wide, paint-cracked, 0 to 2850; capitals touch; plinth caps touch. The shafts (290 in a 350 slot) stand 60 apart across the party line. The D5 downpipe (68 across, axis 94 from the wall, so d 60 to 128) stands in that gap, 12 behind the shafts' faces (140); the plinths and the capitals are notched for it by a chase 76 wide (u +-38) from d 50 to their fronts (z 0 to 600 and 2540 to 2850); the cornice stops 54 short of each side and the consoles stand 110 apart, so the pipe passes all the way up"
+  },
+  {
+   "between": "pilaster and the frames beside it",
+   "how": "the shaft's face (140) stands 45 in front of the window jamb (95) and 40 in front of the shop-door frame and the F1 frame (100); the backing core, painted the pier's colour, makes the return between them, so no daylight and no unpainted edge shows (check PIL-15: at least 40 in front of every frame)"
   },
   {
    "between": "console and capital",
-   "how": "the toe 240 x 60 stands on the abacus's top at z 2850, centred on u 175 / 5825; 0.0 mm gap; two 12 mm hardwood dowels 40 deep from the toe into the capital; two M10 coach screws through the console's back into the wall plate (hidden)"
+   "how": "the toe 240 x 60 stands on the abacus's top at z 2850, centred on u 175 / 5825; 0.0 mm gap; the capital's top is 350 x 175 (its flat reaches d 172, an ovolo rounds the last 3); two 12 mm hardwood dowels 40 deep from the toe into the capital; two M10 coach screws through the console's back into the wall plate (hidden); the lower volute (d 76) overhangs the capital by 16, well inside its 175"
   },
   {
    "between": "fascia board and console",
@@ -5935,7 +7435,7 @@
   },
   {
    "between": "fascia board and capital",
-   "how": "the board's foot rests on the abacus for 55 (u 295 to 350 and 5650 to 5705) and its bed mould overhangs the abacus's top front by 2"
+   "how": "the board's foot rests on the abacus for 55 (u 295 to 350 and 5650 to 5705); the capital's top reaches d 172 to 175, so the board (face d 120) and its bed mould (front 132) stand wholly on it, the mould's front 43 behind the capital's front"
   },
   {
    "between": "cornice and fascia",
@@ -5943,27 +7443,27 @@
   },
   {
    "between": "cornice and the party wall",
-   "how": "the cornice stops 54 short of each party line (u 54 and 5946) leaving a 108 gap between neighbours for the downpipe"
+   "how": "the cornice stops 54 short of each party line (u 54 and 5946) leaving a 108 gap between neighbours for the downpipe; each end is closed by a mitred return of the full 19-point section back to the wall, 215 deep: a 45 degree mitre in plan from the wall at u 269 / 5731 to the nose corner at u 54 / 5946, glued with a loose tongue, the return's back screwed to the wall plate; the lead apron is dressed down over the return with a 25 upstand"
   },
   {
    "between": "window frame and sill",
-   "how": "the bottom rail (z 600 to 690) stands on the sill's flat bed (d 0 to 60), screwed from below through the sill; a mastic line at the junction (1 mm)"
+   "how": "the 25 mm seat (z 600 to 625) stands on the sill's flat bed (d 0 to 60), screwed from below through the sill; a mastic line at the junction (1 mm); the glass sits in the rebate from 625"
   },
   {
    "between": "window frame and pilaster / door frames",
-   "how": "the end jambs (50 x 95) close against the pilaster's backing core and the door frames' jambs; a 3 mm paint joint; no daylight"
+   "how": "the end jambs (50 x 95) close against the pilaster's backing core and the door frames' jambs; a 3 mm paint joint; no daylight; the jamb's face is 45 behind the shaft's"
   },
   {
    "between": "transom and jambs",
    "how": "the transom is housed 10 mm into each jamb with a stub tenon, drawbore-pegged inside; outside only a 1 mm line shows"
   },
   {
-   "between": "mullions and transom/bottom rail",
+   "between": "mullions and transom/seat",
    "how": "mortice and tenon, 25 mm tenon, wedged; end grain not visible after painting; the mullion stops at the transom (z 2400) and the toplight bars start on it"
   },
   {
    "between": "stallriser and plinths",
-   "how": "the stallriser's ends butt the plinths' sides; the plinth is 25 proud of the stallriser face and 0 to 25 of the sill's nose; a 2 mm line"
+   "how": "the stallriser's ends butt the plinths' sides; the plinth is 55 proud of the stallriser face and 30 of the sill's nose; a 2 mm line"
   },
   {
    "between": "sill and plinth",
@@ -5974,12 +7474,20 @@
    "how": "the terrazzo threshold (25 high) runs the frame's width; the leaf clears it by 3 mm over a brass foot strip"
   },
   {
+   "between": "shop door glass and the sill",
+   "how": "the door's glass foot (z 600, the lock rail's top) runs on as one line with the window sill's top (600) along the front: the lock rail 490 to 600 carries the letter plate (z 545) and the lever stands above it at z 1000"
+  },
+  {
    "between": "side-door slot and the shop door frame",
    "how": "the F1 frame's jamb and the shop door's jamb stand 3 apart under a common head strip; the transom runs across both"
   },
   {
    "between": "box sign / flat panel and the old board",
    "how": "stands on the board at the fascia target's outer rectangle; eight pan-head screws; the cornice's soffit clears its top by 35"
+  },
+  {
+   "between": "roller-shutter hood, rails and curtain",
+   "how": "the hood (300 high, 210 deep, z 2550 to 2850) is screwed to the fascia's rail and hides the toplights above 2550; the guide rails (50 wide, 40 deep, d 150 to 190, z 0 to 2550) stand on steel spacer brackets bolted through the frames into the pilaster's core; the curtain runs in one plane at d 170, 20 clear of the sill's nose, across window and door to the footway"
   }
  ],
  "fixings": [
@@ -5997,7 +7505,7 @@
   },
   {
    "part": "cornice",
-   "fixing": "75 mm brass or galvanised screws through the soffit into the wall plate at 450, pellet-plugged and painted; the lead is fixed with copper clout nails at 25 along its upper edge, pointed into the brick"
+   "fixing": "75 mm brass or galvanised screws through the soffit into the wall plate at 450, pellet-plugged and painted; the mitred returns glued and tongued, screwed through their backs into the wall plate; the lead is fixed with copper clout nails at 25 along its upper edge, pointed into the brick"
   },
   {
    "part": "window frame",
@@ -6009,7 +7517,7 @@
   },
   {
    "part": "doors",
-   "fixing": "three 100 x 75 butt hinges, 6 No. 8 screws each; a mortice lock and a rim night latch; the kick plate with 8 brass screws; the F1 door as its own target"
+   "fixing": "three 100 x 75 butt hinges, 6 No. 8 screws each, on the window side of the shop door and the shop-door side of the side door; a mortice lock and a rim night latch; the kick plate with 8 brass screws; the F1 door as its own target"
   },
   {
    "part": "seen on P1, not adopted",
@@ -6017,7 +7525,7 @@
   },
   {
    "part": "roller-shutter box",
-   "fixing": "four M8 bolts per rail through the frame into the pilaster core; the hood on steel angle brackets screwed into the fascia's rail, 600 pitch; rivets on the end caps"
+   "fixing": "four M8 bolts per rail through the frame into the pilaster core, the rails standing out on steel spacer brackets (d 150 to 190), bolt heads visible; the hood on steel angle brackets screwed into the fascia's rail, 600 pitch; rivets on the end caps"
   }
  ],
  "wear": {
@@ -6124,7 +7632,30 @@
      45,
      55
     ],
-    "fixings": "eight pan-head screws through the frame into the board"
+    "fixings": "eight pan-head screws through the frame into the board",
+    "u_z": {
+     "steam_laundry": {
+      "u": [
+       400,
+       5600
+      ],
+      "z": [
+       2885,
+       3365
+      ]
+     },
+     "newsagent": {
+      "u": [
+       390,
+       5610
+      ],
+      "z": [
+       2890,
+       3360
+      ]
+     }
+    },
+    "board": "the old CREAM board stays under it on both fronts (the fascia target's old_board colour)"
    },
    "applies_to": [
     "steam_laundry",
@@ -6136,7 +7667,20 @@
    "what": "a flat acrylic panel screwed over the old board (fascia target: 5230 x 470 x 30)",
    "numbers": {
     "stands_proud_of_board": 30,
-    "front_d": 150
+    "front_d": 150,
+    "u_z": {
+     "tea_rooms": {
+      "u": [
+       385,
+       5615
+      ],
+      "z": [
+       2890,
+       3360
+      ]
+     }
+    },
+    "board": "the old cream board stays under it"
    },
    "applies_to": [
     "tea_rooms"
@@ -6144,23 +7688,34 @@
    "kind": "the fascia target"
   },
   "roller_shutter": {
-   "what": "a steel roller shutter over the window and shop door: a hood under the fascia, two guide rails on the frames, a 77 mm slat curtain",
+   "what": "a steel roller shutter over the window and shop door: a hood under the fascia, two guide rails standing out in front of the frames on spacer brackets, a 77 mm slat curtain running in front of the sill and the stallriser to the footway",
    "numbers": {
     "hood_height": 300,
-    "hood_depth_d": 190,
+    "hood_depth_d": 210,
     "hood_z_range": [
      2550,
      2850
     ],
     "hood_front": "five-faced (octagon half)",
     "hood_ends": "end caps 3 mm, riveted",
+    "hides": "the toplights above 2550 (the hood is 300 high over toplights at 2480 to 2790): 70 of the toplights' 310 shows",
     "guide_rail": {
      "face": 50,
      "depth": 40,
-     "fixing": "four M8 bolts per rail through the frame into the pilaster's core, bolt heads visible"
+     "d_range": [
+      150,
+      190
+     ],
+     "z_range": [
+      0,
+      2550
+     ],
+     "fixing": "steel spacer brackets bolted through the frames into the pilaster core, four M8 bolts per rail, bolt heads visible"
     },
     "curtain_slat_pitch": 77.0,
-    "curtain_front_d": 30,
+    "curtain_plane_d": 170,
+    "curtain_clear_of_sill_nose": 20,
+    "curtain_runs": "across window and door in one plane, to the footway, between the rails; it clears the sill's nose (150), the stallriser (125), the threshold (130), the transom (100), the door frame (100) and the mullions (92)",
     "bottom_rail": {
      "height": 50,
      "locks": 2
@@ -6170,8 +7725,8 @@
    "applies_to": [
     "newsagent"
    ],
-   "source": "Poly Haven CC0 roller shutters (rollershutter_window_01/02/03, rollershutter_door; author MP, published 2023-10-11): the glTFs read today give a hood 150 deep for a 1.55 m shutter and 300 deep for 1.85 and 2.4 m, a curtain plane at z 20 and rails 7 wider than the curtain. They are 2023 products: the form, not the date, is used",
-   "kind": "Photo-scan geometry measured today (hood depth, rail width); the slat pitch and the bolts are Judgement"
+   "source": "Poly Haven CC0 roller shutters (rollershutter_window_01/02/03, rollershutter_door; author MP, published 2023-10-11): the glTFs read today give a hood 150 deep for a 1.55 m shutter and 300 deep for 1.85 and 2.4 m, a curtain plane at z 20 and rails 7 wider than the curtain. They are 2023 products: the form, not the date, is used. The target's 210 deep hood is the reviewer's Judgement between the two",
+   "kind": "Photo-scan geometry measured today (hood depths, rail width); the curtain plane, the rail depth range and the hood's 210 are Judgement fixed by clearing the frames; the slat pitch and the bolts are Judgement"
   },
   "empty_unit": {
    "what": "an empty unit: the panelling painted out and a ply or hardboard sheet screwed over the stallriser, the glass whitewashed from inside, the door's lower leaf hardboarded, a TO LET board on the fascia, one console gone",
@@ -6571,6 +8126,42 @@
    "kind": "Judgement",
    "note": "the kit's terrazzo threshold"
   },
+  "acrylic_white": {
+   "srgb": [
+    225,
+    217,
+    197
+   ],
+   "plain": "white acrylic, yellowed",
+   "rough": 0.3,
+   "metal": 0.0,
+   "kind": "Scaled",
+   "note": "the fascia target's acrylic_white, aged"
+  },
+  "acrylic_red": {
+   "srgb": [
+    197,
+    75,
+    62
+   ],
+   "plain": "red acrylic face, faded",
+   "rough": 0.3,
+   "metal": 0.0,
+   "kind": "Scaled",
+   "note": "the fascia target's vermilion, aged (the newsagent's box face)"
+  },
+  "powder_black": {
+   "srgb": [
+    37,
+    35,
+    34
+   ],
+   "plain": "black powder-coat",
+   "rough": 0.4,
+   "metal": 0.2,
+   "kind": "Scaled",
+   "note": "the fascia target's shade black; the newsagent box's returns"
+  },
   "steel_grey": {
    "srgb": [
     88,
@@ -6665,6 +8256,13 @@
    },
    "fascia_target_id": "mickeys",
    "notes": "The approved sheet's front: slate blue-grey frame on a patterned tile, the piers and fascia painted as a unit. The old board stays under.",
+   "shop_door_hinge_viewer": "L",
+   "shop_door_lever_viewer": "R",
+   "side_door_hinge_viewer": "L",
+   "side_door_knob_viewer": "R",
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 198.0,
+   "door_glass_rule_applies": false,
    "glazing_layout": {
     "mullion_centres": [
      1125.0,
@@ -6739,6 +8337,14 @@
     "shop_door": "slate powder-coat on steel",
     "side_door": "oxblood",
     "metal": "chrome, spotted"
+   },
+   "relief_beside_frames": {
+    "left_pier": 65.0,
+    "right_pier": 40.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 75.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   },
   {
@@ -6820,6 +8426,13 @@
    },
    "fascia_target_id": "fish_market",
    "notes": "The old timber pilasters and consoles stay, repainted pale to match the new board; the window and door were replaced in aluminium.",
+   "shop_door_hinge_viewer": "L",
+   "shop_door_lever_viewer": "R",
+   "side_door_hinge_viewer": "L",
+   "side_door_knob_viewer": "R",
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 198.0,
+   "door_glass_rule_applies": false,
    "glazing_layout": {
     "mullion_centres": [
      850.0,
@@ -6896,6 +8509,14 @@
     "shop_door": "natural anodised aluminium, dulled",
     "side_door": "gloss black, faintly blue",
     "metal": "chrome, spotted"
+   },
+   "relief_beside_frames": {
+    "left_pier": 65.0,
+    "right_pier": 40.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 75.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   },
   {
@@ -6975,6 +8596,13 @@
    },
    "fascia_target_id": "ritas",
    "notes": "Rita's window is the model (Jafar, 2 October). Oxblood on piers, consoles, fascia and stallriser, white joinery inside, the side door in the door paint, brass fittings.",
+   "shop_door_hinge_viewer": "R",
+   "shop_door_lever_viewer": "L",
+   "side_door_hinge_viewer": "R",
+   "side_door_knob_viewer": "L",
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 600.0,
+   "door_glass_rule_applies": true,
    "glazing_layout": {
     "mullion_centres": [
      1121.7,
@@ -7054,6 +8682,14 @@
     "shop_door": "gloss white, yellowed",
     "side_door": "buttermilk cream",
     "metal": "aged brass"
+   },
+   "relief_beside_frames": {
+    "left_pier": 40.0,
+    "right_pier": 45.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 95.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   },
   {
@@ -7132,7 +8768,18 @@
     "metal": "brass"
    },
    "fascia_target_id": "empty_unit",
+   "whitewash": {
+    "over": "every pane of the window and the shop door's glass",
+    "colour": "whitewash"
+   },
    "notes": "The left console (high street x, viewer's left: u 55 to 295) was clipped off and never put back (fascia-01 spec, bay x 26.825). The street draws this front bare.",
+   "shop_door_hinge_viewer": "L",
+   "shop_door_lever_viewer": "R",
+   "side_door_hinge_viewer": "L",
+   "side_door_knob_viewer": "R",
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 600.0,
+   "door_glass_rule_applies": true,
    "glazing_layout": {
     "mullion_centres": [
      1120.0,
@@ -7212,6 +8859,14 @@
     "shop_door": "gloss black, faintly blue",
     "side_door": "gloss black, faintly blue",
     "metal": "aged brass"
+   },
+   "relief_beside_frames": {
+    "left_pier": 45.0,
+    "right_pier": 40.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 95.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   },
   {
@@ -7297,7 +8952,30 @@
     "metal": "chrome"
    },
    "fascia_target_id": "steam_laundry",
+   "fascia_sign": {
+    "kind": "box_sign",
+    "u": [
+     400.0,
+     5600.0
+    ],
+    "z": [
+     2885.0,
+     3365.0
+    ],
+    "depth": 150.0,
+    "front_d": 270.0,
+    "face": "acrylic_white",
+    "returns": "alu_bronze",
+    "source": "the fascia target (steam_laundry_box: outer 105, 35, 5305, 515)"
+   },
    "notes": "The lit box sign (fascia target: 5200 x 480 x 150, bronze returns) stands on the old cream board between the consoles.",
+   "shop_door_hinge_viewer": "R",
+   "shop_door_lever_viewer": "L",
+   "side_door_hinge_viewer": "R",
+   "side_door_knob_viewer": "L",
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 198.0,
+   "door_glass_rule_applies": false,
    "glazing_layout": {
     "mullion_centres": [
      1675.0
@@ -7368,6 +9046,14 @@
     "shop_door": "bronze anodised aluminium",
     "side_door": "dark brown",
     "metal": "chrome, spotted"
+   },
+   "relief_beside_frames": {
+    "left_pier": 40.0,
+    "right_pier": 65.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 75.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   },
   {
@@ -7453,6 +9139,13 @@
    },
    "fascia_target_id": "grocer",
    "notes": "The fascia target's three-slab glass board (bottle green, cream letters) fixes this front's date. The consoles are plain blocks; the window is 4294 wide.",
+   "shop_door_hinge_viewer": "R",
+   "shop_door_lever_viewer": "L",
+   "side_door_hinge_viewer": null,
+   "side_door_knob_viewer": null,
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 600.0,
+   "door_glass_rule_applies": true,
    "glazing_layout": {
     "mullion_centres": [
      1436.0,
@@ -7523,6 +9216,14 @@
     "window_frame": "bronze-plated bar, tarnished",
     "shop_door": "bronze-plated bar, tarnished",
     "metal": "chrome, spotted"
+   },
+   "relief_beside_frames": {
+    "left_pier": 40.0,
+    "right_pier": 100.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 40.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   },
   {
@@ -7603,6 +9304,13 @@
    },
    "fascia_target_id": "chandler",
    "notes": "D06 gave the Hook's shops a metal refit; R05's plain glazed tile under the glass (terrace-front.py SHOPFRONT_REFITS).",
+   "shop_door_hinge_viewer": "R",
+   "shop_door_lever_viewer": "L",
+   "side_door_hinge_viewer": "R",
+   "side_door_knob_viewer": "L",
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 198.0,
+   "door_glass_rule_applies": false,
    "glazing_layout": {
     "mullion_centres": [
      1125.0,
@@ -7677,6 +9385,14 @@
     "shop_door": "natural anodised aluminium, dulled",
     "side_door": "navy",
     "metal": "chrome, spotted"
+   },
+   "relief_beside_frames": {
+    "left_pier": 40.0,
+    "right_pier": 65.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 75.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   },
   {
@@ -7755,7 +9471,30 @@
     "metal": "brass"
    },
    "fascia_target_id": "tea_rooms",
+   "fascia_sign": {
+    "kind": "flat_panel",
+    "u": [
+     385.0,
+     5615.0
+    ],
+    "z": [
+     2890.0,
+     3360.0
+    ],
+    "depth": 30.0,
+    "front_d": 150.0,
+    "face": "brown",
+    "returns": "white_joinery",
+    "source": "the fascia target (tea_rooms_panel: outer 90, 40, 5320, 510)"
+   },
    "notes": "A 1980s caff: the brown acrylic panel on the old board (fascia target), the timber painted brown and cream.",
+   "shop_door_hinge_viewer": "R",
+   "shop_door_lever_viewer": "L",
+   "side_door_hinge_viewer": "R",
+   "side_door_knob_viewer": "L",
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 600.0,
+   "door_glass_rule_applies": true,
    "glazing_layout": {
     "mullion_centres": [
      1121.7,
@@ -7833,6 +9572,14 @@
     "shop_door": "buttermilk cream",
     "side_door": "dark brown",
     "metal": "aged brass"
+   },
+   "relief_beside_frames": {
+    "left_pier": 40.0,
+    "right_pier": 45.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 95.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   },
   {
@@ -7912,6 +9659,13 @@
    },
    "fascia_target_id": "ironmonger",
    "notes": "The street's recipe has a metal refit here (SHOPFRONT_REFITS west_north 1); the traditional sign-written board in the fascia target is better matched by an original front, so this target keeps it timber. Reported.",
+   "shop_door_hinge_viewer": "L",
+   "shop_door_lever_viewer": "R",
+   "side_door_hinge_viewer": "L",
+   "side_door_knob_viewer": "R",
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 600.0,
+   "door_glass_rule_applies": true,
    "glazing_layout": {
     "mullion_centres": [
      1675.0
@@ -7987,6 +9741,14 @@
     "shop_door": "dark green",
     "side_door": "gloss black, faintly blue",
     "metal": "aged brass"
+   },
+   "relief_beside_frames": {
+    "left_pier": 45.0,
+    "right_pier": 40.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 95.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   },
   {
@@ -8048,7 +9810,7 @@
     "n_mullions": 2,
     "toplights": 8,
     "toplight_aligned": false,
-    "glazing": "ovolo beads; the shutter's box hides the toplights' top 100"
+    "glazing": "ovolo beads; the shutter's hood hides the toplights above 2550, 70 shows"
    },
    "pilaster": "panel",
    "console": "scroll",
@@ -8059,7 +9821,7 @@
     "pilaster": "dove_grey",
     "console": "dove_grey",
     "cornice": "dove_grey",
-    "fascia_board": "dove_grey",
+    "fascia_board": "cream",
     "stallriser": "dove_grey",
     "window_frame": "white_joinery",
     "shop_door": "dove_grey",
@@ -8068,10 +9830,33 @@
    },
    "fascia_target_id": "newsagent",
    "roller_shutter": {
-    "over": "window and shop door",
-    "state": "raised by day: box and guide rails only; lowered by night (variant)"
+    "over": "window and shop door (u 350 to 4706)",
+    "state": "raised by day: hood and guide rails only; lowered by night (variant shutter_down)"
    },
-   "notes": "The lit box sign (fascia target, 5220 x 470 x 140, powder-black returns) on the board; the steel hood under it over window and door.",
+   "fascia_sign": {
+    "kind": "box_sign",
+    "u": [
+     390.0,
+     5610.0
+    ],
+    "z": [
+     2890.0,
+     3360.0
+    ],
+    "depth": 140.0,
+    "front_d": 260.0,
+    "face": "acrylic_red",
+    "returns": "powder_black",
+    "source": "the fascia target (newsagent_box: outer 95, 40, 5315, 510 on a 5410 x 550 board)"
+   },
+   "notes": "The lit box sign (fascia target, 5220 x 470 x 140, powder-black returns) stands on the old CREAM board (the fascia target's old_board colour; the board's edges, ends and bed mould are cream like its face), the piers, consoles and cornice dove grey; the steel hood under it over window and door.",
+   "shop_door_hinge_viewer": "L",
+   "shop_door_lever_viewer": "R",
+   "side_door_hinge_viewer": "L",
+   "side_door_knob_viewer": "R",
+   "letter_plate_viewer": "centre",
+   "shop_door_glass_foot_z": 600.0,
+   "door_glass_rule_applies": true,
    "glazing_layout": {
     "mullion_centres": [
      1121.7,
@@ -8111,9 +9896,9 @@
      150
     ],
     "fascia_board": [
-     150,
-     152,
-     150
+     222,
+     209,
+     175
     ],
     "stallriser": [
      150,
@@ -8145,54 +9930,111 @@
     "pilaster": "dove grey",
     "console": "dove grey",
     "cornice": "dove grey",
-    "fascia_board": "dove grey",
+    "fascia_board": "cream",
     "stallriser": "dove grey",
     "window_frame": "gloss white, yellowed",
     "shop_door": "dove grey",
     "side_door": "dark blue",
     "metal": "aged brass"
+   },
+   "relief_beside_frames": {
+    "left_pier": 45.0,
+    "right_pier": 40.0,
+    "shaft_face_d": 140.0,
+    "window_frame_front_d": 95.0,
+    "door_frame_front_d": 100.0,
+    "min": 40.0
    }
   }
  ],
+ "game_today": {
+  "source": "production/previews/rita-day-kit-2026-10-06.jpg, 1600 x 900: the game's Rita front today (the approved model)",
+  "kind": "Sheet (measured on the frame by eye and colour, +-2 px)",
+  "side_door": {
+   "leaf_x_px": [
+    215.7,
+    397.3
+   ],
+   "knob_x_px": [
+    225.7,
+    220.0
+   ],
+   "knob_y_px": [
+    487.7,
+    567.7
+   ],
+   "knob_side": "viewer's left (the pier side)",
+   "hinge_side": "viewer's right (the shop-door side)"
+  },
+  "shop_door": {
+   "glass_x_px": [
+    457.7,
+    604.0
+   ],
+   "lever_rose_x_px": [
+    446.7,
+    475.0
+   ],
+   "lever_y_px": 556.7,
+   "lever_side": "viewer's left (the side-door side, left of the glass)",
+   "hinge_side": "viewer's right (the window side)",
+   "letter_plate_x_px": [
+    493.3,
+    561.7
+   ],
+   "letter_plate_y_px": [
+    582.3,
+    598.7
+   ],
+   "plate": "in the lock rail between the glass's foot (y 563) and the lower panel's top (y 612), centred on the leaf's width (leaf centre x about 530)"
+  },
+  "rule": "the shop door is hinged on the window side with its lever on the opposite edge; the side door on the shop-door side with its knob on the pier side; the letter plate centred on each leaf; mirrored where the doors are on the viewer's right",
+  "note": "the game's glazed-from is 1.0 (the scene's value: glass foot at y 563 against the window's sill at y 655); the target's 600 follows P1 and the review"
+ },
  "variants": {
+  "plinth_tall": "P1's plinth at the street's scale, 800 high (variants.plinth_tall of the pilaster): NOT used; Rita's 600 wins",
   "cornice_tall": {
-   "use": "optional: a cornice 300 high (z 3400 to 3700), 280 deep, for a reviewer who reads P1's crown as binding; it would collide with the fascia target's hanging-sign brackets at 3.60 and the first-floor sills; NOT the default",
+   "use": "optional: a cornice 300 high (z 3400 to 3700), 280 deep, for a reviewer who reads P1's crown as binding; the crown is not measurable by the method, so there is no photographic basis; it would collide with the fascia target's hanging-sign brackets at 3.60 and the first-floor sills; NOT the default",
    "dims": {
     "height": 300.0,
     "depth": 280.0
    }
   },
-  "shutter_down": "the newsagent's curtain lowered: a slatted plane at d 30 over window and door, z 0 to 2550",
+  "shutter_down": "the newsagent's curtain lowered: a slatted plane at d 170 over window and door, z 0 to 2550, between the guide rails (d 150 to 190), clear of every frame, the sill (nose 150) and the threshold (130)",
   "paint_fresh": "each paint's fresh value is the fascia target's where it has one (palette.srgb_fresh); the rest are the aged value lifted 8 per cent"
  },
  "evidence_basis": {
   "pilaster": {
    "photo_today": [
-    "plinth top 800 (ratio to the front's height 0.228 and to the sill 1.27)",
     "shaft 290 wide (290.1 +-8 per cent at the measured scale)",
-    "shaft proud 110 (118 +-14)",
-    "capital 310 (301 +-24)",
-    "the order of members: stepped plinth, shaft, necking ledge, die, flare, abacus",
-    "the three-boss die (optional)"
+    "shaft relief beside the next surface: 117 (painted return, a lower bound) to 276 (the teal frame): 140 sits inside",
+    "the stepped plinth's members (tops at 0.63 / 0.79 / 0.85 of its height) and its hollow-moulded head with a band",
+    "a moulding at the shaft's foot",
+    "the capital's flare (cream band 57 px and top slab 77 px beyond the shaft's edge)",
+    "the capital's height as an upper bound (301)",
+    "the three-boss die (optional)",
+    "the plinth's top against its sill (1.33: NOT followed, Rita's line)"
    ],
    "earlier_notes": [
     "panelled and fluted timber types; plinth at least the stallriser's height (RBKC); 0.35 slot and 0.10 proud (the scene)",
-    "the pairs at the party wall (scene, DOWNPIPE note)"
+    "the pairs at the party wall (scene, DOWNPIPE note)",
+    "the kit's base ogee"
    ],
    "judgement": [
-    "every moulding's profile (astragal r 12, flare hollow, ovolo), the sunk panel's depth 12 and bead 10, the flutes' 12, the stepped plinth's set-backs, the clad variant's sheets",
+    "the shaft's 140 and the plinth's 180 (the relief rule), the capital's 310 and its 175 top",
+    "every moulding's profile (astragal r 12, flare hollow, ovolo), the sunk panel's depth 12 and bead 10, the flutes' 12, the stepped plinth's lower blocks at 600 (360 / 450 / 484), the clad variant's sheets",
     "the downpipe chase"
    ]
   },
   "console": {
    "photo_today": [],
    "earlier_notes": [
-    "envelope 240 x 180 x 550 and the S silhouette of the built mesh (fascia-01)",
+    "envelope 240 x 180 x 550 of the built mesh (fascia-01)",
     "consoles at each end of the fascia on the capitals (FRONTAGE: CV, KC, CW)"
    ],
    "judgement": [
-    "the smoothing, the volute, the acanthus leaf, the block variant",
-    "NO PHOTOGRAPH of a scrolled console was reached"
+    "the two-volute outline, the waist, the grooves, the bosses, the leaf, the block variant",
+    "NO PHOTOGRAPH of a console was reached: the first piece to check"
    ]
   },
   "fascia_board": {
@@ -8210,18 +10052,20 @@
   },
   "cornice": {
    "photo_today": [
-    "a crown of several members (cyma, corona, fillets)"
+    "a crown of several members (cyma, corona, fillets); its height is NOT measurable by this method (170 to 300)"
    ],
    "earlier_notes": [
     "215 x 150 x 5892, the drip groove, the 27 degree wash, the lead (fascia-01)"
    ],
    "judgement": [
-    "the 19-point profile's member sizes"
+    "the 19-point profile's member sizes",
+    "the corona's 0.35 of the height",
+    "the mitred returns"
    ]
   },
   "sill": {
    "photo_today": [
-    "a deep sill group (140 mm: bead, cove, soffit) over the stallriser's frame; sill top 0.18 of the front (0.64 m at 3.55 m; the scene's 600 is 6 per cent under)"
+    "a deep sill group (140 mm: bead, cove, soffit) over the stallriser's frame; sill top 844 at the window's own plane, 0.172 of the front (0.61 m at 3.55 m; the scene's 600 is within 2 per cent)"
    ],
    "earlier_notes": [
     "weathered top, drip, cill 'substantial' (BH, CW); Ellis's stout sill 3 in"
@@ -8232,7 +10076,7 @@
   },
   "stallriser": {
    "photo_today": [
-    "a framed panel under the sill, a bottom rail above the foot (P1: a cast grille panel, 580 high)"
+    "a framed panel under the sill, a bottom rail above the foot (P1: a cast grille panel, 609 high at the window plane)"
    ],
    "earlier_notes": [
     "600 and 0.15 proud (scene); panelled, glazed tile, render; patterned tile and plain glazed tile on metal fronts (R05, R09); white tile and slab in fish shops"
@@ -8243,26 +10087,32 @@
   },
   "window_frame": {
    "photo_today": [
-    "a mid transom bar and a heavy mullion (164 mm, 0.16 of the light): partly followed",
-    "stile 145 mm: not followed"
+    "a mid transom bar and a heavy mullion (172 mm at the window's own plane, 0.15 of the light): partly followed",
+    "stile 77 mm (42 px): not followed (jamb 50)",
+    "the sill group's top is the glazing rebate's foot: the lights stand on the sill"
    ],
    "earlier_notes": [
     "sill 600 to head 2850, transom 2400 to 2480, toplights, mullions 40-70 proud of the glass, glass 30 forward (scene, kit, CW)"
    ],
    "judgement": [
-    "every section's size and shape (T1, T2, M1, M2), bead sizes, bar positions, toplight counts"
+    "every section's size and shape (T1, T2, M1, M2), bead sizes, bar positions, toplight counts",
+    "the 25 mm seat"
    ]
   },
   "shop_door": {
    "photo_today": [
-    "glazed from 0.328 of the leaf (700 on 2040)",
-    "a 30 mm brass foot strip"
+    "glazed from 0.304 of the leaf (798 of 2624 mm on the door's plane; 620 on 2040), level with its window's sill to within 46 mm",
+    "a 29 mm brass foot strip",
+    "an octagonal knob on the lock rail (alternative)"
    ],
    "earlier_notes": [
-    "900 x 2040, frame 1006, kick plate, letter plate, levers, hinges (kit); 'two-thirds glazed' (BH); bottom rail 9 in (Ellis)"
+    "900 x 2040, frame 1006, kick plate, levers, hinges (kit); 'two-thirds glazed' (BH); the door's bottom panel the stallriser's height (Coventry); bottom rail 9 in (Ellis)"
    ],
    "judgement": [
-    "rail and stile widths, the lock rail, furniture heights, the aluminium and bronze leaves"
+    "rail and stile widths, the lock rail 490 to 600, furniture heights (the letter plate at z 545 in the lock rail), the aluminium and bronze leaves"
+   ],
+   "sheet": [
+    "the hinge sides and the plate's place in the lock rail: the game's Rita frame"
    ]
   },
   "side_door_slot": {
@@ -8272,6 +10122,9 @@
    ],
    "judgement": [
     "the mapping into the bay (d 100, z + 45, the trimmed head and threshold)"
+   ],
+   "sheet": [
+    "F1's hinge side: mirrored where the door end is the viewer's left (the game's Rita frame)"
    ]
   },
   "lobby": {
@@ -8291,7 +10144,7 @@
     "metal fronts, patterned tile, letting boards, whitewash (R05, R09, DECISIONS 3 Oct)"
    ],
    "judgement": [
-    "every section size, every colour, the box sign and flat panel depths (the fascia target's)"
+    "every section size, every colour, the shutter's curtain plane (170), rails (d 150 to 190) and hood (210), the box sign and flat panel depths (the fascia target's)"
    ]
   }
  },
@@ -8301,32 +10154,34 @@
     "plinth, shaft, capital in that order, as every source and P1 show",
     "shaft 290 wide; 350 at the plinth and the capital's top, which makes the party-wall pair stand 0.70 m wide",
     "panelled and fluted shafts as the period's timber types",
+    "the plinth 600 high, level with the stallriser and the sill (Rita's line)",
     "a necking bead, a die with a raised tablet, a cap moulding",
+    "the kit's base ogee (25 proud of the shaft, 60 high), which P1 confirms: it shows a moulding at the shaft's foot",
     "the backing core, so no daylight shows between pilaster and frames"
    ],
    "target_changes": [
     {
-     "what": "plinth top 600 -> 800",
-     "reason": "P1: the plinth's top stands 1.27 times the sill's top (1.12 m against 0.88 m at the measured scale) and 0.228 of the front's height; scaled to this street's 3.55 m that is 0.81. RBKC (the earlier reading, KC) wants the stallriser not above the pilaster's base: the sill then lands inside the plinth's height",
-     "kind": "Photo"
+     "what": "shaft projection 100 -> 140, plinth projection 150 -> 180",
+     "reason": "P1: the shaft's painted return beside the next surface is 117 mm (30.8 px at 1087 px off axis), a lower bound; the teal window frame beside it stands 276 behind the shaft's face. The first try read 117 as the whole relief and kept the frames at 95 and 100, so the shafts stood 10 to 15 mm proud of the frames (the review's fault 4). 140 keeps at least 40 in front of every frame beside it (the window jamb 95, the shop-door and F1 frames 100); the plinth goes with it, 40 in front of the shaft",
+     "kind": "Photo (the bounds) and Judgement (the 140)"
     },
     {
-     "what": "shaft projection 100 -> 110",
-     "reason": "P1: the shaft's right return measures 30.8 px at 1087 px from the axis: 118 mm +-14",
-     "kind": "Photo"
+     "what": "the plinth stays 600 (the first try's 800 withdrawn); a hollow-moulded head on the stepped variant",
+     "reason": "P1's plinth is 1.33 times its sill (R1) and would break Rita's line, the plinth's top level with the stallriser in the approved model: Rita's line wins and the photograph's plinth is the unused variants.plinth_tall. P1's head moulding, which the first try dropped ('P1 shows none' was wrong), is adopted: a hollow (cavetto) 95 high and a band 21 high under the shaft",
+     "kind": "Judgement (Rita's line) and Photo (the head)"
     },
     {
-     "what": "capital 330 -> 310 high",
-     "reason": "P1: neck to the top of the abacus is 174 px, 1.04 times the shaft's width: 301 mm +-24 at the measured scale",
-     "kind": "Photo"
+     "what": "the capital: die at d 144, a hollow flare from 144 to 172 over 90, abacus front 175, top 350 x 175",
+     "reason": "P1's capital flares well out (its cream band reaches 57 px and its top slab 77 px beyond the shaft's edge); the first try's flare moved out only 14. The height 310 is Judgement: P1's 301 is an upper bound (the flare's and abacus's undersides add 30 to 60 mm)",
+     "kind": "Photo and Judgement"
     },
     {
-     "what": "a stepped plinth variant (render), a flush clad variant (Mickey's, as built)",
+     "what": "a stepped plinth variant (render), a flush clad variant (Mickey's, as built, 140 proud like the shaft it cases)",
      "reason": "P1 shows four stepped members on the plinth; the Hook sheet and the street show Mickey's piers flat and plain",
      "kind": "Photo and Sheet"
     },
     {
-     "what": "the capital's flare (a hollow echinus 90 high) and an optional three-boss die",
+     "what": "an optional three-boss die",
      "reason": "P1 shows the die with three roundels under a flared cap; the kit's cap is a straight moulding",
      "kind": "Photo"
     }
@@ -8339,8 +10194,8 @@
    ],
    "target_changes": [
     {
-     "what": "the S curve smoothed (53 points) and given a volute on each side face and an acanthus leaf on the face",
-     "reason": "the built mesh is a few flat steps (README: coarse beside the kit); the brief asks for the scroll and its leaf; NO photograph of a scrolled console was reached",
+     "what": "the silhouette redrawn as a scroll: an upper volute (eye at d 126, z 470, outer radius 54, the front reaching d 180 at z 470 and rolling back over the top through (126, 524)), a concave waist (narrowest d 62 at z 130) and a lower volute rolling the other way (eye at 46, 62, radius 30, reaching d 76), under a cap block 180 deep at z 528 to 550; grooves 8 inside the outline ending in eye bosses; the acanthus leaf kept",
+     "reason": "the first try's 'volute' was a spiral groove on a flat face behind a plain corbel outline (the review's fault 5); the brief asks for the scroll, and a console is seen from the side along the street. NO photograph of a console was reached",
      "kind": "Judgement"
     },
     {
@@ -8373,14 +10228,19 @@
    ],
    "target_changes": [
     {
-     "what": "the profile redrawn with a tall corona face (52, 0.35 of the height), two fillets, a cyma reversa and a cap ovolo (19 points) inside the same envelope",
+     "what": "the profile redrawn with a tall corona face (52, 0.35 of the height: Judgement), two fillets, a cyma reversa and a cap ovolo (19 points) inside the same envelope",
      "reason": "the built profile has 12 points and one curve; P1 shows a crown of several members",
-     "kind": "Photo"
+     "kind": "Photo (the members) and Judgement (the sizes)"
     },
     {
-     "what": "the 150 height is KEPT although P1's crown is 0.86 of its fascia field where the street's is 0.27 (about three times)",
-     "reason": "the fascia target fixes the cornice top at 3.55 and the hanging signs' brackets at 3.60 over it; an optional tall cornice (300) is recorded in variants for the reviewer to overturn",
-     "kind": "Photo not followed, stated"
+     "what": "each end closed by a mitred return of the full section, 215 deep back to the wall",
+     "reason": "along the parade there are two exposed ends at every one of nine party walls, seen end-on from the street (the review's fault 8)",
+     "kind": "Judgement"
+    },
+    {
+     "what": "the 150 height is KEPT: P1's crown is not measurable by this method",
+     "reason": "the apparent crown is inflated by D.p/(D - p) for members above eye level and proud of the plane (130 to 270); the true crown is 170 to 300 (0.35 to 0.6 of the board); the fascia target fixes the cornice top at 3.55 and the hanging signs' brackets at 3.60 over it; an optional tall cornice (300) is recorded in variants with no photographic basis",
+     "kind": "Not measurable, stated"
     }
    ]
   },
@@ -8418,30 +10278,45 @@
    "target_changes": [
     {
      "what": "mullion 55 -> 70 wide, front at 92 (62 in front of the glass)",
-     "reason": "P1's mullion is 92 px wide (164 mm at the wall plane) against a 1.0 m light: 0.16 of the light, the kit's 0.05. The guides' 40 to 70 mm is a projection. Not followed in full (D5)",
+     "reason": "P1's mullion is 92 px wide (172 mm at the window frame's own plane, 0.15 of the light), the kit's 0.05. The guides' 40 to 70 mm is a projection. Not followed in full (D5)",
      "kind": "Photo, partly followed"
     },
     {
-     "what": "a bottom rail 90 high on the sill; glazing beads; four more types: T2, M1, M2",
-     "reason": "P1's stallriser frame carries a bottom rail and the lights stand on it; the street needs timber, aluminium and 1930s bronze fronts",
+     "what": "a 25 mm seat on the sill (the first try's 90 mm bottom rail withdrawn)",
+     "reason": "in P1 the sill group's top is the glazing rebate's foot: the lights stand on the sill; with the shop door's glass level with the sill (D2) the window's glass should start within 25 of it",
      "kind": "Photo and Judgement"
+    },
+    {
+     "what": "four more types: T2, M1, M2",
+     "reason": "the street needs timber, aluminium and 1930s bronze fronts",
+     "kind": "Judgement"
     }
    ]
   },
   "shop_door": {
    "kit_gets_right": [
-    "leaf 900 x 2040, frame 1006 wide, 100 deep, kick plate, letter plate, lever handles, three hinges, terrazzo threshold"
+    "leaf 900 x 2040, frame 1006 wide, 100 deep, kick plate, lever handles, three hinges, terrazzo threshold"
    ],
    "target_changes": [
     {
-     "what": "glazed from 1000 -> 700",
-     "reason": "P1's door is glazed from 0.328 of its leaf's height (0.86 of 2.62 m); the books say two-thirds glazed (0.6 to 0.7 m): the photograph and the books agree and the scene's 1.0 is a trade-standard guess. The door's lower portion is then bottom rail 230, panel 360, lock rail 110",
+     "what": "glazed from 1000 -> 600, level with the sill's top",
+     "reason": "P1's door glass starts 0.304 of its leaf up (798 mm of 2624, 620 on a 2040 leaf), within 46 mm of its window's sill (the first try's snap landed inside the dark glass, row 95.7 with a strength of 1.5; the glass foot is row 128.9, strength 12.2); Coventry (the earlier reading) says the door's bottom panel is the stallriser's height. The scene's 1.0 is a trade-standard guess. The door's lower portion is then bottom rail 230, panel 260, lock rail 110",
      "kind": "Photo and Read"
     },
     {
-     "what": "a 30 high brass foot strip across the leaf",
-     "reason": "P1's door foot carries one (15 px, 29 mm)",
+     "what": "the letter plate 250 x 40 centred at z 545 in the lock rail (490 to 600), not at 800 in the glass",
+     "reason": "with the glass from 600 the first try's z 800 stood in the glass; the game's Rita door has the plate in the lock rail",
+     "kind": "Judgement and Sheet"
+    },
+    {
+     "what": "a 30 high brass foot strip across the leaf's foot (the lowest 30 of the kick plate on T1)",
+     "reason": "P1's door foot carries one (15 px, 29 mm); the game's Rita door a 170 plate: one piece, the strip its worn foot",
      "kind": "Photo"
+    },
+    {
+     "what": "a hinge side per shop: the shop door hinged on the window side, the side door on the shop-door side",
+     "reason": "taken from Rita's front in the game today: both levers/knobs on the leaves' left edges; the first try's drawing put every lever on the right",
+     "kind": "Sheet (the game frame)"
     },
     {
      "what": "aluminium and bronze door variants",
@@ -8456,9 +10331,9 @@
    ],
    "target_changes": [
     {
-     "what": "the leaf is the front-door family's F1 (not re-targeted)",
-     "reason": "the brief",
-     "kind": "Read"
+     "what": "the leaf is the front-door family's F1 (not re-targeted); its hinge side follows Rita's",
+     "reason": "the brief; the game frame",
+     "kind": "Read and Sheet"
     }
    ]
   }
@@ -8467,79 +10342,178 @@
   {
    "id": "D1",
    "element": "plinth height",
-   "book_or_scene": "kit and scene: the plinth equals the stallriser, 600",
-   "photograph": "P1: plinth top 0.228 of the front's height, 1.27 times the sill's top",
-   "chosen": "800 (the photograph scaled to 3.55 m is 811)"
+   "book_or_scene": "kit, scene and Rita's front, the approved model: the plinth's top is level with the stallriser, 600",
+   "photograph": "P1: plinth top 1123 mm at its own plane, 1.33 times its sill's top (844) and 0.228 of its front's height; scaled to the street's 3.55 m that is 811",
+   "chosen": "600: Rita's window is Jafar's model and a market-hall pier must not break its line. The photograph's plinth is kept as the unused variants.plinth_tall (800, the review's profile points); P1's head moulding (a hollow and a band) is adopted at 600",
+   "photo_followed": false
   },
   {
    "id": "D2",
    "element": "shop door glazed from",
-   "book_or_scene": "scene C8: 1.0 m",
-   "photograph": "P1: 0.328 of the leaf (0.67 m on a 2.04 leaf); books 0.6 to 0.7 m",
-   "chosen": "700 (photograph and books agree, the scene loses)"
+   "book_or_scene": "scene C8: 1.0 m; the game's Rita door today",
+   "photograph": "P1: the glass foot (row 128.9) is 0.304 of the leaf (798 of 2624 mm; 620 on a 2040 leaf), 46 mm below its window's sill; Coventry (the earlier reading): the door's bottom panel is the stallriser's height",
+   "chosen": "600, level with the sill, as P1 shows and as Coventry says; the scene's 1.0 loses",
+   "photo_followed": true
   },
   {
    "id": "D3",
    "element": "shaft projection",
-   "book_or_scene": "scene: 100",
-   "photograph": "P1: 118 +-14",
-   "chosen": "110 (inside both)"
+   "book_or_scene": "scene: 100; the first try's 110",
+   "photograph": "P1: the painted return beside the next surface is 117 (a lower bound, 30.8 px at 1087 px off axis) and the teal window frame stands 276 behind the shaft's face",
+   "chosen": "140: at least 40 in front of every frame beside it (95, 100, 100); the scene's 0.10 loses",
+   "photo_followed": true
   },
   {
    "id": "D4",
    "element": "capital height",
    "book_or_scene": "kit: 330",
-   "photograph": "P1: 301 +-24",
-   "chosen": "310"
+   "photograph": "P1: at most 301 (an upper bound: the flare's and abacus's undersides add 30 to 60 mm to the 174 px)",
+   "chosen": "310 (Judgement: the capital carries the console's toe and the board's foot)",
+   "photo_followed": false
   },
   {
    "id": "D5",
    "element": "mullion width",
    "book_or_scene": "kit 55; Cornwall guide: projecting 40-70 from the glass (a projection, not a width)",
-   "photograph": "P1: 164 mm face against a 1.0 m light",
-   "chosen": "70 (T1), 80 (T2): the photograph is a heavy plate-glass arcade front; not followed in full. If the reviewer reads the photograph as authoritative, 100 to 120 is the next step"
+   "photograph": "P1: 172 mm (92.1 px at the window frame's own plane, 1.8666 mm a pixel), 0.15 of a 1.0 m light",
+   "chosen": "70 (T1), 80 (T2): the photograph is a heavy plate-glass arcade front; not followed in full. If the reviewer reads the photograph as authoritative, 100 to 120 is the next step",
+   "photo_followed": false
   },
   {
    "id": "D6",
    "element": "fascia face",
    "book_or_scene": "Coventry 2014 (the earlier reading): sloped slightly forward",
    "photograph": "P1: vertical",
-   "chosen": "vertical"
+   "chosen": "vertical",
+   "photo_followed": true
   },
   {
    "id": "D7",
    "element": "cornice height",
    "book_or_scene": "fascia-01: 150; Ellis (the earlier reading, in the London rules of about 1902): a cornice may PROJECT 13 in (330) in a street up to 30 ft wide and 18 in in a wider one (a limit on projection, not height; ours projects 215)",
-   "photograph": "P1: the crown (fillet to cap, measured at the continuous run) is 446 mm, 0.86 of the 505 mm fascia field; the street's 150 over 550 is 0.27",
-   "chosen": "150 kept (the fixed envelope); variant 'tall' 300 offered. The photograph is NOT followed here and this is stated"
+   "photograph": "P1: NOT measurable by this method: the apparent crown (433 at the pilaster plane) is inflated by D.p/(D - p) for members above eye level and proud of the plane (130 to 270); the true crown is 170 to 300, 0.35 to 0.6 of the board",
+   "chosen": "150 kept (the fixed envelope); the corona's 0.35 of the height is Judgement; variant 'tall' 300 offered with no photographic basis",
+   "photo_followed": false
   },
   {
    "id": "D8",
    "element": "sill thickness",
    "book_or_scene": "kit: 50",
    "photograph": "P1: the sill group 140 deep with a bead, cove and soffit; Ellis: stout sill",
-   "chosen": "75"
+   "chosen": "75",
+   "photo_followed": true
   },
   {
    "id": "D9",
    "element": "stallriser height",
    "book_or_scene": "scene 600; guides 400 to 700",
-   "photograph": "P1: sill top 0.18 of the front's height, 0.64 m at 3.55",
-   "chosen": "600 (no disagreement)"
+   "photograph": "P1: sill top 844 at the window frame's own plane, 0.172 of the front's height (0.61 m at 3.55)",
+   "chosen": "600 (no disagreement)",
+   "photo_followed": true
   },
   {
    "id": "D10",
    "element": "the pilasters in pairs at the party wall",
    "book_or_scene": "scene: a pier at every bay edge (two 0.35 piers butt)",
    "photograph": "P1 has single piers between shops",
-   "chosen": "pairs kept: the scene is a fixed fact of the street and a parade of separately owned shops did have a pilaster each; they butt with a painted vertical joint"
+   "chosen": "pairs kept: the scene is a fixed fact of the street and a parade of separately owned shops did have a pilaster each; they butt with a painted vertical joint",
+   "photo_followed": false
   },
   {
    "id": "D11",
    "element": "the scrolled console",
    "book_or_scene": "the brief and the earlier reading: consoles are scrolled brackets",
    "photograph": "P1's pier caps are straight stepped blocks, not scrolls: the photograph does not show the part",
-   "chosen": "scroll by Judgement; stated as not established by a photograph"
+   "chosen": "a two-volute scroll in the built envelope by Judgement; stated as not established by a photograph, and the first piece to check against a reached one",
+   "photo_followed": false
+  },
+  {
+   "id": "D12",
+   "element": "the side door's hinge side in Rita's front",
+   "book_or_scene": "the review: the side door's knob is on its right, so it is hinged on the pier side and F1 is used as drawn where the door end is the viewer's left",
+   "photograph": "the game frame (not a photograph): the side door's leaf spans x 215.7 to 397.3 and its knobs stand at x 225.7 and 220.0, in the leaf's left tenth; the shop door's lever (x 446.7 to 475) is left of its glass (x 457.7 to 604)",
+   "chosen": "both leaves hinged on the viewer's right in Rita's: the side door on the shop-door side with its knob on the pier side; F1 is mirrored where the door end is the viewer's left; the shop door's side agrees with the review",
+   "photo_followed": true
+  }
+ ],
+ "review_faults_answered": [
+  {
+   "n": 1,
+   "fault": "the shop door's glass started at 700 from a mis-snapped edge (row 95.7, strength 1.5)",
+   "answer": "door_glass_bottom re-snapped at row 128.93 (strength 12.2) on a masked door preview (rows 128.9, 531.6, 547.0 re-measurable); glazed from 600 level with the sill; bottom_rail [0, 230], lower_panel [230, 490], lock_rail [490, 600]; R6 0.304 against 0.294; D2 reworded; checks DOR-02 (600) and DOR-06 (door glass foot minus window sill top = 0 +-5 per T1/M2 shop)",
+   "followed": true
+  },
+  {
+   "n": 2,
+   "fault": "the letter plate sat in the glass (z 800)",
+   "answer": "250 x 40 centred at z 545 in the lock rail, 35 clear above and below; DOR-05 [1000, 545]; the octagonal knob alternative on the lock rail at z 545; the drawing now draws the plate",
+   "followed": true
+  },
+  {
+   "n": 3,
+   "fault": "the plinth's head moulding (a hollow and a band) was dropped as 'P1 shows none'",
+   "answer": "plinth_stepped_side carries a cavetto (quarter ellipse 24 x 95) and a band 21 high; the review's points are kept verbatim as plinth_tall_stepped_side (+30 in d); the kit's base ogee restored on the panel and flute variants; 'P1 shows none' struck from meets and section 5; PIL-14 covers both and PIL-16/17 state them. The head sits at Rita's 600 (see fault 3b)",
+   "followed": true
+  },
+  {
+   "n": "3b",
+   "fault": "the review's note: keep the plinth at 800 and name it as a visible change to Jafar's model",
+   "answer": "NOT followed, by the coordinator's instruction and the photograph's own limit: P1's plinth is 1.33 times its sill and breaks Rita's line (the plinth's top level with the stallriser), and Rita's window is Jafar's model. The plinth stays 600 on every front; 800 survives only as the unused variants.plinth_tall; R1 and R2 are 'not followed (Rita's line)'; the lower blocks of the stepped plinth are shortened (360 / 450 / 484 against P1's 504 / 631 / 684) and the head kept whole",
+   "followed": false
+  },
+  {
+   "n": 4,
+   "fault": "pilasters 10 to 15 mm proud of the frames; the capital hardly flared",
+   "answer": "shaft 140, plinth 180, capital die 144, hollow flare 144 to 172 over 90, abacus 175, top 350 x 175; every pilaster plan and side profile moved; the downpipe stands 12 behind the shafts; new check PIL-15 (the shaft 40 or more in front of every frame beside it, per shop in shops[].relief_beside_frames); D3 reworded",
+   "followed": true
+  },
+  {
+   "n": 5,
+   "fault": "the 'scrolled' console was a plain corbel with a decal spiral",
+   "answer": "side_silhouette redrawn as a two-volute scroll (upper eye (126, 470) r 54 with the front at d 180 and the top at (126, 524); waist narrowest 62 at z 130; lower eye (46, 62) r 30 reaching d 76; cap block 180 deep at z 528 to 550); grooves 8 inside the outline, 5 wide, 4 deep, ending in 16 mm eye bosses 3 proud; the leaf kept; CON-07 and CON-08 follow; the console is the first item of could_not_settle",
+   "followed": true
+  },
+  {
+   "n": 6,
+   "fault": "no hinge side for any door, so a mirrored door passed every check",
+   "answer": "shops[].shop_door_hinge_viewer, shop_door_lever_viewer, side_door_hinge_viewer, side_door_knob_viewer, letter_plate_viewer, taken from Rita's front in the game (game_today); check DOR-07 and the drawing follow. PARTLY DISAGREES with the review: in the game frame the side door's knobs are at x 225.7 and 220.0 on a leaf from 215.7 to 397.3, its LEFT edge (the pier side), so it is hinged on the viewer's right (the shop-door side), not the pier side; F1 is therefore mirrored where the door end is the viewer's left (D12)",
+   "followed": "partly"
+  },
+  {
+   "n": 7,
+   "fault": "the roller shutter's curtain was at the glass plane, inside the frames",
+   "answer": "curtain plane d 170 (20 clear of the sill's nose), guide rails 50 x 40 at d 150 to 190, z 0 to 2550, on steel spacer brackets through the frames into the pilaster core, hood 300 high x 210 deep; the newsagent's glazing note: the hood hides the toplights above 2550, 70 shows; ALT-01, ALT-02 and ALT-07 follow; the drawing shows the hood and rails",
+   "followed": true
+  },
+  {
+   "n": 8,
+   "fault": "the cornice's ends at the party-wall gaps were not defined",
+   "answer": "each end closed by a mitred return of the full 19-point section back to the wall, 215 deep (cornice.ends; profiles return_left_uz / return_right_uz and the plans); the lead dressed over it with a 25 upstand; COR-06; a plan drawing of the end",
+   "followed": true
+  },
+  {
+   "n": 9,
+   "fault": "the newsagent's board was dove grey, cream in the fascia target",
+   "answer": "shops[newsagent].paints.fascia_board is cream (222, 209, 175); the piers, consoles and cornice stay dove grey; ALT-08",
+   "followed": true
+  },
+  {
+   "n": 10,
+   "fault": "numbers labelled Photo that P1 does not show (stile 145, sill top 883, crown 446, capital 301, 'between the gilt keylines')",
+   "answer": "stile_right re-snapped at -993.0 (stile 77 mm at the window plane, 41 px); the window rows use the window's own foot row (1.8666 mm a pixel): sill top 844, R3 0.172, R1 1.330, mullion 172; the crown withdrawn (R8 'not measurable', the true crown 170 to 300, the tall variant has no photographic basis); the capital marked an upper bound; the field renamed 'the board between the crown and the capital top'; the scale note adds the D.p/(D - p) rule",
+   "followed": true
+  },
+  {
+   "n": 11,
+   "fault": "STA-03's arithmetic contradicted its own variant",
+   "answer": "the measure text reads 'skirting 100 + two courses at 155.4 pitch + one half course at 79.2 + cap 35 = 525', expected 525 +-2",
+   "followed": true
+  },
+  {
+   "n": "notes",
+   "fault": "the review's narrow points",
+   "answer": "an overlay of the target's Rita elevation on the re-projected pier at the shaft's width with a differences table (photo.rita_vs_p1, previews P1-leadenhall-pier-elevation-ritas-on-photo); the laundry's refit and the vent pipe added to could_not_settle; the kick plate and foot strip: the strip is the plate's lowest 30; the drawings (D2) now show the whitewash, the laundry's box sign, the tea room's panel and the grocer's slabs; the A5 notice's statutory size noted, from memory",
+   "followed": true
   }
  ],
  "sources": [
@@ -8553,8 +10527,8 @@
    "taken": "2019-05-19",
    "shows": "heritage-restored Victorian covered market fronts (built c.1881, from memory, not checked): stone- or render-faced pilasters on stepped plinths, pier caps under a fascia, a deep cornice, heavy teal-painted window frames with a mid transom, a cast-iron ornament band over the head, cast-iron lattice stallrisers in frames, red double doors with a brass foot strip",
    "period": "NOT a 1990 object and not a provincial parade: a 2019 restoration of a London arcade (built c.1881, from memory). Used for proportions and the order of mouldings only, never for colour or wear. Why it still serves: it is the only reached photograph of a Victorian British shopfront in joinery and masonry at a measurable scale, and the parts it shows (plinth, shaft, necking, capital, fascia field, crown, sill, stallriser frame, transom, mullion, door) are the parts of a 1900-1935 parade front; the ratios between them are tested against the street's fixed numbers in section 4 of TARGET.md",
-   "used": "Yes, measured: 43 rows and columns and one notice (photo_measurements.json), 6 joinery-only previews. Lettering (house numerals) is masked; the unmasked views carry real businesses' names and notices and were never saved into the repository",
-   "scale": "fitted on ONE dimension: an A5 notice (148 x 210 mm) on the shop door's glass, 78.35 x 108.90 px; the door plane is 1.104 times farther than the pilaster's front plane (the foot rows 604.1 and 547.0); the camera stands about 1.04 m above the footway"
+   "used": "Yes, measured: 44 rows and columns and one notice (photo_measurements.json), 8 joinery-only previews (the door's glass above its foot and everything seen through the shop window are filled flat; the house numerals are masked). The unmasked views carry real businesses' names and notices and were never saved into the repository",
+   "scale": "fitted on ONE dimension: an A5 notice (148 x 210 mm) on the shop door's glass, 78.35 x 108.92 px (England's statutory no-smoking sign, whose 2007 minimum size was A5: from memory, legislation.gov.uk was unreached); each plane's own scale from its foot row: the pier's front 1.7282 mm a pixel, the window frame's (foot row 559.3) 1.8666, the door's (547.0) 1.9085; the window frame stands 332 and the door 433 behind the pier's face; the camera about 1.04 m above the footway"
   },
   {
    "id": "P2",
@@ -8566,6 +10540,24 @@
    "taken": "scanned or modelled 2023",
    "shows": "a steel hood, guide rails and a slatted curtain; hood depth 153, 168, 300 and 300 for curtains 1546, 1561, 1851 and 2400 high",
    "used": "Yes, for the roller-shutter box's depth and the rail width (alterations.roller_shutter); the form, not the date"
+  },
+  {
+   "id": "G",
+   "what": "the game's Rita front today: production/previews/rita-day-kit-2026-10-06.jpg (1600 x 900) and the kit sheet shopfront-kit-2026-10-06.jpg",
+   "read": "2026-10-09",
+   "author": "studio",
+   "licence": "own",
+   "shows": "the approved model: the plinth's top level with the stallriser, the side door cream with its knobs on its left edge, the shop door white with its lever on its left edge and its letter plate in the lock rail",
+   "used": "Yes: the hinge sides, the plinth's line, the door's rails (measured on the 1600 x 900 frame; see game_today)"
+  },
+  {
+   "id": "R",
+   "what": "TARGET-REVIEW.md (the fresh reviewer's FAIL of the first try, 9 October 2026)",
+   "read": "2026-10-09",
+   "author": "a fresh target reviewer",
+   "licence": "own",
+   "shows": "eleven faults and their amendments, and the reviewer's own re-measuring of P1 on the 16k file (every stored row reproduced to 0.00 px)",
+   "used": "Yes: every amendment applied except where this target shows a measurement against it (review_faults_answered)"
   },
   {
    "id": "K",
@@ -8620,16 +10612,20 @@
   "Manufacturers' 1980s sections for aluminium shopfronts (the extrusion widths: 50 and 75 are Judgement here)"
  ],
  "could_not_settle": [
-  "No photograph of a provincial 1900-1935 shopfront was reached (Wikimedia, Geograph, Flickr, archive.org and the council guides all refused). P1 is a London arcade (c.1881, from memory) restored in 2019: it governs proportions and the order of mouldings; it does not govern timber panel layouts, fluting, console scrolls or leaves, aluminium sections, roller-shutter boxes, box signs, lobbies or whitewashed empty units. Those rest on the earlier notes (cited, not re-read) and Judgement, each marked",
-  "The scrolled console and its leaf (the volute, the acanthus): no photograph at all. The silhouette keeps the street's built envelope; the volute and leaf are Judgement",
+  "The scrolled console and its leaf: no photograph at all; the console is the FIRST piece to check against a reached photograph. The silhouette keeps the street's built envelope (240 x 180 x 550) and draws two volutes, a waist and a cap block by Judgement; the grooves, bosses and the leaf are Judgement",
+  "No photograph of a provincial 1900-1935 shopfront was reached (Wikimedia, Geograph, Flickr, archive.org and the council guides all refused; the other British street HDRIs on Poly Haven, urban_street_01 to 04 and bethnal_green_entrance, show no shopfront). P1 is a London arcade (c.1881, from memory) restored in 2019: it governs proportions near eye level (the plinth against the sill, the door glass against the sill, the shaft width, the foot strip, the order of members); it does not govern timber plinth heights on provincial parades, 1970s aluminium sections, a provincial fascia's slope, panel layouts, fluting, console scrolls or leaves, roller-shutter boxes, box signs, lobbies or whitewashed empty units. Those rest on the earlier notes (cited, not re-read) and Judgement, each marked",
+  "P1's plinth (1.33 times its sill) against Rita's line (the plinth level with the stallriser): this target keeps Rita's 600 on every front and offers 800 only as variants.plinth_tall. It rests on one market-hall pier and the approved model; if the plan owner wants the photograph's plinth the variant is ready, a visible change to Jafar's model",
   "The 1960s-80s aluminium front's sections (50 x 75, cover caps, mastic joints): Judgement; R05 and R09 only say such fronts existed",
-  "Absolute scale of P1: the A5 notice is assumed to be A5 (148 x 210); its plane ratio to the pilasters (1.104) assumes the door foot and the plinth foot are at the same footway level. The scale is +-8 per cent and every Leadenhall millimetre carries it. Ratios do not",
+  "Absolute scale of P1: the A5 notice is assumed to be A5 (148 x 210; England's statutory no-smoking sign, whose 2007 minimum size was A5: from memory, unchecked); each plane's scale follows from its foot row at the same footway level. The scale is +-8 per cent and every Leadenhall millimetre carries it. Ratios do not",
   "Mickey's door: mickeys-office.json puts it at street x 4.65 (the rank spot, the unlock distance); the kit's slots put the shop door's centre at x 4.797, 147 mm farther from the party wall, because the side door slot is 944 and the shop door slot 1006. Rita's front already stands so. A town question (move the door x or narrow the side door's slot)",
   "The fascia target puts a street number on every side door's fanlight (the grocer's at x 38.18); the street recipe and terrace-fronts.md give the grocer no side door (BAY_WITHOUT_SIDE_DOOR = 5). This target follows the recipe; the number belongs on the shop door's fanlight (x 38.147). A fascias question",
-  "The ironmonger: the street recipe makes it a metal refit (SHOPFRONT_REFITS west_north 1); this target keeps it timber to suit its traditional board. A town or art question",
+  "The ironmonger and the launderette: the street recipe has no metal refit for the laundry's bay (SHOPFRONT_REFITS has no east_parade 4) and makes the ironmonger one (west_north 1); this target gives the laundry an aluminium refit with a box sign (the fascia target's box) and keeps the ironmonger timber to suit its traditional board. Both depart from the recipe; a town or art question",
+  "The launderette's vent pipe: terrace-fronts.md runs a vent pipe through the fascia band, which would collide with the laundry's box sign (5200 x 480 x 150); a fascias or town question, not settled here",
   "Twelve fronts or ten: RULINGS 2 Oct counts twelve; the scene has ten shop bays (six east, the chandler, three west). Ten are tabled. A coin shop at x 39 (hook-cast) is not in the scene",
   "The Hook sheet shows a recessed Mickey's door and an angled display bay at the corner; the street's Mickey's is a flat front with its door and room walked in the game. This target keeps it flush (as built) and gives the recess to the grocer and the launderette",
-  "The party-wall downpipe: the 6 October note says it goes 'inside the hollow pilaster'; at the roofline's 94 mm offset it cannot (the shaft is 110 proud and the pipe's front stands at 128). This target leaves the pipe where the roofline has it, in the 60 mm gap between the two shafts and a 76 mm chase through the plinths and capitals; the roofline owner may prefer to move the pipe back",
+  "The party-wall downpipe: the 6 October note says it goes 'inside the hollow pilaster'; at the roofline's 94 mm offset it cannot (the shaft is 140 proud and the pipe's front stands at 128). This target leaves the pipe where the roofline has it, in the 60 mm gap between the two shafts and a 76 mm chase through the plinths and capitals; the pipe's front is now 12 behind the shafts' faces; the roofline owner may prefer to move the pipe back",
+  "The door handing: the street recipe places the kit's door by translation only, so every bay today carries Rita's handing (levers on the viewer's left). This target gives the five mirrored fronts (Mickey's, fish, empty unit, ironmonger, newsagent) the mirror: hinged on the window side, the lever on the other edge. If the builder keeps the street's handing the hinge/lever check DOR-07 reports those five",
+  "The roller shutter's hood depth (210) and the curtain plane (170) are the reviewer's Judgement fixed by clearing the frames; the Poly Haven scans have 150 to 300 deep hoods",
   "Texture size, UVs, material slots and vertex-colour masks are the builder's (the kit's method stands); nothing here changes them",
   "Nobody has looked at these parts at the game's exposure and internal resolution; what is visible at 8 m is not judged"
  ],
@@ -8648,8 +10644,8 @@
    "id": "PIL-02",
    "part": "pilaster",
    "name": "plinth top",
-   "measure": "z of the plinth cap's flat top",
-   "expected": 800.0,
+   "measure": "z of the plinth cap's flat top (Rita's line: level with the sill and the stallriser)",
+   "expected": 600.0,
    "tolerance": 2.0,
    "unit": "mm",
    "method": "mesh bounding box or section"
@@ -8659,7 +10655,7 @@
    "part": "pilaster",
    "name": "plinth proud",
    "measure": "max d of the plinth's front",
-   "expected": 150.0,
+   "expected": 180.0,
    "tolerance": 1.0,
    "unit": "mm",
    "method": "mesh bounding box or section"
@@ -8678,8 +10674,8 @@
    "id": "PIL-05",
    "part": "pilaster",
    "name": "shaft proud",
-   "measure": "d of the shaft's front face",
-   "expected": 110.0,
+   "measure": "d of the shaft's front face (clad variant: the casing's face)",
+   "expected": 140.0,
    "tolerance": 1.0,
    "unit": "mm",
    "method": "mesh bounding box or section"
@@ -8708,12 +10704,12 @@
    "id": "PIL-08",
    "part": "pilaster",
    "name": "capital top size",
-   "measure": "u extent and d extent of the capital's top face",
+   "measure": "u extent and d extent of the capital's top face (the flat reaches d 172 and the ovolo rounds the last 3)",
    "expected": [
     350.0,
-    130.0
+    175.0
    ],
-   "tolerance": 1.0,
+   "tolerance": 3.5,
    "unit": "mm",
    "method": "mesh bounding box or section"
   },
@@ -8731,7 +10727,7 @@
    "id": "PIL-10",
    "part": "pilaster",
    "name": "panelled shaft",
-   "measure": "stile 45, sunk field 12, bead 10; rails 800 to 940 and 2430 to 2540",
+   "measure": "stile 45, sunk field 12, bead 10; rails 600 to 740 (the base ogee on its foot) and 2430 to 2540",
    "expected": [
     45.0,
     12.0,
@@ -8769,7 +10765,7 @@
    "id": "PIL-13",
    "part": "pilaster",
    "name": "downpipe chase",
-   "measure": "a notch 76 wide from d 50 in both neighbours' plinths and capitals at each party line",
+   "measure": "a notch 76 wide from d 50 in both neighbours' plinths (z 0 to 600) and capitals at each party line; the pipe's front (d 128) stands 12 behind the shafts' faces",
    "expected": [
     76.0,
     50.0
@@ -8782,9 +10778,49 @@
    "id": "PIL-14",
    "part": "pilaster",
    "name": "profile fit",
-   "measure": "capital_side and plinth cap profiles: two-way Hausdorff distance to the target profile",
+   "measure": "capital_side, the plinth cap, plinth_stepped_side and the base ogee: two-way Hausdorff distance to the target profile",
    "expected": 0.0,
    "tolerance": 1.5,
+   "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "PIL-15",
+   "part": "pilaster",
+   "name": "relief beside the frames",
+   "measure": "shaft face minus the front face of every frame beside it (window jamb 95, 75 or 40; shop-door frame 100; F1 frame 100) is at least 40; per shop in shops[].relief_beside_frames",
+   "expected": 40.0,
+   "tolerance": 0.0,
+   "unit": "mm, at least",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "PIL-16",
+   "part": "pilaster",
+   "name": "plinth head (render variant)",
+   "measure": "hollow moulding (cavetto) from d 172 at z 484 back to d 148 at z 579 (a quarter ellipse 24 by 95), then a band 21 high at d 148 to z 600, 8 in front of the shaft; blocks to 360 / 450 / 484",
+   "expected": [
+    172.0,
+    484.0,
+    148.0,
+    579.0,
+    600.0
+   ],
+   "tolerance": 1.0,
+   "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "PIL-17",
+   "part": "pilaster",
+   "name": "base ogee (panel and flute)",
+   "measure": "an ogee 25 proud of the shaft's face and 60 high on the plinth's top (z 600 to 660), returned on both sides of the shaft",
+   "expected": [
+    25.0,
+    60.0,
+    600.0
+   ],
+   "tolerance": 1.0,
    "unit": "mm",
    "method": "mesh bounding box or section"
   },
@@ -8819,7 +10855,7 @@
    "id": "CON-03",
    "part": "console",
    "name": "foot on the capital",
-   "measure": "every point of the toe (240 x 60 at z 2850) lies within the capital's top (u 0..350, d 0..130) and at most 1 above it",
+   "measure": "every point of the toe (240 x 60 at z 2850) lies within the capital's top (u 0..350, d 0..175) and at most 1 above it",
    "expected": 0.0,
    "tolerance": 1.0,
    "unit": "mm",
@@ -8863,14 +10899,35 @@
   {
    "id": "CON-07",
    "part": "console",
-   "name": "volute",
-   "measure": "spiral groove centre (d 34, z 82), 1.75 turns, r 3 to 24, 5 wide, 4 deep",
+   "name": "volutes",
+   "measure": "upper volute: eye (d 126, z 470), outer radius 54, the front reaches d 180 at z 470 and the top (126, 524); lower volute: eye (46, 62), outer radius 30, reaching d 76 at z 62; the waist narrowest d 62 at z 130; cap block 180 deep at z 528 to 550",
    "expected": [
-    34.0,
-    82.0,
-    1.75
+    126.0,
+    470.0,
+    54.0,
+    46.0,
+    62.0,
+    30.0,
+    62.0,
+    130.0
    ],
-   "tolerance": 1.0,
+   "tolerance": 1.5,
+   "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "CON-08",
+   "part": "console",
+   "name": "side grooves",
+   "measure": "grooves 8 inside the outline at the front, 5 wide, 4 deep, winding into an eye boss 16 across and 3 proud at each eye (upper 1.25 turns, lower one turn the other way)",
+   "expected": [
+    8.0,
+    5.0,
+    4.0,
+    16.0,
+    3.0
+   ],
+   "tolerance": 0.5,
    "unit": "mm",
    "method": "mesh bounding box or section"
   },
@@ -8908,7 +10965,7 @@
    "id": "FAS-03",
    "part": "fascia_board",
    "name": "bed mould",
-   "measure": "z 2850 to 2890, front d 132",
+   "measure": "z 2850 to 2890, front d 132 (43 behind the capital's top front, 175)",
    "expected": [
     2890.0,
     132.0
@@ -8969,12 +11026,22 @@
    "id": "COR-05",
    "part": "cornice",
    "name": "stops short of the party line",
-   "measure": "u range",
+   "measure": "u range of the nose line",
    "expected": [
     54.0,
     5946.0
    ],
    "tolerance": 1.0,
+   "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "COR-06",
+   "part": "cornice",
+   "name": "closed mitred return at each end",
+   "measure": "each end is a mitred return of the full 19-point section, 215 deep back to the wall (a right triangle in plan, area 23112.5 mm2): the section turned 90 degrees (return_left_uz, return_right_uz) has two-way Hausdorff <= 1.5 to the section; the nose line keeps 54..5946 and the back 269..5731",
+   "expected": 0.0,
+   "tolerance": 1.5,
    "unit": "mm",
    "method": "mesh bounding box or section"
   },
@@ -9031,7 +11098,7 @@
    "id": "STA-03",
    "part": "stallriser",
    "name": "tile courses",
-   "measure": "tile_square: skirting 100 + 3 courses of 152.4 + cap 42.8 + joints = 525",
+   "measure": "tile_square: skirting 100 + two courses at 155.4 pitch + one half course at 79.2 + cap 35 = 525",
    "expected": 525.0,
    "tolerance": 2.0,
    "unit": "mm",
@@ -9041,7 +11108,7 @@
    "id": "WIN-01",
    "part": "window_frame",
    "name": "frame on the sill",
-   "measure": "bottom rail's foot z",
+   "measure": "bottom seat's foot z (a 25 seat: the lights stand on the sill)",
    "expected": 600.0,
    "tolerance": 1.0,
    "unit": "mm",
@@ -9127,8 +11194,8 @@
    "id": "DOR-02",
    "part": "shop_door",
    "name": "glazed from",
-   "measure": "bottom of the glass opening above the footway",
-   "expected": 700.0,
+   "measure": "bottom of the glass opening above the footway: level with the sill's top (600)",
+   "expected": 600.0,
    "tolerance": 3.0,
    "unit": "mm",
    "method": "mesh bounding box or section"
@@ -9147,7 +11214,7 @@
    "id": "DOR-04",
    "part": "shop_door",
    "name": "foot strip",
-   "measure": "brass strip 30 high across the leaf's foot",
+   "measure": "brass strip 30 high across the leaf's foot (the lowest 30 of the kick plate on T1)",
    "expected": 30.0,
    "tolerance": 1.0,
    "unit": "mm",
@@ -9157,13 +11224,33 @@
    "id": "DOR-05",
    "part": "shop_door",
    "name": "furniture heights",
-   "measure": "lever handles at z 1000; letter plate centre at z 800",
+   "measure": "lever handles at z 1000; letter plate 250 x 40 centred at z 545 in the lock rail (490 to 600), not in the glass",
    "expected": [
     1000.0,
-    800.0
+    545.0
    ],
    "tolerance": 5.0,
    "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "DOR-06",
+   "part": "shop_door",
+   "name": "door glass level with the sill",
+   "measure": "per shop with a T1 or M2 door (shops[].door_glass_rule_applies): shop door glass foot minus window sill top = 0",
+   "expected": 0.0,
+   "tolerance": 5.0,
+   "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "DOR-07",
+   "part": "shop_door",
+   "name": "hinge and lever side per shop",
+   "measure": "per shop (shops[].shop_door_hinge_viewer, shop_door_lever_viewer, side_door_hinge_viewer, side_door_knob_viewer, letter_plate_viewer): the shop door hinged on the window side with its lever on the opposite edge; the side door hinged on the shop-door side with its knob on the pier side; the letter plate centred on each leaf's width; the lever and plate side of each leaf are the table's",
+   "expected": "per shop",
+   "tolerance": 0.0,
+   "unit": "side",
    "method": "mesh bounding box or section"
   },
   {
@@ -9190,7 +11277,7 @@
    "id": "SID-03",
    "part": "side_door_slot",
    "name": "F1 frame face",
-   "measure": "d of the F1 frame's outside face",
+   "measure": "d of the F1 frame's outside face (40 behind the shafts' faces)",
    "expected": 100.0,
    "tolerance": 1.0,
    "unit": "mm",
@@ -9236,7 +11323,7 @@
    "measure": "height x depth, z range",
    "expected": [
     300.0,
-    190.0,
+    210.0,
     2550.0,
     2850.0
    ],
@@ -9248,10 +11335,12 @@
    "id": "ALT-02",
    "part": "roller_shutter",
    "name": "guide rail",
-   "measure": "face x depth",
+   "measure": "face x depth, d range (on steel spacer brackets through the frames into the pilaster core)",
    "expected": [
     50.0,
-    40.0
+    40.0,
+    150.0,
+    190.0
    ],
    "tolerance": 1.0,
    "unit": "mm",
@@ -9309,6 +11398,34 @@
    ],
    "tolerance": 3.0,
    "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "ALT-07",
+   "part": "roller_shutter",
+   "name": "curtain plane",
+   "measure": "curtain plane at d 170: at least the sill's nose (150) + 15 and within the hood's depth (210); the lowered variant (the curtain from the hood to the footway in front of window and door) intersects no frame, sill, stallriser or threshold",
+   "expected": [
+    170.0,
+    15.0,
+    210.0
+   ],
+   "tolerance": 1.0,
+   "unit": "mm",
+   "method": "mesh bounding box or section"
+  },
+  {
+   "id": "ALT-08",
+   "part": "newsagent",
+   "name": "board colour",
+   "measure": "the newsagent's fascia board paint is the fascia target's old_board cream (222, 209, 175)",
+   "expected": [
+    222.0,
+    209.0,
+    175.0
+   ],
+   "tolerance": 2.0,
+   "unit": "sRGB units",
    "method": "mesh bounding box or section"
   },
   {
@@ -9712,59 +11829,59 @@
  "self_check": {
   "date": "2026-10-09",
   "script": "self_check.py",
-  "passed": 427,
+  "passed": 561,
   "failed": 0,
-  "reported": 12,
-  "total": 439,
+  "reported": 17,
+  "total": 578,
   "groups": {
    "1 printed": {
-    "pass": 88,
+    "pass": 113,
     "fail": 0,
     "report": 5
    },
    "2 photo": {
-    "pass": 65,
+    "pass": 81,
     "fail": 0,
-    "report": 3
+    "report": 6
    },
    "3 wins": {
-    "pass": 11,
+    "pass": 14,
     "fail": 0,
-    "report": 4
+    "report": 6
    },
    "4 overlay": {
-    "pass": 37,
+    "pass": 45,
     "fail": 0,
     "report": 0
    },
    "5 consistency": {
-    "pass": 218,
+    "pass": 293,
     "fail": 0,
     "report": 0
    },
    "6 faults": {
-    "pass": 8,
+    "pass": 15,
     "fail": 0,
     "report": 0
    }
   },
   "stats": {
-   "re_measured": 38,
-   "re_measure_worst_px": 5.5,
-   "overlay_edges": 34,
+   "re_measured": 42,
+   "re_measure_worst_px": 0.06,
+   "overlay_edges": 38,
    "overlay_worst_px": 0.03
   },
   "failures": [],
   "reported_lines": [
    {
     "group": "1 printed",
-    "name": "shaft proud 110 differs from the scene's 0.10 (disagreement D3 lists it)",
+    "name": "shaft proud 140 differs from the scene's 0.10 (disagreement D3 lists it: the scene's 0.10 loses)",
     "result": "report",
     "detail": "photographs win"
    },
    {
     "group": "1 printed",
-    "name": "glazed from 700 differs from the scene's 1.0 (D2 lists it)",
+    "name": "glazed from 600 differs from the scene's 1.0 (D2 lists it: level with the sill, the scene's 1.0 loses)",
     "result": "report",
     "detail": "the photograph and the books agree against the scene"
    },
@@ -9788,33 +11905,63 @@
    },
    {
     "group": "2 photo",
-    "name": "not re-measurable on a preview (the glass carries lettering): door_foot, door_foot_strip_top, door_glass_bottom, door_glass_top, door_leaf_top, _sign",
+    "name": "not re-measurable on a preview (the glass above the door's foot carries lettering and notices): door_glass_top, door_leaf_top, _sign",
     "result": "report",
-    "detail": "read on the unmasked view only"
+    "detail": "read on the unmasked view only; the door's glass foot, strip and foot ARE on the masked door preview now (the review's fault 1)"
    },
    {
     "group": "2 photo",
     "name": "scale: no cross-check by a second dimension (the door leaf's own 2.62 m is a result)",
     "result": "report",
-    "detail": "the A5 assumption and the plane ratio carry +-8 per cent and are not independently confirmed"
+    "detail": "the A5 assumption and the plane ratios carry +-8 per cent and are not independently confirmed; the notice is England's statutory no-smoking sign (A5 minimum from 2007), from memory"
    },
    {
     "group": "2 photo",
-    "name": "ratio rule R8 crown height over the fascia field: photo 0.859, target 0.273 (NOT followed, stated as D7)",
+    "name": "ratio rule R1 plinth top over sill top: photo 1.330, target 1.000 (NOT followed, stated as D1)",
     "result": "report",
-    "detail": "P1's crown is 0.86 of its field; the street's cornice is 0.27 of its fascia: NOT followed (D7)"
+    "detail": "P1's plinth stands 1.33 times its sill (800 at the street's scale); Rita's front, the approved model, has the plinth's top level with the stallriser (1.0): Rita's line is kept and the photograph's is offered as variants.plinth_tall (D1)"
+   },
+   {
+    "group": "2 photo",
+    "name": "ratio rule R2 plinth top over the front's height: photo 0.228, target 0.169 (NOT followed, stated as D1)",
+    "result": "report",
+    "detail": "0.228 against 0.169: Rita's line kept (D1)"
+   },
+   {
+    "group": "2 photo",
+    "name": "ratio rule R4 capital height over shaft width: photo 1.037, target 1.069 (NOT followed, stated as D4)",
+    "result": "report",
+    "detail": "P1's 1.04 is an UPPER bound (the flare's and abacus's undersides add 30 to 60 mm to the 174 px); 310 / 290 = 1.069 is Judgement (the capital must carry the console's toe and the board's foot)"
+   },
+   {
+    "group": "2 photo",
+    "name": "ratio rule R8 crown height over the board: photo 0.859, target 0.273 (NOT followed, stated as D7)",
+    "result": "report",
+    "detail": "not measurable by this method: the apparent 0.86 includes D.p/(D - p) for projecting members above eye level; the true crown is 170 to 300 (0.35 to 0.6 of the board). The street's 0.27 stands (the fascia target fixes the cornice top); the corona's 0.35 of the height is Judgement (D7)"
    },
    {
     "group": "3 wins",
-    "name": "D5 mullion 70 is not the photograph's 164 (partly followed, stated)",
+    "name": "D1 the photograph's plinth (scaled to the street's 3.55 m = 811, 1.33 times its sill) is NOT followed: it breaks Rita's line; kept as variants.plinth_tall",
     "result": "report",
-    "detail": "the photograph reads 164; the target takes 70 (T1) and 80 (T2)"
+    "detail": "Rita's window is Jafar's model"
    },
    {
     "group": "3 wins",
-    "name": "D7 the cornice stays 150: the photograph's crown is not followed (stated)",
+    "name": "D4 capital 310 is above the photograph's upper bound 301 (Judgement, stated)",
     "result": "report",
-    "detail": "the fixed envelope; a tall variant is offered"
+    "detail": "the capital carries the console's toe and the board's foot"
+   },
+   {
+    "group": "3 wins",
+    "name": "D5 mullion 70 is not the photograph's 172 (partly followed, stated)",
+    "result": "report",
+    "detail": "the photograph reads 172; the target takes 70 (T1) and 80 (T2)"
+   },
+   {
+    "group": "3 wins",
+    "name": "D7 the cornice stays 150: the photograph's crown is not measurable by this method (170 to 300 against an apparent 433)",
+    "result": "report",
+    "detail": "the fixed envelope; a tall variant is offered with no photographic basis"
    },
    {
     "group": "3 wins",
@@ -9824,9 +11971,9 @@
    },
    {
     "group": "3 wins",
-    "name": "D11 the scrolled console is Judgement, not photographed",
+    "name": "D11 the two-volute console is Judgement, not photographed",
     "result": "report",
-    "detail": "no photograph of one was reached"
+    "detail": "no photograph of one was reached; the first item of could_not_settle"
    }
   ]
  }

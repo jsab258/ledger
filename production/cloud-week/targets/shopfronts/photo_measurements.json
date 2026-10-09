@@ -42,6 +42,18 @@
    -2340,
    200,
    380
+  ],
+  "door": [
+   430,
+   100,
+   120,
+   460
+  ],
+  "pier": [
+   -1345,
+   -2340,
+   330,
+   2980
   ]
  },
  "masks": {
@@ -65,6 +77,32 @@
     -80,
     -1316,
     95
+   ]
+  ],
+  "pier": [
+   [
+    -1395,
+    -1870,
+    -1296,
+    -1750
+   ],
+   [
+    -1350,
+    -1500,
+    -1294,
+    -330
+   ],
+   [
+    -1350,
+    -330,
+    -1334,
+    640
+   ],
+   [
+    -1350,
+    -330,
+    -1318,
+    110
    ]
   ]
  },
@@ -280,7 +318,19 @@
     -1500,
     -1440
    ],
-   "what": "the shaft's right return, outer edge (where it meets the wall)"
+   "what": "the shaft's right return, outer edge (the painted return's edge)"
+  },
+  "shaft_return_frame": {
+   "crop": "capital",
+   "kind": "col",
+   "x": -1031.16,
+   "strength": 7.2,
+   "expected": -1029,
+   "span_y": [
+    -1500,
+    -1440
+   ],
+   "what": "the dark return's outer edge where the teal window frame begins (the next surface beside the shaft)"
   },
   "fascia_field_top": {
    "crop": "fascia",
@@ -414,14 +464,14 @@
   "stile_right": {
    "crop": "sill",
    "kind": "col",
-   "x": -952.74,
-   "strength": 4.8,
-   "expected": -953,
+   "x": -992.96,
+   "strength": 5.4,
+   "expected": -993,
    "span_y": [
     300,
     500
    ],
-   "what": "left stile, right edge"
+   "what": "left stile, right edge (where the teal stile ends; not the bar of the cast grille at -953)"
   },
   "sill_top": {
    "crop": "sill",
@@ -552,20 +602,20 @@
    "what": "central mullion, right edge"
   },
   "door_foot": {
-   "crop": "door (unmasked, not saved)",
+   "crop": "door",
    "kind": "row",
    "y": 547.01,
    "strength": 8.9,
-   "expected": 551,
+   "expected": 547,
    "span_x": [
     440,
     540
    ],
    "what": "foot of the door's brass strip (the leaf's bottom)",
-   "remeasurable": false
+   "sign": 0
   },
   "door_foot_strip_top": {
-   "crop": "door (unmasked, not saved)",
+   "crop": "door",
    "kind": "row",
    "y": 531.56,
    "strength": 26.1,
@@ -575,20 +625,20 @@
     540
    ],
    "what": "top of the brass foot strip",
-   "remeasurable": false
+   "sign": 0
   },
   "door_glass_bottom": {
-   "crop": "door (unmasked, not saved)",
+   "crop": "door",
    "kind": "row",
-   "y": 95.66,
-   "strength": 1.5,
-   "expected": 96,
+   "y": 128.93,
+   "strength": 12.2,
+   "expected": 128,
    "span_x": [
-    430,
+    440,
     540
    ],
-   "what": "bottom edge of the glazing (the lock rail's top)",
-   "remeasurable": false
+   "what": "bottom edge of the glazing (glass to bead to lock rail)",
+   "sign": 0
   },
   "door_glass_top": {
    "crop": "door (unmasked, not saved)",
@@ -624,5 +674,5 @@
    "note": "an A5 notice (148 x 210 mm) taped to the shop door's glass; read on the unmasked view"
   }
  },
- "seconds": 0.6
+ "seconds": 1.3
 }
