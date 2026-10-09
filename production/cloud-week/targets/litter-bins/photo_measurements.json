@@ -1,0 +1,935 @@
+{
+ "date": "2026-10-09",
+ "note": "raw rows; self_check.py recomputes each from the pixels / files named",
+ "horizon_anchors": [
+  {
+   "pano": "urban_street_02",
+   "id": "us02_building_wall",
+   "cols": [
+    740,
+    840
+   ],
+   "rows": [
+    2045,
+    2192
+   ],
+   "foot_row": 2194,
+   "gauge_mm": 75.0,
+   "step_m": 0.0,
+   "what": "building wall behind the K2b bollard, on its footway",
+   "px_pitch_by_eye": 11.75,
+   "pitch_tan": 0.00963,
+   "h_above_wall_foot_mm": 875.5,
+   "fit_on_edge": false
+  },
+  {
+   "pano": "urban_street_02",
+   "id": "us02_gate_pier",
+   "cols": [
+    7970,
+    8000
+   ],
+   "rows": [
+    2028,
+    2215
+   ],
+   "foot_row": 2226,
+   "gauge_mm": 75.0,
+   "step_m": 0.0,
+   "what": "gate pier at the panorama seam, on the same footway",
+   "px_pitch_by_eye": 14.77,
+   "pitch_tan": 0.01121,
+   "h_above_wall_foot_mm": 919.3,
+   "fit_on_edge": false
+  }
+ ],
+ "camera_height": {
+  "urban_street_02_footway_m": 0.92,
+  "error_m": 0.04,
+  "urban_street_02_road_m": 1.04,
+  "road_error_m": 0.05,
+  "rule": "the footway height is the bollards writer's 0.92 +-0.04 (their anchors re-run above give [875.5, 919.3] mm); the road is the footway height plus the kerb upstand 0.12 +-0.02 (a 125 mm kerb less the footway's fall)"
+ },
+ "container": {
+  "view": {
+   "pano": "urban_street_02",
+   "yaw": 110.0,
+   "pitch": -5.0,
+   "fov": 14.0,
+   "w": 1400,
+   "h": 1000
+  },
+  "face_box": [
+   640,
+   60,
+   1160,
+   520
+  ],
+  "streak_box": [
+   640,
+   100,
+   720,
+   480
+  ],
+  "clean_box": [
+   880,
+   330,
+   1120,
+   500
+  ],
+  "face": {
+   "median": [
+    94,
+    93,
+    99
+   ],
+   "p10": [
+    88,
+    88,
+    93
+   ],
+   "p90": [
+    102,
+    102,
+    110
+   ],
+   "mean": [
+    95,
+    94,
+    101
+   ],
+   "n_px": 239200
+  },
+  "streak": {
+   "median": [
+    94,
+    96,
+    104
+   ],
+   "p10": [
+    86,
+    87,
+    92
+   ],
+   "p90": [
+    110,
+    113,
+    124
+   ],
+   "mean": [
+    96,
+    98,
+    106
+   ],
+   "n_px": 30400
+  },
+  "clean": {
+   "median": [
+    94,
+    93,
+    98
+   ],
+   "p10": [
+    90,
+    89,
+    94
+   ],
+   "p90": [
+    97,
+    96,
+    101
+   ],
+   "mean": [
+    94,
+    93,
+    98
+   ],
+   "n_px": 40800
+  },
+  "what": "urban_street_02: a hot-dip galvanised steel 1,100-litre container on four castors, a rolled top edge, a formed D handle on its end and a pressed bar handle on its long face, vertical pale rub streaks, small shallow dents, no rust visible at 8 m; photographed 18 Aug 2019 (the type is in use before 1990: steel bulk containers of this kind date from the 1970s on, a lead, not a number)"
+ },
+ "textures": {
+  "corrugated_iron": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/corrugated_iron/corrugated_iron_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    168,
+    177,
+    174
+   ],
+   "p10": [
+    158,
+    167,
+    163
+   ],
+   "p90": [
+    182,
+    191,
+    187
+   ],
+   "mean": [
+    169,
+    178,
+    175
+   ],
+   "n_px": 589824
+  },
+  "corrugated_iron_02": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/corrugated_iron_02/corrugated_iron_02_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    89,
+    88,
+    82
+   ],
+   "p10": [
+    80,
+    80,
+    72
+   ],
+   "p90": [
+    98,
+    96,
+    88
+   ],
+   "mean": [
+    89,
+    88,
+    81
+   ],
+   "n_px": 589824
+  },
+  "corrugated_iron_03": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/corrugated_iron_03/corrugated_iron_03_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    108,
+    118,
+    118
+   ],
+   "p10": [
+    100,
+    113,
+    114
+   ],
+   "p90": [
+    118,
+    124,
+    122
+   ],
+   "mean": [
+    108,
+    118,
+    118
+   ],
+   "n_px": 589824
+  },
+  "worn_corrugated_iron": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_corrugated_iron/worn_corrugated_iron_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    120,
+    119,
+    117
+   ],
+   "p10": [
+    102,
+    99,
+    94
+   ],
+   "p90": [
+    140,
+    140,
+    140
+   ],
+   "mean": [
+    121,
+    119,
+    117
+   ],
+   "n_px": 589824
+  },
+  "green_metal_rust": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/green_metal_rust/green_metal_rust_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    62,
+    76,
+    51
+   ],
+   "p10": [
+    57,
+    71,
+    47
+   ],
+   "p90": [
+    66,
+    80,
+    55
+   ],
+   "mean": [
+    62,
+    76,
+    51
+   ],
+   "n_px": 589824
+  },
+  "rust_coarse_01": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rust_coarse_01/rust_coarse_01_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    103,
+    58,
+    31
+   ],
+   "p10": [
+    78,
+    42,
+    19
+   ],
+   "p90": [
+    125,
+    75,
+    44
+   ],
+   "mean": [
+    102,
+    59,
+    31
+   ],
+   "n_px": 589824
+  },
+  "rusty_painted_metal": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rusty_painted_metal/rusty_painted_metal_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    116,
+    63,
+    46
+   ],
+   "p10": [
+    63,
+    38,
+    29
+   ],
+   "p90": [
+    129,
+    69,
+    51
+   ],
+   "mean": [
+    108,
+    59,
+    43
+   ],
+   "n_px": 589824
+  },
+  "precast_concrete_wall": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/precast_concrete_wall/precast_concrete_wall_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    153,
+    137,
+    118
+   ],
+   "p10": [
+    126,
+    111,
+    95
+   ],
+   "p90": [
+    173,
+    156,
+    136
+   ],
+   "mean": [
+    151,
+    135,
+    116
+   ],
+   "n_px": 589824
+  },
+  "pebble_embedded_concrete": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/pebble_embedded_concrete/pebble_embedded_concrete_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    89,
+    77,
+    63
+   ],
+   "p10": [
+    76,
+    65,
+    52
+   ],
+   "p90": [
+    116,
+    103,
+    87
+   ],
+   "mean": [
+    93,
+    81,
+    67
+   ],
+   "n_px": 589824
+  },
+  "painted_metal_shutter": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/painted_metal_shutter/painted_metal_shutter_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    131,
+    135,
+    138
+   ],
+   "p10": [
+    110,
+    113,
+    114
+   ],
+   "p90": [
+    141,
+    146,
+    149
+   ],
+   "mean": [
+    128,
+    131,
+    134
+   ],
+   "n_px": 589824
+  },
+  "worn_shutter": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_shutter/worn_shutter_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    63,
+    58,
+    53
+   ],
+   "p10": [
+    49,
+    47,
+    44
+   ],
+   "p90": [
+    86,
+    77,
+    66
+   ],
+   "mean": [
+    65,
+    60,
+    54
+   ],
+   "n_px": 589824
+  },
+  "container_side": {
+   "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/container_side/container_side_diff_1k.jpg",
+   "central_crop": [
+    128,
+    128,
+    896,
+    896
+   ],
+   "median": [
+    93,
+    136,
+    81
+   ],
+   "p10": [
+    91,
+    133,
+    79
+   ],
+   "p90": [
+    95,
+    140,
+    83
+   ],
+   "mean": [
+    93,
+    136,
+    81
+   ],
+   "n_px": 589824
+  }
+ },
+ "models": {
+  "metal_trash_can": {
+   "page": "https://polyhaven.com/a/metal_trash_can",
+   "authors": {
+    "GurJas Studios": "All"
+   },
+   "licence": "CC0",
+   "info_dimensions_mm": [
+    1846.9352722167969,
+    556.2898814678192,
+    906.1697272554738
+   ],
+   "gltf_1k_parts": [
+    {
+     "node": "metal_trash_can_handle_left",
+     "translation": [
+      0.227,
+      0.6497,
+      -0.0002
+     ],
+     "size_m": [
+      0.0761,
+      0.0789,
+      0.1855
+     ],
+     "min_m": [
+      -0.0675,
+      -0.071,
+      -0.0928
+     ],
+     "max_m": [
+      0.0086,
+      0.0079,
+      0.0928
+     ],
+     "verts": 243
+    },
+    {
+     "node": "metal_trash_can_lid",
+     "translation": [
+      0.1257,
+      0.2859,
+      -0.0
+     ],
+     "size_m": [
+      0.5563,
+      0.1149,
+      0.5563
+     ],
+     "min_m": [
+      -0.2782,
+      -0.0368,
+      -0.2781
+     ],
+     "max_m": [
+      0.2781,
+      0.0781,
+      0.2782
+     ],
+     "verts": 989
+    },
+    {
+     "node": "metal_trash_can",
+     "translation": [
+      0.5,
+      0,
+      0
+     ],
+     "size_m": [
+      0.6134,
+      0.9062,
+      0.5524
+     ],
+     "min_m": [
+      -0.3067,
+      0.0001,
+      -0.2762
+     ],
+     "max_m": [
+      0.3067,
+      0.9062,
+      0.2762
+     ],
+     "verts": 2883
+    },
+    {
+     "node": "metal_trash_can_handle_right",
+     "translation": [
+      0.7946,
+      0.6497,
+      -0.0002
+     ],
+     "size_m": [
+      0.0999,
+      0.0636,
+      0.1855
+     ],
+     "min_m": [
+      -0.086,
+      -0.0529,
+      -0.0928
+     ],
+     "max_m": [
+      0.0139,
+      0.0107,
+      0.0928
+     ],
+     "verts": 243
+    },
+    {
+     "node": "metal_trash_can_rust",
+     "translation": [
+      -0.5,
+      0,
+      0
+     ],
+     "size_m": [
+      0.6114,
+      0.9062,
+      0.5486
+     ],
+     "min_m": [
+      -0.3048,
+      0.0001,
+      -0.2743
+     ],
+     "max_m": [
+      0.3066,
+      0.9062,
+      0.2743
+     ],
+     "verts": 3335
+    },
+    {
+     "node": "metal_trash_can_rust_handle_left",
+     "translation": [
+      -0.773,
+      0.6497,
+      -0.0002
+     ],
+     "size_m": [
+      0.0864,
+      0.0802,
+      0.1855
+     ],
+     "min_m": [
+      -0.0777,
+      -0.0724,
+      -0.0928
+     ],
+     "max_m": [
+      0.0086,
+      0.0079,
+      0.0928
+     ],
+     "verts": 261
+    },
+    {
+     "node": "metal_trash_can_rust_handle_right",
+     "translation": [
+      -0.227,
+      0.6497,
+      -0.0002
+     ],
+     "size_m": [
+      0.0752,
+      0.0778,
+      0.1855
+     ],
+     "min_m": [
+      -0.0093,
+      -0.0699,
+      -0.0928
+     ],
+     "max_m": [
+      0.0659,
+      0.0079,
+      0.0928
+     ],
+     "verts": 261
+    },
+    {
+     "node": "metal_trash_can_rust_lid",
+     "translation": [
+      -0.8743,
+      0.2859,
+      -0.0
+     ],
+     "size_m": [
+      0.5563,
+      0.1162,
+      0.544
+     ],
+     "min_m": [
+      -0.2782,
+      -0.0381,
+      -0.2692
+     ],
+     "max_m": [
+      0.2781,
+      0.0781,
+      0.2747
+     ],
+     "verts": 1067
+    }
+   ],
+   "note": "y up. node metal_trash_can (the clean variant) is the body: 0.906 high, a ribbed cylinder with its ribs in the normal map and a rolled bead; handles and lid separate; 0.55 across: a US-style can, not the British 18-inch dustbin"
+  },
+  "trashbag": {
+   "page": "https://polyhaven.com/a/trashbag",
+   "authors": {
+    "Benny Weimer": "All"
+   },
+   "licence": "CC0",
+   "info_dimensions_mm": [
+    528.0700623989105,
+    462.893009185791,
+    574.9993845820427
+   ]
+  }
+ },
+ "held_bins": {
+  "litter-bin": {
+   "file": "production/assets/street/clutter/litter-bin.glb",
+   "size_m": [
+    0.416,
+    1.0,
+    0.496
+   ],
+   "min_m": [
+    -0.208,
+    0.0,
+    -0.288
+   ],
+   "max_m": [
+    0.208,
+    1.0,
+    0.208
+   ],
+   "materials": [
+    {
+     "name": "council-green",
+     "base": [
+      0.009,
+      0.0446,
+      0.017,
+      1
+     ],
+     "metallic": 0.30000001192092896,
+     "roughness": 0.5
+    },
+    {
+     "name": "inside-dark",
+     "base": [
+      0.0012,
+      0.0012,
+      0.0012,
+      1
+     ],
+     "metallic": 0,
+     "roughness": 0.8999999761581421
+    },
+    {
+     "name": "letters-white",
+     "base": [
+      0.8355,
+      0.8355,
+      0.7818,
+      1
+     ],
+     "metallic": 0,
+     "roughness": 0.5
+    }
+   ]
+  },
+  "dustbin": {
+   "file": "production/assets/street/clutter/dustbin.glb",
+   "size_m": [
+    0.4821,
+    0.658,
+    0.472
+   ],
+   "min_m": [
+    -0.2411,
+    0.0,
+    -0.236
+   ],
+   "max_m": [
+    0.2411,
+    0.658,
+    0.236
+   ],
+   "materials": [
+    {
+     "name": "galvanised",
+     "base": [
+      0.3112,
+      0.3204,
+      0.3112,
+      1
+     ],
+     "metallic": 0.8500000238418579,
+     "roughness": 0.550000011920929
+    }
+   ]
+  },
+  "grit-bin": {
+   "file": "production/assets/street/clutter/grit-bin.glb",
+   "size_m": [
+    0.96,
+    0.7,
+    0.698
+   ],
+   "min_m": [
+    -0.48,
+    0.0,
+    -0.348
+   ],
+   "max_m": [
+    0.48,
+    0.7,
+    0.35
+   ],
+   "materials": [
+    {
+     "name": "grit-yellow",
+     "base": [
+      0.8122,
+      0.4647,
+      0.0037,
+      1
+     ],
+     "metallic": 0,
+     "roughness": 0.550000011920929
+    },
+    {
+     "name": "grit-black",
+     "base": [
+      0.006,
+      0.006,
+      0.006,
+      1
+     ],
+     "metallic": 0,
+     "roughness": 0.6000000238418579
+    }
+   ]
+  },
+  "outdoor_bin": {
+   "file": "ledger/Assets/Props/base-mesh/outdoor_bin.glb",
+   "size_m": [
+    0.5996,
+    0.7636,
+    0.5996
+   ],
+   "min_m": [
+    -0.2998,
+    0.0,
+    -0.2998
+   ],
+   "max_m": [
+    0.2998,
+    0.7636,
+    0.2998
+   ],
+   "materials": [
+    {
+     "name": "DefaultMaterial",
+     "base": [
+      0.5,
+      0.5,
+      0.5,
+      1.0
+     ],
+     "metallic": 0.200000002980232,
+     "roughness": 0.800000011920929
+    }
+   ]
+  },
+  "swing_bin": {
+   "file": "ledger/Assets/Props/base-mesh/swing_bin.glb",
+   "size_m": [
+    0.33,
+    0.8383,
+    0.32
+   ],
+   "min_m": [
+    -0.165,
+    -0.126,
+    -0.16
+   ],
+   "max_m": [
+    0.165,
+    0.7123,
+    0.16
+   ],
+   "materials": [
+    {
+     "name": "DefaultMaterial",
+     "base": [
+      0.5,
+      0.5,
+      0.5,
+      1.0
+     ],
+     "metallic": 0.200000002980232,
+     "roughness": 0.800000011920929
+    },
+    {
+     "name": "DefaultMaterial",
+     "base": [
+      0.5,
+      0.5,
+      0.5,
+      1.0
+     ],
+     "metallic": 0.200000002980232,
+     "roughness": 0.800000011920929
+    }
+   ]
+  }
+ }
+}
