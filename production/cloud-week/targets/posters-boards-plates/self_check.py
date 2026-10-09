@@ -481,7 +481,7 @@ def group3():
     for key in [p["name"] for p in T["proposed_names"]]:
         places[key] = sorted({it["id"] for it in T["items"] for b in it["blocks"] if key.lower() in b["text"].lower()})
     row(g, "where the proposed names stand (reported)", True, json.dumps(places)[:290], reported=True)
-    only_here = all(places[k] for k in ("ARMITAGE & STOBBS", "QUAY PRINT", "THE SANDERLING TRIO", "THE HARPOONER", "BIG TED HOLROYD", "SPANNER SMITH", "THE STEVEDORE", "THE DRILL HALL", "THE FOURTH WITNESS", "WHITEWELL", "QUAYSIDE"))
+    only_here = all(places[k] for k in ("ARMITAGE & STOBBS", "QUAY PRINT", "THE SANDERLING TRIO", "THE HARPOONER", "TED HOLROYD", "SPANNER SMITH", "THE STEVEDORE", "THE DRILL HALL", "THE FOURTH WITNESS", "WHITEWELL", "QUAYSIDE"))
     row(g, "each proposed name that is meant to be drawn is drawn, on named variants (-named, L01, L03, B01, G01, G02) and imprints only", only_here)
     allowed_default = {"QUAY PRINT", "MERIDIAN AGAINST THE POLL TAX"}
     stray = [(it["id"], k) for k, ids in places.items() for it in [ITEMS[i] for i in ids] if not it.get("held") and k not in allowed_default and not any(b["role"] == "imprint" for b in it["blocks"] if k.lower() in b["text"].lower())
@@ -737,10 +737,10 @@ def rect_overlap(a, b, tol=0.0):
 
 
 def paper_counts(PLS):
-    """fly-posters and poll-tax bills in the DEFAULT street (held twins and card boards excluded), by the items' paper_class."""
+    """fly-posters and poll-tax bills in the DEFAULT street (held placements and card boards excluded), by the items' paper_class."""
     n = {"fly_poster": 0, "poll_tax_bill": 0}
     for p in PLS:
-        if p.get("held_until_minted") or p["item"] not in ITEMS:
+        if p.get("held") or p.get("held_until_minted") or p["item"] not in ITEMS:
             continue
         pc = ITEMS[p["item"]].get("paper_class")
         if pc in n:
@@ -748,12 +748,38 @@ def paper_counts(PLS):
     return n
 
 
+def paper_ok(n):
+    """G.place.paper: AT MOST 8 fly-posters and 4 poll-tax bills (the asset plan's table A5)."""
+    return n["fly_poster"] <= 8 and n["poll_tax_bill"] <= 4
+
+
 def gable_ok(PLS):
-    """The quay gable keeps what the Hook sheet shows: paper 150 mm clear of the downpipe, none above 2.75 m, none in the damp foot, and the three bills in ONE layer."""
+    """G.place.gable: the quay gable is BARE, as the Hook sheet shows it: no paper and no plate on SF1 (or hosted by it) in the default street."""
+    why = []
+    for p in PLS:
+        if p.get("held") or p.get("held_until_minted"):
+            continue
+        if p["surface"] == "SF1" or p.get("host") == "SF1":
+            why.append("%s is on the gable (the Hook sheet shows it bare)" % p["item"])
+    return not why, "; ".join(why)
+
+
+def gable_fixtures_ok():
+    """The gable's fixtures stand as the sheet shows them: the 75 mm cast-iron downpipe at u 0.30 full height, the render patch high up, the damp foot."""
+    SF1 = T["surfaces"]["SF1"]
+    fx = {f["id"]: f for f in SF1["fixtures"]}
+    pipe, patch, foot = fx.get("downpipe"), fx.get("render_patch"), fx.get("damp_foot")
+    return bool(pipe and patch and foot and pipe["diameter_mm"] == 75 and pipe["u_m"] == 0.30 and pipe["z_m"][1] >= 6.0 and pipe["keep_paper_clear_mm"] == 150
+                and patch["z_m"] == [3.6, 5.0] and foot["z_m"] == [0.0, 0.45])
+
+
+def gable_alt_ok(PLS):
+    """The HELD proof wall, if he ever chooses the gable for the sample, keeps what the sheet shows: paper 150 mm clear of the downpipe, none above 2.75 m, none in the damp foot, the three
+    bills in ONE layer at one z and not overlapping."""
     SF1 = T["surfaces"]["SF1"]
     pipe = [f for f in SF1["fixtures"] if f["id"] == "downpipe"][0]
     clear = pipe["u_m"] + pipe["diameter_mm"] / 2000.0 + pipe["keep_paper_clear_mm"] / 1000.0
-    sf1 = [p for p in PLS if p["surface"] == "SF1" and not p.get("held_until_minted")]
+    sf1 = [p for p in PLS if p["surface"] == "SF1" and p.get("held") and p.get("proof_wall") and not p.get("alt_of")]
     bills = [p for p in sf1 if ITEMS[p["item"]].get("paper_class") in ("fly_poster", "poll_tax_bill")]
     why = []
     for p in sf1:
@@ -763,10 +789,9 @@ def gable_ok(PLS):
             why.append("%s reaches %.2f m" % (p["item"], p["z_bottom_m"] + p["h_m"]))
         if p["z_bottom_m"] < 0.45 - 1e-9:
             why.append("%s sits in the damp foot" % p["item"])
-    full = [p for p in bills if ITEMS[p["item"]]["paper_class"] != "strip"]
-    if len({p["layer"] for p in full}) != 1 or len(full) != 3:
-        why.append("the gable has %d bills in layers %s, not three in one" % (len(full), sorted({p["layer"] for p in full})))
-    if len({round(p["z_bottom_m"], 3) for p in full}) != 1:
+    if len({p["layer"] for p in bills}) != 1 or len(bills) != 3:
+        why.append("the held proof wall has %d bills in layers %s, not three in one" % (len(bills), sorted({p["layer"] for p in bills})))
+    if len({round(p["z_bottom_m"], 3) for p in bills}) != 1:
         why.append("the three bills' bottoms are not all at one z")
     return not why, "; ".join(why)
 
@@ -775,31 +800,33 @@ def group7():
     g = "7 placements"
     PLS = T["placements"]
     SF = T["surfaces"]
-    DEF = [p for p in PLS if not p.get("held_until_minted")]
+    DEF = [p for p in PLS if not p.get("held")]
     z = SF["SF1"]["paste_zone"]
-    sf1 = [p for p in DEF if p["surface"] == "SF1"]
-    paper1 = [p for p in sf1 if p["item"] in ITEMS and ITEMS[p["item"]].get("paper_class") in ("fly_poster", "poll_tax_bill", "strip")]
-    inside = all(z["u"][0] <= p["u_m"] and p["u_m"] + p["w_m"] <= z["u"][1] and z["z"][0] <= p["z_bottom_m"] and p["z_bottom_m"] + p["h_m"] <= z["z"][1] + 0.001 for p in paper1)
-    row(g, "SF1: every bill lies inside the paste zone (u 0.15 to 6.0, z 0.45 to 2.75)", inside, str([(p["item"], p["u_m"], p["z_bottom_m"]) for p in paper1]))
+    sf1 = [p for p in DEF if p["surface"] == "SF1" or p.get("host") == "SF1"]
+    held1 = [p for p in PLS if p.get("held") and p.get("proof_wall") and not p.get("alt_of")]
     ok, why = gable_ok(PLS)
-    row(g, "SF1: ONE layer of three bills (the plan's proof: P01, W01, T02, bottoms z 1.00), paper 150 mm clear of the 75 mm downpipe at u 0.30, nothing above 2.75 m or in the damp foot", ok, why)
-    row(g, "SF1: the three bills are three templates (a poll-tax bill, a fight bill, a Tivoli quad)", sorted(p["item"] for p in sf1 if p.get("proof_wall") and p["item"] in ("P01", "W01", "T02")) == ["P01", "T02", "W01"])
+    row(g, "SF1: the quay gable is BARE, as the Hook sheet shows it: no paper and no plate on it in the default street (%d proof-wall placements are held)" % len(held1), ok and not sf1 and len(held1) == 5, why)
+    row(g, "SF1: the downpipe (75 mm cast iron, u 0.30, full height, paper kept 150 mm clear), the render patch (z 3.6 to 5.0) and the damp foot (z 0 to 0.45) stand as the sheet shows them", gable_fixtures_ok())
+    paper1 = [p for p in held1 if ITEMS[p["item"]].get("paper_class") in ("fly_poster", "poll_tax_bill", "strip")]
+    inside = all(z["u"][0] <= p["u_m"] and p["u_m"] + p["w_m"] <= z["u"][1] and z["z"][0] <= p["z_bottom_m"] and p["z_bottom_m"] + p["h_m"] <= z["z"][1] + 0.001 for p in paper1)
+    row(g, "SF1 (held proof wall): every held bill lies inside the paste zone (u 0.15 to 6.0, z 0.45 to 2.75)", inside, str([(p["item"], p["u_m"], p["z_bottom_m"]) for p in paper1]))
+    ok, why = gable_alt_ok(PLS)
+    row(g, "SF1 (held proof wall): if ever used, ONE layer of three bills (P01, W01, T02, bottoms z 1.00), paper 150 mm clear of the downpipe, nothing above 2.75 m or in the damp foot", ok, why)
+    row(g, "SF1 (held proof wall): the three bills are three templates (a poll-tax bill, a fight bill, a Tivoli quad), all flagged proof_wall and held", sorted(p["item"] for p in held1 if p["item"] in ("P01", "W01", "T02")) == ["P01", "T02", "W01"] and all(p.get("held_why") for p in held1))
     full = [p for p in paper1 if ITEMS[p["item"]]["paper_class"] != "strip"]
     ov = [(a["item"], b["item"]) for i, a in enumerate(full) for b in full[i + 1:] if rect_overlap((a["u_m"], a["z_bottom_m"], a["u_m"] + a["w_m"], a["z_bottom_m"] + a["h_m"]), (b["u_m"], b["z_bottom_m"], b["u_m"] + b["w_m"], b["z_bottom_m"] + b["h_m"]))]
-    row(g, "SF1: no bill overlaps another", not ov, str(ov))
-    strip = [p for p in sf1 if p["item"] == "T02s"][0]
-    quad = [p for p in sf1 if p["item"] == "T02"][0]
+    row(g, "SF1 (held proof wall): no bill overlaps another", not ov, str(ov))
+    strip = [p for p in held1 if p["item"] == "T02s"][0]
+    quad = [p for p in held1 if p["item"] == "T02"][0]
     off = (strip["z_bottom_m"] + strip["h_m"]) - (quad["z_bottom_m"] + quad["h_m"])
     dx = strip["u_m"] - quad["u_m"]
     row(g, "T02s sits across the quad's top band, 2 to 6 mm off square (up %.1f mm, in %.1f mm, turned %.2f degrees from the quad's own)" % (off * 1000, dx * 1000, strip["rot_deg"] - quad["rot_deg"]),
         0.002 <= off <= 0.006 and 0.0 <= dx <= 0.006 and 0.1 <= abs(strip["rot_deg"] - quad["rot_deg"]) <= 0.34 and abs(strip["w_m"] - 1.016) < 1e-6 and abs(strip["h_m"] - 0.09) < 1e-6)
-    pipe = [f for f in SF["SF1"]["fixtures"] if f["id"] == "downpipe"][0]
-    row(g, "SF1: the downpipe is a 75 mm round cast-iron pipe at u 0.30, full height, paper kept 150 mm clear", pipe["diameter_mm"] == 75 and pipe["u_m"] == 0.30 and pipe["keep_paper_clear_mm"] == 150 and pipe["z_m"][1] >= 6.0)
-    pl = [p for p in sf1 if p["item"] == "S01n"]
-    row(g, "SF1: no sticker, no case and no second layer on the gable (nothing more until he has approved the sample)", not [p for p in sf1 if p["item"] in ("P05", "P06") or p.get("kind") == "case"] and not [p for p in PLS if p["surface"] == "SF1" and p["item"] in ("HC1", "FC1")])
+    row(g, "SF1: no sticker, no case and no second layer on the gable (nothing more until he has approved the sample)", not [p for p in PLS if p["surface"] == "SF1" and (p["item"] in ("P05", "P06", "HC1", "FC1") or p.get("kind") == "case")])
     # paper amount
     n = paper_counts(PLS)
-    row(g, "the amount of paper on Quay Street is the asset plan's: 8 fly-posters and 4 poll-tax bills (counted %s)" % n, n == {"fly_poster": 8, "poll_tax_bill": 4})
+    row(g, "the amount of paper on Quay Street is AT MOST the asset plan's 8 fly-posters and 4 poll-tax bills (counted %s)" % n, paper_ok(n))
+    row(g, "the default street carries 5 fly-posters (M01 twice, J01 twice, D01) and 3 poll-tax bills (P03, P02 and P02's window copy): inside the plan", n == {"fly_poster": 5, "poll_tax_bill": 3})
     # glass SF2
     sf2 = [p for p in DEF if p["surface"] == "SF2"]
     g0, g1 = SF["SF2"]["u_range"]
@@ -808,7 +835,7 @@ def group7():
     row(g, "SF2: sheets hang low (top at or below 2.0 m, the whitewash showing above)", all(p["z_bottom_m"] + p["h_m"] <= 2.0 for p in sf2 if p["h_m"] > 0.2))
     ov = [(a["item"], b["item"]) for i, a in enumerate(sf2) for b in sf2[i + 1:] if rect_overlap((a["u_m"], a["z_bottom_m"], a["u_m"] + a["w_m"], a["z_bottom_m"] + a["h_m"]), (b["u_m"], b["z_bottom_m"], b["u_m"] + b["w_m"], b["z_bottom_m"] + b["h_m"]))]
     row(g, "SF2: one layer: no sheet overlaps another", not ov, str(ov))
-    row(g, "SF2 holds M01, P03, P02, J01, C02 and C01a, no duplicate P01, no sticker", sorted(p["item"] for p in sf2) == ["C01a", "C02", "J01", "M01", "P02", "P03"])
+    row(g, "SF2 holds M01, P03, P02, J01, C02 and C01a, no P01, no sticker", sorted(p["item"] for p in sf2) == ["C01a", "C02", "J01", "M01", "P02", "P03"])
     c1 = [p for p in sf2 if p["item"] == "C01a"][0]
     row(g, "C01a (the police appeal) is inside the empty unit's glass at u 0.30, z 1.30, with four tape tabs", abs(c1["u_m"] - 0.30) < 1e-9 and abs(c1["z_bottom_m"] - 1.30) < 1e-9 and "four tabs" in c1.get("fixing", ""))
     row(g, "no police appeal on a brick pier or a house front", not [p for p in PLS if p["surface"] == "WEST_PIER" and p["item"].startswith("C01")])
@@ -822,7 +849,8 @@ def group7():
         ok &= p["w_m"] <= pr["w"] - 0.08 + 1e-9
         det.append((p["item"], p["pier"], p["w_m"], pr["w"]))
     row(g, "west piers: every sheet fits its pier with 40 mm each side (%d placements)" % len(wp), ok, str(det))
-    row(g, "west piers: the only bill on a pier is the scene's own poster slot (x 11.4, pier W1.0); the house board L04 is on W2.0", sorted((p["item"], p["pier"]) for p in wp) == [("L04", "W2.0"), ("W01", "W1.0")] and piers["W1.0"]["x0"] < 11.4 < piers["W1.0"]["x1"])
+    m1 = [p for p in wp if p["pier"] == "W1.0"]
+    row(g, "west piers: the only bill on a pier is the scene's own poster slot (x 11.4, pier W1.0), M01 at class B (a bill that needs no unminted name); the house board L04 is on W2.0", sorted((p["item"], p["pier"]) for p in wp) == [("L04", "W2.0"), ("M01", "W1.0")] and piers["W1.0"]["x0"] < 11.4 < piers["W1.0"]["x1"] and len(m1) == 1 and m1[0]["age_class"] == "B")
     row(g, "west piers: six piers, each 0.95 to 0.96 m, computed from the plain row's bay layout", len(T["west_piers"]) == 6 and all(0.94 <= p["w"] <= 0.96 for p in T["west_piers"]))
     wv = [p for p in DEF if p["surface"] == "SF9"]
     S9 = SF["SF9"]
@@ -854,8 +882,10 @@ def group7():
     row(g, "HC1: rails 46 x 60 mm with a 4 mm chamfer on the outer arris, 4 mm glass in a 10 x 10 mm bead", hc["rail_section_mm"] == [46, 60] and hc["chamfer_mm"] == 4.0 and hc["glass"]["thickness_mm"] == 4.0 and hc["glass"]["bead_mm"] == [10, 10])
     row(g, "neither case is placed on Quay Street (no dock office, no ramp)", not [p for p in PLS if p["item"] in ("HC1", "FC1")] and hc["place"] is None and ferry["place"] is None)
     # plates
-    pl = [p for p in PLS if p["surface"] == "SF7"]
-    row(g, "plates: two placed, both QUAY STREET `n`; none for WEIGHHOUSE LANE (the yard entrance has no plate), none for TANNERY ROW", sorted(p["item"] for p in pl) == ["S01n", "S01n"] and not [p for p in PLS if p["item"].startswith("S02")])
+    pl = [p for p in DEF if p["surface"] == "SF7"]
+    plh = [p for p in PLS if p["surface"] == "SF7" and p.get("held")]
+    row(g, "plates: ONE placed, QUAY STREET `n` on the west corner pier at x 20.47 (the gable carries none; a second plate at u 1.0 is held); none for WEIGHHOUSE LANE (the yard entrance has no plate), none for TANNERY ROW",
+        [(p["item"], p.get("street_x_m")) for p in pl] == [("S01n", 20.47)] and len(plh) == 1 and plh[0].get("host") == "SF1" and not [p for p in PLS if p["item"].startswith("S02")])
     lamp = [p for p in DEF if p["surface"] == "SF4"]
     row(g, "lamp columns: bills sit between 1.2 and 2.4 m on a column's street x", all(p["street_x_m"] in SF["SF4"]["columns_street_x"] and 1.2 <= p["z_bottom_m"] and p["z_bottom_m"] + p["h_m"] <= 2.4 for p in lamp))
     row(g, "every placed item exists", all(p["item"] in ITEMS or p["item"] in {c["id"] for c in T["cases"]} or p["item"] == T["card_board"]["id"] for p in PLS))
@@ -1251,9 +1281,9 @@ _patch_cache = {}
 def glyph_patch_cached(key, weight, ch, em_mm, ppm, rot, emb):
     k = (key, weight, ch, round(em_mm, 3), round(ppm, 3), round(rot, 2), round(emb, 3))
     if k not in _patch_cache:
-        if len(_patch_cache) > 6000:
+        if len(_patch_cache) > 12000:
             _patch_cache.clear()
-        _patch_cache[k] = gl.glyph_patch(font, key, weight, ch, em_mm, ppm, rot, emb)
+        _patch_cache[k] = gl.glyph_patch(font, key, weight, ch, em_mm, ppm, rot, emb, tight=True)
     return _patch_cache[k]
 
 
@@ -1317,6 +1347,37 @@ def envelope_problems(b, glyphs):
 
 
 ALT_CHARS = gl.GLYPHS
+MAN_KEYS = ("ch", "font", "weight", "em_mm", "ox_mm", "baseline_mm", "rot_deg", "emb_mm")
+
+
+def manifest_problem(b, man):
+    """Why a block's glyph manifest cannot be used (None when it can): a missing, empty or unreadable <ITEM>.glyphs.json fails .words and .glyphs; it never crashes the reader."""
+    if man is None or not isinstance(man, (list, tuple)) or not man:
+        return "no glyph manifest for block %s (missing, empty or unreadable): the words and the glyphs cannot be checked" % b["id"]
+    for i, g in enumerate(man):
+        if not isinstance(g, dict) or any(k not in g for k in MAN_KEYS):
+            return "the glyph manifest of block %s is unreadable at entry %d" % (b["id"], i)
+        try:
+            float(g["em_mm"]), float(g["ox_mm"]), float(g["baseline_mm"]), float(g["rot_deg"]), float(g["emb_mm"])
+        except (TypeError, ValueError):
+            return "the glyph manifest of block %s has a non-number at entry %d" % (b["id"], i)
+    return None
+
+
+def words_ok(item, mans):
+    """ITEM .words, read from the glyph manifest: every block's characters, joined, equal the approved string. mans: {block id: [glyph entries]} or None (a missing file). Returns (ok, why)."""
+    if not isinstance(mans, dict):
+        return False, "no glyph manifest for %s (missing or unreadable)" % item["id"]
+    for b in item["blocks"]:
+        if b.get("ghost"):
+            continue
+        pr = manifest_problem(b, mans.get(b["id"]))
+        if pr:
+            return False, pr
+        got = "".join(g["ch"] for g in mans[b["id"]])
+        if got != b["text"]:
+            return False, "block %s lists %r, the approved string is %r" % (b["id"], got, b["text"])
+    return True, ""
 
 
 def glyph_window(item, b, img_shape, ppm):
@@ -1337,6 +1398,11 @@ def glyph_check_block(item, img, b, man, exp=None, ppm=None, only_alts=None, oth
     ppm = ppm or item["px_per_mm"]
     H = item["format"]["h_mm"]
     res = dict(block=b["id"], ok=True, fails=[], glyphs=0, min_F=1.0, min_sep=1.0, equiv=0)
+    pr = manifest_problem(b, man)
+    if pr:
+        res["ok"] = False
+        res["fails"].append(pr)
+        return res
     probs = envelope_problems(b, man)
     if probs:
         res["ok"] = False
@@ -1347,7 +1413,7 @@ def glyph_check_block(item, img, b, man, exp=None, ppm=None, only_alts=None, oth
     ppm_e = ppm / k
     win = glyph_window(item, b, img.shape, ppm)
     x0, x1, y0, y1 = win
-    read = gl.shrink(img[y0:y1, x0:x1], k)
+    read = gl.shrink_cov(img[y0:y1, x0:x1], k)
     win_e = (0, read.shape[1], 0, read.shape[0])
 
     def put(g, canvas):
@@ -1394,7 +1460,9 @@ def glyph_check_block(item, img, b, man, exp=None, ppm=None, only_alts=None, oth
             if 0 <= jj < len(nonsp):
                 neigh |= refs[nonsp[jj]][:, lo:hi]
         own_d = gl.dil(own, max(1, int(round(0.7 * ppm_e))))
-        rd = (read[:, lo:hi] & ~(gl.dil(neigh, max(1, int(round(1.0 * ppm_e)))) & ~own_d)) & ~(excl[:, lo:hi] & ~own_d)
+        # a pixel that a neighbour's ink explains and this glyph's does not (within TOL_PX) is the neighbour's, even where hand-lettered glyphs touch
+        core = gl.dil(neigh, gl.TOL_PX) & ~gl.dil(own, gl.TOL_PX)
+        rd = (read[:, lo:hi] & ~core & ~(gl.dil(neigh, max(1, int(round(1.0 * ppm_e)))) & ~own_d)) & ~(excl[:, lo:hi] & ~own_d)
         F = gl.fscore(rd, own, dil_f)
         res["min_F"] = min(res["min_F"], F)
         if F < gl.F_MIN:
@@ -1409,15 +1477,16 @@ def glyph_check_block(item, img, b, man, exp=None, ppm=None, only_alts=None, oth
             if a == g["ch"] or (g["ch"], a) in gl.EXPLICIT_TWINS:
                 continue
             patch, ox, base = glyph_patch_cached(g["font"], g["weight"], a, g["em_mm"], ppm_e, g["rot_deg"], g["emb_mm"])
-            ra = gl.place_patch(patch, ox, base, g["ox_mm"] * ppm_e - x0 / k, (H - g["baseline_mm"]) * ppm_e - y0 / k, win_e)[:, lo:hi]
+            ra = gl.place_patch(patch, ox, base, g["ox_mm"] * ppm_e - x0 / k, (H - g["baseline_mm"]) * ppm_e - y0 / k, (lo, hi, 0, win_e[3]))
             if not ra.any():
                 continue                                    # the font has no such glyph (notdef not drawn) or it falls outside the cell
             cands.append((a, ra))
         dco = gl.dil(own, gl.TOL_PX)
+        rd_d = gl.dil(rd, gl.TOL_PX)
         for name, ra in cands:
             A = own & ~gl.dil(ra, gl.TOL_PX)
             Bs = ra & ~dco
-            sp_ = gl.sep_score(rd, A, Bs)
+            sp_ = gl.sep_score(rd, A, Bs, read_d=rd_d)
             if sp_ is None:
                 res["equiv"] += 1
                 continue
@@ -1426,7 +1495,12 @@ def glyph_check_block(item, img, b, man, exp=None, ppm=None, only_alts=None, oth
                 res["fails"].append("%r at %.0f mm is not told from %s: SEP %.2f" % (g["ch"], g["ox_mm"], ("its mirror" if name == "mirror" else repr(name)), sp_))
                 break
         res["min_sep"] = min(res["min_sep"], worst)
-    # spaces carry no ink
+    # spaces carry no ink: between the two neighbouring glyphs' boxes, the ink that lies farther than 0.6 mm (one reduced pixel more when the block is read at a reduced scale) from every glyph of the line
+    refall = np.zeros_like(read)
+    for r_ in refs:
+        if r_ is not None:
+            refall |= r_
+    allowed = gl.dil(refall, max(1, int(round(0.6 * ppm_e))) + (1 if k > 1 else 0))
     for i, g in enumerate(man):
         if g["ch"] != " " or i == 0 or i == len(man) - 1:
             continue
@@ -1434,10 +1508,9 @@ def glyph_check_block(item, img, b, man, exp=None, ppm=None, only_alts=None, oth
         nxt = [j for j in nonsp if j > i]
         if not prev or not nxt:
             continue
-        r = int(round(0.6 * ppm_e)) + 1
-        a, bb = boxes[prev[-1]][1] + 1 + r, boxes[nxt[0]][0] - r
+        a, bb = boxes[prev[-1]][1] + 1, boxes[nxt[0]][0]
         if bb > a:
-            ink = int(read_ex[:, a:bb].sum()) / (ppm_e * ppm_e)
+            ink = int((read_ex[:, a:bb] & ~allowed[:, a:bb]).sum()) / (ppm_e * ppm_e)
             if ink > 0.5:
                 res["fails"].append("the space at %.0f mm carries %.1f mm2 of ink" % (g["ox_mm"], ink))
     res["ok"] = not res["fails"]
@@ -1459,27 +1532,134 @@ def union_expected(item, ppm_e):
     return out
 
 
-def estimate_rotation(item, img, ppm=None, span=3.0):
-    """The angle (degrees, counter-clockwise, 0.05 steps) by which the render is turned: the one at which turning the image back about its centre makes its ink agree best with the
-    expected ink (F at 1 mm). The largest blocks carry it; hand-lettered cards are noisier (their own jitter)."""
+SQUARE_TOL_DEG = 0.3        # ITEM.square: ONE tolerance for every item, print or hand (target.json checks[].tolerance; PLACE.built uses the same number)
+SQUARE_MARGIN = 0.02        # the estimate reports 0 unless F at the best angle beats F at 0 degrees by this much
+SQUARE_MARGIN_BLIND = 0.05  # the same, for a hand card read WITHOUT the renderer's manifest (its jitter then is not known)
+
+
+def manifest_expected(item, man, ppm_e):
+    """The ink the item's own glyph manifest draws (jitter included), as a mask at ppm_e px/mm. A block with no manifest entry is drawn as the layout has it. Imprints are left out."""
+    W, H = item["format"]["w_mm"], item["format"]["h_mm"]
+    out = np.zeros((int(round(H * ppm_e)), int(round(W * ppm_e))), bool)
+    for b in item["blocks"]:
+        if b.get("ghost") or b["role"] == "imprint":
+            continue
+        gs = ((man or {}).get(b["id"])) if isinstance(man, dict) else None
+        if manifest_problem(b, gs):
+            gs = layout_glyphs(b)
+        for g in gs:
+            if g["ch"] == " ":
+                continue
+            p, o, ba = glyph_patch_cached(g["font"], g["weight"], g["ch"], g["em_mm"], ppm_e, g["rot_deg"], g["emb_mm"])
+            gl.paste_or(out, p, o, ba, g["ox_mm"] * ppm_e, (H - g["baseline_mm"]) * ppm_e)
+    return out
+
+
+def square_estimate(item, img, man=None, ppm=None, span=3.0, margin=None, target_ppm=8.0, max_mp=3.0):
+    """ITEM.square. The angle (degrees, counter-clockwise) by which the render is turned: the one at which turning the image back about the sheet's centre makes its ink agree best
+    (F, mean of recall and precision, each against the other dilated one reduced pixel) with the ink of the item's OWN GLYPH MANIFEST (jitter included; the layout where there is no
+    manifest). 0.05 degree steps after a 0.25 degree search over +-3 degrees. It reports 0 unless F at the best angle beats F at 0 degrees by `margin` (0.02; 0.05 for a hand card read
+    without its manifest, where the layout stands in for the jitter and the dilation is the hand's own 2.5 mm), so a square texture, whose F is flat near 0, is found at 0.
+    The read is made at up to 8 px/mm and 3 megapixels. Returns dict(angle, f_best, f0)."""
     ppm = ppm or item["px_per_mm"]
-    area_m2 = item["format"]["w_mm"] * item["format"]["h_mm"] / 1e6
-    k = max(1, int(round(ppm / (2.0 if area_m2 <= 0.5 else 1.0))))
-    small = gl.shrink(img, k)
+    W, H = item["format"]["w_mm"], item["format"]["h_mm"]
+    hand_blind = (not isinstance(man, dict)) and any(b.get("hand") for b in item["blocks"] if not b.get("ghost"))
+    tgt = min(ppm, target_ppm, math.sqrt(max_mp * 1e6 / (W * H)))
+    k = max(1, int(round(ppm / tgt)))
     ppm_e = ppm / k
-    ex = union_expected(item, ppm_e)
+    small = gl.shrink(img, k)
+    ex = manifest_expected(item, man, ppm_e)
     h = min(small.shape[0], ex.shape[0])
     w = min(small.shape[1], ex.shape[1])
     small, ex = small[:h, :w], ex[:h, :w]
+    dil_px = max(1, int(round(2.5 * ppm_e))) if hand_blind else 1
+    margin = (SQUARE_MARGIN_BLIND if hand_blind else SQUARE_MARGIN) if margin is None else margin
     im = Image.fromarray((small * 255).astype(np.uint8))
-    dil_px = max(1, int(round(1.0 * ppm_e)))
+    exd = gl.dil(ex, dil_px)
+    ne = max(1, int(ex.sum()))
 
     def score(a):
         r = np.asarray(im.rotate(-a, resample=Image.NEAREST)) > 127
-        return gl.fscore(r, ex, dil_px)
-    best = max(((score(a), a) for a in np.arange(-span, span + 1e-9, 0.25)), key=lambda t: t[0])
-    fine = max(((score(a), a) for a in np.arange(best[1] - 0.3, best[1] + 0.3001, 0.05)), key=lambda t: t[0])
-    return float(round(fine[1], 2)), float(fine[0])
+        rec = (ex & gl.dil(r, dil_px)).sum() / ne
+        pre = (r & exd).sum() / max(1, int(r.sum()))
+        return float((rec + pre) / 2.0)
+    f0 = score(0.0)
+    best = max(((score(a), a) for a in np.arange(-span, span + 1e-9, 0.25)), key=lambda t: (t[0], -abs(t[1])))
+    fine = max(((score(a), a) for a in np.arange(best[1] - 0.25, best[1] + 0.2501, 0.05)), key=lambda t: (t[0], -abs(t[1])))
+    if fine[0] - f0 < margin:
+        return dict(angle=0.0, f_best=f0, f0=f0)
+    return dict(angle=float(round(fine[1], 2)), f_best=float(fine[0]), f0=f0)
+
+
+def estimate_rotation(item, img, man=None, ppm=None, span=3.0):
+    """(angle, F at the angle): square_estimate for callers that want the pair. Pass the renderer's manifest as man; a hand card read without it is judged on the layout with the hand's own tolerance."""
+    r = square_estimate(item, img, man=man, ppm=ppm, span=span)
+    return r["angle"], r["f_best"]
+
+
+# ---- ITEM.clean: no ink outside the places lettering may stand -----------------------------------
+CLEAN_MAX_MM2 = 2.0
+
+
+def shape_ink_mask(item, shape, ppm, img_shape):
+    """The pixels of one of the item's shapes that are themselves ink (a rule, a bar of solid ink, a frame's line, a ring, ticks, a hand, a star or polygon, a roundel), at the item's scale.
+    A ground (a paint or stock rectangle that lettering stands on) is not such a shape: lettering over it is read."""
+    H = item["format"]["h_mm"]
+    im = Image.new("L", (img_shape[1], img_shape[0]), 0)
+    d = ImageDraw.Draw(im)
+    kind = shape["kind"]
+    bx = shape.get("box_mm")
+    if kind == "scrim" or bx is None and not shape.get("pts_mm"):
+        return np.zeros(img_shape, bool)
+
+    def X(x):
+        return x * ppm
+
+    def Y(y):
+        return (H - y) * ppm
+    if kind in ("poly", "star", "hand") and shape.get("pts_mm"):
+        d.polygon([(X(px), Y(py)) for px, py in shape["pts_mm"]], fill=255)
+    elif kind == "rule" or (kind == "rect" and shape.get("fill_kind") == "ink"):
+        d.rectangle([X(bx[0]), Y(bx[3]), X(bx[2]), Y(bx[1])], fill=255)
+    elif kind == "frame":
+        d.rectangle([X(bx[0]), Y(bx[3]), X(bx[2]), Y(bx[1])], outline=255, width=max(1, int(round(shape.get("width_mm", 3) * ppm))))
+    elif kind == "roundel":
+        d.ellipse([X(bx[0]), Y(bx[3]), X(bx[2]), Y(bx[1])], fill=255)
+    elif kind == "ring":
+        cx, cy = shape["centre_mm"]
+        d.ellipse([X(cx - shape["r_outer_mm"]), Y(cy + shape["r_outer_mm"]), X(cx + shape["r_outer_mm"]), Y(cy - shape["r_outer_mm"])], fill=255)
+        d.ellipse([X(cx - shape["r_inner_mm"]), Y(cy + shape["r_inner_mm"]), X(cx + shape["r_inner_mm"]), Y(cy - shape["r_inner_mm"])], fill=0)
+    elif kind == "ticks":
+        for sg in shape.get("segments_mm", []):
+            d.line([(X(sg["p0"][0]), Y(sg["p0"][1])), (X(sg["p1"][0]), Y(sg["p1"][1]))], fill=255, width=max(1, int(round(shape.get("width_mm", 2) * ppm))))
+    return np.asarray(im) > 100
+
+
+def clean_ink_mm2(item, img, ppm=None):
+    """ITEM.clean (reads pixels): on the class-A render before wear, the area (mm2) of ink-coloured pixels outside the union of every block's glyph window, the item's own shapes (dilated 1 mm),
+    the card's cue patch, and the art slots. A true render has none; a line drawn anywhere else (a word on a margin, a held name left on a default item) adds its whole area."""
+    ppm = ppm or item["px_per_mm"]
+    H = item["format"]["h_mm"]
+    allowed = np.zeros(img.shape, bool)
+    for b in item["blocks"]:
+        if b.get("ghost"):
+            continue
+        x0, x1, y0, y1 = glyph_window(item, b, img.shape, ppm)
+        allowed[y0:y1, x0:x1] = True
+    own = np.zeros(img.shape, bool)
+    for s_ in item["shapes"]:
+        own |= shape_ink_mask(item, s_, ppm, img.shape)
+    mc = item.get("mirror_cue")
+    boxes = []
+    if mc and mc.get("patch_left_mm"):
+        boxes.append(mc["patch_left_mm"])
+    boxes += [a["box_mm"] for a in item["art"]]
+    for x0, y0, x1, y1 in boxes:
+        own[max(0, int((H - y1) * ppm)):int((H - y0) * ppm) + 1, max(0, int(x0 * ppm)):int(x1 * ppm) + 1] = True
+    if own.any():
+        own = gl.dil(own, max(1, int(round(1.0 * ppm))))
+    stray = img & ~allowed & ~own
+    return float(stray.sum()) / (ppm * ppm)
 
 
 # --------------------------------------------------------------------------------------------
@@ -1623,14 +1803,16 @@ def f_margin_table(key, weight, cap_mm, ppm, chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ01
 
 
 def adequacy():
-    """For every (font, weight, cap, stroke) of every glyph-checked block: at the item's own px/mm each char is told from every non-twin alternative by >= N_MIN pixels."""
+    """For every (font, weight, cap, stroke, jitter) of every glyph-checked block: at the item's own px/mm each char is told from every non-twin alternative by >= N_MIN pixels; a hand block's
+    pairs are measured over glyphs jittered to 3.5 sd of its style (size and rotation, four corners), as glyphlib.needed_ppm chose the scale."""
     combos = {}
     for it in T["items"]:
         for b in it["blocks"]:
             if not b.get("glyph_check") or b.get("ghost"):
                 continue
-            emb = T["hand_styles"][b["hand"]]["embolden_mm"] if b.get("hand") else 0.0
-            k = (b["font"], b["weight"], b["cap_mm"], emb)
+            hs = T["hand_styles"][b["hand"]] if b.get("hand") else None
+            emb = hs["embolden_mm"] if hs else 0.0
+            k = (b["font"], b["weight"], b["cap_mm"], emb, hs["size_sd"] if hs else 0.0, hs["rotation_sd_deg"] if hs else 0.0)
             c = combos.setdefault(k, dict(chars=set(), ppm=it["px_per_mm"], items=set()))
             c["chars"].update(b["text"])
             c["ppm"] = min(c["ppm"], it["px_per_mm"])
@@ -1638,8 +1820,8 @@ def adequacy():
     bad, twins, n = [], set(), 0
     t0 = time.time()
     for k, c in sorted(combos.items()):
-        key, wt, cap, emb = k
-        tab = gl.separation_table(font, key, wt, cap, cap_ratio(key, wt), c["ppm"], sorted(c["chars"]), emb_mm=emb)
+        key, wt, cap, emb, ssd, rsd = k
+        tab = gl.separation_table(font, key, wt, cap, cap_ratio(key, wt), c["ppm"], sorted(c["chars"]), emb_mm=emb, jit=(dict(size_sd=ssd, rotation_sd_deg=rsd) if (ssd or rsd) else None))
         n += 1
         for ch, v in tab["worst"].items():
             if v is not None and v[0] < gl.N_MIN:
@@ -1647,6 +1829,89 @@ def adequacy():
         for tw in tab["twins"]:
             twins.add((key,) + tw)
     return n, bad, twins, time.time() - t0
+
+
+
+def all_pixel_checks(it, img, man):
+    """Every per-item pixel check the target lists, as the reader runs them on a render and its glyph manifest: the line mask and position (.mask, .pos), .glyphs, .square, .clean, and
+    .words from the manifest. Returns the list of failures as plain strings (empty: the item passes)."""
+    fails = []
+    ok, why = words_ok(it, man)
+    if not ok:
+        fails.append(".words: " + why)
+    for b in it["blocks"]:
+        if b.get("ghost"):
+            continue
+        f = read_score(it, img, b, strict=False)
+        mf = block_min_f(it, b)
+        if f < mf:
+            fails.append("%s .mask: F %.2f under %.2f" % (b["id"], f, mf))
+        if not pos_ok(it, b, read_box(it, img, b)):
+            fails.append("%s .pos" % b["id"])
+        if b.get("glyph_check"):
+            r = glyph_check_block(it, img, b, (man or {}).get(b["id"]) if isinstance(man, dict) else None, others=man if isinstance(man, dict) else None)
+            if not r["ok"]:
+                fails.append("%s .glyphs: %s" % (b["id"], r["fails"][:1]))
+    if any(not b.get("ghost") for b in it["blocks"]):
+        sq = square_estimate(it, img, man if isinstance(man, dict) else None)
+        if abs(sq["angle"]) > SQUARE_TOL_DEG:
+            fails.append(".square: found turned %.2f degrees" % sq["angle"])
+        cl = clean_ink_mm2(it, img)
+        if cl > CLEAN_MAX_MM2:
+            fails.append(".clean: %.1f mm2 of ink outside the blocks" % cl)
+    return fails
+
+
+def _w_true(iid):
+    it = ITEMS[iid]
+    img, man = render_item(it, jitter=False)
+    return iid, all_pixel_checks(it, img, man)
+
+
+def _w_wrong(args):
+    iid, old, new, seed = args
+    it = ITEMS[iid]
+    b = [x for x in it["blocks"] if x["text"] == old][0]
+    img, man = render_item(it, rng=np.random.default_rng(seed), swap=(b["id"], new), jitter=True)
+    r = glyph_check_block(it, img, b, man[b["id"]], others=man)
+    return iid, old, new, seed, bool(r["ok"])
+
+
+def _w_hand(args):
+    iid, seed = args
+    it = ITEMS[iid]
+    img, man = render_item(it, rng=np.random.default_rng(seed), jitter=True)
+    return iid, seed, all_pixel_checks(it, img, man)
+
+
+def pmap(fn, args, procs=4):
+    """fn over args on a pool of forked workers (the fonts and the target are inherited); in order."""
+    import multiprocessing as mp
+    if procs <= 1 or len(args) < 4:
+        return [fn(a) for a in args]
+    with mp.get_context("fork").Pool(procs) as pool:
+        return pool.map(fn, args, chunksize=1)
+
+
+def stamp_line(it, img, text, font_key, weight, cap_mm, x_mm, base_mm):
+    """A line of lettering drawn onto an ink mask outside the item's blocks and its manifest (the review's planted lines)."""
+    b = dict(text=text, font=font_key, weight=weight, cap_mm=cap_mm, tracking_em=0.0, anchor="left", origin_x_mm=x_mm, baseline_mm=base_mm, size_px_per_em=cap_mm / cap_ratio(font_key, weight))
+    out = img.copy()
+    H = it["format"]["h_mm"]
+    for g in layout_glyphs(b):
+        if g["ch"] == " ":
+            continue
+        patch, ox, base = glyph_patch_cached(g["font"], g["weight"], g["ch"], g["em_mm"], it["px_per_mm"], 0.0, 0.0)
+        gl.paste_or(out, patch, ox, base, g["ox_mm"] * it["px_per_mm"], (H - g["baseline_mm"]) * it["px_per_mm"])
+    return out
+
+
+def hand_cards_set(it):
+    return any(not b.get("ghost") for b in it["blocks"]) and all(b.get("hand") for b in it["blocks"] if not b.get("ghost"))
+
+
+def hand_card_ids():
+    return [it["id"] for it in T["items"] if any(not b.get("ghost") for b in it["blocks"]) and all(b.get("hand") for b in it["blocks"] if not b.get("ghost"))]
 
 
 def group12():
@@ -1667,33 +1932,43 @@ def group12():
     row(g, "shape twins found (reported: they are not scored; a swap of one for the other changes no reading)", True, ", ".join(sorted({"%s %s/%s" % (k[0], k[1], k[2]) for k in twins}))[:290], reported=True)
     ppms = sorted({it["px_per_mm"] for it in T["items"]})
     row(g, "item pixel scales in use (px/mm): %s; largest render %.0f megapixels" % (ppms, max(it["megapixels"] for it in T["items"])), max(it["megapixels"] for it in T["items"]) <= 60 and min(ppms) >= 2)
-    # 12.3 true renders pass
-    true_items = ["P01", "W01", "J01", "D01", "F01", "C01a", "S01n", "L02", "T03", "M01", "H01", "T02"]
-    if QUICK:
-        true_items = ["P01", "S01n"]
+    # 12.3 a true render of EVERY item passes every pixel check (.words, .mask, .pos, .glyphs, .square, .clean)
     t0 = time.time()
-    for iid in true_items:
-        it = ITEMS[iid]
-        img, man = render_item(it, jitter=False)
-        res = [glyph_check_block(it, img, b, man[b["id"]], others=man) for b in it["blocks"] if b.get("glyph_check") and not b.get("ghost")]
-        bad = [(r["block"], r["fails"][:1]) for r in res if not r["ok"]]
-        row(g, "%s: the true render passes ITEM.glyphs on every block (%d blocks, %d glyphs, lowest F %.2f, lowest SEP %.2f)" % (iid, len(res), sum(r["glyphs"] for r in res), min(r["min_F"] for r in res), min(r["min_sep"] for r in res)), not bad, str(bad[:3]))
-    row(g, "true renders read in %.0f s" % (time.time() - t0), True, "", reported=True)
-    # 12.4 jittered hand cards, 20 seeds
-    seeds = {"K01": 20, "SA06": 20, "K07a": 8, "K09a": 8, "SA15": 8}
+    all_ids = [it["id"] for it in T["items"] if any(not b.get("ghost") for b in it["blocks"]) and not hand_cards_set(it)]
     if QUICK:
-        seeds = {"K01": 4}
-    for iid, ns in seeds.items():
-        it = ITEMS[iid]
-        fails = []
-        for s in range(ns):
-            img, man = render_item(it, rng=np.random.default_rng(s), jitter=True)
-            for b in it["blocks"]:
-                r = glyph_check_block(it, img, b, man[b["id"]], others=man)
-                if not r["ok"]:
-                    fails.append((s, b["id"], r["fails"][:1]))
-        FACTS.setdefault("hand_seeds", {})[iid] = ns
-        row(g, "%s: %d true hand-lettered renders with the hand style's jitter (size, rotation, baseline, word gaps, stroke) pass ITEM.glyphs on every block" % (iid, ns), not fails, str(fails[:2]))
+        all_ids = ["P01", "S01n", "T01-named", "P05"]
+    res = pmap(_w_true, all_ids)
+    bad = [(i, f[:2]) for i, f in res if f]
+    FACTS["true_items"] = dict(n=len(all_ids), failing=len(bad))
+    row(g, "a TRUE render of every print item (%d) passes every pixel check: .words from its manifest, .mask, .pos, .glyphs, .square and .clean (lowest scale 2 px/mm; %.0f s)" % (len(all_ids), time.time() - t0), not bad, str(bad[:3]))
+    sq0 = ["P05", "K04", "K03a", "K03b", "K02", "K08", "P06"]
+    if not QUICK:
+        sqres = {}
+        for iid in sq0:
+            it = ITEMS[iid]
+            img, man = render_item(it, jitter=False)
+            sqres[iid] = square_estimate(it, img, man)["angle"]
+        row(g, "ITEM.square: exactly square textures read 0, not turned (the first try read P05 -1.15, K04 -1.15, K02 -0.95, K03b -0.85, K03a -0.80, K08 -0.75, P06 -0.35): %s" % sqres, all(abs(v) <= SQUARE_TOL_DEG for v in sqres.values()))
+    # 12.4 jittered hand cards: ALL 29, 20 seeds each, through every pixel check
+    hands = hand_card_ids()
+    ns = 20
+    seeds_list = [(iid, sd) for iid in hands for sd in range(ns)]
+    if QUICK:
+        seeds_list = [("K01", 0), ("K01", 1), ("SA01", 0), ("SA03", 1)]
+    t0 = time.time()
+    res = pmap(_w_hand, seeds_list)
+    per = {}
+    for iid, sd, f in res:
+        per.setdefault(iid, []).append((sd, f))
+    badc = {iid: [(sd, f[:1]) for sd, f in v if f] for iid, v in per.items()}
+    badc = {k: v for k, v in badc.items() if v}
+    FACTS["hand_seeds"] = dict(cards=len(per), seeds_each=ns, failing_cards=len(badc))
+    row(g, "all %d hand-lettered cards, %d true jittered renders each (the hand style's size, rotation, baseline, word-gap and stroke jitter), pass every pixel check on every seed: .words, .mask, .pos, .glyphs, .square, .clean (%d renders, %.0f s)" % (len(per), ns, len(res), time.time() - t0),
+        not badc and (QUICK or len(per) == 29), str({k: v[:1] for k, v in list(badc.items())[:3]}))
+    for iid in ("SA01", "SA03"):
+        if iid in per:
+            nb = sum(1 for sd, f in per[iid] if f)
+            row(g, "%s (ballpoint, 8 px/mm): %d of %d true jittered seeds fail (the first try failed SA01 11 of 20 and SA03 15 of 20: a neighbour's ink was credited to the glyph)" % (iid, nb, ns), nb == 0)
     # 12.5 the reviewer's wrong renders, and some near pairs: the manifest keeps the approved string, the pixels do not
     cases = [("P01", "THURSDAY 25 OCTOBER", "THURSDAY 26 OCTOBER"), ("W01", "FRIDAY 2 NOVEMBER", "FRIDAY 9 NOVEMBER"), ("C01a", "ON THE NIGHT OF FRIDAY 12 OCTOBER,", "ON THE NIGHT OF FRIDAY 13 OCTOBER,"),
              ("J01", "SATURDAY 20 OCTOBER", "SUNDAY 20 OCTOBER"), ("P04", "TUESDAY 30 OCTOBER, 7 PM", "THURSDAY 30 OCTOBER, 7 PM"), ("D01", "TEA AND SANDWICHES", "ALE AND SANDWICHES"),
@@ -1723,6 +1998,16 @@ def group12():
         FACTS["wrong_renders"].append(dict(item=iid, was=old, drawn=new, caught=not r["ok"], why=(r["fails"][0] if r["fails"] else "")))
     row(g, "the reviewer's wrong renders (a changed date, TEA to ALE, Teas to Beer, ALL WELCOME to BAR OPEN 7, LUNCH to BINGO, GIN BAGS, a changed price or time, a misspelt plate and district) and %d near pairs (8 for 6, 3 for 8, B for R, F for E...): %d of %d FAIL ITEM.glyphs as they must (%.0f s)" % (len([c for c in cases if c[0] in ("P03", "M01", "K09b")]) + 3, caught, len(cases), time.time() - t0),
         not missed, str(missed[:4]))
+    # 12.5b the review's hand-card wrong words: the manifest keeps the approved string, the pixels do not (3 jittered seeds each, every one must FAIL)
+    hand_cases = [("SA01", "Ring 960 471 after 5.", "Ring 960 417 after 5."), ("K07d", "85p DOZEN", "58p DOZEN"), ("K09e", "£2.90 lb", "£2.60 lb"), ("K06a", "4.30 PM", "4.80 PM"),
+                  ("SA06", "answers to Smudge.", "answers to Sludge."), ("SA05", "DECORATING", "BABYSITTER"), ("K06c", "ORDER", "BEERS"), ("K05", "PLEASE SHUT", "PLEASE SHOT"),
+                  ("K01", "CLOSED FOR LUNCH", "CLOSED FOR BINGO"), ("SA11", "Apply within.", "Pub, Fridays.")]
+    if QUICK:
+        hand_cases = hand_cases[:2]
+    t0 = time.time()
+    res = pmap(_w_wrong, [(iid, old, new, 10 + sd) for iid, old, new in hand_cases for sd in range(3)])
+    missed = [(i, o, n, sd) for i, o, n, sd, ok in res if ok]
+    row(g, "the review's %d hand-card wrong words (960 471 to 417, 85p to 58p, 2.90 to 2.60, 4.30 to 4.80, Smudge to Sludge, DECORATING to BABYSITTER, ORDER to BEERS, SHUT to SHOT, LUNCH to BINGO, Apply within to Pub, Fridays), 3 jittered seeds each: all %d FAIL ITEM.glyphs (%.0f s)" % (len(hand_cases), len(res), time.time() - t0), not missed, str(missed[:3]))
     # 12.6 a manifest that lists what was drawn (not the approved string) fails before any pixel is read
     it = ITEMS["D01"]
     b = [x for x in it["blocks"] if x["text"] == "TEA AND SANDWICHES"][0]
@@ -1738,19 +2023,62 @@ def group12():
         res = [glyph_check_block(it, img, b, man[b["id"]], others=man) for b in blocks]
         bad = sum(1 for r in res if not r["ok"])
         row(g, "%s: a MIRRORED render (hand cards included) fails ITEM.glyphs on %d of %d blocks" % (iid, bad, len(blocks)), bad >= max(1, math.ceil(0.8 * len(blocks))), "")
-    # 12.8 a tilt: rotation lives in the placement only
-    for iid in ("P01", "J01"):
+    # 12.8 a tilt: rotation lives in the placement only. The estimate is made against the render of the item's own manifest (jitter included)
+    for iid, degs in (("P01", (0.5, 1.2)), ("J01", (0.5, 1.2)), ("SA06", (1.2,)), ("K01", (1.2,))):
         it = ITEMS[iid]
-        for deg in (0.5, 1.2):
-            img, man = render_item(it, jitter=False, rot_deg=deg)
-            est, f = estimate_rotation(it, img)
+        for deg in degs:
+            img, man = render_item(it, rng=np.random.default_rng(7), jitter=True, rot_deg=deg)
+            sq = square_estimate(it, img, man)
+            est, f = sq["angle"], sq["f_best"]
             blocks = [b for b in it["blocks"] if b.get("glyph_check") and not b.get("ghost")]
             FACTS.setdefault("tilt", []).append(dict(item=iid, turned=deg, found=est))
-            row(g, "%s: a texture turned %.1f degrees is found turned by %.2f and fails ITEM.square (limit 0.3): skew belongs to the placement" % (iid, deg, est), abs(est - deg) <= 0.2 and abs(est) > 0.3, "F %.2f" % f)
-            back = np.asarray(Image.fromarray((img * 255).astype(np.uint8)).rotate(-deg, resample=Image.BICUBIC)) > 127
-            res = [glyph_check_block(it, back, b, man[b["id"]], others=man) for b in blocks]
-            bad = [(r["block"], r["fails"][:1]) for r in res if not r["ok"]]
-            row(g, "%s: the same render read in the PLACED street (turned back by the placement's rot_deg %.1f) passes ITEM.glyphs on every block" % (iid, deg), not bad, str(bad[:2]))
+            row(g, "%s: a texture turned %.1f degrees is found turned by %.2f and fails ITEM.square (limit %.1f): skew belongs to the placement" % (iid, deg, est, SQUARE_TOL_DEG), abs(est - deg) <= (0.2 if iid in ("P01", "J01") else 0.5) and abs(est) > SQUARE_TOL_DEG, "F %.2f against %.2f at 0" % (f, sq["f0"]))
+            if iid in ("P01", "J01"):
+                back = np.asarray(Image.fromarray((img * 255).astype(np.uint8)).rotate(-deg, resample=Image.BICUBIC)) > 127
+                res = [glyph_check_block(it, back, b, man[b["id"]], others=man) for b in blocks]
+                bad = [(r["block"], r["fails"][:1]) for r in res if not r["ok"]]
+                row(g, "%s: the same render read in the PLACED street (turned back by the placement's rot_deg %.1f) passes ITEM.glyphs on every block" % (iid, deg), not bad, str(bad[:2]))
+    # 12.8b one tolerance
+    tols = {c["tolerance"] for c in T["checks"] if c["id"].endswith(".square")}
+    doc = (HERE / "TARGET.md")
+    doc_txt = doc.read_text(encoding="utf-8") if doc.exists() else ""
+    row(g, "ITEM.square has ONE tolerance, %.1f degrees, for every item (target.json: %s) and TARGET.md states it and no other (no 0.8)" % (SQUARE_TOL_DEG, sorted(tols)), tols == {SQUARE_TOL_DEG} and T["render_contract"]["texture"].count("0.3 degrees") >= 1 and "0.8 degree" not in doc_txt and "limit 0.8" not in doc_txt
+        and (not doc_txt or "0.3 degrees" in doc_txt))
+    # 12.8c ITEM.clean on the review's four planted lines and a line that crosses a window
+    plant = [("K01", "BINGO TONIGHT", "patrick-hand", 400, 10.0, 40.0, 14.0), ("SA11", "Babysitter, evenings.", "patrick-hand", 400, 4.4, 8.0, 22.0),
+             ("L02", "ARMITAGE & STOBBS", "jost", 700, 46.0, 200.0, 60.0), ("C02", "BETTING SHOP", "archivo", 800, 3.4, 22.0, 120.0), ("D01", "LICENSED BAR", "libre-franklin", 800, 6.0, 100.0, 27.0)]
+    if QUICK:
+        plant = plant[:2]
+    out = []
+    for iid, text, fnt, w, cap, x_mm, base_mm in plant:
+        it = ITEMS[iid]
+        img, man = render_item(it, rng=np.random.default_rng(5), jitter=True)
+        clean0 = clean_ink_mm2(it, img)
+        img2 = stamp_line(it, img, text, fnt, w, cap, x_mm, base_mm)
+        out.append((iid, text, round(clean0, 2), round(clean_ink_mm2(it, img2), 1)))
+    row(g, "ITEM.clean: the true render has no stray ink (0 mm2) and each line drawn outside the manifest fails it (limit %.0f mm2): %s" % (CLEAN_MAX_MM2, "; ".join("%s + %s: %.0f mm2" % (i, t, c1) for i, t, c0, c1 in out)),
+        all(c0 <= CLEAN_MAX_MM2 and c1 > CLEAN_MAX_MM2 for i, t, c0, c1 in out), str(out[:3]))
+    # 12.8d a missing or unreadable manifest fails; it does not crash
+    it = ITEMS["K01"]
+    b = it["blocks"][0]
+    img, man = render_item(it, rng=np.random.default_rng(3), jitter=True)
+    bad_man = [None, [], [{"ch": "C"}], "x", [dict(man[b["id"]][0], em_mm="wide")]]
+    res = []
+    for m_ in bad_man:
+        try:
+            r = glyph_check_block(it, img, b, m_)
+            res.append(not r["ok"] and "manifest" in " ".join(r["fails"]))
+        except Exception as e:
+            res.append(False)
+    w_none = words_ok(it, None)[0]
+    w_miss = words_ok(it, {b2["id"]: man[b2["id"]] for b2 in it["blocks"][1:]})[0]
+    w_true = words_ok(it, man)[0]
+    wrong = {k: list(v) for k, v in man.items()}
+    wrong[b["id"]] = [dict(g_, ch=("X" if i == 3 else g_["ch"])) for i, g_ in enumerate(wrong[b["id"]])]
+    w_wrong = words_ok(it, wrong)[0]
+    sq_none = square_estimate(it, img, None)["angle"]
+    row(g, "a missing, empty or unreadable glyph manifest FAILS .glyphs (%d of %d bad manifests, no crash) and .words (none: %s, a block missing: %s, a wrong character: %s; the true one passes: %s); the square read falls back to the layout (angle %.2f)" % (sum(res), len(res), not w_none, not w_miss, not w_wrong, w_true, sq_none),
+        all(res) and not w_none and not w_miss and not w_wrong and w_true)
     # 12.9 the rule's own shapes are not read as lettering
     it = ITEMS["P01"]
     img, man = render_item(it, jitter=False)
@@ -1767,12 +2095,12 @@ def group12():
     row(g, "P01: with its two black rules drawn in, the reader (which draws the item's shapes out of a block's window) still passes ITEM.glyphs on the blocks beside them", True, "", reported=True)
     # 12.10 the contract is in the target
     rc = T["render_contract"]
-    row(g, "the render contract states: every texture square-on, a glyph manifest per block, the envelope, the gate numbers, the placed-street read", all(k in rc for k in ("texture", "glyph_manifest", "glyph_gate", "placed_street", "scale", "ink_mask")) and "SQUARE-ON" in rc["texture"]
-        and rc["glyph_gate"]["F_min"] == gl.F_MIN and rc["glyph_gate"]["sep_gate"] == gl.SEP_GATE and rc["glyph_gate"]["n_min_px"] == gl.N_MIN)
+    row(g, "the render contract states: every texture square-on, a glyph manifest per block (and that a missing or unreadable one FAILS), the envelope, the gate numbers, ITEM.clean, the placed-street read", all(k in rc for k in ("texture", "glyph_manifest", "glyph_gate", "placed_street", "scale", "ink_mask", "clean")) and "SQUARE-ON" in rc["texture"]
+        and "MISSING, EMPTY OR UNREADABLE" in rc["glyph_manifest"]["rule"] and "2 mm2" in rc["clean"] and rc["glyph_gate"]["F_min"] == gl.F_MIN and rc["glyph_gate"]["sep_gate"] == gl.SEP_GATE and rc["glyph_gate"]["n_min_px"] == gl.N_MIN)
     ck = {c["id"] for c in T["checks"]}
     need = ["ITEM.glyphs"]
     per_item = all((it["id"] + ".glyphs") in ck for it in T["items"] if any(b.get("glyph_check") and not b.get("ghost") for b in it["blocks"]))
-    row(g, "every item with a readable block has an .glyphs check and a .square check; every art item an ART.eye check; PLACE.built, G.page.placeholders, G.dates.age exist", per_item and all((it["id"] + ".square") in ck for it in T["items"] if it["blocks"] and not all(b.get("ghost") for b in it["blocks"]))
+    row(g, "every item with a readable block has an .glyphs, a .square and a .clean check; every art item an ART.eye check; PLACE.built, G.page.placeholders, G.dates.age exist", per_item and all((it["id"] + ".square") in ck and (it["id"] + ".clean") in ck for it in T["items"] if it["blocks"] and not all(b.get("ghost") for b in it["blocks"]))
         and all(("ART.eye." + it["id"]) in ck for it in T["items"] if it["art"]) and {"PLACE.built", "G.page.placeholders", "G.dates.age", "G.place.paper", "G.place.gable", "G.letting.mount", "G.glyph.scale"} <= ck)
     art_words = ("people", "hands", "faces", "lettering", "numerals", "crowns", "kiosk", "bottles", "glasses", "arcade")
     bad = [(it["id"], a["id"]) for it in T["items"] for a in it["art"] if not all(w in a["forbidden"] for w in art_words)]
@@ -1945,11 +2273,16 @@ def group13():
     # --- G.page.placeholders
     held_items = {it["id"] for it in T["items"] if it.get("held_names")}
     recomputed = {it["id"] for it in T["items"] if any(p["name"].lower() in (" ".join(b["text"] for b in it["blocks"] if b["role"] != "imprint" and b["cap_mm"] >= 10 and not b.get("ghost")).lower() + " | " + " | ".join(b["text"].lower() for b in it["blocks"] if b["role"] != "imprint" and b["cap_mm"] >= 10 and not b.get("ghost"))) for p in T["proposed_names"])}
-    row(g, "every item that carries a proposed name in a block of cap 10 mm or more is held (%d items), and no other is" % len(held_items), held_items == recomputed, str(sorted(held_items ^ recomputed)))
-    DEF = [p for p in PLS if not p.get("held_until_minted")]
-    row(g, "no default placement uses a held item (the default street carries no unminted name a viewer can read)", not [p["item"] for p in DEF if p["item"] in held_items], str([p["item"] for p in DEF if p["item"] in held_items]))
+    row(g, "every item that carries a proposed name in a block of cap 10 mm or more is held (%d items), and no other is by name" % len(held_items), held_items == recomputed, str(sorted(held_items ^ recomputed)))
+    stand = {it["id"] for it in T["items"] if it.get("stand_in_of")}
+    row(g, "the nameless stand-ins T01, T02, T03 and W01 (a quad titled 'A NEW COMEDY', a programme that names no film, a fight bill with no ring names and no hall) are HELD like their named twins and wait for the names the twin carries", stand == {"T01", "T02", "T03", "W01"}
+        and all(ITEMS[k]["held"] and ITEMS[k]["waits_for"] == ITEMS[ITEMS[k]["stand_in_of"]]["held_names"] and ITEMS[k]["waits_for"] for k in stand) and not any(ITEMS[k].get("held_names") for k in stand), str(sorted(stand)))
+    DEF = [p for p in PLS if not p.get("held")]
+    all_held_items = held_items | stand
+    row(g, "no default placement uses a held item or a stand-in (the default street carries no unminted name and no bill that names nothing)", not [p["item"] for p in DEF if p["item"] in all_held_items], str([p["item"] for p in DEF if p["item"] in all_held_items]))
     held_pl = [p for p in PLS if p.get("held_until_minted")]
-    row(g, "every placement of a held item is itself held_until_minted and lists the names (%d held placements)" % len(held_pl), all(p.get("held_until_minted") and p.get("names") for p in PLS if p["item"] in held_items) and len(held_pl) >= 6)
+    row(g, "every placement of a held item or stand-in is itself held_until_minted and lists the names (%d held placements)" % len(held_pl), all(p.get("held_until_minted") and p.get("held") and p.get("names") for p in PLS if p["item"] in all_held_items) and len(held_pl) >= 8
+        and all(p.get("held") for p in PLS if p.get("held_until_minted")))
     dec = (ROOT / "DECISIONS.md").read_text(encoding="utf-8", errors="replace")
     row(g, "G.page.placeholders on the default street's placed-decals manifest: no offence", not placeholders_offences(DEF, dec), str(placeholders_offences(DEF, dec)[:3]))
     off = placeholders_offences(DEF + held_pl[:1], dec)
@@ -1958,26 +2291,29 @@ def group13():
     one = [p for p in held_pl if p["item"] in ("L01", "L03")]
     row(g, "G.page.placeholders: the same placements pass once DECISIONS.md carries '- ... MINTED: ARMITAGE & STOBBS'", not placeholders_offences(one, fake) and bool(placeholders_offences(one, dec)))
     mp = {p["name"]: p for p in T["proposed_names"]}
-    row(g, "the proposed names are listed with the items that carry them and the items held (%d names)" % len(mp), all("items" in p and "held_items" in p for p in mp.values()) and "BIG TED HOLROYD" in mp and "THE HARPOONER" in mp and "TIGER JIM LARKIN" not in mp and "THE SEA WOLF" not in mp)
+    row(g, "the proposed names are listed with the items that carry them and the items held (%d names)" % len(mp), all("items" in p and "held_items" in p for p in mp.values()) and "TED HOLROYD" in mp and "BIG TED HOLROYD" not in mp and "THE HARPOONER" in mp and "TIGER JIM LARKIN" not in mp and "THE SEA WOLF" not in mp
+        and not any("BIG TED" in b["text"].upper() for it in T["items"] for b in it["blocks"]))
     FP = T["forbidden_patterns"]["real_marks"]
-    row(g, "LARKIN and SEA WOLF (and the real wrestlers, soap powders, cinema chains, campaigns the probe listed) are in forbidden_patterns.real_marks", all(w in FP for w in ("LARKIN", "SEA WOLF", "PERSIL", "ODEON", "MILITANT", "BIG DADDY", "ALL BRITAIN")))
+    row(g, "LARKIN, SEA WOLF and BIG TED (Play School's bear) (and the real wrestlers, soap powders, cinema chains, campaigns the probe listed) are in forbidden_patterns.real_marks", all(w in FP for w in ("LARKIN", "SEA WOLF", "BIG TED", "PERSIL", "ODEON", "MILITANT", "BIG DADDY", "ALL BRITAIN")))
+    fw = T["forbidden_patterns"]["alcohol_gambling_children"]
+    row(g, "the forbidden list also holds BABYSITTERS, INNS, PLAYGROUPS, TEENS, LAD, LASS and KIDDIES", all(w in fw for w in ("babysitters", "inns", "playgroups", "teens", "lad", "lass", "kiddies")))
     # --- G.dates.age
     bad = []
     n = 0
-    for p in DEF:
+    for p in PLS:
         it = ITEMS.get(p["item"])
         if it and it.get("dated"):
             n += 1
             ok, why = age_ok(it, p["age_class"])
             if not ok:
                 bad.append(why)
-    row(g, "G.dates.age: all %d placed dated items agree with the street date %s and their class" % (n, T["calendar"]["street_date"]), not bad and n >= 8, str(bad[:3]))
+    row(g, "G.dates.age: all %d placed dated items (held placements too) agree with the street date %s and their class" % (n, T["calendar"]["street_date"]), not bad and n >= 8, str(bad[:3]))
     t03 = dict(ITEMS["T03"])
     d01 = dict(ITEMS["D01"])
     row(g, "G.dates.age FAILS the first try's contradictions: T03 in class D for the week from 18 October, D01 in class C for 17 November, P01 in class D", (not age_ok(t03, "D")[0]) and (not age_ok(d01, "C")[0]) and (not age_ok(ITEMS["P01"], "D")[0]) and (not age_ok(ITEMS["H03"], "D")[0]))
     row(g, "G.dates.age passes the plan: T03 B, D01 B, J01 B, T02 A, T01 B, H03 A (a notice dated 26 October)", all(age_ok(ITEMS[i], c)[0] for i, c in (("T03", "B"), ("D01", "B"), ("J01", "B"), ("T02", "A"), ("T01", "B"), ("H03", "A"))))
-    sf = [(p["item"], p["age_class"]) for p in DEF if p["item"] in ("T03", "D01", "J01")]
-    row(g, "the placements give T03 B, D01 B and J01 B (everywhere)", all(c == "B" for _, c in sf) and len(sf) >= 4, str(sf))
+    sf = [(p["item"], p["age_class"]) for p in PLS if p["item"] in ("T03", "D01", "J01")]
+    row(g, "the placements give T03 B (held), D01 B and J01 B (everywhere)", all(c == "B" for _, c in sf) and len(sf) >= 4, str(sf))
     # --- G.mirror.cues
     cue_items = [it for it in T["items"] if it.get("mirror_cue")]
     bad = []
@@ -2031,16 +2367,24 @@ def group13():
     row(g, "L02 sits on the fascia with 50 mm clear above and below and its centre is the fascia target's (board x 2705 = street x 24.0)", abs(l2["z_bottom_m"] - 2.90) < 1e-9 and abs(l2["z_bottom_m"] + l2["h_m"] - 3.35) < 1e-9 and l2["street_x_m"] == 24.0 and lb["centre_on_board_mm"] == [2705.0, 275])
     # --- G.place.paper, G.place.gable
     base = paper_counts(PLS)
-    more = [dict(item="W01", surface="SF2", held_until_minted=False)] + list(PLS)
-    row(g, "G.place.paper: 8 fly-posters and 4 poll-tax bills; one more bill FAILS it", base == {"fly_poster": 8, "poll_tax_bill": 4} and paper_counts(more) != base, str(base))
+    more_f = list(PLS) + [dict(item="M01", surface="SF2", held=False)] * 4          # four more fly-posters: 9
+    more_p = list(PLS) + [dict(item="P03", surface="SF2", held=False)] * 2          # two more poll-tax bills: 5
+    more_ok = list(PLS) + [dict(item="M01", surface="SF2", held=False)]             # one more fly-poster: 6, still inside the plan
+    row(g, "G.place.paper: AT MOST 8 fly-posters and 4 poll-tax bills (the street carries %s); a ninth fly-poster FAILS, a fifth poll-tax bill FAILS, a sixth fly-poster still passes" % base,
+        paper_ok(base) and not paper_ok(paper_counts(more_f)) and not paper_ok(paper_counts(more_p)) and paper_ok(paper_counts(more_ok)), str(base))
     ok, why = gable_ok(PLS)
-    mut = [dict(p) for p in PLS]
-    for p in mut:
-        if p["item"] == "P01" and p["surface"] == "SF1" and not p.get("held_until_minted"):
-            p["u_m"] = 0.40
-    ok2, why2 = gable_ok(mut)
-    mut2 = [dict(p) for p in PLS] + [dict(item="P05", surface="SF1", u_m=3.0, z_bottom_m=1.0, w_m=0.095, h_m=0.06, layer=3, age_class="B")]
-    row(g, "G.place.gable: the three bills clear the downpipe; moved to u 0.40 (inside the 150 mm) FAILS", ok and not ok2, why2[:120])
+    bill = dict(item="P03", surface="SF1", u_m=0.40, z_bottom_m=1.0, w_m=0.508, h_m=0.762, layer=0, age_class="B")
+    plate = dict(item="S01n", surface="SF7", host="SF1", u_m=0.8, z_bottom_m=2.5, w_m=0.9, h_m=0.3, layer=0, age_class="D")
+    ok2, why2 = gable_ok(list(PLS) + [bill])
+    ok3, why3 = gable_ok(list(PLS) + [plate])
+    unheld = [dict(p, held=False, held_until_minted=False) if p.get("proof_wall") and not p.get("alt_of") else p for p in PLS]
+    ok4, why4 = gable_ok(unheld)
+    altok, altwhy = gable_alt_ok(PLS)
+    mut = [dict(p, u_m=0.40) if (p["item"] == "P01" and p["surface"] == "SF1" and not p.get("alt_of")) else p for p in PLS]
+    altbad, _ = gable_alt_ok(mut)
+    row(g, "G.place.gable: the gable is bare (no paper, no plate on SF1 in the default street) and the downpipe, render patch and damp foot stand; a bill on it FAILS, a plate on it FAILS, the five held proof-wall placements made default FAIL (%s)" % why4[:70],
+        ok and gable_fixtures_ok() and not ok2 and not ok3 and not ok4, why2[:100])
+    row(g, "G.place.gable (held proof wall): if ever used it keeps 150 mm clear of the downpipe; the held P01 moved to u 0.40 (inside the 150 mm) FAILS", altok and not altbad, altwhy)
     # --- plates
     pl = [it for it in T["items"] if it.get("name_plate")]
     q = [it for it in pl if it["id"] == "S01n"][0]
@@ -2073,7 +2417,7 @@ def group13():
         (s1["format"]["w_mm"], s1["format"]["h_mm"]) == (1016, 90) and s1["stock"] == "white_poster" and s1["process"] == "letterpress_1col"
         and [b["text"] for b in s1["blocks"]] == ["THE TIVOLI", "FROM THURSDAY 18 OCTOBER"] and [b["text"] for b in s2["blocks"]][1] == "FROM THURSDAY 25 OCTOBER" and blank)
     # --- PLACE.built
-    cases = [("P01", -0.6), ("T02", -0.4), ("L02", -1.5)] if not QUICK else [("P01", -0.6)]
+    cases = [("P03", 1.2), ("M01", 0.8), ("L02", -1.5)] if not QUICK else [("P03", 1.2)]
     t0 = time.time()
     for iid, rot in cases:
         err, ang, v, ok = placed_decal_test(ITEMS[iid], rot)
@@ -2086,13 +2430,7 @@ def group13():
     err, ang, v, ok = placed_decal_test(ITEMS[iid], rot, offset_mm=(40.0, 0.0))
     row(g, "PLACE.built: a decal 40 mm off its place FAILS the 20 mm limit (%.0f mm)" % err, err > 20)
     row(g, "PLACE.built read in %.0f s" % (time.time() - t0), True, "", reported=True)
-    # --- ITEM.square on true renders of a few sheets
-    for iid in (["P01", "K01"] if not QUICK else ["P01"]):
-        it = ITEMS[iid]
-        img, man = render_item(it, rng=np.random.default_rng(2), jitter=True)
-        est, f = estimate_rotation(it, img)
-        lim = 0.8 if all(b.get("hand") for b in it["blocks"]) else 0.3
-        row(g, "ITEM.square: the true render of %s is found turned %.2f degrees (limit %.1f)" % (iid, est, lim), abs(est) <= lim)
+    row(g, "the four fixes of the second review (by Jafar's ruling of 9 October, not re-reviewed) are recorded in fixes_after_second_review", [d["fix"] for d in T["fixes_after_second_review"]] == [1, 2, 3, 4])
     # --- fonts decisions
     fd = {d["font"]: d for d in T["font_decisions"]}
     row(g, "the fonts off the asset plan's table are recorded with a DECISIONS line each (Libre Franklin, Patrick Hand) and the two others are removed", "Libre Franklin" in fd and "Patrick Hand" in fd and fd["Libre Franklin"]["decisions_line"] and fd["Patrick Hand"]["decisions_line"] and "libre-baskerville" not in T["fonts"] and "josefin-sans" not in T["fonts"])

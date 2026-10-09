@@ -573,11 +573,6 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         B.height[r0:r1, c0:c1] += 0.35 * a
         info["vinyl_lift"] = dict(rule="lower", x_mm=[x1 - 30, x1])
 
-    # the chandler's lower edge: salt bloom, the board whiter near the foot
-    if sid == "chandler":
-        prof = np.exp(-np.arange(H_MM)[::-1] / 28.0).astype(np.float32)[:, None] * (0.6 + 0.4 * np.clip(B.noise("band"), -1, 1))
-        B.rgb += (np.array([190.0, 194.0, 200.0])[None, None, :] - B.rgb) * (0.10 * np.clip(prof, 0, 1))[..., None]
-
     chalk(B, s)
 
     # ---- 7. the planted moulding, in the height map only (the outer 24 mm, +0.6 mm, a 4 mm chamfer)

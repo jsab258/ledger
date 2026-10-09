@@ -281,21 +281,22 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
         pmx_c = ndi.binary_opening(pmx, structure=np.ones((3, 3), bool))
         # where the paint of a letter is gone INSIDE the letter's own reference shape, next to paint of the letter that is left, the letter has not moved: those pixels
         # stand for it (nothing outside the shape does)
-        worn = lossw_strict & tm & ndi.binary_dilation(pm_c, iterations=20)
+        worn = lossw_strict & tm & ndi.binary_dilation(pm_c, iterations=12)
         pm_pos = ndi.binary_closing(pm_c | worn, structure=np.ones((3, 3), bool), iterations=2)
         pmx_pos = ndi.binary_closing(pmx_c | worn, structure=np.ones((3, 3), bool), iterations=2)
-        bb = pc.ink_bbox_mm(pmx_pos)
-        if bb is None:
+        bb = pc.ink_bbox_mm(pmx_pos)            # vertical readings (bottom, cap, fit): worn pixels stand for the letter
+        bbx = pc.ink_bbox_mm(pmx_c)             # horizontal readings (x, width): only the paint that is there, so a letter shifted along the board is found shifted
+        if bb is None or bbx is None:
             for k in ("pos", "mask", "width", "face", "contrast", "cap", "fit"):
                 out.append(R(f"{bid}.{k}", False, None, None, "no pixels of the face colour found"))
             continue
         x0, y0, x1, y1 = b["ink_box_mm"]
         if b["anchor"] == "centre":
-            got, want = (bb[0] + bb[2]) / 2.0, (x0 + x1) / 2.0
+            got, want = (bbx[0] + bbx[2]) / 2.0, (x0 + x1) / 2.0
         elif b["anchor"] == "left":
-            got, want = bb[0], x0
+            got, want = bbx[0], x0
         else:
-            got, want = bb[2], x1
+            got, want = bbx[2], x1
         gb = flat_glyphs(pm_pos, b['cap_mm'], bad=None)
         if gb:
             base_got = float(H_MM - np.median([p[0] for p in gb]))
@@ -308,16 +309,23 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
             base_ok = abs(base_got - y0) <= 3.0
             base_note = "A4: no flat-bottomed glyph, the pixel ink bottom against ink_box_mm[1]"
         out.append(R(f"{bid}.pos", abs(got - want) <= 15 and base_ok, dict(x_mm=round(got, 1), want_x=round(want, 1), bottom_mm=round(base_got, 1), want_bottom=base_want), note=base_note))
-        wpx = bb[2] - bb[0]
+        wpx = bbx[2] - bbx[0]
         wtol = max(6.0, 0.04 * b["width_mm"]) + (2 * b["embolden_mm"] if b.get("embolden_mm") else 0)
         out.append(R(f"{bid}.width", abs(wpx - b["width_mm"]) <= wtol, round(wpx, 1), b["width_mm"], f"tolerance {round(wtol, 1)}"))
         # G10 under the amended tolerance
         tol = 3.5 if b.get("jitter") else 1.0
         wd = (max(0, win_of(b, 12, 12)[0]), min(H_MM, win_of(b, 12, 12)[1]), max(0, win_of(b, 12, 48)[2]), min(W_MM, win_of(b, 12, 48)[3]))
-        ok10, v10 = g10(crop(tm, wd), crop(fm, wd), crop(pm, wd), tol)
+        # G10 reads the paint that is THERE: where the letter's paint has worn away (the substrate showing) both masks are left out, so wear is read by the age checks
+        # and not twice; a letter that has lost more than 40 per cent of its area fails (it must stay legible)
+        valid = ~ndi.binary_dilation(lossw_strict, iterations=1)
+        tm_l = tm & valid
+        lost_share = 1.0 - float(tm_l.sum()) / max(float(tm.sum()), 1.0)
+        ok10, v10 = g10(crop(tm_l, wd), crop(fm & valid, wd), crop(pm & valid, wd), tol)
+        v10 = dict(v10, worn_share_of_the_letter=round(lost_share, 3))
+        ok10 = ok10 and lost_share <= 0.40
         out.append(R(f"{bid}.mask", ok10, v10, dict(f_min=0.9, flipped_lower_by=0.15),
                      note="G10 under A3: 3.5 mm Euclidean for hand-painted letters, 1 mm for vinyl, applied and glass; the mirror margin read at min(tolerance, 2.5 mm)", reads="pixels+font"))
-        er = ndi.binary_erosion(pm, iterations=2)
+        er = ndi.binary_erosion(pm, iterations=2) & ~ndi.binary_dilation(lossw_strict, iterations=1)
         med = np.median(img[er].astype(float), axis=0) if er.any() else None
         if med is not None:
             dd = float(fc.dE(med, np.array(b["face_1990"], float)))
@@ -332,7 +340,7 @@ def block_results(T, s, d, fonts_dir=None, want_shade=True):
                 continue
             ox0, oy0, ox1, oy1 = ob["effects_box_mm"]
             others[max(0, H_MM - int(oy1 + 2) - 1):H_MM - int(oy0 - 2), max(0, int(ox0 - 2)):int(ox1 + 3)] = True
-        rr_ = ring & ~others
+        rr_ = ring & ~others & ~ndi.binary_dilation(lossw_strict, iterations=2)
         if b.get("region_mm"):
             rx0, ry0, rx1, ry1 = b["region_mm"]
             reg = np.zeros((H_MM, W_MM), bool)
@@ -1413,6 +1421,40 @@ def check_timber(T, s, d, rec):
              dict(grain_ratio_min=5.0, seams=[2, 3], islands=[8, 34]), "wood, not flecks: the gradient across the grain at least five times the gradient along it on the free ground; the seams between three planks are thin dark lines across nearly every column (outside the painted-out patch), 2 to 4 found, each drawn one at least 8 L* darker than the rows beside it; 10 to 30 islands of old paint (8 to 34 counted: the weather bites them), each 40 mm or longer")
 
 
+def check_grime(T, s, d, rec):
+    """try 2 (fault 1): grime builds up where the board is damp, in the same places the paint lets go: the ground is darker down the lower edge than in the open middle, and
+    a little darker at the ends. Read on the free ground (no letters, flakes or wear marks)."""
+    sid = s["id"]
+    if not rec.get("loss"):
+        return None
+    if any(sh["role"] in ("box_frame", "slab_edge") for sh in s["shapes"]):
+        return None                              # a box sign's acrylic and a glass front are not weathered timber: their ring and glass have their own readings
+    L = lab_img(d.img)[..., 0]
+    zone = free_zone(T, s, d, pad=6)
+    if rec.get("loss"):
+        zone &= ~loss_known(T, s, d, rec)
+    zone &= ~ndi.binary_dilation(d.wear.max(axis=2) > 12, iterations=8) if d.wear is not None else zone
+    zone = ndi.binary_erosion(zone, iterations=2)
+    rows = np.arange(H_MM)[:, None]
+    cols = np.arange(W_MM)[None, :]
+    bottom = zone & (rows >= H_MM - 100) & (rows < H_MM - 22)
+    mid = zone & (rows >= 150) & (rows < 400) & (cols > 700) & (cols < W_MM - 700)
+    left = zone & (cols < 200) & (rows >= 120) & (rows < 430)
+    right = zone & (cols >= W_MM - 200) & (rows >= 120) & (rows < 430)
+    if bottom.sum() < 3000 or mid.sum() < 3000:
+        return None
+    mb, mm_ = float(np.median(L[bottom])), float(np.median(L[mid]))
+    ends = []
+    for m in (left, right):
+        if m.sum() >= 1500:
+            ends.append(mm_ - float(np.median(L[m])))
+    d_bottom = mm_ - mb
+    d_ends = float(np.mean(ends)) if ends else None
+    ok = d_bottom >= 1.5 and (d_ends is None or d_ends >= -0.5)
+    return R(f"{sid}.grime", ok, dict(bottom_darker_by_L=round(d_bottom, 2), ends_darker_by_L=None if d_ends is None else round(d_ends, 2)), dict(bottom_min=1.5, ends_min=-0.5),
+             "median L* of the free ground 22 to 100 mm above the lower edge against the open middle, and of the 200 mm at each end against it (the ends need be no lighter than the middle by more than 0.5): dirt builds up where the board is damp, most down the lower edge")
+
+
 def readable_ghost(T, s, d, gb):
     """how well a given word can be read in the board's own contrast, along the colour direction the target's ghost differs from the ground by: the mean of the
     high-pass deviation inside the word's strokes minus the ring round them, and the normalised correlation of the word's mask with that deviation over its box"""
@@ -1562,6 +1604,9 @@ def board_checks(T, s, d, fast=False):
         lw = check_letters_wear(T, s, d, d.rec, pat[1], pat[2])
         if lw:
             out.append(lw)
+    gr = check_grime(T, s, d, d.rec) if d.rec.get("loss") is not None else None
+    if gr:
+        out.append(gr)
     tb = check_timber(T, s, d, d.rec)
     if tb:
         out.append(tb)
@@ -1708,6 +1753,8 @@ def negative_controls(T, setdir, man, only_ids=None):
         fz = ndi.binary_erosion(free_zone(T, s, d, pad=14), iterations=16)
         if d.wear is not None:
             fz &= ~ndi.binary_dilation(d.wear.max(axis=2) > 12, iterations=10)
+        if rec.get("loss"):
+            fz &= ~ndi.binary_dilation(loss_known(T, s, d, rec), iterations=18)        # a clear patch of ground, not on a flake and not beside one
         dist = ndi.distance_transform_edt(fz)
         if rec["id"] == "empty_unit":
             # the unit's dark flaked timber can carry no detectable word; its plain place for one is the painted-out patch, which G14 reads
@@ -1985,7 +2032,7 @@ def aggregate_G(res):
     roll("G15", lambda i: i.endswith(".mount") or (i.endswith(".faces") and not i.startswith("neg")), "the four hanging signs: mount numbers and both faces", reads="geometry+pixels")
     roll("G16", lambda i: ".glass." in i and not i.startswith("neg"), "every glass lettering row not already in the game", reads="pixels+font")
     roll("G17", lambda i: i.endswith(".geometry") or i.endswith("_box") or i.endswith("_panel") or i == "mickeys.no_letters_in_texture", "Mickey's letters, the two boxes and the tea panel, and no gilt in Mickey's texture", reads="geometry")
-    roll("AGE", lambda i: i.endswith((".age_pattern", ".letters_wear", ".wear_placement", ".timber", ".ghost_name.ghost")), "try 2: the ageing is a pattern (joined strips, heavy at the foot and ends), the letters wear with the ground, wear marks stand on edges and fixings, the empty unit is wood, Mickey's has no old name")
+    roll("AGE", lambda i: i.endswith((".age_pattern", ".letters_wear", ".wear_placement", ".timber", ".grime", ".ghost_name.ghost")), "try 2: the ageing is a pattern (joined strips, heavy at the foot and ends), the letters wear with the ground, wear marks stand on edges and fixings, the empty unit is wood, Mickey's has no old name")
     roll("G5", lambda i: i.endswith(".G5"), "no tiling period")
     roll("G6", lambda i: i.endswith(".G6"), "grain direction")
     return out

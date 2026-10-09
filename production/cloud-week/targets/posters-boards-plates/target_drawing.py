@@ -265,7 +265,7 @@ def elevation(surface_id, placements, items, out, scale_mm_per_px=4):
                 d.rectangle([x0 - cl, 0, x0 + f["diameter_mm"] / scale_mm_per_px + cl, H], outline=(255, 255, 255))
             if f["id"] == "damp_foot":
                 d.rectangle([0, H - 0.45 * k, W, H], fill=(80, 64, 56))
-    pls = [p for p in placements if not p.get("held_until_minted") and (p["surface"] == surface_id or (surface_id == "SF1" and p.get("host") == "SF1"))]
+    pls = [p for p in placements if not p.get("held") and (p["surface"] == surface_id or (surface_id == "SF1" and p.get("host") == "SF1"))]
     for p in sorted(pls, key=lambda p: p["layer"]):
         if p.get("u_m") is None:
             continue
@@ -284,6 +284,8 @@ def elevation(surface_id, placements, items, out, scale_mm_per_px=4):
     if surface_id == "SF1":
         z = S["paste_zone"]["z"]
         d.rectangle([S["paste_zone"]["u"][0] * k, H - z[1] * k, min(W - 1, S["paste_zone"]["u"][1] * k), H - z[0] * k], outline=(255, 255, 0))
+        if not pls:
+            d.text((S["paste_zone"]["u"][0] * k + 8, H - (z[0] + z[1]) / 2 * k), "BARE: no paper, no plate (the Hook sheet's gable); the proof wall is held", fill=(255, 255, 255))
     img.save(out)
     return img
 
@@ -310,7 +312,7 @@ def elevation_piers(placements, items, out, scale_mm_per_px=8):
         d.rectangle([(p["x0"] - x0m) * k, 0, (p["x1"] - x0m) * k, H], outline=(255, 255, 0))
         d.text(((p["x0"] - x0m) * k + 3, H - 14), p["id"], fill=(255, 255, 255))
     for p in placements:
-        if p.get("held_until_minted") or p["surface"] not in ("WEST_PIER", "SF9", "SF7") or p.get("street_x_m") is None:
+        if p.get("held") or p["surface"] not in ("WEST_PIER", "SF9", "SF7") or p.get("street_x_m") is None:
             continue
         w = p["w_m"] * k
         xc = (p["street_x_m"] - x0m) * k
@@ -329,12 +331,12 @@ def elevation_piers(placements, items, out, scale_mm_per_px=8):
 
 
 def elevation_plates(placements, items, out, scale_mm_per_px=2):
-    """Where the name plates stand: the west corner pier (street x 19.92 to 21.0, brick to 3.12 m) and the quay gable's first 2.6 m; the yard entrance (x 21 to 24) carries none. z 2.0 to 3.4 m."""
+    """Where the name plates stand: the west corner pier (street x 19.92 to 21.0, brick to 3.12 m) only; the quay gable's first 2.6 m is shown to prove it bare; the yard entrance (x 21 to 24) carries none. z 2.0 to 3.4 m."""
     k = 1000.0 / scale_mm_per_px
     by = {i["id"]: i for i in items}
     pal = T["palette"]
     panels = []
-    for title, x0m, x1m, key in (("west corner pier, street x 19.92 to 21.0", 19.6, 21.3, "street"), ("quay gable, u 0 to 2.6 m", 0.0, 2.6, "u")):
+    for title, x0m, x1m, key in (("west corner pier, street x 19.92 to 21.0", 19.6, 21.3, "street"), ("quay gable, u 0 to 2.6 m: NO plate (the Hook sheet shows none; a second plate at u 1.0 is held)", 0.0, 2.6, "u")):
         W, H = int((x1m - x0m) * k), int(1.5 * k)
         img = Image.new("RGB", (W, H), (150, 110, 96))
         d = ImageDraw.Draw(img)
@@ -343,7 +345,7 @@ def elevation_plates(placements, items, out, scale_mm_per_px=2):
             d.rectangle([(19.92 - x0m) * k, int(0.4 * k), (21.0 - x0m) * k, H], outline=(255, 255, 0))
             d.line([(21.0 - x0m) * k, 0, (21.0 - x0m) * k, H], fill=(255, 255, 255))
         for p in placements:
-            if p.get("held_until_minted") or p["surface"] != "SF7":
+            if p.get("held") or p["surface"] != "SF7":
                 continue
             if key == "street" and p.get("street_x_m") is not None:
                 xc = (p["street_x_m"] - x0m) * k

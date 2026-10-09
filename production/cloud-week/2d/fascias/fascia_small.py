@@ -287,7 +287,7 @@ def render_sign_face(T, sign, face_label, seed, lit_off=False):
     # ---- wear: from the edges, not in the open field
     if sid == "steam_laundry_box":
         # acrylic: it yellows at the edges, the grime gathers at the foot, dead flies lie along the foot inside, a weep from the top seal
-        fa.grime_film(B, fa.MODES["hanging"], dict(grime_film=0.16), [], amp=1.0)
+        fa.grime_film(B, fa.MODES["hanging"], dict(grime_film=0.08), [], amp=1.0)
         rows = np.arange(H, dtype=np.float32)[:, None]
         cols = np.arange(W, dtype=np.float32)[None, :]
         edge = np.minimum(np.minimum(rows - frame, H - frame - rows), np.minimum(cols - frame, W - frame - cols))
@@ -321,7 +321,7 @@ def render_sign_face(T, sign, face_label, seed, lit_off=False):
         prim, wood = ((150, 144, 122), (112, 98, 82)) if sid == "ironmonger_hanging_board" else ((140, 146, 150), (118, 104, 90))
         frac = 0.04 if sid == "ironmonger_hanging_board" else 0.035
         chain_x = [W * 0.14, W * 0.86] if sid == "chandler_hanging_board" else [W * 0.18, W * 0.82]
-        drips, info = age_small(B, "hanging", frac, 0.16, anchors=chain_x, drips=(2, (40, 120)), prim=prim, wood=wood, crack=0.15 if sid == "ironmonger_hanging_board" else 0.10,
+        drips, info = age_small(B, "hanging", frac, 0.08, anchors=chain_x, drips=(2, (40, 120)), prim=prim, wood=wood, crack=0.15 if sid == "ironmonger_hanging_board" else 0.10,
                                 scale=0.25, dark=not light)
         rec["wear"] = dict(runs=info["drips"], loss_fraction_drawn=info.get("loss_drawn_fraction"), substrate_primer=info.get("substrate_primer"), substrate_wood=info.get("substrate_wood"))
     return S, rec
@@ -366,7 +366,7 @@ def render_ball(T, k, seed):
     sm = np.exp(-((rows - H / 2.0) / 1.2) ** 2).astype(np.float32)
     B.rgb *= (1.0 - 0.11 * sm)[..., None]
     B.height += -0.2 * sm
-    fa.grime_film(B, fa.MODES["hanging"], dict(grime_film=0.10), [], amp=1.0)
+    fa.grime_film(B, fa.MODES["hanging"], dict(grime_film=0.05), [], amp=1.0)
     return S, dict(size_mm=[W, H], note="equirectangular: u round the ball, v pole to pole; one texture per ball, each with its own seed")
 
 
@@ -657,7 +657,7 @@ def render_letting_board(T, seed):
     allowed_l[:, :3] = allowed_l[:, -3:] = False
     tb = b["effects_box_mm"]
     allowed_l[max(0, H - int(tb[3]) - 6):min(H, H - int(tb[1]) + 6), max(0, int(tb[0]) - 6):min(W, int(tb[2]) + 6)] = False      # the vinyl letters are stuck fast
-    drips, winfo = age_small(B, "hanging", 0.035, 0.16, anchors=[W * 0.25, W * 0.75], drips=(1, (50, 130)), prim=(190, 184, 166), wood=(132, 118, 100), crack=0.0,
+    drips, winfo = age_small(B, "hanging", 0.035, 0.08, anchors=[W * 0.25, W * 0.75], drips=(1, (50, 130)), prim=(190, 184, 166), wood=(132, 118, 100), crack=0.0,
                              scale=0.3, allowed=allowed_l)
     lower = [heads[2], heads[3]]
     rl = fw.place_rust(B, [(x, y - 7) for x, y in lower], [float(r.uniform(38, 52)) for _ in lower], r, True)

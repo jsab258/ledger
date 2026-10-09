@@ -37,6 +37,9 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.dont_write_bytecode = True
 import glyphlib as gl
+SQUARE_TOL_DEG = 0.3          # ITEM.square: ONE tolerance for every item, print or hand-lettered (self_check.SQUARE_TOL_DEG is the same number; PLACE.built uses it too)
+SQUARE_MARGIN = 0.02          # the estimate reports 0 unless F at the best angle beats F at 0 degrees by this much
+CLEAN_MAX_MM2 = 2.0           # ITEM.clean: the area of ink outside every place lettering may stand
 ROOT = HERE.parents[3]
 SCRATCH_FONTS = "/tmp/claude-0/-home-user-ledger/6ce8dcad-c1af-55c1-8a8d-c9e781414d13/scratchpad/posters/fonts"
 FONT_DIR = os.environ.get("PBP_FONTS", SCRATCH_FONTS)
@@ -525,7 +528,7 @@ PROPOSED = [
     dict(name="ARMITAGE & STOBBS", what="the estate agent on the named letting boards L01 and L03 (the brief asks for a proposed name, marked 'proposed, not minted')", mint="town task"),
     dict(name="THE SANDERLING TRIO", what="the dance band on the named chapel-hall dance bill", mint="town task"),
     dict(name="THE HARPOONER", what="a ring name on the named wrestling bill (renamed from the first try's THE SEA WOLF, which is Jack London's novel; not checked against real lists: the network is closed)", mint="town task"),
-    dict(name="BIG TED HOLROYD", what="a ring name on the named wrestling bill (renamed from TIGER JIM LARKIN, which carried a real dock-union leader's name; not checked against real lists)", mint="town task"),
+    dict(name="TED HOLROYD", what="a ring name on the named wrestling bill (TIGER JIM LARKIN carried a real dock-union leader's name; the first rewrite, BIG TED HOLROYD, is gone too: \"Big Ted\" is the teddy bear of the BBC children's programme Play School, a real programme's character and a child-coded name; not checked against real lists)", mint="town task"),
     dict(name="SPANNER SMITH", what="a ring name on the named wrestling bill (renamed from MAD MAURICE; not checked against real lists)", mint="town task"),
     dict(name="THE STEVEDORE", what="a ring name on the named wrestling bill (renamed from THE BARON, a real television series' title; not checked against real lists)", mint="town task"),
     dict(name="THE FOURTH WITNESS", what="an invented film at the Tivoli, on the named bills T01 and T03 (a film of that name was not checkable: the network is closed)", mint="town task"),
@@ -539,6 +542,14 @@ PROPOSED = [
     dict(name="THE DRILL HALL", what="the hall where the boxing and the named wrestling bills are held (a generic building, no street given)", mint="town task"),
 ]
 HELD_CAP_MM = 10.0     # a proposed name in a block of this cap or more is READABLE from across the street (about 8 px a capital at 8 m): the item is held until the town mints it
+
+
+# The NAMELESS bills (second review, fault 3): a Tivoli quad whose title is "A NEW COMEDY", a programme that names no film, a wrestling bill that names no ring and no hall read as
+# placeholders by another name. They are held like their named twins and built only once the town mints the names the twin carries. (D01's LIVE MUSIC and the poll-tax bills'
+# STAND TOGETHER read naturally and stay.)
+STAND_INS = {"T01": "T01-named", "T02": "T02-named", "T03": "T03-named", "W01": "W01-named"}
+STAND_IN_WHY = ("a bill that names no film, no hall and no ring names reads as a placeholder by another name (second review, fault 3; the 3 October ruling keeps placeholders off his page): "
+                "held with its named twin and built only once the town mints the names the twin carries")
 
 
 def held_names(item):
@@ -786,7 +797,7 @@ def bill_wrestling(named=False):
     S(it, "rule_a", "rule", box=[40, y + 6, 468, y + 9.4], fill="black")
     if named:
         mid = [L("THE HARPOONER", OSW, 700, fitw=380, gap=4, ink="black"), L("v", OSI, 400, 14, gap=4, ink="red"),
-               L("SPANNER SMITH", OSW, 700, fitw=380, gap=18, ink="black"), L("BIG TED HOLROYD", OSW, 700, fitw=380, gap=4, ink="black"),
+               L("SPANNER SMITH", OSW, 700, fitw=380, gap=18, ink="black"), L("TED HOLROYD", OSW, 700, fitw=295, gap=4, ink="black"),
                L("v", OSI, 400, 14, gap=4, ink="red"), L("THE STEVEDORE", OSW, 700, fitw=300, gap=14, ink="black")]
     else:
         mid = [L("HEAVYWEIGHT CONTEST", OSW, 700, fitw=380, gap=14, ink="black"), L("TAG TEAM CONTEST", OSW, 700, fitw=380, gap=16, ink="black")]
@@ -1695,9 +1706,10 @@ def make_cases():
 #    Left and right are the VIEWER'S, in the game (the fascia target's rule: low street x is on the viewer's RIGHT looking
 #    at the east parade, on the viewer's LEFT looking at the west block).
 #
-#    THE AMOUNT OF PAPER is the asset plan's, no more (note 4, table A5, Quay Street, the proof view): 8 fly-posters and 4 poll-tax bills. The quay gable
-#    keeps what the Hook sheet shows (a black downpipe 0.3 m from the front corner, a render patch high up, a dark damp foot) and carries ONE LAYER OF THREE
-#    BILLS, the plan's proof wall ("three bills from three templates"); NOTHING MORE until he has approved that sample in the assembled game (CLAUDE.md).
+#    THE AMOUNT OF PAPER is the asset plan's, AT MOST (note 4, table A5, Quay Street, the proof view): 8 fly-posters and 4 poll-tax bills. The default street carries 5 and 3. The quay gable
+#    is BARE, as the Hook sheet shows it (a black downpipe 0.3 m from the front corner, a render patch high up, a dark damp foot): no paper and no plate on it (second review, accepted by Jafar's
+#    ruling of 9 October). The plan's proof wall (three bills in one layer) is HELD, for the case that he chooses the gable for the sample; the empty unit's glass SF2 (one layer of six sheets)
+#    is the proof sample in the default street; NOTHING MORE until he has approved a sample in the assembled game (CLAUDE.md).
 # --------------------------------------------------------------------------------------------
 BAY_DOOR = 0.419      # side door 0.838 / 2
 BAY_WIN = 0.425       # window 0.85 / 2
@@ -1734,7 +1746,7 @@ SURFACES = {
                                source="the Hook sheet's gable: a black downpipe about 0.2 to 0.4 m from the front corner, full height (TARGET-REVIEW fault 4, read off the sheet by the reviewer)"),
                           dict(id="render_patch", kind="a patch of pale render high up", z_m=[3.6, 5.0], note="above the paste zone: nothing pasted there"),
                           dict(id="damp_foot", kind="dark damp foot", z_m=[0.0, 0.45], note="below the paste zone: nothing pasted there")],
-                sheet_note="The Hook sheet's gable is bare old brick. The plan's proof wall is the one place paper goes on it, in ONE layer at z 1.00 to 1.76, u 0.70 to 2.92; everything else stays as the sheet has it. The three placements carry proof_wall = true: dropping them leaves the gable exactly as the sheet shows it and breaks nothing else."),
+                sheet_note="The Hook sheet's gable is bare old brick, a downpipe, a render patch and a damp foot, and it is the biggest near surface in the hook frame: THE GABLE IS BARE (second review, accepted by Jafar's ruling of 9 October). No paper and no plate on it in the default street. The plan's proof wall (P01, W01, T02 with its strip T02s, in ONE layer at z 1.00 to 1.76, u 0.70 to 2.92, and a second QUAY STREET plate at u 1.0) is kept as HELD placements flagged proof_wall = true, used only if he chooses the gable for the sample; the empty unit's glass SF2 is the proof sample in the default street (the asset plan allows 'the nearest gable, or the empty unit's stallriser')."),
     "SF2": dict(id="SF2", name="the empty unit's whitened display glass (bay 3, east, number 7, street x 21 to 27)", plane="the street face of the glazing, set back 0.12 m",
                 frame="u in metres from the glass's viewer's-LEFT edge (the high-x end, street x 26.65), z up from the pavement; glass 3.562 m wide, z 0.60 to 2.40",
                 u_range=[0.0, 3.562], z_range=[0.60, 2.40], glass_street_x=[23.088, 26.65], note="the recipe's fx counts from the viewer's RIGHT: u = 3.562 x (1 - fx)"),
@@ -1742,7 +1754,7 @@ SURFACES = {
                 note="SCENE-SLOTS: every 20 m, alternate sides, first at 8 m, 0.6 m back from the kerb; a bill wraps the shaft, so the middle 0.17 m of an A3 shows face-on"),
     "SF5": dict(id="SF5", name="the empty unit's fascia", plane="fascia face, 0.12 m proud", frame="centre street x and z", fascia_z=[2.85, 3.40], bay_centre_street_x=24.0),
     "SF6": dict(id="SF6", name="first-floor brick above the empty unit's cornice", plane="brick face", frame="centre street x and z", z_range=[3.55, 4.3], window_gap_street_x=[22.93, 25.07]),
-    "SF7": dict(id="SF7", name="name-plate walls", note="the west corner pier (street x 19.92 to 21.0, brick to 3.12 m) and the quay gable at u 1.0; the yard entrance (street x 21 to 24, the dropped kerb at 22.5) carries NO plate: vignette-scene.json and atlas-01 call it the yard entrance and canon does not name it"),
+    "SF7": dict(id="SF7", name="name-plate walls", note="the west corner pier (street x 19.92 to 21.0, brick to 3.12 m): the street's one QUAY STREET plate (the quay gable carries none: the Hook sheet shows none there; a second plate at u 1.0 is a HELD placement); the yard entrance (street x 21 to 24, the dropped kerb at 22.5) carries NO plate: vignette-scene.json and atlas-01 call it the yard entrance and canon does not name it"),
     "SF8": dict(id="SF8", name="the quay-edge post", plane="a 100 mm post at the quay end, street x about -0.6", frame="z up the post", note="no quay geometry in SCENE-SLOTS: proposed, the builder places the post"),
     "SF9": dict(id="SF9", name="the plain west row's bay-1 window", plane="the glass of the cottage sash at street x 12.3 (centre), 0.85 m wide, sill 0.9 m", frame="street x of the window's centre, z up from the pavement",
                 window_street_x=[11.875, 12.725], z_range=[0.9, 2.4], note="bay 1 of the plain row (street x 9 to 15): door at 10.5, windows at 12.3 and 14.1 (terrace-front.py _plain_ground; the scene file's poster slot at x 11.4 is the pier between)"),
@@ -1778,12 +1790,14 @@ def plan_all(items_by_id):
         P.append(d)
         return d
 
-    # ---- the quay gable SF1: one layer of three bills (the plan's proof), bottoms at z 1.00; the plate above
-    add("P01", "SF1", "B", 1.00, rot=-0.6, u=0.70, proof_wall=True, note="poll tax; the meeting of Thursday 25 October is four days gone on the street date (a stale bill, class B)")
-    add("W01", "SF1", "A", 1.00, rot=0.5, u=1.30, proof_wall=True, note="professional wrestling, Friday 2 November: class A")
+    # ---- the quay gable SF1 is BARE, as the Hook sheet shows it (second review, accepted by Jafar's ruling of 9 October): the plan's proof wall (three bills in one layer, bottoms at z 1.00, and a
+    #      second QUAY STREET plate above) is HELD, not in the default street. P01, W01 and T02 with its strip are the proof wall; W01 and T02 are also nameless stand-ins (held with their named twins).
+    GABLE = "HELD: the quay gable is bare as the Hook sheet shows it (second review; Jafar's ruling of 9 October). This was the plan's proof wall; it is used only if he chooses the gable for the proof sample instead of the empty unit's glass"
+    add("P01", "SF1", "B", 1.00, rot=-0.6, u=0.70, proof_wall=True, held=True, held_why=GABLE, note="poll tax; the meeting of Thursday 25 October is four days gone on the street date (a stale bill, class B)")
+    add("W01", "SF1", "A", 1.00, rot=0.5, u=1.30, proof_wall=True, held=True, held_why=GABLE, note="professional wrestling, Friday 2 November: class A")
     w02, h02 = _dims_m("T02", items_by_id)
-    add("T02", "SF1", "A", 1.00, rot=-0.4, u=1.90, proof_wall=True, note="the Tivoli quad, from Thursday 25 October: class A, four days up")
-    add("T02s", "SF1", "A", 1.00 + h02 - STRIP_H / 1000.0 + 0.004, rot=-0.4 + 0.25, u=1.90 + 0.003, layer=1, proof_wall=True, parent="T02",
+    add("T02", "SF1", "A", 1.00, rot=-0.4, u=1.90, proof_wall=True, held=True, held_why=GABLE, note="the Tivoli quad, from Thursday 25 October: class A, four days up")
+    add("T02s", "SF1", "A", 1.00 + h02 - STRIP_H / 1000.0 + 0.004, rot=-0.4 + 0.25, u=1.90 + 0.003, layer=1, proof_wall=True, held=True, held_why=GABLE, parent="T02",
         note="the venue strip across the quad's top band: set 4 mm high and 3 mm in, 0.25 degrees off the quad's own square (TARGET-REVIEW fault 7: 2 to 6 mm off square)")
     # ---- the empty unit's glass SF2: one layer (u from the glass's viewer's-left edge)
     add("C01a", "SF2", "B", 1.30, rot=0.3, u=0.30, layer=1, fixing="four tabs of yellowed tape, one at each corner", note="the police appeal for Friday 12 October, inside the empty unit's glass (TARGET-REVIEW fault 10)")
@@ -1795,7 +1809,7 @@ def plan_all(items_by_id):
     # ---- the plain west row: the scene's own poster slot (x 11.4 = pier W1.0) and one window bill
     piers = {p["id"]: p for p in west_piers()}
     pr = piers["W1.0"]
-    add("W01", "WEST_PIER", "B", 1.00, x=pr["cx"], pier="W1.0", pier_w_m=pr["w"], note="the scene file's poster slot, x 11.4 (a second seed of the wrestling bill)")
+    add("M01", "WEST_PIER", "B", 1.00, x=pr["cx"], pier="W1.0", pier_w_m=pr["w"], note="the scene file's poster slot, x 11.4: the market bill (a second seed of M01, class B), which needs no unminted name (second review, fault 3: the wrestling bill that stood here named no ring and no hall)")
     pr = piers["W2.0"]
     add("L04", "WEST_PIER", "C", 2.15, x=pr["cx"], pier="W2.0", pier_w_m=pr["w"], layer=2)
     add("P02", "SF9", "A", 1.90 - 0.4458, x=12.3, scale=0.585, taped_inside=True, inside=True,
@@ -1808,19 +1822,19 @@ def plan_all(items_by_id):
     # ---- the letting boards: the fascia target's board on the fascia; a no-agent flat board above
     add("L02", "SF5", "C", 2.90, rot=-1.5, x=24.0, note="the fascia target's own board (900 x 450, TO LET); L01 (a named agent, 1200 x 450) is the held alternative")
     add("L03n", "SF6", "C", 3.70, rot=1.0, x=24.0, note="no agent, no name; L03 (a named agent) is the held alternative")
-    # ---- name plates: the nameless plate `n`, two QUAY STREET plates and NO plate on the yard entrance
+    # ---- name plates: the nameless plate `n`, ONE QUAY STREET plate (the west corner pier's) and NO plate on the yard entrance or the gable
     h = _dims_m("S01n", items_by_id)[1]
     add("S01n", "SF7", "D", 2.63 - h / 2, x=20.47, note="west corner pier (x 19.92 to 21.0, brick to 3.12 m): the existing plate's place, kept; 80 mm of pier either side")
-    add("S01n", "SF7", "D", 2.63 - h / 2, u=1.0 - _dims_m("S01n", items_by_id)[0] / 2, host="SF1", u_centre_m=1.0, proof_wall=True,
-        note="second QUAY STREET plate on the quay gable, centre 1.0 m from the front corner, centre z 2.63 (above the three bills' tops, 1.76 m)")
+    add("S01n", "SF7", "D", 2.63 - h / 2, u=1.0 - _dims_m("S01n", items_by_id)[0] / 2, host="SF1", u_centre_m=1.0, proof_wall=True, held=True, held_why=GABLE,
+        note="HELD: a second QUAY STREET plate on the quay gable, centre 1.0 m from the front corner, centre z 2.63 (above the proof wall's tops, 1.76 m). The sheet shows none on the gable; the street's one plate is on the west corner pier")
     # ---- harbour enamel
     add("H02", "SF8", "C", 1.20, x=-0.6, note="PROPOSED: on a post at the quay edge; no quay geometry in SCENE-SLOTS")
     return P
 
 
 def held_alternates(placements, items_by_id):
-    """Every default placement whose item has a NAMED variant gets a held twin: the named item at the same place, held_until_minted. The named letting boards are
-    twins of the nameless ones too (L02 -> L01, L03n -> L03)."""
+    """Every placement whose item has a NAMED variant gets a held twin: the named item at the same place, held_until_minted. The named letting boards are twins of the nameless ones too
+    (L02 -> L01, L03n -> L03). (A nameless STAND-IN has a twin too: the stand-in's own placement is held as well, see finish_held.)"""
     out = []
     twin = {"L02": "L01", "L03n": "L03"}
     for p in placements:
@@ -1829,11 +1843,29 @@ def held_alternates(placements, items_by_id):
             q = dict(p)
             q["item"] = alt
             q["held_until_minted"] = True
+            q["held"] = True
             q["names"] = items_by_id[alt].get("held_names", [])
             q["alt_of"] = p["item"]
+            w_, h_ = _dims_m(alt, items_by_id, p.get("scale", 1.0))
+            q["w_m"], q["h_m"] = round(w_, 4), round(h_, 4)          # the twin's own size (L01 is 1200 x 450, the fascia target's board 900 x 450)
             q["note"] = "HELD: the named variant of the placement above; built only after the town mints " + ", ".join(q["names"])
             out.append(q)
     return out
+
+
+def finish_held(placements, items_by_id):
+    """Flag the held placements for the checks and the drawing: `held` is 'not in the default street' for any reason; `held_until_minted` (with `names`) is the reason of unminted names. A nameless
+    stand-in's placement waits for the names its named twin carries."""
+    for p in placements:
+        it = items_by_id.get(p["item"])
+        if it is not None and it.get("stand_in_of"):
+            p["held_until_minted"] = True
+            p["stand_in"] = True
+            p["names"] = list(it["waits_for"])
+            p["held_why"] = STAND_IN_WHY
+        if p.get("held_until_minted") or p.get("held_why"):
+            p["held"] = True
+    return placements
 
 
 # --------------------------------------------------------------------------------------------
@@ -1861,10 +1893,11 @@ FORBIDDEN_WORDS = dict(
                                "lucky dip", "darts", "quiz", "quiz night",
                                "child", "children", "kid", "kids", "baby", "babies", "babysitter", "toddler", "toddlers", "pram", "pushchair", "school", "schools", "pupil", "playground",
                                "playgroup", "nursery", "creche", "christening", "teenage", "teenagers", "junior", "juniors", "infant", "family", "families", "toy", "toys", "santa",
-                               "grotto", "youth", "boys", "girls", "scout", "scouts", "cubs", "brownies", "guides", "student", "students", "son", "sons", "daughter", "daughters"],
+                               "grotto", "youth", "boys", "girls", "scout", "scouts", "cubs", "brownies", "guides", "student", "students", "son", "sons", "daughter", "daughters",
+                               "babysitters", "inns", "playgroups", "teens", "lad", "lass", "kiddies"],
     real_marks=["ROYAL MAIL", "POST OFFICE", "BRITISH RAIL", "BRITISH TELECOM", "BRITISH GAS", "NATIONAL LOTTERY", "CRIMESTOPPERS", "NEIGHBOURHOOD WATCH", "LETRASET", "DYMO",
                 "BBC", "ITV", "THATCHER", "KINNOCK", "LABOUR", "CONSERVATIVE", "TORY", "TORIES", "SDP", "LIBERAL", "FEDERATION",
-                "LARKIN", "SEA WOLF", "SEA WOLVES", "MILITANT", "SOCIALIST WORKER", "ANTI-POLL TAX UNION", "ALL BRITAIN",
+                "LARKIN", "SEA WOLF", "SEA WOLVES", "BIG TED", "MILITANT", "SOCIALIST WORKER", "ANTI-POLL TAX UNION", "ALL BRITAIN",
                 "PERSIL", "DAZ", "ARIEL", "OMO", "BOLD", "SURF", "ODEON", "ABC", "RANK", "PG TIPS", "TYPHOO", "BROOKE BOND", "TETLEY",
                 "BIG DADDY", "GIANT HAYSTACKS", "KENDO NAGASAKI", "MICK MCMANUS", "JACKIE PALLO", "ROLLERBALL ROCCO",
                 "CROWN", "KIOSK", "TELEPHONE BOX", "PHONE BOX", "OPERATOR", "BBFC", "CERTIFICATE", "TRANSCO", "NORTHERN GAS",
@@ -1880,41 +1913,53 @@ def norm(s):
     return s.replace("’", "'").replace("‘", "'").replace("—", "-").replace("–", "-")
 
 
+def hand_jit(b):
+    """The jitter of a hand block's style that moves a glyph's shape: (size_sd, rotation_sd_deg); (0, 0) for print."""
+    h = b.get("hand")
+    return (h["size_sd"], h["rotation_sd_deg"]) if h else (0.0, 0.0)
+
+
 def choose_ppm(items):
     """Each item's pixel scale is the smallest at which every glyph of every block (but the imprints) is told from every other glyph of its font by at least
-    glyphlib.N_MIN pixels, and never under 2 px/mm (glyphlib.needed_ppm; self_check.py re-derives the same table and fails the item if its scale is lower)."""
+    glyphlib.N_MIN pixels, and never under 2 px/mm (glyphlib.needed_ppm; self_check.py re-derives the same table and fails the item if its scale is lower). A HAND block's pairs are
+    measured over glyphs jittered to 3.5 sd of its style (size and rotation); self_check.py group 12 then reads 20 true jittered seeds of every hand card, and HAND_PPM_FLOOR holds the
+    scale of any card that needed a raise to pass them."""
     unions = {}
     for it in items:
         for b in it["blocks"]:
             if not b.get("glyph_check") or b.get("ghost"):
                 continue
             emb = (b["hand"] or {}).get("embolden_mm", 0.0) if b.get("hand") else 0.0
-            unions.setdefault((b["font"], b["weight"], b["cap_mm"], emb), set()).update(b["text"])
+            unions.setdefault((b["font"], b["weight"], b["cap_mm"], emb) + hand_jit(b), set()).update(b["text"])
     need = {}
     cache_p = Path(os.environ.get("PBP_PPM_CACHE", "")) if os.environ.get("PBP_PPM_CACHE") else None
     cache = json.loads(cache_p.read_text()) if cache_p and cache_p.exists() else {}
     for k, chars in sorted(unions.items()):
-        key, wt, cap, emb = k
-        ck = json.dumps([key, wt, cap, emb, "".join(sorted(chars)), gl.N_MIN, gl.TOL_PX])
+        key, wt, cap, emb, ssd, rsd = k
+        ck = json.dumps([key, wt, cap, emb, ssd, rsd, "".join(sorted(chars)), gl.N_MIN, gl.TOL_PX, "jit3.5"])
         if ck in cache:
             need[k] = cache[ck]
             continue
-        ppm, _t = gl.needed_ppm(font, key, wt, cap, cap_ratio(key, wt), sorted(chars), emb_mm=emb)
+        jit = dict(size_sd=ssd, rotation_sd_deg=rsd) if (ssd or rsd) else None
+        ppm, _t = gl.needed_ppm(font, key, wt, cap, cap_ratio(key, wt), sorted(chars), emb_mm=emb, jit=jit)
         need[k] = ppm if ppm else 16
         cache[ck] = need[k]
     if cache_p:
         cache_p.write_text(json.dumps(cache))
     for it in items:
-        m = 2
+        m = HAND_PPM_FLOOR.get(it["id"], 2)
         for b in it["blocks"]:
             if not b.get("glyph_check") or b.get("ghost"):
                 continue
             emb = (b["hand"] or {}).get("embolden_mm", 0.0) if b.get("hand") else 0.0
-            m = max(m, need[(b["font"], b["weight"], b["cap_mm"], emb)])
+            m = max(m, need[(b["font"], b["weight"], b["cap_mm"], emb) + hand_jit(b)])
         it["px_per_mm"] = m
         mp = it["format"]["w_mm"] * it["format"]["h_mm"] * m * m / 1e6
         assert mp <= 60, "%s would be %.0f megapixels at %d px/mm" % (it["id"], mp, m)
         it["megapixels"] = round(mp, 1)
+
+
+HAND_PPM_FLOOR = {}      # item id -> px/mm: the least scale at which the 20-seed true-render test of group 12 passes (raised by hand_tune when a card needed more than needed_ppm gave)
 
 
 def build():
@@ -1923,6 +1968,11 @@ def build():
     for it in items:
         it["held_names"] = held_names(it)
         it["held"] = bool(it["held_names"])
+    for k, tw in STAND_INS.items():
+        by_id[k]["held"] = True
+        by_id[k]["stand_in_of"] = tw
+        by_id[k]["waits_for"] = list(by_id[tw]["held_names"])
+        by_id[k]["held_why"] = STAND_IN_WHY
     choose_ppm(items)
     # every hand-lettered card carries ONE cue that matches its fixing and sits on the left half only (TARGET-REVIEW fault 9)
     for it in items:
@@ -2010,7 +2060,7 @@ def make_checks(items, by_id, cases, placements):
                      why="1 pixel is 1/%g mm" % ppm))
         words = sorted({norm(b["text"]) for b in it["blocks"]})
         C.append(chk(iid + ".words", "words exactly as approved", iid, "the strings in the glyph manifest (every character as drawn), apostrophes and dashes normalised",
-                     words, 0, "strings", "the manifest's characters, joined per block, equal the approved string; THIS IS NOT THE PIXEL CHECK: ITEM.glyphs reads the pixels", reads="manifest",
+                     words, 0, "strings", "the manifest's characters, joined per block, equal the approved string; a missing or unreadable <ITEM>.glyphs.json FAILS (it never crashes the reader); THIS IS NOT THE PIXEL CHECK: ITEM.glyphs reads the pixels", reads="manifest",
                      why="the words are ours; the image model never draws one"))
         blocks = [b for b in it["blocks"] if not b.get("ghost")]
         if not blocks:
@@ -2027,12 +2077,17 @@ def make_checks(items, by_id, cases, placements):
         gb = [b for b in blocks if b.get("glyph_check")]
         if gb:
             C.append(chk(iid + ".glyphs", "every glyph read from the pixels", iid,
-                         "for each block (not the imprints) and each character of the manifest, in its own cell: F at 0.5 mm of the glyph re-rendered from the manifest, and SEP against every other glyph of its font and against its own mirror",
+                         "each character of the manifest read in its own cell: F at 0.5 mm against the glyph re-rendered from the manifest, SEP against every other glyph of its font and its own mirror (render_contract.glyph_gate)",
                          [[b["id"], len(b["text"])] for b in gb], "per block [id, characters]", "F >= 0.85 and SEP >= 0.70 (a margin of 0.40) against every alternative the pixels can tell apart",
-                         "glyphlib.py: the manifest's characters equal the approved string; each glyph's origin, baseline, rotation and size lie in the block's envelope; F; SEP; spaces carry no ink. Alternatives: A-Z a-z 0-9 £ . , ' ’ - — – & · ? : !; shape twins (I and l, ' and ’) and a glyph that is its own mirror are listed, not scored",
-                         why="TARGET-REVIEW fault 1: a changed date, TEA for ALE, LUNCH for BINGO, a changed price or time passed the line mask at F 0.94 to 1.00"))
-        C.append(chk(iid + ".square", "the texture is square-on", iid, "rotation of the render, found by turning the expected ink until the largest blocks agree best (0.1 degree steps, +-3 degrees)",
-                     0.0, 0.3, "degrees", "|angle| <= 0.3 degrees", why="skew and rotation live only in the placement's rot_deg (TARGET-REVIEW fault 1d)"))
+                         "glyphlib.py: a missing or unreadable manifest FAILS; the characters equal the approved string; each glyph lies in the block's envelope; spaces carry no ink (beyond 0.6 mm of every glyph); a neighbour's ink that the neighbour explains and the glyph does not is the neighbour's",
+                         why="a changed date, TEA for ALE, LUNCH for BINGO passed the line mask at F 0.94 to 1.00"))
+        C.append(chk(iid + ".square", "the texture is square-on", iid,
+                     "rotation of the render found against the render of the item's own glyph manifest, jitter included (render_contract.texture)",
+                     0.0, SQUARE_TOL_DEG, "degrees", "|angle| <= 0.3 degrees, one tolerance for print and hand-lettered items alike; 0 unless F at the best angle beats F at 0 by 0.02",
+                     why="skew lives only in the placement's rot_deg"))
+        C.append(chk(iid + ".clean", "no ink outside the places lettering stands", iid,
+                     "ink-coloured pixels on the class-A render before wear, outside every block's glyph window, the item's own shapes, the cue patch and the art slots (render_contract.clean)",
+                     CLEAN_MAX_MM2, CLEAN_MAX_MM2, "mm2", "total area <= 2 mm2", why="a line drawn on a margin, a held name left on a default item"))
         cons = []
         for b in blocks:
             nominal = b["contrast"]["B"]
@@ -2083,10 +2138,11 @@ def make_checks(items, by_id, cases, placements):
     C.append(chk("G.place.layers", "same-layer bills do not overlap; every older bill keeps its share of face", "SF1, SF2", "visible fraction by raster", dict(layer0=0.30, layer1=0.45, top=0.97), 0.0, "fraction", "visible_fractions()", reads="geometry"))
     C.append(chk("G.place.piers", "a bill on a west pier fits the brick with 40 mm each side, and clears the openings", "WEST_PIER", "bill width <= pier width - 0.08", "true", 0.0, "m", "geometry", reads="geometry"))
     C.append(chk("G.place.height", "nothing pasted above 2.75 m", "SF1", "top edge of every full bill and plate", 2.75, 0.0, "m", "geometry", reads="geometry"))
-    C.append(chk("G.place.paper", "the amount of paper is the asset plan's: 8 fly-posters and 4 poll-tax bills on Quay Street", "default placements (not held)",
-                 "count of placed items by paper_class: fly_poster, poll_tax_bill", dict(fly_poster=8, poll_tax_bill=4), 0, "count", "geometry", reads="geometry",
-                 why="asset-plan note 4, table A5, row 'Fly-posters and gig bills 8' and 'Poll-tax and election bills 4' (TARGET-REVIEW fault 4)"))
-    C.append(chk("G.place.gable", "the gable keeps what the Hook sheet shows", "SF1", "no paper within 150 mm of the downpipe (u 0.30 +- 0.0375), none above 2.75 m, none in the damp foot (below 0.45 m); the three bills sit in one layer", "true", 0.0, "m", "geometry", reads="geometry"))
+    C.append(chk("G.place.paper", "the amount of paper is at most the asset plan's: 8 fly-posters and 4 poll-tax bills on Quay Street", "default placements (not held)",
+                 "count of placed items by paper_class: fly_poster, poll_tax_bill", dict(fly_poster_at_most=8, poll_tax_bill_at_most=4, default_street_carries=dict(fly_poster=5, poll_tax_bill=3)), 0, "count", "geometry", reads="geometry",
+                 why="asset-plan note 4, table A5, row 'Fly-posters and gig bills 8' and 'Poll-tax and election bills 4' (TARGET-REVIEW fault 4); AT MOST, since the bare gable took three bills off the street (second review)"))
+    C.append(chk("G.place.gable", "the gable is bare, as the Hook sheet shows it", "SF1", "no paper and no plate on SF1 in the default street; the downpipe (75 mm at u 0.30, full height), the render patch (z 3.6 to 5.0) and the damp foot (z 0 to 0.45) stand as fixtures, and the held proof-wall placements, if ever used, keep 150 mm clear of the pipe, below 2.75 m and out of the foot", "true", 0.0, "m", "geometry", reads="geometry",
+                 why="the Hook sheet shows old brick, a downpipe, a render patch and a damp foot; the review's decision, accepted by Jafar's ruling of 9 October"))
     C.append(chk("G.place.shops", "shop cards lie inside their glass or door glass, clear the hours plate and each other", "SHOP", "rectangles", "true", 0.0, "m", "geometry", reads="geometry"))
     C.append(chk("PLACE.built", "each placed decal is where the target puts it and reads the right way round in the placed street", "the built street's placed-decals manifest and one render of each surface",
                  "centre of each decal against the placement's u and z (or street x); its rotation; the decal's largest block read in the render after turning back by rot_deg",
@@ -2161,7 +2217,7 @@ DISAGREEMENTS = [
     dict(topic="the glyph check's margin", wins="the computation (glyph_table() in self_check.py; glyphlib.py's docstring)", others="TARGET-REVIEW fault 1(b): each glyph must out-score every other glyph of its font and its own mirror by at least 0.05 on F at 0.5 mm",
          choice="F is a mean over the whole glyph, so glyphs that share most of their ink score alike: O against D in Oswald 700 at 34 mm capitals scores 0.987 against the true glyph's 1.000 (a margin of 0.013), 6 against 8 0.964, and 14 of the 36 capitals and digits cannot meet 0.05 even at that size. The check therefore keeps F >= 0.85 at 0.5 mm for the glyph itself and scores the separation from each alternative on the PIXELS WHERE THE TWO GLYPHS DIFFER (SEP, 0.70 to pass: a margin of 0.40), with every item's pixel scale chosen so that at least 8 such pixels exist for every pair that is not a shape twin. The reviewer's wrong renders all fail it"),
     dict(topic="paper on the quay gable", wins="the asset plan's own proof wall and the Hook sheet together", others="the Hook sheet's gable is bare old brick with a downpipe, a render patch and a damp foot; the plan's proof wants 'three bills from three templates' on one wall (the nearest gable or the empty unit's stallriser)",
-         choice="one layer of three bills (z 1.00 to 1.76, u 0.70 to 2.92), flagged proof_wall; the downpipe, the render patch and the damp foot kept as the sheet has them, paper 150 mm clear of the pipe; nothing more until he has approved the sample in the assembled game. Dropping the three placements leaves the gable exactly as the sheet shows it"),
+         choice="THE GABLE IS BARE, as the sheet shows it (second review, by Jafar's ruling of 9 October): the three bills (P01, W01, T02 with its strip) and the second QUAY STREET plate are HELD placements flagged proof_wall; the downpipe, the render patch and the damp foot stand as fixtures; the proof sample is the empty unit's glass (six sheets in one layer). Nothing more until he has approved the sample in the assembled game"),
     dict(topic="the one photograph measured", wins="judgement", others="the photographed notice case is a modern blue steel replacement with a wide crest header",
          choice="only its vertical fractions inform the glazed case's proportions; the 1990 case is a timber one with thinner rails (HC1)"),
 ]
@@ -2323,14 +2379,15 @@ def wear_tables():
 # 14. The render contract, the fixings, the second-try answers.
 # --------------------------------------------------------------------------------------------
 RENDER_CONTRACT = dict(
-    texture="EVERY TEXTURE IS SQUARE-ON: no skew, no rotation and no perspective is baked into any base-colour image. Skew and rotation live ONLY in the placement's rot_deg (a hand card's tilt and the A3 sheet's crookedness too). ITEM.square fails a texture turned by more than 0.3 degrees; PLACE.built checks the placed decal's rot_deg to 0.3 degrees.",
+    texture="EVERY TEXTURE IS SQUARE-ON: no skew, no rotation and no perspective is baked into any base-colour image. Skew and rotation live ONLY in the placement's rot_deg (a hand card's tilt and the A3 sheet's crookedness too). ITEM.square fails a texture turned by more than 0.3 degrees (ONE tolerance, print and hand-lettered alike); the angle is found against the render of the item's own glyph manifest, jitter included, and is 0 unless F at the best angle beats F at 0 degrees by 0.02; PLACE.built checks the placed decal's rot_deg to 0.3 degrees.",
     scale="Each item is rendered at its own px_per_mm (items[].px_per_mm, chosen so that every glyph can be told from every other: glyphlib.needed_ppm). Row 0 of the image is the TOP edge; x runs from the viewer's left; y in the item frame runs up from the bottom edge.",
     ink_mask="The reader's ink mask is the set of pixels nearer (CIE76) the block's aged ink colour than its aged ground colour. Imprints (role imprint, cap 2.4 mm) are not read glyph by glyph: they are illegible by design.",
+    clean="ITEM.clean reads the class-A render before wear: the ink-coloured pixels (the ink mask) outside the union of every block's glyph window, the item's own shapes (a rule, a bar of solid ink, a frame's line, a ring, ticks, a hand, a star, a polygon, a roundel, each dilated 1 mm), the card's cue patch and the art slots total at most 2 mm2. A ground (a paint or stock rectangle that lettering stands on) is not such a shape. A line drawn on a margin, a held name left on a default item, a forbidden word anywhere else on the sheet adds its whole area and fails.",
     glyph_manifest=dict(
         file="<ITEM>.glyphs.json, written by the renderer beside every base-colour image (target_drawing.py and self_check.py show a reference writer)",
         schema="{item, px_per_mm, size_px:[w,h], blocks:{<block id>:[{ch, font, weight, em_mm, ox_mm, baseline_mm, rot_deg, emb_mm}, ...]}}: ONE ENTRY PER CHARACTER OF THE APPROVED STRING, SPACES INCLUDED, IN ORDER. "
                "em_mm: the em of the glyph as drawn (mm, x the glyph's own size jitter); ox_mm: the pen origin from the item's left edge; baseline_mm: up from the item's bottom edge (the hand jitter included); rot_deg: counter-clockwise about the pen origin plus half the advance, on the baseline; emb_mm: the stroke added to the font's own (a felt pen), never over 0.6.",
-        rule="The checker re-renders every glyph from the manifest and reads the pixels in the glyph's own cell. A manifest that is not the approved string, or whose glyphs lie outside the block's envelope, fails before any pixel is read.",
+        rule="The checker re-renders every glyph from the manifest and reads the pixels in the glyph's own cell. A manifest that is not the approved string, or whose glyphs lie outside the block's envelope, fails before any pixel is read. A MISSING, EMPTY OR UNREADABLE <ITEM>.glyphs.json FAILS .words and .glyphs (and the square estimate, which then reads the layout): the reader reports the failure and never crashes.",
         envelope=dict(print=dict(ox_mm=0.6, baseline_mm=0.5, rot_deg=0.1, em_frac=0.01, emb_mm=0.2),
                       hand="the block's hand style: baseline within 3.5 sd + 0.6 mm, rotation within 3.5 sd, size within 3.5 sd of 1, origin within 6 mm of the layout at the first glyph and within 6 mm + 5 per cent of the distance along the line, emb_mm within 0.6")),
     glyph_gate=dict(F_min=gl.F_MIN, dilation_mm=0.5, sep_gate=gl.SEP_GATE, n_min_px=gl.N_MIN, tol_px=gl.TOL_PX, alternatives="A-Z a-z 0-9 £ . , ' ’ - — – & · ? : ! (the font's own glyphs only)",
@@ -2349,7 +2406,7 @@ FIXINGS = dict(
 PLACEHOLDER_RULE = dict(
     rule="A placement whose item carries a proposed (unminted) name in a block of cap 10 mm or more is HELD: held_until_minted true, `names` listing the names. G.page.placeholders fails while any held placement is in the built street and any of its names lacks a DECISIONS.md line of the form '- ... MINTED: <NAME> ...'.",
     why="the 3 October ruling: placeholders never reach his page; whole street frames do; from across the street an agent's name at 52 mm capitals is about 8 px a capital at 8 m",
-    default_street="carries only nameless items: P01-P03 say STAND TOGETHER, W01 names no ring names or hall, D01 says LIVE MUSIC, T01 to T03 say A NEW THRILLER and A NEW COMEDY, L02 and L03n have no agent. The named versions (-named, L01, L03, B01, G01, G02) are held.",
+    default_street="carries only items that read naturally without an unminted name: P02 and P03 say STAND TOGETHER, D01 says LIVE MUSIC, M01 needs no name, L02 and L03n have no agent. The NAMELESS bills that would read as stand-ins (T01 to T03 'A NEW THRILLER' / 'A NEW COMEDY', W01 with no ring names and no hall) are HELD like the named versions (-named, L01, L03, B01, G01, G02): built only once the town mints the names the named twin carries (second review, fault 3).",
     allowed_unheld="proposed names under the 10 mm line stay: the 2.4 mm imprints (QUAY PRINT, the campaign, the publisher), the 3.6 to 6 mm campaign lines on P04 to P06")
 
 UNPLACED_WHY = {
@@ -2358,7 +2415,8 @@ UNPLACED_WHY = {
     "H03": "pinned in HC1", "H04": "pinned in HC1", "H05": "pinned in HC1", "F01": "on FC1", "F02": "under F01 on FC1",
     "K02": "the newsagent never closes at midday (hook-cast 6 to 17.30) and Hal's shop is not on the built street",
     "B01": "held (THE DRILL HALL); a spare for the town", "G01": "held (WHITEWELL); a national four-sheet belongs in a contractor's panel",
-    "G02": "held (QUAYSIDE)", "T01": "a spare Tivoli quad (nameless)", "T03": "(placed in a shop window)", "T01s": "the strip of T01, which is not placed",
+    "G02": "held (QUAYSIDE)", "T01": "held: a nameless stand-in, with T01-named", "T03": "held: a nameless stand-in, with T03-named", "T01s": "the strip of T01, which is not placed",
+    "P01": "held: the quay gable is bare; P01 was the proof wall's poll-tax bill (a spare template for the town)",
     "P04": "a spare sheet for the town (the advice evening)", "C01b": "a slot filler: the simulation's other appeals", "C01c": "a slot filler",
     "K03b": "the CLOSED face of K03a, shown when the shop is shut", "L01": "held (the agent's name); disagrees with the fascia target", "L03": "held (the agent's name)",
     "K01": "for a shop that shuts for lunch: none on the built street does (hook-cast hours)", "H01": "a gate or wall of the docks: not built",
@@ -2369,17 +2427,17 @@ UNPLACED_WHY = {
 def second_try_answers():
     return [
         dict(fault=1, short="the checks could not see a wrong word, date or price in the pixels",
-             answer="ITEM.glyphs reads one glyph at a time in its own cell (glyphlib.py, self_check.py group 12): F >= 0.85 at 0.5 mm against the glyph re-rendered from the manifest, and SEP >= 0.70 against every other glyph of the font and its own mirror, on the pixels where they differ; each item's pixel scale is chosen so that every non-twin pair differs by at least 8 pixels. Every wrong render the reviewer built (a changed date, a changed price or time, TEA for ALE, Teas for Beer, LUNCH for BINGO, a mirrored hand card, a misspelt plate) FAILS; a true render, jittered hand renders (20 seeds each of K01 and SA06, 8 each of K07a, K09a and SA15) and a true render turned 1.2 degrees and read in the placed street PASS. The reviewer's own harness, run unchanged, now also fails every PRINT wrong render (the line score includes the worst glyph); hand lines need the renderer's manifest, which is the review's own amendment (a). ART.eye, PLACE.built, ITEM.square and the square-on rule are added."),
+             answer="ITEM.glyphs reads one glyph at a time in its own cell (glyphlib.py, self_check.py group 12): F >= 0.85 at 0.5 mm against the glyph re-rendered from the manifest, and SEP >= 0.70 against every other glyph of the font and its own mirror, on the pixels where they differ; each item's pixel scale is chosen so that every non-twin pair differs by at least 8 pixels. Every wrong render the reviewer built (a changed date, a changed price or time, TEA for ALE, Teas for Beer, LUNCH for BINGO, a mirrored hand card, a misspelt plate) FAILS; a true render, jittered hand renders (20 seeds each of K01 and SA06, 8 each of K07a, K09a and SA15) and a true render turned 1.2 degrees and read in the placed street PASS. The reviewer's own harness, run unchanged, now also fails every PRINT wrong render (the line score includes the worst glyph); hand lines need the renderer's manifest, which is the review's own amendment (a). ART.eye, PLACE.built, ITEM.square and the square-on rule are added. (After the second review, by Jafar's ruling of 9 October: the true jittered renders of all 29 hand cards, 20 seeds each, and a true render of every item pass all pixel checks; ITEM.clean reads ink outside every block; a missing manifest fails.)"),
         dict(fault=2, short="unminted placeholder names were the street's default dressing",
-             answer="the default street carries nameless items only (STAND TOGETHER, LIVE MUSIC, A NEW THRILLER, A NEW COMEDY, no ring names, no hall, no agent); the named versions are -named variants and L01, L03, B01, G01, G02, each held_until_minted with its names; their placements are held twins; G.page.placeholders added and tested."),
+             answer="the default street carries nameless items only where they read naturally (STAND TOGETHER, LIVE MUSIC, no agent); the named versions are -named variants and L01, L03, B01, G01, G02, each held_until_minted with its names; their placements are held twins; G.page.placeholders added and tested. (After the second review: the nameless T02, T03 and W01, which read as stand-ins, are held like their twins.)"),
         dict(fault=3, short="the WEIGHHOUSE LANE plate named the yard entrance",
              answer="the S02d placement and every 'proposed because canon does not name the opening' line are deleted; S02 is a kit plate like S03; the side opening is the yard entrance and carries no plate; C03 keeps DIVERSION VIA WEIGHHOUSE LANE."),
         dict(fault=4, short="the paste plan was far denser than the asset plan and covered the gable the sheet shows bare",
-             answer="eight fly-posters and four poll-tax bills in all (G.place.paper): SF1 carries one layer of three bills (P01 u 0.70, W01 u 1.30, T02 u 1.90, bottoms z 1.00) with the 75 mm cast-iron downpipe at u 0.30 and paper 150 mm clear; the plate stays at u 1.0; SF2 carries M01, P03, P02, J01, C02 and C01a; the piers keep only W1.0; P02 is also an A3 window bill in the bay-1 window at x 12.3 (scale 0.585, top 1.90 m); no sticker on the gable, no bill on the other piers."),
+             answer="at most eight fly-posters and four poll-tax bills (G.place.paper; the default street carries 5 and 3). First answer: SF1 carried one layer of three bills with the 75 mm cast-iron downpipe at u 0.30 and paper 150 mm clear. After the second review, by Jafar's ruling of 9 October, the gable is BARE as the Hook sheet shows it: the three bills, the strip and the second plate are held placements (G.place.gable: no paper and no plate on SF1; the downpipe, the render patch and the damp foot stay as fixtures). SF2 carries M01, P03, P02, J01, C02 and C01a; the west pier W1.0 (the scene's poster slot) takes M01 at class B; P02 is also an A3 window bill in the bay-1 window at x 12.3 (scale 0.585, top 1.90 m); no sticker on the gable, no bill on the other piers."),
         dict(fault=5, short="two targets gave two letting boards, and C02 used the wrong address",
              answer="L02 is the fascia target's board exactly (900 x 450, TO LET, Libre Franklin 800 cap 130, vinyl red, no agent, no number) and is the default on SF5; L01 (1200 x 450 with an agent) is a held variant that would need the fascia target changed in the same batch; G.letting.mount compares size, font, weight, cap and colour with the fascia target; C02 reads 'Change of use of the ground floor, 7 Quay Street,'."),
         dict(fault=6, short="two proposed names collided with real ones",
-             answer="TIGER JIM LARKIN is BIG TED HOLROYD and THE SEA WOLF is THE HARPOONER (and MAD MAURICE and THE BARON, a television series, are SPANNER SMITH and THE STEVEDORE), all held and listed for the town to check; LARKIN, SEA WOLF and SEA WOLVES are in forbidden_patterns.real_marks, with the real wrestlers, soap powders, cinema chains and campaigns the probe listed."),
+             answer="TIGER JIM LARKIN is TED HOLROYD (first BIG TED HOLROYD, withdrawn after the second review: 'Big Ted' is the bear of the BBC children's programme Play School; BIG TED is in real_marks) and THE SEA WOLF is THE HARPOONER (and MAD MAURICE and THE BARON, a television series, are SPANNER SMITH and THE STEVEDORE), all held and listed for the town to check; LARKIN, SEA WOLF and SEA WOLVES are in forbidden_patterns.real_marks, with the real wrestlers, soap powders, cinema chains and campaigns the probe listed."),
         dict(fault=7, short="period wording and process read as the wrong decade or country",
              answer="D01 says SEQUENCE; W01 says PROFESSIONAL (Oswald 700 fitted to the 428 mm measure); the Tivoli's weeks start on Thursday (T01 from THURSDAY 18 OCTOBER, T02 from THURSDAY 25 OCTOBER, T03 four lines); the venue and date are a separate letterpress strip (T01s, T02s, 1016 x 90 mm, black on white, own class, 0.25 degrees off the quad's square) and the litho's top band is blank; J01 and D01 are photocopy A3 notices in shop windows; H03 reads NOTICE TO MARINERS."),
         dict(fault=8, short="no street date, so the age classes contradicted each other",
@@ -2394,6 +2452,22 @@ def second_try_answers():
              answer="the far-side column ends '9.45 10.45 / LAST CROSSING 11.15', so the boat is at the Hook at 11.30 each night and the street's 'last crossing's at eleven' holds from the Hook; G.ferry.schedule simulates the one vessel from the printed blocks and checks that each day ends where the next day's first sailing leaves (Monday to Saturday, Sunday, Monday)."),
         dict(fault=13, short="name plates against the project's own note",
              answer="the default and placed variant is `n` (name only); `d` stays a variant; S01p, S02p, S03p and MR1 are deleted; QUAY STREET is cast aluminium with letters and border raised 3 mm, painted white with black letters, the paint flaking at the raised edges; every plate is at least 200 mm deep; the relief, draft and edge radii are in numbers and G.plates.make checks the lettering against them (Marcellus SC's thinnest stroke at 90 mm capitals is thick enough for a cast or pressed letter)."),
+    ]
+
+
+def fixes_after_second_review():
+    return [
+        dict(fix=1, short="the checks failed correct items and never read ink outside the blocks",
+             answer="ITEM.square finds the angle against the render of the item's own glyph manifest (jitter included) and reports 0 unless F at the best angle beats F at 0 degrees by 0.02: exactly square P05, K04, K03a, K03b, K02, K08 and P06 read 0 and every jittered hand card reads 0; ONE tolerance, 0.3 degrees, in target.json and TARGET.md. "
+                    "The glyph reader gives a pixel a neighbour's ink explains and the glyph's does not to the neighbour, even where hand-lettered glyphs touch (SA01 and SA03 had failed 11 and 15 of 20 true seeds at 8 px/mm; both now pass 20 of 20), reads big capitals at a reduced scale with the same area rule that draws its reference, and counts a space's ink only where it lies beyond 0.6 mm of every glyph (T01-named's true render passes). "
+                    "glyphlib.needed_ppm measures each hand pair over glyphs jittered to 3.5 sd of the block's hand style (size and rotation, four corners). ITEM.clean (new, per item): the ink-coloured pixels outside every block's glyph window, the item's own shapes, the cue patch and the art slots total at most 2 mm2; the reviewer's four planted lines (K01 BINGO TONIGHT, SA11 Babysitter, evenings., L02 ARMITAGE & STOBBS, C02 BETTING SHOP) and D01 + LICENSED BAR fail it. A missing or unreadable <ITEM>.glyphs.json fails .words and .glyphs and never crashes the reader (render contract). Group 12 reads a true render of EVERY item and 20 jittered seeds of all 29 hand cards through .pos, .mask, .glyphs, .square and .clean; any failure is a self-check failure."),
+        dict(fix=2, short="the nameless defaults read as stand-ins",
+             answer="T01, T02, T03 and W01 (the nameless Tivoli quads and programme and the wrestling bill with no ring names and no hall) are HELD like their named twins (item.held, stand_in_of, waits_for): their placements are held_until_minted with the names the twin carries, so G.page.placeholders keeps them off the built street until DECISIONS.md mints the films, the hall and the ring names. "
+                    "Pier W1.0 (the scene's poster slot) takes M01 at class B, a bill that needs no unminted name. G.place.paper is 'at most 8 fly-posters and 4 poll-tax bills' (the default street carries 5 and 3)."),
+        dict(fix=3, short="BIG TED HOLROYD collides with a real children's programme",
+             answer="TED HOLROYD on the named wrestling bill, in PROPOSED and in every check; BIG TED is in forbidden_patterns.real_marks ('Big Ted' is the bear of the BBC children's programme Play School)."),
+        dict(fix=4, short="the quay gable is bare, as the Hook sheet shows it",
+             answer="P01, W01, T02 with its strip T02s and the second QUAY STREET plate (the five proof_wall placements) are held, not in the default street; the west corner pier keeps its plate at x 20.47. G.place.gable is now 'no paper and no plate on SF1' and still checks the downpipe, the render patch and the damp foot as fixtures; the check that demanded exactly three gable bills and the one that demanded exactly 8 and 4 are reworded."),
     ]
 
 
@@ -2440,7 +2514,8 @@ def wear_table_for(it):
 
 def main():
     items, by_id, cases, placements = build()
-    placements = placements + shop_placements(by_id)
+    sp = shop_placements(by_id)
+    placements = finish_held(placements + sp + held_alternates(sp, by_id), by_id)
     cb = card_board(by_id)
     placements.append(dict(item="SB1", surface="SHOP", shop="newsagent", where="glass", u_m=cb["glass_u_m"], z_bottom_m=cb["z_bottom_m"], w_m=cb["area_mm"][0] / 1000.0,
                            h_m=cb["area_mm"][1] / 1000.0, rot_deg=0.0, layer=1, age_class="B", inside=True, note="the card board: 15 cards, see card_board"))
@@ -2494,7 +2569,7 @@ def main():
         paints={k: dict(name=v["name"], fresh=list(v["rgb"]), aged={c: list(age_paint(v["rgb"], c)) for c in AGE}) for k, v in PAINTS.items()},
         grime=list(GRIME), yellowed=list(YELLOWED))
     checks = make_checks(items, by_id, cases, placements)
-    default_pl = [p for p in placements if not p.get("held_until_minted")]
+    default_pl = [p for p in placements if not p.get("held")]
     placed_ids = {p["item"] for p in placements}
     on_board = {c["item"] for c in cb["cards"]}
     unplaced = {}
@@ -2512,13 +2587,13 @@ def main():
             unplaced[k] = "not placed by default"
     for c in cases:
         unplaced[c["id"]] = c["not_placed"]
-    n_held = sum(1 for p in placements if p.get("held_until_minted"))
+    n_held = sum(1 for p in placements if p.get("held"))
     target = dict(
         schema="ledger.cloud-week-42.target.posters-boards-plates/2", family="posters-boards-plates",
-        status="SECOND AND LAST TRY, 9 October 2026 (cloud week 42), after TARGET-REVIEW.md (FAIL, 13 faults); unit 4.2, 4.3 and 4.4 build from this file alone. self_check below is written by self_check.py.",
+        status="SECOND AND LAST TRY, 9 October 2026 (cloud week 42), after TARGET-REVIEW.md (FAIL, 13 faults), with the four fixes of the second review applied by Jafar's ruling of 9 October and NOT re-reviewed (fixes_after_second_review); unit 4.2, 4.3 and 4.4 build from this file alone. self_check below is written by self_check.py.",
         summary_line=("%d sheets, cards, boards and plates for Quay Street's paper and small boards: the poll-tax set, the chapel hall's two photocopied notices, the fights, the market, the Tivoli's quads, strips and programme "
-                      "(each with a NAMELESS default and a held named variant), 7 ferry and Harbour Board sheets, 5 police and council notices, 35 shop-window and newsagent cards, 5 letting boards (the default is the fascia target's), "
-                      "6 street name plates (name only by default); the default street carries no unminted name: %d placements (%d default, %d held twins), 8 fly-posters and 4 poll-tax bills as the asset plan says, "
+                      "(the named variants held, and the nameless ones too where they would read as stand-ins), 7 ferry and Harbour Board sheets, 5 police and council notices, 35 shop-window and newsagent cards, 5 letting boards (the default is the fascia target's), "
+                      "6 street name plates (name only by default); the default street carries no unminted name and a BARE quay gable: %d placements (%d default, %d held), at most 8 fly-posters and 4 poll-tax bills as the asset plan says (5 and 3 carried), "
                       "the street date Monday 29 October 1990, every item read glyph by glyph in its own pixels, %d checks." % (len(items), len(placements), len(default_pl), n_held, len(checks))),
         units=dict(mm="every item's own frame: x from the viewer's LEFT edge as seen in the game, y UP from the bottom edge; baseline_mm is measured up from the bottom edge",
                    m="surfaces: u from the surface's viewer's-left edge, z up from the pavement; street x along the street (0 south)", colour="sRGB 0..255; contrast is WCAG; dE is CIE76 on Lab D65",
@@ -2529,7 +2604,7 @@ def main():
                   evidence=["production/cloud-week/targets/fascia-signs/TARGET.md section 2", "production/previews/morning-hook-day-2026-10-08.jpg: the quay gable is the big brick wall at the right of the hook frame"]),
         calendar=dict(year=YEAR, street_date="Monday 29 October 1990", street_date_iso="1990-10-29",
                       window="1 October to 30 November 1990 by default; the dated bills' weekdays are computed, so any date in 1988 to 1992 can be set with date_slot rules",
-                      note="1 October 1990 was a Monday. 29 October is the one day every dated placement allows (H03 is dated 26 October; T02's film starts on Thursday 25; P01's meeting is the 25th). GMT began on Sunday 28 October. Every printed weekday is computed from datetime.date and checked by G.dates; G.dates.age checks each placed item's age class against the street date."),
+                      note="1 October 1990 was a Monday. 29 October is a day every placed dated item allows (G.dates.age; the held proof wall's P01 and T02 allow it too: the meeting of Thursday 25 October is four days gone, the film started on Thursday 25). GMT began on Sunday 28 October. Every printed weekday is computed from datetime.date and checked by G.dates; G.dates.age checks each placed item's age class against the street date."),
         formats={k: dict(v) for k, v in FORMATS.items()},
         fonts=fonts, font_decisions=font_decisions(), palette=palette, age_classes=ages,
         age_rules=dict(note="Four classes by days on the wall (age_classes[class].days). Colour fade by ink: f = 1 - exp(-t / tau), tau in days (palette.inks, palette.stocks); paper yellows 30 per cent of YELLOWED at class D; grime film GRIME mixed 0, 5, 12, 22 per cent over the paper and 35 per cent of that over ink. Order of fastness (Judgement): fluorescent stock, then red, then blue, then black, then photocopier toner.",
@@ -2548,7 +2623,7 @@ def main():
                                                               "production/previews/cloud-week/refs/posters-boards-plates/P1-urban-street-01-notice-case-target-on-photo.jpg"]),
         items=items_out, approved_words=words, approved_word_parts=tokens, ghost_words=ghosts, proposed_names=prop,
         forbidden_patterns=FORBIDDEN_WORDS, checks=checks, disagreements_photographs_win=DISAGREEMENTS, sources=SOURCES, unreached=UNREACHED,
-        would_read_when_network_opens=WOULD_READ, could_not_settle=COULD_NOT_SETTLE, second_try=second_try_answers(),
+        would_read_when_network_opens=WOULD_READ, could_not_settle=COULD_NOT_SETTLE, second_try=second_try_answers(), fixes_after_second_review=fixes_after_second_review(),
         evidence_split=dict(
             photographs_measured_today="the vertical proportions of one glazed notice case (P1); nothing else",
             earlier_notes="the 1990 mix of print (Letraset, photocopy, two-colour), the Kindersley recommendation of 1952, the 1 October 1990 winter timetable date, cod at about 2.60 a lb, the Harbour Board's blue and white enamel, the ferry's pasted winter sheets, the pound-and-pence prices of 1990 (all cited from the repository, not re-measured)",

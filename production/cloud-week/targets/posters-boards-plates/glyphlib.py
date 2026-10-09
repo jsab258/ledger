@@ -23,6 +23,8 @@ O against D in Oswald 700 at 34 mm capitals scores 0.987 against the true glyph'
 even at that size, and by most of them at 8 mm. SEP looks only at the pixels where the two glyphs differ, which is where the
 decision is made.
 """
+import math
+
 import numpy as np
 from PIL import Image, ImageDraw
 from scipy import ndimage as ndi
@@ -46,14 +48,27 @@ def disk(r):
 
 
 def dil(a, n):
+    """Dilation by n pixels with the 3 x 3 square (what ndi.binary_dilation(a, 3x3, iterations=n) gives), by shifts: the same pixels, several times faster on the small arrays the glyph reader works on."""
+    n = int(n)
     if n <= 0 or not a.any():
         return a
-    return ndi.binary_dilation(a, _ST8, iterations=int(n))
+    d = a
+    for _ in range(n):
+        e = d.copy()
+        e[:, 1:] |= d[:, :-1]
+        e[:, :-1] |= d[:, 1:]
+        f = e.copy()
+        f[1:, :] |= e[:-1, :]
+        f[:-1, :] |= e[1:, :]
+        d = f
+    return d
 
 
-def glyph_patch(font_fn, key, weight, ch, em_mm, ppm, rot_deg=0.0, emb_mm=0.0):
+def glyph_patch(font_fn, key, weight, ch, em_mm, ppm, rot_deg=0.0, emb_mm=0.0, tight=False):
     """The glyph as a boolean patch. Returns (patch, ox, base): the pen origin and the baseline in patch pixels (ox from the left, base from the top).
-    em_mm: the em in millimetres. rot_deg: counter-clockwise about (origin + half the advance, baseline). emb_mm: radius of added stroke."""
+    em_mm: the em in millimetres. rot_deg: counter-clockwise about (origin + half the advance, baseline). emb_mm: radius of added stroke.
+    tight: cut the patch to the ink (plus what a turn and a stroke add) BEFORE turning it, which gives the same pixels much faster; ox and base are then relative to the cut patch
+    (every caller that places a patch by ox and base is unaffected; family() needs the common frame and does not ask for it)."""
     em = em_mm * ppm
     f = font_fn(key, weight, em)
     pad = int(em * 0.35) + 4
@@ -64,13 +79,22 @@ def glyph_patch(font_fn, key, weight, ch, em_mm, ppm, rot_deg=0.0, emb_mm=0.0):
     im = Image.new("L", (W, H), 0)
     ImageDraw.Draw(im).text((pad + em * 0.1, asc), ch, font=f, fill=255, anchor="ls")
     ox = pad + em * 0.1
-    if abs(rot_deg) > 1e-9:
-        im = im.rotate(rot_deg, center=(ox + adv / 2.0, asc), resample=Image.BILINEAR)
-    a = np.asarray(im) > 100
+    cx0 = cy0 = 0
     r = int(round(emb_mm * ppm))
+    if tight:
+        bb = im.getbbox()
+        if bb is None:
+            return np.zeros((1, 1), bool), 0.0, 0
+        m = int(math.ceil(max(bb[2] - bb[0], bb[3] - bb[1]) * math.sin(math.radians(min(abs(rot_deg), 30.0))))) + 3 + max(0, r) + 2
+        cx0, cy0 = max(0, bb[0] - m), max(0, bb[1] - m)
+        im = im.crop((cx0, cy0, min(W, bb[2] + m), min(H, bb[3] + m)))
+        # the cut must not clip what the turn moves: bring the rotation centre along
+    if abs(rot_deg) > 1e-9:
+        im = im.rotate(rot_deg, center=(ox + adv / 2.0 - cx0, asc - cy0), resample=Image.BILINEAR)
+    a = np.asarray(im) > 100
     if r >= 1:
         a = ndi.binary_dilation(a, disk(r))
-    return a, ox, asc
+    return a, ox - cx0, asc - cy0
 
 
 def place_patch(patch, ox, base, x_px, y_px, win):
@@ -118,14 +142,14 @@ def sep_sets(ref_c, ref_a, tol_px=TOL_PX):
     return ref_c & ~da, ref_a & ~dc
 
 
-def sep_score(read, A, B, tol_px=TOL_PX):
+def sep_score(read, A, B, tol_px=TOL_PX, read_d=None):
     """1.0 when the read ink is the claimed glyph, 0.0 when it is the alternative; None when A and B hold fewer than N_MIN pixels.
     The share of the differing pixels (A and B together) on which the read ink sides with the claimed glyph: a pixel of A counts when the read ink (dilated tol_px) covers it,
-    a pixel of B when the read ink leaves it bare."""
+    a pixel of B when the read ink leaves it bare. read_d: the read ink already dilated by tol_px (the same for every alternative of one glyph)."""
     na, nb = int(A.sum()), int(B.sum())
     if na + nb < N_MIN:
         return None
-    dr = dil(read, tol_px)
+    dr = dil(read, tol_px) if read_d is None else read_d
     good = int((A & dr).sum()) + nb - int((B & read).sum())
     return float(good / (na + nb))
 
@@ -149,54 +173,70 @@ def family(font_fn, key, weight, em_mm, ppm, chars, rot_deg=0.0, emb_mm=0.0):
     return out
 
 
-def separation_table(font_fn, key, weight, cap_mm, cap_ratio, ppm, chars, glyphs=GLYPHS, emb_mm=0.0):
+def _corners(jit):
+    """The jitter extremes a hand style reaches (3.5 sd of its size, 3.5 sd of its rotation, all four combinations) and the unjittered glyph."""
+    if not jit:
+        return [(1.0, 0.0)]
+    s, r = 3.5 * jit.get("size_sd", 0.0), 3.5 * jit.get("rotation_sd_deg", 0.0)
+    return [(1.0, 0.0), (1.0 + s, r), (1.0 + s, -r), (1.0 - s, r), (1.0 - s, -r)]
+
+
+def separation_table(font_fn, key, weight, cap_mm, cap_ratio, ppm, chars, glyphs=GLYPHS, emb_mm=0.0, jit=None):
     """For each used char, the worst (smallest) |A|+|B| against any alternative that is not a shape twin, plus the twins found, and the same against its mirror.
+    With jit (a hand style's size_sd and rotation_sd_deg) every pair is measured at the unjittered glyph and at the four corners of the jitter at 3.5 sd (the claimed glyph and
+    the alternative are drawn alike: the checker draws both from the same manifest entry) and the smallest count stands.
     Returns dict(worst={char: (n, alt)}, twins=[(c, a)...], mirror={char: n}, ppm_eval=...)."""
-    em_mm = cap_mm / cap_ratio
+    em0 = cap_mm / cap_ratio
     ppm_eval = ppm
-    em_px = em_mm * ppm
-    if em_px > BIG_EM_PX:
-        ppm_eval = ppm * BIG_EM_PX / em_px
+    if em0 * ppm > BIG_EM_PX:
+        ppm_eval = ppm * BIG_EM_PX / (em0 * ppm)
     allc = sorted(set(glyphs) | (set(chars) - {" "}))
-    pats = family(font_fn, key, weight, em_mm, ppm_eval, allc, emb_mm=emb_mm)
-    dpat = {c: dil(p, TOL_PX) for c, p in pats.items()}
-    tw_p = tw_d = None
     worst, twins, mirror = {}, [], {}
-    for c in sorted(set(chars) - {" "}):
-        if c not in pats:
-            continue
-        best = None
-        for a in allc:
-            if a == c:
+    for sc_, rot in _corners(jit):
+        em_mm = em0 * sc_
+        pats = family(font_fn, key, weight, em_mm, ppm_eval, allc, rot_deg=rot, emb_mm=emb_mm)
+        dpat = {c: dil(p, TOL_PX) for c, p in pats.items()}
+        tw_p = tw_d = None
+        for c in sorted(set(chars) - {" "}):
+            if c not in pats:
                 continue
-            if (c, a) in EXPLICIT_TWINS:
-                twins.append((c, a))
-                continue
-            n = int((pats[c] & ~dpat[a]).sum() + (pats[a] & ~dpat[c]).sum())
-            if n < N_MIN:
-                if em_mm * 24.0 <= 400:
-                    if tw_p is None:
-                        tw_p = family(font_fn, key, weight, em_mm, 24.0, allc)
-                        tw_d = {k: dil(v, 2) for k, v in tw_p.items()}
-                    n2 = ((tw_p[c] & ~tw_d[a]).sum() + (tw_p[a] & ~tw_d[c]).sum()) / (24.0 * 24.0)
-                else:
-                    n2 = 1e9
-                if n2 < TWIN_MM2:
+            best = None
+            for a in allc:
+                if a == c or a not in pats:
+                    continue
+                if (c, a) in EXPLICIT_TWINS:
                     twins.append((c, a))
                     continue
-            if best is None or n < best[0]:
-                best = (n, a)
-        worst[c] = best
-        m = mirror_in_place(pats[c])
-        mirror[c] = int((pats[c] & ~dil(m, TOL_PX)).sum() + (m & ~dpat[c]).sum())
+                n = int((pats[c] & ~dpat[a]).sum() + (pats[a] & ~dpat[c]).sum())
+                if n < N_MIN:
+                    if em_mm * 24.0 <= 400:
+                        if tw_p is None:
+                            tw_p = family(font_fn, key, weight, em_mm, 24.0, allc)
+                            tw_d = {k: dil(v, 2) for k, v in tw_p.items()}
+                        n2 = ((tw_p[c] & ~tw_d[a]).sum() + (tw_p[a] & ~tw_d[c]).sum()) / (24.0 * 24.0)
+                    else:
+                        n2 = 1e9
+                    if n2 < TWIN_MM2:
+                        twins.append((c, a))
+                        continue
+                if best is None or n < best[0]:
+                    best = (n, a)
+            if best is not None and (c not in worst or worst[c] is None or best[0] < worst[c][0]):
+                worst[c] = best
+            elif c not in worst:
+                worst[c] = best
+            m = mirror_in_place(pats[c])
+            mn = int((pats[c] & ~dil(m, TOL_PX)).sum() + (m & ~dpat[c]).sum())
+            mirror[c] = min(mirror.get(c, mn), mn)
     return dict(worst=worst, twins=sorted(set(twins)), mirror=mirror, ppm_eval=ppm_eval)
 
 
-def needed_ppm(font_fn, key, weight, cap_mm, cap_ratio, chars, cands=(2, 3, 4, 6, 8, 12, 16), emb_mm=0.0):
-    """The smallest candidate scale at which every used char is told from every non-twin alternative by at least N_MIN pixels."""
+def needed_ppm(font_fn, key, weight, cap_mm, cap_ratio, chars, cands=(2, 3, 4, 6, 8, 12, 16), emb_mm=0.0, jit=None):
+    """The smallest candidate scale at which every used char is told from every non-twin alternative by at least N_MIN pixels. For a hand style pass jit
+    (size_sd, rotation_sd_deg): each pair is then measured over glyphs jittered to 3.5 sd of that style (separation_table), and the scale rises until the worst corner holds."""
     last = None
     for ppm in cands:
-        t = separation_table(font_fn, key, weight, cap_mm, cap_ratio, ppm, chars, emb_mm=emb_mm)
+        t = separation_table(font_fn, key, weight, cap_mm, cap_ratio, ppm, chars, emb_mm=emb_mm, jit=jit)
         ok = all(v is None or v[0] >= N_MIN for v in t["worst"].values())
         last = (ppm, t)
         if ok:
@@ -214,6 +254,18 @@ def paste_or(canvas, patch, ox, base, x_px, y_px):
     sx1, sy1 = min(w, W - px0), min(h, H - py0)
     if sx1 > sx0 and sy1 > sy0:
         canvas[py0 + sy0:py0 + sy1, px0 + sx0:px0 + sx1] |= patch[sy0:sy1, sx0:sx1]
+
+
+def shrink_cov(a, k, thr=0.4):
+    """Area reduction by an integer factor: a reduced pixel is ink when at least `thr` of its k x k block is ink. This is how a glyph drawn straight at the reduced scale looks
+    (the glyph reader's reference is drawn straight at the reduced scale), where shrink() fattens every edge by up to a reduced pixel."""
+    if k <= 1:
+        return a
+    h, w = a.shape
+    h2, w2 = h // k * k, w // k * k
+    if h2 == 0 or w2 == 0:
+        return a[:1, :1]
+    return a[:h2, :w2].reshape(h2 // k, k, w2 // k, k).mean(axis=(1, 3)) >= thr
 
 
 def shrink(a, k):

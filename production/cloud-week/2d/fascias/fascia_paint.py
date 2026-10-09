@@ -176,7 +176,12 @@ def jitter_draw(T, b, rng, n):
     if not j:
         return z
     hj = T["common_style"]["hand_jitter"]
-    z["dy"] = np.clip(rng.normal(0.0, hj["baseline_sd_mm"][0], n), -hj["baseline_clip_mm"], hj["baseline_clip_mm"])
+    dy = rng.normal(0.0, 1.0, n)
+    if n >= 3:
+        # try 2: the draws of one block are normalised to the specified SD (mean 0, SD exactly baseline_sd_mm) so that a small block, a numeral at each end of a board,
+        # does not scatter by chance into 0.2 or 2 mm: the sample SD of a block is the one the target asks for, then each glyph is clipped at +-1.6 mm
+        dy = (dy - dy.mean()) / max(float(dy.std()), 1e-6)
+    z["dy"] = np.clip(dy * hj["baseline_sd_mm"][0], -hj["baseline_clip_mm"], hj["baseline_clip_mm"])
     z["dx"] = np.clip(rng.normal(0.0, 0.5, n), -1.0, 1.0) * (hj["advance_pct"] / 100.0)      # fraction of own advance
     z["rot"] = np.clip(rng.normal(0.0, 0.5, n), -1.0, 1.0) * hj["rotation_deg"]
     z["stroke"] = np.clip(rng.normal(0.0, 0.5, n), -1.0, 1.0) * (hj["stroke_pct"] / 100.0)
