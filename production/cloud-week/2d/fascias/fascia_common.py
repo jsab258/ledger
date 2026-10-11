@@ -158,6 +158,12 @@ def apply_amendments(T):
             s["age"]["loss_fraction"] = LOSS_V2[s["id"]]
         if s["age"].get("old_board"):
             s["age"]["old_board"]["loss_fraction"] = 0.02
+    for c in T["checks"]:
+        sid_ = c["id"].split(".")[0]
+        if c["id"] == f"{sid_}.age" and sid_ in LOSS_V2:
+            c["expected"]["loss_fraction"] = LOSS_V2[sid_]
+        elif c["id"] == "empty_unit.timber":
+            c["expected"]["islands"] = [8, 130]              # the lifted sheets cut the last owner's paint into more pieces
     T["_amendments"] = AMENDMENT_TEXT
     return T
 

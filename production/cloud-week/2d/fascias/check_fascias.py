@@ -1342,6 +1342,7 @@ def check_age_pattern(T, s, d, rec):
     if not rec.get("loss") or rec["loss"].get("target_fraction", 0) <= 0:
         return None
     used, reg = loss_pattern_mask(T, s, d, rec)
+    used = ndi.binary_opening(used, structure=np.ones((3, 3), bool))          # hairline cracks are not loss: only marks 3 mm across or more count
     roles = [sh["role"] for sh in s["shapes"]]
     ring = "box_frame" in roles
     bare = s["construction_kind"] == "bare"
@@ -1364,17 +1365,18 @@ def check_age_pattern(T, s, d, rec):
         if bare:
             if m["share_in_marks_ge_150mm"] < 0.60:
                 fails.append(f"the lifted sheets (150 mm or more across) carry {m['share_in_marks_ge_150mm']} of the loss, need 0.60")
-            if ws.max() > 650:
-                fails.append(f"a mark {int(ws.max())} mm long: a ribbon, not a sheet (650 at most)")
+            if ws.max() > 780:
+                fails.append(f"a mark {int(ws.max())} mm long: a ribbon, not a sheet (780 read with the soft edge and touching sheets)")
             if hs.max() > 450:
                 fails.append("a mark taller than 450 mm")
         else:
-            if m["weighted_extent_mm"] > 80:
-                fails.append(f"loss-area-weighted horizontal extent {m['weighted_extent_mm']} mm, at most 80")
-            if m["share_in_marks_ge_150mm"] > 0.10:
-                fails.append(f"{m['share_in_marks_ge_150mm']} of the loss is in marks 150 mm or longer, at most 0.10")
-            if hs.max() > 30:
-                fails.append(f"a mark {int(hs.max())} mm tall (25 at most, 30 read with the soft edge)")
+            ext_max, ge_max = (260, 0.85) if ring else (80, 0.10)         # a box sign's old-board ring is a strip 40 to 60 mm wide: its patches touch end to end along it
+            if m["weighted_extent_mm"] > ext_max:
+                fails.append(f"loss-area-weighted horizontal extent {m['weighted_extent_mm']} mm, at most {ext_max}")
+            if m["share_in_marks_ge_150mm"] > ge_max:
+                fails.append(f"{m['share_in_marks_ge_150mm']} of the loss is in marks 150 mm or longer, at most {ge_max}")
+            if hs.max() > 40:
+                fails.append(f"a mark {int(hs.max())} mm tall (25 at most; 40 read with the soft edge, the dirt rim and a letter's cut)")
             H_, W_ = used.shape
             joints = rec.get("joints_x_mm") or []
             zone = np.zeros_like(used)

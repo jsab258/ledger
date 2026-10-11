@@ -475,7 +475,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
     weight = np.where(letter_zone, weight * 0.72, weight).astype(np.float32)
     # the bare timber's silvered strips are read by colour on the pixels a little over what is drawn (the soft edges and the checks beside them): 7 per cent under, so the read lands on the target
     # try 2 after REVIEW-v2-boards (fault 1): local patches at the foot, the ends and the joints, or on the bare timber a few lifted sheets, never ribbons
-    a1, a2, thr = fa.loss_patches(B, allowed, zone, frac * (0.93 if kind == "bare" else 1.0), bjoints, bare=(kind == "bare"))
+    a1, a2, thr = fa.loss_patches(B, allowed, zone, frac * (1.10 if kind == "bare" else 1.0), bjoints, bare=(kind == "bare"))
     S = None
     if False:
         # a letter stays readable and keeps its height: where the pattern would take more than 30 per cent of one block's lettering, or of the top or the bottom
