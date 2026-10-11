@@ -120,3 +120,11 @@ Each file is under 1 MB and is the file as published, unmodified (so a Reserved 
 | `oswald/` | Oswald[wght].ttf | 172,088 | the fish market (500 and 600), its 3 and the 7 | none |
 
 SHA-256 of each file is in `manifest.json` (`fonts`). The fonts are rendered into pictures only; the OFL puts no restriction on a picture made with a font.
+
+# Try 2: the check's result (11 October 2026, run by the coordinator after the weekend stop)
+
+Try 2's pictures were made by `fascia_age.py` (ageing that follows the damp bands, the foot and the cornice, a grey older coat, bare-wood cores), `fascia_brush.py` (brushed whitewash and glass rows), `fascia_timber.py` (the empty unit's timber and whitewash) and the changes in `fascia_paint.py`, `fascia_boards.py` and `fascia_small.py`, answering the first reviews (REVIEW-v1-boards.md, REVIEW-v1-signs-glass.md). Rebuilt on 11 October with `make_fascias.py OUT --jobs 2` (77 s, deterministic: the same pixels as the committed previews) and checked with `check_fascias.py OUT --jobs 2` (6,394 s):
+
+- **475 of 475 checks pass on the set; every one of the target's 316 check ids has a result.** `checks/check_v2.json`.
+- **Negative controls: 66 of 67 fail as they must.** The one that does not: `neg.chandler.letters_pristine`: the chandler's real lettering already carries almost no wear (loss on the letters 0.003 against 0.049 on the ground within 60 mm, ratio 0.06), so "the same board with every worn letter pixel painted back" scores nearly the same and passes the wear-with-the-ground rule. A calibration of that one rule, not a picture fault: the other nine boards' controls are caught (ratio 0.0).
+- **False failures over seeds: 4 in 800 runs (20 seeds a board, the hanging signs and glass rows included), all on the empty unit:** `empty_unit.wear.visible` at seeds 8, 9 and 15 (the marks' contrast in the base colour 0.8, 0.9 and 0.3 dE against the rule's 1) and `empty_unit.age` at seed 15 (loss 0.183 against the target's 0.17 and 0.012). The empty unit's ground is soot-dark flaked timber, where a nail hole or flake in the base colour is hard to tell from the ground. Not cured (Jafar, 11 October: no more polishing); the picture at the seed used (1) passes. For the builder: a seed other than 1 on that board may need `wear.visible` read at 0.25.
