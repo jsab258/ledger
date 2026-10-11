@@ -1,0 +1,639 @@
+{
+ "version": 1,
+ "passed": 58,
+ "failed": [],
+ "total": 58,
+ "rows": [
+  {
+   "id": "K1 height",
+   "ok": true,
+   "measured": 1081.73,
+   "expected": 1081.73,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "K1 foot diameter (the profile's r at the ground, x 2; the target's base_diameter 201.6)",
+   "ok": true,
+   "measured": 201.6,
+   "expected": 201.6,
+   "note": "a 64-gon: corners on the target's radius tol 0.7",
+   "extra": false
+  },
+  {
+   "id": "K1 profile: section through the axis against profile_rz, two-way Hausdorff and IoU",
+   "ok": true,
+   "measured": [
+    0.0,
+    1.0
+   ],
+   "expected": "<= 1.0, >= 0.995",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K1 every object a closed solid (each edge on two faces)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K1 hatching: faces of different objects in one plane, same way, overlapping > 1 mm2",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K1 file under 1 MB and 20,000 triangles",
+   "ok": true,
+   "measured": [
+    133084,
+    4480
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K1 no textures, a UV set on every mesh, materials named by what they are",
+   "ok": true,
+   "measured": [
+    "paint_black"
+   ],
+   "expected": "named, no images",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2 height",
+   "ok": true,
+   "measured": 1049.62,
+   "expected": 1049.62,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "K2 foot diameter (the profile's r at the ground, x 2; the target's base_diameter 250.0)",
+   "ok": true,
+   "measured": 249.98,
+   "expected": 250.0,
+   "note": "a 64-gon: corners on the target's radius tol 0.7",
+   "extra": false
+  },
+  {
+   "id": "K2 profile: section through the axis against profile_rz, two-way Hausdorff and IoU",
+   "ok": true,
+   "measured": [
+    0.0,
+    1.0
+   ],
+   "expected": "<= 1.0, >= 0.995",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2 every object a closed solid (each edge on two faces)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2 hatching: faces of different objects in one plane, same way, overlapping > 1 mm2",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2 file under 1 MB and 20,000 triangles",
+   "ok": true,
+   "measured": [
+    88092,
+    2944
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2 no textures, a UV set on every mesh, materials named by what they are",
+   "ok": true,
+   "measured": [
+    "paint_black"
+   ],
+   "expected": "named, no images",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K3 height",
+   "ok": true,
+   "measured": 850.0,
+   "expected": 850,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "K3 foot diameter (the profile's r at the ground, x 2; the target's base_diameter 250)",
+   "ok": true,
+   "measured": 250.0,
+   "expected": 250,
+   "note": "a 64-gon: corners on the target's radius tol 0.7",
+   "extra": false
+  },
+  {
+   "id": "K3 profile: section through the axis against profile_rz, two-way Hausdorff and IoU",
+   "ok": true,
+   "measured": [
+    0.0,
+    1.0
+   ],
+   "expected": "<= 1.0, >= 0.995",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K3 every object a closed solid (each edge on two faces)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K3 hatching: faces of different objects in one plane, same way, overlapping > 1 mm2",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K3 file under 1 MB and 20,000 triangles",
+   "ok": true,
+   "measured": [
+    25364,
+    896
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K3 no textures, a UV set on every mesh, materials named by what they are",
+   "ok": true,
+   "measured": [
+    "concrete"
+   ],
+   "expected": "named, no images",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K4 height",
+   "ok": true,
+   "measured": 1000.0,
+   "expected": 1000,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "K4 foot diameter (the profile's r at the ground, x 2; the target's base_diameter 114.3)",
+   "ok": true,
+   "measured": 114.3,
+   "expected": 114.3,
+   "note": "a 64-gon: corners on the target's radius tol 0.7",
+   "extra": false
+  },
+  {
+   "id": "K4 profile: section through the axis against profile_rz, two-way Hausdorff and IoU",
+   "ok": true,
+   "measured": [
+    0.0,
+    1.0
+   ],
+   "expected": "<= 1.0, >= 0.995",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K4 every object a closed solid (each edge on two faces)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K4 hatching: faces of different objects in one plane, same way, overlapping > 1 mm2",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K4 file under 1 MB and 20,000 triangles",
+   "ok": true,
+   "measured": [
+    19648,
+    640
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K4 no textures, a UV set on every mesh, materials named by what they are",
+   "ok": true,
+   "measured": [
+    "paint_black"
+   ],
+   "expected": "named, no images",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K5 height",
+   "ok": true,
+   "measured": 1135.0,
+   "expected": 1135.0,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "K5 foot diameter (the profile's r at the ground, x 2; the target's base_diameter 286)",
+   "ok": true,
+   "measured": 286.0,
+   "expected": 286,
+   "note": "a 64-gon: corners on the target's radius tol 0.7",
+   "extra": false
+  },
+  {
+   "id": "K5 profile: section through the axis against profile_rz, two-way Hausdorff and IoU",
+   "ok": true,
+   "measured": [
+    0.0,
+    1.0
+   ],
+   "expected": "<= 1.0, >= 0.995",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K5 nut 0: centre on the pitch circle r 124 at 45 degrees, height 14",
+   "ok": true,
+   "measured": [
+    87.681,
+    87.681,
+    14.5
+   ],
+   "expected": [
+    87.6812408671319,
+    87.68124086713189,
+    14.5
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 stud 0: tops 14 above the nut, 10 across",
+   "ok": true,
+   "measured": [
+    14.0,
+    10.0
+   ],
+   "expected": [
+    14.0,
+    10.0
+   ],
+   "note": "tol 0.8",
+   "extra": false
+  },
+  {
+   "id": "K5 nut 1: centre on the pitch circle r 124 at 135 degrees, height 14",
+   "ok": true,
+   "measured": [
+    -87.681,
+    87.681,
+    14.5
+   ],
+   "expected": [
+    -87.68124086713189,
+    87.6812408671319,
+    14.5
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 stud 1: tops 14 above the nut, 10 across",
+   "ok": true,
+   "measured": [
+    14.0,
+    10.0
+   ],
+   "expected": [
+    14.0,
+    10.0
+   ],
+   "note": "tol 0.8",
+   "extra": false
+  },
+  {
+   "id": "K5 nut 2: centre on the pitch circle r 124 at 225 degrees, height 14",
+   "ok": true,
+   "measured": [
+    -87.681,
+    -87.681,
+    14.5
+   ],
+   "expected": [
+    -87.68124086713192,
+    -87.68124086713189,
+    14.5
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 stud 2: tops 14 above the nut, 10 across",
+   "ok": true,
+   "measured": [
+    14.0,
+    10.0
+   ],
+   "expected": [
+    14.0,
+    10.0
+   ],
+   "note": "tol 0.8",
+   "extra": false
+  },
+  {
+   "id": "K5 nut 3: centre on the pitch circle r 124 at 315 degrees, height 14",
+   "ok": true,
+   "measured": [
+    87.681,
+    -87.681,
+    14.5
+   ],
+   "expected": [
+    87.68124086713188,
+    -87.68124086713192,
+    14.5
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 stud 3: tops 14 above the nut, 10 across",
+   "ok": true,
+   "measured": [
+    14.0,
+    10.0
+   ],
+   "expected": [
+    14.0,
+    10.0
+   ],
+   "note": "tol 0.8",
+   "extra": false
+  },
+  {
+   "id": "K5 lug z 420 w: proud 40 of the shaft, height 55, thickness 18, centre z",
+   "ok": true,
+   "measured": [
+    40.0,
+    55.0,
+    18.0,
+    420.0
+   ],
+   "expected": [
+    40,
+    55,
+    18,
+    420
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 lug z 420 w: the eye's hole (an interior ring in the section at y 0)",
+   "ok": true,
+   "measured": "Polygon",
+   "expected": "one hole",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K5 lug z 420 e: proud 40 of the shaft, height 55, thickness 18, centre z",
+   "ok": true,
+   "measured": [
+    40.0,
+    55.0,
+    18.0,
+    420.0
+   ],
+   "expected": [
+    40,
+    55,
+    18,
+    420
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 lug z 420 e: the eye's hole (an interior ring in the section at y 0)",
+   "ok": true,
+   "measured": "Polygon",
+   "expected": "one hole",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K5 lug z 840 w: proud 40 of the shaft, height 55, thickness 18, centre z",
+   "ok": true,
+   "measured": [
+    40.0,
+    55.0,
+    18.0,
+    840.0
+   ],
+   "expected": [
+    40,
+    55,
+    18,
+    840
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 lug z 840 w: the eye's hole (an interior ring in the section at y 0)",
+   "ok": true,
+   "measured": "Polygon",
+   "expected": "one hole",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K5 lug z 840 e: proud 40 of the shaft, height 55, thickness 18, centre z",
+   "ok": true,
+   "measured": [
+    40.0,
+    55.0,
+    18.0,
+    840.0
+   ],
+   "expected": [
+    40,
+    55,
+    18,
+    840
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 lug z 840 e: the eye's hole (an interior ring in the section at y 0)",
+   "ok": true,
+   "measured": "Polygon",
+   "expected": "one hole",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K5 every object a closed solid (each edge on two faces)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K5 hatching: faces of different objects in one plane, same way, overlapping > 1 mm2",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K5 file under 1 MB and 20,000 triangles",
+   "ok": true,
+   "measured": [
+    215912,
+    6272
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K5 no textures, a UV set on every mesh, materials named by what they are",
+   "ok": true,
+   "measured": [
+    "paint_black",
+    "bare_steel"
+   ],
+   "expected": "named, no images",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6 height",
+   "ok": true,
+   "measured": 720.0,
+   "expected": 720,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "K6 foot diameter (the profile's r at the ground, x 2; the target's base_diameter 500)",
+   "ok": true,
+   "measured": 500.0,
+   "expected": 500,
+   "note": "a 64-gon: corners on the target's radius tol 0.7",
+   "extra": false
+  },
+  {
+   "id": "K6 profile: section through the axis against profile_rz, two-way Hausdorff and IoU",
+   "ok": true,
+   "measured": [
+    0.0,
+    1.0
+   ],
+   "expected": "<= 1.0, >= 0.995",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6 every object a closed solid (each edge on two faces)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6 hatching: faces of different objects in one plane, same way, overlapping > 1 mm2",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6 file under 1 MB and 20,000 triangles",
+   "ok": true,
+   "measured": [
+    47196,
+    1408
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6 no textures, a UV set on every mesh, materials named by what they are",
+   "ok": true,
+   "measured": [
+    "paint_black"
+   ],
+   "expected": "named, no images",
+   "note": "",
+   "extra": false
+  }
+ ],
+ "not_built": [
+  "K7 horn cleat and K5's chain (the quay's, not Quay Street's)",
+  "the condition seeds (worn foot, chalk, rust): the engine's masks"
+ ]
+}

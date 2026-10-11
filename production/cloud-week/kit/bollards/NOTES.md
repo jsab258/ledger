@@ -1,0 +1,9 @@
+# Bollards (kit piece 3.4): build notes
+
+11 October 2026, cloud week 42, built by the coordinating session from `production/cloud-week/targets/bollards/target.json` (kinds K1 to K6) with no departures: `build_bollards.py` (about 20 s), `check_bollards.py` (58 of 58 in `checks/check_v1.json`), `make_row.py` (a review aid: the six side by side, scratch only) and `render_bollards.py` (the two review views).
+
+**Built** (each a solid of revolution, 64 sides, from the target's `profile_rz`, pivot the axis at the ground, z up): K1 the cast-iron domed street bollard (1081.7 high; the yard mouth), K2 the plain tapered iron bollard with its collar band and rolled foot ring (1049.6; the quay-end junction), K3 the round precast concrete bollard (850), K4 the steel tube bollard with its welded cap (1000; black by default, `--paint galvanised` for the dull zinc), K5 the bolted cast-iron chain post (1135, with its four hex nuts and studs on the 124 pitch circle at 45, 135, 225 and 315 degrees and two pairs of chain lugs with their eyes at z 420 and 840), K6 the quay mooring bollard (720). Materials: `paint_black` (24, 24, 26, the target's roughness), `concrete` (152, 150, 144, 0.9) for K3, `galvanised_steel` for K4 on request, `bare_steel` for the studs. Each .glb under 220 KB; the largest K5 at 6,272 triangles.
+
+**Not built:** K7 (the horn cleat) and K5's chain (the quay's, not Quay Street's); the conditions (worn foot, chalk, rust at the foot, scuffs): the engine's masks; K1's second casting (BGE_a, not a model by the target's rule).
+
+**Judgement:** K2's foot diameter 250 is the rolled ring's widest point (r 124.99 at z 11), not the radius at the ground (119 at z 0); the lug's D shape is a rectangle 40 x 55 with the eye (24) bored through, the target gives no outline for it (error +-30 per cent). The flat disc under each foot closes the solid at z 0.
