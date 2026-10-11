@@ -34,10 +34,10 @@ DEFAULT_OUT = "/tmp/claude-0/-home-user-ledger/6ce8dcad-c1af-55c1-8a8d-c9e781414
 
 
 def views():
-    """Metres: the row runs along x from -1.9 to 1.9 (K1, K2, K3, K4, K6, K5), the footway side is -y, z up."""
+    """Metres: the row runs along x from -2.6 to 2.6 (K1, K2, K2b, K3, K4, K6, K6b, K5), the footway side is -y, z up."""
     return [
-        {"name": "street", "loc": [0.0, -6.0, 1.6], "target": [0.0, 0.0, 0.5], "lens": 38},
-        {"name": "close", "loc": [-2.1, -1.1, 1.0], "target": [-1.9, 0.0, 0.85], "lens": 32},
+        {"name": "street", "loc": [0.0, -7.0, 1.6], "target": [0.0, 0.0, 0.5], "lens": 38},
+        {"name": "close", "loc": [1.9, -1.0, 0.85], "target": [2.6, 0.0, 0.35], "lens": 32},
     ]
 
 

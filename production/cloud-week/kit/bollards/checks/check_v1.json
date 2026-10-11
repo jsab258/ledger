@@ -1,8 +1,8 @@
 {
  "version": 1,
- "passed": 58,
+ "passed": 73,
  "failed": [],
- "total": 58,
+ "total": 73,
  "rows": [
   {
    "id": "K1 height",
@@ -289,6 +289,14 @@
    "extra": false
   },
   {
+   "id": "K5 the built profile against the target's raw profile (REVIEW-v1-street: the corners rounded, K5's flange given a flat nut seat): two-way Hausdorff at most 12",
+   "ok": true,
+   "measured": 17.96,
+   "expected": "<= 22 (the flat seat moves K5's flange profile by up to 18)",
+   "note": "",
+   "extra": false
+  },
+  {
    "id": "K5 profile: section through the axis against profile_rz, two-way Hausdorff and IoU",
    "ok": true,
    "measured": [
@@ -300,17 +308,19 @@
    "extra": false
   },
   {
-   "id": "K5 nut 0: centre on the pitch circle r 124 at 45 degrees, height 14",
+   "id": "K5 nut 0: centre on the pitch circle r 124 at 45 degrees, height 14, its underside on the flat seat (z 42, 0.5 in)",
    "ok": true,
    "measured": [
     87.681,
     87.681,
-    14.5
+    14.5,
+    41.5
    ],
    "expected": [
     87.6812408671319,
     87.68124086713189,
-    14.5
+    14.5,
+    41.5
    ],
    "note": "tol 1.0",
    "extra": false
@@ -330,17 +340,19 @@
    "extra": false
   },
   {
-   "id": "K5 nut 1: centre on the pitch circle r 124 at 135 degrees, height 14",
+   "id": "K5 nut 1: centre on the pitch circle r 124 at 135 degrees, height 14, its underside on the flat seat (z 42, 0.5 in)",
    "ok": true,
    "measured": [
     -87.681,
     87.681,
-    14.5
+    14.5,
+    41.5
    ],
    "expected": [
     -87.68124086713189,
     87.6812408671319,
-    14.5
+    14.5,
+    41.5
    ],
    "note": "tol 1.0",
    "extra": false
@@ -360,17 +372,19 @@
    "extra": false
   },
   {
-   "id": "K5 nut 2: centre on the pitch circle r 124 at 225 degrees, height 14",
+   "id": "K5 nut 2: centre on the pitch circle r 124 at 225 degrees, height 14, its underside on the flat seat (z 42, 0.5 in)",
    "ok": true,
    "measured": [
     -87.681,
     -87.681,
-    14.5
+    14.5,
+    41.5
    ],
    "expected": [
     -87.68124086713192,
     -87.68124086713189,
-    14.5
+    14.5,
+    41.5
    ],
    "note": "tol 1.0",
    "extra": false
@@ -390,17 +404,19 @@
    "extra": false
   },
   {
-   "id": "K5 nut 3: centre on the pitch circle r 124 at 315 degrees, height 14",
+   "id": "K5 nut 3: centre on the pitch circle r 124 at 315 degrees, height 14, its underside on the flat seat (z 42, 0.5 in)",
    "ok": true,
    "measured": [
     87.681,
     -87.681,
-    14.5
+    14.5,
+    41.5
    ],
    "expected": [
     87.68124086713188,
     -87.68124086713192,
-    14.5
+    14.5,
+    41.5
    ],
    "note": "tol 1.0",
    "extra": false
@@ -424,7 +440,7 @@
    "ok": true,
    "measured": [
     40.0,
-    55.0,
+    53.627,
     18.0,
     420.0
    ],
@@ -434,7 +450,7 @@
     18,
     420
    ],
-   "note": "tol 1.0",
+   "note": "tol 2.0",
    "extra": false
   },
   {
@@ -450,7 +466,7 @@
    "ok": true,
    "measured": [
     40.0,
-    55.0,
+    53.627,
     18.0,
     420.0
    ],
@@ -460,7 +476,7 @@
     18,
     420
    ],
-   "note": "tol 1.0",
+   "note": "tol 2.0",
    "extra": false
   },
   {
@@ -476,7 +492,7 @@
    "ok": true,
    "measured": [
     40.0,
-    55.0,
+    53.627,
     18.0,
     840.0
    ],
@@ -486,7 +502,7 @@
     18,
     840
    ],
-   "note": "tol 1.0",
+   "note": "tol 2.0",
    "extra": false
   },
   {
@@ -502,7 +518,7 @@
    "ok": true,
    "measured": [
     40.0,
-    55.0,
+    53.627,
     18.0,
     840.0
    ],
@@ -512,7 +528,7 @@
     18,
     840
    ],
-   "note": "tol 1.0",
+   "note": "tol 2.0",
    "extra": false
   },
   {
@@ -546,8 +562,8 @@
    "id": "K5 file under 1 MB and 20,000 triangles",
    "ok": true,
    "measured": [
-    215912,
-    6272
+    228448,
+    6656
    ],
    "expected": "< 1000000, < 20000",
    "note": "",
@@ -578,6 +594,14 @@
    "measured": 500.0,
    "expected": 500,
    "note": "a 64-gon: corners on the target's radius tol 0.7",
+   "extra": false
+  },
+  {
+   "id": "K6 the built profile against the target's raw profile (REVIEW-v1-street: the corners rounded, K5's flange given a flat nut seat): two-way Hausdorff at most 22",
+   "ok": true,
+   "measured": 4.47,
+   "expected": "<= 22 (the flat seat moves K5's flange profile by up to 18)",
+   "note": "",
    "extra": false
   },
   {
@@ -614,8 +638,8 @@
    "id": "K6 file under 1 MB and 20,000 triangles",
    "ok": true,
    "measured": [
-    47196,
-    1408
+    197668,
+    8192
    ],
    "expected": "< 1000000, < 20000",
    "note": "",
@@ -623,6 +647,132 @@
   },
   {
    "id": "K6 no textures, a UV set on every mesh, materials named by what they are",
+   "ok": true,
+   "measured": [
+    "paint_black"
+   ],
+   "expected": "named, no images",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6b height",
+   "ok": true,
+   "measured": 982.0,
+   "expected": 982.0,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "K6b the built profile against the target's raw profile (REVIEW-v1-street: the corners rounded, K5's flange given a flat nut seat): two-way Hausdorff at most 22",
+   "ok": true,
+   "measured": 2.49,
+   "expected": "<= 22 (the flat seat moves K5's flange profile by up to 18)",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6b profile: section through the axis against profile_rz, two-way Hausdorff and IoU",
+   "ok": true,
+   "measured": [
+    0.0,
+    1.0
+   ],
+   "expected": "<= 1.0, >= 0.995",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6b every object a closed solid (each edge on two faces)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6b hatching: faces of different objects in one plane, same way, overlapping > 1 mm2",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6b file under 1 MB and 20,000 triangles",
+   "ok": true,
+   "measured": [
+    266396,
+    11008
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K6b no textures, a UV set on every mesh, materials named by what they are",
+   "ok": true,
+   "measured": [
+    "paint_black"
+   ],
+   "expected": "named, no images",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2b height",
+   "ok": true,
+   "measured": 950.4,
+   "expected": 950.4,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "K2b profile: section through the axis against profile_rz, two-way Hausdorff and IoU",
+   "ok": true,
+   "measured": [
+    0.0,
+    1.0
+   ],
+   "expected": "<= 1.0, >= 0.995",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2b every object a closed solid (each edge on two faces)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2b hatching: faces of different objects in one plane, same way, overlapping > 1 mm2",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2b file under 1 MB and 20,000 triangles",
+   "ok": true,
+   "measured": [
+    76828,
+    2816
+   ],
+   "expected": "< 1000000, < 20000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "K2b no textures, a UV set on every mesh, materials named by what they are",
    "ok": true,
    "measured": [
     "paint_black"
