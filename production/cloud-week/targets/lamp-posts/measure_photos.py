@@ -156,6 +156,10 @@ def main():
     out["us01_lit_lantern"] = {"orange_pixels": int(m.sum()), "median": np.median(a[m], 0).round(0).tolist(), "p10": np.percentile(a[m], 10, 0).round(0).tolist(),
                                "p90": np.percentile(a[m], 90, 0).round(0).tolist(), "core_200_brightest": core.round(0).tolist(),
                                "note": "tone-mapped 2019 photograph, daylight white balance, overcast sky behind; the lamp type (sodium or not) is unknown; the clipped core is over-exposure"}
+    # try 2: the street's vanishing point at US01 is the reviewer's reading of 9 October (TARGET-REVIEW.md fault 1), kept as read: the panorama is not in git
+    out["us01_street_vp"] = {"vp_bearing_deg": -57.8, "vp_pitch_deg": -0.3, "arm_plan_bearing_deg": -147.8, "out_of_plane_deg": 42.1, "plane_normal_bearing_deg": -15.7,
+                             "source": "the review of 9 October 2026 (TARGET-REVIEW.md fault 1): the kerbs and parked cars of the street the column stands on vanish at bearing -57.8, pitch -0.3 in a view of yaw -40, pitch -15, 90 degrees wide; the column stands on that street's right-hand footway and its arm reaches over the carriageway, square to the kerb, so the arm points at bearing -57.8 - 90 = -147.8, 42.1 degrees out of the picture's plane toward the camera; the reviewer's reading, used here as read and NOT re-measured by this writer (the panorama is not in git)",
+                             "kind": "Photo (the reviewer's)"}
     json.dump(out, open(os.path.join(HERE, "photo_measurements.json"), "w"), indent=1)
     print("wrote photo_measurements.json")
     print("BGE sleeve width mean", out["bge_sleeve_width"]["mean_width"], "centre", out["bge_sleeve_width"]["centre_x"])

@@ -104,7 +104,7 @@ _r("sleeve_od", 124, "mm", "Photo", "BGE sleeve 123.6 +-9, rounded to 124 (the s
 _r("sleeve_height", 978, "mm", "Photo", "BGE sleeve top 978 +-10")
 _r("cone_top", 1038, "mm", "Photo", "BGE cone top 1035 to 1040 (+-10)")
 _r("shaft_od_at_cone", 68, "mm", "Photo", "BGE shaft 66 to 69 at z 1100 to 1900")
-_r("shaft_od_at_top", 60, "mm", "Derived", "linear taper from 68 at z 1044 to 61 at z 3900 (BGE), carried to the collar's foot (z 4560): 68 - 7 x (4560 - 1044) / (3900 - 1044) = 59.4; set to 60 (60.3 is a standard 2 in tube)")
+_r("shaft_od_at_top", 60, "mm", "Derived", "linear taper from 68 at z 1044 to 61 at z 3900 (BGE), carried to z 4560, where the taper line ends inside the socket: 68 - 7 x (4560 - 1044) / (3900 - 1044) = 59.4; set to 60 (60.3 is a standard 2 in tube)")
 _r("socket_top_z", 4620, "mm", "Judgement", "the socket's top and the shaft's end (variant A): the 250 mm socket sleeve of the bracket stands from z 4370 to 4620 (review point 1: US01's shaft top is the bracket's socket sleeve, about 450 mm long on that 11 m column, no step a 7 mm pixel can see, a flat top with a small chamfer into the stem); the stem rises from inside it to z 4800.8")
 _r("socket_bottom_z", 4370, "mm", "Judgement", "review point 1: socket z 4370 to 4620 (250 long)")
 _r("socket_od", 64, "mm", "Judgement", "review point 1: socket OD 64 (2 proud of a 62 shaft: with the shaft left at its measured taper, 60.2 at z 4370, it stands 3.8 proud, which a 7 mm pixel cannot see either way)")

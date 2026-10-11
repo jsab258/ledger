@@ -1,0 +1,112 @@
+[
+ {
+  "id": "GG1",
+  "file": "gg823762-orrell-station-column-level-arm-1989.jpg",
+  "page": "https://www.geograph.org.uk/photo/823762",
+  "title": "Orrell station pedestrian access",
+  "author": "Peter Whatley",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "1989-02-21",
+  "date_read": "2026-10-11",
+  "kind": "period (1989), a railway station's own approach, steel column",
+  "material": "painted steel, pale yellow, with a short dark base sleeve (a stepped column)",
+  "what_it_shows": "a slim tubular column with a dark base sleeve beside a paved ramp; the arm leaves the column top in one rounded bend and runs nearly level to a long canopy lantern lying in line with it",
+  "used": "yes: bracket (one bend, near-level arm, lantern in line), the stepped base (variant A's sleeve), reach not measurable (no scale)",
+  "elements": {
+   "bracket": "one rounded bend of centreline radius about 3 tube diameters (the review's 130 is 3 diameters of 42: agrees), then a straight arm rising 8 degrees in the picture (read on a 5 x grid: 8 px over 55); true rake 0 to 10: the amended 0 +-5 agrees, 40 does not",
+   "reach": "the lantern's rear stands about 5 tube widths from the axis (20 px at 4 px of tube), 300 mm for a 60 top: shorter than 430; the scale is the tube's own unknown width, so it is listed (PW9), not amended",
+   "lantern": "a long boat-shaped canopy in line with the arm (within 5 degrees), about 14 top widths long (57 px), 850 mm for a 60 top: longer than 550; listed (PW12)",
+   "shaft_taper": "slim and parallel at this size, no taper readable",
+   "base_door": "a dark sleeve of 55 px in a column 290 px tall (about 0.19; read off the 640 px picture): A's 978 of 5000 is 0.2: agrees; no door visible",
+   "root": "the sleeve stands directly in the paving, no plate: agrees"
+  }
+ },
+ {
+  "id": "GG2",
+  "file": "gg823771-appley-bridge-station-column-level-arm-1989.jpg",
+  "page": "https://www.geograph.org.uk/photo/823771",
+  "title": "Appley Bridge station",
+  "author": "Peter Whatley",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "1989-04-18",
+  "date_read": "2026-10-11",
+  "kind": "period (1989), a railway platform's own lighting, steel column",
+  "material": "painted steel, orange-red, with a black base sleeve about 0.3 of the column's visible height",
+  "what_it_shows": "a stepped tubular column: a slim upper tube about 5 px wide steps out to about 7 px a third of the way down, a black sleeve at the foot, a rounded elbow at the top and a long pale canopy lantern lying on the arm; a station sign is masked grey in the crop",
+  "used": "yes: bracket, base sleeve, lantern in line; paint colour is a railway's, not copied",
+  "elements": {
+   "bracket": "a rounded elbow of centreline radius about 2 tube diameters (read on a 6 x grid), then an arm of 14 px that is the lantern's own spigot length; the lantern's top edge rises 11 degrees in the picture (12 px over 60): true rake 0 to 10; the lantern is in line within 5 degrees",
+   "reach": "the lantern's rear stands about 2.8 tube widths from the axis (14 px at 5 px): 170 mm for a 60 top, 250 for an 89 top: much shorter than 430; listed (PW9), not amended (the scale is the unknown tube width)",
+   "lantern": "a long canopy about 12 top widths long (60 px): 720 mm for a 60 top; longer than 550; listed (PW12)",
+   "shaft_taper": "a visible STEP in the tube's diameter (5 px to 7 px), not a taper: a stepped column as BGE and US01 show (A's cone is such a step)",
+   "base_door": "a black sleeve of about 75 px in a column about 322 px tall (0.23): A's 0.2 agrees; no door visible; the step in the tube above it is a second change of diameter",
+   "root": "stands in a gravel and ash surface: no plate"
+  }
+ },
+ {
+  "id": "GG3",
+  "file": "gg1485479-birchington-concrete-column-elbow-2008.jpg",
+  "page": "https://www.geograph.org.uk/photo/1485479",
+  "title": "Old rare lamp post on Shakespeare Road, Birchington",
+  "author": "Robert Lamb",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "2008-06-14",
+  "date_read": "2026-10-11",
+  "kind": "later photograph of an object the photographer calls old and rare: a precast concrete column with its original 1960s lantern and an anti-glare shield (not a replacement by his word: 'an old lantern ... mounted upon a concrete column'); a mid-1960s to 1970s fitting that stood in 1990 and is not modern replacement stock",
+  "material": "precast concrete column, painted steel bracket and lantern",
+  "what_it_shows": "a concrete column rising to a mitred elbow, a straight arm and a long canopy lantern lying in line with it; an anti-glare plate hangs down at the lantern's rear",
+  "used": "yes: bracket (an angular elbow, arm and lantern in line), the shaft's top width, lantern length; the lamp type (sodium or not) is not stated",
+  "elements": {
+   "bracket": "a mitred elbow, centreline radius about 55 (+-30; one diameter); the arm climbs 19 degrees in a picture taken looking up about 35 degrees, which a level arm pointing partly toward the camera shows: true rake 0 to 10; the lantern lies in line within 5 degrees: agrees with the amended 90 degree bend and level arm (the radius 130 is looser than this elbow: PW11)",
+   "reach": "the lantern's rear stands about 4.3 shaft-top widths from the axis, 430 to 540 for a top of 100 to 125: agrees with 430",
+   "lantern": "about seven column-top widths long (700 to 875 for a top of 100 to 125): longer than 550; listed, not amended",
+   "shaft_taper": "the shaft is about 10 px wide at the top and 13 px a third of the way down in a picture looking up: a foot about 1.7 to 2 times the top (looking up inflates it), agrees with 220 over 125 (1.76)",
+   "base_door": "a small pale plate low on the shaft, unreadable: the door is not seen",
+   "root": "the foot is out of frame"
+  }
+ },
+ {
+  "id": "GG4",
+  "file": "gg1479864-chigwell-concrete-column-curved-arm-2009.jpg",
+  "page": "https://www.geograph.org.uk/photo/1479864",
+  "title": "Lovely old 1950s/60s streetlight on Chigwell Road",
+  "author": "Robert Lamb",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "2009-06-14",
+  "date_read": "2026-10-11",
+  "kind": "later photograph of an object unchanged since the period by the photographer's word: 'vintage 1950s/60s concrete lampposts ... one of many that still retains its original low pressure sodium lamp'; the only reached photograph that names a low-pressure sodium lamp on a concrete column",
+  "material": "precast concrete column with a steel arm",
+  "what_it_shows": "a slim concrete column with a curved gooseneck arm and a small lantern at its end, dusk, a bus stop sign at its foot",
+  "used": "yes, as the disagreement: a curved arm, not an angular one; the column is slim and tapers little over the visible height",
+  "elements": {
+   "bracket": "a smooth curve (gooseneck), not a level arm: DISAGREES with the amended angular bracket; recorded as PW10, not written out (no number readable)",
+   "reach": "the lantern's centre stands about 5 shaft-top widths out",
+   "lantern": "small and set across the arm's end: a different, earlier pattern",
+   "shaft_taper": "slim at the top, no readable taper",
+   "base_door": "not visible",
+   "root": "not visible"
+  }
+ },
+ {
+  "id": "GG5",
+  "file": "gg2049282-coundon-concrete-column-hooked-top-2010.jpg",
+  "page": "https://www.geograph.org.uk/photo/2049282",
+  "title": "Rosslyn Avenue, Coundon",
+  "author": "John Brightley",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "2010-08-31",
+  "date_read": "2026-10-11",
+  "kind": "later photograph of an old precast pattern that stood in 1990 ('a style of concrete lamp post that has been replaced in many other locations because of the risk of concrete failure': this one is a survivor, so unchanged); a suburban street; the lantern's age is not stated",
+  "material": "precast concrete column with a hooked steel top",
+  "what_it_shows": "a tall slim concrete column, a hooked bracket curling over to a downward-facing lantern; pavement and kerb at its foot",
+  "used": "yes, as a disagreement and for the proportions: the shaft tapers visibly from foot to top; the foot stands on the pavement with no plate",
+  "elements": {
+   "bracket": "a hook curving over, not a level arm: DISAGREES, PW10",
+   "reach": "about 3 shaft-top widths from the axis to the lantern's centre",
+   "lantern": "a small pot-shaped lantern on a hook: another pattern",
+   "shaft_taper": "a straight taper read on ten rows: 8 px across at the top (y 100), 9 at y 130, 10 at y 200, 11 at y 250 and 13 near the foot (y 400): a foot 1.6 times the top (the target's 220 over 125 is 1.76): agrees within the reading",
+   "base_door": "a plain square foot, no visible door at this size",
+   "root": "planted straight into the pavement, no plate or collar: agrees"
+  }
+ }
+]

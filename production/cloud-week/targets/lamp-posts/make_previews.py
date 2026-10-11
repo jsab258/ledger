@@ -2,6 +2,7 @@
 """Re-makes the reduced reference crops and overlays of TARGET.md (lamp-posts family).
 
     /home/user/.bpyenv/bin/python make_previews.py PANO_DIR [OUT_DIR]
+    /home/user/.bpyenv/bin/python make_previews.py --overlays-only      (try 2: the Hook-sheet slot with the main build and the US01 3D fit; no panorama needed)
 
 PANO_DIR holds Poly Haven's tone-mapped JPGs (CC0, Andreas Mischok, 8192 x 4096): tm_bethnal_green_entrance.jpg and tm_urban_street_01.jpg.
 OUT_DIR defaults to production/previews/cloud-week/refs/lamp-posts/. Every crop is of the object only: signs that carry text, a telephone number or a drawing are masked
@@ -21,8 +22,8 @@ import lamp_lib as L  # noqa: E402
 import target_drawing as TD  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
-PANO = sys.argv[1]
-OUT = sys.argv[2] if len(sys.argv) > 2 else os.path.join(ROOT, "production", "previews", "cloud-week", "refs", "lamp-posts")
+PANO = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("--") else None
+OUT = sys.argv[2] if len(sys.argv) > 2 and not sys.argv[2].startswith("--") else os.path.join(ROOT, "production", "previews", "cloud-week", "refs", "lamp-posts")
 os.makedirs(OUT, exist_ok=True)
 T = TD.load()
 PF = T["photo_frames"]
@@ -143,7 +144,7 @@ def hook_overlay():
     gy = 0.065
     ox = Image.new("RGBA", sheet.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(ox)
-    for p in views["A_side_elevation"]["polys"]:
+    for p in views["C_side_elevation"]["polys"]:     # the main build (precast concrete, since try 2)
         for g in TD.polys_of(p["geom"]):
             pts = [proj((8.0, gy + v / 1000.0, 3.725 - u / 1000.0)) for u, v in g.exterior.coords]
             d.polygon(pts, fill=(255, 40, 40, 150), outline=(255, 255, 0, 255))
@@ -155,6 +156,28 @@ def hook_overlay():
     return out, proj((8.0, gy, 3.725)), proj((8.0, gy + 5.0, 3.725))
 
 
+def us01_fit_overlay():
+    """lays the 3D fits of the US01 bracket on the reduced elevation (no panorama needed): the observed stem and arm points (green), the free fit with the arm at the street's bearing -147.8 and a LEVEL
+    arm (red), the same forced to 40 degrees (blue), and the first try's reading in the picture's plane with a free rake (yellow)"""
+    import lamp_us01 as U
+    f = PF["US01_ARM"]
+    im = Image.open(os.path.join(OUT, f["file"])).convert("RGB")
+    arr = np.asarray(im).astype(float)
+    lum = 0.2126 * arr[..., 0] + 0.7152 * arr[..., 1] + 0.0722 * arr[..., 2]
+    obs = U.observed(lum, f["x0_mm"], f["z1_mm"], f["mm_per_px"])
+    d = ImageDraw.Draw(im)
+    px = lambda p: ((p[0] - f["x0_mm"]) / f["mm_per_px"], (f["z1_mm"] - p[1]) / f["mm_per_px"])  # noqa: E731
+    for rk, beta, col in ((0, -147.8, (255, 40, 40)), (40, -147.8, (60, 120, 255))):
+        p, res = U.fit_free(obs, beta, rk)
+        d.line([px(q) for q in U.free_curve(p[0], p[1], p[2], rk, beta)], fill=col, width=2)
+    p, res = U.fit_free(obs, -105.7, None)
+    d.line([px(q) for q in U.free_curve(p[0], p[1], p[2], p[3], -105.7)], fill=(255, 220, 0), width=1)
+    for o in obs:
+        x, y = px(o)
+        d.ellipse([x - 2, y - 2, x + 2, y + 2], outline=(0, 255, 0))
+    return im
+
+
 def save(arr_or_im, name):
     path = os.path.join(OUT, name)
     arr = np.asarray(arr_or_im) if not isinstance(arr_or_im, np.ndarray) else arr_or_im
@@ -163,7 +186,18 @@ def save(arr_or_im, name):
     return path
 
 
+def overlays_only():
+    """the two overlays that need no panorama: the Hook-sheet slot (the main build, C) and the US01 3D fit"""
+    hk, base, top = hook_overlay()
+    save(np.asarray(hk), "hook-sheet-slot-x8-east-target-on-sheet.jpg")
+    print("slot on the 1600 x 850 sheet: foot", [round(v) for v in base], "lantern-level", [round(v) for v in top])
+    save(np.asarray(us01_fit_overlay()), "us01-bethnal-green-bent-arm-3d-fit-on-photo.jpg")
+
+
 def main():
+    if "--overlays-only" in sys.argv:
+        overlays_only()
+        return
     sheet = bge_strips()
     save(sheet, PF["BGE_STRIPS"]["file"])
     im, s, xc = overlay_on_strips(sheet)
@@ -174,9 +208,7 @@ def main():
     save(arm, PF["US01_ARM"]["file"])
     save(lit, PF["US01_LIT"]["file"])
     save(sl, PF["US01_SLEEVE"]["file"])
-    hk, base, top = hook_overlay()
-    save(np.asarray(hk), "hook-sheet-slot-x8-east-target-on-sheet.jpg")
-    print("slot on the 1600 x 850 sheet: foot", [round(v) for v in base], "lantern-level", [round(v) for v in top])
+    overlays_only()
 
 
 if __name__ == "__main__":

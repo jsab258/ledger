@@ -1,24 +1,26 @@
 {
  "family": "lamp-posts",
- "title": "Quay Street's lamp posts: the target (cloud week 42, 9 October 2026)",
+ "title": "Quay Street's lamp posts: the target (cloud week 42, try 2, 11 October 2026)",
  "written": "2026-10-09",
+ "rewritten": "2026-10-11 (try 2: the review of 9 October applied)",
  "units": {
   "length": "millimetres in this file unless a key says metres (_m)",
   "glb": "metres, z up, scale 1",
   "frame": "origin on the column's vertical axis at the footway surface; +y toward the carriageway (the lantern side); x along the street; z up; for the west side's columns the whole piece is turned 180 degrees about z so that +y still points at the road",
   "pivot": "the axis at z = 0 (the footway surface); the sleeve runs 150 mm below it, hidden"
  },
- "summary_line": "Quay Street's four lamp posts (x 8, 18, 28, 38, alternate sides) are painted-steel stepped columns of the kind the 2019 photographs show: a black sleeve 124 mm across and 978 high with a 60 mm cone and a ring line, a shaft tapering from 68 to 60 mm to a collar at 4.6 m, a plain bent-arm bracket (a 42 mm stem, one 90 mm bend, a straight arm raked 40 degrees) entering the rear boss of a boat-shaped aluminium canopy (550 x 300 x 200, its top at 5000, centred 500 out) over a yellowed clear bowl with a 54 x 310 sodium lamp inside it, the lantern's long side along the arm (the scene had it along the street), a flush door 100 x 500 at z 400, a 90 x 45 reference plate 'LC n' and no maker's mark; the lit lantern is orange (255, 137, 0) with a yellower lamp, the scene's (255, 219, 0) being the colour of 585 nm, not 589; the approved Hook sheet shows no column at all, and no reachable photograph is of 1990, so every length from the photographs is +-7 % and the choice of steel over the earlier research's concrete is Judgement (concrete is written out as variant C).",
- "no_period_photograph": true,
+ "summary_line": "Quay Street's four lamp posts (x 8, 18, 28, 38, alternate sides) are precast concrete columns, the main build since the review of 9 October: a square shaft 220 at the foot tapering to 125 at 4.62 m with 15 mm chamfered arrises, a door recess 120 x 330 with a blank steel plate at z 450 to 780, a 90 x 45 reference plate 'LC n', and a black cast cap carrying a plain bent-arm bracket (a 48 stem, ONE 90 degree bend of radius 130, a straight LEVEL arm reaching 430 from the axis) into the rear boss of a boat-shaped aluminium canopy (550 x 300 x 200, its top at 5000, centred 705 out, the lantern in line with the arm) over a yellowed clear bowl with a 54 x 310 sodium lamp and a U-shaped arc tube inside it; the painted-steel stepped column of the 2019 photographs (a 124 sleeve 978 high, a 60 mm cone, a 68-to-60 shaft, a 250 socket sleeve for the same bracket) is kept in full as the alternative; the lit lantern is orange (255, 137, 0), the scene's (255, 219, 0) being the colour of 585 nm, not 589; no photograph of a concrete column with a sodium lantern taken before 2000 was found (three of 1989 show steel columns with near-level arms and the lantern in line; the concrete ones are of 2008 to 2010, original lanterns by their photographers' word), so every concrete length is Judgement within the photographs' span.",
+ "no_period_photograph_of_a_concrete_column_with_sodium_lantern": true,
+ "period_photographs_of_steel_columns": true,
  "decision_type": {
-  "main": "A: a painted-steel stepped column (124 mm black sleeve 978 high, a cone, a 68-to-60 mm tapering shaft, a collar), a plain bent-arm bracket (a vertical stem, one tight bend, a straight arm raked 15 degrees) and a boat-shaped aluminium canopy over a deep yellowed clear bowl, the lamp's long axis along the arm; 4 columns at x 8, 18, 28, 38, alternate sides",
+  "main": "C: a precast concrete column (a square shaft 220 at the foot tapering to 125 at 4620, arrises chamfered 15, planted), a cast-steel cap and a plain bent-arm steel bracket (a 48 stem, ONE 90 degree bend of radius 130, a straight LEVEL arm 300 long reaching 430 from the axis) entering the rear boss of a boat-shaped aluminium canopy (550 x 300 x 200, its top at 5000, its centre 705 out) over a deep yellowed clear bowl with a 54 x 310 sodium lamp and a U-shaped arc tube inside it, the lamp's long axis along the arm; 4 columns at x 8, 18, 28, 38, alternate sides",
   "alternatives": [
-   "C: precast concrete shaft with the same bracket and lantern (the earlier research's type; no photograph; build only if ruled)",
+   "A: painted-steel stepped column (124 sleeve, cone, 68-to-60 shaft, a 250 socket) with the same bracket geometry and lantern (written in full; built only if ruled in)",
    "P: post-top dish on the same lower column (what BGE shows; not placed)",
    "W1: a wall bracket for the same lantern (optional; not placed)"
   ],
-  "why_A_is_main": "it keeps what the scene, the recipe (accepted work) and the 2019 photographs (steel tubes, the only column photographs reached) share, corrects what the photographs show otherwise (sleeve, taper, bent arm, lantern along the arm), and leaves the concrete variant as a ruled-in alternative: the earlier research's concrete is not shown by any photograph reached",
-  "who_decides": "the builder builds A; the director or Jafar may rule C in (a different shaft, door plate and paint; the same bracket, lantern, light and places)"
+  "why_C_is_main": "review fault 2 (9 October): the earlier research (street-clutter-1990, section 3) says precast concrete into the 1980s; the steel form rested on 2019 London photographs that may be replacements; DECISIONS.md 9 October 12:29 records the swap as a session decision Jafar can overturn",
+  "who_decides": "the builder builds C; Jafar may rule A in (one line on his page: 'The street's lamp columns: concrete (recommended) or black steel')"
  },
  "what_the_sheets_show": {
   "approved_sheet": "production/reference/hook-sheet.png (pass 4, approved 22 September 2026; the reduced copy production/previews/hook-sheet-2026-10-05.jpg) shows NO lighting column and NO bracket lamp: read at full size on 9 October (the only vertical on its skyline is a mast on the far hill); production/reference/retired-sheet-inheritance.md row 4 and game-design/research/GOVERNS.md say the same",
@@ -683,6 +685,15 @@
     180.0
    ],
    "note": "tone-mapped 2019 photograph, daylight white balance, overcast sky behind; the lamp type (sodium or not) is unknown; the clipped core is over-exposure"
+  },
+  "us01_street_vp": {
+   "vp_bearing_deg": -57.8,
+   "vp_pitch_deg": -0.3,
+   "arm_plan_bearing_deg": -147.8,
+   "out_of_plane_deg": 42.1,
+   "plane_normal_bearing_deg": -15.7,
+   "source": "the review of 9 October 2026 (TARGET-REVIEW.md fault 1): the kerbs and parked cars of the street the column stands on vanish at bearing -57.8, pitch -0.3 in a view of yaw -40, pitch -15, 90 degrees wide; the column stands on that street's right-hand footway and its arm reaches over the carriageway, square to the kerb, so the arm points at bearing -57.8 - 90 = -147.8, 42.1 degrees out of the picture's plane toward the camera; the reviewer's reading, used here as read and NOT re-measured by this writer (the panorama is not in git)",
+   "kind": "Photo (the reviewer's)"
   }
  },
  "photographs_win": [
@@ -698,7 +709,7 @@
    "id": "PW2",
    "what": "the bracket",
    "scene": "a swan neck of three short cylinders on a quarter circle, rising over the lantern and dropping into it (the code's comment: 'a straight bracket reads as a modern column')",
-   "photograph": "US01: a vertical stem, one tight bend, a straight raked arm entering the lantern's rear end; R07 reads 'plain bent-arm lighting' (production/reference/photographs.md)",
+   "photograph": "US01: a vertical stem, one bend, a straight arm (level, read in 3D) entering the lantern's rear end; the 1989 stations the same; R07 reads 'plain bent-arm lighting' (production/reference/photographs.md)",
    "chose": "the bent arm",
    "kind": "Photo + Read"
   },
@@ -730,9 +741,49 @@
    "id": "PW6",
    "what": "the column's concrete or steel",
    "scene": "steel (surface 'metal')",
-   "photograph": "none of the period; the 2019 photographs show steel; the earlier research says concrete",
-   "chose": "steel main, concrete as variant C: unsettled",
+   "photograph": "the 2019 photographs show steel (not period evidence for the type); the earlier research says concrete; the period photographs of 1989 show steel stepped columns at two railway stations; the 'unchanged object' photographs of 2008 to 2010 show concrete columns with their original sodium lanterns (TARGET.md section 0.5)",
+   "chose": "precast concrete main (C), steel as the variant (A): review fault 2; DECISIONS.md 9 October 12:29",
    "kind": "Judgement"
+  },
+  {
+   "id": "PW8",
+   "what": "the bracket's rake",
+   "scene": "a swan neck rising over the lantern; try 1 of this target read 40 degrees from US01's apparent slope",
+   "photograph": "US01's 41.7 degrees is perspective: its arm points 35 to 42 degrees toward the camera (the street's vanishing point) and the camera looks up 45 degrees, so the true rake is 0 to 7 and the lantern lies on the arm's line; the 1989 photographs of two steel columns (Orrell, Appley Bridge) show arms rising 10 degrees or less in the picture with the lantern in line; the concrete column at Birchington (2008) shows a mitred elbow and an arm that climbs 19 degrees in a picture taken looking up 35 degrees, the lantern in line",
+   "chose": "rake 0 (+-5): one 90 degree bend and a level arm, the lantern level and coaxial",
+   "kind": "Photo (3D reading) + lead"
+  },
+  {
+   "id": "PW9",
+   "what": "the bracket's reach",
+   "scene": "outreach_m 0.5 to the lantern's CENTRE (the stand-in's trade guess), which put the lantern's rear 225 from the axis",
+   "photograph": "the earlier research (Read): the arm reaches 1 ft 4 in to 1 ft 6 in (406 to 457) to the spigot; US01's reach to the boss is 0.12 to 0.14 of the column's height (0.6 to 0.7 m at 5 m); Birchington (2008): the lantern's rear stands about 4.3 column-top widths from the axis, 430 to 540 for a top of 100 to 125; the two 1989 steel columns on railway premises show 2.8 and 5 tube widths (170 to 300 mm for a 60 tube): shorter, with an unknown scale, so not followed",
+   "chose": "430 to the spigot (the lantern's rear), 705 to its centre, 980 to its front end",
+   "kind": "Read + Photo"
+  },
+  {
+   "id": "PW10",
+   "what": "the arm's form on a concrete column",
+   "scene": "a swan neck",
+   "photograph": "Birchington (2008): a mitred angular elbow and a straight arm; Chigwell Road (2009) and Coundon (2010): a curved gooseneck arm; the lead: 'angular top-entry brackets' on 1960s to 1970s 5 m concrete columns",
+   "chose": "the review's angular form (one bend, level arm) stays the main build; the curved arm is not written out (no number could be read off the two curved ones) and is listed as unsettled",
+   "kind": "Photo (3 photographs, 640 px)"
+  },
+  {
+   "id": "PW11",
+   "what": "the bend's radius",
+   "scene": "the review: 130, three tube diameters",
+   "photograph": "Birchington: a mitred elbow, centreline radius about 55 (+-30, one diameter); Appley Bridge (1989): a rounded elbow of about 2 to 3 tube diameters; Orrell (1989): about 2 diameters",
+   "chose": "130 as the review gives it, inside the span of the three; the check's tolerance is widened to +-75 so that a mitred elbow of 55 passes",
+   "kind": "Photo + Judgement"
+  },
+  {
+   "id": "PW12",
+   "what": "the lantern's length",
+   "scene": "0.55 along the arm (a stand-in's box; the research estimates 600 to 700)",
+   "photograph": "Birchington (2008) about 7 column-top widths long; Orrell and Appley Bridge (1989) 12 to 14 widths of a slim steel tube: 700 to 880 mm for tops of 60 to 125; the scale is each column's own unknown width",
+   "chose": "550 kept (the review accepts the box; the scale error of one 640 px picture is as big as the difference); the first thing to settle from the PC: scale the lantern's y stations about the rear end (a one-parameter change)",
+   "kind": "Photo (qualitative) + Read"
   },
   {
    "id": "PW7",
@@ -744,27 +795,183 @@
   }
  ],
  "variants": {
-  "A": {
-   "id": "A",
-   "name": "steel bent-arm column (main)",
-   "build": true,
-   "count_in_street": 4
-  },
   "C": {
    "id": "C",
-   "name": "concrete shaft, steel bent-arm bracket, same lantern",
-   "build": false,
-   "why": "the earlier research (street-clutter-1990, section 3) names precast concrete columns with sodium lanterns as the commonest of the period; NO photograph of one was reached; every number is Judgement or the research's",
-   "frame": "as A: axis at the footway, z up, +y to the carriageway",
+   "name": "precast concrete column, steel bent-arm bracket, the lantern (the main build since try 2)",
+   "build": true,
+   "count_in_street": 4,
+   "why": "review fault 2: the earlier research (street-clutter-1990, section 3) names precast concrete columns with sodium lanterns as the commonest of the period and the 2019 steel photographs are not period evidence; the DECISIONS entry of 9 October 12:29 makes it the main build, a session decision Jafar can overturn; its numbers are Judgement or the research's except where the period and 'unchanged object' photographs of try 2 say otherwise (TARGET.md section 0.5)",
+   "frame": "as A: axis at the footway, z up, +y to the carriageway; the section is square to the street (faces at +-x and +-y)",
    "shaft": {
     "section": "square, arrises chamfered",
+    "points_z_side_chamfer": [
+     [
+      -150,
+      220,
+      15
+     ],
+     [
+      0,
+      220,
+      15
+     ],
+     [
+      4620,
+      125,
+      15
+     ]
+    ],
     "side_at_z0": 220,
     "side_at_top": 125,
     "top_z": 4620,
     "chamfer": 15,
     "hidden_root": 150,
-    "taper": "linear in plan, none in the arrises' size",
-    "kind": "Judgement: the research's '20 to 25 cm at the foot' (Read) and 'square or tapered in section' (uncertain)"
+    "taper": "linear in z between the listed points: the side narrows 20.6 mm a metre (95 over 4620), both pairs of faces alike; the 15 chamfers are the same size at every height",
+    "top_face": "flat, with a 5 mm chamfer all round its edge",
+    "top_face_chamfer_mm": 5,
+    "root": "the shaft is planted: the lowest 150 mm are hidden below the footway; no base plate, no collar: the paving is cut round it with a 10 to 15 mm joint of dark grit mortar (as A's sleeve; Photo, BGE: block paving cut round a steel sleeve; no photograph of a concrete column's root was measured)",
+    "kind": "Judgement: the research's '20 to 25 cm at the foot' (Read) and 'square or tapered in section' (uncertain); the photographs of try 2 agree with a plain tapering square shaft, see TARGET.md"
+   },
+   "cap": {
+    "od": 90,
+    "height": 30,
+    "z": [
+     4620,
+     4650
+    ],
+    "kind": "cast steel cap, black paint, seated on the top face; the stem passes through its centre (review F2)"
+   },
+   "bracket": {
+    "tube_od_stem": 48,
+    "centreline_yz": [
+     [
+      0.0,
+      4560.0
+     ],
+     [
+      0.0,
+      4600.0
+     ],
+     [
+      0.0,
+      4640.0
+     ],
+     [
+      0.0,
+      4680.0
+     ],
+     [
+      0.0,
+      4720.0
+     ],
+     [
+      0.0,
+      4760.0
+     ],
+     [
+      0.0,
+      4800.8
+     ],
+     [
+      1.112,
+      4817.768
+     ],
+     [
+      4.43,
+      4834.446
+     ],
+     [
+      9.896,
+      4850.549
+     ],
+     [
+      17.417,
+      4865.8
+     ],
+     [
+      26.864,
+      4879.939
+     ],
+     [
+      38.076,
+      4892.724
+     ],
+     [
+      50.861,
+      4903.936
+     ],
+     [
+      65.0,
+      4913.383
+     ],
+     [
+      80.251,
+      4920.904
+     ],
+     [
+      96.354,
+      4926.37
+     ],
+     [
+      113.032,
+      4929.688
+     ],
+     [
+      130.0,
+      4930.8
+     ],
+     [
+      163.333,
+      4930.8
+     ],
+     [
+      196.667,
+      4930.8
+     ],
+     [
+      230.0,
+      4930.8
+     ],
+     [
+      263.333,
+      4930.8
+     ],
+     [
+      296.667,
+      4930.8
+     ],
+     [
+      330.0,
+      4930.8
+     ],
+     [
+      363.333,
+      4930.8
+     ],
+     [
+      396.667,
+      4930.8
+     ],
+     [
+      430.0,
+      4930.8
+     ]
+    ],
+    "stem_from_z": 4560,
+    "stem_to_z": 4800.8,
+    "bend_radius": 130,
+    "bend_turn_deg": 90,
+    "rake_deg": 0,
+    "arm_start": [
+     130.0,
+     4930.8
+    ],
+    "arm_end": [
+     430,
+     4930.8
+    ],
+    "arm_length": 300.0,
+    "note": "a 48 OD steel stem rising from the top face's centre (through the cap), the same 90 degree bend of radius 130 and level arm as A: identical y-z centreline above z 4620; its lowest 60 mm are cast into the concrete; painted black like A's paint"
    },
    "door": {
     "recess": {
@@ -781,15 +988,125 @@
      "height": 342,
      "thickness": 3,
      "proud": 3,
-     "screws": 2,
-     "lettering": "none (no maker's name)"
+     "z": [
+      444,
+      786
+     ],
+     "screws": {
+      "count": 2,
+      "head_od": 10,
+      "z": [
+       469,
+       761
+      ],
+      "from_ends": 25,
+      "kind": "round-headed hex-socket screw, blank"
+     },
+     "corner_radius": 10,
+     "lettering": "none (no maker's name, no cast mark)"
     },
-    "face": "-y"
+    "face": "-y",
+    "centre_azimuth_deg_from_plus_y": 180,
+    "corner_note": "the recess is square-cornered with 6 mm radii, the steel plate's corners are rounded to 10 (Judgement)"
    },
-   "top": "flat, a 60 mm collar-less seat; the bracket tube (OD 48) enters the top face at the centre (top entry) and the same bend and rake as A follow",
-   "bracket_stem_od": 48,
-   "paint": "none: bare concrete (concrete_srgb) with algae and lime marks",
-   "plate_number": "as A: 90 x 45 white plate at z 2160 on +y"
+   "number_plate": {
+    "on": "the +y face",
+    "z_centre": 2160,
+    "size": [
+     90,
+     45
+    ],
+    "thickness": 1.2,
+    "proud": 1.4,
+    "flat": true,
+    "fixing": "two domed rivets 5 across at 8 from each end",
+    "text": "LC n as A's"
+   },
+   "plate_number": "as A: 90 x 45 white plate at z 2160 on +y, flat on the concrete face",
+   "paint": "none: bare concrete (c_albedo_srgb) with algae and lime marks; the cap, stem and arm are painted black",
+   "materials": {
+    "concrete": {
+     "srgb": [
+      146,
+      143,
+      136
+     ],
+     "roughness": 0.9,
+     "metal": 0.0,
+     "paint": "none"
+    }
+   },
+   "wear": [
+    {
+     "id": "algae",
+     "where": "green algae on the -y face (the shaded face) from the footway to z 700, patchy, strongest below z 300; a lighter film on the other three faces to z 350",
+     "colour": [
+      86,
+      104,
+      70
+     ],
+     "strength": 0.5,
+     "kind": "Judgement (review F2); the photographs of try 2 show dark staining low down on the shaded side"
+    },
+    {
+     "id": "lime_streaks",
+     "where": "from the top face and the cap: 6 to 10 vertical lime streaks 30 to 400 long, 4 to 20 wide, pale (190, 188, 180) on every face, strongest under the cap",
+     "colour": [
+      190,
+      188,
+      180
+     ],
+     "kind": "Judgement (review F2)"
+    },
+    {
+     "id": "rust_bleed",
+     "where": "under the door plate's two screws on -y: two streaks 60 to 200 long, 4 to 8 wide, rust brown",
+     "colour": [
+      94,
+      58,
+      40
+     ],
+     "kind": "Judgement (review F2)"
+    },
+    {
+     "id": "chipped_arris",
+     "where": "LC 2 only (x 18, west): one chipped arris on the +y face's right-hand edge, 60 long x 25 wide x 8 deep at z 400 to 460, the aggregate showing",
+     "kind": "Judgement (review F2; a vehicle's knock; replaces A's dent)"
+    },
+    {
+     "id": "splash_band",
+     "where": "z 0 to 250 all round, darker grey-brown (112, 106, 98), top edge soft over 60",
+     "colour": [
+      112,
+      106,
+      98
+     ],
+     "kind": "Judgement; the wear target lists lamp-column bases among its foot-splash features"
+    },
+    {
+     "id": "canopy_streaks",
+     "where": "8 to 12 vertical grime streaks from the canopy lip down the bowl, black (40, 38, 36) at 0.35",
+     "kind": "Judgement"
+    },
+    {
+     "id": "bowl_yellowing",
+     "where": "the whole bowl, tint to bowl_unlit_srgb; 12 to 25 dark specks 1 to 3 mm inside it (dead insects)",
+     "kind": "Judgement"
+    },
+    {
+     "id": "bird_marks",
+     "where": "the canopy's top, 2 to 3 patches of 20 to 60 mm, white-grey (205, 205, 190); the cap too",
+     "kind": "Judgement; the wear target lists lamp tops as perches"
+    }
+   ]
+  },
+  "A": {
+   "id": "A",
+   "name": "steel bent-arm column (the alternative since try 2)",
+   "build": false,
+   "count_in_street": 0,
+   "built_only_if": "Jafar rules the steel column in",
+   "note_point_9": "review point 9: if A is built, use a shaft top of 64 to 68 at z 4560 (a straight taper from 68, nearly parallel) so that the stem and socket do not look heavier than the shaft; the socket is then made 4 to 6 larger than the shaft top; not applied to A's numbers because C is the main build"
   },
   "P": {
    "id": "P",
@@ -870,8 +1187,8 @@
      0,
      4350
     ],
-    "rake_deg": 10,
-    "to_y": 225,
+    "rake_deg": 0,
+    "to_y": 430,
     "strut": {
      "od": 25,
      "from": [
@@ -879,14 +1196,575 @@
       4130
      ],
      "to_arm_at_y": 140
-    }
+    },
+    "note": "review point 8: level and coaxial with the lantern (rake 0), so no kink where it enters the boss; the reach to the spigot is the column's 430"
    },
-   "lantern": "L1 unchanged, its rear boss at y 225 from the wall face; the arm rises 10 degrees from z 4350 to z 4390 at y 225, so the lantern's top stands at z 4459 (the whole lantern 541 lower than on A)",
+   "lantern": "L1 unchanged, its rear boss at y 430 from the wall face; the arm runs level at z 4350, so the lantern's top stands at z 4419 (the whole lantern 581 lower than on the column)",
    "placement": "none in today's scene; if wanted, a plain gable end, never a shopfront",
    "seen_instead": "US02 (urban_street_02, 2019): a black-backed opal half-egg bulkhead 235 tall and 210 wide (measured against the wall's 75 mm brick courses, +-10 %) on a 1970s-80s brick block, its cable in surface conduit above it: an estate fitting, not a street lantern, not copied"
   }
  },
  "geometry": {
+  "lantern": {
+   "envelope": {
+    "length_y": [
+     430,
+     980
+    ],
+    "width_x": [
+     -150,
+     150
+    ],
+    "height_z": [
+     4800,
+     5000
+    ],
+    "centre": [
+     0,
+     705,
+     4900
+    ],
+    "note": "550 x 300 x 200, the scene's box, turned so that its long side lies ALONG THE ARM (y), not along the street: the photographs win (US01, seen from below, the arm enters the lantern's rear end and the lantern lies along the arm). Since try 2 it stands 430 out at its rear (the research's 406 to 457 reach to the spigot) and 705 out at its centre: the scene's 0.5 was a trade-standard guess"
+   },
+   "canopy": {
+    "material": "painted aluminium",
+    "shell_thickness": 2.5,
+    "rim_z": 4925,
+    "lip_height": 12,
+    "dome_base_z": 4937,
+    "plan_half_width": [
+     [
+      430,
+      0
+     ],
+     [
+      435,
+      30
+     ],
+     [
+      450,
+      58
+     ],
+     [
+      475,
+      86
+     ],
+     [
+      505,
+      108
+     ],
+     [
+      545,
+      128
+     ],
+     [
+      605,
+      144
+     ],
+     [
+      655,
+      150
+     ],
+     [
+      725,
+      150
+     ],
+     [
+      805,
+      146
+     ],
+     [
+      875,
+      134
+     ],
+     [
+      930,
+      108
+     ],
+     [
+      965,
+      62
+     ],
+     [
+      980,
+      0
+     ]
+    ],
+    "top_z_along_y": [
+     [
+      430,
+      4937
+     ],
+     [
+      465,
+      4962
+     ],
+     [
+      525,
+      4990
+     ],
+     [
+      605,
+      5000
+     ],
+     [
+      705,
+      4998
+     ],
+     [
+      805,
+      4985
+     ],
+     [
+      885,
+      4963
+     ],
+     [
+      940,
+      4945
+     ],
+     [
+      980,
+      4937
+     ]
+    ],
+    "section": "at each y the dome is a half ellipse: z = dome_base_z + (top_z(y) - dome_base_z) x sqrt(1 - (x / w(y))^2), w(y) from plan_half_width and top_z(y) from top_z_along_y (both linear between their stations); the lip is the vertical band from rim_z to dome_base_z; the underside is offset 2.5 inward",
+    "gear": "the control gear lives inside the canopy (no separate external box): the canopy's highest part, 4998 to 5000, is the gear tray over y 605 to 705",
+    "underside": "white reflector (reflector_srgb) with a 45 x 60 lamp-holder pad at the rear (y 505 to 550)"
+   },
+   "bowl": {
+    "material": "clear acrylic, yellowed",
+    "shell_thickness": 3.0,
+    "rim_z": 4925,
+    "rim_inset": 8,
+    "base_z": 4800,
+    "rim_plan": "canopy plan_half_width reduced by rim_inset at every station, between y 438 and 972",
+    "base_plan_half_width": [
+     [
+      505,
+      0
+     ],
+     [
+      508,
+      22
+     ],
+     [
+      525,
+      52
+     ],
+     [
+      555,
+      70
+     ],
+     [
+      605,
+      80
+     ],
+     [
+      705,
+      82
+     ],
+     [
+      805,
+      80
+     ],
+     [
+      855,
+      70
+     ],
+     [
+      885,
+      52
+     ],
+     [
+      902,
+      22
+     ],
+     [
+      905,
+      0
+     ]
+    ],
+    "section_at_centre_half_width_z": [
+     [
+      82,
+      4800
+     ],
+     [
+      90,
+      4806
+     ],
+     [
+      100,
+      4815
+     ],
+     [
+      118,
+      4842
+     ],
+     [
+      130,
+      4872
+     ],
+     [
+      138,
+      4900
+     ],
+     [
+      142,
+      4925
+     ]
+    ],
+    "long_section_rear_curve_yz": [
+     [
+      438,
+      4925
+     ],
+     [
+      445,
+      4890
+     ],
+     [
+      467,
+      4850
+     ],
+     [
+      490,
+      4818
+     ],
+     [
+      505,
+      4800
+     ]
+    ],
+    "sides": "rise from the flat refractor base (400 x 164, corner radius 55) outward to the rim in the section's curve at every y; the rim has a 6 x 6 bead",
+    "refractor": "fine prismatic grooves on the base's underside, 2 mm pitch across the lantern (x)",
+    "loft": "ring(z): the closed outline whose half width at y is hw(y, z) = bw(y) + (rw(y) - bw(y)) x s(z), for y from y_rear(z) to 1410 - y_rear(z); bw(y) is base_plan_half_width (0 outside y 505 to 905), rw(y) is the canopy's plan half width minus rim_inset, s(z) = (section_at_centre half width at z - 82) / (142 - 82), y_rear(z) is read off long_section_rear_curve_yz at z (its front end is its mirror about the lantern's centre y 705, that is 1410 - y): at z 4800 the ring is the flat base (y 505 to 905), at z 4925 it is the rim (y 438 to 972)"
+   },
+   "lamp": {
+    "what": "a 35 W low-pressure sodium lamp: one glass jacket, 54 across and 310 long, lying along y, with the arc tube inside it",
+    "od": 54,
+    "length": 310,
+    "centre": [
+     0,
+     705,
+     4872
+    ],
+    "holder": {
+     "y": [
+      505,
+      550
+     ],
+     "x": [
+      -30,
+      30
+     ],
+     "z": [
+      4852,
+      4892
+     ]
+    },
+    "arc_tube": {
+     "what": "review point 3: a glowing U-shaped tube inside the jacket: two legs of 16 OD, centres at x +-11, z 4872, from y 555 (rear ends at the holder) forward, joined at the front by a half-torus of centreline radius 11; the whole tube spans y 555 to 845 (legs straight to y 826, the half-torus's outer surface reaching 845)",
+     "leg_od": 16,
+     "leg_x": [
+      -11,
+      11
+     ],
+     "z": 4872,
+     "y": [
+      555,
+      845
+     ],
+     "legs_straight_to_y": 826,
+     "bend_centreline_radius": 11,
+     "bend_at_front": true
+    },
+    "emissive": {
+     "arc_tube": "full strength (the reference 1.0): 91700.0 cd/m2 in the units below",
+     "jacket": "0.3 of the tube: about 27500 cd/m2 (4,550 lm over its 0.0526 m2 surface)",
+     "bowl": "about 5500 cd/m2 (80 % of the flux through about 0.21 m2 of bowl, Lambertian)",
+     "colour": "all three the one orange (255, 137, 0): a sodium lamp's own light is one orange; the yellow core of the photograph is the camera's clipping and is left to the grade",
+     "or": "both follow VignetteShot.cpp's kLampEmissiveUnitless = 1.0 times the lantern colour in linear (1, 0.25, 0) until the night audit puts the glow in units"
+    }
+   },
+   "hinge": {
+    "where": "rear of the bowl rim",
+    "knuckles": 2,
+    "x": [
+     -60,
+     60
+    ],
+    "y": 467,
+    "size": [
+     22,
+     22,
+     14
+    ],
+    "z": 4925
+   },
+   "catches": {
+    "where": "the bowl's two long sides at the rim",
+    "y": 855,
+    "size_y_z_proud": [
+     30,
+     14,
+     7
+    ],
+    "x_abs": 136.0,
+    "z": 4925,
+    "count": 2
+   },
+   "boss": {
+    "od": 60,
+    "length": 55,
+    "axis_from": [
+     0,
+     430,
+     4930.8
+    ],
+    "axis_deg_above_horizontal": 0,
+    "top_above_rear_crown_mm": 23.8,
+    "grub_screws": {
+     "count": 2,
+     "azimuths_deg_about_axis": [
+      90,
+      270
+     ],
+     "head_od": 10,
+     "proud": 3,
+     "note": "M8 socket set screws, round-headed"
+    },
+    "note": "horizontal, along +y from (0, 430, 4930.8) forward 55, coaxial with the lantern's long axis on its centreline; its top (4960.8) stands 24 above the canopy's rear crown (4937) and its front end (y 485) lies inside the dome (the dome is 4976 there), so nothing pokes through the dome"
+   },
+   "tilt_deg": 0
+  },
+  "C": {
+   "shaft": {
+    "section": "square, arrises chamfered",
+    "points_z_side_chamfer": [
+     [
+      -150,
+      220,
+      15
+     ],
+     [
+      0,
+      220,
+      15
+     ],
+     [
+      4620,
+      125,
+      15
+     ]
+    ],
+    "side_at_z0": 220,
+    "side_at_top": 125,
+    "top_z": 4620,
+    "chamfer": 15,
+    "hidden_root": 150,
+    "taper": "linear in z between the listed points: the side narrows 20.6 mm a metre (95 over 4620), both pairs of faces alike; the 15 chamfers are the same size at every height",
+    "top_face": "flat, with a 5 mm chamfer all round its edge",
+    "top_face_chamfer_mm": 5,
+    "root": "the shaft is planted: the lowest 150 mm are hidden below the footway; no base plate, no collar: the paving is cut round it with a 10 to 15 mm joint of dark grit mortar (as A's sleeve; Photo, BGE: block paving cut round a steel sleeve; no photograph of a concrete column's root was measured)",
+    "kind": "Judgement: the research's '20 to 25 cm at the foot' (Read) and 'square or tapered in section' (uncertain); the photographs of try 2 agree with a plain tapering square shaft, see TARGET.md"
+   },
+   "cap": {
+    "od": 90,
+    "height": 30,
+    "z": [
+     4620,
+     4650
+    ],
+    "kind": "cast steel cap, black paint, seated on the top face; the stem passes through its centre (review F2)"
+   },
+   "door": {
+    "recess": {
+     "width": 120,
+     "height": 330,
+     "depth": 14,
+     "z": [
+      450,
+      780
+     ]
+    },
+    "plate": {
+     "width": 132,
+     "height": 342,
+     "thickness": 3,
+     "proud": 3,
+     "z": [
+      444,
+      786
+     ],
+     "screws": {
+      "count": 2,
+      "head_od": 10,
+      "z": [
+       469,
+       761
+      ],
+      "from_ends": 25,
+      "kind": "round-headed hex-socket screw, blank"
+     },
+     "corner_radius": 10,
+     "lettering": "none (no maker's name, no cast mark)"
+    },
+    "face": "-y",
+    "centre_azimuth_deg_from_plus_y": 180,
+    "corner_note": "the recess is square-cornered with 6 mm radii, the steel plate's corners are rounded to 10 (Judgement)"
+   },
+   "number_plate": {
+    "on": "the +y face",
+    "z_centre": 2160,
+    "size": [
+     90,
+     45
+    ],
+    "thickness": 1.2,
+    "proud": 1.4,
+    "flat": true,
+    "fixing": "two domed rivets 5 across at 8 from each end",
+    "text": "LC n as A's"
+   },
+   "bracket": {
+    "tube_od_stem": 48,
+    "centreline_yz": [
+     [
+      0.0,
+      4560.0
+     ],
+     [
+      0.0,
+      4600.0
+     ],
+     [
+      0.0,
+      4640.0
+     ],
+     [
+      0.0,
+      4680.0
+     ],
+     [
+      0.0,
+      4720.0
+     ],
+     [
+      0.0,
+      4760.0
+     ],
+     [
+      0.0,
+      4800.8
+     ],
+     [
+      1.112,
+      4817.768
+     ],
+     [
+      4.43,
+      4834.446
+     ],
+     [
+      9.896,
+      4850.549
+     ],
+     [
+      17.417,
+      4865.8
+     ],
+     [
+      26.864,
+      4879.939
+     ],
+     [
+      38.076,
+      4892.724
+     ],
+     [
+      50.861,
+      4903.936
+     ],
+     [
+      65.0,
+      4913.383
+     ],
+     [
+      80.251,
+      4920.904
+     ],
+     [
+      96.354,
+      4926.37
+     ],
+     [
+      113.032,
+      4929.688
+     ],
+     [
+      130.0,
+      4930.8
+     ],
+     [
+      163.333,
+      4930.8
+     ],
+     [
+      196.667,
+      4930.8
+     ],
+     [
+      230.0,
+      4930.8
+     ],
+     [
+      263.333,
+      4930.8
+     ],
+     [
+      296.667,
+      4930.8
+     ],
+     [
+      330.0,
+      4930.8
+     ],
+     [
+      363.333,
+      4930.8
+     ],
+     [
+      396.667,
+      4930.8
+     ],
+     [
+      430.0,
+      4930.8
+     ]
+    ],
+    "stem_from_z": 4560,
+    "stem_to_z": 4800.8,
+    "bend_radius": 130,
+    "bend_turn_deg": 90,
+    "rake_deg": 0,
+    "arm_start": [
+     130.0,
+     4930.8
+    ],
+    "arm_end": [
+     430,
+     4930.8
+    ],
+    "arm_length": 300.0,
+    "note": "a 48 OD steel stem rising from the top face's centre (through the cap), the same 90 degree bend of radius 130 and level arm as A: identical y-z centreline above z 4620; its lowest 60 mm are cast into the concrete; painted black like A's paint"
+   },
+   "lantern": {
+    "same_as": "geometry.lantern"
+   },
+   "notes": "the main build since try 2; see variants.C for its materials and wear"
+  },
   "A": {
    "lower": {
     "outer_rz": [
@@ -919,15 +1797,19 @@
       1044
      ],
      [
-      30.0,
-      4560
+      30.216,
+      4370
      ],
      [
-      33.5,
-      4560
+      32.0,
+      4370
      ],
      [
-      33.5,
+      32.0,
+      4617
+     ],
+     [
+      29.0,
       4620
      ],
      [
@@ -940,7 +1822,7 @@
      "meets_ground": "the sleeve runs straight into the footway: the paving is cut round it with a 10 to 15 mm joint of dark grit mortar; no base plate, no collar, no bolts show; the skirt continues 150 mm below the footway (hidden); the footway falls 1 in 40 toward the road, which is 3 mm across the sleeve, and the column stands plumb",
      "kind": "Photo (BGE: the block paving is cut round the sleeve with a dark joint, no plate) + Judgement (the figures)"
     },
-    "note": "(radius, z) in mm of the outer surface, revolved about the axis; the sleeve to z 978, a cone to 1038, a 1.5 proud ring 1038 to 1044, the shaft's straight taper from r 34 to r 30 at z 4560, the collar r 33.5 from 4560 to 4620",
+    "note": "(radius, z) in mm of the outer surface, revolved about the axis; the sleeve to z 978, a cone to 1038 (25 degrees off the vertical), a 1.5 proud ring 1038 to 1044, the shaft's straight taper from r 34 (the same line carried on to r 30 at z 4560, hidden in the socket), the socket r 32 from 4370 to 4620 with a 3 chamfer on its top edge",
     "weld_seam": "a longitudinal weld line 1.5 wide and 0.5 proud on the shaft, on the -y face (BGE shows a faint vertical line near the shaft's edge: qualitative)",
     "sleeve_joint": "a 1 mm groove round the sleeve at z 978 where the cone cap is welded on"
    },
@@ -955,10 +1837,12 @@
     "arc_width": 100,
     "arc_deg": 92.4,
     "proud": 1.5,
+    "corner_radius": 15,
     "joint_groove": {
      "width": 2.5,
      "depth": 2.0,
-     "colour": "dark: black paint in the groove"
+     "colour": "dark: black paint in the groove",
+     "corner_radius": 15
     },
     "screws": {
      "count": 2,
@@ -973,6 +1857,7 @@
     "hinge": "concealed (no hinge shows)",
     "lock": "none visible: the door is held by its two screws",
     "lettering": "none: no maker's name, no plate on the door",
+    "corner_note": "review point 2: US01's flush door has rounded top corners: all four corners of the door and of its joint groove are rounded to radius 15 (Photo, US01, about 2 px at 7 mm)",
     "kind_of_source": "Judgement; the earlier research puts 'a door plate about 50 cm up'; US01's sleeve shows a rectangular door outline with its top edge at about 86 % of the sleeve's height (qualitative); a search lead (a modern catalogue, never a number) gives a 500 x 100 door opening 400 above the ground on a 5 m stepped steel column, which the sleeve's 978 height accommodates (door 400 to 900)"
    },
    "plate": {
@@ -998,15 +1883,29 @@
      "note": "generic: 'LC' for lamp column and the column's number in the street (placement table); no authority's name, no crest, no maker"
     }
    },
-   "collar_screws": {
-    "z": 4590,
-    "azimuths_deg_from_plus_y": [
-     45,
-     135
+   "socket": {
+    "od": 64,
+    "z": [
+     4370,
+     4620
     ],
-    "head_od": 10,
-    "proud": 3.0,
-    "kind": "M8 socket set screw, flush-ish round head"
+    "length": 250,
+    "proud_of_shaft_at_foot_mm": 1.8,
+    "top_chamfer": 3,
+    "foot_seam": "a 1 mm seam groove round its foot at z 4370 (review point 1: a seam at its foot)",
+    "set_screws": {
+     "count": 2,
+     "on": "-y",
+     "azimuth_deg_from_plus_y": 180,
+     "z": [
+      4580,
+      4420
+     ],
+     "head_od": 10,
+     "proud": 3.0,
+     "kind": "M8 socket set screw, round head; one above the other on the -y face"
+    },
+    "note": "review point 1: US01's shaft top is the bracket's socket sleeve (about 450 mm on that 11 m column), no step a 7 mm pixel can see, a flat top with a small chamfer into the stem, a seam at its foot and two set screws one above the other on one side"
    },
    "bracket": {
     "tube_od_stem": 42,
@@ -1029,413 +1928,119 @@
      ],
      [
       0.0,
-      4700
+      4720.0
      ],
      [
-      0.238,
-      4706.539
+      0.0,
+      4760.0
      ],
      [
-      0.95,
-      4713.044
+      0.0,
+      4800.8
      ],
      [
-      2.133,
-      4719.48
+      1.112,
+      4817.768
      ],
      [
-      3.781,
-      4725.812
+      4.43,
+      4834.446
      ],
      [
-      5.884,
-      4732.009
+      9.896,
+      4850.549
      ],
      [
-      8.432,
-      4738.036
+      17.417,
+      4865.8
      ],
      [
-      11.411,
-      4743.862
+      26.864,
+      4879.939
      ],
      [
-      14.806,
-      4749.456
+      38.076,
+      4892.724
      ],
      [
-      18.598,
-      4754.789
+      50.861,
+      4903.936
      ],
      [
-      22.768,
-      4759.832
+      65.0,
+      4913.383
      ],
      [
-      27.293,
-      4764.558
+      80.251,
+      4920.904
      ],
      [
-      32.149,
-      4768.944
+      96.354,
+      4926.37
      ],
      [
-      56.255,
-      4789.172
+      113.032,
+      4929.688
      ],
      [
-      80.362,
-      4809.399
+      130.0,
+      4930.8
      ],
      [
-      104.468,
-      4829.627
+      163.333,
+      4930.8
      ],
      [
-      128.575,
-      4849.855
+      196.667,
+      4930.8
      ],
      [
-      152.681,
-      4870.082
+      230.0,
+      4930.8
      ],
      [
-      176.787,
-      4890.31
+      263.333,
+      4930.8
      ],
      [
-      200.894,
-      4910.537
+      296.667,
+      4930.8
      ],
      [
-      225.0,
-      4930.765
+      330.0,
+      4930.8
+     ],
+     [
+      363.333,
+      4930.8
+     ],
+     [
+      396.667,
+      4930.8
+     ],
+     [
+      430.0,
+      4930.8
      ]
     ],
     "stem_from_z": 4560,
-    "stem_to_z": 4700,
-    "bend_radius": 90,
-    "bend_turn_deg": 50.0,
-    "rake_deg": 40,
+    "stem_to_z": 4800.8,
+    "bend_radius": 130,
+    "bend_turn_deg": 90,
+    "rake_deg": 0,
     "arm_start": [
-     32.149,
-     4768.944
+     130.0,
+     4930.8
     ],
     "arm_end": [
-     225,
-     4930.765
+     430,
+     4930.8
     ],
-    "arm_length": 251.75,
-    "note": "the stem's lowest 60 mm are inside the collar; the arm's end lies inside the lantern's rear boss"
+    "arm_length": 300.0,
+    "note": "the stem rises vertically from inside the socket (z 4560) to z 4800.8, one 90 degree bend of centreline radius 130 to a straight LEVEL arm 300 long ending at (430, 4930.8), inside the lantern's rear boss"
    },
    "lantern": {
-    "envelope": {
-     "length_y": [
-      225,
-      775
-     ],
-     "width_x": [
-      -150,
-      150
-     ],
-     "height_z": [
-      4800,
-      5000
-     ],
-     "centre": [
-      0,
-      500,
-      4900
-     ],
-     "note": "550 x 300 x 200, the scene's box, turned so that its long side lies ALONG THE ARM (y), not along the street: the photographs win (US01, seen from below, the arm enters the lantern's rear end and the lantern lies along the arm)"
-    },
-    "canopy": {
-     "material": "painted aluminium",
-     "shell_thickness": 2.5,
-     "rim_z": 4925,
-     "lip_height": 12,
-     "dome_base_z": 4937,
-     "plan_half_width": [
-      [
-       225,
-       0
-      ],
-      [
-       230,
-       30
-      ],
-      [
-       245,
-       58
-      ],
-      [
-       270,
-       86
-      ],
-      [
-       300,
-       108
-      ],
-      [
-       340,
-       128
-      ],
-      [
-       400,
-       144
-      ],
-      [
-       450,
-       150
-      ],
-      [
-       520,
-       150
-      ],
-      [
-       600,
-       146
-      ],
-      [
-       670,
-       134
-      ],
-      [
-       725,
-       108
-      ],
-      [
-       760,
-       62
-      ],
-      [
-       775,
-       0
-      ]
-     ],
-     "top_z_along_y": [
-      [
-       225,
-       4937
-      ],
-      [
-       260,
-       4962
-      ],
-      [
-       320,
-       4990
-      ],
-      [
-       400,
-       5000
-      ],
-      [
-       500,
-       4998
-      ],
-      [
-       600,
-       4985
-      ],
-      [
-       680,
-       4963
-      ],
-      [
-       735,
-       4945
-      ],
-      [
-       775,
-       4937
-      ]
-     ],
-     "section": "at each y the dome is a half ellipse: z = dome_base_z + (top_z(y) - dome_base_z) x sqrt(1 - (x / w(y))^2), w(y) from plan_half_width and top_z(y) from top_z_along_y (both linear between their stations); the lip is the vertical band from rim_z to dome_base_z; the underside is offset 2.5 inward",
-     "gear": "the control gear lives inside the canopy (no separate external box): the canopy's highest part, 4998 to 5000, is the gear tray over y 400 to 500",
-     "underside": "white reflector (reflector_srgb) with a 40 x 120 lamp-holder pad at the rear (y 300 to 345)"
-    },
-    "bowl": {
-     "material": "clear acrylic, yellowed",
-     "shell_thickness": 3.0,
-     "rim_z": 4925,
-     "rim_inset": 8,
-     "base_z": 4800,
-     "rim_plan": "canopy plan_half_width reduced by rim_inset at every station, between y 233 and 767",
-     "base_plan_half_width": [
-      [
-       300,
-       0
-      ],
-      [
-       303,
-       22
-      ],
-      [
-       320,
-       52
-      ],
-      [
-       350,
-       70
-      ],
-      [
-       400,
-       80
-      ],
-      [
-       500,
-       82
-      ],
-      [
-       600,
-       80
-      ],
-      [
-       650,
-       70
-      ],
-      [
-       680,
-       52
-      ],
-      [
-       697,
-       22
-      ],
-      [
-       700,
-       0
-      ]
-     ],
-     "section_y500_half_width_z": [
-      [
-       82,
-       4800
-      ],
-      [
-       90,
-       4806
-      ],
-      [
-       100,
-       4815
-      ],
-      [
-       118,
-       4842
-      ],
-      [
-       130,
-       4872
-      ],
-      [
-       138,
-       4900
-      ],
-      [
-       142,
-       4925
-      ]
-     ],
-     "long_section_rear_curve_yz": [
-      [
-       233,
-       4925
-      ],
-      [
-       240,
-       4890
-      ],
-      [
-       262,
-       4850
-      ],
-      [
-       285,
-       4818
-      ],
-      [
-       300,
-       4800
-      ]
-     ],
-     "sides": "rise from the flat refractor base (400 x 164, corner radius 55) outward to the rim in the section's curve at every y; the rim has a 6 x 6 bead",
-     "refractor": "fine prismatic grooves on the base's underside, 2 mm pitch across the lantern (x)",
-     "loft": "ring(z): the closed outline whose half width at y is hw(y, z) = bw(y) + (rw(y) - bw(y)) x s(z), for y from y_rear(z) to 1000 - y_rear(z); bw(y) is base_plan_half_width (0 outside y 300 to 700), rw(y) is the canopy's plan half width minus rim_inset, s(z) = (section_y500 half width at z - 82) / (142 - 82), y_rear(z) is read off long_section_rear_curve_yz at z (its front end is its mirror about y = 500): at z 4800 the ring is the flat base (y 300 to 700), at z 4925 it is the rim (y 233 to 767)"
-    },
-    "lamp": {
-     "what": "a 35 W low-pressure sodium lamp: one glass jacket, 54 across and 310 long, lying along y",
-     "od": 54,
-     "length": 310,
-     "centre": [
-      0,
-      500,
-      4872
-     ],
-     "holder": {
-      "y": [
-       300,
-       345
-      ],
-      "x": [
-       -30,
-       30
-      ],
-      "z": [
-       4852,
-       4892
-      ]
-     }
-    },
-    "hinge": {
-     "where": "rear of the bowl rim",
-     "knuckles": 2,
-     "x": [
-      -60,
-      60
-     ],
-     "y": 262,
-     "size": [
-      22,
-      22,
-      14
-     ],
-     "z": 4925
-    },
-    "catches": {
-     "where": "the bowl's two long sides at the rim",
-     "y": 650,
-     "size_y_z_proud": [
-      30,
-      14,
-      7
-     ],
-     "x_abs": 136.0,
-     "z": 4925,
-     "count": 2
-    },
-    "boss": {
-     "od": 60,
-     "length": 55,
-     "axis_from": [
-      0,
-      225,
-      4930.765
-     ],
-     "axis_deg_above_horizontal": 40,
-     "grub_screws": {
-      "count": 2,
-      "azimuths_deg_about_axis": [
-       90,
-       270
-      ],
-      "head_od": 10,
-      "proud": 3,
-      "note": "M8 socket set screws, round-headed"
-     }
-    },
-    "tilt_deg": 0
+    "same_as": "geometry.lantern"
    }
   }
  },
@@ -1447,10 +2052,10 @@
   },
   "position_mm": [
    0,
-   500,
+   705,
    4850
   ],
-  "placement_rule": "Read: one point light 0.05 m below the centre of the emissive piece (the lantern's centre z 4900)",
+  "placement_rule": "Read: one point light 0.05 m below the centre of the emissive piece (the lantern's centre z 4900, y 705)",
   "current_game": {
    "pool_spot": {
     "lm": 500,
@@ -1557,16 +2162,18 @@
    ],
    "glow_lamp_srgb": [
     255,
-    176,
-    28
+    137,
+    0
    ],
+   "jacket_note": "review point 5: the jacket is the same orange at full strength; the photograph's yellow core is the camera's clipping and is left to the grade",
    "note": "an RGB renderer cannot reproduce the colour loss (evening note section 3); the lamp's own light is one orange"
   },
   "warm_up": "a freshly lit SOX lamp glows dim red-pink for a few minutes before turning yellow-orange (evening note section 1); an optional start-up ramp, not required",
   "glow_surface": {
    "emissive_parts": [
-    "lamp jacket (cylinder 54 x 310 at (0, 500, 4872))",
-    "the bowl (translucent, 0.45 of the jacket's brightness)"
+    "arc tube (the U, full strength)",
+    "lamp jacket (cylinder 54 x 310 at (0, 705, 4872), 0.3 of the tube)",
+    "the bowl (translucent)"
    ],
    "not_emissive": [
     "canopy",
@@ -1579,8 +2186,8 @@
    "lit_srgb": {
     "lamp": [
      255,
-     176,
-     28
+     137,
+     0
     ],
     "bowl": [
      255,
@@ -1588,6 +2195,12 @@
      0
     ]
    },
+   "units_cd_m2": {
+    "jacket": 27500,
+    "bowl": 5500,
+    "tube": 91700.0
+   },
+   "unitless_fallback": "kLampEmissiveUnitless = 1.0 times the lantern colour in linear (1, 0.25, 0)",
    "unlit": "both read pale and clear by day (materials.lamp_glass, materials.bowl)"
   },
   "lit_vs_unlit": {
@@ -1687,13 +2300,32 @@
    ],
    "emissive_srgb_lit": [
     255,
-    176,
-    28
+    137,
+    0
    ],
+   "emissive_cd_m2": 27500,
+   "relative_to_tube": 0.3,
    "name": "the lamp's glass jacket, pale when cold, glowing when lit",
    "roughness": 0.1,
    "roughness_words": "glossy",
    "metal": 0.0
+  },
+  "arc_tube": {
+   "srgb_unlit": [
+    170,
+    166,
+    158
+   ],
+   "emissive_srgb_lit": [
+    255,
+    137,
+    0
+   ],
+   "emissive_cd_m2": 91700.0,
+   "name": "the U-shaped arc tube inside the jacket: grey when cold, the full-strength orange when lit",
+   "roughness": 0.2,
+   "metal": 0.0,
+   "kind": "Judgement (review point 3)"
   },
   "bowl_emissive_lit": {
    "srgb": [
@@ -1701,7 +2333,8 @@
     137,
     0
    ],
-   "relative_to_lamp": 0.45,
+   "emissive_cd_m2": 5500,
+   "relative_to_jacket": 0.2,
    "name": "the bowl lit: sodium orange",
    "roughness": 0.15,
    "roughness_words": "glossy",
@@ -1729,16 +2362,103 @@
     143,
     136
    ],
-   "name": "weathered grey precast concrete (variant C)",
+   "name": "weathered grey precast concrete (variant C, the main build)",
    "roughness": 0.9,
    "roughness_words": "rough matt",
-   "metal": 0.0
+   "metal": 0.0,
+   "kind": "Judgement; the photographs of 2008 to 2010 show pale grey-brown concrete, darker low down on the shaded side"
+  },
+  "c_door_plate": {
+   "srgb": [
+    60,
+    62,
+    60
+   ],
+   "name": "painted steel door plate, dark grey-green, blank",
+   "roughness": 0.6,
+   "roughness_words": "satin, worn",
+   "metal": 0.0,
+   "kind": "Judgement"
+  },
+  "c_cap_stem_arm": {
+   "srgb": [
+    31,
+    31,
+    34
+   ],
+   "name": "the cast cap, stem and arm of the bracket: lamp-post black like A's paint",
+   "roughness": 0.42,
+   "metal": 0.0,
+   "kind": "Judgement"
   }
  },
  "wear": {
-  "state": "a tired council column, twenty years since it was last painted (a port town's wet air): black gone to semi-gloss, chipped where knocked, a splash band, rust at fixings",
-  "agrees_with": "the wear target (production/cloud-week/targets/wear/TARGET.md: 'lamp-column bases' in the foot-splash feature list; 'street lamp tops' as perches)",
+  "state": "a tired column of twenty or thirty years in a port town's wet air: the concrete (main build C) streaked and greened low on its shaded side, limed under its cap, rust at the door plate's screws; variant A's black paint gone to semi-gloss, chipped where knocked, a splash band, rust at fixings",
   "features": [
+   {
+    "id": "algae",
+    "where": "green algae on the -y face (the shaded face) from the footway to z 700, patchy, strongest below z 300; a lighter film on the other three faces to z 350",
+    "colour": [
+     86,
+     104,
+     70
+    ],
+    "strength": 0.5,
+    "kind": "Judgement (review F2); the photographs of try 2 show dark staining low down on the shaded side"
+   },
+   {
+    "id": "lime_streaks",
+    "where": "from the top face and the cap: 6 to 10 vertical lime streaks 30 to 400 long, 4 to 20 wide, pale (190, 188, 180) on every face, strongest under the cap",
+    "colour": [
+     190,
+     188,
+     180
+    ],
+    "kind": "Judgement (review F2)"
+   },
+   {
+    "id": "rust_bleed",
+    "where": "under the door plate's two screws on -y: two streaks 60 to 200 long, 4 to 8 wide, rust brown",
+    "colour": [
+     94,
+     58,
+     40
+    ],
+    "kind": "Judgement (review F2)"
+   },
+   {
+    "id": "chipped_arris",
+    "where": "LC 2 only (x 18, west): one chipped arris on the +y face's right-hand edge, 60 long x 25 wide x 8 deep at z 400 to 460, the aggregate showing",
+    "kind": "Judgement (review F2; a vehicle's knock; replaces A's dent)"
+   },
+   {
+    "id": "splash_band",
+    "where": "z 0 to 250 all round, darker grey-brown (112, 106, 98), top edge soft over 60",
+    "colour": [
+     112,
+     106,
+     98
+    ],
+    "kind": "Judgement; the wear target lists lamp-column bases among its foot-splash features"
+   },
+   {
+    "id": "canopy_streaks",
+    "where": "8 to 12 vertical grime streaks from the canopy lip down the bowl, black (40, 38, 36) at 0.35",
+    "kind": "Judgement"
+   },
+   {
+    "id": "bowl_yellowing",
+    "where": "the whole bowl, tint to bowl_unlit_srgb; 12 to 25 dark specks 1 to 3 mm inside it (dead insects)",
+    "kind": "Judgement"
+   },
+   {
+    "id": "bird_marks",
+    "where": "the canopy's top, 2 to 3 patches of 20 to 60 mm, white-grey (205, 205, 190); the cap too",
+    "kind": "Judgement; the wear target lists lamp tops as perches"
+   }
+  ],
+  "agrees_with": "the wear target (production/cloud-week/targets/wear/TARGET.md: 'lamp-column bases' in the foot-splash feature list; 'street lamp tops' as perches)",
+  "features_A": [
    {
     "id": "splash_band",
     "where": "the sleeve, z 0 to 250, all round (1.0 on the carriageway face, 0.6 elsewhere), top edge soft over 60",
@@ -1771,7 +2491,7 @@
    },
    {
     "id": "rust_streaks",
-    "where": "under each collar set screw (two, 80 to 200 long, 3 to 6 wide, strength 0.6); from the door's two lower corners (two, 40 to 120); under the boss's two grub screws (two, 40 to 100)",
+    "where": "under each socket set screw (two, 80 to 200 long, 3 to 6 wide, strength 0.6); from the door's two lower corners (two, 40 to 120); under the boss's two grub screws (two, 40 to 100)",
     "colour": [
      94,
      58,
@@ -1836,7 +2556,8 @@
     "door_faces": "away from the carriageway",
     "plate_text": "LC 1",
     "wear_seed": 11,
-    "dent": false
+    "dent": false,
+    "chipped_arris": false
    },
    {
     "id": "LC 2",
@@ -1848,7 +2569,8 @@
     "door_faces": "away from the carriageway",
     "plate_text": "LC 2",
     "wear_seed": 18,
-    "dent": true
+    "dent": true,
+    "chipped_arris": true
    },
    {
     "id": "LC 3",
@@ -1860,7 +2582,8 @@
     "door_faces": "away from the carriageway",
     "plate_text": "LC 3",
     "wear_seed": 25,
-    "dent": false
+    "dent": false,
+    "chipped_arris": false
    },
    {
     "id": "LC 4",
@@ -1872,7 +2595,8 @@
     "door_faces": "away from the carriageway",
     "plate_text": "LC 4",
     "wear_seed": 32,
-    "dent": false
+    "dent": false,
+    "chipped_arris": false
    }
   ],
   "rule": "the axis 600 mm behind the kerb's back face; the scene's kerb top is 125 wide so z = 3.725; the corrected granite kerb top is 170 so the same rule gives 3.77: the rule governs, within the 40 mm tolerance; the footway falls 1 in 40 to the road and the column stands plumb with its skirt hidden",
@@ -1887,7 +2611,19 @@
    "radius": 1.5
   },
   {
-   "edge": "collar top and bottom edges",
+   "edge": "socket top chamfer and foot edge",
+   "radius": 1.5
+  },
+  {
+   "edge": "concrete shaft arrises (chamfer)",
+   "radius": 15.0
+  },
+  {
+   "edge": "concrete top face edge (chamfer)",
+   "radius": 5.0
+  },
+  {
+   "edge": "cast cap edges",
    "radius": 1.5
   },
   {
@@ -1970,11 +2706,11 @@
    "measure": "the lantern's bounding-box centre (x, y, z), mm",
    "expected": [
     0,
-    500,
+    705,
     4900
    ],
    "tolerance": 12,
-   "kind": "Read (scene outreach 0.5 to the centre; top 5000, 200 tall)"
+   "kind": "Read (the research's reach to the spigot 430 + half the length 275 = 705; top 5000, 200 tall): review fault 3"
   },
   {
    "name": "lantern_axis",
@@ -2003,15 +2739,15 @@
   {
    "name": "lantern_dome_height",
    "applies_to": "A, C",
-   "measure": "max z of the canopy minus the z of its lip's top, at y = 500, mm",
+   "measure": "the maximum over y of the canopy's top z minus the z of its lip's top, mm",
    "expected": 63,
    "tolerance": 6,
-   "kind": "Judgement"
+   "kind": "Judgement; review point 6 (the maximum is 63 at y 605; at the centre y 705 it is 61)"
   },
   {
    "name": "lantern_plan_silhouette",
    "applies_to": "A, C",
-   "measure": "largest nearest distance (both ways) between the lantern's plan outline at z = 4925 and the polygon in target.json geometry.A.lantern.plan, mm",
+   "measure": "largest nearest distance (both ways) between the lantern's plan outline at z = 4925 and the polygon in target.json geometry.lantern.canopy.plan_half_width, mm",
    "expected": 0.0,
    "tolerance": 6.0,
    "kind": "Derived from the plan stations"
@@ -2019,7 +2755,7 @@
   {
    "name": "lantern_section_silhouette",
    "applies_to": "A, C",
-   "measure": "the same, for the cross-section at y = 500 and the long section at x = 0, against target_drawing.py's polygons",
+   "measure": "the same, for the cross-section at y = 705 and the long section at x = 0, against target_drawing.py's polygons",
    "expected": 0.0,
    "tolerance": 6.0,
    "kind": "Derived"
@@ -2043,7 +2779,7 @@
    "expected": {
     "centre": [
      0,
-     500,
+     705,
      4872
     ],
     "od": 54,
@@ -2051,6 +2787,26 @@
    },
    "tolerance": 6,
    "kind": "Judgement (a 35 W SOX lamp)"
+  },
+  {
+   "name": "lamp_arc_tube",
+   "applies_to": "A, C",
+   "measure": "the arc tube inside the jacket: two legs of 16 OD at x +-11, z 4872, y 555 to 845, joined at the front by a half-torus; wholly inside the jacket",
+   "expected": {
+    "leg_od": 16,
+    "x": [
+     -11,
+     11
+    ],
+    "z": 4872,
+    "y": [
+     555,
+     845
+    ],
+    "joined_at_front": true
+   },
+   "tolerance": 3,
+   "kind": "Judgement; the earlier research's 'a glowing U-shaped tube' and US01's lit lamp's bright stripes (review point 3)"
   },
   {
    "name": "lamp_inside_bowl_and_canopy",
@@ -2063,15 +2819,28 @@
   {
    "name": "glow_surface",
    "applies_to": "A, C",
-   "measure": "the emissive surface is the lamp's jacket (full strength) and the bowl (translucent, 45 % of the jacket's brightness), nothing else emits: no emissive vertex outside them",
+   "measure": "the emissive surfaces are the arc tube (full strength), the jacket (0.3 of it) and the bowl, nothing else emits: no emissive vertex outside them",
    "expected": {
     "emissive_parts": [
-     "lamp",
+     "arc_tube",
+     "lamp_jacket",
      "bowl"
     ]
    },
    "tolerance": 0,
    "kind": "Judgement; Photo (US01 lit: the bowl glows orange round a brighter core)"
+  },
+  {
+   "name": "glow_strength",
+   "applies_to": "A, C",
+   "measure": "emissive strengths in cd/m2: jacket, bowl (the tube is the jacket over 0.3); or the engine's kLampEmissiveUnitless rule, stated",
+   "expected": {
+    "jacket_cd_m2": 27500,
+    "bowl_cd_m2": 5500,
+    "tube_over_jacket": 3.33
+   },
+   "tolerance": 600,
+   "kind": "Derived (4,550 lm over the jacket's 0.0526 m2; 80 % of it through 0.21 m2 of bowl): review point 4"
   },
   {
    "name": "glow_colour_bowl",
@@ -2088,14 +2857,14 @@
   {
    "name": "glow_colour_lamp",
    "applies_to": "A, C",
-   "measure": "the lamp jacket's emissive colour, sRGB 8-bit",
+   "measure": "the lamp jacket's and arc tube's emissive colour, sRGB 8-bit: the same orange as the bowl (the yellow core is the camera's clipping)",
    "expected": [
     255,
-    176,
-    28
+    137,
+    0
    ],
-   "tolerance": 14,
-   "kind": "Judgement"
+   "tolerance": 12,
+   "kind": "Derived (a sodium lamp's own light is one orange): review point 5"
   },
   {
    "name": "arm_stem_od",
@@ -2106,31 +2875,66 @@
    "kind": "Photo ratio (US01 0.47 to 0.67 of the shaft's top) + Judgement"
   },
   {
+   "name": "arm_stem_od_c",
+   "applies_to": "C",
+   "measure": "outer diameter of the steel stem rising from the cap, mm",
+   "expected": 48,
+   "tolerance": 4,
+   "kind": "Judgement (review F2)"
+  },
+  {
    "name": "arm_rake",
    "applies_to": "A, C",
    "measure": "angle of the straight arm above horizontal, degrees",
-   "expected": 40,
-   "tolerance": 6.0,
-   "kind": "Photo (US01: 41.7 degrees in the picture; true 36 to 44)"
+   "expected": 0,
+   "tolerance": 5.0,
+   "kind": "Photo (US01, corrected for the arm's 35 to 42 degree turn toward the camera: true rake 0 to 7) + lead (vertical and horizontal sections) + the period photographs of 1989 (near-level arms)"
+  },
+  {
+   "name": "arm_bend_turn",
+   "applies_to": "A, C",
+   "measure": "the one bend from the vertical stem to the level arm, degrees",
+   "expected": 90,
+   "tolerance": 5.0,
+   "kind": "Judgement (review fault 1)"
   },
   {
    "name": "arm_bend_radius",
    "applies_to": "A, C",
    "measure": "centreline radius of the bend, mm",
-   "expected": 90,
-   "tolerance": 40,
-   "kind": "Photo-scaled by reach (US01 435 / 1117 x 225 = 88) + Judgement"
+   "expected": 130,
+   "tolerance": 75,
+   "kind": "Judgement (3 tube diameters, review fault 1); the tolerance spans the photographs: a mitred elbow of 55 (Birchington) to 3 diameters (Orrell)"
   },
   {
    "name": "arm_reaches_boss",
    "applies_to": "A, C",
    "measure": "the straight arm's end point (y, z), mm",
    "expected": [
-    225,
+    430,
     4930.8
    ],
    "tolerance": 12,
-   "kind": "Derived"
+   "kind": "Read (the research's 406 to 457 reach to the spigot; review fault 3) + Judgement (the height)"
+  },
+  {
+   "name": "arm_lantern_coaxial",
+   "applies_to": "A, C",
+   "measure": "the angle between the arm's last 50 mm, the boss axis and the lantern's long axis (all in the y-z plane), degrees: the largest of the three differences",
+   "expected": 0.0,
+   "tolerance": 2.0,
+   "kind": "Photo (US01: the lantern lies on the arm's line, to within a few degrees; the 1989 stations; review fault 1)"
+  },
+  {
+   "name": "boss_top_and_dome",
+   "applies_to": "A, C",
+   "measure": "the boss's top above the canopy's rear crown (z 4937) and the dome's height over the boss's front end (y 485): the top stands 24 above, and the dome is not pierced",
+   "expected": {
+    "top_above_crown": 23.8,
+    "dome_over_front_end_z": 4976.3
+   },
+   "tolerance": 6,
+   "kind": "Judgement; review fault 1 (nothing pokes through the dome)"
   },
   {
    "name": "arm_continuity",
@@ -2146,7 +2950,7 @@
    "measure": "the arm's plan direction against the carriageway's normal, degrees",
    "expected": 0.0,
    "tolerance": 3.0,
-   "kind": "Read (scene: the lantern 0.5 out toward the road)"
+   "kind": "Read (scene: the lantern out toward the road)"
   },
   {
    "name": "sleeve_od",
@@ -2199,7 +3003,7 @@
   {
    "name": "shaft_taper_monotone",
    "applies_to": "A, P",
-   "measure": "outer diameter never increases between z = 1044 and z = 4560 (steps of 100 mm)",
+   "measure": "outer diameter never increases between z = 1044 and z = 4370 (steps of 100 mm)",
    "expected": true,
    "tolerance": 0,
    "kind": "Derived"
@@ -2207,16 +3011,33 @@
   {
    "name": "collar",
    "applies_to": "A",
-   "measure": "collar outer diameter and z range, mm",
+   "measure": "the bracket's socket sleeve: outer diameter and z range, mm",
    "expected": {
-    "od": 67,
+    "od": 64,
     "z": [
-     4560,
+     4370,
      4620
     ]
    },
    "tolerance": 4,
-   "kind": "Judgement"
+   "kind": "Photo qualitative (US01: no step, a flat chamfered top, a foot seam, two set screws) + Judgement: review point 1"
+  },
+  {
+   "name": "socket_set_screws",
+   "applies_to": "A",
+   "measure": "two M8 set screws on -y (azimuth 180 from +y) at z 4580 and 4420, heads 10 across, proud 3, mm",
+   "expected": {
+    "count": 2,
+    "z": [
+     4580,
+     4420
+    ],
+    "azimuth": 180,
+    "head_od": 10,
+    "proud": 3
+   },
+   "tolerance": 1.5,
+   "kind": "Photo qualitative (US01: two set screws one above the other on one side): review point 1"
   },
   {
    "name": "lower_profile_silhouette",
@@ -2238,6 +3059,14 @@
    },
    "tolerance": 10,
    "kind": "Judgement (a lead: a modern 5 m stepped column has a 500 x 100 door 400 above the ground; US01: the door outline's top at about 86 % of the sleeve; the research: a door plate about 50 cm up)"
+  },
+  {
+   "name": "door_corner_radius",
+   "applies_to": "A",
+   "measure": "the radius of all four corners of the door and of its joint groove, mm",
+   "expected": 15,
+   "tolerance": 3,
+   "kind": "Photo (US01: the flush door's rounded top corners, about 2 px at 7 mm): review point 2"
   },
   {
    "name": "door_face",
@@ -2284,22 +3113,10 @@
   {
    "name": "no_maker_marks",
    "applies_to": "all",
-   "measure": "no text, logo or relief lettering on any mesh or texture except the plate's; in particular none of the makers' names in the earlier research, none on the door, the lantern or the base",
+   "measure": "no text, logo or relief lettering on any mesh or texture except the plate's; in particular none of the makers' names in the earlier research, none on the door, the lantern, the base or the concrete",
    "expected": true,
    "tolerance": 0,
    "kind": "Rulings 8 October and brief"
-  },
-  {
-   "name": "collar_screws",
-   "applies_to": "A",
-   "measure": "two set screws at azimuth 45 and 135 degrees from +y, heads 10 across, proud 3, mm",
-   "expected": {
-    "count": 2,
-    "head_od": 10,
-    "proud": 3
-   },
-   "tolerance": 1.5,
-   "kind": "Judgement"
   },
   {
    "name": "boss",
@@ -2308,10 +3125,180 @@
    "expected": {
     "od": 60,
     "length": 55,
-    "rake_deg": 40
+    "rake_deg": 0
    },
    "tolerance": 5,
-   "kind": "Judgement"
+   "kind": "Judgement; level since try 2"
+  },
+  {
+   "name": "c_shaft_side_z300",
+   "applies_to": "C",
+   "measure": "the concrete shaft's side across the faces at z = 300, mm",
+   "expected": 213.8,
+   "tolerance": 6,
+   "kind": "Judgement (linear 220 to 125 over 4620; review F2: 213.8)"
+  },
+  {
+   "name": "c_shaft_side_z2300",
+   "applies_to": "C",
+   "measure": "the concrete shaft's side at z = 2300, mm",
+   "expected": 172.7,
+   "tolerance": 6,
+   "kind": "Judgement (review F2: 172.7)"
+  },
+  {
+   "name": "c_shaft_side_z4300",
+   "applies_to": "C",
+   "measure": "the concrete shaft's side at z = 4300, mm",
+   "expected": 131.6,
+   "tolerance": 6,
+   "kind": "Judgement (review F2: 131.6)"
+  },
+  {
+   "name": "c_chamfer",
+   "applies_to": "C",
+   "measure": "the arris chamfer (leg length on each face), mm, at z = 300, 2300 and 4300",
+   "expected": 15,
+   "tolerance": 3,
+   "kind": "Judgement (review F2: 15 throughout)"
+  },
+  {
+   "name": "c_top_face_chamfer",
+   "applies_to": "C",
+   "measure": "the top face's edge chamfer, mm",
+   "expected": 5,
+   "tolerance": 2,
+   "kind": "Judgement (review F2: 5)"
+  },
+  {
+   "name": "c_section_square_to_street",
+   "applies_to": "C",
+   "measure": "the section's faces against the street's axes (x along the street, y to the carriageway), degrees",
+   "expected": 0.0,
+   "tolerance": 2.0,
+   "kind": "Judgement (review F2)"
+  },
+  {
+   "name": "c_door_recess",
+   "applies_to": "C",
+   "measure": "the door recess on -y: width, height, depth, z range, mm",
+   "expected": {
+    "width": 120,
+    "height": 330,
+    "depth": 14,
+    "z": [
+     450,
+     780
+    ]
+   },
+   "tolerance": 5,
+   "kind": "Judgement (review F2; the research: a door plate about 50 cm up)"
+  },
+  {
+   "name": "c_door_plate",
+   "applies_to": "C",
+   "measure": "the steel door plate over the recess: width, height, thickness, proud, mm",
+   "expected": {
+    "width": 132,
+    "height": 342,
+    "thickness": 3,
+    "proud": 3
+   },
+   "tolerance": 5,
+   "kind": "Judgement (review F2)"
+  },
+  {
+   "name": "c_door_screws",
+   "applies_to": "C",
+   "measure": "two screws 10 across on the plate's centre line, 25 from its ends (z 469 and 761), blank heads",
+   "expected": {
+    "count": 2,
+    "head_od": 10,
+    "z": [
+     469,
+     761
+    ]
+   },
+   "tolerance": 5,
+   "kind": "Judgement (review F2)"
+  },
+  {
+   "name": "c_top_cap",
+   "applies_to": "C",
+   "measure": "the cast-steel cap on the top face: outer diameter and height, z range, mm",
+   "expected": {
+    "od": 90,
+    "height": 30,
+    "z": [
+     4620,
+     4650
+    ]
+   },
+   "tolerance": 5,
+   "kind": "Judgement (review F2)"
+  },
+  {
+   "name": "c_stem_entry",
+   "applies_to": "C",
+   "measure": "the steel stem of OD 48 rises through the cap's centre (x 0, y 0) and its lowest 60 mm are cast into the concrete (from z 4560), mm",
+   "expected": {
+    "od": 48,
+    "centre": [
+     0,
+     0
+    ],
+    "from_z": 4560
+   },
+   "tolerance": 5,
+   "kind": "Judgement (review F2)"
+  },
+  {
+   "name": "c_albedo",
+   "applies_to": "C",
+   "measure": "mean albedo of the concrete shaft, sRGB 8-bit",
+   "expected": [
+    146,
+    143,
+    136
+   ],
+   "tolerance": 12,
+   "kind": "Judgement (weathered precast concrete)"
+  },
+  {
+   "name": "c_roughness",
+   "applies_to": "C",
+   "measure": "roughness of the concrete (0 to 1)",
+   "expected": 0.9,
+   "tolerance": 0.1,
+   "kind": "Judgement (rough matt)"
+  },
+  {
+   "name": "c_no_paint",
+   "applies_to": "C",
+   "measure": "the concrete shaft carries no paint, no band and no lettering; only the cap, stem and arm are painted (black)",
+   "expected": true,
+   "tolerance": 0,
+   "kind": "Judgement (review F2)"
+  },
+  {
+   "name": "c_wear_features",
+   "applies_to": "C",
+   "measure": "the concrete's wear: algae to z 700 on -y, lime streaks from the top, rust bleed under the door plate's screws, a chipped arris 60 x 25 x 8 at z 400 to 460 on +y on LC 2 only",
+   "expected": {
+    "algae_z_max": 700,
+    "chipped_arris": [
+     60,
+     25,
+     8
+    ],
+    "chipped_z": [
+     400,
+     460
+    ],
+    "only_on": "LC 2"
+   },
+   "tolerance": 0,
+   "kind": "Judgement (review F2)"
   },
   {
    "name": "paint_black",
@@ -2405,13 +3392,13 @@
    "expected": {
     "pos": [
      0,
-     500,
+     705,
      4850
     ],
     "count_per_column": 1
    },
    "tolerance": 12,
-   "kind": "Read (scene: 0.05 m below the centre)"
+   "kind": "Read (scene: 0.05 m below the centre) with the lantern's centre at y 705: review fault 3"
   },
   {
    "name": "light_pool",
@@ -2461,7 +3448,7 @@
   },
   {
    "name": "triangles",
-   "applies_to": "A",
+   "applies_to": "A, C",
    "measure": "triangle count of one column with its lantern at LOD0",
    "expected": [
     3000,
@@ -2975,25 +3962,40 @@
    "value": 60,
    "unit": "mm",
    "kind": "Derived",
-   "source": "linear taper from 68 at z 1044 to 61 at z 3900 (BGE), carried to the collar's foot (z 4560): 68 - 7 x (4560 - 1044) / (3900 - 1044) = 59.4; set to 60 (60.3 is a standard 2 in tube)"
+   "source": "linear taper from 68 at z 1044 to 61 at z 3900 (BGE), carried to z 4560, where the taper line ends inside the socket: 68 - 7 x (4560 - 1044) / (3900 - 1044) = 59.4; set to 60 (60.3 is a standard 2 in tube)"
   },
-  "collar_top_z": {
+  "socket_top_z": {
    "value": 4620,
    "unit": "mm",
    "kind": "Judgement",
-   "source": "the collar's top and the shaft's end: so that the 80 mm stem, the bend and the 40 degree arm reach the lantern's rear boss at z 4930 (the canopy's lip band 4925 to 4937); derived from the arm's geometry in TARGET.md section 5.3"
+   "source": "the socket's top and the shaft's end (variant A): the 250 mm socket sleeve of the bracket stands from z 4370 to 4620 (review point 1: US01's shaft top is the bracket's socket sleeve, about 450 mm long on that 11 m column, no step a 7 mm pixel can see, a flat top with a small chamfer into the stem); the stem rises from inside it to z 4800.8"
   },
-  "collar_od": {
-   "value": 67,
+  "socket_bottom_z": {
+   "value": 4370,
    "unit": "mm",
    "kind": "Judgement",
-   "source": "US01 and BGE show the top of a bracket column ending in a short collar a little wider than the shaft (qualitative); shaft top 60 + 7"
+   "source": "review point 1: socket z 4370 to 4620 (250 long)"
   },
-  "collar_height": {
-   "value": 60,
+  "socket_od": {
+   "value": 64,
    "unit": "mm",
    "kind": "Judgement",
-   "source": "the collar about one diameter tall (US01, qualitative)"
+   "source": "review point 1: socket OD 64 (2 proud of a 62 shaft: with the shaft left at its measured taper, 60.2 at z 4370, it stands 3.8 proud, which a 7 mm pixel cannot see either way)"
+  },
+  "socket_top_chamfer": {
+   "value": 3,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review point 1: the socket's top edge chamfered 3"
+  },
+  "socket_screw_z": {
+   "value": [
+    4580,
+    4420
+   ],
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review point 1: two M8 set screws one above the other on -y at z 4580 and 4420 (US01: two set screws one above the other on one side)"
   },
   "weld_ring_height": {
    "value": 6,
@@ -3005,19 +4007,19 @@
    "value": 42,
    "unit": "mm",
    "kind": "Judgement",
-   "source": "ratio to the shaft top 0.47 to 0.67 (US01 Photo) x 60 = 28 to 40; 42.4 is a standard 1.25 in tube; the arm to the shaft's top 0.7 here because a 5 m column's top is slim"
+   "source": "ratio to the shaft top 0.47 to 0.67 (US01 Photo) x 60 = 28 to 40; 42.4 is a standard 1.25 in tube; the arm to the shaft's top 0.7 here because a 5 m column's top is slim (variant A; variant C's stem is 48)"
   },
-  "stem_height_above_collar": {
-   "value": 80,
+  "stem_od_c": {
+   "value": 48,
    "unit": "mm",
    "kind": "Judgement",
-   "source": "a short vertical stem before the bend: US01's stem leaves the collar vertically for about 100 mm (of an 11 m column: 0.9 %); 80 on this 4.6 m shaft"
+   "source": "variant C's steel stem OD 48 (the review's F2 amendment; 48.3 is a standard 1.5 in tube)"
   },
   "us01_arm_apparent_slope_deg": {
    "value": 41.7,
    "unit": "deg",
    "kind": "Photo",
-   "source": "Photo US01 (urban_street_01, Poly Haven CC0, Andreas Mischok, taken 18 August 2019), camera 1.16 +-0.07 m above the footway, column 8.8 +-0.6 m away; photo_measurements.json: the straight arm's centreline fitted over x -1150 to -350 of the elevation: slope -0.890, 41.7 degrees in the picture's plane (43.6 over x -1500 to -500); +-2"
+   "source": "Photo US01 (urban_street_01, Poly Haven CC0, Andreas Mischok, taken 18 August 2019), camera 1.16 +-0.07 m above the footway, column 8.8 +-0.6 m away; photo_measurements.json: the straight arm's centreline fitted over x -1150 to -350 of the elevation: slope -0.890, 41.7 degrees in the picture's plane (43.6 over x -1500 to -500); +-2. NOT the true rake: the arm points 35 to 42 degrees out of the picture's plane toward the camera (see us01_street_vp), where a level arm shows 36 to 42 degrees of rise"
   },
   "us01_bend_tangent_lengths": {
    "value": [
@@ -3026,55 +4028,85 @@
    ],
    "unit": "mm",
    "kind": "Photo",
-   "source": "Photo US01 (urban_street_01, Poly Haven CC0, Andreas Mischok, taken 18 August 2019), camera 1.16 +-0.07 m above the footway, column 8.8 +-0.6 m away; photo_measurements.json: from the corner where the stem's line meets the arm's line, the centreline leaves the stem 147 mm below it and rejoins the arm 244 mm along it; +-40 (the bend is not quite circular)"
+   "source": "Photo US01 (urban_street_01, Poly Haven CC0, Andreas Mischok, taken 18 August 2019), camera 1.16 +-0.07 m above the footway, column 8.8 +-0.6 m away; photo_measurements.json: from the corner where the stem's line meets the arm's line, the centreline leaves the stem 147 mm below it and rejoins the arm 244 mm along it; +-40 (apparent, in the picture's plane; superseded by the 3D reading)"
   },
   "us01_bend_radius": {
    "value": 435,
    "unit": "mm",
    "kind": "Photo",
-   "source": "Photo US01 (urban_street_01, Poly Haven CC0, Andreas Mischok, taken 18 August 2019), camera 1.16 +-0.07 m above the footway, column 8.8 +-0.6 m away; photo_measurements.json: R = mean tangent length 195 / tan(24 degrees) = 435 (the turn is 90 - 41.7 = 48.3 degrees); about 9 arm diameters; +-150"
+   "source": "Photo US01 (urban_street_01, Poly Haven CC0, Andreas Mischok, taken 18 August 2019), camera 1.16 +-0.07 m above the footway, column 8.8 +-0.6 m away; photo_measurements.json: R = mean tangent length 195 / tan(24 degrees) = 435 in the picture's plane (apparent turn 48.3 degrees); about 9 arm diameters on an 11 m column; superseded: the true turn is about 90 degrees"
   },
   "us01_reach_to_boss": {
    "value": 1117,
    "unit": "mm",
    "kind": "Photo",
-   "source": "Photo US01 (urban_street_01, Poly Haven CC0, Andreas Mischok, taken 18 August 2019), camera 1.16 +-0.07 m above the footway, column 8.8 +-0.6 m away; photo_measurements.json: from the stem's axis to the arm's end at the lantern's rear boss, in the picture's plane; +-100"
-  },
-  "bend_radius_scaled_by_reach": {
-   "value": 87.6,
-   "unit": "mm",
-   "kind": "Derived",
-   "source": "435 / 1117 x 225 (the target's reach to the boss): the bend scales with the reach, not with the tube's diameter (a 9-diameter bend cannot fit 225 mm of reach)"
-  },
-  "bend_radius": {
-   "value": 90,
-   "unit": "mm",
-   "kind": "Judgement",
-   "source": "the scaled 87.6 rounded; a tight bend, 'plain bent-arm lighting' (R07 reading, production/reference/photographs.md)"
+   "source": "Photo US01 (urban_street_01, Poly Haven CC0, Andreas Mischok, taken 18 August 2019), camera 1.16 +-0.07 m above the footway, column 8.8 +-0.6 m away; photo_measurements.json: from the stem's axis to the arm's end at the lantern's rear boss, in the picture's plane; +-100 (apparent; the arm points toward the camera, so its true reach is longer)"
   },
   "rake_deg": {
-   "value": 40,
+   "value": 0,
    "unit": "deg",
    "kind": "Photo",
-   "source": "US01: the arm's apparent slope in the picture is 41.7 degrees; the lantern, seen from below, is nearly side-on (its visible length 0.78 m of about 0.9), so the arm points within about 30 degrees of the picture's plane and the true rake is 36 to 44; 40 +-6. (A 5 m class column's own rake is not photographed; standard raked brackets are 5 to 15 degrees: the photograph is followed)"
+   "source": "review fault 1 (9 October): US01's apparent 41.7 degrees is mostly perspective (the arm points 35 to 42 degrees toward the camera, the camera looks up 45 degrees); read in 3D the true rake is 0 to 7 and the lantern lies on the arm's line; period photographs of 1989 (Orrell and Appley Bridge stations, Peter Whatley) show near-level arms with the lantern in line; a lead says 5 m brackets had a vertical and a horizontal section: 0 +-5"
   },
-  "lantern_centre_outreach": {
-   "value": 500,
+  "bend_turn_deg": {
+   "value": 90,
+   "unit": "deg",
+   "kind": "Judgement",
+   "source": "review fault 1: one bend of 90 degrees from the vertical stem to the level arm"
+  },
+  "bend_radius": {
+   "value": 130,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review fault 1: centreline radius 130 (3 tube diameters of 42 = 126, rounded)"
+  },
+  "bracket_reach_to_spigot": {
+   "value": 430,
    "unit": "mm",
    "kind": "Read",
-   "source": "scene outreach 0.5 to the lantern's centre; kept (the research's 406 to 457 is the bracket's projection to the spigot, i.e. 0.23 shorter than the centre)"
+   "source": "production/research/street-clutter-1990/SUMMARY-2026-09-29.md section 3 (the project's earlier reading): bracket reaching out 1 ft 4 in to 1 ft 6 in (406 to 457) and 'an arm reaching out 40 to 45 cm'; review fault 3: 430 from the shaft's axis to the lantern's rear spigot (the old 225 halved it)"
+  },
+  "arm_axis_z": {
+   "value": 4930.8,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "the arm's centreline height: inside the canopy lip band (z 4925 to 4937) so the boss is cast on the canopy's rear tip (review fault 1: the arm runs level at z 4930.8)"
+  },
+  "stem_top_z": {
+   "value": 4800.8,
+   "unit": "mm",
+   "kind": "Derived",
+   "source": "arm_axis_z 4930.8 - bend_radius 130 = 4800.8: where the vertical stem ends and the 90 degree bend begins (review fault 1)"
+  },
+  "arm_length": {
+   "value": 300,
+   "unit": "mm",
+   "kind": "Derived",
+   "source": "bracket_reach_to_spigot 430 - bend_radius 130 = 300: the straight level arm from (130, 4930.8) to (430, 4930.8)"
+  },
+  "lantern_dy": {
+   "value": 205,
+   "unit": "mm",
+   "kind": "Derived",
+   "source": "430 - 225: every y station of the lantern moves 205 further out (review fault 3)"
+  },
+  "lantern_centre_outreach": {
+   "value": 705,
+   "unit": "mm",
+   "kind": "Derived",
+   "source": "the lantern's centre: rear end 430 + half its length 275 = 705 (the scene's 0.5 was a trade-standard guess, the earlier research's 406 to 457 is the reach to the spigot, review fault 3); the scene's outreach_m becomes 0.705"
   },
   "lantern_rear_end_y": {
-   "value": 225,
+   "value": 430,
    "unit": "mm",
-   "kind": "Derived",
-   "source": "lantern centre 500 - length 550 / 2"
+   "kind": "Read",
+   "source": "= bracket_reach_to_spigot: the lantern's rear end is the spigot (the boss starts here)"
   },
   "lantern_front_end_y": {
-   "value": 775,
+   "value": 980,
    "unit": "mm",
    "kind": "Derived",
-   "source": "lantern centre 500 + length 550 / 2"
+   "source": "lantern rear end 430 + length 550"
   },
   "boss_od": {
    "value": 60,
@@ -3155,16 +4187,16 @@
    "source": "the lamp lies along the lantern's axis in the bowl's upper half"
   },
   "lamp_centre_y": {
-   "value": 500,
+   "value": 705,
    "unit": "mm",
    "kind": "Derived",
-   "source": "the lantern's centre"
+   "source": "the lantern's centre (rear end 430 + 275)"
   },
   "light_z": {
    "value": 4850,
    "unit": "mm",
    "kind": "Derived",
-   "source": "the lantern's centre z (4900) minus the scene's rule 50 below the centre of the emissive piece"
+   "source": "the lantern's centre z (4900) minus the scene's rule 50 below the centre of the emissive piece; y is the lantern's centre 705"
   },
   "paint_black_srgb": {
    "value": [
@@ -3249,12 +4281,12 @@
   "glow_lamp_srgb": {
    "value": [
     255,
-    176,
-    28
+    137,
+    0
    ],
    "unit": "sRGB",
-   "kind": "Judgement",
-   "source": "the lamp's own glass is brighter and yellower than the bowl: between the 589 nm colour (255/129/0) and the photograph's clipped core (252/251/180)"
+   "kind": "Derived",
+   "source": "review point 5: a sodium lamp's own light is one orange, so the jacket is (255, 137, 0) at full strength like the bowl; the photograph's yellow core (252/251/180) is the camera's clipping and is left to the grade (the night note's step 2), not modelled as a colour"
   },
   "plate_white_srgb": {
    "value": [
@@ -3285,6 +4317,122 @@
    "unit": "sRGB",
    "kind": "Judgement",
    "source": "weathered precast concrete (variant C only)"
+  },
+  "c_foot_side": {
+   "value": 220,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "the research's '20 to 25 cm at the foot' (Read) taken at 220: a square section, planted (review F2)"
+  },
+  "c_top_side": {
+   "value": 125,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review F2: 125 across at the top (z 4620); a taper of 20 mm a metre across the faces"
+  },
+  "c_top_z": {
+   "value": 4620,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "the top face; the same as variant A's shaft end, so the arm and lantern stand at the same heights on either"
+  },
+  "c_arris_chamfer": {
+   "value": 15,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review F2: arrises chamfered 15 throughout"
+  },
+  "c_top_face_chamfer": {
+   "value": 5,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review F2: the top face flat with a 5 mm chamfer"
+  },
+  "c_hidden_root": {
+   "value": 150,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "planted: 150 hidden below the footway as variant A's skirt, the paving cut round it"
+  },
+  "c_cap_od": {
+   "value": 90,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review F2: a cast-steel cap 90 OD, 30 tall, seated on the top face"
+  },
+  "c_cap_height": {
+   "value": 30,
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review F2"
+  },
+  "c_door_recess": {
+   "value": {
+    "width": 120,
+    "height": 330,
+    "depth": 14,
+    "z": [
+     450,
+     780
+    ]
+   },
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review F2: the recess 120 x 330 x 14 at z 450 to 780 on -y (the research: 'a door plate about 50 cm up')"
+  },
+  "c_door_plate": {
+   "value": {
+    "width": 132,
+    "height": 342,
+    "thickness": 3,
+    "proud": 3,
+    "screws": 2,
+    "screw_od": 10,
+    "screw_inset": 25
+   },
+   "unit": "mm",
+   "kind": "Judgement",
+   "source": "review F2: the plate 132 x 342 x 3, 3 proud, two screws 10 across at 25 from its ends, blank"
+  },
+  "c_albedo_srgb": {
+   "value": [
+    146,
+    143,
+    136
+   ],
+   "unit": "sRGB",
+   "kind": "Judgement",
+   "source": "weathered precast concrete (variant C)"
+  },
+  "c_roughness": {
+   "value": 0.9,
+   "unit": "0-1",
+   "kind": "Judgement",
+   "source": "rough matt concrete"
+  },
+  "emissive_jacket_cd_m2": {
+   "value": 27500,
+   "unit": "cd/m2",
+   "kind": "Derived",
+   "source": "4,550 lm / (pi x 0.0526 m2 of jacket surface: pi x 0.054 x 0.310) = 27,535: about 27,500 (review point 4)"
+  },
+  "emissive_bowl_cd_m2": {
+   "value": 5500,
+   "unit": "cd/m2",
+   "kind": "Derived",
+   "source": "80 % of the flux (3,640 lm) through about 0.21 m2 of bowl, Lambertian: 3,640 / (pi x 0.21) = 5,517: about 5,500 (review point 4)"
+  },
+  "emissive_jacket_over_tube": {
+   "value": 0.3,
+   "unit": "ratio",
+   "kind": "Judgement",
+   "source": "review point 3: the arc tube is the full-strength emissive part and the jacket glass glows at 0.3 of it; so the tube is 27,500 / 0.3 = 91,700 cd/m2 in the same units (stated, not measured)"
+  },
+  "emissive_unitless_fallback": {
+   "value": 1.0,
+   "unit": "unitless",
+   "kind": "Read",
+   "source": "ue-probe/Source/LedgerProbe/Private/VignetteShot.cpp line 203: kLampEmissiveUnitless = 1.0 times the lantern colour in linear (1.0, 0.25, 0.0) until the night audit puts the glow in units: the units above are the target; the builder may use the rule instead and say so"
   },
   "derived_xy_585": {
    "value": [
@@ -3399,12 +4547,124 @@
  "number_kinds": {
   "registry": "lamp_numbers.py REG plus derive(), copied whole into `numbers`",
   "counts": {
-   "Read": 57,
+   "Read": 59,
    "Photo": 29,
-   "Derived": 21,
-   "Judgement": 23
+   "Derived": 26,
+   "Judgement": 39
   }
  },
+ "period_photographs": [
+  {
+   "id": "GG1",
+   "file": "gg823762-orrell-station-column-level-arm-1989.jpg",
+   "page": "https://www.geograph.org.uk/photo/823762",
+   "title": "Orrell station pedestrian access",
+   "author": "Peter Whatley",
+   "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+   "taken": "1989-02-21",
+   "date_read": "2026-10-11",
+   "kind": "period (1989), a railway station's own approach, steel column",
+   "material": "painted steel, pale yellow, with a short dark base sleeve (a stepped column)",
+   "what_it_shows": "a slim tubular column with a dark base sleeve beside a paved ramp; the arm leaves the column top in one rounded bend and runs nearly level to a long canopy lantern lying in line with it",
+   "used": "yes: bracket (one bend, near-level arm, lantern in line), the stepped base (variant A's sleeve), reach not measurable (no scale)",
+   "elements": {
+    "bracket": "one rounded bend of centreline radius about 3 tube diameters (the review's 130 is 3 diameters of 42: agrees), then a straight arm rising 8 degrees in the picture (read on a 5 x grid: 8 px over 55); true rake 0 to 10: the amended 0 +-5 agrees, 40 does not",
+    "reach": "the lantern's rear stands about 5 tube widths from the axis (20 px at 4 px of tube), 300 mm for a 60 top: shorter than 430; the scale is the tube's own unknown width, so it is listed (PW9), not amended",
+    "lantern": "a long boat-shaped canopy in line with the arm (within 5 degrees), about 14 top widths long (57 px), 850 mm for a 60 top: longer than 550; listed (PW12)",
+    "shaft_taper": "slim and parallel at this size, no taper readable",
+    "base_door": "a dark sleeve of 55 px in a column 290 px tall (about 0.19; read off the 640 px picture): A's 978 of 5000 is 0.2: agrees; no door visible",
+    "root": "the sleeve stands directly in the paving, no plate: agrees"
+   }
+  },
+  {
+   "id": "GG2",
+   "file": "gg823771-appley-bridge-station-column-level-arm-1989.jpg",
+   "page": "https://www.geograph.org.uk/photo/823771",
+   "title": "Appley Bridge station",
+   "author": "Peter Whatley",
+   "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+   "taken": "1989-04-18",
+   "date_read": "2026-10-11",
+   "kind": "period (1989), a railway platform's own lighting, steel column",
+   "material": "painted steel, orange-red, with a black base sleeve about 0.3 of the column's visible height",
+   "what_it_shows": "a stepped tubular column: a slim upper tube about 5 px wide steps out to about 7 px a third of the way down, a black sleeve at the foot, a rounded elbow at the top and a long pale canopy lantern lying on the arm; a station sign is masked grey in the crop",
+   "used": "yes: bracket, base sleeve, lantern in line; paint colour is a railway's, not copied",
+   "elements": {
+    "bracket": "a rounded elbow of centreline radius about 2 tube diameters (read on a 6 x grid), then an arm of 14 px that is the lantern's own spigot length; the lantern's top edge rises 11 degrees in the picture (12 px over 60): true rake 0 to 10; the lantern is in line within 5 degrees",
+    "reach": "the lantern's rear stands about 2.8 tube widths from the axis (14 px at 5 px): 170 mm for a 60 top, 250 for an 89 top: much shorter than 430; listed (PW9), not amended (the scale is the unknown tube width)",
+    "lantern": "a long canopy about 12 top widths long (60 px): 720 mm for a 60 top; longer than 550; listed (PW12)",
+    "shaft_taper": "a visible STEP in the tube's diameter (5 px to 7 px), not a taper: a stepped column as BGE and US01 show (A's cone is such a step)",
+    "base_door": "a black sleeve of about 75 px in a column about 322 px tall (0.23): A's 0.2 agrees; no door visible; the step in the tube above it is a second change of diameter",
+    "root": "stands in a gravel and ash surface: no plate"
+   }
+  },
+  {
+   "id": "GG3",
+   "file": "gg1485479-birchington-concrete-column-elbow-2008.jpg",
+   "page": "https://www.geograph.org.uk/photo/1485479",
+   "title": "Old rare lamp post on Shakespeare Road, Birchington",
+   "author": "Robert Lamb",
+   "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+   "taken": "2008-06-14",
+   "date_read": "2026-10-11",
+   "kind": "later photograph of an object the photographer calls old and rare: a precast concrete column with its original 1960s lantern and an anti-glare shield (not a replacement by his word: 'an old lantern ... mounted upon a concrete column'); a mid-1960s to 1970s fitting that stood in 1990 and is not modern replacement stock",
+   "material": "precast concrete column, painted steel bracket and lantern",
+   "what_it_shows": "a concrete column rising to a mitred elbow, a straight arm and a long canopy lantern lying in line with it; an anti-glare plate hangs down at the lantern's rear",
+   "used": "yes: bracket (an angular elbow, arm and lantern in line), the shaft's top width, lantern length; the lamp type (sodium or not) is not stated",
+   "elements": {
+    "bracket": "a mitred elbow, centreline radius about 55 (+-30; one diameter); the arm climbs 19 degrees in a picture taken looking up about 35 degrees, which a level arm pointing partly toward the camera shows: true rake 0 to 10; the lantern lies in line within 5 degrees: agrees with the amended 90 degree bend and level arm (the radius 130 is looser than this elbow: PW11)",
+    "reach": "the lantern's rear stands about 4.3 shaft-top widths from the axis, 430 to 540 for a top of 100 to 125: agrees with 430",
+    "lantern": "about seven column-top widths long (700 to 875 for a top of 100 to 125): longer than 550; listed, not amended",
+    "shaft_taper": "the shaft is about 10 px wide at the top and 13 px a third of the way down in a picture looking up: a foot about 1.7 to 2 times the top (looking up inflates it), agrees with 220 over 125 (1.76)",
+    "base_door": "a small pale plate low on the shaft, unreadable: the door is not seen",
+    "root": "the foot is out of frame"
+   }
+  },
+  {
+   "id": "GG4",
+   "file": "gg1479864-chigwell-concrete-column-curved-arm-2009.jpg",
+   "page": "https://www.geograph.org.uk/photo/1479864",
+   "title": "Lovely old 1950s/60s streetlight on Chigwell Road",
+   "author": "Robert Lamb",
+   "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+   "taken": "2009-06-14",
+   "date_read": "2026-10-11",
+   "kind": "later photograph of an object unchanged since the period by the photographer's word: 'vintage 1950s/60s concrete lampposts ... one of many that still retains its original low pressure sodium lamp'; the only reached photograph that names a low-pressure sodium lamp on a concrete column",
+   "material": "precast concrete column with a steel arm",
+   "what_it_shows": "a slim concrete column with a curved gooseneck arm and a small lantern at its end, dusk, a bus stop sign at its foot",
+   "used": "yes, as the disagreement: a curved arm, not an angular one; the column is slim and tapers little over the visible height",
+   "elements": {
+    "bracket": "a smooth curve (gooseneck), not a level arm: DISAGREES with the amended angular bracket; recorded as PW10, not written out (no number readable)",
+    "reach": "the lantern's centre stands about 5 shaft-top widths out",
+    "lantern": "small and set across the arm's end: a different, earlier pattern",
+    "shaft_taper": "slim at the top, no readable taper",
+    "base_door": "not visible",
+    "root": "not visible"
+   }
+  },
+  {
+   "id": "GG5",
+   "file": "gg2049282-coundon-concrete-column-hooked-top-2010.jpg",
+   "page": "https://www.geograph.org.uk/photo/2049282",
+   "title": "Rosslyn Avenue, Coundon",
+   "author": "John Brightley",
+   "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+   "taken": "2010-08-31",
+   "date_read": "2026-10-11",
+   "kind": "later photograph of an old precast pattern that stood in 1990 ('a style of concrete lamp post that has been replaced in many other locations because of the risk of concrete failure': this one is a survivor, so unchanged); a suburban street; the lantern's age is not stated",
+   "material": "precast concrete column with a hooked steel top",
+   "what_it_shows": "a tall slim concrete column, a hooked bracket curling over to a downward-facing lantern; pavement and kerb at its foot",
+   "used": "yes, as a disagreement and for the proportions: the shaft tapers visibly from foot to top; the foot stands on the pavement with no plate",
+   "elements": {
+    "bracket": "a hook curving over, not a level arm: DISAGREES, PW10",
+    "reach": "about 3 shaft-top widths from the axis to the lantern's centre",
+    "lantern": "a small pot-shaped lantern on a hook: another pattern",
+    "shaft_taper": "a straight taper read on ten rows: 8 px across at the top (y 100), 9 at y 130, 10 at y 200, 11 at y 250 and 13 near the foot (y 400): a foot 1.6 times the top (the target's 220 over 125 is 1.76): agrees within the reading",
+    "base_door": "a plain square foot, no visible door at this size",
+    "root": "planted straight into the pavement, no plate or collar: agrees"
+   }
+  }
+ ],
  "leads": [
   {
    "text": "the SOX 35 W lamp is listed as 311 mm long and 52 mm across by a maker's datasheet and 310 x 54 by a catalogue table; 4,550 lm, 1,700 to 1,800 K",
@@ -3414,57 +4674,79 @@
   {
    "text": "a modern 5 m stepped root-mounted steel column is listed with a 76 mm shaft, a 140 mm base, a 500 x 100 door 400 above the ground, a 150 x 75 cable slot, an 800 mm planting depth and a bitumen-coated root; its standard (the 1978 BS 5649 series, current to 2006) was not reached",
    "via": "WebSearch summary, three makers' catalogues (modern)",
-   "effect": "the door is 100 x 500 at 400 (a width of 100 and a base zone to 900 agree with the sleeve's 978 and US01's door outline); the photographed sleeve 124 and shaft 68 to 60 are smaller than that catalogue's 140 and 76 (BGE's is a post-top column) and are kept; a bracket column's top may be 76"
+   "effect": "A's door is 100 x 500 at 400; the photographed sleeve 124 and shaft 68 to 60 are smaller than that catalogue's 140 and 76 (BGE's is a post-top column) and are kept"
   },
   {
    "text": "enthusiasts' pages describe 1960s to 1970s 5 m precast concrete columns carrying 35 W SOX lanterns on 'angular top-entry brackets', a maker's mark cast into the inspection door, and two 5 m tubular steel columns with 'angular' brackets with a vertical and a horizontal section, the lantern steeply tilted; install dates not stated",
    "via": "WebSearch summary of streetlightonline.co.uk pages (unreached)",
-   "effect": "both types existed with the same lantern (A and C stand); a 5 m bracket may be more horizontal than US01's 40 degree arm; a real door might carry a maker's mark: ours is blank by rule"
+   "effect": "both types existed with the same lantern; the 'vertical and horizontal section' bracket is the review's amendment; a real door might carry a maker's mark: ours is blank by rule"
   },
   {
    "text": "no source for a bracket's upsweep angle was found (the results were Australian and modern)",
    "via": "WebSearch summary",
-   "effect": "the rake rests on US01's photograph alone"
+   "effect": "the rake rests on US01 read in 3D and on the photographs of 1989, 2008 and 2009"
   }
  ],
  "unreached": [
   {
-   "what": "Wikipedia, Wikimedia Commons, Geograph, Flickr, archive.org, HathiTrust, the National Archives, Historic England, legislation.gov.uk, the street-lighting enthusiasts' sites the earlier research cites (the ones with the lantern and column galleries), the lantern and column makers' catalogues",
-   "result": "000 or 403 at the proxy on 9 October 2026 (curl, 20 s)",
+   "what": "Wikipedia, Flickr, HathiTrust, the National Archives, Historic England, legislation.gov.uk, the street-lighting enthusiasts' sites the earlier research cites, the lantern and column makers' catalogues",
+   "result": "000 or 403 at the proxy on 9 October 2026 (curl, 20 s); not retried on 11 October",
+   "used": "nothing"
+  },
+  {
+   "what": "Wikimedia Commons (api.php search and category listings, 11 October 2026)",
+   "result": "reached, but the shared address was rate-limited (HTTP 429) and the searches that did return gave no 1975 to 2000 photograph of a British lamp column; nothing was taken from it",
+   "used": "nothing"
+  },
+  {
+   "what": "archive.org advancedsearch.php (11 October 2026)",
+   "result": "reached (HTTP 200); one search for 'street lighting column' returned books and reports, no period street photograph; nothing taken",
    "used": "nothing"
   }
  ],
  "to_read_when_the_network_opens": [
-  "dated photographs, 1975 to 2000, of provincial British streets with precast concrete and tubular steel lighting columns and sodium lanterns on brackets, with a person or a kerb in frame for scale: the column's shape, the base (sleeve or concrete foot), the door, the bracket's rake and bend, the lantern's canopy and bowl, their paint (Geograph and Wikimedia Commons, CC BY or CC BY-SA, by date taken)",
+  "dated photographs, 1975 to 1995, of provincial British streets with a PRECAST CONCRETE lighting column and a low-pressure sodium lantern close enough to read the bracket, the shaft's taper, the base or door and the root (try 2 found none: Geograph's pre-2000 photographs that mention lighting are few and mostly stations and trams); from the PC: the Middlesbrough, Tyne and Wear and North Tyneside albums on Flickr and the lighting enthusiasts' pages, by date taken",
   "the 1989 code for minor roads (BS 5489-3, current from 31 August 1989 to August 1992) for the column heights and spacing the street would have used",
   "the standard tube sizes of tubular steel columns (BS 1308 / BS 5649 families) and the maker-neutral root-section proportions of a 5 m stepped column",
   "a SOX 35 W lamp's datasheet: jacket diameter and length, lumens, warm-up curve",
-  "the Middlesbrough Council, Tyne and Wear Archives and North Tyneside albums on Flickr that the earlier research lists (street scenes, for the lamps in the background; licences to be read on each page)",
-  "the earlier research's Geograph 1485521 (a 1950s concrete column), read at its page for the licence and date"
+  "a larger copy of one concrete-column photograph (Geograph gives 640 px; the originals are with the photographers) to read the top width, the elbow's radius and the lantern's length to better than +-20 %"
  ],
  "could_not_settle": [
-  "whether 1990's minor street in a northern port town had precast concrete or painted tubular steel columns: no 1990 photograph was reached; steel is the main variant because the only column photographs reached (2019, London) are steel and the scene and recipe assume it; the earlier research says concrete (variant C is written out)",
+  "whether 1990's minor street in a northern port town had precast concrete or painted tubular steel columns: still no 1975 to 1995 photograph of a concrete column with a sodium lantern was found; concrete is the main build on the review's judgement and the earlier research (DECISIONS.md 9 October 12:29), three photographs of 1989 show steel columns with the same bracket and lantern form, and the concrete photographs are of 2008 to 2010 (originals by their photographers' word, not proved)",
+  "the arm's curve: Birchington (2008) shows an angular mitred elbow and a straight arm, Chigwell Road (2009) and Coundon (2010) show a curved gooseneck; the review's angular form is the main build and the curved arm is not written out (PW10)",
+  "the bend's radius: 130 (three diameters) lies inside the three photographs' 1 to 3 diameters; the check's tolerance is +-75",
+  "the lantern's length and the column top's width on a concrete column: Birchington's lantern is about seven column-top widths long (a top of 100 to 125 gives 700 to 875), against the scene's 550 and the research's 600 to 700; not amended (the error of one oblique 640 px picture is as big as the difference)",
   "every BGE and US01 length is +-7 % in absolute size (camera height 1.02 +-0.07 m, 1.16 +-0.07 m); if the BGE sleeve is the standard 114.3 mm tube, all BGE lengths are 7 % smaller",
-  "the bracket's rake (40 degrees is the 11 m column's, from its apparent 41.7 degrees and a nearly side-on lantern; a 5 m column's own rake is not photographed and this writer recalls 5 to 15 for standard raked brackets, no source found, and a search lead says 5 m brackets had a vertical and a horizontal section) and the bend's radius (scaled by the reach)",
-  "the lantern's real length (the research estimates 600 to 700; the scene's 550 is kept) and its canopy and bowl proportions: read from one photograph from below and from the earlier research's words",
-  "the door's real size and place on the steel sleeve (only a faint outline on US01)",
+  "the door's real size and place on both columns (only a faint outline on US01; the concrete door is Judgement)",
   "the 35 W SOX lamp's physical size: 54 x 310 is a catalogue table's figure by search lead (a maker's datasheet lead says 52 x 311); no datasheet was reached",
-  "the shaft's top diameter on a BRACKET column: 60 is a post-top column's (BGE); a bracket column of this height may be 76 at the top (a modern catalogue's), the collar then 83 and the stem 48",
-  "the real light: the night note's numbers are its own intent, not measured in the game; whether the orange (255, 137, 0) reads right in the game's camera is for a fresh reviewer to judge against photographs from the PC",
+  "the real light: the night note's numbers are its own intent, not measured in the game; whether the orange (255, 137, 0) reads right in the game's camera is for a fresh reviewer to judge against photographs from the PC; the emissive units are derived, not measured",
   "no photograph of a council wall bracket lantern was reached: W1 is entirely Judgement"
  ],
  "handover": {
-  "for_scene_file": "furniture E1 and E2: replace the base 0.2 x 0.3, the 0.114 shaft, the three-cylinder swan neck and the box lantern by the kit piece A at the same four places (x 8 E, 18 W, 28 E, 38 W; axis 0.6 m behind the kerb's back); the lantern's top stays at 5.0 and its centre 0.5 out; its long side now lies along the arm",
-  "for_the_night_scene": "the point light and the two spots at (0, 500, 4850) in the piece's frame; colour (1, 0.25, 0) linear, not the scene file's (1, 0.7055, 0); the lantern's lamp and bowl are the emissive parts; the scene file's lantern colour needs correcting (a ruling, so asked first)",
-  "for_the_wear_target": "the lamp-column base foot-splash is the splash_band here (z 0 to 250); the wear target's iron_wear tone row applies to the chips",
-  "for_the_posters_target": "its SF4 puts bills on the shafts at x 8, 28, 48: the street has columns at 8, 18, 28, 38; the shaft is 61 to 68 across at the bill's height, not 114 (so 'the middle 0.17 m of an A3 shows face-on' becomes the middle 0.09 m)",
+  "for_scene_file": "furniture E1 and E2: replace the base 0.2 x 0.3, the 0.114 shaft, the three-cylinder swan neck and the box lantern by the kit piece C at the same four places (x 8 E, 18 W, 28 E, 38 W; axis 0.6 m behind the kerb's back); the lantern's top stays at 5.0 and its long side lies along the arm; outreach_m 0.5 becomes 0.705 (the lantern's centre; its rear end is 0.43 out and its front 0.98); the night note's pool and skirt numbers are unchanged and the pool moves 0.2 m toward the road",
+  "for_the_night_scene": "the point light and the two spots at (0, 705, 4850) in the piece's frame; colour (1, 0.25, 0) linear, not the scene file's (1, 0.7055, 0); the arc tube, jacket and bowl are the emissive parts (about 91,700, 27,500 and 5,500 cd/m2, or the kLampEmissiveUnitless rule); the scene file's lantern colour needs correcting (a ruling, so asked first)",
+  "for_Jafar_s_page": "if the builder wants it confirmed: 'The street's lamp columns: concrete (recommended) or black steel' (DECISIONS.md 9 October 12:29 records concrete as a session decision he can overturn)",
+  "for_the_wear_target": "the lamp-column base foot-splash is the splash_band here (z 0 to 250); for the concrete column the wear target's iron_wear tone row applies to the cap, stem and arm only",
+  "for_the_posters_target": "its SF4 puts bills on the shafts at x 8, 28, 48: the street has columns at 8, 18, 28, 38; the shaft is 125 to 220 across (concrete, square) at the bill's height, not 114; a bill on a column stands on a flat face of 172 at z 2300 (so 'the middle 0.17 m of an A3 shows face-on' becomes the whole width of an A3's 0.297 over the corner chamfers: the face is flat 142 wide between the 15 chamfers at z 2300)",
   "pivot": "the axis at the footway surface; z up; scale 1; one mesh for the column and one for the lantern (the lantern's emissive parts as separate material slots)"
  },
  "self_check": {
-  "date": "2026-10-09",
-  "result_line": "SELF-CHECK PASS: 231 of 231 tests pass (A printed numbers 75/75, B photographs 31/31, C drawing 35/35, D internal consistency 26/26, E text, canon and previews 54/54, W wrong copies refused 10/10)",
-  "tests": 231,
-  "passed": 231,
+  "date": "2026-10-11",
+  "us01_3d_fit": {
+   "n_points": 90,
+   "vp_bearing": -57.8,
+   "street_free_rake_deg": -0.15,
+   "street_free_median_mm": 3.72,
+   "street_rake0_median_mm": 4.19,
+   "street_rake40_median_mm": 43.48,
+   "plane_free_rake_deg": 42.41,
+   "plane_free_median_mm": 4.64,
+   "plane_rake0_median_mm": 68.45,
+   "plane_rake40_median_mm": 12.26
+  },
+  "result_line": "SELF-CHECK PASS: 286 of 286 tests pass (A printed numbers 75/75, B photographs 35/35, C drawing 41/41, D internal consistency 27/27, E text, canon and previews 64/64, T try 2 amendments 26/26, W wrong copies refused 18/18)",
+  "tests": 286,
+  "passed": 286,
   "failed": [],
   "parts": {
    "A": {
@@ -3474,28 +4756,33 @@
    },
    "B": {
     "name": "photographs",
-    "passed": 31,
-    "of": 31
-   },
-   "C": {
-    "name": "drawing",
     "passed": 35,
     "of": 35
    },
+   "C": {
+    "name": "drawing",
+    "passed": 41,
+    "of": 41
+   },
    "D": {
     "name": "internal consistency",
-    "passed": 26,
-    "of": 26
+    "passed": 27,
+    "of": 27
    },
    "E": {
     "name": "text, canon and previews",
-    "passed": 54,
-    "of": 54
+    "passed": 64,
+    "of": 64
+   },
+   "T": {
+    "name": "try 2 amendments",
+    "passed": 26,
+    "of": 26
    },
    "W": {
     "name": "wrong copies refused",
-    "passed": 10,
-    "of": 10
+    "passed": 18,
+    "of": 18
    }
   },
   "wrong_copies_refused": [
@@ -3518,12 +4805,12 @@
     ]
    },
    {
-    "copy": "bracket raked 15 degrees (a standard raked bracket)",
+    "copy": "bracket raked 40 degrees into a level lantern (the first try)",
     "refused": true,
     "by": [
-     "FAILED D the bracket's geometry recomputes: the stem top (collar top + 80), the bend of radius 90 through 50 degrees, the 40 degree arm to y 225",
-     "FAILED D the arm's end lies in the canopy's lip band (z 4925 to 4937) at the rear tip, where the boss is cast",
-     "FAILED D the arm's slope above the bend is the rake (40 degrees)"
+     "FAILED B the target's rake (0) lies inside the 3D reading's range 0 +-7 and its tolerance check says so",
+     "FAILED D the bracket's geometry recomputes: the stem to z 4800.8, ONE bend of 90 degrees on radius 130 to (130, 4930.8), a LEVEL arm to y 430 (A and C alike)",
+     "FAILED D the arm's end lies in the canopy's lip band (z 4925 to 4937) at the rear tip, where the boss is cast"
     ]
    },
    {
@@ -3532,7 +4819,7 @@
     "by": [
      "FAILED C front elevation: the lantern is 300 wide (x +-150) and 200 high",
      "FAILED C plan: the canopy's outline is 300 wide and 550 long; the bowl's rim 8 inside it; the flat base 164 wide and 400 long",
-     "FAILED C cross-section at y 500: the shells span x +-150 (canopy) and the dome reaches z 4998 +-2"
+     "FAILED C cross-section at the lantern's centre (y 705): the shells span x +-150 (canopy) and the dome reaches z 4998 +-2"
     ]
    },
    {
@@ -3540,7 +4827,8 @@
     "refused": true,
     "by": [
      "FAILED C side elevation: the lamp lies wholly inside the bowl",
-     "FAILED C side elevation: the lamp is 54 across and 310 long, centre (500, 4872)"
+     "FAILED C side elevation: the lamp is 54 across and 310 long, centre (705, 4872)",
+     "FAILED T F3: the reach to the spigot is 430 (Read: the research's 406 to 457) and every y station of the lantern (canopy, bowl, lamp, holder, hinge, catches) is the first try's plus 205: rear end 430, centre 705, front end 980"
     ]
    },
    {
@@ -3565,8 +4853,8 @@
     "refused": true,
     "by": [
      "FAILED C side elevation: the arm's end lies inside the boss and the boss touches the canopy",
-     "FAILED D the bracket's geometry recomputes: the stem top (collar top + 80), the bend of radius 90 through 50 degrees, the 40 degree arm to y 225",
-     "FAILED D the arm's slope above the bend is the rake (40 degrees)"
+     "FAILED D the bracket's geometry recomputes: the stem to z 4800.8, ONE bend of 90 degrees on radius 130 to (130, 4930.8), a LEVEL arm to y 430 (A and C alike)",
+     "FAILED D the arm above the bend is level (the rake 0): its slope from arm_start to arm_end is 0 degrees"
     ]
    },
    {
@@ -3582,7 +4870,72 @@
     "copy": "point light above the lantern",
     "refused": true,
     "by": [
-     "FAILED D the point light is the scene's rule: 50 mm below the lantern's centre (4900 - 50 = 4850), on y 500, inside the bowl"
+     "FAILED D the point light is the scene's rule: 50 mm below the lantern's centre (4900 - 50 = 4850), on y 705, inside the bowl",
+     "FAILED T F3: the checks: lantern_centre [0, 705, 4900] +-12, arm_reaches_boss [430, 4930.8] +-12, light_position [0, 705, 4850], and the light block's position"
+    ]
+   },
+   {
+    "copy": "steel the main build, concrete the unbuilt variant (the first try)",
+    "refused": true,
+    "by": [
+     "FAILED D variant C (the main build): a square shaft 220 at the foot to 125 at the top over 4620 (a taper of 20.6 mm a metre), the steel stem 48, the same lantern, light and places as A; its numbers are the research's 20 to 25 cm at the foot",
+     "FAILED T F2: C is the main build for all four places, A is the alternative (build false) written in full; DECISIONS.md records the swap as a session decision Jafar can overturn"
+    ]
+   },
+   {
+    "copy": "reach 225 to the lantern's rear (the stand-in's)",
+    "refused": true,
+    "by": [
+     "FAILED C side elevation: the arm's end lies inside the boss and the boss touches the canopy",
+     "FAILED C side elevation: the lantern is 550 long (y 430 to 980) and 200 high (z 4800 to 5000)",
+     "FAILED C side elevation: the lamp lies wholly inside the bowl"
+    ]
+   },
+   {
+    "copy": "lantern centre 500 out (the scene's guess)",
+    "refused": true,
+    "by": [
+     "FAILED C side elevation: the lantern is 550 long (y 430 to 980) and 200 high (z 4800 to 5000)",
+     "FAILED C side elevation: the lamp lies wholly inside the bowl",
+     "FAILED C side elevation: the bowl's flat base is at z 4800 over y 505 to 905 (400 long) and its rim at z 4925"
+    ]
+   },
+   {
+    "copy": "concrete shaft 114 across at the top",
+    "refused": true,
+    "by": [
+     "FAILED C variant C plan at z 500: the section is the taper's 209.7 square with 15 chamfers (area side^2 - 4 x 15 x 15 / 2 - the door recess 120 x 14)",
+     "FAILED D variant C (the main build): a square shaft 220 at the foot to 125 at the top over 4620 (a taper of 20.6 mm a metre), the steel stem 48, the same lantern, light and places as A; its numbers are the research's 20 to 25 cm at the foot",
+     "FAILED T F2: geometry.C.shaft is the point list (z, side, chamfer) (-150, 220, 15), (0, 220, 15), (4620, 125, 15); the taper is linear, the arrises chamfered 15 throughout, the top face flat with a 5 chamfer"
+    ]
+   },
+   {
+    "copy": "concrete door recess 250 tall",
+    "refused": true,
+    "by": [
+     "FAILED T F2: geometry.C.door: the recess 120 x 330 x 14 at z 450 to 780 on -y; the plate 132 x 342 x 3, 3 proud, two screws 10 across at 25 from its ends (z 469 and 761), blank (no lettering, no cast mark)"
+    ]
+   },
+   {
+    "copy": "socket 67 across (the first try's collar)",
+    "refused": true,
+    "by": [
+     "FAILED T Point 1: the socket sleeve z 4370 to 4620, OD 64, top edge chamfered 3, a seam at its foot, two M8 set screws on -y at z 4580 and 4420; the check collar is {od 64, z [4370, 4620]} +-4"
+    ]
+   },
+   {
+    "copy": "jacket the yellow (255, 176, 28)",
+    "refused": true,
+    "by": [
+     "FAILED A target.json numbers = lamp_numbers.py registry (ids, values, kinds) plus the derived ones",
+     "FAILED T Point 5: the jacket's colour is the one orange (255, 137, 0) at full strength, the yellow core left to the grade; the check glow_colour_lamp is (255, 137, 0) +-12; no (255, 176, 28) anywhere in target.json"
+    ]
+   },
+   {
+    "copy": "door corners square",
+    "refused": true,
+    "by": [
+     "FAILED T Point 2: the door's four corners and its joint groove's are rounded to radius 15: the drawn door's area is w x h minus (4 - pi) x 15^2 and the groove is the same offset; the check door_corner_radius is 15 +-3"
     ]
    }
   ],
@@ -3595,6 +4948,6 @@
    "rows_sleeve": 32,
    "rows_shaft": 57
   },
-  "how": "python -I self_check.py (runs target_drawing in memory, re-measures the previews, regenerates the derived numbers, tries ten deliberately wrong copies of target.json)"
+  "how": "python -I self_check.py (runs target_drawing in memory, re-measures the previews, regenerates the derived numbers, tries eighteen deliberately wrong copies of target.json)"
  }
 }
