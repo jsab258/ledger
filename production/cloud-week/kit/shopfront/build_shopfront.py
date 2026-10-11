@@ -43,10 +43,12 @@ import bpy  # noqa: E402
 import bmesh  # noqa: E402
 from mathutils import Matrix  # noqa: E402
 from shapely.geometry import LineString, Point, Polygon, box as sbox  # noqa: E402
+from shapely.geometry.polygon import orient  # noqa: E402
 from shapely.ops import unary_union  # noqa: E402
 
 import blender_parts  # noqa: E402
 import joinery  # noqa: E402
+import departures  # noqa: E402
 
 BEVEL = 1.0           # mm: the chamfer that eases a timber arris (the target: eased 1 to 2.5 by repainting)
 SEAT_EMBED = 12.0     # mm a frame member's foot goes into the sill (it is scribed down to the weathering)
@@ -54,7 +56,8 @@ SEAT_EMBED = 12.0     # mm a frame member's foot goes into the sill (it is scrib
 
 # ------------------------------------------------------------------ the target
 def load_target():
-    return json.load(open(TARGET_JSON, encoding="utf-8"))
+    """target.json with try 2's departures written into a copy (departures.py); the target file is untouched."""
+    return departures.apply(json.load(open(TARGET_JSON, encoding="utf-8")))
 
 
 def shop_of(T, ident):
@@ -445,7 +448,7 @@ class Builder:
         # -- the die's tablet: 170 x 80, 8 proud (elevation: u 90..260, z 2594..2674)
         tz = elev["die_tablet"]
         dd = d["capital_die_d"]
-        self.add(n("tablet"), box(tz[0][0], tz[1][0], dd - 0.5, dd + d["die_tablet_proud"], tz[0][1], tz[2][1]), mat)
+        self.add(n("tablet"), box(tz[0][0], tz[1][0], dd - 0.5, dd + d["die_tablet_proud"], tz[0][1], tz[2][1]), mat, bev=d.get("die_tablet_chamfer", BEVEL))
         return self
 
     # ---------------------------------------------------------- console (scroll), centred on slot middle u 175
@@ -465,95 +468,118 @@ class Builder:
             rings.append([(uc - hw, 0.0, zz), (uc + hw, 0.0, zz), (uc + hw, -(dv - ch), zz), (uc + hw - ch, -dv, zz),
                           (uc - hw + ch, -dv, zz), (uc - hw, -(dv - ch), zz)])
         ob = self.add(n("body"), loft_rings(rings), mat, bev=None)
-        # side grooves: 8 inside the outline, 5 wide, 4 deep, and the eye pockets; bosses 3 proud of the groove floor
-        gd = d["side_grooves"]
-        gw, gdep = gd["width"], gd["depth"]
-        cut_polys = []
-        for key, eye in (("volute_upper_spiral", d["upper_volute"]["eye_dz"]), ("volute_lower_spiral", d["lower_volute"]["eye_dz"])):
-            line = LineString(pr[key]["points"])
-            rib = line.buffer(gw / 2.0, cap_style=2, join_style=1, resolution=3)
-            pocket = Point(eye).buffer(gd["eye_boss_diameter"] / 2.0 + 1.0, resolution=6)
-            cut_polys.append(unary_union([rib, pocket]))
-        floor = hw - gdep
-        Vc, Fc = [], []
-        for poly in cut_polys:
-            geoms = [poly] if poly.geom_type == "Polygon" else list(poly.geoms)
-            for g in geoms:
-                for (ua, ub) in ((uc + floor, uc + hw + 1.0), (uc - hw - 1.0, uc - floor)):
-                    V, F = poly_prism_u([(p[0], z0 + p[1]) for p in g.exterior.coords], ua, ub)
-                    Fc += [tuple(i + len(Vc) for i in f) for f in F]
-                    Vc += [tuple(v) for v in V]
-        bool_op(ob, np.array(Vc), Fc, "DIFFERENCE")
-        for bk in ("eye_boss_upper", "eye_boss_lower"):
-            pts = [(p[0], z0 + p[1]) for p in pr[bk]["points"]]
-            for side, (ua, ub) in (("r", (uc + floor - 0.4, uc + floor + gd["eye_boss_proud"])), ("l", (uc - floor - gd["eye_boss_proud"], uc - floor + 0.4))):
-                self.add(n("boss_%s_%s" % (bk[9:], side)), prism_dz(pts, ua, ub), mat, bev=None)
-        # the acanthus leaf on the face: a domed relief, 12 at the rib, 0 at its outline, lobes and grooves
+        # D2 the side spirals: raised fillets 10 wide standing 6 proud on each side, and the eye bosses 8 proud (4 into the body)
+        fd = d["side_fillets"]
+        sides = (("r", (uc + hw - 0.4, uc + hw + fd["proud"]), (uc + hw - 0.7, uc + hw + fd["eye_boss_proud"])),
+                 ("l", (uc - hw - fd["proud"], uc - hw + 0.4), (uc - hw - fd["eye_boss_proud"], uc - hw + 0.7)))
+        for key, bk, tag_ in (("volute_upper_spiral", "eye_boss_upper", "u"), ("volute_lower_spiral", "eye_boss_lower", "l")):
+            line = LineString([(p[0], z0 + p[1]) for p in pr[key]["points"]])
+            rib = line.buffer(fd["width"] / 2.0, cap_style=2, join_style=1, resolution=3)
+            geoms = [rib] if rib.geom_type == "Polygon" else list(rib.geoms)
+            # the board's face is d 120: what lies behind d 121 is hidden by the board (and would run into it), so it is not built
+            keep = sbox(121.0, -1e5, 1e5, 1e5).difference(sbox(-1e5, -1e5, 133.0, z0 + 42.0))      # and clear of the board's bed mould (d 132, z to 40)
+            boss = Polygon([(p[0], z0 + p[1]) for p in pr[bk]["points"]]).buffer(0).intersection(keep)
+            boss = list(orient(boss, 1.0).exterior.coords)[:-1]
+            for side, (ua, ub), (ba, bb) in sides:
+                gi = 0
+                for g in geoms:
+                    g = g.intersection(keep)
+                    for gg in ([g] if g.geom_type == "Polygon" else list(g.geoms)):
+                        if gg.is_empty or gg.geom_type != "Polygon":
+                            continue
+                        self.add(n("fillet_%s%d_%s" % (tag_, gi, side)), poly_prism_u(list(orient(gg, 1.0).exterior.coords), ua, ub), mat, bev=None)
+                        gi += 1
+                self.add(n("boss_%s_%s" % (tag_, side)), prism_dz(boss, ba, bb), mat, bev=None)
+        # D3 the acanthus leaf on the face: raised rib, chevron veins, domed lobes
         self.add(n("leaf"), self._leaf(C, uc, z0, front), mat, bev=None)
         return self
 
     def _leaf(self, C, uc, z0, front):
-        """The acanthus pendant on the console's face, as rows across its outline: relief domed 12 at the rib, 0 at the outline,
-        a raised rib 8 wide and 4 proud, a groove 3 deep across each notch between the lobes. Closed against the face."""
+        """D3, the acanthus pendant on the console's face (REVIEW-v1-close fault 2): a 3 mm base that rolls off to nothing at the outline,
+        each lobe domed on its own (12 at its middle, 0 at its veins), a vein 3 wide and 2 deep from each notch up and inward to the
+        rib at 35 degrees (a chevron), a raised rib 8 wide and 4 proud the length of the leaf, each lobe tip turned 6 forward, and the
+        head carried 50 up over the upper roll (the outline's head_extension). One skin on the face (its edge 0.3 inside it) and
+        one 6 inside the body, same grid, closed along the edge."""
         ld = C["dims"]["leaf"]
+        L = ld["try2"]
         outline = C["profiles"]["leaf_outline"]["points"]
-        right = sorted([p for p in outline if p[0] >= 0.0], key=lambda p: p[1])
+        right = sorted([tuple(p) for p in outline if p[0] >= 0.0 and p[1] < 419.9], key=lambda p: p[1]) + [tuple(p) for p in ld["head_extension"]]
         hwz = lerp_table([(p[1], p[0]) for p in right])
         F_of_z = lerp_table([(p[1], p[0]) for p in front])
-        relief = ld["relief_mm"]
-        rib_w, rib_h = 8.0, 4.0            # the rib: 8 wide, 4 proud of the dome
-        gdep = ld["groove_between_lobes"]["depth"]
         zlo, zhi = right[0][1], right[-1][1]
-        # rows: the outline's own heights plus fill-in rows at most 9 mm apart
-        zr = [p[1] for p in right]
-        zs = list(zr)
-        for a, b in zip(zr[:-1], zr[1:]):
-            k = int(math.ceil((b - a) / 9.0))
-            zs += [a + (b - a) * i / k for i in range(1, k)]
-        # notch rows (the right half's concave points) and one row either side, so each groove is resolved
-        notches = []
+        rl = LineString([(p[0], p[1]) for p in right])
+        notches, tips = [], []
         for i in range(1, len(right) - 1):
             a, b, c = np.array(right[i - 1]), np.array(right[i]), np.array(right[i + 1])
             cr = (b - a)[0] * (c - b)[1] - (b - a)[1] * (c - b)[0]
-            if cr > 0 and b[1] > zlo + 20 and b[1] < zhi - 12:
-                notches.append(b[1])
-        for zn in notches:
-            zs += [zn - 3.5, zn + 3.5]
-        zs = uniq_sorted(zs, 0.5)
-        ns = 9
-        S = np.linspace(-1.0, 1.0, ns)
+            if b[1] < 419.0 and b[0] > 5.0:
+                (notches if cr > 0 else tips).append((float(b[0]), float(b[1])))
+        tang = math.tan(math.radians(L["vein_angle_deg"]))
+        veins = [LineString([(wn - 1.0, zn), (L["rib_w"] / 2.0, zn + (wn - L["rib_w"] / 2.0) * tang)]) for wn, zn in notches]
+        zs = list(np.arange(zlo, zhi, 5.0)) + [p[1] for p in right] + [zhi]
+        zs = uniq_sorted(zs, 0.6)
+        nc = 25
+        S = np.linspace(-1.0, 1.0, nc)
+        D, R, rp, rw = L["dome_mm"], L["dome_radius"], L["rib_proud"], L["rib_w"] / 2.0
+        base = 3.0
+
+        def height(u, z, w):
+            u = abs(u)
+            if u >= w - 1e-6:
+                return 0.0
+            P = Point(u, z)
+            d_out = P.distance(rl)
+            d_vein = min(v.distance(P) for v in veins) if veins else 1e9
+            e = min(d_out, d_vein)
+            h = base * min(1.0, d_out / 3.0) + (D - base) * (1.0 - (1.0 - min(1.0, e / R)) ** 2) * min(1.0, d_out / 3.0)
+            h -= L["vein_depth"] * min(1.0, max(0.0, (2.2 - d_vein) / 1.0))
+            h = max(h, 1.0 if d_out > 3.0 else 0.0)
+            if u < rw:
+                h += rp * (1.0 - (u / rw) ** 2) * min(1.0, max(0.0, (zhi - 12.0 - z) / 20.0))
+            for tu, tz in tips:
+                h += L["tip_forward"] * math.exp(-((u - tu) ** 2 + (z - tz) ** 2) / 81.0) * min(1.0, d_out / 0.1 + 0.0) * (1.0 if d_out < 6.0 else 0.0)
+            return h
+
         V = []
         for z in zs:
             w = max(hwz(z), 0.4)
             for s in S:
                 u = w * s
-                hh = (relief - rib_h) * (1.0 - s * s)           # a dome of 8, the rib 4 more at the middle: 12 in all
-                hh *= min(1.0, (zhi - z) / 30.0)                       # tapers to nothing along the square top
-                if abs(u) < rib_w / 2.0:
-                    hh += rib_h * (1.0 - (abs(u) / (rib_w / 2.0)) ** 2) * min(1.0, (zhi - z) / 30.0)
-                for zn in notches:
-                    hh -= gdep * math.exp(-((z - zn) / 3.0) ** 2) * (1.0 - s * s)
-                if abs(s) >= 1.0:
-                    hh = 0.0
-                V.append((uc + u, -(F_of_z(z) + max(hh, 0.0)), z0 + z))
-        top = len(V)
-        for z in zs:
-            w = max(hwz(z), 0.4)
-            for s in S:
-                V.append((uc + w * s, -(F_of_z(z) - 0.4), z0 + z))
-        F = []
+                h = height(u, z, w)
+                V.append((uc + u, -(F_of_z(z) + h - 0.3), z0 + z))
         nr = len(zs)
-        idx = lambda r, c: r * ns + c
+        idx = lambda r, c: r * nc + c
+        F = []
         for r in range(nr - 1):
-            for c in range(ns - 1):
+            for c in range(nc - 1):
                 F.append((idx(r, c), idx(r, c + 1), idx(r + 1, c + 1), idx(r + 1, c)))
-                F.append((top + idx(r + 1, c), top + idx(r + 1, c + 1), top + idx(r, c + 1), top + idx(r, c)))
-        for r in range(nr - 1):                                      # the two sides and the two ends join the skins
-            for c in (0, ns - 1):
-                F.append((idx(r, c), idx(r + 1, c), top + idx(r + 1, c), top + idx(r, c)))
-        for r in (0, nr - 1):
-            for c in range(ns - 1):
-                F.append((idx(r, c), top + idx(r, c), top + idx(r, c + 1), idx(r, c + 1)))
+        # the back: the edge loop dropped to a flat plane d 120 inside the body (the body's front is never nearer than 140), closed by a
+        # constrained triangulation of the loop; the wall between the loop and its drop is hidden inside the console
+        loop = [idx(r, 0) for r in range(nr)] + [idx(nr - 1, c) for c in range(1, nc)] + [idx(r, nc - 1) for r in range(nr - 2, -1, -1)] + [idx(0, c) for c in range(nc - 2, 0, -1)]
+        base_i = len(V)
+        for i in loop:
+            V.append((V[i][0], -120.0, V[i][2]))
+        m = len(loop)
+        cu, cz = uc, z0 + 0.5 * (zlo + zhi)
+        for k in range(m):
+            a_, b_ = loop[k], loop[(k + 1) % m]
+            quad = (a_, b_, base_i + (k + 1) % m, base_i + k)
+            Q = [np.array(V[i]) for i in quad]
+            nrm = np.cross(Q[1] - Q[0], Q[2] - Q[0])
+            mid = (Q[0] + Q[1] + Q[2] + Q[3]) / 4.0
+            if nrm[0] * (mid[0] - cu) + nrm[2] * (mid[2] - cz) < 0:
+                quad = quad[::-1]
+            F.append(quad)
+        poly = Polygon([(V[i][0], V[i][2]) for i in loop]).buffer(0)
+        key = {(round(V[base_i + k][0], 3), round(V[base_i + k][2], 3)): base_i + k for k in range(m)}
+        import shapely
+        for tri in shapely.constrained_delaunay_triangles(poly).geoms:
+            ids = [key[(round(x, 3), round(y, 3))] for x, y in list(tri.exterior.coords)[:3]]
+            A_, B_, C_ = (np.array(V[i]) for i in ids)
+            if np.cross(B_ - A_, C_ - A_)[1] > 0:        # the back faces the wall: its normal points toward +y... fixed below by sign
+                pass
+            nrm = np.cross(B_ - A_, C_ - A_)
+            F.append(tuple(ids) if nrm[1] > 0 else tuple(ids[::-1]))
         V, F = merge_doubles(V, F, 1e-3)
         return V, F
 
@@ -564,6 +590,11 @@ class Builder:
         z0 = fb["dims"]["z_range"][0]
         prof = [(p[0], p[1] + z0) for p in fb["profiles"]["section"]["points"]]
         self.add("fas_board", prism_dz(prof, u0, u1), "oxblood")
+        bm = fb["dims"].get("bed_mould_cyma")
+        if bm:                                                 # D5: a cyma reversa 40 high, d 120 to 150, between the consoles, 1 into the board
+            (zb0, zb1), (db0, db1), (ub0, ub1) = bm["z"], bm["d"], bm["u"]
+            pts = [(db0 - 1.0, zb0)] + [(db0 + (db1 - db0) * (3 * (i / 16.0) ** 2 - 2 * (i / 16.0) ** 3), zb0 + (zb1 - zb0) * i / 16.0) for i in range(17)] + [(db0 - 1.0, zb1)]
+            self.add("fas_mould", prism_dz(pts, ub0, ub1), "oxblood", bev=None)
         return self
 
     # ---------------------------------------------------------- cornice with its mitred returns
@@ -582,7 +613,23 @@ class Builder:
         P = np.asarray(prof, float)
         V, F = sweep_path(P, lambda dv: path(dv))
         V, F = merge_doubles(V, F)
-        self.add("cor_cornice", (V, F), "oxblood")
+        main_ob = self.add("cor_cornice", (V, F), "oxblood")
+        bf = c["dims"].get("break_forward")
+        if bf:                                                # D4: broken forward over each console, with mitred returns
+            front = Polygon(prof).buffer(0).intersection(sbox(depth - bf["forward"], z0 - 1.0, depth + 1.0, z0 + 151.0))
+            Q = list(front.exterior.coords)[:-1]
+            if (Polygon(Q).exterior.is_ccw) != (Polygon(prof).exterior.is_ccw):
+                Q = Q[::-1]
+            for tag_, (ua, ub) in (("l", bf["left_u"]), ("r", bf["right_u"])):
+                def bpath(dv, ua=ua, ub=ub):
+                    k = depth - dv
+                    return [(ua + k, -(depth - k)), (ua + k, -(bf["nose_d"] - k)), (ub - k, -(bf["nose_d"] - k)), (ub - k, -(depth - k))]
+                V, F = sweep_path(np.asarray(Q, float), bpath)
+                V, F = merge_doubles(V, F)
+                vol = sum(np.dot(V[f[0]], np.cross(V[f[i]], V[f[i + 1]])) for f in F for i in range(1, len(f) - 1)) / 6.0
+                if vol < 0:
+                    F = [tuple(f[::-1]) for f in F]
+                bool_op(main_ob, V, F, "UNION")                  # one solid: no coplanar overlaps where the breaks meet the run
         return self
 
     # ---------------------------------------------------------- sill
@@ -685,6 +732,10 @@ class Builder:
         bc = [u0 + c for c in gl["toplight_bar_centres"]]
         for k, c in enumerate(bc):
             self.add("win_bar_%d" % k, prism_ud([(c + p[0], max(p[1], 1.0)) for p in bp], z_tr1 - 6.0, z_h0 + 3.0), "white")
+        mbc = [u0 + c for c in gl.get("toplight_mullion_bar_centres", [])]       # D6: the mullions carried up through the toplights, 70 wide
+        for k, c in enumerate(mbc):
+            self.add("win_mbar_%d" % k, prism_ud([(c + p[0], max(p[1], 1.0)) for p in mp], z_tr1 - 6.0, z_h0 + 3.0), "white")
+        tb = sorted([(c, 14.0, 4.0) for c in bc] + [(c, d["mullion_face"] / 2.0, 8.0) for c in mbc])   # (centre, half face, rebate)
         # glass: 6 plate, d 27 to 33, edges 10 into the jambs' rebates, 8 into the mullions', 4 into the bars'
         gz = d["glass_d"]
         gt = d["glass_thickness"]
@@ -694,9 +745,8 @@ class Builder:
         for k in range(len(mc) + 1):
             a, b = lower_edges[2 * k], lower_edges[2 * k + 1]
             self.add("win_glass_lower_%d" % k, box(a, b, g0, g1, z_seat1, z_tr0), "glass", bev=None)
-        bar_hw = 14.0
-        up = [(ui0 - rjamb)] + [x for c in bc for x in (c - bar_hw + rbar, c + bar_hw - rbar)] + [ui1 + rjamb]
-        for k in range(len(bc) + 1):
+        up = [(ui0 - rjamb)] + [x for c, hw_, rb_ in tb for x in (c - hw_ + rb_, c + hw_ - rb_)] + [ui1 + rjamb]
+        for k in range(len(tb) + 1):
             a, b = up[2 * k], up[2 * k + 1]
             self.add("win_glass_top_%d" % k, box(a, b, g0, g1, z_tr1, z_h0), "glass", bev=None)
         # ovolo glazing beads (glazing_bead_ovolo: 16 along the face x 12 proud) round every light, on the glass's front face (d 36 to 48)
@@ -706,8 +756,8 @@ class Builder:
         edges_l = [ui0] + [x for c in mc for x in (c - d["mullion_face"] / 2.0, c + d["mullion_face"] / 2.0)] + [ui1]
         for k in range(len(mc) + 1):
             lights.append((edges_l[2 * k], z_seat1, edges_l[2 * k + 1], z_tr0))
-        edges_t = [ui0] + [x for c in bc for x in (c - bar_hw, c + bar_hw)] + [ui1]
-        for k in range(len(bc) + 1):
+        edges_t = [ui0] + [x for c, hw_, rb_ in tb for x in (c - hw_, c + hw_)] + [ui1]
+        for k in range(len(tb) + 1):
             lights.append((edges_t[2 * k], z_tr1, edges_t[2 * k + 1], z_h0))
         for k, (a, b, c2, e) in enumerate(lights):
             V, F = joinery.sweep_frame(prof, a, b, c2, e, -g1)

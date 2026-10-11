@@ -109,3 +109,41 @@ Nothing was set aside. Not built, by the brief: the doors, the side door's F1, t
 - The console and the leaf are Judgement (no photograph of a console was reached): the first part to check against one.
 - The right pilaster in the assembly is a mirrored copy, not an instance (the glTF carries it twice; the assembly is 876 KB, so there is 14 per cent of the limit left).
 - Wear, the party-wall downpipe, the neighbour's pilaster, the shutter and the paints of other shops are not here.
+
+# Try 2 (11 October 2026, coordinator; by Jafar's ruling no more target polishing)
+
+Try 1's two fresh reviews: street PASS (three narrow points), close FAIL on two faults, each with its exact fix (`REVIEW-v1-street.md`, `REVIEW-v1-close.md`). Try 2 applies them as written. The target is untouched: each change is one named departure in `departures.py` (D1 to D7), written into a COPY of target.json that the builder, the check and target_drawing.py (`--target`) all read, so every other number is still checked against the target itself.
+
+| | Fault or point | What changed |
+|---|---|---|
+| D1 | close fault 1: the console's profile | tapering bracket: cap block 290 deep at z 520 to 550; upper roll r 80 (eye d 200, z 440, front 280, top z 520); lower roll r 40 (eye d 125, z 60, front 165); foot 130 deep; waist 140 at z 170 (concave, a cove up to the upper roll). Waist 140 kept (the board's rule) |
+| D2 | the same | the side spirals are raised fillets 10 wide standing 6 proud (upper 1.5 turns r 62 to 17, lower 1 turn r 24 to 11; the review gave no radii: chosen to lie on the flat side, 12 or more inside the outline), eye bosses 30 and 20 across standing 8 proud. What lies behind the board's face (d 120) and, below z 42, behind its bed mould (132) is not built (hidden, and it ran into the board) |
+| D3 | close fault 2, street narrow point 2: the leaf | a 3 mm base rolling off at the outline; each lobe domed 12 on its own (0 at its veins, radius 22); veins 3 wide and 2 deep from each notch up and inward at 35 degrees to the rib (the review's "up and inward"); rib 8 wide, 4 proud, the full length; tips turned 6 forward; the head carried 50 over the upper roll (leaf to z 471, following the roll). One skin on the face and a flat back inside the body. The target's own leaf numbers (outline, 3 lobes a side, rib 8 x 4, groove 4 x 3) otherwise stand |
+| D4 | close fault 1's last bullet: the cornice | broken forward 85 (nose d 300) over each console, u 54 to 305 and 5695 to 5946, the profile's front part (d 130 to 215) swept round the break with mitred returns and unioned with the straight run. The review wrote "over u 45 to 305"; the cornice's own ends are at u 54, so the outer end is 54 |
+| D5 | close narrow point 1 | a cyma reversa bed mould 40 high, d 120 to 150, z 3360 to 3400, between the consoles (u 295 to 5705), 1 into the board; clear of the drip groove (d 155) |
+| D6 | street narrow point 1 | nine toplights of 326.9: each mullion carried up as a 70 wide bar (centres 1121.7, 2228.3 from the frame's left edge), two 28 wide bars a light (390.9, 745.8, 1497.6, 1852.5, 2604.2, 2959.1); glass and beads per light |
+| D7 | close narrow point 2 | the capital's tablet edge eased 3 mm (was 1) |
+
+Not changed, as the street review left it to Jafar: the cornice's height (150 against the board's 550). Not in this unit: doors and their heads (the pale strip under the board at the empty door slot was the render's: the scene's dark interior now reaches above the board).
+
+## Judgements
+
+1. The review's cove between the waist and the upper roll is written as a cubic from the waist (vertical tangent) to the roll's foot (200, 360); its control points are mine (`departures.py`, `side_silhouette`). The lower roll leaves the foot at z 20.3 and stops at 30 degrees, then a cubic reaches the waist at 140.
+2. The foot (130) is 2 mm shallower than the board's bed mould (132) over the lowest 20 mm: noted in CON-09, as the review gave the foot 130.
+3. The leaf stands out of the roll up to 13 mm at the head, so the whole piece is 293 deep against the body's 290 (CON-01b: at most 296).
+4. `shopfront_ritas.glb` is 1,165,440 bytes (27,898 triangles): over the push guard's 1 MB, so it is not in git; `build_shopfront.py` (about 3 minutes) rebuilds it exactly. Every part file is under 1 MB and is in git (console 315 KB at 8,592 triangles, the leaf about 5,600 of them).
+
+## Files and numbers (try 2)
+
+| model | triangles | bytes |
+|---|---|---|
+| pilaster | 1,762 | 87,784 |
+| console | 8,592 | 315,304 |
+| fascia_board | 148 | 9,816 |
+| cornice | 1,278 | 69,872 |
+| sill | 116 | 7,736 |
+| stallriser | 2,620 | 86,768 |
+| window_frame | 3,028 | 203,904 |
+| shopfront_ritas (assembly, out of git) | 27,898 | 1,165,440 |
+
+Check: `checks/check_v2.json`, 171 of 171 required rows pass (try 1: 162 of 162), the amended rows named D1 to D6 in their ids; three extra rows (the drawing's plain rectangles for the base ogee and the cornice) still do not match, as in try 1.

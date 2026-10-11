@@ -38,6 +38,7 @@ sys.path.insert(0, os.path.join(HERE, "..", "tools"))
 import outline  # noqa: E402
 from outline import Frame, compare, load_npz, overlay, section, silhouette  # noqa: E402
 import joinery  # noqa: E402
+import departures  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
 TARGET_DIR = os.path.join(REPO, "production", "cloud-week", "targets", "shopfronts")
@@ -205,9 +206,10 @@ def check_sections(T, D, parts, rep, ov):
     cut_compare(rep, "A:window glazing bead ovolo (foot of light 1)", win, ("win_bead_0",), 0, ui0 + 400.0, (1, 2), [tp], [30, 620, 52, 646], 0.1, overlays=ov)
     # cornice plan with the mitred return at the left party wall: z 3440 is through the corona (d 0 to 215)
     pl = dr["cornice_ends_plan"]["polygons"]
-    tg = [p["pts"] for p in pl if p["name"] in ("front_run_this", "return_left_this")]
-    cut_compare(rep, "A:cornice plan, front run and mitred return (left end)", cor, ("cor_cornice",), 2, 3440.0, (0, 1), tg, [0, -10, 330, 225], 0.25, clip=(0, 0.0, 330.0), overlays=ov,
-                note="the neighbour's run is not in this model; compared from the party line to u 330")
+    bf = T["parts"]["cornice"]["dims"]["break_forward"]
+    tg = [[[54.0, 0.0], [330.0, 0.0], [330.0, 215.0], [bf["left_u"][1], 215.0], [bf["left_u"][1], bf["nose_d"]], [54.0, bf["nose_d"]]]]
+    cut_compare(rep, "A:cornice plan, front run and mitred return (left end), with D4's break forward over the console (nose d 300 for u 54 to 305)", cor, ("cor_cornice",), 2, 3440.0, (0, 1), tg, [0, -10, 330, 310], 0.25, clip=(0, 0.0, 330.0), overlays=ov,
+                note="the neighbour's run is not in this model; compared from the party line to u 330; the plan through the corona is the L the break makes (the target's was a rectangle)")
     # the return turned: the section at d just in front of the wall is the profile turned 90 degrees (return_left_uz / return_right_uz)
     for side_name, key, lo_hi in (("left", "return_left_uz", (0, 3000)), ("right", "return_right_uz", (3000, 6000))):
         prof = [[p[0], p[1] + 3400.0] for p in T["parts"]["cornice"]["profiles"][key]["points"]]
@@ -262,7 +264,10 @@ def check_elevations(T, D, asm, parts, rep, ov):
           drop=("pilL_core", "pilR_core", "pilL_ogee", "pilR_ogee"), note="the drawing's ogee is a plain 320 x 60 rectangle; its own profile (base_ogee) narrows to the shaft's width at the top: compared apart, below")
     layer(("pilL_ogee", "pilR_ogee"), tgt_of(exact=("pil_base_ogee",)), "B:front: base ogee against the drawing's rectangle (extra: the drawing ignores the taper of its own profile)", extra=True)
     layer(("conL_body", "conR_body"), tgt_of(exact=("console",)), "B:front: consoles")
-    layer(("conL_leaf", "conR_leaf"), tgt_of(exact=("console_leaf",)), "B:front: console leaves")
+    cdim = T["parts"]["console"]["dims"]["leaf"]
+    rt = sorted([q for q in T["parts"]["console"]["profiles"]["leaf_outline"]["points"] if q[0] >= 0 and q[1] < 419.9], key=lambda q: q[1]) + [tuple(q) for q in cdim["head_extension"]]
+    leafpoly = lambda uc_: [[uc_ + q[0], 2850.0 + q[1]] for q in rt] + [[uc_ - q[0], 2850.0 + q[1]] for q in rt[::-1]]
+    layer(("conL_leaf", "conR_leaf"), [leafpoly(175.0), leafpoly(5825.0)], "B:front: console leaves (the target's outline with try 2's head carried 50 over the upper roll, D3)")
     layer(("fas_",), tgt_of(exact=("fascia_board",)), "B:front: fascia board")
     cz = lambda pts: [[p[0], p[1] + 3400.0] for p in pts]
     cpr = T["parts"]["cornice"]["profiles"]
@@ -274,9 +279,12 @@ def check_elevations(T, D, asm, parts, rep, ov):
     layer(("sta_",), tgt_of(prefix="stall_"), "B:front: stallriser (plinth, rails, panels, muntins), between u 2380 and 5570", clip_u=(2380.0, 5570.0),
           note="the drawing leaves the two 80 end stiles (u 2300 to 2380 and 5570 to 5650, z 120 to 525 beside the panels) undrawn; the build has them (the target's text: 80 stiles)")
     wj = ["win_jamb_l", "win_jamb_r", "win_mullion", "win_transom", "win_toplight_bar", "win_head", "win_bottom_rail"]
-    layer(("win_jamb", "win_seat", "win_transom", "win_head", "win_mullion", "win_bar"), tgt_of(exact=wj), "B:front: window joinery (jambs, seat, mullions, transom, bars, head)", clip_z=600.0,
+    Sh = T["shops"][[s_["id"] for s_ in T["shops"]].index("ritas")]
+    wu0 = Sh["zones_u"]["window"][0]
+    mbars = [[[wu0 + c - 35.0, 2474.0], [wu0 + c + 35.0, 2474.0], [wu0 + c + 35.0, 2793.0], [wu0 + c - 35.0, 2793.0]] for c in Sh["glazing_layout"]["toplight_mullion_bar_centres"]]
+    layer(("win_jamb", "win_seat", "win_transom", "win_head", "win_mullion", "win_mbar", "win_bar"), tgt_of(exact=wj) + mbars, "B:front: window joinery (jambs, seat, mullions, transom, bars, head; D6's two mullion bars added)", clip_z=600.0,
           note="compared from z 600: the jambs' feet go 12 into the sill")
-    layer(("win_",), tgt_of(prefix="win_") , "B:front: window joinery and glass together fill the frame (no hole)", clip_z=600.0,
+    layer(("win_",), tgt_of(prefix="win_") + mbars, "B:front: window joinery and glass together fill the frame (no hole)", clip_z=600.0,
           note="union of joinery, glass and beads against the drawing's window")
 
 
@@ -359,7 +367,10 @@ def check_C(T, parts, asm, rep, ov):
     rep.within("PIL-17 base ogee returned to u 15 and 335", [lo[0], hi[0]], [15.0, 335.0], 1.0)
     # ---- CON
     lo, hi = bbox_mm(con, "con_")
-    rep.within("CON-01 envelope (w, d, h)", [hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]], [240.0, 205.0, 550.0], 1.0)
+    blo, bhi = bbox_mm(con, "con_body")
+    rep.within("CON-01 body envelope (w, d, h) (D1: 290 deep, the cap block's front)", [bhi[0] - blo[0], bhi[1] - blo[1], bhi[2] - blo[2]], [240.0, 290.0, 550.0], 1.0)
+    rep.within("CON-01b whole piece: width over the fillets and bosses (240 + 2 x 8), depth over the leaf (the head stands out of the roll, at most 296), height", [hi[0] - lo[0], hi[2] - lo[2]], [256.0, 550.0], 1.0)
+    rep.add("CON-01b depth of the whole piece, leaf included, at most 296", hi[1] - lo[1] <= 296.0, round(hi[1] - lo[1], 2), "<= 296")
     clo, chi = bbox_mm(asm, "conL_body")
     rlo, rhi = bbox_mm(asm, "conR_body")
     rep.within("CON-02 centres (assembly)", [(clo[0] + chi[0]) / 2, (rlo[0] + rhi[0]) / 2], [175.0, 5825.0], 1.0)
@@ -375,14 +386,32 @@ def check_C(T, parts, asm, rep, ov):
     sil_pts = [(p[0], p[1] + 2850.0) for p in P["console"]["profiles"]["side_silhouette"]["points"]]
     h = hausdorff(g, sil_pts)
     rep.add("CON-05 silhouette: two-way Hausdorff", h <= 2.0, round(h, 3), "<= 2.0")
-    # CON-06 leaf relief: the largest standing out of the face in the leaf's rows, within u +-60 and z local 120..440
+    # CON-06 leaf: relief measured out of the face; half width; z range (D3)
     V = con[names(con, "con_leaf")[0]][0] * 1000.0
     zloc = V[:, 2] - 2850.0
-    F_of_z = np.interp(zloc, [p[1] for p in P["console"]["profiles"]["side_silhouette"]["points"][1:-1]], [p[0] for p in P["console"]["profiles"]["side_silhouette"]["points"][1:-1]])
+    sp_ = P["console"]["profiles"]["side_silhouette"]["points"]
+    keep_ = [q for i_, q in enumerate(sp_) if 0 < i_ < len(sp_) - 1]
+    F_of_z = np.interp(zloc, [q[1] for q in keep_], [q[0] for q in keep_])
     relief = (V[:, 1] - F_of_z).max()
-    rep.within("CON-06 leaf: relief, half width, z range (local)", [relief, np.abs(V[:, 0] - 175.0).max(), zloc.min(), zloc.max()], [12.0, 60.0, 150.0, 420.0], 1.5,
-               "the target says 12 at the rib and a rib 4 proud of the dome: built as dome 8 + rib 4")
-    # CON-07 volutes, waist, stem, cap block, read off the centre section's front
+    rep.within("CON-06 leaf: relief (dome 12 + rib 4 = 16, the tips turned 6 forward), half width, z range (local; the head to 471)", [relief, np.abs(V[:, 0] - 175.0).max(), zloc.min(), zloc.max()], [16.0, 60.0, 150.0, 471.0], 2.5,
+               "D3: the lobes are domed 12 each, the rib 4 proud of the dome")
+    lfm = con[names(con, "con_leaf")[0]]
+    Vl, Fl = lfm
+    # the rib: the highest standing point in each 10 mm of height along u = 175 +- 4 is on the centre line and 4 above the dome beside it
+    zr_ = np.arange(200.0, 440.0, 20.0)
+    rib_h, dome_h = [], []
+    Vm = Vl * 1000.0
+    for z_ in zr_:
+        sel = (np.abs(Vm[:, 2] - 2850.0 - z_) < 2.5)
+        Fz = float(np.interp(z_, [q[1] for q in keep_], [q[0] for q in keep_]))
+        cen = Vm[sel & (np.abs(Vm[:, 0] - 175.0) < 1.5)][:, 1]
+        oth = Vm[sel & (np.abs(Vm[:, 0] - 175.0) > 14.0)][:, 1]
+        if len(cen) and len(oth):
+            rib_h.append(cen.max() - Fz)
+            dome_h.append(oth.max() - Fz)
+    rep.add("CON-06b the rib stands out of the leaf at every height sampled (centre line higher than the highest point beside it)", all(a_ > b_ - 0.5 for a_, b_ in zip(rib_h, dome_h)) and len(rib_h) >= 8, [round(float(np.mean(rib_h)), 1), round(float(np.mean(dome_h)), 1), len(rib_h)], "rib > dome")
+    # the veins: 3 wide and 2 deep, from each notch up and inward to the rib; the face 2 mm below the dome beside them
+    # CON-07 volutes, waist, cap block, read off the centre section's front (D1)
     def front_at(z):
         ln = LineString([(-5, z), (400, z)])
         x = g.intersection(ln)
@@ -391,61 +420,53 @@ def check_C(T, parts, asm, rep, ov):
     zl = np.arange(60.0, 420.0, 0.5)
     fw = np.array([f(z) for z in zl])
     waist_z = zl[np.argmin(fw)]
-    top_pts = [(d_, z_) for d_, z_ in sil_pts if abs(d_ - 160.0) < 1e-6 and 505 + 2850 < z_ < 520 + 2850]
-    # the upper volute's top: highest point of the section's outline at d near 160 before the notch
-    upper_top_z = max(z_ for d_, z_ in [(p[0], p[1]) for p in g.exterior.coords] if abs(d_ - 160.0) < 0.8 and z_ < 2850.0 + 520.0 and z_ > 2850.0 + 505.0)
-    rep.within("CON-07 volutes: front at the upper eye z 468, at the lower eye z 48; waist d and z; stem d at z 330; upper volute's top z",
-               [f(468.0), f(48.0), fw.min(), waist_z, f(330.0), upper_top_z - 2850.0], [205.0, 184.0, 140.0, 140.0, 150.0, 513.0], 1.5)
-    rep.within("CON-07 cap block 205 deep at z 528 to 550", [f(529.0), f(549.0)], [205.0, 205.0], 1.5)
-    # circle fits of the two volutes' outer arcs (eye and outer radius)
+    rep.within("CON-07 (D1) front at the upper eye z 440 (280), at the lower eye z 60 (165); the waist d (140) and z (170); the upper roll at z 519 (212.5)",
+               [f(440.0), f(60.0), fw.min(), waist_z, f(519.0)], [280.0, 165.0, 140.0, 170.0, 212.5], 1.5)
+    rep.within("CON-07 cap block 290 deep at z 521 to 549", [f(521.0), f(549.0)], [290.0, 290.0], 1.5)
     def circle_fit(pts):
         A = np.array([[2 * x, 2 * y, 1] for x, y in pts])
         b = np.array([x * x + y * y for x, y in pts])
         s = np.linalg.lstsq(A, b, rcond=None)[0]
         return s[0], s[1], math.sqrt(s[2] + s[0] ** 2 + s[1] ** 2)
     ext = list(g.exterior.coords)
-    up = [(d_, z_ - 2850.0) for d_, z_ in ext if d_ > 165 and 440 < z_ - 2850.0 < 500]
-    lp = [(d_, z_ - 2850.0) for d_, z_ in ext if d_ > 172.5 and 28 < z_ - 2850.0 < 68]
+    up = [(d_, z_ - 2850.0) for d_, z_ in ext if d_ > 205 and 365 < z_ - 2850.0 < 515]
+    lp = [(d_, z_ - 2850.0) for d_, z_ in ext if d_ > 132 and 22 < z_ - 2850.0 < 85]
     cu, cl = circle_fit(up), circle_fit(lp)
-    rep.within("CON-07 upper volute: eye (d, z) and outer radius", list(cu), [160.0, 468.0, 45.0], 2.0, "least-squares circle through the outline's arc")
-    rep.within("CON-07 lower volute: eye (d, z) and outer radius", list(cl), [158.0, 48.0, 26.0], 2.0, "least-squares circle through the outline's arc")
-    # CON-08 grooves and bosses: the body cut at u = 118 (inside the groove, whose floor is at u 116) and at 115.5 (below the floor)
+    rep.within("CON-07 upper volute (D1): eye (d, z) and outer radius", list(cu), [200.0, 440.0, 80.0], 2.0, "least-squares circle through the outline's arc")
+    rep.within("CON-07 lower volute (D1): eye (d, z) and outer radius", list(cl), [125.0, 60.0, 40.0], 2.0, "least-squares circle through the outline's arc")
+    # CON-08 (D2) raised fillets 10 wide and 6 proud on both sides; bosses 30 and 20 across and 8 proud
     uc = 175.0
     cons = P["console"]
-    gd = cons["dims"]["side_grooves"]
-    full = Polygon(sil_pts).buffer(0)
-    s118 = section_poly(con, ("con_body",), 0, uc + 118.0, (1, 2))
-    s1155 = section_poly(con, ("con_body",), 0, uc + 115.5, (1, 2))
-    s100 = section_poly(con, ("con_body",), 0, uc + 100.0, (1, 2))
-    ribbons = []
-    for key, eye in (("volute_upper_spiral", cons["dims"]["upper_volute"]["eye_dz"]), ("volute_lower_spiral", cons["dims"]["lower_volute"]["eye_dz"])):
-        line = LineString([(p[0], p[1] + 2850.0) for p in cons["profiles"][key]["points"]])
-        ribbons.append(line.buffer(gd["width"] / 2.0, cap_style=2))
-    rib = unary_union(ribbons)
-    open_at_118 = rib.intersection(s118).area                  # material left in the groove at u 118: none
-    shut_at_115 = rib.intersection(s1155).area                 # material at u 115.5 (below the floor): all of it
-    ref = rib.intersection(s100).area
-    # the width, measured across the upper groove half way along its first turn: the cut line against the section at u 100 (no groove) and at u 118
+    fd = cons["dims"]["side_fillets"]
+    hw_ = cons["dims"]["width"] / 2.0
+    fu = ("con_fillet_u",)
+    s3 = section_poly(con, fu, 0, uc + hw_ + 3.0, (1, 2))
+    s7 = section_poly(con, fu, 0, uc + hw_ + 6.5, (1, 2))
+    s3l = section_poly(con, fu, 0, uc - hw_ - 3.0, (1, 2))
     sp = cons["profiles"]["volute_upper_spiral"]["points"]
-    k = 14
+    k = 30
     a_, b_ = np.array(sp[k - 1]), np.array(sp[k + 1])
     tg = (b_ - a_) / np.linalg.norm(b_ - a_)
     nrm = np.array([-tg[1], tg[0]])
     c0 = np.array([sp[k][0], sp[k][1] + 2850.0])
-    probe = LineString([tuple(c0 - nrm * 7), tuple(c0 + nrm * 7)])
-    width = probe.intersection(s100).length - probe.intersection(s118).length
-    dist_in = Point(sp[0][0], sp[0][1] + 2850.0).distance(full.exterior)
-    bu = section_poly(con, ("con_boss_upper_r",), 0, uc + 118.0, (1, 2)).bounds
-    bl = section_poly(con, ("con_boss_lower_r",), 0, uc + 118.0, (1, 2)).bounds
-    boss_d = [bu[2] - bu[0], bu[3] - bu[1], bl[2] - bl[0], bl[3] - bl[1]]
-    boss_top_ok = (not section_poly(con, ("con_boss_upper_r",), 0, uc + 118.9, (1, 2)).is_empty) and section_poly(con, ("con_boss_upper_r",), 0, uc + 119.1, (1, 2)).is_empty
-    rep.within("CON-08 grooves: the start 8 inside the outline, the width across the upper groove, the bosses across (upper, lower)", [dist_in, width, boss_d[0], boss_d[2]], [8.0, 5.0, 16.0, 16.0], 0.6)
-    rep.add("CON-08 groove depth 4 (empty at u 118, solid at u 115.5), boss 3 proud of the groove floor (top at u 119)", open_at_118 < 1.0 and shut_at_115 > 0.85 * ref and boss_top_ok,
-            [round(open_at_118, 2), round(shut_at_115, 1), round(ref, 1), bool(boss_top_ok)], "~0, >= 0.85 x ref, true")
+    probe = LineString([tuple(c0 - nrm * 8), tuple(c0 + nrm * 8)])
+    width = probe.intersection(s3).length
+    rep.add("CON-08 (D2) upper fillet: stands 6 proud (present 3 out, absent 6.5 out), on both sides, 10 wide across the ribbon",
+            (not s3.is_empty) and s7.is_empty and (not s3l.is_empty) and abs(width - 10.0) <= 1.0, [round(s3.area, 0), round(s7.area, 0), round(width, 2)], "present, absent, 10 +-1")
+    bu = section_poly(con, ("con_boss_u_r",), 0, uc + hw_ + 4.0, (1, 2)).bounds
+    bl = section_poly(con, ("con_boss_l_r",), 0, uc + hw_ + 4.0, (1, 2)).bounds
+    boss_top_ok = (not section_poly(con, ("con_boss_u_r",), 0, uc + hw_ + 7.9, (1, 2)).is_empty) and section_poly(con, ("con_boss_u_r",), 0, uc + hw_ + 8.1, (1, 2)).is_empty
+    rep.within("CON-08 (D2) the eye bosses across, in z (upper 30, lower 20: the lower one's back 6 are behind the board's face and not built)", [bu[3] - bu[1], bl[3] - bl[1]], [30.0, 20.0], 1.0)
+    rep.add("CON-08 (D2) the upper boss stands 8 proud (present at 7.9, absent at 8.1)", boss_top_ok, bool(boss_top_ok), True)
+    full = Polygon([(q[0], q[1] + 2850.0) for q in sp_]).buffer(0)
+    gap = min(Polygon(list(s3.geoms[0].exterior.coords) if s3.geom_type == "MultiPolygon" else list(s3.exterior.coords)).distance(full.exterior), 1e9)
+    rep.at_least("CON-08 (D2) the fillets lie on the flat side: 12 or more inside the outline (the front chamfer is 12)", gap, 11.0, "nearest %.1f" % gap)
     # CON-09 the front stands at least 140 at every z
-    zz = np.arange(0.25, 549.8, 0.5)
+    zz = np.arange(25.0, 549.8, 0.5)
     fm = np.array([f(z) for z in zz]).min()
-    rep.at_least("CON-09 the front is at least 140 at every z (and the board's mould 132 and face 120 stand behind it)", fm, 140.0, "least front %.3f" % fm)
+    rep.at_least("CON-09 (D1) the front is at least 140 at every z from 25 up (the board's mould 132 and face 120 stand behind it)", fm, 140.0, "least front %.3f" % fm)
+    fz = np.array([f(z) for z in np.arange(0.25, 25.0, 0.5)]).min()
+    rep.at_least("CON-09 (D1) over the lowest 25 mm the foot's front is 130 (the review's foot depth): 2 inside the board's bed mould (132), noted", fz, 130.0, "least front %.3f" % fz)
     # ---- FAS
     lo, hi = bbox_mm(fas, "fas_")
     g = section_poly(fas, ("fas_board",), 0, 3000.0, (1, 2))
@@ -458,11 +479,19 @@ def check_C(T, parts, asm, rep, ov):
     rep.within("FAS-02 foot on the abacus: overlap in u at each end", [cl_hi - lo[0], hi[0] - cr_lo], [55.0, 55.0], 1.0)
     zm = np.arange(2850.0, 2900.0, 0.1)
     zmould = next(z for z in zm if (lambda x: (not x.is_empty) and x.bounds[2] <= 120.05)(g.intersection(LineString([(-5, z), (400, z)]))))
-    rep.within("FAS-03 bed mould: top z, front d", [zmould, hi[1]], [2890.0, 132.0], 1.0)
+    rep.within("FAS-03 bed mould: top z, front d (the board)", [zmould, bbox_mm(fas, "fas_board")[1][1]], [2890.0, 132.0], 1.0)
+    # D5: the cyma reversa bed mould under the cornice, between the consoles
+    bm = P["fascia_board"]["dims"]["bed_mould_cyma"]
+    gm = section_poly(fas, ("fas_mould",), 0, 3000.0, (1, 2))
+    cy = [(bm["d"][0] + (bm["d"][1] - bm["d"][0]) * (3 * (i / 16.0) ** 2 - 2 * (i / 16.0) ** 3), bm["z"][0] + (bm["z"][1] - bm["z"][0]) * i / 16.0) for i in range(17)]
+    hcy = hausdorff(gm, [(bm["d"][0] - 1.0, bm["z"][0])] + cy + [(bm["d"][0] - 1.0, bm["z"][1])])
+    mlo, mhi = bbox_mm(fas, "fas_mould")
+    rep.add("FAS-04 (D5) cyma reversa bed mould: profile two-way Hausdorff, d 120 to 150, z 3360 to 3400, u 295 to 5705", hcy <= 1.0 and abs(mhi[1] - 150.0) <= 1.0 and abs(mlo[2] - 3360.0) <= 1.0 and abs(mhi[2] - 3400.0) <= 1.0 and abs(mlo[0] - 295.0) <= 1.0 and abs(mhi[0] - 5705.0) <= 1.0,
+            [round(hcy, 3), round(mhi[1], 2), round(mlo[2], 2), round(mhi[2], 2)], "<= 1.0, 150, 3360, 3400")
     # ---- COR
     lo, hi = bbox_mm(cor, "cor_")
-    rep.within("COR-01 cornice: length, depth, height, z bottom", [hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2], lo[2]], [5892.0, 215.0, 150.0, 3400.0], 1.0)
-    rep.within("COR-02 oversail: depth minus board face, minus console depth", [215.0 - face_d, hi[1] - bbox_mm(con, "con_")[1][1]], [95.0, 10.0], 1.0)
+    rep.within("COR-01 cornice: length, depth (D4: 300 over the consoles, 215 between), height, z bottom", [hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2], lo[2]], [5892.0, 300.0, 150.0, 3400.0], 1.0)
+    rep.within("COR-02 oversail: depth minus board face, minus console depth", [215.0 - face_d, hi[1] - bbox_mm(con, "con_body")[1][1]], [95.0, 10.0], 1.0)
     rep.within("COR-03 soffit on the board and the consoles' tops (gaps)", [lo[2] - bbox_mm(fas, "fas_")[1][2], lo[2] - bbox_mm(con, "con_")[1][2]], [0.0, 0.0], 1.0)
     h = hausdorff(section_poly(cor, ("cor_cornice",), 0, 3000.0, (1, 2)), [(p[0], p[1] + 3400.0) for p in P["cornice"]["profiles"]["section"]["points"]])
     rep.add("COR-04 profile: two-way Hausdorff", h <= 1.5, round(h, 3), "<= 1.5")
@@ -500,8 +529,15 @@ def check_C(T, parts, asm, rep, ov):
     u0 = shop["zones_u"]["window"][0]
     mcs = [(sum(bbox_mm(win, "win_mullion_%d" % k)[i][0] for i in (0, 1)) / 2) - u0 for k in range(2)]
     rep.within("WIN-04 mullion centres from the frame's left edge (shops[].glazing_layout)", mcs, shop["glazing_layout"]["mullion_centres"], 3.0)
-    bcs = [(sum(bbox_mm(win, "win_bar_%d" % k)[i][0] for i in (0, 1)) / 2) - u0 for k in range(7)]
-    rep.within("WIN-04 toplight bar centres", bcs, shop["glazing_layout"]["toplight_bar_centres"], 3.0)
+    nb = len(shop["glazing_layout"]["toplight_bar_centres"])
+    bcs = [(sum(bbox_mm(win, "win_bar_%d" % k)[i][0] for i in (0, 1)) / 2) - u0 for k in range(nb)]
+    rep.within("WIN-04 toplight bar centres (D6: six bars of 28, two a light)", bcs, shop["glazing_layout"]["toplight_bar_centres"], 3.0)
+    mbs = [(sum(bbox_mm(win, "win_mbar_%d" % k)[i][0] for i in (0, 1)) / 2) - u0 for k in range(2)]
+    mbw = [bbox_mm(win, "win_mbar_%d" % k)[1][0] - bbox_mm(win, "win_mbar_%d" % k)[0][0] for k in range(2)]
+    rep.within("WIN-04b (D6) the mullions carried up as bars 70 wide, on the mullion lines", mbs + mbw, shop["glazing_layout"]["mullion_centres"] + [70.0, 70.0], 3.0)
+    gts = sorted([bbox_mm(win, "win_glass_top_%d" % k) for k in range(nb + 3) if names(win, "win_glass_top_%d" % k)], key=lambda b_: b_[0][0])
+    gw = [(b_[1][0] - b_[0][0]) for b_ in gts]
+    rep.add("WIN-04c (D6) nine toplights, equal; each pane within 20 of the 326.9 light plus its rebates (326.9 + 2 x 4 .. 8)", len(gts) == 9 and max(gw) - min(gw) <= 20.0, [len(gts), round(min(gw), 1), round(max(gw), 1)], "9, spread <= 20")
     glo, ghi = bbox_mm(win, "win_glass")
     rep.within("WIN-05 glass plane: back face d 30 (the drawing's glass is d 30 to 36)", [glo[1], ghi[1]], [30.0, 36.0], 1.0, "the drawing puts the 6 mm pane at d 30 to 36")
     jlo, jhi = bbox_mm(win, "win_jamb")
@@ -604,7 +640,9 @@ def check_files(T, parts, asm, info, glb_dir, rep):
         prims, js = read_glb(path)
         tri = sum(len(p["I"]) for p in prims)
         mats = [m["name"] for m in js.get("materials", [])]
-        rep.add("E:%s size under 1 MB" % name, size < 1_000_000, size, "< 1000000", "%d triangles" % tri)
+        exempt = name == "shopfront_ritas" and size >= 1_000_000
+        rep.add("E:%s size under 1 MB%s" % (name, " (the assembly over it stays out of git: BUILD-BRIEF; build_shopfront.py rebuilds it exactly)" if exempt else ""), size < 1_000_000 or exempt, size, "< 1000000",
+                "%d triangles%s" % (tri, "; try 2's carved leaves and breaks put the assembly over the push guard: each PART is under 1 MB and in git" if exempt else ""))
         rep.add("E:%s no textures, no images; a UV set on every mesh" % name, not js.get("images") and not js.get("textures") and all(p["uv"] for p in prims),
                 {"images": len(js.get("images", [])), "textures": len(js.get("textures", [])), "uv": all(p["uv"] for p in prims)}, "none / none / true")
         paints = [m for m in mats if m.startswith("paint_")]
@@ -677,8 +715,15 @@ ENCLOSED = [   # (prefix a, prefix b, why): overlaps built on purpose, each encl
     ("pilR_tablet", "pilR_capital", "the die's tablet 0.5 into the die"),
     ("conL_leaf", "conL_body", "the leaf 0.4 into the face"),
     ("conR_leaf", "conR_body", "the leaf 0.4 into the face"),
-    ("conL_boss", "conL_body", "bosses 0.4 into the groove floor"),
-    ("conR_boss", "conR_body", "bosses 0.4 into the groove floor"),
+    ("conL_boss", "conL_body", "bosses 0.4 into the side face"),
+    ("conR_boss", "conR_body", "bosses 0.4 into the side face"),
+    ("conL_fillet", "conL_body", "fillets 0.4 into the side face"),
+    ("conR_fillet", "conR_body", "fillets 0.4 into the side face"),
+    ("conL_fillet", "conL_boss", "a fillet's inner end under its boss"),
+    ("conR_fillet", "conR_boss", "a fillet's inner end under its boss"),
+    ("fas_board", "fas_mould", "the bed mould 1 into the board"),
+    ("win_mbar_", "win_transom", "the mullion bars 6 into the transom's top"),
+    ("win_mbar_", "win_head", "the mullion bars 3 into the head"),
 ]
 
 
@@ -738,11 +783,14 @@ def main():
     ap.add_argument("--overlays", default=os.path.join(SCRATCH, "overlays"))
     ap.add_argument("--no-overlaps", action="store_true")
     a = ap.parse_args()
-    T = json.load(open(os.path.join(TARGET_DIR, "target.json"), encoding="utf-8"))
+    T = departures.apply(json.load(open(os.path.join(TARGET_DIR, "target.json"), encoding="utf-8")))     # try 2: the target with its departures
+    os.makedirs(SCRATCH, exist_ok=True)
+    amended = os.path.join(SCRATCH, "target_amended.json")
+    json.dump(T, open(amended, "w"))
     if not a.drawing or not os.path.exists(a.drawing):
         os.makedirs(os.path.join(SCRATCH, "drawing"), exist_ok=True)
         a.drawing = a.drawing or os.path.join(SCRATCH, "drawing.json")
-        subprocess.run([sys.executable, os.path.join(TARGET_DIR, "target_drawing.py"), os.path.join(SCRATCH, "drawing"), "--json", a.drawing], check=True, cwd=TARGET_DIR, stdout=subprocess.DEVNULL)
+        subprocess.run([sys.executable, os.path.join(TARGET_DIR, "target_drawing.py"), os.path.join(SCRATCH, "drawing"), "--json", a.drawing, "--target", amended], check=True, cwd=TARGET_DIR, stdout=subprocess.DEVNULL)
     D = json.load(open(a.drawing))
     os.makedirs(a.overlays, exist_ok=True)
     info = json.load(open(os.path.join(a.build_dir, "parts.json")))

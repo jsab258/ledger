@@ -63,11 +63,11 @@ def main():
 
     def context(kind, lo, hi):
         orig_context(kind, lo, hi)
-        # a dark matt interior behind the opening (u 350 to 5650, z 0 to 2.85), set well back so the glass is lit from the street
-        bpy.ops.mesh.primitive_cube_add(size=1.0, location=(0.0, 0.7, 1.425))
+        # a dark matt interior behind the opening (u 350 to 5650, z 0 to 3.5: it reaches the cornice, so no sky shows under the board, and nothing shows above the cornice), set well back so the glass is lit from the street
+        bpy.ops.mesh.primitive_cube_add(size=1.0, location=(0.0, 0.7, 1.75))
         ob = bpy.context.object
         ob.name = "ctx_interior"
-        ob.scale = (5.3, 1.3, 2.85)
+        ob.scale = (5.3, 1.3, 3.5)
         m = bpy.data.materials.new("ctx_dark")
         m.use_nodes = True
         b = m.node_tree.nodes["Principled BSDF"]
