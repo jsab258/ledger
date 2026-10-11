@@ -1,4 +1,4 @@
-"""The registry of every number the lamp-post target uses: id -> (value, unit, kind, source). Try 2 (11 October 2026): the review of 9 October applied.
+"""The registry of every number the lamp-post target uses: id -> (value, unit, kind, source). Try 2 (11 October 2026): the review of 9 October applied; then the second review's fixes (R1 and narrow points 1 to 6) by Jafar's ruling of 11 October, not re-reviewed.
 
 Kinds: Read (printed in the repository or in a file this writer opened), Photo (measured on a photograph: method and error in TARGET.md section 4),
 Derived (computed from other numbers here; the formula is in `source`), Judgement (a trade or period guess, said so).
@@ -74,7 +74,7 @@ _r("research_foot_width_range", [200, 250], "mm", "Read", CLUT + ": a tapered sh
 _r("research_door_height_about", 500, "mm", "Read", CLUT + ": with a door plate about 50 cm up (uncertain detail)")
 _r("research_bracket_reach_range", [406, 457], "mm", "Read", CLUT + ": bracket reaching out 1 ft 4 in to 1 ft 6 in (the 1958 example column); modelling note: an arm reaching out 40 to 45 cm")
 _r("research_lantern_height", 197, "mm", "Read", CLUT + ": Lantern: 7 3/4 in (20 cm) tall on the early version")
-_r("research_lantern_length_estimate", [600, 700], "mm", "Read", CLUT + ": length not found; estimate 60 to 70 cm (uncertain); the scene's 550 is kept")
+_r("research_lantern_length_estimate", [600, 700], "mm", "Read", CLUT + ": length not found; estimate 60 to 70 cm (uncertain); the scene's 550 was kept in try 2 and is replaced by 650 in the second review's narrow point 1 (lantern_length)")
 _r("research_lamp_power", 35, "W", "Read", CLUT + ": usually 35 W SOX")
 
 # ---- BGE column (Photo) ----------------------------------------------------------------------------------------------------------------
@@ -113,8 +113,7 @@ _r("socket_screw_z", [4580, 4420], "mm", "Judgement", "review point 1: two M8 se
 _r("weld_ring_height", 6, "mm", "Photo", "BGE: a thin ring line at the cone's top, z 1036 to 1042 (read by eye on the 4 x crop)")
 
 # ---- bracket (Photo ratios, Read reach, Judgement) ----------------------------------------------------------------------------------
-_r("stem_od", 42, "mm", "Judgement", "ratio to the shaft top 0.47 to 0.67 (US01 Photo) x 60 = 28 to 40; 42.4 is a standard 1.25 in tube; the arm to the shaft's top 0.7 here because a 5 m column's top is slim (variant A; variant C's stem is 48)")
-_r("stem_od_c", 48, "mm", "Judgement", "variant C's steel stem OD 48 (the review's F2 amendment; 48.3 is a standard 1.5 in tube)")
+_r("stem_od", 42, "mm", "Judgement", "ratio to the shaft top 0.47 to 0.67 (US01 Photo) x 60 = 28 to 40; 42.4 is a standard 1.25 in tube; the arm to the shaft's top 0.7 here because a 5 m column's top is slim (variant A only: variant C has no stem since the second review, its arm is concrete)")
 _r("us01_arm_apparent_slope_deg", 41.7, "deg", "Photo", US1 + ": the straight arm's centreline fitted over x -1150 to -350 of the elevation: slope -0.890, 41.7 degrees in the picture's plane (43.6 over x -1500 to -500); +-2. NOT the true rake: the arm points 35 to 42 degrees out of the picture's plane toward the camera (see us01_street_vp), where a level arm shows 36 to 42 degrees of rise")
 _r("us01_bend_tangent_lengths", [147, 244], "mm", "Photo", US1 + ": from the corner where the stem's line meets the arm's line, the centreline leaves the stem 147 mm below it and rejoins the arm 244 mm along it; +-40 (apparent, in the picture's plane; superseded by the 3D reading)")
 _r("us01_bend_radius", 435, "mm", "Photo", US1 + ": R = mean tangent length 195 / tan(24 degrees) = 435 in the picture's plane (apparent turn 48.3 degrees); about 9 arm diameters on an 11 m column; superseded: the true turn is about 90 degrees")
@@ -126,15 +125,16 @@ _r("bracket_reach_to_spigot", 430, "mm", "Read", CLUT + ": bracket reaching out 
 _r("arm_axis_z", 4930.8, "mm", "Judgement", "the arm's centreline height: inside the canopy lip band (z 4925 to 4937) so the boss is cast on the canopy's rear tip (review fault 1: the arm runs level at z 4930.8)")
 _r("stem_top_z", 4800.8, "mm", "Derived", "arm_axis_z 4930.8 - bend_radius 130 = 4800.8: where the vertical stem ends and the 90 degree bend begins (review fault 1)")
 _r("arm_length", 300, "mm", "Derived", "bracket_reach_to_spigot 430 - bend_radius 130 = 300: the straight level arm from (130, 4930.8) to (430, 4930.8)")
-_r("lantern_dy", 205, "mm", "Derived", "430 - 225: every y station of the lantern moves 205 further out (review fault 3)")
-_r("lantern_centre_outreach", 705, "mm", "Derived", "the lantern's centre: rear end 430 + half its length 275 = 705 (the scene's 0.5 was a trade-standard guess, the earlier research's 406 to 457 is the reach to the spigot, review fault 3); the scene's outreach_m becomes 0.705")
+_r("lantern_dy", 205, "mm", "Derived", "430 - 225: every y station of the first try's lantern moved 205 further out (review fault 3); the second review's point 1 then scaled them about 430 by 13/11 (lantern_length_scale)")
+_r("lantern_length_scale", 13 / 11, "ratio", "Derived", "second review, narrow point 1: 650 / 550 = 13/11: every lantern y station becomes 430 + (y - 430) x 13/11 (the lamp and its arc tube keep their sizes)")
+_r("lantern_centre_outreach", 755, "mm", "Derived", "the lantern's centre: rear end 430 + half its length 325 = 755 (the scene's 0.5 was a trade-standard guess, the earlier research's 406 to 457 is the reach to the spigot, review fault 3; the length 650 is the second review's point 1); the scene's outreach_m becomes 0.755")
 _r("lantern_rear_end_y", 430, "mm", "Read", "= bracket_reach_to_spigot: the lantern's rear end is the spigot (the boss starts here)")
-_r("lantern_front_end_y", 980, "mm", "Derived", "lantern rear end 430 + length 550")
+_r("lantern_front_end_y", 1080, "mm", "Derived", "lantern rear end 430 + length 650 (second review, narrow point 1)")
 _r("boss_od", 60, "mm", "Judgement", "the lantern's rear spigot sleeve, cast into the canopy")
 _r("boss_length", 55, "mm", "Judgement", "the arm's end sits inside the boss")
 
 # ---- lantern ---------------------------------------------------------------------------------------------------------------------------
-_r("lantern_length", 550, "mm", "Read", "scene 0.55: kept (the research's 600 to 700 is an estimate flagged uncertain)")
+_r("lantern_length", 650, "mm", "Judgement", "second review, narrow point 1: 650 (the earlier research's 600 to 700, Read, flagged uncertain; GG3's lantern is about 6 times its arm, 680 at the arm's 110; GG1 and GG2's lanterns are 12 to 14 tube widths against 9 for 550 / 60); the scene's 0.55 (scene_lantern_length) is a stand-in's box and is no longer the target's length")
 _r("lantern_width", 300, "mm", "Read", "scene 0.30")
 _r("lantern_height", 200, "mm", "Read", "scene 0.20 (the research's 7 3/4 in = 197 agrees)")
 _r("lantern_bottom_z", 4800, "mm", "Read", "scene: lantern top at the mounting height 5000, 200 tall")
@@ -145,8 +145,8 @@ _r("bowl_rim_inset", 8, "mm", "Judgement", "the bowl's rim sits inside the canop
 _r("lamp_od", 54, "mm", "Judgement", "a 35 W low-pressure sodium lamp: about 54 mm across and 310 mm long (a maker's datasheet recalled from memory, not read here)")
 _r("lamp_length", 310, "mm", "Judgement", "as above")
 _r("lamp_centre_z", 4872, "mm", "Judgement", "the lamp lies along the lantern's axis in the bowl's upper half")
-_r("lamp_centre_y", 705, "mm", "Derived", "the lantern's centre (rear end 430 + 275)")
-_r("light_z", 4850, "mm", "Derived", "the lantern's centre z (4900) minus the scene's rule 50 below the centre of the emissive piece; y is the lantern's centre 705")
+_r("lamp_centre_y", 755, "mm", "Derived", "the lantern's centre (rear end 430 + 325): the lamp and its arc tube keep their sizes, the jacket then spans y 600 to 910")
+_r("light_z", 4850, "mm", "Derived", "the lantern's centre z (4900) minus the scene's rule 50 below the centre of the emissive piece; y is the lantern's centre 755")
 
 # ---- colours ----------------------------------------------------------------------------------------------------------------------------
 _r("paint_black_srgb", [31, 31, 34], "sRGB", "Photo", "BGE sleeve median 31/31/33 and US01 sleeve 32/33/38 (the sky tints the shaft): 31/31/34")
@@ -165,13 +165,23 @@ _r("concrete_srgb", [146, 143, 136], "sRGB", "Judgement", "weathered precast con
 
 # ---- variant C: the precast concrete column, the main build (review fault 2) ----------------------------------------------------------
 _r("c_foot_side", 220, "mm", "Judgement", "the research's '20 to 25 cm at the foot' (Read) taken at 220: a square section, planted (review F2)")
-_r("c_top_side", 125, "mm", "Judgement", "review F2: 125 across at the top (z 4620); a taper of 20 mm a metre across the faces")
-_r("c_top_z", 4620, "mm", "Judgement", "the top face; the same as variant A's shaft end, so the arm and lantern stand at the same heights on either")
+_r("c_top_side", 125, "mm", "Judgement", "review F2: 125 across at z 4620; a taper of 20 mm a metre across the faces (the second review carries the same straight line up to the arm's top, c_top_side_at_arm_top)")
+_r("c_taper_ref_z", 4620, "mm", "Judgement", "the height at which the shaft is 125 across (review F2); also variant A's shaft end, so the arm and lantern stand at the same heights on either")
+_r("c_top_z", 4985.8, "mm", "Derived", "second review, R1: the shaft's top face, one face with the arm's top: arm_axis_z 4930.8 + half of the arm's 110 = 4985.8")
+_r("c_top_side_at_arm_top", 117.5, "mm", "Derived", "second review, R1: the same straight taper carried up: 125 - 95 x (4985.8 - 4620) / 4620 = 117.48, listed as 117.5")
 _r("c_arris_chamfer", 15, "mm", "Judgement", "review F2: arrises chamfered 15 throughout")
 _r("c_top_face_chamfer", 5, "mm", "Judgement", "review F2: the top face flat with a 5 mm chamfer")
 _r("c_hidden_root", 150, "mm", "Judgement", "planted: 150 hidden below the footway as variant A's skirt, the paving cut round it")
-_r("c_cap_od", 90, "mm", "Judgement", "review F2: a cast-steel cap 90 OD, 30 tall, seated on the top face")
-_r("c_cap_height", 30, "mm", "Judgement", "review F2")
+_r("c_arm_square", 110, "mm", "Judgement", "second review, R1: the arm is a square precast concrete arm 110 x 110 cast as one with the shaft (Photo: GG3 and 1485521 show an arm about 0.85 to 1.2 of the shaft's top width; the figure is Judgement)")
+_r("c_arm_chamfer", 10, "mm", "Judgement", "second review, R1: the arm's four arrises chamfered 10")
+_r("c_arm_end_y", 400, "mm", "Judgement", "second review, R1: the arm runs from the shaft's -y face along +y to a flat end face at y 400")
+_r("c_arm_end_chamfer", 5, "mm", "Judgement", "second review, R1: the end face's edge chamfer 5")
+_r("c_arm_underside_z", 4875.8, "mm", "Derived", "arm_axis_z 4930.8 - 55 = 4875.8")
+_r("c_mitre_outer_radius", 20, "mm", "Judgement", "second review, R1: the outer corner of the mitre (the top face meeting the shaft's -y face) rounded to radius 20 (Photo: GG3 shows the outer corner rounded by about 2 px)")
+_r("c_mitre_inner_fillet", 10, "mm", "Judgement", "second review, R1: the inner corner (the arm's underside meeting the shaft's +y face at (59.9, 4875.8)) a fillet of radius 10 (Photo: GG3 shows the inner corner square)")
+_r("c_spigot_od", 42, "mm", "Judgement", "second review, R1: a steel spigot OD 42, painted black, on the arm's axis")
+_r("c_spigot_y", [340, 485], "mm", "Judgement", "second review, R1: from y 340 (60 cast into the arm) to y 485 (inside the lantern's boss)")
+_r("c_spigot_exposed_y", [400, 430], "mm", "Derived", "second review, R1: 30 of the spigot shows between the arm's end (400) and the boss (430)")
 _r("c_door_recess", {"width": 120, "height": 330, "depth": 14, "z": [450, 780]}, "mm", "Judgement", "review F2: the recess 120 x 330 x 14 at z 450 to 780 on -y (the research: 'a door plate about 50 cm up')")
 _r("c_door_plate", {"width": 132, "height": 342, "thickness": 3, "proud": 3, "screws": 2, "screw_od": 10, "screw_inset": 25}, "mm", "Judgement", "review F2: the plate 132 x 342 x 3, 3 proud, two screws 10 across at 25 from its ends, blank")
 _r("c_albedo_srgb", [146, 143, 136], "sRGB", "Judgement", "weathered precast concrete (variant C)")
@@ -179,7 +189,7 @@ _r("c_roughness", 0.9, "0-1", "Judgement", "rough matt concrete")
 
 # ---- emissive strength in units (review point 4) ----------------------------------------------------------------------------------------
 _r("emissive_jacket_cd_m2", 27500, "cd/m2", "Derived", "4,550 lm / (pi x 0.0526 m2 of jacket surface: pi x 0.054 x 0.310) = 27,535: about 27,500 (review point 4)")
-_r("emissive_bowl_cd_m2", 5500, "cd/m2", "Derived", "80 % of the flux (3,640 lm) through about 0.21 m2 of bowl, Lambertian: 3,640 / (pi x 0.21) = 5,517: about 5,500 (review point 4)")
+_r("emissive_bowl_cd_m2", 4800, "cd/m2", "Derived", "80 % of the flux (3,640 lm) through about 0.24 m2 of bowl (the 650 long lantern's bowl, second review point 1), Lambertian: 3,640 / (pi x 0.24) = 4,828: about 4,800 (the first try's 0.21 m2 gave 5,500)")
 _r("emissive_jacket_over_tube", 0.3, "ratio", "Judgement", "review point 3: the arc tube is the full-strength emissive part and the jacket glass glows at 0.3 of it; so the tube is 27,500 / 0.3 = 91,700 cd/m2 in the same units (stated, not measured)")
 _r("emissive_unitless_fallback", 1.0, "unitless", "Read", "ue-probe/Source/LedgerProbe/Private/VignetteShot.cpp line 203: kLampEmissiveUnitless = 1.0 times the lantern colour in linear (1.0, 0.25, 0.0) until the night audit puts the glow in units: the units above are the target; the builder may use the rule instead and say so")
 
