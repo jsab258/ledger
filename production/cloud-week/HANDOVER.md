@@ -27,7 +27,7 @@ None finished yet. 4.1, the fascia signs, is in its check (try 2); see the queue
 | 2.2 | shopfronts | done, fixes applied, not re-reviewed | ten fronts by table; Rita's is the model (bay 2); one CC0 photograph measured (a restored arcade), no 1990 provincial front reached when it was written |
 | 2.3 | railings | done | one kerbside guard rail panel (welded, galvanised); its form is judgement: check two dated photographs before its build is gated |
 | 2.4 | bollards | done | cast-iron domed posts at the yard mouth, plain posts at the quay end, ten mooring bollards, chain posts, cleats; unmarked |
-| 2.6 | pillar-box | done without a photograph | Type A, 1500 high, flush blank areas where cypher and lettering would be (canon owes the cypher); to be checked against a real photograph before it is built (Jafar, 11 October) |
+| 2.6 | pillar-box | done; checked against two dated photographs on 11 October (PHOTO-CHECK.md): FAIL on proportion | build to PHOTO-CHECK.md's amendments: body 390 (not 489), 1500 high, cap 535, a straight black base 300 high, slot 250 wide; flush blank areas where cypher and lettering would be (canon owes the cypher) |
 | 2.7 | kerbs-and-covers | done | half-battered granite kerb, two-course sett channel, the dropped crossover, a 485 x 325 gully grate, four blank covers; sizes re-measured at each panorama's own camera height |
 | 2.9 | fascia-signs | done; made in 4.1 | ten boards, four hanging signs |
 | 2.10 | posters-boards-plates | done, fixes applied, not re-reviewed | 84 items: posters, notices, To Let boards, street name plates |

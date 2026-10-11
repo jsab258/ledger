@@ -39,7 +39,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 - 3.3 open. Railings.
 - 3.4 open. Bollards.
 - 3.5 open. Bins.
-- 3.6 open. The pillar box.
+- 3.6 open. The pillar box. Its target checked against two dated photographs first (Jafar, 11 October), 11 Oct 23:05: production/cloud-week/targets/pillar-box/PHOTO-CHECK.md, FAIL on proportion (body 390 not 489, cap 535, a straight black base 300 high, no splayed foot, slot 250 wide; height 1500 kept); the build takes those amendments (DECISIONS 11 Oct).
 - 3.7 open. Kerbs and drain covers.
 - 3.8 open. Lamp posts.
 
