@@ -52,12 +52,12 @@
   "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
   "taken": "2008-06-14",
   "date_read": "2026-10-11",
-  "kind": "later photograph of an object the photographer calls old and rare: a precast concrete column with its original 1960s lantern and an anti-glare shield (not a replacement by his word: 'an old lantern ... mounted upon a concrete column'); a mid-1960s to 1970s fitting that stood in 1990 and is not modern replacement stock",
+  "kind": "later photograph of an object the photographer calls old and rare: a precast concrete column with an old lantern (the photographer's word; its decade is not stated) and an anti-glare shield (not a replacement by his word: 'an old lantern ... mounted upon a concrete column'); an object that stood in 1990 and is not modern replacement stock (by the page's word)",
   "material": "precast concrete column, painted steel bracket and lantern",
   "what_it_shows": "a concrete column rising to a mitred elbow, a straight arm and a long canopy lantern lying in line with it; an anti-glare plate hangs down at the lantern's rear",
   "used": "yes: bracket (an angular elbow, arm and lantern in line), the shaft's top width, lantern length; the lamp type (sodium or not) is not stated",
   "elements": {
-   "bracket": "a mitred elbow, centreline radius about 55 (+-30; one diameter); the arm climbs 19 degrees in a picture taken looking up about 35 degrees, which a level arm pointing partly toward the camera shows: true rake 0 to 10; the lantern lies in line within 5 degrees: agrees with the amended 90 degree bend and level arm (the radius 130 is looser than this elbow: PW11)",
+   "bracket": "a mitred elbow, centreline radius about 55 (+-30; one diameter); the arm climbs 19 degrees in a picture taken looking up about 35 degrees, whose plan direction cannot be read off one picture (true rake 0 to about 18) shows: true rake 0 to 10; the lantern lies in line within 5 degrees: agrees with the amended 90 degree bend and level arm (the radius 130 is looser than this elbow: PW11)",
    "reach": "the lantern's rear stands about 4.3 shaft-top widths from the axis, 430 to 540 for a top of 100 to 125: agrees with 430",
    "lantern": "about seven column-top widths long (700 to 875 for a top of 100 to 125): longer than 550; listed, not amended",
    "shaft_taper": "the shaft is about 10 px wide at the top and 13 px a third of the way down in a picture looking up: a foot about 1.7 to 2 times the top (looking up inflates it), agrees with 220 over 125 (1.76)",
@@ -107,6 +107,160 @@
    "shaft_taper": "a straight taper read on ten rows: 8 px across at the top (y 100), 9 at y 130, 10 at y 200, 11 at y 250 and 13 near the foot (y 400): a foot 1.6 times the top (the target's 220 over 125 is 1.76): agrees within the reading",
    "base_door": "a plain square foot, no visible door at this size",
    "root": "planted straight into the pavement, no plate or collar: agrees"
+  }
+ },
+ {
+  "id": "GG6",
+  "file": "gg1485521-essex-gardens-concrete-column-mitred-arm-2008.jpg",
+  "page": "https://www.geograph.org.uk/photo/1485521",
+  "title": "1950s concrete lamp post on Essex Gardens (the page's title also names a maker, not repeated)",
+  "author": "Robert Lamb",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "2008-06-14",
+  "date_read": "2026-10-11",
+  "kind": "later photograph of an object the page calls a 1950s concrete column (its decade is the photographer's word): an object that stood in 1990; the earlier research names this photograph",
+  "material": "precast concrete column",
+  "what_it_shows": "a precast concrete column rising to a sharp mitre, an arm of the column top's own thickness running on and ending in a pendant lantern; sky behind; the crop (x 290 to 410, y 0 to 130 of the 640 px picture, enlarged 3 x) shows the column top, the arm and the lantern and nothing else",
+  "used": "yes, R1 of the second review: the arm's thickness (about 9 px against a top 7 to 8 px, 1.0 to 1.2) and the sharp mitre; the arm rises about 18 degrees in the picture (narrow point 6)",
+  "elements": {
+   "bracket": "a sharp mitre, no cap, no separate stem, no bend radius: the arm (about 9 px across, 1.0 to 1.2 of the top's 7 to 8) is as thick as the column's top and made of the column's concrete; it ends in a pendant lantern",
+   "reach": "not measured (the scale is the column top's unknown width)",
+   "lantern": "a pendant lantern at the arm's end",
+   "shaft_taper": "slender, the top 7 to 8 px (no foot in frame)",
+   "base_door": "out of frame",
+   "root": "out of frame"
+  }
+ },
+ {
+  "id": "GG7",
+  "file": null,
+  "page": "https://www.geograph.org.uk/photo/5418611",
+  "title": "(page 5418611)",
+  "author": "Christopher Hall",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "2017-01-11",
+  "date_read": "2026-10-11",
+  "kind": "later photograph of an object that stood in 1990 by the page's words: '1960s concrete street light columns photographed just before their removal' (North Yorkshire)",
+  "material": "precast concrete column",
+  "what_it_shows": "concrete columns with curved arms of the shaft's own width and colour",
+  "used": "yes, narrow R1: the arm of the shaft's own width and colour carries on into a curved arm (not written out)",
+  "elements": {
+   "bracket": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "reach": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "lantern": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "shaft_taper": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "base_door": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "root": "not measured (read on the page by the second review, 11 October 2026; the words only)"
+  }
+ },
+ {
+  "id": "GG8",
+  "file": null,
+  "page": "https://www.geograph.org.uk/photo/7029133",
+  "title": "(page 7029133)",
+  "author": "Stephen Craven",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "2021-11-16",
+  "date_read": "2026-10-11",
+  "kind": "later photograph of an object, a concrete lamp post, whose age the page does not state: 'relatively low, concrete lamp post with what is probably a sodium lamp' (West Yorkshire)",
+  "material": "precast concrete column",
+  "what_it_shows": "a concrete lamp post with a curved arm of the shaft's own width",
+  "used": "yes, R1: the arm's form only (a curved arm of the shaft's width); not a dated object",
+  "elements": {
+   "bracket": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "reach": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "lantern": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "shaft_taper": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "base_door": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "root": "not measured (read on the page by the second review, 11 October 2026; the words only)"
+  }
+ },
+ {
+  "id": "GG9",
+  "file": null,
+  "page": "https://www.geograph.org.uk/photo/6558618",
+  "title": "(page 6558618)",
+  "author": "Graeme Paterson",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "2019-11-09",
+  "date_read": "2026-10-11",
+  "kind": "later photograph of an object that stood in 1990 by the page's words: 'concrete lampposts with matching concrete outreach brackets' (Edinburgh)",
+  "material": "precast concrete column",
+  "what_it_shows": "concrete columns with curved concrete outreach arms",
+  "used": "yes, R1: 'matching concrete outreach brackets'; a curved arm of the shaft's width (not written out)",
+  "elements": {
+   "bracket": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "reach": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "lantern": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "shaft_taper": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "base_door": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "root": "not measured (read on the page by the second review, 11 October 2026; the words only)"
+  }
+ },
+ {
+  "id": "GG10",
+  "file": null,
+  "page": "https://www.geograph.org.uk/photo/6538305",
+  "title": "(page 6538305)",
+  "author": "Graeme Paterson",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "2020-07-12",
+  "date_read": "2026-10-11",
+  "kind": "later photograph of an object whose original form the page describes: columns 'from around 1970. Originally they were fitted with matching concrete outreach brackets. The lanterns fitted had low pressure sodium lamps'; the picture shows later steel sleeves, so only the words are used",
+  "material": "precast concrete column",
+  "what_it_shows": "concrete columns with later steel sleeves",
+  "used": "yes, R1: only the page's words (concrete outreach brackets, about 1970, low-pressure sodium lanterns); nothing measured off the picture",
+  "elements": {
+   "bracket": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "reach": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "lantern": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "shaft_taper": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "base_door": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "root": "not measured (read on the page by the second review, 11 October 2026; the words only)"
+  }
+ },
+ {
+  "id": "GG11",
+  "file": null,
+  "page": "https://www.geograph.org.uk/photo/1581328",
+  "title": "(page 1581328)",
+  "author": "John Baker",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "1984",
+  "date_read": "2026-10-11",
+  "kind": "period photograph (1984), a station's own lighting: the page says the 'distinctive concrete lamp-posts' were 'replaced by modern metal variants around 1990'; too small to measure",
+  "material": "precast concrete column",
+  "what_it_shows": "a station with concrete lamp-posts (too small to read the arm)",
+  "used": "yes, F2's support: concrete columns stood in the 1980s and were replaced around 1990; nothing measured",
+  "elements": {
+   "bracket": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "reach": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "lantern": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "shaft_taper": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "base_door": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "root": "not measured (read on the page by the second review, 11 October 2026; the words only)"
+  }
+ },
+ {
+  "id": "GG12",
+  "file": null,
+  "page": "https://www.geograph.org.uk/photo/1496139",
+  "title": "(page 1496139)",
+  "author": "Robert Lamb",
+  "licence": "CC BY-SA 2.0 (read on the page, 11 October 2026)",
+  "taken": "2008-12-14",
+  "date_read": "2026-10-11",
+  "kind": "later photograph of an object whose lantern and bracket the page says are not the original ones, so it is NOT used",
+  "material": "precast concrete column",
+  "what_it_shows": "a concrete column with a replaced lantern and bracket",
+  "used": "no: the page says the lantern and bracket are not the original ones",
+  "elements": {
+   "bracket": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "reach": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "lantern": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "shaft_taper": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "base_door": "not measured (read on the page by the second review, 11 October 2026; the words only)",
+   "root": "not measured (read on the page by the second review, 11 October 2026; the words only)"
   }
  }
 ]

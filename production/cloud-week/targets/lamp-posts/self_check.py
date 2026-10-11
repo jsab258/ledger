@@ -13,7 +13,7 @@ Parts
   E  text, canon and previews: no maker's name, brand, crown or council name anywhere in target.json or TARGET.md; only the plate carries lettering; the previews obey the brief;
      TARGET.md carries its summary line, the plain statement that no 1990 photograph was measured, credits every preview and every period photograph (page, date, licence)
   T  try 2 (11 October 2026): one test row (or more) per amendment of the review of 9 October: faults F1 (the bracket near level, coaxial with the lantern; US01 laid on the
-     picture in 3D), F2 (precast concrete the main build, steel the variant, C written to A's standard), F3 (the reach 430, the lantern 705 out), and narrow points 1 to 9
+     picture in 3D), F2 (precast concrete the main build, steel the variant, C written to A's standard), F3 (the reach 430, the lantern 705 out, 755 since the second review), and narrow points 1 to 9; the second review of 11 October: R1 (the concrete arm and spigot) and its six narrow points
   W  deliberately wrong copies of target.json (made here) must each be REFUSED by at least one test above
 """
 import argparse
@@ -386,11 +386,11 @@ test("C", "side elevation: column, arm, boss and lantern are ONE connected shape
 test("C", "side elevation: the arm's end lies inside the boss and the boss touches the canopy", sa.intersects(boss) and boss.intersects(canopy) and boss.distance(Point(*G["bracket"]["arm_end"])) < 0.01)
 lant_side = unary_union([canopy, bowl])
 bb = lant_side.bounds
-test("C", "side elevation: the lantern is 550 long (y 430 to 980) and 200 high (z 4800 to 5000)", abs(bb[0] - 430) < 1 and abs(bb[2] - 980) < 1 and abs(bb[1] - 4800) < 1 and abs(bb[3] - 5000) < 1, bb)
+test("C", "side elevation: the lantern is 650 long (y 430 to 1080) and 200 high (z 4800 to 5000)", abs(bb[0] - 430) < 1 and abs(bb[2] - 1080) < 1 and abs(bb[1] - 4800) < 1 and abs(bb[3] - 5000) < 1, bb)
 test("C", "side elevation: the lamp lies wholly inside the bowl", bowl.buffer(0.01).contains(lamp), lamp.bounds)
-test("C", "side elevation: the lamp is 54 across and 310 long, centre (705, 4872)", abs(lamp.bounds[2] - lamp.bounds[0] - 310) < 0.01 and abs(lamp.bounds[3] - lamp.bounds[1] - 54) < 0.01 and abs((lamp.bounds[0] + lamp.bounds[2]) / 2 - 705) < 0.01 and abs((lamp.bounds[1] + lamp.bounds[3]) / 2 - 4872) < 0.01)
+test("C", "side elevation: the lamp is 54 across and 310 long, centre (755, 4872)", abs(lamp.bounds[2] - lamp.bounds[0] - 310) < 0.01 and abs(lamp.bounds[3] - lamp.bounds[1] - 54) < 0.01 and abs((lamp.bounds[0] + lamp.bounds[2]) / 2 - 755) < 0.01 and abs((lamp.bounds[1] + lamp.bounds[3]) / 2 - 4872) < 0.01)
 base_seg = bowl.intersection(LineString([(0, 4800.5), (1500, 4800.5)]))
-test("C", "side elevation: the bowl's flat base is at z 4800 over y 505 to 905 (400 long) and its rim at z 4925", abs(bowl.bounds[1] - 4800) < 0.01 and abs(bowl.bounds[3] - 4925) < 0.01 and abs((base_seg.bounds[2] - base_seg.bounds[0]) - 400) < 2.0, base_seg.bounds)
+test("C", "side elevation: the bowl's flat base is at z 4800 over y 518.6 to 991.4 (473 long) and its rim at z 4925", abs(bowl.bounds[1] - 4800) < 0.01 and abs(bowl.bounds[3] - 4925) < 0.01 and abs((base_seg.bounds[2] - base_seg.bounds[0]) - 473) < 2.0, base_seg.bounds)
 front = polys("A_front_elevation_carriageway_side", "canopy").union(polys("A_front_elevation_carriageway_side", "bowl"))
 fb = front.bounds
 test("C", "front elevation: the lantern is 300 wide (x +-150) and 200 high", abs(fb[0] + 150) < 1 and abs(fb[2] - 150) < 1 and abs(fb[1] - 4800) < 1 and abs(fb[3] - 5000) < 2.5, fb)
@@ -402,8 +402,8 @@ test("C", "back elevation: two door screws and two socket set screws (one above 
      and sum(1 for p in views["A_back_elevation_building_side"]["polys"] if p["name"] == "socket_set_screw") == 2)
 pp = views["A_plan_lantern"]["polys"]
 rim = [p["geom"] for p in pp if p["name"] == "canopy_rim_outline"][0]
-test("C", "plan: the canopy's outline is 300 wide and 550 long; the bowl's rim 8 inside it; the flat base 164 wide and 400 long", abs(rim.bounds[2] - rim.bounds[0] - 300) < 0.5 and abs(rim.bounds[3] - rim.bounds[1] - 550) < 0.5
-     and abs([p["geom"] for p in pp if p["name"] == "bowl_flat_base"][0].bounds[2] * 2 - 164) < 0.5 and abs(([p["geom"] for p in pp if p["name"] == "bowl_flat_base"][0].bounds[3] - [p["geom"] for p in pp if p["name"] == "bowl_flat_base"][0].bounds[1]) - 400) < 0.5
+test("C", "plan: the canopy's outline is 300 wide and 650 long; the bowl's rim 8 inside it; the flat base 164 wide and 473 long", abs(rim.bounds[2] - rim.bounds[0] - 300) < 0.5 and abs(rim.bounds[3] - rim.bounds[1] - 650) < 0.5
+     and abs([p["geom"] for p in pp if p["name"] == "bowl_flat_base"][0].bounds[2] * 2 - 164) < 0.5 and abs(([p["geom"] for p in pp if p["name"] == "bowl_flat_base"][0].bounds[3] - [p["geom"] for p in pp if p["name"] == "bowl_flat_base"][0].bounds[1]) - 473) < 0.5
      and rim.buffer(-8).symmetric_difference([p["geom"] for p in pp if p["name"] == "bowl_rim"][0]).area < 1.0)
 lamp_plan = [p["geom"] for p in pp if p["name"] == "lamp"][0]
 test("C", "plan: the lantern's long axis is along y (the arm), the lamp's likewise, and the arm enters at the narrow rear end (the outline is narrower at y 240 than at y 760)",
@@ -411,12 +411,12 @@ test("C", "plan: the lantern's long axis is along y (the arm), the lamp's likewi
      and TD.interp(LAN["canopy"]["plan_half_width"], 445) < TD.interp(LAN["canopy"]["plan_half_width"], 965))
 cs_cross = views["L_section_lantern_cross_centre"]["polys"]
 cr = unary_union([p["geom"] for p in cs_cross if p["name"] in ("canopy_shell", "bowl_shell")])
-test("C", "cross-section at the lantern's centre (y 705): the shells span x +-150 (canopy) and the dome reaches z 4998 +-2", abs(cr.bounds[0] + 150) < 1 and abs(cr.bounds[2] - 150) < 1 and abs(cr.bounds[3] - 4998) < 2.0 and abs(cr.bounds[1] - 4800) < 0.5, cr.bounds)
+test("C", "cross-section at the lantern's centre (y 755): the shells span x +-150 (canopy) and the dome reaches z 4998 +-2", abs(cr.bounds[0] + 150) < 1 and abs(cr.bounds[2] - 150) < 1 and abs(cr.bounds[3] - 4998) < 2.0 and abs(cr.bounds[1] - 4800) < 0.5, cr.bounds)
 ls = views["L_section_lantern_long_x0"]["polys"]
 cshell = [p["geom"] for p in ls if p["name"] == "canopy_shell"][0]
 bshell = [p["geom"] for p in ls if p["name"] == "bowl_shell"][0]
 test("C", "long section: the shells' areas are within 25 % of (outline length x thickness): canopy 2.5, bowl 3", abs(cshell.area / (cshell.length / 2 * 2.5) - 1) < 0.25 and abs(bshell.area / (bshell.length / 2 * 3.0) - 1) < 0.25, (cshell.area, cshell.length, bshell.area, bshell.length))
-for v in ("C_side_elevation", "C_front_elevation_carriageway_side", "C_back_elevation_building_side", "C_plan_z500", "C_plan_z2160_number_plate", "C_plan_z4620_top_cap_and_stem", "C_plan_lantern", "C_section_shaft_half_profile",
+for v in ("C_side_elevation", "C_front_elevation_carriageway_side", "C_back_elevation_building_side", "C_plan_z500", "C_plan_z2160_number_plate", "C_plan_z4985_arm_and_top", "C_plan_lantern", "C_section_shaft_half_profile",
           "C_section_bracket_detail", "P_side_elevation", "W1_side_elevation"):
     test("C", f"view {v} exists with polygons", v in views and len(views[v]["polys"]) >= 1)
 c500 = 220 - 95 * 500 / 4620
@@ -429,7 +429,7 @@ test("C", "variant P: the pod is 420 across and sits on the shaft's top at z 430
 os.makedirs(os.path.join(tmp, "pics"), exist_ok=True)
 pics = TD.render({"A_plan_lantern": views["A_plan_lantern"], "L_section_lantern_long_x0": views["L_section_lantern_long_x0"]}, os.path.join(tmp, "pics"), 1.0)
 sizes = {os.path.basename(p): s for p, s in pics}
-test("C", "pictures are 1 mm a pixel (plus a 24 px margin): the lantern's plan is 348 wide, the long section 548+48 wide", abs(sizes["A_plan_lantern.png"][0] - (300 + 48)) <= 2 and sizes["L_section_lantern_long_x0.png"][0] >= 548 + 40, sizes)
+test("C", "pictures are 1 mm a pixel (plus a 24 px margin): the lantern's plan is 348 wide, the long section 648+48 wide", abs(sizes["A_plan_lantern.png"][0] - (300 + 48)) <= 2 and sizes["L_section_lantern_long_x0.png"][0] >= 648 + 40, sizes)
 
 # ===================================================================================================================================================
 # D. internal consistency
@@ -440,11 +440,13 @@ turn = br["bend_turn_deg"]
 bey = R * (1 - math.cos(math.radians(turn)))
 bez = stem_top + R * math.sin(math.radians(turn))
 aez = bez + (br["arm_end"][0] - bey) * math.tan(math.radians(rake))
-test("D", "the bracket's geometry recomputes: the stem to z 4800.8, ONE bend of 90 degrees on radius 130 to (130, 4930.8), a LEVEL arm to y 430 (A and C alike)",
-     near([bey, bez, aez], [br["arm_start"][0], br["arm_start"][1], br["arm_end"][1]], 0.01) and abs(aez - br["arm_end"][1]) < 0.01 and turn == 90 and rake == 0 and R == 130 and abs(stem_top - 4800.8) < 1e-9
-     and GC["bracket"]["centreline_yz"][-1] == br["centreline_yz"][-1] and GC["bracket"]["arm_end"] == br["arm_end"] and GC["bracket"]["bend_radius"] == R, (bey, bez, aez))
+test("D", "variant A's bracket geometry recomputes: the stem to z 4800.8, ONE bend of 90 degrees on radius 130 to (130, 4930.8), a LEVEL arm to y 430",
+     near([bey, bez, aez], [br["arm_start"][0], br["arm_start"][1], br["arm_end"][1]], 0.01) and abs(aez - br["arm_end"][1]) < 0.01 and turn == 90 and rake == 0 and R == 130 and abs(stem_top - 4800.8) < 1e-9, (bey, bez, aez))
+test("D", "variant C's arm (second review, R1): level at the same z 4930.8, square 110 with 10 chamfers, to y 400, a mitre with no bend radius, rake 0, the centreline [[0, 4930.8], [400, 4930.8]]",
+     GC["bracket"]["axis_z"] == bez and GC["bracket"]["section"] == {"square": 110, "chamfer": 10} and GC["bracket"]["arm_end_y"] == 400 and GC["bracket"]["joint"] == "mitre" and GC["bracket"]["rake_deg"] == 0
+     and GC["bracket"]["centreline_yz"] == [[0, 4930.8], [400, 4930.8]] and "bend_radius" not in GC["bracket"] and "cap" not in GC, GC["bracket"]["axis_z"])
 test("D", "the arm's end lies in the canopy's lip band (z 4925 to 4937) at the rear tip, where the boss is cast", LAN["canopy"]["rim_z"] <= aez <= LAN["canopy"]["dome_base_z"], aez)
-for nm, cl in (("A", br["centreline_yz"]), ("C", GC["bracket"]["centreline_yz"])):
+for nm, cl in (("A", br["centreline_yz"]),):
     steps = [math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(cl, cl[1:])]
     ang = []
     for a, b, c in zip(cl, cl[1:], cl[2:]):
@@ -454,20 +456,20 @@ for nm, cl in (("A", br["centreline_yz"]), ("C", GC["bracket"]["centreline_yz"])
     test("D", f"variant {nm}: the arm's centreline is continuous: no step over 45 mm in the stored samples, no kink over 8 degrees between samples", max(steps) < 45 and max(ang) < 8.0, (max(steps), max(ang)))
 test("D", "the arm above the bend is level (the rake 0): its slope from arm_start to arm_end is 0 degrees", abs(math.degrees(math.atan2(br["arm_end"][1] - br["arm_start"][1], br["arm_end"][0] - br["arm_start"][0]))) < 0.05)
 test("D", "the stem rises vertically from inside the socket (z 4560) to the bend's start, arm axis z 4930.8 minus the radius 130", abs(stem_top - (V("arm_axis_z") - V("bend_radius"))) < 0.01 and br["stem_from_z"] == 4560)
-test("D", "the lantern's own numbers: length 550 = 980 - 430; centre 705 = 430 + 275; the research's reach to the spigot 430 (406 to 457), not the scene's 500 to the centre", LAN["envelope"]["length_y"] == [430, 980] and LAN["envelope"]["centre"] == [0, 705, 4900]
-     and V("lantern_centre_outreach") == 705 and V("bracket_reach_to_spigot") == 430 and V("research_bracket_reach_range")[0] <= 430 <= V("research_bracket_reach_range")[1] and V("scene_outreach") == 500)
+test("D", "the lantern's own numbers: length 650 = 1080 - 430 (second review, point 1); centre 755 = 430 + 325; the research's reach to the spigot 430 (406 to 457), not the scene's 500 to the centre", LAN["envelope"]["length_y"] == [430, 1080] and LAN["envelope"]["centre"] == [0, 755, 4900]
+     and V("lantern_centre_outreach") == 755 and V("bracket_reach_to_spigot") == 430 and V("research_bracket_reach_range")[0] <= 430 <= V("research_bracket_reach_range")[1] and V("scene_outreach") == 500)
 test("D", "the lantern's top is the scene's mounting height 5000 and its bottom 4800; the rim at 4925 leaves canopy 75 and bowl 125", LAN["envelope"]["height_z"] == [4800, 5000] and LAN["canopy"]["rim_z"] == 4925 and 5000 - 4925 == 75 and 4925 - 4800 == 125)
-test("D", "the canopy's highest z is 5000 and its plan's widest is 150 each side; no station exceeds the envelope", max(p[1] for p in LAN["canopy"]["top_z_along_y"]) == 5000 and max(p[1] for p in LAN["canopy"]["plan_half_width"]) == 150 and all(430 <= p[0] <= 980 for p in LAN["canopy"]["plan_half_width"]))
+test("D", "the canopy's highest z is 5000 and its plan's widest is 150 each side; no station exceeds the envelope", max(p[1] for p in LAN["canopy"]["top_z_along_y"]) == 5000 and max(p[1] for p in LAN["canopy"]["plan_half_width"]) == 150 and all(430 <= p[0] <= 1080 for p in LAN["canopy"]["plan_half_width"]))
 dome_max = max(p[1] for p in LAN["canopy"]["top_z_along_y"]) - LAN["canopy"]["dome_base_z"]
-dome_c = dict((p[0], p[1]) for p in LAN["canopy"]["top_z_along_y"])[705] - LAN["canopy"]["dome_base_z"]
-test("D", "the dome's height: the maximum over y is 63 (the check, +-6; review point 6) and at the lantern's centre y 705 it is 61", abs(dome_max - 63) < 0.01 and abs(dome_c - 61) < 0.01 and abs(dome_max - [c for c in T["checks"] if c["name"] == "lantern_dome_height"][0]["expected"]) <= 6, (dome_max, dome_c))
-test("D", "the bowl's base outline (505 to 905) lies inside its rim outline at every y", all(TD.interp(LAN["canopy"]["plan_half_width"], y) - LAN["bowl"]["rim_inset"] > hw for y, hw in LAN["bowl"]["base_plan_half_width"]))
+dome_c = dict((p[0], p[1]) for p in LAN["canopy"]["top_z_along_y"])[755] - LAN["canopy"]["dome_base_z"]
+test("D", "the dome's height: the maximum over y is 63 (the check, +-6; review point 6) and at the lantern's centre y 755 it is 61", abs(dome_max - 63) < 0.01 and abs(dome_c - 61) < 0.01 and abs(dome_max - [c for c in T["checks"] if c["name"] == "lantern_dome_height"][0]["expected"]) <= 6, (dome_max, dome_c))
+test("D", "the bowl's base outline (518.6 to 991.4) lies inside its rim outline at every y", all(TD.interp(LAN["canopy"]["plan_half_width"], y) - LAN["bowl"]["rim_inset"] > hw for y, hw in LAN["bowl"]["base_plan_half_width"]))
 light = T["light"]
-test("D", "the point light is the scene's rule: 50 mm below the lantern's centre (4900 - 50 = 4850), on y 705, inside the bowl", light["position_mm"] == [0, 705, 4850] and 4800 < 4850 < 4925 and bowl.contains(Point(705, 4850)))
+test("D", "the point light is the scene's rule: 50 mm below the lantern's centre (4900 - 50 = 4850), on y 755, inside the bowl", light["position_mm"] == [0, 755, 4850] and 4800 < 4850 < 4925 and bowl.contains(Point(755, 4850)))
 test("D", "the lamp's own centre (4872) is above the light (4850) by 22: both inside the bowl", 4872 - 4850 == 22)
 chk_by = {c["name"]: c for c in T["checks"]}
-test("D", "the checks agree with the geometry: lantern box 550 x 300 x 200, centre (0, 705, 4900), arm end (430, 4930.8), sleeve 124, sleeve height 978", chk_by["lantern_bounding_box"]["expected"] == {"y": 550, "x": 300, "z": 200}
-     and chk_by["lantern_centre"]["expected"] == [0, 705, 4900] and near(chk_by["arm_reaches_boss"]["expected"], [430, round(aez, 1)], 0.15) and chk_by["sleeve_od"]["expected"] == 124 and chk_by["sleeve_height"]["expected"] == 978)
+test("D", "the checks agree with the geometry: lantern box 650 x 300 x 200, centre (0, 755, 4900), arm end (430, 4930.8), sleeve 124, sleeve height 978", chk_by["lantern_bounding_box"]["expected"] == {"y": 650, "x": 300, "z": 200}
+     and chk_by["lantern_centre"]["expected"] == [0, 755, 4900] and near(chk_by["arm_reaches_boss"]["expected"], [430, round(aez, 1)], 0.15) and chk_by["sleeve_od"]["expected"] == 124 and chk_by["sleeve_height"]["expected"] == 978)
 test("D", "every check has a name, a measure, an expected value, a tolerance and a kind; names are unique", all(all(k in c for k in ("name", "applies_to", "measure", "expected", "tolerance", "kind")) for c in T["checks"]) and len({c["name"] for c in T["checks"]}) == len(T["checks"]) and len(T["checks"]) >= 70)
 test("D", "wear: the splash band (z 0 to 250) lies within the sleeve; chips on the carriageway face z 150 to 900; the door (-y face, z 400 to 900) and the dent (+y face, z 480) are on opposite faces; the scratches at z 380 to 430 on +y (variant A); the concrete's algae on -y to z 700, its chip on +y z 400 to 460 (C)",
      250 < V("sleeve_height") and 900 < V("sleeve_height") and G["door"]["centre_azimuth_deg_from_plus_y"] == 180 and "carriageway face" in " ".join(x["where"] for x in T["wear"]["features_A"] if x["id"] in ("dent", "scratches")) and V("bge_scratch_zone") == [380, 430]
@@ -479,14 +481,14 @@ test("D", "the plate's text is 'LC n' for n 1 to 4, one per column, in the place
 test("D", "placement: the four columns at x 8, 18, 28, 38, east west east west; the dent (A) and the chipped arris (C) on LC 2 only; seeds distinct", [c["x_m"] for c in T["placement"]["columns"]] == [8.0, 18.0, 28.0, 38.0] and [c["side"] for c in T["placement"]["columns"]] == ["east", "west", "east", "west"]
      and [c["dent"] for c in T["placement"]["columns"]] == [False, True, False, False] and [c["chipped_arris"] for c in T["placement"]["columns"]] == [False, True, False, False] and len({c["wear_seed"] for c in T["placement"]["columns"]}) == 4)
 test("D", "the column's axis is clear of the footway's far edge: 770 from the kerb face leaves 1230 of the 2000 footway; the sleeve's edge is 0.64 m from the kerb's back face", 2000 - 770 >= 1200 and 600 - 62 > 0)
-test("D", "the colour block: glow bowl (255, 137, 0) = lamp (1, 0.25, 0); the jacket and the arc tube the SAME orange (review point 5), the jacket 0.3 of the tube and the bowl 0.2 of the jacket (5,500 / 27,500)", T["materials"]["bowl_emissive_lit"]["srgb"] == [255, 137, 0] and T["materials"]["lamp_glass"]["emissive_srgb_lit"] == [255, 137, 0]
-     and T["materials"]["arc_tube"]["emissive_srgb_lit"] == [255, 137, 0] and T["materials"]["lamp_glass"]["relative_to_tube"] == 0.3 and T["materials"]["bowl_emissive_lit"]["relative_to_jacket"] == 0.2)
+test("D", "the colour block: glow bowl (255, 137, 0) = lamp (1, 0.25, 0); the jacket and the arc tube the SAME orange (review point 5), the jacket 0.3 of the tube and the bowl 0.17 of the jacket (4,800 / 27,500)", T["materials"]["bowl_emissive_lit"]["srgb"] == [255, 137, 0] and T["materials"]["lamp_glass"]["emissive_srgb_lit"] == [255, 137, 0]
+     and T["materials"]["arc_tube"]["emissive_srgb_lit"] == [255, 137, 0] and T["materials"]["lamp_glass"]["relative_to_tube"] == 0.3 and T["materials"]["bowl_emissive_lit"]["relative_to_jacket"] == 0.17)
 test("D", "the accent budget: the only high-chroma surfaces are the lamp and the bowl; paint, canopy and plate are low-chroma (max channel difference under 16 for paint, canopy and plate; under 30 for the bowl unlit)",
      all(max(c) - min(c) < 16 for c in (V("paint_black_srgb"), V("canopy_srgb"), V("plate_white_srgb"), V("primer_srgb"), V("splash_srgb"))) and max(V("bowl_unlit_srgb")) - min(V("bowl_unlit_srgb")) < 40)
-test("D", "variant C (the main build): a square shaft 220 at the foot to 125 at the top over 4620 (a taper of 20.6 mm a metre), the steel stem 48, the same lantern, light and places as A; its numbers are the research's 20 to 25 cm at the foot", T["variants"]["C"]["build"] is True and T["variants"]["C"]["count_in_street"] == 4 and T["variants"]["A"]["build"] is False
-     and GC["shaft"]["side_at_z0"] == 220 and GC["shaft"]["side_at_top"] == 125 and V("research_foot_width_range")[0] <= 220 <= V("research_foot_width_range")[1] and GC["bracket"]["tube_od_stem"] == 48 and GC["lantern"] == {"same_as": "geometry.lantern"})
+test("D", "variant C (the main build): a square shaft 220 at the foot to 125 at the top over 4620 (a taper of 20.6 mm a metre), a concrete arm 110 square cast as one with the shaft (a 42 steel spigot), the same lantern, light and places as A; its numbers are the research's 20 to 25 cm at the foot", T["variants"]["C"]["build"] is True and T["variants"]["C"]["count_in_street"] == 4 and T["variants"]["A"]["build"] is False
+     and GC["shaft"]["side_at_z0"] == 220 and GC["shaft"]["side_at_z4620"] == 125 and GC["shaft"]["side_at_top"] == 117.5 and V("research_foot_width_range")[0] <= 220 <= V("research_foot_width_range")[1] and GC["bracket"]["section"]["square"] == 110 and GC["spigot"]["od"] == 42 and GC["lantern"] == {"same_as": "geometry.lantern"})
 test("D", "variant P: the shaft ends at 4300 and the pod's centre at 4375 is inside the photographed 4410 +-300", T["variants"]["P"]["shaft_top_z"] == 4300 and abs(T["variants"]["P"]["pod"]["centre_z"] - V("bge_pod_centre_height")) <= 300)
-test("D", "photographs-win list has twelve disagreements, each with a chosen value", len(T["photographs_win"]) == 12 and all(w["chose"] for w in T["photographs_win"]), len(T["photographs_win"]))
+test("D", "photographs-win list has thirteen disagreements (PW13 added by the second review), each with a chosen value", len(T["photographs_win"]) == 13 and all(w["chose"] for w in T["photographs_win"]), len(T["photographs_win"]))
 test("D", "the triangle budget is a range and the bevel list covers the hard edges named", T["triangle_budget"]["lod0"] == [3000, 12000] and len(T["bevels"]) >= 8)
 
 # ===================================================================================================================================================
@@ -507,7 +509,7 @@ for b in CONTENT:
     test("E", f"content rule: no '{b.strip()}' in target.json", b not in json.dumps({k: v for k, v in T.items() if k != "self_check"}).lower(), b)
 test("E", "the plate is the only lettering: its text template is 'LC n' and the door and the bowl carry none", G["plate"]["text"]["template"] == "LC n" and "none" in G["door"]["lettering"] and "no maker" in G["door"]["lettering"])
 PERIOD = T["period_photographs"]
-prev = [PF[k]["file"] for k in PF] + ["bge-bethnal-green-column-target-on-photo.jpg", "hook-sheet-slot-x8-east-target-on-sheet.jpg", "us01-bethnal-green-bent-arm-3d-fit-on-photo.jpg"] + [p["file"] for p in PERIOD]
+prev = [PF[k]["file"] for k in PF] + ["bge-bethnal-green-column-target-on-photo.jpg", "hook-sheet-slot-x8-east-target-on-sheet.jpg", "us01-bethnal-green-bent-arm-3d-fit-on-photo.jpg"] + [p["file"] for p in PERIOD if p.get("file")]
 for fn in prev:
     p = os.path.join(PREV, fn)
     ok = os.path.exists(p)
@@ -524,7 +526,7 @@ test("E", "TARGET.md credits every preview by file name", all(fn in md for fn in
 test("E", "TARGET.md lists each source's licence (CC0) and the photographer (Andreas Mischok) and the dates taken (18 August 2019)", "CC0" in md and "Andreas Mischok" in md and "2019-08-18" in md)
 test("E", "TARGET.md lists each period or later Geograph photograph with its page, author, date taken and licence (CC BY-SA 2.0)", all(p["page"] in md and p["author"] in md and p["taken"] in md for p in PERIOD) and "CC BY-SA 2.0" in md and len(PERIOD) >= 5, [p["page"] for p in PERIOD if p["page"] not in md])
 test("E", "at least two dated photographs of 1975 to 1995 are listed (the 1989 steel columns), each with a free licence and a date taken read on its page, and the later ones say why the object is unchanged", sum(1 for p in PERIOD if "1975" <= p["taken"][:4] <= "1995") >= 2
-     and all("CC BY-SA 2.0" in p["licence"] and re.match(r"^\d{4}-\d\d-\d\d$", p["taken"]) for p in PERIOD) and all(("unchanged" in p["kind"] or "original" in p["kind"] or "object" in p["kind"] or "stood in 1990" in p["kind"]) for p in PERIOD if p["taken"][:4] > "2000"), [(p["id"], p["taken"]) for p in PERIOD])
+     and all("CC BY-SA 2.0" in p["licence"] and re.match(r"^\d{4}(-\d\d-\d\d)?$", p["taken"]) for p in PERIOD) and all(("unchanged" in p["kind"] or "original" in p["kind"] or "object" in p["kind"] or "stood in 1990" in p["kind"]) for p in PERIOD if p["taken"][:4] > "2000"), [(p["id"], p["taken"]) for p in PERIOD])
 test("E", "no period crop shows a sign, a brand, a person's name or a child: TARGET.md says what was masked or cropped, and the crops are the object only", "masked grey" in md and "crops are of the object only" in md.lower().replace("each crop is of the object only", "crops are of the object only"))
 test("E", "TARGET.md has a 'Try 2' section listing each of the three faults and nine narrow points and how each was answered", "## Try 2" in md and all(f"F{i}" in md for i in (1, 2, 3)) and all(f"Point {i}" in md for i in range(1, 10)))
 test("E", "TARGET.md carries the legend of number kinds (Read, Photo, Derived, Judgement) and the could-not-settle list", all(k in md for k in ("**Read**", "**Photo**", "**Derived**", "**Judgement**")) and "could not settle" in md.lower())
@@ -559,7 +561,7 @@ test("T", "F1: the boss is horizontal along +y from (0, 430, 4930.8) forward 55,
      and chkd["boss"]["expected"]["rake_deg"] == 0 and chkd["boss_top_and_dome"]["expected"]["top_above_crown"] == 23.8, (dome_at(485), bs["axis_from"][2] + bs["od"] / 2))
 last = cl[-6:]
 arm_dir = math.degrees(math.atan2(last[-1][1] - last[0][1], last[-1][0] - last[0][0]))
-lantern_axis_deg = 0.0 if (LAN["tilt_deg"] == 0 and LAN["envelope"]["length_y"][1] - LAN["envelope"]["length_y"][0] == 550) else 99.0
+lantern_axis_deg = 0.0 if (LAN["tilt_deg"] == 0 and LAN["envelope"]["length_y"][1] - LAN["envelope"]["length_y"][0] == 650) else 99.0
 angs = [arm_dir, bs["axis_deg_above_horizontal"], lantern_axis_deg + LAN["tilt_deg"]]
 test("T", "F1: the new check arm_lantern_coaxial: the arm's last 50 mm, the boss axis and the lantern's long axis (all in the y-z plane) differ by at most 2 degrees, and the check says so", max(angs) - min(angs) <= 2.0 and chkd["arm_lantern_coaxial"]["expected"] == 0.0 and chkd["arm_lantern_coaxial"]["tolerance"] == 2.0 and len(last) >= 4 and math.hypot(last[-1][0] - last[0][0], last[-1][1] - last[0][1]) >= 49, angs)
 test("T", "F1: the lantern stays level (tilt 0) and its check lantern_tilt 0 +-1.5 is kept", LAN["tilt_deg"] == 0 and chkd["lantern_tilt"]["expected"] == 0.0 and chkd["lantern_tilt"]["tolerance"] == 1.5)
@@ -568,7 +570,8 @@ test("T", "F1: TARGET.md carries PW8 (the rake) and says 'read in 3D'; section 1
 test("T", "F2: C is the main build for all four places, A is the alternative (build false) written in full; DECISIONS.md records the swap as a session decision Jafar can overturn", T["variants"]["C"]["build"] is True and T["variants"]["C"]["count_in_street"] == 4 and T["variants"]["A"]["build"] is False
      and "lamp column as precast concrete (the main build)" in TXT["decisions"] and "kept as a variant" in TXT["decisions"] and "may rule A in" in T["decision_type"]["who_decides"])
 sh_pts = GC["shaft"]["points_z_side_chamfer"]
-test("T", "F2: geometry.C.shaft is the point list (z, side, chamfer) (-150, 220, 15), (0, 220, 15), (4620, 125, 15); the taper is linear, the arrises chamfered 15 throughout, the top face flat with a 5 chamfer", sh_pts == [[-150, 220, 15], [0, 220, 15], [4620, 125, 15]]
+test("T", "F2 and R1: geometry.C.shaft is the point list (z, side, chamfer) (-150, 220, 15), (0, 220, 15), (4620, 125, 15), (4985.8, 117.5, 15) (the same straight taper carried up to the arm's top); the arrises chamfered 15 throughout, the top face flat with a 5 chamfer", sh_pts == [[-150, 220, 15], [0, 220, 15], [4620, 125, 15], [4985.8, 117.5, 15]]
+     and GC["shaft"]["top_z"] == 4985.8 and abs(117.5 - (125 - 95 * (4985.8 - 4620) / 4620)) < 0.05
      and GC["shaft"]["top_face_chamfer_mm"] == 5 and "flat" in GC["shaft"]["top_face"] and all(p[2] == 15 for p in sh_pts))
 cfr = views["C_front_elevation_carriageway_side"]["polys"]
 cshaft = [p["geom"] for p in cfr if p["name"] == "concrete_shaft"][0]
@@ -576,15 +579,24 @@ wid = lambda z: width_at(cshaft, z)  # noqa: E731
 test("T", "F2: the drawn concrete shaft is 213.8 / 172.7 / 131.6 across at z 300 / 2300 / 4300 (the checks, +-6), 220 at the footway and 125 at the top, planted 150 below it", abs(wid(300) - 213.8) < 0.1 and abs(wid(2300) - 172.7) < 0.1 and abs(wid(4300) - 131.6) < 0.1
      and abs(wid(0.5) - 220) < 0.2 and abs(wid(4619) - 125) < 0.2 and abs(cshaft.bounds[1] + 150) < 1e-6 and [chkd[n]["expected"] for n in ("c_shaft_side_z300", "c_shaft_side_z2300", "c_shaft_side_z4300")] == [213.8, 172.7, 131.6]
      and all(chkd[n]["tolerance"] == 6 for n in ("c_shaft_side_z300", "c_shaft_side_z2300", "c_shaft_side_z4300")), (wid(300), wid(2300), wid(4300)))
-test("T", "F2: the chamfer 15 +-3, the top face chamfer 5, the section square to the street +-2 degrees: the checks exist, and the plan at z 4620 is a square 125 with 15 chamfers (area 125^2 - 4 x 15^2 / 2) and its bounds are symmetrical about the axis",
+test("T", "F2: the chamfer 15 +-3, the top face chamfer 5, the section square to the street +-2 degrees: the checks exist, and the plan of the shaft's top (z 4985.8) is a square 117.5 with 15 chamfers (area 117.5^2 - 4 x 15^2 / 2) and its bounds are symmetrical about the axis",
      chkd["c_chamfer"]["expected"] == 15 and chkd["c_chamfer"]["tolerance"] == 3 and chkd["c_top_face_chamfer"]["expected"] == 5 and chkd["c_section_square_to_street"]["tolerance"] == 2.0
-     and abs(unary_union([p["geom"] for p in views["C_plan_z4620_top_cap_and_stem"]["polys"] if p["name"] == "concrete_top_section"]).area - (125 ** 2 - 4 * 15 * 15 / 2)) < 0.5
-     and all(abs(a + b) < 1e-6 for a, b in ((unary_union([p["geom"] for p in views["C_plan_z4620_top_cap_and_stem"]["polys"] if p["name"] == "concrete_top_section"]).bounds[0], unary_union([p["geom"] for p in views["C_plan_z4620_top_cap_and_stem"]["polys"] if p["name"] == "concrete_top_section"]).bounds[2]),)))
-capg = [p["geom"] for p in cfr if p["name"] == "cast_cap"][0]
-stemg = [p["geom"] for p in cfr if p["name"] == "stem_and_arm_end_on"][0]
-test("T", "F2: geometry.C.bracket: a 48 steel stem rising from the top face's centre through a 30 tall, 90 OD cast-steel cap seated on the top (z 4620 to 4650), the same bend and level arm as A (identical centreline above z 4560), and its own centreline",
-     cbr["tube_od_stem"] == 48 and abs(capg.bounds[0] + 45) < 1e-6 and abs(capg.bounds[2] - 45) < 1e-6 and abs(capg.bounds[1] - 4620) < 1e-6 and abs(capg.bounds[3] - 4650) < 1e-6 and abs(stemg.bounds[0] + 24) < 1e-6 and abs(stemg.bounds[2] - 24) < 1e-6
-     and stemg.bounds[1] == 4560 and cbr["centreline_yz"] == G["bracket"]["centreline_yz"] and cbr["arm_end"] == [430, 4930.8] and GC["cap"]["od"] == 90 and GC["cap"]["height"] == 30, (capg.bounds, stemg.bounds))
+     and abs(unary_union([p["geom"] for p in views["C_plan_z4985_arm_and_top"]["polys"] if p["name"] == "concrete_top_section"]).area - (117.5 ** 2 - 4 * 15 * 15 / 2)) < 0.5
+     and all(abs(a + b) < 1e-6 for a, b in ((unary_union([p["geom"] for p in views["C_plan_z4985_arm_and_top"]["polys"] if p["name"] == "concrete_top_section"]).bounds[0], unary_union([p["geom"] for p in views["C_plan_z4985_arm_and_top"]["polys"] if p["name"] == "concrete_top_section"]).bounds[2]),)))
+arm_e = [p["geom"] for p in cfr if p["name"] == "concrete_arm_end_on"][0]
+spg_e = [p["geom"] for p in cfr if p["name"] == "steel_spigot_end_on"][0]
+side_c = {p["name"]: p["geom"] for p in views["C_side_elevation"]["polys"]}
+shaft_arm = side_c["concrete_shaft_and_arm"]
+spg_s = side_c["steel_spigot_od42"]
+test("T", "R1: geometry.C.bracket is a precast concrete arm cast as one with the shaft: square 110 with 10 chamfers, level at z 4930.8 (top 4985.8, underside 4875.8), from the shaft's -y face to a flat end face at y 400 (edge chamfer 5), a mitre with outer corner R20 and inner fillet R10, concrete_C, unpainted; there is no cap and no stem; the drawn end-on arm is 110 across and 110 tall",
+     cbr["section"] == {"square": 110, "chamfer": 10} and cbr["axis_z"] == 4930.8 and cbr["top_z"] == 4985.8 and abs(cbr["underside_z"] - 4875.8) < 1e-9 and cbr["arm_end_y"] == 400 and cbr["joint"] == "mitre" and cbr["mitre"]["outer_corner_radius"] == 20 and cbr["mitre"]["inner_fillet_radius"] == 10
+     and "concrete_C" in cbr["material"] and "cap" not in GC and "tube_od_stem" not in cbr and abs(arm_e.bounds[2] - arm_e.bounds[0] - 110) < 1e-6 and abs(arm_e.bounds[3] - arm_e.bounds[1] - 110) < 1e-6 and abs(arm_e.bounds[3] - 4985.8) < 1e-6
+     and abs(shaft_arm.bounds[2] - 400) < 1e-6 and abs(shaft_arm.bounds[3] - 4985.8) < 1e-6, (arm_e.bounds, shaft_arm.bounds))
+test("T", "R1: the mitre is drawn: the arm's top face and the shaft's top are one face at z 4985.8 (the section's top edge is level from the shaft's -y face to the arm's end), the outer corner is rounded (the point (-58.75, 4985.8) is not on the outline) and the inner corner at about (59.9, 4875.8) is filled by a fillet",
+     abs(shaft_arm.bounds[3] - 4985.8) < 1e-6 and not shaft_arm.buffer(-0.01).contains(Point(-58.7, 4985.7)) and not shaft_arm.contains(Point(-58.7, 4985.7)) and shaft_arm.buffer(0.01).contains(Point(0, 4985.8)) and shaft_arm.contains(Point(60.5, 4875.0)) and not shaft_arm.contains(Point(75.0, 4870.0)), shaft_arm.bounds)
+test("T", "R1: geometry.C.spigot: a steel tube OD 42 on the arm's axis (z 4930.8) from y 340 to y 485, 30 of it showing between the arm's end (400) and the boss (430); the drawn spigot's side view is 42 tall from y 340 to 485, and its end-on circle is 42 across; the material c_spigot is black (31, 31, 34 region) and the concrete is unpainted",
+     GC["spigot"]["od"] == 42 and GC["spigot"]["y"] == [340, 485] and GC["spigot"]["exposed_y"] == [400, 430] and abs(spg_s.bounds[0] - 340) < 1e-6 and abs(spg_s.bounds[2] - 485) < 1e-6 and abs(spg_s.bounds[3] - spg_s.bounds[1] - 42) < 1e-6 and abs(spg_e.bounds[2] - spg_e.bounds[0] - 42) < 0.1
+     and "c_spigot" in T["materials"] and "c_cap_stem_arm" not in T["materials"] and "only the spigot is painted black" in T["variants"]["C"]["paint"])
 cb_back = views["C_back_elevation_building_side"]["polys"]
 rec = [p["geom"] for p in cb_back if p["name"] == "door_recess"][0]
 dpl = [p["geom"] for p in cb_back if p["name"] == "door_plate"][0]
@@ -594,23 +606,44 @@ test("T", "F2: geometry.C.door: the recess 120 x 330 x 14 at z 450 to 780 on -y;
      and abs(dpl.bounds[2] - dpl.bounds[0] - 132) < 1e-6 and abs(dpl.bounds[3] - dpl.bounds[1] - 342) < 1e-6 and cd["plate"]["thickness"] == 3 and cd["plate"]["proud"] == 3
      and cd["plate"]["screws"]["z"] == [469, 761] and cd["plate"]["screws"]["head_od"] == 10 and "none" in cd["plate"]["lettering"] and sum(1 for p in cb_back if p["name"] == "door_plate_screw") == 2
      and all(dpl.buffer(0.01).contains(p["geom"]) for p in cb_back if p["name"] == "door_plate_screw"))
-need = ("c_shaft_side_z300", "c_shaft_side_z2300", "c_shaft_side_z4300", "c_chamfer", "c_section_square_to_street", "c_door_recess", "c_door_plate", "c_door_screws", "c_top_cap", "c_stem_entry", "c_albedo", "c_roughness", "c_no_paint", "c_wear_features", "arm_stem_od_c")
-test("T", "F2: C has its own checks (shaft side at z 300, 2300, 4300; chamfer; square section; door recess and plate; screws; top cap and stem entry; albedo (146, 143, 136) +-12; roughness 0.9 +-0.1; no paint; wear; the 48 stem)", all(n in chkd for n in need) and chkd["c_albedo"]["expected"] == [146, 143, 136] and chkd["c_albedo"]["tolerance"] == 12
-     and chkd["c_roughness"]["expected"] == 0.9 and chkd["c_roughness"]["tolerance"] == 0.1 and chkd["c_door_recess"]["tolerance"] == 5 and chkd["c_top_cap"]["tolerance"] == 5 and chkd["c_no_paint"]["expected"] is True)
+need = ("c_shaft_side_z300", "c_shaft_side_z2300", "c_shaft_side_z4300", "c_chamfer", "c_section_square_to_street", "c_door_recess", "c_door_plate", "c_door_screws", "c_arm_section", "c_mitre", "c_spigot", "c_albedo", "c_roughness", "c_no_paint", "c_wear_features")
+test("T", "F2: C has its own checks (shaft side at z 300, 2300, 4300; chamfer; square section; door recess and plate; screws; the arm\'s section, the mitre and the spigot (R1); albedo (146, 143, 136) +-12; roughness 0.9 +-0.1; no paint; wear)", all(n in chkd for n in need) and chkd["c_albedo"]["expected"] == [146, 143, 136] and chkd["c_albedo"]["tolerance"] == 12
+     and chkd["c_roughness"]["expected"] == 0.9 and chkd["c_roughness"]["tolerance"] == 0.1 and chkd["c_door_recess"]["tolerance"] == 5 and chkd["c_arm_section"]["tolerance"] == 5 and chkd["c_mitre"]["tolerance"] == 5 and chkd["c_spigot"]["tolerance"] == 3 and chkd["c_arm_section"]["expected"]["axis_z"] == 4930.8 and chkd["c_mitre"]["expected"]["top_face_z"] == 4985.8 and chkd["c_spigot"]["expected"]["exposed_y"] == [400, 430]
+     and chkd["arm_bend_turn"]["applies_to"] == "A" and chkd["arm_bend_radius"]["applies_to"] == "A" and chkd["arm_continuity"]["applies_to"] == "A" and "boss_clear_of_bowl" in chkd and "c_top_cap" not in chkd and "arm_stem_od_c" not in chkd and "c_stem_entry" not in chkd and "only the spigot is black" in chkd["c_no_paint"]["measure"])
 cw = {w["id"]: w for w in T["wear"]["features"]}
 test("T", "F2: wear for concrete: green algae to z 700 on -y; lime streaks from the top; rust bleed under the door plate's two screws; one chipped arris 60 x 25 x 8 at z 400 to 460 on +y on LC 2 only (replacing A's dent)", all(k in cw for k in ("algae", "lime_streaks", "rust_bleed", "chipped_arris"))
      and "-y face" in cw["algae"]["where"] and "z 700" in cw["algae"]["where"] and "from the top" in cw["lime_streaks"]["where"] and "two screws" in cw["rust_bleed"]["where"] and "60 long x 25 wide x 8 deep" in cw["chipped_arris"]["where"] and "z 400 to 460" in cw["chipped_arris"]["where"]
      and "LC 2 only" in cw["chipped_arris"]["where"] and [c["chipped_arris"] for c in T["placement"]["columns"]] == [False, True, False, False])
-# ---- F3: the reach 430 and the lantern 705 out ------------------------------------------------------------------------------------------------
-new_ok = (LAN["canopy"]["plan_half_width"] == [[y + 205, w] for y, w in OLD_CANOPY_PLAN] and LAN["canopy"]["top_z_along_y"] == [[y + 205, z] for y, z in OLD_CANOPY_TOP]
-          and LAN["bowl"]["base_plan_half_width"] == [[y + 205, w] for y, w in OLD_BOWL_BASE] and LAN["bowl"]["long_section_rear_curve_yz"] == [[y + 205, z] for y, z in OLD_BOWL_REAR]
-          and LAN["lamp"]["centre"] == [0, 705, 4872] and LAN["lamp"]["holder"]["y"] == [505, 550] and LAN["hinge"]["y"] == 467 and LAN["catches"]["y"] == 855)
-test("T", "F3: the reach to the spigot is 430 (Read: the research's 406 to 457) and every y station of the lantern (canopy, bowl, lamp, holder, hinge, catches) is the first try's plus 205: rear end 430, centre 705, front end 980", V("bracket_reach_to_spigot") == 430 and new_ok
-     and LAN["envelope"]["length_y"] == [430, 980] and LAN["envelope"]["centre"] == [0, 705, 4900] and G["bracket"]["arm_end"][0] == 430 and V("lantern_dy") == 205)
-test("T", "F3: the checks: lantern_centre [0, 705, 4900] +-12, arm_reaches_boss [430, 4930.8] +-12, light_position [0, 705, 4850], and the light block's position", chkd["lantern_centre"]["expected"] == [0, 705, 4900] and chkd["lantern_centre"]["tolerance"] == 12 and chkd["arm_reaches_boss"]["expected"] == [430, 4930.8]
-     and chkd["arm_reaches_boss"]["tolerance"] == 12 and chkd["light_position"]["expected"]["pos"] == [0, 705, 4850] and T["light"]["position_mm"] == [0, 705, 4850])
+# ---- F3: the reach 430 and the lantern 755 out ------------------------------------------------------------------------------------------------
+K = 13 / 11
+sc = lambda tbl: [[430 + (y + 205 - 430) * K, v] for y, v in tbl]  # noqa: E731
+same = lambda a, b: len(a) == len(b) and all(abs(p[0] - q[0]) < 0.06 and abs(p[1] - q[1]) < 0.06 for p, q in zip(a, b))  # noqa: E731
+new_ok = (same(LAN["canopy"]["plan_half_width"], sc(OLD_CANOPY_PLAN)) and same(LAN["canopy"]["top_z_along_y"], sc(OLD_CANOPY_TOP)) and same(LAN["bowl"]["base_plan_half_width"], sc(OLD_BOWL_BASE))
+          and LAN["lamp"]["centre"] == [0, 755, 4872] and LAN["lamp"]["holder"]["y"] == [555, 600] and LAN["hinge"]["y"] == 497 and abs(LAN["catches"]["y"] - 932.3) < 0.06)
+test("T", "F3 and point 1 of the second review: the reach to the spigot is 430 (Read: the research's 406 to 457) and every y station of the lantern (canopy, bowl base, catches) is the first try's plus 205 and then 430 + (y - 430) x 13/11: rear end 430, centre 755, front end 1080; the lamp and its arc tube keep their sizes (centre 755, holder y 555 to 600)",
+     V("bracket_reach_to_spigot") == 430 and new_ok and LAN["envelope"]["length_y"] == [430, 1080] and LAN["envelope"]["centre"] == [0, 755, 4900] and G["bracket"]["arm_end"][0] == 430 and V("lantern_dy") == 205 and abs(V("lantern_length_scale") - 13 / 11) < 1e-9 and V("lantern_length") == 650)
+test("T", "F3 and point 1: the checks: lantern_centre [0, 755, 4900] +-12, lantern_bounding_box y 650, arm_reaches_boss [430, 4930.8] +-12, light_position [0, 755, 4850], bowl_base length 473, lamp_in_bowl centre [0, 755, 4872], and the light block's position", chkd["lantern_centre"]["expected"] == [0, 755, 4900] and chkd["lantern_centre"]["tolerance"] == 12 and chkd["arm_reaches_boss"]["expected"] == [430, 4930.8]
+     and chkd["lantern_bounding_box"]["expected"]["y"] == 650 and chkd["bowl_base"]["expected"]["length"] == 473 and chkd["lamp_in_bowl"]["expected"]["centre"] == [0, 755, 4872] and chkd["lamp_arc_tube"]["expected"]["y"] == [605, 895]
+     and chkd["arm_reaches_boss"]["tolerance"] == 12 and chkd["light_position"]["expected"]["pos"] == [0, 755, 4850] and T["light"]["position_mm"] == [0, 755, 4850])
 kerb_face = 600 + 170
-test("T", "F3: placement: with the axis 770 behind the kerb face the lantern's centre stands 65 behind it and its front end 210 over the channel; the scene's outreach_m becomes 0.705 (handover); TARGET.md says so", kerb_face - 705 == 65 and 980 - kerb_face == 210 and "outreach_m 0.5 becomes 0.705" in T["handover"]["for_scene_file"] and "65 mm behind the kerb" in md and "210 mm over the channel" in md)
+test("T", "F3 and point 1: placement: with the axis 770 behind the kerb face the lantern's centre stands 15 behind it and its front end 310 over the channel; the scene's outreach_m becomes 0.755 (handover); TARGET.md says so", kerb_face - 755 == 15 and 1080 - kerb_face == 310 and "outreach_m 0.5 becomes 0.755" in T["handover"]["for_scene_file"] and "15 mm behind the kerb" in md and "310 mm over the channel" in md)
+# ---- the second review (11 October): narrow points 2 to 6 -----------------------------------------------------------------------------------
+bw = LAN["bowl"]
+rim_y = [p[0] for p in bw["long_section_rear_curve_yz"]]
+boss_end_y = LAN["boss"]["axis_from"][1] + LAN["boss"]["length"]
+test("T", "Second review point 2: the bowl's rear end stands clear of the boss: the rear curve starts at y 488 (the boss ends at y 485, 3 clear), the front curve is written out and the bowl's rim runs between y 488 and 1070.5; the hinge is at y 497; a flat soffit closes the canopy's underside from y 430 to 488; the check boss_clear_of_bowl exists",
+     bw["long_section_rear_curve_yz"] == [[488, 4925], [492, 4890], [500, 4850], [510, 4818], [518.6, 4800]] and bw["long_section_front_curve_yz"] == [[991.4, 4800], [1009.1, 4818], [1036.3, 4850], [1062.3, 4890], [1070.5, 4925]]
+     and min(rim_y) - boss_end_y >= 3 and "y 488 and 1070.5" in bw["rim_plan"] and "to y_front(z)" in bw["loft"] and "soffit" in LAN["canopy"]["underside"] and chkd["boss_clear_of_bowl"]["expected"] == {"at_least": 3})
+bowl_d = unary_union([p["geom"] for p in views["L_section_lantern_long_x0"]["polys"] if p["name"] == "bowl_shell"])
+boss_d = [p["geom"] for p in views["L_section_lantern_long_x0"]["polys"] if p["name"] == "boss"][0]
+test("T", "Second review point 2: drawn in the long section at x = 0, the bowl and the boss do not overlap and are at least 3 mm apart", bowl_d.distance(boss_d) >= 3.0 and not bowl_d.intersects(boss_d), bowl_d.distance(boss_d))
+test("T", "Second review point 3: boss_top_and_dome expects the dome over the boss's front end at 4967.4 (4967 in the words), and the dome there (linear between the stations) is 4967.4, the boss's top 4960.8 under it", abs(dome_at(485) - 4967.4) < 0.05 and chkd["boss_top_and_dome"]["expected"]["dome_over_front_end_z"] == 4967.4 and "the dome is 4967 there" in bs["note"] and dome_at(485) > bs["axis_from"][2] + bs["od"] / 2, dome_at(485))
+test("T", "Second review point 4: the summary line and section 10 say 'two of 1989 (GG1, GG2)' and give GG4's, GG3's and GG5's lantern words; no 'original 1960s lantern' and no 'mid-1960s to 1970s fitting'", "two of 1989 (GG1, GG2)" in T["summary_line"] and "looks to still retain its original low pressure sodium lamp" in T["summary_line"] and "three of 1989" not in T["summary_line"]
+     and "two photographs of 1989 (GG1, GG2)" in md and "original 1960s lantern" not in md and "mid-1960s to 1970s fitting" not in md)
+pw = {w["id"]: w for w in T["photographs_win"]}
+test("T", "Second review point 5: PW11 reads Orrell (1989) about 3 tube diameters and Appley Bridge (1989) about 2, for A only; the bend checks apply to A only", "Orrell (1989): about 3 tube diameters" in pw["PW11"]["photograph"] and "Appley Bridge (1989): about 2" in pw["PW11"]["photograph"] and "A only" in pw["PW11"]["what"] and "about 2 diameters" not in pw["PW11"]["photograph"].replace("about 2 to 3", ""))
+test("T", "Second review point 6: GG3's arm rise is worded 16 to 19 degrees in the picture (1485521's about 18), the true rake 0 to about 18, the level arm kept (rake 0 +-5) in PW8 and in TARGET.md", "16 to 19 degrees in the picture" in pw["PW8"]["photograph"] and "0 to about 18" in pw["PW8"]["photograph"] and "16 to 19 degrees in the picture" in md and "a level arm pointing partly toward the camera" not in md)
+test("T", "Second review R1: PW13 is in the list (the arm on a concrete column, chosen the mitred concrete arm, Photo) and names GG3, 1485521, 5418611, 7029133, 6558618 and 6538305", all(k in pw["PW13"]["photograph"] for k in ("GG3", "1485521", "5418611", "7029133", "6558618", "6538305")) and "mitred concrete arm" in pw["PW13"]["chose"] and pw["PW13"]["kind"] == "Photo")
 # ---- narrow points 1 to 9 ----------------------------------------------------------------------------------------------------------------------
 sk_ = G["socket"]
 test("T", "Point 1: the socket sleeve z 4370 to 4620, OD 64, top edge chamfered 3, a seam at its foot, two M8 set screws on -y at z 4580 and 4420; the check collar is {od 64, z [4370, 4620]} +-4", sk_["od"] == 64 and sk_["z"] == [4370, 4620] and sk_["top_chamfer"] == 3 and "seam" in sk_["foot_seam"]
@@ -624,20 +657,20 @@ test("T", "Point 2: the door's four corners and its joint groove's are rounded t
 tube = LAN["lamp"]["arc_tube"]
 tp = unary_union([p["geom"] for p in views["L_section_lantern_long_x0"]["polys"] if p["name"] == "arc_tube"])
 tplan = [p["geom"] for p in views["A_plan_lantern"]["polys"] if p["name"] == "arc_tube"][0]
-jacket_plan = box(-27, 550, 27, 860)
-test("T", "Point 3: the arc tube: two legs of 16 OD at x +-11 running y 555 to 845 (555 to 826 straight, then a half-torus of centreline radius 11 at the front), z 4872, wholly inside the 54 x 310 jacket; the jacket is 0.3 of the tube", tube["leg_od"] == 16 and tube["leg_x"] == [-11, 11] and tube["y"] == [555, 845]
-     and tube["bend_at_front"] is True and abs(tplan.bounds[1] - 555) < 0.5 and abs(tplan.bounds[3] - 845) < 1.0 and jacket_plan.buffer(0.01).contains(tplan) and abs(tp.bounds[0] - 555) < 0.5 and abs(tp.bounds[2] - 845) < 0.5
+jacket_plan = box(-27, 600, 27, 910)
+test("T", "Point 3: the arc tube: two legs of 16 OD at x +-11 running y 605 to 895 (605 to 876 straight, then a half-torus of centreline radius 11 at the front), z 4872, wholly inside the 54 x 310 jacket; the jacket is 0.3 of the tube", tube["leg_od"] == 16 and tube["leg_x"] == [-11, 11] and tube["y"] == [605, 895]
+     and tube["bend_at_front"] is True and abs(tplan.bounds[1] - 605) < 0.5 and abs(tplan.bounds[3] - 895) < 1.0 and jacket_plan.buffer(0.01).contains(tplan) and abs(tp.bounds[0] - 605) < 0.5 and abs(tp.bounds[2] - 895) < 0.5
      and chkd["lamp_arc_tube"]["expected"]["leg_od"] == 16 and T["materials"]["lamp_glass"]["relative_to_tube"] == 0.3, tplan.bounds)
 jac = 4550 / (math.pi * math.pi * 0.054 * 0.310)
-bowl_cd = 0.8 * 4550 / (math.pi * 0.21)
+bowl_cd = 0.8 * 4550 / (math.pi * 0.24)
 vsh = open(os.path.join(ROOT, "ue-probe", "Source", "LedgerProbe", "Private", "VignetteShot.cpp"), encoding="utf-8", errors="replace").read()
-test("T", "Point 4: emissive strength in units: the jacket about 27,500 cd/m2 (4,550 lm over its 0.0526 m2), the bowl about 5,500 (80 % of the flux through 0.21 m2, Lambertian); or the engine's kLampEmissiveUnitless = 1.0 rule, stated and found in VignetteShot.cpp", abs(jac - 27500) / 27500 < 0.01 and abs(bowl_cd - 5500) / 5500 < 0.01
-     and V("emissive_jacket_cd_m2") == 27500 and V("emissive_bowl_cd_m2") == 5500 and "kLampEmissiveUnitless" in LAN["lamp"]["emissive"]["or"] and "const float kLampEmissiveUnitless = 1.0f;" in vsh and chkd["glow_strength"]["expected"]["jacket_cd_m2"] == 27500
+test("T", "Point 4: emissive strength in units: the jacket about 27,500 cd/m2 (4,550 lm over its 0.0526 m2), the bowl about 4,800 (80 % of the flux through 0.24 m2, Lambertian; second review point 1); or the engine's kLampEmissiveUnitless = 1.0 rule, stated and found in VignetteShot.cpp", abs(jac - 27500) / 27500 < 0.01 and abs(bowl_cd - 4800) / 4800 < 0.01
+     and V("emissive_jacket_cd_m2") == 27500 and V("emissive_bowl_cd_m2") == 4800 and "kLampEmissiveUnitless" in LAN["lamp"]["emissive"]["or"] and "const float kLampEmissiveUnitless = 1.0f;" in vsh and chkd["glow_strength"]["expected"]["jacket_cd_m2"] == 27500
      and abs(math.pi * 0.054 * 0.310 - 0.0526) < 0.0002, (jac, bowl_cd))
 test("T", "Point 5: the jacket's colour is the one orange (255, 137, 0) at full strength, the yellow core left to the grade; the check glow_colour_lamp is (255, 137, 0) +-12; no (255, 176, 28) anywhere in target.json", V("glow_lamp_srgb") == [255, 137, 0] and chkd["glow_colour_lamp"]["expected"] == [255, 137, 0]
      and "255, 176, 28" not in json.dumps({k: v for k, v in T.items() if k not in ("self_check", "photographs_win", "could_not_settle", "decision_type")}) and "camera's clipping" in json.dumps(LAN["lamp"]["emissive"]))
-test("T", "Point 6: lantern_dome_height is 'the maximum over y, 63 +-6' and the geometry's maximum is 63 (at y 605); at the centre y 705 it is 61", "maximum over y" in chkd["lantern_dome_height"]["measure"] and chkd["lantern_dome_height"]["expected"] == 63 and chkd["lantern_dome_height"]["tolerance"] == 6 and dome_max == 63 and dome_c == 61
-     and max(LAN["canopy"]["top_z_along_y"], key=lambda p: p[1])[0] == 605)
+test("T", "Point 6: lantern_dome_height is 'the maximum over y, 63 +-6' and the geometry's maximum is 63 (at y 636.8); at the centre y 755 it is 61", "maximum over y" in chkd["lantern_dome_height"]["measure"] and chkd["lantern_dome_height"]["expected"] == 63 and chkd["lantern_dome_height"]["tolerance"] == 6 and dome_max == 63 and dome_c == 61
+     and max(LAN["canopy"]["top_z_along_y"], key=lambda p: p[1])[0] == 636.8)
 test("T", "Point 7: the cone's angle is 25 degrees off the vertical (atan(28 / 60) = 25.0): TARGET.md says 25 and not 24", abs(math.degrees(math.atan(28 / 60)) - 25.0) < 0.05 and "25 degrees off the vertical" in md and "24 degrees off the vertical" not in md)
 Wd = T["variants"]["W1"]
 wv = views["W1_side_elevation"]["polys"]
@@ -658,7 +691,7 @@ for t in TESTS:
     p[0] += 1 if t["ok"] else 0
 bad = [t for t in TESTS if not t["ok"]]
 n_ok = sum(1 for t in TESTS if t["ok"])
-names = {"A": "printed numbers", "B": "photographs", "C": "drawing", "D": "internal consistency", "E": "text, canon and previews", "T": "try 2 amendments"}
+names = {"A": "printed numbers", "B": "photographs", "C": "drawing", "D": "internal consistency", "E": "text, canon and previews", "T": "try 2 and second-review amendments"}
 result = f"SELF-CHECK {'PASS' if not bad else 'FAIL'}: {n_ok} of {len(TESTS)} tests pass (" + ", ".join(f"{k} {names[k]} {v[0]}/{v[1]}" for k, v in sorted(parts.items())) + ")"
 
 # ---- W: wrong copies must be refused (only in a normal run) ----------------------------------------------------------------------------------------
@@ -713,7 +746,7 @@ if not ARGS.no_write:
         t2["numbers"]["scene_column_x"]["value"] = [8.0, 28.0, 48.0]
 
     def m_light(t2):
-        t2["light"]["position_mm"] = [0, 705, 5100]
+        t2["light"]["position_mm"] = [0, 755, 5100]
 
     def m_steel_main(t2):
         t2["variants"]["C"]["build"] = False
@@ -744,12 +777,25 @@ if not ARGS.no_write:
     def m_corners(t2):
         t2["geometry"]["A"]["door"]["corner_radius"] = 0
 
+    def m_cbracket(t2):
+        gc = t2["geometry"]["C"]
+        gc["cap"] = {"od": 90, "height": 30, "z": [4620, 4650]}
+        gc["bracket"]["tube_od_stem"] = 48
+        gc["bracket"]["section"] = {"square": 48, "chamfer": 0}
+
+    def m_len550(t2):
+        t2["geometry"]["lantern"]["envelope"]["length_y"] = [430, 980]
+        t2["geometry"]["lantern"]["envelope"]["centre"] = [0, 705, 4900]
+
+    def m_boss_bowl(t2):
+        t2["geometry"]["lantern"]["bowl"]["long_section_rear_curve_yz"][0] = [438, 4925]
+
     for label, fn in (("sleeve 114 across instead of 124 (the scene's value)", m_sleeve), ("shaft not tapered (68 to the top)", m_taper), ("bracket raked 40 degrees into a level lantern (the first try)", m_rake),
                       ("lantern plan 20 % narrower", m_lantern), ("lamp above the bowl", m_lamp), ("glow colour the scene file's (255, 219, 0)", m_colour),
                       ("a maker's name on the plate", m_maker), ("arm ends 130 mm below the boss", m_axis), ("columns at x 8, 28, 48", m_places), ("point light above the lantern", m_light),
                       ("steel the main build, concrete the unbuilt variant (the first try)", m_steel_main), ("reach 225 to the lantern's rear (the stand-in's)", m_reach), ("lantern centre 500 out (the scene's guess)", m_centre),
                       ("concrete shaft 114 across at the top", m_cshaft), ("concrete door recess 250 tall", m_cdoor), ("socket 67 across (the first try's collar)", m_socket),
-                      ("jacket the yellow (255, 176, 28)", m_jacket), ("door corners square", m_corners)):
+                      ("jacket the yellow (255, 176, 28)", m_jacket), ("door corners square", m_corners), ("C with a 48 tube bracket on a cap (the first review's)", m_cbracket), ("lantern 550 long (try 2)", m_len550), ("bowl cutting through the boss (try 2)", m_boss_bowl)):
         mutate(label, fn)
     for wcase in wrong:
         TESTS.append({"part": "W", "name": f"wrong copy refused: {wcase['copy']}", "ok": wcase["refused"], "detail": ", ".join(wcase["by"])})
@@ -769,8 +815,8 @@ if not ARGS.quiet or bad:
         print("FAILED", t["part"], t["name"], "|", t["detail"])
 if not ARGS.no_write:
     T2 = json.load(open(TARGET_PATH))
-    T2["self_check"] = {"date": date.today().isoformat() if False else "2026-10-11", "us01_3d_fit": US01_FIT if "US01_FIT" in globals() else None, "result_line": result, "tests": len(TESTS), "passed": n_ok, "failed": [{"part": t["part"], "name": t["name"], "detail": t["detail"]} for t in bad],
+    T2["self_check"] = {"date": "2026-10-12", "us01_3d_fit": US01_FIT if "US01_FIT" in globals() else None, "result_line": result, "tests": len(TESTS), "passed": n_ok, "failed": [{"part": t["part"], "name": t["name"], "detail": t["detail"]} for t in bad],
                         "parts": {k: {"name": names[k], "passed": v[0], "of": v[1]} for k, v in sorted(parts.items())}, "wrong_copies_refused": wrong,
-                        "laid_on_photograph": LAID_SUMMARY if "LAID_SUMMARY" in globals() else None, "how": "python -I self_check.py (runs target_drawing in memory, re-measures the previews, regenerates the derived numbers, tries eighteen deliberately wrong copies of target.json)"}
+                        "laid_on_photograph": LAID_SUMMARY if "LAID_SUMMARY" in globals() else None, "how": "python -I self_check.py (runs target_drawing in memory, re-measures the previews, regenerates the derived numbers, tries twenty-one deliberately wrong copies of target.json)"}
     json.dump(T2, open(TARGET_PATH, "w"), indent=1)
 sys.exit(0 if not bad else 1)

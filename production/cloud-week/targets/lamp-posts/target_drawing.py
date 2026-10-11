@@ -86,8 +86,8 @@ def lantern_parts(T):
     side_top = [(y, interp(top, y)) for y in range(int(y0), int(y1) + 1, 5)]
     canopy_side = Polygon(side_top + [(y1, rim), (y0, rim)]).buffer(0)
     curve = [tuple(p) for p in bowl["long_section_rear_curve_yz"]]               # rim (rear) -> base
-    mirror = [(2 * yc - y, z) for y, z in reversed(curve)]                        # base -> rim (front): the mirror about the centre y
-    bowl_side = Polygon(curve + mirror).buffer(0)
+    front = [tuple(p) for p in bowl["long_section_front_curve_yz"]]               # base -> rim (front): written out since the second review (narrow point 2)
+    bowl_side = Polygon(curve + front).buffer(0)
     lamp_side = box(lamp["centre"][1] - lamp["length"] / 2, lamp["centre"][2] - lamp["od"] / 2, lamp["centre"][1] + lamp["length"] / 2, lamp["centre"][2] + lamp["od"] / 2)
     h = lamp["holder"]
     holder_side = box(h["y"][0], h["z"][0], h["y"][1], h["z"][1])
@@ -248,14 +248,25 @@ def build_views(T):
     C = T["geometry"]["C"]
     cs_ = C["shaft"]
     cb = C["bracket"]
-    cap = C["cap"]
+    sp = C["spigot"]
     cd = C["door"]
     foot, topw, ch = cs_["side_at_z0"], cs_["side_at_top"], cs_["chamfer"]
     zt = cs_["top_z"]
     hid = cs_["hidden_root"]
-    c_shaft_side = Polygon([(-foot / 2, -hid), (foot / 2, -hid), (foot / 2, 0), (topw / 2, zt), (-topw / 2, zt), (-foot / 2, 0)])
-    c_cap_side = box(-cap["od"] / 2, cap["z"][0], cap["od"] / 2, cap["z"][1])
-    c_stem_arm = tube_poly(cb["centreline_yz"], cb["tube_od_stem"])
+    spts = cs_["points_z_side_chamfer"]
+    c_shaft_side = Polygon([(s_ / 2, z_) for z_, s_, _ in spts] + [(-s_ / 2, z_) for z_, s_, _ in reversed(spts)])
+    # the concrete arm (second review, R1): 110 square, level at the axis, from the shaft's -y face to y 400, a sharp mitre (outer corner R20, inner fillet R10)
+    ax, half, aend, ach = cb["axis_z"], cb["section"]["square"] / 2.0, cb["arm_end_y"], 5.0
+    ytop, ybot = -c_side(T, ax + half) / 2.0, c_side(T, ax - half) / 2.0
+    r_out, r_in = cb["mitre"]["outer_corner_radius"], cb["mitre"]["inner_fillet_radius"]
+    arm_side = Polygon([(-40.0, ax - half), (aend - ach, ax - half), (aend, ax - half + ach), (aend, ax + half - ach), (aend - ach, ax + half), (-40.0, ax + half)])
+    outer_cut = box(ytop, ax + half - r_out, ytop + r_out, ax + half).difference(Point(ytop + r_out, ax + half - r_out).buffer(r_out, resolution=24))
+    inner_fill = box(ybot, ax - half - r_in, ybot + r_in, ax - half).difference(Point(ybot + r_in, ax - half - r_in).buffer(r_in, resolution=24))
+    c_shaft_arm = unary_union([c_shaft_side, arm_side, inner_fill]).difference(outer_cut)
+    spigot_side = box(sp["y"][0], ax - sp["od"] / 2.0, sp["y"][1], ax + sp["od"] / 2.0)
+    arm_end_on = chamfered_square(2 * half, cb["section"]["chamfer"])
+    arm_end_on = Polygon([(x, z + ax) for x, z in arm_end_on.exterior.coords])
+    spigot_end_on = Point(0, ax).buffer(sp["od"] / 2.0, resolution=32)
     zr0, zr1 = cd["recess"]["z"]
     p0, p1 = cd["plate"]["z"]
     pr = cd["plate"]["proud"]
@@ -263,15 +274,14 @@ def build_views(T):
     npl = C["number_plate"]
     npz0, npz1 = npl["z_centre"] - npl["size"][1] / 2, npl["z_centre"] + npl["size"][1] / 2
     num_edge = Polygon([(c_side(T, npz0) / 2, npz0), (c_side(T, npz0) / 2 + npl["proud"], npz0), (c_side(T, npz1) / 2 + npl["proud"], npz1), (c_side(T, npz1) / 2, npz1)])
-    V["C_side_elevation"] = {"u": "y (toward the carriageway)", "v": "z", "polys": [P("concrete_shaft", "concrete", c_shaft_side), P("cast_cap", "paint", c_cap_side), P("bracket_stem_arm_od48", "steel", c_stem_arm),
+    V["C_side_elevation"] = {"u": "y (toward the carriageway)", "v": "z", "polys": [P("concrete_shaft_and_arm", "concrete", c_shaft_arm), P("steel_spigot_od42", "paint", spigot_side),
                                                                                     P("boss", "canopy", lp["boss_side"]), P("canopy", "canopy", lp["canopy_side"]), P("bowl", "bowl", lp["bowl_side"]), P("lamp", "lamp", lp["lamp_side"]),
                                                                                     P("door_plate_edge_on", "detail", plate_edge), P("number_plate_edge_on", "plate", num_edge)]}
     # front (the +y face seen from the carriageway)
-    c_front_shaft = Polygon([(-foot / 2, -hid), (foot / 2, -hid), (foot / 2, 0), (topw / 2, zt), (-topw / 2, zt), (-foot / 2, 0)])
-    chamfer_lines = [P("arris_chamfer_line_left", "groove", Polygon([(-foot / 2 + ch - 1, 0), (-foot / 2 + ch + 1, 0), (-topw / 2 + ch + 1, zt), (-topw / 2 + ch - 1, zt)])),
-                     P("arris_chamfer_line_right", "groove", Polygon([(foot / 2 - ch - 1, 0), (foot / 2 - ch + 1, 0), (topw / 2 - ch + 1, zt), (topw / 2 - ch - 1, zt)]))]
-    c_arm_top = cb["arm_end"][1] + cb["tube_od_stem"] / 2
-    c_front_common = [P("concrete_shaft", "concrete", c_front_shaft), P("cast_cap", "paint", c_cap_side), P("stem_and_arm_end_on", "steel", box(-cb["tube_od_stem"] / 2, cb["stem_from_z"], cb["tube_od_stem"] / 2, c_arm_top)),
+    c_front_shaft = c_shaft_side
+    chamfer_lines = [P("arris_chamfer_line_left", "groove", Polygon([(-foot / 2 + ch - 1, 0), (-foot / 2 + ch + 1, 0)] + [(-s_ / 2 + ch + 1, z_) for z_, s_, _ in spts[1:]] + [(-s_ / 2 + ch - 1, z_) for z_, s_, _ in reversed(spts[1:])])),
+                     P("arris_chamfer_line_right", "groove", Polygon([(foot / 2 - ch - 1, 0), (foot / 2 - ch + 1, 0)] + [(s_ / 2 - ch + 1, z_) for z_, s_, _ in spts[1:]] + [(s_ / 2 - ch - 1, z_) for z_, s_, _ in reversed(spts[1:])]))]
+    c_front_common = [P("concrete_shaft", "concrete", c_front_shaft), P("concrete_arm_end_on", "concrete", arm_end_on), P("steel_spigot_end_on", "paint", spigot_end_on),
                       P("canopy", "canopy", can_front), P("bowl", "bowl", bowl_front)]
     V["C_front_elevation_carriageway_side"] = {"u": "x", "v": "z", "polys": c_front_common + chamfer_lines + [P("number_plate", "plate", box(-npl["size"][0] / 2, npz0, npl["size"][0] / 2, npz1))]}
     # back (the -y face: the recess, the plate and its two screws)
@@ -290,13 +300,14 @@ def build_views(T):
     V["C_plan_z2160_number_plate"] = {"u": "x", "v": "y", "polys": [P("concrete_section_chamfered", "concrete", chamfered_square(s2160, ch)),
                                                                    P("number_plate_on_plus_y", "plate", box(-npl["size"][0] / 2, s2160 / 2, npl["size"][0] / 2, s2160 / 2 + npl["proud"]))]}
     top_sq = chamfered_square(topw, ch)
-    V["C_plan_z4620_top_cap_and_stem"] = {"u": "x", "v": "y", "polys": [P("concrete_top_section", "concrete", top_sq), P("top_face_chamfer_inner_edge", "groove", top_sq.difference(top_sq.buffer(-cs_["top_face_chamfer_mm"], join_style=2))),
-                                                                       P("cast_cap", "paint", Point(0, 0).buffer(cap["od"] / 2.0, resolution=48)), P("stem_od48", "steel", Point(0, 0).buffer(cb["tube_od_stem"] / 2.0, resolution=32))]}
-    c_arm_plan = LineString([(0, 0), (0, cb["arm_end"][0])]).buffer(cb["tube_od_stem"] / 2.0, cap_style=2)
-    V["C_plan_lantern"] = {"u": "x", "v": "y", "polys": lantern_plan_polys + [P("arm_and_stem_in_plan", "steel", c_arm_plan), P("concrete_top_and_cap", "concrete", top_sq), P("cast_cap", "paint", Point(0, 0).buffer(cap["od"] / 2.0, resolution=48))]}
+    arm_plan_poly = box(-half, ytop, half, aend)
+    spigot_plan = box(-sp["od"] / 2.0, sp["y"][0], sp["od"] / 2.0, sp["y"][1])
+    V["C_plan_z4985_arm_and_top"] = {"u": "x", "v": "y", "polys": [P("concrete_top_section", "concrete", top_sq), P("concrete_arm_in_plan", "concrete", arm_plan_poly), P("top_face_chamfer_inner_edge", "groove", top_sq.difference(top_sq.buffer(-cs_["top_face_chamfer_mm"], join_style=2))),
+                                                                  P("steel_spigot_in_plan", "paint", spigot_plan)]}
+    V["C_plan_lantern"] = {"u": "x", "v": "y", "polys": lantern_plan_polys + [P("concrete_top_and_arm", "concrete", unary_union([top_sq, arm_plan_poly])), P("steel_spigot_in_plan", "paint", spigot_plan)]}
     V["C_section_shaft_half_profile"] = {"u": "half side (x)", "v": "z", "polys": [P("concrete_half_outline", "concrete", Polygon([(0, -hid), (foot / 2, -hid), (foot / 2, 0), (topw / 2, zt), (0, zt)]))]}
-    V["C_section_bracket_detail"] = {"u": "y", "v": "z", "polys": [P("concrete_shaft_top", "concrete", c_shaft_side.intersection(box(-100, 4300, 100, zt))), P("cast_cap", "paint", c_cap_side),
-                                                                    P("stem_bend_arm", "steel", c_stem_arm), P("boss", "canopy", lp["boss_side"]), P("canopy", "canopy", lp["canopy_side"].intersection(box(400, 4900, 640, 5010)))]}
+    V["C_section_bracket_detail"] = {"u": "y", "v": "z", "polys": [P("concrete_shaft_top_and_arm", "concrete", c_shaft_arm.intersection(box(-100, 4300, aend + 5, zt + 5))), P("steel_spigot_od42", "paint", spigot_side),
+                                                                    P("boss", "canopy", lp["boss_side"]), P("canopy", "canopy", lp["canopy_side"].intersection(box(400, 4900, 640, 5010)))]}
 
     # ---- P: post-top ----------------------------------------------------------------------------------------------------------------
     Pv = T["variants"]["P"]
