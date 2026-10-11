@@ -131,19 +131,30 @@ Not changed, as the street review left it to Jafar: the cornice's height (150 ag
 1. The review's cove between the waist and the upper roll is written as a cubic from the waist (vertical tangent) to the roll's foot (200, 360); its control points are mine (`departures.py`, `side_silhouette`). The lower roll leaves the foot at z 20.3 and stops at 30 degrees, then a cubic reaches the waist at 140.
 2. The foot (130) is 2 mm shallower than the board's bed mould (132) over the lowest 20 mm: noted in CON-09, as the review gave the foot 130.
 3. The leaf stands out of the roll up to 13 mm at the head, so the whole piece is 293 deep against the body's 290 (CON-01b: at most 296).
-4. `shopfront_ritas.glb` is 1,165,440 bytes (27,898 triangles): over the push guard's 1 MB, so it is not in git; `build_shopfront.py` (about 3 minutes) rebuilds it exactly. Every part file is under 1 MB and is in git (console 315 KB at 8,592 triangles, the leaf about 5,600 of them).
+4. `shopfront_ritas.glb` is 1,417,844 bytes (34,780 triangles): over the push guard's 1 MB, so it is not in git; `build_shopfront.py` (about 3 minutes) rebuilds it exactly. Every part file is under 1 MB and is in git (console 449 KB at 12,120 triangles, the leaf about 9,000 of them).
 
 ## Files and numbers (try 2)
 
 | model | triangles | bytes |
 |---|---|---|
 | pilaster | 1,762 | 87,784 |
-| console | 8,592 | 315,304 |
+| console | 12,120 | 448,824 |
 | fascia_board | 148 | 9,816 |
-| cornice | 1,278 | 69,872 |
+| cornice | 1,104 | 55,868 |
 | sill | 116 | 7,736 |
 | stallriser | 2,620 | 86,768 |
 | window_frame | 3,028 | 203,904 |
-| shopfront_ritas (assembly, out of git) | 27,898 | 1,165,440 |
+| shopfront_ritas (assembly, out of git) | 34,780 | 1,417,844 |
 
 Check: `checks/check_v2.json`, 171 of 171 required rows pass (try 1: 162 of 162), the amended rows named D1 to D6 in their ids; three extra rows (the drawing's plain rectangles for the base ogee and the cornice) still do not match, as in try 1.
+
+## After the second close review (REVIEW-v2-close.md, FAIL on one fault; fixes applied, not re-reviewed)
+
+The second fresh review of the close view found everything but the leaf right and failed the piece on the leaf's carving: sampled on a 5 mm grid, its 3 mm veins came out as sawteeth, and a hard cut in the tip term left cliffs up to 6 mm high (slivers at the tips, a spur on the roll's outline). Two tries are spent; as with the targets (Jafar's ruling of 9 October), the review's exact fix is applied, the check re-run, and the piece marked done as "fixes applied, not re-reviewed":
+
+1. **The leaf is a constrained Delaunay triangulation** (`mathutils.geometry.delaunay_2d_cdt`) of the outline, each vein's centre line and its two edges at 1.5 either side, and the rib's two edges, all points 1.5 mm apart, with interior points on a 4 mm grid kept 2 mm clear of those lines. The vein is a V groove 2 deep at its line and 0 at 1.6 each side. The tip term now ends smoothly (`* max(0, 1 - d_out / 6)`).
+2. **Narrow point 1:** the open slot behind each cornice break's returns (about 80 long, 10 to 65 wide, 97 deep, not visible from the street) is filled: one box per break (u 138 to 222 and 5779 to 5862, d 145 to 216, z 3400 to 3550) unioned into the cornice.
+3. **Narrow point 2:** the foot is 134 deep (D1), so the board's bed mould (132) no longer stands proud of it; CON-09 now reads 134.
+4. Narrow point 3 (the lower side spiral half behind the board) is left, as the review says: it reads as a scroll housed against the board.
+
+Check after the fixes: 171 of 171 (`checks/check_v2.json`). The leaf's smoothness is judged only by eye (the renders `shopfront-*-v3-2026-10-11.jpg`); no automatic row measures it.

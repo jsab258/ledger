@@ -138,7 +138,7 @@
     "iou": 0.9962,
     "mean_mm": 0.16,
     "p95_mm": 0.25,
-    "max_mm": 0.35
+    "max_mm": 0.71
    },
    "expected": {
     "iou": 0.97,
@@ -291,7 +291,7 @@
     "iou": 0.998,
     "mean_mm": 0.14,
     "p95_mm": 0.25,
-    "max_mm": 0.25
+    "max_mm": 0.5
    },
    "expected": {
     "iou": 0.97,
@@ -304,7 +304,7 @@
   {
    "id": "COR-06 return left: Hausdorff to return_left_uz (section at d 0.5)",
    "ok": true,
-   "measured": 0.5,
+   "measured": 0.501,
    "expected": "<= 1.5",
    "note": "",
    "extra": false
@@ -312,7 +312,7 @@
   {
    "id": "COR-06 return right: Hausdorff to return_right_uz (section at d 0.5)",
    "ok": true,
-   "measured": 0.5,
+   "measured": 0.501,
    "expected": "<= 1.5",
    "note": "",
    "extra": false
@@ -406,10 +406,10 @@
    "id": "B:front: console leaves (the target's outline with try 2's head carried 50 over the upper roll, D3)",
    "ok": true,
    "measured": {
-    "iou": 0.9812,
-    "mean_mm": 0.64,
-    "p95_mm": 1.41,
-    "max_mm": 2.0
+    "iou": 0.9839,
+    "mean_mm": 0.55,
+    "p95_mm": 1.0,
+    "max_mm": 1.41
    },
    "expected": {
     "iou": 0.97,
@@ -835,7 +835,7 @@
     0.0,
     0.0
    ],
-   "note": "foot 240 x 130",
+   "note": "foot 240 x 134",
    "extra": false
   },
   {
@@ -868,8 +868,8 @@
    "id": "CON-06b the rib stands out of the leaf at every height sampled (centre line higher than the highest point beside it)",
    "ok": true,
    "measured": [
-    12.6,
-    8.4,
+    14.9,
+    10.1,
     12
    ],
    "expected": "rib > dome",
@@ -881,7 +881,7 @@
    "ok": true,
    "measured": [
     280.0,
-    164.966,
+    164.97,
     140.0,
     170.0,
     211.911
@@ -930,9 +930,9 @@
    "id": "CON-07 lower volute (D1): eye (d, z) and outer radius",
    "ok": true,
    "measured": [
-    124.706,
-    60.166,
-    40.278
+    124.723,
+    60.157,
+    40.261
    ],
    "expected": [
     125.0,
@@ -993,11 +993,11 @@
    "extra": false
   },
   {
-   "id": "CON-09 (D1) over the lowest 25 mm the foot's front is 130 (the review's foot depth): 2 inside the board's bed mould (132), noted",
+   "id": "CON-09 (D1) over the lowest 25 mm the foot's front is 134 (REVIEW-v2-close point 2): 2 in front of the board's bed mould (132)",
    "ok": true,
-   "measured": 130.0,
-   "expected": ">= 130.0",
-   "note": "least front 130.000",
+   "measured": 134.0,
+   "expected": ">= 134.0",
+   "note": "least front 134.000",
    "extra": false
   },
   {
@@ -1110,7 +1110,7 @@
   {
    "id": "COR-04 profile: two-way Hausdorff",
    "ok": true,
-   "measured": 0.218,
+   "measured": 0.377,
    "expected": "<= 1.5",
    "note": "",
    "extra": false
@@ -1137,7 +1137,7 @@
    "id": "COR-06 plan: the mitre meets the wall at u 269 (left) and the nose at u 54 (area of the return, 23112.5 mm2)",
    "ok": true,
    "measured": [
-    250.567
+    250.204
    ],
    "expected": [
     0.0
@@ -1628,9 +1628,9 @@
   {
    "id": "E:console size under 1 MB",
    "ok": true,
-   "measured": 315304,
+   "measured": 448824,
    "expected": "< 1000000",
-   "note": "8592 triangles",
+   "note": "12120 triangles",
    "extra": false
   },
   {
@@ -1682,7 +1682,7 @@
   {
    "id": "E:console normals written, every vertex",
    "ok": true,
-   "measured": 8241,
+   "measured": 11752,
    "expected": "= positions",
    "note": "",
    "extra": true
@@ -1752,9 +1752,9 @@
   {
    "id": "E:cornice size under 1 MB",
    "ok": true,
-   "measured": 69872,
+   "measured": 55868,
    "expected": "< 1000000",
-   "note": "1278 triangles",
+   "note": "1104 triangles",
    "extra": false
   },
   {
@@ -1806,7 +1806,7 @@
   {
    "id": "E:cornice normals written, every vertex",
    "ok": true,
-   "measured": 1905,
+   "measured": 1500,
    "expected": "= positions",
    "note": "",
    "extra": true
@@ -2001,9 +2001,9 @@
   {
    "id": "E:shopfront_ritas size under 1 MB (the assembly over it stays out of git: BUILD-BRIEF; build_shopfront.py rebuilds it exactly)",
    "ok": true,
-   "measured": 1165440,
+   "measured": 1417844,
    "expected": "< 1000000",
-   "note": "27898 triangles; try 2's carved leaves and breaks put the assembly over the push guard: each PART is under 1 MB and in git",
+   "note": "34780 triangles; try 2's carved leaves and breaks put the assembly over the push guard: each PART is under 1 MB and in git",
    "extra": false
   },
   {
@@ -2073,7 +2073,7 @@
   {
    "id": "E:shopfront_ritas normals written, every vertex",
    "ok": true,
-   "measured": 30344,
+   "measured": 36939,
    "expected": "= positions",
    "note": "",
    "extra": true
@@ -2213,8 +2213,8 @@
    ]
   },
   "console": {
-   "bytes": 315304,
-   "triangles": 8592,
+   "bytes": 448824,
+   "triangles": 12120,
    "materials": [
     "paint_oxblood"
    ]
@@ -2227,8 +2227,8 @@
    ]
   },
   "cornice": {
-   "bytes": 69872,
-   "triangles": 1278,
+   "bytes": 55868,
+   "triangles": 1104,
    "materials": [
     "paint_oxblood"
    ]
@@ -2256,8 +2256,8 @@
    ]
   },
   "shopfront_ritas": {
-   "bytes": 1165440,
-   "triangles": 27898,
+   "bytes": 1417844,
+   "triangles": 34780,
    "materials": [
     "glass",
     "paint_oxblood",

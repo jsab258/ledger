@@ -19,7 +19,7 @@ import math
 # ---- D1: the side profile, (d, z local from the console's foot at z 2850), front edge from the foot up
 LOWER = {"eye": (125.0, 60.0), "r": 40.0}            # the lower volute: eye d 125, z 60, front 165
 UPPER = {"eye": (200.0, 440.0), "r": 80.0}           # the upper volute: eye d 200, z 440, front 280, top z 520
-FOOT_D, WAIST = 130.0, (140.0, 170.0)
+FOOT_D, WAIST = 134.0, (140.0, 170.0)
 CAP_D, CAP_Z = 290.0, (520.0, 550.0)
 
 
@@ -84,7 +84,7 @@ TOP_BARS = [390.9, 745.8, 1497.6, 1852.5, 2604.2, 2959.1]        # 28 wide, two 
 TOP_MULLION_BARS = [1121.7, 2228.3]                              # 70 wide: the mullions carried up
 
 DEPARTURES = [
-    "D1 console side profile: cap block 290 deep, upper roll r 80 (front 280 at z 440, top z 520), lower roll r 40 (front 165), foot 130 deep, waist 140 at z 170 (REVIEW-v1-close fault 1; target: 205 deep, rolls r 45 and 26, foot 172)",
+    "D1 console side profile: cap block 290 deep, upper roll r 80 (front 280 at z 440, top z 520), lower roll r 40 (front 165), foot 134 deep (REVIEW-v1 gave 130; REVIEW-v2-close narrow point 2 sets 134 so that the board's bed mould, 132, does not stand proud of it), waist 140 at z 170 (REVIEW-v1-close fault 1; target: 205 deep, rolls r 45 and 26, foot 172)",
     "D2 console sides: raised spiral fillets 10 wide standing 6 proud (upper 1.5 turns r 62 to 17, lower 1 turn r 24 to 11) and eye bosses 30 and 20 across standing 8 proud, not 5 x 4 grooves (fault 1; target: grooves)",
     "D3 acanthus leaf: raised rib 8 wide 4 proud the full length, chevron veins 3 wide 2 deep from each notch up and inward to the rib, each lobe domed 12 with its tip turned 6 forward, the head carried 50 over the upper roll to z 471 (fault 2; the target says only 'grooves between lobes')",
     "D4 cornice: broken forward 85 (nose d 300) over each console, u 54 to 305 and 5695 to 5946, with mitred returns back to the main nose d 215 (fault 1; target: one straight run)",

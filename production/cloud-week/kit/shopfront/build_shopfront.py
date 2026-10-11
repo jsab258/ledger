@@ -516,46 +516,108 @@ class Builder:
                 (notches if cr > 0 else tips).append((float(b[0]), float(b[1])))
         tang = math.tan(math.radians(L["vein_angle_deg"]))
         veins = [LineString([(wn - 1.0, zn), (L["rib_w"] / 2.0, zn + (wn - L["rib_w"] / 2.0) * tang)]) for wn, zn in notches]
-        zs = list(np.arange(zlo, zhi, 5.0)) + [p[1] for p in right] + [zhi]
-        zs = uniq_sorted(zs, 0.6)
-        nc = 25
-        S = np.linspace(-1.0, 1.0, nc)
         D, R, rp, rw = L["dome_mm"], L["dome_radius"], L["rib_proud"], L["rib_w"] / 2.0
         base = 3.0
 
-        def height(u, z, w):
+        def height(u, z):
             u = abs(u)
-            if u >= w - 1e-6:
-                return 0.0
             P = Point(u, z)
             d_out = P.distance(rl)
             d_vein = min(v.distance(P) for v in veins) if veins else 1e9
             e = min(d_out, d_vein)
-            h = base * min(1.0, d_out / 3.0) + (D - base) * (1.0 - (1.0 - min(1.0, e / R)) ** 2) * min(1.0, d_out / 3.0)
-            h -= L["vein_depth"] * min(1.0, max(0.0, (2.2 - d_vein) / 1.0))
-            h = max(h, 1.0 if d_out > 3.0 else 0.0)
+            edge = min(1.0, d_out / 3.0)
+            h = (base + (D - base) * (1.0 - (1.0 - min(1.0, e / R)) ** 2)) * edge
+            h -= L["vein_depth"] * min(1.0, max(0.0, (1.6 - d_vein) / 0.6))        # a V groove 2 deep at its line, 0 at 1.6 each side
+            if d_out > 3.0:
+                h = max(h, 0.8)
             if u < rw:
                 h += rp * (1.0 - (u / rw) ** 2) * min(1.0, max(0.0, (zhi - 12.0 - z) / 20.0))
             for tu, tz in tips:
-                h += L["tip_forward"] * math.exp(-((u - tu) ** 2 + (z - tz) ** 2) / 81.0) * min(1.0, d_out / 0.1 + 0.0) * (1.0 if d_out < 6.0 else 0.0)
+                h += L["tip_forward"] * math.exp(-((u - tu) ** 2 + (z - tz) ** 2) / 81.0) * max(0.0, 1.0 - d_out / 6.0)
             return h
 
+        # the plan of the leaf: a constrained Delaunay triangulation (the review's fix) so that every vein is one straight groove with
+        # no steps: the outline, each vein's centre line and its two edges at 1.5 either side, and the rib's two edges, all points 1.5 apart,
+        # with interior points on a 4 mm grid kept 2 mm clear of those lines
+        from mathutils.geometry import delaunay_2d_cdt
+        from mathutils import Vector
+
+        def dens(pts, closed=False, step=1.5):
+            out = []
+            n_ = len(pts) if closed else len(pts) - 1
+            for i in range(n_):
+                a_, b_ = np.array(pts[i], float), np.array(pts[(i + 1) % len(pts)], float)
+                k = max(1, int(math.ceil(np.linalg.norm(b_ - a_) / step)))
+                out += [tuple(a_ + (b_ - a_) * j / k) for j in range(k)]
+            if not closed:
+                out.append(tuple(pts[-1]))
+            return out
+        ring0 = [tuple(p) for p in right] + [(-p[0], p[1]) for p in right[-2::-1]]          # the outline, round from the foot (0, 150) up the right and down the left
+        ring0 = ring0[:-1] if abs(ring0[-1][0]) < 1e-9 and abs(ring0[-1][1] - ring0[0][1]) < 1e-9 else ring0
+        ring = dens(ring0, closed=True)
+        lines = []
+        clip = sbox(rw, -1e9, 1e9, 1e9)
+        for v in veins:
+            c0 = np.array(v.coords[0]); c1 = np.array(v.coords[1])
+            tdir = (c1 - c0) / np.linalg.norm(c1 - c0)
+            nrm = np.array([-tdir[1], tdir[0]])
+            for off in (0.0, 1.5, -1.5):
+                seg = LineString([tuple(c0 + nrm * off), tuple(c1 + nrm * off)]).intersection(clip)
+                if seg.is_empty or seg.geom_type != "LineString":
+                    continue
+                pts_ = dens(list(seg.coords))
+                lines.append(pts_)
+                lines.append([(-q[0], q[1]) for q in pts_])
+        for sgn in (1.0, -1.0):                                       # the rib's edges, full length to 12 below the head
+            lines.append(dens([(sgn * rw, zlo + 14.0), (sgn * rw, zhi - 12.0)]))
+        vidx = {}
+        vecs, edges = [], []
+
+        def vid(q):
+            k_ = (round(q[0], 3), round(q[1], 3))
+            if k_ not in vidx:
+                vidx[k_] = len(vecs)
+                vecs.append(Vector((q[0], q[1])))
+            return vidx[k_]
+        ring_ids = [vid(q) for q in ring]
+        for i in range(len(ring_ids)):
+            edges.append((ring_ids[i], ring_ids[(i + 1) % len(ring_ids)]))
+        line_geoms = []
+        for pts_ in lines:
+            ids = [vid(q) for q in pts_]
+            edges += [(ids[i], ids[i + 1]) for i in range(len(ids) - 1) if ids[i] != ids[i + 1]]
+            line_geoms.append(LineString(pts_))
+        keep_clear = unary_union(line_geoms)
+        inside = Polygon(ring).buffer(-2.0)
+        for uu in np.arange(-60.0, 60.1, 4.0):
+            for zz in np.arange(zlo, zhi + 0.1, 4.0):
+                pt = Point(uu, zz)
+                if inside.contains(pt) and keep_clear.distance(pt) > 2.0:
+                    vid((float(uu), float(zz)))
+        vo, eo, fo, _a, _b, _c = delaunay_2d_cdt([tuple(v) for v in vecs], edges, [list(ring_ids)], 1, 1e-4)
+        P2 = np.array([(v[0], v[1]) for v in vo])
         V = []
-        for z in zs:
-            w = max(hwz(z), 0.4)
-            for s in S:
-                u = w * s
-                h = height(u, z, w)
-                V.append((uc + u, -(F_of_z(z) + h - 0.3), z0 + z))
-        nr = len(zs)
-        idx = lambda r, c: r * nc + c
+        for u, z in P2:
+            V.append((uc + u, -(F_of_z(z) + height(u, z) - 0.3), z0 + z))
         F = []
-        for r in range(nr - 1):
-            for c in range(nc - 1):
-                F.append((idx(r, c), idx(r, c + 1), idx(r + 1, c + 1), idx(r + 1, c)))
+        for f in fo:
+            for i in range(1, len(f) - 1):
+                tri = (f[0], f[i], f[i + 1])
+                a_, b_, c_ = P2[tri[0]], P2[tri[1]], P2[tri[2]]
+                if (b_[0] - a_[0]) * (c_[1] - a_[1]) - (b_[1] - a_[1]) * (c_[0] - a_[0]) < 0:      # front-facing: counter-clockwise in (u, z)
+                    tri = tri[::-1]
+                F.append(tri)
+        he = {}
+        for tri in F:
+            for i in range(3):
+                he[(tri[i], tri[(i + 1) % 3])] = 1
+        nxt = {a_: b_ for (a_, b_) in he if (b_, a_) not in he}      # the boundary, as the triangulation left it (it may have split the outline's edges)
+        start = next(iter(nxt))
+        loop = [start]
+        while nxt[loop[-1]] != start:
+            loop.append(nxt[loop[-1]])
         # the back: the edge loop dropped to a flat plane d 120 inside the body (the body's front is never nearer than 140), closed by a
-        # constrained triangulation of the loop; the wall between the loop and its drop is hidden inside the console
-        loop = [idx(r, 0) for r in range(nr)] + [idx(nr - 1, c) for c in range(1, nc)] + [idx(r, nc - 1) for r in range(nr - 2, -1, -1)] + [idx(0, c) for c in range(nc - 2, 0, -1)]
+        # triangulation of the loop; the wall between the loop and its drop is hidden inside the console
         base_i = len(V)
         for i in loop:
             V.append((V[i][0], -120.0, V[i][2]))
@@ -576,8 +638,6 @@ class Builder:
         for tri in shapely.constrained_delaunay_triangles(poly).geoms:
             ids = [key[(round(x, 3), round(y, 3))] for x, y in list(tri.exterior.coords)[:3]]
             A_, B_, C_ = (np.array(V[i]) for i in ids)
-            if np.cross(B_ - A_, C_ - A_)[1] > 0:        # the back faces the wall: its normal points toward +y... fixed below by sign
-                pass
             nrm = np.cross(B_ - A_, C_ - A_)
             F.append(tuple(ids) if nrm[1] > 0 else tuple(ids[::-1]))
         V, F = merge_doubles(V, F, 1e-3)
@@ -630,6 +690,9 @@ class Builder:
                 if vol < 0:
                     F = [tuple(f[::-1]) for f in F]
                 bool_op(main_ob, V, F, "UNION")                  # one solid: no coplanar overlaps where the breaks meet the run
+            for (ua, ub) in ((138.0, 222.0), (5779.0, 5862.0)):   # REVIEW-v2-close narrow point 1: the pocket behind each break's returns, filled
+                Vb, Fb = box(ua, ub, 145.0, 216.0, z0, z0 + 150.0)
+                bool_op(main_ob, Vb, Fb, "UNION")
         return self
 
     # ---------------------------------------------------------- sill

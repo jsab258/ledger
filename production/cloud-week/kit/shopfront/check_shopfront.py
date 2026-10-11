@@ -466,7 +466,7 @@ def check_C(T, parts, asm, rep, ov):
     fm = np.array([f(z) for z in zz]).min()
     rep.at_least("CON-09 (D1) the front is at least 140 at every z from 25 up (the board's mould 132 and face 120 stand behind it)", fm, 140.0, "least front %.3f" % fm)
     fz = np.array([f(z) for z in np.arange(0.25, 25.0, 0.5)]).min()
-    rep.at_least("CON-09 (D1) over the lowest 25 mm the foot's front is 130 (the review's foot depth): 2 inside the board's bed mould (132), noted", fz, 130.0, "least front %.3f" % fz)
+    rep.at_least("CON-09 (D1) over the lowest 25 mm the foot's front is 134 (REVIEW-v2-close point 2): 2 in front of the board's bed mould (132)", fz, 134.0, "least front %.3f" % fz)
     # ---- FAS
     lo, hi = bbox_mm(fas, "fas_")
     g = section_poly(fas, ("fas_board",), 0, 3000.0, (1, 2))
