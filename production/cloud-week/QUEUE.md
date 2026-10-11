@@ -55,6 +55,10 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 - 5.1 open. production/cloud-week/HANDOVER.md for the builder: each piece, its target and check, and how to bring it into the game.
 
+## 6. Added 12 October (Jafar), conditional
+
+- 6.1 open, only if the street work is done and time is left before Saturday 17 October 08:00 (after 5.1): the AAA study kit, from production/research and the doc "LEDGER AAA Reference Study". Write production/research/aaa-reference/KIT.md: how to open Kingdom Come: Deliverance II's game data (its .pak archives, the folder layout, where schedules, crime, reputation and dialogue are reported to live) and Mafia: The Old Country's Unreal files with FModel (version setting, mapping file, where keys are published); a one-page checklist per study saying where to look first; and a reading list of public talks and modding documentation on both games' systems. Only sources reached. Nothing from either game goes into git.
+
 ## Log
 
 - 8 Oct 21:55: branch cloud/week-42 made from wip at 8356dda; this queue written; Blender 5.2.2 (bpy, headless) installed in the cloud session.
