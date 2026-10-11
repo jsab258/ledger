@@ -100,6 +100,7 @@ def paint_ground_fill(B, s, colour, grain, rough, amp_override=None):
     T = B.T
     win = (0, H_MM, 0, W_MM)
     amp = amp_override if amp_override is not None else grain.get("amp_L", 1.2)
+    amp = amp * 0.4          # REVIEW-v2-boards fault 3: a painted ground is an even field, its span at 7 mm at most 3.5 L* (the long bands read as brushed metal)
     if grain.get("direction") == "along":
         # try 2: the slow tone is long bands along the grain (the old 140 x 55 mm clouds read as suede on the signs), brush marks and fibres
         kinds = (("streak", 0.55), ("grain", 0.34), ("band", 0.52), ("iso", 0.12), ("fine", 0.22))
@@ -121,7 +122,7 @@ def chalk(B, s):
         return
     rows = np.arange(H_MM, dtype=np.float32)[:, None]
     top = 0.6 + 0.9 * np.exp(-rows / 160.0)
-    lift = np.clip(B.noise("band") * 0.55 + 0.35, 0, 1.3) * top * age["chalk_dL"]
+    lift = np.clip(B.noise("band") * 0.22 + 0.35, 0, 1.3) * top * age["chalk_dL"]
     lift = lift - float(lift.mean())
     luma = (0.2126 * B.rgb[..., 0] + 0.7152 * B.rgb[..., 1] + 0.0722 * B.rgb[..., 2]) / 255.0
     L_approx = 100.0 * np.power(np.maximum(luma, 1e-4), 0.45)
@@ -385,6 +386,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
 
     # ---- 4. the letters (they are painted before the ageing: they wear with the ground)
     ink_regions = []
+    wins = {}
     if with_text:
         for b in blocks:
             if b["ghost"] or not b["in_texture"]:
@@ -398,6 +400,7 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
             cols = np.where(m.any(axis=0))[0]
             r0, r1, c0, c1 = drawn["win"]
             ink_regions.append(((r0, r1, c0, c1), m))
+            wins[b["id"]] = (r0, r1, c0, c1)
             if len(rows):
                 ink = [float(c0 + cols.min()), float(H_MM - (r0 + rows.max() + 1)), float(c0 + cols.max() + 1), float(H_MM - (r0 + rows.min()))]
             else:
@@ -449,6 +452,11 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
         ground_L = float(fc.lab(fc.pal(T, [sh for sh in shapes if sh["role"] == "old_board"][0]["colour"]))[0])
     prim, wood = SUBSTRATES.get(sid, SUBSTRATES["_light"] if ground_L >= 55 else SUBSTRATES["_dark"])
     prim, wood = np.array(prim, np.float32), np.array(wood, np.float32)
+    # try 2 after REVIEW-v2-boards: the ageing the photographs show (a grime film under the cornice, two to four soft dirt runs, painted faces faded with their ground)
+    if "box_frame" not in roles and "slab_edge" not in roles and kind != "bare":
+        fa.top_grime(B, 10.0)
+        info["dirt_runs"] = fa.dirt_runs(B, int(B.rng("age", "dirt-n").integers(2, 5)), B.rng("age", "dirt"), ground_L < 40)
+        fa.fade_faces(B, T, blocks, wins)
     weight = fa.damp_weight(H_MM, W_MM, mode, bjoints, nails_top, nails_bot)
     # cracks along the grain, more where the board is damp (they cross letters: it is paint on the same board)
     if timber and mode["crack"] > 0:
@@ -466,31 +474,34 @@ def render_fascia(T, s, seed, wrong_font=None, with_text=True):
             dilate_box(letter_zone, b_["effects_box_mm"], 4)
     weight = np.where(letter_zone, weight * 0.72, weight).astype(np.float32)
     # the bare timber's silvered strips are read by colour on the pixels a little over what is drawn (the soft edges and the checks beside them): 7 per cent under, so the read lands on the target
-    a1, a2, S, thr = fa.loss_alpha(F, weight, allowed, zone, frac * (0.93 if kind == "bare" else 1.0), mode)
-    # a letter stays readable and keeps its height: where the pattern would take more than 30 per cent of one block's lettering, or of the top or the bottom
-    # edge of its letters (a strip across the cap line makes the cap read short), the threshold over that part alone is raised to leave 25 to 28 per cent worn
-    # (the letters still wear: no clean halo)
-    for (wr0, wr1, wc0, wc1), mi in ink_regions:
-        if not mi.any():
-            continue
-        rws = np.where(mi.any(axis=1))[0]
-        band = max(8, int(0.14 * (rws.max() - rws.min() + 1)))
-        parts = [(mi, 0.28), (mi & (np.arange(mi.shape[0])[:, None] < rws.min() + band), 0.25), (mi & (np.arange(mi.shape[0])[:, None] > rws.max() - band), 0.25)]
-        for part, keep in parts:
-            if not part.any():
+    # try 2 after REVIEW-v2-boards (fault 1): local patches at the foot, the ends and the joints, or on the bare timber a few lifted sheets, never ribbons
+    a1, a2, thr = fa.loss_patches(B, allowed, zone, frac * (0.93 if kind == "bare" else 1.0), bjoints, bare=(kind == "bare"))
+    S = None
+    if False:
+        # a letter stays readable and keeps its height: where the pattern would take more than 30 per cent of one block's lettering, or of the top or the bottom
+        # edge of its letters (a strip across the cap line makes the cap read short), the threshold over that part alone is raised to leave 25 to 28 per cent worn
+        # (the letters still wear: no clean halo)
+        for (wr0, wr1, wc0, wc1), mi in ink_regions:
+            if not mi.any():
                 continue
-            aw = a1[wr0:wr1, wc0:wc1]
-            share = float(((aw > 0.5) & part).sum() / part.sum())
-            if share > 0.30:
-                Sw = S[wr0:wr1, wc0:wc1]
-                t_loc = max(thr["t1"], float(np.quantile(Sw[part], 1.0 - keep)))
-                a_new = np.clip((Sw - t_loc) / 0.16 + 0.5, 0.0, 1.0).astype(np.float32)
-                near_ink = ndi.binary_dilation(part, iterations=3)
-                a1[wr0:wr1, wc0:wc1] = np.where(near_ink, np.minimum(aw, a_new), aw)
-                a2[wr0:wr1, wc0:wc1] = np.where(near_ink, np.minimum(a2[wr0:wr1, wc0:wc1], a1[wr0:wr1, wc0:wc1]), a2[wr0:wr1, wc0:wc1])
+            rws = np.where(mi.any(axis=1))[0]
+            band = max(8, int(0.14 * (rws.max() - rws.min() + 1)))
+            parts = [(mi, 0.28), (mi & (np.arange(mi.shape[0])[:, None] < rws.min() + band), 0.25), (mi & (np.arange(mi.shape[0])[:, None] > rws.max() - band), 0.25)]
+            for part, keep in parts:
+                if not part.any():
+                    continue
+                aw = a1[wr0:wr1, wc0:wc1]
+                share = float(((aw > 0.5) & part).sum() / part.sum())
+                if share > 0.30:
+                    Sw = S[wr0:wr1, wc0:wc1]
+                    t_loc = max(thr["t1"], float(np.quantile(Sw[part], 1.0 - keep)))
+                    a_new = np.clip((Sw - t_loc) / 0.16 + 0.5, 0.0, 1.0).astype(np.float32)
+                    near_ink = ndi.binary_dilation(part, iterations=3)
+                    a1[wr0:wr1, wc0:wc1] = np.where(near_ink, np.minimum(aw, a_new), aw)
+                    a2[wr0:wr1, wc0:wc1] = np.where(near_ink, np.minimum(a2[wr0:wr1, wc0:wc1], a1[wr0:wr1, wc0:wc1]), a2[wr0:wr1, wc0:wc1])
     tex = None
     if kind == "bare":
-        tex = (1.0 - 0.30 * B.layers["timber_dl"] + 0.09 * F.long() + 0.05 * F.strip()).astype(np.float32)
+        tex = (1.0 - 0.30 * B.layers["timber_dl"] + 0.20 * F.long() + 0.12 * F.strip()).astype(np.float32)     # the lifted sheets show the open grain
     if kind == "bare":
         # the islands of the last owner's paint that survive: before the loss, so the weather takes bites out of them too
         keep_out = np.zeros((H_MM, W_MM), bool)

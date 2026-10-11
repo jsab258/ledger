@@ -59,7 +59,11 @@ AMENDMENT_TEXT = [
     "A10 (try 2) the newsagent's TOBACCONIST & CONFECTIONER stands on the SHOP DOOR's glass in two lines (TOBACCONIST / & CONFECTIONER) at cap 40, the lower baseline at z 1.72 m, centred on the door (x 40.2): the door light is 0.68 to 0.9 m wide and the 1.69 m line of the target cannot sit on it",
     "A11 (try 2) hours: each trade its own kind of sign, on the shop door's glass or the pilaster: the fishmonger's brushed whitewash on the glass, Rita's gold leaf with a black shade on the glass, the newsagent's white cut vinyl on the glass, the launderette's engraved black laminate plate, the caff's card written in marker pen. The caff's card reads '6.30 AM - 10 PM' and '8 AM - 12 NOON' (the plates' rule bars am and pm: it is extended for this card)",
     "A12 (try 2) figures that read as figures: Mickey's 1 is Old Standard Bold (foot and flag; Marcellus SC's 1 is a hairline that reads as an I), the grocer's 11 is Libre Franklin 700 (Josefin Sans' 11 reads as II), the ironmonger's 16 is closed up (tracking -0.16 em: a gilder spaces figures by eye)",
+    "A13 (try 2, the second fresh review, REVIEW-v2-boards.md) paint loss is LOCAL: patches at most 80 x 25 mm, never chained, at least 70 per cent at the foot (the bottom 40 mm), the first and last 200 mm and 25 mm either side of a joint, 0.3 per cent at most elsewhere; free-zone amounts Mickey's 0.3, Rita's 0.5, fish market 1.5, ironmonger 2.0, chandler 3.0, the three old-board rims 2.0, the empty unit 17 as four to eight lifted sheets of old paint 150 to 600 mm across; in its place a grime film (10 L* darker over the top 80 mm, none by 200), two to four soft dirt runs a board, painted faces faded with their ground (chroma 10 per cent lower, the reds 15 per cent and 4 L* lighter); the ground's banding scaled by 0.4",
 ]
+
+
+LOSS_V2 = {"mickeys": 0.003, "ritas": 0.005, "fish_market": 0.015, "ironmonger": 0.02, "chandler": 0.03}
 
 
 def apply_amendments(T):
@@ -148,6 +152,12 @@ def apply_amendments(T):
             T["glass_lettering"].append(dict(shop=sid, surface="shop-door glass (hours, A11)", text=f"HOURS {sid}", hours=True, font=font, weight=wt, cap_mm=cap, technique=tech,
                                              z_m=z_low, x_street_m=round(x_door, 3), tol_x_m=0.1, tol_z_m=0.03, source="try 2: each trade its own hours sign (the fresh review, fault 5)",
                                              kind="Judgement"))
+    # A13 (REVIEW-v2-boards fault 1): paint loss is local, at the foot, the ends and the joints; the amounts are the review's (free zone)
+    for s in T["shops"]:
+        if s["id"] in LOSS_V2:
+            s["age"]["loss_fraction"] = LOSS_V2[s["id"]]
+        if s["age"].get("old_board"):
+            s["age"]["old_board"]["loss_fraction"] = 0.02
     T["_amendments"] = AMENDMENT_TEXT
     return T
 

@@ -381,7 +381,7 @@ def apply_drips(B, layer, tracks, light, strength=0.30):
         px = B.rgb[m]
         luma = 0.2126 * px[:, 0] + 0.7152 * px[:, 1] + 0.0722 * px[:, 2]
         pale = luma > 105.0
-        tgt = np.where(pale[:, None], GRIME[None, :] * 0.8 + px * 0.2, DUST[None, :])
+        tgt = np.where(pale[:, None], GRIME[None, :] * 0.8 + px * 0.2, px * 0.90)     # REVIEW-v2-boards narrow point 3: on a dark ground the run is dark grime (-4 L*), not a pale smudge
         k = (strength * a[m])[:, None]
         B.rgb[m] = px + (tgt - px) * k
         B.rough[m] = np.clip(B.rough[m] + 0.10 * a[m], 0, 1)
@@ -391,7 +391,7 @@ def apply_drips(B, layer, tracks, light, strength=0.30):
         px = B.rgb[mt]
         luma = 0.2126 * px[:, 0] + 0.7152 * px[:, 1] + 0.0722 * px[:, 2]
         pale = luma > 105.0
-        tgt = np.where(pale[:, None], np.minimum(px * 1.05 + 5, 255), np.minimum(px * 1.0 + 7, 255))
+        tgt = np.where(pale[:, None], np.minimum(px * 1.05 + 5, 255), np.minimum(px * 1.0 + 2, 255))
         B.rgb[mt] = px + (tgt - px) * (0.28 * t[mt])[:, None]
 
 
@@ -556,3 +556,183 @@ def apply_gulls(B, core, centre, spat):
     B.rgb[ms] = B.rgb[ms] + (np.array([196.0, 192.0, 178.0], np.float32)[None, :] - B.rgb[ms]) * (0.7 * sp[ms])[:, None]
     B.rough += (0.78 - B.rough) * np.clip(core, 0, 1) * 0.8
     B.height += (0.12 * np.clip(core, 0, 1)).astype(np.float32)
+
+
+# ================================================================== try 2, after the second fresh review (REVIEW-v2-boards.md, 11 October)
+# Fault 1: the loss ran in long ribbons along the whole board. Real fascias fail locally: patches of at most 80 x 25 mm, never chained, at least 70 per cent of
+# them at the foot (the bottom 40 mm), the first and last 200 mm and 25 mm either side of a joint; elsewhere at most 0.3 per cent of the board. The empty unit's
+# silvered timber keeps its 17 per cent as four to eight lifted sheets of old paint 150 to 600 mm across, plus the foot. The ageing the photographs show goes in
+# its place: a grime film under the cornice, two to four soft dirt runs from the drip points, a sun fade on the reds.
+PATCH_MAX_LEN, PATCH_MAX_H, PATCH_GAP = 80.0, 25.0, 30
+FOOT_MM, END_MM, JOINT_MM = 40, 200, 25
+
+
+def _blob(rng, w, h, ang_deg, rough=0.28, n=18):
+    """a ragged ellipse w x h (mm), turned a few degrees: the vertices of a polygon about the origin"""
+    th = np.linspace(0, 2 * math.pi, n, endpoint=False)
+    k = rng.integers(2, 4)
+    ph = rng.uniform(0, 2 * math.pi, 3)
+    wob = 1.0 + rough * (0.6 * np.sin(k * th + ph[0]) + 0.4 * np.sin((k + 2) * th + ph[1])) + 0.08 * rng.standard_normal(n)
+    x, y = 0.5 * w * np.cos(th) * wob, 0.5 * h * np.sin(th) * wob
+    c, s = math.cos(math.radians(ang_deg)), math.sin(math.radians(ang_deg))
+    return np.column_stack([x * c - y * s, x * s + y * c])
+
+
+def loss_patches(B, allowed, zone, frac, joints, bare=False):
+    """the paint lost as small local patches (or, on the bare timber, a few lifted sheets of old paint). a1: the older coat, a2: bare wood in the core. The area
+    counted toward `frac` is what falls in the free zone (as the target's loss_fraction is read)."""
+    H, W = B.H, B.W
+    rng = B.rng("age", "patches")
+    a1 = Image.new("L", (W, H), 0)
+    a2 = Image.new("L", (W, H), 0)
+    d1, d2 = ImageDraw.Draw(a1), ImageDraw.Draw(a2)
+    target = frac * H * W
+    occ = np.zeros((H, W), bool)
+    got = 0.0
+    n_ok = 0
+    zone_a = zone & allowed
+    els_cap = 0.003 * H * W
+    els = 0.0
+    foot0, foot1 = H - FOOT_MM - 6, H - 8
+    tries = 0
+
+    def place(cx, cy, w, h, ang, core, rough=0.28, n=18):
+        nonlocal got, n_ok
+        pts = _blob(rng, w, h, ang, rough=rough, n=n)
+        poly = [(cx + p[0], cy + p[1]) for p in pts]
+        x0, y0 = int(max(0, min(p[0] for p in poly) - 2)), int(max(0, min(p[1] for p in poly) - 2))
+        x1, y1 = int(min(W, max(p[0] for p in poly) + 3)), int(min(H, max(p[1] for p in poly) + 3))
+        if x1 <= x0 or y1 <= y0:
+            return False
+        win = Image.new("L", (x1 - x0, y1 - y0), 0)
+        ImageDraw.Draw(win).polygon([(p[0] - x0, p[1] - y0) for p in poly], fill=255)
+        m = np.array(win) > 127
+        if not m.any():
+            return False
+        g = PATCH_GAP // 2
+        wy0, wy1, wx0, wx1 = max(0, y0 - g), min(H, y1 + g), max(0, x0 - g), min(W, x1 + g)
+        if occ[wy0:wy1, wx0:wx1].any() and (occ[y0:y1, x0:x1] & m).any():
+            return False
+        if occ[max(0, y0 - g):min(H, y1 + g), max(0, x0 - g):min(W, x1 + g)].any():
+            # a patch within the gap of another: refused (no chaining)
+            ys_, xs_ = np.nonzero(m)
+            near = ndi.binary_dilation(m, iterations=g)
+            sub = occ[y0:y1, x0:x1]
+            if (near & sub).any():
+                return False
+        inside = allowed[y0:y1, x0:x1]
+        if not (m & inside).sum() >= 0.8 * m.sum():
+            return False
+        m = m & inside
+        d1.polygon(poly, fill=255)
+        if core:
+            cp = [(cx + 0.5 * p[0], cy + 0.5 * p[1]) for p in _blob(rng, w, h, ang, rough=0.3)]
+            d2.polygon(cp, fill=255)
+        occ[y0:y1, x0:x1] |= m
+        got += float((m & zone_a[y0:y1, x0:x1]).sum())
+        n_ok += 1
+        return True
+    if not bare:
+        j = [x for x in joints if 40 < x < W - 40]
+        while got < 0.985 * target and tries < 20000:
+            tries += 1
+            L = float(np.clip(rng.lognormal(math.log(26.0), 0.55), 6.0, PATCH_MAX_LEN))
+            h = float(np.clip(L * rng.uniform(0.22, 0.6), 3.0, PATCH_MAX_H))
+            ang = float(rng.uniform(-7, 7))
+            r = rng.random()
+            outside = False
+            if r < 0.08 and els < min(els_cap, 0.15 * target):
+                outside = True
+                cx, cy = rng.uniform(260, W - 260), rng.uniform(40, H - 40)
+            elif r < 0.50:
+                cx, cy = rng.uniform(10, W - 10), rng.uniform(foot0 + h / 2, foot1 - h / 2)
+            elif r < 0.85 or not j:
+                side = rng.random() < 0.5
+                cx = rng.uniform(10, END_MM) if side else rng.uniform(W - END_MM, W - 10)
+                cy = rng.uniform(10 + h / 2, H - 10 - h / 2)
+            else:
+                cx, cy = rng.choice(j) + rng.uniform(-JOINT_MM, JOINT_MM), rng.uniform(10 + h / 2, H - 10 - h / 2)
+            if place(cx, cy, L, h, ang, core=(rng.random() < 0.55)):
+                if outside:
+                    els += L * h * 0.78
+    else:
+        # the empty unit: four to eight lifted sheets of old paint, 150 to 600 mm across, ragged, mostly in the lower half, and the foot
+        k = 0
+        while got < 0.985 * target and tries < 4000:
+            tries += 1
+            wd = float(rng.uniform(250, 600)) if k < 8 else float(rng.uniform(150, 300))
+            ht = float(rng.uniform(110, 330))
+            cx = rng.uniform(wd / 2 + 10, W - wd / 2 - 10)
+            cy = rng.uniform(max(10 + ht / 2, 0.30 * H), H - 10 - ht / 2) if rng.random() < 0.75 else rng.uniform(10 + ht / 2, H - 10 - ht / 2)
+            if place(cx, cy, wd, ht, float(rng.uniform(-5, 5)), core=False, rough=0.55, n=48):
+                k += 1
+        for _ in range(60):                                         # the foot: small patches along the bottom rail
+            L = float(rng.uniform(15, 80))
+            place(rng.uniform(10, W - 10), rng.uniform(foot0 + 5, foot1 - 5), L, float(rng.uniform(5, 20)), float(rng.uniform(-5, 5)), core=(rng.random() < 0.5))
+    A1 = ndi.gaussian_filter(np.array(a1, np.float32) / 255.0, 0.6)
+    A2 = ndi.gaussian_filter(np.array(a2, np.float32) / 255.0, 0.6) * (A1 > 0.01)
+    return A1.astype(np.float32), A2.astype(np.float32), dict(kind="patches" if not bare else "sheets", count=n_ok, target_area_mm2=round(target), got_area_mm2=round(got))
+
+
+def top_grime(B, drop_L=10.0, h1=80, h2=200):
+    """a grime film under the cornice: the base colour `drop_L` L* darker over the top h1 mm, fading linearly to nothing by h2 mm down"""
+    H = B.H
+    rows = np.arange(H, dtype=np.float32)[:, None]
+    k = np.clip(1.0 - (rows - h1) / float(h2 - h1), 0.0, 1.0) * np.where(rows < h1, 1.0, 1.0)
+    B.rgb *= (1.0 - 0.0105 * drop_L * k)[..., None]
+
+
+def dirt_runs(B, n, rng, dark_ground):
+    """two to four soft dirt runs from the drip points on the top edge: 20 to 40 mm wide, 150 to 350 long, 3 to 5 L* darker (the soot runs; on a ground darker than L* 40
+    the run is dark grime too, with a 2 mm pale tide line at its lower end only)"""
+    H, W = B.H, B.W
+    out = []
+    for _ in range(n):
+        x0 = float(rng.uniform(250, W - 250))
+        wd = float(rng.uniform(20, 40))
+        ln = float(rng.uniform(150, 350))
+        dl = float(rng.uniform(3.0, 5.0))
+        c0, c1 = int(max(0, x0 - 2 * wd)), int(min(W, x0 + 2 * wd))
+        r1 = int(min(H, ln + 6))
+        xx = (np.arange(c0, c1, dtype=np.float32)[None, :] - x0) / (0.5 * wd)
+        yy = np.arange(0, r1, dtype=np.float32)[:, None]
+        prof = np.exp(-xx ** 2) * np.clip(1.0 - (yy / ln) ** 2.0, 0.0, 1.0) * np.clip(yy / 12.0, 0.0, 1.0) ** 0.5
+        B.rgb[:r1, c0:c1] *= (1.0 - 0.0105 * dl * prof)[..., None]
+        if dark_ground:
+            tide_r = int(min(H - 2, ln))
+            tide = np.exp(-xx ** 2)[0] * 0.045
+            B.rgb[tide_r:tide_r + 2, c0:c1] *= (1.0 + tide)[None, :, None]
+        out.append((round(x0), round(wd), round(ln), round(dl, 1)))
+    return out
+
+
+def fade_faces(B, T, blocks, wins):
+    """painted faces and shades fade with their ground (REVIEW-v2-boards fault 2): chroma 10 per cent lower than fresh, the reds 15 per cent lower and 4 L* lighter"""
+    img = B.rgb
+    for b in blocks:
+        if not b["in_texture"] or b["ghost"] or b.get("technique", "").startswith("gold") or "gilt" in str(b.get("technique", "")):
+            continue
+        r0, r1, c0, c1 = wins.get(b["id"], (None,) * 4)
+        if r0 is None:
+            continue
+        for key in ("face", "shade"):
+            spec = b.get(key) if key == "face" else (b.get("shade") or {}).get("colour")
+            if not spec:
+                continue
+            try:
+                col = np.array(fc.pal(B.T, spec), np.float32)
+            except Exception:
+                continue
+            win = img[r0:r1, c0:c1]
+            de = fc.dE(win, col)
+            m = np.clip((12.0 - de) / 6.0, 0.0, 1.0)
+            if not (m > 0).any():
+                continue
+            red = col[0] > 1.7 * col[1] and col[0] > 1.7 * col[2]
+            k = 0.85 if red else 0.90
+            grey = win.mean(axis=2, keepdims=True)
+            faded = grey + (win - grey) * k
+            if red:
+                faded = faded * 1.04
+            img[r0:r1, c0:c1] = win + (faded - win) * m[..., None]
+    np.clip(img, 0, 255, out=img)

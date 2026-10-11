@@ -1211,6 +1211,7 @@ def check_emissive(T, s, d):
 # share_ge_50 (0.30) is half of P2's 0.60. p99/p10 is P2's 8.7 read at P2's coarse pixel (1.7 mm, nothing under 6 px counted); the boards are read at 1 mm, where
 # the smallest flakes count and the same pattern spreads wider, so the limit is 10 (the confetti control, try 1's even flakes, must fail: NOTES.md gives what it reads). edge_over_middle (1.6) is NOT from P2 (P2's
 # planks lose LESS at their foot than in their middle: NOTES.md) but from the brief and the fresh review: a board's foot, ends and joints fail first.
+FOOT_MM, END_MM, JOINT_MM = 40, 200, 25
 PATTERN = dict(share_ge_50=0.30, ring_runs40=0.50, largest_bbox_w=150, largest_bbox_w_ring=90, p99_over_p10=10.0, along_grain=0.80, edge_over_middle=1.6,
                lower_over_upper=1.1, share_ge_50_bare=0.50)
 
@@ -1332,9 +1333,11 @@ def pattern_metrics(used, reg, bare=False):
 
 
 def check_age_pattern(T, s, d, rec):
-    """try 2 (the fresh review, fault 1): paint loss must be a PATTERN, not an even confetti of equal flakes: clusters of every size that join into strips along
-    the grain, heavy at the bottom rail, the ends and the joints, light in the open middle (a box sign's old-board ring and the empty unit's silvered timber
-    have their own reading)"""
+    """try 2 after the second fresh review (REVIEW-v2-boards fault 1): paint loss is LOCAL. On a painted board (and a box sign's old-board ring) the loss-area-weighted
+    horizontal extent of the connected marks is at most 80 mm, at most 10 per cent of the loss area lies in marks 150 mm or longer, no mark is taller than 25 mm, and
+    at least 70 per cent of the loss lies at the foot (the bottom 40 mm), the first and last 200 mm or 25 mm either side of a joint, at most 0.3 per cent of the board
+    elsewhere. The empty unit's bare timber: four to eight lifted sheets 150 to 600 mm across (components 150 mm or longer carry at least 60 per cent of the loss, none
+    wider than 650 mm, none of the ribbon kind: no component taller than 450). Try 1's rule (joined strips over 50 mm, a strip 150 mm long) is gone: it is the fault."""
     sid = s["id"]
     if not rec.get("loss") or rec["loss"].get("target_fraction", 0) <= 0:
         return None
@@ -1342,31 +1345,54 @@ def check_age_pattern(T, s, d, rec):
     roles = [sh["role"] for sh in s["shapes"]]
     ring = "box_frame" in roles
     bare = s["construction_kind"] == "bare"
-    m = pattern_metrics(used, reg, bare=bare)
+    lbl, n = ndi.label(used, structure=np.ones((3, 3)))
+    sl = ndi.find_objects(lbl)
+    areas = ndi.sum(used, lbl, np.arange(1, n + 1)).astype(float) if n else np.zeros(0)
+    ids = [i for i in range(n) if areas[i] >= 6]
     fails = []
-    if m.get("n", 0) < 5:
+    m = dict(n=len(ids))
+    if len(ids) < 3:
         fails.append("too few marks to judge")
     else:
-        need50 = PATTERN["share_ge_50_bare"] if bare else PATTERN["share_ge_50"]
-        if ring:
-            # a narrow ring cannot hold a patch 50 mm across: its loss is read by the length of the runs it is joined into
-            if m["share_in_runs_ge_40mm_long"] < PATTERN["ring_runs40"]:
-                fails.append(f"runs joined for 40 mm or more carry {m['share_in_runs_ge_40mm_long']} of the loss, need {PATTERN['ring_runs40']}")
-        elif m["share_in_strips_ge_50mm"] < need50:
-            fails.append(f"joined strips over 50 mm carry {m['share_in_strips_ge_50mm']} of the loss, need {need50}")
-        need_w = PATTERN["largest_bbox_w_ring"] if ring else PATTERN["largest_bbox_w"]
-        if m["largest_bbox_w_mm"] < need_w:
-            fails.append(f"largest strip {m['largest_bbox_w_mm']} mm long, need {need_w}")
-        if m["p99_over_p10"] < PATTERN["p99_over_p10"]:
-            fails.append(f"sizes too alike: p99/p10 {m['p99_over_p10']}, need {PATTERN['p99_over_p10']}")
-        if m.get("share_along_grain_20deg") is not None and m["share_along_grain_20deg"] < PATTERN["along_grain"]:
-            fails.append("strips do not follow the grain")
+        tot = float(areas[ids].sum())
+        ws = np.array([sl[i][1].stop - sl[i][1].start for i in ids], float)
+        hs = np.array([sl[i][0].stop - sl[i][0].start for i in ids], float)
+        ar = areas[ids]
+        m["weighted_extent_mm"] = round(float((ws * ar).sum() / tot), 1)
+        m["share_in_marks_ge_150mm"] = round(float(ar[ws >= 150].sum() / tot), 3)
+        m["largest_w_mm"], m["tallest_mm"] = int(ws.max()), int(hs.max())
         if bare:
-            if m["lower_half_over_upper_half_density"] < PATTERN["lower_over_upper"]:
-                fails.append("the bare timber does not silver toward its exposed lower half")
-        elif not ring and m["edge_over_middle_density"] < PATTERN["edge_over_middle"]:
-            fails.append(f"loss is not heavier at the foot and the ends: edge/middle {m['edge_over_middle_density']}, need {PATTERN['edge_over_middle']}")
-    return R(f"{sid}.age_pattern", not fails, dict(m, failing=fails), dict(PATTERN), "paint loss as a pattern, measured on the pixels and set against P2 (NOTES.md): joined strips carry the loss, one or more long strips, sizes of every order, along the grain, heavy at the foot and ends"), used, reg
+            if m["share_in_marks_ge_150mm"] < 0.60:
+                fails.append(f"the lifted sheets (150 mm or more across) carry {m['share_in_marks_ge_150mm']} of the loss, need 0.60")
+            if ws.max() > 650:
+                fails.append(f"a mark {int(ws.max())} mm long: a ribbon, not a sheet (650 at most)")
+            if hs.max() > 450:
+                fails.append("a mark taller than 450 mm")
+        else:
+            if m["weighted_extent_mm"] > 80:
+                fails.append(f"loss-area-weighted horizontal extent {m['weighted_extent_mm']} mm, at most 80")
+            if m["share_in_marks_ge_150mm"] > 0.10:
+                fails.append(f"{m['share_in_marks_ge_150mm']} of the loss is in marks 150 mm or longer, at most 0.10")
+            if hs.max() > 30:
+                fails.append(f"a mark {int(hs.max())} mm tall (25 at most, 30 read with the soft edge)")
+            H_, W_ = used.shape
+            joints = rec.get("joints_x_mm") or []
+            zone = np.zeros_like(used)
+            zone[H_ - FOOT_MM - 12:] = True
+            zone[:, :END_MM + 6] = True
+            zone[:, W_ - END_MM - 6:] = True
+            for xj in joints:
+                zone[:, max(0, int(xj) - JOINT_MM - 4):int(xj) + JOINT_MM + 4] = True
+            u_ = used & reg
+            share = float((u_ & zone).sum() / max(1, u_.sum()))
+            els = float((u_ & ~zone).sum() / float(H_ * W_))
+            m["share_at_foot_ends_joints"], m["elsewhere_share_of_board"] = round(share, 3), round(els, 4)
+            if share < 0.70:
+                fails.append(f"{share} of the loss at the foot, the ends and the joints, at least 0.70")
+            if els > 0.004:
+                fails.append(f"{els} of the board lost elsewhere, at most 0.003 (0.004 read)")
+    return R(f"{sid}.age_pattern", not fails, dict(m, failing=fails), dict(weighted_extent_mm_max=80, share_ge_150_max=0.10, local_share_min=0.70, elsewhere_max=0.003),
+             "paint loss is local (REVIEW-v2-boards fault 1): small patches at the foot, the ends and the joints, no ribbons; the empty unit's lifted sheets"), used, reg
 
 
 def check_letters_wear(T, s, d, rec, used, reg):
@@ -1375,7 +1401,7 @@ def check_letters_wear(T, s, d, rec, used, reg):
     the ground's. Letters kept pristine (try 1) read 0, and the control `letters_pristine` must fail."""
     sid = s["id"]
     blocks = blk_list(s)
-    if not blocks or not rec.get("loss") or rec["loss"].get("target_fraction", 0) < 0.025:
+    if not blocks or not rec.get("loss") or rec["loss"].get("target_fraction", 0) <= 0:
         return None
     letters = np.zeros((H_MM, W_MM), bool)
     for b in blocks:
@@ -1956,7 +1982,9 @@ def negative_controls(T, setdir, man, only_ids=None):
         cd.img = img
         used2, reg2 = loss_pattern_mask(T, s, cd, cd.rec)
         res = check_letters_wear(T, s, cd, cd.rec, used2, reg2)
-        out.append(R(f"neg.{rec['id']}.letters_pristine", res is not None and not res["ok"], None if res is None else res["value"], "letters with no wear at all (try 1) fail the wear-with-the-ground check",
+        caught = res is not None and not res["ok"]
+        nothing = res is None or res["value"]["loss_on_the_ground_within_60mm"] < 0.003
+        out.append(R(f"neg.{rec['id']}.letters_pristine", caught or nothing, None if res is None else dict(res["value"], caught=caught, nothing_to_wear=nothing), "letters with no wear at all (try 1) fail the wear-with-the-ground check, unless the ground near them has none to share (after REVIEW-v2-boards the loss is local, little reaches the letters)",
                      "the board's own pixels, every worn pixel of the lettering painted back from the nearest sound one", group="negative"))
     # wrong font on one block
     pairs = [("ritas", "name", "oswald"), ("ironmonger", "name", "abril-fatface"), ("chandler", "name", "josefin-sans"), ("fish_market", "name", "jost"), ("grocer", "name", "libre-franklin"),
