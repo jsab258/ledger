@@ -2226,7 +2226,7 @@ def sign_face_result(T, sid, blks, img, W, H):
     for blk in blks:
         b = fs.make_block(T, blk["string"], blk["font"], blk["weight"], blk["cap_mm"], blk["tracking_em"], blk["baseline_mm"], W / 2.0, "centre", sgn["faces"]["colour"],
                           shade_d=(blk["shade"]["d_mm"] if blk.get("shade") else None), shade_colour=(sh["colour"] if sh else "shade_black"),
-                          technique=blk["technique"], hand=blk["hand_jitter"], bid="face", squeeze=blk.get("squeeze", 1.0) or 1.0)
+                          technique=blk["technique"], hand=blk["hand_jitter"], bid="face", squeeze=blk.get("squeeze", 1.0) or 1.0, restore=blk.get("restore"))
         x0, y0, x1, y1 = b["ink_box_mm"]
         reg = np.zeros((H, W), bool)
         reg[max(0, H - int(y1) - 6):H - int(y0) + 6, max(0, int(x0) - 10):int(x1) + 10] = True

@@ -241,7 +241,8 @@ def text_layers(T, b, rng=None, hand=True, board_wh=(W_MM, H_MM), dx_mm=0.0, fon
     xs = [x / SS for x in xs]
     adv = [fS.getlength(ch) / SS for ch in text]
     s_q = float(b.get("squeeze", 1.0) or 1.0)
-    d_q = squeeze_delta(fS, s_q) if s_q != 1.0 else 0
+    rs_ = b.get("restore")
+    d_q = squeeze_delta(fS, s_q, 0.55 if rs_ is None else rs_) if s_q != 1.0 else 0
     if s_q != 1.0:
         xs = [x * s_q + i * 2.0 * d_q / SS for i, x in enumerate(xs)]
         adv = [a * s_q for a in adv]

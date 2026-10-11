@@ -33,7 +33,7 @@ def figure_ratio(T, font_key, weight, text):
 
 
 def make_block(T, text, font_key, weight, cap_mm, tracking_em, baseline_mm, x_mm, anchor, face, shade_d=None, shade_colour="shade_black",
-               technique="painted", hand=False, W=None, H=None, bid="b", role="name", face_rgb=None, figure=False, squeeze=1.0):
+               technique="painted", hand=False, W=None, H=None, bid="b", role="name", face_rgb=None, figure=False, squeeze=1.0, restore=None):
     """a block dict like the target's, for text that is not on a fascia board: the layout numbers are computed the way make_target.py does.
     squeeze < 1 draws a CONDENSED face (the font squeezed to that share of its width, its stems grown back toward their weight)."""
     cr = fc.cap_ratio(T, font_key, weight)
@@ -60,7 +60,7 @@ def make_block(T, text, font_key, weight, cap_mm, tracking_em, baseline_mm, x_mm
         Hd = int(px * 1.8) + 2 * pad
         base = pad + int(px * 1.25)
         b0 = dict(text=text, font=font_key, weight=weight, cap_mm=cap_mm, tracking_em=tracking_em, cap_ratio=cr, jitter=None, origin_x_mm=float(pad),
-                  baseline_mm=Hd - 1 - base, effects_box_mm=[0, 0, Wd, Hd], shade=None, squeeze=squeeze)
+                  baseline_mm=Hd - 1 - base, effects_box_mm=[0, 0, Wd, Hd], shade=None, squeeze=squeeze, restore=restore)
         fa_, _, win_ = fp.text_layers(T, b0, None, hand=False, board_wh=(Wd, Hd), shade=False, extra_pad=0)
         a = np.zeros((Hd, Wd), bool)
         r0_, r1_, c0_, c1_ = win_
@@ -82,7 +82,7 @@ def make_block(T, text, font_key, weight, cap_mm, tracking_em, baseline_mm, x_mm
     b = dict(id=bid, text=text, font=font_key, weight=weight, cap_mm=cap_mm, tracking_em=tracking_em, baseline_mm=baseline_mm, anchor=anchor, x_mm=x_mm,
              face=face, face_rgb=face_rgb, shade=(dict(colour=shade_colour, d_mm=sd) if sd else None), technique=technique,
              jitter=(T["common_style"]["hand_jitter"] if hand else None), ghost=False, in_texture=True, role=role, cap_ratio=cr,
-             size_px_per_em=px, origin_x_mm=origin, width_mm=w, squeeze=squeeze,
+             size_px_per_em=px, origin_x_mm=origin, width_mm=w, squeeze=squeeze, restore=restore,
              ink_box_mm=[x0, baseline_mm + ink_b, x1, baseline_mm + ink_t],
              effects_box_mm=[x0 - 3 - (1.6 if hand else 0), baseline_mm + ink_b - 1.6 - (0 if not sd else sd), x1 + sd + 3, baseline_mm + ink_t + 3 + (1.6 if hand else 0)])
     return b
@@ -152,29 +152,29 @@ def age_small(B, mode_key, frac, grime, anchors=None, drips=(1, (40, 110)), prim
 SIGN_FACE_MARGIN = 24.0
 
 
-def ink_width(T, text, font_key, weight, cap_mm, tracking_em, squeeze=1.0):
-    b = make_block(T, text, font_key, weight, cap_mm, tracking_em, 100, 1000, "centre", "sign_black", squeeze=squeeze)
+def ink_width(T, text, font_key, weight, cap_mm, tracking_em, squeeze=1.0, restore=None):
+    b = make_block(T, text, font_key, weight, cap_mm, tracking_em, 100, 1000, "centre", "sign_black", squeeze=squeeze, restore=restore)
     return b["width_mm"]
 
 
-def fit_squeeze(T, text, font_key, weight, cap_mm, tracking_em, avail, s_min=0.5):
+def fit_squeeze(T, text, font_key, weight, cap_mm, tracking_em, avail, s_min=0.5, restore=None):
     """the least squeeze (nearest 1.0) at which the string at this cap fits `avail` mm: a drawn, condensed face"""
     w1 = ink_width(T, text, font_key, weight, cap_mm, tracking_em, 1.0)
     if w1 <= avail:
         return 1.0, w1
     lo, hi = s_min, 1.0
-    w_lo = ink_width(T, text, font_key, weight, cap_mm, tracking_em, lo)
+    w_lo = ink_width(T, text, font_key, weight, cap_mm, tracking_em, lo, restore)
     if w_lo > avail:
         return None, w_lo
     for _ in range(7):
         mid = (lo + hi) / 2.0
-        w_m = ink_width(T, text, font_key, weight, cap_mm, tracking_em, mid)
+        w_m = ink_width(T, text, font_key, weight, cap_mm, tracking_em, mid, restore)
         if w_m <= avail:
             lo = mid
         else:
             hi = mid
     s = round(lo - 0.005, 3)
-    return s, ink_width(T, text, font_key, weight, cap_mm, tracking_em, s)
+    return s, ink_width(T, text, font_key, weight, cap_mm, tracking_em, s, restore)
 
 
 # the signwriter's fills (try 2, the fresh review): a hanging board is lettered to its edges, in two lines where the legend is two words and in a
@@ -246,7 +246,9 @@ def render_sign_face(T, sign, face_label, seed, lit_off=False):
         avail_h = H - 2 * (inset + rope) - 2 * 30
         technique, hand, light = "painted", True, False
         shade_cfg = fcs.get("shade")
-        sq_lo = 0.5
+        sq_lo = 0.70
+    # REVIEW-v2-signs-glass: the chandler's counters stay open (squeeze no less than 0.70, no stem growth) and the laundry's A keeps its counter (growth 0.30)
+    restore = {"chandler_hanging_board": 0.0, "steam_laundry_box": 0.30}.get(sid)
     # the lettering, fitted: the biggest cap (down from cap_hi) at which the longest line fits the width at the least squeeze, and the lines the height
     colour = fcs["colour"]
     cap = lay["cap_hi"]
@@ -254,7 +256,7 @@ def render_sign_face(T, sign, face_label, seed, lit_off=False):
     gap_k = 0.26
     while True:
         longest = max(lines, key=lambda x: ink_width(T, x, fk, wt, cap, trk))
-        s_q, w_fit = fit_squeeze(T, longest, fk, wt, cap, trk, avail_w, s_min=sq_lo)
+        s_q, w_fit = fit_squeeze(T, longest, fk, wt, cap, trk, avail_w, s_min=sq_lo, restore=restore)
         sd = round(shade_cfg["d_mm"] * cap / cap_t, 1) if shade_cfg else 0.0
         tot_h = n_l * cap + (n_l - 1) * gap_k * cap + sd
         if s_q is not None and tot_h <= avail_h:
@@ -269,13 +271,13 @@ def render_sign_face(T, sign, face_label, seed, lit_off=False):
     for i, ln in enumerate(lines):
         base_y = top_y - cap - i * (cap * (1 + gap_k))
         b = make_block(T, ln, fk, wt, cap, trk, int(round(base_y)), W / 2.0, "centre", colour, shade_d=sd or None,
-                       shade_colour=(shade_cfg["colour"] if shade_cfg else "shade_black"), technique=technique, hand=hand, bid=f"face{i + 1}", W=W, H=H, squeeze=s_q)
+                       shade_colour=(shade_cfg["colour"] if shade_cfg else "shade_black"), technique=technique, hand=hand, bid=f"face{i + 1}", W=W, H=H, squeeze=s_q, restore=restore)
         blocks.append(b)
         drawn = fp.paint_block(B, b, ground_rough=0.45 if hand else 0.35)
         recs.append(dict(string=ln, font=fk, weight=wt, cap_mm=cap, tracking_em=trk, baseline_mm=int(round(base_y)), centre_x_mm=W / 2.0, face=colour,
                          shade=shade_cfg and dict(shade_cfg, d_mm=sd), ink_box_mm=[round(v, 1) for v in b["ink_box_mm"]], origin_x_mm=round(b["origin_x_mm"], 2),
                          cap_ratio=round(b["cap_ratio"], 4), size_px_per_em=round(b["size_px_per_em"], 3), width_mm=round(b["width_mm"], 1), hand_jitter=hand,
-                         technique=technique, squeeze=s_q))
+                         technique=technique, squeeze=s_q, restore=restore))
     rec["block"] = recs[0]
     rec["blocks"] = recs
     rec["b"] = blocks[0]
@@ -580,40 +582,50 @@ def render_window_wash(T, seed, W=3250, H=1800):
         dd = dd + 0.40 * spot_noise                                   # irregular, not a neat ellipse
         spot = np.clip((1.0 - dd) * 1.3, 0, 1) * r.uniform(0.12, 0.26)
         a = a - spot
-    # the margin: the wash does not reach the glazing everywhere; the edge is ragged, corners are missed
-    edge_n = [np.abs(fc.fnoise((1, max(W, H) + 16), 70, 0.01, r)[0]) * 0.7 + np.abs(fc.fnoise((1, max(W, H) + 16), 14, 0.01, r)[0]) * 0.5 + np.abs(fc.fnoise((1, max(W, H) + 16), 4, 0.01, r)[0]) * 0.25
-              for _ in range(4)]
-    mt = 12 + 24 * edge_n[0][:W]                   # top, left-right
-    mb = 44 + 36 * edge_n[1][:W]                   # bottom (room for the dribbles)
-    ml = 10 + 22 * edge_n[2][:H]
-    mr = 10 + 22 * edge_n[3][:H]
-    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32) if False else (yy, xx)
+    # the margin: the wash does not reach the glazing everywhere; the edge is soft and swept, thinner toward the glazing, corners are missed
+    # (REVIEW-v2-signs-glass fault 1: signed smooth noise at 150 mm and up only, no abs(); a 30 mm feather broken by the cloth's own ring texture)
+    def smooth_edge(n):
+        z = fc.fnoise((1, max(W, H) + 16), 150, 0.01, r)[0]
+        z = z / (np.abs(z).max() + 1e-6)
+        return (0.5 + 0.5 * z)[:n]
+    e_top, e_bot, e_l, e_r = smooth_edge(W), smooth_edge(W), smooth_edge(H), smooth_edge(H)
+    mt = 10 + 40 * e_top
+    mb = 15 + 45 * e_bot
+    ml = 10 + 35 * e_l
+    mr = 10 + 35 * e_r
     d_top = yy
     d_bot = (H - 1 - yy)
     d_l = xx
     d_r = (W - 1 - xx)
-    marg = np.minimum(np.minimum((d_top - mt[None, :]) / 12.0, (d_bot - mb[None, :]) / 12.0), np.minimum((d_l - ml[:, None]) / 12.0, (d_r - mr[:, None]) / 12.0))
-    a = a * np.clip(marg, 0, 1)
+    FEATHER = 30.0
+    marg = np.minimum(np.minimum((d_top - mt[None, :]) / FEATHER, (d_bot - mb[None, :]) / FEATHER), np.minimum((d_l - ml[:, None]) / FEATHER, (d_r - mr[:, None]) / FEATHER))
+    ring = np.asarray(Image.fromarray(canvas.astype(np.float32)).resize((W, H), Image.BICUBIC), np.float32)
+    ring = np.clip((ring - float(ring.mean())) / (3.0 * float(ring.std()) + 1e-6), -0.5, 0.5)       # the stroke-ring texture: the edge breaks up along the cloth's arcs
+    a = a * np.clip(np.clip(marg, 0, 1) * (1.0 + 0.9 * ring * (1.0 - np.clip(marg, 0, 1)) * 2.0), 0, 1)
     for (cx, cy, sz) in ((0, 0, r.uniform(80, 200)), (W, 0, r.uniform(60, 160)), (0, H, r.uniform(90, 220)), (W, H, r.uniform(70, 180))):
         if r.random() < 0.8:
-            dd = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2) + 18 * fc.fnoise((H, W), 22, 22, r)
-            a = a * np.clip((dd - sz) / 10.0, 0, 1)
-    # dribbles: a thin run of whiting hanging from the foot of the coat
-    for i in range(int(r.integers(22, 32))):
-        x = int(r.uniform(60, W - 60))
-        y0 = int(H - mb[x] - 4)
-        L = int(r.uniform(35, 190))
-        wd = r.uniform(2.0, 6.5)
-        for q in range(L):
-            tq = q / L
-            ww = max(0.8, wd * (1.0 - 0.5 * tq))
-            cols = np.arange(int(x - 6), int(x + 7))
-            prof = np.clip(1.0 - (np.abs(cols - x - 1.2 * math.sin(q / 14.0)) - ww / 2) / 1.0, 0, 1)
-            yq = y0 + q
-            if yq < H - 3:
-                a[yq, cols] = np.maximum(a[yq, cols], prof * (0.88 - 0.25 * tq))
-        yb = min(H - 3, y0 + L)
-        a[max(0, yb - 3):yb + 3, max(0, x - 4):x + 5] = np.maximum(a[max(0, yb - 3):yb + 3, max(0, x - 4):x + 5], np.clip(1.4 - np.sqrt((np.arange(max(0, yb - 3), yb + 3)[:, None] - yb) ** 2 + (np.arange(max(0, x - 4), x + 5)[None, :] - x) ** 2) / (wd * 0.7 + 0.8), 0, 1) * 0.85)
+            dd = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2) + 18 * fc.fnoise((H, W), 160, 160, r) * 3.0
+            a = a * np.clip((dd - sz) / 30.0, 0, 1)
+    # dribbles: 0 to 3 a window, at least 400 mm apart, each starting inside the coat where it is thickest, 20 to 120 mm long, tapering from 4 mm to 1 mm, fading
+    # from alpha 0.7 to 0.2, no bead at the end (whiting laid on with a cloth does not run: a few drips only)
+    taken = []
+    for i in range(int(r.integers(0, 4))):
+        for attempt in range(60):
+            x = int(r.uniform(300, W - 300))
+            if any(abs(x - tx) < 400 for tx in taken):
+                continue
+            taken.append(x)
+            y0 = int(H - mb[x] - r.uniform(40, 100))
+            L = int(r.uniform(60, 120))
+            for q in range(L):
+                tq = q / L
+                ww = 4.0 - 3.0 * tq
+                cols = np.arange(int(x - 6), int(x + 7))
+                prof = np.clip(1.0 - (np.abs(cols - x - 1.2 * math.sin(q / 14.0)) - ww / 2) / 1.0, 0, 1)
+                yq = y0 + q
+                if 0 <= yq < H - 3:
+                    a[yq, cols] = np.maximum(a[yq, cols], prof * (0.7 - 0.5 * tq))
+            break
     a = np.clip(a, 0, 0.985)
     ww_ = fc.pal(T, "whitewash")
     cream = np.array([226.0, 219.0, 200.0])
