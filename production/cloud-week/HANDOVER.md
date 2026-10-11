@@ -1,6 +1,6 @@
 # Cloud week 42: the handover for the builder
 
-Kept usable at any moment: updated after every finished piece. Last updated 12 October 2026, 02:05 (Swiss). The queue (QUEUE.md) says what state each unit is in; this file says what the builder does with what is done. Branch cloud/week-42, made from wip on 8 October; nothing here is on wip or main until the builder takes it.
+Kept usable at any moment: updated after every finished piece. Last updated 12 October 2026, 01:18 (Swiss). The queue (QUEUE.md) says what state each unit is in; this file says what the builder does with what is done. Branch cloud/week-42, made from wip on 8 October; nothing here is on wip or main until the builder takes it.
 
 ## How a piece gets into the game (the same for every kit piece)
 
