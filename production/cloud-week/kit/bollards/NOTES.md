@@ -19,3 +19,13 @@ The street view failed the piece on K6's head (the kit's raw polyline lathed unc
 5. **Not modelled** (narrow point 4): K3's two mould lines and its pour line at z 400, K4's vertical weld seam and 2 mm cap weld bead: the engine's normal maps. **For the target** (narrow point 5): on the 1979 working quay at Ramsey the chain posts are thin plain painted steel tubes; K5's bolted, beaded cast post is the later marina type, as the target's section 11 says.
 
 Eight models now (K1, K2, K2b, K3, K4, K5, K6, K6b), each under 270 KB; check 73 of 73 (`checks/check_v1.json`, overwritten by try 2). The second review is of the close view (K5's foot, its nuts and lugs).
+
+## After the second review (REVIEW-v2-close.md, FAIL on one fault; fixes applied, not re-reviewed)
+
+The close view of K5's foot failed the piece on one fault, the target's: the lower bead is built as the target draws it (a soft swelling 120 high and 14 proud that fades into the shaft), where LH_b's full-size panorama, re-projected and measured row by row, shows a full, nearly elliptical roll about 78 high and 18 proud with definite corners to the shaft, a quirk and a fillet ring. Two tries are spent; by Jafar's ruling of 9 October the review's exact fix is applied and the unit marked done "fixes applied, not re-reviewed":
+
+1. **K5's lower bead** (`k5_profile`): the target's nine points (91, 278) to (90, 398) replaced by the review's elliptical roll (centre (88, 330), 21 x 40) to (109, 330), then the quirk (98.5, 364.6), (96, 365.5), the fillet ring to (96, 370) and a short cove to (90, 377.5); the bead now z 290 to 378. The target's own text and checks still describe the old bead: the review wrote them as changes to the target (`lower_bead` part and moulding), which are not applied here (no more target polishing).
+2. **Narrow points applied:** the nuts are `bare_steel` (the target and LH_b), with the top corners chamfered 1.5; the studs 14 across (radius 7) with a 1.5 chamfer at the end; a washer 28 across and 2.5 thick under each nut on the seat (the nut and stud raised 2.5); the lugs' edges eased R3.
+3. **Not applied:** the R6 fillet where each lug meets the shaft, and the 1.5 mm chamfers on the eyes' mouths (a boolean union with the shaft; for the engine's normal map).
+
+Check 77 of 77 (`checks/check_v1.json`). K5 8,144 triangles, 288 KB.

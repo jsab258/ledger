@@ -68,10 +68,12 @@ def main():
             for i, ang in enumerate(fx["angles_deg"]):
                 nl, nh = bbox(M, "nut_%d" % i)
                 c = ((nl[0] + nh[0]) / 2.0, (nl[1] + nh[1]) / 2.0)
-                rep.within("K5 nut %d: centre on the pitch circle r %s at %s degrees, height %s, its underside on the flat seat (z 42, 0.5 in)" % (i, fx["pitch_circle_r"], ang, fx["nut_height"]),
-                           [c[0], c[1], nh[2] - nl[2], nl[2]], [fx["pitch_circle_r"] * math.cos(math.radians(ang)), fx["pitch_circle_r"] * math.sin(math.radians(ang)), fx["nut_height"] + 0.5, 41.5], 1.0)
+                rep.within("K5 nut %d: centre on the pitch circle r %s at %s degrees, height %s, its underside on its washer (z 44, 0.5 in the washer)" % (i, fx["pitch_circle_r"], ang, fx["nut_height"]),
+                           [c[0], c[1], nh[2] - nl[2], nl[2]], [fx["pitch_circle_r"] * math.cos(math.radians(ang)), fx["pitch_circle_r"] * math.sin(math.radians(ang)), fx["nut_height"] + 0.5, 44.0], 1.0)
                 sl, sh = bbox(M, "stud_%d" % i)
-                rep.within("K5 stud %d: tops %s above the nut, 10 across" % (i, fx["stud_above_nut"]), [sh[2] - nh[2], sh[0] - sl[0]], [fx["stud_above_nut"], 10.0], 0.8)
+                rep.within("K5 stud %d: tops %s above the nut, 14 across (REVIEW-v2-close: LH_b's read 12 to 14)" % (i, fx["stud_above_nut"]), [sh[2] - nh[2], sh[0] - sl[0]], [fx["stud_above_nut"], 14.0], 1.0)
+                wl, wh = bbox(M, "washer_%d" % i)
+                rep.within("K5 washer %d: 28 across, 2.8 thick (2.5 and 0.3 into the seat), on the seat" % i, [wh[0] - wl[0], wh[2] - wl[2], wl[2]], [28.0, 2.8, 41.7], 0.8)
             lug = K["fixings"]["chain_eyes"]["lug"]
             for zc in K["fixings"]["chain_eyes"]["z"]:
                 for tag in ("w", "e"):

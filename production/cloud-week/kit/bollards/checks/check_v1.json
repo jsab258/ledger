@@ -1,8 +1,8 @@
 {
  "version": 1,
- "passed": 73,
+ "passed": 77,
  "failed": [],
- "total": 73,
+ "total": 77,
  "rows": [
   {
    "id": "K1 height",
@@ -308,129 +308,193 @@
    "extra": false
   },
   {
-   "id": "K5 nut 0: centre on the pitch circle r 124 at 45 degrees, height 14, its underside on the flat seat (z 42, 0.5 in)",
+   "id": "K5 nut 0: centre on the pitch circle r 124 at 45 degrees, height 14, its underside on its washer (z 44, 0.5 in the washer)",
    "ok": true,
    "measured": [
     87.681,
     87.681,
     14.5,
-    41.5
+    44.0
    ],
    "expected": [
     87.6812408671319,
     87.68124086713189,
     14.5,
-    41.5
+    44.0
    ],
    "note": "tol 1.0",
    "extra": false
   },
   {
-   "id": "K5 stud 0: tops 14 above the nut, 10 across",
+   "id": "K5 stud 0: tops 14 above the nut, 14 across (REVIEW-v2-close: LH_b's read 12 to 14)",
    "ok": true,
    "measured": [
     14.0,
-    10.0
+    14.0
    ],
    "expected": [
     14.0,
-    10.0
+    14.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 washer 0: 28 across, 2.8 thick (2.5 and 0.3 into the seat), on the seat",
+   "ok": true,
+   "measured": [
+    28.0,
+    2.8,
+    41.7
+   ],
+   "expected": [
+    28.0,
+    2.8,
+    41.7
    ],
    "note": "tol 0.8",
    "extra": false
   },
   {
-   "id": "K5 nut 1: centre on the pitch circle r 124 at 135 degrees, height 14, its underside on the flat seat (z 42, 0.5 in)",
+   "id": "K5 nut 1: centre on the pitch circle r 124 at 135 degrees, height 14, its underside on its washer (z 44, 0.5 in the washer)",
    "ok": true,
    "measured": [
     -87.681,
     87.681,
     14.5,
-    41.5
+    44.0
    ],
    "expected": [
     -87.68124086713189,
     87.6812408671319,
     14.5,
-    41.5
+    44.0
    ],
    "note": "tol 1.0",
    "extra": false
   },
   {
-   "id": "K5 stud 1: tops 14 above the nut, 10 across",
+   "id": "K5 stud 1: tops 14 above the nut, 14 across (REVIEW-v2-close: LH_b's read 12 to 14)",
    "ok": true,
    "measured": [
     14.0,
-    10.0
+    14.0
    ],
    "expected": [
     14.0,
-    10.0
+    14.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 washer 1: 28 across, 2.8 thick (2.5 and 0.3 into the seat), on the seat",
+   "ok": true,
+   "measured": [
+    28.0,
+    2.8,
+    41.7
+   ],
+   "expected": [
+    28.0,
+    2.8,
+    41.7
    ],
    "note": "tol 0.8",
    "extra": false
   },
   {
-   "id": "K5 nut 2: centre on the pitch circle r 124 at 225 degrees, height 14, its underside on the flat seat (z 42, 0.5 in)",
+   "id": "K5 nut 2: centre on the pitch circle r 124 at 225 degrees, height 14, its underside on its washer (z 44, 0.5 in the washer)",
    "ok": true,
    "measured": [
     -87.681,
     -87.681,
     14.5,
-    41.5
+    44.0
    ],
    "expected": [
     -87.68124086713192,
     -87.68124086713189,
     14.5,
-    41.5
+    44.0
    ],
    "note": "tol 1.0",
    "extra": false
   },
   {
-   "id": "K5 stud 2: tops 14 above the nut, 10 across",
+   "id": "K5 stud 2: tops 14 above the nut, 14 across (REVIEW-v2-close: LH_b's read 12 to 14)",
    "ok": true,
    "measured": [
     14.0,
-    10.0
+    14.0
    ],
    "expected": [
     14.0,
-    10.0
+    14.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 washer 2: 28 across, 2.8 thick (2.5 and 0.3 into the seat), on the seat",
+   "ok": true,
+   "measured": [
+    28.0,
+    2.8,
+    41.7
+   ],
+   "expected": [
+    28.0,
+    2.8,
+    41.7
    ],
    "note": "tol 0.8",
    "extra": false
   },
   {
-   "id": "K5 nut 3: centre on the pitch circle r 124 at 315 degrees, height 14, its underside on the flat seat (z 42, 0.5 in)",
+   "id": "K5 nut 3: centre on the pitch circle r 124 at 315 degrees, height 14, its underside on its washer (z 44, 0.5 in the washer)",
    "ok": true,
    "measured": [
     87.681,
     -87.681,
     14.5,
-    41.5
+    44.0
    ],
    "expected": [
     87.68124086713188,
     -87.68124086713192,
     14.5,
-    41.5
+    44.0
    ],
    "note": "tol 1.0",
    "extra": false
   },
   {
-   "id": "K5 stud 3: tops 14 above the nut, 10 across",
+   "id": "K5 stud 3: tops 14 above the nut, 14 across (REVIEW-v2-close: LH_b's read 12 to 14)",
    "ok": true,
    "measured": [
     14.0,
-    10.0
+    14.0
    ],
    "expected": [
     14.0,
-    10.0
+    14.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "K5 washer 3: 28 across, 2.8 thick (2.5 and 0.3 into the seat), on the seat",
+   "ok": true,
+   "measured": [
+    28.0,
+    2.8,
+    41.7
+   ],
+   "expected": [
+    28.0,
+    2.8,
+    41.7
    ],
    "note": "tol 0.8",
    "extra": false
@@ -440,7 +504,7 @@
    "ok": true,
    "measured": [
     40.0,
-    53.627,
+    53.02,
     18.0,
     420.0
    ],
@@ -466,7 +530,7 @@
    "ok": true,
    "measured": [
     40.0,
-    53.627,
+    53.02,
     18.0,
     420.0
    ],
@@ -492,7 +556,7 @@
    "ok": true,
    "measured": [
     40.0,
-    53.627,
+    53.02,
     18.0,
     840.0
    ],
@@ -518,7 +582,7 @@
    "ok": true,
    "measured": [
     40.0,
-    53.627,
+    53.02,
     18.0,
     840.0
    ],
@@ -562,8 +626,8 @@
    "id": "K5 file under 1 MB and 20,000 triangles",
    "ok": true,
    "measured": [
-    228448,
-    6656
+    288320,
+    8144
    ],
    "expected": "< 1000000, < 20000",
    "note": "",

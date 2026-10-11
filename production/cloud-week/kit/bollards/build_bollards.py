@@ -126,8 +126,16 @@ def k5_profile(prof):
     """REVIEW-v1-street narrow point 1: K5's flange gets a flat seat for its four nuts (the target's profile slopes where its close-up photograph shows a seat):
     (141, 40), (125, 50), (105, 72), (95, 90), (91, 100) become (141, 40), (139, 42), (108, 42), (100, 52), (95, 70), (91, 100)"""
     out = []
+    old_bead = {(91.0, 278.0), (95.0, 285.0), (101.0, 297.0), (105.0, 315.0), (105.0, 335.0), (103.0, 352.0), (98.0, 372.0), (92.0, 390.0), (90.0, 398.0)}
+    # REVIEW-v2-close fault 1: the lower bead is a full, nearly elliptical roll 78 high and 18 proud (centre (88, 330), 21 x 40) with crisp corners, a quirk and a fillet ring
+    new_bead = [(91.0, 290.4), (95.2, 292.4), (100.0, 297.2), (104.1, 304.3), (107.0, 313.1), (108.7, 323.1), (109.0, 330.0), (108.7, 336.9), (107.0, 346.9), (104.1, 355.7),
+                (100.0, 362.8), (98.5, 364.6), (96.0, 365.5), (96.0, 370.0), (94.5, 373.5), (92.0, 376.0), (90.0, 377.5)]
     for r, z in prof:
         if (r, z) in ((125.0, 50.0), (105.0, 72.0), (95.0, 90.0)):
+            continue
+        if (r, z) in old_bead:
+            if (r, z) == (91.0, 278.0):
+                out += new_bead
             continue
         out.append((r, z))
         if (r, z) == (141.0, 40.0):
@@ -190,8 +198,11 @@ def build_kind(T, name, paint, out_dir, npz_dir):
         for i, ang in enumerate(fx["angles_deg"]):
             cx, cy = R * math.cos(math.radians(ang)), R * math.sin(math.radians(ang))
             hexp = [(cx + af / math.sqrt(3.0) * math.cos(math.radians(60 * j + ang)), cy + af / math.sqrt(3.0) * math.sin(math.radians(60 * j + ang))) for j in range(6)]
-            B.add("nut_%d" % i, bs.prism_ud([(x, -y) for x, y in hexp], zf - 0.5, zf + nh), mname, bev=1.0)
-            rings = [[(cx + 5.0 * math.cos(2 * math.pi * j / 12), cy + 5.0 * math.sin(2 * math.pi * j / 12), z) for j in range(12)] for z in (zf, zf + nh + up)]
+            zw = zf + 2.5                                                    # REVIEW-v2-close: a washer 28 across and 2.5 thick on the seat, the nut on it
+            wr = [[(cx + 14.0 * math.cos(2 * math.pi * j / 24), cy + 14.0 * math.sin(2 * math.pi * j / 24), z) for j in range(24)] for z in (zf - 0.3, zw)]
+            B.add("washer_%d" % i, bs.loft_rings(wr), "bare_steel", bev=None)
+            B.add("nut_%d" % i, bs.prism_ud([(x, -y) for x, y in hexp], zw - 0.5, zw + nh), "bare_steel", bev=1.5)      # bare steel (the target and LH_b), the top corners chamfered
+            rings = [[(cx + r_ * math.cos(2 * math.pi * j / 12), cy + r_ * math.sin(2 * math.pi * j / 12), z) for j in range(12)] for z, r_ in ((zf, 7.0), (zw + nh + up - 1.5, 7.0), (zw + nh + up, 5.5))]
             B.add("stud_%d" % i, bs.loft_rings(rings), "bare_steel", bev=None)
         lug = K["fixings"]["chain_eyes"]["lug"]
         hc, rc = lug["hole_centre_from_shaft_face"], lug["proud"] - lug["hole_centre_from_shaft_face"]          # 22 from the shaft face, the outer end a half-round of radius 18
@@ -203,7 +214,7 @@ def build_kind(T, name, paint, out_dir, npz_dir):
                 xz = [(sx * (rs + dx), zc + dz) for dx, dz in d_]
                 if sx < 0:
                     xz = xz[::-1]
-                ob = B.add("lug_%d_%s" % (int(zc), tag), prism_y(xz, -lug["thickness"] / 2.0, lug["thickness"] / 2.0), mname, bev=2.0)
+                ob = B.add("lug_%d_%s" % (int(zc), tag), prism_y(xz, -lug["thickness"] / 2.0, lug["thickness"] / 2.0), mname, bev=3.0)
                 hx = sx * (rs + hc)
                 rings = [[(hx + 12.0 * math.cos(2 * math.pi * j / 20), y_, zc + 12.0 * math.sin(2 * math.pi * j / 20)) for j in range(20)] for y_ in (-lug["thickness"], lug["thickness"])]
                 Vc, Fc = bs.loft_rings([[(p[0], p[1], p[2]) for p in r] for r in rings])
