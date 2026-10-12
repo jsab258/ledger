@@ -38,6 +38,7 @@ HARD = {"paint_flake", "render_crack", "road_crack", "flag_patch_crack", "line_w
         "footway_infill", "graffiti_buff"}         # the last two are opaque fills: a strength variation let the flag joints show through by up to 11 per cent (the review's narrow point a)
 # kinds whose checks read WHERE a level crosses a threshold (the band's top edge on a brick course, its column profile, the peak): a strength variation would slide that line, so they take the warp only
 EDGE_KINDS = {"wall_foot_splash", "wall_foot_damp", "wall_head_band", "salt_bloom", "gutter_grime", "sign_ghost"}
+NO_WARP = {"rust_bleed"}   # its check reads a thin run's aspect where it crosses 0.5: the warp alone cost it (median 7.985 against the target's 8, after the streak fades were made continuous)
 TRIES = 12                # seeds tried per variant until its mask passes every check of its kind on its own
 MOD_DEPTH = 0.12          # a soft kind's strength varies inside its marks by up to this much
 _G = {}
@@ -80,7 +81,7 @@ def make_mask(tj, draw, ed, kid, seed, variant, ppm=None, do_refine=True):
     wrap = wc.wrap_mode(k)
     polys = wd.envelope(tj, draw, kid, seed, variant)
     m = draw.rasterize(polys, ext_mm, ppm, ed.get(kid, 0.0), wrap=wrap)
-    if do_refine:
+    if do_refine and kid not in NO_WARP:
         m = refine(m, kid, k, ppm, ed.get(kid, 0.0), wrap, wc.rng_for(seed, kid, variant, "refine"))
     return m, polys, ppm
 

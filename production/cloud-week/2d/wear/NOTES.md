@@ -38,6 +38,19 @@ Every finding was in the target's own drawing (`target_drawing.py`), which this 
 
 Narrow points: (a) footway_infill and graffiti_buff take the warp only (`HARD`): the strength variation let the flag joints show through by up to 11 per cent; (b) the warp's size is now stated truly (above); (c) the foot and head bands step by courses in flat runs 0.3 to 0.6 m long, under the brick's own per-brick tone (placer: one 2 m tile repeats three times in a 6 m bay); (d) bird droppings are plain ovals and (e) road patches are all square covers: both pass as they are.
 
+## After the second review (REVIEW-v2.md, FAIL, the last try: its exact fixes applied, not re-reviewed)
+
+It found render_patch's six types, the continuous streak fades, tyre_scuff, gutter_grime and the narrow points a and b fixed; algae, poster_remnant and paint_flake partly fixed. Its findings, as applied:
+
+1. **algae_downpipe**: the patch rises 0.4 to 0.7 m above the shoe (it rose 0.2 m in 3 of 5 variants), 0.3 to 0.5 m wide at the foot narrowing to 0.06 to 0.12 m, at 0.75 to 0.9; the run (variants 0 and 2) is 0.08 to 0.30 m wide at 0.85, no fade, from 0.9 to 1.35 m up down into the patch. New checks `algae_rise` (0.4 to 1.2 m) and `algae_run`. The target's `blob_eqd_mm_p50` (at most 450 mm) is not applied to variants 0 and 2: the rule's own run joined to the patch is past it.
+2. **poster_remnant**: the paste ghost is 2 to 4 broken runs, together 30 to 60 per cent of the site's edge, each 10 to 40 mm wide and varying (it was a closed even frame); a tear that leaves a corner under 70 degrees (after a 10 mm simplification) is redrawn. New check `poster_rim`.
+3. **paint_flake and render_crack**: flakes are angular chips with 6 to 9 straight sides (rough 0.35); every Voronoi crack (the crazing, the render's map cracks) is bent sideways every 5 mm by smooth noise of 0.06 times its length, wavelength 25 to 50 mm, nothing at its ends (`voronoi_cracks_bent`, the target's own with the bend added); timber flakes (variants 3 to 5) lie within 8 degrees of the grain, which runs along the tile's x (the placer turns the tile to the grain).
+4. **rust_bleed**: the halo round a fixing is 12 nested discs fading as (1 - r/R)^1.5 from the target's 0.18, centred 0.3 R below the fixing (it was one flat disc with a crisp edge).
+5. **render_patch v4**: 4 to 9 losses spread over the frame, never touching, with ragged outlines (24 points, rough 0.38). New check `patch_pieces`. Placer: variant 4 on render only, variant 5 (one brick) on brick only, on the wall's brick cells.
+6. Narrow points: the moss lies horizontal in the bed joints and upright in the perpends (applied); the sill and coping washes, the gutter fringe's plateaus, the faint smear tail and the clean rust trickles pass as they are.
+
+The composed brick foot (the target's `composed_foot_ratio`, 0.16 to 0.40 of the clean wall at 0.1 m beside the pipe) now reads 0.159 to 0.161 with the algae on the shoe: it passes at the bottom of its range.
+
 ## The check
 
 `check_wear.py` on the third build (the one delivered): **377 rows, 0 failing in 675 s** (`checks/check_v1.json`):

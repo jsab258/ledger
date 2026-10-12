@@ -26,7 +26,8 @@ _STATE = {}
 
 
 def install(draw):
-    """Continuous fades: every streak drawn by the target's module takes one slice per 5 mm of its length (the review's finding 3)."""
+    """Continuous fades: every streak drawn by the target's module takes one slice per 5 mm of its length (the first review's finding 3); every Voronoi crack (the paint's crazing,
+    the render's map cracks) wanders (the second review's finding 3)."""
     if getattr(draw, "_ledger_streak_fixed", False):
         return
     orig = draw.streak
@@ -34,7 +35,51 @@ def install(draw):
     def streak(rng, kind, x0, y0, w0, length, *a, slices=14, **k):
         return orig(rng, kind, x0, y0, w0, length, *a, slices=max(int(slices), int(math.ceil(float(length) / 5.0))), **k)
     draw.streak = streak
+    draw.voronoi_cracks = lambda *a, **k: voronoi_cracks_bent(draw, *a, **k)
     draw._ledger_streak_fixed = True
+
+
+def voronoi_cracks_bent(d, rng, kind, W, H, cell_mm, width_mm, keep, periodic, role, ellipse=None, origin=(0.0, 0.0)):
+    """The target's voronoi_cracks (same seeds, same keeping, same 120-degree junctions and periodic copies), each edge's centre line bent sideways every 5 mm by smooth noise of
+    0.06 times the edge's length, wavelength 25 to 50 mm, nothing at its two ends (so the junctions stay joined): a drying crack wanders, a Voronoi edge is straight."""
+    from scipy.spatial import Voronoi
+    nx, ny = max(2, int(round(W / cell_mm))), max(2, int(round(H / cell_mm)))
+    cw, ch = W / nx, H / ny
+    pts = []
+    for i in range(nx):
+        for j in range(ny):
+            pts.append(((i + 0.5 + rng.uniform(-0.4, 0.4)) * cw, (j + 0.5 + rng.uniform(-0.4, 0.4)) * ch))
+    base = np.array(pts)
+    vor = Voronoi(np.vstack([base + np.array([dx * W, dy * H]) for dx in (-1, 0, 1) for dy in (-1, 0, 1)]))
+    out = []
+    for (a, b) in vor.ridge_vertices:
+        if a < 0 or b < 0:
+            continue
+        p, q = vor.vertices[a], vor.vertices[b]
+        mx, my = (p[0] + q[0]) / 2, (p[1] + q[1]) / 2
+        if not (-5 <= mx <= W + 5 and -5 <= my <= H + 5):
+            continue
+        if rng.uniform() > keep:
+            continue
+        if ellipse is not None:
+            ex, ey, rx, ry = ellipse
+            if ((mx - ex) / rx) ** 2 + ((my - ey) / ry) ** 2 > 1.0:
+                continue
+        L = float(np.hypot(q[0] - p[0], q[1] - p[1]))
+        n = max(3, int(math.ceil(L / 5.0)) + 1)
+        tt = np.linspace(0, 1, n)
+        wl = rng.uniform(25.0, 50.0)
+        off = d.smooth_noise_1d(rng, n, max(2.0, wl / 5.0)) * 0.06 * L * np.sin(math.pi * tt)
+        tx, ty = (q[0] - p[0]) / max(L, 1e-9), (q[1] - p[1]) / max(L, 1e-9)
+        m = [(p[0] + (q[0] - p[0]) * s - ty * o + origin[0], p[1] + (q[1] - p[1]) * s + tx * o + origin[1]) for s, o in zip(tt, off)]
+        wd = d.uni(rng, width_mm) if isinstance(width_mm, (list, tuple)) else float(width_mm)
+        shifts = [(dx * W, dy * H) for dx in (-1, 0, 1) for dy in (-1, 0, 1)] if periodic else [(0.0, 0.0)]
+        for sx, sy in shifts:
+            mm_ = [(x + sx, y + sy) for x, y in m]
+            if periodic and (max(x for x, _ in mm_) < -10 or min(x for x, _ in mm_) > W + 10 or max(y for _, y in mm_) < -10 or min(y for _, y in mm_) > H + 10):
+                continue
+            out.append(d.poly(kind, 1.0 if role == "map_crack" else 0.8, d.ribbon(mm_, np.full(len(mm_), wd)), role, d.path_length(m)))
+    return out
 
 
 def envelope(tj, draw, kid, seed, variant):
@@ -47,6 +92,8 @@ def envelope(tj, draw, kid, seed, variant):
             _STATE["tj_nofingers"] = t2
         return draw.kind_envelope(_STATE["tj_nofingers"], kid, seed, variant)
     f = {"algae_downpipe": algae, "render_patch": render_patch, "poster_remnant": poster, "tyre_scuff": scuff, "paint_flake": flakes}.get(kid)
+    if kid == "rust_bleed":
+        return rust_halo(draw, draw.kind_envelope(tj, kid, seed, variant), kid)
     if f is None:
         return draw.kind_envelope(tj, kid, seed, variant)
     E = tj["kinds"][kid]["envelope"]
@@ -54,57 +101,75 @@ def envelope(tj, draw, kid, seed, variant):
     return f(draw, rng, kid, E, variant)
 
 
+# ------------------------------------------------------------------------------------------ rust_bleed (the second review's finding 4)
+def rust_halo(d, polys, kind):
+    """The rust halo round a fixing: not one flat disc at 0.18 with a crisp edge, but 12 nested discs fading as (1 - r/R)^1.5 from the target's halo level, centred 0.3 R below the fixing."""
+    out = []
+    for p in polys:
+        if p["role"] != "halo":
+            out.append(p)
+            continue
+        P = np.asarray(p["poly"], float)
+        cx, cy = P.mean(0)
+        R = float(np.hypot(*(P - [cx, cy]).T).mean())
+        for i in range(12):
+            r = R * (1 - i / 12.0)
+            lv = p["level"] * (1 - r / R + 1.0 / 24.0) ** 1.5
+            out.append(d.poly(kind, lv, d.circle(cx, cy - 0.3 * R, r, 28), "halo"))
+    return out
+
+
 # ------------------------------------------------------------------------------------------ algae_downpipe (finding 1)
 def algae(d, rng, kind, E, variant):
+    """The patch on the shoe, rising 0.4 to 0.7 m and wider low down (the second review: in 3 of 5 variants it rose only 0.2 m); its moss in the joints near it, horizontal in the bed
+    joints and upright in the perpends; in variants 0 and 2 a run from a leaking joint, 0.08 to 0.30 m wide at full strength, no fade, from 0.9 to 1.35 m up down to the patch."""
     out = []
     W, H = [v * 1000.0 for v in E["region_m"]]
-    bl = E["blobs"]
-    wb = rng.uniform(300.0, 650.0)                       # the patch on the shoe: 0.3 m wide or more (the rule's 0.9 m is past the target's own size check, eqd 450 mm)
-    hb = wb * rng.uniform(0.45, 0.8)
-    cx = rng.uniform(-100.0, 100.0)
-    pts = d.blob(rng, cx, hb * 0.35, math.sqrt(wb * hb), hb / wb, math.pi / 2, n=26, rough=0.18)
-    lv0 = d.uni(rng, [0.85, 1.0])
-    out.append(d.poly(kind, lv0, pts, "blob"))
-    n = d.uni_int(rng, bl["n"]) - 1
-    top = hb * 0.85
-    for i in range(max(0, n)):                            # the others overlap it and narrow upward
-        w = wb * rng.uniform(0.3, 0.5) * (0.8 ** i)
-        h = w * rng.uniform(1.2, 2.0)
-        cy = top + h * rng.uniform(0.0, 0.25)
-        bx = cx + rng.uniform(-0.2, 0.2) * wb
-        out.append(d.poly(kind, d.uni(rng, [0.75, 0.95]), d.blob(rng, bx, cy, math.sqrt(w * h), h / w, math.pi / 2 + rng.normal(0, 0.1), n=22, rough=0.2), "blob"))
-        top = cy + h * 0.35
+    wb = rng.uniform(300.0, 500.0)
+    wt = rng.uniform(60.0, 120.0)
+    rise = rng.uniform(400.0, 700.0)
+    cx = rng.uniform(-80.0, 80.0)
+    m = 14
+    ys = np.linspace(0.0, rise, m)
+    half = (wb / 2) * (1 - (ys / rise) ** 0.8) + (wt / 2) * (ys / rise) ** 0.8
+    rag_l = d.smooth_noise_1d(rng, m, 3.0) * 25.0
+    rag_r = d.smooth_noise_1d(rng, m, 3.0) * 25.0
+    lean = rng.uniform(-40.0, 40.0) * (ys / rise)
+    left = [(cx + lean[k] - half[k] + rag_l[k], ys[k]) for k in range(m)]
+    right = [(cx + lean[k] + half[k] + rag_r[k], ys[k]) for k in range(m - 1, -1, -1)]
+    top = [(cx + lean[-1] + rng.uniform(-0.3, 0.3) * wt, rise + rng.uniform(10.0, 40.0))]
+    pts = [(cx - wb / 2 - 30.0, -40.0)] + left + top + right + [(cx + wb / 2 + 30.0, -40.0)]
+    out.append(d.poly(kind, d.uni(rng, [0.75, 0.9]), pts, "blob"))
     if variant != 3:                                      # moss in the joints near the patch (variant 3 has none: "joint moss on/off")
         p10, p50, p90 = 5.5, 10.2, 31.5
         reach = 150.0
-        ys = np.arange(0.0, min(1200.0, top + reach), 75.0)
         cand = []
-        for c, y in enumerate(ys):
+        for c, y in enumerate(np.arange(0.0, min(1200.0, rise + reach), 75.0)):
             off = 0.0 if c % 2 == 0 else 107.5
             for x in np.arange(-W / 2 - off, W / 2, 215.0):
-                cand.append((x + off, y))                 # a perpend's foot
+                cand.append((x + off, y + 37.5, 1))      # a perpend (upright)
             for x in np.linspace(-W / 2, W / 2, 24):
-                cand.append((x, y))                       # along the bed joint
+                cand.append((x, y, 0))                    # along the bed joint (horizontal)
         cand = np.array(cand)
-        # within 0.15 m of the patch: distance to the patch ellipse (approximated by the first blob's box, grown) and to the upper blobs' column
-        near = (np.abs(cand[:, 0] - cx) <= wb / 2 + reach) & (cand[:, 1] <= top + reach)
+        near = (np.abs(cand[:, 0] - cx) <= wb / 2 + reach) & (cand[:, 1] <= rise + reach)
         cand = cand[near]
         k = int(min(len(cand), rng.integers(18, 45)))
         if k:
             pick = cand[rng.choice(len(cand), k, replace=False)]
-            for (x, y), e in zip(pick, d.lognormal3(rng, p10, p50, p90, k)):
+            for (x, y, up), e in zip(pick, d.lognormal3(rng, p10, p50, p90, k)):
                 e = float(np.clip(e, 4.0, 45.0))
-                horiz = rng.random() < 0.7
-                asp = rng.uniform(1.5, 3.0)
-                out.append(d.poly(kind, 0.75, d.blob(rng, x + rng.normal(0, 15), y + rng.normal(0, 3), e, asp, 0.0 if horiz else math.pi / 2, n=12, rough=0.3), "joint_moss"))
-    rn = E.get("run")
-    if rn and variant in (0, 2):                          # a run from a leaking joint: narrow at the joint, widening as it falls
-        L = d.uni(rng, [v * 1000.0 for v in rn["length_m"]])
-        L = min(L, H - 50.0)
-        y0 = min(H - 20.0, max(top + 150.0, L))
-        w0 = rng.uniform(30.0, 50.0)
-        w1 = rng.uniform(100.0, 300.0)
-        out += d.streak(rng, kind, cx + rng.uniform(-0.15, 0.15) * wb, y0, w0, min(L, y0), 0.02 * L, 1.0 - w1 / w0, 1.0, 0.7, 0.15, role="run")
+                out.append(d.poly(kind, 0.75, d.blob(rng, x + (rng.normal(0, 15) if not up else rng.normal(0, 2)), y + (rng.normal(0, 3) if not up else rng.normal(0, 15)), e,
+                                                    rng.uniform(1.5, 3.0), math.pi / 2 if up else 0.0, n=12, rough=0.3), "joint_moss"))
+    if variant in (0, 2):                                 # a run from a leaking joint: full strength, no fade, 0.08 to 0.30 m wide
+        y0 = rng.uniform(900.0, 1350.0)
+        w = rng.uniform(80.0, 300.0)
+        xr = cx + lean[-1] + rng.uniform(-0.3, 0.3) * wt
+        n = 24
+        yy = np.linspace(y0, rise * 0.6, n)
+        ww = w * np.clip(1 + 0.15 * d.smooth_noise_1d(rng, n, 6.0), 0.8, 1.2)
+        wx = xr + 12.0 * d.smooth_noise_1d(rng, n, 8.0)
+        pts = [(wx[k] - ww[k] / 2, yy[k]) for k in range(n)] + [(wx[k] + ww[k] / 2, yy[k]) for k in range(n - 1, -1, -1)]
+        out.append(d.poly(kind, 0.85, pts, "run"))
     return out
 
 
@@ -158,13 +223,20 @@ def render_patch(d, rng, kind, E, variant):
         ox = rng.uniform(-0.3, 0.3) * s
         tw = rng.uniform(0.35, 0.6) * s
         out += d.streak(rng, kind, ox, -s / 2 + 10.0, tw, L, 8.0, 0.6, 1.0, 0.4, 0.2, role="smear")
-    elif t == 4:                                          # a loss cluster: 4 to 9 losses (33 / 67 / 294 mm), no patch
+    elif t == 4:                                          # a loss cluster: 4 to 9 losses (33 / 67 / 294 mm), no patch, spread and not touching, ragged (the second review)
         p10, p50, p90 = [v * 1000.0 for v in E["loss_blobs"]["eqd_m"]]
         n = int(rng.integers(4, 10))
-        cx, cy = rng.uniform(-60, 60), rng.uniform(-80, 40)
-        for e in d.lognormal3(rng, p10, p50, p90, n):
-            e = float(np.clip(e, 30.0, 260.0))
-            out.append(d.poly(kind, rng.uniform(0.85, 1.0), d.blob(rng, cx + rng.normal(0, 110), cy + rng.normal(0, 90), e, d.uni(rng, [1.0, 2.0]), rng.uniform(0, math.pi)), "loss"))
+        placed = []
+        for e in sorted(d.lognormal3(rng, p10, p50, p90, n), reverse=True):
+            e = float(np.clip(e, 30.0, 200.0))
+            for _try in range(60):
+                x, y = rng.uniform(-300 + e / 2, 300 - e / 2), rng.uniform(-400 + e / 2, 300 - e / 2)
+                if all(math.hypot(x - a, y - b) > (e + f_) * 0.75 + 20.0 for a, b, f_ in placed):
+                    break
+            else:
+                continue
+            placed.append((x, y, e))
+            out.append(d.poly(kind, rng.uniform(0.85, 1.0), d.blob(rng, x, y, e, d.uni(rng, [1.0, 2.0]), rng.uniform(0, math.pi), n=24, rough=0.38), "loss"))
     else:                                                 # one replacement brick, 0.215 by 0.065 m, a mortar-coloured ring round it
         bw, bh = 215.0, 65.0
         out.append(d.poly(kind, 1.0, ragged(d, rng, [(-bw / 2, -bh / 2), (bw / 2, -bh / 2), (bw / 2, bh / 2), (-bw / 2, bh / 2)], 2.0, 4), "brick"))
@@ -207,10 +279,7 @@ def poster(d, rng, kind, E, variant):
     h = d.uni(rng, [v * 1000.0 for v in E["patch_m"][1]])
     w, h = min(w, 1050.0), min(h, 850.0)
     site = [(-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2)]
-    rim = rng.uniform(10.0, 40.0)                          # the paste ghost: a rim at 0.25, 10 to 40 mm wide
-    outer = ragged(d, rng, site, 6.0, 8)
-    inner = [(x * (1 - 2 * rim / w), y * (1 - 2 * rim / h)) for x, y in outer]
-    out.append(d.poly(kind, 0.25, outer + [outer[0]] + [inner[0]] + inner[::-1] + [inner[0]], "paste_rim"))
+    out += paste_rim(d, rng, kind, w, h)
     if variant % 5 == 4:                                  # strips only: 2 to 5 vertical strips, 30 to 120 mm wide
         for _ in range(int(rng.integers(2, 6))):
             sw = rng.uniform(30.0, 120.0)
@@ -227,9 +296,61 @@ def poster(d, rng, kind, E, variant):
         ww, hh = min(ww, w), min(hh, h)
         ox, oy = rng.uniform(-(w - ww) / 2, (w - ww) / 2), rng.uniform(-(h - hh) / 2, (h - hh) / 2)
         rect = ragged(d, rng, [(ox - ww / 2, oy - hh / 2), (ox + ww / 2, oy - hh / 2), (ox + ww / 2, oy + hh / 2), (ox - ww / 2, oy + hh / 2)], 14.0, 30)
-        for p in cut_by_tears(d, rng, rect, int(rng.integers(1, 3))):
-            out.append(d.poly(kind, rng.uniform(0.6, 1.0), p, "layer"))
+        for _try in range(20):                          # a tear that leaves a corner under 70 degrees is redrawn
+            parts = cut_by_tears(d, rng, rect, int(rng.integers(1, 3)))
+            if all(min_corner_deg(p) >= 70.0 for p in parts):
+                break
+        lv = rng.uniform(0.6, 1.0)
+        for p in parts:
+            out.append(d.poly(kind, lv, p, "layer"))
     return out
+
+
+def paste_rim(d, rng, kind, w, h):
+    """The paste ghost (the second review): 2 to 4 broken runs along the site's edge, together 30 to 60 per cent of it, each 10 to 40 mm wide and varying along it, at 0.25."""
+    per = 2 * (w + h)
+    k = int(rng.integers(2, 5))
+    total = per * rng.uniform(0.3, 0.6)
+    lens = rng.dirichlet(np.ones(k)) * total
+    starts = np.sort(rng.uniform(0, per, k))
+    out = []
+
+    def at(s):
+        s %= per
+        if s < w:
+            return np.array([-w / 2 + s, -h / 2]), np.array([0.0, 1.0])
+        s -= w
+        if s < h:
+            return np.array([w / 2, -h / 2 + s]), np.array([-1.0, 0.0])
+        s -= h
+        if s < w:
+            return np.array([w / 2 - s, h / 2]), np.array([0.0, -1.0])
+        s -= w
+        return np.array([-w / 2, h / 2 - s]), np.array([1.0, 0.0])
+    for s0, L in zip(starts, lens):
+        n = max(4, int(L / 10.0))
+        ss = s0 + np.linspace(0, L, n)
+        wd = np.clip(rng.uniform(10, 40) * (1 + 0.35 * d.smooth_noise_1d(rng, n, 4.0)), 10.0, 40.0)
+        P, N = zip(*[at(s) for s in ss])
+        outer = [tuple(p) for p in P]
+        inner = [tuple(p + nn * wv) for p, nn, wv in zip(P, N, wd)]
+        out.append(d.poly(kind, 0.25, outer + inner[::-1], "paste_rim", L))
+    return out
+
+
+def min_corner_deg(pts, tol=10.0):
+    """The sharpest corner of a polygon after simplifying it by `tol` mm (a tear must not leave a sliver: the second review)."""
+    from shapely.geometry import Polygon
+    g = Polygon(pts).buffer(0).simplify(tol)
+    if g.is_empty or g.geom_type != "Polygon":
+        return 180.0
+    P = np.asarray(g.exterior.coords)[:-1]
+    if len(P) < 3:
+        return 180.0
+    a = np.roll(P, 1, 0) - P
+    b = np.roll(P, -1, 0) - P
+    cosv = (a * b).sum(1) / np.maximum(np.hypot(*a.T) * np.hypot(*b.T), 1e-9)
+    return float(np.degrees(np.arccos(np.clip(cosv, -1, 1))).min())
 
 
 def poster_intact(variant):
@@ -304,9 +425,12 @@ def flakes(d, rng, kind, E, variant):
             cx0, cy0 = p0 + (p1 - p0) * t
             an = math.atan2(p1[1] - p0[1], p1[0] - p0[0]) + math.radians(rng.uniform(-10, 10))
             cx0, cy0 = cx0 % W, cy0 % H
+        elif not crazing:                                 # timber: along the grain (x in the tile), within 8 degrees
+            cx0, cy0, an = rng.uniform(0, W), rng.uniform(0, H), math.radians(rng.uniform(-8, 8))
         else:
             cx0, cy0, an = rng.uniform(0, W), rng.uniform(0, H), rng.uniform(0, math.pi)
-        bp = d.blob(rng, cx0, cy0, float(e), asp, an, n=14, rough=0.3)
+        bp = d.blob(rng, cx0, cy0, float(e), asp, an, n=int(rng.integers(6, 10)), rough=0.35)          # an angular chip: 6 to 9 straight sides (the second review)
+        e = max(max(abs(x - cx0), abs(y - cy0)) for x, y in bp) + 2.0          # the flake's true reach, so that a copy over the tile's edge is never skipped (the seam)
         for dx in (-W, 0.0, W):
             for dy in (-H, 0.0, H):
                 if (dx or dy) and not (-e <= cx0 + dx <= W + e and -e <= cy0 + dy <= H + e):
@@ -317,6 +441,7 @@ def flakes(d, rng, kind, E, variant):
         cx0, cy0 = rng.uniform(0, W), rng.uniform(0, H)
         eq0 = d.uni(rng, bs["eqd_mm"])
         bp = d.blob(rng, cx0, cy0, eq0, d.uni(rng, [1.0, 1.8]), rng.uniform(0, math.pi), n=20, rough=0.35)
+        eq0 = max(max(abs(x - cx0), abs(y - cy0)) for x, y in bp) + 2.0
         for dx in (-W, 0.0, W):
             for dy in (-H, 0.0, H):
                 if (dx or dy) and not (-eq0 <= cx0 + dx <= W + eq0 and -eq0 <= cy0 + dy <= H + eq0):
@@ -327,7 +452,8 @@ def flakes(d, rng, kind, E, variant):
 
 # ------------------------------------------------------------------------------------------ checks: the target's, less the one a departure replaces, and the review's new ones
 REPLACED = {("poster_remnant", "coverage_of_decal"): (None, "replaced by poster_intact: the target's 0.25 to 0.75 of the frame assumed one whole sheet; its own variants are 20 to 70 per cent intact"),
-            ("render_patch", "coverage_of_decal"): ((5,), "not on variant 5, the target's own single replacement brick (0.215 x 0.065 m is 2.5 per cent of the 0.7 x 0.8 m frame; the check asks 10)")}
+            ("render_patch", "coverage_of_decal"): ((5,), "not on variant 5, the target's own single replacement brick (0.215 x 0.065 m is 2.5 per cent of the 0.7 x 0.8 m frame; the check asks 10)"),
+            ("algae_downpipe", "blob_eqd_mm_p50"): ((0, 2), "not on variants 0 and 2, which carry the rule's run from a leaking joint (0.1 to 0.3 m wide, 0.5 to 1.5 m long): joined to the patch on the shoe it is past the check's 450 mm; algae_rise and algae_run hold them")}
 
 
 def kind_checks(k, kid, composition_measures, variant=None):
@@ -350,7 +476,33 @@ def extra_checks(kid, variant, m, ppm, polys):
         row = m[m.shape[0] - 1 - int(round(0.02 * ppm))]          # 0.02 m above the shoe (row 0 is the frame's top, 1.4 m)
         wide = float((row >= 0.5).sum()) / ppm
         out.append(("algae_shoe", wide, wide >= 0.3, "mask >= 0.5 over %.2f m at 0.02 m up (at least 0.3)" % wide))
+        bl = [q for q in polys if q["role"] == "blob"]
+        rise = max(y for q in bl for _x, y in q["poly"]) / 1000.0 if bl else 0.0
+        out.append(("algae_rise", rise, 0.4 <= rise <= 1.2, "the patch rises %.2f m above the shoe (the rule: 0.4 to 1.2)" % rise))
+        rn = [q for q in polys if q["role"] == "run"]
+        if variant in (0, 2):
+            ok, det, val = False, "no run", 0.0
+            if rn:
+                P = np.asarray(rn[0]["poly"], float)
+                n = len(P) // 2
+                wmin = float(np.min(P[n:][::-1, 0] - P[:n, 0]))
+                ytop = float(P[:, 1].max())
+                xc = float(P[:, 0].mean())
+                col = int(round((xc / 1000.0 + 0.45) * ppm))
+                r0 = int(round((1.4 - ytop / 1000.0) * ppm)) + 2
+                r1 = int(round((1.4 - P[:, 1].min() / 1000.0) * ppm)) - 2
+                frac = float((m[r0:r1, col] >= 0.5).mean()) if r1 > r0 else 0.0
+                val = frac
+                ok = wmin >= 80.0 and 900.0 <= ytop <= 1350.0 and frac >= 0.9
+                det = "run %.2f m wide or more from %.2f m up, at 0.5 or more over %.0f per cent of its length (0.08 to 0.30 m, 0.9 to 1.35 m, 90 per cent)" % (wmin / 1000.0, ytop / 1000.0, 100 * frac)
+            out.append(("algae_run", val, ok, det))
     elif kid == "poster_remnant":
+        rim = [q for q in polys if q["role"] == "paste_rim"]
+        ys_, xs_ = np.nonzero(m >= 0.2)
+        if rim and len(ys_):
+            per = 2.0 * ((xs_.max() - xs_.min() + 1) + (ys_.max() - ys_.min() + 1)) / ppm * 1000.0
+            share = sum(q.get("length_mm", 0.0) for q in rim) / per
+            out.append(("poster_rim", share, 0.25 <= share <= 0.65, "the paste ghost runs along %.0f per cent of the site's edge in %d pieces (30 to 60)" % (100 * share, len(rim))))
         f = poster_intact(variant)
         ys, xs = np.nonzero(m >= 0.2)
         if f is not None and len(ys):
@@ -362,6 +514,10 @@ def extra_checks(kid, variant, m, ppm, polys):
             from scipy import ndimage as ndi
             lab, n = ndi.label(m >= 0.5)
             out.append(("poster_strips", n, 2 <= n <= 6, "%d strips (2 to 5, a tear may split one)" % n))
+    elif kid == "render_patch" and variant == 4:
+        from scipy import ndimage as ndi
+        lab, n = ndi.label(m >= 0.5)
+        out.append(("patch_pieces", n, 4 <= n <= 9, "%d separate losses (4 to 9)" % n))
     elif kid == "paint_flake" and variant in CRAZING_VARIANTS["paint_flake"]:
         from shapely.geometry import Polygon, Point
         from shapely.ops import unary_union

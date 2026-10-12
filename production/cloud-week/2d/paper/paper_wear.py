@@ -250,119 +250,338 @@ def protect_coarse(S, mx=12.0, my=7.0):
     return m
 
 
-def patch_harmonics(rng, R_ref, amp_mm):
-    """The outline of a torn patch: radius x (1 + a sum of harmonics) with wavelengths 30 to 120 mm round a circle of radius R_ref (so k = 2 pi R_ref / wavelength), a total amplitude of
-    about amp_mm (10 to 40 mm), and a finer raggedness of a few millimetres."""
-    ks = np.maximum(2, np.round(2 * math.pi * R_ref / rng.uniform(30, 120, 6))).astype(int)
-    ph = rng.uniform(0, 2 * math.pi, 6)
-    am = (amp_mm / max(R_ref, 20.0)) * rng.uniform(0.5, 1.0, 6) * 0.45
-    kf = np.maximum(3, np.round(2 * math.pi * R_ref / rng.uniform(10, 25, 4))).astype(int)
-    pf = rng.uniform(0, 2 * math.pi, 4)
-    af = (3.0 / max(R_ref, 20.0)) * rng.uniform(0.5, 1.0, 4)
-    return (ks, ph, am, kf, pf, af)
-
-
-def polar_patch(shape, centre, R, harm, prot, margin=4.0):
-    """A torn patch (bool, 1 px/mm): a closed outline round `centre` (mm from the top left) of mean radius R, kept `margin` mm clear of the protected map along every ray."""
-    Hc, Wc = shape
-    n = 360
-    th = np.linspace(0, 2 * math.pi, n, endpoint=False)
-    ks, ph, am, kf, pf, af = harm
-    r = np.full(n, 1.0)
-    for k, p, a in zip(ks, ph, am):
-        r += a * np.cos(k * th + p)
-    for k, p, a in zip(kf, pf, af):
-        r += a * np.cos(k * th + p)
-    r = np.clip(r, 0.35, 2.0) * R
-    if prot is not None and prot.any():
-        T = int(r.max()) + 2
-        t = np.arange(T, dtype=np.float32)
-        px = np.clip((centre[0] + np.outer(np.cos(th), t)).astype(int), 0, Wc - 1)
-        py = np.clip((centre[1] + np.outer(np.sin(th), t)).astype(int), 0, Hc - 1)
-        hit = prot[py, px] & (np.abs(centre[0] + np.outer(np.cos(th), t) - px) < 2) & (np.abs(centre[1] + np.outer(np.sin(th), t) - py) < 2) & (t[None, :] <= r[:, None] + margin)
-        first = np.where(hit.any(1), hit.argmax(1), 10 ** 6)
-        s = float(np.min(np.maximum(first - margin, 0.0) / np.maximum(r, 1e-6)))
-        if s < 1.0:                     # the whole patch shrinks to clear the window (the close review: clipped ray by ray, its outline stepped square round the text)
-            if s < 0.15:
-                return np.zeros((Hc, Wc), bool)
-            r = r * s
-    pts = [(float(centre[0] + rr * math.cos(a)), float(centre[1] + rr * math.sin(a))) for rr, a in zip(r, th)]
-    im = Image.new("L", (Wc, Hc), 0)
-    ImageDraw.Draw(im).polygon(pts, fill=255)
-    return np.asarray(im) > 127
-
-
-def shape_loss(lost):
-    """No tongue of loss or of paper narrower than 20 mm (the review asked 15): open the loss and the paper with a 20 mm disc. The mask is first padded by its own edge (21 px, more than the
-    disc reaches), so that a loss that reaches the sheet's edge keeps to it (the close review's finding 1: an opening with the border counted as paper left a 10 mm frame round every loss)."""
-    st = gl_disk(10)
-    p = 21
-    m = ndi.binary_opening(np.pad(lost, p, mode="edge"), st)
-    paper = ndi.binary_opening(~m, st)
-    return (~paper)[p:-p, p:-p]
-
-
+# ------------------------------------------------------------------------------------------ the loss of paper: tear lines (the second street review's finding 1, its exact fix)
 def gl_disk(r):
     y, x = np.ogrid[-r:r + 1, -r:r + 1]
     return (x * x + y * y) <= r * r
 
 
+def _dir(a):
+    return np.array([math.cos(a), math.sin(a)])
+
+
+def jag(rng, pts, levels=3, amp=0.06):
+    """Midpoint displacement, `levels` deep, each midpoint moved across its segment by amp x the segment's length (a normal draw)."""
+    P = [np.asarray(p, float) for p in pts]
+    for _ in range(levels):
+        Q = [P[0]]
+        for a, b in zip(P[:-1], P[1:]):
+            d = b - a
+            L = float(np.hypot(*d))
+            n = np.array([-d[1], d[0]]) / max(L, 1e-9)
+            Q += [(a + b) / 2 + n * rng.normal(0, amp * L), b]
+        P = Q
+    return P
+
+
+def tear_walk(rng, G, n_seg, cap=110.0):
+    """An open tear line (mm, y down) along the guide polyline G (from G[0], on the sheet's edge, to G[-1], on the edge): n_seg segments of 12 to 70 mm, each turned 15 to 75 degrees off
+    the guide's heading with the sign alternating at every vertex, two neighbouring turns together at most `cap` degrees; where the guide bends, a vertex sits on the bend with its own turn
+    against the bend; one vertex in four a tooth (a jog of 5 to 25 mm out at 90 to 140 degrees, then back to the heading). Built along the guide (s) and across it (y), then laid on it."""
+    G = [np.asarray(g, float) for g in G]
+    seg = np.array([np.hypot(*(q - p)) for p, q in zip(G[:-1], G[1:])])
+    cum = np.concatenate([[0.0], np.cumsum(seg)])
+    Lg = float(cum[-1])
+    bends = list(cum[1:-1])
+    # the stations along the guide: the bends, then the rest spread by random weights
+    k_free = max(n_seg - 1 - len(bends), 0)
+    w = rng.uniform(0.6, 1.4, k_free + len(bends) + 1)
+    st = np.cumsum(w / w.sum() * Lg)[:-1]
+    st = np.sort(np.concatenate([st[:k_free], bends])) if bends else st
+    for b in bends:                                      # make sure each bend is a station (replace the nearest)
+        j = int(np.argmin(np.abs(st - b)))
+        st[j] = b
+    st = np.unique(np.round(st, 3))
+
+    def frame(s):
+        i = int(np.clip(np.searchsorted(cum, s, side="right") - 1, 0, len(seg) - 1))
+        tgt = (G[i + 1] - G[i]) / max(seg[i], 1e-9)
+        return G[i] + tgt * (s - cum[i]), tgt, np.array([-tgt[1], tgt[0]])
+
+    def bend_turn(s):
+        for bi, b in enumerate(bends):
+            if abs(s - b) < 1e-6:
+                t0 = (G[bi + 1] - G[bi]) / seg[bi]
+                t1 = (G[bi + 2] - G[bi + 1]) / seg[bi + 1]
+                return math.degrees(math.atan2(t0[0] * t1[1] - t0[1] * t1[0], float(np.dot(t0, t1))))
+        return 0.0
+    sign = 1 if rng.random() < 0.5 else -1
+    prev_t = 0.0
+    y = 0.0
+    s_prev = 0.0
+    pts = [G[0]]
+    for k, s in enumerate(list(st) + [Lg]):
+        ds = s - s_prev
+        last = s >= Lg - 1e-6
+        if last:
+            dy = -y
+        else:
+            bt = bend_turn(s)
+            if bt:                                       # the vertex on a bend turns against it
+                sign = -1 if bt > 0 else 1
+            t_c = float(rng.uniform(15.0, max(15.0, min(75.0, cap - prev_t - abs(bt) * 0.5))))
+            dy = sign * ds * math.tan(math.radians(t_c))
+            prev_t = t_c
+        y += dy
+        p, tg, nm = frame(min(s, Lg))
+        q = p + nm * y
+        pts.append(q)
+        if not last and (k + 1) % 4 == 0:               # a tooth: a jog out and back to the heading
+            hd = math.atan2(dy, ds)
+            th = math.radians(rng.uniform(90, 140)) * (-sign)
+            d1, d2 = rng.uniform(5, 25), rng.uniform(12, 30)
+            ox, oy = math.cos(hd + th) * d1, math.sin(hd + th) * d1
+            tip = q + tg * ox + nm * oy
+            back = tip + tg * math.cos(hd) * d2 + nm * math.sin(hd) * d2
+            pts += [tip, back]
+            y += oy + math.sin(hd) * d2
+            s = s + ox + math.cos(hd) * d2
+        sign = -sign
+        s_prev = s
+    return pts
+
+
+def patch_poly(rng, kind, c, a, b, n_seg):
+    """The loss region of one torn patch: kind 'corner' (c a corner; a along the foot or top, b up or down the side: a torn corner, its tear running across it) or 'edge' (c on an edge;
+    a along it each way, b into the sheet: the tear leaves the edge and meets it again at 30 to 70 degrees). Returns (polygon, tear line)."""
+    c = np.asarray(c, float)
+    if kind[0] == "corner":
+        u, v = np.asarray(kind[1], float), np.asarray(kind[2], float)
+        tear = tear_walk(rng, [c + a * u, c + b * v], n_seg)
+        return [c] + tear, tear
+    e, n = np.asarray(kind[1], float), np.asarray(kind[2], float)
+    P0, P1 = c + a * e, c - a * e
+    a0, a1 = math.radians(rng.uniform(40, 70)), math.radians(rng.uniform(40, 70))
+    d0 = math.cos(a0) * (-e) + math.sin(a0) * n
+    d1 = math.cos(a1) * e + math.sin(a1) * n
+    s = np.linalg.solve(np.stack([d0, -d1], 1), P1 - P0)
+    M = P0 + s[0] * d0
+    depth = float(np.dot(M - P0, n))
+    if depth > b:                                        # a flat top at depth b
+        Q1 = P0 + d0 * (b / math.sin(a0))
+        Q2 = P1 + d1 * (b / math.sin(a1))
+        G = [P0, Q1, Q2, P1]
+    else:
+        G = [P0, M, P1]
+    tear = tear_walk(rng, G, n_seg)
+    return tear, tear
+
+
+def bite_poly(rng, c, e, n, R):
+    """An edge bite: 2 to 4 segments leaving and meeting the edge at 30 to 70 degrees."""
+    c, e, n = np.asarray(c, float), np.asarray(e, float), np.asarray(n, float)
+    P0, P1 = c - R * e, c + R * e
+    a0, a1 = math.radians(rng.uniform(30, 70)), math.radians(rng.uniform(30, 70))
+    d0 = math.cos(a0) * e + math.sin(a0) * n
+    d1 = -math.cos(a1) * e + math.sin(a1) * n
+    k = int(rng.integers(2, 5))
+    if k == 2:                                           # the apex where the two rays meet
+        M = np.stack([d0, -d1], 1)
+        s = np.linalg.solve(M, P1 - P0)
+        pts = [P0, P0 + s[0] * d0, P1]
+    else:
+        depth = R * rng.uniform(0.5, 1.0)
+        Q1 = P0 + d0 * depth / max(0.3, math.sin(a0)) * rng.uniform(0.6, 1.0)
+        Q2 = P1 + d1 * depth / max(0.3, math.sin(a1)) * rng.uniform(0.6, 1.0)
+        pts = [P0, Q1]
+        if k == 4:
+            m = (Q1 + Q2) / 2
+            dd = Q2 - Q1
+            pts.append(m + np.array([-dd[1], dd[0]]) * rng.uniform(0.2, 0.4) * (1 if rng.random() < 0.5 else -1))
+        pts += [Q2, P1]
+    return pts, pts
+
+
+def poly_mask(polys, shape, cpm):
+    im = Image.new("L", (shape[1], shape[0]), 0)
+    d = ImageDraw.Draw(im)
+    for P in polys:
+        d.polygon([(float(x) * cpm, float(y) * cpm) for x, y in P], fill=255)
+    return np.asarray(im) > 127
+
+
+def cut_protrusions(m, cpm, sizes_mm=(4, 8, 16, 32)):
+    """Cut off at its base every tongue of loss or of paper longer than 1.5 times its base width (it replaces the 20 mm disc openings, which rounded every corner). The mask is padded
+    by its own edge, so that the sheet's border is neither paper nor loss. Returns (mask, tongues cut)."""
+    cut = 0
+    p = int(max(sizes_mm) * cpm) + 2
+    for D in sizes_mm:
+        r = max(1, int(round(D * cpm / 2)))
+        for inv in (False, True):
+            a = np.pad(~m if inv else m, p, mode="edge")
+            res = a & ~ndi.binary_opening(a, gl_disk(r))
+            lab, k = ndi.label(res)
+            if not k:
+                continue
+            for i, sl in enumerate(ndi.find_objects(lab), 1):
+                L = math.hypot(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start) / cpm
+                if L > 1.5 * D:
+                    a[sl][lab[sl] == i] = False
+                    cut += 1
+            a = a[p:-p, p:-p]
+            m = ~a if inv else a
+    return m, cut
+
+
+def protrusions_left(m, cpm, sizes_mm=(4, 8, 16, 32)):
+    n = 0
+    p = int(max(sizes_mm) * cpm) + 2
+    for D in sizes_mm:
+        r = max(1, int(round(D * cpm / 2)))
+        for inv in (False, True):
+            a = np.pad(~m if inv else m, p, mode="edge")
+            lab, k = ndi.label(a & ~ndi.binary_opening(a, gl_disk(r)))
+            for sl in ndi.find_objects(lab):
+                if math.hypot(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start) / cpm > 1.5 * D:
+                    n += 1
+    return n
+
+
+def tear_tests(lines):
+    """The review's tests on the tear lines: (stretches of 40 mm turning more than 150 degrees one way after 3 mm smoothing, tear lines of 60 mm or more with fewer than two vertices turning
+    60 degrees or more)."""
+    t150 = few = 0
+    for raw, jagged in lines:
+        P = np.asarray(jagged, float)
+        seg = np.hypot(*np.diff(P, axis=0).T)
+        s = np.concatenate([[0.0], np.cumsum(seg)])
+        if s[-1] < 10:
+            continue
+        u = np.arange(0.0, s[-1], 1.0)
+        R = np.stack([np.interp(u, s, P[:, 0]), np.interp(u, s, P[:, 1])], 1)
+        R = ndi.gaussian_filter1d(R, 3.0, axis=0, mode="nearest")
+        h = np.unwrap(np.arctan2(*np.diff(R, axis=0).T[::-1]))
+        dh = np.diff(h)
+        if len(dh) > 40:
+            cs = np.concatenate([[0.0], np.cumsum(dh)])
+            win = np.abs(cs[40:] - cs[:-40])
+            t150 += int(np.degrees(win.max()) > 150)
+        Q = np.asarray(raw, float)
+        if np.hypot(*np.diff(Q, axis=0).T).sum() >= 60 and len(Q) >= 3:
+            hh = np.arctan2(*np.diff(Q, axis=0).T[::-1])
+            tv = np.degrees(np.abs((np.diff(hh) + math.pi) % (2 * math.pi) - math.pi))
+            few += int((tv >= 60).sum() < 2)
+    return t150, few
+
+
 def loss_and_tears(S, share_range, n_tears):
-    """The loss of paper: a bill pasted on a wall is torn from below, the bottom corners first. 2 to 5 torn patches with ragged outlines (wavelengths 30 to 120 mm); class B keeps to the lower
-    corners (a corner of at most 120 mm, half the foot untouched); in C and D also the foot's middle and, in D, an upper corner; the edge tears are small ragged bites; in A and B the lettering's reading
-    window and 4 mm round it are never touched. In C and D a ghost of the paste is left (214, 205, 185 at 0.3). The rim is pale paper fibre."""
+    """The loss of paper (the second street review's exact fix): each loss is the region between the sheet's edge and one tear line, an open polyline of 4 to 12 segments of 12 to 70 mm
+    turned 15 to 75 degrees off its base heading with the sign alternating, one vertex in four a tooth; then a midpoint-displacement jag 3 levels deep at 6 per cent of a segment, the
+    fibre fringe and the pale rim. Edge bites are the same walk with 2 to 4 segments, leaving and meeting the edge at 30 to 70 degrees. No disc openings: a tongue of loss or of paper
+    longer than 1.5 times its base is cut off at its base. The shares, the corners and the ghost are as before: class B keeps to the lower corners (a corner of at most 120 mm, half the foot
+    untouched); C and D also the foot's middle and, in D, an upper side and the top; in A and B the lettering's reading window and 4 mm round it are never touched (a patch shrinks as a whole)."""
     rng = S.rng
     lo, hi = share_range
     share = float(rng.uniform(lo, hi)) if hi > 0 else 0.0
     if share <= 0.001 and n_tears <= 0:
         return
-    Hc, Wc = int(math.ceil(S.H)), int(math.ceil(S.W))
+    W_, H_ = S.W, S.H
+    Hc, Wc = int(math.ceil(H_)), int(math.ceil(W_))
     prot = protect_coarse(S) if S.cls in ("A", "B") else None
-    R0 = math.sqrt(max(share, 0.001) * S.W * S.H / 2.0 * 4.0 / math.pi) if share > 0.001 else 0.0
-    specs = []                              # (centre, weight, harmonics)
+    if prot is not None:
+        prot = ndi.binary_dilation(prot, gl_disk(4))
+    R0 = math.sqrt(max(share, 0.001) * W_ * H_ / 2.0 * 4.0 / math.pi) if share > 0.001 else 0.0
+    specs = []                     # (kind, centre, weight, child seed)
     if share > 0.001:
         left = rng.random() < 0.5
-        corners = [(0.0, S.H), (S.W, S.H)] if S.cls != "B" or rng.random() < 0.5 else [((0.0, S.H) if left else (S.W, S.H))]
-        for c in corners:
-            specs.append((c, float(rng.uniform(0.8, 1.2)), patch_harmonics(rng, R0, rng.uniform(10, 35))))
+        corners = [(0.0, H_), (W_, H_)] if S.cls != "B" or rng.random() < 0.5 else [((0.0, H_) if left else (W_, H_))]
+        for cx, cy in corners:
+            specs.append((("corner", (1.0 if cx == 0 else -1.0, 0.0), (0.0, -1.0)), (cx, cy), float(rng.uniform(0.8, 1.2)), int(rng.integers(1 << 30))))
         if S.cls in ("C", "D"):
-            specs.append(((float(rng.uniform(0.25, 0.75)) * S.W, S.H), float(rng.uniform(0.6, 1.0)), patch_harmonics(rng, R0, rng.uniform(10, 40))))
+            specs.append((("edge", (1.0, 0.0), (0.0, -1.0)), (float(rng.uniform(0.25, 0.75)) * W_, H_), float(rng.uniform(0.6, 1.0)), int(rng.integers(1 << 30))))
         if S.cls == "D":
-            specs.append(((float(rng.choice([0.0, S.W])), float(rng.uniform(0.0, 0.5)) * S.H), float(rng.uniform(0.5, 0.9)), patch_harmonics(rng, R0, rng.uniform(10, 40))))
-            specs.append(((float(rng.uniform(0.1, 0.9)) * S.W, 0.0), float(rng.uniform(0.3, 0.7)), patch_harmonics(rng, R0, rng.uniform(10, 40))))
+            sx = float(rng.choice([0.0, W_]))
+            specs.append((("edge", (0.0, 1.0), (1.0 if sx == 0 else -1.0, 0.0)), (sx, float(rng.uniform(0.15, 0.5)) * H_), float(rng.uniform(0.5, 0.9)), int(rng.integers(1 << 30))))
+            specs.append((("edge", (1.0, 0.0), (0.0, 1.0)), (float(rng.uniform(0.15, 0.85)) * W_, 0.0), float(rng.uniform(0.3, 0.7)), int(rng.integers(1 << 30))))
     R0 = R0 * (2.0 / max(len(specs), 1)) ** 0.5 if specs else 0.0
     bites = []
     for _ in range(n_tears):
         e = int(rng.integers(0, 4))
-        t = float(rng.uniform(0.1, 0.9))
-        c = (t * S.W, 0.0) if e == 0 else ((S.W, t * S.H) if e == 1 else ((t * S.W, S.H) if e == 2 else (0.0, t * S.H)))
-        Rb = float(rng.uniform(14, 35))
-        bites.append((c, Rb, patch_harmonics(rng, Rb, rng.uniform(4, 10))))
-    scale_hi = 0.9 * max(S.W, S.H)
+        t_ = float(rng.uniform(0.1, 0.9))
+        geo = [((t_ * W_, 0.0), (1, 0), (0, 1)), ((W_, t_ * H_), (0, 1), (-1, 0)), ((t_ * W_, H_), (1, 0), (0, -1)), ((0.0, t_ * H_), (0, 1), (1, 0))][e]
+        bites.append((geo, float(rng.uniform(14, 35)), int(rng.integers(1 << 30))))
 
-    def build(f):
-        lost = np.zeros((Hc, Wc), bool)
-        for c, wgt, hm in specs:
-            lost |= polar_patch((Hc, Wc), c, R0 * f * wgt, hm, prot)
-        for c, R, hm in bites:
-            lost |= polar_patch((Hc, Wc), c, R, hm, prot)
-        return lost
-    f = 1.0
-    if specs:
-        lo_f, hi_f = 0.1, 3.0
-        for _ in range(12):
-            f = (lo_f + hi_f) / 2
-            got = float(shape_loss(build(f)).mean())
-            if got > share:
-                hi_f = f
-            else:
-                lo_f = f
-        f = lo_f
-    lost = shape_loss(build(f))
+    def patch(kind, c, R, cs):
+        """(polygon, (tear line, jagged tear line)): the first of up to 24 draws whose line passes the review's own tests (no 40 mm turning 150 degrees one way; two sharp vertices)."""
+        for k in range(24):
+            r2 = np.random.default_rng(cs + 7919 * k)
+            a, b = R * r2.uniform(0.8, 1.25), R * r2.uniform(0.8, 1.25)
+            arc = (math.pi / 4 if kind[0] == "corner" else math.pi / 2) * (a + b)
+            n_seg = int(np.clip(round(arc / r2.uniform(25, 45)), 4, 12))
+            P, T = patch_poly(r2, kind, c, a, b, n_seg)
+            Tj = jag(r2, T)
+            if tear_tests([(T, Tj)]) == (0, 0):
+                break
+        return ([P[0]] + Tj if kind[0] == "corner" else Tj), (T, Tj)
+
+    def bite(c, e, n, Rb, cs):
+        for k in range(24):
+            r2 = np.random.default_rng(cs + 7919 * k)
+            P, T = bite_poly(r2, c, e, n, Rb)
+            Tj = jag(r2, T)
+            if tear_tests([(T, Tj)]) == (0, 0):
+                break
+        return Tj, (T, Tj)
+
+    def clear(P):
+        if prot is None:
+            return True
+        return not (poly_mask([P], (Hc, Wc), 1.0) & prot).any()
+
+    def build(f, salt=0):
+        polys, lines = [], []
+        for kind, c, wgt, cs in specs:
+            R = R0 * f * wgt
+            for _s in range(16):
+                P, L = patch(kind, c, R, cs + salt)
+                if clear(P):
+                    polys.append(P)
+                    lines.append(L)
+                    break
+                R *= 0.85
+        for (c, e, n), Rb, cs in bites:
+            for _s in range(8):
+                P, L = bite(c, e, n, Rb, cs + salt)
+                if clear(P):
+                    polys.append(P)
+                    lines.append(L)
+                    break
+                Rb *= 0.8
+        return polys, lines
+    def size_for(salt):
+        f = 1.0
+        if specs:
+            lo_f, hi_f = 0.1, 3.0
+            for _ in range(12):
+                f = (lo_f + hi_f) / 2
+                got = float(poly_mask(build(f, salt)[0], (Hc, Wc), 1.0).mean())
+                if got > share:
+                    hi_f = f
+                else:
+                    lo_f = f
+            f = lo_f
+        return f
+    cpm = 2.0
+    shp2 = (int(math.ceil(H_ * cpm)), int(math.ceil(W_ * cpm)))
+    for attempt in range(8):                             # a loss whose cutting leaves a tongue (a cut on one side making one on the other) is drawn again from the next seed
+        f = size_for(attempt * 104729)
+        polys, lines = build(f, attempt * 104729)
+        if not polys:
+            return
+        lost, cut = poly_mask(polys, shp2, cpm), 0
+        for _p in range(6):                              # cutting a tongue can leave a shorter one: until none is left
+            lost, c_ = cut_protrusions(lost, cpm)
+            cut += c_
+            if not c_:
+                break
+        left_ = protrusions_left(lost, cpm)
+        if not left_:
+            break
+    t150, few = tear_tests(lines)
+    S.log["tear_tests"] = dict(turn_over_150=t150, few_sharp_vertices=few, tongues_left=left_, tongues_cut=cut)
     if not lost.any():
         return
-    S.log["loss_share"] = float(lost.mean())
-    soft = ndi.gaussian_filter(lost.astype(np.float32), 1.2)
+    soft = ndi.gaussian_filter(lost.astype(np.float32), 0.6)
     up = np.asarray(Image.fromarray((soft * 255).astype(np.uint8)).resize((S.w, S.h), Image.BILINEAR)).astype(np.float32) / 255.0
     fib = pc.value_noise((S.h, S.w), max(1.0, 0.8 * S.ppm), rng, octaves=2)
     lost_f = (up + (fib - 0.5) * 0.30 > 0.5).astype(np.float32)
@@ -645,48 +864,48 @@ def rust_run(S, x, y0, L, op0=0.35, op1=0.05):
     S.tint(win, (prof * op[:, None] * streak).astype(np.float32), RUST, 1.0)
 
 
-def lime_streak(S, width_mm=(20, 50), length_mm=(60, 140), colour=LIME, opacity=0.85, top=True):
-    """Bird lime from the top edge (the close review's finding 10): a splash with a hard ragged edge, within 3 degrees of vertical, narrowing down its first half, and 1 to 3 drips below."""
+def lime_streak(S, width_mm=None, length_mm=None, colour=LIME, opacity=0.9, top=True):
+    """Bird lime (the second street review's exact fix): an irregular splat 8 to 20 mm across on the top edge, (235, 235, 228) at 0.9 with a core of (150, 150, 135) over 20 to 40 per
+    cent of it; from it 1 to 3 runs, each 2 to 5 mm wide (its width within 30 per cent along it, no taper from a wide top), 20 to 90 mm long, within 3 degrees of vertical, at 0.85 to
+    0.95, ending in a bead of 3 to 5 mm. No lime is wider than 8 mm more than 10 mm below the top edge. (width_mm and length_mm are kept for the callers; the review's numbers rule.)"""
     rng = S.rng
     x0 = rng.uniform(0.1, 0.9) * S.w
     y0 = 0.0 if top else S.h * 0.3
-    Wd = rng.uniform(*width_mm) * S.ppm
-    L = rng.uniform(*length_mm) * S.ppm
-    Lb = L * rng.uniform(0.45, 0.6)
-    ang = math.radians(rng.uniform(-3, 3))
-    m = 48
-    tt = np.linspace(0, 1, m)
-    half = Wd / 2 * (1 - 0.65 * tt ** 0.8)
-    rag = lambda: ndi.gaussian_filter1d(rng.normal(0, 0.7 * S.ppm, m), 0.8)
-    lft, rgt = -half + rag(), half + rag()
-    body = [(lft[i], tt[i] * Lb) for i in range(m)] + [(rgt[i], tt[i] * Lb) for i in range(m - 1, -1, -1)]
-    drips = []
+    D = rng.uniform(8, 20) * S.ppm
+    sw, sc_ = S.blob(x0, y0 + D * 0.25, D / 2, 0.35)
+    S.tint(sw, sc_, colour, opacity)
+    core = sc_ * (pc.value_noise(sc_.shape, max(1.0, 0.25 * D), rng) > rng.uniform(0.6, 0.8))
+    S.tint(sw, core.astype(np.float32), (150, 150, 135), 0.9)
+    S.height[sw[2]:sw[3], sw[0]:sw[1]] += (sc_ * 0.3).astype(np.float32)
+    S.rough[sw[2]:sw[3], sw[0]:sw[1]] = S.rough[sw[2]:sw[3], sw[0]:sw[1]] * (1 - sc_) + 0.8 * sc_
     for _ in range(int(rng.integers(1, 4))):
-        u = rng.uniform(-0.6, 0.6) * half[-1]
-        dw = rng.uniform(2, 5) * S.ppm
-        dl = (L - Lb) * rng.uniform(0.4, 1.0)
-        drips.append([(u - dw / 2, Lb - 2 * S.ppm), (u + dw / 2, Lb - 2 * S.ppm), (u + dw * 0.3, Lb + dl), (u - dw * 0.3, Lb + dl)])
-        drips.append(("bead", u, Lb + dl, dw * 0.55))
-    c, s_ = math.cos(ang), math.sin(ang)
-    to = lambda u, v: (x0 + u * c - v * s_, y0 + u * s_ + v * c)
-    polys = [[to(u, v) for u, v in body]] + [[to(u, v) for u, v in d] for d in drips if d[0] != "bead"]
-    beads = [(to(d[1], d[2]), d[3]) for d in drips if d[0] == "bead"]
-    xs = [p[0] for q in polys for p in q]
-    ys = [p[1] for q in polys for p in q]
-    win = S.win_of((min(xs), min(ys), max(xs), max(ys)), 4)
-    if win[1] <= win[0] or win[3] <= win[2]:
-        return
+        wr = rng.uniform(2, 5) * S.ppm
+        L = rng.uniform(20, 90) * S.ppm
+        ang = math.radians(rng.uniform(-3, 3))
+        sx = x0 + rng.uniform(-0.3, 0.3) * D
+        sy = y0 + D * 0.4
+        m = 32
+        tt = np.linspace(0, 1, m)
+        wv = wr * np.clip(1 + 0.3 * ndi.gaussian_filter1d(rng.uniform(-1, 1, m), 2.0) / 0.6, 0.7, 1.3)
+        cx = sx + np.sin(ang) * L * tt
+        cy = sy + np.cos(ang) * L * tt
+        left = [(cx[k] - wv[k] / 2, cy[k]) for k in range(m)]
+        right = [(cx[k] + wv[k] / 2, cy[k]) for k in range(m - 1, -1, -1)]
+        pts = left + right
+        br = rng.uniform(3, 5) / 2 * S.ppm
+        bx, by = cx[-1], cy[-1]
+        xs, ys = [p[0] for p in pts] + [bx - br, bx + br], [p[1] for p in pts] + [by - br, by + br]
+        win = S.win_of((min(xs), min(ys), max(xs), max(ys)), 3)
+        if win[1] <= win[0] or win[3] <= win[2]:
+            continue
 
-    def draw(d, ss, ox, oy):
-        for q in polys:
-            d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in q], fill=255)
-        for (bx, by), br in beads:
+        def draw(d, ss, ox, oy, pts=pts, bx=bx, by=by, br=br):
+            d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in pts], fill=255)
             d.ellipse([(bx - br - ox) * ss, (by - br - oy) * ss, (bx + br - ox) * ss, (by + br - oy) * ss], fill=255)
-    cov = pi.draw_cov(win, draw)
-    dens = 0.92 + 0.08 * pc.value_noise(cov.shape, 2 * S.ppm, rng)
-    S.tint(win, (cov * dens).astype(np.float32), colour, opacity)
-    S.height[win[2]:win[3], win[0]:win[1]] += (cov * 0.2).astype(np.float32)
-    S.rough[win[2]:win[3], win[0]:win[1]] = S.rough[win[2]:win[3], win[0]:win[1]] * (1 - cov) + 0.8 * cov
+        cov = pi.draw_cov(win, draw)
+        S.tint(win, cov, colour, float(rng.uniform(0.85, 0.95)))
+        S.height[win[2]:win[3], win[0]:win[1]] += (cov * 0.2).astype(np.float32)
+        S.rough[win[2]:win[3], win[0]:win[1]] = S.rough[win[2]:win[3], win[0]:win[1]] * (1 - cov) + 0.8 * cov
     S.log["lime"] = S.log.get("lime", 0) + 1
 
 
@@ -749,8 +968,10 @@ def apply(S, table, cls):
     elif table == "notice_sleeve":
         sleeve(S)
     elif table == "plastic_card":
-        # a printed plastic card on a chain: no folds, no curl, no bleaching, no finger smudge; scratches, a little grime (at most 5 per cent) and the sheen of the plastic
-        scratches(S, int(rng.integers(6, 21)), width_mm=(0.2, 0.5), length_mm=(5, 40))
+        # a printed plastic card on a chain: no folds, no curl, no bleaching, no finger smudge; scratches (none in class A; the second street review), a little grime (at most 5 per cent)
+        # and the sheen of the plastic
+        if ci:
+            card_scratches(S, int(rng.integers(6, 13)) + 4 * (ci - 1))
         grime_gradient(S, 0.04 * ci / 1.0 if ci else 0.0)
         S.shade(0.04)
     elif table == "card_felt":
@@ -913,6 +1134,44 @@ def warp(S, mm):
 def curl(S, mm):
     xs = np.arange(S.w, dtype=np.float32) / S.w
     S.height += (np.clip(xs - 0.6, 0, 1) / 0.4 * mm)[None, :].astype(np.float32)
+
+
+def card_scratches(S, n):
+    """The plastic sign's scratches (the second street review): opacity 0.25 to 0.4; 70 per cent within 25 mm of the bottom edge or 20 mm of the hole and within 25 degrees of
+    horizontal; in classes A and B they keep off the lettering."""
+    rng = S.rng
+    holes = []
+    for win, hole in S.geo.holes:
+        ys, xs = np.nonzero(hole > 0.5)
+        if len(ys):
+            holes.append((win[0] + xs.mean(), win[2] + ys.mean()))
+    for _ in range(n):
+        for _t in range(25):
+            near = rng.random() < 0.7
+            if near and holes and rng.random() < 0.4:
+                hx, hy = holes[int(rng.integers(len(holes)))]
+                r = rng.uniform(0, 20) * S.ppm
+                a0 = rng.uniform(0, 2 * math.pi)
+                x, y = hx + r * math.cos(a0), hy + r * math.sin(a0)
+            elif near:
+                x, y = rng.uniform(0.05, 0.95) * S.w, S.h - rng.uniform(1, 25) * S.ppm
+            else:
+                x, y = rng.uniform(0.05, 0.95) * S.w, rng.uniform(0.05, 0.95) * S.h
+            a = math.radians(rng.uniform(-25, 25)) if near else rng.uniform(0, math.pi)
+            L = rng.uniform(5, 40) * S.ppm
+            x, y = float(np.clip(x, 0, S.w - 1)), float(np.clip(y, 0, S.h - 1))
+            x2, y2 = float(np.clip(x + L * math.cos(a), 0, S.w - 1)), float(np.clip(y + L * math.sin(a), 0, S.h - 1))
+            if S.cls not in ("A", "B") or not S.hits_text((min(x, x2), min(y, y2), max(x, x2), max(y, y2)), 1.0):
+                break
+        else:
+            continue
+        wd = rng.uniform(0.2, 0.5)
+        win = S.win_of((min(x, x2), min(y, y2), max(x, x2), max(y, y2)), 3)
+        if win[1] <= win[0] or win[3] <= win[2]:
+            continue
+        cov = pi.draw_cov(win, lambda d, ss, ox, oy: d.line([((x - ox) * ss, (y - oy) * ss), ((x2 - ox) * ss, (y2 - oy) * ss)], fill=255, width=max(1, int(wd * S.ppm * ss))))
+        S.tint(win, cov, (240, 238, 230), float(rng.uniform(0.25, 0.4)))
+    S.log["scratches"] = n
 
 
 def scratches(S, n, width_mm=(0.3, 0.5), length_mm=(10, 40)):
@@ -1084,19 +1343,39 @@ def pressed_plate(S, it):
 
 
 def peel_bites(S, n, length_mm=(20, 80), depth_mm=(3, 15), colour=(150, 145, 135)):
-    """Separate bites of the paint peeled from the foot of a board: grey plywood showing, ragged, the rest of the edge painted."""
+    """Separate bites of the paint peeled from the foot of a board: grey plywood showing; each bite's top edge a ragged tear line (the walk of the loss of paper at a quarter of its scale) and a
+    0.5 mm rim of lifted paint (the paint's colour times 1.08) along it (the second street review)."""
     rng = S.rng
     for _ in range(n):
-        L = rng.uniform(*length_mm) * S.ppm
-        D = rng.uniform(*depth_mm) * S.ppm
-        cx = rng.uniform(0.08, 0.92) * S.w
-        m = 24
-        u = np.linspace(-1, 1, m)
-        prof = np.clip(1 - np.abs(u) ** 1.7, 0, 1) ** 0.6 * (0.65 + 0.35 * rng.random(m))
-        pts = [(cx + ui * L / 2, S.h + 1 - D * p) for ui, p in zip(u, prof)] + [(cx + L / 2 + 1, S.h + 2), (cx - L / 2 - 1, S.h + 2)]
-        xs, ys = [p[0] for p in pts], [p[1] for p in pts]
-        win = S.win_of((min(xs), min(ys), max(xs), max(ys)), 3)
-        cov = pi.draw_cov(win, lambda d, ss, ox, oy: d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in pts], fill=255))
+        L = rng.uniform(*length_mm)
+        D = rng.uniform(*depth_mm)
+        cx = rng.uniform(0.08, 0.92) * S.W
+        a, b = L / 2, D
+        r2 = np.random.default_rng(int(rng.integers(1 << 30)))
+        guide = lambda t, cx=cx, a=a, b=b: np.array([cx + a * math.cos(t * math.pi), S.H - b * math.sin(t * math.pi)])
+        pts = [np.array([cx + a, S.H])]
+        p = pts[0]
+        sign = 1 if r2.random() < 0.5 else -1
+        nseg = int(r2.integers(4, 9))
+        for k in range(1, nseg):
+            aim = guide(k / nseg)
+            base = math.atan2(aim[1] - p[1], aim[0] - p[0])
+            tr = math.radians(r2.uniform(15, 75)) * sign
+            sign = -sign
+            Ls = float(np.clip(np.hypot(*(aim - p)) / max(0.3, math.cos(tr)), 3.0, 17.5))
+            p = p + Ls * _dir(base + tr)
+            p[1] = min(p[1], S.H)
+            pts.append(p)
+        pts.append(np.array([cx - a, S.H]))
+        pts = jag(r2, pts)
+        poly = [(x * S.ppm, y * S.ppm) for x, y in pts] + [((cx - a) * S.ppm, S.h + 2), ((cx + a) * S.ppm, S.h + 2)]
+        xs, ys = [q[0] for q in poly], [q[1] for q in poly]
+        win = S.win_of((min(xs), min(ys), max(xs), max(ys)), int(2 * S.ppm) + 3)
+        cov = pi.draw_cov(win, lambda d, ss, ox, oy, poly=poly: d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in poly], fill=255))
+        rim = np.clip(ndi.grey_dilation(cov, footprint=gl_disk(max(1, int(round(0.5 * S.ppm))))) - cov, 0, 1)
+        sub = S.rgb[win[2]:win[3], win[0]:win[1]]
+        sub[:] = sub * (1 - rim[..., None]) + np.minimum(255.0, sub * 1.08) * rim[..., None]
+        S.height[win[2]:win[3], win[0]:win[1]] += (rim * 0.05).astype(np.float32)
         S.tint(win, cov, colour, 0.95)
         S.height[win[2]:win[3], win[0]:win[1]] -= (cov * 0.2).astype(np.float32)
     S.log["peel_bites"] = n
