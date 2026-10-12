@@ -64,7 +64,11 @@ def run_inner(stage):
         rooms = os.path.join(WORK, "rooms")
         os.makedirs(rooms, exist_ok=True)
         r = S.build_scene(rooms)
-        P = S.calibrate(r, rooms)
+        pj = os.path.join(rooms, "light_params.json")
+        if os.environ.get("LEDGER_REUSE_CAL") and os.path.exists(pj):
+            P = json.load(open(pj))          # the light strengths calibrated on the same scene (skips about four minutes)
+        else:
+            P = S.calibrate(r, rooms)
         times = S.render_states(r, rooms, P, rooms, samples=ROOM_SAMPLES)
         json.dump({"times_s": times, "samples": ROOM_SAMPLES, "params": P}, open(os.path.join(rooms, "render_times.json"), "w"), indent=1)
         json.dump(r.placed, open(os.path.join(rooms, "placed.json"), "w"), indent=0)

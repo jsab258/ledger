@@ -218,7 +218,7 @@ def _clean_patch(arr, box, boxes, rng):
     return None
 
 
-def blank_map(src, dst, boxes, whole_map_print=None, seed=1, fills=None):
+def blank_map(src, dst, boxes, whole_map_print=None, seed=1, fills=None, grain_scale=1.0):
     """Paint the boxes of one map to their ring colour plus the map's own grain. Returns the report rows."""
     img = Image.open(src).convert("RGB")
     arr = np.asarray(img).astype(np.float32)
@@ -248,7 +248,7 @@ def blank_map(src, dst, boxes, whole_map_print=None, seed=1, fills=None):
             grain = rng.normal(0.0, 1.0, (y1 - y0, x1 - x0, 3)).astype(np.float32) * sd
             grain = np.asarray(Image.fromarray(np.clip(grain + 128, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.8))).astype(np.float32) - 128
             how = "grain drawn at the ring's strength (%s)" % ", ".join("%.1f" % v for v in sd)
-        fill = fill + np.clip(grain, -13, 13)
+        fill = fill + np.clip(grain * grain_scale, -13, 13)
         out[y0:y1, x0:x1] = fill
         rows.append({"box": box, "ring": [round(float(c), 1) for c in ring], "patch_from": pos, "grain": how})
     Image.fromarray(np.clip(out + 0.5, 0, 255).astype(np.uint8)).save(dst, quality=98, subsampling=0)
@@ -318,6 +318,21 @@ def blank(ids=None, log=print):
                 for im in g["images"]:
                     if os.path.basename(im["uri"]) == mp:
                         im["uri"] = os.path.join(os.path.dirname(im["uri"]), clean_name).replace(os.sep, "/")
+                # the same boxes on the model's normal and roughness maps: engraved and embossed lettering (the till's plates, the boombox's legends) lives in the relief, which the
+                # target says a print does not have; found at 100 per cent in the first render (13 October), so the relief inside each box goes flat too
+                if "_diff_" in mp and boxes != [[0, 0, 1024, 1024]]:
+                    for kind in ("nor_gl", "arm"):
+                        comp = mp.replace("_diff_", "_%s_" % kind)
+                        try:
+                            crel = map_path(a, comp)
+                        except KeyError:
+                            continue
+                        cdst_name = os.path.splitext(comp)[0] + "_clean.jpg"
+                        blank_map(os.path.join(folder, crel), os.path.join(folder, os.path.dirname(crel), cdst_name), boxes, seed=int(hashlib.md5((a + kind).encode()).hexdigest()[:6], 16), grain_scale=0.5)
+                        rep.append({"map": comp, "clean": cdst_name, "rows": [{"box": b_, "companion_of": mp} for b_ in boxes]})
+                        for im in g["images"]:
+                            if os.path.basename(im["uri"]) == comp:
+                                im["uri"] = os.path.join(os.path.dirname(im["uri"]), cdst_name).replace(os.sep, "/")
             json.dump(g, open(os.path.join(folder, a + "_clean.gltf"), "w"), indent=1)
             log("blanked %s: %s" % (a, ", ".join(r["map"] for r in rep)))
         report[a] = rep
@@ -359,6 +374,33 @@ def verify(log=print):
                 ok = maxdiff <= 24.0 and share < 0.02 and points
                 rows.append({"id": "INV-06 %s %s %s" % (a, b["map"], box), "ok": bool(ok),
                              "detail": "largest difference from the ring %.1f (limit 24); gradient above 40 on %.2f%% (limit 2); glTF points at the clean map: %s" % (maxdiff, share * 100, points)})
+    # the companion maps (normal, roughness): the same boxes, the same test
+    for a in model_ids(T):
+        for b in entries(T, a):
+            if "_diff_" not in b["map"] or b["boxes"] == [[0, 0, 1024, 1024]]:
+                continue
+            folder = os.path.join(POLY, a, RES)
+            for kind in ("nor_gl", "arm"):
+                comp = b["map"].replace("_diff_", "_%s_" % kind)
+                try:
+                    rel = map_path(a, comp)
+                except KeyError:
+                    continue
+                orig = os.path.join(folder, rel)
+                clean = os.path.join(folder, os.path.dirname(rel), os.path.splitext(comp)[0] + "_clean.jpg")
+                arr0 = np.asarray(Image.open(orig).convert("RGB")).astype(np.float32)
+                arr1 = np.asarray(Image.open(clean).convert("RGB")).astype(np.float32)
+                g = json.load(open(gltf_path(a), encoding="utf-8"))
+                points = any(os.path.basename(i["uri"]) == os.path.basename(clean) for i in g["images"])
+                for box in b["boxes"]:
+                    x0, y0, x1, y1 = box
+                    ring = _ring(arr0, box)
+                    patch = arr1[y0:y1, x0:x1]
+                    maxdiff = float(np.abs(patch - ring).max())
+                    gy, gx = np.gradient(patch.mean(axis=2))
+                    share = float((np.hypot(gx, gy) > 40).mean())
+                    ok = maxdiff <= 24.0 and share < 0.02 and points
+                    rows.append({"id": "INV-06 %s %s %s (relief)" % (a, comp, box), "ok": bool(ok), "detail": "largest difference from the ring %.1f; gradient above 40 on %.2f%%; glTF points at it: %s" % (maxdiff, share * 100, points)})
     return rows
 
 
