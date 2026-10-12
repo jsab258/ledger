@@ -3271,7 +3271,7 @@
    "id": "content.canon_gate",
    "what": "tools/canon-gate.py is clean over production/cloud-week/town/people.json, production/cloud-week/town/HOMES.md, production/cloud-week/town/NOTES.md",
    "pass": true,
-   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 31916 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
+   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 31919 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
   },
   {
    "id": "shape.homes_file",

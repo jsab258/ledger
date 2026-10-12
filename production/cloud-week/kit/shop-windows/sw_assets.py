@@ -441,6 +441,6 @@ def models_table(placed_json, display_json):
         if not src or "CC0" not in lic or "polyhaven.com" not in page:
             bad.append(a)
         ent = entries(T, a)
-        marks = "; ".join(sorted({e["reads"].split(";")[0][:70] for e in ent})) if ent else "none found"
+        marks = ("; ".join(sorted({e["reads"].split(";")[0].split(" (")[0][:48] for e in ent}))[:150]) if ent else "none found"
         rows.append("| %s | %s | %s | %d | %d | %s |" % (a, page, lic, room_n.get(a, 0), disp_n.get(a, 0), marks))
     return "\n".join(rows), bad
