@@ -234,15 +234,34 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         o.data.materials.append(dark)
         return o
     ycard = yc
-    slab("reveal_l", -W / 2 - 0.05, -W / 2, 0.0, ycard + 0.02, 0.0, 3.4)
-    slab("reveal_r", W / 2, W / 2 + 0.05, 0.0, ycard + 0.02, 0.0, 3.4)
-    slab("reveal_top", -W / 2, W / 2, 0.0, ycard + 0.02, 2.95, 3.4)
+    slab("reveal_l", -W / 2 - 0.012, -W / 2, 0.0, ycard + 0.02, 0.0, 2.97)
+    slab("reveal_r", W / 2, W / 2 + 0.012, 0.0, ycard + 0.02, 0.0, 2.97)
+    slab("reveal_top", -W / 2, W / 2, 0.0, ycard + 0.02, 2.95, 2.97)
     slab("reveal_floor", -W / 2, W / 2, 0.02, ycard + 0.02, 0.0, 0.55)
     # --- the street: wall, footway, road, far footway
     brick = bpy.data.materials.new("brick")
     brick.use_nodes = True
-    brick.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (*(lin(np.array([0.46, 0.26, 0.20]))), 1.0)
-    brick.node_tree.nodes["Principled BSDF"].inputs["Roughness"].default_value = 0.9
+    bn = brick.node_tree
+    bp = bn.nodes["Principled BSDF"]
+    tc = bn.nodes.new("ShaderNodeTexCoord")
+    sp = bn.nodes.new("ShaderNodeSeparateXYZ")
+    cb = bn.nodes.new("ShaderNodeCombineXYZ")
+    br = bn.nodes.new("ShaderNodeTexBrick")
+    bn.links.new(tc.outputs["Object"], sp.inputs["Vector"])
+    bn.links.new(sp.outputs["X"], cb.inputs["X"])
+    bn.links.new(sp.outputs["Z"], cb.inputs["Y"])
+    bn.links.new(cb.outputs["Vector"], br.inputs["Vector"])
+    br.offset = 0.5
+    br.inputs["Scale"].default_value = 1.0
+    br.inputs["Brick Width"].default_value = 0.215
+    br.inputs["Row Height"].default_value = 0.075
+    br.inputs["Mortar Size"].default_value = 0.010
+    br.inputs["Mortar Smooth"].default_value = 0.2
+    br.inputs["Color1"].default_value = (*lin(np.array([0.50, 0.30, 0.22])), 1.0)
+    br.inputs["Color2"].default_value = (*lin(np.array([0.43, 0.25, 0.18])), 1.0)
+    br.inputs["Mortar"].default_value = (*lin(np.array([0.58, 0.55, 0.50])), 1.0)
+    bn.links.new(br.outputs["Color"], bp.inputs["Base Color"])
+    bp.inputs["Roughness"].default_value = 0.92
     paving = bpy.data.materials.new("paving")
     paving.use_nodes = True
     paving.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (*lin(np.array([0.50, 0.50, 0.48])), 1.0)
