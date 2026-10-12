@@ -15,6 +15,7 @@ import importlib
 import json
 import pkgutil
 import sys
+sys.dont_write_bytecode = True
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -235,6 +236,8 @@ def build_person(p, sf, proposed_places):
         entry["id_note"] = p["internal_id_note"]
     if p["extra"].get("note"):
         entry["note"] = p["extra"]["note"]
+    if p["extra"].get("aka"):
+        entry["aka"] = p["extra"]["aka"]
     return entry
 
 
@@ -247,6 +250,15 @@ def main():
         "version": "v1",
         "made": "13 Oct 2026, cloud week 42, unit 11 (town content)",
         "status": "A PROPOSAL for the PC session. Homes are in HOMES.md. Nothing here is in the game. Every fact is either copied word for word from its home with file and line, derived by script from a home, or marked new with a group Jafar sees in DECISIONS.md.",
+        "fields": {
+            "people[].id": "the internal id where one exists (the casting ids and the routines' ids); id_note says where none was found",
+            "people[].name / heard_as": "the name in the casting home / what the player hears (Ron, Sheila, 'the new owner' for Tom)",
+            "people[].facts[]": "kind knows, believes or saw. text is word for word from the home at src (file, line, end) or derived by script from hook-cast.json (derived) or new, marked with a group (new) and a reason (why). secret: held, never told to a stranger. street: the id of a StreetFacts.cs fact. believes carry truth (true, false, unknown, partly) and truth_basis; saw carry when.",
+            "people[].schedule": "weekday (Monday, the game's first day), weekday_differs (Tuesday to Friday where they differ), saturday, sunday: from, to, place, said. Derived from hook-cast.json unless source.proposed.",
+            "people[].talks_to[]": "who, weight (hook-cast.json's tie), hours_a_week together (recomputed from the routines, 6 m), meets, feeling (the weight's band). Proposed ties say how they were found.",
+            "people[].rumours[]": "gist, truth and truth_basis against canon and the story, sure (how sure the first teller was), heard_from, would_pass_to (only people they meet), based_on (their own fact ids), limits (codes in 'limits').",
+            "people[].newcomer_questions[]": "q, a (under 30 words, in their voice), kind (answers, partly, points_to, deflect, dont_know), uses (their own fact ids), bench (the question bench it adapts). Tom has none.",
+        },
         "groups": GROUPS,
         "limits": __import__("authored.common", fromlist=["LIMITS"]).LIMITS,
         "proposed_places": T.PROPOSED_PLACES,

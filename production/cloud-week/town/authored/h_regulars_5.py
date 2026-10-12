@@ -76,7 +76,7 @@ PEOPLE.append(regular(
 # ---------------------------------------------------------------- 27 Norman Dent (filip)
 sty, tag = "terse", "friend"
 PEOPLE.append(regular(
-    "filip", "Norman", knew=False, line_as="believes", line_truth="partly", line_basis=H(*AWAY, note="True on the nights he is there; the story has him away the night of the fire."),
+    "filip", "Norman", knew=False, line_as="believes", line_truth="unknown", line_basis=H(*AWAY, note="True on the nights he is there; the story has him away the night of the fire, so nothing settles it."),
     manner=("glad of company", "swears he misses nothing"),
     knows=[
         K("walks_row", "FIRE", "The watchman walks the whole row for the warehouses still standing."),
@@ -151,7 +151,7 @@ PEOPLE.append(regular(
         K("with_wife", "REG", "keeps the takeaway on the parade with his wife", via="the contact sheet's who-and-where column"),
     ],
     believes=[
-        BN("good_food_waits", "N-LIVES", "Good food is worth the ten minutes it takes, and a customer who will not wait is not worth the trouble.",
+        BN("good_food_waits", "N-LIVES", "Good food is worth the ten minutes it takes.",
            "From his line 'Good food takes ten minutes.'", "unknown", NOTE("A stance, not a fact about the world.")),
     ],
     saw=[W("came_1968", "REG", "came from the New Territories in 1968", "1968, when he came to Britain")],

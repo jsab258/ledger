@@ -99,7 +99,8 @@ PEOPLE.append(person(
     role=("CASTING", "the Irish-born parish priest, Father Walsh to the street"),
     identity=("CASTING", "**Father Brendan Walsh** | about 61"),
     street=STREET_ALL + MICKEY2, knew_mickey=True,
-    internal_id_note="'emil' is the internal id (the sheet folder keeps the old name: father-emil); the age is 'about 61'.",
+    internal_id_note="'emil' is the internal id (the sheet folder keeps the old name: father-emil).",
+    extra={"note": "Age: the casting row says 'about 61'."},
     knows=[
         K("called", "HK", "Father Walsh, who says mass and calls on the old"),
         K("in_case", "S:emil", "I'm not here to ask you anything. I'm here in case you want to say something."),

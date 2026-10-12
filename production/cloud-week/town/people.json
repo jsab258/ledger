@@ -2,6 +2,15 @@
  "version": "v1",
  "made": "13 Oct 2026, cloud week 42, unit 11 (town content)",
  "status": "A PROPOSAL for the PC session. Homes are in HOMES.md. Nothing here is in the game. Every fact is either copied word for word from its home with file and line, derived by script from a home, or marked new with a group Jafar sees in DECISIONS.md.",
+ "fields": {
+  "people[].id": "the internal id where one exists (the casting ids and the routines' ids); id_note says where none was found",
+  "people[].name / heard_as": "the name in the casting home / what the player hears (Ron, Sheila, 'the new owner' for Tom)",
+  "people[].facts[]": "kind knows, believes or saw. text is word for word from the home at src (file, line, end) or derived by script from hook-cast.json (derived) or new, marked with a group (new) and a reason (why). secret: held, never told to a stranger. street: the id of a StreetFacts.cs fact. believes carry truth (true, false, unknown, partly) and truth_basis; saw carry when.",
+  "people[].schedule": "weekday (Monday, the game's first day), weekday_differs (Tuesday to Friday where they differ), saturday, sunday: from, to, place, said. Derived from hook-cast.json unless source.proposed.",
+  "people[].talks_to[]": "who, weight (hook-cast.json's tie), hours_a_week together (recomputed from the routines, 6 m), meets, feeling (the weight's band). Proposed ties say how they were found.",
+  "people[].rumours[]": "gist, truth and truth_basis against canon and the story, sure (how sure the first teller was), heard_from, would_pass_to (only people they meet), based_on (their own fact ids), limits (codes in 'limits').",
+  "people[].newcomer_questions[]": "q, a (under 30 words, in their voice), kind (answers, partly, points_to, deflect, dont_know), uses (their own fact ids), bench (the question bench it adapts). Tom has none."
+ },
  "groups": {
   "N-LIVES": {
    "title": "Small beliefs, sightings and trade knowledge of the street's people, and how they feel about those they talk to",
@@ -7171,7 +7180,8 @@
      "new": "N-ANSWERS"
     }
    ],
-   "id_note": "'emil' is the internal id (the sheet folder keeps the old name: father-emil); the age is 'about 61'."
+   "id_note": "'emil' is the internal id (the sheet folder keeps the old name: father-emil).",
+   "note": "Age: the casting row says 'about 61'."
   },
   {
    "id": "noor",
@@ -29347,14 +29357,14 @@
       "line": 114,
       "end": 114
      },
-     "truth": "partly",
+     "truth": "unknown",
      "truth_basis": {
       "src": {
        "file": "game-design/warehouse-fire-2026-09-29.md",
        "line": 34,
        "end": 35
       },
-      "note": "True on the nights he is there; the story has him away the night of the fire."
+      "note": "True on the nights he is there; the story has him away the night of the fire, so nothing settles it."
      },
      "id": "filip.b01"
     },
@@ -30428,7 +30438,7 @@
   },
   {
    "id": "takeaway_m",
-   "name": "Peter Tang (Tang Wing-kei)",
+   "name": "Peter Tang",
    "heard_as": "Peter",
    "tier": "regular",
    "age": 44,
@@ -30644,7 +30654,7 @@
      "key": "good_food_waits",
      "kind": "believes",
      "secret": false,
-     "text": "Good food is worth the ten minutes it takes, and a customer who will not wait is not worth the trouble.",
+     "text": "Good food is worth the ten minutes it takes.",
      "new": "N-LIVES",
      "why": "From his line 'Good food takes ten minutes.'",
      "truth": "unknown",
@@ -31033,11 +31043,12 @@
      "new": "N-ANSWERS"
     }
    ],
-   "id_note": "The id is the routine's own, kept from the old studio (REGULARS.md)."
+   "id_note": "The id is the routine's own, kept from the old studio (REGULARS.md).",
+   "aka": "Tang Wing-kei"
   },
   {
    "id": "takeaway_f",
-   "name": "Lily Tang (Wong Mei-ling)",
+   "name": "Lily Tang",
    "heard_as": "Lily",
    "tier": "regular",
    "age": 41,
@@ -31642,7 +31653,8 @@
      "new": "N-ANSWERS"
     }
    ],
-   "id_note": "The id is the routine's own, kept from the old studio (REGULARS.md)."
+   "id_note": "The id is the routine's own, kept from the old studio (REGULARS.md).",
+   "aka": "Wong Mei-ling"
   }
  ]
 }

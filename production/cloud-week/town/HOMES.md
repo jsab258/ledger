@@ -29,4 +29,7 @@ Unit 11, cloud week 42, 13 October 2026. Written before any content, as CLAUDE.m
 6. The empire roster (empire-roster.md 94 to 98) says Ferko drives the night cab; the regulars sheet makes Kevin Needham (ferko) the day driver and Terry Hodgson (dusan) the night one. The sheet outranks; the arm each belongs to is carried and marked.
 7. CASTING.md line 65 names Humberside CID; Ellis's own sheet names no force (Carol Ellis sheet, line 11: not decided in canon). The sheet stands, no force is named here.
 8. CASTING.md 76 says Mickey was a trawlerman until the fleet went; canon.md does not say it and CATALOGUE.md already lists it. Not used.
-9. Ron's approved street lines are written in the approved shape; this file's answers for Ron are in his card's voice and add no line to them.
+9. Sheila's card says the fish shop is two doors up; the street's bays put it next door (Mickey's is bay 0, the fishmonger bay 1). No answer says which.
+10. The casting text names real places (Hull, Grimsby, Humberside, Hessle Road; Darren's sample line "a lift to Grimsby"; Danny "Grimsby-side"), where canon makes the town fictional and RealWorld.cs makes live talk refuse them. The facts here copy around them and no answer names one. The one that remains is the New Territories in Peter Tang's row.
+
+Ron's approved street lines are in an approved shape; the answers written for Ron here are in his card's voice and add no line to them.

@@ -128,6 +128,8 @@ STD = {
 def regular(rid, heard_as, *, street=None, knew=False, line_as="knows", line_truth=None, line_basis=None, line_text=None,
             manner=(), knows=(), believes=(), saw=(), rumours, questions, schedule=None, extra=None, note=None):
     r = REGTAB[rid]
+    shown = r["name"].split(" (")[0]
+    aka = r["name"][r["name"].index("(") + 1:-1] if " (" in r["name"] else None
     line = line_text or r["line"]
     kn, be = [], []
     if line_as == "knows":
@@ -139,8 +141,10 @@ def regular(rid, heard_as, *, street=None, knew=False, line_as="knows", line_tru
     ex = dict(extra or {})
     if note:
         ex["note"] = note
+    if aka:
+        ex["aka"] = aka
     return person(
-        rid, r["name"], heard_as, "regular", r["age"], role=("REG", r["who"]),
+        rid, shown, heard_as, "regular", r["age"], role=("REG", r["who"]),
         identity=("REG", "%s | %s | %d" % (rid, r["name"], r["age"])),
         street=(STREET_ALL + (MICKEY2 if knew else [])) if street is None else street, knew_mickey=knew,
         knows=kn + list(knows), believes=be + list(believes), saw=list(saw), rumours=rumours, questions=questions,

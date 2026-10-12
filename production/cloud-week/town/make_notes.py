@@ -7,6 +7,7 @@ The lists in it (new facts by person, proposed schedules, specific rumours) are 
 import collections
 import json
 import sys
+sys.dont_write_bytecode = True
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent

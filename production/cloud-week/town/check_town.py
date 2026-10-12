@@ -28,6 +28,7 @@ import json
 import re
 import subprocess
 import sys
+sys.dont_write_bytecode = True
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -315,9 +316,11 @@ def run(doc, full=True):
     row("decisions.only_mine_new", "every unit 11 line in DECISIONS.md belongs to a group", len(mine) == len(used_groups), "%d lines, %d groups" % (len(mine), len(used_groups)))
     if full:
         try:
-            ns = subprocess.run(["git", "diff", "--numstat", "--", "DECISIONS.md"], cwd=REPO, capture_output=True, text=True, timeout=60).stdout.split()
+            first = subprocess.run(["git", "log", "-S(cloud week 42, unit 11)", "--format=%H", "--", "DECISIONS.md"], cwd=REPO, capture_output=True, text=True, timeout=60).stdout.split()
+            base = (first[-1] + "^") if first else "HEAD"
+            ns = subprocess.run(["git", "diff", "--numstat", base, "--", "DECISIONS.md"], cwd=REPO, capture_output=True, text=True, timeout=60).stdout.split()
             removed = int(ns[1]) if len(ns) >= 2 else 0
-            row("decisions.append_only", "DECISIONS.md has no removed or changed line against HEAD", removed == 0, "removed lines: %d" % removed)
+            row("decisions.append_only", "DECISIONS.md has no removed or changed line since before unit 11's entries (against %s)" % base[:9], removed == 0, "removed lines: %d" % removed)
         except Exception as e:  # noqa: BLE001
             row("decisions.append_only", "DECISIONS.md has no removed or changed line against HEAD", False, str(e))
 

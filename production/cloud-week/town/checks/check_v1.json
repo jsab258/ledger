@@ -335,7 +335,7 @@
   },
   {
    "id": "decisions.append_only",
-   "what": "DECISIONS.md has no removed or changed line against HEAD",
+   "what": "DECISIONS.md has no removed or changed line since before unit 11's entries (against 7fa57a661)",
    "pass": true,
    "detail": "removed lines: 0"
   },
@@ -3271,7 +3271,7 @@
    "id": "content.canon_gate",
    "what": "tools/canon-gate.py is clean over production/cloud-week/town/people.json, production/cloud-week/town/HOMES.md, production/cloud-week/town/NOTES.md",
    "pass": true,
-   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 31904 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
+   "detail": "canon-gate: clean - 0 finding(s) in 3 file(s), 31916 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
   },
   {
    "id": "shape.homes_file",
