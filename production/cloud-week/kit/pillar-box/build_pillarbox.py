@@ -42,7 +42,7 @@ Z_COLLAR0, Z_COLLAR1, R_COLLAR = 1350.0, 1380.0, 205.0
 Z_RIM0, Z_RIM1, Z_TOP = 1440.0, 1485.0, 1500.0
 DOME_RISE = Z_TOP - Z_RIM1
 SLOT_W, SLOT_H, SLOT_Z = 250.0, 45.0, 1278.0
-DOOR_W, DOOR_Z0, DOOR_Z1 = 240.0, 330.0, 1235.0               # the target's 300 wide scaled 0.8; the head rises to just under the slot's frame (REVIEW-v1-street fault 2)
+DOOR_W, DOOR_Z0, DOOR_Z1 = 240.0, 330.0, 1224.0               # the target's 300 wide scaled 0.8; the head rises to just under the slot's frame (REVIEW-v1-street fault 2; the frame's borders widened to 22 after REVIEW-v2-street)
 SIDES = 96                                                    # the lathe's sides (the target asks for 8,000 to 30,000 triangles)
 LOCK_X, LOCK_Z = -90.0, 818.0                                 # on the viewer's right: with +y the front and z up, the viewer's right is -x (the target's frame line is mirrored)
 FRAME_W, FRAME_H, FRAME_Z = 130.0, 240.0, 1090.0              # an upright frame under the slot, its top at 1210 (REVIEW-v1-street fault 2)
@@ -134,16 +134,16 @@ def build(T, out_dir, npz_dir):
     # the hood over the slot: a curved lip wrapped round the front, 30 proud, its cheeks radial planes at +-47 degrees
     hood = [(R_BODY - 3.0, 1301.0), (R_BODY + 30.0, 1301.0), (R_BODY + 30.0, 1323.0), (R_BODY - 3.0, 1333.0)]   # 0.5 over the slot's ceiling (1300.5): no two faces in one plane
     B.add("hood", arc_solid(hood, -47.0, 47.0), "paint_red", bev=1.5)
-    # the frame round the slot (10 wide, 3 proud, wrapped on the body, the slot cut through it) and the sill under it (REVIEW-v1-street, narrow point)
-    af = math.degrees(math.asin((SLOT_W / 2.0 + 10.0) / R_BODY))
-    z0f, z1f = SLOT_Z - SLOT_H / 2.0 - 10.0, SLOT_Z + SLOT_H / 2.0 + 10.0
-    Vfr, Ffr = arc_solid([(R_BODY - 2.5, z0f), (R_BODY + 3.0, z0f), (R_BODY + 3.0, z1f), (R_BODY - 2.5, z1f)], -af, af)
-    sf = B.add("slot_frame", (Vfr, Ffr), "paint_red", bev=1.0)
+    # the frame round the slot: borders 22 wide, 12 proud (REVIEW-v2-street narrow point 3: the photographs' raised oblong about 300 x 110 under a heavy hood), wrapped on the body, the slot
+    # cut through it; its bottom border is the sill
+    bw_ = 22.0
+    af = math.degrees(math.asin((SLOT_W / 2.0 + bw_) / R_BODY))
+    z0f, z1f = SLOT_Z - SLOT_H / 2.0 - bw_, SLOT_Z + SLOT_H / 2.0 + bw_
+    Vfr, Ffr = arc_solid([(R_BODY - 2.5, z0f), (R_BODY + 12.0, z0f), (R_BODY + 12.0, z1f), (R_BODY - 2.5, z1f)], -af, af)
+    sf = B.add("slot_frame", (Vfr, Ffr), "paint_red", bev=1.5)
     spf = [(p[0], SLOT_Z + p[1]) for p in rrect(SLOT_W + 2.0, SLOT_H + 2.0, 6.0, 3)]                      # 1 mm larger all round than the body's slot: no two faces in one plane
     Vsf, Fsf = prism_y(spf, 60.0, R_BODY + 45.0)
     bs.bool_op(sf, Vsf, Fsf, "DIFFERENCE")
-    Vsl, Fsl = arc_solid([(R_BODY - 3.5, z0f - 6.0), (R_BODY + 8.0, z0f - 6.0), (R_BODY + 8.0, z0f - 1.0), (R_BODY + 3.0, z0f + 2.0), (R_BODY - 3.5, z0f + 2.0)], -af, af)
-    B.add("slot_sill", (Vsl, Fsl), "paint_red", bev=1.0)
     # the collection plate: an upright flat-faced frame 130 x 240 (bezel 10, face plane 9 proud of the door at the axis), a 3 mm recess, the enamel plate in it
     y_face = R_BODY + 9.0
     outer = [(p[0], FRAME_Z + p[1]) for p in rrect(FRAME_W, FRAME_H, 6.0, 4)]
@@ -156,15 +156,15 @@ def build(T, out_dir, npz_dir):
     # built on the front and turned about the axis
     ang = math.degrees(math.asin(LOCK_X / R_BODY))
     ew = math.degrees(20.0 / R_BODY)
-    Ve, Fe = arc_solid([(R_BODY - 3.0, LOCK_Z - 50.0), (R_BODY + 3.0, LOCK_Z - 50.0), (R_BODY + 3.0, LOCK_Z + 50.0), (R_BODY - 3.0, LOCK_Z + 50.0)], ang - ew, ang + ew)
+    Ve, Fe = arc_solid([(R_BODY - 3.0, LOCK_Z - 50.0), (R_BODY + 9.0, LOCK_Z - 50.0), (R_BODY + 9.0, LOCK_Z + 50.0), (R_BODY - 3.0, LOCK_Z + 50.0)], ang - ew, ang + ew)
     es = B.add("escutcheon", (Ve, Fe), "paint_red", bev=1.0)
     kh = [(p[0], LOCK_Z + 20.0 + p[1]) for p in rrect(4.0, 12.0, 1.5, 2)]
-    Vk, Fk = prism_y(kh, R_BODY - 1.0, R_BODY + 8.0)
+    Vk, Fk = prism_y(kh, R_BODY - 1.0, R_BODY + 14.0)
     c, sn = math.cos(math.radians(ang)), math.sin(math.radians(ang))
     Vk = np.array([(x * c + y * sn, -x * sn + y * c, z) for x, y, z in Vk])        # the front (+y) turned to the viewer's right, to x = R sin(ang)
     bs.bool_op(es, Vk, Fk, "DIFFERENCE")
-    lw = math.degrees(12.0 / R_BODY)
-    B.add("lock_lever", arc_solid([(R_BODY + 1.0, LOCK_Z - 12.0), (R_BODY + 7.0, LOCK_Z - 12.0), (R_BODY + 7.0, LOCK_Z - 6.0), (R_BODY + 1.0, LOCK_Z - 6.0)], ang - lw, ang + lw), "paint_red", bev=0.8)
+    lw = math.degrees(12.5 / R_BODY)
+    B.add("lock_lever", arc_solid([(R_BODY + 7.0, LOCK_Z - 14.0), (R_BODY + 18.0, LOCK_Z - 14.0), (R_BODY + 18.0, LOCK_Z - 6.0), (R_BODY + 7.0, LOCK_Z - 6.0)], ang - lw, ang + lw), "paint_red", bev=0.8)
     obs = bs.finish(B, mats, 0.0)
     return bs.write(obs, "pillar_box", 0.0, out_dir, npz_dir)
 

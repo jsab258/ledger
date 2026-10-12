@@ -22,7 +22,7 @@ import check_shopfront as cs  # noqa: E402  (the shared reading tools)
 from outline import load_npz  # noqa: E402
 
 R_BODY = 195.0
-OBJECTS = {"base", "body", "door", "hood", "plate_frame", "plate", "escutcheon", "slot_frame", "slot_sill", "lock_lever"}
+OBJECTS = {"base", "body", "door", "hood", "plate_frame", "plate", "escutcheon", "slot_frame", "lock_lever"}
 
 
 def mm(M, name):
@@ -91,7 +91,7 @@ def main():
     info = json.load(open(os.path.join(HERE, "build", "parts.json")))
     rep = cs.Report()
     names = set(M)
-    rep.add("PARTS the ten parts and no others (no cypher, crown, lettering or maker's mark is modelled)", names == OBJECTS, sorted(names), sorted(OBJECTS))
+    rep.add("PARTS the nine parts and no others (no cypher, crown, lettering or maker's mark is modelled)", names == OBJECTS, sorted(names), sorted(OBJECTS))
     allV = np.vstack([mm(M, n) for n in M])
     rep.within("BOX height: the apex 1500 above the footway", allV[:, 2].max(), 1500.0, 1.0)
     rep.within("BOX the hidden skirt's lowest vertex z -150 (the target: between -160 and -100)", allV[:, 2].min(), -150.0, 10.0)
@@ -99,7 +99,7 @@ def main():
     body = mm(M, "body")
     base = mm(M, "base")
     # ---- the lathe: body, foot, cap (PHOTO-CHECK 1 to 5)
-    Tb = tris(M, ["body", "base", "door", "hood", "plate_frame", "plate", "escutcheon", "slot_frame", "slot_sill", "lock_lever"])
+    Tb = tris(M, ["body", "base", "door", "hood", "plate_frame", "plate", "escutcheon", "slot_frame", "lock_lever"])
     th = np.linspace(100.0, 180.0, 41)                      # the back half (clear of the front's parts)
     for z, want, tol, what in ((1000.0, R_BODY, 0.5, "BODY z 1000: radius 195 (390 across, PHOTO-CHECK 1)"), (600.0, R_BODY, 0.5, "BODY z 600: radius 195")):
         r = radial_profile(Tb, z, np.concatenate([th, -th]))
@@ -168,7 +168,7 @@ def main():
     # ---- the door
     dv = mm(M, "door")
     rep.within("DOOR width: the x extent of its face, 240 (the target's 300 scaled 0.8; the chord at the face 241.2)", dv[:, 0].max() - dv[:, 0].min(), 241.2, 2.0)
-    rep.within("DOOR height z 330 to 1235 (the head just under the slot's frame)", [dv[:, 2].min(), dv[:, 2].max()], [330.0, 1235.0], 0.6)
+    rep.within("DOOR height z 330 to 1224 (the head just under the slot's frame)", [dv[:, 2].min(), dv[:, 2].max()], [330.0, 1224.0], 0.6)
     rep.add("DOOR clear of the base: the lowest z of the door over the base's top roll (298)", dv[:, 2].min() > 298.0 + 10.0, round(float(dv[:, 2].min()), 1), "> 308")
     p0 = radial_profile(Tb, 760.0, [0.0, 10.0, -10.0, 20.0])
     rep.within("DOOR proud: the face radius minus the body's, 1 (centre and across the face)", p0 - R_BODY, [1.0] * 4, 0.3)
@@ -190,18 +190,18 @@ def main():
     if gz:
         rep.within("DOOR joint along the foot: width 3", gz[0][1] - gz[0][0], 3.0, 0.4)
         rep.within("DOOR joint along the foot: depth 3", R_BODY - pz[(zg >= gz[0][0]) & (zg <= gz[0][1])].mean(), 3.0, 0.4)
-    ztop = np.arange(1225.0, 1244.0, 0.05)
+    ztop = np.arange(1214.0, 1233.0, 0.05)
     O = np.stack([np.zeros_like(ztop), np.full_like(ztop, 400.0), ztop], 1)
     pt = 400.0 - cast(Tb, O, np.tile([0.0, -1.0, 0.0], (len(ztop), 1)))
     gt = runs(pt < R_BODY - 2.0, ztop)
-    rep.add("DOOR joint along the head: one groove, 3 wide, under the slot frame's sill (z 1239.5 up)", len(gt) == 1 and abs((gt[0][1] - gt[0][0]) - 3.0) < 0.4, [(round(x, 2), round(y, 2)) for x, y in gt], "3 wide")
+    rep.add("DOOR joint along the head: one groove, 3 wide, under the slot frame's foot (z 1233.5)", len(gt) == 1 and abs((gt[0][1] - gt[0][0]) - 3.0) < 0.4, [(round(x, 2), round(y, 2)) for x, y in gt], "3 wide")
     # hinge side: nothing stands more than 1.5 over the door face on the left edge
     rep.add("DOOR left (joint) edge flush: no part stands more than 1.5 over the door face within 25 of the left edge", True, "no hinge, pin or strap in the part list", "none")
     # ---- the lock (on the viewer's right: x -90)
     ev = mm(M, "escutcheon")
     ec = [(ev[:, 0].min() + ev[:, 0].max()) / 2, (ev[:, 2].min() + ev[:, 2].max()) / 2]
     rep.within("LOCK escutcheon centre x -90 (the viewer's right), z 818", ec, [-90.0, 818.0], 5.0)
-    rep.within("LOCK escutcheon an upright oblong: 100 tall (z), about 40 across, 3 proud of the body (radius 195 to 198)", [ev[:, 2].max() - ev[:, 2].min(), ev[:, 0].max() - ev[:, 0].min(), np.hypot(ev[:, 0], ev[:, 1]).max() - R_BODY], [100.0, 40.0, 3.0], 3.0)
+    rep.within("LOCK escutcheon an upright oblong: 100 tall (z), about 40 across, 9 proud of the body (REVIEW-v2-street: 8 to 10)", [ev[:, 2].max() - ev[:, 2].min(), ev[:, 0].max() - ev[:, 0].min(), np.hypot(ev[:, 0], ev[:, 1]).max() - R_BODY], [100.0, 40.0, 9.0], 3.0)
     ang_l = math.degrees(math.asin(-90.0 / R_BODY))
     a_ = math.radians(ang_l)
     Ok = np.array([[400.0 * math.sin(a_), 400.0 * math.cos(a_), 838.0 + dz] for dz in np.linspace(-9.0, 9.0, 73)])
@@ -210,23 +210,21 @@ def main():
     kz = runs(pk < R_BODY + 1.0, np.linspace(-9.0, 9.0, 73))
     rep.add("LOCK keyhole: one slot through the escutcheon, 12 high (the target's 12, 2)", len(kz) == 1 and abs((kz[0][1] - kz[0][0]) - 12.0) < 2.0, [(round(x, 2), round(y, 2)) for x, y in kz], "12 high")
     lv = mm(M, "lock_lever")
-    rep.within("LOCK lever handle 24 across, 6 tall, under the keyhole (z 806 to 812), 7 proud", [lv[:, 2].min(), lv[:, 2].max(), np.hypot(lv[:, 0], lv[:, 1]).max() - R_BODY], [806.0, 812.0, 7.0], 1.5)
-    # ---- the frame round the slot and its sill
+    rep.within("LOCK lever handle 25 across, 8 tall, under the keyhole (z 804 to 812), 18 proud of the body (REVIEW-v2-street: 15 to 20 proud)", [lv[:, 2].min(), lv[:, 2].max(), np.hypot(lv[:, 0], lv[:, 1]).max() - R_BODY], [804.0, 812.0, 18.0], 2.0)
+    # ---- the frame round the slot (borders 22, 12 proud; its bottom border is the sill)
     sfv = mm(M, "slot_frame")
-    ssv = mm(M, "slot_sill")
-    rep.within("SLOT frame 10 wide round the opening, 3 proud: z 1245.5 to 1310.5, x +-135 at the base", [sfv[:, 2].min(), sfv[:, 2].max(), np.hypot(sfv[:, 0], sfv[:, 1]).max() - R_BODY], [1245.5, 1310.5, 3.0], 1.0)
-    rep.within("SLOT sill under the frame, 8 proud, z 1239.5 to 1247.5", [ssv[:, 2].min(), ssv[:, 2].max(), np.hypot(ssv[:, 0], ssv[:, 1]).max() - R_BODY], [1239.5, 1247.5, 8.0], 1.0)
-    rep.add("DOOR head clear of the slot frame's sill: at least 1 mm of body between the groove's top (1238) and the sill (1239.5)", ssv[:, 2].min() >= 1238.0 + 0.5, round(float(ssv[:, 2].min()), 2), ">= 1238.5")
+    rep.within("SLOT frame: borders 22 wide round the opening, 12 proud: z 1233.5 to 1322.5 (45 + 44), x +-147 at the base (REVIEW-v2-street: about 300 x 110 over all)", [sfv[:, 2].min(), sfv[:, 2].max(), np.hypot(sfv[:, 0], sfv[:, 1]).max() - R_BODY], [1233.5, 1322.5, 12.0], 1.0)
+    rep.add("DOOR head clear of the slot frame: the head's groove top (1227) under the frame's foot (1233.5) by at least 5", sfv[:, 2].min() - 1227.0 >= 5.0, round(float(sfv[:, 2].min() - 1227.0), 1), ">= 5")
     # ---- the collection plate
     fv = mm(M, "plate_frame")
     rep.within("PLATE frame outer 130 x 240, an upright frame (REVIEW-v1-street: about 120 to 150 wide, 220 to 250 tall)", [fv[:, 0].max() - fv[:, 0].min(), fv[:, 2].max() - fv[:, 2].min()], [130.0, 240.0], 1.0)
-    rep.within("PLATE frame centre z 1090: its top at 1210, 45 under the slot's bottom (1255.5)", [(fv[:, 2].max() + fv[:, 2].min()) / 2.0, fv[:, 2].max(), 1255.5 - fv[:, 2].max()], [1090.0, 1210.0, 45.0], 1.0)
+    rep.within("PLATE frame centre z 1090: its top at 1210, 23.5 under the slot frame's foot (1233.5)", [(fv[:, 2].max() + fv[:, 2].min()) / 2.0, fv[:, 2].max(), 1233.5 - fv[:, 2].max()], [1090.0, 1210.0, 23.5], 1.0)
     rep.within("PLATE frame face plane y = body radius + 9 (the target: 254.5 on 244.5, i.e. 10)", fv[:, 1].max(), R_BODY + 9.0, 1.5)
     pv = mm(M, "plate")
     rep.within("PLATE enamel panel 110 x 220 (bezel 10)", [pv[:, 0].max() - pv[:, 0].min(), pv[:, 2].max() - pv[:, 2].min()], [110.0, 220.0], 1.0)
     rep.within("PLATE recess: the frame's face over the enamel's face, 3 (the target 3, 1)", fv[:, 1].max() - pv[:, 1].max(), 2.4, 1.0, "the enamel is sunk 0.6 into the recess floor so that it does not float")
     # ---- the reserved areas: flush, no geometry (moved down in try 2 to where the photographs have the crown and the lettering)
-    allv = np.vstack([mm(M, n) for n in ("body", "door", "hood", "plate_frame", "plate", "escutcheon", "lock_lever", "slot_frame", "slot_sill")])
+    allv = np.vstack([mm(M, n) for n in ("body", "door", "hood", "plate_frame", "plate", "escutcheon", "lock_lever", "slot_frame")])
     rx = np.hypot(allv[:, 0], allv[:, 1])
     band = (allv[:, 2] >= 400.0) & (allv[:, 2] <= 440.0) & (np.abs(allv[:, 0]) <= 115.0) & (allv[:, 1] > 0)
     rep.add("RESERVED lettering band 230 x 40 centred z 420 (on the door, below the cypher): no vertex stands above the door's face (r 196)", float((rx[band] - (R_BODY + 1.0)).max()) <= 0.3 if band.any() else True, round(float((rx[band] - (R_BODY + 1.0)).max()), 3) if band.any() else "no vertex", "<= 0.3")

@@ -108,7 +108,7 @@ def context(kind, lo, hi):
     if kind == "none":
         return
     paving = material("ctx_paving", (0.09, 0.09, 0.088), 0.7)   # dark damp slabs
-    plane("ctx_pavement", (400, 400), (0, 0, min(lo.z, 0) - 0.0005), (0, 0, 0), paving)
+    plane("ctx_pavement", (400, 400), (0, 0, -0.0005), (0, 0, 0), paving)          # the datum z 0, never the lowest vertex: a buried skirt or kerb depth is under the ground (found by the pillar box review, 12 October)
     if kind == "wall":
         brick = material("ctx_wall", (0.30, 0.15, 0.10), 0.85)
         plane("ctx_wall", (40, 12), (0, hi.y + 0.002, 6), (math.radians(90), 0, 0), brick)
