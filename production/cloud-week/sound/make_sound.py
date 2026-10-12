@@ -578,8 +578,30 @@ def loop_jobs():
     return jobs
 
 
+def quiet_start(x):
+    """For a loop that is a circle (grains laid round it, so any point can be its start): the sample at which the level changes
+    least across the join (a second before against a second after, tried every 0.1 s), among the places where the signal is
+    as smooth as everywhere else (no jump larger than 1.5 typical sample steps). Returns the start in samples."""
+    m = x if x.ndim == 1 else x.mean(axis=1)
+    N = len(m)
+    c = np.concatenate([[0.0], np.cumsum(np.concatenate([m, m, m]) ** 2)])
+    pos = np.arange(0, N, RATE // 10)
+    before = (c[pos + N] - c[pos + N - RATE]) / RATE + 1e-14
+    after = (c[pos + N + RATE] - c[pos + N]) / RATE + 1e-14
+    step = np.abs(10 * np.log10(before / after))
+    typical = np.sqrt(np.mean(np.diff(m) ** 2)) + 1e-12
+    step[np.abs(m[pos] - m[pos - 1]) > 1.5 * typical] = 1e9
+    return int(pos[int(np.argmin(step))])
+
+
 def write_loop(name, layer, version, build):
     x, meta = build()
+    if layer in ("voices", "radio"):                # grains laid round a circle: start the file where the level changes least
+        shift = quiet_start(x)
+        x = np.roll(x, -shift, axis=0)
+        n_ms = int(round(len(x) * 1000.0 / RATE))
+        meta["plan"]["pos_ms"] = [(p - int(round(shift * 1000.0 / RATE))) % n_ms for p in meta["plan"]["pos_ms"]]
+        meta["starts_at_circle_s"] = round(shift / RATE, 2)
     target = LOOP_TARGET[name]
     x = x - np.mean(x, axis=0)                      # no DC
     g = sl.gain_to_target(x, target)
