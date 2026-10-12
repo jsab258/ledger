@@ -58,9 +58,9 @@ PEOPLE.append(person(
         note=WHY_NEW_ROUTINE + " She is off Quay Street until the story brings her (police-asking: days 4 and 5, each reason once); Monday, Wednesday and Friday at the row when the watchman comes on."),
     extra={"ties_new": [
         {"who": "noor", "weight": None, "band": "both are on the fire", "meets": "the fire: the reporter who will not drop it, the sergeant who will not close it", "hours_a_week": None,
-         "source": {"file": "game-design/warehouse-fire-2026-09-29.md", "line": 40, "end": 47}},
+         "source": SQ("FIRE", "**Alison:** Mickey's outfit was the story she never landed.")},
         {"who": "filip", "weight": None, "band": "she goes back to him", "meets": "the watchman whose times do not fit", "hours_a_week": None,
-         "source": {"file": "game-design/warehouse-fire-2026-09-29.md", "line": 43, "end": 47}},
+         "source": SQ("FIRE", "the watchman's times do not fit the brigade's")},
     ]},
 ))
 
@@ -116,7 +116,7 @@ PEOPLE.append(person(
         note=WHY_NEW_ROUTINE + " Never on Quay Street at the baseline: the Exchange is canon's district of offices and lawyers, Fairview its residential hills."),
     extra={"ties_new": [
         {"who": "fixer", "weight": None, "band": "the broker he uses", "meets": "the Fixer brokers between all three rivals (canon)", "hours_a_week": None,
-         "source": {"file": "canon.md", "line": 85, "end": 87}},
+         "source": SQ("CANON", "the Fixer, Keith Garbutt (broker between all three rivals)")},
     ]},
 ))
 
@@ -171,11 +171,11 @@ PEOPLE.append(person(
         note=WHY_NEW_ROUTINE + " The fish dock at the morning's selling (shop-hours note: auction about 7 to 7.30), then people come to her."),
     extra={"ties_new": [
         {"who": "joey", "weight": None, "band": "one of her people on the street", "meets": "empire roster, faction table", "hours_a_week": None,
-         "source": {"file": "game-design/empire-roster.md", "line": 275, "end": 275}},
+         "source": SQ("EMP", "| Dockside syndicate | Sera Kest | Joey (dock hand), Ferko (night cab) |")},
         {"who": "ferko", "weight": None, "band": "one of her people on the street", "meets": "empire roster, faction table (it calls him the night cab)", "hours_a_week": None,
-         "source": {"file": "game-design/empire-roster.md", "line": 275, "end": 275}},
+         "source": SQ("EMP", "| Dockside syndicate | Sera Kest | Joey (dock hand), Ferko (night cab) |")},
         {"who": "fixer", "weight": None, "band": "the broker she uses", "meets": "the Fixer brokers between all three rivals (canon)", "hours_a_week": None,
-         "source": {"file": "canon.md", "line": 85, "end": 87}},
+         "source": SQ("CANON", "the Fixer, Keith Garbutt (broker between all three rivals)")},
     ]},
 ))
 
@@ -227,9 +227,9 @@ PEOPLE.append(person(
         note=WHY_NEW_ROUTINE + " Never on Quay Street at the baseline: canon makes the Parade the nightlife district. Act II's noise on Quay Street is the story's, not his daily round."),
     extra={"ties_new": [
         {"who": "rita", "weight": None, "band": "his fence on the street", "meets": "empire roster, faction table", "hours_a_week": None,
-         "source": {"file": "game-design/empire-roster.md", "line": 276, "end": 276}},
+         "source": SQ("EMP", "| The New crew | Danny Ro | Rita (the back-room fence) |")},
         {"who": "fixer", "weight": None, "band": "the broker he uses", "meets": "the Fixer brokers between all three rivals (canon)", "hours_a_week": None,
-         "source": {"file": "canon.md", "line": 85, "end": 87}},
+         "source": SQ("CANON", "the Fixer, Keith Garbutt (broker between all three rivals)")},
     ]},
 ))
 
@@ -279,9 +279,9 @@ PEOPLE.append(person(
         saturday=[(0, 10, "off"), (10, 12, "garbutt_room"), (12, 24, "off")], sunday=[(0, 24, "off")],
         note=WHY_NEW_ROUTINE + " He calls on each of the three in turn: the Exchange, the docks and the Parade."),
     extra={"ties_new": [
-        {"who": "aldous", "weight": None, "band": "one of the three he brokers between", "meets": "canon", "hours_a_week": None, "source": {"file": "canon.md", "line": 85, "end": 87}},
-        {"who": "sera", "weight": None, "band": "one of the three he brokers between", "meets": "canon", "hours_a_week": None, "source": {"file": "canon.md", "line": 85, "end": 87}},
-        {"who": "danny", "weight": None, "band": "one of the three he brokers between", "meets": "canon", "hours_a_week": None, "source": {"file": "canon.md", "line": 85, "end": 87}},
+        {"who": "aldous", "weight": None, "band": "one of the three he brokers between", "meets": "canon", "hours_a_week": None, "source": SQ("CANON", "the Fixer, Keith Garbutt (broker between all three rivals)")},
+        {"who": "sera", "weight": None, "band": "one of the three he brokers between", "meets": "canon", "hours_a_week": None, "source": SQ("CANON", "the Fixer, Keith Garbutt (broker between all three rivals)")},
+        {"who": "danny", "weight": None, "band": "one of the three he brokers between", "meets": "canon", "hours_a_week": None, "source": SQ("CANON", "the Fixer, Keith Garbutt (broker between all three rivals)")},
     ]},
 ))
 

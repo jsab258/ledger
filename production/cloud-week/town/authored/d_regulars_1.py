@@ -194,7 +194,7 @@ PEOPLE.append(regular(
         Q("What time do you open?", "answers", "Nine till half past five, except Wednesdays, when it's nine till one.", ["my_hours"], "held: What time do we open in the morning?"),
         Q("What's it worth?", "deflect", "I never say what a thing is worth until I have to. Let me look at it.", ["manner1", "line"], "invented: a stranger at a pawn counter"),
         Q("What happened between you and Hal?", "deflect", "That's between Hal and me.", ["row"], "invented: the town's own news"),
-        Q("Who's Hal?", "answers", "Hal keeps the coin shop that sells no coins. He calls on Mondays.", ["who_hal"], "invented: a stranger asks about a neighbour"),
+        Q("Who's Hal?", "answers", "Hal keeps the coin shop that sells no coins.", ["who_hal"], "invented: a stranger asks about a neighbour"),
         Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
         Q("What was Mickey like?", "answers", STD["mickey"], ["mickey_counsel"], "firsts: What was Mickey like?"),
         Q("Is there any money in the business?", "answers", STD["trade"], ["trade"], "firsts: Is there any money in the business?"),

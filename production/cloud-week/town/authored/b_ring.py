@@ -121,8 +121,8 @@ PEOPLE.append(person(
         pool("heart", ["vesna"], ["vesna", "ada"], ["died_heart"], "heard it from his housekeeper, who had it from the street"),
         pool("funeral", ["self"], ["vesna", "ada", "june"], ["funeral", "funeral_led"], "was there himself, at the service"),
         pool("june", ["self"], ["vesna", "ada"], ["june"], "sees her at the chapel"),
-        pool("arrive", ["ada"], ["vesna", "magda"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
-        pool("trade", ["ada"], ["vesna", "magda"], ["trade"], "heard it from the street"),
+        pool("arrive", ["ada"], ["vesna", "ada"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("trade", ["ada"], ["vesna", "ada"], ["trade"], "heard it from the street"),
     ],
     questions=[
         Q("Who are you?", "answers", "Father Walsh, son. The Irish-born parish priest. Father Walsh to the street.", ["job"], "firsts: Who are you?"),
@@ -148,7 +148,7 @@ PEOPLE.append(person(
         K("not_writing", "S:noor", "I'm not writing anything yet. I'm just listening. People forget there's a difference."),
         K("twice", "S:noor", "I like to hear a thing twice before I believe it once."),
         K("dont_ask", "S:noor", "You'd be surprised what people tell you when you don't ask."),
-        K("never_landed", "FIRE", "Mickey's outfit was the story she never landed."),
+        K("never_landed", "FIRE", "Mickey's outfit was the story she never landed.", secret=True, via="her own working belief about the fire; not told to a stranger"),
         K("editor", "FIRE", "Her editor wants it dropped."),
         K("moves", "S:noor", "Fast, always half writing; leans on counters; asks the second question after the answer."),
         K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, heard from the pawn's clerk at the kiosk"),
@@ -172,7 +172,7 @@ PEOPLE.append(person(
     questions=[
         Q("Who are you?", "answers", "Alison Sedman. I'm a reporter on the local paper.", ["job"], "firsts: Who are you?"),
         Q("What do you do?", "answers", "I listen. I'm not writing anything yet. People forget there's a difference.", ["not_writing"], "firsts: What do you do here?"),
-        Q("What happened at the warehouse fire?", "partly", "The importer's warehouse on the old row, last November. The paper called it arson. Nobody was charged. It's a story I never landed.", ["fire", "never_landed"], "fresh: What happened at the warehouse fire?"),
+        Q("What happened at the warehouse fire?", "partly", "The importer's warehouse on the old row, last November. The paper called it arson. Nobody was charged. I'm not writing anything yet.", ["fire", "not_writing"], "fresh: What happened at the warehouse fire?"),
         Q("How did Mickey die?", "answers", "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.", ["died_heart"], "firsts: How did Mickey die?"),
         Q("What do people say about me?", "partly", "Only that Mickey's nephew has come and left the office to you, with a letter. I like to hear a thing twice.", ["will", "twice"], "fresh: What do people say about me?"),
         Q("Who was Mickey closest to?", "dont_know", "I couldn't tell you. That's all I know.", [], "fresh: Who was Mickey closest to?"),

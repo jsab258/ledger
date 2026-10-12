@@ -1,0 +1,3299 @@
+{
+ "made": "13 Oct 2026, cloud week 42, unit 11",
+ "file_checked": "production/cloud-week/town/people.json",
+ "summary": {
+  "rows": 548,
+  "pass": 540,
+  "fail": 8
+ },
+ "rows": [
+  {
+   "id": "cast.principals_listed",
+   "what": "CASTING.md lists fourteen principals",
+   "pass": true,
+   "detail": "14"
+  },
+  {
+   "id": "cast.regulars_listed",
+   "what": "REGULARS.md lists thirty regulars",
+   "pass": true,
+   "detail": "30"
+  },
+  {
+   "id": "cast.principal.Dunn",
+   "what": "principal Sheila Dunn has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Kirby",
+   "what": "principal Ron Kirby has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Milner",
+   "what": "principal Darren Milner has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Nowak",
+   "what": "principal Tom Nowak has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Ellis",
+   "what": "principal DS Carol Ellis has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Agar",
+   "what": "principal Geoffrey Agar has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Jensen",
+   "what": "principal Maureen Jensen, \"the Widow\" has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Cammack",
+   "what": "principal Danny Cammack has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Ada",
+   "what": "principal Ada has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Suddaby",
+   "what": "principal June Suddaby has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Walsh",
+   "what": "principal Father Brendan Walsh has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Sedman",
+   "what": "principal Alison Sedman has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Danby",
+   "what": "principal Philip Danby has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.principal.Garbutt",
+   "what": "principal Keith Garbutt, the Fixer has an entry",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.zlata",
+   "what": "regular zlata (Pauline Kitching) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.ferko",
+   "what": "regular ferko (Kevin Needham) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.dusan",
+   "what": "regular dusan (Terry Hodgson) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.marla",
+   "what": "regular marla (Brenda Laverack) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.joey",
+   "what": "regular joey (Lee Drewery) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.rita",
+   "what": "regular rita (Rita Welburn) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.victor",
+   "what": "regular victor (Wayne Harrison) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.tanja",
+   "what": "regular tanja (Julie Kettlewell) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.hal",
+   "what": "regular hal (Henry \"Hal\" Metcalfe) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.tibor",
+   "what": "regular tibor (Susan Coverdale) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.vesna",
+   "what": "regular vesna (Nora Cronin) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.magda",
+   "what": "regular magda (Winifred Duggleby) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.zora",
+   "what": "regular zora (Doreen Harland) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.katarina",
+   "what": "regular katarina (Tracey Scarth) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.stipe",
+   "what": "regular stipe (Colin Mastin) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.fabjan",
+   "what": "regular fabjan (Albert Suggitt) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.tomas",
+   "what": "regular tomas (Gary Mawer) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.luka",
+   "what": "regular luka (Ian Megginson) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.bruno",
+   "what": "regular bruno (Christine Pickering) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.petra",
+   "what": "regular petra (Karen Grummitt) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.dario",
+   "what": "regular dario (Gordon Leckenby) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.sanja",
+   "what": "regular sanja (Sylvia Rennison) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.hana",
+   "what": "regular hana (Edith Stockill) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.franjo",
+   "what": "regular franjo (Shaun Hewson) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.danica",
+   "what": "regular danica (Dawn Pybus) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.drago",
+   "what": "regular drago (Dennis Iveson) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.filip",
+   "what": "regular filip (Norman Dent) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.cafe",
+   "what": "regular cafe (Grace Rinaldi) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.takeaway_m",
+   "what": "regular takeaway_m (Peter Tang (Tang Wing-kei)) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.regular.takeaway_f",
+   "what": "regular takeaway_f (Lily Tang (Wong Mei-ling)) has an entry with that name and age",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cast.no_extra",
+   "what": "nobody else has an entry",
+   "pass": true,
+   "detail": "extra []; entries 44"
+  },
+  {
+   "id": "decisions.N-ANSWERS",
+   "what": "DECISIONS.md has one entry for N-ANSWERS, ending 'Marked for Jafar.'",
+   "pass": false,
+   "detail": "0 entries"
+  },
+  {
+   "id": "decisions.N-LIVES",
+   "what": "DECISIONS.md has one entry for N-LIVES, ending 'Marked for Jafar.'",
+   "pass": false,
+   "detail": "0 entries"
+  },
+  {
+   "id": "decisions.N-MICKEY",
+   "what": "DECISIONS.md has one entry for N-MICKEY, ending 'Marked for Jafar.'",
+   "pass": false,
+   "detail": "0 entries"
+  },
+  {
+   "id": "decisions.N-RIVALS",
+   "what": "DECISIONS.md has one entry for N-RIVALS, ending 'Marked for Jafar.'",
+   "pass": false,
+   "detail": "0 entries"
+  },
+  {
+   "id": "decisions.N-RUMOURS",
+   "what": "DECISIONS.md has one entry for N-RUMOURS, ending 'Marked for Jafar.'",
+   "pass": false,
+   "detail": "0 entries"
+  },
+  {
+   "id": "decisions.N-SCHEDULES",
+   "what": "DECISIONS.md has one entry for N-SCHEDULES, ending 'Marked for Jafar.'",
+   "pass": false,
+   "detail": "0 entries"
+  },
+  {
+   "id": "decisions.only_mine_new",
+   "what": "every unit 11 line in DECISIONS.md belongs to a group",
+   "pass": false,
+   "detail": "0 lines, 6 groups"
+  },
+  {
+   "id": "decisions.append_only",
+   "what": "DECISIONS.md has no removed or changed line against HEAD",
+   "pass": true,
+   "detail": "removed lines: 0"
+  },
+  {
+   "id": "rocco.identity",
+   "what": "rocco: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Ron Kirby** | 58 | a docker until the scheme ended in 1989; Mickey kept him on the door and the rank | big, heavy-se"
+  },
+  {
+   "id": "rocco.ids",
+   "what": "rocco: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rocco.facts",
+   "what": "rocco: 45 facts: 43 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rocco.who",
+   "what": "rocco: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "rocco.schedule",
+   "what": "rocco: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rocco.shop_hours",
+   "what": "rocco: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rocco.ties",
+   "what": "rocco: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['drago', 'dusan', 'fabjan', 'franjo', 'joey', 'lena', 'luka', 'noor', 'petra', 'sam', 'sanja', 'stipe', 'tomas'] got ['drago', 'dusan', 'fabjan', 'franjo', 'joey', 'lena', 'luka', 'noor', 'petra', 'sam', 'sanja', 'stipe', 'tomas']"
+  },
+  {
+   "id": "rocco.ties_hours",
+   "what": "rocco: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rocco.rumours",
+   "what": "rocco: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rocco.questions",
+   "what": "rocco: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rocco.mickey",
+   "what": "rocco: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "lena.identity",
+   "what": "lena: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Sheila Dunn** | 53 | Mickey's bookkeeper for thirty-one years; a widow in a council flat | grey-brown shampoo-and-se"
+  },
+  {
+   "id": "lena.ids",
+   "what": "lena: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "lena.facts",
+   "what": "lena: 46 facts: 44 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "lena.who",
+   "what": "lena: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "lena.schedule",
+   "what": "lena: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "lena.shop_hours",
+   "what": "lena: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "lena.ties",
+   "what": "lena: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'danica', 'franjo', 'ines', 'jelena', 'june', 'noor', 'rocco', 'sam', 'victor', 'zora'] got ['ada', 'danica', 'franjo', 'ines', 'jelena', 'june', 'noor', 'rocco', 'sam', 'victor', 'zora']"
+  },
+  {
+   "id": "lena.ties_hours",
+   "what": "lena: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "lena.rumours",
+   "what": "lena: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "lena.questions",
+   "what": "lena: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "lena.mickey",
+   "what": "lena: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "sam.identity",
+   "what": "sam: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Darren Milner** | 25 | the street hustler; out of work since a youth training scheme, lives at his mother's, pager a"
+  },
+  {
+   "id": "sam.ids",
+   "what": "sam: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sam.facts",
+   "what": "sam: 59 facts: 57 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sam.who",
+   "what": "sam: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "sam.schedule",
+   "what": "sam: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sam.shop_hours",
+   "what": "sam: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sam.ties",
+   "what": "sam: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'danica', 'dario', 'drago', 'dusan', 'fabjan', 'ferko', 'filip', 'goran', 'hal', 'hana', 'ines', 'iva', 'jelena', 'joey', 'katarina', 'lena', 'marla', 'marta', 'noor', 'outfit_man', 'rocco', 'stipe', 'tomas', 'victor', 'zlata'] got ['ada', 'danica', 'dario', 'drago', 'dusan', 'fabjan', 'ferko', 'filip', 'goran', 'hal', 'hana', 'ines', 'iva', 'jelena', 'joey', 'katarina', 'lena', 'marla', 'marta', 'noor', 'outfit_man', 'rocco', 'stipe', 'tomas', 'victor', 'zlata']"
+  },
+  {
+   "id": "sam.ties_hours",
+   "what": "sam: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sam.rumours",
+   "what": "sam: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sam.questions",
+   "what": "sam: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sam.mickey",
+   "what": "sam: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "tom.identity",
+   "what": "tom: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Tom Nowak** | 32 | the player; son of a Polish post-war settler and Mickey's sister, a stranger to the Hook | short "
+  },
+  {
+   "id": "tom.ids",
+   "what": "tom: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tom.facts",
+   "what": "tom: 12 facts: 10 cite a line that holds their words, 0 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tom.who",
+   "what": "tom: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "tom.schedule",
+   "what": "tom: the player's own schedule is not authored",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tom.ties",
+   "what": "tom: the people who first knew him cite a line",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tom.rumours",
+   "what": "tom: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tom.questions",
+   "what": "tom: the player's words are typed; no questions are written for him",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tom.mickey",
+   "what": "tom: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "ada.identity",
+   "what": "ada: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Ada** | 78 | the old woman of the street; a widow who keeps a window on Quay Street | headscarf, hunched, dentures |"
+  },
+  {
+   "id": "ada.ids",
+   "what": "ada: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ada.facts",
+   "what": "ada: 42 facts: 39 cite a line that holds their words, 1 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ada.who",
+   "what": "ada: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "ada.schedule",
+   "what": "ada: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ada.shop_hours",
+   "what": "ada: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ada.ties",
+   "what": "ada: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['emil', 'hana', 'katarina', 'lena', 'magda', 'marla', 'noor', 'sam', 'sanja', 'selma', 'tanja', 'vesna', 'zora'] got ['emil', 'hana', 'katarina', 'lena', 'magda', 'marla', 'noor', 'sam', 'sanja', 'selma', 'tanja', 'vesna', 'zora']"
+  },
+  {
+   "id": "ada.ties_hours",
+   "what": "ada: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ada.rumours",
+   "what": "ada: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ada.questions",
+   "what": "ada: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ada.mickey",
+   "what": "ada: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "june.identity",
+   "what": "june: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **June Suddaby** | 38 | Mickey's estranged daughter, back for the funeral | highlights, shoulder pads | [sheet](june/S"
+  },
+  {
+   "id": "june.ids",
+   "what": "june: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "june.facts",
+   "what": "june: 25 facts: 24 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "june.who",
+   "what": "june: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "june.schedule",
+   "what": "june: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "june.shop_hours",
+   "what": "june: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "june.ties",
+   "what": "june: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['emil', 'lena'] got ['emil', 'lena']"
+  },
+  {
+   "id": "june.ties_hours",
+   "what": "june: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "june.rumours",
+   "what": "june: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "june.questions",
+   "what": "june: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "june.mickey",
+   "what": "june: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "emil.identity",
+   "what": "emil: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Father Brendan Walsh** | about 61 | the Irish-born parish priest, Father Walsh to the street (Jafar, 28 September: o"
+  },
+  {
+   "id": "emil.ids",
+   "what": "emil: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "emil.facts",
+   "what": "emil: 32 facts: 30 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "emil.who",
+   "what": "emil: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "emil.schedule",
+   "what": "emil: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "emil.shop_hours",
+   "what": "emil: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "emil.ties",
+   "what": "emil: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'june', 'vesna'] got ['ada', 'june', 'vesna']"
+  },
+  {
+   "id": "emil.ties_hours",
+   "what": "emil: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "emil.rumours",
+   "what": "emil: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "emil.questions",
+   "what": "emil: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "emil.mickey",
+   "what": "emil: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "noor.identity",
+   "what": "noor: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Alison Sedman** | 30 | a reporter on the local paper; grammar school, first of her family at college | big permed ha"
+  },
+  {
+   "id": "noor.ids",
+   "what": "noor: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "noor.facts",
+   "what": "noor: 40 facts: 38 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "noor.who",
+   "what": "noor: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "noor.schedule",
+   "what": "noor: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "noor.shop_hours",
+   "what": "noor: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "noor.ties",
+   "what": "noor: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'dario', 'hana', 'iva', 'lena', 'marla', 'marta', 'petra', 'rocco', 'sam', 'sanja', 'selma', 'zora'] got ['ada', 'dario', 'hana', 'iva', 'lena', 'marla', 'marta', 'petra', 'rocco', 'sam', 'sanja', 'selma', 'zora']"
+  },
+  {
+   "id": "noor.ties_hours",
+   "what": "noor: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "noor.rumours",
+   "what": "noor: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "noor.questions",
+   "what": "noor: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "noor.mickey",
+   "what": "noor: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "ellis.identity",
+   "what": "ellis: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **DS Carol Ellis** | 40 | Humberside CID | feathered bob, blazer, minimal make-up | [sheet](carol-ellis/SHEET.md) |"
+  },
+  {
+   "id": "ellis.ids",
+   "what": "ellis: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ellis.facts",
+   "what": "ellis: 15 facts: 15 cite a line that holds their words, 0 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ellis.who",
+   "what": "ellis: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "ellis.schedule",
+   "what": "ellis: a proposed schedule (no routine in hook-cast.json) covers each day and uses known places",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ellis.shop_hours",
+   "what": "ellis: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ellis.ties",
+   "what": "ellis: proposed ties cite a line that names the other person, or are computed from the schedules",
+   "pass": true,
+   "detail": "[] []"
+  },
+  {
+   "id": "ellis.rumours",
+   "what": "ellis: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ellis.questions",
+   "what": "ellis: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ellis.mickey",
+   "what": "ellis: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "aldous.identity",
+   "what": "aldous: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Geoffrey Agar** | 62 | solicitor and alderman, head of the old-money machine | silver hair swept back, rimless glass"
+  },
+  {
+   "id": "aldous.ids",
+   "what": "aldous: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "aldous.facts",
+   "what": "aldous: 14 facts: 12 cite a line that holds their words, 0 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "aldous.who",
+   "what": "aldous: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "aldous.schedule",
+   "what": "aldous: a proposed schedule (no routine in hook-cast.json) covers each day and uses known places",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "aldous.shop_hours",
+   "what": "aldous: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "aldous.ties",
+   "what": "aldous: proposed ties cite a line that names the other person, or are computed from the schedules",
+   "pass": true,
+   "detail": "[] []"
+  },
+  {
+   "id": "aldous.rumours",
+   "what": "aldous: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "aldous.questions",
+   "what": "aldous: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "aldous.mickey",
+   "what": "aldous: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "sera.identity",
+   "what": "sera: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Maureen Jensen, \"the Widow\"** | 57 | trawler-owner's widow from a Hessle Road family, head of the dockside syndicate"
+  },
+  {
+   "id": "sera.ids",
+   "what": "sera: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sera.facts",
+   "what": "sera: 16 facts: 15 cite a line that holds their words, 0 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sera.who",
+   "what": "sera: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "sera.schedule",
+   "what": "sera: a proposed schedule (no routine in hook-cast.json) covers each day and uses known places",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sera.shop_hours",
+   "what": "sera: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sera.ties",
+   "what": "sera: proposed ties cite a line that names the other person, or are computed from the schedules",
+   "pass": true,
+   "detail": "[] []"
+  },
+  {
+   "id": "sera.rumours",
+   "what": "sera: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sera.questions",
+   "what": "sera: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sera.mickey",
+   "what": "sera: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "danny.identity",
+   "what": "danny: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Danny Cammack** | 27 | head of the new crew, Grimsby-side, loud money | mullet, gold chain, leather blouson | [sheet"
+  },
+  {
+   "id": "danny.ids",
+   "what": "danny: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danny.facts",
+   "what": "danny: 13 facts: 13 cite a line that holds their words, 0 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danny.who",
+   "what": "danny: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "danny.schedule",
+   "what": "danny: a proposed schedule (no routine in hook-cast.json) covers each day and uses known places",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danny.shop_hours",
+   "what": "danny: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danny.ties",
+   "what": "danny: proposed ties cite a line that names the other person, or are computed from the schedules",
+   "pass": true,
+   "detail": "[] []"
+  },
+  {
+   "id": "danny.rumours",
+   "what": "danny: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danny.questions",
+   "what": "danny: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danny.mickey",
+   "what": "danny: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "fixer.identity",
+   "what": "fixer: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Keith Garbutt, the Fixer** | 48 | brokers between all three rivals | neat moustache, car coat | [sheet](the-fixer/SH"
+  },
+  {
+   "id": "fixer.ids",
+   "what": "fixer: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fixer.facts",
+   "what": "fixer: 15 facts: 15 cite a line that holds their words, 0 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fixer.who",
+   "what": "fixer: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "fixer.schedule",
+   "what": "fixer: a proposed schedule (no routine in hook-cast.json) covers each day and uses known places",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fixer.shop_hours",
+   "what": "fixer: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fixer.ties",
+   "what": "fixer: proposed ties cite a line that names the other person, or are computed from the schedules",
+   "pass": true,
+   "detail": "[] []"
+  },
+  {
+   "id": "fixer.rumours",
+   "what": "fixer: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fixer.questions",
+   "what": "fixer: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fixer.mickey",
+   "what": "fixer: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "elias.identity",
+   "what": "elias: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| **Philip Danby** | 33 | a teacher at the comprehensive, which stands closed for the game's window | side parting, knit"
+  },
+  {
+   "id": "elias.ids",
+   "what": "elias: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "elias.facts",
+   "what": "elias: 18 facts: 17 cite a line that holds their words, 0 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "elias.who",
+   "what": "elias: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "elias.schedule",
+   "what": "elias: a proposed schedule (no routine in hook-cast.json) covers each day and uses known places",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "elias.shop_hours",
+   "what": "elias: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "elias.ties",
+   "what": "elias: proposed ties cite a line that names the other person, or are computed from the schedules",
+   "pass": true,
+   "detail": "[] []"
+  },
+  {
+   "id": "elias.rumours",
+   "what": "elias: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "elias.questions",
+   "what": "elias: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "elias.mickey",
+   "what": "elias: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "zlata.identity",
+   "what": "zlata: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 1 | zlata | Pauline Kitching | 44 | Mickey's dispatcher, the radio and the phone | short brown hair going grey, a V-ne"
+  },
+  {
+   "id": "zlata.ids",
+   "what": "zlata: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zlata.facts",
+   "what": "zlata: 29 facts: 26 cite a line that holds their words, 2 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zlata.who",
+   "what": "zlata: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "zlata.schedule",
+   "what": "zlata: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zlata.shop_hours",
+   "what": "zlata: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zlata.ties",
+   "what": "zlata: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ferko', 'joey', 'sam'] got ['ferko', 'joey', 'sam']"
+  },
+  {
+   "id": "zlata.ties_hours",
+   "what": "zlata: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zlata.rumours",
+   "what": "zlata: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zlata.questions",
+   "what": "zlata: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zlata.mickey",
+   "what": "zlata: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "ferko.identity",
+   "what": "ferko: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 2 | ferko | Kevin Needham | 36 | the day driver on Mickey's rank | thinning ginger hair, a zip-up anorak, smokes | man"
+  },
+  {
+   "id": "ferko.ids",
+   "what": "ferko: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ferko.facts",
+   "what": "ferko: 30 facts: 28 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ferko.who",
+   "what": "ferko: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "ferko.schedule",
+   "what": "ferko: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ferko.shop_hours",
+   "what": "ferko: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ferko.ties",
+   "what": "ferko: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['joey', 'sam', 'zlata'] got ['joey', 'sam', 'zlata']"
+  },
+  {
+   "id": "ferko.ties_hours",
+   "what": "ferko: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ferko.rumours",
+   "what": "ferko: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ferko.questions",
+   "what": "ferko: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "ferko.mickey",
+   "what": "ferko: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "dusan.identity",
+   "what": "dusan: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 3 | dusan | Terry Hodgson | 52 | the night driver | grey crew cut, a moustache, lined face, anorak over a jumper, smok"
+  },
+  {
+   "id": "dusan.ids",
+   "what": "dusan: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dusan.facts",
+   "what": "dusan: 26 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 2 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dusan.who",
+   "what": "dusan: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "dusan.schedule",
+   "what": "dusan: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dusan.shop_hours",
+   "what": "dusan: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dusan.ties",
+   "what": "dusan: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['rocco', 'sam'] got ['rocco', 'sam']"
+  },
+  {
+   "id": "dusan.ties_hours",
+   "what": "dusan: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dusan.rumours",
+   "what": "dusan: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dusan.questions",
+   "what": "dusan: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dusan.mickey",
+   "what": "dusan: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "marla.identity",
+   "what": "marla: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 4 | marla | Brenda Laverack | 50 | the fish shop's woman, buys on the fish dock at dawn | permed blonde-grey hair unde"
+  },
+  {
+   "id": "marla.ids",
+   "what": "marla: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "marla.facts",
+   "what": "marla: 28 facts: 26 cite a line that holds their words, 2 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "marla.who",
+   "what": "marla: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "marla.schedule",
+   "what": "marla: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "marla.shop_hours",
+   "what": "marla: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "marla.ties",
+   "what": "marla: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'noor', 'sam', 'vesna'] got ['ada', 'noor', 'sam', 'vesna']"
+  },
+  {
+   "id": "marla.ties_hours",
+   "what": "marla: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "marla.rumours",
+   "what": "marla: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "marla.questions",
+   "what": "marla: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "marla.mickey",
+   "what": "marla: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "joey.identity",
+   "what": "joey: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 5 | joey | Lee Drewery | 24 | never had steady work; takes casual days on the quay when there are any | cropped hair, "
+  },
+  {
+   "id": "joey.ids",
+   "what": "joey: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "joey.facts",
+   "what": "joey: 28 facts: 27 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "joey.who",
+   "what": "joey: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "joey.schedule",
+   "what": "joey: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "joey.shop_hours",
+   "what": "joey: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "joey.ties",
+   "what": "joey: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ferko', 'rita', 'rocco', 'sam', 'tibor', 'zlata'] got ['ferko', 'rita', 'rocco', 'sam', 'tibor', 'zlata']"
+  },
+  {
+   "id": "joey.ties_hours",
+   "what": "joey: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "joey.rumours",
+   "what": "joey: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "joey.questions",
+   "what": "joey: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "joey.mickey",
+   "what": "joey: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "rita.identity",
+   "what": "rita: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 6 | rita | Rita Welburn | 56 | keeps Rita's, the pawn | plain hair going grey, a wedding ring and a watch, a good wool"
+  },
+  {
+   "id": "rita.ids",
+   "what": "rita: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rita.facts",
+   "what": "rita: 32 facts: 29 cite a line that holds their words, 2 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rita.who",
+   "what": "rita: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "rita.schedule",
+   "what": "rita: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rita.shop_hours",
+   "what": "rita: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rita.ties",
+   "what": "rita: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['hal', 'joey', 'tibor', 'victor'] got ['hal', 'joey', 'tibor', 'victor']"
+  },
+  {
+   "id": "rita.ties_hours",
+   "what": "rita: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rita.rumours",
+   "what": "rita: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rita.questions",
+   "what": "rita: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "rita.mickey",
+   "what": "rita: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "victor.identity",
+   "what": "victor: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 7 | victor | Wayne Harrison | 27 | the pawn's back-room hand | short back and sides, NHS glasses, a navy boiler suit o"
+  },
+  {
+   "id": "victor.ids",
+   "what": "victor: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "victor.facts",
+   "what": "victor: 27 facts: 25 cite a line that holds their words, 2 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "victor.who",
+   "what": "victor: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "victor.schedule",
+   "what": "victor: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "victor.shop_hours",
+   "what": "victor: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "victor.ties",
+   "what": "victor: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['lena', 'rita', 'sam'] got ['lena', 'rita', 'sam']"
+  },
+  {
+   "id": "victor.ties_hours",
+   "what": "victor: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "victor.rumours",
+   "what": "victor: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "victor.questions",
+   "what": "victor: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "victor.mickey",
+   "what": "victor: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "hal.identity",
+   "what": "hal: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 9 | hal | Henry \"Hal\" Metcalfe | 66 | retired from a fish merchant's office; keeps the coin shop that sells no coins; "
+  },
+  {
+   "id": "hal.ids",
+   "what": "hal: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hal.facts",
+   "what": "hal: 29 facts: 27 cite a line that holds their words, 2 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hal.who",
+   "what": "hal: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "hal.schedule",
+   "what": "hal: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hal.shop_hours",
+   "what": "hal: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hal.ties",
+   "what": "hal: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['rita', 'sam'] got ['rita', 'sam']"
+  },
+  {
+   "id": "hal.ties_hours",
+   "what": "hal: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hal.rumours",
+   "what": "hal: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hal.questions",
+   "what": "hal: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hal.mickey",
+   "what": "hal: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "tibor.identity",
+   "what": "tibor: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 10 | tibor | Susan Coverdale | 38 | a customs officer, lives past Rita's | short practical hair, glasses, navy uniform"
+  },
+  {
+   "id": "tibor.ids",
+   "what": "tibor: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tibor.facts",
+   "what": "tibor: 25 facts: 24 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tibor.who",
+   "what": "tibor: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "tibor.schedule",
+   "what": "tibor: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tibor.shop_hours",
+   "what": "tibor: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tibor.ties",
+   "what": "tibor: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['joey', 'rita'] got ['joey', 'rita']"
+  },
+  {
+   "id": "tibor.ties_hours",
+   "what": "tibor: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tibor.rumours",
+   "what": "tibor: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tibor.questions",
+   "what": "tibor: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tibor.mickey",
+   "what": "tibor: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "vesna.identity",
+   "what": "vesna: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 11 | vesna | Nora Cronin | 67 | keeps Father Walsh's house and buys for his table | set grey hair under a felt hat, gl"
+  },
+  {
+   "id": "vesna.ids",
+   "what": "vesna: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "vesna.facts",
+   "what": "vesna: 27 facts: 25 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "vesna.who",
+   "what": "vesna: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "vesna.schedule",
+   "what": "vesna: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "vesna.shop_hours",
+   "what": "vesna: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "vesna.ties",
+   "what": "vesna: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'emil', 'marla'] got ['ada', 'emil', 'marla']"
+  },
+  {
+   "id": "vesna.ties_hours",
+   "what": "vesna: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "vesna.rumours",
+   "what": "vesna: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "vesna.questions",
+   "what": "vesna: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "vesna.mickey",
+   "what": "vesna: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "magda.identity",
+   "what": "magda: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 12 | magda | Winifred Duggleby | 76 | retired; cleans the chapel and does its flowers | a knitted hat over grey hair, "
+  },
+  {
+   "id": "magda.ids",
+   "what": "magda: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "magda.facts",
+   "what": "magda: 24 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "magda.who",
+   "what": "magda: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "magda.schedule",
+   "what": "magda: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "magda.shop_hours",
+   "what": "magda: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "magda.ties",
+   "what": "magda: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada'] got ['ada']"
+  },
+  {
+   "id": "magda.ties_hours",
+   "what": "magda: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "magda.rumours",
+   "what": "magda: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "magda.questions",
+   "what": "magda: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "magda.mickey",
+   "what": "magda: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "zora.identity",
+   "what": "zora: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 13 | zora | Doreen Harland | 61 | a washerwoman at the steam laundry who won't retire, still on the early shift | crop"
+  },
+  {
+   "id": "zora.ids",
+   "what": "zora: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zora.facts",
+   "what": "zora: 28 facts: 26 cite a line that holds their words, 2 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zora.who",
+   "what": "zora: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "zora.schedule",
+   "what": "zora: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zora.shop_hours",
+   "what": "zora: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zora.ties",
+   "what": "zora: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'lena', 'noor'] got ['ada', 'lena', 'noor']"
+  },
+  {
+   "id": "zora.ties_hours",
+   "what": "zora: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zora.rumours",
+   "what": "zora: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zora.questions",
+   "what": "zora: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "zora.mickey",
+   "what": "zora: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "tanja.identity",
+   "what": "tanja: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 8 | tanja | Julie Kettlewell | 29 | laid off from the steam laundry's presses in the summer, looking for anything | lo"
+  },
+  {
+   "id": "tanja.ids",
+   "what": "tanja: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tanja.facts",
+   "what": "tanja: 23 facts: 22 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tanja.who",
+   "what": "tanja: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "tanja.schedule",
+   "what": "tanja: a proposal that replaces hook-cast.json's routine says why",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tanja.shop_hours",
+   "what": "tanja: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tanja.ties",
+   "what": "tanja: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada'] got ['ada']"
+  },
+  {
+   "id": "tanja.ties_hours",
+   "what": "tanja: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tanja.rumours",
+   "what": "tanja: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tanja.questions",
+   "what": "tanja: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tanja.mickey",
+   "what": "tanja: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "katarina.identity",
+   "what": "katarina: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 14 | katarina | Tracey Scarth | 28 | a seamstress: alterations at the laundry and a stall on the market | bleached cri"
+  },
+  {
+   "id": "katarina.ids",
+   "what": "katarina: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "katarina.facts",
+   "what": "katarina: 26 facts: 22 cite a line that holds their words, 3 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "katarina.who",
+   "what": "katarina: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "katarina.schedule",
+   "what": "katarina: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "katarina.shop_hours",
+   "what": "katarina: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "katarina.ties",
+   "what": "katarina: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'sam'] got ['ada', 'sam']"
+  },
+  {
+   "id": "katarina.ties_hours",
+   "what": "katarina: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "katarina.rumours",
+   "what": "katarina: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "katarina.questions",
+   "what": "katarina: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "katarina.mickey",
+   "what": "katarina: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "stipe.identity",
+   "what": "stipe: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 15 | stipe | Colin Mastin | 41 | a crane driver on the docks, home by the quay | moustache, flat cap, work jacket, smo"
+  },
+  {
+   "id": "stipe.ids",
+   "what": "stipe: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "stipe.facts",
+   "what": "stipe: 23 facts: 22 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "stipe.who",
+   "what": "stipe: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "stipe.schedule",
+   "what": "stipe: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "stipe.shop_hours",
+   "what": "stipe: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "stipe.ties",
+   "what": "stipe: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['rocco', 'sam'] got ['rocco', 'sam']"
+  },
+  {
+   "id": "stipe.ties_hours",
+   "what": "stipe: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "stipe.rumours",
+   "what": "stipe: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "stipe.questions",
+   "what": "stipe: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "stipe.mickey",
+   "what": "stipe: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "fabjan.identity",
+   "what": "fabjan: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 16 | fabjan | Albert Suggitt | 78 | a retired trawlerman who mends nets on the docks some mornings | weathered, white "
+  },
+  {
+   "id": "fabjan.ids",
+   "what": "fabjan: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fabjan.facts",
+   "what": "fabjan: 25 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fabjan.who",
+   "what": "fabjan: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "fabjan.schedule",
+   "what": "fabjan: a proposal that replaces hook-cast.json's routine says why",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fabjan.shop_hours",
+   "what": "fabjan: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fabjan.ties",
+   "what": "fabjan: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['goran', 'rocco', 'sam'] got ['goran', 'rocco', 'sam']"
+  },
+  {
+   "id": "fabjan.ties_hours",
+   "what": "fabjan: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fabjan.rumours",
+   "what": "fabjan: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fabjan.questions",
+   "what": "fabjan: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "fabjan.mickey",
+   "what": "fabjan: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "tomas.identity",
+   "what": "tomas: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 17 | tomas | Gary Mawer | 29 | a boat repairer at the yard; breakfast at the caff, the docks twice a week | curly hair"
+  },
+  {
+   "id": "tomas.ids",
+   "what": "tomas: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tomas.facts",
+   "what": "tomas: 24 facts: 22 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tomas.who",
+   "what": "tomas: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "tomas.schedule",
+   "what": "tomas: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tomas.shop_hours",
+   "what": "tomas: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tomas.ties",
+   "what": "tomas: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['rocco', 'sam'] got ['rocco', 'sam']"
+  },
+  {
+   "id": "tomas.ties_hours",
+   "what": "tomas: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tomas.rumours",
+   "what": "tomas: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tomas.questions",
+   "what": "tomas: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "tomas.mickey",
+   "what": "tomas: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "luka.identity",
+   "what": "luka: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 18 | luka | Ian Megginson | 34 | a locksmith and repairman at the yard | neat short hair, glasses, a canvas tool bag |"
+  },
+  {
+   "id": "luka.ids",
+   "what": "luka: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "luka.facts",
+   "what": "luka: 23 facts: 21 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "luka.who",
+   "what": "luka: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "luka.schedule",
+   "what": "luka: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "luka.shop_hours",
+   "what": "luka: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "luka.ties",
+   "what": "luka: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['rocco'] got ['rocco']"
+  },
+  {
+   "id": "luka.ties_hours",
+   "what": "luka: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "luka.rumours",
+   "what": "luka: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "luka.questions",
+   "what": "luka: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "luka.mickey",
+   "what": "luka: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "bruno.identity",
+   "what": "bruno: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 19 | bruno | Christine Pickering | 39 | a clerk at the harbour office | straight hair to her collar, a belted mac, car"
+  },
+  {
+   "id": "bruno.ids",
+   "what": "bruno: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bruno.facts",
+   "what": "bruno: 22 facts: 21 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bruno.who",
+   "what": "bruno: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "bruno.schedule",
+   "what": "bruno: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bruno.shop_hours",
+   "what": "bruno: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bruno.ties",
+   "what": "bruno: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['petra'] got ['petra']"
+  },
+  {
+   "id": "bruno.ties_hours",
+   "what": "bruno: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bruno.rumours",
+   "what": "bruno: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bruno.questions",
+   "what": "bruno: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "bruno.mickey",
+   "what": "bruno: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "petra.identity",
+   "what": "petra: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 20 | petra | Karen Grummitt | 25 | the ferry's ticket clerk; lodges at the boarding house | long hair in a scrunchie, "
+  },
+  {
+   "id": "petra.ids",
+   "what": "petra: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "petra.facts",
+   "what": "petra: 25 facts: 24 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "petra.who",
+   "what": "petra: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "petra.schedule",
+   "what": "petra: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "petra.shop_hours",
+   "what": "petra: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "petra.ties",
+   "what": "petra: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['bruno', 'noor', 'rocco'] got ['bruno', 'noor', 'rocco']"
+  },
+  {
+   "id": "petra.ties_hours",
+   "what": "petra: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "petra.rumours",
+   "what": "petra: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "petra.questions",
+   "what": "petra: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "petra.mickey",
+   "what": "petra: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "dario.identity",
+   "what": "dario: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 21 | dario | Gordon Leckenby | 55 | a ferryman | grey beard, woollen hat, oilskin, smokes a pipe | man, older, slow lo"
+  },
+  {
+   "id": "dario.ids",
+   "what": "dario: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dario.facts",
+   "what": "dario: 24 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dario.who",
+   "what": "dario: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "dario.schedule",
+   "what": "dario: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dario.shop_hours",
+   "what": "dario: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dario.ties",
+   "what": "dario: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['noor', 'sam'] got ['noor', 'sam']"
+  },
+  {
+   "id": "dario.ties_hours",
+   "what": "dario: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dario.rumours",
+   "what": "dario: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dario.questions",
+   "what": "dario: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "dario.mickey",
+   "what": "dario: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "sanja.identity",
+   "what": "sanja: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 22 | sanja | Sylvia Rennison | 64 | a widow who keeps the boarding house; buys fish for her lodgers | set grey hair, g"
+  },
+  {
+   "id": "sanja.ids",
+   "what": "sanja: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sanja.facts",
+   "what": "sanja: 25 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sanja.who",
+   "what": "sanja: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "sanja.schedule",
+   "what": "sanja: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sanja.shop_hours",
+   "what": "sanja: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sanja.ties",
+   "what": "sanja: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'noor', 'rocco'] got ['ada', 'noor', 'rocco']"
+  },
+  {
+   "id": "sanja.ties_hours",
+   "what": "sanja: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sanja.rumours",
+   "what": "sanja: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sanja.questions",
+   "what": "sanja: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "sanja.mickey",
+   "what": "sanja: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "hana.identity",
+   "what": "hana: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 23 | hana | Edith Stockill | 79 | a retired shipping clerk who writes letters and fills in forms at the newsagent's pe"
+  },
+  {
+   "id": "hana.ids",
+   "what": "hana: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hana.facts",
+   "what": "hana: 28 facts: 25 cite a line that holds their words, 2 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hana.who",
+   "what": "hana: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "hana.schedule",
+   "what": "hana: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hana.shop_hours",
+   "what": "hana: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hana.ties",
+   "what": "hana: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['ada', 'noor', 'sam'] got ['ada', 'noor', 'sam']"
+  },
+  {
+   "id": "hana.ties_hours",
+   "what": "hana: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hana.rumours",
+   "what": "hana: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hana.questions",
+   "what": "hana: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "hana.mickey",
+   "what": "hana: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "franjo.identity",
+   "what": "franjo: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 24 | franjo | Shaun Hewson | 26 | the sign painter doing the street's boards this month | paint-flecked overalls, a pe"
+  },
+  {
+   "id": "franjo.ids",
+   "what": "franjo: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "franjo.facts",
+   "what": "franjo: 25 facts: 24 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "franjo.who",
+   "what": "franjo: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "franjo.schedule",
+   "what": "franjo: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "franjo.shop_hours",
+   "what": "franjo: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "franjo.ties",
+   "what": "franjo: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['danica', 'lena', 'rocco'] got ['danica', 'lena', 'rocco']"
+  },
+  {
+   "id": "franjo.ties_hours",
+   "what": "franjo: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "franjo.rumours",
+   "what": "franjo: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "franjo.questions",
+   "what": "franjo: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "franjo.mickey",
+   "what": "franjo: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "danica.identity",
+   "what": "danica: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 25 | danica | Dawn Pybus | 27 | runs for the rent collector | a navy mac, a wedding ring, her hair in a clip, a clipbo"
+  },
+  {
+   "id": "danica.ids",
+   "what": "danica: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danica.facts",
+   "what": "danica: 24 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danica.who",
+   "what": "danica: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "danica.schedule",
+   "what": "danica: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danica.shop_hours",
+   "what": "danica: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danica.ties",
+   "what": "danica: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['franjo', 'lena', 'sam'] got ['franjo', 'lena', 'sam']"
+  },
+  {
+   "id": "danica.ties_hours",
+   "what": "danica: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danica.rumours",
+   "what": "danica: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danica.questions",
+   "what": "danica: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "danica.mickey",
+   "what": "danica: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "drago.identity",
+   "what": "drago: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 26 | drago | Dennis Iveson | 62 | a scrap dealer on the old warehouse row | stubble, flat cap, stout, dentures, glasse"
+  },
+  {
+   "id": "drago.ids",
+   "what": "drago: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "drago.facts",
+   "what": "drago: 26 facts: 24 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "drago.who",
+   "what": "drago: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "drago.schedule",
+   "what": "drago: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "drago.shop_hours",
+   "what": "drago: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "drago.ties",
+   "what": "drago: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['rocco', 'sam'] got ['rocco', 'sam']"
+  },
+  {
+   "id": "drago.ties_hours",
+   "what": "drago: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "drago.rumours",
+   "what": "drago: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "drago.questions",
+   "what": "drago: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "drago.mickey",
+   "what": "drago: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "filip.identity",
+   "what": "filip: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 27 | filip | Norman Dent | 57 | the night watchman on the warehouse row | grey hair, clean-shaven, a greatcoat, a torc"
+  },
+  {
+   "id": "filip.ids",
+   "what": "filip: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "filip.facts",
+   "what": "filip: 25 facts: 24 cite a line that holds their words, 1 derived and equal to the home, 0 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "filip.who",
+   "what": "filip: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "filip.schedule",
+   "what": "filip: schedule equals the routine in hook-cast.json for every weekday",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "filip.shop_hours",
+   "what": "filip: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "filip.ties",
+   "what": "filip: who they talk to equals hook-cast.json's ties (weight and line)",
+   "pass": true,
+   "detail": "expected ['sam'] got ['sam']"
+  },
+  {
+   "id": "filip.ties_hours",
+   "what": "filip: hours a week with each tie are recomputed from the schedules",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "filip.rumours",
+   "what": "filip: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "filip.questions",
+   "what": "filip: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "filip.mickey",
+   "what": "filip: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "cafe.identity",
+   "what": "cafe: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 28 | cafe | Grace Rinaldi | 58 | keeps the caff, her Italian father's before her | dark hair pulled back under a hairn"
+  },
+  {
+   "id": "cafe.ids",
+   "what": "cafe: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cafe.facts",
+   "what": "cafe: 25 facts: 23 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cafe.who",
+   "what": "cafe: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "cafe.schedule",
+   "what": "cafe: a proposed schedule (no routine in hook-cast.json) covers each day and uses known places",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cafe.shop_hours",
+   "what": "cafe: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cafe.ties",
+   "what": "cafe: proposed ties cite a line that names the other person, or are computed from the schedules",
+   "pass": true,
+   "detail": "[] []"
+  },
+  {
+   "id": "cafe.rumours",
+   "what": "cafe: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cafe.questions",
+   "what": "cafe: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "cafe.mickey",
+   "what": "cafe: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "takeaway_m.identity",
+   "what": "takeaway_m: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 29 | takeaway_m | Peter Tang (Tang Wing-kei) | 44 | keeps the takeaway on the parade with his wife; came from the New "
+  },
+  {
+   "id": "takeaway_m.ids",
+   "what": "takeaway_m: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_m.facts",
+   "what": "takeaway_m: 23 facts: 22 cite a line that holds their words, 0 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_m.who",
+   "what": "takeaway_m: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "takeaway_m.schedule",
+   "what": "takeaway_m: a proposed schedule (no routine in hook-cast.json) covers each day and uses known places",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_m.shop_hours",
+   "what": "takeaway_m: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_m.ties",
+   "what": "takeaway_m: proposed ties cite a line that names the other person, or are computed from the schedules",
+   "pass": true,
+   "detail": "[] []"
+  },
+  {
+   "id": "takeaway_m.rumours",
+   "what": "takeaway_m: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_m.questions",
+   "what": "takeaway_m: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_m.mickey",
+   "what": "takeaway_m: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "takeaway_f.identity",
+   "what": "takeaway_f: name and age are on the cited casting line",
+   "pass": true,
+   "detail": "| 30 | takeaway_f | Lily Tang (Wong Mei-ling) | 41 | the takeaway's front and its books | a bob, a patterned blouse, a g"
+  },
+  {
+   "id": "takeaway_f.ids",
+   "what": "takeaway_f: fact ids are unique",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_f.facts",
+   "what": "takeaway_f: 23 facts: 22 cite a line that holds their words, 0 derived and equal to the home, 1 new and marked",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_f.who",
+   "what": "takeaway_f: what they know of who each tie is equals hook-cast.json's description",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "takeaway_f.schedule",
+   "what": "takeaway_f: a proposed schedule (no routine in hook-cast.json) covers each day and uses known places",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_f.shop_hours",
+   "what": "takeaway_f: inside a shop or the cafe only in its opening hours",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_f.ties",
+   "what": "takeaway_f: proposed ties cite a line that names the other person, or are computed from the schedules",
+   "pass": true,
+   "detail": "[] []"
+  },
+  {
+   "id": "takeaway_f.rumours",
+   "what": "takeaway_f: exactly five rumours, each on their own facts, told only to people they meet, within RULINGS' limits",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_f.questions",
+   "what": "takeaway_f: ten answers under 30 words, from their own facts only, no secret told, no invented specific",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "takeaway_f.mickey",
+   "what": "takeaway_f: Mickey is described only by regulars who knew him, in the approved lines",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "content.gate_written",
+   "what": "tools/content-gate.py finds nothing in the written text: new facts, rumours, answers (679 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.gate_carried",
+   "what": "tools/content-gate.py finds nothing in the text carried word for word from the homes (1091 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.gate_questions",
+   "what": "tools/content-gate.py finds nothing in the questions (430 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.children",
+   "what": "no children, schools or children's words in written text (1109 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.children_carried",
+   "what": "no children's words in carried text (1091 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.real_names",
+   "what": "no real brand, place, public figure or later-than-1992 word in written text (RealWorld.cs's lists plus Humber-side towns) (1109 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.real_names_carried",
+   "what": "carried text names no real brand or place from the lists (1091 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.era",
+   "what": "no year after 1992 in any text",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.old_names",
+   "what": "no old name (Lena, Rocco, Sam and the rest) in written text: they survive only as ids (1109 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.tom_name",
+   "what": "Tom's name appears only in Ron's, Sheila's, Darren's and Tom's own written text (the ladder) (1109 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.foul_play",
+   "what": "nothing suggests Mickey died other than of his heart (1109 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.fire_truth",
+   "what": "the warehouse fire's truth is in no fact, rumour or answer that is not a marked secret",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.mickeys_is_a_cab_office",
+   "what": "Mickey's is never a pub or a bar (canon D19) (2200 texts)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.nobody_teaches",
+   "what": "nobody but Philip Danby is a teacher (Ada never was)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.tom_unwritten",
+   "what": "no word is written for Tom",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "content.canon_gate",
+   "what": "tools/canon-gate.py is clean over production/cloud-week/town/people.json, production/cloud-week/town/HOMES.md",
+   "pass": true,
+   "detail": "canon-gate: clean - 0 finding(s) in 2 file(s), 34987 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
+  },
+  {
+   "id": "shape.homes_file",
+   "what": "HOMES.md exists and names each kind of fact's home",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "id": "shape.notes_file",
+   "what": "NOTES.md exists",
+   "pass": false,
+   "detail": ""
+  },
+  {
+   "id": "shape.street_facts",
+   "what": "the street's facts in people.json are word for word in StreetFacts.cs",
+   "pass": true,
+   "detail": "[]"
+  },
+  {
+   "id": "shape.counts",
+   "what": "44 entries, 5 rumours each, 10 answers each but Tom's",
+   "pass": true,
+   "detail": "new facts: 29"
+  }
+ ]
+}

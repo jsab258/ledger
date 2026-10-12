@@ -28,6 +28,15 @@
    "decisions_key": "which regulars knew Mickey"
   }
  },
+ "limits": {
+  "L1": "A witness's story is only as sure as the witness was: a noise or a shape is suspicion, never 'he did it' (RULINGS.md 113).",
+  "L2": "The warehouse fire's truth is never the street's: only the paper's arson, nobody charged and the street's insurance talk (RULINGS.md 110).",
+  "L3": "Nobody but regulars who knew Mickey describe him, and only in the approved lines (RULINGS.md 101; StreetFacts.cs mickey_counsel, mickey_kept_ron).",
+  "L4": "Mickey died of his heart at the office early one morning and Ron found him; nobody thinks otherwise (RULINGS.md 108).",
+  "L5": "No reason is given for why the docks went (the outline keeps it underneath, never explained: story-outline 20 to 22).",
+  "L6": "Nobody can say what the row at Rita's was about, so nobody invents it (town-news-sample 19 to 21).",
+  "L7": "Tom's name follows the ladder: 'the new owner' or Mickey's nephew unless they know it; Sheila, Ron and Darren know it from the start (canon.md 88 to 91; what-they-call-him)."
+ },
  "proposed_places": {
   "exchange_office": {
    "said": "his office in the Exchange, the district of offices and lawyers",
@@ -2918,6 +2927,19 @@
      "id": "sam.k23"
     },
     {
+     "key": "landing_man",
+     "kind": "knows",
+     "secret": false,
+     "text": "to the street, a man who hangs about the ferry landing at night",
+     "src": {
+      "file": "game-design/first-ask-2026-09-29.md",
+      "line": 53,
+      "end": 54
+     },
+     "via": "the street's own word for him",
+     "id": "sam.k24"
+    },
+    {
      "key": "breakfast_man",
      "kind": "knows",
      "secret": true,
@@ -2928,7 +2950,7 @@
       "end": 55
      },
      "via": "the outfit's man at the landing, never named",
-     "id": "sam.k24"
+     "id": "sam.k25"
     },
     {
      "key": "watchman",
@@ -2940,7 +2962,7 @@
       "line": 13,
       "end": 15
      },
-     "id": "sam.k25"
+     "id": "sam.k26"
     },
     {
      "key": "row",
@@ -2953,7 +2975,7 @@
       "end": 10
      },
      "via": "day 1, Monday at eleven, at Rita's: the town's sample story; he was there",
-     "id": "sam.k26"
+     "id": "sam.k27"
     },
     {
      "key": "knows_name",
@@ -2965,7 +2987,7 @@
       "line": 36,
       "end": 36
      },
-     "id": "sam.k27"
+     "id": "sam.k28"
     },
     {
      "key": "day",
@@ -2977,7 +2999,7 @@
       "line": 621,
       "how": "day"
      },
-     "id": "sam.k28"
+     "id": "sam.k29"
     },
     {
      "key": "who_rocco",
@@ -2990,7 +3012,7 @@
       "end": 305
      },
      "via": "who rocco is, as the home describes them (hook-cast.json, the tie of 0.8)",
-     "id": "sam.k29"
+     "id": "sam.k30"
     },
     {
      "key": "who_lena",
@@ -3003,7 +3025,7 @@
       "end": 371
      },
      "via": "who lena is, as the home describes them (hook-cast.json, the tie of 0.6)",
-     "id": "sam.k30"
+     "id": "sam.k31"
     },
     {
      "key": "who_noor",
@@ -3016,7 +3038,7 @@
       "end": 999
      },
      "via": "who noor is, as the home describes them (hook-cast.json, the tie of 0.6)",
-     "id": "sam.k31"
+     "id": "sam.k32"
     },
     {
      "key": "who_dusan",
@@ -3029,7 +3051,7 @@
       "end": 541
      },
      "via": "who dusan is, as the home describes them (hook-cast.json, the tie of 0.6)",
-     "id": "sam.k32"
+     "id": "sam.k33"
     },
     {
      "key": "who_ada",
@@ -3042,7 +3064,7 @@
       "end": 889
      },
      "via": "who ada is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k33"
+     "id": "sam.k34"
     },
     {
      "key": "who_victor",
@@ -3055,7 +3077,7 @@
       "end": 1299
      },
      "via": "who victor is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k34"
+     "id": "sam.k35"
     },
     {
      "key": "who_goran",
@@ -3068,7 +3090,7 @@
       "end": 2225
      },
      "via": "who goran is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k35"
+     "id": "sam.k36"
     },
     {
      "key": "who_katarina",
@@ -3081,7 +3103,7 @@
       "end": 1903
      },
      "via": "who katarina is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k36"
+     "id": "sam.k37"
     },
     {
      "key": "who_stipe",
@@ -3094,7 +3116,7 @@
       "end": 2151
      },
      "via": "who stipe is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k37"
+     "id": "sam.k38"
     },
     {
      "key": "who_drago",
@@ -3107,7 +3129,7 @@
       "end": 2926
      },
      "via": "who drago is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k38"
+     "id": "sam.k39"
     },
     {
      "key": "who_ines",
@@ -3120,7 +3142,7 @@
       "end": 1980
      },
      "via": "who ines is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k39"
+     "id": "sam.k40"
     },
     {
      "key": "who_dario",
@@ -3133,7 +3155,7 @@
       "end": 2530
      },
      "via": "who dario is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k40"
+     "id": "sam.k41"
     },
     {
      "key": "who_filip",
@@ -3146,7 +3168,7 @@
       "end": 2957
      },
      "via": "who filip is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k41"
+     "id": "sam.k42"
     },
     {
      "key": "who_marta",
@@ -3159,7 +3181,7 @@
       "end": 2025
      },
      "via": "who marta is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k42"
+     "id": "sam.k43"
     },
     {
      "key": "who_jelena",
@@ -3172,7 +3194,7 @@
       "end": 2066
      },
      "via": "who jelena is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "sam.k43"
+     "id": "sam.k44"
     },
     {
      "key": "who_outfit_man",
@@ -3185,7 +3207,7 @@
       "end": 2978
      },
      "via": "who outfit_man is, as the home describes them (hook-cast.json, the tie of 0.45)",
-     "id": "sam.k44"
+     "id": "sam.k45"
     },
     {
      "key": "who_danica",
@@ -3198,7 +3220,7 @@
       "end": 2794
      },
      "via": "who danica is, as the home describes them (hook-cast.json, the tie of 0.45)",
-     "id": "sam.k45"
+     "id": "sam.k46"
     },
     {
      "key": "who_marla",
@@ -3211,7 +3233,7 @@
       "end": 1133
      },
      "via": "who marla is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "sam.k46"
+     "id": "sam.k47"
     },
     {
      "key": "who_ferko",
@@ -3224,7 +3246,7 @@
       "end": 502
      },
      "via": "who ferko is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "sam.k47"
+     "id": "sam.k48"
     },
     {
      "key": "who_zlata",
@@ -3237,7 +3259,7 @@
       "end": 459
      },
      "via": "who zlata is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "sam.k48"
+     "id": "sam.k49"
     },
     {
      "key": "who_tomas",
@@ -3250,7 +3272,7 @@
       "end": 2322
      },
      "via": "who tomas is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "sam.k49"
+     "id": "sam.k50"
     },
     {
      "key": "who_iva",
@@ -3263,7 +3285,7 @@
       "end": 1814
      },
      "via": "who iva is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "sam.k50"
+     "id": "sam.k51"
     },
     {
      "key": "who_fabjan",
@@ -3276,7 +3298,7 @@
       "end": 2188
      },
      "via": "who fabjan is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "sam.k51"
+     "id": "sam.k52"
     },
     {
      "key": "who_joey",
@@ -3289,7 +3311,7 @@
       "end": 1200
      },
      "via": "who joey is, as the home describes them (hook-cast.json, the tie of 0.3)",
-     "id": "sam.k52"
+     "id": "sam.k53"
     },
     {
      "key": "who_hal",
@@ -3302,7 +3324,7 @@
       "end": 1345
      },
      "via": "who hal is, as the home describes them (hook-cast.json, the tie of 0.3)",
-     "id": "sam.k53"
+     "id": "sam.k54"
     },
     {
      "key": "who_hana",
@@ -3315,7 +3337,7 @@
       "end": 2636
      },
      "via": "who hana is, as the home describes them (hook-cast.json, the tie of 0.3)",
-     "id": "sam.k54"
+     "id": "sam.k55"
     },
     {
      "key": "keeps_clear",
@@ -4178,7 +4200,7 @@
       "ada"
      ],
      "based_on": [
-      "sam.k26",
+      "sam.k27",
       "sam.s02"
      ],
      "limits": [
@@ -4407,7 +4429,7 @@
      "kind": "deflect",
      "a": "Not going there, mate. Round here people remember who was asking.",
      "uses": [
-      "sam.k24"
+      "sam.k25"
      ],
      "bench": "none: Who was the man in the grey car?",
      "new": "N-ANSWERS"
@@ -4775,7 +4797,7 @@
      ],
      "would_pass_to": [
       "sam",
-      "joey"
+      "ferko"
      ],
      "based_on": [
       "tom.s01"
@@ -4830,7 +4852,7 @@
      ],
      "would_pass_to": [
       "sam",
-      "marla"
+      "ada"
      ],
      "based_on": [
       "tom.b02"
@@ -7536,7 +7558,7 @@
      ],
      "would_pass_to": [
       "vesna",
-      "magda"
+      "ada"
      ],
      "based_on": [
       "emil.k04"
@@ -7563,7 +7585,7 @@
      ],
      "would_pass_to": [
       "vesna",
-      "magda"
+      "ada"
      ],
      "based_on": [
       "emil.k11"
@@ -7974,13 +7996,14 @@
     {
      "key": "never_landed",
      "kind": "knows",
-     "secret": false,
+     "secret": true,
      "text": "Mickey's outfit was the story she never landed.",
      "src": {
       "file": "game-design/warehouse-fire-2026-09-29.md",
       "line": 40,
       "end": 40
      },
+     "via": "her own working belief about the fire; not told to a stranger",
      "id": "noor.k21"
     },
     {
@@ -8791,10 +8814,10 @@
      "id": "noor.q3",
      "q": "What happened at the warehouse fire?",
      "kind": "partly",
-     "a": "The importer's warehouse on the old row, last November. The paper called it arson. Nobody was charged. It's a story I never landed.",
+     "a": "The importer's warehouse on the old row, last November. The paper called it arson. Nobody was charged. I'm not writing anything yet.",
      "uses": [
       "noor.k03",
-      "noor.k21"
+      "noor.k18"
      ],
      "bench": "fresh: What happened at the warehouse fire?",
      "new": "N-ANSWERS"
@@ -9231,8 +9254,8 @@
       "meets": "the watchman whose times do not fit",
       "source": {
        "file": "game-design/warehouse-fire-2026-09-29.md",
-       "line": 43,
-       "end": 47
+       "line": 44,
+       "end": 45
       }
      },
      "feeling": "shares the same place 3 hours a week (computed from the two schedules)"
@@ -9246,7 +9269,7 @@
      "source": {
       "file": "game-design/warehouse-fire-2026-09-29.md",
       "line": 40,
-      "end": 47
+      "end": 40
      },
      "feeling": "both are on the fire"
     }
@@ -9771,7 +9794,7 @@
      "hours_a_week": null,
      "source": {
       "file": "canon.md",
-      "line": 85,
+      "line": 86,
       "end": 87
      },
      "feeling": "the broker he uses"
@@ -10334,8 +10357,8 @@
      "hours_a_week": null,
      "source": {
       "file": "game-design/empire-roster.md",
-      "line": 275,
-      "end": 275
+      "line": 96,
+      "end": 96
      },
      "feeling": "one of her people on the street"
     },
@@ -10347,8 +10370,8 @@
      "hours_a_week": null,
      "source": {
       "file": "game-design/empire-roster.md",
-      "line": 275,
-      "end": 275
+      "line": 96,
+      "end": 96
      },
      "feeling": "one of her people on the street"
     },
@@ -10360,7 +10383,7 @@
      "hours_a_week": null,
      "source": {
       "file": "canon.md",
-      "line": 85,
+      "line": 86,
       "end": 87
      },
      "feeling": "the broker she uses"
@@ -10877,8 +10900,8 @@
      "hours_a_week": null,
      "source": {
       "file": "game-design/empire-roster.md",
-      "line": 276,
-      "end": 276
+      "line": 98,
+      "end": 98
      },
      "feeling": "his fence on the street"
     },
@@ -10890,7 +10913,7 @@
      "hours_a_week": null,
      "source": {
       "file": "canon.md",
-      "line": 85,
+      "line": 86,
       "end": 87
      },
      "feeling": "the broker he uses"
@@ -11449,7 +11472,7 @@
      "hours_a_week": null,
      "source": {
       "file": "canon.md",
-      "line": 85,
+      "line": 86,
       "end": 87
      },
      "feeling": "one of the three he brokers between"
@@ -11462,7 +11485,7 @@
      "hours_a_week": null,
      "source": {
       "file": "canon.md",
-      "line": 85,
+      "line": 86,
       "end": 87
      },
      "feeling": "one of the three he brokers between"
@@ -11475,7 +11498,7 @@
      "hours_a_week": null,
      "source": {
       "file": "canon.md",
-      "line": 85,
+      "line": 86,
       "end": 87
      },
      "feeling": "one of the three he brokers between"
@@ -17323,7 +17346,7 @@
      "id": "rita.q6",
      "q": "Who's Hal?",
      "kind": "answers",
-     "a": "Hal keeps the coin shop that sells no coins. He calls on Mondays.",
+     "a": "Hal keeps the coin shop that sells no coins.",
      "uses": [
       "rita.k30"
      ],

@@ -192,6 +192,10 @@ def build_person(p, sf, proposed_places):
         other = T.hk_person(t["who"])
         t["other_role"] = other["role"] if other else None
     for t in p["extra"].get("ties_new", []):
+        sq = t["source"]
+        if isinstance(sq, dict) and "_q" in sq:
+            alias, quote = sq["_q"]
+            t["source"] = src_dict(T.path_of(alias), quote)
         dup = next((x for x in ties if x["who"] == t["who"]), None)
         if dup is not None:
             # the story's own tie and the computed one are the same pair: keep the computed hours, add the story's reason
@@ -241,6 +245,7 @@ def main():
         "made": "13 Oct 2026, cloud week 42, unit 11 (town content)",
         "status": "A PROPOSAL for the PC session. Homes are in HOMES.md. Nothing here is in the game. Every fact is either copied word for word from its home with file and line, derived by script from a home, or marked new with a group Jafar sees in DECISIONS.md.",
         "groups": GROUPS,
+        "limits": __import__("authored.common", fromlist=["LIMITS"]).LIMITS,
         "proposed_places": T.PROPOSED_PLACES,
         "street_facts": street_index,
         "people": out_people,

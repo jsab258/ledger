@@ -455,3 +455,8 @@ def propose_ties(pid, sched, min_hours=3):
                         "meets": "computed", "hours_a_week": h, "source": {"new": "N-SCHEDULES", "computed": True}})
     out.sort(key=lambda e: -e["hours_a_week"])
     return out
+
+
+def SQ(alias, quote):
+    """A source for a tie or a proposal: the builder finds the quote's line in its home."""
+    return {"_q": (alias, quote)}
