@@ -510,6 +510,8 @@ selling them on their own.
 | Family (folder) | Copyright, as its OFL.txt states |
 |---|---|
 | Abril Fatface (abril-fatface) | Copyright (c) 2011, TypeTogether |
+| Archivo (archivo) | Copyright 2020 The Archivo Project Authors (github.com/Omnibus-Type/Archivo) |
+| Courier Prime (courier-prime) | Copyright 2015 The Courier Prime Project Authors (github.com/quoteunquoteapps/CourierPrime) |
 | Alfa Slab One (alfa-slab-one) | Copyright 2016 The Alfa Slab One Project Authors, Reserved Font Name "Alfa Slab" |
 | Fraunces (fraunces) | Copyright 2018 The Fraunces Project Authors |
 | Josefin Sans (josefin-sans) | Copyright 2010 The Josefin Sans Project Authors, with a Reserved Font Name |

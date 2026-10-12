@@ -252,6 +252,8 @@ WATCHED = {
     "production/fonts/jost": "THE STREET'S SIGNS AND PAPER",
     "production/fonts/libre-franklin": "THE STREET'S SIGNS AND PAPER",
     "production/fonts/old-standard-tt": "THE STREET'S SIGNS AND PAPER",
+    "production/fonts/archivo": "THE STREET'S SIGNS AND PAPER",
+    "production/fonts/courier-prime": "THE STREET'S SIGNS AND PAPER",
     "production/fonts/oswald": "THE STREET'S SIGNS AND PAPER",
     # THE PS5 CORNER'S BAR, 23 September: two Kingdom Come: Deliverance II
     # screenshots supplied by Jafar. Out of the repository since 3 October (his
