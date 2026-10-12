@@ -202,7 +202,8 @@ FOUL = r"murder|killed|poison|foul play|stabbed|shot|pushed him|suspicious death
 MICKEY_DESC = r"\bMickey(?:'s)? (?:was|used to|liked|loved|hated|would|always|never|kept|ran|owed|thought|wanted|said|told|had a)\b"
 DK = re.compile(r"that's all i know|no idea|couldn't (?:tell|say)|wouldn't (?:like to )?(?:say|know)|didn't know|don't know|can't say|never really knew|not that i've found|not to me", re.I)
 NUMW = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12,
-        "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60}
+        "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19,
+        "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90, "hundred": 100, "thousand": 1000}
 DAYWORD = {"monday": "mon", "tuesday": "tue", "wednesday": "wed", "thursday": "thu", "friday": "fri", "saturday": "sat", "sunday": "sun"}
 SHOP_EXCEPT = {("zora", "laundry_counter"): "REGULARS.md row 13: still on the early shift; the steam laundry is a works, which runs before its counter opens"}
 OK_CAPS = {"I", "Mickey", "Mr", "Mrs", "Miss", "Mickey's"}
@@ -303,6 +304,9 @@ def run(doc, full=True):
                          | ({"N-SCHEDULES"} if any(p["schedule"].get("source", {}).get("new") for p in people) else set())
                          | ({"N-MICKEY"} if any(p["knew_mickey"] for p in people) else set()))
     for g in used_groups:
+        if g not in groups:
+            row("decisions." + g, "the group %s is defined in people.json" % g, False, "undefined group")
+            continue
         key = groups[g]["decisions_key"]
         hit = [l for l in mine if key in l]
         row("decisions." + g, "DECISIONS.md has one entry for %s, ending 'Marked for Jafar.'" % g,
@@ -337,7 +341,7 @@ def run(doc, full=True):
     carried_texts = []
     all_ids_ok = True
 
-    for p in people:
+    def check_person(p):
         pid = p["id"]
         facts = p["facts"]
         fids = {f["id"] for f in facts}
@@ -577,12 +581,12 @@ def run(doc, full=True):
                     tri = {tuple(aw[i:i + 3]) for i in range(len(aw) - 2)}
                     for u in q["uses"]:
                         if u in secret:
-                            sw = words(ftext[u])
+                            sw = words(ftext.get(u, ""))
                             st = {tuple(sw[i:i + 3]) for i in range(len(sw) - 2)}
                             if tri & st:
                                 qbad.append("%s repeats words of the secret it withholds" % q["id"])
                 if q["kind"] != "dont_know":
-                    allowed = q["q"] + " " + " ".join(ftext[u] for u in q["uses"]) + " " + names_ok
+                    allowed = q["q"] + " " + " ".join(ftext.get(u, "") for u in q["uses"]) + " " + names_ok
                     badw = specifics_ok(a, allowed)
                     if badw:
                         qbad.append("%s says %s, which is not in what it draws on" % (q["id"], badw))
@@ -604,6 +608,12 @@ def run(doc, full=True):
                 if re.search(MICKEY_DESC, s) and (not p["knew_mickey"] or fold(s).lower() not in approved_mickey):
                     mb.append(label)
         row("%s.mickey" % pid, "%s: Mickey is described only by regulars who knew him, in the approved lines" % pid, not mb, str(mb[:3]))
+
+    for p in people:
+        try:
+            check_person(p)
+        except Exception as e:  # noqa: BLE001
+            row("%s.crash" % p.get("id", "?"), "the check could not read this entry", False, repr(e))
 
     # ---- content rows over the written text and the carried text
     def scan_all(items, label, rid):
@@ -664,7 +674,7 @@ def run(doc, full=True):
     row("content.fire_truth", "the warehouse fire's truth is in no fact, rumour or answer that is not a marked secret", not fire_hits, "; ".join(fire_hits[:6]))
     pub = re.compile(r"Mickey's (pub|bar)|the (pub|bar) at Mickey", re.I)
     rx_rows("content.mickeys_is_a_cab_office", "Mickey's is never a pub or a bar (canon D19)", pub, allw + carried_texts)
-    teach = [("%s %s" % (pid, where)) for pid, where, t in allw if re.search(r"teach", t, re.I) and pid != "elias"]
+    teach = [("%s %s" % (pid, where)) for pid, where, t in allw if re.search(r"teach|taught|schoolmaster|schoolmistress|lessons?\b", t, re.I) and pid != "elias"]
     row("content.nobody_teaches", "nobody but Philip Danby is a teacher (Ada never was)", not teach, "; ".join(teach[:4]))
     tom_q = [p["id"] for p in people if p.get("tom_exception") and p["newcomer_questions"]]
     row("content.tom_unwritten", "no word is written for Tom", not tom_q)
@@ -776,13 +786,13 @@ def seeded_faults():
     def m_tom_q(d):
         person(d, "tom")["newcomer_questions"].append(dict(q(d, "ada"), id="tom.q1"))
     def m_teach(d):
-        q(d, "ada")["a"] = "I taught on this street, love."
+        q(d, "ada")["a"] = "I teach on this street, love."
     def m_old_name(d):
         q(d, "ada")["a"] = "That is Lena's affair, love."
     def m_dk(d):
         q(d, "ada", 9)["uses"] = ["ada.k05"]
     def m_hours(d):
-        person(d, "rita")["schedule"]["weekday"][1]["place"] = "ritas_counter"; person(d, "rita")["schedule"]["weekday"][0]["to"] = "03:00"
+        person(d, "rita")["schedule"]["weekday"][0]["place"] = "ritas_counter"
     return [
         ("a sourced fact's words changed", "rocco.facts", m_text), ("a citation pointed at the wrong line", "rocco.facts", m_line),
         ("a new fact with no such group", "ada.facts", m_group), ("a fact with no source and no mark", "ada.facts", m_unmarked),

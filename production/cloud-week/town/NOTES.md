@@ -6,7 +6,7 @@ Written 13 October 2026 for Jafar's order of 12 October: for every principal and
 
 - **HOMES.md**: where each kind of fact lives today, and how these files relate to each home. Written first.
 - **people.json**: 44 entries (the fourteen principals, with Tom's entry holding only what the town knows of him, and the thirty regulars). Each has facts (knows, believes, saw), a schedule, who they talk to, five rumours and ten answers.
-- **check_town.py** and **checks/check_v1.json**: the checks, written apart from the builder. Result today: **548 of 548 rows pass**.
+- **check_town.py** and **checks/check_v1.json**: the checks, written apart from the builder. Result today: **578 of 578 rows pass**.
 - **build_people.py**, **town_lib.py**, **authored/**: the builder and the written text. `python3 build_people.py` makes people.json; `python3 check_town.py` checks it; `python3 make_notes.py` makes this file. Standard library only; the whole run takes seconds.
 
 ## The numbers
@@ -18,7 +18,7 @@ Written 13 October 2026 for Jafar's order of 12 October: for every principal and
   - Beliefs (48): 39 unknown, 5 true, 3 false, 1 partly, each against canon and the story.
 - **Rumours:** 220, five a person. 191 are one of eleven pooled stories the street passes round (the heart, the nephew, the funeral, June, the fire as the street has it, the thin trade, the door, the man at the landing, Hal and Rita, the radio, and the arrival seen); 29 are specific to a person (listed below).
 - **Answers:** 430, ten a person but Tom's. Kinds: 316 plain answers, 26 partial, 23 pointing to someone, 27 deflections, 38 honest don't-knows. Every answer is under thirty words and cites the fact ids it draws on.
-- **Check:** 548 of 548 rows pass. It covers the cast (each of the 44, nobody else), every citation, every derived fact and schedule re-derived from hook-cast.json, the ties and their hours a week recomputed, the rumours' limits, each answer's facts, words and length, the gates, and DECISIONS.md.
+- **Check:** 578 of 578 rows pass. It covers the cast (each of the 44, nobody else), every citation, every derived fact and schedule re-derived from hook-cast.json, the ties and their hours a week recomputed, the rumours' limits, each answer's facts, words and length, the gates, and DECISIONS.md. It also damages a copy of people.json thirty ways (a changed quote, a wrong line, a secret told, a real brand, drink, a year after 1992, Tom's name, the fire's truth, murder, a missing or extra person and so on) and requires each to fail a row: 30 seeded faults, 30 caught.
 
 ## Where the files do not settle things (homes that disagree, for the PC session; none is settled here)
 
