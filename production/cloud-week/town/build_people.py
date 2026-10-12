@@ -65,6 +65,18 @@ def hk_area_line(area):
     raise SystemExit("no area " + area)
 
 
+def resolve_basis(b):
+    if b is None:
+        return None
+    if "basis_src" in b:
+        alias, quote = b["basis_src"]
+        out = {"src": src_dict(T.path_of(alias), quote)}
+        if b.get("note"):
+            out["note"] = b["note"]
+        return out
+    return {"note": b["basis_note"]}
+
+
 def build_person(p, sf, proposed_places):
     pid = p["id"]
     facts = []
@@ -86,6 +98,9 @@ def build_person(p, sf, proposed_places):
         s = sf[sid]
         text = s["own"] if (s["about"] == pid and s["own"]) else s["fact"]
         add({"key": sid, "kind": "knows", "text": text, "src": src_dict(T.ALIASES["SF"], text), "street": sid, "secret": False})
+    # 1b. who they are, in the home's own words (the role cell or line)
+    ralias, rquote = p["role"]
+    add({"key": "job", "kind": "knows", "text": rquote, "src": src_dict(T.path_of(ralias), rquote), "secret": False, "via": "who and what they are, as their home gives it"})
     # 2. the rest, in the order written
     for f in p["knows"] + p["believes"] + p["saw"]:
         out = {"key": f["key"], "kind": f["kind"], "secret": bool(f.get("secret"))}
@@ -114,7 +129,7 @@ def build_person(p, sf, proposed_places):
                 raise SystemExit("bad derived")
         if f["kind"] == "believes":
             out["truth"] = f["truth"]
-            out["truth_basis"] = f["basis"]
+            out["truth_basis"] = resolve_basis(f["basis"])
         if f["kind"] == "saw":
             out["when"] = f["when"]
         add(out)
@@ -150,7 +165,7 @@ def build_person(p, sf, proposed_places):
             if k not in keymap:
                 raise SystemExit("rumour of %s rests on unknown fact %s" % (pid, k))
             on.append(keymap[k])
-        rumours.append({"id": "%s.r%d" % (pid, i), "gist": r["gist"], "truth": r["truth"], "truth_basis": r["basis"], "sure": r["sure"],
+        rumours.append({"id": "%s.r%d" % (pid, i), "gist": r["gist"], "truth": r["truth"], "truth_basis": resolve_basis(r["basis"]), "sure": r["sure"],
                         "heard_from": r["frm"], "would_pass_to": r["to"], "based_on": on, "limits": r["limits"], "new": "N-RUMOURS"})
     questions = []
     for i, q in enumerate(p["questions"], 1):

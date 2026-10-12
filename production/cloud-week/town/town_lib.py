@@ -365,6 +365,16 @@ def Q(question, kind, answer, uses=(), bench=None):
     return Spec(q=question, kind=kind, a=answer, uses=list(uses), bench=bench)
 
 
+def H(alias, quote, note=None):
+    """A truth basis that points at a line in a home (the quote is found and cited)."""
+    return Spec(basis_src=(alias, quote), note=note)
+
+
+def NOTE(text):
+    """A truth basis that is only a reason in words (canon and the story are silent)."""
+    return Spec(basis_note=text)
+
+
 def person(pid, name, heard_as, tier, age, role, identity, knows, believes, saw, rumours, questions, street=(), ties_note=None,
            schedule=None, talks=None, knew_mickey=False, tom_exception=False, internal_id_note=None, extra=None):
     return Spec(id=pid, name=name, heard_as=heard_as, tier=tier, age=age, role=role, identity=identity, knows=list(knows),
