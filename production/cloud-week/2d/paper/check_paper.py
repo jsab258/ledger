@@ -13,6 +13,7 @@ OUTDIR is what make_paper.py wrote. The check reads the PNG files (not the maker
   <ID>.<c>.read                 each delivered class: classes A and B must pass every pixel check; C and D (weathered on purpose) are reported
   <ID>.<c>.paper, .ink, .contrast, .loss, .wear     colours, contrast and wear counts against the target's numbers for the class
   <ID>.<c>.holes                no loss of paper that does not reach the sheet's edge is over 0.2 per cent of the sheet
+  <ID>.<c>.height               no height pixel clipped at 0 or 65535 (the height scale is chosen per picture: 25600, 8192 or 4096 units a mm)
   <ID>.<c>.tears                the second street review's tests on the tear lines (the maker's log): no 40 mm turning 150 degrees one way, two sharp vertices a line, no tongue
   <ID>.cue                      a hand card's tape tab or sucker reads LEFT (G.mirror.cues); the mirrored card reads RIGHT
   <ID>.relief                   a cast or pressed plate's letters and border stand the target's height above its face
@@ -224,6 +225,9 @@ def check_item(task):
             if k in wl and not (rng_[cls][0] <= wl[k] <= rng_[cls][1]):
                 wr.append("%s %s outside %s" % (k, wl[k], rng_[cls]))
         R.add("%s.%s.wear" % (iid, cls), not wr, "; ".join(wr) or "wear log %s" % json.dumps(wl))
+        h16c = np.asarray(Image.open(Path(out) / c["height"]["file"]))
+        n_clip = int((h16c == 0).sum() + (h16c == 65535).sum())
+        R.add("%s.%s.height" % (iid, cls), n_clip == 0, "no height pixel at 0 or 65535 (%g units/mm)" % c["height"]["units_per_mm"] if not n_clip else "%d height pixels clipped at 0 or 65535 (%g units/mm)" % (n_clip, c["height"]["units_per_mm"]))
         tt = wl.get("tear_tests")
         if tt is not None:            # the second street review's tests on the tear lines, logged by the maker
             bad_t = {k: v for k, v in tt.items() if k in ("turn_over_150", "few_sharp_vertices", "tongues_left") and v}

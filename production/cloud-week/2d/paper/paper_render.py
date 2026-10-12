@@ -105,7 +105,14 @@ def render(P, geo, cls, seed, wear=True):
         pw.apply(S, table, cls)
         log = S.log
         rgb, alpha, height, rough, metal = S.rgb, S.alpha, S.height, S.rough, S.metal
+    units = height_units(height)
     return dict(rgb=rgb, alpha=alpha, height=height, rough=rough, metal=metal, units=units, log=log, tau=tau)
+
+
+def height_units(height):
+    """16-bit units per mm, chosen per picture so that no pixel clips (the second close review: 86 of 129 maps hit +-1.28 mm at 25600): 25600 to 1.27 mm, 8192 to 3.99 mm, else 4096."""
+    hm = float(np.abs(height).max()) if height.size else 0.0
+    return 25600.0 if hm <= 1.27 else (8192.0 if hm <= 3.99 else 4096.0)
 
 
 def relief_height(it, geo, alpha):
@@ -136,7 +143,7 @@ def rolled_edge(it, geo, alpha, rgb, height):
     d = ndi.distance_transform_edt(np.pad(alpha > 0.5, 1))[1:-1, 1:-1].astype(np.float32) / geo.ppm      # padded: the picture's own border is the plate's edge (the close review's finding 2)
     t = np.clip(d / roll, 0, 1)
     drop = roll * (1 - np.sqrt(np.clip(1 - (1 - t) ** 2, 0, 1)))
-    height -= (drop * 0.35).astype(np.float32)
+    height -= (drop * (1.0 if it["process"] in ("enamel", "vitreous_enamel_steel") else 0.35)).astype(np.float32)      # H01, H02: the target's true 6 mm radius
     k = (1 - t)
     gy, gx = np.gradient(drop)
     rgb *= (1 - 0.10 * k + (-gx * 0.5 - gy * 0.5) * geo.ppm * 0.05)[..., None]

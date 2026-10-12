@@ -260,8 +260,8 @@ def _dir(a):
     return np.array([math.cos(a), math.sin(a)])
 
 
-def jag(rng, pts, levels=3, amp=0.06):
-    """Midpoint displacement, `levels` deep, each midpoint moved across its segment by amp x the segment's length (a normal draw)."""
+def jag(rng, pts, levels=3, amp=0.06, cap=None):
+    """Midpoint displacement, `levels` deep, each midpoint moved across its segment by amp x the segment's length (a normal draw), at most `cap` mm when given."""
     P = [np.asarray(p, float) for p in pts]
     for _ in range(levels):
         Q = [P[0]]
@@ -269,7 +269,10 @@ def jag(rng, pts, levels=3, amp=0.06):
             d = b - a
             L = float(np.hypot(*d))
             n = np.array([-d[1], d[0]]) / max(L, 1e-9)
-            Q += [(a + b) / 2 + n * rng.normal(0, amp * L), b]
+            o = rng.normal(0, amp * L)
+            if cap is not None:
+                o = float(np.clip(o, -cap, cap))
+            Q += [(a + b) / 2 + n * o, b]
         P = Q
     return P
 
@@ -400,24 +403,55 @@ def poly_mask(polys, shape, cpm):
     return np.asarray(im) > 127
 
 
-def cut_protrusions(m, cpm, sizes_mm=(4, 8, 16, 32)):
-    """Cut off at its base every tongue of loss or of paper longer than 1.5 times its base width (it replaces the 20 mm disc openings, which rounded every corner). The mask is padded
-    by its own edge, so that the sheet's border is neither paper nor loss. Returns (mask, tongues cut)."""
+def cut_protrusions(m, cpm, sizes_mm=(4, 8, 16, 32), rng=None):
+    """Cut off every tongue of loss or of paper longer than 1.5 times its base width (it replaces the 20 mm disc openings, which rounded every corner). The second close review: the cut
+    is a straight torn chord, not the opening's disc arc: of the tongue's pixels touching the body, A and B the two farthest apart; only the tongue's pixels beyond the line AB (jagged 3
+    levels deep at 6 per cent, like a tear) change side. The mask is padded by its own edge, so that the sheet's border is neither paper nor loss. Returns (mask, tongues cut)."""
+    rng = rng or np.random.default_rng(0)
     cut = 0
     p = int(max(sizes_mm) * cpm) + 2
     for D in sizes_mm:
         r = max(1, int(round(D * cpm / 2)))
         for inv in (False, True):
             a = np.pad(~m if inv else m, p, mode="edge")
-            res = a & ~ndi.binary_opening(a, gl_disk(r))
-            lab, k = ndi.label(res)
-            if not k:
-                continue
-            for i, sl in enumerate(ndi.find_objects(lab), 1):
-                L = math.hypot(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start) / cpm
-                if L > 1.5 * D:
-                    a[sl][lab[sl] == i] = False
-                    cut += 1
+            body = ndi.binary_opening(a, gl_disk(r))
+            lab, k = ndi.label(a & ~body)
+            for i, sl in enumerate(ndi.find_objects(lab) if k else [], 1):
+                if math.hypot(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start) / cpm <= 1.5 * D:
+                    continue
+                y0, y1 = max(0, sl[0].start - 3), min(a.shape[0], sl[0].stop + 3)
+                x0, x1 = max(0, sl[1].start - 3), min(a.shape[1], sl[1].stop + 3)
+                T = lab[y0:y1, x0:x1] == i
+                B_ = body[y0:y1, x0:x1]
+                touch = T & ndi.binary_dilation(B_, np.ones((3, 3), bool))
+                ty, tx = np.nonzero(touch)
+                cut += 1
+                if len(ty) < 2:
+                    a[y0:y1, x0:x1][T] = False
+                    continue
+                P = np.stack([tx, ty], 1).astype(np.float64)
+                if len(P) > 300:
+                    P = P[np.linspace(0, len(P) - 1, 300).astype(int)]
+                d2 = ((P[:, None, :] - P[None, :, :]) ** 2).sum(-1)
+                ia, ib = np.unravel_index(int(np.argmax(d2)), d2.shape)
+                A, Bp = P[ia], P[ib]
+                AB = Bp - A
+                L = float(np.hypot(*AB))
+                if L < 1.0:
+                    a[y0:y1, x0:x1][T] = False
+                    continue
+                prof = np.array(jag(rng, [(0.0, 0.0), (L, 0.0)]))
+                order = np.argsort(prof[:, 0])
+                by, bx = np.nonzero(B_ & ~T)
+                cb = np.array([bx.mean(), by.mean()]) if len(by) else A + np.array([-AB[1], AB[0]])
+                side_b = np.sign(AB[0] * (cb[1] - A[1]) - AB[1] * (cb[0] - A[0])) or 1.0
+                yy, xx = np.nonzero(T)
+                tt = ((xx - A[0]) * AB[0] + (yy - A[1]) * AB[1]) / L
+                off = np.interp(tt, prof[order, 0], prof[order, 1])
+                side = (AB[0] * (yy - A[1]) - AB[1] * (xx - A[0])) / L - off * side_b
+                far = np.sign(side) != side_b
+                sub = a[y0:y1, x0:x1]
+                sub[yy[far], xx[far]] = False
             a = a[p:-p, p:-p]
             m = ~a if inv else a
     return m, cut
@@ -435,6 +469,73 @@ def protrusions_left(m, cpm, sizes_mm=(4, 8, 16, 32)):
                 if math.hypot(sl[0].stop - sl[0].start, sl[1].stop - sl[1].start) / cpm > 1.5 * D:
                     n += 1
     return n
+
+
+def trace_outline(comp):
+    """The ordered outer boundary (x, y pixel centres) of one component (Moore-neighbour tracing)."""
+    a = np.pad(comp, 1)
+    ys, xs = np.nonzero(a)
+    k0 = int(np.lexsort((xs, ys))[0])
+    start = (int(ys[k0]), int(xs[k0]))
+    nb = [(-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)]
+    pts = [start]
+    cur, back = start, 6                                 # entered from the west
+    for _step in range(4 * a.size):
+        found = False
+        for kk in range(8):
+            dd = (back + 1 + kk) % 8
+            ny, nx = cur[0] + nb[dd][0], cur[1] + nb[dd][1]
+            if a[ny, nx]:
+                back = (dd + 4) % 8
+                cur = (ny, nx)
+                found = True
+                break
+        if not found or (cur == start and len(pts) > 2):
+            break
+        pts.append(cur)
+    return [(x - 1, y - 1) for y, x in pts]
+
+
+def outline_runs(lost, cpm):
+    """The tear runs of the final loss: each component's outline, cut where it lies on the sheet's border, in mm, simplified at 0.5 mm."""
+    from shapely.geometry import LineString
+    h, w = lost.shape
+    lab, n = ndi.label(lost)
+    runs = []
+    for i in range(1, n + 1):
+        comp = lab == i
+        if comp.sum() < 4:
+            continue
+        P = trace_outline(comp)
+        on = [x <= 1 or y <= 1 or x >= w - 2 or y >= h - 2 for x, y in P]
+        cur = []
+        for (x, y), o in zip(P + P[:1], on + on[:1]):
+            if o:
+                if len(cur) >= 10:
+                    runs.append(cur)
+                cur = []
+            else:
+                cur.append((x / cpm, y / cpm))
+        if len(cur) >= 10:
+            runs.append(cur)
+    out = []
+    for r_ in runs:
+        ls = LineString(r_)
+        s = ls.simplify(0.5)
+        out.append((list(s.coords), r_))
+    return out
+
+
+def staircase(T):
+    """Two consecutive segments each within 10 degrees of an axis, meeting at 80 to 100 degrees (the second close review's narrow point 8)."""
+    Q = np.asarray(T, float)
+    h = np.degrees(np.arctan2(*np.diff(Q, axis=0).T[::-1]))
+    ax = np.minimum(np.abs(((h + 45) % 90) - 45), 90)
+    for k in range(len(h) - 1):
+        turn = abs(((h[k + 1] - h[k]) + 180) % 360 - 180)
+        if ax[k] <= 10 and ax[k + 1] <= 10 and 80 <= turn <= 100:
+            return True
+    return False
 
 
 def tear_tests(lines):
@@ -510,7 +611,7 @@ def loss_and_tears(S, share_range, n_tears):
             n_seg = int(np.clip(round(arc / r2.uniform(25, 45)), 4, 12))
             P, T = patch_poly(r2, kind, c, a, b, n_seg)
             Tj = jag(r2, T)
-            if tear_tests([(T, Tj)]) == (0, 0):
+            if tear_tests([(T, Tj)]) == (0, 0) and not staircase(T):
                 break
         return ([P[0]] + Tj if kind[0] == "corner" else Tj), (T, Tj)
 
@@ -569,26 +670,33 @@ def loss_and_tears(S, share_range, n_tears):
         if not polys:
             return
         lost, cut = poly_mask(polys, shp2, cpm), 0
+        crng = np.random.default_rng(int(attempt * 7 + 11))
         for _p in range(6):                              # cutting a tongue can leave a shorter one: until none is left
-            lost, c_ = cut_protrusions(lost, cpm)
+            lost, c_ = cut_protrusions(lost, cpm, rng=crng)
             cut += c_
             if not c_:
                 break
         left_ = protrusions_left(lost, cpm)
-        if not left_:
+        t150, few = tear_tests(outline_runs(lost, cpm))   # the review's tests on the final outline, not on the drawn lines
+        if not left_ and not t150 and not few:
             break
-    t150, few = tear_tests(lines)
     S.log["tear_tests"] = dict(turn_over_150=t150, few_sharp_vertices=few, tongues_left=left_, tongues_cut=cut)
     if not lost.any():
         return
     soft = ndi.gaussian_filter(lost.astype(np.float32), 0.6)
     up = np.asarray(Image.fromarray((soft * 255).astype(np.uint8)).resize((S.w, S.h), Image.BILINEAR)).astype(np.float32) / 255.0
     fib = pc.value_noise((S.h, S.w), max(1.0, 0.8 * S.ppm), rng, octaves=2)
-    lost_f = (up + (fib - 0.5) * 0.30 > 0.5).astype(np.float32)
-    lost_f = pc.smooth(lost_f, 0.6)
-    edge = np.clip(ndi.grey_dilation(lost_f, size=(int(1.3 * S.ppm) * 2 + 1,) * 2) - lost_f, 0, 1)
+    lost_b = up + (fib - 0.5) * 0.30 > 0.5
+    lab, n_ = ndi.label(lost_b)                          # specks of loss under 1 mm2 are dropped before the rim (the second close review: a 0.04 mm2 speck drew a square rim)
+    if n_:
+        sizes = ndi.sum(lost_b, lab, range(1, n_ + 1))
+        lost_b &= np.isin(lab, np.nonzero(sizes >= S.ppm * S.ppm)[0] + 1)
+    lost_f = pc.smooth(lost_b.astype(np.float32), 0.6)
+    wr = np.maximum(1.0, (0.4 + 0.8 * pc.value_noise((S.h, S.w), 6 * S.ppm, rng)) * S.ppm)          # the pale rim: round, 0.4 to 1.2 mm wide, varying
+    dist = ndi.distance_transform_edt(~lost_b)
+    edge = np.clip(wr - dist + 0.5, 0, 1) * (~lost_b)
     fibre = 0.6 + 0.4 * pc.value_noise((S.h, S.w), 1.5 * S.ppm, rng)
-    S.tint((0, S.w, 0, S.h), edge * (1 - lost_f) * fibre, (244, 241, 231), 0.8)
+    S.tint((0, S.w, 0, S.h), (edge * (1 - lost_f) * fibre).astype(np.float32), (244, 241, 231), 0.8)
     if S.cls in ("C", "D"):
         ghost = np.asarray((214, 205, 185), np.float32)
         S.rgb[:] = S.rgb * (1 - lost_f[..., None]) + ghost * lost_f[..., None]
@@ -784,12 +892,14 @@ def bolt_head(S, x_mm, y_mm, d_mm=18, hole_mm=10, rust=True):
 
 
 def chips(S, n, size_mm, near=None, edge_bias=0.7, colour=STEEL, halo_mm=(1, 3), halo_op=0.35, fade=1.0, spots=None):
-    """Chips in the enamel (the close review's finding 11): rounded and scalloped (three to six overlapping discs), dark steel ringed by 0.5 to 1 mm of the grey ground coat; in classes C
-    and D the steel is rusty and a thin rust stain lies round the chip, three times as strong below it."""
+    """Chips in the enamel (the close reviews): rounded and scalloped (three to six overlapping discs), dark steel; all the chips are gathered into one shape and ringed once by 0.5 to
+    1 mm of the grey ground coat (190, 190, 185), so that rings never cross a chip; in classes C and D the steel is rusty and a thin rust stain lies round them, stronger below. The bolt
+    heads are drawn after the chips (enamel_plate, pressed_plate), so that no chip lies on a head."""
     rng = S.rng
-    done = 0
     rusty = S.cls in ("C", "D")
     steel = np.asarray(colour, np.float32) * 0.55 + np.asarray(RUST, np.float32) * 0.45 if rusty else np.asarray(colour, np.float32)
+    allc = np.zeros((S.h, S.w), np.float32)
+    done = 0
     for i in range(n):
         r = float(rng.uniform(size_mm[0], size_mm[1])) / 2 * S.ppm
         if spots and rng.random() < 0.55:
@@ -797,17 +907,15 @@ def chips(S, n, size_mm, near=None, edge_bias=0.7, colour=STEEL, halo_mm=(1, 3),
             x, y = sx * S.ppm + rng.normal(0, 7 * S.ppm), (S.H - sy) * S.ppm + rng.normal(0, 7 * S.ppm)
         elif rng.random() < edge_bias:
             e = int(rng.integers(0, 4))
-            t = rng.uniform(0, 1)
+            t_ = rng.uniform(0, 1)
             m_ = rng.uniform(1, 9) * S.ppm
-            x, y = ((t * S.w, m_) if e == 0 else ((S.w - m_, t * S.h) if e == 1 else ((t * S.w, S.h - m_) if e == 2 else (m_, t * S.h))))
+            x, y = ((t_ * S.w, m_) if e == 0 else ((S.w - m_, t_ * S.h) if e == 1 else ((t_ * S.w, S.h - m_) if e == 2 else (m_, t_ * S.h))))
         else:
             x, y = rng.uniform(0, S.w), rng.uniform(0, S.h)
         x, y = float(np.clip(x, 0, S.w - 1)), float(np.clip(y, 0, S.h - 1))
         if S.cls in ("A", "B") and S.hits_text((x - 1.6 * r, y - 1.6 * r, x + 1.6 * r, y + 1.6 * r), 1.5):
-            continue                   # in the young classes a chip keeps off the lettering (a light ring in a word gap reads as ink: S02d in the sixth build's seeded runs)
-        ring_px = float(rng.uniform(0.5, 1.0)) * S.ppm
-        hm = float(rng.uniform(*halo_mm)) * S.ppm if rusty else 0.0
-        pad = 1.6 * r + ring_px + hm + 3
+            continue
+        pad = 1.6 * r + 3
         win = S.win_of((x - pad, y - pad, x + pad, y + pad))
         wx0, wx1, wy0, wy1 = win
         if wx1 <= wx0 or wy1 <= wy0:
@@ -817,26 +925,29 @@ def chips(S, n, size_mm, near=None, edge_bias=0.7, colour=STEEL, halo_mm=(1, 3),
             a, dd = rng.uniform(0, 2 * math.pi), rng.uniform(0, 0.55) * r
             discs.append((x + dd * math.cos(a), y + dd * math.sin(a), r * rng.uniform(0.45, 0.8)))
 
-        def draw(d, ss, ox, oy):
+        def draw(d, ss, ox, oy, discs=discs):
             for cx, cy, rr_ in discs:
                 d.ellipse([(cx - rr_ - ox) * ss, (cy - rr_ - oy) * ss, (cx + rr_ - ox) * ss, (cy + rr_ - oy) * ss], fill=255)
         cc = pi.draw_cov(win, draw)
-        if cc.max() <= 0:
-            continue
-        inside = cc > 0.5
-        d_out = ndi.distance_transform_edt(~inside)
-        ring = np.clip(1 - (d_out - ring_px) / 1.0, 0, 1) * (1 - cc)
-        if rusty and hm > 0:
-            gy = np.arange(wy0, wy1, dtype=np.float32)[:, None] - y
-            below = np.clip(0.5 + 0.5 * gy / np.maximum(d_out + r, 1.0), 0, 1)
-            halo = np.clip(1 - (d_out - ring_px) / hm, 0, 1) * (d_out > ring_px) * (1 / 3.0 + 2 / 3.0 * below)
-            S.tint(win, (halo * (0.6 + 0.4 * pc.value_noise(cc.shape, 1.5 * S.ppm, rng))).astype(np.float32), RUST, halo_op * fade)
-        S.tint(win, ring.astype(np.float32), GROUND_COAT, 0.95)
-        S.tint(win, cc, steel, 0.95)
-        S.height[wy0:wy1, wx0:wx1] -= (cc * 0.12 + ring * 0.05).astype(np.float32)
-        S.rough[wy0:wy1, wx0:wx1] = S.rough[wy0:wy1, wx0:wx1] * (1 - cc) + 0.7 * cc
+        allc[wy0:wy1, wx0:wx1] = np.maximum(allc[wy0:wy1, wx0:wx1], cc)
         done += 1
     S.log["chips"] = done
+    if not done:
+        return
+    inside = allc > 0.5
+    d_out = ndi.distance_transform_edt(~inside)
+    ring_px = (0.5 + 0.5 * pc.value_noise((S.h, S.w), 3 * S.ppm, rng)) * S.ppm
+    ring = (np.clip(1 - (d_out - ring_px) / 1.0, 0, 1) * (1 - allc)).astype(np.float32)
+    if rusty:
+        hm = float(rng.uniform(*halo_mm)) * S.ppm
+        low = ndi.shift(inside.astype(np.float32), (0.5 * hm, 0), order=0) > 0.5          # the stain hangs below
+        d_low = ndi.distance_transform_edt(~(inside | low))
+        halo = np.clip(1 - (d_low - ring_px) / max(hm, 1.0), 0, 1) * (d_out > ring_px)
+        S.tint((0, S.w, 0, S.h), (halo * (0.6 + 0.4 * pc.value_noise((S.h, S.w), 1.5 * S.ppm, rng))).astype(np.float32), RUST, halo_op * fade)
+    S.tint((0, S.w, 0, S.h), ring, GROUND_COAT, 0.95)
+    S.tint((0, S.w, 0, S.h), allc, steel, 0.95)
+    S.height -= (allc * 0.12 + ring * 0.05).astype(np.float32)
+    S.rough[:] = S.rough * (1 - allc) + 0.7 * allc
 
 
 def rust_run(S, x, y0, L, op0=0.35, op1=0.05):
@@ -872,7 +983,12 @@ def lime_streak(S, width_mm=None, length_mm=None, colour=LIME, opacity=0.9, top=
     x0 = rng.uniform(0.1, 0.9) * S.w
     y0 = 0.0 if top else S.h * 0.3
     D = rng.uniform(8, 20) * S.ppm
-    sw, sc_ = S.blob(x0, y0 + D * 0.25, D / 2, 0.35)
+    lobes = int(rng.integers(5, 10))                   # a lobed splat (the second close review)
+    th = np.linspace(0, 2 * math.pi, 72, endpoint=False)
+    rr = D / 2 * (1 + 0.22 * np.cos(lobes * th + rng.uniform(0, 2 * math.pi)) + 0.08 * np.cos(2 * th + rng.uniform(0, 2 * math.pi)))
+    spl = [(x0 + r_ * math.cos(a_), y0 + D * 0.25 + r_ * math.sin(a_)) for r_, a_ in zip(rr, th)]
+    sw = S.win_of((x0 - D, y0 + D * 0.25 - D, x0 + D, y0 + D * 1.25), 2)
+    sc_ = pi.draw_cov(sw, lambda d, ss, ox, oy: d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in spl], fill=255))
     S.tint(sw, sc_, colour, opacity)
     core = sc_ * (pc.value_noise(sc_.shape, max(1.0, 0.25 * D), rng) > rng.uniform(0.6, 0.8))
     S.tint(sw, core.astype(np.float32), (150, 150, 135), 0.9)
@@ -886,8 +1002,10 @@ def lime_streak(S, width_mm=None, length_mm=None, colour=LIME, opacity=0.9, top=
         sy = y0 + D * 0.4
         m = 32
         tt = np.linspace(0, 1, m)
-        wv = wr * np.clip(1 + 0.3 * ndi.gaussian_filter1d(rng.uniform(-1, 1, m), 2.0) / 0.6, 0.7, 1.3)
-        cx = sx + np.sin(ang) * L * tt
+        Lmm = L / S.ppm
+        wv = 2 * np.clip((0.8 + 1.7 * np.interp(tt * Lmm, np.arange(0, Lmm + 5, 5.0), rng.random(int(Lmm / 5) + 2))) * S.ppm, 0.8 * S.ppm, 2.5 * S.ppm)   # half-width 0.8 to 2.5 mm by noise at 5 mm
+        wander = 0.6 * S.ppm * np.interp(tt * Lmm, np.arange(0, Lmm + 15, 15.0), rng.uniform(-1, 1, int(Lmm / 15) + 2))                                  # the line wanders +-0.6 mm over 15 mm
+        cx = sx + np.sin(ang) * L * tt + wander * np.cos(ang)
         cy = sy + np.cos(ang) * L * tt
         left = [(cx[k] - wv[k] / 2, cy[k]) for k in range(m)]
         right = [(cx[k] + wv[k] / 2, cy[k]) for k in range(m - 1, -1, -1)]
@@ -1199,11 +1317,11 @@ def enamel_plate(S, it):
     rng = S.rng
     holes = it["fixing"]["holes_mm"]
     k = {"A": 0.0, "B": 0.45, "C": 0.75, "D": 1.0}[S.cls]
-    for hx, hy in holes:
-        bolt_head(S, hx, hy, 18, 10, rust=S.cls in ("C", "D"))
+    chips(S, int(round(rng.integers(12, 31) * k)), (2, 9), edge_bias=0.65, spots=holes, fade=k)
+    for hx, hy in holes:                               # the heads after the chips: no chip lies on a head (the second close review)
         if S.cls != "A":
             crazing(S, hx, hy, 3)
-    chips(S, int(round(rng.integers(12, 31) * k)), (2, 9), edge_bias=0.65, spots=holes, fade=k)
+        bolt_head(S, hx, hy, 18, 10, rust=S.cls in ("C", "D"))
     if S.cls in ("C", "D"):
         for hx, hy in [h for h in holes if h[1] > S.H / 2]:          # under the top bolts (y is from the bottom)
             rust_run(S, hx * S.ppm, (S.H - hy) * S.ppm + 6 * S.ppm, rng.uniform(150, 400) * S.ppm * (0.6 + 0.4 * k))
@@ -1238,6 +1356,12 @@ def edge_flakes(S, rm, share):
     din = ndi.distance_transform_edt(np.pad(on, 1))[1:-1, 1:-1]
     gy_, gx_ = np.gradient(ndi.gaussian_filter(din.astype(np.float32), 1.0))
     eys, exs = np.nonzero(on & (din <= 1.0))
+    # the runs start only inside 3 to 6 clusters, each 40 to 120 mm along the plate (the second close review: an even fringe on every edge read as a distressed font)
+    keep = np.zeros(len(exs), bool)
+    for _c in range(int(rng.integers(3, 7))):
+        x0c = rng.uniform(0, S.W) * S.ppm
+        keep |= (exs >= x0c) & (exs <= x0c + rng.uniform(40, 120) * S.ppm)
+    starts = np.nonzero(keep)[0] if keep.any() else np.arange(len(exs))
     pts = np.stack([exs, eys], 1).astype(np.float32)
     ss = 3
     im = Image.new("L", (S.w * ss, S.h * ss), 0)
@@ -1246,7 +1370,7 @@ def edge_flakes(S, rm, share):
     est, runs, flakes = 0.0, 0, 0
     while est < target and runs < 4000:
         runs += 1
-        i0 = int(rng.integers(len(eys)))
+        i0 = int(starts[int(rng.integers(len(starts)))])
         c0 = pts[i0]
         L = rng.uniform(6, 25) * S.ppm
         n = int(rng.integers(3, 9))
@@ -1268,7 +1392,7 @@ def edge_flakes(S, rm, share):
             nn = math.hypot(nx, ny) or 1.0
             sh = rng.uniform(0.2, 0.8) * S.ppm
             cx, cy = ex + 0.5 + nx / nn * sh, ey + 0.5 + ny / nn * sh
-            r = rng.uniform(0.8, 2.0) * S.ppm
+            r = rng.uniform(1.25, 2.5) * S.ppm                  # flakes 2.5 to 5 mm
             m = int(rng.integers(5, 8))
             ang = np.sort(rng.uniform(0, 2 * math.pi, m))
             rad = r * rng.uniform(0.5, 1.0, m)
@@ -1313,8 +1437,11 @@ def cast_plate(S, it):
         S.rough[:] = S.rough * (1 - flake * 0.5) + 0.35 * flake * 0.5
         S.height -= (flake * 0.15).astype(np.float32)
         S.log["flake_share"] = float((flake > 0.5).mean())
-    if k > 0:
-        chalky_ground(S, rm, 0.01)
+    if k > 0:                                          # the ground lightened 3 per cent at the top, nothing at the foot, a little rougher (it replaces the chalky blobs)
+        ground = ((rm < 0.5) & (S.alpha > 0.5)).astype(np.float32)
+        ys_ = np.arange(S.h, dtype=np.float32) / max(1, S.h - 1)
+        S.rgb *= (1 + 0.03 * (1 - ys_)[:, None] * ground)[..., None]
+        S.rough[:] = np.minimum(1.0, S.rough + 0.1 * ground)
     grime_gradient(S, 0.12 * k)
     if S.cls in ("C", "D"):
         holes = it["fixing"]["holes_mm"]
@@ -1334,10 +1461,10 @@ def pressed_plate(S, it):
     rng = S.rng
     k = {"A": 0.0, "B": 0.4, "C": 0.7, "D": 1.0}[S.cls]
     holes = it["fixing"]["holes_mm"]
-    for hx, hy in holes:
-        bolt_head(S, hx, hy, 14, 10, rust=S.cls == "D")
     corners = [(6, 6), (S.W - 6, 6), (6, S.H - 6), (S.W - 6, S.H - 6)]
     chips(S, int(round(rng.integers(4, 13) * max(k, 0.3))), (2, 6), edge_bias=0.0, spots=corners + holes, fade=k, halo_mm=(1, 4), halo_op=0.35)
+    for hx, hy in holes:
+        bolt_head(S, hx, hy, 14, 10, rust=S.cls == "D")
     grime_gradient(S, 0.10 * k)
     S.shade(0.04)
 
@@ -1367,11 +1494,14 @@ def peel_bites(S, n, length_mm=(20, 80), depth_mm=(3, 15), colour=(150, 145, 135
             p[1] = min(p[1], S.H)
             pts.append(p)
         pts.append(np.array([cx - a, S.H]))
-        pts = jag(r2, pts)
+        pts = jag(r2, pts, cap=1.0)
         poly = [(x * S.ppm, y * S.ppm) for x, y in pts] + [((cx - a) * S.ppm, S.h + 2), ((cx + a) * S.ppm, S.h + 2)]
         xs, ys = [q[0] for q in poly], [q[1] for q in poly]
         win = S.win_of((min(xs), min(ys), max(xs), max(ys)), int(2 * S.ppm) + 3)
         cov = pi.draw_cov(win, lambda d, ss, ox, oy, poly=poly: d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in poly], fill=255))
+        mb, _c = cut_protrusions(cov > 0.5, S.ppm, sizes_mm=(2, 4, 8), rng=r2)          # no needles (the second close review)
+        cov = np.minimum(cov, pc.smooth(mb.astype(np.float32), 0.5))
+        S.log["bite_tongues_left"] = S.log.get("bite_tongues_left", 0) + protrusions_left(cov > 0.5, S.ppm, sizes_mm=(2, 4, 8))
         rim = np.clip(ndi.grey_dilation(cov, footprint=gl_disk(max(1, int(round(0.5 * S.ppm))))) - cov, 0, 1)
         sub = S.rgb[win[2]:win[3], win[0]:win[1]]
         sub[:] = sub * (1 - rim[..., None]) + np.minimum(255.0, sub * 1.08) * rim[..., None]

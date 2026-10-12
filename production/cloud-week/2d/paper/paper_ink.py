@@ -218,6 +218,25 @@ def paste_block(sc, gl, glyphs, ppm, H, win):
     return canvas
 
 
+def aa_factor(ppm):
+    return 4 if ppm <= 6 else 2
+
+
+def paste_block_aa(sc, gl, glyphs, ppm, H, win):
+    """The lettering's coverage, 0 to 1 (the second close review's finding 2: a bool mask at the item's scale stepped every edge by a whole pixel): every glyph drawn at s times the
+    scale (s = 4 to 6 px/mm, else 2) and each s x s block averaged."""
+    s = aa_factor(ppm)
+    wx0, wx1, wy0, wy1 = win
+    hh, ww = wy1 - wy0, wx1 - wx0
+    hi = np.zeros((hh * s, ww * s), bool)
+    for g in glyphs:
+        if g["ch"] == " ":
+            continue
+        patch, ox, base = glyph_patch(sc, g, ppm * s)
+        gl.paste_or(hi, patch, ox, base, g["ox_mm"] * ppm * s - wx0 * s, (H - g["baseline_mm"]) * ppm * s - wy0 * s)
+    return hi.reshape(hh, s, ww, s).mean(axis=(1, 3)).astype(np.float32)
+
+
 def block_window(item, b, shape, ppm):
     H = item["format"]["h_mm"]
     x0, y0, x1, y1 = b["ink_box_mm"]
@@ -230,16 +249,18 @@ def look_of(item):
     return LOOK.get(item["process"], dict(sigma=0.12, film=0.0, rough=0.6))
 
 
-def block_coverage(sc, mask, look, item, b, rng, ppm, mottle_field, win):
-    """(cov, dens, rim): the ink's coverage, its density and a rim-darkening, from a boolean mask in a window, by the item's process."""
-    sig = max(0.55, min(0.62, look["sigma"] * ppm * 0.7))      # a pixel is the limit: at 12 px/mm a blur of more than 0.6 px closes the small counters of an e
-    blur = ndi.gaussian_filter(mask.astype(np.float32), sig)
+def block_coverage(sc, covf, look, item, b, rng, ppm, mottle_field, win):
+    """(cov, dens, rim): the ink's coverage, its density and a rim-darkening, from the lettering's anti-aliased coverage in a window, by the item's process (the second close review: a
+    blur of 0.35 px and no smoothstep, which hardened every edge back to a step)."""
+    mask = covf >= 0.5
+    sig = max(0.55, min(0.62, look["sigma"] * ppm * 0.7))
+    blur = ndi.gaussian_filter(covf.astype(np.float32), 0.35)
     bias = look.get("fat", 0.0)
     jitter = 0.0
     if look.get("rag"):
         n = pc.value_noise(mask.shape, max(1.0, 0.6 * ppm), rng)
         jitter = (n - 0.5) * min(0.6, look["rag"] * ppm * 0.35)
-    cov = smoothstep((blur - (0.5 - bias) + jitter) * 1.6 + 0.5).astype(np.float32)
+    cov = np.clip(blur - (0.5 - bias) + jitter + 0.5, 0, 1).astype(np.float32)
     dens = np.ones(mask.shape, np.float32)
     if look.get("density"):
         dens *= look["density"]
@@ -253,10 +274,10 @@ def block_coverage(sc, mask, look, item, b, rng, ppm, mottle_field, win):
         dens -= look["pressure"] * n
     rim = None
     if look.get("rim"):
-        wide = ndi.gaussian_filter(mask.astype(np.float32), max(1.0, 3 * sig))
+        wide = ndi.gaussian_filter(covf.astype(np.float32), max(1.0, 3 * sig))
         rim = np.clip(cov - wide, 0, 1) * look["rim"] * 4.0
     if look.get("pool"):
-        wide = ndi.gaussian_filter(mask.astype(np.float32), max(1.2, 0.5 * ppm))
+        wide = ndi.gaussian_filter(covf.astype(np.float32), max(1.2, 0.5 * ppm))
         rim = np.clip(cov - wide, 0, 1) * look["pool"] * 4.0
     if look.get("pin"):
         per_cm2, (d0, d1) = look["pin"]
@@ -324,18 +345,33 @@ def stroke_ends(mask):
 
 
 def blot_ballpoint(mask, ppm, rng):
-    """Ballpoint: a blot of 0.6 mm where the pen stopped, at one stroke end in ten."""
-    ys, xs = stroke_ends(mask)
-    out = mask.copy()
+    """Ballpoint: a blot where the pen stopped, at one stroke end in ten (the second close review): an ellipse 0.5 to 0.8 mm long, 1.5 to 1, along the stroke, reaching 0.2 mm past its
+    end. Returns its coverage (0 to 1); it is drawn at full density, against the stroke's 0.75 to 1.0."""
+    sk = thin(mask)
+    nb = ndi.convolve(sk.astype(np.int16), np.ones((3, 3), np.int16), mode="constant") - sk
+    ys, xs = np.nonzero(sk & (nb == 1))
+    out = np.zeros(mask.shape, np.float32)
+    sy, sx = np.nonzero(sk)
     for i in range(len(ys)):
         if rng.random() >= 0.10:
             continue
-        r = 0.3 * ppm
-        ri = int(math.ceil(r))
-        y0, y1 = max(0, ys[i] - ri), min(mask.shape[0], ys[i] + ri + 1)
-        x0, x1 = max(0, xs[i] - ri), min(mask.shape[1], xs[i] + ri + 1)
-        gy, gx = np.mgrid[y0:y1, x0:x1]
-        out[y0:y1, x0:x1] |= ((gy - ys[i]) ** 2 + (gx - xs[i]) ** 2) <= r * r
+        y, x = ys[i], xs[i]
+        near = (np.abs(sy - y) <= 4) & (np.abs(sx - x) <= 4)
+        v = np.array([x - sx[near].mean(), y - sy[near].mean()], float)
+        nv = float(np.hypot(*v))
+        v = v / nv if nv > 1e-6 else np.array([1.0, 0.0])
+        L = rng.uniform(0.5, 0.8) * ppm
+        a, b_ = L / 2, L / 3
+        cx, cy = x + v[0] * (0.2 * ppm - a), y + v[1] * (0.2 * ppm - a)
+        r = int(math.ceil(a)) + 2
+        y0, y1 = max(0, int(cy) - r), min(mask.shape[0], int(cy) + r + 1)
+        x0, x1 = max(0, int(cx) - r), min(mask.shape[1], int(cx) + r + 1)
+        if y1 <= y0 or x1 <= x0:
+            continue
+        gy, gx = np.mgrid[y0:y1, x0:x1].astype(np.float32)
+        u = ((gx - cx) * v[0] + (gy - cy) * v[1]) / a
+        w = (-(gx - cx) * v[1] + (gy - cy) * v[0]) / b_
+        out[y0:y1, x0:x1] = np.maximum(out[y0:y1, x0:x1], np.clip((1 - np.sqrt(u * u + w * w)) * max(a, 1.0), 0, 1))
     return out
 
 
@@ -425,10 +461,14 @@ def build(sc, gl, P, item, seed, mottle_cache=None):
         glyphs = lay_block(sc, b, rng, off)
         geo.man[b["id"]] = glyphs
         win = block_window(item, b, shp, ppm)
-        mask = paste_block(sc, gl, glyphs, ppm, H, win)
+        covf = paste_block_aa(sc, gl, glyphs, ppm, H, win)
+        blot = None
         if look.get("blots") and b.get("hand") == "ballpoint":
-            mask = blot_ballpoint(mask, ppm, rng)
-        cov, dens, rim = block_coverage(sc, mask, look, item, b, rng, ppm, mf, win)
+            blot = blot_ballpoint(covf >= 0.5, ppm, rng)
+            covf = np.maximum(covf, blot)
+        cov, dens, rim = block_coverage(sc, covf, look, item, b, rng, ppm, mf, win)
+        if blot is not None:
+            dens = np.where(blot > 0.5, 1.0, dens).astype(np.float32)
         if look.get("strike"):
             dens = dens * typed_strike(sc, glyphs, ppm, H, win, rng, look["strike"])
         spec = ("ink", b["ink"])

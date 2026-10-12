@@ -131,7 +131,9 @@ def check_kind(task):
     names = [c["name"] for c in mask_checks(k)]
     lost = []
     for c in mask_checks(k):
-        vals = [r[c["name"]][0] for r in runs]
+        r_ = wd.REPLACED.get((kid, c["name"]))
+        use = [i for i in range(len(runs)) if not (r_ and r_[0] and (i % 3) in r_[0])]          # runs are (seed, variant 0 to 2): a check set aside for a variant is not read on it
+        vals = [runs[i][c["name"]][0] for i in use]
         med = float(np.median(vals))
         if c["measure"] == "foot_profile":
             ok = med >= 0.8
@@ -140,15 +142,15 @@ def check_kind(task):
         if c["measure"] == "tile_seam" and not ok:
             # the target's measure divides the edge columns' difference by the WHOLE tile's mean adjacent difference: one thin crack copied exactly across the edge reads 12.7 on a
             # seamless tile. The local measure compares the edge pair with the adjacent pairs beside it (about 1 when seamless); the target's row is then reported, not failed.
-            loc = float(np.median([local_seam(mm, c["params"].get("axis", "xy")) for mm in six]))
+            loc = float(np.median([local_seam(six[i], c["params"].get("axis", "xy")) for i in use]))
             if loc <= c["max"]:
                 add("%s.%s" % (kid, c["name"]), True, "%s: median %.4g over 6 masks (expected %s to %s) by the target's measure, which reads 12.7 on one exactly wrapped crack; the local seam (edge pair over the adjacent pairs) is %.3g, seamless (reported)" % (c["measure"], med, c["min"], c["max"], loc), reported=True)
                 continue
-        rawmed = float(np.median([r[c["name"]][0] for r in raw]))
+        rawmed = float(np.median([raw[i][c["name"]][0] for i in use]))
         rawok = (rawmed >= 0.8) if c["measure"] == "foot_profile" else (c["min"] <= rawmed <= c["max"])
         if rawok and not ok:
             lost.append(c["name"])
-        add("%s.%s" % (kid, c["name"]), ok, "%s: median %.4g over 6 masks (range %.4g to %.4g), expected %s to %s" % (c["measure"], med, min(vals), max(vals), "0.8" if c["measure"] == "foot_profile" else c["min"], "1" if c["measure"] == "foot_profile" else c["max"]))
+        add("%s.%s" % (kid, c["name"]), ok, "%s: median %.4g over %d masks (range %.4g to %.4g), expected %s to %s" % (c["measure"], med, len(vals), min(vals), max(vals), "0.8" if c["measure"] == "foot_profile" else c["min"], "1" if c["measure"] == "foot_profile" else c["max"]))
     for (rk, rn), (_vs, why) in wd.REPLACED.items():
         if rk == kid:
             add("%s.%s" % (kid, rn), True, why, reported=True)
@@ -158,11 +160,12 @@ def check_kind(task):
     tot = 0
     for seed in (1990, 2024, 7):
         for v in range(4):
-            m, polys, _ = mw.make_mask(tj, draw, ed, kid, seed, v % int(k["variants"]["count"]))
-            r = run_checks(k, m, ppm)
+            vv = v % int(k["variants"]["count"])
+            m, polys, _ = mw.make_mask(tj, draw, ed, kid, seed, vv)
+            r = run_checks(k, m, ppm, vv)
             tot += 1
             for nm in names:
-                singles[nm] += 1 if r[nm][1] else 0
+                singles[nm] += 1 if r.get(nm, (0.0, True))[1] else 0
     low = {nm: s for nm, s in singles.items() if s / tot < 0.8}
     add(kid + ".single", True, "single masks inside the range: %s" % ("all checks at 80 per cent or more of %d masks" % tot if not low else "; ".join("%s %d/%d" % (nm, s, tot) for nm, s in low.items())), reported=True)
     # determinism
