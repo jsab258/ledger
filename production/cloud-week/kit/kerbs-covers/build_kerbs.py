@@ -146,7 +146,7 @@ def setts_run(P, B, rng, x0, x1, name_prefix="sett", along=(120.0, 210.0), joint
     for ci, (nm, y0, y1) in enumerate(courses):
         x = x0 - (0.0 if ci == 0 else float(rng.uniform(40.0, 90.0)))
         while x < x1:
-            jt = float(rng.uniform(8.0, 16.0))                                       # REVIEW-v2-street point 3: joints 8 to 16
+            jt = float(rng.triangular(8.0, 9.0, 15.0))                                # REVIEW-v1-close point 3: joints 8 to 16, mean about 10.7 (the 1 mm of skin makes the measured mean 11 to 12)
             L = float(rng.uniform(*along))
             if ci == 1:
                 for _ in range(40):
@@ -161,11 +161,18 @@ def setts_run(P, B, rng, x0, x1, name_prefix="sett", along=(120.0, 210.0), joint
                 ym = (y0 + y1) / 2.0
                 sect = [(y0 + 0.5, -140.0), (y1 - 0.5, -140.0), (y1 - 0.5, -4.0 + dz), (ym, 0.0 + dz), (y0 + 0.5, -4.0 + dz)]
                 m = mats[int(rng.choice(3, p=share))]
-                out[m].append(prism_x(sect, xa + 0.5, xb - 0.5))
+                Vs_, Fs_ = prism_x(sect, xa + 0.5, xb - 0.5)
+                Vs_ = np.array(Vs_, float)
+                aj = math.radians(float(rng.uniform(-0.5, 0.5)))                          # REVIEW-v1-close point 3: no two joints exactly parallel: each sett turned up to half a degree about its centre (the channel stays inside its 204)
+                cx_, cy_ = (xa + xb) / 2.0, ym
+                c_, s__ = math.cos(aj), math.sin(aj)
+                dx_, dy_ = Vs_[:, 0] - cx_, Vs_[:, 1] - cy_
+                Vs_[:, 0], Vs_[:, 1] = cx_ + dx_ * c_ - dy_ * s__, cy_ + dx_ * s__ + dy_ * c_
+                out[m].append((Vs_, Fs_))
             x += L + jt
     for m, parts in out.items():
         if parts:
-            B.add("%s_%s" % (name_prefix, m), orient(*merge(*parts)), m, bev=1.5, min_angle=60.0)
+            B.add("%s_%s" % (name_prefix, m), orient(*merge(*parts)), m, bev=6.0, min_angle=60.0)        # the arris chamfer 6 (the review's R10 needs 3 segments: over the 1 MB file guard)
 
 
 def piece_kerb_granite(T, B):
@@ -180,7 +187,7 @@ def piece_channel_setts(T, B):
     P = T["pieces"]["channel_setts"]
     rng = np.random.default_rng(1990)
     setts_run(P, B, rng, -600.0, 600.0)
-    B.add("mortar", box3(-599.0, 599.0, 1.0, 203.0, -141.0, -8.0), "bitumen_joint", bev=None)          # the recessed dark mortar: 8 under the setts' tops
+    B.add("mortar", box3(-599.0, 599.0, 2.5, 201.5, -141.0, -8.0), "bitumen_joint", bev=None)          # the recessed dark mortar: 8 under the setts' tops
 
 
 def piece_channel_concrete(T, B):
@@ -201,7 +208,11 @@ def piece_crossover(T, B):
     fl = P["flank_strips"]
     for sx in (-1.0, 1.0):
         xa, xb = (W, W + fl["width_mm"]) if sx > 0 else (-W - fl["width_mm"], -W)
-        B.add("flank_%s" % ("r" if sx > 0 else "l"), box3(xa, xb, fl["plan_y"][0], fl["plan_y"][1], -100.0, fl["top_z"]), "granite_grey", bev=3.0, min_angle=60.0)
+        if sx < 0:                                                           # REVIEW-v1-close point 2: the left strip's inner face splayed 40 over its height (a dark band that widens toward the kerb)
+            prof = [(xa, -100.0), (xb, -100.0), (xb, 12.0), (xb - 40.0, fl["top_z"]), (xa, fl["top_z"])]
+            B.add("flank_l", orient(*prism_y(prof, fl["plan_y"][0], fl["plan_y"][1])), "granite_grey", bev=3.0, min_angle=60.0)
+        else:
+            B.add("flank_r", box3(xa, xb, fl["plan_y"][0], fl["plan_y"][1], -100.0, fl["top_z"]), "granite_grey", bev=3.0, min_angle=60.0)
     rp = P["ramp"]
     sect = [(rp["plan_y"][1], -120.0), (rp["plan_y"][1], rp["z_at_lip"]), (rp["plan_y"][0], rp["z_at_back"]), (rp["plan_y"][0], -120.0)]
     sect = [(-124.0, -120.0), (-124.0, rp["z_at_lip"]), (-845.0, rp["z_at_back"]), (-845.0, -120.0)]
@@ -219,6 +230,8 @@ def piece_crossover(T, B):
     for m, ps in parts.items():
         if ps:
             B.add("lip_%s" % m, orient(*merge(*ps)), m, bev=1.0, min_angle=60.0)
+    # REVIEW-v1-close point 1: a dark bitumen bed under the whole crossing, its top 8 under the lip's (z +4): the joints between the ramp, the flanks, the end blocks and the lip setts end on it
+    B.add("bed", box3(-W - fl["width_mm"] + 6.0, W + fl["width_mm"] - 6.0, -839.0, -4.0, -135.0, 4.0), "bitumen_joint", bev=None)
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------ the gully grates
@@ -258,7 +271,7 @@ def piece_gully_B(T, B):
     h = P["lifting_holes"]
     holes = [(sx * (xs[-1] + h["beyond_end_slot_centres_mm"]), 0.0, h["diameter"]) for sx in (-1.0, 1.0)]
     grate_plate(P["overall_along_kerb"], P["overall_across"], 45.0, slots, B, holes=holes)
-    gully_pot(P["overall_along_kerb"], P["overall_across"], B)
+    gully_pot(max(P["overall_along_kerb"], 2.0 * (xs[-1] + h["beyond_end_slot_centres_mm"] + 14.0) + 40.0), P["overall_across"], B)      # the pot reaches under the lifting holes (x +-180: REVIEW-v1-close)
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------ the covers
@@ -340,6 +353,17 @@ def piece_cover_round(T, B):
     B.add("lugs", orient(*merge(*[extrude(g, -0.5, P["pattern"]["lug_height_mm"]) for g in lugs])), "cast_iron_cover", bev=None)
 
 
+def add_floor(B, depth=50.0, round_=False):
+    """one dark floor under the whole frame opening, 45 under the lid top (REVIEW-v1-close, the pieces the views leave out: every opening went straight through to the void)"""
+    V = np.vstack([np.array([v.co[:] for v in ob.data.vertices]) for ob in B.objs])
+    lo, hi = V.min(0), V.max(0)
+    if round_:
+        r = min(hi[0] - lo[0], hi[1] - lo[1]) / 2.0 - 3.0
+        B.add("floor", cyl_z((lo[0] + hi[0]) / 2.0, (lo[1] + hi[1]) / 2.0, -depth - 5.0, -depth, r, 48), "pot_black", bev=None)
+    else:
+        B.add("floor", box3(lo[0] + 3.0, hi[0] - 3.0, lo[1] + 3.0, hi[1] - 3.0, -depth - 5.0, -depth), "pot_black", bev=None)
+
+
 def piece_cover_footway(T, B):
     P = T["pieces"]["cover_recessed_footway"]
     ow, oh = P["outer"][0] / 2.0, P["outer"][1] / 2.0
@@ -375,7 +399,7 @@ def piece_cover_footway(T, B):
 def piece_cover_road(T, B):
     P = T["pieces"]["cover_recessed_road"]
     ow, oh = P["outer"][0] / 2.0, P["outer"][1] / 2.0
-    rim, hl = P["frame_rim"], P["hairline_mm"]
+    rim, hl = min(P["frame_rim"], 10.0), P["hairline_mm"]                 # REVIEW-v1-close: the photograph shows a hairline of about 10, not a 35 band: the tarmac comes out to within 10 of the frame's edge
     frame = sbox(-ow, -oh, ow, oh).difference(sbox(-ow + rim, -oh + rim, ow - rim, oh - rim))
     B.add("frame", extrude(frame, -40.0, 0.0), "cast_iron_cover", bev=1.0, min_angle=60.0)
     B.add("infill", extrude(sbox(-ow + rim + hl, -oh + rim + hl, ow - rim - hl, oh - rim - hl), -40.0, -1.0), "tarmac_infill", bev=None)
@@ -405,6 +429,7 @@ def piece_cover_double_leaf(T, B):
                 if inner.contains(s_):
                     studs.append(extrude(s_, -0.5, st["stud_height_mm"]))
     B.add("studs", orient(*merge(*studs)), "cast_iron_cover", bev=None)
+    B.add("mortar", extrude(sbox(-ow - 140.0, -oh - 140.0, ow + 140.0, oh + 140.0).difference(sbox(-ow, -oh, ow, oh)), -40.0, 0.0), "mortar_pale", bev=None)       # the pale band 140 wide round it (the target; the urban_street_04 photograph)
 
 
 def piece_service(T, B, kind):
@@ -469,7 +494,7 @@ def piece_review(T, B):
     concrete meets the granite with an 8 mm joint at the granite's level"""
     K = T["pieces"]["kerb_granite"]
     grng = np.random.default_rng(21)
-    x, prev, x_end = -3550.0, 0.0, 2798.0
+    x, prev, x_end = -2600.0, 0.0, 2798.0
     while x < x_end - 1.0:
         L = float(grng.uniform(750.0, 1050.0))
         while abs(L - prev) < 20.0:
@@ -482,16 +507,16 @@ def piece_review(T, B):
     for i in range(4):
         kerb_block(T["pieces"]["kerb_concrete"], 915.0, Shift(B, X0C + i * 923.0, 0.0, 20.0), "concrete_kerb", bev=3.0)
     rng = np.random.default_rng(7)
-    setts_run(T["pieces"]["channel_setts"], Shift(B), rng, -3550.0, 2802.0)
-    Shift(B).add("mortar", box3(-3549.0, 2801.0, 1.0, 203.0, -141.0, -8.0), "bitumen_joint")
+    setts_run(T["pieces"]["channel_setts"], Shift(B), rng, -2600.0, 2802.0)
+    Shift(B).add("mortar", box3(-2599.0, 2801.0, 2.5, 201.5, -141.0, -8.0), "bitumen_joint")
     for i in range(4):
         Shift(B, X0C + i * 923.0, 0.0, 0.0).add("channel", prism_x([tuple(p) for p in T["pieces"]["channel_concrete"]["section_yz"]], -457.5, 457.5), "concrete_kerb", bev=None)
     setts_run(T["pieces"]["channel_setts"], Shift(B), np.random.default_rng(8), 7300.0, 12900.0, name_prefix="sett_b")
-    Shift(B).add("mortar_b", box3(7301.0, 12899.0, 1.0, 203.0, -141.0, -8.0), "bitumen_joint")
+    Shift(B).add("mortar_b", box3(7301.0, 12899.0, 2.5, 201.5, -141.0, -8.0), "bitumen_joint")
     # the street's own ground, for the pictures only: the footway flags (top 110, behind the kerb and round the crossing) and the road (top 6, flat)
-    for (xa, xb, ya, yb) in ((-3600.0, 2802.0, -40000.0, -170.0), (2802.0, 8000.0, -40000.0, -125.0), (8000.0, 12900.0, -40000.0, -845.0), (8000.0, 8760.0, -845.0, -170.0), (12040.0, 12900.0, -845.0, -170.0)):
+    for (xa, xb, ya, yb) in ((-2650.0, 2802.0, -40000.0, -170.0), (2802.0, 8000.0, -40000.0, -125.0), (8000.0, 12900.0, -40000.0, -845.0), (8000.0, 8760.0, -845.0, -170.0), (12040.0, 12900.0, -845.0, -170.0)):
         Shift(B).add("ground_footway", box3(xa, xb, ya, yb, -300.0, 110.0), "flag_pale")
-    Shift(B).add("ground_road_a", box3(-3600.0, 2806.0, 204.0, 40000.0, -300.0, 6.0), "tarmac_infill")
+    Shift(B).add("ground_road_a", box3(-2650.0, 2806.0, 204.0, 40000.0, -300.0, 6.0), "tarmac_infill")
     Shift(B).add("ground_road_b", box3(2806.0, 6498.0, 255.0, 40000.0, -300.0, 6.0), "tarmac_infill")
     Shift(B).add("ground_road_c", box3(6498.0, 12900.0, 204.0, 40000.0, -300.0, 6.0), "tarmac_infill")
     # the holed pieces: at the origin, then moved
@@ -504,6 +529,12 @@ def piece_review(T, B):
     sc = Shift(B, 1500.0, -800.0, 110.0, deferred=True)
     piece_cover_stud(T, sc)
     sc.apply()
+    for sh_, rnd in ((rc, True), (sc, False)):                                       # a dark floor under the moved covers' openings too
+        lo_, hi_ = sh_.bounds()
+        if rnd:
+            Shift(B).add("floor_round", cyl_z((lo_[0] + hi_[0]) / 2.0, (lo_[1] + hi_[1]) / 2.0, -55.0 + 6.0, -50.0 + 6.0, min(hi_[0] - lo_[0], hi_[1] - lo_[1]) / 2.0 - 3.0, 48), "pot_black", bev=None)
+        else:
+            Shift(B).add("floor_stud", box3(lo_[0] + 3.0, hi_[0] - 3.0, lo_[1] + 3.0, hi_[1] - 3.0, 110.0 - 55.0, 110.0 - 50.0), "pot_black", bev=None)
     piece_crossover(T, Shift(B, 10400.0, 0.0, 0.0))
     # the ground and the channel are cut round what stands in them
     glo, ghi = g.bounds()
@@ -556,6 +587,10 @@ def build(T, out_dir, npz_dir, only=None):
         mats = mats_for(T)
         B = Parts()
         fn(T, B)
+        if name in ("cover_stud_square", "cover_recessed_footway", "cover_recessed_road", "cover_road_double_leaf", "service_gas", "service_telecom"):
+            add_floor(B)
+        elif name in ("cover_round_600", "service_stopcock"):
+            add_floor(B, round_=True)
         obs = bs.finish(B, mats, 0.0)
         out[name] = bs.write(obs, name, 0.0, out_dir, npz_dir)
     return out

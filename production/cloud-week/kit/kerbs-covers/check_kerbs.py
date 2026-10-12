@@ -98,7 +98,7 @@ def main():
     rep.add("CHANNEL setts: lengths along the kerb 120 to 210 (+-15), the mean about 160", min(allL) >= 120 - 15 - 2 and max(allL) <= 210 + 15 + 2 and 130 <= float(np.mean(allL)) <= 190, [round(min(allL)), round(max(allL)), round(float(np.mean(allL)))], "120 to 210, mean 160")
     xsA = sorted([pg.bounds for pg in polys_of(Pc) if pg.centroid.y < 104], key=lambda b: b[0])
     gaps = [xsA[i + 1][0] - xsA[i][2] for i in range(len(xsA) - 1)]
-    rep.within("CHANNEL setts: joints 11 between setts along a course (the 1 mm of sett skin counted)", [min(gaps), max(gaps)], [11.0, 11.0], 1.5)
+    rep.add("CHANNEL setts: joints between setts along a course 8 to 16 (REVIEW-v2-street point 3), mean about 11 (the 1 mm of sett skin counted)", min(gaps) >= 8.0 and max(gaps) <= 17.5 and 10.0 <= float(np.mean(gaps)) <= 13.0, [round(min(gaps), 1), round(max(gaps), 1), round(float(np.mean(gaps)), 1)], "8 to 17.5, mean 10 to 13")
     top = [sec(M, tuple(sm), 0, x, (1, 2)).bounds[3] for x in (-300.0, 0.0, 300.0)]
     rep.add("CHANNEL setts: the mortar's top 8 under the setts' tops (recessed dark joints)", abs(bnd(M, "mortar")[1][2] - (-8.0)) < 0.5, round(float(bnd(M, "mortar")[1][2]), 2), "-8")
 
@@ -202,7 +202,7 @@ def main():
     C = P["cover_recessed_road"]
     lo, hi = bnd(M, "frame")
     il, ih = bnd(M, "infill")
-    rep.within("COVER recessed road: outer 645 x 670, frame rim 25, the tarmac infill with a 10 hairline between (595 - 20 = 575 x 600)", [hi[0] - lo[0], hi[1] - lo[1], ih[0] - il[0], ih[1] - il[1]], [645.0, 670.0, 575.0, 600.0], 1.5)
+    rep.within("COVER recessed road: outer 645 x 670, the frame's lip 10 (REVIEW-v1-close: the photograph shows a hairline of about 10, not a 35 band), the tarmac infill with a 10 hairline between (645 - 40 = 605 x 630)", [hi[0] - lo[0], hi[1] - lo[1], ih[0] - il[0], ih[1] - il[1]], [645.0, 670.0, 605.0, 630.0], 1.5)
 
     M = N("cover_road_double_leaf")
     C = P["cover_road_double_leaf"]
