@@ -374,7 +374,7 @@
     "notched_tones_hz": {
      "fs_182610": {
       "1": [
-       99.93
+       99.88
       ]
      }
     }
@@ -391,10 +391,10 @@
    "seam": {
     "jump_ratio": 0.0,
     "level_step_db": 2.83,
-    "step_percentile": 0.842,
+    "step_percentile": 0.845,
     "crossfade_s": 4.0
    },
-   "sha256": "5787a9451bc80e44c2208492da3c61acefc1045ed45d25ae3c14e4da34ff6de8"
+   "sha256": "d4f47d2332413b9c56c001669a4c514bb334fd558f2e79b850d112c47f32da37"
   },
   "amb_harbour_rain": {
    "file": "amb_harbour_rain.wav",
@@ -422,15 +422,29 @@
     "notched_tones_hz": {
      "fs_182612": {
       "0": [
-       64.16,
-       92.08,
-       110.5
+       46.0,
+       55.25,
+       64.12,
+       73.62,
+       96.25,
+       110.25,
+       128.25,
+       144.38,
+       160.38,
+       192.5
       ],
       "1": [
-       55.23,
-       64.16,
-       96.2,
-       110.5
+       46.0,
+       55.25,
+       64.12,
+       73.62,
+       96.25,
+       101.25,
+       104.25,
+       110.38,
+       128.25,
+       144.25,
+       192.38
       ]
      }
     }
@@ -441,16 +455,16 @@
    "seconds": 60.0,
    "target_lufs": -43,
    "lufs_integrated": -43.0,
-   "true_peak_dbtp": -23.36,
-   "sample_peak_dbfs": -23.41,
+   "true_peak_dbtp": -23.34,
+   "sample_peak_dbfs": -23.39,
    "gain_applied_db": -7.87,
    "seam": {
-    "jump_ratio": 0.695,
-    "level_step_db": 0.18,
-    "step_percentile": 0.107,
+    "jump_ratio": 0.694,
+    "level_step_db": 0.17,
+    "step_percentile": 0.102,
     "crossfade_s": 4.0
    },
-   "sha256": "894fb3324e2b28d0b19eb1c01ebd357cf5e25a8fc8531cc9e4dd7c2af9ac607d"
+   "sha256": "d89db68e31a2428f7a37fb73e05ff189870e005765db008a6e10c7f8ae1b0b97"
   },
   "amb_radio_day": {
    "file": "amb_radio_day.wav",
@@ -3346,11 +3360,11 @@
     "notched_tones_hz": {
      "fs_454130": {
       "0": [
-       58.83,
+       117.0,
        120.0
       ],
       "1": [
-       120.0
+       117.0
       ]
      }
     }
@@ -3361,16 +3375,16 @@
    "seconds": 75.0,
    "target_lufs": -42,
    "lufs_integrated": -42.0,
-   "true_peak_dbtp": -13.68,
-   "sample_peak_dbfs": -13.8,
+   "true_peak_dbtp": -13.67,
+   "sample_peak_dbfs": -13.79,
    "gain_applied_db": -12.32,
    "seam": {
-    "jump_ratio": 1.036,
+    "jump_ratio": 1.048,
     "level_step_db": 0.86,
     "step_percentile": 0.777,
     "crossfade_s": 4.0
    },
-   "sha256": "9fda3b73d1f33b8d2f9bf724e33cff531a67b1c4a82503ef0d16cbe39b342d35"
+   "sha256": "962ca14d2a0aa2e95bb3e0144f0d34376479257b181fbc46bb23dad3dff07eaa"
   },
   "amb_rain_gutter": {
    "file": "amb_rain_gutter.wav",
@@ -3393,9 +3407,13 @@
      "fs_846446": {
       "0": [
        47.5,
-       85.55,
-       88.37,
-       200.02
+       73.38,
+       85.5,
+       88.38,
+       200.0
+      ],
+      "1": [
+       47.5
       ]
      }
     }
@@ -3415,7 +3433,7 @@
     "step_percentile": 0.66,
     "crossfade_s": 4.0
    },
-   "sha256": "f654854f286c0bd42013d4c8489d2df4cfbc832f3076f19c1d6fc53a1280e69e"
+   "sha256": "88d636679f954fdb25ac76678bf988d21fc95d84eb7f130b4616ed08ef30ba18"
   },
   "amb_rain_pavement": {
    "file": "amb_rain_pavement.wav",
@@ -3503,7 +3521,24 @@
       104.0
      ]
     ],
-    "chain": "highpass 70 Hz, lowpass 1500 Hz, leveller 0.35"
+    "chain": "highpass 70 Hz, lowpass 1500 Hz, leveller 0.35",
+    "notched_tones_hz": {
+     "fs_395686": {
+      "0": [
+       100.0,
+       300.0,
+       490.25,
+       590.25,
+       605.88
+      ],
+      "1": [
+       100.0,
+       300.0,
+       590.12,
+       605.88
+      ]
+     }
+    }
    },
    "channels": 2,
    "sample_rate": 48000,
@@ -3511,16 +3546,16 @@
    "seconds": 75.0,
    "target_lufs": -45,
    "lufs_integrated": -45.01,
-   "true_peak_dbtp": -21.86,
-   "sample_peak_dbfs": -21.87,
-   "gain_applied_db": -2.37,
+   "true_peak_dbtp": -22.04,
+   "sample_peak_dbfs": -22.05,
+   "gain_applied_db": -2.38,
    "seam": {
-    "jump_ratio": 0.15,
-    "level_step_db": 2.87,
-    "step_percentile": 0.854,
+    "jump_ratio": 0.153,
+    "level_step_db": 3.01,
+    "step_percentile": 0.86,
     "crossfade_s": 4.0
    },
-   "sha256": "3080c8ea062456f1e8a758ac0f543fe2519cf446004df5c97f81ba92c09b28ae"
+   "sha256": "00d8ade6ada094483023c88c2078e7dd0a9d147c3bfecbe9ee6cd35008c33c15"
   },
   "amb_traffic_rain": {
    "file": "amb_traffic_rain.wav",
@@ -3542,12 +3577,12 @@
     "notched_tones_hz": {
      "bsb_621": {
       "0": [
-       6406.48,
+       6406.5,
        9000.0
       ],
       "1": [
-       1281.3,
-       6406.48
+       1281.25,
+       6406.5
       ]
      }
     }
@@ -3558,16 +3593,16 @@
    "seconds": 60.0,
    "target_lufs": -42,
    "lufs_integrated": -42.0,
-   "true_peak_dbtp": -22.49,
+   "true_peak_dbtp": -22.48,
    "sample_peak_dbfs": -22.49,
-   "gain_applied_db": -12.73,
+   "gain_applied_db": -12.74,
    "seam": {
-    "jump_ratio": 1.306,
+    "jump_ratio": 1.315,
     "level_step_db": 1.21,
-    "step_percentile": 0.913,
+    "step_percentile": 0.912,
     "crossfade_s": 4.0
    },
-   "sha256": "e83a7b0e41072c93afb7e3b1e9e0d906fee7459d623bd118effc5091c5cb2484"
+   "sha256": "9facad121824611c1f6dad541e15b2a2e59f0a1c90a21f3ed6e18b85bb27cf4b"
   },
   "amb_voices_day": {
    "file": "amb_voices_day.wav",
@@ -15283,7 +15318,7 @@
     "notched_tones_hz": {
      "fs_554845": {
       "0": [
-       120.02
+       120.0
       ]
      }
     }
@@ -15294,16 +15329,16 @@
    "seconds": 75.0,
    "target_lufs": -47,
    "lufs_integrated": -47.0,
-   "true_peak_dbtp": -28.76,
-   "sample_peak_dbfs": -28.77,
-   "gain_applied_db": -7.43,
+   "true_peak_dbtp": -28.75,
+   "sample_peak_dbfs": -28.75,
+   "gain_applied_db": -7.44,
    "seam": {
-    "jump_ratio": 1.31,
+    "jump_ratio": 1.404,
     "level_step_db": 0.53,
-    "step_percentile": 0.533,
+    "step_percentile": 0.531,
     "crossfade_s": 4.0
    },
-   "sha256": "79101335ab98acc797d13de13ac892dd049a8bcfb7f490e9fb5a1354e2185c88"
+   "sha256": "a1cb893c22e9ff2a627f6931486d36410da0b856e477e57c98c5ee9d919d41a5"
   },
   "amb_wind_rain": {
    "file": "amb_wind_rain.wav",

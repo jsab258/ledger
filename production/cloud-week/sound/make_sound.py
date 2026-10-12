@@ -150,55 +150,53 @@ def apply_chain(x, chain):
     return x
 
 
-def find_lines(x, min_db=20.0, fmin=45.0, fmax=11000.0, block_hz=2.0, max_width_hz=0.5):
-    """Steady tones in one channel of a source cut: lines far narrower than any real sound, found at the cut's own frequency
-    resolution (about 0.01 Hz). A bin is a line when it stands min_db over the median of the bins about it (2 Hz blocks, the
-    median of the 41 blocks round it) and it is under max_width_hz wide at 10 dB down. Returns [(Hz, dB over, width Hz)].
-    The check measures tones another way (1 Hz bins, median over time), so this finder cannot pass its own check."""
+def find_lines(x, seg_s=8.0, min_db=12.0, fmin=45.0, fmax=11000.0, block_hz=2.0, max_width_hz=1.0):
+    """Steady tones in one channel of a source cut (mains hum, a recorder's whine, a machine's drone): lines far narrower than any
+    real sound. The cut is read in 8 s frames (0.125 Hz bins) and each bin takes its level as the median over the frames, so
+    what is there in the quiet stretches counts, which is where a tone is heard. The floor is the 30th percentile of the 2 Hz
+    blocks' lower quartiles over the 41 blocks round it, so a crowd of lines does not lift it. A peak is a line when it stands
+    min_db over that floor and is under max_width_hz wide at 10 dB down. Returns [(Hz, dB over, width Hz)].
+    The check reads tones another way (1 s frames, 1 Hz bins), so this finder cannot pass its own check."""
     from scipy import ndimage
-    n = len(x)
-    X = np.abs(np.fft.rfft(x * np.hanning(n))) ** 2
-    f = np.fft.rfftfreq(n, 1.0 / RATE)
+    nper = int(seg_s * RATE)
+    f, _, S = signal.spectrogram(x, fs=RATE, window="hann", nperseg=nper, noverlap=nper // 2, detrend=False, mode="psd")
+    S = S[:, S.sum(axis=0) > 1e-14]
+    P = 10 ** (np.percentile(10 * np.log10(S + 1e-24), 50, axis=1) / 10)
     df = f[1]
     bpb = max(3, int(round(block_hz / df)))
-    nb = len(X) // bpb
-    blocks = np.median(X[:nb * bpb].reshape(nb, bpb), axis=1)
-    floor_b = ndimage.median_filter(blocks, size=41, mode="nearest")
-    floor = np.concatenate([np.repeat(floor_b, bpb), np.full(len(X) - nb * bpb, floor_b[-1])])
-    ratio = X / (floor + 1e-30)
-    cand = np.flatnonzero((ratio > 10 ** (min_db / 10)) & (f >= fmin) & (f <= fmax))
-    out, i = [], 0
-    while i < len(cand):
-        j = i
-        while j + 1 < len(cand) and cand[j + 1] - cand[j] <= int(0.3 / df):
-            j += 1
-        seg = cand[i:j + 1]
-        k = seg[np.argmax(X[seg])]
-        lo_k, hi_k = k, k                                   # the width at 10 dB down, walking out from the peak
-        while lo_k > 0 and X[lo_k - 1] > X[k] / 10 and k - lo_k < int(3 / df):
-            lo_k -= 1
-        while hi_k < len(X) - 1 and X[hi_k + 1] > X[k] / 10 and hi_k - k < int(3 / df):
-            hi_k += 1
-        width = (hi_k - lo_k + 1) * df
+    nb = len(P) // bpb
+    blocks = np.percentile(P[:nb * bpb].reshape(nb, bpb), 25, axis=1)
+    fl = ndimage.percentile_filter(blocks, 30, size=41, mode="nearest")
+    floor = np.concatenate([np.repeat(fl, bpb), np.full(len(P) - nb * bpb, fl[-1])]) * 1.5      # the lower quartile sits 1.8 dB under the median
+    ratio_db = 10 * np.log10(P / (floor + 1e-30))
+    ok = (f >= fmin) & (f <= fmax)
+    peaks, _ = signal.find_peaks(np.where(ok, ratio_db, -99.0), height=min_db, distance=max(1, int(0.5 / df)))
+    out = []
+    for k in peaks:
+        lo, hi = k, k                                   # the width at 10 dB down, walking out from the peak
+        while lo > 0 and P[lo - 1] > P[k] / 10 and k - lo < int(3 / df):
+            lo -= 1
+        while hi < len(P) - 1 and P[hi + 1] > P[k] / 10 and hi - k < int(3 / df):
+            hi += 1
+        width = (hi - lo + 1) * df
         if width <= max_width_hz:
-            out.append((float(f[k]), float(10 * np.log10(ratio[k])), float(width)))
-        i = j + 1
+            out.append((float(f[k]), float(ratio_db[k]), float(width)))
     return out
 
 
-def detone(x, q=60.0):
-    """Take the steady tones (mains hum, a recorder's whine) out of a source cut: a narrow notch on each line found by
-    find_lines, zero-phase, on each channel separately. Returns (cleaned cut, {channel: [Hz, ...]})."""
-    from scipy import signal as sg
+def detone(x):
+    """Take the steady tones out of a source cut: a notch on each line found by find_lines (as wide as three times the line, and
+    never narrower than f/80), zero-phase, on each channel separately. Returns (cleaned cut, {channel: [Hz, ...]})."""
     y = np.array(x, dtype=float)
     cols = [y] if y.ndim == 1 else [y[:, c] for c in range(y.shape[1])]
     found = {}
     for c, col in enumerate(cols):
-        hz = [round(l[0], 2) for l in find_lines(col)]
-        found[c] = hz
-        for f0 in hz:
-            b, a = sg.iirnotch(f0, q, fs=RATE)
-            col[:] = sg.sosfiltfilt(sg.tf2sos(b, a), col)
+        lines = find_lines(col)
+        found[c] = [round(l[0], 2) for l in lines]
+        for f0, _, width in lines:
+            bw = max(3.0 * width, f0 / 80.0, 0.4)
+            b, a = signal.iirnotch(f0, f0 / bw, fs=RATE)
+            col[:] = signal.sosfiltfilt(signal.tf2sos(b, a), col)
     return (y if y.ndim == 1 else np.stack(cols, axis=1)), {str(k): v for k, v in found.items() if v}
 
 
