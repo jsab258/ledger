@@ -5,7 +5,7 @@
 Reads production/cloud-week/targets/pillar-box/target.json for what the target fixes (the colours, the slot's height and centre, the door's 1 mm and its 3 x 3 groove, the
 plate frame's bezel and recess, the 1500 total height, no cypher, no lettering, no maker's mark) and builds it with PHOTO-CHECK.md's amendments, which win over the target's
 body, foot and cap numbers (two Geograph photographs, 2009 and 2012; DECISIONS 11 Oct 21:55): body 390 across, a straight black base 300 high no wider than 398, the cap
-rim 535 across and about 65 deep, the dome rising 60, the slot 250 wide. Door, plate frame and escutcheon are the target's scaled 0.8 to the narrower body.
+rim 535 across and 60 deep, the dome rising 15, the slot 250 wide. The door is the target's 300 wide; the plate frame and the escutcheon are scaled to the narrower body.
 
 Writes production/assets/cloud-week/pillar-box/pillar_box.glb (metres, z up, the axis at the footway, +y the front, the hidden skirt to z -150) and build/pillar_box.npz.
 The cypher and the operator's lettering are FLUSH reserved areas (no geometry); the collection plate's words are a texture, the plate is a plain enamel panel here.
@@ -36,15 +36,17 @@ R_BODY, R_BASE, Z_BASE = 195.0, 199.0, 290.0                  # PHOTO-CHECK: bod
 Z_ROLL = 298.0                                                # the base's top roll (R6) ends here: the black-to-red line reads at about 297.7
 R_RIM = 267.5                                                 # the cap rim 535 across
 # try 2 after REVIEW-v1-street (fault 1), measured on five Geograph photographs, as fractions of the 1500: collar 1350 to 1380 (a ring a little proud of the body, just over the
-# slot's hood), a deep concave flare from the collar to the rim's lower edge at 1440, the rim band 1440 to 1485 (about 45 deep) with a bead on its lower edge, then a low dome
-# (15 rise) straight from just inside the rim's top bead: no shelf, no neck
+# slot's hood), a deep concave flare from the collar to the rim's lower edge at 1425 (REVIEW-v2-close point 2: the rim band as deep as the flare, 60), the rim band 1425 to 1485
+# with a bead on its lower edge and an R8 round on its top edge, then a low dome (15 rise) straight from just inside the rim's top bead: no shelf, no neck
 Z_COLLAR0, Z_COLLAR1, R_COLLAR = 1350.0, 1380.0, 205.0
-Z_RIM0, Z_RIM1, Z_TOP = 1440.0, 1485.0, 1500.0
+Z_RIM0, Z_RIM1, Z_TOP = 1425.0, 1485.0, 1500.0
 DOME_RISE = Z_TOP - Z_RIM1
 SLOT_W, SLOT_H, SLOT_Z = 250.0, 45.0, 1278.0
-DOOR_W, DOOR_Z0, DOOR_Z1 = 240.0, 330.0, 1224.0               # the target's 300 wide scaled 0.8; the head rises to just under the slot's frame (REVIEW-v1-street fault 2; the frame's borders widened to 22 after REVIEW-v2-street)
+HOOD_P, HOOD_ZTOP = 40.0, 1347.0                              # the deep hood: 40 proud, its face 1301 to 1347 (REVIEW-v2-close point 1)
+TAB_Z, TAB_W, TAB_H, TAB_WW, TAB_WH = 1324.0, 55.0, 38.0, 40.0, 28.0   # the tablet's frame and its window
+DOOR_W, DOOR_Z0, DOOR_Z1 = 300.0, 330.0, 1224.0               # the target's 300 (REVIEW-v2-close point 4: the photographs' door is about 0.8 of the seen width); the head rises to just under the slot's frame (REVIEW-v1-street fault 2; the frame's borders widened to 22 after REVIEW-v2-street)
 SIDES = 96                                                    # the lathe's sides (the target asks for 8,000 to 30,000 triangles)
-LOCK_X, LOCK_Z = -90.0, 818.0                                 # on the viewer's right: with +y the front and z up, the viewer's right is -x (the target's frame line is mirrored)
+LOCK_X, LOCK_Z, GRIP_Z = -90.0, 818.0, 745.0                                              # on the viewer's right: with +y the front and z up, the viewer's right is -x (the target's frame line is mirrored)
 FRAME_W, FRAME_H, FRAME_Z = 130.0, 240.0, 1090.0              # an upright frame under the slot, its top at 1210 (REVIEW-v1-street fault 2)
 CYPHER_Z, LETTER_Z, LETTER_W = 620.0, 420.0, 230.0            # the reserved flush areas, moved down to where the photographs have the crown and the lettering
 
@@ -61,11 +63,11 @@ def body_profile():
     for k in range(1, 5):                                     # the bead on the rim's lower edge, R4
         a = math.radians(-90.0 + 90.0 * k / 4)
         pts.append((R_RIM - 4.0 + 4.0 * math.cos(a), Z_RIM0 + 4.0 * math.sin(a)))
-    pts += [(R_RIM, Z_RIM1 - 6.0)]
-    for k in range(1, 5):                                     # the rim's top edge, R6
-        a = math.radians(90.0 * k / 4)
-        pts.append((R_RIM - 6.0 + 6.0 * math.cos(a), Z_RIM1 - 6.0 + 6.0 * math.sin(a)))
-    r1 = R_RIM - 6.0
+    pts += [(R_RIM, Z_RIM1 - 8.0)]
+    for k in range(1, 7):                                     # the rim's top edge, R8 (REVIEW-v2-close point 2)
+        a = math.radians(90.0 * k / 6)
+        pts.append((R_RIM - 8.0 + 8.0 * math.cos(a), Z_RIM1 - 8.0 + 8.0 * math.sin(a)))
+    r1 = R_RIM - 8.0
     Rd = (r1 ** 2 + DOME_RISE ** 2) / (2 * DOME_RISE)
     for k in range(1, 17):
         r = r1 * (1 - k / 16.0)
@@ -131,9 +133,15 @@ def build(T, out_dir, npz_dir):
     # the door: a cylindrical panel 1 mm proud (it fills the inside of the groove, 3 deep)
     Vd, Fd = arc_solid([(R_BODY - 3.0, DOOR_Z0), (R_BODY + 1.0, DOOR_Z0), (R_BODY + 1.0, DOOR_Z1), (R_BODY - 3.0, DOOR_Z1)], -ha, ha)
     B.add("door", (Vd, Fd), "paint_red", bev=None)
-    # the hood over the slot: a curved lip wrapped round the front, 30 proud, its cheeks radial planes at +-47 degrees
-    hood = [(R_BODY - 3.0, 1301.0), (R_BODY + 30.0, 1301.0), (R_BODY + 30.0, 1323.0), (R_BODY - 3.0, 1333.0)]   # 0.5 over the slot's ceiling (1300.5): no two faces in one plane
-    B.add("hood", arc_solid(hood, -47.0, 47.0), "paint_red", bev=1.5)
+    # the hood over the slot: the Elizabeth II pattern of REVIEW-v2-close point 1 (G1, P1, P2: a deep box about 46 high in its face and 40 proud, its top under the collar, the tablet
+    # set in its face), wrapped round the front, its cheeks radial planes at +-50 degrees; the roof slopes up to the body at 1351
+    hood = [(R_BODY - 3.0, 1301.0), (R_BODY + HOOD_P, 1301.0), (R_BODY + HOOD_P, HOOD_ZTOP), (R_BODY - 3.0, 1351.0)]   # 0.5 over the slot's ceiling (1300.5): no two faces in one plane
+    B.add("hood", arc_solid(hood, -50.0, 50.0), "paint_red", bev=1.5)
+    # the tablet: a frame 55 x 38 standing 3 proud of the hood's face at its middle round a window 40 x 28 through it to the hood's own face (the cast words are the engine's texture:
+    # the window is a flush reserved area)
+    tf = B.add("tablet_frame", prism_y([(p[0], TAB_Z + p[1]) for p in rrect(TAB_W, TAB_H, 4.0, 3)], R_BODY - 10.0, R_BODY + HOOD_P + 3.0), "paint_red", bev=1.0)
+    Vtw, Ftw = prism_y([(p[0], TAB_Z + p[1]) for p in rrect(TAB_WW, TAB_WH, 2.5, 3)], R_BODY - 12.0, R_BODY + HOOD_P + 8.0)
+    bs.bool_op(tf, Vtw, Ftw, "DIFFERENCE")
     # the frame round the slot: borders 22 wide, 12 proud (REVIEW-v2-street narrow point 3: the photographs' raised oblong about 300 x 110 under a heavy hood), wrapped on the body, the slot
     # cut through it; its bottom border is the sill
     bw_ = 22.0
@@ -152,19 +160,23 @@ def build(T, out_dir, npz_dir):
     Vr, Fr = prism_y(inner, y_face - 3.0, y_face + 5.0)
     bs.bool_op(fr, Vr, Fr, "DIFFERENCE")
     B.add("plate", prism_y(inner, y_face - 3.4, y_face - 2.4), "enamel_white", bev=None)
-    # the lock, on the viewer's right (x -90, z 818): an upright oblong escutcheon 40 x 100, 3 proud, with its keyhole 4 x 12 and a small lever handle 24 x 6 under it;
-    # built on the front and turned about the axis
+    # the lock, on the viewer's right (x -90, z 818), REVIEW-v2-close point 3: an upright oblong escutcheon 45 x 70, 9 proud, with a true keyhole 10 x 20 (a round top and a slot) cut
+    # through it, and the door's grip as its own part below it (70 x 25, 25 proud); built on the front and turned about the axis
     ang = math.degrees(math.asin(LOCK_X / R_BODY))
-    ew = math.degrees(20.0 / R_BODY)
-    Ve, Fe = arc_solid([(R_BODY - 3.0, LOCK_Z - 50.0), (R_BODY + 9.0, LOCK_Z - 50.0), (R_BODY + 9.0, LOCK_Z + 50.0), (R_BODY - 3.0, LOCK_Z + 50.0)], ang - ew, ang + ew)
+    ew = math.degrees(22.5 / R_BODY)
+    Ve, Fe = arc_solid([(R_BODY - 4.0, LOCK_Z - 35.0), (R_BODY + 9.0, LOCK_Z - 35.0), (R_BODY + 9.0, LOCK_Z + 35.0), (R_BODY - 4.0, LOCK_Z + 35.0)], ang - ew, ang + ew)
     es = B.add("escutcheon", (Ve, Fe), "paint_red", bev=1.0)
-    kh = [(p[0], LOCK_Z + 20.0 + p[1]) for p in rrect(4.0, 12.0, 1.5, 2)]
-    Vk, Fk = prism_y(kh, R_BODY - 1.0, R_BODY + 14.0)
     c, sn = math.cos(math.radians(ang)), math.sin(math.radians(ang))
-    Vk = np.array([(x * c + y * sn, -x * sn + y * c, z) for x, y, z in Vk])        # the front (+y) turned to the viewer's right, to x = R sin(ang)
-    bs.bool_op(es, Vk, Fk, "DIFFERENCE")
-    lw = math.degrees(12.5 / R_BODY)
-    B.add("lock_lever", arc_solid([(R_BODY + 7.0, LOCK_Z - 14.0), (R_BODY + 18.0, LOCK_Z - 14.0), (R_BODY + 18.0, LOCK_Z - 6.0), (R_BODY + 7.0, LOCK_Z - 6.0)], ang - lw, ang + lw), "paint_red", bev=0.8)
+    def turned(V):
+        return np.array([(x * c + y * sn, -x * sn + y * c, z) for x, y, z in V])        # the front (+y) turned to the viewer's right, to x = R sin(ang)
+    cz = LOCK_Z + 10.0
+    kh_round = [(5.0 * math.cos(2 * math.pi * i / 24), cz + 5.0 * math.sin(2 * math.pi * i / 24)) for i in range(24)]
+    kh_slot = [(p[0], LOCK_Z + 2.5 + p[1]) for p in rrect(4.0, 15.0, 1.0, 2)]               # z LOCK_Z -5 to +10: under the round top, which ends at +15
+    for kh in (kh_round, kh_slot):
+        Vk, Fk = prism_y(kh, R_BODY - 1.0, R_BODY + 14.0)
+        bs.bool_op(es, turned(Vk), Fk, "DIFFERENCE")
+    lw = math.degrees(35.0 / R_BODY)
+    B.add("lock_grip", arc_solid([(R_BODY - 4.5, GRIP_Z - 12.5), (R_BODY + 25.0, GRIP_Z - 12.5), (R_BODY + 25.0, GRIP_Z + 12.5), (R_BODY - 4.5, GRIP_Z + 12.5)], ang - lw, ang + lw), "paint_red", bev=5.0)
     obs = bs.finish(B, mats, 0.0)
     return bs.write(obs, "pillar_box", 0.0, out_dir, npz_dir)
 
