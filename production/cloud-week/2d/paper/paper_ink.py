@@ -269,10 +269,11 @@ def block_coverage(sc, covf, look, item, b, rng, ppm, mottle_field, win, mask_b=
     if mask_b is not None:
         # which pixels are ink is the target's own bitmap at the item's scale (its glyph maker hints small type; the anti-aliased outline differs from it by fractions of a pixel,
         # enough that the reader could not tell some glyphs apart): the side is decided as before the second close review, and only the edge's shading is anti-aliased (ink pixels
-        # 0.85 to 1, paper pixels 0 to 0.3)
+        # full, paper pixels 0 to 0.3: the smoothing is on the paper side of the edge, where it costs the ink colour nothing)
         bb = ndi.gaussian_filter(mask_b.astype(np.float32), sig)
         side = smoothstep((bb - (0.5 - bias) + jitter) * 1.6 + 0.5) >= 0.5
-        cov = np.where(side, np.clip(cov, 0.85, 1.0), np.clip(cov, 0.0, 0.3)).astype(np.float32)
+        fringe = 0.3 if ppm <= 2.0 else 0.0              # the paper-side shading only on the 2 px/mm door cards, where the review saw the steps: elsewhere any fringe moved the reader's
+        cov = np.where(side, 1.0, np.clip(cov, 0.0, fringe)).astype(np.float32)          # ink colour (W01-named's small italic v, dE 15 to 16); set aside there, named in NOTES
     dens = np.ones(mask.shape, np.float32)
     if look.get("density"):
         dens *= look["density"]
@@ -285,11 +286,12 @@ def block_coverage(sc, covf, look, item, b, rng, ppm, mottle_field, win, mask_b=
         n = pc.value_noise(mask.shape, max(2.0, 1.4 * ppm), rng, octaves=2)
         dens -= look["pressure"] * n
     rim = None
+    edgesrc = (mask_b if mask_b is not None else covf).astype(np.float32)        # the letterpress rim and the felt pool from the reader's own ink pixels, as before
     if look.get("rim"):
-        wide = ndi.gaussian_filter(covf.astype(np.float32), max(1.0, 3 * sig))
+        wide = ndi.gaussian_filter(edgesrc, max(1.0, 3 * sig))
         rim = np.clip(cov - wide, 0, 1) * look["rim"] * 4.0
     if look.get("pool"):
-        wide = ndi.gaussian_filter(covf.astype(np.float32), max(1.2, 0.5 * ppm))
+        wide = ndi.gaussian_filter(edgesrc, max(1.2, 0.5 * ppm))
         rim = np.clip(cov - wide, 0, 1) * look["pool"] * 4.0
     if look.get("pin"):
         per_cm2, (d0, d1) = look["pin"]

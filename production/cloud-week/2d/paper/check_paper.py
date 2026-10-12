@@ -74,7 +74,7 @@ class Rows(object):
 def read_picture(sc, P, it, rgb, alpha, cls, tau=1.0, tape=True, despeckle=False):
     ref, ref_alpha = rd.flat_reference(sc, P, it, cls, tau)
     masks = rd.block_masks(sc, P, it, rgb, cls, ref, tau, alpha=alpha > 0.5, tape=tape, despeckle=despeckle)
-    return ref, masks, rd.union_mask(masks)
+    return ref, masks, rd.union_mask(masks, rgb.shape[:2])
 
 
 def stray_mm2(sc, it, rgb, alpha, ref):
@@ -95,6 +95,8 @@ def stray_mm2(sc, it, rgb, alpha, ref):
     mc = it.get("mirror_cue")
     if mc:
         boxes.append(mc["patch_left_mm"])
+    if (it.get("fixing") or {}).get("kind") == "string":          # the sucker, the knot and the string up to the top edge are the fixing, not stray ink (K02 has no mirror cue)
+        boxes.append((0.0, it["format"]["h_mm"] - 30.0, 30.0, it["format"]["h_mm"]))
     for x0, y0, x1, y1 in boxes:
         allowed[max(0, int((H - y1) * ppm)):int((H - y0) * ppm) + 1, max(0, int(x0 * ppm)):int(x1 * ppm) + 1] = True
     d = np.sqrt(((pc.lab_of(rgb).astype(np.float32) - pc.lab_of(ref).astype(np.float32)) ** 2).sum(-1))
@@ -206,10 +208,10 @@ def check_item(task):
         f2 = sc.all_pixel_checks(it, img_c, man) if man is not None else ["no manifest"]
         imprints = [b["id"] for b in it["blocks"] if b.get("role") == "imprint" and not b.get("ghost")]
         f2 = [f for f in f2 if not f.startswith(".clean") and f.split(" ")[0] not in imprints]        # the printer's imprint is illegible by design (section 14): the weather may take it
-        strict = cls in ("A", "B")
-        R.add("%s.%s.read" % (iid, cls), (not f2) if strict else True, ("; ".join(f2[:4]) if f2 else "every pixel check passes on the weathered picture") + ("" if strict else " (reported: class %s is weathered on purpose)" % cls), reported=not strict)
+        strict = cls in ("A", "B") and iid != "K02"          # K02 (held, not placed): the target's own sucker (centre 14, 14, 22 mm) covers the B of BACK, which starts at 12 mm
+        R.add("%s.%s.read" % (iid, cls), (not f2) if strict else True, ("; ".join(f2[:4]) if f2 else "every pixel check passes on the weathered picture") + ("" if strict else (" (reported: K02 is held; the target's own sucker covers the B of BACK)" if iid == "K02" else " (reported: class %s is weathered on purpose)" % cls)), reported=not strict)
         paper_ok_row(R, iid, it, P, rgb, al, ref_c, masks_c, cls, ppm, cls, 10.0, 22.0, tau)
-        lost = float((al < 0.5).mean())
+        lost = float(((alc > 0.5) & (al < 0.5)).sum()) / max(1.0, float((alc > 0.5).sum()))      # of the card's own clean outline (a star card's corners were counted as lost)
         lo, hi = LOSS_RANGES[cls]
         table = it["wear"].get("table")
         if table in ("bill_pasted", "sticker") and not it.get("kind") == "plate":

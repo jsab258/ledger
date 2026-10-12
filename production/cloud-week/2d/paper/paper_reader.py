@@ -200,9 +200,12 @@ def block_masks(sc, P, item, rgb, cls, ref, tau=1.0, alpha=None, tape=True, desp
     return out
 
 
-def union_mask(masks):
-    it = iter(masks.values())
-    u = next(it).copy()
-    for m in it:
+def union_mask(masks, shape=None):
+    """The union of the blocks' masks; an item with no legible block (F02: only ghosts) gives an empty mask of `shape` (a StopIteration here once ended the check's pool early)."""
+    vals = list(masks.values())
+    if not vals:
+        return np.zeros(shape, bool) if shape is not None else None
+    u = vals[0].copy()
+    for m in vals[1:]:
         u |= m
     return u
