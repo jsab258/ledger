@@ -8,7 +8,7 @@
   "profile": "(r, z): r the radius from the part's own axis, z up from the flag top at the piece's pivot; each lathe outline runs round the part and closes on the axis; elevation polygons mirror it about the axis",
   "pivot": "K1: the post axis on the footway flag top; K2 and D1: the base centre on the flag top. The flag top is the kerbs target's +110 above the channel top. z up, +x as each kind says",
   "axes": {
-   "K1": "+x from the post axis toward the bin's axis (216 away); the lettering faces +y (the building side); the buried part of the post (0.3 m, not modelled) is below z = 0",
+   "K1": "+x from the post axis toward the bin's axis (232 away); the lettering faces +y (the building side); the buried part of the post (0.3 m, not modelled) is below z = 0",
    "K2": "+x is the aperture's side (azimuth 0); the lock is at azimuth 180",
    "D1": "the two side handles stand at +y and -y; the lid's handle runs along x"
   },
@@ -1240,9 +1240,9 @@
     ]
    }
   },
-  "topsy_974902": {
+  "s12_974902": {
    "photo": "S12, Geograph 974902 (Jim Champion, 2008-09-21, CC BY-SA 2.0), the 427 x 640 reduced copy",
-   "method": "the bin's silhouette read by eye on a 3x enlargement with a 20 px grid, +-2 px at every edge; one dimension fitted: the dome crown (row 257) to the base centre (row 548, the front bottom edge at row 556 less the ellipse of the round foot) is 291 px = the K2 height 900, so 3.09 mm a pixel (the George V box beside it, 465 px from cap top to foot, gives 3.2 mm a pixel at an assumed 1.5 m, so the bin reads 917 high: the two agree within 2 %, and the box's height is itself +-4 %); every width is a silhouette width at the stated row (a cylinder seen from a little above reads its true diameter at its widest rows); the error is +-2 px (+-6 mm) plus the scale +-5 %",
+   "method": "the bin's silhouette read by eye on a 3x enlargement with a 20 px grid, +-2 px at every edge; one dimension fitted: the dome crown (row 257) to the base centre (row 548, the front bottom edge at row 556 less the ellipse of the round foot) is 291 px = the K2 height 900, so 3.09 mm a pixel (the pillar box beside it is 462 px tall and 101 px across its body, 4.6 to 1, which is not the pillar-box target's Type A (3.07 to 1): its type and height are not established, so the photograph gives PROPORTIONS only and K2's absolute size rests on the Judgement height 900); every width is a silhouette width at the stated row (a cylinder seen from a little above reads its true diameter at its widest rows); the error is +-2 px (+-6 mm) plus the scale +-5 %",
    "rows_px_and_mm": [
     {
      "part": "hood skirt (rows 283 to 338)",
@@ -1265,14 +1265,14 @@
      "r_mm": 209
     },
     {
-     "part": "collar (rows 432 to 447)",
+     "part": "collar (rows 436 to 452)",
      "x_px": [
-      62,
-      210
+      70,
+      210.5
      ],
-     "width_px": 148,
-     "diameter_mm": 457,
-     "r_mm": 229
+     "width_px": 140.5,
+     "diameter_mm": 434,
+     "r_mm": 217
     },
     {
      "part": "base drum (rows 470 to 545)",
@@ -1684,7 +1684,7 @@
     "kind": "Judgement (the trade's 3-inch tube, 76.1 x 3.2; the repository's script post is also 76 mm)"
    },
    "bin": {
-    "axis_offset_x": 216.0,
+    "axis_offset_x": 232.0,
     "z_base": 550.0,
     "z_rim_top": 1050.0,
     "wall": 1.5,
@@ -1825,12 +1825,13 @@
    "bracket": {
     "back_strap": {
      "width": 40.0,
-     "thickness": 5.0,
      "z0": 590.0,
      "z1": 1030.0,
-     "x_from": 38.05,
-     "x_to": 43.05,
-     "note": "a flat bar welded up the back of the bin, touching the post along a line"
+     "x_from": 43.05,
+     "x_to": null,
+     "thickness_at_640": 21.4,
+     "thickness_at_980": 10.3,
+     "note": "a tapered spacer bar 40 wide welded up the back of the bin (TARGET-REVIEW 12 October, fault 1): its post face is flat on x 43.05 (the clamp rings' outer face, touching them along a line), its bin face follows the bin wall x = axis_offset_x - r(z), so it is 21 thick at z 640 and 10 at z 980; the first try's flat 5 mm strap could not reach a bin that tapers toward the post"
     },
     "clamps": [
      {
@@ -1846,7 +1847,7 @@
       "ring_t": 5.0
      }
     ],
-    "clamp_note": "each clamp is a 40 x 5 flat ring round the post, welded to the back strap on the bin side and closed at the far side of the post by ONE M8 bolt through two 12 mm ears (hex head 13 across, domed nut 13 across, 8 high)",
+    "clamp_note": "each clamp is a 40 x 5 flat ring round the post, welded to the spacer bar on the bin side and closed at the far side of the post by ONE M8 bolt through two 12 mm ears (hex head 13 across, domed nut 13 across, 8 high)",
     "bolts": {
      "count": 2,
      "size": "M8",
@@ -1885,7 +1886,7 @@
    "extent": {
     "x": [
      -38.05,
-     402.5
+     418.5
     ],
     "z": [
      0.0,
@@ -2006,7 +2007,7 @@
   "K2": {
    "name": "hooded_drum",
    "title": "Free-standing hooded glass-fibre drum bin with a galvanised liner (generic; not the form of any maker's bin)",
-   "basis": "PHOTO (one photograph, 2008) AND LEADS: no photograph of a hooded bin of the period was reached; the form is measured on ONE Geograph photograph of 2008 (S12, a hooded glass-fibre bin beside a George V pillar box, which gives the scale) of a bin type made since 1984 (the leads below), so it shows the form but not a 1990 example: a stepped drum, the base the widest part, a collar, a plain body, a groove and the hood skirt under a flat shallow dome (the first try's generic drum, widest at the middle with the hood the widest part, was the opposite). Leads (search summaries, unreached pages): hooded glass-fibre council bins existed by 1959 (Elton Civic Supplies, MoDiP records), Glasdon's own pages date its original Topsy to 1984 and a museum record dates a Glasdon bin with a removable red plastic hood and a metal liner to 1984 to 1990. No maker's mark, crest or sticker is modelled",
+   "basis": "PHOTO (one photograph, 2008) AND LEADS: no photograph of a hooded bin of the period was reached; the form is measured on ONE Geograph photograph of 2008 (S12, a hooded glass-fibre bin beside a George V pillar box, which gives the scale) of a bin type made since 1984 (the leads below), so it shows the form but not a 1990 example: a stepped drum, the base the widest part, a collar, a plain body, a groove and the hood skirt under a flat shallow dome (the first try's generic drum, widest at the middle with the hood the widest part, was the opposite). Leads (search summaries, unreached pages): hooded glass-fibre council bins existed by 1959 (Elton Civic Supplies, MoDiP records), Glasdon's own pages date its original Topsy to 1984 and a museum record dates a Glasdon bin with a removable red plastic hood and a metal liner to 1984 to 1990. No maker's mark or crest, and no sticker with any readable content, is modelled; K2's height 900 is Judgement: S12 gives proportions only (the box beside it is of an unestablished type and height)",
    "pivot": "the base centre on the flag top",
    "placed": true,
    "outer_profile_rz": [
@@ -2035,28 +2036,32 @@
      248.0
     ],
     [
-     236.0,
-     262.0
+     238.0,
+     258.0
     ],
     [
-     231.0,
-     282.0
+     228.0,
+     276.0
     ],
     [
-     230.0,
+     221.0,
+     290.0
+    ],
+    [
+     220.0,
      300.0
     ],
     [
-     230.0,
-     338.0
+     220.0,
+     345.0
     ],
     [
-     224.0,
-     348.0
+     216.0,
+     352.0
     ],
     [
-     214.0,
-     356.0
+     211.0,
+     358.0
     ],
     [
      210.0,
@@ -2064,19 +2069,19 @@
     ],
     [
      210.0,
-     640.0
+     630.0
     ],
     [
      206.0,
-     648.0
+     636.0
     ],
     [
      206.0,
-     658.0
+     644.0
     ],
     [
      218.0,
-     664.0
+     650.0
     ],
     [
      218.0,
@@ -2143,28 +2148,28 @@
       300.0,
       364.0
      ],
-     "r_max": 230.0,
-     "note": "a collar r 230 (z 300 to 338) stepping in to the body by a 26 mm round"
+     "r_max": 220.0,
+     "note": "a collar r 220 (z 300 to 345), 10 proud of the body, stepping in to it by a 15 mm round (TARGET-REVIEW fault 4: the photograph gives r 217)"
     },
     "body": {
      "z": [
       364.0,
-      640.0
+      630.0
      ],
      "r_max": 210.0,
      "note": "a plain straight drum r 210 (a moulded seam line down each side at azimuth +-90, 0.5 high, 3 wide)"
     },
     "join_groove": {
      "z": [
-      640.0,
-      664.0
+      630.0,
+      650.0
      ],
      "depth": 4.0,
-     "note": "the shadow line between body and hood"
+     "note": "the shadow line between body and hood: the hood's lower lip at z 640 to 650 (fault 5)"
     },
     "hood": {
      "z": [
-      664.0,
+      650.0,
       900.0
      ],
      "r_max": 218.0,
@@ -2211,10 +2216,27 @@
     },
     "lock": {
      "azimuth_deg": 180.0,
-     "z": 650.0,
+     "z": 640.0,
      "d": 22.0,
      "escutcheon_d": 40.0,
      "note": "a barrel lock at the back of the join; not seen from the front"
+    },
+    "ground_patch": {
+     "r": [
+      290.0,
+      330.0
+     ],
+     "proud": [
+      0.0,
+      2.0
+     ],
+     "srgb": [
+      186,
+      184,
+      176
+     ],
+     "rough": 0.85,
+     "note": "TARGET-REVIEW fault 6: the photographed bin stands on a ragged pale cement patch set flush in the paving round its foot, reaching 40 to 90 beyond the base drum, with a broken edge (where its ground fixing was set; the fixing is hidden under the base): an irregular flush disc, a separate mesh (seeded) or a decal in the footway set"
     }
    },
    "lettering": {
@@ -2231,7 +2253,7 @@
     ],
     "safe_because": "as K1"
    },
-   "fixings": "free-standing on its ballasted foot ring (mass about 28 kg); hood located by four moulded lugs and the lock; nothing is bolted to the footway; no visible screws or rivets on the front",
+   "fixings": "free-standing on its ballasted base drum (mass about 28 kg), its ground fixing hidden under the base (the cement patch round it is a part); hood located by four moulded lugs and the lock; no visible screws or rivets on the front",
    "edges": "every moulding rounded: the aperture's lip R6, the hood skirt's edge R5, the foot ring's top R10; moulded seam lines only; no maker's name, logo, product number or moulded lettering of any kind",
    "conditions": {
     "a": {
@@ -2324,52 +2346,52 @@
      28.0
     ],
     [
-     203.9638989169675,
-     138.0
+     221.24729241877256,
+     521.0
     ],
     [
-     210.50541516245488,
-     144.0
+     224.65342960288808,
+     524.0
     ],
     [
-     210.50541516245488,
-     156.0
+     225.65342960288808,
+     527.0
     ],
     [
-     205.04693140794222,
-     162.0
+     225.65342960288808,
+     533.0
     ],
     [
-     210.28158844765343,
-     278.0
+     224.65342960288808,
+     536.0
     ],
     [
-     216.8231046931408,
-     284.0
+     222.0595667870036,
+     539.0
     ],
     [
-     216.8231046931408,
-     296.0
+     222.42057761732852,
+     547.0
     ],
     [
-     211.36462093862815,
-     302.0
+     225.82671480144404,
+     550.0
     ],
     [
-     216.59927797833936,
-     418.0
+     226.82671480144404,
+     553.0
     ],
     [
-     223.1407942238267,
-     424.0
+     226.82671480144404,
+     559.0
     ],
     [
-     223.1407942238267,
-     436.0
+     225.82671480144404,
+     562.0
     ],
     [
-     217.68231046931407,
-     442.0
+     223.23285198555956,
+     565.0
     ],
     [
      224.0,
@@ -2398,14 +2420,24 @@
    ],
    "body_top": 610.0,
    "rib_z": [
-    150.0,
-    290.0,
-    430.0
+    530.0,
+    556.0
    ],
    "rib": {
-    "height": 24.0,
-    "proud": 6.0,
-    "note": "three swaged ribs, rounded, every 140; the first at 150"
+    "height": 18.0,
+    "proud": 4.0,
+    "note": "two rolled rings under the rim at z 530 and 556, rounded (TARGET-REVIEW fault 2: none of four British galvanised dustbins photographed has the three mid-body horizontal ribs the first try took from a US can; Chawleigh shows two rings under the rim)"
+   },
+   "flutes": {
+    "count": 64,
+    "depth": 4.0,
+    "z": [
+     40.0,
+     515.0
+    ],
+    "pitch_mm": 21.0,
+    "note": "vertical corrugations round the body below a plain band (Pentonville and Chawleigh, TARGET-REVIEW fault 2; Patterdale has a plain body): 64 rounded flutes 4 deep from z 40 to 515, fading out at both ends; in the kit they are a NORMAL MAP (4 mm flutes at 21 mm pitch need 128 sides, over the 4,500 triangle budget)",
+    "kind": "Photo, three examples"
    },
    "foot_ring": {
     "z": [
@@ -2476,7 +2508,7 @@
      "top_z": 660.0,
      "rivets": 2
     },
-    "note": "a shallow pressed dome, 502 across (the scene's 0.50), its skirt overlapping the rim by 22 and standing 8 clear all round; a flat strap handle on its crown; lid height over the body top 50 (the scene's 0.05)"
+    "note": "a shallow pressed dome, 502 across (the scene's 0.50), its skirt overlapping the rim by 22 and standing 8 clear all round; a flat strap handle on its crown; radial_ribs: 20 pressed ribs 12 wide and 3 proud from r 70 to r 225 on the dome (Photo, one example: Cusop 3757342; a normal map in the kit); lid height over the body top 50 (the scene's 0.05)"
    },
    "side_handles": {
     "count": 2,
@@ -2485,13 +2517,16 @@
      270.0
     ],
     "z": 470.0,
-    "height": 100.0,
-    "proud": 45.0,
+    "bar_d": 12.0,
+    "length": 170.0,
+    "proud": 38.0,
+    "height": 55.0,
     "strap_w": 25.0,
     "strap_t": 3.0,
     "rivets_per_end": 2,
+    "rivet_pitch": 40.0,
     "rivet_d": 8.0,
-    "note": "a loop of 25 x 3 flat strip, 100 tall, standing 45 proud, riveted at each end with two 8 mm dome-head rivets"
+    "note": "a horizontal grip (TARGET-REVIEW fault 3: Patterdale and Chawleigh): a 12 mm round bar 170 long between lug centres, standing 38 proud of the body, bent down at each end into a lug 25 wide x 55 tall x 3, each lug held by two 8 mm dome rivets one above the other, 40 apart"
    },
    "sheet": {
     "thickness": 0.6,
@@ -2514,8 +2549,8 @@
     ],
     "with_handles_r": 264.0
    },
-   "edges": "rolled edges at the foot, the rim and the lid; the ribs rounded; nothing sharp but the cut ends of the handle straps",
-   "fixings": "rivets: 4 on each side handle (2 per end), 2 on the lid handle; the body has one vertical lock seam on the back (azimuth 180)",
+   "edges": "rolled edges at the foot, the rim and the lid; the rings rounded; nothing sharp but the lugs' edges",
+   "fixings": "rivets: 4 on each side handle (2 per lug, one above the other), 2 on the lid handle; the body has one vertical lock seam on the back (azimuth 180)",
    "conditions": {
     "a": {
      "name": "lid on, ordinary",
@@ -2569,6 +2604,7 @@
   }
  },
  "wear": {
+  "stickers_defined": "a \"sticker\" in the conditions (K1 1 to 2, K2 0 to 2) is a weathered BLANK or illegible paper or vinyl rectangle 60 to 120 mm across (the fly-poster remnant of K1-w7 and K2-w7): no readable word, number, logo or crest, and never a maker's or council sticker (S12's council crest is exactly what must not appear) (TARGET-REVIEW fault 7)",
   "rule": "The wear is a layer on each bin's own UVs (a mask set per mesh, as the asset plan's \"curvature and occlusion bake per asset: edge chips to primer, rust streaks down from fixings, grime from the ground up, rain streaks from the top\"), seeded per instance, and it AGREES WITH the wear target (production/cloud-week/targets/wear/target.json): its iron_wear rule for painted ironwork, its cig_end and gum kinds for the litter and gum round the bins, its splash and foot rule. Nothing below is measured on a bin photograph (none was reached); the parts marked Photo are measured on the galvanised container and the scans.",
   "agree_with_wear_target": {
    "iron_wear": "paint loss and rust over 4 to 8 % of the UNWRAPPED area (post: 239 wide, the circumference of 76.1), in patches of 20 to 110 mm (p50 45), 40 % of the lost paint in the lowest 0.3 m of the post (the shoe), 30 % within 80 mm of a clamp, strap, bead or weld, 30 % anywhere; patch colour primer_ochre; below 4 in 10 clamps and every drain hole one or two rust streaks, width p50 24, aspect 4 to 12, length 100 to 300",
@@ -3203,7 +3239,7 @@
     "side": "east",
     "post_x_m": 6.6,
     "post_z_m": 3.62,
-    "bin_axis_x_m": 6.384,
+    "bin_axis_x_m": 6.368,
     "bin_axis_z_m": 3.62,
     "setback_from_kerb_face_m": 0.62,
     "near_edge_from_kerb_face_m": 0.433,
@@ -3219,7 +3255,7 @@
     "side": "east",
     "post_x_m": 35.2,
     "post_z_m": 3.62,
-    "bin_axis_x_m": 35.416,
+    "bin_axis_x_m": 35.432,
     "bin_axis_z_m": 3.62,
     "setback_from_kerb_face_m": 0.62,
     "near_edge_from_kerb_face_m": 0.433,
@@ -3239,7 +3275,7 @@
     "near_edge_from_kerb_face_m": 0.55,
     "far_edge_from_kerb_face_m": 1.05,
     "yaw_note": "the aperture faces the shops' side of the footway (the building line)",
-    "serves": "the newsagent's side door (41.178), the bus stop (46.0) and the chandler's queue"
+    "serves": "the newsagent's side door (41.178), and the bus stop (46.0)"
    }
   ],
   "dustbins": [
@@ -3997,7 +4033,7 @@
    "taken": "2008-09-21 (SU4014, Wilton Road, Southampton)",
    "what": "a grey hooded glass-fibre litter bin beside a George V pillar box outside a corner shop: the bin's whole side with its hood, aperture, groove, collar and base drum, the box giving the scale (the same hooded bin type has been made since 1984, S-leads below)",
    "used": "YES (K2 revised 12 October): the bin's silhouette read at 3 mm a pixel (method in photo_measurements.topsy_974902); a crop to the bin alone, the crest sticker masked, in production/previews/cloud-week/refs/litter-bins/",
-   "period": "2008, not 1990: the bin type dates from 1984 (L1, L2) and its form is read as unchanged, but the example itself is later; whether Meridian's council bought it is not known"
+   "period": "2008, not 1990: the bin type is dated to 1984 by the leads (L1, L2: a date, not a form), so its form is ASSUMED unchanged since the 1980s (no period photograph of the type was reached) and the example itself is later; whether Meridian's council bought it is not known"
   },
   {
    "id": "S13",
@@ -4180,7 +4216,7 @@
   "NO PHOTOGRAPH OF A 1975 TO 1995 STREET LITTER BIN WAS REACHED (Geograph, searched 12 October for litter bin, litter, dustbin, waste bin, bin on a post, pole mounted bin and a dozen more, each year 1975 to 1996: forty-nine photographs of any year, none a street litter bin; Wikimedia Commons refused every request with 429; archive.org not searched). K2 is now measured on one 2008 photograph of a hooded bin type made since 1984 (S12); K1, the pole-mounted open steel bin, has no photograph at all and stays research and judgement. The shape of K1 and, for what S12 does not show, K2 is research and judgement, not measurement: their proportions (the taper, the bead, the clamp rings, the hood's skirt and the aperture's size and height) are ergonomic and trade guesses and a fresh reviewer has nothing to hold them against but the asset plan's kit names and the leads.",
   "Which council colour Meridian used (green is a judgement from the repository's own recipe and from green being common on 1980s municipal steel and glass-fibre; no source says); canon owes the council's name and no word of it appears on any bin.",
   "Whether Meridian's council had bought the Topsy-type (1984) or only older hooded or pole stock: K2 now has that type's form (S12), so a council with older stock would show a different bin; the colour, the lettering and the aperture's width (about 230, the photograph shows it foreshortened) are Judgement.",
-  "The real height of rim and aperture: K1 rim 1.05 and K2 aperture sill 0.65 are ergonomic Judgement (the repository's script has 0.95 for the pole bin).",
+  "The real height of rim and aperture: K1 rim 1.05 and K2 aperture sill 0.68 are ergonomic Judgement (the sill 0.68 is read on S12 as a proportion of the Judgement height) (the repository's script has 0.95 for the pole bin).",
   "The BS 792 dimension table (the 1973 or earlier edition): 0.46 x 0.61 is the scene's; the foot (398), the rib heights and the handle sizes are Judgement.",
   "Whether bins were fixed to the lamp columns on Quay Street: K1 stands on its own post; the lamp-post target's shaft at 1.0 m is 68 mm and the sleeve 124, neither a clean 76 mm host. A column-mounted variant would need the lamp target's sleeve and a different clamp: not written.",
   "The bus stop (hook-cast: x 46.0, z -4.3; not in the scene file) has no pole yet, so the 2.0 m between B3 and the stop is to the cast's point.",
@@ -4251,9 +4287,9 @@
    "name": "K1_bin_offset",
    "applies_to": "K1",
    "measure": "post axis to bin axis along x",
-   "expected": 216.0,
+   "expected": 232.0,
    "tolerance": 10,
-   "kind": "Derived"
+   "kind": "Derived (TARGET-REVIEW fault 1: 232, so that the rim bead clears the post by 7)"
   },
   {
    "name": "K1_capacity_litres",
@@ -4352,9 +4388,9 @@
    "name": "K2_collar_diameter",
    "applies_to": "K2",
    "measure": "diameter of the collar at z 320",
-   "expected": 460.0,
+   "expected": 440.0,
    "tolerance": 12,
-   "kind": "Photo"
+   "kind": "Photo (a proportion; the absolute size follows the Judgement height)"
   },
   {
    "name": "K2_base_diameter",
@@ -4401,8 +4437,8 @@
    "applies_to": "K2",
    "measure": "z of the join groove",
    "expected": [
-    640.0,
-    664.0
+    630.0,
+    650.0
    ],
    "tolerance": 10,
    "kind": "Photo"
@@ -4484,30 +4520,29 @@
   {
    "name": "D1_rib_count_and_z",
    "applies_to": "D1",
-   "measure": "three swaged ribs at z",
+   "measure": "two rolled rings under the rim at z",
    "expected": [
-    150.0,
-    290.0,
-    430.0
+    530.0,
+    556.0
    ],
-   "tolerance": 15,
-   "kind": "Judgement"
+   "tolerance": 10,
+   "kind": "Photo (TARGET-REVIEW fault 2)"
   },
   {
    "name": "D1_side_handles",
    "applies_to": "D1",
-   "measure": "two strap loops at z 470, 45 proud",
+   "measure": "two horizontal round-bar grips at z 470, 38 proud",
    "expected": [
     2,
     470.0,
-    45.0
+    38.0
    ],
    "tolerance": [
     0,
     25.0,
-    8.0
+    6.0
    ],
-   "kind": "Judgement"
+   "kind": "Photo (TARGET-REVIEW fault 3)"
   },
   {
    "name": "D1_lid_clearance",
@@ -4683,9 +4718,9 @@
   ]
  },
  "self_check": {
-  "line": "SELF-CHECK litter-bins: 139 checks, 139 passed, 0 failed, 9 reported",
-  "checks": 139,
-  "passed": 139,
+  "line": "SELF-CHECK litter-bins: 144 checks, 144 passed, 0 failed, 11 reported",
+  "checks": 144,
+  "passed": 144,
   "failed": [],
   "reported": [
    "K2_no_maker_mark: not computed here (moulded or printed maker, council or product marks)",
@@ -4696,7 +4731,9 @@
    "wear_iron_share: a placement or content rule, tested in groups 4 and 6",
    "no_brand_text: a placement or content rule, tested in groups 4 and 6",
    "no_alcohol_gambling_children: a placement or content rule, tested in groups 4 and 6",
-   "dressing_separate: a placement or content rule, tested in groups 4 and 6"
+   "dressing_separate: a placement or content rule, tested in groups 4 and 6",
+   "PHOTO the scale: 900 mm over 291 px is 3.09 mm a pixel, FITTED to K2's Judgement height; the pillar box beside the bin is of an unestablished type and height (462 px tall, 101 across: 4.6 to 1, not Type A's 3.07), so S12 gives proportions only (TARGET-REVIEW fault 8)",
+   "PHOTO the pixel table (rows_px_and_mm) is the writer's reading, re-measured by a fresh reviewer on 12 October on 4x and 8x enlargements (the collar and the groove corrected); this group compares K2's profile with that table"
   ],
   "groups": {
    "1": [
@@ -4708,16 +4745,16 @@
     42
    ],
    "3": [
-    11,
-    11
+    10,
+    10
    ],
    "7": [
     2,
     2
    ],
    "4": [
-    17,
-    17
+    23,
+    23
    ],
    "5": [
     16,

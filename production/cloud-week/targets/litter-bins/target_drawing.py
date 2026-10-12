@@ -78,11 +78,20 @@ def ring(cx, cy, r_in, r_out, n=96):
     return circle(cx, cy, r_out, n).difference(circle(cx, cy, r_in, n))
 
 
-def loop_handle_side(r_body, proud, z0, z1, strap_t, w):
-    """a D strap handle seen in profile (y horizontal): an outline frame from the wall out to proud and back"""
-    outer = box(r_body - 1.0, z0, r_body + proud, z1)
-    inner = box(r_body - 1.0, z0 + strap_t, r_body + proud - strap_t, z1 - strap_t)
-    return outer.difference(inner)
+def grip_side(r_body, sh):
+    """the horizontal round-bar grip seen end-on (y horizontal): the lug (3 thick, 55 tall) on the wall and the 12 mm bar standing out to `proud` (TARGET-REVIEW fault 3)"""
+    z = sh['z']
+    lug = box(r_body - 1.0, z - sh['height'] / 2.0, r_body + sh['strap_t'], z + sh['height'] / 2.0)
+    leg = box(r_body, z - sh['bar_d'] / 2.0, r_body + sh['proud'], z + sh['bar_d'] / 2.0)
+    bar = circle(r_body + sh['proud'] - sh['bar_d'] / 2.0, z, sh['bar_d'] / 2.0, 24)
+    return unary_union([lug, leg, bar])
+
+
+def strap_poly(bn, s):
+    """the K1 spacer bar in the plane of the post and bin axes: its post face flat on x_from, its bin face on the bin's wall x = axis_offset_x - r(z) (TARGET-REVIEW fault 1)"""
+    def wx(z):
+        return bn['axis_offset_x'] - (bn['r_base'] + (bn['r_top'] - bn['r_base']) * (z - 560.0) / (1038.0 - 560.0))
+    return Polygon([(s['x_from'], s['z0']), (wx(s['z0']) + 0.5, s['z0']), (wx(s['z1']) + 0.5, s['z1']), (s['x_from'], s['z1'])])
 
 
 def poly_pts(p):
@@ -132,7 +141,7 @@ def k1_views(T):
     bin_sil = silhouette(prof, x0, top_index=top)
     v.add('bin', 'bin', 'paint_green_worn', bin_sil)
     s = br['back_strap']
-    v.add('back_strap', 'bracket', 'paint_green_worn', box(s['x_from'], s['z0'], s['x_to'] + 0.0, s['z1']))
+    v.add('back_strap', 'bracket', 'paint_green_worn', strap_poly(bn, s))
     for i, c in enumerate(br['clamps']):
         v.add(f'clamp_{i + 1}', 'bracket', 'paint_green_worn', box(-(rp + c['ring_t']), c['z0'], rp + c['ring_t'], c['z1']))
         v.add(f'clamp_ear_{i + 1}', 'bracket', 'paint_green_worn', box(-(rp + c['ring_t']) - 12, (c['z0'] + c['z1']) / 2 - 8, -(rp + c['ring_t']), (c['z0'] + c['z1']) / 2 + 8))
@@ -158,7 +167,7 @@ def k1_views(T):
     v.add('post', 'post', 'paint_green_worn', circle(0, 0, rp))
     for i, c in enumerate(br['clamps'][:1]):
         v.add('clamp_ring', 'bracket', 'paint_green_worn', ring(0, 0, rp, rp + c['ring_t']))
-    v.add('back_strap', 'bracket', 'paint_green_worn', box(rp, -s['width'] / 2, rp + s['thickness'], s['width'] / 2))
+    v.add('back_strap', 'bracket', 'paint_green_worn', box(s['x_from'], -s['width'] / 2, bn['axis_offset_x'] - (bn['r_base'] + (bn['r_top'] - bn['r_base']) * (800.0 - 560.0) / (1038.0 - 560.0)) + 0.5, s['width'] / 2))
     dh = bn['base_plate']['drain_holes']
     for k in range(dh['count']):
         a = math.radians(dh['first_azimuth'] + 360.0 / dh['count'] * k)
@@ -173,7 +182,7 @@ def k1_views(T):
     v.add('post_tube', 'post', 'paint_green_worn', tube)
     cap = Polygon([(-r, z) for r, z in reversed(post['profile_rz'][4:])] + [(r, z) for r, z in post['profile_rz'][4:]])
     v.add('post_cap', 'post', 'paint_green_worn', cap.buffer(0))
-    v.add('back_strap', 'bracket', 'paint_green_worn', box(s['x_from'], s['z0'], s['x_to'], s['z1']))
+    v.add('back_strap', 'bracket', 'paint_green_worn', strap_poly(bn, s))
     for i, c in enumerate(br['clamps']):
         v.add(f'clamp_{i + 1}_left', 'bracket', 'paint_green_worn', box(-(rp + c['ring_t']), c['z0'], -rp, c['z1']))
         v.add(f'clamp_{i + 1}_right', 'bracket', 'paint_green_worn', box(rp, c['z0'], rp + c['ring_t'], c['z1']))
@@ -248,7 +257,7 @@ def d1_views(T):
     v.add('lid_handle', 'lid', 'zinc_weathered', hh)
     r_h = rhz(sh['z'])
     for sgn in (1, -1):
-        g = loop_handle_side(r_h, sh['proud'], sh['z'] - sh['height'] / 2, sh['z'] + sh['height'] / 2, sh['strap_t'], sh['strap_w'])
+        g = grip_side(r_h, sh)
         v.add('side_handle_%s' % ('plus' if sgn > 0 else 'minus'), 'handle', 'zinc_weathered', g if sgn > 0 else affinity.scale(g, xfact=-1, yfact=1, origin=(0, 0)))
     out = {'D1_side': v}
     # front view along y: one handle face-on
@@ -256,9 +265,12 @@ def d1_views(T):
     v.add('body', 'body', 'zinc_weathered', body_sil)
     v.add('lid', 'lid', 'zinc_weathered', lid_poly)
     v.add('lid_handle', 'lid', 'zinc_weathered', box(-lh['length'] / 2, lid[-1][1], lh['length'] / 2, lh['top_z']))
-    face = box(-sh['strap_w'] * 2.4, sh['z'] - sh['height'] / 2, sh['strap_w'] * 2.4, sh['z'] + sh['height'] / 2)
-    inner = box(-sh['strap_w'] * 2.4 + sh['strap_t'] * 2, sh['z'] - sh['height'] / 2 + sh['strap_t'], sh['strap_w'] * 2.4 - sh['strap_t'] * 2, sh['z'] + sh['height'] / 2 - sh['strap_t'])
-    v.add('side_handle_face', 'handle', 'zinc_weathered', face.difference(inner))
+    half = sh['length'] / 2.0
+    for sx in (-1.0, 1.0):                                                           # the two lugs (25 wide, 55 tall) with their two rivets, and the bar across at the top of the bend
+        v.add('lug_%s' % ('r' if sx > 0 else 'l'), 'handle', 'zinc_weathered', box(sx * half - sh['strap_w'] / 2.0, sh['z'] - sh['height'] / 2.0, sx * half + sh['strap_w'] / 2.0, sh['z'] + sh['height'] / 2.0))
+        for dz in (-sh['rivet_pitch'] / 2.0, sh['rivet_pitch'] / 2.0):
+            v.add('rivet_%s_%d' % ('r' if sx > 0 else 'l', dz), 'fixing', 'zinc_new', circle(sx * half, sh['z'] + dz, sh['rivet_d'] / 2.0, 16))
+    v.add('grip_bar', 'handle', 'zinc_weathered', box(-half - sh['bar_d'] / 2.0, sh['z'] - sh['bar_d'] / 2.0, half + sh['bar_d'] / 2.0, sh['z'] + sh['bar_d'] / 2.0))
     out['D1_front'] = v
     # plan
     v = View('D1 plan', ['x (mm)', 'y (mm)'])
@@ -267,7 +279,7 @@ def d1_views(T):
     v.add('foot_ring', 'body', 'zinc_dark_grime', ring(0, 0, 200.0, K['foot_ring']['r_max']))
     v.add('lid_handle', 'lid', 'zinc_weathered', box(-lh['length'] / 2, -lh['strap_w'] / 2, lh['length'] / 2, lh['strap_w'] / 2))
     for sgn in (1, -1):
-        v.add('side_handle_%s' % ('plus' if sgn > 0 else 'minus'), 'handle', 'zinc_weathered', box(-sh['strap_w'] * 1.2, sgn * r_h, sh['strap_w'] * 1.2, sgn * (r_h + sh['proud'])) if sgn > 0 else box(-sh['strap_w'] * 1.2, -(r_h + sh['proud']), sh['strap_w'] * 1.2, -r_h))
+        v.add('side_handle_%s' % ('plus' if sgn > 0 else 'minus'), 'handle', 'zinc_weathered', box(-sh['length'] / 2.0 - sh['bar_d'] / 2.0, sgn * r_h, sh['length'] / 2.0 + sh['bar_d'] / 2.0, sgn * (r_h + sh['proud'])) if sgn > 0 else box(-sh['length'] / 2.0 - sh['bar_d'] / 2.0, -(r_h + sh['proud']), sh['length'] / 2.0 + sh['bar_d'] / 2.0, -r_h))
     for zc in K['rib_z']:
         v.lines.append(('rib_r_%d' % zc, [(rhz(zc) + K['rib']['proud'] * math.cos(a), (rhz(zc) + K['rib']['proud']) * math.sin(a)) for a in np.linspace(0, 2 * math.pi, 120)]))
     out['D1_plan'] = v

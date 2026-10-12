@@ -7,8 +7,7 @@ _b, _c (the hooded glass-fibre drum, with its galvanised liner as a separate obj
 leaning off the bin). Millimetres in the script, metres in the .glb, z up. K1: the post axis at the origin on the flag top (a hidden skirt to z -150), the bin on +x (the engine
 mirrors it for B2); K2 and D1: the base centre at the origin (+x is K2's aperture side). Geometric damage only where it is 5 mm or deeper (dents, the bent rim, the burnt hood's
 hole, the lean and the tilt); the small dents, scuffs, chalk, rust, stickers, gum, scorch and the overflowing litter (a separate dressing set) are the engine's masks and
-instances. The lettering (LITTER, LB n, the dustbin's number) is the engine's decal. Departures, each small: the K1 bin hangs 10 mm farther out than the target's 216 (its rim bead
-would otherwise stand inside the post), the back strap is a wedge bar closing the gap between the post and the tapering wall, the dustbin is a solid of revolution closed at the rim (the sheet's 0.6 is not modelled; with its lid off a dark disc of contents stands under the rim), the K2 shell is 5 thick as the target says, the dents are a smooth bump, not a crease.
+instances. The lettering (LITTER, LB n, the dustbin's number) is the engine's decal. Departures, each small: the dustbin is a solid of revolution closed at the rim (the sheet's 0.6 is not modelled; with its lid off a dark disc of contents stands under the rim), the K2 shell is 5 thick as the target says, the dents are a smooth bump, not a crease.
 """
 import argparse
 import json
@@ -33,8 +32,8 @@ ASSET_DIR = os.path.join(REPO, "production", "assets", "cloud-week", "bins")
 NPZ_DIR = os.path.join(HERE, "build")
 
 BURN_AZ = -58.0              # the burnt hole's azimuth: the target's -28 would merge it with the aperture (now 230 wide), so it moves to the hood's upper left, clear of the aperture's edge
-BIN_OFFSET = 226.0           # post axis to bin axis (the target's 216, +-10): the rim bead stands clear of the post
-SIDES_K1, SIDES_K2, SIDES_D1 = 36, 36, 36
+BIN_OFFSET = 232.0           # post axis to bin axis (TARGET-REVIEW fault 1: the target's 232): the rim bead stands 7 clear of the post
+SIDES_K1, SIDES_K2, SIDES_D1 = 36, 34, 36
 
 
 # ------------------------------------------------------------------------------------------------------------------------------------ helpers
@@ -140,12 +139,40 @@ def rot_y(V, deg, about_xz):
     return V
 
 
+def box3(x0, x1, y0, y1, z0, z1):
+    V = np.array([(x, y, z) for z in (z0, z1) for y in (y0, y1) for x in (x0, x1)], float)
+    F = [(0, 1, 3, 2), (4, 6, 7, 5), (0, 4, 5, 1), (2, 3, 7, 6), (0, 2, 6, 4), (1, 5, 7, 3)]
+    return orient(V, F)
+
+
 def cyl_z(x, y, z0, z1, r, n=16):
     V, F = lathe([(0.0, z0), (r, z0), (r, z1), (0.0, z1)], n)
     V = np.array(V)
     V[:, 0] += x
     V[:, 1] += y
     return V, F
+
+
+def extrude_poly(poly_xy, z0, z1):
+    """a prism of a convex-or-star polygon (x, y) from z0 to z1, built as a fan from its centroid (closed, outward-facing)"""
+    P = np.array(poly_xy, float)
+    c = P.mean(0)
+    n = len(P)
+    V = np.vstack([np.column_stack([P, np.full(n, z0)]), np.column_stack([P, np.full(n, z1)]), [[c[0], c[1], z0]], [[c[0], c[1], z1]]])
+    F = []
+    for i in range(n):
+        j = (i + 1) % n
+        F.append((i, j, n + j, n + i))
+        F.append((2 * n, j, i))
+        F.append((2 * n + 1, n + i, n + j))
+    return orient(V, F)
+
+
+def cyl_x(y, z, x0, x1, r, n=12):
+    V, F = lathe([(0.0, x0), (r, x0), (r, x1), (0.0, x1)], n)
+    V = np.array(V)
+    out = np.stack([V[:, 2], V[:, 1] + y, V[:, 0] + z], 1)       # (r cos, r sin, along) -> (along, y, z)
+    return orient(out, F)
 
 
 def cyl_y(x, z, y0, y1, r, n=16):
@@ -275,7 +302,8 @@ def build_k1(T, cond, out_dir, npz_dir):
     def wall_x(z):
         return BIN_OFFSET - (165.0 + (180.5 - 165.0) * (z - 560.0) / (1038.0 - 560.0))
     xs0, xs1 = wall_x(Br["back_strap"]["z0"]) + 0.6, wall_x(Br["back_strap"]["z1"]) + 0.6
-    st = [(Po["od"] / 2.0 - 0.5, Br["back_strap"]["z0"]), (xs0, Br["back_strap"]["z0"]), (xs1, Br["back_strap"]["z1"]), (Po["od"] / 2.0 - 0.5, Br["back_strap"]["z1"])]
+    xf = Br["back_strap"]["x_from"] - 0.55                              # the spacer bar: its post face on the clamp rings' outer face (x 43.05), 0.55 into them; its bin face on the wall
+    st = [(xf, Br["back_strap"]["z0"]), (xs0, Br["back_strap"]["z0"]), (xs1, Br["back_strap"]["z1"]), (xf, Br["back_strap"]["z1"])]
     Vs, Fs = prism_y(st, -Br["back_strap"]["width"] / 2.0, Br["back_strap"]["width"] / 2.0)
     parts["strap"] = (Vs, Fs, "paint_green", 2.0, "bin")
     # the two clamps: a ring 40 x 5 round the post, an ear pair on the far side with one M8 bolt through, the nut on the other side
@@ -338,6 +366,8 @@ def build_k2(T, cond, out_dir, npz_dir):
     ap = K["aperture"]
     mats = mats_for(T, {"gel_green": C["gel"], "zinc_liner": "zinc_weathered"})
     mats["lock_steel"] = bs.make_material("lock_steel", (150, 150, 152), 0.45, 1.0)
+    gpm = K["parts"]["ground_patch"]
+    mats["cement_patch"] = bs.make_material("cement_patch", tuple(gpm["srgb"]), gpm["rough"], 0.0)
     B = Parts()
     prof = [tuple(p) for p in K["outer_profile_rz"]]
     sec = band(prof, K["shell"])
@@ -366,16 +396,23 @@ def build_k2(T, cond, out_dir, npz_dir):
         Vh, Fh = irregular_prism_dir(poly, (0.0, 0.0), dirv, 150.0, 300.0)
         bs.bool_op(body, Vh, Fh, "DIFFERENCE")
     # the barrel lock at the back of the join: an escutcheon 40 across, 4 proud, a 22 barrel, at azimuth 180, z 650 (a 2 mm slot cut across the barrel is the engine's normal map)
-    r_j = 218.0
-    lock = revolve([(0.0, -2.0), (20.0, -2.0), (20.0, 2.0), (11.0, 2.5), (11.0, 4.0), (0.0, 4.0)], 20)
+    lock = revolve([(0.0, -2.0), (20.0, -2.0), (20.0, 2.0), (11.0, 2.5), (11.0, 6.0), (0.0, 6.0)], 20)
     Vl = np.array(lock[0])
-    Vl = np.stack([-(r_j - 6.0 + Vl[:, 2]), Vl[:, 1], 652.0 + Vl[:, 0]], 1)    # the disc's axis along -x
+    Vl = np.stack([-(206.0 - 2.0 + Vl[:, 2]), Vl[:, 1], K["parts"]["lock"]["z"] + Vl[:, 0]], 1)    # the disc's axis along -x, 4 proud of the groove's r 206 at z 640
     B.add("k2_lock", (Vl, lock[1]), "lock_steel", bev=None)
     # the liner (a separate object): a galvanised sheet can with a rolled rim, 1.6 thick here
     lp = [tuple(p) for p in K["parts"]["liner"]["profile_rz"]]
     lsec = band(lp, 1.6)
     Vq, Fq = revolve(resample(lsec, 60.0), 40)
     B.add("k2_liner", (Vq, Fq), "zinc_liner", bev=None)
+    # the cement patch the photographed bin stands on (TARGET-REVIEW fault 6): an irregular flush disc r 290 to 330, seeded, its top 1 over the flag, a separate object
+    gp = K["parts"]["ground_patch"]
+    prng = np.random.default_rng(12)
+    ang = np.linspace(0.0, 2 * math.pi, 28, endpoint=False)
+    rad = [float(gp["r"][0] + (gp["r"][1] - gp["r"][0]) * (0.5 + 0.5 * math.sin(3 * a + 0.7) * 0.8 + 0.2 * prng.standard_normal())) for a in ang]
+    rad = [min(max(r, gp["r"][0]), gp["r"][1]) for r in rad]
+    pv = extrude_poly([(r * math.cos(a), r * math.sin(a)) for r, a in zip(rad, ang)], -4.0, 1.0)
+    B.add("k2_ground_patch", pv, "cement_patch", bev=None)
     obs = bs.finish(B, mats, 0.0)
     return bs.write(obs, "K2_hooded_drum_" + cond, 0.0, out_dir, npz_dir)
 
@@ -430,26 +467,24 @@ def build_d1(T, cond, out_dir, npz_dir):
     elif C.get("lid_tilt_deg"):
         LV = rot_y(LV, C["lid_tilt_deg"], (231.0, 588.0))
     B.add("d1_lid", (LV, lid[1]), "zinc", bev=None)
-    # the two side handles: D-loop straps, 100 tall, 45 proud, 25 wide, 3 thick at z 470 on the +-y sides, four rivets each
+    # the two side handles (TARGET-REVIEW fault 3): a horizontal 12 mm round-bar grip 170 long standing 38 proud, bent down at each end into a lug 25 x 55 x 3 held by two 8 mm
+    # dome rivets one above the other (40 apart), at z 470 on the +-y sides
+    sh = K["side_handles"]
+    r_h = 199.0 + 25.0 * (sh["z"] - 28.0) / (582.0 - 28.0)           # the body's radius at the handles' height (the target's taper)
+    half = sh["length"] / 2.0
+    yb = r_h + sh["proud"] - sh["bar_d"] / 2.0                 # the bar's axis: its outer face stands `proud` from the body's surface at the middle
     for sgn in (1.0, -1.0):
-        r_out = 220.5
-        hh, pr, sw, st_ = K["side_handles"]["height"], K["side_handles"]["proud"], K["side_handles"]["strap_w"], K["side_handles"]["strap_t"]
-        z_mid = K["side_handles"]["z"]
-        # the loop in the (radial = y, z) plane, swept along x for sw: an outer rounded rectangle less the inner, joined at the foot to the body
-        y0 = sgn * (r_out - 3.0)
-        outer = [(y0 + sgn * (pr + 3.0) * u, z_mid + (hh / 2.0) * v) for u, v in [(0, -1), (0.8, -1), (1.0, -0.7), (1.0, 0.7), (0.8, 1), (0, 1)]]
-        inner = [(y0 + sgn * (pr + 3.0 - st_) * u, z_mid + (hh / 2.0 - st_) * v) for u, v in [(0, 1), (0.8, 1), (1.0, 0.7), (1.0, -0.7), (0.8, -1), (0, -1)]]
-        # the outer ring as an open U of strap: build as a polygon (outer path then inner path back) in the (y, z) plane, extruded along x
-        poly = [(p[0], p[1]) for p in outer] + [(p[0], p[1]) for p in inner]
-        Vg, Fg = prism_y(poly, -sw / 2.0, sw / 2.0)       # prism_y extrudes (x, z) along y: here the polygon's first coordinate is y, so swap after
-        Vg = np.array(Vg)
-        Vg = np.stack([Vg[:, 1], Vg[:, 0], Vg[:, 2]], 1)
-        Vg, Fg = orient(Vg, Fg)
-        B.add("d1_handle_%s" % ("p" if sgn > 0 else "m"), (Vg, Fg), "zinc", bev=None)
-        for zz, dz in ((z_mid - hh / 2.0, -3.0), (z_mid + hh / 2.0, 3.0)):          # the heads on the strap's outer faces, at the ends (the strap's feet are buried in the body)
-            for sx in (-1.0, 1.0):
-                rv = dome_z(sx * 7.0, sgn * (r_out + 6.0), zz, dz, 4.0, 10)
-                B.add("d1_rivet_%d_%d_%d" % (int(sgn), int(zz), int(sx)), rv, "zinc", bev=None)
+        ys = math.sqrt(r_h * r_h - half * half)                # the body's surface at the lug's x
+        parts = [cyl_x(sgn * yb, sh["z"], -half - 3.0, half + 3.0, sh["bar_d"] / 2.0, 12)]
+        for sx in (-1.0, 1.0):
+            lug = box3(sx * half - sh["strap_w"] / 2.0, sx * half + sh["strap_w"] / 2.0, min(sgn * (ys - 2.0), sgn * (ys + sh["strap_t"])), max(sgn * (ys - 2.0), sgn * (ys + sh["strap_t"])), sh["z"] - sh["height"] / 2.0, sh["z"] + sh["height"] / 2.0)
+            parts.append(lug)
+            parts.append(cyl_y(sx * half, sh["z"], min(sgn * (ys + sh["strap_t"] - 0.5), sgn * yb), max(sgn * (ys + sh["strap_t"] - 0.5), sgn * yb), sh["bar_d"] / 2.0, 12))
+        B.add("d1_handle_%s" % ("p" if sgn > 0 else "m"), merge(*parts), "zinc", bev=None)
+        for sx in (-1.0, 1.0):
+            for dz in (-sh["rivet_pitch"] / 2.0, sh["rivet_pitch"] / 2.0):
+                rv = dome_y(sx * half, sh["z"] + dz, sgn * (ys + sh["strap_t"]), sgn * 3.0, sh["rivet_d"] / 2.0, 10)
+                B.add("d1_rivet_%d_%d_%d" % (int(sgn), int(dz), int(sx)), rv, "zinc", bev=None)
     obs = bs.finish(B, mats, 0.0)
     return bs.write(obs, "D1_dustbin_" + cond, 0.0, out_dir, npz_dir)
 

@@ -10,7 +10,7 @@ import math
 # ---------------------------------------------------------------------------------------------------------------------------------------
 K1_POST_R = 38.05            # 76.1 mm tube, 3.2 wall (Judgement: the trade's 3-inch tube; the recipe's existing post is 76 mm)
 K1_POST_TOP = 1255.0
-K1_BIN_OFFSET = 216.0        # post axis to bin axis: post radius + 5 strap + the bin's mid-height wall radius 173
+K1_BIN_OFFSET = 232.0        # post axis to bin axis (TARGET-REVIEW 12 October, fault 1): the rim bead's radius 186.5 + the post's 38.05 + 7 clear; the first try's 216 put the bead 8.5 into the post
 K1_BIN_Z0 = 550.0            # underside of the base plate
 K1_RIM_TOP = 1050.0
 K1_WALL = 1.5
@@ -54,10 +54,10 @@ K1_CONDITIONS = {
 # Frame: pivot = the base centre on the flag top; +x is the aperture's side.
 # ---------------------------------------------------------------------------------------------------------------------------------------
 K2_HEIGHT = 900.0
-K2_OUTER = [(0.0, 0.0), (236.0, 0.0), (244.0, 5.0), (247.0, 14.0), (247.0, 236.0), (243.0, 248.0), (236.0, 262.0), (231.0, 282.0), (230.0, 300.0),      # the base drum and its shoulder
-            (230.0, 338.0), (224.0, 348.0), (214.0, 356.0), (210.0, 364.0),                                                                             # the collar and the step in
-            (210.0, 640.0), (206.0, 648.0), (206.0, 658.0), (218.0, 664.0),                                                                             # the body, the join groove
-            (218.0, 822.0), (214.0, 842.0), (205.0, 862.0), (190.0, 878.0), (160.0, 890.0), (110.0, 896.0), (50.0, 899.0), (0.0, K2_HEIGHT)]           # the hood's skirt, its shoulder and flat dome
+K2_OUTER = [(0.0, 0.0), (236.0, 0.0), (244.0, 5.0), (247.0, 14.0), (247.0, 236.0), (243.0, 248.0), (238.0, 258.0), (228.0, 276.0), (221.0, 290.0), (220.0, 300.0),    # the base drum and its shoulder
+            (220.0, 345.0), (216.0, 352.0), (211.0, 358.0), (210.0, 364.0),                                                                                             # the collar (r 220, 10 proud of the body: TARGET-REVIEW fault 4) and the step in
+            (210.0, 630.0), (206.0, 636.0), (206.0, 644.0), (218.0, 650.0),                                                                                             # the body, the join groove (fault 5: the hood's lip at z 640 to 650)
+            (218.0, 822.0), (214.0, 842.0), (205.0, 862.0), (190.0, 878.0), (160.0, 890.0), (110.0, 896.0), (50.0, 899.0), (0.0, K2_HEIGHT)]                            # the hood's skirt, its shoulder and flat dome
 K2_SHELL = 5.0
 K2_APERTURE = dict(width=230.0, height=105.0, sill_z=680.0, top_z=785.0, corner_r=25.0, azimuth_deg=0.0, return_flange_depth=15.0, return_flange_t=6.0,
                    note='cut through the hood skirt under the dome; the lower edge is a flat sill with a 15 mm return flange turned inward; the upper edge is the dome overhanging it (the photograph: a lipped slot about 105 high with the dome standing out over it)')
@@ -72,7 +72,7 @@ K2_CONDITIONS = {
 # D1: galvanised household dustbin (the scene's two). Frame: pivot = base centre on the flag top; handles on +-y.
 # ---------------------------------------------------------------------------------------------------------------------------------------
 D1_BODY_TOP = 610.0         # Read: scene 0.61
-D1_RIB_Z = (150.0, 290.0, 430.0)
+D1_RIB_Z = (530.0, 556.0)
 
 
 def d1_body_r(z):
@@ -81,16 +81,16 @@ def d1_body_r(z):
 
 def d1_outer():
     p = [(0.0, 6.0), (190.0, 6.0), (194.0, 0.0), (205.0, 0.0), (207.0, 8.0), (207.0, 20.0), (203.0, 26.0), (d1_body_r(28.0), 28.0)]
-    for zc in D1_RIB_Z:
+    for zc in D1_RIB_Z:                                           # two rolled rings under the rim (TARGET-REVIEW fault 2: the three mid-body ribs were an American can's): 18 high, 4 proud
         r = d1_body_r(zc)
-        p += [(d1_body_r(zc - 12.0), zc - 12.0), (r + 6.0, zc - 6.0), (r + 6.0, zc + 6.0), (d1_body_r(zc + 12.0), zc + 12.0)]
+        p += [(d1_body_r(zc - 9.0), zc - 9.0), (r + 3.0, zc - 6.0), (r + 4.0, zc - 3.0), (r + 4.0, zc + 3.0), (r + 3.0, zc + 6.0), (d1_body_r(zc + 9.0), zc + 9.0)]
     p += [(d1_body_r(582.0), 582.0), (229.0, 585.0), (231.5, 595.0), (230.0, 606.0), (226.0, D1_BODY_TOP), (222.0, 609.0)]
     return p
 
 
 D1_LID = [(240.0, 588.0), (250.5, 590.0), (251.0, 610.0), (247.0, 617.0), (240.0, 621.0), (210.0, 630.0), (150.0, 637.0), (80.0, 640.0), (0.0, 641.0)]
 D1_LID_HANDLE = dict(length=100.0, strap_w=25.0, strap_t=3.0, rise=19.0, top_z=660.0, rivets=2)
-D1_SIDE_HANDLE = dict(z=470.0, height=100.0, proud=45.0, strap_w=25.0, strap_t=3.0, rivets_per_end=2, rivet_d=8.0)
+D1_SIDE_HANDLE = dict(z=470.0, bar_d=12.0, length=170.0, proud=38.0, height=55.0, strap_w=25.0, strap_t=3.0, rivets_per_end=2, rivet_pitch=40.0, rivet_d=8.0)   # a horizontal round-bar grip on two lugs (fault 3)
 D1_CONDITIONS = {
     'a': dict(name='lid on, ordinary', lid='on', lid_tilt_deg=2.0, dents=5, rust_foot=0.35, white_rust=0.30, soot=0.2, sacks=0, overflow=None, number_stencil=True),
     'b': dict(name='lid off, over-full', lid='off_leaning', lid_tilt_deg=0.0, dents=7, rust_foot=0.5, white_rust=0.35, soot=0.35, sacks=2, overflow='O3_sacks', number_stencil=True),
@@ -140,7 +140,7 @@ STALLRISER_FACE = 4.975   # |z| of the shopfront's stallriser face (building lin
 PLACEMENTS = [
     dict(id='B1', kind='K1', condition='A', side='east', post_x=6.6, post_setback_from_kerb_face=0.62, bin_dir=-1, yaw_note='the bin is hung on the quay side of its post (toward x = 0)', serves='Mickey\'s doors (shop door 4.797, side door 3.822) and the cab rank'),
     dict(id='B2', kind='K1', condition='B', side='east', post_x=35.2, post_setback_from_kerb_face=0.62, bin_dir=+1, yaw_note='hung on the uphill side (toward x = 48)', serves='the grocer\'s door (38.147) and the launderette\'s side door (32.178)'),
-    dict(id='B3', kind='K2', condition='c', side='west', axis_x=44.0, axis_setback_from_kerb_face=0.80, yaw_note='the aperture faces the shops\' side of the footway (the building line)', serves='the newsagent\'s side door (41.178), the bus stop (46.0) and the chandler\'s queue'),
+    dict(id='B3', kind='K2', condition='c', side='west', axis_x=44.0, axis_setback_from_kerb_face=0.80, yaw_note='the aperture faces the shops\' side of the footway (the building line)', serves='the newsagent\'s side door (41.178), and the bus stop (46.0)'),
 ]
 DUSTBINS = [dict(id='D1-1', condition='a', side='east', x=21.4, setback_from_kerb=1.6), dict(id='D1-2', condition='b', side='east', x=22.0, setback_from_kerb=1.6)]
 WALKING_PERSON_M = 0.68

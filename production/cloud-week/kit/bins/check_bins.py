@@ -26,7 +26,7 @@ from outline import load_npz  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", ".."))
 T = json.load(open(os.path.join(REPO, "production", "cloud-week", "targets", "litter-bins", "target.json"), encoding="utf-8"))
-BIN_OFFSET = 226.0
+BIN_OFFSET = 232.0
 
 
 def mm(M, *names):
@@ -96,7 +96,17 @@ def main():
             rep.within("%s BIN height: the rim crown over the base plate's underside, 500 (15)" % name, binv[:, 2].max() - binv[:, 2].min(), 500.0, 15.0)
             bb = binv[binv[:, 2] < 560.0]
             ax = (bb[:, 0].max() + bb[:, 0].min()) / 2.0 + 553.0 * math.sin(lean)
-            rep.within("%s BIN offset: post axis to bin axis at the base plate (the lean added back), %.0f (the target's 216 +-10; the rim bead would stand inside the post at 216)" % (name, BIN_OFFSET), ax, BIN_OFFSET, 1.5)
+            rep.within("%s BIN offset: post axis to bin axis at the base plate (the lean added back), %.0f (the target's, TARGET-REVIEW fault 1)" % (name, BIN_OFFSET), ax, BIN_OFFSET, 1.5)
+            # the bead against the post: the bin's nearest x at z 1030 to 1050 over the post's surface at that height (both lean alike)
+            pk_ = post[(post[:, 2] > 1225.0) & (post[:, 2] < 1235.0)]
+            pax = float(np.mean(pk_[:, 0]) / np.mean(pk_[:, 2]) * 1040.0)                 # the post's axis at z 1040 (a lean is a rotation about the origin: x runs with z)
+            bx = float(binv[binv[:, 2] > 1030.0][:, 0].min())
+            rep.add("%s BIN clears the post: the bead's nearest x less the post's far surface at z 1040 is %.1f, at least 3 (the first try's 216 put it 8.5 inside)" % (name, bx - (pax + 38.05)), bx - (pax + 38.05) >= 3.0, round(bx - (pax + 38.05), 1), ">= 3")
+            st = mm(M, "k1_strap")
+            Tst = tris(M, ["k1_strap"])
+            for zq, tq in ((640.0, 21.4), (980.0, 10.3)):
+                hx = 600.0 - cast(Tst, np.array([[600.0, 0.0, zq]]), np.array([[-1.0, 0.0, 0.0]]))[0]
+                rep.within("%s SPACER bar at z %d: %.1f thick over the clamp rings' face (x 43.05; the review: 21 at 640, 10 at 980; the lean 0.4 degrees shifts it %.1f)" % (name, zq, hx - 43.05, zq * math.sin(lean)), hx - 43.05 + zq * math.sin(lean), tq, 2.5)
             rim_d = float(ring_r(Tr, (BIN_OFFSET, 0.0), 1046.0, [90.0])[0] + ring_r(Tr, (BIN_OFFSET, 0.0), 1046.0, [270.0])[0])
             rep.within("%s BIN rim diameter over the bead at z 1046 (across y), 373 (12)" % name, rim_d, 373.0, 12.0)
             foot_d = float(ring_r(Tr, (BIN_OFFSET, 0.0), 556.0, [90.0])[0] + ring_r(Tr, (BIN_OFFSET, 0.0), 556.0, [270.0])[0])
@@ -154,10 +164,14 @@ def main():
                 return float(ring_r(Tr, (0, 0), z, [90.0])[0] + ring_r(Tr, (0, 0), z, [270.0])[0])
             rep.within("%s HOOD skirt diameter at z 750 (across y), 436 (12)" % name, dia(750.0), 436.0, 12.0)
             rep.within("%s BODY diameter at z 500, 420 (12)" % name, dia(500.0), 420.0, 12.0)
-            rep.within("%s COLLAR diameter at z 320, 460 (12)" % name, dia(320.0), 460.0, 12.0)
+            rep.within("%s COLLAR diameter at z 320, 440 (12; the photograph's 217 for the radius, TARGET-REVIEW fault 4)" % name, dia(320.0), 440.0, 12.0)
             rep.within("%s BASE drum diameter at z 120, 494 (12): the widest part" % name, dia(120.0), 494.0, 12.0)
             rep.add("%s BASE drum is the widest part (over the hood, the body and the collar)" % name, dia(120.0) > max(dia(750.0), dia(500.0), dia(320.0)), [round(dia(z), 1) for z in (120.0, 320.0, 500.0, 750.0)], "base widest")
-            rep.within("%s GROOVE at z 652: the radius is 206, under the body's 210 and the hood's 218" % name, float(ring_r(Tr, (0, 0), 652.0, [90.0])[0]), 206.0, 2.0)
+            rep.within("%s GROOVE at z 640: the radius is 206, under the body's 210 and the hood's 218 (the hood's lip at 640 to 650)" % name, float(ring_r(Tr, (0, 0), 640.0, [90.0])[0]), 206.0, 2.0)
+            gpv = mm(M, "k2_ground_patch")
+            rg = np.hypot(gpv[:, 0], gpv[:, 1])
+            rg = rg[rg > 100.0]                                                              # the rim's vertices (the fan's centres are on the axis)
+            rep.add("%s GROUND patch: an irregular flush disc, radii %.0f to %.0f (290 to 330), its top %.1f over the flag (0 to 2)" % (name, rg.min(), rg.max(), gpv[:, 2].max()), 285.0 <= rg.min() and rg.max() <= 335.0 and 0.0 <= gpv[:, 2].max() <= 2.0 and rg.max() - rg.min() > 15.0, [round(float(rg.min()), 1), round(float(rg.max()), 1), round(float(gpv[:, 2].max()), 1)], "290 to 330, top 0 to 2")
             ys = np.linspace(-150.0, 150.0, 601)
             Oz = np.array([[400.0, y, 735.0] for y in ys])
             dz_ = cast(Tr, Oz, np.tile([-1.0, 0.0, 0.0], (len(ys), 1)))
@@ -203,16 +217,19 @@ def main():
             rep.within("%s BODY height: the rim crown above the base, 610 (6)" % name, body[:, 2].max(), 610.0, 6.0)
             rep.within("%s RIM diameter over the rolled bead, 463 (6)" % name, dia(595.0), 463.0, 6.0)
             rep.within("%s FOOT diameter of the bottom hoop at z 12, 414 (10)" % name, dia(12.0), 414.0, 10.0)
-            zz = np.arange(40.0, 560.0, 2.0)
+            zz = np.arange(40.0, 575.0, 2.0)
             rr_ = np.array([float(ring_r(Tb, (0, 0), z, [90.0, 270.0]).mean()) for z in zz])
             pk = [float(zz[i]) for i in range(1, len(zz) - 1) if rr_[i] > rr_[i - 1] + 1e-6 and rr_[i] >= rr_[i + 1] - 1e-6 and rr_[i] > rr_[max(0, i - 6)] + 3.0]
             rb = []
             for p in pk:
                 if not rb or p - rb[-1] > 20.0:
                     rb.append(p)
-            rep.add("%s RIBS: three swaged ribs, crowns at z %s (150, 290, 430; 15)" % (name, rb), len(rb) >= 3 and all(abs(x - y) <= 18.0 for x, y in zip(rb[:3], [150.0, 290.0, 430.0])), rb, "150, 290, 430")
+            rep.add("%s RINGS: two rolled rings under the rim, crowns at z %s (530 and 556; 10; the first try's three mid-body ribs are gone, TARGET-REVIEW fault 2)" % (name, rb), len(rb) == 2 and all(abs(x - y) <= 12.0 for x, y in zip(rb, [530.0, 556.0])), rb, "530, 556")
             h = [mm(M, "d1_handle_p"), mm(M, "d1_handle_m")]
-            rep.within("%s SIDE handles: two, at z 470 (25), 100 tall, standing 45 proud of the body (8)" % name, [len(h), float((h[0][:, 2].max() + h[0][:, 2].min()) / 2.0), float(h[0][:, 2].max() - h[0][:, 2].min()), float(np.abs(h[0][:, 1]).max() - 220.5)], [2, 470.0, 100.0, 48.0], 8.0)
+            r470 = 199.0 + 25.0 * (470.0 - 28.0) / (582.0 - 28.0)
+            rep.within("%s SIDE handles: two horizontal round-bar grips at z 470 (25), the bar's outer face 38 proud of the body (6), 170 + 12 long (TARGET-REVIEW fault 3)" % name, [len(h), float((h[0][:, 2].max() + h[0][:, 2].min()) / 2.0), float(np.abs(h[0][:, 1]).max() - r470), float(h[0][:, 0].max() - h[0][:, 0].min())], [2, 470.0, 38.0, 195.0], 6.5)
+            nr = len([n_ for n_ in M if n_.startswith("d1_rivet")])
+            rep.add("%s RIVETS: four on each handle's two lugs (two on each lug, one above the other), eight in all" % name, nr == 8, nr, "8")
             skirt_in = float(np.hypot(lid[:, 0], lid[:, 1])[(lid[:, 2] > 588.0) & (lid[:, 2] < 604.0)].min())
             rep.within("%s LID clearance: the skirt's inner radius less the rim bead's 231.5 (8.5, 4; the lid is 1.5 thick here)" % name, skirt_in - 231.5, 8.5, 4.0)
             rep.within("%s LID diameter at the skirt 502 (6)" % name, 2 * float(np.hypot(lid[:, 0], lid[:, 1]).max()), 502.0, 6.0)
@@ -239,7 +256,7 @@ def main():
         prims, js = cs.read_glb(info[name]["glb"])
         rep.add("FILE %s: no textures, a UV set on every mesh, no emission, materials named by what they are" % name, not js.get("images") and all(p["uv"] for p in prims) and not any(m.get("emissiveFactor", [0, 0, 0]) != [0, 0, 0] for m in js.get("materials", [])), [m["name"] for m in js.get("materials", [])], "named materials")
         # the lowest vertex: the post's hidden skirt (K1) or the ground (K2, D1)
-        low = min(float(V[:, 2].min()) for V, F in M.values()) * 1000.0
+        low = min(float(V[:, 2].min()) for n_, (V, F) in M.items() if n_ != "k2_ground_patch") * 1000.0
         exp = -150.0 if kind == "K1" else 0.0
         rep.within("PIVOT %s: the lowest vertex z %.1f (K1: the post's skirt at -150; K2 and D1 stand on the flag at 0)" % (name, low), low, exp, 8.0 if kind == "K1" else 2.0)
     req = rep.rows

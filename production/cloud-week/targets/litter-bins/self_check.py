@@ -128,14 +128,15 @@ for c in T['checks']:
         ok(2, 'CHECK %s: %s against %s +-%s' % (nm, v, exp, tol), near(v, exp, tol), v)
 
 # ---- 3 K2 against its photograph (S12)
-pm = T['photo_measurements']['topsy_974902']
+pm = T['photo_measurements']['s12_974902']
 for row in pm['rows_px_and_mm']:
     zs = {'hood skirt': 750.0, 'body': 500.0, 'collar': 330.0, 'base drum': 120.0}
     key = next(k for k in zs if row['part'].startswith(k))
     r = r_of_z(k2p, zs[key])
     ok(3, 'PHOTO %s: radius %.1f at z %d against the photograph %.0f (+-12)' % (row['part'], r, zs[key], row['r_mm']), near(r, row['r_mm'], 12.0), '')
     ok(3, 'PHOTO %s: the width in pixels times the scale gives the diameter (3.09 mm a pixel)' % row['part'], near(row['width_px'] * 3.09, row['diameter_mm'], 2.0), row['width_px'] * 3.09)
-ok(3, 'PHOTO the scale: 900 mm over 291 px is 3.09 and the pillar box reading (3.2) agrees within 4 per cent', abs(900 / 291.0 - 3.2) / 3.2 < 0.04, 900 / 291.0)
+REPORTED.append('PHOTO the scale: 900 mm over 291 px is 3.09 mm a pixel, FITTED to K2\'s Judgement height; the pillar box beside the bin is of an unestablished type and height (462 px tall, 101 across: 4.6 to 1, not Type A\'s 3.07), so S12 gives proportions only (TARGET-REVIEW fault 8)')
+REPORTED.append('PHOTO the pixel table (rows_px_and_mm) is the writer\'s reading, re-measured by a fresh reviewer on 12 October on 4x and 8x enlargements (the collar and the groove corrected); this group compares K2\'s profile with that table')
 ok(3, 'PHOTO the order of the stations: base drum widest, then collar, hood skirt, body narrowest', r_of_z(k2p, 120) > r_of_z(k2p, 330) > r_of_z(k2p, 750) > r_of_z(k2p, 500), [round(r_of_z(k2p, z), 1) for z in (120, 330, 750, 500)])
 ok(3, 'PHOTO the aperture sits in the hood skirt, between the groove and the dome shoulder', K2['parts']['join_groove']['z'][1] <= ap['sill_z'] and ap['top_z'] <= 822.0, '%s %s' % (ap['sill_z'], ap['top_z']))
 for p_ in ('geo974902-southampton-hooded-bin-2008.jpg', 'geo974902-southampton-hooded-bin-2008-target-on-photo.jpg'):
@@ -165,6 +166,17 @@ for b in bins:
     ok(4, '%s placed inside the footway: its far edge is under the building line (4.975) and clear of the kerb by 0.25' % b['id'], b.get('near_edge_from_kerb_face_m', 0.45) >= 0.25 - 1e-9 and b.get('far_edge_from_kerb_face_m', 0.8) < 1.975, '%s %s' % (b.get('near_edge_from_kerb_face_m'), b.get('far_edge_from_kerb_face_m')))
 ok(4, 'the street has three public bins (K1, K1, K2) and two dustbins', [b['kind'] for b in bins] == ['K1', 'K1', 'K2'] and len(Pl['dustbins']) == 2, [b['kind'] for b in bins])
 ok(4, 'B3 (K2) stands at x 44.0 on the west side', bins[2]['side'] == 'west', bins[2]['side'])
+
+# ---- 4b K1's bin against its post, spacer and clamps (TARGET-REVIEW fault 9: the first try's 216 put the rim bead 8.5 into the post and no test saw it)
+off = K1['bin']['axis_offset_x']
+xs = [(z, off - r_of_z(k1b, z)) for z in range(560, 1051, 10)]
+ok(4, 'K1 bin clears the post: the wall\'s nearest x (the bead included) is over the post radius + 3 at every height from 560 to 1050', all(x >= K1['post']['od'] / 2.0 + 3.0 for z, x in xs), min(x for z, x in xs))
+sp = K1['bracket']['back_strap']
+ok(4, 'K1 spacer bar: the wall stands at least 8 off the clamp rings\' outer face (x 43.05) from z 590 to 1030, so the bar is 8 thick or more all along', all(x - sp['x_from'] >= 8.0 for z, x in xs if sp['z0'] <= z <= sp['z1']), [round(x - sp['x_from'], 1) for z, x in xs if z in (590, 640, 800, 980, 1030)])
+ok(4, 'K1 spacer bar: 21 thick at z 640 and 10 at z 980 (the review), as the data computes them', near([sp['thickness_at_640'], sp['thickness_at_980']], [21.0, 10.0], 1.5), [sp['thickness_at_640'], sp['thickness_at_980']])
+ok(4, 'D1: the two rolled rings under the rim at z 530 and 556 do not overlap each other or the rim bead (each 18 high)', D1['rib_z'] == [530.0, 556.0] and 556.0 - 530.0 >= 18.0 and 582.0 - 556.0 >= 9.0, D1['rib_z'])
+ok(4, 'D1 side handles: a 12 mm bar 170 long standing 38 proud on two lugs 25 x 55 x 3 with two 8 mm rivets 40 apart', (D1['side_handles']['bar_d'], D1['side_handles']['length'], D1['side_handles']['proud'], D1['side_handles']['rivets_per_end'], D1['side_handles']['rivet_pitch']) == (12.0, 170.0, 38.0, 2, 40.0), D1['side_handles'])
+ok(4, 'K2 ground patch: an irregular flush disc r 290 to 330 round the base drum (r 247), 0 to 2 proud', K2['parts']['ground_patch']['r'][0] > 247.0 + 40.0 and K2['parts']['ground_patch']['proud'][1] <= 2.0, K2['parts']['ground_patch']['r'])
 
 # ---- 5 the drawing
 import target_drawing as TD

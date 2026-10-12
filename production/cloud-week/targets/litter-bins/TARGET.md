@@ -2,20 +2,25 @@
 
 **Quay Street had three council bins in 1990, not eleven: two steel pole-mounted open bins (K1, 45 litres, rim at 1.05 m, hung on their own 76 mm posts, at x 6.6 and x 35.2 east) and one free-standing hooded glass-fibre drum (K2, 900 high, at x 44.0 west by the newsagent and the bus stop), all council green and marked only LITTER, plus the scene's two galvanised dustbins (D1, 0.46 across, 0.61 high, lid 0.50 x 0.05, at x 21.4 and 22.0 east); no photograph of a period bin was reached: K2's form is measured on one 2008 Geograph photograph of a hooded bin type made since 1984 (the base drum the widest part, then a collar, a plain body, the groove, the hood), the pole-mounted K1 and the dustbin are research and judgement, and the other photographs measured are one galvanised steel container and the material scans.**
 
-Cloud week 42. Written 9 October 2026; **K2 revised 12 October 2026** after one Geograph photograph (S12). `SELF-CHECK litter-bins: 139 checks, 139 passed, 0 failed, 9 reported`
+Cloud week 42. Written 9 October 2026; **K2 revised 12 October 2026** after one Geograph photograph (S12). `SELF-CHECK litter-bins: 144 checks, 144 passed, 0 failed, 11 reported`
 
 ## Files in this folder
 
 - `target.json`: the whole target (units: millimetres unless a key ends _m (metres); angles in degrees; the .glb is metres, z up, scale 1).
 - `litter_data.py`, `litter_lib.py`, `make_target.py`, `measure.py`: the author tools (the data, the shared geometry, the writer, the photograph and texture measurements from the cached panoramas).
 - `target_drawing.py`: draws every kind's elevations, plans and sections, the street plan and a scale sheet from `target.json` alone (`drawing.json` holds the polygons; pictures with `--out DIR`).
-- `self_check.py`: 139 checks in seven groups (the numbers read from other files, the target's own checks computed from its profiles, K2 against its photograph, internal consistency, the drawing, the content rule, the preview files); it writes its result into `target.json`.
+- `self_check.py`: 144 checks in seven groups (the numbers read from other files, the target's own checks computed from its profiles, K2 against its photograph, internal consistency, the drawing, the content rule, the preview files); it writes its result into `target.json`.
 - `make_previews.py`, `make_doc.py`: the preview crop and its overlay; this page.
+- `TARGET-REVIEW.md`: the one review round (12 October).
 - Previews, in `production/previews/cloud-week/refs/litter-bins/`: `geo974902-southampton-hooded-bin-2008.jpg` (Jim Champion, Geograph 974902, 2008-09-21, CC BY-SA 2.0; cropped to the bin, the council crest sticker painted out) and its `-target-on-photo` overlay (K2's profile laid on it at one fitted dimension).
 
 ## What changed on 12 October (K2, after one photograph)
 
 The network opened on 11 October. Geograph was searched for litter bins of every year 1975 to 1996 with a dozen terms and for bins on posts and hooded bins without a year: **no 1975 to 1995 photograph of a street litter bin was reached** (forty-nine photographs of any year came back for the year-filtered searches, none of a litter bin); Commons refused every request; archive.org was not searched. One 2008 photograph, S12, shows a hooded glass-fibre bin of a type made since 1984 beside a George V pillar box, which gives its scale; K2 was redrawn from it. **K2 is now a stepped drum**, widest at the base (r 247), a collar (r 230), a plain body (r 210), a groove at z 640 to 664 and a hood skirt (r 218) under a flat shallow dome, the aperture a lipped slot (about 230 x 105, sill 680); the first try's generic drum was widest at the middle with the hood the widest part and a narrow foot, the opposite. K1 (the pole-mounted open steel bin) has no photograph: it stays research and judgement.
+
+## The review of 12 October (TARGET-REVIEW.md: PASS, fourteen narrow points, all applied, not re-reviewed)
+
+The one review round Jafar allowed passed the target with fourteen narrow points; each is applied as the reviewer wrote it. **K1:** the bin hangs 232 from the post (216 put the rim bead 8.5 into the post) and the back strap is a tapered spacer bar 21 thick at z 640 and 10 at z 980. **D1:** the three mid-body ribs (a US can's) are two rolled rings under the rim at z 530 and 556, the body is plain with 64 vertical flutes 4 deep as a normal map, the side handles are horizontal 12 mm round-bar grips 170 long standing 38 proud on two lugs with two rivets each, the lid has 20 radial ribs (a normal map, one photograph). **K2:** the collar is r 220 (the photograph gives 217), the hood's lip at z 640 to 650 (groove 630 to 650), a ragged flush cement patch round the foot (r 290 to 330), the sticker defined as blank or illegible, the height 900 marked Judgement (the photograph gives proportions only: the pillar box beside the bin is of an unestablished type). **Self-check:** the clearance of the K1 bin against its post and spacer is tested; the scale line is reported, not passed. **Wording:** S12's period (form assumed unchanged), the stale sill (0.68), the product name out of a data key (`s12_974902`), B3's "chandler's queue" dropped.
 
 ## Sources
 
@@ -66,7 +71,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
 - **S12** https://www.geograph.org.uk/photo/974902 | read 2026-10-12 | Jim Champion | licence CC BY-SA 2.0 (geograph.org.uk) | taken 2008-09-21 (SU4014, Wilton Road, Southampton)
   - what: a grey hooded glass-fibre litter bin beside a George V pillar box outside a corner shop: the bin's whole side with its hood, aperture, groove, collar and base drum, the box giving the scale (the same hooded bin type has been made since 1984, S-leads below)
   - used: YES (K2 revised 12 October): the bin's silhouette read at 3 mm a pixel (method in photo_measurements.topsy_974902); a crop to the bin alone, the crest sticker masked, in production/previews/cloud-week/refs/litter-bins/
-  - period: 2008, not 1990: the bin type dates from 1984 (L1, L2) and its form is read as unchanged, but the example itself is later; whether Meridian's council bought it is not known
+  - period: 2008, not 1990: the bin type is dated to 1984 by the leads (L1, L2: a date, not a form), so its form is ASSUMED unchanged since the 1980s (no period photograph of the type was reached) and the example itself is later; whether Meridian's council bought it is not known
 - **S13** https://www.geograph.org.uk/photo/986601 , /photo/1090799 , /photo/2281325 , /photo/1697504 , /photo/3022536 , /photo/615647 , /photo/1064051 , /photo/686593 , /photo/885698 , /photo/1003175 | read 2026-10-12 | ten Geograph photographers (the name is on each page) | licence CC BY-SA 2.0 | taken 2007 to 2011
   - what: ten Geograph street and park litter bins of the 2000s (round hooded steel drums, a blue open drum, a stainless Welsh-lettered bin, a green slatted cast bin, a rocket-shaped play-area bin, a four-compartment recycling bin)
   - used: LOOKED AT, not measured: every one is a design of the 1990s or later or a park bin; none shows a pole-mounted open steel bin
@@ -81,7 +86,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
 - **profile**: (r, z): r the radius from the part's own axis, z up from the flag top at the piece's pivot; each lathe outline runs round the part and closes on the axis; elevation polygons mirror it about the axis
 - **pivot**: K1: the post axis on the footway flag top; K2 and D1: the base centre on the flag top. The flag top is the kerbs target's +110 above the channel top. z up, +x as each kind says
 - **axes**:
-  - **K1**: +x from the post axis toward the bin's axis (216 away); the lettering faces +y (the building side); the buried part of the post (0.3 m, not modelled) is below z = 0
+  - **K1**: +x from the post axis toward the bin's axis (232 away); the lettering faces +y (the building side); the buried part of the post (0.3 m, not modelled) is below z = 0
   - **K2**: +x is the aperture's side (azimuth 0); the lock is at azimuth 180
   - **D1**: the two side handles stand at +y and -y; the lid's handle runs along x
 - **street**: x along the street from the south (quay) end, z across from the crown, east +, metres; kerb face |z| 3.0, kerb back |z| 3.17 (kerbs target, granite; the scene's earlier 3.125), building line |z| 5.125, stallriser face |z| 4.975
@@ -103,7 +108,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
   - **root**: set in 0.3 m of concrete; the flag is cut round it with a 10 to 15 mm dark bitumen-and-grit joint; no flange, no collar
   - **kind**: Judgement (the trade's 3-inch tube, 76.1 x 3.2; the repository's script post is also 76 mm)
 - **bin**:
-  - **axis_offset_x**: 216
+  - **axis_offset_x**: 232
   - **z_base**: 550
   - **z_rim_top**: 1050
   - **wall**: 1.5
@@ -130,18 +135,19 @@ The network opened on 11 October. Geograph was searched for litter bins of every
 - **bracket**:
   - **back_strap**:
     - **width**: 40
-    - **thickness**: 5
     - **z0**: 590
     - **z1**: 1030
-    - **x_from**: 38.05
-    - **x_to**: 43.05
-    - **note**: a flat bar welded up the back of the bin, touching the post along a line
+    - **x_from**: 43.05
+    - **x_to**: None
+    - **thickness_at_640**: 21.4
+    - **thickness_at_980**: 10.3
+    - **note**: a tapered spacer bar 40 wide welded up the back of the bin (TARGET-REVIEW 12 October, fault 1): its post face is flat on x 43.05 (the clamp rings' outer face, touching them along a line), its bin face follows the bin wall x = axis_offset_x - r(z), so it is 21 thick at z 640 and 10 at z 980; the first try's flat 5 mm strap could not reach a bin that tapers toward the post
   - **clamps**:
     | z0 | z1 | ring_r_in | ring_t |
     |---|---|---|---|
     | 620.0 | 660.0 | 38.05 | 5.0 |
     | 960.0 | 1000.0 | 38.05 | 5.0 |
-  - **clamp_note**: each clamp is a 40 x 5 flat ring round the post, welded to the back strap on the bin side and closed at the far side of the post by ONE M8 bolt through two 12 mm ears (hex head 13 across, domed nut 13 across, 8 high)
+  - **clamp_note**: each clamp is a 40 x 5 flat ring round the post, welded to the spacer bar on the bin side and closed at the far side of the post by ONE M8 bolt through two 12 mm ears (hex head 13 across, domed nut 13 across, 8 high)
   - **bolts**:
     - **count**: 2
     - **size**: M8
@@ -170,7 +176,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
   - **material**: letters_cream_worn
   - **note**: the same idea as the lamp columns' LC n plates: generic, a letter pair and a digit
 - **extent**:
-  - **x**: [-38.05, 402.5]
+  - **x**: [-38.05, 418.5]
   - **z**: [0, 1255]
   - **bin_dia_rim_bead**: 373
 - **edges**: every edge rounded or rolled; the post's cap has a 3 mm radius; the bin's base corner is a 5 mm radius with a visible turned-up lap; the straps' edges are square and slightly burred (a worn grey line where the paint has gone)
@@ -243,10 +249,10 @@ The network opened on 11 October. Geograph was searched for litter bins of every
 ## K2: Free-standing hooded glass-fibre drum bin with a galvanised liner (generic; not the form of any maker's bin)
 
 - **name**: hooded_drum
-- **basis**: PHOTO (one photograph, 2008) AND LEADS: no photograph of a hooded bin of the period was reached; the form is measured on ONE Geograph photograph of 2008 (S12, a hooded glass-fibre bin beside a George V pillar box, which gives the scale) of a bin type made since 1984 (the leads below), so it shows the form but not a 1990 example: a stepped drum, the base the widest part, a collar, a plain body, a groove and the hood skirt under a flat shallow dome (the first try's generic drum, widest at the middle with the hood the widest part, was the opposite). Leads (search summaries, unreached pages): hooded glass-fibre council bins existed by 1959 (Elton Civic Supplies, MoDiP records), Glasdon's own pages date its original Topsy to 1984 and a museum record dates a Glasdon bin with a removable red plastic hood and a metal liner to 1984 to 1990. No maker's mark, crest or sticker is modelled
+- **basis**: PHOTO (one photograph, 2008) AND LEADS: no photograph of a hooded bin of the period was reached; the form is measured on ONE Geograph photograph of 2008 (S12, a hooded glass-fibre bin beside a George V pillar box, which gives the scale) of a bin type made since 1984 (the leads below), so it shows the form but not a 1990 example: a stepped drum, the base the widest part, a collar, a plain body, a groove and the hood skirt under a flat shallow dome (the first try's generic drum, widest at the middle with the hood the widest part, was the opposite). Leads (search summaries, unreached pages): hooded glass-fibre council bins existed by 1959 (Elton Civic Supplies, MoDiP records), Glasdon's own pages date its original Topsy to 1984 and a museum record dates a Glasdon bin with a removable red plastic hood and a metal liner to 1984 to 1990. No maker's mark or crest, and no sticker with any readable content, is modelled; K2's height 900 is Judgement: S12 gives proportions only (the box beside it is of an unestablished type and height)
 - **pivot**: the base centre on the flag top
 - **placed**: True
-- **outer_profile_rz**: [(0, 0) (236, 0) (244, 5) (247, 14) (247, 236) (243, 248) (236, 262) (231, 282) (230, 300) (230, 338) (224, 348) (214, 356) (210, 364) (210, 640) (206, 648) (206, 658) (218, 664) (218, 822) (214, 842) (205, 862) (190, 878) (160, 890) (110, 896) (50, 899) (0, 900)]
+- **outer_profile_rz**: [(0, 0) (236, 0) (244, 5) (247, 14) (247, 236) (243, 248) (238, 258) (228, 276) (221, 290) (220, 300) (220, 345) (216, 352) (211, 358) (210, 364) (210, 630) (206, 636) (206, 644) (218, 650) (218, 822) (214, 842) (205, 862) (190, 878) (160, 890) (110, 896) (50, 899) (0, 900)]
 - **shell**: 5
 - **height**: 900
 - **extent**:
@@ -270,18 +276,18 @@ The network opened on 11 October. Geograph was searched for litter bins of every
     - **note**: the base drum, the widest part: r 247, a 14 mm round at the ground edge, a shoulder 236 to 300 stepping in to the collar; it is filled with concrete ballast to z 50 (not modelled)
   - **collar**:
     - **z**: [300, 364]
-    - **r_max**: 230
-    - **note**: a collar r 230 (z 300 to 338) stepping in to the body by a 26 mm round
+    - **r_max**: 220
+    - **note**: a collar r 220 (z 300 to 345), 10 proud of the body, stepping in to it by a 15 mm round (TARGET-REVIEW fault 4: the photograph gives r 217)
   - **body**:
-    - **z**: [364, 640]
+    - **z**: [364, 630]
     - **r_max**: 210
     - **note**: a plain straight drum r 210 (a moulded seam line down each side at azimuth +-90, 0.5 high, 3 wide)
   - **join_groove**:
-    - **z**: [640, 664]
+    - **z**: [630, 650]
     - **depth**: 4
-    - **note**: the shadow line between body and hood
+    - **note**: the shadow line between body and hood: the hood's lower lip at z 640 to 650 (fault 5)
   - **hood**:
-    - **z**: [664, 900]
+    - **z**: [650, 900]
     - **r_max**: 218
     - **note**: a lift-off glass-fibre hood: a skirt 158 high standing 8 proud of the body, a shoulder (R about 45), a flat shallow dome; the aperture is cut in its front
   - **liner**:
@@ -292,10 +298,16 @@ The network opened on 11 October. Geograph was searched for litter bins of every
     - **note**: a galvanised steel liner 0.8 sheet, 650 high, a rolled rim whose upper edge is seen through the aperture; two wire bail handles (not modelled); capacity about 70 litres
   - **lock**:
     - **azimuth_deg**: 180
-    - **z**: 650
+    - **z**: 640
     - **d**: 22
     - **escutcheon_d**: 40
     - **note**: a barrel lock at the back of the join; not seen from the front
+  - **ground_patch**:
+    - **r**: [290, 330]
+    - **proud**: [0, 2]
+    - **srgb**: [186, 184, 176]
+    - **rough**: 0.85
+    - **note**: TARGET-REVIEW fault 6: the photographed bin stands on a ragged pale cement patch set flush in the paving round its foot, reaching 40 to 90 beyond the base drum, with a broken edge (where its ground fixing was set; the fixing is hidden under the base): an irregular flush disc, a separate mesh (seeded) or a decal in the footway set
 - **lettering**:
   - **text**: LITTER
   - **cap_height**: 55
@@ -308,7 +320,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
   - **words_allowed**:
     - LITTER
   - **safe_because**: as K1
-- **fixings**: free-standing on its ballasted foot ring (mass about 28 kg); hood located by four moulded lugs and the lock; nothing is bolted to the footway; no visible screws or rivets on the front
+- **fixings**: free-standing on its ballasted base drum (mass about 28 kg), its ground fixing hidden under the base (the cement patch round it is a part); hood located by four moulded lugs and the lock; no visible screws or rivets on the front
 - **edges**: every moulding rounded: the aperture's lip R6, the hood skirt's edge R5, the foot ring's top R10; moulded seam lines only; no maker's name, logo, product number or moulded lettering of any kind
 - **conditions**:
   - **a**:
@@ -361,13 +373,20 @@ The network opened on 11 October. Geograph was searched for litter bins of every
 - **basis**: READ for the sizes the scene prints (0.46 across, 0.61 high, lid 0.50 x 0.05); LEADS for the rest (a galvanised bin of 18 in top diameter, 15 in base, 22 to 24 in high; four sizes in BS 792:1973; a body, rims, base hoop, lid, body handles, lid handle); JUDGEMENT for the profile points; PHOTO for the metal's colour and weathering (the galvanised container of urban_street_02 and the zinc scans)
 - **pivot**: the base centre on the flag top
 - **placed**: True
-- **outer_profile_rz**: [(0, 6) (190, 6) (194, 0) (205, 0) (207, 8) (207, 20) (203, 26) (199, 28) (203.964, 138) (210.505, 144) (210.505, 156) (205.047, 162) (210.282, 278) (216.823, 284) (216.823, 296) (211.365, 302) (216.599, 418) (223.141, 424) (223.141, 436) (217.682, 442) (224, 582) (229, 585) (231.5, 595) (230, 606) (226, 610) (222, 609)]
+- **outer_profile_rz**: [(0, 6) (190, 6) (194, 0) (205, 0) (207, 8) (207, 20) (203, 26) (199, 28) (221.247, 521) (224.653, 524) (225.653, 527) (225.653, 533) (224.653, 536) (222.06, 539) (222.421, 547) (225.827, 550) (226.827, 553) (226.827, 559) (225.827, 562) (223.233, 565) (224, 582) (229, 585) (231.5, 595) (230, 606) (226, 610) (222, 609)]
 - **body_top**: 610
-- **rib_z**: [150, 290, 430]
+- **rib_z**: [530, 556]
 - **rib**:
-  - **height**: 24
-  - **proud**: 6
-  - **note**: three swaged ribs, rounded, every 140; the first at 150
+  - **height**: 18
+  - **proud**: 4
+  - **note**: two rolled rings under the rim at z 530 and 556, rounded (TARGET-REVIEW fault 2: none of four British galvanised dustbins photographed has the three mid-body horizontal ribs the first try took from a US can; Chawleigh shows two rings under the rim)
+- **flutes**:
+  - **count**: 64
+  - **depth**: 4
+  - **z**: [40, 515]
+  - **pitch_mm**: 21
+  - **note**: vertical corrugations round the body below a plain band (Pentonville and Chawleigh, TARGET-REVIEW fault 2; Patterdale has a plain body): 64 rounded flutes 4 deep from z 40 to 515, fading out at both ends; in the kit they are a NORMAL MAP (4 mm flutes at 21 mm pitch need 128 sides, over the 4,500 triangle budget)
+  - **kind**: Photo, three examples
 - **foot_ring**:
   - **z**: [0, 26]
   - **r_max**: 207
@@ -388,18 +407,21 @@ The network opened on 11 October. Geograph was searched for litter bins of every
     - **rise**: 19
     - **top_z**: 660
     - **rivets**: 2
-  - **note**: a shallow pressed dome, 502 across (the scene's 0.50), its skirt overlapping the rim by 22 and standing 8 clear all round; a flat strap handle on its crown; lid height over the body top 50 (the scene's 0.05)
+  - **note**: a shallow pressed dome, 502 across (the scene's 0.50), its skirt overlapping the rim by 22 and standing 8 clear all round; a flat strap handle on its crown; radial_ribs: 20 pressed ribs 12 wide and 3 proud from r 70 to r 225 on the dome (Photo, one example: Cusop 3757342; a normal map in the kit); lid height over the body top 50 (the scene's 0.05)
 - **side_handles**:
   - **count**: 2
   - **azimuths_deg**: [90, 270]
   - **z**: 470
-  - **height**: 100
-  - **proud**: 45
+  - **bar_d**: 12
+  - **length**: 170
+  - **proud**: 38
+  - **height**: 55
   - **strap_w**: 25
   - **strap_t**: 3
   - **rivets_per_end**: 2
+  - **rivet_pitch**: 40
   - **rivet_d**: 8
-  - **note**: a loop of 25 x 3 flat strip, 100 tall, standing 45 proud, riveted at each end with two 8 mm dome-head rivets
+  - **note**: a horizontal grip (TARGET-REVIEW fault 3: Patterdale and Chawleigh): a 12 mm round bar 170 long between lug centres, standing 38 proud of the body, bent down at each end into a lug 25 wide x 55 tall x 3, each lug held by two 8 mm dome rivets one above the other, 40 apart
 - **sheet**:
   - **thickness**: 0.6
   - **kind**: Lead: retail galvanised bins are 0.5 to 0.6 mm
@@ -415,8 +437,8 @@ The network opened on 11 October. Geograph was searched for litter bins of every
   - **r_max**: 251
   - **z**: [0, 660]
   - **with_handles_r**: 264
-- **edges**: rolled edges at the foot, the rim and the lid; the ribs rounded; nothing sharp but the cut ends of the handle straps
-- **fixings**: rivets: 4 on each side handle (2 per end), 2 on the lid handle; the body has one vertical lock seam on the back (azimuth 180)
+- **edges**: rolled edges at the foot, the rim and the lid; the rings rounded; nothing sharp but the lugs' edges
+- **fixings**: rivets: 4 on each side handle (2 per lug, one above the other), 2 on the lid handle; the body has one vertical lock seam on the back (azimuth 180)
 - **conditions**:
   - **a**:
     - **name**: lid on, ordinary
@@ -476,7 +498,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
     - **side**: east
     - **post_x_m**: 6.6
     - **post_z_m**: 3.62
-    - **bin_axis_x_m**: 6.384
+    - **bin_axis_x_m**: 6.368
     - **bin_axis_z_m**: 3.62
     - **setback_from_kerb_face_m**: 0.62
     - **near_edge_from_kerb_face_m**: 0.433
@@ -491,7 +513,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
     - **side**: east
     - **post_x_m**: 35.2
     - **post_z_m**: 3.62
-    - **bin_axis_x_m**: 35.416
+    - **bin_axis_x_m**: 35.432
     - **bin_axis_z_m**: 3.62
     - **setback_from_kerb_face_m**: 0.62
     - **near_edge_from_kerb_face_m**: 0.433
@@ -510,7 +532,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
     - **near_edge_from_kerb_face_m**: 0.55
     - **far_edge_from_kerb_face_m**: 1.05
     - **yaw_note**: the aperture faces the shops' side of the footway (the building line)
-    - **serves**: the newsagent's side door (41.178), the bus stop (46.0) and the chandler's queue
+    - **serves**: the newsagent's side door (41.178), and the bus stop (46.0)
 - **dustbins**:
   | id | kind | condition | side | axis_x_m | axis_z_m | setback_from_kerb_m | lid_edge_z_m | note |
   |---|---|---|---|---|---|---|---|---|
@@ -740,6 +762,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
 
 ## Wear
 
+- **stickers_defined**: a "sticker" in the conditions (K1 1 to 2, K2 0 to 2) is a weathered BLANK or illegible paper or vinyl rectangle 60 to 120 mm across (the fly-poster remnant of K1-w7 and K2-w7): no readable word, number, logo or crest, and never a maker's or council sticker (S12's council crest is exactly what must not appear) (TARGET-REVIEW fault 7)
 - **rule**: The wear is a layer on each bin's own UVs (a mask set per mesh, as the asset plan's "curvature and occlusion bake per asset: edge chips to primer, rust streaks down from fixings, grime from the ground up, rain streaks from the top"), seeded per instance, and it AGREES WITH the wear target (production/cloud-week/targets/wear/target.json): its iron_wear rule for painted ironwork, its cig_end and gum kinds for the litter and gum round the bins, its splash and foot rule. Nothing below is measured on a bin photograph (none was reached); the parts marked Photo are measured on the galvanised container and the scans.
 - **agree_with_wear_target**:
   - **iron_wear**: paint loss and rust over 4 to 8 % of the UNWRAPPED area (post: 239 wide, the circumference of 76.1), in patches of 20 to 110 mm (p50 45), 40 % of the lost paint in the lowest 0.3 m of the post (the shoe), 30 % within 80 mm of a clamp, strap, bead or weld, 30 % anywhere; patch colour primer_ochre; below 4 in 10 clamps and every drain hole one or two rust streaks, width p50 24, aspect 4 to 12, length 100 to 300
@@ -1344,9 +1367,9 @@ The network opened on 11 October. Geograph was searched for litter bins of every
         - **base**: [0.5, 0.5, 0.5, 1]
         - **metallic**: 0.2
         - **roughness**: 0.8
-- **topsy_974902**:
+- **s12_974902**:
   - **photo**: S12, Geograph 974902 (Jim Champion, 2008-09-21, CC BY-SA 2.0), the 427 x 640 reduced copy
-  - **method**: the bin's silhouette read by eye on a 3x enlargement with a 20 px grid, +-2 px at every edge; one dimension fitted: the dome crown (row 257) to the base centre (row 548, the front bottom edge at row 556 less the ellipse of the round foot) is 291 px = the K2 height 900, so 3.09 mm a pixel (the George V box beside it, 465 px from cap top to foot, gives 3.2 mm a pixel at an assumed 1.5 m, so the bin reads 917 high: the two agree within 2 %, and the box's height is itself +-4 %); every width is a silhouette width at the stated row (a cylinder seen from a little above reads its true diameter at its widest rows); the error is +-2 px (+-6 mm) plus the scale +-5 %
+  - **method**: the bin's silhouette read by eye on a 3x enlargement with a 20 px grid, +-2 px at every edge; one dimension fitted: the dome crown (row 257) to the base centre (row 548, the front bottom edge at row 556 less the ellipse of the round foot) is 291 px = the K2 height 900, so 3.09 mm a pixel (the pillar box beside it is 462 px tall and 101 px across its body, 4.6 to 1, which is not the pillar-box target's Type A (3.07 to 1): its type and height are not established, so the photograph gives PROPORTIONS only and K2's absolute size rests on the Judgement height 900); every width is a silhouette width at the stated row (a cylinder seen from a little above reads its true diameter at its widest rows); the error is +-2 px (+-6 mm) plus the scale +-5 %
   - **rows_px_and_mm**:
     -
       - **part**: hood skirt (rows 283 to 338)
@@ -1361,11 +1384,11 @@ The network opened on 11 October. Geograph was searched for litter bins of every
       - **diameter_mm**: 417
       - **r_mm**: 209
     -
-      - **part**: collar (rows 432 to 447)
-      - **x_px**: [62, 210]
-      - **width_px**: 148
-      - **diameter_mm**: 457
-      - **r_mm**: 229
+      - **part**: collar (rows 436 to 452)
+      - **x_px**: [70, 210.5]
+      - **width_px**: 140.5
+      - **diameter_mm**: 434
+      - **r_mm**: 217
     -
       - **part**: base drum (rows 470 to 545)
       - **x_px**: [58, 218]
@@ -1465,7 +1488,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
 - NO PHOTOGRAPH OF A 1975 TO 1995 STREET LITTER BIN WAS REACHED (Geograph, searched 12 October for litter bin, litter, dustbin, waste bin, bin on a post, pole mounted bin and a dozen more, each year 1975 to 1996: forty-nine photographs of any year, none a street litter bin; Wikimedia Commons refused every request with 429; archive.org not searched). K2 is now measured on one 2008 photograph of a hooded bin type made since 1984 (S12); K1, the pole-mounted open steel bin, has no photograph at all and stays research and judgement. The shape of K1 and, for what S12 does not show, K2 is research and judgement, not measurement: their proportions (the taper, the bead, the clamp rings, the hood's skirt and the aperture's size and height) are ergonomic and trade guesses and a fresh reviewer has nothing to hold them against but the asset plan's kit names and the leads.
 - Which council colour Meridian used (green is a judgement from the repository's own recipe and from green being common on 1980s municipal steel and glass-fibre; no source says); canon owes the council's name and no word of it appears on any bin.
 - Whether Meridian's council had bought the Topsy-type (1984) or only older hooded or pole stock: K2 now has that type's form (S12), so a council with older stock would show a different bin; the colour, the lettering and the aperture's width (about 230, the photograph shows it foreshortened) are Judgement.
-- The real height of rim and aperture: K1 rim 1.05 and K2 aperture sill 0.65 are ergonomic Judgement (the repository's script has 0.95 for the pole bin).
+- The real height of rim and aperture: K1 rim 1.05 and K2 aperture sill 0.68 are ergonomic Judgement (the sill 0.68 is read on S12 as a proportion of the Judgement height) (the repository's script has 0.95 for the pole bin).
 - The BS 792 dimension table (the 1973 or earlier edition): 0.46 x 0.61 is the scene's; the foot (398), the rib heights and the handle sizes are Judgement.
 - Whether bins were fixed to the lamp columns on Quay Street: K1 stands on its own post; the lamp-post target's shaft at 1.0 m is 68 mm and the sleeve 124, neither a clean 76 mm host. A column-mounted variant would need the lamp target's sleeve and a different clamp: not written.
 - The bus stop (hook-cast: x 46.0, z -4.3; not in the scene file) has no pole yet, so the 2.0 m between B3 and the stop is to the cast's point.
@@ -1771,9 +1794,9 @@ The network opened on 11 October. Geograph was searched for litter bins of every
   - **name**: K1_bin_offset
   - **applies_to**: K1
   - **measure**: post axis to bin axis along x
-  - **expected**: 216
+  - **expected**: 232
   - **tolerance**: 10
-  - **kind**: Derived
+  - **kind**: Derived (TARGET-REVIEW fault 1: 232, so that the rim bead clears the post by 7)
 -
   - **name**: K1_capacity_litres
   - **applies_to**: K1
@@ -1849,9 +1872,9 @@ The network opened on 11 October. Geograph was searched for litter bins of every
   - **name**: K2_collar_diameter
   - **applies_to**: K2
   - **measure**: diameter of the collar at z 320
-  - **expected**: 460
+  - **expected**: 440
   - **tolerance**: 12
-  - **kind**: Photo
+  - **kind**: Photo (a proportion; the absolute size follows the Judgement height)
 -
   - **name**: K2_base_diameter
   - **applies_to**: K2
@@ -1891,7 +1914,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
   - **name**: K2_join_groove_z
   - **applies_to**: K2
   - **measure**: z of the join groove
-  - **expected**: [640, 664]
+  - **expected**: [630, 650]
   - **tolerance**: 10
   - **kind**: Photo
 -
@@ -1961,17 +1984,17 @@ The network opened on 11 October. Geograph was searched for litter bins of every
 -
   - **name**: D1_rib_count_and_z
   - **applies_to**: D1
-  - **measure**: three swaged ribs at z
-  - **expected**: [150, 290, 430]
-  - **tolerance**: 15
-  - **kind**: Judgement
+  - **measure**: two rolled rings under the rim at z
+  - **expected**: [530, 556]
+  - **tolerance**: 10
+  - **kind**: Photo (TARGET-REVIEW fault 2)
 -
   - **name**: D1_side_handles
   - **applies_to**: D1
-  - **measure**: two strap loops at z 470, 45 proud
-  - **expected**: [2, 470, 45]
-  - **tolerance**: [0, 25, 8]
-  - **kind**: Judgement
+  - **measure**: two horizontal round-bar grips at z 470, 38 proud
+  - **expected**: [2, 470, 38]
+  - **tolerance**: [0, 25, 6]
+  - **kind**: Photo (TARGET-REVIEW fault 3)
 -
   - **name**: D1_lid_clearance
   - **applies_to**: D1
@@ -2101,7 +2124,7 @@ The network opened on 11 October. Geograph was searched for litter bins of every
 
 ## Self-check
 
-SELF-CHECK litter-bins: 139 checks, 139 passed, 0 failed, 9 reported
+SELF-CHECK litter-bins: 144 checks, 144 passed, 0 failed, 11 reported
 
 - reported: K2_no_maker_mark: not computed here (moulded or printed maker, council or product marks)
 - reported: walking_strip: a placement or content rule, tested in groups 4 and 6
@@ -2112,3 +2135,5 @@ SELF-CHECK litter-bins: 139 checks, 139 passed, 0 failed, 9 reported
 - reported: no_brand_text: a placement or content rule, tested in groups 4 and 6
 - reported: no_alcohol_gambling_children: a placement or content rule, tested in groups 4 and 6
 - reported: dressing_separate: a placement or content rule, tested in groups 4 and 6
+- reported: PHOTO the scale: 900 mm over 291 px is 3.09 mm a pixel, FITTED to K2's Judgement height; the pillar box beside the bin is of an unestablished type and height (462 px tall, 101 across: 4.6 to 1, not Type A's 3.07), so S12 gives proportions only (TARGET-REVIEW fault 8)
+- reported: PHOTO the pixel table (rows_px_and_mm) is the writer's reading, re-measured by a fresh reviewer on 12 October on 4x and 8x enlargements (the collar and the groove corrected); this group compares K2's profile with that table
