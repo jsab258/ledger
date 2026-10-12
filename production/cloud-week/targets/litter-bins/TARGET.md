@@ -1,0 +1,2114 @@
+# Quay Street's litter bins and the household dustbin: the exact target
+
+**Quay Street had three council bins in 1990, not eleven: two steel pole-mounted open bins (K1, 45 litres, rim at 1.05 m, hung on their own 76 mm posts, at x 6.6 and x 35.2 east) and one free-standing hooded glass-fibre drum (K2, 900 high, at x 44.0 west by the newsagent and the bus stop), all council green and marked only LITTER, plus the scene's two galvanised dustbins (D1, 0.46 across, 0.61 high, lid 0.50 x 0.05, at x 21.4 and 22.0 east); no photograph of a period bin was reached: K2's form is measured on one 2008 Geograph photograph of a hooded bin type made since 1984 (the base drum the widest part, then a collar, a plain body, the groove, the hood), the pole-mounted K1 and the dustbin are research and judgement, and the other photographs measured are one galvanised steel container and the material scans.**
+
+Cloud week 42. Written 9 October 2026; **K2 revised 12 October 2026** after one Geograph photograph (S12). `SELF-CHECK litter-bins: 139 checks, 139 passed, 0 failed, 9 reported`
+
+## Files in this folder
+
+- `target.json`: the whole target (units: millimetres unless a key ends _m (metres); angles in degrees; the .glb is metres, z up, scale 1).
+- `litter_data.py`, `litter_lib.py`, `make_target.py`, `measure.py`: the author tools (the data, the shared geometry, the writer, the photograph and texture measurements from the cached panoramas).
+- `target_drawing.py`: draws every kind's elevations, plans and sections, the street plan and a scale sheet from `target.json` alone (`drawing.json` holds the polygons; pictures with `--out DIR`).
+- `self_check.py`: 139 checks in seven groups (the numbers read from other files, the target's own checks computed from its profiles, K2 against its photograph, internal consistency, the drawing, the content rule, the preview files); it writes its result into `target.json`.
+- `make_previews.py`, `make_doc.py`: the preview crop and its overlay; this page.
+- Previews, in `production/previews/cloud-week/refs/litter-bins/`: `geo974902-southampton-hooded-bin-2008.jpg` (Jim Champion, Geograph 974902, 2008-09-21, CC BY-SA 2.0; cropped to the bin, the council crest sticker painted out) and its `-target-on-photo` overlay (K2's profile laid on it at one fitted dimension).
+
+## What changed on 12 October (K2, after one photograph)
+
+The network opened on 11 October. Geograph was searched for litter bins of every year 1975 to 1996 with a dozen terms and for bins on posts and hooded bins without a year: **no 1975 to 1995 photograph of a street litter bin was reached** (forty-nine photographs of any year came back for the year-filtered searches, none of a litter bin); Commons refused every request; archive.org was not searched. One 2008 photograph, S12, shows a hooded glass-fibre bin of a type made since 1984 beside a George V pillar box, which gives its scale; K2 was redrawn from it. **K2 is now a stepped drum**, widest at the base (r 247), a collar (r 230), a plain body (r 210), a groove at z 640 to 664 and a hood skirt (r 218) under a flat shallow dome, the aperture a lipped slot (about 230 x 105, sill 680); the first try's generic drum was widest at the middle with the hood the widest part and a narrow foot, the opposite. K1 (the pole-mounted open steel bin) has no photograph: it stays research and judgement.
+
+## Sources
+
+- **S1** https://polyhaven.com/a/urban_street_02 | read 2026-10-09 | Andreas Mischok | licence CC0 1.0 (polyhaven.com/license) | taken 2019-08-18 06:45 UTC (51.526655, -0.056465)
+  - what: an estate road under a railway viaduct, Bethnal Green: a galvanised steel 1,100-litre container and a purple four-castor plastic bin on the road at the kerb, black plain tapered bollards, double yellow lines
+  - used: YES: the container's colour and wear; the scale overlay; the camera height
+  - period: 2019: the steel container is the kind used in yards and estates from the 1970s on (Lead); the purple bin is a later plastic type; the bollard is of a pattern that stood in 1990
+- **S2** https://polyhaven.com/a/bethnal_green_entrance | read 2026-10-09 | Andreas Mischok | licence CC0 1.0 | taken 2019-08-18 07:01 UTC
+  - what: a park entrance: two black rectangular panelled hooded bins inside the railings, about 10 to 15 m from the camera, behind a wall
+  - used: LOOKED AT, not measured (8 to 12 pixels across; its ground level behind the wall is unknown)
+  - period: modern (panelled, 2000s): a later type than K2
+- **S3** https://polyhaven.com/a/leadenhall_market | read 2026-10-09 | Andreas Mischok | licence CC0 1.0 | taken 2019-05-19
+  - what: a covered market lane in the City: two small stainless-steel rectangular bins with a sticker on a pavement
+  - used: LOOKED AT, not measured; the frame includes shop lettering and a bar's sign, so no crop of it is kept
+  - period: modern (stainless): not period
+- **S4** https://polyhaven.com/a/roof_garden | read 2026-10-09 | Andreas Mischok | licence CC0 1.0 | taken 2019-05-19
+  - what: a roof garden: two stainless drum bins on short pedestals beside a path
+  - used: LOOKED AT, not measured
+  - period: modern (2010s stainless drum): not period
+- **S5** https://polyhaven.com/a/limehouse | read 2026-10-09 | Andreas Mischok | licence CC0 1.0 | taken 2019-05-19 15:45 UTC
+  - what: a marina: one small blue bin on a pontoon
+  - used: LOOKED AT, not measured
+  - period: modern
+- **S6** https://polyhaven.com/a/birbeck_street_underpass | read 2026-10-09 | Andreas Mischok | licence CC0 1.0 | taken 2019-08-18 06:53 UTC
+  - what: a street under a railway arch: a wheeled bin at a blue gate, two small recycling boxes at a gate pier, road barriers
+  - used: LOOKED AT, not measured
+  - period: wheeled and recycling bins: later than 1990
+- **S7** https://polyhaven.com/a/metal_trash_can | read 2026-10-09 | GurJas Studios | licence CC0 1.0 | taken model published 2023-09-27
+  - what: a ribbed galvanised-style trash can with two handles and a lid, 0.906 high and 0.55 across (a US-style can), clean and rusted variants
+  - used: YES: a reference for the pressed rib, rolled bead and handle arrangement of a ribbed steel can; its size is NOT the British dustbin's
+  - period: not British
+- **S8** https://polyhaven.com/a/trashbag | read 2026-10-09 | Benny Weimer | licence CC0 1.0 | taken model published 2026
+  - what: a black polythene sack 0.528 x 0.463 x 0.575
+  - used: YES: the sack's size and look
+  - period: timeless
+- **S9** https://polyhaven.com/textures (api.polyhaven.com/files/<id>, diffuse 1k) | read 2026-10-09 | Dimitrios Savva, Jenelle van Heerden, Charlotte Baglioni, Rob Tuytel, Amal Kumar, Sergej Majboroda | licence CC0 1.0 | taken various
+  - what: twelve scanned material albedos: corrugated_iron, corrugated_iron_02, _03, worn_corrugated_iron, green_metal_rust, rust_coarse_01, rusty_painted_metal, precast_concrete_wall, pebble_embedded_concrete, painted_metal_shutter, worn_shutter, container_side
+  - used: YES: the median sRGB of the galvanised, painted-green, rust and concrete colours (each in photo_measurements.json)
+  - period: n/a: a material's colour does not date
+- **S10** the repository (production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md; production/research/street-clutter-1990/SUMMARY-2026-09-29.md; production/specs/vignette-scene.json; production/specs/hook-cast.json; production/cloud-week/targets/*; production/assets/street/clutter/*.glb; ledger/Assets/Props/base-mesh/{outdoor_bin,swing_bin}.glb; tools/art-recipes/terrace-front.py; tools/meshgen/blender/clutter/{litter_bin,dustbin}.py) | read 2026-10-09 | the project | licence the project's own, and CC0 for the Base Mesh files | taken 2026-09-09 to 2026-10-09
+  - what: the scene's bins and dustbins, the street's frame, the neighbours' targets, the held and built bin meshes
+  - used: YES (Read numbers)
+  - period: n/a
+- **S11** WebSearch result summaries, 9 October 2026 (Glasdon FAQ and news pages; London Transport Museum record 2023-1775; MoDiP records BXL 0564 to 0570; the National Archives blog "Public bins: a design history"; V&A O1194407; BSI Knowledge BS 792; a UK tariff ruling; trade catalogues; a council bins review) | read 2026-10-09 | third parties (reached only as summaries; every page refused or does not resolve here) | licence n/a | taken n/a
+  - what: leads: dates and sizes in section 3
+  - used: LEADS ONLY: steer a judgement, never a number the target relies on
+  - period: n/a
+- **S12** https://www.geograph.org.uk/photo/974902 | read 2026-10-12 | Jim Champion | licence CC BY-SA 2.0 (geograph.org.uk) | taken 2008-09-21 (SU4014, Wilton Road, Southampton)
+  - what: a grey hooded glass-fibre litter bin beside a George V pillar box outside a corner shop: the bin's whole side with its hood, aperture, groove, collar and base drum, the box giving the scale (the same hooded bin type has been made since 1984, S-leads below)
+  - used: YES (K2 revised 12 October): the bin's silhouette read at 3 mm a pixel (method in photo_measurements.topsy_974902); a crop to the bin alone, the crest sticker masked, in production/previews/cloud-week/refs/litter-bins/
+  - period: 2008, not 1990: the bin type dates from 1984 (L1, L2) and its form is read as unchanged, but the example itself is later; whether Meridian's council bought it is not known
+- **S13** https://www.geograph.org.uk/photo/986601 , /photo/1090799 , /photo/2281325 , /photo/1697504 , /photo/3022536 , /photo/615647 , /photo/1064051 , /photo/686593 , /photo/885698 , /photo/1003175 | read 2026-10-12 | ten Geograph photographers (the name is on each page) | licence CC BY-SA 2.0 | taken 2007 to 2011
+  - what: ten Geograph street and park litter bins of the 2000s (round hooded steel drums, a blue open drum, a stainless Welsh-lettered bin, a green slatted cast bin, a rocket-shaped play-area bin, a four-compartment recycling bin)
+  - used: LOOKED AT, not measured: every one is a design of the 1990s or later or a park bin; none shows a pole-mounted open steel bin
+  - period: later than 1990
+
+**Unreached:**
+- Wikimedia Commons (every litter-bin and dustbin category), Geograph, Flickr, archive.org, HathiTrust, Wikipedia, Historic England (the "From Lamp Posts to Litter Bins" blog), Glasdon's own site, the London Transport Museum, MoDiP, the National Archives' blog, the V&A, BSI Knowledge, the Design Council Archive, British Pathe, BBC, gov.uk, legislation.gov.uk, Gutenberg, Pexels, Sketchfab, the Beauty of Transport: all answer "CONNECT tunnel failed, response 403" or do not resolve from this cloud (WebFetch: "getaddrinfo ENOTFOUND"). Nothing was taken from any of them except what a WebSearch summary said, marked Lead.
+- ambientCG answers its home page only; a galvanised-steel query to its API returned no material.
+
+## The frame
+
+- **profile**: (r, z): r the radius from the part's own axis, z up from the flag top at the piece's pivot; each lathe outline runs round the part and closes on the axis; elevation polygons mirror it about the axis
+- **pivot**: K1: the post axis on the footway flag top; K2 and D1: the base centre on the flag top. The flag top is the kerbs target's +110 above the channel top. z up, +x as each kind says
+- **axes**:
+  - **K1**: +x from the post axis toward the bin's axis (216 away); the lettering faces +y (the building side); the buried part of the post (0.3 m, not modelled) is below z = 0
+  - **K2**: +x is the aperture's side (azimuth 0); the lock is at azimuth 180
+  - **D1**: the two side handles stand at +y and -y; the lid's handle runs along x
+- **street**: x along the street from the south (quay) end, z across from the crown, east +, metres; kerb face |z| 3.0, kerb back |z| 3.17 (kerbs target, granite; the scene's earlier 3.125), building line |z| 5.125, stallriser face |z| 4.975
+- **glb**: metres, z up, scale 1, forward -Z as production/specs/asset-interface.md says; one mesh per kind and condition; the liner, the lid, the sacks and every dressing piece are separate meshes of the same piece; NO text and no decal carries any word except LITTER (and the optional digits of the asset stencil)
+
+## K1: Pole-mounted open-top steel litter bin on its own 76 mm post (the street-clutter research's (a))
+
+- **name**: pole_open_steel
+- **basis**: JUDGEMENT AND LEADS: no photograph of a period pole bin was reached. The type is the asset plan's "pole-mounted open bin" and the clutter research's first candidate; its size is a 50-litre-class bin (Lead: a council review found pole bins to hold about 50 litres), the repository's own script bin (round, 0.40 across, rim 0.95) corrected by the leads; every number is Judgement unless marked
+- **pivot**: the post axis on the flag top
+- **placed**: True
+- **post**:
+  - **type**: tube
+  - **od**: 76.1
+  - **wall**: 3.2
+  - **height**: 1255
+  - **profile_rz**: [(0, 0) (38.05, 0) (38.05, 1230) (40, 1231) (40, 1246) (37, 1252) (25, 1254.5) (0, 1255)]
+  - **cap**: a pressed steel cap 80 across, 25 high, its top domed 4 mm, fitted with a dab of bitumen, painted with the post
+  - **root**: set in 0.3 m of concrete; the flag is cut round it with a 10 to 15 mm dark bitumen-and-grit joint; no flange, no collar
+  - **kind**: Judgement (the trade's 3-inch tube, 76.1 x 3.2; the repository's script post is also 76 mm)
+- **bin**:
+  - **axis_offset_x**: 216
+  - **z_base**: 550
+  - **z_rim_top**: 1050
+  - **wall**: 1.5
+  - **outer_profile_rz**: [(0, 550) (160, 550) (165, 553) (165, 560) (180.5, 1038) (183, 1041) (186.5, 1046) (184, 1050) (180, 1050.5) (177.5, 1048) (176.8, 1045)]
+  - **wall_section_rz**: [(0, 550) (160, 550) (165, 553) (165, 560) (180.5, 1038) (183, 1041) (186.5, 1046) (184, 1050) (180, 1050.5) (177.5, 1048) (176.8, 1045) (175.3, 1045) (179, 1040) (163.5, 556) (163.5, 553) (0, 553)]
+  - **r_base**: 165
+  - **r_top**: 180.5
+  - **rim_bead**:
+    - **diameter**: 9
+    - **centre_r**: 182
+    - **centre_z**: 1046
+    - **note**: the sheet rolled outward over a 4 mm wire; no sharp edge
+  - **base_plate**:
+    - **thickness**: 3
+    - **turned_up_edge**: 6
+    - **drain_holes**:
+      - **count**: 4
+      - **diameter**: 8
+      - **on_radius**: 100
+      - **first_azimuth**: 45
+  - **seam**: one vertical lap seam 12 wide on the post side (azimuth 180), spot-welded every 40; not seen from the footway
+  - **capacity_litres**: 44.9
+  - **capacity_kind**: Derived from the inner frustum; Lead: pole bins about 50 litres
+- **bracket**:
+  - **back_strap**:
+    - **width**: 40
+    - **thickness**: 5
+    - **z0**: 590
+    - **z1**: 1030
+    - **x_from**: 38.05
+    - **x_to**: 43.05
+    - **note**: a flat bar welded up the back of the bin, touching the post along a line
+  - **clamps**:
+    | z0 | z1 | ring_r_in | ring_t |
+    |---|---|---|---|
+    | 620.0 | 660.0 | 38.05 | 5.0 |
+    | 960.0 | 1000.0 | 38.05 | 5.0 |
+  - **clamp_note**: each clamp is a 40 x 5 flat ring round the post, welded to the back strap on the bin side and closed at the far side of the post by ONE M8 bolt through two 12 mm ears (hex head 13 across, domed nut 13 across, 8 high)
+  - **bolts**:
+    - **count**: 2
+    - **size**: M8
+    - **head_af**: 13
+    - **nut**: domed, 13 across, 8 high
+    - **finish**: galvanised, painted over once with the bin (a worn edge shows grey)
+- **lettering**:
+  - **text**: LITTER
+  - **cap_height**: 45
+  - **stroke**: 6
+  - **z_centre**: 800
+  - **azimuth_deg**: 90
+  - **arc_deg**: 70
+  - **material**: letters_cream
+  - **face**: sans-serif capitals, upright, no serifs, set in an OFL face the builder picks (no maker's lettering, no council name); one line; a flat decal on the bin wall, bent to its radius
+  - **words_allowed**:
+    - LITTER
+  - **safe_because**: LITTER is a plain English common noun: no maker, council, organisation, crest or product is named, and the asset plan says such words carry no brand
+- **asset_stencil**:
+  - **optional**: True
+  - **text**: LB n
+  - **n**: [1, 2]
+  - **cap_height**: 22
+  - **z**: 1130
+  - **on**: the post, away from the carriageway
+  - **material**: letters_cream_worn
+  - **note**: the same idea as the lamp columns' LC n plates: generic, a letter pair and a digit
+- **extent**:
+  - **x**: [-38.05, 402.5]
+  - **z**: [0, 1255]
+  - **bin_dia_rim_bead**: 373
+- **edges**: every edge rounded or rolled; the post's cap has a 3 mm radius; the bin's base corner is a 5 mm radius with a visible turned-up lap; the straps' edges are square and slightly burred (a worn grey line where the paint has gone)
+- **fixings**: 4 M8 bolts in two clamps (the bin hangs by its clamps alone); 8 to 10 spot-welds up the strap and 4 at the base plate seen as 6 mm dimples; no screws; no plate
+- **conditions**:
+  - **A**:
+    - **name**: tired but sound
+    - **paint**: paint_green_worn
+    - **fade**: 0.25
+    - **dents**:
+      | z | az | d | depth |
+      |---|---|---|---|
+      | 640 | 200 | 55 | 4 |
+      | 700 | 250 | 40 | 3 |
+    - **rim_dent**: None
+    - **post_lean_deg**: 0.4
+    - **bin_tilt_deg**: 0
+    - **rust_share**: 0.04
+    - **liner_sack**: False
+    - **stickers**: 1
+    - **gum**: 2
+    - **scorch**: 3
+    - **overflow**: O1_low
+  - **B**:
+    - **name**: faded and rusting
+    - **paint**: paint_green_chalk
+    - **fade**: 0.55
+    - **dents**:
+      | z | az | d | depth |
+      |---|---|---|---|
+      | 620 | 165 | 90 | 8 |
+      | 760 | 215 | 60 | 5 |
+      | 900 | 120 | 45 | 3 |
+    - **rim_dent**:
+      - **az**: 240
+      - **length**: 70
+      - **depth**: 8
+    - **post_lean_deg**: 1.2
+    - **bin_tilt_deg**: 0.8
+    - **rust_share**: 0.08
+    - **liner_sack**: True
+    - **stickers**: 2
+    - **gum**: 3
+    - **scorch**: 5
+    - **overflow**: O1_full
+  - **C**:
+    - **name**: damaged
+    - **paint**: paint_green_worn
+    - **fade**: 0.4
+    - **dents**:
+      | z | az | d | depth |
+      |---|---|---|---|
+      | 600 | 185 | 110 | 12 |
+      | 690 | 140 | 70 | 7 |
+      | 830 | 230 | 50 | 4 |
+    - **rim_dent**:
+      - **az**: 200
+      - **length**: 120
+      - **depth**: 18
+    - **post_lean_deg**: 1.5
+    - **bin_tilt_deg**: 2.5
+    - **rust_share**: 0.08
+    - **liner_sack**: False
+    - **stickers**: 2
+    - **gum**: 4
+    - **scorch**: 7
+    - **overflow**: O1_low
+- **tri_budget**: 3500
+
+## K2: Free-standing hooded glass-fibre drum bin with a galvanised liner (generic; not the form of any maker's bin)
+
+- **name**: hooded_drum
+- **basis**: PHOTO (one photograph, 2008) AND LEADS: no photograph of a hooded bin of the period was reached; the form is measured on ONE Geograph photograph of 2008 (S12, a hooded glass-fibre bin beside a George V pillar box, which gives the scale) of a bin type made since 1984 (the leads below), so it shows the form but not a 1990 example: a stepped drum, the base the widest part, a collar, a plain body, a groove and the hood skirt under a flat shallow dome (the first try's generic drum, widest at the middle with the hood the widest part, was the opposite). Leads (search summaries, unreached pages): hooded glass-fibre council bins existed by 1959 (Elton Civic Supplies, MoDiP records), Glasdon's own pages date its original Topsy to 1984 and a museum record dates a Glasdon bin with a removable red plastic hood and a metal liner to 1984 to 1990. No maker's mark, crest or sticker is modelled
+- **pivot**: the base centre on the flag top
+- **placed**: True
+- **outer_profile_rz**: [(0, 0) (236, 0) (244, 5) (247, 14) (247, 236) (243, 248) (236, 262) (231, 282) (230, 300) (230, 338) (224, 348) (214, 356) (210, 364) (210, 640) (206, 648) (206, 658) (218, 664) (218, 822) (214, 842) (205, 862) (190, 878) (160, 890) (110, 896) (50, 899) (0, 900)]
+- **shell**: 5
+- **height**: 900
+- **extent**:
+  - **r_max**: 247
+  - **z_min**: 0
+  - **z_max**: 900
+- **aperture**:
+  - **width**: 230
+  - **height**: 105
+  - **sill_z**: 680
+  - **top_z**: 785
+  - **corner_r**: 25
+  - **azimuth_deg**: 0
+  - **return_flange_depth**: 15
+  - **return_flange_t**: 6
+  - **note**: cut through the hood skirt under the dome; the lower edge is a flat sill with a 15 mm return flange turned inward; the upper edge is the dome overhanging it (the photograph: a lipped slot about 105 high with the dome standing out over it)
+- **parts**:
+  - **base_drum**:
+    - **z**: [0, 236]
+    - **r_max**: 247
+    - **note**: the base drum, the widest part: r 247, a 14 mm round at the ground edge, a shoulder 236 to 300 stepping in to the collar; it is filled with concrete ballast to z 50 (not modelled)
+  - **collar**:
+    - **z**: [300, 364]
+    - **r_max**: 230
+    - **note**: a collar r 230 (z 300 to 338) stepping in to the body by a 26 mm round
+  - **body**:
+    - **z**: [364, 640]
+    - **r_max**: 210
+    - **note**: a plain straight drum r 210 (a moulded seam line down each side at azimuth +-90, 0.5 high, 3 wide)
+  - **join_groove**:
+    - **z**: [640, 664]
+    - **depth**: 4
+    - **note**: the shadow line between body and hood
+  - **hood**:
+    - **z**: [664, 900]
+    - **r_max**: 218
+    - **note**: a lift-off glass-fibre hood: a skirt 158 high standing 8 proud of the body, a shoulder (R about 45), a flat shallow dome; the aperture is cut in its front
+  - **liner**:
+    - **profile_rz**: [(0, 60) (190, 60) (196, 66) (196, 696) (200, 702) (200, 708) (196, 708)]
+    - **rim_z**: [702, 708]
+    - **od**: 400
+    - **material**: zinc_weathered
+    - **note**: a galvanised steel liner 0.8 sheet, 650 high, a rolled rim whose upper edge is seen through the aperture; two wire bail handles (not modelled); capacity about 70 litres
+  - **lock**:
+    - **azimuth_deg**: 180
+    - **z**: 650
+    - **d**: 22
+    - **escutcheon_d**: 40
+    - **note**: a barrel lock at the back of the join; not seen from the front
+- **lettering**:
+  - **text**: LITTER
+  - **cap_height**: 55
+  - **stroke**: 8
+  - **z_centre**: 470
+  - **azimuth_deg**: 0
+  - **arc_deg**: 68
+  - **material**: letters_cream
+  - **face**: as K1
+  - **words_allowed**:
+    - LITTER
+  - **safe_because**: as K1
+- **fixings**: free-standing on its ballasted foot ring (mass about 28 kg); hood located by four moulded lugs and the lock; nothing is bolted to the footway; no visible screws or rivets on the front
+- **edges**: every moulding rounded: the aperture's lip R6, the hood skirt's edge R5, the foot ring's top R10; moulded seam lines only; no maker's name, logo, product number or moulded lettering of any kind
+- **conditions**:
+  - **a**:
+    - **name**: council-fresh
+    - **gel**: gel_green_fresh
+    - **chalk**: 0.15
+    - **scuff**: 0.25
+    - **burn**: None
+    - **overflow**: O2_low
+    - **stickers**: 0
+    - **gum**: 2
+    - **cracks**: 0
+    - **hood_dent**: None
+  - **b**:
+    - **name**: sun-chalked and scuffed
+    - **gel**: gel_green_chalk
+    - **chalk**: 0.55
+    - **scuff**: 0.55
+    - **burn**: None
+    - **overflow**: O2_full
+    - **stickers**: 2
+    - **gum**: 4
+    - **cracks**: 3
+    - **hood_dent**:
+      - **az**: -35
+      - **d**: 80
+      - **depth**: 5
+  - **c**:
+    - **name**: burnt hood
+    - **gel**: gel_green_chalk
+    - **chalk**: 0.45
+    - **scuff**: 0.45
+    - **burn**:
+      - **az**: -28
+      - **z**: 770
+      - **w**: 115
+      - **h**: 85
+      - **charred**: 60
+      - **plume**: 420
+    - **overflow**: O2_full
+    - **stickers**: 1
+    - **gum**: 4
+    - **cracks**: 2
+    - **hood_dent**: None
+- **tri_budget**: 6000
+
+## D1: Galvanised steel household dustbin (the scene's E13), to the shape of BS 792 as the research and leads give it
+
+- **name**: galvanised_dustbin_18in
+- **basis**: READ for the sizes the scene prints (0.46 across, 0.61 high, lid 0.50 x 0.05); LEADS for the rest (a galvanised bin of 18 in top diameter, 15 in base, 22 to 24 in high; four sizes in BS 792:1973; a body, rims, base hoop, lid, body handles, lid handle); JUDGEMENT for the profile points; PHOTO for the metal's colour and weathering (the galvanised container of urban_street_02 and the zinc scans)
+- **pivot**: the base centre on the flag top
+- **placed**: True
+- **outer_profile_rz**: [(0, 6) (190, 6) (194, 0) (205, 0) (207, 8) (207, 20) (203, 26) (199, 28) (203.964, 138) (210.505, 144) (210.505, 156) (205.047, 162) (210.282, 278) (216.823, 284) (216.823, 296) (211.365, 302) (216.599, 418) (223.141, 424) (223.141, 436) (217.682, 442) (224, 582) (229, 585) (231.5, 595) (230, 606) (226, 610) (222, 609)]
+- **body_top**: 610
+- **rib_z**: [150, 290, 430]
+- **rib**:
+  - **height**: 24
+  - **proud**: 6
+  - **note**: three swaged ribs, rounded, every 140; the first at 150
+- **foot_ring**:
+  - **z**: [0, 26]
+  - **r_max**: 207
+  - **note**: a rolled bottom hoop 207 across its fullest, its lower edge 6 above the ground at the centre (the base is dished)
+- **rim**:
+  - **bead_r_max**: 231.5
+  - **z**: [582, 610]
+  - **note**: a rolled top bead over a stiffening wire: 463 across (the scene's 0.46), its crown at 610 (the scene's 0.61)
+- **lid**:
+  - **profile_rz**: [(240, 588) (250.5, 590) (251, 610) (247, 617) (240, 621) (210, 630) (150, 637) (80, 640) (0, 641)]
+  - **skirt_r_outer**: 251
+  - **skirt_z**: [588, 617]
+  - **dome_top_z**: 641
+  - **handle**:
+    - **length**: 100
+    - **strap_w**: 25
+    - **strap_t**: 3
+    - **rise**: 19
+    - **top_z**: 660
+    - **rivets**: 2
+  - **note**: a shallow pressed dome, 502 across (the scene's 0.50), its skirt overlapping the rim by 22 and standing 8 clear all round; a flat strap handle on its crown; lid height over the body top 50 (the scene's 0.05)
+- **side_handles**:
+  - **count**: 2
+  - **azimuths_deg**: [90, 270]
+  - **z**: 470
+  - **height**: 100
+  - **proud**: 45
+  - **strap_w**: 25
+  - **strap_t**: 3
+  - **rivets_per_end**: 2
+  - **rivet_d**: 8
+  - **note**: a loop of 25 x 3 flat strip, 100 tall, standing 45 proud, riveted at each end with two 8 mm dome-head rivets
+- **sheet**:
+  - **thickness**: 0.6
+  - **kind**: Lead: retail galvanised bins are 0.5 to 0.6 mm
+- **stencil**:
+  - **optional**: True
+  - **text**: house number, digits only (for example 14 and 16)
+  - **cap_height**: 60
+  - **z**: 330
+  - **azimuth_deg**: 0
+  - **material**: letters_cream_worn
+  - **note**: painted by the householder, a brushed or stencilled white number, flaking; digits only, no word
+- **extent**:
+  - **r_max**: 251
+  - **z**: [0, 660]
+  - **with_handles_r**: 264
+- **edges**: rolled edges at the foot, the rim and the lid; the ribs rounded; nothing sharp but the cut ends of the handle straps
+- **fixings**: rivets: 4 on each side handle (2 per end), 2 on the lid handle; the body has one vertical lock seam on the back (azimuth 180)
+- **conditions**:
+  - **a**:
+    - **name**: lid on, ordinary
+    - **lid**: on
+    - **lid_tilt_deg**: 2
+    - **dents**: 5
+    - **rust_foot**: 0.35
+    - **white_rust**: 0.3
+    - **soot**: 0.2
+    - **sacks**: 0
+    - **overflow**: None
+    - **number_stencil**: True
+  - **b**:
+    - **name**: lid off, over-full
+    - **lid**: off_leaning
+    - **lid_tilt_deg**: 0
+    - **dents**: 7
+    - **rust_foot**: 0.5
+    - **white_rust**: 0.35
+    - **soot**: 0.35
+    - **sacks**: 2
+    - **overflow**: O3_sacks
+    - **number_stencil**: True
+  - **c**:
+    - **name**: old and rusty
+    - **lid**: on
+    - **lid_tilt_deg**: 0
+    - **dents**: 9
+    - **rust_foot**: 0.8
+    - **white_rust**: 0.45
+    - **soot**: 0.45
+    - **sacks**: 0
+    - **overflow**: None
+    - **number_stencil**: False
+- **tri_budget**: 4500
+
+## K3: concrete_drum
+
+- **name**: concrete_drum
+- **placed**: False
+- **height**: 900
+- **outer_d**: 550
+- **wall**: 60
+- **liner_d**: 410
+- **liner_rim_below_top**: 40
+- **finish**: exposed pebble aggregate, grey-buff
+- **source**: street-clutter-1990 (c): a hollow cylinder 55 cm across and 90 cm tall, rough pebbled surface, a liner showing at the top; Lead: a 1960 design competition praised an open concrete bin and current precast bins are 500 to 550 across
+
+## Placements
+
+- **frame**: x along the street (0 at the south/quay end), z across from the crown, east +; metres; set-backs are to the piece's axis from the kerb FACE (z 3.0) for the new bins (the bollards' convention) and from the kerb's back edge for the scene's dustbins (the scene's)
+- **bins**:
+  -
+    - **id**: B1
+    - **kind**: K1
+    - **condition**: A
+    - **side**: east
+    - **post_x_m**: 6.6
+    - **post_z_m**: 3.62
+    - **bin_axis_x_m**: 6.384
+    - **bin_axis_z_m**: 3.62
+    - **setback_from_kerb_face_m**: 0.62
+    - **near_edge_from_kerb_face_m**: 0.433
+    - **far_edge_from_kerb_face_m**: 0.806
+    - **bin_dir**: -1
+    - **yaw_note**: the bin is hung on the quay side of its post (toward x = 0)
+    - **serves**: Mickey's doors (shop door 4.797, side door 3.822) and the cab rank
+  -
+    - **id**: B2
+    - **kind**: K1
+    - **condition**: B
+    - **side**: east
+    - **post_x_m**: 35.2
+    - **post_z_m**: 3.62
+    - **bin_axis_x_m**: 35.416
+    - **bin_axis_z_m**: 3.62
+    - **setback_from_kerb_face_m**: 0.62
+    - **near_edge_from_kerb_face_m**: 0.433
+    - **far_edge_from_kerb_face_m**: 0.806
+    - **bin_dir**: 1
+    - **yaw_note**: hung on the uphill side (toward x = 48)
+    - **serves**: the grocer's door (38.147) and the launderette's side door (32.178)
+  -
+    - **id**: B3
+    - **kind**: K2
+    - **condition**: c
+    - **side**: west
+    - **axis_x_m**: 44
+    - **axis_z_m**: -3.8
+    - **setback_from_kerb_face_m**: 0.8
+    - **near_edge_from_kerb_face_m**: 0.55
+    - **far_edge_from_kerb_face_m**: 1.05
+    - **yaw_note**: the aperture faces the shops' side of the footway (the building line)
+    - **serves**: the newsagent's side door (41.178), the bus stop (46.0) and the chandler's queue
+- **dustbins**:
+  | id | kind | condition | side | axis_x_m | axis_z_m | setback_from_kerb_m | lid_edge_z_m | note |
+  |---|---|---|---|---|---|---|---|---|
+  | D1-1 | D1 | a | east | 21.4 | 4.725 | 1.6 | 4.975 | the scene's setback is read from the kerb's back edge (3.125, the scene's kerb width 0.125), the convention the pillar box and lamp columns use; with the kerbs target's granite kerb (back edge 3.17) the lids' far edge is 4.97 to 5.02, against the stallriser line 4.975: kept as the scene has it |
+  | D1-2 | D1 | b | east | 22.0 | 4.725 | 1.6 | 4.975 | the scene's setback is read from the kerb's back edge (3.125, the scene's kerb width 0.125), the convention the pillar box and lamp columns use; with the kerbs target's granite kerb (back edge 3.17) the lids' far edge is 4.97 to 5.02, against the stallriser line 4.975: kept as the scene has it |
+- **conditional**:
+  | id | kind | condition | side | post_x | post_setback_from_kerb_face | bin_dir | only_if | placed |
+  |---|---|---|---|---|---|---|---|---|
+  | B4 | K1 | A | west | 47.2 | 0.62 | 1 | the bus-stop flag pole is placed at x 46.0 within 2 m of this slot AND the street adds a second shelter-less stop; with B3 at 44.0 (2.0 m from the pole) the stop is already served, so B4 is NOT placed | False |
+- **rule_asset_plan**: a litter bin within 3 m of each shop door and at the bus stop (production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md, A3 example rules)
+- **judgement**:
+  - **doors**:
+    - **shop_doors**: 10
+    - **side_doors**: 9
+    - **note**: ten shopfronts (six east bays and the chandler, three west shops) and nine side doors: the rule would place 10 to 19 bins in 48 m, one every 2.5 to 5 m, and a bin at the bus stop on top
+  - **reasoning**:
+    - Lead: a council review (Rossendale, modern) found about half of a district's bins were pole bins of about 50 litres, the rest floor bins of 100 to 120 litres: bins are bought by the hundred and fixed where litter is made, not at every door.
+    - Lead: the 1958 Litter Act and the 1960 Council of Industrial Design competition made bins a council duty on the main streets of towns, not a shopkeeper's; Quay Street is a minor street of an old port quarter.
+    - The scene file already judged "a British parade carries about one bin per shop group" (E6 note) and the asset plan's own count is 2 to 3 for the street.
+    - Litter is made at: the tobacconist and newsagent (the most), the grocer, the taxi rank where drivers wait and smoke, and the bus stop. The fishmonger's trade is wet and kept off the pavement; Rita's pawnbroker, the empty unit, the launderette and the chandler make little street litter; the tea room and the ironmonger make none.
+    - So: THREE bins, one per litter source group, each within 3 m of at least one door or the stop: B1 serves Mickey's two doors (2.6 and 1.6 m) and the rank; B2 serves the grocer (2.7 m); B3 serves the newsagent's side door (2.8 m) and the bus stop (2.0 m).
+  - **doors_served**:
+    - **B1**:
+      - door_mickeys_shop (1.59)
+      - door_mickeys_side (2.56)
+    - **B2**:
+      - door_grocer_shop (2.73)
+    - **B3**:
+      - door_news_side (2.82)
+      - bus stop (2.0)
+  - **doors_not_served**: fishmonger 10.797, Rita's 19.203, empty unit 22.797, launderette 31.203, chandler 44.203, tea room 25.797, ironmonger 34.203, newsagent's main door 40.203 (3.8 from B3): the nearest bin to each is 4 to 15 m away, which is what a 1990 minor street had
+- **walking_strip**:
+  - **minimum_m**: 0.68
+  - **rule**: after every bin, the clear width between the bin's building-side extreme and the nearest obstacle on that side (the stallriser face |z| 4.975, a fixture, another bin) is at least 0.68 m, and the bin leaves the kerb's back edge (|z| 3.17) at least 0.25 m clear
+  - **note**: the 0.68 m is the walking person of the railings' target; B1 and B2 leave 1.17 m, B3 0.92 m, the dustbins 1.30 m on the kerb side
+- **clearances**:
+  - **from_door_leaf_x_m**: 0.3
+  - **from_lamp_column_axis_m**: 1
+  - **from_other_furniture_edge_m**: 0.6
+  - **from_kerb_back_m**: 0.25
+  - **from_crossover_edge_m**: 0.5
+  - **note**: distances in plan between the bin's footprint and the thing, the bollards' writer's rules (from other furniture 0.6)
+- **obstacles**:
+  - **note**: the fixed things the strip and the clearances are tested against, read from the other targets and the scene (self_check re-reads them): lamp columns LC1 (8.0 east), LC2 (18.0 west), LC3 (28.0 east), LC4 (38.0 west) at |z| 3.77; the kiosk (16.5 east, 0.914 square at 0.55 set-back); the pillar box (27.0 east, cap 0.66, set-back 0.6); the guard railing (10 to 12 east, 0.25 back); the east bollards K3 (38.8 and 40.2, |z| 3.5), K4 (42.5 and 44.0, |z| 3.45); the west yard bollards (20.7 and 24.3, |z| 3.5), the crossover (west 21 to 24); the recipe's grit bin (41.0 west, 0.96 wide); the fish market's crates (x 9 to 15 east, 0.92 deep from the stallriser); the bus stop (46.0 west)
+- **dustbin_note**: the two dustbins stand 0.6 m apart on the line x 21.4 and 22.0, in front of the empty unit's side door (x 21.40 to 22.24): suits an unlet unit and the household that never uses it; the door is not to be opened in the walk. Kept as the scene has it.
+
+## Variants
+
+- **rule**: one model of each kind (a council fits one design to a street): K1 one shape in three conditions, K2 one shape in three conditions, D1 one shape in three conditions; the shape never varies, the age does (asset plan A3: "variety comes from age and condition, not from shape")
+- **models**:
+  - **K1**: 1
+  - **K2**: 1
+  - **D1**: 1
+  - **K3_not_placed**: 1
+- **conditions_per_model**: 3
+- **street_picks**:
+  - **B1**: K1 A
+  - **B2**: K1 B
+  - **B3**: K2 c (burnt hood)
+  - **D1_1**: D1 a (lid on)
+  - **D1_2**: D1 b (lid off, over-full)
+- **seeds**:
+  - **post_lean_deg**: [0, 1.5]
+  - **bin_tilt_deg**: [0, 2.5]
+  - **yaw_deg**: K1: the bin side is fixed by the placement; K2: the aperture faces the building line +-15; D1: free about the axis, handles stay on the side seen from the street +-20
+  - **dent_positions**: from the condition tables
+- **swaps**: K2 hood open or off (the hood lifted aside at 0.4 m, the liner showing) only for a street event, not placed
+
+## Materials
+
+- **paint_green_fresh**:
+  - **srgb**: [38, 64, 46]
+  - **rough**: 0.45
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: the council livery on a bin put up within two years; the street recipe's own council-green is (30, 62, 40) and reads too dark and saturated in overcast
+- **paint_green_worn**:
+  - **srgb**: [62, 76, 51]
+  - **rough**: 0.6
+  - **metal**: 0
+  - **kind**: Photo
+  - **tex**: green_metal_rust
+  - **note**: worn dark-green paint on steel: the median of the scanned albedo of Poly Haven's green_metal_rust (Rob Tuytel, CC0)
+  - **p10**: [57, 71, 47]
+  - **p90**: [66, 80, 55]
+- **paint_green_chalk**:
+  - **srgb**: [88, 100, 82]
+  - **rough**: 0.72
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: the same green chalked and faded by twenty years of weather on its sun side (about 0.55 of the way to a pale grey-green)
+- **gel_green_fresh**:
+  - **srgb**: [40, 78, 58]
+  - **rough**: 0.3
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: glass-fibre gelcoat, the same livery, glossier than paint
+- **gel_green_chalk**:
+  - **srgb**: [92, 112, 96]
+  - **rough**: 0.62
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: gelcoat chalked by UV; the hood's top is the palest
+- **letters_cream**:
+  - **srgb**: [226, 222, 205]
+  - **rough**: 0.5
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: self-adhesive or stencilled letters; the same value as the street recipe's letters-white (235, 235, 228) lowered a little for age
+- **letters_cream_worn**:
+  - **srgb**: [196, 190, 170]
+  - **rough**: 0.65
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: the same, grimed
+- **zinc_new**:
+  - **srgb**: [168, 177, 174]
+  - **rough**: 0.4
+  - **metal**: 1
+  - **kind**: Photo
+  - **tex**: corrugated_iron
+  - **note**: new hot-dip zinc: scanned albedo of Poly Haven's corrugated_iron (Jenelle van Heerden / Dimitrios Savva, CC0)
+  - **p10**: [158, 167, 163]
+  - **p90**: [182, 191, 187]
+- **zinc_weathered**:
+  - **srgb**: [108, 118, 118]
+  - **rough**: 0.55
+  - **metal**: 0.8
+  - **kind**: Photo
+  - **tex**: corrugated_iron_03
+  - **note**: weathered galvanising, dull and cool: scanned albedo of corrugated_iron_03 (Charlotte Baglioni, CC0)
+  - **p10**: [100, 113, 114]
+  - **p90**: [118, 124, 122]
+- **zinc_worn_dirty**:
+  - **srgb**: [120, 119, 117]
+  - **rough**: 0.65
+  - **metal**: 0.4
+  - **kind**: Photo
+  - **tex**: worn_corrugated_iron
+  - **note**: old galvanising with grime, paint and rust specks: scanned albedo of worn_corrugated_iron (CC0)
+  - **p10**: [102, 99, 94]
+  - **p90**: [140, 140, 140]
+- **zinc_dark_grime**:
+  - **srgb**: [89, 88, 82]
+  - **rough**: 0.75
+  - **metal**: 0.2
+  - **kind**: Photo
+  - **tex**: corrugated_iron_02
+  - **note**: galvanising under soot and street film: scanned albedo of corrugated_iron_02 (CC0)
+  - **p10**: [80, 80, 72]
+  - **p90**: [98, 96, 88]
+- **white_rust**:
+  - **srgb**: [205, 208, 204]
+  - **rough**: 0.85
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: zinc oxide and carbonate bloom, a chalky white-grey powder on damp galvanising (the container photograph shows its faint trace as the pale rub streaks: +3 to +9 in G and B over the face)
+- **rust**:
+  - **srgb**: [103, 58, 31]
+  - **rough**: 0.85
+  - **metal**: 0
+  - **kind**: Photo
+  - **tex**: rust_coarse_01
+  - **note**: bare-steel rust: scanned albedo of rust_coarse_01 (CC0)
+  - **p10**: [78, 42, 19]
+  - **p90**: [125, 75, 44]
+- **rust_painted**:
+  - **srgb**: [116, 63, 46]
+  - **rough**: 0.85
+  - **metal**: 0
+  - **kind**: Photo
+  - **tex**: rusty_painted_metal
+  - **note**: rust under and through paint: scanned albedo of rusty_painted_metal (CC0)
+  - **p10**: [63, 38, 29]
+  - **p90**: [129, 69, 51]
+- **primer_ochre**:
+  - **srgb**: [152, 110, 78]
+  - **rough**: 0.8
+  - **metal**: 0
+  - **kind**: Read
+  - **note**: the wear target's pale ochre where paint has gone to primer or first rust (dry 152, 110, 78; wet 141, 102, 72)
+- **soot**:
+  - **srgb**: [36, 33, 30]
+  - **rough**: 0.9
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: cigarette scorch and smoke film
+- **splash_band**:
+  - **srgb**: [62, 56, 48]
+  - **rough**: 0.9
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: road-splash grime, dark warm grey-brown, heaviest below 0.3 m (the wear target's foot rule)
+- **char**:
+  - **srgb**: [22, 20, 18]
+  - **rough**: 0.8
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: burnt glass-fibre and scorched paint
+- **melted_edge**:
+  - **srgb**: [58, 64, 52]
+  - **rough**: 0.25
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: re-set resin at the rim of a burn hole, glossy
+- **paper_remnant**:
+  - **srgb**: [215, 210, 195]
+  - **rough**: 0.8
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: torn fly-poster paper, rain-softened
+- **bin_sack_black**:
+  - **srgb**: [22, 22, 24]
+  - **rough**: 0.25
+  - **metal**: 0
+  - **kind**: Judgement
+  - **note**: black polythene sack (Poly Haven trashbag reads "shiny black")
+- **concrete_precast**:
+  - **srgb**: [153, 137, 118]
+  - **rough**: 0.9
+  - **metal**: 0
+  - **kind**: Photo
+  - **tex**: precast_concrete_wall
+  - **note**: K3 only: scanned albedo of precast_concrete_wall (CC0)
+  - **p10**: [126, 111, 95]
+  - **p90**: [173, 156, 136]
+
+## Wear
+
+- **rule**: The wear is a layer on each bin's own UVs (a mask set per mesh, as the asset plan's "curvature and occlusion bake per asset: edge chips to primer, rust streaks down from fixings, grime from the ground up, rain streaks from the top"), seeded per instance, and it AGREES WITH the wear target (production/cloud-week/targets/wear/target.json): its iron_wear rule for painted ironwork, its cig_end and gum kinds for the litter and gum round the bins, its splash and foot rule. Nothing below is measured on a bin photograph (none was reached); the parts marked Photo are measured on the galvanised container and the scans.
+- **agree_with_wear_target**:
+  - **iron_wear**: paint loss and rust over 4 to 8 % of the UNWRAPPED area (post: 239 wide, the circumference of 76.1), in patches of 20 to 110 mm (p50 45), 40 % of the lost paint in the lowest 0.3 m of the post (the shoe), 30 % within 80 mm of a clamp, strap, bead or weld, 30 % anywhere; patch colour primer_ochre; below 4 in 10 clamps and every drain hole one or two rust streaks, width p50 24, aspect 4 to 12, length 100 to 300
+  - **cig_end**: 5 to 8 ends within 0.5 m of a K1 or K2 foot and 6 to 10 per m2 at the apron under B1 (Mickey's step), in the wear target's tiers (doorway apron 4 to 10 per m2); 8 x 25 to 30 mm, white or tan filter
+  - **gum**: 3 to 6 trodden discs within 0.5 m of each bin (the wear target's "around bins", shop-apron tier 4 to 8 per m2); 11 to 35 mm
+  - **splash**: the lowest 0.3 m darker: splash_band, a gradient over 0.3 m (the wear target's foot rule)
+- **K1**:
+  -
+    - **id**: K1-w1
+    - **what**: paint loss and rust (the iron_wear rule above) on post, strap, clamps, base plate and rim bead
+    - **share_of_area**: [0.04, 0.08]
+    - **patch_mm**: [20, 110]
+    - **material**: primer_ochre
+    - **under**: rust_painted
+    - **kind**: Read (wear target) applied; Judgement for the split by part
+  -
+    - **id**: K1-w2
+    - **what**: dents in the bin wall: round shallow dishes with a faint crease, concentrated below z 800 on the street side (kicked)
+    - **count**: [2, 3]
+    - **diameter_mm**: [40, 110]
+    - **depth_mm**: [3, 12]
+    - **kind**: Judgement
+    - **per_condition**: see conditions
+  -
+    - **id**: K1-w3
+    - **what**: rim bead crushed or bent inward over a stretch (a bin kicked or struck by a van)
+    - **length_mm**: [70, 120]
+    - **depth_mm**: [8, 18]
+    - **kind**: Judgement
+    - **per_condition**: B and C only
+  -
+    - **id**: K1-w4
+    - **what**: cigarette scorch on the rim: 3 to 7 brown-black marks 8 to 12 across on the rim bead, a grey ash smear 30 long on the outside below each
+    - **material**: soot
+    - **kind**: Judgement (tobacco is allowed; the wear target has the ends)
+  -
+    - **id**: K1-w5
+    - **what**: splash and grime band on the post and bin foot, dark warm grey-brown, lowest 0.3 m of the post fully, fading by 0.6 m; the bin's underside near-black
+    - **material**: splash_band
+    - **kind**: Judgement (the wear target's foot rule)
+  -
+    - **id**: K1-w6
+    - **what**: rust streaks from the four drain holes down the underside edge and a rust ring where the base plate meets the wall (a hand's width of orange along 40 % of the circumference)
+    - **material**: rust_painted
+    - **kind**: Judgement
+  -
+    - **id**: K1-w7
+    - **what**: fly-poster remnants: torn blank paper 80 to 250 mm, two at most, stuck on the bin's road side or the post; rain-softened, curling 3; no readable word, name or brand; no alcohol or gambling or children in any print
+    - **material**: paper_remnant
+    - **kind**: Judgement (the posters target governs content)
+  -
+    - **id**: K1-w8
+    - **what**: gum: 2 to 4 discs on the rim bead and 1 on the post at 1.0 m
+    - **kind**: Judgement
+  -
+    - **id**: K1-w9
+    - **what**: paint fade: chalking on the faces looking at the sky (rim top, bead, the bin's upper third) toward paint_green_chalk by the condition's fade fraction; the underside and post foot keep the darker paint
+    - **kind**: Judgement
+  -
+    - **id**: K1-w10
+    - **what**: the lettering: cream paint worn 25 % in speckles, one letter chipped at its edge, grimed toward letters_cream_worn below
+    - **material**: letters_cream_worn
+    - **kind**: Judgement
+  -
+    - **id**: K1-w11
+    - **what**: a black sack as the liner (B only): tucked over the rim 120 on the outside, a tie, a split showing contents
+    - **material**: bin_sack_black
+    - **kind**: Judgement
+- **K2**:
+  -
+    - **id**: K2-w1
+    - **what**: kick scuffs on the lower body (z 52 to 330): pale rubbed streaks and black rubber marks 20 to 80 long, covering the scuff fraction of the condition
+    - **kind**: Judgement
+  -
+    - **id**: K2-w2
+    - **what**: UV chalking: the hood's top and the sun side go toward gel_green_chalk by the chalk fraction; roughness rises 0.30 to 0.62
+    - **kind**: Judgement
+  -
+    - **id**: K2-w3
+    - **what**: BURN (condition c): a hole melted and burnt through the hood's upper left (azimuth -28, z 770), irregular, about 115 wide x 85 high, its edge thickened and re-set (melted_edge), a charred fringe 60 wide round it (char), a soot plume running up the dome 420 and a brown stain down the body 300; the liner inside scorched blue-black; a 25 mm stretch of the hood skirt blistered
+    - **kind**: Judgement (bin fires are why the 1984 hoods carried a fire-safety device: Lead)
+  -
+    - **id**: K2-w4
+    - **what**: crazing: 2 to 3 hairline stress cracks 40 to 100 long at the aperture's lower corners and one running from the lock
+    - **kind**: Judgement
+  -
+    - **id**: K2-w5
+    - **what**: cigarette scorch and dark dots on the aperture's sill lip (a place to stub out): 6 to 10 marks 8 to 12 across; a black smear below
+    - **material**: soot
+    - **kind**: Judgement
+  -
+    - **id**: K2-w6
+    - **what**: grime: splash_band to 0.35 m; a drip-stain tongue below the aperture's sill (brown-grey, 60 wide, 200 long); the hood's join groove packed dark
+    - **material**: splash_band
+    - **kind**: Judgement
+  -
+    - **id**: K2-w7
+    - **what**: fly-poster remnants (as K1-w7): 1 to 2, on the body, blank or ghosted
+    - **material**: paper_remnant
+    - **kind**: Judgement
+  -
+    - **id**: K2-w8
+    - **what**: a shallow dent 80 across, 5 deep on the hood (b)
+    - **kind**: Judgement
+  -
+    - **id**: K2-w9
+    - **what**: the liner seen through the aperture: a galvanised rim, a black sack's folded edge over it, and loose litter (the overflow set)
+    - **kind**: Judgement
+  -
+    - **id**: K2-w10
+    - **what**: the lettering: as K1-w10, plus a corner lifted 6 mm
+    - **kind**: Judgement
+- **D1**:
+  -
+    - **id**: D1-w1
+    - **what**: dents: 5 to 9 round or oval dishes 30 to 120 across, 3 to 12 deep, lower half and one on the lid; the ribs flattened across the two worst; a crease running from the worst dent
+    - **kind**: Judgement
+  -
+    - **id**: D1-w2
+    - **what**: rust at the foot hoop (35 to 80 % of its circumference, orange-brown streaking up 40), at the rivet heads of the handles (orange rings 12 across) and under the rolled rim's lowest edge; nowhere on the clean zinc between
+    - **material**: rust
+    - **kind**: Judgement (the container photograph shows none at 8 m; a seen-in-the-yard bin always has it at the foot)
+  -
+    - **id**: D1-w3
+    - **what**: white rust: a chalky bloom on the lower body and the underside of the lid's skirt, vertical pale rub-and-run streaks 20 to 60 wide (Photo: the container's streaks read +3 to +9 in G and B over its face)
+    - **material**: white_rust
+    - **kind**: Photo (the streak look), Judgement (the share)
+  -
+    - **id**: D1-w4
+    - **what**: soot and street film: the zinc goes from zinc_weathered at the top to zinc_dark_grime at the foot; a darker tide-line round the body where a wet pavement splashed it (z 120 to 160)
+    - **material**: zinc_dark_grime
+    - **kind**: Photo (the two scans), Judgement
+  -
+    - **id**: D1-w5
+    - **what**: scratches: 20 to 40 fine bright zinc-grey lines 60 to 200 long, mostly horizontal, where the bins are dragged
+    - **kind**: Judgement
+  -
+    - **id**: D1-w6
+    - **what**: the lid: dented, sitting 2 degrees off, its handle strap rusted at the rivets; (b) the lid off, stood on its edge against the wall 120 beyond the second bin
+    - **kind**: Judgement
+  -
+    - **id**: D1-w7
+    - **what**: a stencilled house number (digits only) in worn cream paint on the body's front, flaking
+    - **material**: letters_cream_worn
+    - **kind**: Judgement
+  -
+    - **id**: D1-w8
+    - **what**: a wet tide mark and dark drip tongue below the lid skirt, the lid's skirt edge dark inside
+    - **kind**: Judgement
+- **note**: What the photographs of the galvanised container show (urban_street_02, 8 m, 2019): a plain mid-grey surface with no visible spangle at that distance, faint vertical pale rub-and-run streaks on the left of the face, a few shallow smooth dents, a blue paint dab, handles of formed bar, no rust at the visible edges, grime heaviest at the foot behind the castors. The D1 wear above is that look plus the foot rust and rivet rust every old galvanised bin has.
+
+## Dressing (overflowing litter: a separate set, never baked into a bin)
+
+- **rule**: OVERFLOWING LITTER IS A SEPARATE DRESSING: instanced pieces placed by the scene seed round and in each bin, never baked into its mesh, so a bin can be emptied (a night's work for the street) and the pieces scatter from the same seed as the scene's 34 pieces of litter and 60 of gum (seed 19900214, vignette-scene.json scatter). No piece carries a word or a brand; no alcohol, gambling or child-related object exists in the set.
+- **items**:
+  - **crisp_packet**:
+    - **size**: [130, 95, 6]
+    - **colours**: [(170, 172, 176) (150, 40, 35) (200, 170, 40)]
+    - **note**: crumpled foil bag, printed with abstract stripes only: no word, no maker, no mark
+  - **chip_paper**:
+    - **size**: [190, 150, 20]
+    - **colours**: [(200, 195, 180)]
+    - **note**: a greasy newsprint ball or flat sheet, grease spots (170, 150, 110); the print is grey bands, no readable word
+  - **newspaper**:
+    - **size**: [380, 280, 12]
+    - **colours**: [(190, 188, 180)]
+    - **note**: a folded broadsheet page, unreadable grey text bands; no masthead, no headline
+  - **tray_foam**:
+    - **size**: [190, 140, 30]
+    - **colours**: [(225, 222, 215)]
+    - **note**: a polystyrene food tray, yellowed edges
+  - **can_330**:
+    - **size**: [66, 66, 115]
+    - **colours**: [(170, 40, 35) (60, 120, 70) (60, 90, 150)]
+    - **note**: a 330 ml soft-drink can, an invented generic livery, no lettering; NEVER beer, lager or cider
+  - **bottle_2l**:
+    - **size**: [105, 105, 335]
+    - **colours**: [(200, 205, 195)]
+    - **note**: a clear or pale-green 2-litre pop bottle, label blank; never alcohol
+  - **cig_packet**:
+    - **size**: [55, 85, 22]
+    - **colours**: [(230, 228, 220) (170, 150, 60)]
+    - **note**: a blank-faced cigarette pack (tobacco is allowed); no brand, no health text
+  - **paper_cup**:
+    - **size**: [75, 75, 95]
+    - **colours**: [(225, 222, 212) (150, 110, 70)]
+    - **note**: a plain paper cup, no logo
+  - **sweet_wrapper**:
+    - **size**: [60, 35, 2]
+    - **colours**: [(190, 60, 60) (60, 90, 160)]
+    - **note**: twist wrapper, no print
+  - **cig_end**:
+    - **size**: [8, 8, 28]
+    - **note**: the wear target's kind: 8 x 25 to 30, white or tan filter
+  - **gum**:
+    - **size**: [20, 20, 2]
+    - **note**: the wear target's kind: 11 to 35 across, trodden flat
+  - **bin_sack**:
+    - **size**: [450, 400, 550]
+    - **colours**: [(22, 22, 24)]
+    - **note**: a tied black polythene sack; Poly Haven's CC0 trashbag model is 528 x 463 x 575 (Read, polyhaven.com/a/trashbag) and may be scaled to 0.85 as the source, else our own cloth-simulated shape (the asset plan: bags are ours)
+- **sets**:
+  - **O1_low**:
+    - **for_kind**: K1
+    - **mouth**:
+      - **pieces**: [3, 5]
+      - **rise_above_rim**: [0, 60]
+      - **mix**:
+        - crisp_packet
+        - chip_paper
+        - can_330
+        - cig_packet
+    - **base**:
+      - **radius_m**: 0.5
+      - **pieces**: [3, 6]
+      - **mix**:
+        - crisp_packet
+        - sweet_wrapper
+        - chip_paper
+    - **cig_end**: [5, 8]
+    - **gum**: [2, 3]
+  - **O1_full**:
+    - **for_kind**: K1
+    - **mouth**:
+      - **pieces**: [8, 12]
+      - **rise_above_rim**: [90, 160]
+      - **mix**:
+        - crisp_packet
+        - chip_paper
+        - can_330
+        - paper_cup
+        - tray_foam
+        - newspaper
+    - **base**:
+      - **radius_m**: 0.5
+      - **pieces**: [8, 14]
+      - **mix**:
+        - crisp_packet
+        - sweet_wrapper
+        - chip_paper
+        - paper_cup
+        - can_330
+    - **cig_end**: [6, 10]
+    - **gum**: [3, 5]
+    - **sack_tie**: True
+  - **O2_low**:
+    - **for_kind**: K2
+    - **aperture**:
+      - **pieces**: [1, 3]
+      - **jammed_out_mm**: [0, 30]
+      - **mix**:
+        - crisp_packet
+        - paper_cup
+    - **base**:
+      - **radius_m**: 0.55
+      - **pieces**: [4, 8]
+      - **mix**:
+        - crisp_packet
+        - sweet_wrapper
+        - chip_paper
+    - **cig_end**: [4, 8]
+    - **gum**: [2, 4]
+  - **O2_full**:
+    - **for_kind**: K2
+    - **aperture**:
+      - **pieces**: [4, 7]
+      - **jammed_out_mm**: [60, 100]
+      - **mix**:
+        - paper_cup
+        - tray_foam
+        - chip_paper
+        - newspaper
+        - can_330
+    - **base**:
+      - **radius_m**: 0.6
+      - **pieces**: [10, 16]
+      - **mix**:
+        - crisp_packet
+        - sweet_wrapper
+        - chip_paper
+        - paper_cup
+        - can_330
+        - bottle_2l
+        - newspaper
+    - **cig_end**: [8, 14]
+    - **gum**: [3, 6]
+  - **O3_sacks**:
+    - **for_kind**: D1b
+    - **mouth**:
+      - **sacks**: 1
+      - **rise_above_rim**: [120, 200]
+      - **note**: one black sack bulging out of the open bin, tied, its neck folded, a split showing newspaper and tray
+    - **beside**:
+      - **sack_slumped**:
+        - **size**: [450, 400, 420]
+        - **count**: 1
+        - **position**: at the second bin's foot on the pavement, toward the kerb side
+      - **spill**:
+        - **pieces**: [8, 12]
+        - **radius_m**: 0.6
+        - **mix**:
+          - chip_paper
+          - newspaper
+          - tray_foam
+          - crisp_packet
+          - can_330
+    - **lid**:
+      - **pose**: stood on its edge against the wall, 120 mm beyond the second bin, 12 degrees off vertical
+- **instances_by_street**:
+  - **B1**: O1_low
+  - **B2**: O1_full
+  - **B3**: O2_full
+  - **D1_1**: None
+  - **D1_2**: O3_sacks
+- **consistent_with_wear_target**: cig_end and gum counts lie inside the wear target's doorway-apron tier (4 to 10 per m2 and 4 to 8 per m2) over each bin's 0.5 to 0.6 m radius
+
+## Photographs, books and the asset plan disagree
+
+| id | topic | book | other | chose | kind |
+|---|---|---|---|---|---|
+| P1 | when hooded bins began | the asset plan (3-FURNITURE-PROPS-FOOD.md A4) reads "Glasdon's Topsy 65 marks 65 years in 2024, which puts the hooded glass-fibre bin's design at about 1959" from a retail listing | a search summary of the maker's own FAQ dates the ORIGINAL Topsy to 1984 (a lift-off hood, a fire-safety device); a museum record dates a Glasdon bin with a red plastic hood and a metal liner to 1984 to 1990; the MoDiP records (leads) show Elton Civic Supplies' hooded glass-fibre bins dated 1959 with a side door to a galvanised liner | a hooded bin is plausible in 1990 either way (a six-year-old Topsy-type or a thirty-year-old Elton-type); K2 is a generic drum with a LIFT-OFF hood and a galvanised liner, which fits both; the "65 years" is the company's age, not the bin's, and the asset plan's 1959 is not relied on | Lead against a retail page; no photograph either way |
+| P2 | which types | the clutter research (7) recommends (a) an open-top bin on a pole or (c) a round precast concrete bin | the asset plan lists two kinds (a pole-mounted open bin and a free-standing hooded bin) | K1 (a) and K2 (b) are placed; (c) is written as K3 and not placed: the leads (a 1960 competition's praise for an open concrete design; a current precast range) show concrete bins existed but nothing says Meridian's council bought them; a concrete drum 0.55 across would also take 0.55 m of a 2.0 m footway where the 0.68 strip has to be kept beside a pillar box and a kiosk; timber-slatted bins have no support in any source and are not written | Judgement |
+| P3 | how many bins | the asset plan's rule: a litter bin within 3 m of each shop door and at the bus stop | the same plan's count: 2 to 3 on the street; the scene: one per shop group | THREE bins (section 7): the rule would give 10 to 19 | Judgement |
+| P4 | dustbin height | the clutter research (10): 575 mm tall (a modern 90-litre listing), 450 across the top, 400 at the foot; the recipe's script builds 0.55 | the scene (E13, Read): 0.46 across, 0.61 high ("18 in by 24 in"); leads: 22 in (559) to 610 mm retail | the scene's 0.46 x 0.61 and lid 0.50 x 0.05 (the scene is the law and the leads span 559 to 610); the foot 398 across and the three ribs are Judgement | Read over Lead |
+| P5 | pole bin rim height | the recipe's script puts the rim at 0.95 | no source; ergonomics (a bin is used with a straight arm: rim near the hip-to-elbow height of 1.0 to 1.1 m) | rim at 1.05 m, post top at 1.255; the recipe's 0.95 and 0.40 floor are replaced | Judgement |
+| P6 | the set-back convention | the scene's dustbins: "1.6 m back from the kerb" | the bollards' target: 0.5 m behind the kerb FACE | the dustbins keep the scene's reading (from the kerb's back edge); the new bins state their set-back from the kerb face and also give their edge distances | Read |
+| P7 | wheeled bins | the brief: no wheelie bins unless shown otherwise | urban_street_02 (2019) shows a purple four-castor bulk bin and a galvanised 1,100-litre steel container on the road by a housing block | neither is placed: the purple plastic bulk bin is a later type; the steel container is a yard or estate bin, not a street litter bin (the asset plan places "1,100-litre bin" in the yard, 1 to 2); it is the only photograph of galvanised steel in street wear that was reached and is used for that | Photo |
+
+## Photograph measurements
+
+- **container**:
+  - **view**:
+    - **pano**: urban_street_02
+    - **yaw**: 110
+    - **pitch**: -5
+    - **fov**: 14
+    - **w**: 1400
+    - **h**: 1000
+  - **face_box**: [640, 60, 1160, 520]
+  - **streak_box**: [640, 100, 720, 480]
+  - **clean_box**: [880, 330, 1120, 500]
+  - **face**:
+    - **median**: [94, 93, 99]
+    - **p10**: [88, 88, 93]
+    - **p90**: [102, 102, 110]
+    - **mean**: [95, 94, 101]
+    - **n_px**: 239200
+  - **streak**:
+    - **median**: [94, 96, 104]
+    - **p10**: [86, 87, 92]
+    - **p90**: [110, 113, 124]
+    - **mean**: [96, 98, 106]
+    - **n_px**: 30400
+  - **clean**:
+    - **median**: [94, 93, 98]
+    - **p10**: [90, 89, 94]
+    - **p90**: [97, 96, 101]
+    - **mean**: [94, 93, 98]
+    - **n_px**: 40800
+  - **what**: urban_street_02: a hot-dip galvanised steel 1,100-litre container on four castors, a rolled top edge, a formed D handle on its end and a pressed bar handle on its long face, vertical pale rub streaks, small shallow dents, no rust visible at 8 m; photographed 18 Aug 2019 (the type is in use before 1990: steel bulk containers of this kind date from the 1970s on, a lead, not a number)
+- **textures**:
+  - **corrugated_iron**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/corrugated_iron/corrugated_iron_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [168, 177, 174]
+    - **p10**: [158, 167, 163]
+    - **p90**: [182, 191, 187]
+    - **mean**: [169, 178, 175]
+    - **n_px**: 589824
+  - **corrugated_iron_02**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/corrugated_iron_02/corrugated_iron_02_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [89, 88, 82]
+    - **p10**: [80, 80, 72]
+    - **p90**: [98, 96, 88]
+    - **mean**: [89, 88, 81]
+    - **n_px**: 589824
+  - **corrugated_iron_03**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/corrugated_iron_03/corrugated_iron_03_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [108, 118, 118]
+    - **p10**: [100, 113, 114]
+    - **p90**: [118, 124, 122]
+    - **mean**: [108, 118, 118]
+    - **n_px**: 589824
+  - **worn_corrugated_iron**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_corrugated_iron/worn_corrugated_iron_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [120, 119, 117]
+    - **p10**: [102, 99, 94]
+    - **p90**: [140, 140, 140]
+    - **mean**: [121, 119, 117]
+    - **n_px**: 589824
+  - **green_metal_rust**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/green_metal_rust/green_metal_rust_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [62, 76, 51]
+    - **p10**: [57, 71, 47]
+    - **p90**: [66, 80, 55]
+    - **mean**: [62, 76, 51]
+    - **n_px**: 589824
+  - **rust_coarse_01**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rust_coarse_01/rust_coarse_01_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [103, 58, 31]
+    - **p10**: [78, 42, 19]
+    - **p90**: [125, 75, 44]
+    - **mean**: [102, 59, 31]
+    - **n_px**: 589824
+  - **rusty_painted_metal**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rusty_painted_metal/rusty_painted_metal_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [116, 63, 46]
+    - **p10**: [63, 38, 29]
+    - **p90**: [129, 69, 51]
+    - **mean**: [108, 59, 43]
+    - **n_px**: 589824
+  - **precast_concrete_wall**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/precast_concrete_wall/precast_concrete_wall_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [153, 137, 118]
+    - **p10**: [126, 111, 95]
+    - **p90**: [173, 156, 136]
+    - **mean**: [151, 135, 116]
+    - **n_px**: 589824
+  - **pebble_embedded_concrete**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/pebble_embedded_concrete/pebble_embedded_concrete_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [89, 77, 63]
+    - **p10**: [76, 65, 52]
+    - **p90**: [116, 103, 87]
+    - **mean**: [93, 81, 67]
+    - **n_px**: 589824
+  - **painted_metal_shutter**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/painted_metal_shutter/painted_metal_shutter_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [131, 135, 138]
+    - **p10**: [110, 113, 114]
+    - **p90**: [141, 146, 149]
+    - **mean**: [128, 131, 134]
+    - **n_px**: 589824
+  - **worn_shutter**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/worn_shutter/worn_shutter_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [63, 58, 53]
+    - **p10**: [49, 47, 44]
+    - **p90**: [86, 77, 66]
+    - **mean**: [65, 60, 54]
+    - **n_px**: 589824
+  - **container_side**:
+    - **url**: https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/container_side/container_side_diff_1k.jpg
+    - **central_crop**: [128, 128, 896, 896]
+    - **median**: [93, 136, 81]
+    - **p10**: [91, 133, 79]
+    - **p90**: [95, 140, 83]
+    - **mean**: [93, 136, 81]
+    - **n_px**: 589824
+- **models**:
+  - **metal_trash_can**:
+    - **page**: https://polyhaven.com/a/metal_trash_can
+    - **authors**:
+      - **GurJas Studios**: All
+    - **licence**: CC0
+    - **info_dimensions_mm**: [1846.93, 556.29, 906.17]
+    - **gltf_1k_parts**:
+      -
+        - **node**: metal_trash_can_handle_left
+        - **translation**: [0.227, 0.65, -0]
+        - **size_m**: [0.076, 0.079, 0.185]
+        - **min_m**: [-0.068, -0.071, -0.093]
+        - **max_m**: [0.009, 0.008, 0.093]
+        - **verts**: 243
+      -
+        - **node**: metal_trash_can_lid
+        - **translation**: [0.126, 0.286, -0]
+        - **size_m**: [0.556, 0.115, 0.556]
+        - **min_m**: [-0.278, -0.037, -0.278]
+        - **max_m**: [0.278, 0.078, 0.278]
+        - **verts**: 989
+      -
+        - **node**: metal_trash_can
+        - **translation**: [0.5, 0, 0]
+        - **size_m**: [0.613, 0.906, 0.552]
+        - **min_m**: [-0.307, 0, -0.276]
+        - **max_m**: [0.307, 0.906, 0.276]
+        - **verts**: 2883
+      -
+        - **node**: metal_trash_can_handle_right
+        - **translation**: [0.795, 0.65, -0]
+        - **size_m**: [0.1, 0.064, 0.185]
+        - **min_m**: [-0.086, -0.053, -0.093]
+        - **max_m**: [0.014, 0.011, 0.093]
+        - **verts**: 243
+      -
+        - **node**: metal_trash_can_rust
+        - **translation**: [-0.5, 0, 0]
+        - **size_m**: [0.611, 0.906, 0.549]
+        - **min_m**: [-0.305, 0, -0.274]
+        - **max_m**: [0.307, 0.906, 0.274]
+        - **verts**: 3335
+      -
+        - **node**: metal_trash_can_rust_handle_left
+        - **translation**: [-0.773, 0.65, -0]
+        - **size_m**: [0.086, 0.08, 0.185]
+        - **min_m**: [-0.078, -0.072, -0.093]
+        - **max_m**: [0.009, 0.008, 0.093]
+        - **verts**: 261
+      -
+        - **node**: metal_trash_can_rust_handle_right
+        - **translation**: [-0.227, 0.65, -0]
+        - **size_m**: [0.075, 0.078, 0.185]
+        - **min_m**: [-0.009, -0.07, -0.093]
+        - **max_m**: [0.066, 0.008, 0.093]
+        - **verts**: 261
+      -
+        - **node**: metal_trash_can_rust_lid
+        - **translation**: [-0.874, 0.286, -0]
+        - **size_m**: [0.556, 0.116, 0.544]
+        - **min_m**: [-0.278, -0.038, -0.269]
+        - **max_m**: [0.278, 0.078, 0.275]
+        - **verts**: 1067
+    - **note**: y up. node metal_trash_can (the clean variant) is the body: 0.906 high, a ribbed cylinder with its ribs in the normal map and a rolled bead; handles and lid separate; 0.55 across: a US-style can, not the British 18-inch dustbin
+  - **trashbag**:
+    - **page**: https://polyhaven.com/a/trashbag
+    - **authors**:
+      - **Benny Weimer**: All
+    - **licence**: CC0
+    - **info_dimensions_mm**: [528.07, 462.893, 574.999]
+- **held_bins**:
+  - **litter-bin**:
+    - **file**: production/assets/street/clutter/litter-bin.glb
+    - **size_m**: [0.416, 1, 0.496]
+    - **min_m**: [-0.208, 0, -0.288]
+    - **max_m**: [0.208, 1, 0.208]
+    - **materials**:
+      -
+        - **name**: council-green
+        - **base**: [0.009, 0.045, 0.017, 1]
+        - **metallic**: 0.3
+        - **roughness**: 0.5
+      -
+        - **name**: inside-dark
+        - **base**: [0.001, 0.001, 0.001, 1]
+        - **metallic**: 0
+        - **roughness**: 0.9
+      -
+        - **name**: letters-white
+        - **base**: [0.836, 0.836, 0.782, 1]
+        - **metallic**: 0
+        - **roughness**: 0.5
+  - **dustbin**:
+    - **file**: production/assets/street/clutter/dustbin.glb
+    - **size_m**: [0.482, 0.658, 0.472]
+    - **min_m**: [-0.241, 0, -0.236]
+    - **max_m**: [0.241, 0.658, 0.236]
+    - **materials**:
+      -
+        - **name**: galvanised
+        - **base**: [0.311, 0.32, 0.311, 1]
+        - **metallic**: 0.85
+        - **roughness**: 0.55
+  - **grit-bin**:
+    - **file**: production/assets/street/clutter/grit-bin.glb
+    - **size_m**: [0.96, 0.7, 0.698]
+    - **min_m**: [-0.48, 0, -0.348]
+    - **max_m**: [0.48, 0.7, 0.35]
+    - **materials**:
+      -
+        - **name**: grit-yellow
+        - **base**: [0.812, 0.465, 0.004, 1]
+        - **metallic**: 0
+        - **roughness**: 0.55
+      -
+        - **name**: grit-black
+        - **base**: [0.006, 0.006, 0.006, 1]
+        - **metallic**: 0
+        - **roughness**: 0.6
+  - **outdoor_bin**:
+    - **file**: ledger/Assets/Props/base-mesh/outdoor_bin.glb
+    - **size_m**: [0.6, 0.764, 0.6]
+    - **min_m**: [-0.3, 0, -0.3]
+    - **max_m**: [0.3, 0.764, 0.3]
+    - **materials**:
+      -
+        - **name**: DefaultMaterial
+        - **base**: [0.5, 0.5, 0.5, 1]
+        - **metallic**: 0.2
+        - **roughness**: 0.8
+  - **swing_bin**:
+    - **file**: ledger/Assets/Props/base-mesh/swing_bin.glb
+    - **size_m**: [0.33, 0.838, 0.32]
+    - **min_m**: [-0.165, -0.126, -0.16]
+    - **max_m**: [0.165, 0.712, 0.16]
+    - **materials**:
+      -
+        - **name**: DefaultMaterial
+        - **base**: [0.5, 0.5, 0.5, 1]
+        - **metallic**: 0.2
+        - **roughness**: 0.8
+      -
+        - **name**: DefaultMaterial
+        - **base**: [0.5, 0.5, 0.5, 1]
+        - **metallic**: 0.2
+        - **roughness**: 0.8
+- **topsy_974902**:
+  - **photo**: S12, Geograph 974902 (Jim Champion, 2008-09-21, CC BY-SA 2.0), the 427 x 640 reduced copy
+  - **method**: the bin's silhouette read by eye on a 3x enlargement with a 20 px grid, +-2 px at every edge; one dimension fitted: the dome crown (row 257) to the base centre (row 548, the front bottom edge at row 556 less the ellipse of the round foot) is 291 px = the K2 height 900, so 3.09 mm a pixel (the George V box beside it, 465 px from cap top to foot, gives 3.2 mm a pixel at an assumed 1.5 m, so the bin reads 917 high: the two agree within 2 %, and the box's height is itself +-4 %); every width is a silhouette width at the stated row (a cylinder seen from a little above reads its true diameter at its widest rows); the error is +-2 px (+-6 mm) plus the scale +-5 %
+  - **rows_px_and_mm**:
+    -
+      - **part**: hood skirt (rows 283 to 338)
+      - **x_px**: [68, 208]
+      - **width_px**: 140
+      - **diameter_mm**: 433
+      - **r_mm**: 217
+    -
+      - **part**: body (rows 345 to 430)
+      - **x_px**: [70, 205]
+      - **width_px**: 135
+      - **diameter_mm**: 417
+      - **r_mm**: 209
+    -
+      - **part**: collar (rows 432 to 447)
+      - **x_px**: [62, 210]
+      - **width_px**: 148
+      - **diameter_mm**: 457
+      - **r_mm**: 229
+    -
+      - **part**: base drum (rows 470 to 545)
+      - **x_px**: [58, 218]
+      - **width_px**: 160
+      - **diameter_mm**: 495
+      - **r_mm**: 247
+  - **heights_mm**:
+    - **dome_crown**: 900
+    - **hood_shoulder_start**: 820
+    - **groove_top**: 650
+    - **groove_bottom**: 630
+    - **collar_top**: 360
+    - **collar_bottom**: 312
+    - **base_shoulder_top**: 240
+    - **aperture_top**: 780
+    - **aperture_sill**: 680
+  - **aperture**: about 57 px of its width is seen (x 143 to 200) and it wraps round the front-right: a width of about 230 is read, +-25; its height rows 297 to 328 = 95 to 105 with the dome's lip standing out over it
+  - **differs_from_first_try**: the first try's generic drum was widest at the middle of the body (r 237) with the hood the widest part (r 250) and a narrow foot (r 211): the photograph has the base drum the widest (r 247), the body narrower (r 210) and the hood skirt narrower (r 218)
+  - **not_modelled**: the crest sticker on the body (a council name: masked in the preview and not modelled); the dome's small top moulding
+
+## Calibration
+
+- **method**: the horizon (brick-course) method of this week's bollards writer, re-run here on its two urban_street_02 anchors: in a levelled equirectangular panorama the horizon is the middle row; the courses of a 75 mm-gauge brick wall are evenly spaced in tan(angle below the horizon); camera height above the wall foot = 75 mm x tan(foot angle) / (course pitch in tan units)
+- **horizon_anchors**:
+  -
+    - **pano**: urban_street_02
+    - **id**: us02_building_wall
+    - **cols**: [740, 840]
+    - **rows**: [2045, 2192]
+    - **foot_row**: 2194
+    - **gauge_mm**: 75
+    - **step_m**: 0
+    - **what**: building wall behind the K2b bollard, on its footway
+    - **px_pitch_by_eye**: 11.75
+    - **pitch_tan**: 0.01
+    - **h_above_wall_foot_mm**: 875.5
+    - **fit_on_edge**: False
+  -
+    - **pano**: urban_street_02
+    - **id**: us02_gate_pier
+    - **cols**: [7970, 8000]
+    - **rows**: [2028, 2215]
+    - **foot_row**: 2226
+    - **gauge_mm**: 75
+    - **step_m**: 0
+    - **what**: gate pier at the panorama seam, on the same footway
+    - **px_pitch_by_eye**: 14.77
+    - **pitch_tan**: 0.011
+    - **h_above_wall_foot_mm**: 919.3
+    - **fit_on_edge**: False
+- **camera_height**:
+  - **urban_street_02_footway_m**: 0.92
+  - **error_m**: 0.04
+  - **urban_street_02_road_m**: 1.04
+  - **road_error_m**: 0.05
+  - **rule**: the footway height is the bollards writer's 0.92 +-0.04 (their anchors re-run above give [875.5, 919.3] mm); the road is the footway height plus the kerb upstand 0.12 +-0.02 (a 125 mm kerb less the footway's fall)
+- **note**: no panorama is at 1.6 m: urban_street_02 is at 0.92 m above its footway and 1.04 m above the road where the container stands. Every length read on it is +-5 % at best. NO bin of the target is measured on a photograph, so no length of any bin rests on this height; it serves only the scale overlay of section 6 and the container's colour
+
+## Panoramas looked at
+
+- **note**: all seventeen British panoramas on Poly Haven (the Dublin sets docklands_01 and _02 and the Irish interiors were not used) were looked at as 8 rectilinear views each at 75 degrees; none shows a street litter bin of a type used before 1990
+- **rows**:
+  | panorama | shows | type | in_use_before_1990 |
+  |---|---|---|---|
+  | adams_place_bridge | a glazed footbridge | no bin | n/a |
+  | bethnal_green_entrance | two black panelled hooded bins inside park railings, 10 to 15 m away; a white sack caught on the railings | modern hooded bin (a later type than K2) | no: panelled 2000s type; the hooded idea yes |
+  | birbeck_street_underpass | a wheeled bin at a blue gate; two small recycling boxes at a gate pier; blue road barriers | wheeled and recycling bins | no (wheelie bins after 1990 on most streets; recycling boxes later) |
+  | cambridge | a college A-board; no bin | no bin | n/a |
+  | canary_wharf | a ticket-machine wall, a concrete block, handrails; no bin | no bin | n/a |
+  | epping_forest_01 / 02 | woodland; no bin | no bin | n/a |
+  | greenwich_park / _02 / _03 | parkland, a bench; no bin | no bin | n/a |
+  | leadenhall_market | two stainless rectangular bins at a shopfront (plus shop lettering and a bar's sign in other views: no crop kept) | modern stainless | no |
+  | limehouse | one small blue bin on a pontoon | modern | no |
+  | roof_garden | two stainless drum bins on short pedestals | modern stainless drum | no |
+  | urban_street_01 | no bin: bollards, planted bed, cars | no bin | n/a |
+  | urban_street_02 | a purple four-castor plastic bulk bin with a grey lid and a galvanised steel 1,100-litre container with castors, on the road at the kerb outside a housing block; black bollards | bulk containers (not street litter bins) | steel container: yes (1970s on, Lead); purple plastic bulk bin: later; neither is a litter bin |
+  | urban_street_03 | no bin on the street; a blue box in a front garden | no bin | n/a |
+  | urban_street_04 | no bin: stuccoed terrace, a cycle hoop, a railed garden | no bin | n/a |
+
+## Leads (search summaries: never numbers)
+
+| id | what | url | kind | use |
+|---|---|---|---|---|
+| L1 | Glasdon's FAQ (search summary): the original Topsy was launched in 1984 with a lift-off hood and a fire-safety device; earlier hooded models such as the Super Guppy opened level with the rim so a full liner had to be hoisted about three feet | https://www.glasdon.com/intl/faq/topsy-litter-bin | Lead | K2's lift-off hood; the burn variant |
+| L2 | London Transport Museum collection record 2023-1775 (search summary): "Waste bin; freestanding litter bin, 1984 - 1990", Glasdon-made, a metal liner and a removable red plastic outer hood | https://www.ltmuseum.co.uk/collections/collections-online/infrastructure/item/2023-1775 | Lead | K2's liner and hood; the date window |
+| L3 | MoDiP (Museum of Design in Plastics) records BXL 0564 to 0570 (search summary): Elton Civic Supplies' free-standing bins of fire-retardant glass-fibre polyester dated 1959 with a side door to a galvanised liner; post-type bins of reinforced polyester c. 1960 to 1969, supplied to councils free, "no rust stains on concrete lamp standards" | https://www.modip.ac.uk/artefact/bxl-0567 | Lead | glass-fibre bins in councils by 1959 to 1969; pole bins on lamp standards |
+| L4 | The National Archives blog "Public bins: a design history we should not discard too easily" (search summary): the 1958 Litter Act; the 1960 Council of Industrial Design competition and its Embankment Gardens exhibition; the 1961 "Town Number One" (a perforated-sheet cylinder on a black base, V&A O1194407) ; councils decided locally so stock varied regionally; an open concrete design praised | https://blog.nationalarchives.gov.uk/public-bins-design-history | Lead | why councils had bins; why no single type; K3 |
+| L5 | Rossendale Borough Council bins review (search summary, modern): of 388 bins 207 were pole bins; pole bins hold about 50 litres, floor bins 100 to 120 | https://www.rossendale.gov.uk/download/meetings/id/1746/Item%2520D9%2520-%2520Appendix%25202 | Lead (modern) | K1 capacity; the mix |
+| L6 | trade catalogues (search summaries, modern): a 70-litre galvanised post bin of 2 mm sheet with an 8 mm base and a "LITTER" sticker supplied; a 40-litre round steel post bin 355 across and 480 high; a 56-litre square post bin 419 x 235 x 622 | https://www.kingfisherdirect.co.uk/middlesbrough-post-mountable-steel-litter-bin-70-litre-capacity | Lead (modern) | K1 size band; the word LITTER as the one marking |
+| L7 | BSI Knowledge, BS 792 (search summary): editions 1938, 1947 (published 1965) and 1973 (published October 1973, withdrawn August 2016): "four sizes of dustbins up to 0.092 m3"; clauses on the body, rims, base, bottom hoop, lid, body handles and lid handle | https://knowledge.bsigroup.com/products/specification-for-mild-steel-dustbins | Lead | D1's parts list |
+| L8 | a UK tariff ruling and two retail listings (search summaries): a 90-litre galvanised bin of 18 in top, 15 in base, 22 in high; 457 across x 610 high excluding the lid; or 450 top, 400 base, 575 high; 0.5 to 0.6 mm sheet | https://www.tax.service.gov.uk/search-for-advance-tariff-rulings/ruling/600008935 | Lead | D1's taper and sheet |
+| L9 | a summary of Preston Central Bus Station (1969): glass-reinforced plastic litter bins, poster boards and signs | (summary only) | Lead | GRP street furniture by 1969 |
+| L10 | Ian Leith, "British Litter Bins 1950 to 66", Design Council Archive, University of Brighton (a pointer in a summary) | (not reached) | Lead | first thing to read when the network opens |
+
+## What the target could not settle
+
+- NO PHOTOGRAPH OF A 1975 TO 1995 STREET LITTER BIN WAS REACHED (Geograph, searched 12 October for litter bin, litter, dustbin, waste bin, bin on a post, pole mounted bin and a dozen more, each year 1975 to 1996: forty-nine photographs of any year, none a street litter bin; Wikimedia Commons refused every request with 429; archive.org not searched). K2 is now measured on one 2008 photograph of a hooded bin type made since 1984 (S12); K1, the pole-mounted open steel bin, has no photograph at all and stays research and judgement. The shape of K1 and, for what S12 does not show, K2 is research and judgement, not measurement: their proportions (the taper, the bead, the clamp rings, the hood's skirt and the aperture's size and height) are ergonomic and trade guesses and a fresh reviewer has nothing to hold them against but the asset plan's kit names and the leads.
+- Which council colour Meridian used (green is a judgement from the repository's own recipe and from green being common on 1980s municipal steel and glass-fibre; no source says); canon owes the council's name and no word of it appears on any bin.
+- Whether Meridian's council had bought the Topsy-type (1984) or only older hooded or pole stock: K2 now has that type's form (S12), so a council with older stock would show a different bin; the colour, the lettering and the aperture's width (about 230, the photograph shows it foreshortened) are Judgement.
+- The real height of rim and aperture: K1 rim 1.05 and K2 aperture sill 0.65 are ergonomic Judgement (the repository's script has 0.95 for the pole bin).
+- The BS 792 dimension table (the 1973 or earlier edition): 0.46 x 0.61 is the scene's; the foot (398), the rib heights and the handle sizes are Judgement.
+- Whether bins were fixed to the lamp columns on Quay Street: K1 stands on its own post; the lamp-post target's shaft at 1.0 m is 68 mm and the sleeve 124, neither a clean 76 mm host. A column-mounted variant would need the lamp target's sleeve and a different clamp: not written.
+- The bus stop (hook-cast: x 46.0, z -4.3; not in the scene file) has no pole yet, so the 2.0 m between B3 and the stop is to the cast's point.
+- The camera heights of every panorama but urban_street_02 were not re-measured; no bin's size depends on one.
+
+## To read when more of the network answers
+
+- Wikimedia Commons: Category "Litter bins in the United Kingdom" and "Dustbins" (and the Geograph Britain and Ireland grid squares of any English port town photographed 1985 to 1992): the type, size and colour of every bin in a dated street photograph; check each file page for author, licence, date
+- Geograph: searches for "litter bin" and "dustbin" limited to 1980 to 1995 uploads of scanned slides
+- Historic England Archive: street-furniture photographs 1975 to 1995
+- The Design Council Archive (University of Brighton): Ian Leith, "British Litter Bins 1950 to 66", and its several hundred bin photographs
+- MoDiP records BXL 0564 to 0570 in full (dates, dimensions, colours of the Elton glass-fibre bins)
+- The London Transport Museum records 2023-1775 and 1999-37177 (dimensions and colours of a 1984 to 1990 hooded bin and a 1950s to 60s grey bin)
+- Glasdon's company history and its Topsy and Super Guppy data sheets (the shapes to AVOID copying, and the real 1984 dimensions)
+- The National Archives blog and the V&A record O1194407 (Town Number One)
+- BSI BS 792:1973 (the preview of its dimension table) and BS 3735 (lids)
+- British Pathe and BFI film of a British high street, 1988 to 1991 (bins in use, colours, overflow)
+
+## The numbers the street already has (read from other files)
+
+-
+  - **id**: street_length_m
+  - **value**: 48
+  - **file**: production/specs/vignette-scene.json
+  - **path**: street.length_m
+-
+  - **id**: kerb_face_z_m
+  - **value**: 3
+  - **file**: production/specs/vignette-scene.json
+  - **path**: street.carriageway.half_width_m
+-
+  - **id**: footway_width_m
+  - **value**: 2
+  - **file**: production/specs/vignette-scene.json
+  - **path**: street.footway.width_m
+-
+  - **id**: dustbin_x_m
+  - **value**: 21.4
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E13_household_dustbin].x_m
+-
+  - **id**: dustbin_count
+  - **value**: 2
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E13_household_dustbin].count
+-
+  - **id**: dustbin_spacing_m
+  - **value**: 0.6
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E13_household_dustbin].spacing_m
+-
+  - **id**: dustbin_setback_m
+  - **value**: 1.6
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E13_household_dustbin].setback_from_kerb_m
+-
+  - **id**: dustbin_body_d_m
+  - **value**: 0.46
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E13_household_dustbin].body_diameter_m
+-
+  - **id**: dustbin_body_h_m
+  - **value**: 0.61
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E13_household_dustbin].body_height_m
+-
+  - **id**: dustbin_lid_d_m
+  - **value**: 0.5
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E13_household_dustbin].lid_diameter_m
+-
+  - **id**: dustbin_lid_h_m
+  - **value**: 0.05
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E13_household_dustbin].lid_height_m
+-
+  - **id**: kiosk_x_m
+  - **value**: 16.5
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E3_telephone_kiosk].x_m
+-
+  - **id**: kiosk_setback_m
+  - **value**: 0.55
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E3_telephone_kiosk].setback_from_kerb_m
+-
+  - **id**: kiosk_plan_m
+  - **value**: 0.914
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E3_telephone_kiosk].plan_m
+-
+  - **id**: pillar_box_x_m
+  - **value**: 27
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E4_pillar_box].x_m
+-
+  - **id**: pillar_box_setback_m
+  - **value**: 0.6
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E4_pillar_box].setback_from_kerb_m
+-
+  - **id**: pillar_box_cap_d_m
+  - **value**: 0.66
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E4_pillar_box].cap_diameter_m
+-
+  - **id**: railing_x_m
+  - **value**: 10
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E8_guard_railing].x_m
+-
+  - **id**: railing_panel_m
+  - **value**: 2
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E8_guard_railing].panel_length_m
+-
+  - **id**: railing_setback_m
+  - **value**: 0.25
+  - **file**: production/specs/vignette-scene.json
+  - **path**: furniture[bom=E8_guard_railing].setback_from_kerb_m
+-
+  - **id**: lamp_LC1_x_m
+  - **value**: 8
+  - **file**: production/cloud-week/targets/lamp-posts/target.json
+  - **path**: placement.columns[id=LC 1].x_m
+-
+  - **id**: lamp_LC1_z_m
+  - **value**: 3.77
+  - **file**: production/cloud-week/targets/lamp-posts/target.json
+  - **path**: placement.columns[id=LC 1].corrected_z_m
+-
+  - **id**: lamp_LC2_x_m
+  - **value**: 18
+  - **file**: production/cloud-week/targets/lamp-posts/target.json
+  - **path**: placement.columns[id=LC 2].x_m
+-
+  - **id**: lamp_LC3_x_m
+  - **value**: 28
+  - **file**: production/cloud-week/targets/lamp-posts/target.json
+  - **path**: placement.columns[id=LC 3].x_m
+-
+  - **id**: lamp_LC4_x_m
+  - **value**: 38
+  - **file**: production/cloud-week/targets/lamp-posts/target.json
+  - **path**: placement.columns[id=LC 4].x_m
+-
+  - **id**: door_mickeys_shop_x_m
+  - **value**: 4.797
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=mickeys].centres_street_x_m.shop_door
+-
+  - **id**: door_mickeys_side_x_m
+  - **value**: 3.822
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=mickeys].centres_street_x_m.side_door
+-
+  - **id**: door_fish_shop_x_m
+  - **value**: 10.797
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=fish_market].centres_street_x_m.shop_door
+-
+  - **id**: door_ritas_shop_x_m
+  - **value**: 19.203
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=ritas].centres_street_x_m.shop_door
+-
+  - **id**: door_empty_side_x_m
+  - **value**: 21.822
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=empty_unit].centres_street_x_m.side_door
+-
+  - **id**: door_empty_shop_x_m
+  - **value**: 22.797
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=empty_unit].centres_street_x_m.shop_door
+-
+  - **id**: door_laundry_side_x_m
+  - **value**: 32.178
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=steam_laundry].centres_street_x_m.side_door
+-
+  - **id**: door_laundry_shop_x_m
+  - **value**: 31.203
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=steam_laundry].centres_street_x_m.shop_door
+-
+  - **id**: door_grocer_shop_x_m
+  - **value**: 38.147
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=grocer].centres_street_x_m.shop_door
+-
+  - **id**: door_chandler_shop_x_m
+  - **value**: 44.203
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=chandler].centres_street_x_m.shop_door
+-
+  - **id**: door_tea_shop_x_m
+  - **value**: 25.797
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=tea_rooms].centres_street_x_m.shop_door
+-
+  - **id**: door_iron_shop_x_m
+  - **value**: 34.203
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=ironmonger].centres_street_x_m.shop_door
+-
+  - **id**: door_news_shop_x_m
+  - **value**: 40.203
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=newsagent].centres_street_x_m.shop_door
+-
+  - **id**: door_news_side_x_m
+  - **value**: 41.178
+  - **file**: production/cloud-week/targets/shopfronts/target.json
+  - **path**: shops[id=newsagent].centres_street_x_m.side_door
+-
+  - **id**: bollard_east_K3_x1_m
+  - **value**: 38.8
+  - **file**: production/cloud-week/targets/bollards/target.json
+  - **path**: placements.street_proper[id=side_passage].x_m[0]
+-
+  - **id**: bollard_east_K4_x1_m
+  - **value**: 42.5
+  - **file**: production/cloud-week/targets/bollards/target.json
+  - **path**: placements.street_proper[id=chandler_front].x_m[0]
+-
+  - **id**: bollard_east_K4_x2_m
+  - **value**: 44
+  - **file**: production/cloud-week/targets/bollards/target.json
+  - **path**: placements.street_proper[id=chandler_front].x_m[1]
+-
+  - **id**: bollard_west_yard_x1_m
+  - **value**: 20.7
+  - **file**: production/cloud-week/targets/bollards/target.json
+  - **path**: placements.street_proper[id=yard_mouth].x_m[0]
+-
+  - **id**: bollard_west_yard_x2_m
+  - **value**: 24.3
+  - **file**: production/cloud-week/targets/bollards/target.json
+  - **path**: placements.street_proper[id=yard_mouth].x_m[1]
+-
+  - **id**: kerb_top_width_mm
+  - **value**: 170
+  - **file**: production/cloud-week/targets/kerbs-and-covers/target.json
+  - **path**: pieces.kerb_granite.top_width
+  - **optional**: True
+-
+  - **id**: bus_stop_x_m
+  - **value**: 46
+  - **file**: production/specs/hook-cast.json
+  - **path**: places.bus_stop.x_m
+-
+  - **id**: bus_stop_z_m
+  - **value**: -4.3
+  - **file**: production/specs/hook-cast.json
+  - **path**: places.bus_stop.z_m
+
+## The checks the builder's automatic check must pass
+
+-
+  - **name**: K1_total_height
+  - **applies_to**: K1
+  - **measure**: z of the post cap's top above the pivot
+  - **expected**: 1255
+  - **tolerance**: 25
+  - **kind**: Judgement
+-
+  - **name**: K1_post_diameter
+  - **applies_to**: K1
+  - **measure**: outer diameter of the post tube
+  - **expected**: 76.1
+  - **tolerance**: 3
+  - **kind**: Judgement (3-inch tube)
+-
+  - **name**: K1_rim_height
+  - **applies_to**: K1
+  - **measure**: z of the rim bead's crown above the pivot
+  - **expected**: 1050
+  - **tolerance**: 20
+  - **kind**: Judgement; the repository script's 950 is wrong by 100
+-
+  - **name**: K1_bin_height
+  - **applies_to**: K1
+  - **measure**: rim crown minus the base plate's underside
+  - **expected**: 500
+  - **tolerance**: 15
+  - **kind**: Judgement
+-
+  - **name**: K1_bin_rim_diameter
+  - **applies_to**: K1
+  - **measure**: diameter over the rim bead
+  - **expected**: 373
+  - **tolerance**: 12
+  - **kind**: Judgement
+-
+  - **name**: K1_bin_foot_diameter
+  - **applies_to**: K1
+  - **measure**: outer diameter of the wall at its foot
+  - **expected**: 330
+  - **tolerance**: 10
+  - **kind**: Judgement
+-
+  - **name**: K1_bin_offset
+  - **applies_to**: K1
+  - **measure**: post axis to bin axis along x
+  - **expected**: 216
+  - **tolerance**: 10
+  - **kind**: Derived
+-
+  - **name**: K1_capacity_litres
+  - **applies_to**: K1
+  - **measure**: inner volume from the floor to the rim
+  - **expected**: 44.9
+  - **tolerance**: 6
+  - **kind**: Derived; Lead 50 L class
+-
+  - **name**: K1_wall_thickness
+  - **applies_to**: K1
+  - **measure**: sheet thickness (inner offset of the wall section)
+  - **expected**: 1.5
+  - **tolerance**: 0.7
+  - **kind**: Judgement; the repository script's 3 mm is too thick
+-
+  - **name**: K1_clamp_count_and_z
+  - **applies_to**: K1
+  - **measure**: two clamp rings, centres at z 640 and 980
+  - **expected**: [640, 980]
+  - **tolerance**: 25
+  - **kind**: Judgement
+-
+  - **name**: K1_drain_holes
+  - **applies_to**: K1
+  - **measure**: four holes of 8 in the base plate on radius 100
+  - **expected**: [4, 8, 100]
+  - **tolerance**: [0, 2, 6]
+  - **kind**: Judgement
+-
+  - **name**: K1_letter_height
+  - **applies_to**: K1
+  - **measure**: cap height of LITTER
+  - **expected**: 45
+  - **tolerance**: 6
+  - **kind**: Judgement; the repository script's 75 is too tall
+-
+  - **name**: K1_only_word
+  - **applies_to**: K1
+  - **measure**: every word on any mesh or texture
+  - **expected**:
+    - LITTER
+  - **tolerance**: 0
+  - **kind**: rule
+-
+  - **name**: K1_bead_diameter
+  - **applies_to**: K1
+  - **measure**: rolled bead cross-section
+  - **expected**: 9
+  - **tolerance**: 2
+  - **kind**: Judgement
+-
+  - **name**: K2_total_height
+  - **applies_to**: K2
+  - **measure**: z of the dome crown
+  - **expected**: 900
+  - **tolerance**: 20
+  - **kind**: Judgement
+-
+  - **name**: K2_hood_diameter
+  - **applies_to**: K2
+  - **measure**: diameter of the hood skirt (z 700 to 800)
+  - **expected**: 436
+  - **tolerance**: 12
+  - **kind**: Photo
+-
+  - **name**: K2_body_diameter
+  - **applies_to**: K2
+  - **measure**: diameter of the body at z 500
+  - **expected**: 420
+  - **tolerance**: 12
+  - **kind**: Photo
+-
+  - **name**: K2_collar_diameter
+  - **applies_to**: K2
+  - **measure**: diameter of the collar at z 320
+  - **expected**: 460
+  - **tolerance**: 12
+  - **kind**: Photo
+-
+  - **name**: K2_base_diameter
+  - **applies_to**: K2
+  - **measure**: diameter of the base drum at z 120 (the widest part)
+  - **expected**: 494
+  - **tolerance**: 12
+  - **kind**: Photo
+-
+  - **name**: K2_aperture_width
+  - **applies_to**: K2
+  - **measure**: width of the aperture opening
+  - **expected**: 230
+  - **tolerance**: 25
+  - **kind**: Judgement
+-
+  - **name**: K2_aperture_height
+  - **applies_to**: K2
+  - **measure**: height of the aperture opening
+  - **expected**: 105
+  - **tolerance**: 15
+  - **kind**: Photo
+-
+  - **name**: K2_aperture_sill_z
+  - **applies_to**: K2
+  - **measure**: z of the aperture's lower edge
+  - **expected**: 680
+  - **tolerance**: 20
+  - **kind**: Photo
+-
+  - **name**: K2_liner_rim_z
+  - **applies_to**: K2
+  - **measure**: z of the liner's rolled rim (seen through the aperture)
+  - **expected**: 702
+  - **tolerance**: 15
+  - **kind**: Judgement
+-
+  - **name**: K2_join_groove_z
+  - **applies_to**: K2
+  - **measure**: z of the join groove
+  - **expected**: [640, 664]
+  - **tolerance**: 10
+  - **kind**: Photo
+-
+  - **name**: K2_letter_height
+  - **applies_to**: K2
+  - **measure**: cap height of LITTER
+  - **expected**: 55
+  - **tolerance**: 6
+  - **kind**: Judgement
+-
+  - **name**: K2_only_word
+  - **applies_to**: K2
+  - **measure**: every word on any mesh or texture
+  - **expected**:
+    - LITTER
+  - **tolerance**: 0
+  - **kind**: rule
+-
+  - **name**: K2_no_maker_mark
+  - **applies_to**: K2
+  - **measure**: moulded or printed maker, council or product marks
+  - **expected**: 0
+  - **tolerance**: 0
+  - **kind**: rule
+-
+  - **name**: D1_total_height
+  - **applies_to**: D1
+  - **measure**: lid handle top above the base (body 0.61 + lid 0.05)
+  - **expected**: 660
+  - **tolerance**: 8
+  - **kind**: Read (scene)
+-
+  - **name**: D1_body_height
+  - **applies_to**: D1
+  - **measure**: rim crown above the base
+  - **expected**: 610
+  - **tolerance**: 6
+  - **kind**: Read (scene 0.61)
+-
+  - **name**: D1_rim_diameter
+  - **applies_to**: D1
+  - **measure**: diameter over the rolled top bead
+  - **expected**: 463
+  - **tolerance**: 6
+  - **kind**: Read (scene 0.46)
+-
+  - **name**: D1_lid_diameter
+  - **applies_to**: D1
+  - **measure**: lid skirt diameter
+  - **expected**: 502
+  - **tolerance**: 6
+  - **kind**: Read (scene 0.50)
+-
+  - **name**: D1_lid_height
+  - **applies_to**: D1
+  - **measure**: lid crown + handle above the rim crown
+  - **expected**: 50
+  - **tolerance**: 5
+  - **kind**: Read (scene 0.05)
+-
+  - **name**: D1_foot_diameter
+  - **applies_to**: D1
+  - **measure**: bottom hoop diameter
+  - **expected**: 414
+  - **tolerance**: 10
+  - **kind**: Judgement; Lead 400 to 412
+-
+  - **name**: D1_rib_count_and_z
+  - **applies_to**: D1
+  - **measure**: three swaged ribs at z
+  - **expected**: [150, 290, 430]
+  - **tolerance**: 15
+  - **kind**: Judgement
+-
+  - **name**: D1_side_handles
+  - **applies_to**: D1
+  - **measure**: two strap loops at z 470, 45 proud
+  - **expected**: [2, 470, 45]
+  - **tolerance**: [0, 25, 8]
+  - **kind**: Judgement
+-
+  - **name**: D1_lid_clearance
+  - **applies_to**: D1
+  - **measure**: lid skirt inner radius minus rim bead radius
+  - **expected**: 8.5
+  - **tolerance**: 4
+  - **kind**: Derived
+-
+  - **name**: street_bin_count
+  - **applies_to**: placements
+  - **measure**: public litter bins on the street
+  - **expected**: 3
+  - **tolerance**: 0
+  - **kind**: Judgement (section 7)
+-
+  - **name**: dustbin_count_and_x
+  - **applies_to**: placements
+  - **measure**: dustbins and their x
+  - **expected**: [2, 21.4, 22]
+  - **tolerance**: [0, 0.03, 0.03]
+  - **kind**: Read
+-
+  - **name**: dustbin_setback
+  - **applies_to**: placements
+  - **measure**: axis from the kerb's back edge
+  - **expected**: 1.6
+  - **tolerance**: 0.04
+  - **kind**: Read
+-
+  - **name**: B1_place
+  - **applies_to**: placements
+  - **measure**: K1 post x and |z|
+  - **expected**: [6.6, 3.62]
+  - **tolerance**: [0.05, 0.03]
+  - **kind**: Judgement
+-
+  - **name**: B2_place
+  - **applies_to**: placements
+  - **measure**: K1 post x and |z|
+  - **expected**: [35.2, 3.62]
+  - **tolerance**: [0.05, 0.03]
+  - **kind**: Judgement
+-
+  - **name**: B3_place
+  - **applies_to**: placements
+  - **measure**: K2 axis x and |z|
+  - **expected**: [44, 3.8]
+  - **tolerance**: [0.05, 0.03]
+  - **kind**: Judgement
+-
+  - **name**: walking_strip
+  - **applies_to**: placements
+  - **measure**: clear footway beside every bin
+  - **expected**: 0.68
+  - **tolerance**: at least
+  - **kind**: Read (railings target)
+-
+  - **name**: kerb_clear
+  - **applies_to**: placements
+  - **measure**: bin edge to the kerb back edge
+  - **expected**: 0.25
+  - **tolerance**: at least
+  - **kind**: Judgement
+-
+  - **name**: door_leaf_clear
+  - **applies_to**: placements
+  - **measure**: bin footprint to the nearest door leaf in x
+  - **expected**: 0.3
+  - **tolerance**: at least
+  - **kind**: Judgement
+-
+  - **name**: every_bin_within_3m_of_a_door_or_the_stop
+  - **applies_to**: placements
+  - **measure**: distance from each bin to the nearest shop door or the bus stop
+  - **expected**: 3
+  - **tolerance**: at most
+  - **kind**: the asset plan's rule as applied
+-
+  - **name**: wear_iron_share
+  - **applies_to**: K1
+  - **measure**: share of the post and bin surface with paint loss
+  - **expected**: [0.04, 0.08]
+  - **tolerance**: 0
+  - **kind**: Read (wear target)
+-
+  - **name**: no_brand_text
+  - **applies_to**: all
+  - **measure**: council name, maker name, product name, crest, monogram on any mesh or texture
+  - **expected**: 0
+  - **tolerance**: 0
+  - **kind**: rule
+-
+  - **name**: no_alcohol_gambling_children
+  - **applies_to**: all
+  - **measure**: any alcohol, gambling or child image in any dressing or poster remnant
+  - **expected**: 0
+  - **tolerance**: 0
+  - **kind**: rule (canon)
+-
+  - **name**: dressing_separate
+  - **applies_to**: all
+  - **measure**: overflow litter in the bin's own mesh
+  - **expected**: 0
+  - **tolerance**: 0
+  - **kind**: rule (the brief)
+-
+  - **name**: tri_budget
+  - **applies_to**: all
+  - **measure**: triangles per kind
+  - **expected**:
+    - **K1**: 3500
+    - **K2**: 6000
+    - **D1**: 4500
+  - **tolerance**: 0.15
+  - **kind**: Judgement
+
+## Hand-over
+
+- **glb**: K1_pole_open_<A|B|C>.glb, K2_hooded_drum_<a|b|c>.glb, D1_dustbin_<a|b|c>.glb (metres, z up, scale 1, pivot as the frame says); the lid of D1 b is a separate mesh stood against the wall; the liner of K2 and the sack of K1 B are separate meshes; the overflow pieces are the dressing sets' instanced meshes (one mesh per item, 150 to 600 triangles)
+- **replaces**: production/assets/street/clutter/litter-bin.glb and dustbin.glb, the recipe's CLUTTER_FOR_HELD (swing_bin and outdoor_bin to litter-bin) and the three E6 placements of the scene (public bins: x 8.0 east, x 30.0 east, x 33.0 west) with B1, B2 and B3; the dustbins keep the scene's E13 place
+- **lettering**: LITTER only; the font is the builder's pick from an OFL face (the asset plan: "lettering must be set in OFL fonts"); no other word; digits only for the asset stencil and the house number
+- **materials**: master materials per substance (painted steel, glass-fibre gelcoat, galvanised steel, rust, grime) with the per-asset masks of the asset plan; the sRGB values in materials are albedo, not render values
+- **notes**:
+  - the bins carry no maker's name, no council name, no crest, no cypher
+  - K1's bin is hung along the street, not across it, so it takes no footway depth beyond its own 0.37 m; its letters face the building line
+  - tobacco is allowed (canon): scorch marks and cigarette ends stay; nothing else of the content rule is touched
+
+## Self-check
+
+SELF-CHECK litter-bins: 139 checks, 139 passed, 0 failed, 9 reported
+
+- reported: K2_no_maker_mark: not computed here (moulded or printed maker, council or product marks)
+- reported: walking_strip: a placement or content rule, tested in groups 4 and 6
+- reported: kerb_clear: a placement or content rule, tested in groups 4 and 6
+- reported: door_leaf_clear: a placement or content rule, tested in groups 4 and 6
+- reported: every_bin_within_3m_of_a_door_or_the_stop: a placement or content rule, tested in groups 4 and 6
+- reported: wear_iron_share: a placement or content rule, tested in groups 4 and 6
+- reported: no_brand_text: a placement or content rule, tested in groups 4 and 6
+- reported: no_alcohol_gambling_children: a placement or content rule, tested in groups 4 and 6
+- reported: dressing_separate: a placement or content rule, tested in groups 4 and 6

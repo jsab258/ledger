@@ -194,16 +194,16 @@ def k2_views(T):
     r_at = r_of_z(prof, L['z_centre'])
     chord = 2 * r_at * math.sin(math.radians(L['arc_deg'] / 2))
     v.add('lettering_LITTER', 'lettering', 'letters_cream', box(-chord / 2, L['z_centre'] - L['cap_height'] / 2, chord / 2, L['z_centre'] + L['cap_height'] / 2), edge=False)
-    v.add('join_groove', 'moulding', 'bin_sack_black', box(-r_of_z(prof, 582.0), K['parts']['join_groove']['z'][0] + 2, r_of_z(prof, 582.0), K['parts']['join_groove']['z'][1] - 4), edge=False)
+    v.add('join_groove', 'moulding', 'bin_sack_black', box(-r_of_z(prof, 652.0), K['parts']['join_groove']['z'][0] + 2, r_of_z(prof, 652.0), K['parts']['join_groove']['z'][1] - 4), edge=False)
     out = {'K2_front': v}
     # plan
     v = View('K2 plan (x right toward the aperture)', ['x (mm)', 'y (mm)'])
-    v.add('hood', 'shell', 'gel_green_chalk', circle(0, 0, 250.0))
-    v.add('body_max', 'shell', 'gel_green_fresh', ring(0, 0, 236.0, 237.0))
-    v.add('foot', 'shell', 'gel_green_fresh', ring(0, 0, 210.0, 211.0))
-    v.add('liner', 'liner', 'zinc_weathered', ring(0, 0, 186.0, 194.0))
-    v.add('aperture', 'aperture', 'bin_sack_black', box(236, -ap['width'] / 2, 252, ap['width'] / 2))
-    v.add('lock', 'fixing', 'zinc_new', circle(-250.0, 0, K['parts']['lock']['escutcheon_d'] / 2, 24))
+    v.add('base_drum', 'shell', 'gel_green_fresh', circle(0, 0, K['parts']['base_drum']['r_max']))
+    v.add('hood', 'shell', 'gel_green_chalk', circle(0, 0, K['parts']['hood']['r_max']))
+    v.add('body', 'shell', 'gel_green_fresh', ring(0, 0, K['parts']['body']['r_max'] - 1.0, K['parts']['body']['r_max']))
+    v.add('liner', 'liner', 'zinc_weathered', ring(0, 0, 192.0, 200.0))
+    v.add('aperture', 'aperture', 'bin_sack_black', box(K['parts']['hood']['r_max'] - 8.0, -ap['width'] / 2, K['parts']['hood']['r_max'] + 2.0, ap['width'] / 2))
+    v.add('lock', 'fixing', 'zinc_new', circle(-K['parts']['hood']['r_max'], 0, K['parts']['lock']['escutcheon_d'] / 2, 24))
     out['K2_plan'] = v
     # section through the axis (x toward the aperture)
     v = View('K2 section through the axis and the aperture centre', ['x (mm) toward the aperture', 'z (mm)'])
@@ -213,7 +213,8 @@ def k2_views(T):
     band_r = LineString(path_r).buffer(t, cap_style=2, join_style=2).intersection(right_half)
     shell_r = band_r
     # the aperture cut through the hood wall on +x
-    cut = box(200, ap['sill_z'], 300, ap['top_z'])
+    rs_cut = r_of_z(prof, ap['sill_z']) - 10.0
+    cut = box(rs_cut, ap['sill_z'], 300, ap['top_z'])
     shell_r = shell_r.difference(cut)
     shell_l = affinity.scale(band_r, xfact=-1, yfact=1, origin=(0, 0))
     v.add('shell_right_cut_at_aperture', 'shell', 'gel_green_chalk', shell_r)

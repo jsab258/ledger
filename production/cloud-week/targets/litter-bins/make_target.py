@@ -38,8 +38,8 @@ def build():
     T['units'] = 'millimetres unless a key ends _m (metres); angles in degrees; the .glb is metres, z up, scale 1'
     T['summary_line'] = ('Quay Street had three council bins in 1990, not eleven: two steel pole-mounted open bins (K1, 45 litres, rim at 1.05 m, hung on their own 76 mm posts, at x 6.6 and x 35.2 east) '
                          'and one free-standing hooded glass-fibre drum (K2, 900 high, at x 44.0 west by the newsagent and the bus stop), all council green and marked only LITTER, plus the scene\'s two galvanised '
-                         'dustbins (D1, 0.46 across, 0.61 high, lid 0.50 x 0.05, at x 21.4 and 22.0 east); no photograph of a period bin was reached, so every bin shape is research and judgement, and the '
-                         'only photographs measured are one galvanised steel container and the material scans.')
+                         'dustbins (D1, 0.46 across, 0.61 high, lid 0.50 x 0.05, at x 21.4 and 22.0 east); no photograph of a period bin was reached: K2\'s form is measured on one 2008 Geograph photograph of a hooded bin type made since 1984 (the base drum the widest part, then a collar, a plain body, the groove, the hood), the pole-mounted K1 and the dustbin are research and judgement, and the '
+                         'other photographs measured are one galvanised steel container and the material scans.')
     T['frame'] = dict(
         profile='(r, z): r the radius from the part\'s own axis, z up from the flag top at the piece\'s pivot; each lathe outline runs round the part and closes on the axis; elevation polygons mirror it about the axis',
         pivot='K1: the post axis on the footway flag top; K2 and D1: the base centre on the flag top. The flag top is the kerbs target\'s +110 above the channel top. z up, +x as each kind says',
@@ -96,15 +96,27 @@ def build():
         dict(id='bollard_east_K4_x2_m', value=44.0, file='production/cloud-week/targets/bollards/target.json', path='placements.street_proper[id=chandler_front].x_m[1]'),
         dict(id='bollard_west_yard_x1_m', value=20.7, file='production/cloud-week/targets/bollards/target.json', path='placements.street_proper[id=yard_mouth].x_m[0]'),
         dict(id='bollard_west_yard_x2_m', value=24.3, file='production/cloud-week/targets/bollards/target.json', path='placements.street_proper[id=yard_mouth].x_m[1]'),
-        dict(id='kerb_top_width_mm', value=170, file='production/cloud-week/targets/kerbs-and-covers/target.json', path='pieces.granite_kerb.top_width', optional=True),
+        dict(id='kerb_top_width_mm', value=170, file='production/cloud-week/targets/kerbs-and-covers/target.json', path='pieces.kerb_granite.top_width', optional=True),
     ]
-    T['hook_cast_numbers'] = [dict(id='bus_stop_x_m', value=46.0, file='production/specs/hook-cast.json', path='bus_stop.x_m'), dict(id='bus_stop_z_m', value=-4.3, file='production/specs/hook-cast.json', path='bus_stop.z_m')]
+    T['hook_cast_numbers'] = [dict(id='bus_stop_x_m', value=46.0, file='production/specs/hook-cast.json', path='places.bus_stop.x_m'), dict(id='bus_stop_z_m', value=-4.3, file='production/specs/hook-cast.json', path='places.bus_stop.z_m')]
     # -------------------------------------------------------------------------------------------------------------------------- photographs and models
     T['calibration'] = dict(
         method='the horizon (brick-course) method of this week\'s bollards writer, re-run here on its two urban_street_02 anchors: in a levelled equirectangular panorama the horizon is the middle row; the courses of a 75 mm-gauge brick wall are evenly spaced in tan(angle below the horizon); camera height above the wall foot = 75 mm x tan(foot angle) / (course pitch in tan units)',
         horizon_anchors=PM['horizon_anchors'], camera_height=PM['camera_height'],
         note='no panorama is at 1.6 m: urban_street_02 is at 0.92 m above its footway and 1.04 m above the road where the container stands. Every length read on it is +-5 % at best. NO bin of the target is measured on a photograph, so no length of any bin rests on this height; it serves only the scale overlay of section 6 and the container\'s colour')
     T['photo_measurements'] = dict(container=PM['container'], textures=TEX, models=PM['models'], held_bins=PM['held_bins'])
+    T['photo_measurements']['topsy_974902'] = dict(
+        photo='S12, Geograph 974902 (Jim Champion, 2008-09-21, CC BY-SA 2.0), the 427 x 640 reduced copy',
+        method='the bin\'s silhouette read by eye on a 3x enlargement with a 20 px grid, +-2 px at every edge; one dimension fitted: the dome crown (row 257) to the base centre (row 548, the front bottom edge at row 556 less the ellipse of the round foot) is 291 px = the K2 height 900, so 3.09 mm a pixel (the George V box beside it, 465 px from cap top to foot, gives 3.2 mm a pixel at an assumed 1.5 m, so the bin reads 917 high: the two agree within 2 %, and the box\'s height is itself +-4 %); every width is a silhouette width at the stated row (a cylinder seen from a little above reads its true diameter at its widest rows); the error is +-2 px (+-6 mm) plus the scale +-5 %',
+        rows_px_and_mm=[
+            dict(part='hood skirt (rows 283 to 338)', x_px=[68, 208], width_px=140, diameter_mm=433, r_mm=217),
+            dict(part='body (rows 345 to 430)', x_px=[70, 205], width_px=135, diameter_mm=417, r_mm=209),
+            dict(part='collar (rows 432 to 447)', x_px=[62, 210], width_px=148, diameter_mm=457, r_mm=229),
+            dict(part='base drum (rows 470 to 545)', x_px=[58, 218], width_px=160, diameter_mm=495, r_mm=247)],
+        heights_mm=dict(dome_crown=900, hood_shoulder_start=820, groove_top=650, groove_bottom=630, collar_top=360, collar_bottom=312, base_shoulder_top=240, aperture_top=780, aperture_sill=680),
+        aperture='about 57 px of its width is seen (x 143 to 200) and it wraps round the front-right: a width of about 230 is read, +-25; its height rows 297 to 328 = 95 to 105 with the dome\'s lip standing out over it',
+        differs_from_first_try='the first try\'s generic drum was widest at the middle of the body (r 237) with the hood the widest part (r 250) and a narrow foot (r 211): the photograph has the base drum the widest (r 247), the body narrower (r 210) and the hood skirt narrower (r 218)',
+        not_modelled='the crest sticker on the body (a council name: masked in the preview and not modelled); the dome\'s small top moulding')
     # -------------------------------------------------------------------------------------------------------------------------- materials
     mats = {}
     for k, v in D.MATERIALS.items():
@@ -147,16 +159,17 @@ def build():
     k2_ext = lathe_extent(D.K2_OUTER)
     K2 = dict(
         name='hooded_drum', title='Free-standing hooded glass-fibre drum bin with a galvanised liner (generic; not the form of any maker\'s bin)',
-        basis='JUDGEMENT AND LEADS: no photograph of a hooded bin of the period was reached. Leads (search summaries, unreached pages): hooded glass-fibre council bins existed by 1959 (Elton Civic Supplies, MoDiP records), Glasdon\'s own pages date its original Topsy to 1984 and a museum record dates a Glasdon bin with a removable red plastic hood and a metal liner to 1984 to 1990. The asset plan\'s "since about 1959" came from a retail page; the form below is a generic drum with a hood, built from the asset plan\'s "generic hooded bin, not the Topsy\'s exact form"',
+        basis='PHOTO (one photograph, 2008) AND LEADS: no photograph of a hooded bin of the period was reached; the form is measured on ONE Geograph photograph of 2008 (S12, a hooded glass-fibre bin beside a George V pillar box, which gives the scale) of a bin type made since 1984 (the leads below), so it shows the form but not a 1990 example: a stepped drum, the base the widest part, a collar, a plain body, a groove and the hood skirt under a flat shallow dome (the first try\'s generic drum, widest at the middle with the hood the widest part, was the opposite). Leads (search summaries, unreached pages): hooded glass-fibre council bins existed by 1959 (Elton Civic Supplies, MoDiP records), Glasdon\'s own pages date its original Topsy to 1984 and a museum record dates a Glasdon bin with a removable red plastic hood and a metal liner to 1984 to 1990. No maker\'s mark, crest or sticker is modelled',
         pivot='the base centre on the flag top', placed=True,
         outer_profile_rz=D.K2_OUTER, shell=D.K2_SHELL, height=D.K2_HEIGHT, extent=k2_ext, aperture=D.K2_APERTURE,
-        parts=dict(foot_ring=dict(z=[0.0, 52.0], r_max=211.0, note='a moulded foot ring, 6 mm chamfer at the ground; the base below it is filled with concrete ballast to z 50 (not modelled)'),
-                   body=dict(z=[52.0, 572.0], r_max=237.0, note='a gently bellied drum: r 205 at z 58, 237 at z 430, 232 at z 572; one moulded seam line down each side at azimuth +-90, 0.5 high, 3 wide'),
-                   join_groove=dict(z=[576.0, 588.0], depth=6.0, note='the shadow line between body and hood'),
-                   hood=dict(z=[588.0, k2_ext['z_max']], r_max=250.0, note='a lift-off glass-fibre hood: a skirt 50 high overhanging the body by 18, a shoulder, a shallow dome; the aperture is cut in its front'),
-                   liner=dict(profile_rz=D.K2_LINER, rim_z=[700.0, 706.0], od=388.0, material='zinc_weathered', note='a galvanised steel liner 0.8 sheet, 640 high, a rolled rim whose upper edge is seen through the aperture; two wire bail handles (not modelled); capacity about 70 litres'),
-                   lock=dict(azimuth_deg=180.0, z=582.0, d=22.0, escutcheon_d=40.0, note='a barrel lock at the back of the join; not seen from the front')),
-        lettering=dict(text='LITTER', cap_height=55.0, stroke=8.0, z_centre=330.0, azimuth_deg=0.0, arc_deg=68.0, material='letters_cream', face='as K1', words_allowed=['LITTER'],
+        parts=dict(base_drum=dict(z=[0.0, 236.0], r_max=247.0, note='the base drum, the widest part: r 247, a 14 mm round at the ground edge, a shoulder 236 to 300 stepping in to the collar; it is filled with concrete ballast to z 50 (not modelled)'),
+                   collar=dict(z=[300.0, 364.0], r_max=230.0, note='a collar r 230 (z 300 to 338) stepping in to the body by a 26 mm round'),
+                   body=dict(z=[364.0, 640.0], r_max=210.0, note='a plain straight drum r 210 (a moulded seam line down each side at azimuth +-90, 0.5 high, 3 wide)'),
+                   join_groove=dict(z=[640.0, 664.0], depth=4.0, note='the shadow line between body and hood'),
+                   hood=dict(z=[664.0, k2_ext['z_max']], r_max=218.0, note='a lift-off glass-fibre hood: a skirt 158 high standing 8 proud of the body, a shoulder (R about 45), a flat shallow dome; the aperture is cut in its front'),
+                   liner=dict(profile_rz=D.K2_LINER, rim_z=[702.0, 708.0], od=400.0, material='zinc_weathered', note='a galvanised steel liner 0.8 sheet, 650 high, a rolled rim whose upper edge is seen through the aperture; two wire bail handles (not modelled); capacity about 70 litres'),
+                   lock=dict(azimuth_deg=180.0, z=650.0, d=22.0, escutcheon_d=40.0, note='a barrel lock at the back of the join; not seen from the front')),
+        lettering=dict(text='LITTER', cap_height=55.0, stroke=8.0, z_centre=470.0, azimuth_deg=0.0, arc_deg=68.0, material='letters_cream', face='as K1', words_allowed=['LITTER'],
                        safe_because='as K1'),
         fixings='free-standing on its ballasted foot ring (mass about 28 kg); hood located by four moulded lugs and the lock; nothing is bolted to the footway; no visible screws or rivets on the front',
         edges='every moulding rounded: the aperture\'s lip R6, the hood skirt\'s edge R5, the foot ring\'s top R10; moulded seam lines only; no maker\'s name, logo, product number or moulded lettering of any kind',
@@ -401,6 +414,8 @@ def sources_block():
         dict(id='S9', url='https://polyhaven.com/textures (api.polyhaven.com/files/<id>, diffuse 1k)', read='2026-10-09', author='Dimitrios Savva, Jenelle van Heerden, Charlotte Baglioni, Rob Tuytel, Amal Kumar, Sergej Majboroda', licence='CC0 1.0', taken='various', what='twelve scanned material albedos: corrugated_iron, corrugated_iron_02, _03, worn_corrugated_iron, green_metal_rust, rust_coarse_01, rusty_painted_metal, precast_concrete_wall, pebble_embedded_concrete, painted_metal_shutter, worn_shutter, container_side', used='YES: the median sRGB of the galvanised, painted-green, rust and concrete colours (each in photo_measurements.json)', period='n/a: a material\'s colour does not date'),
         dict(id='S10', url='the repository (production/research/asset-plan/3-FURNITURE-PROPS-FOOD.md; production/research/street-clutter-1990/SUMMARY-2026-09-29.md; production/specs/vignette-scene.json; production/specs/hook-cast.json; production/cloud-week/targets/*; production/assets/street/clutter/*.glb; ledger/Assets/Props/base-mesh/{outdoor_bin,swing_bin}.glb; tools/art-recipes/terrace-front.py; tools/meshgen/blender/clutter/{litter_bin,dustbin}.py)', read='2026-10-09', author='the project', licence='the project\'s own, and CC0 for the Base Mesh files', taken='2026-09-09 to 2026-10-09', what='the scene\'s bins and dustbins, the street\'s frame, the neighbours\' targets, the held and built bin meshes', used='YES (Read numbers)', period='n/a'),
         dict(id='S11', url='WebSearch result summaries, 9 October 2026 (Glasdon FAQ and news pages; London Transport Museum record 2023-1775; MoDiP records BXL 0564 to 0570; the National Archives blog "Public bins: a design history"; V&A O1194407; BSI Knowledge BS 792; a UK tariff ruling; trade catalogues; a council bins review)', read='2026-10-09', author='third parties (reached only as summaries; every page refused or does not resolve here)', licence='n/a', taken='n/a', what='leads: dates and sizes in section 3', used='LEADS ONLY: steer a judgement, never a number the target relies on', period='n/a'),
+        dict(id='S12', url='https://www.geograph.org.uk/photo/974902', read='2026-10-12', author='Jim Champion', licence='CC BY-SA 2.0 (geograph.org.uk)', taken='2008-09-21 (SU4014, Wilton Road, Southampton)', what='a grey hooded glass-fibre litter bin beside a George V pillar box outside a corner shop: the bin\'s whole side with its hood, aperture, groove, collar and base drum, the box giving the scale (the same hooded bin type has been made since 1984, S-leads below)', used='YES (K2 revised 12 October): the bin\'s silhouette read at 3 mm a pixel (method in photo_measurements.topsy_974902); a crop to the bin alone, the crest sticker masked, in production/previews/cloud-week/refs/litter-bins/', period='2008, not 1990: the bin type dates from 1984 (L1, L2) and its form is read as unchanged, but the example itself is later; whether Meridian\'s council bought it is not known'),
+        dict(id='S13', url='https://www.geograph.org.uk/photo/986601 , /photo/1090799 , /photo/2281325 , /photo/1697504 , /photo/3022536 , /photo/615647 , /photo/1064051 , /photo/686593 , /photo/885698 , /photo/1003175', read='2026-10-12', author='ten Geograph photographers (the name is on each page)', licence='CC BY-SA 2.0', taken='2007 to 2011', what='ten Geograph street and park litter bins of the 2000s (round hooded steel drums, a blue open drum, a stainless Welsh-lettered bin, a green slatted cast bin, a rocket-shaped play-area bin, a four-compartment recycling bin)', used='LOOKED AT, not measured: every one is a design of the 1990s or later or a park bin; none shows a pole-mounted open steel bin', period='later than 1990'),
     ]
 
 
@@ -447,9 +462,9 @@ def leads_block():
 
 def could_not_settle_block():
     return [
-        'NO PHOTOGRAPH OF A PERIOD STREET LITTER BIN WAS REACHED, so the shape of K1 and K2 is research and judgement, not measurement: their proportions (the taper, the bead, the clamp rings, the hood\'s skirt and the aperture\'s size and height) are ergonomic and trade guesses and a fresh reviewer has nothing to hold them against but the asset plan\'s kit names and the leads.',
+        'NO PHOTOGRAPH OF A 1975 TO 1995 STREET LITTER BIN WAS REACHED (Geograph, searched 12 October for litter bin, litter, dustbin, waste bin, bin on a post, pole mounted bin and a dozen more, each year 1975 to 1996: forty-nine photographs of any year, none a street litter bin; Wikimedia Commons refused every request with 429; archive.org not searched). K2 is now measured on one 2008 photograph of a hooded bin type made since 1984 (S12); K1, the pole-mounted open steel bin, has no photograph at all and stays research and judgement. The shape of K1 and, for what S12 does not show, K2 is research and judgement, not measurement: their proportions (the taper, the bead, the clamp rings, the hood\'s skirt and the aperture\'s size and height) are ergonomic and trade guesses and a fresh reviewer has nothing to hold them against but the asset plan\'s kit names and the leads.',
         'Which council colour Meridian used (green is a judgement from the repository\'s own recipe and from green being common on 1980s municipal steel and glass-fibre; no source says); canon owes the council\'s name and no word of it appears on any bin.',
-        'Whether Meridian\'s council had bought the Topsy-type (1984) or only older hooded or pole stock; K2 is built generic so either reads.',
+        'Whether Meridian\'s council had bought the Topsy-type (1984) or only older hooded or pole stock: K2 now has that type\'s form (S12), so a council with older stock would show a different bin; the colour, the lettering and the aperture\'s width (about 230, the photograph shows it foreshortened) are Judgement.',
         'The real height of rim and aperture: K1 rim 1.05 and K2 aperture sill 0.65 are ergonomic Judgement (the repository\'s script has 0.95 for the pole bin).',
         'The BS 792 dimension table (the 1973 or earlier edition): 0.46 x 0.61 is the scene\'s; the foot (398), the rib heights and the handle sizes are Judgement.',
         'Whether bins were fixed to the lamp columns on Quay Street: K1 stands on its own post; the lamp-post target\'s shaft at 1.0 m is 68 mm and the sleeve 124, neither a clean 76 mm host. A column-mounted variant would need the lamp target\'s sleeve and a different clamp: not written.',
@@ -494,14 +509,15 @@ def checks_block(T):
     add('K1_bead_diameter', 'K1', 'rolled bead cross-section', 9.0, 2, 'Judgement')
     # K2
     add('K2_total_height', 'K2', 'z of the dome crown', D.K2_HEIGHT, 20, 'Judgement')
-    add('K2_hood_max_diameter', 'K2', 'diameter of the hood skirt', 500.0, 15, 'Judgement')
-    add('K2_body_max_diameter', 'K2', 'diameter of the body at z 430', 474.0, 15, 'Judgement')
-    add('K2_foot_diameter', 'K2', 'diameter of the foot ring', 422.0, 12, 'Judgement')
-    add('K2_aperture_width', 'K2', 'width of the aperture opening', D.K2_APERTURE['width'], 20, 'Judgement')
-    add('K2_aperture_height', 'K2', 'height of the aperture opening', D.K2_APERTURE['height'], 15, 'Judgement')
-    add('K2_aperture_sill_z', 'K2', 'z of the aperture\'s lower edge', D.K2_APERTURE['sill_z'], 20, 'Judgement')
-    add('K2_liner_rim_z', 'K2', 'z of the liner\'s rolled rim (seen through the aperture)', 700.0, 15, 'Judgement')
-    add('K2_join_groove_z', 'K2', 'z of the join groove', [576.0, 588.0], 10, 'Judgement')
+    add('K2_hood_diameter', 'K2', 'diameter of the hood skirt (z 700 to 800)', 436.0, 12, 'Photo')
+    add('K2_body_diameter', 'K2', 'diameter of the body at z 500', 420.0, 12, 'Photo')
+    add('K2_collar_diameter', 'K2', 'diameter of the collar at z 320', 460.0, 12, 'Photo')
+    add('K2_base_diameter', 'K2', 'diameter of the base drum at z 120 (the widest part)', 494.0, 12, 'Photo')
+    add('K2_aperture_width', 'K2', 'width of the aperture opening', D.K2_APERTURE['width'], 25, 'Judgement')
+    add('K2_aperture_height', 'K2', 'height of the aperture opening', D.K2_APERTURE['height'], 15, 'Photo')
+    add('K2_aperture_sill_z', 'K2', 'z of the aperture\'s lower edge', D.K2_APERTURE['sill_z'], 20, 'Photo')
+    add('K2_liner_rim_z', 'K2', 'z of the liner\'s rolled rim (seen through the aperture)', 702.0, 15, 'Judgement')
+    add('K2_join_groove_z', 'K2', 'z of the join groove', [640.0, 664.0], 10, 'Photo')
     add('K2_letter_height', 'K2', 'cap height of LITTER', 55.0, 6, 'Judgement')
     add('K2_only_word', 'K2', 'every word on any mesh or texture', ['LITTER'], 0, 'rule')
     add('K2_no_maker_mark', 'K2', 'moulded or printed maker, council or product marks', 0, 0, 'rule')

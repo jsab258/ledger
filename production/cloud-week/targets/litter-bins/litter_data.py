@@ -49,18 +49,19 @@ K1_CONDITIONS = {
 }
 
 # ---------------------------------------------------------------------------------------------------------------------------------------
-# K2: free-standing hooded drum bin (generic; not the form of any maker's bin). Frame: pivot = the base centre on the flag top; +x is the aperture's side.
+# K2: free-standing hooded drum bin, REVISED 12 October 2026 after one Geograph photograph of a hooded glass-fibre bin (Wilton Road, 2008, beside a George V pillar box that gives the scale):
+# a stepped drum, the base the widest part (r 247), a collar, a plain body (r 210), a groove and a hood skirt (r 218) under a flat shallow dome, the aperture a lipped slot under the dome.
+# Frame: pivot = the base centre on the flag top; +x is the aperture's side.
 # ---------------------------------------------------------------------------------------------------------------------------------------
 K2_HEIGHT = 900.0
-K2_OUTER = [(0.0, 0.0), (190.0, 0.0), (200.0, 2.0), (209.0, 8.0), (211.0, 40.0), (206.0, 48.0), (198.0, 52.0),                 # foot ring and its recess
-            (205.0, 58.0), (214.0, 90.0), (224.0, 200.0), (233.0, 330.0), (237.0, 430.0), (236.0, 520.0), (232.0, 572.0),        # body
-            (226.0, 576.0), (226.0, 588.0),                                                                                      # the join groove
-            (244.0, 590.0), (250.0, 598.0), (250.0, 640.0),                                                                       # the hood's skirt
-            (249.0, 700.0), (244.0, 760.0), (233.0, 812.0), (212.0, 850.0), (176.0, 878.0), (124.0, 893.0), (60.0, 899.0), (0.0, K2_HEIGHT)]
+K2_OUTER = [(0.0, 0.0), (236.0, 0.0), (244.0, 5.0), (247.0, 14.0), (247.0, 236.0), (243.0, 248.0), (236.0, 262.0), (231.0, 282.0), (230.0, 300.0),      # the base drum and its shoulder
+            (230.0, 338.0), (224.0, 348.0), (214.0, 356.0), (210.0, 364.0),                                                                             # the collar and the step in
+            (210.0, 640.0), (206.0, 648.0), (206.0, 658.0), (218.0, 664.0),                                                                             # the body, the join groove
+            (218.0, 822.0), (214.0, 842.0), (205.0, 862.0), (190.0, 878.0), (160.0, 890.0), (110.0, 896.0), (50.0, 899.0), (0.0, K2_HEIGHT)]           # the hood's skirt, its shoulder and flat dome
 K2_SHELL = 5.0
-K2_APERTURE = dict(width=300.0, height=150.0, sill_z=650.0, top_z=800.0, corner_r=30.0, azimuth_deg=0.0, return_flange_depth=15.0, return_flange_t=6.0,
-                   note='cut through the hood wall; the lower edge is a flat sill with a 15 mm return flange turned inward; the upper edge is the dome overhanging it')
-K2_LINER = [(0.0, 60.0), (185.0, 60.0), (190.0, 66.0), (190.0, 694.0), (194.0, 700.0), (194.0, 706.0), (190.0, 706.0)]   # galvanised, 0.8 sheet; rolled rim at z 700 to 706
+K2_APERTURE = dict(width=230.0, height=105.0, sill_z=680.0, top_z=785.0, corner_r=25.0, azimuth_deg=0.0, return_flange_depth=15.0, return_flange_t=6.0,
+                   note='cut through the hood skirt under the dome; the lower edge is a flat sill with a 15 mm return flange turned inward; the upper edge is the dome overhanging it (the photograph: a lipped slot about 105 high with the dome standing out over it)')
+K2_LINER = [(0.0, 60.0), (190.0, 60.0), (196.0, 66.0), (196.0, 696.0), (200.0, 702.0), (200.0, 708.0), (196.0, 708.0)]   # galvanised, 0.8 sheet; rolled rim at z 702 to 708
 K2_CONDITIONS = {
     'a': dict(name='council-fresh', gel='gel_green_fresh', chalk=0.15, scuff=0.25, burn=None, overflow='O2_low', stickers=0, gum=2, cracks=0, hood_dent=None),
     'b': dict(name='sun-chalked and scuffed', gel='gel_green_chalk', chalk=0.55, scuff=0.55, burn=None, overflow='O2_full', stickers=2, gum=4, cracks=3, hood_dent=dict(az=-35, d=80, depth=5)),
