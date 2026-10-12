@@ -57,7 +57,7 @@ K2_HEIGHT = 900.0
 K2_OUTER = [(0.0, 0.0), (236.0, 0.0), (244.0, 5.0), (247.0, 14.0), (247.0, 236.0), (243.0, 248.0), (238.0, 258.0), (228.0, 276.0), (221.0, 290.0), (220.0, 300.0),    # the base drum and its shoulder
             (220.0, 345.0), (216.0, 352.0), (211.0, 358.0), (210.0, 364.0),                                                                                             # the collar (r 220, 10 proud of the body: TARGET-REVIEW fault 4) and the step in
             (210.0, 630.0), (206.0, 636.0), (206.0, 644.0), (218.0, 650.0),                                                                                             # the body, the join groove (fault 5: the hood's lip at z 640 to 650)
-            (218.0, 822.0), (214.0, 842.0), (205.0, 862.0), (190.0, 878.0), (160.0, 890.0), (110.0, 896.0), (50.0, 899.0), (0.0, K2_HEIGHT)]                            # the hood's skirt, its shoulder and flat dome
+            (218.0, 778.0), (224.0, 782.0), (224.0, 786.0), (223.0, 790.0), (222.0, 800.0), (214.0, 830.0), (200.0, 858.0), (175.0, 880.0), (130.0, 893.0), (60.0, 899.0), (0.0, K2_HEIGHT)]    # the hood's skirt, the dome's rounded LIP standing 6 proud over the aperture (TARGET-REVIEW of the build, street view point 2: S12 and Fifehead Magdalen show it), its shoulder and flat dome
 K2_SHELL = 5.0
 K2_APERTURE = dict(width=230.0, height=105.0, sill_z=680.0, top_z=785.0, corner_r=25.0, azimuth_deg=0.0, return_flange_depth=15.0, return_flange_t=6.0,
                    note='cut through the hood skirt under the dome; the lower edge is a flat sill with a 15 mm return flange turned inward; the upper edge is the dome overhanging it (the photograph: a lipped slot about 105 high with the dome standing out over it)')

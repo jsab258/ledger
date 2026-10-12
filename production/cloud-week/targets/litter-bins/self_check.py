@@ -138,7 +138,7 @@ for row in pm['rows_px_and_mm']:
 REPORTED.append('PHOTO the scale: 900 mm over 291 px is 3.09 mm a pixel, FITTED to K2\'s Judgement height; the pillar box beside the bin is of an unestablished type and height (462 px tall, 101 across: 4.6 to 1, not Type A\'s 3.07), so S12 gives proportions only (TARGET-REVIEW fault 8)')
 REPORTED.append('PHOTO the pixel table (rows_px_and_mm) is the writer\'s reading, re-measured by a fresh reviewer on 12 October on 4x and 8x enlargements (the collar and the groove corrected); this group compares K2\'s profile with that table')
 ok(3, 'PHOTO the order of the stations: base drum widest, then collar, hood skirt, body narrowest', r_of_z(k2p, 120) > r_of_z(k2p, 330) > r_of_z(k2p, 750) > r_of_z(k2p, 500), [round(r_of_z(k2p, z), 1) for z in (120, 330, 750, 500)])
-ok(3, 'PHOTO the aperture sits in the hood skirt, between the groove and the dome shoulder', K2['parts']['join_groove']['z'][1] <= ap['sill_z'] and ap['top_z'] <= 822.0, '%s %s' % (ap['sill_z'], ap['top_z']))
+ok(3, 'PHOTO the aperture sits in the hood skirt, between the groove and the dome shoulder', K2['parts']['join_groove']['z'][1] <= ap['sill_z'] and ap['top_z'] <= 790.0, '%s %s' % (ap['sill_z'], ap['top_z']))
 for p_ in ('geo974902-southampton-hooded-bin-2008.jpg', 'geo974902-southampton-hooded-bin-2008-target-on-photo.jpg'):
     f = os.path.join(ROOT, 'production', 'previews', 'cloud-week', 'refs', 'litter-bins', p_)
     ok(7, 'FILE ' + p_, os.path.exists(f) and os.path.getsize(f) < 300_000, os.path.getsize(f) if os.path.exists(f) else 'missing')

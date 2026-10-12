@@ -252,7 +252,7 @@ The one review round Jafar allowed passed the target with fourteen narrow points
 - **basis**: PHOTO (one photograph, 2008) AND LEADS: no photograph of a hooded bin of the period was reached; the form is measured on ONE Geograph photograph of 2008 (S12, a hooded glass-fibre bin beside a George V pillar box, which gives the scale) of a bin type made since 1984 (the leads below), so it shows the form but not a 1990 example: a stepped drum, the base the widest part, a collar, a plain body, a groove and the hood skirt under a flat shallow dome (the first try's generic drum, widest at the middle with the hood the widest part, was the opposite). Leads (search summaries, unreached pages): hooded glass-fibre council bins existed by 1959 (Elton Civic Supplies, MoDiP records), Glasdon's own pages date its original Topsy to 1984 and a museum record dates a Glasdon bin with a removable red plastic hood and a metal liner to 1984 to 1990. No maker's mark or crest, and no sticker with any readable content, is modelled; K2's height 900 is Judgement: S12 gives proportions only (the box beside it is of an unestablished type and height)
 - **pivot**: the base centre on the flag top
 - **placed**: True
-- **outer_profile_rz**: [(0, 0) (236, 0) (244, 5) (247, 14) (247, 236) (243, 248) (238, 258) (228, 276) (221, 290) (220, 300) (220, 345) (216, 352) (211, 358) (210, 364) (210, 630) (206, 636) (206, 644) (218, 650) (218, 822) (214, 842) (205, 862) (190, 878) (160, 890) (110, 896) (50, 899) (0, 900)]
+- **outer_profile_rz**: [(0, 0) (236, 0) (244, 5) (247, 14) (247, 236) (243, 248) (238, 258) (228, 276) (221, 290) (220, 300) (220, 345) (216, 352) (211, 358) (210, 364) (210, 630) (206, 636) (206, 644) (218, 650) (218, 778) (224, 782) (224, 786) (223, 790) (222, 800) (214, 830) (200, 858) (175, 880) (130, 893) (60, 899) (0, 900)]
 - **shell**: 5
 - **height**: 900
 - **extent**:
@@ -288,8 +288,8 @@ The one review round Jafar allowed passed the target with fourteen narrow points
     - **note**: the shadow line between body and hood: the hood's lower lip at z 640 to 650 (fault 5)
   - **hood**:
     - **z**: [650, 900]
-    - **r_max**: 218
-    - **note**: a lift-off glass-fibre hood: a skirt 158 high standing 8 proud of the body, a shoulder (R about 45), a flat shallow dome; the aperture is cut in its front
+    - **r_max**: 224
+    - **note**: a lift-off glass-fibre hood: a skirt 128 high (650 to 778) standing 8 proud of the body, a rounded lip 6 proud of the skirt at z 782 to 790 over the aperture (the dome overhangs the slot: S12 and Fifehead Magdalen 1917089), a shoulder, a flat shallow dome; the aperture is cut in its front
   - **liner**:
     - **profile_rz**: [(0, 60) (190, 60) (196, 66) (196, 696) (200, 702) (200, 708) (196, 708)]
     - **rim_z**: [702, 708]

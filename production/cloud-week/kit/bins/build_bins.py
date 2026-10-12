@@ -286,16 +286,21 @@ def build_k1(T, cond, out_dir, npz_dir):
         if dd["depth"] >= 5.0:
             Vb = dent(Vb, ax, dd["z"], dd["az"], dd["d"], dd["depth"])
     rd = C.get("rim_dent")
-    if rd:                                                              # the rim bent in and down: a long shallow dent on the bead
+    if rd:                                                              # the rim bent in and down over its whole length (REVIEW-v1-street point 3): a cosine falloff, deepest at the middle
         span = rd["length"]
-        Vb = dent(Vb, ax, 1046.0, rd["az"], span * 1.15, rd["depth"])
-        zmask = Vb[:, 2] > 1030.0
         rel = Vb[:, :2] - np.array(ax)
         ang = np.degrees(np.arctan2(rel[:, 1], rel[:, 0]))
-        da = np.abs((ang - rd["az"] + 180.0) % 360.0 - 180.0)
-        rr = np.hypot(rel[:, 0], rel[:, 1])
-        wz = np.where(zmask & (da * math.pi / 180.0 * np.maximum(rr, 1.0) < span / 2.0), 1.0 - (da * math.pi / 180.0 * np.maximum(rr, 1.0) / (span / 2.0)) ** 2, 0.0)
-        Vb[:, 2] -= wz * rd["depth"] * 0.4 * zmask
+        da = np.radians((ang - rd["az"] + 180.0) % 360.0 - 180.0)
+        rr = np.maximum(np.hypot(rel[:, 0], rel[:, 1]), 1.0)
+        arc = np.abs(da) * rr
+        wz = np.where(arc < span / 2.0, 0.5 * (1.0 + np.cos(np.pi * arc / (span / 2.0))), 0.0)
+        # the height weight: the rim's top 25 (the bead and the wall under it), fading to nothing by z 1010
+        hz = np.clip((Vb[:, 2] - 1010.0) / 30.0, 0.0, 1.0)
+        w = wz * hz
+        u = rel / rr[:, None]
+        Vb[:, 0] -= u[:, 0] * rd["depth"] * w
+        Vb[:, 1] -= u[:, 1] * rd["depth"] * w
+        Vb[:, 2] -= rd["depth"] * 0.4 * w
     # drain holes: four 8 mm holes in the base plate on r 100
     parts["bin"] = (Vb, Fb, "paint_green", None, "bin")
     # the back strap: a wedge bar from the post's face to the tapering wall, 40 wide, z 590 to 1030 (the wall's x at a height is BIN_OFFSET - r(z))
@@ -316,11 +321,11 @@ def build_k1(T, cond, out_dir, npz_dir):
             ear = prism_y([(-37.0, c["z0"] + 2.0), (-60.0, c["z0"] + 2.0), (-60.0, c["z1"] - 2.0), (-37.0, c["z1"] - 2.0)], sy * 6.0 if sy > 0 else -18.0, 18.0 if sy > 0 else -6.0)
             parts["ear_%d_%s" % (i, "p" if sy > 0 else "m")] = (ear[0], ear[1], "paint_green", 1.5, "bin")
         bolt = cyl_y(-50.0, zc, -24.0, 24.0, 4.0, 12)
-        parts["bolt_%d" % i] = (bolt[0], bolt[1], "zinc_galv", None, "bin")
+        parts["bolt_%d" % i] = (bolt[0], bolt[1], "paint_green", None, "bin")
         head = hex_y(-50.0, zc, 18.0, 26.0, 13.0)
-        parts["bolthead_%d" % i] = (head[0], head[1], "zinc_galv", 0.8, "bin")
+        parts["bolthead_%d" % i] = (head[0], head[1], "paint_green", 0.8, "bin")
         nut = dome_y(-50.0, zc, -18.0, -8.0, 7.5, 12)
-        parts["nut_%d" % i] = (nut[0], nut[1], "zinc_galv", None, "bin")
+        parts["nut_%d" % i] = (nut[0], nut[1], "paint_green", None, "bin")
     # the tilt of the bin on its clamps and the lean of the post
     for nm, (V, F, mat, bev, grp) in parts.items():
         V = np.array(V, float)
@@ -330,7 +335,21 @@ def build_k1(T, cond, out_dir, npz_dir):
             V = rot_y(V, -C["post_lean_deg"], (0.0, 0.0))                # the post leans toward the roadway side by its lean (-x here is the far side from the bin)
         parts[nm] = (V, F, mat, bev, grp)
     if C["liner_sack"]:
-        sk = sack((BIN_OFFSET, 0.0, 1062.0), 300.0, 270.0, 150.0, n=16, rows=8)
+        # REVIEW-v1-street point 1: the sack fills the bin down to the floor, its mouth turns over the rim and hangs 120 outside (gathered), and it stands no more than 75 above the rim
+        def r_in(z):
+            return 165.0 + (K1["bin"]["r_top"] - 165.0) * (z - 560.0) / (1038.0 - 560.0) - 6.0
+        prof_s = [(0.0, 1124.0), (70.0, 1118.0), (r_in(1050.0) - 14.0, 1100.0), (r_in(1050.0) - 4.0, 1070.0), (r_in(1050.0), 1050.0), (r_in(900.0), 900.0), (r_in(700.0), 700.0), (r_in(570.0), 570.0), (0.0, 566.0)]
+        Vs_, Fs_ = revolve(prof_s, 24)
+        Vs_ = np.array(Vs_)
+        Vs_[:, 0] += BIN_OFFSET
+        cuff = [(r_in(1050.0) + 4.0, 1046.0), (r_in(1050.0) + 4.0, 1058.0), (K1["bin"]["r_top"] + 8.0, 1058.0), (K1["bin"]["r_top"] + 8.0, 930.0), (K1["bin"]["r_top"] + 4.0, 930.0), (K1["bin"]["r_top"] + 4.0, 1052.0)]
+        Vc_, Fc_ = revolve(cuff, 24)
+        Vc_ = np.array(Vc_)
+        a_c = np.arctan2(Vc_[:, 1], Vc_[:, 0])
+        gath = 1.0 + 0.018 * np.sin(5.0 * a_c) + 0.008 * np.sin(11.0 * a_c + 1.0)               # the gathers
+        rr_c = np.hypot(Vc_[:, 0], Vc_[:, 1])
+        Vc_[:, 0], Vc_[:, 1] = rr_c * gath * np.cos(a_c) + BIN_OFFSET, rr_c * gath * np.sin(a_c)
+        sk = merge((Vs_, Fs_), (Vc_, Fc_))
         V = np.array(sk[0])
         if C["bin_tilt_deg"]:
             V = rot_y(V, C["bin_tilt_deg"], (Po["od"] / 2.0, 640.0))
@@ -462,8 +481,10 @@ def build_d1(T, cond, out_dir, npz_dir):
         x, z = LV[:, 0].copy(), LV[:, 2].copy()
         LV[:, 0] = x * c - z * s
         LV[:, 2] = x * s + z * c
-        LV[:, 0] += 440.0
         LV[:, 2] -= LV[:, 2].min()
+        it = int(np.argmax(LV[:, 2]))                                         # its top edge rests against the can's wall (REVIEW-v1-street point 4)
+        zt = float(LV[it, 2])
+        LV[:, 0] += (199.0 + 25.0 * (min(zt, 560.0) - 28.0) / (582.0 - 28.0) + 3.0) - LV[it, 0]
     elif C.get("lid_tilt_deg"):
         LV = rot_y(LV, C["lid_tilt_deg"], (231.0, 588.0))
     B.add("d1_lid", (LV, lid[1]), "zinc", bev=None)
