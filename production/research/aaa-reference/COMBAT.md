@@ -310,7 +310,7 @@ Each entry: start pose, end pose, length and key frames with their source mark, 
 
 **D04 struck, reeling.** Start: D03, D05 or stance. End: hunched, hand to the face, guard low (D05's pose). 30 frames (1.0 s). Two half-steps and a lurch, 0.55 m reached at f15 (0.5 s). Derived: equal to the Bumps stagger cap. Blends from D03, D05 or any stance over 3 frames; to D05 over 5. Causes: footing reeling; guard drops (Combat.cs: Reeling means "Guard is dropping"). Sound: a heavy grunt, a wet breath, shoes. Camera: none. Witnesses: the injured side shows (HarmBook.LooksLike has never been displayed).
 
-**D05 reeling (loop).** Pose: swaying, one hand to the face, ragged breath, chin up. 45 frames (1.5 s) loop, judgement. Blends from D04; to D02, D04, D06, E02, A02. Footing reeling. Sound: breath at the ragged rate. Camera: none. Witnesses: his state reads as hurt.
+**D05 reeling (loop).** Pose: swaying, one hand to the face, ragged breath, chin up. 45 frames (1.5 s) loop, judgement. Blends from D04 and D08; to D02, D04, D06, E02, A02. Footing reeling. Sound: breath at the ragged rate. Camera: none. Witnesses: his state reads as hurt.
 
 **D06 struck, knocked down.** Start: D04 or D05 pose. End: on the ground on his side, one hand on his head. 45 frames (1.5 s). Knees go in 8 frames, falls sideways, ground at f16 (0.53 s), 0.6 m from where he stood, then settles. Judgement. Blends from D04 or D05 over 3 frames; to D07 over 5. Causes: footing down. Sound: a gasp, a body fall at f16, a scrape of a hand on stone. Camera: on Tom's camera a 2 degree settle (judgement). Witnesses: aftermath begins at f16; the victim and a body on the ground are the strongest cue the mill can read.
 

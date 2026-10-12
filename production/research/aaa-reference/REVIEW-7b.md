@@ -136,3 +136,36 @@ What was checked: in COMBAT.md, about 60 numbers and quotes against 30 sources (
 ## Note for the coordinator (no change to either file)
 
 CREDITS-MAP.md section 1 reports that MobyGames was retried "with a Chrome browser identity" after its robot check. A retry under a browser identity is a try at getting round a block, which the brief rules out. It failed, nothing from it was used, and the file says so openly, so no text change is asked; it should not be repeated.
+
+## Applied (13 October)
+
+All 24 fixes were applied exactly as written, to COMBAT.md and CREDITS-MAP.md only. After each fix the edited place was re-read, and each repeated number or claim was searched for in the same file. A line under each title now says the file was reviewed and the fixes were not reviewed again.
+
+1. APPLIED. COMBAT.md section 5.4, run 3 bullet replaced. The old totals (1.00, 1.93, 2.78, 3.57), "0.02 short" and "2.5 s or more apart" appear nowhere else in the file.
+2. APPLIED. All four places: section 2.2 clinch row, section 2.2 shove or kick row, section 4 row 9, Unverified item 12. No other place reads the patch 1.2 note as a feature.
+3. APPLIED. CREDITS-MAP.md section 5, opening sentence replaced.
+4. APPLIED. COMBAT.md, Notes on the table, second bullet.
+5. APPLIED. Parts a, b and c: two rows added to the section 2.3 table, the "If the gap rule is" bullet, and entry B01.
+6. APPLIED. Parts a, b and c: section 5.1 wind-up bullet, the telegraph setting words, and section 5.4 item 3. No other place still says "3 frames before contact", "to see" or "lengthened".
+7. APPLIED. COMBAT.md section 2.3, first patch bullet.
+8. APPLIED. Parts a, b and c: D04, D05 and A02. Every "Blends from" and "to" list in section 5.3 was checked against the new chains.
+9. APPLIED. COMBAT.md, In plain words, item 4.
+10. APPLIED. CREDITS-MAP.md: the Appendix is now "7. Appendix" and sits before Not reached, so the file ends with Not reached, Unverified and Sources.
+11. APPLIED. CREDITS-MAP.md, Unverified, the S1 totals line.
+12. APPLIED. CREDITS-MAP.md section 4, map row 4, "How much" cell.
+13. APPLIED. CREDITS-MAP.md section 4, "What the map shows", first bullet.
+14. APPLIED. Parts a and b. The 29 % figure appears only in section 2 (with the new 31 % figure beside it); 523 appears only in sections 2 and 4, both now "at least".
+15. APPLIED. COMBAT.md section 5.4 item 4. The 1.2 m shove in D01 and the run 2 line (more than 1.9 m apart) agree with the new range.
+16. APPLIED. COMBAT.md section 5.2, rows D01 and D04.
+17. APPLIED. COMBAT.md section 4, row 2, Reason cell.
+18. APPLIED. COMBAT.md entry A02. The old 0.85 breath figure appears nowhere else.
+19. APPLIED. Parts a and b, in the "Status: DRAFT." paragraph.
+20. APPLIED. CREDITS-MAP.md Appendix, Warhorse Studio Orchestra line.
+21. APPLIED. CREDITS-MAP.md section 2, "Community, tributes and thanks" row, "What it is" cell.
+22. APPLIED. CREDITS-MAP.md section 6.
+23. APPLIED. CREDITS-MAP.md section 5, "Why these three come first".
+24. APPLIED. Part a: the six music block headings renamed in the Appendix. Part b: 18 spaced hyphens on 14 lines of CREDITS-MAP.md replaced by ": ". COMBAT.md had none.
+
+NOT APPLIED: none.
+
+Checks run after applying: a script on both files found no U+2014, no U+2013, no single-asterisk or single-underscore italics and no spaced hyphens used as dashes (PASS). A second script found every repository path and file name cited in the two files (101) on disk (PASS). Nothing was committed or pushed.
