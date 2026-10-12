@@ -1,0 +1,448 @@
+{
+ "Tiles032": {
+  "name": "Tiles 032",
+  "cat": "Tiles",
+  "tags": [
+   "32",
+   "bathroom",
+   "clean",
+   "dark",
+   "green",
+   "reflective"
+  ],
+  "date": "2019-03-05 00:00:00",
+  "type": "Material"
+ },
+ "Tiles074": {
+  "name": "Tiles 074",
+  "cat": "Tiles",
+  "tags": [
+   "74",
+   "floor",
+   "marble",
+   "stone",
+   "tiled",
+   "tiles"
+  ],
+  "date": "2020-11-08 00:00:00",
+  "type": "Material"
+ },
+ "Tiles101": {
+  "name": "Tiles 101",
+  "cat": "Tiles",
+  "tags": [
+   "101",
+   "clean",
+   "painted",
+   "pattern",
+   "tiles"
+  ],
+  "date": "2021-05-23 00:00:00",
+  "type": "Material"
+ },
+ "Ice002": {
+  "name": "Ice 002",
+  "cat": "Ice",
+  "tags": [
+   "2",
+   "frozen",
+   "green",
+   "ice",
+   "lake",
+   "shiny"
+  ],
+  "date": "2018-09-05 00:00:00",
+  "type": "Material"
+ },
+ "Ice001": {
+  "name": "Ice 001",
+  "cat": "Ice",
+  "tags": [
+   "1",
+   "frozen",
+   "green",
+   "ice",
+   "lake",
+   "shiny"
+  ],
+  "date": "2018-09-01 00:00:00",
+  "type": "Material"
+ },
+ "Marble006": {
+  "name": "Marble 006",
+  "cat": "Marble",
+  "tags": [
+   "6",
+   "black",
+   "dark",
+   "gray",
+   "grey",
+   "marble"
+  ],
+  "date": "2020-01-26 00:00:00",
+  "type": "Material"
+ },
+ "Marble012": {
+  "name": "Marble 012",
+  "cat": "Marble",
+  "tags": [
+   "012",
+   "12",
+   "bathroom",
+   "elegant",
+   "glossy",
+   "gray"
+  ],
+  "date": "2020-01-26 00:00:00",
+  "type": "Material"
+ },
+ "Rope001": {
+  "name": "Rope 001",
+  "cat": "Rope",
+  "tags": [
+   "1",
+   "beige",
+   "light",
+   "rope",
+   "string"
+  ],
+  "date": "2018-03-11 00:00:00",
+  "type": "Material"
+ },
+ "Rope002": {
+  "name": "Rope 002",
+  "cat": "Rope",
+  "tags": [
+   "2",
+   "beige",
+   "light",
+   "metal",
+   "rope",
+   "steel"
+  ],
+  "date": "2018-03-21 00:00:00",
+  "type": "Material"
+ },
+ "Candy001": {
+  "name": "Candy 001",
+  "cat": "Candy",
+  "tags": [
+   "1",
+   "candy",
+   "cane",
+   "christmas",
+   "coating",
+   "red"
+  ],
+  "date": "2018-12-01 00:00:00",
+  "type": "Material"
+ },
+ "Candy002": {
+  "name": "Candy 002",
+  "cat": "Candy",
+  "tags": [
+   "2",
+   "brown",
+   "candy",
+   "cane",
+   "christmas",
+   "coating"
+  ],
+  "date": "2018-12-02 00:00:00",
+  "type": "Material"
+ },
+ "Fabric028": {
+  "name": "Fabric 028",
+  "cat": "Fabric",
+  "tags": [
+   "28",
+   "beige",
+   "carpet",
+   "cloth",
+   "dirty",
+   "fabric"
+  ],
+  "date": "2019-04-20 00:00:00",
+  "type": "Material"
+ },
+ "Fabric029": {
+  "name": "Fabric 029",
+  "cat": "Fabric",
+  "tags": [
+   "29",
+   "black",
+   "brown",
+   "carpet",
+   "cloth",
+   "dark"
+  ],
+  "date": "2019-04-21 00:00:00",
+  "type": "Material"
+ },
+ "Fabric030": {
+  "name": "Fabric 030",
+  "cat": "Fabric",
+  "tags": [
+   "30",
+   "cloth",
+   "fabric",
+   "grey"
+  ],
+  "date": "2019-05-30 00:00:00",
+  "type": "Material"
+ },
+ "Metal042A": {
+  "name": "Metal 042 A",
+  "cat": "Metal",
+  "tags": [
+   "42",
+   "clean",
+   "gold",
+   "metal",
+   "shiny"
+  ],
+  "date": "2022-11-28 16:00:00",
+  "type": "Material"
+ },
+ "Metal048A": {
+  "name": "Metal 048 A",
+  "cat": "Metal",
+  "tags": [
+   "48",
+   "clean",
+   "gold",
+   "metal",
+   "smooth"
+  ],
+  "date": "2024-08-10 12:00:00",
+  "type": "Material"
+ },
+ "SurfaceImperfections001": {
+  "name": "Surface Imperfections 001",
+  "cat": "Surface Imperfections",
+  "tags": [
+   "1",
+   "imperfections",
+   "smear",
+   "smudge",
+   "stains",
+   "surface"
+  ],
+  "date": "2018-04-15 00:00:00",
+  "type": "Material"
+ },
+ "Smear001": {
+  "name": "Smear 001",
+  "cat": "Smear",
+  "tags": [
+   "1",
+   "imperfections",
+   "scratched",
+   "scratches",
+   "smear",
+   "surface"
+  ],
+  "date": "2018-06-04 00:00:00",
+  "type": "Material"
+ },
+ "Fingerprints001": {
+  "name": "Fingerprints 001",
+  "cat": "Fingerprints",
+  "tags": [
+   "1",
+   "dirt",
+   "finger",
+   "fingerprints",
+   "imperfection",
+   "print"
+  ],
+  "date": "2018-04-11 00:00:00",
+  "type": "Material"
+ },
+ "Scratches001": {
+  "name": "Scratches 001",
+  "cat": "Scratches",
+  "tags": [
+   "1",
+   "imperfections",
+   "scratched",
+   "scratches",
+   "surface"
+  ],
+  "date": "2018-05-25 00:00:00",
+  "type": "Material"
+ },
+ "Leaking001": {
+  "name": "Leaking 001",
+  "cat": "Leaking",
+  "tags": [
+   "1",
+   "leaking",
+   "moisture",
+   "smear",
+   "smudge",
+   "streaks"
+  ],
+  "date": "2018-06-03 00:00:00",
+  "type": "Decal"
+ },
+ "Concrete034": {
+  "name": "Concrete 034",
+  "cat": "Concrete",
+  "tags": [
+   "34",
+   "concrete",
+   "grey",
+   "light",
+   "plaster",
+   "smooth"
+  ],
+  "date": "2020-11-01 00:00:00",
+  "type": "Material"
+ },
+ "Bricks059": {
+  "name": "Bricks 059",
+  "cat": "Bricks",
+  "tags": [
+   "59",
+   "bricks",
+   "red",
+   "wall"
+  ],
+  "date": "2021-04-11 00:00:00",
+  "type": "Material"
+ },
+ "Paint001": {
+  "name": "Paint 001",
+  "cat": "Paint",
+  "tags": [
+   "1",
+   "cracks",
+   "paint",
+   "reflective",
+   "shiny"
+  ],
+  "date": "2019-03-22 00:00:00",
+  "type": "Material"
+ },
+ "Wood049": {
+  "name": "Wood 049",
+  "cat": "Wood",
+  "tags": [
+   "049",
+   "49",
+   "brown",
+   "furniture",
+   "grain",
+   "horizontal"
+  ],
+  "date": "2020-09-27 00:00:00",
+  "type": "Material"
+ },
+ "Chipboard001": {
+  "name": "Chipboard 001",
+  "cat": "Chipboard",
+  "tags": [
+   "1",
+   "chipboard",
+   "plank",
+   "plywood",
+   "wood"
+  ],
+  "date": "2018-11-25 00:00:00",
+  "type": "Material"
+ },
+ "PaintedPlaster001": {
+  "name": "Painted Plaster 001",
+  "cat": "Painted Plaster",
+  "tags": [
+   "1",
+   "paint",
+   "painted",
+   "plaster",
+   "red",
+   "wall"
+  ],
+  "date": "2018-11-05 00:00:00",
+  "type": "Material"
+ },
+ "PaintedMetal005": {
+  "name": "Painted Metal 005",
+  "cat": "Painted Metal",
+  "tags": [
+   "5",
+   "green",
+   "metal",
+   "painted"
+  ],
+  "date": "2018-04-16 00:00:00",
+  "type": "Material"
+ },
+ "Plastic001": {
+  "name": "Plastic 001",
+  "cat": "Plastic",
+  "tags": [
+   "1",
+   "black",
+   "blue",
+   "plastic",
+   "scratched",
+   "smooth"
+  ],
+  "date": "2018-03-08 00:00:00",
+  "type": "Material"
+ },
+ "Rubber004": {
+  "name": "Rubber 004",
+  "cat": "Rubber",
+  "tags": [
+   "4",
+   "black",
+   "floor",
+   "gym",
+   "rubber"
+  ],
+  "date": "2023-12-03 14:00:00",
+  "type": "Material"
+ },
+ "Carpet009": {
+  "name": "Carpet 009",
+  "cat": "Carpet",
+  "tags": [
+   "9",
+   "carpet",
+   "pattern",
+   "small",
+   "sqare"
+  ],
+  "date": "2019-08-01 00:00:00",
+  "type": "Material"
+ },
+ "WoodFloor043": {
+  "name": "Wood Floor 043",
+  "cat": "Wood Floor",
+  "tags": [
+   "43",
+   "floor",
+   "parquet",
+   "planks",
+   "wood"
+  ],
+  "date": "2021-04-18 00:00:00",
+  "type": "Material"
+ },
+ "Planks021": {
+  "name": "Planks 021",
+  "cat": "Planks",
+  "tags": [
+   "21",
+   "brown",
+   "floor",
+   "planks",
+   "raw",
+   "rough"
+  ],
+  "date": "2019-11-21 00:00:00",
+  "type": "Material"
+ }
+}
