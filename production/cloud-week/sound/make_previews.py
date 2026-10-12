@@ -7,11 +7,11 @@
   spec_<layer>.jpg          a spectrogram of each layer, its day, night and rain versions stacked (spec_rain.jpg: the three rains)
   spec_steps_<surface>.jpg  the eight variants of each footstep surface in a row
   spec_doors_*.jpg, spec_bell.jpg, spec_phonebox.jpg   the door, bell and phone-box one-shots in a row
-  clip_mix_{day,night,rain}.ogg   (audio is not committed: see make_clips) 20 s of each bed: its layers summed at their own levels (mono layers centred), one gain for all three
+  clip_mix_{day,night,rain}.ogg   (audio is not committed: .gitignore lists *.ogg; make_clips) 20 s of each bed: its layers summed at their own levels (mono layers centred), one gain for all three
   clip_steps_<surface>.ogg        the eight variants of a surface, walked
   clip_doors.ogg                  shop door, bell, house door, phone box
 
-Spectrograms are ffmpeg's showspectrumpic (1600 px wide, JPEG under 500 KB). Clips are Ogg Vorbis, at most 20 s, under 300 KB.
+Spectrograms are ffmpeg's showspectrumpic (1600 px wide, JPEG under 500 KB; the top of each picture is set by resampling, not by its `stop` option, which drew a false line, see spec_png). Clips are Ogg Vorbis, at most 20 s, under 300 KB.
 The mix clips carry +10 dB over the real levels, with a peak limiter at -1 dBFS, so that they are audible at an ordinary
 listening volume: they are for judging what is in each bed and how the beds differ, not the game's levels.
 """
@@ -60,8 +60,11 @@ def run(cmd):
 
 
 def spec_png(wav, png, height, stop_hz):
+    """ffmpeg's showspectrumpic, the top of the picture set by the sample rate (twice stop_hz) and not by its `stop` option:
+    with `stop`, every picture carried a false bright line a tenth of the way up (960 Hz on a 10 kHz panel, 1.2 kHz on a 12 kHz one;
+    pink noise shows it too; the first build's NOTES.md took it for sound). Without `stop` the line is gone (checked on pink noise)."""
     run(["ffmpeg", "-v", "error", "-y", "-i", wav, "-lavfi",
-         "aresample=32000,showspectrumpic=s=1600x%d:mode=combined:legend=1:scale=log:stop=%d:drange=80:color=viridis" % (height, stop_hz), "-update", "1", png])
+         "aresample=%d,showspectrumpic=s=1600x%d:mode=combined:legend=1:scale=log:drange=80:color=viridis" % (2 * stop_hz, height), "-update", "1", png])
 
 
 def stack_jpeg(wavs, out, height, stop_hz, tmp):
@@ -118,7 +121,7 @@ def encode_ogg(x, out, quality, tmp, limit=False, gain_db=0.0, max_kb=290):
 
 def make_clips():
     """The nine listening clips. Audio does not go into git (the size guard refuses it): they are written beside the JPEGs in
-    production/previews/cloud-week/sound/ (kept out of git locally) and copied to SOUND_OUT/clips/, and make_sound.py makes them
+    production/previews/cloud-week/sound/ (kept out of git by the .gitignore there: `*.ogg`) and copied to SOUND_OUT/clips/, and make_sound.py makes them
     at the end of a full run, so one command rebuilds the WAVs and the clips."""
     os.makedirs(PREV, exist_ok=True)
     tmp = tempfile.mkdtemp(prefix="soundclips_")
@@ -131,6 +134,7 @@ def make_clips():
             for p in parts:
                 x = rd(p)
                 x = np.stack([x, x], axis=1) * np.sqrt(0.5) if x.ndim == 1 else x
+                x = np.concatenate([x] * (-(-int(28 * RATE) // len(x))))[:int(28 * RATE)]     # loops of 60 and 75 s: each repeated as far as the clip needs
                 tot = x if tot is None else tot + x
             clip = tot[int(8 * RATE):int(28 * RATE)]
             clip = clip * np.minimum(1.0, np.linspace(0, 1, len(clip)) * 20.0)[:, None] * np.minimum(1.0, np.linspace(1, 0, len(clip)) * 20.0)[:, None]

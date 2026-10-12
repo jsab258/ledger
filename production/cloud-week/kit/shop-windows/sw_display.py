@@ -29,8 +29,8 @@ L_DISPLAY = 3.35
 DEPTH = 0.55
 # orientation per model (about the vertical, or lying): the front toward the street (-y)
 ROT = {
-    "standing_picture_frame_01": (0.0, 0.0, math.pi / 2),
-    "standing_picture_frame_02": (0.0, 0.0, math.pi / 2),
+    "standing_picture_frame_01": (0.0, 0.0, -math.pi / 2),
+    "standing_picture_frame_02": (0.0, 0.0, -math.pi / 2),
     "magnifying_glass_01": (math.pi / 2, 0.0, 0.0),
 }
 LEVELS = (0.12, 0.40, 0.75)

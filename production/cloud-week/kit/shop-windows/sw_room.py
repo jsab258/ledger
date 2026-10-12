@@ -207,9 +207,22 @@ class Room:
             if o.type != "MESH":
                 bpy.data.objects.remove(o, do_unlink=True)
 
-        def blended(o):
-            return all(getattr(ms.material, "surface_render_method", "") == "BLENDED" or any(g in ms.material.name.lower() for g in GLASSY) for ms in o.material_slots if ms.material) and len(o.material_slots) > 0
-        keep = [o for o in meshes if not blended(o)]
+        def is_glassy(m):
+            return m is not None and (getattr(m, "surface_render_method", "") == "BLENDED" or any(g in m.name.lower() for g in GLASSY))
+        # a mesh whose every slot is glass or alpha goes; in a mesh that mixes them (the clocks' faces) the glass faces are cut out
+        keep = []
+        for o in meshes:
+            gidx = [i for i, ms in enumerate(o.material_slots) if is_glassy(ms.material)]
+            if gidx and len(gidx) == len(o.material_slots):
+                continue
+            if gidx:
+                bm = bmesh.new()
+                bm.from_mesh(o.data)
+                dead = [f for f in bm.faces if f.material_index in gidx]
+                bmesh.ops.delete(bm, geom=dead, context="FACES")
+                bm.to_mesh(o.data)
+                bm.free()
+            keep.append(o)
         if keep:
             for o in meshes:
                 if o not in keep:
@@ -543,6 +556,7 @@ class Room:
             for (a, b) in td["ranges"]:
                 x = a + 0.05
                 guard = 0
+                n_in = 0
                 while queue and guard < 60:
                     guard += 1
                     # the next piece that fits this clearance without shrinking below 55 per cent
@@ -576,7 +590,9 @@ class Room:
                     ext = self.place(p["model"], (x + wdt / 2, D - 0.02, z), rot=(0, 0, turn + rnd.uniform(-0.08, 0.08)), scale=s, fixture="R-back-stock", anchor=("c", "max", "min"))
                     self.tickets_for(x + wdt / 2, D - 0.30 + 0.0, z)
                     queue.pop(i)
+                    n_in += 1
                     x += wdt + rnd.uniform(0.0, 0.03)
+                self.fill_log = getattr(self, "fill_log", []) + [(z, round(a, 2), round(b, 2), round(x, 2), n_in)]
         leftovers = queue
         # the top tier (z 2.05): the cardboard boxes of stock and whatever is left, spread across the whole wall
         top = [p for p in boxes_top] + leftovers
