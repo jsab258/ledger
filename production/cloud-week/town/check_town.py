@@ -510,6 +510,7 @@ def run(doc, full=True):
             row("%s.ties" % pid, "%s: the people who first knew him cite a line" % pid, not tb)
 
         # rumours
+        names_all = " ".join([p["name"], p["heard_as"]] + [byid[t["who"]]["name"] + " " + byid[t["who"]]["heard_as"] for t in ties if t["who"] in byid])
         rbad = []
         if len(p["rumours"]) != 5:
             rbad.append("%d rumours" % len(p["rumours"]))
@@ -531,6 +532,10 @@ def run(doc, full=True):
                 rbad.append("%s passes to nobody" % r["id"])
             if not r["based_on"] or any(x not in fids for x in r["based_on"]):
                 rbad.append("%s rests on facts that are not theirs" % r["id"])
+            else:
+                badw = specifics_ok(r["gist"], " ".join(ftext[x] for x in r["based_on"]) + " " + names_all)
+                if badw:
+                    rbad.append("%s says %s, which is in none of the facts it rests on" % (r["id"], badw))
             if any(x in secret for x in r["based_on"]) and not r["id"].endswith("zzz"):
                 rbad.append("%s rests on a secret fact" % r["id"])
             for lim in r["limits"]:

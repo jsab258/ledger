@@ -159,7 +159,7 @@ PEOPLE.append(regular(
         pool("nephew", ["rocco"], ["ferko", "zlata", "sam"], ["will"], "heard it from Ron, who saw it", limits=["L7"]),
         pool("fire", ["sam"], ["ferko", "rocco"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
         pool("trade", ["self"], ["rocco", "ferko", "zlata"], ["trade"], "knows it from the quay", limits=["L5"]),
-        rumour("Casual work on the quay is scarce: Lee takes a day when there is one, and mostly there isn't.", "true", TB_TRADE, "he knows it first hand",
+        rumour("Casual work on the quay is scarce: Lee takes a day when there is any, and mostly there isn't.", "true", TB_TRADE, "he knows it first hand",
                ["self"], ["rocco", "zlata"], ["line", "casual_quay"], ["L5"]),
     ],
     questions=[

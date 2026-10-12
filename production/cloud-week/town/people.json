@@ -1217,7 +1217,7 @@
     },
     {
      "id": "rocco.r4",
-     "gist": "Three fares a day on the rank and the street dead since the docks went; nobody has the money for a cab.",
+     "gist": "The street has been dead since the docks went, and nobody has the money for a cab.",
      "truth": "true",
      "truth_basis": {
       "src": {
@@ -15170,7 +15170,7 @@
     },
     {
      "id": "joey.r5",
-     "gist": "Casual work on the quay is scarce: Lee takes a day when there is one, and mostly there isn't.",
+     "gist": "Casual work on the quay is scarce: Lee takes a day when there is any, and mostly there isn't.",
      "truth": "true",
      "truth_basis": {
       "src": {

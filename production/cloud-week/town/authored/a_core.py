@@ -37,7 +37,7 @@ PEOPLE.append(person(
         pool("arrive", ["self"], ["lena", "sam", "joey"], ["arrive", "will"], "saw it himself",
              gist="Mickey's nephew came to Mickey's with his case; the new owner, with a letter."),
         pool("fire", ["sam"], ["lena", "joey"], ["fire"], "street talk, nobody in particular"),
-        rumour("Three fares a day on the rank and the street dead since the docks went; nobody has the money for a cab.", "true", TB_TRADE, "saw it himself from the rank",
+        rumour("The street has been dead since the docks went, and nobody has the money for a cab.", "true", TB_TRADE, "saw it himself from the rank",
                ["self"], ["sam", "joey", "dusan"], ["dead_street", "trade"], ["L5"]),
         pool("june", ["lena"], ["sam", "noor"], ["june"], "heard it from Sheila, who sees her at the office"),
     ],

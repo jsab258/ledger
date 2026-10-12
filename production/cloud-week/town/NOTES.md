@@ -136,10 +136,10 @@ Groups: N-LIVES is a small belief, sighting or trade fact where canon and the sh
 **Grace Rinaldi** (cafe)
 - cafe.b01, believes, N-LIVES [truth: unknown]: A cup of tea sets most people right, and nobody leaves her caff hungry or cold. Follows: From her line 'Sit down before you fall down. Tea's on.' and 'warm, bossy'.
 
-**Peter Tang (Tang Wing-kei)** (takeaway_m)
-- takeaway_m.b01, believes, N-LIVES [truth: unknown]: Good food is worth the ten minutes it takes, and a customer who will not wait is not worth the trouble. Follows: From his line 'Good food takes ten minutes.'
+**Peter Tang** (takeaway_m)
+- takeaway_m.b01, believes, N-LIVES [truth: unknown]: Good food is worth the ten minutes it takes. Follows: From his line 'Good food takes ten minutes.'
 
-**Lily Tang (Wong Mei-ling)** (takeaway_f)
+**Lily Tang** (takeaway_f)
 - takeaway_f.b01, believes, N-LIVES [truth: unknown]: Regulars are remembered, and a customer who thinks she forgets is mistaken. Follows: From her line 'Same as last week? I remember. Everybody thinks I don't.'
 
 ## Schedules proposed (group N-SCHEDULES), one line each
@@ -153,8 +153,8 @@ Groups: N-LIVES is a small belief, sighting or trade fact where canon and the sh
 - **Julie Kettlewell** (tanja) (replaces hook-cast.json's routine), a weekday: 09:00 to 10:00 by the kiosk on Quay Street; 10:00 to 11:00 the pavement outside the steam laundry; 11:00 to 12:00 the newsagent's counter, where the pensions are paid.
 - **Albert Suggitt** (fabjan) (replaces hook-cast.json's routine), a weekday: 06:00 to 12:00 the dock gate; 17:00 to 18:00 the quay at the bottom of Quay Street.
 - **Grace Rinaldi** (cafe), a weekday: 06:00 to 14:00 inside the cafe across the street from Mickey's; 17:00 to 22:30 inside the cafe across the street from Mickey's.
-- **Peter Tang (Tang Wing-kei)** (takeaway_m), a weekday: 10:00 to 14:00 the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let); 16:30 to 23:00 the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let).
-- **Lily Tang (Wong Mei-ling)** (takeaway_f), a weekday: 11:00 to 14:00 the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let); 16:30 to 23:00 the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let).
+- **Peter Tang** (takeaway_m), a weekday: 10:00 to 14:00 the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let); 16:30 to 23:00 the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let).
+- **Lily Tang** (takeaway_f), a weekday: 11:00 to 14:00 the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let); 16:30 to 23:00 the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let).
 
 Places added that hook-cast.json lacks (all off Quay Street or unplaced): exchange_office: his office in the Exchange, the district of offices and lawyers; exchange_lunch: his table at luncheon in the Exchange; fairview_house: his house in Fairview, on the hills; dock_room: the back room of a dockside office in the Hook; jensen_house: her house by the docks; parade_district: the Parade, the nightlife district; danny_flat: his flat above a shop in the Parade district; station: the police station, in the CID office; garbutt_room: the room he keeps for meetings, over a shop in Copper Row; takeaway: the Tangs' takeaway on the parade (its unit not yet fixed: RULINGS.md has bay 3 empty and to let).
 
@@ -163,7 +163,7 @@ Places added that hook-cast.json lacks (all off Quay Street or unplaced): exchan
 The eleven pooled stories, each a rewording of facts every holder has, with its truth against canon and the story: the heart (true); the nephew has come (true); he missed the funeral (true); June is still in town (true); the fire as the street has it (partly: the paper's arson and 'nobody charged' stand, the owner's guilt is false against the story); trade is thin (true); the door and the key (true); a man at the landing (true); Hal and Rita had words (unknown, nobody can say why); the radio is overheard (true, canon); the arrival seen (true). The 29 specific ones:
 
 - Ron Kirby (rocco.r2), true: Mickey's nephew came to Mickey's with his case; the new owner, with a letter.
-- Ron Kirby (rocco.r4), true: Three fares a day on the rank and the street dead since the docks went; nobody has the money for a cab.
+- Ron Kirby (rocco.r4), true: The street has been dead since the docks went, and nobody has the money for a cab.
 - Sheila Dunn (lena.r2), true: Mickey's nephew has come, with one suitcase and a letter; Sheila showed the new management round.
 - Sheila Dunn (lena.r3), true: Mickey's has not made much since the docks went; the takings are thin and the phone rings more than it used to, and it is rarely good news.
 - Tom Nowak (tom.r3), true: Mickey's nephew has come and nobody knows where from: he has said nothing of his life before the Hook, and nobody has asked.
@@ -183,7 +183,7 @@ The eleven pooled stories, each a rewording of facts every holder has, with its 
 - Keith Garbutt (fixer.r5), true: Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.
 - Kevin Needham (ferko.r4), unknown: Traffic on the bridge is bad again; it is quicker round by the market.
 - Brenda Laverack (marla.r5), unknown: Haddock is dear this week and it is not even good haddock.
-- Lee Drewery (joey.r5), true: Casual work on the quay is scarce: Lee takes a day when there is one, and mostly there isn't.
+- Lee Drewery (joey.r5), true: Casual work on the quay is scarce: Lee takes a day when there is any, and mostly there isn't.
 - Susan Coverdale (tibor.r4), true: The quay has never been so quiet, not in all Susan's time.
 - Doreen Harland (zora.r5), true: A laundress at the steam laundry, laid off from the presses in the summer, is looking for anything.
 - Julie Kettlewell (tanja.r1), true: A laundress laid off from the steam laundry's presses in the summer is looking for anything.
