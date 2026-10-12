@@ -4,13 +4,14 @@
     python check_sound.py              # checks SOUND_OUT, writes checks/check_v1.json, prints "N of M rows pass"
     python check_sound.py --out v2     # writes checks/check_v2.json instead
 
-One row per test: each of BRIEF.md's automatic acceptance cases (7, numbers 1 to 16) and each file. A missing output fails
+One row per test: each of BRIEF.md's automatic acceptance cases (numbers 1 to 16 and 22 to 25) and each file. A missing output fails
 by name. Every number comes from BRIEF.md's targets-json block. This script does not import make_sound.py: loop loudness
 and true peak are measured with ffmpeg's own ebur128 filter (a second implementation of BS.1770), the seam and the
 rest with code written here, so a fault in the build cannot pass its own check.
 """
 import hashlib
 import json
+import math
 import os
 import re
 import subprocess
@@ -19,6 +20,7 @@ import tempfile
 import wave
 
 import numpy as np
+from scipy import signal
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_DIR = os.environ.get("SOUND_OUT", "/home/user/ledger-scratch/sound-out")
@@ -109,6 +111,182 @@ def sha256(path):
     return hashlib.sha256(open(path, "rb").read()).hexdigest()
 
 
+def mono(x):
+    return x if x.ndim == 1 else x.mean(axis=1)
+
+
+def channels(x):
+    return [x] if x.ndim == 1 else [x[:, c] for c in range(x.shape[1])]
+
+
+def spectral_stats(m):
+    """(centroid Hz, 95 percent roll-off Hz, {band: share of power}) of a loop, from a Welch spectrum."""
+    f, P = signal.welch(m, fs=RATE, nperseg=16384)
+    tot = P.sum()
+    share = lambda a, b: float(P[(f >= a) & (f < b)].sum() / tot)
+    return (float((P * f).sum() / tot), float(f[np.searchsorted(np.cumsum(P) / tot, 0.95)]),
+            {"lt250": share(0, 250), "300_3000": share(300, 3000), "1000_2500": share(1000, 2500)})
+
+
+def level_spread_db(m, lo=10, hi=95):
+    """How much the 100 ms level moves: the 10th to 95th percentile of the 100 ms RMS in dB."""
+    n = RATE // 10
+    k = len(m) // n
+    e = 10 * np.log10((m[:k * n].reshape(k, n) ** 2).mean(axis=1) + 1e-14)
+    return float(np.percentile(e, hi) - np.percentile(e, lo))
+
+
+def gap_fraction(m, below_db=15.0):
+    """The share of 100 ms frames more than below_db under the loop's loud frames (its 90th percentile level)."""
+    n = RATE // 10
+    k = len(m) // n
+    e = 10 * np.log10((m[:k * n].reshape(k, n) ** 2).mean(axis=1) + 1e-14)
+    return float(np.mean(e < np.percentile(e, 90) - below_db))
+
+
+def gull_calls(m, thr_db=-45.0, merge_s=1.5, min_s=0.15):
+    """Gull calls counted from the audio: sound above thr_db under the loop's loudest 50 ms (high-passed at 500 Hz), runs closer
+    than merge_s joined (a call and its tail, or a run of calls), runs shorter than min_s dropped."""
+    y = signal.sosfilt(signal.butter(2, 500.0, btype="highpass", fs=RATE, output="sos"), m)
+    n = int(0.05 * RATE)
+    e = np.sqrt(np.convolve(y * y, np.ones(n) / n, "same"))
+    act = e > e.max() * 10 ** (thr_db / 20)
+    idx = np.flatnonzero(np.diff(np.concatenate([[0], act.astype(int), [0]])))
+    runs = []
+    for i in range(0, len(idx), 2):
+        a, b = int(idx[i]), int(idx[i + 1])
+        if runs and a - runs[-1][1] < merge_s * RATE:
+            runs[-1][1] = b
+        else:
+            runs.append([a, b])
+    return sum(1 for a, b in runs if (b - a) / RATE >= min_s)
+
+
+def repeat_scan(m, p):
+    """Does any part of a loop play twice inside it? The loop (one channel, taken down to RATE/p) is read in windows of window_s
+    every hop_s; each window is compared, by normalised waveform correlation, with the whole loop taken as a circle, at every lag
+    from min_lag_s up to half the loop (nearer than that, the same sound is compared with itself). Returns (highest correlation,
+    window start s, other start s). A window with no sound in it is skipped, and so is a place with under 5 percent of its amplitude.
+    1.0 is a repeat, about 0.1 is two different stretches of noise."""
+    fs = RATE // p["decimate"]
+    x = signal.resample_poly(m, 1, p["decimate"])
+    N, W, H = len(x), int(p["window_s"] * fs), int(p["hop_s"] * fs)
+    X = np.fft.rfft(x)
+    e = np.concatenate([[0.0], np.cumsum(np.concatenate([x, x]) ** 2)])
+    ex = np.sqrt(np.maximum(e[np.arange(N) + W] - e[np.arange(N)], 1e-18))
+    lag_ok = lambda t0: ((np.arange(N) - t0) % N >= int(p["min_lag_s"] * fs)) & ((np.arange(N) - t0) % N <= N // 2)
+    best = (0.0, 0.0, 0.0)
+    for t0 in range(0, N, H):
+        w = x[(np.arange(W) + t0) % N]
+        ew = np.sqrt(np.sum(w * w))
+        if ew < 1e-6:
+            continue
+        wp = np.zeros(N)
+        wp[:W] = w
+        c = np.fft.irfft(X * np.conj(np.fft.rfft(wp)), N) / (ew * ex)
+        v = np.where(lag_ok(t0) & (ex > 0.05 * ew), np.abs(c), 0.0)
+        i = int(np.argmax(v))
+        if v[i] > best[0]:
+            best = (float(v[i]), t0 / fs, i / fs)
+    return best
+
+
+def steady_tones(m, p):
+    """The steady tones of one channel: it is read in 1 s frames (1 Hz bins), each bin takes its level as the median over the frames
+    (so what stands there in the quiet stretches counts), and a peak's prominence is its level over the median level of the
+    bins 5 to 60 Hz either side of it. Returns [(Hz, dB over its neighbours)] for the highest three peaks between fmin and fmax."""
+    f, _, S = signal.spectrogram(m, fs=RATE, window="hann", nperseg=RATE, noverlap=RATE // 2, detrend=False, mode="psd")
+    S = S[:, S.sum(axis=0) > 1e-14]
+    D = np.median(10 * np.log10(S + 1e-22), axis=1)
+    lo, hi = p["near_hz"]
+    offs = np.concatenate([np.arange(-hi, -lo + 1), np.arange(lo, hi + 1)])
+    cand = np.flatnonzero((f >= p["fmin_hz"]) & (f <= p["fmax_hz"]))
+    prom = np.zeros(len(D))
+    prom[cand] = D[cand] - np.median(np.stack([D[np.clip(cand + o, 0, len(D) - 1)] for o in offs]), axis=0)
+    peaks = [i for i in cand if prom[i] > 0 and prom[i] >= prom[i - 1] and prom[i] >= prom[i + 1]]
+    peaks.sort(key=lambda i: -prom[i])
+    out = []
+    for i in peaks:
+        if all(abs(i - j) > 8 for j, _ in out):
+            out.append((i, prom[i]))
+        if len(out) >= 3:
+            break
+    return [(float(f[i]), float(v)) for i, v in out]
+
+
+def grain_runs(plan, N_ms, near_ms=320, gap_ms=50):
+    """From a speech loop's grain plan (what the build recorded of every grain: source, start and length in the source, place in the
+    loop, all in ms): (the longest grain, the longest run, the shortest distance in loop time between two grains that use
+    overlapping places of a source). A run is a chain of grains that start within near_ms of each other (round the circle) and
+    whose places in a source touch or lie within gap_ms of each other; its length is the stretch of source it covers. Written
+    here, not shared with the build."""
+    src, st, ln, pos = (np.array(plan["plan"][k]) for k in ("src", "start_ms", "len_ms", "pos_ms"))
+    n = len(pos)
+    parent = list(range(n))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+    reuse = 1e9
+    for j in range(n):
+        d = np.abs(pos[j + 1:] - pos[j])
+        d = np.minimum(d, N_ms - d)
+        later = slice(j + 1, n)
+        same = src[later] == src[j]
+        overlap = same & (st[later] < st[j] + ln[j]) & (st[j] < st[later] + ln[later])
+        if overlap.any():
+            reuse = min(reuse, float(d[overlap].min()) / 1000.0)
+        touch = same & (d < near_ms) & (st[later] < st[j] + ln[j] + gap_ms) & (st[j] < st[later] + ln[later] + gap_ms)
+        for i in np.flatnonzero(touch):
+            parent[find(int(i) + j + 1)] = find(j)
+    groups = {}
+    for j in range(n):
+        groups.setdefault(find(j), []).append(j)
+    run = max(max(st[i] + ln[i] for i in g) - min(st[i] for i in g) for g in groups.values())
+    return int(ln.max()), int(run), reuse
+
+
+_src_cache = {}
+
+
+def source_mono(path):
+    """A source as the footstep cutter reads it: decoded to stereo at 48 kHz, the two channels averaged, and the rumble taken off with
+    a high-pass that rises from nothing at 50 Hz to everything at 70 Hz (the definition in BRIEF.md; written here, not shared)."""
+    if path not in _src_cache:
+        raw = subprocess.run(["ffmpeg", "-v", "error", "-i", path, "-ac", "2", "-ar", str(RATE), "-f", "f32le", "-"], capture_output=True, check=True).stdout
+        a = np.frombuffer(raw, dtype=np.float32).astype(np.float64).reshape(-1, 2).mean(axis=1)
+        F = np.fft.rfft(a)
+        F *= np.clip((np.fft.rfftfreq(len(a), 1.0 / RATE) - 50.0) / 20.0, 0.0, 1.0)
+        _src_cache[path] = np.fft.irfft(F, len(a))
+    return _src_cache[path]
+
+
+def rms_env(x, ms):
+    n = max(1, int(RATE * ms / 1000.0))
+    return np.sqrt(np.convolve(x * x, np.ones(n) / n, "same"))
+
+
+def step_end_db(x):
+    """How far under its loudest 5 ms the last 20 ms of a footstep (as written) still is."""
+    e = rms_env(x, 5.0)
+    return float(20 * np.log10(e[-int(0.02 * RATE):].max() / e.max() + 1e-12))
+
+
+def step_pre_db(src_path, cut_s, length_ms):
+    """Measured on the source: how far under the footstep's loudest 5 ms the 20 ms before its cut lies. Near 0 means the step
+    starts inside a sound already going, and the fade-in then makes a second onset."""
+    m = source_mono(src_path)
+    a = int(round(cut_s * RATE))
+    e = rms_env(m, 5.0)
+    peak = e[a:a + int(length_ms / 1000.0 * RATE)].max()
+    lo, hi = a - int(0.0225 * RATE), a - int(0.0025 * RATE)
+    if lo < 0:
+        return 0.0
+    return float(20 * np.log10(e[lo:hi].max() / peak + 1e-12))
+
+
 # --------------------------------------------------------------------------------------------------- main
 def main():
     tag = "v1"
@@ -153,6 +331,7 @@ def main():
         return {"bell_shop": "bell", "phonebox_door_creak": "phonebox_creak", "phonebox_door_shut": "phonebox_shut", "phonebox_ring": "phonebox_ring"}[g]
 
     audio = {}
+    loud_I = {}
     tmp = tempfile.mkdtemp(prefix="soundcheck_")
     for n in expected:
         p = os.path.join(OUT_DIR, n + ".wav")
@@ -163,9 +342,10 @@ def main():
         add(2, "WAV 16-bit 48 kHz", bits == 16 and sr == RATE, "%d-bit %d Hz %d ch" % (bits, sr, ch), n + ".wav")
         if is_loop:
             sec = len(x) / RATE
-            add(2, "loop is 75 s", abs(sec - 75.0) < 0.01, "%.2f s" % sec, n + ".wav")
+            add(2, "loop is %g to %g s" % (T["loop_seconds_min"], T["loop_seconds_max"]), T["loop_seconds_min"] - 0.01 <= sec <= T["loop_seconds_max"] + 0.01, "%.2f s" % sec, n + ".wav")
             add(3, "loop at least %d s" % T["loop_seconds_min"], sec >= T["loop_seconds_min"], "%.1f s" % sec, n + ".wav")
             I, tp, _ = ffmpeg_loudness(p)
+            loud_I[n] = I
             tgt = T["loops_lufs"][n]
             add(4, "integrated loudness within %.1f LU of %.1f" % (T["loop_lufs_tolerance"], tgt), I is not None and abs(I - tgt) <= T["loop_lufs_tolerance"],
                 "%.2f LUFS" % I if I is not None else "unmeasured", n + ".wav")
@@ -175,6 +355,18 @@ def main():
             add(6, "no click at the seam (jump at most %.1f)" % T["seam_jump_max"], j <= T["seam_jump_max"], "jump %.2f x typical step" % j, n + ".wav")
             add(6, "no level step across the seam", st <= T["seam_step_ok_db"] or pc <= T["seam_step_percentile_max"],
                 "%.2f dB, larger than at %.0f%% of other places" % (st, 100 * pc), n + ".wav")
+            rp = T["repeat"]
+            best = max((repeat_scan(c, rp) for c in channels(x)), key=lambda r: r[0])
+            add(22, "no part of the loop plays twice inside it (%g s windows, lags %g s to half the loop, correlation at most %.2f)" % (rp["window_s"], rp["min_lag_s"], rp["max_correlation"]),
+                best[0] <= rp["max_correlation"], "highest correlation %.2f (the window at %.0f s against the loop at %.0f s)" % best, n + ".wav")
+            tn = T["tone"]
+            worst = None
+            for ci, c in enumerate(channels(x)):
+                pk = steady_tones(c, tn)
+                if pk and (worst is None or pk[0][1] > worst[2]):
+                    worst = (("left", "right")[ci] if x.ndim > 1 else "mono", pk[0][0], pk[0][1])
+            add(23, "no steady tone stands more than %g dB over its neighbours" % tn["margin_db"], worst is not None and worst[2] <= tn["margin_db"],
+                "highest peak +%.1f dB at %.0f Hz (%s)" % (worst[2], worst[1], worst[0]) if worst else "no peak found", n + ".wav")
         else:
             add(2, "one-shot is mono", ch == 1, "%d ch" % ch, n + ".wav")
             I, tp, M = ffmpeg_loudness(p, pad_to=1.5)
@@ -187,6 +379,19 @@ def main():
             m = x
             head, tail = abs(m[0]), np.abs(m[-int(0.002 * RATE):]).max()
             add(8, "no click at either end", head <= 10 ** (-50 / 20) and tail <= 10 ** (-50 / 20), "start %.1f dBFS, end %.1f dBFS" % (20 * np.log10(head + 1e-9), 20 * np.log10(tail + 1e-9)), n + ".wav")
+            if n.startswith("step_"):
+                kind = "step_wet" if n.startswith("step_wet_") else "default"
+                end_db = step_end_db(x)
+                lim = T["step_end_db_max"][kind]
+                add(24, "the step has died away at its end (last 20 ms at least %g dB under its peak)" % -lim, end_db <= lim, "%.1f dB" % end_db, n + ".wav")
+                b = manifest.get(n, {}).get("build", {})
+                sfile = sources.get((manifest.get(n, {}).get("sources") or ["?"])[0], {}).get("file")
+                if sfile and os.path.exists(os.path.join(SOURCES_DIR, sfile)) and "cut_at_s" in b:
+                    pre = step_pre_db(os.path.join(SOURCES_DIR, sfile), b["cut_at_s"], b["length_ms"])
+                    plim = T["step_pre_db_max"][kind]
+                    add(24, "the step does not start inside a sound (the 20 ms before its cut in the source at least %g dB under its peak)" % -plim, pre <= plim, "%.1f dB" % pre, n + ".wav")
+                else:
+                    add(24, "the step does not start inside a sound (the 20 ms before its cut in the source at least %g dB under its peak)" % -T["step_pre_db_max"][kind], False, "source or cut point missing", n + ".wav")
         add(5, "no clipping (no full-scale sample)", float(np.abs(x).max()) < 0.999, "peak %.2f dBFS" % (20 * np.log10(np.abs(x).max() + 1e-12)), n + ".wav")
         add(15, "sha256 matches manifest.json", n in manifest and manifest[n].get("sha256") == sha256(p),
             "" if n in manifest else "no manifest row", n + ".wav")
@@ -218,9 +423,14 @@ def main():
             add(10, "%s bed mix measures within %.1f LU of %.1f" % (v, T["bed_mix_tolerance"], T["bed_mix_lufs"][v]), False, "MISSING " + ", ".join(p for p in parts if p not in audio))
             continue
         tot = None
+        lens = {len(audio[p]) for p in parts}
+        L = math.lcm(*lens)                  # loops of 60 and 75 s come round together every 300 s: the mix is measured over that
+        if L > 600 * RATE:
+            L = max(lens)
         for p in parts:
             x = audio[p]
             x = np.stack([x, x], axis=1) * np.sqrt(0.5) if x.ndim == 1 else x
+            x = np.concatenate([x] * (-(-L // len(x))))[:L].astype(np.float32)
             tot = x if tot is None else tot + x
         path = os.path.join(tmp, "mix_%s.wav" % v)
         pcm = (np.clip(tot, -1, 1) * 32767).astype("<i2")
@@ -242,6 +452,23 @@ def main():
     cnt = {v: manifest.get("amb_gulls_%s" % v, {}).get("build", {}).get("call_count") for v in ("day", "night", "rain")}
     add(11, "night gulls: fewer calls than day and at most three", cnt["night"] is not None and cnt["day"] is not None and cnt["night"] < cnt["day"] and cnt["night"] <= 3, "calls day %s, night %s, rain %s" % (cnt["day"], cnt["night"], cnt["rain"]))
     add(11, "rain gulls: fewer calls than day", cnt["rain"] is not None and cnt["day"] is not None and cnt["rain"] < cnt["day"], "rain %s, day %s" % (cnt["rain"], cnt["day"]))
+    heard = {}
+    for v in ("day", "night", "rain"):
+        if "amb_gulls_%s" % v in audio:
+            heard[v] = gull_calls(mono(audio["amb_gulls_%s" % v]))
+    if len(heard) == 3:
+        add(11, "gull calls counted from the audio: night fewer than day and at most three, rain fewer than day",
+            heard["night"] < heard["day"] and heard["night"] <= 3 and heard["rain"] < heard["day"], "heard day %d, night %d, rain %d" % (heard["day"], heard["night"], heard["rain"]))
+        add(11, "gull calls heard in the audio agree with the build's record (within one)", all(cnt[v] is not None and abs(heard[v] - cnt[v]) <= 1 for v in heard),
+            "heard %s, recorded %s" % ([heard[v] for v in ("day", "night", "rain")], [cnt[v] for v in ("day", "night", "rain")]))
+    if "amb_wind_day" in audio and "amb_wind_night" in audio:
+        wd, wn = mono(audio["amb_wind_day"]), mono(audio["amb_wind_night"])
+        cd, cn = centroid(wd), centroid(wn)
+        add(11, "night wind is darker than day wind (spectral centroid)", cn < cd, "night %.0f Hz, day %.0f Hz" % (cn, cd))
+        add(11, "night wind is quieter than day wind (integrated loudness)", loud_I.get("amb_wind_night") is not None and loud_I["amb_wind_night"] < loud_I["amb_wind_day"],
+            "night %.2f LUFS, day %.2f LUFS" % (loud_I["amb_wind_night"], loud_I["amb_wind_day"]))
+        sd, sn = level_spread_db(wd), level_spread_db(wn)
+        add(11, "night wind is steadier than day wind (spread of its 100 ms level, 10th to 95th percentile)", sn < sd, "night %.1f dB, day %.1f dB" % (sn, sd))
 
     # case 12: voices and radio indistinct -------------------------------------------------------------------
     for layer in ("voices", "radio"):
@@ -249,10 +476,33 @@ def main():
             n = "amb_%s_%s" % (layer, v)
             if n not in audio:
                 continue
-            gm = manifest.get(n, {}).get("build", {}).get("grain_ms", [0, 9999])
-            add(12, "grains no longer than %d ms" % T["grain_ms_max"], gm[1] <= T["grain_ms_max"], "grains %s ms" % gm, n + ".wav")
+            plan = manifest.get(n, {}).get("build", {})
+            if plan.get("plan"):
+                longest, run, reuse = grain_runs(plan, int(round(len(audio[n]) * 1000.0 / RATE)))
+                add(12, "no grain longer than %d ms (every grain of the build's record)" % T["grain_ms_max"], longest <= T["grain_ms_max"], "longest grain %d ms of %d" % (longest, len(plan["plan"]["src"])), n + ".wav")
+                add(12, "no run of speech longer than %d ms (no grain continues another)" % T["grain_ms_max"], run <= T["grain_ms_max"], "longest run %d ms" % run, n + ".wav")
+                need = T["grain_reuse_min_s"][n]
+                add(12, "no moment of the recording comes back within %g s" % need, reuse >= need, "shortest return %.1f s" % reuse, n + ".wav")
+            else:
+                for what in ("no grain longer than %d ms" % T["grain_ms_max"], "no run of speech longer than %d ms" % T["grain_ms_max"], "no moment of the recording comes back"):
+                    add(12, what, False, "no grain record in manifest.json", n + ".wav")
             hf = hf_fraction(audio[n])
             add(12, "power above 2.5 kHz at most %.1f%%" % (100 * T["voice_hf_fraction_max"]), hf <= T["voice_hf_fraction_max"], "%.4f%%" % (100 * hf), n + ".wav")
+
+    # case 25: the radio is a radio, not more voices --------------------------------------------------------
+    rd = T["radio"]
+    for v in ("day", "night", "rain"):
+        rn, vn = "amb_radio_%s" % v, "amb_voices_%s" % v
+        if rn not in audio or vn not in audio:
+            continue
+        _, r95, rsh = spectral_stats(mono(audio[rn]))
+        _, v95, _ = spectral_stats(mono(audio[vn]))
+        add(25, "radio holds no hum: at most %.1f%% of its power under 250 Hz" % (100 * rd["lt250_max"]), rsh["lt250"] <= rd["lt250_max"], "%.2f%%" % (100 * rsh["lt250"]), rn + ".wav")
+        add(25, "radio is a band of its own: at least %.0f%% of its power between 300 Hz and 3 kHz" % (100 * rd["band_min"]), rsh["300_3000"] >= rd["band_min"], "%.1f%%" % (100 * rsh["300_3000"]), rn + ".wav")
+        add(25, "radio has more midrange than the voices: its 95%% roll-off at least %d Hz above the %s voices'" % (rd["roll95_over_voices_hz"], v), r95 - v95 >= rd["roll95_over_voices_hz"],
+            "radio %.0f Hz, voices %.0f Hz" % (r95, v95), rn + ".wav")
+        gf = gap_fraction(mono(audio[rn]))
+        add(25, "radio is intermittent: at least %.0f%% of its 100 ms frames lie 15 dB or more under its loud ones" % (100 * rd["gap_fraction_min"]), gf >= rd["gap_fraction_min"], "%.0f%%" % (100 * gf), rn + ".wav")
 
     # case 14: licences and content words ------------------------------------------------------------------------
     used = sorted({s for n in expected for s in manifest.get(n, {}).get("sources", [])})
@@ -265,6 +515,9 @@ def main():
         hits = [w for w in FORBIDDEN if re.search(r"(?<![a-z])%s(?![a-z])" % re.escape(w), text)]
         add(14, "title and page text hold no content-rule word", not hits, ", ".join(hits) if hits else "clean", sid)
     add(13, "every source in sources.json is used by an output", set(sources) <= set(used), "unused: %s" % (sorted(set(sources) - set(used)) or "none"))
+    for sid in sorted(sources):
+        if sources[sid].get("host") == "freesound":
+            add(13, "a Freesound source has the date its page gives for the upload", bool(sources[sid].get("uploaded")), str(sources[sid].get("uploaded")), sid)
 
     # case 16: previews ------------------------------------------------------------------------------------------
     for f in SPEC_PREVIEWS:

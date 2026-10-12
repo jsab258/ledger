@@ -58,7 +58,6 @@ class Room:
         self.coll_t = bpy.data.collections.new("templates")
         self.sc.collection.children.link(self.coll_t)
         self.coll_t.hide_render = True
-        self.coll_t.hide_viewport = True
 
     # ------------------------------------------------------------------------------------------------ materials
     def mat(self, name, rgb, rough=0.6, metal=0.0, emit=None, emit_strength=0.0, glass=False, alpha_img=None):
@@ -182,10 +181,12 @@ class Room:
         return o
 
     # ------------------------------------------------------------------------------------------------ models
-    def template(self, asset):
-        """The model imported once (glass meshes left out as the recipe did: the glTF's opacity maps are not in the 1k set), kept in a hidden collection."""
-        if asset in self.templates:
-            return self.templates[asset]
+    def template(self, asset, tris=None, min_keep=0.3):
+        """The model imported once (glass meshes left out as the recipe did: the glTF's opacity maps are not in the 1k set), kept in a hidden collection.
+        With `tris`, cut to about that many triangles (never by more than 70 per cent: the recipe's rule for the display)."""
+        key = asset if tris is None else (asset, tris)
+        if key in self.templates:
+            return self.templates[key]
         before = set(bpy.data.objects)
         bpy.ops.import_scene.gltf(filepath=A.gltf_path(asset))
         new = [o for o in bpy.data.objects if o not in before]
@@ -220,24 +221,39 @@ class Room:
             self.coll_t.objects.link(o)
             if o.data.shape_keys is not None:
                 o.shape_key_clear()
+        if tris is not None:
+            total = 0
+            for o in meshes:
+                o.data.calc_loop_triangles()
+                total += len(o.data.loop_triangles)
+            ratio = max(min_keep, min(1.0, tris / float(max(total, 1))))
+            for o in meshes:
+                bpy.ops.object.select_all(action="DESELECT")
+                o.select_set(True)
+                bpy.context.view_layer.objects.active = o
+                bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+                if ratio < 1.0:
+                    md = o.modifiers.new("cut", "DECIMATE")
+                    md.ratio = ratio
+                    bpy.ops.object.modifier_apply(modifier=md.name)
         pts = [o.matrix_world @ Vector(c) for o in meshes for c in o.bound_box]
         lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
         hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
-        self.templates[asset] = (meshes, lo, hi)
-        return self.templates[asset]
+        self.templates[key] = (meshes, lo, hi)
+        return self.templates[key]
 
-    def dims(self, asset, rot=(0.0, 0.0, 0.0)):
-        meshes, lo, hi = self.template(asset)
+    def dims(self, asset, rot=(0.0, 0.0, 0.0), tris=None):
+        meshes, lo, hi = self.template(asset, tris)
         E = Euler(rot, "XYZ").to_matrix()
         corners = [E @ Vector((x, y, z)) for x in (lo.x, hi.x) for y in (lo.y, hi.y) for z in (lo.z, hi.z)]
         mn = Vector((min(c.x for c in corners), min(c.y for c in corners), min(c.z for c in corners)))
         mx = Vector((max(c.x for c in corners), max(c.y for c in corners), max(c.z for c in corners)))
         return mx - mn
 
-    def place(self, asset, ref, rot=(0.0, 0.0, 0.0), scale=1.0, fixture="", anchor=("c", "c", "min"), record=True):
+    def place(self, asset, ref, rot=(0.0, 0.0, 0.0), scale=1.0, fixture="", anchor=("c", "c", "min"), record=True, tris=None):
         """Put a model so that its (scaled, rotated) bounding box has the anchor point at ref: anchor per axis is 'min', 'c' or 'max'.
         Returns the world extents [x0, x1, y0, y1, z0, z1]."""
-        meshes, lo, hi = self.template(asset)
+        meshes, lo, hi = self.template(asset, tris)
         E = Euler(rot, "XYZ").to_matrix()
         corners = [E @ Vector((x, y, z)) * scale for x in (lo.x, hi.x) for y in (lo.y, hi.y) for z in (lo.z, hi.z)]
         mn = Vector((min(c.x for c in corners), min(c.y for c in corners), min(c.z for c in corners)))
@@ -482,9 +498,9 @@ class Room:
             best = None
             for turn in (0.0, math.pi / 2):
                 d = self.dims(asset, (0, 0, turn))
-                s = min(1.0, (gap - BOARD_T - 0.015) / d.z, (depth_max - 0.02) / d.y)
-                if long_side:
-                    s = min(s, long_side / max(d.x, d.y, d.z))
+                # the stock was crammed and sized to its shelf (the approved room's pool sizes: a cassette player 0.3, a camera 0.15 against 0.24 and 0.26 as modelled):
+                # scaled to fill the clearance, at most 1.45 times its modelled size, never deeper than the shelf
+                s = min(1.45, (gap - BOARD_T - 0.015) / d.z, (depth_max - 0.02) / d.y)
                 if best is None or s > best[0] + 1e-9 or (abs(s - best[0]) < 1e-9 and d.y < best[2].y):
                     best = (s, turn, d)
             return best
@@ -505,12 +521,12 @@ class Room:
             s = 0.3 / max(self.dims("cardboard_box_01"))
             d = self.dims("cardboard_box_01", (0, 0, 0.0))
             self.place("cardboard_box_01", (x, D - 0.01, 2.05), rot=(0, 0, rnd.uniform(-0.12, 0.12)), scale=s, fixture="R-back-door-boxes", anchor=("c", "max", "min"))
-        # the four television sets on the two TV tiers (1.35 and 1.70), x -1.9 to 0.9: scaled to 0.8 so each stands clear of the tier above (the target gives 0.35 depth; at 0.8 they are 0.28)
+        # the four television sets on the two TV tiers (1.35 and 1.70), x -1.9 to 0.9: scaled to 0.75 so each stands clear of the tier above (the target gives 0.35 depth; at 0.75 they are 0.26)
         tv_x = {1.35: [-1.55, -0.25], 1.7: [-1.1, 0.25]}
         k = 0
         for z, xl in tv_x.items():
             for x in xl:
-                s = 0.8
+                s = 0.75
                 self.place("television_02", (x, D - 0.02, z), rot=(0, 0, rnd.uniform(-0.05, 0.05)), scale=s, fixture="R-back-tv-tiers", anchor=("c", "max", "min"))
                 self.tickets_for(x, D - 0.30 + 0.0, z)
                 k += 1
@@ -705,11 +721,11 @@ class Room:
                 s = min(s, 0.6 / max(d1.y, d1.z))
             ext = self.place(asset, (t_front, y, z), rot=rot, scale=s, fixture="R-right-board", anchor=("max", "c", "c"))
         # near end: two ukuleles hung by their heads and the ornate mirror, flat to the wall (0.07)
-        for k, y in enumerate((0.55, 0.9)):
+        for k, y in enumerate((0.80, 1.10)):
             s = 0.62 / max(self.dims("Ukulele_01"))
             self.place("Ukulele_01", (xr - 0.004, y, 1.62), rot=(0, 0, math.radians(-90 + 5 * (k * 2 - 1) * 0)), scale=s, fixture="R-right-hung", anchor=("max", "c", "c"))
         s = 0.42 / max(self.dims("ornate_mirror_01"))
-        self.place("ornate_mirror_01", (xr - 0.004, 1.12, 1.45), rot=(0, 0, math.radians(-90)), scale=s, fixture="R-right-hung", anchor=("max", "c", "c"))
+        self.place("ornate_mirror_01", (xr - 0.004, 0.45, 1.30), rot=(0, 0, math.radians(-90)), scale=s, fixture="R-right-hung", anchor=("max", "c", "c"))
         # floor mat (flat)
         self.box("door_mat", -2.45, -1.55, 0.15, 0.85, 0.0, 0.012, self.mat("mat", rgb8(40, 30, 24), rough=0.95), fixture="R-floor-mat")
 
