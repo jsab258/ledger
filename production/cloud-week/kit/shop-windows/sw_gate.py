@@ -38,7 +38,7 @@ Y_WALL = 5.295
 FOOT = 0.10
 BRIGHTNESS = {"day": 0.15, "night_lit": 0.7, "night_dark": 0.7}
 VFOV = {"STREET_SQUARE": 39.0, "STREET_30": 39.0, "CLOSE_35": 60.0, "CLOSE_35_B": 60.0}
-RES = (2560, 1440)
+RES = tuple(int(v) for v in os.environ.get("LEDGER_GATE_RES", "2560x1440").split("x"))
 CARD_PX = (2560, 1161)           # the card is 5.3 x 2.4 m: 483 px a metre
 
 

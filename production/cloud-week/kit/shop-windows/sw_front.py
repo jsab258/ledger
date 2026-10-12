@@ -227,6 +227,13 @@ class Front:
         self.add("door_keyhole", bx(lx - 4.0, lx + 4.0, 73.0, 73.6, 938.0, 962.0), "steel", bev=None)
         for k, z in enumerate((178.0, 1048.0, 1918.0)):
             self.add("door_butt_%d" % k, cyl_z(lu1 + 1.0, 62.0, z - 50.0, z + 50.0, 5.5, 10), "brass", bev=None)
+        # the leaf's stops behind its 3 mm clearances (left, right, head and foot) and the hall floor behind both doors: what stands behind a gap in the real door, so the front has no
+        # see-through crack (FRN-07): 14 wide stops on the room side of the leaf's back face (d 4 to 20), a floor slab inside from the pilaster to the window frame
+        self.add("door_stop_l", bx(u_in0, u_in0 + 14.0, 4.0, 20.0, 25.0, 2071.0), "white", bev=None)
+        self.add("door_stop_r", bx(u_in1 - 14.0, u_in1, 4.0, 20.0, 25.0, 2071.0), "white", bev=None)
+        self.add("door_stop_head", bx(u_in0, u_in1, 4.0, 20.0, 2060.0, 2071.0), "white", bev=None)
+        self.add("door_stop_foot", bx(u_in0, u_in1, 4.0, 20.0, 25.0, 40.0), "white", bev=None)
+        self.add("hall_floor_behind_doors", bx(slot[0] - 944.0, slot[1], -160.0, 4.0, 0.0, 58.0), "terrazzo", bev=None)
         # the bell (target 4.2): a spring strip 20 x 3, 220 long, on the INSIDE of the top rail, 90 from the hanging stile; the bell hung 80 below
         bd = D["bell"]
         ub = lu1 - 90.0
@@ -416,6 +423,9 @@ class Front:
         for nm, (a, b) in (("l", (s[0], s[0] + 24.4)), ("r", (s[1] - 24.4, s[1]))):
             self.add("side_filler_" + nm, bx(a, b, 0.0, 100.0, 25.0, 2400.0), "oxblood", bev=None)
         self.extra += out
+        # the sealing strip where the sill's end stands 3 short of the pilaster's plinth (the kit's meets row), so no crack shows
+        win = self.R["front"]["zones_u_mm"]["window"]
+        self.add("sill_end_seal", bx(win[1] - 8.0, win[1], 0.0, 60.0, 525.0, 600.0), "white", bev=None)
         return out
 
     # ----------------------------------------------------------------------------------------------- finishing: the builder's objects to metres, UVs, materials

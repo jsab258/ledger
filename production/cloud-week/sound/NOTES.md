@@ -2,10 +2,10 @@
 
 ## What was made
 
-97 files, all 48 kHz 16-bit WAV, rebuilt exactly from 47 CC0 recordings by `make_sound.py` (BRIEF.md says what each must sound like and holds every number):
+97 files, all 48 kHz 16-bit WAV, rebuilt exactly from 46 CC0 recordings by `make_sound.py` (BRIEF.md says what each must sound like and holds every number):
 
-- **21 ambience loops, 75 s, seamless**: traffic, gulls, harbour, wind, voices through a window and a radio through a window, each in day, night and rain (18), and the rain on pavement, on an awning and in a gutter (3, rain only). Beds are stereo; gulls, voices, radio and the pavement rain are mono. Mixed at their own levels the day bed measures -36.5 LUFS, night -39.5, rain -33.5.
-- **40 footsteps**: paving, setts, asphalt, wet, wood, 8 variants each (mono, 101 to 260 ms).
+- **21 ambience loops, 60 to 75 s, seamless**: traffic, gulls, harbour, wind, voices through a window and a radio through a window, each in day, night and rain (18), and the rain on pavement, on an awning and in a gutter (3, rain only). Beds are stereo; gulls, voices, radio and the pavement rain are mono. Eighteen are 75 s; the rain traffic, the day wind and the rain harbour are 60 s (their recordings, the road 67 s, the wind 66.5 s and the rigging whistle 72 s, are too short for 75 s without playing part of them twice). Mixed at their own levels (the 60 s loops repeated, the mix measured over the 300 s in which all come round together) the day bed measures @@DAY@@ LUFS, night @@NIGHT@@, rain @@RAIN@@ (targets -36.5, -39.5, -33.5).
+- **40 footsteps**: paving, setts, asphalt, wet, wood, 8 variants each (mono, @@STEPMIN@@ to 260 ms).
 - **36 other one-shots**: shop door (open 2, close 3, latch 4), house door (open 3, close 5, latch 3), shop bell 5, phone box (door creak 5, door shut 3, a telephone ringing 3).
 - Previews: 16 spectrogram JPEGs in `production/previews/cloud-week/sound/` (in git) and 9 listening clips (Ogg Vorbis, at most 20 s: the three bed mixes, a walk on each surface, the doors). **The clips are not in git** (the size guard refuses audio): they sit beside the JPEGs locally and in `/home/user/ledger-scratch/sound-out/clips/`. The WAVs and the clips live in `/home/user/ledger-scratch/sound-out/` and are rebuilt by one command, `make_sound.py`; on the PC they go to `F:\LedgerTools\sound-out`. The three mix clips carry +10 dB over their real levels, with a peak limiter, so they are audible (the rain clip is encoded at a lower Vorbis quality to stay under 300 KB); they are for judging what is in each bed.
 

@@ -186,14 +186,14 @@ def find_lines(x, seg_s=8.0, min_db=11.0, fmin=45.0, fmax=11000.0, block_hz=2.0,
     return out
 
 
-def detone(x):
+def detone(x, min_db=11.0):
     """Take the steady tones out of a source cut: a notch on each line found by find_lines (as wide as three times the line, and
     never narrower than f/80), zero-phase, on each channel separately. Returns (cleaned cut, {channel: [Hz, ...]})."""
     y = np.array(x, dtype=float)
     cols = [y] if y.ndim == 1 else [y[:, c] for c in range(y.shape[1])]
     found = {}
     for c, col in enumerate(cols):
-        lines = find_lines(col)
+        lines = find_lines(col, min_db=min_db)
         found[c] = [round(l[0], 2) for l in lines]
         for f0, _, width in lines:
             bw = max(3.0 * width, f0 / 80.0, 0.4)
@@ -448,9 +448,9 @@ def build_radio(version):
 
 
 # -------------------------------------------------------------------------------------------------- beds
-def cut_clean(sid, a, b, tones):
+def cut_clean(sid, a, b, tones, min_db=11.0):
     """A source cut with its steady tones notched out (find_lines/detone); what was found is added to tones."""
-    x, found = detone(cut_src(sid, a, b))
+    x, found = detone(cut_src(sid, a, b), min_db)
     if found:
         tones.setdefault(sid, {}).update(found)
     return x
@@ -515,7 +515,7 @@ def build_harbour(version):
                                           "chain": "water highpass 100, lowpass 3500; rigging -14 dB, lowpass 3000"}, tones)
     # rain: a 60 s loop. The Dorset take 182612 carries a steady engine-like drone (73 to 193 Hz) the whole way, so its water is
     # high-passed at 200 Hz; the whistle is 64 s of one 72 s take, so it is not repeated inside the loop
-    water = apply_chain(cut_clean("fs_182612", 12.0, 12.0 + SHORT_LOOP_S + XF_S, tones), [("hp", 200.0, 4), ("lp", 4500.0, 4)])
+    water = apply_chain(cut_clean("fs_182612", 12.0, 12.0 + SHORT_LOOP_S + XF_S, tones, min_db=9.0), [("hp", 200.0, 4), ("lp", 4500.0, 4)])
     whistle = apply_chain(cut_clean("fs_463373", 0.0, SHORT_LOOP_S + XF_S, tones), [("hp", 400.0, 2), ("lp", 4000.0, 2)])
     n = min(len(water), len(whistle))
     mix = water[:n] + whistle[:n] * 10 ** (-12 / 20)
@@ -697,7 +697,7 @@ STEP_TAKES = {
     # 4 by 14 dB and 8 by 12 dB. So the wet set takes the 8 that die away by 12 dB (BRIEF.md: step_cut_db), with a long (40 ms) fade-out
     # and an 8 ms fade-in, and the brighter splash a puddle makes (centroid up to 6 kHz).
     "wet": [("fs_263495", 70.0, dict(WET_OPTS)), ("fs_531566", 70.0, dict(WET_OPTS))],
-    "wood": [("fs_536770", 70.0, {}), ("fs_575898", 70.0, {})],
+    "wood": [("fs_536770", 70.0, {})],      # the second take (fs_575898) has no footfall that dies away by 20 dB: retired, see sources.json
 }
 STEP_OPTS = dict(min_transients=1, centroid_range=(300.0, 3500.0), max_ms=260.0, died_db=STEP_CUT_DB["default"], pre_db=STEP_CUT_DB["default"])
 STEPS_PER_SURFACE = 8

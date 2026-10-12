@@ -2,9 +2,16 @@
  "check": "check_sound.py v1",
  "brief": "BRIEF.md",
  "outputs_dir": "/home/user/ledger-scratch/sound-out",
- "rows_pass": 1049,
- "rows_total": 1049,
- "failing": [],
+ "rows_pass": 1238,
+ "rows_total": 1239,
+ "failing": [
+  {
+   "case": 13,
+   "test": "every source in sources.json is used by an output",
+   "file": null,
+   "detail": "unused: ['fs_575898']"
+  }
+ ],
  "rows": [
   {
    "case": 1,
@@ -267,7 +274,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_gulls_day.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -308,6 +315,20 @@
    "detail": "0.14 dB, larger than at 44% of other places"
   },
   {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "highest correlation 0.31 (the window at 10 s against the loop at 17 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_gulls_day.wav",
+   "pass": true,
+   "detail": "highest peak +2.0 dB at 5779 Hz (mono)"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_gulls_day.wav",
@@ -337,7 +358,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_gulls_night.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -378,6 +399,20 @@
    "detail": "0.08 dB, larger than at 64% of other places"
   },
   {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "highest correlation 0.18 (the window at 28 s against the loop at 29 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_gulls_night.wav",
+   "pass": true,
+   "detail": "highest peak +1.8 dB at 3509 Hz (mono)"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_gulls_night.wav",
@@ -407,7 +442,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_gulls_rain.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -448,6 +483,20 @@
    "detail": "0.04 dB, larger than at 60% of other places"
   },
   {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "highest correlation 0.25 (the window at 54 s against the loop at 56 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_gulls_rain.wav",
+   "pass": true,
+   "detail": "highest peak +1.8 dB at 1363 Hz (mono)"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_gulls_rain.wav",
@@ -477,7 +526,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_harbour_day.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -518,6 +567,20 @@
    "detail": "1.46 dB, larger than at 52% of other places"
   },
   {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "highest correlation 0.08 (the window at 30 s against the loop at 32 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_harbour_day.wav",
+   "pass": true,
+   "detail": "highest peak +6.4 dB at 132 Hz (right)"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_harbour_day.wav",
@@ -547,7 +610,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_harbour_night.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -585,7 +648,21 @@
    "test": "no level step across the seam",
    "file": "amb_harbour_night.wav",
    "pass": true,
-   "detail": "2.81 dB, larger than at 85% of other places"
+   "detail": "2.83 dB, larger than at 85% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "highest correlation 0.12 (the window at 2 s against the loop at 9 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_harbour_night.wav",
+   "pass": true,
+   "detail": "highest peak +7.7 dB at 96 Hz (right)"
   },
   {
    "case": 5,
@@ -617,17 +694,17 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "75.00 s"
+   "detail": "60.00 s"
   },
   {
    "case": 3,
    "test": "loop at least 60 s",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "75.0 s"
+   "detail": "60.0 s"
   },
   {
    "case": 4,
@@ -641,28 +718,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "-23.00 dBTP"
+   "detail": "-23.30 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "jump 0.16 x typical step"
+   "detail": "jump 0.66 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "0.13 dB, larger than at 8% of other places"
+   "detail": "0.21 dB, larger than at 15% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "highest correlation 0.10 (the window at 58 s against the loop at 16 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_harbour_rain.wav",
+   "pass": true,
+   "detail": "highest peak +11.1 dB at 98 Hz (right)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "peak -23.06 dBFS"
+   "detail": "peak -23.37 dBFS"
   },
   {
    "case": 15,
@@ -687,7 +778,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_radio_day.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -711,28 +802,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_radio_day.wav",
    "pass": true,
-   "detail": "-43.90 dBTP"
+   "detail": "-39.00 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_radio_day.wav",
    "pass": true,
-   "detail": "jump 1.55 x typical step"
+   "detail": "jump 0.27 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_radio_day.wav",
    "pass": true,
-   "detail": "1.02 dB, larger than at 50% of other places"
+   "detail": "0.00 dB, larger than at 0% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "highest correlation 0.38 (the window at 52 s against the loop at 7 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "highest peak +3.6 dB at 164 Hz (mono)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_radio_day.wav",
    "pass": true,
-   "detail": "peak -43.91 dBFS"
+   "detail": "peak -39.06 dBFS"
   },
   {
    "case": 15,
@@ -757,7 +862,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_radio_night.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -781,28 +886,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_radio_night.wav",
    "pass": true,
-   "detail": "-45.70 dBTP"
+   "detail": "-41.10 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_radio_night.wav",
    "pass": true,
-   "detail": "jump 1.25 x typical step"
+   "detail": "jump 0.86 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_radio_night.wav",
    "pass": true,
-   "detail": "1.01 dB, larger than at 49% of other places"
+   "detail": "0.01 dB, larger than at 0% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "highest correlation 0.41 (the window at 60 s against the loop at 17 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "highest peak +2.9 dB at 492 Hz (mono)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_radio_night.wav",
    "pass": true,
-   "detail": "peak -45.75 dBFS"
+   "detail": "peak -41.06 dBFS"
   },
   {
    "case": 15,
@@ -827,7 +946,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_radio_rain.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -851,28 +970,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_radio_rain.wav",
    "pass": true,
-   "detail": "-44.90 dBTP"
+   "detail": "-40.80 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_radio_rain.wav",
    "pass": true,
-   "detail": "jump 1.51 x typical step"
+   "detail": "jump 0.49 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_radio_rain.wav",
    "pass": true,
-   "detail": "0.97 dB, larger than at 46% of other places"
+   "detail": "0.00 dB, larger than at 0% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "highest correlation 0.43 (the window at 60 s against the loop at 17 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "highest peak +2.5 dB at 134 Hz (mono)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_radio_rain.wav",
    "pass": true,
-   "detail": "peak -44.87 dBFS"
+   "detail": "peak -40.80 dBFS"
   },
   {
    "case": 15,
@@ -897,7 +1030,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_rain_awning.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -938,11 +1071,25 @@
    "detail": "0.86 dB, larger than at 78% of other places"
   },
   {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "highest correlation 0.05 (the window at 34 s against the loop at 42 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_rain_awning.wav",
+   "pass": true,
+   "detail": "highest peak +5.3 dB at 109 Hz (left)"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_rain_awning.wav",
    "pass": true,
-   "detail": "peak -13.80 dBFS"
+   "detail": "peak -13.79 dBFS"
   },
   {
    "case": 15,
@@ -967,7 +1114,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_rain_gutter.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -1005,14 +1152,28 @@
    "test": "no level step across the seam",
    "file": "amb_rain_gutter.wav",
    "pass": true,
-   "detail": "1.26 dB, larger than at 66% of other places"
+   "detail": "1.27 dB, larger than at 66% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "highest correlation 0.09 (the window at 70 s against the loop at 32 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_rain_gutter.wav",
+   "pass": true,
+   "detail": "highest peak +12.6 dB at 3400 Hz (left)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_rain_gutter.wav",
    "pass": true,
-   "detail": "peak -8.84 dBFS"
+   "detail": "peak -8.83 dBFS"
   },
   {
    "case": 15,
@@ -1037,7 +1198,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_rain_pavement.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -1078,6 +1239,20 @@
    "detail": "1.80 dB, larger than at 72% of other places"
   },
   {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "highest correlation 0.21 (the window at 30 s against the loop at 51 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_rain_pavement.wav",
+   "pass": true,
+   "detail": "highest peak +3.8 dB at 75 Hz (mono)"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_rain_pavement.wav",
@@ -1107,7 +1282,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_traffic_day.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -1148,6 +1323,20 @@
    "detail": "0.55 dB, larger than at 19% of other places"
   },
   {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "highest correlation 0.14 (the window at 4 s against the loop at 36 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_traffic_day.wav",
+   "pass": true,
+   "detail": "highest peak +6.5 dB at 196 Hz (right)"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_traffic_day.wav",
@@ -1177,7 +1366,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_traffic_night.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -1201,28 +1390,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_traffic_night.wav",
    "pass": true,
-   "detail": "-21.90 dBTP"
+   "detail": "-22.00 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_traffic_night.wav",
    "pass": true,
-   "detail": "jump 0.15 x typical step"
+   "detail": "jump 0.31 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_traffic_night.wav",
    "pass": true,
-   "detail": "2.87 dB, larger than at 85% of other places"
+   "detail": "3.03 dB, larger than at 86% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "highest correlation 0.19 (the window at 28 s against the loop at 29 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_traffic_night.wav",
+   "pass": true,
+   "detail": "highest peak +6.9 dB at 69 Hz (right)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_traffic_night.wav",
    "pass": true,
-   "detail": "peak -21.87 dBFS"
+   "detail": "peak -22.04 dBFS"
   },
   {
    "case": 15,
@@ -1247,17 +1450,17 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_traffic_rain.wav",
    "pass": true,
-   "detail": "75.00 s"
+   "detail": "60.00 s"
   },
   {
    "case": 3,
    "test": "loop at least 60 s",
    "file": "amb_traffic_rain.wav",
    "pass": true,
-   "detail": "75.0 s"
+   "detail": "60.0 s"
   },
   {
    "case": 4,
@@ -1271,28 +1474,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_traffic_rain.wav",
    "pass": true,
-   "detail": "-21.60 dBTP"
+   "detail": "-22.50 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_traffic_rain.wav",
    "pass": true,
-   "detail": "jump 2.09 x typical step"
+   "detail": "jump 1.33 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_traffic_rain.wav",
    "pass": true,
-   "detail": "0.81 dB, larger than at 91% of other places"
+   "detail": "1.26 dB, larger than at 91% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "highest correlation 0.08 (the window at 12 s against the loop at 20 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_traffic_rain.wav",
+   "pass": true,
+   "detail": "highest peak +10.5 dB at 60 Hz (right)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_traffic_rain.wav",
    "pass": true,
-   "detail": "peak -21.55 dBFS"
+   "detail": "peak -22.47 dBFS"
   },
   {
    "case": 15,
@@ -1317,7 +1534,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_voices_day.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -1341,28 +1558,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_voices_day.wav",
    "pass": true,
-   "detail": "-30.30 dBTP"
+   "detail": "-29.10 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_voices_day.wav",
    "pass": true,
-   "detail": "jump 0.28 x typical step"
+   "detail": "jump 1.29 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_voices_day.wav",
    "pass": true,
-   "detail": "0.88 dB, larger than at 35% of other places"
+   "detail": "0.01 dB, larger than at 0% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "highest correlation 0.16 (the window at 20 s against the loop at 36 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "highest peak +3.3 dB at 256 Hz (mono)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_voices_day.wav",
    "pass": true,
-   "detail": "peak -30.29 dBFS"
+   "detail": "peak -29.14 dBFS"
   },
   {
    "case": 15,
@@ -1387,7 +1618,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_voices_night.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -1411,28 +1642,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_voices_night.wav",
    "pass": true,
-   "detail": "-29.70 dBTP"
+   "detail": "-30.50 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_voices_night.wav",
    "pass": true,
-   "detail": "jump 0.00 x typical step"
+   "detail": "jump 1.04 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_voices_night.wav",
    "pass": true,
-   "detail": "1.24 dB, larger than at 28% of other places"
+   "detail": "0.01 dB, larger than at 13% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "highest correlation 0.43 (the window at 4 s against the loop at 36 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "highest peak +2.1 dB at 828 Hz (mono)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_voices_night.wav",
    "pass": true,
-   "detail": "peak -29.73 dBFS"
+   "detail": "peak -30.47 dBFS"
   },
   {
    "case": 15,
@@ -1457,7 +1702,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_voices_rain.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -1481,28 +1726,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_voices_rain.wav",
    "pass": true,
-   "detail": "-35.70 dBTP"
+   "detail": "-36.00 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_voices_rain.wav",
    "pass": true,
-   "detail": "jump 0.73 x typical step"
+   "detail": "jump 0.00 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_voices_rain.wav",
    "pass": true,
-   "detail": "1.78 dB, larger than at 70% of other places"
+   "detail": "0.00 dB, larger than at 0% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "highest correlation 0.18 (the window at 16 s against the loop at 29 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "highest peak +3.7 dB at 257 Hz (mono)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_voices_rain.wav",
    "pass": true,
-   "detail": "peak -35.74 dBFS"
+   "detail": "peak -36.01 dBFS"
   },
   {
    "case": 15,
@@ -1527,17 +1786,17 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_wind_day.wav",
    "pass": true,
-   "detail": "75.00 s"
+   "detail": "60.00 s"
   },
   {
    "case": 3,
    "test": "loop at least 60 s",
    "file": "amb_wind_day.wav",
    "pass": true,
-   "detail": "75.0 s"
+   "detail": "60.0 s"
   },
   {
    "case": 4,
@@ -1551,28 +1810,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_wind_day.wav",
    "pass": true,
-   "detail": "-25.50 dBTP"
+   "detail": "-26.10 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_wind_day.wav",
    "pass": true,
-   "detail": "jump 2.75 x typical step"
+   "detail": "jump 1.00 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_wind_day.wav",
    "pass": true,
-   "detail": "0.20 dB, larger than at 13% of other places"
+   "detail": "0.16 dB, larger than at 9% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "highest correlation 0.07 (the window at 14 s against the loop at 28 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_wind_day.wav",
+   "pass": true,
+   "detail": "highest peak +2.9 dB at 101 Hz (right)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_wind_day.wav",
    "pass": true,
-   "detail": "peak -25.47 dBFS"
+   "detail": "peak -26.07 dBFS"
   },
   {
    "case": 15,
@@ -1597,7 +1870,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_wind_night.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -1611,38 +1884,52 @@
   },
   {
    "case": 4,
-   "test": "integrated loudness within 0.5 LU of -45.0",
+   "test": "integrated loudness within 0.5 LU of -47.0",
    "file": "amb_wind_night.wav",
    "pass": true,
-   "detail": "-45.00 LUFS"
+   "detail": "-47.00 LUFS"
   },
   {
    "case": 5,
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_wind_night.wav",
    "pass": true,
-   "detail": "-25.00 dBTP"
+   "detail": "-28.70 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_wind_night.wav",
    "pass": true,
-   "detail": "jump 0.58 x typical step"
+   "detail": "jump 1.40 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_wind_night.wav",
    "pass": true,
-   "detail": "0.63 dB, larger than at 60% of other places"
+   "detail": "0.53 dB, larger than at 53% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "highest correlation 0.07 (the window at 22 s against the loop at 23 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_wind_night.wav",
+   "pass": true,
+   "detail": "highest peak +4.2 dB at 120 Hz (right)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_wind_night.wav",
    "pass": true,
-   "detail": "peak -25.04 dBFS"
+   "detail": "peak -28.75 dBFS"
   },
   {
    "case": 15,
@@ -1667,7 +1954,7 @@
   },
   {
    "case": 2,
-   "test": "loop is 75 s",
+   "test": "loop is 60 to 75 s",
    "file": "amb_wind_rain.wav",
    "pass": true,
    "detail": "75.00 s"
@@ -1691,28 +1978,42 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "amb_wind_rain.wav",
    "pass": true,
-   "detail": "-25.90 dBTP"
+   "detail": "-25.30 dBTP"
   },
   {
    "case": 6,
    "test": "no click at the seam (jump at most 4.0)",
    "file": "amb_wind_rain.wav",
    "pass": true,
-   "detail": "jump 0.67 x typical step"
+   "detail": "jump 1.48 x typical step"
   },
   {
    "case": 6,
    "test": "no level step across the seam",
    "file": "amb_wind_rain.wav",
    "pass": true,
-   "detail": "0.21 dB, larger than at 7% of other places"
+   "detail": "0.37 dB, larger than at 14% of other places"
+  },
+  {
+   "case": 22,
+   "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "highest correlation 0.06 (the window at 6 s against the loop at 26 s)"
+  },
+  {
+   "case": 23,
+   "test": "no steady tone stands more than 15 dB over its neighbours",
+   "file": "amb_wind_rain.wav",
+   "pass": true,
+   "detail": "highest peak +2.5 dB at 108 Hz (right)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_wind_rain.wav",
    "pass": true,
-   "detail": "peak -25.97 dBFS"
+   "detail": "peak -25.35 dBFS"
   },
   {
    "case": 15,
@@ -3770,21 +4071,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_asphalt_01.wav",
    "pass": true,
-   "detail": "-9.00 dBTP"
+   "detail": "-4.40 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_asphalt_01.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": "-31.5 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_asphalt_01.wav",
+   "pass": true,
+   "detail": "-49.5 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_asphalt_01.wav",
    "pass": true,
-   "detail": "peak -9.02 dBFS"
+   "detail": "peak -4.78 dBFS"
   },
   {
    "case": 15,
@@ -3826,7 +4141,7 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_asphalt_02.wav",
    "pass": true,
-   "detail": "-2.90 dBTP"
+   "detail": "-6.30 dBTP"
   },
   {
    "case": 8,
@@ -3836,11 +4151,25 @@
    "detail": "start -180.0 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": "-31.6 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_asphalt_02.wav",
+   "pass": true,
+   "detail": "-47.0 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_asphalt_02.wav",
    "pass": true,
-   "detail": "peak -2.90 dBFS"
+   "detail": "peak -6.33 dBFS"
   },
   {
    "case": 15,
@@ -3882,21 +4211,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_asphalt_03.wav",
    "pass": true,
-   "detail": "-7.80 dBTP"
+   "detail": "-6.10 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_asphalt_03.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": "-33.4 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_asphalt_03.wav",
+   "pass": true,
+   "detail": "-49.3 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_asphalt_03.wav",
    "pass": true,
-   "detail": "peak -7.82 dBFS"
+   "detail": "peak -6.11 dBFS"
   },
   {
    "case": 15,
@@ -3948,6 +4291,20 @@
    "detail": "start -180.0 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": "-38.0 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_asphalt_04.wav",
+   "pass": true,
+   "detail": "-40.9 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_asphalt_04.wav",
@@ -3994,7 +4351,7 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_asphalt_05.wav",
    "pass": true,
-   "detail": "-5.40 dBTP"
+   "detail": "-3.70 dBTP"
   },
   {
    "case": 8,
@@ -4004,11 +4361,25 @@
    "detail": "start -90.3 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": "-32.0 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_asphalt_05.wav",
+   "pass": true,
+   "detail": "-45.1 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_asphalt_05.wav",
    "pass": true,
-   "detail": "peak -5.65 dBFS"
+   "detail": "peak -3.71 dBFS"
   },
   {
    "case": 15,
@@ -4050,21 +4421,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_asphalt_06.wav",
    "pass": true,
-   "detail": "-6.10 dBTP"
+   "detail": "-5.60 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_asphalt_06.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": "-34.2 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_asphalt_06.wav",
+   "pass": true,
+   "detail": "-47.9 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_asphalt_06.wav",
    "pass": true,
-   "detail": "peak -6.15 dBFS"
+   "detail": "peak -5.69 dBFS"
   },
   {
    "case": 15,
@@ -4114,6 +4499,20 @@
    "file": "step_asphalt_07.wav",
    "pass": true,
    "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": "-31.5 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_asphalt_07.wav",
+   "pass": true,
+   "detail": "-36.0 dB"
   },
   {
    "case": 5,
@@ -4172,6 +4571,20 @@
    "detail": "start -180.0 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": "-30.5 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_asphalt_08.wav",
+   "pass": true,
+   "detail": "-32.0 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_asphalt_08.wav",
@@ -4228,6 +4641,20 @@
    "detail": "start -180.0 dBFS, end -90.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": "-34.0 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_paving_01.wav",
+   "pass": true,
+   "detail": "-39.8 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_paving_01.wav",
@@ -4274,21 +4701,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_paving_02.wav",
    "pass": true,
-   "detail": "-5.10 dBTP"
+   "detail": "-2.70 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_paving_02.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+   "detail": "start -180.0 dBFS, end -78.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": "-36.8 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_paving_02.wav",
+   "pass": true,
+   "detail": "-42.2 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_paving_02.wav",
    "pass": true,
-   "detail": "peak -5.06 dBFS"
+   "detail": "peak -2.68 dBFS"
   },
   {
    "case": 15,
@@ -4329,78 +4770,106 @@
    "case": 5,
    "test": "true peak at most -1.0 dBTP",
    "file": "step_paving_03.wav",
-   "pass": true,
-   "detail": "-4.20 dBTP"
-  },
-  {
-   "case": 8,
-   "test": "no click at either end",
-   "file": "step_paving_03.wav",
-   "pass": true,
-   "detail": "start -90.3 dBFS, end -71.2 dBFS"
-  },
-  {
-   "case": 5,
-   "test": "no clipping (no full-scale sample)",
-   "file": "step_paving_03.wav",
-   "pass": true,
-   "detail": "peak -4.26 dBFS"
-  },
-  {
-   "case": 15,
-   "test": "sha256 matches manifest.json",
-   "file": "step_paving_03.wav",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "case": 13,
-   "test": "every source has a full row in sources.json",
-   "file": "step_paving_03.wav",
-   "pass": true,
-   "detail": "fs_273067"
-  },
-  {
-   "case": 2,
-   "test": "WAV 16-bit 48 kHz",
-   "file": "step_paving_04.wav",
-   "pass": true,
-   "detail": "16-bit 48000 Hz 1 ch"
-  },
-  {
-   "case": 2,
-   "test": "one-shot is mono",
-   "file": "step_paving_04.wav",
-   "pass": true,
-   "detail": "1 ch"
-  },
-  {
-   "case": 7,
-   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
-   "file": "step_paving_04.wav",
-   "pass": true,
-   "detail": "-27.00 LUFS-M"
-  },
-  {
-   "case": 5,
-   "test": "true peak at most -1.0 dBTP",
-   "file": "step_paving_04.wav",
    "pass": true,
    "detail": "-4.50 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "start -90.3 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "-26.4 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "-40.2 dB"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "peak -4.45 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_03.wav",
+   "pass": true,
+   "detail": "fs_273067"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
    "file": "step_paving_04.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "-2.10 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "-33.3 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_paving_04.wav",
+   "pass": true,
+   "detail": "-35.2 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_paving_04.wav",
    "pass": true,
-   "detail": "peak -4.45 dBFS"
+   "detail": "peak -2.06 dBFS"
   },
   {
    "case": 15,
@@ -4452,6 +4921,20 @@
    "detail": "start -180.0 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": "-29.2 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_paving_05.wav",
+   "pass": true,
+   "detail": "-36.5 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_paving_05.wav",
@@ -4498,21 +4981,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_paving_06.wav",
    "pass": true,
-   "detail": "-4.20 dBTP"
+   "detail": "-2.10 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_paving_06.wav",
    "pass": true,
-   "detail": "start -90.3 dBFS, end -84.3 dBFS"
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": "-29.1 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_paving_06.wav",
+   "pass": true,
+   "detail": "-39.9 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_paving_06.wav",
    "pass": true,
-   "detail": "peak -4.21 dBFS"
+   "detail": "peak -2.12 dBFS"
   },
   {
    "case": 15,
@@ -4553,78 +5050,106 @@
    "case": 5,
    "test": "true peak at most -1.0 dBTP",
    "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "-2.20 dBTP"
+  },
+  {
+   "case": 8,
+   "test": "no click at either end",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "start -180.0 dBFS, end -78.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "-31.4 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "-43.5 dB"
+  },
+  {
+   "case": 5,
+   "test": "no clipping (no full-scale sample)",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "peak -2.19 dBFS"
+  },
+  {
+   "case": 15,
+   "test": "sha256 matches manifest.json",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "case": 13,
+   "test": "every source has a full row in sources.json",
+   "file": "step_paving_07.wav",
+   "pass": true,
+   "detail": "fs_273071"
+  },
+  {
+   "case": 2,
+   "test": "WAV 16-bit 48 kHz",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "16-bit 48000 Hz 1 ch"
+  },
+  {
+   "case": 2,
+   "test": "one-shot is mono",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "1 ch"
+  },
+  {
+   "case": 7,
+   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "-27.00 LUFS-M"
+  },
+  {
+   "case": 5,
+   "test": "true peak at most -1.0 dBTP",
+   "file": "step_paving_08.wav",
    "pass": true,
    "detail": "-1.80 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
-   "file": "step_paving_07.wav",
+   "file": "step_paving_08.wav",
    "pass": true,
    "detail": "start -180.0 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "-35.1 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_paving_08.wav",
+   "pass": true,
+   "detail": "-40.5 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
-   "file": "step_paving_07.wav",
+   "file": "step_paving_08.wav",
    "pass": true,
    "detail": "peak -1.88 dBFS"
-  },
-  {
-   "case": 15,
-   "test": "sha256 matches manifest.json",
-   "file": "step_paving_07.wav",
-   "pass": true,
-   "detail": ""
-  },
-  {
-   "case": 13,
-   "test": "every source has a full row in sources.json",
-   "file": "step_paving_07.wav",
-   "pass": true,
-   "detail": "fs_273071"
-  },
-  {
-   "case": 2,
-   "test": "WAV 16-bit 48 kHz",
-   "file": "step_paving_08.wav",
-   "pass": true,
-   "detail": "16-bit 48000 Hz 1 ch"
-  },
-  {
-   "case": 2,
-   "test": "one-shot is mono",
-   "file": "step_paving_08.wav",
-   "pass": true,
-   "detail": "1 ch"
-  },
-  {
-   "case": 7,
-   "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
-   "file": "step_paving_08.wav",
-   "pass": true,
-   "detail": "-27.00 LUFS-M"
-  },
-  {
-   "case": 5,
-   "test": "true peak at most -1.0 dBTP",
-   "file": "step_paving_08.wav",
-   "pass": true,
-   "detail": "-3.50 dBTP"
-  },
-  {
-   "case": 8,
-   "test": "no click at either end",
-   "file": "step_paving_08.wav",
-   "pass": true,
-   "detail": "start -180.0 dBFS, end -80.8 dBFS"
-  },
-  {
-   "case": 5,
-   "test": "no clipping (no full-scale sample)",
-   "file": "step_paving_08.wav",
-   "pass": true,
-   "detail": "peak -3.54 dBFS"
   },
   {
    "case": 15,
@@ -4674,6 +5199,20 @@
    "file": "step_setts_01.wav",
    "pass": true,
    "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": "-31.6 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_setts_01.wav",
+   "pass": true,
+   "detail": "-41.7 dB"
   },
   {
    "case": 5,
@@ -4732,6 +5271,20 @@
    "detail": "start -180.0 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": "-31.6 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_setts_02.wav",
+   "pass": true,
+   "detail": "-28.5 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_setts_02.wav",
@@ -4788,6 +5341,20 @@
    "detail": "start -180.0 dBFS, end -78.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": "-35.7 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_setts_03.wav",
+   "pass": true,
+   "detail": "-35.0 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_setts_03.wav",
@@ -4827,14 +5394,14 @@
    "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
    "file": "step_setts_04.wav",
    "pass": true,
-   "detail": "-30.50 LUFS-M (peak-limited)"
+   "detail": "-27.00 LUFS-M"
   },
   {
    "case": 5,
    "test": "true peak at most -1.0 dBTP",
    "file": "step_setts_04.wav",
    "pass": true,
-   "detail": "-1.50 dBTP"
+   "detail": "-3.70 dBTP"
   },
   {
    "case": 8,
@@ -4844,11 +5411,25 @@
    "detail": "start -180.0 dBFS, end -90.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": "-35.2 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_setts_04.wav",
+   "pass": true,
+   "detail": "-39.9 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_setts_04.wav",
    "pass": true,
-   "detail": "peak -1.59 dBFS"
+   "detail": "peak -3.72 dBFS"
   },
   {
    "case": 15,
@@ -4890,21 +5471,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_setts_05.wav",
    "pass": true,
-   "detail": "-4.20 dBTP"
+   "detail": "-3.90 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_setts_05.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -66.8 dBFS"
+   "detail": "start -180.0 dBFS, end -76.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": "-27.8 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_setts_05.wav",
+   "pass": true,
+   "detail": "-38.3 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_setts_05.wav",
    "pass": true,
-   "detail": "peak -4.30 dBFS"
+   "detail": "peak -3.88 dBFS"
   },
   {
    "case": 15,
@@ -4946,21 +5541,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_setts_06.wav",
    "pass": true,
-   "detail": "-2.20 dBTP"
+   "detail": "-2.40 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_setts_06.wav",
    "pass": true,
-   "detail": "start -90.3 dBFS, end -84.3 dBFS"
+   "detail": "start -90.3 dBFS, end -78.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": "-21.8 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_setts_06.wav",
+   "pass": true,
+   "detail": "-31.4 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_setts_06.wav",
    "pass": true,
-   "detail": "peak -2.24 dBFS"
+   "detail": "peak -2.41 dBFS"
   },
   {
    "case": 15,
@@ -4974,7 +5583,7 @@
    "test": "every source has a full row in sources.json",
    "file": "step_setts_06.wav",
    "pass": true,
-   "detail": "fs_868548"
+   "detail": "fs_637555"
   },
   {
    "case": 2,
@@ -5010,6 +5619,20 @@
    "file": "step_setts_07.wav",
    "pass": true,
    "detail": "start -90.3 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": "-27.7 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_setts_07.wav",
+   "pass": true,
+   "detail": "-30.9 dB"
   },
   {
    "case": 5,
@@ -5068,6 +5691,20 @@
    "detail": "start -90.3 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": "-29.7 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_setts_08.wav",
+   "pass": true,
+   "detail": "-36.4 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_setts_08.wav",
@@ -5114,21 +5751,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wet_01.wav",
    "pass": true,
-   "detail": "-5.30 dBTP"
+   "detail": "-2.00 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wet_01.wav",
    "pass": true,
-   "detail": "start -90.3 dBFS, end -66.2 dBFS"
+   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 14 dB under its peak)",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": "-22.3 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 11 dB under its peak)",
+   "file": "step_wet_01.wav",
+   "pass": true,
+   "detail": "-15.7 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wet_01.wav",
    "pass": true,
-   "detail": "peak -5.33 dBFS"
+   "detail": "peak -2.39 dBFS"
   },
   {
    "case": 15,
@@ -5177,14 +5828,28 @@
    "test": "no click at either end",
    "file": "step_wet_02.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -57.4 dBFS"
+   "detail": "start -90.3 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 14 dB under its peak)",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": "-29.0 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 11 dB under its peak)",
+   "file": "step_wet_02.wav",
+   "pass": true,
+   "detail": "-18.5 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wet_02.wav",
    "pass": true,
-   "detail": "peak -8.42 dBFS"
+   "detail": "peak -8.45 dBFS"
   },
   {
    "case": 15,
@@ -5219,28 +5884,42 @@
    "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
    "file": "step_wet_03.wav",
    "pass": true,
-   "detail": "-27.00 LUFS-M"
+   "detail": "-30.90 LUFS-M (peak-limited)"
   },
   {
    "case": 5,
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wet_03.wav",
    "pass": true,
-   "detail": "-1.80 dBTP"
+   "detail": "-1.50 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wet_03.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -66.2 dBFS"
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 14 dB under its peak)",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": "-22.4 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 11 dB under its peak)",
+   "file": "step_wet_03.wav",
+   "pass": true,
+   "detail": "-13.3 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wet_03.wav",
    "pass": true,
-   "detail": "peak -1.87 dBFS"
+   "detail": "peak -1.59 dBFS"
   },
   {
    "case": 15,
@@ -5275,7 +5954,7 @@
    "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
    "file": "step_wet_04.wav",
    "pass": true,
-   "detail": "-31.50 LUFS-M (peak-limited)"
+   "detail": "-27.70 LUFS-M (peak-limited)"
   },
   {
    "case": 5,
@@ -5289,14 +5968,28 @@
    "test": "no click at either end",
    "file": "step_wet_04.wav",
    "pass": true,
-   "detail": "start -90.3 dBFS, end -74.7 dBFS"
+   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 14 dB under its peak)",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": "-28.7 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 11 dB under its peak)",
+   "file": "step_wet_04.wav",
+   "pass": true,
+   "detail": "-13.2 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wet_04.wav",
    "pass": true,
-   "detail": "peak -3.40 dBFS"
+   "detail": "peak -1.51 dBFS"
   },
   {
    "case": 15,
@@ -5331,28 +6024,42 @@
    "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
    "file": "step_wet_05.wav",
    "pass": true,
-   "detail": "-27.00 LUFS-M"
+   "detail": "-29.70 LUFS-M (peak-limited)"
   },
   {
    "case": 5,
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wet_05.wav",
    "pass": true,
-   "detail": "-7.70 dBTP"
+   "detail": "-1.50 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wet_05.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -72.2 dBFS"
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 14 dB under its peak)",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": "-36.7 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 11 dB under its peak)",
+   "file": "step_wet_05.wav",
+   "pass": true,
+   "detail": "-19.6 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wet_05.wav",
    "pass": true,
-   "detail": "peak -7.82 dBFS"
+   "detail": "peak -1.73 dBFS"
   },
   {
    "case": 15,
@@ -5394,14 +6101,28 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wet_06.wav",
    "pass": true,
-   "detail": "-2.30 dBTP"
+   "detail": "-2.40 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wet_06.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 14 dB under its peak)",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": "-28.6 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 11 dB under its peak)",
+   "file": "step_wet_06.wav",
+   "pass": true,
+   "detail": "-27.1 dB"
   },
   {
    "case": 5,
@@ -5443,7 +6164,7 @@
    "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
    "file": "step_wet_07.wav",
    "pass": true,
-   "detail": "-28.60 LUFS-M (peak-limited)"
+   "detail": "-33.70 LUFS-M (peak-limited)"
   },
   {
    "case": 5,
@@ -5457,14 +6178,28 @@
    "test": "no click at either end",
    "file": "step_wet_07.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -78.3 dBFS"
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 14 dB under its peak)",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": "-29.8 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 11 dB under its peak)",
+   "file": "step_wet_07.wav",
+   "pass": true,
+   "detail": "-20.4 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wet_07.wav",
    "pass": true,
-   "detail": "peak -1.86 dBFS"
+   "detail": "peak -1.60 dBFS"
   },
   {
    "case": 15,
@@ -5506,21 +6241,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wet_08.wav",
    "pass": true,
-   "detail": "-7.30 dBTP"
+   "detail": "-7.20 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wet_08.wav",
    "pass": true,
-   "detail": "start -90.3 dBFS, end -80.8 dBFS"
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 14 dB under its peak)",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": "-35.2 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 11 dB under its peak)",
+   "file": "step_wet_08.wav",
+   "pass": true,
+   "detail": "-18.8 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wet_08.wav",
    "pass": true,
-   "detail": "peak -7.31 dBFS"
+   "detail": "peak -7.30 dBFS"
   },
   {
    "case": 15,
@@ -5562,21 +6311,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wood_01.wav",
    "pass": true,
-   "detail": "-3.50 dBTP"
+   "detail": "-5.60 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wood_01.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -80.8 dBFS"
+   "detail": "start -90.3 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": "-34.2 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_wood_01.wav",
+   "pass": true,
+   "detail": "-25.0 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wood_01.wav",
    "pass": true,
-   "detail": "peak -3.52 dBFS"
+   "detail": "peak -5.73 dBFS"
   },
   {
    "case": 15,
@@ -5618,21 +6381,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wood_02.wav",
    "pass": true,
-   "detail": "-2.50 dBTP"
+   "detail": "-1.60 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wood_02.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": "-31.8 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_wood_02.wav",
+   "pass": true,
+   "detail": "-39.3 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wood_02.wav",
    "pass": true,
-   "detail": "peak -2.49 dBFS"
+   "detail": "peak -1.65 dBFS"
   },
   {
    "case": 15,
@@ -5667,14 +6444,14 @@
    "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
    "file": "step_wood_03.wav",
    "pass": true,
-   "detail": "-27.00 LUFS-M"
+   "detail": "-28.90 LUFS-M (peak-limited)"
   },
   {
    "case": 5,
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wood_03.wav",
    "pass": true,
-   "detail": "-2.90 dBTP"
+   "detail": "-1.50 dBTP"
   },
   {
    "case": 8,
@@ -5684,11 +6461,25 @@
    "detail": "start -180.0 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": "-36.5 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_wood_03.wav",
+   "pass": true,
+   "detail": "-46.9 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wood_03.wav",
    "pass": true,
-   "detail": "peak -2.90 dBFS"
+   "detail": "peak -1.51 dBFS"
   },
   {
    "case": 15,
@@ -5738,6 +6529,20 @@
    "file": "step_wood_04.wav",
    "pass": true,
    "detail": "start -180.0 dBFS, end -76.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": "-26.5 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_wood_04.wav",
+   "pass": true,
+   "detail": "-38.0 dB"
   },
   {
    "case": 5,
@@ -5796,6 +6601,20 @@
    "detail": "start -180.0 dBFS, end -84.3 dBFS"
   },
   {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": "-34.5 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_wood_05.wav",
+   "pass": true,
+   "detail": "-48.3 dB"
+  },
+  {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wood_05.wav",
@@ -5835,28 +6654,42 @@
    "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
    "file": "step_wood_06.wav",
    "pass": true,
-   "detail": "-27.00 LUFS-M"
+   "detail": "-28.10 LUFS-M (peak-limited)"
   },
   {
    "case": 5,
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wood_06.wav",
    "pass": true,
-   "detail": "-8.80 dBTP"
+   "detail": "-1.50 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wood_06.wav",
    "pass": true,
-   "detail": "start -90.3 dBFS, end -78.3 dBFS"
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": "-31.4 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_wood_06.wav",
+   "pass": true,
+   "detail": "-44.8 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wood_06.wav",
    "pass": true,
-   "detail": "peak -8.83 dBFS"
+   "detail": "peak -1.52 dBFS"
   },
   {
    "case": 15,
@@ -5891,28 +6724,42 @@
    "test": "momentary loudness within 1.5 LU of -27.0, or lower and peak-limited",
    "file": "step_wood_07.wav",
    "pass": true,
-   "detail": "-27.00 LUFS-M"
+   "detail": "-27.20 LUFS-M (peak-limited)"
   },
   {
    "case": 5,
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wood_07.wav",
    "pass": true,
-   "detail": "-6.20 dBTP"
+   "detail": "-1.50 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wood_07.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -72.2 dBFS"
+   "detail": "start -180.0 dBFS, end -84.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": "-25.4 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_wood_07.wav",
+   "pass": true,
+   "detail": "-38.4 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wood_07.wav",
    "pass": true,
-   "detail": "peak -6.17 dBFS"
+   "detail": "peak -1.57 dBFS"
   },
   {
    "case": 15,
@@ -5926,7 +6773,7 @@
    "test": "every source has a full row in sources.json",
    "file": "step_wood_07.wav",
    "pass": true,
-   "detail": "fs_575898"
+   "detail": "fs_536770"
   },
   {
    "case": 2,
@@ -5954,21 +6801,35 @@
    "test": "true peak at most -1.0 dBTP",
    "file": "step_wood_08.wav",
    "pass": true,
-   "detail": "-9.10 dBTP"
+   "detail": "-5.80 dBTP"
   },
   {
    "case": 8,
    "test": "no click at either end",
    "file": "step_wood_08.wav",
    "pass": true,
-   "detail": "start -180.0 dBFS, end -70.3 dBFS"
+   "detail": "start -180.0 dBFS, end -90.3 dBFS"
+  },
+  {
+   "case": 24,
+   "test": "the step has died away at its end (last 20 ms at least 18 dB under its peak)",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": "-33.5 dB"
+  },
+  {
+   "case": 24,
+   "test": "the step does not start inside a sound (the 20 ms before its cut in the source at least 19 dB under its peak)",
+   "file": "step_wood_08.wav",
+   "pass": true,
+   "detail": "-33.0 dB"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "step_wood_08.wav",
    "pass": true,
-   "detail": "peak -9.09 dBFS"
+   "detail": "peak -5.82 dBFS"
   },
   {
    "case": 15,
@@ -5982,14 +6843,14 @@
    "test": "every source has a full row in sources.json",
    "file": "step_wood_08.wav",
    "pass": true,
-   "detail": "fs_575898"
+   "detail": "fs_536770"
   },
   {
    "case": 9,
    "test": "variants of step_paving differ (no pair above 0.90, none identical)",
    "file": "step_paving_*",
    "pass": true,
-   "detail": "closest pair ('step_paving_04', 'step_paving_08') correlate 0.74"
+   "detail": "closest pair ('step_paving_03', 'step_paving_04') correlate 0.74"
   },
   {
    "case": 9,
@@ -6003,84 +6864,84 @@
    "test": "variants of step_asphalt differ (no pair above 0.90, none identical)",
    "file": "step_asphalt_*",
    "pass": true,
-   "detail": "closest pair ('step_asphalt_01', 'step_asphalt_03') correlate 0.71"
+   "detail": "closest pair ('step_asphalt_03', 'step_asphalt_06') correlate 0.77"
   },
   {
    "case": 9,
    "test": "variants of step_wet differ (no pair above 0.90, none identical)",
    "file": "step_wet_*",
    "pass": true,
-   "detail": "closest pair ('step_wet_02', 'step_wet_06') correlate 0.27"
+   "detail": "closest pair ('step_wet_03', 'step_wet_05') correlate 0.54"
   },
   {
    "case": 9,
    "test": "variants of step_wood differ (no pair above 0.90, none identical)",
    "file": "step_wood_*",
    "pass": true,
-   "detail": "closest pair ('step_wood_01', 'step_wood_02') correlate 0.60"
+   "detail": "closest pair ('step_wood_01', 'step_wood_08') correlate 0.66"
   },
   {
    "case": 10,
    "test": "day bed mix measures within 1.5 LU of -36.5",
    "file": null,
    "pass": true,
-   "detail": "-36.50 LUFS"
+   "detail": "-36.60 LUFS"
   },
   {
    "case": 5,
    "test": "day bed mix true peak at most -1.0 dBTP",
    "file": null,
    "pass": true,
-   "detail": "-15.10 dBTP"
+   "detail": "-14.90 dBTP"
   },
   {
    "case": 10,
    "test": "night bed mix measures within 1.5 LU of -39.5",
    "file": null,
    "pass": true,
-   "detail": "-39.60 LUFS"
+   "detail": "-40.30 LUFS"
   },
   {
    "case": 5,
    "test": "night bed mix true peak at most -1.0 dBTP",
    "file": null,
    "pass": true,
-   "detail": "-17.10 dBTP"
+   "detail": "-17.00 dBTP"
   },
   {
    "case": 10,
    "test": "rain bed mix measures within 1.5 LU of -33.5",
    "file": null,
    "pass": true,
-   "detail": "-33.40 LUFS"
+   "detail": "-33.50 LUFS"
   },
   {
    "case": 5,
    "test": "rain bed mix true peak at most -1.0 dBTP",
    "file": null,
    "pass": true,
-   "detail": "-5.70 dBTP"
+   "detail": "-5.40 dBTP"
   },
   {
    "case": 10,
    "test": "night bed at least 2 LU under day",
    "file": null,
    "pass": true,
-   "detail": "night -39.6, day -36.5"
+   "detail": "night -40.3, day -36.6"
   },
   {
    "case": 10,
    "test": "rain bed at least 2 LU over day",
    "file": null,
    "pass": true,
-   "detail": "rain -33.4, day -36.5"
+   "detail": "rain -33.5, day -36.6"
   },
   {
    "case": 11,
    "test": "rain traffic's spectral centroid above day traffic's",
    "file": null,
    "pass": true,
-   "detail": "rain 704 Hz, day 485 Hz"
+   "detail": "rain 751 Hz, day 485 Hz"
   },
   {
    "case": 11,
@@ -6097,88 +6958,291 @@
    "detail": "rain 2, day 9"
   },
   {
+   "case": 11,
+   "test": "gull calls counted from the audio: night fewer than day and at most three, rain fewer than day",
+   "file": null,
+   "pass": true,
+   "detail": "heard day 9, night 2, rain 2"
+  },
+  {
+   "case": 11,
+   "test": "gull calls heard in the audio agree with the build's record (within one)",
+   "file": null,
+   "pass": true,
+   "detail": "heard [9, 2, 2], recorded [9, 2, 2]"
+  },
+  {
+   "case": 11,
+   "test": "night wind is darker than day wind (spectral centroid)",
+   "file": null,
+   "pass": true,
+   "detail": "night 450 Hz, day 478 Hz"
+  },
+  {
+   "case": 11,
+   "test": "night wind is quieter than day wind (integrated loudness)",
+   "file": null,
+   "pass": true,
+   "detail": "night -47.00 LUFS, day -46.00 LUFS"
+  },
+  {
+   "case": 11,
+   "test": "night wind is steadier than day wind (spread of its 100 ms level, 10th to 95th percentile)",
+   "file": null,
+   "pass": true,
+   "detail": "night 3.8 dB, day 13.6 dB"
+  },
+  {
    "case": 12,
-   "test": "grains no longer than 160 ms",
+   "test": "no grain longer than 160 ms (every grain of the build's record)",
    "file": "amb_voices_day.wav",
    "pass": true,
-   "detail": "grains [80, 150] ms"
+   "detail": "longest grain 150 ms of 1316"
+  },
+  {
+   "case": 12,
+   "test": "no run of speech longer than 160 ms (no grain continues another)",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "longest run 150 ms"
+  },
+  {
+   "case": 12,
+   "test": "no moment of the recording comes back within 12 s",
+   "file": "amb_voices_day.wav",
+   "pass": true,
+   "detail": "shortest return 12.3 s"
   },
   {
    "case": 12,
    "test": "power above 2.5 kHz at most 0.1%",
    "file": "amb_voices_day.wav",
    "pass": true,
-   "detail": "0.0017%"
+   "detail": "0.0021%"
   },
   {
    "case": 12,
-   "test": "grains no longer than 160 ms",
+   "test": "no grain longer than 160 ms (every grain of the build's record)",
    "file": "amb_voices_night.wav",
    "pass": true,
-   "detail": "grains [80, 150] ms"
+   "detail": "longest grain 150 ms of 247"
+  },
+  {
+   "case": 12,
+   "test": "no run of speech longer than 160 ms (no grain continues another)",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "longest run 150 ms"
+  },
+  {
+   "case": 12,
+   "test": "no moment of the recording comes back within 20 s",
+   "file": "amb_voices_night.wav",
+   "pass": true,
+   "detail": "shortest return 20.4 s"
   },
   {
    "case": 12,
    "test": "power above 2.5 kHz at most 0.1%",
    "file": "amb_voices_night.wav",
    "pass": true,
-   "detail": "0.0038%"
+   "detail": "0.0105%"
   },
   {
    "case": 12,
-   "test": "grains no longer than 160 ms",
+   "test": "no grain longer than 160 ms (every grain of the build's record)",
    "file": "amb_voices_rain.wav",
    "pass": true,
-   "detail": "grains [80, 150] ms"
+   "detail": "longest grain 150 ms of 1313"
+  },
+  {
+   "case": 12,
+   "test": "no run of speech longer than 160 ms (no grain continues another)",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "longest run 150 ms"
+  },
+  {
+   "case": 12,
+   "test": "no moment of the recording comes back within 7 s",
+   "file": "amb_voices_rain.wav",
+   "pass": true,
+   "detail": "shortest return 7.3 s"
   },
   {
    "case": 12,
    "test": "power above 2.5 kHz at most 0.1%",
    "file": "amb_voices_rain.wav",
    "pass": true,
-   "detail": "0.0047%"
+   "detail": "0.0066%"
   },
   {
    "case": 12,
-   "test": "grains no longer than 160 ms",
+   "test": "no grain longer than 160 ms (every grain of the build's record)",
    "file": "amb_radio_day.wav",
    "pass": true,
-   "detail": "grains [90, 160] ms"
+   "detail": "longest grain 160 ms of 225"
+  },
+  {
+   "case": 12,
+   "test": "no run of speech longer than 160 ms (no grain continues another)",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "longest run 160 ms"
+  },
+  {
+   "case": 12,
+   "test": "no moment of the recording comes back within 20 s",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "shortest return 20.5 s"
   },
   {
    "case": 12,
    "test": "power above 2.5 kHz at most 0.1%",
    "file": "amb_radio_day.wav",
    "pass": true,
-   "detail": "0.0028%"
+   "detail": "0.0593%"
   },
   {
    "case": 12,
-   "test": "grains no longer than 160 ms",
+   "test": "no grain longer than 160 ms (every grain of the build's record)",
    "file": "amb_radio_night.wav",
    "pass": true,
-   "detail": "grains [90, 160] ms"
+   "detail": "longest grain 160 ms of 225"
+  },
+  {
+   "case": 12,
+   "test": "no run of speech longer than 160 ms (no grain continues another)",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "longest run 160 ms"
+  },
+  {
+   "case": 12,
+   "test": "no moment of the recording comes back within 20 s",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "shortest return 20.5 s"
   },
   {
    "case": 12,
    "test": "power above 2.5 kHz at most 0.1%",
    "file": "amb_radio_night.wav",
    "pass": true,
-   "detail": "0.0045%"
+   "detail": "0.0170%"
   },
   {
    "case": 12,
-   "test": "grains no longer than 160 ms",
+   "test": "no grain longer than 160 ms (every grain of the build's record)",
    "file": "amb_radio_rain.wav",
    "pass": true,
-   "detail": "grains [90, 160] ms"
+   "detail": "longest grain 160 ms of 225"
+  },
+  {
+   "case": 12,
+   "test": "no run of speech longer than 160 ms (no grain continues another)",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "longest run 160 ms"
+  },
+  {
+   "case": 12,
+   "test": "no moment of the recording comes back within 20 s",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "shortest return 20.5 s"
   },
   {
    "case": 12,
    "test": "power above 2.5 kHz at most 0.1%",
    "file": "amb_radio_rain.wav",
    "pass": true,
-   "detail": "0.0045%"
+   "detail": "0.0095%"
+  },
+  {
+   "case": 25,
+   "test": "radio holds no hum: at most 1.0% of its power under 250 Hz",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "0.21%"
+  },
+  {
+   "case": 25,
+   "test": "radio is a band of its own: at least 97% of its power between 300 Hz and 3 kHz",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "99.7%"
+  },
+  {
+   "case": 25,
+   "test": "radio has more midrange than the voices: its 95% roll-off at least 120 Hz above the day voices'",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "radio 1233 Hz, voices 844 Hz"
+  },
+  {
+   "case": 25,
+   "test": "radio is intermittent: at least 40% of its 100 ms frames lie 15 dB or more under its loud ones",
+   "file": "amb_radio_day.wav",
+   "pass": true,
+   "detail": "65%"
+  },
+  {
+   "case": 25,
+   "test": "radio holds no hum: at most 1.0% of its power under 250 Hz",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "0.21%"
+  },
+  {
+   "case": 25,
+   "test": "radio is a band of its own: at least 97% of its power between 300 Hz and 3 kHz",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "99.7%"
+  },
+  {
+   "case": 25,
+   "test": "radio has more midrange than the voices: its 95% roll-off at least 120 Hz above the night voices'",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "radio 1119 Hz, voices 680 Hz"
+  },
+  {
+   "case": 25,
+   "test": "radio is intermittent: at least 40% of its 100 ms frames lie 15 dB or more under its loud ones",
+   "file": "amb_radio_night.wav",
+   "pass": true,
+   "detail": "65%"
+  },
+  {
+   "case": 25,
+   "test": "radio holds no hum: at most 1.0% of its power under 250 Hz",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "0.21%"
+  },
+  {
+   "case": 25,
+   "test": "radio is a band of its own: at least 97% of its power between 300 Hz and 3 kHz",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "99.7%"
+  },
+  {
+   "case": 25,
+   "test": "radio has more midrange than the voices: its 95% roll-off at least 120 Hz above the rain voices'",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "radio 838 Hz, voices 668 Hz"
+  },
+  {
+   "case": 25,
+   "test": "radio is intermittent: at least 40% of its 100 ms frames lie 15 dB or more under its loud ones",
+   "file": "amb_radio_rain.wav",
+   "pass": true,
+   "detail": "66%"
   },
   {
    "case": 13,
@@ -7171,120 +8235,393 @@
    "case": 13,
    "test": "every source in sources.json is used by an output",
    "file": null,
+   "pass": false,
+   "detail": "unused: ['fs_575898']"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_182610",
    "pass": true,
-   "detail": "unused: none"
+   "detail": "April 1st, 2013"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_182611",
+   "pass": true,
+   "detail": "April 1st, 2013"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_182612",
+   "pass": true,
+   "detail": "April 1st, 2013"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_260124",
+   "pass": true,
+   "detail": "January 3rd, 2015"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_263495",
+   "pass": true,
+   "detail": "February 7th, 2015"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_273067",
+   "pass": true,
+   "detail": "May 1st, 2015"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_273071",
+   "pass": true,
+   "detail": "May 1st, 2015"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_360633",
+   "pass": true,
+   "detail": "September 22nd, 2016"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_372213",
+   "pass": true,
+   "detail": "January 2nd, 2017"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_395686",
+   "pass": true,
+   "detail": "June 18th, 2017"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_402459",
+   "pass": true,
+   "detail": "September 17th, 2017"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_402460",
+   "pass": true,
+   "detail": "September 17th, 2017"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_402464",
+   "pass": true,
+   "detail": "September 17th, 2017"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_402465",
+   "pass": true,
+   "detail": "September 17th, 2017"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_402466",
+   "pass": true,
+   "detail": "September 17th, 2017"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_435577",
+   "pass": true,
+   "detail": "July 26th, 2018"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_454130",
+   "pass": true,
+   "detail": "December 18th, 2018"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_454374",
+   "pass": true,
+   "detail": "December 18th, 2018"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_455056",
+   "pass": true,
+   "detail": "December 27th, 2018"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_463373",
+   "pass": true,
+   "detail": "March 13th, 2019"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_494565",
+   "pass": true,
+   "detail": "November 21st, 2019"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_503456",
+   "pass": true,
+   "detail": "January 24th, 2020"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_528615",
+   "pass": true,
+   "detail": "July 21st, 2020"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_531566",
+   "pass": true,
+   "detail": "August 20th, 2020"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_536770",
+   "pass": true,
+   "detail": "September 27th, 2020"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_538015",
+   "pass": true,
+   "detail": "October 5th, 2020"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_538016",
+   "pass": true,
+   "detail": "October 5th, 2020"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_554845",
+   "pass": true,
+   "detail": "January 19th, 2021"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_559821",
+   "pass": true,
+   "detail": "February 22nd, 2021"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_575898",
+   "pass": true,
+   "detail": "June 15th, 2021"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_57743",
+   "pass": true,
+   "detail": "July 23rd, 2008"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_637555",
+   "pass": true,
+   "detail": "June 9th, 2022"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_637556",
+   "pass": true,
+   "detail": "June 9th, 2022"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_674027",
+   "pass": true,
+   "detail": "February 10th, 2023"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_73497",
+   "pass": true,
+   "detail": "June 3rd, 2009"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_744592",
+   "pass": true,
+   "detail": "July 4th, 2024"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_757318",
+   "pass": true,
+   "detail": "September 26th, 2024"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_846446",
+   "pass": true,
+   "detail": "February 25th, 2026"
+  },
+  {
+   "case": 13,
+   "test": "a Freesound source has the date its page gives for the upload",
+   "file": "fs_868548",
+   "pass": true,
+   "detail": "September 1st, 2026"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_traffic.jpg",
    "pass": true,
-   "detail": "196 KB"
+   "detail": "182 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_gulls.jpg",
    "pass": true,
-   "detail": "113 KB"
+   "detail": "112 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_harbour.jpg",
    "pass": true,
-   "detail": "232 KB"
+   "detail": "211 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_wind.jpg",
    "pass": true,
-   "detail": "188 KB"
+   "detail": "167 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_voices.jpg",
    "pass": true,
-   "detail": "193 KB"
+   "detail": "141 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_radio.jpg",
    "pass": true,
-   "detail": "194 KB"
+   "detail": "136 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_rain.jpg",
    "pass": true,
-   "detail": "352 KB"
+   "detail": "326 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_steps_paving.jpg",
    "pass": true,
-   "detail": "122 KB"
+   "detail": "111 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_steps_setts.jpg",
    "pass": true,
-   "detail": "122 KB"
+   "detail": "113 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_steps_asphalt.jpg",
    "pass": true,
-   "detail": "128 KB"
+   "detail": "120 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_steps_wet.jpg",
    "pass": true,
-   "detail": "108 KB"
+   "detail": "100 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_steps_wood.jpg",
    "pass": true,
-   "detail": "108 KB"
+   "detail": "84 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_doors_shop.jpg",
    "pass": true,
-   "detail": "127 KB"
+   "detail": "110 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_doors_house.jpg",
    "pass": true,
-   "detail": "130 KB"
+   "detail": "114 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_bell.jpg",
    "pass": true,
-   "detail": "92 KB"
+   "detail": "75 KB"
   },
   {
    "case": 16,
    "test": "spectrogram JPEG exists, under 500 KB",
    "file": "spec_phonebox.jpg",
    "pass": true,
-   "detail": "150 KB"
+   "detail": "129 KB"
   },
   {
    "case": 16,
@@ -7298,21 +8635,21 @@
    "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
    "file": "clip_mix_night.ogg",
    "pass": true,
-   "detail": "vorbis 20.0 s 226 KB"
+   "detail": "vorbis 20.0 s 225 KB"
   },
   {
    "case": 16,
    "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
    "file": "clip_mix_rain.ogg",
    "pass": true,
-   "detail": "vorbis 20.0 s 254 KB"
+   "detail": "vorbis 20.0 s 253 KB"
   },
   {
    "case": 16,
    "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
    "file": "clip_steps_paving.ogg",
    "pass": true,
-   "detail": "vorbis 5.8 s 23 KB"
+   "detail": "vorbis 6.2 s 27 KB"
   },
   {
    "case": 16,
@@ -7326,21 +8663,21 @@
    "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
    "file": "clip_steps_asphalt.ogg",
    "pass": true,
-   "detail": "vorbis 5.9 s 23 KB"
+   "detail": "vorbis 6.0 s 24 KB"
   },
   {
    "case": 16,
    "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
    "file": "clip_steps_wet.ogg",
    "pass": true,
-   "detail": "vorbis 5.3 s 19 KB"
+   "detail": "vorbis 5.6 s 20 KB"
   },
   {
    "case": 16,
    "test": "listening clip is Vorbis, at most 20 s, under 300 KB",
    "file": "clip_steps_wood.ogg",
    "pass": true,
-   "detail": "vorbis 5.7 s 19 KB"
+   "detail": "vorbis 6.0 s 21 KB"
   },
   {
    "case": 16,

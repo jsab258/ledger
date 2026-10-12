@@ -771,30 +771,6 @@
    "date_read": "2026-10-12"
   },
   {
-   "id": "fs_575898",
-   "host": "freesound",
-   "freesound_id": 575898,
-   "page_url": "https://freesound.org/s/575898/",
-   "used_for": "step_wood_*: walking on an old wooden floor",
-   "title": "wooden floor, old, creaking, footsteps, walking.WAV",
-   "author": "VMan533",
-   "page_title": "wooden floor, old, creaking, footsteps, walking.WAV by VMan533",
-   "licence": "Creative Commons 0",
-   "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/",
-   "uploaded": "June 15th, 2021",
-   "description_on_page": "Sound effects > Human sounds and actions Recording of me walking on a old wooden floor.",
-   "original_duration": "0:18.154",
-   "original_sample_rate": "96 kHz",
-   "original_bit_depth": "24 bit",
-   "original_channels": "Stereo",
-   "download_url": "https://cdn.freesound.org/previews/575/575898_3283195-hq.mp3",
-   "download_kind": "Freesound high-quality preview (MP3, about 190 kbps)",
-   "file": "fs_575898.mp3",
-   "md5": "8d6c3941669fcaf597fc9a0b7b628443",
-   "bytes": 422208,
-   "date_read": "2026-10-12"
-  },
-  {
    "id": "bsb_1270",
    "host": "bigsoundbank",
    "bsb_number": 1270,
@@ -1171,6 +1147,11 @@
    "page": "https://freesound.org/s/334457/, /s/766212/, /s/871593/",
    "what": "two-person wet footsteps (evsecrets), hardwood footsteps (kgopong), quiet night traffic (brunoboselli)",
    "why": "fetched and tried; none of their steps or stretches was chosen, so they are not in the build"
+  },
+  {
+   "page": "https://freesound.org/s/575898/",
+   "what": "wooden floor, old, creaking, footsteps, walking.WAV (VMan533)",
+   "why": "a wooden-floor steps take used in the first build; after the review the footstep cutter judges each step against its own peak, and none of its 66 onsets dies away by 20 dB (a noisy take; at 14 dB only 3 do), so no footfall of it is left to use. Retired on 12 October 2026 (NOTES.md, 'Changed after the review'); its page had been read and states CC0"
   }
  ]
 }
