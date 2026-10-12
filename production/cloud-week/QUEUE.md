@@ -45,7 +45,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 
 ## 4. 2D, finished
 
-- 4.1 in progress (from 11 Oct 21:40). Fascia signs: try 1 made and checked (433 of 433), both fresh reviews FAILED (production/cloud-week/2d/fascias/REVIEW-v1-boards.md and REVIEW-v1-signs-glass.md: the ageing like a filter, the empty unit's timber and whitewash, gull marks, Mickey's old name, the hanging signs, the fish window, the newsagent's line, the hours plates); try 2's code and previews (fascias-*-v2-2026-10-09.jpg) are made and committed, but its 20-seed check had not finished and no fresh review has seen it. Next: finish try 2's check (check_fascias.py), then one fresh reviewer per view.
+- 4.1 done (12 Oct 07:20; the second reviews' fixes applied, not re-reviewed; known shortfalls listed): production/cloud-week/2d/fascias/ (make_fascias.py, check_fascias.py, fascia_*.py, make_previews.py, NOTES.md, REVIEW-v1-boards.md, REVIEW-v1-signs-glass.md, REVIEW-v2-boards.md, REVIEW-v2-signs-glass.md, checks/check_v4.json: 475 of 475, 3 of 67 negative controls not caught, 19 of 240 seeded runs fail a seed-sensitive age row); previews production/previews/cloud-week/fascias/ (v3 the last). The 128 PNGs (ten boards, nine sign faces, 23 glass rows, three panels; 33 seconds to rebuild) are not in git.
 - 4.2 open. Posters and notices for invented 1990 events and goods, in period type (OFL fonts).
 - 4.3 open. "To Let" boards.
 - 4.4 open. Street name plates.

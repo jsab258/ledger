@@ -22,7 +22,9 @@ Kept usable at any moment: updated after every finished piece. Last updated 12 O
 
 ## 2D (finished pictures, rebuilt by script; the PNGs are not in git)
 
-None finished yet. 4.1, the fascia signs, is in its check (try 2); see the queue.
+| Unit | What | Files | Check | Reviews | For the builder |
+|---|---|---|---|---|---|
+| 4.1 | The ten shop fascia boards (5410 x 550 mm, base colour, height, ORM, wear), four hanging signs, nine sign faces, the glass lettering rows, three panels | rebuilt by `python production/cloud-week/2d/fascias/make_fascias.py OUTDIR --seed-base 1` (33 seconds, 128 PNGs, deterministic; never in git) | checks/check_v4.json: 475 of 475 | try 1 FAIL (both views), try 2 FAIL (boards, signs and glass): the fixes of the second reviews applied, not re-reviewed (REVIEW-v1-boards.md, REVIEW-v1-signs-glass.md, REVIEW-v2-boards.md, REVIEW-v2-signs-glass.md) | The raised gilt letters of Mickey's board are geometry, not texture (the set holds the flat board). Keep `manifest.json` with the set: its seed is one the age rows pass (19 of 240 other seeds fail one: Mickey's 4 of 6). Known shortfalls of the check: 3 of 67 negative controls not caught (two tiled boards, one even confetti). Not applied (narrow points): the fish market's ground colour (203, 199, 186) and the target's palette, Mickey's contact shadow in the ORM channel, the ironmonger's ghost. Reading order: u grows as street x falls (the manifest's `u_rule`); the east parade's doors are on the left or right as each board's label says. |
 
 ## Targets ready to build (each: TARGET.md, target.json, target_drawing.py, self_check.py, TARGET-REVIEW.md in production/cloud-week/targets/<family>/)
 
