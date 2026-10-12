@@ -329,7 +329,14 @@
       186.0
      ]
     ],
-    "chain": "water: highpass 100, lowpass 6000; rigging -8 dB from highpass 250; a far boat engine (lowpass 700, 8 s fades) at 22 s, -12 dB re the water"
+    "chain": "water: highpass 100, lowpass 6000; rigging -8 dB from highpass 250; a far boat engine (lowpass 700, 8 s fades) at 22 s, -12 dB re the water",
+    "notched_tones_hz": {
+     "fs_360633": {
+      "1": [
+       50.62
+      ]
+     }
+    }
    },
    "channels": 2,
    "sample_rate": 48000,
@@ -339,14 +346,14 @@
    "lufs_integrated": -41.0,
    "true_peak_dbtp": -14.86,
    "sample_peak_dbfs": -14.87,
-   "gain_applied_db": -5.33,
+   "gain_applied_db": -5.32,
    "seam": {
     "jump_ratio": 0.222,
     "level_step_db": 1.46,
     "step_percentile": 0.525,
     "crossfade_s": 4.0
    },
-   "sha256": "e9a0c46592ce658ba624acb3d92cb16a746c27fe929f57e602c3bcd01df7f34d"
+   "sha256": "32ef471de530d669cd674aded3c37fe0c131d51bac7412b94df1640aefb4c59a"
   },
   "amb_harbour_night": {
    "file": "amb_harbour_night.wav",
@@ -426,10 +433,14 @@
        55.25,
        64.12,
        73.62,
+       92.0,
+       95.75,
        96.25,
+       104.25,
        110.25,
        128.25,
        144.38,
+       147.12,
        160.38,
        192.5
       ],
@@ -438,13 +449,21 @@
        55.25,
        64.12,
        73.62,
+       74.12,
+       92.0,
        96.25,
        101.25,
        104.25,
        110.38,
        128.25,
        144.25,
-       192.38
+       144.88,
+       147.12,
+       160.38,
+       192.38,
+       224.5,
+       288.88,
+       320.62
       ]
      }
     }
@@ -455,16 +474,16 @@
    "seconds": 60.0,
    "target_lufs": -43,
    "lufs_integrated": -43.0,
-   "true_peak_dbtp": -23.34,
-   "sample_peak_dbfs": -23.39,
-   "gain_applied_db": -7.87,
+   "true_peak_dbtp": -23.33,
+   "sample_peak_dbfs": -23.37,
+   "gain_applied_db": -7.85,
    "seam": {
-    "jump_ratio": 0.694,
-    "level_step_db": 0.17,
-    "step_percentile": 0.102,
+    "jump_ratio": 0.66,
+    "level_step_db": 0.21,
+    "step_percentile": 0.149,
     "crossfade_s": 4.0
    },
-   "sha256": "d89db68e31a2428f7a37fb73e05ff189870e005765db008a6e10c7f8ae1b0b97"
+   "sha256": "f214d1c132554527095f06deed79609b857d6d9bf9d7bba03bc1e6b3012b0cc7"
   },
   "amb_radio_day": {
    "file": "amb_radio_day.wav",
@@ -3360,11 +3379,14 @@
     "notched_tones_hz": {
      "fs_454130": {
       "0": [
+       58.88,
        117.0,
+       117.62,
        120.0
       ],
       "1": [
-       117.0
+       117.0,
+       120.0
       ]
      }
     }
@@ -3384,7 +3406,7 @@
     "step_percentile": 0.777,
     "crossfade_s": 4.0
    },
-   "sha256": "962ca14d2a0aa2e95bb3e0144f0d34376479257b181fbc46bb23dad3dff07eaa"
+   "sha256": "398c618612b3c1e0c277d9e0da0e0d0cd0e5c545d0ee86c98e281aaaa773ba16"
   },
   "amb_rain_gutter": {
    "file": "amb_rain_gutter.wav",
@@ -3410,10 +3432,14 @@
        73.38,
        85.5,
        88.38,
-       200.0
+       200.0,
+       1400.25
       ],
       "1": [
-       47.5
+       47.5,
+       85.5,
+       192.62,
+       200.0
       ]
      }
     }
@@ -3424,16 +3450,16 @@
    "seconds": 75.0,
    "target_lufs": -47,
    "lufs_integrated": -47.0,
-   "true_peak_dbtp": -8.34,
-   "sample_peak_dbfs": -8.84,
-   "gain_applied_db": 3.35,
+   "true_peak_dbtp": -8.32,
+   "sample_peak_dbfs": -8.83,
+   "gain_applied_db": 3.37,
    "seam": {
-    "jump_ratio": 0.235,
-    "level_step_db": 1.26,
+    "jump_ratio": 0.234,
+    "level_step_db": 1.27,
     "step_percentile": 0.66,
     "crossfade_s": 4.0
    },
-   "sha256": "88d636679f954fdb25ac76678bf988d21fc95d84eb7f130b4616ed08ef30ba18"
+   "sha256": "c8a7e58b4acfee4539d9a7467a1486192bf49688cc15fd3af76abb2e42e39d39"
   },
   "amb_rain_pavement": {
    "file": "amb_rain_pavement.wav",
@@ -3525,6 +3551,7 @@
     "notched_tones_hz": {
      "fs_395686": {
       "0": [
+       48.5,
        100.0,
        300.0,
        490.25,
@@ -3532,6 +3559,10 @@
        605.88
       ],
       "1": [
+       48.25,
+       55.0,
+       62.88,
+       73.62,
        100.0,
        300.0,
        590.12,
@@ -3545,17 +3576,17 @@
    "bit_depth": 16,
    "seconds": 75.0,
    "target_lufs": -45,
-   "lufs_integrated": -45.01,
-   "true_peak_dbtp": -22.04,
-   "sample_peak_dbfs": -22.05,
-   "gain_applied_db": -2.38,
+   "lufs_integrated": -45.0,
+   "true_peak_dbtp": -22.03,
+   "sample_peak_dbfs": -22.04,
+   "gain_applied_db": -2.34,
    "seam": {
-    "jump_ratio": 0.153,
-    "level_step_db": 3.01,
+    "jump_ratio": 0.305,
+    "level_step_db": 3.03,
     "step_percentile": 0.86,
     "crossfade_s": 4.0
    },
-   "sha256": "00d8ade6ada094483023c88c2078e7dd0a9d147c3bfecbe9ee6cd35008c33c15"
+   "sha256": "c2d82ff6743b63ca2c2b4924f34d104800e7741eb1aa91f8df1ca0360bfb85b0"
   },
   "amb_traffic_rain": {
    "file": "amb_traffic_rain.wav",
@@ -3577,10 +3608,14 @@
     "notched_tones_hz": {
      "bsb_621": {
       "0": [
+       59.5,
+       397.62,
+       398.38,
        6406.5,
        9000.0
       ],
       "1": [
+       78.0,
        1281.25,
        6406.5
       ]
@@ -3593,16 +3628,16 @@
    "seconds": 60.0,
    "target_lufs": -42,
    "lufs_integrated": -42.0,
-   "true_peak_dbtp": -22.48,
-   "sample_peak_dbfs": -22.49,
-   "gain_applied_db": -12.74,
+   "true_peak_dbtp": -22.46,
+   "sample_peak_dbfs": -22.47,
+   "gain_applied_db": -12.59,
    "seam": {
-    "jump_ratio": 1.315,
-    "level_step_db": 1.21,
-    "step_percentile": 0.912,
+    "jump_ratio": 1.328,
+    "level_step_db": 1.26,
+    "step_percentile": 0.915,
     "crossfade_s": 4.0
    },
-   "sha256": "9facad121824611c1f6dad541e15b2a2e59f0a1c90a21f3ed6e18b85bb27cf4b"
+   "sha256": "d4862297457f6f680690559e87dbfa64edeadb84e93c454e807cee8aa5270c2d"
   },
   "amb_voices_day": {
    "file": "amb_voices_day.wav",
@@ -15319,6 +15354,9 @@
      "fs_554845": {
       "0": [
        120.0
+      ],
+      "1": [
+       58.88
       ]
      }
     }
@@ -15329,16 +15367,16 @@
    "seconds": 75.0,
    "target_lufs": -47,
    "lufs_integrated": -47.0,
-   "true_peak_dbtp": -28.75,
+   "true_peak_dbtp": -28.74,
    "sample_peak_dbfs": -28.75,
-   "gain_applied_db": -7.44,
+   "gain_applied_db": -7.43,
    "seam": {
     "jump_ratio": 1.404,
     "level_step_db": 0.53,
     "step_percentile": 0.531,
     "crossfade_s": 4.0
    },
-   "sha256": "a1cb893c22e9ff2a627f6931486d36410da0b856e477e57c98c5ee9d919d41a5"
+   "sha256": "7126331473ed8a4aedacf5ba99b58665ec002141b2684898101d96b060037b04"
   },
   "amb_wind_rain": {
    "file": "amb_wind_rain.wav",

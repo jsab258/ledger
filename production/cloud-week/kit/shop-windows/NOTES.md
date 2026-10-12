@@ -10,3 +10,6 @@ PROGRESS LOG (kept current for a reset; the final notes replace this section)
   (c) The approved pawnbroker pictures at full size (2048 wide): no legible maker's name in any of the three. Seen: the till's drawer plate as a
   pale two-word smudge on a dark plate (about 30 x 5 px, letters not resolved), a red roundel dot on the cassette player, a badge on the boombox.
   "Dixons" is not legible in any of them.
+- 13 Oct: front built (sw_front.py -> production/assets/cloud-week/shop-windows/ritas_front.glb 55k triangles, 11.6 MB with its textures: out of git;
+  ritas_grille_night.glb 24.5k triangles). Looked at in elevation and at the doors: band above the doors, fanlight, three toplights, panel, head all present.
+  Next: room (sw_room.py), display, gate, checks.

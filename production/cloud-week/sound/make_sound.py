@@ -150,7 +150,7 @@ def apply_chain(x, chain):
     return x
 
 
-def find_lines(x, seg_s=8.0, min_db=12.0, fmin=45.0, fmax=11000.0, block_hz=2.0, max_width_hz=1.0):
+def find_lines(x, seg_s=8.0, min_db=11.0, fmin=45.0, fmax=11000.0, block_hz=2.0, max_width_hz=4.0):
     """Steady tones in one channel of a source cut (mains hum, a recorder's whine, a machine's drone): lines far narrower than any
     real sound. The cut is read in 8 s frames (0.125 Hz bins) and each bin takes its level as the median over the frames, so
     what is there in the quiet stretches counts, which is where a tone is heard. The floor is the 30th percentile of the 2 Hz
@@ -437,7 +437,7 @@ def build_radio(version):
     speech = np.std(x[np.abs(x) > 0.1 * np.abs(x).max()]) + 1e-12
     x = np.tanh(RADIO_DRIVE * x / speech) * speech                         # a little cone distortion
     rng = np.random.default_rng(22)
-    hiss = circ_filter(rng.standard_normal(len(x)), "bp", [500.0, 2500.0], 2)
+    hiss = circ_filter(rng.standard_normal(len(x)), "bp", [400.0, 1800.0], 2)
     x = x + hiss * RADIO_HISS * speech / (np.std(hiss) + 1e-12)
     lp = {"day": RADIO_LP["day"], "night": RADIO_LP["night"], "rain": RADIO_LP["rain"]}[version]
     x = circ_filter(x, "lp", lp, 4)                                         # then the window
