@@ -4776,6 +4776,3992 @@
    "tom_exception": "The player's words are typed, never authored (casting/tom-nowak/SHEET.md); no questions are written for Tom.",
    "id_note": "No internal id found for the player; 'tom' is proposed (the sheet says only that Novak became Nowak on 24 September).",
    "note": "Tom is the player: this entry is only what the town knows of him. His words are typed by the player and none is written."
+  },
+  {
+   "id": "ada",
+   "name": "Ada",
+   "heard_as": "Ada",
+   "tier": "principal",
+   "age": 78,
+   "role": {
+    "text": "the old woman of the street; a widow who keeps a window on Quay Street",
+    "src": {
+     "file": "production/casting/CASTING.md",
+     "line": 69,
+     "end": 69
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 69,
+    "end": 69
+   },
+   "knew_mickey": true,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "ada.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "ada.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "ada.k03"
+    },
+    {
+     "key": "will",
+     "kind": "knows",
+     "text": "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 45,
+      "end": 45
+     },
+     "street": "will",
+     "secret": false,
+     "id": "ada.k04"
+    },
+    {
+     "key": "funeral",
+     "kind": "knows",
+     "text": "Mickey's funeral was at Father Walsh's chapel, before the new owner came; he missed it.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 47,
+      "end": 47
+     },
+     "street": "funeral",
+     "secret": false,
+     "id": "ada.k05"
+    },
+    {
+     "key": "june",
+     "kind": "knows",
+     "text": "June, Mickey's daughter, came back to the Hook for the funeral and is still in town; she wants nothing from the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 49,
+      "end": 49
+     },
+     "street": "june",
+     "secret": false,
+     "id": "ada.k06"
+    },
+    {
+     "key": "flat",
+     "kind": "knows",
+     "text": "The new owner is living in Mickey's flat over the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 53,
+      "end": 53
+     },
+     "street": "flat",
+     "secret": false,
+     "id": "ada.k07"
+    },
+    {
+     "key": "door",
+     "kind": "knows",
+     "text": "The door at the back of Mickey's that Sheila does not open is Mickey's own room; it has been locked since he died, and Sheila keeps the key.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 55,
+      "end": 55
+     },
+     "street": "door",
+     "secret": false,
+     "id": "ada.k08"
+    },
+    {
+     "key": "drivers",
+     "kind": "knows",
+     "text": "Mickey's has two cab drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 59,
+      "end": 59
+     },
+     "street": "drivers",
+     "secret": false,
+     "id": "ada.k09"
+    },
+    {
+     "key": "hours",
+     "kind": "knows",
+     "text": "The cab office opens at seven in the morning, nine on Sundays, and runs until the night driver goes home at three.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 61,
+      "end": 61
+     },
+     "street": "hours",
+     "secret": false,
+     "id": "ada.k10"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "ada.k11"
+    },
+    {
+     "key": "cafe",
+     "kind": "knows",
+     "text": "The cafe is across the street, in the shops opposite the north end of the parade; it opens at half past six and shuts at ten at night, and on Sundays it is open only from eight till twelve.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 65,
+      "end": 65
+     },
+     "street": "cafe",
+     "secret": false,
+     "id": "ada.k12"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "ada.k13"
+    },
+    {
+     "key": "sheila_books",
+     "kind": "knows",
+     "text": "Sheila Dunn has kept the books at Mickey's for thirty-one years.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 83,
+      "end": 83
+     },
+     "street": "sheila_books",
+     "secret": false,
+     "id": "ada.k14"
+    },
+    {
+     "key": "ron_rank",
+     "kind": "knows",
+     "text": "Ron Kirby keeps the rank outside Mickey's and watches the yard gate; Mickey kept him on when the docks let him go in 1989.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 87,
+      "end": 87
+     },
+     "street": "ron_rank",
+     "secret": false,
+     "id": "ada.k15"
+    },
+    {
+     "key": "darren_rounds",
+     "kind": "knows",
+     "text": "Darren Milner walks Quay Street at all hours and talks to everyone; if something is being said in the Hook, he has heard it.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 91,
+      "end": 91
+     },
+     "street": "darren_rounds",
+     "secret": false,
+     "id": "ada.k16"
+    },
+    {
+     "key": "mickey_counsel",
+     "kind": "knows",
+     "text": "Mickey kept his business to himself; you would not hear it from him on the street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 76,
+      "end": 76
+     },
+     "street": "mickey_counsel",
+     "secret": false,
+     "id": "ada.k17"
+    },
+    {
+     "key": "mickey_kept_ron",
+     "kind": "knows",
+     "text": "Mickey kept Ron on when the docks let him go in 1989.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 78,
+      "end": 78
+     },
+     "street": "mickey_kept_ron",
+     "secret": false,
+     "id": "ada.k18"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "the old woman of the street; a widow who keeps a window on Quay Street",
+     "src": {
+      "file": "production/casting/CASTING.md",
+      "line": 69,
+      "end": 69
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "ada.k19"
+    },
+    {
+     "key": "widow",
+     "kind": "knows",
+     "secret": false,
+     "text": "A widow of the Hook.",
+     "src": {
+      "file": "production/casting/ada/SHEET.md",
+      "line": 10,
+      "end": 10
+     },
+     "id": "ada.k20"
+    },
+    {
+     "key": "window",
+     "kind": "knows",
+     "secret": false,
+     "text": "I've sat at that window a long time, love. Long enough to know when to say nothing.",
+     "src": {
+      "file": "production/casting/ada/SHEET.md",
+      "line": 21,
+      "end": 21
+     },
+     "id": "ada.k21"
+    },
+    {
+     "key": "remember",
+     "kind": "knows",
+     "secret": false,
+     "text": "I don't gossip. I remember. It's not the same thing.",
+     "src": {
+      "file": "production/casting/ada/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "ada.k22"
+    },
+    {
+     "key": "step_rule",
+     "kind": "knows",
+     "secret": false,
+     "text": "Don't stand on my step with that face on. Come in or go on.",
+     "src": {
+      "file": "production/casting/ada/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "id": "ada.k23"
+    },
+    {
+     "key": "watches_out",
+     "kind": "knows",
+     "secret": false,
+     "text": "Ada watches from her window.",
+     "src": {
+      "file": "game-design/story-outline-2026-09-28.md",
+      "line": 31,
+      "end": 32
+     },
+     "id": "ada.k24"
+    },
+    {
+     "key": "day",
+     "kind": "knows",
+     "secret": false,
+     "text": "Monday: 09:00 to 10:00 Ada's front step, in the terraces across from Mickey's, then 10:00 to 11:00 the pavement outside the steam laundry, then 11:00 to 12:00 behind the counter of the fish market on Quay Street, then 12:00 to 13:00 the pavement outside the fish market, then 13:00 to 16:00 Ada's front step, in the terraces across from Mickey's, then 16:00 to 17:00 the pavement at Mickey's door, where the cabs wait, then 17:00 to 18:00 Ada's front step, in the terraces across from Mickey's. Saturday: 09:00 to 10:00 Ada's front step, in the terraces across from Mickey's, then 10:00 to 11:00 the pavement outside the steam laundry, then 11:00 to 12:00 behind the counter of the fish market on Quay Street, then 12:00 to 13:00 the pavement outside the fish market, then 13:00 to 16:00 Ada's front step, in the terraces across from Mickey's, then 16:00 to 17:00 the pavement at Mickey's door, where the cabs wait, then 17:00 to 18:00 Ada's front step, in the terraces across from Mickey's. Sunday: 10:00 to 11:00 Father Walsh's chapel, then 11:00 to 12:00 the chapel hall, then 14:00 to 17:00 Ada's front step, in the terraces across from Mickey's.",
+     "derived": {
+      "file": "production/specs/hook-cast.json",
+      "line": 888,
+      "how": "day"
+     },
+     "id": "ada.k25"
+    },
+    {
+     "key": "who_noor",
+     "kind": "knows",
+     "secret": false,
+     "text": "Alison Sedman, the reporter, out on her rounds",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 999,
+      "end": 999
+     },
+     "via": "who noor is, as the home describes them (hook-cast.json, the tie of 0.7)",
+     "id": "ada.k26"
+    },
+    {
+     "key": "who_lena",
+     "kind": "knows",
+     "secret": false,
+     "text": "Sheila Dunn, Mickey's bookkeeper",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 371,
+      "end": 371
+     },
+     "via": "who lena is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "ada.k27"
+    },
+    {
+     "key": "who_emil",
+     "kind": "knows",
+     "secret": false,
+     "text": "Father Walsh, who says mass and calls on the old",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1451,
+      "end": 1451
+     },
+     "via": "who emil is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "ada.k28"
+    },
+    {
+     "key": "who_hana",
+     "kind": "knows",
+     "secret": false,
+     "text": "the letter writer at the newsagent's pension counter",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2636,
+      "end": 2636
+     },
+     "via": "who hana is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "ada.k29"
+    },
+    {
+     "key": "who_sam",
+     "kind": "knows",
+     "secret": false,
+     "text": "Darren Milner, the street hustler, always on his rounds",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 623,
+      "end": 623
+     },
+     "via": "who sam is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "ada.k30"
+    },
+    {
+     "key": "who_marla",
+     "kind": "knows",
+     "secret": false,
+     "text": "the woman from the fish shop, who buys on the fish dock",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1133,
+      "end": 1133
+     },
+     "via": "who marla is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "ada.k31"
+    },
+    {
+     "key": "who_vesna",
+     "kind": "knows",
+     "secret": false,
+     "text": "Father Walsh's housekeeper",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1559,
+      "end": 1559
+     },
+     "via": "who vesna is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "ada.k32"
+    },
+    {
+     "key": "who_magda",
+     "kind": "knows",
+     "secret": false,
+     "text": "the chapel's cleaner, who does its flowers",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1658,
+      "end": 1658
+     },
+     "via": "who magda is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "ada.k33"
+    },
+    {
+     "key": "who_zora",
+     "kind": "knows",
+     "secret": false,
+     "text": "a washerwoman at the steam laundry",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1769,
+      "end": 1769
+     },
+     "via": "who zora is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "ada.k34"
+    },
+    {
+     "key": "who_sanja",
+     "kind": "knows",
+     "secret": false,
+     "text": "the woman who keeps the boarding house",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2575,
+      "end": 2575
+     },
+     "via": "who sanja is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "ada.k35"
+    },
+    {
+     "key": "who_selma",
+     "kind": "knows",
+     "secret": false,
+     "text": "a laundress at the steam laundry",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1845,
+      "end": 1845
+     },
+     "via": "who selma is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "ada.k36"
+    },
+    {
+     "key": "who_katarina",
+     "kind": "knows",
+     "secret": false,
+     "text": "the seamstress who does alterations at the laundry and sells on the market",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1903,
+      "end": 1903
+     },
+     "via": "who katarina is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "ada.k37"
+    },
+    {
+     "key": "who_tanja",
+     "kind": "knows",
+     "secret": false,
+     "text": "a laundress at the steam laundry",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1876,
+      "end": 1876
+     },
+     "via": "who tanja is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "ada.k38"
+    },
+    {
+     "key": "seen_remembered",
+     "kind": "believes",
+     "secret": false,
+     "text": "Whoever stands about the street long enough is seen, and what is seen is remembered.",
+     "new": "N-LIVES",
+     "why": "Follows her sheet's 'I don't gossip. I remember.'",
+     "truth": "unknown",
+     "truth_basis": {
+      "note": "A stance, not a fact about the world."
+     },
+     "id": "ada.b01"
+    },
+    {
+     "key": "name_earned",
+     "kind": "believes",
+     "secret": false,
+     "text": "A man is no more than a name until he is seen to do something.",
+     "new": "N-LIVES",
+     "why": "Follows 'she does not ask a stranger in' (day-three design) and her window's patience.",
+     "truth": "unknown",
+     "truth_basis": {
+      "note": "A stance, not a fact about the world."
+     },
+     "id": "ada.b02"
+    },
+    {
+     "key": "watching_step",
+     "kind": "saw",
+     "secret": false,
+     "text": "On her step or at her window, watching; she turns her whole body to look, not just her head.",
+     "src": {
+      "file": "production/casting/ada/SHEET.md",
+      "line": 16,
+      "end": 16
+     },
+     "when": "every day, from her step or window",
+     "id": "ada.s01"
+    },
+    {
+     "key": "arrive",
+     "kind": "saw",
+     "secret": false,
+     "text": "six see him come (Ron, Sheila, the dispatcher, a day driver, Ada, and the sign painter doing the street's boards)",
+     "src": {
+      "file": "game-design/day-one-2026-09-29.md",
+      "line": 32,
+      "end": 34
+     },
+     "when": "day 1, about nine, from her window, when the new owner came to Mickey's",
+     "id": "ada.s02"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "09:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "09:00",
+      "to": "10:00",
+      "place": "adas_step",
+      "said": "Ada's front step, in the terraces across from Mickey's"
+     },
+     {
+      "from": "10:00",
+      "to": "11:00",
+      "place": "laundry_front",
+      "said": "the pavement outside the steam laundry"
+     },
+     {
+      "from": "11:00",
+      "to": "12:00",
+      "place": "fish_counter",
+      "said": "behind the counter of the fish market on Quay Street"
+     },
+     {
+      "from": "12:00",
+      "to": "13:00",
+      "place": "fish_front",
+      "said": "the pavement outside the fish market"
+     },
+     {
+      "from": "13:00",
+      "to": "16:00",
+      "place": "adas_step",
+      "said": "Ada's front step, in the terraces across from Mickey's"
+     },
+     {
+      "from": "16:00",
+      "to": "17:00",
+      "place": "mickeys_rank",
+      "said": "the pavement at Mickey's door, where the cabs wait"
+     },
+     {
+      "from": "17:00",
+      "to": "18:00",
+      "place": "adas_step",
+      "said": "Ada's front step, in the terraces across from Mickey's"
+     },
+     {
+      "from": "18:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "weekday_note": "Monday, the first day of the game's week; the days below differ from it",
+    "weekday_differs": {
+     "thu": [
+      {
+       "from": "00:00",
+       "to": "09:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      },
+      {
+       "from": "09:00",
+       "to": "10:00",
+       "place": "pension_counter",
+       "said": "the newsagent's counter, where the pensions are paid"
+      },
+      {
+       "from": "10:00",
+       "to": "11:00",
+       "place": "laundry_front",
+       "said": "the pavement outside the steam laundry"
+      },
+      {
+       "from": "11:00",
+       "to": "12:00",
+       "place": "fish_counter",
+       "said": "behind the counter of the fish market on Quay Street"
+      },
+      {
+       "from": "12:00",
+       "to": "13:00",
+       "place": "fish_front",
+       "said": "the pavement outside the fish market"
+      },
+      {
+       "from": "13:00",
+       "to": "16:00",
+       "place": "adas_step",
+       "said": "Ada's front step, in the terraces across from Mickey's"
+      },
+      {
+       "from": "16:00",
+       "to": "17:00",
+       "place": "mickeys_rank",
+       "said": "the pavement at Mickey's door, where the cabs wait"
+      },
+      {
+       "from": "17:00",
+       "to": "18:00",
+       "place": "adas_step",
+       "said": "Ada's front step, in the terraces across from Mickey's"
+      },
+      {
+       "from": "18:00",
+       "to": "24:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      }
+     ]
+    },
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "09:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "09:00",
+      "to": "10:00",
+      "place": "adas_step",
+      "said": "Ada's front step, in the terraces across from Mickey's"
+     },
+     {
+      "from": "10:00",
+      "to": "11:00",
+      "place": "laundry_front",
+      "said": "the pavement outside the steam laundry"
+     },
+     {
+      "from": "11:00",
+      "to": "12:00",
+      "place": "fish_counter",
+      "said": "behind the counter of the fish market on Quay Street"
+     },
+     {
+      "from": "12:00",
+      "to": "13:00",
+      "place": "fish_front",
+      "said": "the pavement outside the fish market"
+     },
+     {
+      "from": "13:00",
+      "to": "16:00",
+      "place": "adas_step",
+      "said": "Ada's front step, in the terraces across from Mickey's"
+     },
+     {
+      "from": "16:00",
+      "to": "17:00",
+      "place": "mickeys_rank",
+      "said": "the pavement at Mickey's door, where the cabs wait"
+     },
+     {
+      "from": "17:00",
+      "to": "18:00",
+      "place": "adas_step",
+      "said": "Ada's front step, in the terraces across from Mickey's"
+     },
+     {
+      "from": "18:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "10:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "10:00",
+      "to": "11:00",
+      "place": "chapel",
+      "said": "Father Walsh's chapel"
+     },
+     {
+      "from": "11:00",
+      "to": "12:00",
+      "place": "chapel_hall",
+      "said": "the chapel hall"
+     },
+     {
+      "from": "12:00",
+      "to": "14:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "14:00",
+      "to": "17:00",
+      "place": "adas_step",
+      "said": "Ada's front step, in the terraces across from Mickey's"
+     },
+     {
+      "from": "17:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "source": {
+     "file": "production/specs/hook-cast.json",
+     "line": 888,
+     "derived": true
+    }
+   },
+   "talks_to": [
+    {
+     "who": "noor",
+     "weight": 0.7,
+     "band": "old and close",
+     "meets": "kiosk/fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat",
+     "hours_a_week": 12.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3069,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Alison Sedman: the reporter on her rounds (canon)"
+    },
+    {
+     "who": "lena",
+     "weight": 0.6,
+     "band": "good friends",
+     "meets": "fish_counter/mickeys_office 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank/mickeys_office 16:00 Mon,Tue,Wed,Thu,Fri; ...",
+     "hours_a_week": 18.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3033,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Sheila Dunn: Mickey's bookkeeper (canon)"
+    },
+    {
+     "who": "emil",
+     "weight": 0.6,
+     "band": "good friends",
+     "meets": "adas_step 13:00 Mon,Tue,Wed,Thu,Fri,Sat; chapel 10:00 Sun; chapel_hall 11:00 Sun",
+     "hours_a_week": 8.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3177,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Father Walsh (canon, Father Brendan Walsh, Irish-born): mass, the presbytery, calls on the old"
+    },
+    {
+     "who": "hana",
+     "weight": 0.6,
+     "band": "good friends",
+     "meets": "adas_step 09:00 Mon,Tue,Wed,Fri,Sat",
+     "hours_a_week": 5.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3315,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "writes letters and fills in forms for people, at the newsagent's pension counter"
+    },
+    {
+     "who": "sam",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "mickeys_rank 16:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Mon,Tue,Wed,Thu,Fri",
+     "hours_a_week": 11.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3039,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Darren Milner: the street hustler, on his rounds (canon)"
+    },
+    {
+     "who": "marla",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_counter/fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat",
+     "hours_a_week": 12.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3045,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "the fish shop's woman, who buys on the fish dock"
+    },
+    {
+     "who": "vesna",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; chapel 10:00 Sun; chapel_hall 11:00 Sun",
+     "hours_a_week": 8.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3141,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "keeps Father Walsh's house and buys for his table"
+    },
+    {
+     "who": "magda",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "adas_step 14:00 Mon,Wed,Fri; chapel 10:00 Sun; chapel_hall 11:00 Sun",
+     "hours_a_week": 5.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3237,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "cleans the chapel and does its flowers"
+    },
+    {
+     "who": "zora",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "laundry_counter/laundry_front 10:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Sat",
+     "hours_a_week": 7.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3339,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "a washerwoman at the steam laundry"
+    },
+    {
+     "who": "sanja",
+     "weight": 0.4,
+     "band": "on easy terms",
+     "meets": "fish_counter 11:00 Mon,Tue,Wed,Thu,Fri; fish_front 12:00 Mon,Tue,Wed,Thu,Fri",
+     "hours_a_week": 10.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3249,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "keeps the boarding house; buys fish for her lodgers"
+    },
+    {
+     "who": "selma",
+     "weight": 0.4,
+     "band": "on easy terms",
+     "meets": "laundry_counter/laundry_front 10:00 Mon,Tue,Wed,Thu,Fri,Sat",
+     "hours_a_week": 6.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3447,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "a laundress"
+    },
+    {
+     "who": "katarina",
+     "weight": 0.3,
+     "band": "a nod and a word",
+     "meets": "laundry_counter/laundry_front 10:00 Mon,Wed,Thu",
+     "hours_a_week": 3.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3279,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "a seamstress who takes in alterations at the laundry, and sells on the market"
+    },
+    {
+     "who": "tanja",
+     "weight": 0.3,
+     "band": "a nod and a word",
+     "meets": "laundry_counter/laundry_front 10:00 Mon,Tue,Wed,Thu,Fri,Sat",
+     "hours_a_week": 6.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3465,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "a laundress"
+    }
+   ],
+   "rumours": [
+    {
+     "id": "ada.r1",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "heard it from Sheila",
+     "heard_from": [
+      "lena"
+     ],
+     "would_pass_to": [
+      "emil",
+      "marla"
+     ],
+     "based_on": [
+      "ada.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "ada.r2",
+     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/day-one-2026-09-29.md",
+       "line": 32,
+       "end": 34
+      }
+     },
+     "sure": "saw it herself from her window",
+     "heard_from": [
+      "self"
+     ],
+     "would_pass_to": [
+      "noor",
+      "emil",
+      "lena"
+     ],
+     "based_on": [
+      "ada.s02",
+      "ada.k04"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "ada.r3",
+     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson, nobody was charged, and the street says the owner had it done for the insurance.",
+     "truth": "partly",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 37,
+       "end": 39
+      },
+      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+     },
+     "sure": "street talk; she says she does not repeat what she is not sure of",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "magda",
+      "hana"
+     ],
+     "based_on": [
+      "ada.k03"
+     ],
+     "limits": [
+      "L2",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "ada.r4",
+     "gist": "June, Mickey's daughter, came back for the funeral, is still in town, and wants nothing from the office.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 49,
+       "end": 49
+      }
+     },
+     "sure": "heard it from Father Walsh, who sees her at the chapel",
+     "heard_from": [
+      "emil"
+     ],
+     "would_pass_to": [
+      "noor",
+      "vesna"
+     ],
+     "based_on": [
+      "ada.k06"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "ada.r5",
+     "gist": "The door at the back of Mickey's is Mickey's own room; it has been locked since he died and Sheila keeps the key.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 55,
+       "end": 55
+      }
+     },
+     "sure": "heard it from Sheila, who keeps the key",
+     "heard_from": [
+      "lena"
+     ],
+     "would_pass_to": [
+      "noor",
+      "magda"
+     ],
+     "based_on": [
+      "ada.k08"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "ada.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "Ada, love. A widow of the Hook, with a window on Quay Street. I've sat at it a long time.",
+     "uses": [
+      "ada.k19",
+      "ada.k20",
+      "ada.k21"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ada.q2",
+     "q": "What do you do here?",
+     "kind": "answers",
+     "a": "I keep a window on Quay Street and I watch. I don't gossip. I remember.",
+     "uses": [
+      "ada.k19",
+      "ada.k22"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ada.q3",
+     "q": "What is this place?",
+     "kind": "answers",
+     "a": "Mickey's, love. The minicab office, on Quay Street. My step's across the road from it.",
+     "uses": [
+      "ada.k13",
+      "ada.k25"
+     ],
+     "bench": "firsts: What is this place?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ada.q4",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
+     "uses": [
+      "ada.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ada.q5",
+     "q": "Sorry I missed the funeral.",
+     "kind": "answers",
+     "a": "It was at Father Walsh's chapel, love, before you came. June came back for it.",
+     "uses": [
+      "ada.k05",
+      "ada.k06"
+     ],
+     "bench": "firsts: Sorry I missed the funeral.",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ada.q6",
+     "q": "Is June still about?",
+     "kind": "answers",
+     "a": "She's still in town, love. She came back for the funeral and she wants nothing from the office.",
+     "uses": [
+      "ada.k06"
+     ],
+     "bench": "fresh: Is June still about?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ada.q7",
+     "q": "What was Mickey like?",
+     "kind": "answers",
+     "a": "Mickey kept his business to himself. You'd not hear it from him on the street.",
+     "uses": [
+      "ada.k17"
+     ],
+     "bench": "firsts: What was Mickey like?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ada.q8",
+     "q": "What happened at the warehouse fire?",
+     "kind": "partly",
+     "a": "The paper called it arson, love, and nobody was charged. The rest is street talk, and I don't gossip.",
+     "uses": [
+      "ada.k03",
+      "ada.k22"
+     ],
+     "bench": "fresh: What happened at the warehouse fire?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ada.q9",
+     "q": "Who's the priest round here?",
+     "kind": "answers",
+     "a": "Father Walsh, love. He says mass and calls on the old.",
+     "uses": [
+      "ada.k28"
+     ],
+     "bench": "fresh: Who's the priest round here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "ada.q10",
+     "q": "Did Mickey ever mention me?",
+     "kind": "dont_know",
+     "a": "Not to me, love. That's all I know.",
+     "uses": [],
+     "bench": "held: Did Mickey ever mention me?",
+     "new": "N-ANSWERS"
+    }
+   ]
+  },
+  {
+   "id": "june",
+   "name": "June Suddaby",
+   "heard_as": "June",
+   "tier": "principal",
+   "age": 38,
+   "role": {
+    "text": "Mickey's estranged daughter, back for the funeral",
+    "src": {
+     "file": "production/casting/CASTING.md",
+     "line": 70,
+     "end": 70
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 70,
+    "end": 70
+   },
+   "knew_mickey": false,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "june.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "june.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "june.k03"
+    },
+    {
+     "key": "will",
+     "kind": "knows",
+     "text": "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 45,
+      "end": 45
+     },
+     "street": "will",
+     "secret": false,
+     "id": "june.k04"
+    },
+    {
+     "key": "funeral",
+     "kind": "knows",
+     "text": "Mickey's funeral was at Father Walsh's chapel, before the new owner came; he missed it.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 47,
+      "end": 47
+     },
+     "street": "funeral",
+     "secret": false,
+     "id": "june.k05"
+    },
+    {
+     "key": "june",
+     "kind": "knows",
+     "text": "I came back to the Hook for my father's funeral and I am still in town; I want nothing from the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 50,
+      "end": 50
+     },
+     "street": "june",
+     "secret": false,
+     "id": "june.k06"
+    },
+    {
+     "key": "flat",
+     "kind": "knows",
+     "text": "The new owner is living in Mickey's flat over the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 53,
+      "end": 53
+     },
+     "street": "flat",
+     "secret": false,
+     "id": "june.k07"
+    },
+    {
+     "key": "door",
+     "kind": "knows",
+     "text": "The door at the back of Mickey's that Sheila does not open is Mickey's own room; it has been locked since he died, and Sheila keeps the key.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 55,
+      "end": 55
+     },
+     "street": "door",
+     "secret": false,
+     "id": "june.k08"
+    },
+    {
+     "key": "drivers",
+     "kind": "knows",
+     "text": "Mickey's has two cab drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 59,
+      "end": 59
+     },
+     "street": "drivers",
+     "secret": false,
+     "id": "june.k09"
+    },
+    {
+     "key": "hours",
+     "kind": "knows",
+     "text": "The cab office opens at seven in the morning, nine on Sundays, and runs until the night driver goes home at three.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 61,
+      "end": 61
+     },
+     "street": "hours",
+     "secret": false,
+     "id": "june.k10"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "june.k11"
+    },
+    {
+     "key": "cafe",
+     "kind": "knows",
+     "text": "The cafe is across the street, in the shops opposite the north end of the parade; it opens at half past six and shuts at ten at night, and on Sundays it is open only from eight till twelve.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 65,
+      "end": 65
+     },
+     "street": "cafe",
+     "secret": false,
+     "id": "june.k12"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "june.k13"
+    },
+    {
+     "key": "sheila_books",
+     "kind": "knows",
+     "text": "Sheila Dunn has kept the books at Mickey's for thirty-one years.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 83,
+      "end": 83
+     },
+     "street": "sheila_books",
+     "secret": false,
+     "id": "june.k14"
+    },
+    {
+     "key": "ron_rank",
+     "kind": "knows",
+     "text": "Ron Kirby keeps the rank outside Mickey's and watches the yard gate; Mickey kept him on when the docks let him go in 1989.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 87,
+      "end": 87
+     },
+     "street": "ron_rank",
+     "secret": false,
+     "id": "june.k15"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "Mickey's estranged daughter, back for the funeral",
+     "src": {
+      "file": "production/casting/CASTING.md",
+      "line": 70,
+      "end": 70
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "june.k16"
+    },
+    {
+     "key": "born",
+     "kind": "knows",
+     "secret": false,
+     "text": "Born in the Hook; left it young.",
+     "src": {
+      "file": "production/casting/june/SHEET.md",
+      "line": 12,
+      "end": 12
+     },
+     "id": "june.k17"
+    },
+    {
+     "key": "came_back",
+     "kind": "knows",
+     "secret": false,
+     "text": "I didn't come back for the business. I came back because somebody had to.",
+     "src": {
+      "file": "production/casting/june/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "june.k18"
+    },
+    {
+     "key": "not_stopping",
+     "kind": "knows",
+     "secret": false,
+     "text": "I'm not stopping long. I've a life to get back to.",
+     "src": {
+      "file": "production/casting/june/SHEET.md",
+      "line": 24,
+      "end": 24
+     },
+     "id": "june.k19"
+    },
+    {
+     "key": "coat_on",
+     "kind": "knows",
+     "secret": false,
+     "text": "Keeps her coat on indoors at Mickey's and does not sit down there, as if she might leave at any minute.",
+     "src": {
+      "file": "production/casting/june/SHEET.md",
+      "line": 18,
+      "end": 18
+     },
+     "id": "june.k20"
+    },
+    {
+     "key": "day",
+     "kind": "knows",
+     "secret": false,
+     "text": "Monday: 10:00 to 12:00 the front room of Mickey's, the cab office, then 16:00 to 17:00 Father Walsh's chapel. Saturday: not on the street. Sunday: 10:00 to 12:00 Father Walsh's chapel.",
+     "derived": {
+      "file": "production/specs/hook-cast.json",
+      "line": 571,
+      "how": "day"
+     },
+     "id": "june.k21"
+    },
+    {
+     "key": "who_lena",
+     "kind": "knows",
+     "secret": false,
+     "text": "Sheila Dunn, Mickey's bookkeeper",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 371,
+      "end": 371
+     },
+     "via": "who lena is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "june.k22"
+    },
+    {
+     "key": "who_emil",
+     "kind": "knows",
+     "secret": false,
+     "text": "Father Walsh, who says mass and calls on the old",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1451,
+      "end": 1451
+     },
+     "via": "who emil is, as the home describes them (hook-cast.json, the tie of 0.45)",
+     "id": "june.k23"
+    },
+    {
+     "key": "leaving",
+     "kind": "believes",
+     "secret": false,
+     "text": "I'm not stopping long. I've a life to get back to.",
+     "src": {
+      "file": "production/casting/june/SHEET.md",
+      "line": 24,
+      "end": 24
+     },
+     "truth": "unknown",
+     "truth_basis": {
+      "note": "Canon has her 'still in town' and says nothing of when she goes."
+     },
+     "id": "june.b01"
+    },
+    {
+     "key": "funeral_there",
+     "kind": "saw",
+     "secret": false,
+     "text": "I came back to the Hook for my father's funeral and I am still in town; I want nothing from the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 50,
+      "end": 50
+     },
+     "when": "the funeral, before the game",
+     "id": "june.s01"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "10:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "10:00",
+      "to": "12:00",
+      "place": "mickeys_office",
+      "said": "the front room of Mickey's, the cab office"
+     },
+     {
+      "from": "12:00",
+      "to": "16:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "16:00",
+      "to": "17:00",
+      "place": "chapel",
+      "said": "Father Walsh's chapel"
+     },
+     {
+      "from": "17:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "weekday_note": "Monday, the first day of the game's week; the days below differ from it",
+    "weekday_differs": {},
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "10:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "10:00",
+      "to": "12:00",
+      "place": "chapel",
+      "said": "Father Walsh's chapel"
+     },
+     {
+      "from": "12:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "source": {
+     "file": "production/specs/hook-cast.json",
+     "line": 571,
+     "derived": true
+    }
+   },
+   "talks_to": [
+    {
+     "who": "lena",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "mickeys_office 10:00 Mon,Tue,Wed,Thu,Fri; mickeys_office 11:00 Mon,Tue,Wed,Thu,Fri",
+     "hours_a_week": 10.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3159,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Sheila Dunn: Mickey's bookkeeper (canon)"
+    },
+    {
+     "who": "emil",
+     "weight": 0.45,
+     "band": "on easy terms",
+     "meets": "chapel 16:00 Mon,Tue,Wed,Thu,Fri; chapel 10:00 Sun",
+     "hours_a_week": 6.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3165,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Father Walsh (canon, Father Brendan Walsh, Irish-born): mass, the presbytery, calls on the old"
+    }
+   ],
+   "rumours": [
+    {
+     "id": "june.r1",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "heard it from Father Walsh",
+     "heard_from": [
+      "emil"
+     ],
+     "would_pass_to": [
+      "lena",
+      "emil"
+     ],
+     "based_on": [
+      "june.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "june.r2",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
+      }
+     },
+     "sure": "heard it from Sheila",
+     "heard_from": [
+      "lena"
+     ],
+     "would_pass_to": [
+      "emil",
+      "lena"
+     ],
+     "based_on": [
+      "june.k04"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "june.r3",
+     "gist": "Mickey's nephew missed the funeral, which was at Father Walsh's chapel before he came.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 47,
+       "end": 47
+      }
+     },
+     "sure": "was there herself",
+     "heard_from": [
+      "emil"
+     ],
+     "would_pass_to": [
+      "lena"
+     ],
+     "based_on": [
+      "june.s01",
+      "june.k05"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "june.r4",
+     "gist": "The door at the back of Mickey's is Mickey's own room; it has been locked since he died and Sheila keeps the key.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 55,
+       "end": 55
+      }
+     },
+     "sure": "heard it from Sheila, who keeps the key",
+     "heard_from": [
+      "lena"
+     ],
+     "would_pass_to": [
+      "emil"
+     ],
+     "based_on": [
+      "june.k08"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "june.r5",
+     "gist": "June, Mickey's daughter, is still in town and wants nothing from the office.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 49,
+       "end": 49
+      }
+     },
+     "sure": "her own word, said plainly",
+     "heard_from": [
+      "self"
+     ],
+     "would_pass_to": [
+      "lena",
+      "emil"
+     ],
+     "based_on": [
+      "june.k06"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "june.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "June. I came back to the Hook for my father's funeral and I'm still here. I want nothing from the office.",
+     "uses": [
+      "june.k06"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "june.q2",
+     "q": "Was Mickey your father?",
+     "kind": "answers",
+     "a": "He was. I'm his daughter, back for the funeral.",
+     "uses": [
+      "june.k16"
+     ],
+     "bench": "fresh: Is June still about?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "june.q3",
+     "q": "What do you do here?",
+     "kind": "answers",
+     "a": "Nothing here. I came back because somebody had to, and I'm not stopping long.",
+     "uses": [
+      "june.k18",
+      "june.k19"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "june.q4",
+     "q": "Did Mickey leave me anything?",
+     "kind": "answers",
+     "a": "The office. He left it to you in his will, and the letter you came with says so.",
+     "uses": [
+      "june.k04"
+     ],
+     "bench": "firsts: Did Mickey leave me anything?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "june.q5",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
+     "uses": [
+      "june.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "june.q6",
+     "q": "Sorry I missed the funeral.",
+     "kind": "answers",
+     "a": "It was at Father Walsh's chapel, before you came. I was there.",
+     "uses": [
+      "june.k05",
+      "june.s01"
+     ],
+     "bench": "firsts: Sorry I missed the funeral.",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "june.q7",
+     "q": "What's behind that door?",
+     "kind": "answers",
+     "a": "Mickey's own room, at the back. It's been locked since he died, and Sheila keeps the key.",
+     "uses": [
+      "june.k08"
+     ],
+     "bench": "firsts: What's behind that door?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "june.q8",
+     "q": "What was Mickey like?",
+     "kind": "points_to",
+     "a": "Ask Sheila. She kept his books thirty-one years. I'm not the one to tell you.",
+     "uses": [
+      "june.k14",
+      "june.k22"
+     ],
+     "bench": "firsts: What was Mickey like?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "june.q9",
+     "q": "Are you stopping long?",
+     "kind": "answers",
+     "a": "No. I've a life to get back to.",
+     "uses": [
+      "june.b01",
+      "june.k19"
+     ],
+     "bench": "fresh: Is June still about?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "june.q10",
+     "q": "Who was Mickey's solicitor?",
+     "kind": "dont_know",
+     "a": "I couldn't tell you. That's all I know.",
+     "uses": [],
+     "bench": "held: Who was Mickey's solicitor?",
+     "new": "N-ANSWERS"
+    }
+   ]
+  },
+  {
+   "id": "emil",
+   "name": "Father Brendan Walsh",
+   "heard_as": "Father Walsh",
+   "tier": "principal",
+   "age": 61,
+   "role": {
+    "text": "the Irish-born parish priest, Father Walsh to the street",
+    "src": {
+     "file": "production/casting/CASTING.md",
+     "line": 71,
+     "end": 71
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 71,
+    "end": 71
+   },
+   "knew_mickey": true,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "emil.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "emil.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "emil.k03"
+    },
+    {
+     "key": "will",
+     "kind": "knows",
+     "text": "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 45,
+      "end": 45
+     },
+     "street": "will",
+     "secret": false,
+     "id": "emil.k04"
+    },
+    {
+     "key": "funeral",
+     "kind": "knows",
+     "text": "Mickey's funeral was at Father Walsh's chapel, before the new owner came; he missed it.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 47,
+      "end": 47
+     },
+     "street": "funeral",
+     "secret": false,
+     "id": "emil.k05"
+    },
+    {
+     "key": "june",
+     "kind": "knows",
+     "text": "June, Mickey's daughter, came back to the Hook for the funeral and is still in town; she wants nothing from the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 49,
+      "end": 49
+     },
+     "street": "june",
+     "secret": false,
+     "id": "emil.k06"
+    },
+    {
+     "key": "flat",
+     "kind": "knows",
+     "text": "The new owner is living in Mickey's flat over the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 53,
+      "end": 53
+     },
+     "street": "flat",
+     "secret": false,
+     "id": "emil.k07"
+    },
+    {
+     "key": "door",
+     "kind": "knows",
+     "text": "The door at the back of Mickey's that Sheila does not open is Mickey's own room; it has been locked since he died, and Sheila keeps the key.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 55,
+      "end": 55
+     },
+     "street": "door",
+     "secret": false,
+     "id": "emil.k08"
+    },
+    {
+     "key": "drivers",
+     "kind": "knows",
+     "text": "Mickey's has two cab drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 59,
+      "end": 59
+     },
+     "street": "drivers",
+     "secret": false,
+     "id": "emil.k09"
+    },
+    {
+     "key": "hours",
+     "kind": "knows",
+     "text": "The cab office opens at seven in the morning, nine on Sundays, and runs until the night driver goes home at three.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 61,
+      "end": 61
+     },
+     "street": "hours",
+     "secret": false,
+     "id": "emil.k10"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "emil.k11"
+    },
+    {
+     "key": "cafe",
+     "kind": "knows",
+     "text": "The cafe is across the street, in the shops opposite the north end of the parade; it opens at half past six and shuts at ten at night, and on Sundays it is open only from eight till twelve.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 65,
+      "end": 65
+     },
+     "street": "cafe",
+     "secret": false,
+     "id": "emil.k12"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "emil.k13"
+    },
+    {
+     "key": "sheila_books",
+     "kind": "knows",
+     "text": "Sheila Dunn has kept the books at Mickey's for thirty-one years.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 83,
+      "end": 83
+     },
+     "street": "sheila_books",
+     "secret": false,
+     "id": "emil.k14"
+    },
+    {
+     "key": "ron_rank",
+     "kind": "knows",
+     "text": "Ron Kirby keeps the rank outside Mickey's and watches the yard gate; Mickey kept him on when the docks let him go in 1989.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 87,
+      "end": 87
+     },
+     "street": "ron_rank",
+     "secret": false,
+     "id": "emil.k15"
+    },
+    {
+     "key": "darren_rounds",
+     "kind": "knows",
+     "text": "Darren Milner walks Quay Street at all hours and talks to everyone; if something is being said in the Hook, he has heard it.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 91,
+      "end": 91
+     },
+     "street": "darren_rounds",
+     "secret": false,
+     "id": "emil.k16"
+    },
+    {
+     "key": "mickey_counsel",
+     "kind": "knows",
+     "text": "Mickey kept his business to himself; you would not hear it from him on the street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 76,
+      "end": 76
+     },
+     "street": "mickey_counsel",
+     "secret": false,
+     "id": "emil.k17"
+    },
+    {
+     "key": "mickey_kept_ron",
+     "kind": "knows",
+     "text": "Mickey kept Ron on when the docks let him go in 1989.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 78,
+      "end": 78
+     },
+     "street": "mickey_kept_ron",
+     "secret": false,
+     "id": "emil.k18"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "the Irish-born parish priest, Father Walsh to the street",
+     "src": {
+      "file": "production/casting/CASTING.md",
+      "line": 71,
+      "end": 71
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "emil.k19"
+    },
+    {
+     "key": "called",
+     "kind": "knows",
+     "secret": false,
+     "text": "Father Walsh, who says mass and calls on the old",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1451,
+      "end": 1451
+     },
+     "id": "emil.k20"
+    },
+    {
+     "key": "ask_ok",
+     "kind": "knows",
+     "secret": false,
+     "text": "I don't ask where people have been. I ask whether they're all right.",
+     "src": {
+      "file": "production/casting/father-emil/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "id": "emil.k21"
+    },
+    {
+     "key": "in_case",
+     "kind": "knows",
+     "secret": false,
+     "text": "I'm not here to ask you anything. I'm here in case you want to say something.",
+     "src": {
+      "file": "production/casting/father-emil/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "emil.k22"
+    },
+    {
+     "key": "sit",
+     "kind": "knows",
+     "secret": false,
+     "text": "Sit a minute. Nobody's going to mind you sitting a minute.",
+     "src": {
+      "file": "production/casting/father-emil/SHEET.md",
+      "line": 24,
+      "end": 24
+     },
+     "id": "emil.k23"
+    },
+    {
+     "key": "confessor",
+     "kind": "knows",
+     "secret": true,
+     "text": "Father Walsh's card changes to hearing Mickey's confession for twenty years, and keeping the last year's.",
+     "src": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 28,
+      "end": 29
+     },
+     "via": "sealed: never said, never passed on",
+     "id": "emil.k24"
+    },
+    {
+     "key": "sealed",
+     "kind": "knows",
+     "secret": true,
+     "text": "Father Walsh heard him confess it, and the seal of confession keeps him silent for good, so the book is the only way to the truth.",
+     "src": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 53,
+      "end": 54
+     },
+     "via": "sealed: the fire's truth is never the street's",
+     "id": "emil.k25"
+    },
+    {
+     "key": "day",
+     "kind": "knows",
+     "secret": false,
+     "text": "Monday: 07:00 to 13:00 Father Walsh's chapel, then 13:00 to 14:00 Ada's front step, in the terraces across from Mickey's, then 14:00 to 18:00 Father Walsh's chapel. Saturday: 07:00 to 13:00 Father Walsh's chapel, then 13:00 to 14:00 Ada's front step, in the terraces across from Mickey's, then 14:00 to 18:00 Father Walsh's chapel. Sunday: 09:00 to 11:00 Father Walsh's chapel, then 11:00 to 13:00 the chapel hall.",
+     "derived": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1450,
+      "how": "day"
+     },
+     "id": "emil.k26"
+    },
+    {
+     "key": "who_vesna",
+     "kind": "knows",
+     "secret": false,
+     "text": "Father Walsh's housekeeper",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1559,
+      "end": 1559
+     },
+     "via": "who vesna is, as the home describes them (hook-cast.json, the tie of 0.7)",
+     "id": "emil.k27"
+    },
+    {
+     "key": "who_ada",
+     "kind": "knows",
+     "secret": false,
+     "text": "Ada, the widow who keeps a window on Quay Street",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 889,
+      "end": 889
+     },
+     "via": "who ada is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "emil.k28"
+    },
+    {
+     "key": "who_june",
+     "kind": "knows",
+     "secret": false,
+     "text": "June, Mickey's daughter, back for the funeral",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 572,
+      "end": 572
+     },
+     "via": "who june is, as the home describes them (hook-cast.json, the tie of 0.45)",
+     "id": "emil.k29"
+    },
+    {
+     "key": "all_right",
+     "kind": "believes",
+     "secret": false,
+     "text": "I don't ask where people have been. I ask whether they're all right.",
+     "src": {
+      "file": "production/casting/father-emil/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "truth": "unknown",
+     "truth_basis": {
+      "note": "A stance, not a fact about the world."
+     },
+     "id": "emil.b01"
+    },
+    {
+     "key": "funeral_led",
+     "kind": "saw",
+     "secret": false,
+     "text": "Father Walsh took Mickey's funeral service at his chapel.",
+     "new": "N-LIVES",
+     "why": "The street fact puts the funeral at his chapel; a priest takes the service there.",
+     "when": "the funeral, before the game",
+     "id": "emil.s01"
+    },
+    {
+     "key": "round",
+     "kind": "saw",
+     "secret": false,
+     "text": "An unhurried walk round the parish with his hands behind his back; stops for everybody; calls on the old.",
+     "src": {
+      "file": "production/casting/father-emil/SHEET.md",
+      "line": 17,
+      "end": 17
+     },
+     "when": "every day, round the parish",
+     "id": "emil.s02"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "07:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "07:00",
+      "to": "13:00",
+      "place": "chapel",
+      "said": "Father Walsh's chapel"
+     },
+     {
+      "from": "13:00",
+      "to": "14:00",
+      "place": "adas_step",
+      "said": "Ada's front step, in the terraces across from Mickey's"
+     },
+     {
+      "from": "14:00",
+      "to": "18:00",
+      "place": "chapel",
+      "said": "Father Walsh's chapel"
+     },
+     {
+      "from": "18:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "weekday_note": "Monday, the first day of the game's week; the days below differ from it",
+    "weekday_differs": {
+     "tue": [
+      {
+       "from": "00:00",
+       "to": "07:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      },
+      {
+       "from": "07:00",
+       "to": "11:00",
+       "place": "chapel",
+       "said": "Father Walsh's chapel"
+      },
+      {
+       "from": "11:00",
+       "to": "12:00",
+       "place": "market",
+       "said": "the open market"
+      },
+      {
+       "from": "12:00",
+       "to": "13:00",
+       "place": "chapel",
+       "said": "Father Walsh's chapel"
+      },
+      {
+       "from": "13:00",
+       "to": "14:00",
+       "place": "adas_step",
+       "said": "Ada's front step, in the terraces across from Mickey's"
+      },
+      {
+       "from": "14:00",
+       "to": "18:00",
+       "place": "chapel",
+       "said": "Father Walsh's chapel"
+      },
+      {
+       "from": "18:00",
+       "to": "24:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      }
+     ],
+     "fri": [
+      {
+       "from": "00:00",
+       "to": "07:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      },
+      {
+       "from": "07:00",
+       "to": "11:00",
+       "place": "chapel",
+       "said": "Father Walsh's chapel"
+      },
+      {
+       "from": "11:00",
+       "to": "12:00",
+       "place": "market",
+       "said": "the open market"
+      },
+      {
+       "from": "12:00",
+       "to": "13:00",
+       "place": "chapel",
+       "said": "Father Walsh's chapel"
+      },
+      {
+       "from": "13:00",
+       "to": "14:00",
+       "place": "adas_step",
+       "said": "Ada's front step, in the terraces across from Mickey's"
+      },
+      {
+       "from": "14:00",
+       "to": "18:00",
+       "place": "chapel",
+       "said": "Father Walsh's chapel"
+      },
+      {
+       "from": "18:00",
+       "to": "24:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      }
+     ]
+    },
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "07:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "07:00",
+      "to": "13:00",
+      "place": "chapel",
+      "said": "Father Walsh's chapel"
+     },
+     {
+      "from": "13:00",
+      "to": "14:00",
+      "place": "adas_step",
+      "said": "Ada's front step, in the terraces across from Mickey's"
+     },
+     {
+      "from": "14:00",
+      "to": "18:00",
+      "place": "chapel",
+      "said": "Father Walsh's chapel"
+     },
+     {
+      "from": "18:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "09:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "09:00",
+      "to": "11:00",
+      "place": "chapel",
+      "said": "Father Walsh's chapel"
+     },
+     {
+      "from": "11:00",
+      "to": "13:00",
+      "place": "chapel_hall",
+      "said": "the chapel hall"
+     },
+     {
+      "from": "13:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "source": {
+     "file": "production/specs/hook-cast.json",
+     "line": 1450,
+     "derived": true
+    }
+   },
+   "talks_to": [
+    {
+     "who": "vesna",
+     "weight": 0.7,
+     "band": "old and close",
+     "meets": "chapel 09:00 daily; chapel 07:00 Mon,Tue,Wed,Thu,Fri,Sat; chapel 08:00 Mon,Tue,Wed,Thu,Fri,Sat; ...",
+     "hours_a_week": 56.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3171,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "keeps Father Walsh's house and buys for his table"
+    },
+    {
+     "who": "ada",
+     "weight": 0.6,
+     "band": "good friends",
+     "meets": "adas_step 13:00 Mon,Tue,Wed,Thu,Fri,Sat; chapel 10:00 Sun; chapel_hall 11:00 Sun",
+     "hours_a_week": 8.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3177,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Ada: the widow who keeps a window on Quay Street (canon)"
+    },
+    {
+     "who": "june",
+     "weight": 0.45,
+     "band": "on easy terms",
+     "meets": "chapel 16:00 Mon,Tue,Wed,Thu,Fri; chapel 10:00 Sun",
+     "hours_a_week": 6.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3165,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "June: Mickey's daughter, back for the funeral (canon)"
+    }
+   ],
+   "rumours": [
+    {
+     "id": "emil.r1",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "heard it from his housekeeper, who had it from the street",
+     "heard_from": [
+      "vesna"
+     ],
+     "would_pass_to": [
+      "vesna",
+      "ada"
+     ],
+     "based_on": [
+      "emil.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "emil.r2",
+     "gist": "Mickey's nephew missed the funeral, which was at Father Walsh's chapel before he came.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 47,
+       "end": 47
+      }
+     },
+     "sure": "was there himself, at the service",
+     "heard_from": [
+      "self"
+     ],
+     "would_pass_to": [
+      "vesna",
+      "ada",
+      "june"
+     ],
+     "based_on": [
+      "emil.k05",
+      "emil.s01"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "emil.r3",
+     "gist": "June, Mickey's daughter, came back for the funeral, is still in town, and wants nothing from the office.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 49,
+       "end": 49
+      }
+     },
+     "sure": "sees her at the chapel",
+     "heard_from": [
+      "self"
+     ],
+     "would_pass_to": [
+      "vesna",
+      "ada"
+     ],
+     "based_on": [
+      "emil.k06"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "emil.r4",
+     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/day-one-2026-09-29.md",
+       "line": 32,
+       "end": 34
+      }
+     },
+     "sure": "heard it from Ada, who saw it from her window",
+     "heard_from": [
+      "ada"
+     ],
+     "would_pass_to": [
+      "vesna",
+      "magda"
+     ],
+     "based_on": [
+      "emil.k04"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "emil.r5",
+     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 63,
+       "end": 63
+      }
+     },
+     "sure": "heard it from the street",
+     "heard_from": [
+      "ada"
+     ],
+     "would_pass_to": [
+      "vesna",
+      "magda"
+     ],
+     "based_on": [
+      "emil.k11"
+     ],
+     "limits": [
+      "L5"
+     ],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "emil.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "Father Walsh, son. The Irish-born parish priest. Father Walsh to the street.",
+     "uses": [
+      "emil.k19"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "emil.q2",
+     "q": "What do you do?",
+     "kind": "answers",
+     "a": "I say mass and I call on the old. I stop for everybody.",
+     "uses": [
+      "emil.k20",
+      "emil.s02"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "emil.q3",
+     "q": "Who's the priest round here?",
+     "kind": "answers",
+     "a": "I am, son. Father Walsh.",
+     "uses": [
+      "emil.k19"
+     ],
+     "bench": "fresh: Who's the priest round here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "emil.q4",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning.",
+     "uses": [
+      "emil.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "emil.q5",
+     "q": "Sorry I missed the funeral.",
+     "kind": "answers",
+     "a": "It was at my chapel, before you came. Sit a minute. Nobody's going to mind you sitting.",
+     "uses": [
+      "emil.k05",
+      "emil.s01",
+      "emil.k23"
+     ],
+     "bench": "firsts: Sorry I missed the funeral.",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "emil.q6",
+     "q": "What was Mickey like?",
+     "kind": "answers",
+     "a": "Mickey kept his business to himself. You'd not hear it from him on the street.",
+     "uses": [
+      "emil.k17"
+     ],
+     "bench": "firsts: What was Mickey like?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "emil.q7",
+     "q": "Did Mickey have any enemies?",
+     "kind": "deflect",
+     "a": "I don't ask where people have been, son. What's said to me at my chapel stays there.",
+     "uses": [
+      "emil.k21",
+      "emil.k24"
+     ],
+     "bench": "fresh: Did Mickey have any enemies?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "emil.q8",
+     "q": "What happened at the warehouse fire?",
+     "kind": "deflect",
+     "a": "The paper called it arson, and nobody was charged. Beyond that, son, I've nothing to say.",
+     "uses": [
+      "emil.k03",
+      "emil.k25"
+     ],
+     "bench": "fresh: What happened at the warehouse fire?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "emil.q9",
+     "q": "Is June still about?",
+     "kind": "answers",
+     "a": "She is. She came back for the funeral and she's still in town. She wants nothing from the office.",
+     "uses": [
+      "emil.k06"
+     ],
+     "bench": "fresh: Is June still about?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "emil.q10",
+     "q": "Who can I trust?",
+     "kind": "partly",
+     "a": "I'm not here to ask you anything, son. I'm here in case you want to say something.",
+     "uses": [
+      "emil.k22"
+     ],
+     "bench": "firsts: Who can I trust?",
+     "new": "N-ANSWERS"
+    }
+   ],
+   "id_note": "'emil' is the internal id (the sheet folder keeps the old name: father-emil); the age is 'about 61'."
+  },
+  {
+   "id": "noor",
+   "name": "Alison Sedman",
+   "heard_as": "Alison",
+   "tier": "principal",
+   "age": 30,
+   "role": {
+    "text": "a reporter on the local paper; grammar school, first of her family at college",
+    "src": {
+     "file": "production/casting/CASTING.md",
+     "line": 72,
+     "end": 72
+    }
+   },
+   "identity_src": {
+    "file": "production/casting/CASTING.md",
+    "line": 72,
+    "end": 72
+   },
+   "knew_mickey": false,
+   "facts": [
+    {
+     "key": "died_when",
+     "kind": "knows",
+     "text": "Mickey died three weeks before the new owner, his nephew, came to Quay Street.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 33,
+      "end": 33
+     },
+     "street": "died_when",
+     "secret": false,
+     "id": "noor.k01"
+    },
+    {
+     "key": "died_heart",
+     "kind": "knows",
+     "text": "Mickey died of his heart, at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 36,
+      "end": 36
+     },
+     "street": "died_heart",
+     "secret": false,
+     "id": "noor.k02"
+    },
+    {
+     "key": "fire",
+     "kind": "knows",
+     "text": "Last November, on a Saturday night, the importer's warehouse at the far end of the old warehouse row burned down; the evening paper called it arson, since it started in two places, but nobody was charged, and the street says the owner had it done for the insurance.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 41,
+      "end": 41
+     },
+     "street": "fire",
+     "secret": false,
+     "id": "noor.k03"
+    },
+    {
+     "key": "will",
+     "kind": "knows",
+     "text": "Mickey left the office, Mickey's, the cab office on Quay Street, to his nephew, the new owner, by his will; the new owner came with one suitcase and a letter saying so.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 45,
+      "end": 45
+     },
+     "street": "will",
+     "secret": false,
+     "id": "noor.k04"
+    },
+    {
+     "key": "funeral",
+     "kind": "knows",
+     "text": "Mickey's funeral was at Father Walsh's chapel, before the new owner came; he missed it.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 47,
+      "end": 47
+     },
+     "street": "funeral",
+     "secret": false,
+     "id": "noor.k05"
+    },
+    {
+     "key": "june",
+     "kind": "knows",
+     "text": "June, Mickey's daughter, came back to the Hook for the funeral and is still in town; she wants nothing from the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 49,
+      "end": 49
+     },
+     "street": "june",
+     "secret": false,
+     "id": "noor.k06"
+    },
+    {
+     "key": "flat",
+     "kind": "knows",
+     "text": "The new owner is living in Mickey's flat over the office.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 53,
+      "end": 53
+     },
+     "street": "flat",
+     "secret": false,
+     "id": "noor.k07"
+    },
+    {
+     "key": "door",
+     "kind": "knows",
+     "text": "The door at the back of Mickey's that Sheila does not open is Mickey's own room; it has been locked since he died, and Sheila keeps the key.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 55,
+      "end": 55
+     },
+     "street": "door",
+     "secret": false,
+     "id": "noor.k08"
+    },
+    {
+     "key": "drivers",
+     "kind": "knows",
+     "text": "Mickey's has two cab drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 59,
+      "end": 59
+     },
+     "street": "drivers",
+     "secret": false,
+     "id": "noor.k09"
+    },
+    {
+     "key": "hours",
+     "kind": "knows",
+     "text": "The cab office opens at seven in the morning, nine on Sundays, and runs until the night driver goes home at three.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 61,
+      "end": 61
+     },
+     "street": "hours",
+     "secret": false,
+     "id": "noor.k10"
+    },
+    {
+     "key": "trade",
+     "kind": "knows",
+     "text": "Mickey's has not made much money since the docks went; trade has been thin.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 63,
+      "end": 63
+     },
+     "street": "trade",
+     "secret": false,
+     "id": "noor.k11"
+    },
+    {
+     "key": "cafe",
+     "kind": "knows",
+     "text": "The cafe is across the street, in the shops opposite the north end of the parade; it opens at half past six and shuts at ten at night, and on Sundays it is open only from eight till twelve.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 65,
+      "end": 65
+     },
+     "street": "cafe",
+     "secret": false,
+     "id": "noor.k12"
+    },
+    {
+     "key": "office",
+     "kind": "knows",
+     "text": "Mickey's, the minicab office, is on Quay Street in the Hook, with the rank outside.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 70,
+      "end": 70
+     },
+     "street": "office",
+     "secret": false,
+     "id": "noor.k13"
+    },
+    {
+     "key": "sheila_books",
+     "kind": "knows",
+     "text": "Sheila Dunn has kept the books at Mickey's for thirty-one years.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 83,
+      "end": 83
+     },
+     "street": "sheila_books",
+     "secret": false,
+     "id": "noor.k14"
+    },
+    {
+     "key": "ron_rank",
+     "kind": "knows",
+     "text": "Ron Kirby keeps the rank outside Mickey's and watches the yard gate; Mickey kept him on when the docks let him go in 1989.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 87,
+      "end": 87
+     },
+     "street": "ron_rank",
+     "secret": false,
+     "id": "noor.k15"
+    },
+    {
+     "key": "darren_rounds",
+     "kind": "knows",
+     "text": "Darren Milner walks Quay Street at all hours and talks to everyone; if something is being said in the Hook, he has heard it.",
+     "src": {
+      "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+      "line": 91,
+      "end": 91
+     },
+     "street": "darren_rounds",
+     "secret": false,
+     "id": "noor.k16"
+    },
+    {
+     "key": "job",
+     "kind": "knows",
+     "text": "a reporter on the local paper; grammar school, first of her family at college",
+     "src": {
+      "file": "production/casting/CASTING.md",
+      "line": 72,
+      "end": 72
+     },
+     "secret": false,
+     "via": "who and what they are, as their home gives it",
+     "id": "noor.k17"
+    },
+    {
+     "key": "not_writing",
+     "kind": "knows",
+     "secret": false,
+     "text": "I'm not writing anything yet. I'm just listening. People forget there's a difference.",
+     "src": {
+      "file": "production/casting/alison-sedman/SHEET.md",
+      "line": 21,
+      "end": 21
+     },
+     "id": "noor.k18"
+    },
+    {
+     "key": "twice",
+     "kind": "knows",
+     "secret": false,
+     "text": "I like to hear a thing twice before I believe it once.",
+     "src": {
+      "file": "production/casting/alison-sedman/SHEET.md",
+      "line": 22,
+      "end": 22
+     },
+     "id": "noor.k19"
+    },
+    {
+     "key": "dont_ask",
+     "kind": "knows",
+     "secret": false,
+     "text": "You'd be surprised what people tell you when you don't ask.",
+     "src": {
+      "file": "production/casting/alison-sedman/SHEET.md",
+      "line": 23,
+      "end": 23
+     },
+     "id": "noor.k20"
+    },
+    {
+     "key": "never_landed",
+     "kind": "knows",
+     "secret": false,
+     "text": "Mickey's outfit was the story she never landed.",
+     "src": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 40,
+      "end": 40
+     },
+     "id": "noor.k21"
+    },
+    {
+     "key": "editor",
+     "kind": "knows",
+     "secret": false,
+     "text": "Her editor wants it dropped.",
+     "src": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 42,
+      "end": 42
+     },
+     "id": "noor.k22"
+    },
+    {
+     "key": "moves",
+     "kind": "knows",
+     "secret": false,
+     "text": "Fast, always half writing; leans on counters; asks the second question after the answer.",
+     "src": {
+      "file": "production/casting/alison-sedman/SHEET.md",
+      "line": 16,
+      "end": 16
+     },
+     "id": "noor.k23"
+    },
+    {
+     "key": "day",
+     "kind": "knows",
+     "secret": false,
+     "text": "Monday: 09:00 to 10:00 the pavement outside the steam laundry, then 10:00 to 11:00 the newsagent's counter, where the pensions are paid, then 11:00 to 12:00 by the kiosk on Quay Street, then 12:00 to 13:00 the pavement outside the fish market, then 15:00 to 16:00 the pavement at Mickey's door, where the cabs wait. Saturday: 11:00 to 12:00 by the kiosk on Quay Street, then 12:00 to 13:00 the pavement outside the fish market. Sunday: not on the street.",
+     "derived": {
+      "file": "production/specs/hook-cast.json",
+      "line": 998,
+      "how": "day"
+     },
+     "id": "noor.k24"
+    },
+    {
+     "key": "who_ada",
+     "kind": "knows",
+     "secret": false,
+     "text": "Ada, the widow who keeps a window on Quay Street",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 889,
+      "end": 889
+     },
+     "via": "who ada is, as the home describes them (hook-cast.json, the tie of 0.7)",
+     "id": "noor.k25"
+    },
+    {
+     "key": "who_sam",
+     "kind": "knows",
+     "secret": false,
+     "text": "Darren Milner, the street hustler, always on his rounds",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 623,
+      "end": 623
+     },
+     "via": "who sam is, as the home describes them (hook-cast.json, the tie of 0.6)",
+     "id": "noor.k26"
+    },
+    {
+     "key": "who_lena",
+     "kind": "knows",
+     "secret": false,
+     "text": "Sheila Dunn, Mickey's bookkeeper",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 371,
+      "end": 371
+     },
+     "via": "who lena is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "noor.k27"
+    },
+    {
+     "key": "who_rocco",
+     "kind": "knows",
+     "secret": false,
+     "text": "Ron Kirby, who keeps Mickey's door and the rank",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 305,
+      "end": 305
+     },
+     "via": "who rocco is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "noor.k28"
+    },
+    {
+     "key": "who_sanja",
+     "kind": "knows",
+     "secret": false,
+     "text": "the woman who keeps the boarding house",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2575,
+      "end": 2575
+     },
+     "via": "who sanja is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "noor.k29"
+    },
+    {
+     "key": "who_iva",
+     "kind": "knows",
+     "secret": false,
+     "text": "a presser at the steam laundry",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1814,
+      "end": 1814
+     },
+     "via": "who iva is, as the home describes them (hook-cast.json, the tie of 0.5)",
+     "id": "noor.k30"
+    },
+    {
+     "key": "who_marla",
+     "kind": "knows",
+     "secret": false,
+     "text": "the woman from the fish shop, who buys on the fish dock",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1133,
+      "end": 1133
+     },
+     "via": "who marla is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "noor.k31"
+    },
+    {
+     "key": "who_petra",
+     "kind": "knows",
+     "secret": false,
+     "text": "the ferry's ticket clerk, who lodges at the boarding house",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2485,
+      "end": 2485
+     },
+     "via": "who petra is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "noor.k32"
+    },
+    {
+     "key": "who_hana",
+     "kind": "knows",
+     "secret": false,
+     "text": "the letter writer at the newsagent's pension counter",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2636,
+      "end": 2636
+     },
+     "via": "who hana is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "noor.k33"
+    },
+    {
+     "key": "who_zora",
+     "kind": "knows",
+     "secret": false,
+     "text": "a washerwoman at the steam laundry",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1769,
+      "end": 1769
+     },
+     "via": "who zora is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "noor.k34"
+    },
+    {
+     "key": "who_selma",
+     "kind": "knows",
+     "secret": false,
+     "text": "a laundress at the steam laundry",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 1845,
+      "end": 1845
+     },
+     "via": "who selma is, as the home describes them (hook-cast.json, the tie of 0.4)",
+     "id": "noor.k35"
+    },
+    {
+     "key": "who_dario",
+     "kind": "knows",
+     "secret": false,
+     "text": "a ferryman",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2530,
+      "end": 2530
+     },
+     "via": "who dario is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "noor.k36"
+    },
+    {
+     "key": "who_marta",
+     "kind": "knows",
+     "secret": false,
+     "text": "the pawn's clerk",
+     "src": {
+      "file": "production/specs/hook-cast.json",
+      "line": 2025,
+      "end": 2025
+     },
+     "via": "who marta is, as the home describes them (hook-cast.json, the tie of 0.3)",
+     "id": "noor.k37"
+    },
+    {
+     "key": "thinks_outfit",
+     "kind": "believes",
+     "secret": true,
+     "text": "She has heard the owner stopped paying somebody, so she thinks the outfit burned him out, and that Mickey knew.",
+     "src": {
+      "file": "game-design/warehouse-fire-2026-09-29.md",
+      "line": 40,
+      "end": 42
+     },
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 48,
+       "end": 48
+      },
+      "note": "Her belief matches the story's truth; she cannot prove it and it is not the street's."
+     },
+     "id": "noor.b01"
+    },
+    {
+     "key": "covered_fire",
+     "kind": "saw",
+     "secret": false,
+     "text": "She covered the warehouse fire for the paper and walked the burned row afterwards.",
+     "new": "N-LIVES",
+     "why": "She 'will not drop' the story (outline); a reporter on the paper would have covered it.",
+     "when": "last November, the days after the fire",
+     "id": "noor.s01"
+    }
+   ],
+   "schedule": {
+    "weekday": [
+     {
+      "from": "00:00",
+      "to": "09:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "09:00",
+      "to": "10:00",
+      "place": "laundry_front",
+      "said": "the pavement outside the steam laundry"
+     },
+     {
+      "from": "10:00",
+      "to": "11:00",
+      "place": "pension_counter",
+      "said": "the newsagent's counter, where the pensions are paid"
+     },
+     {
+      "from": "11:00",
+      "to": "12:00",
+      "place": "kiosk",
+      "said": "by the kiosk on Quay Street"
+     },
+     {
+      "from": "12:00",
+      "to": "13:00",
+      "place": "fish_front",
+      "said": "the pavement outside the fish market"
+     },
+     {
+      "from": "13:00",
+      "to": "15:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "15:00",
+      "to": "16:00",
+      "place": "mickeys_rank",
+      "said": "the pavement at Mickey's door, where the cabs wait"
+     },
+     {
+      "from": "16:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "weekday_note": "Monday, the first day of the game's week; the days below differ from it",
+    "weekday_differs": {
+     "tue": [
+      {
+       "from": "00:00",
+       "to": "09:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      },
+      {
+       "from": "09:00",
+       "to": "10:00",
+       "place": "laundry_front",
+       "said": "the pavement outside the steam laundry"
+      },
+      {
+       "from": "10:00",
+       "to": "11:00",
+       "place": "ferry_stop",
+       "said": "the ferry landing"
+      },
+      {
+       "from": "11:00",
+       "to": "12:00",
+       "place": "kiosk",
+       "said": "by the kiosk on Quay Street"
+      },
+      {
+       "from": "12:00",
+       "to": "13:00",
+       "place": "fish_front",
+       "said": "the pavement outside the fish market"
+      },
+      {
+       "from": "13:00",
+       "to": "15:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      },
+      {
+       "from": "15:00",
+       "to": "16:00",
+       "place": "mickeys_rank",
+       "said": "the pavement at Mickey's door, where the cabs wait"
+      },
+      {
+       "from": "16:00",
+       "to": "24:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      }
+     ],
+     "thu": [
+      {
+       "from": "00:00",
+       "to": "09:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      },
+      {
+       "from": "09:00",
+       "to": "10:00",
+       "place": "laundry_front",
+       "said": "the pavement outside the steam laundry"
+      },
+      {
+       "from": "10:00",
+       "to": "11:00",
+       "place": "ferry_stop",
+       "said": "the ferry landing"
+      },
+      {
+       "from": "11:00",
+       "to": "12:00",
+       "place": "kiosk",
+       "said": "by the kiosk on Quay Street"
+      },
+      {
+       "from": "12:00",
+       "to": "13:00",
+       "place": "fish_front",
+       "said": "the pavement outside the fish market"
+      },
+      {
+       "from": "13:00",
+       "to": "15:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      },
+      {
+       "from": "15:00",
+       "to": "16:00",
+       "place": "mickeys_rank",
+       "said": "the pavement at Mickey's door, where the cabs wait"
+      },
+      {
+       "from": "16:00",
+       "to": "24:00",
+       "place": "off",
+       "said": "away from the street (at home, or elsewhere)"
+      }
+     ]
+    },
+    "saturday": [
+     {
+      "from": "00:00",
+      "to": "11:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     },
+     {
+      "from": "11:00",
+      "to": "12:00",
+      "place": "kiosk",
+      "said": "by the kiosk on Quay Street"
+     },
+     {
+      "from": "12:00",
+      "to": "13:00",
+      "place": "fish_front",
+      "said": "the pavement outside the fish market"
+     },
+     {
+      "from": "13:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "sunday": [
+     {
+      "from": "00:00",
+      "to": "24:00",
+      "place": "off",
+      "said": "away from the street (at home, or elsewhere)"
+     }
+    ],
+    "source": {
+     "file": "production/specs/hook-cast.json",
+     "line": 998,
+     "derived": true
+    }
+   },
+   "talks_to": [
+    {
+     "who": "ada",
+     "weight": 0.7,
+     "band": "old and close",
+     "meets": "kiosk/fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat",
+     "hours_a_week": 12.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3069,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Ada: the widow who keeps a window on Quay Street (canon)"
+    },
+    {
+     "who": "sam",
+     "weight": 0.6,
+     "band": "good friends",
+     "meets": "fish_front 12:00 Mon,Tue,Wed,Thu,Fri; mickeys_rank 15:00 Mon,Tue,Wed,Thu,Fri; kiosk/ritas_step 11:00 Mon,Wed",
+     "hours_a_week": 12.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3075,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Darren Milner: the street hustler, on his rounds (canon)"
+    },
+    {
+     "who": "lena",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank/mickeys_office 15:00 Mon,Tue,Wed,Thu,Fri",
+     "hours_a_week": 11.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3081,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Sheila Dunn: Mickey's bookkeeper (canon)"
+    },
+    {
+     "who": "rocco",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank 15:00 Mon,Tue,Wed,Thu,Fri",
+     "hours_a_week": 11.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3087,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "Ron Kirby: Mickey's door and rank (canon)"
+    },
+    {
+     "who": "sanja",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "fish_counter/kiosk 11:00 Mon,Tue,Wed,Thu,Fri; fish_front 12:00 Mon,Tue,Wed,Thu,Fri",
+     "hours_a_week": 10.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3255,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "keeps the boarding house; buys fish for her lodgers"
+    },
+    {
+     "who": "iva",
+     "weight": 0.5,
+     "band": "friendly",
+     "meets": "laundry_counter/laundry_front 09:00 Mon,Tue,Wed,Thu,Fri",
+     "hours_a_week": 5.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3399,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "works the steam laundry's presses"
+    },
+    {
+     "who": "marla",
+     "weight": 0.4,
+     "band": "on easy terms",
+     "meets": "kiosk/fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front/fish_counter 12:00 Mon,Tue,Wed,Thu,Fri,Sat",
+     "hours_a_week": 12.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3093,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "the fish shop's woman, who buys on the fish dock"
+    },
+    {
+     "who": "petra",
+     "weight": 0.4,
+     "band": "on easy terms",
+     "meets": "ferry_stop 10:00 Tue,Thu",
+     "hours_a_week": 2.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3213,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "the ferry's ticket clerk; lodges at the boarding house"
+    },
+    {
+     "who": "hana",
+     "weight": 0.4,
+     "band": "on easy terms",
+     "meets": "pension_counter 10:00 Mon,Wed,Fri",
+     "hours_a_week": 3.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3321,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "writes letters and fills in forms for people, at the newsagent's pension counter"
+    },
+    {
+     "who": "zora",
+     "weight": 0.4,
+     "band": "on easy terms",
+     "meets": "laundry_counter/laundry_front 09:00 Mon,Tue,Wed,Thu,Fri; fish_front 12:00 Sat",
+     "hours_a_week": 6.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3333,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "a washerwoman at the steam laundry"
+    },
+    {
+     "who": "selma",
+     "weight": 0.4,
+     "band": "on easy terms",
+     "meets": "laundry_counter/laundry_front 09:00 Mon,Tue,Wed,Thu,Fri",
+     "hours_a_week": 5.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3453,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "a laundress"
+    },
+    {
+     "who": "dario",
+     "weight": 0.3,
+     "band": "a nod and a word",
+     "meets": "ferry_stop 10:00 Tue,Thu",
+     "hours_a_week": 2.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3441,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "a ferryman"
+    },
+    {
+     "who": "marta",
+     "weight": 0.3,
+     "band": "a nod and a word",
+     "meets": "ritas_step/kiosk 11:00 Mon,Tue,Wed,Thu,Fri,Sat",
+     "hours_a_week": 6.0,
+     "source": {
+      "file": "production/specs/hook-cast.json",
+      "line": 3477,
+      "derived": true
+     },
+     "crowd": null,
+     "other_role": "the pawn's clerk"
+    }
+   ],
+   "rumours": [
+    {
+     "id": "noor.r1",
+     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson, nobody was charged, and the street says the owner had it done for the insurance.",
+     "truth": "partly",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/warehouse-fire-2026-09-29.md",
+       "line": 37,
+       "end": 39
+      },
+      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+     },
+     "sure": "the paper's own word and street talk; she has not got more",
+     "heard_from": [
+      "street"
+     ],
+     "would_pass_to": [
+      "ada",
+      "sam"
+     ],
+     "based_on": [
+      "noor.k03",
+      "noor.s01"
+     ],
+     "limits": [
+      "L2",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "noor.r2",
+     "gist": "Mickey died of his heart at the office early one morning; Ron found him when he came on at the rank, and the doctor said it was his heart.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "RULINGS.md",
+       "line": 108,
+       "end": 108
+      }
+     },
+     "sure": "heard it from Sheila",
+     "heard_from": [
+      "lena"
+     ],
+     "would_pass_to": [
+      "ada",
+      "sam"
+     ],
+     "based_on": [
+      "noor.k02"
+     ],
+     "limits": [
+      "L4"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "noor.r3",
+     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/day-one-2026-09-29.md",
+       "line": 32,
+       "end": 34
+      }
+     },
+     "sure": "heard it from Ada, who saw it from her window",
+     "heard_from": [
+      "ada"
+     ],
+     "would_pass_to": [
+      "sam",
+      "rocco"
+     ],
+     "based_on": [
+      "noor.k04"
+     ],
+     "limits": [
+      "L7"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "noor.r4",
+     "gist": "Hal and Rita had words in the pawn, and nobody knows what about.",
+     "truth": "unknown",
+     "truth_basis": {
+      "src": {
+       "file": "game-design/town-news-sample-2026-09-29.md",
+       "line": 10,
+       "end": 10
+      },
+      "note": "Told as the town sample tells it: only what was seen; nobody can say why."
+     },
+     "sure": "heard it from the pawn's clerk at the kiosk",
+     "heard_from": [
+      "marta"
+     ],
+     "would_pass_to": [
+      "ada",
+      "sam"
+     ],
+     "based_on": [
+      "noor.k03"
+     ],
+     "limits": [
+      "L6",
+      "L1"
+     ],
+     "new": "N-RUMOURS"
+    },
+    {
+     "id": "noor.r5",
+     "gist": "June, Mickey's daughter, came back for the funeral, is still in town, and wants nothing from the office.",
+     "truth": "true",
+     "truth_basis": {
+      "src": {
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 49,
+       "end": 49
+      }
+     },
+     "sure": "heard it from Ada",
+     "heard_from": [
+      "ada"
+     ],
+     "would_pass_to": [
+      "lena",
+      "sam"
+     ],
+     "based_on": [
+      "noor.k06"
+     ],
+     "limits": [],
+     "new": "N-RUMOURS"
+    }
+   ],
+   "newcomer_questions": [
+    {
+     "id": "noor.q1",
+     "q": "Who are you?",
+     "kind": "answers",
+     "a": "Alison Sedman. I'm a reporter on the local paper.",
+     "uses": [
+      "noor.k17"
+     ],
+     "bench": "firsts: Who are you?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "noor.q2",
+     "q": "What do you do?",
+     "kind": "answers",
+     "a": "I listen. I'm not writing anything yet. People forget there's a difference.",
+     "uses": [
+      "noor.k18"
+     ],
+     "bench": "firsts: What do you do here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "noor.q3",
+     "q": "What happened at the warehouse fire?",
+     "kind": "partly",
+     "a": "The importer's warehouse on the old row, last November. The paper called it arson. Nobody was charged. It's a story I never landed.",
+     "uses": [
+      "noor.k03",
+      "noor.k21"
+     ],
+     "bench": "fresh: What happened at the warehouse fire?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "noor.q4",
+     "q": "How did Mickey die?",
+     "kind": "answers",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
+     "uses": [
+      "noor.k02"
+     ],
+     "bench": "firsts: How did Mickey die?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "noor.q5",
+     "q": "What do people say about me?",
+     "kind": "partly",
+     "a": "Only that Mickey's nephew has come and left the office to you, with a letter. I like to hear a thing twice.",
+     "uses": [
+      "noor.k04",
+      "noor.k19"
+     ],
+     "bench": "fresh: What do people say about me?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "noor.q6",
+     "q": "Who was Mickey closest to?",
+     "kind": "dont_know",
+     "a": "I couldn't tell you. That's all I know.",
+     "uses": [],
+     "bench": "fresh: Who was Mickey closest to?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "noor.q7",
+     "q": "What's the cafe like?",
+     "kind": "answers",
+     "a": "It's over the road, in the shops across from the north end of the parade. Half past six till ten at night, and eight till twelve on a Sunday.",
+     "uses": [
+      "noor.k12"
+     ],
+     "bench": "fresh: What's the cafe like?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "noor.q8",
+     "q": "Who's the priest round here?",
+     "kind": "partly",
+     "a": "Father Walsh, I think. Mickey's funeral was at his chapel.",
+     "uses": [
+      "noor.k05"
+     ],
+     "bench": "fresh: Who's the priest round here?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "noor.q9",
+     "q": "Is June still about?",
+     "kind": "answers",
+     "a": "She's still in town. She came back for the funeral and wants nothing from the office.",
+     "uses": [
+      "noor.k06"
+     ],
+     "bench": "fresh: Is June still about?",
+     "new": "N-ANSWERS"
+    },
+    {
+     "id": "noor.q10",
+     "q": "Who can I trust?",
+     "kind": "deflect",
+     "a": "People tell you a lot when you don't ask. I'd listen first.",
+     "uses": [
+      "noor.k20"
+     ],
+     "bench": "firsts: Who can I trust?",
+     "new": "N-ANSWERS"
+    }
+   ]
   }
  ]
 }
