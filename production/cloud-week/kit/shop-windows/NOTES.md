@@ -13,3 +13,7 @@ PROGRESS LOG (kept current for a reset; the final notes replace this section)
 - 13 Oct: front built (sw_front.py -> production/assets/cloud-week/shop-windows/ritas_front.glb 55k triangles, 11.6 MB with its textures: out of git;
   ritas_grille_night.glb 24.5k triangles). Looked at in elevation and at the doors: band above the doors, fanlight, three toplights, panel, head all present.
   Next: room (sw_room.py), display, gate, checks.
+- 13 Oct (later): display built (sw_display.py: 31 pieces of 26 models, ~146k triangles, 7 MB). Room stage launched (`python build_ritas.py room`, 64 samples,
+  log /home/user/ledger-scratch/shop-windows/room_stage.log); pictures go to /home/user/ledger-scratch/shop-windows/rooms/. Gate pipeline tested at low res (bake through
+  trace takes seconds; renders work, day and night, lattice at night). check_ritas.py written; front rows pass. If the session resets: run `python build_ritas.py gate checks`
+  once rooms/pawnbroker_*.png exist, then write the final notes (this file) and copy the pictures to production/assets/cloud-week/shop-windows/rooms/.

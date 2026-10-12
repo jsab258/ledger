@@ -325,10 +325,18 @@ def render_view(cam_name, cam_def, state, card_png, out_png, front_glb, grille_g
         ro = bpy.data.objects.new("spill", rl)
         sc.collection.objects.link(ro)
         ro.location = (0.975, -0.02, 2.36)
-        ro.rotation_euler = (math.radians(180 - 62 + 90 - 90), 0.0, 0.0)
-        ro.rotation_euler = (math.radians(62 + 0.0), 0.0, 0.0)           # shines down and a little back (+y): the area light's -Z axis tipped 62 degrees from straight down toward +y... see below
-        # an area light shines along its own -Z: with no rotation it shines straight down; tipping it about x by +t turns the beam toward -y (the street), -t toward +y (the room).
+        # an area light shines along its own -Z; tipped about x by -28 degrees it shines down and out toward the street: 62 degrees below the horizontal, as the spec's rect light
         ro.rotation_euler = (math.radians(-28.0), 0.0, 0.0)
+        # lighting channel 1 (the game's): the spill lights the display, the front and the street but not the night grille's lattice (the bars would flare)
+        recv = bpy.data.collections.new("spill_receivers")
+        sc.collection.children.link(recv)
+        for o in list(bpy.data.objects):
+            if o.type == "MESH" and o not in lattice and o.name != "card":
+                for c in list(o.users_collection):
+                    if c is not recv:
+                        pass
+                recv.objects.link(o)
+        ro.light_linking.receiver_collection = recv
     # --- render
     sc.render.engine = "CYCLES"
     sc.cycles.device = "CPU"

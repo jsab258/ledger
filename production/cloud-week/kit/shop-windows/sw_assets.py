@@ -376,3 +376,29 @@ if __name__ == "__main__":
         for x in r:
             if not x["ok"]:
                 print("FAIL", x["id"], x["detail"])
+
+
+def models_table(placed_json, display_json):
+    """A markdown table of every model placed (room and display), with its Poly Haven page, licence read from its source.json and what was blanked (verify_display_sources.py's method:
+    each asset's own source.json must be present, CC0, and from polyhaven.com)."""
+    T = load_target()
+    placed = json.load(open(placed_json))
+    disp = json.load(open(display_json))
+    room_n, disp_n = {}, {}
+    for p in placed:
+        room_n[p["model"]] = room_n.get(p["model"], 0) + 1
+    for i in disp["items"]:
+        disp_n[i["model"]] = disp_n.get(i["model"], 0) + 1
+    rows = ["| model | Poly Haven page | licence | in the room | in the display | maker's marks painted out |", "|---|---|---|---|---|---|"]
+    bad = []
+    for a in sorted(set(room_n) | set(disp_n)):
+        p = os.path.join(POLY, a, RES, "source.json")
+        src = json.load(open(p)) if os.path.exists(p) else None
+        lic = (src or {}).get("licence", "?")
+        page = (src or {}).get("page", "?")
+        if not src or "CC0" not in lic or "polyhaven.com" not in page:
+            bad.append(a)
+        ent = entries(T, a)
+        marks = "; ".join(sorted({e["reads"].split(";")[0][:70] for e in ent})) if ent else "none found"
+        rows.append("| %s | %s | %s | %d | %d | %s |" % (a, page, lic, room_n.get(a, 0), disp_n.get(a, 0), marks))
+    return "\n".join(rows), bad

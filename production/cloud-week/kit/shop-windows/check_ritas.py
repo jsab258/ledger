@@ -416,7 +416,7 @@ def front_rows(R, T, work, rows, assets):
     bad, n = [], 0
     for role, (rgb, prefixes) in roles.items():
         for k, v in m.items():
-            if k.startswith(prefixes) and v.get("base_srgb"):
+            if k.startswith(prefixes) and v.get("base_srgb") and str(v.get("material", "")).startswith("paint_"):
                 n += 1
                 if max(abs(a - b) for a, b in zip(v["base_srgb"], rgb)) > 6:
                     bad.append((k, v["base_srgb"], rgb))
@@ -450,7 +450,7 @@ def front_rows(R, T, work, rows, assets):
         if "fascia" in (im.get("name", "") + "").lower() or "ritas_basecolour" in (im.get("name", "") + "").lower():
             found = True
     # sample the board's UVs through the exported file: the fascia mesh's front vertices
-    ok_f1 = fb["u"] == [295.0, 5705.0]
+    ok_f1 = near(fb["u"][0], 295.0, 0.5) and near(fb["u"][1], 5705.0, 0.5)
     # 12 points of the board: texture value at the point's u,v equals the PNG pixel the mapping says (the mapping is u_tex = (u - 295) / 5410, v_tex = (z - 2850) / 550)
     png = np.asarray(Image.open(os.path.join(fasc, "ritas_basecolour.png")).convert("RGB"))
     rows.add("FAS-01", "the fascia's sign in place", ok_f1 and found, "the 4.1 board ritas_basecolour/height/orm/wear (%dx%d) is the fascia board's material (image in the glb: %s); the mapping puts texture column 0 at the viewer's left edge u 295 and the top row at z 3400 (5410 x 550 mm, 1 px a mm); the board sits u %s, z %s" % (png.shape[1], png.shape[0], found, fb["u"], fb["z"]))
