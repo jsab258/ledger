@@ -151,26 +151,26 @@ Third person, linear, set in Sicily in the early 1900s, Unreal Engine 5, release
 
 ### 3.2 Knife duels
 
-- **What a duel is.** Hangar 13's president Nick Baynes at PAX East 2025: the knife is "more than just a one-shot kill"; a new knife-dueling mode puts you against "a boss character" in a "one-on-one duel to the death" [M7, press report of the panel]. The game director calls them lethal encounters that "unfold at pivotal moments in the story" [M5, official, 8 May 2025].
+- **What a duel is.** Hangar 13's president Nick Baynes at PAX East 2025: the knife is "more than just a one-shot kill"; a new knife-dueling mode puts you against a boss character, one on one, to the death (the report words this with a typo, so it is not quoted) [M7, press report of the panel]. The game director calls them lethal encounters that "unfold at pivotal moments in the story" [M5, official, 8 May 2025].
 - **Inputs.** Five actions only: slash, thrust, strike, dodge, parry. No other action is possible during a duel [M22 press]. On PC: strike right mouse, thrust middle mouse, slash left mouse, parry left shift, dodge space, steer with WASD [M12 press].
 - **Rhythm.** Official: "the timing windows for different inputs (dodge, parry, etc.) are unique", button-mashing "won't get Enzo very far", listen for audio cues and "watch for red glints indicating unparryable attacks that must be dodged" [M1]. Guides: a normal attack is parried; a heavy strike with a red glint cannot be, so you dodge and counter; your own strike breaks a guard, then you follow with slashes or thrusts [M13, M14]. Parry is called generous [M13]. A foe is open for a short time after its own dodge; slashes have a wider hit area than thrusts [M12]. Each opponent has its own timing for strong attacks [M12].
 - **Shape of a boss duel.** Guides describe two phases: rapid slashes first, then unparryable strikes from about half health, and quick-time prompts at about 50 percent and 0 percent health; a late prompt lets the boss regain 25 percent [M14]. These are guide claims. A German press piece describes the duels as a matter of quick reflexes, dodging or striking at the right moment [M26].
 - **Tutorial.** A sparring duel with a blunt blade; three parries are needed to advance [M14, M21].
-- **Knives.** Three types: one throwable, one that allows one-hit kills in active combat, one with the best durability [M1]. Only one knife is carried; durability is spent by lockpicking, quick stealth kills, throws and one-hit kills; whetstones restore it; the plain melee attack always works and is "not as quick or stealthy as a silent takedown, but it's lethal nonetheless" [M3]. In duels the knife type does not change damage [M12].
+- **Knives.** Three types: one throwable, one that allows one-hit kills in active combat, one with the best durability [M1]. Only one knife is carried; durability is spent by lockpicking, quick stealth kills, throws and one-hit kills; whetstones restore it; the plain melee attack always works and "isn't as quick or stealthy as a silent takedown" but is lethal [M3]. In duels the knife type does not change damage [M12].
 - **Frames or seconds.** Not published. A search summary of a guide says "about a second" to parry; that page was not reached (403) and nothing from it is used.
 
 ### 3.3 Brawls and fists
 
-- Hand-to-hand fighting as a system: not published. Hangar 13 shows "freeform melee attacks you can employ in any combat encounter" [M6, official, 22 July 2025], with no inputs or timings. One critic says "You won't be using your fists in the Sicilian underworld" [M18, press]. Hangar 13's own words are that this "isn't an era of ... easy brawls" [M2].
+- Hand-to-hand fighting as a system: not published. Hangar 13 shows "freeform melee attacks you can employ in any combat encounter" [M6, official, 22 July 2025], with no inputs or timings. One critic says "You won't be using your fists in the Sicilian underworld" [M20, press]. Hangar 13's own words are that this "isn't an era of ... easy brawls" [M2].
 - A knife melee attack exists outside duels and is always available [M3].
 
 ### 3.4 Takedowns and stealth
 
-- **Bare hands.** Approach crouched, in the target's blind spot, hold the grab and press the prompted button repeatedly to choke him out. "Of course, this takes time, and if another enemy appears nearby, he will spot you" [M15 press].
+- **Bare hands.** Approach crouched, in the target's blind spot, hold the grab and press the prompted button repeatedly to choke him out. The guide: "this takes time, and if another enemy appears nearby, he will spot you" [M15 press].
 - **Knife.** A quick lethal stab from behind, faster than choking, at the cost of knife durability [M15, M3]. A throwing knife kills from range and has to be collected [M1].
 - **Distraction.** Throw a coin or a bottle; every enemy close enough investigates; the nearest one comes, not necessarily the one you meant [M15, M16 press].
 - **Bodies.** Official tip: stash bodies, "which will prevent guards from being alerted by the sight of a corpse" [M1]. Drag a body out of a patrol route or into a crate [M15, M17].
-- **Detection.** Enemies "can spot you from a long distance" and move to where they saw you even if not fully alerted [M15]. Some sequences require staying undetected; most do not [M3].
+- **Detection.** Enemies "spot you from a long distance" and move to where they saw you even if not fully alerted [M15]. Some sequences require staying undetected; most do not [M3].
 - **Instinct.** A mode that shows enemies through walls [M1, M6].
 - **Timings of takedowns:** not published.
 
@@ -203,7 +203,7 @@ The verdict says what LEDGER should do with the games' practice for that point, 
 | 5 | Not free: witnesses, lasting injury, treatment, feud | Health does not heal itself, bleeding loses 1 HP per 6 s, crimes bring fines or branding, gear wears [K18, K1, K26] | Health regenerates; knife durability; no social cost published [M25, M3] | ADOPT | Spec: "Every swing has a cost even when you win"; KCD2 charges body, gear and standing |
 | 6 | Not a separate mode: no arena, no lock-on state, no sting | Lock-on rose, crossed-swords icon, music and UI hint at combat (a fix mentions them) [K18, K10] | A separate one-on-one mode with five actions [M7, M22] | IGNORE | Spec: "No arena, no lock-on state you enter and exit, no music sting" |
 | 7 | Verb: Square up (a stance everyone sees) | No stance verb; drawing a weapon makes NPCs confront; above anger 0.67 NPCs arm everywhere [K1, K9] | Enzo "boldly draws his knife to challenge foes" [M6]; duel start is scripted [M5] | ADAPT | Spec: "Witnesses start paying attention BEFORE anything lands"; both show a visible commitment, ours is a stance with fists |
-| 8 | Verb: Strike (slow, telegraphed, heavy; a miss hurts you more) | Four-direction swing, chain, cost 26, spam delay, charge up to 1.4 s [K1, K18, K9] | Slash, thrust, red-glint heavy strike, audio cues [M1, M13] | ADAPT | Spec wants a small verb set where "the player mashes" nothing; take one-cost swing and sight-and-sound tell, drop directions and combos |
+| 8 | Verb: Strike (slow, telegraphed, heavy; a miss hurts you more) | Four-direction swing, chain, cost 26, spam delay, charge up to 1.4 s [K1, K18, K9] | Slash, thrust, red-glint heavy strike, audio cues [M1, M13] | ADAPT | Spec: "A small verb set ... beats a large one where the player mashes"; take one-cost swing and sight-and-sound tell, drop directions and combos |
 | 9 | Verb: Shove (distance, non-injuring, de-escalation) | Clinch can push a man out of a pen; "locks, grips and throws" [K9, K5]; kick in the first game [K22] | Not published | ADAPT | Spec: "Cheap, non-injuring"; KCD2's clinch is a weapon lock, ours is a two-hand push that makes space |
 | 10 | Verb: Guard (absorb; cannot guard forever) | Block drains stamina with the blow, regain x0.6; perfect block free; armour turns hits into stamina loss [K18, K1, K28] | Parry and dodge; no held guard published; foes guard and can be guard-broken [M13] | ADAPT | Spec: "Absorb rather than avoid"; take stamina drain and slower regain, drop the perfect-block prize |
 | 11 | Verb: Back off ("the game should say so") | Developers' tip: "consider a tactical retreat" [K8]; fleeing draws a chase [K26] | No retreat inside a duel [M22] | ADOPT | Spec: "explicitly viable"; Warhorse's own tips say the same |
@@ -219,13 +219,13 @@ The verdict says what LEDGER should do with the games' practice for that point, 
 | 21 | The audience: cost shown in Mickey's book or a line | Arrest dialogue lists your crimes; a reputation tab per place [K9, K18] | Not published | ADAPT | Spec: "not a toast"; KCD2's list is a menu, ours is diegetic |
 | 22 | Accessibility: longer telegraph, auto-resolve | Windows widen with skill [K22, K1]; fans built mods to widen them within days [K38] | "Simplified Struggle" completes rapid presses; three difficulties [M3] | ADAPT | Spec: "the same fight at a different tempo"; Mafia's auto-complete is the model, KCD2's skill growth is not (no stats) |
 | 23 | Minimal HUD later as a toggle (7c) | Hardcore and "UI only when relevant" are options [K6, K11] | Adjustable HUD [M1, M3] | ADOPT | Spec 7c: "a settings toggle rather than a rewrite" |
-| 24 | Resolve has no randomness | Mastery "rather than an unseen roll" [K5]; AI picks are chance weighted [K1]; stealth kills can fail [K9] | Not published | ADAPT | Spec: "a fight the player cannot read is a fight they cannot learn"; player outcomes fixed, AI variety seeded |
-| 25 | Reach 1.6 m: no hit at range | Not published (only a from-behind angle of 135 degrees with x1.2) [K1] | Not published | IGNORE | Nothing to take; spec: "a hit at four metres is the fastest way to lose a player's trust" |
+| 24 | Resolve has no randomness | Mastery "rather than an unseen roll" [K5]; AI picks are chance weighted [K1]; stealth kills can fail [K9] | Not published | ADAPT | Combat.cs: "No randomness: a fight the player cannot read is a fight they cannot learn"; player outcomes fixed, AI variety seeded |
+| 25 | Reach 1.6 m: no hit at range | Not published (only a from-behind angle of 135 degrees with x1.2) [K1] | Not published | IGNORE | Nothing to take; Combat.cs: a hit at four metres is "the fastest way to lose a player's trust" |
 | 26 | Stamina must matter; mashing gasses out | Swing costs 26, regain 22 per second: 1.18 s per swing at rest (derived); a spam delay was added by patch [K1, K9] | Button-mashing "won't get Enzo very far" [M1] | ADAPT | Spec lab: mashing won 76 percent until retuned; KCD2 needed a patch for the same flaw; ours regains far slower (0.34 cost, 0.09 per second, 3.8 s per swing, derived) |
 | 27 | A fight is three to four swings; winning costs | Armoured fights are long stamina contests, unarmoured men fall fast [K18] | Two-phase duels; length not published [M14] | ADAPT | Spec: "Even the best line wins a quarter of the time"; LEDGER's men in coats match KCD2's unarmoured case |
 | 28 | Witness rules: from how far, through what; alley at night vs noon | Night lowers visibility (a penalty of 0.7 outdoors); hearing boosted for violence; seeing through walls fixed; investigators shown to 100 m [K1, K9] | Enemies spot from far and investigate; bodies stashed [M15, M1] | ADAPT | Spec phase 2: "Fighting in an alley at night is genuinely different"; LEDGER's Observation is finer |
 | 29 | A killing brings police (a new pressure track) | Ladder from fine to execution; unrest makes guards call in help; area more watchful even without proof [K26, K18, K14] | Not published | ADOPT | Spec 7b: "It brings police"; the audit's E5 asked for the town to change its behaviour |
-| 30 | Who swings first: both | NPC anger from violence and from being robbed exists; the player can strike anyone [K2, K4] | Scripted | ADOPT | Jafar: "violence is part of our crime world and a legit tool" |
+| 30 | Who swings first: both | NPC anger from violence and from being robbed exists; the player can strike anyone [K2, K4] | Scripted | ADOPT | Jafar: "violence is a part of our crime world and a legit tool" |
 | 31 | Lethality: yes, rarely and permanently | Fists knock out (our reading); killing innocents is a crime; hanging ends the game [K1, K26, K14] | Duels are to the death, scripted [M7] | ADAPT | Jafar: "Yes, rarely and permanently"; fists as knock-out fits "finishing" being a separate act |
 | 32 | A body is a fact that cannot be discredited | Corpse hidden after 300 or 3,600 s; crime memory expires [K1, K4] | A seen corpse alerts guards until hidden [M1] | IGNORE | Spec 7b: no discredit or decay "touch a corpse"; both games let evidence fade or be hidden |
 | 33 | A killing solves the immediate problem completely | Kill the reporter and no alarm [K30] | Hide the body and nobody is alerted [M1] | ADOPT | Spec 7b: be "honest about this or the choice is fake" |
@@ -235,8 +235,8 @@ The verdict says what LEDGER should do with the games' practice for that point, 
 | 37 | Camera rig and momentum: weight and readability | First person, lock-on, free look while blocking, hit reaction slows the player [K17, K35, K9] | Third person; hit-pause not published [M10] | ADAPT | Spec 5: "Weight and readability"; take the hit-reaction slow-down, keep our third-person camera with no lock-on |
 | 38 | An enemy AI that can telegraph and react | 2 s mean gap, longer per attacker; practice foes start in defence [K1, K11] | Boss phases; own strong-attack timing per boss [M14, M12] | ADOPT | Spec 5: "an enemy AI that can telegraph and react"; both give concrete rhythms |
 | 39 | Injuries persist and heal on a schedule | Bleeding 1 HP per 6 s; injury fades 1 percent per 20 s; health does not heal itself [K1, K18] | Health regenerates; Classic difficulty makes it sparse [M25] | ADAPT | Spec 0: "Injuries persist and heal on a schedule"; KCD2's run in game seconds, ours in days |
-| 40 | The stagger model (Bumps) | A hit reaction slows the player; a too-long knock-back was fixed as a bug [K9] | A parry staggers the foe [M14] | ADAPT | Spec 5: "Bumps: contact classification and stagger"; cap distances as Bumps does (0.55 m) |
-| 41 | Footing: Down, cannot act, can be finished | Knocked-out men stay unconscious while a depth value fades; unconscious men no longer idle [K1, K12] | Not published | ADAPT | Spec: "On the ground. Cannot act; can be finished"; KCD2's timed unconsciousness gives the way back up |
+| 40 | The stagger model (Bumps) | A hit reaction slows the player; a too-long knock-back was fixed as a bug [K9] | A parry staggers the foe [M14] | ADAPT | Spec 5 lists Bumps for "Contact classification and stagger"; cap distances as Bumps does (0.55 m) |
+| 41 | Footing: Down, cannot act, can be finished | Knocked-out men stay unconscious while a depth value fades; unconscious men no longer idle [K1, K12] | Not published | ADAPT | Combat.cs: Down is "On the ground. Cannot act; can be finished"; KCD2's timed unconsciousness gives the way back up |
 | 42 | The risk: combat ruins the game; stop if it distracts | Combat is a loud complaint among players [K33]; a critic finds it "overly reliant on parry & riposte" [K23]; Warhorse made it "more accessible" [K16, K15] | Critics: repetitive, "contractual" [M19, M18]; PC Gamer 45 of 100 [M10] | ADOPT | Spec 8: "the correct decision is to stop there and leave violence as something that happens TO you" |
 
 Notes on the table:
@@ -304,13 +304,13 @@ Each entry: start pose, end pose, length and key frames with their source mark, 
 
 **D03 struck, steady.** Start: any stance. End: back in stance, a little lower. 18 frames (0.60 s). Head snaps for 4 frames, half-step of 0.25 m by f10, hand to the face, stance regained at f18. Judgement; stays under the 0.55 m stumble cap. Causes: footing stays steady. Sound: grunt, shoe scuff. Camera: none beyond B01's. Witnesses: nothing new.
 
-**D04 struck, reeling.** Start: D03 or stance. End: hunched, hand to the face, guard low (D05's pose). 30 frames (1.0 s). Two half-steps and a lurch, 0.55 m reached at f15 (0.5 s). Derived: equal to the Bumps stagger cap. Causes: footing reeling; guard drops (spec: "Guard is dropping"). Sound: a heavy grunt, a wet breath, shoes. Camera: none. Witnesses: the injured side shows (HarmBook.LooksLike has never been displayed).
+**D04 struck, reeling.** Start: D03 or stance. End: hunched, hand to the face, guard low (D05's pose). 30 frames (1.0 s). Two half-steps and a lurch, 0.55 m reached at f15 (0.5 s). Derived: equal to the Bumps stagger cap. Causes: footing reeling; guard drops (Combat.cs: Reeling means "Guard is dropping"). Sound: a heavy grunt, a wet breath, shoes. Camera: none. Witnesses: the injured side shows (HarmBook.LooksLike has never been displayed).
 
 **D05 reeling (loop).** Pose: swaying, one hand to the face, ragged breath, chin up. 45 frames (1.5 s) loop, judgement. Blends from D04; to D02, D06, E02. Footing reeling. Sound: breath at the ragged rate. Camera: none. Witnesses: his state reads as hurt.
 
 **D06 struck, knocked down.** Start: D04 or D05 pose. End: on the ground on his side, one hand on his head. 45 frames (1.5 s). Knees go in 8 frames, falls sideways, ground at f16 (0.53 s), 0.6 m from where he stood, then settles. Judgement. Causes: footing down. Sound: a gasp, a body fall at f16, a scrape of a hand on stone. Camera: on Tom's camera a 2 degree settle (judgement). Witnesses: aftermath begins at f16; the victim and a body on the ground are the strongest cue the mill can read.
 
-**D07 down (loop).** Pose: on his side, knees drawn, hand to the head, breathing. 90 frames (3.0 s) loop, judgement. Footing down: cannot act; can be finished (spec). The finishing verb is not in this first test. Sound: breath. Camera: none. Witnesses: aftermath persists.
+**D07 down (loop).** Pose: on his side, knees drawn, hand to the head, breathing. 90 frames (3.0 s) loop, judgement. Footing down: cannot act; can be finished (Combat.cs). The finishing verb is not in this first test. Sound: breath. Camera: none. Witnesses: aftermath persists.
 
 **D08 getting up.** Start: D07 pose. End: standing, hand on knee, reeling pose. 90 frames (3.0 s): hands and knees by f30, kneeling by f60, standing by f90. Judgement. Needed only if the test lets a downed man rise; the spec does not say. Sound: breath, a shoe on stone. Camera: none. Witnesses: a man standing up again is not a new event.
 
@@ -322,7 +322,11 @@ Each entry: start pose, end pose, length and key frames with their source mark, 
 
 ### 5.4 The first test, and what it measures to pass
 
-The scene: two men on the built Quay Street, packaged build, day and night. The second man squares up (A01), holds for 3 s or more (A02), then strikes Tom (B01). Tom guards (E01), backs off (A03) or shoves (C01). The second man swings up to three times. The three blows leave him steady, then reeling, then down (D03, D04, D06). A shove on him while reeling puts him down (D02). Nothing in the test kills anyone.
+The scene: Tom Nowak and a second man, on the built Quay Street, packaged build, day and night. Four short runs, each with both men in shot.
+- Run 1, the read. The second man squares up (A01) and holds for 3 s or more (A02), then strikes (B01). Tom guards (E01, E03) in one take and backs off (A03) in another.
+- Run 2, the shove. Tom shoves a steady second man (C01, D01); the pair ends more than 1.9 m apart.
+- Run 3, the strikes. Tom strikes the second man four times, 2.0 s apart (the KCD2 mean gap). Derived from the Combat.cs constants (swing cost 0.34, stamina back 0.09 a second, floor 2.8, reeling from 55 percent of it, an unguarded man at full capability): the blows add 1.00, 1.93, 2.78 and 3.57 punishment, so the man is steady after blow 1 (D03), reeling after blow 2 (D04, then D05 between blows), still reeling after blow 3 (D04 again, 0.02 short of the floor), and down on blow 4 (D06, then D07). With swings 2.5 s or more apart he goes down on blow 3. A shove on him while reeling puts him down at once (C01, D02). One run uses a miss (B02) because the second man stepped back.
+- Nothing in the test kills anyone.
 
 It passes when all of these hold. The thresholds are judgement unless marked.
 
@@ -330,7 +334,7 @@ It passes when all of these hold. The thresholds are judgement unless marked.
 2. **Readable.** A fresh reviewer (not the builder; CLAUDE.md's gate), shown the strike from the street camera at 3 m and at 8 m, says "he is about to hit" before the contact frame in at least 9 of 10 showings, and tells a shove from a punch in 10 of 10.
 3. **Answerable.** A scripted player with a 0.45 s delay (our figure) gets the guard live by f20 with at least 3 frames to spare: 0.45 + 0.10 = 0.55 s against 0.667 s.
 4. **Distances.** A shove ends with the two men more than 1.9 m apart in every run on level ground, with the shoved man moved 1.2 m, plus or minus 0.15 m. A strike moves a steady man 0.25 m, a reeling man no more than 0.55 m, a floored man ends within 0.15 m of 0.6 m from where he stood.
-5. **Footing and clip agree.** With Combat.Resolve, three strikes give D03, D04, D06 in that order and no fourth is needed; a shove on a reeling man gives D02. No clip plays in the wrong footing.
+5. **Footing and clip agree.** With Combat.Resolve, run 3 gives D03, D04, D04, D06 in that order (blows 1 to 4); a shove on a reeling man gives D02. No clip plays in the wrong footing, and the swinger is visibly short of breath by blow 4.
 6. **Joins.** No foot slide over 5 cm and no pop at any blend (NOW.md records a walk that slides at its joins, so this is a real risk).
 7. **What witnesses register.** Replayed in the headless simulation with two onlookers, one 6 m away in view and one behind a wall: the first records a precursor within 0.23 s of A01 starting, and act and victim at f22; the second records sound only, at f22. Neither records anything before A01. The shove records only the 4.0 s shove attention.
 8. **Tempo.** With the longer-telegraph setting on, the wind-up is 30 frames, every later key frame is 10 frames later, and the outcomes are identical.
@@ -372,7 +376,7 @@ Done means walked in the packaged build by the AI tester; it stays "ready for re
 11. The official wiki's example crime entry values (assault, importance 130): shown as an example of the table format [K4].
 12. Whether KCD2 has a kick or shove as a named verb; only the first game's codex and a clinch-push patch note were read [K22, K9].
 13. That fists knock out and do not kill in KCD2 (our reading of one help text with value 0) [K1].
-14. Any fist or brawl system in Mafia: not published; one critic says none [M18].
+14. Any fist or brawl system in Mafia: not published; one critic says none [M20].
 15. Any bystander, civilian or police reaction to a fight in Mafia: not published.
 16. A player summary of KCD2 surrender prompts (E to talk): from a search summary of Steam threads, not read as a page, not used for any claim above.
 17. Which weapons lack which direction in KCD2: guides conflict [K18, K34, K31].
