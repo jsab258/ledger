@@ -61,7 +61,7 @@ def main():
         orig_context(kind, lo, hi)
 
     rr.reset, rr.context = reset, context
-    sys.argv = ["review_render.py", a.glb, a.out, "--views", vj, "--context", "street", "--samples", str(a.samples), "--width", "1600", "--height", "1200",
+    sys.argv = ["review_render.py", a.glb, a.out, "--views", vj, "--context", "none", "--samples", str(a.samples), "--width", "1600", "--height", "1200",
                 "--hdri", HDRI, "--only", a.only]
     rr.main()
     if a.no_previews:

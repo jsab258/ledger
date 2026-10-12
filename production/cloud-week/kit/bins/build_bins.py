@@ -32,6 +32,7 @@ TARGET_JSON = os.path.join(REPO, "production", "cloud-week", "targets", "litter-
 ASSET_DIR = os.path.join(REPO, "production", "assets", "cloud-week", "bins")
 NPZ_DIR = os.path.join(HERE, "build")
 
+BURN_AZ = -58.0              # the burnt hole's azimuth: the target's -28 would merge it with the aperture (now 230 wide), so it moves to the hood's upper left, clear of the aperture's edge
 BIN_OFFSET = 226.0           # post axis to bin axis (the target's 216, +-10): the rim bead stands clear of the post
 SIDES_K1, SIDES_K2, SIDES_D1 = 36, 36, 36
 
@@ -169,6 +170,17 @@ def dome_y(x, z, y_base, dy, r, n=12):
     return orient(out, F)
 
 
+def dome_z(x, y, z_base, dz, r, n=10):
+    """a rivet head of radius r and height |dz| standing from z_base toward +z (dz > 0) or -z"""
+    prof = [(0.0, 0.0), (r, 0.0), (r * 0.92, abs(dz) * 0.45), (r * 0.6, abs(dz) * 0.85), (0.0, abs(dz))]
+    V, F = lathe(prof, n)
+    V = np.array(V)
+    V[:, 2] = z_base + (1.0 if dz >= 0 else -1.0) * V[:, 2]
+    V[:, 0] += x
+    V[:, 1] += y
+    return orient(V, F)
+
+
 def sack(centre, w, d, h, n=14, rows=8, seed=3):
     """a black refuse sack: a lumpy squashed ellipsoid, closed (a separate object)"""
     rng = np.random.default_rng(seed)
@@ -186,7 +198,7 @@ def sack(centre, w, d, h, n=14, rows=8, seed=3):
             b = len(V)
             for k in range(n):
                 a = 2 * math.pi * k / n
-                lump = 1.0 + 0.10 * math.sin(3 * a + i) + 0.05 * rng.standard_normal()
+                lump = 1.0 + 0.05 * math.sin(3 * a + i) + 0.015 * rng.standard_normal()
                 V.append((centre[0] + rr * math.cos(a) * w / 2.0 * lump, centre[1] + rr * math.sin(a) * d / 2.0 * lump, centre[2] + zz * h / 2.0))
             idx.append(list(range(b, b + n)))
     F = []
@@ -273,7 +285,7 @@ def build_k1(T, cond, out_dir, npz_dir):
         zc = (c["z0"] + c["z1"]) / 2.0
         # ears: two 12 thick plates on the far side (-x), 22 long, 40 high, 6 apart in y
         for sy in (-1.0, 1.0):
-            ear = prism_y([(-37.0, c["z0"]), (-60.0, c["z0"]), (-60.0, c["z1"]), (-37.0, c["z1"])], sy * 6.0 if sy > 0 else -18.0, 18.0 if sy > 0 else -6.0)
+            ear = prism_y([(-37.0, c["z0"] + 2.0), (-60.0, c["z0"] + 2.0), (-60.0, c["z1"] - 2.0), (-37.0, c["z1"] - 2.0)], sy * 6.0 if sy > 0 else -18.0, 18.0 if sy > 0 else -6.0)
             parts["ear_%d_%s" % (i, "p" if sy > 0 else "m")] = (ear[0], ear[1], "paint_green", 1.5, "bin")
         bolt = cyl_y(-50.0, zc, -24.0, 24.0, 4.0, 12)
         parts["bolt_%d" % i] = (bolt[0], bolt[1], "zinc_galv", None, "bin")
@@ -290,7 +302,7 @@ def build_k1(T, cond, out_dir, npz_dir):
             V = rot_y(V, -C["post_lean_deg"], (0.0, 0.0))                # the post leans toward the roadway side by its lean (-x here is the far side from the bin)
         parts[nm] = (V, F, mat, bev, grp)
     if C["liner_sack"]:
-        sk = sack((BIN_OFFSET, 0.0, 1062.0), 300.0, 270.0, 150.0)
+        sk = sack((BIN_OFFSET, 0.0, 1062.0), 300.0, 270.0, 150.0, n=16, rows=8)
         V = np.array(sk[0])
         if C["bin_tilt_deg"]:
             V = rot_y(V, C["bin_tilt_deg"], (Po["od"] / 2.0, 640.0))
@@ -342,7 +354,7 @@ def build_k2(T, cond, out_dir, npz_dir):
     # the burnt hood (condition c): an irregular hole melted through the skirt on the upper left, 115 x 85, at azimuth -28, z 770
     if C.get("burn"):
         bn = C["burn"]
-        a_ = math.radians(bn["az"])
+        a_ = math.radians(BURN_AZ)
         dirv = (math.cos(a_), math.sin(a_))
         w_, h_ = bn["w"], bn["h"]
         rng = np.random.default_rng(11)
@@ -350,7 +362,7 @@ def build_k2(T, cond, out_dir, npz_dir):
         for k in range(18):
             t = 2 * math.pi * k / 18
             rad = 1.0 + 0.16 * math.sin(3 * t + 0.6) + 0.07 * math.sin(5 * t)
-            poly.append((math.cos(t) * w_ / 2.0 * rad, bn["z"] + math.sin(t) * h_ / 2.0 * rad))
+            poly.append((math.cos(t) * w_ / 2.0 * rad, bn["z"] + 10.0 + math.sin(t) * h_ / 2.0 * rad))
         Vh, Fh = irregular_prism_dir(poly, (0.0, 0.0), dirv, 150.0, 300.0)
         bs.bool_op(body, Vh, Fh, "DIFFERENCE")
     # the barrel lock at the back of the join: an escutcheon 40 across, 4 proud, a 22 barrel, at azimuth 180, z 650 (a 2 mm slot cut across the barrel is the engine's normal map)
@@ -434,9 +446,9 @@ def build_d1(T, cond, out_dir, npz_dir):
         Vg = np.stack([Vg[:, 1], Vg[:, 0], Vg[:, 2]], 1)
         Vg, Fg = orient(Vg, Fg)
         B.add("d1_handle_%s" % ("p" if sgn > 0 else "m"), (Vg, Fg), "zinc", bev=None)
-        for zz in (z_mid - hh / 2.0 + st_ / 2.0, z_mid + hh / 2.0 - st_ / 2.0):
+        for zz, dz in ((z_mid - hh / 2.0, -3.0), (z_mid + hh / 2.0, 3.0)):          # the heads on the strap's outer faces, at the ends (the strap's feet are buried in the body)
             for sx in (-1.0, 1.0):
-                rv = dome_y(sx * 7.0, zz, sgn * (r_out - 3.0), sgn * 3.0 * 1.0, 4.0, 10)
+                rv = dome_z(sx * 7.0, sgn * (r_out + 6.0), zz, dz, 4.0, 10)
                 B.add("d1_rivet_%d_%d_%d" % (int(sgn), int(zz), int(sx)), rv, "zinc", bev=None)
     obs = bs.finish(B, mats, 0.0)
     return bs.write(obs, "D1_dustbin_" + cond, 0.0, out_dir, npz_dir)

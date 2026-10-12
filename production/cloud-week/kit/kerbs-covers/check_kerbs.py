@@ -91,6 +91,8 @@ def main():
     rows = {"A": [], "B": []}
     for pg in polys_of(Pc):
         cy = pg.centroid.y
+        if pg.bounds[0] <= -598.0 or pg.bounds[2] >= 598.0:                       # the pieces cut by the ends of the 1.2 m run are not whole setts
+            continue
         rows["A" if cy < 104 else "B"].append(pg.bounds[2] - pg.bounds[0] + 1.0)
     allL = rows["A"] + rows["B"]
     rep.add("CHANNEL setts: lengths along the kerb 120 to 210 (+-15), the mean about 160", min(allL) >= 120 - 15 - 2 and max(allL) <= 210 + 15 + 2 and 130 <= float(np.mean(allL)) <= 190, [round(min(allL)), round(max(allL)), round(float(np.mean(allL)))], "120 to 210, mean 160")

@@ -142,10 +142,18 @@ def setts_run(P, B, rng, x0, x1, name_prefix="sett", along=(120.0, 210.0), joint
     mats = ["sett_pale_worn", "sett_dull", "granite_blue_grey"]
     share = [0.35, 0.5, 0.15]
     out = {m: [] for m in mats}
+    joints_a = []                                                                  # course A's joint positions: course B's must not fall within 40 of one (running bond, REVIEW-v1-street)
     for ci, (nm, y0, y1) in enumerate(courses):
         x = x0 - (0.0 if ci == 0 else float(rng.uniform(40.0, 90.0)))
         while x < x1:
             L = float(rng.uniform(*along))
+            if ci == 1:
+                for _ in range(40):
+                    if all(abs((x + L + joint / 2.0) - ja) > 40.0 for ja in joints_a):
+                        break
+                    L = float(rng.uniform(*along))
+            else:
+                joints_a.append(x + L + joint / 2.0)
             xa, xb = max(x, x0), min(x + L, x1)
             if xb - xa > 20.0:
                 dz = -float(rng.uniform(0.0, 3.0)) - (float(rng.uniform(0.0, 5.0)) if (ci == 1 and rng.random() < 0.3) else 0.0)
@@ -424,40 +432,90 @@ def piece_service(T, B, kind):
 
 class Shift:
     """a Parts look-alike that moves every added object by (dx, dy, dz): the review composition places the kit's own pieces, built by their own functions"""
-    def __init__(self, B, dx=0.0, dy=0.0, dz=0.0, rot_deg=0.0):
-        self.B, self.d, self.rot = B, np.array([dx, dy, dz], float), math.radians(rot_deg)
+    def __init__(self, B, dx=0.0, dy=0.0, dz=0.0, rot_deg=0.0, deferred=False):
+        self.B, self.d, self.rot, self.deferred, self.objs = B, np.array([dx, dy, dz], float), math.radians(rot_deg), deferred, []
 
     def add(self, name, VF, mat, bev=None, min_angle=50.0):
         V = np.asarray(VF[0], float)
         if self.rot:
             c, s_ = math.cos(self.rot), math.sin(self.rot)
             V = np.column_stack([V[:, 0] * c - V[:, 1] * s_, V[:, 0] * s_ + V[:, 1] * c, V[:, 2]])
+        if self.deferred:                                                           # the piece's own boolean cutters work at the origin: the objects are moved when it is finished (REVIEW-v1-street fault 1)
+            ob = self.B.add(name, (V, VF[1]), mat, bev=bev, min_angle=min_angle)
+            self.objs.append(ob)
+            return ob
         return self.B.add(name, (V + self.d, VF[1]), mat, bev=bev, min_angle=min_angle)
+
+    def apply(self):
+        from mathutils import Matrix
+        for ob in self.objs:
+            ob.data.transform(Matrix.Translation(tuple(self.d)))
+            ob.data.update()
+
+    def bounds(self):
+        V = np.vstack([np.array([v.co[:] for v in ob.data.vertices]) for ob in self.objs])
+        return V.min(0), V.max(0)
+
+
+def cut(ob, box):
+    bs.bool_op(ob, *box3(*box), "DIFFERENCE")
 
 
 def piece_review(T, B):
-    """not a kit piece: the pieces together as a player meets them, for the two review views: a run of kerb (granite, then a stretch of concrete) with its channel, a gully grate
-    and a round cover in the road, a stud cover in the footway, and (at x 8 to 12.8 m) the dropped crossover"""
+    """not a kit piece: the pieces together as a player meets them, for the two review views: a run of kerb (granite in blocks of 750 to 1050, then a stretch of concrete laid to the
+    granite's line and level) with its channel, a gully grate and a round cover in the road, a stud cover in the footway, and (at x 8 to 12.8 m) the dropped crossover. After
+    REVIEW-v1-street: the holed pieces are built at the origin and moved when finished, the grate stands flush with the setts, the ground is cut round every cover and grate, the
+    concrete meets the granite with an 8 mm joint at the granite's level"""
     K = T["pieces"]["kerb_granite"]
-    for i in range(7):
-        kerb_block(K, 900.0, Shift(B, -3100.0 + i * 908.0), "granite_grey", bev=10.0)
+    grng = np.random.default_rng(21)
+    x, prev, x_end = -3550.0, 0.0, 2798.0
+    while x < x_end - 1.0:
+        L = float(grng.uniform(750.0, 1050.0))
+        while abs(L - prev) < 20.0:
+            L = float(grng.uniform(750.0, 1050.0))
+        if x_end - (x + L) < 400.0:
+            L = x_end - x                                                           # the last block is cut to close the run
+        kerb_block(K, L, Shift(B, x + L / 2.0), "granite_grey", bev=10.0)
+        prev, x = L, x + L + 8.0
+    X0C = 3263.5                                                                    # the first concrete block's centre: 8 mm after the granite's end, both at the granite's top (+20 on its bed)
     for i in range(4):
-        kerb_block(T["pieces"]["kerb_concrete"], 915.0, Shift(B, 3500.0 + i * 923.0), "concrete_kerb", bev=3.0)
+        kerb_block(T["pieces"]["kerb_concrete"], 915.0, Shift(B, X0C + i * 923.0, 0.0, 20.0), "concrete_kerb", bev=3.0)
     rng = np.random.default_rng(7)
-    setts_run(T["pieces"]["channel_setts"], Shift(B), rng, -3550.0, 3050.0)
-    Shift(B).add("mortar", box3(-3549.0, 3049.0, 1.0, 203.0, -141.0, -8.0), "bitumen_joint")
+    setts_run(T["pieces"]["channel_setts"], Shift(B), rng, -3550.0, 2802.0)
+    Shift(B).add("mortar", box3(-3549.0, 2801.0, 1.0, 203.0, -141.0, -8.0), "bitumen_joint")
     for i in range(4):
-        Shift(B, 3500.0 + i * 923.0).add("channel", prism_x([tuple(p) for p in T["pieces"]["channel_concrete"]["section_yz"]], -457.5, 457.5), "concrete_kerb", bev=None)
+        Shift(B, X0C + i * 923.0, 0.0, 20.0).add("channel", prism_x([tuple(p) for p in T["pieces"]["channel_concrete"]["section_yz"]], -457.5, 457.5), "concrete_kerb", bev=None)
     setts_run(T["pieces"]["channel_setts"], Shift(B), np.random.default_rng(8), 7300.0, 12900.0, name_prefix="sett_b")
     Shift(B).add("mortar_b", box3(7301.0, 12899.0, 1.0, 203.0, -141.0, -8.0), "bitumen_joint")
     # the street's own ground, for the pictures only: the footway flags (top 110, behind the kerb and round the crossing) and the road (top 6, flat)
-    for (xa, xb, ya, yb) in ((-3600.0, 8000.0, -2600.0, -170.0), (8000.0, 12900.0, -2600.0, -845.0), (8000.0, 8760.0, -845.0, -170.0), (12040.0, 12900.0, -845.0, -170.0)):
+    for (xa, xb, ya, yb) in ((-3600.0, 2802.0, -40000.0, -170.0), (2802.0, 8000.0, -40000.0, -125.0), (8000.0, 12900.0, -40000.0, -845.0), (8000.0, 8760.0, -845.0, -170.0), (12040.0, 12900.0, -845.0, -170.0)):
         Shift(B).add("ground_footway", box3(xa, xb, ya, yb, -300.0, 110.0), "flag_pale")
-    Shift(B).add("ground_road", box3(-3600.0, 12900.0, 204.0, 4200.0, -300.0, 6.0), "tarmac_infill")
-    piece_gully_A(T, Shift(B, 800.0, 235.0, 6.0))
-    piece_cover_round(T, Shift(B, -1500.0, 1400.0, 6.0))
-    piece_cover_stud(T, Shift(B, -1800.0, -800.0, 110.0))
+    Shift(B).add("ground_road_a", box3(-3600.0, 2806.0, 204.0, 40000.0, -300.0, 6.0), "tarmac_infill")
+    Shift(B).add("ground_road_b", box3(2806.0, 6498.0, 255.0, 40000.0, -300.0, 6.0), "tarmac_infill")
+    Shift(B).add("ground_road_c", box3(6498.0, 12900.0, 204.0, 40000.0, -300.0, 6.0), "tarmac_infill")
+    # the holed pieces: at the origin, then moved
+    g = Shift(B, 800.0, 235.0, 0.0, deferred=True)
+    piece_gully_A(T, g)
+    g.apply()
+    rc = Shift(B, 300.0, 1300.0, 6.0, deferred=True)
+    piece_cover_round(T, rc)
+    rc.apply()
+    sc = Shift(B, 1500.0, -800.0, 110.0, deferred=True)
+    piece_cover_stud(T, sc)
+    sc.apply()
     piece_crossover(T, Shift(B, 10400.0, 0.0, 0.0))
+    # the ground and the channel are cut round what stands in them
+    glo, ghi = g.bounds()
+    slo, shi = sc.bounds()
+    rlo, rhi = rc.bounds()
+    for ob in list(B.objs):
+        if ob.name.startswith(("sett_", "mortar")) and not ob.name.endswith("_b"):
+            cut(ob, (glo[0] - 0.5, ghi[0] + 0.5, glo[1] - 0.5, 204.0, -300.0, 10.0))
+        if ob.name.startswith("ground_road_a"):
+            cut(ob, (glo[0] - 0.5, ghi[0] + 0.5, glo[1] - 0.5, ghi[1] + 0.5, -300.0, 10.0))
+            bs.bool_op(ob, *cyl_z(300.0, 1300.0, -300.0, 10.0, 346.0, 96), "DIFFERENCE")
+        if ob.name.startswith("ground_footway"):
+            cut(ob, (slo[0] - 0.5, shi[0] + 0.5, slo[1] - 0.5, shi[1] + 0.5, -300.0, 120.0))
 
 
 PIECES = [
@@ -481,7 +539,7 @@ def bevel_ends(ob, width, min_angle=50.0):
         xmin = min(abs(v.co.x) for v in bm.verts)
         sel = [e for e in sel if all(abs(abs(v.co.x) - xm) < 0.01 or abs(abs(v.co.x) - xmin) < 0.01 for v in e.verts) and abs(e.verts[0].co.x - e.verts[1].co.x) < 0.01]
     if sel:
-        bmesh.ops.bevel(bm, geom=sel, offset=width, segments=1, affect="EDGES", clamp_overlap=True)
+        bmesh.ops.bevel(bm, geom=sel, offset=width, segments=3 if width >= 8.0 else 1, affect="EDGES", clamp_overlap=True)
     bm.to_mesh(ob.data)
     bm.free()
 
