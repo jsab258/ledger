@@ -7,15 +7,16 @@
 - **21 ambience loops, 75 s, seamless**: traffic, gulls, harbour, wind, voices through a window and a radio through a window, each in day, night and rain (18), and the rain on pavement, on an awning and in a gutter (3, rain only). Beds are stereo; gulls, voices, radio and the pavement rain are mono. Mixed at their own levels the day bed measures -36.5 LUFS, night -39.5, rain -33.5.
 - **40 footsteps**: paving, setts, asphalt, wet, wood, 8 variants each (mono, 101 to 260 ms).
 - **36 other one-shots**: shop door (open 2, close 3, latch 4), house door (open 3, close 5, latch 3), shop bell 5, phone box (door creak 5, door shut 3, a telephone ringing 3).
-- Previews in `production/previews/cloud-week/sound/`: 16 spectrogram JPEGs and 9 listening clips (Ogg Vorbis, at most 20 s). The three mix clips carry +10 dB over their real levels, with a peak limiter, so they are audible; they are for judging what is in each bed.
+- Previews: 16 spectrogram JPEGs in `production/previews/cloud-week/sound/` (in git) and 9 listening clips (Ogg Vorbis, at most 20 s: the three bed mixes, a walk on each surface, the doors). **The clips are not in git** (the size guard refuses audio): they sit beside the JPEGs locally and in `/home/user/ledger-scratch/sound-out/clips/`. The WAVs and the clips live in `/home/user/ledger-scratch/sound-out/` and are rebuilt by one command, `make_sound.py`; on the PC they go to `F:\LedgerTools\sound-out`. The three mix clips carry +10 dB over their real levels, with a peak limiter, so they are audible (the rain clip is encoded at a lower Vorbis quality to stay under 300 KB); they are for judging what is in each bed.
 
 ## Rebuild
 
 ```
 python production/cloud-week/sound/fetch_sources.py   # the sources, 102 MB, into SOUND_SOURCES
-python production/cloud-week/sound/make_sound.py      # 97 WAVs, 226 MB, into SOUND_OUT, and manifest.json
-python production/cloud-week/sound/check_sound.py     # checks/check_v1.json: "N of M rows pass"
-python production/cloud-week/sound/make_previews.py   # production/previews/cloud-week/sound/
+python production/cloud-week/sound/make_sound.py      # 97 WAVs (226 MB) and the 9 clips into SOUND_OUT, manifest.json; about 12 minutes
+python production/cloud-week/sound/check_sound.py     # checks/check_v1.json: "N of M rows pass" (1049 of 1049 on the 12 October build)
+python production/cloud-week/sound/make_previews.py   # the 16 spectrogram JPEGs, several minutes
+python production/cloud-week/sound/check_sound.py --negative-controls   # breaks six outputs on purpose; each must fail by name (6 of 6 caught)
 ```
 
 Needs ffmpeg, ffprobe, curl, numpy and scipy; no other package. The defaults are the cloud's folders; on the PC set SOUND_SOURCES and SOUND_OUT (for instance `F:/LedgerTools/sound-sources` and `F:/LedgerTools/sound-out`). Every step is deterministic (fixed cut points, seeded random numbers, seeded dither): a second run gives byte-identical WAVs, and `manifest.json` holds each file's sha256. `fetch_sources.py` refuses any source whose page does not say CC0, and downloads one file at a time, because Freesound's server answers 403 to parallel downloads.

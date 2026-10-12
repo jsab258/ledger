@@ -107,7 +107,7 @@ Automatic (`check_sound.py`, checks/check_v1.json; each row names its case):
 13. Every output's every source has a row in `sources.json` with its page, author, licence, date read, download and md5, and the file on disk matches the md5.
 14. Every source's licence reads CC0 on its page, and no source's title or page text holds a content-rule word.
 15. Every WAV's sha256 matches `manifest.json`.
-16. The previews exist: sixteen spectrogram JPEGs (the six layers with day, night and rain stacked, the three rains, the five footstep surfaces, the four door, bell and phone-box sets; 1600 px wide, under 500 KB) and nine listening clips (OGG Vorbis, at most 20 s, under 300 KB: the three bed mixes, a walk on each surface, the doors).
+16. The previews exist: sixteen spectrogram JPEGs (the six layers with day, night and rain stacked, the three rains, the five footstep surfaces, the four door, bell and phone-box sets; 1600 px wide, under 500 KB) and nine listening clips (OGG Vorbis, at most 20 s, under 300 KB: the three bed mixes, a walk on each surface, the doors; audio stays out of git).
 
 By ear (the fresh listener, against sections 1 to 4; NOTES.md lists them for Jafar):
 
