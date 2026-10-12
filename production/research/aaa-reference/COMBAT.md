@@ -1,5 +1,7 @@
 # COMBAT: how Kingdom Come 2 and Mafia: The Old Country do melee, set beside the combat spec
 
+Reviewed by a fresh reviewer on 13 October 2026 (REVIEW-7b.md); its listed fixes are applied and were not reviewed again.
+
 13 October 2026 (Jafar's local time). Cloud week 42, unit 7b, the combat part. Public pages only. Nothing from either game (files, text, pictures, sound) is in this file: only this file's own sentences, its own arithmetic and the developers' published numbers, each with its source key. The keys are listed with their links at the end.
 
 ## In plain words
@@ -7,7 +9,7 @@
 1. Neither game publishes a timing test. The only hard numbers are Warhorse's own rules table for Kingdom Come 2 (stamina costs, about 2 seconds between a careful opponent's attacks). For Mafia's knife duels there are no numbers at all.
 2. Both games make a blow readable with one clear signal (a green shield, a red glint). That backs the spec's "telegraph, not tell". Kingdom Come's stamina, witnesses and town unrest suit LEDGER; its stats, perks and lock-on do not.
 3. Of 42 points taken from the spec: 12 ADOPT, 25 ADAPT, 5 IGNORE (section 4).
-4. The draft for phase 3 lists 17 animations for two men with a shove and a strike (section 5). The strike winds up for about two thirds of a second (20 frames), by judgement: people need about 0.2 s just to see a move.
+4. The draft for phase 3 lists 17 animations for two men with a shove and a strike (section 5). The strike winds up for about two thirds of a second (20 frames), by judgement: people need about 0.2 s just to press one key when a light comes on, before any choice.
 5. Jafar needs to do nothing now. Combat waits for characters (PLAN.md), and section 5 is the brief for that day.
 
 ## 1. How to read this file
@@ -41,8 +43,8 @@
 | Riposte | A counter-blow right after a perfect block. A riposte can only be stopped by another perfect block. It costs stamina. | K18 wiki, K28 press |
 | Master strike | A counter from the opposite side at the green shield. Taught by Master Tomcat after a duel. Sword only, say Gamerant and the players; one player says NPCs use it in a fist fight. | K24 press, K31 press, K32 player |
 | Dodge | A sidestep that costs stamina (official cost 20, section 2.3). A perfect dodge is timed to the same shield. Beebom says it suits light swords and fists best. | K1 official, K28 press |
-| Clinch, lock, grip, throw | Warhorse says "locks, grips and throws" were added so a man can be grappled into submission, and that an unarmed man can disarm an armed one. A patch note says the clinch can push a man out of a fighting pen. A perk lets two unarmed men go from a clinch to an arm lock and a chokehold that knocks out. | K5 official, K9 official, K29 press |
-| Shove or kick | The first game's codex has a kick that pushes a man away. For KCD2 no page read describes a kick or shove as its own verb; the clinch push above is the nearest. | K22 wiki (first game), K9 official |
+| Clinch, lock, grip, throw | Warhorse says "locks, grips and throws" were added so a man can be grappled into submission, and that an unarmed man can disarm an armed one. Patch 1.2 removed, as a fault, the ability to push an opponent out of a fighting pen with the clinch. A perk lets two unarmed men go from a clinch to an arm lock and a chokehold that knocks out. | K5 official, K9 official, K29 press |
+| Shove or kick | The first game's codex has a kick that pushes a man away. For KCD2 no page read describes a kick or shove as its own verb; the nearest was a clinch push out of a fighting pen, which patch 1.2 removed as a fault. | K22 wiki (first game), K9 official |
 | Fists | Hooks and jabs in the first game's codex. For KCD2, a wiki says a fistfight uses fists and "occasional kicks". | K22 wiki, K18 wiki |
 | Tackle | A tackling attack exists (patch 1.2 mentions it). No timing published. | K9 official |
 
@@ -63,6 +65,8 @@
 | Time to reach full charge | AttackChargingCooldown | 1.4 | seconds |
 | Mean gap between attacks for a defensive AI fighter | CombatAutoMaxAttackDelay | 2 | seconds |
 | How the gap grows for each attacker | CombatAutoAttackDelayIncreasePerAttacker | 0.8 | "how many times the period is increased" |
+| Spread of that gap | CombatAutoAttackDelaySigma | 4 | seconds ("attack delay variation") |
+| Gap shortened when the target is another NPC | CombatAutoNPCOpponentAtkDelayCoef | 0.5 | share |
 | Smallest perfect-block slot at the lowest skill | MinPerfectBlockSlot01 | 0.3 | unit not stated |
 | Perfect-block window, as a share of the lead time of the attack | MaxPerfectBlockSlotModifier | 0.85 | share |
 | Fewest steps in an AI combo | ComboMinSteps | 3 | steps |
@@ -75,12 +79,12 @@
 Derived from those rows (formula shown; none is an official figure):
 - At rest one attack's stamina comes back in 26 / 22 = 1.18 s. With a block held it takes 26 / (22 x 0.6) = 1.97 s. A dodge takes 20 / 22 = 0.91 s. (derived)
 - 2.356 radians is 135 degrees (2.35619 x 57.2958 = 135.0). (derived)
-- If the gap rule is "the period grows by 0.8 of itself for each extra attacker" (a reading by this file, unverified), the gap is 2.0 s for one attacker, 3.6 s each for two, 5.2 s each for three, 6.8 s each for four. The crowd as a whole then swings at about 0.5 to 0.6 times a second whatever its size (derived from an unverified reading).
+- If the gap rule is "the period grows by 0.8 of itself for each extra attacker" (a reading by this file, unverified), the gap is 2.0 s for one attacker, 3.6 s each for two, 5.2 s each for three, 6.8 s each for four. The crowd as a whole then swings at about 0.5 to 0.6 times a second whatever its size, before the official 4 s spread is applied (derived from an unverified reading).
 - Reading of the perfect-block row: the window is at most 85 percent of the time between the slot opening and the hit, and it widens with the square root of relative skill (the official table gives the exponent 0.5). So a slower attack gives a longer window. This is a reading of a help text, unverified.
 - The same table holds chance-weighted AI choices: block, perfect block, master strike and dodge each have a pair of probability values, and combos have step probabilities (names such as CombatPerfectBlockProb1 and ComboNextStepProbHit) [K1]. The AI is not deterministic even though the player's results are.
 
 What the patches say about timing, without numbers [K9 patch 1.2 unless marked]:
-- "Introduced a short delay between melee attacking an opponent while not locked on to reduce the effectiveness of attack spamming."
+- A short delay was added between melee attacks made without lock-on, so that spamming attacks works less well.
 - A hit reaction now slows the player, so he cannot "easily back away from attacking enemies".
 - Being hit no longer interrupts drawing a weapon.
 - Patch 1.4: practice opponents "start practice fights in defense" [K11].
@@ -197,14 +201,14 @@ The verdict says what LEDGER should do with the games' practice for that point, 
 | # | Spec point | KCD2 | Mafia TOC | Verdict | Reason |
 |---|---|---|---|---|---|
 | 1 | Filter: "Violence is seen" | Witnesses report or confront; reputation spreads at a stated delay; violence makes a region more watchful; watchers flee if it comes close [K14, K1, K9] | Not published for fights; a second enemy who comes near spots a choke, and a visible corpse alerts guards [M15, M1] | ADOPT | Spec section 1 makes witnesses the cost; KCD2 builds consequence from witnesses and LEDGER's seven slots go finer |
-| 2 | Not a win condition: killing a witness works, the second problem is larger | Killing the would-be reporter stops the alarm [K30], but a corpse near you still gets you accused [K25] and fades after 300 or 3,600 s [K1] | Not published | ADAPT | Keep "works, evidence remains"; drop the corpse timer, since spec 7b says nothing "touches a corpse" |
+| 2 | Not a win condition: killing a witness works, the second problem is larger | Killing the would-be reporter stops the alarm [K30], but a corpse near you still gets you accused [K25] and fades after 300 or 3,600 s [K1] | Not published | ADAPT | Keep "works, evidence remains"; drop the corpse timer, since spec 7b says none of the containment tools "touch a corpse" |
 | 3 | Not empowering: Tom is "not a fighter" | Weak at the start [K27], outnumbered is deadly [K33], but skills grow and one player says "unstoppable by halfway" [K33] | Enzo is a "coiled spring" who scrapes for weapons [M7]; scarce ammunition [M8] | ADAPT | Keep "not a superhero"; drop growth, since D11 forbids stats and spec says "if the player feels good at fighting, the fiction ... break" |
 | 4 | Not frequent: "a handful of fights" | Fights, tourneys and bandit events recur; no count published | Duels come at the end of each chapter [M19]; critics call them repetitive [M19, M18], one disagrees [M20] | IGNORE | Spec target is a handful per playthrough; both games run far more and Mafia's critics are the warning |
 | 5 | Not free: witnesses, lasting injury, treatment, feud | Health does not heal itself, bleeding loses 1 HP per 6 s, crimes bring fines or branding, gear wears [K18, K1, K26] | Health regenerates; knife durability; no social cost published [M25, M3] | ADOPT | Spec: "Every swing has a cost even when you win"; KCD2 charges body, gear and standing |
 | 6 | Not a separate mode: no arena, no lock-on state, no sting | Lock-on rose, a hare icon with crossed swords in direct combat, music and UI hint at combat (a fix mentions them) [K18, K30, K10] | A separate one-on-one mode with five actions [M7, M22] | IGNORE | Spec: "No arena, no lock-on state you enter and exit, no music sting" |
 | 7 | Verb: Square up (a stance everyone sees) | No stance verb; drawing a weapon makes NPCs confront; above anger 0.67 NPCs arm everywhere [K1, K9] | Enzo "boldly draws his knife to challenge foes" [M6]; duel start is scripted [M5] | ADAPT | Spec: "Witnesses start paying attention BEFORE anything lands"; both show a visible commitment, LEDGER's is a stance with fists |
 | 8 | Verb: Strike (slow, telegraphed, heavy; a miss hurts you more) | Four-direction swing, chain, cost 26, spam delay, charge up to 1.4 s [K1, K18, K9] | Slash, thrust, red-glint heavy strike, audio cues [M1, M13] | ADAPT | Spec: "A small verb set ... beats a large one where the player mashes"; take one-cost swing and sight-and-sound tell, drop directions and combos |
-| 9 | Verb: Shove (distance, non-injuring, de-escalation) | Clinch can push a man out of a pen; "locks, grips and throws" [K9, K5]; kick in the first game [K22] | Not published | ADAPT | Spec: "Cheap, non-injuring"; KCD2's clinch is a weapon lock, LEDGER's is a two-hand push that makes space |
+| 9 | Verb: Shove (distance, non-injuring, de-escalation) | Clinch with "locks, grips and throws" [K5]; a clinch push out of a fighting pen was removed as a fault in patch 1.2 [K9]; kick in the first game [K22] | Not published | ADAPT | Spec: "Cheap, non-injuring"; KCD2's clinch is a weapon lock, LEDGER's is a two-hand push that makes space |
 | 10 | Verb: Guard (absorb; cannot guard forever) | Block drains stamina with the blow, regain x0.6; perfect block free; armour turns hits into stamina loss [K18, K1, K28] | Parry and dodge; no held guard published; foes guard and can be guard-broken [M13] | ADAPT | Spec: "Absorb rather than avoid"; take stamina drain and slower regain, drop the perfect-block prize |
 | 11 | Verb: Back off ("the game should say so") | Developers' tip: "consider a tactical retreat" [K8]; fleeing draws a chase [K26] | No retreat inside a duel [M22] | ADOPT | Spec: "explicitly viable"; Warhorse's own tips say the same |
 | 12 | Finishing a downed man, as a decision afterwards | A separate mercy kill on a weak foe [K18, K9]; knock-out is the alternative | Quick-time kills inside the duel; one-hit knife kills mid-fight [M14, M3] | ADAPT | Spec: "never ... in the flow of a scuffle"; KCD2's separate act fits, Mafia's in-flow kills do not |
@@ -241,12 +245,12 @@ The verdict says what LEDGER should do with the games' practice for that point, 
 
 Notes on the table:
 - The rows cover every verb (six, with finishing), every "must not be" (five), the interface rules, the plan points from sections 5 and 6, Jafar's answers, the body rules of 7b and the risk of section 8.
-- Not copied, because RULINGS, canon or the coverage audit rule them out: KCD2's stats, perks, skills that rise with use, jump, horses, hunger, alcohol, dice and betting; Mafia's driving, cover shooting and quick-time bouts. RULINGS "What the game is" lists no jump, fists and improvised weapons, firearms rare, no health bar, no stats.
+- Not copied, because RULINGS, canon or the coverage audit rule them out: KCD2's stats, perks, skills that rise with use, jump, horses, hunger, alcohol, dice and betting; Mafia's driving, cover shooting and quick-time bouts. RULINGS "What the game is" lists no jump, fists and improvised weapons, firearms rare (23 September, genre) and no stats (D11). No health bar is the spec's own rule (combat-spec section 4), not a ruling.
 - Ideas from the games that are not in the spec and could be raised later: a hit from behind that counts more (KCD2 official, x1.2 from 135 degrees); hiding a body to delay its finding (Mafia's stash points); NPCs that flee a fight when it moves close to them (KCD2 patch 1.2).
 
 ## 5. DRAFT TARGET LIST for combat-spec phase 3
 
-**Status: DRAFT.** Phase 3 in the spec is "Bodies and telegraphs. Animation, the read, hit reactions, the guard", blocked on characters. This list is what a first test needs. It names targets and timings, not clips. Where the clips come from (MetaHuman movement clips and Mixamo, per RULINGS 3 October, or the project's own capture) is not decided here. All names are the project's own and carry no drink, gambling or child words, so they pass the clip-name walk of tools/content-gate.py.
+**Status: DRAFT.** Phase 3 in the spec is "Bodies and telegraphs. Animation, the read, hit reactions, the guard", blocked on characters. This list is what a first test needs. It names targets and timings, not clips. Where the clips come from (MetaHuman movement clips and Mixamo, per RULINGS 3 October; the project's own capture would need a new ruling and an allowlist record first) is not decided here. All names are the project's own and carry no drink, gambling or child words, so they should pass the clip-name walk of tools/content-gate.py (to be run when the clips exist).
 
 ### 5.1 How the numbers were made
 
@@ -255,8 +259,8 @@ Notes on the table:
 - Standard: simple human reaction to a visual signal is about 190 ms for college-age people, and "on the order of 200 ms" generally [S2]. Choosing between three answers (guard, shove, back off) and pressing a key takes longer; that part is judgement.
 - Game: KCD2's official numbers give a mean 2 s between a careful AI fighter's attacks and 0.2 s before a held attack starts to charge [K1]. They give no wind-up length for a plain swing. No Mafia number exists.
 - The repository's own constants: reach 1.6 m and shove reach 1.9 m (Combat.cs); a stumble is at most 0.55 m (Bumps.Stagger in Interaction.cs); VerbBeat's default wind-up is 0.18 s (Interaction.cs). That default is below the 0.19 s reaction time in [S2], so a strike left at it could not be read.
-- The wind-up, derived with judgement: 0.19 s to see (standard) + 0.35 s to choose among three answers and press (judgement) + 0.10 s for the guard to come live (E01) = 0.64 s, rounded to 20 frames (0.667 s). Range 0.50 to 0.80 s. Contact comes 2 frames later, at 0.733 s, so the guard is live about 3 frames before the blow lands.
-- Telegraph setting (spec section 4, "a longer telegraph window"): the wind-up is lengthened by 1.5 and nothing else changes. 20 frames become 30 and every later key frame moves by 10.
+- The wind-up, derived with judgement: 0.19 s simple reaction, seeing a signal and pressing one key (standard) + 0.35 s more to choose among three answers (judgement) + 0.10 s for the guard to come live (E01) = 0.64 s, rounded up to 20 frames (0.667 s; 0.64 s is 19.2 frames). Range 0.50 to 0.80 s. Contact comes 2 frames later, at 0.733 s, so a guard pressed at 0.54 s is live 0.09 s (between 2 and 3 frames) before the blow lands.
+- Telegraph setting (spec section 4, "a longer telegraph window"): the wind-up is multiplied by 1.5 and nothing else changes. 20 frames become 30 and every later key frame moves by 10.
 
 ### 5.2 The list at a glance
 
@@ -268,10 +272,10 @@ Notes on the table:
 | B01 | strike, lands | 1.33 s | 40 | wind-up end f20, contact f22, recovery starts f28 | judgement on a standard |
 | B02 | strike, misses | 1.93 s | 58 | wind-up end f20, would-be contact f22, recovery starts f32 | judgement |
 | C01 | shove | 0.80 s | 24 | wind-up end f8, contact f10, recovery starts f14 | judgement |
-| D01 | shoved, steady | 0.83 s | 25 | 1.2 m reached f15 | derived from repository constants |
+| D01 | shoved, steady | 0.83 s | 25 | 1.2 m reached f15 | judgement (the distance is derived from repository constants) |
 | D02 | shoved while reeling, falls | 1.00 s | 30 | ground f14 | judgement |
 | D03 | struck, steady | 0.60 s | 18 | head snap ends f4, step ends f10 | judgement |
-| D04 | struck, reeling | 1.00 s | 30 | 0.55 m reached f15 | derived from repository constants |
+| D04 | struck, reeling | 1.00 s | 30 | 0.55 m reached f15 | judgement (the distance is derived from repository constants) |
 | D05 | reeling (loop) | 1.5 s | 45 | loop seam f45 | judgement |
 | D06 | struck, knocked down | 1.50 s | 45 | ground f16 | judgement |
 | D07 | down (loop) | 3.0 s | 90 | loop seam f90 | judgement |
@@ -288,11 +292,11 @@ Each entry: start pose, end pose, length and key frames with their source mark, 
 
 **A01 square-up enter.** Start: standing or walking idle. End: feet a shoulder apart with the lead foot toward the other man, knees soft, hands up at chest height, chin tucked, weight forward. 21 frames (0.70 s), range 0.5 to 1.0 s, judgement. Stance visible at f6 (0.20 s), when the shoulders turn and the hands rise. Blends from walk or idle over 5 frames; to A02. Causes: nothing; it is not an attack. Sound: foot scuff at f4, cloth at f6, breath in at f8. Camera: none; no mode change (spec section 2). Witnesses: the precursor slot fills at f6 for anyone with sight of the stance; "witnesses start paying attention before anything lands" (spec section 3).
 
-**A02 square-up hold (loop).** Start and end: the A01 end pose with a slow weight shift and chest breathing, rate tied to the body's breath rate (Rig.BreathRate, 0.25 to 0.85 a second). 60 frames (2.0 s) loop, judgement. Blends from A01, E02, D05; to B01, C01, E01, A03. Sound: breath. Camera: none. Witnesses: the precursor continues. An NPC swings only after at least 3 s of holding it (spec section 4: "has been staring for three seconds").
+**A02 square-up hold (loop).** Start and end: the A01 end pose with a slow weight shift and chest breathing, rate tied to the body's breath rate (Rig.BreathRate in Rig.cs: 0.25 breaths a second at rest, 0.75 when spent, at most 0.93 when spent and hurt). 60 frames (2.0 s) loop, judgement. Blends from A01, B01, B02, C01, D01, D03, D05, E02; to B01, C01, E01, A03. Sound: breath. Camera: none. Witnesses: the precursor continues. An NPC swings only after at least 3 s of holding it (spec section 4: "has been staring for three seconds").
 
 **A03 stand-down step.** Start: A02 pose. End: hands low, one step back, shoulders turned away. 27 frames (0.90 s), judgement. Hands down at f6 (0.20 s), step planted at f14. Displacement 0.8 m. Blends from A02 or E02 over 3 frames; to walk over 5 frames. Sound: step, breath out. Camera: none. Witnesses: at f6 the precursor ends ("he stood down"); this is the best option "and the game should say so" (spec section 3). No act is recorded.
 
-**B01 strike, lands.** Start: A02 pose. Wind-up: weight to the back foot, right fist cocked behind the ear, torso twisted away, breath in. Contact: a heavy overhand at head height. End: follow-through, then a half-step and guard up. 40 frames (1.33 s). Wind-up end f20 (0.667 s), range 0.50 to 0.80 s (judgement on a standard, section 5.1). Contact f22 (0.733 s), with 3 active frames (f22 to f24, judgement; "first hitting frame" convention from [S1]). Recovery starts f28; free to act at f40, which is 0.60 s after contact (judgement). A strike by the same man is not started again for 2.0 s on average, spread plus or minus 0.5 s (game: KCD2 official mean gap; the spread is judgement). Blends from A02 over 4 frames; to A02 over 5 frames. Causes: a hit reaction by the target's footing: steady, D03 (0.25 m stagger, 0.33 s); reeling, D04 (0.55 m, 0.5 s); would be floored, D06 (falls, ground at 0.53 s, ends 0.6 m from where he stood). Through a guard, E03. Sound: breath in at f3, cloth swish f18 to f22, thud at f22, grunt at f24. Camera: hit-pause of 2 frames (0.067 s) on both men at f22 (judgement; Dustloop confirms hit-stop exists as a concept, its length differs by game [S1]); for Tom's camera a 1.5 degree nudge toward the blow settling over 0.4 s (judgement; spec: "a camera that drifts and settles harder"). Witnesses: at f22 the act and victim slots fill for anyone in sight; the thud carries to shout range; the actor slot fills only if the identification ladder allows. Aftermath fills when the target is down (D06, D07). The act is recorded in the harm book.
+**B01 strike, lands.** Start: A02 pose. Wind-up: weight to the back foot, right fist cocked behind the ear, torso twisted away, breath in. Contact: a heavy overhand at head height. End: follow-through, then a half-step and guard up. 40 frames (1.33 s). Wind-up end f20 (0.667 s), range 0.50 to 0.80 s (judgement on a standard, section 5.1). Contact f22 (0.733 s), with 3 active frames (f22 to f24, judgement; "first hitting frame" convention from [S1]). Recovery starts f28; free to act at f40, which is 0.60 s after contact (judgement). A strike by the same man is not started again for 2.0 s on average, spread plus or minus 0.5 s (game: KCD2 official mean gap. KCD2's own table gives a far wider spread, 4 s, CombatAutoAttackDelaySigma [K1]; LEDGER's narrow spread is judgement, chosen so the rhythm can be learned). Blends from A02 over 4 frames; to A02 over 5 frames. Causes: a hit reaction by the target's footing: steady, D03 (0.25 m stagger, 0.33 s); reeling, D04 (0.55 m, 0.5 s); would be floored, D06 (falls, ground at 0.53 s, ends 0.6 m from where he stood). Through a guard, E03. Sound: breath in at f3, cloth swish f18 to f22, thud at f22, grunt at f24. Camera: hit-pause of 2 frames (0.067 s) on both men at f22 (judgement; Dustloop confirms hit-stop exists as a concept, its length differs by game [S1]); for Tom's camera a 1.5 degree nudge toward the blow settling over 0.4 s (judgement; spec: "a camera that drifts and settles harder"). Witnesses: at f22 the act and victim slots fill for anyone in sight; the thud carries to shout range; the actor slot fills only if the identification ladder allows. Aftermath fills when the target is down (D06, D07). The act is recorded in the harm book.
 
 **B02 strike, misses.** As B01 to f22; the fist meets nothing. Then overbalance: torso swings past, one stumbling step forward 0.4 m by f32, then recovery. 58 frames (1.93 s); recovery starts f32; free to act at f58, which is 1.2 s after the would-be contact, twice B01's 0.6 s (judgement; spec: "misses hurt you more than them"). Blends and sound as B01 without the thud; a breath out of effort at f26. Causes: none; the target's reaction is a flinch or a step back of its own. Camera: no hit-pause; Tom's camera lurches forward slightly (judgement). Witnesses: the act slot fills at f22 with no victim: "he swung at him".
 
@@ -304,9 +308,9 @@ Each entry: start pose, end pose, length and key frames with their source mark, 
 
 **D03 struck, steady.** Start: any stance. End: back in stance, a little lower. 18 frames (0.60 s). Head snaps for 4 frames, half-step of 0.25 m by f10, hand to the face, stance regained at f18. Judgement; stays under the 0.55 m stumble cap. Blends from any stance over 2 frames; to A02 over 5. Causes: footing stays steady. Sound: grunt, shoe scuff. Camera: none beyond B01's. Witnesses: nothing new.
 
-**D04 struck, reeling.** Start: D03 or stance. End: hunched, hand to the face, guard low (D05's pose). 30 frames (1.0 s). Two half-steps and a lurch, 0.55 m reached at f15 (0.5 s). Derived: equal to the Bumps stagger cap. Blends from D03 or any stance over 3 frames; to D05 over 5. Causes: footing reeling; guard drops (Combat.cs: Reeling means "Guard is dropping"). Sound: a heavy grunt, a wet breath, shoes. Camera: none. Witnesses: the injured side shows (HarmBook.LooksLike has never been displayed).
+**D04 struck, reeling.** Start: D03, D05 or stance. End: hunched, hand to the face, guard low (D05's pose). 30 frames (1.0 s). Two half-steps and a lurch, 0.55 m reached at f15 (0.5 s). Derived: equal to the Bumps stagger cap. Blends from D03, D05 or any stance over 3 frames; to D05 over 5. Causes: footing reeling; guard drops (Combat.cs: Reeling means "Guard is dropping"). Sound: a heavy grunt, a wet breath, shoes. Camera: none. Witnesses: the injured side shows (HarmBook.LooksLike has never been displayed).
 
-**D05 reeling (loop).** Pose: swaying, one hand to the face, ragged breath, chin up. 45 frames (1.5 s) loop, judgement. Blends from D04; to D02, D06, E02. Footing reeling. Sound: breath at the ragged rate. Camera: none. Witnesses: his state reads as hurt.
+**D05 reeling (loop).** Pose: swaying, one hand to the face, ragged breath, chin up. 45 frames (1.5 s) loop, judgement. Blends from D04; to D02, D04, D06, E02, A02. Footing reeling. Sound: breath at the ragged rate. Camera: none. Witnesses: his state reads as hurt.
 
 **D06 struck, knocked down.** Start: D04 or D05 pose. End: on the ground on his side, one hand on his head. 45 frames (1.5 s). Knees go in 8 frames, falls sideways, ground at f16 (0.53 s), 0.6 m from where he stood, then settles. Judgement. Blends from D04 or D05 over 3 frames; to D07 over 5. Causes: footing down. Sound: a gasp, a body fall at f16, a scrape of a hand on stone. Camera: on Tom's camera a 2 degree settle (judgement). Witnesses: aftermath begins at f16; the victim and a body on the ground are the strongest cue the mill can read.
 
@@ -325,15 +329,15 @@ Each entry: start pose, end pose, length and key frames with their source mark, 
 The scene: Tom Nowak and a second man, on the built Quay Street, packaged build, day and night. Four short runs, each with both men in shot.
 - Run 1, the read. The second man squares up (A01) and holds for 3 s or more (A02), then strikes (B01). Tom guards (E01, E03) in one take and backs off (A03) in another.
 - Run 2, the shove. Tom shoves a steady second man (C01, D01); the pair ends more than 1.9 m apart.
-- Run 3, the strikes. Tom strikes the second man four times, 2.0 s apart (the KCD2 mean gap). Derived from the Combat.cs constants (swing cost 0.34, stamina back 0.09 a second, floor 2.8, reeling from 55 percent of it, an unguarded man at full capability): the blows add 1.00, 1.93, 2.78 and 3.57 punishment, so the man is steady after blow 1 (D03), reeling after blow 2 (D04, then D05 between blows), still reeling after blow 3 (D04 again, 0.02 short of the floor), and down on blow 4 (D06, then D07). With swings 2.5 s or more apart he goes down on blow 3. A shove on him while reeling puts him down at once (C01, D02). One run uses a miss (B02) because the second man stepped back.
+- Run 3, the strikes. Tom strikes the second man four times, 2.0 s apart (the KCD2 mean gap), standing still between blows. Derived from the Combat.cs constants and the order Combat.Resolve works in (the swing's cost of 0.34 is paid first, then the blow's power is 0.55 + 0.45 x the stamina left; stamina back 0.09 a second; floor 2.8, reeling from 55 percent of it, 1.54; an unguarded man at full capability): the running totals are 0.847, 1.622, 2.325 and 2.956 punishment, so the man is steady after blow 1 (D03), reeling after blow 2 (D04, then D05 between blows), still reeling after blow 3 (D04 again, 0.475 short of the floor), and down on blow 4 (D06, then D07). However far apart the swings, an unguarded man at full capability needs four blows: three fully rested blows add only 2.541. A shove on him while reeling puts him down at once (C01, D02). One run uses a miss (B02) because the second man stepped back.
 - Nothing in the test kills anyone.
 
 It passes when all of these hold. The thresholds are judgement unless marked.
 
 1. **Timing.** Every key frame in 5.2 is within one frame (0.033 s) of the table in 10 of 10 runs, read from the clip's own markers and checked against a 30 fps recording.
 2. **Readable.** A fresh reviewer (not the builder; CLAUDE.md's gate), shown the strike from the street camera at 3 m and at 8 m, says "he is about to hit" before the contact frame in at least 9 of 10 showings, and tells a shove from a punch in 10 of 10.
-3. **Answerable.** A scripted player who presses guard 0.54 s after the wind-up starts (0.19 s standard plus 0.35 s judgement) has the guard live at 0.64 s, at least 3 frames before contact at 0.733 s (f22).
-4. **Distances.** A shove ends with the two men more than 1.9 m apart in every run on level ground, with the shoved man moved 1.2 m, plus or minus 0.15 m. A strike moves a steady man 0.25 m, a reeling man no more than 0.55 m, a floored man ends within 0.15 m of 0.6 m from where he stood.
+3. **Answerable.** A scripted player who presses guard 0.54 s after the wind-up starts (0.19 s standard plus 0.35 s judgement; the press lands on f17, 0.567 s, the first frame after it) has the guard live by f20 (0.667 s, E01's f3), at least 2 frames (0.067 s) before contact at f22 (0.733 s).
+4. **Distances.** A shove ends with the two men more than 1.9 m apart in every run on level ground, from a start at least 0.8 m apart, with the shoved man moved 1.15 m to 1.35 m. A strike moves a steady man 0.25 m, a reeling man no more than 0.55 m, a floored man ends within 0.15 m of 0.6 m from where he stood.
 5. **Footing and clip agree.** With Combat.Resolve, run 3 gives D03, D04, D04, D06 in that order (blows 1 to 4); a shove on a reeling man gives D02. No clip plays in the wrong footing, and the swinger is visibly short of breath by blow 4.
 6. **Joins.** No foot slide over 5 cm and no pop at any blend (NOW.md records a walk that slides at its joins, so this is a real risk).
 7. **What witnesses register.** Replayed in the headless simulation with two onlookers, one 6 m away in view and one behind a wall: the first records a precursor within 0.23 s of A01 starting, and act and victim at f22; the second records sound only, at f22. Neither records anything before A01. The shove records only the 4.0 s shove attention.
@@ -374,7 +378,7 @@ Done means walked in the packaged build by the AI tester; it stays "ready for re
 9. Units not stated in the official table: MinPerfectBlockSlot01, the stealth slot and cooldown values (StealthKillMinSlot 0.05 and StealthKillMaxSlot 0.4, StealthCooldown 5). Not used in any total.
 10. The Escapist's mapping of crimes to punishments (press; no official table read) [K26].
 11. The official wiki's example crime entry values (assault, importance 130): shown as an example of the table format [K4].
-12. Whether KCD2 has a kick or shove as a named verb; only the first game's codex and a clinch-push patch note were read [K22, K9].
+12. Whether KCD2 has a kick or shove as a named verb; only the first game's codex and a patch note that removed a clinch push were read [K22, K9].
 13. That fists knock out and do not kill in KCD2 (a reading of one help text with value 0) [K1].
 14. Any fist or brawl system in Mafia: not published; one critic says none [M20].
 15. Any bystander, civilian or police reaction to a fight in Mafia: not published.
