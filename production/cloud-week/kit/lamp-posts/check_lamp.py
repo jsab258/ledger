@@ -173,7 +173,7 @@ def main():
     base = Vb[Vb[:, 2] < 4800.5]
     rep.within("BOWL flat base z 4800, 473 long (y 518.6 to 991.4), 164 wide", [base[:, 2].max(), base[:, 1].max() - base[:, 1].min(), (base[:, 0].max() - base[:, 0].min())], [4800.0, 473.0, 164.0], 8.0)
     rep.within("BOWL level: the base plane is horizontal (tilt 0 +-1.5 degrees)", math.degrees(math.atan2(base[:, 2].max() - base[:, 2].min(), 400.0)), 0.0, 1.5)
-    rep.within("BOWL rim z 4925 from y 488 to 1070.5", [bw_h[2], bw_l[1], bw_h[1]], [4925.0, 488.0, 1070.5], 2.0)
+    rep.within("BOWL rim z 4925 from y 488 to 1072 (REVIEW-v1-close point 1: the target's 1070.5 left a crescent 9 deep at the nose; the rim now runs 3 further round it)", [bw_h[2], bw_l[1], bw_h[1]], [4925.0, 488.0, 1072.0], 2.5)
     jl, jh = bnd(M, "lamp_jacket")
     rep.within("LAMP jacket 54 across and 310 long, centre (0, 755, 4872)", [jh[0] - jl[0], jh[2] - jl[2], jh[1] - jl[1], (jl[0] + jh[0]) / 2, (jl[1] + jh[1]) / 2, (jl[2] + jh[2]) / 2], [54.0, 54.0, 310.0, 0.0, 755.0, 4872.0], 3.0, "a 32-gon reads 54 corner to corner")
     tl, th = bnd(M, "arc_tube")

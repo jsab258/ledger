@@ -25,7 +25,7 @@ SUBSTRATES = {
     "mickeys": ((126, 130, 136), (116, 102, 86)),       # an older blue-grey undercoat
     "fish_market": ((168, 162, 138), (122, 108, 92)),    # an older cream-yellow gloss
     "ritas": ((122, 134, 120), (116, 102, 86)),          # an older dull green
-    "ironmonger": ((124, 126, 112), (104, 90, 76)),      # an older olive stone
+    "ironmonger": ((112, 120, 132), (104, 90, 76)),      # an older cool grey-blue coat (try 2: the olive stone it was sat within a few dE of the tan ground darkened by the foot grime, and read as a ribbon of loss)
     "chandler": ((148, 150, 146), (116, 102, 86)),       # an older pale grey (salt-bleached)
     "empty_unit": ((114, 102, 88), (98, 86, 72)),        # the silvered open-grained timber
     "_light": ((138, 134, 124), (104, 90, 76)),

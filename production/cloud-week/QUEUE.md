@@ -41,7 +41,7 @@ Where things go: research notes in production/cloud-week/research/; targets in p
 - 3.5 open. Bins.
 - 3.6 done (12 Oct 02:50, both views PASS; narrow points applied, not re-reviewed): production/cloud-week/kit/pillar-box/ (build_pillarbox.py, check_pillarbox.py, render_pillarbox.py, NOTES.md, REVIEW-v1-street.md, REVIEW-v2-street.md, REVIEW-v2-close.md, checks/check_v3.json 71 of 71); production/assets/cloud-week/pillar-box/pillar_box.glb; previews production/previews/cloud-week/pillar-box/ (v3 the last). Its target was checked against five dated Geograph photographs first (PHOTO-CHECK.md); no 1975 to 1995 photograph was reached.
 - 3.7 open. Kerbs and drain covers.
-- 3.8 open. Lamp posts.
+- 3.8 done (12 Oct 04:10, both views PASS; narrow points applied, not re-reviewed): production/cloud-week/kit/lamp-posts/ (build_lamp.py, check_lamp.py, render_lamp.py, NOTES.md, REVIEW-v1-street.md, REVIEW-v1-close.md, checks/check_v2.json 69 of 69); production/assets/cloud-week/lamp-posts/ (lamp_column_C.glb, lamp_lantern.glb, lamp_post_C.glb); previews production/previews/cloud-week/refs and production/previews/cloud-week/lamp-posts/ (v2 the last). No 1975 to 1995 photograph of a concrete column with a sodium lantern was reached by the target or either review; the form follows two 1989 station photographs and later photographs of the same castings.
 
 ## 4. 2D, finished
 

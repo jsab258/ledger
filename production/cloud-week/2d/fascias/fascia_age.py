@@ -644,9 +644,9 @@ def loss_patches(B, allowed, zone, frac, joints, bare=False):
             if r < 0.08 and els < min(els_cap, 0.15 * target):
                 outside = True
                 cx, cy = rng.uniform(260, W - 260), rng.uniform(40, H - 40)
-            elif r < 0.50:
+            elif r < 0.30:                                      # the foot (try 2 check: 0.50 chained the foot's patches into a ribbon on the long boards)
                 cx, cy = rng.uniform(10, W - 10), rng.uniform(foot0 + h / 2, foot1 - h / 2)
-            elif r < 0.85 or not j:
+            elif r < 0.80 or not j:
                 side = rng.random() < 0.5
                 cx = rng.uniform(10, END_MM) if side else rng.uniform(W - END_MM, W - 10)
                 cy = rng.uniform(10 + h / 2, H - 10 - h / 2)

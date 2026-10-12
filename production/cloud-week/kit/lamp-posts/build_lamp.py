@@ -62,6 +62,15 @@ def lerp(tbl, y):
     return tbl[-1][1]
 
 
+def smooth(tbl):
+    """a monotone cubic (PCHIP) through (y, v) stations: the canopy's plan and top height pass through every station of the target and are smooth between them (REVIEW-v1-close point 4)"""
+    from scipy.interpolate import PchipInterpolator
+    t = sorted(tbl)
+    f = PchipInterpolator([a for a, _ in t], [b for _, b in t], extrapolate=False)
+    lo, hi = t[0], t[-1]
+    return lambda y: float(lo[1] if y <= lo[0] else hi[1] if y >= hi[0] else f(y))
+
+
 def oct_ring(side, ch, z):
     h = side / 2.0
     return [(-h + ch, -h, z), (h - ch, -h, z), (h, -h + ch, z), (h, h - ch, z), (h - ch, h, z), (-h + ch, h, z), (-h, h - ch, z), (-h, -h + ch, z)]
@@ -200,7 +209,8 @@ def canopy_shell(L, t_out, t_in, y_from, y_to):
     can = L["canopy"]
     rim, zb = can["rim_z"], can["dome_base_z"]
     pw, tz = [tuple(p) for p in can["plan_half_width"]], [tuple(p) for p in can["top_z_along_y"]]
-    ys = sorted({y for y, _ in pw} | {y for y, _ in tz} | {(a + b) / 2.0 for (a, _), (b, _) in zip(pw, pw[1:])})
+    pws, tzs = smooth(pw), smooth(tz)
+    ys = sorted({y for y, _ in pw} | {y for y, _ in tz} | {(a + b) / 2.0 for (a, _), (b, _) in zip(pw, pw[1:])} | {float(y) for y in np.arange(1000.0, 1080.0, 7.0)})
     ys = [y for y in ys if y_from <= y <= y_to]
     keep = [ys[0]]
     for y in ys[1:]:                                   # no two stations within 4 mm (slivers whose triangles turn over)
@@ -210,8 +220,8 @@ def canopy_shell(L, t_out, t_in, y_from, y_to):
     ys[0], ys[-1] = ys[0] + 1.2, ys[-1] - 1.2
     rings = []
     for y in ys:
-        w = max(lerp(pw, y), 0.0) + (3.0 if y in (ys[0], ys[-1]) else 0.0)
-        r2 = arch_ring(w, lerp(tz, y), zb, rim, t_out, t_in)
+        w = max(pws(y), 0.0) + (3.0 if y in (ys[0], ys[-1]) else 0.0)
+        r2 = arch_ring(w, tzs(y), zb, rim, t_out, t_in)
         rings.append([(x, y, z) for x, z in r2])
     return orient(*bs.loft_rings(rings))
 
@@ -220,6 +230,7 @@ def bowl_rings(L, inner=False):
     bw = L["bowl"]
     base_tbl = [tuple(p) for p in bw["base_plan_half_width"]]
     pw = [tuple(p) for p in L["canopy"]["plan_half_width"]]
+    pws_ = smooth(pw)
     rear = [tuple(p) for p in bw["long_section_rear_curve_yz"]]        # (y, z) rim -> base
     front = [tuple(p) for p in bw["long_section_front_curve_yz"]]      # base -> rim
     sec = [tuple(p) for p in bw["section_at_centre_half_width_z"]]     # (half width, z)
@@ -240,7 +251,7 @@ def bowl_rings(L, inner=False):
 
     def y_front(z):
         pts = sorted([(zz, yy) for yy, zz in front])
-        return float(np.interp(z, [p[0] for p in pts], [p[1] for p in pts]))
+        return float(np.interp(z, [p[0] for p in pts], [p[1] for p in pts])) + 3.0 * (z - z_lo) / (z_hi - z_lo)       # REVIEW-v1-close point 1: the rim runs 3 further round the nose
     zs = sorted(set([z_lo] + [z for _, z in sec] + [z_hi]))
     rings = []
     for k, z in enumerate(zs):
@@ -253,7 +264,7 @@ def bowl_rings(L, inner=False):
         zz = z + (t if (inner and k == 0) else 0.0)               # the inner floor stands 3 above the outer base
         for y in ys:
             bwy = lerp(base_tbl, y) if base_tbl[0][0] <= y <= base_tbl[-1][0] else 0.0
-            rw = max(lerp(pw, y) - inset, 0.0)
+            rw = max(pws_(y) - inset, 0.0)
             hw = bwy + (rw - bwy) * s
             hw = max(hw - d, 0.4)
             left.append((-hw, y, zz))
@@ -290,7 +301,7 @@ def lantern(T, B, mats):
     y_lo, y_hi = L["envelope"]["length_y"]
     # the canopy: a shell 2.5 thick (the outer paint), and the white reflector as a thin skin inside it
     B.add("canopy", canopy_shell(L, 0.0, 2.5, y_lo, y_hi), "canopy", bev=1.5, min_angle=60.0)
-    B.add("reflector", canopy_shell(L, 2.5, 4.5, y_lo + 6.0, y_hi - 6.0), "reflector", bev=None)
+    B.add("reflector", canopy_shell(L, 2.5, 4.5, y_lo + 6.0, y_hi - 3.0), "reflector", bev=None)
     # the flat cast soffit closing the canopy's underside at z 4925 from y 430 to 488, in the canopy's material (the boss's lower 24 mm hang below it)
     pw = [tuple(p) for p in can["plan_half_width"]]
     ysf = [431.5, 435.9, 453.6, 483.2, 488.0]
@@ -374,8 +385,8 @@ def build(T, out_dir, npz_dir):
                 "c_spigot": bs.make_material("c_spigot", V("paint_black_srgb"), 0.42, 0.0),
                 "canopy": bs.make_material("canopy", V("canopy_srgb"), T["materials"]["canopy"]["roughness"], 0.0),
                 "reflector": bs.make_material("reflector", V("reflector_srgb"), 0.35, 0.0),
-                "bowl": bs.make_material("bowl", V("bowl_unlit_srgb"), 0.15, 0.0, transmission=0.85, ior=1.49),
-                "lamp_glass": bs.make_material("lamp_glass", T["materials"]["lamp_glass"]["srgb_unlit"], 0.10, 0.0),
+                "bowl": bs.make_material("bowl", (240, 236, 220), 0.15, 0.0, transmission=0.85, ior=1.49),
+                "lamp_glass": bs.make_material("lamp_glass", (246, 242, 232), 0.05, 0.0, transmission=0.92, ior=1.5),
                 "arc_tube": bs.make_material("arc_tube", T["materials"]["arc_tube"]["srgb_unlit"], 0.2, 0.0)}
         B = Parts()
         if what in ("column", "assembly"):

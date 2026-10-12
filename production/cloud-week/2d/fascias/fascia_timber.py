@@ -16,7 +16,7 @@ from scipy import ndimage as ndi
 import fascia_common as fc
 from fascia_common import H_MM, W_MM
 
-OLD_PAINT = np.array([84.0, 82.0, 68.0], np.float32)       # a dull green, the last owner's: far from the silvered timber and from the soot
+OLD_PAINT = np.array([86.0, 98.0, 80.0], np.float32)       # a dull grey-green, the last owner's: more than 5 Lab units from every pixel of the silvered timber and the soot (the check counts its islands by colour; 84,82,68 sat inside the weathered wood, 200,000 px of it)
 SILVER = np.array([112.0, 100.0, 86.0], np.float32)
 SILVER_CORE = np.array([98.0, 86.0, 72.0], np.float32)
 
@@ -52,7 +52,7 @@ def paint_bare_timber(B, T, s):
     pl_off = [float(rng.uniform(-2.4, 2.4)) for _ in range(3)]
     for i in range(3):
         tone[int(edges[i]):int(edges[i + 1])] = pl_off[i]
-    t = 0.60 * g1 + 0.70 * g2 + 0.85 * g3 + 0.45 * g4
+    t = 0.60 * g1 + 0.70 * g2 + 0.85 * g3 + 0.62 * g4                    # g4 (the 90 mm fibres) 0.45 to 0.62: they run across the grain's lines, so they raise the across-over-along ratio (try 2 check: at least 5 to 1)
     t *= amp / max(1e-6, math.sqrt(0.60 ** 2 + 0.70 ** 2 + 0.85 ** 2 + 0.45 ** 2))
     t = t + tone * (amp / 3.0)
     f = 1.0 + 1.36 * t / max(L0, 8.0)

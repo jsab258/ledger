@@ -1,0 +1,934 @@
+{
+ "version": 2,
+ "passed": 69,
+ "failed": [],
+ "total": 69,
+ "rows": [
+  {
+   "id": "PARTS: the column's six parts and the lantern's twelve, no others (no letters, no maker's mark)",
+   "ok": true,
+   "measured": [
+    "arc_tube",
+    "boss",
+    "boss_screws",
+    "bowl",
+    "canopy",
+    "catches",
+    "column",
+    "door_plate",
+    "door_screws",
+    "hinge",
+    "lamp_holder",
+    "lamp_jacket",
+    "lamp_stubs",
+    "number_plate",
+    "number_rivets",
+    "reflector",
+    "soffit",
+    "spigot"
+   ],
+   "expected": "18 parts",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "PIVOT: the lowest vertex z -150 (the target: -160 to -140), the shaft's axis at the origin",
+   "ok": true,
+   "measured": [
+    -150.0,
+    0.0,
+    -0.0
+   ],
+   "expected": [
+    -150.0,
+    0.0,
+    0.0
+   ],
+   "note": "tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT side across the faces at z 300 (x and y extents; the target 213.8)",
+   "ok": true,
+   "measured": [
+    213.831,
+    213.831
+   ],
+   "expected": [
+    213.8,
+    213.8
+   ],
+   "note": "tol 6.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT arris chamfer 15 at z 300 (read from the section's area: side^2 - 2 c^2)",
+   "ok": true,
+   "measured": 14.776,
+   "expected": 15.0,
+   "note": "tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT section square to the street at z 300: symmetric about both axes",
+   "ok": true,
+   "measured": [
+    0.0,
+    -0.0
+   ],
+   "expected": [
+    0.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT side across the faces at z 2300 (x and y extents; the target 172.7)",
+   "ok": true,
+   "measured": [
+    172.706,
+    172.706
+   ],
+   "expected": [
+    172.7,
+    172.7
+   ],
+   "note": "tol 6.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT arris chamfer 15 at z 2300 (read from the section's area: side^2 - 2 c^2)",
+   "ok": true,
+   "measured": 14.967,
+   "expected": 15.0,
+   "note": "tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT section square to the street at z 2300: symmetric about both axes",
+   "ok": true,
+   "measured": [
+    0.0,
+    -0.0
+   ],
+   "expected": [
+    0.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT side across the faces at z 4300 (x and y extents; the target 131.6)",
+   "ok": true,
+   "measured": [
+    131.58,
+    131.58
+   ],
+   "expected": [
+    131.6,
+    131.6
+   ],
+   "note": "tol 6.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT arris chamfer 15 at z 4300 (read from the section's area: side^2 - 2 c^2)",
+   "ok": true,
+   "measured": 15.087,
+   "expected": 15.0,
+   "note": "tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT section square to the street at z 4300: symmetric about both axes",
+   "ok": true,
+   "measured": [
+    0.0,
+    -0.0
+   ],
+   "expected": [
+    0.0,
+    0.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "SHAFT 220 at the footway",
+   "ok": true,
+   "measured": [
+    219.99,
+    219.99
+   ],
+   "expected": [
+    220.0,
+    220.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "SHAFT top: the highest vertex z 4985.8 (one face with the arm's top)",
+   "ok": true,
+   "measured": 4985.8,
+   "expected": 4985.8,
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "SHAFT top face's edge chamfer 5 (the section 0.4 below the top is inset 4.6 a side: 117.5 - 9.2)",
+   "ok": true,
+   "measured": 108.309,
+   "expected": 108.3,
+   "note": "tol 2.5",
+   "extra": false
+  },
+  {
+   "id": "ARM section at y 250: 110 wide, 110 tall, axis z 4930.8",
+   "ok": true,
+   "measured": [
+    110.0,
+    109.993,
+    4930.804
+   ],
+   "expected": [
+    110.0,
+    110.0,
+    4930.8
+   ],
+   "note": "tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "ARM arrises chamfered 10 (read from the section's area)",
+   "ok": true,
+   "measured": 10.535,
+   "expected": 10.0,
+   "note": "tol 2.5",
+   "extra": false
+  },
+  {
+   "id": "ARM ends flat at y 400 (the column's furthest vertex)",
+   "ok": true,
+   "measured": 400.0,
+   "expected": 400.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "ARM level: rake 0 (top and underside the same height at y 150, 250 and 380; the arm's rise over 300 at most 5 degrees' worth)",
+   "ok": true,
+   "measured": [
+    0.0,
+    0.005
+   ],
+   "expected": [
+    0.0,
+    0.0
+   ],
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "ARM top face z 4985.8 and underside 4875.8",
+   "ok": true,
+   "measured": [
+    4985.8,
+    4875.807
+   ],
+   "expected": [
+    4985.8,
+    4875.8
+   ],
+   "note": "tol 0.6",
+   "extra": false
+  },
+  {
+   "id": "MITRE outer corner rounded to radius 20: the outline stands 0.414 x 20 = 8.3 from the sharp corner (the target: R20 +-5)",
+   "ok": true,
+   "measured": 8.35,
+   "expected": 8.284,
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "MITRE inner corner a fillet of radius 10: out of the sharp corner along its diagonal the solid reaches 0.414 x 10 = 4.1 (R10 +-5)",
+   "ok": true,
+   "measured": 4.15,
+   "expected": 4.142,
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "MITRE the arm's top face and the shaft's top are one face at z 4985.8: the section's top edge is level from the shaft's -y side to y 400",
+   "ok": true,
+   "measured": [
+    4985.8,
+    395.8
+   ],
+   "expected": "z 4985.8 to y 400",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "SPIGOT: OD 42 (x and z extents), y 340 to 485, axis z 4930.8",
+   "ok": true,
+   "measured": [
+    42.0,
+    42.01,
+    340.0,
+    483.0,
+    4930.805
+   ],
+   "expected": [
+    42.0,
+    42.0,
+    340.0,
+    483.0,
+    4930.8
+   ],
+   "note": "the target says 485 (inside the boss, +-3): the end is 2 inside the boss end so that no two faces share a plane tol 0.8",
+   "extra": false
+  },
+  {
+   "id": "SPIGOT shows 30 between the arm's end (400) and the boss (430)",
+   "ok": true,
+   "measured": [
+    30.0
+   ],
+   "expected": [
+    30.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "BOSS: OD 60 (x and z extents), 55 long from y 430, axis z 4930.8 (rake 0)",
+   "ok": true,
+   "measured": [
+    60.0,
+    60.01,
+    430.0,
+    485.0,
+    4930.805
+   ],
+   "expected": [
+    60.0,
+    60.0,
+    430.0,
+    485.0,
+    4930.8
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "BOSS two grub screws, 3 proud, on the +x and -x sides (azimuth 90 and 270)",
+   "ok": true,
+   "measured": [
+    -33.0,
+    33.0
+   ],
+   "expected": "x +-33",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "DOOR recess z range 450 to 780 (the section at x 0 steps back more than 3 mm)",
+   "ok": true,
+   "measured": [
+    449.0,
+    781.0
+   ],
+   "expected": [
+    450.0,
+    780.0
+   ],
+   "note": "tol 5.0",
+   "extra": false
+  },
+  {
+   "id": "DOOR recess depth 14",
+   "ok": true,
+   "measured": 14.0,
+   "expected": 14.0,
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "DOOR recess width 120 (at z 600)",
+   "ok": true,
+   "measured": 124.0,
+   "expected": 120.0,
+   "note": "tol 5.0",
+   "extra": false
+  },
+  {
+   "id": "DOOR plate 132 x 342, z 444 to 786",
+   "ok": true,
+   "measured": [
+    132.0,
+    342.0,
+    444.0,
+    786.0
+   ],
+   "expected": [
+    132.0,
+    342.0,
+    444.0,
+    786.0
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "DOOR plate stands 3 proud of the face (the front vertices' distance in front of the tapered face)",
+   "ok": true,
+   "measured": 3.0,
+   "expected": 3.0,
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "DOOR two screws 10 across at z 469 and 761, on the plate's centre line",
+   "ok": true,
+   "measured": [
+    10.0,
+    469.0,
+    761.0
+   ],
+   "expected": [
+    10.0,
+    469.0,
+    761.0
+   ],
+   "note": "tol 2.0",
+   "extra": false
+  },
+  {
+   "id": "NUMBER plate 90 x 45 centred z 2160 on the +y face, 1.4 proud",
+   "ok": true,
+   "measured": [
+    90.0,
+    45.0,
+    2160.0,
+    1.626
+   ],
+   "expected": [
+    90.0,
+    45.0,
+    2160.0,
+    1.4
+   ],
+   "note": "tol 1.2",
+   "extra": false
+  },
+  {
+   "id": "LANTERN box (canopy, bowl, catches, hinge; not the boss): y 650, x 300, z 200",
+   "ok": true,
+   "measured": [
+    647.6,
+    300.0,
+    200.01
+   ],
+   "expected": [
+    650.0,
+    300.0,
+    200.0
+   ],
+   "note": "tol 8.0",
+   "extra": false
+  },
+  {
+   "id": "LANTERN centre (0, 755, 4900)",
+   "ok": true,
+   "measured": [
+    0.0,
+    755.0,
+    4900.005
+   ],
+   "expected": [
+    0.0,
+    755.0,
+    4900.0
+   ],
+   "note": "tol 12.0",
+   "extra": false
+  },
+  {
+   "id": "LANTERN top z 5000 (the mounting height)",
+   "ok": true,
+   "measured": 5000.01,
+   "expected": 5000.0,
+   "note": "tol 10.0",
+   "extra": false
+  },
+  {
+   "id": "LANTERN canopy's lower edge z 4925 (the lip), the dome 63 over the lip's top",
+   "ok": true,
+   "measured": [
+    4924.991,
+    63.01
+   ],
+   "expected": [
+    4925.0,
+    63.0
+   ],
+   "note": "tol 6.0",
+   "extra": false
+  },
+  {
+   "id": "BOWL flat base z 4800, 473 long (y 518.6 to 991.4), 164 wide",
+   "ok": true,
+   "measured": [
+    4800.0,
+    471.6,
+    163.681
+   ],
+   "expected": [
+    4800.0,
+    473.0,
+    164.0
+   ],
+   "note": "tol 8.0",
+   "extra": false
+  },
+  {
+   "id": "BOWL level: the base plane is horizontal (tilt 0 +-1.5 degrees)",
+   "ok": true,
+   "measured": 0.0,
+   "expected": 0.0,
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "BOWL rim z 4925 from y 488 to 1072 (REVIEW-v1-close point 1: the target's 1070.5 left a crescent 9 deep at the nose; the rim now runs 3 further round it)",
+   "ok": true,
+   "measured": [
+    4925.0,
+    488.6,
+    1072.9
+   ],
+   "expected": [
+    4925.0,
+    488.0,
+    1072.0
+   ],
+   "note": "tol 2.5",
+   "extra": false
+  },
+  {
+   "id": "LAMP jacket 54 across and 310 long, centre (0, 755, 4872)",
+   "ok": true,
+   "measured": [
+    54.0,
+    54.01,
+    310.0,
+    0.0,
+    755.0,
+    4872.005
+   ],
+   "expected": [
+    54.0,
+    54.0,
+    310.0,
+    0.0,
+    755.0,
+    4872.0
+   ],
+   "note": "a 32-gon reads 54 corner to corner tol 3.0",
+   "extra": false
+  },
+  {
+   "id": "ARC TUBE: legs 16 OD at x +-11, z 4872, y 605 to 895",
+   "ok": true,
+   "measured": [
+    38.0,
+    15.609,
+    605.0,
+    895.0,
+    4872.005
+   ],
+   "expected": [
+    38.0,
+    16.0,
+    605.0,
+    895.0,
+    4872.0
+   ],
+   "note": "x extent 11 + 11 + 16 = 38 tol 2.5",
+   "extra": false
+  },
+  {
+   "id": "LAMP wholly inside the bowl's and canopy's envelope",
+   "ok": true,
+   "measured": [
+    [
+     -27.0,
+     600.0,
+     4845.0
+    ],
+    [
+     27.0,
+     910.0,
+     4899.0
+    ]
+   ],
+   "expected": "inside",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "LAMP holder 60 x 45 x 40 at the rear (x +-30, y 555 to 600, z 4852 to 4892) hung from the ceiling",
+   "ok": true,
+   "measured": [
+    -30.0,
+    30.0,
+    555.0,
+    600.0,
+    4852.0
+   ],
+   "expected": [
+    -30.0,
+    30.0,
+    555.0,
+    600.0,
+    4852.0
+   ],
+   "note": "tol 1.0",
+   "extra": false
+  },
+  {
+   "id": "LAMP holder reaches the canopy's ceiling (its bracket ends above 4960)",
+   "ok": true,
+   "measured": 4992.7,
+   "expected": "> 4960",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "DOME over the boss's front end (y 485) at x 0: z 4967.4, the boss's top 4960.8 stays under it",
+   "ok": true,
+   "measured": [
+    4968.639,
+    4960.81
+   ],
+   "expected": [
+    4967.4,
+    4960.8
+   ],
+   "note": "tol 6.0",
+   "extra": false
+  },
+  {
+   "id": "BOSS top 23.8 over the canopy's rear crown (4937): nothing pokes through the dome",
+   "ok": true,
+   "measured": [
+    4960.8,
+    4968.6
+   ],
+   "expected": "4960.8 under the dome",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "BOWL clear of the boss: the nearest distance is at least 3",
+   "ok": true,
+   "measured": 52.0,
+   "expected": ">= 3",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "LIGHT point (0, 755, 4850) lies inside the bowl",
+   "ok": true,
+   "measured": "inside the clear shell",
+   "expected": "inside",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "HINGE two knuckles 22 x 22 x 14 at x +-60, y 497 (z 4925 up); CATCHES 30 long, 14 tall at y 932.3, x +-136",
+   "ok": true,
+   "measured": [
+    71.0,
+    -71.0,
+    497.0,
+    14.0,
+    932.3,
+    136.0
+   ],
+   "expected": [
+    71.0,
+    -71.0,
+    497.0,
+    14.0,
+    932.3,
+    136.0
+   ],
+   "note": "tol 1.5",
+   "extra": false
+  },
+  {
+   "id": "DRAWING C side silhouette of the column (shaft, mitre and arm, projected along x) against the drawing's concrete_shaft_and_arm",
+   "ok": true,
+   "measured": {
+    "iou": 0.9969,
+    "mean_mm": 0.25,
+    "p95_mm": 1.0,
+    "max_mm": 5.0
+   },
+   "expected": {
+    "iou": 0.985,
+    "p95_mm": 2.0,
+    "max_mm": 6.0
+   },
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "DRAWING long section of the lantern at x 0: canopy's skin within 6 of the drawing's outline (model to drawing; the drawing's closing line along the rim is not a surface)",
+   "ok": true,
+   "measured": 3.5,
+   "expected": "<= 6",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "DRAWING long section of the lantern at x 0: bowl outline within 6 of the drawing's (largest distance, either way)",
+   "ok": true,
+   "measured": 2.4,
+   "expected": "<= 6",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "DRAWING long section of the lantern at x 0: boss outline within 6 of the drawing's (largest distance, either way)",
+   "ok": true,
+   "measured": 1.07,
+   "expected": "<= 6",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "DRAWING plan of the canopy's rim at z 4930 within 6 of the drawing's plan outline",
+   "ok": true,
+   "measured": 4.17,
+   "expected": "<= 6",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "DRAWING cross-section of the lantern at y 755: canopy within 6 of the drawing's",
+   "ok": true,
+   "measured": 1.78,
+   "expected": "<= 6",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "DRAWING cross-section of the lantern at y 755: bowl within 6 of the drawing's",
+   "ok": true,
+   "measured": 1.12,
+   "expected": "<= 6",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "SOLID every object closed (each edge on two triangles)",
+   "ok": true,
+   "measured": [],
+   "expected": [],
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "HATCH faces of different objects in one plane, facing the same way, overlapping > 1 mm2 (every part but the reflector skin)",
+   "ok": true,
+   "measured": {
+    "count": 0,
+    "examples": []
+   },
+   "expected": 0,
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "HATCH the reflector skin lies inside the canopy's shell, its faces 2 mm from the canopy's inner surface; the few pairs the test finds are crossing facets at the crown (planes within 0.1 mm along a line, not coincident surfaces)",
+   "ok": true,
+   "measured": {
+    "count": 11,
+    "examples": [
+     [
+      "reflector",
+      "canopy",
+      109.9,
+      [
+       -0.07,
+       0.43,
+       -0.9
+      ]
+     ],
+     [
+      "reflector",
+      "canopy",
+      136.5,
+      [
+       -0.09,
+       0.38,
+       -0.92
+      ]
+     ],
+     [
+      "canopy",
+      "reflector",
+      4.1,
+      [
+       0.1,
+       0.13,
+       -0.99
+      ]
+     ],
+     [
+      "reflector",
+      "canopy",
+      33.1,
+      [
+       0.42,
+       -0.01,
+       -0.91
+      ]
+     ]
+    ]
+   },
+   "expected": "<= 12 crossing facets",
+   "note": "an exemption, said here: the skin is the white inner face of the canopy, not a second surface in the same plane",
+   "extra": false
+  },
+  {
+   "id": "TRIANGLES the column with its lantern at LOD0: 3,000 to 12,000",
+   "ok": true,
+   "measured": 10868,
+   "expected": "3000 to 12000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE lamp_column_C under 1 MB",
+   "ok": true,
+   "measured": [
+    61484,
+    1348
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE lamp_lantern under 1 MB",
+   "ok": true,
+   "measured": [
+    295792,
+    9520
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE lamp_post_C under 1 MB",
+   "ok": true,
+   "measured": [
+    357088,
+    10868
+   ],
+   "expected": "< 1000000",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE lamp_column_C: no textures, a UV set on every mesh, no emission set (the glow is the engine's)",
+   "ok": true,
+   "measured": [
+    "concrete_C",
+    "c_door_plate",
+    "plate",
+    "c_spigot"
+   ],
+   "expected": "named materials",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "FILE lamp_lantern: no textures, a UV set on every mesh, no emission set (the glow is the engine's)",
+   "ok": true,
+   "measured": [
+    "arc_tube",
+    "canopy",
+    "bowl",
+    "lamp_glass",
+    "reflector"
+   ],
+   "expected": "named materials",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "CONCRETE albedo (146, 143, 136) and roughness 0.9 (shaft and arm alike), not metal",
+   "ok": true,
+   "measured": [
+    146.0,
+    143.0,
+    136.0,
+    0.9,
+    0.0
+   ],
+   "expected": [
+    146.0,
+    143.0,
+    136.0,
+    0.9,
+    0.0
+   ],
+   "note": "tol 12.0",
+   "extra": false
+  },
+  {
+   "id": "LANTERN emissive slots are their own materials: lamp_glass, arc_tube, bowl",
+   "ok": true,
+   "measured": [
+    "arc_tube",
+    "bowl",
+    "canopy",
+    "lamp_glass",
+    "reflector"
+   ],
+   "expected": "three slots",
+   "note": "",
+   "extra": false
+  },
+  {
+   "id": "COLUMN: the spigot is the only black part (c_spigot); the shaft and arm are one unpainted concrete material",
+   "ok": true,
+   "measured": [
+    "c_door_plate",
+    "c_spigot",
+    "concrete_C",
+    "plate"
+   ],
+   "expected": "concrete_C, c_spigot",
+   "note": "",
+   "extra": false
+  }
+ ],
+ "not_built": [
+  "variant A (the painted steel column; built only if Jafar rules it in)",
+  "the plate's 'LC n' letters (the engine's texture on the plate)",
+  "the engine's lights and the emissive strengths (cd/m2) on lamp_glass, arc_tube and bowl",
+  "the wear (algae, lime, rust, the chipped arris on LC 2: the engine's masks, unit 4.5)",
+  "the refractor grooves under the bowl (a normal map) and the bowl's 6 x 6 rim bead (hidden inside the canopy's lip)",
+  "the four places: the engine places the column four times, the west two turned 180 degrees"
+ ]
+}
