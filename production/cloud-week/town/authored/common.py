@@ -94,3 +94,57 @@ T.PROPOSED_PLACES.update({
 
 def PS(*a, **k):
     return T.PS(*a, **k)
+
+
+# --- the thirty regulars: their rows are parsed from REGULARS.md so every name, age and cell is the home's own ---------
+REGTAB = {}
+for _l in T._lines(T.ALIASES["REG"]):
+    if _l.startswith("| ") and _l.count("|") >= 10 and _l.split("|")[1].strip().isdigit():
+        _c = [x.strip() for x in _l.strip().strip("|").split("|")]
+        REGTAB[_c[1]] = dict(n=_c[0], id=_c[1], name=_c[2], age=int(_c[3]), who=_c[4], look=_c[5], voice=_c[6], manner=_c[7], line=_c[8].strip('"'))
+assert len(REGTAB) == 30, len(REGTAB)
+
+# the street's plain answers, in the street's own plain words (StreetFacts.cs "said"), for the people who say them
+STD = {
+    "died_heart": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+    "cafe": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+    "door": "Mickey's own room, at the back. It's been locked since he died, and Sheila keeps the key.",
+    "office": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+    "june": "She came back for the funeral and she's still in town. She wants nothing from the office.",
+    "funeral": "It was at Father Walsh's chapel, before you came.",
+    "flat": "You're in Mickey's flat, over the office.",
+    "will": "The office, by his will. The letter you came with says so.",
+    "drivers": "Two on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
+    "hours": "Seven in the morning, nine on a Sunday, and on till the night driver goes home at three.",
+    "trade": "Not much since the docks went. Trade has been thin.",
+    "fire": "The importer's warehouse at the far end of the old warehouse row burned down last November, on a Saturday night. The paper called it arson. Nobody was charged.",
+    "mickey": "Mickey kept his business to himself. You'd not hear it from him on the street.",
+    "who_runs": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+}
+
+
+def regular(rid, heard_as, *, street=None, knew=False, line_as="knows", line_truth=None, line_basis=None, line_text=None,
+            manner=(), knows=(), believes=(), saw=(), rumours, questions, schedule=None, extra=None, note=None):
+    r = REGTAB[rid]
+    line = line_text or r["line"]
+    kn, be = [], []
+    if line_as == "knows":
+        kn.append(K("line", "REG", line, via="the sample line on the contact sheet"))
+    else:
+        be.append(B("line", "REG", line, line_truth, line_basis))
+    for i, frag in enumerate(manner, 1):
+        kn.append(K("manner%d" % i, "REG", frag, via="the contact sheet's manner column"))
+    ex = dict(extra or {})
+    if note:
+        ex["note"] = note
+    return person(
+        rid, r["name"], heard_as, "regular", r["age"], role=("REG", r["who"]),
+        identity=("REG", "%s | %s | %d" % (rid, r["name"], r["age"])),
+        street=(STREET_ALL + (MICKEY2 if knew else [])) if street is None else street, knew_mickey=knew,
+        knows=kn + list(knows), believes=be + list(believes), saw=list(saw), rumours=rumours, questions=questions,
+        schedule=schedule, extra=ex,
+        internal_id_note="The id is the routine's own, kept from the old studio (REGULARS.md).")
+
+
+def QS(q, kind, a, uses, bench=None):
+    return Q(q, kind, a, uses, bench)

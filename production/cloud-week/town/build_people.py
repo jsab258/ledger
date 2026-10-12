@@ -60,7 +60,7 @@ def hk_area_line(area):
     for i, l in enumerate(lines, 1):
         if l.startswith(' "areas": {'):
             in_areas = True
-        if in_areas and l == '  "%s": {' % area:
+        if in_areas and l.startswith('  "%s": {' % area):
             return i
     raise SystemExit("no area " + area)
 
