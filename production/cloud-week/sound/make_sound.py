@@ -36,6 +36,8 @@ import sndlib as sl
 import stepcut
 from sndlib import RATE
 
+RADIO_BODY_DB, RADIO_DRIVE, RADIO_HISS = 5.0, 2.6, 0.06
+RADIO_LP = {"day": 2600.0, "night": 2200.0, "rain": 1500.0}
 NIGHT_WIND_LP = 1000   # Hz: the night wind is darker than the day wind (2500 Hz); the first build's 1800 Hz was brighter
 LOOP_S = 75.0     # a loop's length unless its source is too short for it (the brief allows 60 to 75 s)
 SHORT_LOOP_S = 60.0   # loops whose source holds only about 67 s: 60 s plus the 4 s crossfade, with no part of the source played twice
@@ -46,6 +48,7 @@ TARGETS = sl.load_targets()
 LOOP_TARGET = TARGETS["loops_lufs"]            # by output name, integrated LUFS
 SHOT_TARGET = TARGETS["one_shot_lufs_m"]       # by class, highest 400 ms momentary LUFS
 SHOT_TOL = TARGETS["one_shot_tolerance"]
+GRAIN_REUSE_S = TARGETS["grain_reuse_min_s"]    # by output name: seconds before a moment of a speech source may come back
 TP_LIMIT = TARGETS["true_peak_max_dbtp"]
 
 _cache = {}
@@ -245,57 +248,197 @@ def build_gulls(version):
 
 
 # ---------------------------------------------------------------------------- voices and radio through glass
-def grain_babble(sources, weights, length_s, seed, grain_ms=(80, 150), hop_frac=0.5, phrase_hz=0.25, floor_gain=0.25):
-    """Speech turned to a murmur: grains of 80 to 150 ms taken from random places in the sources, laid in random order
-    with Hann windows (50 percent overlap) round a circle, under a slow random swell so it comes and goes in
-    phrases. No word survives: a grain is shorter than any syllable run. Seamless as a loop."""
-    rng = np.random.default_rng(seed)
-    N = int(length_s * RATE)
-    out = np.zeros(N)
-    pools = [sl.to_mono(S(sid)) for sid in sources]
-    w = np.array(weights, dtype=float) / np.sum(weights)
-    pos = 0
-    while pos < N:
-        g = int(rng.uniform(*grain_ms) / 1000 * RATE)
-        p = pools[rng.choice(len(pools), p=w)]
-        s0 = rng.integers(int(0.3 * RATE), len(p) - g - int(0.3 * RATE))
-        grain = p[s0:s0 + g] * np.hanning(g)
-        add_circular(out, grain, pos)
-        pos += int(g * hop_frac)
-    # slow swell (circular, so the loop closes): smoothed noise with a few cycles in the loop
+CELL = int(0.010 * RATE)     # the grain plan's bookkeeping on a source: 10 ms cells
+RUN_GAP_MS = 50              # neighbouring grains must lie at least this far apart in the source, so no grain continues another
+NEAR_S = 0.32                # "neighbouring": starting within this much loop time of each other (two of the longest grains)
+SRC_MARGIN_S = 0.3           # grains are never taken from the first or last 0.3 s of a source
+
+
+def swell(rng, N, length_s, phrase_hz, floor_gain, gate=0.0):
+    """A slow random swell round a circle (so the loop closes): the murmur comes and goes in phrases. gate above 0 cuts its low
+    part away smoothly, so the quiet stretches are real gaps and not just a lower level."""
     k = max(2, int(phrase_hz * length_s))
     ctrl = rng.random(k)
     ctrl = np.append(ctrl, ctrl[0])
     sw = np.interp(np.linspace(0, k, N, endpoint=False), np.arange(k + 1), ctrl)
     sw = floor_gain + (1 - floor_gain) * (0.5 - 0.5 * np.cos(np.pi * sw))
-    return out * sw
+    return np.clip((sw - gate) / (1 - gate), 0.0, 1.0) if gate > 0 else sw
+
+
+def speech_bursts(rng, N, burst_s=(0.6, 2.0), gap_s=(0.7, 3.0), level=(0.55, 1.0), edge_s=0.10):
+    """A radio's speech comes in bursts of different lengths and levels with gaps of different lengths between (the burst that
+    runs past the end of the loop continues at its start)."""
+    env = np.zeros(N)
+    t = 0
+    while t < N:
+        b = int(rng.uniform(*burst_s) * RATE)
+        w = signal.windows.tukey(b, alpha=min(1.0, 2 * edge_s * RATE / b)) * rng.uniform(*level)
+        add_circular(env, w, t)
+        t += b + int(rng.uniform(*gap_s) * RATE)
+    return np.minimum(env, 1.0)
+
+
+def grain_plan(rng, N, lens, weights, env, grain_ms, hop, no_repeat_s):
+    """Where every grain goes, and which part of which source it is taken from.
+    Grains of grain_ms[0] to grain_ms[1] start where env is above 0.03, one after another, a random hop (in grain lengths) apart.
+    Each source is cut into slots as long as the longest grain, and each grain is given one slot, at a random place inside it,
+    such that
+      - no grain continues another: grains starting within NEAR_S of each other (round the circle) take slots that are neither
+        the same nor next to each other, so there are at least RUN_GAP_MS between their places in a source and a run of speech
+        is never longer than one grain;
+      - no slot comes back within no_repeat_s of loop time (round the circle), as far as the source holds enough slots;
+        where it does not, the least used slot is taken and the grain counted in 'fallbacks'.
+    Returns arrays (pos, length, source index, source start; all in samples) and the number of fallbacks."""
+    pos, glen = [], []
+    p = 0
+    while p < N:
+        if env[p] < 0.03:
+            p += CELL
+            continue
+        g = int(rng.uniform(*grain_ms) / 1000.0 * RATE)
+        pos.append(p)
+        glen.append(g)
+        p += max(CELL, int(g * rng.uniform(*hop)))
+    pos, glen = np.array(pos), np.array(glen)
+    n, m = len(pos), len(lens)
+    w = np.array(weights, dtype=float) / np.sum(weights)
+    margin = int(SRC_MARGIN_S * RATE)
+    slot = -(-int(grain_ms[1] / 1000.0 * RATE) // CELL) * CELL            # slot length in samples, a whole number of cells
+    nslots = [(L - 2 * margin) // slot for L in lens]
+    R, near = int((no_repeat_s + 0.3) * RATE), int(NEAR_S * RATE)
+    sl_of = np.full(n, -1)
+    src = np.full(n, -1)
+    fallbacks = 0
+    for j in range(n):
+        d = np.abs(pos[:j] - pos[j])
+        d = np.minimum(d, N - d)
+        order = rng.choice(m, size=m, replace=False, p=w) if m > 1 else [0]
+        pick, best = None, None
+        for k in order:
+            same = src[:j] == k
+            win = np.zeros(nslots[k] + 2)
+            np.add.at(win, sl_of[:j][same & (d < R)], 1)
+            nb = np.zeros(nslots[k] + 2)
+            for off in (-1, 0, 1):
+                np.add.at(nb, np.clip(sl_of[:j][same & (d < near)] + off, 0, nslots[k] + 1), 1)
+            free = np.flatnonzero((win[:nslots[k]] == 0) & (nb[:nslots[k]] == 0))
+            if len(free):
+                pick = (k, int(free[rng.integers(len(free))]))
+                break
+            load = win[:nslots[k]] + 1000.0 * nb[:nslots[k]]
+            cand = np.flatnonzero(load == load.min())
+            if best is None or load.min() < best[0]:
+                best = (float(load.min()), k, int(cand[rng.integers(len(cand))]))
+        if pick is None:
+            pick = (best[1], best[2])
+            fallbacks += 1
+        src[j], sl_of[j] = pick
+    st = np.array([margin + int(sl_of[j]) * slot + int(rng.integers(0, max(1, slot - glen[j]))) for j in range(n)])
+    return pos, glen, src, st, fallbacks
+
+
+def reuse_and_run(src, st, glen, pos, N):
+    """From a grain plan: the shortest loop-time distance (s) between two grains that use overlapping places in a source, and
+    the longest run (ms) of neighbouring grains whose places in a source touch or lie within RUN_GAP_MS of each other."""
+    n = len(pos)
+    best, run = 1e9, 0.0
+    parent = list(range(n))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+    for j in range(n):
+        d = np.abs(pos - pos[j])
+        d = np.minimum(d, N - d)
+        same = (src == src[j]) & (np.arange(n) > j)
+        over = same & (st < st[j] + glen[j]) & (st[j] < st + glen)
+        if over.any():
+            best = min(best, float(d[over].min()) / RATE)
+        gap = RUN_GAP_MS * RATE // 1000
+        touch = same & (d < NEAR_S * RATE) & (st < st[j] + glen[j] + gap) & (st[j] < st + glen + gap)
+        for i in np.flatnonzero(touch):
+            parent[find(int(i))] = find(j)
+    groups = {}
+    for j in range(n):
+        groups.setdefault(find(j), []).append(j)
+    for g in groups.values():
+        run = max(run, float(max(st[i] + glen[i] for i in g) - min(st[i] for i in g)) / RATE * 1000.0)
+    return best, run
+
+
+def grain_babble(sources, weights, length_s, seed, grain_ms=(80, 150), hop=(0.5, 0.5), phrase_hz=0.25, floor_gain=0.25,
+                 gate=0.0, bursts=False, gain_jitter_db=0.0, no_repeat_s=20.0, tukey=None):
+    """Speech turned to a murmur: grains of 80 to 150 ms taken from places in the sources chosen by grain_plan, laid in random
+    order with Hann windows (or flat-topped Tukey ones where tukey is set) round a circle (hop 0.5 grains is 50 percent overlap, a
+    dense murmur), under a slow random swell (or,
+    for a radio, in bursts with gaps) so it comes and goes in phrases. No word survives: a grain is shorter than any syllable run
+    and no grain continues another. Seamless as a loop. Returns the signal and a record of every grain (the check reads it)."""
+    rng = np.random.default_rng(seed)
+    N = int(length_s * RATE)
+    pools = [sl.to_mono(S(sid)) for sid in sources]
+    env = speech_bursts(rng, N) if bursts else swell(rng, N, length_s, phrase_hz, floor_gain, gate)
+    pos, glen, src, st, fb = grain_plan(rng, N, [len(p) for p in pools], weights, env, grain_ms, hop, no_repeat_s)
+    out = np.zeros(N)
+    gains = 10 ** (rng.uniform(-gain_jitter_db, gain_jitter_db, len(pos)) / 20.0)
+    for j in range(len(pos)):
+        win = signal.windows.tukey(glen[j], tukey) if tukey else np.hanning(glen[j])
+        g = pools[src[j]][st[j]:st[j] + glen[j]] * win * gains[j]
+        add_circular(out, g, int(pos[j]))
+    out *= env
+    reuse, run = reuse_and_run(src, st, glen, pos, N)
+    ms = lambda a: [int(round(v * 1000.0 / RATE)) for v in a]
+    plan = {"sources": list(sources), "grains_n": int(len(pos)), "grain_ms": [int(round(glen.min() * 1000.0 / RATE)), int(round(glen.max() * 1000.0 / RATE))],
+            "no_repeat_s_asked": no_repeat_s, "fallback_grains": int(fb), "min_reuse_s": round(reuse, 2), "longest_run_ms": round(run),
+            "voiced_fraction": round(float(np.mean(env > 0.03)), 3),
+            "plan": {"src": [int(v) for v in src], "start_ms": ms(st), "len_ms": ms(glen), "pos_ms": ms(pos)}}
+    return out, plan
+
+
+def circ_apply(x, fn):
+    """Apply a causal filter to a circle: run it over three turns and keep the middle one, so the loop still closes."""
+    n = len(x)
+    return fn(np.tile(x, 3))[n:2 * n]
 
 
 def build_voices(version):
     if version == "day":
-        x = grain_babble(["fs_757318", "fs_260124"], [0.7, 0.3], LOOP_S, seed=11)
-        lp, extra = 1150.0, 0
+        x, plan = grain_babble(["fs_757318", "fs_260124"], [0.7, 0.3], LOOP_S, seed=11, no_repeat_s=GRAIN_REUSE_S["amb_voices_day"])
+        lp = 1150.0
     elif version == "night":
-        x = grain_babble(["fs_260124"], [1.0], LOOP_S, seed=12, phrase_hz=0.15, floor_gain=0.05)
-        lp, extra = 1000.0, 0
+        # two adults, very quiet, in gaps: shorter phrases with real gaps between (gate), grains hopping 0.85 of their length
+        # (Tukey windows), so the 19.7 s of recording is not used up and no moment of it comes back within 20 s
+        x, plan = grain_babble(["fs_260124"], [1.0], LOOP_S, seed=12, hop=(0.85, 0.85), phrase_hz=0.25, floor_gain=0.05, gate=0.5,
+                               no_repeat_s=GRAIN_REUSE_S["amb_voices_night"], tukey=0.5)
+        lp = 1000.0
     else:
-        x = grain_babble(["fs_757318"], [1.0], LOOP_S, seed=13, phrase_hz=0.2, floor_gain=0.15)
-        lp, extra = 800.0, 1
+        x, plan = grain_babble(["fs_757318"], [1.0], LOOP_S, seed=13, phrase_hz=0.2, floor_gain=0.15, no_repeat_s=GRAIN_REUSE_S["amb_voices_rain"])
+        lp = 800.0
     x = circ_filter(x, "hp", 160.0, 2)
     x = circ_filter(x, "lp", lp, 4)         # a pane of glass and a wall: nothing above about 1 kHz gets through
-    return x, {"lowpass_hz": lp, "grain_ms": [80, 150], "sources": ["fs_757318", "fs_260124"] if version == "day" else (["fs_260124"] if version == "night" else ["fs_757318"])}
+    plan["lowpass_hz"] = lp
+    return x, plan
 
 
 def build_radio(version):
-    x = grain_babble(["fs_528615"], [1.0], LOOP_S, seed=21, grain_ms=(90, 160), phrase_hz=0.12, floor_gain=0.35)
-    x = circ_filter(x, "bp", [320.0, 3200.0], 2)                   # a small speaker's band
-    x = np.tanh(2.2 * x / (np.std(x) + 1e-12)) * np.std(x)           # a little cone distortion
+    """A small speaker in a room next door: speech in bursts with gaps of different lengths (the grains hop 0.8 to 1.6 grains,
+    so some touch and some leave a gap), cut to 300 Hz to 3 kHz (nothing below: no hum), a little more midrange body, a little
+    cone distortion, a faint hiss, then the window. The recording it is made from is already muffled (nine tenths of its power
+    between 445 and 727 Hz), so the body and the distortion are what give the band its width."""
+    x, plan = grain_babble(["fs_528615"], [1.0], LOOP_S, seed=21, grain_ms=(90, 160), hop=(0.8, 1.6), bursts=True, gain_jitter_db=3.0,
+                           no_repeat_s=GRAIN_REUSE_S["amb_radio_%s" % version], tukey=0.5)
+    x = circ_filter(x, "bp", [300.0, 3000.0], 2)                           # a small speaker's band, hum-free
+    x = circ_apply(x, lambda y: sl.peaking(y, 1000.0, 0.7, RADIO_BODY_DB))   # midrange body
+    speech = np.std(x[np.abs(x) > 0.1 * np.abs(x).max()]) + 1e-12
+    x = np.tanh(RADIO_DRIVE * x / speech) * speech                         # a little cone distortion
     rng = np.random.default_rng(22)
-    hiss = circ_filter(rng.standard_normal(len(x)), "bp", [1500.0, 5000.0], 2)
-    x = x + hiss * 0.12 * np.std(x) / (np.std(hiss) + 1e-12)
-    lp = {"day": 1250.0, "night": 1050.0, "rain": 800.0}[version]
-    x = circ_filter(x, "lp", lp, 4)                                 # then the window
-    return x, {"lowpass_hz": lp, "band_hz": [320, 3200], "grain_ms": [90, 160], "sources": ["fs_528615"]}
+    hiss = circ_filter(rng.standard_normal(len(x)), "bp", [500.0, 2500.0], 2)
+    x = x + hiss * RADIO_HISS * speech / (np.std(hiss) + 1e-12)
+    lp = {"day": RADIO_LP["day"], "night": RADIO_LP["night"], "rain": RADIO_LP["rain"]}[version]
+    x = circ_filter(x, "lp", lp, 4)                                         # then the window
+    plan.update({"lowpass_hz": lp, "band_hz": [300, 3000], "body_db_at_1k": RADIO_BODY_DB, "drive": RADIO_DRIVE, "hiss_re_speech": RADIO_HISS})
+    return x, plan
 
 
 # -------------------------------------------------------------------------------------------------- beds
@@ -647,7 +790,7 @@ def save_manifest():
     out = {
         "about": "Every output of make_sound.py: what it is made from, where it was cut, how loud it measures (BS.1770-4), and for loops how the seam closes. "
                  "Rebuilt by make_sound.py from the sources listed in sources.json; the sha256 of each WAV shows a rebuild is identical.",
-        "rate": RATE, "loop_seconds": LOOP_S, "loop_crossfade_seconds": XF_S,
+        "rate": RATE, "loop_seconds_max": LOOP_S, "loop_seconds_short": SHORT_LOOP_S, "loop_crossfade_seconds": XF_S,
         "loop_targets_lufs_integrated": dict(sorted(LOOP_TARGET.items())),
         "one_shot_targets_lufs_momentary_max": SHOT_TARGET, "one_shot_tolerance_lu": SHOT_TOL, "true_peak_limit_dbtp": TP_LIMIT,
         "sources_md5": {s["id"]: s.get("md5") for s in src},

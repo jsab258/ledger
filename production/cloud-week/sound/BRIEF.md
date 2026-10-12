@@ -48,12 +48,13 @@ Loudness is ITU-R BS.1770-4: integrated (LUFS) for loops; for one-shots the high
 ```targets-json
 {
  "loop_seconds_min": 60,
+ "loop_seconds_max": 75,
  "loop_lufs_tolerance": 0.5,
  "true_peak_max_dbtp": -1.0,
  "loops_lufs": {
   "amb_traffic_day": -40, "amb_traffic_night": -45, "amb_traffic_rain": -42,
   "amb_harbour_day": -41, "amb_harbour_night": -43, "amb_harbour_rain": -43,
-  "amb_wind_day": -46, "amb_wind_night": -45, "amb_wind_rain": -43,
+  "amb_wind_day": -46, "amb_wind_night": -47, "amb_wind_rain": -43,
   "amb_gulls_day": -48, "amb_gulls_night": -56, "amb_gulls_rain": -54,
   "amb_voices_day": -50, "amb_voices_night": -53, "amb_voices_rain": -55,
   "amb_radio_day": -52, "amb_radio_night": -54, "amb_radio_rain": -54,
@@ -73,7 +74,9 @@ Loudness is ITU-R BS.1770-4: integrated (LUFS) for loops; for one-shots the high
  "seam_step_ok_db": 1.0,
  "step_variant_max_correlation": 0.9,
  "voice_hf_fraction_max": 0.001,
- "grain_ms_max": 160
+ "grain_ms_max": 160,
+ "grain_reuse_min_s": {"amb_voices_day": 12, "amb_voices_night": 20, "amb_voices_rain": 7,
+                       "amb_radio_day": 20, "amb_radio_night": 20, "amb_radio_rain": 20}
 }
 ```
 
