@@ -29,6 +29,40 @@ TEXTURES = ["old_linoleum_flooring_01", "painted_plaster_wall"]
 RES = "1k"
 
 
+# Marks the builder found at 1k that the target's list does not have (step 0, looked at every map): applied the same way, reported in NOTES.md
+# for the target's owner to add to inventory.texture_marks. Boxes in pixels of the 1k base-colour map, [x0, y0, x1, y1].
+EXTRA_BLANK = {
+    "Camera_01": [{"map": "Camera_01_strap_diff_1k.jpg", "boxes": [[632, 840, 712, 874]],
+                   "fill": "the strap leather's brown", "reads": "'INGRID' handwritten in red on the strap (a person's name)"}],
+    "cardboard_box_01": [{"map": "cardboard_box_01_diff_1k.jpg", "boxes": [[185, 190, 395, 350], [395, 255, 505, 365], [250, 360, 375, 465]],
+                          "fill": "the cardboard's own tan", "reads": "'no sharp instruments to open', 'Keep Out of Reach of Children' (the children rule), the two handling pictograms and 'Recommended storage below 30 C'"}],
+    "pliers": [{"map": "pliers_diff_1k.jpg", "boxes": [[146, 530, 196, 778]],
+                "fill": "the handle's red", "reads": "'160 mm', the VDE and GS approval marks and '1000 V' (German certification marks, a modern insulated tool)"}],
+    "seadogs_compass": [{"map": "seadogs_compass_diff_1k.jpg", "boxes": [[560, 230, 615, 335], [650, 225, 735, 350]],
+                         "fill": "the brass ring's brown", "reads": "'LONDON 1965' and the maker's name 'RADOLIER' stamped on the bezel ring"}],
+}
+
+
+# Target boxes tightened where the target's box is wider than the print and straddles two surfaces (the fill would then be a median of two
+# colours): {(model, map): {target box: tighter box that still holds every glyph}}. Looked at 100 per cent beside the original.
+BOX_FIX = {("vintage_pocket_watch", "vintage_pocket_watch_diff_1k.jpg"): {(620, 630, 765, 790): [640, 664, 694, 762]}}
+
+
+# Where the ring just outside a box is mostly another surface than the print's own, the target's stated sampled fill is used instead of the ring's median:
+# {(model, box): (r, g, b)}. The box's own test in verify() then compares with that fill.
+FILL_OVERRIDE = {("vintage_pocket_watch", (640, 664, 694, 762)): (180, 182, 184)}
+
+
+def entries(T, a):
+    out = []
+    for e in T["inventory"]["polyhaven"][a].get("blank") or []:
+        e = dict(e)
+        fix = BOX_FIX.get((a, e["map"]), {})
+        e["boxes"] = [fix.get(tuple(b), b) for b in e["boxes"]]
+        out.append(e)
+    return out + list(EXTRA_BLANK.get(a, []))
+
+
 def load_target():
     return json.load(open(TARGET_JSON, encoding="utf-8"))
 
@@ -145,8 +179,21 @@ def _ring(arr, box, w=6):
     return np.median(patch, axis=0)
 
 
+def _grain(p):
+    """A patch's grain: the patch minus its own broad level (a 4 px blur)."""
+    pim = Image.fromarray(np.clip(p, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(4))
+    return p - np.asarray(pim).astype(np.float32)
+
+
+def _edge_share(p):
+    gy, gx = np.gradient(p.mean(axis=2))
+    return float((np.hypot(gx, gy) > 14).mean())
+
+
 def _clean_patch(arr, box, boxes, rng):
-    """A same-size patch of the map's own grain from the nearest area that is clear of every listed box and close in colour to the ring."""
+    """A same-size patch of the map's own grain from the nearest area that is clear of every listed box, close in colour to the ring, and
+    itself free of print and edges (a patch that carries numerals or a scale would only move the lettering). None when the map has no such
+    area near: the caller then draws grain of the ring's own strength."""
     h, wd = arr.shape[:2]
     x0, y0, x1, y1 = box
     bw, bh = x1 - x0, y1 - y0
@@ -159,25 +206,19 @@ def _clean_patch(arr, box, boxes, rng):
             if not (c <= u0 - 4 or a >= u1 + 4 or d <= v0 - 4 or b >= v1 + 4):
                 return False
         return True
-    best = None
-    for r in range(1, 40):
+    for r in range(1, 60):
         for dx, dy in ((0, -r), (0, r), (-r, 0), (r, 0), (-r, -r), (r, -r), (-r, r), (r, r)):
             a, b = x0 + dx * (bw + 6) // 2, y0 + dy * (bh + 6) // 2
-            if clear(a, b, a + bw, b + bh):
-                p = arr[b:b + bh, a:a + bw]
-                dist = float(np.abs(np.median(p.reshape(-1, p.shape[-1]), axis=0) - ring).max())
-                if dist < 40:
-                    return a, b
-                if best is None or dist < best[0]:
-                    best = (dist, a, b)
-        if best is not None and r > 6:
-            break
-    if best is None:
-        return None
-    return best[1], best[2]
+            if not clear(a, b, a + bw, b + bh):
+                continue
+            p = arr[b:b + bh, a:a + bw]
+            dist = float(np.abs(np.median(p.reshape(-1, p.shape[-1]), axis=0) - ring).max())
+            if dist < 30 and _edge_share(p) < 0.0015:
+                return a, b
+    return None
 
 
-def blank_map(src, dst, boxes, whole_map_print=None, seed=1):
+def blank_map(src, dst, boxes, whole_map_print=None, seed=1, fills=None):
     """Paint the boxes of one map to their ring colour plus the map's own grain. Returns the report rows."""
     img = Image.open(src).convert("RGB")
     arr = np.asarray(img).astype(np.float32)
@@ -187,19 +228,30 @@ def blank_map(src, dst, boxes, whole_map_print=None, seed=1):
     for box in boxes:
         x0, y0, x1, y1 = box
         ring = _ring(arr, box)
+        if fills and tuple(box) in fills:
+            ring = np.array(fills[tuple(box)], np.float32)
         pos = _clean_patch(arr, box, boxes, rng)
         fill = np.empty((y1 - y0, x1 - x0, 3), np.float32)
         fill[:] = ring
         if pos is not None:
             a, b = pos
-            p = arr[b:b + (y1 - y0), a:a + (x1 - x0)]
-            # the grain only: the patch minus its own broad level (a 9 px blur), so the box keeps the ring's colour
-            pim = Image.fromarray(np.clip(p, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(4))
-            grain = p - np.asarray(pim).astype(np.float32)
-            fill = fill + np.clip(grain, -18, 18)
+            grain = _grain(arr[b:b + (y1 - y0), a:a + (x1 - x0)])
+            how = "the map's own grain from the patch at %s" % (pos,)
+        else:
+            # no clean area near: grain of the ring's own strength (the ring is the print-free pixels just outside the box)
+            h, wd = arr.shape[:2]
+            X0, Y0, X1, Y1 = max(0, x0 - 8), max(0, y0 - 8), min(wd, x1 + 8), min(h, y1 + 8)
+            rp = _grain(arr[Y0:Y1, X0:X1])
+            m = np.ones(rp.shape[:2], bool)
+            m[(y0 - Y0):(y1 - Y0), (x0 - X0):(x1 - X0)] = False
+            sd = np.clip(np.median(np.abs(rp[m]), axis=0) * 1.4826, 1.0, 9.0)
+            grain = rng.normal(0.0, 1.0, (y1 - y0, x1 - x0, 3)).astype(np.float32) * sd
+            grain = np.asarray(Image.fromarray(np.clip(grain + 128, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.8))).astype(np.float32) - 128
+            how = "grain drawn at the ring's strength (%s)" % ", ".join("%.1f" % v for v in sd)
+        fill = fill + np.clip(grain, -13, 13)
         out[y0:y1, x0:x1] = fill
-        rows.append({"box": box, "ring": [round(float(c), 1) for c in ring], "patch_from": pos})
-    Image.fromarray(np.clip(out + 0.5, 0, 255).astype(np.uint8)).save(dst, quality=95, subsampling=0)
+        rows.append({"box": box, "ring": [round(float(c), 1) for c in ring], "patch_from": pos, "grain": how})
+    Image.fromarray(np.clip(out + 0.5, 0, 255).astype(np.uint8)).save(dst, quality=98, subsampling=0)
     return rows
 
 
@@ -241,8 +293,7 @@ def blank(ids=None, log=print):
     ids = ids or model_ids(T)
     report = {}
     for a in ids:
-        e = inv[a]
-        entries = e.get("blank") or []
+        entries = globals()["entries"](T, a)
         folder = os.path.join(POLY, a, RES)
         g = json.load(open(gltf_path(a, clean=False), encoding="utf-8"))
         rep = []
@@ -261,7 +312,8 @@ def blank(ids=None, log=print):
                     invented_print(dst, kind)
                     rows = [{"box": boxes[0], "whole_map": True, "replaced_by": "invented_print(kind=%d)" % kind}]
                 else:
-                    rows = blank_map(src, dst, boxes, seed=int(hashlib.md5(a.encode()).hexdigest()[:6], 16))
+                    fills = {k[1]: v for k, v in FILL_OVERRIDE.items() if k[0] == a}
+                    rows = blank_map(src, dst, boxes, seed=int(hashlib.md5(a.encode()).hexdigest()[:6], 16), fills=fills)
                 rep.append({"map": mp, "clean": clean_name, "rows": rows})
                 for im in g["images"]:
                     if os.path.basename(im["uri"]) == mp:
@@ -280,7 +332,7 @@ def verify(log=print):
     inv = T["inventory"]["polyhaven"]
     rows = []
     for a in model_ids(T):
-        for b in inv[a].get("blank") or []:
+        for b in entries(T, a):
             folder = os.path.join(POLY, a, RES)
             rel = map_path(a, b["map"])
             orig = os.path.join(folder, rel)
@@ -298,7 +350,7 @@ def verify(log=print):
             points = any(os.path.basename(i["uri"]) == os.path.basename(clean) for i in g["images"])
             for box in b["boxes"]:
                 x0, y0, x1, y1 = box
-                ring = _ring(arr0, box)
+                ring = np.array(FILL_OVERRIDE.get((a, tuple(box)), _ring(arr0, box)), np.float32)
                 patch = arr1[y0:y1, x0:x1]
                 maxdiff = float(np.abs(patch - ring).max())
                 gy, gx = np.gradient(patch.mean(axis=2))

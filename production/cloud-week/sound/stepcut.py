@@ -49,15 +49,19 @@ def footfall_first(s):
 
 
 def cut(m, max_ms=250.0, thr_scale=0.08, min_gap=0.2, min_transients=2, centroid_range=(500.0, 1600.0),
-        min_ms=80.0, died_db=-20.0, ring_db=-35.0, min_snr_db=12.0):
+        min_ms=80.0, died_db=-20.0, ring_db=-35.0, min_snr_db=12.0, pre_db=-20.0, fade_ms=15.0):
     """Every footfall in m that passes the tests: a list of (start_sample, samples).
 
-    Outdoor takes carry a noise floor, so "has died away" and "where it ends" are judged against the larger of
-    the original's thresholds (20 dB and 35 dB below the step's loudest hit) and a level 2.5 times the take's own
-    noise floor (the 20th percentile of its 5 ms envelope); a step must also stand min_snr_db above that floor.
-    On a clean take the floor is below both thresholds and this is make_steps.py's test exactly."""
+    Outdoor takes carry a noise floor, so "where it ends" is judged against the larger of the original's threshold
+    (35 dB below the step's loudest hit) and a level 2.5 times the take's own noise floor (the 20th percentile of its
+    5 ms envelope); a step must also stand min_snr_db above that floor. Whether it "has died away" is judged against
+    the step's own peak alone (the last 20 ms before the cut-off at least died_db under it): the first build let a
+    noisy take's floor excuse a tail only 7 to 10 dB down, and wet steps 1 to 4 were cut off while still sounding.
+    A step is also rejected when it starts inside a sound: the 20 ms before its cut must lie at least pre_db under its
+    peak (or the take must hold that much before the cut), or the 2 ms fade-in makes a second onset 10 ms before the hit."""
     e = envelope(m, 2.0)
-    floor = float(np.percentile(envelope(m, 5.0), 20))
+    e5 = envelope(m, 5.0)
+    floor = float(np.percentile(e5, 20))
     thr = np.percentile(e, 99.5) * thr_scale
     onsets, last = [], -RATE
     for i in range(1, len(e)):
@@ -87,10 +91,13 @@ def cut(m, max_ms=250.0, thr_scale=0.08, min_gap=0.2, min_transients=2, centroid
         end = min(len(s), quiet[-1] + int(0.01 * RATE)) if len(quiet) else len(s)
         if end < int(0.05 * RATE):
             continue
-        if se[max(0, end - int(0.02 * RATE)):end].max() > max(se.max() * 10 ** (died_db / 20.0), 3.0 * floor):
+        if se[max(0, end - int(0.02 * RATE)):end].max() > se.max() * 10 ** (died_db / 20.0):     # died away: against its own peak
+            continue
+        lo, hi = a2 - int(0.0225 * RATE), a2 - int(0.0025 * RATE)       # the 20 ms before the cut (the 5 ms envelope reaches 2.5 ms either side)
+        if lo < 0 or e5[lo:hi].max() > se.max() * 10 ** (pre_db / 20.0):  # starts inside a sound, or no way to tell
             continue
         s = s[:end]
-        n = min(len(s), int(0.015 * RATE))
+        n = min(len(s), int(fade_ms / 1000.0 * RATE))
         s[-n:] *= np.linspace(1.0, 0.0, n)
         s[:int(0.002 * RATE)] *= np.linspace(0.0, 1.0, int(0.002 * RATE))
         ms = 1000.0 * len(s) / RATE
