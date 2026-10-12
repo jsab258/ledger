@@ -349,10 +349,10 @@ class Room:
             d.rectangle([2, 2, size_px[0] - 3, size_px[1] - 3], outline=tuple(int(c * 0.7) for c in ink), width=2)
             im = im.filter(ImageFilter.GaussianBlur(0.4))
             im.save(os.path.join(self.tex, name + ".png"))
-        card("notice_licence", (512, 200), (232, 226, 210), [("LICENSED PAWNBROKER", 0.2), ("Consumer Credit Act 1974", 0.13), ("Loans on all articles of value", 0.12)], (28, 30, 70))
-        card("notice_unredeemed", (480, 160), (205, 190, 140), [("UNREDEEMED", 0.26), ("PLEDGES FOR SALE", 0.26)], (130, 24, 18))
-        card("notice_tested", (1024, 120), (222, 210, 170), [("ALL ELECTRICAL GOODS TESTED", 0.38)], (130, 24, 18))
-        card("notice_loans", (1024, 260), (236, 232, 222), [("CASH LOANS", 0.30), ("on Gold, Watches & Tools", 0.17)], (50, 52, 96))
+        card("notice_licence", (512, 200), (186, 180, 164), [("LICENSED PAWNBROKER", 0.2), ("Consumer Credit Act 1974", 0.13), ("Loans on all articles of value", 0.12)], (28, 30, 70))
+        card("notice_unredeemed", (480, 160), (166, 150, 104), [("UNREDEEMED", 0.26), ("PLEDGES FOR SALE", 0.26)], (130, 24, 18))
+        card("notice_tested", (1024, 120), (172, 160, 122), [("ALL ELECTRICAL GOODS TESTED", 0.38)], (130, 24, 18))
+        card("notice_loans", (1024, 260), (188, 182, 168), [("CASH LOANS", 0.30), ("on Gold, Watches & Tools", 0.17)], (50, 52, 96))
         # frame prints are in sw_assets (the invented coastal prints)
 
     def flat_card(self, name, tex, x, y0, y1, z0, z1, standoff=0.004, wall="left"):
@@ -855,7 +855,7 @@ def luma_stats(path):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------------- the driver
-DEFAULT_P = {"day": 900.0, "tube": 60.0, "sodium_ratio": 0.06, "back_day": 25.0, "back_nl": 25.0, "back_nd": 4.0, "diff_emit": 6.0}
+DEFAULT_P = {"day": 900.0, "tube": 60.0, "sodium_ratio": 0.06, "back_day": 25.0, "back_nl": 25.0, "back_nd": 4.0, "diff_emit": 0.85}
 TARGET_MEAN = {"day": 119.5, "night_lit": 79.8, "night_dark": 17.7}
 
 
