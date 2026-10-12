@@ -65,7 +65,7 @@ def paint_bare_timber(B, T, s):
     # dark grain lines: the hard late-wood of the grain
     dl = np.clip((-g2 - 0.7) / 0.9, 0, 1) * 0.55 + np.clip((-g4 - 1.0) / 0.9, 0, 1) * 0.30 + np.clip((-g1 - 1.1) / 1.0, 0, 1) * 0.35
     dl = np.clip(dl, 0, 1)
-    rgb *= (1.0 - 0.34 * dl)[..., None]
+    rgb *= (1.0 - 0.39 * dl)[..., None]                                # the late-wood lines a little harder (try 2 check: the grain reads across, 5 to 1)
     B.rgb[:] = rgb
     B.rough[:] = np.clip(0.85 + 0.04 * g2, 0.55, 1.0)
     B.metal[:] = 0.0

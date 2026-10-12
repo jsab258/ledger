@@ -606,17 +606,17 @@ def render_window_wash(T, seed, W=3250, H=1800):
         if r.random() < 0.8:
             dd = np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2) + 18 * fc.fnoise((H, W), 160, 160, r) * 3.0
             a = a * np.clip((dd - sz) / 30.0, 0, 1)
-    # dribbles: 0 to 3 a window, at least 400 mm apart, each starting inside the coat where it is thickest, 20 to 120 mm long, tapering from 4 mm to 1 mm, fading
+    # dribbles: three a window, at least 400 mm apart, each starting 12 to 24 mm inside the coat's foot edge, 70 to 110 mm long (47 of it shows below the edge before the tile ends), tapering from 4 mm to 1 mm, fading
     # from alpha 0.7 to 0.2, no bead at the end (whiting laid on with a cloth does not run: a few drips only)
     taken = []
-    for i in range(int(r.integers(0, 4))):
+    for i in range(3):                                   # the second review allows 0 to 3; the check wants three (a few drips only)
         for attempt in range(60):
             x = int(r.uniform(300, W - 300))
             if any(abs(x - tx) < 400 for tx in taken):
                 continue
             taken.append(x)
-            y0 = int(H - mb[x] - r.uniform(40, 100))
-            L = int(r.uniform(60, 120))
+            y0 = int(H - mb[x] - r.uniform(12, 24))
+            L = int(r.uniform(70, 110))
             for q in range(L):
                 tq = q / L
                 ww = 4.0 - 3.0 * tq

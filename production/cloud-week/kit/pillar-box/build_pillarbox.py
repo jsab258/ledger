@@ -32,39 +32,55 @@ TARGET_JSON = os.path.join(REPO, "production", "cloud-week", "targets", "pillar-
 ASSET_DIR = os.path.join(REPO, "production", "assets", "cloud-week", "pillar-box")
 NPZ_DIR = os.path.join(HERE, "build")
 
-R_BODY, R_BASE, Z_BASE = 195.0, 199.0, 300.0                  # PHOTO-CHECK: body 390, a straight black base 300 high at most 4 wider
+R_BODY, R_BASE, Z_BASE = 195.0, 199.0, 290.0                  # PHOTO-CHECK: body 390, a straight black base about 300 high at most 4 wider; the body starts inside the base's roll
+Z_ROLL = 298.0                                                # the base's top roll (R6) ends here: the black-to-red line reads at about 297.7
 R_RIM = 267.5                                                 # the cap rim 535 across
-Z_COVE0, Z_RIM0, Z_RIM1, Z_NECK1 = 1342.0, 1362.0, 1420.0, 1440.0
-R_SHELF, DOME_RISE, Z_TOP = 245.0, 60.0, 1500.0
+# try 2 after REVIEW-v1-street (fault 1), measured on five Geograph photographs, as fractions of the 1500: collar 1350 to 1380 (a ring a little proud of the body, just over the
+# slot's hood), a deep concave flare from the collar to the rim's lower edge at 1440, the rim band 1440 to 1485 (about 45 deep) with a bead on its lower edge, then a low dome
+# (15 rise) straight from just inside the rim's top bead: no shelf, no neck
+Z_COLLAR0, Z_COLLAR1, R_COLLAR = 1350.0, 1380.0, 205.0
+Z_RIM0, Z_RIM1, Z_TOP = 1440.0, 1485.0, 1500.0
+DOME_RISE = Z_TOP - Z_RIM1
 SLOT_W, SLOT_H, SLOT_Z = 250.0, 45.0, 1278.0
-DOOR_W, DOOR_Z0, DOOR_Z1 = 240.0, 330.0, 1180.0               # the target's 300 wide scaled 0.8; the top stops 10 under the lettering band (1190 to 1230)
+DOOR_W, DOOR_Z0, DOOR_Z1 = 240.0, 330.0, 1235.0               # the target's 300 wide scaled 0.8; the head rises to just under the slot's frame (REVIEW-v1-street fault 2)
 SIDES = 96                                                    # the lathe's sides (the target asks for 8,000 to 30,000 triangles)
-LOCK_X, LOCK_Z = 90.0, 818.0                                  # the target's 112 scaled 0.8, on the right as seen from the front
-FRAME_W, FRAME_H, FRAME_Z = 168.0, 100.0, 950.0
+LOCK_X, LOCK_Z = -90.0, 818.0                                 # on the viewer's right: with +y the front and z up, the viewer's right is -x (the target's frame line is mirrored)
+FRAME_W, FRAME_H, FRAME_Z = 130.0, 240.0, 1090.0              # an upright frame under the slot, its top at 1210 (REVIEW-v1-street fault 2)
+CYPHER_Z, LETTER_Z, LETTER_W = 620.0, 420.0, 230.0            # the reserved flush areas, moved down to where the photographs have the crown and the lettering
 
 
 def body_profile():
-    """(r, z) from the foot of the red body up to the apex: the body to the cap's soffit, a cove out to the rim, the vertical rim with its rounded top, a flat shelf, a short
-    neck and the shallow dome (sagitta 60 on r 245)"""
-    pts = [(0.0, Z_BASE), (R_BODY, Z_BASE), (R_BODY, Z_COVE0)]
-    for k in range(1, 9):                                     # the cove: a quarter ellipse, concave, out to the rim
-        a = math.radians(90.0 * k / 8)
-        pts.append((R_BODY + (R_RIM - R_BODY) * math.sin(a), Z_COVE0 + (Z_RIM0 - Z_COVE0) * (1 - math.cos(a))))
+    """(r, z) from the foot of the red body to the apex: the body to the collar, the collar, the deep concave flare out to the rim's lower bead, the vertical rim with its
+    rounded top, the low dome"""
+    pts = [(0.0, Z_BASE), (R_BODY, Z_BASE), (R_BODY, Z_COLLAR0), (R_COLLAR, Z_COLLAR0), (R_COLLAR, Z_COLLAR1), (R_COLLAR - 5.0, Z_COLLAR1)]
+    i_col0, i_col1 = 3, 4
+    r0 = R_COLLAR - 5.0
+    for k in range(1, 13):                                    # the flare: tangent to the vertical at the collar, turning to the horizontal at the rim's lower edge
+        a = math.radians(90.0 * k / 12)
+        pts.append((r0 + (R_RIM - 4.0 - r0) * (1 - math.cos(a)), Z_COLLAR1 + (Z_RIM0 - 4.0 - Z_COLLAR1) * math.sin(a)))
+    for k in range(1, 5):                                     # the bead on the rim's lower edge, R4
+        a = math.radians(-90.0 + 90.0 * k / 4)
+        pts.append((R_RIM - 4.0 + 4.0 * math.cos(a), Z_RIM0 + 4.0 * math.sin(a)))
     pts += [(R_RIM, Z_RIM1 - 6.0)]
     for k in range(1, 5):                                     # the rim's top edge, R6
         a = math.radians(90.0 * k / 4)
         pts.append((R_RIM - 6.0 + 6.0 * math.cos(a), Z_RIM1 - 6.0 + 6.0 * math.sin(a)))
-    pts += [(R_SHELF, Z_RIM1), (R_SHELF, Z_NECK1)]
-    Rs = (R_SHELF ** 2 + DOME_RISE ** 2) / (2 * DOME_RISE)
+    r1 = R_RIM - 6.0
+    Rd = (r1 ** 2 + DOME_RISE ** 2) / (2 * DOME_RISE)
     for k in range(1, 17):
-        r = R_SHELF * (1 - k / 16.0)
-        pts.append((r, Z_TOP - (Rs - math.sqrt(max(Rs * Rs - r * r, 0.0)))))
-    i = [j for j, p in enumerate(pts) if abs(p[0] - R_SHELF) < 1e-9 and abs(p[1] - Z_NECK1) < 1e-9][0]
-    return fillet(pts, {i: 2.5})                              # the neck's top edge eased (the target's 1.5 lips, a little more on a 62 degree turn)
+        r = r1 * (1 - k / 16.0)
+        pts.append((r, Z_TOP - (Rd - math.sqrt(max(Rd * Rd - r * r, 0.0)))))
+    return fillet(pts, {i_col0: 2.5, i_col1: 2.5})
 
 
 def base_profile():
-    return [(0.0, -150.0), (R_BASE, -150.0), (R_BASE, Z_BASE - 3.0), (R_BASE - 0.6, Z_BASE - 0.1), (R_BASE - 2.2, Z_BASE + 2.0), (R_BODY, Z_BASE + 6.0), (0.0, Z_BASE + 6.0)]
+    """the black base: straight, 199 across, to its top roll (R6), which meets the body at about z 297.7"""
+    pts = [(0.0, -150.0), (R_BASE, -150.0), (R_BASE, Z_ROLL - 6.0)]
+    for k in range(1, 7):
+        a = math.radians(90.0 * k / 6)
+        pts.append((R_BASE - 6.0 + 6.0 * math.cos(a), Z_ROLL - 6.0 + 6.0 * math.sin(a)))
+    pts.append((0.0, Z_ROLL))
+    return pts
 
 
 def arc_solid(sect_rz, a0, a1, n=None):
@@ -112,14 +128,23 @@ def build(T, out_dir, npz_dir):
     Vi, Fi = arc_solid([(R_BODY - 4.0, DOOR_Z0), (R_BODY + 3.0, DOOR_Z0), (R_BODY + 3.0, DOOR_Z1), (R_BODY - 4.0, DOOR_Z1)], -ha, ha)
     bs.bool_op(body, Vs, Fs, "DIFFERENCE")
     bs.bool_op(body, Vo, Fo, "DIFFERENCE")
-    B2 = Parts()
     # the door: a cylindrical panel 1 mm proud (it fills the inside of the groove, 3 deep)
     Vd, Fd = arc_solid([(R_BODY - 3.0, DOOR_Z0), (R_BODY + 1.0, DOOR_Z0), (R_BODY + 1.0, DOOR_Z1), (R_BODY - 3.0, DOOR_Z1)], -ha, ha)
     B.add("door", (Vd, Fd), "paint_red", bev=None)
     # the hood over the slot: a curved lip wrapped round the front, 30 proud, its cheeks radial planes at +-47 degrees
     hood = [(R_BODY - 3.0, 1301.0), (R_BODY + 30.0, 1301.0), (R_BODY + 30.0, 1323.0), (R_BODY - 3.0, 1333.0)]   # 0.5 over the slot's ceiling (1300.5): no two faces in one plane
     B.add("hood", arc_solid(hood, -47.0, 47.0), "paint_red", bev=1.5)
-    # the collection plate: a flat-faced frame (bezel 10, face plane 9 proud of the door at the axis), a 3 mm recess, the enamel plate in it
+    # the frame round the slot (10 wide, 3 proud, wrapped on the body, the slot cut through it) and the sill under it (REVIEW-v1-street, narrow point)
+    af = math.degrees(math.asin((SLOT_W / 2.0 + 10.0) / R_BODY))
+    z0f, z1f = SLOT_Z - SLOT_H / 2.0 - 10.0, SLOT_Z + SLOT_H / 2.0 + 10.0
+    Vfr, Ffr = arc_solid([(R_BODY - 2.5, z0f), (R_BODY + 3.0, z0f), (R_BODY + 3.0, z1f), (R_BODY - 2.5, z1f)], -af, af)
+    sf = B.add("slot_frame", (Vfr, Ffr), "paint_red", bev=1.0)
+    spf = [(p[0], SLOT_Z + p[1]) for p in rrect(SLOT_W + 2.0, SLOT_H + 2.0, 6.0, 3)]                      # 1 mm larger all round than the body's slot: no two faces in one plane
+    Vsf, Fsf = prism_y(spf, 60.0, R_BODY + 45.0)
+    bs.bool_op(sf, Vsf, Fsf, "DIFFERENCE")
+    Vsl, Fsl = arc_solid([(R_BODY - 3.5, z0f - 6.0), (R_BODY + 8.0, z0f - 6.0), (R_BODY + 8.0, z0f - 1.0), (R_BODY + 3.0, z0f + 2.0), (R_BODY - 3.5, z0f + 2.0)], -af, af)
+    B.add("slot_sill", (Vsl, Fsl), "paint_red", bev=1.0)
+    # the collection plate: an upright flat-faced frame 130 x 240 (bezel 10, face plane 9 proud of the door at the axis), a 3 mm recess, the enamel plate in it
     y_face = R_BODY + 9.0
     outer = [(p[0], FRAME_Z + p[1]) for p in rrect(FRAME_W, FRAME_H, 6.0, 4)]
     fr = B.add("plate_frame", prism_y(outer, 150.0, y_face), "paint_red", bev=1.5)
@@ -127,16 +152,19 @@ def build(T, out_dir, npz_dir):
     Vr, Fr = prism_y(inner, y_face - 3.0, y_face + 5.0)
     bs.bool_op(fr, Vr, Fr, "DIFFERENCE")
     B.add("plate", prism_y(inner, y_face - 3.4, y_face - 2.4), "enamel_white", bev=None)
-    # the escutcheon: a round-cornered plate 36 across and 3 proud at the lock (x 90, z 818), with its keyhole 4 x 12; built on the front and turned about the axis to x 90
+    # the lock, on the viewer's right (x -90, z 818): an upright oblong escutcheon 40 x 100, 3 proud, with its keyhole 4 x 12 and a small lever handle 24 x 6 under it;
+    # built on the front and turned about the axis
     ang = math.degrees(math.asin(LOCK_X / R_BODY))
-    ew = math.degrees(18.0 / R_BODY)
-    Ve, Fe = arc_solid([(R_BODY - 3.0, LOCK_Z - 18.0), (R_BODY + 3.0, LOCK_Z - 18.0), (R_BODY + 3.0, LOCK_Z + 18.0), (R_BODY - 3.0, LOCK_Z + 18.0)], ang - ew, ang + ew)
+    ew = math.degrees(20.0 / R_BODY)
+    Ve, Fe = arc_solid([(R_BODY - 3.0, LOCK_Z - 50.0), (R_BODY + 3.0, LOCK_Z - 50.0), (R_BODY + 3.0, LOCK_Z + 50.0), (R_BODY - 3.0, LOCK_Z + 50.0)], ang - ew, ang + ew)
     es = B.add("escutcheon", (Ve, Fe), "paint_red", bev=1.0)
-    kh = [(p[0], LOCK_Z + p[1]) for p in rrect(4.0, 12.0, 1.5, 2)]
+    kh = [(p[0], LOCK_Z + 20.0 + p[1]) for p in rrect(4.0, 12.0, 1.5, 2)]
     Vk, Fk = prism_y(kh, R_BODY - 1.0, R_BODY + 8.0)
     c, sn = math.cos(math.radians(ang)), math.sin(math.radians(ang))
-    Vk = np.array([(x * c + y * sn, -x * sn + y * c, z) for x, y, z in Vk])        # the front (+y) turned to the right, to x = R sin(ang)
+    Vk = np.array([(x * c + y * sn, -x * sn + y * c, z) for x, y, z in Vk])        # the front (+y) turned to the viewer's right, to x = R sin(ang)
     bs.bool_op(es, Vk, Fk, "DIFFERENCE")
+    lw = math.degrees(12.0 / R_BODY)
+    B.add("lock_lever", arc_solid([(R_BODY + 1.0, LOCK_Z - 12.0), (R_BODY + 7.0, LOCK_Z - 12.0), (R_BODY + 7.0, LOCK_Z - 6.0), (R_BODY + 1.0, LOCK_Z - 6.0)], ang - lw, ang + lw), "paint_red", bev=0.8)
     obs = bs.finish(B, mats, 0.0)
     return bs.write(obs, "pillar_box", 0.0, out_dir, npz_dir)
 

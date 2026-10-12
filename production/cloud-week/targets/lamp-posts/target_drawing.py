@@ -260,7 +260,7 @@ def build_views(T):
     ytop, ybot = -c_side(T, ax + half) / 2.0, c_side(T, ax - half) / 2.0
     r_out, r_in = cb["mitre"]["outer_corner_radius"], cb["mitre"]["inner_fillet_radius"]
     arm_side = Polygon([(-40.0, ax - half), (aend - ach, ax - half), (aend, ax - half + ach), (aend, ax + half - ach), (aend - ach, ax + half), (-40.0, ax + half)])
-    outer_cut = box(ytop, ax + half - r_out, ytop + r_out, ax + half).difference(Point(ytop + r_out, ax + half - r_out).buffer(r_out, resolution=24))
+    outer_cut = box(ytop - 2.0, ax + half - r_out, ytop + r_out, ax + half + 2.0).difference(Point(ytop + r_out, ax + half - r_out).buffer(r_out, resolution=24))
     inner_fill = box(ybot, ax - half - r_in, ybot + r_in, ax - half).difference(Point(ybot + r_in, ax - half - r_in).buffer(r_in, resolution=24))
     c_shaft_arm = unary_union([c_shaft_side, arm_side, inner_fill]).difference(outer_cut)
     spigot_side = box(sp["y"][0], ax - sp["od"] / 2.0, sp["y"][1], ax + sp["od"] / 2.0)

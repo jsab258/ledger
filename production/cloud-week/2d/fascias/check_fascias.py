@@ -2469,7 +2469,11 @@ def wash_metrics(a):
     foot[H - 120:, :] = True
     col_runs = 0
     cols = a[H - 120:, :]
-    lbl, n = ndi.label((cols > 0.4) & ndi.binary_dilation(cols > 0.4, structure=np.ones((9, 1), bool)))
+    # try 2 after the second signs review: the coat's foot edge is soft and near the tile's bottom, so a dribble that leaves it is joined to the coat in the plain mask; the coat
+    # (wide) is opened away first, and the thin runs that hang from it are counted
+    hi = cols > 0.4
+    coat = ndi.binary_dilation(ndi.binary_opening(hi, structure=np.ones((1, 41), bool)), structure=np.ones((3, 3), bool))
+    lbl, n = ndi.label(hi & ~coat & ndi.binary_dilation(hi, structure=np.ones((9, 1), bool)))
     for sl in ndi.find_objects(lbl):
         hh = sl[0].stop - sl[0].start
         ww = sl[1].stop - sl[1].start
