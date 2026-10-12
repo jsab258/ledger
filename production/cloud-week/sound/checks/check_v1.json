@@ -2,16 +2,9 @@
  "check": "check_sound.py v1",
  "brief": "BRIEF.md",
  "outputs_dir": "/home/user/ledger-scratch/sound-out",
- "rows_pass": 1238,
- "rows_total": 1239,
- "failing": [
-  {
-   "case": 13,
-   "test": "every source in sources.json is used by an output",
-   "file": null,
-   "detail": "unused: ['fs_575898']"
-  }
- ],
+ "rows_pass": 1235,
+ "rows_total": 1235,
+ "failing": [],
  "rows": [
   {
    "case": 1,
@@ -732,28 +725,28 @@
    "test": "no level step across the seam",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "0.21 dB, larger than at 15% of other places"
+   "detail": "0.26 dB, larger than at 18% of other places"
   },
   {
    "case": 22,
    "test": "no part of the loop plays twice inside it (4 s windows, lags 1 s to half the loop, correlation at most 0.50)",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "highest correlation 0.10 (the window at 58 s against the loop at 16 s)"
+   "detail": "highest correlation 0.11 (the window at 58 s against the loop at 16 s)"
   },
   {
    "case": 23,
    "test": "no steady tone stands more than 15 dB over its neighbours",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "highest peak +11.1 dB at 98 Hz (right)"
+   "detail": "highest peak +10.0 dB at 175 Hz (right)"
   },
   {
    "case": 5,
    "test": "no clipping (no full-scale sample)",
    "file": "amb_harbour_rain.wav",
    "pass": true,
-   "detail": "peak -23.37 dBFS"
+   "detail": "peak -23.36 dBFS"
   },
   {
    "case": 15,
@@ -8024,27 +8017,6 @@
   {
    "case": 13,
    "test": "source file on disk matches its md5",
-   "file": "fs_575898",
-   "pass": true,
-   "detail": "fs_575898.mp3"
-  },
-  {
-   "case": 14,
-   "test": "licence reads CC0 on the page",
-   "file": "fs_575898",
-   "pass": true,
-   "detail": "Creative Commons 0 | http://creativecommons.org/publicdomain/zero/1.0/"
-  },
-  {
-   "case": 14,
-   "test": "title and page text hold no content-rule word",
-   "file": "fs_575898",
-   "pass": true,
-   "detail": "clean"
-  },
-  {
-   "case": 13,
-   "test": "source file on disk matches its md5",
    "file": "fs_57743",
    "pass": true,
    "detail": "fs_57743.mp3"
@@ -8235,8 +8207,8 @@
    "case": 13,
    "test": "every source in sources.json is used by an output",
    "file": null,
-   "pass": false,
-   "detail": "unused: ['fs_575898']"
+   "pass": true,
+   "detail": "unused: none"
   },
   {
    "case": 13,
@@ -8440,13 +8412,6 @@
    "file": "fs_559821",
    "pass": true,
    "detail": "February 22nd, 2021"
-  },
-  {
-   "case": 13,
-   "test": "a Freesound source has the date its page gives for the upload",
-   "file": "fs_575898",
-   "pass": true,
-   "detail": "June 15th, 2021"
   },
   {
    "case": 13,
