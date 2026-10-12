@@ -8,6 +8,7 @@ AWAY = ("FIRE", "He had slipped off home, and he swore in his report that he had
 WHY_NEW = "No routine for this person in hook-cast.json (REGULARS.md: 'Grace and the Tangs need theirs'); proposed from the contact sheet and the shop hours."
 
 # ---------------------------------------------------------------- 25 Dawn Pybus (danica)
+sty, tag = "brisk", "love"
 PEOPLE.append(regular(
     "danica", "Dawn", knew=False, line_as="believes", line_truth="unknown",
     line_basis=NOTE("A collector's remark; whose fault the rent is is not settled by canon."), manner=("hates the job",),
@@ -26,16 +27,17 @@ PEOPLE.append(regular(
         Q("What do you do here?", "answers", "I run for the rent collector. I hate the job, to be honest.", ["job", "manner1"], "firsts: What do you do here?"),
         Q("Who do I pay the rent to?", "partly", "I only collect it. Shout at the landlord, not me.", ["line"], "invented: a stranger asks a collector"),
         Q("Who's Sheila?", "answers", "Sheila Dunn, Mickey's bookkeeper.", ["who_lena"], "invented: a stranger asks about a neighbour"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What is this place?", "answers", STD["office"], ["office"], "firsts: What is this place?"),
-        Q("Where can I get something to eat?", "answers", STD["cafe"], ["cafe"], "firsts: Where can I get something to eat?"),
-        Q("Is it always this quiet?", "answers", STD["trade"], ["trade"], "held: Is it always this quiet?"),
-        Q("Who runs things round here?", "points_to", STD["who_runs"], ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
-        Q("What was Mickey like?", "dont_know", "I never really knew him. That's all I know.", [], "firsts: What was Mickey like?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What is this place?", "answers", std("office", sty, tag), ["office"], "firsts: What is this place?"),
+        Q("Where can I get something to eat?", "answers", std("cafe", sty, tag), ["cafe"], "firsts: Where can I get something to eat?"),
+        Q("Is it always this quiet?", "answers", std("trade", sty, tag), ["trade"], "held: Is it always this quiet?"),
+        Q("Who runs things round here?", "points_to", std("who_runs", sty, tag), ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
+        Q("What was Mickey like?", "dont_know", std("dk_mickey", sty, tag), [], "firsts: What was Mickey like?"),
     ],
 ))
 
 # ---------------------------------------------------------------- 26 Dennis Iveson (drago)
+sty, tag = "warm", "mate"
 PEOPLE.append(regular(
     "drago", "Dennis", knew=False, manner=("buys anything",),
     knows=[
@@ -61,17 +63,18 @@ PEOPLE.append(regular(
         Q("Who are you?", "answers", "Dennis Iveson. I'm a scrap dealer on the old warehouse row.", ["job"], "firsts: Who are you?"),
         Q("What do you do here?", "answers", "I deal in scrap on the old warehouse row. I buy anything.", ["job", "manner1"], "firsts: What do you do here?"),
         Q("What do you buy?", "answers", "Copper, lead, brass. I'll weigh it and I'll pay you. Fair's fair.", ["line"], "invented: a stranger asks a scrap dealer"),
-        Q("What happened at the warehouse fire?", "answers", STD["fire"], ["fire"], "fresh: What happened at the warehouse fire?"),
+        Q("What happened at the warehouse fire?", "answers", std("fire", sty, tag), ["fire"], "fresh: What happened at the warehouse fire?"),
         Q("Did you buy anything from the fire?", "deflect", "I buy anything, me. Copper, lead, brass, I'll weigh it and I'll pay you.", ["fittings", "manner1", "line"], "invented: a stranger asks a scrap dealer"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What is this place?", "answers", STD["office"], ["office"], "firsts: What is this place?"),
-        Q("Where can I get something to eat?", "answers", STD["cafe"], ["cafe"], "firsts: Where can I get something to eat?"),
-        Q("Is it always this quiet?", "answers", STD["trade"], ["trade"], "held: Is it always this quiet?"),
-        Q("What was Mickey like?", "dont_know", "I never really knew him. That's all I know.", [], "firsts: What was Mickey like?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What is this place?", "answers", std("office", sty, tag), ["office"], "firsts: What is this place?"),
+        Q("Where can I get something to eat?", "answers", std("cafe", sty, tag), ["cafe"], "firsts: Where can I get something to eat?"),
+        Q("Is it always this quiet?", "answers", std("trade", sty, tag), ["trade"], "held: Is it always this quiet?"),
+        Q("What was Mickey like?", "dont_know", std("dk_mickey", sty, tag), [], "firsts: What was Mickey like?"),
     ],
 ))
 
 # ---------------------------------------------------------------- 27 Norman Dent (filip)
+sty, tag = "terse", "friend"
 PEOPLE.append(regular(
     "filip", "Norman", knew=False, line_as="believes", line_truth="partly", line_basis=H(*AWAY, note="True on the nights he is there; the story has him away the night of the fire."),
     manner=("glad of company", "swears he misses nothing"),
@@ -95,16 +98,17 @@ PEOPLE.append(regular(
         Q("What do you do here?", "answers", "I walk the whole row at night, for the warehouses still standing.", ["job", "walks_row"], "firsts: What do you do here?"),
         Q("What's it like at night?", "answers", "Nothing moves on that row at night but me and the rats.", ["line"], "held: What's the street like after dark?"),
         Q("Were you there the night of the fire?", "deflect", "I swear I miss nothing on that row.", ["manner2", "slipped"], "invented: a stranger asks the watchman"),
-        Q("What happened at the warehouse fire?", "answers", STD["fire"], ["fire"], "fresh: What happened at the warehouse fire?"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What is this place?", "answers", STD["office"], ["office"], "firsts: What is this place?"),
-        Q("Is it always this quiet?", "answers", STD["trade"], ["trade"], "held: Is it always this quiet?"),
-        Q("Who runs things round here?", "points_to", STD["who_runs"], ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
-        Q("What was Mickey like?", "dont_know", "I never really knew him. That's all I know.", [], "firsts: What was Mickey like?"),
+        Q("What happened at the warehouse fire?", "answers", std("fire", sty, tag), ["fire"], "fresh: What happened at the warehouse fire?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What is this place?", "answers", std("office", sty, tag), ["office"], "firsts: What is this place?"),
+        Q("Is it always this quiet?", "answers", std("trade", sty, tag), ["trade"], "held: Is it always this quiet?"),
+        Q("Who runs things round here?", "points_to", std("who_runs", sty, tag), ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
+        Q("What was Mickey like?", "dont_know", std("dk_mickey", sty, tag), [], "firsts: What was Mickey like?"),
     ],
 ))
 
 # ---------------------------------------------------------------- 28 Grace Rinaldi (cafe)
+sty, tag = "warm", "love"
 PEOPLE.append(regular(
     "cafe", "Grace", knew=True, manner=("fierce about her tea", "forgets nobody"),
     knows=[D("my_hours", "hours", "cafe")],
@@ -126,11 +130,11 @@ PEOPLE.append(regular(
         Q("What time do you open?", "answers", "Half six till ten at night, Monday to Saturday. Eight till twelve on a Sunday.", ["my_hours"], "held: What time do we open in the morning?"),
         Q("Where can I get something to eat?", "answers", "Here, love. Half six till ten at night, and eight till twelve on a Sunday.", ["cafe", "my_hours"], "firsts: Where can I get something to eat?"),
         Q("Is there anywhere to get breakfast?", "answers", "Here, love. Half six in the morning. Sit down and I'll bring you a tea.", ["my_hours", "line"], "fresh: Is there anywhere to get breakfast?"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What was Mickey like?", "answers", STD["mickey"], ["mickey_counsel"], "firsts: What was Mickey like?"),
-        Q("Is June still about?", "answers", STD["june"], ["june"], "fresh: Is June still about?"),
-        Q("What is this place?", "answers", STD["office"], ["office"], "firsts: What is this place?"),
-        Q("Who runs things round here?", "points_to", STD["who_runs"], ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What was Mickey like?", "answers", std("mickey", sty, tag), ["mickey_counsel"], "firsts: What was Mickey like?"),
+        Q("Is June still about?", "answers", std("june", sty, tag), ["june"], "fresh: Is June still about?"),
+        Q("What is this place?", "answers", std("office", sty, tag), ["office"], "firsts: What is this place?"),
+        Q("Who runs things round here?", "points_to", std("who_runs", sty, tag), ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
     ],
     schedule=PS(
         weekday=[(0, 6, "off"), (6, 14, "cafe"), (14, 17, "off"), (17, 22.5, "cafe"), (22.5, 24, "off")],
@@ -140,6 +144,7 @@ PEOPLE.append(regular(
 ))
 
 # ---------------------------------------------------------------- 29 Peter Tang (takeaway_m)
+sty, tag = "formal", "love"
 PEOPLE.append(regular(
     "takeaway_m", "Peter", knew=False, manner=("careful with strangers", "proud of his cooking"),
     knows=[
@@ -162,12 +167,12 @@ PEOPLE.append(regular(
         Q("What do you do here?", "answers", "I cook, and I'm proud of it. We keep the takeaway on the parade, my wife and I.", ["job", "manner2"], "firsts: What do you do here?"),
         Q("How long will it be?", "answers", "Ten minutes, love. Good food takes ten minutes.", ["line"], "invented: a stranger orders at a takeaway"),
         Q("How long have you been here?", "answers", "I came over in 1968.", ["came_1968"], "held: How long have you been here?"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What is this place?", "answers", STD["office"], ["office"], "firsts: What is this place?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What is this place?", "answers", std("office", sty, tag), ["office"], "firsts: What is this place?"),
         Q("Where can I get something to eat?", "answers", "Here, love. Ten minutes, and good food takes ten minutes.", ["line", "job"], "firsts: Where can I get something to eat?"),
-        Q("Is it always this quiet?", "answers", STD["trade"], ["trade"], "held: Is it always this quiet?"),
-        Q("Who runs things round here?", "points_to", STD["who_runs"], ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
-        Q("What was Mickey like?", "dont_know", "I never really knew him. That's all I know.", [], "firsts: What was Mickey like?"),
+        Q("Is it always this quiet?", "answers", std("trade", sty, tag), ["trade"], "held: Is it always this quiet?"),
+        Q("Who runs things round here?", "points_to", std("who_runs", sty, tag), ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
+        Q("What was Mickey like?", "dont_know", std("dk_mickey", sty, tag), [], "firsts: What was Mickey like?"),
     ],
     schedule=PS(
         weekday=[(0, 10, "off"), (10, 14, "takeaway"), (14, 16.5, "off"), (16.5, 23, "takeaway"), (23, 24, "off")],
@@ -179,6 +184,7 @@ PEOPLE.append(regular(
 ))
 
 # ---------------------------------------------------------------- 30 Lily Tang (takeaway_f)
+sty, tag = "brisk", "love"
 PEOPLE.append(regular(
     "takeaway_f", "Lily", knew=False, manner=("warm with regulars", "sharp with anyone who's rude"),
     knows=[
@@ -201,12 +207,12 @@ PEOPLE.append(regular(
         Q("What do you do here?", "answers", "I'm the takeaway's front and its books. Warm with regulars, sharp with anyone who's rude.", ["job", "manner1", "manner2"], "firsts: What do you do here?"),
         Q("Do you remember what I had?", "answers", "Same as last week? I remember. Everybody thinks I don't.", ["line"], "invented: a stranger at a takeaway counter"),
         Q("Who keeps the takeaway?", "answers", "My husband and I keep the takeaway on the parade.", ["with_husband"], "invented: a stranger at a takeaway counter"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What is this place?", "answers", STD["office"], ["office"], "firsts: What is this place?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What is this place?", "answers", std("office", sty, tag), ["office"], "firsts: What is this place?"),
         Q("Where can I get something to eat?", "answers", "Here, love. Same as last week, if you've been.", ["line", "job"], "firsts: Where can I get something to eat?"),
-        Q("Is it always this quiet?", "answers", STD["trade"], ["trade"], "held: Is it always this quiet?"),
-        Q("Who runs things round here?", "points_to", STD["who_runs"], ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
-        Q("What was Mickey like?", "dont_know", "I never really knew him. That's all I know.", [], "firsts: What was Mickey like?"),
+        Q("Is it always this quiet?", "answers", std("trade", sty, tag), ["trade"], "held: Is it always this quiet?"),
+        Q("Who runs things round here?", "points_to", std("who_runs", sty, tag), ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
+        Q("What was Mickey like?", "dont_know", std("dk_mickey", sty, tag), [], "firsts: What was Mickey like?"),
     ],
     schedule=PS(
         weekday=[(0, 11, "off"), (11, 14, "takeaway"), (14, 16.5, "off"), (16.5, 23, "takeaway"), (23, 24, "off")],

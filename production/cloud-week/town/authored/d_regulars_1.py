@@ -7,6 +7,7 @@ ARRIVE = ("DAY1", "six see him come (Ron, Sheila, the dispatcher, a day driver, 
 ROW = ("NEWS", "Everybody in the pawn then saw it: Rita and Hal themselves, Darren Milner, the pawn's back-room hand, its appraiser, its clerk, and the locksmith who works its counter in the mornings.")
 
 # ---------------------------------------------------------------- 1 Pauline Kitching (zlata)
+sty, tag = "brisk", "love"
 PEOPLE.append(regular(
     "zlata", "Pauline", knew=True, manner=("quick and dry on the radio, kind off it",),
     knows=[
@@ -29,18 +30,19 @@ PEOPLE.append(regular(
     questions=[
         Q("Who are you?", "answers", "Pauline Kitching. I'm Mickey's dispatcher, on the radio and the phone.", ["job"], "firsts: Who are you?"),
         Q("How do I get a cab?", "partly", "Car to the station, two minutes. No, love, two real minutes.", ["line"], "held: Are we still taking bookings?"),
-        Q("How many drivers are there?", "answers", STD["drivers"], ["drivers"], "firsts: How many drivers are there?"),
+        Q("How many drivers are there?", "answers", std("drivers", sty, tag), ["drivers"], "firsts: How many drivers are there?"),
         Q("What time does the night driver finish?", "answers", "Three. The office runs on till the night driver goes home at three.", ["hours"], "fresh: What time does the night driver finish?"),
         Q("What time do we open in the morning?", "answers", "Seven in the morning, nine on a Sunday.", ["hours"], "held: What time do we open in the morning?"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What was Mickey like?", "answers", STD["mickey"], ["mickey_counsel"], "firsts: What was Mickey like?"),
-        Q("Who runs things round here?", "points_to", STD["who_runs"], ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
-        Q("Is it always this quiet?", "answers", STD["trade"], ["trade"], "held: Is it always this quiet?"),
-        Q("What's behind that door?", "answers", STD["door"], ["door"], "firsts: What's behind that door?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What was Mickey like?", "answers", std("mickey", sty, tag), ["mickey_counsel"], "firsts: What was Mickey like?"),
+        Q("Who runs things round here?", "points_to", std("who_runs", sty, tag), ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
+        Q("Is it always this quiet?", "answers", std("trade", sty, tag), ["trade"], "held: Is it always this quiet?"),
+        Q("What's behind that door?", "answers", std("door", sty, tag), ["door"], "firsts: What's behind that door?"),
     ],
 ))
 
 # ---------------------------------------------------------------- 2 Kevin Needham (ferko)
+sty, tag = "warm", "mate"
 PEOPLE.append(regular(
     "ferko", "Kevin", knew=True, manner=("knows every short cut", "moans about his car"),
     knows=[
@@ -66,18 +68,19 @@ PEOPLE.append(regular(
     questions=[
         Q("Who are you?", "answers", "Kevin Needham. I'm the day driver on Mickey's rank.", ["job"], "firsts: Who are you?"),
         Q("What do you do here?", "answers", "I drive the day shift on the rank. I know every short cut, and I moan about my car.", ["job", "manner1", "manner2"], "firsts: What do you do here?"),
-        Q("How many drivers are there?", "answers", STD["drivers"], ["drivers"], "firsts: How many drivers are there?"),
+        Q("How many drivers are there?", "answers", std("drivers", sty, tag), ["drivers"], "firsts: How many drivers are there?"),
         Q("Which cars are still on the road?", "answers", "Two on the rank: mine by day and the night driver's.", ["drivers", "job"], "held: Which cars are still on the road?"),
         Q("What's the traffic like?", "answers", "Traffic on the bridge again. I went round by the market.", ["line"], "invented: a driver's likely small talk"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What was Mickey like?", "answers", STD["mickey"], ["mickey_counsel"], "firsts: What was Mickey like?"),
-        Q("Where can I get something to eat?", "answers", STD["cafe"], ["cafe"], "firsts: Where can I get something to eat?"),
-        Q("Is it always this quiet?", "answers", STD["trade"], ["trade"], "held: Is it always this quiet?"),
-        Q("Who runs things round here?", "points_to", STD["who_runs"], ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What was Mickey like?", "answers", std("mickey", sty, tag), ["mickey_counsel"], "firsts: What was Mickey like?"),
+        Q("Where can I get something to eat?", "answers", std("cafe", sty, tag), ["cafe"], "firsts: Where can I get something to eat?"),
+        Q("Is it always this quiet?", "answers", std("trade", sty, tag), ["trade"], "held: Is it always this quiet?"),
+        Q("Who runs things round here?", "points_to", std("who_runs", sty, tag), ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
     ],
 ))
 
 # ---------------------------------------------------------------- 3 Terry Hodgson (dusan)
+sty, tag = "terse", ""
 PEOPLE.append(regular(
     "dusan", "Terry", knew=True, manner=("few words, all nights, keeps himself to himself",),
     knows=[D("day", "day")],
@@ -101,16 +104,17 @@ PEOPLE.append(regular(
         Q("Where to?", "answers", "Now then. Where to?", ["line"], "invented: a fare's first words"),
         Q("What time do you finish?", "answers", "Three. The office runs on till the night driver goes home at three.", ["hours"], "fresh: What time does the night driver finish?"),
         Q("How busy does the rank get at night?", "answers", "Not very. Trade has been thin since the docks went.", ["trade"], "fresh: How busy does the rank get at night?"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What was Mickey like?", "answers", STD["mickey"], ["mickey_counsel"], "firsts: What was Mickey like?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What was Mickey like?", "answers", std("mickey", sty, tag), ["mickey_counsel"], "firsts: What was Mickey like?"),
         Q("What's the street like after dark?", "partly", "I see who comes and goes, but I say little of it. That's all I know.", ["night_street"], "held: What's the street like after dark?"),
-        Q("Who runs things round here?", "points_to", STD["who_runs"], ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
-        Q("What's behind that door?", "answers", STD["door"], ["door"], "firsts: What's behind that door?"),
-        Q("Is June still about?", "answers", STD["june"], ["june"], "fresh: Is June still about?"),
+        Q("Who runs things round here?", "points_to", std("who_runs", sty, tag), ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
+        Q("What's behind that door?", "answers", std("door", sty, tag), ["door"], "firsts: What's behind that door?"),
+        Q("Is June still about?", "answers", std("june", sty, tag), ["june"], "fresh: Is June still about?"),
     ],
 ))
 
 # ---------------------------------------------------------------- 4 Brenda Laverack (marla)
+sty, tag = "warm", "love"
 PEOPLE.append(regular(
     "marla", "Brenda", knew=True, line_as="believes", line_truth="unknown",
     line_basis=NOTE("A shopkeeper's opinion of this week's fish; nothing in canon or the story settles it."),
@@ -132,15 +136,16 @@ PEOPLE.append(regular(
         Q("What time do you open?", "answers", "Half seven, till two. Wednesdays I shut at one.", ["my_hours"], "held: What time do we open in the morning?"),
         Q("Where do you buy your fish?", "answers", "On the fish dock, at dawn.", ["job"], "invented: a stranger at a fish counter"),
         Q("What's the price of that?", "answers", "I know the price of everything, love.", ["manner1"], "invented: a stranger at a fish counter"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What was Mickey like?", "answers", STD["mickey"], ["mickey_counsel"], "firsts: What was Mickey like?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What was Mickey like?", "answers", std("mickey", sty, tag), ["mickey_counsel"], "firsts: What was Mickey like?"),
         Q("What is this place?", "answers", "That's Mickey's. The minicab office, on Quay Street in the Hook, with the rank outside.", ["office"], "firsts: What is this place?"),
-        Q("Is it always this quiet?", "answers", STD["trade"], ["trade"], "held: Is it always this quiet?"),
-        Q("Where can I get something to eat?", "answers", STD["cafe"], ["cafe"], "firsts: Where can I get something to eat?"),
+        Q("Is it always this quiet?", "answers", std("trade", sty, tag), ["trade"], "held: Is it always this quiet?"),
+        Q("Where can I get something to eat?", "answers", std("cafe", sty, tag), ["cafe"], "firsts: Where can I get something to eat?"),
     ],
 ))
 
 # ---------------------------------------------------------------- 5 Lee Drewery (joey)
+sty, tag = "warm", "mate"
 PEOPLE.append(regular(
     "joey", "Lee", knew=False, line_as="believes", line_truth="true", line_basis=TB_TRADE, manner=("careful with Ron",),
     knows=[
@@ -162,16 +167,17 @@ PEOPLE.append(regular(
         Q("Is there any work going?", "answers", "Casual again. If they want me. They mostly don't.", ["line"], "invented: a stranger asks a man on the quay"),
         Q("What do you do here?", "answers", "I take casual days on the quay when there are any.", ["job"], "firsts: What do you do here?"),
         Q("Who's the big man on the rank?", "answers", "Ron Kirby. He keeps Mickey's door and the rank. I'm careful with Ron.", ["who_rocco", "manner1"], "held: Who's the lad hanging about by the rank?"),
-        Q("What is this place?", "answers", STD["office"], ["office"], "firsts: What is this place?"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("Where can I get something to eat?", "answers", STD["cafe"], ["cafe"], "firsts: Where can I get something to eat?"),
-        Q("Is it always this quiet?", "answers", STD["trade"], ["trade"], "held: Is it always this quiet?"),
-        Q("Who runs things round here?", "points_to", STD["who_runs"], ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
-        Q("What was Mickey like?", "dont_know", "Never really knew him. That's all I know.", [], "firsts: What was Mickey like?"),
+        Q("What is this place?", "answers", std("office", sty, tag), ["office"], "firsts: What is this place?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("Where can I get something to eat?", "answers", std("cafe", sty, tag), ["cafe"], "firsts: Where can I get something to eat?"),
+        Q("Is it always this quiet?", "answers", std("trade", sty, tag), ["trade"], "held: Is it always this quiet?"),
+        Q("Who runs things round here?", "points_to", std("who_runs", sty, tag), ["sheila_books", "ron_rank"], "firsts: Who runs things round here?"),
+        Q("What was Mickey like?", "dont_know", std("dk_mickey", sty, tag), [], "firsts: What was Mickey like?"),
     ],
 ))
 
 # ---------------------------------------------------------------- 6 Rita Welburn (rita)
+sty, tag = "formal", ""
 PEOPLE.append(regular(
     "rita", "Rita", knew=True, manner=("never says what a thing is worth until she has to",),
     knows=[
@@ -199,9 +205,9 @@ PEOPLE.append(regular(
         Q("What's it worth?", "deflect", "I never say what a thing is worth until I have to. Let me look at it.", ["manner1", "line"], "invented: a stranger at a pawn counter"),
         Q("What happened between you and Hal?", "deflect", "That's between Hal and me.", ["row"], "invented: the town's own news"),
         Q("Who's Hal?", "answers", "Hal keeps the coin shop that sells no coins.", ["who_hal"], "invented: a stranger asks about a neighbour"),
-        Q("How did Mickey die?", "answers", STD["died_heart"], ["died_heart"], "firsts: How did Mickey die?"),
-        Q("What was Mickey like?", "answers", STD["mickey"], ["mickey_counsel"], "firsts: What was Mickey like?"),
-        Q("Is there any money in the business?", "answers", STD["trade"], ["trade"], "firsts: Is there any money in the business?"),
-        Q("What's behind that door?", "answers", STD["door"], ["door"], "firsts: What's behind that door?"),
+        Q("How did Mickey die?", "answers", std("died_heart", sty, tag), ["died_heart"], "firsts: How did Mickey die?"),
+        Q("What was Mickey like?", "answers", std("mickey", sty, tag), ["mickey_counsel"], "firsts: What was Mickey like?"),
+        Q("Is there any money in the business?", "answers", std("trade", sty, tag), ["trade"], "firsts: Is there any money in the business?"),
+        Q("What's behind that door?", "answers", std("door", sty, tag), ["door"], "firsts: What's behind that door?"),
     ],
 ))

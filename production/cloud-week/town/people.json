@@ -12428,7 +12428,7 @@
      "id": "zlata.q3",
      "q": "How many drivers are there?",
      "kind": "answers",
-     "a": "Two on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
+     "a": "Two drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
      "uses": [
       "zlata.k09"
      ],
@@ -12461,7 +12461,7 @@
      "id": "zlata.q6",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "zlata.k02"
      ],
@@ -13128,7 +13128,7 @@
      "id": "ferko.q3",
      "q": "How many drivers are there?",
      "kind": "answers",
-     "a": "Two on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
+     "a": "Two on the rank, mate, one by day and one by night, and a dispatcher on the radio and the phone.",
      "uses": [
       "ferko.k09"
      ],
@@ -13162,7 +13162,7 @@
      "id": "ferko.q6",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, mate, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "ferko.k02"
      ],
@@ -13184,7 +13184,7 @@
      "id": "ferko.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "ferko.k12"
      ],
@@ -13195,7 +13195,7 @@
      "id": "ferko.q9",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Not much since the docks went, mate. Trade's been thin.",
      "uses": [
       "ferko.k11"
      ],
@@ -13206,7 +13206,7 @@
      "id": "ferko.q10",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, mate, Sheila keeps the books and Ron keeps the rank.",
      "uses": [
       "ferko.k14",
       "ferko.k15"
@@ -13766,7 +13766,7 @@
      "id": "dusan.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart. The doctor said so. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "dusan.k02"
      ],
@@ -13799,7 +13799,7 @@
      "id": "dusan.q8",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Sheila keeps the books. Ron keeps the rank.",
      "uses": [
       "dusan.k14",
       "dusan.k15"
@@ -13811,7 +13811,7 @@
      "id": "dusan.q9",
      "q": "What's behind that door?",
      "kind": "answers",
-     "a": "Mickey's own room, at the back. It's been locked since he died, and Sheila keeps the key.",
+     "a": "Mickey's own room, at the back. Locked since he died. Sheila keeps the key.",
      "uses": [
       "dusan.k08"
      ],
@@ -13822,7 +13822,7 @@
      "id": "dusan.q10",
      "q": "Is June still about?",
      "kind": "answers",
-     "a": "She came back for the funeral and she's still in town. She wants nothing from the office.",
+     "a": "She came back for the funeral. Still in town. Wants nothing from the office.",
      "uses": [
       "dusan.k06"
      ],
@@ -14481,7 +14481,7 @@
      "id": "marla.q6",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, love, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "marla.k02"
      ],
@@ -14514,7 +14514,7 @@
      "id": "marla.q9",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Not much since the docks went, love. Trade's been thin.",
      "uses": [
       "marla.k11"
      ],
@@ -14525,7 +14525,7 @@
      "id": "marla.q10",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, love, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "marla.k12"
      ],
@@ -15237,7 +15237,7 @@
      "id": "joey.q5",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That's Mickey's, mate, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "joey.k13"
      ],
@@ -15248,7 +15248,7 @@
      "id": "joey.q6",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, mate, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "joey.k02"
      ],
@@ -15259,7 +15259,7 @@
      "id": "joey.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "joey.k12"
      ],
@@ -15270,7 +15270,7 @@
      "id": "joey.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Not much since the docks went, mate. Trade's been thin.",
      "uses": [
       "joey.k11"
      ],
@@ -15281,7 +15281,7 @@
      "id": "joey.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, mate, Sheila keeps the books and Ron keeps the rank.",
      "uses": [
       "joey.k14",
       "joey.k15"
@@ -15293,7 +15293,7 @@
      "id": "joey.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "Never really knew him. That's all I know.",
+     "a": "I never really knew him, mate. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -16036,7 +16036,7 @@
      "id": "rita.q7",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "It was his heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "rita.k02"
      ],
@@ -16058,7 +16058,7 @@
      "id": "rita.q9",
      "q": "Is there any money in the business?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "It has not made much since the docks went. Trade has been thin.",
      "uses": [
       "rita.k11"
      ],
@@ -16069,7 +16069,7 @@
      "id": "rita.q10",
      "q": "What's behind that door?",
      "kind": "answers",
-     "a": "Mickey's own room, at the back. It's been locked since he died, and Sheila keeps the key.",
+     "a": "It is Mickey's own room, at the back. It has been locked since he died, and Sheila keeps the key.",
      "uses": [
       "rita.k08"
      ],
@@ -16725,7 +16725,7 @@
      "id": "victor.q7",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "victor.k02"
      ],
@@ -16736,7 +16736,7 @@
      "id": "victor.q8",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's, the minicab office, on Quay Street in the Hook. The rank's outside.",
      "uses": [
       "victor.k13"
      ],
@@ -16747,7 +16747,7 @@
      "id": "victor.q9",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "victor.k12"
      ],
@@ -16758,7 +16758,7 @@
      "id": "victor.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "Never really knew him. That's all I know.",
+     "a": "I never really knew him. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -17456,7 +17456,7 @@
      "id": "hal.q6",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "It was his heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "hal.k02"
      ],
@@ -17487,7 +17487,7 @@
      "id": "hal.q9",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
      "uses": [
       "hal.k12"
      ],
@@ -17498,7 +17498,7 @@
      "id": "hal.q10",
      "q": "Is there any money in the business?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "It has not made much since the docks went. Trade has been thin.",
      "uses": [
       "hal.k11"
      ],
@@ -18056,7 +18056,7 @@
      "id": "tibor.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "It was his heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "tibor.k02"
      ],
@@ -18067,7 +18067,7 @@
      "id": "tibor.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That is Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "tibor.k13"
      ],
@@ -18078,7 +18078,7 @@
      "id": "tibor.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
      "uses": [
       "tibor.k12"
      ],
@@ -18089,7 +18089,7 @@
      "id": "tibor.q8",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, Sheila keeps the books and Ron keeps the rank. Past that I could not say.",
      "uses": [
       "tibor.k14",
       "tibor.k15"
@@ -18101,7 +18101,7 @@
      "id": "tibor.q9",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I didn't know him. That's all I know.",
+     "a": "I did not know him well. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -18110,7 +18110,7 @@
      "id": "tibor.q10",
      "q": "What happened at the warehouse fire?",
      "kind": "answers",
-     "a": "The importer's warehouse at the far end of the old warehouse row burned down last November, on a Saturday night. The paper called it arson. Nobody was charged.",
+     "a": "The importer's warehouse at the far end of the old warehouse row burned down last November, on a Saturday night. The paper called it arson, and nobody was charged.",
      "uses": [
       "tibor.k03"
      ],
@@ -18767,7 +18767,7 @@
      "id": "vesna.q4",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, dear, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "vesna.k02"
      ],
@@ -18778,7 +18778,7 @@
      "id": "vesna.q5",
      "q": "Sorry I missed the funeral.",
      "kind": "answers",
-     "a": "It was at Father Walsh's chapel, before you came.",
+     "a": "It was at Father Walsh's chapel, dear, before you came.",
      "uses": [
       "vesna.k05"
      ],
@@ -18800,7 +18800,7 @@
      "id": "vesna.q7",
      "q": "Is June still about?",
      "kind": "answers",
-     "a": "She came back for the funeral and she's still in town. She wants nothing from the office.",
+     "a": "She is, dear. She came back for the funeral and she's still in town, and she wants nothing from the office.",
      "uses": [
       "vesna.k06"
      ],
@@ -18811,7 +18811,7 @@
      "id": "vesna.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, dear, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "vesna.k12"
      ],
@@ -18822,7 +18822,7 @@
      "id": "vesna.q9",
      "q": "What's behind that door?",
      "kind": "answers",
-     "a": "Mickey's own room, at the back. It's been locked since he died, and Sheila keeps the key.",
+     "a": "That's Mickey's own room, at the back, dear. It's been locked since he died, and Sheila keeps the key.",
      "uses": [
       "vesna.k08"
      ],
@@ -19398,7 +19398,7 @@
      "id": "magda.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, dear, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "magda.k02"
      ],
@@ -19409,7 +19409,7 @@
      "id": "magda.q6",
      "q": "Sorry I missed the funeral.",
      "kind": "answers",
-     "a": "It was at Father Walsh's chapel, before you came.",
+     "a": "It was at Father Walsh's chapel, dear, before you came.",
      "uses": [
       "magda.k05"
      ],
@@ -19431,7 +19431,7 @@
      "id": "magda.q8",
      "q": "Is June still about?",
      "kind": "answers",
-     "a": "She came back for the funeral and she's still in town. She wants nothing from the office.",
+     "a": "She is, dear. She came back for the funeral and she's still in town, and she wants nothing from the office.",
      "uses": [
       "magda.k06"
      ],
@@ -19442,7 +19442,7 @@
      "id": "magda.q9",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That's Mickey's, dear, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "magda.k13"
      ],
@@ -19453,7 +19453,7 @@
      "id": "magda.q10",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, dear, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "magda.k12"
      ],
@@ -20052,7 +20052,7 @@
      "id": "zora.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, love, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "zora.k02"
      ],
@@ -20074,7 +20074,7 @@
      "id": "zora.q7",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That's Mickey's, love, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "zora.k13"
      ],
@@ -20085,7 +20085,7 @@
      "id": "zora.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, love, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "zora.k12"
      ],
@@ -20096,7 +20096,7 @@
      "id": "zora.q9",
      "q": "What's behind that door?",
      "kind": "answers",
-     "a": "Mickey's own room, at the back. It's been locked since he died, and Sheila keeps the key.",
+     "a": "That's Mickey's own room, at the back, love. It's been locked since he died, and Sheila keeps the key.",
      "uses": [
       "zora.k08"
      ],
@@ -20107,7 +20107,7 @@
      "id": "zora.q10",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Not much since the docks went, love. Trade's been thin.",
      "uses": [
       "zora.k11"
      ],
@@ -20628,7 +20628,7 @@
      "id": "tanja.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "tanja.k02"
      ],
@@ -20639,7 +20639,7 @@
      "id": "tanja.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's, the minicab office, on Quay Street in the Hook. The rank's outside.",
      "uses": [
       "tanja.k13"
      ],
@@ -20650,7 +20650,7 @@
      "id": "tanja.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "tanja.k12"
      ],
@@ -20672,7 +20672,7 @@
      "id": "tanja.q9",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I didn't know him. That's all I know.",
+     "a": "I never really knew him. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -21308,7 +21308,7 @@
      "id": "katarina.q6",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, love, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "katarina.k02"
      ],
@@ -21319,7 +21319,7 @@
      "id": "katarina.q7",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That's Mickey's, love, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "katarina.k13"
      ],
@@ -21330,7 +21330,7 @@
      "id": "katarina.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, love, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "katarina.k12"
      ],
@@ -21341,7 +21341,7 @@
      "id": "katarina.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, love, Sheila keeps the books and Ron keeps the rank.",
      "uses": [
       "katarina.k14",
       "katarina.k15"
@@ -21353,7 +21353,7 @@
      "id": "katarina.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I never really knew him. That's all I know.",
+     "a": "I never really knew him, love. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -21875,7 +21875,7 @@
      "id": "stipe.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart. The doctor said so. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "stipe.k02"
      ],
@@ -21886,7 +21886,7 @@
      "id": "stipe.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's. The minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "stipe.k13"
      ],
@@ -21897,7 +21897,7 @@
      "id": "stipe.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "stipe.k12"
      ],
@@ -21908,7 +21908,7 @@
      "id": "stipe.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Thin. Not much since the docks went.",
      "uses": [
       "stipe.k11"
      ],
@@ -21919,7 +21919,7 @@
      "id": "stipe.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Sheila keeps the books. Ron keeps the rank.",
      "uses": [
       "stipe.k14",
       "stipe.k15"
@@ -22540,7 +22540,7 @@
      "id": "fabjan.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart. The doctor said so. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "fabjan.k02"
      ],
@@ -22551,7 +22551,7 @@
      "id": "fabjan.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's. The minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "fabjan.k13"
      ],
@@ -22562,7 +22562,7 @@
      "id": "fabjan.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "fabjan.k12"
      ],
@@ -22573,7 +22573,7 @@
      "id": "fabjan.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Thin. Not much since the docks went.",
      "uses": [
       "fabjan.k11"
      ],
@@ -22584,7 +22584,7 @@
      "id": "fabjan.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Sheila keeps the books. Ron keeps the rank.",
      "uses": [
       "fabjan.k14",
       "fabjan.k15"
@@ -22596,7 +22596,7 @@
      "id": "fabjan.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I didn't know him. That's all I know.",
+     "a": "Didn't know him. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -23208,7 +23208,7 @@
      "id": "tomas.q4",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "tomas.k12"
      ],
@@ -23219,7 +23219,7 @@
      "id": "tomas.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, mate, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "tomas.k02"
      ],
@@ -23230,7 +23230,7 @@
      "id": "tomas.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That's Mickey's, mate, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "tomas.k13"
      ],
@@ -23241,7 +23241,7 @@
      "id": "tomas.q7",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Not much since the docks went, mate. Trade's been thin.",
      "uses": [
       "tomas.k11"
      ],
@@ -23252,7 +23252,7 @@
      "id": "tomas.q8",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, mate, Sheila keeps the books and Ron keeps the rank.",
      "uses": [
       "tomas.k14",
       "tomas.k15"
@@ -23264,7 +23264,7 @@
      "id": "tomas.q9",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "Never really knew him. That's all I know.",
+     "a": "I never really knew him, mate. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -23273,7 +23273,7 @@
      "id": "tomas.q10",
      "q": "Is June still about?",
      "kind": "answers",
-     "a": "She came back for the funeral and she's still in town. She wants nothing from the office.",
+     "a": "She is, mate. She came back for the funeral and she's still in town, and she wants nothing from the office.",
      "uses": [
       "tomas.k06"
      ],
@@ -23798,7 +23798,7 @@
      "id": "luka.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart. The doctor said so. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "luka.k02"
      ],
@@ -23809,7 +23809,7 @@
      "id": "luka.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's. The minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "luka.k13"
      ],
@@ -23820,7 +23820,7 @@
      "id": "luka.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "luka.k12"
      ],
@@ -23831,7 +23831,7 @@
      "id": "luka.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Thin. Not much since the docks went.",
      "uses": [
       "luka.k11"
      ],
@@ -23842,7 +23842,7 @@
      "id": "luka.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Sheila keeps the books. Ron keeps the rank.",
      "uses": [
       "luka.k14",
       "luka.k15"
@@ -23854,7 +23854,7 @@
      "id": "luka.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I never really knew him. That's all I know.",
+     "a": "Didn't know him. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -24348,7 +24348,7 @@
      "id": "bruno.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "It was his heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "bruno.k02"
      ],
@@ -24359,7 +24359,7 @@
      "id": "bruno.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That is Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "bruno.k13"
      ],
@@ -24370,7 +24370,7 @@
      "id": "bruno.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
      "uses": [
       "bruno.k12"
      ],
@@ -24381,7 +24381,7 @@
      "id": "bruno.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "It has not made much since the docks went. Trade has been thin.",
      "uses": [
       "bruno.k11"
      ],
@@ -24392,7 +24392,7 @@
      "id": "bruno.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, Sheila keeps the books and Ron keeps the rank. Past that I could not say.",
      "uses": [
       "bruno.k14",
       "bruno.k15"
@@ -24404,7 +24404,7 @@
      "id": "bruno.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I never really knew him. That's all I know.",
+     "a": "I did not know him well. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -25000,7 +25000,7 @@
      "id": "petra.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "petra.k02"
      ],
@@ -25011,7 +25011,7 @@
      "id": "petra.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's, the minicab office, on Quay Street in the Hook. The rank's outside.",
      "uses": [
       "petra.k13"
      ],
@@ -25022,7 +25022,7 @@
      "id": "petra.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "petra.k12"
      ],
@@ -25597,7 +25597,7 @@
      "id": "dario.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart. The doctor said so. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "dario.k02"
      ],
@@ -25608,7 +25608,7 @@
      "id": "dario.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's. The minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "dario.k13"
      ],
@@ -25619,7 +25619,7 @@
      "id": "dario.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "dario.k12"
      ],
@@ -25630,7 +25630,7 @@
      "id": "dario.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Thin. Not much since the docks went.",
      "uses": [
       "dario.k11"
      ],
@@ -25641,7 +25641,7 @@
      "id": "dario.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Sheila keeps the books. Ron keeps the rank.",
      "uses": [
       "dario.k14",
       "dario.k15"
@@ -25653,7 +25653,7 @@
      "id": "dario.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I never really knew him. That's all I know.",
+     "a": "Didn't know him. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -26246,7 +26246,7 @@
      "id": "sanja.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "It was his heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "sanja.k02"
      ],
@@ -26257,7 +26257,7 @@
      "id": "sanja.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That is Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "sanja.k13"
      ],
@@ -26268,7 +26268,7 @@
      "id": "sanja.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
      "uses": [
       "sanja.k12"
      ],
@@ -26279,7 +26279,7 @@
      "id": "sanja.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "It has not made much since the docks went. Trade has been thin.",
      "uses": [
       "sanja.k11"
      ],
@@ -26290,7 +26290,7 @@
      "id": "sanja.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, Sheila keeps the books and Ron keeps the rank. Past that I could not say.",
      "uses": [
       "sanja.k14",
       "sanja.k15"
@@ -26302,7 +26302,7 @@
      "id": "sanja.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I never really knew him. That's all I know.",
+     "a": "I did not know him well. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -26968,7 +26968,7 @@
      "id": "hana.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "It was his heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "hana.k02"
      ],
@@ -26990,7 +26990,7 @@
      "id": "hana.q7",
      "q": "Is June still about?",
      "kind": "answers",
-     "a": "She came back for the funeral and she's still in town. She wants nothing from the office.",
+     "a": "She is. She came back for the funeral and is still in town. She wants nothing from the office.",
      "uses": [
       "hana.k06"
      ],
@@ -27001,7 +27001,7 @@
      "id": "hana.q8",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That is Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "hana.k13"
      ],
@@ -27012,7 +27012,7 @@
      "id": "hana.q9",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
      "uses": [
       "hana.k12"
      ],
@@ -27023,7 +27023,7 @@
      "id": "hana.q10",
      "q": "Sorry I missed the funeral.",
      "kind": "answers",
-     "a": "It was at Father Walsh's chapel, before you came.",
+     "a": "The funeral was at Father Walsh's chapel, before you came.",
      "uses": [
       "hana.k05"
      ],
@@ -27656,7 +27656,7 @@
      "id": "franjo.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, mate, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "franjo.k02"
      ],
@@ -27667,7 +27667,7 @@
      "id": "franjo.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That's Mickey's, mate, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "franjo.k13"
      ],
@@ -27678,7 +27678,7 @@
      "id": "franjo.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "franjo.k12"
      ],
@@ -27689,7 +27689,7 @@
      "id": "franjo.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Not much since the docks went, mate. Trade's been thin.",
      "uses": [
       "franjo.k11"
      ],
@@ -27700,7 +27700,7 @@
      "id": "franjo.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, mate, Sheila keeps the books and Ron keeps the rank.",
      "uses": [
       "franjo.k14",
       "franjo.k15"
@@ -27712,7 +27712,7 @@
      "id": "franjo.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I never really knew him. That's all I know.",
+     "a": "I never really knew him, mate. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -28399,7 +28399,7 @@
      "id": "danica.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "danica.k02"
      ],
@@ -28410,7 +28410,7 @@
      "id": "danica.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's, the minicab office, on Quay Street in the Hook. The rank's outside.",
      "uses": [
       "danica.k13"
      ],
@@ -28421,7 +28421,7 @@
      "id": "danica.q7",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
      "uses": [
       "danica.k12"
      ],
@@ -29023,7 +29023,7 @@
      "id": "drago.q4",
      "q": "What happened at the warehouse fire?",
      "kind": "answers",
-     "a": "The importer's warehouse at the far end of the old warehouse row burned down last November, on a Saturday night. The paper called it arson. Nobody was charged.",
+     "a": "The importer's warehouse at the far end of the old warehouse row burned down last November, mate, on a Saturday night. The paper called it arson. Nobody was charged.",
      "uses": [
       "drago.k03"
      ],
@@ -29047,7 +29047,7 @@
      "id": "drago.q6",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, mate, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "drago.k02"
      ],
@@ -29058,7 +29058,7 @@
      "id": "drago.q7",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That's Mickey's, mate, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "drago.k13"
      ],
@@ -29069,7 +29069,7 @@
      "id": "drago.q8",
      "q": "Where can I get something to eat?",
      "kind": "answers",
-     "a": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+     "a": "The cafe's over the road, mate, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
      "uses": [
       "drago.k12"
      ],
@@ -29080,7 +29080,7 @@
      "id": "drago.q9",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Not much since the docks went, mate. Trade's been thin.",
      "uses": [
       "drago.k11"
      ],
@@ -29091,7 +29091,7 @@
      "id": "drago.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I never really knew him. That's all I know.",
+     "a": "I never really knew him, mate. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -29644,7 +29644,7 @@
      "id": "filip.q5",
      "q": "What happened at the warehouse fire?",
      "kind": "answers",
-     "a": "The importer's warehouse at the far end of the old warehouse row burned down last November, on a Saturday night. The paper called it arson. Nobody was charged.",
+     "a": "The importer's warehouse, far end of the old warehouse row. Burned down last November, a Saturday night. The paper called it arson. Nobody was charged.",
      "uses": [
       "filip.k03"
      ],
@@ -29655,7 +29655,7 @@
      "id": "filip.q6",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart. The doctor said so. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "filip.k02"
      ],
@@ -29666,7 +29666,7 @@
      "id": "filip.q7",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's. The minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "filip.k13"
      ],
@@ -29677,7 +29677,7 @@
      "id": "filip.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "Thin. Not much since the docks went.",
      "uses": [
       "filip.k11"
      ],
@@ -29688,7 +29688,7 @@
      "id": "filip.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Sheila keeps the books. Ron keeps the rank.",
      "uses": [
       "filip.k14",
       "filip.k15"
@@ -29700,7 +29700,7 @@
      "id": "filip.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I never really knew him. That's all I know.",
+     "a": "Didn't know him. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -30371,7 +30371,7 @@
      "id": "cafe.q6",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, love, the doctor said. Ron came on at the rank early one morning and found him at the office.",
      "uses": [
       "cafe.k02"
      ],
@@ -30393,7 +30393,7 @@
      "id": "cafe.q8",
      "q": "Is June still about?",
      "kind": "answers",
-     "a": "She came back for the funeral and she's still in town. She wants nothing from the office.",
+     "a": "She is, love. She came back for the funeral and she's still in town, and she wants nothing from the office.",
      "uses": [
       "cafe.k06"
      ],
@@ -30404,7 +30404,7 @@
      "id": "cafe.q9",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That's Mickey's, love, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "cafe.k13"
      ],
@@ -30415,7 +30415,7 @@
      "id": "cafe.q10",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, love, Sheila keeps the books and Ron keeps the rank.",
      "uses": [
       "cafe.k14",
       "cafe.k15"
@@ -30970,7 +30970,7 @@
      "id": "takeaway_m.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "It was his heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "takeaway_m.k02"
      ],
@@ -30981,7 +30981,7 @@
      "id": "takeaway_m.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "That is Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
      "uses": [
       "takeaway_m.k13"
      ],
@@ -31004,7 +31004,7 @@
      "id": "takeaway_m.q8",
      "q": "Is it always this quiet?",
      "kind": "answers",
-     "a": "Not much since the docks went. Trade has been thin.",
+     "a": "It has not made much since the docks went. Trade has been thin.",
      "uses": [
       "takeaway_m.k11"
      ],
@@ -31015,7 +31015,7 @@
      "id": "takeaway_m.q9",
      "q": "Who runs things round here?",
      "kind": "points_to",
-     "a": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+     "a": "Round the office, Sheila keeps the books and Ron keeps the rank. Past that I could not say.",
      "uses": [
       "takeaway_m.k14",
       "takeaway_m.k15"
@@ -31027,7 +31027,7 @@
      "id": "takeaway_m.q10",
      "q": "What was Mickey like?",
      "kind": "dont_know",
-     "a": "I never really knew him. That's all I know.",
+     "a": "I did not know him well. That's all I know.",
      "uses": [],
      "bench": "firsts: What was Mickey like?",
      "new": "N-ANSWERS"
@@ -31579,7 +31579,7 @@
      "id": "takeaway_f.q5",
      "q": "How did Mickey die?",
      "kind": "answers",
-     "a": "His heart, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+     "a": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
      "uses": [
       "takeaway_f.k02"
      ],
@@ -31590,7 +31590,7 @@
      "id": "takeaway_f.q6",
      "q": "What is this place?",
      "kind": "answers",
-     "a": "Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+     "a": "Mickey's, the minicab office, on Quay Street in the Hook. The rank's outside.",
      "uses": [
       "takeaway_f.k13"
      ],

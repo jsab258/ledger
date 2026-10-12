@@ -150,3 +150,100 @@ def regular(rid, heard_as, *, street=None, knew=False, line_as="knows", line_tru
 
 def QS(q, kind, a, uses, bench=None):
     return Q(q, kind, a, uses, bench)
+
+
+# --- the same plain fact, said four ways, so that thirty people do not answer in one voice -------------------
+# styles: terse (few words), brisk (quick and clipped), warm (talkative), formal (careful and exact).
+# {t} is the person's own tag of address (", love", ", mate" or nothing). Every number and name is the fact's own.
+VOICES = {
+    "died_heart": {
+        "terse": "His heart. The doctor said so. Ron found him at the office early one morning, when he came on at the rank.",
+        "brisk": "His heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
+        "warm": "His heart{t}, the doctor said. Ron came on at the rank early one morning and found him at the office.",
+        "formal": "It was his heart, the doctor said. Ron found him at the office early one morning, when he came on at the rank.",
+    },
+    "cafe": {
+        "terse": "The cafe. Over the road, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+        "brisk": "The cafe's over the road, in the shops across from the north end of the parade. Half six till ten at night; Sundays, eight till twelve.",
+        "warm": "The cafe's over the road{t}, in the shops across from the north end of the parade. Half six till ten at night, and eight till twelve on a Sunday.",
+        "formal": "There is the cafe, over the road in the shops across from the north end of the parade. It is open from half six till ten at night, and on a Sunday from eight till twelve.",
+    },
+    "office": {
+        "terse": "Mickey's. The minicab office, on Quay Street in the Hook, with the rank outside.",
+        "brisk": "Mickey's, the minicab office, on Quay Street in the Hook. The rank's outside.",
+        "warm": "That's Mickey's{t}, the minicab office, on Quay Street in the Hook, with the rank outside.",
+        "formal": "That is Mickey's, the minicab office, on Quay Street in the Hook, with the rank outside.",
+    },
+    "door": {
+        "terse": "Mickey's own room, at the back. Locked since he died. Sheila keeps the key.",
+        "brisk": "Mickey's own room, at the back. It's been locked since he died, and Sheila keeps the key.",
+        "warm": "That's Mickey's own room, at the back{t}. It's been locked since he died, and Sheila keeps the key.",
+        "formal": "It is Mickey's own room, at the back. It has been locked since he died, and Sheila keeps the key.",
+    },
+    "june": {
+        "terse": "She came back for the funeral. Still in town. Wants nothing from the office.",
+        "brisk": "She came back for the funeral and she's still in town. She wants nothing from the office.",
+        "warm": "She is{t}. She came back for the funeral and she's still in town, and she wants nothing from the office.",
+        "formal": "She is. She came back for the funeral and is still in town. She wants nothing from the office.",
+    },
+    "funeral": {
+        "terse": "At Father Walsh's chapel. Before you came.",
+        "brisk": "It was at Father Walsh's chapel, before you came.",
+        "warm": "It was at Father Walsh's chapel{t}, before you came.",
+        "formal": "The funeral was at Father Walsh's chapel, before you came.",
+    },
+    "trade": {
+        "terse": "Thin. Not much since the docks went.",
+        "brisk": "Not much since the docks went. Trade has been thin.",
+        "warm": "Not much since the docks went{t}. Trade's been thin.",
+        "formal": "It has not made much since the docks went. Trade has been thin.",
+    },
+    "who_runs": {
+        "terse": "Sheila keeps the books. Ron keeps the rank.",
+        "brisk": "Round the office, Sheila keeps the books and Ron keeps the rank.",
+        "warm": "Round the office{t}, Sheila keeps the books and Ron keeps the rank.",
+        "formal": "Round the office, Sheila keeps the books and Ron keeps the rank. Past that I could not say.",
+    },
+    "fire": {
+        "terse": "The importer's warehouse, far end of the old warehouse row. Burned down last November, a Saturday night. The paper called it arson. Nobody was charged.",
+        "brisk": "The importer's warehouse at the far end of the old warehouse row burned down last November, a Saturday night. The paper called it arson. Nobody was charged.",
+        "warm": "The importer's warehouse at the far end of the old warehouse row burned down last November{t}, on a Saturday night. The paper called it arson. Nobody was charged.",
+        "formal": "The importer's warehouse at the far end of the old warehouse row burned down last November, on a Saturday night. The paper called it arson, and nobody was charged.",
+    },
+    "drivers": {
+        "terse": "Two on the rank, one by day, one by night. A dispatcher on the radio and the phone.",
+        "brisk": "Two drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
+        "warm": "Two on the rank{t}, one by day and one by night, and a dispatcher on the radio and the phone.",
+        "formal": "There are two drivers on the rank, one by day and one by night, and a dispatcher on the radio and the phone.",
+    },
+    "hours": {
+        "terse": "Seven in the morning, nine on a Sunday. On till the night driver goes home at three.",
+        "brisk": "Seven in the morning, nine on a Sunday, and on till the night driver goes home at three.",
+        "warm": "It opens at seven{t}, nine on a Sunday, and runs till the night driver goes home at three.",
+        "formal": "The office opens at seven in the morning, nine on Sundays, and runs until the night driver goes home at three.",
+    },
+    "flat": {
+        "terse": "You're in Mickey's flat, over the office.",
+        "brisk": "You're in Mickey's flat, over the office.",
+        "warm": "You're in Mickey's flat{t}, over the office.",
+        "formal": "You are in Mickey's flat, over the office.",
+    },
+    "will": {
+        "terse": "The office. By his will. Your letter says so.",
+        "brisk": "The office, by his will. The letter you came with says so.",
+        "warm": "The office{t}, by his will. The letter you came with says so.",
+        "formal": "He left you the office, by his will. The letter you came with says so.",
+    },
+    "mickey": {s: "Mickey kept his business to himself. You'd not hear it from him on the street." for s in ("terse", "brisk", "warm", "formal")},
+    "dk_mickey": {
+        "terse": "Didn't know him. That's all I know.",
+        "brisk": "I never really knew him. That's all I know.",
+        "warm": "I never really knew him{t}. That's all I know.",
+        "formal": "I did not know him well. That's all I know.",
+    },
+}
+
+
+def std(key, style, tag=""):
+    t = (", " + tag) if tag else ""
+    return VOICES[key][style].replace("{t}", t)
