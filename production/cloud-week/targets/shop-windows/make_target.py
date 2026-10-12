@@ -394,7 +394,7 @@ def build():
     # the integer rules the target writes (rounded down to 5 mm): back wall shelving and goods; counters at the back wall; side walls; floor and ceiling
     rules = {"shelf_goods_on_back_wall_m": 0.30, "furniture_at_back_wall_m": 0.60, "side_wall_relief_m": 0.10, "side_wall_flat_m": 0.05, "floor_and_ceiling_m": 0.025, "floor_ceiling_tolerated_m": 0.05}
     rules["shelf_named_exceptions"] = [{"fixture": "R-back-tv-tiers", "depth_m": 0.35,
-                                        "limit": "at most method.standoff_budget.reads_true_20px.back_wall_middle (the 20 px budget at the card's middle; the review's own measure: about 0.36)",
+                                        "limit": "at most the 20 px budget at the card's middle: method.standoff_budget.reads_true_20px.back_wall_middle (sw_common's measure, %.3f) and at most 0.36 (the review's independent measure of 12 October)" % budget["reads_true_20px"]["back_wall_middle"],
                                         "why": "television_02 is 0.35 deep at its size; the two tiers above the counter carry them (mid height), where 0.35 stays under 20 px; every other back-wall shelf unit is 0.30 or less"}]
     rules["derivation"] = ("true (20 px): back wall %.2f, sides %.2f, floor/ceiling %.2f; tolerated (40 px): back wall %.2f, sides %.2f, floor/ceiling %.2f; the rules are those figures rounded down to 5 mm and "
                            "to the nearest builder-friendly depth: a shelf (0.30) is true, a counter or machine against the back wall (0.60) is tolerated, a side wall carries only boards and 0.10 "
@@ -460,7 +460,7 @@ def build():
         "schema": "ledger-shop-windows-target/1",
         "family": "shop-windows",
         "summary_line": "",
-        "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026 by the target writer; nothing built, nothing committed",
+        "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026 by the target writer; its fresh review (TARGET-REVIEW.md) failed it with 3 faults and 15 narrow points, every exact amendment is applied: FIXES APPLIED, NOT RE-REVIEWED (Jafar's 11 October rule: no more polishing of targets); nothing built, nothing committed",
         "units": {"length": "metres (frames: street, card, picture, room, display: see TARGET.md section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)", "colour": "sRGB 0 to 255",
                   "luma": "Rec. 709 weights on the 8-bit sRGB values"},
         "street": {"ten_units_as_built": True, "twelve_not_found": True,

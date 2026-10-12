@@ -49,6 +49,27 @@ CONTROLS = {
     "a dark shop marked lit": lambda t: shop(t, "fish_market").__setitem__("lit_at_night", True),
     "the picture 2048 wide": lambda t: shop(t, "grocer")["pictures"]["json_fields"].__setitem__("pixels", [2048, 927]),
     "a good on a missing fixture": lambda t: shop(t, "chandler")["room"]["goods"].append({"model": "oil_tin", "n": 1, "on": "NOPE", "size_m": None, "note": ""}),
+    # ---- the controls added after the review of 12 October (faults 1 to 3 and the narrow points) ----------------------------------------
+    "a hole in the front: Rita's panel over the side door only 220 high (FRN-07)": lambda t: shop(t, "ritas")["door"]["panel_over_side_door"].__setitem__("z_mm", [2480.0, 2700.0]),
+    "no head across the doors: Rita's head only 40 wide (FRN-07)": lambda t: shop(t, "ritas")["door"]["head"].__setitem__("u_mm", [350.0, 390.0]),
+    "the over-door toplights gone from the grocer (FRN-07)": lambda t: shop(t, "grocer")["door"]["toplights_over_shop_door"].__setitem__("panes", [[400.0, 500.0]]),
+    "a toplight bar 20 mm off its place (FRN-04)": lambda t: shop(t, "ritas")["front"]["glazing_layout"]["toplight_bars"][0].__setitem__("centre", 410.9),
+    "a toplight sliver 94.5 wide beside a mullion (FRN-04)": lambda t: shop(t, "newsagent")["front"]["glazing_layout"]["toplight_panes"].__setitem__(0, [50.0, 144.5]),
+    "the unaligned 2.2 toplights back on the ironmonger (FRN-04)": lambda t: shop(t, "ironmonger")["front"]["glazing"].__setitem__("toplight_aligned", False),
+    "'dixons' out of the brand blocklist (INV-05)": lambda t: t["inventory"]["brand_blocklist"].remove("dixons"),
+    "cassette_player's mark forgotten (INV-06)": lambda t: t["inventory"]["polyhaven"]["cassette_player"].update({"marks": None, "blank": []}),
+    "a blanking step with no boxes (INV-06)": lambda t: t["inventory"]["polyhaven"]["CashRegister_01"]["blank"][0].__setitem__("boxes", []),
+    "the stale sodium wash (1.0, 0.7055, 0.0) in Rita's night_dark (LIT-06)": lambda t: shop(t, "ritas")["room"]["lights"].__setitem__("night_dark_wash_linear_rgb", [1.0, 0.7055, 0.0]),
+    "Rita's stock wall across her back door (SO-05)": lambda t: next(f for f in shop(t, "ritas")["room"]["fixtures"] if f["id"] == "R-back-stock").__setitem__("x", [-2.6, 2.6]),
+    "Rita's stock wall 0.40 deep again (SO-01)": lambda t: next(f for f in shop(t, "ritas")["room"]["fixtures"] if f["id"] == "R-back-stock").__setitem__("depth_m", 0.40),
+    "an M1 door's letter plate back in the glass at 545 (FRN-03)": lambda t: shop(t, "mickeys")["door"]["letter_plate"].__setitem__("z_mm", 545.0),
+    "a ceiling fixture that fills the whole height (z 0 to 2.4)": lambda t: next(f for f in shop(t, "grocer")["room"]["fixtures"] if f["id"].endswith("ceiling-tubes")).__setitem__("z", [0.0, 2.4]),
+    "P6's fascia band left unmasked (PRV-02)": lambda t: next(p for p in t["previews"]["photos"] if p["id"] == "P6")["masks"].pop(0),
+    "a mask that is not grey in the committed JPEG (PRV-01)": lambda t: next(p for p in t["previews"]["photos"] if p["id"] == "P1")["masks"].__setitem__(0, {"what": "x", "shape": "rect", "box": [20, 200, 80, 260]}),
+    "Rita's left wall bare again (a board only 1.8 m long)": lambda t: next(f for f in shop(t, "ritas")["room"]["fixtures"] if f["id"] == "R-left-board").__setitem__("y", [0.9, 2.7]),
+    "a fourth question on Jafar's page (the lit list)": lambda t: t["needs_you"].append({"q": "At night, light the units the street file lights or only those open late?", "recommended": "keep the street file's six", "why": "x"}),
+    "the nine other fronts pointing at a Markdown section again": lambda t: shop(t, "grocer")["door"].__setitem__("from", "targets/shopfronts/TARGET.md section 10"),
+    "Rita's grille with no daytime state": lambda t: shop(t, "ritas").__setitem__("blinds_grilles_shutters", "a closed lattice grille outside the glass at night; none by day"),
 }
 
 

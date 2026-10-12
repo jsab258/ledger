@@ -90,7 +90,7 @@ def front_polys(shop):
     for br in gl["toplight_bars"]:
         add("toplight_bar", rect(w0 + br["centre"] - br["face"] / 2, 2480, w0 + br["centre"] + br["face"] / 2, ztop), wf, layer="frame")
     if not hood:
-        add("window_head", rect(w0 + jf, 2790, w1 - jf, 2850), wf, layer="frame")
+        add("window_head", rect(w0, 2790, w1, 2850), wf, layer="frame")           # the head runs the full width of the frame, over the jambs
     else:
         add("roller_shutter_hood", rect(hood["u_mm"][0], hood["z_mm"][0], hood["u_mm"][1], hood["z_mm"][1]), (88, 90, 90), layer="part")
     # ---- the shop door and what stands over it ------------------------------------------------------------------------------------

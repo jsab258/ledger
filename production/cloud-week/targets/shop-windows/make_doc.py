@@ -10,6 +10,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import sw_common as S  # noqa: E402
+import target_drawing as TD  # noqa: E402
 
 T = json.load(open(os.path.join(HERE, "target.json")))
 SH = {s["id"]: s for s in T["shops"]}
@@ -62,6 +63,9 @@ def build():
     w()
     w("# Shop windows of Quay Street: the exact target")
     w()
+    w("**Status: fixes applied, not re-reviewed.** The fresh review of 12 October (TARGET-REVIEW.md: 3 faults, 15 narrow points) failed this target; every exact amendment is applied here and in `target.json`, the author scripts, the self-check and the previews. "
+      "By Jafar's rule of 11 October (no more polishing of targets) it is not reviewed a second time: the build's gate holds it to the checks in section 10.")
+    w()
     w("Cloud week 42, part 2, unit 7 (12 October 2026). Written by the target writer from sources reached that day; nothing is built and nothing is committed. Every number below is in `target.json`; "
       "the checks that follow from it are its `checks` list and its `self_check` (%s; %d of %d negative controls caught)." % (T["self_check"]["result"], json.load(open(os.path.join(HERE, "controls_result.json")))["caught"], json.load(open(os.path.join(HERE, "controls_result.json")))["of"]))
     w()
@@ -71,7 +75,7 @@ def build():
         ["TARGET.md", "this page (made by make_doc.py from target.json)"],
         ["target.json", "the ten shops (front, door, glass, fascia, room, display, lights, pictures, cameras), the method's numbers, the inventory, the spec entries, the checks, the self-check"],
         ["target_drawing.py", "draws target.json alone: each bay's elevation, each room's plan, back wall and picture layout, the ten fronts' sheet, and the elevation laid on the main photograph"],
-        ["self_check.py, controls.py", "tests the target against its sources (%d rows) and shows the self-check can fail (13 mutations)" % len(T["self_check"]["rows"])],
+        ["self_check.py, controls.py", "tests the target against its sources (%d rows; it writes nothing unless --write) and shows the self-check can fail (%d mutations of target.json, every one caught)" % (len(T["self_check"]["rows"]), json.load(open(os.path.join(HERE, "controls_result.json")))["of"])],
         ["sw_common.py, sw_shops.py, make_target.py, extras.py, make_doc.py, make_previews.py", "author tools: the game's rule and the stand-off budgets; the rooms and displays as data; the builders of target.json, TARGET.md and the previews"],
         ["polyhaven_checked.json, sketchfab_checked.json, ambientcg_checked.json", "what the three libraries' APIs answered on 12 October"],
         ["production/previews/cloud-week/refs/shop-windows/", "P1 to P6 (the photographs, cropped to the craft), the overlay, D1 to D4 (drawings)"],
@@ -105,7 +109,7 @@ def build():
     # ---- 2
     w("## 2. Sources")
     w()
-    w("Only sources reached on 12 October are used. Photographs are for measuring and for the reviewers only: never placed in the game, never traced into a texture, never fed to an image model; each preview is cropped to the craft, with every person, real firm's name, number and drink merchant's sign cropped away or masked grey. No NoAI source.")
+    w("Only sources reached on 12 October are used. Photographs are for measuring and for the reviewers only: never placed in the game, never traced into a texture, never fed to an image model; each preview is cropped to the craft, with every person, real firm's name, number and drink merchant's sign cropped away or masked grey (exactly what is masked in each preview is in section 12; the masks are drawn on every rebuild and read back from the JPEG). No NoAI source.")
     w()
     table(["id", "what", "URL", "read", "author", "licence", "taken", "shows", "used"], [[s["id"], s["what"], s["url"], s["read"], s["author"], s["licence"], s["taken"], s["shows"] + " " + (("[" + s["dated_object"] + "]") if s["dated_object"] not in ("n/a", "-") else ""), s["used"]] for s in T["sources"]])
     w("**Not reached (nothing rests on them):**")
@@ -152,7 +156,7 @@ def build():
       "Composite floors (the picture times the brightness, tone-mapped Standard, glass reflection off): day >= 33, night_lit >= 45, night_dark 10 to 35 (of 255).")
     w()
     w("**Lights per state, for every room** (each shop's own tubes are in its `room.lights`): day = an overcast area light the size of the card on its plane (6500 K, strength set so the picture's mean matches the standard) plus the battens on (the shop is open); night_lit = the battens only, cool white 4000 K, 5 ft T12, 38 mm (about 12 kcd/m2 on the tube: DRESSING note), "
-      "no sky; night_dark = a faint sodium wash through the front (linear (1.0, 0.7055, 0.0), 6 per cent of night_lit's energy) and one small practical so the room is not black. Windows are not lit by a second picture's worth of tungsten: the pawnbroker's display spots (2700 K) are the display's, not the picture's.")
+      "no sky; night_dark = a faint sodium wash through the front (linear (1.0, 0.25, 0.0): the game's `lantern_linear_rgb` in production/specs/unreal-look.json; the scene file's (1, 0.7055, 0) is stale, QUEUE.md 9 Oct 12:10; 6 per cent of night_lit's energy) and one small practical so the room is not black. Windows are not lit by a second picture's worth of tungsten: the pawnbroker's display spots (2700 K) are the display's, not the picture's.")
     w()
     w("**The review cameras** (street frame, metres; eye 1.70 above the crown = 1.60 above the footway; 2560 x 1440). STREET_SQUARE: on the far pavement's kerb edge (the brief's 'about 8 m' is 8.76 m to the glass, the nearest the far pavement allows), square to the window's centre, vertical field 39 degrees. "
       "STREET_30: the same distance, 30 degrees off the normal toward the quay end (low street x), 39 degrees. CLOSE_35: on the shop's own pavement 1.5 m from the glass, 35 degrees off the normal toward the quay end, aimed at the display's middle (z 1.45), vertical field 60 degrees (the vignette camera's). "
@@ -170,7 +174,7 @@ def build():
     w()
     w("### 4.1 The front, from the 3.2 parts")
     w()
-    w("Rita's front is the 3.2 kit's own (every part built, `shopfront_ritas.glb`, 34,780 triangles, out of git; `python build_shopfront.py` rebuilds it) except the doors, the lobby and the side door's trim, which are this target's and the door family's. "
+    w("Rita's front is the 3.2 kit's own (every part built, `shopfront_ritas.glb`, 34,780 triangles, out of git; `python build_shopfront.py` rebuilds it) except the doors, the lobby, the side door's trim and the band above the doors (4.1a), which are this target's and the door family's. "
       "Door end: the viewer's LEFT (street high x). Zones across the bay (u, mm): side door 350 to 1294, shop door 1294 to 2300, window 2300 to 5650 (3350 long). Assembly order, bottom to top, then left to right:")
     w()
     for i, p in enumerate(f["assembly_order"], 1):
@@ -183,11 +187,44 @@ def build():
         ["cornice", "yes", "5892 x 150 x 215 deep, z 3400 to 3550, broken forward 85 over each console, mitred returns (3.2 D4); 150 mm as built is Jafar's ruling of 12 Oct", "oxblood"],
         ["sill", "yes", "75 thick, nose 150, z 525 to 600, u 2300 to 5647 (3 short of the plinth)", "white joinery 226,224,214"],
         ["stallriser, panel", "yes (three panels)", "z 0 to 600, 125 proud, three raised and fielded panels (1002, 1026, 1002) between 80 stiles", "oxblood"],
-        ["window frame T1", "yes", "jambs 50 x 95; seat 25 (z 600 to 625); 3 lights 625 to 2400; transom 2400 to 2480; **nine toplights as built** (3.2 D6; the 2.2 table says eight) 2480 to 2790; head 2790 to 2850; mullions 70 wide, front d 92, centres 1121.7 and 2228.3 from the frame's left; glass 6 mm at d 30 to 36, ovolo bead 16 x 12", "white joinery"],
-        ["shop door T1", "NO: specified here (4.2)", "slot 1006, leaf 900 x 2040 at z 28, frame jambs 50 x 100, fanlight z 2131 to 2400", "white joinery"],
-        ["side door F1 (3.1)", "door_F1.glb, yes", "slot 944, mirrored (door end left): hinge on the shop-door side, knob on the pier side; head trimmed at z 2400", "buttermilk 222,212,184"],
+        ["window frame T1", "yes", "jambs 50 x 95; seat 25 (z 600 to 625); 3 lights 625 to 2400; transom 2400 to 2480; **nine toplights of 326.9 as built** (3.2 D6: each mullion carried up as a 70 wide bar, two 28 wide bars a light at 390.9, 745.8, 1497.6, 1852.5, 2604.2, 2959.1; the 2.2 table said eight, unaligned) 2480 to 2790; head 2790 to 2850; mullions 70 wide, front d 92, centres 1121.7 and 2228.3 from the frame's left; glass 6 mm at d 30 to 36, ovolo bead 16 x 12", "white joinery"],
+        ["shop door T1", "NO: specified here (4.2)", "slot 1006, leaf 900 x 2040 at z 28, frame jambs 50 x 100 running up to the head; fanlight z 2131 to 2400 between the jambs (u 1344 to 2250), three toplights over it (4.1a)", "white joinery"],
+        ["transom over both door slots", "NO: specified here (4.1a)", "transom_t1, u 350 to 2300, z 2400 to 2480, meeting the window frame's left jamb", "white joinery"],
+        ["panel over the side door", "NO: specified here (4.1a)", "one raised-and-fielded panel, field 844 wide (944 - 2 x 50), z 2480 to 2790, raised_field_edge", "white joinery 226,224,214"],
+        ["head across the door slots", "NO: specified here (4.1a)", "head_section 95 x 60, u 350 to 2300, z 2790 to 2850", "white joinery"],
+        ["side door F1 (3.1)", "door_F1.glb, yes", "slot 944, mirrored (door end left): hinge on the shop-door side, knob on the pier side; head trimmed at z 2400; 24.4 filler strip each side", "buttermilk 222,212,184"],
         ["night grille (4.3)", "NO: specified here", "see 4.3", "black powder-coat 37,35,34"],
     ])
+    w("### 4.1a The band above the doors (transom line 2400 to the fascia 2850) and the toplights: the fault the review found")
+    w()
+    w("The 3.2 kit built the window only and left the door slots empty on purpose; this target takes the doors on, so it also puts in what stands above them. The numbers are 2.2's (`targets/shopfronts/target.json` `parts.shop_door.dims` and `parts.side_door_slot.dims.above`, at commit %s), resolved per shop from `front.zones_u_mm` and written into each shop's `door` (keys `fanlight`, `transom`, `toplights_over_shop_door`, `panel_over_side_door`, `head`). Rita's, in millimetres in the 2.2 bay frame (u from the viewer's left, z above the footway):" % r["front"]["build_from"]["commit"])
+    w()
+    rd = r["door"]
+    tb = rd["toplights_over_shop_door"]
+    table(["part", "u (mm)", "z (mm)", "what it is"], [
+        ["fanlight", "%g to %g" % tuple(rd["fanlight"]["u_mm"]), "%g to %g" % tuple(rd["fanlight"]["z_mm"]), "one 6 mm pane in a timber ovolo bead, between the shop door frame's jambs (50 face each side of the 1006 slot). The street number %s goes on it (4.1; see the note below)" % rd["fanlight"]["street_number"]["text"]],
+        ["transom (door slots)", "%g to %g" % tuple(rd["transom"]["u_mm"]), "%g to %g" % tuple(rd["transom"]["z_mm"]), "`transom_t1`, across both door slots, meeting the window frame's left jamb; the window's own transom continues it"],
+        ["toplights over the shop door", "%g to %g" % tuple(tb["u_mm"]), "%g to %g" % tuple(tb["z_mm"]), "three panes of %.1f between two 28 wide `toplight_bar_plan` bars at u %.1f and %.1f; glass and beads as the window's toplights; the door frame's jambs run up beside them" % (tb["pane_width_mm"], tb["bars"][0]["centre"], tb["bars"][1]["centre"])],
+        ["panel over the side door", "%g to %g" % tuple(rd["panel_over_side_door"]["u_mm"]), "%g to %g" % tuple(rd["panel_over_side_door"]["z_mm"]), "one raised-and-fielded panel, field %g wide (944 - 2 x 50), `raised_field_edge`, painted white joinery (226, 224, 214) as on the approved front (2.2 gives it 2480 to 2850; here the head takes 2790 to 2850, as the approved front shows)" % rd["panel_over_side_door"]["field_width_mm"]],
+        ["head (door slots)", "%g to %g" % tuple(rd["head"]["u_mm"]), "%g to %g" % tuple(rd["head"]["z_mm"]), "the window's `head_section` (95 x 60) carried across the door slots under the fascia"],
+    ])
+    w("**On the other nine fronts** the same, mirrored where the door end is the viewer's right (the band runs from the window frame's right jamb to the pilaster); the metal fronts (M1: Mickey's, the fish market, the laundry and the chandler; M2: the grocer) take their own variant's transom section (`transom_m1`, a 50 high box carrying a 30 mm cover plate to keep 2.2's 80 high band: Judgement) and 2.2's numbers for their doors' tops; the grocer has no side door and so no panel; the newsagent's roller-shutter hood (u 350 to 4706, z 2550 to 2850) cuts the toplights, bars and head away behind it and leaves 70 of the toplights showing. "
+      "**FRN-07 (no opening in the front):** on the elevation drawn from `target.json` (D1 and D2), every point between the pilasters' inner edges (u 350 to 5650) from z 0 to 2850 lies on a part; the largest uncovered rectangle is at most 5 x 5 mm. Computed here, per shop (width x height, mm):")
+    w()
+    rows41 = []
+    for s_ in T["shops"]:
+        pl_ = TD.front_polys(s_)
+        ar_, ww_, hh_, at_ = S.largest_uncovered(TD.covering_rects(pl_), 350.0, 5650.0, 0.0, 2850.0)
+        gl_ = s_["front"]["glazing_layout"]
+        d_ = s_["door"]
+        rows41.append([s_["id"], s_["front"]["glazing"]["pattern"], "%d of %.1f" % (gl_["toplights"], gl_["toplight_width"]), ", ".join("%.1f" % c for c in gl_["toplight_bar_centres"]) or "none (the mullions carry up)", ", ".join("%.1f" % c for c in gl_["mullion_centres"]) + (" (%g wide)" % gl_["mullion_face"]),
+                       "3 of %.1f" % d_["toplights_over_shop_door"]["pane_width_mm"], "%.1f x %.1f" % (ww_, hh_)])
+    table(["shop", "glazing pattern", "window toplights", "28 wide toplight bars (u from the frame's left)", "mullions carried up as bars (centres)", "over the shop door", "largest open rectangle"], rows41)
+    w("**The toplight rule (3.2 street review fault 1, kit departure D6), now on every front:** each mullion is carried up through the toplight row as a bar of its own width, and each light's toplight is split equally by 28 wide bars. 2.2's table (a fixed pitch of bars, slivers of 91 to 95 mm beside the mullions on five fronts, the grocer's 256 mm panes beside both mullions, the launderette's one long pane) is replaced; the launderette's divided upper lights are P5's (disagreement D11); the grocer's sunrise is etched one to a light across its two toplights (Judgement). "
+      "FRN-04 checks the bar centres (+-2 mm), a bar on every mullion line, equal widths in a light and no toplight under 250, not only the count.")
+    w()
+    w("**The street number on the fanlight.** " + rd["fanlight"]["street_number"]["where"] + ". " + rd["fanlight"]["street_number"]["frame_of_z"] + ".")
+    w()
     w("### 4.2 The shop door, the side door and the bell (the 3.2 kit has none)")
     w()
     d = r["door"]
@@ -200,7 +237,7 @@ def build():
         ["lower panel, raised and fielded", "%d to %d" % tuple(rl["lower_panel_field"]), "Photo; the 12 mm sticking and the 8 mm bevel as 2.2's raised_field_edge"],
         ["lock rail, carrying the plates", "%d to %d" % tuple(rl["lock_rail"]), "Photo: 322 high; **2.2 had the glass starting at 600 (D1 supersedes it)**"],
         ["letter plate 250 x 40, brass", "centre %d" % d["letter_plate"]["z_mm"], "Photo: 0.32 of the leaf; 2.2 had 545; in the lock rail, centred across the leaf"],
-        ["lever handle on a 240 x 40 backplate", "1000 (rim latch and escutcheon at 950)", "Read (the kit); the photograph's knob sits at 0.42 of the leaf: not adopted (narrow point)"],
+        ["lever handle on a 240 x 40 backplate", "1000 (rim latch and escutcheon at 950)", "Read (the kit); the photograph's handle sits at 0.42 of the leaf (about 890) and is not adopted because the approved game door's lever (rita-day-kit-2026-10-06.jpg, the door Jafar has seen) stands at about 1050 (D12)"],
         ["glass, two panes", "%d to %d" % tuple(rl["glass"]), "Photo: 6 mm in an ovolo bead 14 x 11; the glass 99.5 px wide = 600 of a leaf 853 wide in the photograph; here the leaf is 900 with stiles 115"],
         ["glazing bar", "centre %d, 28 wide" % rl["glazing_bar"]["z"], "Photo: one bar, two panes of about 540"],
         ["top rail", "%d to %d" % tuple(rl["top_rail"]), "Photo: 95 high; 2.2 had 115"],
@@ -211,7 +248,7 @@ def build():
         ["the OPEN / CLOSED sign", "inside the glass at z 1500", d["sign"]],
     ])
     w("The side door is the door family's **F1** (3.1: production/assets/cloud-week/door/door_F1.glb), used as 2.2 section 10 places it: slot 944, F1 mirrored where the door end is the viewer's left, its frame's outside face at d 100, trimmed at the shop transom, painted buttermilk (222, 212, 184), "
-      "letter plate 250 x 40, the bell push the 3.1 fix leaves as a plain oblong. Metal doors (M1 aluminium: full-height glass in a 50 frame, 100 top rail, 170 bottom rail, a 300 chrome D pull and a floor spring; M2 bronze: a bronze kick panel to 600, glass above) are as 2.2 for the shops that have them.")
+      "letter plate 250 x 40, the bell push the 3.1 fix leaves as a plain oblong. Metal doors (M1 aluminium: full-height glass in a 50 frame, 100 top rail, 170 bottom rail, a 300 chrome D pull and a floor spring; M2 bronze: a bronze kick panel to 600, glass above) are as 2.2 for the shops that have them, with one change: an M1 door's letter plate is centred in the 170 bottom rail at z 113, outside the glass (2.2's 545 stood inside it); the M2 door's plate stays in the kick panel at 545.")
     w()
     w("### 4.3 The glass, the fascia, the paint and the grille")
     w()
@@ -235,8 +272,8 @@ def build():
     table(["model", "n", "zone u0-u1, v0-v1, w0-w1 (m)", "note"], [[i["model"], i["n"], "%.2f-%.2f, %.2f-%.2f, %.2f-%.2f" % tuple(i["zone"]), i.get("note") or i.get("why") or ""] for i in dsp["items"]])
     w("### 4.6 The pictures, the spec entry and the cameras")
     w()
-    w("Files `pawnbroker_day.png`, `pawnbroker_night_lit.png`, `pawnbroker_night_dark.png` (4096 x 1855) and `pawnbroker.json` (w 5.3, h 2.4, d 4.5, camera_d 5.3, pixels [4096, 1855]). The spec entry is unchanged except `pixels_wide` 2048 to 4096 and the display's `x0`/`x1` (15.45 to 18.8 measured on the street model's glass; 15.35 to 18.7 with the 3.2 front's window zone): "
-      "a 0.10 m shift the builder takes from whichever front stands. Lit at night (RULINGS 1 Oct): night_lit is the picture the game shows all night; `spill_lumens` 350 and the display's rect light stay as approved.")
+    w("Files `pawnbroker_day.png`, `pawnbroker_night_lit.png`, `pawnbroker_night_dark.png` (4096 x 1855) and `pawnbroker.json` (w 5.3, h 2.4, d 4.5, camera_d 5.3, pixels [4096, 1855]). The spec entry is unchanged except `pixels_wide` 2048 to 4096, the display's `x0`/`x1` (15.45 to 18.8 measured on the street model's glass; 15.35 to 18.7 with the 3.2 front's window zone: "
+      "a 0.10 m shift the builder takes from whichever front stands) and its `decal`, which goes from `production/art/interiors-2026-09-23/int23_pawn` to `production/art/shop-rooms/pawnbroker_day`. Lit at night (RULINGS 1 Oct): night_lit is the picture the game shows all night; `spill_lumens` 350 and the display's rect light stay as approved.")
     w()
     table(["camera", "eye (street m)", "aim (street m)"], [[c, v["eye_street_m"], v["aim_street_m"]] for c, v in r["cameras"].items()])
     w("Parallax test (PRJ-02): between CLOSE_35 and CLOSE_35_B the card's centre moves **%.0f px** (of 4096) by the rule." % r["parallax_test"]["expected_du_px"])

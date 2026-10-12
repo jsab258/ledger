@@ -10915,7 +10915,7 @@
     {
      "fixture": "R-back-tv-tiers",
      "depth_m": 0.35,
-     "limit": "at most method.standoff_budget.reads_true_20px.back_wall_middle (the 20 px budget at the card's middle; the review's own measure: about 0.36)",
+     "limit": "at most the 20 px budget at the card's middle: method.standoff_budget.reads_true_20px.back_wall_middle (sw_common's measure, 0.398) and at most 0.36 (the review's independent measure of 12 October)",
      "why": "television_02 is 0.35 deep at its size; the two tiers above the counter carry them (mid height), where 0.35 stays under 20 px; every other back-wall shelf unit is 0.30 or less"
     }
    ],
@@ -16897,5 +16897,2356 @@
    "D4": "the stand-off chart and the camera plan"
   },
   "rule": "every preview is looked at by eye after each rebuild; make_previews.py draws the masks and reads them back from the JPEG it wrote; the files are JPEG, at most 1200 px, under 300 KB"
+ },
+ "self_check": {
+  "result": "self_check: 379 pass, 0 fail, 3 reported",
+  "counts": {
+   "pass": 379,
+   "fail": 0,
+   "report": 3
+  },
+  "groups": {
+   "1 printed": {
+    "pass": 95,
+    "fail": 0,
+    "report": 0
+   },
+   "2 rule": {
+    "pass": 28,
+    "fail": 0,
+    "report": 0
+   },
+   "3 photo": {
+    "pass": 11,
+    "fail": 0,
+    "report": 0
+   },
+   "4 inventory": {
+    "pass": 9,
+    "fail": 0,
+    "report": 0
+   },
+   "5 room": {
+    "pass": 55,
+    "fail": 0,
+    "report": 3
+   },
+   "6 display": {
+    "pass": 18,
+    "fail": 0,
+    "report": 0
+   },
+   "7 consistency": {
+    "pass": 58,
+    "fail": 0,
+    "report": 0
+   },
+   "8 front": {
+    "pass": 86,
+    "fail": 0,
+    "report": 0
+   },
+   "9 marks": {
+    "pass": 19,
+    "fail": 0,
+    "report": 0
+   }
+  },
+  "date": "2026-10-12",
+  "live": false,
+  "rows": [
+   {
+    "group": "1 printed",
+    "name": "the camera rule is the spec's, word for word",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "the never list is the spec's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "the three states are the spec's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ten units, twelve not found",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "mickeys: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "mickeys: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 3.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "mickeys: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "mickeys: the card is terrace-front.py's (x 3.35 to 8.65, z 0.65 to 3.05, y +5.875)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "fish_market: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "fish_market: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 9.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "fish_market: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "fish_market: the card is terrace-front.py's (x 9.35 to 14.65, z 0.65 to 3.05, y +5.875)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ritas: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ritas: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 15.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "ritas: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ritas: the card is terrace-front.py's (x 15.35 to 20.65, z 0.65 to 3.05, y +5.875)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "empty_unit: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "empty_unit: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 21.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "empty_unit: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "steam_laundry: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "steam_laundry: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 27.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "steam_laundry: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "steam_laundry: the card is terrace-front.py's (x 27.35 to 32.65, z 0.65 to 3.05, y +5.875)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "grocer: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "grocer: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 33.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "grocer: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "grocer: the card is terrace-front.py's (x 33.35 to 38.65, z 0.65 to 3.05, y +5.875)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "chandler: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "chandler: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 40.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "chandler: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "chandler: the card is terrace-front.py's (x 40.35 to 45.65, z 0.65 to 3.05, y +5.875)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "tea_rooms: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "tea_rooms: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 24.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "tea_rooms: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "tea_rooms: the card is terrace-front.py's (x 24.35 to 29.65, z 0.65 to 3.05, y -5.875)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ironmonger: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ironmonger: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 30.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "ironmonger: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ironmonger: the card is terrace-front.py's (x 30.35 to 35.65, z 0.65 to 3.05, y -5.875)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "newsagent: block, bay, side and street x are 2.2's and the scene's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "newsagent: the bay's low x is the scene's (a west bay counts from the high end)",
+    "result": "pass",
+    "detail": "bay_x0 36.000"
+   },
+   {
+    "group": "1 printed",
+    "name": "newsagent: the fascia board and street number are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "newsagent: the card is terrace-front.py's (x 36.35 to 41.65, z 0.65 to 3.05, y -5.875)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "mickeys: hours are hook-cast.json's areas.mickeys",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "fish_market: hours are hook-cast.json's areas.fish_market",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ritas: hours are hook-cast.json's areas.ritas",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "steam_laundry: hours are hook-cast.json's areas.laundry",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "tea_rooms: hours are hook-cast.json's areas.cafe",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "newsagent: hours are hook-cast.json's areas.newsagent",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "grocer: hours are a stated Judgement (not found in the research)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ironmonger: hours are a stated Judgement (not found in the research)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "chandler: hours are a stated Judgement (not found in the research)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "mickeys: in the lit list, lit at night after Tom's key, dark until it (spec lit_at_start false, lit_at_night true)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ritas: lit at night because east_parade_interior2 is in vignette-pieces lit_names",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "grocer: lit at night because east_parade_interior5 is in vignette-pieces lit_names",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "newsagent: lit at night because west_north_interior0 is in vignette-pieces lit_names",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "tea_rooms: lit at night because west_north_interior2 is in vignette-pieces lit_names",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "chandler: lit at night because east_chandler_interior0 is in vignette-pieces lit_names",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "fish_market: dark at night (not in lit_names)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "steam_laundry: dark at night (not in lit_names)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ironmonger: dark at night (not in lit_names)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "empty_unit: dark at night (not in lit_names)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "pawnbroker: room, card, camera_d, brightness and spill equal the spec's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "pawnbroker: the display's front, bed and depth equal the spec's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "pawnbroker: the display's x0 and x1 differ from the spec's by the 0.10 the 3.2 front shifts them (reported, not a failure)",
+    "result": "pass",
+    "detail": "spec 15.45 to 18.8; the 3.2 front's window zone 15.35 to 18.7"
+   },
+   {
+    "group": "1 printed",
+    "name": "pawnbroker: pixels_wide goes from the spec's 2048 to 4096 (reported)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "pawnbroker: the decal goes from the spec's 'production/art/interiors-2026-09-23/int23_pawn' to 'production/art/shop-rooms/pawnbroker_day' (reported; TARGET.md 4.6 says so)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "mickeys: the spec entry is untouched (no spec entry written)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "fishmonger: the spec entry has every key the entries of the spec have",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "fishmonger: the display's front is the glass's back plus 0.005 on the shop's side",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "pawnbroker: the spec entry has every key the entries of the spec have",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "pawnbroker: the display's front is the glass's back plus 0.005 on the shop's side",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "launderette: the spec entry has every key the entries of the spec have",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "launderette: the display's front is the glass's back plus 0.005 on the shop's side",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "grocer: the spec entry has every key the entries of the spec have",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "grocer: the display's front is the glass's back plus 0.005 on the shop's side",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "chandler: the spec entry has every key the entries of the spec have",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "chandler: the display's front is the glass's back plus 0.005 on the shop's side",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "tea_room: the spec entry has every key the entries of the spec have",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "tea_room: the display's front is the glass's back plus 0.005 on the shop's side",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ironmonger: the spec entry has every key the entries of the spec have",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ironmonger: the display's front is the glass's back plus 0.005 on the shop's side",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "newsagent: the spec entry has every key the entries of the spec have",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "newsagent: the display's front is the glass's back plus 0.005 on the shop's side",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "mickeys: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "fish_market: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ritas: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "empty_unit: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "steam_laundry: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "grocer: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "chandler: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "tea_rooms: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "ironmonger: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "newsagent: the paints are 2.2's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "1 printed",
+    "name": "the glass lettering rows are 4.1's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PRJ-01: from the render camera every card point shows its own pixel (worst 0.0000 px at 4096)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "west card: the picture's left is the card's low x (trace side -1)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PIC-04: the back wall's corners ([940, 426], [3156, 1429]) equal the rule's",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "the picture is 4096 x 1855 (4096 x 1855)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "the box's floor is the card's bottom (0.65 above the crown) and its ceiling the card's top (3.05)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PRJ-02 fish_market: the two close cameras 2 m apart move the card's centre by 1387 px (target 1387); the picture shifts with the eye",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PRJ-02 ritas: the two close cameras 2 m apart move the card's centre by 1322 px (target 1322); the picture shifts with the eye",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PRJ-02 steam_laundry: the two close cameras 2 m apart move the card's centre by 1322 px (target 1322); the picture shifts with the eye",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PRJ-02 grocer: the two close cameras 2 m apart move the card's centre by 1614 px (target 1614); the picture shifts with the eye",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PRJ-02 chandler: the two close cameras 2 m apart move the card's centre by 1322 px (target 1322); the picture shifts with the eye",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PRJ-02 tea_rooms: the two close cameras 2 m apart move the card's centre by -1387 px (target -1387); the picture shifts with the eye",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PRJ-02 ironmonger: the two close cameras 2 m apart move the card's centre by -1322 px (target -1322); the picture shifts with the eye",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "PRJ-02 newsagent: the two close cameras 2 m apart move the card's centre by -1322 px (target -1322); the picture shifts with the eye",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "the stand-off budget (true, 20 px) recomputed: back 0.327 sides 0.057 floor 0.029",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "the written rules sit inside the budgets: true rules <= the 20 px budget, tolerated rules <= the 40 px budget",
+    "result": "pass",
+    "detail": "true {'back_wall': 0.327, 'back_wall_middle': 0.398, 'side_walls': 0.057, 'floor_and_ceiling': 0.029}; tolerated {'back_wall': 0.637, 'side_walls': 0.114, 'floor_and_ceiling': 0.059}; rules {'shelf_goods_on_back_wall_m': 0.3, 'furniture_at_back_wall_m': 0.6, 'side_wall_relief_m': 0.1, 'side_wall_flat_m': 0.05, 'floor_and_ceiling_m': 0.025, 'floor_ceiling_tolerated_m': 0.05, 'shelf_named_exceptions': [{'fixture': 'R-back-tv-tiers', 'depth_m': 0.35, 'limit': \"at most the 20 px budget at the card's middle: method.standoff_budget.reads_true_20px.back_wall_middle (sw_common's measure, 0.398) and at most 0.36 (the review's independent measure of 12 October)\", 'why': 'television_02 is 0.35 deep at its size; the two tiers above the counter carry them (mid height), where 0.35 stays under 20 px; every other back-wall shelf unit is 0.30 or less'}]}"
+   },
+   {
+    "group": "2 rule",
+    "name": "the window's far end is seen at 61.2 degrees from 1.5 m (under 62) and past it nearer",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "at 4096 wide no part of the glass is softer than 2 pixels a texel from 0.5 m; at 2048 it is (0.131 of the glass at 0.5 m)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "at CLOSE_35 back-wall shelf goods slide 15 px (20 or less), a board 9 px, a counter 38 px (40 or less), a free item 110 px and a 0.30 side unit 60 px (over 40: refused)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 mickeys: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 fish_market: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 ritas: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 empty_unit: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 steam_laundry: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 grocer: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 chandler: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 tea_rooms: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 ironmonger: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "2 rule",
+    "name": "CAM-01 newsagent: the cameras stand on the right pavements at the right distances, eye 1.70 above the crown (1.60 above the footway)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "scale 6.080 mm a pixel from the leaf's height (335 px = 2040 mm)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "T1 door glass foot above the footway: photograph 870 mm, target 871 (error +-30)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "T1 door letter plate: photograph 679 mm, target 678 (+-30)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "T1 door glazing bar: photograph 1423 mm, target 1423 (+-30)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "T1 door glass top: photograph 1974 mm, target 1973 (+-30)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "stallriser top: photograph 609 mm, target 600 (+-30; the 2.2 number kept, D4)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "door leaf width: photograph 851 mm, target 900 (+-60; D3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "the lock rail runs from the panel's top (549) to the glass foot (871): the photograph's panel top 545",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "the drawing's stallriser line falls within 5 px of the photograph's row (363.4 against 362.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "the drawing's door glass foot falls within 6 px of the photograph's row (318.9 against 319.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "3 photo",
+    "name": "the drawing's glazing bar falls within 6 px of the photograph's row (228.1 against 228.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "4 inventory",
+    "name": "INV-01: all 104 Poly Haven ids exist with a 1k glTF (the catalogue read 12 October, 521 models)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "4 inventory",
+    "name": "INV-02: no denied id is placed",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "4 inventory",
+    "name": "NEV-01: no word of the content blocklists in any name, lettering or fixture text (0 hits outside the tags)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "4 inventory",
+    "name": "NEV-01: no word of the blocklists in the allowed models' tags (0 hits)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "4 inventory",
+    "name": "INV-05: no real maker's name in any lettering, fixture text or model id (0 hits)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "4 inventory",
+    "name": "INV-04: every scripted kind has a reason, 51 kinds",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "4 inventory",
+    "name": "INV-04: no scripted kind is a fish, crab or prawn body (the scans are named, never hand-made)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "4 inventory",
+    "name": "the Sketchfab scans are CC0 and downloadable by record (15)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "4 inventory",
+    "name": "the model dates: every allowed model was published by 12 October 2026 and none is in the era blocklist (nothing after 1992 is a by-eye gate; the denied list holds what was seen)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "SO-01 to SO-03 fish_market: all 8 fixtures are inside the stand-off rules",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "fish_market: every fixture lies inside the box (5.3 x 4.50 x 2.4)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "fish_market: every good stands on a fixture that exists, fits its depth, and is at a believable scale",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "fish_market: 10 kinds of goods (3 Poly Haven models, 7 scripted forms), none repeated more than 240 times (the scripted tins) or 40 times (a model)",
+    "result": "pass",
+    "detail": "[('script:tins_and_jars', 24), ('script:enamel_trays', 14), ('script:price_stakes', 14)]"
+   },
+   {
+    "group": "5 room",
+    "name": "fish_market: scripted forms are 70 per cent of its kinds (reported: the more there are, the less CC0 support the shop has)",
+    "result": "report",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "fish_market: the 2 tubes lie inside the room and its three states are written",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "fish_market: the mean-luma targets are Rita's approved pictures' (119.5, 79.8, 17.7)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "SO-01 to SO-03 ritas: all 11 fixtures are inside the stand-off rules",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "ritas: every fixture lies inside the box (5.3 x 4.50 x 2.4)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "ritas: every good stands on a fixture that exists, fits its depth, and is at a believable scale",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "ritas: 47 kinds of goods (45 Poly Haven models, 2 scripted forms), none repeated more than 240 times (the scripted tins) or 40 times (a model)",
+    "result": "pass",
+    "detail": "[('script:pledge_tickets', 90), ('cardboard_box_01', 9), ('portable_cassette_player', 6)]"
+   },
+   {
+    "group": "5 room",
+    "name": "ritas: scripted forms are 4 per cent of its kinds (reported: the more there are, the less CC0 support the shop has)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "ritas: the 3 tubes lie inside the room and its three states are written",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "ritas: the mean-luma targets are Rita's approved pictures' (119.5, 79.8, 17.7)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "SO-01 to SO-03 steam_laundry: all 7 fixtures are inside the stand-off rules",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "steam_laundry: every fixture lies inside the box (5.3 x 4.50 x 2.4)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "steam_laundry: every good stands on a fixture that exists, fits its depth, and is at a believable scale",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "steam_laundry: 10 kinds of goods (2 Poly Haven models, 8 scripted forms), none repeated more than 240 times (the scripted tins) or 40 times (a model)",
+    "result": "pass",
+    "detail": "[('script:wrapped_parcels', 18), ('script:detergent_boxes', 10), ('script:tumble_dryer', 6)]"
+   },
+   {
+    "group": "5 room",
+    "name": "steam_laundry: scripted forms are 80 per cent of its kinds (reported: the more there are, the less CC0 support the shop has)",
+    "result": "report",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "steam_laundry: the 3 tubes lie inside the room and its three states are written",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "steam_laundry: the mean-luma targets are Rita's approved pictures' (119.5, 79.8, 17.7)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "SO-01 to SO-03 grocer: all 7 fixtures are inside the stand-off rules",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "grocer: every fixture lies inside the box (5.3 x 4.50 x 2.4)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "grocer: every good stands on a fixture that exists, fits its depth, and is at a believable scale",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "grocer: 21 kinds of goods (11 Poly Haven models, 10 scripted forms), none repeated more than 240 times (the scripted tins) or 40 times (a model)",
+    "result": "pass",
+    "detail": "[('script:tins', 200), ('script:packets', 120), ('script:jars', 42)]"
+   },
+   {
+    "group": "5 room",
+    "name": "grocer: scripted forms are 48 per cent of its kinds (reported: the more there are, the less CC0 support the shop has)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "grocer: the 3 tubes lie inside the room and its three states are written",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "grocer: the mean-luma targets are Rita's approved pictures' (119.5, 79.8, 17.7)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "SO-01 to SO-03 chandler: all 7 fixtures are inside the stand-off rules",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "chandler: every fixture lies inside the box (5.3 x 4.50 x 2.4)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "chandler: every good stands on a fixture that exists, fits its depth, and is at a believable scale",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "chandler: 20 kinds of goods (13 Poly Haven models, 7 scripted forms), none repeated more than 240 times (the scripted tins) or 40 times (a model)",
+    "result": "pass",
+    "detail": "[('script:paint_tins', 40), ('script:shackles_blocks', 24), ('script:rope_coils', 11)]"
+   },
+   {
+    "group": "5 room",
+    "name": "chandler: scripted forms are 35 per cent of its kinds (reported: the more there are, the less CC0 support the shop has)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "chandler: the 2 tubes lie inside the room and its three states are written",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "chandler: the mean-luma targets are Rita's approved pictures' (119.5, 79.8, 17.7)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "SO-01 to SO-03 tea_rooms: all 8 fixtures are inside the stand-off rules",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "tea_rooms: every fixture lies inside the box (5.3 x 4.50 x 2.4)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "tea_rooms: every good stands on a fixture that exists, fits its depth, and is at a believable scale",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "tea_rooms: 21 kinds of goods (14 Poly Haven models, 7 scripted forms), none repeated more than 240 times (the scripted tins) or 40 times (a model)",
+    "result": "pass",
+    "detail": "[('script:cups_saucers', 24), ('tea_set_01', 3), ('carrot_cake', 2)]"
+   },
+   {
+    "group": "5 room",
+    "name": "tea_rooms: scripted forms are 33 per cent of its kinds (reported: the more there are, the less CC0 support the shop has)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "tea_rooms: the 3 tubes lie inside the room and its three states are written",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "tea_rooms: the mean-luma targets are Rita's approved pictures' (119.5, 79.8, 17.7)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "SO-01 to SO-03 ironmonger: all 7 fixtures are inside the stand-off rules",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "ironmonger: every fixture lies inside the box (5.3 x 4.50 x 2.4)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "ironmonger: every good stands on a fixture that exists, fits its depth, and is at a believable scale",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "ironmonger: 42 kinds of goods (38 Poly Haven models, 4 scripted forms), none repeated more than 240 times (the scripted tins) or 40 times (a model)",
+    "result": "pass",
+    "detail": "[('script:drawer_fronts', 60), ('script:paint_tins', 40), ('lightbulb_01', 24)]"
+   },
+   {
+    "group": "5 room",
+    "name": "ironmonger: scripted forms are 10 per cent of its kinds (reported: the more there are, the less CC0 support the shop has)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "ironmonger: the 2 tubes lie inside the room and its three states are written",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "ironmonger: the mean-luma targets are Rita's approved pictures' (119.5, 79.8, 17.7)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "SO-01 to SO-03 newsagent: all 8 fixtures are inside the stand-off rules",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "newsagent: every fixture lies inside the box (5.3 x 4.50 x 2.4)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "newsagent: every good stands on a fixture that exists, fits its depth, and is at a believable scale",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "5 room",
+    "name": "newsagent: 14 kinds of goods (5 Poly Haven models, 9 scripted forms), none repeated more than 240 times (the scripted tins) or 40 times (a model)",
+    "result": "pass",
+    "detail": "[('script:cigarette_packs', 100), ('script:magazine_covers', 60), ('script:greeting_cards', 40)]"
+   },
+   {
+    "group": "5 room",
+    "name": "newsagent: scripted forms are 64 per cent of its kinds (reported: the more there are, the less CC0 support the shop has)",
+    "result": "report",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "newsagent: the 3 tubes lie inside the room and its three states are written",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "newsagent: the mean-luma targets are Rita's approved pictures' (119.5, 79.8, 17.7)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "Rita's: the old glass counter 2.1 m off the wall is gone (a counter stands against the back wall)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "5 room",
+    "name": "no room has a fixture on the open floor (kind free_at_wall stands against a wall)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "DSP-01 fish_market: all 6 display items lie in the window zone's envelope (u 0 to 3.350, v 0 to 0.55, w 0 to 1.10) and fit",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "6 display",
+    "name": "fish_market: the display's u range is the window zone's (3.350 m)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "DSP-01 ritas: all 26 display items lie in the window zone's envelope (u 0 to 3.350, v 0 to 0.55, w 0 to 1.55) and fit",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "6 display",
+    "name": "ritas: the display's u range is the window zone's (3.350 m)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "DSP-01 steam_laundry: all 6 display items lie in the window zone's envelope (u 0 to 3.350, v 0 to 0.55, w 0 to 1.30) and fit",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "6 display",
+    "name": "steam_laundry: the display's u range is the window zone's (3.350 m)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "DSP-01 grocer: all 14 display items lie in the window zone's envelope (u 0 to 4.294, v 0 to 0.55, w 0 to 1.45) and fit",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "6 display",
+    "name": "grocer: the display's u range is the window zone's (4.294 m)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "DSP-01 chandler: all 12 display items lie in the window zone's envelope (u 0 to 3.350, v 0 to 0.55, w 0 to 1.55) and fit",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "6 display",
+    "name": "chandler: the display's u range is the window zone's (3.350 m)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "DSP-01 tea_rooms: all 10 display items lie in the window zone's envelope (u 0 to 3.350, v 0 to 0.55, w 0 to 1.50) and fit",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "6 display",
+    "name": "tea_rooms: the display's u range is the window zone's (3.350 m)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "DSP-01 ironmonger: all 14 display items lie in the window zone's envelope (u 0 to 3.350, v 0 to 0.55, w 0 to 1.50) and fit",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "6 display",
+    "name": "ironmonger: the display's u range is the window zone's (3.350 m)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "DSP-01 newsagent: all 8 display items lie in the window zone's envelope (u 0 to 3.350, v 0 to 0.55, w 0 to 1.50) and fit",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "6 display",
+    "name": "newsagent: the display's u range is the window zone's (3.350 m)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "the display is never in front of a door: its u is measured from the window zone's edge (2.2's zones), door end aware",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "6 display",
+    "name": "the display's depth is 0.55: it ends 0.055 before the card (card 0.61 m behind the glass)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "ten unique shop ids",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "eight rooms (Rita's, the fish market, the laundry, the grocer, the chandler, the tea room, the ironmonger, the newsagent); no room for the empty unit; Mickey's room is real already",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "seven new spec entries plus Rita's re-stated",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PIC-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PIC-02 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PIC-03 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PIC-04 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PIC-05 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PIC-06 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PRJ-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PRJ-02 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PRJ-03 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check SO-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check SO-02 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check SO-03 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check SO-04 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check SO-05 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check DSP-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check DSP-02 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check INV-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check INV-02 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check INV-03 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check INV-04 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check INV-05 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check INV-06 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check NEV-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check NEV-02 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check FRN-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check FRN-02 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check FRN-03 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check FRN-04 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check FRN-05 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check FRN-06 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check FRN-07 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check FAS-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check FAS-02 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check GLS-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check LIT-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check LIT-02 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check LIT-03 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check LIT-04 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check LIT-05 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check LIT-06 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check PRV-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "check CAM-01 names shops that exist",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "42 checks, ids unique",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "fish_market: the picture's JSON beside it carries w, h, d, camera_d (5.3, 2.4, 4.5, 5.3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "ritas: the picture's JSON beside it carries w, h, d, camera_d (5.3, 2.4, 4.5, 5.3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "steam_laundry: the picture's JSON beside it carries w, h, d, camera_d (5.3, 2.4, 4.5, 5.3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "grocer: the picture's JSON beside it carries w, h, d, camera_d (5.3, 2.4, 4.5, 5.3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "chandler: the picture's JSON beside it carries w, h, d, camera_d (5.3, 2.4, 4.5, 5.3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "tea_rooms: the picture's JSON beside it carries w, h, d, camera_d (5.3, 2.4, 4.5, 5.3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "ironmonger: the picture's JSON beside it carries w, h, d, camera_d (5.3, 2.4, 4.5, 5.3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "newsagent: the picture's JSON beside it carries w, h, d, camera_d (5.3, 2.4, 4.5, 5.3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "front.missing_from_3_2 names the variants the kit lacks for each shop (Rita's only the doors)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "the door of every shop names a bell, a hinge side and a lever side",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "the twelve disagreements are listed (D1 to D12, with D10 the unlet shop's glass against the 3 October ruling, D11 the launderette's toplight, D12 the lever)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "7 consistency",
+    "name": "the three failures are each answered (F1 to F3)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 mickeys: 3 toplights in 3 lights, aligned: a bar on every mullion line, every toplight 1050.0 wide (the narrowest 1050.0, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 3L-3T-aligned; bars [1125.0, 2225.0]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 mickeys: the toplights over the shop door are three equal panes of 268.7 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 fish_market: 4 toplights in 4 lights, aligned: a bar on every mullion line, every toplight 775.0 wide (the narrowest 775.0, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 4L-4T-aligned; bars [850.0, 1675.0, 2500.0]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 fish_market: the toplights over the shop door are three equal panes of 268.7 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 ritas: 9 toplights in 3 lights, aligned: a bar on every mullion line, every toplight 326.9 wide (the narrowest 326.9, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 3L-9T; bars [390.9, 745.8, 1121.7, 1497.57, 1852.43, 2228.3, 2604.2, 2959.1]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 ritas: the review's numbers: 9 toplights of 326.9, bars [390.9, 745.8, 1497.6, 1852.5, 2604.2, 2959.1] (within 0.2 mm)",
+    "result": "pass",
+    "detail": "stored [390.9, 745.8, 1497.57, 1852.43, 2604.2, 2959.1]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 ritas: the toplights over the shop door are three equal panes of 283.3 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 empty_unit: 9 toplights in 3 lights, aligned: a bar on every mullion line, every toplight 324.7 wide (the narrowest 324.7, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 3L-9T; bars [388.67, 741.33, 1120.0, 1498.67, 1851.33, 2230.0, 2608.67, 2961.33]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 empty_unit: the review's numbers: 9 toplights of 324.7, bars [388.7, 741.3, 1498.7, 1851.3, 2608.7, 2961.3] (within 0.2 mm)",
+    "result": "pass",
+    "detail": "stored [388.67, 741.33, 1498.67, 1851.33, 2608.67, 2961.33]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 empty_unit: the toplights over the shop door are three equal panes of 283.3 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 steam_laundry: 2 toplights in 2 lights, aligned: a bar on every mullion line, every toplight 1600.0 wide (the narrowest 1600.0, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 2L-2T-aligned; bars [1675.0]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 steam_laundry: the review's numbers: 2 toplights of 1600.0, bars [] (within 0.2 mm)",
+    "result": "pass",
+    "detail": "stored []"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 steam_laundry: the toplights over the shop door are three equal panes of 268.7 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 grocer: 6 toplights in 3 lights, aligned: a bar on every mullion line, every toplight 683.0 wide (the narrowest 683.0, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 3L-6T-sunrise; bars [725.0, 1436.0, 2147.0, 2858.0, 3569.0]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 grocer: the review's numbers: 6 toplights of 683.0, bars [725.0, 2147.0, 3569.0] (within 0.2 mm)",
+    "result": "pass",
+    "detail": "stored [725.0, 2147.0, 3569.0]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 grocer: the toplights over the shop door are three equal panes of 283.3 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 chandler: 3 toplights in 3 lights, aligned: a bar on every mullion line, every toplight 1050.0 wide (the narrowest 1050.0, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 3L-3T-aligned; bars [1125.0, 2225.0]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 chandler: the toplights over the shop door are three equal panes of 268.7 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 tea_rooms: 6 toplights in 3 lights, aligned: a bar on every mullion line, every toplight 504.4 wide (the narrowest 504.3, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 3L-6T; bars [568.35, 1121.7, 1675.0, 2228.3, 2781.65]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 tea_rooms: the review's numbers: 6 toplights of 504.4, bars [568.4, 1675.0, 2781.7] (within 0.2 mm)",
+    "result": "pass",
+    "detail": "stored [568.35, 1675.0, 2781.65]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 tea_rooms: the toplights over the shop door are three equal panes of 283.3 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 ironmonger: 6 toplights in 2 lights, aligned: a bar on every mullion line, every toplight 509.7 wide (the narrowest 509.7, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 2L-6T; bars [573.67, 1111.33, 1675.0, 2238.67, 2776.33]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 ironmonger: the review's numbers: 6 toplights of 509.7, bars [573.7, 1111.3, 2238.7, 2776.3] (within 0.2 mm)",
+    "result": "pass",
+    "detail": "stored [573.67, 1111.33, 2238.67, 2776.33]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 ironmonger: the toplights over the shop door are three equal panes of 283.3 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 newsagent: 9 toplights in 3 lights, aligned: a bar on every mullion line, every toplight 326.9 wide (the narrowest 326.9, at least 250), equal within a light, bars and panes tile each light, the layout is the D6 rule's",
+    "result": "pass",
+    "detail": "pattern 3L-9T; bars [390.9, 745.8, 1121.7, 1497.57, 1852.43, 2228.3, 2604.2, 2959.1]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 newsagent: the review's numbers: 9 toplights of 326.9, bars [390.9, 745.8, 1497.6, 1852.5, 2604.2, 2959.1] (within 0.2 mm)",
+    "result": "pass",
+    "detail": "stored [390.9, 745.8, 1497.57, 1852.43, 2604.2, 2959.1]"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-04 newsagent: the toplights over the shop door are three equal panes of 283.3 between two bars (none under 250)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 mickeys: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, panel over the side door and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 fish_market: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, panel over the side door and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 ritas: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, panel over the side door and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 empty_unit: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, panel over the side door and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 steam_laundry: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, panel over the side door and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 grocer: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, no panel (no side door) and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 chandler: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, panel over the side door and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 tea_rooms: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, panel over the side door and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 ironmonger: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, panel over the side door and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 newsagent: the front has no uncovered area between the pilasters (u 350 to 5650, z 0 to 2850): the largest open rectangle is 0.0 x 0.0 mm (at most 5 x 5); fanlight, transom, toplights, panel over the side door and head are in `door` as the zones give them",
+    "result": "pass",
+    "detail": "largest open rectangle at u 350.0, z 0.0"
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-07 Rita's band is the review's: fanlight u 1344 to 2250 z 2131 to 2400; transom u 350 to 2300 z 2400 to 2480; three toplights of 283.3 (bars at 1641.3 and 1952.7) z 2480 to 2790; panel field 844 wide in the 944 slot z 2480 to 2790; head u 350 to 2300 z 2790 to 2850",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "the band's 4.1 street number: on the fanlight (z baseline 2200 above the footway, inside z 2131 to 2400), with the frame of 4.1's 2.18 stated (above the crown: 2080 above the footway, below the fanlight)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 mickeys: the M1 door's letter plate (z 113, 250 x 40) is outside the glass (z 198 to 1968), centred in the 170 bottom rail at z 113",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 fish_market: the M1 door's letter plate (z 113, 250 x 40) is outside the glass (z 198 to 1968), centred in the 170 bottom rail at z 113",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 ritas: the T1 door's letter plate (z 678, 250 x 40) is outside the glass (z 871 to 1973)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 empty_unit: the T1 door's letter plate (z 678, 250 x 40) is outside the glass (z 871 to 1973)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 steam_laundry: the M1 door's letter plate (z 113, 250 x 40) is outside the glass (z 198 to 1968), centred in the 170 bottom rail at z 113",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 grocer: the M2 door's letter plate (z 545, 250 x 40) is outside the glass (z 600 to 1968)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 chandler: the M1 door's letter plate (z 113, 250 x 40) is outside the glass (z 198 to 1968), centred in the 170 bottom rail at z 113",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 tea_rooms: the T1 door's letter plate (z 678, 250 x 40) is outside the glass (z 871 to 1973)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 ironmonger: the T1 door's letter plate (z 678, 250 x 40) is outside the glass (z 871 to 1973)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "FRN-03 newsagent: the T1 door's letter plate (z 678, 250 x 40) is outside the glass (z 871 to 1973)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "LIT-06 fish_market: night_dark's sodium wash is the game's lantern_linear_rgb [1.0, 0.25, 0.0] (unreal-look.json), not the stale (1.0, 0.7055, 0.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "fish_market: the ceiling fixture is the battens' own box x [-1.35, 1.35] y [1.5, 3.3] z [2.355, 2.4] (from lights.tubes), not a full-height object",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "LIT-06 ritas: night_dark's sodium wash is the game's lantern_linear_rgb [1.0, 0.25, 0.0] (unreal-look.json), not the stale (1.0, 0.7055, 0.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "ritas: the ceiling fixture is the battens' own box x [-0.75, 0.75] y [0.9, 3.1] z [2.355, 2.4] (from lights.tubes), not a full-height object",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "LIT-06 steam_laundry: night_dark's sodium wash is the game's lantern_linear_rgb [1.0, 0.25, 0.0] (unreal-look.json), not the stale (1.0, 0.7055, 0.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "steam_laundry: the ceiling fixture is the battens' own box x [-0.75, 0.75] y [0.9, 3.5] z [2.355, 2.4] (from lights.tubes), not a full-height object",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "LIT-06 grocer: night_dark's sodium wash is the game's lantern_linear_rgb [1.0, 0.25, 0.0] (unreal-look.json), not the stale (1.0, 0.7055, 0.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "grocer: the ceiling fixture is the battens' own box x [-1.35, 1.35] y [1.1, 3.7] z [2.355, 2.4] (from lights.tubes), not a full-height object",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "LIT-06 chandler: night_dark's sodium wash is the game's lantern_linear_rgb [1.0, 0.25, 0.0] (unreal-look.json), not the stale (1.0, 0.7055, 0.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "chandler: the ceiling fixture is the battens' own box x [-1.45, 1.45] y [1.5, 3.1] z [2.355, 2.4] (from lights.tubes), not a full-height object",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "LIT-06 tea_rooms: night_dark's sodium wash is the game's lantern_linear_rgb [1.0, 0.25, 0.0] (unreal-look.json), not the stale (1.0, 0.7055, 0.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "tea_rooms: the ceiling fixture is the battens' own box x [-0.75, 0.75] y [0.9, 3.5] z [2.355, 2.4] (from lights.tubes), not a full-height object",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "LIT-06 ironmonger: night_dark's sodium wash is the game's lantern_linear_rgb [1.0, 0.25, 0.0] (unreal-look.json), not the stale (1.0, 0.7055, 0.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "ironmonger: the ceiling fixture is the battens' own box x [-1.35, 1.35] y [1.5, 3.1] z [2.355, 2.4] (from lights.tubes), not a full-height object",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "LIT-06 newsagent: night_dark's sodium wash is the game's lantern_linear_rgb [1.0, 0.25, 0.0] (unreal-look.json), not the stale (1.0, 0.7055, 0.0)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "newsagent: the ceiling fixture is the battens' own box x [-0.75, 0.75] y [0.9, 3.5] z [2.355, 2.4] (from lights.tubes), not a full-height object",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "SO-05 fish_market: nothing stands across a door of the back wall (1 doors)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-01 fish_market: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: none (each within the 20 px budget at the card's middle, 0.398, and the review's 0.36)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-05 ritas: nothing stands across a door of the back wall (1 doors)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-01 ritas: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: [('R-back-tv-tiers', 0.35)] (each within the 20 px budget at the card's middle, 0.398, and the review's 0.36)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-05 steam_laundry: nothing stands across a door of the back wall (0 doors)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-01 steam_laundry: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: none (each within the 20 px budget at the card's middle, 0.398, and the review's 0.36)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-05 grocer: nothing stands across a door of the back wall (0 doors)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-01 grocer: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: none (each within the 20 px budget at the card's middle, 0.398, and the review's 0.36)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-05 chandler: nothing stands across a door of the back wall (0 doors)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-01 chandler: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: none (each within the 20 px budget at the card's middle, 0.398, and the review's 0.36)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-05 tea_rooms: nothing stands across a door of the back wall (0 doors)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-01 tea_rooms: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: none (each within the 20 px budget at the card's middle, 0.398, and the review's 0.36)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-05 ironmonger: nothing stands across a door of the back wall (0 doors)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-01 ironmonger: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: none (each within the 20 px budget at the card's middle, 0.398, and the review's 0.36)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-05 newsagent: nothing stands across a door of the back wall (1 doors)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "SO-01 newsagent: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: none (each within the 20 px budget at the card's middle, 0.398, and the review's 0.36)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "8 front",
+    "name": "Rita's side walls are dressed: boards and hung goods cover 87 per cent of the left wall and 82 per cent of the right wall's depth at mid height z 1.5 (at least 80), all at 0.10 or less",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "Rita's back wall: R-back-stock is 0.30 deep and ends at x 1.35, the back door stands at x 1.45 to 2.35 with one tier of boxes at z 2.05 to 2.25 over it, the four television sets stand on R-back-tv-tiers (0.35, z 1.35 and 1.70) above the counter",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "Rita's grille by day: the lattice is lifted out and stored, the 40 x 40 top rail (at the transom) and the bottom channel stay; the text says 'at the transom', not 'under the fascia'",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "the nine other fronts are built from 2.2's JSON at its commit (front.build_from: production/cloud-week/targets/shopfronts/target.json at dd706f6), not from a Markdown section",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "8 front",
+    "name": "2.2's target.json is unchanged since the commit this target pins (dd706f6; git says dd706f6)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "INV-05: brand_blocklist carries the review's retailers (dixons, currys, comet, rumbelows) and the makers read off the maps",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "INV-06: every model the review and the writer found marked has `marks` and a blanking step (36 models listed)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "9 marks",
+    "name": "INV-06: cassette_player's entry names the red roundel, 'Dixons' and 'TR12 Cassette Recorder' and says they are painted out of the base-colour map to the case's brushed grey, the tape's handwritten label kept",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "INV-06: every blanking step names its map, its boxes (inside the 1024 x 1024 map) and its fill; the step and the final-texture check (script and visual) are written",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "9 marks",
+    "name": "INV-06: every placed model carries `marks` (a mark, or none seen at 1k)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "INV-06: the goods rows that place cassette_player, portable_cassette_player, Camera_01, wall_clock, CashRegister_01, cement_bag say the mark is blanked",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "PRV-01 P1: 3 masks, each flat grey in the committed JPEG (3 have pixels in the crop)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "9 marks",
+    "name": "PRV-01 P2: 0 masks, each flat grey in the committed JPEG (0 have pixels in the crop)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "9 marks",
+    "name": "PRV-01 P3: 0 masks, each flat grey in the committed JPEG (0 have pixels in the crop)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "9 marks",
+    "name": "PRV-01 P4: 3 masks, each flat grey in the committed JPEG (3 have pixels in the crop)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "9 marks",
+    "name": "PRV-01 P5: 0 masks, each flat grey in the committed JPEG (0 have pixels in the crop)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "9 marks",
+    "name": "PRV-01 P6: 2 masks, each flat grey in the committed JPEG (2 have pixels in the crop)",
+    "result": "pass",
+    "detail": "[]"
+   },
+   {
+    "group": "9 marks",
+    "name": "PRV-02: P1 masks the door's number plate and P6 masks the old fascia band and the neighbouring shop's board (fault 3 of the review)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "PRV-03: the overlay P1-worcester-fish-front-target-on-photo.jpg also has the number plate masked grey (std 1.6)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "Jafar's page: at most three questions, each with a recommendation; the door question offers 871, 600 and about 1000 (the approved game door); Rita's room 'flattened' is asked ('approve?', recommended yes); the lit-list question is gone",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "statements corrected: Rita's room rests on the approved pictures (no unreached source is evidence); the Dixons fact for Jafar is recorded; the 2100-leaf glass foot is 896 above the footway",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "photographs-win records: D10 (P6's unwhitewashed glass against the 3 October ruling: whitewash) and D12 (the lever kept at 1000 because the approved door's lever stands at about 1050)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "PRJ-02 is marked as proving the gate, not the game, and the owed PC row exists (PC-01: 1322 px of 4096, +-20); LIT-05 (the display lit at night) is a check",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "9 marks",
+    "name": "the check list carries FRN-07 (no opening in the front), INV-06 (final textures carry no mark), SO-05 (nothing across a door), LIT-06 (the sodium wash) and PRV-01 (the previews)",
+    "result": "pass",
+    "detail": ""
+   }
+  ]
  }
 }

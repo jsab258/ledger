@@ -503,8 +503,8 @@ def main():
         too_deep = [(f_["id"], f_["depth_m"]) for f_ in fxs if f_["surface"] == "back" and f_["kind"] == "shelf_unit" and f_["depth_m"] > T["method"]["standoff_rules_m"]["shelf_goods_on_back_wall_m"] + 1e-9]
         deep = [f_ for f_ in fxs if f_["kind"] == "shelf_unit_deep"]
         mid20 = T["method"]["standoff_budget"]["reads_true_20px"]["back_wall_middle"]
-        deep_ok = all(f_["id"] in exc and near(f_["depth_m"], exc[f_["id"]]["depth_m"], 1e-9) and f_["depth_m"] <= mid20 + 1e-9 and f_["z"][0] >= 1.35 - 1e-9 for f_ in deep)
-        chk(g, "SO-01 %s: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: %s (each within the 20 px budget at the card's middle, %.3f)" % (sid, [(f_["id"], f_["depth_m"]) for f_ in deep] or "none", mid20), not too_deep and deep_ok, str(too_deep))
+        deep_ok = all(f_["id"] in exc and near(f_["depth_m"], exc[f_["id"]]["depth_m"], 1e-9) and f_["depth_m"] <= min(mid20, 0.36) + 1e-9 and f_["z"][0] >= 1.35 - 1e-9 for f_ in deep)
+        chk(g, "SO-01 %s: every back-wall shelf unit is at most 0.30 deep (the written rule); named exceptions: %s (each within the 20 px budget at the card's middle, %.3f, and the review's 0.36)" % (sid, [(f_["id"], f_["depth_m"]) for f_ in deep] or "none", mid20), not too_deep and deep_ok, str(too_deep))
     rt = shops["ritas"]["room"]
     left = [f_ for f_ in rt["fixtures"] if f_["surface"] == "left" and f_["kind"] in ("flat_board", "flat_hung") and f_["id"] != "R-left-notices"]
     right = [f_ for f_ in rt["fixtures"] if f_["surface"] == "right" and f_["kind"] in ("flat_board", "flat_hung")]
@@ -548,7 +548,7 @@ def main():
     REQ = ["cassette_player", "CashRegister_01", "cement_bag", "lifebuoy", "rubber_boots", "wall_clock", "Camera_01", "portable_cassette_player", "vintage_lighter", "measuring_tape_01", "cigarette_pack", "cleaner_tin_01", "drain_cleaner", "boombox"]
     chk(g, "INV-06: every model the review and the writer found marked has `marks` and a blanking step (%d models listed)" % len(tm["models_with_marks"]), all(m_ in tm["models_with_marks"] and inv["polyhaven"][m_]["marks"] and inv["polyhaven"][m_]["blank"] for m_ in REQ) and not tm["marks_for_models_not_in_the_inventory"], str(tm["marks_for_models_not_in_the_inventory"]))
     chk(g, "INV-06: cassette_player's entry names the red roundel, 'Dixons' and 'TR12 Cassette Recorder' and says they are painted out of the base-colour map to the case's brushed grey, the tape's handwritten label kept",
-        all(w_ in inv["polyhaven"]["cassette_player"]["marks"] for w_ in ("red roundel", "Dixons", "TR12 Cassette Recorder", "base-colour map", "brushed grey", "tape's handwritten label")))
+        all(w_ in (inv["polyhaven"]["cassette_player"]["marks"] or "") for w_ in ("red roundel", "Dixons", "TR12 Cassette Recorder", "base-colour map", "brushed grey", "tape's handwritten label")))
     badstep = []
     for m_ in tm["models_with_marks"]:
         for b_ in inv["polyhaven"][m_]["blank"]:
