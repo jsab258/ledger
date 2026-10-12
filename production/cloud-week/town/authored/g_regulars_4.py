@@ -15,7 +15,7 @@ PEOPLE.append(regular(
     saw=[W("harbour_desk", "REG", "a clerk at the harbour office", "every working day, at the harbour office")],
     rumours=[
         pool("heart", ["petra"], ["petra"], ["died_heart"], "heard it from the ticket clerk at the landing"),
-        pool("arrive", ["petra"], ["petra"], ["will"], "heard it from the ticket clerk", limits=["L7"]),
+        pool("nephew", ["petra"], ["petra"], ["will"], "heard it from the ticket clerk", limits=["L7"]),
         pool("fire", ["petra"], ["petra"], ["fire"], "street talk, by way of the ticket clerk", limits=["L2", "L1"]),
         pool("june", ["petra"], ["petra"], ["june"], "heard it from the ticket clerk"),
         pool("trade", ["self"], ["petra"], ["trade"], "she sees the harbour's paper go thin", limits=["L5"]),
@@ -43,7 +43,7 @@ PEOPLE.append(regular(
     saw=[W("ferry_desk", "REG", "the ferry's ticket clerk", "every day, at the ferry landing")],
     rumours=[
         pool("heart", ["rocco"], ["noor", "bruno"], ["died_heart"], "heard it from Ron on Friday evening"),
-        pool("arrive", ["rocco"], ["noor"], ["will"], "heard it from Ron", limits=["L7"]),
+        pool("nephew", ["rocco"], ["noor"], ["will"], "heard it from Ron", limits=["L7"]),
         pool("fire", ["noor"], ["bruno", "rocco"], ["fire"], "the paper's word, by way of the reporter", limits=["L2", "L1"]),
         pool("landing", ["self"], ["noor", "bruno"], ["landing_man"], "knows him by sight from the landing", limits=["L1"]),
         pool("trade", ["self"], ["bruno", "noor"], ["trade"], "sees how few take the ferry", limits=["L5"]),
@@ -71,10 +71,11 @@ PEOPLE.append(regular(
     saw=[W("crossing", "REG", "a ferryman", "every working day, on the crossing")],
     rumours=[
         pool("heart", ["sam"], ["sam", "noor"], ["died_heart"], "heard it from Darren"),
-        pool("arrive", ["sam"], ["noor"], ["will"], "heard it from Darren", limits=["L7"]),
+        pool("nephew", ["sam"], ["noor"], ["will"], "heard it from Darren", limits=["L7"]),
         pool("fire", ["sam"], ["noor"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
         pool("landing", ["self"], ["sam", "noor"], ["landing_man"], "knows him by sight from the landing", limits=["L1"]),
-        pool("trade", ["self"], ["sam"], ["trade"], "sees how few cross", limits=["L5"]),
+        rumour("The wind is getting up and she will be lively on the crossing.", "unknown", NOTE("A ferryman's forecast; nothing in canon settles the weather."), "his own reading of the weather",
+               ["self"], ["sam", "noor"], ["line", "crossing"], []),
     ],
     questions=[
         Q("Who are you?", "answers", "Gordon Leckenby. I'm a ferryman.", ["job"], "firsts: Who are you?"),
@@ -101,7 +102,7 @@ PEOPLE.append(regular(
     saw=[W("fish_buy", "REG", "buys fish for her lodgers", "most days, at the fish counter")],
     rumours=[
         pool("heart", ["rocco"], ["noor", "ada"], ["died_heart"], "heard it from Ron at the fish counter"),
-        pool("arrive", ["ada"], ["noor"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("nephew", ["ada"], ["noor"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
         pool("fire", ["noor"], ["ada", "rocco"], ["fire"], "the paper's word, by way of the reporter", limits=["L2", "L1"]),
         pool("june", ["noor"], ["ada"], ["june"], "heard it from the reporter"),
         pool("trade", ["self"], ["noor", "ada"], ["trade"], "sees what her lodgers can afford", limits=["L5"]),
@@ -132,7 +133,7 @@ PEOPLE.append(regular(
     rumours=[
         pool("heart", ["ada"], ["ada", "noor"], ["died_heart"], "heard it from Ada on her step"),
         pool("funeral", ["ada"], ["ada", "noor"], ["funeral"], "heard it from Ada on her step"),
-        pool("arrive", ["ada"], ["noor"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("nephew", ["ada"], ["noor"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
         pool("june", ["ada"], ["noor"], ["june"], "heard it from Ada"),
         pool("trade", ["self"], ["sam", "ada"], ["trade"], "sees the pensions counter's custom thin", limits=["L5"]),
     ],

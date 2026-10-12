@@ -16,7 +16,7 @@ PEOPLE.append(regular(
     saw=[W("rounds", "REG", "runs for the rent collector", "every week, on her rounds")],
     rumours=[
         pool("heart", ["sam"], ["sam", "lena"], ["died_heart"], "heard it from Darren"),
-        pool("arrive", ["lena"], ["sam", "franjo"], ["will"], "heard it from Sheila at the office on a Friday", limits=["L7"]),
+        pool("nephew", ["lena"], ["sam", "franjo"], ["will"], "heard it from Sheila at the office on a Friday", limits=["L7"]),
         pool("fire", ["sam"], ["lena"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
         pool("june", ["lena"], ["sam", "franjo"], ["june"], "heard it from Sheila"),
         pool("trade", ["self"], ["sam", "lena"], ["trade"], "sees who is behind on the rent", limits=["L5"]),
@@ -53,7 +53,7 @@ PEOPLE.append(regular(
     rumours=[
         pool("fire", ["self"], ["sam", "rocco"], ["fire", "owner_did", "burned_end"], "the paper's word and street talk; he sees the burned end himself", limits=["L2", "L1"]),
         pool("heart", ["rocco"], ["sam"], ["died_heart"], "heard it from Ron at the cafe"),
-        pool("arrive", ["rocco"], ["sam"], ["will"], "heard it from Ron at the cafe", limits=["L7"]),
+        pool("nephew", ["rocco"], ["sam"], ["will"], "heard it from Ron at the cafe", limits=["L7"]),
         pool("june", ["rocco"], ["sam"], ["june"], "heard it from Ron"),
         pool("trade", ["self"], ["sam", "rocco"], ["trade"], "sees how little scrap comes in", limits=["L5"]),
     ],
@@ -87,7 +87,7 @@ PEOPLE.append(regular(
                "his own word, and he was away the night of the fire", ["self"], ["sam"], ["line", "walks_row"], ["L1", "L2"]),
         pool("fire", ["street"], ["sam"], ["fire"], "the paper's word; he says nothing of his own night", limits=["L2", "L1"]),
         pool("heart", ["sam"], ["sam"], ["died_heart"], "heard it from Darren"),
-        pool("arrive", ["sam"], ["sam"], ["will"], "heard it from Darren", limits=["L7"]),
+        pool("nephew", ["sam"], ["sam"], ["will"], "heard it from Darren", limits=["L7"]),
         pool("june", ["sam"], ["sam"], ["june"], "heard it from Darren"),
     ],
     questions=[
@@ -115,7 +115,7 @@ PEOPLE.append(regular(
     saw=[W("keeps_caff", "REG", "keeps the caff, her Italian father's before her", "every day, behind her counter")],
     rumours=[
         pool("heart", ["rocco"], ["rocco", "franjo"], ["died_heart"], "heard it from Ron, who has his tea at the cafe"),
-        pool("arrive", ["rocco"], ["rocco", "franjo"], ["will"], "heard it from Ron at the cafe", limits=["L7"]),
+        pool("nephew", ["rocco"], ["rocco", "franjo"], ["will"], "heard it from Ron at the cafe", limits=["L7"]),
         pool("fire", ["drago"], ["rocco", "luka"], ["fire"], "street talk at the counter", limits=["L2", "L1"]),
         pool("june", ["rocco"], ["franjo", "luka"], ["june"], "heard it from Ron at the cafe"),
         pool("trade", ["self"], ["rocco", "tomas"], ["trade"], "sees the custom at the counter", limits=["L5"]),
@@ -152,7 +152,7 @@ PEOPLE.append(regular(
     saw=[W("came_1968", "REG", "came from the New Territories in 1968", "1968, when he came to Britain")],
     rumours=[
         pool("heart", ["street"], ["takeaway_f"], ["died_heart"], "customers at the counter"),
-        pool("arrive", ["street"], ["takeaway_f"], ["will"], "customers at the counter", limits=["L7"]),
+        pool("nephew", ["street"], ["takeaway_f"], ["will"], "customers at the counter", limits=["L7"]),
         pool("fire", ["street"], ["takeaway_f"], ["fire"], "customers at the counter", limits=["L2", "L1"]),
         pool("june", ["street"], ["takeaway_f"], ["june"], "customers at the counter"),
         pool("trade", ["self"], ["takeaway_f"], ["trade"], "sees what the street spends", limits=["L5"]),
@@ -191,7 +191,7 @@ PEOPLE.append(regular(
     saw=[W("front_books", "REG", "the takeaway's front and its books", "every day, at the front of the takeaway")],
     rumours=[
         pool("heart", ["street"], ["takeaway_m"], ["died_heart"], "customers at the counter"),
-        pool("arrive", ["street"], ["takeaway_m"], ["will"], "customers at the counter", limits=["L7"]),
+        pool("nephew", ["street"], ["takeaway_m"], ["will"], "customers at the counter", limits=["L7"]),
         pool("fire", ["street"], ["takeaway_m"], ["fire"], "customers at the counter", limits=["L2", "L1"]),
         pool("june", ["street"], ["takeaway_m"], ["june"], "customers at the counter"),
         pool("trade", ["self"], ["takeaway_m"], ["trade"], "she keeps the books and sees the takings", limits=["L5"]),

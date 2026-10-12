@@ -23,7 +23,7 @@ PEOPLE.append(person(
         K("moves", "S:ellis", "Brisk and economical. Writes in her notebook while she listens and lets silences run."),
     ],
     believes=[
-        B("paid_away", "FIRE", "she thinks someone paid him to be away.", "false",
+        B("paid_away", "FIRE", "the watchman's times do not fit the brigade's, and she thinks someone paid him to be away.", "false",
           H("FIRE", "Nobody did, but it is why she will not let it go", note="False against the story; it is why she will not let the fire go.")),
     ],
     saw=[

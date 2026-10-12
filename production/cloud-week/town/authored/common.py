@@ -60,6 +60,8 @@ POOL = {
                     truth="true", basis=TB_LANDING, limits=["L1"]),
     "halrita": dict(gist="Hal and Rita had words in the pawn, and nobody knows what about.",
                     truth="unknown", basis=TB_NEWS, limits=["L6", "L1"]),
+    "radio": dict(gist="Whatever goes out on Mickey's radio is heard by every car and half the street.",
+                  truth="true", basis=H("CANON", "a radio nobody can help overhearing"), limits=[]),
     "arrive": dict(gist="Saw Mickey's nephew come to Mickey's with his case, the new owner.",
                    truth="true", basis=TB_ARRIVE, limits=["L7"]),
 }

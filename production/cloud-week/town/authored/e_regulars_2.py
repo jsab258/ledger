@@ -21,7 +21,7 @@ PEOPLE.append(regular(
     rumours=[
         pool("halrita", ["self"], ["lena", "sam"], ["row", "row_seen"], "saw it himself, from the back room", limits=["L6", "L1"]),
         pool("heart", ["lena"], ["sam", "rita"], ["died_heart"], "heard it from Sheila on Rita's step"),
-        pool("arrive", ["lena"], ["sam", "rita"], ["will"], "heard it from Sheila on Rita's step", limits=["L7"]),
+        pool("nephew", ["lena"], ["sam", "rita"], ["will"], "heard it from Sheila on Rita's step", limits=["L7"]),
         pool("fire", ["sam"], ["rita", "lena"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
         pool("trade", ["self"], ["rita", "sam"], ["trade"], "sees what comes over the counter", limits=["L5"]),
     ],
@@ -57,7 +57,7 @@ PEOPLE.append(regular(
     rumours=[
         pool("halrita", ["self"], ["sam", "rita"], ["row", "row_seen"], "saw it himself; he and Rita keep it to themselves", limits=["L6", "L1"]),
         pool("heart", ["sam"], ["sam", "rita"], ["died_heart"], "heard it from Darren"),
-        pool("arrive", ["sam"], ["rita"], ["will"], "heard it from Darren", limits=["L7"]),
+        pool("nephew", ["sam"], ["rita"], ["will"], "heard it from Darren", limits=["L7"]),
         pool("fire", ["sam"], ["rita"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
         pool("june", ["sam"], ["rita"], ["june"], "heard it from Darren"),
     ],
@@ -87,9 +87,10 @@ PEOPLE.append(regular(
     saw=[W("quiet_quay", "REG", "I've never known the quay this quiet.", "every working day, on the quay")],
     rumours=[
         pool("heart", ["joey"], ["rita", "joey"], ["died_heart"], "heard it from the dock hand on Rita's step"),
-        pool("arrive", ["joey"], ["rita"], ["will"], "heard it on Rita's step in the evening", limits=["L7"]),
+        pool("nephew", ["joey"], ["rita"], ["will"], "heard it on Rita's step in the evening", limits=["L7"]),
         pool("fire", ["street"], ["rita", "joey"], ["fire"], "street talk", limits=["L2", "L1"]),
-        pool("trade", ["self"], ["joey", "rita"], ["trade", "line"], "sees the quay herself", limits=["L5"]),
+        rumour("The quay has never been so quiet, not in all Susan's time.", "true", TB_TRADE, "sees the quay herself, every working day",
+               ["self"], ["joey", "rita"], ["line", "quiet_quay"], ["L5"]),
         pool("june", ["rita"], ["joey"], ["june"], "heard it from Rita"),
     ],
     questions=[
@@ -119,7 +120,7 @@ PEOPLE.append(regular(
         pool("heart", ["emil"], ["emil", "ada"], ["died_heart"], "heard it from Father Walsh"),
         pool("funeral", ["emil"], ["ada", "marla"], ["funeral"], "heard it from Father Walsh, who took the service"),
         pool("june", ["emil"], ["ada", "marla"], ["june"], "heard it from Father Walsh, who sees her at the chapel"),
-        pool("arrive", ["ada"], ["emil", "marla"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("nephew", ["ada"], ["emil", "marla"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
         pool("fire", ["marla"], ["ada"], ["fire"], "street talk, by way of the fish shop", limits=["L2", "L1"]),
     ],
     questions=[
@@ -148,7 +149,7 @@ PEOPLE.append(regular(
         pool("heart", ["ada"], ["ada"], ["died_heart"], "heard it from Ada, who watches the street"),
         pool("funeral", ["ada"], ["ada"], ["funeral"], "heard it at the chapel, and from Ada"),
         pool("june", ["ada"], ["ada"], ["june"], "heard it from Ada"),
-        pool("arrive", ["ada"], ["ada"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("nephew", ["ada"], ["ada"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
         pool("door", ["ada"], ["ada"], ["door"], "heard it from Ada, who had it from Sheila", limits=[]),
     ],
     questions=[
@@ -176,7 +177,7 @@ PEOPLE.append(regular(
     saw=[W("early_shift", "REG", "still on the early shift", "every working day, from six")],
     rumours=[
         pool("heart", ["ada"], ["ada", "noor"], ["died_heart"], "heard it from Ada"),
-        pool("arrive", ["ada"], ["ada", "noor"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("nephew", ["ada"], ["ada", "noor"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
         pool("fire", ["noor"], ["ada", "lena"], ["fire"], "the paper's word, by way of the reporter", limits=["L2", "L1"]),
         pool("june", ["ada"], ["noor", "lena"], ["june"], "heard it from Ada"),
         rumour("A laundress at the steam laundry, laid off from the presses in the summer, is looking for anything.", "true", H("REG", "laid off from the steam laundry's presses in the summer, looking for anything"),

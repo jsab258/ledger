@@ -33,7 +33,7 @@ PREVIEWS = os.path.join(REPO, "production", "previews", "cloud-week", "shop-wind
 PY = os.environ.get("LEDGER_BPY", "/home/user/.bpyenv/bin/python")
 STAGES = ["assets", "paper", "front", "display", "room", "gate", "checks"]
 ROOM_SAMPLES = int(os.environ.get("LEDGER_ROOM_SAMPLES", "64"))
-GATE_SAMPLES = int(os.environ.get("LEDGER_GATE_SAMPLES", "48"))
+GATE_SAMPLES = int(os.environ.get("LEDGER_GATE_SAMPLES", "32"))
 
 
 def run_inner(stage):

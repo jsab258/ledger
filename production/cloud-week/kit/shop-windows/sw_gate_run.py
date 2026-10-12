@@ -69,7 +69,10 @@ def run(work, assets, previews, samples, views=None, log=print):
     front = os.path.join(assets, "ritas_front.glb")
     disp = os.path.join(assets, "ritas_display.glb")
     grille = os.path.join(assets, "ritas_grille_night.glb")
-    extra = json.load(open(os.path.join(gate, "gate_lights.json"))) if os.path.exists(os.path.join(gate, "gate_lights.json")) else {}
+    lp = os.path.join(gate, "gate_lights.json")
+    if not os.path.exists(lp):
+        json.dump({"lamp_w": 50000, "spill_w": 150}, open(lp, "w"))      # Blender watts, set by eye (see NOTES.md)
+    extra = json.load(open(lp))
     times = {}
     todo = views or [(c, s) for c in CAMS for s in STATES]
     for cam, st in todo:

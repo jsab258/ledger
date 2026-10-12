@@ -15,7 +15,7 @@ PEOPLE.append(regular(
         rumour("A laundress laid off from the steam laundry's presses in the summer is looking for anything.", "true", H("REG", "laid off from the steam laundry's presses in the summer, looking for anything"),
                "first hand: it is her own", ["self"], ["ada"], ["job"], []),
         pool("heart", ["ada"], ["ada"], ["died_heart"], "heard it from Ada"),
-        pool("arrive", ["ada"], ["ada"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("nephew", ["ada"], ["ada"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
         pool("june", ["ada"], ["ada"], ["june"], "heard it from Ada"),
         pool("trade", ["self"], ["ada"], ["trade"], "she has felt the street's trade go herself", limits=["L5"]),
     ],
@@ -49,7 +49,7 @@ PEOPLE.append(regular(
     saw=[W("two_jobs", "REG", "alterations at the laundry and a stall on the market", "every week, at the laundry and on the market")],
     rumours=[
         pool("heart", ["sam"], ["sam", "ada"], ["died_heart"], "heard it from Darren at the market"),
-        pool("arrive", ["sam"], ["ada"], ["will"], "heard it from Darren", limits=["L7"]),
+        pool("nephew", ["sam"], ["ada"], ["will"], "heard it from Darren", limits=["L7"]),
         pool("fire", ["sam"], ["ada"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
         pool("june", ["ada"], ["sam"], ["june"], "heard it from Ada at the laundry"),
         pool("trade", ["self"], ["ada", "sam"], ["trade"], "sees what the street can afford", limits=["L5"]),
@@ -76,9 +76,10 @@ PEOPLE.append(regular(
     saw=[W("berths", "REG", "Half the berths empty.", "every working day, from the crane")],
     rumours=[
         pool("heart", ["rocco"], ["sam", "rocco"], ["died_heart"], "heard it from Ron on the quay"),
-        pool("arrive", ["rocco"], ["sam"], ["will"], "heard it from Ron on the quay", limits=["L7"]),
+        pool("nephew", ["rocco"], ["sam"], ["will"], "heard it from Ron on the quay", limits=["L7"]),
         pool("fire", ["sam"], ["rocco"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
-        pool("trade", ["self"], ["sam", "rocco"], ["trade", "line"], "sees the berths himself", limits=["L5"]),
+        rumour("Half the berths on the docks are empty.", "true", DOCKS_LOSS, "sees the berths himself, from the crane",
+               ["self"], ["sam", "rocco"], ["line", "berths"], ["L5"]),
         pool("june", ["rocco"], ["sam"], ["june"], "heard it from Ron"),
     ],
     questions=[
@@ -106,7 +107,7 @@ PEOPLE.append(regular(
     saw=[W("nets", "REG", "mends nets on the docks some mornings", "some mornings, on the docks")],
     rumours=[
         pool("heart", ["rocco"], ["sam", "rocco"], ["died_heart"], "heard it from Ron on the quay"),
-        pool("arrive", ["rocco"], ["sam"], ["will"], "heard it from Ron on the quay", limits=["L7"]),
+        pool("nephew", ["rocco"], ["sam"], ["will"], "heard it from Ron on the quay", limits=["L7"]),
         pool("fire", ["sam"], ["rocco", "goran"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
         pool("trade", ["self"], ["sam", "goran"], ["trade"], "sees the dock himself", limits=["L5"]),
         pool("june", ["rocco"], ["sam"], ["june"], "heard it from Ron"),
@@ -142,7 +143,7 @@ PEOPLE.append(regular(
     saw=[W("breakfast", "REG", "breakfast at the caff, the docks twice a week", "most mornings at the cafe; the docks on Tuesday and Thursday")],
     rumours=[
         pool("heart", ["rocco"], ["sam", "rocco"], ["died_heart"], "heard it from Ron at the cafe"),
-        pool("arrive", ["rocco"], ["sam"], ["will"], "heard it from Ron at the cafe", limits=["L7"]),
+        pool("nephew", ["rocco"], ["sam"], ["will"], "heard it from Ron at the cafe", limits=["L7"]),
         pool("fire", ["sam"], ["rocco"], ["fire"], "street talk, by way of Darren on the docks", limits=["L2", "L1"]),
         pool("trade", ["self"], ["sam", "rocco"], ["trade"], "sees it at the yard", limits=["L5"]),
         pool("june", ["rocco"], ["sam"], ["june"], "heard it from Ron"),
@@ -172,10 +173,11 @@ PEOPLE.append(regular(
     saw=[W("locks_seen", "REG", "knows every lock on the street", "every working day, mending and repairing")],
     rumours=[
         pool("heart", ["rocco"], ["rocco"], ["died_heart"], "heard it from Ron at the cafe"),
-        pool("arrive", ["rocco"], ["rocco"], ["will"], "heard it from Ron at the cafe", limits=["L7"]),
+        pool("nephew", ["rocco"], ["rocco"], ["will"], "heard it from Ron at the cafe", limits=["L7"]),
         pool("fire", ["street"], ["rocco"], ["fire"], "street talk at the cafe", limits=["L2", "L1"]),
         pool("door", ["rocco"], ["rocco"], ["door"], "heard it from Ron, who knows who has the key"),
-        pool("june", ["rocco"], ["rocco"], ["june"], "heard it from Ron"),
+        rumour("Most of the street's locks would not stop a patient man.", "unknown", NOTE("A locksmith's opinion, not a fact about the world."), "he has mended the street's locks himself",
+               ["self"], ["rocco"], ["locks_weak", "locks_seen"], []),
     ],
     questions=[
         Q("Who are you?", "answers", "Ian Megginson. I'm a locksmith and repairman at the yard.", ["job"], "firsts: Who are you?"),

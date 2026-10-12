@@ -549,7 +549,7 @@
   },
   {
    "id": "tom.facts",
-   "what": "tom: 12 facts: 10 cite a line that holds their words, 0 derived and equal to the home, 2 new and marked",
+   "what": "tom: 10 facts: 8 cite a line that holds their words, 0 derived and equal to the home, 2 new and marked",
    "pass": true,
    "detail": ""
   },
@@ -735,7 +735,7 @@
   },
   {
    "id": "emil.facts",
-   "what": "emil: 32 facts: 30 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
+   "what": "emil: 31 facts: 29 cite a line that holds their words, 1 derived and equal to the home, 1 new and marked",
    "pass": true,
    "detail": ""
   },
@@ -1227,7 +1227,7 @@
   },
   {
    "id": "zlata.facts",
-   "what": "zlata: 29 facts: 26 cite a line that holds their words, 2 derived and equal to the home, 1 new and marked",
+   "what": "zlata: 30 facts: 27 cite a line that holds their words, 2 derived and equal to the home, 1 new and marked",
    "pass": true,
    "detail": ""
   },
@@ -3183,7 +3183,7 @@
   },
   {
    "id": "content.gate_carried",
-   "what": "tools/content-gate.py finds nothing in the text carried word for word from the homes (1091 texts)",
+   "what": "tools/content-gate.py finds nothing in the text carried word for word from the homes (1089 texts)",
    "pass": true,
    "detail": ""
   },
@@ -3201,7 +3201,7 @@
   },
   {
    "id": "content.children_carried",
-   "what": "no children's words in carried text (1091 texts)",
+   "what": "no children's words in carried text (1089 texts)",
    "pass": true,
    "detail": ""
   },
@@ -3213,7 +3213,7 @@
   },
   {
    "id": "content.real_names_carried",
-   "what": "carried text names no real brand or place from the lists (1091 texts)",
+   "what": "carried text names no real brand or place from the lists (1089 texts)",
    "pass": true,
    "detail": ""
   },
@@ -3249,7 +3249,7 @@
   },
   {
    "id": "content.mickeys_is_a_cab_office",
-   "what": "Mickey's is never a pub or a bar (canon D19) (2200 texts)",
+   "what": "Mickey's is never a pub or a bar (canon D19) (2198 texts)",
    "pass": true,
    "detail": ""
   },
@@ -3269,7 +3269,7 @@
    "id": "content.canon_gate",
    "what": "tools/canon-gate.py is clean over production/cloud-week/town/people.json, production/cloud-week/town/HOMES.md",
    "pass": true,
-   "detail": "canon-gate: clean - 0 finding(s) in 2 file(s), 34988 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
+   "detail": "canon-gate: clean - 0 finding(s) in 2 file(s), 34952 line(s) examined, 13 era term(s) and 45 brand token(s) screened"
   },
   {
    "id": "shape.homes_file",

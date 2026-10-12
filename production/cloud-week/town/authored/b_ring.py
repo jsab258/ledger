@@ -102,7 +102,6 @@ PEOPLE.append(person(
     internal_id_note="'emil' is the internal id (the sheet folder keeps the old name: father-emil); the age is 'about 61'.",
     knows=[
         K("called", "HK", "Father Walsh, who says mass and calls on the old"),
-        K("ask_ok", "S:emil", "I don't ask where people have been. I ask whether they're all right."),
         K("in_case", "S:emil", "I'm not here to ask you anything. I'm here in case you want to say something."),
         K("sit", "S:emil", "Sit a minute. Nobody's going to mind you sitting a minute."),
         K("confessor", "FIRE", "Father Walsh's card changes to hearing Mickey's confession for twenty years, and keeping the last year's.", secret=True, via="sealed: never said, never passed on"),
@@ -121,7 +120,7 @@ PEOPLE.append(person(
         pool("heart", ["vesna"], ["vesna", "ada"], ["died_heart"], "heard it from his housekeeper, who had it from the street"),
         pool("funeral", ["self"], ["vesna", "ada", "june"], ["funeral", "funeral_led"], "was there himself, at the service"),
         pool("june", ["self"], ["vesna", "ada"], ["june"], "sees her at the chapel"),
-        pool("arrive", ["ada"], ["vesna", "ada"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("nephew", ["ada"], ["vesna", "ada"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
         pool("trade", ["ada"], ["vesna", "ada"], ["trade"], "heard it from the street"),
     ],
     questions=[
@@ -131,7 +130,7 @@ PEOPLE.append(person(
         Q("How did Mickey die?", "answers", "His heart, the doctor said. Ron found him at the office early one morning.", ["died_heart"], "firsts: How did Mickey die?"),
         Q("Sorry I missed the funeral.", "answers", "It was at my chapel, before you came. Sit a minute. Nobody's going to mind you sitting.", ["funeral", "funeral_led", "sit"], "firsts: Sorry I missed the funeral."),
         Q("What was Mickey like?", "answers", "Mickey kept his business to himself. You'd not hear it from him on the street.", ["mickey_counsel"], "firsts: What was Mickey like?"),
-        Q("Did Mickey have any enemies?", "deflect", "I don't ask where people have been, son. What's said to me at my chapel stays there.", ["ask_ok", "confessor"], "fresh: Did Mickey have any enemies?"),
+        Q("Did Mickey have any enemies?", "deflect", "I don't ask where people have been, son. What's said to me at my chapel stays there.", ["all_right", "confessor"], "fresh: Did Mickey have any enemies?"),
         Q("What happened at the warehouse fire?", "deflect", "The paper called it arson, and nobody was charged. Beyond that, son, I've nothing to say.", ["fire", "sealed"], "fresh: What happened at the warehouse fire?"),
         Q("Is June still about?", "answers", "She is. She came back for the funeral and she's still in town. She wants nothing from the office.", ["june"], "fresh: Is June still about?"),
         Q("Who can I trust?", "partly", "I'm not here to ask you anything, son. I'm here in case you want to say something.", ["in_case"], "firsts: Who can I trust?"),
@@ -165,7 +164,7 @@ PEOPLE.append(person(
     rumours=[
         pool("fire", ["street"], ["ada", "sam"], ["fire", "covered_fire"], "the paper's own word and street talk; she has not got more", limits=["L2", "L1"]),
         pool("heart", ["lena"], ["ada", "sam"], ["died_heart"], "heard it from Sheila"),
-        pool("arrive", ["ada"], ["sam", "rocco"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("nephew", ["ada"], ["sam", "rocco"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
         pool("halrita", ["marta"], ["ada", "sam"], ["row"], "heard it from the pawn's clerk at the kiosk", limits=["L6", "L1"]),
         pool("june", ["ada"], ["lena", "sam"], ["june"], "heard it from Ada"),
     ],

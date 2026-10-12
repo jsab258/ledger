@@ -71,7 +71,7 @@ PEOPLE.append(person(
         K("flat_things", "DAY1", "Your flat's upstairs, over the office. His things are still in it. I didn't have the heart."),
         K("books_know", "S:lena", "I know what every fare cost and who never paid it."),
         K("arrangements", "WEEK", "Take it over, then? Mickey's arrangements and everything that comes with them, yours.", secret=True, via="her words on day 7, over the book"),
-        K("knows_name", "NAMES", "Mickey's own people, Sheila, Ron and Darren, know it from the start"),
+        K("knows_name", "NAMES", "Mickey's own people, Sheila, Ron and Darren, know it from the start", via="his name, by the name ladder (what-they-call-him, design A)"),
         K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, heard at Rita's step in the evening from the pawn's back-room hand"),
         D("day", "day"),
     ],
@@ -124,7 +124,7 @@ PEOPLE.append(person(
         K("breakfast_man", "ASK", "He has his breakfast at the cafe on weekdays, where Darren starts his day, and the two know each other a little.", secret=True, via="the outfit's man at the landing, never named"),
         K("watchman", "FIRE", "His secret is that he slipped off home on his break the night of the fire and lied in his report, and Darren knows it.", secret=True),
         K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, Monday at eleven, at Rita's: the town's sample story; he was there"),
-        K("knows_name", "NAMES", "Mickey's own people, Sheila, Ron and Darren, know it from the start"),
+        K("knows_name", "NAMES", "Mickey's own people, Sheila, Ron and Darren, know it from the start", via="his name, by the name ladder (what-they-call-him, design A)"),
         D("day", "day"),
     ],
     believes=[
@@ -167,9 +167,7 @@ PEOPLE.append(person(
     internal_id_note="No internal id found for the player; 'tom' is proposed (the sheet says only that Novak became Nowak on 24 September).",
     knows=[
         K("life_unsaid", "CANON", "His life before the Hook is left unsaid: nobody in the game asks and he never tells (Jafar, 2026-09-28)."),
-        K("ladder", "CANON", "What the town calls you reads out your standing: the new owner, then Nowak, then Tom, then Tommy. The gate is knowing, not liking."),
         K("same_things", "S:tom", "One suitcase: he is seen in the same few things again and again, which the town will notice."),
-        K("nephew_by_name", "CANON", "known only as Mickey's nephew by name (Jafar, 2026-09-23)."),
     ],
     believes=[
         BN("heir_rich", "N-LIVES", "Some on the street suppose the new owner has come into more than a cab office that has made little since the docks went.",
@@ -182,9 +180,10 @@ PEOPLE.append(person(
         W("arrive", "DAY1", "six see him come (Ron, Sheila, the dispatcher, a day driver, Ada, and the sign painter doing the street's boards)", "day 1, about nine, when he came to Mickey's"),
     ],
     rumours=[
-        pool("nephew", ["rocco"], ["lena", "sam"], ["will", "nephew_by_name"], "saw him come, as the six did"),
+        pool("nephew", ["rocco"], ["lena", "sam"], ["will", "job"], "saw him come, as the six did"),
         pool("funeral", ["lena"], ["rocco", "ada"], ["funeral"], "street fact, held by all"),
-        pool("arrive", ["rocco"], ["sam", "ferko"], ["arrive"], "saw him come"),
+        rumour("Mickey's nephew has come and nobody knows where from: he has said nothing of his life before the Hook, and nobody has asked.", "true", H("CANON", "His life before the Hook is left unsaid: nobody in the game asks and he never tells (Jafar, 2026-09-28)."),
+               "what was seen on the pavement, nothing more", ["rocco"], ["sam", "ferko"], ["life_unsaid", "arrive"], ["L1", "L7"]),
         rumour("Some say the new owner has come into money. The takings say otherwise.", "false", TB_TRADE, "a guess, nobody saw anything",
                ["street"], ["rocco", "sam"], ["heir_rich"], ["L1", "L7"]),
         rumour("Some say the new owner will sell up and go.", "unknown", H("WEEK", "wind it down, take it over, or refuse to say"), "a guess, nobody knows",

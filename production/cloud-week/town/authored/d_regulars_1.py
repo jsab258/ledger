@@ -11,6 +11,7 @@ PEOPLE.append(regular(
     "zlata", "Pauline", knew=True, manner=("quick and dry on the radio, kind off it",),
     knows=[
         K("book_radio", "CANON", "a book of every fare, a radio nobody can help overhearing, a yard with two escapes, a rank outside."),
+        K("row", "NEWS", "Hal and Rita had words in the pawn, and nobody knows what about.", via="day 1, Monday, heard from Darren on his rounds"),
         D("my_hours", "hours", "mickeys"), D("day", "day"),
     ],
     believes=[
@@ -22,8 +23,8 @@ PEOPLE.append(regular(
         pool("heart", ["ferko"], ["joey", "sam"], ["died_heart"], "heard it from the day driver"),
         pool("arrive", ["self"], ["ferko", "joey", "sam"], ["arrive", "will"], "saw it herself from the office"),
         pool("trade", ["self"], ["ferko", "joey"], ["trade"], "knows it from the office's own takings", limits=["L5"]),
-        pool("halrita", ["sam"], ["ferko", "joey"], ["fire"], "heard it from Darren on his rounds", limits=["L6", "L1"]),
-        pool("fire", ["sam"], ["ferko"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
+        pool("halrita", ["sam"], ["ferko", "joey"], ["row"], "heard it from Darren on his rounds", limits=["L6", "L1"]),
+        pool("radio", ["self"], ["ferko", "joey"], ["on_air", "book_radio"], "her own desk: she sends it"),
     ],
     questions=[
         Q("Who are you?", "answers", "Pauline Kitching. I'm Mickey's dispatcher, on the radio and the phone.", ["job"], "firsts: Who are you?"),
@@ -58,7 +59,8 @@ PEOPLE.append(regular(
         pool("heart", ["zlata"], ["joey", "sam"], ["died_heart"], "heard it from the dispatcher"),
         pool("arrive", ["self"], ["zlata", "joey", "sam"], ["arrive", "will"], "saw it himself from the rank"),
         pool("fire", ["sam"], ["zlata", "joey"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
-        pool("trade", ["self"], ["zlata", "joey"], ["trade"], "knows it from the rank", limits=["L5"]),
+        rumour("Traffic on the bridge is bad again; it is quicker round by the market.", "unknown", NOTE("A driver's opinion; the story does not settle it."), "saw it himself, driving",
+               ["self"], ["zlata", "joey"], ["bridge_jam", "bridge_bad"], []),
         pool("june", ["zlata"], ["joey", "sam"], ["june"], "heard it from the dispatcher"),
     ],
     questions=[
@@ -92,7 +94,7 @@ PEOPLE.append(regular(
         pool("fire", ["street"], ["sam"], ["fire"], "street talk", limits=["L2", "L1"]),
         pool("trade", ["self"], ["rocco", "sam"], ["trade"], "knows it from the night rank", limits=["L5"]),
         pool("june", ["rocco"], ["sam"], ["june"], "heard it from Ron"),
-        pool("arrive", ["rocco"], ["sam", "rocco"], ["will"], "heard it from Ron, who saw it", limits=["L7"]),
+        pool("nephew", ["rocco"], ["sam", "rocco"], ["will"], "heard it from Ron, who saw it", limits=["L7"]),
     ],
     questions=[
         Q("Who are you?", "answers", "Terry Hodgson. The night driver.", ["job"], "firsts: Who are you?"),
@@ -118,10 +120,11 @@ PEOPLE.append(regular(
     saw=[W("dawn_dock", "REG", "buys on the fish dock at dawn", "every dawn, on the fish dock")],
     rumours=[
         pool("heart", ["ada"], ["ada", "vesna"], ["died_heart"], "heard it from Ada, who watches the street"),
-        pool("arrive", ["ada"], ["ada", "noor"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
+        pool("nephew", ["ada"], ["ada", "noor"], ["will"], "heard it from Ada, who saw it from her window", limits=["L7"]),
         pool("fire", ["vesna"], ["ada", "noor"], ["fire"], "street talk, by way of Father Walsh's housekeeper", limits=["L2", "L1"]),
         pool("june", ["noor"], ["ada", "vesna"], ["june"], "heard it from the reporter"),
-        pool("trade", ["self"], ["ada", "sam"], ["trade"], "knows it from the shop's own counter", limits=["L5"]),
+        rumour("Haddock is dear this week and it is not even good haddock.", "unknown", NOTE("A shopkeeper's opinion of this week's fish; nothing in canon settles it."), "she saw the fish herself, at dawn",
+               ["self"], ["ada", "noor", "vesna"], ["line", "dawn_dock"], []),
     ],
     questions=[
         Q("Who are you?", "answers", "Brenda Laverack. I've the fish shop, and I buy on the fish dock at dawn.", ["job"], "firsts: Who are you?"),
@@ -148,10 +151,11 @@ PEOPLE.append(regular(
     saw=[W("casual_quay", "REG", "takes casual days on the quay when there are any", "most weeks, on the quay")],
     rumours=[
         pool("heart", ["rocco"], ["ferko", "zlata", "rocco"], ["died_heart"], "heard it from Ron, who found him"),
-        pool("arrive", ["rocco"], ["ferko", "zlata", "sam"], ["will"], "heard it from Ron, who saw it", limits=["L7"]),
+        pool("nephew", ["rocco"], ["ferko", "zlata", "sam"], ["will"], "heard it from Ron, who saw it", limits=["L7"]),
         pool("fire", ["sam"], ["ferko", "rocco"], ["fire"], "street talk, by way of Darren", limits=["L2", "L1"]),
         pool("trade", ["self"], ["rocco", "ferko", "zlata"], ["trade"], "knows it from the quay", limits=["L5"]),
-        pool("june", ["rocco"], ["zlata", "sam"], ["june"], "heard it from Ron"),
+        rumour("Casual work on the quay is scarce: Lee takes a day when there is one, and mostly there isn't.", "true", TB_TRADE, "he knows it first hand",
+               ["self"], ["rocco", "zlata"], ["line", "casual_quay"], ["L5"]),
     ],
     questions=[
         Q("Who are you?", "answers", "Lee Drewery. Casual days on the quay, when there are any.", ["job"], "firsts: Who are you?"),
@@ -184,7 +188,7 @@ PEOPLE.append(regular(
     rumours=[
         pool("halrita", ["self"], ["victor"], ["row", "row_seen"], "saw it herself; she and Hal keep it to themselves", limits=["L6", "L1"]),
         pool("heart", ["joey"], ["victor", "joey"], ["died_heart"], "heard it from the dock hand on her step"),
-        pool("arrive", ["joey"], ["victor", "tibor"], ["will"], "heard it on her step in the evening", limits=["L7"]),
+        pool("nephew", ["joey"], ["victor", "tibor"], ["will"], "heard it on her step in the evening", limits=["L7"]),
         pool("fire", ["street"], ["victor", "joey"], ["fire"], "street talk", limits=["L2", "L1"]),
         pool("trade", ["self"], ["victor", "tibor"], ["trade"], "she sees what comes over the counter", limits=["L5"]),
     ],

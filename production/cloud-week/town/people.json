@@ -1836,6 +1836,7 @@
       "line": 36,
       "end": 36
      },
+     "via": "his name, by the name ladder (what-they-call-him, design A)",
      "id": "lena.k29"
     },
     {
@@ -2987,6 +2988,7 @@
       "line": 36,
       "end": 36
      },
+     "via": "his name, by the name ladder (what-they-call-him, design A)",
      "id": "sam.k28"
     },
     {
@@ -4535,18 +4537,6 @@
      "id": "tom.k06"
     },
     {
-     "key": "ladder",
-     "kind": "knows",
-     "secret": false,
-     "text": "What the town calls you reads out your standing: the new owner, then Nowak, then Tom, then Tommy. The gate is knowing, not liking.",
-     "src": {
-      "file": "canon.md",
-      "line": 88,
-      "end": 89
-     },
-     "id": "tom.k07"
-    },
-    {
      "key": "same_things",
      "kind": "knows",
      "secret": false,
@@ -4556,19 +4546,7 @@
       "line": 15,
       "end": 15
      },
-     "id": "tom.k08"
-    },
-    {
-     "key": "nephew_by_name",
-     "kind": "knows",
-     "secret": false,
-     "text": "known only as Mickey's nephew by name (Jafar, 2026-09-23).",
-     "src": {
-      "file": "canon.md",
-      "line": 74,
-      "end": 74
-     },
-     "id": "tom.k09"
+     "id": "tom.k07"
     },
     {
      "key": "heir_rich",
@@ -4746,7 +4724,7 @@
      ],
      "based_on": [
       "tom.k02",
-      "tom.k09"
+      "tom.k05"
      ],
      "limits": [
       "L7"
@@ -4782,16 +4760,16 @@
     },
     {
      "id": "tom.r3",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come and nobody knows where from: he has said nothing of his life before the Hook, and nobody has asked.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "canon.md",
+       "line": 75,
+       "end": 76
       }
      },
-     "sure": "saw him come",
+     "sure": "what was seen on the pavement, nothing more",
      "heard_from": [
       "rocco"
      ],
@@ -4800,9 +4778,11 @@
       "ferko"
      ],
      "based_on": [
+      "tom.k06",
       "tom.s01"
      ],
      "limits": [
+      "L1",
       "L7"
      ],
      "new": "N-RUMOURS"
@@ -7072,18 +7052,6 @@
      "id": "emil.k20"
     },
     {
-     "key": "ask_ok",
-     "kind": "knows",
-     "secret": false,
-     "text": "I don't ask where people have been. I ask whether they're all right.",
-     "src": {
-      "file": "production/casting/father-emil/SHEET.md",
-      "line": 22,
-      "end": 22
-     },
-     "id": "emil.k21"
-    },
-    {
      "key": "in_case",
      "kind": "knows",
      "secret": false,
@@ -7093,7 +7061,7 @@
       "line": 23,
       "end": 23
      },
-     "id": "emil.k22"
+     "id": "emil.k21"
     },
     {
      "key": "sit",
@@ -7105,7 +7073,7 @@
       "line": 24,
       "end": 24
      },
-     "id": "emil.k23"
+     "id": "emil.k22"
     },
     {
      "key": "confessor",
@@ -7118,7 +7086,7 @@
       "end": 29
      },
      "via": "sealed: never said, never passed on",
-     "id": "emil.k24"
+     "id": "emil.k23"
     },
     {
      "key": "sealed",
@@ -7131,7 +7099,7 @@
       "end": 54
      },
      "via": "sealed: the fire's truth is never the street's",
-     "id": "emil.k25"
+     "id": "emil.k24"
     },
     {
      "key": "day",
@@ -7143,7 +7111,7 @@
       "line": 1450,
       "how": "day"
      },
-     "id": "emil.k26"
+     "id": "emil.k25"
     },
     {
      "key": "who_vesna",
@@ -7156,7 +7124,7 @@
       "end": 1559
      },
      "via": "who vesna is, as the home describes them (hook-cast.json, the tie of 0.7)",
-     "id": "emil.k27"
+     "id": "emil.k26"
     },
     {
      "key": "who_ada",
@@ -7169,7 +7137,7 @@
       "end": 889
      },
      "via": "who ada is, as the home describes them (hook-cast.json, the tie of 0.6)",
-     "id": "emil.k28"
+     "id": "emil.k27"
     },
     {
      "key": "who_june",
@@ -7182,7 +7150,7 @@
       "end": 572
      },
      "via": "who june is, as the home describes them (hook-cast.json, the tie of 0.45)",
-     "id": "emil.k29"
+     "id": "emil.k28"
     },
     {
      "key": "all_right",
@@ -7543,13 +7511,13 @@
     },
     {
      "id": "emil.r4",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ada, who saw it from her window",
@@ -7650,7 +7618,7 @@
      "uses": [
       "emil.k05",
       "emil.s01",
-      "emil.k23"
+      "emil.k22"
      ],
      "bench": "firsts: Sorry I missed the funeral.",
      "new": "N-ANSWERS"
@@ -7672,8 +7640,8 @@
      "kind": "deflect",
      "a": "I don't ask where people have been, son. What's said to me at my chapel stays there.",
      "uses": [
-      "emil.k21",
-      "emil.k24"
+      "emil.b01",
+      "emil.k23"
      ],
      "bench": "fresh: Did Mickey have any enemies?",
      "new": "N-ANSWERS"
@@ -7685,7 +7653,7 @@
      "a": "The paper called it arson, and nobody was charged. Beyond that, son, I've nothing to say.",
      "uses": [
       "emil.k03",
-      "emil.k25"
+      "emil.k24"
      ],
      "bench": "fresh: What happened at the warehouse fire?",
      "new": "N-ANSWERS"
@@ -7707,7 +7675,7 @@
      "kind": "partly",
      "a": "I'm not here to ask you anything, son. I'm here in case you want to say something.",
      "uses": [
-      "emil.k22"
+      "emil.k21"
      ],
      "bench": "firsts: Who can I trust?",
      "new": "N-ANSWERS"
@@ -8707,13 +8675,13 @@
     },
     {
      "id": "noor.r3",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ada, who saw it from her window",
@@ -9087,10 +9055,10 @@
      "key": "paid_away",
      "kind": "believes",
      "secret": false,
-     "text": "she thinks someone paid him to be away.",
+     "text": "the watchman's times do not fit the brigade's, and she thinks someone paid him to be away.",
      "src": {
       "file": "game-design/warehouse-fire-2026-09-29.md",
-      "line": 45,
+      "line": 44,
       "end": 45
      },
      "truth": "false",
@@ -12901,6 +12869,19 @@
      "id": "zlata.k22"
     },
     {
+     "key": "row",
+     "kind": "knows",
+     "secret": false,
+     "text": "Hal and Rita had words in the pawn, and nobody knows what about.",
+     "src": {
+      "file": "game-design/town-news-sample-2026-09-29.md",
+      "line": 10,
+      "end": 10
+     },
+     "via": "day 1, Monday, heard from Darren on his rounds",
+     "id": "zlata.k23"
+    },
+    {
      "key": "my_hours",
      "kind": "knows",
      "secret": false,
@@ -12911,7 +12892,7 @@
       "how": "hours",
       "area": "mickeys"
      },
-     "id": "zlata.k23"
+     "id": "zlata.k24"
     },
     {
      "key": "day",
@@ -12923,7 +12904,7 @@
       "line": 458,
       "how": "day"
      },
-     "id": "zlata.k24"
+     "id": "zlata.k25"
     },
     {
      "key": "who_joey",
@@ -12936,7 +12917,7 @@
       "end": 1200
      },
      "via": "who joey is, as the home describes them (hook-cast.json, the tie of 0.5)",
-     "id": "zlata.k25"
+     "id": "zlata.k26"
     },
     {
      "key": "who_ferko",
@@ -12949,7 +12930,7 @@
       "end": 502
      },
      "via": "who ferko is, as the home describes them (hook-cast.json, the tie of 0.45)",
-     "id": "zlata.k26"
+     "id": "zlata.k27"
     },
     {
      "key": "who_sam",
@@ -12962,7 +12943,7 @@
       "end": 623
      },
      "via": "who sam is, as the home describes them (hook-cast.json, the tie of 0.4)",
-     "id": "zlata.k27"
+     "id": "zlata.k28"
     },
     {
      "key": "on_air",
@@ -13240,7 +13221,7 @@
       "joey"
      ],
      "based_on": [
-      "zlata.k03"
+      "zlata.k23"
      ],
      "limits": [
       "L6",
@@ -13250,30 +13231,28 @@
     },
     {
      "id": "zlata.r5",
-     "gist": "The importer's warehouse at the far end of the old warehouse row burned down last November; the paper called it arson, nobody was charged, and the street says the owner had it done for the insurance.",
-     "truth": "partly",
+     "gist": "Whatever goes out on Mickey's radio is heard by every car and half the street.",
+     "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/warehouse-fire-2026-09-29.md",
-       "line": 37,
-       "end": 39
-      },
-      "note": "The paper's 'arson' and 'nobody charged' stand; the owner's guilt is the street's talk, false against the story: the home's lines 48 to 56 say what is true and it is never said here (RULINGS: the truth is never the street's)."
+       "file": "canon.md",
+       "line": 43,
+       "end": 44
+      }
      },
-     "sure": "street talk, by way of Darren",
+     "sure": "her own desk: she sends it",
      "heard_from": [
-      "sam"
+      "self"
      ],
      "would_pass_to": [
-      "ferko"
+      "ferko",
+      "joey"
      ],
      "based_on": [
-      "zlata.k03"
+      "zlata.b01",
+      "zlata.k22"
      ],
-     "limits": [
-      "L2",
-      "L1"
-     ],
+     "limits": [],
      "new": "N-RUMOURS"
     }
    ],
@@ -14019,16 +13998,12 @@
     },
     {
      "id": "ferko.r4",
-     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
-     "truth": "true",
+     "gist": "Traffic on the bridge is bad again; it is quicker round by the market.",
+     "truth": "unknown",
      "truth_basis": {
-      "src": {
-       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
-       "line": 63,
-       "end": 63
-      }
+      "note": "A driver's opinion; the story does not settle it."
      },
-     "sure": "knows it from the rank",
+     "sure": "saw it himself, driving",
      "heard_from": [
       "self"
      ],
@@ -14037,11 +14012,10 @@
       "joey"
      ],
      "based_on": [
-      "ferko.k11"
+      "ferko.s02",
+      "ferko.b01"
      ],
-     "limits": [
-      "L5"
-     ],
+     "limits": [],
      "new": "N-RUMOURS"
     },
     {
@@ -14752,13 +14726,13 @@
     },
     {
      "id": "dusan.r5",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ron, who saw it",
@@ -15469,13 +15443,13 @@
     },
     {
      "id": "marla.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ada, who saw it from her window",
@@ -15550,29 +15524,25 @@
     },
     {
      "id": "marla.r5",
-     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
-     "truth": "true",
+     "gist": "Haddock is dear this week and it is not even good haddock.",
+     "truth": "unknown",
      "truth_basis": {
-      "src": {
-       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
-       "line": 63,
-       "end": 63
-      }
+      "note": "A shopkeeper's opinion of this week's fish; nothing in canon settles it."
      },
-     "sure": "knows it from the shop's own counter",
+     "sure": "she saw the fish herself, at dawn",
      "heard_from": [
       "self"
      ],
      "would_pass_to": [
       "ada",
-      "sam"
+      "noor",
+      "vesna"
      ],
      "based_on": [
-      "marla.k11"
+      "marla.b01",
+      "marla.s01"
      ],
-     "limits": [
-      "L5"
-     ],
+     "limits": [],
      "new": "N-RUMOURS"
     }
    ],
@@ -16310,13 +16280,13 @@
     },
     {
      "id": "joey.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ron, who saw it",
@@ -16395,27 +16365,30 @@
     },
     {
      "id": "joey.r5",
-     "gist": "June, Mickey's daughter, came back for the funeral, is still in town, and wants nothing from the office.",
+     "gist": "Casual work on the quay is scarce: Lee takes a day when there is one, and mostly there isn't.",
      "truth": "true",
      "truth_basis": {
       "src": {
        "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
-       "line": 49,
-       "end": 49
+       "line": 63,
+       "end": 63
       }
      },
-     "sure": "heard it from Ron",
+     "sure": "he knows it first hand",
      "heard_from": [
-      "rocco"
+      "self"
      ],
      "would_pass_to": [
-      "zlata",
-      "sam"
+      "rocco",
+      "zlata"
      ],
      "based_on": [
-      "joey.k06"
+      "joey.b01",
+      "joey.s01"
      ],
-     "limits": [],
+     "limits": [
+      "L5"
+     ],
      "new": "N-RUMOURS"
     }
    ],
@@ -17204,13 +17177,13 @@
     },
     {
      "id": "rita.r3",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it on her step in the evening",
@@ -17973,13 +17946,13 @@
     },
     {
      "id": "victor.r3",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Sheila on Rita's step",
@@ -18811,13 +18784,13 @@
     },
     {
      "id": "hal.r3",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Darren",
@@ -19472,13 +19445,13 @@
     },
     {
      "id": "tibor.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it on Rita's step in the evening",
@@ -19527,7 +19500,7 @@
     },
     {
      "id": "tibor.r4",
-     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "gist": "The quay has never been so quiet, not in all Susan's time.",
      "truth": "true",
      "truth_basis": {
       "src": {
@@ -19536,7 +19509,7 @@
        "end": 63
       }
      },
-     "sure": "sees the quay herself",
+     "sure": "sees the quay herself, every working day",
      "heard_from": [
       "self"
      ],
@@ -19545,8 +19518,8 @@
       "rita"
      ],
      "based_on": [
-      "tibor.k11",
-      "tibor.b01"
+      "tibor.b01",
+      "tibor.s01"
      ],
      "limits": [
       "L5"
@@ -20337,13 +20310,13 @@
     },
     {
      "id": "vesna.r4",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ada, who saw it from her window",
@@ -21051,13 +21024,13 @@
     },
     {
      "id": "magda.r4",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ada, who saw it from her window",
@@ -21740,13 +21713,13 @@
     },
     {
      "id": "zora.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ada, who saw it from her window",
@@ -22427,13 +22400,13 @@
     },
     {
      "id": "tanja.r3",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ada, who saw it from her window",
@@ -23145,13 +23118,13 @@
     },
     {
      "id": "katarina.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Darren",
@@ -23803,13 +23776,13 @@
     },
     {
      "id": "stipe.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ron on the quay",
@@ -23857,16 +23830,16 @@
     },
     {
      "id": "stipe.r4",
-     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
+     "gist": "Half the berths on the docks are empty.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
-       "line": 63,
-       "end": 63
+       "file": "game-design/story-outline-2026-09-28.md",
+       "line": 20,
+       "end": 21
       }
      },
-     "sure": "sees the berths himself",
+     "sure": "sees the berths himself, from the crane",
      "heard_from": [
       "self"
      ],
@@ -23875,8 +23848,8 @@
       "rocco"
      ],
      "based_on": [
-      "stipe.k11",
-      "stipe.b01"
+      "stipe.b01",
+      "stipe.s01"
      ],
      "limits": [
       "L5"
@@ -24550,13 +24523,13 @@
     },
     {
      "id": "fabjan.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ron on the quay",
@@ -25307,13 +25280,13 @@
     },
     {
      "id": "tomas.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ron at the cafe",
@@ -25972,13 +25945,13 @@
     },
     {
      "id": "luka.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ron at the cafe",
@@ -26050,24 +26023,21 @@
     },
     {
      "id": "luka.r5",
-     "gist": "June, Mickey's daughter, came back for the funeral, is still in town, and wants nothing from the office.",
-     "truth": "true",
+     "gist": "Most of the street's locks would not stop a patient man.",
+     "truth": "unknown",
      "truth_basis": {
-      "src": {
-       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
-       "line": 49,
-       "end": 49
-      }
+      "note": "A locksmith's opinion, not a fact about the world."
      },
-     "sure": "heard it from Ron",
+     "sure": "he has mended the street's locks himself",
      "heard_from": [
-      "rocco"
+      "self"
      ],
      "would_pass_to": [
       "rocco"
      ],
      "based_on": [
-      "luka.k06"
+      "luka.b01",
+      "luka.s01"
      ],
      "limits": [],
      "new": "N-RUMOURS"
@@ -26600,13 +26570,13 @@
     },
     {
      "id": "bruno.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from the ticket clerk",
@@ -27327,13 +27297,13 @@
     },
     {
      "id": "petra.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ron",
@@ -28010,13 +27980,13 @@
     },
     {
      "id": "dario.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Darren",
@@ -28091,28 +28061,24 @@
     },
     {
      "id": "dario.r5",
-     "gist": "Mickey's has not made much since the docks went; trade has been thin.",
-     "truth": "true",
+     "gist": "The wind is getting up and she will be lively on the crossing.",
+     "truth": "unknown",
      "truth_basis": {
-      "src": {
-       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
-       "line": 63,
-       "end": 63
-      }
+      "note": "A ferryman's forecast; nothing in canon settles the weather."
      },
-     "sure": "sees how few cross",
+     "sure": "his own reading of the weather",
      "heard_from": [
       "self"
      ],
      "would_pass_to": [
-      "sam"
+      "sam",
+      "noor"
      ],
      "based_on": [
-      "dario.k11"
+      "dario.b01",
+      "dario.s01"
      ],
-     "limits": [
-      "L5"
-     ],
+     "limits": [],
      "new": "N-RUMOURS"
     }
    ],
@@ -28740,13 +28706,13 @@
     },
     {
      "id": "sanja.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ada, who saw it from her window",
@@ -29582,13 +29548,13 @@
     },
     {
      "id": "hana.r3",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ada, who saw it from her window",
@@ -31142,13 +31108,13 @@
     },
     {
      "id": "danica.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Sheila at the office on a Friday",
@@ -31887,13 +31853,13 @@
     },
     {
      "id": "drago.r3",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ron at the cafe",
@@ -32603,13 +32569,13 @@
     },
     {
      "id": "filip.r4",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Darren",
@@ -33351,13 +33317,13 @@
     },
     {
      "id": "cafe.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "heard it from Ron at the cafe",
@@ -34045,13 +34011,13 @@
     },
     {
      "id": "takeaway_m.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "customers at the counter",
@@ -34734,13 +34700,13 @@
     },
     {
      "id": "takeaway_f.r2",
-     "gist": "Saw Mickey's nephew come to Mickey's with his case, the new owner.",
+     "gist": "Mickey's nephew has come to take the office, with one suitcase and a letter that says Mickey left it to him.",
      "truth": "true",
      "truth_basis": {
       "src": {
-       "file": "game-design/day-one-2026-09-29.md",
-       "line": 32,
-       "end": 34
+       "file": "ledger/Assets/Scripts/Core/StreetFacts.cs",
+       "line": 45,
+       "end": 45
       }
      },
      "sure": "customers at the counter",

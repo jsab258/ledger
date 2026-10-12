@@ -478,7 +478,6 @@ def front_rows(R, T, work, rows, assets):
 # ------------------------------------------------------------------------------------------------------------- the gate renders
 def project(cam_rec, pts_model, res=(2560, 1440)):
     """Pixel positions of model-frame points for a gate camera (pinhole, vertical field)."""
-    from mathutils import Vector
     eye = np.array(G.to_model(cam_rec["eye_street_m"]))
     aim = np.array(G.to_model(cam_rec["aim_street_m"]))
     fwd = (aim - eye) / np.linalg.norm(aim - eye)
