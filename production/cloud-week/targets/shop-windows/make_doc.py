@@ -294,12 +294,23 @@ def build():
         rows.append(["front", "Alterations: %s. Variants: pilaster %s, console %s, cornice %s, stallriser %s, window %s %s (%.0f mm long), shop door %s, side door %s. Door end the viewer's %s. Missing from 3.2: %s. Lobby: %s." % (
             ", ".join(fr["alterations"]), fr["variants"]["pilaster"], fr["variants"]["console"], fr["variants"]["cornice"], fr["variants"]["stallriser"], fr["variants"]["window_frame"], fr["glazing"]["pattern"], fr["window_length_mm"], fr["variants"]["shop_door"],
             fr["variants"]["side_door"] or "none (the flat is reached from the rear yard)", {"L": "left", "R": "right"}[fr["door_end_viewer"]], ", ".join(fr["missing_from_3_2"]) or "nothing", fr["lobby"]["kind"] + (" %s deep" % fr["lobby"].get("depth", "") if fr["lobby"].get("depth") else ""))])
+        rows.append(["built from", "`front.build_from`: %s at commit %s (a script builds the front from this target.json and that one versioned input): %s" % (fr["build_from"]["file"], fr["build_from"]["commit"], "; ".join(fr["build_from"]["keys"]))])
+        lay_ = fr["glazing_layout"]
+        dd_ = s["door"]
+        rows.append(["toplights (D6)", "%s: %d toplights of %.1f in %d lights; %s bars between a light's toplights at %s; each mullion carried up as a bar (centres %s, %g wide); 2.2 had pattern %s (%d toplights, aligned: %s)" % (
+            fr["glazing"]["pattern"], lay_["toplights"], lay_["toplight_width"], len(lay_["lights"]), "%g wide" % lay_["toplight_bar_face"], ", ".join("%.1f" % c for c in lay_["toplight_bar_centres"]) or "no", ", ".join("%.1f" % c for c in lay_["mullion_centres"]), lay_["mullion_face"],
+            fr["glazing"]["from_2_2"]["pattern"], fr["glazing"]["from_2_2"]["toplights"], fr["glazing"]["from_2_2"]["toplight_aligned"])])
+        rows.append(["band above the doors (FRN-07)", "fanlight u %s z %s; transom u %s z %s; three toplights of %.1f over the shop door (bars at %s) z %s%s; panel over the side door: %s; head u %s z %s%s" % (
+            dd_["fanlight"]["u_mm"], dd_["fanlight"]["z_mm"], dd_["transom"]["u_mm"], dd_["transom"]["z_mm"], dd_["toplights_over_shop_door"]["pane_width_mm"], ", ".join("%.1f" % b_["centre"] for b_ in dd_["toplights_over_shop_door"]["bars"]), dd_["toplights_over_shop_door"]["z_mm"],
+            (" (visible %s only: the roller-shutter hood stands over u %s, z %s)" % (dd_["toplights_over_shop_door"]["z_visible_mm"], dd_["shutter_hood"]["u_mm"], dd_["shutter_hood"]["z_mm"])) if dd_.get("shutter_hood") else "",
+            ("one raised-and-fielded panel, field %g wide, u %s z %s" % (dd_["panel_over_side_door"]["field_width_mm"], dd_["panel_over_side_door"]["u_mm"], dd_["panel_over_side_door"]["z_mm"])) if dd_.get("panel_over_side_door") else "none (no side door)",
+            dd_["head"]["u_mm"], dd_["head"]["z_mm"], ("; the head over the shop door is cut away behind the hood (u %s)" % dd_["head"]["cut_away_behind_hood_mm"]) if dd_["head"].get("cut_away_behind_hood_mm") else "")])
         rows.append(["zones across the bay (u, mm)", "side door %s; shop door %s; window %s" % (fr["zones_u_mm"]["side_door"], fr["zones_u_mm"]["shop_door"], fr["zones_u_mm"]["window"])])
-        rows.append(["door", "%s leaf 900 x 2040; glass foot %d; letter plate z %d; hinge on the viewer's %s, lever on the %s; paint %s; the bell and the OPEN / CLOSED sign as 4.2%s" % (
-            s["door"]["variant"], s["door"]["glass_foot_z_mm"], s["door"]["letter_plate"]["z_mm"], {"L": "left", "R": "right"}[s["door"]["hinge_viewer"]], {"L": "left", "R": "right"}[s["door"]["lever_viewer"]], s["door"]["paint"],
+        rows.append(["door", "%s leaf 900 x 2040; glass foot %d; letter plate z %d (%s); hinge on the viewer's %s, lever on the %s; paint %s; the bell and the OPEN / CLOSED sign as 4.2%s" % (
+            s["door"]["variant"], s["door"]["glass_foot_z_mm"], s["door"]["letter_plate"]["z_mm"], s["door"]["letter_plate"]["note"], {"L": "left", "R": "right"}[s["door"]["hinge_viewer"]], {"L": "left", "R": "right"}[s["door"]["lever_viewer"]], s["door"]["paint"],
             ("; T1 rails as Rita's" if s["door"]["variant"] == "T1" else ""))])
         rows.append(["paint (sRGB)", "; ".join("%s %s" % (k, v) for k, v in (fr["paint_srgb"] or {}).items())])
-        rows.append(["glass", "%d lights + %d toplights, 6 mm plate; lettering rows: %s" % (s["glass"]["lights"], s["glass"]["toplights"], s["glass"]["lettering"] or "none")])
+        rows.append(["glass", "%d lights + %d toplights, 6 mm plate; lettering rows: %s; blinds, grilles, shutters: %s" % (s["glass"]["lights"], s["glass"]["toplights"], s["glass"]["lettering"] or "none", s["blinds_grilles_shutters"])])
         rows.append(["fascia (4.1)", "%s; name blocks %s; hanging sign %s" % (s["fascia"]["board"], s["fascia"]["name_blocks"], (s["fascia"]["hanging_sign"] or {}).get("id") or "none")])
         rows.append(["night furniture", s["night_furniture"] or "none"])
         rows.append(["hours, lit", "%s (%s); at night: %s (%s)" % (hours_str(s["hours"]), s["hours_source"], "lit" if s["lit_at_night"] else "dark", s["lit_why"])])
@@ -342,7 +353,7 @@ def build():
     # ---- 8
     w("## 8. Photographs win: each disagreement")
     w()
-    for dgs in sorted(T["disagreements_photographs_win"], key=lambda d_: d_["id"]):
+    for dgs in sorted(T["disagreements_photographs_win"], key=lambda d_: int(d_["id"][1:])):
         w("- **%s, %s.** Target: %s. Photograph or research: %s. Chosen: %s. Why: %s" % (dgs["id"], dgs["what"], dgs.get("target_2_2") or dgs.get("target"), dgs.get("photograph") or dgs.get("photograph/research"), dgs["chosen"], dgs["why"]))
     w()
     pm = T["photographs"]
@@ -365,6 +376,21 @@ def build():
     w("**Scans (CC0, Sketchfab, on the allowlist as 'Sketchfab CC0 filter'; read 12 October; the download API answers 401 without a login, so none is downloaded):**")
     w()
     table(["uid", "name", "licence", "faces", "published"], [[v["uid"], v["name"], v["license"], v["faces"], v["published"][:10]] for v in inv["sketchfab_checked"].values()])
+    tm = inv["texture_marks"]
+    w("**Marks on the models' base-colour maps, and how each is blanked (the second fault of the review: the real retailer's name 'Dixons' stood on `cassette_player`).** After the review the writer opened the 1k base-colour map of every one of the %d models (25 contact sheets at 512 px; the marked ones at 1k with the boxes drawn on them) and found the marks below; thumbnails alone had missed them. Every model carries `marks` in `inventory.polyhaven` (a mark, or none seen at 1k). The step, for every map below: %s" % (len(inv["polyhaven"]), tm["step"]))
+    w()
+    mrows = []
+    for mid in tm["models_with_marks"]:
+        rec_ = inv["polyhaven"][mid]
+        for b_ in rec_["blank"]:
+            mrows.append([mid, rec_["marks"] if b_ is rec_["blank"][0] else "(as above)", b_["map"], "; ".join(str(bx) for bx in b_["boxes"]), b_["fill"], b_["reads"]])
+    table(["model", "what is printed on it", "map (1k, 1024 x 1024)", "boxes [x0, y0, x1, y1]", "fill", "what the boxes hold"], mrows)
+    w("**What is kept:** " + "; ".join("%s: %s" % (m_, inv["polyhaven"][m_]["keep"]) for m_ in tm["models_with_marks"] if inv["polyhaven"][m_].get("keep")) + ".")
+    w()
+    w("**The final texture is checked (INV-06).** Script: " + tm["final_check"]["script"] + ". Visual, where a script cannot test it: " + tm["final_check"]["visual"] + ".")
+    w()
+    w("**The brand blocklist** (`inventory.brand_blocklist`, searched by INV-05 and the self-check): " + ", ".join("'%s'" % b_ for b_ in inv["brand_blocklist"]) + ". The first four are the real British high-street retailers the review named; the next group are the makers and look-alikes read off the maps.")
+    w()
     w("**Surfaces:** Poly Haven textures " + ", ".join(inv["surfaces"]["polyhaven_textures"]) + " (all exist: LIVE check); ambientCG " + ", ".join(inv["surfaces"]["ambientcg"]) + " (the ones read from its API are in ambientcg_checked.json). The packaged goods' labels are the project's atlas (production/assets/shop-goods/labels.jpg: 32 fictional makers in our OFL fonts), twelve tiles to add.")
     w()
     w("**Rules the inventory enforces.** " + inv["rule"])
@@ -373,8 +399,10 @@ def build():
     w("## 10. Checks (target.json `checks`; the cloud gate and the build run them)")
     w()
     table(["id", "name", "measure", "expected", "tolerance", "applies to"], [[c["id"], c["name"], c["what"], c["expected"], c["tolerance"], ", ".join(c["applies_to"]) if len(c["applies_to"]) < 5 else "%d shops" % len(c["applies_to"])] for c in T["checks"]])
-    w("**Self-check** (before anything is built): %s. Groups: %s. Negative controls: 13 of 13 mutations of target.json make it fail (controls.py): a counter 2.4 m out, a 0.40 deep side unit, a denied chair, the door's glass back at 600, a display item outside the window, a reworded camera rule, a card 0.1 m off, a changed hour, a brand in lettering, a drink word, a dark shop marked lit, a 2048-wide picture, a good on a missing fixture." % (
-        T["self_check"]["result"], "; ".join("%s: %d pass %d fail %d reported" % (k, v["pass"], v["fail"], v["report"]) for k, v in sorted(T["self_check"]["groups"].items()))))
+    cr_ = json.load(open(os.path.join(HERE, "controls_result.json")))
+    import controls as CT   # the list of mutations
+    w("**Self-check** (before anything is built): %s. Groups: %s. Negative controls: %d of %d mutations of target.json make it fail (controls.py): %s." % (
+        T["self_check"]["result"], "; ".join("%s: %d pass %d fail %d reported" % (k, v["pass"], v["fail"], v["report"]) for k, v in sorted(T["self_check"]["groups"].items())), cr_["caught"], cr_["of"], "; ".join(CT.CONTROLS.keys())))
     w()
     # ---- 11
     w("## 11. What the target could not settle")
@@ -390,9 +418,17 @@ def build():
     # ---- 12
     w("## 12. Previews")
     w()
-    w("Reduced JPEGs in production/previews/cloud-week/refs/shop-windows/ (at most 1200 px, under 300 KB each; credits in section 2): P1 `P1-worcester-fish-front-below-fascia.jpg` and its overlay `P1-worcester-fish-front-target-on-photo.jpg` (the target's door, stallriser, glass-foot and glazing-bar lines at the scale fitted on the leaf's height); "
-      "P2 `P2-bath-grocer-window-stock.jpg` (the left window and stand only); P3 `P3-pinner-hardware-newsagent-windows.jpg`; P4 `P4-hull-chandler-front-mesh.jpg` (the firm's name and plaque masked grey); P5 `P5-launderette-front-type-2009.jpg`; P6 `P6-kames-unlet-shop-1995.jpg`; "
-      "D1 `D1-ritas-front.jpg`, D2 `D2-ten-fronts-sheet.jpg`, D3 `D3-ritas-room-plan-picture.jpg`, D4 `D4-standoff-and-cameras.jpg` (drawn from target.json).")
+    w("Eleven JPEGs in production/previews/cloud-week/refs/shop-windows/ (at most 1200 px, under 300 KB each; credits in section 2). **What is masked in each, exactly** (flat grey 120, 120, 120, drawn on the original before the crop by `make_previews.py` on every rebuild from the list `extras.PREVIEW_PHOTOS`, then read back from the JPEG it wrote; `self_check.py` reads the committed JPEGs against the same list, checks PRV-01 to PRV-03; every preview was looked at by eye after the rebuild of 12 October and none shows a real firm's name, a door number, a face, alcohol, a gambling sign or a child):")
+    w()
+    pv_ = T["previews"]
+    for ph in pv_["photos"]:
+        name_ = ph["name"] + ".jpg"
+        ms_ = ph["masks"]
+        w("- **%s `%s`** (original crop %s). %s Masked: %s" % (ph["id"], name_, ph["crop"], ph["cropped_away"][0].upper() + ph["cropped_away"][1:] + ("." if not ph["cropped_away"].endswith(".") else ""),
+            ("; ".join("%s (%s %s)" % (m_["what"], "box" if m_["shape"] == "rect" else "polygon", m_["box"] if m_["shape"] == "rect" else m_["poly"]) for m_ in ms_) + ".") if ms_ else "nothing needed masking (nothing legible is in the crop)."))
+    w("- **P1 overlay `P1-worcester-fish-front-target-on-photo.jpg`**: made from the masked P1 crop, so it carries the same three masks (the door's number plate included) with the target's door, stallriser, glass-foot and glazing-bar lines laid on at the scale fitted on the leaf's height.")
+    w("- **D1 `D1-ritas-front.jpg`, D2 `D2-ten-fronts-sheet.jpg`, D3 `D3-ritas-room-plan-picture.jpg`, D4 `D4-standoff-and-cameras.jpg`**: drawn from target.json alone; no photograph is in them and nothing in them is masked. D1 and D2 now show the band above the doors (fanlight, transom, three toplights, panel, head) and the aligned toplights on every front.")
+    w("- The earlier P6 (it showed the old fascia's lettering and the neighbouring board) and the earlier P1 (it showed the door's number) were deleted from the folder and rebuilt as above; the earlier files remain in the history of the commit that first added them.")
     w()
     open(os.path.join(HERE, "TARGET.md"), "w").write("\n".join(OUT) + "\n")
     print("wrote TARGET.md", len("\n".join(OUT).split()), "words")

@@ -101,12 +101,16 @@ def main():
     save_jpg(Image.open(tmp), os.path.join(a.previews, "P1-worcester-fish-front-target-on-photo.jpg"))
     # drawings
     ritas = next(s for s in t["shops"] if s["id"] == "ritas")
-    im = TD.draw_polys(TD.front_polys(ritas), (1500, 760), 0.24, (30, 30), "Rita's bay from target.json: millimetres, u from the viewer's left, z from the footway; card dashed, display amber")
+    rd = ritas["door"]
+    labs = [(rd["fanlight"]["u_mm"][0] + 12, rd["fanlight"]["z_mm"][1] - 20, "fanlight 2131-2400", (20, 20, 20)), (rd["transom"]["u_mm"][0] + 8, rd["transom"]["z_mm"][1] - 6, "transom 2400-2480", (20, 20, 20)),
+            (rd["toplights_over_shop_door"]["u_mm"][0] + 6, rd["toplights_over_shop_door"]["z_mm"][1] - 40, "3 toplights", (20, 20, 20)), (rd["panel_over_side_door"]["u_mm"][0] + 30, rd["panel_over_side_door"]["z_mm"][1] - 60, "raised panel", (20, 20, 20)),
+            (rd["head"]["u_mm"][0] + 8, rd["head"]["z_mm"][1] - 5, "head 2790-2850", (20, 20, 20)), (rd["toplights_over_shop_door"]["bars"][1]["centre"] + 60, 2150, "door leaf 28-2068", (20, 20, 20))]
+    im = TD.draw_polys(TD.front_polys(ritas), (1500, 900), 0.24, (30, 30), "Rita's bay from target.json: millimetres, u from the viewer's left, z from the footway; the band above the doors in full; card dashed, display amber", labels=labs)
     save_jpg(im, os.path.join(a.previews, "D1-ritas-front.jpg"))
     sheet = []
     for s in t["shops"]:
-        sheet.append(TD.draw_polys(TD.front_polys(s), (1500, 760), 0.24, (30, 30), s["id"]))
-    cols, cw, ch = 2, 600, 304
+        sheet.append(TD.draw_polys(TD.front_polys(s), (1500, 800), 0.24, (30, 30), "%s: %s, %s toplights, band above the doors drawn" % (s["id"], s["front"]["glazing"]["pattern"], s["front"]["glazing"]["toplights"])))
+    cols, cw, ch = 2, 600, 320
     sh = Image.new("RGB", (cols * cw, 5 * ch), (240, 240, 240))
     for n, i in enumerate(sheet):
         sh.paste(i.resize((cw, ch)), ((n % cols) * cw, (n // cols) * ch))

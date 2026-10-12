@@ -2,7 +2,7 @@
  "schema": "ledger-shop-windows-target/1",
  "family": "shop-windows",
  "summary_line": "Shop windows: ten units as built (twelve not found); eight rooms of 104 checked CC0 models and 51 named scripted forms, rendered 4096 wide to the game's own `trace` rule, stock only where that rule can show it and the near 0.55 m a real display; the fish scans wait on one login.",
- "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026 by the target writer; nothing built, nothing committed",
+ "status": "target for unit 7 of cloud week 42, part 2; written 12 October 2026 by the target writer; its fresh review (TARGET-REVIEW.md) failed it with 3 faults and 15 narrow points, every exact amendment is applied: FIXES APPLIED, NOT RE-REVIEWED (Jafar's 11 October rule: no more polishing of targets); nothing built, nothing committed",
  "units": {
   "length": "metres (frames: street, card, picture, room, display: see TARGET.md section 3); front parts in millimetres in the 2.2 bay frame (u, d, z)",
   "colour": "sRGB 0 to 255",
@@ -16899,9 +16899,9 @@
   "rule": "every preview is looked at by eye after each rebuild; make_previews.py draws the masks and reads them back from the JPEG it wrote; the files are JPEG, at most 1200 px, under 300 KB"
  },
  "self_check": {
-  "result": "self_check: 379 pass, 0 fail, 3 reported",
+  "result": "self_check: 381 pass, 0 fail, 3 reported",
   "counts": {
-   "pass": 379,
+   "pass": 381,
    "fail": 0,
    "report": 3
   },
@@ -16922,7 +16922,7 @@
     "report": 0
    },
    "4 inventory": {
-    "pass": 9,
+    "pass": 11,
     "fail": 0,
     "report": 0
    },
@@ -16953,7 +16953,7 @@
    }
   },
   "date": "2026-10-12",
-  "live": false,
+  "live": true,
   "rows": [
    {
     "group": "1 printed",
@@ -17810,6 +17810,18 @@
    {
     "group": "4 inventory",
     "name": "the model dates: every allowed model was published by 12 October 2026 and none is in the era blocklist (nothing after 1992 is a by-eye gate; the denied list holds what was seen)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "4 inventory",
+    "name": "LIVE: all models exist in the live catalogue (521)",
+    "result": "pass",
+    "detail": ""
+   },
+   {
+    "group": "4 inventory",
+    "name": "LIVE: all 17 Poly Haven textures named as surfaces exist (missing: [])",
     "result": "pass",
     "detail": ""
    },
