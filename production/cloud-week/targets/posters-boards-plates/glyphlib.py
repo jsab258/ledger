@@ -77,7 +77,7 @@ def sliver_only(A, B, n=1):
 
 def glyph_patch(font_fn, key, weight, ch, em_mm, ppm, rot_deg=0.0, emb_mm=0.0, tight=False):
     """The glyph as a boolean patch. Returns (patch, ox, base): the pen origin and the baseline in patch pixels (ox from the left, base from the top).
-    em_mm: the em in millimetres. rot_deg: counter-clockwise about (origin + half the advance, baseline). emb_mm: radius of added stroke.
+    em_mm: the em in millimetres. rot_deg: counter-clockwise about (origin + half the advance, baseline). emb_mm: radius of added stroke (negative: of stroke taken away).
     tight: cut the patch to the ink (plus what a turn and a stroke add) BEFORE turning it, which gives the same pixels much faster; ox and base are then relative to the cut patch
     (every caller that places a patch by ox and base is unaffected; family() needs the common frame and does not ask for it)."""
     em = em_mm * ppm
@@ -105,6 +105,8 @@ def glyph_patch(font_fn, key, weight, ch, em_mm, ppm, rot_deg=0.0, emb_mm=0.0, t
     a = np.asarray(im) > 100
     if r >= 1:
         a = ndi.binary_dilation(a, disk(r))
+    elif r <= -1:                   # a negative emb_mm thins the stroke (a ballpoint line, 0.3 to 0.45 mm: the paper close review of 12 October, finding 4)
+        a = ndi.binary_erosion(a, disk(-r))
     return a, ox - cx0, asc - cy0
 
 

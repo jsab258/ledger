@@ -187,3 +187,38 @@ def lab_of(rgb):
 
 def dE76(a, b):
     return np.sqrt(((np.asarray(a, float) - np.asarray(b, float)) ** 2).sum(-1))
+
+
+# ------------------------------------------------------------------------------------------ where an item's wear table and tabs differ from the target's (one home: the maker, the reader and the check read these)
+WEAR_OVERRIDE = {
+    ("P02", "A"): "glass_bill",          # the target hangs P02 in the cottage window (SF9) taped inside the glass: it is not a pasted bill there
+    ("C01a", "B"): "glass_bill",         # the appeal hangs inside the empty unit's glass (SF2) by four tabs: no sleeve, beads or fog inside a window (the close review's finding 5)
+    ("C02", "A"): "glass_two_tabs",      # C02 hangs inside the same glass by two tabs at its top corners: no beads, ties or fog (the close review's finding 5)
+}
+TAB_SCALE = {"P02": 1 / 0.585}           # P02 is shown at 0.585 of its size in the cottage window (SF9): its tabs are drawn 1/0.585 bigger so that they are the target's 38 x 16 mm on the glass
+
+
+def wear_table(item, cls):
+    return WEAR_OVERRIDE.get((item["id"], cls), item["wear"].get("table"))
+
+
+def tab_layout(T, item, cls):
+    """[(centre_mm (x from the left, y from the bottom), flip_x, flip_y, spec)]: every tab of yellowed tape the item carries in a class: the hand card's one tab at the top-left (its mirror cue),
+    four tabs across the corners of a sheet of A4 or more inside glass, two across the top corners of C02."""
+    fx = T["fixings"]
+    W, H = item["format"]["w_mm"], item["format"]["h_mm"]
+    out = []
+    mc = item.get("mirror_cue")
+    if mc and mc.get("kind") == "tape":
+        out.append((tuple(mc["tab_centre_mm"]), False, False, fx["tape_tab"]))
+    table = wear_table(item, cls)
+    rows = (False, True) if (table == "glass_bill" and W >= 200) else ((False,) if table == "glass_two_tabs" else ())
+    if rows:
+        k = TAB_SCALE.get(item["id"], 1.0)
+        f4 = fx["four_tabs"]
+        spec = dict(length_mm=f4["length_mm"] * k, width_mm=f4["width_mm"] * k, angle_deg=f4["angle_deg"], rgb=f4["rgb"], opacity=f4["opacity"])
+        c = [v * k for v in fx["tape_tab"]["centre_in_mm"]]
+        for right in (False, True):
+            for bottom in rows:
+                out.append(((W - c[0] if right else c[0], c[1] if bottom else H - c[1]), right, bottom, spec))
+    return out

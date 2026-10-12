@@ -19,7 +19,9 @@ PASTE = (168, 148, 110)
 RUST = (140, 84, 44)
 STEEL = (44, 40, 38)
 ALUM = (150, 150, 146)
-LIME = (226, 223, 212)
+LIME = (235, 235, 228)            # the close review's finding 10
+STRING = (150, 150, 146)          # the string and its knot (the close review's finding 8): the target's cream (236, 232, 220) does not show on a white card
+GROUND_COAT = (190, 190, 185)     # the grey ground coat of vitreous enamel, round a chip (finding 11)
 
 
 class Surf(object):
@@ -129,9 +131,55 @@ class Surf(object):
 
 
 # ------------------------------------------------------------------------------------------ paper
-def cockle(S, amp_mm, wl_mm, aniso=2.2):
-    n = pc.value_noise((S.h, S.w), wl_mm * S.ppm, S.rng, aniso=aniso, octaves=2)
-    S.height += ((n - 0.5) * 2.0 * amp_mm).astype(np.float32)
+def paper_relief(S, table):
+    """The relief of a sheet (the close review's finding 12; it replaces a cockle of noise over the whole sheet, which a raking light would show as crumpled): a pasted bill has 4 to 10
+    vertical wrinkles (more with age; 50 to 300 mm long, 3 to 8 mm wide, 0.4 to 1.5 mm high) and 2 to 4 paste bubbles (20 to 60 mm across); a sheet behind glass or in a sleeve at most two
+    wrinkles; every sheet a ripple of at most 0.15 mm (a sticker 0.05)."""
+    rng = S.rng
+    ci = S.ci
+    n = pc.value_noise((S.h, S.w), rng.uniform(15, 40) * S.ppm, rng, octaves=2)
+    amp = 0.05 if table == "sticker" else 0.15 * (0.6 + 0.4 * ci / 3.0)
+    S.height += ((n - 0.5) * 2.0 * amp).astype(np.float32)
+    if table == "bill_pasted":
+        n_w = int(np.clip(round(4 + 2 * ci + rng.uniform(-1, 1)), 4, 10))
+        n_b = int(rng.integers(2, 5))
+    elif table == "sticker":
+        n_w, n_b = 0, 0
+    else:
+        n_w, n_b = int(rng.integers(0, 3)), 0
+    hmax = 0.4 + 1.1 * (0.25 + 0.75 * ci / 3.0)
+    for _ in range(n_w):
+        L = min(rng.uniform(50, 300), 0.95 * S.H) * S.ppm
+        y0 = rng.uniform(0, max(1.0, S.h - L))
+        x0 = rng.uniform(0.04, 0.96) * S.w
+        sig = rng.uniform(3, 8) * S.ppm / 2.355
+        a = float(rng.uniform(0.4, hmax))
+        tilt = math.tan(math.radians(rng.normal(0, 3)))
+        wan, wl, wp = rng.uniform(0.5, 2.0) * S.ppm, rng.uniform(60, 200) * S.ppm, rng.uniform(0, 2 * math.pi)
+        win = S.win_of((x0 - 4 * sig - abs(tilt) * L - wan, y0, x0 + 4 * sig + abs(tilt) * L + wan, y0 + L))
+        wx0, wx1, wy0, wy1 = win
+        if wx1 <= wx0 or wy1 <= wy0:
+            continue
+        ys = np.arange(wy0, wy1, dtype=np.float32) + 0.5
+        tt = np.clip((ys - y0) / L, 0, 1)
+        xc = x0 + tilt * (ys - y0) + wan * np.sin(2 * math.pi * (ys - y0) / wl + wp)
+        xs = np.arange(wx0, wx1, dtype=np.float32) + 0.5
+        prof = np.exp(-0.5 * ((xs[None, :] - xc[:, None]) / sig) ** 2)
+        along = np.clip(np.sin(math.pi * tt), 0, 1) ** 0.5
+        S.height[wy0:wy1, wx0:wx1] += (a * prof * along[:, None]).astype(np.float32)
+    for _ in range(n_b):
+        D = rng.uniform(20, 60) * S.ppm
+        x, y = rng.uniform(0.1, 0.9) * S.w, rng.uniform(0.1, 0.9) * S.h
+        a = float(rng.uniform(0.3, 0.6 + 0.4 * ci / 3.0))
+        e, ang = rng.uniform(0.7, 1.0), rng.uniform(0, math.pi)
+        win = S.win_of((x - D, y - D, x + D, y + D))
+        wx0, wx1, wy0, wy1 = win
+        gy, gx = np.mgrid[wy0:wy1, wx0:wx1].astype(np.float32)
+        u = ((gx - x) * math.cos(ang) + (gy - y) * math.sin(ang)) / (D / 2)
+        v = (-(gx - x) * math.sin(ang) + (gy - y) * math.cos(ang)) / (D / 2 * e)
+        rr = u * u + v * v
+        S.height[wy0:wy1, wx0:wx1] += (a * np.clip(1 - rr, 0, 1) ** 2).astype(np.float32)
+    S.log["relief"] = dict(wrinkles=n_w, bubbles=n_b)
 
 
 def corner_lift(S, corner, r_mm, back=None, avoid=True):
@@ -231,11 +279,13 @@ def polar_patch(shape, centre, R, harm, prot, margin=4.0):
         t = np.arange(T, dtype=np.float32)
         px = np.clip((centre[0] + np.outer(np.cos(th), t)).astype(int), 0, Wc - 1)
         py = np.clip((centre[1] + np.outer(np.sin(th), t)).astype(int), 0, Hc - 1)
-        hit = prot[py, px] & (np.abs(centre[0] + np.outer(np.cos(th), t) - px) < 2) & (t[None, :] <= r[:, None] + margin)
+        hit = prot[py, px] & (np.abs(centre[0] + np.outer(np.cos(th), t) - px) < 2) & (np.abs(centre[1] + np.outer(np.sin(th), t) - py) < 2) & (t[None, :] <= r[:, None] + margin)
         first = np.where(hit.any(1), hit.argmax(1), 10 ** 6)
-        r = np.minimum(r, np.maximum(first - margin, 0.0))
-        r = ndi.gaussian_filter1d(r, 4.0, mode="wrap")
-        r = np.minimum(r, np.maximum(first - margin, 0.0))
+        s = float(np.min(np.maximum(first - margin, 0.0) / np.maximum(r, 1e-6)))
+        if s < 1.0:                     # the whole patch shrinks to clear the window (the close review: clipped ray by ray, its outline stepped square round the text)
+            if s < 0.15:
+                return np.zeros((Hc, Wc), bool)
+            r = r * s
     pts = [(float(centre[0] + rr * math.cos(a)), float(centre[1] + rr * math.sin(a))) for rr, a in zip(r, th)]
     im = Image.new("L", (Wc, Hc), 0)
     ImageDraw.Draw(im).polygon(pts, fill=255)
@@ -243,11 +293,13 @@ def polar_patch(shape, centre, R, harm, prot, margin=4.0):
 
 
 def shape_loss(lost):
-    """No tongue of loss or of paper narrower than 20 mm (the review asked 15): open the loss and the paper with a 20 mm disc."""
+    """No tongue of loss or of paper narrower than 20 mm (the review asked 15): open the loss and the paper with a 20 mm disc. The mask is first padded by its own edge (21 px, more than the
+    disc reaches), so that a loss that reaches the sheet's edge keeps to it (the close review's finding 1: an opening with the border counted as paper left a 10 mm frame round every loss)."""
     st = gl_disk(10)
-    lost = ndi.binary_opening(lost, st, border_value=0)
-    paper = ndi.binary_opening(~lost, st, border_value=1)
-    return ~paper
+    p = 21
+    m = ndi.binary_opening(np.pad(lost, p, mode="edge"), st)
+    paper = ndi.binary_opening(~m, st)
+    return (~paper)[p:-p, p:-p]
 
 
 def gl_disk(r):
@@ -300,7 +352,7 @@ def loss_and_tears(S, share_range, n_tears):
         lo_f, hi_f = 0.1, 3.0
         for _ in range(12):
             f = (lo_f + hi_f) / 2
-            got = float(build(f).mean())
+            got = float(shape_loss(build(f)).mean())
             if got > share:
                 hi_f = f
             else:
@@ -324,7 +376,7 @@ def loss_and_tears(S, share_range, n_tears):
         S.alpha *= (1 - 0.7 * lost_f)
     else:
         S.alpha *= (1 - lost_f)
-    S.height -= (lost_f * 0.1).astype(np.float32)
+    S.height[:] = (S.height * (1 - lost_f) - 0.1 * lost_f).astype(np.float32)          # where the paper is gone the wall lies the paper's thickness below the face
     S.log["tears"] = len(bites)
     S.log["loss_share"] = float(1 - (S.alpha > 0.5).mean())
 
@@ -425,14 +477,34 @@ def tape_filter(S, win, cov, spec):
     S.rough[wy0:wy1, wx0:wx1] = S.rough[wy0:wy1, wx0:wx1] * (1 - cov) + 0.35 * cov
 
 
-def tape_tab(S, centre_mm, flip_x=False, flip_y=False, spec=None, lift=True):
+def tape_tab(S, centre_mm, flip_x=False, flip_y=False, spec=None):
+    """A tab of tape; where it passes the edge of a shaped card (the star cards) it is the tape alone, at alpha 0.49 (the close review's finding 9: the target's tab passes the card's edge;
+    0.49 keeps it under the reader's 0.5, so that it is not read as card)."""
     spec = spec or S.P.T["fixings"]["tape_tab"]
     pts = pc.tape_polygon(centre_mm, S.ppm, S.H, spec, flip_x, flip_y)
     xs, ys = [p[0] for p in pts], [p[1] for p in pts]
     win = S.win_of((min(xs), min(ys), max(xs), max(ys)), 3)
-    cov = pi.draw_cov(win, lambda d, ss, ox, oy: d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in pts], fill=255))
+    cov = pi.draw_cov(win, lambda d, ss, ox, oy: d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in pts], fill=255), ss=4)
     tape_filter(S, win, cov, spec)
+    wx0, wx1, wy0, wy1 = win
+    a_card = S.alpha[wy0:wy1, wx0:wx1]
+    a_tab = 0.49 * cov * (1 - a_card)
+    if a_tab.max() > 0.02:
+        a_new = a_card + a_tab
+        sub = S.rgb[wy0:wy1, wx0:wx1]
+        mix = (sub * a_card[..., None] + np.asarray(spec["rgb"], np.float32) * a_tab[..., None]) / np.maximum(a_new, 1e-6)[..., None]
+        sub[:] = np.where((a_new > 1e-6)[..., None], mix, sub)
+        a_card[:] = a_new
     return win, cov
+
+
+def tabs(S):
+    """Every tab of tape the item carries in its class (paper_common.tab_layout: one home for the maker and the reader)."""
+    lay = pc.tab_layout(S.P.T, S.item, S.cls)
+    for c, fxx, fyy, spec in lay:
+        tape_tab(S, c, fxx, fyy, spec)
+    if lay:
+        S.log["tabs"] = len(lay)
 
 
 def string_cue(S):
@@ -451,17 +523,21 @@ def string_cue(S):
     S.tint(win, cov * np.clip(1 - rr * 3, 0, 1), (112, 112, 108), 0.5)
     wx0, wx1, wy0, wy1 = win
     S.height[wy0:wy1, wx0:wx1] += (cov * 0.9).astype(np.float32)
-    # the knot: a small cream lump at the sucker's top edge, and the string running up to the card's top edge
+    # the string, 1.0 mm, straight up from the knot to the card's top edge, and the 8 mm knot over the sucker's upper half (the close review's finding 8), in STRING
     kr = fx["knot_mm"] / 2 * S.ppm
-    kx, ky = px + 2 * S.ppm, py - r - kr * 0.6
-    kwin = S.win_of((kx - kr - 3, ky - kr - 3, kx + kr + 3, ky + kr + 3))
-    kc = pi.draw_cov(kwin, lambda d, ss, ox, oy: d.ellipse([(kx - kr - ox) * ss, (ky - kr - oy) * ss, (kx + kr - ox) * ss, (ky + kr - oy) * ss], fill=255))
-    S.tint(kwin, kc, fx["string_rgb"], 1.0)
-    wid = max(1.0, 1.4 * S.ppm)
-    sw = S.win_of((kx - wid - 2, 0, kx + wid + 2, ky))
-    sc_ = pi.draw_cov(sw, lambda d, ss, ox, oy: d.line([((kx - ox) * ss, (0 - oy) * ss), ((kx - ox) * ss, (ky - oy) * ss)], fill=255, width=max(1, int(wid * ss))))
-    S.tint(sw, sc_, fx["string_rgb"], 0.95)
-    S.tint(sw, sc_, (120, 114, 100), 0.18)
+    kx, ky = px, py - 0.45 * r
+    wid = 1.0 * S.ppm
+    sw = S.win_of((kx - wid - 2, 0, kx + wid + 2, ky + 1))
+    sc_ = pi.rect_cov((kx - wid / 2, 0, kx + wid / 2, ky), sw)
+    S.tint(sw, sc_, STRING, 0.95)
+    S.height[sw[2]:sw[3], sw[0]:sw[1]] += (sc_ * 0.5).astype(np.float32)
+    kwin, kc = S.blob(kx, ky, kr, 0.22)
+    S.tint(kwin, kc, STRING, 1.0)
+    gy, gx = np.mgrid[kwin[2]:kwin[3], kwin[0]:kwin[1]].astype(np.float32)
+    S.tint(kwin, kc * np.clip(((gx - kx) + (gy - ky)) / (2 * kr), 0, 1), (96, 96, 92), 0.35)        # the knot's shaded lower right
+    kin = ndi.distance_transform_edt(np.pad(kc > 0.5, 1))[1:-1, 1:-1]
+    S.tint(kwin, ((kin > 0) & (kin <= max(1.0, 0.4 * S.ppm))).astype(np.float32) * kc, (88, 88, 84), 0.6)       # its edge, so that it shows on the sucker
+    S.height[kwin[2]:kwin[3], kwin[0]:kwin[1]] += (kc * 1.5).astype(np.float32)
     S.log["string_cue"] = True
 
 
@@ -473,9 +549,14 @@ def bolt_head(S, x_mm, y_mm, d_mm=18, hole_mm=10, rust=True):
     cov = pi.draw_cov(win, lambda d, ss, ox, oy: d.ellipse([(px - r - ox) * ss, (py - r - oy) * ss, (px + r - ox) * ss, (py + r - oy) * ss], fill=255))
     gy, gx = np.mgrid[win[2]:win[3], win[0]:win[1]].astype(np.float32)
     rr = np.hypot(gx - px, gy - py) / r
-    if rust:
-        halo = np.clip(1 - (rr - 1) * r / (5 * S.ppm), 0, 1) * (rr >= 0.95)
-        S.tint(win, halo.astype(np.float32), RUST, 0.45)
+    if rust:                # a ring of rust 2 to 4 mm wide at 0.5, three times as strong below the head as above it (the close review's finding 10)
+        wr = float(S.rng.uniform(2, 4)) * S.ppm
+        dd = (rr - 1) * r
+        ring = np.clip(1 - (np.maximum(dd, 0) / wr) ** 2, 0, 1) * (rr >= 0.95)
+        below = np.clip(0.5 + 0.5 * (gy - py) / np.maximum(rr * r, 1.0), 0, 1)
+        wgt = 1 / 3.0 + (2 / 3.0) * below
+        n = 0.65 + 0.35 * pc.value_noise(rr.shape, 1.2 * S.ppm, S.rng)
+        S.tint(win, (ring * wgt * n).astype(np.float32), RUST, 0.5)
     shade = (0.82 + 0.35 * np.clip(1 - rr, 0, 1) ** 0.7 - 0.05 * (gx - px) / r)[..., None]
     sub = S.rgb[win[2]:win[3], win[0]:win[1]]
     sub[:] = sub * (1 - cov[..., None]) + np.asarray((118, 116, 112), np.float32) * shade * cov[..., None]
@@ -483,9 +564,13 @@ def bolt_head(S, x_mm, y_mm, d_mm=18, hole_mm=10, rust=True):
     S.rough[win[2]:win[3], win[0]:win[1]] = S.rough[win[2]:win[3], win[0]:win[1]] * (1 - cov) + 0.45 * cov
 
 
-def chips(S, n, size_mm, near=None, edge_bias=0.7, colour=STEEL, halo_mm=(3, 8), halo_op=0.5, fade=1.0, spots=None):
+def chips(S, n, size_mm, near=None, edge_bias=0.7, colour=STEEL, halo_mm=(1, 3), halo_op=0.35, fade=1.0, spots=None):
+    """Chips in the enamel (the close review's finding 11): rounded and scalloped (three to six overlapping discs), dark steel ringed by 0.5 to 1 mm of the grey ground coat; in classes C
+    and D the steel is rusty and a thin rust stain lies round the chip, three times as strong below it."""
     rng = S.rng
     done = 0
+    rusty = S.cls in ("C", "D")
+    steel = np.asarray(colour, np.float32) * 0.55 + np.asarray(RUST, np.float32) * 0.45 if rusty else np.asarray(colour, np.float32)
     for i in range(n):
         r = float(rng.uniform(size_mm[0], size_mm[1])) / 2 * S.ppm
         if spots and rng.random() < 0.55:
@@ -499,25 +584,107 @@ def chips(S, n, size_mm, near=None, edge_bias=0.7, colour=STEEL, halo_mm=(3, 8),
         else:
             x, y = rng.uniform(0, S.w), rng.uniform(0, S.h)
         x, y = float(np.clip(x, 0, S.w - 1)), float(np.clip(y, 0, S.h - 1))
-        hm = float(rng.uniform(*halo_mm)) * S.ppm
-        win, cov = S.blob(x, y, r + hm, 0.0)
+        ring_px = float(rng.uniform(0.5, 1.0)) * S.ppm
+        hm = float(rng.uniform(*halo_mm)) * S.ppm if rusty else 0.0
+        pad = 1.6 * r + ring_px + hm + 3
+        win = S.win_of((x - pad, y - pad, x + pad, y + pad))
         wx0, wx1, wy0, wy1 = win
-        gy, gx = np.mgrid[wy0:wy1, wx0:wx1].astype(np.float32)
-        rr = np.hypot(gx - x, gy - y)
-        halo = np.clip(1 - (rr - r) / max(1.0, hm), 0, 1) * (rr >= r * 0.8) * (0.6 + 0.4 * pc.value_noise(rr.shape, 2 * S.ppm, rng))
-        S.tint(win, halo.astype(np.float32), RUST, halo_op * fade)
-        cw, cc = S.blob(x, y, r, 0.45)
-        S.tint(cw, cc, colour, 0.95)
-        S.height[cw[2]:cw[3], cw[0]:cw[1]] -= (cc * 0.12).astype(np.float32)
-        S.rough[cw[2]:cw[3], cw[0]:cw[1]] = S.rough[cw[2]:cw[3], cw[0]:cw[1]] * (1 - cc) + 0.7 * cc
+        if wx1 <= wx0 or wy1 <= wy0:
+            continue
+        discs = []
+        for _k in range(int(rng.integers(3, 7))):
+            a, dd = rng.uniform(0, 2 * math.pi), rng.uniform(0, 0.55) * r
+            discs.append((x + dd * math.cos(a), y + dd * math.sin(a), r * rng.uniform(0.45, 0.8)))
+
+        def draw(d, ss, ox, oy):
+            for cx, cy, rr_ in discs:
+                d.ellipse([(cx - rr_ - ox) * ss, (cy - rr_ - oy) * ss, (cx + rr_ - ox) * ss, (cy + rr_ - oy) * ss], fill=255)
+        cc = pi.draw_cov(win, draw)
+        if cc.max() <= 0:
+            continue
+        inside = cc > 0.5
+        d_out = ndi.distance_transform_edt(~inside)
+        ring = np.clip(1 - (d_out - ring_px) / 1.0, 0, 1) * (1 - cc)
+        if rusty and hm > 0:
+            gy = np.arange(wy0, wy1, dtype=np.float32)[:, None] - y
+            below = np.clip(0.5 + 0.5 * gy / np.maximum(d_out + r, 1.0), 0, 1)
+            halo = np.clip(1 - (d_out - ring_px) / hm, 0, 1) * (d_out > ring_px) * (1 / 3.0 + 2 / 3.0 * below)
+            S.tint(win, (halo * (0.6 + 0.4 * pc.value_noise(cc.shape, 1.5 * S.ppm, rng))).astype(np.float32), RUST, halo_op * fade)
+        S.tint(win, ring.astype(np.float32), GROUND_COAT, 0.95)
+        S.tint(win, cc, steel, 0.95)
+        S.height[wy0:wy1, wx0:wx1] -= (cc * 0.12 + ring * 0.05).astype(np.float32)
+        S.rough[wy0:wy1, wx0:wx1] = S.rough[wy0:wy1, wx0:wx1] * (1 - cc) + 0.7 * cc
         done += 1
     S.log["chips"] = done
 
 
-def lime_streak(S, width_mm=(20, 50), length_mm=(60, 140), colour=LIME, opacity=0.8, top=True):
+def rust_run(S, x, y0, L, op0=0.35, op1=0.05):
+    """A rust run from a screw (the close review's finding 10): 4 to 6 mm wide at the screw tapering to 1 mm, wandering up to 2 mm sideways, its opacity falling from 0.35 to 0.05."""
     rng = S.rng
-    x = rng.uniform(0.1, 0.9) * S.w
-    S.streak(x, 0.0 if top else S.h * 0.3, rng.uniform(*length_mm) * S.ppm, rng.uniform(*width_mm) * S.ppm, colour, opacity, sway=0.3)
+    w0, w1 = float(rng.uniform(4, 6)) * S.ppm, 1.0 * S.ppm
+    pad = w0 + 2.5 * S.ppm
+    win = S.win_of((x - pad, y0, x + pad, y0 + L))
+    wx0, wx1, wy0, wy1 = win
+    if wx1 <= wx0 or wy1 <= wy0 or L < 2:
+        return
+    ys = np.arange(wy0, wy1, dtype=np.float32) + 0.5
+    tt = np.clip((ys - y0) / L, 0, 1)
+    k = max(4, int(L / (8 * S.ppm)))
+    walk = np.cumsum(rng.normal(0, 1, k + 1))
+    walk -= walk[0]
+    walk *= 2.0 * S.ppm * float(rng.uniform(0.5, 1.0)) / max(1e-6, float(np.abs(walk).max()))
+    xc = x + ndi.gaussian_filter1d(np.interp(tt, np.linspace(0, 1, k + 1), walk), max(1.0, 2 * S.ppm))
+    wid = w0 + (w1 - w0) * tt ** 0.7
+    xs = np.arange(wx0, wx1, dtype=np.float32) + 0.5
+    edge = np.clip((wid[:, None] / 2 - np.abs(xs[None, :] - xc[:, None])) / (0.4 * S.ppm), 0, 1)
+    prof = edge * edge * (3 - 2 * edge)
+    op = op0 * (op1 / op0) ** tt
+    streak = 0.8 + 0.2 * pc.value_noise((wy1 - wy0, wx1 - wx0), 3 * S.ppm, rng, aniso=4.0)
+    S.tint(win, (prof * op[:, None] * streak).astype(np.float32), RUST, 1.0)
+
+
+def lime_streak(S, width_mm=(20, 50), length_mm=(60, 140), colour=LIME, opacity=0.85, top=True):
+    """Bird lime from the top edge (the close review's finding 10): a splash with a hard ragged edge, within 3 degrees of vertical, narrowing down its first half, and 1 to 3 drips below."""
+    rng = S.rng
+    x0 = rng.uniform(0.1, 0.9) * S.w
+    y0 = 0.0 if top else S.h * 0.3
+    Wd = rng.uniform(*width_mm) * S.ppm
+    L = rng.uniform(*length_mm) * S.ppm
+    Lb = L * rng.uniform(0.45, 0.6)
+    ang = math.radians(rng.uniform(-3, 3))
+    m = 48
+    tt = np.linspace(0, 1, m)
+    half = Wd / 2 * (1 - 0.65 * tt ** 0.8)
+    rag = lambda: ndi.gaussian_filter1d(rng.normal(0, 0.7 * S.ppm, m), 0.8)
+    lft, rgt = -half + rag(), half + rag()
+    body = [(lft[i], tt[i] * Lb) for i in range(m)] + [(rgt[i], tt[i] * Lb) for i in range(m - 1, -1, -1)]
+    drips = []
+    for _ in range(int(rng.integers(1, 4))):
+        u = rng.uniform(-0.6, 0.6) * half[-1]
+        dw = rng.uniform(2, 5) * S.ppm
+        dl = (L - Lb) * rng.uniform(0.4, 1.0)
+        drips.append([(u - dw / 2, Lb - 2 * S.ppm), (u + dw / 2, Lb - 2 * S.ppm), (u + dw * 0.3, Lb + dl), (u - dw * 0.3, Lb + dl)])
+        drips.append(("bead", u, Lb + dl, dw * 0.55))
+    c, s_ = math.cos(ang), math.sin(ang)
+    to = lambda u, v: (x0 + u * c - v * s_, y0 + u * s_ + v * c)
+    polys = [[to(u, v) for u, v in body]] + [[to(u, v) for u, v in d] for d in drips if d[0] != "bead"]
+    beads = [(to(d[1], d[2]), d[3]) for d in drips if d[0] == "bead"]
+    xs = [p[0] for q in polys for p in q]
+    ys = [p[1] for q in polys for p in q]
+    win = S.win_of((min(xs), min(ys), max(xs), max(ys)), 4)
+    if win[1] <= win[0] or win[3] <= win[2]:
+        return
+
+    def draw(d, ss, ox, oy):
+        for q in polys:
+            d.polygon([((x - ox) * ss, (y - oy) * ss) for x, y in q], fill=255)
+        for (bx, by), br in beads:
+            d.ellipse([(bx - br - ox) * ss, (by - br - oy) * ss, (bx + br - ox) * ss, (by + br - oy) * ss], fill=255)
+    cov = pi.draw_cov(win, draw)
+    dens = 0.92 + 0.08 * pc.value_noise(cov.shape, 2 * S.ppm, rng)
+    S.tint(win, (cov * dens).astype(np.float32), colour, opacity)
+    S.height[win[2]:win[3], win[0]:win[1]] += (cov * 0.2).astype(np.float32)
+    S.rough[win[2]:win[3], win[0]:win[1]] = S.rough[win[2]:win[3], win[0]:win[1]] * (1 - cov) + 0.8 * cov
     S.log["lime"] = S.log.get("lime", 0) + 1
 
 
@@ -547,12 +714,9 @@ def crazing(S, x_mm, y_mm, n=3):
 
 
 # ------------------------------------------------------------------------------------------ the tables
-WEAR_OVERRIDE = {("P02", "A"): "glass_bill"}      # the target hangs P02 in the cottage window (SF9) taped inside the glass: it is not a pasted bill there
-
-
 def apply(S, table, cls):
     it = S.item
-    table = WEAR_OVERRIDE.get((it["id"], cls), table)
+    table = pc.WEAR_OVERRIDE.get((it["id"], cls), table)
     if it["process"] == "plastic_print":
         table = "plastic_card"
     rng = S.rng
@@ -562,13 +726,9 @@ def apply(S, table, cls):
     process = it["process"]
     mc = it.get("mirror_cue")
     fixk = (it.get("fixing") or {}).get("kind", "")
-    if table in ("bill_pasted", "glass_bill", "notice_sleeve", "sticker"):
-        amp = R["wrinkle"]["amplitude_mm"]
-        a = amp[0] + (amp[1] - amp[0]) * ci / 3.0
-        if table == "sticker":
-            a *= 0.3
+    if table in ("bill_pasted", "glass_bill", "glass_two_tabs", "notice_sleeve", "sticker"):
         if ci > 0 or table != "sticker":
-            cockle(S, a if ci > 0 else amp[0] * 0.6, rng.uniform(*R["wrinkle"]["wavelength_mm"]), aniso=2.2 if table == "bill_pasted" else 1.4)
+            paper_relief(S, table)
             S.shade(0.10)
     if table == "bill_pasted":
         corner_lifts(S, [0, 1, 1, 2][ci] if ci else 0, 15, 60)
@@ -580,13 +740,12 @@ def apply(S, table, cls):
     elif table == "glass_bill":
         condensation(S)
         curl_out(S)
-        if it["format"]["w_mm"] >= 200:
-            four_tabs(S)
+        S.rough[:] = S.rough * 0.85
+    elif table == "glass_two_tabs":
+        curl_out(S, 2, 5)              # hung by its top corners inside the glass: the foot curls out a little; no beads, ties or fog
         S.rough[:] = S.rough * 0.85
     elif table == "notice_sleeve":
         sleeve(S)
-        if it["id"] == "C01a":
-            four_tabs(S)               # the appeal hangs inside the empty unit's glass, taped by four tabs (the target's placement)
     elif table == "plastic_card":
         # a printed plastic card on a chain: no folds, no curl, no bleaching, no finger smudge; scratches, a little grime (at most 5 per cent) and the sheen of the plastic
         scratches(S, int(rng.integers(6, 21)), width_mm=(0.2, 0.5), length_mm=(5, 40))
@@ -621,31 +780,9 @@ def apply(S, table, cls):
     # photocopier artefacts and fixings belong to the print and the way it hangs
     if process in ("photocopy_a3", "photocopy_a4"):
         photocopy_artefacts(S, process)
-    if mc:
-        if mc["kind"] == "tape":
-            tape_tab(S, mc["tab_centre_mm"])
-        else:
-            string_cue(S)
-    elif fixk == "string":
+    tabs(S)                            # the tape lies over the print and the copier's marks
+    if (mc and mc["kind"] != "tape") or (not mc and fixk == "string"):
         string_cue(S)
-    S.height += 0.0
-
-
-TAB_SCALE = {"P02": 1 / 0.585}       # P02 is shown at 0.585 of its size in the cottage window (SF9): its tabs are drawn 1/0.585 bigger so that they are the target's 38 x 16 mm on the glass
-
-
-def four_tabs(S):
-    """A sheet taped in a window by four tabs, one across each corner (the target's four_tabs)."""
-    fx = S.P.T["fixings"]["four_tabs"]
-    k = TAB_SCALE.get(S.item["id"], 1.0)
-    spec = dict(length_mm=fx["length_mm"] * k, width_mm=fx["width_mm"] * k, angle_deg=fx["angle_deg"], rgb=fx["rgb"], opacity=fx["opacity"])
-    c = [v * k for v in S.P.T["fixings"]["tape_tab"]["centre_in_mm"]]
-    for right in (False, True):
-        for bottom in (False, True):
-            cx = S.W - c[0] if right else c[0]
-            cy_up = c[1] if bottom else S.H - c[1]
-            tape_tab(S, (cx, cy_up), flip_x=right, flip_y=bottom, spec=spec)
-    S.log["tabs"] = 4
 
 
 def sleeve(S):
@@ -674,16 +811,7 @@ def sleeve(S):
         S.tint(win, np.roll(m, int(wid * 1.5), axis=0), (60, 60, 60), 0.10)
     # water beads, lower third
     for _ in range(int(rng.integers(6, 21))):
-        r = rng.uniform(1.0, 3.0) * S.ppm
-        x, y = rng.uniform(0.05, 0.95) * S.w, rng.uniform(0.66, 0.97) * S.h
-        win = S.win_of((x - r - 2, y - r - 2, x + r + 2, y + r + 2))
-        cov = pi.draw_cov(win, lambda d, ss, ox, oy: d.ellipse([(x - r - ox) * ss, (y - r - oy) * ss, (x + r - ox) * ss, (y + r - oy) * ss], fill=255))
-        gy, gx = np.mgrid[win[2]:win[3], win[0]:win[1]].astype(np.float32)
-        rr = np.hypot(gx - x, gy - y) / r
-        S.tint(win, cov * np.clip(1 - np.abs(rr - 0.85) * 6, 0, 1), (60, 62, 66), 0.30)
-        lum = S.rgb[win[2]:win[3], win[0]:win[1]].mean(-1) / 255.0
-        S.tint(win, cov * np.clip(1 - np.hypot(gx - x + 0.35 * r, gy - y + 0.35 * r) / (0.4 * r), 0, 1) * (0.3 + 0.7 * np.clip(lum, 0, 1)), (255, 255, 255), 0.7)
-        S.height[win[2]:win[3], win[0]:win[1]] += (cov * 0.25).astype(np.float32)
+        water_bead(S, rng.uniform(0.05, 0.95) * S.w, rng.uniform(0.66, 0.97) * S.h, rng.uniform(1.0, 3.0) * S.ppm)
     S.rough[:] = np.minimum(S.rough, 0.25)
     # the sheet has slid down inside: a clear band at the top, a highlight along its lower edge (kept inside the top margin)
     top_margin_mm = S.H - it["safe_mm"][3]
@@ -704,6 +832,28 @@ def sleeve(S):
         S.tint(win, m, (74, 76, 78), 0.95)
         S.height[win[2]:win[3], win[0]:win[1]] += (m * 0.5).astype(np.float32)
     S.log["sleeve"] = True
+
+
+def water_bead(S, x, y, r):
+    """A bead of water on polythene, 2 to 6 mm, as a lens (the close review's finding 7: not an outlined ring): the paper under it enlarged 1.08 times, a darker crescent (-12 per cent)
+    on its lower 0.3 R, a highlight of radius 0.2 R (+35 per cent) at its upper left, no outline."""
+    win = S.win_of((x - r - 2, y - r - 2, x + r + 2, y + r + 2))
+    wx0, wx1, wy0, wy1 = win
+    if wx1 <= wx0 or wy1 <= wy0:
+        return
+    cov = pi.draw_cov(win, lambda d, ss, ox, oy: d.ellipse([(x - r - ox) * ss, (y - r - oy) * ss, (x + r - ox) * ss, (y + r - oy) * ss], fill=255))
+    gy, gx = np.mgrid[wy0:wy1, wx0:wx1].astype(np.float32) + 0.5
+    sx, sy = x + (gx - x) / 1.08 - 0.5, y + (gy - y) / 1.08 - 0.5
+    mag = np.stack([ndi.map_coordinates(S.rgb[..., k], [sy, sx], order=1, mode="nearest") for k in range(3)], -1)
+    sub = S.rgb[wy0:wy1, wx0:wx1]
+    sub[:] = sub * (1 - cov[..., None]) + mag * cov[..., None]
+    up = np.hypot(gx - x, gy - (y - 0.3 * r))                                  # the crescent: inside the bead, outside the same disc lifted 0.3 R
+    cres = cov * np.clip(up - r + 0.5, 0, 1)
+    sub *= (1 - 0.12 * cres)[..., None]
+    hl = cov * np.clip(0.2 * r - np.hypot(gx - (x - 0.4 * r), gy - (y - 0.4 * r)) + 0.5, 0, 1)
+    sub[:] = np.minimum(255.0, sub * (1 + 0.35 * hl)[..., None])
+    rr = np.hypot(gx - x, gy - y) / r
+    S.height[wy0:wy1, wx0:wx1] += (cov * 0.4 * np.sqrt(np.clip(1 - rr * rr, 0, 1))).astype(np.float32)
 
 
 def dog_ears(S, n):
@@ -788,9 +938,8 @@ def enamel_plate(S, it):
             crazing(S, hx, hy, 3)
     chips(S, int(round(rng.integers(12, 31) * k)), (2, 9), edge_bias=0.65, spots=holes, fade=k)
     if S.cls in ("C", "D"):
-        for hx, hy in [h for h in holes if h[1] < S.H / 2]:
-            px = hx * S.ppm
-            S.streak(px, (S.H - hy) * S.ppm + 8 * S.ppm, (S.H - hy) * S.ppm + rng.uniform(150, 400) * S.ppm * (0.6 + 0.4 * k), rng.uniform(6, 14) * S.ppm, RUST, 0.30 * k + 0.1, sway=0.5)
+        for hx, hy in [h for h in holes if h[1] > S.H / 2]:          # under the top bolts (y is from the bottom)
+            rust_run(S, hx * S.ppm, (S.H - hy) * S.ppm + 6 * S.ppm, rng.uniform(150, 400) * S.ppm * (0.6 + 0.4 * k))
         lime_streak(S)
     if it["id"] == "H02":
         n = pc.value_noise((S.h, S.w), 3 * S.ppm, rng, octaves=2)
@@ -811,67 +960,105 @@ def raised_mask(S):
     return m
 
 
-def angular_flakes(S, rm, share):
-    """The paint of the raised faces lifting as angular flakes of 2 to 12 mm (five to seven straight sides), twice as dense on the upper half of each letter, until `share` of the plate is bare."""
+def edge_flakes(S, rm, share):
+    """The paint of the raised letters and border lifting at their edges first (the close review's finding 6; the first answer, angular flakes spread over every face, read as
+    terrazzo): runs of 3 to 8 angular flakes, 6 to 25 mm long, along the raised edges, each flake 1.6 to 4 mm across and set 0.2 to 0.8 mm in from the edge, until `share` of the raised
+    area is bare; the share within 2 mm of an edge is logged (at least 0.8)."""
     rng = S.rng
-    lab, n = ndi.label(rm > 0.5)
-    ys, xs = np.nonzero(rm > 0.5)
-    if not len(ys):
+    on = rm > 0.5
+    if not on.any():
         return np.zeros((S.h, S.w), np.float32)
-    objs = ndi.find_objects(lab)
-    top = np.zeros(n + 1); bot = np.zeros(n + 1)
-    for i, sl in enumerate(objs, 1):
-        top[i], bot[i] = sl[0].start, sl[0].stop
-    comp = lab[ys, xs]
-    mid = (top[comp] + bot[comp]) / 2.0
-    wgt = np.where(ys < mid, 2.0, 1.0)
-    wgt = wgt / wgt.sum()
+    din = ndi.distance_transform_edt(np.pad(on, 1))[1:-1, 1:-1]
+    gy_, gx_ = np.gradient(ndi.gaussian_filter(din.astype(np.float32), 1.0))
+    eys, exs = np.nonzero(on & (din <= 1.0))
+    pts = np.stack([exs, eys], 1).astype(np.float32)
     ss = 3
     im = Image.new("L", (S.w * ss, S.h * ss), 0)
     d = ImageDraw.Draw(im)
-    area_px = share * S.w * S.h
-    got = 0.0
-    tries = 0
-    while got < area_px and tries < 6000:
-        tries += 1
-        i = rng.choice(len(ys), p=wgt)
-        cx, cy = xs[i] + rng.random(), ys[i] + rng.random()
-        r = rng.uniform(1.0, 6.0) * S.ppm
-        m = int(rng.integers(5, 8))
-        ang = np.sort(rng.uniform(0, 2 * math.pi, m))
-        rad = r * rng.uniform(0.45, 1.0, m)
-        pts = [((cx + rr * math.cos(a)) * ss, (cy + rr * math.sin(a) * rng.uniform(0.5, 1.0)) * ss) for rr, a in zip(rad, ang)]
-        d.polygon(pts, fill=255)
-        got += 0.5 * m * rad.mean() ** 2 * math.sin(2 * math.pi / m) * 0.7
-    a_ = np.asarray(im.resize((S.w, S.h), Image.BOX)).astype(np.float32) / 255.0
-    return a_ * (rm > 0.5)
+    target = share * float(on.sum())
+    est, runs, flakes = 0.0, 0, 0
+    while est < target and runs < 4000:
+        runs += 1
+        i0 = int(rng.integers(len(eys)))
+        c0 = pts[i0]
+        L = rng.uniform(6, 25) * S.ppm
+        n = int(rng.integers(3, 9))
+        near = np.abs(pts - c0).max(1) <= L
+        loc = pts[near]
+        tan_ = loc[np.hypot(*(loc - c0).T) <= 3 * S.ppm]
+        if len(tan_) < 4:
+            continue
+        w_, v_ = np.linalg.eigh(np.cov((tan_ - tan_.mean(0)).T))
+        tdir = v_[:, -1]
+        for k in range(n):
+            q = c0 + tdir * (k - (n - 1) / 2.0) * L / max(1, n - 1)
+            dq = np.hypot(*(loc - q).T)
+            j = int(np.argmin(dq))
+            if dq[j] > 2 * S.ppm:
+                continue
+            ex, ey = loc[j]
+            nx, ny = gx_[int(ey), int(ex)], gy_[int(ey), int(ex)]
+            nn = math.hypot(nx, ny) or 1.0
+            sh = rng.uniform(0.2, 0.8) * S.ppm
+            cx, cy = ex + 0.5 + nx / nn * sh, ey + 0.5 + ny / nn * sh
+            r = rng.uniform(0.8, 2.0) * S.ppm
+            m = int(rng.integers(5, 8))
+            ang = np.sort(rng.uniform(0, 2 * math.pi, m))
+            rad = r * rng.uniform(0.5, 1.0, m)
+            d.polygon([((cx + rr * math.cos(a)) * ss, (cy + rr * math.sin(a)) * ss) for rr, a in zip(rad, ang)], fill=255)
+            est += 0.5 * m * float(np.mean(rad)) ** 2 * math.sin(2 * math.pi / m) * 0.6
+            flakes += 1
+    a_ = np.asarray(im.resize((S.w, S.h), Image.BOX)).astype(np.float32) / 255.0 * on
+    tot = float(a_.sum())
+    S.log["flake_runs"] = runs
+    S.log["flakes"] = flakes
+    S.log["flake_share_of_raised"] = tot / max(1.0, float(on.sum()))
+    S.log["flake_within_2mm"] = float((a_ * (din <= 2.0 * S.ppm)).sum()) / max(1e-6, tot)
+    return a_
+
+
+def chalky_ground(S, rm, share=0.01):
+    """Chalky patches on the painted ground between the raised letters (the close review's finding 6): 1 per cent of the ground, matt and a shade duller."""
+    ground = (rm < 0.5) & (S.alpha > 0.5)
+    if not ground.any():
+        return
+    n = pc.value_noise((S.h, S.w), 25 * S.ppm, S.rng, octaves=3)
+    thr = float(np.quantile(n[ground], 1 - share))
+    ch = (pc.smooth((n >= thr).astype(np.float32), 1.0 * S.ppm) * ground).astype(np.float32)
+    S.tint((0, S.w, 0, S.h), ch, (222, 220, 212), 0.5)
+    S.rough[:] = S.rough * (1 - ch) + 0.9 * ch
+    S.log["chalky_share"] = float((ch > 0.5).sum()) / float(ground.sum())
 
 
 def cast_plate(S, it):
-    """S01 n and d: cast aluminium, letters and border raised 3 mm, painted: the paint lifts first at the raised edges, a grime gradient, a rust run under each screw, bird lime on the top border."""
+    """S01 n and d: cast aluminium, letters and border raised 3 mm, painted: the paint lifts first at the raised edges (a darker rim of lifted paint round each flake), chalky patches on the
+    ground, a grime gradient, rust from the screws, bird lime on the top border."""
     rng = S.rng
     rm = raised_mask(S)
-    edge = np.clip(ndi.grey_dilation(rm, size=(int(1.2 * S.ppm) * 2 + 1,) * 2) - ndi.grey_erosion(rm, size=(int(1.2 * S.ppm) * 2 + 1,) * 2), 0, 1)
-    edge = pc.smooth(edge, 1.5 * S.ppm)
-    share = float(rng.uniform(0.03, 0.06)) * {"A": 0.0, "B": 0.4, "C": 0.7, "D": 1.0}[S.cls]
+    k = {"A": 0.0, "B": 0.4, "C": 0.7, "D": 1.0}[S.cls]
+    share = float(rng.uniform(0.03, 0.06)) * k
     if share > 0 and rm.sum() > 0:
-        flake = angular_flakes(S, rm, share)
-        bloom = np.clip(ndi.grey_dilation(flake, size=(int(0.8 * S.ppm) * 2 + 1,) * 2) - flake, 0, 1)
-        S.tint((0, S.w, 0, S.h), bloom * (1 - flake), (170, 168, 160), 0.30)
+        flake = edge_flakes(S, rm, share)
+        rim = np.clip(ndi.grey_dilation(flake, footprint=gl_disk(max(1, int(round(0.4 * S.ppm))))) - flake, 0, 1) * (rm > 0.5)
+        S.rgb *= (1 - 0.2 * rim)[..., None]                    # a 0.4 mm rim of lifted paint at 0.8 of its value
         S.tint((0, S.w, 0, S.h), flake, ALUM, 0.95)
         S.metal = np.maximum(S.metal, flake)
         S.rough[:] = S.rough * (1 - flake * 0.5) + 0.35 * flake * 0.5
         S.height -= (flake * 0.15).astype(np.float32)
         S.log["flake_share"] = float((flake > 0.5).mean())
-    grime_gradient(S, 0.12 * {"A": 0.0, "B": 0.4, "C": 0.7, "D": 1.0}[S.cls])
+    if k > 0:
+        chalky_ground(S, rm, 0.01)
+    grime_gradient(S, 0.12 * k)
     if S.cls in ("C", "D"):
-        for hx, hy in it["fixing"]["holes_mm"]:
+        holes = it["fixing"]["holes_mm"]
+        run = [h for h in holes if rng.random() < 0.6] or [holes[int(rng.integers(len(holes)))]]
+        for hx, hy in holes:
             bolt_head(S, hx, hy, 14, 10, rust=True)
-            if hy < S.H / 2:
-                S.streak(hx * S.ppm, (S.H - hy) * S.ppm + 6 * S.ppm, (S.H - hy) * S.ppm + rng.uniform(20, 80) * S.ppm * 2.2, rng.uniform(5, 11) * S.ppm, RUST, 0.30, sway=0.4)
+        for hx, hy in run:
+            L = (rng.uniform(40, 120) if hy > S.H / 2 else rng.uniform(15, 40)) * S.ppm
+            rust_run(S, hx * S.ppm, (S.H - hy) * S.ppm + 5 * S.ppm, L)
         for _ in range(int(rng.integers(1, 3))):
-            x = rng.uniform(0.1, 0.9) * S.w
-            S.streak(x, 0, rng.uniform(22, 50) * S.ppm, rng.uniform(20, 50) * S.ppm, LIME, 0.6, sway=0.2)
+            lime_streak(S, width_mm=(12, 30), length_mm=(22, 50))
     S.shade(0.05)
 
 
@@ -928,9 +1115,11 @@ def letting_board(S, it):
             op = float(rng.uniform(0.05, 0.10))
         w_top = rng.uniform(15, 60)
         S.streak(x, 0, rng.uniform(80, 250) * S.ppm, w_top * S.ppm, (48, 44, 38), op, sway=0.5, end_frac=rng.uniform(5, 20) / w_top)
-    for x in sx:
-        L = rng.uniform(40, 140) * S.ppm
-        S.streak(x * S.ppm, (S.H - 40) * S.ppm + 6 * S.ppm, (S.H - 40) * S.ppm + L, rng.uniform(4, 9) * S.ppm, RUST, 0.32, sway=0.4)
+    screws = [(x, y) for x in sx for y in sy]
+    run = [s for s in screws if rng.random() < 0.6] or [screws[int(rng.integers(len(screws)))]]
+    for x, y in run:
+        L = (rng.uniform(40, 140) if y > S.H / 2 else rng.uniform(15, 38)) * S.ppm
+        rust_run(S, x * S.ppm, (S.H - y) * S.ppm + 5 * S.ppm, L)
     peel_bites(S, int(rng.integers(2, 5)))
     ys, xs = np.mgrid[0:S.h, 0:S.w].astype(np.float32)
     if S.cls == "D":

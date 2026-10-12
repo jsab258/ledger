@@ -135,20 +135,11 @@ def tape_region(sc, P, item, cls, tau=1.0):
     filter (the filter is what turns bare stock into the target's tape colour at the target's opacity). None when the item has no tab."""
     ppm = float(item["px_per_mm"])
     W, H = item["format"]["w_mm"], item["format"]["h_mm"]
-    fx = sc.T["fixings"]
-    polys = []
-    mc = item.get("mirror_cue")
-    if mc and mc.get("kind") == "tape":
-        polys.append(pc.tape_polygon(mc["tab_centre_mm"], ppm, H, fx["tape_tab"]))
-        spec = fx["tape_tab"]
-    elif item["wear"].get("table") == "glass_bill" and W >= 200 or item["id"] == "C01a":
-        spec = fx["four_tabs"]
-        c = fx["tape_tab"]["centre_in_mm"]
-        for right in (False, True):
-            for bottom in (False, True):
-                polys.append(pc.tape_polygon((W - c[0] if right else c[0], c[1] if bottom else H - c[1]), ppm, H, dict(spec, centre_in_mm=c), right, bottom))
-    else:
+    tabs = pc.tab_layout(sc.T, item, cls)
+    if not tabs:
         return None
+    polys = [pc.tape_polygon(c, ppm, H, spec, fxx, fyy) for c, fxx, fyy, spec in tabs]
+    spec = tabs[0][3]
     w, h = int(round(W * ppm)), int(round(H * ppm))
     im = Image.new("L", (w, h), 0)
     d = ImageDraw.Draw(im)

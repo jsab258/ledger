@@ -27,7 +27,7 @@ LOOK = {
     "photocopy_a3": dict(sigma=0.12, density=0.92, fat=0.06, film=0.01, rough=0.60),
     "typed_carbon": dict(sigma=0.10, strike=(0.88, 1.0), film=0.01, rough=0.55),
     "felt_pen": dict(sigma=0.22, pool=0.14, film=0.0, rough=0.65),
-    "ballpoint_card": dict(sigma=0.12, pressure=0.12, blots=True, film=0.0, rough=0.45),
+    "ballpoint_card": dict(sigma=0.12, pressure=0.25, blots=True, film=0.0, rough=0.45),     # the density along the stroke 0.75 to 1.0 (the close review)
     "sticker_print": dict(sigma=0.10, mottle=(0.03, 5), film=0.01, rough=0.45),
     "plastic_print": dict(sigma=0.10, film=0.01, rough=0.30),
     "enamel": dict(sigma=0.08, film=0.0, rough=0.12),
@@ -126,12 +126,60 @@ def reg_offset(rng):
     return (sx * float(rng.uniform(0.28, 0.36)), sy * float(rng.uniform(0.05, 0.25)))
 
 
+# A person's line (the close review's finding 3): the target's `jitter_glyphs` draws every glyph's baseline and size on its own (ballpoint: baseline sd 0.6 mm, size sd 0.06), so the
+# letters jump one by one. Here the baseline is a slope per line, one slow wave and a small per-glyph wobble, and the size varies per word with a smaller per-glyph part; every draw is
+# clipped at 3 sd as the target's are, and the whole stays inside the target's hand envelope (`envelope_problems`), which the check proves.
+HAND = dict(slope_sd_deg=0.5, wave_mm=0.4, wave_len_mm=(60.0, 120.0), glyph_sd_cap=0.03, word_size_sd=0.03, glyph_size_sd=0.025, rotation_sd_deg=0.8)
+BALLPOINT_EMB_MM = -0.2       # a ballpoint line is 0.3 to 0.45 mm wide: Patrick Hand's own stroke (about 0.85 mm at a 4.4 mm cap) thinned by 0.2 mm on each side
+
+
+def hand_glyphs(sc, b, rng):
+    """The manifest of a HAND block by the smooth model above (the target's layout, word gaps by the hand style's word_gap_sd)."""
+    hs = sc.T["hand_styles"][b["hand"]]
+    base = sc.layout_glyphs(b)
+    f = sc.font(b["font"], b["weight"], b["size_px_per_em"] * sc.LAYOUT_PPM)
+
+    def n(sd):
+        return float(np.clip(rng.normal(0, sd), -3 * sd, 3 * sd))
+    slope = math.tan(math.radians(n(HAND["slope_sd_deg"])))
+    lam = float(rng.uniform(*HAND["wave_len_mm"]))
+    ph = float(rng.uniform(0, 2 * math.pi))
+    amp = HAND["wave_mm"] * float(rng.uniform(0.6, 1.0))
+    xs = [e["ox_mm"] for e in base]
+    xc = (min(xs) + max(xs)) / 2.0 if xs else 0.0
+    lim = 0.85 * (3.5 * hs["baseline_sd_mm"] + 0.6)          # inside the target's envelope with a margin
+    emb = BALLPOINT_EMB_MM if b["hand"] == "ballpoint" else hs["embolden_mm"]
+    out, drift = [], 0.0
+    word = 1.0 + n(HAND["word_size_sd"])
+    for e in base:
+        if e["ch"] == " ":
+            drift += f.getlength(" ") / sc.LAYOUT_PPM * n(hs["word_gap_sd"])
+            word = 1.0 + n(HAND["word_size_sd"])
+            out.append(dict(e, ox_mm=e["ox_mm"] + drift))
+            continue
+        s = word * (1.0 + n(HAND["glyph_size_sd"]))
+        s = float(np.clip(s, 1 - 3.0 * hs["size_sd"], 1 + 3.0 * hs["size_sd"]))
+        adv = f.getlength(e["ch"]) / sc.LAYOUT_PPM
+        x = e["ox_mm"] + drift
+        dy = slope * (x - xc) + amp * math.sin(2 * math.pi * x / lam + ph) + n(HAND["glyph_sd_cap"] * b["cap_mm"])
+        dy = float(np.clip(dy, -lim, lim))
+        out.append(dict(e, ox_mm=x, em_mm=e["em_mm"] * s, baseline_mm=e["baseline_mm"] + dy, rot_deg=n(HAND["rotation_sd_deg"]), emb_mm=emb))
+        drift += (s - 1.0) * adv
+    shift = -drift / 2.0 if b["anchor"] == "centre" else (-drift if b["anchor"] == "right" else 0.0)
+    return [dict(e, ox_mm=e["ox_mm"] + shift) for e in out]
+
+
 def lay_block(sc, b, rng, off=(0.0, 0.0)):
-    """The manifest of one block (the target's own layout or hand jitter, plus the registration offset)."""
-    g = sc.jitter_glyphs(b, rng) if b.get("hand") else sc.layout_glyphs(b)
+    """The manifest of one block (the target's own layout or a person's hand, plus the registration offset)."""
+    g = hand_glyphs(sc, b, rng) if b.get("hand") else sc.layout_glyphs(b)
     if off != (0.0, 0.0):
         g = [dict(e, ox_mm=e["ox_mm"] + off[0], baseline_mm=e["baseline_mm"] + off[1]) for e in g]
     return g
+
+
+def glyph_patch(sc, g, ppm):
+    """The glyph's patch, by the target's own glyph maker (a negative emb_mm thins the stroke: the target's glyphlib takes it since the close review)."""
+    return sc.glyph_patch_cached(g["font"], g["weight"], g["ch"], g["em_mm"], ppm, g["rot_deg"], g["emb_mm"])
 
 
 def paste_block(sc, gl, glyphs, ppm, H, win):
@@ -140,7 +188,7 @@ def paste_block(sc, gl, glyphs, ppm, H, win):
     for g in glyphs:
         if g["ch"] == " ":
             continue
-        patch, ox, base = sc.glyph_patch_cached(g["font"], g["weight"], g["ch"], g["em_mm"], ppm, g["rot_deg"], g["emb_mm"])
+        patch, ox, base = glyph_patch(sc, g, ppm)
         gl.paste_or(canvas, patch, ox, base, g["ox_mm"] * ppm - wx0, (H - g["baseline_mm"]) * ppm - wy0)
     return canvas
 
@@ -207,7 +255,7 @@ def typed_strike(sc, glyphs, ppm, H, win, rng, strike):
     for g in glyphs:
         if g["ch"] == " ":
             continue
-        patch, ox, base = sc.glyph_patch_cached(g["font"], g["weight"], g["ch"], g["em_mm"], ppm, g["rot_deg"], g["emb_mm"])
+        patch, ox, base = glyph_patch(sc, g, ppm)
         px0 = int(round(g["ox_mm"] * ppm - wx0 - ox))
         py0 = int(round((H - g["baseline_mm"]) * ppm - wy0 - base))
         h, w = patch.shape
@@ -220,18 +268,47 @@ def typed_strike(sc, glyphs, ppm, H, win, rng, strike):
     return d
 
 
+def thin(mask):
+    """Zhang-Suen thinning of a boolean mask to a one-pixel skeleton (numpy, no scikit-image here)."""
+    s = np.pad(mask, 1).astype(np.uint8)
+    while True:
+        moved = False
+        for step in (0, 1):
+            P = [s[0:-2, 1:-1], s[0:-2, 2:], s[1:-1, 2:], s[2:, 2:], s[2:, 1:-1], s[2:, 0:-2], s[1:-1, 0:-2], s[0:-2, 0:-2]]       # p2 .. p9, clockwise from north
+            B = sum(p.astype(np.int16) for p in P)
+            A = sum(((P[i] == 0) & (P[(i + 1) % 8] == 1)).astype(np.int16) for i in range(8))
+            c = s[1:-1, 1:-1] == 1
+            if step == 0:
+                c2 = (P[0] * P[2] * P[4] == 0) & (P[2] * P[4] * P[6] == 0)
+            else:
+                c2 = (P[0] * P[2] * P[6] == 0) & (P[0] * P[4] * P[6] == 0)
+            kill = c & (B >= 2) & (B <= 6) & (A == 1) & c2
+            if kill.any():
+                s[1:-1, 1:-1][kill] = 0
+                moved = True
+        if not moved:
+            break
+    return s[1:-1, 1:-1].astype(bool)
+
+
+def stroke_ends(mask):
+    """(ys, xs) of the stroke ends: the skeleton's pixels with one neighbour."""
+    sk = thin(mask)
+    nb = ndi.convolve(sk.astype(np.int16), np.ones((3, 3), np.int16), mode="constant") - sk
+    return np.nonzero(sk & (nb == 1))
+
+
 def blot_ballpoint(mask, ppm, rng):
-    """Ballpoint: now and then a blot where the pen stopped (a small disc on the ink)."""
-    ys, xs = np.nonzero(mask)
-    if not len(ys):
-        return mask
-    n = rng.poisson(max(0.0, len(ys) / (ppm * ppm) / 160.0))
+    """Ballpoint: a blot of 0.6 mm where the pen stopped, at one stroke end in ten."""
+    ys, xs = stroke_ends(mask)
     out = mask.copy()
-    for _ in range(min(n, 12)):
-        i = rng.integers(0, len(ys))
-        r = max(1, int(round(rng.uniform(0.28, 0.42) * ppm)))
-        y0, y1 = max(0, ys[i] - r), min(mask.shape[0], ys[i] + r + 1)
-        x0, x1 = max(0, xs[i] - r), min(mask.shape[1], xs[i] + r + 1)
+    for i in range(len(ys)):
+        if rng.random() >= 0.10:
+            continue
+        r = 0.3 * ppm
+        ri = int(math.ceil(r))
+        y0, y1 = max(0, ys[i] - ri), min(mask.shape[0], ys[i] + ri + 1)
+        x0, x1 = max(0, xs[i] - ri), min(mask.shape[1], xs[i] + ri + 1)
         gy, gx = np.mgrid[y0:y1, x0:x1]
         out[y0:y1, x0:x1] |= ((gy - ys[i]) ** 2 + (gx - xs[i]) ** 2) <= r * r
     return out

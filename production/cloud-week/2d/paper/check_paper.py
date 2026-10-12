@@ -12,6 +12,7 @@ OUTDIR is what make_paper.py wrote. The check reads the PNG files (not the maker
   <ID>.clean.stray              ITEM.clean read from the colour picture: at most 2 mm2 differs from the flat reference outside the lettering's windows, the shapes' edges, the art and the cue patch
   <ID>.<c>.read                 each delivered class: classes A and B must pass every pixel check; C and D (weathered on purpose) are reported
   <ID>.<c>.paper, .ink, .contrast, .loss, .wear     colours, contrast and wear counts against the target's numbers for the class
+  <ID>.<c>.holes                no loss of paper that does not reach the sheet's edge is over 0.2 per cent of the sheet
   <ID>.cue                      a hand card's tape tab or sucker reads LEFT (G.mirror.cues); the mirrored card reads RIGHT
   <ID>.relief                   a cast or pressed plate's letters and border stand the target's height above its face
 
@@ -115,6 +116,23 @@ def sc_disk(k):
     return _G["gl"].disk(k)
 
 
+def inner_losses(alc, al):
+    """(count, [share of the sheet of each inner loss over 0.2 per cent]): the losses of paper (card in the clean picture, gone in the weathered one) that do not reach the sheet's edge
+    (the close review's finding 1: a bill is torn from its edges; a hole in the middle with paper all round is a maker's fault)."""
+    card = alc > 0.5
+    gone = card & (al < 0.5)
+    if not gone.any():
+        return 0, []
+    lab, n = ndi.label(gone)
+    edge = ndi.binary_dilation(~card, iterations=2)
+    edge[0, :] = edge[-1, :] = edge[:, 0] = edge[:, -1] = True
+    touching = set(np.unique(lab[edge & gone]).tolist()) - {0}
+    sizes = ndi.sum(gone, lab, range(1, n + 1))
+    area = float(card.sum())
+    inner = [float(s) / area for i, s in enumerate(sizes, 1) if i not in touching]
+    return len(inner), [s for s in inner if s > 0.002]
+
+
 WEAR_RANGES = {   # the target's age_rules.paper_wear and wear tables: (what, class -> (lo, hi))
     "corner_lifts": {"A": (0, 0), "B": (0, 1), "C": (0, 2), "D": (0, 3)},
     "tears": {"A": (0, 0), "B": (0, 1), "C": (0, 2), "D": (0, 4)},
@@ -197,6 +215,8 @@ def check_item(task):
             R.add("%s.%s.loss" % (iid, cls), lost <= lim_hi and (lost >= lo - 0.02 or lo == 0), "paper lost %.3f (the target's range for class %s: %.2f to %.2f)" % (lost, cls, lo, hi))
         else:
             R.add("%s.%s.loss" % (iid, cls), lost <= 0.30, "alpha lost %.3f (a sleeve's clear band, a dog-ear or a star's outline only)" % lost)
+        n_in, big = inner_losses(alc, al)
+        R.add("%s.%s.holes" % (iid, cls), not big, "%d losses inside the sheet, none over 0.2 per cent of it" % n_in if not big else "%d losses do not reach the sheet's edge, the largest %.2f per cent of it (limit 0.2)" % (len(big), 100 * max(big)))
         wl = c["wear"]
         wr = []
         for k, rng_ in WEAR_RANGES.items():
@@ -332,7 +352,8 @@ def control_item(task):
         gl.paste_or(cv, pa, ox, base, g["ox_mm"] * ppm, (H - g["baseline_mm"]) * ppm)
         cv = ndi.binary_dilation(cv, gl.disk(1))
         r2[cv] = ref[cv]
-        pb, oxb, baseb = sc.glyph_patch_cached(g["font"], g["weight"], new_ch, g["em_mm"], ppm, g["rot_deg"], g["emb_mm"])
+        import paper_ink
+        pb, oxb, baseb = paper_ink.glyph_patch(sc, dict(g, ch=new_ch), ppm)
         cv2 = np.zeros((h_, w_), bool)
         gl.paste_or(cv2, pb, oxb, baseb, g["ox_mm"] * ppm, (H - g["baseline_mm"]) * ppm)
         r2[cv2] = ink_col

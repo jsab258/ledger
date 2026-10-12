@@ -128,12 +128,12 @@ def rolled_edge(it, geo, alpha, rgb, height):
     roll = 6.0
     if it.get("relief"):
         txt = it["relief"].get("edge", "")
-        roll = 3.0 if "radius 3" in txt else 4.0
+        roll = 3.0 if "radius 3" in txt else (2.0 if "2 mm arris" in txt else 4.0)          # S01: the target's 2 mm arris
     if it["process"] in ("enamel", "vitreous_enamel_steel"):
         roll = 6.0
     if it["process"] == "agent_board":
         roll = 2.0
-    d = ndi.distance_transform_edt(alpha > 0.5).astype(np.float32) / geo.ppm
+    d = ndi.distance_transform_edt(np.pad(alpha > 0.5, 1))[1:-1, 1:-1].astype(np.float32) / geo.ppm      # padded: the picture's own border is the plate's edge (the close review's finding 2)
     t = np.clip(d / roll, 0, 1)
     drop = roll * (1 - np.sqrt(np.clip(1 - (1 - t) ** 2, 0, 1)))
     height -= (drop * 0.35).astype(np.float32)
