@@ -1,6 +1,6 @@
 # Paper, cards, boards and plates of Quay Street (units 4.2, 4.3 and 4.4): build notes
 
-12 October 2026, cloud week 42. Built by script from `production/cloud-week/targets/posters-boards-plates/target.json` (and `TARGET.md`), the target as it stands after its second review and Jafar's ruling of 9 October (its `self_check.py` reader is imported, not edited). The target is untouched. The pictures are not in git (`production/previews/cloud-week/paper/` holds the review previews); one command rebuilds them.
+12 October 2026, cloud week 42. Built by script from `production/cloud-week/targets/posters-boards-plates/target.json` (and `TARGET.md`), the target as it stands after its second review and Jafar's ruling of 9 October (its `self_check.py` reader is imported, not edited). The target is untouched but for two lines of its glyph maker (`glyphlib.glyph_patch` thins a stroke on a negative `emb_mm`, for the ballpoint; below). The pictures are not in git (`production/previews/cloud-week/paper/` holds the review previews); one command rebuilds them.
 
 ## What was made
 
@@ -17,7 +17,7 @@
 The set (rebuilt into the scratch folder given to the command): **84 items** (every item of the target, the held twins and stand-ins too: `held` in the manifest), 140 delivered pictures (an item's classes are the ones the target lists in `items[].wear.classes`; `--classes all` makes A to D), each with a base colour, a 16-bit height map and an ORM map, one `<ID>.glyphs.json` per item, and **SB1**. Per picture:
 
 - `<ID>_<class>_basecolour.png`: sRGB 8-bit, **RGBA where the item has an outline or a loss** (a star card, a hole, a torn or lost edge, a sleeve's clear band, a die-cut or rounded corner), else RGB. Row 0 is the TOP, column 0 the viewer's LEFT, **one pixel scale per item** (`items[].px_per_mm`, 2 to 12, as the target chose it so that every glyph can be told from every other), **square-on**: no skew and no rotation is baked in; the placement's `rot_deg` is the only turn.
-- `<ID>_<class>_height.png`: 16-bit, 32768 is the face; 25600 units a millimetre (the fascia maps' own scale), **8192 on the cast and pressed plates** (their letters and border stand 3 and 1.5 mm; the manifest gives `units_per_mm` for each file). Paper cockle and impression, the ink film (+0.03 mm screen, -0.06 mm letterpress), torn edges, curl, tape (+0.12), the plate relief with ten degrees of draft and a rounded top, rolled edges.
+- `<ID>_<class>_height.png`: 16-bit, 32768 is the face; 25600 units a millimetre (the fascia maps' own scale), **8192 on the cast and pressed plates** (their letters and border stand 3 and 1.5 mm; the manifest gives `units_per_mm` for each file). Paper relief (wrinkles, paste bubbles, a ripple) and impression, the ink film (+0.03 mm screen, -0.06 mm letterpress), torn edges, curl, tape (+0.12), the plate relief with ten degrees of draft and a rounded top, rolled edges.
 - `<ID>_<class>_orm.png`: R 255 (no occlusion drawn), G roughness (paper 0.8 to 0.9, toner 0.6, litho 0.7, enamel 0.12, agent's board 0.35, cast aluminium 0.5, a sleeve's polythene 0.25), B metal (bare aluminium where the paint has flaked).
 
 ## How a picture is made (stages, in order)
